@@ -148,7 +148,8 @@ internal/rules/combat     戰略層的戰鬥自動判定：戰力、傷亡、壞
 internal/rules/diplomacy  交友度矩陣與外交官
 internal/rules/persuasion 進言與說得（玩家扮軍師，指令要先說服君主）
 internal/rules/rng        原版的亂數產生器（置換表 ＋ 兩個 byte）
-internal/state            劇本／存檔的載入與**寫回**（改寫而非重建）
+internal/state            劇本／存檔的載入與**寫回**（改寫而非重建）＋ 世界迴圈
+                          （時鐘、月結、每小時的勢力更新、軍團編成與行軍、遭遇戰）
 
 cmd/wlshot                解素材成 PNG，無頭環境可跑
 cmd/wlview                Ebiten 互動檢視器（素材模式 / 大地圖模式，Tab 切換）

@@ -120,6 +120,15 @@ type General struct {
 	Politics int
 	Timer    int // 每月遞減，歸零才行動
 
+	// Posted 是「出陣中」（記錄 +0x17）。編成軍團時原版寫 1
+	// （`sub_16F26`），武將被俘時寫 4（`sub_129C3`）、釋放時歸零。
+	Posted bool
+
+	// LoyalToDeath 是記錄 +0x00 的 bit 4：**舊主已滅時寧可自刎也不改事二主**
+	// （`sub_129C3` → 訊息 0x43，docs/re/09 §6）。
+	// 旗標那個 byte 有 7 種值，目前只解出這一個位元。
+	LoyalToDeath bool
+
 	// Budget 是官員手上的經費餘額（記錄 +0x1A）。外交官每次工作
 	// 扣 23 − 政治，歸零就停擺，要再向君主開口要錢。
 	Budget int
@@ -159,6 +168,15 @@ type World struct {
 	Cities   [numCities]City
 	Generals [numGenerals]General
 
+	// Corps 是軍團表。**索引與武將表平行**——軍團 i 由武將 i 帶
+	// （`sub_1291A` 直接換算兩張表的位址，docs/re/09 §6）。
+	// 出貨的劇本檔裡全零：開局沒有軍團，玩家要自己編成。
+	Corps [numCorps]Corps
+
+	// corpsCursor 是下一支要更新的軍團（原版 cs:0D18h）。
+	// 每 tick 只推進 16 支，所以掃完一輪要 8 個 tick。
+	corpsCursor int
+
 	// hourFaction 是下一個輪到的勢力（原版 cs:0D1Ch，以 si 步進 0x40）。
 	// 不匯出——它是迴圈的內部游標，不是遊戲狀態的一部分。
 	hourFaction int
@@ -190,6 +208,12 @@ type World struct {
 	NextTaxRate    int
 	NextRecruitCap [economy.NumTroopTypes]int
 }
+
+// 原版的哨兵值。0xFF 表示「沒有」——**不等於 Go 的零值**（CLAUDE.md §8）。
+const (
+	noFaction = 0xFF
+	noCity    = 0xFF
+)
 
 func u16(b []byte, off int) int { return int(binary.LittleEndian.Uint16(b[off:])) }
 
@@ -310,15 +334,18 @@ func LoadScenario(path string, index int) (*World, error) {
 			Aptitude: [3]int{
 				int(r[0x0E]) >> 4, int(r[0x0F]) >> 4, int(r[0x10]) >> 4,
 			},
-			Martial:  int(r[0x11]),
-			Command:  int(r[0x12]),
-			Politics: int(r[0x13]),
-			Timer:    int(r[0x18]),
-			Budget:   int(r[0x1A]),
-			Faction:  int(r[0x1C]),
-			Captor:   int(r[0x1D]),
+			Martial:      int(r[0x11]),
+			Command:      int(r[0x12]),
+			Politics:     int(r[0x13]),
+			Timer:        int(r[0x18]),
+			Posted:       r[0x17] != 0,
+			LoyalToDeath: r[0x00]&0x10 != 0,
+			Budget:       int(r[0x1A]),
+			Faction:      int(r[0x1C]),
+			Captor:       int(r[0x1D]),
 		}
 	}
+	w.loadCorps(b)
 	return w, nil
 }
 
@@ -340,12 +367,21 @@ type Event struct {
 
 	// FriendshipUp 為真表示外交官這次做出了成果（交友度 +1）。
 	FriendshipUp bool
+
+	// Corps 是這個 tick 裡動過或打過的軍團。原版每 tick 只更新 16 支
+	// （`sub_125A3` 的 `mov cx, 10h`），所以這裡通常是空的或很短。
+	Corps []CorpsEvent
 }
 
 // Tick 推進一個 tick。月結、季節、災害都掛在對應的進位事件上，
 // 順序照原版（docs/re/06 §5、docs/re/07 §1）。
 func (w *World) Tick(rng economy.Rand) Event {
 	ev := Event{Clock: w.Clock.Advance(), HourFaction: -1}
+
+	// 軍團先動。原版的主迴圈是「先 sub_125A3 再 sub_11D8E（時鐘）」，
+	// 不過時鐘已經在上面推進了，所以這裡用推進後的小時去判軍費。
+	ev.Corps = w.tickCorps(w.Clock.Hour, rng)
+
 	if ev.Clock.Hour {
 		w.hourly(&ev, rng)
 	}
@@ -625,10 +661,16 @@ func (w *World) Bytes() []byte {
 		r[0x12] = byte(g.Command)
 		r[0x13] = byte(g.Politics)
 		r[0x18] = byte(g.Timer)
+		if g.Posted {
+			r[0x17] = 1
+		} else {
+			r[0x17] = 0
+		}
 		r[0x1A] = byte(g.Budget)
 		r[0x1C] = byte(g.Faction)
 		r[0x1D] = byte(g.Captor)
 	}
+	w.saveCorps(b)
 	return b
 }
 

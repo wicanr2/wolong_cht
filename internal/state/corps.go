@@ -1,0 +1,559 @@
+package state
+
+import (
+	"fmt"
+
+	"github.com/wicanr2/wolong_cht/internal/rules/army"
+	"github.com/wicanr2/wolong_cht/internal/rules/combat"
+	"github.com/wicanr2/wolong_cht/internal/rules/economy"
+)
+
+// 軍團表：127 筆 × 64 B，區塊 `+0x22C0`（段內 `2240h`）。
+// 出貨的劇本檔裡全零——開局沒有軍團，玩家要自己編成。
+// 佈局見 docs/formats/08 §1.7，來源是 `sub_16F26`／`sub_16F86`／`sub_125A3`。
+const (
+	corpsBase, corpsSize, numCorps = 0x22C0, 64, 127
+
+	// unitSlots 起點：軍團記錄 +0x28 起是六個部隊槽，每槽 4 B
+	// （`sub_15285` 的 `add si, 28h` ＋ `add si, 4`，docs/re/09 §3.1）。
+	unitSlotBase, unitSlotSize = 0x28, 4
+
+	// aliveFlag 是存在旗標的門檻。編成時寫 0xC0，掃描時比 `cmp byte ptr [si], 80h`。
+	aliveFlag = 0x80
+	newCorps  = 0xC0
+)
+
+// Corps 是一支軍團。
+//
+// **軍團編號與武將編號一一對應**：`sub_1291A` 直接用
+// `(軍團位址 − 0x2240) ÷ 2 + 0x4240` 換算，兩張表同索引平行
+// （docs/re/09 §6）。所以這裡不另外存「將領」——索引就是將領。
+type Corps struct {
+	Alive   bool
+	Faction int // +0x01
+	Morale  int // +0x06，編成時從勢力的士氣基準複製
+	Men     int // +0x04，總兵力（六個槽的和）
+
+	// Units 是六個編成位置的兵種與兵力。空槽的 Men 是 0。
+	// 一點兵力 ＝ 10 人，滿編 100 ＝ 1,000 人（說明書 5.5）。
+	Units [army.Positions]combat.Unit
+
+	Direction int // +0x0A，決定走連結表的哪一條
+	Timer     int // +0x0B，每 tick 減 1，歸零走一步
+	Interval  int // +0x1E，速度 ＝ 間隔的倒數
+
+	Node, X, Y                   int // +0x0E（÷8）／+0x10／+0x12
+	TargetNode, TargetX, TargetY int // +0x14（÷8）／+0x16／+0x18
+
+	Home int // +0x20，編成時寫首都據點編號
+}
+
+// Leader 回傳帶兵的武將編號。軍團與武將同索引，所以就是軍團編號。
+func (w *World) Leader(corps int) int { return corps }
+
+func (w *World) loadCorps(b []byte) {
+	for i := range w.Corps {
+		r := b[corpsBase+i*corpsSize:]
+		c := Corps{
+			Alive:      r[0x00] >= aliveFlag,
+			Faction:    int(r[0x01]),
+			Men:        u16(r, 0x04),
+			Morale:     int(r[0x06]),
+			Direction:  int(r[0x0A]),
+			Timer:      int(r[0x0B]),
+			Node:       u16(r, 0x0E) / 8,
+			X:          u16(r, 0x10),
+			Y:          u16(r, 0x12),
+			TargetNode: u16(r, 0x14) / 8,
+			TargetX:    u16(r, 0x16),
+			TargetY:    u16(r, 0x18),
+			Interval:   int(r[0x1E]),
+			Home:       int(r[0x20]),
+		}
+		for k := range c.Units {
+			s := r[unitSlotBase+k*unitSlotSize:]
+			c.Units[k] = combat.Unit{Men: int(s[1]), Kind: kindFromByte(s[2])}
+		}
+		w.Corps[i] = c
+	}
+}
+
+func (w *World) saveCorps(b []byte) {
+	for i, c := range w.Corps {
+		r := b[corpsBase+i*corpsSize:]
+		if !c.Alive {
+			// 不存在的軍團**一個 byte 都不動**。原版解散時只把旗標
+			// 改成 8（`sub_12977`），其餘欄位留著；重建會抹掉那些痕跡。
+			continue
+		}
+		r[0x00] = newCorps
+		r[0x01] = byte(c.Faction)
+		r[0x02] = byte(i)
+		putU16(r, 0x04, c.Men)
+		r[0x06] = byte(c.Morale)
+		r[0x0A] = byte(c.Direction)
+		r[0x0B] = byte(c.Timer)
+		putU16(r, 0x0E, c.Node*8)
+		putU16(r, 0x10, c.X)
+		putU16(r, 0x12, c.Y)
+		putU16(r, 0x14, c.TargetNode*8)
+		putU16(r, 0x16, c.TargetX)
+		putU16(r, 0x18, c.TargetY)
+		r[0x1E] = byte(c.Interval)
+		r[0x20] = byte(c.Home)
+		for k, u := range c.Units {
+			s := r[unitSlotBase+k*unitSlotSize:]
+			s[1] = byte(u.Men)
+			s[2] = byteFromKind(u.Kind)
+		}
+	}
+}
+
+// 兵種在檔案裡是 1-based（`sub_14F8A` 直接寫 3 表示步兵，docs/re/09 §7）。
+func kindFromByte(v byte) army.TroopType {
+	if v == 0 {
+		return army.Cavalry
+	}
+	return army.TroopType(v - 1)
+}
+
+func byteFromKind(t army.TroopType) byte { return byte(t) + 1 }
+
+// 移動間隔。純騎馬編成走得快（說明書 5.5「騎馬隊のみの軍団は
+// 移動速度が速くなります」）。
+//
+// ⚠ **實際數值還沒反組譯出來**，這兩個是 remake 的暫定值，
+// 只保證「純騎馬比較快」這個方向。
+const (
+	IntervalCavalry = 6
+	IntervalMixed   = 9
+)
+
+// FormCorps 編成一支軍團（原版 `sub_16F26`）。
+//
+// leader 是帶兵的武將編號，units 是六個位置的兵種（空位傳 -1 的槽用
+// men[k] == 0 表示）。兵從勢力的預備兵扣，一個位置固定 1,000 人。
+//
+// 照原版的順序：武將標成出陣中、軍團繼承勢力的士氣基準、
+// 位置設在首都、勢力的軍團數 +1。
+func (w *World) FormCorps(leader int, kinds [army.Positions]army.TroopType,
+	manned [army.Positions]bool) error {
+
+	if leader < 0 || leader >= numCorps {
+		return fmt.Errorf("state: 武將編號 %d 超出 0–%d", leader, numCorps-1)
+	}
+	g := &w.Generals[leader]
+	if !g.Alive {
+		return fmt.Errorf("state: 武將 %d 不存在", leader)
+	}
+	if g.Faction < 0 || g.Faction >= numFactions {
+		return fmt.Errorf("state: 武將 %d 在野，不能編成", leader)
+	}
+	if w.Corps[leader].Alive {
+		return fmt.Errorf("state: 武將 %d 已經帶著軍團", leader)
+	}
+	f := &w.Factions[g.Faction]
+
+	// 先確認預備兵夠。**不足就整批不做**——原版沒有「編一半」這回事。
+	need := [economy.NumTroopTypes]int{}
+	for k, ok := range manned {
+		if ok {
+			need[kinds[k]] += army.MenPerUnit
+		}
+	}
+	for t, n := range need {
+		if f.Reserves[t] < n {
+			return fmt.Errorf("state: %v 預備兵只有 %d，需要 %d",
+				army.TroopType(t), f.Reserves[t], n)
+		}
+	}
+	for t, n := range need {
+		f.Reserves[t] -= n
+	}
+
+	home := w.clampCity(f.Capital)
+	c := Corps{
+		Alive:   true,
+		Faction: g.Faction,
+		Morale:  f.MoraleBase,
+		Home:    f.Capital,
+		Node:    home,
+		X:       w.Cities[home].X,
+		Y:       w.Cities[home].Y,
+		// 目標先設成原地，行軍指令下達前不會動。
+		TargetNode: home,
+		TargetX:    w.Cities[home].X,
+		TargetY:    w.Cities[home].Y,
+	}
+	allCav := false
+	for k, ok := range manned {
+		if !ok {
+			continue
+		}
+		// 一點兵力 ＝ 10 人。
+		c.Units[k] = combat.Unit{Men: army.MenPerUnit / 10, Kind: kinds[k]}
+		c.Men += army.MenPerUnit / 10
+	}
+	allCav = c.rules().AllCavalry()
+	c.Interval = IntervalMixed
+	if allCav {
+		c.Interval = IntervalCavalry
+	}
+	c.Timer = c.Interval
+
+	w.Corps[leader] = c
+	g.Posted = true
+	f.Corps++
+	return nil
+}
+
+// rules 回傳這支軍團在 army 層的視圖。
+func (c Corps) rules() army.Corps {
+	out := army.Corps{Alive: c.Alive, Faction: c.Faction, Morale: c.Morale,
+		Node: c.Node, X: c.X, Y: c.Y,
+		TargetNode: c.TargetNode, TargetX: c.TargetX, TargetY: c.TargetY,
+		Direction: c.Direction, MoveTimer: c.Timer, MoveInterval: c.Interval}
+	for k, u := range c.Units {
+		out.Units[k] = u.Kind
+		out.Manned[k] = u.Men > 0
+	}
+	return out
+}
+
+// battle 回傳這支軍團在 combat 層的視圖。
+func (w *World) battle(i int) combat.Corps {
+	c := w.Corps[i]
+	g := w.Generals[i]
+	return combat.Corps{
+		Faction: c.Faction,
+		Leader: combat.Leader{
+			Martial: g.Martial, Command: g.Command,
+			SiegeAptitude: g.Aptitude[0], FieldAptitude: g.Aptitude[1],
+			Rating: g.Rules().Rating(),
+		},
+		Units: c.Units, Morale: c.Morale, Men: c.Men,
+	}
+}
+
+func (w *World) applyBattle(i int, b combat.Corps) {
+	c := &w.Corps[i]
+	c.Units, c.Morale, c.Men = b.Units, b.Morale, b.Men
+}
+
+// ---------------------------------------------------------------------------
+// 每 tick 的軍團更新（`sub_125A3`）
+// ---------------------------------------------------------------------------
+
+// corpsPerTick 是原版每個 tick 處理幾支軍團。
+//
+// ⭐ **不是全部 127 支**：`sub_125A3` 的 `mov cx, 10h` 只跑 16 筆，
+// 從一個游標開始，處理完把游標往前推，`si >= 0x1FC0`（127 × 64）繞回 0。
+// 所以軍團是**輪流**被更新的，一輪要 8 個 tick。
+const corpsPerTick = 16
+
+// upkeepHour 是收軍費與回士氣的時刻。
+//
+// ⚠ `sub_12600` 開頭就是 `cmp cs:byte_10CF3, 1 / jz`，而 `ds:0CF3h` 是
+// **小時**（`sub_11D8E` 在 `0x17` ＝ 23 進位）。所以軍費不是每 tick 收，
+// 是**每天「一時」那個小時收**。docs/re/09 §9 初版寫成「每 tick」，
+// 那是只看 `sub_125A3` 的呼叫點、沒往下讀 `sub_12600` 的閘。
+const upkeepHour = 1
+
+// CorpsEvent 是一支軍團在這個 tick 發生的事。
+type CorpsEvent struct {
+	Corps int
+
+	Moved   bool // 這個 tick 走了一步
+	Arrived bool // 到達目標
+
+	// Battle 不是 nil 表示打了一場。Enemy 是對手的軍團編號，
+	// −1 表示對手是據點的城兵。
+	Battle *combat.Result
+	Enemy  int
+
+	// Destroyed 是這一戰壞滅的軍團編號（可能兩支都是）。
+	Destroyed []int
+	// Fate 是壞滅方主將的下場，只在 Destroyed 非空時有意義。
+	Fate map[int]combat.Fate
+
+	// Captured 不是 −1 表示這個 tick 佔下了某個據點。
+	Captured int
+}
+
+// tickCorps 跑一輪軍團更新，回傳這個 tick 發生的事。
+func (w *World) tickCorps(hour int, rng combat.Rand) []CorpsEvent {
+	var out []CorpsEvent
+	for n := 0; n < corpsPerTick; n++ {
+		i := w.corpsCursor
+		w.corpsCursor = (w.corpsCursor + 1) % numCorps
+		if !w.Corps[i].Alive {
+			continue
+		}
+		if ev := w.tickOneCorps(i, hour, rng); ev != nil {
+			out = append(out, *ev)
+		}
+	}
+	return out
+}
+
+func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
+	c := &w.Corps[i]
+	ev := CorpsEvent{Corps: i, Enemy: -1, Captured: -1}
+
+	// ① 移動的節拍。原版先減再判斷：間隔 N 表示每 N 個 tick 走一步。
+	c.Timer--
+	if c.Timer <= 0 {
+		c.Timer = c.Interval
+		if w.step(c) {
+			ev.Moved = true
+			ev.Arrived = c.Node == c.TargetNode
+			w.resolveContact(i, &ev, rng)
+		}
+	}
+
+	// ② 軍費與士氣。每天「一時」那個小時才收。
+	// 這一步壞滅的軍團不收——它已經不在了。
+	if hour == upkeepHour && c.Alive {
+		inField := army.KindOf(c.Node) == army.FieldNode
+		f := &w.Factions[c.Faction]
+		f.Expense = economy.ClampFunds(f.Expense + combat.Upkeep(c.Men, inField))
+		cc := combat.Corps{Morale: c.Morale}
+		combat.Recover(&cc, f.MoraleBase, inField)
+		c.Morale = cc.Morale
+	}
+
+	if !ev.Moved && ev.Battle == nil {
+		return nil
+	}
+	return &ev
+}
+
+// step 把軍團往目標推進一格，回傳有沒有真的動。
+//
+// ⚠ **這不是原版的走法。** 原版沿著連結表（`docs/re/08` §6）在節點之間
+// 移動，而連結表每筆的佈局還沒解出來。這裡先用**切比雪夫直線**逼近，
+// 到達目標座標時才更新所在節點編號。
+// 解開連結表之後要換掉——**標成 remake 差異，不要當成原版行為**。
+func (w *World) step(c *Corps) bool {
+	if c.X == c.TargetX && c.Y == c.TargetY {
+		if c.Node != c.TargetNode {
+			c.Node = c.TargetNode
+			return true
+		}
+		return false
+	}
+	c.X += sign(c.TargetX - c.X)
+	c.Y += sign(c.TargetY - c.Y)
+	if c.X == c.TargetX && c.Y == c.TargetY {
+		c.Node = c.TargetNode
+	}
+	return true
+}
+
+func sign(v int) int {
+	switch {
+	case v > 0:
+		return 1
+	case v < 0:
+		return -1
+	}
+	return 0
+}
+
+// resolveContact 檢查這一步之後有沒有撞上敵人或走進別人的據點。
+//
+// 兩條路對應原版的 `sub_12831`（野戰遭遇）與 `sub_12880`（攻城），
+// 判定條件照原版：**同格且不同勢力**才打，走進自家據點直接通過。
+func (w *World) resolveContact(i int, ev *CorpsEvent, rng combat.Rand) {
+	c := w.Corps[i]
+
+	// 野戰：同一格上有別的勢力的軍團。
+	for j := range w.Corps {
+		d := w.Corps[j]
+		if j == i || !d.Alive || d.Faction == c.Faction {
+			continue
+		}
+		if d.X == c.X && d.Y == c.Y {
+			w.fight(i, j, ev, combat.Field, 0, rng)
+			return
+		}
+	}
+
+	// 攻城：走進據點，而且那個據點不是自家的。
+	if army.KindOf(c.Node) != army.CityNode {
+		return
+	}
+	city := &w.Cities[c.Node]
+	if city.Owner == c.Faction || city.Owner == combat.NeutralFaction {
+		if city.Owner == combat.NeutralFaction {
+			city.Owner = c.Faction
+			w.Factions[c.Faction].Cities++
+			ev.Captured = c.Node
+		}
+		return
+	}
+	// 城裡有守軍就打守軍，沒有就打城兵。
+	for j := range w.Corps {
+		d := w.Corps[j]
+		if d.Alive && d.Faction == city.Owner && d.Node == c.Node {
+			w.fight(i, j, ev, combat.Siege, city.Garrison, rng)
+			return
+		}
+	}
+	w.fightGarrison(i, ev, rng)
+}
+
+func (w *World) fight(att, def int, ev *CorpsEvent, m combat.Mode, garrison int, rng combat.Rand) {
+	a, d := w.battle(att), w.battle(def)
+	r := combat.Resolve(&a, &d, m, garrison, rng)
+	w.applyBattle(att, a)
+	w.applyBattle(def, d)
+	ev.Battle, ev.Enemy = &r, def
+	w.damageCity(w.Corps[att].Node, m, r)
+
+	w.afterBattle(ev, att, r.AttackerDestroyed, def, rng)
+	w.afterBattle(ev, def, r.DefenderDestroyed, att, rng)
+
+	if r.DefenderDestroyed && !r.AttackerDestroyed && m == combat.Siege {
+		w.capture(att, ev)
+	}
+}
+
+// fightGarrison 打的是據點的城兵——原版在 `ds:4200h` 現搭一支臨時軍團
+// （`sub_14F8A`，docs/re/09 §7）。守方不是軍團，所以不會有壞滅或被擒。
+func (w *World) fightGarrison(att int, ev *CorpsEvent, rng combat.Rand) {
+	node := w.Corps[att].Node
+	city := &w.Cities[node]
+	a := w.battle(att)
+	g := combat.Garrison(city.Owner, city.Garrison)
+	r := combat.Resolve(&a, &g, combat.Siege, city.Garrison, rng)
+	w.applyBattle(att, a)
+	ev.Battle, ev.Enemy = &r, -1
+	w.damageCity(node, combat.Siege, r)
+
+	w.afterBattle(ev, att, r.AttackerDestroyed, -1, rng)
+	if !r.DefenderWins && !r.AttackerDestroyed {
+		w.capture(att, ev)
+	}
+}
+
+// damageCity 套用攻城戰對據點的損傷。城兵、上昇值、防災值各扣同一個量，
+// **不分勝敗**（`sub_151B3`，docs/re/09 §4.1）。
+func (w *World) damageCity(node int, m combat.Mode, r combat.Result) {
+	if m != combat.Siege || army.KindOf(node) != army.CityNode {
+		return
+	}
+	c := &w.Cities[node]
+	c.Garrison = clampDown(c.Garrison, r.CityDamage)
+	c.Prevention = clampDown(c.Prevention, r.CityDamage)
+	// 上昇值在記憶體裡是「實際值 ＋ 100」的存值，原版扣的是存值。
+	c.Growth = clampDown(c.Growth+100, r.CityDamage) - 100
+}
+
+func clampDown(v, d int) int {
+	if v -= d; v < 0 {
+		return 0
+	}
+	return v
+}
+
+// afterBattle 處理壞滅：軍團消失、主將擲一次下場（`sub_1291A`）。
+//
+// victor 是勝方的軍團編號，−1 表示勝方是據點的城兵
+// （那時勝方勢力就是該據點的所屬）。
+func (w *World) afterBattle(ev *CorpsEvent, i int, destroyed bool, victor int, rng combat.Rand) {
+	if !destroyed {
+		return
+	}
+	c := &w.Corps[i]
+	loser := c.Faction
+	winner := combat.NeutralFaction
+	if victor >= 0 {
+		winner = w.Corps[victor].Faction
+	} else if n := w.Corps[i].Node; army.KindOf(n) == army.CityNode {
+		winner = w.Cities[n].Owner
+	}
+
+	f := &w.Factions[loser]
+	g := &w.Generals[i]
+	fate := combat.RollFate(combat.Captive{
+		Rating:       g.Rules().Rating(),
+		IsRuler:      f.Lord == i,
+		HasCapital:   f.Capital != noCity,
+		LoyalToDeath: g.LoyalToDeath,
+		LordSurvives: f.Alive,
+	}, winner, loser, rng)
+
+	c.Alive = false
+	g.Posted = false
+	if f.Corps > 0 {
+		f.Corps--
+	}
+	switch fate {
+	case combat.Captured:
+		g.Captor = loser
+		g.Faction = winner
+	case combat.Suicide:
+		g.Alive = false
+		g.Faction = noFaction
+	}
+
+	ev.Destroyed = append(ev.Destroyed, i)
+	if ev.Fate == nil {
+		ev.Fate = map[int]combat.Fate{}
+	}
+	ev.Fate[i] = fate
+}
+
+// capture 把據點換手（`sub_14CF3`）。
+func (w *World) capture(att int, ev *CorpsEvent) {
+	node := w.Corps[att].Node
+	if army.KindOf(node) != army.CityNode {
+		return
+	}
+	city := &w.Cities[node]
+	old := city.Owner
+	next := w.Corps[att].Faction
+	if old == next {
+		return
+	}
+	// 原本無主（0x18）就沒有「奪取」，只有新主的據點數 +1。
+	if old != combat.NeutralFaction && old >= 0 && old < numFactions {
+		if w.Factions[old].Cities > 0 {
+			w.Factions[old].Cities--
+		}
+	}
+	city.Owner = next
+	city.OwnerRecorded = next
+	w.Factions[next].Cities++
+	ev.Captured = node
+}
+
+// March 給軍團下行軍指令：往 node 那個據點走。
+//
+// 原版的目標是一組三元組（據點編號 × 8、X、Y），行軍就是把現在的那組
+// 往目標推。這裡只接受據點——說明書 3.2 的行軍指令也是選據點，
+// 野外座標是原版內部推路徑時才用到的。
+func (w *World) March(corps, node int) error {
+	if corps < 0 || corps >= numCorps || !w.Corps[corps].Alive {
+		return fmt.Errorf("state: 軍團 %d 不存在", corps)
+	}
+	if node < 0 || node >= numCities {
+		return fmt.Errorf("state: 據點編號 %d 超出 0–%d", node, numCities-1)
+	}
+	c := &w.Corps[corps]
+	c.TargetNode = node
+	c.TargetX, c.TargetY = w.Cities[node].X, w.Cities[node].Y
+	return nil
+}
+
+// AliveCorps 回傳還在的軍團編號。
+func (w *World) AliveCorps() []int {
+	var out []int
+	for i, c := range w.Corps {
+		if c.Alive {
+			out = append(out, i)
+		}
+	}
+	return out
+}

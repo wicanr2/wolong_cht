@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/wicanr2/wolong_cht/internal/assets/text"
+	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
 	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
@@ -564,5 +565,237 @@ func TestReserveUpkeepAccumulatesHourly(t *testing.T) {
 	// (3200 + 1600 + 1600) ÷ 32 = 200
 	if got := w.Factions[f].Expense; got != 200 {
 		t.Errorf("累計支出 ＝ %d，應為 200", got)
+	}
+}
+
+// 編成一支軍團：兵從預備兵扣、士氣繼承勢力的基準、位置在首都、
+// 武將標成出陣中、勢力的軍團數 +1。
+func TestFormCorps(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[0]
+	lord := w.Factions[f].Lord
+	w.Factions[f].Reserves = [economy.NumTroopTypes]int{6000, 6000, 6000}
+	before := w.Factions[f].Corps
+
+	kinds := [army.Positions]army.TroopType{
+		army.Cavalry, army.Cavalry, army.Archer,
+		army.Archer, army.Infantry, army.Infantry,
+	}
+	manned := [army.Positions]bool{true, true, true, true, true, true}
+	if err := w.FormCorps(lord, kinds, manned); err != nil {
+		t.Fatalf("編成失敗：%v", err)
+	}
+
+	c := w.Corps[lord]
+	if !c.Alive {
+		t.Fatal("軍團沒有建立")
+	}
+	if c.Morale != w.Factions[f].MoraleBase {
+		t.Errorf("士氣 %d，應繼承勢力基準 %d", c.Morale, w.Factions[f].MoraleBase)
+	}
+	if c.Node != w.Factions[f].Capital {
+		t.Errorf("位置在據點 %d，應在首都 %d", c.Node, w.Factions[f].Capital)
+	}
+	if c.Men != 600 { // 六槽 × 100 點 = 6,000 人
+		t.Errorf("兵力 %d 點，應為 600（＝6,000 人）", c.Men)
+	}
+	if !w.Generals[lord].Posted {
+		t.Error("武將沒有被標成出陣中")
+	}
+	if w.Factions[f].Corps != before+1 {
+		t.Errorf("勢力軍團數 %d，應為 %d", w.Factions[f].Corps, before+1)
+	}
+	// 騎馬扣 2,000、弓兵 2,000、步兵 2,000。
+	for tp, want := range map[economy.TroopType]int{
+		economy.Cavalry: 4000, economy.Archer: 4000, economy.Infantry: 4000,
+	} {
+		if got := w.Factions[f].Reserves[tp]; got != want {
+			t.Errorf("%v 預備兵剩 %d，應為 %d", tp, got, want)
+		}
+	}
+	// 同一個武將不能編兩支。
+	if err := w.FormCorps(lord, kinds, manned); err == nil {
+		t.Error("同一個武將編了第二支軍團")
+	}
+}
+
+// 預備兵不足就整批不做——原版沒有「編一半」這回事。
+func TestFormCorpsAllOrNothing(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[0]
+	lord := w.Factions[f].Lord
+	w.Factions[f].Reserves = [economy.NumTroopTypes]int{6000, 0, 6000}
+
+	kinds := [army.Positions]army.TroopType{
+		army.Cavalry, army.Cavalry, army.Archer, army.Archer, army.Cavalry, army.Cavalry,
+	}
+	manned := [army.Positions]bool{true, true, true, true, true, true}
+	if err := w.FormCorps(lord, kinds, manned); err == nil {
+		t.Fatal("弓兵不足卻編成成功了")
+	}
+	if w.Corps[lord].Alive {
+		t.Error("失敗卻留下了軍團")
+	}
+	if w.Factions[f].Reserves[economy.Cavalry] != 6000 {
+		t.Error("失敗卻扣了騎馬預備兵")
+	}
+}
+
+// 純騎馬編成走得快（說明書 5.5）。
+func TestAllCavalryMarchesFaster(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[0]
+	w.Factions[f].Reserves = [economy.NumTroopTypes]int{20000, 20000, 20000}
+
+	cav := [army.Positions]army.TroopType{}
+	mixed := [army.Positions]army.TroopType{
+		army.Cavalry, army.Cavalry, army.Cavalry, army.Cavalry, army.Cavalry, army.Infantry,
+	}
+	manned := [army.Positions]bool{true, true, true, true, true, true}
+
+	a := w.Factions[f].Lord
+	b := -1
+	for i := range w.Generals {
+		if w.Generals[i].Alive && w.Generals[i].Faction == f && i != a {
+			b = i
+			break
+		}
+	}
+	if b < 0 {
+		t.Skip("這個勢力只有一名武將")
+	}
+	if err := w.FormCorps(a, cav, manned); err != nil {
+		t.Fatal(err)
+	}
+	if err := w.FormCorps(b, mixed, manned); err != nil {
+		t.Fatal(err)
+	}
+	if w.Corps[a].Interval >= w.Corps[b].Interval {
+		t.Errorf("純騎馬間隔 %d 應小於混編的 %d",
+			w.Corps[a].Interval, w.Corps[b].Interval)
+	}
+}
+
+// 軍團表要能原樣寫回：載入 → 編成 → 寫回 → 再載入，欄位一致。
+func TestCorpsRoundTrip(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[0]
+	lord := w.Factions[f].Lord
+	w.Factions[f].Reserves = [economy.NumTroopTypes]int{6000, 6000, 6000}
+	kinds := [army.Positions]army.TroopType{
+		army.Cavalry, army.Archer, army.Infantry,
+		army.Cavalry, army.Archer, army.Infantry,
+	}
+	manned := [army.Positions]bool{true, true, true, true, true, true}
+	if err := w.FormCorps(lord, kinds, manned); err != nil {
+		t.Fatal(err)
+	}
+	if err := w.March(lord, 42); err != nil {
+		t.Fatal(err)
+	}
+
+	b := w.Bytes()
+	w2 := &World{raw: b}
+	w2.loadCorps(b)
+
+	a, c := w.Corps[lord], w2.Corps[lord]
+	if a != c {
+		t.Errorf("寫回後不一致：\n 原 %+v\n 後 %+v", a, c)
+	}
+	// 沒有軍團的槽一個 byte 都不該動。
+	orig := load(t, 0)
+	for i := range orig.Corps {
+		if i == lord {
+			continue
+		}
+		if w2.Corps[i] != orig.Corps[i] {
+			t.Fatalf("軍團 %d 被動到了", i)
+		}
+	}
+}
+
+// 每 tick 只更新 16 支軍團，一輪要 8 個 tick——不是全部一起動。
+func TestCorpsCursorRotates(t *testing.T) {
+	w := load(t, 0)
+	seen := map[int]bool{}
+	for n := 0; n < 8; n++ {
+		start := w.corpsCursor
+		for k := 0; k < 16; k++ {
+			seen[(start+k)%127] = true
+		}
+		w.tickCorps(0, rng.NewFixed(1))
+	}
+	if len(seen) != 127 {
+		t.Errorf("8 個 tick 掃到 %d 支軍團，應為全部 127 支", len(seen))
+	}
+}
+
+// 端對端：兩個勢力的軍團往對方的首都走，途中撞上就打一場。
+//
+// 這條把「編成 → 行軍 → 遭遇 → 自動判定 → 傷亡／壞滅／敗將下場」
+// 整條鏈接起來跑。單元測試各自驗過每一段，這裡驗的是**接得起來**。
+func TestCorpsMeetAndFight(t *testing.T) {
+	w := load(t, 0)
+	alive := w.AliveFactions()
+	if len(alive) < 2 {
+		t.Skip("這個劇本只有一個勢力")
+	}
+	a, b := alive[0], alive[1]
+	for _, f := range []int{a, b} {
+		w.Factions[f].Reserves = [economy.NumTroopTypes]int{6000, 6000, 6000}
+	}
+	kinds := [army.Positions]army.TroopType{}
+	manned := [army.Positions]bool{true, true, true, true, true, true}
+
+	la, lb := w.Factions[a].Lord, w.Factions[b].Lord
+	if err := w.FormCorps(la, kinds, manned); err != nil {
+		t.Fatal(err)
+	}
+	if err := w.FormCorps(lb, kinds, manned); err != nil {
+		t.Fatal(err)
+	}
+	// 互相往對方的首都走。
+	if err := w.March(la, w.Factions[b].Capital); err != nil {
+		t.Fatal(err)
+	}
+	if err := w.March(lb, w.Factions[a].Capital); err != nil {
+		t.Fatal(err)
+	}
+
+	r := rng.NewFixed(5)
+	var fought *CorpsEvent
+	for i := 0; i < 200000 && fought == nil; i++ {
+		ev := w.Tick(r)
+		for k := range ev.Corps {
+			// 要的是兩支軍團的野戰遭遇，不是走到城下打城兵。
+			if ev.Corps[k].Battle != nil && ev.Corps[k].Enemy >= 0 {
+				fought = &ev.Corps[k]
+			}
+		}
+	}
+	if fought == nil {
+		t.Fatalf("兩支軍團一路走到底都沒有交戰\n a:(%d,%d)→(%d,%d)  b:(%d,%d)→(%d,%d)",
+			w.Corps[la].X, w.Corps[la].Y, w.Corps[la].TargetX, w.Corps[la].TargetY,
+			w.Corps[lb].X, w.Corps[lb].Y, w.Corps[lb].TargetX, w.Corps[lb].TargetY)
+	}
+	if fought.Battle.Ratio < 8 {
+		t.Errorf("戰力比值 %d，最小應為 8（勢均力敵）", fought.Battle.Ratio)
+	}
+	// 打完之後至少有一方掉了兵。
+	if w.Corps[la].Men == 600 && w.Corps[lb].Men == 600 {
+		t.Error("打了一場卻兩邊都沒有傷亡")
+	}
+	t.Logf("交戰：軍團 %d vs %d，比值 %d，守方勝 %v，壞滅 %v",
+		fought.Corps, fought.Enemy, fought.Battle.Ratio,
+		fought.Battle.DefenderWins, fought.Destroyed)
+
+	// 敗方的士氣被重設成 100 × 兵力比，所以打輸一場之後必定低於 100
+	// （docs/re/09 §4.4）。這是接起來之後才看得到的行為。
+	loser := fought.Corps
+	if !fought.Battle.DefenderWins {
+		loser = fought.Enemy
+	}
+	if m := w.Corps[loser].Morale; w.Corps[loser].Alive && m >= 100 {
+		t.Errorf("敗方軍團 %d 戰後士氣 %d，應低於 100", loser, m)
 	}
 }
