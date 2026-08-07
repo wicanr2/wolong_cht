@@ -288,3 +288,155 @@ func TestReserveCap(t *testing.T) {
 		t.Errorf("騎馬 = %d, want 上限 %d", f.Reserves[Cavalry], MaxReserve)
 	}
 }
+
+// ---------------------------------------------------------------------------
+// 生產力與上昇值
+// ---------------------------------------------------------------------------
+
+// 變化量與生產力本身成正比 —— 這是複利模型不是線性模型。
+// 說明書：「大きい数値の方が変化が大きくなります」。
+func TestGrowthIsProportional(t *testing.T) {
+	small := CityState{Production: 1000, ProductionCap: 999999, Growth: 10}
+	big := CityState{Production: 20000, ProductionCap: 999999, Growth: 10}
+	before := [2]int{small.Production, big.Production}
+
+	GrowCity(&small, 0, false, zeroRand())
+	GrowCity(&big, 0, false, zeroRand())
+
+	ds := small.Production - before[0]
+	db := big.Production - before[1]
+	if db <= ds {
+		t.Errorf("大據點的增量 %d 應該大於小據點的 %d", db, ds)
+	}
+	// (生產力>>8) × 上昇值 / 2
+	if want := (1000 >> 8) * 10 / 2; ds != want {
+		t.Errorf("小據點增量 = %d, want %d", ds, want)
+	}
+	if want := (20000 >> 8) * 10 / 2; db != want {
+		t.Errorf("大據點增量 = %d, want %d", db, want)
+	}
+}
+
+// 生產力不會超過該據點的上限。
+func TestProductionCap(t *testing.T) {
+	c := CityState{Production: 20714, ProductionCap: 21000, Growth: 11}
+	GrowCity(&c, 0, false, zeroRand())
+	if c.Production != 21000 {
+		t.Errorf("生產力 = %d, want 被上限 21000 鉗住", c.Production)
+	}
+}
+
+// 上昇值為負時生產力下降，而且扣的是**全額**不是一半。
+func TestNegativeGrowthShrinks(t *testing.T) {
+	c := CityState{Production: 20000, ProductionCap: 999999, Growth: -10}
+	GrowCity(&c, 0, false, zeroRand())
+	want := 20000 - (20000>>8)*10 // 全額，不是 /2
+	if c.Production != want {
+		t.Errorf("生產力 = %d, want %d（負成長扣全額）", c.Production, want)
+	}
+}
+
+// 生產力不會掉到負數。
+func TestProductionFloorsAtZero(t *testing.T) {
+	c := CityState{Production: 100, ProductionCap: 999999, Growth: -100}
+	for i := 0; i < 50; i++ {
+		GrowCity(&c, 0, false, zeroRand())
+	}
+	if c.Production < 0 {
+		t.Errorf("生產力 = %d, 不該為負", c.Production)
+	}
+}
+
+// ⭐ 稅率的中性點是 30%：低於就繁榮，高於就荒廢。
+func TestTaxNeutralPoint(t *testing.T) {
+	base := CityState{Production: 20000, ProductionCap: 999999, Growth: 0}
+
+	// 稅率 30% → 上昇值不受稅率影響（只被自然衰減扣掉）。
+	c := base
+	GrowCity(&c, TaxNeutral, true, zeroRand())
+	if c.Growth != 0 {
+		t.Errorf("稅率 30%% 時上昇值 = %d, want 0", c.Growth)
+	}
+
+	// 稅率 10% → 上昇值 +20。
+	c = base
+	GrowCity(&c, 10, true, zeroRand())
+	if c.Growth != 20 {
+		t.Errorf("稅率 10%% 時上昇值 = %d, want +20", c.Growth)
+	}
+
+	// 稅率 60% → 上昇值 −30。
+	c = base
+	GrowCity(&c, 60, true, zeroRand())
+	if c.Growth != -30 {
+		t.Errorf("稅率 60%% 時上昇值 = %d, want −30", c.Growth)
+	}
+}
+
+// 稅率修正只對玩家的據點生效，AI 的據點完全不受影響。
+func TestTaxOnlyAffectsPlayerCities(t *testing.T) {
+	ai := CityState{Production: 20000, ProductionCap: 999999, Growth: 5}
+	GrowCity(&ai, 90, false, zeroRand()) // 極高稅率，但 applyTax=false
+	if ai.Growth != 5 {
+		t.Errorf("AI 據點的上昇值 = %d, want 5（不受稅率影響）", ai.Growth)
+	}
+}
+
+// 上昇值每月自然衰減 rand(0..15)，並鉗在 ±100。
+func TestGrowthDecayAndClamp(t *testing.T) {
+	c := CityState{Production: 5000, ProductionCap: 999999, Growth: 50}
+	GrowCity(&c, 0, false, &fixedRand{seq: []int{15}})
+	if c.Growth != 35 {
+		t.Errorf("上昇值 = %d, want 35（50 − 15）", c.Growth)
+	}
+
+	hi := CityState{Production: 5000, ProductionCap: 999999, Growth: 100}
+	GrowCity(&hi, 0, true, zeroRand()) // 稅率 0 → +30
+	if hi.Growth != MaxGrowth {
+		t.Errorf("上昇值 = %d, want 上限 %d", hi.Growth, MaxGrowth)
+	}
+
+	lo := CityState{Production: 5000, ProductionCap: 999999, Growth: -100}
+	GrowCity(&lo, 100, true, &fixedRand{seq: []int{15}})
+	if lo.Growth != MinGrowth {
+		t.Errorf("上昇值 = %d, want 下限 %d", lo.Growth, MinGrowth)
+	}
+}
+
+// 暴動風險是硬性閘門：上昇值不為負就完全免疫（說明書 9.3）。
+func TestRiotGate(t *testing.T) {
+	for _, g := range []int{0, 1, 100} {
+		if (CityState{Growth: g}).RiotRisk() {
+			t.Errorf("上昇值 %d 不該有暴動風險", g)
+		}
+	}
+	for _, g := range []int{-1, -100} {
+		if !(CityState{Growth: g}).RiotRisk() {
+			t.Errorf("上昇值 %d 應該有暴動風險", g)
+		}
+	}
+}
+
+// 長期行為：稅率低於平衡點（30 − 7.5 ≈ 22.5）時據點會長大，
+// 高於就會萎縮。這是攻略章「通常は税率を下げるだけで、
+// 内政の必要はありません」那句話的可驗證版本。
+func TestLongRunTaxBehaviour(t *testing.T) {
+	// 用固定的平均衰減 8 來代表 rand(0..15) 的期望值。
+	avg := func() Rand { return &fixedRand{seq: []int{8}} }
+
+	low := CityState{Production: 5000, ProductionCap: 42800, Growth: 4}
+	high := CityState{Production: 5000, ProductionCap: 42800, Growth: 4}
+	for i := 0; i < 120; i++ { // 十年
+		GrowCity(&low, 10, true, avg())
+		GrowCity(&high, 50, true, avg())
+	}
+	if low.Production <= 5000 {
+		t.Errorf("低稅十年後生產力 = %d, 應該成長", low.Production)
+	}
+	if high.Production >= 5000 {
+		t.Errorf("高稅十年後生產力 = %d, 應該萎縮", high.Production)
+	}
+	if !high.RiotRisk() {
+		t.Error("高稅十年後上昇值應該已經轉負（暴動風險）")
+	}
+}

@@ -256,3 +256,87 @@ func clampReserve(v int) int {
 // 這個判定在兩個地方被用到：說服理由「敵が疲弊中」／「我が国疲弊」
 // 的可用條件（docs/mechanics/70-ai.md §1.3），以及赤字懲罰。
 func (f Faction) Exhausted() bool { return f.Funds < 0 }
+
+// ---------------------------------------------------------------------------
+// 生產力與上昇值（原版 `sub_15695`，docs/re/07 §11）
+// ---------------------------------------------------------------------------
+
+// 上昇值的範圍。原版存成一個 byte，實際值 ＝ 存值 − 100。
+const (
+	MaxGrowth = 100
+	MinGrowth = -100
+
+	// TaxNeutral 是稅率對上昇值不加不減的那一點。
+	// 原版 `sub ax, 1Eh`——稅率低於它就讓據點繁榮，高於就讓據點荒廢。
+	TaxNeutral = 30
+)
+
+// CityState 是一個據點在生產力結算時會變動的部分。
+// 欄位對應據點記錄的 +0Ch／+0Eh／+10h（docs/re/07 §11）。
+type CityState struct {
+	Production    int // +0Eh
+	ProductionCap int // +0Ch，每個據點各自不同
+	Growth        int // +10h 的實際值（−100…+100），是**成長率**不是增量
+	Owner         int
+}
+
+// GrowCity 跑一個據點的月度生產力結算，就地更新 c。
+//
+// taxRate 只在這個據點屬於玩家時才有作用（原版用 `cmp ah, [si+1]` 判斷）；
+// AI 的據點完全不受稅率影響，傳 applyTax=false。
+//
+// 公式（docs/re/07 §11）：
+//
+//	r = 上昇值 − (稅率 − 30)
+//	d = (生產力 >> 8) × r        生產力 >> 8 為 0 時當 1
+//	r ≥ 0 → 生產力 = min(生產力 + d/2, 上限)
+//	r < 0 → 生產力 = max(生產力 − |d|, 0)
+//	上昇值 = clamp(r − rand(0..15), −100, +100)
+//
+// **變化量與生產力本身成正比**——這是說明書「大きい数値の方が変化が
+// 大きくなります」的來源，也代表這是複利模型：大據點長得快、崩得也快。
+func GrowCity(c *CityState, taxRate int, applyTax bool, rng Rand) {
+	r := c.Growth
+	if applyTax {
+		r -= taxRate - TaxNeutral
+	}
+
+	// 原版取的是生產力的**高位元組**，不是除以 256 之後四捨五入。
+	scale := c.Production >> 8
+	if scale == 0 {
+		scale = 1
+	}
+	d := scale * r
+
+	switch {
+	case r >= 0:
+		c.Production += d / 2
+		if c.Production > c.ProductionCap {
+			c.Production = c.ProductionCap
+		}
+	default:
+		c.Production += d // d 已經是負的
+		if c.Production < 0 {
+			c.Production = 0
+		}
+	}
+
+	// 上昇值每月自然衰減 rand(0..15)。期望值 7.5，
+	// 所以稅率的實際平衡點大約在 22.5%（30 − 7.5），
+	// 這就是攻略章「通常は税率を下げるだけで、内政の必要はありません」的機制。
+	r -= rng.Next() & 0x0F
+	if r > MaxGrowth {
+		r = MaxGrowth
+	}
+	if r < MinGrowth {
+		r = MinGrowth
+	}
+	c.Growth = r
+}
+
+// RiotRisk 回報這個據點這個月會不會有暴動的風險。
+//
+// 說明書 9.3：「上昇値がマイナスになると発生率が高くなり、
+// **プラスの場合は発生しません**」——是硬性閘門不是機率調整，
+// 所以只要上昇值不為負就完全免疫。
+func (c CityState) RiotRisk() bool { return c.Growth < 0 }
