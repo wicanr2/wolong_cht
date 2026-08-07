@@ -26,20 +26,9 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
 	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
+	"github.com/wicanr2/wolong_cht/internal/rules/rng"
 	"github.com/wicanr2/wolong_cht/internal/state"
 )
-
-// lcg 是一個可重現的偽亂數源。
-//
-// 原版用的是 sub_1ECE0，演算法還沒反組譯出來，所以這裡**不是**在模仿它——
-// 只要求「可重現」，這樣同一個 seed 跑兩次結果一樣，回歸比對才有意義。
-// 等 sub_1ECE0 解出來再換掉。
-type lcg struct{ s uint32 }
-
-func (r *lcg) Next() int {
-	r.s = r.s*1664525 + 1013904223
-	return int(r.s >> 16)
-}
 
 func main() {
 	path := flag.String("orig", "workplace/orig/dosv/SINARIO.DAT",
@@ -48,7 +37,7 @@ func main() {
 	player := flag.Int("player", 0, "玩家所仕的勢力編號")
 	years := flag.Int("years", 10, "要跑幾年")
 	tax := flag.Int("tax", -1, "覆寫稅率（-1 ＝ 用劇本預設）")
-	seed := flag.Uint("seed", 1, "亂數種子")
+	seed := flag.Int("seed", 1, "亂數種子（0–255，原版是從即時時鐘播的）")
 	every := flag.Int("every", 12, "每幾個月印一列")
 	flag.Parse()
 
@@ -66,7 +55,7 @@ func main() {
 		len(w.AliveFactions()), w.TaxRate, *seed)
 	fmt.Printf("玩家所仕勢力 %d（君主 %s）\n\n", w.Player, big5(w.LordName(w.Player)))
 
-	rng := &lcg{s: uint32(*seed)}
+	rng := rng.NewFixed(*seed)
 	tw := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
 	fmt.Fprintln(tw, "年月\t勢力數\t玩家據點\t玩家資金\t玩家預備兵\t平均生產力\t平均上昇值\t火災\t暴動\t暴風雨")
 

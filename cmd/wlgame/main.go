@@ -43,6 +43,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/rules/general"
 	"github.com/wicanr2/wolong_cht/internal/rules/persuasion"
+	"github.com/wicanr2/wolong_cht/internal/rules/rng"
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
@@ -81,7 +82,7 @@ var residentWindows = [numWindows]bool{winCommand: true, winFaction: true, winMi
 type game struct {
 	lib   *library.Library
 	world *state.World
-	rng   *lcg
+	rng   *rng.Rand
 	td    *textdraw.Drawer
 
 	open       [numWindows]bool
@@ -126,13 +127,6 @@ const (
 	advisePickTarget              // 選對象勢力
 	advisePersuade                // 君主拒絕了，開始說服
 )
-
-type lcg struct{ s uint32 }
-
-func (r *lcg) Next() int {
-	r.s = r.s*1664525 + 1013904223
-	return int(r.s >> 16)
-}
 
 // timeRuns 是暫停規則。
 //
@@ -576,7 +570,7 @@ func main() {
 		ascii = a
 	}
 
-	g := &game{lib: lib, world: w, rng: &lcg{s: 1}, speed: *speed,
+	g := &game{lib: lib, world: w, rng: rng.Now(), speed: *speed,
 		td:       textdraw.New(font, ascii),
 		shotPath: *shot, shotAt: *shotFrames}
 	if *openWin >= 0 && *openWin < int(numWindows) {

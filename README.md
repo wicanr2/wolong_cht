@@ -143,6 +143,11 @@ internal/ui/listwin       一覽表的狀態機：兩段式選取、排序、跨
 internal/rules/clock      五層遊戲時鐘（子刻→時→日→月→年，一天 216 tick）
 internal/rules/economy    月結：收入、募兵、赤字懲罰、生產力複利、三種災害
 internal/rules/general    武將評價（＝適性和 ＋ 2×武術 ＋ 2×統率）
+internal/rules/army       軍團編成、行軍節拍、單位佔用圖
+internal/rules/combat     戰略層的戰鬥自動判定：戰力、傷亡、壞滅、敗將的下場
+internal/rules/diplomacy  交友度矩陣與外交官
+internal/rules/persuasion 進言與說得（玩家扮軍師，指令要先說服君主）
+internal/rules/rng        原版的亂數產生器（置換表 ＋ 兩個 byte）
 internal/state            劇本／存檔的載入與**寫回**（改寫而非重建）
 
 cmd/wlshot                解素材成 PNG，無頭環境可跑
