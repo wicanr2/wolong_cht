@@ -36,8 +36,8 @@ func TestBankCounts(t *testing.T) {
 func TestSeasonColor(t *testing.T) {
 	pal := load(t, "GAMEPAL.BRG")
 	want := []struct {
-		season     Season
-		r, g, b    uint8
+		season  Season
+		r, g, b uint8
 	}{
 		{Spring, 0x88, 0xaa, 0x66},
 		{Summer, 0x55, 0xaa, 0x11},

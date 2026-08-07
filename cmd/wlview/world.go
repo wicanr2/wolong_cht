@@ -14,9 +14,9 @@ import (
 // 也就是 40 × 23 格 —— 這個數字與原版的畫面圖塊快取一致
 // （docs/re/05 提到的 (bx×40 + dx)×8 索引算式）。
 const (
-	viewCols  = screenW / world.TileSize        // 40
-	viewRows  = (screenH - bannerH) / world.TileSize // 23
-	bannerH   = 32
+	viewCols   = screenW / world.TileSize             // 40
+	viewRows   = (screenH - bannerH) / world.TileSize // 23
+	bannerH    = 32
 	scrollFast = 8 // 按住 Shift 時一次捲幾格
 )
 

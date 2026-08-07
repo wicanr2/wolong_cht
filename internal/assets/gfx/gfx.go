@@ -27,8 +27,8 @@ type Spec struct {
 
 // 四個圖庫的規格。ICONGRF 是四段組合檔，不在這裡（見 IconRegions）。
 var (
-	Kao   = Spec{"KAOGRF", 64, 64}    // 武將頭像，150 張
-	Kyo   = Spec{"KYOGRF", 96, 96}    // 據點景觀，15 張
+	Kao   = Spec{"KAOGRF", 64, 64}     // 武將頭像，150 張
+	Kyo   = Spec{"KYOGRF", 96, 96}     // 據點景觀，15 張
 	Ivent = Spec{"IVENTGRF", 288, 176} // 劇情過場，3 張
 )
 
