@@ -475,7 +475,163 @@ add di, 20h                               ; 記錄 32 B
 
 野戰用的 192–208 一個物件格都沒有。
 
-## 5. 還沒解的
+## 5. ⭐ 每幀更新：戰場其實是 64 × 64 × 7 的立體格
+
+`loc_1A065` 有自我修改碼（§1），手動解位元組之後是：
+
+```asm
+cmp byte ptr ds:0D348h, 0
+jz  .1                          ; ← 那個被寫進去的 0x74
+  mov dx, ds:0D328h / mov bx, ds:0D32Ah
+  call sub_1DC9D
+  mov byte ptr ds:0D348h, 0
+.1:
+call sub_1A12A
+call sub_1A6FA
+call sub_1B941                  ; ★ 實體更新
+```
+
+### 5.1 `sub_1B941`：兩張表，每幀各掃一遍
+
+```asm
+mov ds, cs:word_1D30E / mov es, cs:word_1D2FA
+mov si, 1400h
+.a: cmp byte ptr [si], 0C0h / jb .next
+    call sub_1B97E / call sub_1BA2E / call sub_1BAB7
+.next: add si, 20h / cmp si, 1800h / jb .a
+mov si, 0E00h
+.b: cmp byte ptr [si], 0C0h / jb .next2
+    call sub_1BB10
+.next2: add si, 20h / cmp si, 1400h / jb .b
+```
+
+`word_1D30E` 的佈局到這裡補齊了：
+
+| 範圍 | 筆數 × 大小 | 內容 |
+|---|---|---|
+| `0x0000`–`0x0BFF` | 96 × 32 B | **兵士**。`0x01`–`0x2F` 一方、`0x30`–`0x5F` 另一方 |
+| `0x0C00`–`0x0DFF` | 16 × 32 B | 指令 15 掃它（§3.5） |
+| `0x0E00`–`0x13FF` | 48 × 32 B | 每幀畫一次，`+0x1B` 是 4 幀動畫相位 |
+| `0x1400`–`0x17FF` | 32 × 32 B | **飛道具**（箭之類的） |
+
+⭐ **一側 48 個兵，分成 6 隊 × 8 人。** 腳本操作的「六隊」
+（`0x600 + k × 0x100`）就是每隊的**第一個兵**——`0x100` ＝ 8 × 32。
+
+說明書 4.1 說戰場上 1 個兵 ＝ 戰略的 10 人，而一個編成位置是 1,000 人
+＝ 100 個兵；場上只放得下 8 個，其餘就是那句
+「**残りは予備兵として画面外に待機**」。
+
+### 5.2 ⭐ 格子索引是三維的
+
+`sub_1BA2E`（飛道具移動）：
+
+```asm
+mov al, [si+5]                  ; 方向
+mov bx, [si+10h]                ; 格索引
+test al, 1 / jnz .vert
+  and al,al / jnz .east
+  dec bx / dec byte ptr [si+7]  ; ★ 西：−1，X −1
+.east: inc bx / inc byte ptr [si+7]
+.vert:
+  cmp al,1 / jnz .south
+  sub bx, 40h / dec byte ptr [si+9]   ; ★ 北：−0x40，Y −1
+.south: add bx, 40h / inc byte ptr [si+9]
+```
+
+一列 `0x40` ＝ **64 格**，正是戰場的寬。而 `sub_1BB6D`（§4.2）把七層的
+通行性寫在相隔 `0x1000` 的七張圖上，`0x1000` ＝ 4,096 ＝ 64 × 64。
+
+```
+格索引 ＝ Z × 0x1000 ＋ Y × 0x40 ＋ X
+7 × 4,096 ＝ 28,672 ＝ ds:0D2FA 的大小
+```
+
+⭐ **戰場是 64 × 64 × 7 的立體格**，而 §4.2 那個「一格是一疊 1–7 層圖塊」
+定義的就是**哪幾層是實心的**。兩件事在這裡接上了：
+堆疊高得比較高的地方（城牆），兵站的 Z 就比較高——
+說明書的「城壁に登る」在資料上就是換一層 Z。
+
+### 5.3 ⭐ 命中判定：`sub_1B97E`
+
+```asm
+mov bx, [si+10h] / mov bh, es:[bx]     ; 那一格的內容
+and bh, bh / jz ret                     ; 0 ＝ 空
+cmp bh, 80h / jnb .hitWall              ; ≥ 0x80 ＝ 障礙 → 飛道具消失
+cmp bh, 60h / ja ret
+dec bh                                  ; ★ 格子裡存的是「兵編號 + 1」
+cmp word ptr [si+2], 600h / jnb .mine
+  cmp bh, 30h / jb ret                  ; 敵方射的，打到 <0x30 是自己人
+  jmp .hit
+.mine: cmp bh, 30h / jnb ret            ; 我方射的，打到 ≥0x30 是自己人
+.hit: xor bl,bl / shr bx,1 ×3           ; ★ 兵記錄 ＝ 編號 × 32
+      cmp byte ptr [bx], 80h / jb ret
+```
+
+**佔用圖每格存的是「兵編號 + 1」**，`0` 是空格、`≥ 0x80` 是障礙。
+編號 `0x01`–`0x2F` 與 `0x30`–`0x5F` 分屬兩軍，**誤傷自己人不判定**。
+
+### 5.4 ⭐ 扣體力
+
+```asm
+cmp byte ptr [bx+4], 0 / jz .dmg
+cmp byte ptr [bx+3], 64h / jnb .dmg     ; ★ 體力滿 100 → 不觸發下面這段
+mov ax, [bx+1Ah]
+cmp al,5 / jz .dmg / cmp ah,5 / jz .dmg
+cmp al,ah / jz .1 / mov [bx+1Ah], ah
+.1: mov byte ptr [bx+1Bh], 5            ; ★ 受傷的兵自己改成命令 5
+.dmg:
+mov al, [si+4]                          ; 飛道具的威力
+cmp byte ptr [bx+4], 36h / jz .quarter
+cmp byte ptr [bx+4], 0 / jnz .full
+test byte ptr [bx+2], 1 / jz ret        ; 不受傷
+.quarter: shr al,1 / shr al,1           ; ★ 威力 ÷ 4
+.full:
+mov byte ptr [bx+1], 2                  ; 動作 ＝ 被打中
+…
+sub [bx+3], al / ja .alive              ; ★ 體力 −= 威力
+mov byte ptr [bx+3], 1
+cmp byte ptr [bx+4], 0 / jz .alive
+  and byte ptr [bx], 10h / or byte ptr [bx], 1
+  mov byte ptr [bx+1], 4                ; 動作 ＝ 倒下
+  mov byte ptr [bx+3], 0                ; ★ 死亡
+.alive: mov al, 0Bh / call sub_102F5
+```
+
+兵士記錄（32 B）已解出的欄位：
+
+| 偏移 | 內容 |
+|---|---|
+| `+0x00` | 旗標，`≥ 0x80` 存在；bit 6 這一幀被打中 |
+| `+0x01` | 動作：`2` ＝ 被打中、`4` ＝ 倒下 |
+| `+0x02` | 旗標，bit 0 決定 `+0x04 == 0` 的兵受不受傷 |
+| **`+0x03`** | **體力**，上限 **100** |
+| `+0x04` | 類別：`0x36` 這種傷害只吃四分之一；`0` 這種要 `+0x02` bit 0 才受傷 |
+| `+0x1A` | 生效中的命令 |
+| `+0x1B` | 新下達的命令 |
+
+⭐ **受傷的兵會自己把命令改成 5**（體力滿 100 的不會）。
+說明書 4.1：「兵士が戦闘して敵にやられると、**画面外に退却**し、
+待機中の兵が出陣します」——**命令 5 ＝ 退卻**（強證據）。
+指令 3 對命令 5 走另一條路（`sub_1A8F6`）也對得上：退卻不是普通命令。
+
+### 5.5 飛道具會隨高度改變威力
+
+`sub_1BAB7`（畫出來並更新）：
+
+```asm
+mov cl, al / xchg cl, [si+0Eh]     ; al ＝ 新的 Z，cl ＝ 舊的 Z
+mov ch, [si+4] / shr ch,1 / shr ch,1   ; 威力 ÷ 4
+cmp al, cl / jz .same
+jb  .down
+sub [si+4], ch                     ; ★ 往上飛 → 威力 −25%
+jmp .same
+.down: inc ch / add [si+4], ch      ; ★ 往下落 → 威力 +25%
+```
+
+**箭往上飛威力遞減、往下落威力遞增。** 這解釋了說明書為什麼強調
+「城壁に登って攻撃」——站在高處往下射，每一格都在加成。
+
+## 6. 還沒解的
 
 按「解開之後能換到什麼」排序：
 
@@ -484,8 +640,9 @@ add di, 20h                               ; 記錄 32 B
 | ~~19 個腳本指令~~ | ✅ 全部讀完（§3.5） |
 | **命令碼 0–9 各是什麼** | 只定了 3 ＝ 城壁移動、1 ＝ 攻擊（§3.7） | 對上說明書 4.2 的六個戰術指令 |
 | 單位記錄 `+0x03`／`+0x24` | `word_1D30E` 段（§3.6） | 指令 13 的分組依據 |
-| **單位記錄的欄位** | `ds:0D30E`（18,432 B），`sub_1B240` 用 `si` 掃 | 兵的狀態：位置、疲勞、士氣、命令 |
-| **每幀更新** | `loc_1A065` → `sub_1A12A`／`sub_1A6FA`／`sub_1B941` | 移動、攻擊、判定的主體 |
+| 兵士記錄的其餘欄位 | `ds:0D30E`，32 B／筆（§5.4 已解出 7 個） | 疲勞、士氣存在哪 |
+| ~~每幀更新~~ | ✅ `sub_1B941` 全解（§5）。`sub_1A12A`／`sub_1A6FA` 還沒讀 |
+| **兵士怎麼決定往哪走** | 命令 → 移動的那一段還沒找到 | 陣形與尋路 |
 | **六個戰術指令** | 左鍵 `sub_1BFF2`／右鍵 `sub_1C01D` | 突擊／攻擊／陣形／城壁／守陣／退卻 |
 | **16 種陣形表** | 說明書 4.3 說有 16 種 | 陣形的相對座標 |
 | **勝負判定** | 找 `mov sp, cs:word_1D340` | 「先補不出兵的一方輸」怎麼實作 |
