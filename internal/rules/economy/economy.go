@@ -334,9 +334,14 @@ func GrowCity(c *CityState, taxRate int, applyTax bool, rng Rand) {
 	c.Growth = r
 }
 
-// RiotRisk 回報這個據點這個月會不會有暴動的風險。
+// RiotRisk 回報這個據點有沒有暴動的可能。
 //
-// 說明書 9.3：「上昇値がマイナスになると発生率が高くなり、
-// **プラスの場合は発生しません**」——是硬性閘門不是機率調整，
-// 所以只要上昇值不為負就完全免疫。
-func (c CityState) RiotRisk() bool { return c.Growth < 0 }
+// ⚠ 說明書 9.3 寫「上昇値がマイナスになると発生率が高くなり、
+// プラスの場合は発生しません」，但機器碼的門檻比這寬鬆：
+// 比較用的亂數是 0–63，而上昇值存值 ＝ 實際值 ＋ 100，
+// 所以**實際上昇值 ≥ −36 就完全免疫**（docs/re/07 §17）。
+//
+// 說明書的說法是正確但保守的建議。實際擲骰用 RollCityDisaster。
+func (c CityState) RiotRisk() bool {
+	return c.Growth+100 < DisasterImmunity
+}

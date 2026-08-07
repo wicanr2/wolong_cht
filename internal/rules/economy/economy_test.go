@@ -403,14 +403,15 @@ func TestGrowthDecayAndClamp(t *testing.T) {
 	}
 }
 
-// 暴動風險是硬性閘門：上昇值不為負就完全免疫（說明書 9.3）。
+// 暴動的免疫門檻是「上昇值存值 ≥ 64」＝ 實際上昇值 ≥ −36，
+// 比說明書講的「不為負」寬鬆（docs/re/07 §17）。
 func TestRiotGate(t *testing.T) {
-	for _, g := range []int{0, 1, 100} {
+	for _, g := range []int{0, 1, 100, -1, -36} {
 		if (CityState{Growth: g}).RiotRisk() {
-			t.Errorf("上昇值 %d 不該有暴動風險", g)
+			t.Errorf("上昇值 %d 不該有暴動風險（門檻是 −36）", g)
 		}
 	}
-	for _, g := range []int{-1, -100} {
+	for _, g := range []int{-37, -100} {
 		if !(CityState{Growth: g}).RiotRisk() {
 			t.Errorf("上昇值 %d 應該有暴動風險", g)
 		}
@@ -437,6 +438,6 @@ func TestLongRunTaxBehaviour(t *testing.T) {
 		t.Errorf("高稅十年後生產力 = %d, 應該萎縮", high.Production)
 	}
 	if !high.RiotRisk() {
-		t.Error("高稅十年後上昇值應該已經轉負（暴動風險）")
+		t.Errorf("高稅十年後上昇值 = %d，應該已經跌破 −36（暴動風險）", high.Growth)
 	}
 }
