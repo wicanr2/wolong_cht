@@ -56,6 +56,9 @@ Go 版與 Python 版的輸出逐像素完全相同。
 | **四個圖庫全解** | `docs/formats/03`。`KAOGRF` 150×64×64、`KYOGRF` 15×96×96（據點景觀）、`IVENTGRF` 3×288×176（劇情過場）**全部餘 0 B 並渲染驗收**；`ICONGRF` 是四段組合檔，段 0（640×32 標題橫幅）與段 2（192×128 縮小地圖）已解 |
 | **中文化缺口第一項** | `docs/reference/03`。主畫面標題橫幅寫的是日文「臥竜伝」，`ICONGRF` 兩版相同 → **松崗版沒重繪** |
 | **DOSBox-X 設定** | `dosbox/`。出自 msdostest（實測 `__PASS__`），`core=normal` ＋ 固定 `cycles=20000` → **即時制的可重現性解決了** |
+| **DOS/V 版實跑** | `tools/dosbox.sh` ＋ `docs/playtest/01`。**字型懸案結案**（不用自備，`YNFONT.EXE` 自帶）、**防拷確認**、淡入行為與 `docs/re/02` 對上 |
+| **`.MAP`/`.SCH` 容器格式** | `docs/formats/04`。索引 (offset,length) ＋ 壓縮片段，六個檔的末端全部等於檔長。**只有松崗自加的檔用這格式**，原版的 `MMAP`/`BATTLE` 是裸資料 |
+| **PC-98 有無符號表** | **沒有**（使用者提問）。`KI.EXE` 兩版都無 CodeView／Borland debug 資訊、無原始檔名殘留。PC-98 的價值在「兩版 diff」與「沒有防拷」，不在符號 |
 | **Go 解碼層** | `internal/assets/{palette,gfx,text,library}`。三份 READY 規格全部接上，測試綠（含 Go 版的 byte-for-byte round-trip）|
 | **素材檢視器** | `cmd/wlview`（Ebiten，實跑截圖驗過）＋ `cmd/wlshot`（無頭出 PNG）|
 | **交叉驗證** | Go 版與 Python 版的圖庫輸出**逐像素完全相同**（KAOGRF 1.84 MB、KYOGRF 414 KB）|
@@ -67,9 +70,8 @@ Go 版與 Python 版的輸出逐像素完全相同。
 
 | 項目 | 狀態 |
 |---|---|
-| DOSBox-X 環境 | 設定已就緒（`dosbox/`），**還沒實跑**。np2 不需要了——DOSBox-X 的 `machine=pc98` 兩版通吃 |
-| 字型來源 | 半解：PC-98 靠字型 ROM，DOS/V 需外部中文系統。**剩「玩家自備 vs 打包漏檔」未定案** |
-| 防拷檢查 | **未查**。PC-98 的自製 `FGDOS` 是頭號嫌疑犯 |
+| DOSBox-X（PC-98） | **還沒跑**。本機的 dosbox image 是 0.74，不支援 `machine=pc98`，要另外弄 DOSBox-X |
+| **DOS/V 防拷** | **確認有**（`docs/playtest/01`）：查說明書第 NN 頁的四字密碼，擋住 DOS/V 的 oracle。**繞路：PC-98 版沒有這一關**，規則類的 oracle 改跑 PC-98 |
 | 日文說明書全文判讀 | 38 頁只讀了 3 頁。純掃描無文字層，要 OCR 或逐頁看 |
 
 ---
@@ -92,6 +94,8 @@ Go 版與 Python 版的輸出逐像素完全相同。
 | `docs/reference/02-jp-cht-diff.md` | 日中對照：15 則譯文缺陷 |
 | `docs/reference/03-baked-japanese.md` | 燒進美術裡的日文（松崗沒重繪的部分） |
 | `dosbox/` | 兩版的 DOSBox-X 設定 ＋ 出處 |
+| `docs/playtest/01-dosbox-dosv.md` | DOS/V 版首次實跑：字型結案、防拷發現 |
+| `docs/formats/04-map-sch-container.md` | `.MAP`/`.SCH` 容器格式 |
 | `README.md` | 公開的專案入口 |
 | `translations/extract/talk-{dosv,pc98}.json` | 抽出的 1,022 則訊息（兩版） |
 | `tools/fdi_extract.py` | PC-98 FDI 磁片抽檔 |
@@ -149,8 +153,9 @@ Go 版與 Python 版的輸出逐像素完全相同。
 - [x] ~~即時制的可重現性~~ — msdostest 的設定用 `core=normal` ＋ 固定 `cycles`，已解
 - [ ] DOSBox-X docker 化並實跑兩版（設定已在 `dosbox/`）
 - [x] ~~np2 環境~~ — 不需要，DOSBox-X `machine=pc98` 兩版通吃
-- [ ] 字型來源結案：DOSBox 實跑看它抱不抱怨缺 `STDFONT.24`
-- [ ] 防拷檢查排除：查 `FGDOS.SYS`、兩版 `KI.EXE` 的磁碟／磁片存取
+- [x] ~~字型來源結案~~ — 不用自備，`YNFONT.EXE` 自帶
+- [x] ~~防拷檢查~~ — DOS/V 有、PC-98 沒有；oracle 改跑 PC-98
+- [ ] **弄一個 DOSBox-X**（`machine=pc98`），跑 PC-98 版拿玩法畫面
 - [ ] 日文說明書 38 頁全判讀 → `docs/reference/01`
 
 ### 7.2 M1 起手順序（依投報排）
@@ -182,6 +187,7 @@ Go 版與 Python 版的輸出逐像素完全相同。
 | `tools/ida_xref.idc` | 查 IDA 的 xref 圖。⚠ 立即值形式的位址參考 IDA 不建 xref，回零筆不等於沒人用（`docs/re/03` §0） |
 | `tools/go.sh` | `tools/go.sh test ./...`。image 沿用 demonwinter-go，volume 是自己的 `wl-gomod`／`wl-gobuild` |
 | `tools/shot.sh` | `tools/shot.sh out.png KEYS=Right,Down [參數]`。Xvfb + xdotool，驗呈現層 |
+| `tools/dosbox.sh` | `tools/dosbox.sh dosv "wait:2;type:START;key:Return;wait:10;shot:x"`。原版 oracle |
 
 **還沒建但 `CLAUDE.md` §5.1 要求的**：`tools/addr.py`（位址反查三張表）、
 `tools/dump_func.py`（dump 時自動翻語意 ＋ grep docs）、`tools/ida_xref.idc`。
