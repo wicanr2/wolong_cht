@@ -60,10 +60,15 @@ docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
 set -e
 cat > /tmp/dosbox-x.conf <<'EOF'
 [sdl]
-# autolock 由環境變數控制，兩種模式各有問題（見 docs/playtest/04）：
-#   true  → 點擊進得去，但 DOSBox 收相對位移，游標定不了位
-#   false → 可用絕對座標定位，但要確認點擊進不進得去
-autolock=\$AUTOLOCK
+# ⭐ 這兩行是自動化的關鍵，見 docs/playtest/04。
+# mouse_emulation 預設是 `locked`（只在滑鼠鎖定時模擬），配上
+# autolock=false 就等於**從來不模擬**，遊戲內游標完全不動 ——
+# 五次失敗的嘗試全部卡在這裡。
+# `never` 的官方說明：「the mouse position in DOSBox-X is exactly
+# where the host OS reports it」，正是自動化要的。
+autolock=false
+mouse_emulation=never
+usesystemcursor=false
 [dosbox]
 memsize=8
 machine=pc98

@@ -1,6 +1,6 @@
 # 04 — 受阻：PC-98 oracle 動不了遊戲內的滑鼠游標
 
-**狀態：卡住。已試五種組合全部失敗，停手記錄。**
+**狀態：卡住。已試六種組合全部失敗，停手記錄。**
 
 - 日期：2026-08-07
 - 依據 `rulebook/41`（特例越補越多、「再差一點」卡很久 → 停下重想架構）
@@ -24,6 +24,31 @@
 | 3 | `autolock=true` ＋ 「先灌 −2000,−2000 歸零再走相對位移」 | 游標不動 |
 | 4 | `autolock=false` ＋ root 絕對座標 | 游標不動 |
 | 5 | 鍵盤（`Up` / `Return` / `space`） | 對話框完全不反應 —— 這個介面是純滑鼠的 |
+| 6 | **`mouse_emulation=never` ＋ `autolock=false`** | 游標**還是不動** |
+
+### 第 6 項的來由（找到了設定，但沒解決）
+
+`/usr/share/dosbox-x/dosbox-x.reference.full.conf` 裡有：
+
+```
+#   mouse_emulation: When is mouse emulated ?
+#                      integration: when not locked
+#                      locked:      when locked      ← 預設
+#                      always:      every time
+#                      never:       at no time
+#                      If disabled, the mouse position in DOSBox-X is exactly
+#                      where the host OS reports it.
+```
+
+**這本來是很好的假說**：預設 `locked` 配上我用的 `autolock=false`，
+等於「從來不模擬」，正好解釋游標不動。改成 `never`（官方說明白寫
+「位置就是 host 回報的位置」）照理應該直通。
+
+**實測沒有用。** 游標仍停在原位。
+
+> 記下這一項是因為**它的推理看起來完全正確**——
+> 找到設定、讀懂說明、對上現象、改了、還是不動。
+> 下一輪如果又想到「應該是 mouse_emulation」，這裡已經試過了。
 
 第 5 項本身是有用的資訊：**遊戲的選單不吃鍵盤**。
 `KI.EXE` 的 `ERROR: Mouse driver not install ?` 與 PC-98 版另附的
@@ -31,7 +56,7 @@
 
 ## 3. 為什麼要記下來
 
-這一輪在同一個問題上花了**五次執行、約 18 分鐘**（每次要重播 90 秒開場）。
+這一輪在同一個問題上花了**六次執行、約 25 分鐘**（每次要重播 90 秒開場）。
 再試更多變體不會變便宜，而且沒有新的假說 —— 符合停手的訊號。
 
 **不寫下來的話，下一輪會從第 1 種再試一次。**
@@ -48,7 +73,17 @@
 3. **改用松崗 DOS/V 版當 oracle。** 那一版是標準 PC 滑鼠（INT 33h），
    DOSBox 的支援成熟得多。代價是要先過防拷（`docs/playtest/01` §2）。
 4. `sensitivity` 設定、mapper 檔、`-c` 啟動指令。
-5. 用真的 X server 而不是 Xvfb（Xvfb 的指標處理可能是原因）。
+5. **用真的 X server 而不是 Xvfb。** 六次失敗橫跨兩種 `autolock`、
+   絕對與相對定位、以及 `mouse_emulation=never` —— 共同點是**都在 Xvfb 下**。
+   Xvfb 的指標處理（沒有真實輸入裝置）是目前最大的共同嫌疑。
+   這一項升為第一候選。
+6. `mouse_emulation=always`（唯一沒試過的值）。
+7. **先確認畫面上那個紅色標記到底是不是滑鼠游標。** 它在不同畫面會換位置
+   （`NEW GAME` 時在 `NO` 旁、`LOAD DATA` 時在第二格旁），
+   但也可能是**選單的選取指示器**而不是游標 ——
+   若是後者，整個「移動游標」的方向就是錯的。
+   **這一項最便宜，應該先做**：在同一個畫面送幾次不同位置的點擊，
+   看標記會不會跟著跳。
 
 ## 5. 這件事擋住了什麼
 
