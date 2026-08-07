@@ -82,10 +82,23 @@ def extract(path, outdir):
             beg = data_off + (clus - 2) * bpb['spc'] * bpb['bps']
             blob += img[beg:beg + bpb['spc'] * bpb['bps']]
         blob = blob[:ent['size']]
-        with open(os.path.join(outdir, ent['name']), 'wb') as fp:
+        dest = os.path.join(outdir, ent['name'])
+        # ⚠ 多片抽到同一個目錄時，同名檔會被後面的片蓋掉。
+        # 臥竜伝的 A 片與 B 片就有一個 YNSHELL.COM 內容不同（2699 vs 2675 B）。
+        # 靜靜覆蓋會讓「合併後的目錄」不等於任何一片的真實內容。
+        note = ''
+        if os.path.exists(dest):
+            old = open(dest, 'rb').read()
+            note = '  ← 已存在且相同，跳過' if old == blob else \
+                   f'  ⚠ 已存在且**內容不同**（舊 {len(old)} B），覆蓋'
+            if old == blob:
+                print(f'   {ent["name"]:14s} {ent["size"]:8d}{note}')
+                continue
+        with open(dest, 'wb') as fp:
             fp.write(blob)
-        flag = '' if len(blob) == ent['size'] else '  ← 長度不足'
-        print(f'   {ent["name"]:14s} {ent["size"]:8d}{flag}')
+        if len(blob) != ent['size']:
+            note += '  ← 長度不足'
+        print(f'   {ent["name"]:14s} {ent["size"]:8d}{note}')
 
 
 if __name__ == '__main__':
