@@ -24,8 +24,8 @@
 **M0 進行中，`TALK.DAT` 已全解（M2 的核心已經拿下）。**
 兩版素材入庫、兩版 `KI.EXE` 進 IDA、逐檔比對完成；
 `TALK.DAT` 兩版都 byte-for-byte round-trip 通過，日中對照表已產出並找到 15 則譯文缺陷。
-`.BRG` 調色盤也已全解（不必靠截圖，程式碼直接寫死了通道順序）。
-**下一步：`*GRF.DAT` 圖庫解碼**——已知是 4 bpp planar，調色盤已就緒。
+`.BRG` 調色盤與 `KAOGRF.DAT` 頭像也已全解（150 張 64×64 已渲染驗收）。
+**下一步：另外三個 `*GRF.DAT` 的尺寸**——照 `docs/re/03` §5 的路徑走，不要猜。
 
 ---
 
@@ -49,6 +49,8 @@
 | **`.BRG` 調色盤全解** | **READY**。`docs/formats/02` ＋ `docs/re/02`。通道順序 B,R,G、4 bit、每組 16 色、亮度 0–16，兩版機器碼互證 |
 | **顯示模式定案** | 兩版都是 **16 色 4 平面 planar**（DOS/V VGA GC+Seq、PC-98 GRCG）→ `*GRF.DAT` 是 4 bpp |
 | **四季調色盤** | `GAMEPAL` banks 0–3 只差色號 14：灰綠→鮮綠→橙褐→雪白 |
+| **`KAOGRF.DAT` 全解** | **READY**。`docs/formats/03` ＋ `docs/re/03`。150 張 64×64 4bpp plane-major，餘 0 B，已渲染驗收 |
+| **AI 機制文件開張** | `docs/mechanics/70-ai.md`（＋ `00-index.md`）。內容目前全來自日文說明書第 10、11 章，每條都標了等級 |
 | GitHub repo | https://github.com/wicanr2/wolong_cht（private） |
 
 ### 進行中／受阻
@@ -70,7 +72,11 @@
 | `docs/re/01-first-recon.md` | 首輪偵查：檔案清單、執行結構、兩版比對 |
 | `docs/formats/01-talk-dat.md` | **READY** — `TALK.DAT` 訊息表格式 |
 | `docs/formats/02-brg-palette.md` | **READY** — `.BRG` 調色盤格式 |
+| `docs/formats/03-grf-images.md` | **READY**（僅 `KAOGRF`）— 圖庫格式 |
 | `docs/re/02-palette-routine.md` | 兩版調色盤常式的反組譯 |
+| `docs/re/03-image-blitter.md` | 圖庫載入器與 VGA 四平面繪製常式 |
+| `docs/mechanics/00-index.md` | 機制索引與推論等級定義 |
+| `docs/mechanics/70-ai.md` | **電腦 AI 的判斷邏輯**（蒐集中） |
 | `docs/reference/01-jp-manual.md` | 日文原版說明書判讀紀錄（逐頁累加） |
 | `docs/reference/02-jp-cht-diff.md` | 日中對照：15 則譯文缺陷 |
 | `translations/extract/talk-{dosv,pc98}.json` | 抽出的 1,022 則訊息（兩版） |
@@ -135,7 +141,7 @@
 ### 7.2 M1 起手順序（依投報排）
 
 1. ~~`.BRG` 調色盤~~ ✅ **完成**，`docs/formats/02` READY
-2. `*GRF.DAT` 圖庫（4 檔，兩版全同）——先量熵判斷有無壓縮。**已知是 4 bpp planar**
+2. `*GRF.DAT` 圖庫 — `KAOGRF` ✅ 完成；`ICONGRF`／`KYOGRF`／`IVENTGRF` 待解（`docs/re/03` §5 有路徑）
 3. `MMAP.*` 大地圖三件（兩版全同）
 4. `BATTLE.*` 戰場（兩版全同）
 5. `SINARIO.DAT` ／ `SAVE.DAT`（兩版大小同內容異 → diff 定位字串欄位）
@@ -153,6 +159,8 @@
 | `tools/ida.sh` | `tools/ida.sh batch dosv KI.EXE` ／ `tools/ida.sh raw pc98 idat -A -S/work/tools/x.idc KI.EXE.i64` |
 | `tools/talkdat.py` | `dump` ／ `export` ／ `build` ／ `verify` ／ `diff`。**驗收指令是 `verify`，要求 byte-for-byte** |
 | `tools/brg.py` | `info` ／ `swatch`。純標準函式庫的 PNG 輸出 |
+| `tools/grf.py` | `sheet` ／ `one`。**`sheet` 會印「餘 N byte」，不是 0 就代表尺寸猜錯** |
+| `tools/ida_xref.idc` | 查 IDA 的 xref 圖。⚠ 立即值形式的位址參考 IDA 不建 xref，回零筆不等於沒人用（`docs/re/03` §0） |
 
 **還沒建但 `CLAUDE.md` §5.1 要求的**：`tools/addr.py`（位址反查三張表）、
 `tools/dump_func.py`（dump 時自動翻語意 ＋ grep docs）、`tools/ida_xref.idc`。
