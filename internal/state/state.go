@@ -73,6 +73,10 @@ type Faction struct {
 	Corps int // 軍團數（記錄 +0x14）
 
 	Diplomat int // 派駐「這個」勢力的外交官（由別人派來），0xFF ＝ 無
+
+	// LowFunds 是記錄 +0x00 的 bit 6：資金低於「取消侵攻」門檻的**一半**
+	// 時設起。用途還沒解——原版設了它但還沒找到誰讀（docs/re/08 §1）。
+	LowFunds bool
 }
 
 // City 是一個據點的完整狀態。
@@ -115,8 +119,20 @@ type General struct {
 	Command  int
 	Politics int
 	Timer    int // 每月遞減，歸零才行動
-	Faction  int // 所屬勢力，0xFF ＝ 在野
-	Posting  int // 派駐狀態，0xFF ＝ 未派駐
+
+	// Budget 是官員手上的經費餘額（記錄 +0x1A）。外交官每次工作
+	// 扣 23 − 政治，歸零就停擺，要再向君主開口要錢。
+	Budget int
+
+	Faction int // 所屬勢力，0xFF ＝ 在野
+
+	// Captor 是**舊主的勢力編號**（記錄 +0x1D），0xFF ＝ 非捕虜。
+	//
+	// ⚠ 這一欄先前叫 Posting，記成「派駐狀態」。四個劇本開局全是 0xFF，
+	// 兩種解讀都說得通——是用法把它定下來的：戰敗被擒時寫入舊主
+	// （`sub_129C3`）、釋放時清掉並通知舊主（`sub_150D7`）、
+	// 月結時判歸降（`sub_1585F`）。見 docs/re/09 §6。
+	Captor int
 }
 
 // Rules 回傳這名武將在規則層的視圖。
@@ -142,6 +158,10 @@ type World struct {
 	Factions [numFactions]Faction
 	Cities   [numCities]City
 	Generals [numGenerals]General
+
+	// hourFaction 是下一個輪到的勢力（原版 cs:0D1Ch，以 si 步進 0x40）。
+	// 不匯出——它是迴圈的內部游標，不是遊戲狀態的一部分。
+	hourFaction int
 
 	// Player 是玩家所仕的勢力編號。原版存在 cs:0CFFh，
 	// 但劇本檔裡沒有（開新遊戲時才選），所以預設 −1。
@@ -294,8 +314,9 @@ func LoadScenario(path string, index int) (*World, error) {
 			Command:  int(r[0x12]),
 			Politics: int(r[0x13]),
 			Timer:    int(r[0x18]),
+			Budget:   int(r[0x1A]),
 			Faction:  int(r[0x1C]),
-			Posting:  int(r[0x1D]),
+			Captor:   int(r[0x1D]),
 		}
 	}
 	return w, nil
@@ -308,12 +329,26 @@ type Event struct {
 	Disaster   map[int]economy.Disaster // 據點編號 → 災害
 	Storm      *economy.StormArea
 	Eliminated []int // 這個 tick 被判定滅亡的勢力
+
+	// HourFaction 是這個 tick 輪到的勢力編號，−1 表示這個 tick 沒有輪到誰。
+	// 原版每「時」只處理一個勢力，22 個勢力輪一圈（docs/re/08 §1）。
+	HourFaction int
+
+	// InvasionCancelled 為真表示上面那個勢力因為財政撐不住，
+	// 侵攻目標被自動清掉了。
+	InvasionCancelled bool
+
+	// FriendshipUp 為真表示外交官這次做出了成果（交友度 +1）。
+	FriendshipUp bool
 }
 
 // Tick 推進一個 tick。月結、季節、災害都掛在對應的進位事件上，
 // 順序照原版（docs/re/06 §5、docs/re/07 §1）。
 func (w *World) Tick(rng economy.Rand) Event {
-	ev := Event{Clock: w.Clock.Advance()}
+	ev := Event{Clock: w.Clock.Advance(), HourFaction: -1}
+	if ev.Clock.Hour {
+		w.hourly(&ev, rng)
+	}
 	if !ev.Clock.Month {
 		return ev
 	}
@@ -377,6 +412,68 @@ func (w *World) Tick(rng economy.Rand) Event {
 		}
 	}
 	return ev
+}
+
+// hourly 跑原版 `sub_13E11`：**每「時」只處理一個勢力**，
+// 22 個勢力輪一圈 ＝ 22 小時，所以每個勢力大約每天被處理一次。
+//
+// 順序照原版：① 侵攻的財政檢查 → ② 預備兵維持費 → ③ 外交官。
+// 完整反組譯見 docs/re/08 §1–§3。
+func (w *World) hourly(ev *Event, rng economy.Rand) {
+	i := w.hourFaction
+	w.hourFaction = (i + 1) % numFactions
+	ev.HourFaction = i
+
+	f := &w.Factions[i]
+	if !f.Alive {
+		return
+	}
+
+	// ① 財政撐不住就自動取消侵攻。門檻與**據點數**掛鉤——
+	//    地盤越大，維持一場侵攻需要的最低資金越高。
+	if !diplomacy.CanSustainInvasion(f.Funds, f.Cities) {
+		if f.InvasionTarget != diplomacy.NoTarget {
+			ev.InvasionCancelled = true
+		}
+		f.InvasionTarget = diplomacy.NoTarget
+		// 再低一半就設 bit 6。原版設了它，但還沒找到誰讀。
+		f.LowFunds = !diplomacy.CanSustainInvasion(f.Funds*2, f.Cities)
+	} else {
+		f.LowFunds = false
+	}
+
+	// ② 預備兵維持費：三個兵種相加除以 32，累進本月支出。
+	//    這是說明書 5.2「予備兵にも月単位で経費がかかり」的實際來源——
+	//    它其實是**每小時**扣，只是月末才結算。
+	total := 0
+	for _, n := range f.Reserves {
+		total += n
+	}
+	f.Expense = economy.ClampFunds(f.Expense + total>>5)
+
+	// ③ 外交官。派駐在這個勢力的外交官是**別人派來的**，
+	//    所以要改的是「派遣方 → 這個勢力」那一格交友度。
+	ev.FriendshipUp = w.runDiplomat(i, rng)
+}
+
+// runDiplomat 讓派駐在 target 的外交官工作一次，回報交友度有沒有提升。
+func (w *World) runDiplomat(target int, rng economy.Rand) bool {
+	id := w.Factions[target].Diplomat
+	if id < 0 || id >= numGenerals {
+		return false // 0xFF ＝ 沒有外交官派駐
+	}
+	g := &w.Generals[id]
+	sender := g.Faction
+	if sender < 0 || sender >= numFactions || sender == target {
+		return false
+	}
+
+	d := diplomacy.Diplomat{Politics: g.Politics, Budget: g.Budget}
+	fr := w.Friendship[sender][target]
+	up := d.Tick(&fr, rng)
+	w.Friendship[sender][target] = fr
+	g.Budget = d.Budget
+	return up
 }
 
 func (w *World) clampCity(i int) int {
@@ -528,8 +625,9 @@ func (w *World) Bytes() []byte {
 		r[0x12] = byte(g.Command)
 		r[0x13] = byte(g.Politics)
 		r[0x18] = byte(g.Timer)
+		r[0x1A] = byte(g.Budget)
 		r[0x1C] = byte(g.Faction)
-		r[0x1D] = byte(g.Posting)
+		r[0x1D] = byte(g.Captor)
 	}
 	return b
 }

@@ -5,7 +5,10 @@ import (
 	"testing"
 
 	"github.com/wicanr2/wolong_cht/internal/assets/text"
+	"github.com/wicanr2/wolong_cht/internal/rules/clock"
+	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
+	"github.com/wicanr2/wolong_cht/internal/rules/rng"
 )
 
 // 原版資產不隨本專案散布（CLAUDE.md §10），所以這些測試在沒有
@@ -485,5 +488,81 @@ func TestNoWarAtScenarioStart(t *testing.T) {
 				}
 			}
 		}
+	}
+}
+
+// 每「時」只處理一個勢力，22 個勢力輪一圈——所以每個勢力大約
+// 每天被處理一次，不是每 tick 一次。這個節奏決定了外交官的效率，
+// 寫錯會讓交友度以 9 倍速度上漲（一「時」有 9 個子刻）。
+func TestHourlyRotation(t *testing.T) {
+	w := load(t, 0)
+	rng := rng.NewFixed(7)
+
+	seen := map[int]int{}
+	hours := 0
+	for hours < 44 { // 兩圈
+		ev := w.Tick(rng)
+		if !ev.Clock.Hour {
+			if ev.HourFaction != -1 {
+				t.Fatalf("沒有進位到新的「時」卻輪到了勢力 %d", ev.HourFaction)
+			}
+			continue
+		}
+		hours++
+		seen[ev.HourFaction]++
+	}
+	if len(seen) != 22 {
+		t.Errorf("兩圈只輪到 %d 個勢力，應為 22", len(seen))
+	}
+	for i, n := range seen {
+		if n != 2 {
+			t.Errorf("勢力 %d 在兩圈裡被處理 %d 次，應為 2", i, n)
+		}
+	}
+}
+
+// 財政撐不住就自動取消侵攻。門檻與據點數掛鉤，
+// 這是政略 AI 的硬性煞車（docs/re/08 §1）。
+func TestBrokeFactionAbandonsInvasion(t *testing.T) {
+	w := load(t, 0)
+	rng := rng.NewFixed(3)
+
+	// 挑一個活著的勢力，塞給它一個侵攻目標再把錢抽乾。
+	victim := w.AliveFactions()[0]
+	w.Factions[victim].InvasionTarget = (victim + 1) % 22
+	w.Factions[victim].Funds = 0
+
+	for i := 0; i < 22*clock.SubticksPerHour+9; i++ {
+		ev := w.Tick(rng)
+		if ev.HourFaction == victim {
+			break
+		}
+	}
+	if got := w.Factions[victim].InvasionTarget; got != diplomacy.NoTarget {
+		t.Errorf("沒錢的勢力仍在侵攻 %d，應被清成 0xFF", got)
+	}
+	if !w.Factions[victim].LowFunds {
+		t.Error("資金 0 遠低於門檻的一半，bit 6 應設起")
+	}
+}
+
+// 預備兵維持費每小時累加，月結時才付。預備兵越多扣得越多——
+// 說明書 5.2 說的是「月単位」，實際上是每小時扣、月末結算。
+func TestReserveUpkeepAccumulatesHourly(t *testing.T) {
+	w := load(t, 0)
+	rng := rng.NewFixed(11)
+
+	f := w.AliveFactions()[0]
+	w.Factions[f].Reserves = [economy.NumTroopTypes]int{3200, 1600, 1600}
+	w.Factions[f].Expense = 0
+
+	for i := 0; i < 22*clock.SubticksPerHour+9; i++ {
+		if ev := w.Tick(rng); ev.HourFaction == f {
+			break
+		}
+	}
+	// (3200 + 1600 + 1600) ÷ 32 = 200
+	if got := w.Factions[f].Expense; got != 200 {
+		t.Errorf("累計支出 ＝ %d，應為 200", got)
 	}
 }

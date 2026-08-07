@@ -227,6 +227,11 @@ func Settle(f *Faction, cities []City, owner int, rng Rand) Result {
 	return res
 }
 
+// ClampFunds 把值鉗在 ±655,000。原版收入（`sub_15609`）與支出
+// （`sub_15673`）用的是同一組界限，所以累計支出也要走這裡——
+// 每小時的預備兵維持費就是累加進 +0x1A 的（docs/re/08 §2）。
+func ClampFunds(v int) int { return clampFunds(v) }
+
 func clampFunds(v int) int {
 	if v > MaxFunds {
 		return MaxFunds
