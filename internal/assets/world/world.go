@@ -74,9 +74,11 @@ func ParseTileSet(data []byte) (*TileSet, error) {
 
 // Render 畫出以 (x0, y0) 為左上角、cols×rows 格的一塊地圖。
 //
-// ⚠ **這裡還沒做自動連接。** 原版的道路與河流會依鄰格換圖塊
-// （`sub_1E57F`，值域 0xB8–0xDD，見 docs/formats/05 §3），
-// 直接查表畫出來的接邊會是斷的。等 `sub_1E68C` 讀完再補。
+// ⚠ **這裡畫的是檔案裡的原始圖塊值，不是原版執行時的地圖內容。**
+// 原版載入後有一個前處理階段（`sub_1E4CE`）會把道路格（0xCB–0xD3）
+// 換成節點流水號並建一張連接關係表，見 docs/formats/05 §3。
+// 那一步還沒實作——目前的輸出對「看地形」是對的，
+// 對「重現原版的記憶體狀態」還不夠。
 func (m *Map) Render(ts *TileSet, pal *palette.Palette, bank,
 	x0, y0, cols, rows int) (*image.RGBA, error) {
 	img := image.NewRGBA(image.Rect(0, 0, cols*TileSize, rows*TileSize))
