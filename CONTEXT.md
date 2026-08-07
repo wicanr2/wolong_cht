@@ -62,6 +62,8 @@ Go 版與 Python 版的輸出逐像素完全相同。
 | **大地圖畫面拿到** | 推進到 NEW GAME 對話框。**畫面最上方的橫幅正是 `ICONGRF` 段 0**（640×32），位置完全對上 |
 | **`MMAP.MDL` 全解** | 256 塊 16×16 地形圖塊，餘 0，與實機地形吻合（`docs/formats/05`）|
 | **地圖尺寸定案** | **384 × 256 格**（`sub_1E4CE` 的 `cmp cx, 180h` ＋ 列跨距 0x18 段；98,304 ÷ 384 ＝ 256）|
+| **`MMAP.MAP` 全解** | **READY**。RLE（用連續兩個相同 byte 當 run 觸發，無逃脫字元），80,716 → 98,308 B，取前 98,304 ＝ 384×256。畫出來是連貫的中國地圖 |
+| **Go 世界地圖層** | `internal/assets/{rle,world}` ＋ 測試（尺寸、圖塊種類≥100、最常見圖塊不超過 1/3、兩版解出長度相同）|
 | **自動連接機制** | 道路／河流會依鄰格換圖塊（`sub_1E57F`，值域 `0xB8`–`0xDD`）。**remake 照抄查表會讓接邊斷掉** |
 | **逐片抽檔修正** | `workplace/orig/pc98_discs/{A..E}` 是權威來源；合併目錄 A 片優先。踩到「同名檔被後片靜靜蓋掉」（`YNSHELL.COM` 2699 vs 2675 B），工具已加比對警告 |
 | **`.MAP`/`.SCH` 容器格式** | `docs/formats/04`。索引 (offset,length) ＋ 壓縮片段，六個檔的末端全部等於檔長。**只有松崗自加的檔用這格式**，原版的 `MMAP`/`BATTLE` 是裸資料 |
@@ -105,6 +107,7 @@ Go 版與 Python 版的輸出逐像素完全相同。
 | `docs/playtest/02-dosboxx-pc98.md` | PC-98 實跑：oracle 建立、合併抽檔陷阱 |
 | `docs/formats/04-map-sch-container.md` | `.MAP`/`.SCH` 容器格式 |
 | `docs/formats/05-mmap-worldmap.md` | 大地圖：圖塊、384×256、自動連接 |
+| `docs/formats/06-mmap-rle.md` | **READY** — `MMAP.MAP` 的 RLE 壓縮 |
 | `README.md` | 公開的專案入口 |
 | `translations/extract/talk-{dosv,pc98}.json` | 抽出的 1,022 則訊息（兩版） |
 | `tools/fdi_extract.py` | PC-98 FDI 磁片抽檔 |
@@ -179,7 +182,7 @@ Go 版與 Python 版的輸出逐像素完全相同。
 
 1. ~~`.BRG` 調色盤~~ ✅ **完成**，`docs/formats/02` READY
 2. ~~`*GRF.DAT` 圖庫~~ ✅ **完成**（`ICONGRF` 段 1／段 3 待補）
-2.5 ~~`MMAP.MDL`~~ ✅ **完成**；`MMAP.MAP` 的編碼待解（`docs/re/04` 有四個入口）
+2.5 ~~`MMAP.MDL` ＋ `MMAP.MAP`~~ ✅ **完成**（`MMAP.MCH` 待解）
 3. `MMAP.*` 大地圖三件（兩版全同）
 4. `BATTLE.*` 戰場（兩版全同）
 5. `SINARIO.DAT` ／ `SAVE.DAT`（兩版大小同內容異 → diff 定位字串欄位）
