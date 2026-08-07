@@ -95,6 +95,29 @@ type Corps struct {
 	TargetNode, TargetX, TargetY int // 記錄 +0x14（÷8）、+0x16、+0x18
 
 	Direction int // 記錄 +0x0A，決定走哪一條連結
+
+	// MoveTimer 與 MoveInterval 是行軍的節拍（記錄 +0x0B／+0x1E）。
+	// 每個 tick 計時器減 1，歸零就走一步並從 MoveInterval 重載。
+	//
+	// **所以「速度」是間隔的倒數**：間隔越小走得越快。
+	// 說明書 5.5「騎馬隊のみの軍団は移動速度が速くなります」
+	// 就是給純騎馬編成一個較小的間隔。
+	MoveTimer    int
+	MoveInterval int
+}
+
+// Step 把行軍的計時器推進一個 tick，回傳這個 tick 是否要走一步。
+//
+// 照原版 `sub_125A3`：先減，歸零才動作並重載。
+// **注意是「先減再判斷」**——間隔設 N 表示每 N 個 tick 走一步，
+// 不是 N+1。
+func (c *Corps) Step() bool {
+	c.MoveTimer--
+	if c.MoveTimer > 0 {
+		return false
+	}
+	c.MoveTimer = c.MoveInterval
+	return true
 }
 
 // Strength 回傳總兵力。每個有兵的位置固定 1000 人（說明書 5.5）。

@@ -34,13 +34,17 @@ add  ax, 1800h  → ds:9876h      ; 98,304 B  ← MMAP.MDL + MCH 放這裡
 add  ax, 1200h  → ds:987Ah      ; 73,728 B
 add  ax, 410h   → ds:9878h      ; 16,640 B
 add  ax, 1CCh   → ds:0D42h      ;  7,360 B
-add  ax, 0FAh   → ds:9874h      ;  4,000 B
+add  ax, 0FAh   → ds:9874h      ;  4,000 B  ← **行軍的連結表**（docs/re/08 §6.5）
 ```
 
 （單位是段＝16 byte。）
 
-**`word_19872` 的 98,304 B 是渲染用的畫布**：`sub_119CA` 會把它整塊清零
-（`rep stosw` 0x8000 words ＋ 0x4000 words ＝ 0x18000 B ＝ 98,304）。
+> ⚠ **修正**：先前寫「`word_19872` 的 98,304 B 是渲染用的畫布」。
+> 它是**單位佔用圖**——每格一個 byte 的計數，位址 `Y × 384 + X`，
+> 軍團進入時 `inc`、離開時 `dec`（`docs/re/08` §5）。
+> 尺寸猜對（384 × 256 ＝ 98,304），用途猜錯。
+> `sub_119CA` 開機時把它整塊清零（`rep stosw` 0x8000 ＋ 0x4000 words）
+> 正是因為開局沒有任何軍團在地圖上。
 
 `word_19876` 這一塊**會被重複使用**——`sub_187AF` 放 `MMAP.MDL`＋`MCH`，
 但 `sub_13D09` 也把 `IVENTGRF.DAT` 載到同一個段。

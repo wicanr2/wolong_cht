@@ -164,3 +164,33 @@ func TestOccupancyBounds(t *testing.T) {
 		t.Error("右下角應該可以放")
 	}
 }
+
+// 行軍節拍：間隔 N 表示每 N 個 tick 走一步。
+// 原版是「先減再判斷」（sub_125A3 的 dec / jnz）。
+func TestMoveCadence(t *testing.T) {
+	c := Corps{MoveTimer: 3, MoveInterval: 3}
+	steps := 0
+	for i := 0; i < 12; i++ {
+		if c.Step() {
+			steps++
+		}
+	}
+	if steps != 4 {
+		t.Errorf("間隔 3 跑 12 tick 走了 %d 步, want 4", steps)
+	}
+
+	// 間隔越小走得越快 —— 純騎馬編成靠的就是這個。
+	fast := Corps{MoveTimer: 1, MoveInterval: 1}
+	f := 0
+	for i := 0; i < 12; i++ {
+		if fast.Step() {
+			f++
+		}
+	}
+	if f != 12 {
+		t.Errorf("間隔 1 跑 12 tick 走了 %d 步, want 12", f)
+	}
+	if f <= steps {
+		t.Error("間隔小的應該走得比較快")
+	}
+}
