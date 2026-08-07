@@ -28,7 +28,23 @@
 | `TALK.DAT` 訊息表 | READY，兩版 byte-for-byte round-trip | [`docs/formats/01`](docs/formats/01-talk-dat.md) |
 | `.BRG` 調色盤 | READY | [`docs/formats/02`](docs/formats/02-brg-palette.md) |
 | `*GRF.DAT` 圖庫 | READY（`ICONGRF` 剩兩段） | [`docs/formats/03`](docs/formats/03-grf-images.md) |
-| `MMAP.*` 大地圖 | 只找到入口 | [`docs/re/04`](docs/re/04-mmap-entry-points.md) |
+| `MMAP.MDL` 地形圖塊 | READY，256 塊 16×16 | [`docs/formats/05`](docs/formats/05-mmap-worldmap.md) |
+| `MMAP.MAP` 世界地圖 | READY，RLE → 384×256 格 | [`docs/formats/06`](docs/formats/06-mmap-rle.md) |
+| `.MAP`/`.SCH` 容器 | 索引層 READY | [`docs/formats/04`](docs/formats/04-map-sch-container.md) |
+| `BATTLE.*` 戰場 | 分段結構已解，像素格式未解 | [`docs/formats/07`](docs/formats/07-battle.md) |
+
+### 引擎已經畫得出遊戲畫面
+
+`cmd/wlview` 的大地圖模式：384×256 格的世界地圖，可捲動，頂端是原版的
+標題橫幅（`ICONGRF` 段 0）。
+
+![大地圖（春）](docs/images/wlview-world-spring.png)
+
+**按 `4` 換到冬天** —— 只換調色盤的色號 14 這**一個顏色**，
+21 萬個像素改變，而樹林、河流、道路、城池全部保持原色。
+這是原版 1994 年在 16 色機器上的做法，remake 照做（`docs/formats/02` §4）。
+
+![大地圖（冬）](docs/images/wlview-world-winter.png)
 
 ![素材檢視器](docs/images/wlview-kyogrf.png)
 
@@ -38,9 +54,11 @@
 internal/assets/palette   .BRG 解碼（純函式，不認識 Ebiten）
 internal/assets/gfx       *GRF.DAT 4bpp planar 解碼
 internal/assets/text      TALK.DAT 解析與寫回
+internal/assets/rle       原版的 RLE 解壓（MMAP.MAP 用）
+internal/assets/world     大地圖：384×256 格 + 256 塊地形圖塊
 internal/assets/library   把素材目錄載成可檢視的項目（不 import Ebiten）
 cmd/wlshot                解素材成 PNG，無頭環境可跑
-cmd/wlview                Ebiten 互動檢視器
+cmd/wlview                Ebiten 互動檢視器（素材模式 / 大地圖模式，Tab 切換）
 ```
 
 分層是刻意的：**Ebiten 在 init 期就要求顯示器**，
@@ -59,6 +77,7 @@ tools/go.sh test ./...                       # 測試
 tools/go.sh run ./cmd/wlshot -list           # 列出素材
 tools/go.sh run ./cmd/wlshot -asset 0 -sheet 15 -out kao.png
 tools/go.sh run ./cmd/wlview                 # 互動檢視器
+tools/go.sh run ./cmd/wlview -world          # 直接開大地圖
 tools/shot.sh out.png KEYS=Right,Down        # headless 截圖驗收
 ```
 

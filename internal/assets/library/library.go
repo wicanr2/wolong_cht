@@ -15,6 +15,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/assets/gfx"
 	"github.com/wicanr2/wolong_cht/internal/assets/palette"
 	"github.com/wicanr2/wolong_cht/internal/assets/text"
+	"github.com/wicanr2/wolong_cht/internal/assets/world"
 )
 
 // Entry 是一種可檢視的素材。
@@ -31,6 +32,11 @@ type Library struct {
 	Talk    *text.Table
 	Entries []Entry
 	Warns   []string // 餘數不是 0 之類的警告，呼叫端要顯示出來
+
+	// World 與 Tiles 是大地圖。原版是 384×256 格、每格 16×16 px，
+	// 整張攤開是 6144×4096 —— 不預先畫成一張圖，畫面要多少畫多少。
+	World *world.Map
+	Tiles *world.TileSet
 }
 
 func read(dir, name string) ([]byte, error) {
@@ -100,7 +106,28 @@ func Load(dir string) (*Library, error) {
 		}
 		add("ICONGRF/"+r.Name, r.Spec, icon[r.Offset:r.Offset+r.Length])
 	}
+
+	// 大地圖。缺檔或解不開就記進 Warns 而不是整個失敗 ——
+	// 檢視器的其他功能不該被它拖著一起壞。
+	if mapRaw, err := read(dir, "MMAP.MAP"); err != nil {
+		lib.Warns = append(lib.Warns, err.Error())
+	} else if lib.World, err = world.ParseMap(mapRaw); err != nil {
+		lib.Warns = append(lib.Warns, err.Error())
+	}
+	if mdl, err := read(dir, "MMAP.MDL"); err != nil {
+		lib.Warns = append(lib.Warns, err.Error())
+	} else if lib.Tiles, err = world.ParseTileSet(mdl); err != nil {
+		lib.Warns = append(lib.Warns, err.Error())
+	}
 	return lib, nil
+}
+
+// RenderWorld 畫出以 (x0, y0) 格為左上角、cols×rows 格的一塊大地圖。
+func (l *Library) RenderWorld(x0, y0, cols, rows, bank int) (*image.RGBA, error) {
+	if l.World == nil || l.Tiles == nil {
+		return nil, fmt.Errorf("大地圖沒有載入成功，看 Warns")
+	}
+	return l.World.Render(l.Tiles, l.Palette, bank, x0, y0, cols, rows)
 }
 
 // Render 畫出第 asset 種素材的第 page 張。

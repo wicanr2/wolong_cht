@@ -12,7 +12,10 @@
 // **Ebiten 在 init 期就要求顯示器**，跟它放同一個 binary 就跑不起來
 // （這個坑實際踩過，見 internal/assets/library 的套件說明）。
 //
-// 操作：← → 換頁、↑ ↓ 換素材、1–4 換季節、ESC 退回第一張、F10 離開。
+// 兩種模式，Tab 切換：
+//   素材模式  ← → 換頁、↑ ↓ 換素材、1–4 換季節、ESC 退回第一張
+//   地圖模式  方向鍵捲動（按著持續捲）、Shift 加速、Home 回原點、1–4 換季節
+// F10 離開（Y/N 確認）。
 package main
 
 import (
@@ -41,6 +44,9 @@ type app struct {
 	page     int  // 目前張數
 	season   int  // 調色盤組（0–3 ＝ 春夏秋冬）
 	quitting bool // F10 之後的 Y/N 確認
+
+	mapMode bool      // true ＝ 大地圖模式
+	world   worldView // 大地圖的捲動狀態
 }
 
 func (a *app) Update() error {
@@ -54,9 +60,19 @@ func (a *app) Update() error {
 		}
 		return nil
 	}
-	switch {
-	case pressed(ebiten.KeyF10):
+	if pressed(ebiten.KeyF10) {
 		a.quitting = true
+		return nil
+	}
+	if pressed(ebiten.KeyTab) {
+		a.mapMode = !a.mapMode
+		return nil
+	}
+	if a.mapMode {
+		a.world.update()
+		return nil
+	}
+	switch {
 	case pressed(ebiten.KeyEscape):
 		a.page = 0
 	case pressed(ebiten.KeyArrowRight):
@@ -80,6 +96,13 @@ func (a *app) Update() error {
 }
 
 func (a *app) Draw(screen *ebiten.Image) {
+	if a.mapMode {
+		a.drawWorld(screen)
+		if a.quitting {
+			ebitenutil.DebugPrintAt(screen, "Quit? (Y/N)", screenW/2-40, screenH/2)
+		}
+		return
+	}
 	e := a.lib.Entries[a.cur]
 	img, err := a.lib.Render(a.cur, a.page, a.season)
 	if err != nil {
@@ -98,7 +121,7 @@ func (a *app) Draw(screen *ebiten.Image) {
 	// 很容易被誤判成排版 bug。中文顯示要等倚天 16×15 點陣字那一項
 	// （原版的字型來源見 CLAUDE.md §3.6，還沒結案）。
 	ebitenutil.DebugPrint(screen, fmt.Sprintf(
-		"%s  %d/%d  %dx%d  season=%s  [<-/->]page [up/dn]asset [1-4]season [F10]quit",
+		"%s  %d/%d  %dx%d  season=%s  [<-/->]page [up/dn]asset [1-4]season [tab]world [F10]quit",
 		e.Label, a.page+1, e.Count, e.Spec.Width, e.Spec.Height,
 		seasonNames[a.season]))
 	if a.quitting {
@@ -114,6 +137,9 @@ func main() {
 	page := flag.Int("page", 0, "起始張數")
 	asset := flag.Int("asset", 0, "起始素材編號")
 	season := flag.Int("season", 0, "季節 0-3（春夏秋冬）")
+	worldMode := flag.Bool("world", false, "直接開大地圖模式")
+	wx := flag.Int("wx", 0, "大地圖起始格 x")
+	wy := flag.Int("wy", 0, "大地圖起始格 y")
 	flag.Parse()
 
 	lib, err := library.Load(*dir)
@@ -130,6 +156,10 @@ func main() {
 	ebiten.SetWindowSize(screenW*2, screenH*2)
 	ebiten.SetWindowTitle("臥龍傳 素材檢視器")
 	a := &app{lib: lib, cur: *asset, page: *page, season: *season}
+	a.world.season = *season
+	a.mapMode = *worldMode
+	a.world.x, a.world.y = *wx, *wy
+	a.world.clamp()
 	if err := ebiten.RunGame(a); err != nil && err != ebiten.Termination {
 		log.Fatal(err)
 	}
