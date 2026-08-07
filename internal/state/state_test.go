@@ -207,8 +207,14 @@ func TestCityInvariants(t *testing.T) {
 func TestInitialAssignments(t *testing.T) {
 	w := load(t, 0)
 	for _, i := range w.AliveFactions() {
-		if w.Factions[i].Trust != 200 {
-			t.Errorf("勢力 %d 的信賴度 = %d, want 200", i, w.Factions[i].Trust)
+		if w.Factions[i].MoraleBase != 200 {
+			t.Errorf("勢力 %d 的士氣基準 = %d, want 200", i, w.Factions[i].MoraleBase)
+		}
+		if w.Factions[i].InvasionTarget != 0xFF {
+			t.Errorf("勢力 %d 開局就在侵攻 %d？", i, w.Factions[i].InvasionTarget)
+		}
+		if w.Factions[i].Corps != 0 {
+			t.Errorf("勢力 %d 開局就有 %d 個軍團？", i, w.Factions[i].Corps)
 		}
 		if w.Factions[i].Diplomat != 0xFF {
 			t.Errorf("勢力 %d 開局就有外交官？", i)
@@ -304,7 +310,7 @@ func TestSaveWritesChanges(t *testing.T) {
 	before := w.Bytes()
 
 	w.Factions[0].Funds = -12345
-	w.Factions[0].Trust = 77
+	w.Factions[0].MoraleBase = 77
 	w.Cities[0].Growth = -50
 	w.Cities[0].Production = 4242
 	w.Clock.Month = 7

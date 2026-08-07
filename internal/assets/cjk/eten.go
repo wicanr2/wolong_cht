@@ -60,8 +60,8 @@ var manualBig5 = map[rune][2]byte{
 
 // Font 是載入好的倚天點陣字。
 type Font struct {
-	std []byte // STDFONT.15：漢字區
-	spc []byte // SPCFONT.15：全形符號／標點
+	std  []byte // STDFONT.15：漢字區
+	spc  []byte // SPCFONT.15：全形符號／標點
 	bold bool   // 每列向右膨脹 1px，保留原生 16×15 的手工字形
 }
 

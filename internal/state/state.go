@@ -47,14 +47,24 @@ type Faction struct {
 	Funds    int // 有號 24 位
 	Expense  int // 本月累計支出，月結後歸零
 
-	// Trust 是信賴度。歸 0 → 被逐出勢力 → Game Over
-	// （docs/mechanics/80-victory.md §1）。開局四個劇本全部是 200。
-	Trust int
+	// MoraleBase 是新編成軍團的初始士氣（記錄 +0x1D，四個劇本都是 200）。
+	//
+	// ⚠ 先前這一欄被標成「疑似信賴度」。編成軍團時它被複製進軍團的
+	// 士氣欄位，而說明書編成畫面的士氣值正好是 200 ——
+	// 所以它是士氣基準值。**信賴度存在哪還沒解**（docs/re/08 §4）。
+	MoraleBase int
 
 	// Aggression 是君主的好戰等級（0–15），**不顯示給玩家**。
 	// 呂布 15、曹操 14、劉備 4、劉表 1、劉禪 0。
 	// 同一位君主在所有劇本裡是同一個值。
 	Aggression int
+
+	// InvasionTarget 是這個勢力正在侵攻的對象（勢力記錄 +0x19），
+	// 0xFF ＝ 無。**財政撐不住時原版會自動把它設回 0xFF**
+	// （docs/re/08 §1）——這是政略 AI 的一條硬性煞車。
+	InvasionTarget int
+
+	Corps int // 軍團數（記錄 +0x14）
 
 	Diplomat int // 派駐「這個」勢力的外交官（由別人派來），0xFF ＝ 無
 }
@@ -200,13 +210,19 @@ func LoadScenario(path string, index int) (*World, error) {
 	for i := range w.Factions {
 		r := b[factionBase+i*factionSize:]
 		w.Factions[i] = Faction{
-			Alive:      r[0x00] >= 0x80,
-			Lord:       int(r[0x01]),
-			Advisor:    int(r[0x02]),
-			Capital:    int(r[0x03]),
-			Generals:   int(r[0x18]),
-			Expense:    i24(r, 0x1A),
-			Trust:      int(r[0x1D]),
+			Alive:          r[0x00] >= 0x80,
+			Lord:           int(r[0x01]),
+			Advisor:        int(r[0x02]),
+			Capital:        int(r[0x03]),
+			Generals:       int(r[0x18]),
+			Expense:        i24(r, 0x1A),
+			Corps:          int(r[0x14]),
+			InvasionTarget: int(r[0x19]),
+
+			// ⚠ +0x1D 是**士氣基準值**，不是信賴度 ——
+			// 編成軍團時它被複製進軍團的士氣欄位（docs/re/08 §4）。
+			// 信賴度存在哪還沒解。
+			MoraleBase: int(r[0x1D]),
 			Funds:      i24(r, 0x20),
 			Cities:     int(r[0x23]),
 			Aggression: int(r[0x28]),
@@ -431,9 +447,11 @@ func (w *World) Bytes() []byte {
 		for t := 0; t < int(economy.NumTroopTypes); t++ {
 			putU16(r, 0x04+t*2, f.Reserves[t])
 		}
+		r[0x14] = byte(f.Corps)
 		r[0x18] = byte(f.Generals)
+		r[0x19] = byte(f.InvasionTarget)
 		putI24(r, 0x1A, f.Expense)
-		r[0x1D] = byte(f.Trust)
+		r[0x1D] = byte(f.MoraleBase)
 		putI24(r, 0x20, f.Funds)
 		r[0x23] = byte(f.Cities)
 		r[0x28] = byte(f.Aggression)

@@ -182,3 +182,32 @@ func CanRequestCooperation(allyInvadingSomeone bool, allyToUs, allyToTarget Frie
 // 標準流程是先用協力外交讓對方轉向去打第三方，
 // 對方就不再「正在侵攻我方」，停戰才談得成（說明書 10.1）。
 func CanCeaseFire(theyAreInvadingUs bool) bool { return !theyAreInvadingUs }
+
+// ---------------------------------------------------------------------------
+// 侵攻狀態（勢力記錄 +0x19，docs/re/08 §1）
+// ---------------------------------------------------------------------------
+
+// NoTarget 表示這個勢力沒有侵攻對象。
+const NoTarget = 0xFF
+
+// CanSustainInvasion 回報一個勢力的財政撐不撐得起侵攻。
+//
+// 原版每小時輪到該勢力時檢查（`sub_13E11`）：
+//
+//	資金 >> 8  <  據點數 × 8 + 24   →  侵攻目標設回 0xFF
+//
+// **⭐ 財政撐不住就自動取消侵攻**，而且門檻與**據點數**掛鉤——
+// 地盤越大，維持一場侵攻需要的最低資金越高。
+//
+// 這條規則是說明書幾個說服理由的底層機制：「敵が疲弊中」（資金 < 0）
+// 之所以是提停戰的好時機，正是因為對方的侵攻**在機制上已經停了**
+// （docs/mechanics/70-ai.md §3.11）。
+//
+// funds 傳有號的資金原值，程式內部照原版取 >> 8。
+func CanSustainInvasion(funds, cities int) bool {
+	return funds>>8 >= cities*8+24
+}
+
+// InvasionThreshold 回傳維持侵攻所需的最低資金（原值，不是 >> 8 之後的）。
+// 只用於顯示與測試——判斷請用 CanSustainInvasion，那個才是照原版的比較法。
+func InvasionThreshold(cities int) int { return (cities*8 + 24) << 8 }

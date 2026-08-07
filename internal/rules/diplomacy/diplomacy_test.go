@@ -170,3 +170,41 @@ func TestCeaseFire(t *testing.T) {
 		t.Error("對方沒在侵攻時應該能停戰")
 	}
 }
+
+// ⭐ 財政撐不住就取消侵攻，門檻與據點數掛鉤。
+func TestInvasionSustainability(t *testing.T) {
+	// 14 個據點 → 門檻 = (14×8 + 24) << 8 = 136 << 8 = 34,816
+	const cities = 14
+	if got := InvasionThreshold(cities); got != 34816 {
+		t.Errorf("門檻 = %d, want 34816", got)
+	}
+	if !CanSustainInvasion(34816, cities) {
+		t.Error("剛好在門檻上應該撐得住")
+	}
+	if CanSustainInvasion(34815, cities) {
+		t.Error("低於門檻不該撐得住")
+	}
+
+	// 地盤越大，門檻越高。
+	if InvasionThreshold(30) <= InvasionThreshold(10) {
+		t.Error("據點多的門檻應該比較高")
+	}
+
+	// 疲弊（資金為負）一定撐不住 —— 這是「敵が疲弊中」有用的原因。
+	for _, f := range []int{-1, -1000, -655000} {
+		if CanSustainInvasion(f, 1) {
+			t.Errorf("資金 %d 不該撐得住侵攻", f)
+		}
+	}
+}
+
+// 劇本 1 曹操的實際數值：14 個據點、74,000 資金 → 撐得住。
+func TestScenario1CaoCaoCanInvade(t *testing.T) {
+	if !CanSustainInvasion(74000, 14) {
+		t.Error("曹操開局 74,000 資金 / 14 據點應該撐得起侵攻")
+	}
+	// 但如果只剩 3 萬就撐不住了。
+	if CanSustainInvasion(30000, 14) {
+		t.Error("資金掉到 30,000 就該取消侵攻")
+	}
+}

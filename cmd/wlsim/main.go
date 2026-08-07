@@ -24,6 +24,7 @@ import (
 
 	"github.com/wicanr2/wolong_cht/internal/assets/text"
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
+	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/state"
 )
@@ -121,9 +122,10 @@ func main() {
 
 	fmt.Printf("\n跑了 %d 個月（%d tick）。火災 %d 次、暴動 %d 次、暴風雨 %d 次。\n",
 		months, months*30*clock.TicksPerDay, fires, riots, storms)
-	fmt.Printf("玩家勢力：據點 %d　資金 %d　信賴度 %d　君主好戰等級 %d\n",
-		w.Factions[w.Player].Cities, w.Factions[w.Player].Funds,
-		w.Factions[w.Player].Trust, w.Factions[w.Player].Aggression)
+	p := w.Factions[w.Player]
+	fmt.Printf("玩家勢力：據點 %d　資金 %d　君主好戰等級 %d　侵攻可持續 %v\n",
+		p.Cities, p.Funds, p.Aggression,
+		diplomacy.CanSustainInvasion(p.Funds, p.Cities))
 }
 
 // big5 把 internal/state 保留的原始位元組轉成可以印的字串。
