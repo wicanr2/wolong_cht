@@ -799,3 +799,26 @@ func TestCorpsMeetAndFight(t *testing.T) {
 		t.Errorf("敗方軍團 %d 戰後士氣 %d，應低於 100", loser, m)
 	}
 }
+
+// 大將的位置一定要有兵——原版的壞滅判定直接看第一槽，
+// 空著的話軍團一編出來就會被判掉（docs/re/09 §5）。
+func TestFormCorpsNeedsGeneralSlot(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[0]
+	lord := w.Factions[f].Lord
+	w.Factions[f].Reserves = [economy.NumTroopTypes]int{6000, 6000, 6000}
+
+	kinds := [army.Positions]army.TroopType{}
+	// 第一槽空著，其餘有兵。
+	manned := [army.Positions]bool{false, true, true, true, true, true}
+	if err := w.FormCorps(lord, kinds, manned); err == nil {
+		t.Fatal("大將空著卻編成成功了")
+	}
+	// 全空更不行。
+	if err := w.FormCorps(lord, kinds, [army.Positions]bool{}); err == nil {
+		t.Fatal("六個位置全空卻編成成功了")
+	}
+	if w.Corps[lord].Alive {
+		t.Error("失敗卻留下了軍團")
+	}
+}

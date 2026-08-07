@@ -2,6 +2,7 @@
 # 在 headless X（Xvfb）底下跑 cmd/wlview 並截一張圖。
 #
 #   tools/shot.sh out.png [KEYS=Right,Right,Down] [程式參數…]
+#   WOLONG_SHOT_CMD=wlgame tools/shot.sh out.png …    截別支程式
 #
 # 用途是**驗收呈現層**。素材本身的解碼驗收用 cmd/wlshot（不需要 X），
 # 這支是為了證明「Ebiten 這一層真的跑得起來、版面沒跑掉」，
@@ -13,6 +14,7 @@ set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 IMAGE="${WOLONG_GO_IMAGE:-demonwinter-go}"
+CMD="${WOLONG_SHOT_CMD:-wlview}"
 CACHE_VOL=wl-gomod
 BUILD_VOL=wl-gobuild
 
@@ -37,11 +39,11 @@ docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
     -w /src \
     "$IMAGE" bash -c "
 set -e
-go build -o /tmp/wlview ./cmd/wlview
+go build -o /tmp/app ./cmd/$CMD
 Xvfb :99 -screen 0 1600x900x24 >/tmp/xvfb.log 2>&1 &
 XVFB_PID=\$!
 for i in \$(seq 1 50); do xdpyinfo -display :99 >/dev/null 2>&1 && break; sleep 0.1; done
-DISPLAY=:99 /tmp/wlview $* >/tmp/app.log 2>&1 &
+DISPLAY=:99 /tmp/app $* >/tmp/app.log 2>&1 &
 APP_PID=\$!
 sleep 3
 # **一定要包 timeout。** xdotool search --sync 在視窗永遠不出現時會無限等，

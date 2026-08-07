@@ -154,6 +154,13 @@ func (w *World) FormCorps(leader int, kinds [army.Positions]army.TroopType,
 	}
 	f := &w.Factions[g.Faction]
 
+	// **大將的位置一定要有兵。** 原版的壞滅判定 `sub_1474A` 直接看
+	// `[si+29h]`（第一槽的兵力）是不是 0，是就當軍團已經沒了——
+	// 所以一支大將空著的軍團一編出來就會被判掉（docs/re/09 §5）。
+	if !manned[0] {
+		return fmt.Errorf("state: 大將的位置一定要有兵")
+	}
+
 	// 先確認預備兵夠。**不足就整批不做**——原版沒有「編一半」這回事。
 	need := [economy.NumTroopTypes]int{}
 	for k, ok := range manned {

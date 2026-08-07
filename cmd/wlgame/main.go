@@ -99,6 +99,16 @@ type game struct {
 	list    *listwin.List
 	sortMem listwin.Memory
 
+	// listRow 把一列資料格式化成「名稱 ＋ 右邊那串數字」。
+	// 一覽表本身只管狀態機（listwin），顯示什麼由開啟它的人決定。
+	listRow func(id int) (name, cols string)
+	// listPick 是決定一列之後要做的事。回傳 true 表示關掉一覽表。
+	listPick func(id int) bool
+	listHint string
+
+	// form 是編成流程的狀態。
+	form formState
+
 	// 進言的狀態機：選指令 → 選對象 → 說服。
 	advise    adviseStage
 	adviseCmd persuasion.Command
@@ -135,8 +145,8 @@ const (
 // 刻意寫成一個函式而不是散在各視窗的開關程式碼裡——
 // 這樣「哪些視窗會停時間」只有一個地方可以改。
 func (g *game) timeRuns() bool {
-	// 一覽表與進言都是非常駐視窗 —— 開著就停時間。
-	if g.list != nil || g.adviseActive() {
+	// 一覽表、進言、編成都是非常駐視窗 —— 開著就停時間。
+	if g.list != nil || g.adviseActive() || g.form.active {
 		return false
 	}
 	for k := windowKind(0); k < numWindows; k++ {
@@ -164,6 +174,18 @@ func (g *game) openGeneralList() {
 		{Title: "政治", Less: func(a, b int) bool { return gs[a].Politics > gs[b].Politics }},
 		{Title: "評價", Less: func(a, b int) bool { return rating(a) > rating(b) }},
 	}, rows, 12, &g.sortMem)
+	g.listRow = func(i int) (string, string) {
+		gen := gs[i]
+		rr := general.General{Aptitude: gen.Aptitude, Martial: gen.Martial,
+			Command: gen.Command, Politics: gen.Politics}
+		return big5(gen.Name), fmt.Sprintf("%4d%8d%8d%8d",
+			gen.Martial, gen.Command, gen.Politics, rr.Rating())
+	}
+	g.listPick = func(i int) bool {
+		g.lastEvent = "選擇了 " + big5(gs[i].Name)
+		return true
+	}
+	g.listHint = "↑↓ 移動　Enter 選取／決定　1-5 排序　ESC 取消"
 }
 
 // drawList 畫一覽表。兩段式選取的「反白」用底色表示。
@@ -188,7 +210,6 @@ func (g *game) drawList(screen *ebiten.Image) {
 	rows, first := l.Visible()
 	ry := y + 26
 	for i, r := range rows {
-		gen := g.world.Generals[r]
 		col := white
 		if first+i == l.Cursor {
 			hl := color.RGBA{70, 60, 30, 255}
@@ -199,15 +220,13 @@ func (g *game) drawList(screen *ebiten.Image) {
 			vector.DrawFilledRect(screen, x+4, float32(ry-1), w-8,
 				float32(textdraw.GlyphH+2), hl, false)
 		}
-		g.td.Draw(screen, big5(gen.Name), x+8, ry, col)
-		rr := general.General{Aptitude: gen.Aptitude, Martial: gen.Martial,
-			Command: gen.Command, Politics: gen.Politics}
-		g.td.Draw(screen, fmt.Sprintf("%4d%8d%8d%8d",
-			gen.Martial, gen.Command, gen.Politics, rr.Rating()), x+88, ry, col)
+		name, cols := g.listRow(r)
+		g.td.Draw(screen, name, x+8, ry, col)
+		g.td.Draw(screen, cols, x+88, ry, col)
 		ry += textdraw.GlyphH + 2
 	}
 
-	hint := "↑↓ 移動　Enter 選取／決定　1-5 排序　ESC 取消"
+	hint := g.listHint
 	if l.Phase() == listwin.Selected {
 		hint = "已選取　Enter 決定　ESC 退回"
 	}
@@ -254,8 +273,9 @@ func (g *game) Update() error {
 			g.list.Move(1)
 		case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
 			if id, ok := g.list.Confirm(); ok {
-				g.lastEvent = "選擇了 " + big5(g.world.Generals[id].Name)
-				g.list = nil
+				if g.listPick(id) {
+					g.list = nil
+				}
 			}
 		case pressed(ebiten.KeyEscape):
 			if g.list.Cancel() {
@@ -270,8 +290,23 @@ func (g *game) Update() error {
 		}
 		return nil
 	}
-	if pressed(ebiten.KeyG) {
+	// 編成畫面是模態的，優先吃輸入。
+	if g.form.active {
+		g.updateForm()
+		return nil
+	}
+	switch {
+	case pressed(ebiten.KeyG):
 		g.openGeneralList()
+		return nil
+	case pressed(ebiten.KeyC):
+		g.openCorpsList()
+		return nil
+	case pressed(ebiten.KeyA):
+		g.beginForm()
+		return nil
+	case pressed(ebiten.KeyM):
+		g.beginMarch()
 		return nil
 	}
 	if pressed(ebiten.KeyEscape) {
@@ -335,6 +370,7 @@ func (g *game) Update() error {
 		for _, i := range ev.Eliminated {
 			g.lastEvent = big5(g.world.LordName(i)) + " 滅亡"
 		}
+		g.reportCorps(ev)
 	}
 	return nil
 }
@@ -445,20 +481,24 @@ func (g *game) Draw(screen *ebiten.Image) {
 	}
 
 	// 底部狀態列自己鋪底，否則字會壓在地圖上看不清楚。
-	vector.DrawFilledRect(screen, 0, screenH-19, mapW, 19, color.RGBA{0, 0, 0, 210}, false)
-	g.td.Draw(screen, "1-4 視窗　P 進言　G 武將一覽　方向鍵 捲動　F10 離開",
-		4, screenH-17, dim)
+	// **事件列與按鍵列分開兩行**——戰報比按鍵提示長得多，
+	// 擠在同一行會被畫到資訊欄上或直接跑出畫面。
 	if g.lastEvent != "" {
-		g.td.Draw(screen, g.lastEvent, mapW+6, screenH-17, amber)
+		vector.DrawFilledRect(screen, 0, screenH-38, mapW, 19, color.RGBA{0, 0, 0, 210}, false)
+		g.td.Draw(screen, g.lastEvent, 4, screenH-36, amber)
 	}
+	vector.DrawFilledRect(screen, 0, screenH-19, mapW, 19, color.RGBA{0, 0, 0, 210}, false)
+	g.td.Draw(screen, "1-4 視窗　P 進言　A 編成　M 行軍　C 軍團　G 武將　F10 離開",
+		4, screenH-17, dim)
 	if !g.td.Available() {
-		g.td.Draw(screen, "（未載入字型）", mapW+6, screenH-36,
+		g.td.Draw(screen, "（未載入字型）", mapW+6, screenH-17,
 			color.RGBA{240, 140, 140, 255})
 	}
 
 	if g.list != nil {
 		g.drawList(screen)
 	}
+	g.drawForm(screen)
 	g.drawAdvise(screen)
 
 	if g.quitting {
@@ -532,6 +572,8 @@ func main() {
 	openWin := flag.Int("open-window", -1, "截圖前先打開第幾個視窗（0–3，驗收暫停規則用）")
 	openList := flag.Bool("open-list", false, "截圖前先開武將一覽（驗收用）")
 	openAdvise := flag.Bool("open-advise", false, "截圖前先跑到說服畫面（驗收用）")
+	openForm := flag.Bool("open-form", false, "截圖前先編一支軍團並開編成畫面（驗收用）")
+	openCorps := flag.Bool("open-corps", false, "截圖前先編兩支軍團並開軍團一覽（驗收用）")
 	flag.Parse()
 
 	lib, err := library.Load(*dir)
@@ -580,6 +622,10 @@ func main() {
 		g.openGeneralList()
 		g.list.Move(2)
 		g.list.Confirm() // 展示反白狀態
+	}
+	if *openForm || *openCorps {
+		// 驗收用：直接編幾支軍團出來，免得截圖前要按一長串鍵。
+		g.demoCorps(*openCorps)
 	}
 	if *openAdvise {
 		g.openAdvise()
