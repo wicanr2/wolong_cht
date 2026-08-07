@@ -24,8 +24,8 @@
 **M0 進行中，`TALK.DAT` 已全解（M2 的核心已經拿下）。**
 兩版素材入庫、兩版 `KI.EXE` 進 IDA、逐檔比對完成；
 `TALK.DAT` 兩版都 byte-for-byte round-trip 通過，日中對照表已產出並找到 15 則譯文缺陷。
-`.BRG` 調色盤與 `KAOGRF.DAT` 頭像也已全解（150 張 64×64 已渲染驗收）。
-**下一步：另外三個 `*GRF.DAT` 的尺寸**——照 `docs/re/03` §5 的路徑走，不要猜。
+`.BRG` 調色盤與**四個圖庫全部解完**（`ICONGRF` 剩兩段）。
+**下一步：`MMAP.*` 大地圖三件**（`docs/re/03` 的路徑已經走通三次，照做）。
 
 ---
 
@@ -49,7 +49,9 @@
 | **`.BRG` 調色盤全解** | **READY**。`docs/formats/02` ＋ `docs/re/02`。通道順序 B,R,G、4 bit、每組 16 色、亮度 0–16，兩版機器碼互證 |
 | **顯示模式定案** | 兩版都是 **16 色 4 平面 planar**（DOS/V VGA GC+Seq、PC-98 GRCG）→ `*GRF.DAT` 是 4 bpp |
 | **四季調色盤** | `GAMEPAL` banks 0–3 只差色號 14：灰綠→鮮綠→橙褐→雪白 |
-| **`KAOGRF.DAT` 全解** | **READY**。`docs/formats/03` ＋ `docs/re/03`。150 張 64×64 4bpp plane-major，餘 0 B，已渲染驗收 |
+| **四個圖庫全解** | `docs/formats/03`。`KAOGRF` 150×64×64、`KYOGRF` 15×96×96（據點景觀）、`IVENTGRF` 3×288×176（劇情過場）**全部餘 0 B 並渲染驗收**；`ICONGRF` 是四段組合檔，段 0（640×32 標題橫幅）與段 2（192×128 縮小地圖）已解 |
+| **中文化缺口第一項** | `docs/reference/03`。主畫面標題橫幅寫的是日文「臥竜伝」，`ICONGRF` 兩版相同 → **松崗版沒重繪** |
+| **DOSBox-X 設定** | `dosbox/`。出自 msdostest（實測 `__PASS__`），`core=normal` ＋ 固定 `cycles=20000` → **即時制的可重現性解決了** |
 | **AI 機制文件開張** | `docs/mechanics/70-ai.md`（＋ `00-index.md`）。內容目前全來自日文說明書第 10、11 章，每條都標了等級 |
 | GitHub repo | https://github.com/wicanr2/wolong_cht（private） |
 
@@ -57,7 +59,7 @@
 
 | 項目 | 狀態 |
 |---|---|
-| DOSBox／np2 環境 | **未開始**。即時制的可重現性是前置問題（`CLAUDE.md` §5） |
+| DOSBox-X 環境 | 設定已就緒（`dosbox/`），**還沒實跑**。np2 不需要了——DOSBox-X 的 `machine=pc98` 兩版通吃 |
 | 字型來源 | 半解：PC-98 靠字型 ROM，DOS/V 需外部中文系統。**剩「玩家自備 vs 打包漏檔」未定案** |
 | 防拷檢查 | **未查**。PC-98 的自製 `FGDOS` 是頭號嫌疑犯 |
 | 日文說明書全文判讀 | 38 頁只讀了 3 頁。純掃描無文字層，要 OCR 或逐頁看 |
@@ -79,6 +81,8 @@
 | `docs/mechanics/70-ai.md` | **電腦 AI 的判斷邏輯**（蒐集中） |
 | `docs/reference/01-jp-manual.md` | 日文原版說明書判讀紀錄（逐頁累加） |
 | `docs/reference/02-jp-cht-diff.md` | 日中對照：15 則譯文缺陷 |
+| `docs/reference/03-baked-japanese.md` | 燒進美術裡的日文（松崗沒重繪的部分） |
+| `dosbox/` | 兩版的 DOSBox-X 設定 ＋ 出處 |
 | `translations/extract/talk-{dosv,pc98}.json` | 抽出的 1,022 則訊息（兩版） |
 | `tools/fdi_extract.py` | PC-98 FDI 磁片抽檔 |
 | `tools/ida.sh` | IDA Pro 9.4 headless 包裝 |
@@ -132,8 +136,9 @@
 
 ### 7.1 M0 剩餘
 
-- [ ] DOSBox docker 化，**先解決即時制的可重現性**（`CLAUDE.md` §5）
-- [ ] np2（Neko Project）環境，跑 PC-98 版
+- [x] ~~即時制的可重現性~~ — msdostest 的設定用 `core=normal` ＋ 固定 `cycles`，已解
+- [ ] DOSBox-X docker 化並實跑兩版（設定已在 `dosbox/`）
+- [x] ~~np2 環境~~ — 不需要，DOSBox-X `machine=pc98` 兩版通吃
 - [ ] 字型來源結案：DOSBox 實跑看它抱不抱怨缺 `STDFONT.24`
 - [ ] 防拷檢查排除：查 `FGDOS.SYS`、兩版 `KI.EXE` 的磁碟／磁片存取
 - [ ] 日文說明書 38 頁全判讀 → `docs/reference/01`
@@ -141,7 +146,7 @@
 ### 7.2 M1 起手順序（依投報排）
 
 1. ~~`.BRG` 調色盤~~ ✅ **完成**，`docs/formats/02` READY
-2. `*GRF.DAT` 圖庫 — `KAOGRF` ✅ 完成；`ICONGRF`／`KYOGRF`／`IVENTGRF` 待解（`docs/re/03` §5 有路徑）
+2. ~~`*GRF.DAT` 圖庫~~ ✅ **完成**（`ICONGRF` 段 1／段 3 待補）
 3. `MMAP.*` 大地圖三件（兩版全同）
 4. `BATTLE.*` 戰場（兩版全同）
 5. `SINARIO.DAT` ／ `SAVE.DAT`（兩版大小同內容異 → diff 定位字串欄位）

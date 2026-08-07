@@ -91,6 +91,31 @@ def cmd_sheet(src, width, height, palpath, bank, out, per_row=15):
           f'排成 {cols}×{sheet_rows}（餘 {len(blob) % size} B）')
 
 
+def cmd_region(src, offset, width, height, palpath, bank, out, per_row=16):
+    """解組合檔裡的一段。`ICONGRF.DAT` 是四段拼起來的，每段尺寸不同。
+
+    offset 可以寫 0x2800 或十進位。count 由段長推算——
+    段長是載入器的 `di` 值，不是檔案長度。
+    """
+    width, height, per_row = int(width), int(height), int(per_row)
+    offset = int(str(offset), 0)
+    blob = open(src, 'rb').read()[offset:]
+    size = frame_bytes(width, height)
+    count = len(blob) // size
+    pal = _palette(palpath, bank)
+    cols = min(per_row, count)
+    sheet_rows = (count + cols - 1) // cols
+    canvas = [[(0, 0, 0)] * (cols * width) for _ in range(sheet_rows * height)]
+    for i in range(count):
+        cx, cy = (i % cols) * width, (i // cols) * height
+        for y, row in enumerate(decode(blob, i * size, width, height)):
+            for x, idx in enumerate(row):
+                canvas[cy + y][cx + x] = pal[idx]
+    _png(out, cols * width, sheet_rows * height, canvas)
+    print(f'{out}: 位移 0x{offset:X} 起 {count} 張 {width}×{height}'
+          f'（餘 {len(blob) % size} B）')
+
+
 def cmd_one(src, width, height, palpath, bank, index, out, zoom=4):
     width, height, index, zoom = int(width), int(height), int(index), int(zoom)
     blob = open(src, 'rb').read()
@@ -105,7 +130,7 @@ def cmd_one(src, width, height, palpath, bank, index, out, zoom=4):
 if __name__ == '__main__':
     if len(sys.argv) < 3:
         sys.exit(__doc__)
-    fn = {'sheet': cmd_sheet, 'one': cmd_one}.get(sys.argv[1])
+    fn = {'sheet': cmd_sheet, 'region': cmd_region, 'one': cmd_one}.get(sys.argv[1])
     if not fn:
         sys.exit(__doc__)
     sys.exit(fn(*sys.argv[2:]) or 0)
