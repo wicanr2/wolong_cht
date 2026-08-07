@@ -113,6 +113,15 @@ func (g General) Rules() general.General {
 
 // World 是一整個遊戲狀態。
 type World struct {
+	// raw 是載入時那個劇本區塊的完整位元組。
+	//
+	// **存檔採「改寫」而不是「重建」**（CLAUDE.md §10）：
+	// Save 會從這份原始位元組出發，只覆寫已經解出來的欄位，
+	// 其餘一個 byte 都不動。這樣還沒解的區域（事件佇列、軍團表、
+	// 那 69 byte 不載入的空隙…）能原封不動保留，
+	// 存檔也不會因為我們理解不完整而損毀。
+	raw []byte
+
 	Clock    clock.Clock
 	Factions [numFactions]Faction
 	Cities   [numCities]City
@@ -170,7 +179,7 @@ func LoadScenario(path string, index int) (*World, error) {
 	}
 	b := raw[index*blockSize : (index+1)*blockSize]
 
-	w := &World{Player: -1}
+	w := &World{Player: -1, raw: append([]byte(nil), b...)}
 
 	// 遊戲時鐘（docs/formats/08 §1.1）。+0x01 的該月天數不另存，
 	// clock 套件用 DaysInMonth(Month) 算得出來。
@@ -357,4 +366,135 @@ func (w *World) LordName(faction int) string {
 		return ""
 	}
 	return w.Generals[f.Lord].Name
+}
+
+// ---------------------------------------------------------------------------
+// 存檔
+// ---------------------------------------------------------------------------
+
+func putU16(b []byte, off, v int) {
+	binary.LittleEndian.PutUint16(b[off:], uint16(v))
+}
+
+// putI24 寫一個有號 24 位元的值，並照原版的上下限鉗住。
+func putI24(b []byte, off, v int) {
+	if v > economy.MaxFunds {
+		v = economy.MaxFunds
+	}
+	if v < economy.MinFunds {
+		v = economy.MinFunds
+	}
+	u := uint32(v) & 0xFFFFFF
+	b[off] = byte(u)
+	b[off+1] = byte(u >> 8)
+	b[off+2] = byte(u >> 16)
+}
+
+// Bytes 把世界狀態寫回一個 22,208 byte 的劇本／存檔區塊。
+//
+// **策略是「改寫」不是「重建」**：從載入時的原始位元組出發，
+// 只覆寫下面列出的已解欄位。還沒解的區域一個 byte 都不動。
+//
+// 這條規則不是潔癖——原版區塊裡至少還有事件佇列（+0x52C0 起 1,024 B，
+// 256 筆 × 4 B）、軍團表（+0x22C0 起 127 筆 × 32 B）、
+// 以及 +0x3B–+0x7F 那 69 byte 不載入的空隙。
+// 重建會把它們全部歸零，等於損毀存檔。
+func (w *World) Bytes() []byte {
+	b := append([]byte(nil), w.raw...)
+
+	// 遊戲時鐘。+0x01 的該月天數是快取值，原版在換月時一起寫，
+	// 這裡也一起寫回去，否則進位判斷會用到舊的天數。
+	b[0x00] = byte(w.Clock.Day)
+	b[0x01] = byte(clock.DaysInMonth(w.Clock.Month))
+	b[0x02] = byte(w.Clock.Subtick)
+	b[0x03] = byte(w.Clock.Hour)
+	putU16(b, 0x04, w.Clock.Month)
+	putU16(b, 0x06, w.Clock.Year)
+
+	b[taxOffset] = byte(w.TaxRate)
+	b[nextSettings] = byte(w.NextTaxRate)
+	for i := 0; i < int(economy.NumTroopTypes); i++ {
+		putU16(b, recruitCapOffset+i*2, w.RecruitCap[i])
+		putU16(b, nextSettings+2+i*2, w.NextRecruitCap[i])
+	}
+
+	for i, f := range w.Factions {
+		r := b[factionBase+i*factionSize:]
+		if f.Alive {
+			r[0x00] |= 0x80
+		} else {
+			r[0x00] &^= 0x80
+		}
+		r[0x01] = byte(f.Lord)
+		r[0x02] = byte(f.Advisor)
+		r[0x03] = byte(f.Capital)
+		for t := 0; t < int(economy.NumTroopTypes); t++ {
+			putU16(r, 0x04+t*2, f.Reserves[t])
+		}
+		r[0x18] = byte(f.Generals)
+		putI24(r, 0x1A, f.Expense)
+		r[0x1D] = byte(f.Trust)
+		putI24(r, 0x20, f.Funds)
+		r[0x23] = byte(f.Cities)
+		r[0x28] = byte(f.Aggression)
+		r[0x2A] = byte(f.Diplomat)
+	}
+
+	for i, c := range w.Cities {
+		r := b[cityBase+i*citySize:]
+		r[0x01] = byte(c.Owner)
+		copy(r[0x02:0x08], []byte(c.Name))
+		putU16(r, 0x08, c.X)
+		putU16(r, 0x0A, c.Y)
+		putU16(r, 0x0C, c.ProductionCap)
+		putU16(r, 0x0E, c.Production)
+		r[0x10] = byte(c.Growth + 100)
+		r[0x11] = byte(c.Prevention)
+		r[0x12] = byte(c.GarrisonCap)
+		r[0x13] = byte(c.Garrison)
+		r[0x19] = byte(c.Governor)
+		r[0x1A] = byte(c.OwnerRecorded)
+	}
+
+	for i, g := range w.Generals {
+		r := b[generalBase+i*generalSize:]
+		if g.Alive {
+			r[0x00] |= 0x80
+		} else {
+			r[0x00] &^= 0x80
+		}
+		copy(r[0x02:0x08], []byte(g.Name))
+		copy(r[0x08:0x0E], []byte(g.Alias))
+		// 適性存的是 ×16 的值（讀進來時 >>4）。
+		for k := 0; k < 3; k++ {
+			r[0x0E+k] = byte(g.Aptitude[k] << 4)
+		}
+		r[0x11] = byte(g.Martial)
+		r[0x12] = byte(g.Command)
+		r[0x13] = byte(g.Politics)
+		r[0x18] = byte(g.Timer)
+		r[0x1C] = byte(g.Faction)
+		r[0x1D] = byte(g.Posting)
+	}
+	return b
+}
+
+// SaveInto 把這個世界寫回檔案的第 index 個區塊，其餘三個區塊原封不動。
+//
+// ⚠ 原版資產是唯讀的（CLAUDE.md §10）。這個函式**只寫呼叫端指定的
+// 輸出路徑**，不會就地改原始檔——要覆寫原版存檔是呼叫端的決定。
+func (w *World) SaveInto(srcPath, dstPath string, index int) error {
+	raw, err := os.ReadFile(srcPath)
+	if err != nil {
+		return err
+	}
+	if len(raw) != blockSize*numBlocks {
+		return fmt.Errorf("%s 大小 %d，預期 %d", srcPath, len(raw), blockSize*numBlocks)
+	}
+	if index < 0 || index >= numBlocks {
+		return fmt.Errorf("槽位 %d 超出 0–%d", index, numBlocks-1)
+	}
+	out := append([]byte(nil), raw...)
+	copy(out[index*blockSize:(index+1)*blockSize], w.Bytes())
+	return os.WriteFile(dstPath, out, 0o644)
 }

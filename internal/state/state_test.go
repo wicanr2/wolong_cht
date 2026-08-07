@@ -264,3 +264,159 @@ func (r *testRand) Next() int {
 }
 
 var _ economy.Rand = (*testRand)(nil)
+
+// ---------------------------------------------------------------------------
+// 存檔寫回
+// ---------------------------------------------------------------------------
+
+// ⭐ Round-trip：載入之後原封不動寫回，必須與原始位元組**完全相同**。
+//
+// 這是「改寫而非重建」策略的驗收條件。只要有任何一個未解欄位被誤寫成 0，
+// 或任何一個已解欄位的編碼寫錯（偏移、位元組序、+100 偏移…），
+// 這條測試就會抓到。
+func TestSaveRoundTrip(t *testing.T) {
+	raw, err := os.ReadFile(origPath)
+	if err != nil {
+		t.Skip("找不到原版 SINARIO.DAT，跳過")
+	}
+	for idx := 0; idx < 4; idx++ {
+		w, err := LoadScenario(origPath, idx)
+		if err != nil {
+			t.Fatal(err)
+		}
+		got := w.Bytes()
+		want := raw[idx*blockSize : (idx+1)*blockSize]
+		if len(got) != len(want) {
+			t.Fatalf("劇本 %d：長度 %d, want %d", idx+1, len(got), len(want))
+		}
+		for i := range want {
+			if got[i] != want[i] {
+				t.Fatalf("劇本 %d：偏移 0x%X 不同（得到 %02X，原始 %02X）",
+					idx+1, i, got[i], want[i])
+			}
+		}
+	}
+}
+
+// 改過的欄位要真的寫進去，而且只動該動的地方。
+func TestSaveWritesChanges(t *testing.T) {
+	w := load(t, 0)
+	before := w.Bytes()
+
+	w.Factions[0].Funds = -12345
+	w.Factions[0].Trust = 77
+	w.Cities[0].Growth = -50
+	w.Cities[0].Production = 4242
+	w.Clock.Month = 7
+	w.TaxRate = 42
+
+	after := w.Bytes()
+	if len(before) != len(after) {
+		t.Fatal("長度變了")
+	}
+	diff := 0
+	for i := range before {
+		if before[i] != after[i] {
+			diff++
+		}
+	}
+	// 資金 3 B ＋ 信賴度 1 ＋ 上昇值 1 ＋ 生產力 2 ＋ 月 1（u16 高位不變）
+	// ＋ 該月天數 1 ＋ 稅率 1 ＝ 10 個 byte。
+	if diff != 10 {
+		t.Errorf("改了 %d 個 byte，預期 10（多出來的表示動到不該動的地方）", diff)
+	}
+
+	// 讀回來要一致。
+	reloaded, err := reparse(after)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if reloaded.Factions[0].Funds != -12345 {
+		t.Errorf("資金 = %d, want −12345", reloaded.Factions[0].Funds)
+	}
+	if reloaded.Cities[0].Growth != -50 {
+		t.Errorf("上昇值 = %d, want −50", reloaded.Cities[0].Growth)
+	}
+	if reloaded.TaxRate != 42 {
+		t.Errorf("稅率 = %d, want 42", reloaded.TaxRate)
+	}
+	if reloaded.Clock.Month != 7 {
+		t.Errorf("月 = %d, want 7", reloaded.Clock.Month)
+	}
+	// 換月之後該月天數要跟著更新，否則進位判斷會用到舊值。
+	if after[0x01] != 31 {
+		t.Errorf("7 月的天數欄位 = %d, want 31", after[0x01])
+	}
+}
+
+// 資金寫回時要照原版的上下限鉗住。
+func TestSaveClampsFunds(t *testing.T) {
+	w := load(t, 0)
+	w.Factions[0].Funds = 99_999_999
+	got, err := reparse(w.Bytes())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got.Factions[0].Funds != 655000 {
+		t.Errorf("資金 = %d, want 655000（上限）", got.Factions[0].Funds)
+	}
+	w.Factions[0].Funds = -99_999_999
+	got, _ = reparse(w.Bytes())
+	if got.Factions[0].Funds != -655000 {
+		t.Errorf("資金 = %d, want −655000（下限）", got.Factions[0].Funds)
+	}
+}
+
+// 跑過一段時間之後存檔，未解區域仍然必須與原始檔完全相同。
+// **這才是「改寫而非重建」真正要防的事**——遊戲跑了一陣子之後
+// 才存檔，是最容易把沒理解的區域寫壞的時機。
+func TestSaveAfterSimulationPreservesUnknownRegions(t *testing.T) {
+	raw, err := os.ReadFile(origPath)
+	if err != nil {
+		t.Skip("找不到原版 SINARIO.DAT，跳過")
+	}
+	w := load(t, 0)
+	w.Player = 0
+	rng := &testRand{s: 999}
+	for months := 0; months < 24; {
+		if w.Tick(rng).Settled {
+			months++
+		}
+	}
+	got := w.Bytes()
+	orig := raw[:blockSize]
+
+	// 這些區間是**還沒解的**，跑再久也不該被動到。
+	regions := []struct {
+		name     string
+		from, to int
+	}{
+		{"+0x3B–0x7F 不載入的空隙", 0x3B, 0x80},
+		{"軍團表", 0x22C0, 0x42C0},
+		{"事件佇列", 0x52C0, 0x56C0},
+	}
+	for _, r := range regions {
+		for i := r.from; i < r.to; i++ {
+			if got[i] != orig[i] {
+				t.Fatalf("%s 的偏移 0x%X 被動到了（%02X → %02X）",
+					r.name, i, orig[i], got[i])
+			}
+		}
+	}
+}
+
+// reparse 把一個區塊的位元組重新解析成 World，測試用。
+func reparse(block []byte) (*World, error) {
+	full := make([]byte, blockSize*numBlocks)
+	copy(full, block)
+	f, err := os.CreateTemp("", "wolong-*.dat")
+	if err != nil {
+		return nil, err
+	}
+	defer os.Remove(f.Name())
+	if _, err := f.Write(full); err != nil {
+		return nil, err
+	}
+	f.Close()
+	return LoadScenario(f.Name(), 0)
+}
