@@ -23,6 +23,7 @@ IMAGE="${WOLONG_DOSBOXX_IMAGE:-wolong-dosboxx}"
 #   floppy     照原樣掛五片磁片開機。**遊戲會報「ファイルが異常です」**
 #              ——它預期檔案都在同一顆硬碟上，跨片找不到。
 MODE="${WOLONG_PC98_MODE:-mount}"
+AUTOLOCK="${WOLONG_AUTOLOCK:-true}"
 TIMELINE="${1:-wait:15;shot:pc98-default}"
 FDI="$REPO_ROOT/workplace/dosbox/pc98_fdi"
 GAME="$REPO_ROOT/workplace/dosbox/pc98"
@@ -54,14 +55,15 @@ fi
 docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
     --network none --memory 2g --cpus 2 --pids-limit 256 \
     -v "$FDI:/fdi" -v "$GAME:/game" -v "$SHOTS:/shots" \
-    -u "$(id -u):$(id -g)" -e HOME=/tmp \
+    -u "$(id -u):$(id -g)" -e HOME=/tmp -e AUTOLOCK="$AUTOLOCK" \
     "$IMAGE" bash -c "
 set -e
 cat > /tmp/dosbox-x.conf <<'EOF'
 [sdl]
-# autolock 一定要開：關掉的話 DOSBox 不會把滑鼠事件轉給 guest，
-# xdotool 的合成點擊會被吃掉，看起來像「遊戲不理滑鼠」。
-autolock=true
+# autolock 由環境變數控制，兩種模式各有問題（見 docs/playtest/04）：
+#   true  → 點擊進得去，但 DOSBox 收相對位移，游標定不了位
+#   false → 可用絕對座標定位，但要確認點擊進不進得去
+autolock=\$AUTOLOCK
 [dosbox]
 memsize=8
 machine=pc98
@@ -92,6 +94,11 @@ if [ -z \"\$WID\" ]; then
     kill -9 \$DB \$XVFB 2>/dev/null || true; exit 1
 fi
 DISPLAY=:99 xdotool windowactivate --sync \$WID 2>/dev/null || true
+# 視窗在 root 上的絕對位置。DOSBox 讀的是**絕對指標位置**，
+# 用 `xdotool mousemove --window` 送相對座標它收不到 ——
+# 症狀是點擊完全沒反應，看起來像「遊戲不理滑鼠」。
+eval \$(DISPLAY=:99 xdotool getwindowgeometry --shell \$WID)
+echo \"視窗位置 (\$X,\$Y) 大小 \${WIDTH}x\${HEIGHT}\"
 IFS=';' read -ra STEPS <<< '$TIMELINE'
 for step in \"\${STEPS[@]}\"; do
     kind=\${step%%:*}; arg=\${step#*:}
@@ -99,11 +106,31 @@ for step in \"\${STEPS[@]}\"; do
         wait) sleep \"\$arg\" ;;
         key)  DISPLAY=:99 xdotool key --window \$WID --clearmodifiers \"\$arg\"; sleep 0.4 ;;
         type) DISPLAY=:99 xdotool type --window \$WID --delay 60 \"\$arg\"; sleep 0.4 ;;
-        click) # 遊戲要滑鼠（KI.EXE 有 \'Mouse driver not install ?\'）。
-               # arg 格式 x,y；不給就點畫面中央。
+        click|rclick)
+               # ⚠ autolock 擷取滑鼠之後，DOSBox 收的是**相對位移**，
+               # 絕對定位（xdotool mousemove 到某個 root 座標）會漂 ——
+               # 症狀是游標位置與送的座標對不上，點到隔壁的選項。
+               # 標準做法：先往左上角灌一個大位移把游標「歸零」（會被夾住），
+               # 再走精確的相對位移過去。
                cx=\${arg%%,*}; cy=\${arg##*,}
-               DISPLAY=:99 xdotool mousemove --window \$WID \"\$cx\" \"\$cy\" click 1
+               btn=1; [ \"\$kind\" = rclick ] && btn=3
+               if [ \"\$AUTOLOCK\" = false ]; then
+                   DISPLAY=:99 xdotool mousemove \$((X+cx)) \$((Y+cy))
+               else
+                   DISPLAY=:99 xdotool mousemove_relative -- -2000 -2000
+                   sleep 0.1
+                   DISPLAY=:99 xdotool mousemove_relative -- \"\$cx\" \"\$cy\"
+               fi
+               sleep 0.2
+               DISPLAY=:99 xdotool mousedown \$btn
+               sleep 0.15
+               DISPLAY=:99 xdotool mouseup \$btn
                sleep 0.5 ;;
+        move)  cx=\${arg%%,*}; cy=\${arg##*,}
+               DISPLAY=:99 xdotool mousemove_relative -- -2000 -2000
+               sleep 0.1
+               DISPLAY=:99 xdotool mousemove_relative -- \"\$cx\" \"\$cy\"
+               sleep 0.3 ;;
         shot) DISPLAY=:99 import -window \$WID \"/shots/\$arg.png\" && echo \"  截圖 \$arg.png\" ;;
     esac
 done
