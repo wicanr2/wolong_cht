@@ -64,6 +64,8 @@ Go 版與 Python 版的輸出逐像素完全相同。
 | **地圖尺寸定案** | **384 × 256 格**（`sub_1E4CE` 的 `cmp cx, 180h` ＋ 列跨距 0x18 段；98,304 ÷ 384 ＝ 256）|
 | **`MMAP.MAP` 全解** | **READY**。RLE（用連續兩個相同 byte 當 run 觸發，無逃脫字元），80,716 → 98,308 B，取前 98,304 ＝ 384×256。畫出來是連貫的中國地圖 |
 | **Go 世界地圖層** | `internal/assets/{rle,world}` ＋ 測試（尺寸、圖塊種類≥100、最常見圖塊不超過 1/3、兩版解出長度相同）|
+| **`BATTLE.*` 分段結構** | `docs/formats/07`。`BATTLE.MAP` ＝ 512 B 索引 ＋ **214 個戰場** × 4,096 B；`BATTLE.MDL` ＝ 4,096 B 表頭 ＋ 3 組 × 63,488 B（合計 194,560 ＝ 檔長）。緩衝區配置四個數字同時對上 |
+| **確認 `BATTLE.*` 不壓縮** | 只有 `MMAP.MAP` 走 RLE 那一支載入器。特地查過才寫——「都是地圖資料應該都壓縮」正是最容易犯的跨檔案外推 |
 | **自動連接機制** | 道路／河流會依鄰格換圖塊（`sub_1E57F`，值域 `0xB8`–`0xDD`）。**remake 照抄查表會讓接邊斷掉** |
 | **逐片抽檔修正** | `workplace/orig/pc98_discs/{A..E}` 是權威來源；合併目錄 A 片優先。踩到「同名檔被後片靜靜蓋掉」（`YNSHELL.COM` 2699 vs 2675 B），工具已加比對警告 |
 | **`.MAP`/`.SCH` 容器格式** | `docs/formats/04`。索引 (offset,length) ＋ 壓縮片段，六個檔的末端全部等於檔長。**只有松崗自加的檔用這格式**，原版的 `MMAP`/`BATTLE` 是裸資料 |
@@ -108,6 +110,7 @@ Go 版與 Python 版的輸出逐像素完全相同。
 | `docs/formats/04-map-sch-container.md` | `.MAP`/`.SCH` 容器格式 |
 | `docs/formats/05-mmap-worldmap.md` | 大地圖：圖塊、384×256、自動連接 |
 | `docs/formats/06-mmap-rle.md` | **READY** — `MMAP.MAP` 的 RLE 壓縮 |
+| `docs/formats/07-battle.md` | 戰場：分段結構已解，像素格式未解 |
 | `README.md` | 公開的專案入口 |
 | `translations/extract/talk-{dosv,pc98}.json` | 抽出的 1,022 則訊息（兩版） |
 | `tools/fdi_extract.py` | PC-98 FDI 磁片抽檔 |
