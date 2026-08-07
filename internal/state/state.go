@@ -141,6 +141,14 @@ type World struct {
 	// 但劇本檔裡沒有（開新遊戲時才選），所以預設 −1。
 	Player int
 
+	// Trust 是信賴度：君主對軍師（＝玩家）的評價。
+	// 歸 0 → 被逐出勢力 → Game Over（docs/mechanics/80-victory.md §1）。
+	//
+	// ⚠ **它在存檔裡的位置還沒找到。** 勢力記錄 +0x1D 曾被誤判成信賴度，
+	// 實際是士氣基準（docs/re/08 §4）。所以這一欄目前是**執行期狀態**，
+	// 存檔不會保留 —— 找到欄位之前不要假裝存得起來。
+	Trust int
+
 	// 稅率與募兵數是**玩家專屬**的設定（AI 不用，見 docs/re/07 §8）。
 	// Next 那一組是玩家在財政視窗改的值，月結時才搬到生效那一組。
 	TaxRate        int
@@ -189,7 +197,8 @@ func LoadScenario(path string, index int) (*World, error) {
 	}
 	b := raw[index*blockSize : (index+1)*blockSize]
 
-	w := &World{Player: -1, raw: append([]byte(nil), b...)}
+	// 信賴度的欄位還沒找到，開局先給說明書截圖上的值。
+	w := &World{Player: -1, Trust: 200, raw: append([]byte(nil), b...)}
 
 	// 遊戲時鐘（docs/formats/08 §1.1）。+0x01 的該月天數不另存，
 	// clock 套件用 DaysInMonth(Month) 算得出來。

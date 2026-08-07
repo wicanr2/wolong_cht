@@ -42,6 +42,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/rules/general"
+	"github.com/wicanr2/wolong_cht/internal/rules/persuasion"
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
@@ -97,6 +98,14 @@ type game struct {
 	list    *listwin.List
 	sortMem listwin.Memory
 
+	// 進言的狀態機：選指令 → 選對象 → 說服。
+	advise    adviseStage
+	adviseCmd persuasion.Command
+	target    int
+	sess      *persuasion.Session
+	sessCur   int
+	adviseLog []string
+
 	lastEvent string
 	quitting  bool
 
@@ -107,6 +116,16 @@ type game struct {
 	shotAt   int
 	frame    int
 }
+
+// adviseStage 是進言的三個階段。
+type adviseStage int
+
+const (
+	adviseNone        adviseStage = iota
+	advisePickCommand             // 選敵對／停戰／協力
+	advisePickTarget              // 選對象勢力
+	advisePersuade                // 君主拒絕了，開始說服
+)
 
 type lcg struct{ s uint32 }
 
@@ -122,8 +141,8 @@ func (r *lcg) Next() int {
 // 刻意寫成一個函式而不是散在各視窗的開關程式碼裡——
 // 這樣「哪些視窗會停時間」只有一個地方可以改。
 func (g *game) timeRuns() bool {
-	// 一覽表是非常駐視窗 —— 開著就停時間。
-	if g.list != nil {
+	// 一覽表與進言都是非常駐視窗 —— 開著就停時間。
+	if g.list != nil || g.adviseActive() {
 		return false
 	}
 	for k := windowKind(0); k < numWindows; k++ {
@@ -220,6 +239,15 @@ func (g *game) Update() error {
 	}
 	if pressed(ebiten.KeyF10) {
 		g.quitting = true
+		return nil
+	}
+	// 進言流程是模態的，優先吃輸入。
+	if g.adviseActive() {
+		g.updateAdvise()
+		return nil
+	}
+	if pressed(ebiten.KeyP) {
+		g.openAdvise()
 		return nil
 	}
 	// 一覽表開著時吃掉所有輸入 —— 它是模態的（說明書 3.8 的兩段式操作
@@ -371,6 +399,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 	line(big5(g.world.LordName(p))+" 軍", amber)
 	line("軍師 "+big5(g.advisorName()), dim)
 	line("", white)
+	line(fmt.Sprintf("信賴度 %3d", g.world.Trust), white)
 	line(fmt.Sprintf("據點   %3d", f.Cities), white)
 	line(fmt.Sprintf("武將   %3d", f.Generals), white)
 	line(fmt.Sprintf("軍團   %3d", f.Corps), white)
@@ -423,7 +452,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 
 	// 底部狀態列自己鋪底，否則字會壓在地圖上看不清楚。
 	vector.DrawFilledRect(screen, 0, screenH-19, mapW, 19, color.RGBA{0, 0, 0, 210}, false)
-	g.td.Draw(screen, "1-4 視窗　G 武將一覽　方向鍵 捲動　-/= 速度　F10 離開",
+	g.td.Draw(screen, "1-4 視窗　P 進言　G 武將一覽　方向鍵 捲動　F10 離開",
 		4, screenH-17, dim)
 	if g.lastEvent != "" {
 		g.td.Draw(screen, g.lastEvent, mapW+6, screenH-17, amber)
@@ -436,6 +465,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 	if g.list != nil {
 		g.drawList(screen)
 	}
+	g.drawAdvise(screen)
 
 	if g.quitting {
 		vector.DrawFilledRect(screen, float32(screenW/2-90), float32(screenH/2-14),
@@ -507,6 +537,7 @@ func main() {
 	shotFrames := flag.Int("shot-frames", 120, "截圖前先跑幾幀")
 	openWin := flag.Int("open-window", -1, "截圖前先打開第幾個視窗（0–3，驗收暫停規則用）")
 	openList := flag.Bool("open-list", false, "截圖前先開武將一覽（驗收用）")
+	openAdvise := flag.Bool("open-advise", false, "截圖前先跑到說服畫面（驗收用）")
 	flag.Parse()
 
 	lib, err := library.Load(*dir)
@@ -555,6 +586,14 @@ func main() {
 		g.openGeneralList()
 		g.list.Move(2)
 		g.list.Confirm() // 展示反白狀態
+	}
+	if *openAdvise {
+		g.openAdvise()
+		g.adviseCmd = persuasion.Hostility
+		g.target = 13 // 劇本 1 的呂布
+		g.beginPersuasion()
+		// 曹操（14 據點）對呂布（7 據點）→「我國有利」成立。
+		g.offerReason(persuasion.WeAreStronger)
 	}
 	// 開場把鏡頭移到首都附近。
 	if cap := w.Factions[*player].Capital; cap >= 0 && cap < len(w.Cities) {
