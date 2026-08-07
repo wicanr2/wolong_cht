@@ -1,0 +1,31 @@
+# 原版素材一律不進版控（CLAUDE.md §10）
+卧龙传.zip
+*.rar
+Garyouden_Manual.pdf
+Garyouden_Xtra_Addendum.pdf
+workplace/
+
+# IDA 產出
+*.i64
+*.idb
+*.asm
+*.id0
+*.id1
+*.id2
+*.nam
+*.til
+
+# Go
+/dragon
+/bin/
+*.test
+
+# 暫存
+__pycache__/
+*.pyc
+.DS_Store
+
+# 截圖：只有 docs/images/ 底下的 README 展示圖是例外（CLAUDE.md §10）
+*.png
+*.jpg
+!docs/images/*.png
