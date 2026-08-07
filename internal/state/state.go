@@ -14,6 +14,7 @@ import (
 	"os"
 
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
+	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/rules/general"
 )
@@ -24,6 +25,11 @@ const (
 	numBlocks = 4
 
 	factionBase, factionSize, numFactions = 0x0080, 64, 22
+
+	// 交友度矩陣：列 ＝ 觀察者、欄 ＝ 對象，每列 24 byte（用到前 22 欄）。
+	// 位址算法出自 `sub_13119`：`0x600 + 觀察者 × 24 + 對象`（段內偏移），
+	// 檔案偏移再加 0x80。
+	friendBase, friendStride              = 0x0680, 24
 	cityBase, citySize, numCities         = 0x08C0, 32, 192
 	generalBase, generalSize, numGenerals = 0x42C0, 32, 127
 
@@ -141,6 +147,14 @@ type World struct {
 	// 但劇本檔裡沒有（開新遊戲時才選），所以預設 −1。
 	Player int
 
+	// Friendship 是交友度矩陣：Friendship[觀察者][對象]。
+	//
+	// **這是有向的**——A 對 B 與 B 對 A 是兩個獨立的值，
+	// 畫面上只看得到自家君主那一側（docs/mechanics/50-diplomacy.md §1）。
+	//
+	// 對角線是 0xFF（自己），值 127 超過一般上限 100。
+	Friendship [numFactions][numFactions]diplomacy.Friendship
+
 	// Trust 是信賴度：君主對軍師（＝玩家）的評價。
 	// 歸 0 → 被逐出勢力 → Game Over（docs/mechanics/80-victory.md §1）。
 	//
@@ -239,6 +253,13 @@ func LoadScenario(path string, index int) (*World, error) {
 		}
 		for t := 0; t < int(economy.NumTroopTypes); t++ {
 			w.Factions[i].Reserves[t] = u16(r, 0x04+t*2)
+		}
+	}
+
+	for i := range w.Friendship {
+		row := b[friendBase+i*friendStride:]
+		for j := range w.Friendship[i] {
+			w.Friendship[i][j] = diplomacy.Friendship(row[j])
 		}
 	}
 
@@ -465,6 +486,13 @@ func (w *World) Bytes() []byte {
 		r[0x23] = byte(f.Cities)
 		r[0x28] = byte(f.Aggression)
 		r[0x2A] = byte(f.Diplomat)
+	}
+
+	for i := range w.Friendship {
+		row := b[friendBase+i*friendStride:]
+		for j := range w.Friendship[i] {
+			row[j] = byte(w.Friendship[i][j])
+		}
 	}
 
 	for i, c := range w.Cities {

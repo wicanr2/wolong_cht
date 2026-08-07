@@ -8,14 +8,21 @@ package diplomacy
 // Rand 是規則層共用的亂數介面。
 type Rand interface{ Next() int }
 
-// 交友度的儲存格式：**一個 byte，低 7 位是 0–100 的值，最高位元是交戰旗標**。
+// 交友度的儲存格式：**一個 byte，低 7 位是 0–100 的值，
+// 最高位元是「非交戰」旗標**（1 ＝ 和平，0 ＝ 交戰中）。
 //
-// 原版兩處都用同一個拆法（`and ax, 807Fh` / `cmp al, 64h`），
-// 而且高位元設定時外交官的要價基準會從 125 降到 100 ——
-// 與說明書「交戰中畫面固定顯示『交戰』，但值仍在漲」對得上。
+// ⚠ **第一版我把這個位元的極性寫反了**（寫成 1 ＝ 交戰）。
+// 從 SINARIO.DAT 讀出交友度矩陣之後才發現：四個劇本裡
+// **每一格的最高位元都是 1，而且沒有任何勢力有侵攻目標**——
+// 若 1 代表交戰，開局就會是所有人互相宣戰。
+//
+// 極性確定之後，`sub_1578F` 的要價基準也跟著對上了：
+// 位元為 1（和平）→ 基準 100；為 0（交戰）→ 基準 125。
+// **交戰中要更多錢**，與說明書「交戦中でも外交官を派遣し、
+// 懐柔策を講じておかなければ」的語氣一致。
 const (
 	MaxFriendship = 100
-	atWarBit      = 0x80
+	peaceBit      = 0x80
 )
 
 // Friendship 是「某個勢力看另一個勢力」的交友度。**這是單向的**：
@@ -25,8 +32,9 @@ type Friendship uint8
 // Value 回傳 0–100 的交友值（去掉交戰旗標）。
 func (f Friendship) Value() int { return int(f) & 0x7F }
 
-// AtWar 回報是不是交戰中。
-func (f Friendship) AtWar() bool { return f&atWarBit != 0 }
+// AtWar 回報是不是交戰中。**最高位元是「和平」而不是「交戰」**——
+// 位元清掉才代表開戰。
+func (f Friendship) AtWar() bool { return f&peaceBit == 0 }
 
 // WithValue 換掉數值但保留交戰旗標。
 func (f Friendship) WithValue(v int) Friendship {
@@ -36,16 +44,20 @@ func (f Friendship) WithValue(v int) Friendship {
 	if v > MaxFriendship {
 		v = MaxFriendship
 	}
-	return Friendship(byte(v) | (byte(f) & atWarBit))
+	return Friendship(byte(v) | (byte(f) & peaceBit))
 }
 
-// WithWar 設定或清除交戰旗標。
+// WithWar 設定或清除交戰狀態。開戰是**清掉**和平位元。
 func (f Friendship) WithWar(at bool) Friendship {
 	if at {
-		return f | atWarBit
+		return f &^ peaceBit
 	}
-	return f &^ atWarBit
+	return f | peaceBit
 }
+
+// Peace 是一個和平狀態的交友值（最高位元設起）。
+// 直接寫 Friendship(50) 會得到「交戰中」，那幾乎不會是呼叫端要的。
+func Peace(v int) Friendship { return Friendship(peaceBit).WithValue(v) }
 
 // Level 是說明書 5.1 的六階顯示。
 type Level int
@@ -145,9 +157,11 @@ func Demand(mine, theirs Friendship) int {
 	if theirs.Value() < mine.Value() {
 		v = theirs
 	}
-	base := 125
+	// 原版：`cmp al, 80h / jnb → 100`，否則 125。
+	// 和平（位元為 1）→ 100；交戰（位元為 0）→ 125，**要更多錢**。
+	base := 100
 	if v.AtWar() {
-		base = 100
+		base = 125
 	}
 	n := base - v.Value()
 	if n < 0 {

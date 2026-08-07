@@ -18,11 +18,18 @@ func (r *fixedRand) Next() int {
 
 func seq(v ...int) Rand { return &fixedRand{seq: v} }
 
-// 交友度是一個 byte：低 7 位是值，最高位元是交戰旗標。
+// 交友度是一個 byte：低 7 位是值，**最高位元是「和平」**（1 ＝ 非交戰）。
+//
+// ⚠ 極性是從資料驗出來的：四個劇本裡每一格的最高位元都是 1，
+// 而且沒有任何勢力有侵攻目標 —— 若 1 代表交戰，開局就是所有人互相宣戰。
 func TestFriendshipEncoding(t *testing.T) {
-	f := Friendship(50)
+	f := Peace(50)
 	if f.Value() != 50 || f.AtWar() {
 		t.Errorf("50 → 值 %d 交戰 %v", f.Value(), f.AtWar())
+	}
+	// 沒有和平位元 = 交戰中。原版開局全部帶著這個位元。
+	if !Friendship(50).AtWar() {
+		t.Error("最高位元為 0 應該是交戰中")
 	}
 	w := f.WithWar(true)
 	if w.Value() != 50 || !w.AtWar() {
@@ -41,7 +48,7 @@ func TestFriendshipEncoding(t *testing.T) {
 
 // 交戰壓過一切：說明書說交戰中固定顯示「交戰」，但值仍在漲。
 func TestLevelAtWarOverrides(t *testing.T) {
-	f := Friendship(95).WithWar(true)
+	f := Peace(95).WithWar(true)
 	if f.Level() != AtWar {
 		t.Errorf("交戰中顯示 %v, want 交戰", f.Level())
 	}
@@ -57,7 +64,7 @@ func TestLevelAtWarOverrides(t *testing.T) {
 func TestDiplomatCostAndChance(t *testing.T) {
 	// 亂數 0x20 = 32 → 不小於 32，不動作。
 	d := &Diplomat{Politics: 10, Budget: 100}
-	f := Friendship(0)
+	f := Peace(0)
 	if d.Tick(&f, seq(0x20)) || d.Budget != 100 {
 		t.Errorf("機率沒過卻動作了，經費 %d", d.Budget)
 	}
@@ -74,7 +81,7 @@ func TestDiplomatCostAndChance(t *testing.T) {
 func TestPoliticsAffectsBothCostAndSuccess(t *testing.T) {
 	// 政治 15：消耗 8，rand(0..15) 一定 ≤ 15 → 必成功。
 	hi := &Diplomat{Politics: 15, Budget: 100}
-	f := Friendship(0)
+	f := Peace(0)
 	if !hi.Tick(&f, seq(0, 15)) {
 		t.Error("政治 15 遇到亂數 15 應該成功")
 	}
@@ -84,7 +91,7 @@ func TestPoliticsAffectsBothCostAndSuccess(t *testing.T) {
 
 	// 政治 1：消耗 22，rand=2 > 1 → 失敗，但錢照扣。
 	lo := &Diplomat{Politics: 1, Budget: 100}
-	g := Friendship(0)
+	g := Peace(0)
 	if lo.Tick(&g, seq(0, 2)) {
 		t.Error("政治 1 遇到亂數 2 不該成功")
 	}
@@ -99,7 +106,7 @@ func TestPoliticsAffectsBothCostAndSuccess(t *testing.T) {
 // 經費歸零就完全停工。
 func TestDiplomatStopsWhenBroke(t *testing.T) {
 	d := &Diplomat{Politics: 15, Budget: 0}
-	f := Friendship(0)
+	f := Peace(0)
 	if d.Tick(&f, seq(0, 0)) {
 		t.Error("沒錢還在工作")
 	}
@@ -108,7 +115,7 @@ func TestDiplomatStopsWhenBroke(t *testing.T) {
 // 成功一次加 1，而且不會超過 100。
 func TestFriendshipIncrementAndCap(t *testing.T) {
 	d := &Diplomat{Politics: 15, Budget: 10000}
-	f := Friendship(0)
+	f := Peace(0)
 	rng := seq(0, 0)
 	for i := 0; i < 500; i++ {
 		d.Tick(&f, rng)
@@ -120,23 +127,26 @@ func TestFriendshipIncrementAndCap(t *testing.T) {
 
 // 要價公式，並確認取的是兩個方向的較小者。
 func TestDemand(t *testing.T) {
-	// 我方看對方 60、對方看我方 30 → 取 30 → (125 − 30) × 200
-	if got := Demand(Friendship(60), Friendship(30)); got != 95*200 {
-		t.Errorf("要價 = %d, want %d", got, 95*200)
+	// 和平時基準 100。我方看對方 60、對方看我方 30 → 取 30 → (100 − 30) × 200
+	if got := Demand(Peace(60), Peace(30)); got != 70*200 {
+		t.Errorf("要價 = %d, want %d", got, 70*200)
 	}
-	// 反過來一樣。
-	if got := Demand(Friendship(30), Friendship(60)); got != 95*200 {
+	// 反過來一樣（取兩個方向的較小者）。
+	if got := Demand(Peace(30), Peace(60)); got != 70*200 {
 		t.Errorf("方向對調後 = %d, 應該一樣", got)
 	}
-	// 交戰旗標讓基準從 125 降到 100。
-	if got := Demand(Friendship(30).WithWar(true), Friendship(60)); got != 70*200 {
-		t.Errorf("交戰中要價 = %d, want %d", got, 70*200)
+	// ⭐ 交戰中基準升到 125 —— **打仗時要更多錢**。
+	if got := Demand(Peace(30).WithWar(true), Peace(60)); got != 95*200 {
+		t.Errorf("交戰中要價 = %d, want %d（應該比和平時貴）", got, 95*200)
+	}
+	if Demand(Peace(30).WithWar(true), Peace(60)) <= Demand(Peace(30), Peace(60)) {
+		t.Error("交戰中應該比和平時貴")
 	}
 }
 
 // ⭐ 協力是確定性的布林判定，不是機率 —— remake 不要在這裡擲骰子。
 func TestCooperationIsDeterministic(t *testing.T) {
-	allyToUs, allyToTarget := Friendship(60), Friendship(30)
+	allyToUs, allyToTarget := Peace(60), Peace(30)
 
 	if !CanRequestCooperation(false, allyToUs, allyToTarget, 0) {
 		t.Error("條件滿足卻不成立")
@@ -152,11 +162,11 @@ func TestCooperationIsDeterministic(t *testing.T) {
 		t.Error("協力方正在侵攻時不該成立")
 	}
 	// 交友度反過來 → 不成立。
-	if CanRequestCooperation(false, Friendship(30), Friendship(60), 0) {
+	if CanRequestCooperation(false, Peace(30), Peace(60), 0) {
 		t.Error("對我方比對目標差時不該成立")
 	}
 	// 對方君主的額外門檻。
-	if CanRequestCooperation(false, Friendship(35), Friendship(30), 10) {
+	if CanRequestCooperation(false, Peace(35), Peace(30), 10) {
 		t.Error("差距不足以跨過門檻時不該成立")
 	}
 }

@@ -426,3 +426,64 @@ func reparse(block []byte) (*World, error) {
 	f.Close()
 	return LoadScenario(f.Name(), 0)
 }
+
+// ⭐ 交友度矩陣：位址算法出自 sub_13119（0x600 + 觀察者×24 + 對象）。
+//
+// 驗收用的是**歷史事實**，不是我推的數字：
+//
+//	劉備 ↔ 公孫瓚 = 100（同門，公孫瓚曾收留劉備）
+//	孫策 → 劉表  = 20（孫堅死於劉表部將黃祖之手）
+func TestFriendshipMatrix(t *testing.T) {
+	w := load(t, 0)
+
+	name := func(i int) string {
+		return text.Decode([]byte(w.LordName(i)), text.Big5)
+	}
+	idx := map[string]int{}
+	for _, i := range w.AliveFactions() {
+		idx[name(i)] = i
+	}
+
+	liubei, gongsun := idx["劉備"], idx["公孫瓚"]
+	if got := w.Friendship[liubei][gongsun].Value(); got != 100 {
+		t.Errorf("劉備看公孫瓚 = %d, want 100", got)
+	}
+	if got := w.Friendship[gongsun][liubei].Value(); got != 100 {
+		t.Errorf("公孫瓚看劉備 = %d, want 100", got)
+	}
+
+	sunce, liubiao := idx["孫策"], idx["劉表"]
+	if got := w.Friendship[sunce][liubiao].Value(); got != 20 {
+		t.Errorf("孫策看劉表 = %d, want 20（父仇）", got)
+	}
+	// **但劉表看孫策不是 20** —— 交友度是有向的。
+	if w.Friendship[liubiao][sunce].Value() == 20 {
+		t.Error("交友度應該是有向的，兩個方向不該一樣")
+	}
+
+	// 對角線是自己，值 127（超過一般上限 100）。
+	for _, i := range w.AliveFactions() {
+		if got := w.Friendship[i][i].Value(); got != 127 {
+			t.Errorf("勢力 %d 對自己 = %d, want 127", i, got)
+		}
+	}
+}
+
+// ⭐ 開局沒有任何交戰：每一格都帶著「和平」位元，
+// 而且沒有任何勢力有侵攻目標。這兩件事必須一致 ——
+// 它們就是「最高位元 = 和平而不是交戰」的證據。
+func TestNoWarAtScenarioStart(t *testing.T) {
+	for idx := 0; idx < 4; idx++ {
+		w := load(t, idx)
+		for _, i := range w.AliveFactions() {
+			if w.Factions[i].InvasionTarget != 0xFF {
+				t.Errorf("劇本 %d 勢力 %d 開局就有侵攻目標", idx+1, i)
+			}
+			for j := range w.Friendship[i] {
+				if w.Friendship[i][j].AtWar() {
+					t.Errorf("劇本 %d：%d 對 %d 開局就交戰", idx+1, i, j)
+				}
+			}
+		}
+	}
+}

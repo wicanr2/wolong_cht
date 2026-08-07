@@ -56,9 +56,8 @@ func (g *game) situation(target int) persuasion.Situation {
 		OurFunds:    me.Funds,
 		TheirFunds:  them.Funds,
 
-		// ⚠ 交友度表在存檔裡的位置還沒解（docs/re/08 §7），
-		// 所以這裡先用一個中性值。**不要假裝這是原版資料。**
-		Friendship: 50,
+		// 交友度是**有向的**：這裡要的是自家君主看對方的值。
+		Friendship: g.world.Friendship[g.world.Player][target].Value(),
 
 		TheyInvadeThirdParty: them.InvasionTarget != diplomacy.NoTarget &&
 			them.InvasionTarget != g.world.Player,
