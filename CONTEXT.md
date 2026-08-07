@@ -24,7 +24,8 @@
 **M0 進行中，`TALK.DAT` 已全解（M2 的核心已經拿下）。**
 兩版素材入庫、兩版 `KI.EXE` 進 IDA、逐檔比對完成；
 `TALK.DAT` 兩版都 byte-for-byte round-trip 通過，日中對照表已產出並找到 15 則譯文缺陷。
-**下一步：`.BRG` 調色盤 ＋ `*GRF.DAT` 圖庫**（M1 起手，見 §7.2）。
+`.BRG` 調色盤也已全解（不必靠截圖，程式碼直接寫死了通道順序）。
+**下一步：`*GRF.DAT` 圖庫解碼**——已知是 4 bpp planar，調色盤已就緒。
 
 ---
 
@@ -45,6 +46,10 @@
 | **`TALK.DAT` 全解** | **READY**。`docs/formats/01`。兩版 byte-for-byte round-trip 通過，1,022 則、零逃脫位元組 |
 | **日中對照第一批** | `docs/reference/02`。15 則譯文缺陷（漏變數 6、漏名詞 3、變數換號 1、錯位 4、對調 2） |
 | 訊息抽取工具 | `tools/talkdat.py`（dump／export／build／verify／diff） |
+| **`.BRG` 調色盤全解** | **READY**。`docs/formats/02` ＋ `docs/re/02`。通道順序 B,R,G、4 bit、每組 16 色、亮度 0–16，兩版機器碼互證 |
+| **顯示模式定案** | 兩版都是 **16 色 4 平面 planar**（DOS/V VGA GC+Seq、PC-98 GRCG）→ `*GRF.DAT` 是 4 bpp |
+| **四季調色盤** | `GAMEPAL` banks 0–3 只差色號 14：灰綠→鮮綠→橙褐→雪白 |
+| GitHub repo | https://github.com/wicanr2/wolong_cht（private） |
 
 ### 進行中／受阻
 
@@ -64,6 +69,8 @@
 | `CLAUDE.md` | 目標、原則、硬規則、里程碑、工作紀律 |
 | `docs/re/01-first-recon.md` | 首輪偵查：檔案清單、執行結構、兩版比對 |
 | `docs/formats/01-talk-dat.md` | **READY** — `TALK.DAT` 訊息表格式 |
+| `docs/formats/02-brg-palette.md` | **READY** — `.BRG` 調色盤格式 |
+| `docs/re/02-palette-routine.md` | 兩版調色盤常式的反組譯 |
 | `docs/reference/01-jp-manual.md` | 日文原版說明書判讀紀錄（逐頁累加） |
 | `docs/reference/02-jp-cht-diff.md` | 日中對照：15 則譯文缺陷 |
 | `translations/extract/talk-{dosv,pc98}.json` | 抽出的 1,022 則訊息（兩版） |
@@ -112,9 +119,10 @@
 是驗證整條「解碼 → 渲染 → 對照 DOSBox 截圖」管道最便宜的起點。
 管道通了再上 `*GRF.DAT`（307 KB 的 `KAOGRF` 是最大的一個）。
 
-**但排在它前面的是一件 M0 沒做完的事**：DOSBox 環境。
-沒有原版截圖就無法驗證調色盤通道順序（`BRG` 是不是真的 B,R,G 是假說），
-解出來的圖也無從判斷對錯。**先把 oracle 建起來再解格式。**
+> **原本以為要先建 DOSBox 才驗得了調色盤——結果不用。**
+> 反組譯直接給出通道順序，比截圖比對更硬。
+> 教訓：**撞到「需要視覺 oracle」的判斷時，先問一次「機器碼有沒有直接寫」。**
+> 截圖仍然有用（驗證整張圖畫對），但不是解格式的前置條件。
 
 ### 7.1 M0 剩餘
 
@@ -126,8 +134,8 @@
 
 ### 7.2 M1 起手順序（依投報排）
 
-1. `.BRG` 調色盤（4 檔，兩版全同）——最小、最快、驗證管道用
-2. `*GRF.DAT` 圖庫（4 檔，兩版全同）——先量熵判斷有無壓縮
+1. ~~`.BRG` 調色盤~~ ✅ **完成**，`docs/formats/02` READY
+2. `*GRF.DAT` 圖庫（4 檔，兩版全同）——先量熵判斷有無壓縮。**已知是 4 bpp planar**
 3. `MMAP.*` 大地圖三件（兩版全同）
 4. `BATTLE.*` 戰場（兩版全同）
 5. `SINARIO.DAT` ／ `SAVE.DAT`（兩版大小同內容異 → diff 定位字串欄位）
@@ -144,6 +152,7 @@
 | `tools/fdi_extract.py` | `python3 tools/fdi_extract.py <image.fdi> <輸出目錄>` |
 | `tools/ida.sh` | `tools/ida.sh batch dosv KI.EXE` ／ `tools/ida.sh raw pc98 idat -A -S/work/tools/x.idc KI.EXE.i64` |
 | `tools/talkdat.py` | `dump` ／ `export` ／ `build` ／ `verify` ／ `diff`。**驗收指令是 `verify`，要求 byte-for-byte** |
+| `tools/brg.py` | `info` ／ `swatch`。純標準函式庫的 PNG 輸出 |
 
 **還沒建但 `CLAUDE.md` §5.1 要求的**：`tools/addr.py`（位址反查三張表）、
 `tools/dump_func.py`（dump 時自動翻語意 ＋ grep docs）、`tools/ida_xref.idc`。
