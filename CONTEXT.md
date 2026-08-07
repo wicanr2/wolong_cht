@@ -58,6 +58,8 @@ Go 版與 Python 版的輸出逐像素完全相同。
 | **DOSBox-X 設定** | `dosbox/`。出自 msdostest（實測 `__PASS__`），`core=normal` ＋ 固定 `cycles=20000` → **即時制的可重現性解決了** |
 | **DOS/V 版實跑** | `tools/dosbox.sh` ＋ `docs/playtest/01`。**字型懸案結案**（不用自備，`YNFONT.EXE` 自帶）、**防拷確認**、淡入行為與 `docs/re/02` 對上 |
 | **PC-98 版實跑（oracle 建立）** | `tools/dosboxx.sh` ＋ `docker/dosboxx/` ＋ `docs/playtest/02`。**沒有防拷，開場完整播放**。掛目錄跑（原版本來就裝硬碟），五片分掛會報「ファイルが異常です」 |
+| **⭐ 說明書 p.3–p.14 讀完** | 拿到說服系統全套判定（國力＝據點數、疲弊＝資金<0）、時間暫停規則、四劇本起始日、六位編制。見 `docs/mechanics/10`、`15`、`70` |
+| **⭐ 遊戲時鐘欄位定案** | 劇本區塊最前 8 B：`+0x03` 日、`+0x04` 月、`+0x06` 年，`+0x01` 是該月天數。`docs/formats/08` §1.1 |
 | **⛔ oracle 的滑鼠輸入無效（根因已定位）** | `docs/playtest/04`。pixel diff 證明**滑鼠事件從來沒進入 guest**（兩種天差地遠的設定，畫面 0 像素差異）；先前看到的「進展」都是遊戲自己在跑。**但鍵盤有效**（DOS/V 版靠 `type:START` 啟動過）→ 下一輪走 DOSBox-X 的 mapper 把鍵盤綁成滑鼠動作。仍擋住四件事 |
 | **存檔槽 4 個（confirmed）** | `LOAD DATA` 畫面實測，全部 `0年 0月 0日`。日文說明書的說法從「說明書」升到 confirmed。**時間單位是年／月／日** |
 | **oracle 可重現性通過** | 同一串操作跑兩次，截圖 **byte-for-byte 相同、0 個不同像素**。這是即時制專案的關鍵閘門 |
