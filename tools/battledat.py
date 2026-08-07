@@ -28,14 +28,33 @@ SCRIPT_SIZE = 256          # 一段（＝ sub_1CBE5 的 di）
 NUM_SCRIPTS = 32           # 8192 ÷ 256
 NUM_OPCODES = 19           # funcs_1A457 的表長
 
-# 19 個處理常式的位址。**名稱還沒解讀**，這裡只放位址，
-# 免得用臆測的名字污染筆記（CLAUDE.md §8）。
-HANDLERS = [
-    "sub_1A48C", "sub_1A495", "sub_1A4AB", "sub_1A4BF", "sub_1A50D",
-    "sub_1A516", "sub_1A52E", "sub_1A560", "sub_1A564", "sub_1A57A",
-    "sub_1A591", "sub_1A5E1", "sub_1A5F7", "sub_1A60D", "sub_1A654",
-    "sub_1A65D", "sub_1A69F", "sub_1A6CF", "sub_1A6E8",
+# 19 個指令。名稱與作用出自 docs/re/11 §3.5。
+OPS = [
+    ("wait",     "等待 N 幀"),
+    ("set1",     "byte_1D347 ← N，word_1D344 ← N × 96"),
+    ("set2",     "word_1D33E ← {0x3A,0x24,0x10}[參數]"),
+    ("order",    "下命令：參數 7＝全軍、0–5＝指定隊"),
+    ("q.d346",   "條件 ← byte_1D346"),
+    ("q.d33c",   "條件 ← word_1D33C 與 0x1C 比大小（0/1/2）"),
+    ("q.mine",   "條件 ← 我方六隊命令的最小值"),
+    ("q.theirs", "條件 ← 敵方六隊命令的最小值"),
+    ("q.d31e",   "條件 ← byte_1D31E（word_1D31A 高位 ≤ 0x20 時取 2）"),
+    ("q.rand",   "條件 ← 亂數 mod N（N＝0 時 mod 6）"),
+    ("branch",   "條件分支，下一個 word 是目標"),
+    ("q.a24",    "條件 ← word_1D30A:0x24（上限 255）"),
+    ("q.a04",    "條件 ← word_1D30A:0x04（上限 255）"),
+    ("order.by", "依 [+0x24] == 參數×18 的隊下命令"),
+    ("q.d31c",   "條件 ← word_1D31C 高位"),
+    ("q.min18",  "條件 ← 0xC00 那張表 [+0x18] 的最小值 × 4"),
+    ("msg",      "訊息 0x1CE + N（依 byte_1D349 與參數決定要不要出）"),
+    ("q.cmd9",   "條件 ← 我方大將的命令 ≥ 9"),
+    ("q.b03",    "條件 ← 我方大將的 [+0x03]"),
 ]
+
+# 分支指令的五種比較（`sub_1A591` 的 switch）。
+CMP = ["無條件", "==", "!=", "<", ">"]
+
+BRANCH = 10
 
 
 def decode(word):
@@ -59,32 +78,65 @@ def cmd_verify(data, _args):
            if (data[i] & 0x1F) >= NUM_OPCODES for w in [data[i:i + 2]]]
     total = len(data) // 2
     print(f"{total} 個 word：低 5 位 ≥ {NUM_OPCODES}（無效指令）的有 {len(bad)} 個")
+    # 分支指令後面那個 word 一定是目標（低位元組 0）。
+    br = tgt = 0
+    for _, s in scripts(data):
+        for i in range(0, len(s) - 3, 2):
+            if s[i] & 0x1F == BRANCH:
+                br += 1
+                tgt += s[i + 2] == 0
+    print(f"分支指令 {br} 個，後面那個 word 低位為 0 的 {tgt} 個")
     print(f"若位元組隨機，期望約 {total * (32 - NUM_OPCODES) // 32} 個")
     for i, w in bad[:10]:
         print(f"  位移 0x{i:04X}: {w.hex(' ')}")
     return 0 if not bad else 1
 
 
+def walk(script):
+    """依序走一段腳本，回傳 [(位移, 指令碼, 參數, 運算元, 目標或 None)]。
+
+    ⚠ **不能每兩個 byte 當一個指令。** 分支指令（10）後面那個 word 是
+    **跳躍目標**，不是指令——它長得像「等待」（低位元組 0），
+    照直線切會把 564 個目標誤讀成 564 次等待（docs/re/11 §3.4）。
+    """
+    out, i = [], 0
+    while i < len(script) - 1:
+        lo, hi = script[i], script[i + 1]
+        op, par = lo & 0x1F, (lo & 0xE0) >> 5
+        target = None
+        if op == BRANCH and i + 3 < len(script) and script[i + 2] == 0:
+            target = script[i + 3]
+        out.append((i, op, par, hi, target))
+        i += 4 if target is not None else 2
+    return out
+
+
 def cmd_list(data, _args):
-    print("段  武將+0x16  戰場類別  用到的指令")
+    print("段  武將+0x16  戰場類別  指令數  用到的指令")
     for i, s in scripts(data):
-        ops = sorted({decode(s[o:o + 2])[0] for o in range(0, SCRIPT_SIZE, 2)})
-        print(f"{i:2d}      {i // 4}        {i % 4}      {ops}")
-    hist = collections.Counter(decode(data[o:o + 2])[0]
-                               for o in range(0, len(data), 2))
-    print("\n全檔指令分佈（指令碼: 次數）：")
+        prog = walk(s)
+        ops = sorted({p[1] for p in prog})
+        print(f"{i:2d}      {i // 4}        {i % 4}      {len(prog):4d}   {ops}")
+    hist = collections.Counter(p[1] for _, s in scripts(data) for p in walk(s))
+    print("\n全檔指令分佈：")
     for op, n in sorted(hist.items()):
-        print(f"  {op:2d} {HANDLERS[op]:>10}  {n:5d}")
+        print(f"  {op:2d} {OPS[op][0]:>9}  {n:5d}   {OPS[op][1]}")
 
 
 def cmd_dump(data, args):
     n = args.script
     s = data[n * SCRIPT_SIZE:(n + 1) * SCRIPT_SIZE]
+    prog = walk(s)
+    labels = {p[4] * 2 for p in prog if p[4] is not None}
     print(f"段 {n}（武將 +0x16 ＝ {n // 4}，戰場類別 {n % 4}）")
-    for o in range(0, SCRIPT_SIZE, 2):
-        op, par, arg = decode(s[o:o + 2])
-        print(f"  {o:3d}  {s[o]:02x} {s[o+1]:02x}   op={op:2d} "
-              f"par={par}  arg=0x{arg:02x}  {HANDLERS[op]}")
+    for off, op, par, arg, target in prog:
+        mark = ">" if off in labels else " "
+        name = OPS[op][0]
+        if op == BRANCH:
+            text = f"{name} {CMP[par] if par < len(CMP) else par} {arg} → {target * 2}"
+        else:
+            text = f"{name} 參數={par} 運算元={arg}"
+        print(f"{mark} {off:3d}  {s[off]:02x} {s[off+1]:02x}  {text}")
 
 
 def main():
