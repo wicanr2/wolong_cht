@@ -17,10 +17,10 @@
 //   - 季節在 3/6/9/12 月的前 16 天漸變，不是瞬間切換
 //   - 月結時資金、預備兵、生產力會跳動
 //
-// ⚠ 中文還畫不出來。原版用倚天 16×15 點陣字，那一項還沒解
-// （CLAUDE.md §3.6），而 Ebiten 內建的 debug 字型只有 ASCII，
-// 中文會被**靜靜吃掉**。所以畫面上的字一律是 ASCII，
-// 並在需要顯示人名／地名的地方標出編號。
+// 中文用倚天 16×15 點陣字（`-font` 指到自備的字型目錄）。
+// **字型檔不隨本專案散布**，與原版資料同一個處理方式。
+// 沒帶 `-font` 也跑得起來，只是中文會畫成空心方框——
+// 缺字要看得出來，不能靜靜吃掉。
 package main
 
 import (
@@ -33,15 +33,16 @@ import (
 	"os"
 
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/hajimehoshi/ebiten/v2/vector"
 
+	"github.com/wicanr2/wolong_cht/internal/assets/cjk"
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
 	"github.com/wicanr2/wolong_cht/internal/assets/text"
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/state"
+	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
 // 原版是 640×400。畫面分成三塊，比例照日文說明書 3.1 的截圖：
@@ -69,7 +70,7 @@ const (
 	numWindows
 )
 
-var windowNames = [numWindows]string{"COMMAND", "FACTION", "MINIMAP", "SYSTEM"}
+var windowNames = [numWindows]string{"命令", "自勢力情報", "縮小地圖", "系統"}
 
 // residentWindows 是「開著也不會停時間」的那三個。
 var residentWindows = [numWindows]bool{winCommand: true, winFaction: true, winMinimap: true}
@@ -78,6 +79,7 @@ type game struct {
 	lib   *library.Library
 	world *state.World
 	rng   *lcg
+	td    *textdraw.Drawer
 
 	open       [numWindows]bool
 	camX, camY int
@@ -192,11 +194,16 @@ func (g *game) Update() error {
 	for i := 0; i < g.speed; i++ {
 		ev := g.world.Tick(g.rng)
 		if ev.Settled {
-			g.lastEvent = fmt.Sprintf("month end  fires/riots=%d  storm=%v",
-				len(ev.Disaster), ev.Storm != nil)
+			g.lastEvent = "月結"
+			if n := len(ev.Disaster); n > 0 {
+				g.lastEvent += fmt.Sprintf("　災害%d", n)
+			}
+			if ev.Storm != nil {
+				g.lastEvent += "　暴風雨"
+			}
 		}
-		for _, f := range ev.Eliminated {
-			g.lastEvent = fmt.Sprintf("faction %d eliminated", f)
+		for _, i := range ev.Eliminated {
+			g.lastEvent = big5(g.world.LordName(i)) + " 滅亡"
 		}
 	}
 	return nil
@@ -236,73 +243,92 @@ func (g *game) Draw(screen *ebiten.Image) {
 	p := g.world.Player
 	f := g.world.Factions[p]
 
-	ebitenutil.DebugPrintAt(screen, fmt.Sprintf(
-		"WOLONG   %3d/%02d/%02d  %02dh  %s",
-		c.Year, c.Month, c.Day, c.Hour, seasonASCII(c.Season())), 8, 8)
+	white := color.RGBA{240, 240, 230, 255}
+	amber := color.RGBA{240, 200, 120, 255}
+	dim := color.RGBA{150, 150, 160, 255}
 
-	stat := fmt.Sprintf(""+
-		"FACTION %d\n"+
-		"lord    #%d\n"+
-		"advisor #%d\n"+
-		"trust   %d\n"+
-		"cities  %d\n"+
-		"funds   %d\n"+
-		"reserve\n"+
-		" cav %d\n"+
-		" arc %d\n"+
-		" inf %d\n"+
-		"tax     %d%%\n"+
-		"\n"+
-		"TIME  %s\n"+
-		"speed %d",
-		p, f.Lord, f.Advisor, f.Trust, f.Cities, f.Funds,
-		f.Reserves[economy.Cavalry], f.Reserves[economy.Archer],
-		f.Reserves[economy.Infantry], g.world.TaxRate,
-		map[bool]string{true: "RUNNING", false: "PAUSED"}[g.timeRuns()], g.speed)
-	ebitenutil.DebugPrintAt(screen, stat, mapW+6, bannerH+4)
+	// 橫幅：遊戲名與日期。原版右上角就是「196年 4月 8日」。
+	g.td.Draw(screen, "臥龍傳", 10, 8, amber)
+	g.td.Draw(screen, fmt.Sprintf("%d年%2d月%2d日", c.Year, c.Month, c.Day),
+		mapW-150, 8, white)
+	g.td.Draw(screen, seasonName(c.Season()), mapW-32, 8, amber)
 
-	const winListY = bannerH + 4 + 16*15
-	ebitenutil.DebugPrintAt(screen, "WINDOWS", mapW+6, winListY)
+	// 右側資訊欄。
+	x := mapW + 6
+	y := bannerH + 4
+	line := func(s string, col color.RGBA) {
+		g.td.Draw(screen, s, x, y, col)
+		y += textdraw.GlyphH + textdraw.LineGap
+	}
+	line(big5(g.world.LordName(p))+" 軍", amber)
+	line("軍師 "+big5(g.advisorName()), dim)
+	line("", white)
+	line(fmt.Sprintf("信賴度 %3d", f.Trust), white)
+	line(fmt.Sprintf("據點   %3d", f.Cities), white)
+	line(fmt.Sprintf("武將   %3d", f.Generals), white)
+	line(fmt.Sprintf("資金 %6d", f.Funds), white)
+	line("預備兵", white)
+	line(fmt.Sprintf(" 騎馬 %5d", f.Reserves[economy.Cavalry]), white)
+	line(fmt.Sprintf(" 弓兵 %5d", f.Reserves[economy.Archer]), white)
+	line(fmt.Sprintf(" 步兵 %5d", f.Reserves[economy.Infantry]), white)
+	line(fmt.Sprintf("稅率   %2d%%", g.world.TaxRate), white)
+	line("", white)
+	if g.timeRuns() {
+		line("時間 進行中", color.RGBA{140, 230, 140, 255})
+	} else {
+		line("時間 停止", color.RGBA{240, 140, 140, 255})
+	}
+	line(fmt.Sprintf("速度 %d", g.speed), dim)
+	line("", white)
 	for k := windowKind(0); k < numWindows; k++ {
-		mark := " "
+		// ⚠ 用 Big5 有的字。「▶」不在 Big5，會被畫成缺字方框——
+		// 那個方框是字型層的設計（缺字要看得見），不該由介面自己觸發。
+		mark := "　"
+		col := dim
 		if g.open[k] {
-			mark = "*"
+			mark = "●"
+			col = amber
 		}
 		note := ""
 		if !residentWindows[k] {
-			note = " (stops time)"
+			note = "（停時間）"
 		}
-		ebitenutil.DebugPrintAt(screen,
-			fmt.Sprintf("%d%s %s%s", k+1, mark, windowNames[k], note),
-			mapW+6, winListY+16+int(k)*14)
+		line(fmt.Sprintf("%d%s%s%s", k+1, mark, windowNames[k], note), col)
 	}
 
 	// 開著的視窗畫成疊在地圖上的框。內容還沒做——
 	// 現階段的重點是「開了會不會停時間」這條規則，不是視窗長什麼樣。
-	y := bannerH + 16
+	wy := bannerH + 16
 	for k := windowKind(0); k < numWindows; k++ {
 		if !g.open[k] {
 			continue
 		}
-		vector.DrawFilledRect(screen, 16, float32(y), 260, 72, color.RGBA{0, 0, 0, 200}, false)
-		vector.StrokeRect(screen, 16, float32(y), 260, 72, 1, color.RGBA{200, 180, 120, 255}, false)
-		ebitenutil.DebugPrintAt(screen, windowNames[k]+" window (not implemented)", 24, y+8)
+		vector.DrawFilledRect(screen, 16, float32(wy), 300, 60, color.RGBA{0, 0, 0, 210}, false)
+		vector.StrokeRect(screen, 16, float32(wy), 300, 60, 1, amber, false)
+		g.td.Draw(screen, windowNames[k]+"視窗（尚未實作）", 24, wy+8, white)
 		if !residentWindows[k] {
-			ebitenutil.DebugPrintAt(screen, "time is STOPPED while this is open", 24, y+24)
+			g.td.Draw(screen, "此視窗開啟時，時間停止", 24, wy+30,
+				color.RGBA{240, 140, 140, 255})
 		}
-		y += 80
+		wy += 68
 	}
 
 	// 底部狀態列自己鋪底，否則字會壓在地圖上看不清楚。
-	vector.DrawFilledRect(screen, 0, screenH-16, mapW, 16, color.RGBA{0, 0, 0, 200}, false)
-	ebitenutil.DebugPrintAt(screen,
-		"[1-4]win [arrows]scroll [-/=]speed [ESC]close [F10]quit", 4, screenH-15)
+	vector.DrawFilledRect(screen, 0, screenH-19, mapW, 19, color.RGBA{0, 0, 0, 210}, false)
+	g.td.Draw(screen, "1-4 視窗　方向鍵 捲動　-/= 速度　ESC 關閉　F10 離開",
+		4, screenH-17, dim)
 	if g.lastEvent != "" {
-		ebitenutil.DebugPrintAt(screen, g.lastEvent, mapW+6, screenH-15)
+		g.td.Draw(screen, g.lastEvent, mapW+6, screenH-17, amber)
+	}
+	if !g.td.Available() {
+		g.td.Draw(screen, "（未載入字型）", mapW+6, screenH-36,
+			color.RGBA{240, 140, 140, 255})
 	}
 
 	if g.quitting {
-		ebitenutil.DebugPrintAt(screen, "Quit? (Y/N)", screenW/2-40, screenH/2)
+		vector.DrawFilledRect(screen, float32(screenW/2-90), float32(screenH/2-14),
+			180, 28, color.RGBA{0, 0, 0, 230}, false)
+		g.td.Draw(screen, "確定離開？（Y／N）", screenW/2-80, screenH/2-8, white)
 	}
 	if g.shotPath != "" && g.frame == g.shotAt {
 		g.saveShot(screen)
@@ -334,8 +360,27 @@ func (g *game) saveShot(screen *ebiten.Image) {
 
 func (g *game) Layout(int, int) (int, int) { return screenW, screenH }
 
-func seasonASCII(s clock.Season) string {
-	return [...]string{"spring", "summer", "autumn", "winter"}[s]
+// seasonName 用中文的季節名。clock.Season 的 String() 已經是中文，
+// 這裡只是把它包成一個明確的名字，讓畫面程式讀起來清楚。
+func seasonName(s clock.Season) string { return s.String() }
+
+// big5 把 internal/state 保留的原始位元組轉成 UTF-8。
+// 解析層刻意保留原始位元組才能 round-trip，所以轉換發生在最外層。
+func big5(s string) string {
+	if s == "" {
+		return "－"
+	}
+	return text.Decode([]byte(s), text.Big5)
+}
+
+// advisorName 回傳玩家所仕勢力的軍師名。0xFF 表示沒有軍師——
+// 開新遊戲時玩家本人就是要填進那一格的人。
+func (g *game) advisorName() string {
+	f := g.world.Factions[g.world.Player]
+	if f.Advisor < 0 || f.Advisor >= len(g.world.Generals) {
+		return ""
+	}
+	return g.world.Generals[f.Advisor].Name
 }
 
 func main() {
@@ -343,6 +388,8 @@ func main() {
 	scenPath := flag.String("scenario-file", "", "劇本檔路徑（預設 <orig>/SINARIO.DAT）")
 	scenario := flag.Int("scenario", 0, "劇本編號 0–3")
 	player := flag.Int("player", 0, "玩家所仕的勢力編號")
+	fontDir := flag.String("font", "workplace/eten",
+		"倚天點陣字目錄（STDFONT.15／SPCFONT.15／ASCFONT.15，請自備）")
 	speed := flag.Int("speed", 4, "每個畫面更新推進幾個遊戲 tick")
 	shot := flag.String("shot", "", "跑 N 幀之後截圖到這個路徑就結束（驗收用）")
 	shotFrames := flag.Int("shot-frames", 120, "截圖前先跑幾幀")
@@ -371,7 +418,22 @@ func main() {
 		len(w.AliveFactions()), *player,
 		text.Decode([]byte(w.LordName(*player)), text.Big5))
 
+	// 字型載不到不該讓遊戲開不了——只警告，然後把字畫成方框。
+	var font *cjk.Font
+	var ascii *cjk.ASCIIFont
+	if f, err := cjk.LoadDir(*fontDir, cjk.Options{}); err != nil {
+		log.Printf("⚠ 載不到倚天全形字型（%v）；中文會顯示成方框", err)
+	} else {
+		font = f
+	}
+	if a, err := cjk.LoadASCIIDir(*fontDir); err != nil {
+		log.Printf("⚠ 載不到倚天半形字型（%v）", err)
+	} else {
+		ascii = a
+	}
+
 	g := &game{lib: lib, world: w, rng: &lcg{s: 1}, speed: *speed,
+		td:       textdraw.New(font, ascii),
 		shotPath: *shot, shotAt: *shotFrames}
 	if *openWin >= 0 && *openWin < int(numWindows) {
 		g.open[*openWin] = true

@@ -23,7 +23,7 @@
 
 | 已完成 | 進行中 | 還沒開始 |
 |---|---|---|
-| 素材格式、劇本／存檔結構、時間模型、經濟、災害 | 內政官／外交官、AI、UI | 軍團與行軍、戰鬥層 |
+| 素材格式、劇本／存檔結構、時間模型、經濟、災害、中文顯示 | 內政官／外交官、AI、介面 | 軍團與行軍、戰鬥層 |
 
 ### 已解出的格式
 
@@ -41,7 +41,7 @@
 
 `cmd/wlgame` 從真實的 `SINARIO.DAT` 載入劇本，用反組譯出來的規則驅動：
 
-![戰略畫面（秋）](docs/images/wlgame-autumn.png)
+![戰略畫面（秋）](docs/images/wlgame-cht.png)
 
 畫面上的每個數字都是原版資料算出來的：曹操的 14 個據點、74,000 起始資金、
 騎馬 400／弓兵 600／步兵 1000 的預備兵、稅率 18%。
@@ -52,7 +52,7 @@
 
 ### 暫停規則是規格，不是 UI 細節
 
-![戰略畫面（暫停）](docs/images/wlgame-paused.png)
+![戰略畫面（暫停）](docs/images/wlgame-cht-paused.png)
 
 > 命令、自勢力情報、縮小マップの３つのウインドウ以外が表示されている状態では、
 > **ゲームの時間が進みません**（日文原版說明書 3.1）
@@ -64,9 +64,18 @@
 時間推進 ⟺ 開啟中的視窗集合 ⊆ {命令, 自勢力情報, 縮小地圖}
 ```
 
-⚠ 畫面上的字目前全是 ASCII。原版用倚天 16×15 點陣字，那一項還沒解，
-而 Ebiten 內建的除錯字型會把中文**靜靜吃掉**——寧可先用 ASCII，
-也不要畫面缺字卻看起來像排版問題。
+### 中文用倚天 16×15 點陣字
+
+不用 TTF 縮到 16px（會糊、筆劃比例也不對），走 1990 年代 DOS 中文遊戲
+實際用的倚天點陣字。**字型檔不隨本專案散布**——執行時用 `-font` 指到
+自備的字庫，與原版資料同一個處理方式。
+
+沒帶字型也跑得起來，只是字會畫成空心方框：**缺字要看得見**。
+Ebiten 內建的除錯字型會把中文靜靜吃掉，那種畫面看起來像排版 bug，很難查。
+
+字型層的驗收樣本不是手打的詞彙表，是**從 `SINARIO.DAT` 抽出來的**——
+四個劇本全部武將名（含呼び名）加 192 個據點名的 377 個相異字。
+憑印象列詞會漏掉「叡」「懿」「廮」這種只在特定劇本出現的字。
 
 ### 素材檢視器
 
@@ -92,6 +101,8 @@ internal/assets/text      TALK.DAT 解析與寫回
 internal/assets/rle       原版的 RLE 解壓（MMAP.MAP 用）
 internal/assets/world     大地圖：384×256 格 + 256 塊地形圖塊
 internal/assets/library   把素材目錄載成可檢視的項目（不 import Ebiten）
+internal/assets/cjk       倚天 16×15 點陣字（全形 + 半形）
+internal/ui/textdraw      把點陣字畫到 Ebiten，缺字畫成方框而不是吃掉
 
 internal/rules/clock      五層遊戲時鐘（子刻→時→日→月→年，一天 216 tick）
 internal/rules/economy    月結：收入、募兵、赤字懲罰、生產力複利、三種災害
@@ -115,7 +126,7 @@ cmd/wlgame                戰略主畫面原型
 
 ```bash
 tools/go.sh test ./...                                  # 全部測試
-tools/go.sh run ./cmd/wlgame -orig workplace/orig/dosv  # 戰略畫面
+tools/go.sh run ./cmd/wlgame -orig workplace/orig/dosv -font workplace/eten
 tools/go.sh run ./cmd/wlsim  -years 15 -tax 25          # 無頭模擬，看十五年的軌跡
 ```
 
