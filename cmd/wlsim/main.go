@@ -1,0 +1,138 @@
+// wlsim 是無頭的世界模擬器。
+//
+// 它把 internal/rules 的三個套件（clock／economy／general）接成一條
+// 可以跑很久的迴圈，用**長期行為**去驗證那些從機器碼讀出來的公式。
+// 這不是遊戲——沒有畫面、沒有輸入、不會存檔。
+//
+//	tools/go.sh run ./cmd/wlsim -orig workplace/orig/dosv/SINARIO.DAT
+//	tools/go.sh run ./cmd/wlsim -scenario 1 -years 20 -tax 50
+//
+// 為什麼需要它：規則層每個套件都有單元測試，但單元測試只能驗
+// 「一次呼叫的結果對不對」。經濟是複利模型（docs/mechanics/40 §4），
+// 錯誤要跑幾十個月才看得出來——這支程式就是那個 loop。
+//
+// ⚠ 這支程式**不 import Ebiten**。Ebiten 在 init 期就要求顯示器，
+// 跟它放同一個 binary 在容器裡跑不起來（cmd/wlshot 踩過同樣的坑）。
+package main
+
+import (
+	"flag"
+	"fmt"
+	"log"
+	"os"
+	"text/tabwriter"
+
+	"github.com/wicanr2/wolong_cht/internal/assets/text"
+	"github.com/wicanr2/wolong_cht/internal/rules/clock"
+	"github.com/wicanr2/wolong_cht/internal/rules/economy"
+	"github.com/wicanr2/wolong_cht/internal/state"
+)
+
+// lcg 是一個可重現的偽亂數源。
+//
+// 原版用的是 sub_1ECE0，演算法還沒反組譯出來，所以這裡**不是**在模仿它——
+// 只要求「可重現」，這樣同一個 seed 跑兩次結果一樣，回歸比對才有意義。
+// 等 sub_1ECE0 解出來再換掉。
+type lcg struct{ s uint32 }
+
+func (r *lcg) Next() int {
+	r.s = r.s*1664525 + 1013904223
+	return int(r.s >> 16)
+}
+
+func main() {
+	path := flag.String("orig", "workplace/orig/dosv/SINARIO.DAT",
+		"原版劇本檔（不隨本專案散布，請自備）")
+	scenario := flag.Int("scenario", 0, "劇本編號 0–3")
+	player := flag.Int("player", 0, "玩家所仕的勢力編號")
+	years := flag.Int("years", 10, "要跑幾年")
+	tax := flag.Int("tax", -1, "覆寫稅率（-1 ＝ 用劇本預設）")
+	seed := flag.Uint("seed", 1, "亂數種子")
+	every := flag.Int("every", 12, "每幾個月印一列")
+	flag.Parse()
+
+	w, err := state.LoadScenario(*path, *scenario)
+	if err != nil {
+		log.Fatal(err)
+	}
+	w.Player = *player
+	if *tax >= 0 {
+		w.TaxRate, w.NextTaxRate = *tax, *tax
+	}
+
+	fmt.Printf("劇本 %d　起始 %d年%d月%d日　勢力 %d 個　稅率 %d%%　種子 %d\n",
+		*scenario+1, w.Clock.Year, w.Clock.Month, w.Clock.Day,
+		len(w.AliveFactions()), w.TaxRate, *seed)
+	fmt.Printf("玩家所仕勢力 %d（君主 %s）\n\n", w.Player, big5(w.LordName(w.Player)))
+
+	rng := &lcg{s: uint32(*seed)}
+	tw := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
+	fmt.Fprintln(tw, "年月\t勢力數\t玩家據點\t玩家資金\t玩家預備兵\t平均生產力\t平均上昇值\t火災\t暴動\t暴風雨")
+
+	var fires, riots, storms int
+	months := 0
+	total := *years * 12
+
+	for months < total {
+		ev := w.Tick(rng)
+		if !ev.Settled {
+			continue
+		}
+		months++
+		for _, d := range ev.Disaster {
+			switch d {
+			case economy.Fire:
+				fires++
+			case economy.Riot:
+				riots++
+			}
+		}
+		if ev.Storm != nil {
+			storms++
+		}
+		for _, i := range ev.Eliminated {
+			fmt.Fprintf(tw, "%d/%d\t— 勢力 %d（%s）滅亡 —\n",
+				w.Clock.Year, w.Clock.Month, i, big5(w.LordName(i)))
+		}
+		if months%*every != 0 {
+			continue
+		}
+
+		p := w.Factions[w.Player]
+		prodSum, growSum, owned := 0, 0, 0
+		for _, c := range w.Cities {
+			if c.Owner == w.Player {
+				prodSum += c.Production
+				growSum += c.Growth
+				owned++
+			}
+		}
+		avgP, avgG := 0, 0
+		if owned > 0 {
+			avgP, avgG = prodSum/owned, growSum/owned
+		}
+		fmt.Fprintf(tw, "%d/%d\t%d\t%d\t%d\t%d/%d/%d\t%d\t%+d\t%d\t%d\t%d\n",
+			w.Clock.Year, w.Clock.Month, len(w.AliveFactions()),
+			p.Cities, p.Funds,
+			p.Reserves[economy.Cavalry], p.Reserves[economy.Archer], p.Reserves[economy.Infantry],
+			avgP, avgG, fires, riots, storms)
+	}
+	tw.Flush()
+
+	fmt.Printf("\n跑了 %d 個月（%d tick）。火災 %d 次、暴動 %d 次、暴風雨 %d 次。\n",
+		months, months*30*clock.TicksPerDay, fires, riots, storms)
+	fmt.Printf("玩家勢力：據點 %d　資金 %d　信賴度 %d　君主好戰等級 %d\n",
+		w.Factions[w.Player].Cities, w.Factions[w.Player].Funds,
+		w.Factions[w.Player].Trust, w.Factions[w.Player].Aggression)
+}
+
+// big5 把 internal/state 保留的原始位元組轉成可以印的字串。
+//
+// 規則層刻意不做編碼轉換（存原始 byte 才能 round-trip 回原版檔案），
+// 所以轉換發生在最外層。
+func big5(s string) string {
+	if s == "" {
+		return "?"
+	}
+	return text.Decode([]byte(s), text.Big5)
+}
