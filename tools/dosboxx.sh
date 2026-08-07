@@ -59,7 +59,9 @@ docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
 set -e
 cat > /tmp/dosbox-x.conf <<'EOF'
 [sdl]
-autolock=false
+# autolock 一定要開：關掉的話 DOSBox 不會把滑鼠事件轉給 guest，
+# xdotool 的合成點擊會被吃掉，看起來像「遊戲不理滑鼠」。
+autolock=true
 [dosbox]
 memsize=8
 machine=pc98

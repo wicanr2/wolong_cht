@@ -58,6 +58,11 @@ Go 版與 Python 版的輸出逐像素完全相同。
 | **DOSBox-X 設定** | `dosbox/`。出自 msdostest（實測 `__PASS__`），`core=normal` ＋ 固定 `cycles=20000` → **即時制的可重現性解決了** |
 | **DOS/V 版實跑** | `tools/dosbox.sh` ＋ `docs/playtest/01`。**字型懸案結案**（不用自備，`YNFONT.EXE` 自帶）、**防拷確認**、淡入行為與 `docs/re/02` 對上 |
 | **PC-98 版實跑（oracle 建立）** | `tools/dosboxx.sh` ＋ `docker/dosboxx/` ＋ `docs/playtest/02`。**沒有防拷，開場完整播放**。掛目錄跑（原版本來就裝硬碟），五片分掛會報「ファイルが異常です」 |
+| **oracle 可重現性通過** | 同一串操作跑兩次，截圖 **byte-for-byte 相同、0 個不同像素**。這是即時制專案的關鍵閘門 |
+| **大地圖畫面拿到** | 推進到 NEW GAME 對話框。**畫面最上方的橫幅正是 `ICONGRF` 段 0**（640×32），位置完全對上 |
+| **`MMAP.MDL` 全解** | 256 塊 16×16 地形圖塊，餘 0，與實機地形吻合（`docs/formats/05`）|
+| **地圖尺寸定案** | **384 × 256 格**（`sub_1E4CE` 的 `cmp cx, 180h` ＋ 列跨距 0x18 段；98,304 ÷ 384 ＝ 256）|
+| **自動連接機制** | 道路／河流會依鄰格換圖塊（`sub_1E57F`，值域 `0xB8`–`0xDD`）。**remake 照抄查表會讓接邊斷掉** |
 | **逐片抽檔修正** | `workplace/orig/pc98_discs/{A..E}` 是權威來源；合併目錄 A 片優先。踩到「同名檔被後片靜靜蓋掉」（`YNSHELL.COM` 2699 vs 2675 B），工具已加比對警告 |
 | **`.MAP`/`.SCH` 容器格式** | `docs/formats/04`。索引 (offset,length) ＋ 壓縮片段，六個檔的末端全部等於檔長。**只有松崗自加的檔用這格式**，原版的 `MMAP`/`BATTLE` 是裸資料 |
 | **PC-98 有無符號表** | **沒有**（使用者提問）。`KI.EXE` 兩版都無 CodeView／Borland debug 資訊、無原始檔名殘留。PC-98 的價值在「兩版 diff」與「沒有防拷」，不在符號 |
@@ -99,6 +104,7 @@ Go 版與 Python 版的輸出逐像素完全相同。
 | `docs/playtest/01-dosbox-dosv.md` | DOS/V 版首次實跑：字型結案、防拷發現 |
 | `docs/playtest/02-dosboxx-pc98.md` | PC-98 實跑：oracle 建立、合併抽檔陷阱 |
 | `docs/formats/04-map-sch-container.md` | `.MAP`/`.SCH` 容器格式 |
+| `docs/formats/05-mmap-worldmap.md` | 大地圖：圖塊、384×256、自動連接 |
 | `README.md` | 公開的專案入口 |
 | `translations/extract/talk-{dosv,pc98}.json` | 抽出的 1,022 則訊息（兩版） |
 | `tools/fdi_extract.py` | PC-98 FDI 磁片抽檔 |
@@ -159,9 +165,10 @@ Go 版與 Python 版的輸出逐像素完全相同。
 - [x] ~~字型來源結案~~ — 不用自備，`YNFONT.EXE` 自帶
 - [x] ~~防拷檢查~~ — DOS/V 有、PC-98 沒有；oracle 改跑 PC-98
 - [x] ~~弄一個 DOSBox-X~~ — `docker/dosboxx/`，PC-98 版已跑起來
-- [ ] **實測即時制的可重現性**：同一串操作跑兩次要得到同一張圖。
-      這是 oracle 能不能用的關鍵，`cycles` 固定了但還沒驗
-- [ ] 推進到標題選單與大地圖（開場動畫很長，要更長的自動化序列）
+- [x] ~~實測即時制的可重現性~~ — **通過**：同一串操作跑兩次，
+      截圖 byte-for-byte 相同、0 個不同像素。oracle 可信
+- [x] ~~推進到大地圖~~ — 已到 NEW GAME 對話框，地形畫面拿到了
+- [ ] 日文說明書 38 頁判讀（讀了 6 頁）
 - [ ] 日文說明書 38 頁全判讀 → `docs/reference/01`
 
 ### 7.2 M1 起手順序（依投報排）
@@ -172,6 +179,7 @@ Go 版與 Python 版的輸出逐像素完全相同。
 
 1. ~~`.BRG` 調色盤~~ ✅ **完成**，`docs/formats/02` READY
 2. ~~`*GRF.DAT` 圖庫~~ ✅ **完成**（`ICONGRF` 段 1／段 3 待補）
+2.5 ~~`MMAP.MDL`~~ ✅ **完成**；`MMAP.MAP` 的編碼待解（`docs/re/04` 有四個入口）
 3. `MMAP.*` 大地圖三件（兩版全同）
 4. `BATTLE.*` 戰場（兩版全同）
 5. `SINARIO.DAT` ／ `SAVE.DAT`（兩版大小同內容異 → diff 定位字串欄位）
