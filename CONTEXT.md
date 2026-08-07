@@ -25,6 +25,8 @@
 兩版素材入庫、兩版 `KI.EXE` 進 IDA、逐檔比對完成；
 `TALK.DAT` 兩版都 byte-for-byte round-trip 通過，日中對照表已產出並找到 15 則譯文缺陷。
 `.BRG` 調色盤與**四個圖庫全部解完**（`ICONGRF` 剩兩段）。
+**Go 解碼層與素材檢視器已經跑起來**（`internal/assets/*` ＋ `cmd/wlshot`／`cmd/wlview`），
+Go 版與 Python 版的輸出逐像素完全相同。
 **下一步：`MMAP.*` 大地圖三件**——入口已找到（`docs/re/04`），
 但這一組不像圖庫那樣「載入器直接寫死尺寸」，資料在記憶體裡會先被展開，
 要先解 `sub_1E48A`。
@@ -54,6 +56,10 @@
 | **四個圖庫全解** | `docs/formats/03`。`KAOGRF` 150×64×64、`KYOGRF` 15×96×96（據點景觀）、`IVENTGRF` 3×288×176（劇情過場）**全部餘 0 B 並渲染驗收**；`ICONGRF` 是四段組合檔，段 0（640×32 標題橫幅）與段 2（192×128 縮小地圖）已解 |
 | **中文化缺口第一項** | `docs/reference/03`。主畫面標題橫幅寫的是日文「臥竜伝」，`ICONGRF` 兩版相同 → **松崗版沒重繪** |
 | **DOSBox-X 設定** | `dosbox/`。出自 msdostest（實測 `__PASS__`），`core=normal` ＋ 固定 `cycles=20000` → **即時制的可重現性解決了** |
+| **Go 解碼層** | `internal/assets/{palette,gfx,text,library}`。三份 READY 規格全部接上，測試綠（含 Go 版的 byte-for-byte round-trip）|
+| **素材檢視器** | `cmd/wlview`（Ebiten，實跑截圖驗過）＋ `cmd/wlshot`（無頭出 PNG）|
+| **交叉驗證** | Go 版與 Python 版的圖庫輸出**逐像素完全相同**（KAOGRF 1.84 MB、KYOGRF 414 KB）|
+| **Go 建置環境** | `tools/go.sh`（docker）＋ `tools/shot.sh`（Xvfb 截圖）＋ `docker/go/Dockerfile` |
 | **AI 機制文件開張** | `docs/mechanics/70-ai.md`（＋ `00-index.md`）。內容目前全來自日文說明書第 10、11 章，每條都標了等級 |
 | GitHub repo | https://github.com/wicanr2/wolong_cht（private） |
 
@@ -86,6 +92,7 @@
 | `docs/reference/02-jp-cht-diff.md` | 日中對照：15 則譯文缺陷 |
 | `docs/reference/03-baked-japanese.md` | 燒進美術裡的日文（松崗沒重繪的部分） |
 | `dosbox/` | 兩版的 DOSBox-X 設定 ＋ 出處 |
+| `README.md` | 公開的專案入口 |
 | `translations/extract/talk-{dosv,pc98}.json` | 抽出的 1,022 則訊息（兩版） |
 | `tools/fdi_extract.py` | PC-98 FDI 磁片抽檔 |
 | `tools/ida.sh` | IDA Pro 9.4 headless 包裝 |
@@ -173,6 +180,8 @@
 | `tools/brg.py` | `info` ／ `swatch`。純標準函式庫的 PNG 輸出 |
 | `tools/grf.py` | `sheet` ／ `one`。**`sheet` 會印「餘 N byte」，不是 0 就代表尺寸猜錯** |
 | `tools/ida_xref.idc` | 查 IDA 的 xref 圖。⚠ 立即值形式的位址參考 IDA 不建 xref，回零筆不等於沒人用（`docs/re/03` §0） |
+| `tools/go.sh` | `tools/go.sh test ./...`。image 沿用 demonwinter-go，volume 是自己的 `wl-gomod`／`wl-gobuild` |
+| `tools/shot.sh` | `tools/shot.sh out.png KEYS=Right,Down [參數]`。Xvfb + xdotool，驗呈現層 |
 
 **還沒建但 `CLAUDE.md` §5.1 要求的**：`tools/addr.py`（位址反查三張表）、
 `tools/dump_func.py`（dump 時自動翻語意 ＋ grep docs）、`tools/ida_xref.idc`。

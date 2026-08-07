@@ -29,3 +29,6 @@ __pycache__/
 *.png
 *.jpg
 !docs/images/*.png
+
+# Go 檢視器的截圖輸出（workplace/ 已整個忽略，這行只是提醒）
+workplace/shots/
