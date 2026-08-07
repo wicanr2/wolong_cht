@@ -41,7 +41,9 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/assets/text"
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
+	"github.com/wicanr2/wolong_cht/internal/rules/general"
 	"github.com/wicanr2/wolong_cht/internal/state"
+	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
@@ -90,6 +92,11 @@ type game struct {
 	// 並把這件事標記為 remake 差異（15-realtime.md §7）。
 	speed int
 
+	// list 是開著的一覽表（武將／據點…）。它是**非常駐視窗**，
+	// 所以開著的時候時間會停（15-realtime.md §2）。
+	list    *listwin.List
+	sortMem listwin.Memory
+
 	lastEvent string
 	quitting  bool
 
@@ -115,12 +122,83 @@ func (r *lcg) Next() int {
 // 刻意寫成一個函式而不是散在各視窗的開關程式碼裡——
 // 這樣「哪些視窗會停時間」只有一個地方可以改。
 func (g *game) timeRuns() bool {
+	// 一覽表是非常駐視窗 —— 開著就停時間。
+	if g.list != nil {
+		return false
+	}
 	for k := windowKind(0); k < numWindows; k++ {
 		if g.open[k] && !residentWindows[k] {
 			return false
 		}
 	}
 	return true
+}
+
+// openGeneralList 開武將一覽。欄位與說明書 5.3 的一覽表一致。
+func (g *game) openGeneralList() {
+	var rows []int
+	for i, gen := range g.world.Generals {
+		if gen.Alive && gen.Faction == g.world.Player {
+			rows = append(rows, i)
+		}
+	}
+	gs := g.world.Generals
+	rating := func(i int) int { return gs[i].Rules().Rating() }
+	g.list = listwin.New(listwin.Generals, []listwin.Column{
+		{Title: "武將名", Less: func(a, b int) bool { return gs[a].Name < gs[b].Name }},
+		{Title: "武術", Less: func(a, b int) bool { return gs[a].Martial > gs[b].Martial }},
+		{Title: "統率", Less: func(a, b int) bool { return gs[a].Command > gs[b].Command }},
+		{Title: "政治", Less: func(a, b int) bool { return gs[a].Politics > gs[b].Politics }},
+		{Title: "評價", Less: func(a, b int) bool { return rating(a) > rating(b) }},
+	}, rows, 12, &g.sortMem)
+}
+
+// drawList 畫一覽表。兩段式選取的「反白」用底色表示。
+func (g *game) drawList(screen *ebiten.Image) {
+	l := g.list
+	const x, y, w = 40, 44, 400
+	h := 26 + (l.Height+1)*(textdraw.GlyphH+2)
+	vector.DrawFilledRect(screen, x, y, w, float32(h), color.RGBA{0, 0, 0, 225}, false)
+	vector.StrokeRect(screen, x, y, w, float32(h), 1, color.RGBA{240, 200, 120, 255}, false)
+
+	white := color.RGBA{240, 240, 230, 255}
+	amber := color.RGBA{240, 200, 120, 255}
+	dim := color.RGBA{150, 150, 160, 255}
+
+	// 欄位名。數字鍵 1–5 對應排序，對應說明書「點欄位名排序」。
+	cx := x + 8
+	for i, c := range l.Columns {
+		g.td.Draw(screen, fmt.Sprintf("%d%s", i+1, c.Title), cx, y+6, amber)
+		cx += 80
+	}
+
+	rows, first := l.Visible()
+	ry := y + 26
+	for i, r := range rows {
+		gen := g.world.Generals[r]
+		col := white
+		if first+i == l.Cursor {
+			hl := color.RGBA{70, 60, 30, 255}
+			if l.Phase() == listwin.Selected {
+				hl = color.RGBA{180, 140, 40, 255} // 反白
+				col = color.RGBA{20, 20, 20, 255}
+			}
+			vector.DrawFilledRect(screen, x+4, float32(ry-1), w-8,
+				float32(textdraw.GlyphH+2), hl, false)
+		}
+		g.td.Draw(screen, big5(gen.Name), x+8, ry, col)
+		rr := general.General{Aptitude: gen.Aptitude, Martial: gen.Martial,
+			Command: gen.Command, Politics: gen.Politics}
+		g.td.Draw(screen, fmt.Sprintf("%4d%8d%8d%8d",
+			gen.Martial, gen.Command, gen.Politics, rr.Rating()), x+88, ry, col)
+		ry += textdraw.GlyphH + 2
+	}
+
+	hint := "↑↓ 移動　Enter 選取／決定　1-5 排序　ESC 取消"
+	if l.Phase() == listwin.Selected {
+		hint = "已選取　Enter 決定　ESC 退回"
+	}
+	g.td.Draw(screen, hint, x+8, y+h-textdraw.GlyphH-4, dim)
 }
 
 func pressed(k ebiten.Key) bool { return inpututil.IsKeyJustPressed(k) }
@@ -142,6 +220,36 @@ func (g *game) Update() error {
 	}
 	if pressed(ebiten.KeyF10) {
 		g.quitting = true
+		return nil
+	}
+	// 一覽表開著時吃掉所有輸入 —— 它是模態的（說明書 3.8 的兩段式操作
+	// 只有在獨佔輸入時才成立）。
+	if g.list != nil {
+		switch {
+		case pressed(ebiten.KeyArrowUp):
+			g.list.Move(-1)
+		case pressed(ebiten.KeyArrowDown):
+			g.list.Move(1)
+		case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
+			if id, ok := g.list.Confirm(); ok {
+				g.lastEvent = "選擇了 " + big5(g.world.Generals[id].Name)
+				g.list = nil
+			}
+		case pressed(ebiten.KeyEscape):
+			if g.list.Cancel() {
+				g.list = nil
+			}
+		}
+		for i, k := range []ebiten.Key{ebiten.Key1, ebiten.Key2, ebiten.Key3,
+			ebiten.Key4, ebiten.Key5} {
+			if pressed(k) {
+				g.list.SortBy(i)
+			}
+		}
+		return nil
+	}
+	if pressed(ebiten.KeyG) {
+		g.openGeneralList()
 		return nil
 	}
 	if pressed(ebiten.KeyEscape) {
@@ -315,7 +423,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 
 	// 底部狀態列自己鋪底，否則字會壓在地圖上看不清楚。
 	vector.DrawFilledRect(screen, 0, screenH-19, mapW, 19, color.RGBA{0, 0, 0, 210}, false)
-	g.td.Draw(screen, "1-4 視窗　方向鍵 捲動　-/= 速度　ESC 關閉　F10 離開",
+	g.td.Draw(screen, "1-4 視窗　G 武將一覽　方向鍵 捲動　-/= 速度　F10 離開",
 		4, screenH-17, dim)
 	if g.lastEvent != "" {
 		g.td.Draw(screen, g.lastEvent, mapW+6, screenH-17, amber)
@@ -323,6 +431,10 @@ func (g *game) Draw(screen *ebiten.Image) {
 	if !g.td.Available() {
 		g.td.Draw(screen, "（未載入字型）", mapW+6, screenH-36,
 			color.RGBA{240, 140, 140, 255})
+	}
+
+	if g.list != nil {
+		g.drawList(screen)
 	}
 
 	if g.quitting {
@@ -394,6 +506,7 @@ func main() {
 	shot := flag.String("shot", "", "跑 N 幀之後截圖到這個路徑就結束（驗收用）")
 	shotFrames := flag.Int("shot-frames", 120, "截圖前先跑幾幀")
 	openWin := flag.Int("open-window", -1, "截圖前先打開第幾個視窗（0–3，驗收暫停規則用）")
+	openList := flag.Bool("open-list", false, "截圖前先開武將一覽（驗收用）")
 	flag.Parse()
 
 	lib, err := library.Load(*dir)
@@ -437,6 +550,11 @@ func main() {
 		shotPath: *shot, shotAt: *shotFrames}
 	if *openWin >= 0 && *openWin < int(numWindows) {
 		g.open[*openWin] = true
+	}
+	if *openList {
+		g.openGeneralList()
+		g.list.Move(2)
+		g.list.Confirm() // 展示反白狀態
 	}
 	// 開場把鏡頭移到首都附近。
 	if cap := w.Factions[*player].Capital; cap >= 0 && cap < len(w.Cities) {
