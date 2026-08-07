@@ -25,7 +25,9 @@
 兩版素材入庫、兩版 `KI.EXE` 進 IDA、逐檔比對完成；
 `TALK.DAT` 兩版都 byte-for-byte round-trip 通過，日中對照表已產出並找到 15 則譯文缺陷。
 `.BRG` 調色盤與**四個圖庫全部解完**（`ICONGRF` 剩兩段）。
-**下一步：`MMAP.*` 大地圖三件**（`docs/re/03` 的路徑已經走通三次，照做）。
+**下一步：`MMAP.*` 大地圖三件**——入口已找到（`docs/re/04`），
+但這一組不像圖庫那樣「載入器直接寫死尺寸」，資料在記憶體裡會先被展開，
+要先解 `sub_1E48A`。
 
 ---
 
@@ -77,6 +79,7 @@
 | `docs/formats/03-grf-images.md` | **READY**（僅 `KAOGRF`）— 圖庫格式 |
 | `docs/re/02-palette-routine.md` | 兩版調色盤常式的反組譯 |
 | `docs/re/03-image-blitter.md` | 圖庫載入器與 VGA 四平面繪製常式 |
+| `docs/re/04-mmap-entry-points.md` | 大地圖的入口點與記憶體佈局（進行中） |
 | `docs/mechanics/00-index.md` | 機制索引與推論等級定義 |
 | `docs/mechanics/70-ai.md` | **電腦 AI 的判斷邏輯**（蒐集中） |
 | `docs/reference/01-jp-manual.md` | 日文原版說明書判讀紀錄（逐頁累加） |
@@ -144,6 +147,10 @@
 - [ ] 日文說明書 38 頁全判讀 → `docs/reference/01`
 
 ### 7.2 M1 起手順序（依投報排）
+
+> **前三項走通的路徑**（`docs/re/03` §5）：grep 檔名偏移的立即值 → 載入器讀出
+> 「每筆多少 byte、怎麼定位」→ 繪製呼叫端的 `ax` 拆成寬高 → 渲染，餘數要是 0。
+> **`MMAP.*` 這一組不適用**——資料先展開再畫，見 `docs/re/04`。
 
 1. ~~`.BRG` 調色盤~~ ✅ **完成**，`docs/formats/02` READY
 2. ~~`*GRF.DAT` 圖庫~~ ✅ **完成**（`ICONGRF` 段 1／段 3 待補）
