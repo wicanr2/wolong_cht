@@ -257,7 +257,9 @@ Go 版與 Python 版的輸出逐像素完全相同。
    決策鏈的分岔**已解**（`docs/mechanics/70-ai.md`）：
    **世界會單調地與玩家為敵**——AI 之間和平 −2／交戰 +1（厭戰），
    但所有勢力對玩家只有 −1 且交戰不加。玩家只能靠外交官推回去。
-   **還缺**：`sub_12E89` 挑侵攻目標是挑最強還是最弱（國力評分公式已解）。
+   `sub_12E89` **已解**：判準是「**鄰居的合計國力超過自己**」就對撐不住的
+   那幾家發事件 3 ＝ **停戰提案**（訊息 43 直接定名）。
+   **還缺**：`es:[di]` 最高位元的標記是誰設的（`sub_12CDF` 存進去時是乾淨的）。
 
 #### 進行中的長線
 
@@ -329,6 +331,7 @@ Go 版與 Python 版的輸出逐像素完全相同。
 | `tools/talkdat.py` | `dump` ／ `export` ／ `build` ／ `verify` ／ `diff`。**驗收指令是 `verify`，要求 byte-for-byte** |
 | `tools/brg.py` | `info` ／ `swatch`。純標準函式庫的 PNG 輸出 |
 | `tools/grf.py` | `sheet` ／ `one`。**`sheet` 會印「餘 N byte」，不是 0 就代表尺寸猜錯** |
+| `tools/ida_func.idc` | `tools/ida.sh raw dosv idat -A \"-S/work/tools/ida_func.idc sub_XXXX\" KI.EXE.i64`。一次給呼叫者 ＋ 反組譯 ＋ **這支碰到的每個位址還有誰在用**。查欄位語意用這支，不要 grep `.asm` |
 | `tools/ida_xref.idc` | 查 IDA 的 xref 圖。⚠ 立即值形式的位址參考 IDA 不建 xref，回零筆不等於沒人用（`docs/re/03` §0） |
 | `tools/check.sh` | **提交前跑這一支**：`go vet` ＋ `go test` ＋ 文件索引檢查。三種檢查分開記就會漏掉一個，實際漏掉的是第三個 |
 | `tools/index.py` | `generate` 重生 `docs/INDEX.md`（含斷言總表），`check` 只檢查。**擋下「狀態行說未解但內文已 confirmed」「A 說未解 B 說 READY」「連結壞掉」**。⚠ 改這支之後要做正對照——第一版有兩個 bug 讓檢查永遠不觸發，是故意放回一條過時狀態才發現的 |
