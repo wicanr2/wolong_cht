@@ -36,13 +36,13 @@ var windowRect = [numWindows]struct{ X, Y, W, H int }{
 var commandMenu = []struct{ key, name string }{
 	{"P", "進　言"},
 	{"J", "人　事"},
-	{"", "財　政"},
+	{"F", "財　政"},
 	{"A", "編　成"},
 	{"M", "行　軍"},
 	{"C", "軍　團"},
-	{"", "據　點"},
+	{"T", "據　點"},
 	{"G", "武　將"},
-	{"", "勢　力"},
+	{"K", "勢　力"},
 }
 
 // archorRight 讓視窗靠右邊，留 8 px 邊。

@@ -130,6 +130,10 @@ type game struct {
 	// form 是編成流程的狀態。
 	form formState
 
+	// finance 是財政畫面的狀態。與 form 一樣是**非常駐視窗**，
+	// 開著的時候時間會停（15-realtime.md §2）。
+	finance financeState
+
 	// 進言的狀態機：選指令 → 選對象 → 說服。
 	advise    adviseStage
 	adviseCmd persuasion.Command
@@ -167,7 +171,7 @@ const (
 // 這樣「哪些視窗會停時間」只有一個地方可以改。
 func (g *game) timeRuns() bool {
 	// 一覽表、進言、編成都是非常駐視窗 —— 開著就停時間。
-	if g.list != nil || g.adviseActive() || g.form.active {
+	if g.list != nil || g.adviseActive() || g.form.active || g.finance.active {
 		return false
 	}
 	for k := windowKind(0); k < numWindows; k++ {
@@ -319,6 +323,11 @@ func (g *game) Update() error {
 		}
 		return nil
 	}
+	// 財政畫面是模態的，優先吃輸入。
+	if g.finance.active {
+		g.updateFinance()
+		return nil
+	}
 	// 編成畫面是模態的，優先吃輸入。
 	if g.form.active {
 		g.updateForm()
@@ -330,6 +339,15 @@ func (g *game) Update() error {
 		return nil
 	case pressed(ebiten.KeyJ):
 		g.openPersonnel()
+		return nil
+	case pressed(ebiten.KeyF):
+		g.beginFinance()
+		return nil
+	case pressed(ebiten.KeyT):
+		g.openCityList()
+		return nil
+	case pressed(ebiten.KeyK):
+		g.openFactionList()
 		return nil
 	case pressed(ebiten.KeyC):
 		g.openCorpsList()
@@ -482,6 +500,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 		g.drawList(screen)
 	}
 	g.drawForm(screen)
+	g.drawFinance(screen)
 	g.drawAdvise(screen)
 
 	if g.quitting {
