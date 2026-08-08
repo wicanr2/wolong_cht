@@ -18,6 +18,21 @@ const (
 	arrowCooldown = 24
 )
 
+// hitByArrow 是**飛道具**的傷害（原版 `sub_1B97E`）。
+//
+// 與近戰的差別只有一條：**目標是步兵就右移兩位**
+// （`cmp byte ptr [bx+4], 36h / jz` → `shr al,1` × 2）。
+// 大將也吃這個減傷，但要多一個條件（`test byte ptr [bx+2], 1`）。
+func (b *Battle) hitByArrow(from int, e *Soldier, power int) {
+	if e.Kind == Infantry && power > 0 {
+		power /= InfantryArrowDivisor
+		if power < 1 {
+			power = 1
+		}
+	}
+	b.hit(from, e, power)
+}
+
 // InfantryArrowDivisor 是步兵挨箭的減傷倍數。
 //
 // 原版 `sub_1B97E`：`cmp byte ptr [bx+4], 36h / jz` → **威力右移兩位**。
@@ -25,21 +40,26 @@ const (
 // 數值依據就在這裡：步兵是唯一扛得住城牆上箭雨的兵種。
 const InfantryArrowDivisor = 4
 
-// hit 對一個兵造成傷害。
+// hit 是**近戰**傷害（原版 `sub_1B618`）。
 //
-// 三條規則全部照原版：
-//
-//   - **步兵挨箭只吃四分之一**
 //   - **大將不會陣亡**：體力扣到 1 就停住（`cmp [bx+4], 0 / jz` 跳過死亡分支）
 //   - 受傷的兵**自己把命令改成退卻**，但體力還滿的不會
 //     （`cmp byte ptr [bx+3], 64h / jnb` 跳過）
+//
+// ⚠ **這裡沒有「步兵吃四分之一」**——那條在 `sub_1B97E`，
+// 也就是**飛道具**的命中常式，近戰的 `sub_1B618` 沒有。
+// 本專案一度把它套在兩邊，結果近戰威力 6 右移兩位變成 1，
+// 步兵幾乎打不動，戰鬥卡住（見 hitByArrow）。
 func (b *Battle) hit(from int, e *Soldier, power int) {
 	if !e.Alive {
 		return
 	}
-	if e.Kind == Infantry && power > 0 {
-		power >>= 2
-	}
+	// 受擊硬直：原版 `sub_1B618` 一起做三件事——設 `+0x02` bit 4、
+	// **把面向歸零**、設「這一幀被動過」。面向歸零之後圖號公式會
+	// 一律畫正面（§5.13 的 bit 4），所以三件事其實是同一件：
+	// 被打中的兵轉過來、畫受擊的圖、那一幀不能被換位置。
+	e.Hurt = true
+
 	wasFull := e.HP >= MaxHP
 	e.HP -= power
 	if e.HP <= 0 {
@@ -104,7 +124,7 @@ func (b *Battle) stepProjectiles() {
 			continue
 		}
 		if hitSoldier := b.soldierAt(1-p.side, p.x, p.y, p.z); hitSoldier != nil {
-			b.hit(p.side, hitSoldier, p.power)
+			b.hitByArrow(p.side, hitSoldier, p.power)
 			continue // 箭消失
 		}
 		if p.x == p.tx && p.y == p.ty {
@@ -135,4 +155,65 @@ func sign(v int) int {
 		return -1
 	}
 	return 0
+}
+
+// 撞到**敵方大將**的處理，重現 `sub_1B6BC`（`loc_1B5B1` 呼叫的那一支）。
+//
+// 大將不是「打不到」——是**要先過一關**：
+//
+//	大將體力 ≤ 1        → 打不動
+//	大將的命令是 0 或 5  → 打不到（陣形中／退卻中）
+//	亂數 < 0x19          → **直接命中**（25/256 ≈ 10%）
+//	否則                 → 差值 ＝ 攻擊者戰力 − 大將戰力（負的當 0、上限 24）
+//	                       亂數 & 0x7F **小於**差值才命中
+//
+// 命中的傷害是**攻擊者戰力 ÷ 8**（至少 1），而且**大將體力最低留 1**
+// （`sub [di+3], al / ja / mov byte ptr [di+3], 1`）——大將不會被打死，
+// 但會被打到 50 以下觸發全軍退卻（§5.8h）。
+//
+// ⭐ 最後 `or byte ptr [si+2], 8` 給**攻擊者**設 bit 3——
+// 那正是圖號公式裡剩下的那一位（§5.13）：**打在大將身上會換一張圖**。
+const (
+	// generalAutoHit 是直接命中的亂數門檻（`cmp al, 19h / jb`）。
+	generalAutoHit = 0x19
+	// generalEdgeCap 是戰力差的上限（`cmp ah, 18h`）。
+	generalEdgeCap = 24
+	// generalDamageShift 是傷害的位移（`shr al, 1` × 3 ＝ ÷ 8）。
+	generalDamageShift = 3
+	// GeneralMinHP 是大將被打到的下限——**不會死**。
+	GeneralMinHP = 1
+)
+
+// hitGeneral 打一次敵方大將。回傳有沒有命中。
+func (b *Battle) hitGeneral(attacker *Soldier, g *Soldier) bool {
+	if !g.Alive || g.HP <= GeneralMinHP {
+		return false
+	}
+	// 陣形中或退卻中的大將打不到。
+	if g.Cmd == Form || g.Cmd == Retreat {
+		return false
+	}
+	if b.rng.Next()&0xFF >= generalAutoHit {
+		edge := attacker.Power - g.Power
+		if edge < 0 {
+			edge = 0
+		}
+		if edge > generalEdgeCap {
+			edge = generalEdgeCap
+		}
+		if b.rng.Next()&0x7F >= edge {
+			return false
+		}
+	}
+	g.Hurt, g.Swapped = true, true
+	dmg := attacker.Power >> generalDamageShift
+	if dmg < 1 {
+		dmg = 1
+	}
+	g.HP -= dmg
+	if g.HP < GeneralMinHP {
+		g.HP = GeneralMinHP
+	}
+	attacker.HitGeneral = true // 圖號 bit 3
+	return true
 }

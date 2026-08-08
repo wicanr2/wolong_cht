@@ -158,6 +158,22 @@ type Soldier struct {
 	Path   *Waypoints
 	PathAt int
 
+	// Power 是由士氣算出來的戰力（原版 `+0x18`，`sub_19B6D` 寫）。
+	// 打大將時的命中率與傷害都看它。
+	Power int
+
+	// HitGeneral 是「這一擊打在大將身上」（原版 `+0x02` 的 bit 3，
+	// `sub_1B6BC` 結尾 `or byte ptr [si+2], 8`）——圖號會換一張。
+	HitGeneral bool
+
+	// Hurt 是「剛剛被打中」（原版 `+0x02` 的 bit 4）。
+	//
+	// `sub_1B618` 打中人的時候一起做三件事：設這個位元、**把面向歸零**
+	// （`mov byte ptr [di+5], 0`）、設 Swapped。而圖號公式裡
+	// bit 4 的作用正是「面向一律當成 0」（§5.13）——**兩邊是同一件事**：
+	// 受擊的兵轉向正面、畫受擊的圖，而且那一幀不能被換位置。
+	Hurt bool
+
 	// Swapped 是「這一幀已經被別人換過位置了」（原版 `+0x00` 的 bit 6）。
 	//
 	// `sub_1B732` 換完會對被換的那一個 `or byte ptr [di], 40h`，

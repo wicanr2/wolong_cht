@@ -11,6 +11,9 @@ type Side struct {
 	// （`sub_1A754` 的 1 + 7 迴圈）。
 	Soldiers [SoldiersOnFoot]Soldier
 
+	// Power 是這一側的戰力（原版由士氣算進每個兵的 `+0x18`，§3.9）。
+	Power int
+
 	// Kinds[k] 是第 k 隊的兵種。
 	//
 	// ⚠ **不能拿隊長的兵種當一隊的兵種。** 第 0 隊的隊長是大將（兵種 0），
@@ -175,6 +178,11 @@ func NewBattle(f *Field, forms *Formations, rng Rand, cityWall int) *Battle {
 // 場上一隊只放 8 個，其餘進待機（說明書 4.1）。
 func (b *Battle) Deploy(side int, squad int, kind Kind, men int) {
 	s := &b.Sides[side]
+	if s.Power == 0 {
+		// 沒有指定就用滿值。原版的 `+0x18` 是由軍團士氣算出來的（§3.9）；
+		// 呼叫端沒給士氣時（測試、無頭模擬）用這個。
+		s.Power = DefaultPower
+	}
 	s.Kinds[squad] = kind
 	on := men
 	if on > PerSquad {
@@ -188,7 +196,7 @@ func (b *Battle) Deploy(side int, squad int, kind Kind, men int) {
 		}
 		s.Soldiers[squad*PerSquad+i] = Soldier{
 			Alive: true, Kind: k, HP: MaxHP, Stamina: StaminaFull,
-			Target: -1, Cmd: Form, Next: Form,
+			Power: s.Power, Target: -1, Cmd: Form, Next: Form,
 		}
 	}
 }
@@ -343,7 +351,7 @@ func (b *Battle) reinforce() {
 				}
 				x, y := b.formationSpot(i, j)
 				s.Soldiers[j] = Soldier{
-					Alive: true, Kind: s.Kinds[k],
+					Alive: true, Kind: s.Kinds[k], Power: s.Power,
 					HP: MaxHP, Stamina: StaminaFull, Target: -1,
 					Cmd: Form, Next: s.Standing,
 					X: x, Y: y, Z: b.Field.StandLevel(x, y),
@@ -367,6 +375,9 @@ func sideName(i int) string {
 // ---------------------------------------------------------------------------
 // 與戰略層的換算
 // ---------------------------------------------------------------------------
+
+// DefaultPower 是沒有指定士氣時每個兵的戰力。
+const DefaultPower = 100
 
 // MenPerSoldier 是戰場上一個兵等於戰略上幾個人。
 //

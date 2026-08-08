@@ -122,11 +122,15 @@ const (
 // soldierImage 取一個兵的圖。圖號的算法照 `sub_1B240` 的尾段
 // （docs/re/11 §5.13）：兵種 ＋（面向 × 2 ｜ 狀態旗標）。
 //
-// flags 這裡只餵得出**走路的動畫幀**（bit 0）——原版每次更新完
-// `xor [si+2], 1`，所以拿幀數的最低位當它。其餘旗標（bit 3／4）
-// 對應的狀態本專案還沒有等價物。
-func (v *battleView) soldierImage(side int, kind tactical.Kind, facing, step int) *ebiten.Image {
-	return v.frame(side, battle.SpriteFor(int(kind), facing, step&battle.PoseFlagStep))
+// flags 目前餵兩個位元：**走路的動畫幀**（bit 0，原版每次更新完
+// `xor [si+2], 1`）與**受擊**（bit 4，原版 `sub_1B618` 設，
+// 效果是面向一律當成正面）。bit 3 對應的狀態還沒解。
+func (v *battleView) soldierImage(s *tactical.Soldier, side, step int) *ebiten.Image {
+	flags := step & battle.PoseFlagStep
+	if s.Hurt {
+		flags |= battle.PoseFlagFront
+	}
+	return v.frame(side, battle.SpriteFor(int(s.Kind), s.Facing, flags))
 }
 
 // bannerImage 取軍旗。大將身邊插的那一支——軍旗那一組
@@ -273,7 +277,7 @@ func (g *game) drawBattleIso(screen *ebiten.Image, b *tactical.Battle, me *tacti
 			if !ok {
 				continue
 			}
-			if img := v.soldierImage(i, s.Kind, s.Facing, b.Frame+k); img != nil {
+			if img := v.soldierImage(s, i, b.Frame+k); img != nil {
 				op := &ebiten.DrawImageOptions{}
 				// 腳底對準格子：圖高 64，站的那一格在最下面那一列。
 				op.GeoM.Translate(float64(px-battle.SpriteW/2),

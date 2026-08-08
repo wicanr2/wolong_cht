@@ -152,17 +152,37 @@ func TestGeneralRetreatOrdersWholeSide(t *testing.T) {
 
 // 步兵挨箭只吃四分之一 —— 說明書「攻城戦では弓兵、歩兵が必要です」的
 // 數值依據。
+//
+// ⭐ **只有箭**。那條規則在 `sub_1B97E`（飛道具的命中），
+// 近戰的 `sub_1B618` 沒有——本專案一度把它套在兩邊，
+// 結果近戰打步兵幾乎不掉血，戰鬥卡住（下面那條測試釘住這件事）。
 func TestInfantryResistsArrows(t *testing.T) {
+	b := newTestBattle(flatField())
+	inf := &Soldier{Alive: true, Kind: Infantry, HP: MaxHP}
+	cav := &Soldier{Alive: true, Kind: Cavalry, HP: MaxHP}
+	b.hitByArrow(0, inf, 40)
+	b.hitByArrow(0, cav, 40)
+	if MaxHP-inf.HP != 10 {
+		t.Errorf("步兵挨箭掉了 %d，應為 10（40 ÷ 4）", MaxHP-inf.HP)
+	}
+	if MaxHP-cav.HP != 40 {
+		t.Errorf("騎馬挨箭掉了 %d，應為 40", MaxHP-cav.HP)
+	}
+}
+
+// ⭐ 近戰**不吃**那個四分之一。
+func TestMeleeIgnoresInfantryArrowResistance(t *testing.T) {
 	b := newTestBattle(flatField())
 	inf := &Soldier{Alive: true, Kind: Infantry, HP: MaxHP}
 	cav := &Soldier{Alive: true, Kind: Cavalry, HP: MaxHP}
 	b.hit(0, inf, 40)
 	b.hit(0, cav, 40)
-	if MaxHP-inf.HP != 10 {
-		t.Errorf("步兵掉了 %d，應為 10（40 ÷ 4）", MaxHP-inf.HP)
+	if MaxHP-inf.HP != 40 {
+		t.Errorf("步兵近戰掉了 %d，應為 40——四分之一只在飛道具那一支",
+			MaxHP-inf.HP)
 	}
 	if MaxHP-cav.HP != 40 {
-		t.Errorf("騎馬掉了 %d，應為 40", MaxHP-cav.HP)
+		t.Errorf("騎馬近戰掉了 %d，應為 40", MaxHP-cav.HP)
 	}
 }
 

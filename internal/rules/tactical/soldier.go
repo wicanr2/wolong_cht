@@ -45,8 +45,9 @@ func (s *Soldier) applyNewOrder() bool {
 // updateSoldier 是一個兵的一幀。
 func (b *Battle) updateSoldier(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
-	// 原版每個兵更新時先清掉「被換過」的旗標（`and byte ptr [si], 0BFh`）。
-	s.Swapped = false
+	// 原版每個兵更新時先清掉這一幀的暫態旗標
+	// （`and byte ptr [si], 0BFh`、`and byte ptr [si+2], 1`）。
+	s.Swapped, s.Hurt, s.HitGeneral = false, false, false
 	b.lockOnNearest(side, k)
 	s.applyNewOrder()
 
@@ -276,7 +277,10 @@ func (b *Battle) tryMove(side, k, x, y, z int) bool {
 	if side2, k2 := b.anyoneAt(x, y, z); k2 >= 0 {
 		if side2 != side {
 			e := &b.Sides[side2].Soldiers[k2]
-			if !e.IsGeneral() {
+			if e.IsGeneral() {
+				// 大將另一條路：要過命中判定，而且打不死（`sub_1B6BC`）。
+				b.hitGeneral(s, e)
+			} else {
 				b.hit(side, e, meleePower)
 			}
 			return false
@@ -294,9 +298,11 @@ func (b *Battle) tryMove(side, k, x, y, z int) bool {
 //
 //	[di+04] == 0     擋路的是**大將**
 //	[di+1A] == 5     擋路的正在**退卻**
-//	[di] & 0x61      bit 6 ＝ **這一幀已經被換過**（`sub_1B732` 設、
-//	                 `sub_1B240` 清）；bit 0／5 未解
-//	[di+02] & 0x10   ⚠ 旗標未解
+//	[di] & 0x61      bit 0 ＝ **陣亡**（`sub_1B618` 把體力扣到 0 時設，
+//	                 同時 `[di+1] = 4`）；bit 5 ＝ **正在移動常式裡面**
+//	                 （`sub_1AF69` 進入時 `or [si], 20h`、離開時清掉，
+//	                 是重入保護，本專案不需要）；bit 6 ＝ **這一幀已經被換過**
+//	[di+02] & 0x10   **剛剛被打中**（`sub_1B618` 設，同時把面向歸零）
 //
 // 通過之後還分兩種：
 //
@@ -311,7 +317,8 @@ func (b *Battle) swapWith(side, k, side2, k2 int) bool {
 	other := &b.Sides[side2].Soldiers[k2]
 
 	// bit 6：這一幀已經被換過了就不能再換，否則兩個兵會原地互換不停。
-	if other.Swapped || other.IsGeneral() || other.Cmd == Retreat {
+	// bit 4 of +0x02：剛被打中的兵這一幀不能被換走。
+	if other.Swapped || other.Hurt || other.IsGeneral() || other.Cmd == Retreat {
 		return false
 	}
 	// 跨層對調只有弓兵與步兵做得到。
