@@ -1,0 +1,243 @@
+// Package tactical 實作戰術戰鬥。
+//
+// 規格全部出自 `KI.EXE` 的戰術模組，完整反組譯見 docs/re/11，
+// 機制說明見 docs/mechanics/30-combat.md。
+//
+// 原版的戰術戰鬥是**硬即時**的（說明書 4.1：「戦闘中は絶対に時間を
+// 止められません」），所以這一層做成「一幀一步」的純函式狀態機：
+// 呼叫端每幀呼叫一次 Step，不含畫面、不含輸入。
+// 這樣它可以在無頭環境裡大量重複執行來驗證長期行為。
+//
+// ⚠ **這裡實作的是已經解出來的部分。** 還沒解的（真正的尋路演算法、
+// 士氣值、像素格式）在下面各自標出來，用的是 remake 的暫定作法，
+// **不要當成原版行為**。
+package tactical
+
+// 戰場的尺寸。格索引是三維的：Z × 0x1000 ＋ Y × 0x40 ＋ X
+// （`sub_1BA2E`／`sub_1B047`，docs/re/11 §5.2）。
+const (
+	Width  = 64
+	Height = 62
+	Levels = 7
+
+	// 座標會被 `sub_1AACF` 夾在 1–62。
+	MinCoord = 1
+	MaxCoord = 62
+)
+
+// 一側的編制：6 隊 × 8 人，每隊 1 隊長 ＋ 7 隊員
+// （`sub_1A754` 的 1 + 7 迴圈，docs/re/11 §5.6）。
+const (
+	Squads         = 6
+	PerSquad       = 8
+	SoldiersOnFoot = Squads * PerSquad // 48
+)
+
+// Kind 是兵種。原版存的是**兵種 × 18**（`sub_1AB7C` 的三個分支門檻
+// 都是 18 的倍數，docs/re/11 §5.8e）。
+type Kind int
+
+const (
+	General  Kind = 0  // 大將：不攻擊、不會陣亡、爬不上城牆
+	Cavalry  Kind = 18 // 騎馬：追著敵人打，爬不上城牆
+	Archer   Kind = 36 // 弓兵：站著不動放箭
+	Infantry Kind = 54 // 步兵：近戰，挨箭只吃四分之一
+)
+
+func (k Kind) String() string {
+	switch k {
+	case General:
+		return "大將"
+	case Cavalry:
+		return "騎馬"
+	case Archer:
+		return "弓兵"
+	case Infantry:
+		return "步兵"
+	}
+	return "?"
+}
+
+// Command 是六個戰術指令（說明書 4.2）。編號與原版一致，
+// 每一個都是從程式行為認出來的，見 docs/re/11 §5.8b。
+type Command int
+
+const (
+	Form     Command = 0 // 陣形：走到陣形指定的座標
+	Attack   Command = 1 // 攻擊：大將以外的兵攻擊
+	Charge   Command = 2 // 突擊：攻城戰的守方會開門
+	ScaleWal Command = 3 // 城壁移動：野戰時自動變成攻擊
+	Guard    Command = 4 // 守陣：敵人靠近就打、走遠就回陣
+	Retreat  Command = 5 // 退卻：不可打斷
+
+	// 內部狀態，腳本不會下達（docs/re/11 §5.8b）。
+	Holding Command = 7 // 陣形已就位
+)
+
+func (c Command) String() string {
+	switch c {
+	case Form:
+		return "陣形"
+	case Attack:
+		return "攻擊"
+	case Charge:
+		return "突擊"
+	case ScaleWal:
+		return "城壁移動"
+	case Guard:
+		return "守陣"
+	case Retreat:
+		return "退卻"
+	case Holding:
+		return "就位"
+	}
+	return "?"
+}
+
+// 疲勞度（原版叫「餘力」，兵記錄 +0x19，docs/re/11 §5.8f）。
+const (
+	// StaminaFull 是走到陣形位置那一刻補到的值。
+	// **只有「走到定位」會補**——下令不會（`sub_1AA2C` 的
+	// `mov byte ptr [si+19h], 80h`）。
+	StaminaFull = 128
+	// StaminaFighting 是攻擊時的上限（`sub_1AB7C` 的 `cmp 28h`）。
+	StaminaFighting = 40
+	// StaminaBackToForm 是守陣時退回陣形的門檻（`sub_1ABB2` 的 `cmp 10h`）。
+	StaminaBackToForm = 16
+)
+
+const (
+	// MaxHP 是兵的體力上限（`sub_1B97E` 的 `cmp [bx+3], 64h`）。
+	MaxHP = 100
+	// GeneralRetreatHP 是大將自動退卻的門檻（`sub_1AE56` 的 `cmp [di+3], 32h`）。
+	GeneralRetreatHP = 50
+	// SiegeDrainInterval 是攻城方大將體力遞減的間隔（`sub_1AE56` 的 `mov cs:byte_1D321, 0Ah`）。
+	SiegeDrainInterval = 10
+)
+
+// 面向。`sub_1B047`／`sub_1B069` 直接寫 0 與 2，飛道具移動
+// （`sub_1BA2E`）用同一組編碼。
+const (
+	West = iota
+	North
+	East
+	South
+)
+
+// Soldier 是一個兵。欄位對應原版的 32 byte 記錄（docs/re/11 §5.8l）。
+type Soldier struct {
+	Alive bool
+	Kind  Kind
+	HP    int
+
+	X, Y, Z int
+	Facing  int
+
+	// Stamina 是疲勞度（餘力），越高越好。
+	Stamina int
+
+	// Cmd 是生效中的命令、Next 是新下達的命令。
+	// **兩個欄位是分開的**，所以腳本可以「下令之後等幾幀再問到位了沒」。
+	Cmd, Next Command
+
+	// Target 是鎖定的敵人（對方陣營的索引），−1 表示沒有。
+	Target int
+
+	// GoalX/GoalY/GoalZ 是最終目標（陣形位置或敵人的位置）。
+	// StepX/StepY/StepZ 是這一步要走向的中繼點。
+	GoalX, GoalY, GoalZ int
+	StepX, StepY, StepZ int
+}
+
+// IsGeneral 回報這是不是大將。原版用 `+0x04 == 0` 判。
+func (s *Soldier) IsGeneral() bool { return s.Kind == General }
+
+// CanClimb 回報這個兵爬不爬得上城牆。
+//
+// 原版是 `cmp byte ptr [si+4], 12h / jbe` ——**大將與騎馬跳過 Z 軸移動**
+// （docs/re/11 §5.8j）。說明書 5.5「騎馬のみの編成では城壁に登れない」
+// 在機器碼裡就是這一行。
+func (s *Soldier) CanClimb() bool { return s.Kind > Cavalry }
+
+// Field 是戰場的立體格。Solid[z] 為真表示那一層是實心的（站不上去）。
+//
+// 原版把它存成 7 張 64×64 的圖（`sub_1BB6D` 每層相隔 0x1000），
+// 一格的可站立層由地圖圖塊的堆疊決定（docs/re/11 §4.2、§5.2）。
+type Field struct {
+	solid [Levels][Height][Width]bool
+	// gateX 是命令 3（城壁移動）要走過去的那一格 X
+	// （`BATTLE.MAP` 索引的第二欄，docs/re/11 §5.8i）。0 表示這張圖沒有城。
+	gateX int
+	// top[y][x] 是那一格最高的可站立層。
+	top [Height][Width]int
+}
+
+// NewField 從每格的堆疊高度建一張戰場。
+//
+// stack[y][x] 是那一格的圖塊堆疊層數（0–7）：**堆疊的部分是實心的**，
+// 兵站在它上面。堆疊 ≥ 4 的格子原版會給站上去的兵設一個旗標
+// （docs/re/11 §4.3），在攻城圖上那些格子構成城牆。
+func NewField(stack [][]int, gateX int) *Field {
+	f := &Field{gateX: gateX}
+	for y := 0; y < Height && y < len(stack); y++ {
+		for x := 0; x < Width && x < len(stack[y]); x++ {
+			h := stack[y][x]
+			if h > Levels {
+				h = Levels
+			}
+			for z := 0; z < h; z++ {
+				f.solid[z][y][x] = true
+			}
+			f.top[y][x] = h
+		}
+	}
+	return f
+}
+
+// GateX 回傳登城點的 X。0 表示這是野戰用的戰場。
+func (f *Field) GateX() int { return f.gateX }
+
+// IsSiege 回報這是不是攻城戰的戰場。
+//
+// 判準與原版一致：**索引第二欄為 0 就是野戰**
+// （214 張裡零例外，docs/re/11 §4.5）。
+func (f *Field) IsSiege() bool { return f.gateX != 0 }
+
+// StandLevel 回傳 (x, y) 那一格站得上去的層。
+func (f *Field) StandLevel(x, y int) int {
+	if !inBounds(x, y) {
+		return 0
+	}
+	return f.top[y][x]
+}
+
+// Walkable 回報 (x, y, z) 站不站得上去：那一層本身不能是實心的，
+// 而且要正好站在堆疊的頂上（不能浮空）。
+func (f *Field) Walkable(x, y, z int) bool {
+	if !inBounds(x, y) || z < 0 || z >= Levels {
+		return false
+	}
+	return f.top[y][x] == z
+}
+
+func inBounds(x, y int) bool {
+	return x >= MinCoord && x <= MaxCoord && y >= MinCoord && y <= MaxCoord
+}
+
+// clamp 重現 `sub_1AACF`：座標夾在 1–62。
+func clamp(v int) int {
+	if v <= 0 {
+		return MinCoord
+	}
+	if v >= 63 {
+		return MaxCoord
+	}
+	return v
+}
+
+func abs(v int) int {
+	if v < 0 {
+		return -v
+	}
+	return v
+}
