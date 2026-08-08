@@ -74,11 +74,58 @@ func TestPathRespectsClimb(t *testing.T) {
 
 // 走不到的目標要回 nil，不能回半條路。
 func TestPathUnreachable(t *testing.T) {
+	// 一道**沒有門**、只有一層高的坎：爬得上去的兵跨得過，其餘不行。
+	//
+	// ⚠ 高度只取 1 是有意的——`stepOK` 一次只准上下一層（原版同），
+	// 四層的牆**連爬得上去的兵也翻不過**，那是正確行為，不是 bug。
+	stack := make([][]int, Height)
+	for y := range stack {
+		stack[y] = make([]int, Width)
+		stack[y][32] = 1
+	}
+	f := NewField(stack, 32)
+	if got := f.FindPath(Point{X: 20, Y: 30}, Point{X: 40, Y: 30}, false, nil); got != nil {
+		t.Errorf("爬不上去的兵被整道坎擋住，卻回了 %v", got)
+	}
+	if got := f.FindPath(Point{X: 20, Y: 30}, Point{X: 40, Y: 30}, true, nil); got == nil {
+		t.Error("爬得上去的兵應該跨得過一層高的坎")
+	}
+
+	// 四層的牆連爬得上去的兵也過不去（一次只能上下一層）。
+	for y := range stack {
+		stack[y][32] = 4
+	}
+	tall := NewField(stack, 32)
+	if got := tall.FindPath(Point{X: 20, Y: 30}, Point{X: 40, Y: 30}, true, nil); got != nil {
+		t.Errorf("四層的牆不該翻得過去，卻回了 %v", got)
+	}
+}
+
+// ⭐ 地形成本表在出貨版裡永遠是 0，所以尋路就是純 BFS。
+//
+// 這條測試釘住「額外成本 0 ＝ 每走一格加 1 ＝ 波數」這個等價關係：
+// 給任何一格加懲罰都只會讓路徑變長或不變，不會變短。
+func TestPathPenaltyIsInertByDefault(t *testing.T) {
 	f := flatField()
-	// 成本函式一律回 0 ＝ 全部不可通行。
-	if got := f.FindPath(Point{X: 5, Y: 5}, Point{X: 40, Y: 40}, false,
-		func(int, int) int { return 0 }); got != nil {
-		t.Errorf("全不可通行時回了 %v，應為 nil", got)
+	base := f.FindPath(Point{X: 5, Y: 30}, Point{X: 30, Y: 40}, false, nil)
+	zero := f.FindPath(Point{X: 5, Y: 30}, Point{X: 30, Y: 40}, false,
+		func(int, int) int { return 0 })
+	if len(base) != len(zero) {
+		t.Errorf("預設（%d 點）與明寫 0（%d 點）不一致", len(base), len(zero))
+	}
+	// 對整條直線加重懲罰，路徑不該變短。
+	heavy := f.FindPath(Point{X: 5, Y: 30}, Point{X: 30, Y: 40}, false,
+		func(x, y int) int {
+			if y == 30 {
+				return 50
+			}
+			return 0
+		})
+	if heavy == nil {
+		t.Fatal("加了懲罰就找不到路")
+	}
+	if len(heavy) < len(base) {
+		t.Errorf("加懲罰之後轉彎點反而變少（%d < %d）", len(heavy), len(base))
 	}
 }
 

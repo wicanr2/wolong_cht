@@ -15,8 +15,16 @@ package tactical
 // ＝ 128 byte，正好是每個兵那塊 `0x1800 + 兵編號 × 128` 的大小（§5.8k）。
 // 兩邊對得上，這條路徑才走得完。
 //
-// ⚠ **地形成本圖還沒解**（原版在 `ds:0D2FE`，由 `sub_1BBA6` 建）。
-// 這裡的 Cost 預設一律回 1，行為等於 BFS；解出來之後換掉 Cost 就好。
+// ⭐ **那張地形成本表在出貨版裡永遠是 0。**
+//
+// `sub_1BBA6` 最後 `mov es, cs:word_1D2FE / xor ax, ax / mov cx, 1000h /
+// rep stosw` 把它全部歸零，而**整支程式再也沒有人寫它**——
+// `word_1D2FE` 這個符號總共只出現兩次（資料定義 ＋ 那一次歸零），
+// 從其他基底也搆不到（`+0x2000`／`+0x3000` 那些寫入的 `ds`／`es`
+// 都是 `word_1D2FA` 的七層通行圖）。
+//
+// 所以 `[bx] = 地形成本 + dx = dx`，**實際行為就是純 BFS**。
+// 這個欄位是留著沒用的設計。
 
 // MaxWaypoints 是一條路徑最多幾個轉彎點（原版 `mov cl, 40h`）。
 const MaxWaypoints = 64
@@ -24,9 +32,12 @@ const MaxWaypoints = 64
 // Point 是戰場上的一格。
 type Point struct{ X, Y int }
 
-// Cost 是走進 (x, y) 要付的代價。原版從一張每格一 byte 的表讀
-// （`es:[bx+2000h]`）；回 0 表示不可通行。
-type Cost func(x, y int) int
+// Penalty 是走進 (x, y) 的**額外**成本（0 ＝ 沒有額外成本）。
+//
+// 原版從 `es:[bx+2000h]` 讀一個 byte 加上去，但那張表永遠是 0（見上）。
+// 留這個鉤子是為了「解出誰該寫它」時不必動演算法；
+// **能不能走是地形決定的，不是這裡**。
+type Penalty func(x, y int) int
 
 // pathNode 是擴散時每一格的狀態。
 type pathNode struct {
@@ -45,15 +56,15 @@ const unreached = 0xFFFF
 //
 // 走不到就回 nil。點數超過 MaxWaypoints 時只回前 64 個——與原版一致
 // （原版的緩衝區就只有那麼大，`dec cl / jz` 到了就停）。
-func (f *Field) FindPath(from, to Point, climb bool, cost Cost) []Point {
+func (f *Field) FindPath(from, to Point, climb bool, penalty Penalty) []Point {
 	if !inBounds(from.X, from.Y) || !inBounds(to.X, to.Y) {
 		return nil
 	}
 	if from == to {
 		return nil
 	}
-	if cost == nil {
-		cost = func(int, int) int { return 1 }
+	if penalty == nil {
+		penalty = func(int, int) int { return 0 }
 	}
 
 	idx := func(x, y int) int { return y*Width + x }
@@ -82,12 +93,10 @@ func (f *Field) FindPath(from, to Point, climb bool, cost Cost) []Point {
 			if !f.stepOK(cz, nx, ny, climb) {
 				continue
 			}
-			c := cost(nx, ny)
-			if c <= 0 {
-				continue // 0 ＝ 不可通行
-			}
 			n := idx(nx, ny)
-			if v := nodes[cur].cost + c; v < nodes[n].cost {
+			// 原版是 `[bx] = 地形成本 + dx`（dx 是波數）；成本恆為 0
+			// 的話就等於每走一格加 1。
+			if v := nodes[cur].cost + 1 + penalty(nx, ny); v < nodes[n].cost {
 				nodes[n] = pathNode{cost: v, from: cur}
 				if n == goal {
 					found = true

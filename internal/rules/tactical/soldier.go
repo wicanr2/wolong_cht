@@ -161,9 +161,8 @@ func (b *Battle) doRetreat(side, k int) {
 
 // moveToward 重現 `sub_1AF69`：**三軸依序試**，先 X、再 Y、最後 Z。
 //
-// ⚠ 原版撞到障礙時會去讀一張預先算好的繞路點清單（`sub_1B00D`，
-// docs/re/11 §5.8k），而**算那張清單的程式還沒解出來**。
-// 這裡撞到就換下一軸，解開之後要換掉——**標成 remake 差異**。
+// 撞到障礙時會去讀一張預先算好的繞路點清單（`sub_1B00D`，
+// docs/re/11 §5.8k），那張清單由 `loc_1BD46` 算（§5.15）。
 func (b *Battle) moveToward(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
 	s.StepX, s.StepY, s.StepZ = s.GoalX, s.GoalY, s.GoalZ
