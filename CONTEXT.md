@@ -303,8 +303,10 @@ Go 版與 Python 版的輸出逐像素完全相同。
 - **M8 部分完成**：`tools/denylist.py`（三層：副檔名／內容雜湊／檔名族，
   含 `--selftest` 正對照）與 `tools/release.sh`（跨平台建置 → deny-list → 打包）
   已建好並接進 `tools/check.sh`。**還缺實機驗收**。
-  ⚠ Ebiten 要 cgo，交叉編譯拿不到 X11／OpenGL 標頭 →
-  **只有 `wlsim`（純邏輯）能交叉出去，遊戲本體要在目標平台自己建**。
+  **交叉編譯的實測結果**（先前寫「Ebiten 要 cgo」是**過度概化**）：
+  遊戲邏輯 100% 純 Go（`wlsim`／`wlshot` 三個平台 `CGO_ENABLED=0` 都建得出來，
+  Mach-O arm64／ELF aarch64／PE32+ 都驗過）；要 cgo 的只有開視窗那一層，
+  而且**只有 linux／mac**（GLFW 是 C 函式庫），**windows 純 Go 就能建**。
 - **`ICONGRF` 段 1** 仍未解（段 3 已解出視窗外框，`docs/formats/03` §5.4）。
 - **視窗內部的龍紋**不是圖塊拼的（§5.5 的負面結果），
   要補得先反組譯視窗繪製常式。

@@ -29,9 +29,15 @@ import sys
 
 # 第 1 層：副檔名。大小寫不分。
 BAD_EXT = {
-    ".exe", ".com", ".dat", ".map", ".mdl", ".sch", ".mch", ".brg", ".o",
+    ".dat", ".map", ".mdl", ".sch", ".mch", ".brg", ".o",
     ".fdi", ".zip", ".rar",
 }
+
+# `.exe`／`.com` 不能一律擋 —— **我們自己建的 Windows 執行檔也是 `.exe`**。
+# 原版是 16-bit DOS 執行檔（MZ 檔頭、沒有 PE 簽章），
+# Go 建出來的是 PE32+（MZ 檔頭 ＋ 偏移 0x3C 指向的 `PE\0\0`）。
+# 所以這兩個副檔名改用**檔頭**判斷，不用副檔名。
+EXE_EXT = {".exe", ".com"}
 
 # 第 3 層：倚天中文系統的字型檔名族（`CLAUDE.md` §3.6）。
 BAD_NAMES = {"stdfont.24", "stdfont.15", "ascfont.24", "ascfont.15"}
@@ -58,6 +64,26 @@ def walk_files(root):
         for n in names:
             full = os.path.join(dirpath, n)
             yield os.path.relpath(full, root)
+
+
+def is_dos_executable(path):
+    """是不是 DOS 時代的執行檔（MZ 但不是 PE）。
+
+    判錯的代價不對稱：**漏擋**會散布原版執行檔，**誤擋**只是發行流程卡住。
+    所以讀不到檔頭時回 True（當成要擋），讓人去看，而不是放過去。
+    """
+    try:
+        with open(path, "rb") as f:
+            head = f.read(0x40)
+            if head[:2] != b"MZ":
+                return False          # 連 MZ 都不是 → 不是 DOS 執行檔
+            if len(head) < 0x40:
+                return True
+            off = int.from_bytes(head[0x3C:0x40], "little")
+            f.seek(off)
+            return f.read(4) != b"PE\0\0"   # 有 PE 簽章 → 是我們建的
+    except OSError:
+        return True
 
 
 def sha256(path):
@@ -112,6 +138,9 @@ def scan(repo, target):
         if ext in BAD_EXT:
             bad.append((posix, f"副檔名 {ext}"))
             continue
+        if ext in EXE_EXT and is_dos_executable(full):
+            bad.append((posix, f"{ext} 是 DOS 執行檔（MZ 但無 PE 簽章）"))
+            continue
         if name in BAD_NAMES:
             bad.append((posix, "倚天字型檔名"))
             continue
@@ -157,9 +186,21 @@ def selftest(repo):
             shutil.copyfile(src, os.path.join(tmp, "sub", "strings.bin"))
             cases.append(("sub/strings.bin", "內容雜湊"))
 
-        # ④ 乾淨檔案，不該被誤報
+        # ④ DOS 執行檔（MZ 無 PE）→ 要擋
+        with open(os.path.join(tmp, "old.exe"), "wb") as f:
+            f.write(b"MZ" + b"\0" * 0x3E + b"\0" * 16)
+        cases.append(("old.exe", "DOS 檔頭"))
+
+        # ⑤ 乾淨檔案，不該被誤報。
+        #    **自己建的 Windows 執行檔也放進來** —— 這一格是真的踩過：
+        #    第一版把 `.exe` 一律擋掉，於是發行流程被自己的產出擋住。
         with open(os.path.join(tmp, "main.go"), "wb") as f:
             f.write(b"package main\n")
+        pe = bytearray(b"MZ" + b"\0" * 0x3E)
+        pe[0x3C:0x40] = (0x40).to_bytes(4, "little")
+        pe += b"PE\0\0"
+        with open(os.path.join(tmp, "wlgame.exe"), "wb") as f:
+            f.write(bytes(pe))
 
         bad, _, _ = scan(repo, tmp)
         got = {p for p, _ in bad}
@@ -170,11 +211,12 @@ def selftest(repo):
             else:
                 print(f"  ✗ {layer}：**沒有**擋下 {path}")
                 ok = False
-        if "main.go" in got:
-            print("  ✗ 誤報：乾淨的 main.go 被擋下")
-            ok = False
-        else:
-            print("  ✓ 乾淨檔案沒被誤報")
+        for clean in ("main.go", "wlgame.exe"):
+            if clean in got:
+                print(f"  ✗ 誤報：乾淨的 {clean} 被擋下")
+                ok = False
+            else:
+                print(f"  ✓ {clean} 沒被誤報")
         if not hashed:
             print(f"  ⚠ 找不到 {ORIG}/dosv/TALK.DAT，**內容雜湊那層沒驗到**")
         return 0 if ok else 1

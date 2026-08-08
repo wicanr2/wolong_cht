@@ -23,11 +23,24 @@ PLATFORMS=(
 )
 if [ $# -gt 0 ]; then PLATFORMS=("$@"); fi
 
-# Ebiten 在 linux 上要 cgo（X11／OpenGL），交叉編譯拿不到那些標頭。
-# **所以能交叉出去的只有純邏輯的工具**，遊戲本體要在目標平台上自己建。
-# 這件事寫在這裡而不是留給使用者踩：
-CROSS_OK=(./cmd/wlsim)          # 不依賴 Ebiten
-NATIVE_ONLY=(./cmd/wlgame ./cmd/wlview ./cmd/wlshot)
+# ── 哪些東西能交叉編譯（實測，不是推測）──
+#
+# **遊戲邏輯本身是 100% 純 Go**：`internal/rules/*`、`internal/state`、
+# `internal/assets/*` 完全不碰 cgo，`wlsim`／`wlshot` 三個平台
+# 用 `CGO_ENABLED=0` 都建得出來（Mach-O arm64／ELF aarch64／PE32+ 都驗過）。
+#
+# 需要 cgo 的只有**開視窗那一層**，而且**只有部分平台**：
+#
+#   windows  ✅ 純 Go 就能建 —— Ebiten 走 syscall／purego 動態載 DLL
+#   linux    ❌ 要 cgo —— OpenGL 驅動綁 GLFW（C 函式庫），
+#                CGO_ENABLED=0 會停在 `undefined: glfw.Window`
+#   darwin   ❌ 同上（Cocoa／Metal）
+#
+# 所以矩陣是「純邏輯工具全平台 ＋ 遊戲本體只交叉到 windows」，
+# linux／mac 的本體要在目標平台自己建。
+CROSS_OK=(./cmd/wlsim ./cmd/wlshot)              # 不依賴 Ebiten
+CROSS_WINDOWS_OK=(./cmd/wlgame ./cmd/wlview)     # 依賴 Ebiten，但 windows 純 Go
+NATIVE_ONLY=(./cmd/wlgame ./cmd/wlview)
 
 rm -rf "$DIST"; mkdir -p "$DIST"
 
@@ -37,7 +50,9 @@ for p in "${PLATFORMS[@]}"; do
     out="$DIST/$os-$arch"; mkdir -p "$out"
     ext=""; [ "$os" = windows ] && ext=.exe
 
-    for pkg in "${CROSS_OK[@]}"; do
+    pkgs=("${CROSS_OK[@]}")
+    if [ "$os" = windows ]; then pkgs+=("${CROSS_WINDOWS_OK[@]}"); fi
+    for pkg in "${pkgs[@]}"; do
         name="$(basename "$pkg")"
         echo "  $os/$arch  $name"
         GOOS=$os GOARCH=$arch CGO_ENABLED=0 \
@@ -47,8 +62,9 @@ for p in "${PLATFORMS[@]}"; do
     done
 done
 
-# 本機平台額外建遊戲本體（需要 cgo）。
-echo "── 本機平台（Ebiten 需要 cgo）──"
+# 本機平台額外建遊戲本體。linux／mac 的 Ebiten 要 cgo，只能在目標平台建；
+# windows 上面那圈已經建好了。
+echo "── 本機平台（linux／mac 的 Ebiten 要 cgo）──"
 native="$DIST/$(go env GOOS 2>/dev/null || echo linux)-$(go env GOARCH 2>/dev/null || echo amd64)"
 mkdir -p "$native"
 for pkg in "${NATIVE_ONLY[@]}"; do
