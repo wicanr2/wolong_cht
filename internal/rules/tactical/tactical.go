@@ -23,6 +23,12 @@ const (
 	// 座標會被 `sub_1AACF` 夾在 1–62。
 	MinCoord = 1
 	MaxCoord = 62
+
+	// ⚠ **戰場只有 Height 列**（`BATTLE.MAP` 一張圖 62 列 × 64 行），
+	// 所以 Y 的上限比 `sub_1AACF` 的 62 少一格。原版的格子陣列是
+	// 64 × 64（每層 0x1000），最後兩列是空的；本專案只存 62 列，
+	// 用 MaxCoord 去索引會越界。**X 用 MaxCoord、Y 用 MaxY。**
+	MaxY = Height - 1
 )
 
 // 一側的編制：6 隊 × 8 人，每隊 1 隊長 ＋ 7 隊員
@@ -147,6 +153,11 @@ type Soldier struct {
 	// StepX/StepY/StepZ 是這一步要走向的中繼點。
 	GoalX, GoalY, GoalZ int
 	StepX, StepY, StepZ int
+
+	// Path 是還沒走完的繞路點（原版 `0x1800 + 兵編號 × 128`，§5.15）。
+	// PathAt 是上次重算的幀，用來節流。
+	Path   *Waypoints
+	PathAt int
 }
 
 // IsGeneral 回報這是不是大將。原版用 `+0x04 == 0` 判。
@@ -285,16 +296,27 @@ func (f *Field) Walkable(x, y, z int) bool {
 }
 
 func inBounds(x, y int) bool {
-	return x >= MinCoord && x <= MaxCoord && y >= MinCoord && y <= MaxCoord
+	return x >= MinCoord && x <= MaxCoord && y >= MinCoord && y <= MaxY
 }
 
-// clamp 重現 `sub_1AACF`：座標夾在 1–62。
+// clamp 重現 `sub_1AACF`：X 夾在 1–62。
 func clamp(v int) int {
 	if v <= 0 {
 		return MinCoord
 	}
 	if v >= 63 {
 		return MaxCoord
+	}
+	return v
+}
+
+// clampY 是 Y 的版本，上限是實際的列數（見 MaxY）。
+func clampY(v int) int {
+	if v <= 0 {
+		return MinCoord
+	}
+	if v > MaxY {
+		return MaxY
 	}
 	return v
 }

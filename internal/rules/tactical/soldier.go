@@ -168,6 +168,15 @@ func (b *Battle) moveToward(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
 	s.StepX, s.StepY, s.StepZ = s.GoalX, s.GoalY, s.GoalZ
 
+	// 有繞路點就先走繞路點——原版 `sub_1B00D` 每次取一個當中繼點，
+	// 取完（`[si+0x17]` 減到 −1）才回頭直接朝目標走（§5.15）。
+	if p, ok := s.Path.Next(); ok {
+		if s.Path.Len() > 0 || (p.X == s.GoalX && p.Y == s.GoalY) {
+			s.StepX, s.StepY = p.X, p.Y
+			s.StepZ = b.Field.StandLevel(p.X, p.Y)
+		}
+	}
+
 	moved := false
 	if s.X != s.StepX {
 		d := 1
@@ -199,9 +208,36 @@ func (b *Battle) moveToward(side, k int) {
 			moved = true
 		}
 	}
+	if !moved {
+		// 三個軸都走不動 → 算一條繞路。原版在 `sub_1AED2` 就是這樣
+		// 補上 `0x1800 + 兵編號 × 128` 那塊繞路點清單的（§5.15）。
+		b.replan(side, k)
+	}
 	if moved && s.Stamina > 0 {
 		s.Stamina-- // 移動每幀 −1（`sub_1ADC8`）
 	}
+}
+
+// replanInterval 是重算繞路的最短間隔（幀）。
+//
+// ⚠ 原版沒有這個節流——它是在「命令生效」那一刻算一次（`sub_1AED2`）。
+// 這裡加上是因為本專案的兵每幀都可能被別人擋住，不節流的話 48 × 2 個兵
+// 每幀各跑一次波前擴散，無頭模擬會慢到跑不完。**這是 remake 的取捨。**
+const replanInterval = 30
+
+// replan 幫一個兵算一條繞開障礙的路。
+func (b *Battle) replan(side, k int) {
+	s := &b.Sides[side].Soldiers[k]
+	if s.Path.Len() > 0 || b.Frame-s.PathAt < replanInterval {
+		return
+	}
+	s.PathAt = b.Frame
+	pts := b.Field.FindPath(Point{X: s.X, Y: s.Y},
+		Point{X: s.GoalX, Y: s.GoalY}, s.CanClimb(), nil)
+	if len(pts) == 0 {
+		return
+	}
+	s.Path = &Waypoints{pts: pts}
 }
 
 // tryMove 試著走到一格。走得上去才動。

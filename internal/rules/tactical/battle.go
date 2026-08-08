@@ -219,7 +219,7 @@ func (b *Battle) formationSpot(side, k int) (int, int) {
 	if b.Sides[side].Mirror {
 		dx = -dx
 	}
-	return clamp(b.Sides[side].Line + dx), clamp(OriginY + dy)
+	return clamp(b.Sides[side].Line + dx), clampY(OriginY + dy)
 }
 
 // Order 對一整側或單一隊下命令。squad 為 −1 表示全軍
