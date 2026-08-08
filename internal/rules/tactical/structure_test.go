@@ -132,7 +132,7 @@ func TestHitStructureBreaksAndFlattens(t *testing.T) {
 		t.Fatalf("開場那一格應該是 4 層，得到 %d", f.StandLevel(32, y))
 	}
 	for i := s.Durability; i > 0; i-- {
-		if !b.hitStructure(32, y) {
+		if !b.hitStructure(0, East, 32, y) {
 			t.Fatal("撞在城壁上應該要有反應")
 		}
 	}
@@ -142,7 +142,7 @@ func TestHitStructureBreaksAndFlattens(t *testing.T) {
 	if s.Broken {
 		t.Fatal("耐久歸零的那一幀還沒垮——原版是下一次撞上才垮")
 	}
-	b.hitStructure(32, y)
+	b.hitStructure(0, East, 32, y)
 	if !b.Structures[0].Broken {
 		t.Fatal("耐久 0 再撞一次應該垮")
 	}
@@ -241,5 +241,77 @@ func TestStructuresAgainstRealMap(t *testing.T) {
 	}
 	if overflow != 0 {
 		t.Errorf("有 %d 張圖的城壁段數＋門數塞滿或超過 16 筆的額度", overflow)
+	}
+}
+
+// ⭐ `seg000:B5B7` 那三條分支，行為照抄。
+//
+// 每一個運算元都查證過（見 hitStructure 的說明）：守方碰不壞城壁、
+// 攻方背對城的方向撞上去耐久直接歸零、其餘只減 1。
+func TestHitStructureSiegeBranches(t *testing.T) {
+	newSiege := func() (*Battle, int) {
+		f, _ := tiledField(32)
+		b := NewBattle(f, SyntheticFormations(), &fixedRand{}, 10)
+		return b, b.Structures[0].Y
+	}
+
+	// ① 守方（side 1）碰不壞。
+	b, y := newSiege()
+	before := b.Structures[0].Durability
+	if b.hitStructure(1, East, 32, y) {
+		t.Error("守方不該碰得壞城壁")
+	}
+	if b.Structures[0].Durability != before {
+		t.Errorf("守方撞了之後耐久從 %d 變成 %d", before, b.Structures[0].Durability)
+	}
+
+	// ② 攻方朝著城走（East）→ 只減 1。
+	b, y = newSiege()
+	before = b.Structures[0].Durability
+	b.hitStructure(0, East, 32, y)
+	if got := b.Structures[0].Durability; got != before-1 {
+		t.Errorf("朝城撞一次耐久 %d，應為 %d", got, before-1)
+	}
+
+	// ③ 攻方背對城（West）→ 直接歸零。
+	b, y = newSiege()
+	b.hitStructure(0, West, 32, y)
+	if got := b.Structures[0].Durability; got != 0 {
+		t.Errorf("背對城撞上去耐久 %d，應為 0", got)
+	}
+	// 再撞一次就垮。
+	b.hitStructure(0, West, 32, y)
+	if !b.Structures[0].Broken {
+		t.Error("耐久 0 再撞一次應該垮")
+	}
+
+	// ④ 野戰沒有這個分支——背對也只減 1。
+	f, _ := tiledField(0) // gateX 0 ＝ 野戰
+	fb := NewBattle(f, SyntheticFormations(), &fixedRand{}, 0)
+	before = fb.Structures[0].Durability
+	fb.hitStructure(0, West, 32, fb.Structures[0].Y)
+	if got := fb.Structures[0].Durability; got != before-1 {
+		t.Errorf("野戰背對撞一次耐久 %d，應為 %d（那個分支只在攻城戰）", got, before-1)
+	}
+}
+
+// 面向只在**走成功**那一步才更新——被牆擋住的兵保持原本的面向。
+//
+// 原版把 `[si+5]` 寫在四個移動常式裡，而那些常式只有走得動時才被呼叫。
+func TestFacingOnlyUpdatesOnSuccessfulMove(t *testing.T) {
+	f := walledField(32)
+	b := NewBattle(f, SyntheticFormations(), &fixedRand{}, 0)
+	b.Deploy(0, 0, Infantry, 1)
+	s := &b.Sides[0].Soldiers[0]
+	s.X, s.Y, s.Z = 31, 10, 0 // 牆的正左邊（那一列沒有門）
+	s.Facing = West
+	s.GoalX, s.GoalY, s.GoalZ = 40, 10, 0 // 目標在牆的另一邊
+
+	b.moveToward(0, 0)
+	if s.X != 31 {
+		t.Fatalf("兵越過了牆，X ＝ %d", s.X)
+	}
+	if s.Facing != West {
+		t.Errorf("被牆擋住卻把面向改成 %d，應該保持 West(%d)", s.Facing, West)
 	}
 }

@@ -185,16 +185,27 @@ func (b *Battle) CityDamage(cityWall int) int {
 	return d
 }
 
-// hitStructure 是兵撞上城壁／門時的處理，重現 `seg000:B5EB` 那一段：
+// hitStructure 是兵撞上城壁／門時的處理，重現 `seg000:B5B7`–`B5FE`：
 //
-//	耐久 > 0　→　減 1
-//	耐久 = 0　→　打壞它，**而且同一列（同 Y）的實體一起垮**（`sub_1B799`）
+//	守方（side 1）→ 直接離開，**碰不壞城壁**（`cmp si, 600h / jnb loc_1B612`）
+//	攻方面向「背對城的方向」→ 耐久**直接歸零**
+//	其餘 → 耐久減 1；歸零之後再撞一次，同一列一起垮
 //
-// ⚠ 原版在這之前還有一個分支會把耐久**直接歸零**，條件是
-// 「攻城戰 ＋ 側別對得上 ＋ 兵記錄 `+0x05` 是 0 或 2」。`+0x05` 看起來是面向，
-// 但那樣讀出來的語意（背對城壁的兵一下打穿）不合理，**所以沒有實作**——
-// 在解清楚之前不要補上（docs/re/11 §5.9）。
-func (b *Battle) hitStructure(x, y int) bool {
+// ⭐ 那個「直接歸零」的分支每一個運算元都查證過了：
+//
+//   - `byte_1D34B == 0` ＝ 攻城戰（§3.2）
+//   - `byte_10D35` bit 7 ＝ **玩家是守方**（`sub_14E5C` 只在互換
+//     `word_10D2E`／`word_10D30` 那一支設它）
+//   - `si < 0x600` ＝ side 0；配上 bit 7 之後**兩種組合指的都是攻方**
+//   - `[si+05]` ＝ 面向（`sub_1B047` 等四支常式寫 0／1／2／3 的同時
+//     各自 `dec [si+6]`／`dec [si+8]`／`inc [si+6]`／`inc [si+8]`）
+//
+// ⚠ **語意存疑，但行為照抄。** 186 張攻城圖的城壁一律在 X 33–46，
+// 攻方從 X 5 出發，所以「朝城走」是 East；條件要的卻是 West——
+// 而面向只有走成功才更新，**攻方唯一會面向 West 的時機是退卻**。
+// 兩種鏡射組合下這個不對稱是一致的，所以機制是確定的；
+// 它究竟是設計還是原版的 bug，沒有資料可以判斷。**照抄。**
+func (b *Battle) hitStructure(side, facing, x, y int) bool {
 	i := b.structureAt(x, y)
 	if i < 0 {
 		return false
@@ -203,6 +214,14 @@ func (b *Battle) hitStructure(x, y int) bool {
 	if s.Broken {
 		return false
 	}
+	// 守方碰不壞自己的城壁。
+	if side != 0 {
+		return false
+	}
+	// 攻方背對城的方向 → 直接歸零。
+	if b.Field.IsSiege() && facing == awayFromCastle {
+		s.Durability = 0
+	}
 	if s.Durability > 0 {
 		s.Durability--
 		return true
@@ -210,6 +229,12 @@ func (b *Battle) hitStructure(x, y int) bool {
 	b.breakRow(s.Y)
 	return true
 }
+
+// awayFromCastle 是攻方「背對城」的面向。
+//
+// 攻城圖的城壁一律在 X 33–46（186 張零例外），攻方的陣形原點在 X 5，
+// 所以朝城是 East、背對是 West。
+const awayFromCastle = West
 
 // structureAt 找出蓋住 (x, y) 的那一段。一段城壁蓋 Run 格。
 func (b *Battle) structureAt(x, y int) int {

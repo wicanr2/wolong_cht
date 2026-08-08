@@ -255,7 +255,7 @@ func (g *game) drawBattleIso(screen *ebiten.Image, b *tactical.Battle, me *tacti
 	}
 	v.buf.Fill(color.RGBA{16, 18, 20, 255})
 	v.drawTerrain(v.buf, 0, 0)
-	v.drawBanners(v.buf)
+	v.drawBanners(v.buf, b.Frame)
 
 	// 兵。畫成色塊疊在等角座標上——**人物圖形在 `BATTLE.SCH`，還沒解**，
 	// 所以這一層仍然是暫代的（README 有標）。
@@ -313,17 +313,19 @@ func (g *game) drawBattleIso(screen *ebiten.Image, b *tactical.Battle, me *tacti
 	screen.DrawImage(v.buf, op)
 }
 
-// drawBanners 畫場上插的旗。它們是靜態的實體，開場就決定好了
-// （`sub_19E10`，docs/re/11 §5.14）——旗色由圖塊編號的最低位選，
-// 與交戰雙方無關。
-func (v *battleView) drawBanners(dst *ebiten.Image) {
+// drawBanners 畫場上插的旗（`sub_19E10`，docs/re/11 §5.14）。
+//
+// 位置開場就決定好，旗色由圖塊編號的最低位選、與交戰雙方無關；
+// **但旗子會飄**——`sub_1BB10` 每幀把相位加一再 `and 3`，四張一循環。
+// 建立時的亂數初值讓滿場的旗不會同步揮舞。
+func (v *battleView) drawBanners(dst *ebiten.Image, frame int) {
 	op := &ebiten.DrawImageOptions{}
 	for _, b := range v.banners {
 		px, py, ok := v.ScreenPos(0, 0, b.X, b.Y, b.Z)
 		if !ok {
 			continue
 		}
-		img := v.frame(b.Side, battle.BannerSprite)
+		img := v.frame(b.Side, b.Sprite(frame))
 		if img == nil {
 			continue
 		}

@@ -171,6 +171,9 @@ func SpriteFor(kind, facing, flags int) int {
 //
 // 拿 214 張戰場驗過：每張 0–48 支，**沒有一張超過 `0x0E00`–`0x1800`
 // 放得下的 80 筆**；194 張有旗。
+//
+// ⭐ 旗子會**飄**：`sub_1BB10` 每幀把 `+0x1B` 加一再 `and 3`，
+// 圖號取基底加相位——四張一循環（見 Banner.Phase）。
 const (
 	TopSubTileFlagLo = 0xBA
 	TopSubTileFlagHi = 0xBF
@@ -183,9 +186,12 @@ type Banner struct {
 	X, Y, Z int
 	// Side 是旗色，由最頂層子圖塊的最低位決定（0 → 圖 72、1 → 圖 162）。
 	Side int
-	// Variant 是原版寫進 `+0x1B` 的亂數 0–3。
-	// ⚠ 它的用途還沒解（旗號是 `+0x1C` 直接給的，不經過這個值）。
-	Variant int
+	// Phase 是**旗子飄動的動畫相位**（原版 `+0x1B`）。
+	//
+	// `sub_1BB10` 每幀 `inc` 再 `and 3`，圖號取 `+0x1C` 的基底加上
+	// **相位 × 2**（顯示串列的一格 ＝ 2，所以就是加一張圖）。
+	// 建立時給亂數 0–3 是為了讓滿場的旗**不要同步揮舞**。
+	Phase int
 }
 
 // Banners 回傳第 n 張戰場上所有的旗。
@@ -215,9 +221,17 @@ func (l *Library) Banners(n int, rand func() int) []Banner {
 				v = rand() & 3
 			}
 			out = append(out, Banner{
-				X: x, Y: y, Z: len(st), Side: int(top & 1), Variant: v,
+				X: x, Y: y, Z: len(st), Side: int(top & 1), Phase: v,
 			})
 		}
 	}
 	return out
+}
+
+// BannerFrames 是旗子飄動的張數（`and byte ptr [si+1Bh], 3`）。
+const BannerFrames = 4
+
+// Sprite 回傳一支旗在第 frame 幀該用哪一張圖。
+func (b Banner) Sprite(frame int) int {
+	return BannerSprite + (b.Phase+frame)%BannerFrames
 }

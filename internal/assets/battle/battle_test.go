@@ -390,3 +390,28 @@ func TestBannersFitTheEntityArea(t *testing.T) {
 	t.Logf("%d／%d 張有旗，最多 %d 支（額度 %d），兩色 %d／%d",
 		with, NumFields, most, MaxBanners, side[0], side[1])
 }
+
+// 旗子四張一循環，而且不同的旗相位不同（開場的亂數初值）。
+func TestBannerAnimation(t *testing.T) {
+	l := load(t)
+	seq := 0
+	b := Banner{Phase: 1}
+	for f := 0; f < BannerFrames; f++ {
+		if got, want := b.Sprite(f), BannerSprite+(1+f)%BannerFrames; got != want {
+			t.Errorf("第 %d 幀圖號 %d，應為 %d", f, got, want)
+		}
+		seq++
+	}
+	if b.Sprite(0) != b.Sprite(BannerFrames) {
+		t.Error("四幀之後應該回到同一張")
+	}
+	// 亂數初值要讓相位分散開。
+	n := 0
+	phases := map[int]bool{}
+	for _, x := range l.Banners(0, func() int { n++; return n }) {
+		phases[x.Phase] = true
+	}
+	if len(phases) < 2 {
+		t.Errorf("一張圖上的旗只有 %d 種相位，應該是分散的", len(phases))
+	}
+}

@@ -176,25 +176,28 @@ func (b *Battle) moveToward(side, k int) {
 		}
 	}
 
+	// ⭐ **面向只在真的走成功那一步才更新。**
+	// 原版把 `[si+5]` 寫在四個移動常式裡（`sub_1B047`／`1B069`／`1B08B`／
+	// `1B0AF`），而那些常式只有在走得動時才被呼叫——所以**被牆擋住的兵
+	// 保持原本的面向**。差別看得見：面向決定畫哪一張圖，也決定
+	// §5.9 那個城壁分支成不成立。
 	moved := false
 	if s.X != s.StepX {
-		d := 1
-		s.Facing = East
+		d, face := 1, East
 		if s.X > s.StepX {
-			d, s.Facing = -1, West
+			d, face = -1, West
 		}
 		if b.tryMove(side, k, s.X+d, s.Y, s.Z) {
-			moved = true
+			s.Facing, moved = face, true
 		}
 	}
 	if !moved && s.Y != s.StepY {
-		d := 1
-		s.Facing = South
+		d, face := 1, South
 		if s.Y > s.StepY {
-			d, s.Facing = -1, North
+			d, face = -1, North
 		}
 		if b.tryMove(side, k, s.X, s.Y+d, s.Z) {
-			moved = true
+			s.Facing, moved = face, true
 		}
 	}
 	// ★ 大將與騎馬不做 Z 移動 —— 爬不上城牆（`cmp [si+4], 12h / jbe`）。
@@ -256,7 +259,7 @@ func (b *Battle) tryMove(side, k, x, y, z int) bool {
 		if abs(z-s.Z) > 1 {
 			// 擋住去路的是城壁或門的話，這一撞要算耐久
 			// （原版在同一個碰撞路徑上 `dec [di+18h]`，docs/re/11 §5.9）。
-			b.hitStructure(x, y)
+			b.hitStructure(side, s.Facing, x, y)
 			return false
 		}
 	}
