@@ -42,6 +42,9 @@ func (g *game) battleActive() bool { return g.world.PendingBattle() != nil }
 func (g *game) updateBattle() {
 	p := g.world.PendingBattle()
 	b := p.Battle
+	if g.view == nil {
+		g.view = g.newBattleView(g.fieldNumber(p.Node, p.Mode == combat.Siege))
+	}
 
 	if !b.Done {
 		// 六個戰術指令。編號與原版一致（docs/re/11 §5.8b）。
@@ -70,6 +73,7 @@ func (g *game) updateBattle() {
 		if ev := g.world.ResolvePending(g.rng); ev != nil {
 			g.setEvent(battleLine(g, *ev))
 		}
+		g.view = nil
 	}
 }
 
@@ -89,12 +93,19 @@ func (g *game) drawBattle(screen *ebiten.Image) {
 	screen.Fill(color.RGBA{18, 22, 18, 255})
 	vector.DrawFilledRect(screen, 0, 0, screenW, bannerH, color.RGBA{32, 24, 16, 255}, false)
 
-	white := color.RGBA{240, 240, 230, 255}
 	amber := color.RGBA{240, 200, 120, 255}
-	dim := color.RGBA{150, 150, 160, 255}
 
-	// 鏡頭跟著玩家那一側的大將走，否則 62 列塞不進畫面。
+	// 鏡頭跟著玩家那一側的大將走。
 	me := b.Sides[g.battleSide()].Soldiers[0]
+
+	if g.view != nil {
+		g.drawBattleIso(screen, b, &me)
+		g.drawBattleBanner(screen, b, p)
+		g.drawBattleKeys(screen, b)
+		return
+	}
+
+	// 沒有原版美術時的退路：由上往下的高度圖。
 	top := me.Y - visRows/2
 	if top < 0 {
 		top = 0
@@ -168,6 +179,17 @@ func (g *game) drawBattle(screen *ebiten.Image) {
 		}
 	}
 
+	g.drawBattleBanner(screen, b, p)
+
+	g.drawBattleKeys(screen, b)
+}
+
+// drawBattleBanner 畫上方橫幅與右側的城壁狀態。兩條繪製路徑共用。
+func (g *game) drawBattleBanner(screen *ebiten.Image, b *tactical.Battle, p *state.Pending) {
+	white := color.RGBA{240, 240, 230, 255}
+	amber := color.RGBA{240, 200, 120, 255}
+	dim := color.RGBA{150, 150, 160, 255}
+	_ = p
 	// 上方橫幅：雙方的兵數與有利／不利。
 	g.td.Draw(screen, "戰場", 8, 8, amber)
 	for i := range b.Sides {
@@ -183,7 +205,7 @@ func (g *game) drawBattle(screen *ebiten.Image) {
 	// 右側的空白欄放城壁的狀態。攻城戰打的是城壁耐久，
 	// 而腳本指令 15 看的就是這個值（docs/re/11 §5.11）。
 	if b.Field.IsSiege() && len(b.Structures) > 0 {
-		const px = tactical.Width*cellPx + 8
+		const px = isoNativeW*isoScale + 6
 		py := bannerH + 8
 		g.td.Draw(screen, "城壁", px, py, amber)
 		min, intact := b.MinWallDurability()
@@ -202,6 +224,12 @@ func (g *game) drawBattle(screen *ebiten.Image) {
 			len(b.Structures)), px, py+36, dim)
 	}
 
+}
+
+// drawBattleKeys 畫底部的指令列。兩條繪製路徑共用。
+func (g *game) drawBattleKeys(screen *ebiten.Image, b *tactical.Battle) {
+	amber := color.RGBA{240, 200, 120, 255}
+	dim := color.RGBA{150, 150, 160, 255}
 	// 底部：指令列。
 	vector.DrawFilledRect(screen, 0, screenH-19, screenW, 19, color.RGBA{0, 0, 0, 210}, false)
 	if b.Done {

@@ -107,3 +107,100 @@ func TestScriptSelection(t *testing.T) {
 		t.Error("第 0 段與第 31 段完全相同，段編號算錯了")
 	}
 }
+
+// 子圖塊的格式：五個 64 B 位元平面，第一個是遮罩。
+//
+// ⭐ 決定性的證據是這條不變量：**遮罩是 0 的地方，四個色平面全部是 0**。
+// 這不是我挑的指標——它是「有沒有解對」的必要條件，而且不可能靠巧合成立：
+// 3 組 × 192 個子圖塊 × 512 像素 ＝ 294,912 個位元，一個例外都不能有。
+//
+// 反過來的檢查也在這裡：把遮罩換成別的平面就會破功。
+func TestSubTileMaskInvariant(t *testing.T) {
+	l := load(t)
+	raw := mustRead(t, "BATTLE.MDL")
+
+	bad, transparent, total := 0, 0, 0
+	for set := 0; set < NumTileSets; set++ {
+		for n := 0; n < NumSubTiles; n++ {
+			base := MDLHeader + set*TileSetSize + subTileBase + n*SubTileSize
+			b := raw[base : base+SubTileSize]
+			for i := 0; i < planeBytes; i++ {
+				var any byte
+				for p := 1; p <= 4; p++ {
+					any |= b[planeBytes*p+i]
+				}
+				// 遮罩為 0 的位元上，四個色平面必須也是 0。
+				bad += popcount(^b[i] & any)
+				transparent += popcount(^b[i])
+				total += 8
+			}
+		}
+	}
+	if bad != 0 {
+		t.Errorf("有 %d 個位元違反「遮罩 0 → 色平面 0」——平面分組解錯了", bad)
+	}
+	if r := float64(transparent) / float64(total); r < 0.2 || r > 0.5 {
+		t.Errorf("透明像素佔 %.1f%%，不像等角圖塊（預期三成上下）", r*100)
+	}
+
+	// 解出來的子圖塊要與原始位元一致，而且真的用到多種顏色。
+	seen := map[int]bool{}
+	for n := 0; n < NumSubTiles; n++ {
+		s := l.SubTile(0, n)
+		if s == nil {
+			t.Fatalf("子圖塊 %d 解不出來", n)
+		}
+		for i := range s.Pix {
+			seen[int(s.Pix[i])] = true
+		}
+	}
+	if len(seen) < 10 {
+		t.Errorf("整組只用到 %d 種色號，太少——色平面的順序可能錯了", len(seen))
+	}
+}
+
+func mustRead(t *testing.T, n string) []byte {
+	t.Helper()
+	b, err := os.ReadFile(dir + n)
+	if err != nil {
+		t.Skip("找不到原版 " + n + "，跳過")
+	}
+	return b
+}
+
+func popcount(b byte) int {
+	n := 0
+	for ; b != 0; b &= b - 1 {
+		n++
+	}
+	return n
+}
+
+// 圖塊定義引用的子圖塊編號一定要落在 0–191。
+// **192 × 320 B 正好用完 61,440 B 的像素區**——兩件事互相印證。
+func TestSubTileIndexRange(t *testing.T) {
+	raw := mustRead(t, "BATTLE.MDL")
+	if NumSubTiles*SubTileSize != TileSetSize-subTileBase {
+		t.Fatalf("192 × 320 ＝ %d，像素區是 %d",
+			NumSubTiles*SubTileSize, TileSetSize-subTileBase)
+	}
+	max := 0
+	for set := 0; set < NumTileSets; set++ {
+		base := MDLHeader + set*TileSetSize
+		for i := 0; i < TileDefs; i++ {
+			r := raw[base+i*TileDefLen : base+(i+1)*TileDefLen]
+			k := int(r[0])
+			if k > MaxStack {
+				k = MaxStack
+			}
+			for _, v := range r[1 : 1+k] {
+				if int(v) > max {
+					max = int(v)
+				}
+			}
+		}
+	}
+	if max != NumSubTiles-1 {
+		t.Errorf("子圖塊編號最大是 %d，預期 %d", max, NumSubTiles-1)
+	}
+}

@@ -45,6 +45,10 @@ type Library struct {
 	// stacks[組][圖塊] 是那個圖塊由下往上的子圖塊；長度就是堆疊高度。
 	stacks [NumTileSets][TileDefs][]byte
 	script []byte
+
+	mdl []byte
+	// sub 是解過的子圖塊快取（一個組 192 個）。
+	sub [NumTileSets][NumSubTiles]*SubTile
 }
 
 // Parse 解三個檔。scripts 可以是 nil（沒有 `BATTLE.DAT` 就不驅動 AI）。
@@ -59,7 +63,7 @@ func Parse(mapData, mdl, scripts []byte) (*Library, error) {
 		return nil, fmt.Errorf("battle: BATTLE.DAT 是 %d B，預期 %d",
 			len(scripts), ScriptSize*NumScripts)
 	}
-	l := &Library{mapData: mapData, script: scripts}
+	l := &Library{mapData: mapData, script: scripts, mdl: mdl}
 	for t := 0; t < NumTileSets; t++ {
 		base := MDLHeader + t*TileSetSize
 		for i := 0; i < TileDefs; i++ {
@@ -158,4 +162,93 @@ func Category(field int) int {
 		return 1
 	}
 	return 2
+}
+
+// ---------------------------------------------------------------------------
+// 子圖塊的像素
+// ---------------------------------------------------------------------------
+
+// 子圖塊的格式（docs/formats/07 §9）。
+//
+// 一個圖塊組的 63,488 B 裡，前 2,048 B 是圖塊定義，剩下 61,440 B 是
+// **192 個子圖塊 × 320 B**——192 × 320 剛好用完，而圖塊定義裡的子圖塊
+// 編號值域也正好是 0–191。
+//
+// 320 B ＝ **五個 64 B 的位元平面**，每個平面是一張 16 × 32 的 1bpp 圖
+// （2 B 一列、MSB 在左）：
+//
+//	平面 0      遮罩：**1 ＝ 有畫、0 ＝ 透明**
+//	平面 1–4    4bpp 色號的 bit 0–3
+//
+// 驗過的不變量：**遮罩是 0 的地方，四個色平面全部是 0**——
+// 3 組 × 192 個子圖塊 × 512 像素，零例外。
+const (
+	SubTileW    = 16
+	SubTileH    = 32
+	planeBytes  = SubTileW * SubTileH / 8 // 64
+	SubTileSize = planeBytes * 5          // 320
+	NumSubTiles = 192
+	subTileBase = 2048
+)
+
+// Transparent 是 SubTile 裡表示「不畫」的色號。
+// 真正的色號只有 0–15，所以用 −1。
+const Transparent = -1
+
+// SubTile 是一個 16 × 32 的子圖塊，Pix[y*16+x] 是色號或 Transparent。
+type SubTile struct {
+	Pix [SubTileW * SubTileH]int8
+}
+
+// At 回傳 (x, y) 的色號，透明處回傳 Transparent。
+func (s *SubTile) At(x, y int) int {
+	if x < 0 || x >= SubTileW || y < 0 || y >= SubTileH {
+		return Transparent
+	}
+	return int(s.Pix[y*SubTileW+x])
+}
+
+// SubTile 解出第 set 組的第 n 個子圖塊。
+func (l *Library) SubTile(set, n int) *SubTile {
+	if set < 0 || set >= NumTileSets || n < 0 || n >= NumSubTiles {
+		return nil
+	}
+	if t := l.sub[set][n]; t != nil {
+		return t
+	}
+	base := MDLHeader + set*TileSetSize + subTileBase + n*SubTileSize
+	b := l.mdl[base : base+SubTileSize]
+	t := &SubTile{}
+	for y := 0; y < SubTileH; y++ {
+		for x := 0; x < SubTileW; x++ {
+			i := y*2 + x/8
+			bit := uint(7 - x%8)
+			if b[i]>>bit&1 == 0 {
+				t.Pix[y*SubTileW+x] = Transparent
+				continue
+			}
+			v := 0
+			for p := 0; p < 4; p++ {
+				v |= int(b[planeBytes*(1+p)+i]>>bit&1) << p
+			}
+			t.Pix[y*SubTileW+x] = int8(v)
+		}
+	}
+	l.sub[set][n] = t
+	return t
+}
+
+// SubTiles 回傳第 n 張戰場每一格由下往上要疊哪幾個子圖塊。
+func (l *Library) SubTiles(n int) [][][]byte {
+	t := l.TileSet(n)
+	off := FieldsBase + n*FieldSize + CellsOff
+	cells := l.mapData[off : off+NumCells]
+	out := make([][][]byte, Height)
+	for y := 0; y < Height; y++ {
+		out[y] = make([][]byte, Width)
+		for x := 0; x < Width; x++ {
+			out[y][x] = l.stacks[t][cells[y*Width+x]]
+		}
+	}
+	return out
 }
