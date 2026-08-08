@@ -16,3 +16,6 @@ echo "── go test ──"
 tools/go.sh test ./...
 echo "── 文件索引 ──"
 python3 tools/index.py generate
+echo "── 資產 deny-list ──"
+python3 tools/denylist.py --selftest
+python3 tools/denylist.py
