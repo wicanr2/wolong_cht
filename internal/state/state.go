@@ -181,6 +181,10 @@ type World struct {
 
 	// tactical 是戰術戰鬥的戰場來源；nil 表示全部走自動判定。
 	tactical *TacticalSetup
+
+	// cityBias 是載入時「勢力記錄的據點數 − 實際數出來的」，
+	// 給不變量檢查當基準線（見 invariant.go）。
+	cityBias [numFactions]int
 	// pending 是一場等著被跑完的戰術戰鬥。它還在的時候世界不前進。
 	pending *Pending
 	// rng 是給戰術層用的亂數源，開戰時記下來。
@@ -360,6 +364,8 @@ func LoadScenario(path string, index int) (*World, error) {
 		}
 	}
 	w.loadCorps(b)
+	// 記下據點數的基準差額，給不變量檢查用（見 invariant.go）。
+	w.snapshotBias()
 	return w, nil
 }
 
@@ -428,6 +434,9 @@ func (w *World) Tick(rng economy.Rand) Event {
 		res := economy.Settle(&ef, cities, i, rng)
 		f.Funds, f.Reserves, f.Expense = ef.Funds, ef.Reserves, ef.Expense
 		f.Cities = res.Cities
+		// 月結會照實際的據點重算，開局那個差額到此消失
+		// （劇本 3、4 的資料瑕疵，見 invariant.go）。
+		w.cityBias[i] = 0
 	}
 
 	// ② 生產力與上昇值。原版掃全部 192 個據點，不分勢力；

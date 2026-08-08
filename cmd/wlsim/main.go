@@ -38,6 +38,8 @@ func main() {
 	years := flag.Int("years", 10, "要跑幾年")
 	tax := flag.Int("tax", -1, "覆寫稅率（-1 ＝ 用劇本預設）")
 	seed := flag.Int("seed", 1, "亂數種子（0–255，原版是從即時時鐘播的）")
+	check := flag.Bool("check", false,
+		"每個 tick 檢查資料模型的不變量，第一個違反就停（見 internal/state/invariant.go）")
 	every := flag.Int("every", 12, "每幾個月印一列")
 	flag.Parse()
 
@@ -63,8 +65,27 @@ func main() {
 	months := 0
 	total := *years * 12
 
+	ticks := 0
 	for months < total {
 		ev := w.Tick(rng)
+		ticks++
+		// ⭐ 不變量檢查：驗的是「規則組合起來對不對」，
+		// 不是單條公式對不對（單元測試已經釘住單條了）。
+		if *check {
+			if v := w.CheckInvariants(); len(v) > 0 {
+				tw.Flush()
+				fmt.Printf("\n✗ 第 %d 個 tick（%d 年 %d 月 %d 日）違反 %d 條：\n",
+					ticks, w.Clock.Year, w.Clock.Month, w.Clock.Day, len(v))
+				for i, x := range v {
+					if i >= 5 {
+						fmt.Printf("  …還有 %d 條\n", len(v)-5)
+						break
+					}
+					fmt.Printf("  %s\n", x)
+				}
+				os.Exit(1)
+			}
+		}
 		if !ev.Settled {
 			continue
 		}
