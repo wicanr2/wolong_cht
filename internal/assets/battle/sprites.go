@@ -147,3 +147,77 @@ func SpriteFor(kind, facing, flags int) int {
 	}
 	return n
 }
+
+// ---------------------------------------------------------------------------
+// 場上的軍旗
+// ---------------------------------------------------------------------------
+
+// 戰場上插的旗（`sub_19E10`，docs/re/11 §5.14）。
+//
+// 載入時掃過 64 × 64 每一格，**看那一格圖塊的最頂層子圖塊**：
+// 落在 `0xBA`–`0xBF` 就在那裡插一支旗，記錄放在單位區的 `0x0E00` 起
+// （接在 96 個兵與 16 段城壁門後面），類型碼 3。
+//
+//	es:[di]    = 0x3C0   旗標 0xC0、類型 3
+//	es:[di+6]  = X
+//	es:[di+8]  = Y
+//	es:[di+0A] = 堆疊高度（＝ 插在地面上）
+//	es:[di+1B] = 亂數 0–3
+//	es:[di+1C] = 0x150 或 0x204   ← 最頂層子圖塊的**最低位**決定
+//
+// ⭐ 那兩個常數就是圖號：`(0x150 − 192) ÷ 2 = 72` ＝ **軍旗那一組的起點**，
+// `(0x204 − 192) ÷ 2 = 162 = 72 + 90` ＝ **另一側的軍旗**。
+// 換句話說旗子的顏色是**圖塊編號的最低位**選的，與交戰雙方無關。
+//
+// 拿 214 張戰場驗過：每張 0–48 支，**沒有一張超過 `0x0E00`–`0x1800`
+// 放得下的 80 筆**；194 張有旗。
+const (
+	TopSubTileFlagLo = 0xBA
+	TopSubTileFlagHi = 0xBF
+	// MaxBanners 是 `0x0E00` 到繞路點區 `0x1800` 之間放得下的筆數。
+	MaxBanners = (0x1800 - 0x0E00) / 32 // 80
+)
+
+// Banner 是場上的一支旗。
+type Banner struct {
+	X, Y, Z int
+	// Side 是旗色，由最頂層子圖塊的最低位決定（0 → 圖 72、1 → 圖 162）。
+	Side int
+	// Variant 是原版寫進 `+0x1B` 的亂數 0–3。
+	// ⚠ 它的用途還沒解（旗號是 `+0x1C` 直接給的，不經過這個值）。
+	Variant int
+}
+
+// Banners 回傳第 n 張戰場上所有的旗。
+//
+// rand 每支旗會被呼叫一次，對應原版的 `call sub_1ECE0 / and al, 3`。
+// 傳 nil 就一律用 0。
+func (l *Library) Banners(n int, rand func() int) []Banner {
+	t := l.TileSet(n)
+	off := FieldsBase + n*FieldSize + CellsOff
+	cells := l.mapData[off : off+NumCells]
+	var out []Banner
+	for y := 0; y < Height; y++ {
+		for x := 0; x < Width; x++ {
+			st := l.stacks[t][cells[y*Width+x]]
+			if len(st) == 0 {
+				continue
+			}
+			top := st[len(st)-1]
+			if top < TopSubTileFlagLo || top > TopSubTileFlagHi {
+				continue
+			}
+			if len(out) >= MaxBanners {
+				return out
+			}
+			v := 0
+			if rand != nil {
+				v = rand() & 3
+			}
+			out = append(out, Banner{
+				X: x, Y: y, Z: len(st), Side: int(top & 1), Variant: v,
+			})
+		}
+	}
+	return out
+}

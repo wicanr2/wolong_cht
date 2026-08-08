@@ -352,3 +352,41 @@ func TestSpriteForMatchesOriginal(t *testing.T) {
 		t.Errorf("地形子圖塊 %d 個，原版的偏移是 0xC0 ＝ 192", NumSubTiles)
 	}
 }
+
+// 場上的軍旗（`sub_19E10`）：頂層子圖塊 0xBA–0xBF 的格子上各插一支。
+//
+// 兩條檢查：
+//   - **沒有一張戰場超過 80 支**——那正是 `0x0E00` 到繞路點區 `0x1800`
+//     之間放得下的筆數。原版沒有為溢位留後路，所以「剛好塞得下」就是證據。
+//   - 旗色來自子圖塊的最低位，兩種都要出現（否則就是位元取錯了）。
+func TestBannersFitTheEntityArea(t *testing.T) {
+	l := load(t)
+	most, with := 0, 0
+	side := [2]int{}
+	for n := 0; n < NumFields; n++ {
+		b := l.Banners(n, nil)
+		if len(b) > most {
+			most = len(b)
+		}
+		if len(b) > 0 {
+			with++
+		}
+		for _, x := range b {
+			side[x.Side]++
+			if x.Z < 1 {
+				t.Fatalf("戰場 %d 的旗在 Z=%d，應該站在地面上", n, x.Z)
+			}
+		}
+	}
+	if most > MaxBanners {
+		t.Errorf("最多的一張有 %d 支旗，超過 %d 筆的額度", most, MaxBanners)
+	}
+	if with == 0 {
+		t.Error("214 張戰場一支旗都沒有——子圖塊區間可能抓錯")
+	}
+	if side[0] == 0 || side[1] == 0 {
+		t.Errorf("旗色分佈 %v，兩種都該出現", side)
+	}
+	t.Logf("%d／%d 張有旗，最多 %d 支（額度 %d），兩色 %d／%d",
+		with, NumFields, most, MaxBanners, side[0], side[1])
+}

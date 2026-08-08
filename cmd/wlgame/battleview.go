@@ -58,8 +58,11 @@ type battleView struct {
 	buf *ebiten.Image
 
 	// sprites 是 `BATTLE.SCH` 的人物圖形，載不到就是 nil（兵畫成色點）。
-	sprites  *battle.Sprites
-	spCache  map[int]*ebiten.Image
+	sprites *battle.Sprites
+	spCache map[int]*ebiten.Image
+
+	// banners 是場上插的旗（`sub_19E10`，docs/re/11 §5.14）。
+	banners []battle.Banner
 
 	camCol, camRow int
 }
@@ -79,6 +82,7 @@ func (g *game) newBattleView(field int) *battleView {
 		subs:  g.battleLib.SubTiles(field),
 		cache: map[int]*ebiten.Image{}, pal: bank,
 		sprites: g.battleSprites, spCache: map[int]*ebiten.Image{},
+		banners: g.battleLib.Banners(field, g.rng.Next),
 	}
 }
 
@@ -251,6 +255,7 @@ func (g *game) drawBattleIso(screen *ebiten.Image, b *tactical.Battle, me *tacti
 	}
 	v.buf.Fill(color.RGBA{16, 18, 20, 255})
 	v.drawTerrain(v.buf, 0, 0)
+	v.drawBanners(v.buf)
 
 	// 兵。畫成色塊疊在等角座標上——**人物圖形在 `BATTLE.SCH`，還沒解**，
 	// 所以這一層仍然是暫代的（README 有標）。
@@ -306,4 +311,25 @@ func (g *game) drawBattleIso(screen *ebiten.Image, b *tactical.Battle, me *tacti
 	op.GeoM.Scale(isoScale, isoScale)
 	op.GeoM.Translate(isoScreenX, isoScreenY)
 	screen.DrawImage(v.buf, op)
+}
+
+// drawBanners 畫場上插的旗。它們是靜態的實體，開場就決定好了
+// （`sub_19E10`，docs/re/11 §5.14）——旗色由圖塊編號的最低位選，
+// 與交戰雙方無關。
+func (v *battleView) drawBanners(dst *ebiten.Image) {
+	op := &ebiten.DrawImageOptions{}
+	for _, b := range v.banners {
+		px, py, ok := v.ScreenPos(0, 0, b.X, b.Y, b.Z)
+		if !ok {
+			continue
+		}
+		img := v.frame(b.Side, battle.BannerSprite)
+		if img == nil {
+			continue
+		}
+		op.GeoM.Reset()
+		op.GeoM.Translate(float64(px-battle.SpriteW/2),
+			float64(py-battle.SpriteH+isoRowPx))
+		dst.DrawImage(img, op)
+	}
 }
