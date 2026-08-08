@@ -31,10 +31,17 @@ const (
 	nodeDX = 4
 )
 
-// RoadEdge 是兩個據點之間的一條路。Steps 是沿路的格數，可以直接當距離。
+// RoadEdge 是兩個據點之間的一條路。
 type RoadEdge struct {
 	A, B  int
-	Steps int
+	Steps int // 沿路的格數，可以直接當距離
+
+	// Path 是從 A 到 B 要經過的地圖格，**不含 A 的所在格、含 B 的所在格**。
+	// 這樣把多條邊接起來時不會在中繼據點重複一格。
+	//
+	// 頭尾各有一小段是「城門到城中心」：據點記錄的座標是城圖左緣，
+	// 節點格在 `(X+4, Y)`，所以路的兩端各接一段 ≤ 4 格的水平走法。
+	Path [][2]int
 }
 
 func isRoad(v byte) bool {
@@ -82,10 +89,12 @@ func RoadEdges(m *Map, cities [][2]int) ([]RoadEdge, error) {
 	}
 	owner := make([]int32, Width*Height)
 	dist := make([]int32, Width*Height)
+	parent := make([]int32, Width*Height)
 	for i := range owner {
-		owner[i] = -1
+		owner[i], parent[i] = -1, -1
 	}
 
+	nodeOf := make([]int, len(cities))
 	queue := make([]int, 0, Width*Height)
 	for ci, c := range cities {
 		cell := m.nodeCell(c[0], c[1])
@@ -93,11 +102,13 @@ func RoadEdges(m *Map, cities [][2]int) ([]RoadEdge, error) {
 			return nil, fmt.Errorf("world: 據點 %d (%d,%d) 找不到節點格",
 				ci, c[0], c[1])
 		}
+		nodeOf[ci] = cell
 		owner[cell] = int32(ci)
 		queue = append(queue, cell)
 	}
 
-	best := map[[2]int]int{}
+	type meeting struct{ w, p, q int }
+	best := map[[2]int]meeting{}
 	for head := 0; head < len(queue); head++ {
 		p := queue[head]
 		px := p % Width
@@ -114,26 +125,51 @@ func RoadEdges(m *Map, cities [][2]int) ([]RoadEdge, error) {
 			case owner[q] < 0:
 				owner[q] = owner[p]
 				dist[q] = dist[p] + 1
+				parent[q] = int32(p)
 				queue = append(queue, q)
 			case owner[q] != owner[p]:
 				a, b := int(owner[p]), int(owner[q])
+				pp, qq := p, q
 				if a > b {
 					a, b = b, a
+					pp, qq = q, p
 				}
 				w := int(dist[p]+dist[q]) + 1
 				k := [2]int{a, b}
-				if old, ok := best[k]; !ok || w < old {
-					best[k] = w
+				if old, ok := best[k]; !ok || w < old.w {
+					best[k] = meeting{w: w, p: pp, q: qq}
 				}
 			}
 		}
 	}
 
-	// 排序輸出，讓結果與 map 的走訪順序無關——不然同一份地圖每次
-	// 跑出來的邊順序都不一樣，測試會忽好忽壞。
+	// 從相遇的兩格各自沿 parent 回到起點，接成一條完整的格子路徑。
+	chain := func(cell int) [][2]int {
+		var out [][2]int
+		for c := int32(cell); c >= 0; c = parent[c] {
+			out = append(out, [2]int{int(c) % Width, int(c) / Width})
+		}
+		return out
+	}
+	reverse := func(a [][2]int) {
+		for i, j := 0, len(a)-1; i < j; i, j = i+1, j-1 {
+			a[i], a[j] = a[j], a[i]
+		}
+	}
+
 	out := make([]RoadEdge, 0, len(best))
-	for k, w := range best {
-		out = append(out, RoadEdge{A: k[0], B: k[1], Steps: w})
+	for k, mt := range best {
+		// A 側：從 A 的節點格走到相遇點 p。
+		left := chain(mt.p)
+		reverse(left)
+		// B 側：從相遇點 q 走到 B 的節點格。
+		right := chain(mt.q)
+
+		cells := append(append([][2]int{}, left...), right...)
+		out = append(out, RoadEdge{
+			A: k[0], B: k[1], Steps: mt.w,
+			Path: withCityEnds(cells, cities[k[0]], cities[k[1]]),
+		})
 	}
 	for i := 1; i < len(out); i++ {
 		for j := i; j > 0 && less(out[j], out[j-1]); j-- {
@@ -141,6 +177,40 @@ func RoadEdges(m *Map, cities [][2]int) ([]RoadEdge, error) {
 		}
 	}
 	return out, nil
+}
+
+// withCityEnds 把「節點格到節點格」的路徑補成「據點座標到據點座標」。
+//
+// 節點格在 `(X+4, Y)`，而軍團的位置用的是據點記錄的 `(X, Y)`，
+// 兩者差一小段水平距離。少了這一段，軍團出城與進城時會**跳 4 格**。
+//
+// 回傳的序列**不含起點格、含終點格**——接起來時中繼據點不會重複一格。
+func withCityEnds(cells [][2]int, from, to [2]int) [][2]int {
+	out := make([][2]int, 0, len(cells)+8)
+	for x := from[0]; x != cells[0][0]; x += sign(cells[0][0] - x) {
+		if x != from[0] {
+			out = append(out, [2]int{x, from[1]})
+		}
+	}
+	out = append(out, cells...)
+	last := cells[len(cells)-1]
+	for x := last[0]; x != to[0]; x += sign(to[0] - x) {
+		if x != last[0] {
+			out = append(out, [2]int{x, to[1]})
+		}
+	}
+	out = append(out, to)
+	return out
+}
+
+func sign(v int) int {
+	switch {
+	case v > 0:
+		return 1
+	case v < 0:
+		return -1
+	}
+	return 0
 }
 
 func less(a, b RoadEdge) bool {

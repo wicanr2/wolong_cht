@@ -15,10 +15,17 @@ package march
 
 import "container/heap"
 
-// Edge 是一條路。Steps 是沿路的格數。
+// Edge 是一條路。
 type Edge struct {
 	A, B  int
 	Steps int
+	// Path 是從 A 到 B 的地圖格序列，**不含 A 的所在格、含 B 的**。
+	// 可以是 nil —— 那時 CellRoute 回 nil，呼叫端退回直線移動。
+	Path [][2]int
+
+	// ACell 是 A 的所在格。Path 刻意不含它（不然接兩段路時中繼點會重複），
+	// 但反向的序列需要它當結尾，所以要另外帶進來。
+	ACell [2]int
 }
 
 // Graph 是據點道路圖。
@@ -28,6 +35,7 @@ type Graph struct {
 
 type link struct {
 	to, steps int
+	path      [][2]int // 從**這條 link 的起點**走到 to 的格子序列
 }
 
 // New 從邊清單建圖。n 是據點數。
@@ -37,10 +45,50 @@ func New(n int, edges []Edge) *Graph {
 		if e.A < 0 || e.A >= n || e.B < 0 || e.B >= n {
 			continue
 		}
-		g.adj[e.A] = append(g.adj[e.A], link{e.B, e.Steps})
-		g.adj[e.B] = append(g.adj[e.B], link{e.A, e.Steps})
+		g.adj[e.A] = append(g.adj[e.A], link{e.B, e.Steps, e.Path})
+		// 反向要把格子序列倒過來，而且**最後一格換成起點**：
+		// 序列的約定是「不含起點、含終點」，直接反轉會少了 A 的格子、
+		// 多出 B 的格子。
+		g.adj[e.B] = append(g.adj[e.B], link{e.A, e.Steps, reversePath(e.Path, e.ACell)})
 	}
 	return g
+}
+
+// reversePath 把 A→B 的序列翻成 B→A：反轉之後去掉頭（原本的 B 格），
+// 再把 A 的格子接到尾巴。
+func reversePath(p [][2]int, a [2]int) [][2]int {
+	if len(p) == 0 {
+		return nil
+	}
+	out := make([][2]int, 0, len(p))
+	for i := len(p) - 2; i >= 0; i-- {
+		out = append(out, p[i])
+	}
+	return append(out, a)
+}
+
+// CellRoute 回傳 from 走到 to 要經過的**每一格**，不含 from 的所在格。
+// 走不到、或圖裡沒有格子序列時回 nil。
+func (g *Graph) CellRoute(from, to int) [][2]int {
+	route := g.Route(from, to)
+	if len(route) < 2 {
+		return nil
+	}
+	var out [][2]int
+	for i := 0; i+1 < len(route); i++ {
+		var seg [][2]int
+		for _, l := range g.adj[route[i]] {
+			if l.to == route[i+1] {
+				seg = l.path
+				break
+			}
+		}
+		if seg == nil {
+			return nil // 有一段沒有格子序列 → 整條都不用
+		}
+		out = append(out, seg...)
+	}
+	return out
 }
 
 // Neighbours 回傳與 node 直接相連的據點。

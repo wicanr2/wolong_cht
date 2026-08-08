@@ -369,30 +369,28 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 // **標成 remake 差異。**
 func (w *World) step(i int) bool {
 	c := &w.Corps[i]
-	route := w.routes[i]
 
-	// 目前這一段的終點：路線上還有中繼點就走中繼點，沒有就走最終目標。
-	lx, ly := c.TargetX, c.TargetY
-	if len(route) > 0 {
-		city := w.Cities[w.clampCity(route[0])]
-		lx, ly = city.X, city.Y
+	// ① 有格子路徑就逐格走 —— **這條路徑每一格都踩在道路圖塊上**
+	//    （`internal/assets/world` 有逐格檢查的測試）。
+	if cells := w.routes[i]; len(cells) > 0 {
+		next := cells[0]
+		w.routes[i] = cells[1:]
+		c.Heading = headingTo(c.X, c.Y, next[0], next[1])
+		c.X, c.Y = next[0], next[1]
+		// 踩到某個據點的座標就算抵達那個據點。中繼據點也要更新，
+		// 不然攻城、遭遇這些判定會在錯的地方觸發。
+		if n := w.cityAt(next[0], next[1]); n >= 0 {
+			c.Node = n
+		}
+		if len(w.routes[i]) == 0 {
+			c.Node = c.TargetNode
+			c.Heading = HeadingStill
+		}
+		return true
 	}
 
-	// 到了目前這一段的終點，換下一段。
-	if c.X == lx && c.Y == ly {
-		if len(route) > 0 {
-			// 抵達中繼點：更新所在據點，然後**這一步就結束**。
-			//
-			// ⚠ 早期版本在路線剛好走完時往下掉進「補上終點」那一段，
-			// 於是軍團會從最後一個中繼點**直接瞬移到目的地**，
-			// 整條最後一段沒走。單元測試（TestMarchFollowsRoads）
-			// 靠「經過的據點集合」抓到——**只看「有沒有抵達」是抓不到的**，
-			// 因為它照樣會抵達。
-			c.Node = route[0]
-			w.routes[i] = route[1:]
-			c.Heading = HeadingStill
-			return true
-		}
+	// ② 沒有路徑（缺素材、或圖裡這一段沒有格子序列）→ 退回直線。
+	if c.X == c.TargetX && c.Y == c.TargetY {
 		if c.Node != c.TargetNode {
 			c.Node = c.TargetNode
 			c.Heading = HeadingStill
@@ -401,14 +399,27 @@ func (w *World) step(i int) bool {
 		c.Heading = HeadingStill
 		return false
 	}
-	c.Heading = headingTo(c.X, c.Y, lx, ly)
-	c.X += sign(lx - c.X)
-	c.Y += sign(ly - c.Y)
-	if c.X == lx && c.Y == ly && len(w.routes[i]) == 0 {
+	c.Heading = headingTo(c.X, c.Y, c.TargetX, c.TargetY)
+	c.X += sign(c.TargetX - c.X)
+	c.Y += sign(c.TargetY - c.Y)
+	if c.X == c.TargetX && c.Y == c.TargetY {
 		c.Node = c.TargetNode
 		c.Heading = HeadingStill
 	}
 	return true
+}
+
+// cityAt 回傳座標上的據點編號，沒有回 −1。
+//
+// 用線性掃描是刻意的：192 筆而已，而建索引就要面對「兩個據點同座標」
+// 這種原版資料可能有的狀況。線性掃描回第一個，行為明確。
+func (w *World) cityAt(x, y int) int {
+	for i := range w.Cities {
+		if w.Cities[i].X == x && w.Cities[i].Y == y {
+			return i
+		}
+	}
+	return -1
 }
 
 // 朝向的四個值加上「靜止」。原版寫進軍團記錄 `+0x08`
@@ -672,10 +683,8 @@ func (w *World) March(corps, node int) error {
 		return fmt.Errorf("state: 從 %s 沒有路可以到 %s",
 			w.Cities[w.clampCity(c.Node)].Name, w.Cities[node].Name)
 	}
-	// path[0] 是現在所在的據點，去掉；最後一個是終點，留給 TargetNode 處理。
-	if len(path) > 2 {
-		w.routes[corps] = append([]int{}, path[1:len(path)-1]...)
-	}
+	// 有格子序列就用格子序列（沿真正的道路走）；沒有就留空，退回直線。
+	w.routes[corps] = w.roads.CellRoute(c.Node, node)
 	return nil
 }
 

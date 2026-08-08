@@ -611,7 +611,8 @@ func main() {
 		} else {
 			me := make([]march.Edge, len(edges))
 			for i, e := range edges {
-				me[i] = march.Edge{A: e.A, B: e.B, Steps: e.Steps}
+				me[i] = march.Edge{A: e.A, B: e.B, Steps: e.Steps,
+					Path: e.Path, ACell: xy[e.A]}
 			}
 			w.SetRoads(march.New(len(w.Cities), me))
 			log.Printf("道路圖：%d 條路", len(edges))

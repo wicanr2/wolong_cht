@@ -1066,7 +1066,8 @@ func TestMarchFollowsRoads(t *testing.T) {
 	}
 	me := make([]march.Edge, len(edges))
 	for i, e := range edges {
-		me[i] = march.Edge{A: e.A, B: e.B, Steps: e.Steps}
+		me[i] = march.Edge{A: e.A, B: e.B, Steps: e.Steps,
+			Path: e.Path, ACell: xy[e.A]}
 	}
 	g := march.New(len(w.Cities), me)
 	w.SetRoads(g)
@@ -1101,16 +1102,30 @@ func TestMarchFollowsRoads(t *testing.T) {
 	if err := w.March(lord, to); err != nil {
 		t.Fatal(err)
 	}
-	if len(w.routes[lord]) != hops-2 {
-		t.Fatalf("中繼點 %d 個，期望 %d（路線 %d 段）",
-			len(w.routes[lord]), hops-2, hops)
+	if len(w.routes[lord]) == 0 {
+		t.Fatal("沒有算出格子路徑")
+	}
+	// ⭐ 路徑必須逐格連續。斷開的話軍團會瞬移，而「有沒有抵達」看不出來。
+	prev := [2]int{c.X, c.Y}
+	for k, cell := range w.routes[lord] {
+		dx, dy := cell[0]-prev[0], cell[1]-prev[1]
+		if dx < -1 || dx > 1 || dy < -1 || dy > 1 {
+			t.Fatalf("第 %d 格從 %v 跳到 %v", k, prev, cell)
+		}
+		prev = cell
 	}
 
-	// 走完全程，記下經過的據點。
+	// 走完全程，記下經過的據點與每一格的座標。
 	seen := map[int]bool{}
+	cells := 0
 	for i := 0; i < 200000 && c.Node != to; i++ {
 		w.step(lord)
 		seen[c.Node] = true
+		cells++
+	}
+	// 走的格數要與路徑長度相符 —— 差太多代表某處抄了近路。
+	if cells < hops {
+		t.Errorf("只走了 %d 格，路線有 %d 段，太短了", cells, hops)
 	}
 	if c.Node != to {
 		t.Fatal("走不到目的地")

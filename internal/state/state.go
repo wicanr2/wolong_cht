@@ -231,9 +231,10 @@ type World struct {
 	// nil 表示沒有素材 —— 行軍退回直線移動。
 	roads *march.Graph
 
-	// routes[i] 是軍團 i 還沒走完的中繼據點。見 corps.go 的說明：
-	// 它刻意不放進 Corps，那樣 Corps 才留得住 `==` 可比性。
-	routes [numCorps][]int
+	// routes[i] 是軍團 i 還沒走完的**地圖格**序列（沿真正的道路）。
+	// 見 corps.go 的說明：它刻意不放進 Corps，
+	// 那樣 Corps 才留得住 `==` 可比性（存檔 round-trip 測試靠它）。
+	routes [numCorps][][2]int
 
 	// hourFaction 是下一個輪到的勢力（原版 cs:0D1Ch，以 si 步進 0x40）。
 	// 不匯出——它是迴圈的內部游標，不是遊戲狀態的一部分。

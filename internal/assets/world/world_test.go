@@ -195,8 +195,81 @@ func TestRoadGraphIdenticalAcrossVersions(t *testing.T) {
 		t.Fatalf("兩版邊數不同：%d vs %d", len(got[0]), len(got[1]))
 	}
 	for i := range got[0] {
-		if got[0][i] != got[1][i] {
-			t.Fatalf("第 %d 條邊不同：%+v vs %+v", i, got[0][i], got[1][i])
+		a, b := got[0][i], got[1][i]
+		if a.A != b.A || a.B != b.B || a.Steps != b.Steps ||
+			len(a.Path) != len(b.Path) {
+			t.Fatalf("第 %d 條邊不同：%d–%d/%d 格 vs %d–%d/%d 格",
+				i, a.A, a.B, a.Steps, b.A, b.B, b.Steps)
+		}
+		for k := range a.Path {
+			if a.Path[k] != b.Path[k] {
+				t.Fatalf("第 %d 條邊的第 %d 格不同：%v vs %v",
+					i, k, a.Path[k], b.Path[k])
+			}
+		}
+	}
+}
+
+// ⭐ 路徑必須真的踩在路上。
+//
+// 推導只保證「兩端是據點、長度是最短」，**不保證中間每一格都是道路**——
+// 如果 parent 鏈接錯邊，路徑會穿過山river，而總長度看起來還是對的。
+// 這條逐格檢查圖塊值。
+func TestRoadPathStaysOnRoad(t *testing.T) {
+	m, err := ParseMap(read(t, "dosv", "MMAP.MAP"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	xy, _ := cityRecords(t)
+	edges, err := RoadEdges(m, xy)
+	if err != nil {
+		t.Fatal(err)
+	}
+	offRoad, checked := 0, 0
+	for _, e := range edges {
+		// 兩端各有一小段「城門到城中心」，那幾格在城圖上不是道路，
+		// 所以只檢查中段。
+		if len(e.Path) < 12 {
+			continue
+		}
+		for _, c := range e.Path[5 : len(e.Path)-5] {
+			checked++
+			if !isRoad(m.Tiles[c[1]*Width+c[0]]) {
+				offRoad++
+			}
+		}
+	}
+	if checked == 0 {
+		t.Fatal("沒有檢查到任何格子")
+	}
+	if offRoad != 0 {
+		t.Errorf("%d/%d 格不在道路上", offRoad, checked)
+	}
+}
+
+// 路徑要是**連續**的：相鄰兩格必須 8-連通。
+// 斷開的話軍團會瞬移，而總步數看起來還是對的。
+func TestRoadPathIsContiguous(t *testing.T) {
+	m, err := ParseMap(read(t, "dosv", "MMAP.MAP"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	xy, _ := cityRecords(t)
+	edges, err := RoadEdges(m, xy)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, e := range edges {
+		prev := xy[e.A]
+		for i, c := range e.Path {
+			dx, dy := c[0]-prev[0], c[1]-prev[1]
+			if dx < -1 || dx > 1 || dy < -1 || dy > 1 || (dx == 0 && dy == 0) {
+				t.Fatalf("邊 %d–%d 的第 %d 格從 %v 跳到 %v", e.A, e.B, i, prev, c)
+			}
+			prev = c
+		}
+		if prev != xy[e.B] {
+			t.Fatalf("邊 %d–%d 的終點是 %v，應該是 %v", e.A, e.B, prev, xy[e.B])
 		}
 	}
 }
