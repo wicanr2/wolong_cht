@@ -227,12 +227,13 @@ func TestRoadPathStaysOnRoad(t *testing.T) {
 	}
 	offRoad, checked := 0, 0
 	for _, e := range edges {
-		// 兩端各有一小段「城門到城中心」，那幾格在城圖上不是道路，
-		// 所以只檢查中段。
-		if len(e.Path) < 12 {
+		// 兩端各有一小段「城中心 → 節點格 → 城門格」，那幾格踩在
+		// 城池圖形上而不是道路上。StubA／StubB 記著長度，照它排除——
+		// **不要用固定的邊界值**，那會在城圖大小不同時失準。
+		if len(e.Path) <= e.StubA+e.StubB {
 			continue
 		}
-		for _, c := range e.Path[5 : len(e.Path)-5] {
+		for _, c := range e.Path[e.StubA : len(e.Path)-e.StubB] {
 			checked++
 			if !isRoad(m.Tiles[c[1]*Width+c[0]]) {
 				offRoad++
@@ -270,6 +271,88 @@ func TestRoadPathIsContiguous(t *testing.T) {
 		}
 		if prev != xy[e.B] {
 			t.Fatalf("邊 %d–%d 的終點是 %v，應該是 %v", e.A, e.B, prev, xy[e.B])
+		}
+	}
+}
+
+// ⭐ 城門格的數量必須等於「類 4」圖塊的數量。
+//
+// 城門格是用「節點格的四個方向、先 1 格再 2 格」找出來的（sub_1E57F），
+// 而類 4（0xD4–0xDD）是 sub_1E961 獨立分出來的一類。
+// **兩邊算法完全無關，數字卻應該一樣**——
+// 對得上就代表「類 4 ＝ 城門格」這個讀法是對的，也代表沒有漏找。
+func TestGateCellsMatchClassFour(t *testing.T) {
+	m, err := ParseMap(read(t, "dosv", "MMAP.MAP"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	xy, _ := cityRecords(t)
+
+	classFour := 0
+	for _, v := range m.Tiles[:Width*Height] {
+		if tileClass(v) == 4 {
+			classFour++
+		}
+	}
+
+	// 照 RoadEdges 的方式數一次城門格。
+	gates := map[int]bool{}
+	for _, c := range xy {
+		node := -1
+		for _, dx := range [...]int{nodeDX, -nodeDX} {
+			if v := m.Tiles[c[1]*Width+c[0]+dx]; v >= nodeLo && v <= nodeHi {
+				node = c[1]*Width + c[0] + dx
+				break
+			}
+		}
+		if node < 0 {
+			t.Fatalf("據點 (%d,%d) 找不到節點格", c[0], c[1])
+		}
+		for _, probe := range gateProbe {
+			for _, off := range probe {
+				if q := node + off; q >= 0 && q < Width*Height && isRoad(m.Tiles[q]) {
+					gates[q] = true
+					break
+				}
+			}
+		}
+	}
+	if len(gates) != classFour {
+		t.Errorf("城門格 %d 個、類 4 圖塊 %d 格，兩者應相等",
+			len(gates), classFour)
+	}
+}
+
+// 路徑不能比兩點直線距離短——短了代表某處穿牆或跳格。
+//
+// 這條抓的是「連續性檢查放過去、但整體走向錯了」的情況：
+// 逐格連續只保證每一步合法，不保證整條路合理。
+func TestRoadPathNotShorterThanStraightLine(t *testing.T) {
+	m, err := ParseMap(read(t, "dosv", "MMAP.MAP"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	xy, _ := cityRecords(t)
+	edges, err := RoadEdges(m, xy)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, e := range edges {
+		dx := xy[e.A][0] - xy[e.B][0]
+		dy := xy[e.A][1] - xy[e.B][1]
+		if dx < 0 {
+			dx = -dx
+		}
+		if dy < 0 {
+			dy = -dy
+		}
+		straightLine := dx
+		if dy > dx {
+			straightLine = dy // 切比雪夫距離 ＝ 8 方向的下限
+		}
+		if len(e.Path) < straightLine {
+			t.Errorf("邊 %d–%d 只有 %d 格，直線下限是 %d",
+				e.A, e.B, len(e.Path), straightLine)
 		}
 	}
 }

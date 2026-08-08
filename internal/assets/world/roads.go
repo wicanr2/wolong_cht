@@ -2,173 +2,182 @@ package world
 
 import "fmt"
 
-// 道路網的推導。原版是在載入 `MMAP` 時現建的（`sub_1E4CE` 掃節點格、
-// `sub_1E717` 建連結表、`sub_1E81C` 沿路走），這裡從同一份地圖資料
-// 推出**等價的圖**：節點是 192 個據點，邊是「兩個據點之間有一條路直達」。
+// 道路網。**這是原版建表常式的直接移植**，不是等價的重寫：
 //
-// ⚠ **這不是照抄那三支常式。** 原版還會建路上（192–255）與野外（≥256）
-// 節點，並把每條路的路徑點與外接矩形算出來（`docs/re/08` §7.1–§7.3）。
-// 這裡只取「據點與據點的連通關係 ＋ 步數」——行軍要的就是這個。
-// 路徑點層級的忠實重現還沒做，**標成 remake 差異**。
+//	sub_1E4CE  逐格掃地圖找據點的節點格（row-major）
+//	sub_1E57F  對節點格的四個方向找「城門格」（先試 1 格再試 2 格）
+//	sub_1E81C  從城門格沿路走到對面的城門格，逐格記下座標
+//	sub_1E961  判定一格能不能走，並回傳它的類別
+//
+// 出處與推導見 `docs/re/08` §7.1–§7.7。
+//
+// ⚠ 先前這裡是**多源 BFS 的等價重寫**。逐條比對之後推翻：
+// BFS 少找到一條邊（會稽–章安），而且共同的 253 條裡有 **109 條**
+// 路徑長度差超過 2 格——BFS 會抄近路，原版照著畫出來的路走。
+// **「拓樸一樣」不等於「路一樣」。**
 
 const (
-	// roadLo、roadHi 是道路格的圖塊值域。出自 `sub_1E4CE`：
-	// 它檢查鄰格是否落在 `0xB8`–`0xDD`（`docs/formats/05` §3）。
+	// 圖塊的四個類別，出自 `sub_1E961` 的連續比較。
+	// **走訪繼續的條件是 `(類別 & 7) ≤ 1`**，所以類 0／1 繼續、類 3／4 停。
+	//
+	//	類 1  0xB8–0xB9  可走
+	//	類 0  0xBA–0xCA  可走（一般道路）
+	//	類 3  0xCB–0xD3  終端 —— **全圖正好 192 格 ＝ 據點的節點格**
+	//	類 4  0xD4–0xDD  終端 —— **全圖正好 508 格 ＝ 城門格**
+	//
+	// 值域外（< 0xB8 或 > 0xDD）一律不可走。
 	roadLo, roadHi = 0xB8, 0xDD
-
-	// bridgeTile 是橋。**這個值不在上面的值域裡**，是量出來的：
-	// 只用 `0xB8`–`0xDD` 時 192 個據點散成 27 群，把 `0xFF` 加進去
-	// 就收成 1 群。全圖只有 84 格，都貼著 `0xFE` 成組出現在河上。
-	bridgeTile = 0xFF
-
-	// nodeLo、nodeHi 是「據點節點格」的圖塊值域（`sub_1E4CE` 的掃描條件）。
-	// 全圖正好 192 格 —— 與據點數相同。
 	nodeLo, nodeHi = 0xCB, 0xD3
+	gateLo         = 0xD4
 
-	// nodeDX 是節點格相對於據點座標的偏移。
-	// 據點記錄的 X 是城圖左緣，節點在右邊四格（191/192 個據點都是 +4，
-	// 剩下一個是 −4）。
+	// nodeDX 是節點格相對於據點座標的偏移。據點記錄的 X 是城圖左緣，
+	// 節點在右邊四格（191/192 個是 `+4`，剩下一個是 `−4`）。
 	nodeDX = 4
 )
 
 // RoadEdge 是兩個據點之間的一條路。
 type RoadEdge struct {
 	A, B  int
-	Steps int // 沿路的格數，可以直接當距離
+	Steps int // 路徑格數，可以直接當距離
 
 	// Path 是從 A 到 B 要經過的地圖格，**不含 A 的所在格、含 B 的所在格**。
-	// 這樣把多條邊接起來時不會在中繼據點重複一格。
+	// 這樣把多條邊接起來時中繼據點不會重複一格。
 	//
-	// 頭尾各有一小段是「城門到城中心」：據點記錄的座標是城圖左緣，
-	// 節點格在 `(X+4, Y)`，所以路的兩端各接一段 ≤ 4 格的水平走法。
+	// 頭尾各有一小段是「城中心 → 節點格 → 城門格」的直線，
+	// 那幾格踩在城池圖形上而不是道路上（Stub 記著長度）。
 	Path [][2]int
+
+	// StubA、StubB 是頭尾那兩段的格數。要逐格檢查「有沒有踩在路上」時
+	// 得把它們排除——**城池圖形本身不是道路圖塊**。
+	StubA, StubB int
 }
 
-func isRoad(v byte) bool {
-	return (v >= roadLo && v <= roadHi) || v == bridgeTile
-}
-
-// nodeCell 找出據點 i 的節點格。回 −1 表示找不到。
-func (m *Map) nodeCell(x, y int) int {
-	for _, dx := range [...]int{nodeDX, -nodeDX} {
-		nx := x + dx
-		if nx < 0 || nx >= Width || y < 0 || y >= Height {
-			continue
-		}
-		if v := m.Tiles[y*Width+nx]; v >= nodeLo && v <= nodeHi {
-			return y*Width + nx
-		}
+// tileClass 是 `sub_1E961` 的分類。回 −1 表示不可走。
+func tileClass(v byte) int {
+	switch {
+	case v < roadLo || v > roadHi:
+		return -1
+	case v < 0xBA:
+		return 1
+	case v < nodeLo:
+		return 0
+	case v < gateLo:
+		return 3
+	default:
+		return 4
 	}
-	return -1
 }
 
-// 八個方向。**道路是 8-連通的**——`sub_1E81C` 找下一格時依序試
-// 西／東／北／南／西北／東北／西南／東南。
-// 只用四方向的話道路的階梯狀轉折會斷開（實測 192 個據點散成 233 群）。
-var neighbours8 = [8][2]int{
-	{-1, 0}, {1, 0}, {0, -1}, {0, 1},
-	{-1, -1}, {1, -1}, {-1, 1}, {1, 1},
+func isRoad(v byte) bool { return tileClass(v) >= 0 }
+
+// 八個方向的偏移，**順序就是 `sub_1E81C` 的嘗試順序**：
+// 西 → 東 → 北 → 南 → 西北 → 東北 → 西南 → 東南。
+//
+// 順序是行為的一部分：走到分岔時第一個能走的方向就是它要走的方向。
+// 換個順序會得到一條不同的路，而長度看起來還是差不多。
+var stepOrder = [8]int{-1, 1, -Width, Width, -Width - 1, -Width + 1, Width - 1, Width + 1}
+
+// 四個起步方向的偏移（`sub_1E57F`）。**每個方向先試 1 格再試 2 格**——
+// 城門格不一定緊貼節點格。
+var gateProbe = [4][2]int{
+	{-1, -2}, {1, 2}, {-Width, -2 * Width}, {Width, 2 * Width},
 }
 
-// RoadEdges 從地圖推出據點之間的道路圖。
+// 起步方向對應的第一步（`sub_1E81C` 的 `dh & 0x0F`）。
+var firstStep = [4]int{-1, 1, -Width, Width}
+
+// RoadEdges 從地圖建出據點之間的道路圖，含每條路的逐格路徑。
 //
 // cities 是 192 個據點的 (X, Y)，順序就是據點編號。
 //
-// 作法是**多源 BFS**：192 個節點格同時往外擴，每一格記下「離哪個據點最近」
-// 與距離；兩個不同據點的領域碰在一起的地方就是一條邊，長度是
-// `兩側距離相加 ＋ 1`。這等價於把道路網收縮成據點圖。
+// 五個獨立的驗證（見 `world_test.go`）：
 //
-// 三個獨立的驗證（`internal/assets/world` 的測試釘住）：
-//
-//	據點記錄裡那 85 條鄰接（+0x00 遮罩 ＋ +0x1C–+0x1F）**全部**出現在結果裡
-//	192 個據點**全連通**
-//	每個據點的分支度 ≤ 4 —— 正好對上據點記錄只有四個方向槽
+//	據點記錄裡那 85 條鄰接全部出現       85 / 85
+//	192 個據點全連通                     192 / 192
+//	每個據點的分支度 ≤ 4（記錄只有四槽）  最大 4
+//	城門格數 ＝ 類 4 的格數              508 / 508
+//	路徑逐格連續、且中段全踩在道路圖塊上
 func RoadEdges(m *Map, cities [][2]int) ([]RoadEdge, error) {
 	if len(m.Tiles) < Width*Height {
 		return nil, fmt.Errorf("world: 地圖只有 %d 格", len(m.Tiles))
 	}
-	owner := make([]int32, Width*Height)
-	dist := make([]int32, Width*Height)
-	parent := make([]int32, Width*Height)
-	for i := range owner {
-		owner[i], parent[i] = -1, -1
-	}
+	t := m.Tiles
 
+	// ① 每個據點的節點格。
 	nodeOf := make([]int, len(cities))
-	queue := make([]int, 0, Width*Height)
 	for ci, c := range cities {
-		cell := m.nodeCell(c[0], c[1])
+		cell := -1
+		for _, dx := range [...]int{nodeDX, -nodeDX} {
+			nx := c[0] + dx
+			if nx < 0 || nx >= Width || c[1] < 0 || c[1] >= Height {
+				continue
+			}
+			if v := t[c[1]*Width+nx]; v >= nodeLo && v <= nodeHi {
+				cell = c[1]*Width + nx
+				break
+			}
+		}
 		if cell < 0 {
 			return nil, fmt.Errorf("world: 據點 %d (%d,%d) 找不到節點格",
 				ci, c[0], c[1])
 		}
 		nodeOf[ci] = cell
-		owner[cell] = int32(ci)
-		queue = append(queue, cell)
 	}
 
-	type meeting struct{ w, p, q int }
-	best := map[[2]int]meeting{}
-	for head := 0; head < len(queue); head++ {
-		p := queue[head]
-		px := p % Width
-		for _, d := range neighbours8 {
-			qx, qy := px+d[0], p/Width+d[1]
-			if qx < 0 || qx >= Width || qy < 0 || qy >= Height {
-				continue
-			}
-			q := qy*Width + qx
-			if !isRoad(m.Tiles[q]) {
-				continue
-			}
-			switch {
-			case owner[q] < 0:
-				owner[q] = owner[p]
-				dist[q] = dist[p] + 1
-				parent[q] = int32(p)
-				queue = append(queue, q)
-			case owner[q] != owner[p]:
-				a, b := int(owner[p]), int(owner[q])
-				pp, qq := p, q
-				if a > b {
-					a, b = b, a
-					pp, qq = q, p
+	// ② 城門格。`sub_1E57F` 對四個方向各找一格，先 1 格再 2 格。
+	type start struct {
+		city, gate, dir int
+	}
+	gateCity := map[int]int{}
+	var starts []start
+	for ci, node := range nodeOf {
+		for d, probe := range gateProbe {
+			for _, off := range probe {
+				q := node + off
+				if q < 0 || q >= Width*Height || !isRoad(t[q]) {
+					continue
 				}
-				w := int(dist[p]+dist[q]) + 1
-				k := [2]int{a, b}
-				if old, ok := best[k]; !ok || w < old.w {
-					best[k] = meeting{w: w, p: pp, q: qq}
-				}
+				gateCity[q] = ci
+				starts = append(starts, start{city: ci, gate: q, dir: d})
+				break
 			}
 		}
 	}
 
-	// 從相遇的兩格各自沿 parent 回到起點，接成一條完整的格子路徑。
-	chain := func(cell int) [][2]int {
-		var out [][2]int
-		for c := int32(cell); c >= 0; c = parent[c] {
-			out = append(out, [2]int{int(c) % Width, int(c) / Width})
+	// ③ 從每個城門格走一次。
+	best := map[[2]int][][2]int{}
+	stub := map[[2]int][2]int{}
+	for _, s := range starts {
+		cells, end := walkRoad(t, s.gate, s.dir)
+		other, ok := gateCity[end]
+		if !ok || other == s.city {
+			continue // 走到死路或繞回自己
 		}
-		return out
-	}
-	reverse := func(a [][2]int) {
-		for i, j := 0, len(a)-1; i < j; i, j = i+1, j-1 {
-			a[i], a[j] = a[j], a[i]
+		a, b := s.city, other
+		reversed := false
+		if a > b {
+			a, b = b, a
+			reversed = true
 		}
+		k := [2]int{a, b}
+		if old, ok := best[k]; ok && len(old) <= len(cells) {
+			continue
+		}
+		if reversed {
+			for i, j := 0, len(cells)-1; i < j; i, j = i+1, j-1 {
+				cells[i], cells[j] = cells[j], cells[i]
+			}
+		}
+		full, sa, sb := withCityEnds(cells, nodeOf[a], nodeOf[b], cities[a], cities[b])
+		best[k] = full
+		stub[k] = [2]int{sa, sb}
 	}
 
 	out := make([]RoadEdge, 0, len(best))
-	for k, mt := range best {
-		// A 側：從 A 的節點格走到相遇點 p。
-		left := chain(mt.p)
-		reverse(left)
-		// B 側：從相遇點 q 走到 B 的節點格。
-		right := chain(mt.q)
-
-		cells := append(append([][2]int{}, left...), right...)
+	for k, path := range best {
 		out = append(out, RoadEdge{
-			A: k[0], B: k[1], Steps: mt.w,
-			Path: withCityEnds(cells, cities[k[0]], cities[k[1]]),
+			A: k[0], B: k[1], Steps: len(path), Path: path,
+			StubA: stub[k][0], StubB: stub[k][1],
 		})
 	}
 	for i := 1; i < len(out); i++ {
@@ -179,28 +188,104 @@ func RoadEdges(m *Map, cities [][2]int) ([]RoadEdge, error) {
 	return out, nil
 }
 
-// withCityEnds 把「節點格到節點格」的路徑補成「據點座標到據點座標」。
+// walkRoad 是 `sub_1E81C`：從城門格出發沿路走，回傳走過的格子（含起點）
+// 與停下來的那一格。
 //
-// 節點格在 `(X+4, Y)`，而軍團的位置用的是據點記錄的 `(X, Y)`，
-// 兩者差一小段水平距離。少了這一段，軍團出城與進城時會**跳 4 格**。
+// 兩條規則都是行為的一部分，不能簡化：
+//
+//	**不能走回上一格**（`cmp si, di / jz`）。少了它會原地來回。
+//	**八個方向有固定優先序**。分岔時走第一個能走的，不是走最近的。
+func walkRoad(t []byte, gate, dir int) ([]int, int) {
+	si, prev := gate, -1
+	var path []int
+
+	// `cmp al, 0D4h / jnb` —— 起步格是城門格（類 4）就先記下再踏出第一步。
+	if t[si] >= gateLo {
+		path = append(path, si)
+		prev = si
+		si += firstStep[dir]
+	}
+	for range Width * Height {
+		if si < 0 || si >= len(t) || si == prev {
+			return path, si
+		}
+		c := tileClass(t[si])
+		path = append(path, si)
+		if c < 0 || c > 1 {
+			return path, si // 踩到終端（節點格或城門格）
+		}
+		next := -1
+		for _, off := range stepOrder {
+			q := si + off
+			// ⚠ **x 位移不能超過 1。** 原版的地圖定址是分段的（一列一段），
+			// 天然就是二維；這裡用平面陣列模擬，`si ± 1` 在列邊界會
+			// **繞到下一列的另一端**。實測有一條路因此從 (383,190)
+			// 跳到 (0,192)。加這個限制不是偏離原版，是把平面模型
+			// 修正回原版本來的二維語意。
+			if q < 0 || q >= len(t) || q == prev || abs(q%Width-si%Width) > 1 {
+				continue
+			}
+			if isRoad(t[q]) {
+				next = q
+				break
+			}
+		}
+		if next < 0 {
+			return path, si
+		}
+		prev, si = si, next
+	}
+	return path, si
+}
+
+// withCityEnds 把「城門格到城門格」的路徑補成「據點座標到據點座標」，
+// 並回傳頭尾兩段的長度。
+//
+// 軍團的位置用的是據點記錄的 (X, Y)，而路是從城門格開始的。
+// 少了這兩段，軍團出城與進城時會**跳好幾格**。
 //
 // 回傳的序列**不含起點格、含終點格**——接起來時中繼據點不會重複一格。
-func withCityEnds(cells [][2]int, from, to [2]int) [][2]int {
-	out := make([][2]int, 0, len(cells)+8)
-	for x := from[0]; x != cells[0][0]; x += sign(cells[0][0] - x) {
-		if x != from[0] {
-			out = append(out, [2]int{x, from[1]})
-		}
+func withCityEnds(cells []int, nodeA, nodeB int, from, to [2]int) ([][2]int, int, int) {
+	// ⚠ `between` 與 `straight` 都是「不含起點、含終點」，
+	// 所以 `節點格 → 城門格` 已經含了城門格，而 `cells[0]` 也是城門格。
+	// **接的時候要跳過 `cells[0]`**，不然路徑裡會出現重複的一格——
+	// 那在畫面上看不出來（軍團原地停一拍），但連續性檢查會抓到。
+	head := straight(from, cellXY(nodeA))            // 城中心 → 節點格
+	head = append(head, between(nodeA, cells[0])...) // 節點格 → 城門格（含）
+	tail := between(cells[len(cells)-1], nodeB)      // 城門格 → 節點格
+	tail = append(tail, straight(cellXY(nodeB), to)...)
+
+	out := make([][2]int, 0, len(head)+len(cells)+len(tail))
+	out = append(out, head...)
+	for _, c := range cells[1:] {
+		out = append(out, cellXY(c))
 	}
-	out = append(out, cells...)
-	last := cells[len(cells)-1]
-	for x := last[0]; x != to[0]; x += sign(to[0] - x) {
-		if x != last[0] {
-			out = append(out, [2]int{x, to[1]})
-		}
+	out = append(out, tail...)
+	return out, len(head), len(tail)
+}
+
+func cellXY(c int) [2]int { return [2]int{c % Width, c / Width} }
+
+// straight 產生 from（不含）到 to（含）的直線格子。兩點共用一個座標軸時
+// 就是一條直線；不共用時走對角再補直——城門那一小段只會是前者。
+func straight(from, to [2]int) [][2]int {
+	var out [][2]int
+	x, y := from[0], from[1]
+	for x != to[0] || y != to[1] {
+		x += sign(to[0] - x)
+		y += sign(to[1] - y)
+		out = append(out, [2]int{x, y})
 	}
-	out = append(out, to)
 	return out
+}
+
+func between(a, b int) [][2]int { return straight(cellXY(a), cellXY(b)) }
+
+func abs(v int) int {
+	if v < 0 {
+		return -v
+	}
+	return v
 }
 
 func sign(v int) int {
