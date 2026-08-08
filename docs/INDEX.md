@@ -52,10 +52,10 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 135 條。**要查「這件事解了沒」先看這裡**，
+共 136 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
-### confirmed（64 條）
+### confirmed（65 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -85,6 +85,7 @@
 | 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x0E | `docs/formats/08-sinario-save.md` |
 | 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x10 | `docs/formats/08-sinario-save.md` |
 | 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x13 | `docs/formats/08-sinario-save.md` |
+| 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x16 | `docs/formats/08-sinario-save.md` |
 | 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x19 | `docs/formats/08-sinario-save.md` |
 | 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x1A | `docs/formats/08-sinario-save.md` |
 | 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x1C–+0x1F | `docs/formats/08-sinario-save.md` |
@@ -181,8 +182,8 @@
 | 1. 檔案 ＝ 4 個劇本區塊 × 22,208 B ▸ +0x3AC0…+0x42C0 | `docs/formats/08-sinario-save.md` |
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x16 | `docs/formats/08-sinario-save.md` |
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x19 | `docs/formats/08-sinario-save.md` |
-| 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x2A | `docs/formats/08-sinario-save.md` |
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x3F | `docs/formats/08-sinario-save.md` |
+| 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x17 | `docs/formats/08-sinario-save.md` |
 | 2. 記憶體佈局：sub_1CC31 ▸ ds:0D2F8 | `docs/re/11-tactical-battle.md` |
 | 2. 記憶體佈局：sub_1CC31 ▸ ds:0D2FC | `docs/re/11-tactical-battle.md` |
 | 2. 記憶體佈局：sub_1CC31 ▸ ds:0D306 | `docs/re/11-tactical-battle.md` |
