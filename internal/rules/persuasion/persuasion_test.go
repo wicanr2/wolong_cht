@@ -78,12 +78,16 @@ func TestFriendshipReasonsAreExclusive(t *testing.T) {
 	}
 }
 
-// 每個指令永遠給五個理由，外加進言撤回。
+// 每個指令的選單永遠是五項：四個理由 ＋ 撤回進言。
+//
+// ⚠ 這條先前寫成「五個理由 ＋ 撤回 ＝ 6 項」，是把說明書那句
+// 「常に 5 つの項目」讀成了 5 個理由。原版的選單訊息
+// （102／166／230）各正好五行，最後一行就是撤回。
 func TestAlwaysFiveOptionsPlusWithdraw(t *testing.T) {
 	for _, c := range []Command{Hostility, CeaseFire, Cooperate} {
 		opts := Options(c)
-		if len(opts) != 6 {
-			t.Errorf("%v 的選項有 %d 個, want 6（5 ＋ 撤回）", c, len(opts))
+		if len(opts) != 5 {
+			t.Errorf("%v 的選項有 %d 個, want 5（4 ＋ 撤回）", c, len(opts))
 		}
 		if opts[len(opts)-1] != Withdraw {
 			t.Errorf("%v 的最後一項應該是進言撤回", c)
@@ -182,19 +186,65 @@ func TestRepeatedReasonIsNeutral(t *testing.T) {
 
 // ⭐ 成立的理由都講完了君主還不點頭 → 應該用撤回收手，而不是硬選。
 func TestExhaustedSuggestsWithdraw(t *testing.T) {
-	// 只有一個理由成立，但君主要兩個以上。
-	s := Situation{Aggression: 4, TheyInvadeUs: true,
+	// 只有一個理由成立（敵勢力疲乏），但君主要的不只一個。
+	// 敵對提案的池是 交友惡／我國有利／敵侵他國／敵疲乏，
+	// 這裡刻意讓前三個都不成立。
+	s := Situation{Aggression: 4, TheirFunds: -1,
 		OurCities: 1, TheirCities: 99, Friendship: 100}
 	sess := Begin(Hostility, s)
 	if sess.Exhausted() {
 		t.Fatal("一開始還有成立的理由")
 	}
-	sess.Offer(WeAreDefending)
+	sess.Offer(EnemyExhausted)
 	if !sess.Exhausted() {
 		t.Error("成立的理由講完之後 Exhausted 應該為 true")
 	}
 	// 此時撤回不損信賴度。
 	if _, dt := sess.Offer(Withdraw); dt != 0 {
 		t.Errorf("撤回卻扣了 %d 信賴度", dt)
+	}
+}
+
+// ⭐ 佇列裡已經有那筆事件 → 君主當場同意，而且**這一關排在最前面**：
+// 同一個局面沒有佇列事件時是拒絕的。
+func TestFirstReactionQueuedBeatsThreshold(t *testing.T) {
+	s := Situation{Aggression: 5, Friendship: 45} // 45 ≥ 5×2+20
+	if got := FirstReaction(s, true, false); got != Agree {
+		t.Fatalf("佇列裡有事件應同意，得到 %d", got)
+	}
+	if got := FirstReaction(s, false, false); got != Refuse {
+		t.Fatalf("沒有佇列事件應拒絕，得到 %d", got)
+	}
+}
+
+func TestFirstReactionAlreadyAtWar(t *testing.T) {
+	s := Situation{Aggression: 5, Friendship: 10}
+	if got := FirstReaction(s, false, true); got != AlreadyAtWar {
+		t.Fatalf("交戰中應回 3，得到 %d", got)
+	}
+}
+
+// 好戰等級直接決定君主肯不肯聽：同一個交友度，換個君主結果相反。
+func TestFirstReactionThresholdMovesWithAggression(t *testing.T) {
+	for _, c := range []struct {
+		aggression int
+		want       Reaction
+	}{{5, Refuse}, {6, AskReason}} { // 門檻 30 vs 32，交友度 30
+		s := Situation{Aggression: c.aggression, Friendship: 30}
+		if got := FirstReaction(s, false, false); got != c.want {
+			t.Fatalf("好戰 %d 應回 %d，得到 %d", c.aggression, c.want, got)
+		}
+	}
+}
+
+// 拒絕門檻（好戰×2+20）與「外交關係惡劣」門檻（好戰+15）是兩條線，
+// 中間那一段就是「君主願意聽，但這個理由不成立」。
+func TestTwoThresholdsAreDistinct(t *testing.T) {
+	s := Situation{Aggression: 5, Friendship: 25} // 20 ≤ 25 < 30
+	if got := FirstReaction(s, false, false); got != AskReason {
+		t.Fatalf("應該進說服迴圈，得到 %d", got)
+	}
+	if s.Applies(FriendshipBad) {
+		t.Error("交友度 25 ≥ 好戰+15 ＝ 20，「外交關係惡劣」不該成立")
 	}
 }

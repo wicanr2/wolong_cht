@@ -41,10 +41,12 @@ const (
 )
 
 func (r Reason) String() string {
+	// **用字照原版選單**（訊息 102／166／230），不是自己翻的。
+	// 這是保存專案，選單文字屬於松崗版的原文。
 	return [...]string{
-		"交友關係惡", "交友關係良", "我國有利", "敵國強大",
-		"敵在侵攻他國", "我國防戰中", "敵已疲弊", "我國疲弊",
-		"協力國強大", "侵攻國強大", "進言撤回",
+		"外交關係惡劣", "外交關係良好", "我國較有利", "對我國較不利",
+		"敵正侵攻他國", "我正在防禦戰", "敵勢力疲乏", "我國力疲乏",
+		"協力國強大", "侵攻對象強大", "撤回進言",
 	}[r]
 }
 
@@ -73,24 +75,29 @@ type Situation struct {
 
 // badFriendshipGate 是「交友關係惡」成立的交友值上限。
 //
-// 說明書 3.9 舉了兩個例子：
+// 說明書 3.9 只給了方向（呂布關係不特別差就買帳、劉備要相當差才買帳），
+// **實際的式子從 `sub_16475` 讀出來了**：`ah>>1 + 5`，
+// 而 `ah` 在那一行是 `好戰 × 2 + 20`，所以是 **好戰 ＋ 15**。
 //
-//	例えば、呂布などの場合は特に悪くない状態でも説得可能ですし、
-//	劉備などの場合は逆にかなり悪くならないと説得できません。
-//
-// **好戰等級越高，門檻越高**——呂布（15）在關係「不特別差」時就買帳，
-// 劉備（4）要關係「相當差」才買帳。
-//
-// ⚠ 第一版我把方向寫反了（寫成好戰等級越高門檻越低），
-// 照說明書那兩個例子寫的測試當場抓到。**實際換算還沒反組譯出來**，
-// 這條線性式是 remake 的暫定值，只保證方向對。
-func badFriendshipGate(aggression int) int { return 10 + aggression*2 }
+// ⚠ 舊值是 `10 + 好戰 × 2`（remake 暫定）。形狀猜對了一半——
+// `好戰 × 2` 那個項確實存在，但它是**君主拒絕**的門檻
+// （見 FirstReaction），不是這個理由的門檻。
+// **一個猜測在錯的地方對，比全錯更難發現。**
+func badFriendshipGate(aggression int) int { return aggression + 15 }
 
-// 國力比較的修正量。說明書：「好戦レベルが高い場合は多少拠点数が
-// 少なくとも有利とみなします」。
+// weAreStronger 是「我國較有利」的判準（`sub_16A28`）。
 //
-// ⚠ 同樣是暫定值——只保證方向對。
-func powerBonus(aggression int) int { return aggression / 3 }
+//	我方據點數 × (好戰 ＋ 20)  >  敵方據點數 × 25
+//
+// **平衡點在好戰 ＝ 5**：據點數相同時，好戰 5 的君主覺得是平手，
+// 6 以上才覺得自己有利。劉禪 0、劉表 1、劉備 4 都在平衡點以下。
+//
+// ⚠ 舊版寫成「我方據點 ＋ 好戰/3 > 敵方據點」——**加法**。
+// 原版是兩邊各乘一個係數的**乘法**，差別在據點數大的時候會拉開：
+// 10 vs 10 與 100 vs 100 在加法版是同一個答案，在原版不是。
+func weAreStronger(ourCities, theirCities, aggression int) bool {
+	return ourCities*(aggression+20) > theirCities*25
+}
 
 // Applies 回報某個理由在這個局勢下是否「符合狀況」。
 //
@@ -103,9 +110,11 @@ func (s Situation) Applies(r Reason) bool {
 	case FriendshipGood:
 		return s.Friendship >= badFriendshipGate(s.Aggression)
 	case WeAreStronger:
-		return s.OurCities+powerBonus(s.Aggression) > s.TheirCities
+		return weAreStronger(s.OurCities, s.TheirCities, s.Aggression)
 	case EnemyIsStronger:
-		return s.TheirCities > s.OurCities+powerBonus(s.Aggression)
+		// 反向用同一個式子取反——不是另外定義一條，
+		// 免得兩邊在邊界上同時成立或同時不成立。
+		return !weAreStronger(s.OurCities, s.TheirCities, s.Aggression)
 	case EnemyInvading:
 		return s.TheyInvadeThirdParty
 	case WeAreDefending:
@@ -126,15 +135,34 @@ func (s Situation) Applies(r Reason) bool {
 
 // 每個指令會用到的理由池（說明書 3.9 的分類）。
 // 畫面上一次只給五個，從對應的池裡挑。
+// 三個指令各自的理由池。**內容與順序直接抄自原版的選單訊息**
+// （102／166／230），不是照說明書的分類推的。
+//
+//	#102 敵對提案  外交關係惡劣│我國較有利　│敵正侵攻他國│敵勢力疲乏　│撤回進言
+//	#166 停戰提案  對我國較不利│我正在防禦戰│敵正侵攻他國│我國力疲乏　│撤回進言
+//	#230 協力要請  外交關係良好│協力國強大　│侵攻對象強大│我正在防禦戰│撤回進言
+//
+// ⚠ **每個池是四個理由，不是五個。** 說明書那句「常に 5 つの項目が
+// 選択肢として用意されています」的 5 是**含撤回**——先前讀成
+// 「5 個理由 ＋ 撤回」，於是三個池各自多塞或錯放了一個。
+// 對照之下，舊版三個池只有敵對提案接近正確：
+//
+//	敵對  多了「我國防戰中」
+//	停戰  多了「外交關係良好」「侵攻對象強大」，少了「敵正侵攻他國」
+//	協力  多了「我國力疲乏」「敵正侵攻他國」，少了「我正在防禦戰」
+//
+// **順序也是資料**：`sub_16475` 組出來的可用旗標，位元順序與選單一致。
 var pools = map[Command][]Reason{
-	Hostility: {FriendshipBad, WeAreStronger, EnemyInvading, EnemyExhausted, WeAreDefending},
-	CeaseFire: {EnemyIsStronger, WeAreExhausted, FriendshipGood, InvaderIsStronger, WeAreDefending},
-	Cooperate: {FriendshipGood, AllyIsStronger, InvaderIsStronger, WeAreExhausted, EnemyInvading},
+	Hostility: {FriendshipBad, WeAreStronger, EnemyInvading, EnemyExhausted},
+	CeaseFire: {EnemyIsStronger, WeAreDefending, EnemyInvading, WeAreExhausted},
+	Cooperate: {FriendshipGood, AllyIsStronger, InvaderIsStronger, WeAreDefending},
 }
 
-// Options 回傳這個指令會顯示的五個理由，外加「進言撤回」。
+// Options 回傳這個指令的選單：四個理由 ＋「撤回進言」，一共五項。
 //
-// 說明書：「常に 5 つの項目が選択肢として用意されています」。
+// 說明書：「常に 5 つの項目が選択肢として用意されています」——
+// **那個 5 是含撤回的**（原版選單訊息 102／166／230 各正好五行）。
+//
 // **不符合狀況的理由也會出現在選項裡**——那正是這個系統的難處：
 // 玩家要自己判斷哪些成立，選錯就扣信賴度。
 func Options(c Command) []Reason {
@@ -245,4 +273,48 @@ func (s *Session) Exhausted() bool {
 		}
 	}
 	return true
+}
+
+// Reaction 是君主聽完進言的**第一反應**（`sub_16475`）。
+//
+// 說明書只講了「君主可能拒絕，然後挑理由說服他」，沒說在那之前
+// 還有三種不進入說服迴圈的分支。數值照原版——
+// 台詞是按 `基底 ＋ 4 ＋ 反應碼 × 3` 排的（`sub_13830`），
+// 所以這幾個數字有意義，不能重排。
+type Reaction int
+
+const (
+	// Refuse ＝ 0：「無法答允！別平白增加敵人。」（訊息 90–92）
+	Refuse Reaction = 0
+	// Agree ＝ 1：「我也有同樣的想法。立刻準備交戰！」（93–95）
+	Agree Reaction = 1
+	// AskReason ＝ 2：「聽你這麼說，看來是有勝算囉？」（96–98）
+	// **只有這一個會進入說服迴圈**（Begin／Offer）。
+	AskReason Reaction = 2
+	// AlreadyAtWar ＝ 3：「你別迷糊了！不是已經在交戰狀態中了嗎！」（99–101）
+	AlreadyAtWar Reaction = 3
+)
+
+// FirstReaction 回傳君主的第一反應。
+//
+// queued 是「事件佇列裡已經有一筆本勢力要打這個目標的宣戰事件」
+// （原版 `sub_1304E` 掃 `0x000`–`0x3FF`）。為真代表**自家勢力的 AI
+// 早就決定要打它了**——台詞「我也有同樣的想法」講的正是這件事，
+// 不是客套話，是同一個變數的兩端。
+//
+// atWar 是「和平位元沒設」，也就是已經在交戰中。
+//
+// ⚠ **拒絕的門檻是 `好戰 × 2 ＋ 20`**，與 badFriendshipGate 的
+// `好戰 ＋ 15` 是兩條不同的線。舊版把 `10 + 好戰×2` 用在後者，
+// 形狀對、常數與位置都錯。
+func FirstReaction(s Situation, queued, atWar bool) Reaction {
+	switch {
+	case queued:
+		return Agree
+	case atWar:
+		return AlreadyAtWar
+	case s.Friendship >= s.Aggression*2+20:
+		return Refuse
+	}
+	return AskReason
 }
