@@ -248,8 +248,75 @@ func TestSpriteFormatMatchesSubTile(t *testing.T) {
 			empty = append(empty, n)
 		}
 	}
-	if len(empty) != 2 || empty[0] != EmptySprite ||
-		empty[1] != EmptySprite+SpritesPerSide {
-		t.Errorf("全空的是 %v，預期正好兩個且相差 %d", empty, SpritesPerSide)
+	if len(empty) != 2 || empty[0] != EmptyUnit ||
+		empty[1] != EmptyUnit+UnitsPerSide {
+		t.Errorf("全空的是 %v，預期正好兩個且相差 %d", empty, UnitsPerSide)
+	}
+}
+
+// ⭐ 兵種的儲存值就是圖形表的索引。
+//
+// 這條測試把「為什麼兵種要存成 × 18」釘住：一組 18 張，而分界正好落在
+// 0／18／36／54／72。用**棕色像素的比例**去驗——騎馬那一組
+// （兵種 18）是馬，棕色會遠多於其他組。
+func TestSpriteGroupsMatchTroopKind(t *testing.T) {
+	sp, err := ParseSprites(mustRead(t, "BATTLE.SCH"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	const brown = 6 // GAMEPAL 第 0 組的 (136, 68, 34)
+	ratio := func(kind int) float64 {
+		var n, b int
+		for pose := 0; pose < PosesPerKind; pose++ {
+			f := sp.Sprite(0, SpriteFor(kind, pose))
+			if f == nil {
+				t.Fatalf("兵種 %d 第 %d 張取不到", kind, pose)
+			}
+			for _, v := range f.Pix {
+				if v == Transparent {
+					continue
+				}
+				n++
+				if v == brown {
+					b++
+				}
+			}
+		}
+		if n == 0 {
+			return 0
+		}
+		return float64(b) / float64(n)
+	}
+	// 騎馬那一組要是棕色最多的，而且比第二名高出一截。
+	// （弓兵也有兩成——弓與皮甲也是棕的，所以門檻取 1.5 倍而不是 2 倍。）
+	cav := ratio(18)
+	for _, kind := range []int{0, 36, 54} {
+		if r := ratio(kind); cav < r*1.5 {
+			t.Errorf("騎馬那一組的棕色只有 %.0f%%，兵種 %d 是 %.0f%%——"+
+				"分組沒有對上兵種", cav*100, kind, r*100)
+		}
+	}
+	// 大將那一組幾乎沒有棕色（沒有馬），這是最乾淨的一條。
+	if r := ratio(0); r > 0.05 {
+		t.Errorf("大將那一組有 %.0f%% 棕色，預期幾乎沒有", r*100)
+	}
+	t.Logf("騎馬組棕色 %.0f%%（大將 %.0f%%、弓 %.0f%%、步 %.0f%%）",
+		cav*100, ratio(0)*100, ratio(36)*100, ratio(54)*100)
+
+	// 軍旗那一組：紅（10）或藍（3）佔比要明顯高於兵的那幾組。
+	flag := 0
+	for pose := 0; pose < PosesPerKind; pose++ {
+		f := sp.Sprite(0, BannerSprite+pose)
+		if f == nil {
+			t.Fatal("軍旗取不到")
+		}
+		for _, v := range f.Pix {
+			if v == 10 {
+				flag++
+			}
+		}
+	}
+	if flag < 500 {
+		t.Errorf("軍旗那一組只有 %d 個紅色像素，看起來不是旗子", flag)
 	}
 }

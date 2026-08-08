@@ -376,3 +376,33 @@ func TestRealScriptsRun(t *testing.T) {
 		}
 	}
 }
+
+// 補進場的兵要用**那一隊的兵種**，不能用隊長的。
+//
+// 第 0 隊的隊長是大將（兵種 0），照隊長補會讓整隊都變成大將——
+// 而大將不攻擊、不會陣亡，一整隊站著不動，戰鬥就永遠打不完。
+func TestReinforcementsKeepSquadKind(t *testing.T) {
+	b := newTestBattle(flatField())
+	// 把第 0 隊打光，讓待機的補上來。
+	for i := 0; i < PerSquad; i++ {
+		b.Sides[0].Soldiers[i].Alive = false
+	}
+	for i := 0; i < 40; i++ {
+		b.reinforce()
+	}
+	generals := 0
+	for i := 0; i < PerSquad; i++ {
+		s := &b.Sides[0].Soldiers[i]
+		if !s.Alive {
+			continue
+		}
+		if s.Kind == General {
+			generals++
+		} else if s.Kind != Infantry {
+			t.Errorf("第 0 隊補進來的兵種是 %v，應為步兵", s.Kind)
+		}
+	}
+	if generals > 0 {
+		t.Errorf("補進來 %d 個大將——補兵抄了隊長的兵種", generals)
+	}
+}

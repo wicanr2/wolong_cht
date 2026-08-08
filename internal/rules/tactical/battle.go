@@ -11,6 +11,13 @@ type Side struct {
 	// （`sub_1A754` 的 1 + 7 迴圈）。
 	Soldiers [SoldiersOnFoot]Soldier
 
+	// Kinds[k] 是第 k 隊的兵種。
+	//
+	// ⚠ **不能拿隊長的兵種當一隊的兵種。** 第 0 隊的隊長是大將（兵種 0），
+	// 照隊長補兵會讓整隊變成大將——而大將不攻擊也不會陣亡，一整隊
+	// 站在那裡不動，戰鬥就永遠打不完。
+	Kinds [Squads]Kind
+
 	// Reserve[k] 是第 k 隊還在畫面外待機的兵數。
 	//
 	// 說明書 4.1：「1つの戦場に全軍がはいることは出来ませんので、
@@ -168,6 +175,7 @@ func NewBattle(f *Field, forms *Formations, rng Rand, cityWall int) *Battle {
 // 場上一隊只放 8 個，其餘進待機（說明書 4.1）。
 func (b *Battle) Deploy(side int, squad int, kind Kind, men int) {
 	s := &b.Sides[side]
+	s.Kinds[squad] = kind
 	on := men
 	if on > PerSquad {
 		on = PerSquad
@@ -335,7 +343,7 @@ func (b *Battle) reinforce() {
 				}
 				x, y := b.formationSpot(i, j)
 				s.Soldiers[j] = Soldier{
-					Alive: true, Kind: s.Soldiers[k*PerSquad].Kind,
+					Alive: true, Kind: s.Kinds[k],
 					HP: MaxHP, Stamina: StaminaFull, Target: -1,
 					Cmd: Form, Next: s.Standing,
 					X: x, Y: y, Z: b.Field.StandLevel(x, y),

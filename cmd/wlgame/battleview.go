@@ -115,50 +115,43 @@ const (
 	maxRow = (tactical.Height-1)/2 + isoOriginY
 )
 
-// spriteSlot 決定一個兵要用第幾張人物圖形。
+// soldierImage 取一個兵的圖。
 //
-// ⚠ **這是 remake 的暫定對應，不是原版行為。** 已知的只有
-// 「一側 180 張、兩兩一組」（docs/formats/07 §10），180 張裡誰是誰
-// 還沒解——所以這裡只保證「不同兵種畫得不一樣、面向會換圖」。
-// 解出來之後要換掉整個函式。
-func spriteSlot(kind tactical.Kind, facing int) int {
-	base := 0
-	switch kind {
-	case tactical.Cavalry:
-		base = 60
-	case tactical.Archer:
-		base = 100
-	case tactical.Infantry:
-		base = 20
-	}
-	// 兩兩一組，所以方向的間隔取偶數。
-	return (base + facing*2) % battle.SpritesPerSide
+// ⭐ **圖號就是兵種的儲存值**（0／18／36／54）——兵種存成「× 18」正是
+// 為了當索引用（docs/formats/07 §10）。姿勢那 18 張裡誰是誰還沒解，
+// 所以這裡先用面向去挑，**那一段是 remake 的選擇**。
+func (v *battleView) soldierImage(side int, kind tactical.Kind, facing int) *ebiten.Image {
+	return v.frame(side, battle.SpriteFor(int(kind), facing))
 }
 
-// soldierImage 取一個兵的圖。
-func (v *battleView) soldierImage(side int, kind tactical.Kind, facing int) *ebiten.Image {
+// bannerImage 取軍旗。大將身邊插的那一支。
+func (v *battleView) bannerImage(side, pose int) *ebiten.Image {
+	return v.frame(side, battle.BannerSprite+pose%battle.PosesPerKind)
+}
+
+func (v *battleView) frame(side, n int) *ebiten.Image {
 	if v.sprites == nil {
 		return nil
 	}
-	n := side*battle.SpritesPerSide + spriteSlot(kind, facing)
-	if img, ok := v.spCache[n]; ok {
+	key := side*battle.SpritesPerSide + n
+	if img, ok := v.spCache[key]; ok {
 		return img
 	}
-	s := v.sprites.At(n)
-	if s == nil {
-		v.spCache[n] = nil
+	f := v.sprites.Sprite(side, n)
+	if f == nil {
+		v.spCache[key] = nil
 		return nil
 	}
-	rgba := image.NewRGBA(image.Rect(0, 0, battle.SubTileW, battle.SubTileH))
-	for y := 0; y < battle.SubTileH; y++ {
-		for x := 0; x < battle.SubTileW; x++ {
-			if c := s.At(x, y); c != battle.Transparent {
+	rgba := image.NewRGBA(image.Rect(0, 0, battle.SpriteW, battle.SpriteH))
+	for y := 0; y < battle.SpriteH; y++ {
+		for x := 0; x < battle.SpriteW; x++ {
+			if c := f.At(x, y); c != battle.Transparent {
 				rgba.SetRGBA(x, y, v.pal[c&15])
 			}
 		}
 	}
 	img := ebiten.NewImageFromImage(rgba)
-	v.spCache[n] = img
+	v.spCache[key] = img
 	return img
 }
 
@@ -275,10 +268,19 @@ func (g *game) drawBattleIso(screen *ebiten.Image, b *tactical.Battle, me *tacti
 			}
 			if img := v.soldierImage(i, s.Kind, s.Facing); img != nil {
 				op := &ebiten.DrawImageOptions{}
-				// 腳底對準格子：圖高 32，站的那一格在最下面那 8 px。
-				op.GeoM.Translate(float64(px-battle.SubTileW/2),
-					float64(py-battle.SubTileH+isoRowPx))
+				// 腳底對準格子：圖高 64，站的那一格在最下面那一列。
+				op.GeoM.Translate(float64(px-battle.SpriteW/2),
+					float64(py-battle.SpriteH+isoRowPx))
 				v.buf.DrawImage(img, op)
+				// 大將身邊插軍旗（圖 72–89 那一組）。
+				if s.IsGeneral() {
+					if b := v.bannerImage(i, s.Facing); b != nil {
+						op.GeoM.Reset()
+						op.GeoM.Translate(float64(px-battle.SpriteW/2+6),
+							float64(py-battle.SpriteH+isoRowPx-4))
+						v.buf.DrawImage(b, op)
+					}
+				}
 				continue
 			}
 			c := base
