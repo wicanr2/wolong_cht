@@ -42,10 +42,6 @@ func (g *game) battleActive() bool { return g.world.PendingBattle() != nil }
 func (g *game) updateBattle() {
 	p := g.world.PendingBattle()
 	b := p.Battle
-	if !g.scriptsOn {
-		g.attachScripts(p)
-		g.scriptsOn = true
-	}
 
 	if !b.Done {
 		// 六個戰術指令。編號與原版一致（docs/re/11 §5.8b）。
@@ -74,7 +70,6 @@ func (g *game) updateBattle() {
 		if ev := g.world.ResolvePending(g.rng); ev != nil {
 			g.setEvent(battleLine(g, *ev))
 		}
-		g.scriptsOn = false
 	}
 }
 
@@ -123,6 +118,27 @@ func (g *game) drawBattle(screen *ebiten.Image) {
 		}
 	}
 
+	// 城壁與門。它們不是地形而是**實體**（docs/re/11 §5.11），
+	// 所以另外畫：完好的城壁畫石灰色、門畫木色，打壞的不畫（那一格已經變平地）。
+	for _, st := range b.Structures {
+		if st.Broken {
+			continue
+		}
+		c := color.RGBA{200, 200, 190, 255} // 城壁
+		if st.Kind == tactical.KindGate {
+			c = color.RGBA{170, 120, 60, 255} // 門
+		}
+		for r := 0; r < st.Run; r++ {
+			y := st.Y + r
+			if y < top || y >= top+visRows {
+				continue
+			}
+			vector.DrawFilledRect(screen,
+				float32(fieldX+st.X*cellPx), float32(fieldY+(y-top)*cellPx),
+				cellPx, cellPx, c, false)
+		}
+	}
+
 	// 兵。攻方暖色、守方冷色；大將畫大一格。
 	for i := range b.Sides {
 		base := color.RGBA{230, 120, 90, 255}
@@ -163,6 +179,27 @@ func (g *game) drawBattle(screen *ebiten.Image) {
 		g.td.Draw(screen, fmt.Sprintf("%s %4d 兵　%s　大將體力 %3d",
 			label, s.Remaining(), advName(b.Advantage[i]), s.Soldiers[0].HP),
 			90+i*260, 8, white)
+	}
+	// 右側的空白欄放城壁的狀態。攻城戰打的是城壁耐久，
+	// 而腳本指令 15 看的就是這個值（docs/re/11 §5.11）。
+	if b.Field.IsSiege() && len(b.Structures) > 0 {
+		const px = tactical.Width*cellPx + 8
+		py := bannerH + 8
+		g.td.Draw(screen, "城壁", px, py, amber)
+		min, intact := b.MinWallDurability()
+		txt := fmt.Sprintf("耐久 %d", min)
+		if !intact {
+			txt = "已破"
+		}
+		g.td.Draw(screen, txt, px, py+18, white)
+		broken := 0
+		for _, st := range b.Structures {
+			if st.Broken {
+				broken++
+			}
+		}
+		g.td.Draw(screen, fmt.Sprintf("%d／%d 段", len(b.Structures)-broken,
+			len(b.Structures)), px, py+36, dim)
 	}
 
 	// 底部：指令列。
@@ -216,6 +253,12 @@ func (g *game) installTactical(dir string) {
 		Field: func(node int, siege bool) *tactical.Field {
 			return g.buildField(node, siege)
 		},
+		Script: func(node int, siege bool, tactic int) []byte {
+			if g.battleLib == nil {
+				return nil
+			}
+			return g.battleLib.Script(tactic, battle.Category(g.fieldNumber(node, siege)))
+		},
 	})
 }
 
@@ -247,21 +290,29 @@ func loadBattleLibrary(dir string) *battle.Library {
 //   - **野戰**：從大地圖上即時算（`internal/rules/battlefield`）——
 //     取軍團所在格與下方四格的地形類型去配一張 21 筆的表
 func (g *game) buildField(node int, siege bool) *tactical.Field {
-	n := node
-	if !siege {
-		n = g.fieldForNode(node)
-	}
+	n := g.fieldNumber(node, siege)
 	if g.battleLib == nil || n < 0 || n >= battle.NumFields {
 		return syntheticField(siege)
 	}
-	return tactical.NewField(g.battleLib.Stacks(n), g.battleLib.GateX(n))
+	// 用原始圖塊值建，不只用堆疊高度——城壁與門是從圖塊值認出來的，
+	// 而且打壞時要換圖塊再重算高度（docs/re/11 §5.9）。
+	return tactical.NewFieldFromTiles(
+		g.battleLib.Tiles(n), g.battleLib.Heights(n), g.battleLib.GateX(n))
+}
+
+// fieldNumber 回傳這一場用第幾張戰場：攻城就是據點編號，野戰現算。
+func (g *game) fieldNumber(node int, siege bool) int {
+	if siege {
+		return node
+	}
+	return g.fieldForNode(node)
 }
 
 // fieldForNode 依大地圖的地形算出野戰要用哪一張戰場。
 //
-// 取樣的五格與 `sub_14B63` 一致（中心、下、左下、右下、兩格下方）。
-// ⚠ **行進方向先固定用 2**——原版讀的是軍團記錄 `+0x08`，
-// 而那個欄位在本專案的軍團結構裡還沒接出來。
+// 取樣的五格與 `sub_14B63` 一致（中心、下、左下、右下、兩格下方），
+// 取樣方向用**玩家那一側軍團的朝向**（軍團記錄 `+0x08`）——原版是
+// `cmp ah, [si+1] / mov al, [si+8]`，只在勢力等於玩家時才取。
 func (g *game) fieldForNode(node int) int {
 	if g.lib == nil || g.lib.World == nil {
 		return battlefield.FieldBase + 6
@@ -285,7 +336,7 @@ func (g *game) fieldForNode(node int) int {
 		DownRight: at(1, 1),
 		TwoDown:   at(0, 2),
 	}
-	f, _ := battlefield.Select(2, n)
+	f, _ := battlefield.Select(g.playerHeading(), n)
 	if f >= 209 && f <= 213 {
 		f = battlefield.SelectWater(f-battlefield.TerrainBase, g.rng.Next())
 	}
@@ -315,31 +366,23 @@ func syntheticField(siege bool) *tactical.Field {
 	return tactical.NewField(stack, wallX)
 }
 
-// attachScripts 讓**不是玩家的那一側**由原版的 AI 腳本驅動。
+// playerHeading 回傳玩家目前在動的那一支軍團的朝向。
 //
-// 段編號 ＝ 帶兵武將的 `+0x16` × 4 ＋ 戰場類別（`sub_1CBE5`）。
-func (g *game) attachScripts(p *state.Pending) {
-	if g.battleLib == nil {
-		return
-	}
-	field := p.Node
-	if p.Mode != combat.Siege {
-		field = g.fieldForNode(p.Node)
-	}
-	cat := battle.Category(field)
-	for side, corps := range [2]int{p.Attacker, p.Defender} {
-		if corps < 0 || g.world.Corps[corps].Faction == g.world.Player {
-			continue // 玩家那一側留給玩家下命令
-		}
-		code := g.battleLib.Script(g.world.Generals[corps].Tactic, cat)
-		if code != nil {
-			p.Battle.SetScript(side, tactical.NewScript(code, side))
+// 原版只在「軍團的勢力 ＝ 玩家的勢力」時才拿 `+0x08`（`sub_14B63` 開頭那兩個
+// `cmp ah, [si+1]`），所以戰場的取樣方向是**從玩家的視角**定的。
+// 玩家沒有在移動的軍團時退回靜止（4），配對表會走預設那一支。
+func (g *game) playerHeading() int {
+	for i := range g.world.Corps {
+		c := &g.world.Corps[i]
+		if c.Alive && c.Faction == g.world.Player && c.Heading != state.HeadingStill {
+			return c.Heading
 		}
 	}
+	return state.HeadingStill
 }
 
 // demoBattle 是**驗收用**的捷徑：直接擺一場戰術戰鬥出來。
-func (g *game) demoBattle() {
+func (g *game) demoBattle(siege bool) {
 	p := g.world.Player
 	var mine, theirs int = -1, -1
 	for i, gen := range g.world.Generals {
@@ -369,17 +412,31 @@ func (g *game) demoBattle() {
 			return
 		}
 	}
-	// 把敵方放在隔壁一格、目標設成我方所在的那一格——
-	// 下一次輪到它移動就會撞上（原版的野戰遭遇條件是「同格、不同勢力」）。
 	me := &g.world.Corps[mine]
 	foe := &g.world.Corps[theirs]
-	foe.X, foe.Y = me.X-1, me.Y
-	foe.TargetX, foe.TargetY = me.X, me.Y
-	foe.TargetNode = me.Node
-	foe.Timer = 1
+	if siege {
+		// 攻城：把攻方擺到守方的城上，直接開一場攻城戰。
+		// **走正常的遭遇判定擺不出來**——守軍就待在城裡，座標與攻方相同，
+		// 而 `resolveContact` 是先問野戰的（見 state.StageBattle 的說明）。
+		node := foe.Node
+		me.Node, me.X, me.Y = node, g.world.Cities[node].X, g.world.Cities[node].Y
+		me.TargetNode, me.TargetX, me.TargetY = node, me.X, me.Y
+		if err := g.world.StageBattle(mine, theirs, combat.Siege, g.rng); err != nil {
+			g.setEvent(err.Error())
+			return
+		}
+	} else {
+		// 野戰：把敵方放在隔壁一格、目標設成我方所在的那一格——
+		// 下一次輪到它移動就會撞上（遭遇條件是「同格、不同勢力」）。
+		foe.X, foe.Y = me.X-1, me.Y
+		foe.TargetX, foe.TargetY = me.X, me.Y
+		foe.TargetNode = me.Node
+		foe.Timer = 1
+	}
 	for i := 0; i < 64 && !g.battleActive(); i++ {
 		g.world.Tick(g.rng)
 	}
+
 	if g.battleActive() {
 		// 先跑一段，截圖時才看得到陣線接觸；速度調 1 免得截圖前就打完。
 		for i := 0; i < 900; i++ {

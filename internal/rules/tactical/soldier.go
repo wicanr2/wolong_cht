@@ -219,6 +219,9 @@ func (b *Battle) tryMove(side, k, x, y, z int) bool {
 		}
 		// 一次只能上下一層。
 		if abs(z-s.Z) > 1 {
+			// 擋住去路的是城壁或門的話，這一撞要算耐久
+			// （原版在同一個碰撞路徑上 `dec [di+18h]`，docs/re/11 §5.9）。
+			b.hitStructure(x, y)
 			return false
 		}
 	}

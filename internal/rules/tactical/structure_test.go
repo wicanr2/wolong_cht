@@ -1,0 +1,245 @@
+package tactical
+
+import (
+	"os"
+	"testing"
+)
+
+// tiledField 造一張帶原始圖塊值的戰場：X = 32 那一行從 top 到 bottom
+// 是城壁圖塊，gate 那一格是門。
+func tiledField(gateX int) (*Field, [][]byte) {
+	tiles := make([][]byte, Height)
+	for y := range tiles {
+		tiles[y] = make([]byte, Width)
+	}
+	var heights [256]int
+	heights[TileWallLo] = 4 // 城壁：四層，爬得上去但走不過去
+	heights[TileGateLo] = 4
+	heights[TileWallLo+brokenWallDelta] = 0 // 瓦礫：平的
+	heights[TileGateLo+brokenGateDelta] = 0
+
+	const top, bottom = 8, Height - 9
+	gate := Height / 2
+	for y := top; y <= bottom; y++ {
+		tiles[y][32] = TileWallLo
+	}
+	tiles[gate][32] = TileGateLo
+	return NewFieldFromTiles(tiles, &heights, gateX), tiles
+}
+
+// 一行連續的城壁只算一段，門另外算一筆——原版 `sub_19CE2` 用 dh 累計連續，
+// 遇到非城壁的圖塊才把長度寫進 `+0x1A`。門把中間切開，所以是兩段。
+func TestStructuresMergeRuns(t *testing.T) {
+	f, _ := tiledField(32)
+	b := NewBattle(f, SyntheticFormations(), &fixedRand{}, 0)
+
+	var walls, gates int
+	for _, s := range b.Structures {
+		switch s.Kind {
+		case KindWall:
+			walls++
+		case KindGate:
+			gates++
+		}
+	}
+	if walls != 2 {
+		t.Errorf("城壁應為 2 段（被門切開），得到 %d", walls)
+	}
+	if gates != 1 {
+		t.Errorf("門應為 1 道，得到 %d", gates)
+	}
+
+	const top, bottom = 8, Height - 9
+	gate := Height / 2
+	total := 0
+	for _, s := range b.Structures {
+		if s.Kind == KindWall {
+			total += s.Run
+		}
+	}
+	if want := (bottom - top + 1) - 1; total != want {
+		t.Errorf("城壁總長 %d，應為 %d（%d 格扣掉門那一格）", total, want, want+1)
+	}
+	if b.Structures[0].Y != top {
+		t.Errorf("第一段從 Y=%d 起，應為 %d", b.Structures[0].Y, top)
+	}
+	if b.Structures[1].Y != gate+1 {
+		t.Errorf("第二段從 Y=%d 起，應為 %d", b.Structures[1].Y, gate+1)
+	}
+}
+
+// 攻城戰的城壁耐久 ＝（城兵數 ＋ 50）× 10；野戰固定 300；門固定 80。
+func TestStructureDurability(t *testing.T) {
+	f, _ := tiledField(32)
+	b := NewBattle(f, SyntheticFormations(), &fixedRand{}, 77)
+	for _, s := range b.Structures {
+		want := SiegeWallDurability(77)
+		if s.Kind == KindGate {
+			want = GateDurability
+		}
+		if s.Durability != want {
+			t.Errorf("%s 耐久 %d，應為 %d", structureName(s.Kind), s.Durability, want)
+		}
+	}
+	if got := SiegeWallDurability(77); got != 1270 {
+		t.Errorf("(77+50)×10 應為 1270，得到 %d", got)
+	}
+
+	// gateX 為 0 就是野戰，城壁改成 300。
+	f2, _ := tiledField(0)
+	b2 := NewBattle(f2, SyntheticFormations(), &fixedRand{}, 77)
+	for _, s := range b2.Structures {
+		if s.Kind == KindWall && s.Durability != FieldWallDurability {
+			t.Errorf("野戰城壁耐久 %d，應為 %d", s.Durability, FieldWallDurability)
+		}
+	}
+}
+
+// 指令 15 查到的是「最小耐久 ÷ 64」，但**只要有一段破了就回 0**。
+func TestWallQuery(t *testing.T) {
+	f, _ := tiledField(32)
+	b := NewBattle(f, SyntheticFormations(), &fixedRand{}, 10)
+
+	min, intact := b.MinWallDurability()
+	if !intact {
+		t.Fatal("開場不該有破掉的城壁")
+	}
+	if want := SiegeWallDurability(10); min != want {
+		t.Fatalf("最小耐久 %d，應為 %d", min, want)
+	}
+	if got, want := b.WallQuery(), (min*4)>>8; got != want {
+		t.Errorf("指令 15 回 %d，應為 %d", got, want)
+	}
+
+	// 打壞一段之後一律回 0。
+	b.breakRow(b.Structures[0].Y)
+	if _, intact := b.MinWallDurability(); intact {
+		t.Error("打壞之後 intact 應為 false")
+	}
+	if got := b.WallQuery(); got != 0 {
+		t.Errorf("破了之後指令 15 應回 0，得到 %d", got)
+	}
+}
+
+// 撞一次掉一點耐久；歸零那一下整段垮，而且**地形跟著變平**。
+func TestHitStructureBreaksAndFlattens(t *testing.T) {
+	f, _ := tiledField(32)
+	b := NewBattle(f, SyntheticFormations(), &fixedRand{}, 0)
+	s := &b.Structures[0]
+	y := s.Y
+
+	if f.StandLevel(32, y) != 4 {
+		t.Fatalf("開場那一格應該是 4 層，得到 %d", f.StandLevel(32, y))
+	}
+	for i := s.Durability; i > 0; i-- {
+		if !b.hitStructure(32, y) {
+			t.Fatal("撞在城壁上應該要有反應")
+		}
+	}
+	if s.Durability != 0 {
+		t.Fatalf("耐久應該歸零，得到 %d", s.Durability)
+	}
+	if s.Broken {
+		t.Fatal("耐久歸零的那一幀還沒垮——原版是下一次撞上才垮")
+	}
+	b.hitStructure(32, y)
+	if !b.Structures[0].Broken {
+		t.Fatal("耐久 0 再撞一次應該垮")
+	}
+	if got := f.StandLevel(32, y); got != 0 {
+		t.Errorf("垮掉之後應該是平地，得到 %d 層", got)
+	}
+	if got := f.Tile(32, y); got != TileWallLo+brokenWallDelta {
+		t.Errorf("圖塊值應換成 %#x，得到 %#x", TileWallLo+brokenWallDelta, got)
+	}
+}
+
+// 突擊會把門全部打開，而且開了關不回去（說明書 4.2）。
+func TestChargeOpensGates(t *testing.T) {
+	f, _ := tiledField(32)
+	b := NewBattle(f, SyntheticFormations(), &fixedRand{}, 0)
+	for k := 0; k < Squads; k++ {
+		b.Deploy(1, k, Infantry, 10)
+	}
+	b.Place()
+
+	gate := Height / 2
+	if f.StandLevel(32, gate) == 0 {
+		t.Fatal("門那一格開場應該是擋著的")
+	}
+	b.Order(1, -1, Charge)
+	if f.StandLevel(32, gate) != 0 {
+		t.Error("突擊之後門那一格應該走得過去")
+	}
+	for _, s := range b.Structures {
+		if s.Kind == KindGate && !s.Broken {
+			t.Error("突擊之後門應該全開")
+		}
+	}
+}
+
+// 城壁與門的圖塊區間拿原版的 `BATTLE.MAP` 對過。
+//
+// 三條檢查，每一條都是「解錯就會不成立」的性質：
+//
+//  1. **186 張攻城戰場全部有城壁圖塊，零例外**——區間抓錯就不會全中。
+//  2. **一張圖的「城壁段數 ＋ 門數」從來不超過 16**，正好等於原版
+//     0x0C00–0x0DFF 那 16 筆的額度。多算或少算都會有圖超出去。
+//  3. 段數與門數都不是 0（每張攻城圖至少有一段城壁、一道門）。
+func TestStructuresAgainstRealMap(t *testing.T) {
+	const path = "../../../workplace/orig/dosv/BATTLE.MAP"
+	raw, err := os.ReadFile(path)
+	if err != nil {
+		t.Skip("找不到原版 BATTLE.MAP，跳過")
+	}
+	const idx, fieldSize, cellsOff, numFields = 512, 4096, 0x40, 214
+
+	var heights [256]int
+	for i := TileWallLo; i <= TileWallHi; i++ {
+		heights[i] = 4
+	}
+	for i := TileGateLo; i <= TileGateHi; i++ {
+		heights[i] = 4
+	}
+
+	siege, withWall, overflow := 0, 0, 0
+	for n := 0; n < numFields; n++ {
+		gateX := int(raw[n*2+1])
+		base := idx + n*fieldSize + cellsOff
+		tiles := make([][]byte, Height)
+		for y := 0; y < Height; y++ {
+			tiles[y] = append([]byte(nil), raw[base+y*Width:base+(y+1)*Width]...)
+		}
+		f := NewFieldFromTiles(tiles, &heights, gateX)
+		got := buildStructures(tiles, f.IsSiege(), 0)
+
+		if gateX == 0 {
+			continue // 野戰
+		}
+		siege++
+		walls, gates := 0, 0
+		for _, s := range got {
+			if s.Kind == KindWall {
+				walls++
+			} else {
+				gates++
+			}
+		}
+		if walls > 0 && gates > 0 {
+			withWall++
+		}
+		if len(got) >= MaxStructures {
+			overflow++
+		}
+	}
+	if siege != 186 {
+		t.Errorf("攻城戰場有 %d 張，應為 186", siege)
+	}
+	if withWall != siege {
+		t.Errorf("只有 %d／%d 張攻城戰場同時有城壁與門——圖塊區間可能抓錯",
+			withWall, siege)
+	}
+	if overflow != 0 {
+		t.Errorf("有 %d 張圖的城壁段數＋門數塞滿或超過 16 筆的額度", overflow)
+	}
+}

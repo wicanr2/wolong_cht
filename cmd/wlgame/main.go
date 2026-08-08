@@ -98,8 +98,6 @@ type game struct {
 	// list 是開著的一覽表（武將／據點…）。它是**非常駐視窗**，
 	// 所以開著的時候時間會停（15-realtime.md §2）。
 	battleLib *battle.Library
-	// scriptsOn 記著這一場的 AI 腳本掛上去了沒。
-	scriptsOn bool
 
 	list    *listwin.List
 	sortMem listwin.Memory
@@ -591,7 +589,8 @@ func main() {
 	openAdvise := flag.Bool("open-advise", false, "截圖前先跑到說服畫面（驗收用）")
 	openForm := flag.Bool("open-form", false, "截圖前先編一支軍團並開編成畫面（驗收用）")
 	openCorps := flag.Bool("open-corps", false, "截圖前先編兩支軍團並開軍團一覽（驗收用）")
-	openBattle := flag.Bool("open-battle", false, "截圖前先開一場戰術戰鬥（驗收用）")
+	openBattle := flag.Bool("open-battle", false, "截圖前先開一場野戰的戰術戰鬥（驗收用）")
+	openSiege := flag.Bool("open-siege", false, "截圖前先開一場攻城的戰術戰鬥（驗收用）")
 	flag.Parse()
 
 	lib, err := library.Load(*dir)
@@ -642,8 +641,8 @@ func main() {
 		g.list.Confirm() // 展示反白狀態
 	}
 	g.installTactical(*dir)
-	if *openBattle {
-		g.demoBattle()
+	if *openBattle || *openSiege {
+		g.demoBattle(*openSiege)
 	}
 	if *openForm || *openCorps {
 		// 驗收用：直接編幾支軍團出來，免得截圖前要按一長串鍵。

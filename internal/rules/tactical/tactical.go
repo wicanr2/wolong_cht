@@ -170,6 +170,12 @@ type Field struct {
 	gateX int
 	// top[y][x] 是那一格最高的可站立層。
 	top [Height][Width]int
+
+	// tiles[y][x] 是原始圖塊值、heights[圖塊] 是它的堆疊層數。
+	// 兩個都只有「從圖塊建的戰場」才有——城壁打壞時要換圖塊再重算高度，
+	// 沒有它們就退化成「打壞了但地形不變」。
+	tiles   [][]byte
+	heights *[256]int
 }
 
 // NewField 從每格的堆疊高度建一張戰場。
@@ -193,6 +199,64 @@ func NewField(stack [][]int, gateX int) *Field {
 	}
 	return f
 }
+
+// NewFieldFromTiles 從戰場的**原始圖塊值**建一張戰場。
+//
+// heights[圖塊] 是那個圖塊的堆疊層數（`BATTLE.MDL` 的圖塊定義第一個 byte）。
+// 與 NewField 的差別是這個版本記得住圖塊值，所以城壁被打壞時
+// 可以換成瓦礫的圖塊再重算高度——原版 `sub_1B824` 做的正是這件事。
+func NewFieldFromTiles(tiles [][]byte, heights *[256]int, gateX int) *Field {
+	f := &Field{gateX: gateX, tiles: tiles, heights: heights}
+	for y := 0; y < Height && y < len(tiles); y++ {
+		for x := 0; x < Width && x < len(tiles[y]); x++ {
+			f.setCell(x, y, heights[tiles[y][x]])
+		}
+	}
+	return f
+}
+
+func (f *Field) setCell(x, y, h int) {
+	if h > Levels {
+		h = Levels
+	}
+	if h < 0 {
+		h = 0
+	}
+	for z := 0; z < Levels; z++ {
+		f.solid[z][y][x] = z < h
+	}
+	f.top[y][x] = h
+}
+
+// Retile 把 (x, y) 的圖塊值加上 delta 再重算高度。
+//
+// 原版打壞城壁時圖塊值**未滿 0xF0 加 0x10、否則加 8**，然後重新展開
+// 那個圖塊的堆疊（`sub_1B824` → `sub_1BB6D`）。沒有圖塊資料時什麼都不做。
+func (f *Field) Retile(x, y, delta int) {
+	if f.tiles == nil || f.heights == nil || !inBounds(x, y) {
+		return
+	}
+	if y >= len(f.tiles) || x >= len(f.tiles[y]) {
+		return
+	}
+	t := int(f.tiles[y][x]) + delta
+	if t > 0xFF {
+		t = 0xFF
+	}
+	f.tiles[y][x] = byte(t)
+	f.setCell(x, y, f.heights[t])
+}
+
+// Tile 回傳 (x, y) 目前的圖塊值。沒有圖塊資料時回 0。
+func (f *Field) Tile(x, y int) byte {
+	if f.tiles == nil || y < 0 || y >= len(f.tiles) || x < 0 || x >= len(f.tiles[y]) {
+		return 0
+	}
+	return f.tiles[y][x]
+}
+
+// HasTiles 回報這張戰場帶不帶原始圖塊值。
+func (f *Field) HasTiles() bool { return f.tiles != nil }
 
 // GateX 回傳登城點的 X。0 表示這是野戰用的戰場。
 func (f *Field) GateX() int { return f.gateX }

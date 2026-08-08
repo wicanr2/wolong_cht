@@ -38,7 +38,12 @@ type Corps struct {
 	// 一點兵力 ＝ 10 人，滿編 100 ＝ 1,000 人（說明書 5.5）。
 	Units [army.Positions]combat.Unit
 
-	Direction int // +0x0A，決定走連結表的哪一條
+	// Heading 是**朝向**（+0x08）：0／1 是東西、2／3 是南北、4 是靜止。
+	// `sub_12808` 從「現在座標與下一個路徑點的差」算出來，X 有差就用 X、
+	// 沒差才看 Y。野戰要取樣大地圖上的哪兩格由它決定（`sub_14B63`）。
+	Heading int
+
+	Direction int // +0x0A，沿路徑表前進的**步進量**（`sub_127F6` 取負再相加）
 	Timer     int // +0x0B，每 tick 減 1，歸零走一步
 	Interval  int // +0x1E，速度 ＝ 間隔的倒數
 
@@ -59,6 +64,7 @@ func (w *World) loadCorps(b []byte) {
 			Faction:    int(r[0x01]),
 			Men:        u16(r, 0x04),
 			Morale:     int(r[0x06]),
+			Heading:    int(r[0x08]),
 			Direction:  int(r[0x0A]),
 			Timer:      int(r[0x0B]),
 			Node:       u16(r, 0x0E) / 8,
@@ -91,6 +97,7 @@ func (w *World) saveCorps(b []byte) {
 		r[0x02] = byte(i)
 		putU16(r, 0x04, c.Men)
 		r[0x06] = byte(c.Morale)
+		r[0x08] = byte(c.Heading)
 		r[0x0A] = byte(c.Direction)
 		r[0x0B] = byte(c.Timer)
 		putU16(r, 0x0E, c.Node*8)
@@ -345,16 +352,50 @@ func (w *World) step(c *Corps) bool {
 	if c.X == c.TargetX && c.Y == c.TargetY {
 		if c.Node != c.TargetNode {
 			c.Node = c.TargetNode
+			c.Heading = HeadingStill
 			return true
 		}
+		c.Heading = HeadingStill
 		return false
 	}
+	c.Heading = headingTo(c.X, c.Y, c.TargetX, c.TargetY)
 	c.X += sign(c.TargetX - c.X)
 	c.Y += sign(c.TargetY - c.Y)
 	if c.X == c.TargetX && c.Y == c.TargetY {
 		c.Node = c.TargetNode
+		c.Heading = HeadingStill
 	}
 	return true
+}
+
+// 朝向的四個值加上「靜止」。原版寫進軍團記錄 `+0x08`
+// （`sub_12808`；到站時 `sub_12662`／`sub_127A2` 改寫成 4）。
+//
+// 編碼是**符號位元**來的：`ax = 現在 − 目標`，取 bit 15 轉成 0／1，
+// 南北那一組再加 2。所以 0／1 是「X 減少／增加」，2／3 是「Y 減少／增加」。
+const (
+	HeadingXMinus = 0
+	HeadingXPlus  = 1
+	HeadingYMinus = 2
+	HeadingYPlus  = 3
+	HeadingStill  = 4
+)
+
+// headingTo 重現 `sub_12808`：**X 有差就只看 X，X 相同才看 Y**。
+func headingTo(x, y, tx, ty int) int {
+	if d := tx - x; d != 0 {
+		if d < 0 {
+			return HeadingXMinus
+		}
+		return HeadingXPlus
+	}
+	if d := ty - y; d != 0 {
+		if d < 0 {
+			return HeadingYMinus
+		}
+		return HeadingYPlus
+	}
+	return HeadingStill
 }
 
 func sign(v int) int {

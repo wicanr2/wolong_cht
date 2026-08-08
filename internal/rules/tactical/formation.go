@@ -15,13 +15,24 @@ const (
 	formStride    = SoldiersOnFoot * 2 // 96，正是原版指令 1 乘的那個數
 )
 
-// 陣形線的三個位置（原版指令 2 寫的三個常數）。
-// 說明書 4.3：「自軍側／中央／敵軍側三選一」。
-const (
-	LineOwn    = 58
-	LineCenter = 36
-	LineEnemy  = 16
-)
+// 陣形原點。說明書 4.3：陣形線「自軍側／中央／敵軍側」三選一。
+//
+// ⭐ **兩側的常數不一樣，而且不是互相對稱的。** 原版把原點分成兩個變數：
+//
+//	word_1D33C  side 0（玩家）　初值 0x2005 ＝ (X=5,  Y=32)
+//	word_1D33E  side 1（腳本）　初值 0x2039 ＝ (X=58, Y=32)
+//
+// 玩家那三個值在選單的處理常式裡（`seg000:C168`／`C184`／`C1A0`）寫死成
+// 48／28／5；腳本那三個在指令 2（`sub_1A4AB`）裡寫死成 58／36／16。
+// 鏡射是靠**把陣形表的 dx 取負**做的（`sub_1AA2C` 的 `neg dl`），
+// 所以原點不必對稱——照抄兩組就好，不要自己算 `Width-1-l`。
+var lineX = [2][3]int{
+	{5, 28, 48},  // side 0：自軍側／中央／敵軍側
+	{58, 36, 16}, // side 1：同上
+}
+
+// OriginY 是陣形原點的 Y，兩側都一樣（兩個初值的高位元組都是 0x20）。
+const OriginY = 32
 
 // Formations 是十六種陣形的相對座標表。
 type Formations struct {
@@ -83,32 +94,29 @@ func (f *Formations) Bounds(form int) (minX, maxX, minY, maxY int) {
 	return
 }
 
-// Line 把「自軍側／中央／敵軍側」換成戰場上的 X。
-//
-// 三個常數是原版指令 2 寫進 `word_1D33E` 的（58／36／16），
-// 而那個變數是**鏡射那一側**用的。另一側的原點要對稱過去，
-// 兩軍才會面對面——用 LineFor 取，不要直接用這個。
-func Line(choice int) int {
-	switch choice {
-	case 0:
-		return LineOwn
-	case 1:
-		return LineCenter
-	default:
-		return LineEnemy
+// LineFor 回傳第 side 側在某個陣形線選擇下的原點 X。
+// choice 0／1／2 ＝ 自軍側／中央／敵軍側。
+func LineFor(side, choice int) int {
+	if side < 0 || side > 1 {
+		side = 0
 	}
+	if choice < 0 || choice > 2 {
+		choice = 0
+	}
+	return lineX[side][choice]
 }
 
-// LineFor 回傳第 side 側在某個陣形線選擇下的原點 X。
-//
-// 鏡射那一側（1）直接用原版的常數；另一側對稱過去。
-// **兩側都選「自軍側」時，各自貼著自己那一邊的邊緣。**
-func LineFor(side, choice int) int {
-	l := Line(choice)
-	if side == 1 {
-		return l
+// LineChoice 是 LineFor 的反查：把原點 X 換回三選一的編號，找不到回 −1。
+func LineChoice(side, x int) int {
+	if side < 0 || side > 1 {
+		return -1
 	}
-	return Width - 1 - l
+	for i, v := range lineX[side] {
+		if v == x {
+			return i
+		}
+	}
+	return -1
 }
 
 // SyntheticFormations 造一組不需要原版檔的陣形，給測試與無資產環境用。

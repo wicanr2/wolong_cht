@@ -10,33 +10,38 @@ package tactical
 // 十九個處理常式裡，條件全部寫進同一個暫存器再由分支讀走——
 // **這是一台「查詢 → 分支 → 下令 → 等待」的小機器**。
 //
-// ⚠ 十九個裡有幾個查的是還沒解出來的全域變數（`byte_1D346`、
-// `word_1D33C`、`word_1D30A` 那些）。**那幾個在這裡回 0**，
-// 並在下面各自標出來——解出來之前不要當成原版行為。
+// 原版的腳本永遠跑在 side 1 那一側（查詢常式裡的 `mov bx, 600h`、
+// `word_1D31C+1`、`ds:24h` 都寫死是第二側）。這裡把它一般化成
+// 「腳本自己那一側 ↔ 對面那一側」，語意相同。
 
 // 指令碼。名稱與作用見 docs/re/11 §3.5。
 const (
-	opWait     = 0
-	opForm     = 1  // 切換陣形
-	opLine     = 2  // 陣形線
-	opOrder    = 3  // 下命令
-	opQD346    = 4  // 未解
-	opQD33C    = 5  // 未解
-	opQMine    = 6  // 我方六隊命令的最小值
-	opQTheirs  = 7  // 敵方六隊命令的最小值
-	opQAdv     = 8  // 有利／不利
-	opQRand    = 9  // 亂數 mod N
-	opBranch   = 10 // 條件分支
-	opQA24     = 11 // 未解
-	opQA04     = 12 // 未解
-	opOrderBy  = 13 // 依兵種下命令
-	opQD31C    = 14 // 我方兵數
-	opQMin18   = 15 // 門／城壁耐久的最小值
-	opMessage  = 16
-	opQCmd9    = 17
-	opQB03     = 18
-	numOpcodes = 19
+	opWait      = 0
+	opForm      = 1  // 切換陣形
+	opLine      = 2  // 陣形線
+	opOrder     = 3  // 下命令
+	opQFoeForm  = 4  // 敵方選的陣形編號
+	opQFoeLine  = 5  // 敵方的陣形線落在哪一段
+	opQMine     = 6  // 我方六隊命令的最小值
+	opQTheirs   = 7  // 敵方六隊命令的最小值
+	opQAdv      = 8  // 有利／不利
+	opQRand     = 9  // 亂數 mod N
+	opBranch    = 10 // 條件分支
+	opQMyMen    = 11 // 我方剩餘兵力
+	opQFoeMen   = 12 // 敵方剩餘兵力
+	opOrderBy   = 13 // 依兵種下命令
+	opQOnField  = 14 // 我方場上人數
+	opQWall     = 15 // 城壁耐久
+	opMessage   = 16
+	opQLeadCmd9 = 17
+	opQLeadHP   = 18
+	numOpcodes  = 19
 )
+
+// foeLineMid 是指令 5 的比較基準（`sub_1A516` 的 `cmp al, 1Ch`）。
+// 玩家的三個陣形線是 5／28／48，所以這一問等於
+// 「敵陣擺在自己那邊（0）／正中央（1）／壓過來了（2）」。
+const foeLineMid = 28
 
 // 分支的五種比較（`sub_1A591` 的 switch）。
 const (
@@ -144,23 +149,47 @@ func (s *Script) exec(b *Battle, op, par, arg int) {
 			n = Squads
 		}
 		s.cond = b.rng.Next() % n
-	case opQD31C:
+
+	case opQFoeForm:
+		// `byte_1D346` ＝ **玩家在陣形選單上選的那一格**
+		// （`seg000:C127` 從游標座標算：(X−0x1F0)÷16，下排再加 8）。
+		// 玩家是對面那一側，所以這是「敵方擺什麼陣」。
+		s.cond = b.Sides[1-side].Formation
+
+	case opQFoeLine:
+		// `word_1D33C` 的低位元組 ＝ 玩家的陣形原點 X，與 28 比大小。
+		switch x := b.Sides[1-side].Line; {
+		case x < foeLineMid:
+			s.cond = 0
+		case x == foeLineMid:
+			s.cond = 1
+		default:
+			s.cond = 2
+		}
+
+	case opQMyMen:
+		// `word_1D30A:0x24` ＝ side 1 的即時兵力。那個 64 byte 的區塊
+		// 每側 32 byte，`+4` 是兵力（開打時從軍團記錄 +4 抄過來，
+		// 每死一個兵 `dec`，而且畫在畫面上）。**超過 255 夾成 255**。
 		s.cond = clampByte(b.Sides[side].Remaining())
-	case opQMin18:
-		// 門與城壁的耐久。**還沒實作**（那張 16 筆的表沒接），
-		// 回 0 等於「已經被打爛」，腳本會走比較積極的分支。
-		s.cond = 0
-	case opQCmd9:
+	case opQFoeMen:
+		// `word_1D30A:0x04` ＝ side 0 的同一個欄位。
+		s.cond = clampByte(b.Sides[1-side].Remaining())
+
+	case opQOnField:
+		// `word_1D31C+1` ＝ 我方**場上**的人數（0–48），與待機的無關。
+		s.cond = b.Sides[side].Alive()
+
+	case opQWall:
+		s.cond = b.WallQuery()
+
+	case opQLeadCmd9:
 		s.cond = 0
 		if b.Sides[side].Soldiers[0].Cmd >= 9 {
 			s.cond = 1
 		}
-	case opQB03:
+	case opQLeadHP:
 		s.cond = b.Sides[side].Soldiers[0].HP
-
-	case opQD346, opQD33C, opQA24, opQA04:
-		// ⚠ 這四個查的全域變數還沒解（docs/re/11 §3.5）。回 0。
-		s.cond = 0
 
 	case opMessage:
 		// 訊息 0x1CE + N。戰場的訊息還沒接，先記進 Log。

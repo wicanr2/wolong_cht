@@ -39,8 +39,7 @@ func walledField(gateX int) *Field {
 }
 
 func newTestBattle(f *Field) *Battle {
-	b := NewBattle(f, SyntheticFormations(), &fixedRand{seq: []int{1, 7, 3}})
-	b.Sides[0].Line, b.Sides[1].Line = LineFor(0, 0), LineFor(1, 0)
+	b := NewBattle(f, SyntheticFormations(), &fixedRand{seq: []int{1, 7, 3}}, 0)
 	for k := 0; k < Squads; k++ {
 		b.Deploy(0, k, Infantry, 100)
 		b.Deploy(1, k, Infantry, 100)

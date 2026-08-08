@@ -105,6 +105,31 @@ func (l *Library) Stacks(n int) [][]int {
 	return out
 }
 
+// Tiles 回傳第 n 張戰場每一格的**原始圖塊值**，逐列排列（Height × Width）。
+//
+// 城壁與門是從這些值認出來的（0xD0–0xDF 與 0xF0–0xF7，docs/re/11 §5.9），
+// 而且打壞時要把圖塊值換掉，所以規則層需要的是這個而不只是堆疊高度。
+// 回傳的是複本，改它不會動到載入的檔案。
+func (l *Library) Tiles(n int) [][]byte {
+	off := FieldsBase + n*FieldSize + CellsOff
+	cells := l.mapData[off : off+NumCells]
+	out := make([][]byte, Height)
+	for y := 0; y < Height; y++ {
+		out[y] = append([]byte(nil), cells[y*Width:(y+1)*Width]...)
+	}
+	return out
+}
+
+// Heights 回傳第 n 張戰場那一組圖塊的堆疊高度表（圖塊值 → 層數）。
+func (l *Library) Heights(n int) *[256]int {
+	t := l.TileSet(n)
+	var h [256]int
+	for i := 0; i < TileDefs; i++ {
+		h[i] = len(l.stacks[t][i])
+	}
+	return &h
+}
+
 // Script 回傳一段 AI 腳本。
 //
 // 段編號 ＝ **武將記錄 `+0x16` × 4 ＋ 戰場類別**（`sub_1CBE5`，docs/re/11 §3.2）。

@@ -118,6 +118,9 @@ type Battle struct {
 	// Advantage[i] 是第 i 側目前的有利／不利。
 	Advantage [2]Advantage
 
+	// Structures 是城壁與門，最多 16 段（docs/re/11 §5.9）。
+	Structures []Structure
+
 	rng Rand
 
 	// projectiles 是飛在空中的箭。原版是一張 32 筆的表（docs/re/11 §5.1）。
@@ -142,9 +145,20 @@ type projectile struct {
 }
 
 // NewBattle 開一場戰鬥。
-func NewBattle(f *Field, forms *Formations, rng Rand) *Battle {
+//
+// cityWall 是攻城時守方據點的城壁值（據點記錄 `+0x13`），決定城壁耐久；
+// 野戰用不到，傳 0 即可。
+func NewBattle(f *Field, forms *Formations, rng Rand, cityWall int) *Battle {
 	b := &Battle{Field: f, Forms: forms, rng: rng, Winner: -1}
+	// 原版把兩側的陣形原點分開存（side 0 → word_1D33C，side 1 → word_1D33E），
+	// 而 side 1 是**把陣形表的 dx 取負**來鏡射（`sub_1AA2C` 的 `neg dl`），
+	// 不是把原點對稱過去。
 	b.Sides[1].Mirror = true
+	b.Sides[0].Line = LineFor(0, 0)
+	b.Sides[1].Line = LineFor(1, 0)
+	if f != nil {
+		b.Structures = buildStructures(f.tiles, f.IsSiege(), cityWall)
+	}
 	return b
 }
 
@@ -197,7 +211,7 @@ func (b *Battle) formationSpot(side, k int) (int, int) {
 	if b.Sides[side].Mirror {
 		dx = -dx
 	}
-	return clamp(b.Sides[side].Line + dx), clamp(Height/2 + dy)
+	return clamp(b.Sides[side].Line + dx), clamp(OriginY + dy)
 }
 
 // Order 對一整側或單一隊下命令。squad 為 −1 表示全軍
@@ -212,6 +226,7 @@ func (b *Battle) Order(side, squad int, c Command) {
 	if c == Charge && b.Field.IsSiege() {
 		// 說明書 4.2：突擊時守方會開門，而**開了就關不回去**。
 		b.Sides[side].GateOpen = true
+		b.OpenGates()
 	}
 	lo, hi := 0, SoldiersOnFoot
 	if squad >= 0 {

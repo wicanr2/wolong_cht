@@ -1,6 +1,9 @@
 package state
 
 import (
+	"errors"
+	"fmt"
+
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
@@ -23,6 +26,12 @@ import (
 // 回傳 nil 表示這一場開不了戰術畫面，退回自動判定。
 type TacticalSetup struct {
 	Field func(node int, siege bool) *tactical.Field
+
+	// Script 回傳一側的 AI 腳本。tactic 是武將記錄 `+0x16`（0–7），
+	// 段編號 ＝ tactic × 4 ＋ 戰場類別（`sub_1CBE5`，docs/re/11 §3.2）。
+	// 沒設或回 nil 那一側就不由腳本驅動。
+	Script func(node int, siege bool, tactic int) []byte
+
 	Forms *tactical.Formations
 }
 
@@ -38,6 +47,9 @@ type Pending struct {
 	Node     int
 	Mode     combat.Mode
 	Garrison int
+
+	// CityWall 是開打時守方據點的城兵數，攻城結算要用它算損害。
+	CityWall int
 }
 
 // SetTactical 裝上戰場來源。傳 nil 就回到全自動判定。
@@ -68,10 +80,13 @@ func (w *World) beginTactical(att, def int, m combat.Mode, garrison int) bool {
 	if f == nil {
 		return false
 	}
-	b := tactical.NewBattle(f, w.tactical.Forms, w.rng)
-	// 陣形線：兩軍都擺在自己那一側（說明書 4.3 的三選一，預設自軍側）。
-	b.Sides[0].Line = tactical.LineFor(0, 0)
-	b.Sides[1].Line = tactical.LineFor(1, 0)
+	// 攻城戰的城壁耐久由**守方據點的城兵數**決定：（城兵數 ＋ 50）× 10
+	// （`sub_19CE2` 讀據點記錄 `+0x13`）。野戰用不到。
+	cityWall := 0
+	if m == combat.Siege && node >= 0 && node < len(w.Cities) {
+		cityWall = w.Cities[node].Garrison
+	}
+	b := tactical.NewBattle(f, w.tactical.Forms, w.rng, cityWall)
 
 	deploy := func(side, corps int) {
 		c := w.Corps[corps]
@@ -88,19 +103,53 @@ func (w *World) beginTactical(att, def int, m combat.Mode, garrison int) bool {
 	deploy(1, def)
 	b.Place()
 
-	// ⚠ 開場都下「攻擊」。
+	// AI 那一側交給 `BATTLE.DAT` 的腳本（段編號 ＝ 武將 +0x16 × 4 ＋
+	// 戰場類別，docs/re/11 §3.2）。**玩家那一側不裝**，由畫面層下命令。
 	//
-	// 原版是由 `BATTLE.DAT` 的腳本驅動 AI（段編號 ＝ 武將 +0x16 × 4 ＋
-	// 戰場類別，docs/re/11 §3.2），十九個指令都讀出來了，但**那台直譯器
-	// 還沒實作**——它查的那些全域變數有一半還沒解。
-	// 在那之前用這個代替，**不要當成原版行為**。
-	b.Order(0, -1, tactical.Attack)
-	b.Order(1, -1, tactical.Attack)
+	// 腳本第一個指令通常是查詢，所以掛上去之前先給一個「攻擊」當底，
+	// 免得沒有腳本的那一場開局所有人都站著不動。
+	corpsOf := [2]int{att, def}
+	for side := range b.Sides {
+		b.Order(side, -1, tactical.Attack)
+		if w.Corps[corpsOf[side]].Faction == w.Player || w.tactical.Script == nil {
+			continue
+		}
+		code := w.tactical.Script(node, m == combat.Siege,
+			w.Generals[w.Leader(corpsOf[side])].Tactic)
+		if code != nil {
+			b.SetScript(side, tactical.NewScript(code, side))
+		}
+	}
 
 	w.pending = &Pending{Battle: b, Attacker: att, Defender: def,
-		Node: node, Mode: m, Garrison: garrison}
+		Node: node, Mode: m, Garrison: garrison, CityWall: cityWall}
 	return true
 }
+
+// StageBattle 直接擺一場戰術戰鬥，**繞過遭遇判定**。
+//
+// 給驗收與測試用：`resolveContact` 的觸發順序是「先野戰再攻城」
+// （照 `sub_12708` 的 `cmp byte ptr [di], 0` 那個閘），而守軍就待在城裡時
+// 兩者的座標相同，所以走正常流程擺不出攻城的戰術畫面。
+// 那個順序對不對是**戰略層的獨立問題**（見 CONTEXT.md），不在這裡繞過去。
+func (w *World) StageBattle(att, def int, m combat.Mode, rng combat.Rand) error {
+	if w.tactical == nil || w.tactical.Forms == nil || w.tactical.Field == nil {
+		return errNoTactical
+	}
+	// 正常路徑是 `Tick` 把亂數源記進 w.rng；這裡繞過了 Tick，要自己給。
+	w.rng = rng
+	for _, i := range []int{att, def} {
+		if i < 0 || i >= numCorps || !w.Corps[i].Alive {
+			return fmt.Errorf("state: 軍團 %d 不存在", i)
+		}
+	}
+	if !w.beginTactical(att, def, m, w.Cities[w.clampCity(w.Corps[att].Node)].Garrison) {
+		return fmt.Errorf("state: 擺不出戰場（據點 %d）", w.Corps[att].Node)
+	}
+	return nil
+}
+
+var errNoTactical = errors.New("state: 沒有裝戰場來源")
 
 func kindOf(t army.TroopType) tactical.Kind {
 	switch t {
@@ -163,6 +212,9 @@ func (w *World) ResolvePending(rng combat.Rand) *CorpsEvent {
 
 	r.AttackerDestroyed = combat.Destroyed(w.battle(p.Attacker))
 	r.DefenderDestroyed = combat.Destroyed(w.battle(p.Defender))
+	// 攻城的損害走**戰術層自己的公式**（`sub_19FDC` 前半：由城壁被打掉
+	// 多少算，不是自動判定的兵力比），三個欄位各扣同一個值。
+	r.CityDamage = p.Battle.CityDamage(p.CityWall)
 	w.damageCity(p.Node, p.Mode, r)
 	w.afterBattle(ev, p.Attacker, r.AttackerDestroyed, p.Defender, rng)
 	w.afterBattle(ev, p.Defender, r.DefenderDestroyed, p.Attacker, rng)
