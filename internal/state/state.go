@@ -13,6 +13,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/wicanr2/wolong_cht/internal/rules/capital"
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
@@ -109,6 +110,23 @@ type City struct {
 	Garrison      int // 城兵數
 	GarrisonCap   int
 	Governor      int // 派駐的內政官（武將編號），0xFF ＝ 無
+
+	// Kind 是據點類型（記錄 +0x16 的低 4 位）：
+	// 0 大城／1 中城／2 小城／3 關／4 戰場。**數字越小城越大。**
+	//
+	// 選首都時拿它當第一 key（`internal/rules/capital`），
+	// 而類型本身也解釋了兩個先前看起來突兀的數字：
+	// 關的城兵上限最高（194–254），戰場是 0（不能駐兵）。
+	// 見 docs/formats/08 §1.6。
+	Kind int
+
+	// KindHigh 是 +0x16 的高 4 位（0–14）。嚴格巢狀在 Kind 內，
+	// 疑似大地圖上的外觀編號，**未解**——存著只為了寫回時不失真。
+	KindHigh int
+
+	// Adjacency 是記錄 +0x00 的低 4 位：四個方向哪幾個有鄰接
+	// （對應 +0x1C–+0x1F 的四個據點編號，docs/formats/08 §4.1）。
+	Adjacency int
 }
 
 // General 是一名武將的完整狀態。
@@ -353,6 +371,9 @@ func LoadScenario(path string, index int) (*World, error) {
 			GarrisonCap:   int(r[0x12]),
 			Garrison:      int(r[0x13]),
 			Governor:      int(r[0x19]),
+			Kind:          int(r[0x16]) & 0x0F,
+			KindHigh:      int(r[0x16]) >> 4,
+			Adjacency:     int(r[0x00]) & 0x0F,
 		}
 	}
 
@@ -402,6 +423,11 @@ type Event struct {
 
 	// FriendshipUp 為真表示外交官這次做出了成果（交友度 +1）。
 	FriendshipUp bool
+
+	// Relocated 記錄這個 tick 遷都的勢力：勢力編號 → 新首都的據點編號。
+	// 兩個觸發都會寫進來：首都被打下來（`sub_14DF0`），
+	// 以及沒仗打時的主動遷都（事件 8）。
+	Relocated map[int]int
 
 	// Corps 是這個 tick 裡動過或打過的軍團。原版每 tick 只更新 16 支
 	// （`sub_125A3` 的 `mov cx, 10h`），所以這裡通常是空的或很短。
@@ -550,6 +576,42 @@ func (w *World) hourly(ev *Event, rng economy.Rand) {
 	// ③ 外交官。派駐在這個勢力的外交官是**別人派來的**，
 	//    所以要改的是「派遣方 → 這個勢力」那一格交友度。
 	ev.FriendshipUp = w.runDiplomat(i, rng)
+
+	// ④ 主動遷都（原版的事件 8，`sub_12D3A`）。
+	//    **沒有侵攻目標時**才會發，機率 rand(0..255) < 0x40 ＝ 25%。
+	//    「閒著沒仗打就把首都搬到最好的城」——與侵攻互斥。
+	if f.InvasionTarget == diplomacy.NoTarget && rng.Next()&0xFF < 0x40 {
+		if next := w.relocateCapital(i); next != capital.None {
+			if ev.Relocated == nil {
+				ev.Relocated = map[int]int{}
+			}
+			ev.Relocated[i] = next
+		}
+	}
+}
+
+// relocateCapital 把 faction 的首都搬到 `internal/rules/capital` 選出的據點。
+//
+// 原版寫回時用 `xchg ah, [si+3]` 再 `cmp al, ah`——**位置沒變就什麼都不做**，
+// 連通知都不發。這裡照抄那個相等判斷。
+//
+// 回傳新首都的據點編號，沒動或無據點可遷回 capital.None。
+// **事件記錄交給呼叫端**——兩個觸發點的事件型別不同。
+func (w *World) relocateCapital(faction int) int {
+	sites := make([]capital.Site, len(w.Cities))
+	for i := range w.Cities {
+		c := &w.Cities[i]
+		sites[i] = capital.Site{
+			Owner: c.Owner, Kind: c.Kind,
+			Production: c.Production, Adjacency: c.Adjacency,
+		}
+	}
+	next := capital.Pick(sites, faction)
+	if next == capital.None || next == w.Factions[faction].Capital {
+		return capital.None
+	}
+	w.Factions[faction].Capital = next
+	return next
 }
 
 // runDiplomat 讓派駐在 target 的外交官工作一次，回報交友度有沒有提升。
@@ -700,6 +762,7 @@ func (w *World) Bytes() []byte {
 		r[0x11] = byte(c.Prevention)
 		r[0x12] = byte(c.GarrisonCap)
 		r[0x13] = byte(c.Garrison)
+		r[0x16] = byte(c.KindHigh<<4 | c.Kind&0x0F)
 		r[0x19] = byte(c.Governor)
 		r[0x1A] = byte(c.OwnerRecorded)
 	}

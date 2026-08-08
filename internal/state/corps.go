@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
+	"github.com/wicanr2/wolong_cht/internal/rules/capital"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 )
@@ -293,6 +294,10 @@ type CorpsEvent struct {
 
 	// Captured 不是 −1 表示這個 tick 佔下了某個據點。
 	Captured int
+
+	// Relocated 不是 −1 表示**舊主的首都被打下來，遷到了這個據點**
+	// （原版 `sub_14DF0`，訊息 30「首都被攻陷了！儘速遷都到\2」）。
+	Relocated int
 }
 
 // tickCorps 跑一輪軍團更新，回傳這個 tick 發生的事。
@@ -313,7 +318,7 @@ func (w *World) tickCorps(hour int, rng combat.Rand) []CorpsEvent {
 
 func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 	c := &w.Corps[i]
-	ev := CorpsEvent{Corps: i, Enemy: -1, Captured: -1}
+	ev := CorpsEvent{Corps: i, Enemy: -1, Captured: -1, Relocated: capital.None}
 
 	// ① 移動的節拍。原版先減再判斷：間隔 N 表示每 N 個 tick 走一步。
 	c.Timer--
@@ -433,6 +438,7 @@ func (w *World) resolveContact(i int, ev *CorpsEvent, rng combat.Rand) {
 		city := &w.Cities[c.Node]
 		switch {
 		case city.Owner == combat.NeutralFaction:
+			// 中立據點沒有主人，所以沒有「首都失守」這回事。
 			city.Owner = c.Faction
 			w.Factions[c.Faction].Cities++
 			ev.Captured = c.Node
@@ -594,6 +600,12 @@ func (w *World) capture(att int, ev *CorpsEvent) {
 	city.OwnerRecorded = next
 	w.Factions[next].Cities++
 	ev.Captured = node
+	// 首都被打下來就遷都（原版 `sub_14DF0`：先比 `[bx+3]` 再挑新的）。
+	// **舊主還活著才遷**——一個據點都不剩時 `sub_16A3D` 回 CF ＝ 1，
+	// 滅亡由別的地方判定，這裡不越權。
+	if old >= 0 && old < numFactions && w.Factions[old].Capital == node {
+		ev.Relocated = w.relocateCapital(old)
+	}
 }
 
 // March 給軍團下行軍指令：往 node 那個據點走。

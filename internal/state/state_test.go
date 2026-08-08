@@ -8,6 +8,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
 	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
+	"github.com/wicanr2/wolong_cht/internal/rules/capital"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/rules/rng"
@@ -971,5 +972,69 @@ func TestMarchIntoDefendedCityIsSiege(t *testing.T) {
 	}
 	if got.Mode != combat.Siege {
 		t.Errorf("打成 %v，應為攻城——據點的判定被野戰搶先了", got.Mode)
+	}
+}
+
+// TestCapitalPickMatchesScenarioData 拿四個劇本的初始資料當黃金對照：
+// 把 `sub_16A3D` 照抄的選首都演算法跑過每一個活著的勢力，
+// 與檔案裡的首都欄位（勢力記錄 +0x03）比。
+//
+// **命中 41/43，兩個例外是作者刻意填的**：
+//   - 劇本 1 勢力 19：三個據點同為小城，演算法選生產力較高的「黃」，
+//     作者填「北海」。
+//   - 劇本 2 勢力 2：作者把首都填成**長阪**——那是戰場（類型 4，
+//     城兵上限 0）。長阪坡的劉備。
+//
+// 首都是作者填的，這支只在首都易主時才跑，所以不必吻合。
+// 這條測試釘住的是**那個數字**：如果它變了，代表選首都的邏輯或
+// 據點類型的解讀被動過。
+func TestCapitalPickMatchesScenarioData(t *testing.T) {
+	if _, err := os.Stat(origPath); err != nil {
+		t.Skip("找不到原版 SINARIO.DAT，跳過")
+	}
+	hit, total := 0, 0
+	for idx := 0; idx < 4; idx++ {
+		w, err := LoadScenario(origPath, idx)
+		if err != nil {
+			t.Fatalf("劇本 %d 載入失敗：%v", idx+1, err)
+		}
+		for f := range w.Factions {
+			if !w.Factions[f].Alive {
+				continue
+			}
+			total++
+			if w.relocateCapital(f) == capital.None {
+				hit++ // 回 None 代表「選出來的就是現在這個」
+			}
+		}
+	}
+	if total != 43 || hit != 41 {
+		t.Fatalf("四個劇本應是 41/43 吻合，得到 %d/%d", hit, total)
+	}
+}
+
+// TestCityKindDistribution 釘住據點類型的分佈。
+// 三條獨立證據（城名、生產力上限、城兵上限）都指向這個讀法，
+// 見 docs/formats/08 §1.6。
+func TestCityKindDistribution(t *testing.T) {
+	w := load(t, 0)
+	var n [5]int
+	for i := range w.Cities {
+		c := &w.Cities[i]
+		if c.Kind < 0 || c.Kind > 4 {
+			t.Fatalf("據點 %d 的類型 %d 超出 0–4", i, c.Kind)
+		}
+		n[c.Kind]++
+		// 戰場不能駐兵，關的守備最厚——類型解讀對不對，這兩條最敏感。
+		if c.Kind == 4 && c.GarrisonCap != 0 {
+			t.Errorf("戰場 %s 的城兵上限應是 0，得到 %d", c.Name, c.GarrisonCap)
+		}
+		if c.Kind == 3 && c.GarrisonCap < 194 {
+			t.Errorf("關 %s 的城兵上限應 ≥ 194，得到 %d", c.Name, c.GarrisonCap)
+		}
+	}
+	want := [5]int{21, 72, 86, 9, 4}
+	if n != want {
+		t.Fatalf("類型分佈 %v，期望 %v（大/中/小/關/戰場）", n, want)
 	}
 }
