@@ -79,3 +79,124 @@ func TestRLESameShapeBothVersions(t *testing.T) {
 		t.Errorf("兩版解出的長度不同：dosv %d B、pc98 %d B", len(a), len(b))
 	}
 }
+
+// cityRecords 從 SINARIO.DAT 取 192 個據點的座標與鄰接欄位。
+// 這裡直接讀原始位元組而不經過 internal/state —— 資產層不該依賴規則層。
+func cityRecords(t *testing.T) (xy [][2]int, known map[[2]int]bool) {
+	t.Helper()
+	b := read(t, "dosv", "SINARIO.DAT")
+	const base, size, n = 0x8C0, 32, 192
+	known = map[[2]int]bool{}
+	for i := 0; i < n; i++ {
+		r := b[base+i*size : base+i*size+size]
+		xy = append(xy, [2]int{
+			int(r[8]) | int(r[9])<<8,
+			int(r[10]) | int(r[11])<<8,
+		})
+		for k := 0; k < 4; k++ {
+			if r[0]>>k&1 == 0 {
+				continue
+			}
+			if m := int(r[0x1C+k]); m < n {
+				a, c := i, m
+				if a > c {
+					a, c = c, a
+				}
+				known[[2]int{a, c}] = true
+			}
+		}
+	}
+	return xy, known
+}
+
+// ⭐ 道路圖的三個正對照。這張圖是**推導**出來的（多源 BFS），
+// 不是從檔案裡讀出來的，所以它的正確性完全靠這三條：
+//
+//	① 據點記錄裡那 85 條鄰接必須全部出現
+//	② 192 個據點必須全連通
+//	③ 每個據點的分支度 ≤ 4 —— 據點記錄只有四個方向槽
+//
+// ①③ 是原版資料自己說的話，②是「遊戲要能玩」的下限。
+// 三條同時成立，推導的參數（道路值域、橋、8-連通、節點偏移）才算對。
+func TestRoadGraphAgainstCityRecords(t *testing.T) {
+	m, err := ParseMap(read(t, "dosv", "MMAP.MAP"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	xy, known := cityRecords(t)
+	edges, err := RoadEdges(m, xy)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	have := map[[2]int]bool{}
+	deg := make([]int, len(xy))
+	adj := make([][]int, len(xy))
+	for _, e := range edges {
+		have[[2]int{e.A, e.B}] = true
+		deg[e.A]++
+		deg[e.B]++
+		adj[e.A] = append(adj[e.A], e.B)
+		adj[e.B] = append(adj[e.B], e.A)
+	}
+
+	// ① 已知邊全中
+	missing := 0
+	for k := range known {
+		if !have[k] {
+			missing++
+		}
+	}
+	if missing != 0 {
+		t.Errorf("據點記錄的 %d 條鄰接有 %d 條不在推導的道路圖裡",
+			len(known), missing)
+	}
+
+	// ② 全連通
+	seen := map[int]bool{0: true}
+	stack := []int{0}
+	for len(stack) > 0 {
+		x := stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+		for _, y := range adj[x] {
+			if !seen[y] {
+				seen[y] = true
+				stack = append(stack, y)
+			}
+		}
+	}
+	if len(seen) != len(xy) {
+		t.Errorf("只有 %d/%d 個據點連通", len(seen), len(xy))
+	}
+
+	// ③ 分支度 ≤ 4
+	for i, d := range deg {
+		if d > 4 {
+			t.Errorf("據點 %d 的分支度 %d > 4（記錄只有四個方向槽）", i, d)
+		}
+	}
+}
+
+// 兩版的 MMAP.MAP 是 byte-for-byte 相同的（CLAUDE.md §3.10），
+// 所以推出來的道路圖也必須一模一樣。這條在防「解碼路徑摻進版本相依」。
+func TestRoadGraphIdenticalAcrossVersions(t *testing.T) {
+	xy, _ := cityRecords(t)
+	var got [2][]RoadEdge
+	for i, ver := range []string{"dosv", "pc98"} {
+		m, err := ParseMap(read(t, ver, "MMAP.MAP"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if got[i], err = RoadEdges(m, xy); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if len(got[0]) != len(got[1]) {
+		t.Fatalf("兩版邊數不同：%d vs %d", len(got[0]), len(got[1]))
+	}
+	for i := range got[0] {
+		if got[0][i] != got[1][i] {
+			t.Fatalf("第 %d 條邊不同：%+v vs %+v", i, got[0][i], got[1][i])
+		}
+	}
+}

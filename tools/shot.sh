@@ -65,6 +65,10 @@ if [ -n '$KEYS' ]; then
     sleep 0.6
 fi
 DISPLAY=:99 import -window root /out/$(basename "$OUT_ABS")
+# **成功時也要把程式 log 印出來。**
+# 先前只在「視窗沒出現」那條路徑印，於是啟動時的警告（載不到字型、
+# 推不出道路圖…）全部被吞掉——截圖看起來正常，問題在 log 裡沒人看見。
+echo '--- app log ---'; cat /tmp/app.log || true
 kill -9 \$APP_PID \$XVFB_PID 2>/dev/null || true
 "
 echo "$OUT"

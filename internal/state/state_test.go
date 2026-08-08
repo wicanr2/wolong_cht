@@ -8,7 +8,9 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
 	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
+	"github.com/wicanr2/wolong_cht/internal/assets/world"
 	"github.com/wicanr2/wolong_cht/internal/rules/capital"
+	"github.com/wicanr2/wolong_cht/internal/rules/march"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/rules/rng"
@@ -1036,5 +1038,114 @@ func TestCityKindDistribution(t *testing.T) {
 	want := [5]int{21, 72, 86, 9, 4}
 	if n != want {
 		t.Fatalf("類型分佈 %v，期望 %v（大/中/小/關/戰場）", n, want)
+	}
+}
+
+// ⭐ 行軍要沿著道路走，不是直線穿過山河。
+//
+// 用原版的地圖推出道路圖掛上去，然後叫一支軍團走到一個**不相鄰**的據點，
+// 檢查它真的經過中繼據點。沒有這條測試的話，「Route 永遠是空的」
+// 與「行軍正常」在畫面上看起來一樣——軍團照樣會抵達目的地。
+func TestMarchFollowsRoads(t *testing.T) {
+	raw, err := os.ReadFile("../../workplace/orig/dosv/MMAP.MAP")
+	if err != nil {
+		t.Skip("找不到原版 MMAP.MAP，跳過")
+	}
+	m, err := world.ParseMap(raw)
+	if err != nil {
+		t.Fatal(err)
+	}
+	w := load(t, 0)
+	xy := make([][2]int, len(w.Cities))
+	for i := range w.Cities {
+		xy[i] = [2]int{w.Cities[i].X, w.Cities[i].Y}
+	}
+	edges, err := world.RoadEdges(m, xy)
+	if err != nil {
+		t.Fatal(err)
+	}
+	me := make([]march.Edge, len(edges))
+	for i, e := range edges {
+		me[i] = march.Edge{A: e.A, B: e.B, Steps: e.Steps}
+	}
+	g := march.New(len(w.Cities), me)
+	w.SetRoads(g)
+
+	// 找一對距離最遠的據點當測試對象——最遠的那一對必然要經過中繼點。
+	from, to, hops := 0, 0, 0
+	for a := 0; a < len(w.Cities); a += 17 { // 抽樣，不必全掃
+		for b := 0; b < len(w.Cities); b += 17 {
+			if p := g.Route(a, b); len(p) > hops {
+				from, to, hops = a, b, len(p)
+			}
+		}
+	}
+	if hops < 3 {
+		t.Fatalf("抽樣找不到需要中繼的路線（最長 %d 段）", hops)
+	}
+
+	f := w.AliveFactions()[0]
+	lord := w.Factions[f].Lord
+	kinds := [army.Positions]army.TroopType{
+		army.Cavalry, army.Cavalry, army.Cavalry,
+		army.Cavalry, army.Cavalry, army.Cavalry,
+	}
+	manned := [army.Positions]bool{true, true, true, true, true, true}
+	w.Factions[f].Reserves = [economy.NumTroopTypes]int{6000, 6000, 6000}
+	if err := w.FormCorps(lord, kinds, manned); err != nil {
+		t.Fatal(err)
+	}
+	c := &w.Corps[lord]
+	c.Node, c.X, c.Y = from, w.Cities[from].X, w.Cities[from].Y
+
+	if err := w.March(lord, to); err != nil {
+		t.Fatal(err)
+	}
+	if len(w.routes[lord]) != hops-2 {
+		t.Fatalf("中繼點 %d 個，期望 %d（路線 %d 段）",
+			len(w.routes[lord]), hops-2, hops)
+	}
+
+	// 走完全程，記下經過的據點。
+	seen := map[int]bool{}
+	for i := 0; i < 200000 && c.Node != to; i++ {
+		w.step(lord)
+		seen[c.Node] = true
+	}
+	if c.Node != to {
+		t.Fatal("走不到目的地")
+	}
+	route := g.Route(from, to)
+	for _, n := range route[1 : len(route)-1] {
+		if !seen[n] {
+			t.Errorf("沒有經過中繼據點 %s", big5Name(w.Cities[n].Name))
+		}
+	}
+}
+
+func big5Name(s string) string { return s }
+
+// 走不到的目的地要回錯誤，不能默默走直線。
+func TestMarchRejectsUnreachable(t *testing.T) {
+	w := load(t, 0)
+	// 只有一條邊 0–1 的圖：從 0 到 2 走不到。
+	w.SetRoads(march.New(len(w.Cities), []march.Edge{{A: 0, B: 1, Steps: 1}}))
+	f := w.AliveFactions()[0]
+	lord := w.Factions[f].Lord
+	kinds := [army.Positions]army.TroopType{
+		army.Cavalry, army.Cavalry, army.Cavalry,
+		army.Cavalry, army.Cavalry, army.Cavalry,
+	}
+	manned := [army.Positions]bool{true, true, true, true, true, true}
+	w.Factions[f].Reserves = [economy.NumTroopTypes]int{6000, 6000, 6000}
+	if err := w.FormCorps(lord, kinds, manned); err != nil {
+		t.Fatal(err)
+	}
+	w.Corps[lord].Node = 0
+	if err := w.March(lord, 2); err == nil {
+		t.Fatal("走不到卻沒有回錯誤")
+	}
+	if w.Corps[lord].TargetNode != 0 {
+		t.Errorf("失敗後目標應留在原地，卻是 %d", w.Corps[lord].TargetNode)
 	}
 }

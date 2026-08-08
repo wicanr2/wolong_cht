@@ -5,6 +5,7 @@ import (
 
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/rules/capital"
+	"github.com/wicanr2/wolong_cht/internal/rules/march"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 )
@@ -53,6 +54,13 @@ type Corps struct {
 
 	Home int // +0x20，編成時寫首都據點編號
 }
+
+// ⚠ **行軍路線刻意不放在 Corps 裡**，放在 `World.routes`。
+//
+// 兩個理由。一、原版的軍團記錄沒有這個欄位（原版玩家只能對相鄰據點
+// 下令，不需要多段路由），放進來會讓「記錄長什麼樣」與「remake 加了什麼」
+// 混在一起。二、**Corps 一旦含有 slice 就不能用 `==` 比**，
+// 而存檔的 byte-for-byte round-trip 測試正是靠這個可比性。
 
 // Leader 回傳帶兵的武將編號。軍團與武將同索引，所以就是軍團編號。
 func (w *World) Leader(corps int) int { return corps }
@@ -324,7 +332,7 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 	c.Timer--
 	if c.Timer <= 0 {
 		c.Timer = c.Interval
-		if w.step(c) {
+		if w.step(i) {
 			ev.Moved = true
 			ev.Arrived = c.Node == c.TargetNode
 			w.resolveContact(i, &ev, rng)
@@ -350,12 +358,41 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 
 // step 把軍團往目標推進一格，回傳有沒有真的動。
 //
-// ⚠ **這不是原版的走法。** 原版沿著連結表（`docs/re/08` §6）在節點之間
-// 移動，而連結表每筆的佈局還沒解出來。這裡先用**切比雪夫直線**逼近，
-// 到達目標座標時才更新所在節點編號。
-// 解開連結表之後要換掉——**標成 remake 差異，不要當成原版行為**。
-func (w *World) step(c *Corps) bool {
-	if c.X == c.TargetX && c.Y == c.TargetY {
+// **走的是道路圖上的路線**（`Route`）：一次朝下一個中繼據點移動，
+// 到了就換下一個。道路圖從 `MMAP` 推導（`internal/assets/world`），
+// 沒有它時 `Route` 是空的，退回原本的直線逼近。
+//
+// ⚠ **段內仍是直線，不是原版的路徑點。** 原版沿著載入時建好的連結表
+// 逐格走，每條路都有自己的路徑點序列（`docs/re/08` §7.3）。
+// 這裡在**相鄰**據點之間走直線——比先前「橫跨整張地圖的直線」近得多
+// （會經過正確的中繼據點、總距離也對），但轉折的形狀還不是原版的。
+// **標成 remake 差異。**
+func (w *World) step(i int) bool {
+	c := &w.Corps[i]
+	route := w.routes[i]
+
+	// 目前這一段的終點：路線上還有中繼點就走中繼點，沒有就走最終目標。
+	lx, ly := c.TargetX, c.TargetY
+	if len(route) > 0 {
+		city := w.Cities[w.clampCity(route[0])]
+		lx, ly = city.X, city.Y
+	}
+
+	// 到了目前這一段的終點，換下一段。
+	if c.X == lx && c.Y == ly {
+		if len(route) > 0 {
+			// 抵達中繼點：更新所在據點，然後**這一步就結束**。
+			//
+			// ⚠ 早期版本在路線剛好走完時往下掉進「補上終點」那一段，
+			// 於是軍團會從最後一個中繼點**直接瞬移到目的地**，
+			// 整條最後一段沒走。單元測試（TestMarchFollowsRoads）
+			// 靠「經過的據點集合」抓到——**只看「有沒有抵達」是抓不到的**，
+			// 因為它照樣會抵達。
+			c.Node = route[0]
+			w.routes[i] = route[1:]
+			c.Heading = HeadingStill
+			return true
+		}
 		if c.Node != c.TargetNode {
 			c.Node = c.TargetNode
 			c.Heading = HeadingStill
@@ -364,10 +401,10 @@ func (w *World) step(c *Corps) bool {
 		c.Heading = HeadingStill
 		return false
 	}
-	c.Heading = headingTo(c.X, c.Y, c.TargetX, c.TargetY)
-	c.X += sign(c.TargetX - c.X)
-	c.Y += sign(c.TargetY - c.Y)
-	if c.X == c.TargetX && c.Y == c.TargetY {
+	c.Heading = headingTo(c.X, c.Y, lx, ly)
+	c.X += sign(lx - c.X)
+	c.Y += sign(ly - c.Y)
+	if c.X == lx && c.Y == ly && len(w.routes[i]) == 0 {
 		c.Node = c.TargetNode
 		c.Heading = HeadingStill
 	}
@@ -623,8 +660,34 @@ func (w *World) March(corps, node int) error {
 	c := &w.Corps[corps]
 	c.TargetNode = node
 	c.TargetX, c.TargetY = w.Cities[node].X, w.Cities[node].Y
+	w.routes[corps] = nil
+	if w.roads == nil || node == c.Node {
+		return nil
+	}
+	path := w.roads.Route(c.Node, node)
+	if path == nil {
+		// **走不到要說走不到**，不要默默走直線穿過山河。
+		c.TargetNode = c.Node
+		c.TargetX, c.TargetY = w.Cities[w.clampCity(c.Node)].X, w.Cities[w.clampCity(c.Node)].Y
+		return fmt.Errorf("state: 從 %s 沒有路可以到 %s",
+			w.Cities[w.clampCity(c.Node)].Name, w.Cities[node].Name)
+	}
+	// path[0] 是現在所在的據點，去掉；最後一個是終點，留給 TargetNode 處理。
+	if len(path) > 2 {
+		w.routes[corps] = append([]int{}, path[1:len(path)-1]...)
+	}
 	return nil
 }
+
+// SetRoads 掛上道路圖。**規則層不讀檔案**，所以圖由呼叫端
+// （`cmd/wlgame` 等）從 `MMAP` 推導後注入。
+//
+// 沒有掛的話行軍退回直線移動——缺原版素材時要能降級跑，
+// 不是整個動不了。
+func (w *World) SetRoads(g *march.Graph) { w.roads = g }
+
+// Roads 回傳目前掛著的道路圖，可能是 nil。
+func (w *World) Roads() *march.Graph { return w.roads }
 
 // AliveCorps 回傳還在的軍團編號。
 func (w *World) AliveCorps() []int {

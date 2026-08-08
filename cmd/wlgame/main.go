@@ -39,10 +39,12 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/assets/battle"
 	"github.com/wicanr2/wolong_cht/internal/assets/cjk"
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
+	"github.com/wicanr2/wolong_cht/internal/assets/world"
 	"github.com/wicanr2/wolong_cht/internal/assets/text"
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
 	"github.com/wicanr2/wolong_cht/internal/rules/general"
 	"github.com/wicanr2/wolong_cht/internal/rules/persuasion"
+	"github.com/wicanr2/wolong_cht/internal/rules/march"
 	"github.com/wicanr2/wolong_cht/internal/rules/rng"
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
@@ -596,6 +598,25 @@ func main() {
 		log.Fatal(err)
 	}
 	w.Player = *player
+
+	// 道路圖：從 MMAP 推導，掛給規則層。**行軍要走路，不是走直線。**
+	// 推不出來只警告——沒有它遊戲照樣跑，只是軍團會直線穿過山河。
+	if lib.World != nil {
+		xy := make([][2]int, len(w.Cities))
+		for i := range w.Cities {
+			xy[i] = [2]int{w.Cities[i].X, w.Cities[i].Y}
+		}
+		if edges, err := world.RoadEdges(lib.World, xy); err != nil {
+			log.Printf("⚠ 推不出道路圖（%v）；行軍會走直線", err)
+		} else {
+			me := make([]march.Edge, len(edges))
+			for i, e := range edges {
+				me[i] = march.Edge{A: e.A, B: e.B, Steps: e.Steps}
+			}
+			w.SetRoads(march.New(len(w.Cities), me))
+			log.Printf("道路圖：%d 條路", len(edges))
+		}
+	}
 
 	log.Printf("劇本 %d：%d年%d月%d日，勢力 %d 個，玩家所仕 %d（君主 %s）",
 		*scenario+1, w.Clock.Year, w.Clock.Month, w.Clock.Day,

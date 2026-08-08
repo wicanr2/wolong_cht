@@ -20,6 +20,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/rules/general"
 	"github.com/wicanr2/wolong_cht/internal/rules/governor"
+	"github.com/wicanr2/wolong_cht/internal/rules/march"
 )
 
 // 劇本／存檔的佈局常數（docs/formats/08 §0–§1.6）。
@@ -225,6 +226,14 @@ type World struct {
 	// corpsCursor 是下一支要更新的軍團（原版 cs:0D18h）。
 	// 每 tick 只推進 16 支，所以掃完一輪要 8 個 tick。
 	corpsCursor int
+
+	// roads 是據點道路圖，從 MMAP 推導後由呼叫端注入（SetRoads）。
+	// nil 表示沒有素材 —— 行軍退回直線移動。
+	roads *march.Graph
+
+	// routes[i] 是軍團 i 還沒走完的中繼據點。見 corps.go 的說明：
+	// 它刻意不放進 Corps，那樣 Corps 才留得住 `==` 可比性。
+	routes [numCorps][]int
 
 	// hourFaction 是下一個輪到的勢力（原版 cs:0D1Ch，以 si 步進 0x40）。
 	// 不匯出——它是迴圈的內部游標，不是遊戲狀態的一部分。
