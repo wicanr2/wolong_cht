@@ -308,3 +308,72 @@ func TestRealFormationTable(t *testing.T) {
 		t.Errorf("有 %d 個陣形把隊長全排在最後面，應為 3（4／5／6）", allBack)
 	}
 }
+
+// 腳本直譯器：等待、下令、分支都要照原版的編碼跑。
+func TestScriptBasics(t *testing.T) {
+	b := newTestBattle(flatField())
+	// e3 00 ＝ 指令 3、參數 7（全軍）、運算元 0（陣形）
+	// 00 05 ＝ 等待 5 幀
+	// 63 01 ＝ 指令 3、參數 3（第 3 隊）、運算元 1（攻擊）
+	code := make([]byte, ScriptCodeSize)
+	copy(code, []byte{0xe3, 0x00, 0x00, 0x05, 0x63, 0x01})
+	s := NewScript(code, 0)
+
+	s.Step(b)
+	if got := b.Sides[0].Soldiers[1].Next; got != Form {
+		t.Errorf("全軍命令是 %v，應為陣形", got)
+	}
+	// 第二個 Step 讀到「等待 5」，接下來五幀都在扣計時器。
+	for i := 0; i < 6; i++ {
+		s.Step(b)
+		if b.Sides[0].Soldiers[3*PerSquad+1].Next == Attack {
+			t.Fatalf("第 %d 幀就執行了等待後面的指令", i)
+		}
+	}
+	s.Step(b)
+	if got := b.Sides[0].Soldiers[3*PerSquad+1].Next; got != Attack {
+		t.Errorf("第 3 隊的命令是 %v，應為攻擊", got)
+	}
+	if got := b.Sides[0].Soldiers[1].Next; got == Attack {
+		t.Error("指定第 3 隊的命令卻影響到第 0 隊")
+	}
+}
+
+// 分支指令是 4 byte：後面那個 word 是跳躍目標，低位元組必須是 0。
+func TestScriptBranch(t *testing.T) {
+	b := newTestBattle(flatField())
+	code := make([]byte, ScriptCodeSize)
+	// 0: 09 02  q.rand 2        固定亂數的第一個是 1 → cond ＝ 1
+	// 2: 4a 00  branch != 0 → 目標（成立）
+	// 4: 00 04  目標 ＝ 第 4 個 word ＝ byte 8
+	// 6: e3 05  order 全軍 退卻   ← 跳過去就不該執行到
+	// 8: e3 01  order 全軍 攻擊
+	copy(code, []byte{0x09, 0x02, 0x4a, 0x00, 0x00, 0x04, 0xe3, 0x05, 0xe3, 0x01})
+	s := NewScript(code, 0)
+	s.Step(b) // q.rand → cond
+	s.Step(b) // branch
+	s.Step(b) // 目標處的指令
+	if got := b.Sides[0].Soldiers[1].Next; got != Attack {
+		t.Errorf("跳過去之後的命令是 %v，應為攻擊（分支沒跳對）", got)
+	}
+}
+
+// 原版的腳本跑得起來，而且不會炸。
+func TestRealScriptsRun(t *testing.T) {
+	const dat = "../../../workplace/orig/dosv/BATTLE.DAT"
+	raw, err := os.ReadFile(dat)
+	if err != nil {
+		t.Skip("找不到原版 BATTLE.DAT，跳過")
+	}
+	for seg := 0; seg < 32; seg++ {
+		b := newTestBattle(flatField())
+		b.SetScript(0, NewScript(raw[seg*256:(seg+1)*256], 0))
+		b.SetScript(1, NewScript(raw[seg*256:(seg+1)*256], 1))
+		for i := 0; i < 20000 && !b.Done; i++ {
+			b.Step()
+		}
+		if b.Sides[0].Remaining() < 0 || b.Sides[1].Remaining() < 0 {
+			t.Fatalf("段 %d 跑出負的兵數", seg)
+		}
+	}
+}

@@ -125,6 +125,11 @@ type General struct {
 	// （`sub_16F26`），武將被俘時寫 4（`sub_129C3`）、釋放時歸零。
 	Posted bool
 
+	// Tactic 是戰場行動腳本編號（記錄 +0x16，值域 0–7）。
+	// `BATTLE.DAT` 的段編號 ＝ 本值 × 4 ＋ 戰場類別（docs/re/11 §3.3）。
+	// 它與能力值單調對應：0 是呂布那型（平均武力 13.6），7 是純文官（1.5）。
+	Tactic int
+
 	// LoyalToDeath 是記錄 +0x00 的 bit 4：**舊主已滅時寧可自刎也不改事二主**
 	// （`sub_129C3` → 訊息 0x43，docs/re/09 §6）。
 	// 旗標那個 byte 有 7 種值，目前只解出這一個位元。
@@ -345,6 +350,7 @@ func LoadScenario(path string, index int) (*World, error) {
 			Martial:      int(r[0x11]),
 			Command:      int(r[0x12]),
 			Politics:     int(r[0x13]),
+			Tactic:       int(r[0x16]),
 			Timer:        int(r[0x18]),
 			Posted:       r[0x17] != 0,
 			LoyalToDeath: r[0x00]&0x10 != 0,
@@ -673,6 +679,7 @@ func (w *World) Bytes() []byte {
 		r[0x11] = byte(g.Martial)
 		r[0x12] = byte(g.Command)
 		r[0x13] = byte(g.Politics)
+		r[0x16] = byte(g.Tactic)
 		r[0x18] = byte(g.Timer)
 		if g.Posted {
 			r[0x17] = 1

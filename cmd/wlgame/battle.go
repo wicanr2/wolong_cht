@@ -11,11 +11,14 @@ import (
 	"fmt"
 	"image/color"
 	"log"
+	"os"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/vector"
 
+	"github.com/wicanr2/wolong_cht/internal/assets/battle"
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
+	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
 	"github.com/wicanr2/wolong_cht/internal/state"
 )
@@ -38,6 +41,10 @@ func (g *game) battleActive() bool { return g.world.PendingBattle() != nil }
 func (g *game) updateBattle() {
 	p := g.world.PendingBattle()
 	b := p.Battle
+	if !g.scriptsOn {
+		g.attachScripts(p)
+		g.scriptsOn = true
+	}
 
 	if !b.Done {
 		// 六個戰術指令。編號與原版一致（docs/re/11 §5.8b）。
@@ -66,6 +73,7 @@ func (g *game) updateBattle() {
 		if ev := g.world.ResolvePending(g.rng); ev != nil {
 			g.setEvent(battleLine(g, *ev))
 		}
+		g.scriptsOn = false
 	}
 }
 
@@ -191,29 +199,66 @@ func sideLabel(i int) string {
 
 // installTactical 把戰場來源裝到世界上。
 //
-// 陣形表從原版的 KI.EXE 讀（`docs/re/11` §5.8d）；讀不到就不裝，
-// 玩家的戰鬥會退回自動判定——**少一個檔不該讓遊戲開不起來**。
-func (g *game) installTactical(exePath string) {
-	forms, err := tactical.LoadFormations(exePath)
+// 三份資料各自可缺：陣形表在 `KI.EXE`、地形在 `BATTLE.MAP` ＋ `BATTLE.MDL`、
+// AI 腳本在 `BATTLE.DAT`。**少一份就退一級**，不會讓遊戲開不起來——
+// 最差的情況是玩家的戰鬥也走自動判定。
+func (g *game) installTactical(dir string) {
+	forms, err := tactical.LoadFormations(dir + "/KI.EXE")
 	if err != nil {
 		log.Printf("⚠ 載不到陣形表（%v）；玩家的戰鬥會走自動判定", err)
 		return
 	}
+	lib := loadBattleLibrary(dir)
+	g.battleLib = lib
 	g.world.SetTactical(&state.TacticalSetup{
 		Forms: forms,
 		Field: func(node int, siege bool) *tactical.Field {
-			return buildField(g, node, siege)
+			return g.buildField(node, siege)
 		},
 	})
 }
 
-// buildField 生一張戰場。
+func loadBattleLibrary(dir string) *battle.Library {
+	read := func(name string) []byte {
+		b, err := os.ReadFile(dir + "/" + name)
+		if err != nil {
+			log.Printf("⚠ 載不到 %s（%v）", name, err)
+			return nil
+		}
+		return b
+	}
+	m, mdl := read("BATTLE.MAP"), read("BATTLE.MDL")
+	if m == nil || mdl == nil {
+		log.Print("⚠ 沒有戰場地形，會用生成的替代")
+		return nil
+	}
+	lib, err := battle.Parse(m, mdl, read("BATTLE.DAT"))
+	if err != nil {
+		log.Printf("⚠ %v；會用生成的地形", err)
+		return nil
+	}
+	return lib
+}
+
+// buildField 取一張戰場。
 //
-// ⚠ 原版是從 `BATTLE.MAP` 讀 214 張現成的戰場，一格存圖塊編號，
-// 圖塊再展開成 1–7 層的堆疊（docs/re/11 §4）。**那一段還沒接上**——
-// 這裡先照「攻城戰有一圈城牆、野戰是空地」生一張，
-// 幾何與原版同尺寸（64 × 62），內容是暫代的。
-func buildField(g *game, node int, siege bool) *tactical.Field {
+// 攻城戰的戰場編號就是據點編號（`docs/re/05`），野戰的是 0xC0 以上。
+// ⚠ **野戰的戰場該挑哪一張還沒接**——原版是依軍團所在格與周圍的地形
+// 即時算出來的（`sub_14B63`），那需要大地圖的地形類型表。
+// 這裡先固定用 198（平原 ＋ 平原，最常見的那一張）。
+func (g *game) buildField(node int, siege bool) *tactical.Field {
+	n := node
+	if !siege {
+		n = 198
+	}
+	if g.battleLib == nil || n < 0 || n >= battle.NumFields {
+		return syntheticField(siege)
+	}
+	return tactical.NewField(g.battleLib.Stacks(n), g.battleLib.GateX(n))
+}
+
+// syntheticField 是沒有原版戰場資料時的替代品。幾何同尺寸，內容是自己生的。
+func syntheticField(siege bool) *tactical.Field {
 	stack := make([][]int, tactical.Height)
 	for y := range stack {
 		stack[y] = make([]int, tactical.Width)
@@ -221,7 +266,6 @@ func buildField(g *game, node int, siege bool) *tactical.Field {
 	if !siege {
 		return tactical.NewField(stack, 0)
 	}
-	// 一圈城牆，左邊留一個門。
 	const wallX, top, bottom = 40, 8, tactical.Height - 9
 	gate := tactical.Height / 2
 	for y := top; y <= bottom; y++ {
@@ -234,6 +278,29 @@ func buildField(g *game, node int, siege bool) *tactical.Field {
 		stack[bottom][x] = 4
 	}
 	return tactical.NewField(stack, wallX)
+}
+
+// attachScripts 讓**不是玩家的那一側**由原版的 AI 腳本驅動。
+//
+// 段編號 ＝ 帶兵武將的 `+0x16` × 4 ＋ 戰場類別（`sub_1CBE5`）。
+func (g *game) attachScripts(p *state.Pending) {
+	if g.battleLib == nil {
+		return
+	}
+	field := p.Node
+	if p.Mode != combat.Siege {
+		field = 198
+	}
+	cat := battle.Category(field)
+	for side, corps := range [2]int{p.Attacker, p.Defender} {
+		if corps < 0 || g.world.Corps[corps].Faction == g.world.Player {
+			continue // 玩家那一側留給玩家下命令
+		}
+		code := g.battleLib.Script(g.world.Generals[corps].Tactic, cat)
+		if code != nil {
+			p.Battle.SetScript(side, tactical.NewScript(code, side))
+		}
+	}
 }
 
 // demoBattle 是**驗收用**的捷徑：直接擺一場戰術戰鬥出來。

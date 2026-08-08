@@ -126,6 +126,10 @@ type Battle struct {
 	// siegeTick 是攻城方大將體力遞減的計時器。
 	siegeTick int
 
+	// scripts[i] 不是 nil 時，第 i 側由 `BATTLE.DAT` 的腳本驅動。
+	// 玩家那一側留 nil，由畫面層下命令。
+	scripts [2]*Script
+
 	// Log 記錄值得回報的事件，供呼叫端呈現。
 	Log []string
 }
@@ -229,6 +233,13 @@ func (b *Battle) Step() {
 		return
 	}
 	b.Frame++
+
+	// 腳本先跑：原版的主迴圈是「執行一個腳本指令 → 更新實體」。
+	for i := range b.scripts {
+		if b.scripts[i] != nil {
+			b.scripts[i].Step(b)
+		}
+	}
 
 	for i := range b.Sides {
 		for k := range b.Sides[i].Soldiers {

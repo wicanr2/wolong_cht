@@ -36,6 +36,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/hajimehoshi/ebiten/v2/vector"
 
+	"github.com/wicanr2/wolong_cht/internal/assets/battle"
 	"github.com/wicanr2/wolong_cht/internal/assets/cjk"
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
 	"github.com/wicanr2/wolong_cht/internal/assets/text"
@@ -96,6 +97,10 @@ type game struct {
 
 	// list 是開著的一覽表（武將／據點…）。它是**非常駐視窗**，
 	// 所以開著的時候時間會停（15-realtime.md §2）。
+	battleLib *battle.Library
+	// scriptsOn 記著這一場的 AI 腳本掛上去了沒。
+	scriptsOn bool
+
 	list    *listwin.List
 	sortMem listwin.Memory
 
@@ -636,7 +641,7 @@ func main() {
 		g.list.Move(2)
 		g.list.Confirm() // 展示反白狀態
 	}
-	g.installTactical(*dir + "/KI.EXE")
+	g.installTactical(*dir)
 	if *openBattle {
 		g.demoBattle()
 	}
