@@ -268,7 +268,7 @@ func TestSpriteGroupsMatchTroopKind(t *testing.T) {
 	ratio := func(kind int) float64 {
 		var n, b int
 		for pose := 0; pose < PosesPerKind; pose++ {
-			f := sp.Sprite(0, SpriteFor(kind, pose))
+			f := sp.Sprite(0, kind+pose)
 			if f == nil {
 				t.Fatalf("兵種 %d 第 %d 張取不到", kind, pose)
 			}
@@ -318,5 +318,37 @@ func TestSpriteGroupsMatchTroopKind(t *testing.T) {
 	}
 	if flag < 500 {
 		t.Errorf("軍旗那一組只有 %d 個紅色像素，看起來不是旗子", flag)
+	}
+}
+
+// 圖號公式照 `sub_1B240` 的尾段（docs/re/11 §5.13）。
+//
+// 這條測試釘住三件已經對過機器碼的事：
+//   - 面向的間隔是 2（`shl cl, 1`）
+//   - **bit 4 設了就一律用正面**（`test ch, 10h` → `xor cl, cl`）
+//   - bit 0（走路的動畫幀）與 bit 3 直接 OR 進圖號
+func TestSpriteForMatchesOriginal(t *testing.T) {
+	cases := []struct{ kind, facing, flags, want int }{
+		{0, 0, 0, 0},    // 大將、面向 0、無旗標
+		{0, 3, 0, 6},    // 面向 3 → 3×2
+		{18, 2, 0, 22},  // 騎馬 ＋ 面向 2
+		{54, 1, 1, 57},  // 步兵 ＋ 面向 1 ＋ 動畫幀
+		{18, 3, 8, 32},  // 騎馬 ＋ 面向 3 ＋ bit 3
+		{36, 3, 16, 52}, // ★ bit 4 → 面向歸零，只留旗標
+		{36, 3, 17, 53}, // bit 4 ＋ bit 0
+	}
+	for _, c := range cases {
+		if got := SpriteFor(c.kind, c.facing, c.flags); got != c.want {
+			t.Errorf("SpriteFor(%d, %d, %#x) ＝ %d，應為 %d",
+				c.kind, c.facing, c.flags, got, c.want)
+		}
+	}
+	// 兩側相差 90 張（原版的 `add cx, 5Ah`）。
+	if SpritesPerSide != 0x5A {
+		t.Errorf("一側 %d 張，原版是 0x5A ＝ 90", SpritesPerSide)
+	}
+	// 合併表裡人物接在 192 個地形子圖塊後面（原版的 `add cx, 0C0h`）。
+	if NumSubTiles != 0xC0 {
+		t.Errorf("地形子圖塊 %d 個，原版的偏移是 0xC0 ＝ 192", NumSubTiles)
 	}
 }

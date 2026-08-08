@@ -105,8 +105,45 @@ func (s *Sprites) Sprite(side, n int) *Frame {
 	return f
 }
 
-// SpriteFor 回傳某個兵種第 pose 個姿勢的圖號。
-// kind 直接傳兵種的**儲存值**（0／18／36／54），因為它本身就是索引。
-func SpriteFor(kind, pose int) int {
-	return kind + pose%PosesPerKind
+// 姿勢的位元編碼（`sub_1B240` 尾段，docs/re/11 §5.13）。
+//
+//	cl  = [si+05] × 2          面向 0–3 → 0／2／4／6
+//	ch  = [si+02] & 0x19       狀態旗標的 bit 0、3、4
+//	     bit 4 設了 → **面向歸零**
+//	cl |= ch ; cl += [si+04]   ＋ 兵種（已經 × 18）
+//	side 1 → cx += 0x5A（90）
+//	cx = cx × 2 + 0xC0（192）  → 合併表裡的單位編號
+//
+// 最後那個 `+192` 正是**地形子圖塊的張數**——原版把地形與人物放在
+// 同一張表裡（`word_1E15A`），前 192 個單位是地形（`BATTLE.MDL` 的
+// 61,440 B ÷ 320），後面接 `BATTLE.SCH`。兩個檔案在記憶體裡是連著的
+// （`sub_1CC31` 把 `ds:0D304` 排在 `ds:0D302` 之後）。
+//
+// ⭐ **bit 0 是走路的動畫幀**：`sub_1B240` 每次更新完就 `xor [si+2], 1`。
+const (
+	// FacingStride 是面向在圖號裡的間隔。
+	FacingStride = 2
+	// PoseFlagMask 是狀態旗標裡會進圖號的位元。
+	PoseFlagMask = 0x19
+	// PoseFlagStep 是動畫幀那一位（bit 0），每次更新翻面。
+	PoseFlagStep = 0x01
+	// PoseFlagFront 是「面向歸零」那一位（bit 4）。
+	PoseFlagFront = 0x10
+)
+
+// SpriteFor 回傳一個兵要用第幾張圖（0–89，同一側內）。
+//
+// kind 傳兵種的**儲存值**（0／18／36／54），因為它本身就是索引；
+// facing 是 0–3；flags 是兵記錄 `+0x02` 的狀態旗標。
+func SpriteFor(kind, facing, flags int) int {
+	f := flags & PoseFlagMask
+	pose := facing * FacingStride
+	if f&PoseFlagFront != 0 {
+		pose = 0 // bit 4 設了就一律用正面
+	}
+	n := kind + (pose | f)
+	if n < 0 || n >= SpritesPerSide {
+		return 0
+	}
+	return n
 }

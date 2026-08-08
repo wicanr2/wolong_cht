@@ -115,18 +115,20 @@ const (
 	maxRow = (tactical.Height-1)/2 + isoOriginY
 )
 
-// soldierImage 取一個兵的圖。
+// soldierImage 取一個兵的圖。圖號的算法照 `sub_1B240` 的尾段
+// （docs/re/11 §5.13）：兵種 ＋（面向 × 2 ｜ 狀態旗標）。
 //
-// ⭐ **圖號就是兵種的儲存值**（0／18／36／54）——兵種存成「× 18」正是
-// 為了當索引用（docs/formats/07 §10）。姿勢那 18 張裡誰是誰還沒解，
-// 所以這裡先用面向去挑，**那一段是 remake 的選擇**。
-func (v *battleView) soldierImage(side int, kind tactical.Kind, facing int) *ebiten.Image {
-	return v.frame(side, battle.SpriteFor(int(kind), facing))
+// flags 這裡只餵得出**走路的動畫幀**（bit 0）——原版每次更新完
+// `xor [si+2], 1`，所以拿幀數的最低位當它。其餘旗標（bit 3／4）
+// 對應的狀態本專案還沒有等價物。
+func (v *battleView) soldierImage(side int, kind tactical.Kind, facing, step int) *ebiten.Image {
+	return v.frame(side, battle.SpriteFor(int(kind), facing, step&battle.PoseFlagStep))
 }
 
-// bannerImage 取軍旗。大將身邊插的那一支。
-func (v *battleView) bannerImage(side, pose int) *ebiten.Image {
-	return v.frame(side, battle.BannerSprite+pose%battle.PosesPerKind)
+// bannerImage 取軍旗。大將身邊插的那一支——軍旗那一組
+// （圖 72–89）不是兵種，所以直接用面向去挑。
+func (v *battleView) bannerImage(side, facing int) *ebiten.Image {
+	return v.frame(side, battle.BannerSprite+facing*battle.FacingStride)
 }
 
 func (v *battleView) frame(side, n int) *ebiten.Image {
@@ -266,7 +268,7 @@ func (g *game) drawBattleIso(screen *ebiten.Image, b *tactical.Battle, me *tacti
 			if !ok {
 				continue
 			}
-			if img := v.soldierImage(i, s.Kind, s.Facing); img != nil {
+			if img := v.soldierImage(i, s.Kind, s.Facing, b.Frame+k); img != nil {
 				op := &ebiten.DrawImageOptions{}
 				// 腳底對準格子：圖高 64，站的那一格在最下面那一列。
 				op.GeoM.Translate(float64(px-battle.SpriteW/2),
@@ -274,11 +276,11 @@ func (g *game) drawBattleIso(screen *ebiten.Image, b *tactical.Battle, me *tacti
 				v.buf.DrawImage(img, op)
 				// 大將身邊插軍旗（圖 72–89 那一組）。
 				if s.IsGeneral() {
-					if b := v.bannerImage(i, s.Facing); b != nil {
+					if bn := v.bannerImage(i, s.Facing); bn != nil {
 						op.GeoM.Reset()
 						op.GeoM.Translate(float64(px-battle.SpriteW/2+6),
 							float64(py-battle.SpriteH+isoRowPx-4))
-						v.buf.DrawImage(b, op)
+						v.buf.DrawImage(bn, op)
 					}
 				}
 				continue
