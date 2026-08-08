@@ -18,6 +18,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/rules/general"
+	"github.com/wicanr2/wolong_cht/internal/rules/governor"
 )
 
 // 劇本／存檔的佈局常數（docs/formats/08 §0–§1.6）。
@@ -169,6 +170,10 @@ func (g General) Rules() general.General {
 
 // World 是一整個遊戲狀態。
 type World struct {
+	// cityCursor 是據點整備的輪轉游標（原版 `word_10D1E`）。
+	// 每 tick 前進一格，192 個據點輪一圈 ≈ 一天。
+	cityCursor int
+
 	// raw 是載入時那個劇本區塊的完整位元組。
 	//
 	// **存檔採「改寫」而不是「重建」**（CLAUDE.md §10）：
@@ -416,6 +421,11 @@ func (w *World) Tick(rng economy.Rand) Event {
 	// 軍團先動。原版的主迴圈是「先 sub_125A3 再 sub_11D8E（時鐘）」，
 	// 不過時鐘已經在上面推進了，所以這裡用推進後的小時去判軍費。
 	ev.Corps = w.tickCorps(w.Clock.Hour, rng)
+
+	// 據點整備：**每 tick 一個**，游標輪轉（原版 `sub_13EFD` 的
+	// `mov si, word_10D1E` … `add si, 20h`）。192 個據點輪一圈，
+	// 而一天是 216 tick，所以每個據點大約每天一次。
+	w.tickCity(rng)
 
 	if ev.Clock.Hour {
 		w.hourly(&ev, rng)
@@ -731,4 +741,41 @@ func (w *World) SaveInto(srcPath, dstPath string, index int) error {
 	out := append([]byte(nil), raw...)
 	copy(out[index*blockSize:(index+1)*blockSize], w.Bytes())
 	return os.WriteFile(dstPath, out, 0o644)
+}
+
+// tickCity 跑游標指到的那一個據點的整備（原版 `sub_13EFD` → `sub_14194`）。
+//
+// ⭐ **少了這一層，AI 的據點會單調掉到暴動。** 月結每月扣上昇值
+// `rand(0..15)`（期望 −7.5），補回來的就是這裡：AI 的據點每天有 9/16
+// 的機率 +1，月期望 +16.9。實作這一層之前，模擬跑 120 個月會出現
+// 1872 次暴動（`docs/re/07` §19）。
+func (w *World) tickCity(rng economy.Rand) {
+	if len(w.Cities) == 0 {
+		return
+	}
+	w.cityCursor = (w.cityCursor + 1) % len(w.Cities)
+	c := &w.Cities[w.cityCursor]
+	if c.Owner < 0 || c.Owner >= numFactions {
+		return // 中立據點不整備
+	}
+
+	gc := governor.City{
+		Growth: c.Growth, Prevention: c.Prevention,
+		Garrison: c.Garrison, GarrisonCap: c.GarrisonCap,
+	}
+	var gov *governor.Official
+	// 只有玩家的據點會走內政官那一支（原版 `cmp al, [si+841h]`）。
+	isPlayer := c.Owner == w.Player
+	if isPlayer && c.Governor >= 0 && c.Governor < len(w.Generals) {
+		g := &w.Generals[c.Governor]
+		gov = &governor.Official{
+			Politics: g.Politics, Martial: g.Martial, Budget: g.Budget,
+		}
+	}
+	governor.Tick(&gc, gov, isPlayer, func() int { return rng.Next() & 0xFF })
+	c.Growth, c.Prevention = gc.Growth, gc.Prevention
+	c.Garrison = gc.Garrison
+	if gov != nil {
+		w.Generals[c.Governor].Budget = gov.Budget
+	}
 }
