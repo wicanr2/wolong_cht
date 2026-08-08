@@ -52,7 +52,7 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 124 條。**要查「這件事解了沒」先看這裡**，
+共 133 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（62 條）
@@ -122,7 +122,7 @@
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x1C | `docs/re/08-hourly-update.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x1E | `docs/re/08-hourly-update.md` |
 
-### 強證據（23 條）
+### 強證據（30 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -149,6 +149,13 @@
 | 據點記錄再解出四個欄位 ▸ +13h | `docs/re/07-monthly-settlement.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x04 | `docs/re/08-hourly-update.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x20 | `docs/re/08-hourly-update.md` |
+| 連結記錄（16 byte） ▸ +0x00 | `docs/re/08-hourly-update.md` |
+| 連結記錄（16 byte） ▸ +0x02 | `docs/re/08-hourly-update.md` |
+| 連結記錄（16 byte） ▸ +0x06 | `docs/re/08-hourly-update.md` |
+| 連結記錄（16 byte） ▸ +0x0A | `docs/re/08-hourly-update.md` |
+| 連結記錄（16 byte） ▸ +0x0C | `docs/re/08-hourly-update.md` |
+| 連結記錄（16 byte） ▸ +0x0E | `docs/re/08-hourly-update.md` |
+| 連結記錄（16 byte） ▸ +0x0F | `docs/re/08-hourly-update.md` |
 
 ### 說明書（8 條）
 
@@ -163,7 +170,7 @@
 | 3.4 其他戰術判定（說明書） ▸ 陣形有利不利 | `docs/mechanics/70-ai.md` |
 | 5.8 ⭐ 十一個命令處理常式，隊長與隊員各一套 ▸ 命令 | `docs/re/11-tactical-battle.md` |
 
-### 未解（31 條）
+### 未解（33 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -198,4 +205,6 @@
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x08 | `docs/re/08-hourly-update.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x0C | `docs/re/08-hourly-update.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x23 | `docs/re/08-hourly-update.md` |
+| 連結記錄（16 byte） ▸ +0x04 | `docs/re/08-hourly-update.md` |
+| 連結記錄（16 byte） ▸ +0x08 | `docs/re/08-hourly-update.md` |
 
