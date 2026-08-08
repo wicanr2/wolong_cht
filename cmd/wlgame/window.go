@@ -35,7 +35,7 @@ var windowRect = [numWindows]struct{ X, Y, W, H int }{
 // 把沒做的藏起來會讓缺口從畫面上消失。
 var commandMenu = []struct{ key, name string }{
 	{"P", "進　言"},
-	{"", "人　事"},
+	{"J", "人　事"},
 	{"", "財　政"},
 	{"A", "編　成"},
 	{"M", "行　軍"},

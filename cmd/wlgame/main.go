@@ -328,6 +328,9 @@ func (g *game) Update() error {
 	case pressed(ebiten.KeyG):
 		g.openGeneralList()
 		return nil
+	case pressed(ebiten.KeyJ):
+		g.openPersonnel()
+		return nil
 	case pressed(ebiten.KeyC):
 		g.openCorpsList()
 		return nil
