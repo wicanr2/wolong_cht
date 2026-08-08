@@ -59,7 +59,7 @@ func main() {
 
 	rng := rng.NewFixed(*seed)
 	tw := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
-	fmt.Fprintln(tw, "年月\t勢力數\t玩家據點\t玩家資金\t玩家預備兵\t平均生產力\t平均上昇值\t火災\t暴動\t暴風雨")
+	fmt.Fprintln(tw, "年月\t勢力數\t玩家據點\t玩家資金\t玩家預備兵\t平均生產力\t玩家上昇值\tAI上昇值\tAI低於−36\t火災\t暴動\t暴風雨")
 
 	var fires, riots, storms int
 	months := 0
@@ -111,22 +111,40 @@ func main() {
 
 		p := w.Factions[w.Player]
 		prodSum, growSum, owned := 0, 0, 0
+		// ⭐ AI 的據點要**分開統計**。先前只印玩家的，於是實作內政官之後
+		// 看到「平均上昇值 +100」就以為問題解決了，但暴動只降了 64%
+		// 而且速率沒隨時間下降——那代表沒被拉起來的是別人的城。
+		// **看不到的那一半才是問題所在。**
+		aiSum, aiN, aiRiskly := 0, 0, 0
 		for _, c := range w.Cities {
-			if c.Owner == w.Player {
+			switch {
+			case c.Owner == w.Player:
 				prodSum += c.Production
 				growSum += c.Growth
 				owned++
+			case c.Owner >= 0 && c.Owner < 22:
+				aiSum += c.Growth
+				aiN++
+				// 暴動的免疫門檻：上昇值存值 ≥ 64 ＝ 實際值 ≥ −36
+				// （docs/re/07 §17、internal/rules/economy/disaster.go）。
+				if c.Growth < -36 {
+					aiRiskly++
+				}
 			}
 		}
 		avgP, avgG := 0, 0
 		if owned > 0 {
 			avgP, avgG = prodSum/owned, growSum/owned
 		}
-		fmt.Fprintf(tw, "%d/%d\t%d\t%d\t%d\t%d/%d/%d\t%d\t%+d\t%d\t%d\t%d\n",
+		avgAI := 0
+		if aiN > 0 {
+			avgAI = aiSum / aiN
+		}
+		fmt.Fprintf(tw, "%d/%d\t%d\t%d\t%d\t%d/%d/%d\t%d\t%+d\t%+d\t%d\t%d\t%d\t%d\n",
 			w.Clock.Year, w.Clock.Month, len(w.AliveFactions()),
 			p.Cities, p.Funds,
 			p.Reserves[economy.Cavalry], p.Reserves[economy.Archer], p.Reserves[economy.Infantry],
-			avgP, avgG, fires, riots, storms)
+			avgP, avgG, avgAI, aiRiskly, fires, riots, storms)
 	}
 	tw.Flush()
 

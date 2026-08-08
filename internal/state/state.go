@@ -486,11 +486,23 @@ func (w *World) Tick(rng economy.Rand) Event {
 	// ④ 「來月」的設定生效（原版是一次 4 個 word 的複製）。
 	w.TaxRate, w.RecruitCap = w.NextTaxRate, w.NextRecruitCap
 
-	// ⑤ 勢力滅亡判定。據點數歸零就出局。
-	//    ⚠ 原版「滅亡」的精確條件還沒反組譯出來（docs/mechanics/80-victory.md §3），
-	//    這裡先用最直覺的一條，並標成 remake 的暫定規則。
+	// ⑤ 勢力滅亡判定。**據點與軍團都沒了**才出局。
+	//
+	//    ⚠ 原版「滅亡」的精確條件還沒反組譯出來
+	//    （docs/mechanics/80-victory.md §3），這裡是 remake 的暫定規則。
+	//
+	//    初版只看據點數歸零，於是**還有軍團在野外的勢力會被判死**，
+	//    留下一支沒有主人的軍團——不變量層的「已滅勢力還有軍團」抓到的
+	//    就是這個。兩種修法裡選了這一種而不是「判死時順手刪掉軍團」：
+	//    還有軍團在外的勢力仍然可能打下城來，直接刪軍團等於替原版
+	//    決定了一條我們還沒讀出來的規則。**暫定規則要往保守的方向定。**
+	//
+	//    ⚠ 這個 bug 是**實作內政官之後才炸出來的**：城兵數變了 → 戰況變了
+	//    → 才走到「最後一城被佔但軍團還在外面」那個組合。
+	//    加一個會改變長期軌跡的機制，等於幫舊程式做了一次隨機測試。
 	for i := range w.Factions {
-		if w.Factions[i].Alive && w.Factions[i].Cities == 0 {
+		if w.Factions[i].Alive && w.Factions[i].Cities == 0 &&
+			w.Factions[i].Corps == 0 {
 			w.Factions[i].Alive = false
 			ev.Eliminated = append(ev.Eliminated, i)
 		}
@@ -755,9 +767,14 @@ func (w *World) tickCity(rng economy.Rand) {
 	}
 	w.cityCursor = (w.cityCursor + 1) % len(w.Cities)
 	c := &w.Cities[w.cityCursor]
-	if c.Owner < 0 || c.Owner >= numFactions {
-		return // 中立據點不整備
-	}
+	// ⚠ **中立據點也要整備。** 原版 `sub_13EFD` 的
+	// `cmp byte ptr [si+841h], 18h / jz` 只跳過 `sub_13F74`，
+	// **`sub_14194` 是無條件呼叫的**。
+	//
+	// 初版在這裡加了一個原版沒有的 owner 檢查，結果中立據點的上昇值
+	// 只有每月 −rand(0..15) 而沒有回補，十年累積 681 次暴動——
+	// 而玩家與 AI 的上昇值統計都是 +100，**看起來完全正常**。
+	// 症狀出現在統計欄位看不到的那一群身上。
 
 	gc := governor.City{
 		Growth: c.Growth, Prevention: c.Prevention,
