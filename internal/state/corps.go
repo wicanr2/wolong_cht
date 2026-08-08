@@ -281,9 +281,10 @@ type CorpsEvent struct {
 	Arrived bool // 到達目標
 
 	// Battle 不是 nil 表示打了一場。Enemy 是對手的軍團編號，
-	// −1 表示對手是據點的城兵。
+	// −1 表示對手是據點的城兵。Mode 是野戰還是攻城。
 	Battle *combat.Result
 	Enemy  int
+	Mode   combat.Mode
 
 	// Destroyed 是這一戰壞滅的軍團編號（可能兩支都是）。
 	Destroyed []int
@@ -415,6 +416,42 @@ func sign(v int) int {
 func (w *World) resolveContact(i int, ev *CorpsEvent, rng combat.Rand) {
 	c := w.Corps[i]
 
+	// ⭐ **據點要先問，野戰後問。**
+	//
+	// 原版的順序反過來（`sub_12708` 先看佔用圖 `cmp byte ptr [di], 0`，
+	// 有人才叫 `sub_12831` 打野戰，沒人而且是據點圖塊才叫 `sub_12880`
+	// 打攻城），但那是建立在**一個據點佔好幾格地圖**上的：
+	// 據點的圖塊值是 `0xCE`–`0xDD` 一整段，守軍站在其中一格，
+	// 攻方通常踏進的是**別的那幾格**——那幾格佔用圖是 0，所以走攻城，
+	// 接著 `sub_14C72` 再用**據點自己的座標**把守軍找出來。
+	//
+	// 本專案的據點是**一個點**，攻方必然踏在守軍那一格上，
+	// 照抄順序的話永遠打成野戰、攻城那條路永遠走不到。
+	// 所以這裡把順序倒過來——**這是為了補上地圖模型的差異，
+	// 不是規則不同**（docs/re/09 §2）。
+	if army.KindOf(c.Node) == army.CityNode {
+		city := &w.Cities[c.Node]
+		switch {
+		case city.Owner == combat.NeutralFaction:
+			city.Owner = c.Faction
+			w.Factions[c.Faction].Cities++
+			ev.Captured = c.Node
+			return
+		case city.Owner != c.Faction:
+			// 城裡有守軍就打守軍，沒有就打城兵。
+			for j := range w.Corps {
+				d := w.Corps[j]
+				if d.Alive && d.Faction == city.Owner && d.Node == c.Node {
+					w.fight(i, j, ev, combat.Siege, city.Garrison, rng)
+					return
+				}
+			}
+			w.fightGarrison(i, ev, rng)
+			return
+		}
+		// 自家的據點：不打，繼續往下看有沒有敵軍團同格（不該發生，但不擋）。
+	}
+
 	// 野戰：同一格上有別的勢力的軍團。
 	for j := range w.Corps {
 		d := w.Corps[j]
@@ -426,33 +463,11 @@ func (w *World) resolveContact(i int, ev *CorpsEvent, rng combat.Rand) {
 			return
 		}
 	}
-
-	// 攻城：走進據點，而且那個據點不是自家的。
-	if army.KindOf(c.Node) != army.CityNode {
-		return
-	}
-	city := &w.Cities[c.Node]
-	if city.Owner == c.Faction || city.Owner == combat.NeutralFaction {
-		if city.Owner == combat.NeutralFaction {
-			city.Owner = c.Faction
-			w.Factions[c.Faction].Cities++
-			ev.Captured = c.Node
-		}
-		return
-	}
-	// 城裡有守軍就打守軍，沒有就打城兵。
-	for j := range w.Corps {
-		d := w.Corps[j]
-		if d.Alive && d.Faction == city.Owner && d.Node == c.Node {
-			w.fight(i, j, ev, combat.Siege, city.Garrison, rng)
-			return
-		}
-	}
-	w.fightGarrison(i, ev, rng)
 }
 
 func (w *World) fight(att, def int, ev *CorpsEvent, m combat.Mode, garrison int, rng combat.Rand) {
 	// ⭐ 玩家的勢力捲進去就開戰術畫面，其餘自動判定（原版 `sub_14E5C`）。
+	ev.Mode = m
 	if w.wantsTactical(att, def) && w.beginTactical(att, def, m, garrison) {
 		return
 	}
@@ -460,7 +475,7 @@ func (w *World) fight(att, def int, ev *CorpsEvent, m combat.Mode, garrison int,
 	r := combat.Resolve(&a, &d, m, garrison, rng)
 	w.applyBattle(att, a)
 	w.applyBattle(def, d)
-	ev.Battle, ev.Enemy = &r, def
+	ev.Battle, ev.Enemy, ev.Mode = &r, def, m
 	w.damageCity(w.Corps[att].Node, m, r)
 
 	w.afterBattle(ev, att, r.AttackerDestroyed, def, rng)
@@ -480,7 +495,7 @@ func (w *World) fightGarrison(att int, ev *CorpsEvent, rng combat.Rand) {
 	g := combat.Garrison(city.Owner, city.Garrison)
 	r := combat.Resolve(&a, &g, combat.Siege, city.Garrison, rng)
 	w.applyBattle(att, a)
-	ev.Battle, ev.Enemy = &r, -1
+	ev.Battle, ev.Enemy, ev.Mode = &r, -1, combat.Siege
 	w.damageCity(node, combat.Siege, r)
 
 	w.afterBattle(ev, att, r.AttackerDestroyed, -1, rng)

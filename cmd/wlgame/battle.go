@@ -452,16 +452,14 @@ func (g *game) demoBattle(siege bool) {
 	me := &g.world.Corps[mine]
 	foe := &g.world.Corps[theirs]
 	if siege {
-		// 攻城：把攻方擺到守方的城上，直接開一場攻城戰。
-		// **走正常的遭遇判定擺不出來**——守軍就待在城裡，座標與攻方相同，
-		// 而 `resolveContact` 是先問野戰的（見 state.StageBattle 的說明）。
+		// 攻城：守方待在自己的城裡，攻方從隔壁一格走進去。
+		// 走的是**正常的遭遇判定**——`resolveContact` 先問據點再問野戰。
 		node := foe.Node
-		me.Node, me.X, me.Y = node, g.world.Cities[node].X, g.world.Cities[node].Y
-		me.TargetNode, me.TargetX, me.TargetY = node, me.X, me.Y
-		if err := g.world.StageBattle(mine, theirs, combat.Siege, g.rng); err != nil {
-			g.setEvent(err.Error())
-			return
-		}
+		me.Node = node
+		me.X, me.Y = g.world.Cities[node].X-1, g.world.Cities[node].Y
+		me.TargetNode = node
+		me.TargetX, me.TargetY = g.world.Cities[node].X, g.world.Cities[node].Y
+		me.Timer = 1
 	} else {
 		// 野戰：把敵方放在隔壁一格、目標設成我方所在的那一格——
 		// 下一次輪到它移動就會撞上（遭遇條件是「同格、不同勢力」）。

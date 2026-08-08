@@ -8,6 +8,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
 	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
+	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/rules/rng"
 	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
@@ -896,4 +897,61 @@ func TestPlayerBattleGoesTactical(t *testing.T) {
 	}
 	t.Logf("戰術戰鬥 %d 幀，守方勝 %v；攻方剩 %d 點、守方剩 %d 點",
 		p.Battle.Frame, ev.Battle.DefenderWins, w.Corps[la].Men, w.Corps[lb].Men)
+}
+
+// ⭐ 走進**有守軍的敵方據點**要打攻城，不是野戰。
+//
+// 原版的判定順序其實反過來（先看佔用圖再看據點圖塊），但那建立在
+// 「一個據點佔好幾格地圖」上：攻方踏進的通常是據點的**別格**，
+// 那幾格沒有人，所以走攻城，再由 `sub_14C72` 用據點座標把守軍找出來。
+// 本專案的據點是一個點，照抄順序的話攻城那條路永遠走不到——
+// 所以 `resolveContact` 把據點放在野戰前面（docs/re/09 §2）。
+func TestMarchIntoDefendedCityIsSiege(t *testing.T) {
+	w := load(t, 0)
+	alive := w.AliveFactions()
+	a, b := alive[0], alive[1]
+	for _, f := range []int{a, b} {
+		w.Factions[f].Reserves = [economy.NumTroopTypes]int{6000, 6000, 6000}
+	}
+	kinds := [army.Positions]army.TroopType{}
+	manned := [army.Positions]bool{true, true, true, true, true, true}
+	att, def := w.Factions[a].Lord, w.Factions[b].Lord
+	if err := w.FormCorps(att, kinds, manned); err != nil {
+		t.Fatal(err)
+	}
+	if err := w.FormCorps(def, kinds, manned); err != nil {
+		t.Fatal(err)
+	}
+
+	// 守方待在自己的城裡；攻方從隔壁一格走進去。
+	node := w.Corps[def].Node
+	if w.Cities[node].Owner != b {
+		w.Cities[node].Owner = b
+	}
+	c := &w.Corps[att]
+	c.Node = node
+	c.X, c.Y = w.Cities[node].X-1, w.Cities[node].Y
+	c.TargetNode = node
+	c.TargetX, c.TargetY = w.Cities[node].X, w.Cities[node].Y
+	c.Timer = 1
+
+	var got *CorpsEvent
+	for i := 0; i < 64 && got == nil; i++ {
+		for _, ev := range w.tickCorps(0, rng.New(0, 0, 0)) {
+			if ev.Battle != nil {
+				e := ev
+				got = &e
+				break
+			}
+		}
+	}
+	if got == nil {
+		t.Fatal("走進敵方據點沒有打起來")
+	}
+	if got.Enemy != def {
+		t.Errorf("對手是軍團 %d，應為 %d", got.Enemy, def)
+	}
+	if got.Mode != combat.Siege {
+		t.Errorf("打成 %v，應為攻城——據點的判定被野戰搶先了", got.Mode)
+	}
 }
