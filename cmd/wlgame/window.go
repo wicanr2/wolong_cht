@@ -28,6 +28,23 @@ var windowRect = [numWindows]struct{ X, Y, W, H int }{
 	winSystem:  {archorRight(216), 216, 216, 152},
 }
 
+// commandMenu 是原版命令視窗的八組指令（說明書 §3.2、§3.3，
+// 整理在 docs/mechanics/10-strategy.md）。key 空字串 ＝ **還沒實作**。
+//
+// 保留未實作的項目是刻意的：選單本身就是一份「還缺什麼」的清單，
+// 把沒做的藏起來會讓缺口從畫面上消失。
+var commandMenu = []struct{ key, name string }{
+	{"P", "進　言"},
+	{"", "人　事"},
+	{"", "財　政"},
+	{"A", "編　成"},
+	{"M", "行　軍"},
+	{"C", "軍　團"},
+	{"", "據　點"},
+	{"G", "武　將"},
+	{"", "勢　力"},
+}
+
 // archorRight 讓視窗靠右邊，留 8 px 邊。
 func archorRight(w int) int { return screenW - w - 8 }
 
@@ -61,13 +78,18 @@ func (g *game) drawWindow(dst *ebiten.Image, k windowKind) {
 
 	switch k {
 	case winCommand:
+		// 原版的命令視窗是**八組**：進言 ＋ 說明書 §3 的其餘七個
+		// （docs/mechanics/10-strategy.md）。沒實作的照樣列出來並標灰，
+		// **不要因為還沒做就從選單上消失**——那會讓「還缺什麼」看不見。
 		w.line("命　令")
 		w.line("")
-		for _, s := range []string{
-			"P 進　言", "A 編　成", "M 行　軍",
-			"C 軍　團", "G 武　將",
-		} {
-			w.line(s)
+		for _, c := range commandMenu {
+			col := ink
+			key := c.key
+			if key == "" {
+				col, key = color.RGBA{150, 140, 120, 255}, "－"
+			}
+			w.lineC(fmt.Sprintf("%s %s", key, c.name), col)
 		}
 	case winFaction:
 		g.drawFactionWindow(dst, r.X, r.Y, r.W, w)

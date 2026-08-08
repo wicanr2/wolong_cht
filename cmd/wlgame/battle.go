@@ -2,10 +2,10 @@ package main
 
 // 戰場畫面。
 //
-// ⚠ **這裡畫的不是原版的美術。** `BATTLE.MDL` 的像素格式還沒解出來
-// （docs/re/11 §6），所以地形用堆疊高度上色、兵用色點。
-// **幾何是對的**（64 × 62 的格、立體的層、陣形位置、鎖敵），
-// 美術是暫代的——解出像素格式之後換掉這一層就好。
+// `BATTLE.MDL` 的子圖塊與 `BATTLE.SCH` 的人物圖形都已經解出來了
+// （docs/formats/07 §8–§10），等角繪圖走 battleview.go；
+// **沒有原版素材時退回高度圖 ＋ 色點**，幾何一樣是對的
+// （64 × 62 的格、立體的層、陣形位置、鎖敵）。
 
 import (
 	"fmt"
@@ -17,6 +17,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/vector"
 
 	"github.com/wicanr2/wolong_cht/internal/assets/battle"
+	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/rules/battlefield"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
@@ -207,6 +208,8 @@ func (g *game) drawBattleBanner(screen *ebiten.Image, b *tactical.Battle, p *sta
 	if b.Field.IsSiege() && len(b.Structures) > 0 {
 		const px = isoNativeW*isoScale + 6
 		py := bannerH + 8
+		g.chrome.Window(screen, px-chrome.Tile-2, py-chrome.Tile-2,
+			screenW-(px-chrome.Tile-2)-2, 72, chrome.Menu)
 		g.td.Draw(screen, "城壁", px, py, amber)
 		min, intact := b.MinWallDurability()
 		txt := fmt.Sprintf("耐久 %d", min)
@@ -230,15 +233,16 @@ func (g *game) drawBattleBanner(screen *ebiten.Image, b *tactical.Battle, p *sta
 func (g *game) drawBattleKeys(screen *ebiten.Image, b *tactical.Battle) {
 	amber := color.RGBA{240, 200, 120, 255}
 	dim := color.RGBA{150, 150, 160, 255}
-	// 底部：指令列。
-	vector.DrawFilledRect(screen, 0, screenH-19, screenW, 19, color.RGBA{0, 0, 0, 210}, false)
+	// 底部：指令列。與戰略畫面一樣用原版外框，不要黑底長條。
+	const h = 32
+	g.chrome.Window(screen, 0, screenH-h, screenW, h, chrome.Menu)
 	if b.Done {
 		g.td.Draw(screen, fmt.Sprintf("%s勝　第 %d 幀　按 Enter 回戰略畫面",
-			sideLabel(b.Winner), b.Frame), 4, screenH-17, amber)
+			sideLabel(b.Winner), b.Frame), chrome.Tile+4, screenH-h+9, amber)
 	} else {
 		g.td.Draw(screen,
-			"1 陣形　2 攻擊　3 突擊　4 城壁　5 守陣　6 退卻　（時間不會停）",
-			4, screenH-17, dim)
+			"1 陣形　2 攻擊　3 突擊　4 城壁　5 守陣　6 退卻",
+			chrome.Tile+4, screenH-h+9, dim)
 	}
 }
 
