@@ -1,5 +1,7 @@
 # 01 — 松崗 DOS/V 版首次實跑（DOSBox）
 
+**狀態：DOS/V 版可開機；字型懸案結案，**防拷確認擋住 oracle**。**
+
 - 日期：2026-08-07
 - 環境：`tools/dosbox.sh dosv`，DOSBox 0.74-3，`machine=vgaonly`、`cycles=fixed 20000`
 - 素材：`workplace/orig/dosv/` 的可寫副本

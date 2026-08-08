@@ -1,6 +1,7 @@
 # 05 — `MMAP.*` 大地圖
 
-**狀態：`MMAP.MDL` READY；地圖尺寸與自動連接 confirmed；`MMAP.MAP` 的編碼未解。**
+**狀態：READY。`MMAP.MDL`、地圖尺寸、自動連接都 confirmed；
+`MMAP.MAP` 的 RLE 見 [`docs/formats/06`](06-mmap-rle.md)，也 READY。**
 
 - 日期：2026-08-07
 - 出處：`workplace/ida/dosv/KI.EXE.i64`（`sub_1E48A`／`sub_1E4CE`／`sub_1E57F`）

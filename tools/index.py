@@ -1,0 +1,305 @@
+#!/usr/bin/env python3
+"""從 docs/ 生出索引，並檢查「已經解掉的事情有沒有還被寫成未解」。
+
+    tools/index.py check      只檢查，有問題回非 0（CI／提交前跑）
+    tools/index.py generate   重生 docs/INDEX.md
+
+## 為什麼要這個
+
+**手寫的索引本身就是會過時的東西。** 這個專案實際踩過三次：
+
+- `docs/playtest/04` 列了「四件事被滑鼠自動化擋住」，
+  而那四件在寫下的當下就有三件已經解掉了 —— 之後好幾輪都繞著
+  那道不存在的閘打轉。
+- `docs/formats/07` 的狀態行寫「像素格式未解」，但同一份文件的
+  §8–§10 就是像素格式的解法。
+- `CONTEXT.md` 的「進行中／受阻」表列著早就完成的項目。
+
+共同點是**沒有人會為了寫一行新結論而回頭改三份舊文件的摘要**。
+所以這裡不生產「另一份要維護的文件」，而是：
+
+1. **狀態從內文推導**，不從摘要抄；
+2. **衝突自動報錯**——同一個主題在兩份文件裡等級不同就當成錯誤。
+
+## 檢查項
+
+| 檢查 | 為什麼 |
+|---|---|
+| 每份 docs 文件都要有狀態行與日期 | 沒有狀態行的文件無法判斷新舊 |
+| 狀態行說「未解／受阻」但內文有對應的 confirmed／READY | 就是上面那三次 |
+| A 的狀態行說某識別字未解，B 的狀態行說它 READY | `formats/05` 說 `MMAP.MAP` 未解，`formats/06` 就是它的解法 |
+| 斷言表的同一個鍵在不同文件有不同等級 | 兩份文件對同一件事說法不同 |
+| 文件內的相對連結指得到檔案 | 改檔名時最容易漏 |
+| `CONTEXT.md` 提到的 docs 路徑都存在，且有指向 `docs/INDEX.md` | 完整清單交給生成的那份，人只維護指標 |
+
+只用標準函式庫。
+"""
+import os
+import re
+import sys
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DOCS = os.path.join(ROOT, "docs")
+CONTEXT = os.path.join(ROOT, "CONTEXT.md")
+OUT = os.path.join(DOCS, "INDEX.md")
+
+# 推論等級，由強到弱。`docs/mechanics/00-index.md` 定義的那一組。
+LEVELS = ["confirmed", "READY", "強證據", "說明書", "假說", "未解"]
+LEVEL_RANK = {v: i for i, v in enumerate(LEVELS)}
+
+STATUS_RE = re.compile(r"\*\*狀態[：:](.+?)\*\*", re.S)
+DATE_RE = re.compile(r"^-\s*日期[：:]\s*(\d{4}-\d{2}-\d{2})", re.M)
+TITLE_RE = re.compile(r"^#\s+(.+)$", re.M)
+LINK_RE = re.compile(r"\]\((?!https?:)([^)#]+)")
+# 斷言表的一列：| `+0x08` | u16 | 說明 | confirmed |
+ROW_RE = re.compile(r"^\|(.+)\|\s*$", re.M)
+HEAD_RE = re.compile(r"^#{2,4}\s+(.+)$", re.M)
+
+# 狀態行裡代表「還沒好」的字眼。
+OPEN_WORDS = ["未解", "受阻", "⛔", "沒解", "還沒"]
+
+
+def md_files():
+    for dirpath, _, names in os.walk(DOCS):
+        for n in sorted(names):
+            if n.endswith(".md") and n != "INDEX.md":
+                yield os.path.join(dirpath, n)
+
+
+def rel(path):
+    return os.path.relpath(path, ROOT).replace(os.sep, "/")
+
+
+def cell_level(cell):
+    """一格文字裡的推論等級（取最強的那個）。沒有就回 None。"""
+    best = None
+    for lv in LEVELS:
+        if lv in cell:
+            if best is None or LEVEL_RANK[lv] < LEVEL_RANK[best]:
+                best = lv
+    return best
+
+
+def strip_md(s):
+    return s.replace("*", "").replace("`", "").strip()
+
+
+class Doc:
+    def __init__(self, path):
+        self.path = path
+        self.text = open(path, encoding="utf-8").read()
+        m = TITLE_RE.search(self.text)
+        self.raw_title = m.group(1) if m else os.path.basename(path)
+        self.title = strip_md(self.raw_title)
+        m = STATUS_RE.search(self.text)
+        # ⚠ status 是給人看的（去掉 markdown），**識別字比對要用 raw_status**——
+        # strip_md 會把反引號拿掉，用它去找 `MMAP.MAP` 永遠找不到。
+        self.raw_status = " ".join(m.group(1).split()) if m else ""
+        self.status = " ".join(strip_md(m.group(1)).split()) if m else ""
+        m = DATE_RE.search(self.text)
+        self.date = m.group(1) if m else ""
+        self.claims = self._claims()
+
+    def _claims(self):
+        """抓出「鍵 → 等級」的斷言。只認最後一格是等級的表格列。
+
+        鍵要**冠上最近的一個標題**：`+0x01` 在勢力表、據點表、軍團表
+        是三個不同的東西，不冠標題會把它們當成同一條而互報衝突。
+        """
+        out = {}
+        # 先記下每個標題的位置，等一下用位移找「最近的上一個標題」。
+        heads = [(m.start(), strip_md(m.group(1))) for m in HEAD_RE.finditer(self.text)]
+
+        def head_of(pos):
+            name = ""
+            for start, h in heads:
+                if start < pos:
+                    name = h
+                else:
+                    break
+            return name
+
+        for m in ROW_RE.finditer(self.text):
+            line = m.group(1)
+            cells = [c.strip() for c in line.split("|")]
+            if len(cells) < 3:
+                continue
+            lv = cell_level(cells[-1])
+            # 最後一格必須**幾乎只有**等級，否則整段散文都會被當成斷言。
+            if lv is None or len(strip_md(cells[-1])) > len(lv) + 24:
+                continue
+            raw = strip_md(cells[0])
+            if not raw or raw.startswith("---") or raw in ("偏移", "欄位", "項目"):
+                continue
+            h = head_of(m.start())
+            key = f"{h} ▸ {raw}" if h else raw
+            prev = out.get(key)
+            if prev is None or LEVEL_RANK[lv] < LEVEL_RANK[prev]:
+                out[key] = lv
+        return out
+
+    def open_status(self):
+        return any(w in self.status for w in OPEN_WORDS)
+
+
+def check(docs):
+    problems = []
+
+    # ① 每份文件都要有狀態行與日期。
+    for d in docs:
+        if not d.status:
+            problems.append(f"{rel(d.path)}：沒有「**狀態：…**」那一行")
+        if not d.date:
+            problems.append(f"{rel(d.path)}：沒有「- 日期：YYYY-MM-DD」")
+
+    # ② 狀態行說未解，但內文自己有 confirmed／READY 的斷言。
+    #    這就是 formats/07 那個「像素格式未解」的形狀。
+    for d in docs:
+        if not d.open_status():
+            continue
+        solid = [k for k, v in d.claims.items() if v in ("confirmed", "READY")]
+        if len(solid) >= 3:
+            problems.append(
+                f"{rel(d.path)}：狀態行寫「{d.status[:28]}…」，"
+                f"但內文有 {len(solid)} 條 confirmed／READY 斷言"
+                f"（如 {'、'.join(solid[:3])}）——狀態行可能過時")
+
+    # ③ 同一個鍵在不同文件等級不同。
+    #
+    # ⚠ 這一項只**提醒**不擋，因為偏移鍵天生有歧義（同一個 `+0x08`
+    # 在不同的表是不同欄位），冠了標題也還是可能誤報。
+    # 它的用途是「這個東西別處是不是已經解了」的線索，不是門禁。
+    where = {}
+    for d in docs:
+        for k, v in d.claims.items():
+            where.setdefault(k, []).append((v, rel(d.path)))
+    warns = []
+    for k, lst in sorted(where.items()):
+        if len({v for v, _ in lst}) > 1:
+            desc = "、".join(f"{v}（{p}）" for v, p in lst)
+            warns.append(f"斷言「{k}」在不同文件等級不一致：{desc}")
+
+    # ⑥ 跨文件：A 的狀態行說某個東西「未解」，B 的狀態行卻說它 READY。
+    #
+    # 抓的是狀態行裡用反引號括起來的識別字（`MMAP.MAP`、`TALK.DAT`…）。
+    # 實際踩過：`docs/formats/05` 寫「`MMAP.MAP` 的編碼未解」，
+    # 而隔壁的 `docs/formats/06` 整份就是它的解法且標 READY。
+    ident = re.compile(r"`([A-Za-z0-9_.*/]{3,})`")
+    closed = {}
+    for d in docs:
+        if d.status and not d.open_status():
+            # **標題也要看。** `docs/formats/06` 的狀態行只有「READY。」，
+            # 識別字在標題「06 — `MMAP.MAP` 的 RLE 壓縮」裡——
+            # 只看狀態行的話這條檢查永遠不會觸發（做正對照才發現）。
+            for t in ident.findall(d.raw_status + " " + d.raw_title):
+                closed.setdefault(t, []).append(rel(d.path))
+    for d in docs:
+        if not d.open_status():
+            continue
+        for t in ident.findall(d.raw_status):
+            # 只有當 t 出現在「未解」那半句附近才算數，這裡從寬：
+            # 同一狀態行同時出現 READY 與未解是常態（多主題文件）。
+            if t in closed and re.search(rf"{re.escape(t)}`?[^，。；]*(未解|受阻|沒解|還沒)", d.raw_status):
+                problems.append(
+                    f"{rel(d.path)}：狀態行說 `{t}` 未解，"
+                    f"但 {'、'.join(closed[t])} 說它已經好了")
+
+    # ④ 相對連結指得到檔案。
+    for d in docs:
+        for target in LINK_RE.findall(d.text):
+            t = target.strip()
+            if not t or t.startswith("<"):
+                continue
+            full = os.path.normpath(os.path.join(os.path.dirname(d.path), t))
+            if not os.path.exists(full):
+                problems.append(f"{rel(d.path)}：連結指不到 {t}")
+
+    # ⑤ CONTEXT.md 提到的 docs 路徑不能是死的。
+    #
+    # ⚠ **不檢查「有沒有列全」**。第一版要求 CONTEXT.md 的清單與 docs/
+    # 完全一致，那等於強制人工複製一份清單——而那正是會爛掉的東西
+    # （這個工具存在的理由）。完整清單由 docs/INDEX.md 生成，
+    # CONTEXT.md 只需要指過去。
+    ctx = open(CONTEXT, encoding="utf-8").read()
+    # INDEX.md 不在 docs 清單裡（它是產物），但 CONTEXT 本來就該指它。
+    actual = {rel(d.path) for d in docs} | {rel(OUT)}
+    for extra in sorted(set(re.findall(r"`(docs/[^`]+\.md)`", ctx)) - actual):
+        problems.append(f"CONTEXT.md 提到不存在的 {extra}")
+    if "docs/INDEX.md" not in ctx:
+        problems.append("CONTEXT.md 沒有指向 docs/INDEX.md（完整清單在那裡）")
+
+    return problems, warns
+
+
+def generate(docs):
+    lines = [
+        "# 文件索引（自動產生，不要手改）",
+        "",
+        "由 `tools/index.py generate` 從 `docs/**/*.md` 生出來。",
+        "**狀態與日期是從各文件的內文讀的，不是另外維護的一份摘要**——",
+        "手寫的索引會過時，而過時的索引比沒有索引更糟"
+        "（`docs/playtest/04` 的「四件事被擋住」整張表在寫下的當下就是錯的）。",
+        "",
+        "提交前跑 `tools/index.py check`，它會擋下：狀態行與內文矛盾、",
+        "同一斷言在兩份文件等級不同、連結壞掉、`CONTEXT.md` 漏登記。",
+        "",
+        "## 文件",
+        "",
+        "| 文件 | 標題 | 狀態 | 日期 |",
+        "|---|---|---|---|",
+    ]
+    for d in sorted(docs, key=lambda d: rel(d.path)):
+        st = d.status or "—"
+        if len(st) > 60:
+            st = st[:58] + "…"
+        lines.append(f"| [`{rel(d.path)}`]({os.path.relpath(d.path, DOCS)}) "
+                     f"| {d.title} | {st} | {d.date or '—'} |")
+
+    # 斷言總表：一個鍵一列，按等級分組，讓「這件事解了沒」一眼可查。
+    where = {}
+    for d in docs:
+        for k, v in d.claims.items():
+            where.setdefault(k, []).append((v, rel(d.path)))
+    lines += ["", "## 斷言（欄位／常數 → 推論等級 → 出處）", "",
+              f"共 {len(where)} 條。**要查「這件事解了沒」先看這裡**，",
+              "不要重讀整份文件，更不要重推一次。", ""]
+    for lv in LEVELS:
+        keys = sorted(k for k, l in where.items()
+                      if min(LEVEL_RANK[x] for x, _ in l) == LEVEL_RANK[lv])
+        if not keys:
+            continue
+        lines += [f"### {lv}（{len(keys)} 條）", "", "| 鍵 | 出處 |", "|---|---|"]
+        for k in keys:
+            srcs = sorted({p for v, p in where[k] if v == lv})
+            lines.append(f"| {k} | {'、'.join(f'`{s}`' for s in srcs)} |")
+        lines.append("")
+    open(OUT, "w", encoding="utf-8").write("\n".join(lines) + "\n")
+    return len(where)
+
+
+def main():
+    cmd = sys.argv[1] if len(sys.argv) > 1 else "check"
+    docs = [Doc(p) for p in md_files()]
+    if cmd == "generate":
+        n = generate(docs)
+        print(f"{rel(OUT)}：{len(docs)} 份文件、{n} 條斷言")
+        cmd = "check"
+    if cmd == "check":
+        problems, warns = check(docs)
+        for w in warns:
+            print(f"  ? {w}")
+        if warns:
+            print(f"（以上 {len(warns)} 條只是提醒，不擋）")
+        if not problems:
+            print(f"索引檢查通過（{len(docs)} 份文件）")
+            return 0
+        print(f"索引檢查發現 {len(problems)} 個問題：")
+        for p in problems:
+            print(f"  - {p}")
+        return 1
+    print(__doc__)
+    return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())

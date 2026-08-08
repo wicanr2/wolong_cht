@@ -1,5 +1,7 @@
 # 02 — PC-98 日文原版實跑（DOSBox-X）：oracle 建立完成
 
+**狀態：PC-98 oracle 已建立，沒有防拷。**
+
 - 日期：2026-08-07
 - 環境：`tools/dosboxx.sh`，DOSBox-X 2025.02.01，`machine=pc98`、`cycles=20000`
 - 推論等級：**畫面看到的都是 confirmed**

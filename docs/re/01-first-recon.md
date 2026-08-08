@@ -1,5 +1,7 @@
 # 01 — 首輪偵查：兩版檔案清單與比對
 
+**狀態：READY。兩版檔案清單、執行結構、逐檔比對都完成。**
+
 - 日期：2026-08-07
 - 輸入：`workplace/orig/dosv/`（松崗 DOS/V 繁中版，69 檔）、
   `workplace/orig/pc98/`（PC-98 日文原版，69 檔，由 `tools/fdi_extract.py` 從

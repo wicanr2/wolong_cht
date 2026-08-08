@@ -124,42 +124,27 @@ Go 版與 Python 版的輸出逐像素完全相同。
 
 ## 4. 文件索引
 
-| 文件 | 內容 |
-|---|---|
-| `CLAUDE.md` | 目標、原則、硬規則、里程碑、工作紀律 |
-| `docs/re/01-first-recon.md` | 首輪偵查：檔案清單、執行結構、兩版比對 |
-| `docs/formats/01-talk-dat.md` | **READY** — `TALK.DAT` 訊息表格式 |
-| `docs/formats/02-brg-palette.md` | **READY** — `.BRG` 調色盤格式 |
-| `docs/formats/03-grf-images.md` | **READY**（僅 `KAOGRF`）— 圖庫格式 |
-| `docs/re/02-palette-routine.md` | 兩版調色盤常式的反組譯 |
-| `docs/re/03-image-blitter.md` | 圖庫載入器與 VGA 四平面繪製常式 |
-| `docs/re/04-mmap-entry-points.md` | 大地圖的入口點與記憶體佈局 |
-| `docs/re/05-battle-selection.md` | **政略↔戰術的接縫**：戰場怎麼被選出來 |
-| `docs/mechanics/00-index.md` | 機制索引與推論等級定義 |
-| `docs/mechanics/30-combat.md` | 戰場：進場規則、地形類型對映、戰場形狀 |
-| `docs/mechanics/70-ai.md` | **電腦 AI 的判斷邏輯**（蒐集中） |
-| `docs/reference/01-jp-manual.md` | 日文原版說明書判讀紀錄（逐頁累加） |
-| `docs/reference/02-jp-cht-diff.md` | 日中對照：15 則譯文缺陷 |
-| `docs/reference/03-baked-japanese.md` | 燒進美術裡的日文（松崗沒重繪的部分） |
-| `dosbox/` | 兩版的 DOSBox-X 設定 ＋ 出處 |
-| `docs/playtest/01-dosbox-dosv.md` | DOS/V 版首次實跑：字型結案、防拷發現 |
-| `docs/playtest/02-dosboxx-pc98.md` | PC-98 實跑：oracle 建立、合併抽檔陷阱 |
-| `docs/playtest/03-verification-log.md` | **補驗紀錄**：撐得住的、撐不住的、失敗的驗證嘗試 |
-| `docs/playtest/04-mouse-automation-blocked.md` | ~~受阻~~：動不了遊戲內游標。**兩個核心判斷都已被推翻**，留作「推理看起來正確但結論是錯的」的紀錄 |
-| `docs/playtest/05-viewport-and-city-coords.md` | **據點座標 confirmed**：用既有截圖把畫面對回大地圖（水域分佈 725 格 100% 吻合），7/7 據點落在城池圖案上 |
-| `docs/playtest/06-mouse-solved.md` | **✅ 滑鼠通了**：三個互相遮蔽的原因（到站判斷／絕對 vs 相對／8 bit 截斷）與各自的解法 |
-| `docs/playtest/07-in-game-oracle.md` | **進到遊戲本體**：君主選擇表一次驗掉五個欄位、**頭像編號 ＝ 武將記錄 `+0x01`**、跳過開場的 `noopen` 模式 |
-| `docs/formats/04-map-sch-container.md` | `.MAP`/`.SCH` 容器格式 |
-| `docs/formats/05-mmap-worldmap.md` | 大地圖：圖塊、384×256、自動連接 |
-| `docs/formats/06-mmap-rle.md` | **READY** — `MMAP.MAP` 的 RLE 壓縮 |
-| `docs/formats/07-battle.md` | 戰場：分段結構與**像素格式都已解**（`BATTLE.MDL` 子圖塊、`BATTLE.SCH` 人物圖形）|
-| `docs/formats/08-sinario-save.md` | **劇本／存檔**：4 劇本 × (192 據點 ＋ 127 武將)，武將三圍已定案 |
-| `README.md` | 公開的專案入口 |
-| `translations/extract/talk-{dosv,pc98}.json` | 抽出的 1,022 則訊息（兩版） |
-| `tools/fdi_extract.py` | PC-98 FDI 磁片抽檔 |
-| `tools/ida.sh` | IDA Pro 9.4 headless 包裝 |
+**完整清單在 [`docs/INDEX.md`](docs/INDEX.md)，那份是 `tools/index.py generate`
+自動產生的**——狀態與日期從各文件內文讀出來，不是另外抄一份摘要。
+它同時附一張**斷言總表**（欄位／常數 → 推論等級 → 出處），
+要查「這件事解了沒」先翻那張表，不要重讀整份文件，更不要重推一次。
 
----
+> 這裡刻意**不再列全部文件**。舊版列了一份手抄清單，結果 `re/06`–`re/11`
+> 六份最硬的反組譯成果一直沒被登記進來——而那正是最不該被遺忘的東西。
+> 人工維護的清單會爛掉，所以改成「人只維護指標，清單交給生成」。
+
+提交前跑 `tools/index.py check`，它會擋下：文件缺狀態行或日期、
+狀態行說「未解」但內文已有 confirmed、連結壞掉、`CONTEXT.md` 提到死路徑。
+
+### 從哪裡開始讀
+
+| 想知道 | 先看 |
+|---|---|
+| 全部文件與斷言 | [`docs/INDEX.md`](docs/INDEX.md) |
+| 這個專案在幹嘛、硬規則 | [`CLAUDE.md`](CLAUDE.md) |
+| 現在做到哪、下一步 | 本檔 §3、§7 |
+| 推論等級怎麼定義 | `docs/mechanics/00-index.md` |
+| 哪些斷言被推翻過、為什麼 | 本檔 §6 |
 
 ## 5. 術語表
 
@@ -325,6 +310,8 @@ Go 版與 Python 版的輸出逐像素完全相同。
 | `tools/brg.py` | `info` ／ `swatch`。純標準函式庫的 PNG 輸出 |
 | `tools/grf.py` | `sheet` ／ `one`。**`sheet` 會印「餘 N byte」，不是 0 就代表尺寸猜錯** |
 | `tools/ida_xref.idc` | 查 IDA 的 xref 圖。⚠ 立即值形式的位址參考 IDA 不建 xref，回零筆不等於沒人用（`docs/re/03` §0） |
+| `tools/check.sh` | **提交前跑這一支**：`go vet` ＋ `go test` ＋ 文件索引檢查。三種檢查分開記就會漏掉一個，實際漏掉的是第三個 |
+| `tools/index.py` | `generate` 重生 `docs/INDEX.md`（含斷言總表），`check` 只檢查。**擋下「狀態行說未解但內文已 confirmed」「A 說未解 B 說 READY」「連結壞掉」**。⚠ 改這支之後要做正對照——第一版有兩個 bug 讓檢查永遠不觸發，是故意放回一條過時狀態才發現的 |
 | `tools/go.sh` | `tools/go.sh test ./...`。image 沿用 demonwinter-go，volume 是自己的 `wl-gomod`／`wl-gobuild` |
 | `tools/shot.sh` | `tools/shot.sh out.png KEYS=Right,Down [參數]`。Xvfb + xdotool，驗呈現層 |
 | `tools/dosbox.sh` | `tools/dosbox.sh dosv "wait:2;type:START;key:Return;wait:10;shot:x"`。DOS/V oracle（會撞防拷）|
