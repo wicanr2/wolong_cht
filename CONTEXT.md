@@ -5,7 +5,7 @@
 >
 > 硬規則、目標、工作紀律在 [`CLAUDE.md`](./CLAUDE.md)。這份只管**狀態**。
 >
-> 最後更新：2026-08-07
+> 最後更新：2026-08-08
 
 ---
 
@@ -75,7 +75,10 @@ Go 版與 Python 版的輸出逐像素完全相同。
 | **⭐⭐ 月結的經濟公式全解，`internal/rules/economy` 已實作** | 三條說明書沒寫的公式：**收入依與首都的切比雪夫距離衰減**（÷2/3/4）、**募兵配比依 Y 座標分三區**（北騎59%／中步75%／南弓50%）、**赤字每兵種各扣 \|資金\|/16**。資金是 ±655,000 的有號 24 位。`docs/re/07` |
 | **⭐ 規則層開工：`internal/rules/clock`** | 五層時鐘的 Go 實作 ＋ 10 個測試（全過）。測試直接拿反組譯出的常數當期望值：216 tick/日、二月 28 天、四劇本起始日、年封頂 999、季節 16 步漸變、進位階梯不變式 |
 | **⭐ 劇本／存檔區塊三段式佈局定案** | 59 B 時鐘＋全域 / 21,056 B 勢力據點武將 / 1,024 B，合計正好 22,208。`docs/formats/08` §0 |
-| **⛔ oracle 的滑鼠輸入無效（根因已定位）** | `docs/playtest/04`。pixel diff 證明**滑鼠事件從來沒進入 guest**（兩種天差地遠的設定，畫面 0 像素差異）；先前看到的「進展」都是遊戲自己在跑。**但鍵盤有效**（DOS/V 版靠 `type:START` 啟動過）→ 下一輪走 DOSBox-X 的 mapper 把鍵盤綁成滑鼠動作。仍擋住四件事 |
+| **⭐⭐ 畫面照原版重做** | 橫幅換成原版美術（`ICONGRF` 段 0）＋ 日期填進「年 月 日」欄位、地圖滿版 40×23 格、**取消常駐側欄**改成浮動視窗、視窗外框用原版美術（**`ICONGRF` 段 3**，原本整段未解）、**武將頭像接上 `KAOGRF`**。`docs/images/wlgame-*.png` |
+| **⭐ `ICONGRF` 段 3 解出視窗外框** | 8×8、4bpp、32 B／塊：`0x06C0` 上下邊 motif、`0x06E0` 柱頭、`0x0700` 柱身。找法是**比「顏色的等價關係」而不是比顏色**（實機是 PC-98 調色盤），並且**逐 byte 掃不切格線**。`docs/formats/03` §5.4 |
+| **⭐ 頭像編號 ＝ 武將記錄 `+0x01`** | 曹操是第 16 個武將但頭像在第 50 頁。原本只知道「127 筆各不相同」，**光看資料分不出用途**——是實機的君主確認畫面定下來的 |
+| **⭐⭐ oracle 的滑鼠通了，可以自動玩** | `docs/playtest/06`。三個原因互相遮蔽：開場長度每次不同（`wait:` 靠不住，改 `until:<md5>` 認畫面）、PC-98 是**匯流排滑鼠**只吃相對位移（要 `Ctrl+F10` 鎖住，絕對定位餵的是 INT 33h 那條別的路）、8 bit 位移會截斷大跳躍（要閉迴路逼近）。已走完 `NEW GAME` → `YES` → 劇本選單 |
 | **存檔槽 4 個（confirmed）** | `LOAD DATA` 畫面實測，全部 `0年 0月 0日`。日文說明書的說法從「說明書」升到 confirmed。**時間單位是年／月／日** |
 | **oracle 可重現性通過** | 同一串操作跑兩次，截圖 **byte-for-byte 相同、0 個不同像素**。這是即時制專案的關鍵閘門 |
 | **大地圖畫面拿到** | 推進到 NEW GAME 對話框。**畫面最上方的橫幅正是 `ICONGRF` 段 0**（640×32），位置完全對上 |
@@ -114,6 +117,7 @@ Go 版與 Python 版的輸出逐像素完全相同。
 |---|---|
 
 | **DOS/V 防拷** | **確認有**（`docs/playtest/01`）：查說明書第 NN 頁的四字密碼，擋住 DOS/V 的 oracle。**繞路：PC-98 版沒有這一關**，規則類的 oracle 改跑 PC-98 |
+| ~~PC-98 oracle 的滑鼠~~ | ✅ **已解**（`docs/playtest/06`）。要三件事同時到位：`until:<md5>` 認畫面到站（開場長度每次不同）、`Ctrl+F10` 鎖滑鼠走相對位移（PC-98 是匯流排滑鼠，不吃絕對定位）、閉迴路移游標（8 bit 位移會截斷大跳躍）。現在可以自動點進遊戲本體 |
 | 日文說明書全文判讀 | 38 頁只讀了 3 頁。純掃描無文字層，要 OCR 或逐頁看 |
 
 ---
@@ -141,11 +145,14 @@ Go 版與 Python 版的輸出逐像素完全相同。
 | `docs/playtest/01-dosbox-dosv.md` | DOS/V 版首次實跑：字型結案、防拷發現 |
 | `docs/playtest/02-dosboxx-pc98.md` | PC-98 實跑：oracle 建立、合併抽檔陷阱 |
 | `docs/playtest/03-verification-log.md` | **補驗紀錄**：撐得住的、撐不住的、失敗的驗證嘗試 |
-| `docs/playtest/04-mouse-automation-blocked.md` | **⛔ 受阻**：動不了遊戲內游標，五種組合的紀錄與下一輪候選 |
+| `docs/playtest/04-mouse-automation-blocked.md` | ~~受阻~~：動不了遊戲內游標。**兩個核心判斷都已被推翻**，留作「推理看起來正確但結論是錯的」的紀錄 |
+| `docs/playtest/05-viewport-and-city-coords.md` | **據點座標 confirmed**：用既有截圖把畫面對回大地圖（水域分佈 725 格 100% 吻合），7/7 據點落在城池圖案上 |
+| `docs/playtest/06-mouse-solved.md` | **✅ 滑鼠通了**：三個互相遮蔽的原因（到站判斷／絕對 vs 相對／8 bit 截斷）與各自的解法 |
+| `docs/playtest/07-in-game-oracle.md` | **進到遊戲本體**：君主選擇表一次驗掉五個欄位、**頭像編號 ＝ 武將記錄 `+0x01`**、跳過開場的 `noopen` 模式 |
 | `docs/formats/04-map-sch-container.md` | `.MAP`/`.SCH` 容器格式 |
 | `docs/formats/05-mmap-worldmap.md` | 大地圖：圖塊、384×256、自動連接 |
 | `docs/formats/06-mmap-rle.md` | **READY** — `MMAP.MAP` 的 RLE 壓縮 |
-| `docs/formats/07-battle.md` | 戰場：分段結構已解，像素格式未解 |
+| `docs/formats/07-battle.md` | 戰場：分段結構與**像素格式都已解**（`BATTLE.MDL` 子圖塊、`BATTLE.SCH` 人物圖形）|
 | `docs/formats/08-sinario-save.md` | **劇本／存檔**：4 劇本 × (192 據點 ＋ 127 武將)，武將三圍已定案 |
 | `README.md` | 公開的專案入口 |
 | `translations/extract/talk-{dosv,pc98}.json` | 抽出的 1,022 則訊息（兩版） |
@@ -225,6 +232,10 @@ Go 版與 Python 版的輸出逐像素完全相同。
 | 2026-08-07 | 「`TALK.DAT` 偏移表 2,048 ÷ 4 ＝ 512 筆」 | 實際是 uint16、1024 筆。假說當時就標了「待驗」，驗完是錯的 |
 | 2026-08-07 | 「地形類型 5（`0xB1`–`0xB3`）是河岸／淺灘」 | 量化推翻：只有 **34.4%** 鄰接水域，僅略高於 22% 的背景值；放大看是**綠色樹叢**。**原判讀是在 16×16 縮圖上做的——縮圖不足以判讀圖塊，要放大** |
 | 2026-08-07 | 「大地圖有 autotiling：道路／河流依鄰格換成連接圖塊 `0x80`／`0x81`」 | 讀完 `sub_1E68C` 推翻：`0x80`–`0x83` 是**方向碼**，那段寫的是 8-byte 記錄不是圖塊值。**只看 `mov al, 80h` 就往「換圖塊」推，是拿指令片段當語意的典型錯誤。** 而且初版只讀到左右兩個方向，上下（`±180h`）漏了 |
+| 2026-08-08 | 「PC-98 oracle 的截圖是開場動畫還在播，鍵盤跳不過」 | 那是**戰略地圖 ＋ `NEW GAME` 對話框**，遊戲早就開完機了。**跨三小時四次獨立執行 md5 完全相同**——會動的東西不會 pixel 相同，靜止本身就是證據。`docs/playtest/04` 問對了「輸入有沒有進去」，卻沒問「我看到的是什麼」 |
+| 2026-08-08 | 據點座標「最佳偏移 `dx=+2` 只有 41.7%，要進遊戲才能定案」 | 偏移是 **(0, 0)**，座標直接就是城池那一格；視窗內 7 個量得到的據點全部落在城池圖案上（各在全畫面 824 格的前 2.7%）。**而且不必進遊戲——那張畫面手上早就有了**。舊結論是拿圖塊編號掃「像不像城池」得到的，判準太鬆（`docs/playtest/05`）|
+| 2026-08-08 | 「開場長度固定，`wait:100` 就到選單」 | **每次不一樣**（實測 104 s、>114 s、126 s）。用固定秒數會讓整段測試跑在過場動畫裡——**測試不會失敗，它會什麼都沒測到**。連續兩輪的滑鼠實驗都白跑在這上面 |
+| 2026-08-08 | `docs/playtest/04`「四件事同時卡在滑鼠自動化這一個點上」 | **四件都不需要它**：據點座標用既有截圖驗完、`15-realtime` 早就 READY、地形類型已用鄰接統計推翻、戰場圖塊像素格式已用檔案自身的遮罩不變量解掉。**「受阻」寫進文件就會被當成閘，然後每輪都繞著閘打轉** |
 
 ---
 
@@ -270,9 +281,10 @@ Go 版與 Python 版的輸出逐像素完全相同。
 - [x] ~~推進到大地圖~~ — 已到 NEW GAME 對話框，地形畫面拿到了
 - [x] ~~日文說明書 38 頁判讀~~ — **有實質機制的都讀完了**
       （剩 p.6 啟動操作、p.36–38 疑似附錄）
-- [ ] **⛔ oracle 的滑鼠輸入無效**（`docs/playtest/04`）——
-      根因已定位（事件從沒進 guest，但鍵盤有效）。
-      **不再擋 `15-realtime`**；仍擋據點座標驗證、地形命名、戰場圖塊
+- [x] ~~oracle 的滑鼠輸入無效~~ — **已解**（`docs/playtest/06`）。
+      它原本「擋住」的四件事，事後看**一件都不需要它**：
+      據點座標用既有截圖驗完（`docs/playtest/05`）、`15-realtime` 早就 READY、
+      地形命名已用鄰接統計推翻、戰場圖塊像素格式已用檔案自身的遮罩不變量解掉
 
 ### 7.2 M1 起手順序（依投報排）
 
@@ -316,7 +328,7 @@ Go 版與 Python 版的輸出逐像素完全相同。
 | `tools/go.sh` | `tools/go.sh test ./...`。image 沿用 demonwinter-go，volume 是自己的 `wl-gomod`／`wl-gobuild` |
 | `tools/shot.sh` | `tools/shot.sh out.png KEYS=Right,Down [參數]`。Xvfb + xdotool，驗呈現層 |
 | `tools/dosbox.sh` | `tools/dosbox.sh dosv "wait:2;type:START;key:Return;wait:10;shot:x"`。DOS/V oracle（會撞防拷）|
-| `tools/dosboxx.sh` | `tools/dosboxx.sh "wait:20;click:320,200;shot:x"`。**PC-98 oracle，無防拷**。timeline 支援 wait／key／type／click／shot |
+| `tools/dosboxx.sh` | `tools/dosboxx.sh "until:<md5>,260;xkey:ctrl+F10;clickat:300,172;shot:x"`。**PC-98 oracle，無防拷**。timeline：`wait`／`until:md5,上限`／`settle`／`key`／`type`／`xkey`／`xtype`／`move`／`click`／`goto`／`clickat`／`probe`／`shot`。**要點滑鼠一定要先 `xkey:ctrl+F10`**，而且用 `clickat`（閉迴路）不要用 `click`（開迴路會被 8 bit 位移截斷）。滑鼠三個旋鈕：`WOLONG_SDL_AUTOLOCK`／`WOLONG_MOUSE_EMU`／`WOLONG_LOG_MOUSE`。原理見 `docs/playtest/06` |
 
 **還沒建但 `CLAUDE.md` §5.1 要求的**：`tools/addr.py`（位址反查三張表）、
 `tools/dump_func.py`（dump 時自動翻語意 ＋ grep docs）、`tools/ida_xref.idc`。

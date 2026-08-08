@@ -35,13 +35,25 @@
 | `MMAP.MDL` 地形圖塊 | READY，256 塊 16×16 | [`docs/formats/05`](docs/formats/05-mmap-worldmap.md) |
 | `MMAP.MAP` 世界地圖 | READY，RLE → 384×256 格 | [`docs/formats/06`](docs/formats/06-mmap-rle.md) |
 | `.MAP`/`.SCH` 容器 | 索引層 READY | [`docs/formats/04`](docs/formats/04-map-sch-container.md) |
-| `BATTLE.*` 戰場 | 分段結構已解，像素格式未解 | [`docs/formats/07`](docs/formats/07-battle.md) |
+| `BATTLE.*` 戰場 | 分段結構與像素格式都已解 | [`docs/formats/07`](docs/formats/07-battle.md) |
+| `ICONGRF` 段 3 | 視窗外框圖塊（8×8） | [`docs/formats/03`](docs/formats/03-grf-images.md) |
 
 ### 引擎已經跑得出一個「時間在走的世界」
 
 `cmd/wlgame` 從真實的 `SINARIO.DAT` 載入劇本，用反組譯出來的規則驅動：
 
 ![戰略畫面（秋）](docs/images/wlgame-cht.png)
+
+版面照原版重做：**最上方 32 px 是原版的橫幅美術**（`ICONGRF` 段 0，
+日期填進它印好的「年 月 日」欄位），其餘 640×368 全部是地圖，
+**沒有常駐側欄**——情報、命令、縮小地圖、系統都是浮在地圖上的視窗。
+視窗外框也是原版美術（`ICONGRF` 段 3，原本整段未解），
+君主頭像取自 `KAOGRF`。
+
+> 版面的三個數字是從 PC-98 實機截圖量出來的，不是估的：
+> 用水域分佈把畫面對回大地圖，狀態列高度掃五種，
+> **只有 32 px 得到 725 格 100% 吻合**，而且地圖是對齊格線畫的、一格 16 px
+> （`docs/playtest/05`）。
 
 畫面上的每個數字都是原版資料算出來的：曹操的 14 個據點、74,000 起始資金、
 騎馬 400／弓兵 600／步兵 1000 的預備兵、稅率 18%。

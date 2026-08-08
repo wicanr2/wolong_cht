@@ -115,6 +115,15 @@ type General struct {
 	Alive    bool
 	Name     string
 	Alias    string // 呼び名。多數與 Name 相同
+
+	// Portrait 是 KAOGRF 的頁碼（記錄 +0x01）。
+	//
+	// **不是武將編號。** 曹操是第 16 個武將但頭像在第 50 頁、
+	// 荀彧是第 62 個但在第 121 頁——拿武將編號當頁碼會畫出別人的臉。
+	// 這個欄位原本只知道「127 筆各不相同」，是拿 PC-98 實機的君主確認畫面
+	// 比對出來的：畫面上的曹操與 KAOGRF 第 50 頁是同一張圖
+	// （docs/playtest/07）。KAOGRF 有 150 張 > 127 人，也對得上。
+	Portrait int    // 見上（宣告順序照記錄偏移）
 	Aptitude [3]int // 已經 >>4 的小值
 	Martial  int
 	Command  int
@@ -345,9 +354,10 @@ func LoadScenario(path string, index int) (*World, error) {
 	for i := range w.Generals {
 		r := b[generalBase+i*generalSize:]
 		w.Generals[i] = General{
-			Alive: r[0x00] >= 0x80,
-			Name:  decodeName(r[0x02:0x08]),
-			Alias: decodeName(r[0x08:0x0E]),
+			Alive:    r[0x00] >= 0x80,
+			Name:     decodeName(r[0x02:0x08]),
+			Alias:    decodeName(r[0x08:0x0E]),
+			Portrait: int(r[0x01]),
 			Aptitude: [3]int{
 				int(r[0x0E]) >> 4, int(r[0x0F]) >> 4, int(r[0x10]) >> 4,
 			},

@@ -41,24 +41,38 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
 	"github.com/wicanr2/wolong_cht/internal/assets/text"
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
-	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/rules/general"
 	"github.com/wicanr2/wolong_cht/internal/rules/persuasion"
 	"github.com/wicanr2/wolong_cht/internal/rules/rng"
 	"github.com/wicanr2/wolong_cht/internal/state"
+	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
-// 原版是 640×400。畫面分成三塊，比例照日文說明書 3.1 的截圖：
-// 最上方 32 px 的橫幅、左邊的大地圖、右邊 160 px 的資訊欄。
+// 原版是 640×400，版面只有兩塊：**最上方 32 px 的橫幅，其餘全是地圖**。
+// 資訊、命令、一覽表都是**浮在地圖上的視窗**，沒有常駐側欄。
+//
+// 這三個數字是從 PC-98 實機截圖量出來的，不是估的（docs/playtest/05）：
+// 用水域分佈把畫面對回大地圖，狀態列高度掃 0／8／16／24／32 五種，
+// **只有 32 得到 725 格 100% 吻合**，而且地圖是**對齊格線**畫的、
+// 一格 16 px——所以可視範圍正好 40×23 格。
 const (
 	screenW, screenH = 640, 400
 	bannerH          = 32
-	panelW           = 160
-	mapW             = screenW - panelW
-	viewCols         = mapW / 16                // 30
+	viewCols         = screenW / 16             // 40
 	viewRows         = (screenH - bannerH) / 16 // 23
+)
+
+// 橫幅右段那三個數字欄的右緣。橫幅本身（ICONGRF 段 0）已經印好
+// 「年 月 日」三個字，數字要填在每個字**左邊**那塊黑底上。
+// 座標是量橫幅圖檔得到的：文字色 (255,223,154) 的三段分別在
+// x 496–511（年）、528–541（月）、562–573（日）。
+const (
+	bannerYearRight  = 494
+	bannerMonthRight = 526
+	bannerDayRight   = 560
+	bannerTextY      = 9
 )
 
 // windowKind 是四個視窗開關（說明書 3.1）。
@@ -81,10 +95,11 @@ var windowNames = [numWindows]string{"命令", "自勢力情報", "縮小地圖"
 var residentWindows = [numWindows]bool{winCommand: true, winFaction: true, winMinimap: true}
 
 type game struct {
-	lib   *library.Library
-	world *state.World
-	rng   *rng.Rand
-	td    *textdraw.Drawer
+	lib    *library.Library
+	world  *state.World
+	rng    *rng.Rand
+	td     *textdraw.Drawer
+	chrome *chrome.Set // 原版視窗外框（ICONGRF 段 3）
 
 	open       [numWindows]bool
 	camX, camY int
@@ -194,41 +209,44 @@ func (g *game) openGeneralList() {
 	g.listHint = "↑↓ 移動　Enter 選取／決定　1-5 排序　ESC 取消"
 }
 
-// drawList 畫一覽表。兩段式選取的「反白」用底色表示。
+// drawList 畫一覽表。
+//
+// 原版的清單視窗是**米色底、黑字**，選取的那一列是**綠色反白條**
+// （PC-98 實機量到的三個顏色都寫在 internal/ui/chrome）。
+// 兩段式選取的第一下就是把那一列變綠，第二下才決定——
+// 這在原版的君主選擇畫面上實際看得到。
 func (g *game) drawList(screen *ebiten.Image) {
 	l := g.list
-	const x, y, w = 40, 44, 400
-	h := 26 + (l.Height+1)*(textdraw.GlyphH+2)
-	vector.DrawFilledRect(screen, x, y, w, float32(h), color.RGBA{0, 0, 0, 225}, false)
-	vector.StrokeRect(screen, x, y, w, float32(h), 1, color.RGBA{240, 200, 120, 255}, false)
+	const x, y, w = 48, 56, 448
+	h := (5+(l.Height+2)*(textdraw.GlyphH+2))/chrome.Tile*chrome.Tile + 2*chrome.Tile
+	g.chrome.Window(screen, x, y, w, h, chrome.Sheet)
 
-	white := color.RGBA{240, 240, 230, 255}
-	amber := color.RGBA{240, 200, 120, 255}
-	dim := color.RGBA{150, 150, 160, 255}
+	ink := chrome.Ink
+	head := color.RGBA{120, 40, 20, 255}
+	dim := color.RGBA{90, 80, 70, 255}
+	inner := x + chrome.Tile + 4
 
 	// 欄位名。數字鍵 1–5 對應排序，對應說明書「點欄位名排序」。
-	cx := x + 8
+	cx := inner
 	for i, c := range l.Columns {
-		g.td.Draw(screen, fmt.Sprintf("%d%s", i+1, c.Title), cx, y+6, amber)
+		g.td.Draw(screen, fmt.Sprintf("%d%s", i+1, c.Title), cx, y+chrome.Tile+2, head)
 		cx += 80
 	}
 
 	rows, first := l.Visible()
-	ry := y + 26
+	ry := y + chrome.Tile + 2 + textdraw.GlyphH + 6
 	for i, r := range rows {
-		col := white
 		if first+i == l.Cursor {
-			hl := color.RGBA{70, 60, 30, 255}
+			hl := color.RGBA{200, 210, 170, 255}
 			if l.Phase() == listwin.Selected {
-				hl = color.RGBA{180, 140, 40, 255} // 反白
-				col = color.RGBA{20, 20, 20, 255}
+				hl = chrome.Select // 反白：原版就是這個綠
 			}
-			vector.DrawFilledRect(screen, x+4, float32(ry-1), w-8,
-				float32(textdraw.GlyphH+2), hl, false)
+			vector.DrawFilledRect(screen, float32(x+chrome.Tile), float32(ry-1),
+				float32(w-2*chrome.Tile), float32(textdraw.GlyphH+2), hl, false)
 		}
 		name, cols := g.listRow(r)
-		g.td.Draw(screen, name, x+8, ry, col)
-		g.td.Draw(screen, cols, x+88, ry, col)
+		g.td.Draw(screen, name, inner, ry, ink)
+		g.td.Draw(screen, cols, inner+80, ry, ink)
 		ry += textdraw.GlyphH + 2
 	}
 
@@ -236,7 +254,7 @@ func (g *game) drawList(screen *ebiten.Image) {
 	if l.Phase() == listwin.Selected {
 		hint = "已選取　Enter 決定　ESC 退回"
 	}
-	g.td.Draw(screen, hint, x+8, y+h-textdraw.GlyphH-4, dim)
+	g.td.Draw(screen, hint, inner, y+h-chrome.Tile-textdraw.GlyphH, dim)
 }
 
 func pressed(k ebiten.Key) bool { return inpututil.IsKeyJustPressed(k) }
@@ -411,7 +429,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 	}
 	season := int(g.world.Clock.Season())
 
-	// 大地圖。四季調色盤直接吃時鐘算出來的季節——
+	// 大地圖鋪滿橫幅以下的全部畫面。四季調色盤直接吃時鐘算出來的季節——
 	// 所以畫面會隨遊戲時間換季，不需要另外驅動。
 	if img, err := g.lib.RenderWorld(g.camX, g.camY, viewCols, viewRows, season); err == nil {
 		op := &ebiten.DrawImageOptions{}
@@ -419,97 +437,41 @@ func (g *game) Draw(screen *ebiten.Image) {
 		screen.DrawImage(ebiten.NewImageFromImage(img), op)
 	}
 
-	// 右側資訊欄。
-	vector.DrawFilledRect(screen, mapW, 0, panelW, screenH, color.RGBA{16, 16, 32, 255}, false)
-	vector.DrawFilledRect(screen, 0, 0, mapW, bannerH, color.RGBA{32, 24, 16, 255}, false)
-
-	c := g.world.Clock
-	p := g.world.Player
-	f := g.world.Factions[p]
-
-	white := color.RGBA{240, 240, 230, 255}
-	amber := color.RGBA{240, 200, 120, 255}
-	dim := color.RGBA{150, 150, 160, 255}
-
-	// 橫幅：遊戲名與日期。原版右上角就是「196年 4月 8日」。
-	g.td.Draw(screen, "臥龍傳", 10, 8, amber)
-	g.td.Draw(screen, fmt.Sprintf("%d年%2d月%2d日", c.Year, c.Month, c.Day),
-		mapW-150, 8, white)
-	g.td.Draw(screen, seasonName(c.Season()), mapW-32, 8, amber)
-
-	// 右側資訊欄。
-	x := mapW + 6
-	y := bannerH + 4
-	line := func(s string, col color.RGBA) {
-		g.td.Draw(screen, s, x, y, col)
-		y += textdraw.GlyphH + textdraw.LineGap
-	}
-	line(big5(g.world.LordName(p))+" 軍", amber)
-	line("軍師 "+big5(g.advisorName()), dim)
-	line("", white)
-	line(fmt.Sprintf("信賴度 %3d", g.world.Trust), white)
-	line(fmt.Sprintf("據點   %3d", f.Cities), white)
-	line(fmt.Sprintf("武將   %3d", f.Generals), white)
-	line(fmt.Sprintf("軍團   %3d", f.Corps), white)
-	line(fmt.Sprintf("資金 %6d", f.Funds), white)
-	line("預備兵", white)
-	line(fmt.Sprintf(" 騎馬 %5d", f.Reserves[economy.Cavalry]), white)
-	line(fmt.Sprintf(" 弓兵 %5d", f.Reserves[economy.Archer]), white)
-	line(fmt.Sprintf(" 步兵 %5d", f.Reserves[economy.Infantry]), white)
-	line(fmt.Sprintf("稅率   %2d%%", g.world.TaxRate), white)
-	line("", white)
-	if g.timeRuns() {
-		line("時間 進行中", color.RGBA{140, 230, 140, 255})
+	// 橫幅是原版美術（ICONGRF 段 0），不是自己畫的長條。
+	// 上面已經印好「臥竜伝」與「年 月 日」，這裡只填數字。
+	// ⚠ 橫幅寫的是日文「臥竜伝」——松崗版沒有重繪這張圖
+	// （docs/reference/03），中文化要補的缺口之一。
+	if b, err := g.lib.Banner(season); err == nil {
+		screen.DrawImage(ebiten.NewImageFromImage(b), &ebiten.DrawImageOptions{})
 	} else {
-		line("時間 停止", color.RGBA{240, 140, 140, 255})
+		vector.DrawFilledRect(screen, 0, 0, screenW, bannerH,
+			color.RGBA{32, 24, 16, 255}, false)
+		g.td.Draw(screen, "臥龍傳", 10, 8, color.RGBA{240, 200, 120, 255})
 	}
-	line(fmt.Sprintf("速度 %d", g.speed), dim)
-	line("", white)
+	c := g.world.Clock
+	white := color.RGBA{240, 240, 230, 255}
+	right := func(s string, xr, y int) { g.td.Draw(screen, s, xr-g.td.Width(s), y, white) }
+	right(fmt.Sprintf("%d", c.Year), bannerYearRight, bannerTextY)
+	right(fmt.Sprintf("%d", c.Month), bannerMonthRight, bannerTextY)
+	right(fmt.Sprintf("%d", c.Day), bannerDayRight, bannerTextY)
+
+	// 四個視窗都是**浮在地圖上**的，沒有常駐側欄——原版就是這樣。
 	for k := windowKind(0); k < numWindows; k++ {
-		// ⚠ 用 Big5 有的字。「▶」不在 Big5，會被畫成缺字方框——
-		// 那個方框是字型層的設計（缺字要看得見），不該由介面自己觸發。
-		mark := "　"
-		col := dim
 		if g.open[k] {
-			mark = "●"
-			col = amber
+			g.drawWindow(screen, k)
 		}
-		note := ""
-		if !residentWindows[k] {
-			note = "（停時間）"
-		}
-		line(fmt.Sprintf("%d%s%s%s", k+1, mark, windowNames[k], note), col)
 	}
 
-	// 開著的視窗畫成疊在地圖上的框。內容還沒做——
-	// 現階段的重點是「開了會不會停時間」這條規則，不是視窗長什麼樣。
-	wy := bannerH + 16
-	for k := windowKind(0); k < numWindows; k++ {
-		if !g.open[k] {
-			continue
-		}
-		vector.DrawFilledRect(screen, 16, float32(wy), 300, 60, color.RGBA{0, 0, 0, 210}, false)
-		vector.StrokeRect(screen, 16, float32(wy), 300, 60, 1, amber, false)
-		g.td.Draw(screen, windowNames[k]+"視窗（尚未實作）", 24, wy+8, white)
-		if !residentWindows[k] {
-			g.td.Draw(screen, "此視窗開啟時，時間停止", 24, wy+30,
-				color.RGBA{240, 140, 140, 255})
-		}
-		wy += 68
-	}
-
-	// 底部狀態列自己鋪底，否則字會壓在地圖上看不清楚。
-	// **事件列與按鍵列分開兩行**——戰報比按鍵提示長得多，
-	// 擠在同一行會被畫到資訊欄上或直接跑出畫面。
+	// 事件列只在有事的時候出現，而且畫成一個視窗而不是貼在畫面底部的黑條。
 	if g.lastEvent != "" {
-		vector.DrawFilledRect(screen, 0, screenH-38, mapW, 19, color.RGBA{0, 0, 0, 210}, false)
-		g.td.Draw(screen, g.lastEvent, 4, screenH-36, amber)
+		w := g.td.Width(g.lastEvent) + 4*chrome.Tile
+		w = (w/chrome.Tile + 1) * chrome.Tile
+		x := (screenW - w) / 2 / chrome.Tile * chrome.Tile
+		g.chrome.Window(screen, x, screenH-40, w, 32, chrome.Menu)
+		g.td.Draw(screen, g.lastEvent, x+2*chrome.Tile, screenH-32, chrome.Paper)
 	}
-	vector.DrawFilledRect(screen, 0, screenH-19, mapW, 19, color.RGBA{0, 0, 0, 210}, false)
-	g.td.Draw(screen, "1-4 視窗　P 進言　A 編成　M 行軍　C 軍團　G 武將　F10 離開",
-		4, screenH-17, dim)
 	if !g.td.Available() {
-		g.td.Draw(screen, "（未載入字型）", mapW+6, screenH-17,
+		g.td.Draw(screen, "（未載入字型）", 8, screenH-20,
 			color.RGBA{240, 140, 140, 255})
 	}
 
@@ -635,6 +597,12 @@ func main() {
 	g := &game{lib: lib, world: w, rng: rng.Now(), speed: *speed,
 		td:       textdraw.New(font, ascii),
 		shotPath: *shot, shotAt: *shotFrames}
+	// 外框圖塊跟著季節換色組。缺素材時 Load 會回一個畫純色框的 Set，
+	// 不會讓遊戲開不起來。
+	g.chrome = chrome.Load(lib, int(w.Clock.Season()))
+	if !g.chrome.Available() {
+		log.Printf("⚠ 取不到 ICONGRF 段 3 的視窗外框，改畫純色框")
+	}
 	if *openWin >= 0 && *openWin < int(numWindows) {
 		g.open[*openWin] = true
 	}

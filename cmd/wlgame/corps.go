@@ -19,6 +19,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
+	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
@@ -109,9 +110,8 @@ func (g *game) drawForm(screen *ebiten.Image) {
 	if !f.active {
 		return
 	}
-	const x, y, w, h = 40, 52, 400, 214
-	vector.DrawFilledRect(screen, x, y, w, h, color.RGBA{0, 0, 0, 230}, false)
-	vector.StrokeRect(screen, x, y, w, h, 1, color.RGBA{240, 200, 120, 255}, false)
+	const x, y, w, h = 40, 56, 400, 216
+	g.chrome.Window(screen, x, y, w, h, chrome.Menu)
 
 	white := color.RGBA{240, 240, 230, 255}
 	amber := color.RGBA{240, 200, 120, 255}

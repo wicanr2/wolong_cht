@@ -5,11 +5,11 @@ import (
 	"image/color"
 
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/vector"
 
 	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/rules/persuasion"
 	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
+	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
@@ -192,11 +192,11 @@ func (g *game) drawAdvise(screen *ebiten.Image) {
 	dim := color.RGBA{150, 150, 160, 255}
 	red := color.RGBA{240, 140, 140, 255}
 
+	// 進言的視窗也走原版外框（ICONGRF 段 3）。尺寸先進位到 8 的倍數，
+	// 不然邊框會切在半塊上。
 	box := func(x, y, w, h int) {
-		vector.DrawFilledRect(screen, float32(x), float32(y), float32(w), float32(h),
-			color.RGBA{0, 0, 0, 225}, false)
-		vector.StrokeRect(screen, float32(x), float32(y), float32(w), float32(h),
-			1, amber, false)
+		up := func(v int) int { return (v + chrome.Tile - 1) / chrome.Tile * chrome.Tile }
+		g.chrome.Window(screen, x, y, up(w), up(h), chrome.Menu)
 	}
 	lh := textdraw.GlyphH + 2
 
@@ -215,7 +215,18 @@ func (g *game) drawAdvise(screen *ebiten.Image) {
 		if g.sess != nil {
 			h += 8 + 7*lh
 		}
-		box(40, 44, 420, h)
+		box(40, 44, 496, h)
+		// 說得是在跟**自己的君主**對話（玩家是軍師），所以右上角放君主頭像。
+		// 頁碼取武將記錄的 +0x01，不是武將編號（見 state.General.Portrait）。
+		if lord := g.world.Factions[g.world.Player].Lord; lord >= 0 &&
+			lord < len(g.world.Generals) {
+			if img, err := g.lib.Portrait(g.world.Generals[lord].Portrait,
+				int(g.world.Clock.Season())); err == nil {
+				op := &ebiten.DrawImageOptions{}
+				op.GeoM.Translate(float64(40+496-8-64), 52)
+				screen.DrawImage(ebiten.NewImageFromImage(img), op)
+			}
+		}
 		g.td.Draw(screen, "說　得　　對象 "+big5(g.world.LordName(g.target)),
 			48, 50, amber)
 		y := 70

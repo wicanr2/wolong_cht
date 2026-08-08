@@ -33,6 +33,10 @@ type Library struct {
 	Entries []Entry
 	Warns   []string // 餘數不是 0 之類的警告，呼叫端要顯示出來
 
+	// Chrome 是 ICONGRF 段 3 的原始位元組——視窗外框的圖塊在裡面。
+	// 用 gfx.RenderChrome ＋ gfx.ChromeEdge／ChromeCap／ChromeShaft 取。
+	Chrome []byte
+
 	// World 與 Tiles 是大地圖。原版是 384×256 格、每格 16×16 px，
 	// 整張攤開是 6144×4096 —— 不預先畫成一張圖，畫面要多少畫多少。
 	World *world.Map
@@ -107,6 +111,9 @@ func Load(dir string) (*Library, error) {
 		add("ICONGRF/"+r.Name, r.Spec, icon[r.Offset:r.Offset+r.Length])
 	}
 
+	// 段 3 是視窗外框（見 gfx/chrome.go）。整段留著，畫面層要哪一塊自己取。
+	lib.Chrome = icon[gfx.IconRegions[3].Offset : gfx.IconRegions[3].Offset+gfx.IconRegions[3].Length]
+
 	// 大地圖。缺檔或解不開就記進 Warns 而不是整個失敗 ——
 	// 檢視器的其他功能不該被它拖著一起壞。
 	if mapRaw, err := read(dir, "MMAP.MAP"); err != nil {
@@ -128,6 +135,35 @@ func (l *Library) RenderWorld(x0, y0, cols, rows, bank int) (*image.RGBA, error)
 		return nil, fmt.Errorf("大地圖沒有載入成功，看 Warns")
 	}
 	return l.World.Render(l.Tiles, l.Palette, bank, x0, y0, cols, rows)
+}
+
+// RenderChrome 畫出一塊視窗外框圖塊（8×8）。
+func (l *Library) RenderChrome(off, bank int) (*image.RGBA, error) {
+	if l.Chrome == nil {
+		return nil, fmt.Errorf("ICONGRF 段 3 沒有載入")
+	}
+	return gfx.RenderChrome(l.Chrome, off, l.Palette, bank)
+}
+
+// Portrait 畫出 KAOGRF 的第 page 張頭像。
+// page 要傳武將記錄的 `+0x01`（state.General.Portrait），**不是武將編號**。
+func (l *Library) Portrait(page, bank int) (*image.RGBA, error) {
+	for i, e := range l.Entries {
+		if e.Spec.Name == gfx.Kao.Name {
+			return l.Render(i, page, bank)
+		}
+	}
+	return nil, fmt.Errorf("KAOGRF 沒有載入")
+}
+
+// Banner 畫出最上方那條 640×32 的標題橫幅（ICONGRF 段 0）。
+func (l *Library) Banner(bank int) (*image.RGBA, error) {
+	for i, e := range l.Entries {
+		if e.Label == "ICONGRF/banner" {
+			return l.Render(i, 0, bank)
+		}
+	}
+	return nil, fmt.Errorf("ICONGRF 段 0 沒有載入")
 }
 
 // Render 畫出第 asset 種素材的第 page 張。
