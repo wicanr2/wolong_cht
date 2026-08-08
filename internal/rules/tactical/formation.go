@@ -84,6 +84,10 @@ func (f *Formations) Bounds(form int) (minX, maxX, minY, maxY int) {
 }
 
 // Line 把「自軍側／中央／敵軍側」換成戰場上的 X。
+//
+// 三個常數是原版指令 2 寫進 `word_1D33E` 的（58／36／16），
+// 而那個變數是**鏡射那一側**用的。另一側的原點要對稱過去，
+// 兩軍才會面對面——用 LineFor 取，不要直接用這個。
 func Line(choice int) int {
 	switch choice {
 	case 0:
@@ -93,6 +97,18 @@ func Line(choice int) int {
 	default:
 		return LineEnemy
 	}
+}
+
+// LineFor 回傳第 side 側在某個陣形線選擇下的原點 X。
+//
+// 鏡射那一側（1）直接用原版的常數；另一側對稱過去。
+// **兩側都選「自軍側」時，各自貼著自己那一邊的邊緣。**
+func LineFor(side, choice int) int {
+	l := Line(choice)
+	if side == 1 {
+		return l
+	}
+	return Width - 1 - l
 }
 
 // SyntheticFormations 造一組不需要原版檔的陣形，給測試與無資產環境用。

@@ -10,6 +10,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/rules/rng"
+	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
 )
 
 // 原版資產不隨本專案散布（CLAUDE.md §10），所以這些測試在沒有
@@ -821,4 +822,78 @@ func TestFormCorpsNeedsGeneralSlot(t *testing.T) {
 	if w.Corps[lord].Alive {
 		t.Error("失敗卻留下了軍團")
 	}
+}
+
+// 玩家的勢力捲進去就開戰術畫面，其餘自動判定——原版的分派規則。
+func TestPlayerBattleGoesTactical(t *testing.T) {
+	w := load(t, 0)
+	w.SetTactical(&TacticalSetup{
+		Forms: tactical.SyntheticFormations(),
+		Field: func(int, bool) *tactical.Field {
+			stack := make([][]int, tactical.Height)
+			for y := range stack {
+				stack[y] = make([]int, tactical.Width)
+			}
+			return tactical.NewField(stack, 0)
+		},
+	})
+	alive := w.AliveFactions()
+	a, b := alive[0], alive[1]
+	w.Player = a
+	for _, f := range []int{a, b} {
+		w.Factions[f].Reserves = [economy.NumTroopTypes]int{6000, 6000, 6000}
+	}
+	kinds := [army.Positions]army.TroopType{}
+	manned := [army.Positions]bool{true, true, true, true, true, true}
+	la, lb := w.Factions[a].Lord, w.Factions[b].Lord
+	if err := w.FormCorps(la, kinds, manned); err != nil {
+		t.Fatal(err)
+	}
+	if err := w.FormCorps(lb, kinds, manned); err != nil {
+		t.Fatal(err)
+	}
+	if err := w.March(la, w.Factions[b].Capital); err != nil {
+		t.Fatal(err)
+	}
+	if err := w.March(lb, w.Factions[a].Capital); err != nil {
+		t.Fatal(err)
+	}
+
+	r := rng.NewFixed(5)
+	for i := 0; i < 200000 && w.PendingBattle() == nil; i++ {
+		w.Tick(r)
+	}
+	p := w.PendingBattle()
+	if p == nil {
+		t.Fatal("玩家的軍團一路走到底都沒有開戰術畫面")
+	}
+	if got := p.Battle.Sides[0].Alive(); got != tactical.SoldiersOnFoot {
+		t.Errorf("攻方場上 %d 個兵，應為 %d", got, tactical.SoldiersOnFoot)
+	}
+
+	// 有戰鬥掛著的時候世界不前進。
+	before := w.Clock
+	w.Tick(r)
+	if w.Clock != before {
+		t.Error("戰術戰鬥還沒打完，世界卻繼續走了")
+	}
+
+	if !p.Battle.Run(200000) {
+		t.Fatal("戰術戰鬥跑不完")
+	}
+	ev := w.ResolvePending(r)
+	if ev == nil || ev.Battle == nil {
+		t.Fatal("結算不出結果")
+	}
+	if w.PendingBattle() != nil {
+		t.Error("結算完了卻還掛著")
+	}
+	// 結算完世界要能繼續走。
+	before = w.Clock
+	w.Tick(r)
+	if w.Clock == before {
+		t.Error("結算完世界還是停著")
+	}
+	t.Logf("戰術戰鬥 %d 幀，守方勝 %v；攻方剩 %d 點、守方剩 %d 點",
+		p.Battle.Frame, ev.Battle.DefenderWins, w.Corps[la].Men, w.Corps[lb].Men)
 }

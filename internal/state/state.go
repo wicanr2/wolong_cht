@@ -14,6 +14,7 @@ import (
 	"os"
 
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
+	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/rules/general"
@@ -172,6 +173,13 @@ type World struct {
 	// （`sub_1291A` 直接換算兩張表的位址，docs/re/09 §6）。
 	// 出貨的劇本檔裡全零：開局沒有軍團，玩家要自己編成。
 	Corps [numCorps]Corps
+
+	// tactical 是戰術戰鬥的戰場來源；nil 表示全部走自動判定。
+	tactical *TacticalSetup
+	// pending 是一場等著被跑完的戰術戰鬥。它還在的時候世界不前進。
+	pending *Pending
+	// rng 是給戰術層用的亂數源，開戰時記下來。
+	rng combat.Rand
 
 	// corpsCursor 是下一支要更新的軍團（原版 cs:0D18h）。
 	// 每 tick 只推進 16 支，所以掃完一輪要 8 個 tick。
@@ -376,6 +384,11 @@ type Event struct {
 // Tick 推進一個 tick。月結、季節、災害都掛在對應的進位事件上，
 // 順序照原版（docs/re/06 §5、docs/re/07 §1）。
 func (w *World) Tick(rng economy.Rand) Event {
+	// 有戰術戰鬥還沒打完，世界就停在那裡——原版進戰術畫面時戰略時間也停了。
+	if w.pending != nil {
+		return Event{HourFaction: -1}
+	}
+	w.rng = rng
 	ev := Event{Clock: w.Clock.Advance(), HourFaction: -1}
 
 	// 軍團先動。原版的主迴圈是「先 sub_125A3 再 sub_11D8E（時鐘）」，

@@ -411,6 +411,10 @@ func (w *World) resolveContact(i int, ev *CorpsEvent, rng combat.Rand) {
 }
 
 func (w *World) fight(att, def int, ev *CorpsEvent, m combat.Mode, garrison int, rng combat.Rand) {
+	// ⭐ 玩家的勢力捲進去就開戰術畫面，其餘自動判定（原版 `sub_14E5C`）。
+	if w.wantsTactical(att, def) && w.beginTactical(att, def, m, garrison) {
+		return
+	}
 	a, d := w.battle(att), w.battle(def)
 	r := combat.Resolve(&a, &d, m, garrison, rng)
 	w.applyBattle(att, a)

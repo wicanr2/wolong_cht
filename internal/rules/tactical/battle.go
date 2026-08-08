@@ -27,6 +27,10 @@ type Side struct {
 	// Mirror 為真表示這一側的陣形要左右鏡射（原版對 0x600 側 `neg dl`）。
 	Mirror bool
 
+	// Standing 是這一側目前的常令。補進場的兵接這個，**不是接隊長當下的命令**——
+	// 隊長正在退卻時，新兵一出來就跟著往回走，整個待機池會在幾百幀內流光。
+	Standing Command
+
 	// GateOpen 記錄守方是否已經開門。說明書 4.2：突擊會開門，
 	// 而**開了的門這場戰鬥不能再關**。
 	GateOpen bool
@@ -208,6 +212,9 @@ func (b *Battle) Order(side, squad int, c Command) {
 	lo, hi := 0, SoldiersOnFoot
 	if squad >= 0 {
 		lo, hi = squad*PerSquad, (squad+1)*PerSquad
+	} else if c != Retreat {
+		// 退卻是被動觸發的（受傷、大將不支），不該變成常令。
+		b.Sides[side].Standing = c
 	}
 	for i := lo; i < hi; i++ {
 		if b.Sides[side].Soldiers[i].Alive {
@@ -304,7 +311,7 @@ func (b *Battle) reinforce() {
 				s.Soldiers[j] = Soldier{
 					Alive: true, Kind: s.Soldiers[k*PerSquad].Kind,
 					HP: MaxHP, Stamina: StaminaFull, Target: -1,
-					Cmd: Form, Next: s.Soldiers[k*PerSquad].Cmd,
+					Cmd: Form, Next: s.Standing,
 					X: x, Y: y, Z: b.Field.StandLevel(x, y),
 				}
 				s.Soldiers[j].GoalX, s.Soldiers[j].GoalY = x, y
@@ -321,4 +328,46 @@ func sideName(i int) string {
 		return "攻方"
 	}
 	return "守方"
+}
+
+// ---------------------------------------------------------------------------
+// 與戰略層的換算
+// ---------------------------------------------------------------------------
+
+// MenPerSoldier 是戰場上一個兵等於戰略上幾個人。
+//
+// 說明書 4.1：「戦術では、**1兵士が戦略の兵数10人分に相当**します」。
+const MenPerSoldier = 10
+
+// Outcome 是一場戰術戰鬥的結果，換算回戰略層的單位。
+type Outcome struct {
+	AttackerWins bool
+	// Men[i] 是第 i 側剩下的人數（已經 × 10 換回戰略單位）。
+	Men [2]int
+	// GeneralHP[i] 是第 i 側大將的體力，供「被擒／逃脫」之類的後續判定參考。
+	GeneralHP [2]int
+	Frames    int
+}
+
+// Result 把戰鬥結果換算成戰略層看得懂的數字。
+func (b *Battle) Result() Outcome {
+	o := Outcome{AttackerWins: b.Winner == 0, Frames: b.Frame}
+	for i := range b.Sides {
+		o.Men[i] = b.Sides[i].Remaining() * MenPerSoldier
+		o.GeneralHP[i] = b.Sides[i].Soldiers[0].HP
+	}
+	return o
+}
+
+// Run 把戰鬥一路跑到結束，回傳結果。
+//
+// 給無頭環境（測試、cmd/wlsim）用；有畫面的呼叫端應該自己每幀呼叫 Step，
+// 因為**戰鬥中不能停時間**（說明書 4.1），畫面要跟著跑。
+//
+// maxFrames 是保險絲：真的跑不完就判平手（回傳 false）。
+func (b *Battle) Run(maxFrames int) bool {
+	for i := 0; i < maxFrames && !b.Done; i++ {
+		b.Step()
+	}
+	return b.Done
 }

@@ -254,6 +254,11 @@ func (g *game) Update() error {
 		g.quitting = true
 		return nil
 	}
+	// 戰場畫面獨佔一切——戰鬥中不能停時間，也不能開別的視窗。
+	if g.battleActive() {
+		g.updateBattle()
+		return nil
+	}
 	// 進言流程是模態的，優先吃輸入。
 	if g.adviseActive() {
 		g.updateAdvise()
@@ -391,6 +396,13 @@ func (g *game) clampCam() {
 }
 
 func (g *game) Draw(screen *ebiten.Image) {
+	if g.battleActive() {
+		g.drawBattle(screen)
+		if g.shotPath != "" && g.frame == g.shotAt {
+			g.saveShot(screen)
+		}
+		return
+	}
 	season := int(g.world.Clock.Season())
 
 	// 大地圖。四季調色盤直接吃時鐘算出來的季節——
@@ -574,6 +586,7 @@ func main() {
 	openAdvise := flag.Bool("open-advise", false, "截圖前先跑到說服畫面（驗收用）")
 	openForm := flag.Bool("open-form", false, "截圖前先編一支軍團並開編成畫面（驗收用）")
 	openCorps := flag.Bool("open-corps", false, "截圖前先編兩支軍團並開軍團一覽（驗收用）")
+	openBattle := flag.Bool("open-battle", false, "截圖前先開一場戰術戰鬥（驗收用）")
 	flag.Parse()
 
 	lib, err := library.Load(*dir)
@@ -622,6 +635,10 @@ func main() {
 		g.openGeneralList()
 		g.list.Move(2)
 		g.list.Confirm() // 展示反白狀態
+	}
+	g.installTactical(*dir + "/KI.EXE")
+	if *openBattle {
+		g.demoBattle()
 	}
 	if *openForm || *openCorps {
 		// 驗收用：直接編幾支軍團出來，免得截圖前要按一長串鍵。
