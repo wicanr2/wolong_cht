@@ -157,6 +157,14 @@ type Soldier struct {
 	// PathAt 是上次重算的幀，用來節流。
 	Path   *Waypoints
 	PathAt int
+
+	// Swapped 是「這一幀已經被別人換過位置了」（原版 `+0x00` 的 bit 6）。
+	//
+	// `sub_1B732` 換完會對被換的那一個 `or byte ptr [di], 40h`，
+	// 而 `sub_1B240` 在自己更新時 `and byte ptr [si], 0BFh` 清掉。
+	// **沒有這個旗標，兩個兵會原地互換到天荒地老**——
+	// `seg000:B56D` 的 `test byte ptr [di], 61h` 檢查的就是它（bit 6）。
+	Swapped bool
 }
 
 // IsGeneral 回報這是不是大將。原版用 `+0x04 == 0` 判。

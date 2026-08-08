@@ -406,3 +406,75 @@ func TestReinforcementsKeepSquadKind(t *testing.T) {
 		t.Errorf("補進來 %d 個大將——補兵抄了隊長的兵種", generals)
 	}
 }
+
+// ⭐ 撞到自己人是**對調位置**，不是擋下來也不是穿過去（`sub_1B732`）。
+func TestFriendlyCollisionSwaps(t *testing.T) {
+	b := newTestBattle(flatField())
+	a := &b.Sides[0].Soldiers[10] // 不是隊長，所以不是大將
+	c := &b.Sides[0].Soldiers[11]
+	a.Kind, c.Kind = Infantry, Infantry
+	a.X, a.Y, a.Z = 20, 20, 0
+	c.X, c.Y, c.Z = 21, 20, 0
+	a.Cmd, c.Cmd = Attack, Attack
+
+	if !b.tryMove(0, 10, 21, 20, 0) {
+		t.Fatal("撞到自己人應該換位成功")
+	}
+	if a.X != 21 || c.X != 20 {
+		t.Errorf("換位之後 a.X=%d c.X=%d，應為 21 與 20", a.X, c.X)
+	}
+	if !c.Swapped {
+		t.Error("被換的那一個要標記（原版 `or byte ptr [di], 40h`）")
+	}
+
+	// 標記的作用：**同一幀裡第三個人不能再跟它換**
+	// （`test byte ptr [di], 61h` 的 bit 6）。
+	d := &b.Sides[0].Soldiers[12]
+	d.Kind = Infantry
+	d.X, d.Y, d.Z = 19, 20, 0
+	if b.tryMove(0, 12, 20, 20, 0) {
+		t.Error("這一幀已經被換過的兵，不該再被第三個人換走")
+	}
+	// 那個兵自己更新時會把旗標清掉（`and byte ptr [si], 0BFh`）。
+	b.updateSoldier(0, 11)
+	if c.Swapped {
+		t.Error("兵自己更新時應該清掉「被換過」的旗標")
+	}
+}
+
+// 撞到敵人是**打他**，自己不動（`loc_1B5A1` → `sub_1B618`）。
+func TestEnemyCollisionAttacks(t *testing.T) {
+	b := newTestBattle(flatField())
+	a := &b.Sides[0].Soldiers[10]
+	e := &b.Sides[1].Soldiers[10]
+	a.Kind, e.Kind = Infantry, Infantry
+	a.X, a.Y, a.Z = 20, 20, 0
+	e.X, e.Y, e.Z = 21, 20, 0
+	hp := e.HP
+
+	if b.tryMove(0, 10, 21, 20, 0) {
+		t.Error("敵人擋著不該走得過去")
+	}
+	if a.X != 20 {
+		t.Errorf("撞到敵人卻移動了，X ＝ %d", a.X)
+	}
+	if e.HP >= hp {
+		t.Errorf("撞到敵人沒扣血（%d → %d）", hp, e.HP)
+	}
+}
+
+// 大將換不了位置（`cmp byte ptr [di+4], 0 / jz` ＝ 失敗）。
+func TestGeneralNeverSwaps(t *testing.T) {
+	b := newTestBattle(flatField())
+	g := &b.Sides[0].Soldiers[0] // 第 0 隊隊長 ＝ 大將
+	a := &b.Sides[0].Soldiers[10]
+	a.Kind = Infantry
+	g.X, g.Y, g.Z = 21, 20, 0
+	a.X, a.Y, a.Z = 20, 20, 0
+	if b.tryMove(0, 10, 21, 20, 0) {
+		t.Error("不該跟大將換位置")
+	}
+	if a.X != 20 || g.X != 21 {
+		t.Error("大將被換走了")
+	}
+}

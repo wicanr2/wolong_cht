@@ -45,6 +45,8 @@ func (s *Soldier) applyNewOrder() bool {
 // updateSoldier 是一個兵的一幀。
 func (b *Battle) updateSoldier(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
+	// 原版每個兵更新時先清掉「被換過」的旗標（`and byte ptr [si], 0BFh`）。
+	s.Swapped = false
 	b.lockOnNearest(side, k)
 	s.applyNewOrder()
 
@@ -263,26 +265,75 @@ func (b *Battle) tryMove(side, k, x, y, z int) bool {
 			return false
 		}
 	}
-	// 退卻中的兵可以穿過自己人——它正在從陣線裡撤出來。
-	// 原版怎麼處理還沒解，**這是 remake 的決定**：不讓它穿過去的話，
-	// 後排的兵會把前排堵死，整條輸送帶就卡住了。
-	if s.Cmd != Retreat && b.occupied(x, y, z) {
-		return false
+	// 有人擋著 → 走碰撞處理（`loc_1B533`）。**敵我分兩條路**：
+	//
+	//	敵人擋路 → 打他（`loc_1B5A1` → `sub_1B618`），自己不動
+	//	自己人擋路 → **兩個對調位置**（`loc_1B56D` → `sub_1B732`）
+	//
+	// 分敵我那一行是 `cmp di, <立即值>`，而那個立即值是
+	// **自我修改碼**寫進去的（`byte_1B562`／`byte_1B56A`，由 `sub_19A33`
+	// 依雙方的編號範圍填）——這是本作第四處自我修改碼。
+	if side2, k2 := b.anyoneAt(x, y, z); k2 >= 0 {
+		if side2 != side {
+			e := &b.Sides[side2].Soldiers[k2]
+			if !e.IsGeneral() {
+				b.hit(side, e, meleePower)
+			}
+			return false
+		}
+		return b.swapWith(side, k, side2, k2)
 	}
 	s.X, s.Y, s.Z = x, y, z
 	return true
 }
 
-// occupied 回報那一格上有沒有人。原版把佔用狀況寫在立體格上
-// （每格存「兵編號 + 1」，docs/re/11 §5.3）。
-func (b *Battle) occupied(x, y, z int) bool {
+// swapWith 重現 `seg000:B56D`–`B598` ＋ `sub_1B732`：
+// 條件符合就把兩個兵的座標對調，回傳 true（＝「走成功了」）。
+//
+// 擋路的一方符合下列任一條就不換（原版 `jz/jnz loc_1B59E` ＝ 失敗）：
+//
+//	[di+04] == 0     擋路的是**大將**
+//	[di+1A] == 5     擋路的正在**退卻**
+//	[di] & 0x61      bit 6 ＝ **這一幀已經被換過**（`sub_1B732` 設、
+//	                 `sub_1B240` 清）；bit 0／5 未解
+//	[di+02] & 0x10   ⚠ 旗標未解
+//
+// 通過之後還分兩種：
+//
+//	同一層（`[si+1E] == [di+1E]`，那是 Z 平面的位址高位）→ 直接換
+//	不同層                                              → **兩邊都要是弓兵或步兵**
+//	                                                      （`cmp [si+4], 12h / jbe` 兩次）
+//
+// 所以**大將與騎馬跨不了層換位**——它們本來就爬不上城牆。
+func (b *Battle) swapWith(side, k, side2, k2 int) bool {
+	_ = side2 // 走到這裡時一定同側
+	me := &b.Sides[side].Soldiers[k]
+	other := &b.Sides[side2].Soldiers[k2]
+
+	// bit 6：這一幀已經被換過了就不能再換，否則兩個兵會原地互換不停。
+	if other.Swapped || other.IsGeneral() || other.Cmd == Retreat {
+		return false
+	}
+	// 跨層對調只有弓兵與步兵做得到。
+	if me.Z != other.Z && (!me.CanClimb() || !other.CanClimb()) {
+		return false
+	}
+	me.X, other.X = other.X, me.X
+	me.Y, other.Y = other.Y, me.Y
+	me.Z, other.Z = other.Z, me.Z
+	other.Swapped = true
+	return true
+}
+
+// anyoneAt 回傳站在那一格的兵（側別與索引），沒有人回 (0, −1)。
+func (b *Battle) anyoneAt(x, y, z int) (int, int) {
 	for i := range b.Sides {
 		for k := range b.Sides[i].Soldiers {
 			s := &b.Sides[i].Soldiers[k]
 			if s.Alive && s.X == x && s.Y == y && s.Z == z {
-				return true
+				return i, k
 			}
 		}
 	}
-	return false
+	return 0, -1
 }
