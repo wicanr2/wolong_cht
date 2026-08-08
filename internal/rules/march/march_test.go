@@ -41,20 +41,11 @@ func TestSameNodeIsNotUnreachable(t *testing.T) {
 	}
 }
 
-func TestAdjacencyIsUndirected(t *testing.T) {
-	g := sample()
-	if !g.Adjacent(0, 1) || !g.Adjacent(1, 0) {
-		t.Fatal("邊應該是雙向的")
-	}
-	if g.Adjacent(0, 3) {
-		t.Fatal("沒有邊的兩點不該相鄰")
-	}
-}
 
 func TestNilGraphIsSafe(t *testing.T) {
 	// 沒有原版素材時圖是 nil，呼叫端會退回直線移動——**不能 panic**。
 	var g *Graph
-	if g.Route(0, 1) != nil || g.Adjacent(0, 1) || g.Neighbours(0) != nil {
+	if g.Route(0, 1) != nil || g.CellRoute(0, 1) != nil || g.Distance(0, 1) != -1 {
 		t.Fatal("nil 圖應該安靜地回空值")
 	}
 }

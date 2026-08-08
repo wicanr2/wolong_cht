@@ -91,30 +91,6 @@ func (g *Graph) CellRoute(from, to int) [][2]int {
 	return out
 }
 
-// Neighbours 回傳與 node 直接相連的據點。
-func (g *Graph) Neighbours(node int) []int {
-	if g == nil || node < 0 || node >= len(g.adj) {
-		return nil
-	}
-	out := make([]int, 0, len(g.adj[node]))
-	for _, l := range g.adj[node] {
-		out = append(out, l.to)
-	}
-	return out
-}
-
-// Adjacent 回報兩個據點是不是直接相連。
-func (g *Graph) Adjacent(a, b int) bool {
-	if g == nil || a < 0 || a >= len(g.adj) {
-		return false
-	}
-	for _, l := range g.adj[a] {
-		if l.to == b {
-			return true
-		}
-	}
-	return false
-}
 
 // Route 找 from 到 to 的最短路，回傳**含頭尾**的據點序列。
 //

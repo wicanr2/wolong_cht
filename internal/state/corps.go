@@ -358,15 +358,12 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 
 // step 把軍團往目標推進一格，回傳有沒有真的動。
 //
-// **走的是道路圖上的路線**（`Route`）：一次朝下一個中繼據點移動，
-// 到了就換下一個。道路圖從 `MMAP` 推導（`internal/assets/world`），
-// 沒有它時 `Route` 是空的，退回原本的直線逼近。
+// **逐格走在原版的道路上。** 路徑是 `internal/assets/world` 用
+// 原版的走訪常式（`sub_1E81C`／`sub_1E961`）算出來的，
+// 不是最短路——原版照著畫出來的路走，會繞。
 //
-// ⚠ **段內仍是直線，不是原版的路徑點。** 原版沿著載入時建好的連結表
-// 逐格走，每條路都有自己的路徑點序列（`docs/re/08` §7.3）。
-// 這裡在**相鄰**據點之間走直線——比先前「橫跨整張地圖的直線」近得多
-// （會經過正確的中繼據點、總距離也對），但轉折的形狀還不是原版的。
-// **標成 remake 差異。**
+// 沒有道路圖時（缺原版素材）`routes` 是空的，退回直線逼近：
+// **缺素材要能降級跑，不是整個動不了。**
 func (w *World) step(i int) bool {
 	c := &w.Corps[i]
 
@@ -695,8 +692,6 @@ func (w *World) March(corps, node int) error {
 // 不是整個動不了。
 func (w *World) SetRoads(g *march.Graph) { w.roads = g }
 
-// Roads 回傳目前掛著的道路圖，可能是 nil。
-func (w *World) Roads() *march.Graph { return w.roads }
 
 // AliveCorps 回傳還在的軍團編號。
 func (w *World) AliveCorps() []int {
