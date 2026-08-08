@@ -18,6 +18,7 @@ import (
 
 	"github.com/wicanr2/wolong_cht/internal/assets/battle"
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
+	"github.com/wicanr2/wolong_cht/internal/rules/battlefield"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
 	"github.com/wicanr2/wolong_cht/internal/state"
@@ -242,19 +243,53 @@ func loadBattleLibrary(dir string) *battle.Library {
 
 // buildField 取一張戰場。
 //
-// 攻城戰的戰場編號就是據點編號（`docs/re/05`），野戰的是 0xC0 以上。
-// ⚠ **野戰的戰場該挑哪一張還沒接**——原版是依軍團所在格與周圍的地形
-// 即時算出來的（`sub_14B63`），那需要大地圖的地形類型表。
-// 這裡先固定用 198（平原 ＋ 平原，最常見的那一張）。
+//   - **攻城戰**：戰場編號就是據點編號（`docs/re/05`）
+//   - **野戰**：從大地圖上即時算（`internal/rules/battlefield`）——
+//     取軍團所在格與下方四格的地形類型去配一張 21 筆的表
 func (g *game) buildField(node int, siege bool) *tactical.Field {
 	n := node
 	if !siege {
-		n = 198
+		n = g.fieldForNode(node)
 	}
 	if g.battleLib == nil || n < 0 || n >= battle.NumFields {
 		return syntheticField(siege)
 	}
 	return tactical.NewField(g.battleLib.Stacks(n), g.battleLib.GateX(n))
+}
+
+// fieldForNode 依大地圖的地形算出野戰要用哪一張戰場。
+//
+// 取樣的五格與 `sub_14B63` 一致（中心、下、左下、右下、兩格下方）。
+// ⚠ **行進方向先固定用 2**——原版讀的是軍團記錄 `+0x08`，
+// 而那個欄位在本專案的軍團結構裡還沒接出來。
+func (g *game) fieldForNode(node int) int {
+	if g.lib == nil || g.lib.World == nil {
+		return battlefield.FieldBase + 6
+	}
+	// 野外的節點編號沒有座標，只有據點有；用據點的格座標取樣。
+	if node < 0 || node >= len(g.world.Cities) {
+		return battlefield.FieldBase + 6
+	}
+	cx, cy := g.world.Cities[node].X, g.world.Cities[node].Y
+	at := func(dx, dy int) int {
+		t, err := g.lib.World.Tile(cx+dx, cy+dy)
+		if err != nil {
+			return 0
+		}
+		return battlefield.Terrain(t)
+	}
+	n := battlefield.Neighbours{
+		Centre:    at(0, 0),
+		Down:      at(0, 1),
+		DownLeft:  at(-1, 1),
+		DownRight: at(1, 1),
+		TwoDown:   at(0, 2),
+	}
+	f, _ := battlefield.Select(2, n)
+	if f >= 209 && f <= 213 {
+		f = battlefield.SelectWater(f-battlefield.TerrainBase, g.rng.Next())
+	}
+	return f
 }
 
 // syntheticField 是沒有原版戰場資料時的替代品。幾何同尺寸，內容是自己生的。
@@ -289,7 +324,7 @@ func (g *game) attachScripts(p *state.Pending) {
 	}
 	field := p.Node
 	if p.Mode != combat.Siege {
-		field = 198
+		field = g.fieldForNode(p.Node)
 	}
 	cat := battle.Category(field)
 	for side, corps := range [2]int{p.Attacker, p.Defender} {
