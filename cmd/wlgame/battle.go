@@ -276,6 +276,15 @@ func (g *game) installTactical(dir string) {
 	}
 	lib := loadBattleLibrary(dir)
 	g.battleLib = lib
+	if raw, err := os.ReadFile(dir + "/BATTLE.SCH"); err == nil {
+		if sp, err := battle.ParseSprites(raw); err == nil {
+			g.battleSprites = sp
+		} else {
+			log.Printf("⚠ %v；兵會畫成色點", err)
+		}
+	} else {
+		log.Printf("⚠ 載不到 BATTLE.SCH（%v）；兵會畫成色點", err)
+	}
 	g.world.SetTactical(&state.TacticalSetup{
 		Forms: forms,
 		Field: func(node int, siege bool) *tactical.Field {

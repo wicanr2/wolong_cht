@@ -99,7 +99,8 @@ type game struct {
 	// 所以開著的時候時間會停（15-realtime.md §2）。
 	battleLib *battle.Library
 	// view 是戰場的等角繪圖資源。沒有原版美術時是 nil，畫面退回高度圖。
-	view *battleView
+	view          *battleView
+	battleSprites *battle.Sprites
 
 	list    *listwin.List
 	sortMem listwin.Memory

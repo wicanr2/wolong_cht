@@ -204,3 +204,52 @@ func TestSubTileIndexRange(t *testing.T) {
 		t.Errorf("子圖塊編號最大是 %d，預期 %d", max, NumSubTiles-1)
 	}
 }
+
+// `BATTLE.SCH` 與 `BATTLE.MDL` 的子圖塊是**同一個格式**。
+//
+// 同一條不變量（遮罩為 0 處四個色平面全 0）在這裡也必須 100% 成立，
+// 而且 360 個單位裡**只有 170 與 350 是全空的**——正好相差 180，
+// 那就是「兩側各 180 張」的證據。
+func TestSpriteFormatMatchesSubTile(t *testing.T) {
+	raw := mustRead(t, "BATTLE.SCH")
+	sp, err := ParseSprites(raw)
+	if err != nil {
+		t.Fatal(err)
+	}
+	bad := 0
+	for n := 0; n < NumSprites; n++ {
+		b := raw[n*SpriteUnit : (n+1)*SpriteUnit]
+		for i := 0; i < planeBytes; i++ {
+			var any byte
+			for p := 1; p <= 4; p++ {
+				any |= b[planeBytes*p+i]
+			}
+			bad += popcount(^b[i] & any)
+		}
+	}
+	if bad != 0 {
+		t.Errorf("有 %d 個位元違反「遮罩 0 → 色平面 0」——BATTLE.SCH 不是同一個格式", bad)
+	}
+
+	var empty []int
+	for n := 0; n < NumSprites; n++ {
+		s := sp.At(n)
+		if s == nil {
+			t.Fatalf("第 %d 張解不出來", n)
+		}
+		blank := true
+		for _, v := range s.Pix {
+			if v != Transparent {
+				blank = false
+				break
+			}
+		}
+		if blank {
+			empty = append(empty, n)
+		}
+	}
+	if len(empty) != 2 || empty[0] != EmptySprite ||
+		empty[1] != EmptySprite+SpritesPerSide {
+		t.Errorf("全空的是 %v，預期正好兩個且相差 %d", empty, SpritesPerSide)
+	}
+}

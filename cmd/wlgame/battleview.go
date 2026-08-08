@@ -57,6 +57,10 @@ type battleView struct {
 	// buf 是原生解析度的離屏畫布，畫完再整張放大。
 	buf *ebiten.Image
 
+	// sprites 是 `BATTLE.SCH` 的人物圖形，載不到就是 nil（兵畫成色點）。
+	sprites  *battle.Sprites
+	spCache  map[int]*ebiten.Image
+
 	camCol, camRow int
 }
 
@@ -72,8 +76,9 @@ func (g *game) newBattleView(field int) *battleView {
 	}
 	return &battleView{
 		lib: g.battleLib, set: g.battleLib.TileSet(field),
-		subs: g.battleLib.SubTiles(field),
+		subs:  g.battleLib.SubTiles(field),
 		cache: map[int]*ebiten.Image{}, pal: bank,
+		sprites: g.battleSprites, spCache: map[int]*ebiten.Image{},
 	}
 }
 
@@ -109,6 +114,53 @@ const (
 	minRow = -(tactical.Width - 1) / 2
 	maxRow = (tactical.Height-1)/2 + isoOriginY
 )
+
+// spriteSlot 決定一個兵要用第幾張人物圖形。
+//
+// ⚠ **這是 remake 的暫定對應，不是原版行為。** 已知的只有
+// 「一側 180 張、兩兩一組」（docs/formats/07 §10），180 張裡誰是誰
+// 還沒解——所以這裡只保證「不同兵種畫得不一樣、面向會換圖」。
+// 解出來之後要換掉整個函式。
+func spriteSlot(kind tactical.Kind, facing int) int {
+	base := 0
+	switch kind {
+	case tactical.Cavalry:
+		base = 60
+	case tactical.Archer:
+		base = 100
+	case tactical.Infantry:
+		base = 20
+	}
+	// 兩兩一組，所以方向的間隔取偶數。
+	return (base + facing*2) % battle.SpritesPerSide
+}
+
+// soldierImage 取一個兵的圖。
+func (v *battleView) soldierImage(side int, kind tactical.Kind, facing int) *ebiten.Image {
+	if v.sprites == nil {
+		return nil
+	}
+	n := side*battle.SpritesPerSide + spriteSlot(kind, facing)
+	if img, ok := v.spCache[n]; ok {
+		return img
+	}
+	s := v.sprites.At(n)
+	if s == nil {
+		v.spCache[n] = nil
+		return nil
+	}
+	rgba := image.NewRGBA(image.Rect(0, 0, battle.SubTileW, battle.SubTileH))
+	for y := 0; y < battle.SubTileH; y++ {
+		for x := 0; x < battle.SubTileW; x++ {
+			if c := s.At(x, y); c != battle.Transparent {
+				rgba.SetRGBA(x, y, v.pal[c&15])
+			}
+		}
+	}
+	img := ebiten.NewImageFromImage(rgba)
+	v.spCache[n] = img
+	return img
+}
 
 // centreOn 把相機對到某一格上，並夾在戰場的範圍內。
 func (v *battleView) centreOn(x, y, z int) {
@@ -219,6 +271,14 @@ func (g *game) drawBattleIso(screen *ebiten.Image, b *tactical.Battle, me *tacti
 			}
 			px, py, ok := v.ScreenPos(0, 0, s.X, s.Y, s.Z)
 			if !ok {
+				continue
+			}
+			if img := v.soldierImage(i, s.Kind, s.Facing); img != nil {
+				op := &ebiten.DrawImageOptions{}
+				// 腳底對準格子：圖高 32，站的那一格在最下面那 8 px。
+				op.GeoM.Translate(float64(px-battle.SubTileW/2),
+					float64(py-battle.SubTileH+isoRowPx))
+				v.buf.DrawImage(img, op)
 				continue
 			}
 			c := base

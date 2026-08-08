@@ -217,7 +217,15 @@ func (l *Library) SubTile(set, n int) *SubTile {
 		return t
 	}
 	base := MDLHeader + set*TileSetSize + subTileBase + n*SubTileSize
-	b := l.mdl[base : base+SubTileSize]
+	t := decodePlanar(l.mdl[base : base+SubTileSize])
+	l.sub[set][n] = t
+	return t
+}
+
+// decodePlanar 解一個 320 B 的單位：五個 64 B 位元平面，
+// 第一個是遮罩（1 ＝ 有畫），其餘四個是 4bpp 的色號。
+// `BATTLE.MDL` 的子圖塊與 `BATTLE.SCH` 的人物圖形用的是同一個格式。
+func decodePlanar(b []byte) *SubTile {
 	t := &SubTile{}
 	for y := 0; y < SubTileH; y++ {
 		for x := 0; x < SubTileW; x++ {
@@ -234,7 +242,6 @@ func (l *Library) SubTile(set, n int) *SubTile {
 			t.Pix[y*SubTileW+x] = int8(v)
 		}
 	}
-	l.sub[set][n] = t
 	return t
 }
 
