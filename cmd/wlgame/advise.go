@@ -48,20 +48,31 @@ func (g *game) closeAdvise() {
 func (g *game) situation(target int) persuasion.Situation {
 	me := g.world.Factions[g.world.Player]
 	them := g.world.Factions[target]
+	// 「有別的勢力正在侵攻我方」——停戰提案的「我正在防禦戰」用這個，
+	// 原版是 `sub_16577` 裡掃 22 個勢力的迴圈，**而且跳過交涉對象本身**。
+	anyone := false
+	for i := range g.world.Factions {
+		f := &g.world.Factions[i]
+		if f.Alive && i != target && f.InvasionTarget == g.world.Player {
+			anyone = true
+			break
+		}
+	}
 	return persuasion.Situation{
 		Aggression:  me.Aggression,
 		OurCities:   me.Cities,
 		TheirCities: them.Cities,
-		AllyCities:  them.Cities,
 		OurFunds:    me.Funds,
 		TheirFunds:  them.Funds,
 
-		// 交友度是**有向的**：這裡要的是自家君主看對方的值。
-		Friendship: g.world.Friendship[g.world.Player][target].Value(),
+		// 交友度是**有向的**，而且判定式要的是**含和平位元的原始值**
+		// （`0x80` ＝ 和平）——門檻常數本身就帶著它。
+		Friendship: g.world.Friendship[g.world.Player][target].Raw(),
 
 		TheyInvadeThirdParty: them.InvasionTarget != diplomacy.NoTarget &&
 			them.InvasionTarget != g.world.Player,
-		TheyInvadeUs: them.InvasionTarget == g.world.Player,
+		TheyInvadeUs:    them.InvasionTarget == g.world.Player,
+		AnyoneInvadesUs: anyone,
 	}
 }
 

@@ -60,17 +60,31 @@ type Situation struct {
 	// **不顯示給玩家**——玩家只能靠被拒絕的次數去推。
 	Aggression int
 
-	OurCities, TheirCities int // 國力 ＝ 據點數
-	AllyCities             int // 協力勢力的據點數
-	InvaderCities          int // 侵攻勢力的據點數
+	// 「對方」在三個指令裡指的不是同一個勢力：
+	//
+	//	敵對提案  想打的目標
+	//	停戰提案  想停戰的敵人
+	//	請求協助  **想一起打的侵攻對象**（協力對象另外放 Ally*）
+	OurCities, TheirCities int // 國力比較的據點數
+	AllyCities             int // 協力對象的據點數（只有請求協助用得到）
 
 	OurFunds, TheirFunds int // 疲弊 ＝ 資金 < 0
 
-	// Friendship 是自家君主看對方的交友值（0–100）。
+	// Friendship 是自家君主看「對方」的交友值，**含最高位的和平位元**
+	// （`0x80` ＝ 和平）。判定式直接拿原始值比，不要先去掉那個位元——
+	// 原版的門檻常數本身就帶著它。
 	Friendship int
+	// AllyFriendship 是看協力對象的交友值（只有請求協助用得到）。
+	AllyFriendship int
 
 	TheyInvadeThirdParty bool // 對方正在侵攻第三方
-	TheyInvadeUs         bool // 對方正在侵攻我方
+	TheyInvadeUs         bool // **對方**正在侵攻我方
+	// SameFactionPicked 為真表示請求協助時，協力對象與侵攻對象選成同一家。
+	SameFactionPicked bool
+	// AnyoneInvadesUs 為真表示**有任何一個別的勢力**（交涉對象除外）
+	// 把我方設成侵攻目標。停戰提案的「我正在防禦戰」用這個，
+	// 而請求協助用的是 TheyInvadeUs ——**同一個選項，兩個條件**。
+	AnyoneInvadesUs bool
 }
 
 // badFriendshipGate 是「交友關係惡」成立的交友值上限。
@@ -83,7 +97,38 @@ type Situation struct {
 // `好戰 × 2` 那個項確實存在，但它是**君主拒絕**的門檻
 // （見 FirstReaction），不是這個理由的門檻。
 // **一個猜測在錯的地方對，比全錯更難發現。**
-func badFriendshipGate(aggression int) int { return aggression + 15 }
+func badFriendshipGate(aggression int) int { return peaceBit + aggression + 15 }
+
+// goodFriendshipGate 是「交友關係良好」成立的下限（`sub_166D9`）：
+//
+//	交友度 ≥ 0x80 ＋ 好戰 × 4 ＋ 60
+//
+// ⚠ **它不是 badFriendshipGate 的反面。** 兩個門檻中間有一大段
+// 「既不算差、也不算好」——好戰 5 時是 `0xA0`–`0xD0`（32–80）。
+// 舊版把兩者寫成互補，於是那一段的判定必定有一邊是錯的。
+func goodFriendshipGate(aggression int) int { return peaceBit + aggression*4 + 60 }
+
+// peaceBit 是交友度最高位：設著 ＝ 和平。
+const peaceBit = 0x80
+
+// power 是 `sub_16A28` 的國力比較：兩邊各乘一個係數。
+//
+//	我方 ＝ 我方據點數 × (好戰 ＋ 20)
+//	對方 ＝ 對方據點數 × 25
+//
+// **平衡點在好戰 ＝ 5**：據點數相同時，好戰 5 的君主覺得是平手。
+// 劉禪 0、劉表 1、劉備 4 都在平衡點以下。
+//
+// ⚠ 三個指令拿它比的方向不同，而且**相等時兩邊都不成立**：
+//
+//	敵對「我國較有利」    我方 >  對方
+//	停戰「對我國較不利」  我方 <  對方
+//	協力「協力國強大」    我方 <  協力對象
+//
+// 舊版把後者寫成 `!weAreStronger`，於是相等時會誤判成「對我國較不利」。
+func power(ourCities, theirCities, aggression int) (ours, theirs int) {
+	return ourCities * (aggression + 20), theirCities * 25
+}
 
 // weAreStronger 是「我國較有利」的判準（`sub_16A28`）。
 //
@@ -96,37 +141,51 @@ func badFriendshipGate(aggression int) int { return aggression + 15 }
 // 原版是兩邊各乘一個係數的**乘法**，差別在據點數大的時候會拉開：
 // 10 vs 10 與 100 vs 100 在加法版是同一個答案，在原版不是。
 func weAreStronger(ourCities, theirCities, aggression int) bool {
-	return ourCities*(aggression+20) > theirCities*25
+	ours, theirs := power(ourCities, theirCities, aggression)
+	return ours > theirs
+}
+
+// theyAreStronger 是反向。**不是 weAreStronger 取反**——相等時兩者皆偽。
+func theyAreStronger(ourCities, theirCities, aggression int) bool {
+	ours, theirs := power(ourCities, theirCities, aggression)
+	return ours < theirs
 }
 
 // Applies 回報某個理由在這個局勢下是否「符合狀況」。
 //
+// **要傳指令**：同一個選項在不同指令下是**不同的條件**。
+// 最明顯的是「我正在防禦戰」——停戰提案掃全部 22 個勢力
+// （`sub_16577` 的 `mov cx, 16h` 迴圈），請求協助只看侵攻對象
+// （`sub_166D9` 的 `cmp al, byte_10CFF`）。
+//
 // **選到不符合的理由 → 說服失敗、信賴度下降。**
 // 所以這個函式的正確性直接決定玩家會不會被冤枉扣分。
-func (s Situation) Applies(r Reason) bool {
+func (s Situation) Applies(c Command, r Reason) bool {
 	switch r {
-	case FriendshipBad:
+	case FriendshipBad: // 敵對①
 		return s.Friendship < badFriendshipGate(s.Aggression)
-	case FriendshipGood:
-		return s.Friendship >= badFriendshipGate(s.Aggression)
-	case WeAreStronger:
+	case FriendshipGood: // 協力①，比的是**協力對象**
+		return s.AllyFriendship >= goodFriendshipGate(s.Aggression)
+	case WeAreStronger: // 敵對②
 		return weAreStronger(s.OurCities, s.TheirCities, s.Aggression)
-	case EnemyIsStronger:
-		// 反向用同一個式子取反——不是另外定義一條，
-		// 免得兩邊在邊界上同時成立或同時不成立。
-		return !weAreStronger(s.OurCities, s.TheirCities, s.Aggression)
-	case EnemyInvading:
+	case EnemyIsStronger: // 停戰①「對我國較不利」
+		return theyAreStronger(s.OurCities, s.TheirCities, s.Aggression)
+	case AllyIsStronger: // 協力②，比的是**協力對象**
+		return theyAreStronger(s.OurCities, s.AllyCities, s.Aggression)
+	case InvaderIsStronger: // 協力③「侵攻對象強大」
+		return theyAreStronger(s.OurCities, s.TheirCities, s.Aggression)
+	case EnemyInvading: // 敵對③／停戰③
 		return s.TheyInvadeThirdParty
 	case WeAreDefending:
+		// ⚠ 同一個選項，兩個條件。
+		if c == CeaseFire {
+			return s.AnyoneInvadesUs
+		}
 		return s.TheyInvadeUs
-	case EnemyExhausted:
+	case EnemyExhausted: // 敵對④，**對方**資金 < 0
 		return s.TheirFunds < 0
-	case WeAreExhausted:
+	case WeAreExhausted: // 停戰④，**我方**資金 < 0
 		return s.OurFunds < 0
-	case AllyIsStronger:
-		return s.AllyCities > s.OurCities
-	case InvaderIsStronger:
-		return s.InvaderCities > s.OurCities
 	case Withdraw:
 		return true // 隨時可用
 	}
@@ -252,7 +311,7 @@ func (s *Session) Offer(r Reason) (Outcome, int) {
 	}
 	s.used[r] = true
 
-	if !s.Situation.Applies(r) {
+	if !s.Situation.Applies(s.Command, r) {
 		return Failed, TrustOnFailure
 	}
 	s.need--
@@ -268,7 +327,7 @@ func (s *Session) Offer(r Reason) (Outcome, int) {
 // 而不是硬選一個不成立的理由（會扣信賴度）。
 func (s *Session) Exhausted() bool {
 	for _, r := range pools[s.Command] {
-		if !s.used[r] && s.Situation.Applies(r) {
+		if !s.used[r] && s.Situation.Applies(s.Command, r) {
 			return false
 		}
 	}
@@ -295,26 +354,63 @@ const (
 	AlreadyAtWar Reaction = 3
 )
 
-// FirstReaction 回傳君主的第一反應。
+// SameFaction ＝ 4：請求協助時協力對象與侵攻對象選成同一個。
+// `sub_13830` 對 ≥ 4 的碼一律顯示訊息 83「我想軍師並不是來談笑的。」
+const SameFaction Reaction = 4
+
+// FirstReaction 回傳君主的第一反應。**三個指令的判定式各自不同。**
 //
-// queued 是「事件佇列裡已經有一筆本勢力要打這個目標的宣戰事件」
-// （原版 `sub_1304E` 掃 `0x000`–`0x3FF`）。為真代表**自家勢力的 AI
-// 早就決定要打它了**——台詞「我也有同樣的想法」講的正是這件事，
-// 不是客套話，是同一個變數的兩端。
+//	敵對 `sub_16475`   佇列裡已有 → 1；交戰中 → 3；交友度 ≥ 好戰×2+20 → 0
+//	停戰 `sub_16577`   **和平中 → 3**（沒在打，停什麼）；交友度 < 好戰÷2 → 0
+//	協力 `sub_166D9`   兩個選同一家 → 4；交友對象太差 → 0；
+//	                   與侵攻對象和平中 → 3；被它打且國力不到它一半 → 1
 //
-// atWar 是「和平位元沒設」，也就是已經在交戰中。
+// 好戰等級在拒絕門檻上出現**三個不同的係數**（×2+20／÷2／×4+30）。
+// 看起來像可以合併，**不要合併**——那是三個獨立讀出來的常數。
 //
-// ⚠ **拒絕的門檻是 `好戰 × 2 ＋ 20`**，與 badFriendshipGate 的
-// `好戰 ＋ 15` 是兩條不同的線。舊版把 `10 + 好戰×2` 用在後者，
-// 形狀對、常數與位置都錯。
-func FirstReaction(s Situation, queued, atWar bool) Reaction {
-	switch {
-	case queued:
-		return Agree
-	case atWar:
-		return AlreadyAtWar
-	case s.Friendship >= s.Aggression*2+20:
-		return Refuse
+// queued 只有敵對用得到：事件佇列裡已經有一筆本勢力要打這個目標的宣戰事件
+// （原版 `sub_1304E`），代表自家 AI 早就想打它了，所以君主說
+// 「我也有同樣的想法」。
+func FirstReaction(c Command, s Situation, queued bool) Reaction {
+	atWarWithThem := s.Friendship&peaceBit == 0
+	// 去掉和平位元才是 0–127 的實值。原版一律先 `sub al, 80h`。
+	friend := s.Friendship &^ peaceBit
+
+	switch c {
+	case Hostility:
+		switch {
+		case queued:
+			return Agree
+		case atWarWithThem:
+			return AlreadyAtWar
+		case friend >= s.Aggression*2+20:
+			return Refuse
+		}
+	case CeaseFire:
+		switch {
+		case !atWarWithThem:
+			return AlreadyAtWar // 「原本就沒有和\3交戰啊！」
+		case friend < s.Aggression/2:
+			return Refuse
+		}
+	case Cooperate:
+		switch {
+		case s.SameFactionPicked:
+			return SameFaction
+		case s.AllyFriendship < peaceBit+s.Aggression*4+30:
+			return Refuse
+		case !atWarWithThem:
+			return AlreadyAtWar // 與侵攻對象還在和平
+		case s.TheyInvadeUs && weakerThanHalf(s):
+			return Agree
+		}
 	}
 	return AskReason
+}
+
+// weakerThanHalf 是協力那條「直接同意」的門檻：我方國力**不到對方的一半**
+// （`sub_16A28` 之後 `shr cx, 1`）。被打得夠慘，君主不必聽理由就答應。
+func weakerThanHalf(s Situation) bool {
+	ours, theirs := power(s.OurCities, s.TheirCities, s.Aggression)
+	return ours < theirs/2
 }

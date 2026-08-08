@@ -36,6 +36,11 @@ func (f Friendship) Value() int { return int(f) & 0x7F }
 // 位元清掉才代表開戰。
 func (f Friendship) AtWar() bool { return f&peaceBit == 0 }
 
+// Raw 是**含和平位元**的原始值。說服判定要的是這個——
+// 原版的門檻常數（`0x80 + 好戰 × 4 + 60` 之類）本身就帶著那個位元，
+// 傳 Value() 進去會讓每一道門檻都偏 128。
+func (f Friendship) Raw() int { return int(f) }
+
 // WithValue 換掉數值但保留交戰旗標。
 func (f Friendship) WithValue(v int) Friendship {
 	if v < 0 {
