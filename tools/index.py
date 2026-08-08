@@ -35,6 +35,7 @@
 只用標準函式庫。
 """
 import os
+import pathlib
 import re
 import sys
 
@@ -142,6 +143,38 @@ class Doc:
         return any(w in self.status for w in OPEN_WORDS)
 
 
+
+# 敘述「當初怎麼錯的」的用語。刻意窄——寧可漏抓也不要誤報，
+# 誤報會讓人把整個檢查關掉。
+NARRATIVE = re.compile(r"當初|先前寫|先前記|原本寫|舊版寫|後來發現|這一節的結論|錯掉的那")
+
+# 允許的地方：推翻紀錄本來就該集中在這裡。
+#   CONTEXT.md 的「已被推翻的斷言」整節
+#   CLAUDE.md 的「教訓」整節（那是規則不是敘事，但會引用具體案例）
+ALLOW_SECTIONS = ("已被推翻的斷言", "從前三個 remake 專案帶過來的教訓")
+
+
+def narrative_hits(path):
+    """回傳 (行號, 內容)。允許區段內的不算。
+
+    ⚠ `docs/playtest/` **整個目錄豁免**：那是有日期的實驗紀錄，
+    文類本身就是「當時跑了什麼、結果如何、哪條路走不通」。
+    對它套「只寫現況」會把紀錄的用途毀掉。
+    規範的對象是**宣稱現況的文件**：規格、反組譯筆記、機制文件。
+
+    誤報會讓人把整個檢查關掉，所以豁免要寫在這裡而不是靠人記得。
+    """
+    path = pathlib.Path(path)
+    if "playtest" in path.parts:
+        return []
+    out, allowed = [], False
+    for i, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        if line.startswith("#"):
+            allowed = any(a in line for a in ALLOW_SECTIONS)
+        if not allowed and NARRATIVE.search(line):
+            out.append((i, line.strip()))
+    return out
+
 def check(docs):
     problems = []
 
@@ -164,7 +197,25 @@ def check(docs):
                 f"但內文有 {len(solid)} 條 confirmed／READY 斷言"
                 f"（如 {'、'.join(solid[:3])}）——狀態行可能過時")
 
-    # ③ 同一個鍵在不同文件等級不同。
+    # ③ 正文在敘述「當初怎麼錯的」。
+    #
+    # 規則（`~/.claude/rulebook/63`）：斷言被推翻就把正文改寫成正確答案，
+    # 推翻紀錄集中到 CONTEXT.md 的「已被推翻的斷言」表，正文最多留一個指標。
+    #
+    # ⚠ **為什麼要做成檢查而不是再寫一遍規則**：63 的觸發條件全是稽核時
+    # （review／接續 worklist／斷言完成前），而違規發生在**寫入時**——
+    # 剛解出東西正要寫進文件那一刻，沒有任何觸發條件成立。
+    # 這個專案裡黏住的紀律都有測試；只靠記憶的規則在「剛解出東西」
+    # 那一刻最不可靠。第一次量到 18 行命中、9 個檔，那是預設寫法不是偶發。
+    for d in docs:
+        for n, line in narrative_hits(d.path):
+            problems.append(
+                f"{rel(d.path)}:{n}：正文在敘述當初怎麼錯的"
+                f"（{line[:34]}…）——改寫成正確答案，"
+                f"推翻紀錄放 CONTEXT.md 的「已被推翻的斷言」")
+
+    # ④ 同一個鍵在不同文件等級不同。
+
     #
     # ⚠ 這一項只**提醒**不擋，因為偏移鍵天生有歧義（同一個 `+0x08`
     # 在不同的表是不同欄位），冠了標題也還是可能誤報。
