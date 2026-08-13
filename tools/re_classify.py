@@ -29,6 +29,12 @@ KNOWN = {
     # 人事四支明明是 cx=0x0B/0x0C/0x0D/0x0E，卻全被標成「不能准許出兵進攻」。
     "sub_18810": ("顯示訊息", "cx", "talk", "docs/re/25 §2"),
     "sub_193E9": ("彈出選單", "cx", "talk", "docs/re/22 §4"),
+    # 繪圖共用層，見 docs/re/33（呼叫點數是挑選依據：24／9／7／3）
+    "sub_106FD": ("畫三個全形字（名稱欄）", None, None, "docs/re/33 §1"),
+    "sub_106F5": ("畫變長字串（NUL 結尾，自動全／半形）", None, None, "docs/re/33 §1"),
+    "sub_107D2": ("畫武將肖像（al＝武將編號，四格快取）", "al", None, "docs/re/33 §2"),
+    "sub_188B0": ("畫勢力名（＝君主姓名）", None, None, "docs/re/33 §1"),
+    "sub_15CE0": ("小地圖畫單一據點（四色）", None, None, "docs/re/33 §3"),
     "sub_1E453": ("讀滑鼠熱區編號", None, None, "docs/re/22 §2"),
     "sub_121E7": ("等待按鍵（CF=1 為右鍵取消）", None, None, "docs/re/22 §2"),
     "sub_12078": ("游標狀態保存", None, None, "docs/re/22 §3.3"),
@@ -48,7 +54,7 @@ KNOWN = {
     "sub_17C6E": ("數值編輯視窗（ax＝上限）", "ax", None, "docs/re/13"),
     "sub_17663": ("選武將", None, None, "docs/re/22 §3.0"),
     "sub_1ECE0": ("亂數", None, None, "docs/re/10"),
-    "sub_1062F": ("印數字", None, None, "docs/re/06"),
+    "sub_1062F": ("印數字（bl＝位數、bh＝背景:前景）", None, None, "docs/re/28 §2"),
     "sub_101B4": ("繪圖狀態保存", None, None, None),
     "sub_101DB": ("繪圖狀態復原", None, None, None),
 }
@@ -163,11 +169,8 @@ def main():
     want = "T4"
     if "--tier" in sys.argv:
         want = sys.argv[sys.argv.index("--tier") + 1]
-    # 預設把目錄本身排除——它逐支登記了每個未讀函式，不排除就會把
-    # 「已登記」誤算成「已讀懂」，T4 直接歸零（見 re_coverage.scan_mentions）。
-    exclude = ["docs/re/24-unread-function-catalogue.md"]
-    if "--include-catalogue" in sys.argv:
-        exclude = []
+    # 排除清單與 re_coverage 共用同一份 CATALOGUES，兩支才不會給出不同的數字。
+    # 目錄型文件逐支登記未讀函式，不排除就會把「已登記」誤算成「已讀懂」。
 
     talk = load_talk()
     funcs = load_census(census_p)
@@ -175,7 +178,8 @@ def main():
 
     # 分級沿用 re_coverage.py 的定義，這裡重算一次以免兩支不同步。
     sys.path.insert(0, os.path.join(REPO, "tools"))
-    from re_coverage import scan_mentions, tier, segment_of, SEGMENTS
+    from re_coverage import scan_mentions, tier, segment_of, SEGMENTS, CATALOGUES
+    exclude = [] if "--include-catalogue" in sys.argv else list(CATALOGUES)
     hits = scan_mentions(REPO, exclude=exclude)
     for ea, f in funcs.items():
         f["tier"] = tier(hits.get(ea, set()))
