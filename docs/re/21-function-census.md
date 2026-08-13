@@ -157,15 +157,21 @@ T1 佔函式數 44% 卻佔程式碼 54%，表示**已解的偏向大函式**—�
 | 所在函式 | 位址 | 指令 | 分級 |
 |---|---|---|---|
 | `sub_103E6`／`sub_1054D`／`sub_1059B` | `10401`／`10592`／`105E4` | `call cs:word_1036D` | T4 |
-| `sub_1820E`／`sub_184DD`／`sub_1851A`／`sub_18546` | 四處 | `call cs:word_181A6`／`word_181A8` | T4 |
 | `sub_15FAA` | `15FDC` | `call word ptr [bx+6056h]` | T4 |
 | `sub_1E9C1` | `1E9F9` | `call word ptr [bx-15F3h]` | T4 |
 | `sub_1ACD6` | `1ACF6` | `call cs:funcs_1ACF6[di]` | T3 |
 | `sub_1BFF2` | `1C006` | `call word ptr [bx-3FB8h]` | T1 |
 
-`word_181A6` 在靜態影像裡是 `07 1F C3 90`（`pop es; pop ds; retn; nop`），
-也就是**開機時它指向的位置是一段 return stub**，實際目標由 runtime 填。
-四支呼叫它的函式都是 T4。這一組要靠動態 trace，靜態讀不出來。
+`word_181A6`／`word_181A8` 這一組**已解，靜態就夠**（見
+[`26-list-window-engine.md`](26-list-window-engine.md) §3.1）：
+它們是一覽表引擎的 callback 槽，八個呼叫端在進入 `sub_1820E` 時
+用立即值把自己的 callback 位址傳進來，所以候選集合有限且已知。
+
+靜態影像裡它們指向 `07 1F C3 90`（`pop es; pop ds; retn; nop`）確實是 return stub，
+但那只說明**初值**是安全預設，不代表目標不可解。
+
+**規則**：看到「全域函式指標」不要先判定要動態 trace。**先找誰寫它**——
+寫入端如果是立即值，靜態就能把候選集合封口。
 
 ## 8. 怎麼重跑
 
