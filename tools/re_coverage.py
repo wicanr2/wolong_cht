@@ -68,8 +68,14 @@ def load_census(path):
     return funcs, callers, icalls
 
 
-def scan_mentions(repo):
-    """回傳 symbol -> 提到它的檔案集合。"""
+def scan_mentions(repo, exclude=()):
+    """回傳 symbol -> 提到它的檔案集合。
+
+    `exclude` 是路徑片段清單，命中的檔案不計入。用途只有一個：
+    **目錄型文件會把自己算進覆蓋率**。`docs/re/24` 逐支登記了每個未讀函式，
+    掃描一跑，287 支全部從「沒被提過」升級成「已寫進 docs/re/」，
+    指標歸零而實際上一支都沒多讀。排除它才量得到真正讀過的部分。
+    """
     hits = collections.defaultdict(set)
     roots = ["docs", "internal", "cmd", "tools", "translations"]
     files = []
@@ -92,6 +98,8 @@ def scan_mentions(repo):
         except OSError:
             continue
         rel = os.path.relpath(path, repo)
+        if any(x in rel.replace(os.sep, "/") for x in exclude):
+            continue
         for m in SYM.finditer(text):
             hits[int(m.group(1), 16)].add(rel)
     return hits
