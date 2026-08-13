@@ -209,6 +209,7 @@ tools/ida.sh raw    dosv idat -A "-S/work/tools/ida_func.idc sub_12E89" KI.EXE.i
 | `ida_dispatch_tables.idc` | 攤開間接分派跳表的內容 |
 | `ida_hot_helpers.idc` | 被大量未讀函式呼叫的共用常式 |
 | `ida_dump_bytes.idc` | 指定範圍的原始 bytes |
+| **`ida_scan.py`** | **IDAPython**：全庫掃「對 `[reg+disp]` 寫立即值」（解碼運算元，不比對文字）＋ 指定函式 dump。新腳本照這一支的骨架寫 |
 
 三支 Python 把上面的輸出變成可查的表：
 
@@ -229,9 +230,16 @@ grep `.asm` 只能從呼叫端的參數順序反推——那是間接證據，�
 
 四條硬知識：
 
-1. **IDAPython 在這個 image 跑不起來，要寫 IDC。**
-2. **headless 的 `print`／`Message()` 不進 stdout**，腳本一律 `fopen` 寫檔。
+1. **優先寫 IDAPython，不要寫 IDC。** `tools/ida.sh script` 看到 `.py` 就自動換到
+   `ida-pro-9.4-idapython:py312-v1`。**基底 image 跑 IDAPython 是零輸出的靜默失敗**，
+   所以找不到那顆 image 時要停下來建它，不要退回基底重試。
+   IDC 缺一半內建函式（`get_func_qty()` 就不存在），而**缺函式在 headless 底下
+   是靜默中止**——已寫進緩衝的輸出一起消失，exit code 還是 0。
+2. **headless 的 `print`／`Message()` 不進 stdout**，腳本一律寫檔。
    不寫檔就等於沒跑，而且 exit code 還是 0。
+   **輸出檔裡要放 probe**（函式數、輸入檔 SHA-256）——沒有它就分不出
+   「沒找到」與「沒跑到」。容器的 locale 不是 UTF-8，寫檔一律明寫
+   `encoding="utf-8"`，否則會在第一個中文字炸掉並留下一份看似截斷的輸出。
 3. **讀寫判定用 `XrefType()`**（`dr_O=1` 取位址／`dr_W=2` 寫／`dr_R=3` 讀），
    不要比對助憶碼字串，也不要看 `print_operand(x,0)`。
    `call` 的 cref 也要濾：`fl_CN=16`／`fl_CF=17` 才是呼叫邊，`fl_F=21` 是循序落下。

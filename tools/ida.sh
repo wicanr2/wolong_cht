@@ -3,9 +3,15 @@
 #
 #   tools/ida.sh batch <版本> <執行檔>       產 .i64 + .asm
 #   tools/ida.sh raw   <版本> <idat 參數…>   直接下 idat 指令（會改寫 .i64）
-#   tools/ida.sh script <版本> <腳本.idc>    對 .i64 的唯讀副本跑腳本
+#   tools/ida.sh script <版本> <腳本.idc|.py>  對 .i64 的唯讀副本跑腳本
 #
 # <版本> = dosv | pc98，對應 workplace/ida/<版本>/
+#
+# ⭐ 腳本副檔名是 .py 就自動換到修好 IDAPython 的 image
+# （ida-pro-9.4-idapython:py312-v1）。**基底 image 跑 IDAPython 是零輸出的
+# 靜默失敗，而且 exit code 不可信**——所以這裡用副檔名決定 image，
+# 不讓呼叫端記得要換。優先寫 IDAPython：有 idautils／ida_funcs／ida_xref，
+# 不必跟 IDC 缺哪個內建函式搏鬥。
 #
 # script 模式存在的理由：idat 一開啟 .i64 就會改寫它的雜湊，
 # 而筆記要靠雜湊標明「這個結論是在哪一份資料庫上驗的」。
@@ -13,6 +19,7 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 IMAGE=ida-pro-9.4-ver2
+IMAGE_PY=ida-pro-9.4-idapython:py312-v1
 MODE="$1"; VER="$2"; shift 2
 WORK="$ROOT/workplace/ida/$VER"
 mkdir -p "$WORK"
@@ -48,13 +55,26 @@ case "$MODE" in
     IDC="$1"; DB="${2:-KI.EXE.i64}"
     SCRATCH="$WORK/census"
     mkdir -p "$SCRATCH"
+    # .py 走修好 IDAPython 的 image；.idc 走基底。副檔名決定，不靠紀律。
+    IMG="$IMAGE"
+    case "$IDC" in
+      *.py)
+        IMG="$IMAGE_PY"
+        docker image inspect "$IMG" >/dev/null 2>&1 || {
+          echo "[ida.sh] 找不到 $IMG。IDAPython 在基底 image 上是靜默失敗，" >&2
+          echo "         不要退回基底重試——先建 image，Dockerfile 見" >&2
+          echo "         ~/.claude/knowledge-base/retro/assets/ida-pro-9.4-idapython.Dockerfile" >&2
+          exit 3; }
+        ;;
+    esac
     echo "來源資料庫："; sha256sum "$WORK/$DB"
+    echo "image：$IMG"
     cp -f "$WORK/$DB" "$SCRATCH/$DB"
     chmod u+w "$SCRATCH/$DB"
     docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
       --network none --memory 4g --pids-limit 256 \
       -v "$SCRATCH:/work" -v "$ROOT/tools:/tools:ro" -w /work \
-      "$IMAGE" idat -A "-S/tools/$(basename "$IDC")" "$DB"
+      "$IMG" idat -A "-S/tools/$(basename "$IDC")" "$DB"
     fix_owner "$SCRATCH"
     echo "原始資料庫雜湊（應與上方相同）："; sha256sum "$WORK/$DB"
     ;;
