@@ -22,7 +22,7 @@
 | [`docs/mechanics/00-index.md`](mechanics/00-index.md) | 00 — 遊戲機制索引 | 索引與推論等級定義，長期有效。 | 2026-08-08 |
 | [`docs/mechanics/10-strategy.md`](mechanics/10-strategy.md) | 10 — 大地圖政略 | 指令清單完整；部分戰略數值與 AI 決策已由機器碼解出並實作，仍有未解公式。 | 2026-08-13 |
 | [`docs/mechanics/15-realtime.md`](mechanics/15-realtime.md) | 15 — 即時制的時間模型 | ✅ READY。整條時間鏈已在機器碼裡讀出來。 | 2026-08-08 |
-| [`docs/mechanics/20-military.md`](mechanics/20-military.md) | 20 — 行軍與軍團 | 道路網與行軍已解並實作；AI 軍團編成來源已解並接入，玩家編成的完整戰力換算仍未完。 | 2026-08-13 |
+| [`docs/mechanics/20-military.md`](mechanics/20-military.md) | 20 — 行軍與軍團 | 道路網與行軍已解並實作；AI 與玩家的編成流程都已解； 六個位置怎麼換算成戰力仍未完。 | 2026-08-13 |
 | [`docs/mechanics/30-combat.md`](mechanics/30-combat.md) | 30 — 戰場（戰術） | 進場規則與戰略層的自動判定全解；戰術核心已接入並實作，完整結算與少數分支未完 | 2026-08-09 |
 | [`docs/mechanics/40-economy.md`](mechanics/40-economy.md) | 40 — 經濟：資金與預備兵 | 機制與公式都已解 | 2026-08-08 |
 | [`docs/mechanics/50-diplomacy.md`](mechanics/50-diplomacy.md) | 50 — 外交 | 成立條件與外交官的數值都已解 | 2026-08-13 |
@@ -86,6 +86,7 @@
 | [`docs/re/27-list-row-fields.md`](re/27-list-row-fields.md) | 27 — 一覽表的逐列繪製與外交關係等級 | 四個家族的逐列常式全部讀完，欄位對照 confirmed；兵力的 ×10 顯示、 三條換色規則與外交關係六級換算 c… | 2026-08-13 |
 | [`docs/re/28-text-number-rendering.md`](re/28-text-number-rendering.md) | 28 — 文字與數字的繪製層 | 數字繪製、兩支字串繪製與 EGA 平面寫入方式 confirmed。 單字元 blitter loc_1F75E 與… | 2026-08-13 |
 | [`docs/re/29-font-service-int15.md`](re/29-font-service-int15.md) | 29 — 原版怎麼顯示中文：INT 15h 字型服務與 END_S13/S14.DAT | 整條鏈 confirmed（靜態）。KI.EXE 側走 DOS/V 的 INT 15h AH=50h 向常駐服務要字… | 2026-08-13 |
+| [`docs/re/30-corps-formation-ui.md`](re/30-corps-formation-ui.md) | 30 — 軍團編成畫面：兵員池、兵種切換與派生數值 | 編成畫面的主迴圈與三支被它呼叫的常式 confirmed。 兵員池的搬運方向、兵種切換的循環、確定的前提條件與移動間… | 2026-08-13 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-13 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -95,10 +96,10 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 147 條。**要查「這件事解了沒」先看這裡**，
+共 146 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
-### confirmed（75 條）
+### confirmed（77 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -111,6 +112,8 @@
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x00 | `docs/formats/08-sinario-save.md` |
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x01 | `docs/formats/08-sinario-save.md` |
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x02 | `docs/formats/08-sinario-save.md` |
+| 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x06 | `docs/formats/08-sinario-save.md` |
+| 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x08 | `docs/formats/08-sinario-save.md` |
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x14 | `docs/formats/08-sinario-save.md` |
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x18 | `docs/formats/08-sinario-save.md` |
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x1A | `docs/formats/08-sinario-save.md` |
@@ -178,14 +181,11 @@
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x1E | `docs/re/08-hourly-update.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x20 | `docs/re/08-hourly-update.md` |
 
-### 強證據（29 條）
+### 強證據（26 條）
 
 | 鍵 | 出處 |
 |---|---|
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x03 | `docs/formats/08-sinario-save.md` |
-| 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x04 | `docs/formats/08-sinario-save.md` |
-| 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x06 | `docs/formats/08-sinario-save.md` |
-| 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x08 | `docs/formats/08-sinario-save.md` |
 | 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x11 | `docs/formats/08-sinario-save.md` |
 | 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x12 | `docs/formats/08-sinario-save.md` |
 | 2. 地形類型對映表（confirmed） ▸ 0 | `docs/mechanics/30-combat.md` |

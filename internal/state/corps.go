@@ -146,11 +146,12 @@ func byteFromKind(t army.TroopType) byte { return byte(t) + 1 }
 // 移動間隔。純騎馬編成走得快（說明書 5.5「騎馬隊のみの軍団は
 // 移動速度が速くなります」）。
 //
-// ⚠ **實際數值還沒反組譯出來**，這兩個是 remake 的暫定值，
-// 只保證「純騎馬比較快」這個方向。
+// 數值出自 `sub_16FD2`：掃六個槽，只要有一槽兵種不是騎馬就記一個旗標，
+// 最後 `+0x1E` ＝ 全騎馬 2、否則 3（`docs/re/30` §5）。
+// **混編一律同速**——多摻一種兵不會更慢。
 const (
-	IntervalCavalry = 6
-	IntervalMixed   = 9
+	IntervalCavalry = 2
+	IntervalMixed   = 3
 )
 
 // FormCorps 編成一支軍團（原版 `sub_16F26`）。
@@ -230,7 +231,9 @@ func (w *World) FormCorps(leader int, kinds [army.Positions]army.TroopType,
 	if allCav {
 		c.Interval = IntervalCavalry
 	}
-	c.Timer = c.Interval
+	// 原版的 `sub_16FD2` 每次重算都把 `+0x0B` 寫成 **1**，不是寫成間隔——
+	// 所以剛編成的軍團下一個 tick 就會走第一步（`docs/re/30` §5）。
+	c.Timer = 1
 
 	w.Corps[leader] = c
 	g.Posted = true
