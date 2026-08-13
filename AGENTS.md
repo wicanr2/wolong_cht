@@ -38,10 +38,13 @@
 - 專案 `AGENTS.md`、`CLAUDE.md`、`CONTEXT.md`、`docs/INDEX.md` 與可重現原版證據優先。
   外部知識只提供方法，**不能推翻本專案已定案的 DOS/V 座標、資產、流程或權利邊界**。
 - `~/.claude` 一律唯讀。需要 Claude Code 的復古遊戲技巧時，使用
-  `~/.codex/knowledge-base/sources/claude/` 的受控快照及其 `SYNC-MANIFEST.md`；
+  `~/.codex/knowledge-base/sources/claude/` 的受控快照，清單在
+  `~/.codex/knowledge-base/SYNC-MANIFEST.md`（在 kb 根目錄，不在 `sources/claude/` 裡）；
   不得從本專案或 `~/.codex` 回寫、同步覆蓋或污染 `~/.claude`。
-- 推廣片工作固定命中 `game-promo-video-ffmpeg.md`；原版 AdLib／素材來源再加讀
-  `rulebook/93-promo-video-original-assets.md`；戰術畫面則加讀 remake 驗證 reference。
+- 推廣片工作固定命中
+  `~/.codex/knowledge-base/sources/claude/retro-cht/game-promo-video-ffmpeg.md`；
+  原版 AdLib／素材來源再加讀 `~/.claude/rulebook/93-promo-video-original-assets.md`；
+  戰術畫面則加讀 remake 驗證 reference。
   這是階層式引用，不代表要把上述知識全部轉成技能。
 
 ## 3. 版本代號

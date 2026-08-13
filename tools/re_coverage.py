@@ -68,6 +68,15 @@ def load_census(path):
     return funcs, callers, icalls
 
 
+# 逐支登記未讀函式的目錄型文件。它們提到某個符號不代表那支被讀懂了。
+# `24` 是整份目錄（268 支），`21` 是這份報告自己（T4 前 40 名那張表，多 16 支）。
+# 兩份都要排除，否則量測工具會把自己的輸出算成進度。
+CATALOGUES = (
+    "docs/re/24-unread-function-catalogue.md",
+    "docs/re/21-function-census.md",
+)
+
+
 def scan_mentions(repo, exclude=()):
     """回傳 symbol -> 提到它的檔案集合。
 
@@ -119,7 +128,13 @@ def main():
     census = sys.argv[1]
     repo = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     funcs, callers, icalls = load_census(census)
-    hits = scan_mentions(repo)
+    # 目錄型文件逐支登記未讀函式，不排除就會把「已登記」算成「已讀懂」——
+    # 含目錄時 T4 是 8 支（90% T1），排除後是 268 支。差別不是讀懂了，
+    # 只是寫進了一份清單。要看含目錄的原始數字加 --include-catalogue。
+    exclude = [] if "--include-catalogue" in sys.argv else list(CATALOGUES)
+    hits = scan_mentions(repo, exclude=exclude)
+    if exclude:
+        print("> 覆蓋率已排除目錄型文件：%s\n" % "、".join("`%s`" % x for x in exclude))
 
     for ea, f in funcs.items():
         f["files"] = hits.get(ea, set())
