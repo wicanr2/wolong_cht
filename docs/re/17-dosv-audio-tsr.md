@@ -1,6 +1,7 @@
 # 17 — 松崗 DOS/V 音源 TSR 與戰術效果碼
 
-**狀態：INT 61h 介面、遊戲端效果碼與硬體 register 寫入已證實；資源格式、可聽音色與
+**狀態：INT 61h 介面、遊戲端效果碼與硬體 register 寫入已證實；`*BGM.DAT` 的容器與
+聲軌指標結構已解（見 [`23`](23-bgm-resource-format.md)）；聲軌事件編碼、可聽音色與
 精確音效卡／晶片型號仍未知。**
 
 - 日期：2026-08-12
@@ -46,7 +47,7 @@ iret
 |---:|---:|---|---|
 | `0x05` | `0x01DC` | 呼叫內部 `0x07E6` 選擇／播放遊戲效果 code | 已證實的控制流 |
 | `0x06` | `0x01E2` | 保存 `DS:SI` 資源指標，並寫入 mode byte `CS:0x0A4C=6` | 已證實 |
-| `0x07` | `0x01F6` | 從保存來源讀 offset words，初始化多張內部表 | 已證實為資源 layout parser；格式未知 |
+| `0x07` | `0x01F6` | 從保存來源讀 offset words，初始化多張內部表 | 已證實為資源 layout parser；結構見 [`23`](23-bgm-resource-format.md) |
 | `0x0A` | `0x02D7` | 回傳 `CS:0x099E` 的 flags 至 AL | 已證實 |
 
 其他 table entries 存在，但本輪未把沒有資料流／呼叫端證據的 entry 命名為音樂、停止或音量。
@@ -98,6 +99,7 @@ TSR 路徑分離。故「戰術效果」與「介面／TALK click」不能共用
 
 ## 6. remake 邊界
 
-本輪不合成新音色，也不將未解的 `SOUND.DAT`／`BGM.DAT` 猜成既定格式。若 remake 新增音效，
+本輪不合成新音色，也不將未解的 `SOUND.DAT` 猜成既定格式；`BGM.DAT` 的結構雖已解
+（[`23`](23-bgm-resource-format.md)），聲軌事件編碼未解，一樣不能宣稱音色 parity。若 remake 新增音效，
 應先保留 `0x0A`／`0x0B`／`0x0C` 這個已證實事件層，再把實際聲音標成替代資產；只有取得
 可重播的原版輸出或完整 resource parser 後，才可宣稱音色／時序 parity。

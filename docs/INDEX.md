@@ -13,14 +13,14 @@
 |---|---|---|---|
 | [`docs/formats/01-talk-dat.md`](formats/01-talk-dat.md) | 01 — TALK.DAT 訊息表格式 | READY | 2026-08-07 |
 | [`docs/formats/02-brg-palette.md`](formats/02-brg-palette.md) | 02 — .BRG 調色盤格式 | READY | 2026-08-07 |
-| [`docs/formats/03-grf-images.md`](formats/03-grf-images.md) | 03 — GRF.DAT 圖庫格式 | KAOGRF／KYOGRF／IVENTGRF READY，ICONGRF 部分解。 | 2026-08-07 |
+| [`docs/formats/03-grf-images.md`](formats/03-grf-images.md) | 03 — GRF.DAT 圖庫格式 | KAOGRF／KYOGRF／IVENTGRF READY，ICONGRF 部分解。 | 2026-08-13 |
 | [`docs/formats/04-map-sch-container.md`](formats/04-map-sch-container.md) | 04 — .MAP／.SCH／.MCH：兩種完全不同的東西 | 容器格式的索引層 READY，壓縮演算法未解。 | 2026-08-07 |
 | [`docs/formats/05-mmap-worldmap.md`](formats/05-mmap-worldmap.md) | 05 — MMAP. 大地圖 | MMAP.MDL、地圖尺寸、自動連接與 MMAP.MCH 物件圖形入口 confirmed；MMAP.MAP 的 R… | 2026-08-07 |
 | [`docs/formats/06-mmap-rle.md`](formats/06-mmap-rle.md) | 06 — MMAP.MAP 的 RLE 壓縮 | READY。 | 2026-08-07 |
 | [`docs/formats/07-battle.md`](formats/07-battle.md) | 07 — BATTLE. 戰場資料 | 分段結構、圖塊定義與像素格式都 confirmed。 | 2026-08-07 |
 | [`docs/formats/08-sinario-save.md`](formats/08-sinario-save.md) | 08 — SINARIO.DAT / SAVE.DAT：劇本與存檔 | 整體結構 confirmed，武將能力值 confirmed，其餘欄位進行中。 | 2026-08-07 |
 | [`docs/mechanics/00-index.md`](mechanics/00-index.md) | 00 — 遊戲機制索引 | 索引與推論等級定義，長期有效。 | 2026-08-08 |
-| [`docs/mechanics/10-strategy.md`](mechanics/10-strategy.md) | 10 — 大地圖政略 | 指令清單完整；部分戰略數值與 AI 決策已由機器碼解出並實作，仍有未解公式。 | 2026-08-08 |
+| [`docs/mechanics/10-strategy.md`](mechanics/10-strategy.md) | 10 — 大地圖政略 | 指令清單完整；部分戰略數值與 AI 決策已由機器碼解出並實作，仍有未解公式。 | 2026-08-13 |
 | [`docs/mechanics/15-realtime.md`](mechanics/15-realtime.md) | 15 — 即時制的時間模型 | ✅ READY。整條時間鏈已在機器碼裡讀出來。 | 2026-08-08 |
 | [`docs/mechanics/20-military.md`](mechanics/20-military.md) | 20 — 行軍與軍團 | 道路網與行軍已解並實作；AI 軍團編成來源已解並接入，玩家編成的完整戰力換算仍未完。 | 2026-08-08 |
 | [`docs/mechanics/30-combat.md`](mechanics/30-combat.md) | 30 — 戰場（戰術） | 進場規則與戰略層的自動判定全解；戰術核心已接入並實作，完整結算與少數分支未完 | 2026-08-09 |
@@ -49,7 +49,7 @@
 | [`docs/playtest/17-expert-dosbox-remake.md`](playtest/17-expert-dosbox-remake.md) | 17 — DOSBox 原版／remake 可玩性專家驗證 | remake 正常策略路徑與存檔／讀檔通過；DOS/V 原版密碼頁已可進入開場，尚未展開完整自然長程驗證；PC-98… | 2026-08-11 |
 | [`docs/playtest/18-dosv-password-verification.md`](playtest/18-dosv-password-verification.md) | 18 — 松崗 DOS/V 密碼頁輸入驗證 | 已證實，在受控 DOSBox-X 重播中按「確定」即可越過密碼頁；密碼頁不再是 DOS/V 原版行為驗證的阻擋。 | 2026-08-12 |
 | [`docs/playtest/19-tactical-minimap.md`](playtest/19-tactical-minimap.md) | 19 — DOS/V 戰術縮圖 raw producer 驗收 | PASS（已證實 producer 的 remake 實作）；局部更新與原版精確外框素材仍為 unknown。 | 2026-08-12 |
-| [`docs/playtest/20-tactical-layout-parity.md`](playtest/20-tactical-layout-parity.md) | 20 — 松崗 DOS/V 戰術版面 parity 重開 | PARTIAL（主要幾何、右欄命令面板、底列 glyph 與選取框已修正；同狀態戰場取景與動畫時序仍未完成）。 | 2026-08-12 |
+| [`docs/playtest/20-tactical-layout-parity.md`](playtest/20-tactical-layout-parity.md) | 20 — 松崗 DOS/V 戰術版面 parity 重開 | PARTIAL（主要幾何、右欄命令面板、底列 glyph、原版初始相機、 32×30 display grid、鄰格… | 2026-08-12 |
 | [`docs/playtest/21-command-window-parity.md`](playtest/21-command-window-parity.md) | 21 — 松崗 DOS/V 指揮／事件／一覽畫面 parity 重開 | PARTIAL（事件 TALK、系統面板與一覽第一層主要幾何已修正；一覽詳細層與捲軸未完成）。 | 2026-08-12 |
 | [`docs/playtest/22-field-siege-shared-layout.md`](playtest/22-field-siege-shared-layout.md) | 攻城／兩軍遭遇共用戰術骨架驗收 | PASS（共用幾何與原版指令面板已封口；不代表動畫逐像素 parity） | 2026-08-12 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | remake 推廣片、代表幀「經典再現」比較片與 DOS/V／remake 實機動態比較片均已產出並完成媒體規格驗證… | 2026-08-12 |
@@ -73,17 +73,22 @@
 | [`docs/re/14-mmap-mch-objects.md`](re/14-mmap-mch-objects.md) | 14 — MMAP.MCH 戰略地圖物件 | 資產格式、事件 12 的火災／暴動圖形鏈與 typed 動畫／移動時序 confirmed； type 3 的事件語… | 2026-08-10 |
 | [`docs/re/15-event10-producer.md`](re/15-event10-producer.md) | 15 — 事件 10 producer 深度逆向 | 事件 10 dispatcher／consumer／queue writer 已證實；原版自然 producer 仍… | 2026-08-11 |
 | [`docs/re/16-idle-clock-event10.md`](re/16-idle-clock-event10.md) | 16 — DOS/V 無輸入自動時鐘與事件 10 關係 | 無輸入時的自動時鐘／軍團行軍已由 IDA .i64 證實；事件 10 是該路徑 中的受節流 queue consum… | 2026-08-11 |
-| [`docs/re/17-dosv-audio-tsr.md`](re/17-dosv-audio-tsr.md) | 17 — 松崗 DOS/V 音源 TSR 與戰術效果碼 | INT 61h 介面、遊戲端效果碼與硬體 register 寫入已證實；資源格式、可聽音色與 精確音效卡／晶片型號仍… | 2026-08-12 |
+| [`docs/re/17-dosv-audio-tsr.md`](re/17-dosv-audio-tsr.md) | 17 — 松崗 DOS/V 音源 TSR 與戰術效果碼 | INT 61h 介面、遊戲端效果碼與硬體 register 寫入已證實；BGM.DAT 的容器與 聲軌指標結構已解（… | 2026-08-12 |
 | [`docs/re/18-tactical-button-glyphs.md`](re/18-tactical-button-glyphs.md) | 18 — DOS/V 戰術底列按鈕 glyph 候選資產研究 | 六個命令 glyph、底板、右欄複合面板與選取矩形已解出並接入 remake。 | 2026-08-12 |
 | [`docs/re/19-outcome.md`](re/19-outcome.md) | DOS/V 已證實敗北 outcome 接線 | READY（只涵蓋兩種敗北；不涵蓋勝利、君主死亡或原版返回標題）。 | 2026-08-12 |
+| [`docs/re/20-ida-re-coverage-audit.md`](re/20-ida-re-coverage-audit.md) | 20 — DOS/V IDA 逆向覆蓋與 remake 差距審計 | REVIEWED。足以支撐可玩重製與多數規則，但不足以支撐高忠實度戰術呈現；主要缺口是原版顯示串列、相機狀態機、逐幀… | 2026-08-12 |
+| [`docs/re/21-function-census.md`](re/21-function-census.md) | 21 — DOS/V KI.EXE 全函式覆蓋普查 | 量測完成。739 支函式中 355 支（48%，佔程式碼 39%）從未在專案任何一處被提及； 缺口集中在戰略 UI … | 2026-08-13 |
+| [`docs/re/22-strategy-command-tree.md`](re/22-strategy-command-tree.md) | 22 — 戰略指令列與滑鼠熱區分派 | 指令列的八個槽位、兩層子選單、熱區查表定址式與狀態列提示常式 confirmed。指令列圖形來源與 sub_1628… | 2026-08-13 |
+| [`docs/re/23-bgm-resource-format.md`](re/23-bgm-resource-format.md) | 23 — BGM.DAT 音樂資源格式 | 容器索引與曲塊的聲軌指標表 confirmed，兩版都逐 byte 對齊到檔尾且餘 0。 聲軌資料本身的事件編碼、+… | 2026-08-13 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-07 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
+| [`docs/reference/04-first-survey.md`](reference/04-first-survey.md) | 04 — 首輪偵查紀錄（2026-08-07） | 歷史快照。已解的項目由 docs/formats/、docs/re/ 與 docs/INDEX.md 接手；本檔只保… | 2026-08-07 |
 | [`docs/release/README-RELEASE.md`](release/README-RELEASE.md) | 臥龍傳 remake 可執行封裝 | 三平台候選封裝、Linux AppImage、推廣片與驗收紀錄已集中於 [dist-all](../../dist-… | 2026-08-12 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 144 條。**要查「這件事解了沒」先看這裡**，
+共 148 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（74 條）
@@ -213,7 +218,13 @@
 | 3.4 其他戰術判定（說明書） ▸ 陣形有利不利 | `docs/mechanics/70-ai.md` |
 | 5.8 ⭐ 十一個命令處理常式，隊長與隊員各一套 ▸ 命令 | `docs/re/11-tactical-battle.md` |
 
-### 未解（32 條）
+### 假說（1 條）
+
+| 鍵 | 出處 |
+|---|---|
+| 2.1 執行結構（已驗證） ▸ YNSOUND.COM | `docs/reference/04-first-survey.md` |
+
+### 未解（35 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -228,6 +239,9 @@
 | 2. 記憶體佈局：sub_1CC31 ▸ ds:0D2FC | `docs/re/11-tactical-battle.md` |
 | 2. 記憶體佈局：sub_1CC31 ▸ ds:0D306 | `docs/re/11-tactical-battle.md` |
 | 2. 記憶體佈局：sub_1CC31 ▸ ds:0D42 | `docs/re/11-tactical-battle.md` |
+| 2.7 圖像與調色盤 ▸ KYOGRF.DAT | `docs/reference/04-first-survey.md` |
+| 3. 曲塊內部 ▸ +0x00 | `docs/re/23-bgm-resource-format.md` |
+| 3. 曲塊內部 ▸ +0x06–+0x0F | `docs/re/23-bgm-resource-format.md` |
 | 3. 武將記錄（32 byte） ▸ +0 | `docs/formats/08-sinario-save.md` |
 | 3. 武將記錄（32 byte） ▸ +16（0x10） | `docs/formats/08-sinario-save.md` |
 | 3. 武將記錄（32 byte） ▸ +20（0x14） | `docs/formats/08-sinario-save.md` |

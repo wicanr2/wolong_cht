@@ -40,6 +40,10 @@ for v in GOOS GOARCH CGO_ENABLED GOARM GOAMD64; do
     if [ -n "${!v:-}" ]; then CROSS_ENV+=(-e "$v=${!v}"); fi
 done
 
+# ⚠ **Ebiten 在 init 期就要求顯示器**，所以 `cmd/wlgame` 與 `internal/ui/textdraw`
+# 沒有 X 就會 panic（`glfw: The GLFW library is not initialized`）。
+# 快取命中時看不出來——`go test` 直接回 `(cached)`，冷啟動才炸。
+# 因此一律先起 Xvfb 再跑，不要靠快取掩蓋。
 exec docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
     --network none --memory 2g --cpus 2 --pids-limit 256 \
     "${CROSS_ENV[@]+"${CROSS_ENV[@]}"}" \
@@ -50,5 +54,10 @@ exec docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
     -e HOME=/tmp \
     -e GOCACHE=/gocache \
     -e GOMODCACHE=/gomod \
+    -e DISPLAY=:99 \
     -w /src \
-    "$IMAGE" go "$@"
+    "$IMAGE" sh -c 'if command -v Xvfb >/dev/null 2>&1 && ! [ -e /tmp/.X11-unix/X99 ]; then
+                      Xvfb :99 -screen 0 1600x900x24 >/tmp/xvfb.log 2>&1 &
+                      for _ in 1 2 3 4 5 6 7 8 9 10; do [ -e /tmp/.X11-unix/X99 ] && break; sleep 0.3; done
+                    fi
+                    exec go "$@"' _ "$@"
