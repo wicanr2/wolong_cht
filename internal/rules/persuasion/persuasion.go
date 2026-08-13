@@ -56,6 +56,10 @@ func (r Reason) String() string {
 // 「国力の基準は拠点数からチェックされ」），疲弊用**資金 < 0**
 // （機器碼用 24 位值的符號位判斷，docs/formats/08 §1.5）。
 type Situation struct {
+	// Trust 是原版全域信賴度 byte_10D00（0–255）。說服迴圈開始時，
+	// 原版 sub_13C1E 會把它換成 1–4 級，決定還要聽幾個成立理由。
+	Trust int
+
 	// Aggression 是自家君主的好戰等級（0–15，勢力記錄 +0x28）。
 	// **不顯示給玩家**——玩家只能靠被拒絕的次數去推。
 	Aggression int
@@ -238,15 +242,13 @@ const (
 	Withdrawn                // 用進言撤回收手 → 信賴度不變
 )
 
-// 信賴度的增減量。
-//
-// ⚠ **實際數值還沒反組譯出來**（說明書只說「下降」「上昇」
-// 「大幅に上昇」）。這裡的值是 remake 的暫定值，
-// 只保證「外交成功 ≫ 進言成功 > 0 > 失敗」的相對關係。
+// 信賴度的增減量。數值來自 sub_13830：
+// `mov al,14h` 後分別呼叫 sub_13D91／sub_13DC9；多理由成功先
+// `shr al,1`，所以是 +10。原版的 byte_10D00 會在 0 與 255 飽和。
 const (
-	TrustOnSuccess       = 2
-	TrustOnFailure       = -5
-	TrustOnDiplomaticWin = 20 // 停戰／協力外交成功後另外給
+	TrustOnReasonSuccess    = 10
+	TrustOnImmediateSuccess = 20
+	TrustOnFailure          = -20
 )
 
 // Session 是一次進行中的說服。
@@ -262,27 +264,26 @@ type Session struct {
 
 // requiredReasons 是君主點頭前要聽幾個成立的理由。
 //
-// 好戰等級決定他對哪一類指令買不買帳（說明書 3.9）：
-// 好戰的君主容易被說服去打人、不容易被說服停戰；消極的相反。
-//
-// ⚠ 換算是 remake 的暫定值，只保證方向。
-func requiredReasons(c Command, aggression int) int {
-	n := 2
-	switch c {
-	case Hostility:
-		n += (15 - aggression) / 5 // 好戰的君主要的理由少
-	case CeaseFire, Cooperate:
-		n += aggression / 5 // 好戰的君主要的理由多
+// sub_13C1E 直接讀 byte_10D00，回傳放在 AH 的信賴度級別；
+// sub_13BA9 每選到一個符合狀況的理由就遞減 [bp+3]（也就是該級別）。
+// 這個門檻與 Command、Aggression 無關；好戰等級只參與三種指令的
+// 第一反應與各理由是否成立。
+func requiredReasons(trust int) int {
+	switch {
+	case trust >= 0xE0:
+		return 1
+	case trust >= 0x90:
+		return 2
+	case trust >= 0x20:
+		return 3
+	default:
+		return 4
 	}
-	if n < 1 {
-		n = 1
-	}
-	return n
 }
 
 // Begin 開始一次說服。
 func Begin(c Command, s Situation) *Session {
-	return &Session{Command: c, Situation: s, need: requiredReasons(c, s.Aggression)}
+	return &Session{Command: c, Situation: s, need: requiredReasons(s.Trust)}
 }
 
 // Remaining 回傳君主還想再聽幾個理由。純粹給測試與除錯用——
@@ -316,7 +317,7 @@ func (s *Session) Offer(r Reason) (Outcome, int) {
 	}
 	s.need--
 	if s.need <= 0 {
-		return Agreed, TrustOnSuccess
+		return Agreed, TrustOnReasonSuccess
 	}
 	return Continue, 0
 }
@@ -357,6 +358,21 @@ const (
 // SameFaction ＝ 4：請求協助時協力對象與侵攻對象選成同一個。
 // `sub_13830` 對 ≥ 4 的碼一律顯示訊息 83「我想軍師並不是來談笑的。」
 const SameFaction Reaction = 4
+
+// ReactionTrustDelta 是 sub_13830 對第一反應碼的信賴度變化。
+//
+// AL=1 直接成功；AL=0、3 走失敗分支；AL=2 進入 Session，AL=4
+// 是協力選到同一家，只顯示訊息而不改信賴度。
+func ReactionTrustDelta(r Reaction) int {
+	switch r {
+	case Agree:
+		return TrustOnImmediateSuccess
+	case Refuse, AlreadyAtWar:
+		return TrustOnFailure
+	default:
+		return 0
+	}
+}
 
 // FirstReaction 回傳君主的第一反應。**三個指令的判定式各自不同。**
 //

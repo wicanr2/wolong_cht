@@ -40,7 +40,7 @@ func TestPathRecordsTurns(t *testing.T) {
 
 // ⭐ 爬不上去的兵要繞過城牆，爬得上去的可以直接翻。
 func TestPathRespectsClimb(t *testing.T) {
-	f := walledField(32)   // X=32 一道 4 層高的牆，只有中間那一格通
+	f := walledField(32) // X=32 一道 4 層高的牆，只有中間那一格通
 	gate := Height / 2
 
 	// 目標挑在牆的另一側、且不是門那一列。
@@ -136,6 +136,35 @@ func TestPathCapsAtBufferSize(t *testing.T) {
 	}
 	if MaxWaypoints*2 != 128 {
 		t.Errorf("64 個點 × 2 byte 應為 128，與 0x1800 + 兵編號 × 128 對不上")
+	}
+}
+
+// 原版只有抵達目前中繼點後才消費下一個點；若每幀直接取下一點，
+// 兵會在尚未走完第一段時跳過轉角。
+func TestWaypointsAdvanceOnlyAfterArrival(t *testing.T) {
+	b := NewBattle(flatField(), SyntheticFormations(), &fixedRand{seq: []int{127}}, 0)
+	s := &b.Sides[0].Soldiers[0]
+	*s = Soldier{
+		Alive: true, Kind: Infantry, HP: MaxHP, Power: DefaultPower,
+		X: 10, Y: 20, Z: 0, GoalX: 20, GoalY: 20, GoalZ: 0,
+		StepX: 10, StepY: 20, StepZ: 0, Cmd: Attack, Next: Attack,
+		Path: &Waypoints{pts: []Point{{X: 12, Y: 20}, {X: 12, Y: 22}}},
+	}
+
+	b.moveToward(0, 0)
+	if s.X != 11 || s.Path.Len() != 2 {
+		t.Fatalf("第一幀走到 (%d,%d)，剩 %d 點；應為 (11,20) 與 2 點",
+			s.X, s.Y, s.Path.Len())
+	}
+	b.moveToward(0, 0)
+	if s.X != 12 || s.Y != 20 || s.Path.Len() != 2 {
+		t.Fatalf("抵達第一中繼點後座標 (%d,%d)、剩 %d 點錯誤",
+			s.X, s.Y, s.Path.Len())
+	}
+	b.moveToward(0, 0)
+	if s.X != 12 || s.Y != 21 || s.Path.Len() != 1 {
+		t.Fatalf("下一幀沒有前進到第二段：座標 (%d,%d)、剩 %d 點",
+			s.X, s.Y, s.Path.Len())
 	}
 }
 

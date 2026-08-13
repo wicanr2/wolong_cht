@@ -160,6 +160,42 @@ func (l *List) Move(d int) {
 	l.scrollIntoView()
 }
 
+// Select 把游標移到指定的 Rows 索引，供滑鼠／觸控列點擊使用。
+// 點到不同列時，原本的兩段式反白必須先解除；點到同一列則保留
+// Selected，讓呼叫端可用同一個 Confirm 完成第二次點擊確認。
+func (l *List) Select(row int) bool {
+	if row < 0 || row >= len(l.Rows) {
+		return false
+	}
+	if l.phase == Selected && l.Cursor != row {
+		l.phase = Browsing
+	}
+	l.Cursor = row
+	l.scrollIntoView()
+	return true
+}
+
+// Page 以目前可見列數翻頁。頁切換沿用 Move 的邊界與捲動規則，
+// 並清除兩段式反白，避免翻頁後仍把不可見列當成待確認項目。
+func (l *List) Page(delta int) {
+	if len(l.Rows) == 0 || delta == 0 {
+		return
+	}
+	step := l.Height
+	if step <= 0 {
+		step = 1
+	}
+	l.phase = Browsing
+	l.Cursor += delta * step
+	if l.Cursor < 0 {
+		l.Cursor = 0
+	}
+	if l.Cursor >= len(l.Rows) {
+		l.Cursor = len(l.Rows) - 1
+	}
+	l.scrollIntoView()
+}
+
 func (l *List) scrollIntoView() {
 	if l.Height <= 0 {
 		return

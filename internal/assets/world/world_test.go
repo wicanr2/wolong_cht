@@ -43,6 +43,62 @@ func TestTileSet(t *testing.T) {
 	}
 }
 
+// TestMCHObjectLayout 固定 sub_1D804 的 256×160 物件圖塊區，以及
+// sub_12533 的 CS:985Ah object type/frame 查表。這不是把檔案尾端湊成圖，
+// 而是同時檢查 IDA 的 metadata 讀法與實際 MMAP.MCH source byte。
+func TestMCHObjectLayout(t *testing.T) {
+	m, err := ParseMCH(read(t, "dosv", "MMAP.MCH"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, id := range []byte{0, 0x80, 0xFF} {
+		tile := m.Tile(id)
+		if tile == nil {
+			t.Fatalf("MCH 圖塊 0x%02X 解不出來", id)
+		}
+		opaque, transparent := 0, 0
+		for _, px := range tile.Pix {
+			if px == MCHTransparent {
+				transparent++
+			} else if px < 16 {
+				opaque++
+			} else {
+				t.Fatalf("MCH 圖塊 0x%02X 出現非法色號 0x%02X", id, px)
+			}
+		}
+		if opaque == 0 || transparent == 0 {
+			t.Fatalf("MCH 圖塊 0x%02X 沒有同時呈現 mask 的不透明／透明像素", id)
+		}
+	}
+
+	for _, tc := range []struct {
+		objectType, frame, index, width, height int
+	}{
+		{1, 0, 0x18, 16, 9},
+		{1, 4, 0x1C, 16, 9},
+		{1, 7, 0x1A, 16, 9},
+		{2, 0, 0x20, 5, 5},
+		{2, 7, 0x23, 5, 5},
+		{3, 0, 0x28, 5, 5},
+	} {
+		index, ok := ObjectPatternIndex(tc.objectType, tc.frame)
+		if !ok || index != tc.index {
+			t.Fatalf("object type %d frame %d 查到 0x%X，預期 0x%X",
+				tc.objectType, tc.frame, index, tc.index)
+		}
+		pattern, ok := m.Pattern(index)
+		if !ok || pattern.Width != tc.width || pattern.Height != tc.height {
+			t.Fatalf("pattern 0x%X = %dx%d，預期 %dx%d",
+				tc.index, pattern.Width, pattern.Height, tc.width, tc.height)
+		}
+	}
+	p, ok := m.PatternFor(1, 0)
+	if !ok || len(p.Tiles) != 16*9 || p.Tiles[4] != 0xD0 {
+		t.Fatalf("火災第 0 相位的 source 矩陣不符：ok=%v len=%d tile[4]=0x%02X",
+			ok, len(p.Tiles), p.Tiles[4])
+	}
+}
+
 // TestTilesLookSane 檢查解出來的地圖不是雜訊：
 // 用到的圖塊種類要夠多（真實地圖會用上百種），
 // 而且最常出現的那一種不該佔壓倒性多數（那代表解壓爆掉變成一片同值）。

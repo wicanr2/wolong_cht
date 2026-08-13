@@ -63,6 +63,14 @@ func (k Kind) String() string {
 	return "?"
 }
 
+// PlaneHighGround／PlaneHighElevated 是兵記錄 +0x1E 的原始值。
+// 原版不是把 Z 整數直接存進這一 byte，而是以 0／0x10 選擇格索引的
+// 高位平面（`sub_1B0D3`／`sub_1B116`，IDA `seg000:1B103`／`1B14A`）。
+const (
+	PlaneHighGround   byte = 0x00
+	PlaneHighElevated byte = 0x10
+)
+
 // Command 是六個戰術指令（說明書 4.2）。編號與原版一致，
 // 每一個都是從程式行為認出來的，見 docs/re/11 §5.8b。
 type Command int
@@ -138,8 +146,30 @@ type Soldier struct {
 	X, Y, Z int
 	Facing  int
 
+	// PoseStep 是原版兵記錄 +0x02 bit 0。主迴圈每次更新後翻轉它；
+	// 除了人物走路圖，也會被特殊投射物拿來選 raw 0x214／0x215。
+	// 它是呈現／暫態欄位，不影響戰鬥規則與存檔。
+	PoseStep uint8
+
+	// ProjectileCooldown 對應原版兵記錄 +0x13。sub_1AD2D 成功發射
+	// 普通投射物時寫入 8；sub_1AD7F 成功發射特殊投射物時寫入 6；
+	// 下一次發射嘗試會先遞減非零值並直接返回。
+	ProjectileCooldown uint8
+
 	// Stamina 是疲勞度（餘力），越高越好。
 	Stamina int
+
+	// PlaneHigh 是原版 +0x1E 的 raw runtime 欄位，只會由地面 0 變成
+	// 高位平面 0x10，再回到 0；它不是 Z 高度本身。
+	PlaneHigh byte
+
+	// HighTerrain 是原版 +0x00 bit 1。`sub_1B240` 依目前圖塊堆疊高度
+	// 是否至少 4 層設定它，鎖敵與換位都會讀這個旗標。
+	HighTerrain bool
+
+	// Climbing 是早期 remake API 留下的相容欄位。新 runtime 以 PlaneHigh
+	// 為準，讀取時仍接受手寫測試中的 Climbing=true。
+	Climbing bool
 
 	// Cmd 是生效中的命令、Next 是新下達的命令。
 	// **兩個欄位是分開的**，所以腳本可以「下令之後等幾幀再問到位了沒」。
@@ -185,6 +215,28 @@ type Soldier struct {
 
 // IsGeneral 回報這是不是大將。原版用 `+0x04 == 0` 判。
 func (s *Soldier) IsGeneral() bool { return s.Kind == General }
+
+// planeHigh 回傳原版 +0x1E；Climbing 只保留給未經 Place 的舊測試資料。
+func (s *Soldier) planeHigh() byte {
+	if s.PlaneHigh != PlaneHighGround {
+		return s.PlaneHigh
+	}
+	if s.Climbing {
+		return PlaneHighElevated
+	}
+	return PlaneHighGround
+}
+
+// syncTerrain 把目前座標同步成原版的 +0x1E 與 +0x00 bit 1。
+func (s *Soldier) syncTerrain(f *Field, x, y, z int) {
+	s.PlaneHigh = PlaneHighGround
+	s.Climbing = false
+	if z > 0 {
+		s.PlaneHigh = PlaneHighElevated
+		s.Climbing = true
+	}
+	s.HighTerrain = f != nil && f.HighTerrain(x, y)
+}
 
 // CanClimb 回報這個兵爬不爬得上城牆。
 //
@@ -307,6 +359,12 @@ func (f *Field) StandLevel(x, y int) int {
 		return 0
 	}
 	return f.top[y][x]
+}
+
+// HighTerrain 對應原版 `sub_1B240` 對 +0x00 bit 1 的設定：
+// 目前格子的堆疊高度至少 4 層。
+func (f *Field) HighTerrain(x, y int) bool {
+	return f.StandLevel(x, y) >= 4
 }
 
 // Walkable 回報 (x, y, z) 站不站得上去：那一層本身不能是實心的，

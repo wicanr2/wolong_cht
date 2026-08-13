@@ -156,10 +156,11 @@ func (d *Diplomat) Tick(f *Friendship, rng Rand) bool {
 //	base = 125 若 v 沒有交戰旗標，否則 100
 //	金額 = (base − v 的數值) × 200
 //
-// **取兩個方向的較小者**——顯示是單向的，但外交官的工作量看比較差的那邊。
+// **取兩個方向原始 byte 的較小者**——顯示是單向的，但外交官的工作量
+// 看比較差的那一邊；比較時保留最高位的和平／交戰旗標。
 func Demand(mine, theirs Friendship) int {
 	v := mine
-	if theirs.Value() < mine.Value() {
+	if theirs < mine {
 		v = theirs
 	}
 	// 原版：`cmp al, 80h / jnb → 100`，否則 125。

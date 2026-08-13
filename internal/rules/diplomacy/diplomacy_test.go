@@ -142,6 +142,11 @@ func TestDemand(t *testing.T) {
 	if Demand(Peace(30).WithWar(true), Peace(60)) <= Demand(Peace(30), Peace(60)) {
 		t.Error("交戰中應該比和平時貴")
 	}
+	// min 比較的是原始 byte，不是去掉旗標後的 Value：交戰 90（0x5A）
+	// 仍小於和平 10（0x8A），所以原版選交戰側的基準 125 與數值 90。
+	if got := Demand(Peace(90).WithWar(true), Peace(10)); got != 35*200 {
+		t.Errorf("保留旗標的 raw min 要價 = %d，want %d", got, 35*200)
+	}
 }
 
 // ⭐ 協力是確定性的布林判定，不是機率 —— remake 不要在這裡擲骰子。

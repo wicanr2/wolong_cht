@@ -15,7 +15,9 @@ tools/go.sh vet ./...
 echo "── go test ──"
 tools/go.sh test ./...
 echo "── 文件索引 ──"
-python3 tools/index.py generate
+tools/py.sh tools/index.py generate
 echo "── 資產 deny-list ──"
-python3 tools/denylist.py --selftest
-python3 tools/denylist.py
+tools/py.sh tools/denylist.py --selftest
+tools/py.sh tools/denylist.py
+echo "── TALK.DAT 校訂工具 ──"
+tools/py.sh tools/talkdat_selftest.py

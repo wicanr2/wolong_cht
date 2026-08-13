@@ -13,7 +13,7 @@ import (
 //
 // 原版的分派規則（`sub_14E5C`／`sub_14ED7`，docs/re/09 §2）：
 //
-//   - **玩家的勢力捲進去 → 開戰術畫面**
+//   - **玩家的勢力捲進去 → 先問戰鬥指揮／委任**
 //   - 其餘一律自動判定
 //   - 例外：**攻打空城**（城裡沒有軍團）也走自動判定
 //
@@ -52,11 +52,65 @@ type Pending struct {
 	CityWall int
 }
 
+// EncounterChoice 是一場等著玩家決定處理方式的遭遇。
+//
+// 這是原版行軍抵達敵軍／敵城時的中間狀態：
+//
+//   - 戰鬥指揮：進入戰術畫面，由玩家下令
+//   - 委任：不開戰術畫面，直接用自動判定解決
+//
+// 它只存在於執行期，不是劇本／存檔欄位。
+type EncounterChoice struct {
+	Attacker int
+	Defender int // -1 表示城兵；目前只有軍團對軍團會進這個選單
+	Node     int
+	Mode     combat.Mode
+	Garrison int
+}
+
 // SetTactical 裝上戰場來源。傳 nil 就回到全自動判定。
 func (w *World) SetTactical(t *TacticalSetup) { w.tactical = t }
 
 // PendingBattle 回傳等著玩家打的那一場，沒有就回 nil。
 func (w *World) PendingBattle() *Pending { return w.pending }
+
+// PendingEncounter 回傳等著玩家選擇的遭遇，沒有就回 nil。
+// 回傳副本，避免畫面層直接改動規則狀態。
+func (w *World) PendingEncounter() *EncounterChoice {
+	if w.encounter == nil {
+		return nil
+	}
+	c := *w.encounter
+	return &c
+}
+
+var errNoEncounter = errors.New("state: 沒有待處理的遭遇")
+
+// ChooseBattleCommand 把待處理的遭遇轉成戰術戰鬥。
+func (w *World) ChooseBattleCommand() error {
+	if w.encounter == nil {
+		return errNoEncounter
+	}
+	c := *w.encounter
+	if !w.beginTactical(c.Attacker, c.Defender, c.Mode, c.Garrison) {
+		return errNoTactical
+	}
+	w.encounter = nil
+	return nil
+}
+
+// ChooseBattleDelegate 委任待處理的遭遇，回傳與正常自動戰鬥相同的事件。
+func (w *World) ChooseBattleDelegate(rng combat.Rand) *CorpsEvent {
+	if w.encounter == nil {
+		return nil
+	}
+	c := *w.encounter
+	w.encounter = nil
+	w.rng = rng
+	ev := &CorpsEvent{Corps: c.Attacker, Enemy: c.Defender, Mode: c.Mode}
+	w.resolveCorpsBattle(ev, c.Attacker, c.Defender, c.Mode, c.Garrison, rng)
+	return ev
+}
 
 // wantsTactical 回報這一場該不該開戰術畫面。
 func (w *World) wantsTactical(att, def int) bool {
@@ -171,6 +225,9 @@ func kindOf(t army.TroopType) tactical.Kind {
 // （`afterBattle`），所以兩種戰鬥的出口一致——原版也是這樣
 // （docs/re/09 §10：戰術層回傳的 `al`／`ah` 與自動判定同格式）。
 func (w *World) ResolvePending(rng combat.Rand) *CorpsEvent {
+	if w == nil || w.outcome != InProgress {
+		return nil
+	}
 	p := w.pending
 	if p == nil || !p.Battle.Done {
 		return nil
@@ -179,6 +236,7 @@ func (w *World) ResolvePending(rng combat.Rand) *CorpsEvent {
 	o := p.Battle.Result()
 
 	ev := &CorpsEvent{Corps: p.Attacker, Enemy: p.Defender, Captured: -1}
+	ev.BattleBefore = [2]int{w.Corps[p.Attacker].Men, w.Corps[p.Defender].Men}
 	r := combat.Result{DefenderWins: !o.AttackerWins}
 	ev.Battle = &r
 
@@ -217,6 +275,8 @@ func (w *World) ResolvePending(rng combat.Rand) *CorpsEvent {
 	// 攻城的損害走**戰術層自己的公式**（`sub_19FDC` 前半：由城壁被打掉
 	// 多少算，不是自動判定的兵力比），三個欄位各扣同一個值。
 	r.CityDamage = p.Battle.CityDamage(p.CityWall)
+	ev.BattleAfter = [2]int{w.Corps[p.Attacker].Men, w.Corps[p.Defender].Men}
+	ev.BattleCityDamage = r.CityDamage
 	w.damageCity(p.Node, p.Mode, r)
 	w.afterBattle(ev, p.Attacker, r.AttackerDestroyed, p.Defender, rng)
 	w.afterBattle(ev, p.Defender, r.DefenderDestroyed, p.Attacker, rng)

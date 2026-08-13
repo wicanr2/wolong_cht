@@ -18,7 +18,21 @@ workplace/
 # Go
 /dragon
 /bin/
+/wlgame
 *.test
+
+# Android：只收原始檔，build 產出與 gomobile 綁定不進版控
+android/.gradle/
+android/build/
+android/app/build/
+android/app/libs/
+android/local.properties
+*.apk
+*.aar
+*.so
+*.dex
+*.class
+*.jar
 
 # 暫存
 __pycache__/
@@ -33,3 +47,4 @@ __pycache__/
 # Go 檢視器的截圖輸出（workplace/ 已整個忽略，這行只是提醒）
 workplace/shots/
 dist/
+dist-all/

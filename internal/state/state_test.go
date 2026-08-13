@@ -2,17 +2,20 @@ package state
 
 import (
 	"os"
+	"reflect"
 	"testing"
 
+	"github.com/wicanr2/wolong_cht/internal/assets/battle"
+	"github.com/wicanr2/wolong_cht/internal/assets/library"
 	"github.com/wicanr2/wolong_cht/internal/assets/text"
-	"github.com/wicanr2/wolong_cht/internal/rules/army"
-	"github.com/wicanr2/wolong_cht/internal/rules/clock"
-	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/assets/world"
+	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/rules/capital"
-	"github.com/wicanr2/wolong_cht/internal/rules/march"
+	"github.com/wicanr2/wolong_cht/internal/rules/clock"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
+	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
+	"github.com/wicanr2/wolong_cht/internal/rules/march"
 	"github.com/wicanr2/wolong_cht/internal/rules/rng"
 	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
 )
@@ -353,7 +356,7 @@ func TestSaveWritesChanges(t *testing.T) {
 			diff++
 		}
 	}
-	// 資金 3 B ＋ 信賴度 1 ＋ 上昇值 1 ＋ 生產力 2 ＋ 月 1（u16 高位不變）
+	// 資金 3 B ＋ 士氣基準 1 ＋ 上昇值 1 ＋ 生產力 2 ＋ 月 1（u16 高位不變）
 	// ＋ 該月天數 1 ＋ 稅率 1 ＝ 10 個 byte。
 	if diff != 10 {
 		t.Errorf("改了 %d 個 byte，預期 10（多出來的表示動到不該動的地方）", diff)
@@ -379,6 +382,1089 @@ func TestSaveWritesChanges(t *testing.T) {
 	// 換月之後該月天數要跟著更新，否則進位判斷會用到舊值。
 	if after[0x01] != 31 {
 		t.Errorf("7 月的天數欄位 = %d, want 31", after[0x01])
+	}
+}
+
+// 信賴度是原版 cs:0D00h（IDA `byte_10D00`）的單一 byte；改寫式存檔
+// 必須讀回它，並在超出原版 byte 值域時採 0…255 的邊界。
+func TestTrustStorage(t *testing.T) {
+	w := load(t, 0)
+	if w.Trust != int(w.raw[trustOffset]) {
+		t.Fatalf("信賴度 = %d，原始 +0x%X = %d", w.Trust, trustOffset, w.raw[trustOffset])
+	}
+	for _, in := range []int{-1, 123, 300} {
+		w.Trust = in
+		got, err := reparse(w.Bytes())
+		if err != nil {
+			t.Fatal(err)
+		}
+		want := in
+		if want < 0 {
+			want = 0
+		}
+		if want > 0xFF {
+			want = 0xFF
+		}
+		if got.Trust != want {
+			t.Errorf("信賴度輸入 %d → %d，want %d", in, got.Trust, want)
+		}
+	}
+}
+
+// Player 是原版全域區段的一組持久化值：`word_10CFD`（區塊 +0x0D）
+// 是勢力表位址 faction×0x40，`byte_10CFF`（+0x0F）是勢力編號。
+// 新劇本兩者都是無玩家哨兵；有效存檔載入時原版會跳過新遊戲選擇流程，
+// 直接使用這組值。
+func TestPlayerStorage(t *testing.T) {
+	w := load(t, 0)
+	if w.Player != -1 {
+		t.Fatalf("新劇本 Player = %d，want -1", w.Player)
+	}
+	w.Player = 3
+	b := w.Bytes()
+	if got := u16(b, playerPtrOffset); got != 3*factionSize {
+		t.Errorf("Player pointer = 0x%X，want 0x%X", got, 3*factionSize)
+	}
+	if got := int(b[playerOffset]); got != 3 {
+		t.Errorf("Player byte = %d，want 3", got)
+	}
+	got, err := reparse(b)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got.Player != 3 {
+		t.Errorf("Player round-trip = %d，want 3", got.Player)
+	}
+
+	// 指標與 byte 不一致時 fail-closed，不把一個孤立 byte 猜成玩家勢力。
+	b[playerOffset] = 4
+	got, err = reparse(b)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got.Player != -1 {
+		t.Errorf("不一致的 Player 欄位被解成 %d，want -1", got.Player)
+	}
+}
+
+// 事件佇列先驗收「原始資料可保存」，不把尚未完全解出的 handler 行為
+// 偷換成猜測。Code 的高 byte 也要 round-trip，因為原版用它承載勢力／
+// 災害變體（docs/formats/08、docs/re/07）；已知 handler 另由下方測試驗收。
+func TestEventQueueStorage(t *testing.T) {
+	w := load(t, 0)
+	w.events[0] = QueuedEvent{Code: 0x010C, Param: 171}
+	w.events[63] = QueuedEvent{Code: 0xFF01, Param: 0x1234}
+	w.events[64] = QueuedEvent{Code: 0x020C, Param: 0x00C0}
+	w.events[255] = QueuedEvent{Code: 0x000D, Param: 127}
+
+	b := w.Bytes()
+	for i, want := range []QueuedEvent{w.events[0], w.events[63], w.events[64], w.events[255]} {
+		idx := []int{0, 63, 64, 255}[i]
+		off := eventQueueOffset + idx*eventQueueEntrySize
+		if got := u16(b, off); got != int(want.Code) {
+			t.Errorf("佇列 %d code = 0x%04X, want 0x%04X", idx, got, want.Code)
+		}
+		if got := u16(b, off+2); got != int(want.Param) {
+			t.Errorf("佇列 %d param = 0x%04X, want 0x%04X", idx, got, want.Param)
+		}
+	}
+
+	got, err := reparse(b)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, idx := range []int{0, 63, 64, 255} {
+		if got.events[idx] != w.events[idx] {
+			t.Errorf("佇列 %d round-trip = %#v, want %#v", idx, got.events[idx], w.events[idx])
+		}
+	}
+}
+
+// 原版 sub_131AE 每十次「每時」呼叫才取一格；新遊戲／月結後的第一筆
+// 不是立刻處理，而是從 byte_131AD = 7 開始倒數。
+func TestEventQueueTiming(t *testing.T) {
+	w := load(t, 0)
+	w.events[0] = QueuedEvent{Code: 0x010C, Param: 171}
+	w.eventCursor, w.eventDelay = 0, 7
+
+	for i := 0; i < 6; i++ {
+		if _, ok := w.takeNextQueuedEvent(); ok {
+			t.Fatalf("第 %d 次就取到事件", i+1)
+		}
+	}
+	got, ok := w.takeNextQueuedEvent()
+	if !ok || got != w.events[0] {
+		t.Fatalf("第 7 次取到 %#v／%v，want %#v／true", got, ok, w.events[0])
+	}
+	if w.eventCursor != eventQueueEntrySize || w.eventDelay != 10 {
+		t.Fatalf("取事件後 cursor=%d delay=%d，want %d／10",
+			w.eventCursor, w.eventDelay, eventQueueEntrySize)
+	}
+	for i := 0; i < 9; i++ {
+		if _, ok := w.takeNextQueuedEvent(); ok {
+			t.Fatalf("事件後第 %d 次又取到事件", i+1)
+		}
+	}
+	if w.eventDelay != 1 {
+		t.Fatalf("下一筆前 delay=%d，want 1", w.eventDelay)
+	}
+}
+
+// 無輸入主迴圈的 state 核心是連續呼叫 World.Tick：據點／軍團先更新，
+// 時鐘再按子刻進位，每個新的「時」才進入 hourly／queue dispatcher。事件 10
+// 不應成為 clock 的 driver；它只能在原版 byte_131AD 的第 7／之後每 10 次
+// 每時節拍被取出。
+func TestIdleClockDispatchesQueuedEvent10OnHourlyCadence(t *testing.T) {
+	w := load(t, 0)
+	w.events = [eventQueueEntries]QueuedEvent{{Code: 0x030A, Param: 0x0042}}
+	w.eventCursor, w.eventDelay = 0, 7
+	rng := rng.NewFixed(13)
+
+	var hourly int
+	var notices []TalkNotice
+	for i := 0; i < 7*clock.SubticksPerHour; i++ {
+		ev := w.Tick(rng)
+		if !ev.Clock.Hour {
+			continue
+		}
+		hourly++
+		notices = append(notices, ev.TalkNotices...)
+		if hourly < 7 && len(ev.TalkNotices) != 0 {
+			t.Fatalf("第 %d 個每時邊界提前產生事件 10：%#v", hourly, ev.TalkNotices)
+		}
+	}
+	if hourly != 7 {
+		t.Fatalf("idle fixture 只跑到 %d 個每時邊界，want 7；clock=%+v", hourly, w.Clock)
+	}
+	if len(notices) != 1 || notices[0] != (TalkNotice{
+		Index: 0x42, City: -1, Faction: -1, General: 3, Amount: -1,
+	}) {
+		t.Fatalf("第 7 個每時邊界的事件 10 = %#v，want 一筆 raw TALK notice", notices)
+	}
+	if w.Clock.Hour != 8 || w.Clock.Subtick != 0 {
+		t.Fatalf("idle clock = %+v，want 從 1:0 前進 7 個每時邊界至 8:0", w.Clock)
+	}
+}
+
+// sub_12BD9 的月度壓縮是「丟掉前 64 格、後 192 格前移、尾端清零」，
+// 不是普通 FIFO 的逐筆刪除；這個差異會影響長期事件軌跡與存檔內容。
+func TestEventQueueMonthlyCompaction(t *testing.T) {
+	w := load(t, 0)
+	for i := range w.events {
+		w.events[i] = QueuedEvent{Code: uint16(i + 1), Param: uint16(0xA000 + i)}
+	}
+	w.eventCursor, w.eventDelay = 124, 2
+	w.compactEventQueue()
+
+	for i := 0; i < eventQueueEntries-eventQueueDispatch; i++ {
+		want := QueuedEvent{Code: uint16(i + eventQueueDispatch + 1), Param: uint16(0xA000 + i + eventQueueDispatch)}
+		if w.events[i] != want {
+			t.Fatalf("壓縮後第 %d 格 = %#v，want %#v", i, w.events[i], want)
+		}
+	}
+	for i := eventQueueEntries - eventQueueDispatch; i < eventQueueEntries; i++ {
+		if w.events[i] != (QueuedEvent{}) {
+			t.Fatalf("壓縮後尾端第 %d 格未清零：%#v", i, w.events[i])
+		}
+	}
+	if w.eventCursor != 0 || w.eventDelay != 7 {
+		t.Fatalf("壓縮後 cursor=%d delay=%d，want 0／7", w.eventCursor, w.eventDelay)
+	}
+}
+
+// 目前已有獨立反組譯證據的事件 handler：事件 1 宣戰、事件 2 合作、
+// 事件 3 停戰、事件 6／7 外交官回報、事件 8 遷都、事件 9 釋放指定武將、
+// 事件 13 信賴度 −50。
+// 未解的事件仍不應因 dispatch 而產生猜測效果。
+func TestQueuedEventHandlers(t *testing.T) {
+	w := load(t, 0)
+	w.Player = -1
+	source, target := 0, 13
+	w.Factions[source].InvasionTarget = diplomacy.NoTarget
+	w.Factions[target].InvasionTarget = diplomacy.NoTarget
+	w.Friendship[source][target] = diplomacy.Peace(40)
+	w.Friendship[target][source] = diplomacy.Peace(60)
+	w.events[0] = QueuedEvent{
+		Code:  uint16(source)<<8 | 1,
+		Param: uint16(0xFF00 | target),
+	}
+	w.eventCursor, w.eventDelay = 0, 1
+	w.dispatchQueuedEvent(&Event{})
+	if got := w.Factions[source].InvasionTarget; got != target {
+		t.Fatalf("事件 1 沒有設定發起方目標：got %d want %d", got, target)
+	}
+	if got := w.Factions[target].InvasionTarget; got != source {
+		t.Fatalf("事件 1 沒有套用回頭宣戰：got %d want %d", got, source)
+	}
+	if !w.Friendship[source][target].AtWar() || !w.Friendship[target][source].AtWar() {
+		t.Fatal("事件 1 後雙向交友度仍是和平")
+	}
+
+	w = load(t, 0)
+	player, invader, invaded := 0, 1, 2
+	w.Player = player
+	// 事件 2 呼叫 sub_13712(SI=player, DI=被侵攻方，BX=侵攻方)。
+	// 讓 player 君主政治 12、被侵攻方最高政治未出陣武將政治 8，
+	// 並避開平手亂數；合作金額因此是 (90−60)/2×1000=15000。
+	w.Factions[player].Lord = 0
+	w.Factions[player].Diplomat = noFaction
+	w.Factions[player].Aggression = 1
+	w.Factions[invaded].Diplomat = noFaction
+	for i := range w.Generals {
+		if w.Generals[i].Faction == invaded {
+			w.Generals[i].Posted = true
+		}
+	}
+	w.Generals[0] = General{Alive: true, Politics: 12, Posted: true, Faction: player, Captor: noFaction}
+	w.Generals[1] = General{Alive: true, Politics: 8, Faction: invaded, Captor: noFaction}
+	w.Generals[2] = General{Alive: true, Faction: player, Captor: invaded, Posted: true}
+	w.Corps[0] = Corps{Alive: true, Faction: player}
+	w.Factions[player].Funds = 10_000
+	w.Factions[invaded].Funds = 50_000
+	w.Friendship[player][invader] = diplomacy.Peace(40)
+	w.Friendship[player][invaded] = diplomacy.Peace(60)
+	w.Friendship[invader][player] = diplomacy.Peace(50)
+	w.Factions[invader].InvasionTarget = diplomacy.NoTarget
+	w.events[0] = QueuedEvent{
+		Code:  uint16(player)<<8 | 2,
+		Param: uint16(invaded)<<8 | uint16(invader),
+	}
+	w.eventCursor, w.eventDelay = 0, 1
+	w.dispatchQueuedEvent(&Event{})
+	if w.PendingDiplomacy() == nil || !w.ResolveDiplomacy(DiplomacyOfferFunds) {
+		t.Fatal("事件 2 玩家合作選擇沒有完成狀態收尾")
+	}
+	if w.Factions[player].Funds != 25_000 || w.Factions[invaded].Funds != 35_000 {
+		t.Fatalf("事件 2 金額方向／數值錯誤：player=%d invaded=%d", w.Factions[player].Funds, w.Factions[invaded].Funds)
+	}
+	if w.Factions[player].InvasionTarget != diplomacy.NoTarget || w.Factions[invader].InvasionTarget != player {
+		t.Fatalf("事件 2 宣戰收尾錯誤：player=%d invader=%d", w.Factions[player].InvasionTarget, w.Factions[invader].InvasionTarget)
+	}
+	if !w.Friendship[player][invader].AtWar() || !w.Friendship[invader][player].AtWar() {
+		t.Fatal("事件 2 合作成立後玩家與侵攻方仍是和平")
+	}
+	if g := w.Generals[2]; g.Faction != invaded || g.Captor != noFaction || g.Posted {
+		t.Fatalf("事件 2 沒有釋放合作雙方俘虜：%+v", g)
+	}
+
+	w = load(t, 0)
+	w.Player = -1
+	source, target = 0, 1
+	// 事件 3 呼叫 sub_136C4(SI=target, DI=source)。讓 target 的君主
+	// 已出陣，這樣 sub_13771 會取君主政治；source 則提供 fallback
+	// 的最高政治未出陣武將。數值故意避開平手亂數分支。
+	targetLord, sourceGeneral := 0, 1
+	w.Factions[target].Lord = targetLord
+	w.Factions[target].Diplomat = noFaction
+	w.Factions[target].Aggression = 1
+	w.Factions[source].Diplomat = noFaction
+	for i := range w.Generals {
+		if w.Generals[i].Faction == source {
+			w.Generals[i].Posted = true
+		}
+	}
+	w.Generals[targetLord] = General{Alive: true, Politics: 12, Posted: true, Faction: target, Captor: noFaction}
+	w.Generals[sourceGeneral] = General{Alive: true, Politics: 8, Faction: source, Captor: noFaction}
+	w.Corps[targetLord] = Corps{Alive: true, Faction: target}
+	w.Friendship[target][source] = diplomacy.Peace(20)
+	w.Friendship[source][target] = diplomacy.Peace(50)
+	w.Factions[source].Funds = 50_000
+	w.Factions[target].Funds = 10_000
+	w.Factions[source].InvasionTarget = target
+	w.Factions[target].InvasionTarget = 9
+	w.Generals[2] = General{Alive: true, Faction: source, Captor: target, Posted: true}
+	w.Generals[3] = General{Alive: true, Faction: target, Captor: source, Posted: true}
+	w.Generals[4] = General{Alive: true, Faction: source, Captor: 5, Posted: true}
+	w.Cities[0].Owner, w.Cities[0].OwnerRecorded = source, target
+	w.Cities[1].Owner, w.Cities[1].OwnerRecorded = source, 5
+	w.events[0] = QueuedEvent{
+		Code:  uint16(source)<<8 | 3,
+		Param: uint16(0xFF00 | target),
+	}
+	w.eventCursor, w.eventDelay = 0, 1
+	w.dispatchQueuedEvent(&Event{})
+	if got := w.Factions[target].Funds; got != 28_000 {
+		t.Fatalf("事件 3 對方資金 = %d，want 28000", got)
+	}
+	if got := w.Factions[source].Funds; got != 32_000 {
+		t.Fatalf("事件 3 提出方資金 = %d，want 32000", got)
+	}
+	if w.Factions[source].InvasionTarget != diplomacy.NoTarget || w.Factions[target].InvasionTarget != 9 {
+		t.Fatalf("事件 3 侵攻目標清理錯誤：source=%d target=%d", w.Factions[source].InvasionTarget, w.Factions[target].InvasionTarget)
+	}
+	if got := w.Friendship[source][target]; got != diplomacy.Peace(20) || w.Friendship[target][source] != diplomacy.Peace(20) {
+		t.Fatalf("事件 3 交友度 = %#v／%#v，want 雙向和平 20", got, w.Friendship[target][source])
+	}
+	if g := w.Generals[2]; g.Faction != target || g.Captor != noFaction || g.Posted {
+		t.Fatalf("事件 3 沒有釋放 source→target 俘虜：%+v", g)
+	}
+	if g := w.Generals[3]; g.Faction != source || g.Captor != noFaction || g.Posted {
+		t.Fatalf("事件 3 沒有釋放 target→source 俘虜：%+v", g)
+	}
+	if g := w.Generals[4]; g.Faction != source || g.Captor != 5 || !g.Posted {
+		t.Fatalf("事件 3 誤改非配對俘虜：%+v", g)
+	}
+	if w.Cities[0].OwnerRecorded != source || w.Cities[1].OwnerRecorded != 5 {
+		t.Fatalf("事件 3 OwnerRecorded 同步邊界錯誤：%d／%d", w.Cities[0].OwnerRecorded, w.Cities[1].OwnerRecorded)
+	}
+
+	w = load(t, 0)
+	w.Player = -1
+	faction, expected := -1, -1
+	for i, f := range w.Factions {
+		if !f.Alive {
+			continue
+		}
+		old := f.Capital
+		if next := w.relocateCapital(i); next != capital.None {
+			faction, expected = i, next
+			w.Factions[i].Capital = old
+			break
+		}
+	}
+	if faction < 0 {
+		t.Skip("劇本 1 沒有可供事件 8 驗證的遷都候選")
+	}
+	oldCapital := w.Factions[faction].Capital
+	otherFaction := (faction + 1) % numFactions
+	w.Corps[0] = Corps{
+		Alive: true, Faction: faction, Home: oldCapital, TargetNode: expected,
+		TargetX: 0x1234, TargetY: 0x5678,
+	}
+	w.Corps[1] = Corps{
+		Alive: true, Faction: faction, Home: oldCapital, TargetNode: oldCapital,
+	}
+	w.Corps[2] = Corps{
+		Alive: true, Faction: otherFaction, Home: oldCapital, TargetNode: expected,
+	}
+	w.events[0] = QueuedEvent{Code: uint16(faction)<<8 | 8, Param: 0xFFFF}
+	w.eventCursor, w.eventDelay = 0, 1
+	w.dispatchQueuedEvent(&Event{})
+	if got := w.Factions[faction].Capital; got != expected {
+		t.Fatalf("事件 8 首都 = %d，want %d", got, expected)
+	}
+	if c := w.Corps[0]; c.Home != expected || c.TargetNode != oldCapital || c.TargetX != 0x1234 || c.TargetY != 0x5678 {
+		t.Fatalf("事件 8 未照 sub_14502 同步軍團 0：%+v，舊首都=%d 新首都=%d", c, oldCapital, expected)
+	}
+	if c := w.Corps[1]; c.Home != expected || c.TargetNode != oldCapital {
+		t.Fatalf("事件 8 不應改寫非新首都目標：%+v", c)
+	}
+	if c := w.Corps[2]; c.Home != oldCapital || c.TargetNode != expected {
+		t.Fatalf("事件 8 不應同步其他勢力軍團：%+v", c)
+	}
+
+	w = load(t, 0)
+	w.Trust = 200
+	w.events[0] = QueuedEvent{Code: 13, Param: 0x0196}
+	w.eventCursor, w.eventDelay = 0, 1
+	w.dispatchQueuedEvent(&Event{})
+	if w.Trust != 150 {
+		t.Fatalf("事件 13 Trust = %d，want 150", w.Trust)
+	}
+}
+
+// 玩家進言的三個 producer 必須保留原版的分流：敵對直接收尾，停戰／協力
+// 寫入事件 6／7；後兩者從第 20 格提示位置找完整 256 格，而不是套用 AI
+// producer 只掃前 64 格的限制。
+func TestPlayerDiplomacyProducers(t *testing.T) {
+	w := load(t, 0)
+	player, target := 0, 1
+	w.Player = player
+	w.events = [eventQueueEntries]QueuedEvent{}
+	w.Factions[target].Diplomat = noFaction
+	w.Friendship[player][target] = diplomacy.Peace(40).WithWar(true)
+	for i := 0x14; i < eventQueueDispatch; i++ {
+		w.events[i] = QueuedEvent{Code: 0x010C}
+	}
+	w.eventCursor, w.eventDelay = 0, 7
+	if !w.QueuePlayerCeasefire(target) {
+		t.Fatal("玩家停戰 producer 沒有寫入事件 6")
+	}
+	if got := w.events[eventQueueDispatch]; got != (QueuedEvent{Code: uint16(target)<<8 | 6}) {
+		t.Fatalf("事件 6 payload／完整佇列位置錯誤：%#v", got)
+	}
+	if w.QueuePlayerCeasefire(target) {
+		t.Fatal("同一回報方已有事件 6 時不應重複排入")
+	}
+
+	w = load(t, 0)
+	w.Player = player
+	w.events = [eventQueueEntries]QueuedEvent{}
+	w.Factions[player].InvasionTarget = diplomacy.NoTarget
+	w.Friendship[player][target] = diplomacy.Peace(40)
+	if !w.ApplyPlayerHostility(target) {
+		t.Fatal("玩家敵對提案沒有走直接宣戰收尾")
+	}
+	if !w.Friendship[player][target].AtWar() || !w.Friendship[target][player].AtWar() {
+		t.Fatal("玩家敵對提案後雙向交友度仍是和平")
+	}
+
+	w = load(t, 0)
+	ally, invader := 1, 2
+	w.Player = player
+	w.events = [eventQueueEntries]QueuedEvent{}
+	w.Factions[ally].Diplomat = noFaction
+	w.Friendship[player][invader] = diplomacy.Peace(40).WithWar(true)
+	if !w.QueuePlayerCooperation(ally, invader) {
+		t.Fatal("玩家協力 producer 沒有寫入事件 7")
+	}
+	want := QueuedEvent{
+		Code:  uint16(ally)<<8 | 7,
+		Param: uint16(invader)<<8 | uint16(invader),
+	}
+	if got := w.events[0x14]; got != want {
+		t.Fatalf("事件 7 payload／位置錯誤：%#v，want %#v", got, want)
+	}
+	if w.QueuePlayerCooperation(ally, invader) {
+		t.Fatal("同一協力方已有事件 7 時不應重複排入")
+	}
+}
+
+func TestEvent10ProducerWritesRawTalkPayload(t *testing.T) {
+	w := load(t, 0)
+	w.events = [eventQueueEntries]QueuedEvent{}
+	w.eventCursor = 0
+	if !w.QueueEvent10(3, 0x42) {
+		t.Fatal("事件 10 producer 沒有寫入有效 raw payload")
+	}
+	if got := w.events[0]; got != (QueuedEvent{Code: 0x030A, Param: 0x0042}) {
+		t.Fatalf("事件 10 raw payload = %#v，want code=030A param=0042", got)
+	}
+
+	// producer 使用完整 256 格路徑；前 64 格滿時仍應能保留訊息事件。
+	w = load(t, 0)
+	w.events = [eventQueueEntries]QueuedEvent{}
+	for i := 0; i < eventQueueDispatch; i++ {
+		w.events[i] = QueuedEvent{Code: 0x010C}
+	}
+	w.eventCursor = 0
+	if !w.QueueEvent10(4, 0x43) {
+		t.Fatal("事件 10 producer 不應被前 64 格滿阻擋")
+	}
+	if got := w.events[eventQueueDispatch]; got != (QueuedEvent{Code: 0x040A, Param: 0x0043}) {
+		t.Fatalf("事件 10 完整佇列位置／payload = %#v", got)
+	}
+
+	if w.QueueEvent10(-1, 0x42) || w.QueueEvent10(numGenerals, 0x42) ||
+		w.QueueEvent10(3, -1) || w.QueueEvent10(3, 0x10000) {
+		t.Fatal("事件 10 producer 應拒絕越界 General／TALK index")
+	}
+}
+
+// 事件 11／12 的 handler 寫入城市 runtime 的 +0x15 marker；sub_14269
+// 在後續據點輪轉才套用持久傷害。事件 12 的高 byte 與 Param 位址、延遲
+// 清除事件也要保留。
+func TestQueuedDisasterAnimationHandlers(t *testing.T) {
+	w := load(t, 0)
+	w.events = [eventQueueEntries]QueuedEvent{}
+	w.rng = rng.NewFixed(17)
+	param := uint16(runtimeCityBase)
+	w.events[0] = QueuedEvent{Code: 0x010C, Param: param}
+	w.eventCursor, w.eventDelay = 0, 1
+	ev := &Event{}
+	w.dispatchQueuedEvent(ev)
+	if w.disasterMarkers[0] != economy.Fire || w.disasterMarkerLevels[0] == 0 {
+		t.Fatalf("事件 0x010C 沒有建立火災 runtime 標記：kind=%v level=%d",
+			w.disasterMarkers[0], w.disasterMarkerLevels[0])
+	}
+	if ev.Disaster[0] != economy.Fire {
+		t.Fatalf("事件 0x010C 沒有回報火災據點：%v", ev.Disaster)
+	}
+	clearSlot := -1
+	for i, e := range w.events {
+		if e.Code == 0x000C && e.Param == param {
+			clearSlot = i
+			break
+		}
+	}
+	if clearSlot < 0 {
+		t.Fatal("事件 0x010C 沒有排入延遲清除事件")
+	}
+	w.eventCursor, w.eventDelay = clearSlot*eventQueueEntrySize, 1
+	w.dispatchQueuedEvent(&Event{})
+	if w.disasterMarkers[0] != economy.NoDisaster || w.disasterMarkerLevels[0] != 0 {
+		t.Fatalf("事件 0x000C 沒有清除 runtime 標記：kind=%v level=%d",
+			w.disasterMarkers[0], w.disasterMarkerLevels[0])
+	}
+
+	w = load(t, 0)
+	w.events = [eventQueueEntries]QueuedEvent{}
+	w.rng = rng.NewFixed(23)
+	c := w.Cities[0]
+	w.stormArea = &economy.StormArea{
+		MinX: c.X - 5, MinY: c.Y - 5, MaxX: c.X + 5, MaxY: c.Y + 5,
+	}
+	w.events[0] = QueuedEvent{Code: 0x000B}
+	w.eventCursor, w.eventDelay = 0, 1
+	w.dispatchQueuedEvent(&Event{})
+	if w.disasterMarkers[0] != economy.Storm || w.disasterMarkerLevels[0] == 0 {
+		t.Fatalf("事件 0x000B 沒有建立暴風雨 runtime 標記：kind=%v level=%d",
+			w.disasterMarkers[0], w.disasterMarkerLevels[0])
+	}
+}
+
+func TestDisasterMarkerAppliesRawPersistentEffects(t *testing.T) {
+	w := load(t, 0)
+	c := &w.Cities[0]
+	c.Prevention = 3
+	c.Growth = 0 // 原始 +0x10 存值 100
+	c.Production = 0x1200
+	c.Garrison = 20
+	w.disasterMarkers[0] = economy.Fire
+	w.disasterMarkerLevels[0] = 7
+
+	w.applyCityDisasterEffect(0)
+
+	// deficit = 7 − 3 = 4；生產力損失 = (4 × 0x12) >> 2 = 18。
+	if c.Prevention != 0 || c.Growth != -4 || c.Production != 0x11EE || c.Garrison != 18 {
+		t.Fatalf("sub_14269 持久效果錯誤：prevention=%d growth=%d production=%#x garrison=%d",
+			c.Prevention, c.Growth, c.Production, c.Garrison)
+	}
+	if w.disasterMarkers[0] != economy.Fire || w.disasterMarkerLevels[0] != 7 {
+		t.Fatal("sub_14269 不應自行清除 +0x15 marker")
+	}
+
+	// 防災值足夠時只扣護盾，不應碰其他三個欄位。
+	c.Prevention = 10
+	c.Growth = 12
+	c.Production = 0x2345
+	c.Garrison = 19
+	w.applyCityDisasterEffect(0)
+	if c.Prevention != 3 || c.Growth != 12 || c.Production != 0x2345 || c.Garrison != 19 {
+		t.Fatalf("防災護盾分支錯誤：prevention=%d growth=%d production=%#x garrison=%d",
+			c.Prevention, c.Growth, c.Production, c.Garrison)
+	}
+}
+
+func TestDisasterMarkerReadOnlySnapshots(t *testing.T) {
+	w := load(t, 0)
+	w.disasterMarkers[0] = economy.Fire
+	w.disasterMarkerLevels[0] = 7
+
+	got, ok := w.DisasterMarkerAt(0)
+	if !ok || got != (DisasterMarker{Kind: economy.Fire, Level: 7}) {
+		t.Fatalf("火災 marker snapshot 錯誤：%#v，ok=%v", got, ok)
+	}
+	if _, ok := w.DisasterMarkerAt(-1); ok {
+		t.Fatal("負的據點編號不應回傳 marker")
+	}
+	if _, ok := w.DisasterMarkerAt(len(w.Cities)); ok {
+		t.Fatal("超出據點表不應回傳 marker")
+	}
+
+	w.stormArea = &economy.StormArea{MinX: 10, MinY: 20, MaxX: 20, MaxY: 30}
+	area, ok := w.StormAreaSnapshot()
+	if !ok || area != (economy.StormArea{MinX: 10, MinY: 20, MaxX: 20, MaxY: 30}) {
+		t.Fatalf("暴風雨範圍 snapshot 錯誤：%#v，ok=%v", area, ok)
+	}
+	area.MinX = 999
+	areaAgain, _ := w.StormAreaSnapshot()
+	if areaAgain.MinX != 10 {
+		t.Fatal("StormAreaSnapshot 不應讓呼叫端改到 runtime 範圍")
+	}
+}
+
+// 事件 11／12／13 的通知索引是原版 handler 直接傳入 sub_18810 的值：
+// #70 暴風雨、#71 大火、#72 暴動、#51 君主赤字警告。state 只回傳索引
+// 與城市目標，文字與 Big5 展開留給呈現層。
+func TestQueuedTalkNotices(t *testing.T) {
+	w := load(t, 0)
+	player := 0
+	w.Player = player
+	city := w.Factions[player].Capital
+	if city < 0 || city >= len(w.Cities) || w.Cities[city].Owner != player {
+		t.Fatalf("玩家首都不是有效的玩家據點：player=%d city=%d", player, city)
+	}
+
+	param := uint16(runtimeCityBase + city*citySize)
+	w.events = [eventQueueEntries]QueuedEvent{{Code: 0x010C, Param: param}}
+	w.eventCursor, w.eventDelay = 0, 1
+	fire := &Event{}
+	w.dispatchQueuedEvent(fire)
+	if len(fire.TalkNotices) != 1 || fire.TalkNotices[0] != (TalkNotice{
+		Index: 0x47, City: city, Faction: -1, General: -1, Amount: -1,
+	}) {
+		t.Fatalf("事件 12 火災通知錯誤：%#v", fire.TalkNotices)
+	}
+
+	w = load(t, 0)
+	w.Player = player
+	c := w.Cities[city]
+	w.rng = rng.NewFixed(23)
+	w.stormArea = &economy.StormArea{
+		MinX: c.X - 5, MinY: c.Y - 5, MaxX: c.X + 5, MaxY: c.Y + 5,
+	}
+	w.events = [eventQueueEntries]QueuedEvent{{Code: 0x000B}}
+	w.eventCursor, w.eventDelay = 0, 1
+	storm := &Event{}
+	w.dispatchQueuedEvent(storm)
+	foundStorm := false
+	for _, notice := range storm.TalkNotices {
+		if notice.Index == 0x46 && notice.City == city && notice.General == -1 {
+			foundStorm = true
+			break
+		}
+	}
+	if !foundStorm {
+		t.Fatalf("事件 11 沒有產生玩家據點 #70 通知：%#v", storm.TalkNotices)
+	}
+
+	w = load(t, 0)
+	w.events = [eventQueueEntries]QueuedEvent{{Code: 0x000D, Param: 0x0196}}
+	w.eventCursor, w.eventDelay = 0, 1
+	deficit := &Event{}
+	w.dispatchQueuedEvent(deficit)
+	if len(deficit.TalkNotices) != 1 || deficit.TalkNotices[0] != (TalkNotice{
+		Index: 0x33, City: -1, Faction: -1, General: -1, Amount: -1,
+	}) {
+		t.Fatalf("事件 13 赤字通知錯誤：%#v", deficit.TalkNotices)
+	}
+}
+
+// 事件 10（sub_13496）不是「只取出不顯示」：Param 直接是 TALK.DAT
+// 索引，高位元組以 FFxx formatter word 提供 \1 的武將索引。
+func TestQueuedEvent10TalkNotice(t *testing.T) {
+	w := load(t, 0)
+	w.events[0] = QueuedEvent{Code: 0x030A, Param: 0x0042}
+	w.eventCursor, w.eventDelay = 0, 1
+	ev := &Event{}
+	w.dispatchQueuedEvent(ev)
+	if len(ev.TalkNotices) != 1 || ev.TalkNotices[0] != (TalkNotice{
+		Index: 0x42, City: -1, Faction: -1, General: 3, Amount: -1,
+	}) {
+		t.Fatalf("事件 10 formatter 邊界錯誤：%#v", ev.TalkNotices)
+	}
+
+	// 原版仍會呼叫 TALK；來源超出武將表時只拒絕錯誤肖像／\1 代入，
+	// 不把整則訊息吞掉。
+	w = load(t, 0)
+	w.events[0] = QueuedEvent{Code: 0xFF0A, Param: 0x0042}
+	w.eventCursor, w.eventDelay = 0, 1
+	ev = &Event{}
+	w.dispatchQueuedEvent(ev)
+	if len(ev.TalkNotices) != 1 || ev.TalkNotices[0].General != -1 ||
+		ev.TalkNotices[0].Index != 0x42 {
+		t.Fatalf("事件 10 無效 general 應 fail-closed 保留 TALK：%#v", ev.TalkNotices)
+	}
+}
+
+// sub_123FF／sub_12459／sub_12533 的 runtime 物件時序：建立時 phase=1、
+// timer=1；第一次 map update 立即 dirty，但該次 render 仍畫 phase=1，
+// 之後每 16 次 map update 才換下一個相位。
+func TestDisasterObjectAnimationTiming(t *testing.T) {
+	w := load(t, 0)
+	w.events = [eventQueueEntries]QueuedEvent{{Code: 0x010C, Param: runtimeCityBase}}
+	w.eventCursor, w.eventDelay = 0, 1
+	w.rng = rng.NewFixed(17)
+	w.dispatchQueuedEvent(&Event{})
+
+	objects := w.RenderDisasterObjects()
+	if len(objects) != 1 || objects[0].TypeCode != 1 || objects[0].Phase != 1 {
+		t.Fatalf("火災物件初始記錄錯誤：%#v", objects)
+	}
+
+	w.AdvanceDisasterObjects()
+	objects = w.RenderDisasterObjects()
+	if len(objects) != 1 || objects[0].Phase != 1 {
+		t.Fatalf("第一次 dirty render 應先畫 phase=1：%#v", objects)
+	}
+
+	for i := 0; i < disasterObjectInterval-1; i++ {
+		w.AdvanceDisasterObjects()
+	}
+	objects = w.RenderDisasterObjects()
+	if len(objects) != 1 || objects[0].Phase != 2 {
+		t.Fatalf("16 次 map update 後應畫 phase=2：%#v", objects)
+	}
+
+	// sub_12438 會清掉同城市的所有 runtime object，與 marker 清除同步。
+	w.events[1] = QueuedEvent{Code: 0x000C, Param: runtimeCityBase}
+	w.eventCursor, w.eventDelay = eventQueueEntrySize, 1
+	w.dispatchQueuedEvent(&Event{})
+	if got := w.RenderDisasterObjects(); len(got) != 0 {
+		t.Fatalf("清除事件後仍有災害物件：%#v", got)
+	}
+}
+
+func TestSub124FFMatchesRawSignedByteContract(t *testing.T) {
+	tests := []struct {
+		name      string
+		drift     uint16
+		random    int
+		wantDrift uint16
+		wantWhole int
+	}{
+		{name: "carry positive", drift: 0x000F, random: 7, wantDrift: 0x0000, wantWhole: 1},
+		{name: "negative wrap", drift: 0xF100, random: 0, wantDrift: 0xF100, wantWhole: -1},
+		{name: "signed fractional no carry", drift: 0x0FF0, random: 7, wantDrift: 0x0FFF, wantWhole: 0},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotDrift, gotWhole := sub124FF(tt.drift, tt.random)
+			if gotDrift != tt.wantDrift || gotWhole != tt.wantWhole {
+				t.Fatalf("sub_124FF(%04X,%d) = (%04X,%d), want (%04X,%d)",
+					tt.drift, tt.random, gotDrift, gotWhole, tt.wantDrift, tt.wantWhole)
+			}
+		})
+	}
+}
+
+type sequenceRand struct {
+	values []int
+	pos    int
+}
+
+func (r *sequenceRand) Next() int {
+	if r == nil || len(r.values) == 0 {
+		return 0
+	}
+	v := r.values[r.pos%len(r.values)]
+	r.pos++
+	return v
+}
+
+func TestMovingDisasterSub1248AUsesOnlyLastHalfOfRawSlots(t *testing.T) {
+	w := load(t, 0)
+	r := &sequenceRand{values: []int{7, 7}}
+	base := disasterObject{
+		active: true, kind: economy.Fire, typeCode: 1, city: 0,
+		x: 10, y: 20, timer: 1, interval: disasterObjectInterval,
+		phase: 1, xDrift: 0x000F, yDrift: 0x000F,
+	}
+	w.disasterObjects[disasterMovingSlot-1] = base
+	w.disasterObjects[disasterMovingSlot] = base
+
+	w.AdvanceMapObjects(r)
+	if got := w.disasterObjects[disasterMovingSlot-1]; got.x != 10 ||
+		got.y != 20 || got.xDrift != 0x000F || got.yDrift != 0x000F {
+		t.Fatalf("sub_1248A 不應作用於前半 slots：%+v", got)
+	}
+	got := w.disasterObjects[disasterMovingSlot]
+	if got.x != 11 || got.y != 21 || got.xDrift != 0 || got.yDrift != 0 ||
+		got.timer != disasterObjectInterval || !got.dirty {
+		t.Fatalf("後半 slot 未依 raw sub_1248A 移動：%+v", got)
+	}
+}
+
+func TestMovingDisasterSub1248ARawWrapAndDirectionByte(t *testing.T) {
+	w := load(t, 0)
+	w.rng = &sequenceRand{values: []int{7, 7}}
+	w.stormArea = &economy.StormArea{MinX: 5, MinY: 5, MaxX: 6, MaxY: 6}
+	w.disasterObjects[disasterMovingSlot] = disasterObject{
+		active: true, kind: economy.Riot, typeCode: 2, city: 0,
+		x: disasterWrapMaxX + 1, y: disasterWrapMaxY + 1,
+		timer: 1, interval: disasterObjectInterval,
+		phase: 1, xDrift: 0x000F, yDrift: 0x000F,
+	}
+
+	w.AdvanceDisasterObjects()
+	got := w.disasterObjects[disasterMovingSlot]
+	if got.x != disasterWrapMinX || got.y != disasterWrapMinY ||
+		got.xDrift != 0xFF00 || got.yDrift != 0xFF00 {
+		t.Fatalf("sub_1248A 回繞／方向 byte 錯誤：%+v", got)
+	}
+}
+
+// 事件 6／7 的 TALK 參數來自 handler 的同一組 raw 暫存器：#57 使用回報方
+// 的勢力／外交官，#44／#48 的 \7 使用 sub_136C4／sub_13712 留在 DX 的金額。
+func TestQueuedDiplomacyReportTalkNotices(t *testing.T) {
+	w := load(t, 0)
+	player, other := 0, 1
+	w.Player = player
+	w.Factions[other].Lord = 1
+	w.Factions[other].Diplomat = 1
+	w.Factions[other].Aggression = 1
+	for i := range w.Generals {
+		if w.Generals[i].Faction == other {
+			w.Generals[i].Posted = true
+		}
+	}
+	w.Generals[1] = General{Alive: true, Politics: 8, Faction: other, Captor: noFaction}
+	w.Factions[player].Funds = 50_000
+	w.Factions[other].Funds = 10_000
+	w.Factions[player].InvasionTarget = other
+	w.Factions[other].InvasionTarget = diplomacy.NoTarget
+	w.Friendship[player][other] = diplomacy.Peace(50)
+	w.Friendship[other][player] = diplomacy.Peace(20)
+	w.events[0] = QueuedEvent{Code: uint16(other)<<8 | 6}
+	w.eventCursor, w.eventDelay = 0, 1
+	event6 := &Event{}
+	w.dispatchQueuedEvent(event6)
+	want6 := []TalkNotice{
+		{Index: 0x39, City: -1, Faction: other, General: 1, Amount: -1},
+		{Index: 0x2C, City: -1, Faction: other, General: -1, Amount: 14_000},
+	}
+	if !reflect.DeepEqual(event6.TalkNotices, want6) {
+		t.Fatalf("事件 6 TALK 通知錯誤：got %#v want %#v", event6.TalkNotices, want6)
+	}
+
+	w = load(t, 0)
+	ally, invader := 1, 2
+	w.Player = player
+	w.Factions[ally].Lord = 1
+	w.Factions[ally].Diplomat = 1
+	w.Factions[ally].Aggression = 1
+	for i := range w.Generals {
+		if w.Generals[i].Faction == ally {
+			w.Generals[i].Posted = true
+		}
+	}
+	w.Generals[1] = General{Alive: true, Politics: 8, Faction: ally, Captor: noFaction}
+	w.Factions[player].Funds = 50_000
+	w.Factions[ally].Funds = 10_000
+	w.Factions[ally].InvasionTarget = diplomacy.NoTarget
+	w.Factions[invader].InvasionTarget = diplomacy.NoTarget
+	w.Friendship[ally][player] = diplomacy.Peace(60)
+	w.Friendship[ally][invader] = diplomacy.Peace(20)
+	w.Friendship[player][ally] = diplomacy.Peace(50)
+	w.Friendship[player][invader] = diplomacy.Peace(50)
+	w.events[0] = QueuedEvent{
+		Code:  uint16(ally)<<8 | 7,
+		Param: uint16(invader)<<8 | uint16(invader),
+	}
+	w.eventCursor, w.eventDelay = 0, 1
+	event7 := &Event{}
+	w.dispatchQueuedEvent(event7)
+	want7 := []TalkNotice{
+		{Index: 0x39, City: -1, Faction: ally, General: 1, Amount: -1},
+		{Index: 0x30, City: -1, Faction: ally, General: -1, Amount: 15_000},
+	}
+	if !reflect.DeepEqual(event7.TalkNotices, want7) {
+		t.Fatalf("事件 7 TALK 通知錯誤：got %#v want %#v", event7.TalkNotices, want7)
+	}
+}
+
+func TestQueuedDiplomacySecondaryTalkConditions(t *testing.T) {
+	w := load(t, 0)
+	player, other := 0, 1
+	w.Player = player
+	w.Factions[other].Lord = 1
+	w.Factions[other].Diplomat = 1
+	w.Factions[other].Aggression = 1
+	w.Generals[1] = General{Alive: true, Politics: 8, Faction: other, Captor: noFaction}
+	// sub_13138 的第一個方向：回報方曾俘虜玩家方武將。
+	w.Generals[2] = General{Faction: player, Captor: other}
+	w.Factions[player].Funds = 50_000
+	w.Factions[other].Funds = 10_000
+	w.Factions[player].InvasionTarget = other
+	w.Factions[other].InvasionTarget = diplomacy.NoTarget
+	w.Friendship[player][other] = diplomacy.Peace(50)
+	w.Friendship[other][player] = diplomacy.Peace(20)
+	w.events[0] = QueuedEvent{Code: uint16(other)<<8 | 6}
+	w.eventCursor, w.eventDelay = 0, 1
+	ev := &Event{}
+	w.dispatchQueuedEvent(ev)
+	if len(ev.TalkNotices) != 3 {
+		t.Fatalf("事件 6 有俘虜關係時應有第二次 TALK：%#v", ev.TalkNotices)
+	}
+	got := ev.TalkNotices[2]
+	if got.Index != 0x48 || !got.Secondary || got.NoPortrait {
+		t.Fatalf("事件 6 次要 TALK raw 邊界錯誤：%#v", got)
+	}
+	if got.RawFormatterWordValid || got.RawFormatterWord != -1 {
+		t.Fatalf("事件 6 次要 TALK 未捕捉到原版 SS:[DI] payload 時必須 fail-closed：%#v", got)
+	}
+
+	w = load(t, 0)
+	ally, invader := 1, 2
+	w.Player = player
+	w.Factions[ally].Lord = 1
+	w.Factions[ally].Diplomat = 1
+	w.Factions[ally].Aggression = 1
+	w.Generals[1] = General{Alive: true, Politics: 8, Faction: ally, Captor: noFaction}
+	w.Generals[2] = General{Faction: player, Captor: ally}
+	w.Factions[player].Funds = 50_000
+	w.Factions[ally].Funds = 10_000
+	w.Factions[ally].InvasionTarget = diplomacy.NoTarget
+	w.Factions[invader].InvasionTarget = diplomacy.NoTarget
+	w.Friendship[ally][player] = diplomacy.Peace(60)
+	w.Friendship[ally][invader] = diplomacy.Peace(20)
+	w.Friendship[player][ally] = diplomacy.Peace(50)
+	w.Friendship[player][invader] = diplomacy.Peace(50)
+	w.events[0] = QueuedEvent{
+		Code:  uint16(ally)<<8 | 7,
+		Param: uint16(invader)<<8 | uint16(invader),
+	}
+	w.eventCursor, w.eventDelay = 0, 1
+	ev = &Event{}
+	w.dispatchQueuedEvent(ev)
+	if len(ev.TalkNotices) != 3 {
+		t.Fatalf("事件 7 有俘虜關係時應有第二次 TALK：%#v", ev.TalkNotices)
+	}
+	if got := ev.TalkNotices[2]; got != (TalkNotice{
+		Index: 0x4C, City: -1, Faction: -1, General: -1, Amount: -1,
+		RawFormatterWord: -1,
+		Secondary:        true, NoPortrait: true,
+	}) {
+		t.Fatalf("事件 7 次要 TALK raw 邊界錯誤：%#v", got)
+	}
+}
+
+// 事件 6／7 是玩家進言後的延遲外交回報，不是事件 2／3 的同一方向：
+// 事件 6 由玩家付停戰金額給回報方；事件 7 由玩家付協力金額給協力方，
+// 再由協力方對第三方宣戰。兩個 payload 與原版 handler 的 SI／DI／BX
+// 方向都在這裡固定，避免日後把事件字高誤當成付款方。
+func TestQueuedDiplomacyReportHandlers(t *testing.T) {
+	w := load(t, 0)
+	player, other := 0, 1
+	w.Player = player
+	w.Factions[other].Lord = 1
+	w.Factions[other].Diplomat = 1
+	w.Factions[other].Aggression = 1
+	for i := range w.Generals {
+		if w.Generals[i].Faction == other {
+			w.Generals[i].Posted = true
+		}
+	}
+	w.Generals[1] = General{
+		Alive: true, Politics: 8, Faction: other, Captor: noFaction,
+	}
+	w.Factions[player].Funds = 50_000
+	w.Factions[other].Funds = 10_000
+	w.Factions[player].InvasionTarget = other
+	w.Factions[other].InvasionTarget = diplomacy.NoTarget
+	w.Friendship[player][other] = diplomacy.Peace(50)
+	w.Friendship[other][player] = diplomacy.Peace(20)
+	w.events[0] = QueuedEvent{Code: uint16(other)<<8 | 6}
+	w.eventCursor, w.eventDelay = 0, 1
+	w.dispatchQueuedEvent(&Event{})
+	if got := w.Factions[player].Funds; got != 36_000 {
+		t.Fatalf("事件 6 玩家付款後資金 = %d，want 36000", got)
+	}
+	if got := w.Factions[other].Funds; got != 24_000 {
+		t.Fatalf("事件 6 回報方收款後資金 = %d，want 24000", got)
+	}
+	if w.Factions[player].InvasionTarget != diplomacy.NoTarget ||
+		w.Factions[other].InvasionTarget != diplomacy.NoTarget {
+		t.Fatalf("事件 6 停戰後侵攻目標未清除：player=%d other=%d",
+			w.Factions[player].InvasionTarget, w.Factions[other].InvasionTarget)
+	}
+	if w.Friendship[player][other].AtWar() || w.Friendship[other][player].AtWar() {
+		t.Fatal("事件 6 停戰回報後雙向交友度仍非和平")
+	}
+
+	w = load(t, 0)
+	player, ally, invader := 0, 1, 2
+	w.Player = player
+	w.Factions[ally].Lord = 1
+	w.Factions[ally].Diplomat = 1
+	w.Factions[ally].Aggression = 1
+	for i := range w.Generals {
+		if w.Generals[i].Faction == ally {
+			w.Generals[i].Posted = true
+		}
+	}
+	w.Generals[1] = General{
+		Alive: true, Politics: 8, Faction: ally, Captor: noFaction,
+	}
+	w.Factions[player].Funds = 50_000
+	w.Factions[ally].Funds = 10_000
+	w.Factions[ally].InvasionTarget = diplomacy.NoTarget
+	w.Factions[invader].InvasionTarget = diplomacy.NoTarget
+	w.Friendship[ally][player] = diplomacy.Peace(60)
+	w.Friendship[ally][invader] = diplomacy.Peace(20)
+	w.Friendship[player][ally] = diplomacy.Peace(50)
+	w.Friendship[player][invader] = diplomacy.Peace(50)
+	w.events[0] = QueuedEvent{
+		Code:  uint16(ally)<<8 | 7,
+		Param: uint16(invader)<<8 | uint16(invader),
+	}
+	w.eventCursor, w.eventDelay = 0, 1
+	w.dispatchQueuedEvent(&Event{})
+	if got := w.Factions[player].Funds; got != 35_000 {
+		t.Fatalf("事件 7 玩家付款後資金 = %d，want 35000", got)
+	}
+	if got := w.Factions[ally].Funds; got != 25_000 {
+		t.Fatalf("事件 7 協力方收款後資金 = %d，want 25000", got)
+	}
+	if w.Factions[ally].InvasionTarget != invader {
+		t.Fatalf("事件 7 協力方未對侵攻目標宣戰：got %d want %d",
+			w.Factions[ally].InvasionTarget, invader)
+	}
+	if !w.Friendship[ally][invader].AtWar() || !w.Friendship[invader][ally].AtWar() {
+		t.Fatal("事件 7 協力成立後雙向交友度仍是和平")
+	}
+
+	// 回報方外交官在事件抵達前消失時，handler 必須保持 fail-closed。
+	w = load(t, 0)
+	w.Player = player
+	w.Factions[other].Diplomat = noFaction
+	w.Factions[player].Funds = 50_000
+	w.Factions[other].Funds = 10_000
+	w.events[0] = QueuedEvent{Code: uint16(other)<<8 | 6}
+	w.eventCursor, w.eventDelay = 0, 1
+	w.dispatchQueuedEvent(&Event{})
+	if w.Factions[player].Funds != 50_000 || w.Factions[other].Funds != 10_000 {
+		t.Fatalf("事件 6 缺少外交官卻改寫資金：player=%d other=%d",
+			w.Factions[player].Funds, w.Factions[other].Funds)
+	}
+}
+
+// sub_17C6E 的數值核心不是每次加固定步長：數字鍵追加一位，另有
+// 00、退位、還原初值與清零。事件 2／3、4／5 必須共用同一組上限語意。
+func TestRawAmountEditorSemantics(t *testing.T) {
+	w := load(t, 0)
+	w.diplomacy = &DiplomacyChoice{InitialAmount: 1200, OfferAmount: 12}
+	if !w.EditDiplomacyOfferAmount(AmountAppendDigit, 3) || w.diplomacy.OfferAmount != 123 {
+		t.Fatalf("外交數字追加 = %d，want 123", w.diplomacy.OfferAmount)
+	}
+	if !w.EditDiplomacyOfferAmount(AmountAppendHundred, 0) || w.diplomacy.OfferAmount != 12_300 {
+		t.Fatalf("外交追加 00 = %d，want 12300", w.diplomacy.OfferAmount)
+	}
+	if !w.EditDiplomacyOfferAmount(AmountDeleteDigit, 0) || w.diplomacy.OfferAmount != 1_230 {
+		t.Fatalf("外交退位 = %d，want 1230", w.diplomacy.OfferAmount)
+	}
+	if !w.EditDiplomacyOfferAmount(AmountRestoreInitial, 0) || w.diplomacy.OfferAmount != 1_200 {
+		t.Fatalf("外交還原 = %d，want 1200", w.diplomacy.OfferAmount)
+	}
+	if !w.EditDiplomacyOfferAmount(AmountClear, 0) || w.diplomacy.OfferAmount != 0 {
+		t.Fatalf("外交清零 = %d，want 0", w.diplomacy.OfferAmount)
+	}
+	if w.EditDiplomacyOfferAmount(AmountAppendDigit, 10) || w.diplomacy.OfferAmount != 0 {
+		t.Fatal("外交非法數字不應改寫狀態")
+	}
+
+	w.funding = &FundingChoice{RequestedAmount: 6500, OfferAmount: 29999}
+	if !w.EditFundingAmount(AmountAppendDigit, 9) || w.funding.OfferAmount != 30_000 {
+		t.Fatalf("撥款上限 = %d，want 30000", w.funding.OfferAmount)
+	}
+	if !w.EditFundingAmount(AmountRestoreInitial, 0) || w.funding.OfferAmount != 6_500 {
+		t.Fatalf("撥款還原 = %d，want 6500", w.funding.OfferAmount)
+	}
+}
+
+// 事件 4／5 在撥款三選一之前，分別先顯示 sub_132A9／sub_132E9 的
+// TALK #56／#57；這裡只固定前置報告，不把 sub_139E8 後續訊息池猜成完整流程。
+func TestQueuedFundingInitialTalkNotices(t *testing.T) {
+	w := load(t, 0)
+	player, city, officer := 0, 0, 1
+	w.Player = player
+	w.Cities[city].Owner = player
+	w.Cities[city].Governor = officer
+	w.Generals[officer] = General{Alive: true, Faction: player, Politics: 8, Budget: 0}
+	w.events[0] = QueuedEvent{Code: uint16(city)<<8 | 4, Param: 1_000}
+	w.eventCursor, w.eventDelay = 0, 1
+	governor := &Event{}
+	w.dispatchQueuedEvent(governor)
+	if len(governor.TalkNotices) != 1 || governor.TalkNotices[0] != (TalkNotice{
+		Index: 0x38, City: city, Faction: -1, General: officer, Amount: -1,
+	}) {
+		t.Fatalf("事件 4 前置 TALK 錯誤：%#v", governor.TalkNotices)
+	}
+
+	w = load(t, 0)
+	w.Player = player
+	other := 1
+	w.Factions[other].Diplomat = officer
+	w.Generals[officer] = General{Alive: true, Faction: other, Politics: 8, Budget: 0}
+	w.events[0] = QueuedEvent{Code: uint16(other)<<8 | 5, Param: 1_000}
+	w.eventCursor, w.eventDelay = 0, 1
+	diplomat := &Event{}
+	w.dispatchQueuedEvent(diplomat)
+	if len(diplomat.TalkNotices) != 1 || diplomat.TalkNotices[0] != (TalkNotice{
+		Index: 0x39, City: -1, Faction: other, General: officer, Amount: -1,
+	}) {
+		t.Fatalf("事件 5 前置 TALK 錯誤：%#v", diplomat.TalkNotices)
 	}
 }
 
@@ -419,14 +1505,15 @@ func TestSaveAfterSimulationPreservesUnknownRegions(t *testing.T) {
 	got := w.Bytes()
 	orig := raw[:blockSize]
 
-	// 這些區間是**還沒解的**，跑再久也不該被動到。
+	// 這些區間是**還沒解的**，跑再久也不該被動到。事件佇列已經是
+	// 已解出的可變欄位，另由 TestEventQueueStorage／Timing／MonthlyCompaction
+	// 驗證，不能再把它當成未知區域。
 	regions := []struct {
 		name     string
 		from, to int
 	}{
 		{"+0x3B–0x7F 不載入的空隙", 0x3B, 0x80},
 		{"軍團表", 0x22C0, 0x42C0},
-		{"事件佇列", 0x52C0, 0x56C0},
 	}
 	for _, r := range regions {
 		for i := r.from; i < r.to; i++ {
@@ -542,6 +1629,31 @@ func TestHourlyRotation(t *testing.T) {
 		if n != 2 {
 			t.Errorf("勢力 %d 在兩圈裡被處理 %d 次，應為 2", i, n)
 		}
+	}
+}
+
+// 原版 idle path 在 sub_11D8E 之前先跑 sub_125A3：時鐘仍在「時 = 1」時，
+// 該時的軍費／士氣更新就應該發生；不能先 Advance 成「時 = 2」才傳給軍團。
+func TestTickRunsCorpsBeforeClockAdvance(t *testing.T) {
+	w := load(t, 0)
+	faction := w.AliveFactions()[0]
+	w.Factions[faction].Expense = 0
+	w.Factions[faction].Reserves = [economy.NumTroopTypes]int{}
+	w.Corps[0] = Corps{
+		Alive: true, Faction: faction, Men: 32, Morale: 100,
+		Timer: 99, Interval: 99, Node: 0, TargetNode: 0,
+	}
+	w.corpsCursor = 0
+	w.hourFaction = (faction + 1) % numFactions
+	w.Clock.Hour, w.Clock.Subtick = 1, clock.SubticksPerHour-1
+
+	got := w.Tick(rng.NewFixed(5))
+	if !got.Clock.Hour || w.Clock.Hour != 2 || w.Clock.Subtick != 0 {
+		t.Fatalf("clock = %+v／event=%+v，want 從 1:8 進位至 2:0", w.Clock, got.Clock)
+	}
+	wantExpense := combat.Upkeep(32, false)
+	if got := w.Factions[faction].Expense; got != wantExpense {
+		t.Fatalf("軍團在 clock advance 後才更新：expense=%d，want %d", got, wantExpense)
 	}
 }
 
@@ -846,7 +1958,7 @@ func TestFormCorpsNeedsGeneralSlot(t *testing.T) {
 	}
 }
 
-// 玩家的勢力捲進去就開戰術畫面，其餘自動判定——原版的分派規則。
+// 玩家的勢力捲進去先問戰鬥指揮／委任，其餘自動判定——原版的分派規則。
 func TestPlayerBattleGoesTactical(t *testing.T) {
 	w := load(t, 0)
 	w.SetTactical(&TacticalSetup{
@@ -882,8 +1994,19 @@ func TestPlayerBattleGoesTactical(t *testing.T) {
 	}
 
 	r := rng.NewFixed(5)
-	for i := 0; i < 200000 && w.PendingBattle() == nil; i++ {
+	for i := 0; i < 200000 && w.PendingBattle() == nil && w.PendingEncounter() == nil; i++ {
 		w.Tick(r)
+	}
+	choice := w.PendingEncounter()
+	if choice == nil {
+		t.Fatal("玩家的軍團一路走到底都沒有出現戰鬥選擇")
+	}
+	if choice.Attacker != la || choice.Defender != lb {
+		t.Fatalf("遭遇選擇是 %d vs %d，應為 %d vs %d",
+			choice.Attacker, choice.Defender, la, lb)
+	}
+	if err := w.ChooseBattleCommand(); err != nil {
+		t.Fatal(err)
 	}
 	p := w.PendingBattle()
 	if p == nil {
@@ -918,6 +2041,55 @@ func TestPlayerBattleGoesTactical(t *testing.T) {
 	}
 	t.Logf("戰術戰鬥 %d 幀，守方勝 %v；攻方剩 %d 點、守方剩 %d 點",
 		p.Battle.Frame, ev.Battle.DefenderWins, w.Corps[la].Men, w.Corps[lb].Men)
+}
+
+// 委任要消費同一個遭遇選擇，直接回傳自動判定結果；選單掛著時時鐘不能走。
+func TestPlayerBattleCanBeDelegated(t *testing.T) {
+	w := load(t, 0)
+	w.SetTactical(&TacticalSetup{
+		Forms: tactical.SyntheticFormations(),
+		Field: func(int, bool) *tactical.Field {
+			stack := make([][]int, tactical.Height)
+			for y := range stack {
+				stack[y] = make([]int, tactical.Width)
+			}
+			return tactical.NewField(stack, 0)
+		},
+	})
+	alive := w.AliveFactions()
+	a, b := alive[0], alive[1]
+	w.Player = a
+	for _, f := range []int{a, b} {
+		w.Factions[f].Reserves = [economy.NumTroopTypes]int{6000, 6000, 6000}
+	}
+	kinds := [army.Positions]army.TroopType{}
+	manned := [army.Positions]bool{true, true, true, true, true, true}
+	la, lb := w.Factions[a].Lord, w.Factions[b].Lord
+	if err := w.FormCorps(la, kinds, manned); err != nil {
+		t.Fatal(err)
+	}
+	if err := w.FormCorps(lb, kinds, manned); err != nil {
+		t.Fatal(err)
+	}
+
+	r := rng.NewFixed(5)
+	queued := &CorpsEvent{}
+	w.fight(la, lb, queued, combat.Field, 0, r)
+	if w.PendingEncounter() == nil {
+		t.Fatal("玩家遭遇沒有進入選擇狀態")
+	}
+	before := w.Clock
+	w.Tick(r)
+	if w.Clock != before {
+		t.Fatal("遭遇選單掛著時世界仍然前進")
+	}
+	ev := w.ChooseBattleDelegate(r)
+	if ev == nil || ev.Battle == nil {
+		t.Fatal("委任沒有回傳自動判定結果")
+	}
+	if w.PendingEncounter() != nil || w.PendingBattle() != nil {
+		t.Fatal("委任完成後仍掛著戰鬥狀態")
+	}
 }
 
 // ⭐ 走進**有守軍的敵方據點**要打攻城，不是野戰。
@@ -975,6 +2147,258 @@ func TestMarchIntoDefendedCityIsSiege(t *testing.T) {
 	if got.Mode != combat.Siege {
 		t.Errorf("打成 %v，應為攻城——據點的判定被野戰搶先了", got.Mode)
 	}
+}
+
+// 真實劇本的正常玩家切片：編成一槽步兵、沿 MMAP 道路走到汝南，
+// 進入沒有敵方軍團的據點時，照原版規則用城兵自動判定攻城。
+//
+// 這裡刻意不掛 TacticalSetup，也不呼叫任何 demo／StageBattle 捷徑：
+// 「城裡只有城兵」本來就不會進戰鬥指揮選單（docs/re/09 §2），
+// 但仍必須由正常行軍觸發 `Enemy == -1, Mode == Siege`。
+func TestNormalScenarioMarchIntoGarrison(t *testing.T) {
+	w := load(t, 0)
+	w.Player = 0
+	lib, err := library.Load("../../workplace/orig/dosv")
+	if err != nil {
+		t.Fatal(err)
+	}
+	xy := make([][2]int, len(w.Cities))
+	for i := range w.Cities {
+		xy[i] = [2]int{w.Cities[i].X, w.Cities[i].Y}
+	}
+	edges, err := world.RoadEdges(lib.World, xy)
+	if err != nil {
+		t.Fatal(err)
+	}
+	me := make([]march.Edge, len(edges))
+	for i, e := range edges {
+		me[i] = march.Edge{A: e.A, B: e.B, Steps: e.Steps,
+			Path: e.Path, ACell: xy[e.A]}
+	}
+	w.SetRoads(march.New(len(w.Cities), me))
+
+	leader := -1
+	for i, g := range w.Generals {
+		if g.Alive && g.Faction == w.Player && !g.Posted {
+			leader = i
+			break
+		}
+	}
+	if leader < 0 {
+		t.Fatal("找不到可編成的曹操武將")
+	}
+	var kinds [army.Positions]army.TroopType
+	var manned [army.Positions]bool
+	kinds[0] = army.Infantry
+	manned[0] = true
+	if err := w.FormCorps(leader, kinds, manned); err != nil {
+		t.Fatal(err)
+	}
+
+	target := -1
+	for i, c := range w.Cities {
+		if text.Decode([]byte(c.Name), text.Big5) == "汝南" {
+			target = i
+			if c.Owner == w.Player || c.Garrison <= 0 {
+				t.Fatalf("汝南不是可驗證的敵方城兵據點：owner=%d garrison=%d",
+					c.Owner, c.Garrison)
+			}
+			break
+		}
+	}
+	if target < 0 {
+		t.Fatal("找不到汝南")
+	}
+	if err := w.March(leader, target); err != nil {
+		t.Fatal(err)
+	}
+
+	var fought *CorpsEvent
+	for i := 0; i < 100000 && fought == nil; i++ {
+		for _, ev := range w.Tick(rng.NewFixed(1)).Corps {
+			if ev.Battle != nil {
+				copy := ev
+				fought = &copy
+				break
+			}
+		}
+	}
+	if fought == nil {
+		t.Fatalf("正常行軍到汝南後沒有攻城：node=%d xy=%d,%d target=%d,%d",
+			w.Corps[leader].Node, w.Corps[leader].X, w.Corps[leader].Y,
+			w.Corps[leader].TargetX, w.Corps[leader].TargetY)
+	}
+	if fought.Enemy != -1 || fought.Mode != combat.Siege {
+		t.Fatalf("正常城兵遭遇 = enemy=%d mode=%v，應為 enemy=-1、siege",
+			fought.Enemy, fought.Mode)
+	}
+}
+
+// 真實劇本的敵方 AI 遭遇：從正常編成／道路行軍進入戰鬥指揮後，
+// 真實 BATTLE.MAP／BATTLE.MDL／BATTLE.DAT 也必須能完成並回寫戰略軍團。
+// 這不是 `StageBattle` 或 `demoBattle` 捷徑；只有素材缺席時才跳過。
+func TestNormalScenarioTacticalBattleTerminates(t *testing.T) {
+	w := load(t, 0)
+	w.Player = 0
+	w.EnableStrategicAI()
+	lib, err := library.Load("../../workplace/orig/dosv")
+	if err != nil {
+		t.Fatal(err)
+	}
+	xy := make([][2]int, len(w.Cities))
+	for i := range w.Cities {
+		xy[i] = [2]int{w.Cities[i].X, w.Cities[i].Y}
+	}
+	edges, err := world.RoadEdges(lib.World, xy)
+	if err != nil {
+		t.Fatal(err)
+	}
+	me := make([]march.Edge, len(edges))
+	for i, e := range edges {
+		me[i] = march.Edge{A: e.A, B: e.B, Steps: e.Steps,
+			Path: e.Path, ACell: xy[e.A]}
+	}
+	w.SetRoads(march.New(len(w.Cities), me))
+
+	leader := -1
+	for i, g := range w.Generals {
+		if g.Alive && g.Faction == w.Player && !g.Posted {
+			leader = i
+			break
+		}
+	}
+	if leader < 0 {
+		t.Fatal("找不到可編成的曹操武將")
+	}
+	var kinds [army.Positions]army.TroopType
+	var manned [army.Positions]bool
+	kinds[0], manned[0] = army.Infantry, true
+	if err := w.FormCorps(leader, kinds, manned); err != nil {
+		t.Fatal(err)
+	}
+	const target = 56 // 濮陽；正常固定種子 17 的敵方 AI 遭遇據點
+	if w.Cities[target].Owner != w.Player {
+		t.Fatalf("濮陽的正常玩家據點 owner=%d，應為玩家 %d", w.Cities[target].Owner, w.Player)
+	}
+	if err := w.March(leader, target); err != nil {
+		t.Fatal(err)
+	}
+
+	read := func(name string) []byte {
+		b, err := os.ReadFile("../../workplace/orig/dosv/" + name)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return b
+	}
+	battleLib, err := battle.Parse(read("BATTLE.MAP"), read("BATTLE.MDL"), read("BATTLE.DAT"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	forms, err := tactical.LoadFormations("../../workplace/orig/dosv/KI.EXE")
+	if err != nil {
+		t.Fatal(err)
+	}
+	w.SetTactical(&TacticalSetup{
+		Forms: forms,
+		Field: func(node int, siege bool) *tactical.Field {
+			if !siege || node < 0 || node >= battle.NumFields {
+				return nil
+			}
+			return tactical.NewFieldFromTiles(
+				battleLib.Tiles(node), battleLib.Heights(node), battleLib.GateX(node))
+		},
+		Script: func(node int, siege bool, tactic int) []byte {
+			if !siege {
+				return nil
+			}
+			return battleLib.Script(tactic, battle.Category(node))
+		},
+	})
+
+	r := rng.NewFixed(17)
+	for i := 0; i < 200000 && w.PendingEncounter() == nil && w.PendingBattle() == nil; i++ {
+		w.Tick(r)
+	}
+	choice := w.PendingEncounter()
+	if choice == nil {
+		t.Fatal("正常劇本沒有走到敵方 AI 遭遇選單")
+	}
+	if choice.Mode != combat.Siege || choice.Defender < 0 {
+		t.Fatalf("正常敵方遭遇 = attacker=%d defender=%d mode=%v，應為軍團攻城",
+			choice.Attacker, choice.Defender, choice.Mode)
+	}
+	if err := w.ChooseBattleCommand(); err != nil {
+		t.Fatal(err)
+	}
+	p := w.PendingBattle()
+	if p == nil {
+		t.Fatal("正常敵方遭遇沒有建立戰術戰鬥")
+	}
+	beforeMen := [2]int{w.Corps[choice.Attacker].Men, w.Corps[choice.Defender].Men}
+	if !p.Battle.Run(200000) {
+		for side := range p.Battle.Sides {
+			alive := 0
+			cmds := map[tactical.Command]int{}
+			minX, maxX := tactical.Width, 0
+			for _, s := range p.Battle.Sides[side].Soldiers {
+				if !s.Alive {
+					continue
+				}
+				alive++
+				cmds[s.Cmd]++
+				if s.X < minX {
+					minX = s.X
+				}
+				if s.X > maxX {
+					maxX = s.X
+				}
+			}
+			t.Logf("卡住 side=%d alive=%d reserve=%v cmds=%v x=%d..%d",
+				side, alive, p.Battle.Sides[side].Reserve, cmds, minX, maxX)
+			for k := 0; k < 4; k++ {
+				s := p.Battle.Sides[side].Soldiers[k]
+				t.Logf("  soldier=%d alive=%v kind=%v hp=%d xyz=%d,%d,%d goal=%d,%d,%d step=%d,%d,%d target=%d path=%d",
+					k, s.Alive, s.Kind, s.HP, s.X, s.Y, s.Z,
+					s.GoalX, s.GoalY, s.GoalZ, s.StepX, s.StepY, s.StepZ,
+					s.Target, s.Path.Len())
+			}
+			if side == 0 {
+				for k, s := range p.Battle.Sides[side].Soldiers {
+					if !s.Alive {
+						continue
+					}
+					pnt, ok := s.Path.Current()
+					t.Logf("  retreating soldier=%d xyz=%d,%d,%d edgeZ=%d climb=%v face=%d pathCurrent=%v/%v",
+						k, s.X, s.Y, s.Z, p.Battle.Field.StandLevel(tactical.MinCoord, s.Y),
+						s.CanClimb(), s.Facing, pnt, ok)
+				}
+			}
+		}
+		for i, st := range p.Battle.Structures {
+			t.Logf("結構 %d kind=%d x=%d y=%d run=%d hp=%d broken=%v",
+				i, st.Kind, st.X, st.Y, st.Run, st.Durability, st.Broken)
+		}
+		t.Fatalf("正常真實攻城跑了 20 萬幀還沒結束：攻方 %d、守方 %d",
+			p.Battle.Sides[0].Remaining(), p.Battle.Sides[1].Remaining())
+	}
+	ev := w.ResolvePending(r)
+	if ev == nil || ev.Battle == nil || w.PendingBattle() != nil {
+		t.Fatal("正常真實攻城無法回寫戰略結果")
+	}
+	if ev.BattleBefore != beforeMen {
+		t.Fatalf("戰後事件沒有保留戰前兵力：got=%v want=%v", ev.BattleBefore, beforeMen)
+	}
+	afterMen := [2]int{w.Corps[choice.Attacker].Men, w.Corps[choice.Defender].Men}
+	if ev.BattleAfter != afterMen {
+		t.Fatalf("戰後事件兵力與戰略狀態脫鉤：got=%v state=%v", ev.BattleAfter, afterMen)
+	}
+	if ev.BattleCityDamage != p.Battle.CityDamage(p.CityWall) {
+		t.Fatalf("戰後事件城損與戰術結果脫鉤：got=%d", ev.BattleCityDamage)
+	}
+	t.Logf("正常真實攻城第 %d 幀結束，守方勝 %v；攻方 %d 點、守方 %d 點",
+		p.Battle.Frame, ev.Battle.DefenderWins,
+		w.Corps[choice.Attacker].Men, w.Corps[choice.Defender].Men)
 }
 
 // TestCapitalPickMatchesScenarioData 拿四個劇本的初始資料當黃金對照：
@@ -1162,5 +2586,355 @@ func TestMarchRejectsUnreachable(t *testing.T) {
 	}
 	if w.Corps[lord].TargetNode != 0 {
 		t.Errorf("失敗後目標應留在原地，卻是 %d", w.Corps[lord].TargetNode)
+	}
+}
+
+// 事件 9（sub_13485 → sub_150D7）的 Code 高 byte 是 General 索引，
+// 不是事件來源勢力；釋放時清出陣／俘虜欄位，並依原俘虜方存亡回寫勢力。
+func TestQueuedEventReleaseGeneral(t *testing.T) {
+	w := load(t, 0)
+	w.Player = -1
+	generalID, captor, faction := 7, 1, 2
+	w.Generals[generalID] = General{
+		Alive: true, Faction: faction, Captor: captor, Posted: true,
+	}
+	w.Factions[captor].Alive = true
+	w.events[0] = QueuedEvent{
+		Code: uint16(generalID)<<8 | 9,
+	}
+	w.eventCursor, w.eventDelay = 0, 1
+	ev := &Event{}
+	w.dispatchQueuedEvent(ev)
+	if got := w.Generals[generalID]; got.Faction != captor || got.Captor != noFaction || got.Posted {
+		t.Fatalf("事件 9 未依存活俘虜方釋放武將：%+v", got)
+	}
+	if len(ev.ReleasedGenerals) != 1 || ev.ReleasedGenerals[0] != generalID {
+		t.Fatalf("事件 9 沒有回報釋放武將：%v", ev.ReleasedGenerals)
+	}
+
+	w = load(t, 0)
+	w.Player = -1
+	deadCaptor := 1
+	w.Generals[generalID] = General{
+		Alive: true, Faction: faction, Captor: deadCaptor, Posted: true,
+	}
+	w.Factions[deadCaptor].Alive = false
+	w.events[0] = QueuedEvent{
+		Code: uint16(generalID)<<8 | 9,
+	}
+	w.eventCursor, w.eventDelay = 0, 1
+	w.dispatchQueuedEvent(&Event{})
+	if got := w.Generals[generalID]; got.Faction != noFaction || got.Captor != noFaction || got.Posted {
+		t.Fatalf("事件 9 未將已滅勢力俘虜放回在野：%+v", got)
+	}
+}
+
+// 玩家是事件 2 的合作方、事件 3 的停戰對象時，dispatch 只掛起三選一；
+// World.Tick 與同一小時後續財政處理都不能穿透模態狀態。
+func TestQueuedDiplomacyChoice(t *testing.T) {
+	w := load(t, 0)
+	player, invader, invaded := 0, 1, 2
+	w.Player = player
+	w.Factions[player].Lord = 0
+	w.Factions[player].Diplomat = noFaction
+	w.Factions[player].Aggression = 1
+	w.Factions[invaded].Diplomat = noFaction
+	for i := range w.Generals {
+		if w.Generals[i].Faction == invaded {
+			w.Generals[i].Posted = true
+		}
+	}
+	w.Generals[0] = General{Alive: true, Politics: 12, Posted: true, Faction: player, Captor: noFaction}
+	w.Generals[1] = General{Alive: true, Politics: 8, Faction: invaded, Captor: noFaction}
+	w.Corps[0] = Corps{Alive: true, Faction: player}
+	w.Factions[player].Funds = 10_000
+	w.Factions[invaded].Funds = 50_000
+	w.Friendship[player][invader] = diplomacy.Peace(40)
+	w.Friendship[player][invaded] = diplomacy.Peace(60)
+	w.Factions[invader].InvasionTarget = diplomacy.NoTarget
+	w.events[0] = QueuedEvent{
+		Code:  uint16(player)<<8 | 2,
+		Param: uint16(invaded)<<8 | uint16(invader),
+	}
+	w.eventCursor, w.eventDelay = 0, 1
+	beforeClock := w.Clock
+	w.dispatchQueuedEvent(&Event{})
+	c := w.PendingDiplomacy()
+	if c == nil || c.Kind != DiplomacyCooperation || c.Source != player || c.Invader != invader || c.Target != invaded {
+		t.Fatalf("事件 2 沒有掛起正確外交選擇：%+v", c)
+	}
+	if w.Factions[player].Funds != 10_000 || w.Factions[invaded].Funds != 50_000 {
+		t.Fatalf("事件 2 在選擇前就改了資金：player=%d invaded=%d", w.Factions[player].Funds, w.Factions[invaded].Funds)
+	}
+	w.Tick(rng.NewFixed(1))
+	if w.Clock != beforeClock {
+		t.Fatalf("外交選單掛起時時鐘仍前進：got=%+v want=%+v", w.Clock, beforeClock)
+	}
+	if !w.SetDiplomacyOfferAmount(7_000) || !w.ResolveDiplomacy(DiplomacyOfferFunds) {
+		t.Fatal("事件 2 的提供資金選項沒有完成狀態收尾")
+	}
+	if w.PendingDiplomacy() != nil || w.Factions[player].Funds != 17_000 || w.Factions[invaded].Funds != 43_000 {
+		t.Fatalf("事件 2 選擇後狀態錯誤：pending=%+v player=%d invaded=%d", w.PendingDiplomacy(), w.Factions[player].Funds, w.Factions[invaded].Funds)
+	}
+
+	w = load(t, 0)
+	player, source := 0, 1
+	w.Player = player
+	w.Factions[player].Lord = player
+	w.Factions[player].Diplomat = noFaction
+	w.Factions[source].Diplomat = noFaction
+	for i := range w.Generals {
+		if w.Generals[i].Faction == source {
+			w.Generals[i].Posted = true
+		}
+	}
+	w.Generals[player] = General{Alive: true, Politics: 12, Posted: true, Faction: player, Captor: noFaction}
+	w.Generals[source+1] = General{Alive: true, Politics: 8, Faction: source, Captor: noFaction}
+	w.Corps[player] = Corps{Alive: true, Faction: player}
+	w.Friendship[player][source] = diplomacy.Peace(20)
+	w.Friendship[source][player] = diplomacy.Peace(50)
+	w.Factions[source].InvasionTarget = player
+	w.Factions[player].InvasionTarget = 9
+	w.events[0] = QueuedEvent{
+		Code:  uint16(source)<<8 | 3,
+		Param: uint16(0xFF00 | player),
+	}
+	w.eventCursor, w.eventDelay = 0, 1
+	w.dispatchQueuedEvent(&Event{})
+	c = w.PendingDiplomacy()
+	if c == nil || c.Kind != DiplomacyCeasefire || c.Source != source || c.Target != player {
+		t.Fatalf("事件 3 沒有掛起正確外交選擇：%+v", c)
+	}
+	if !w.ResolveDiplomacy(DiplomacyAcceptFree) || w.PendingDiplomacy() != nil {
+		t.Fatal("事件 3 的無條件同意沒有完成狀態收尾")
+	}
+	if w.Factions[source].InvasionTarget != diplomacy.NoTarget || w.Friendship[source][player] != diplomacy.Peace(20) {
+		t.Fatalf("事件 3 選擇後停戰狀態錯誤：target=%d friendship=%#v", w.Factions[source].InvasionTarget, w.Friendship[source][player])
+	}
+}
+
+// 事件 2／3 進入玩家三選一前，原版先顯示請求報告：停戰是 #360，協力是
+// #373；兩者的 {3} 都是提出請求的勢力君主，而不是事件字高的數字。
+func TestQueuedDiplomacyChoiceTalkNotices(t *testing.T) {
+	w := load(t, 0)
+	player, invader, invaded := 0, 1, 2
+	w.Player = player
+	w.Factions[player].Lord = player
+	w.Factions[player].Diplomat = noFaction
+	w.Factions[player].Aggression = 1
+	w.Factions[invader].Diplomat = noFaction
+	w.Factions[invaded].Diplomat = noFaction
+	for i := range w.Generals {
+		if w.Generals[i].Faction == invader || w.Generals[i].Faction == invaded {
+			w.Generals[i].Posted = true
+		}
+	}
+	w.Generals[0] = General{Alive: true, Politics: 12, Posted: true, Faction: player, Captor: noFaction}
+	w.Generals[1] = General{Alive: true, Politics: 8, Faction: invaded, Captor: noFaction}
+	w.Corps[0] = Corps{Alive: true, Faction: player}
+	w.Factions[player].Funds = 10_000
+	w.Factions[invaded].Funds = 50_000
+	w.Friendship[player][invader] = diplomacy.Peace(40)
+	w.Friendship[player][invaded] = diplomacy.Peace(60)
+	w.Factions[invader].InvasionTarget = diplomacy.NoTarget
+	w.events[0] = QueuedEvent{
+		Code:  uint16(player)<<8 | 2,
+		Param: uint16(invaded)<<8 | uint16(invader),
+	}
+	w.eventCursor, w.eventDelay = 0, 1
+	ev := Event{}
+	w.dispatchQueuedEvent(&ev)
+	want := []TalkNotice{{Index: 0x175, City: -1, Faction: invader, General: -1, Amount: -1}}
+	if !reflect.DeepEqual(ev.TalkNotices, want) {
+		t.Fatalf("事件 2 前置 TALK 錯誤：got %#v want %#v", ev.TalkNotices, want)
+	}
+
+	w = load(t, 0)
+	player, source := 0, 1
+	w.Player = player
+	w.Factions[player].Lord = player
+	w.Factions[player].Diplomat = noFaction
+	w.Factions[source].Diplomat = noFaction
+	for i := range w.Generals {
+		if w.Generals[i].Faction == source {
+			w.Generals[i].Posted = true
+		}
+	}
+	w.Generals[player] = General{Alive: true, Politics: 12, Posted: true, Faction: player, Captor: noFaction}
+	w.Generals[source+1] = General{Alive: true, Politics: 8, Faction: source, Captor: noFaction}
+	w.Corps[player] = Corps{Alive: true, Faction: player}
+	w.Friendship[player][source] = diplomacy.Peace(20)
+	w.Friendship[source][player] = diplomacy.Peace(50)
+	w.Factions[source].InvasionTarget = player
+	w.events[0] = QueuedEvent{
+		Code:  uint16(source)<<8 | 3,
+		Param: uint16(0xFF00 | player),
+	}
+	w.eventCursor, w.eventDelay = 0, 1
+	ev = Event{}
+	w.dispatchQueuedEvent(&ev)
+	want = []TalkNotice{{Index: 0x168, City: -1, Faction: source, General: -1, Amount: -1}}
+	if !reflect.DeepEqual(ev.TalkNotices, want) {
+		t.Fatalf("事件 3 前置 TALK 錯誤：got %#v want %#v", ev.TalkNotices, want)
+	}
+}
+
+// 事件 4／5 的玩家撥款在選擇前不改世界；指定金額會照 sub_139E8 寫入
+// 官員經費（amount／128）並從玩家資金扣款，拒絕則完全無副作用。
+func TestQueuedFundingChoice(t *testing.T) {
+	w := load(t, 0)
+	w.Player = 0
+	w.Factions[w.Player].Funds = 50_000
+	cityID := -1
+	for i, c := range w.Cities {
+		if c.Owner == w.Player {
+			cityID = i
+			break
+		}
+	}
+	if cityID < 0 {
+		t.Fatal("找不到玩家據點")
+	}
+	officer := -1
+	for i, g := range w.Generals {
+		if g.Alive && g.Faction == w.Player {
+			officer = i
+			break
+		}
+	}
+	if officer < 0 {
+		t.Fatal("找不到玩家武將")
+	}
+	w.Cities[cityID].Governor = officer
+	w.Generals[officer].Budget = 0
+	w.events[0] = QueuedEvent{Code: uint16(cityID)<<8 | 4, Param: 6_000}
+	w.eventCursor, w.eventDelay = 0, 1
+	beforeClock := w.Clock
+	w.dispatchQueuedEvent(&Event{})
+	c := w.PendingFunding()
+	if c == nil || c.Kind != FundingGovernor || c.Subject != cityID || c.Officer != officer ||
+		c.RequestedAmount != 6_000 || c.OfferAmount != 6_000 {
+		t.Fatalf("事件 4 沒有掛起正確撥款選擇：%+v", c)
+	}
+	if w.Factions[w.Player].Funds != 50_000 || w.Generals[officer].Budget != 0 {
+		t.Fatalf("事件 4 在選擇前就改了狀態：funds=%d budget=%d",
+			w.Factions[w.Player].Funds, w.Generals[officer].Budget)
+	}
+	w.Tick(rng.NewFixed(1))
+	if w.Clock != beforeClock {
+		t.Fatalf("撥款選單掛起時時鐘仍前進：got=%+v want=%+v", w.Clock, beforeClock)
+	}
+	if !w.SetFundingAmount(7_000) || !w.ResolveFunding(FundingSetAmount) {
+		t.Fatal("事件 4 的指定金額選項沒有完成狀態收尾")
+	}
+	if w.PendingFunding() != nil || w.Factions[w.Player].Funds != 43_000 ||
+		w.Generals[officer].Budget != 7_000/128 {
+		t.Fatalf("事件 4 選擇後狀態錯誤：pending=%+v funds=%d budget=%d",
+			w.PendingFunding(), w.Factions[w.Player].Funds, w.Generals[officer].Budget)
+	}
+
+	w = load(t, 0)
+	w.Player = 0
+	w.Factions[w.Player].Funds = 50_000
+	target := 1
+	diplomat := -1
+	for i, g := range w.Generals {
+		if g.Alive && g.Faction != w.Player {
+			diplomat = i
+			break
+		}
+	}
+	if diplomat < 0 {
+		t.Fatal("找不到非玩家外交官")
+	}
+	w.Factions[target].Diplomat = diplomat
+	w.Generals[diplomat].Budget = 0
+	w.events[0] = QueuedEvent{Code: uint16(target)<<8 | 5, Param: 400}
+	w.eventCursor, w.eventDelay = 0, 1
+	w.dispatchQueuedEvent(&Event{})
+	c = w.PendingFunding()
+	if c == nil || c.Kind != FundingDiplomat || c.Subject != target || c.Officer != diplomat ||
+		c.RequestedAmount != fundingMinOffer {
+		t.Fatalf("事件 5 沒有套用非零初始金額 500 下限：%+v", c)
+	}
+	if w.ResolveFunding(FundingReject) || w.PendingFunding() != nil {
+		t.Fatal("事件 5 拒絕不應回報成功或留下 pending")
+	}
+	if w.Factions[w.Player].Funds != 50_000 || w.Generals[diplomat].Budget != 0 {
+		t.Fatalf("事件 5 拒絕仍有副作用：funds=%d budget=%d",
+			w.Factions[w.Player].Funds, w.Generals[diplomat].Budget)
+	}
+}
+
+// sub_13902 與 sub_139E8 對「指定金額」的上限語意不同：外交超過
+// 初始要求會回傳拒絕碼；撥款超過初始要求則仍會寫入，只有輸入 0 無效。
+func TestDiplomacyAndFundingAmountOutcomeBounds(t *testing.T) {
+	w := load(t, 0)
+	player, invader, target := 0, 1, 2
+	w.Player = player
+	w.Factions[player].Lord = 0
+	w.Factions[target].Lord = 2
+	w.Factions[player].Diplomat = noFaction
+	w.Factions[target].Diplomat = noFaction
+	w.Generals[0] = General{Alive: true, Faction: player, Politics: 12, Posted: true}
+	w.Generals[1] = General{Alive: true, Faction: invader, Politics: 8}
+	w.Generals[2] = General{Alive: true, Faction: target, Politics: 8, Posted: true}
+	w.Corps[0] = Corps{Alive: true, Faction: player}
+	w.Factions[player].Funds = 10_000
+	w.Factions[target].Funds = 50_000
+	w.Friendship[player][invader] = diplomacy.Peace(40)
+	w.Friendship[player][target] = diplomacy.Peace(60)
+	w.Factions[invader].InvasionTarget = diplomacy.NoTarget
+	w.events[0] = QueuedEvent{Code: uint16(player)<<8 | 2,
+		Param: uint16(target)<<8 | uint16(invader)}
+	w.eventCursor, w.eventDelay = 0, 1
+	w.dispatchQueuedEvent(&Event{})
+	c := w.PendingDiplomacy()
+	if c == nil || c.InitialAmount != 15_000 {
+		t.Fatalf("外交初始金額錯誤：%+v", c)
+	}
+	trustBeforeOverOffer := w.Trust
+	if !w.SetDiplomacyOfferAmount(15_001) || w.ResolveDiplomacy(DiplomacyOfferFunds) {
+		t.Fatal("外交超過初始要求不應完成")
+	}
+	if w.Factions[player].Funds != 10_000 || w.Factions[target].Funds != 50_000 ||
+		w.Friendship[player][invader].AtWar() ||
+		w.Trust != clampU8(trustBeforeOverOffer-0x1E) {
+		t.Fatalf("外交超額輸入仍有副作用：player=%d target=%d", w.Factions[player].Funds, w.Factions[target].Funds)
+	}
+
+	w = load(t, 0)
+	w.Player = 0
+	w.Factions[0].Funds = 50_000
+	officer := 1
+	w.Cities[0].Owner = 0
+	w.Cities[0].Governor = officer
+	w.Generals[officer] = General{Alive: true, Faction: 0, Budget: 0}
+	w.events[0] = QueuedEvent{Code: 4, Param: 6_000}
+	w.eventCursor, w.eventDelay = 0, 1
+	w.dispatchQueuedEvent(&Event{})
+	if !w.SetFundingAmount(0) || w.ResolveFunding(FundingSetAmount) {
+		t.Fatal("撥款指定 0 不應完成")
+	}
+	if w.Factions[0].Funds != 50_000 || w.Generals[officer].Budget != 0 {
+		t.Fatalf("撥款指定 0 仍有副作用：funds=%d budget=%d",
+			w.Factions[0].Funds, w.Generals[officer].Budget)
+	}
+
+	w = load(t, 0)
+	w.Player = 0
+	w.Factions[0].Funds = 50_000
+	w.Cities[0].Owner = 0
+	w.Cities[0].Governor = officer
+	w.Generals[officer] = General{Alive: true, Faction: 0, Budget: 0}
+	w.events[0] = QueuedEvent{Code: 4, Param: 6_000}
+	w.eventCursor, w.eventDelay = 0, 1
+	w.dispatchQueuedEvent(&Event{})
+	if !w.SetFundingAmount(7_000) || !w.ResolveFunding(FundingSetAmount) {
+		t.Fatal("撥款超過初始要求應完成")
+	}
+	if w.Factions[0].Funds != 43_000 || w.Generals[officer].Budget != 7_000/128 {
+		t.Fatalf("撥款超額輸入結果錯誤：funds=%d budget=%d",
+			w.Factions[0].Funds, w.Generals[officer].Budget)
 	}
 }

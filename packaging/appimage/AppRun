@@ -1,0 +1,15 @@
+#!/bin/sh
+set -eu
+
+HERE=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+
+# 完整原版 TALK 表不隨 AppImage 散布；只把公開的最小校訂覆蓋傳給
+# wlgame，讓它對玩家自行提供的 TALK.DAT fail-closed 套用修正。
+export WOLONG_TALK_CORRECTIONS="${WOLONG_TALK_CORRECTIONS:-$HERE/usr/share/wolong-remake/translations/corrections.json}"
+
+if [ "${1:-}" = "--wlview" ]; then
+    shift
+    exec "$HERE/usr/bin/wlview" "$@"
+fi
+
+exec "$HERE/usr/bin/wlgame" "$@"

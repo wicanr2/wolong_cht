@@ -5,9 +5,9 @@ import (
 
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/rules/capital"
-	"github.com/wicanr2/wolong_cht/internal/rules/march"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
+	"github.com/wicanr2/wolong_cht/internal/rules/march"
 )
 
 // 軍團表：127 筆 × 64 B，區塊 `+0x22C0`（段內 `2240h`）。
@@ -295,6 +295,13 @@ type CorpsEvent struct {
 	Enemy  int
 	Mode   combat.Mode
 
+	// BattleBefore／BattleAfter 是戰略層的兵力點數（每點 10 人），
+	// 給結果視窗與事件記錄使用。它們不是原版存檔欄位，也不參與規則；
+	// 只是把戰鬥前後已存在的數值沿事件流帶出來，避免 UI 重新猜測。
+	BattleBefore     [2]int
+	BattleAfter      [2]int
+	BattleCityDamage int
+
 	// Destroyed 是這一戰壞滅的軍團編號（可能兩支都是）。
 	Destroyed []int
 	// Fate 是壞滅方主將的下場，只在 Destroyed 非空時有意義。
@@ -517,16 +524,34 @@ func (w *World) resolveContact(i int, ev *CorpsEvent, rng combat.Rand) {
 }
 
 func (w *World) fight(att, def int, ev *CorpsEvent, m combat.Mode, garrison int, rng combat.Rand) {
-	// ⭐ 玩家的勢力捲進去就開戰術畫面，其餘自動判定（原版 `sub_14E5C`）。
+	// ⭐ 玩家的勢力捲進去先問戰鬥指揮／委任，其餘自動判定（原版 `sub_14E5C`）。
 	ev.Mode = m
-	if w.wantsTactical(att, def) && w.beginTactical(att, def, m, garrison) {
-		return
+	if w.wantsTactical(att, def) {
+		// 先確認這場的地形來源確實能建出來；沒有對應戰場時照原版的
+		// 委任退路，不讓玩家卡在一個永遠選不了的空選單。
+		node := w.Corps[att].Node
+		if w.tactical.Field(node, m == combat.Siege) != nil {
+			w.encounter = &EncounterChoice{
+				Attacker: att, Defender: def, Node: node,
+				Mode: m, Garrison: garrison,
+			}
+			return
+		}
 	}
+	w.resolveCorpsBattle(ev, att, def, m, garrison, rng)
+}
+
+// resolveCorpsBattle 執行一場已決定委任的軍團對軍團戰鬥。
+// 戰鬥指揮的出口走 ResolvePending；兩者最後共用同一組戰後處理。
+func (w *World) resolveCorpsBattle(ev *CorpsEvent, att, def int, m combat.Mode, garrison int, rng combat.Rand) {
 	a, d := w.battle(att), w.battle(def)
+	ev.BattleBefore = [2]int{a.Men, d.Men}
 	r := combat.Resolve(&a, &d, m, garrison, rng)
 	w.applyBattle(att, a)
 	w.applyBattle(def, d)
 	ev.Battle, ev.Enemy, ev.Mode = &r, def, m
+	ev.BattleAfter = [2]int{a.Men, d.Men}
+	ev.BattleCityDamage = r.CityDamage
 	w.damageCity(w.Corps[att].Node, m, r)
 
 	w.afterBattle(ev, att, r.AttackerDestroyed, def, rng)
@@ -544,9 +569,12 @@ func (w *World) fightGarrison(att int, ev *CorpsEvent, rng combat.Rand) {
 	city := &w.Cities[node]
 	a := w.battle(att)
 	g := combat.Garrison(city.Owner, city.Garrison)
+	ev.BattleBefore = [2]int{a.Men, g.Men}
 	r := combat.Resolve(&a, &g, combat.Siege, city.Garrison, rng)
 	w.applyBattle(att, a)
 	ev.Battle, ev.Enemy, ev.Mode = &r, -1, combat.Siege
+	ev.BattleAfter = [2]int{a.Men, g.Men}
+	ev.BattleCityDamage = r.CityDamage
 	w.damageCity(node, combat.Siege, r)
 
 	w.afterBattle(ev, att, r.AttackerDestroyed, -1, rng)
@@ -650,6 +678,15 @@ func (w *World) capture(att int, ev *CorpsEvent) {
 	// 滅亡由別的地方判定，這裡不越權。
 	if old >= 0 && old < numFactions && w.Factions[old].Capital == node {
 		ev.Relocated = w.relocateCapital(old)
+		if ev.Relocated == capital.None {
+			// sub_14DF0：首都失守且找不到替代據點時，capital=0xFF
+			// 並清除勢力 alive bit；sub_14FCE 隨後對玩家離開主循環。
+			w.Factions[old].Capital = noCity
+			w.Factions[old].Alive = false
+			if old == w.Player {
+				w.latchOutcome(DefeatFactionEliminated)
+			}
+		}
 	}
 }
 
@@ -691,7 +728,6 @@ func (w *World) March(corps, node int) error {
 // 沒有掛的話行軍退回直線移動——缺原版素材時要能降級跑，
 // 不是整個動不了。
 func (w *World) SetRoads(g *march.Graph) { w.roads = g }
-
 
 // AliveCorps 回傳還在的軍團編號。
 func (w *World) AliveCorps() []int {

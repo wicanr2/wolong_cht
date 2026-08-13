@@ -5,7 +5,40 @@
 >
 > 硬規則、目標、工作紀律在 [`CLAUDE.md`](./CLAUDE.md)。這份只管**狀態**。
 >
-> 最後更新：2026-08-08
+> 最後更新：2026-08-12
+
+## 0.1 2026-08-12 DOS/V 密碼頁勘誤
+
+松崗 DOS/V 的「密碼輸入：第 NN 頁」畫面仍會出現，但在受控
+`wolong-dosboxx:latest`／INT 33 integration 重播中，空白確認、`0000`、`1234`
+都會進入原版開場。它不再是 DOS/V 原版自然流程或畫面採樣的技術阻擋，也不需要被
+重製到 remake。這是**動態轉場已證實**；`PASS.*`／`YNFONT.EXE` 為何放行及真實硬體
+行為仍是未知。完整輸入、雜湊與範圍見
+[`docs/playtest/18-dosv-password-verification.md`](docs/playtest/18-dosv-password-verification.md)。
+
+舊段落中將密碼頁寫成「oracle 阻擋」者均為歷史紀錄，應以上述勘誤為準；完整長程測試與
+同狀態逐像素對拍仍未執行，但不再以密碼頁作為理由。
+
+## 0. 2026-08-11 封口（歷史）
+
+本輪已用短 fixture 與可重跑 gate 完成下列切片：`sub_1248A` 最後半區物件移動、
+事件 2／3／4／5 TALK 分支、事件 9 通知短 fixture、M7 60 筆校訂的 marker／寬度／
+硬分頁，以及一般／特殊投射物運動與 raw frame。入口是
+[`tools/parity_gate.sh`](tools/parity_gate.sh)，結果與證據索引在
+[`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md) 2026-08-11 章節。
+
+事件 10 已完成限時深度靜態逆向：IDA Pro 9.4 由 `.i64` 的 function boundary、code
+xref、data ref 與 raw instruction 證實 `sub_131AE` → `funcs_131E8` → `sub_13496`
+的 dispatcher／consumer，以及 `sub_12FBF`／`sub_1301C` queue writer graph；已定位的
+direct callers 沒有低碼 `0x0A` producer。原版自然 producer 定為 **unknown（負證據
+邊界，不是猜測完成）**；`World.QueueEvent10` 保持受控 raw fixture 注入口。完整報告：
+[`docs/re/15-event10-producer.md`](docs/re/15-event10-producer.md)。
+
+原始 `KI.EXE` SHA-256 為
+`fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，IDA `.i64`
+SHA-256 為 `7b7c1aa67c47f99062cfdd4439b3423302808c874f929c3ea6f75ec564034c26`；位址均
+以 DOS/V 線性位址記錄。完整長程遊戲、原版同狀態自然畫面逐像素對拍與目標平台
+原生 GUI 仍是明確邊界，沒有被本輪 gate 誤標成完成。
 
 ---
 
@@ -49,7 +82,7 @@ M8 實機驗收。細節見 §7.0。
 | 日文說明書初判 | 38 頁掃描，目次與第 3.5 節已讀。見 `docs/reference/01` |
 | 網路查證 | 發行資訊、四劇本、規模。見 `CLAUDE.md` §2 |
 | **`TALK.DAT` 全解** | **READY**。`docs/formats/01`。兩版 byte-for-byte round-trip 通過，1,022 則、零逃脫位元組 |
-| **日中對照第一批** | `docs/reference/02`。15 則譯文缺陷（漏變數 6、漏名詞 3、變數換號 1、錯位 4、對調 2） |
+| **日中對照／文意校訂** | `docs/reference/02`。60 筆可重跑校訂（變數／槽位／內容／明確文字與語意）；#0–#1021 第一輪逐句讀取已完成，畫面抽樣仍未完成 |
 | 訊息抽取工具 | `tools/talkdat.py`（dump／export／build／verify／diff） |
 | **`.BRG` 調色盤全解** | **READY**。`docs/formats/02` ＋ `docs/re/02`。通道順序 B,R,G、4 bit、每組 16 色、亮度 0–16，兩版機器碼互證 |
 | **顯示模式定案** | 兩版都是 **16 色 4 平面 planar**（DOS/V VGA GC+Seq、PC-98 GRCG）→ `*GRF.DAT` 是 4 bpp |
@@ -64,8 +97,8 @@ M8 實機驗收。細節見 §7.0。
 | **⭐⭐ 好戰等級找到了：勢力記錄 `+0x28`** | 0–15，呂布 15、曹操 14、劉備 4、劉表 1、劉禪 0。**同一君主跨劇本是常數**，且對上說明書點名的兩個例子。連帶解出勢力表 22 欄位、據點表 `+1`/`+26`、武將表 `+28`。`docs/formats/08` §1.5 |
 | **⭐⭐ 官員的效果在「每小時」不是「每月」** | 先前在月結路徑裡 grep 不到，因為找錯地方。外交官 `sub_13E8E` 已全解並實作（`internal/rules/diplomacy`）：12.5% 動作率、消耗 `23−政治`、成功條件 `rand(0..15) ≤ 政治`、成功 +1 上限 100。**交友度 ＝ 0–100 ＋ 最高位元的交戰旗標** |
 | **⭐ 勢力 `+0x19` ＝ 侵攻目標，財政撐不住就自動取消** | 門檻 `資金>>8 < 據點數×8+24`，與**據點數**掛鉤。這解釋了「敵が疲弊中」為什麼是提停戰的好時機——**疲弊的敵人在機制上已經停止侵攻** |
-| **⭐ 進言與說得已接進畫面** | 選指令 → 選對象 → 說服，三階段都可玩。**進言是非常駐視窗，暫停規則自動延伸過去**。信賴度目前是執行期狀態——它在存檔裡的欄位還沒找到（`+0x1D` 已排除） |
-| **⭐ 進言與說得實作完成（`internal/rules/persuasion`）** | 本作的招牌機制。九個理由的成立條件、五選項＋撤回、信賴度三態（加／扣／不變）。**寫第一版時把交友門檻的方向寫反，照說明書兩個例子寫的測試當場抓到** |
+| **⭐ 進言與說得已接進畫面** | 選指令 → 選對象 → 說服，三階段都可玩。**進言是非常駐視窗，暫停規則自動延伸過去**。信賴度已定位為每區塊 `+0x10`（原版 `cs:0D00h`／IDA `byte_10D00`），`+0x1D` 已排除為士氣基準 |
+| **⭐ 進言與說得實作完成（`internal/rules/persuasion`）** | 本作的招牌機制。各指令四個理由、五選項＋撤回、第一反應與信賴度結果碼已接入；**寫第一版時把交友門檻的方向寫反，照說明書兩個例子寫的測試當場抓到** |
 | **⭐ 一覽表實作完成（`internal/ui/listwin`）** | 說明書 3.8 的四條規則全部實作並用 11 條測試釘住：點欄位名排序、**兩段式選取**、反白狀態取消只退一層、**排序狀態以視窗種類為單位記住**。畫面已驗收 |
 | **⭐ 行軍的節拍與連結表位置** | 軍團 `+0x0B` 是計時器、`+0x1E` 是間隔（**速度＝間隔的倒數**）；連結表就是 `docs/re/04` 那塊標「未解」的 4,000 B（`word_19874`）。每 tick 只處理 16 個軍團，127 個要 8 次才輪完 |
 | **⭐ 行軍是在圖上走節點，不是在格子上自由移動** | 節點分三類（據點 0–191／路上 192–255／野外 ≥256），到達判定比**節點編號**不比座標。佔用圖進入 `inc`、離開 `dec` 已在機器碼裡驗到。`docs/re/08` §6 |
@@ -76,13 +109,13 @@ M8 實機驗收。細節見 §7.0。
 | **⭐⭐ 月結的經濟公式全解，`internal/rules/economy` 已實作** | 三條說明書沒寫的公式：**收入依與首都的切比雪夫距離衰減**（÷2/3/4）、**募兵配比依 Y 座標分三區**（北騎59%／中步75%／南弓50%）、**赤字每兵種各扣 \|資金\|/16**。資金是 ±655,000 的有號 24 位。`docs/re/07` |
 | **⭐ 規則層開工：`internal/rules/clock`** | 五層時鐘的 Go 實作 ＋ 10 個測試（全過）。測試直接拿反組譯出的常數當期望值：216 tick/日、二月 28 天、四劇本起始日、年封頂 999、季節 16 步漸變、進位階梯不變式 |
 | **⭐ 劇本／存檔區塊三段式佈局定案** | 59 B 時鐘＋全域 / 21,056 B 勢力據點武將 / 1,024 B，合計正好 22,208。`docs/formats/08` §0 |
-| **⭐⭐ 畫面照原版重做** | 橫幅換成原版美術（`ICONGRF` 段 0）＋ 日期填進「年 月 日」欄位、地圖滿版 40×23 格、**取消常駐側欄**改成浮動視窗、視窗外框用原版美術（**`ICONGRF` 段 3**，原本整段未解）、**武將頭像接上 `KAOGRF`**。`docs/images/wlgame-*.png` |
+| **⭐⭐ 畫面照原版重做** | DOS/V 自然 HUD：橫幅 32 px＋命令列 32 px、左側 27×21 格地圖、右側 208 px minimap／自勢力情報；視窗外框與數值面板使用原版美術（**`ICONGRF` 段 3**，含 96×64 內框／3×6 靜態 glyph）、DOS/V `KI.EXE` 16×16 白框／紅填硬體游標已接線、**武將頭像接上 `KAOGRF`**。`docs/images/wlgame-dosv-natural-remake.png` 與使用者 YouTube oracle |
 | **⭐ `ICONGRF` 段 3 解出視窗外框** | 8×8、4bpp、32 B／塊：`0x06C0` 上下邊 motif、`0x06E0` 柱頭、`0x0700` 柱身。找法是**比「顏色的等價關係」而不是比顏色**（實機是 PC-98 調色盤），並且**逐 byte 掃不切格線**。`docs/formats/03` §5.4 |
 | **⭐ 頭像編號 ＝ 武將記錄 `+0x01`** | 曹操是第 16 個武將但頭像在第 50 頁。原本只知道「127 筆各不相同」，**光看資料分不出用途**——是實機的君主確認畫面定下來的 |
-| **⭐⭐ oracle 的滑鼠通了，可以自動玩** | `docs/playtest/06`。三個原因互相遮蔽：開場長度每次不同（`wait:` 靠不住，改 `until:<md5>` 認畫面）、PC-98 是**匯流排滑鼠**只吃相對位移（要 `Ctrl+F10` 鎖住，絕對定位餵的是 INT 33h 那條別的路）、8 bit 位移會截斷大跳躍（要閉迴路逼近）。已走完 `NEW GAME` → `YES` → 劇本選單 |
+| **⭐⭐ oracle 的滑鼠通了，可以自動玩** | `docs/playtest/06`。三個原因互相遮蔽：開場長度每次不同（`wait:` 靠不住，改 `until:<md5>` 認畫面）、PC-98 是**匯流排滑鼠**只吃相對位移（要 `Ctrl+F10` 鎖住，絕對定位餵的是 INT 33h 那條別的路）、8 bit 位移會截斷大跳躍（要閉迴路逼近）。已走完 `NEW GAME` → `YES` → 劇本 → 君主 → `決定`，進入遊戲本體的流程見 `docs/playtest/07` |
 | **存檔槽 4 個（confirmed）** | `LOAD DATA` 畫面實測，全部 `0年 0月 0日`。日文說明書的說法從「說明書」升到 confirmed。**時間單位是年／月／日** |
 | **oracle 可重現性通過** | 同一串操作跑兩次，截圖 **byte-for-byte 相同、0 個不同像素**。這是即時制專案的關鍵閘門 |
-| **大地圖畫面拿到** | 推進到 NEW GAME 對話框。**畫面最上方的橫幅正是 `ICONGRF` 段 0**（640×32），位置完全對上 |
+| **大地圖畫面拿到** | PC-98 已實際進入劇本 1 大地圖，日期 `196年 4月 1日`；據點資訊框也已取得。`docs/images/pc98-oracle-in-game.png`、`pc98-oracle-city-panel.png` |
 | **`MMAP.MDL` 全解** | 256 塊 16×16 地形圖塊，餘 0，與實機地形吻合（`docs/formats/05`）|
 | **地圖尺寸定案** | **384 × 256 格**（`sub_1E4CE` 的 `cmp cx, 180h` ＋ 列跨距 0x18 段；98,304 ÷ 384 ＝ 256）|
 | **`MMAP.MAP` 全解** | **READY**。RLE（用連續兩個相同 byte 當 run 觸發，無逃脫字元），80,716 → 98,308 B，取前 98,304 ＝ 384×256。畫出來是連貫的中國地圖 |
@@ -167,6 +200,8 @@ M8 實機驗收。細節見 §7.0。
 |---|---|---|
 | `SINARIO.DAT` `+0x00` 是「恆為 1，未解」、`+0x03` 是「日」 | **`+0x00` 是日，`+0x03` 是「時」** | 兩欄在四個劇本裡都是 `1`（都從 1 日開始，且「時」初值就是 1），**光看資料分不出來**。要靠反組譯才分得開 |
 | 勢力記錄 `+0x1D`（全為 200）是「疑似信賴度」 | **士氣基準值** | 編成軍團時它被複製進軍團的士氣欄位，而說明書編成畫面的士氣值正好是 200。**只看「全部都是 200」猜不出用途，要看誰讀它** |
+| 信賴度「沒有存檔欄位」 | **每個劇本／存檔區塊 `+0x10` 的 u8，對應 `cs:0D00h`／IDA `byte_10D00`** | `sub_18CAE`／`sub_18CFF` 複製全域 59 B；`sub_13D91`／`sub_13DC9` 對該位址做飽和加減。新遊戲初始化的完整時序仍另列待 oracle |
+| `Player` 只是 remake 的啟動參數、不在存檔 | **有效存檔的全域 `+0x0D`／`+0x0F` 會還原玩家勢力** | 新遊戲選定後 `sub_11AC3` 寫 `word_10CFD`／`byte_10CFF`；`sub_18B40` 載入後跳過選擇直接使用；空白四槽仍是 `FFFF`／`FF` |
 | 勢力記錄 `+0x19` 是「財政警戒旗標」 | **侵攻／敵對目標勢力編號** | 只看到 `mov [si+19h], 0FFh` 就以為是布林旗標。實際上另外三處拿它跟**勢力編號**比對（含玩家勢力編號）。**看到一處寫 0xFF 不代表那是旗標——0xFF 也可能是「無」** |
 | 軍團記錄是 32 byte | **64 byte** | 我拿 `sub_15456` 的 `add bx, 20h` 當依據，但那一支本身就與其他三處矛盾。**欄位用到 `+0x23`（35）本來就塞不進 32**——這一點我當時沒檢查 |
 | `YNFONT.EXE` 自帶中文字型 | **找不到證據** | 整檔當 1bpp 畫出來沒有字形、熵只有 3.05、60,888 B 也放不下 377 個相異字。原結論來自「遊戲沒有 STDFONT 也顯示中文」的**間接推論** |
@@ -227,6 +262,7 @@ M8 實機驗收。細節見 §7.0。
 | 2026-08-08 | 「內政官的效果找不到，可能掛在每日層」 | **根本沒有「每日」這一層**（`sub_11D8E` 的日進位直接落到時的分支）。它掛在**主迴圈的每 tick 據點更新** `sub_13EFD` 上。前幾輪 grep `840h` 找不到它，是因為**基址被折進了立即值**（`[si+841h]`、`[si+850h]`…）——**用基址搜尋會漏掉把基址折進位移的常式** |
 | 2026-08-08 | 事件代碼 `0x010C`（火災）與 `0x020C`（暴動）是兩個不同的代碼 | **同一個代碼**：分派只看低位元組（`mov bl, al`），兩者都是 12，走同一支 `sub_134B1`；高位元組是**參數**。`docs/formats/08` 的事件代碼表要照這個讀 |
 | 2026-08-08 | `docs/playtest/04`「四件事同時卡在滑鼠自動化這一個點上」 | **四件都不需要它**：據點座標用既有截圖驗完、`15-realtime` 早就 READY、地形類型已用鄰接統計推翻、戰場圖塊像素格式已用檔案自身的遮罩不變量解掉。**「受阻」寫進文件就會被當成閘，然後每輪都繞著閘打轉** |
+| 2026-08-09 | `sub_10CDE` 會把事件函式壓入的兩筆記錄餵給訊息變數 | **`sub_10CDE` 只是 `mov ax,101h` 後呼叫 `sub_1EB11` 的 PC 喇叭（PC speaker）音效包裝器；參數是由保留的 `DI=SP` 在後續 `sub_18810` → `sub_1075B` → `sub_1084A` 取用。** 證據：IDA Pro 9.4、`KI.EXE` SHA-256 `FFFEBA985231CDA4D636E93D10F598470B1F691D00275E4AA38E285893D43868`、`func-sub_10CDE.txt`、`func-sub_1EB11.txt`、`func-sub_1075B-current.txt`、`func-sub_1084A-current.txt` |
 
 ---
 | **行軍**「機制已經齊了，缺的是把它接起來」（寫在 worklist 上） | 據點記錄裡的鄰接是**不連通的**：170 條有向邊、全部雙向，但只有 85 條無向邊、**108 個連通分量**，最大的只有 17 個據點。從長安走不到洛陽 | 那四格只是「中間沒有路節點」的直接相鄰，真正的道路網是載入 `MMAP` 時現建的。**待辦清單上的樂觀判斷跟文件裡的斷言一樣需要被驗證**——照那句話直接寫 BFS 會做出一個「大部分目的地都說走不到」的行軍層，而 bug 不在程式裡，在前提裡 |
@@ -238,16 +274,76 @@ M8 實機驗收。細節見 §7.0。
 | `sub_133EA` 是一支「呼叫完就結束」的殘缺函式 | 它的結尾是 `call` **沒有 `retn`**——直接落進 `sub_133FD`，那才是寫回首都的地方 | 只 dump 一支函式會漏掉後半段。**看到函式結尾沒有 `retn`，要把下一支也 dump 出來** |
 | 進言的選單是「**5 個理由** ＋ 撤回」（照說明書「常に 5 つの項目」） | **4 個理由 ＋ 撤回 ＝ 5 項**。原版選單就在 `TALK.DAT` #102／#166／#230 | 一個湊數的假設逼著後面每一步跟著錯：三個理由池被硬湊到 5 個，兩個池各放錯兩個、少放一個。**說明書把機制講對了，錯的是拿分類敘述去填具體清單**——而具體清單一次 grep 就有 |
 | 「外交關係惡劣」門檻 ＝ `10 + 好戰 × 2`（remake 暫定值） | **`好戰 + 15`**。`好戰 × 2` 那個項確實存在，但它是**君主拒絕進言**的門檻（`好戰 × 2 + 20`） | **形狀猜對了一半，用在錯的地方。** 一個猜測在錯的地方對，比全錯更難發現——它通得過所有「方向對不對」的檢查 |
+| 進言／說得的信賴度與所需理由仍是暫定值 | **`sub_13830` 已定案：第一反應 `+20`／`−20`，多理由完成 `+10`，錯選 `−20`；`sub_13C1E` 依 `byte_10D00` 的 `E0／90／20` 分段要求 1／2／3／4 個成立理由** | `persuasion.Situation.Trust`、`Session.Offer`、`ReactionTrustDelta` 與 GUI 直接反應已接入；事件 2／3 其他外交回報增減仍未完成 |
 | Ebiten 需要 cgo，所以**遊戲本體不能交叉編譯** | 遊戲邏輯 100% 純 Go；要 cgo 的只有開視窗那一層，而且**只有 linux／mac**（GLFW 是 C 函式庫），**windows 純 Go 就能建** | 更早的一層錯誤：`tools/go.sh` 沒把 `GOOS` 傳進 docker，所以「三個平台都建過了」建出來的是**三個一模一樣的本機執行檔**（同一個 BuildID），而且每次都 exit 0。**沉默的成功比失敗難發現** |
 
 ## 7. Worklist（狀態的單一真相來源）
 
-### 7.0 下一步（2026-08-08 基準）
+### 7.0 下一步（2026-08-09 基準）
 
 > 這一節**只留「現在該做什麼」與「為什麼」**。已完成事項的細節在
 > §3、§6 與各文件，**不要在這裡重述**——舊版把好幾輪的過程全堆在這裡，
 > 接手的人得讀完才找得到下一步。查「某件事解了沒」一律先看
 > [`docs/INDEX.md`](docs/INDEX.md) 的斷言總表。
+
+#### 本輪新增的可玩切片
+
+- `cmd/wlgame` 已把既有 `World.SaveInto` 接到系統視窗：明確指定 `-save-file` 後，
+  `S`／`L` 開四槽儲存／讀取模態視窗，讀取會重新掛回道路圖與戰術來源。
+- overlay 不存在時才在第一次儲存建立；同目錄暫存檔加改名避免半個檔案；原始素材相同路徑
+  會 fail-closed 拒絕。`internal/savepath` 有無 Ebiten 路徑安全測試。
+- 2026-08-09 Xvfb 驗收：`4 → S → Return` 產出 88,832 B、UID/GID `1000:1000` 的 overlay；
+  前進後槽位與原始 `SINARIO.DAT` 雜湊不同，重新啟動載入日期為 196/4/8；原始雜湊未變。
+- 尚未宣稱完整存檔 parity：`Trust` 的原版儲存位址已證實為每區塊 `+0x10`，並已接入
+  改寫式讀寫與 byte 值域測試；事件佇列 `+0x52C0` 的 256 筆 × 4 B 原始資料、每十次
+  節拍、月度「丟前 64 格／後 192 格前移」，以及有獨立證據的事件 1 宣戰、事件 2 合作、事件 3 停戰狀態部分、事件 8 遷都（含
+  `sub_14502` 軍團同步）、
+  事件 9 釋放指定武將狀態部分、事件 13 信賴度 −50 handler 也已接入測試；`Player` 的 `+0x0D`
+  （勢力表位址）／`+0x0F`（勢力編號）也已由 `sub_11AC3`／`sub_18B40` 定案並接入
+  round-trip；事件 2／3 的產生器、已證實狀態副作用、玩家三選一接縫與 `sub_17C6E` 數值編輯語意已接入，但原版完整接受／PC-98 數值輸入畫面／訊息 UI、事件 4–7、10–12、事件 9 的通知／完整流程與原版 save parity 仍待 oracle。
+- 2026-08-09 戰鬥接縫切片：玩家勢力捲入軍團遭遇時先進入
+  `state.EncounterChoice`，由「戰鬥指揮／委任」決定後才建立戰術戰鬥或執行自動判定；
+  選單掛起時 `World.Tick` 不推進。`internal/state` 兩條分支與時鐘停止都有測試，
+  Docker/Xvfb 以真實 `SINARIO.DAT` 產出 `docs/images/wlgame-battle-choice.png`；
+  `-open-battle` 驗收捷徑也已接回這個狀態。這仍不等於完整正常玩家路徑對拍。
+- 2026-08-09 正常玩家路徑切片：不使用任何 `-open-*` 旗標，以真實預備兵資源
+  操作 `A` 編成一槽步兵，再以 `M` 選軍團／目的地「虎牢關」並按 `=` 行軍；
+  日期由 196/4/1 推進至 196/4/2，畫面事件顯示「曹操 向 虎牢關 行軍」。
+  另從同一目的地清單選袁術的「汝南」，沿 253 條原版道路抵達後由城兵自動判定，
+  畫面顯示「曹操 對 城兵　攻下 汝南」；規則測試
+  `TestNormalScenarioMarchIntoGarrison` 同步通過。證據是
+  `docs/playtest/08-wlgame-normal-strategy-path.md` 與四張
+  `wlgame-normal-*.png`。同一文件另以固定種子 17、正常 `A`／`M`／方向鍵／速度輸入
+  走到「呂布 對 曹操／攻城／戰鬥指揮／委任」，畫面證據為
+  `docs/images/wlgame-ai-normal-encounter.png`。
+- 2026-08-09 政略 AI 垂直切片：載入原始據點 `+0x1C..+0x1F` 四槽鄰接，照
+  `sub_12C52`／`sub_12D58`／`sub_12EFB` 接上鄰接排序、月度交友度漂移、資金／
+  交友度／國力三閘與雙向宣戰值；再照 `CS:6C4C` 六槽兵種表選未出陣最高武力武將，
+  編成敵方軍團並沿現有 MMAP 道路向敵方據點行軍。`TestStrategicAIScenarioOneProducesEnemyWarPath`
+  以真實劇本、固定亂數種子 17、六個月驗到宣戰 5、編成 4、戰鬥 4，逐 tick 不變量通過。
+  這是可重播的 runtime 轉接；事件 1／2（產生器、合作狀態、三選一接縫與數值編輯語意）／3（產生器、停戰狀態、三選一接縫與數值編輯語意）／8／9（指定武將釋放狀態）／13 已走過佇列節拍，仍不是事件 2、事件 3 的完整接受／PC-98 數值輸入畫面／原版訊息 UI、事件 4–7、10–12、事件 9 的通知／完整流程、
+  完整多軍團請求或原版行軍狀態機 parity；
+  詳見 `docs/re/07-monthly-settlement.md` §21 與 `docs/mechanics/70-ai.md` §6。
+- 2026-08-09 存檔回放核查：把使用者提供的 DOS/V `SAVE.DAT` 第 1 槽複本掛成
+  `-save-file` overlay，在沒有任何 `-open-*` 旗標下回放到「張飛 對 許褚／攻城」
+  的「戰鬥指揮／委任」選單，畫面證據為
+  `docs/images/wlgame-save-replay-choice.png`。但 loader 記錄起始為 0 年 0 月 0 日，
+  第 600 幀為 0 年 1 月 1 日；所以只證明含軍團存檔可回放與 UI 接縫，不證明正常 AI
+  產生、正常開局時序或完整原版存檔 parity。
+- 2026-08-09 正常戰術畫面切片：沿同一條真實劇本／固定種子 17／無 `-open-*` 路徑，
+  從「呂布 對 曹操」遭遇選單按「戰鬥指揮」進入攻城戰術畫面，再送出編號 2 的攻擊命令。
+  `wlgame -shot` 產出 `docs/images/wlgame-ai-afterpatch.png`、
+  `docs/images/wlgame-ai-battle-afterpatch.png`、
+  `docs/images/wlgame-ai-battle-attack-afterpatch.png` 與
+  `docs/images/wlgame-ai-battle-result.png`；最新事件佇列接入後重拍明確顯示守方勝、
+  攻方 5590→0、守方 1000→1000、攻城損害 0，按 Enter 才回戰略畫面；狀態層測試仍以第 549 幀
+  作為固定結果證據。核心同輪補上
+  `sub_1B618` 近戰公式、隊長退卻／待機兵清除與 `sub_1B00D` 繞路點消費修正，
+  測試與證據界線見 `docs/playtest/09-wlgame-normal-tactical-path.md`。另以
+  `TestNormalScenarioTacticalBattleTerminates` 使用同一真實劇本、固定種子 17、
+  真實 `BATTLE.*` 素材完成狀態層攻城：第 549 幀守方勝，攻方 0、守方 100，
+  `CorpsEvent` 保留戰前／戰後兵力與攻城損害，`ResolvePending` 後戰略層不再有 pending 遭遇；同一正常 GUI 路徑另以
+  `docs/images/wlgame-ai-postbattle.png` 證明按 Enter 後回到戰略地圖。
 
 #### 剩下的主要工作
 
@@ -255,11 +351,19 @@ M8 實機驗收。細節見 §7.0。
    - 變數層**已全量掃完**（12 則，`docs/reference/02` §9）
    - **先修那 12 則**：`#192`–`#195` 是**槽位錯位**不是翻譯問題，
      修法是把訊息放回正確的槽位，不是重譯
-   - `translations/corrections.json` 有 11 筆（8 筆有 `fix`、3 筆待人工裁定）
+   - `translations/corrections.json` 有 60 筆；`tools/talkdat.py correct` 已可重跑套用全部 60 筆，
+     `tools/talkdat_selftest.py` 驗證 60 筆套用與 mismatch guard；`#751` 在既有中文「我」後補 `{1}`，
+     插入位置有同一戰場台詞池的強證據；第二批已讀完 #360–#1021，完整語氣與畫面排版未驗收；`#321` 已由
+     `KI.EXE` 訊息格式化器（formatter）證據定案，`#192`–`#195` 也已由
+     `sub_13BA9`／`sub_13C99` 的三變體索引證據完成槽位裁定
 
-2. **M8 實機驗收** —— 建置與發行閘已就位（`tools/release.sh`、
-   `tools/denylist.py`），缺的是在各平台上真的跑一遍。
-   ⚠ linux／mac 的本體要在目標平台自己建（Ebiten 那一層要 cgo）。
+2. **M8 實機驗收** —— `tools/release.sh`、`tools/py.sh` 與 `tools/denylist.py` 的
+   Docker-only 發行閘已驗證；2026-08-09 完成 `windows/amd64` 交叉建置、Linux 本機
+   Ebiten 建置、PE/ELF 檔頭檢查、deny-list、一年期 `wlsim -check`，以及直接啟動
+   `dist/linux-amd64/wlgame -shot` 的 packaged Xvfb smoke。正常鍵盤路徑觸發敵方軍團
+  遭遇選單、正常戰術畫面、戰後結果報告與 GUI 戰後回戰略接縫已驗；狀態層正常攻城結算也已驗，
+  仍缺各目標平台真正實機執行、原版／remake 同狀態畫面對拍與完整戰術規則 parity；
+   linux／mac 的本體要在目標平台自己建。
 
 #### 未解的小項（各自獨立，可平行）
 
@@ -270,8 +374,9 @@ M8 實機驗收。細節見 §7.0。
 | ~~停戰／協力的理由成立條件~~ | ✅ **已解**（`sub_16577`／`sub_166D9`）。三個指令的反應碼與四個理由條件全部讀出來並實作，見 `docs/mechanics/70-ai.md` |
 | `ICONGRF` 段 1 | 未解（段 3 已解出視窗外框，`docs/formats/03` §5.4） |
 | 視窗內部的龍紋 | **不是圖塊拼的**（§5.5 的負面結果，量過任何尺度都沒有週期）。要補得先反組譯視窗繪製常式 |
-| `sub_14502` 的第二段 | 機制照抄了，**方向是反的**（「目標是新首都的改成舊首都」）。單一次暫存器對調，像 bug 但沒證據 |
+| `sub_14502` 的第二段 | ✅ **已解／已接入**：IDA `seg000:14502` 的輸入是 `AL=新首都`、`AH=舊首都`、`CX=新×8`、`DX=舊×8`；目標是新首都的軍團改回舊首都，方向雖反直覺但不是未知。`TestQueuedEventHandlers` 已驗證且保留目標 X/Y |
 | `sub_135AB` 的 `0x24` 門檻 | 讓中立（24）走進國力比較，而中立沒有真勢力記錄（`24 × 64 = 0x600` 正好是交友度矩陣起點）→ **原版的越界讀**。remake 標成差異 |
+| `sub_1AD7F` 的 `CH=0x20` 飛道具分支 | `shootSpecial` 已接入方向 `+0x80`、相鄰格、垂直 `-0x100` 與威力 `0x20`；`+0x1E`→`Climbing` 仍是強推論，完整投射物／動畫對拍未完 |
 
 #### ⚠ 反覆踩到的四件事
 
@@ -296,7 +401,7 @@ M8 實機驗收。細節見 §7.0。
 | M4 機制文件 | 停戰／協力的理由判定式 |
 | M5 規則層 | 大致完成；缺的規則跟著上表走 |
 | M6 呈現層 | 視窗內部的龍紋 |
-| M7 校訂 | 文意層 1,022 則（見上） |
+| M7 校訂 | 文意層 1,022 則；60 筆文字／變數／槽位／內容校訂已可套用，#0–#1021 第一輪已讀，畫面抽樣與排版 parity 未完成 |
 | M8 發行 | 實機驗收 |
 
 ---
@@ -305,9 +410,10 @@ M8 實機驗收。細節見 §7.0。
 
 | 工具 | 用法 |
 |---|---|
-| `tools/fdi_extract.py` | `python3 tools/fdi_extract.py <image.fdi> <輸出目錄>` |
+| `tools/fdi_extract.py` | `tools/py.sh tools/fdi_extract.py <image.fdi> <輸出目錄>` |
 | `tools/ida.sh` | `tools/ida.sh batch dosv KI.EXE` ／ `tools/ida.sh raw pc98 idat -A -S/work/tools/x.idc KI.EXE.i64` |
-| `tools/talkdat.py` | `dump` ／ `export` ／ `build` ／ `verify` ／ `diff`。**驗收指令是 `verify`，要求 byte-for-byte** |
+| `tools/talkdat.py` | `dump` ／ `export` ／ `build` ／ `verify` ／ `diff` ／ `correct`。`correct` 只套用有 `fix` 的校訂並 fail-closed 比對現況；**驗收指令是 `verify`，要求 byte-for-byte** |
+| `tools/talkdat_selftest.py` | Docker-only 自測 `correct`：60 筆套用、校訂後 round-trip、現況不符時拒絕 |
 | `tools/brg.py` | `info` ／ `swatch`。純標準函式庫的 PNG 輸出 |
 | `tools/grf.py` | `sheet` ／ `one`。**`sheet` 會印「餘 N byte」，不是 0 就代表尺寸猜錯** |
 | `tools/ida_func.idc` | `tools/ida.sh raw dosv idat -A \"-S/work/tools/ida_func.idc sub_XXXX\" KI.EXE.i64`。一次給呼叫者 ＋ 反組譯 ＋ **這支碰到的每個位址還有誰在用**。查欄位語意用這支，不要 grep `.asm` |
@@ -317,6 +423,7 @@ M8 實機驗收。細節見 §7.0。
 | `tools/release.sh` | `tools/release.sh [平台…]`。跨平台建置 → deny-list（掃 `dist/` 不是 repo，因為 `go:embed` 可以把任何東西烤進執行檔）→ 打包 |
 | `tools/index.py` | `generate` 重生 `docs/INDEX.md`（含斷言總表），`check` 只檢查。**擋下「狀態行說未解但內文已 confirmed」「A 說未解 B 說 READY」「連結壞掉」**。⚠ 改這支之後要做正對照——第一版有兩個 bug 讓檢查永遠不觸發，是故意放回一條過時狀態才發現的 |
 | `tools/go.sh` | `tools/go.sh test ./...`。image 沿用 demonwinter-go，volume 是自己的 `wl-gomod`／`wl-gobuild` |
+| `tools/py.sh` | 在 demonwinter-go 內執行 Python 文件索引／deny-list 工具；`--network none`、固定資源、目前 UID/GID |
 | `tools/shot.sh` | `tools/shot.sh out.png KEYS=Right,Down [參數]`。Xvfb + xdotool，驗呈現層 |
 | `tools/dosbox.sh` | `tools/dosbox.sh dosv "wait:2;type:START;key:Return;wait:10;shot:x"`。DOS/V oracle（會撞防拷）|
 | `tools/dosboxx.sh` | `tools/dosboxx.sh "until:<md5>,260;xkey:ctrl+F10;clickat:300,172;shot:x"`。**PC-98 oracle，無防拷**。timeline：`wait`／`until:md5,上限`／`settle`／`key`／`type`／`xkey`／`xtype`／`move`／`click`／`goto`／`clickat`／`probe`／`shot`。**要點滑鼠一定要先 `xkey:ctrl+F10`**，而且用 `clickat`（閉迴路）不要用 `click`（開迴路會被 8 bit 位移截斷）。滑鼠三個旋鈕：`WOLONG_SDL_AUTOLOCK`／`WOLONG_MOUSE_EMU`／`WOLONG_LOG_MOUSE`。原理見 `docs/playtest/06` |
@@ -325,3 +432,573 @@ M8 實機驗收。細節見 §7.0。
 > `tools/dump_func.py`」。那兩支**從來沒有存在過**，而 `CLAUDE.md` §5.1
 > 也已經改成 `tools/ida_func.idc`。**待辦清單上掛著一個不存在的工具，
 > 比沒有那一行更糟**——照做的人會先花時間去找它。
+
+## 2026-08-09 最新接手狀態：事件 4／5
+
+- 事件 4／5 已從月結產生端接到事件佇列：事件 4 高 byte 是玩家據點編號，事件 5 高 byte 是非玩家勢力編號；兩者 `Param` 都是要求金額。事件 4 使用原始 `+0x10 = Growth+100`，事件 5 的要價使用雙向友好度原始 byte min。
+- `sub_132A9`／`sub_132E9` 的處理時官員驗證、`sub_139E8` 的非零初始 500 下限／30,000 自訂上限／拒絕無副作用／官員 `amount/128`／玩家扣款，以及前置 TALK #56／#57 通知已接入 `World.PendingFunding`、`ResolveFunding` 與 `cmd/wlgame/funding.go`。
+- `TestFundingRequestGenerators`、`TestQueuedFundingChoice`、`TestQueuedFundingInitialTalkNotices`、全量 `go vet ./...`／`go test ./...` 已通過。這是事件 4／5 的產生器、狀態、前置通知與可玩 UI 接縫，不代表 `sub_139E8` 後續 TALK.DAT 訊息／PC-98 數字視窗、事件 6／7／10–12、事件 9 通知／完整流程、M7／M8 或完整 save parity 已完成。
+
+## 2026-08-09 最新接手狀態：事件 6／7
+
+- 事件 6／7 的 queue 處理端已接入：事件 6 是玩家停戰結果回報，事件 7 是協力方攻擊第三方的結果回報；兩者均照原版暫存器方向重用既有外交收尾，且處理時重新驗證 `Faction +0x2A` 外交官。
+- 事件 6 的付款方向是玩家→回報方；事件 7 是玩家→協力方，之後協力方→第三方宣戰。`TestQueuedDiplomacyReportHandlers` 已通過。
+- 明確邊界：玩家 `advise.go` 尚未接回原版 `sub_164F1`／`sub_16623` 的完整選單／反應／queue 產生，TALK.DAT 訊息與完整長期外交 oracle 仍未完成。
+
+## 2026-08-09 最新接手狀態：玩家進言 producer 接回
+
+- `cmd/wlgame/advise.go` 已接 `persuasion.FirstReaction`：敵對同意直接套用 `sub_13526` 狀態收尾；停戰／協力同意後分別寫事件 6／7。
+- 協力選取恢復為兩段式（協力方 → 侵攻目標），同一家仍可選並由 `SameFaction` 反應拒絕；`World.QueuePlayerCeasefire`／`QueuePlayerCooperation` 會重驗證存活、外交官空缺、交戰與重複事件。
+- `World.queuePlayerEvent` 對應 `sub_1301C` 的第 20 格提示位置，與 AI 的前 64 格 producer 分開；`TestPlayerDiplomacyProducers` 驗證完整 256 格搜尋與事件 payload。
+- 邊界更新：玩家 producer／state 接縫已接入；原版 `TALK.DAT` 反應／外交官回報訊息逐句內容與逐頁排版、事件 10–12、事件 9 通知及長期外交 oracle 仍未完成。
+
+## 2026-08-09 最新接手狀態：事件 10–12 dispatch
+
+- 事件 10（`sub_13496`）確認為訊息 formatter-only 邊界；事件 11（`sub_134A6`／`sub_1237E`）與事件 12（`sub_134B1`／`sub_123FF`／`sub_12438`）已接入 runtime 災害 marker，並由 `sub_14269` 接續持久效果。
+- `World.Tick` 月結後依原版事件順序產生事件 11 與 `0x010C`／`0x020C`；事件 12 以 runtime city record 位址解碼，高 byte 1／2 建立火災／暴動 marker，再從 `eventCursor + 6..13` 的完整 queue 搜尋位置排入高 byte 0 清除。
+- `TestQueuedDisasterAnimationHandlers` 與 `TestDisasterMarkerAppliesRawPersistentEffects` 固定暴風雨／火災 marker、Param 位址、延遲清除、持久欄位公式與不由 `sub_14269` 自動清 marker 的邊界。仍缺事件 10–12 的 TALK.DAT／物件動畫呈現。
+
+## 2026-08-09 最新接手狀態：事件 9 通知觀測
+
+- 事件 9 的 `sub_13485`／`sub_150D7` 狀態接縫已擴成可觀測結果：成功釋放的武將索引會進入 `Event.ReleasedGenerals`，`cmd/wlgame` 顯示通用 `<武將名> 已釋放`。
+- `TestQueuedEventReleaseGeneral` 已驗證存活俘虜方與已滅原勢力方兩條狀態分支；這個欄位是 runtime 事件回報，不是新的存檔欄位。
+- 邊界仍明確：`TALK.DAT` 0x25 原句「被敵軍所擒的{1}大人回來了」已由 `cmd/wlgame` 取用；原版勢力通知對話框、選擇／排版、完整事件流程與長期 oracle 尚未完成。
+- 證據輸入為 `KI.EXE.asm` SHA-256 `FFFEBA2D9E6EE947A4CF7ABF8FEF6D4B8D0FB4E6E0EC66D9D34D7B5A0D43868`，IDA Pro 9.4 線性位址 `seg000:13485`／`150D7`；runtime／測試在 `wolong-go:20260809` Docker 內執行。
+
+## 2026-08-09 最新接手狀態：戰術 raw `PlaneHigh` 勘誤
+
+- 舊紀錄把兵 `+0x1E` 暫表成 `Climbing`，本輪已以 IDA `.i64` 交叉參照修正：`sub_1B4EA` 初始化 0、`sub_1B0D3` 上移寫 `0x10`、`sub_1B116` 回地面清 0、`sub_1B732` 交換；`sub_1B240` 依圖塊堆疊至少 4 層設定 `+0x00 bit 1`，並把 `+0x1E` 複製進 `+0x1F` 組格索引。
+- `sub_1A85B` 的鎖敵條件已接成 raw 分支：候選平面低於目前平面時看候選 `HighTerrain`；候選平面不低於目前平面時，只有目前兵種 `<= Cavalry` 且候選非地面平面加 64。`sub_1AC55`／`sub_1ACA4` 的步兵特殊投射物則是 raw 平面比較與兩軸 max ≤2。
+- remake 已加入 `PlaneHigh`／`HighTerrain`，`Place`／移動／增援／交換同步；`Climbing` 僅作舊夾具相容。新增三個 raw 條件測試在 Docker 通過。這只收斂原始欄位與進入條件，不代表完整投射物、動畫或原版同狀態對拍完成。
+- 證據：`workplace/ida/dosv/KI.EXE.i64`、`KI.EXE.asm`、`KI.EXE`；`KI.EXE.asm` SHA-256 `FFFEBA2D9E6EE947A4CF7ABF8FEF6D4B8D0FB4E6E0EC66D9D34D7B5A0D43868`，`KI.EXE` SHA-256 `FFFEBA985231CDA4D636E93D10F598470B1F691D00275E4AA38E285893D43868`；`ida-pro-9.4-ver2:uidfix-v1`／IDA Pro 9.4，IDA 線性位址；匯出檔 `workplace/ida/dosv/func-sub_1A85B.txt` 等。
+
+## 2026-08-09 最新接手狀態：投射物逐幀與畫面接縫
+
+- `sub_1B941` 已由 IDA 函式邊界確認為 `sub_1B97E` → `sub_1BA2E` → `sub_1BAB7`；remake 先查目前格再移動，保留 `+0x05` 方向、`+0x0A` 固定點高度、`+0x0B` 整數 Z、`+0x0E` 前 Z、`+0x10`／`+0x12` 格索引與 `+0x14` 速度的可對照狀態。
+- `sub_1BA2E` 的 ±0x100 速度夾限、每幀 −0x14、特殊方向 `0x80` 不改 X/Y、實心／越界清除，以及 `sub_1BAB7` 上升扣／下降加威力已接入。普通箭的 `sub_1AD2D` 初始速度公式與 `sub_1ECE0`／`sub_1EC82` RNG 已接入並有單測；完整圖形／動畫與同狀態對拍仍未完成。
+- `Battle.Projectiles()` 已接到 `cmd/wlgame/battleview.go`；以戰場內側別／CH=0x20 標記可觀測，不把缺少的 `BATTLE.SCH` 投射物圖形或動畫寫成已完成。
+- 測試：`TestProjectileRawDirectionGridAndHeightPower`、`TestProjectileChecksCurrentCellBeforeMoving`、`TestProjectileStopsAtSolidLayerAfterMoving`，以及全量 Docker vet／test／build 通過。原版普通箭同狀態、完整動畫、戰後訊息、M7／M8 仍未完成。
+
+## 2026-08-09 最新接手狀態：事件 11／12 災害 marker 持久效果
+
+- 原版 `sub_13EFD`（IDA 線性位址 `00013EFD`）在 `00013F5A` 於內政官 `sub_14194` 後呼叫 `sub_14269`（`00014269`）。事件 11／12 寫入城市 `+0x15` 的 marker 會在據點輪轉時先扣防災值；不足時再按原版 byte／word 算術扣上昇值、生產力與城兵。
+- `World.applyCityDisasterEffect` 與 `TestDisasterMarkerAppliesRawPersistentEffects` 已接入；事件 12 高 byte 0 的延遲清除仍負責歸零 marker。這收斂持久災害效果，但不等於物件動畫、完整 TALK／翻頁或長期原版 oracle 完成。
+- 輸入為唯讀 DOS/V `KI.EXE.i64`／`KI.EXE.asm`／`KI.EXE`；工具 `ida-pro-9.4-ver2:uidfix-v1`／IDA Pro 9.4，runtime／測試使用 `wolong-go:20260809` Docker。雜湊與完整證據見 `RESEARCH-LOG.md` 最新災害段。
+
+## 2026-08-09 最新接手狀態：事件 TALK 通知 modal
+
+- 已由 IDA 線性位址 `0001237E`、`000134A6`、`000134B1`、`00013507` 及唯讀 `TALK.DAT` 交叉確認：事件 11／12 的玩家城市通知接 TALK #70／#71／#72，事件 13 接 TALK #51；`sub_1237E` 的 `DI` 城市記錄對應 `\\2` 代換。
+- `internal/state.Event.TalkNotices` 與 `cmd/wlgame/messages.go` 已把上述通知接到原始行邊界的 Big5 modal；顯示期間世界時間停止，Enter／Space 關閉。事件 9 釋放武將也共用 #37（`0x25`）通知佇列。
+- 證據輸入為 `KI.EXE.asm` SHA-256 `FFFEBA2D9E6EE947A4CF7ABF8FEF6D4B8D0FB4E6E0EC66D9D34D7B5A0D43868` 與 `KI.EXE` SHA-256 `FFFEBA985231CDA4D636E93D10F598470B1F691D00275E4AA38E285893D43868`；工具 `ida-pro-9.4-ver2:uidfix-v1`／IDA Pro 9.4，runtime／測試 `wolong-go:20260809`。`TestQueuedTalkNotices` 通過。
+- `-open-message` Docker/Xvfb 抽樣已確認實際 modal：`docs/images/wlgame-event-modal.png` 顯示玩家首都「許昌發生了暴風雨。」；第 30 幀仍為 196/4/1。UI 代換表已修正為 TALK ASCII marker `'1'`／`'2'`。
+- 未完成邊界：事件 10 producer／formatter、事件 6／7 完整 TALK、原版完整訊息流程與肖像／翻頁、災害物件動畫、原版／remake 同狀態對拍，以及 M7／M8 長程玩家路徑。
+
+## 2026-08-09 最新接手狀態：事件 6／7 主要 TALK
+
+- 已接入事件 6／7 的主要通知鏈：#57 外交官／回報勢力，#58 失敗，#43–#45 停戰結果，#47–#49 合作結果；`TalkNotice.Faction` 對 `\\3`，`Amount` 對 `\\7`。
+- `sub_136C4`／`sub_13712` 的 DX 金額以單次 terms 結果保存，避免 tie RNG 重抽；`TestQueuedDiplomacyReportTalkNotices` 固定 14,000／15,000 金額案例。IDB hash `7b7c1aa67c47f99062cfdd4439b3423302808c874f929c3ea6f75ec564034c26`，工具 IDA Pro 9.4，位址為 IDA 線性位址。
+- 尚未完成：`sub_13C3D` AH／`sub_13DC9` 次要訊息、原版數值欄寬／逐頁排版、事件 2／3 完整回應與 PC-98 輸入畫面、事件 10、災害物件動畫、長期正常劇本 oracle 與跨平台 GUI runtime。
+
+## 2026-08-09 最新接手狀態：M8 發行矩陣與封裝 smoke
+
+- `dist/` 已在 Docker 等價 release 流程重建：`linux/amd64`、`linux/arm64`、`windows/amd64`、`darwin/amd64`、`darwin/arm64` 的純 Go 工具；Windows `wlgame`／`wlview`；Linux 原生 `wlgame`／`wlview`。
+- ELF／PE／Mach-O 檔頭與 `python3 tools/denylist.py dist` 通過；封裝 Linux `wlgame` 在 Docker/Xvfb `:101` 使用唯讀原版素材／字型完成 120 幀截圖 smoke。
+- 邊界更新：M8 的產物／Linux smoke／發行隔離已通過，但 Windows／macOS GUI runtime 實機與原版／remake 有效時序同狀態對拍仍未完成；M7 校訂後畫面／排版 parity 也未完成。
+
+## 2026-08-09 最新接手狀態：投射物逐幀與畫面接縫
+
+- `sub_1B941` 已由 IDA 函式邊界確認為 `sub_1B97E` → `sub_1BA2E` → `sub_1BAB7`；remake 先查目前格再移動，保留 `+0x05` 方向、`+0x0A` 固定點高度、`+0x0B` 整數 Z、`+0x0E` 前 Z、`+0x10`／`+0x12` 格索引與 `+0x14` 速度的可對照狀態。
+- `sub_1BA2E` 的 ±0x100 速度夾限、每幀 −0x14、特殊方向 `0x80` 不改 X/Y、實心／越界清除，以及 `sub_1BAB7` 上升扣／下降加威力已接入。普通箭的 `sub_1AD2D` 初始速度公式與 `sub_1ECE0`／`sub_1EC82` RNG 已接入並有單測；完整圖形／動畫與同狀態對拍仍未完成。
+- `Battle.Projectiles()` 已接到 `cmd/wlgame/battleview.go`；以戰場內側別／CH=0x20 標記可觀測，不把缺少的 `BATTLE.SCH` 投射物圖形或動畫寫成已完成。
+- 測試：`TestProjectileRawDirectionGridAndHeightPower`、`TestProjectileChecksCurrentCellBeforeMoving`、`TestProjectileStopsAtSolidLayerAfterMoving`，以及全量 Docker vet／test／build 通過。原版普通箭同狀態、完整動畫、戰後訊息、M7／M8 仍未完成。
+## 2026-08-09 最新接手狀態：`sub_17C6E` 數值編輯語意
+
+- IDA 線性位址 `00017C6E` 的數值輸入器以初值、上限 `0x7530` 與目前值運作；`00017DA5` 追加十進位數字、`00017DC3` 乘 100、`00017DDD` 除 10、`00017DEC` 還原初值、`00017DF1` 清零，`00017DEA` 結束並保留目前值。這些是已證實的數值變化，不把 PC-98 掃描碼直接外推成跨平台按鍵。
+- `internal/state.AmountEdit`、`World.EditDiplomacyOfferAmount`、`World.EditFundingAmount` 與 `TestRawAmountEditorSemantics` 已接入事件 2／3、4／5；`cmd/wlgame` 的指定金額列現在可用數字鍵、退格、Insert（補 `00`）、Delete（清零）、Home（還原），並保留原本的方向鍵輔助調整。
+- `sub_17D0D`（`00017D0D`）→`sub_1FA37` 的 `AX=4006h` 與 `sub_1FAA2` 迴圈另已證實數值視窗外框資源 blit 為 96×64；`word_10D50:0600h` 已對回 `ICONGRF` 段 3 `0x14A0`，內框與 3×6 靜態 glyph 已解出。
+- 這只封閉狀態層與跨平台輸入語意；本輪 DOS/V 數值視窗的實際 glyph 與 `KI.EXE` 硬體游標已由原始 bytes 解碼，PC-98 按鍵掃描碼／畫面不作目標；TALK.DAT 訊息順序與自然逐頁畫面仍是其他 parity 邊界。輸入／測試使用 `wolong-go:20260809` Docker；原始 `.i64`／`.asm`／binary 唯讀。
+
+## 2026-08-09 最新接手狀態：事件 2／3 TALK 分支
+
+- `sub_13902` 的已證實選項索引為事件 3 #364/#365/#366、事件 2 #377/#378/#379；
+  `sub_13C3D` 的主要結果為停戰 #43/#44/#45、協力 #47/#48/#49。外交超額輸入顯示
+  response 2 破裂句、不套用外交狀態，但 response=3 另由 `sub_13C3D` 扣信賴度 30；
+  零輸入回到 response 0。
+- `cmd/wlgame/diplomacy.go` 已按上述 base+offset 排入建言與主要結果 TALK；
+  `TestDiplomacyTalkIndicesMatchRaw13902Branches` 與真實資產 marker 展開測試已通過。
+- `sub_13C3D` 的 AH／信賴度次要訊息、PC-98（非本輪目標）數值視窗／欄寬／游標／逐頁動畫仍未知；
+  完整長程遊戲測試依本輪接手決策不作為目前阻塞，但不能因此宣稱全量 parity。
+
+## 2026-08-09 最新接手狀態：外交／撥款指定金額收尾邊界
+
+- `sub_13902` 在玩家指定外交金額後，若 `DX > [BP+0Ah]` 會把回傳碼設為 3；外層事件 2／3 以 `AL >= 2` 不套用收尾，`sub_13C3D` 再以 `AL=1Eh` 呼叫 `sub_13DC9`。因此 `World.ResolveDiplomacy(DiplomacyOfferFunds)` 現在以 `DiplomacyChoice.InitialAmount` 驗證，超額輸入 fail-closed 並扣 `Trust−30`，不再重新計算條件。
+- 不重新計算也修正了平手代表政治值時的亂數時序：`beginDiplomacy` 取得的原始要求金額會保存到 pending，確認時直接沿用，不會因第二次呼叫 `sub_13771` 額外消耗 `World.rng`。
+- `sub_139E8` 的撥款分支不同：輸入 0 走選項碼 2、沒有官員／資金副作用；輸入高於原始要求則走選項碼 3，仍以輸入金額寫官員經費並扣款。`ResolveFunding` 已接入這個差異。
+- 新增 `TestDiplomacyAndFundingAmountOutcomeBounds`；既有外交／撥款測試與全量 Docker Go 閘門仍需一併通過。原版數值視窗、TALK 順序／欄寬／逐頁排版與其餘事件訊息仍未完成。
+
+## 2026-08-09 最新接手狀態：事件 4／5 後續 TALK 分支
+
+- IDA 的 `sub_1084A` 以 ASCII marker 索引 `CS:08A4` table：`\1`／`\2`／`\3`／`\4` 分別是武將、據點、勢力君主、玩家軍師姓名；`\6` 是不輸出文字的欄位控制；`\7` 是十進位數值。證據位址為 `000108B2`、`000108DB`、`00010904`、`00010939`、`0001097E`、`00010984`，均為 IDA 線性位址。
+- `sub_139E8` 的事件 4 base `0x116`／事件 5 base `0x13F` 已由原始 TALK 索引與控制流接成結果→收尾序列；`cmd/wlgame/funding.go` 以 `fundingTalkIndices` 固定全額、指定等額／低額／零／超額、拒絕六種語意。
+- 指定 0 與拒絕在 state 都是無副作用結果，但 UI 仍顯示各自原版 #286/#327 分支；這是 `ResolveFunding` 回傳 false 不等於「要顯示泛用錯誤」的交接注意點。
+- `TestFundingTalkIndicesMatchRaw139E8Branches` 已加入；本輪 GUI 測試使用有界 Docker `Xvfb` 通過。尚未完成的是 PC-98 數值視窗像素排版、`\6` 的精確欄位位置、逐頁動畫與跨平台 GUI 實跑。
+
+## 2026-08-09 最新接手狀態：事件 2／3 前置外交請求 TALK
+
+- IDA `sub_138C7`（`000138C7`）在玩家停戰三選一前把 `CX` 設為 `0x168`（TALK #360）；
+  `sub_138E6`（`000138E6`）在協力三選一前把 `CX` 設為 `0x175`（TALK #373）。兩句的
+  `{3}` 都是提出請求的勢力君主名，這些位址均為 IDA 線性位址。
+- `internal/state.beginDiplomacy` 現在建立對應 `TalkNotice`，沿用既有通知 modal；
+  `TestQueuedDiplomacyChoiceTalkNotices` 與真實資產的
+  `TestDiplomacyTalkExpansionUsesOriginalRequestMarkers` 已在 Docker／Xvfb 驗證。
+- 只接前置報告，不宣稱事件 2／3 的接受／拒絕後 TALK、數值視窗、PC-98 欄寬／游標／
+  逐頁動畫或完整長程玩家路徑已完成。原始 `.i64`／`.asm`／binary／`TALK.DAT` 仍唯讀。
+
+## 2026-08-09 最新接手狀態：事件 9 通知條件勘誤
+
+- `sub_13485` → `sub_150D7` 只有在釋放後 General `+0x1C` 等於玩家勢力
+  `byte_10CFF` 時呼叫 TALK #37（`CX=0x25`）；回到其他勢力／在野不通知玩家。
+- `cmd/wlgame/messages.go` 已依釋放後 `Faction` 加條件；
+  `TestReleasedGeneralTalkOnlyTargetsPlayerFaction` 已在 Docker／Xvfb 通過。
+- `CX=0x199` 後續 formatter 與 TALK #409 空槽仍未知，未擅自顯示；事件 9 的原版肖像／
+  逐頁呈現與長程 oracle 仍未完成。
+
+## 2026-08-10 最新增量：災害 marker 地圖呈現接縫
+
+- `World.DisasterMarkerAt` 與 `World.StormAreaSnapshot` 只讀取事件 11／12 的 runtime
+  狀態，不改存檔欄位、不改事件時序；`TestDisasterMarkerReadOnlySnapshots` 驗證無效索引、
+  marker 強度與暴風雨範圍副本的隔離。
+- `cmd/wlgame` 已在地圖與浮動視窗之間畫出低干擾的火災／暴動／暴風雨向量標記，以及
+  11×11 暴風雨範圍輪廓。這是 `sub_123FF`／`sub_12438` 物件圖形與動畫尚未解碼前的
+  明示替代，不是原版像素 parity。
+- `cmd/wlgame` 事件／外交短測試與 `go build` 在 `wolong-go:20260809`、有界 Xvfb／無網路
+  快取流程通過；完整物件動畫、原版對拍與長程路徑仍列未完成。
+
+## 2026-08-10 最新增量：事件 10 producer 負證據
+
+- `sub_131AE`／`funcs_131E8` 已確認低位事件碼 `0x0A` 指向 `sub_13496`；handler 只把
+  `AH`／`DX` 與 `AL=0x93` 交給 `sub_18810`，沒有可證實的狀態寫入。
+- 已檢查策略 queue helper 的直接與動態 caller：`sub_12FBF`、`sub_12FB1`、`sub_1301C`
+  出現事件 1–9、11–13，沒有找到低位 `0x0A` producer。這是未完成的負證據，不能升格成
+  binary 全域不存在；`mov al/ah,0Ah` 的非 queue 命中不接入。
+- 因此事件 10 仍不建立 state／TALK 猜測；需 IDA `.i64` 完整資料流與原始 TALK 槽位證據
+  才能接入。三平台封裝與推廣影片 release gate 維持未解除。
+
+## 2026-08-10 最新增量：事件 6／7 次要 formatter 不可安全外推
+
+- `sub_137D8`／`sub_13138` 的 `AH` bit 是兩方向 General `+0x1D`（舊主）與 `+0x1C`
+  （目前所屬）配對形成的俘虜旗標；這與信賴度欄位分開，證據位址為 IDA 線性
+  `00013138`／`000137D8`。
+- `sub_13C3D` 的第一次 TALK 呼叫建立 `DI=SP` 參數堆疊；第二次 `CX+0x1D` 呼叫在
+  還原 `DI` 後沒有重建堆疊。事件 6／7 的 raw 索引因此是 #72/#73、#76/#77，但其
+  `TALK.DAT` marker／選單文字不能由現有 `TalkNotice` 欄位可靠展開。
+- 這是已確認控制流加上強推論的呈現邊界；本輪保留未完成，不以 #72/#73/#76/#77 猜接
+  事件 6／7 UI，也不把事件 2／3 的 #367–#372／#380–#385 混進來。
+
+## 2026-08-10 事件 6／7 次要 index 範圍勘誤
+
+- `sub_13C3D`（IDA `00013C3D`）的第二次呼叫確實以 `CX+0x1D`、`AL=0x93` 顯示
+  次要 TALK，但恢復 `DI` 後沒有重建第一次 `DI=SP` formatter 堆疊。由四個直接 caller
+  的 literal 可直接證實事件 6／3 為 #72、事件 7／2 為 #76；鄰近 #73／#77 不在這段
+  直接算術結果中，維持未知。
+- #72 的 `\\2` 需要 `SS:[DI]` word，#76 是選單文字，因此本輪不新增 `TalkNotice`
+  欄位或猜測城市／勢力語意。PC-98 暫時 oracle 未越過啟動選擇畫面，屬 inconclusive，
+  不解除 release gate。
+
+## 2026-08-10 事件 9 空槽勘誤
+
+`sub_150D7` 在玩家勢力成立時先顯示 #37，再以 `CX=0x199` 呼叫 TALK formatter；
+PC-98／DOS/V 原始 `TALK.DAT` 的 #409（`0x199`）均只有資料上的空行，沒有文字／marker。
+因此 remake 只排入
+有可見內容的 #37，並新增 `TestReleasedGeneralRawFollowup409IsEmptyNoOp` 固定空槽不產生
+空白 modal。這封閉事件 9 的可見訊息接縫；原版空呼叫的堆疊時序不冒充畫面差異，其他
+release gate 不變。
+
+## 2026-08-10 最新增量：M7 校訂訊息接入 wlgame
+
+- `translations/talk-dosv-corrected.json` 是由 `translations/extract/talk-dosv.json` 與
+  `translations/corrections.json` 以 `tools/talkdat.py correct` 產出的 1,022 則繁中呈現表；
+  `tools/talkdat_selftest.py` 現在會逐 byte 比對這個版控產出，避免校訂來源與 runtime 檔案漂移。
+- `internal/assets/text.LoadJSON` 會保留每行邊界、尾端空行與 `{N}` marker，再以 cp950 編回
+  `text.Part`；raw `TALK.DAT` 仍先經 `Parse` 並維持原始 round-trip，原版素材不被覆寫。
+- `cmd/wlgame` 預設使用 `-talk-json translations/talk-dosv-corrected.json`；傳入空字串可明確
+  回到 raw `TALK.DAT`。這只把已定案的 60 筆文字／槽位修正接入呈現層，不宣稱 formatter、
+  PC-98 數字視窗、逐頁動畫或行寬 parity 已完成。
+- 新增 `internal/assets/text` JSON marker／尾端空行測試；完整 Docker/Xvfb gate 的
+  `go vet ./...`、`go test -p=1 -vet=off ./... -count=1`、兩版 TALK round-trip、deny-list
+  selftest、文件索引均已通過；短 GUI smoke 已實際載入校訂表並產生截圖。
+- release gate 仍被事件 6／7 次要 formatter、事件 10、原版災害／投射物物件動畫、PC-98
+  數字視窗與完整訊息排版、Windows／macOS GUI runtime、同狀態原版對拍阻擋；不建立三平台
+  正式包或推廣影片。
+
+## 2026-08-10 最新增量：M7 remake modal 行寬 guard
+
+- `tools/talkdat_selftest.py` 新增 22 個全形格的保守行寬檢查；它以 `{N}` 三格、一般字元一格
+  的校訂工具模型計算，對應 `cmd/wlgame.drawMessage` 384 px modal 的 360 px 內容寬度。
+- 目前 1,022 則校訂表通過此 guard；校訂後最大保守寬度為 13 格，沒有 modal 像素溢出風險。
+- 這只封閉 remake modal 的安全性，不能取代原版硬換行、formatter、游標、逐頁動畫或畫面抽樣；
+  原版／remake parity 與其他 release gate 維持未完成。
+
+## 2026-08-10 最新增量：remake 數值面板與訊息安全分頁
+
+- `cmd/wlgame/amountpanel.go` 將已由 `sub_17C6E` caller／`sub_17D5F` 證實的
+  `(80,176)` 外框、`(88,200)` 起點、3×6／16×16 格位接到事件 2／3／4／5 共用 UI；
+  面板內的目前值、初值、30,000 上限是 remake 呈現，不把 `CS:7D93h` 未知格位內容
+  命名成原版語意。`TestAmountPanelKeepsVerifiedNativeGeometry` 固定座標與最後一格。
+- `drawDiplomacy`／`drawFunding` 已使用同一數值面板，保留 `AmountEdit` 的數字、退格、
+  Insert、Delete、Home 與方向鍵輸入；選項列移到右側，避免覆蓋已量得格位。
+- `messageDialog` 新增以 TALK 原始硬斷行為單位的 10 行分頁與動態安全寬度；
+  `TestMessagePagePreservesTalkHardBoundaries`／`TestMessagePageClampsInvalidPage`
+  固定不重新切行且頁碼夾限。這仍是 remake modal，不是原版肖像／游標／逐頁動畫 parity。
+- 在 `wolong-go:20260809` 的無網路 Docker／Xvfb 中，`go test ./...`、`go vet ./...`、
+  `go build ./cmd/wlgame` 與 `git diff --check` 通過；長時間完整遊戲測試仍依使用者指示略過。
+- release gate 仍保持關閉：事件 6／7 次要 formatter、事件 10 producer、原版災害／
+  投射物動畫、跨平台 GUI 實機與原版同狀態對拍尚未封口，因此本輪不建立正式三平台包／影片。
+
+## 2026-08-10 勘誤：原版事件 6 主要結果 fixture oracle
+
+- 以 Docker 臨時副本把使用者提供的 DOS/V `SAVE.DAT`（SHA-256
+  `59e27270ee8192f63b08e012bf31a0b8da1477ce2c643fd487e6f8181b7650d2`）載入 PC-98
+  原版；fixture SHA-256 為
+  `c695eec5ce61d5eda2eb5927d0ee33dd023d639c16ca47e01cdb45eb0fe24245`。原始 PC-98
+  `KI.EXE`／`SAVE.DAT` 雜湊、DOSBox-X 版本、注入位址與截圖雜湊完整記在
+  `RESEARCH-LOG.md` 與 [`docs/playtest/11-event6-original-fixture.md`](docs/playtest/11-event6-original-fixture.md)。
+- `NEW GAME` 選 `NO`、第 1 槽讀檔成功，原版地圖在 `196年 4月 1日` 顯示事件 6 的
+  主要停戰結果視窗（14000 金）。這修正先前「未越過啟動選擇」的暫時 oracle 紀錄，
+  但只提升事件 6 主要結果證據；不提升次要 formatter、事件 7、事件 10 或原版數值／
+  翻頁 parity。
+- 原始素材未修改；fixture 的時鐘、玩家指標、勢力 3 `+0x2A` 外交官與事件佇列都是
+  明示注入，不能當成原版自然時間線。正式三平台包與推廣影片 gate 維持關閉。
+
+## 2026-08-10 最新增量：`MMAP.MCH` 災害物件圖形串接
+
+- 以 DOS/V `KI.EXE`／`MMAP.MCH` 為唯讀輸入；`KI.EXE` SHA-256 為
+  `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`，`MMAP.MCH`
+  SHA-256 為 `b10a5b64bbffa672c1fb5cb37703ac4c14b18bf1166cc47c4e802c19aae9f8f7`。
+  IDA Pro 9.4／IDA 線性位址證實 `sub_187AF` 將 MCH 載到 `word_1987A`，其檔案
+  `0xA000` 是 64 筆 4-byte metadata，`0xA100` 起是物件矩陣來源。
+- `sub_12533`（`00012533`）以 `CS:985A` 查表；原始表的 type 1／2／3 八幀分別為
+  `18..1C,18..1A`／`20,21,22,23,20,21,22,23`／`28,29,2A,2B,28,29,2A,2B`。
+  `sub_1D804` 的格式為 16×16、160 bytes 的遮罩／四平面圖塊；type 1 為 16×9，
+  type 2／3 為 5×5。事件 12 的 `AH=1/2` 因此已能對回火災／暴動物件。
+- 新增 `internal/assets/world/mmapmch.go`、測試與 `Library.MCH` 載入；`cmd/wlgame`
+  已用 MCH 紋理取代火災／暴動向量 marker，缺檔仍 fail-closed 回退。原版 `[si+0F]`
+  計時／相位欄位未保存於目前 runtime marker，故固定呈現時鐘仍是明示替代；暴風雨
+  handler 也沒有呼叫物件建立函式，維持範圍輪廓而不冒充 MCH parity。
+- Docker 定向測試已通過 `internal/assets/world` 與 `cmd/wlgame`；大型 MCH 圖靠近畫面
+  邊界的裁切也已改以實際圖像 bounds 判斷。事件 6／7 次要 formatter、事件 10 producer、
+  原版動畫時序、PC-98 數字／排版 parity、Windows／macOS GUI runtime 與同狀態對拍仍未完成，
+  因此正式三平台包與推廣影片 gate 維持關閉。
+
+## 2026-08-10 最終本輪 Docker／release 複核
+
+- 有界 Xvfb／無網路 `wolong-go:20260809` 已通過 `go test -p=1 -vet=off ./... -count=1`、
+  `go vet ./...`、Linux `cmd/wlgame` 建置、`tools/index.py generate/check`；長時間完整
+  遊戲測試依使用者指示略過。`git diff --check` 通過，專案相關容器清理後為零。
+- 依 `tools/release.sh` 的已知矩陣，`wlsim`／`wlshot` 的 Linux amd64/arm64、Windows amd64、
+  Darwin amd64/arm64 與 Windows `wlgame` 候選均在 Docker 建置成功；Linux／macOS `wlgame`
+  仍需目標平台原生建置，尚沒有 Windows／macOS GUI 啟動證據。
+- 未建立 `dist/` 正式三平台包或推廣影片：事件 6／7 次要 formatter、事件 10 producer、
+  MCH timer／frame parity、PC-98 數字／排版、原版／remake 同狀態對拍與目標 GUI runtime
+  仍開啟。這是條件式 release gate 的正確 fail-closed 結果。
+
+## 2026-08-10 本輪接手後續：數值格、TALK 五行分頁與消像
+
+- 已完成原版可回查的 DOS/V 數值選取呈現：`CS:7D93h` 18-byte raw table、`(88,200)` 起點、
+  3×6／16×16 格、數字／百／退位／清零／還原／完成 action；滑鼠座標選取、DOS/V
+  `KI.EXE` 16×16 白框／紅填 cursor 與鍵盤 fallback 共用狀態層 `AmountEdit`。PC-98
+  硬體游標不在本輪畫面基準內。
+- `cmd/wlgame/messages.go` 使用五行／16 px TALK 分頁，marker 後按 ASCII 8 px／CJK 16 px
+  換行；保持 hard line 與中間空行、移除結構尾空行。event2／3／4／5 composite 已含
+  IVENTGRF、肖像、prompt、選項與數值器。
+- pending 完成／取消後 Draw 先重畫地圖，舊 IVENTGRF／肖像不殘留，再顯示後續 TALK；
+  `docs/playtest/12-event3-same-state-parity.md` 與 `docs/re/13-pc98-numeric-window.md`
+  記錄短 smoke、截圖 hash 與限制。完整長程遊戲測試依使用者要求略過。
+- 自然 DOS/V／remake 整張截圖逐像素對拍、事件 6／7 次要 formatter、事件 10、MCH／投射物 timer、
+  Windows／macOS GUI runtime 尚未封口；三平台正式包與推廣影片仍不建立。
+
+## 2026-08-10 最新增量：DOS/V 外框、事件 6／7 次要 TALK、事件 10 與物件 timer
+
+- DOS/V 數值視窗已不再使用通用框冒充原版：`sub_17D0D`（`00017D0D`）的
+  `DS:SI=word_10D50:0600h`／`AX=4006h`，依 `sub_100DF` 段指標換算為
+  `ICONGRF.DAT` 第 3 段相對 `0x14A0` 的 96×64 資源。`cmd/wlgame` 在 `(88,184)`
+  繪製它；`(80,176)`／112×80 保存區與 `(88,200)`／3×6／16×16 格位不變。
+  原版 DOS/V `KI.EXE` 硬體游標與 `ICONGRF` 3×6 按鍵 glyph 已取得足夠資源證據並接線；
+  尚未取得的是自然 DOS/V／remake 整張截圖的逐像素對拍，不把資產解碼與畫面对拍混為一談。
+- 事件 6／7 已接 `sub_13C3D` 第二次 `sub_18810` 的 raw 條件與索引：事件 6 #72、
+  事件 7 #76，並由 `TalkNotice.Secondary`／`NoPortrait` 保存順序與肖像政策。#72
+  因恢復 `DI` 後沒有 `DI=SP` formatter stack，缺 `\\2` 城市 payload 時呈現層
+  fail-closed；禁止猜 `AH` 語意。事件 7 #76 以無肖像文字 modal 顯示。
+- 事件 10 `sub_13496` consumer 已保存 raw `Param` TALK index；事件字高 byte 在
+  `0..126` 時映射 `\\1` General，無效值仍保留 TALK、General=-1。尚未找到 `0x0A`
+  producer，這是已記錄的負證據，不虛構事件來源。
+- 事件 12 火災／暴動已用非序列化 typed runtime object record 重現
+  `sub_123FF`／`sub_12459`／`sub_12533`：建立 timer=1／interval=16／phase=1，
+  每次可見 map-loop update 遞減，dirty render 先畫舊 phase 再遞增八相位；清除事件
+  同步移除同城物件。只剩最後一個 slot 的 `sub_1248A` 移動分支未接。
+- 以上均已補 state／gfx／wlgame 窄單測；完整長程遊戲測試依使用者要求略過，正式三平台
+  包與推廣影片仍等剩餘 P0／目標平台 GUI gate。
+
+## 2026-08-11 目前接手狀態：raw formatter、事件 10、自然畫面與目標 GUI
+
+- 事件 6／7 次要 formatter 已完成接線與 fail-closed：`TalkNotice` 保存 raw word 與
+  明確 valid flag；事件 6 #72 對應已知原版 stack 範圍內的 raw word，事件 7 #76 維持
+  無 formatter marker。`ResolveTalkFormatter2` 依 DOS/V `seg000:000108DB` 的 SS／DS
+  解析規則取 bytes，不以 `AH` 猜城市。
+- 事件 10 producer 已完成 remake 受控入口 `World.QueueEvent10` 與單測；原版
+  `sub_13496` consumer 已接，但 IDA caller／DOS/V queue 仍沒有可證實自然 `0x0A`
+  producer。這個入口只能供 fixture／劇本注入，不能宣稱原版自然觸發時序。
+- DOS/V 自然啟動在 Docker／DOSBox 可靠重現到松崗複製保護「密碼輸入：第 09 頁」；
+  沒有合法答案，所以原版／remake 自然逐像素對拍 gate 保持未通過。remake 固定種子
+  短 smoke 圖、hash 與命令記在 `docs/playtest/13-dosv-natural-and-target-gui.md`。
+- 目標平台 GUI 已封閉編譯 gate：Linux／Xvfb smoke、Windows amd64 `PE32+`、macOS
+  amd64／arm64 `Mach-O`；尚無 Windows／macOS 原生桌面 runtime，不能寫成平台 parity。
+- 不建立 `HANDOFF.md`；交接唯一來源是 `WORKLIST.md`，本檔只追加狀態與勘誤。完整長程
+  遊戲測試依使用者要求略過，正式三平台包與推廣影片維持關閉。
+
+## 2026-08-11 YouTube 自然 oracle 更新
+
+- 使用者提供的 [YouTube 錄製](https://www.youtube.com/watch?v=af6xqcicXoI) 可作自然
+  遊戲畫面參考，取代 DOSBox 密碼頁作為唯一自然 oracle 阻塞。影片 metadata 為 567 秒、
+  478×360、30 fps；代表幀與 hash 詳見 `docs/playtest/13-dosv-natural-and-target-gui.md`。
+- 影片對照確認 DOS/V 自然策略 HUD：32 px banner、32 px command strip、左側 27×21
+  地圖格、右側 208 px minimap／自勢力情報。新增 `cmd/wlgame/strategyhud.go`，
+  `main.go` 的自然地圖、災害 clip 與右欄已接上同一組幾何；浮動 modal 視窗仍保留。
+- remake 30 幀自然 smoke 最新 hash 為
+  `961e583915d2e0e7b65cd51f637ec214530b68040ba0da5770add4b35cb46e30`。影片與 remake
+  的畫面結構／色彩／欄位位置對拍通過；因影片有損縮放且日期／鏡頭不同，嚴格同狀態
+  每像素 diff 不宣稱。Windows／macOS 原生 runtime 仍是剩餘 GUI gate。
+
+## 2026-08-11 最新增量：無輸入自動 clock 與事件 10 節拍
+
+- 使用者描述的行為已由 DOS/V `.i64` 證實：滑鼠座標不變時，`sub_11F7F` 設起
+  `byte_198A3` bit 7，`sub_11BE0` 隨後進入 `sub_11CD0`；該路徑依序更新據點、
+  軍團、MCH 物件與 `sub_11D8E` 時鐘。已下達目的地的軍團因此不需要玩家再次下命令
+  就會繼續走，日期也會流逝。
+- 事件 10 並不是 clock driver。`sub_11D8E` 每小時呼叫 `sub_13E11`，後者呼叫
+  `sub_131AE`；`byte_131AD` 初始為 7、取 record 後重設 0x0A，所以 queue 通知是
+  第 7 個每時邊界、之後每 10 個每時邊界取一筆。低碼 `0x0A` 才會進
+  `sub_13496` TALK consumer；高碼 `byte_131AD=0x0A` 是另一個節流值。
+- remake 的正確功能對應是 `game.timeRuns` → `World.Tick`；`World.QueueEvent10` 只
+  是受控 fixture／劇本 raw 注入口。新增 `TestIdleClockDispatchesQueuedEvent10OnHourlyCadence`
+  固定這個關係；完整 IDA 證據與順序差異見 `docs/re/16-idle-clock-event10.md`。
+- remake 正常 UI map-loop 已改用 `World.TickMap` 對齊原版據點／軍團／物件／時鐘順序；
+  同一畫面的額外 `g.speed` 規則 tick 使用不含物件的 `World.Tick`，保留 MCH 動畫 cadence。
+  這與未知的 event10 producer 是兩條獨立邊界。
+
+## 2026-08-11 本輪依序完成：M7、事件 2–5、事件 9 與推廣片
+
+- M7：`tools/m7_review.py --check`、`talkdat_selftest.py` 與
+  `TestM7CorrectedTalkLayoutGate` 通過；60 筆定案修正已逐筆看過語意、marker、硬換行、
+  寬度與代表畫面。完整清單與六張代表幀見 `docs/playtest/14-m7-review.md`。
+- 事件 2–5：`TestEvent2To5FullTalkPageSampling` 通過 36 個 raw TALK 頁面／18 組雙頁
+  回應，涵蓋外交與撥款的成功、拒絕、金額邊界與超額分支；詳見
+  `docs/playtest/15-event2-5-talk-sampling.md`。
+- 事件 9：`TestEvent9LongNaturalRoute` 通過 27 小時 bounded queue，在第 7／17／27 小時
+  取出三筆事件；`TestEvent9LongNotificationRoute` 通過玩家通知、非玩家／在野抑制與
+  `#409` no-op；詳見 `docs/playtest/16-event9-long-route.md`。
+- 推廣片：已產出 `dist/promo/wolong-remake-trailer.mp4`（60 秒、1280×720、H.264/AAC），
+  以原創合成配樂串接自然策略、事件、戰術、投射物、戰果、M7 與存檔代表幀；重現方式與
+  音訊權利標記見 `docs/promo/README.md`。
+- 仍保留的界線：完整長程遊戲依使用者要求略過；DOS/V 密碼頁後的同狀態逐像素對拍、
+  Windows／macOS 原生 GUI smoke 與正式三平台可執行包仍是獨立 release gate。`HANDOFF.md`
+  不重建，接手入口仍是 `WORKLIST.md`。
+
+## 2026-08-11 事件 10 近似自然 producer
+
+- 原版結論不變：`sub_13496` 的 raw consumer 與 idle clock 下游關係已證實，但自然低碼
+  `0x0A` writer 仍 unknown。這次依使用者要求增加 remake substitute，不把未知來源升格
+  為原版事實。
+- `internal/state/event10_approx.go` 在月結既有 producer 後，從玩家勢力的活俘虜中每月
+  最多選一名；沿 `General.Timer` 倒數與 `rand&0xFF` 的 `0x20／0x40` 邊界，近似 TALK
+  `0x41` 逃走或 `0x42` 歸降，寫入已證實的 `(general<<8)|0x0A`／`Param` raw record。
+- 事件仍要等下一個每時 queue dispatcher 才變成 `TalkNotice`；不把事件 10 接成 clock。
+  `LoadScenario` 預設開啟，`SetApproximateEvent10(false)` 可讓 raw fixture 只測 consumer。
+- 證據等級：raw queue／formatter／TALK 文字是已查證；producer 的自然條件是
+  **substitute／強推論**。驗收見 `TestApproximateEvent10*` 與
+  `docs/re/15-event10-producer.md`。
+
+## 2026-08-11 DOSBox／remake 可玩性專家驗證
+
+- DOS/V 原版在 Docker／DOSBox 固定 `cycles=20000` 可啟動至複製保護「密碼輸入：第 15 頁」；
+  沒有合法答案，不把密碼頁後的自然玩法寫成已驗證。PC-98 DOSBox-X 可到 `NEW GAME`，
+  既有受控 oracle 已有劇本選單與戰略地圖畫面。
+- 目前工作樹 remake 以 `-seed 17`、無 `-open-*` 走過編成、關閉完成通知、行軍、玩家
+  不下命令時的日期流逝與 196/6/28 遭遇選單；證據入口為
+  `docs/playtest/17-expert-dosbox-remake.md`。
+- remake 系統視窗的第 1 槽儲存／讀取通過，實際 overlay 88,832 bytes；原始 DOS/V 資料
+  以唯讀方式掛載。戰術 GUI 目前建置也通過 debug smoke，但不取代既有無旗標正常戰術
+  證據或原版逐像素 parity。
+- 本輪 PC-98 DOSBox-X image 沒有 window manager，bus-mouse／焦點輸入完整重播不穩定；
+  這是測試輸入橋接的剩餘工作，不是原版不可玩的結論。完整長程遊戲依使用者要求略過。
+
+## 2026-08-11 YouTube／推廣片像素差異驗收
+
+- 已依使用者要求產出研究用 `dist/promo/wolong-remake-yt-comparison.mp4`，把 YouTube
+  原版代表幀與推廣片採用的 remake 畫面並排；正式 60 秒推廣片仍是
+  `dist/promo/wolong-remake-trailer.mp4`。
+- 以原版 80 秒 640×400 代表幀與 remake 自然 640×400 基準幀量測，raw
+  `AE=255003/256000 (99.61%)`、`RMSE=0.338208`；差異圖與區域統計見
+  `docs/promo/yt-remake-pixel-review.md`。
+- 這封閉的是「影片／畫面可見像素差異、HUD 幾何與整體視覺方向」驗收；因來源有損縮放、
+  日期／鏡頭／狀態不同，仍不宣稱同狀態逐像素 parity，也不以密碼繞過取得原版畫面。
+
+## 2026-08-11 DOS/V 自然策略骨架調整
+
+- `cmd/wlgame/strategyhud.go` 已依 YouTube DOS/V 參考幀修正右欄繪製順序：minimap 下方
+  16 px 紅／藍勢力色標列覆蓋共用 8 px 分隔邊，下方情報框從原版頭像所在位置開始。
+- 常駐情報改為君主／首都／軍師三列、信賴度、紅色分隔線與黑底資金／預備兵區；中央
+  reserve raw glyph 尚未解出，保持幾何 fallback，不冒充原版資產。
+- 最新自然截圖為 `docs/images/wlgame-dosv-natural-remake-skeleton.png`；重錄推廣片與
+  YouTube 對照片後，640×400 raw metric 為 `AE=249178/256000 (97.34%)`、
+  `RMSE=0.329145`。局部視覺骨架已調整，嚴格同狀態 parity 仍不宣稱。
+
+## 2026-08-11 三平台候選封裝與 Android 版規劃（歷史起點）
+
+- 依使用者要求，Docker 等價 release 流程已在 `dist/release-20260811/` 產出三個候選封裝：Linux amd64、Windows amd64、macOS universal（Intel／Apple Silicon）。Linux 包含原生 `wlgame`／`wlview`；Windows 為 PE32+；macOS 兩架構為 `Mach-O`。每包含 `README-RELEASE.md`、校訂文字與自身 `SHA256SUMS.txt`，不含原版資產。
+- 封裝檔案：三平台主包 `packages/wolong-remake-linux-amd64-20260811.tar.gz`、`packages/wolong-remake-windows-amd64-20260811.tar.gz`、`packages/wolong-remake-macos-universal-20260811.tar.gz`，另有 `packages/wolong-remake-linux-arm64-tools-20260811.tar.gz` 邏輯工具伴隨包。外層雜湊見 `dist/release-20260811/SHA256SUMS.txt`；stage／packages deny-list、tar 解包清單與 Linux Xvfb 30 幀 smoke 均通過。
+- Linux 封裝 smoke 的自然截圖 hash 為 `45a68852335420dd7b22b4e240192dcd7a38fbbc62f72c8c59ec95acdc137b24`；Windows／macOS 尚只有交叉編譯與檔頭證據，沒有目標作業系統原生 GUI、輸入、音訊與字型載入實機證據。
+- Android 版進入規劃階段，規格在 [`docs/mobile/android-plan.md`](docs/mobile/android-plan.md)：第一版橫向優先、保留 640×400 邏輯畫布，以安全區／右側或底部觸控抽屜／手勢轉接配合手機；這是當時的起始紀錄，現況見下方 Android 原型封口。
+
+## 2026-08-11 AppImage、經典再現影片與 Android 模擬器封口
+
+- Linux amd64 AppImage 已建立於 `dist/release-20260811/packages/wolong-remake-linux-amd64-20260811.AppImage`。
+  AppDir 根目錄的 `.desktop`／`AppRun`、deny-list 與 Docker／Xvfb
+  `APPIMAGE_EXTRACT_AND_RUN=1` 啟動 smoke 通過；它只包 remake 程式與校訂文字，不包原版資料、
+  圖庫、音樂或倚天字型。外層 `SHA256SUMS.txt` 以本輪最終檔案重算。
+- 依 `~/.claude/knowledge-base/retro` 的可重播原則，新增
+  `dist/promo/wolong-remake-classic-revival.mp4`（60 秒、1280×720、H.264/AAC）。原版側是
+  使用者 YouTube `af6xqcicXoI` 的代表幀，remake 側是固定 `seed=17` 的實際截圖；若重播 DOSBox
+  oracle，標準為 `machine=pc98`（只在 PC-98 oracle 使用）、`core=normal`、`cputype=486`、
+  `cycles=20000`。影片只做畫面語彙／骨架與經典再現展示，不繞過密碼，也不宣稱同狀態逐像素 parity。
+- Android 觸控 shell 原型已透過固定 Docker 工具鏈建置 debug APK，套件為
+  `com.wicanr2.wolong`，`minSdk=29`、SDK 35、NDK `27.2.12479018`、Ebiten `v2.9.9`。
+  在 Android 35 `google_apis;x86_64`、KVM 加速模擬器以橫向 1920×1080 畫面完成安裝／啟動 smoke；
+  長按 `CONTINUE` 顯示 `TALK page 1/3`，長按 `MENU` 顯示 `COMMAND DRAWER OPEN`。證據圖為
+  `docs/images/android-wolong-touch-prototype.png`、`android-wolong-touch-after-continue.png`、
+  `android-wolong-touch-after-menu.png`。
+- 本次 Android 產物仍只是手機操作殼，不含完整自然 clock、事件 2–10、存檔／讀檔、實機／平板
+  驗收或 release signing；不得把模擬器 smoke 升格為 Android 完整可玩性。模擬器容器已停止，
+  沒有留下本輪 `wolong` 持續執行容器；沒有重新建立 `HANDOFF.md`。
+
+## 2026-08-11 松崗繁中事件 10 功能封口
+
+- 驗證基準改為松崗繁中版；原始資料仍位於 `workplace/orig/dosv`，該名稱只是既有路徑，
+  不再把 PC-98 或其他版本差異當作事件 10 的 gate。
+- `cmd/wlgame/idle.go` 新增 `idleClockGate`，在游標首次觀測、游標位移、滑鼠按鈕或任何
+  仍會穿透到地圖的命令 frame 阻止 world tick；游標連續穩定且無輸入時才進
+  `World.TickMap`。因此已下達目的地的軍團、物件、日期與 queue dispatcher 依
+  「據點／軍團／物件／時鐘」自然前進。
+- `TestIdleClockGateRequiresStablePointerAndNoCommand`、
+  `TestIdleClockDispatchesQueuedEvent10OnHourlyCadence`、既有 `TestApproximateEvent10*`
+  共同封口 UI idle gate、state cadence 與 substitute raw payload。Docker/Xvfb、固定
+  `seed=17`、速度 1、30 frame smoke 的畫面 hash 為
+  `45a68852335420dd7b22b4e240192dcd7a38fbbc62f72c8c59ec95acdc137b24`。
+- 原版低碼 `0x0A` natural writer 沒有新證據，仍標為 **unknown**；完成的是玩家可感知的
+  remake 行為與已授權的 substitute，而不是把未知 producer 偽稱為原版 parity。
+
+## 2026-08-12 勘誤：未知項再審結果
+
+- 事件 6 #72 先前曾把 Go 零值當成可用的 `RawFormatterWord=0`；最新 IDA raw handler
+  證實第二次 formatter 讀取的是未保存的 `SS:[DI]` transient word，不能從 World state
+  重建。此舊結論撤回：現在一律 `-1/false` 並整則 fail-closed，除非未來有原版動態 trace。
+- 事件 10 的所有目前可見 direct queue producer 已逐一展開，仍無 low byte `0x0A`；這是
+  強化後的有限負證據，而非全 binary 排除。自然 producer、自然 TALK index／時序保持
+  **unknown**；remake 月結規則仍只是可關閉 substitute。
+- `sub_1248A` 實際對 slots 16–31 執行，先前「最後一筆」的寫法撤回。event 12 的可見
+  direct producer 只給 type 1／2；type 3 保留資產查表、事件語意仍 **unknown**。
+- 戰術投射物已依 `sub_1AB7C`／`sub_1AD2D`／`sub_1AD7F` 接入 max-axis 條件、
+  `0x214／0x215`、raw 8／6 冷卻；這不升格為完整動畫或同狀態像素 parity。DOS/V 音源
+  的 INT 61h TSR／效果碼／register writes 已另存 `docs/re/17-dosv-audio-tsr.md`。
+
+## 2026-08-12 DOS/V／remake 實機動態推廣片
+
+- 依使用者要求，已產出 `dist/promo/wolong-remake-dosv-live-comparison.mp4`：60.000 秒、
+  1280×720、30 fps、H.264/AAC，SHA-256 為
+  `4e886f456ffaa3bc93cf3a97450e9415a4033ed699929efb8ccf6f7eff0ac414`。
+- 原版動態來源為使用者指定的松崗 DOS/V YouTube 錄影 `af6xqcicXoI`（只取 76–83、154–160、
+  236–241、317–324、398–403 秒畫面）與受控 DOSBox-X 正常啟動後的 `NEW GAME` 畫面；
+  暫存原始錄影在輸出、雜湊與抽樣驗收後已刪除，只留下 URL、工具版本與 SHA-256 中繼資料。
+- remake 策略、編成、目的地與行軍皆為固定 `seed=17`、不帶 `-open-*` 的正常鍵盤路徑實機
+  擷取；戰術段是有明確片上／文件標示的獨立 `-open-siege` 可視化 fixture，不可挪作正常
+  自然路徑 evidence。六組 remake 序列均有多種畫面雜湊，非重複靜態圖。
+- 原版各片段均在合成時移除音訊；成品唯一音軌是 `tools/promo_score.py` 的原創合成配樂。影片
+  是使用者指定的推廣比較媒體，不隨 Windows、macOS、Linux 或 Android 遊戲包發行，也不把
+  畫面比較宣稱為同日期／同輸入／同狀態的逐像素 parity。完整分鏡、驗收與離線重播條件見
+  `docs/promo/dosv-live-comparison.md`。
+
+## 2026-08-12 `dist-all` 三平台交付與公開校訂覆蓋
+
+- 本輪唯一可交付根目錄是 `dist-all/`：`packages/` 有 Linux amd64、Windows amd64、
+  macOS Intel＋Apple Silicon 三個桌面完整包與 Linux amd64 AppImage；`promo/` 有四支
+  推廣片；`verification/` 有 ABI 摘要、Linux tar／AppImage Xvfb smoke；Android 觸控 shell
+  APK 位於 `experimental/android/`，明確不是完整 Android 遊戲。
+- `cmd/wlgame` 不再預設依賴不可散布的完整 `talk-dosv-corrected.json`。它以玩家自備的 raw
+  `TALK.DAT` 為來源，讀取同包公開 `translations/corrections.json`，先 fail-closed 驗證原文
+  再套用 60 筆校訂。`internal/assets/text/TestApplyCorrectionsMatchesGeneratedTableWhenOriginalAvailable`
+  已以松崗 `TALK.DAT` 驗證其 1,022 則輸出逐則 bytes 與既有產生表一致；完整表只留開發／CI
+  oracle，絕不放入 release。
+- Linux 解壓包從不同工作目錄啟動，以及 `APPIMAGE_EXTRACT_AND_RUN=1` 的 AppImage，均在
+  Docker/Xvfb 以 `seed=17`、松崗資料與倚天字型產出相同 640×400 截圖，SHA-256
+  `45a68852335420dd7b22b4e240192dcd7a38fbbc62f72c8c59ec95acdc137b24`。這驗證同包校訂
+  覆蓋的執行期路徑，不是原版同狀態 parity。
+- `tools/denylist.py dist-all` 掃描 19 個交付檔並比對 120 個原版檔後通過；
+  `sha256sum -c dist-all/SHA256SUMS.txt` 全數通過。包內不含 `TALK.DAT`、完整校訂表、
+  原版執行檔、圖像、音樂或字型。
+- Windows `wlgame.exe` 為 PE32+ x86-64；macOS 兩個 `wlgame` 分別為 Mach-O x86_64／arm64。
+  這是交叉建置／ABI 證據；目標系統 GUI、輸入、音訊、字型 runtime 仍未驗證，不能升格為
+  全平台 GUI parity。
+- 推廣主片 `trailer`、`classic-revival`、`dosv-live-comparison` 均為 60 秒、1280×720、
+  H.264/AAC；YouTube 代表幀比較片為 24 秒、1280×400。`dosv-live-comparison`（SHA-256
+  `4e886f456ffaa3bc93cf3a97450e9415a4033ed699929efb8ccf6f7eff0ac414`）是使用者指定的
+  DOS/V／remake 推廣比較媒體，不是無損同狀態逐像素 diff。
+
+## 2026-08-12 一般玩家啟動／新遊戲殼層切片
+
+- `cmd/wlgame/launcher.go` 新增不持有 `World` 的啟動狀態機：`NEW GAME` 確認、四劇本、由實際 `SINARIO.DAT` 劇本篩出的合法玩家勢力／君主、確認與返回。
+- 無 direct-start 白名單旗標時，`main` 只載入圖庫／字型與存檔槽摘要，不預先建立 scenario 0 的 `World`。選定新局後才由 `startWorld` 載入選定劇本、設定玩家、AI、道路、戰術來源、相機與 DOS/V 外框／游標。
+- `-save-file` 存在時啟用四槽 `LOAD DATA`；`inspectLauncherSlots` 以既有 `state.LoadScenario` 與合法玩家欄位判定可用槽，空槽或無效槽拒讀。讀檔仍使用既有 overlay，不寫回 `SINARIO.DAT`。
+- `-scenario`、`-player`、`-scenario-file`、`-shot`、`-open-*` 等既有驗收入口列入明確 direct-start 白名單；`-orig`、`-font`、`-seed`、`-speed`、`-save-file` 單獨使用不會繞過一般 launcher。新增 `-direct` 作為明示的直接啟動旗標。
+- 鍵盤與滑鼠共用 launcher selection state；首次靜止游標不覆蓋鍵盤選取，游標移動／點擊才更新選取。`launcher_test.go` 已覆蓋新局、返回、非法玩家、空槽與成功槽位轉移；Docker/Xvfb 已實測無旗標啟動與六次確認進入策略世界。
+- 本切片只封口一般玩家啟動功能，不處理戰術／自然 HUD polish，也不宣稱 DOS/V 逐像素 parity。正式視窗標題改為「臥龍傳－三國制霸之計」。
+- Xvfb 實機 GUI 證據（未使用 `-shot`，避免 direct 白名單繞過 launcher）：修正後 `/tmp/wolong-launcher-title.png`、`/tmp/wolong-launcher-scenario.png`、`/tmp/wolong-launcher-player.png` 均為 640×400；SHA-256 依序為 `60def98e0cf54726ad62794b92906017f200863241442db68aa3f536eb3b5150`、`9fc49e523b75e45b5a939177272a4b199fe1a36d4dd7fb67fc506b70d70eeb04`、`0b3a7f4709b538a6c9729a3bb745e3b49c523d999c8e7bfc596e1178cf5f38eb`。player 清單固定 8 列可滾動，標題／列／反白／提示均在 `x=128..512、y=72..328` 安全區，未選文字改用可讀 dim 色；不宣稱逐像素 parity。
+
+## 2026-08-12 Mentor polish 收斂
+
+- 戰術動態縮圖、鍵鼠命令與開戰 TALK 已接線，但推廣片複驗推翻「版面骨架已對齊」：戰場 viewport、上下 TALK 區、右側狀態／縮圖／命令 glyph 與底列配置仍和松崗 DOS/V 原版不同。`docs/images/wlgame-tactical-opening-talk.png` 只能證明功能接線，不是幾何 parity 證據。
+- 玩家敗北只涵蓋已證實的信賴度歸零與最後據點失守；信賴度歸零使用 `TALK.DAT` #414。確認後回 launcher 是 remake 呈現政策，原版 `sub_11CB1` 後續仍為 unknown。
+- 存讀檔與一覽表的滑鼠／觸控走既有 dispatcher；一覽表維持原版兩段式點選，modal 阻止背景輸入。
+- 推廣片的「指令與事件」鏡頭左右不是同類狀態：原版為事件／一覽視窗，remake 為目的地選擇，故不能證明指揮畫面 parity；該項重新列為未完成。
+- 整合後 Docker＋Xvfb 全套 Go 測試與 `go vet` 通過；文件索引檢查通過。這些證明 remake 自洽，不升格為未知原版流程或逐像素 parity。
+- 三平台包已在 TALK 垂直排版修正後重新建置並原子替換 `dist-all/`；`denylist.py dist-all` 掃描 17 個交付檔、比對 120 個原版檔後通過，根目錄 `SHA256SUMS.txt` 全數通過。
+- `dist-all/promo/wolong-remake-dosv-live-comparison.mp4` 保留既有已驗證的松崗原版／remake 實機時間線，將 40–45 秒舊戰術段替換為本輪重新錄製的 TALK、動態縮圖、六指令與戰場運動。影片仍為 60 秒、1280×720、30 fps、H.264/AAC；SHA-256 `72f69ef3ff3c7af869b78f5d32c6fe69b3b6876c928e000d00e68c09a23d950b`。
+
+## 2026-08-12 推廣片複驗後的版面勘誤與修正
+
+- 使用者從推廣片指出戰術與指揮畫面未對齊；複驗成立。松崗錄影遊戲本體正規化為 320×200 後，戰術分界為 logical `x=240`，不是舊文件／程式採用的 `x=248`。remake 已改為左區 480、右欄 160、底列 `y=368..399`，上下 TALK 固定為原版式 slot。
+- 自然 UI 分成不同畫面契約：事件 TALK 固定左下 `0,320,256,80`；系統設定為中央五列綠色值格；一覽第一層外框約 `98,82,448,...`。原版選取後的前層詳細窗與左側捲軸仍未完成。
+- 推廣片原先的「事件／一覽 vs 目的地」異類比較已撤換為同類系統設定比較；戰術段重新錄製。最新影片視訊／音訊皆為 60 秒、1800 視訊幀，SHA-256 `426edb8f07b99e2f99cc47ef6b4d30e95ef029e189f78a554efe893936d718b7`。
+- 同類並排與量測見 `docs/playtest/20-tactical-layout-parity.md`、`21-command-window-parity.md`。目前只宣稱主要幾何修正，不宣稱戰術 glyph、內框、一覽詳細層或逐像素 parity。
+## 2026-08-12 攻城與兩軍遭遇畫面封口
+
+- `combat.Siege` 與 `combat.Field` 已確認共用 `dosvBattleLayoutFor`、上下 TALK、右欄四區、底部六命令與同一命中區；模式差異只在戰場／城牆素材、部隊、數值與結算。
+- `demoBattle` 從預跑 900 tick 改為 120 tick，修正野戰驗收畫面在第一幀前已結束的假差異；不改變正常遊戲路徑。
+- 純城兵據點攻擊仍依 DOS/V 已有證據自動判定，不進手動戰術畫面。視覺證據及限制見 `docs/playtest/22-field-siege-shared-layout.md`。
+- Docker／Xvfb 全專案 `go test -p=1 ./...` 與 `go vet ./...` 通過。
+- 後續追蹤 `sub_1F938` 證實 `sub_1F888` 每次呼叫把 `SI` 前進 `0xC0`；因此 `segment1+0x3900..0x3D7F` 實為六張 24×16 命令 glyph，舊的 unknown 結論撤回。`0x3000` 80×32 底板、`0x1800` 128×96 右欄複合面板與 palette index `0x0C` 雙層選取矩形均已接入。
+- 目前戰術共用未完成邊界縮小為動畫時序與同狀態逐像素 parity。
+- `dist-all/` 已在這組 UI 實作後重建三平台包與 AppImage；Linux tar／AppImage GUI smoke 雜湊均為 `45a68852335420dd7b22b4e240192dcd7a38fbbc62f72c8c59ec95acdc137b24`，全部發行雜湊與 deny-list 通過。
+- 推廣片 `dist-all/promo/wolong-remake-dosv-live-comparison.mp4` 的 remake 戰術段已替換為新畫面；第一版 overlay 字型不含 CJK 而顯示方框，經 42 秒代表幀發現後已改用 Noto CJK 重建。最終影像 60 秒、1800 幀、H.264/AAC，SHA-256 `feddd6633860f79b544a78bafdc0cdc9b29ebe6b6234ff4b0da40aa3043961e8`。
+
+## 2026-08-12 推廣片 AdLib 與戰術 viewport 勘誤
+
+- 使用者指出配樂不是原版 AdLib 後，主實機對照片已移除 `tools/promo_score.py` 依賴，
+  改用使用者松崗 DOS 原版錄影 `300–375 秒`的實際遊戲音軌。成片音訊平均
+  `-21.3 dB`、峰值 `-4.2 dB`；來源與權利界線見
+  `docs/promo/dosv-adlib-and-tactical-review.md`。
+- 原版影片來源先正規化為 640×480，再裁成 DOS/V 640×400；remake 也是 640×400，
+  兩側不再分別以 4:3／16:10 塞入 720p。戰術 buffer 也從錯誤的 496×384 修為
+  480×368，與 layout viewport 一致。
+- remake 戰術段已用新 binary 重錄；片上明示為不同戰況的攻城 fixture／layout-only，
+  不宣稱同狀態逐像素 parity。最終成片 SHA-256：
+  `a00a221bf3c4213f4d9777c66a3e58a06dcae93aab2beecc146de67a7447973d`。

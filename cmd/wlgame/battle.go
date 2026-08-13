@@ -14,27 +14,108 @@ import (
 	"os"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/hajimehoshi/ebiten/v2/vector"
 
 	"github.com/wicanr2/wolong_cht/internal/assets/battle"
-	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/rules/battlefield"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
 	"github.com/wicanr2/wolong_cht/internal/state"
-)
-
-// 戰場畫在地圖那一塊（480 × 368），一格 7 px。
-const (
-	cellPx  = 7
-	fieldX  = 0
-	fieldY  = bannerH
-	visRows = (screenH - bannerH - 20) / cellPx
+	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
+	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
 // battleActive 回報現在是不是在戰場畫面。
 func (g *game) battleActive() bool { return g.world.PendingBattle() != nil }
+
+// updateBattleChoice 是行軍遭遇後的「戰鬥指揮／委任」選單。
+// 這個選單不是除錯捷徑：它只消費正常行軍觸發的 EncounterChoice，
+// 在玩家決定前不會讓戰略時鐘繼續走。
+func (g *game) updateBattleChoice() {
+	x, y := ebiten.CursorPosition()
+	if row, ok := battleChoiceRowAt(x, y); ok {
+		// Hover 只改變反白列；只有 JustPressed 才能確認。
+		g.battleChoiceRow = row
+	}
+	if pressed(ebiten.KeyArrowUp) || pressed(ebiten.KeyArrowDown) {
+		g.battleChoiceRow = 1 - g.battleChoiceRow
+	}
+	if pressed(ebiten.Key1) {
+		g.battleChoiceRow = 0
+	}
+	if pressed(ebiten.Key2) {
+		g.battleChoiceRow = 1
+	}
+	keyboardConfirm := pressed(ebiten.KeyEnter) || pressed(ebiten.KeySpace) ||
+		pressed(ebiten.Key1) || pressed(ebiten.Key2)
+	mouseConfirm := inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft)
+	if !keyboardConfirm && !mouseConfirm {
+		return
+	}
+	if mouseConfirm {
+		// 畫面外、框線與列距空白都不能觸發既有確認路徑。
+		if _, ok := battleChoiceRowAt(x, y); !ok {
+			return
+		}
+	}
+
+	if g.battleChoiceRow == 0 {
+		if err := g.world.ChooseBattleCommand(); err != nil {
+			g.setEvent(err.Error())
+			return
+		}
+		g.view = nil
+		g.setEvent("戰鬥指揮")
+		return
+	}
+	ev := g.world.ChooseBattleDelegate(g.rng)
+	if ev == nil {
+		g.setEvent("沒有待處理的遭遇")
+		return
+	}
+	g.setEvent("委任：" + battleLine(g, *ev))
+}
+
+// drawBattleChoice 畫出原版行軍抵達後的兩路選擇。
+func (g *game) drawBattleChoice(screen *ebiten.Image, c *state.EncounterChoice) {
+	l := battleChoiceLayoutFor()
+	g.chrome.Window(screen, l.Window.X, l.Window.Y, l.Window.W, l.Window.H, chrome.Menu)
+	amber := color.RGBA{240, 200, 120, 255}
+	white := chrome.Paper
+	dim := color.RGBA{170, 170, 180, 255}
+	selected := color.RGBA{140, 230, 140, 255}
+	x, y, h := l.Window.X, l.Window.Y, l.Window.H
+
+	att := big5(g.world.Generals[c.Attacker].Name)
+	def := "城兵"
+	if c.Defender >= 0 {
+		def = big5(g.world.Generals[c.Defender].Name)
+	}
+	g.td.Draw(screen, "遭遇戰", x+chrome.Tile+4, y+chrome.Tile+2, amber)
+	g.td.Draw(screen, att+" 對 "+def, x+chrome.Tile+4,
+		y+chrome.Tile+textdraw.GlyphH+6, white)
+	mode := "野戰"
+	if c.Mode == combat.Siege {
+		mode = "攻城"
+	}
+	g.td.Draw(screen, mode+"　請選擇處理方式", x+chrome.Tile+4,
+		y+chrome.Tile+2*(textdraw.GlyphH+4), dim)
+
+	rows := []string{"戰鬥指揮", "委任"}
+	for i, row := range rows {
+		col := white
+		mark := "　"
+		if i == g.battleChoiceRow {
+			col, mark = selected, "●"
+		}
+		g.td.Draw(screen, fmt.Sprintf("%s%d　%s", mark, i+1, row),
+			l.Rows[i].X, l.Rows[i].Y, col)
+	}
+	g.td.Draw(screen, "↑↓ 選擇　1-2 直選　Enter 確定",
+		x+chrome.Tile+4, y+h-chrome.Tile-textdraw.GlyphH, dim)
+}
 
 // updateBattle 是戰場畫面的輸入。
 //
@@ -43,20 +124,36 @@ func (g *game) battleActive() bool { return g.world.PendingBattle() != nil }
 func (g *game) updateBattle() {
 	p := g.world.PendingBattle()
 	b := p.Battle
+	l := dosvBattleLayoutFor(screenW, screenH)
 	if g.view == nil {
 		g.view = g.newBattleView(g.fieldNumber(p.Node, p.Mode == combat.Siege))
 	}
 
 	if !b.Done {
+		g.startBattleTalk(p)
+		talkAdvanced := g.advanceBattleTalkInput()
 		// 六個戰術指令。編號與原版一致（docs/re/11 §5.8b）。
-		for i, k := range []ebiten.Key{
-			ebiten.Key1, ebiten.Key2, ebiten.Key3,
-			ebiten.Key4, ebiten.Key5, ebiten.Key6,
-		} {
-			if pressed(k) {
-				side := g.battleSide()
-				b.Order(side, -1, tactical.Command(i))
-				g.setEvent("下令：" + tactical.Command(i).String())
+		if !talkAdvanced {
+			for i, k := range []ebiten.Key{
+				ebiten.Key1, ebiten.Key2, ebiten.Key3,
+				ebiten.Key4, ebiten.Key5, ebiten.Key6,
+			} {
+				if pressed(k) {
+					g.issueBattleCommand(b, i)
+				}
+			}
+			if x, y := ebiten.CursorPosition(); inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+				if g.view != nil && l.SideMiniMap.containsPoint(x, y) {
+					g.view.setCameraFromMiniMap(x, y)
+					return
+				}
+				command, ok := splitBattleCommandIndexAt(l.BottomCommands, x, y)
+				if !ok {
+					command, ok = battleSideCommandIndexAt(l.SideCommands, x, y)
+				}
+				if ok {
+					g.issueBattleCommand(b, command)
+				}
 			}
 		}
 		// 每個畫面更新推進 speed 幀，與戰略層共用同一個倍率。
@@ -67,8 +164,10 @@ func (g *game) updateBattle() {
 		for i := 0; i < n && !b.Done; i++ {
 			b.Step()
 		}
+		g.tickBattleTalk(n)
 		return
 	}
+	clearBattleTalkSession(g, b)
 	// 打完了，按 Enter 結算回戰略層。
 	if pressed(ebiten.KeyEnter) || pressed(ebiten.KeySpace) {
 		if ev := g.world.ResolvePending(g.rng); ev != nil {
@@ -76,6 +175,28 @@ func (g *game) updateBattle() {
 		}
 		g.view = nil
 	}
+}
+
+func battleCommandIndexForKey(k ebiten.Key) (int, bool) {
+	for i, key := range [...]ebiten.Key{
+		ebiten.Key1, ebiten.Key2, ebiten.Key3,
+		ebiten.Key4, ebiten.Key5, ebiten.Key6,
+	} {
+		if k == key {
+			return i, true
+		}
+	}
+	return 0, false
+}
+
+func (g *game) issueBattleCommand(b *tactical.Battle, command int) {
+	if b == nil || b.Done || command < 0 || command >= len(battleCommandLabels) {
+		return
+	}
+	side := g.battleSide()
+	order := tactical.Command(command)
+	b.Order(side, -1, order)
+	g.setEvent("下令：" + order.String())
 }
 
 // battleSide 回傳玩家在這一場裡是哪一側。
@@ -90,23 +211,26 @@ func (g *game) battleSide() int {
 func (g *game) drawBattle(screen *ebiten.Image) {
 	p := g.world.PendingBattle()
 	b := p.Battle
+	l := dosvBattleLayoutFor(screenW, screenH)
 
 	screen.Fill(color.RGBA{18, 22, 18, 255})
-	vector.DrawFilledRect(screen, 0, 0, screenW, bannerH, color.RGBA{32, 24, 16, 255}, false)
-
-	amber := color.RGBA{240, 200, 120, 255}
 
 	// 鏡頭跟著玩家那一側的大將走。
 	me := b.Sides[g.battleSide()].Soldiers[0]
 
 	if g.view != nil {
 		g.drawBattleIso(screen, b, &me)
-		g.drawBattleBanner(screen, b, p)
-		g.drawBattleKeys(screen, b)
+		g.drawBattleChrome(screen, b, p, l)
+		g.drawBattleResult(screen, b, p)
 		return
 	}
 
-	// 沒有原版美術時的退路：由上往下的高度圖。
+	// 沒有原版美術時的退路：由上往下的高度圖。仍遵守同一個完整
+	// 戰術版面，避免資產缺失時又退回右側大片空黑。
+	amber := color.RGBA{240, 200, 120, 255}
+	cellPx := 7
+	fieldX, fieldY := l.Field.X, l.Field.Y
+	visRows := l.Field.H / cellPx
 	top := me.Y - visRows/2
 	if top < 0 {
 		top = 0
@@ -119,6 +243,9 @@ func (g *game) drawBattle(screen *ebiten.Image) {
 	for row := 0; row < visRows; row++ {
 		y := top + row
 		for x := 0; x < tactical.Width; x++ {
+			if fieldX+x*cellPx >= l.Field.right() {
+				break
+			}
 			h := b.Field.StandLevel(x, y)
 			if h == 0 {
 				continue
@@ -126,7 +253,7 @@ func (g *game) drawBattle(screen *ebiten.Image) {
 			v := uint8(40 + h*24)
 			vector.DrawFilledRect(screen,
 				float32(fieldX+x*cellPx), float32(fieldY+row*cellPx),
-				cellPx, cellPx, color.RGBA{v, v, uint8(30 + h*10), 255}, false)
+				float32(cellPx), float32(cellPx), color.RGBA{v, v, uint8(30 + h*10), 255}, false)
 		}
 	}
 
@@ -145,9 +272,12 @@ func (g *game) drawBattle(screen *ebiten.Image) {
 			if y < top || y >= top+visRows {
 				continue
 			}
+			if fieldX+st.X*cellPx >= l.Field.right() {
+				continue
+			}
 			vector.DrawFilledRect(screen,
 				float32(fieldX+st.X*cellPx), float32(fieldY+(y-top)*cellPx),
-				cellPx, cellPx, c, false)
+				float32(cellPx), float32(cellPx), c, false)
 		}
 	}
 
@@ -162,6 +292,9 @@ func (g *game) drawBattle(screen *ebiten.Image) {
 			if !s.Alive || s.Y < top || s.Y >= top+visRows {
 				continue
 			}
+			if fieldX+s.X*cellPx >= l.Field.right() {
+				continue
+			}
 			px := float32(fieldX + s.X*cellPx)
 			py := float32(fieldY + (s.Y-top)*cellPx)
 			c := base
@@ -170,7 +303,7 @@ func (g *game) drawBattle(screen *ebiten.Image) {
 			}
 			size := float32(cellPx - 2)
 			if s.IsGeneral() {
-				size = cellPx
+				size = float32(cellPx)
 				c = amber
 				if i == 1 {
 					c = color.RGBA{200, 220, 255, 255}
@@ -180,69 +313,270 @@ func (g *game) drawBattle(screen *ebiten.Image) {
 		}
 	}
 
-	g.drawBattleBanner(screen, b, p)
-
-	g.drawBattleKeys(screen, b)
+	g.drawBattleChrome(screen, b, p, l)
+	g.drawBattleResult(screen, b, p)
 }
 
-// drawBattleBanner 畫上方橫幅與右側的城壁狀態。兩條繪製路徑共用。
-func (g *game) drawBattleBanner(screen *ebiten.Image, b *tactical.Battle, p *state.Pending) {
-	white := color.RGBA{240, 240, 230, 255}
-	amber := color.RGBA{240, 200, 120, 255}
-	dim := color.RGBA{150, 150, 160, 255}
-	_ = p
-	// 上方橫幅：雙方的兵數與有利／不利。
-	g.td.Draw(screen, "戰場", 8, 8, amber)
-	for i := range b.Sides {
-		s := &b.Sides[i]
-		label := "攻方"
-		if i == 1 {
-			label = "守方"
-		}
-		g.td.Draw(screen, fmt.Sprintf("%s %4d 兵　%s　大將體力 %3d",
-			label, s.Remaining(), advName(b.Advantage[i]), s.Soldiers[0].HP),
-			90+i*260, 8, white)
+// drawBattleResult 是戰術戰鬥完成後、回寫戰略層之前的明確結果畫面。
+// 這個停留點對應原版「戰鬥結束後仍先顯示結果，玩家確認才返回」的
+// 玩家路徑；按 Enter 仍由 updateBattle 呼叫 ResolvePending。
+func (g *game) drawBattleResult(screen *ebiten.Image, b *tactical.Battle, p *state.Pending) {
+	if !b.Done {
+		return
 	}
-	// 右側的空白欄放城壁的狀態。攻城戰打的是城壁耐久，
-	// 而腳本指令 15 看的就是這個值（docs/re/11 §5.11）。
-	if b.Field.IsSiege() && len(b.Structures) > 0 {
-		const px = isoNativeW*isoScale + 6
-		py := bannerH + 8
-		g.chrome.Window(screen, px-chrome.Tile-2, py-chrome.Tile-2,
-			screenW-(px-chrome.Tile-2)-2, 72, chrome.Menu)
-		g.td.Draw(screen, "城壁", px, py, amber)
-		min, intact := b.MinWallDurability()
-		txt := fmt.Sprintf("耐久 %d", min)
-		if !intact {
-			txt = "已破"
-		}
-		g.td.Draw(screen, txt, px, py+18, white)
-		broken := 0
-		for _, st := range b.Structures {
-			if st.Broken {
-				broken++
+	o := b.Result()
+	const x, y, w, h = 72, 104, 496, 160
+	g.chrome.Window(screen, x, y, w, h, chrome.Menu)
+	amber := color.RGBA{240, 200, 120, 255}
+	white := chrome.Paper
+	dim := color.RGBA{170, 170, 180, 255}
+	winner := "攻方勝"
+	if !o.AttackerWins {
+		winner = "守方勝"
+	}
+	g.td.Draw(screen, "戰鬥結果　"+winner, x+chrome.Tile+4,
+		y+chrome.Tile+2, amber)
+	attBefore := g.world.Corps[p.Attacker].Men * tactical.MenPerSoldier
+	defName := "守方"
+	defBefore := 0
+	if p.Defender >= 0 {
+		defName = "守方"
+		defBefore = g.world.Corps[p.Defender].Men * tactical.MenPerSoldier
+	} else {
+		defName = "城兵"
+		defBefore = p.Garrison * tactical.MenPerSoldier
+	}
+	g.td.Draw(screen, fmt.Sprintf("攻方兵力　%d → %d", attBefore, o.Men[0]),
+		x+chrome.Tile+4, y+chrome.Tile+textdraw.GlyphH+8, white)
+	g.td.Draw(screen, fmt.Sprintf("%s兵力　%d → %d", defName, defBefore, o.Men[1]),
+		x+chrome.Tile+4, y+chrome.Tile+2*(textdraw.GlyphH+8), white)
+	if p.Mode == combat.Siege {
+		g.td.Draw(screen, fmt.Sprintf("攻城損害　%d", b.CityDamage(p.CityWall)),
+			x+chrome.Tile+4, y+chrome.Tile+3*(textdraw.GlyphH+8), dim)
+	}
+	g.td.Draw(screen, "Enter　回到戰略畫面", x+chrome.Tile+4,
+		y+h-chrome.Tile-textdraw.GlyphH, dim)
+}
+
+// drawBattleChrome 畫戰術畫面本身的完整 DOS/V 編排。
+//
+// 原版不是「上方一條文字 banner ＋ 左邊一張圖」；主將 TALK、雙方狀態、
+// 縮圖、命令區與底部 glyph row 都是戰場畫面的一部分。TALK 的 producer
+// 不在本批修改範圍內，因此沒有 payload 時只顯示可診斷的版面 fallback。
+func (g *game) drawBattleChrome(screen *ebiten.Image, b *tactical.Battle, p *state.Pending, l dosvBattleLayout) {
+	g.drawBattleSidebar(screen, b, p, l)
+	talks := g.battleTalkState(b, p)
+	if talks.visible(0) {
+		g.drawBattleTalk(screen, talks.text(0), l.TopTalk, 0, talks.portrait(0), p)
+	}
+	if talks.visible(1) {
+		g.drawBattleTalk(screen, talks.text(1), l.BottomTalk, 1, talks.portrait(1), p)
+	}
+	g.drawBattleKeys(screen, b, l.BottomCommands)
+}
+
+// battleTalkState 只呈現目前 queue 的一筆。未知 marker 已在 enqueue 時
+// fail-closed；此處仍保留同一個安全閘，避免錯誤資料進入 renderer。
+func (g *game) battleTalkState(b *tactical.Battle, p *state.Pending) battleTalkState {
+	if g == nil || b == nil || p == nil {
+		return battleTalkState{}
+	}
+	g.startBattleTalk(p)
+	if len(g.battleTalkSession.queue.entries) == 0 {
+		return battleTalkState{}
+	}
+	s := &g.battleTalkSession
+	entry, ok := s.queue.current()
+	if !ok || s.battle != b {
+		return battleTalkState{}
+	}
+	text, ok := g.battleTalkText(entry)
+	if !ok {
+		s.queue.advance()
+		return battleTalkState{}
+	}
+	result := battleTalkState{}
+	if entry.Side == 0 {
+		result.Top, result.TopPortrait = text, entry.Portrait
+	} else {
+		result.Bottom, result.BottomPortrait = text, entry.Portrait
+	}
+	return result
+}
+
+func (g *game) drawBattleTalk(screen *ebiten.Image, text string, r battleRect, side, portraitPage int, p *state.Pending) {
+	if text == "" {
+		return
+	}
+	g.chrome.Window(screen, r.X, r.Y, r.W, r.H, chrome.Menu)
+	white := chrome.Paper
+	amber := color.RGBA{240, 200, 120, 255}
+
+	commander := g.battleCommander(p, side)
+	name := sideLabel(side)
+	if commander >= 0 && commander < len(g.world.Generals) {
+		name = big5(g.world.Generals[commander].Name)
+		if g.lib != nil && portraitPage >= 0 {
+			if portrait, err := g.lib.Portrait(portraitPage, int(g.world.Clock.Season())); err == nil {
+				op := &ebiten.DrawImageOptions{}
+				op.GeoM.Translate(float64(r.X+chrome.Tile), float64(r.Y+chrome.Tile))
+				screen.DrawImage(ebiten.NewImageFromImage(portrait), op)
 			}
 		}
-		g.td.Draw(screen, fmt.Sprintf("%d／%d 段", len(b.Structures)-broken,
-			len(b.Structures)), px, py+36, dim)
 	}
 
+	tx := r.X + chrome.Tile + 72
+	// 原版 TALK 區的 80 px 高度扣掉上下各 8 px 框後，恰好只有四個
+	// 16 px 字格：姓名一格、本文三格。此處不可沿用一般文字視窗的
+	// 4 px 行距，否則第三行字腳會被下框吃掉。
+	ty := r.Y + chrome.Tile
+	g.td.Draw(screen, name, tx, ty, amber)
+	maxWidth := r.W - (tx - r.X) - chrome.Tile - 4
+	for i, line := range textdraw.WrapLine(text, maxWidth) {
+		if i >= 3 {
+			break
+		}
+		g.td.Draw(screen, line, tx, ty+(i+1)*textdraw.GlyphH, white)
+	}
 }
 
-// drawBattleKeys 畫底部的指令列。兩條繪製路徑共用。
-func (g *game) drawBattleKeys(screen *ebiten.Image, b *tactical.Battle) {
+func (g *game) battleCommander(p *state.Pending, side int) int {
+	corps := p.Attacker
+	if side == 1 {
+		corps = p.Defender
+	}
+	if corps < 0 || corps >= len(g.world.Corps) || !g.world.Corps[corps].Alive {
+		return -1
+	}
+	return g.world.Leader(corps)
+}
+
+func (g *game) drawBattleSidebar(screen *ebiten.Image, b *tactical.Battle, p *state.Pending, l dosvBattleLayout) {
+	vector.DrawFilledRect(screen, float32(l.Sidebar.X), float32(l.Sidebar.Y),
+		float32(l.Sidebar.W), float32(l.Sidebar.H), chrome.Menu, false)
+	g.drawBattleSideStatus(screen, b, p, l.SideAttacker, 0)
+	g.drawBattleMiniMap(screen, b, l.SideMiniMap)
+	g.drawBattleSideStatus(screen, b, p, l.SideDefender, 1)
+	g.drawBattleSideCommands(screen, b, l.SideCommands)
+}
+
+func (g *game) drawBattleSideStatus(screen *ebiten.Image, b *tactical.Battle, p *state.Pending, r battleRect, side int) {
+	g.chrome.Window(screen, r.X, r.Y, r.W, r.H, chrome.Menu)
+	white := chrome.Paper
 	amber := color.RGBA{240, 200, 120, 255}
-	dim := color.RGBA{150, 150, 160, 255}
-	// 底部：指令列。與戰略畫面一樣用原版外框，不要黑底長條。
-	const h = 32
-	g.chrome.Window(screen, 0, screenH-h, screenW, h, chrome.Menu)
+	dim := color.RGBA{190, 190, 200, 255}
+	s := &b.Sides[side]
+	name := sideLabel(side)
+	if commander := g.battleCommander(p, side); commander >= 0 && commander < len(g.world.Generals) {
+		name = big5(g.world.Generals[commander].Name)
+	}
+	g.td.Draw(screen, name, r.X+chrome.Tile+4, r.Y+chrome.Tile+1, amber)
+	g.td.Draw(screen, fmt.Sprintf("%4d 兵", s.Remaining()), r.X+chrome.Tile+4,
+		r.Y+chrome.Tile+1+textdraw.GlyphH+2, white)
+	cols := battleSideStatusColumns(r)
+	statsY := r.Y + chrome.Tile + 2*(textdraw.GlyphH+2)
+	if len(s.Soldiers) > 0 {
+		g.td.Draw(screen, fmt.Sprintf("體力 %d", s.Soldiers[0].HP),
+			cols.HP.X, statsY, dim)
+	}
+	g.td.Draw(screen, advName(b.Advantage[side]), cols.Advantage.X, statsY, dim)
+}
+
+// drawBattleMiniMap 畫出戰術初始化時建立的 DOS/V 128×128 base minimap。
+//
+// 原版 `sub_1C83E`／`sub_1C4FA`／`sub_1C51E` 只證實了 MAP tile → MDL
+// attribute → 2×2 palette block；沒有證實單位或城壁變更的局部更新位址。
+// 所以兵、旗與結構不混進 base minimap，也不把高度圖 fallback 冒充原版。
+func (g *game) drawBattleMiniMap(screen *ebiten.Image, b *tactical.Battle, r battleRect) {
+	if g.view == nil || g.view.minimap == nil || r.W < battle.TacticalMinimapWidth ||
+		r.H < battle.TacticalMinimapHeight {
+		// 缺少 raw MAP/MDL 或 palette 時明確留空；不能重新引入高度／
+		// 每兩格取樣的假 minimap。
+		return
+	}
+	op := &ebiten.DrawImageOptions{}
+	op.GeoM.Translate(float64(r.X), float64(r.Y))
+	screen.DrawImage(g.view.minimap, op)
+	// 只畫外框，不縮放或裁切 128×128 原版 base image。
+	vector.StrokeRect(screen, float32(r.X), float32(r.Y),
+		float32(battle.TacticalMinimapWidth), float32(battle.TacticalMinimapHeight),
+		1, chrome.Paper, false)
+}
+
+func (g *game) drawBattleSideCommands(screen *ebiten.Image, b *tactical.Battle, r battleRect) {
+	selected := -1
+	if len(b.Sides) > 0 && len(b.Sides[g.battleSide()].Soldiers) > 0 {
+		selected = int(b.Sides[g.battleSide()].Soldiers[0].Cmd)
+	}
+	if g.battleSideCommands != nil {
+		op := &ebiten.DrawImageOptions{}
+		op.GeoM.Translate(float64(r.X), float64(r.Y))
+		screen.DrawImage(g.battleSideCommands, op)
+		if selected >= 0 {
+			cell := battleSideCommandCells(r)[selected]
+			vector.StrokeRect(screen, float32(cell.X), float32(cell.Y),
+				float32(cell.W), float32(cell.H), 1, g.battleCommandSelect, false)
+			vector.StrokeRect(screen, float32(cell.X+1), float32(cell.Y+1),
+				float32(cell.W-2), float32(cell.H-2), 1, g.battleCommandSelect, false)
+		}
+		return
+	}
+	g.chrome.Window(screen, r.X, r.Y, r.W, r.H, chrome.Menu)
+	for i, cell := range battleSideCommandCells(r) {
+		label := fmt.Sprintf("%d%s", i+1, battleCommandLabels[i])
+		if i == selected {
+			vector.DrawFilledRect(screen, float32(cell.X), float32(cell.Y),
+				float32(cell.W), float32(cell.H), chrome.Select, false)
+		}
+		x := cell.X + (cell.W-battleCommandTextWidth(label))/2
+		y := cell.Y + (cell.H-textdraw.GlyphH)/2
+		g.td.Draw(screen, label, x, y, chrome.Paper)
+	}
+}
+
+// drawBattleKeys 畫底部六格原版指令。sub_1C7F4 在 (0,368) 起每 80 px
+// 重貼 80×32 底板，並把六張連續 24×16 glyph 放在各格 (4,6)。
+func (g *game) drawBattleKeys(screen *ebiten.Image, b *tactical.Battle, r battleRect) {
+	amber := color.RGBA{240, 200, 120, 255}
+	dim := color.RGBA{190, 190, 200, 255}
+	selected := -1
+	if !b.Done && len(b.Sides) > 0 && len(b.Sides[g.battleSide()].Soldiers) > 0 {
+		selected = int(b.Sides[g.battleSide()].Soldiers[0].Cmd)
+	}
+	for i, cell := range splitBattleCommandCells(r) {
+		if g.battleCommandBase != nil && g.battleCommandGlyphs[i] != nil {
+			op := &ebiten.DrawImageOptions{}
+			op.GeoM.Translate(float64(cell.X), float64(cell.Y))
+			screen.DrawImage(g.battleCommandBase, op)
+			op = &ebiten.DrawImageOptions{}
+			op.GeoM.Translate(float64(cell.X+4), float64(cell.Y+6))
+			screen.DrawImage(g.battleCommandGlyphs[i], op)
+			if i == selected {
+				// sub_1C6BF：外層 x..x+77/y=372..392，內層各縮 1 px；
+				// AH=0x0C 由 GAMEPAL.BRG 直接取色。
+				vector.StrokeRect(screen, float32(cell.X+1), float32(cell.Y+4),
+					78, 21, 1, g.battleCommandSelect, false)
+				vector.StrokeRect(screen, float32(cell.X+2), float32(cell.Y+5),
+					76, 19, 1, g.battleCommandSelect, false)
+			}
+			continue
+		}
+		label := fmt.Sprintf("%d %s", i+1, battleCommandLabels[i])
+		if i == selected {
+			vector.DrawFilledRect(screen, float32(cell.X+2), float32(cell.Y+2),
+				float32(cell.W-4), float32(cell.H-4), chrome.Select, false)
+		}
+		vector.StrokeRect(screen, float32(cell.X+1), float32(cell.Y+1),
+			float32(cell.W-2), float32(cell.H-2), 1, color.RGBA{90, 170, 90, 255}, false)
+		col := dim
+		if i == selected {
+			col = amber
+		}
+		x := cell.X + (cell.W-battleCommandTextWidth(label))/2
+		g.td.Draw(screen, label, x, r.Y+5, col)
+	}
 	if b.Done {
-		g.td.Draw(screen, fmt.Sprintf("%s勝　第 %d 幀　按 Enter 回戰略畫面",
-			sideLabel(b.Winner), b.Frame), chrome.Tile+4, screenH-h+9, amber)
-	} else {
-		g.td.Draw(screen,
-			"1 陣形　2 攻擊　3 突擊　4 城壁　5 守陣　6 退卻",
-			chrome.Tile+4, screenH-h+9, dim)
+		g.td.Draw(screen, "Enter 回戰略", r.X+r.W-112, r.Y+5, amber)
 	}
 }
 
@@ -289,7 +623,7 @@ func (g *game) installTactical(dir string) {
 	} else {
 		log.Printf("⚠ 載不到 BATTLE.SCH（%v）；兵會畫成色點", err)
 	}
-	g.world.SetTactical(&state.TacticalSetup{
+	setup := &state.TacticalSetup{
 		Forms: forms,
 		Field: func(node int, siege bool) *tactical.Field {
 			return g.buildField(node, siege)
@@ -300,7 +634,9 @@ func (g *game) installTactical(dir string) {
 			}
 			return g.battleLib.Script(tactic, battle.Category(g.fieldNumber(node, siege)))
 		},
-	})
+	}
+	g.tactical = setup
+	g.world.SetTactical(setup)
 }
 
 func loadBattleLibrary(dir string) *battle.Library {
@@ -423,7 +759,8 @@ func (g *game) playerHeading() int {
 }
 
 // demoBattle 是**驗收用**的捷徑：直接擺一場戰術戰鬥出來。
-func (g *game) demoBattle(siege bool) {
+// choose=false 時停在正常遭遇決策選單，供畫面驗收。
+func (g *game) demoBattle(siege, choose bool) {
 	p := g.world.Player
 	var mine, theirs int = -1, -1
 	for i, gen := range g.world.Generals {
@@ -472,13 +809,22 @@ func (g *game) demoBattle(siege bool) {
 		foe.TargetNode = me.Node
 		foe.Timer = 1
 	}
-	for i := 0; i < 64 && !g.battleActive(); i++ {
+	for i := 0; i < 64 && !g.battleActive() && g.world.PendingEncounter() == nil; i++ {
 		g.world.Tick(g.rng)
+	}
+	// demoBattle 是驗收捷徑，但仍經過與正常行軍相同的遭遇決策狀態；
+	// 這個旗標的語意是「最後開戰場」，所以在這裡選擇戰鬥指揮。
+	if choose && g.world.PendingEncounter() != nil {
+		if err := g.world.ChooseBattleCommand(); err != nil {
+			g.setEvent(err.Error())
+			return
+		}
 	}
 
 	if g.battleActive() {
-		// 先跑一段，截圖時才看得到陣線接觸；速度調 1 免得截圖前就打完。
-		for i := 0; i < 900; i++ {
+		// 只跑到部隊展開。900 tick 會使野戰 fixture 在第一幀 GUI
+		// 前就結束，造成「攻城有戰場、兩軍遭遇只有戰果」的假差異。
+		for i := 0; i < 120; i++ {
 			g.world.PendingBattle().Battle.Step()
 		}
 		g.speed = 1

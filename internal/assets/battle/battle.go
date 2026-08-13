@@ -134,6 +134,24 @@ func (l *Library) Heights(n int) *[256]int {
 	return &h
 }
 
+// TileAttributes 回傳第 n 張戰場所用圖塊組的 256-byte raw attribute table。
+//
+// 這就是 DOS/V `sub_1C4FA` 經 `ds:0D308` 讀取的表：先以
+// BATTLE.MAP 的 raw tile index 索引，再把 byte 原樣交給
+// `sub_1C51E` 的 EGA set/reset。呼叫端不得把它當堆疊高度；兩者是
+// 不同的資料表。回傳複本，避免呈現層修改載入資料。
+func (l *Library) TileAttributes(n int) []byte {
+	if l == nil || n < 0 || n >= NumFields {
+		return nil
+	}
+	t := l.TileSet(n)
+	start := t * TileDefs
+	if start < 0 || start+TileDefs > len(l.mdl) || start+TileDefs > MDLHeader {
+		return nil
+	}
+	return append([]byte(nil), l.mdl[start:start+TileDefs]...)
+}
+
 // Script 回傳一段 AI 腳本。
 //
 // 段編號 ＝ **武將記錄 `+0x16` × 4 ＋ 戰場類別**（`sub_1CBE5`，docs/re/11 §3.2）。

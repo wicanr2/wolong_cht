@@ -18,12 +18,32 @@
 
 ## 現在做到哪裡
 
-**格式解析告一段落，規則層開工中。**
+**核心規則與可玩垂直切片已接通；完整交付已集中在 `dist-all/`（三平台桌面包、Linux AppImage、推廣片與 Android 觸控 shell 原型）。Windows／macOS 原生 GUI 實機驗收仍待完成。**
 狀態的單一真相來源是 [`CONTEXT.md`](CONTEXT.md)。
 
-| 已完成 | 進行中 | 還沒開始 |
+| 已完成 | 進行中 | 尚未完成 |
 |---|---|---|
-| 素材格式、存檔、時間模型、經濟、災害、中文顯示、外交、軍團結構、一覽表、進言與說得 | 內政官、行軍推進、AI、指令視窗 | 戰鬥層 |
+| 素材格式、存檔改寫、時間模型、經濟、災害、中文顯示、外交、軍團結構、一覽表、進言與說得、行軍與戰術戰鬥垂直切片、四槽存檔 overlay、敵方 AI 正常遭遇接點、事件 2–10 的既定 fixture／時鐘驗收、Linux AppImage、三平台候選封裝、60 秒推廣片 | Windows／macOS 原生 GUI short smoke、Android 完整核心接入與實機、原版／remake 同狀態畫面對拍、完整戰術／長程遊戲抽樣 | `ICONGRF` 段 1／龍紋、部分 `MMAP.MCH`／`BATTLE.MCH` 語意、DOS/V 音源與原版事件 10 自然 producer 等未解研究項 |
+
+### 候選封裝與推廣片
+
+- 完整交付根目錄：[`dist-all`](dist-all)，包含三平台桌面候選包、Linux AppImage、四支推廣片、雜湊與 Linux GUI smoke 截圖。
+- Linux AppImage：[`wolong-remake-linux-amd64-20260812.AppImage`](dist-all/packages/wolong-remake-linux-amd64-20260812.AppImage)。已通過 Linux／Xvfb 固定種子 smoke；仍要由玩家提供合法 DOS/V 資料與中文字型。
+- 三平台候選包與 SHA-256：[`dist-all/packages`](dist-all/packages)。Windows／macOS 是交叉建置候選，尚未在目標作業系統完成原生 GUI runtime 驗收。
+- 「經典再現」實機比較片：[`wolong-remake-dosv-live-comparison.mp4`](dist-all/promo/wolong-remake-dosv-live-comparison.mp4)。原版側是使用者指定的松崗 DOS/V 推廣比較素材，remake 側為實機 GUI；不是同日期／同輸入逐像素 parity。
+- Android 原型：[`wolong-remake-touch-prototype-debug-20260812.apk`](dist-all/experimental/android/wolong-remake-touch-prototype-debug-20260812.apk) 已在 Android 35 x86_64 模擬器驗證橫向啟動與 `CONTINUE`／`MENU` 觸控；它是操作 shell 原型，不是完整 Android release。細節見 [`docs/mobile/android-plan.md`](docs/mobile/android-plan.md)。
+
+`wlgame` 的持久化要明確指定可寫路徑，例如：
+
+```text
+tools/shot.sh /tmp/wlgame-save.png KEYS=4,s,Return \
+  -orig workplace/orig/dosv -save-file /out/SAVE.DAT
+```
+
+遊戲中先開「系統」視窗，按 `S` 儲存或 `L` 讀取，再以方向鍵／`1`–`4` 選槽。
+`-save-file` 是 overlay；原始 `SINARIO.DAT` 只讀，且儲存會先寫同目錄暫存檔再改名。
+
+![四槽存檔視窗](docs/images/wlgame-save-ui.png)
 
 ### 已解出的格式
 
@@ -38,28 +58,29 @@
 | `BATTLE.*` 戰場 | 分段結構與像素格式都已解 | [`docs/formats/07`](docs/formats/07-battle.md) |
 | `ICONGRF` 段 3 | 視窗外框圖塊（8×8） | [`docs/formats/03`](docs/formats/03-grf-images.md) |
 
-### 引擎已經跑得出一個「時間在走的世界」
+### 引擎已經跑得出可玩的戰略／戰術垂直切片
 
 `cmd/wlgame` 從真實的 `SINARIO.DAT` 載入劇本，用反組譯出來的規則驅動：
 
-![戰略畫面（秋）](docs/images/wlgame-cht.png)
+![DOS/V 自然策略畫面](docs/images/wlgame-dosv-natural-remake.png)
 
-版面照原版重做：**最上方 32 px 是原版的橫幅美術**（`ICONGRF` 段 0，
-日期填進它印好的「年 月 日」欄位），其餘 640×368 全部是地圖，
-**沒有常駐側欄**——情報、命令、縮小地圖、系統都是浮在地圖上的視窗。
-視窗外框也是原版美術（`ICONGRF` 段 3，原本整段未解），
-君主頭像取自 `KAOGRF`。
+版面照 DOS/V 自然畫面重做：**最上方 32 px 是原版的橫幅美術**（`ICONGRF` 段 0，
+日期填進它印好的「年 月 日」欄位），下方 32 px 是命令列；左側 432×336 是
+27×21 格大地圖，右側 208 px 是 192×128 縮小地圖與自勢力情報 HUD。
+使用者提供的 [自然遊戲錄製](https://www.youtube.com/watch?v=af6xqcicXoI) 作為
+DOS/V 畫面參考；視窗外框仍是原版美術（`ICONGRF` 段 3；數值面板的 96×64 內框與
+3×6 靜態 glyph 已直接解碼），君主頭像取自 `KAOGRF`。
 
-> 版面的三個數字是從 PC-98 實機截圖量出來的，不是估的：
-> 用水域分佈把畫面對回大地圖，狀態列高度掃五種，
-> **只有 32 px 得到 725 格 100% 吻合**，而且地圖是對齊格線畫的、一格 16 px
-> （`docs/playtest/05`）。
+> 版面的三個數字與 16 px 格位先由既有原始素材／說明書固定，再以使用者影片的
+> 478×360 自然畫面交叉核對；影片對拍是結構／色彩／位置 oracle，不把壓縮後像素
+> 冒充無損同狀態 diff。
 
 畫面上的每個數字都是原版資料算出來的：曹操的 14 個據點、74,000 起始資金、
 騎馬 400／弓兵 600／步兵 1000 的預備兵、稅率 18%。
 時鐘照原版的五層單位跑（子刻 → 時 → 日 → 月 → 年，**一天 216 tick**），
 月結會依 `Σ(生產力 ÷ 距離除數) × 稅率 ÷ 100` 入帳。
-截圖是遊戲內的 196 年 10 月，**季節已經自動換到秋天**——
+自然 smoke 截圖是遊戲內的 196 年 4 月 1 日；既有秋季垂直切片仍見
+`docs/images/wlgame-cht.png`——**季節已經自動換到秋天**——
 四季調色盤直接吃時鐘算出的季節，而且是在 3／6／9／12 月的前 16 天**漸變**過去的。
 
 ### 暫停規則是規格，不是 UI 細節
@@ -90,8 +111,8 @@
 > 状況に合うものを総て選択しても君主が納得しない場合は、
 > **進言撤回でキャンセルする事が出来ます。この場合は信頼度は変化しません。**
 
-判定全在 `internal/rules/persuasion`（13 條測試），
-畫面只負責呈現。九個理由的成立條件裡有兩個直接用已解出的資料：
+判定全在 `internal/rules/persuasion`（23 條測試），
+畫面只負責呈現。各指令四個理由的成立條件裡有兩個直接用已解出的資料：
 **國力 ＝ 據點數**、**疲弊 ＝ 資金 < 0**。
 
 ### 軍團：編成 → 行軍 → 遭遇
@@ -114,6 +135,12 @@
 軍團走到敵方軍團所在的格子就打野戰，走進敵方據點就攻城；
 城裡沒有軍團就打城兵。整條鏈跑在 `internal/state`，
 勝負與傷亡在 `internal/rules/combat`（`docs/re/09`）。
+
+敵方政略 AI 也已接到這條正常路徑：`sub_12C52` 的原始鄰接槽、
+`sub_12EFB` 的宣戰三閘、`CS:6C4C` 六槽編成表與道路行軍都會在真實劇本中生效。
+使用 `-seed 17` 只固定驗收亂數，正常按鍵即可重播「呂布 對 曹操／攻城／戰鬥指揮／委任」；
+證據見 [`docs/playtest/08`](docs/playtest/08-wlgame-normal-strategy-path.md) 與
+[`wlgame-ai-normal-encounter.png`](docs/images/wlgame-ai-normal-encounter.png)。
 
 ⚠ **判定順序與原版相反，而且是刻意的。** 原版先問野戰再問攻城，
 但那建立在「**一個據點佔好幾格地圖**」上（圖塊值 `0xCE`–`0xDD` 一整段）：
@@ -355,10 +382,10 @@ tools/shot.sh out.png KEYS=Right,Down        # headless 截圖驗收
 Python 工具（只用標準函式庫，不裝套件）：
 
 ```sh
-python3 tools/fdi_extract.py <image.fdi> <輸出目錄>
-python3 tools/talkdat.py verify workplace/orig/dosv/TALK.DAT cp950
-python3 tools/brg.py swatch workplace/orig/dosv/GAMEPAL.BRG out.png
-python3 tools/grf.py sheet workplace/orig/dosv/KAOGRF.DAT 64 64 \
+tools/py.sh tools/fdi_extract.py <image.fdi> <輸出目錄>
+tools/py.sh tools/talkdat.py verify workplace/orig/dosv/TALK.DAT cp950
+tools/py.sh tools/brg.py swatch workplace/orig/dosv/GAMEPAL.BRG out.png
+tools/py.sh tools/grf.py sheet workplace/orig/dosv/KAOGRF.DAT 64 64 \
         workplace/orig/dosv/GAMEPAL.BRG 0 out.png 15
 ```
 

@@ -68,8 +68,8 @@ PC-98 走 GRCG）。**`*GRF.DAT` 的圖像因此是 4 bpp。**
 ## 5. 工具
 
 ```sh
-python3 tools/brg.py info   workplace/orig/dosv/GAMEPAL.BRG
-python3 tools/brg.py swatch workplace/orig/dosv/GAMEPAL.BRG out.png 24
+tools/py.sh tools/brg.py info   workplace/orig/dosv/GAMEPAL.BRG
+tools/py.sh tools/brg.py swatch workplace/orig/dosv/GAMEPAL.BRG out.png 24
 ```
 
 四個調色盤的色票在 `docs/images/palette-*.png`。

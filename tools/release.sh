@@ -4,8 +4,8 @@
 #   tools/release.sh              建全部平台
 #   tools/release.sh linux/amd64  只建一個
 #
-# [HARD] 建置一律走 docker（CLAUDE.md §10），所以這支只是 tools/go.sh 的
-# 迴圈 ＋ 交叉編譯的環境變數。
+# [HARD] 建置、環境查詢與 deny-list 一律走 docker（CLAUDE.md §10），所以這支只是
+# tools/go.sh／tools/py.sh 的迴圈 ＋ 交叉編譯環境變數。
 #
 # ⚠ **deny-list 是發行閘，不是收尾檢查。** 它擋不下來就不出包——
 # 所以掃描排在打包之前，而且掃的是 dist/ 本身而不是 repo。
@@ -42,12 +42,13 @@ CROSS_OK=(./cmd/wlsim ./cmd/wlshot)              # 不依賴 Ebiten
 CROSS_WINDOWS_OK=(./cmd/wlgame ./cmd/wlview)     # 依賴 Ebiten，但 windows 純 Go
 NATIVE_ONLY=(./cmd/wlgame ./cmd/wlview)
 
-rm -rf "$DIST"; mkdir -p "$DIST"
+tools/py.sh tools/release_fs.py prepare
 
 echo "── 版本 $VERSION ──"
 for p in "${PLATFORMS[@]}"; do
     os="${p%%/*}"; arch="${p##*/}"
-    out="$DIST/$os-$arch"; mkdir -p "$out"
+    out="$DIST/$os-$arch"
+    tools/py.sh tools/release_fs.py mkdir "$out"
     ext=""; [ "$os" = windows ] && ext=.exe
 
     pkgs=("${CROSS_OK[@]}")
@@ -65,8 +66,10 @@ done
 # 本機平台額外建遊戲本體。linux／mac 的 Ebiten 要 cgo，只能在目標平台建；
 # windows 上面那圈已經建好了。
 echo "── 本機平台（linux／mac 的 Ebiten 要 cgo）──"
-native="$DIST/$(go env GOOS 2>/dev/null || echo linux)-$(go env GOARCH 2>/dev/null || echo amd64)"
-mkdir -p "$native"
+host_os="$(tools/go.sh env GOOS)"
+host_arch="$(tools/go.sh env GOARCH)"
+native="$DIST/${host_os}-${host_arch}"
+tools/py.sh tools/release_fs.py mkdir "$native"
 for pkg in "${NATIVE_ONLY[@]}"; do
     name="$(basename "$pkg")"
     echo "  本機  $name"
@@ -75,12 +78,11 @@ for pkg in "${NATIVE_ONLY[@]}"; do
         -o "$native/$name" "$pkg"
 done
 
-cp README.md "$DIST/" 2>/dev/null || true
-cp -r translations "$DIST/" 2>/dev/null || true
+tools/py.sh tools/release_fs.py finalize
 
 echo "── deny-list（發行閘）──"
-python3 tools/denylist.py "$DIST"
+tools/py.sh tools/denylist.py "$DIST"
 
 echo
 echo "產出在 $DIST/"
-du -sh "$DIST"/* 2>/dev/null || true
+tools/py.sh tools/release_fs.py report

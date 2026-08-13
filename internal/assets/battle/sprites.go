@@ -44,6 +44,12 @@ const (
 	BannerSprite = 72
 	// EmptyUnit 是兩側都空著的那一格（170 與 350）。
 	EmptyUnit = 170
+
+	// CombinedSourceTerrainTiles 是原版 word_1E15A 所指的合併圖形表中，
+	// BATTLE.MDL 像素圖塊的數量。BATTLE.SCH 緊接在這 192 個 320 B
+	// 單位之後；因此原版投射物的 raw 圖號 0x210／0x214 對應 SCH
+	// 單位 336／340（docs/re/11 §5.13）。
+	CombinedSourceTerrainTiles = NumSubTiles
 )
 
 // Sprites 是解好的人物圖形。
@@ -71,6 +77,19 @@ func (s *Sprites) At(n int) *SubTile {
 	t := decodePlanar(s.raw[n*SpriteUnit : (n+1)*SpriteUnit])
 	s.cache[n] = t
 	return t
+}
+
+// SourceTile 取原版合併圖形表中的 BATTLE.SCH 單位。
+//
+// 原版先把 BATTLE.MDL 的 192 個地形子圖塊放在表前，再把
+// BATTLE.SCH 接在後面；`sub_1E085` 的 raw 圖號不是 BATTLE.SCH
+// 的獨立索引，而是這張合併表的索引。raw 小於 192 的值屬於 MDL，
+// 本方法刻意回 nil，避免呼叫端把兩個檔案的位址基準混在一起。
+func (s *Sprites) SourceTile(raw int) *SubTile {
+	if raw < CombinedSourceTerrainTiles {
+		return nil
+	}
+	return s.At(raw - CombinedSourceTerrainTiles)
 }
 
 // Frame 是一張 16 × 64 的人物圖形，Pix[y*16+x] 是色號或 Transparent。
@@ -127,6 +146,8 @@ const (
 	PoseFlagMask = 0x19
 	// PoseFlagStep 是動畫幀那一位（bit 0），每次更新翻面。
 	PoseFlagStep = 0x01
+	// PoseFlagHitGeneral 是攻擊命中大將時的姿勢（bit 3）。
+	PoseFlagHitGeneral = 0x08
 	// PoseFlagFront 是「面向歸零」那一位（bit 4）。
 	PoseFlagFront = 0x10
 )

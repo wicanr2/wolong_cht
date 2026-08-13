@@ -152,6 +152,46 @@ type projectile struct {
 	x, y, z    int
 	tx, ty, tz int
 	power      int
+	special    bool
+	// specialFrame 是原版特殊投射物 raw 0x214／0x215 的低位。它取自
+	// 發射兵記錄 +0x02 bit 0，不能用方向或 side 代替。
+	specialFrame uint8
+	// direction 是原版飛道具記錄 +0x05：0 西、1 北、2 東、3 南；
+	// CH=0x20 會再加上 0x80，sub_1BA2E 因而只更新高度。
+	direction int
+	// gridIndex／previousGridIndex 對應 +0x10／+0x12；畫面層尚未使用
+	// previous*，但保留它們讓每幀狀態可直接對照 sub_1BAB7。
+	gridIndex, previousGridIndex    int
+	previousX, previousY, previousZ int
+	heightFP                        int
+	velocityFP                      int
+}
+
+// ProjectileView 是畫面層可讀的飛道具快照；不暴露規則層的可變記錄。
+type ProjectileView struct {
+	Side, X, Y, Z                   int
+	PreviousX, PreviousY, PreviousZ int
+	Power                           int
+	Direction                       int
+	Special                         bool
+	SpecialFrame                    int
+}
+
+// Projectiles 回傳目前仍在場上的飛道具，供戰術畫面以原生格座標繪製。
+func (b *Battle) Projectiles() []ProjectileView {
+	if b == nil || len(b.projectiles) == 0 {
+		return nil
+	}
+	out := make([]ProjectileView, len(b.projectiles))
+	for i, p := range b.projectiles {
+		out[i] = ProjectileView{
+			Side: p.side, X: p.x, Y: p.y, Z: p.z,
+			PreviousX: p.previousX, PreviousY: p.previousY, PreviousZ: p.previousZ,
+			Power: p.power, Direction: p.direction, Special: p.special,
+			SpecialFrame: int(p.specialFrame & 1),
+		}
+	}
+	return out
 }
 
 // NewBattle 開一場戰鬥。
@@ -212,6 +252,7 @@ func (b *Battle) Place() {
 			x, y := b.formationSpot(i, k)
 			s.X, s.Y = x, y
 			s.Z = b.Field.StandLevel(x, y)
+			s.syncTerrain(b.Field, x, y, s.Z)
 			s.GoalX, s.GoalY, s.GoalZ = x, y, s.Z
 			s.StepX, s.StepY, s.StepZ = x, y, s.Z
 		}
@@ -356,6 +397,7 @@ func (b *Battle) reinforce() {
 					Cmd: Form, Next: s.Standing,
 					X: x, Y: y, Z: b.Field.StandLevel(x, y),
 				}
+				s.Soldiers[j].syncTerrain(b.Field, x, y, s.Soldiers[j].Z)
 				s.Soldiers[j].GoalX, s.Soldiers[j].GoalY = x, y
 				s.Soldiers[j].StepX, s.Soldiers[j].StepY = x, y
 				s.Reserve[k]--

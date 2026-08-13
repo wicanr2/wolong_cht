@@ -48,6 +48,7 @@ func main() {
 		log.Fatal(err)
 	}
 	w.Player = *player
+	w.EnableStrategicAI()
 	if *tax >= 0 {
 		w.TaxRate, w.NextTaxRate = *tax, *tax
 	}

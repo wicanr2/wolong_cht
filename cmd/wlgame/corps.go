@@ -18,8 +18,8 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/state"
-	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
+	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
@@ -296,6 +296,24 @@ func (g *game) reportCorps(ev state.Event) {
 	}
 }
 
+// reportStrategy 只把涉及玩家的政略動作放進狀態列；其餘勢力的月度宣戰
+// 不應每幀刷屏，但敵人正式把玩家列為目標時必須讓正常遊戲看得見。
+func (g *game) reportStrategy(ev state.Event) {
+	for _, s := range ev.Strategy {
+		if s.Target != g.world.Player || s.Faction < 0 || s.Faction >= len(g.world.Factions) {
+			continue
+		}
+		lord := big5(g.world.LordName(s.Faction))
+		if s.Corps < 0 {
+			g.lastEvent = lord + " 對我方宣戰"
+			continue
+		}
+		if s.Destination >= 0 && s.Destination < len(g.world.Cities) {
+			g.lastEvent = lord + " 軍團向 " + big5(g.world.Cities[s.Destination].Name) + " 行軍"
+		}
+	}
+}
+
 func battleLine(g *game, e state.CorpsEvent) string {
 	who := big5(g.world.Generals[e.Corps].Name)
 	against := "城兵"
@@ -303,6 +321,19 @@ func battleLine(g *game, e state.CorpsEvent) string {
 		against = big5(g.world.Generals[e.Enemy].Name)
 	}
 	line := who + " 對 " + against
+	if e.Battle != nil {
+		winner := "攻方勝"
+		if e.Battle.DefenderWins {
+			winner = "守方勝"
+		}
+		line += fmt.Sprintf("　%s　兵力 %d→%d／%d→%d",
+			winner,
+			e.BattleBefore[0]*10, e.BattleAfter[0]*10,
+			e.BattleBefore[1]*10, e.BattleAfter[1]*10)
+		if e.BattleCityDamage > 0 {
+			line += fmt.Sprintf("　據點損害 %d", e.BattleCityDamage)
+		}
+	}
 	for _, d := range e.Destroyed {
 		name := big5(g.world.Generals[d].Name)
 		switch e.Fate[d] {

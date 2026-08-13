@@ -3,6 +3,8 @@ package tactical
 import (
 	"os"
 	"testing"
+
+	"github.com/wicanr2/wolong_cht/internal/assets/battle"
 )
 
 type fixedRand struct {
@@ -119,6 +121,69 @@ func TestAttackCapsStamina(t *testing.T) {
 	}
 }
 
+// 近戰不是固定威力：命中值取 rand&0x7f 加攻擊者戰力，
+// 有利與突擊再分別套用原版的 0x40／0xc8 飽和加成。
+func TestMeleeUsesOriginalPowerAndAdvantage(t *testing.T) {
+	b := NewBattle(flatField(), SyntheticFormations(), &fixedRand{seq: []int{0}}, 0)
+	attacker := &Soldier{Alive: true, Kind: Cavalry, HP: MaxHP, Power: 80,
+		Cmd: Attack, Next: Attack}
+	target := &Soldier{Alive: true, Kind: Infantry, HP: MaxHP}
+	b.Advantage[0] = Even
+	if !b.meleeHit(0, attacker, target) {
+		t.Fatal("rand 0 + 戰力 80 應達到 0x46 命中門檻")
+	}
+	if target.HP != 20 {
+		t.Errorf("一般近戰扣血 %d，應為 80", MaxHP-target.HP)
+	}
+
+	b.rng = &fixedRand{seq: []int{0}}
+	target = &Soldier{Alive: true, Kind: Infantry, HP: MaxHP}
+	b.Advantage[0] = Disadvantaged
+	if b.meleeHit(0, attacker, target) {
+		t.Fatal("不利時 (0 + 80 - 0x32) 不應達到命中門檻")
+	}
+	if target.HP != MaxHP {
+		t.Errorf("未命中卻扣了 %d 點血", MaxHP-target.HP)
+	}
+
+	b.rng = &fixedRand{seq: []int{0}}
+	target = &Soldier{Alive: true, Kind: Infantry, HP: MaxHP}
+	attacker.Power = 100
+	b.Advantage[0] = Advantaged
+	if !b.meleeHit(0, attacker, target) || target.Alive {
+		t.Fatal("有利時 100 + 0x40 應以飽和威力擊倒普通兵")
+	}
+
+	b.rng = &fixedRand{seq: []int{100}}
+	target = &Soldier{Alive: true, Kind: Infantry, HP: MaxHP}
+	attacker.Power, attacker.Cmd = 40, Charge
+	b.Advantage[0] = Even
+	if !b.meleeHit(0, attacker, target) || target.Alive {
+		t.Fatal("突擊的 40 + 0xc8 應擊倒普通兵")
+	}
+}
+
+// 隊長離場後，原版的七名隊員退卻，該隊不能再用沒有隊長的待機兵補場。
+func TestLeaderLossRetreatsSquadAndDropsReserve(t *testing.T) {
+	b := newTestBattle(flatField())
+	leader := &b.Sides[0].Soldiers[PerSquad]
+	leader.HP = 1
+	if !b.applyHit(leader, 1) {
+		t.Fatal("隊長應該被命中")
+	}
+	if leader.Alive {
+		t.Fatal("非大將隊長被擊倒後仍在場")
+	}
+	if b.Sides[0].Reserve[1] != 0 {
+		t.Errorf("隊長離場後仍有 %d 個待機兵，應為 0", b.Sides[0].Reserve[1])
+	}
+	for k := PerSquad + 1; k < 2*PerSquad; k++ {
+		if b.Sides[0].Soldiers[k].Next != Retreat {
+			t.Errorf("第 %d 個隊員命令是 %v，應為退卻", k, b.Sides[0].Soldiers[k].Next)
+		}
+	}
+}
+
 // 大將不會陣亡：體力扣到 1 就停住。
 // 說明書 6.1「將軍體力…低於一定值自動退卻」——退卻不是陣亡。
 func TestGeneralNeverDies(t *testing.T) {
@@ -128,7 +193,7 @@ func TestGeneralNeverDies(t *testing.T) {
 		t.Fatal("第 0 隊的隊長應該是大將")
 	}
 	for i := 0; i < 100; i++ {
-		b.hit(1, g, 50)
+		b.applyHit(g, 50)
 	}
 	if !g.Alive {
 		t.Error("大將陣亡了")
@@ -170,13 +235,260 @@ func TestInfantryResistsArrows(t *testing.T) {
 	}
 }
 
+func TestSpecialProjectileUsesCH20AndFallsVertically(t *testing.T) {
+	b := newTestBattle(flatField())
+	attacker := &b.Sides[0].Soldiers[1]
+	*attacker = Soldier{Alive: true, Kind: Archer, HP: MaxHP, Power: 40,
+		X: 10, Y: 20, Z: 2, Target: 1, Cmd: Attack, Next: Attack}
+	target := &b.Sides[1].Soldiers[1]
+	*target = Soldier{Alive: true, Kind: Infantry, HP: MaxHP,
+		X: 11, Y: 20, Z: 1, Target: -1, Cmd: Attack, Next: Attack}
+	b.shoot(0, 1, target)
+	if len(b.projectiles) != 1 || !b.projectiles[0].special {
+		t.Fatalf("高處近距離弓兵沒有建立 CH=0x20 效果：%+v", b.projectiles)
+	}
+	p := b.projectiles[0]
+	if p.power != specialProjectilePower || p.x != 11 || p.y != 20 || p.z != 3 {
+		t.Fatalf("特殊效果初值錯誤：%+v", p)
+	}
+	if attacker.ProjectileCooldown != 6 {
+		t.Fatalf("sub_1AD7F 成功後 +0x13 應為 6，got %d", attacker.ProjectileCooldown)
+	}
+	for i := 0; i < 2; i++ {
+		b.stepProjectiles()
+		if target.HP != MaxHP {
+			t.Fatalf("第 %d 幀提前命中：HP=%d", i+1, target.HP)
+		}
+	}
+	b.stepProjectiles()
+	expectedPower := specialProjectilePower
+	for i := 0; i < 2; i++ {
+		expectedPower += expectedPower>>2 + 1 // sub_1BAB7 的兩次下降加成
+	}
+	if target.HP != MaxHP-expectedPower/InfantryArrowDivisor {
+		t.Fatalf("CH=0x20 垂直效果傷害=%d，應為 %d", MaxHP-target.HP,
+			expectedPower/InfantryArrowDivisor)
+	}
+}
+
+func TestSpecialProjectileCarriesPoseBitIntoSecondRawFrame(t *testing.T) {
+	b := newTestBattle(flatField())
+	attacker := &b.Sides[0].Soldiers[1]
+	*attacker = Soldier{Alive: true, Kind: Archer, HP: MaxHP, Power: 40,
+		PoseStep: 1, X: 10, Y: 20, Z: 2, Target: 1, Cmd: Attack, Next: Attack}
+	target := &b.Sides[1].Soldiers[1]
+	*target = Soldier{Alive: true, Kind: Infantry, HP: MaxHP,
+		X: 11, Y: 20, Z: 1, Target: -1, Cmd: Attack, Next: Attack}
+	b.shoot(0, 1, target)
+	views := b.Projectiles()
+	if len(views) != 1 || !views[0].Special || views[0].SpecialFrame != 1 {
+		t.Fatalf("特殊投射物沒有保留 +0x02 bit 0：%+v", views)
+	}
+}
+
+func TestClimbingInfantryCanUseSpecialProjectile(t *testing.T) {
+	b := newTestBattle(flatField())
+	attacker := &b.Sides[0].Soldiers[1]
+	*attacker = Soldier{Alive: true, Kind: Infantry, HP: MaxHP, Power: 40,
+		X: 10, Y: 20, Z: 1, Climbing: true, Target: 1, Cmd: Attack, Next: Attack}
+	target := &b.Sides[1].Soldiers[1]
+	*target = Soldier{Alive: true, Kind: Infantry, HP: MaxHP,
+		X: 11, Y: 20, Z: 1, Target: -1, Cmd: Attack, Next: Attack}
+	b.doAttack(0, 1)
+	if len(b.projectiles) != 1 || !b.projectiles[0].special {
+		t.Fatalf("高層步兵近距離未走 CH=0x20 分支：%+v", b.projectiles)
+	}
+}
+
+func TestProjectileCooldownMatchesRawLaunchBranches(t *testing.T) {
+	b := newTestBattle(flatField())
+	shooter := &b.Sides[0].Soldiers[1]
+	*shooter = Soldier{Alive: true, Kind: Archer, HP: MaxHP, Power: 40,
+		X: 10, Y: 20, Z: 1, Target: 1, Cmd: Attack, Next: Attack}
+	target := &b.Sides[1].Soldiers[1]
+	*target = Soldier{Alive: true, Kind: Infantry, HP: MaxHP,
+		X: 14, Y: 20, Z: 1, Target: -1, Cmd: Attack, Next: Attack}
+
+	b.shoot(0, 1, target)
+	if len(b.projectiles) != 1 || shooter.ProjectileCooldown != 8 {
+		t.Fatalf("sub_1AD2D 成功後投射物／冷卻錯誤：count=%d cooldown=%d", len(b.projectiles), shooter.ProjectileCooldown)
+	}
+	for want := uint8(7); ; want-- {
+		b.shoot(0, 1, target)
+		if len(b.projectiles) != 1 || shooter.ProjectileCooldown != want {
+			t.Fatalf("普通投射物冷卻遞減錯誤：count=%d cooldown=%d want=%d", len(b.projectiles), shooter.ProjectileCooldown, want)
+		}
+		if want == 0 {
+			break
+		}
+	}
+	b.shoot(0, 1, target)
+	if len(b.projectiles) != 2 || shooter.ProjectileCooldown != 8 {
+		t.Fatalf("冷卻歸零後應再次發射普通投射物：count=%d cooldown=%d", len(b.projectiles), shooter.ProjectileCooldown)
+	}
+
+	shooter.ProjectileCooldown = 0
+	shooter.Z = 2
+	target.X, target.Y, target.Z = 11, 20, 1
+	b.shoot(0, 1, target)
+	if len(b.projectiles) != 3 || !b.projectiles[2].special || shooter.ProjectileCooldown != 6 {
+		t.Fatalf("sub_1AD7F 成功後投射物／冷卻錯誤：%+v cooldown=%d", b.projectiles, shooter.ProjectileCooldown)
+	}
+}
+
+func TestRawPlaneHighAndTerrainFlag(t *testing.T) {
+	b := newTestBattle(walledField(32))
+	s := &b.Sides[0].Soldiers[1]
+	*s = Soldier{Alive: true, Kind: Infantry, X: 32, Y: 10, Z: 4}
+	s.syncTerrain(b.Field, s.X, s.Y, s.Z)
+	if s.PlaneHigh != PlaneHighElevated || !s.Climbing {
+		t.Fatalf("高位平面欄位錯誤：PlaneHigh=%#x climbing=%v", s.PlaneHigh, s.Climbing)
+	}
+	if !s.HighTerrain {
+		t.Fatal("堆疊 4 層的格子沒有設定 +0x00 bit 1 對應旗標")
+	}
+	s.syncTerrain(b.Field, 10, 10, 0)
+	if s.PlaneHigh != PlaneHighGround || s.Climbing || s.HighTerrain {
+		t.Fatalf("回到地面後 raw terrain 沒清除：%+v", *s)
+	}
+}
+
+func TestSpecialProjectileUsesPlaneHighAndMaxAxisDistance(t *testing.T) {
+	attacker := &Soldier{Kind: Infantry, X: 10, Y: 20, Z: 2,
+		PlaneHigh: PlaneHighElevated}
+	target := &Soldier{Kind: Infantry, X: 12, Y: 22, Z: 0}
+	if !specialAttackAvailable(attacker, target) {
+		t.Fatal("兩軸差值都是 2 時，原版 sub_1ACA4 應允許特殊投射物")
+	}
+	target.X, target.Y = 13, 21
+	if specialAttackAvailable(attacker, target) {
+		t.Fatal("較大軸差值為 3 時，不應進入特殊投射物")
+	}
+}
+
+func TestNormalProjectileVelocityMatchesRawSub1AD2D(t *testing.T) {
+	b := NewBattle(flatField(), SyntheticFormations(), &fixedRand{seq: []int{3}}, 0)
+	shooter := &Soldier{X: 10, Y: 20, Z: 3}
+	target := &Soldier{X: 14, Y: 22, Z: 1}
+
+	// max(|dx|, |dy|) = 4；4 >> 1 + (1 - 3) + (3 & 3) = 3，
+	// 對應 raw sub_1AD2D 的 `shr bx,1`、高度差、`and ax,3`。
+	if got, want := normalProjectileVelocity(b, shooter, target), 3*0x14; got != want {
+		t.Fatalf("普通箭初始速度=%#x，應為 %#x", got, want)
+	}
+}
+
+func TestLockOnPlanePenaltyMatchesRawBranches(t *testing.T) {
+	for _, tc := range []struct {
+		name string
+		me   Soldier
+		e    Soldier
+		want bool
+	}{
+		{"地面騎兵看高位平面", Soldier{Kind: Cavalry}, Soldier{PlaneHigh: PlaneHighElevated}, true},
+		{"地面步兵看高位平面", Soldier{Kind: Infantry}, Soldier{PlaneHigh: PlaneHighElevated}, false},
+		{"高位步兵看普通地面", Soldier{Kind: Infantry, PlaneHigh: PlaneHighElevated}, Soldier{}, false},
+		{"高位步兵看高地面旗標", Soldier{Kind: Infantry, PlaneHigh: PlaneHighElevated}, Soldier{HighTerrain: true}, true},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			if got := targetPlanePenalty(&tc.me, &tc.e); got != tc.want {
+				t.Fatalf("targetPlanePenalty=%v，預期 %v", got, tc.want)
+			}
+		})
+	}
+}
+
+func TestProjectileRawDirectionGridAndHeightPower(t *testing.T) {
+	b := newTestBattle(flatField())
+	for side := range b.Sides {
+		for k := range b.Sides[side].Soldiers {
+			b.Sides[side].Soldiers[k].Alive = false
+		}
+	}
+	p := projectile{
+		side: 0, x: 10, y: 20, z: 1, direction: East, power: arrowPower,
+		heightFP: 1 << 8, velocityFP: 0x100,
+		gridIndex:         projectileGridIndex(10, 20, 1),
+		previousGridIndex: projectileGridIndex(10, 20, 1),
+	}
+	b.projectiles = []projectile{p}
+	b.stepProjectiles()
+	if len(b.projectiles) != 1 {
+		t.Fatalf("普通投射物在空氣層不應消失：%+v", b.projectiles)
+	}
+	got := b.projectiles[0]
+	if got.x != 11 || got.y != 20 || got.z != 2 {
+		t.Fatalf("raw 方向／高度錯誤：%+v", got)
+	}
+	if got.previousX != 10 || got.previousY != 20 || got.previousZ != 1 {
+		t.Fatalf("sub_1BAB7 前一格錯誤：%+v", got)
+	}
+	if got.gridIndex != projectileGridIndex(11, 20, 2) ||
+		got.previousGridIndex != projectileGridIndex(10, 20, 1) {
+		t.Fatalf("+0x10／+0x12 格索引錯誤：%+v", got)
+	}
+	if got.power != arrowPower-arrowPower>>2 || got.velocityFP != 0x100-0x14 {
+		t.Fatalf("上升時威力／速度錯誤：power=%d velocity=%#x", got.power, got.velocityFP)
+	}
+}
+
+func TestProjectileChecksCurrentCellBeforeMoving(t *testing.T) {
+	b := newTestBattle(flatField())
+	for side := range b.Sides {
+		for k := range b.Sides[side].Soldiers {
+			b.Sides[side].Soldiers[k].Alive = false
+		}
+	}
+	target := &b.Sides[1].Soldiers[1]
+	*target = Soldier{Alive: true, Kind: Infantry, HP: MaxHP, X: 10, Y: 20, Z: 1}
+	b.projectiles = []projectile{{
+		side: 0, x: 10, y: 20, z: 1, direction: East, power: arrowPower,
+		heightFP: 1 << 8, velocityFP: 0x100,
+		gridIndex: projectileGridIndex(10, 20, 1),
+	}}
+	b.stepProjectiles()
+	if len(b.projectiles) != 0 {
+		t.Fatalf("命中目前格後投射物沒有消失：%+v", b.projectiles)
+	}
+	if target.HP != MaxHP-arrowPower/InfantryArrowDivisor {
+		t.Fatalf("目前格命中傷害=%d，應為 %d", MaxHP-target.HP,
+			arrowPower/InfantryArrowDivisor)
+	}
+}
+
+func TestProjectileStopsAtSolidLayerAfterMoving(t *testing.T) {
+	b := newTestBattle(walledField(32))
+	for side := range b.Sides {
+		for k := range b.Sides[side].Soldiers {
+			b.Sides[side].Soldiers[k].Alive = false
+		}
+	}
+	b.projectiles = []projectile{{
+		side: 0, x: 31, y: 10, z: 0, direction: East, power: arrowPower,
+		heightFP: 0, velocityFP: 0,
+		gridIndex: projectileGridIndex(31, 10, 0),
+	}}
+	b.stepProjectiles()
+	if len(b.projectiles) != 0 {
+		t.Fatalf("投射物進入實心城壁層後仍存活：%+v", b.projectiles)
+	}
+}
+
 // ⭐ 近戰**不吃**那個四分之一。
 func TestMeleeIgnoresInfantryArrowResistance(t *testing.T) {
-	b := newTestBattle(flatField())
+	b := NewBattle(flatField(), SyntheticFormations(), &fixedRand{seq: []int{100}}, 0)
+	b.Advantage[0] = Even
+	attacker := &Soldier{Alive: true, Kind: Cavalry, Power: 40, HP: MaxHP,
+		Cmd: Attack, Next: Attack}
 	inf := &Soldier{Alive: true, Kind: Infantry, HP: MaxHP}
 	cav := &Soldier{Alive: true, Kind: Cavalry, HP: MaxHP}
-	b.hit(0, inf, 40)
-	b.hit(0, cav, 40)
+	if !b.meleeHit(0, attacker, inf) {
+		t.Fatal("第一下近戰應該命中")
+	}
+	attacker.HitGeneral = false
+	if !b.meleeHit(0, attacker, cav) {
+		t.Fatal("第二下近戰應該命中")
+	}
 	if MaxHP-inf.HP != 40 {
 		t.Errorf("步兵近戰掉了 %d，應為 40——四分之一只在飛道具那一支",
 			MaxHP-inf.HP)
@@ -245,6 +557,22 @@ func TestCavalryCannotClimb(t *testing.T) {
 	}
 }
 
+func TestHorizontalStepAdjustsOneLevelForNonClimber(t *testing.T) {
+	stack := make([][]int, Height)
+	for y := range stack {
+		stack[y] = make([]int, Width)
+	}
+	stack[20][11] = 2
+	b := NewBattle(NewField(stack, 0), SyntheticFormations(), &fixedRand{seq: []int{1}}, 0)
+	s := &b.Sides[0].Soldiers[1]
+	*s = Soldier{Alive: true, Kind: Cavalry, HP: MaxHP, Stamina: StaminaFull,
+		Cmd: Attack, Next: Attack, X: 10, Y: 20, Z: 1, GoalX: 11, GoalY: 20, GoalZ: 2}
+	b.moveToward(0, 1)
+	if s.X != 11 || s.Z != 2 {
+		t.Fatalf("水平跨一層未同步高度：位置=%d,%d,%d", s.X, s.Y, s.Z)
+	}
+}
+
 // 退卻不可打斷 —— 說明書 4.2「一旦執行不能取消」。
 func TestRetreatCannotBeInterrupted(t *testing.T) {
 	s := &Soldier{Alive: true, Cmd: Retreat, Next: Attack}
@@ -253,6 +581,35 @@ func TestRetreatCannotBeInterrupted(t *testing.T) {
 	}
 	if s.Cmd != Retreat {
 		t.Errorf("命令變成 %v，應維持退卻", s.Cmd)
+	}
+}
+
+func TestRetreatDropsOldPath(t *testing.T) {
+	b := newTestBattle(flatField())
+	s := &b.Sides[0].Soldiers[1]
+	s.Cmd, s.Next = Retreat, Retreat
+	s.Path = &Waypoints{pts: []Point{{X: 20, Y: 20}}}
+	s.PathAt = 123
+	b.doRetreat(0, 1)
+	if s.Path != nil || s.PathAt != 0 {
+		t.Fatal("退卻仍保留舊繞路點")
+	}
+}
+
+func TestRetreatUsesOriginalExitTarget(t *testing.T) {
+	b := newTestBattle(flatField())
+	low := &b.Sides[0].Soldiers[1]
+	*low = Soldier{Alive: true, Cmd: Retreat, Next: Retreat, X: 20, Y: 5, Z: 3}
+	b.doRetreat(0, 1)
+	if low.GoalX != 1 || low.GoalY != 0x10 || low.GoalZ != 0 {
+		t.Fatalf("低處退卻目標錯誤：%d,%d,%d", low.GoalX, low.GoalY, low.GoalZ)
+	}
+
+	high := &b.Sides[1].Soldiers[1]
+	*high = Soldier{Alive: true, Cmd: Retreat, Next: Retreat, X: 20, Y: 60, Z: 3}
+	b.doRetreat(1, 1)
+	if high.GoalX != 0x3E || high.GoalY != 0x2F || high.GoalZ != 0 {
+		t.Fatalf("高處退卻目標錯誤：%d,%d,%d", high.GoalX, high.GoalY, high.GoalZ)
 	}
 }
 
@@ -274,6 +631,47 @@ func TestBattleTerminates(t *testing.T) {
 	}
 	t.Logf("第 %d 幀結束，勝方 %d（剩 %d 對 %d）", b.Frame, b.Winner,
 		b.Sides[b.Winner].Remaining(), b.Sides[1-b.Winner].Remaining())
+}
+
+// 真實 BATTLE.MAP 的攻城地形也不能讓核心戰鬥卡死。
+// 原始素材不隨專案散布；沒有使用者提供的 dosv 資產時跳過。
+func TestRealSiegeFieldBattleTerminates(t *testing.T) {
+	const dir = "../../../workplace/orig/dosv"
+	if _, err := os.Stat(dir + "/BATTLE.MAP"); err != nil {
+		t.Skip("找不到原版 BATTLE.MAP，跳過")
+	}
+	read := func(name string) []byte {
+		b, err := os.ReadFile(dir + "/" + name)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return b
+	}
+	lib, err := battle.Parse(read("BATTLE.MAP"), read("BATTLE.MDL"), read("BATTLE.DAT"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	forms, err := LoadFormations(dir + "/KI.EXE")
+	if err != nil {
+		t.Fatal(err)
+	}
+	const fieldNumber = 56 // 劇本 1 的濮陽，正常 AI 截圖所進的攻城場
+	f := NewFieldFromTiles(lib.Tiles(fieldNumber), lib.Heights(fieldNumber), lib.GateX(fieldNumber))
+	b := NewBattle(f, forms, &fixedRand{seq: []int{1, 7, 3}}, 127)
+	b.Deploy(0, 0, Infantry, 16)
+	b.Deploy(1, 0, Infantry, 49)
+	b.Place()
+	b.Order(0, -1, Attack)
+	b.Order(1, -1, Attack)
+	if code := lib.Script(0, battle.Category(fieldNumber)); code != nil {
+		b.SetScript(1, NewScript(code, 1))
+	}
+	if !b.Run(200000) {
+		t.Fatalf("真實攻城場跑了 20 萬幀還沒結束（攻方剩 %d、守方剩 %d）",
+			b.Sides[0].Remaining(), b.Sides[1].Remaining())
+	}
+	t.Logf("真實攻城場第 %d 幀結束，勝方 %d（剩 %d 對 %d）",
+		b.Frame, b.Winner, b.Sides[0].Remaining(), b.Sides[1].Remaining())
 }
 
 // 原版的陣形表載得進來，而且性質與 docs/re/11 §5.8d 對得上。
@@ -465,6 +863,7 @@ func TestFriendlyCollisionSwaps(t *testing.T) {
 // 撞到敵人是**打他**，自己不動（`loc_1B5A1` → `sub_1B618`）。
 func TestEnemyCollisionAttacks(t *testing.T) {
 	b := newTestBattle(flatField())
+	b.Advantage[0] = Even
 	a := &b.Sides[0].Soldiers[10]
 	e := &b.Sides[1].Soldiers[10]
 	a.Kind, e.Kind = Infantry, Infantry

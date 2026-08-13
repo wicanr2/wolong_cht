@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=臥龍傳 Remake
+Comment=讓經典再現的 DOS/V 戰略 remake
+Exec=AppRun %U
+Icon=wolong-remake
+Terminal=false
+Categories=Game;StrategyGame;
+Keywords=三國;臥龍傳;Wolong;strategy;
+X-AppImage-Version=wolong-remake-dist-all

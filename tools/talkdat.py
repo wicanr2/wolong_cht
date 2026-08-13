@@ -16,10 +16,12 @@
     talkdat.py build  <in.json>  <編碼> <out.DAT>           由 JSON 組回
     talkdat.py verify <TALK.DAT> <編碼>                     round-trip 驗證
     talkdat.py diff   <A.DAT> <encA> <B.DAT> <encB>         兩版對照
+    talkdat.py correct <in.json> <corrections.json> <out.json> 套用已定案校訂
 
 只用標準函式庫，不裝任何套件。
 """
 import json
+import os
 import struct
 import sys
 
@@ -164,6 +166,155 @@ def _load(path, enc):
     return blob, [decode(m, enc) for m in msgs]
 
 
+def _correction_tokens(text):
+    """把文字拆成可換行的 token；`{N}` 視為一個三格全形插入值。
+
+    這不是原版渲染器的完整字寬模型。校訂工具只需要一個保守、可重現的
+    JSON 版面保護：中文／標點各一格，武將／據點等 `{N}` 先按三格計。
+    產出的行仍須經實機畫面抽樣，不能把這個估算當成 parity 證據。
+    """
+    out = []
+    i = 0
+    while i < len(text):
+        if (text[i] == '{' and i + 2 < len(text)
+                and text[i + 2] == '}' and text[i + 1].isdigit()):
+            start = i
+            width = 0
+            # 連續的數值插入（例如 `{6}{7}`）不可被拆到兩行中間。
+            while (i + 2 < len(text) and text[i] == '{'
+                   and text[i + 2] == '}' and text[i + 1].isdigit()):
+                width += 3
+                i += 3
+            out.append((text[start:i], width))
+        else:
+            out.append((text[i], 1))
+            i += 1
+    return out
+
+
+def _display_width(text):
+    return sum(width for _, width in _correction_tokens(text))
+
+
+def _wrap_correction(text, width):
+    """以原訊息的最大非空行寬度包裝校訂文字。"""
+    if not text:
+        return ['']
+    width = max(1, width)
+    lines, cur, used = [], [], 0
+    for token, token_width in _correction_tokens(text):
+        # 不讓中文標點孤零零落在新行開頭；這個排版保護可能讓該行多一格，
+        # 呼叫端會收到畫面抽樣警告。
+        if token in '，。！？；：、）】」』':
+            if not cur and lines:
+                lines[-1] += token
+                continue
+            if cur and used + token_width > width:
+                cur.append(token)
+                used += token_width
+                continue
+        if cur and used + token_width > width:
+            lines.append(''.join(cur))
+            cur, used = [], 0
+        cur.append(token)
+        used += token_width
+    if cur:
+        lines.append(''.join(cur))
+    return lines
+
+
+def _trailing_empty(lines):
+    n = 0
+    for line in reversed(lines):
+        if line != '':
+            break
+        n += 1
+    return n
+
+
+def _correction_expected(item, by_id):
+    expected = item.get('cht', '')
+    if isinstance(expected, str) and expected.startswith('同 '):
+        ref = int(expected.split()[1])
+        if ref not in by_id or by_id[ref].get('cht', '').startswith('同 '):
+            raise ValueError(f"#{item['id']} 的同文參照無效：{expected}")
+        return by_id[ref]['cht']
+    return expected
+
+
+def cmd_correct(src, corrections_path, out):
+    """只套用有 `fix` 的項目，保留 null 的人工裁定項。"""
+    if os.path.abspath(src) == os.path.abspath(out):
+        raise ValueError('correct 的輸出不可覆寫輸入 JSON')
+    data = json.load(open(src, encoding='utf-8'))
+    correction_data = json.load(open(corrections_path, encoding='utf-8'))
+    messages = data.get('messages')
+    items = correction_data.get('corrections')
+    enc = data.get('encoding', 'cp950')
+    if not isinstance(messages, list) or len(messages) != MSG_COUNT:
+        raise ValueError(f'{src} 不是 {MSG_COUNT} 則訊息的 extract JSON')
+    if not isinstance(items, list):
+        raise ValueError(f'{corrections_path} 沒有 corrections 陣列')
+
+    by_id = {int(item['id']): item for item in items}
+    result = [list(lines) for lines in messages]
+    applied, skipped, layout_changes, layout_warnings = [], [], [], []
+    for item in items:
+        ident = int(item['id'])
+        fix = item.get('fix')
+        if fix is None:
+            skipped.append(ident)
+            continue
+        if ident < 0 or ident >= len(result):
+            raise ValueError(f'校訂編號超出 TALK.DAT：#{ident}')
+        current = ''.join(result[ident])
+        expected = _correction_expected(item, by_id)
+        if current != expected:
+            raise ValueError(
+                f'#{ident} 的現況與 corrections.json 不符：\n'
+                f'  現況：{current}\n  預期：{expected}')
+        jp = item.get('jp', '')
+        if jp and not (isinstance(jp, str) and jp.startswith('同 ')):
+            if markers([fix]) != markers([jp]):
+                raise ValueError(f'#{ident} fix 與 jp 的變數集合不同')
+
+        trailing_count = _trailing_empty(result[ident])
+        body = result[ident][:-trailing_count] if trailing_count else result[ident]
+        max_width = max((_display_width(line) for line in body if line), default=10)
+        wrapped = _wrap_correction(fix, max_width)
+        trailing = [''] * trailing_count
+        try:
+            encode(wrapped + trailing, enc)
+        except (UnicodeEncodeError, ValueError) as exc:
+            raise ValueError(f'#{ident} fix 無法以 {enc} 編碼：{exc}') from exc
+        result[ident] = wrapped + trailing
+        applied.append(ident)
+        if len(wrapped) != len(body):
+            layout_changes.append((ident, len(body), len(wrapped), max_width))
+        over = [(_display_width(line), line) for line in wrapped
+                if _display_width(line) > max_width]
+        if over:
+            layout_warnings.append((ident, max_width, over))
+
+    output = dict(data)
+    output['messages'] = result
+    with open(out, 'w', encoding='utf-8') as fp:
+        json.dump(output, fp, ensure_ascii=False, indent=1)
+        fp.write('\n')
+    print(f'✅ 套用 {len(applied)} 筆校訂 → {out}')
+    print('   已套用：' + ', '.join(f'#{i}' for i in applied))
+    print('   保留人工裁定：' + ', '.join(f'#{i}' for i in skipped))
+    if layout_changes:
+        print('   行數變更（需畫面抽樣）：' + ', '.join(
+            f'#{i} {before}→{after} 行／寬 {width}'
+            for i, before, after, width in layout_changes))
+    if layout_warnings:
+        print('   行寬警告（需畫面抽樣）：' + ', '.join(
+            f'#{i} 上限 {width}、實際 ' + '/'.join(str(actual) for actual, _ in over)
+            for i, width, over in layout_warnings))
+    return 0
+
+
 def cmd_dump(path, enc):
     _, messages = _load(path, enc)
     for i, lines in enumerate(messages):
@@ -219,7 +370,7 @@ if __name__ == '__main__':
         sys.exit(__doc__)
     cmd, args = sys.argv[1], sys.argv[2:]
     fn = {'dump': cmd_dump, 'export': cmd_export, 'build': cmd_build,
-          'verify': cmd_verify, 'diff': cmd_diff}.get(cmd)
+          'verify': cmd_verify, 'diff': cmd_diff, 'correct': cmd_correct}.get(cmd)
     if not fn:
         sys.exit(__doc__)
     sys.exit(fn(*args) or 0)

@@ -173,19 +173,60 @@ func TestAgreementRaisesTrust(t *testing.T) {
 	}
 }
 
-// ⭐ 好戰的君主容易被說服去打人，消極的容易被說服停戰。
-func TestAggressionShapesWhatLordAccepts(t *testing.T) {
-	luHostile := requiredReasons(Hostility, 15)
-	liuHostile := requiredReasons(Hostility, 4)
-	if luHostile >= liuHostile {
-		t.Errorf("好戰的君主對敵對提案要 %d 個理由，消極的要 %d —— 方向反了",
-			luHostile, liuHostile)
+// ⭐ sub_13C1E 的四段信賴度級別直接決定 sub_13BA9 要求的成立理由數。
+func TestTrustTierDeterminesRequiredReasons(t *testing.T) {
+	for _, tc := range []struct {
+		trust int
+		need  int
+	}{
+		{0xFF, 1},
+		{0xE0, 1},
+		{0xDF, 2},
+		{0x90, 2},
+		{0x8F, 3},
+		{0x20, 3},
+		{0x1F, 4},
+		{0, 4},
+	} {
+		for _, c := range []Command{Hostility, CeaseFire, Cooperate} {
+			if got := Begin(c, Situation{Trust: tc.trust}).Remaining(); got != tc.need {
+				t.Errorf("信賴度 0x%02X、%v：要 %d 個理由，得到 %d",
+					tc.trust, c, tc.need, got)
+			}
+		}
 	}
-	luPeace := requiredReasons(CeaseFire, 15)
-	liuPeace := requiredReasons(CeaseFire, 4)
-	if luPeace <= liuPeace {
-		t.Errorf("好戰的君主對停戰要 %d 個理由，消極的要 %d —— 方向反了",
-			luPeace, liuPeace)
+}
+
+// sub_13830 的 AL=2 路徑完成後 +10，錯選理由則立即 −20。
+func TestReasonPathUsesOriginalTrustDeltas(t *testing.T) {
+	s := Situation{Trust: 0xE0, OurCities: 10, TheirCities: 1}
+	sess := Begin(Hostility, s)
+	if out, dt := sess.Offer(WeAreStronger); out != Agreed || dt != TrustOnReasonSuccess {
+		t.Fatalf("高信賴度選到成立理由：(%v, %d)，want (Agreed, %d)",
+			out, dt, TrustOnReasonSuccess)
+	}
+
+	sess = Begin(Hostility, Situation{Trust: 0xE0})
+	if out, dt := sess.Offer(WeAreStronger); out != Failed || dt != TrustOnFailure {
+		t.Fatalf("錯選理由：(%v, %d)，want (Failed, %d)", out, dt, TrustOnFailure)
+	}
+}
+
+// sub_13830 的第一反應碼：AL=1 為 +20；AL=0、3 為 −20；AL=4 不變。
+func TestFirstReactionUsesOriginalTrustDeltas(t *testing.T) {
+	for _, tc := range []struct {
+		reaction Reaction
+		delta    int
+	}{
+		{Agree, TrustOnImmediateSuccess},
+		{Refuse, TrustOnFailure},
+		{AlreadyAtWar, TrustOnFailure},
+		{AskReason, 0},
+		{SameFaction, 0},
+	} {
+		if got := ReactionTrustDelta(tc.reaction); got != tc.delta {
+			t.Errorf("反應碼 %d：信賴度變化 %d，want %d", tc.reaction, got, tc.delta)
+		}
 	}
 }
 
@@ -245,7 +286,7 @@ func TestFirstReactionQueuedBeatsThreshold(t *testing.T) {
 //	敵對  和平位元沒設（在打）→ 3「不是已經在交戰狀態中了嗎！」
 //	停戰  和平位元設著（沒打）→ 3「原本就沒有和\3交戰啊！」
 func TestAlreadyAtWarIsMirroredBetweenCommands(t *testing.T) {
-	atWar := Situation{Aggression: 5, Friendship: 25}            // 沒有和平位元
+	atWar := Situation{Aggression: 5, Friendship: 25} // 沒有和平位元
 	atPeace := Situation{Aggression: 5, Friendship: peaceBit + 25}
 	if got := FirstReaction(Hostility, atWar, false); got != AlreadyAtWar {
 		t.Errorf("敵對：交戰中應回 3，得到 %d", got)

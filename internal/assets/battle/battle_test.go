@@ -254,6 +254,44 @@ func TestSpriteFormatMatchesSubTile(t *testing.T) {
 	}
 }
 
+// 原版戰場 render 的合併圖形表把 BATTLE.SCH 接在 BATTLE.MDL 的
+// 192 個 320 B 子圖塊後面。`sub_1AD2D` 的 0x210／0x211 與
+// `sub_1AD7F` 的 0x214／0x215 因而落在 SCH 的 336、337、340、341。
+// 這個測試鎖住的是檔案／索引對照，不替未解出的動畫狀態加語意。
+func TestCombinedSourceProjectileTiles(t *testing.T) {
+	sp, err := ParseSprites(mustRead(t, "BATTLE.SCH"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, tc := range []struct {
+		raw, unit int
+	}{
+		{0x210, 336}, {0x211, 337}, {0x214, 340}, {0x215, 341},
+	} {
+		got := sp.SourceTile(tc.raw)
+		want := sp.At(tc.unit)
+		if got == nil || got != want {
+			t.Fatalf("raw 圖號 %#x 沒有對到 BATTLE.SCH 單位 %d", tc.raw, tc.unit)
+		}
+		blank := true
+		for _, px := range got.Pix {
+			if px != Transparent {
+				blank = false
+				break
+			}
+		}
+		if blank {
+			t.Errorf("投射物單位 %d 是全空圖", tc.unit)
+		}
+	}
+	if sp.SourceTile(NumSubTiles) == nil {
+		t.Fatal("合併表的第一個 BATTLE.SCH 單位不應為 nil")
+	}
+	if sp.SourceTile(NumSubTiles-1) != nil {
+		t.Fatal("MDL 圖號不應由 SourceTile 冒充")
+	}
+}
+
 // ⭐ 兵種的儲存值就是圖形表的索引。
 //
 // 這條測試把「為什麼兵種要存成 × 18」釘住：一組 18 張，而分界正好落在

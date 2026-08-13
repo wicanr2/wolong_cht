@@ -25,6 +25,107 @@ const (
 	LineGap = 2
 )
 
+// RuneWidth 回傳單一字元在這套點陣字上的像素寬度。
+// ASCII 走 8×15 半形字；其他 Unicode 字元走 16×15 全形字。TALK
+// 排版與 Drawer 必須共用這個契約，否則「量過不溢位」只會在其中一條
+// 路徑成立。
+func RuneWidth(ch rune) int {
+	if ch < 0x80 {
+		return HalfW
+	}
+	return GlyphW
+}
+
+// StringWidth 回傳一列字串的實際繪製寬度（像素）。
+func StringWidth(s string) int {
+	w := 0
+	for _, ch := range s {
+		if ch == '\n' || ch == '\r' {
+			continue
+		}
+		w += RuneWidth(ch)
+	}
+	return w
+}
+
+// WrapLines 依據實際點陣字寬度斷行，但保留呼叫端傳入的硬斷行。
+//
+// 這是呈現層的 formatter，不改 TALK.DAT，也不把換行寫回規則層。每個
+// 空字串仍保留成一列；換行時捨棄剛好位於斷點的前導空白，避免英文／數字
+// 混排在下一列留下難以察覺的縮排。
+func WrapLines(lines []string, maxPixels int) []string {
+	if len(lines) == 0 {
+		return nil
+	}
+	out := make([]string, 0, len(lines))
+	for _, line := range lines {
+		out = append(out, WrapLine(line, maxPixels)...)
+	}
+	return out
+}
+
+// WrapLine 對一條 TALK 硬斷行做測量式換行。關閉標點不會被單獨放到
+// 下一行；若它正好超出邊界，寧可讓該列多出一個全形字，也不讓中文標點
+// 出現在列首。maxPixels<=0 時維持原列，作為 fail-safe。
+func WrapLine(line string, maxPixels int) []string {
+	if maxPixels <= 0 {
+		return []string{line}
+	}
+	if line == "" {
+		return []string{""}
+	}
+
+	var out []string
+	current := make([]rune, 0, len([]rune(line)))
+	width := 0
+	flush := func() {
+		out = append(out, string(current))
+		current = current[:0]
+		width = 0
+	}
+	for _, ch := range line {
+		if ch == '\r' {
+			continue
+		}
+		if ch == '\n' {
+			flush()
+			continue
+		}
+		if ch == ' ' && len(current) == 0 {
+			continue
+		}
+		w := RuneWidth(ch)
+		if width > 0 && width+w > maxPixels {
+			if isClosingPunctuation(ch) {
+				current = append(current, ch)
+				width += w
+				continue
+			}
+			flush()
+			if ch == ' ' {
+				continue
+			}
+		}
+		current = append(current, ch)
+		width += w
+	}
+	if len(current) > 0 || len(out) == 0 {
+		flush()
+	}
+	return out
+}
+
+func isClosingPunctuation(ch rune) bool {
+	switch ch {
+	case ',', '.', '!', '?', ':', ';', ')', ']', '}', '%',
+		'，', '。', '、', '！', '？', '：', '；', '）', '］', '｝',
+		'》', '」', '』', '】', '〕', '〉', '”', '’':
+		return true
+	default:
+		return false
+	}
+}
+
 // Drawer 把字串畫成 Ebiten 圖片。
 type Drawer struct {
 	font  *cjk.Font
@@ -48,15 +149,7 @@ func (d *Drawer) Available() bool { return d != nil && d.font != nil }
 
 // Width 回傳一段字串畫出來會佔多寬（像素）。
 func (d *Drawer) Width(s string) int {
-	w := 0
-	for _, ch := range s {
-		if ch < 0x80 {
-			w += HalfW
-		} else {
-			w += GlyphW
-		}
-	}
-	return w
+	return StringWidth(s)
 }
 
 // Draw 從 (x, y) 開始畫一段字串，回傳結束時的 x。
@@ -72,11 +165,7 @@ func (d *Drawer) Draw(dst *ebiten.Image, s string, x, y int, c color.RGBA) int {
 			op.GeoM.Translate(float64(x), float64(y))
 			dst.DrawImage(img, op)
 		}
-		if ch < 0x80 {
-			x += HalfW
-		} else {
-			x += GlyphW
-		}
+		x += RuneWidth(ch)
 	}
 	return x
 }

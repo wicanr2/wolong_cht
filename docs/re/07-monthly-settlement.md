@@ -650,9 +650,9 @@ remake 要決定照抄還是修正。**預設照抄**（`CLAUDE.md` §8：
 | 缺口 | 位置 |
 |---|---|
 | `sub_15940` 的兩個分支 | 已派駐武將的每月行動，會發訊息 `0x41`／`0x42`。分支 2 有一行 `mov byte ptr [si+1Ch], 18h`（把所屬勢力寫成 24）**與「+1Ch 是勢力編號、只有 0–21」矛盾**，還沒解釋 |
-| `sub_12BD9` | 月結尾段唯一還沒讀的一支。對 22 個勢力各配一塊 0x30 的緩衝區，疑似 AI 的局勢評估或縮小地圖 |
-| `sub_12FBF` 的事件表 | 災害事件的實際傷害在這裡（`ax` ＝ `010Ch` 火災／`020Ch` 暴動／`0Bh` 暴風雨） |
-| `sub_13119` | 交友度的查表位址，解開就能定位交友度表 |
+| `sub_12BD9` | 已讀：對 22 個勢力各建 0x30 的候選緩衝區，串起交友度排序、協力／停戰／宣戰產生器與遷都事件 8 |
+| `sub_14269`／`sub_13EFD` | 事件 11／12 寫入的城市 `+0x15` marker 在據點輪轉時先扣防災值；不足時再扣上昇值、生產力與城兵，已接入 `World.applyCityDisasterEffect`；物件動畫仍未完 |
+| `sub_13119` | 已解：`0x600 + 觀察者×24 + 對象` 的交友度查表位址 |
 | 武將 `+1Ah` | 官員「要錢中」的旗標／金額，`sub_12FBF` 的事件會寫它 |
 | 武將 `+0Eh`／`+0Fh`／`+10h` 是不是兵種適性 | 需要與戰鬥程式對照 |
 | `sub_157FE` 觸發的事件內容 | `sub_12FBF(ax=0Dh, dx=196h)` |
@@ -692,11 +692,11 @@ sub_131AE:
 | 6 | `sub_13327` | — |
 | 7 | `sub_13388` | — |
 | 8 | `sub_133EA` | — |
-| 9 | `sub_13485` | — |
-| 10 | `sub_13496` | — |
-| 11 | `sub_134A6` | — |
-| **12** | **`sub_134B1`** | 事件字 `0x010C`／`0x020C` ＝ 火災／暴動（低位元組 `0x0C` ＝ 12） |
-| 13 | `sub_13507` | 事件字 `0x000D` ＝ 資金深度赤字 |
+| 9 | `sub_13485` | 指定武將釋放；`World.releaseGeneral` 已接入 `sub_150D7` 的狀態寫入，`Event.ReleasedGenerals` 與 `wlgame` 的 `TALK.DAT` 0x25 句型取用已接入，`TestQueuedEventReleaseGeneral` 驗證存活／已滅俘虜方分支；remake 結構化訊息佇列已接入，原版完整通知流程仍未接 |
+| 10 | `sub_13496` | 訊息-only：建立武將／參數 formatter 游標；持久狀態尚未找到 |
+| 11 | `sub_134A6` | `sub_1237E` 更新城市 runtime `+0x15` 暴風雨動畫標記；`World.applyQueuedStormMarker` 與 `TALK.DAT #70` 結構化通知已接，完整物件動畫仍未接 |
+| **12** | **`sub_134B1`** | 事件字 `0x010C`／`0x020C` ＝ 火災／暴動（低位元組 `0x0C` ＝ 12）；`World.applyQueuedDisasterMarker` 已接高 byte、runtime 標記、`#71/#72` 通知與延遲清除 |
+| 13 | `sub_13507` | 事件字 `0x000D` ＝ 資金深度赤字；`TALK.DAT #51` 玩家通知已接 |
 
 > ⚠ **事件字的高位元組是參數的一部分，不是代碼。**
 > `0x010C` 與 `0x020C` 走的是**同一支** `sub_134B1`（低位元組都是 `0x0C`），
@@ -710,12 +710,23 @@ sub_131AE:
 xor al, al / shr ax,1 ×3 / add ax, 840h / mov bx, ax   ; ah ＝ 據點編號 → 據點記錄
 mov ah, [bx+19h] / cmp ah, 0FFh / jz retn              ; 內政官被解任了就作廢
 xor al, al / shr ax,1 ×3 / add ax, 4240h               ; → **武將表基址 0x4240**
-push ax / push bx / mov di, sp / call sub_10CDE        ; 把兩筆記錄餵給訊息變數
+push ax / push bx / mov di, sp / call sub_10CDE        ; 建立後續 formatter 要讀的 SS 堆疊游標
 mov cx, 38h / mov al, 93h / call sub_18810             ; 顯示訊息 0x38
 pop bx / pop si / mov ax, dx / mov cx, 116h / call sub_12078
 call sub_139E8                                         ; ← 玩家的答覆
 call sub_120D6
 ```
+
+> **2026-08-09 勘誤（已證實）。** 舊註解把 `sub_10CDE` 說成「把兩筆記錄餵給
+> 訊息變數」不正確。IDA Pro 9.4 對同一份 `KI.EXE`（SHA-256
+> `FFFEBA985231CDA4D636E93D10F598470B1F691D00275E4AA38E285893D43868`）顯示
+> `00010CDE` 只有 `mov ax,101h` → `call sub_1EB11`；而 `sub_1EB11`
+> 實際讀寫 PC 喇叭（PC speaker）的輸入／輸出埠（I/O port）`61h`。它保留 `DI`，不讀 `SS:[DI]`。
+> 真正的資料流是呼叫端先 `mov di,sp`，再由
+> `sub_18810+1Dh` → `sub_1075B` → `sub_1084A` 讀取訊息與參數；
+> `sub_1084A` 的 `\6` handler（`0001097E`）會消耗一個 16 位元參數並把 `DX`
+> 左移 `0x30`。原註解保留在 `RESEARCH-LOG.md` 的勘誤記錄中，不能再當成
+> `sub_10CDE` 的語意。
 
 兩個新事實：
 
@@ -845,6 +856,31 @@ AI 的據點走預設分支 `cl = 8`：每天有 **9/16** 的機率上昇值 `+1
 `CLAUDE.md` §11 的「下結論之前先查 `docs/INDEX.md`」要改成
 **動手之前**先查——「還沒解」與「我不記得解過」在動手那一刻長得一模一樣。
 
+### 19.1 ⭐⭐ 災害 marker 的持久效果：`sub_14269`
+
+事件 11／12 的處理端先寫城市 runtime record `+0x15`；它不是只供物件
+動畫使用。`sub_13EFD`（`00013EFD`）在 `sub_14194`（內政官整備）之後，
+於 `00013F5A` 無條件呼叫 `sub_14269`（`00014269`），所以據點每輪到一次
+就會消耗目前 marker：
+
+```text
+marker ≤ +0x11 防災值：+0x11 -= marker
+marker > +0x11：
+  deficit = marker − +0x11；+0x11 = 0
+  +0x10 存值（上昇值 + 100）-= deficit，下限 0
+  +0x0E 生產力 -= (deficit × +0x0F 生產力高 byte) >> 2（u16 sub）
+  +0x13 城兵 -= deficit >> 1，下限 0
+```
+
+事件 12 的火災／暴動 marker 是 4–11；暴風雨由 `sub_1237E` 以強度減去
+距離一半寫入。高 byte 0 的延遲事件才清除 `+0x15`，因此在清除前每次輪到
+該據點都會套用一次。remake 對應 `World.applyCityDisasterEffect`，保留
+生產力欄位的 16 位元減法，不另加原版沒有證據的飽和夾制。
+
+直接證據：`KI.EXE` 的 IDA 線性位址 `00013F5A`、`00014269`、
+`000134A6`、`000134B1`、`0001237E`；輸入雜湊、工具版本與位址基準見
+`RESEARCH-LOG.md` 最新「事件 11／12 災害 marker 持久效果」段。
+
 ## 20. ⭐⭐ `sub_12BD9`：月結時的 AI 決策回合（2026-08-08）
 
 月結尾段最後一支沒讀的。它做兩件不相干的事，而**第一件跟 AI 無關**。
@@ -877,7 +913,7 @@ mov es, cs:word_1987C / xor di,di / mov ax, 0FFFFh / mov cx, 210h / rep stosw
 mov cx, 16h / mov si, 0 / xor di, di
 loop1:  cmp byte ptr [si], 80h / jb .skip
         call sub_12C52            ; 局勢評估 → 每勢力 0x30 的緩衝區
-        call sub_12D3A            ; ★ 侵攻起意
+        call sub_12D3A            ; ★ 主動遷都事件 8
 .skip:  add di, 30h / add si, 40h / loop
 loop2:  call sub_12D58            ; 決策鏈（22 個勢力再跑一次）
 ```
@@ -885,7 +921,7 @@ loop2:  call sub_12D58            ; 決策鏈（22 個勢力再跑一次）
 **`sub_12C52`** 掃 192 個據點，把屬於該勢力的（`cmp ah, [di+1]`）
 累加進那塊 `0x30` 的緩衝區 —— 所以那塊是**該勢力所有據點的彙總**。
 
-### ⭐ `sub_12D3A`：沒有侵攻目標的勢力，每月 25% 起意
+### ⭐ `sub_12D3A`：沒有侵攻目標的勢力，每月 25% 嘗試主動遷都
 
 ```asm
 cmp byte ptr [si+19h], 0FFh      ; 已經有侵攻目標 → 什麼都不做
@@ -895,15 +931,199 @@ jnb ret
 mov al, 8 / mov dx, 0FFFFh / mov bl, dl / call sub_12FB1   ; 發事件 8
 ```
 
-**這是 AI 侵攻的起點**，而且與已知的兩條規則接得起來：
+**這不是 AI 侵攻的起點**：事件 8 會沿 `sub_133EA` 落入
+`sub_16A3D`，掃描自身據點並選擇新首都。侵攻目標是同一支
+`sub_12BD9` 後段的 `sub_12D58` 決策鏈，真正的候選與三道閘見
+`docs/mechanics/70-ai.md` §6。
 
-- 起意之後 `+0x19` 被填上目標勢力編號（`sub_12E33`／`sub_13526`／`sub_135AB`）
-- 財政撐不住時每小時的 `sub_13E11` 會把它清回 `0xFF`（`docs/re/08` §1）
-
-所以 AI 的侵攻是**「每月 25% 機率起意 → 每小時檢查養不養得起」**的循環。
-「敵が疲弊中」之所以是提停戰的好時機，是因為疲弊的敵人**剛被取消侵攻，
-而且下個月才有機會再起意**。
+財政撐不住時每小時的 `sub_13E11` 仍會把既有侵攻目標清回 `0xFF`
+（`docs/re/08` §1），但不能把這條取消規則與事件 8 的遷都亂數串成同一個
+「每月 25% 侵攻起意」循環。
 
 `sub_12D58` 的決策鏈（`sub_12DB8`／`sub_12DF3`／`sub_12E33`／`sub_12E89`／
-`sub_12EFB`）還沒逐支讀 —— **玩家的勢力走 `sub_12DF3`，其餘走 `sub_12DB8`**
-（`cmp si, cs:word_10CFD`），這個分岔本身就值得先記下來。
+`sub_12EFB`）已逐支讀出機制 —— **玩家的勢力走 `sub_12DF3`，其餘走 `sub_12DB8`**
+（`cmp si, cs:word_10CFD`）。完整的三閘與宣戰收尾見
+`docs/mechanics/70-ai.md` §6；事件佇列 raw、節拍、月壓縮與事件 1／2（合作產生器與狀態部分）／3（停戰產生器與狀態部分）／8／9（指定武將釋放狀態）／13
+已接入，事件 2／3 的完整接受／玩家 UI、事件 4／5 的逐位撥款輸入／原版訊息、事件 6／7 的 producer／外交官回報狀態、事件 9 的釋放結果與 `TALK.DAT` 句型取用、事件 11／12 的 runtime 災害 marker、`sub_14269` 持久效果與玩家 `TALK.DAT #70/#71/#72` 通知、事件 13 的 `#51` 通知；事件 6／7 的 TALK.DAT 反應／回報訊息、事件 9 的原版完整通知流程、事件 10 的訊息、事件 11／12 的物件動畫仍是 runtime 尚未移植的差異。
+
+## 21. ⭐⭐ 政略 AI 目標、宣戰與敵方編成接入（2026-08-09）
+
+本節把 §20 的月結呼叫順序接到目前 remake；事件 8 的語意更正如下：
+`sub_12D3A` 只負責以 `rand(0..255) < 0x40` 發出主動遷都事件，
+事件處理端 `sub_133EA` 會落入 `sub_16A3D` 選自己的新首都。它不是侵攻起點。
+
+### 已證實並已接入的資料流
+
+| 原版位置 | 機制 | remake 對應 | 狀態 |
+|---|---|---|---|
+| `sub_12C52`／`sub_12CDF` | 掃己方據點的 `+0x1C..+0x1F` 四個鄰接槽，依交友度去重排序 | `City.Neighbours` 保留原始槽位；`strategyCandidates` 依 `Adjacency` 掃描並排序 | 已證實／已接入 |
+| `sub_12DB8` | 非玩家勢力對排序第一鄰居：和平 −2（下限 20），交戰 +1（上限 50；對玩家不加） | `driftAIFriendship` | 已證實／已接入 |
+| `sub_12DF3` | 玩家勢力第一鄰居 −1；交戰再 −7；其他勢力對玩家 −1 | `driftPlayerFriendship` | 已證實／已接入 |
+| `sub_12EFB` | 資金、交友度、國力三道嚴格比較 | `internal/rules/strategyai.ShouldDeclareWar` | 已證實／已接入 |
+| `sub_13526`／`sub_13639` | 宣戰後寫入 `+0x19`，雙向交友度取小值後右移一位並清和平位元 | `World.dispatchQueuedEvent`／`applyQueuedDeclaration` | 已證實／已接入 |
+| `sub_12E33`／`sub_13220`／`sub_13712`／`sub_135ED` | 合作事件的鄰接／交友度產生閘、代表政治／交友度 gate、被侵攻方付費、俘虜釋放與對侵攻方宣戰 | `World.queueCooperationProposal`／`applyQueuedCooperation`／`beginDiplomacy`／`ResolveDiplomacy`；`TestStrategicAIDiplomacyEventGenerators`／`TestQueuedEventHandlers`／`TestQueuedDiplomacyChoice` | 已證實／產生器、狀態與三選一接縫已接入；完整接受／金額輸入／原版訊息 UI 未完 |
+| `sub_12E89`／`sub_13262`／`sub_136C4`／`sub_135ED` | 停戰事件的交戰鄰居國力累減產生、政治／交友度金額、資金轉移、俘虜釋放與停戰收尾 | `World.queueCeasefireProposals`／`applyQueuedCeasefire`／`beginDiplomacy`／`ResolveDiplomacy`；`TestStrategicAIDiplomacyEventGenerators`／`TestQueuedEventHandlers`／`TestQueuedDiplomacyChoice` | 已證實／產生器、狀態與三選一接縫已接入；完整接受／金額輸入／原版訊息 UI 未完 |
+| `sub_15715`／`sub_132A9`／`sub_139E8` | 內政官要求經費、處理時重新確認據點官員、玩家撥款 | `World.queueFundingRequests`／`beginFunding`／`ResolveFunding`；`TestFundingRequestGenerators`／`TestQueuedFundingChoice` | 已證實／產生器、狀態效果與三選一接縫已接入；逐位輸入／原版訊息 UI 未完 |
+| `sub_1578F`／`sub_132E9`／`sub_139E8` | 外交官要求經費、原始 byte 要價、玩家撥款 | `World.queueFundingRequests`／`diplomacy.Demand`／`ResolveFunding`；`TestFundingRequestGenerators`／`TestQueuedFundingChoice` | 已證實／產生器、狀態效果與三選一接縫已接入；逐位輸入／原版訊息 UI 未完 |
+| `sub_13327`／`sub_136C4`／`sub_135ED`／`sub_164F1` | 事件 6：外交官回報玩家停戰結果；玩家付款給回報方，完成停戰收尾；先 #57，再 #58 或 #43–#45 | `World.ceasefireTerms`／`finishQueuedCeasefire`／`QueuePlayerCeasefire`／`dispatchQueuedEvent`；`TestQueuedDiplomacyReportHandlers`／`TestQueuedDiplomacyReportTalkNotices`／`TestPlayerDiplomacyProducers` | 已證實／主要 TALK index、faction／general／金額 marker 已接入；`sub_13C3D` 次要 AH 分支、原版數值欄寬／逐頁排版未完 |
+| `sub_13388`／`sub_13712`／`sub_135ED`／`sub_13526`／`sub_16623` | 事件 7：外交官回報協力結果；玩家付款給協力方，再由協力方攻擊第三方；先 #57，再 #58 或 #47–#49 | `World.cooperationTerms`／`finishQueuedCooperation`／`QueuePlayerCooperation`／`dispatchQueuedEvent`；`TestQueuedDiplomacyReportHandlers`／`TestQueuedDiplomacyReportTalkNotices`／`TestPlayerDiplomacyProducers` | 已證實／主要 TALK index、faction／general／金額 marker 已接入；`sub_13C3D` 次要 AH 分支、原版數值欄寬／逐頁排版未完 |
+| `sub_145C1` | 同勢力、未出陣武將取最高武力者 | `formAICorps` | 已證實／已接入 |
+| `sub_16EC9` | `CS:6C4C` 六槽兵種候選表，每槽要求預備兵至少 `0x32` | `aiFormationTable` | 已證實／已接入 |
+| `sub_14698` | 各兵種剩餘預備兵分配到同型槽位，每槽最多 100 | `formAICorps` | 已證實／已接入 |
+| `sub_14502` | 遷都後掃描 127 筆軍團：同勢力且 `Home=舊首都` 者改掛新首都；目標為新首都者改回舊首都，目標 X/Y 不動 | `syncCorpsAfterCapitalChange`；`TestQueuedEventHandlers` | 已證實／已接入 |
+
+`sub_13091` 的國力也已保留兩個容易漏掉的細節：預備兵各右移 2 位後相加，
+高 byte 不小於據點數時拉到 `0x7D0`，並以原始 24 位資金的高兩 byte
+（unsigned word）與 `0x13` 比較；負資金不能直接用 Go 的算術右移代替。
+
+### remake 的明示轉接差異
+
+原版 `sub_12BD9` 把宣戰先放入事件佇列，事件處理又受每十次呼叫一筆的節奏影響。
+目前 `World.runStrategicAI` 先把宣戰／協力／停戰／遷都放進 queue，再由每小時節拍處理事件 1／2／3／8／9；
+下一個據點 tick 依六槽表編成至多一支敵方軍團，再用 remake 已建的 MMAP 道路圖向目標
+勢力最近的據點行軍。這保留已證實的欄位、比較式與兵種配置，但不宣稱事件 2、事件 3 的完整接受／原版訊息 UI、事件 4／5 的逐位金額輸入／原版訊息、事件 6／7 的 TALK.DAT 文字、事件 10 的訊息、事件 11／12 的物件動畫、事件 9 的原版完整流程
+的完整效果、
+`sub_14575` 的多軍團請求、`sub_142AB`／`sub_14300`／`sub_14325` 行軍狀態機
+已與原版一致；協力／停戰事件的完整 AI 決策、numeric input 與原版訊息／接受流程仍尚未接入這個轉接層。
+
+### 可重播驗收
+
+- `TestScenarioOneStrategyNeighbourOrder`：真實劇本 1 的曹操候選勢力為
+  `[13, 12, 11, 21, 2]`。
+- `TestStrategicAIScenarioOneProducesEnemyWarPath`：玩家勢力 0、固定亂數種子 17，
+  連續六個月每 tick 檢查不變量，至少產生宣戰、敵方編成與軍團戰鬥；目前觀測為
+  宣戰 5、編成 4、戰鬥 4。
+- 同一六個月測試只驗證狀態層 AI 來源，不等同於已由正常 `wlgame` 鍵盤路徑
+  觸發「戰鬥指揮／委任」畫面；該畫面目前仍由存檔回放與獨立接縫測試驗證。
+
+逆向輸入是 DOS/V `KI.EXE`，SHA-256
+`FFFEBA985231CDA4D636E93D10F598470B1F691D00275E4AA38E285893D43868`；工具為
+IDA Pro 9.4。`000xxxxx` 是 IDA 線性位址，`CS:6C4C` 是原始程式段位址；
+`CS:6C4C` 對應的 EXE 檔案偏移 `0x6E4C` 只作獨立檔案定位，不能與前兩者混用。
+
+## 22. ⭐⭐ 事件 4／5 撥款請求接入（2026-08-09）
+
+### 22.1 產生端與事件封包
+
+`sub_15358` 在月結壓縮佇列後，依序呼叫 `sub_15715`、`sub_1578F`；兩支都
+使用 `sub_12FBF` 的前 64 格搜尋。這次接入保留了「事件字高 byte 是選擇器、
+Param 是金額」的實際格式：
+
+| 事件 | 高 byte | 產生條件 | Param |
+|---|---:|---|---:|
+| 4 | 玩家據點編號 | `City.Owner == Player`、`City.Governor != 0xFF`、官員 `+0x1A == 0` | `((gapGrowth + gapPrevention + gapGarrison) >> 1) × 50` |
+| 5 | 非玩家勢力編號 | `Faction.Diplomat != 0xFF`、該 General `+0x1A == 0` | `diplomacy.Demand(Friendship[Player][f], Friendship[f][Player])` |
+
+事件 4 的三個差值仍是原始記錄 byte 的 unsigned 差值：
+
+```
+gapGrowth     = max(180 − (World.City.Growth + 100), 0)
+gapPrevention = max(180 − World.City.Prevention, 0)
+gapGarrison   = max(World.City.GarrisonCap − World.City.Garrison, 0)
+```
+
+`World.City.Growth` 是為了規則層方便而扣掉 100 的值，不能直接拿它與原版
+`[di+0x10]` 比較。事件 5 的 `Demand` 保留原始友好度 byte 的最小值，再依
+其最高位判定 100／125 基準；這一點在一方交戰、一方和平時不能只比較 `Value()`。
+
+### 22.2 處理端與撥款效果
+
+`sub_132A9` 由事件字高 byte 還原據點，再讀 `City +0x19`；`sub_132E9` 由
+事件字高 byte 還原勢力，再讀 `Faction +0x2A`。兩支都在呼叫
+`sub_139E8` 前重新確認官員指標，remake 對應 `World.beginFunding` 的
+fail-closed 邊界。事件排入後官員被撤換時，不會把舊事件誤套到新官員。
+
+`sub_139E8` 的已證實狀態效果為：非零初始要求低於 `0x1F4` 時先拉到 500；
+玩家自訂值的輸入上限是 `0x7530`；拒絕（response 2）完全沒有副作用；其他
+兩列把金額寫成 `(amount × 2) >> 8` 的 byte 到 General `+0x1A`，並從玩家
+勢力資金扣掉原始金額。runtime 對應 `PendingFunding`、`SetFundingAmount`、
+`ResolveFunding` 與 `cmd/wlgame/funding.go`；完整 TALK.DAT 訊息順序與逐位
+輸入畫面仍未宣稱 parity。
+
+### 22.3 驗證邊界
+
+`TestFundingRequestGenerators` 驗證事件 4／5 的高 byte、Param 與 Growth
+偏移；`TestQueuedFundingChoice` 驗證處理前不改資金、pending 時鐘凍結、
+`amount/128` 寫回、玩家扣款、500 初始下限與拒絕無副作用。這只完成事件 4／5
+的產生器、狀態效果與玩家 UI 接縫；事件 6／7 的狀態效果與外交官重驗證另由
+`TestQueuedDiplomacyReportHandlers` 與 `TestQueuedDiplomacyReportTalkNotices` 固定；事件 6／7 的主要 TALK
+索引與 marker 已接入 modal；事件 9 的可見 #37 通知與 #409 空槽 no-op、事件 10 的訊息、事件 11／12 的物件動畫、
+事件 6／7 的玩家 producer 已由 `TestPlayerDiplomacyProducers` 固定：敵對提案
+直接走 `sub_13526`，停戰／協力分別由 `sub_1301C` 的第 20 格提示位置寫入事件
+6／7，且完整 256 格搜尋與重複防護均驗證。事件 11／12／13 的已證實 Talk 索引、城市目標與 modal 通知已由 `TalkNotice`、`TestQueuedTalkNotices` 與 `cmd/wlgame/messages.go` 接入；`sub_14269` 的事件 11／12 持久效果也已接入；仍未完成的是事件 6／7 的次要反應／數值欄寬／逐頁排版與長期正常劇本 oracle；事件 9 的原版完整流程、事件 10 訊息、事件 11／12 物件動畫呈現、
+原版訊息與長期正常劇本 oracle 仍是未完成邊界。
+
+### 22.4 事件 9 的空槽後續
+
+`sub_150D7` 在玩家勢力條件成立時，以 `CX=25h` 顯示 #37；隨後的 `CX=199h`
+對應 #409。Docker 內讀取 PC-98／DOS/V 原始 `TALK.DAT` 後，#409 只有資料上的空行，
+沒有文字 byte 或 marker。`cmd/wlgame/messages.go` 因此對全空行訊息不建立空白 modal，
+`TestReleasedGeneralRawFollowup409IsEmptyNoOp` 固定這個可見結果；這不把原版空呼叫的
+堆疊時序或長程畫面 oracle 宣稱為 parity。
+## 22. ⭐ `sub_17C6E`：外交／撥款共用的數值編輯器（2026-08-09）
+
+`sub_13902`（事件 2／3）與 `sub_139E8`（事件 4／5）都把目前值、初值與
+`0x7530` 上限交給 `sub_17C6E`（IDA 線性位址 `00017C6E`）。它的操作表與
+函式邊界直接固定以下數值語意：
+
+| IDA 線性位址 | 行為 | 推論等級 |
+|---|---|---|
+| `00017DA5` | `SI = SI×10 + digit`，超過呼叫端上限就鉗住 | 已證實 |
+| `00017DC3` | `SI = SI×100`，超過上限就鉗住 | 已證實 |
+| `00017DDD` | `SI = SI÷10` | 已證實 |
+| `00017DF1` | `SI = 0`，清零後留在輸入迴圈 | 已證實 |
+| `00017DEC` | `SI = 初值` | 已證實 |
+| `00017DEA` | `STC` 結束輸入迴圈，保留目前 `SI` | 已證實 |
+
+remake 以 `internal/state.AmountEdit`、`World.EditDiplomacyOfferAmount`、
+`World.EditFundingAmount` 接入同一組純狀態語意，並由
+`TestRawAmountEditorSemantics` 固定數字追加、`00`、退位、還原、清零、非法數字
+與 30,000 上限。`cmd/wlgame` 的指定金額列提供跨平台數字鍵、退格、Insert、Delete、
+Home 映射；這是跨平台輸入接縫，不是 PC-98 掃描碼或原版數字視窗的畫面 parity。
+
+證據輸入為唯讀 DOS/V `KI.EXE.i64`／`KI.EXE.asm`／`KI.EXE`；工具為
+`ida-pro-9.4-ver2:uidfix-v1`／IDA Pro 9.4，位址均為 IDA 線性位址。原版 PC-98
+掃描碼、數字視窗的字型／欄寬／游標、TALK.DAT 順序與逐頁訊息仍列為未完成。
+
+## 23. ⭐ 指定金額的事件差異（2026-08-09）
+
+事件 2／3 的 `sub_13902` 與事件 4／5 的 `sub_139E8` 不能共用同一個
+「超過初始值」規則：
+
+| 路徑 | 輸入 0 | 高於初始要求 | remake 接入 |
+|---|---|---|---|
+| 外交 `sub_13902` | 回傳 0，走無條件收尾 | 回傳 3，外層 `AL >= 2` 不收尾 | `ResolveDiplomacy` 以 pending `InitialAmount` fail-closed |
+| 撥款 `sub_139E8` | 選項碼 2，不寫官員／資金 | 選項碼 3，仍照輸入金額寫入／扣款 | `ResolveFunding` 分開處理 |
+
+外交 terms 只在進入玩家視窗前計算一次；保存初始金額也避免平手代表政治值
+在確認按鍵時重抽亂數。證據定位為 `sub_13902`／`sub_139E8` 的 IDA 線性位址
+`00013902`／`000139E8`，測試為 `TestDiplomacyAndFundingAmountOutcomeBounds`。
+PC-98 數字視窗與原版訊息排版仍未宣稱完成。
+
+## 24. ⭐ `sub_139E8` 後續 TALK 分支與 formatter table（2026-08-09）
+
+### 24.1 `CS:08A4` marker 表
+
+`sub_1084A` 把反斜線後的 ASCII marker 減 `0x31`，再索引 `CS:08A4` 的 word table。IDA Pro 9.4 對 DOS/V `KI.EXE.i64`（SHA-256 `7b7c1aa67c47f99062cfdd4439b3423302808c874f929c3ea6f75ec564034c26`）讀得以下已用 handler；位址均是 IDA 線性位址：
+
+| marker | handler | 已證實行為 |
+|---|---:|---|
+| `\1` | `000108B2` | formatter stack 的武將索引 → `0x4240` 武將姓名 |
+| `\2` | `000108DB` | formatter stack 的據點索引 → `0x0840` 據點姓名 |
+| `\3` | `00010904` | 勢力記錄 `+1` 君主索引 → 君主姓名 |
+| `\4` | `00010939` | `word_10CFD` 玩家勢力 `+2` 軍師索引 → 軍師姓名 |
+| `\6` | `0001097E` | 不畫字；消耗一個 word、`DX -= 0x30`，屬欄位排版控制 |
+| `\7` | `00010984` | formatter stack 的 word → 十進位數值 |
+
+原始 DOS/V `TALK.DAT` 事件 4 base 是 #278（`0x116`），事件 5 base 是 #319（`0x13F`）。`sub_139E8` 先走 base+5 menu，再以 `base+6+[code]` 顯示結果，最後以 `base+10+5×原始選項` 收尾：
+
+| 路徑 | 事件 4 | 事件 5 | 狀態 |
+|---|---:|---:|---|
+| 全額 | #284 → #288 | #325 → #329 | 原始要求撥款 |
+| 指定等額 | #284 → #293 | #325 → #334 | 撥款 |
+| 指定低額 | #285 → #293 | #326 → #334 | 輸入額撥款 |
+| 指定 0 | #286 → #293 | #327 → #334 | code 2、無副作用 |
+| 指定超額 | #287 → #293 | #328 → #334 | code 3、仍以輸入額撥款 |
+| 拒絕 | #286 → #298 | #327 → #339 | 無副作用 |
+
+`cmd/wlgame/funding.go` 的 `fundingTalkIndices`／`enqueueFundingTalk` 已接上述結果與收尾 queue；`TestFundingTalkIndicesMatchRaw139E8Branches` 固定 12 個分支。文字 modal 保留 TALK.DAT 行邊界，但沒有把 `DX` 欄位位置、PC-98 數值字型／游標、逐頁動畫或 `\6` 像素排版冒充成完成。

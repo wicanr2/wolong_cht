@@ -17,9 +17,9 @@ func (b *Battle) lockOnNearest(side, k int) {
 			continue
 		}
 		d := abs(me.X-e.X) + abs(me.Y-e.Y)
-		// 爬不上城牆的兵不該把牆上的敵人當成主要目標——原版是加一個
-		// 64 格的距離懲罰讓它排到最後（`sub_1A85B`，docs/re/11 §5.8c）。
-		if e.Z > me.Z && !me.CanClimb() {
+		// `sub_1A85B` 先比較雙方 +0x1E，再依攻擊者兵種與候選的
+		// +0x00 bit 1 決定是否加 0x40；不是單純比較 Z 高低。
+		if targetPlanePenalty(me, e) {
 			d += Width
 		}
 		if d < bestD {
@@ -27,6 +27,14 @@ func (b *Battle) lockOnNearest(side, k int) {
 		}
 	}
 	me.Target = best
+}
+
+func targetPlanePenalty(me, e *Soldier) bool {
+	mePlane, enemyPlane := me.planeHigh(), e.planeHigh()
+	if mePlane > enemyPlane {
+		return e.HighTerrain
+	}
+	return me.Kind <= Cavalry && enemyPlane != PlaneHighGround
 }
 
 // applyNewOrder 重現 `sub_1A7B7`：**退卻不可打斷**，換命令時記下起點。
@@ -39,6 +47,10 @@ func (s *Soldier) applyNewOrder() bool {
 	}
 	s.Cmd = s.Next
 	s.StepX, s.StepY, s.StepZ = s.X, s.Y, s.Z
+	// 原版換令時把繞路點游標歸零；舊命令的路徑不能帶進退卻或
+	// 下一個攻擊目標，否則兵會永遠沿著上一個目標的路走。
+	s.Path = nil
+	s.PathAt = 0
 	return true
 }
 
@@ -66,6 +78,9 @@ func (b *Battle) updateSoldier(side, k int) {
 		// 已就位，原地待命。
 	}
 	b.moveToward(side, k)
+	// `sub_1B240` 尾端的 `xor byte ptr [si+2], 1`。特殊投射物在
+	// 本幀攻擊時先取舊值，下一幀人物姿勢再翻面。
+	s.PoseStep ^= 1
 }
 
 // doFormation 是命令 0：走到陣形指定的座標，**到位就轉成「就位」並補滿疲勞**。
@@ -107,9 +122,13 @@ func (b *Battle) doAttack(side, k int) {
 		b.shoot(side, k, e)
 		return
 	}
+	if specialAttackAvailable(s, e) {
+		b.shootSpecial(side, k, e)
+		return
+	}
 	s.GoalX, s.GoalY, s.GoalZ = e.X, e.Y, e.Z
 	if abs(s.X-e.X)+abs(s.Y-e.Y) <= 1 && s.Z == e.Z {
-		b.hit(side, e, meleePower)
+		b.attackCollision(side, s, e)
 	}
 }
 
@@ -148,17 +167,52 @@ func (b *Battle) doGuard(side, k int) {
 
 // doRetreat 是命令 5：往自軍側的邊緣走，走出畫面就離場。
 //
-// 說明書 4.1：「兵士が戦闘して敵にやられると、**画面外に退却**し、
-// 待機中の兵が出陣します」。
+// 說明書 4.1：「兵士が戦闘して敵にやられると、**画面外に退却**し，
+// 待機中の兵が出陣します」。原版 `sub_1AAED` 會把出口寫成
+// X=1／62、Y 夾在 0x10..0x2F，Z 固定為 0。
 func (b *Battle) doRetreat(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
+	// 退卻是新的、固定朝向側邊的出口；若兵在受傷前已經有攻擊繞路點，
+	// 那個點可能把它留在城門／敵陣附近。`applyNewOrder` 通常會清掉路徑，
+	// 但已經處於退卻命令的兵也可能從受擊或隊長連鎖進入這裡，必須在出口
+	// 再清一次，否則正常攻城會有兵永遠走不到畫面邊緣。
+	s.Path = nil
+	s.PathAt = 0
 	edge := MinCoord
 	if b.Sides[side].Mirror {
 		edge = MaxCoord
 	}
-	s.GoalX, s.GoalY, s.GoalZ = edge, s.Y, b.Field.StandLevel(edge, s.Y)
+	retreatY := s.Y
+	if retreatY < 0x10 {
+		retreatY = 0x10
+	}
+	if retreatY > 0x2F {
+		retreatY = 0x2F
+	}
+	s.GoalX, s.GoalY, s.GoalZ = edge, retreatY, 0
 	if s.X == edge {
 		s.Alive = false
+		b.squadLeaderGone(side, k)
+	}
+}
+
+// squadLeaderGone 重現 `sub_1A83F`：某隊第一格的隊長不在場時，該隊
+// 剩下的七人全部改排退卻。隊長已經不在，畫面外的預備兵也不能再補成
+// 一個沒有隊長的隊伍；清掉該隊待機數才能讓 §5.9 的「補不出兵」成立。
+func (b *Battle) squadLeaderGone(side, k int) {
+	if k < 0 || k >= SoldiersOnFoot || k%PerSquad != 0 {
+		return
+	}
+	squad := k / PerSquad
+	s := &b.Sides[side]
+	s.Reserve[squad] = 0
+	for j := squad * PerSquad; j < (squad+1)*PerSquad; j++ {
+		if j == k || !s.Soldiers[j].Alive {
+			continue
+		}
+		if s.Soldiers[j].Cmd != Retreat {
+			s.Soldiers[j].Next = Retreat
+		}
 	}
 }
 
@@ -170,12 +224,17 @@ func (b *Battle) moveToward(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
 	s.StepX, s.StepY, s.StepZ = s.GoalX, s.GoalY, s.GoalZ
 
-	// 有繞路點就先走繞路點——原版 `sub_1B00D` 每次取一個當中繼點，
-	// 取完（`[si+0x17]` 減到 −1）才回頭直接朝目標走（§5.15）。
-	if p, ok := s.Path.Next(); ok {
-		if s.Path.Len() > 0 || (p.X == s.GoalX && p.Y == s.GoalY) {
-			s.StepX, s.StepY = p.X, p.Y
-			s.StepZ = b.Field.StandLevel(p.X, p.Y)
+	// 有繞路點就先走目前的中繼點。原版 `sub_1B00D` 只有在抵達
+	// 目前的 X/Y/Z 後才消費它；不能每幀直接取下一個點，否則兵只
+	// 走一步就會跳過轉角（§5.15）。
+	if p, ok := s.Path.Current(); ok {
+		pz := b.Field.StandLevel(p.X, p.Y)
+		if s.X == p.X && s.Y == p.Y && s.Z == pz {
+			s.Path.Advance()
+			p, ok = s.Path.Current()
+		}
+		if ok {
+			s.StepX, s.StepY, s.StepZ = p.X, p.Y, b.Field.StandLevel(p.X, p.Y)
 		}
 	}
 
@@ -254,8 +313,11 @@ func (b *Battle) tryMove(side, k, x, y, z int) bool {
 	// Z 沒指定成那一格的可站立層時，用那一格的頂。
 	if !b.Field.Walkable(x, y, z) {
 		z = b.Field.StandLevel(x, y)
-		// 爬不上去的兵不能靠這個上牆。
-		if z > s.Z && !s.CanClimb() {
+		// 水平跨格時，原版 `sub_1B1B1` 會把兵的 Z 同步調整一層；
+		// 「大將／騎馬不能爬牆」只限制純 Z 軸移動（`sub_1AF69`
+		// 在 X/Y 已到位後的分支），不能拿來阻擋退卻時跨過一格高度 1
+		// 的邊界地形。
+		if x == s.X && y == s.Y && z > s.Z && !s.CanClimb() {
 			return false
 		}
 		// 一次只能上下一層。
@@ -277,17 +339,14 @@ func (b *Battle) tryMove(side, k, x, y, z int) bool {
 	if side2, k2 := b.anyoneAt(x, y, z); k2 >= 0 {
 		if side2 != side {
 			e := &b.Sides[side2].Soldiers[k2]
-			if e.IsGeneral() {
-				// 大將另一條路：要過命中判定，而且打不死（`sub_1B6BC`）。
-				b.hitGeneral(s, e)
-			} else {
-				b.hit(side, e, meleePower)
-			}
+			// 大將走 `sub_1B6BC`，其餘敵人走 `sub_1B618`。
+			b.attackCollision(side, s, e)
 			return false
 		}
 		return b.swapWith(side, k, side2, k2)
 	}
 	s.X, s.Y, s.Z = x, y, z
+	s.syncTerrain(b.Field, x, y, z)
 	return true
 }
 
@@ -328,6 +387,9 @@ func (b *Battle) swapWith(side, k, side2, k2 int) bool {
 	me.X, other.X = other.X, me.X
 	me.Y, other.Y = other.Y, me.Y
 	me.Z, other.Z = other.Z, me.Z
+	me.PlaneHigh, other.PlaneHigh = other.PlaneHigh, me.PlaneHigh
+	me.HighTerrain, other.HighTerrain = other.HighTerrain, me.HighTerrain
+	me.Climbing, other.Climbing = other.Climbing, me.Climbing
 	other.Swapped = true
 	return true
 }

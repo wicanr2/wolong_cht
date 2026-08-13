@@ -1,4 +1,4 @@
-// wlgame 是戰略主畫面的原型。
+// wlgame 是戰略主畫面的可玩垂直切片。
 //
 // 它把三層接起來跑：
 //
@@ -8,8 +8,9 @@
 //
 //	tools/go.sh run ./cmd/wlgame -orig workplace/orig/dosv
 //
-// **這還不是遊戲。** 沒有指令、沒有軍團、沒有戰鬥、不能存檔。
-// 它做的是把「時間在跑的世界」呈現出來，讓已定案的規格
+// 它已接上命令、軍團、行軍、戰術戰鬥與四槽存檔 overlay；仍不是完整
+// 發行版，尚缺 M7 全量文意校訂、目標平台實機與部分原版素材語意。
+// 這裡把「時間在跑的世界」呈現出來，讓已定案的規格
 // （docs/mechanics/15-realtime.md）能用眼睛驗收：
 //
 //   - 時間是連續的，不是回合制
@@ -31,6 +32,8 @@ import (
 	"image/png"
 	"log"
 	"os"
+	"path/filepath"
+	"strings"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
@@ -39,31 +42,35 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/assets/battle"
 	"github.com/wicanr2/wolong_cht/internal/assets/cjk"
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
-	"github.com/wicanr2/wolong_cht/internal/assets/world"
 	"github.com/wicanr2/wolong_cht/internal/assets/text"
+	"github.com/wicanr2/wolong_cht/internal/assets/world"
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
+	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/rules/general"
-	"github.com/wicanr2/wolong_cht/internal/rules/persuasion"
 	"github.com/wicanr2/wolong_cht/internal/rules/march"
+	"github.com/wicanr2/wolong_cht/internal/rules/persuasion"
 	"github.com/wicanr2/wolong_cht/internal/rules/rng"
+	"github.com/wicanr2/wolong_cht/internal/savepath"
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
-// 原版是 640×400，版面只有兩塊：**最上方 32 px 的橫幅，其餘全是地圖**。
-// 資訊、命令、一覽表都是**浮在地圖上的視窗**，沒有常駐側欄。
+// 原版 DOS/V 是 640×400：最上方 32 px 是橫幅，接著 32 px 命令列；
+// 左側是 27×21 格的大地圖，右側 208 px 是縮小地圖／自勢力情報常駐 HUD。
+// 命令、列表、財政與事件選擇等暫存視窗仍浮在這個自然策略畫面上。
 //
-// 這三個數字是從 PC-98 實機截圖量出來的，不是估的（docs/playtest/05）：
-// 用水域分佈把畫面對回大地圖，狀態列高度掃 0／8／16／24／32 五種，
-// **只有 32 得到 725 格 100% 吻合**，而且地圖是**對齊格線**畫的、
-// 一格 16 px——所以可視範圍正好 40×23 格。
+// 這三個數字沿用 640×400 DOS/V 畫布與原版 16 px 格座標；歷史 PC-98 截圖只作
+// 交叉驗證，不作本輪 DOS/V 畫面 oracle：
+// 用水域分佈把畫面對回大地圖，狀態列高度掃 0／8／16／24／32 五種；再以
+// 使用者 YouTube oracle 核對右欄分界。地圖仍是**對齊格線**畫的、一格 16 px，
+// 自然策略 HUD 的可視範圍是左側 27×21 格。
 const (
 	screenW, screenH = 640, 400
 	bannerH          = 32
-	viewCols         = screenW / 16             // 40
-	viewRows         = (screenH - bannerH) / 16 // 23
+	viewCols         = strategyMapW / 16 // 27
+	viewRows         = strategyMapH / 16 // 21
 )
 
 // 橫幅右段那三個數字欄的右緣。橫幅本身（ICONGRF 段 0）已經印好
@@ -102,6 +109,32 @@ type game struct {
 	rng    *rng.Rand
 	td     *textdraw.Drawer
 	chrome *chrome.Set // 原版視窗外框（ICONGRF 段 3）
+	// amountFrame 是 DOS/V sub_17D0D 的 96×64 數值視窗內框；
+	// 一般 chrome.Set 只負責其他視窗的 8×8 邊框。
+	amountFrame *ebiten.Image
+	// cursorImage 是 DOS/V KI.EXE seg002:031B 的白框／紅填 16×16 游標。
+	// 數值 modal 內用它取代向量高亮，鍵盤 fallback 才會把箭頭定位到目前格位。
+	cursorImage *ebiten.Image
+	// battleCommandBase／battleCommandGlyphs／battleSideCommands 是松崗
+	// DOS/V ICONGRF 段 1 的原版戰術指令素材；nil 時才用文字 fallback。
+	battleCommandBase   *ebiten.Image
+	battleCommandGlyphs [6]*ebiten.Image
+	battleSideCommands  *ebiten.Image
+	battleCommandSelect color.RGBA
+
+	// roads 與 tactical 是掛在 World 上的執行期來源，不屬於存檔本體。
+	// 讀取另一個槽位後要重新掛回，否則數值雖然恢復，行軍／戰鬥會悄悄退回
+	// 沒有道路圖與戰術資料的降級路徑。
+	roads    *march.Graph
+	tactical *state.TacticalSetup
+
+	// 存檔採明確指定的可寫 overlay；空字串代表這次執行沒有開啟持久化。
+	origDir    string
+	sourceFile string
+	saveFile   string
+	saveBase   string
+	saveUI     saveUIState
+	launcher   *launcherModel
 
 	open       [numWindows]bool
 	camX, camY int
@@ -111,6 +144,11 @@ type game struct {
 	// （docs/re/06 §4）；remake 改成固定 60 Hz 邏輯更新 ＋ 可調倍率，
 	// 並把這件事標記為 remake 差異（15-realtime.md §7）。
 	speed int
+
+	// idleGate 對應松崗繁中版 sub_11F7F 的「游標座標未變」判定。
+	// 它是讓自然世界迴圈開始的 UI 閘門；事件 queue 的 consumer 仍在
+	// World.TickMap 的每時更新內，不能把兩者混成同一件事。
+	idleGate idleClockGate
 
 	// list 是開著的一覽表（武將／據點…）。它是**非常駐視窗**，
 	// 所以開著的時候時間會停（15-realtime.md §2）。
@@ -139,13 +177,37 @@ type game struct {
 	// 進言的狀態機：選指令 → 選對象 → 說服。
 	advise    adviseStage
 	adviseCmd persuasion.Command
+	ally      int
 	target    int
 	sess      *persuasion.Session
 	sessCur   int
 	adviseLog []string
 
 	lastEvent string
+	messages  []messageDialog
 	quitting  bool
+
+	// battleChoiceRow 是遭遇決策視窗目前反白的選項。
+	battleChoiceRow int
+	// battleTalkSession 是 presentation-only 的戰術開場 TALK queue；不進 state／存檔。
+	battleTalkSession battleTalkSession
+
+	// diplomacyRow 是事件 2／3 外交三選一視窗目前反白的選項。
+	diplomacyRow int
+	// diplomacyEditingAmount 對應原版 sub_13902 選到「資金提供」後
+	// 進入 sub_17C6E 的第二個 modal；未進入數值器前 Enter 仍只選列。
+	diplomacyEditingAmount bool
+
+	// fundingRow 是事件 4／5 撥款三選一視窗目前反白的選項。
+	fundingRow int
+	// fundingEditingAmount 對應事件 4／5 的 sub_139E8 → sub_17C6E。
+	fundingEditingAmount bool
+
+	// amountCursor 是原版滑鼠格選取的跨平台呈現狀態。row／col 直接
+	// 對應 CS:7D93h 的 3×6 格；鍵盤只是把同一個格動作映射出來。
+	amountCursorRow, amountCursorCol int
+	amountCursorActive               bool
+	amountCursorOwner                int
 
 	// 截圖模式：跑 shotAt 幀之後把畫面存成 PNG 然後結束。
 	// 這是這支程式**唯一**的自動驗收方式——Ebiten 要顯示器，
@@ -153,6 +215,11 @@ type game struct {
 	shotPath string
 	shotAt   int
 	frame    int
+	shotDone bool
+
+	// 災害物件圖像快取。key 內含季節、原版 object type 與 8 相位；
+	// Level 不進 key，因為它是 marker 強度，不是動畫幀。
+	disasterImages map[int]*ebiten.Image
 }
 
 // adviseStage 是進言的三個階段。
@@ -161,6 +228,7 @@ type adviseStage int
 const (
 	adviseNone        adviseStage = iota
 	advisePickCommand             // 選敵對／停戰／協力
+	advisePickAlly                // 協力要請先選協力方
 	advisePickTarget              // 選對象勢力
 	advisePersuade                // 君主拒絕了，開始說服
 )
@@ -172,8 +240,12 @@ const (
 // 刻意寫成一個函式而不是散在各視窗的開關程式碼裡——
 // 這樣「哪些視窗會停時間」只有一個地方可以改。
 func (g *game) timeRuns() bool {
+	if g.world != nil && g.world.Outcome() != state.InProgress {
+		return false
+	}
 	// 一覽表、進言、編成都是非常駐視窗 —— 開著就停時間。
-	if g.list != nil || g.adviseActive() || g.form.active || g.finance.active {
+	if g.list != nil || g.adviseActive() || g.form.active || g.finance.active ||
+		g.saveUI.active || g.messageActive() {
 		return false
 	}
 	for k := windowKind(0); k < numWindows; k++ {
@@ -217,14 +289,14 @@ func (g *game) openGeneralList() {
 
 // drawList 畫一覽表。
 //
-// 原版的清單視窗是**米色底、黑字**，選取的那一列是**綠色反白條**
-// （PC-98 實機量到的三個顏色都寫在 internal/ui/chrome）。
+// 原版的清單視窗是**米色底、黑字**，選取的那一列是**綠色反白條**；
+// 顏色常數沿用共用 ICONGRF／palette 證據，PC-98 實機只作歷史交叉驗證。
 // 兩段式選取的第一下就是把那一列變綠，第二下才決定——
 // 這在原版的君主選擇畫面上實際看得到。
 func (g *game) drawList(screen *ebiten.Image) {
 	l := g.list
-	const x, y, w = 48, 56, 448
-	h := (5+(l.Height+2)*(textdraw.GlyphH+2))/chrome.Tile*chrome.Tile + 2*chrome.Tile
+	const x, y, w = listWindowX, listWindowY, listWindowW
+	h := listWindowHeight(l)
 	g.chrome.Window(screen, x, y, w, h, chrome.Sheet)
 
 	ink := chrome.Ink
@@ -256,18 +328,25 @@ func (g *game) drawList(screen *ebiten.Image) {
 		ry += textdraw.GlyphH + 2
 	}
 
-	hint := g.listHint
-	if l.Phase() == listwin.Selected {
-		hint = "已選取　Enter 決定　ESC 退回"
+	footerY := listFooterY(l)
+	footerLabels := [...]string{"上一頁", "下一頁", "確定", "取消"}
+	for i, label := range footerLabels {
+		r := listFooterRect(l, i)
+		col := dim
+		if (i == 2 && l.Phase() == listwin.Selected) || i == 3 {
+			col = ink
+		}
+		g.td.Draw(screen, label, r.Min.X+16, footerY, col)
 	}
-	g.td.Draw(screen, hint, inner, y+h-chrome.Tile-textdraw.GlyphH, dim)
 }
 
 func pressed(k ebiten.Key) bool { return inpututil.IsKeyJustPressed(k) }
 
 func (g *game) Update() error {
 	g.frame++
-	if g.shotPath != "" && g.frame > g.shotAt {
+	// 截圖模式要等 Draw 真正取到像素後才結束；只用 `frame > shotAt`
+	// 會在高更新速率下跳過那一幀，讓 packaged smoke 沒有 PNG 卻仍 exit 0。
+	if g.shotPath != "" && g.shotDone {
 		return ebiten.Termination
 	}
 	// [HARD] ESC 只取消／關視窗，F10 才離開（CLAUDE.md §10）。
@@ -284,9 +363,43 @@ func (g *game) Update() error {
 		g.quitting = true
 		return nil
 	}
+	if g.launcher != nil {
+		return g.updateLauncher()
+	}
+	if g.world != nil && g.world.Outcome() != state.InProgress {
+		return g.updateOutcome()
+	}
 	// 戰場畫面獨佔一切——戰鬥中不能停時間，也不能開別的視窗。
 	if g.battleActive() {
 		g.updateBattle()
+		return nil
+	}
+	// 玩家捲入遭遇但尚未決定戰鬥方式時，戰略時間也不能前進。
+	if g.world.PendingEncounter() != nil {
+		g.updateBattleChoice()
+		return nil
+	}
+	// 事件前置報告可能與外交／撥款 pending 同一個 tick 產生；原版先
+	// 顯示 TALK，再讓玩家進入選擇，因此通知 modal 優先於這兩個選單。
+	if g.messageActive() {
+		if pressed(ebiten.KeyEnter) || pressed(ebiten.KeySpace) {
+			if _, pages, ok := messagePage(g.messages[0].lines, g.messages[0].page); ok &&
+				g.messages[0].page+1 < pages {
+				g.messages[0].page++
+			} else {
+				g.messages = g.messages[1:]
+			}
+		}
+		return nil
+	}
+	// 事件 2／3 外交三選一也會凍結戰略時間。
+	if g.world.PendingDiplomacy() != nil {
+		g.updateDiplomacy()
+		return nil
+	}
+	// 事件 4／5 內政官／外交官撥款也會凍結戰略時間。
+	if g.world.PendingFunding() != nil {
+		g.updateFunding()
 		return nil
 	}
 	// 進言流程是模態的，優先吃輸入。
@@ -294,35 +407,26 @@ func (g *game) Update() error {
 		g.updateAdvise()
 		return nil
 	}
-	if pressed(ebiten.KeyP) {
-		g.openAdvise()
+	// 存檔／讀取是模態視窗，不能讓背景的命令鍵穿透。
+	if g.saveUI.active {
+		g.updateSaveUI()
 		return nil
+	}
+	// 系統視窗內才接受存檔快捷鍵；避免在地圖上誤觸而改變狀態。
+	if g.open[winSystem] {
+		switch {
+		case pressed(ebiten.KeyS):
+			g.beginSaveUI(saveWrite)
+			return nil
+		case pressed(ebiten.KeyL):
+			g.beginSaveUI(saveRead)
+			return nil
+		}
 	}
 	// 一覽表開著時吃掉所有輸入 —— 它是模態的（說明書 3.8 的兩段式操作
 	// 只有在獨佔輸入時才成立）。
 	if g.list != nil {
-		switch {
-		case pressed(ebiten.KeyArrowUp):
-			g.list.Move(-1)
-		case pressed(ebiten.KeyArrowDown):
-			g.list.Move(1)
-		case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
-			if id, ok := g.list.Confirm(); ok {
-				if g.listPick(id) {
-					g.list = nil
-				}
-			}
-		case pressed(ebiten.KeyEscape):
-			if g.list.Cancel() {
-				g.list = nil
-			}
-		}
-		for i, k := range []ebiten.Key{ebiten.Key1, ebiten.Key2, ebiten.Key3,
-			ebiten.Key4, ebiten.Key5} {
-			if pressed(k) {
-				g.list.SortBy(i)
-			}
-		}
+		g.updateListUI()
 		return nil
 	}
 	// 財政畫面是模態的，優先吃輸入。
@@ -335,33 +439,42 @@ func (g *game) Update() error {
 		g.updateForm()
 		return nil
 	}
+	// 自然策略頂端八格只在沒有 active modal／戰鬥／啟動器時接收滑鼠。
+	// 上面的 return 順序是輸入隔離閘；winSystem 是唯一非 resident 的原生
+	// 視窗，也必須阻止命令列點擊穿透。游標 hover 不改狀態，因為目前沒有
+	// 足夠 DOS/V 證據證明原版頂端八格的 hover highlight。
+	if !g.open[winSystem] && inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+		x, y := ebiten.CursorPosition()
+		if command, ok := hitTestNaturalCommand(x, y); ok {
+			g.dispatchNaturalCommand(command)
+			return nil
+		}
+	}
+	for _, key := range []ebiten.Key{
+		ebiten.KeyP, ebiten.KeyJ, ebiten.KeyF, ebiten.KeyA,
+		ebiten.KeyC, ebiten.KeyT, ebiten.KeyG, ebiten.KeyK,
+	} {
+		if pressed(key) {
+			command, ok := strategyCommandForShortcut(key)
+			if ok {
+				g.dispatchNaturalCommand(command)
+				return nil
+			}
+		}
+	}
 	switch {
-	case pressed(ebiten.KeyG):
-		g.openGeneralList()
-		return nil
-	case pressed(ebiten.KeyJ):
-		g.openPersonnel()
-		return nil
-	case pressed(ebiten.KeyF):
-		g.beginFinance()
-		return nil
-	case pressed(ebiten.KeyT):
-		g.openCityList()
-		return nil
-	case pressed(ebiten.KeyK):
-		g.openFactionList()
-		return nil
-	case pressed(ebiten.KeyC):
-		g.openCorpsList()
-		return nil
-	case pressed(ebiten.KeyA):
-		g.beginForm()
-		return nil
 	case pressed(ebiten.KeyM):
 		g.beginMarch()
 		return nil
 	}
+	// 松崗繁中版會在游標未移動且沒有新輸入時才走 sub_11CD0 的自然世界
+	// 迴圈。上方會開啟 modal 的命令已經 return；這裡保留仍可穿透到
+	// timeRuns 的 UI 操作，確保同一 frame 不會一邊接受命令一邊推進日期。
+	inputActive := ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) ||
+		ebiten.IsMouseButtonPressed(ebiten.MouseButtonMiddle) ||
+		ebiten.IsMouseButtonPressed(ebiten.MouseButtonRight)
 	if pressed(ebiten.KeyEscape) {
+		inputActive = true
 		// 由上而下關掉最上面那個開著的視窗。
 		for k := numWindows - 1; k >= 0; k-- {
 			if g.open[k] {
@@ -372,11 +485,13 @@ func (g *game) Update() error {
 	}
 	for i, k := range []ebiten.Key{ebiten.Key1, ebiten.Key2, ebiten.Key3, ebiten.Key4} {
 		if pressed(k) {
+			inputActive = true
 			g.open[i] = !g.open[i]
 		}
 	}
 	for i, k := range []ebiten.Key{ebiten.KeyMinus, ebiten.KeyEqual} {
 		if pressed(k) {
+			inputActive = true
 			g.speed += []int{-1, 1}[i]
 		}
 	}
@@ -392,15 +507,19 @@ func (g *game) Update() error {
 		step = 8
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyArrowRight) {
+		inputActive = true
 		g.camX += step
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyArrowLeft) {
+		inputActive = true
 		g.camX -= step
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyArrowDown) {
+		inputActive = true
 		g.camY += step
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyArrowUp) {
+		inputActive = true
 		g.camY -= step
 	}
 	g.clampCam()
@@ -408,8 +527,28 @@ func (g *game) Update() error {
 	if !g.timeRuns() {
 		return nil
 	}
+	// 第一個觀測 frame 也視為尚未 idle；原版必須先得到一筆穩定座標，
+	// 才會設 byte_198A3 的 bit 7。任何游標移動或命令都會停住這次
+	// 據點／軍團／物件／時鐘更新，下一個靜止 frame 才可恢復。
+	cursorX, cursorY := ebiten.CursorPosition()
+	if !g.idleGate.Allows(cursorX, cursorY, inputActive) {
+		return nil
+	}
+	// speed=0 是 remake 的明示暫停：保留原本可見 map-loop 的物件動畫，
+	// 但不推進據點／軍團／時鐘。
+	if g.speed == 0 {
+		g.world.AdvanceMapObjects(g.rng)
+		return nil
+	}
 	for i := 0; i < g.speed; i++ {
-		ev := g.world.Tick(g.rng)
+		// 第一個規則 tick 跑完整的原版順序「據點／軍團／物件／時鐘」；
+		// 同一畫面的額外 speed tick 不重跑物件。
+		var ev state.Event
+		if i == 0 {
+			ev = g.world.TickMap(g.rng)
+		} else {
+			ev = g.world.Tick(g.rng)
+		}
 		if ev.Settled {
 			g.lastEvent = "月結"
 			if n := len(ev.Disaster); n > 0 {
@@ -423,6 +562,14 @@ func (g *game) Update() error {
 			g.lastEvent = big5(g.world.LordName(i)) + " 滅亡"
 		}
 		g.reportCorps(ev)
+		g.reportStrategy(ev)
+		g.enqueueEventMessages(ev)
+		if g.world.Outcome() != state.InProgress {
+			break
+		}
+		if g.messageActive() {
+			break
+		}
 	}
 	return nil
 }
@@ -443,11 +590,17 @@ func (g *game) clampCam() {
 }
 
 func (g *game) Draw(screen *ebiten.Image) {
-	if g.battleActive() {
+	if g.launcher != nil {
+		g.drawLauncher(screen)
+		g.maybeSaveShot(screen)
+		return
+	}
+	if g.world == nil {
+		return
+	}
+	if g.world.Outcome() == state.InProgress && g.battleActive() {
 		g.drawBattle(screen)
-		if g.shotPath != "" && g.frame == g.shotAt {
-			g.saveShot(screen)
-		}
+		g.maybeSaveShot(screen)
 		return
 	}
 	season := int(g.world.Clock.Season())
@@ -456,9 +609,10 @@ func (g *game) Draw(screen *ebiten.Image) {
 	// 所以畫面會隨遊戲時間換季，不需要另外驅動。
 	if img, err := g.lib.RenderWorld(g.camX, g.camY, viewCols, viewRows, season); err == nil {
 		op := &ebiten.DrawImageOptions{}
-		op.GeoM.Translate(0, bannerH)
+		op.GeoM.Translate(0, strategyMapY)
 		screen.DrawImage(ebiten.NewImageFromImage(img), op)
 	}
+	g.drawDisasterOverlay(screen)
 
 	// 橫幅是原版美術（ICONGRF 段 0），不是自己畫的長條。
 	// 上面已經印好「臥竜伝」與「年 月 日」，這裡只填數字。
@@ -478,7 +632,8 @@ func (g *game) Draw(screen *ebiten.Image) {
 	right(fmt.Sprintf("%d", c.Month), bannerMonthRight, bannerTextY)
 	right(fmt.Sprintf("%d", c.Day), bannerDayRight, bannerTextY)
 
-	// 四個視窗都是**浮在地圖上**的，沒有常駐側欄——原版就是這樣。
+	// 自然策略 HUD 是原版主畫面的固定骨架；四個視窗仍是可獨立切換的暫存層。
+	g.drawNaturalStrategyHUD(screen)
 	for k := windowKind(0); k < numWindows; k++ {
 		if g.open[k] {
 			g.drawWindow(screen, k)
@@ -504,19 +659,177 @@ func (g *game) Draw(screen *ebiten.Image) {
 	g.drawForm(screen)
 	g.drawFinance(screen)
 	g.drawAdvise(screen)
+	g.drawSaveUI(screen)
+	if choice := g.world.PendingEncounter(); choice != nil {
+		g.drawBattleChoice(screen, choice)
+	}
+	if choice := g.world.PendingDiplomacy(); choice != nil {
+		g.drawDiplomacy(screen, choice)
+	}
+	if choice := g.world.PendingFunding(); choice != nil {
+		g.drawFunding(screen, choice)
+	}
+	if g.messageActive() {
+		g.drawMessage(screen)
+	}
+	if g.world.Outcome() != state.InProgress {
+		g.drawOutcome(screen)
+	}
 
 	if g.quitting {
 		vector.DrawFilledRect(screen, float32(screenW/2-90), float32(screenH/2-14),
 			180, 28, color.RGBA{0, 0, 0, 230}, false)
 		g.td.Draw(screen, "確定離開？（Y／N）", screenW/2-80, screenH/2-8, white)
 	}
-	if g.shotPath != "" && g.frame == g.shotAt {
-		g.saveShot(screen)
+	g.maybeSaveShot(screen)
+}
+
+// drawDisasterOverlay 把 state 的 runtime 災害 marker 接到戰略地圖。
+//
+// 事件 12 的火災／暴動物件現在使用 MMAP.MCH 原版矩陣與 16×16 平面圖塊：
+// sub_123FF 寫入 object type 1／2，sub_12533 以 CS:985Ah 查表取 8 相位，
+// 再由 loc_1D51F 置中寫入 40×23 的戰略地圖 cell buffer。remake 在同一個
+// 地圖格座標上合成圖像；相位時鐘是呈現層的固定 frame clock，因為目前
+// runtime object 的 [si+0F]／[si+0C] 已由 state 保存為非存檔欄位，
+// 由 map-loop timer 驅動；這裡只負責把本次 render 取得的相位交給 MCH。
+//
+// 暴風雨事件 11 的已證實 handler 只更新城市 +0x15 與範圍，不會呼叫
+// sub_123FF；所以它仍畫範圍輪廓。若 MCH 缺檔，才退回低干擾向量 marker，
+// 不把 fallback 說成原版 parity。
+func (g *game) drawDisasterOverlay(screen *ebiten.Image) {
+	objects := g.world.RenderDisasterObjects()
+	objectByCity := make(map[int]state.DisasterObjectSnapshot, len(objects))
+	for _, object := range objects {
+		// 原版掃描順序是 slot 0→31；同城重複時第一筆先被呈現層取用。
+		if _, exists := objectByCity[object.City]; !exists {
+			objectByCity[object.City] = object
+		}
+	}
+	for cityID, city := range g.world.Cities {
+		marker, ok := g.world.DisasterMarkerAt(cityID)
+		if !ok {
+			continue
+		}
+		x := (city.X - g.camX) * world.TileSize
+		y := strategyMapY + (city.Y-g.camY)*world.TileSize
+		phase := uint8(1)
+		if object, exists := objectByCity[cityID]; exists {
+			phase = object.Phase
+		}
+		if img := g.disasterImage(marker.Kind, int(phase)); img != nil {
+			w, h := img.Bounds().Dx(), img.Bounds().Dy()
+			drawX := x + world.TileSize/2 - w/2
+			drawY := y + world.TileSize/2 - h/2
+			if drawX+w <= 0 || drawX >= strategyMapW || drawY+h <= strategyMapY || drawY >= screenH {
+				continue
+			}
+			op := &ebiten.DrawImageOptions{}
+			op.GeoM.Translate(float64(drawX), float64(drawY))
+			screen.DrawImage(img, op)
+			continue
+		}
+		if x+world.TileSize <= 0 || x >= strategyMapW || y+world.TileSize <= strategyMapY || y >= screenH {
+			continue
+		}
+		g.drawDisasterMarker(screen, x, y, marker)
+	}
+	if area, ok := g.world.StormAreaSnapshot(); ok {
+		g.drawStormArea(screen, area)
 	}
 }
 
+func disasterObjectType(kind economy.Disaster) (int, bool) {
+	switch kind {
+	case economy.Fire:
+		return 1, true // sub_134B1 的 AH=1
+	case economy.Riot:
+		return 2, true // sub_134B1 的 AH=2
+	default:
+		return 0, false
+	}
+}
+
+func (g *game) disasterImage(kind economy.Disaster, phase int) *ebiten.Image {
+	objectType, ok := disasterObjectType(kind)
+	if !ok || g.lib == nil || g.lib.MCH == nil || phase < 0 || phase >= 8 {
+		return nil
+	}
+	season := 0
+	if g.world != nil {
+		season = int(g.world.Clock.Season())
+	}
+	key := (((season*3)+objectType)*8 + phase)
+	if g.disasterImages == nil {
+		g.disasterImages = make(map[int]*ebiten.Image)
+	}
+	if img, exists := g.disasterImages[key]; exists {
+		return img
+	}
+	pattern, ok := g.lib.MCH.PatternFor(objectType, phase)
+	if !ok {
+		return nil
+	}
+	img, err := g.lib.MCH.RenderPattern(pattern, g.lib.Palette, season)
+	if err != nil {
+		return nil
+	}
+	result := ebiten.NewImageFromImage(img)
+	g.disasterImages[key] = result
+	return result
+}
+
+func (g *game) drawDisasterMarker(screen *ebiten.Image, x, y int, marker state.DisasterMarker) {
+	// 深色底讓標記在四季地圖上都可辨識；Level 只控制亮度，不被解讀為幀數。
+	alpha := uint8(180 + int(marker.Level&3)*18)
+	dark := color.RGBA{24, 18, 20, 220}
+	vector.DrawFilledRect(screen, float32(x+9), float32(y+1), 7, 7, dark, false)
+	switch marker.Kind {
+	case economy.Fire:
+		vector.DrawFilledRect(screen, float32(x+10), float32(y+2), 5, 5,
+			color.RGBA{246, 92, 32, alpha}, false)
+		vector.DrawFilledRect(screen, float32(x+12), float32(y), 2, 4,
+			color.RGBA{255, 210, 54, alpha}, false)
+	case economy.Riot:
+		vector.DrawFilledRect(screen, float32(x+10), float32(y+2), 5, 5,
+			color.RGBA{196, 56, 170, alpha}, false)
+		vector.DrawFilledRect(screen, float32(x+11), float32(y+1), 3, 7,
+			color.RGBA{255, 224, 92, alpha}, false)
+	case economy.Storm:
+		vector.DrawFilledRect(screen, float32(x+10), float32(y+2), 5, 5,
+			color.RGBA{64, 180, 226, alpha}, false)
+		vector.DrawFilledRect(screen, float32(x+12), float32(y+1), 2, 7,
+			color.RGBA{190, 242, 255, alpha}, false)
+	}
+}
+
+func (g *game) drawStormArea(screen *ebiten.Image, area economy.StormArea) {
+	// 範圍本身只畫輪廓，避免把地圖地形整片蓋掉；城市 marker 才是目前
+	// 受影響據點的狀態提示。座標與 StormArea 同樣以地圖格為單位。
+	x := (area.MinX - g.camX) * world.TileSize
+	y := strategyMapY + (area.MinY-g.camY)*world.TileSize
+	w := (area.MaxX - area.MinX + 1) * world.TileSize
+	h := (area.MaxY - area.MinY + 1) * world.TileSize
+	if w <= 0 || h <= 0 || x+w <= 0 || x >= strategyMapW || y+h <= strategyMapY || y >= screenH {
+		return
+	}
+	c := color.RGBA{80, 194, 232, 150}
+	vector.DrawFilledRect(screen, float32(x), float32(y), float32(w), 2, c, false)
+	vector.DrawFilledRect(screen, float32(x), float32(y+h-2), float32(w), 2, c, false)
+	vector.DrawFilledRect(screen, float32(x), float32(y), 2, float32(h), c, false)
+	vector.DrawFilledRect(screen, float32(x+w-2), float32(y), 2, float32(h), c, false)
+}
+
+// maybeSaveShot 在達到目標幀後的第一個 Draw 取像素，下一次 Update 才結束。
+// 它不依賴 Draw 與 Update 恰好一對一，對 Xvfb 與不同平台的繪製節奏都安全。
+func (g *game) maybeSaveShot(screen *ebiten.Image) {
+	if g.shotPath == "" || g.shotDone || g.frame < g.shotAt {
+		return
+	}
+	g.shotDone = g.saveShot(screen)
+}
+
 // saveShot 把目前畫面寫成 PNG。只在截圖模式用。
-func (g *game) saveShot(screen *ebiten.Image) {
+func (g *game) saveShot(screen *ebiten.Image) bool {
 	b := screen.Bounds()
 	img := image.NewRGBA(b)
 	for y := b.Min.Y; y < b.Max.Y; y++ {
@@ -527,15 +840,16 @@ func (g *game) saveShot(screen *ebiten.Image) {
 	f, err := os.Create(g.shotPath)
 	if err != nil {
 		log.Printf("⚠ 截圖失敗：%v", err)
-		return
+		return false
 	}
 	defer f.Close()
 	if err := png.Encode(f, img); err != nil {
 		log.Printf("⚠ 截圖編碼失敗：%v", err)
-		return
+		return false
 	}
 	log.Printf("截圖 → %s（第 %d 幀，%d年%d月%d日）",
 		g.shotPath, g.frame, g.world.Clock.Year, g.world.Clock.Month, g.world.Clock.Day)
+	return true
 }
 
 func (g *game) Layout(int, int) (int, int) { return screenW, screenH }
@@ -553,6 +867,21 @@ func big5(s string) string {
 	return text.Decode([]byte(s), text.Big5)
 }
 
+// talkMessage 取一則原版 TALK.DAT 訊息並代入已知變數。
+// TALK.DAT 的行尾是原版對話框硬斷行；事件列是 remake 的單行觀測列，
+// 因此這裡只合併行，不宣稱已重現原版逐頁對話框。
+func (g *game) talkMessage(index int, vars map[byte]string) string {
+	lines, ok := g.talkLines(index, vars)
+	if !ok {
+		return ""
+	}
+	var b strings.Builder
+	for _, line := range lines {
+		b.WriteString(line)
+	}
+	return b.String()
+}
+
 // advisorName 回傳玩家所仕勢力的軍師名。0xFF 表示沒有軍師——
 // 開新遊戲時玩家本人就是要填進那一格的人。
 func (g *game) advisorName() string {
@@ -563,16 +892,53 @@ func (g *game) advisorName() string {
 	return g.world.Generals[f.Advisor].Name
 }
 
+const defaultTalkCorrections = "translations/corrections.json"
+
+// bundledTalkCorrectionsPath 保持「發行包不含完整原版文字表」的同時，讓
+// corrections.json 可隨可執行檔安裝。先尊重明確環境設定與目前工作目錄，
+// 再尋找一般 tar/zip 與 AppImage 的同包路徑；若都不存在則回傳預設相對路徑，
+// 由 LoadWithOptions 顯示可診斷的失敗，而不是靜默跳過校訂。
+func bundledTalkCorrectionsPath() string {
+	if configured := os.Getenv("WOLONG_TALK_CORRECTIONS"); configured != "" {
+		return configured
+	}
+	if fileExists(defaultTalkCorrections) {
+		return defaultTalkCorrections
+	}
+	executable, err := os.Executable()
+	if err != nil {
+		return defaultTalkCorrections
+	}
+	dir := filepath.Dir(executable)
+	for _, candidate := range []string{
+		filepath.Join(dir, defaultTalkCorrections),
+		filepath.Join(dir, "..", defaultTalkCorrections),
+		filepath.Join(dir, "..", "share", "wolong-remake", defaultTalkCorrections),
+	} {
+		if fileExists(candidate) {
+			return candidate
+		}
+	}
+	return defaultTalkCorrections
+}
+
+func fileExists(path string) bool {
+	info, err := os.Stat(path)
+	return err == nil && !info.IsDir()
+}
+
 func main() {
 	dir := flag.String("orig", "workplace/orig/dosv", "原版素材目錄（請自備）")
 	scenPath := flag.String("scenario-file", "", "劇本檔路徑（預設 <orig>/SINARIO.DAT）")
-	scenario := flag.Int("scenario", 0, "劇本編號 0–3")
-	player := flag.Int("player", 0, "玩家所仕的勢力編號")
-	fontDir := flag.String("font", "workplace/eten",
-		"倚天點陣字目錄（STDFONT.15／SPCFONT.15／ASCFONT.15，請自備）")
+	scenario := flag.Int("scenario", 0, "劇本編號 0–3（直接啟動／驗收用）")
+	player := flag.Int("player", 0, "玩家所仕的勢力編號（直接啟動／驗收用）")
+	directStart := flag.Bool("direct", false, "跳過一般玩家啟動殼層，直接啟動指定劇本／玩家（驗收用）")
+	fontDir := flag.String("font", "workplace/eten", "倚天點陣字目錄（請自備）")
 	speed := flag.Int("speed", 4, "每個畫面更新推進幾個遊戲 tick")
+	seed := flag.Int("seed", -1, "驗收用固定亂數種子；負值時照原版以時鐘播種")
 	shot := flag.String("shot", "", "跑 N 幀之後截圖到這個路徑就結束（驗收用）")
 	shotFrames := flag.Int("shot-frames", 120, "截圖前先跑幾幀")
+	saveFile := flag.String("save-file", "", "可寫的四槽存檔 overlay 路徑；一般啟動可選讀檔")
 	openWin := flag.Int("open-window", -1, "截圖前先打開第幾個視窗（0–3，驗收暫停規則用）")
 	openList := flag.Bool("open-list", false, "截圖前先開武將一覽（驗收用）")
 	openAdvise := flag.Bool("open-advise", false, "截圖前先跑到說服畫面（驗收用）")
@@ -580,51 +946,31 @@ func main() {
 	openCorps := flag.Bool("open-corps", false, "截圖前先編兩支軍團並開軍團一覽（驗收用）")
 	openBattle := flag.Bool("open-battle", false, "截圖前先開一場野戰的戰術戰鬥（驗收用）")
 	openSiege := flag.Bool("open-siege", false, "截圖前先開一場攻城的戰術戰鬥（驗收用）")
+	openBattleChoice := flag.Bool("open-battle-choice", false, "截圖前停在戰鬥指揮／委任選單（驗收用）")
+	openMessage := flag.Bool("open-message", false, "截圖前先開玩家首都的暴風雨 TALK #70 通知（驗收用）")
+	openTalkIndex := flag.Int("open-talk-index", -1, "截圖前直接開指定 TALK.DAT 槽位（驗收用）")
+	openOutcome := flag.String("open-outcome", "", "只供截圖的敗北 modal fixture：trust 或 faction")
+	talkJSON := flag.String("talk-json", "", "完整繁中 TALK JSON（研究用）")
+	talkCorrections := flag.String("talk-corrections", bundledTalkCorrectionsPath(), "繁中 TALK 校訂覆蓋")
 	flag.Parse()
+	flagVisit = func(fn func(string)) { flag.CommandLine.Visit(func(f *flag.Flag) { fn(f.Name) }) }
 
-	lib, err := library.Load(*dir)
+	lib, err := library.LoadWithOptions(*dir, library.LoadOptions{TalkJSON: *talkJSON, TalkCorrections: *talkCorrections})
 	if err != nil {
 		log.Fatal(err)
 	}
-	for _, w := range lib.Warns {
-		log.Printf("⚠ %s", w)
+	for _, warning := range lib.Warns {
+		log.Printf("⚠ %s", warning)
 	}
 	path := *scenPath
 	if path == "" {
-		path = *dir + "/SINARIO.DAT"
+		path = filepath.Join(*dir, "SINARIO.DAT")
 	}
-	w, err := state.LoadScenario(path, *scenario)
+	loadPath, err := savepath.InitialLoadPath(path, *saveFile)
 	if err != nil {
 		log.Fatal(err)
 	}
-	w.Player = *player
 
-	// 道路圖：從 MMAP 推導，掛給規則層。**行軍要走路，不是走直線。**
-	// 推不出來只警告——沒有它遊戲照樣跑，只是軍團會直線穿過山河。
-	if lib.World != nil {
-		xy := make([][2]int, len(w.Cities))
-		for i := range w.Cities {
-			xy[i] = [2]int{w.Cities[i].X, w.Cities[i].Y}
-		}
-		if edges, err := world.RoadEdges(lib.World, xy); err != nil {
-			log.Printf("⚠ 推不出道路圖（%v）；行軍會走直線", err)
-		} else {
-			me := make([]march.Edge, len(edges))
-			for i, e := range edges {
-				me[i] = march.Edge{A: e.A, B: e.B, Steps: e.Steps,
-					Path: e.Path, ACell: xy[e.A]}
-			}
-			w.SetRoads(march.New(len(w.Cities), me))
-			log.Printf("道路圖：%d 條路", len(edges))
-		}
-	}
-
-	log.Printf("劇本 %d：%d年%d月%d日，勢力 %d 個，玩家所仕 %d（君主 %s）",
-		*scenario+1, w.Clock.Year, w.Clock.Month, w.Clock.Day,
-		len(w.AliveFactions()), *player,
-		text.Decode([]byte(w.LordName(*player)), text.Big5))
-
-	// 字型載不到不該讓遊戲開不了——只警告，然後把字畫成方框。
 	var font *cjk.Font
 	var ascii *cjk.ASCIIFont
 	if f, err := cjk.LoadDir(*fontDir, cjk.Options{}); err != nil {
@@ -637,50 +983,213 @@ func main() {
 	} else {
 		ascii = a
 	}
-
-	g := &game{lib: lib, world: w, rng: rng.Now(), speed: *speed,
-		td:       textdraw.New(font, ascii),
-		shotPath: *shot, shotAt: *shotFrames}
-	// 外框圖塊跟著季節換色組。缺素材時 Load 會回一個畫純色框的 Set，
-	// 不會讓遊戲開不起來。
-	g.chrome = chrome.Load(lib, int(w.Clock.Season()))
+	gameRNG := rng.Now()
+	if *seed >= 0 {
+		gameRNG = rng.NewFixed(*seed)
+		log.Printf("驗收固定亂數種子：%d", *seed)
+	}
+	g := &game{lib: lib, rng: gameRNG, speed: *speed, td: textdraw.New(font, ascii),
+		shotPath: *shot, shotAt: *shotFrames, origDir: *dir, sourceFile: path,
+		saveFile: *saveFile, saveBase: path}
+	g.chrome = chrome.Load(lib, 0)
 	if !g.chrome.Available() {
 		log.Printf("⚠ 取不到 ICONGRF 段 3 的視窗外框，改畫純色框")
 	}
-	if *openWin >= 0 && *openWin < int(numWindows) {
-		g.open[*openWin] = true
+
+	if *directStart || directStartFlagWasPassed() {
+		if err := g.startWorld(loadPath, *scenario, *player, true); err != nil {
+			log.Fatal(err)
+		}
+		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *openForm, *openCorps,
+			*openBattle, *openSiege, *openBattleChoice, *openMessage, *openTalkIndex, *openOutcome)
+	} else {
+		slots := inspectLauncherSlots(*saveFile)
+		g.launcher = newLauncher(hasAvailableLauncherSlot(slots), slots)
 	}
-	if *openList {
-		g.openGeneralList()
-		g.list.Move(2)
-		g.list.Confirm() // 展示反白狀態
+
+	ebiten.SetWindowSize(screenW*2, screenH*2)
+	ebiten.SetWindowTitle("臥龍傳－三國制霸之計")
+	if err := ebiten.RunGame(g); err != nil && err != ebiten.Termination {
+		log.Fatal(err)
 	}
-	g.installTactical(*dir)
-	if *openBattle || *openSiege {
-		g.demoBattle(*openSiege)
+}
+
+func (g *game) buildRoads(w *state.World) *march.Graph {
+	if g.lib == nil || g.lib.World == nil || w == nil {
+		return nil
 	}
-	if *openForm || *openCorps {
-		// 驗收用：直接編幾支軍團出來，免得截圖前要按一長串鍵。
-		g.demoCorps(*openCorps)
+	xy := make([][2]int, len(w.Cities))
+	for i := range w.Cities {
+		xy[i] = [2]int{w.Cities[i].X, w.Cities[i].Y}
 	}
-	if *openAdvise {
-		g.openAdvise()
-		g.adviseCmd = persuasion.Hostility
-		g.target = 13 // 劇本 1 的呂布
-		g.beginPersuasion()
-		// 曹操（14 據點）對呂布（7 據點）→「我國有利」成立。
-		g.offerReason(persuasion.WeAreStronger)
+	edges, err := world.RoadEdges(g.lib.World, xy)
+	if err != nil {
+		log.Printf("⚠ 推不出道路圖（%v）；行軍會走直線", err)
+		return nil
 	}
-	// 開場把鏡頭移到首都附近。
-	if cap := w.Factions[*player].Capital; cap >= 0 && cap < len(w.Cities) {
+	me := make([]march.Edge, len(edges))
+	for i, e := range edges {
+		me[i] = march.Edge{A: e.A, B: e.B, Steps: e.Steps, Path: e.Path, ACell: xy[e.A]}
+	}
+	log.Printf("道路圖：%d 條路", len(edges))
+	return march.New(len(w.Cities), me)
+}
+
+// startWorld 是唯一的正式 World 建立入口。一般 launcher 在確認新局／
+// 讀檔後才呼叫；direct fixture 也走同一條路，避免兩套初始化語意漂移。
+func (g *game) startWorld(path string, slot int, player int, overridePlayer bool) error {
+	w, err := state.LoadScenario(path, slot)
+	if err != nil {
+		return err
+	}
+	if overridePlayer {
+		if !validLauncherPlayer(w, player) {
+			return fmt.Errorf("玩家勢力 %d 在劇本 %d 不合法", player, slot+1)
+		}
+		w.Player = player
+	} else if !validLauncherPlayer(w, w.Player) {
+		return fmt.Errorf("第 %d 槽沒有合法玩家資料", slot+1)
+	}
+	w.EnableStrategicAI()
+
+	g.world = w
+	g.roads = g.buildRoads(w)
+	if g.roads != nil {
+		w.SetRoads(g.roads)
+	}
+	g.tactical = nil
+	g.battleLib = nil
+	g.battleSprites = nil
+	g.view = nil
+	g.battleCommandBase = nil
+	g.battleCommandGlyphs = [6]*ebiten.Image{}
+	g.battleSideCommands = nil
+	g.battleCommandSelect = color.RGBA{240, 0, 0, 255}
+	g.installTactical(g.origDir)
+	g.saveBase = path
+	g.open = [numWindows]bool{}
+	g.list = nil
+	g.form = formState{}
+	g.finance = financeState{}
+	g.advise = adviseNone
+	g.messages = nil
+	g.lastEvent = ""
+	g.quitting = false
+	g.idleGate = idleClockGate{}
+
+	season := int(w.Clock.Season())
+	g.chrome = chrome.Load(g.lib, season)
+	if !g.chrome.Available() {
+		log.Printf("⚠ 取不到 ICONGRF 段 3 的視窗外框，改畫純色框")
+	}
+	if frame, err := g.lib.DOSVAmountPanel(season); err != nil {
+		log.Printf("⚠ 取不到 DOS/V 數值視窗內框，指定金額畫面改用通用框：%v", err)
+	} else {
+		g.amountFrame = ebiten.NewImageFromImage(frame)
+	}
+	if cursor, err := g.lib.DOSVCursor(season); err != nil {
+		log.Printf("⚠ 取不到 DOS/V 內建硬體游標，指定金額畫面不疊游標：%v", err)
+	} else {
+		g.cursorImage = ebiten.NewImageFromImage(cursor)
+	}
+	if base, err := g.lib.DOSVBattleCommandBase(season); err != nil {
+		log.Printf("⚠ 取不到 DOS/V 戰術底列底板，改用文字 fallback：%v", err)
+	} else {
+		g.battleCommandBase = ebiten.NewImageFromImage(base)
+	}
+	for i := range g.battleCommandGlyphs {
+		glyph, err := g.lib.DOSVBattleCommandGlyph(i, season)
+		if err != nil {
+			log.Printf("⚠ 取不到 DOS/V 戰術指令 glyph %d，改用文字 fallback：%v", i, err)
+			g.battleCommandGlyphs = [6]*ebiten.Image{}
+			break
+		}
+		g.battleCommandGlyphs[i] = ebiten.NewImageFromImage(glyph)
+	}
+	if panel, err := g.lib.DOSVBattleSideCommands(season); err != nil {
+		log.Printf("⚠ 取不到 DOS/V 戰術右欄命令面板，改用文字 fallback：%v", err)
+	} else {
+		g.battleSideCommands = ebiten.NewImageFromImage(panel)
+	}
+	if selected, err := g.lib.PaletteColor(season, 0x0C); err != nil {
+		log.Printf("⚠ 取不到 DOS/V 戰術指令選取色 0x0C，使用紅色 fallback：%v", err)
+	} else {
+		g.battleCommandSelect = selected
+	}
+	if cap := w.Factions[w.Player].Capital; cap >= 0 && cap < len(w.Cities) {
 		g.camX = w.Cities[cap].X - viewCols/2
 		g.camY = w.Cities[cap].Y - viewRows/2
 	}
 	g.clampCam()
+	log.Printf("劇本 %d：%d年%d月%d日，勢力 %d 個，玩家所仕 %d（君主 %s）",
+		slot+1, w.Clock.Year, w.Clock.Month, w.Clock.Day,
+		len(w.AliveFactions()), w.Player, text.Decode([]byte(w.LordName(w.Player)), text.Big5))
+	return nil
+}
 
-	ebiten.SetWindowSize(screenW*2, screenH*2)
-	ebiten.SetWindowTitle("臥龍傳 戰略畫面原型")
-	if err := ebiten.RunGame(g); err != nil && err != ebiten.Termination {
-		log.Fatal(err)
+func configureDirectFixtures(g *game, openWin int, openList, openAdvise, openForm, openCorps,
+	openBattle, openSiege, openBattleChoice, openMessage bool, openTalkIndex int, openOutcome string) {
+	w := g.world
+	if w == nil {
+		return
+	}
+	player := w.Player
+	if openMessage && player >= 0 && player < len(w.Factions) {
+		capital := w.Factions[player].Capital
+		if capital >= 0 && capital < len(w.Cities) {
+			g.enqueueTalkNotice(state.TalkNotice{Index: 0x46, City: capital, Faction: -1, General: -1, Amount: -1})
+		}
+	}
+	if openTalkIndex >= 0 {
+		vars := map[byte]string{'1': "武將", '2': "據點", '3': "君主", '4': "軍師", '5': "目標", '6': "", '7': "1234"}
+		if len(w.Generals) > 0 {
+			vars['1'] = big5(w.Generals[0].Name)
+		}
+		if player >= 0 && player < len(w.Factions) {
+			vars['3'] = big5(w.LordName(player))
+			advisor := w.Factions[player].Advisor
+			if advisor >= 0 && advisor < len(w.Generals) {
+				vars['4'] = big5(w.Generals[advisor].Name)
+			}
+			city := w.Factions[player].Capital
+			if city >= 0 && city < len(w.Cities) {
+				vars['2'] = big5(w.Cities[city].Name)
+			}
+		}
+		if openTalkIndex < len(g.lib.Talk.Messages) {
+			g.enqueueTalk(openTalkIndex, vars)
+		} else {
+			log.Printf("⚠ TALK 槽位超出範圍：%d", openTalkIndex)
+		}
+	}
+	// 只供截圖的 fixture；正常 state path 仍由 AdjustTrust／capture 產生。
+	switch openOutcome {
+	case "trust":
+		w.AdjustTrust(-w.Trust)
+	case "faction":
+		w.DebugLatchOutcomeForShot(state.DefeatFactionEliminated)
+	}
+	if openWin >= 0 && openWin < int(numWindows) {
+		g.open[openWin] = true
+	}
+	if openList {
+		g.openGeneralList()
+		g.list.Move(2)
+		g.list.Confirm()
+	}
+	if openBattle || openSiege || openBattleChoice {
+		g.demoBattle(openSiege, !openBattleChoice)
+	}
+	if openForm || openCorps {
+		g.demoCorps(openCorps)
+	}
+	if openAdvise {
+		g.openAdvise()
+		g.adviseCmd = persuasion.Hostility
+		g.target = 13
+		g.beginPersuasion()
+		if g.sess != nil {
+			g.offerReason(persuasion.WeAreStronger)
+		}
 	}
 }

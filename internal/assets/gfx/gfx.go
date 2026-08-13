@@ -48,6 +48,22 @@ var IconRegions = []IconRegion{
 	{"unknown3", 0x9700, 0x23A0, Spec{Name: "ICONGRF/unknown3"}},
 }
 
+// 松崗 DOS/V 戰術指令介面位於 ICONGRF 第 1 段。下列 offset／尺寸都由
+// sub_1C7F4／sub_1C863 的直接 blit 參數取得；offset 以第 1 段為基準。
+const (
+	DOSVBattleSideCommandsOffset = 0x1800
+	DOSVBattleCommandBaseOffset  = 0x3000
+	DOSVBattleCommandGlyphOffset = 0x3900
+	DOSVBattleCommandGlyphStride = 0x00C0
+	DOSVBattleCommandGlyphCount  = 6
+)
+
+var (
+	DOSVBattleSideCommands = Spec{Name: "ICONGRF/DOSV battle side commands", Width: 128, Height: 96}
+	DOSVBattleCommandBase  = Spec{Name: "ICONGRF/DOSV battle command base", Width: 80, Height: 32}
+	DOSVBattleCommandGlyph = Spec{Name: "ICONGRF/DOSV battle command glyph", Width: 24, Height: 16}
+)
+
 // FrameBytes 是一張圖佔的位元組數。
 func (s Spec) FrameBytes() int {
 	return s.Width * s.Height / 2 // 4 bpp
@@ -74,17 +90,33 @@ func (s Spec) Decode(data []byte, index int) ([]byte, error) {
 	if size == 0 {
 		return nil, fmt.Errorf("gfx: %s 的尺寸還沒解出來", s.Name)
 	}
-	base := index * size
-	if base < 0 || base+size > len(data) {
+	if index < 0 {
 		return nil, fmt.Errorf("gfx: %s 第 %d 張超出範圍（共 %d 張）",
 			s.Name, index, len(data)/size)
+	}
+	return s.DecodeAt(data, index*size)
+}
+
+// DecodeAt 解出 data 中指定 byte offset 的一張平面圖。
+//
+// 大型組合檔不一定把每張圖從檔案開頭連續編號；DOS/V 數值視窗就是
+// ICONGRF 第 3 段內的獨立 96×64 資源。因此保留以 byte offset 定位的
+// 入口，避免把段內資源硬切成錯誤的 frame index。
+func (s Spec) DecodeAt(data []byte, offset int) ([]byte, error) {
+	size := s.FrameBytes()
+	if size == 0 {
+		return nil, fmt.Errorf("gfx: %s 的尺寸還沒解出來", s.Name)
+	}
+	if offset < 0 || offset+size > len(data) {
+		return nil, fmt.Errorf("gfx: %s 的 byte offset 0x%X 超出範圍（需要 0x%X byte）",
+			s.Name, offset, size)
 	}
 	stride := s.Width / 8 // 每平面每列的位元組數
 	plane := stride * s.Height
 	out := make([]byte, s.Width*s.Height)
 	for y := 0; y < s.Height; y++ {
 		for x := 0; x < s.Width; x++ {
-			byteIdx := base + y*stride + x/8
+			byteIdx := offset + y*stride + x/8
 			bit := uint(7 - x%8) // 最高位在最左
 			var v byte
 			for p := 0; p < Planes; p++ {
@@ -102,6 +134,19 @@ func (s Spec) RenderRGBA(data []byte, index int, p *palette.Palette, bankIdx int
 	if err != nil {
 		return nil, err
 	}
+	return s.renderRGBA(idx, p, bankIdx)
+}
+
+// RenderRGBAAt 解出 data 中指定 byte offset 的一張平面圖並上色。
+func (s Spec) RenderRGBAAt(data []byte, offset int, p *palette.Palette, bankIdx int) (*image.RGBA, error) {
+	idx, err := s.DecodeAt(data, offset)
+	if err != nil {
+		return nil, err
+	}
+	return s.renderRGBA(idx, p, bankIdx)
+}
+
+func (s Spec) renderRGBA(idx []byte, p *palette.Palette, bankIdx int) (*image.RGBA, error) {
 	bank, err := p.Bank(bankIdx)
 	if err != nil {
 		return nil, err

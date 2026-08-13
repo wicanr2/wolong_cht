@@ -188,3 +188,46 @@ func TestSortResetsCursor(t *testing.T) {
 		t.Errorf("排序後 cursor=%d top=%d, want 0/0", l.Cursor, l.Top)
 	}
 }
+
+func TestSelectAndPageActions(t *testing.T) {
+	cases := []struct {
+		name       string
+		row        int
+		page       int
+		wantCursor int
+		wantTop    int
+	}{
+		{name: "click visible row", row: 2, wantCursor: 2, wantTop: 0},
+		{name: "page down clamps", row: 0, page: 1, wantCursor: 3, wantTop: 1},
+		{name: "page up clamps", row: 3, page: -1, wantCursor: 0, wantTop: 0},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			l, _ := newList(nil)
+			if !l.Select(tc.row) {
+				t.Fatalf("Select(%d) rejected", tc.row)
+			}
+			l.Page(tc.page)
+			if l.Cursor != tc.wantCursor || l.Top != tc.wantTop {
+				t.Fatalf("cursor/top = %d/%d, want %d/%d", l.Cursor, l.Top, tc.wantCursor, tc.wantTop)
+			}
+		})
+	}
+}
+
+func TestSelectDifferentRowClearsPendingConfirmation(t *testing.T) {
+	l, _ := newList(nil)
+	if !l.Select(1) {
+		t.Fatal("first row selection rejected")
+	}
+	l.Confirm()
+	if l.Phase() != Selected {
+		t.Fatal("first click should enter selected phase")
+	}
+	if !l.Select(2) {
+		t.Fatal("second row selection rejected")
+	}
+	if l.Phase() != Browsing || l.Cursor != 2 {
+		t.Fatalf("different row did not reset selection: phase=%v cursor=%d", l.Phase(), l.Cursor)
+	}
+}

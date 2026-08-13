@@ -137,6 +137,16 @@ plane 3  整張
 > `0x0700`–`0x0720` 每 8 byte 都相符，那是因為**柱身在垂直方向同紋**，
 > 不是有五塊不同的圖。
 
+#### 5.4.1 DOS/V 數值面板資源（2026-08-10）
+
+先前「段 3 尚未解」的描述只適用於當時尚未定位的通用外框圖塊，不適用於 DOS/V
+數值輸入器。DOS/V `KI.EXE` 的 `sub_17D0D`（IDA `00017D0D`）以
+`DS:SI=word_10D50:0600h`、`AX=4006h` 呼叫 `sub_1FA37`／`sub_1FAA2`，依段指標
+換算為本檔第 3 段相對 `0x14A0` 的 96×64 平面資源。它的下半部與原始
+`(88,200)` 起點的 3×6、16×16 格重合，含實際靜態按鍵 glyph；`internal/assets/gfx`
+與 `docs/re/13` 已固定此定位及逐格資產測試。這是段 3 的一個已證實複合資源，
+不推論段 3 其餘 bytes 的用途。
+
 #### 找法：比「顏色的等價關係」，不比顏色
 
 實機截圖是 PC-98 的調色盤，素材這邊用 DOS/V 的 `GAMEPAL` 解，
@@ -194,18 +204,18 @@ plane 3  整張
 
 ```sh
 # 全部排成總覽
-python3 tools/grf.py sheet workplace/orig/dosv/KAOGRF.DAT 64 64 \
+tools/py.sh tools/grf.py sheet workplace/orig/dosv/KAOGRF.DAT 64 64 \
         workplace/orig/dosv/GAMEPAL.BRG 0 out.png 15
 
 # 單張放大
-python3 tools/grf.py one workplace/orig/dosv/KAOGRF.DAT 64 64 \
+tools/py.sh tools/grf.py one workplace/orig/dosv/KAOGRF.DAT 64 64 \
         workplace/orig/dosv/GAMEPAL.BRG 0 42 one.png 6
 ```
 
 `ICONGRF` 這種組合檔用 `region`：
 
 ```sh
-python3 tools/grf.py region workplace/orig/dosv/ICONGRF.DAT 0x6700 192 128 \
+tools/py.sh tools/grf.py region workplace/orig/dosv/ICONGRF.DAT 0x6700 192 128 \
         workplace/orig/dosv/GAMEPAL.BRG 0 out.png 1
 ```
 

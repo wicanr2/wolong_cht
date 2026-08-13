@@ -1,0 +1,266 @@
+package main
+
+import (
+	"fmt"
+	"strconv"
+	"strings"
+
+	"github.com/hajimehoshi/ebiten/v2"
+
+	"github.com/wicanr2/wolong_cht/internal/state"
+	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
+	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
+)
+
+// messageDialog 保存已經由 TALK.DAT 展開、並經過 remake 實際字寬換行、
+// 但尚未由玩家確認的訊息。原始 TALK 行仍先作為 hard boundary；自動換行
+// 只發生在單一原始行內，不把翻譯文字寫回資料檔。
+type messageDialog struct {
+	lines        []string
+	page         int
+	portraitPage int // -1 表示這則訊息沒有可回查的 speaker 肖像。
+}
+
+const (
+	// messagePageRows 對齊原版 sub_18810／sub_1895D 的 CX=510h：
+	// 5 個 16 px TALK 文字列。TALK.DAT 尾端的空行是結構終止符，
+	// 不應佔掉這五列之一。
+	messagePageRows = 5
+	// 22 個全形 cell = 352 px；這個寬度與 talkdat_selftest 的 modal
+	// safety guard 對齊，並以 textdraw 的半形／全形實測寬度為準。
+	messageContentWidth = 22 * textdraw.GlyphW
+)
+
+func layoutMessageLines(lines []string) []string {
+	return textdraw.WrapLines(lines, messageContentWidth)
+}
+
+func messagePage(lines []string, page int) ([]string, int, bool) {
+	if page < 0 {
+		page = 0
+	}
+	pages := (len(lines) + messagePageRows - 1) / messagePageRows
+	if pages == 0 {
+		return nil, 0, false
+	}
+	if page >= pages {
+		page = pages - 1
+	}
+	start := page * messagePageRows
+	end := start + messagePageRows
+	if end > len(lines) {
+		end = len(lines)
+	}
+	return lines[start:end], pages, true
+}
+
+func (g *game) messageActive() bool {
+	return len(g.messages) > 0
+}
+
+// talkLines 取出 TALK.DAT 的原始行並代入目前已證實可用的 marker。
+// 缺少 marker 時整則訊息 fail-closed，不顯示半句或把錯誤索引當成文字。
+func (g *game) talkLines(index int, vars map[byte]string) ([]string, bool) {
+	if g == nil || g.lib == nil || g.lib.Talk == nil || index < 0 ||
+		index >= len(g.lib.Talk.Messages) {
+		return nil, false
+	}
+	lines := make([]string, 0, len(g.lib.Talk.Messages[index].Lines))
+	for _, line := range g.lib.Talk.Messages[index].Lines {
+		var b strings.Builder
+		for _, part := range line.Parts {
+			if part.Marker != 0 {
+				value, ok := vars[part.Marker]
+				if !ok {
+					return nil, false
+				}
+				b.WriteString(value)
+				continue
+			}
+			b.WriteString(textDecodeBig5(part.Raw))
+		}
+		lines = append(lines, b.String())
+	}
+	// text.Parse 會保留 TALK.DAT 每則訊息的最後一個 NUL 結束空行。
+	// 原版 sub_1084A 在讀到這個終止空行時停止，不把它畫成可見列；
+	// 中間真正存在的空行仍必須保留。
+	if len(lines) > 0 && lines[len(lines)-1] == "" {
+		lines = lines[:len(lines)-1]
+	}
+	return lines, true
+}
+
+// textDecodeBig5 讓訊息檔的解碼集中在既有 Big5 呈現路徑；獨立成小函式
+// 方便 talkLines 保持「先代 marker、再顯示」的順序。
+func textDecodeBig5(raw []byte) string {
+	if len(raw) == 0 {
+		return ""
+	}
+	return big5(string(raw))
+}
+
+func (g *game) enqueueEventMessages(ev state.Event) {
+	for _, notice := range ev.TalkNotices {
+		// 事件 2／3 的 base TALK 不是獨立 modal。原版
+		// sub_13902 → sub_13C99 會把 base 與 General +0x1E 的變體、
+		// 肖像、IVENTGRF 場景及三選一一次畫出；pending choice 的
+		// composite renderer 會接手它。state 仍保留 notice 作為事件證據。
+		if g.world != nil && g.world.PendingDiplomacy() != nil &&
+			isCompositeDiplomacyNotice(notice) {
+			continue
+		}
+		g.enqueueTalkNotice(notice)
+	}
+	for _, id := range ev.ReleasedGenerals {
+		if id < 0 || id >= len(g.world.Generals) ||
+			g.world.Player < 0 || g.world.Player >= len(g.world.Factions) ||
+			g.world.Generals[id].Faction != g.world.Player {
+			// sub_150D7 只有在釋放後的 General +0x1C 等於玩家勢力
+			// （byte_10CFF）時，才建立 TALK #37 的玩家通知。
+			continue
+		}
+		g.enqueueTalkNotice(state.TalkNotice{
+			Index: 0x25, City: -1, Faction: -1, General: id, Amount: -1,
+		})
+	}
+}
+
+func (g *game) enqueueTalk(index int, vars map[byte]string) {
+	g.enqueueTalkWithPortrait(index, vars, -1)
+}
+
+func (g *game) enqueueTalkWithPortrait(index int, vars map[byte]string, portraitPage int) {
+	lines, ok := g.talkLines(index, vars)
+	if !ok || len(lines) == 0 {
+		return
+	}
+	visible := false
+	for _, line := range lines {
+		if line != "" {
+			visible = true
+			break
+		}
+	}
+	if !visible {
+		// TALK.DAT 的空槽仍可能保留一個資料上的空行；它不應變成
+		// 玩家看得到的空白 modal（事件 9 的 #409 就是這種情況）。
+		return
+	}
+	lineWidth := messageContentWidth
+	if portraitPage >= 0 {
+		lineWidth = talkTextWidth
+	}
+	g.messages = append(g.messages, messageDialog{
+		lines:        textdraw.WrapLines(lines, lineWidth),
+		portraitPage: portraitPage,
+	})
+}
+
+func isCompositeDiplomacyNotice(notice state.TalkNotice) bool {
+	return notice.Index == diplomacyTalkBase(state.DiplomacyCeasefire) ||
+		notice.Index == diplomacyTalkBase(state.DiplomacyCooperation)
+}
+
+// noticePortraitPage 以 state notice 可直接回查的 General／Faction 取肖像；
+// 沒有 speaker 指標時退回玩家君主。事件 3 的玩家君主路徑已由原版
+// sub_13902 → sub_187FF／sub_13C99 與 fixture 截圖證實；其他 generic notice
+// 的退回順序是呈現層的強推論，不把它升格成原版 speaker 語意。
+func (g *game) noticePortraitPage(notice state.TalkNotice) int {
+	if g == nil || g.world == nil {
+		return -1
+	}
+	if notice.General >= 0 && notice.General < len(g.world.Generals) {
+		return g.world.Generals[notice.General].Portrait
+	}
+	if notice.Faction >= 0 && notice.Faction < len(g.world.Factions) {
+		lord := g.world.Factions[notice.Faction].Lord
+		if lord >= 0 && lord < len(g.world.Generals) {
+			return g.world.Generals[lord].Portrait
+		}
+	}
+	return g.playerLordPortrait()
+}
+
+func (g *game) enqueueTalkNotice(notice state.TalkNotice) {
+	vars := make(map[byte]string, 6)
+	// IDA 線性位址 0001097E 的原版 handler 只消耗一個 formatter
+	// 參數並調整 X 位置，不輸出字元；在文字 modal 中保留成空字串，
+	// 不把排版控制誤顯示成「6」。
+	vars['6'] = ""
+	if g.world.Player >= 0 && g.world.Player < len(g.world.Factions) {
+		advisor := g.world.Factions[g.world.Player].Advisor
+		if advisor >= 0 && advisor < len(g.world.Generals) && g.world.Generals[advisor].Alive {
+			// 原版 marker \\4（00010939）取玩家勢力的軍師姓名。
+			vars['4'] = big5(g.world.Generals[advisor].Name)
+		}
+	}
+	if notice.RawFormatterWordValid {
+		if notice.RawFormatterWord < 0 || notice.RawFormatterWord > 0xFFFF {
+			return
+		}
+		raw, ok := g.world.ResolveTalkFormatter2(uint16(notice.RawFormatterWord))
+		if !ok {
+			// 原版 formatter 的 SS／DS 位址無法安全回查時，不能猜城市
+			// 或顯示未代入的半句。
+			return
+		}
+		vars['2'] = textDecodeBig5(raw)
+	} else if notice.City >= 0 && notice.City < len(g.world.Cities) {
+		// TALK.DAT 的 marker 是 ASCII '2'，不是 state 裡的數值欄位 2。
+		vars['2'] = big5(g.world.Cities[notice.City].Name)
+	}
+	if notice.General >= 0 && notice.General < len(g.world.Generals) {
+		// TALK.DAT 的 marker 是 ASCII '1'，不是 state 裡的數值欄位 1。
+		vars['1'] = big5(g.world.Generals[notice.General].Name)
+	}
+	if notice.Faction >= 0 && notice.Faction < len(g.world.Factions) {
+		// 原版 marker \\3 顯示的是該勢力君主名（「{3}勢力」），
+		// 不是把 faction 編號直接轉成文字。
+		vars['3'] = big5(g.world.LordName(notice.Faction))
+	}
+	if notice.Amount >= 0 {
+		// 原版 marker \\7 由 sub_1062F 以十進位數值繪製；這裡保留
+		// 數值語意，字型／欄寬仍是 remake modal 的呈現責任。
+		vars['7'] = strconv.Itoa(notice.Amount)
+	}
+	portrait := g.noticePortraitPage(notice)
+	if notice.NoPortrait {
+		portrait = -1
+	}
+	g.enqueueTalkWithPortrait(notice.Index, vars, portrait)
+}
+
+func (g *game) drawMessage(screen *ebiten.Image) {
+	d := g.messages[0]
+	lines, pages, ok := messagePage(d.lines, d.page)
+	if !ok {
+		return
+	}
+	if d.portraitPage >= 0 {
+		g.drawLegacyTalkBox(screen, 0, 320, 256, 80,
+			lines, d.portraitPage)
+		return
+	}
+	// 文字在 enqueue 時已依同一個 Drawer 寬度換行；視窗寬固定，避免
+	// 同一則 TALK 因頁面不同而左右跳動，也讓原生 640×400 的截圖可重播。
+	width := messageContentWidth + chrome.Tile*2 + 16
+	height := chrome.Tile*2 + (len(lines)+1)*(textdraw.GlyphH+textdraw.LineGap) + 8
+	if height < 96 {
+		height = 96
+	}
+	height = (height/chrome.Tile + 1) * chrome.Tile
+	x := (screenW - width) / 2
+	y := (screenH - height) / 2
+	g.chrome.Window(screen, x, y, width, height, chrome.Menu)
+	lineY := y + chrome.Tile + 4
+	for _, line := range lines {
+		g.td.Draw(screen, line, x+chrome.Tile+4, lineY, chrome.Paper)
+		lineY += textdraw.GlyphH + textdraw.LineGap
+	}
+	hint := "Enter／Space　繼續"
+	if pages > 1 {
+		hint = fmt.Sprintf("第 %d／%d 頁　Enter／Space　繼續", d.page+1, pages)
+	}
+	g.td.Draw(screen, hint, x+chrome.Tile+4,
+		y+height-chrome.Tile-textdraw.GlyphH-2, chrome.Paper)
+}

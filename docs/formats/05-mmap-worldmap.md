@@ -1,7 +1,9 @@
 # 05 — `MMAP.*` 大地圖
 
-**狀態：READY。`MMAP.MDL`、地圖尺寸、自動連接都 confirmed；
-`MMAP.MAP` 的 RLE 見 [`docs/formats/06`](06-mmap-rle.md)，也 READY。**
+**狀態：`MMAP.MDL`、地圖尺寸、自動連接與 `MMAP.MCH` 物件圖形入口
+confirmed；`MMAP.MAP` 的 RLE 見 [`docs/formats/06`](06-mmap-rle.md)，
+也 READY。事件 12 object type 1／2 已接入呈現層，原版 timer 時序仍是
+呈現層 substitute。**
 
 - 日期：2026-08-07
 - 出處：`workplace/ida/dosv/KI.EXE.i64`（`sub_1E48A`／`sub_1E4CE`／`sub_1E57F`）
@@ -113,7 +115,9 @@ mov     es:[di], al         ;     蓋回地圖格
 
 - **`MMAP.MAP`（80,716 B）的編碼**。展開成 98,304 B，`sub_1E48A` →
   `sub_1E4CE`／`sub_1E717` 是入口。熵 6.01。
-- `MMAP.MCH`（43,058 B）是什麼。載入時緊接在 `MDL` 之後（`docs/re/04` §1）。
+- `MMAP.MCH` 的 256×160-byte MCH 圖塊、0xA000 metadata、事件 12 火災／暴動
+  object type 1／2 查表已解，見 [`docs/re/14`](../re/14-mmap-mch-objects.md)。
+  type 3 的事件語意、object timer 與逐 frame 原版時序仍未知。
 - `sub_1E717` 建出來的記錄實際被誰用（§3）。
 - `byte_1E47E` 與 `byte_1E47F` 兩個流水號的分工（`sub_1E567` 寫前者、
   `sub_1E68C` 寫後者，程式碼其餘部分完全相同）。

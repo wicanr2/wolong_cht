@@ -92,9 +92,25 @@ b'\xb6i\xa6\xe6\xb35\xb6\xa4\xbds\xb2\xd5\xa1C\x00\xbd\xd0\xbf\xef\xbe\xdc\xaaZ\
 | `\6` | 72 | 74 |
 | `\7` | 18 | 18 |
 
-**各標記代表什麼還沒解**（要從 `KI.EXE` 的訊息輸出常式反追）。
-從上下文看的**假說**：`\1`／`\2` 是武將或勢力名、`\3`／`\4` 是勢力名、
-`\6` 疑似出現在句首當說話者前綴、`\7` 與金額同時出現。**都未驗。**
+`KI.EXE` 的訊息格式化器（formatter）已把其中一段定案。`sub_1075B`（線性位址
+`0001075B`）依訊息索引取偏移，`sub_1084A`（`0001084A`）逐字讀取訊息；遇到
+`\N` 就以 `CS:[SI+08A4h]` 的七項跳躍表分派。這裡的 `SI` 是訊息游標，`DI`
+是呼叫端建立的 `SS` 參數堆疊游標。
+
+- `\6` 的處理器（handler）是 `0001097E`：讀取並消耗 `SS:[DI]` 的一個 16 位元參數，
+  `DI += 2`，再把文字繪製座標 `DX` 左移 `0x30`；它不繪出該參數。因此
+  `\6` 是**會消耗參數的排版控制標記**，不是已證實的說話者名稱。
+- `\7` 的處理器（handler）是 `00010984`：同樣消耗一個 16 位元參數，接著進入
+  `sub_1062F` 的圖形／數值繪製路徑；它與金額欄位同時出現的文意相符，但數值
+  格式仍以該 handler 的後續常式為準。
+- `\1`／`\2`／`\3`／`\4` 的資料來源已可由 handler 看到部分記錄偏移，完整的
+  文字語意仍保留為未定案，不能只靠翻譯上下文升格。
+
+上述位址是 `KI.EXE` 的 IDA 線性位址，不是檔案偏移；證據為
+`workplace/ida/dosv/func-sub_1075B-current.txt`、
+`func-sub_1084A-current.txt`，輸入 `KI.EXE` SHA-256
+`FFFEBA985231CDA4D636E93D10F598470B1F691D00275E4AA38E285893D43868`，工具為
+IDA Pro 9.4。
 
 ### ⚠⚠ 不能用 regex 找 `\N`
 
@@ -144,10 +160,10 @@ Python 的轉換表與 1994 年的原版不完全一致。光靠 decode 成功�
 ## 6. 工具
 
 ```sh
-python3 tools/talkdat.py verify workplace/orig/dosv/TALK.DAT cp950
-python3 tools/talkdat.py export workplace/orig/dosv/TALK.DAT cp950 out.json
-python3 tools/talkdat.py build  out.json cp950 new.DAT
-python3 tools/talkdat.py diff   workplace/orig/dosv/TALK.DAT cp950 \
+tools/py.sh tools/talkdat.py verify workplace/orig/dosv/TALK.DAT cp950
+tools/py.sh tools/talkdat.py export workplace/orig/dosv/TALK.DAT cp950 out.json
+tools/py.sh tools/talkdat.py build  out.json cp950 new.DAT
+tools/py.sh tools/talkdat.py diff   workplace/orig/dosv/TALK.DAT cp950 \
                                 workplace/orig/pc98/TALK.DAT cp932
 ```
 

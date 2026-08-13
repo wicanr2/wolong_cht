@@ -123,7 +123,7 @@ func (f *Field) FindPath(from, to Point, climb bool, penalty Penalty) []Point {
 		dy := cur/Width - prev/Width
 		// 方向變了 → 前一格是轉彎點。
 		if (dx != lastDX || dy != lastDY) && lastDX|lastDY != 0 {
-			back = append(back, Point{X: cur%Width, Y: cur / Width})
+			back = append(back, Point{X: cur % Width, Y: cur / Width})
 		}
 		lastDX, lastDY = dx, dy
 		cur = prev
@@ -142,14 +142,18 @@ func (f *Field) FindPath(from, to Point, climb bool, penalty Penalty) []Point {
 
 // stepOK 回報從高度 fromZ 的格子踏進 (x, y) 行不行。
 //
-// 與 tryMove 同一組規則：一次只能上下一層，爬不上去的兵不能上牆
-// （`cmp byte ptr [si+4], 12h / jbe`，docs/re/11 §5.8j）。
+// 與 tryMove 同一組規則：水平跨格允許同步一層高度；只有在同一格做
+// 純 Z 軸移動時，才由兵種能力限制爬牆（`cmp byte ptr [si+4], 12h / jbe`，
+// docs/re/11 §5.8j）。
 func (f *Field) stepOK(fromZ, x, y int, climb bool) bool {
+	// 尋路的自我修改分支仍依 `climb` 決定能否向上跨越高度；這讓非爬牆
+	// 兵繞過整道一層牆。實際逐格移動則另由 tryMove 重現
+	// `sub_1B1B1` 的水平一層高度同步，兩者不能混成同一個檢查。
 	z := f.StandLevel(x, y)
-	if z > fromZ && !climb {
+	if abs(z-fromZ) > 1 {
 		return false
 	}
-	return abs(z-fromZ) <= 1
+	return z <= fromZ || climb
 }
 
 // Waypoints 讓一個兵沿著算好的路徑走。
@@ -161,14 +165,22 @@ type Waypoints struct {
 	i   int
 }
 
-// Next 取下一個中繼點。取完回 false。
-func (w *Waypoints) Next() (Point, bool) {
+// Current 回傳目前的中繼點，但不前進游標。
+// 原版 `sub_1B00D` 只有在兵已抵達目前目標後才會遞減點數並前進
+// `+0x16`；每幀先取下一個點會把尚未走完的轉角跳掉。
+func (w *Waypoints) Current() (Point, bool) {
 	if w == nil || w.i >= len(w.pts) {
 		return Point{}, false
 	}
-	p := w.pts[w.i]
+	return w.pts[w.i], true
+}
+
+// Advance 抵達目前中繼點後才消費它。
+func (w *Waypoints) Advance() {
+	if w == nil || w.i >= len(w.pts) {
+		return
+	}
 	w.i++
-	return p, true
 }
 
 // Len 回傳還剩幾個點。

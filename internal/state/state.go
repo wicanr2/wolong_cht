@@ -39,9 +39,23 @@ const (
 
 	// 稅率與三兵種募兵數。原版載到 cs:0D08h，而區塊前 59 B 對映到
 	// cs:0CF0h，所以 0D08h − 0CF0h = 0x18 就是區塊內的偏移。
+	// 信賴度則是 cs:0D00h（IDA `byte_10D00`），所以是區塊內的 +0x10。
+	// Player 的原版 runtime 值是 cs:0CFFh（區塊 +0x0F）；前一個 word
+	// cs:0CFDh（區塊 +0x0D）保存同一勢力的記錄表位址 `faction×0x40`。
+	playerPtrOffset  = 0x0D
+	playerOffset     = 0x0F
+	trustOffset      = 0x10
 	taxOffset        = 0x18
 	recruitCapOffset = 0x1A
 	nextSettings     = 0x20 // 「來月」的同四項，月結時搬到上面兩處
+
+	// 原版事件佇列位於區塊尾端；事件字的高 byte 可能是勢力／災害
+	// 變體，不能只保存低 byte。這裡先保存原始 256 × 4 B，處理時序與
+	// handler 效果仍由事件佇列的反組譯切片逐項接入。
+	eventQueueOffset    = 0x52C0
+	eventQueueEntrySize = 4
+	eventQueueEntries   = 0x100
+	eventQueueDispatch  = 0x40 // sub_131AE 只處理前 64 筆（0x100 byte）
 )
 
 // Faction 是一個勢力的完整狀態。
@@ -59,9 +73,8 @@ type Faction struct {
 
 	// MoraleBase 是新編成軍團的初始士氣（記錄 +0x1D，四個劇本都是 200）。
 	//
-	// ⚠ 先前這一欄被標成「疑似信賴度」。編成軍團時它被複製進軍團的
-	// 士氣欄位，而說明書編成畫面的士氣值正好是 200 ——
-	// 所以它是士氣基準值。**信賴度存在哪還沒解**（docs/re/08 §4）。
+	// 編成軍團時它被複製進軍團的士氣欄位，而說明書編成畫面的士氣值
+	// 正好是 200，所以它是士氣基準值（docs/re/08 §4）。
 	MoraleBase int
 
 	// Aggression 是君主的好戰等級（0–15），**不顯示給玩家**。
@@ -128,13 +141,19 @@ type City struct {
 	// Adjacency 是記錄 +0x00 的低 4 位：四個方向哪幾個有鄰接
 	// （對應 +0x1C–+0x1F 的四個據點編號，docs/formats/08 §4.1）。
 	Adjacency int
+
+	// Neighbours 是記錄 +0x1C–+0x1F 的四個鄰接據點編號。
+	// 只有 Adjacency 對應的 bit 設起時，該槽才有意義；未使用槽保留原始
+	// byte（通常是 0xFF）。這些槽是政略 AI 建立「相鄰勢力清單」的直接來源
+	// （原版 sub_12C52 → sub_12CDF），不能只用由地圖推導的道路圖替代。
+	Neighbours [4]int
 }
 
 // General 是一名武將的完整狀態。
 type General struct {
-	Alive    bool
-	Name     string
-	Alias    string // 呼び名。多數與 Name 相同
+	Alive bool
+	Name  string
+	Alias string // 呼び名。多數與 Name 相同
 
 	// Portrait 是 KAOGRF 的頁碼（記錄 +0x01）。
 	//
@@ -143,7 +162,14 @@ type General struct {
 	// 這個欄位原本只知道「127 筆各不相同」，是拿 PC-98 實機的君主確認畫面
 	// 比對出來的：畫面上的曹操與 KAOGRF 第 50 頁是同一張圖
 	// （docs/playtest/07）。KAOGRF 有 150 張 > 127 人，也對得上。
-	Portrait int    // 見上（宣告順序照記錄偏移）
+	Portrait int // 見上（宣告順序照記錄偏移）
+
+	// TalkVariant 是記錄 +0x1E 的原始值；sub_13C99 以它取 0–2 的
+	// TALK 變體（值 >= 3 時先減 3）。它不是武將編號，也不應拿來
+	// 推測人物身分；保留原始欄位是為了讓事件 2／3 的 composite TALK
+	// 可以回到正確的 prompt。語意等級：已證實（IDA 00013C99）。
+	TalkVariant int
+
 	Aptitude [3]int // 已經 >>4 的小值
 	Martial  int
 	Command  int
@@ -212,6 +238,27 @@ type World struct {
 	// 出貨的劇本檔裡全零：開局沒有軍團，玩家要自己編成。
 	Corps [numCorps]Corps
 
+	// events 是原版區塊 +0x52C0 的 256 筆事件佇列。事件字完整保留
+	// u16（包含高 byte 的勢力／災害分流），參數也是 u16；目前接上
+	// 存檔 round-trip、時鐘／壓縮，以及已有獨立證據的 1／2／3／4／5／6／7／8／9／10／11／12／13 handler（10 為訊息邊界、11／12 為 runtime marker 與延遲效果）。
+	events [eventQueueEntries]QueuedEvent
+
+	// disasterMarkers 是事件 11／12 在執行期寫入城市記錄 +0x15 的
+	// 災害 marker。原版 sub_14269 會在該據點輪到時消耗這個 marker，
+	// 並把防災值／上昇值／生產力／城兵寫回 City；marker 本身是 runtime
+	// 欄位，事件 12 的清除事件到達後才歸零。這兩個陣列不序列化。
+	disasterMarkers      [numCities]economy.Disaster
+	disasterMarkerLevels [numCities]uint8
+	// disasterObjects 是 sub_123FF／sub_12459／sub_12533 的 32 筆非存檔
+	// runtime 物件；事件 12 的火災／暴動才會建立，清除事件會移除。
+	disasterObjects [disasterObjectSlots]disasterObject
+	stormArea       *economy.StormArea
+
+	// eventCursor／eventDelay 是原版的 runtime 游標（`word_10D20`）與
+	// 節流計數（`byte_131AD`），不在存檔區塊內；載入新狀態與月結都重設。
+	eventCursor int
+	eventDelay  uint8
+
 	// tactical 是戰術戰鬥的戰場來源；nil 表示全部走自動判定。
 	tactical *TacticalSetup
 
@@ -220,6 +267,13 @@ type World struct {
 	cityBias [numFactions]int
 	// pending 是一場等著被跑完的戰術戰鬥。它還在的時候世界不前進。
 	pending *Pending
+	// encounter 是一場玩家尚未選擇「戰鬥指揮／委任」的遭遇。
+	// 它和 pending 一樣會凍結戰略時間，但還沒有建立戰術戰場。
+	encounter *EncounterChoice
+	// diplomacy 是事件 2／3 的玩家互動；它是 runtime 狀態，不進存檔。
+	diplomacy *DiplomacyChoice
+	// funding 是事件 4／5 的玩家撥款互動；它是 runtime 狀態，不進存檔。
+	funding *FundingChoice
 	// rng 是給戰術層用的亂數源，開戰時記下來。
 	rng combat.Rand
 
@@ -240,9 +294,25 @@ type World struct {
 	// 不匯出——它是迴圈的內部游標，不是遊戲狀態的一部分。
 	hourFaction int
 
-	// Player 是玩家所仕的勢力編號。原版存在 cs:0CFFh，
-	// 但劇本檔裡沒有（開新遊戲時才選），所以預設 −1。
+	// Player 是玩家所仕的勢力編號。原版存於 cs:0CFFh（區塊 +0x0F），
+	// 同一全域區段的 cs:0CFDh（+0x0D）保存勢力表位址；新劇本兩者都是
+	// 0xFF／0xFFFF，只有玩家選定或有效存檔才有值。
 	Player int
+
+	// strategicAI 是執行期開關。載入／存檔本身不包含「誰是玩家」這個
+	// 啟動參數；wlgame／wlsim 在設定 Player 後明確啟用，讓純格式／規則
+	// 測試可以仍然只跑已驗證的時鐘與月結，不被長期 AI 軌跡混入。
+	strategicAI bool
+
+	// approximateEvent10 是事件 10 的 remake 近似 producer 開關。原版
+	// `sub_13496` 的 consumer 已知，但自然 `0x0A` writer 尚未定位；載入
+	// 劇本時預設開啟，讓正常遊戲有可玩的俘虜消息；raw fixture 可關閉它，
+	// 避免把替代規則混入原版 queue 邊界測試。這是 runtime 設定，不存檔。
+	approximateEvent10 bool
+
+	// outcome 是 runtime 的單次結果 latch，不寫入存檔。只由已證實的
+	// 信賴度／據點 mutation 邊界設定；不能由 UI 每幀掃描推導。
+	outcome OutcomeKind
 
 	// Friendship 是交友度矩陣：Friendship[觀察者][對象]。
 	//
@@ -255,9 +325,9 @@ type World struct {
 	// Trust 是信賴度：君主對軍師（＝玩家）的評價。
 	// 歸 0 → 被逐出勢力 → Game Over（docs/mechanics/80-victory.md §1）。
 	//
-	// ⚠ **它在存檔裡的位置還沒找到。** 勢力記錄 +0x1D 曾被誤判成信賴度，
-	// 實際是士氣基準（docs/re/08 §4）。所以這一欄目前是**執行期狀態**，
-	// 存檔不會保留 —— 找到欄位之前不要假裝存得起來。
+	// 原版載入／存檔把 cs:0CF0h 起的 0x3B byte 整段搬入／搬出；
+	// 說服流程的 `byte_10D00`（IDA `seg000:10D00`）在這段的 +0x10，
+	// 因此它是可持久化的 u8。勢力記錄 +0x1D 是士氣基準，不是信賴度。
 	Trust int
 
 	// 稅率與募兵數是**玩家專屬**的設定（AI 不用，見 docs/re/07 §8）。
@@ -273,6 +343,16 @@ const (
 	noFaction = 0xFF
 	noCity    = 0xFF
 )
+
+// QueuedEvent 是原版事件佇列的一筆原始記錄。
+//
+// Code 保留完整 u16：低 byte 是 dispatch code，高 byte 在部分路徑承載
+// 勢力或災害變體。這個型別用於存檔 round-trip 與已接入的事件 handler；
+// 不要把高 byte 丟掉。
+type QueuedEvent struct {
+	Code  uint16
+	Param uint16
+}
 
 func u16(b []byte, off int) int { return int(binary.LittleEndian.Uint16(b[off:])) }
 
@@ -314,8 +394,29 @@ func LoadScenario(path string, index int) (*World, error) {
 	}
 	b := raw[index*blockSize : (index+1)*blockSize]
 
-	// 信賴度的欄位還沒找到，開局先給說明書截圖上的值。
-	w := &World{Player: -1, Trust: 200, raw: append([]byte(nil), b...)}
+	// Trust 是原始全域區段的 byte_10D00（區塊 +0x10）。
+	player := -1
+	if p := int(b[playerOffset]); p >= 0 && p < numFactions &&
+		u16(b, playerPtrOffset) == p*factionSize {
+		player = p
+	}
+	w := &World{
+		Player:      player,
+		Trust:       int(b[trustOffset]),
+		raw:         append([]byte(nil), b...),
+		eventDelay:  7,
+		eventCursor: 0,
+		// 事件 10 的原版 producer unknown；remake 預設使用明確標示的
+		// 近似 producer，仍可由 SetApproximateEvent10(false) 關閉。
+		approximateEvent10: true,
+	}
+	for i := range w.events {
+		off := eventQueueOffset + i*eventQueueEntrySize
+		w.events[i] = QueuedEvent{
+			Code:  binary.LittleEndian.Uint16(b[off:]),
+			Param: binary.LittleEndian.Uint16(b[off+2:]),
+		}
+	}
 
 	// 遊戲時鐘（docs/formats/08 §1.1）。+0x01 的該月天數不另存，
 	// clock 套件用 DaysInMonth(Month) 算得出來。
@@ -345,9 +446,8 @@ func LoadScenario(path string, index int) (*World, error) {
 			Corps:          int(r[0x14]),
 			InvasionTarget: int(r[0x19]),
 
-			// ⚠ +0x1D 是**士氣基準值**，不是信賴度 ——
-			// 編成軍團時它被複製進軍團的士氣欄位（docs/re/08 §4）。
-			// 信賴度存在哪還沒解。
+			// +0x1D 是**士氣基準值**，不是信賴度 —— 編成軍團時它被
+			// 複製進軍團的士氣欄位（docs/re/08 §4）。信賴度在全域 +0x10。
 			MoraleBase: int(r[0x1D]),
 			Funds:      i24(r, 0x20),
 			Cities:     int(r[0x23]),
@@ -384,16 +484,18 @@ func LoadScenario(path string, index int) (*World, error) {
 			Kind:          int(r[0x16]) & 0x0F,
 			KindHigh:      int(r[0x16]) >> 4,
 			Adjacency:     int(r[0x00]) & 0x0F,
+			Neighbours:    [4]int{int(r[0x1C]), int(r[0x1D]), int(r[0x1E]), int(r[0x1F])},
 		}
 	}
 
 	for i := range w.Generals {
 		r := b[generalBase+i*generalSize:]
 		w.Generals[i] = General{
-			Alive:    r[0x00] >= 0x80,
-			Name:     decodeName(r[0x02:0x08]),
-			Alias:    decodeName(r[0x08:0x0E]),
-			Portrait: int(r[0x01]),
+			Alive:       r[0x00] >= 0x80,
+			Name:        decodeName(r[0x02:0x08]),
+			Alias:       decodeName(r[0x08:0x0E]),
+			Portrait:    int(r[0x01]),
+			TalkVariant: int(r[0x1E]),
 			Aptitude: [3]int{
 				int(r[0x0E]) >> 4, int(r[0x0F]) >> 4, int(r[0x10]) >> 4,
 			},
@@ -415,6 +517,115 @@ func LoadScenario(path string, index int) (*World, error) {
 	return w, nil
 }
 
+// ResolveTalkFormatter2 重現 DOS/V TALK formatter `\\2` 取字串的 raw 規則。
+//
+// 證據：DOS/V KI.EXE `seg000:000108DB` 先從 SS:[DI] 取一個 word；高 byte
+// 為 FF 時，把低 byte 轉成 `0x0840 + city×0x20`，否則直接把 word 當成
+// DS 位移，兩條路徑最後都再加 2。這裡的 DS 動態區對應所載劇本區塊的
+// `+0x80` 至事件佇列前；不把 queue 或區塊外資料當成可顯示字串，解析
+// 不到時回傳 false，讓呈現層整則 fail-closed。
+func (w *World) ResolveTalkFormatter2(word uint16) ([]byte, bool) {
+	const dynamicSize = eventQueueOffset - factionBase // 0x5240
+	if w == nil || len(w.raw) < factionBase+dynamicSize {
+		return nil, false
+	}
+
+	off := int(word)
+	if byte(word>>8) == 0xFF {
+		city := int(byte(word))
+		if city >= numCities {
+			return nil, false
+		}
+		off = runtimeCityBase + city*citySize
+	}
+	off += 2
+	if off < 0 || off >= dynamicSize {
+		return nil, false
+	}
+
+	data := w.raw[factionBase+off : factionBase+dynamicSize]
+	for i, b := range data {
+		if b == 0 {
+			data = data[:i]
+			break
+		}
+	}
+	return append([]byte(nil), data...), true
+}
+
+// FundingKind 是原版事件 4／5 的玩家撥款互動類型。
+type FundingKind byte
+
+const (
+	FundingGovernor FundingKind = 4
+	FundingDiplomat FundingKind = 5
+)
+
+// FundingOption 是原版 sub_139E8 的三列選項。
+type FundingOption byte
+
+const (
+	FundingFullAmount FundingOption = iota
+	FundingSetAmount
+	FundingReject
+)
+
+// FundingChoice 是暫存在 runtime 的玩家撥款視窗，不寫入存檔。
+// Subject 是事件 4 的據點編號或事件 5 的勢力編號；Officer 是實際收到
+// 經費的武將編號。RequestedAmount 是事件佇列帶來的原始要求，OfferAmount
+// 是玩家在「指定金額」路徑裡目前輸入的值。
+type FundingChoice struct {
+	Kind            FundingKind
+	Subject         int
+	Officer         int
+	RequestedAmount int
+	OfferAmount     int
+}
+
+// AmountEdit 是原版 sub_17C6E 數值輸入器已證實的編輯動作。
+//
+// 原始函式的 DOS/V 輸入 API／平台按鍵仍由呈現層映射；這裡只保存它呼叫的
+// 數值語意，讓事件 2／3 與 4／5 共用同一組邊界與上限。
+type AmountEdit byte
+
+const (
+	AmountAppendDigit AmountEdit = iota
+	AmountAppendHundred
+	AmountDeleteDigit
+	AmountRestoreInitial
+	AmountClear
+	AmountFinishInput
+)
+
+// DiplomacyKind 是原版事件 2／3 的玩家外交互動類型。
+type DiplomacyKind byte
+
+const (
+	DiplomacyCooperation DiplomacyKind = 2
+	DiplomacyCeasefire   DiplomacyKind = 3
+)
+
+// DiplomacyOption 是原版 sub_13902 的三列選項。
+// OfferFunds 使用狀態層已解出的預設說服金額；數值編輯器的狀態語意由
+// AmountEdit 保存，PC-98 掃描碼與逐頁畫面仍屬呈現層工作。
+type DiplomacyOption byte
+
+const (
+	DiplomacyAcceptFree DiplomacyOption = iota
+	DiplomacyOfferFunds
+	DiplomacyReject
+)
+
+// DiplomacyChoice 是暫存在 runtime 的玩家外交視窗，不寫入存檔。
+type DiplomacyChoice struct {
+	Kind          DiplomacyKind
+	Source        int
+	Invader       int
+	Target        int
+	InitialAmount int
+	OfferAmount   int
+}
+
 // Event 是一個 tick 裡發生的事，供呼叫端記錄或呈現。
 type Event struct {
 	Clock      clock.Event
@@ -422,6 +633,11 @@ type Event struct {
 	Disaster   map[int]economy.Disaster // 據點編號 → 災害
 	Storm      *economy.StormArea
 	Eliminated []int // 這個 tick 被判定滅亡的勢力
+
+	// TalkNotices 是事件處理器已確認要交給呈現層的 TALK.DAT 訊息。
+	// 它只保存原版索引與可回查的 state 目標，不把文字、編碼或排版塞進
+	// state；索引與 marker 來源見 docs/re/07 §18、docs/formats/01。
+	TalkNotices []TalkNotice
 
 	// HourFaction 是這個 tick 輪到的勢力編號，−1 表示這個 tick 沒有輪到誰。
 	// 原版每「時」只處理一個勢力，22 個勢力輪一圈（docs/re/08 §1）。
@@ -439,29 +655,143 @@ type Event struct {
 	// 以及沒仗打時的主動遷都（事件 8）。
 	Relocated map[int]int
 
+	// Diplomacy 是這個 tick 剛掛起的玩家外交選擇；選擇完成前世界停止。
+	Diplomacy *DiplomacyChoice
+
+	// Funding 是這個 tick 剛掛起的事件 4／5 撥款選擇；選擇完成前世界停止。
+	Funding *FundingChoice
+
+	// Strategy 記錄政略 AI 在這個 tick 做出的「宣戰／編成」動作。
+	// Corps 或 Destination 為 −1 時，表示該欄位在這筆事件沒有動作。
+	// 這是觀測用事件，不寫回存檔。
+	Strategy []StrategyEvent
+
 	// Corps 是這個 tick 裡動過或打過的軍團。原版每 tick 只更新 16 支
 	// （`sub_125A3` 的 `mov cx, 10h`），所以這裡通常是空的或很短。
 	Corps []CorpsEvent
+
+	// ReleasedGenerals 記錄事件 9（或其同一狀態收尾）釋放的武將索引，
+	// 讓 GUI 能取用原版 TALK.DAT 句子並顯示可回查的事件通知；對話框排版
+	// 仍由呈現層決定，不寫入存檔。
+	ReleasedGenerals []int
 }
 
-// Tick 推進一個 tick。月結、季節、災害都掛在對應的進位事件上，
-// 順序照原版（docs/re/06 §5、docs/re/07 §1）。
+// DisasterMarker 是事件 11／12 留在執行期城市記錄上的災害標記。
+//
+// 這不是存檔欄位，也不代表已解出原版物件動畫；呈現層只能把它當成
+// 「目前有一個待套用／仍在顯示中的災害狀態」來讀。Level 保留原版
+// marker 的強度，讓不同呈現層可以做一致的可視化，但不得把它解讀成
+// 動畫幀數或剩餘時間。
+type DisasterMarker struct {
+	Kind  economy.Disaster
+	Level uint8
+}
+
+// DisasterMarkerAt 回傳指定據點目前的 runtime 災害 marker。
+//
+// 這個唯讀方法刻意不暴露內部陣列，也不把 runtime marker 寫進存檔；
+// 無效據點與 NoDisaster 都回傳 ok=false。它是 wlgame 視覺層的接縫，
+// 不是新的規則來源。
+func (w *World) DisasterMarkerAt(cityID int) (DisasterMarker, bool) {
+	if cityID < 0 || cityID >= len(w.disasterMarkers) {
+		return DisasterMarker{}, false
+	}
+	kind := w.disasterMarkers[cityID]
+	if kind == economy.NoDisaster {
+		return DisasterMarker{}, false
+	}
+	return DisasterMarker{Kind: kind, Level: w.disasterMarkerLevels[cityID]}, true
+}
+
+// StormAreaSnapshot 回傳目前 runtime 暴風雨範圍的副本。
+//
+// StormArea 由事件 11 的 handler 暫存，沒有值時回傳 ok=false；回傳副本
+// 可避免 UI 意外修改規則層的指標內容。
+func (w *World) StormAreaSnapshot() (economy.StormArea, bool) {
+	if w.stormArea == nil {
+		return economy.StormArea{}, false
+	}
+	return *w.stormArea, true
+}
+
+// TalkNotice 是一則原版訊息的結構化呈現要求。
+//
+// Index 是 TALK.DAT 的原始槽位。City、Faction 與 General 是可選的 state 索引，
+// 未使用時為 -1；Amount 是 `\\7` 數值 marker 的原始十進位值，未使用時為 -1。
+// 目前災害訊息使用 City，外交官回報使用 Faction／General，事件 10
+// 使用 General 保存 formatter 的高位元組，事件 13 不帶目標。
+// RawFormatterWordValid／RawFormatterWord 是原版直接呼叫 TALK 時，從
+// `SS:[DI]` 取出的原始 word；它不是 City ID。Valid 必須顯式設起，避免
+// Go 結構的零值把「未提供」誤當成原版 word 0。
+// 這裡不直接保存展開後文字，讓 Big5 round-trip 與 UI 排版仍由資產／呈現層
+// 負責，也避免把尚未解出的 formatter 參數誤升格成語意。
+type TalkNotice struct {
+	Index                 int
+	City                  int
+	Faction               int
+	General               int
+	Amount                int
+	RawFormatterWord      int
+	RawFormatterWordValid bool
+	Secondary             bool // sub_13C3D 的第二次 TALK 呼叫
+	NoPortrait            bool // 原版直接 sub_18810 的文字／選單沒有肖像 blit
+}
+
+// StrategyEvent 是政略 AI 的可觀測動作。
+type StrategyEvent struct {
+	Faction     int
+	Target      int
+	Corps       int
+	Destination int
+}
+
+// Tick 推進一個 tick。月結、季節、災害都掛在對應的進位事件上。
+//
+// 原版 sub_11CD0 的可觀測順序是：據點 sub_13EFD → 軍團 sub_125A3
+// → MCH 物件 sub_12459 → 時鐘 sub_11D8E。Tick 是規則 tick 的
+// 據點／軍團／時鐘部分；一次可見 map-loop 的完整順序由 TickMap 提供，
+// 不把 UI 的 g.speed 倍速誤套到物件動畫。
 func (w *World) Tick(rng economy.Rand) Event {
-	// 有戰術戰鬥還沒打完，世界就停在那裡——原版進戰術畫面時戰略時間也停了。
-	if w.pending != nil {
+	return w.tick(rng, false)
+}
+
+// TickMap 跑一次完整的原版 map-loop：據點、軍團、MCH 物件，最後才是時鐘。
+// wlgame 每個可見畫面的第一個規則 tick 使用它；同畫面的額外 speed tick
+// 使用 Tick，避免自訂快轉改變物件 16-update cadence。
+func (w *World) TickMap(rng economy.Rand) Event {
+	return w.tick(rng, true)
+}
+
+func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
+	// sub_11CB1 離開主遊戲循環後，remake 的 state 不再讓 Tick／AI／時鐘
+	// 產生任何副作用；已經排入的訊息仍可由呈現層讀取。
+	if w.outcome != InProgress {
+		return Event{HourFaction: -1}
+	}
+	// 有戰術戰鬥、玩家尚未選擇的遭遇、外交提案或撥款請求，世界都停在那裡。
+	// 原版進戰術畫面前也會先問「戰鬥指揮／委任」，這個選單同樣不能讓
+	// 下一個軍團或時鐘在背景偷偷前進。
+	if w.pending != nil || w.encounter != nil || w.diplomacy != nil || w.funding != nil {
 		return Event{HourFaction: -1}
 	}
 	w.rng = rng
-	ev := Event{Clock: w.Clock.Advance(), HourFaction: -1}
+	ev := Event{HourFaction: -1}
 
-	// 軍團先動。原版的主迴圈是「先 sub_125A3 再 sub_11D8E（時鐘）」，
-	// 不過時鐘已經在上面推進了，所以這裡用推進後的小時去判軍費。
-	ev.Corps = w.tickCorps(w.Clock.Hour, rng)
-
-	// 據點整備：**每 tick 一個**，游標輪轉（原版 `sub_13EFD` 的
+	// ① 據點整備：**每 tick 一個**，游標輪轉（原版 `sub_13EFD` 的
 	// `mov si, word_10D1E` … `add si, 20h`）。192 個據點輪一圈，
 	// 而一天是 216 tick，所以每個據點大約每天一次。
-	w.tickCity(rng)
+	ev.Strategy = append(ev.Strategy, w.tickCity(rng)...)
+
+	// ② 軍團在時鐘進位前更新，使用尚未 Advance 的小時。
+	ev.Corps = w.tickCorps(w.Clock.Hour, rng)
+
+	// ③ 完整 map-loop 才更新一次 MCH 物件；額外的 speed tick 跳過這裡。
+	if includeMapObjects {
+		w.AdvanceDisasterObjects()
+	}
+
+	// ④ 最後才進入 sub_11D8E。
+	ev.Clock = w.Clock.Advance()
 
 	if ev.Clock.Hour {
 		w.hourly(&ev, rng)
@@ -519,6 +849,56 @@ func (w *World) Tick(rng economy.Rand) Event {
 	}
 	ev.Storm = economy.RollStorm(cities, rng)
 
+	// 原版 sub_12BD9 緊接月結經濟處理後壓縮事件佇列，並重設
+	// `word_10D20`／`byte_131AD`。已證實的 queue 邊界先照原版保存，避免
+	// 積壓事件跨月時留下錯誤資料；事件 handler 由每小時流程逐筆取出。
+	w.compactEventQueue()
+	// 原版 sub_15358 在月結壓縮後先跑 sub_15715／sub_1578F，將玩家
+	// 內政官／外交官的撥款請求放進事件佇列，再進入其他政略評估。
+	if w.Player >= 0 && w.Player < numFactions {
+		w.queueFundingRequests(rng)
+	}
+	// 暴風雨與火災／暴動也是月結產生的事件：sub_122DB 先寫事件 11，
+	// sub_12286 再按據點順序寫事件 0x010C／0x020C。事件 12 的 Param
+	// 保存原版 runtime city record 位址，不把檔案偏移或 city ID 偷換進去。
+	w.stormArea = ev.Storm
+	if ev.Storm != nil {
+		w.queueEvent(rng, 0, 11, 0, 0xFF)
+	}
+	for i := range w.Cities {
+		d, ok := ev.Disaster[i]
+		if !ok {
+			continue
+		}
+		variant := 0
+		if d == economy.Fire {
+			variant = 1
+		} else if d == economy.Riot {
+			variant = 2
+		} else {
+			continue
+		}
+		param := uint16(runtimeCityBase + i*citySize)
+		w.queueEvent(rng, variant, 12, param, 0xFF)
+	}
+
+	// 原版 sub_12BD9 在月結的經濟處理之後跑政略評估。宣戰／遷都決策先
+	// 寫入 queue，再由每小時的 sub_131AE 邊界逐筆處理；其餘尚未解出的
+	// handler 仍不在這個轉接層裡。每一筆決策仍只使用已由機器碼確認的
+	// 欄位與比較式。
+	if w.strategicAI {
+		strategyEvents, relocated := w.runStrategicAI(rng)
+		ev.Strategy = append(ev.Strategy, strategyEvents...)
+		if len(relocated) > 0 {
+			ev.Relocated = relocated
+		}
+	}
+
+	// 原版 event 10 的自然 writer 仍未知。remake 在所有已證實的月結／
+	// queue producer 之後，使用獨立、可關閉的近似 producer；它只產生
+	// raw `(general<<8)|0x0A`，實際 TALK 仍等下一次每時 dispatcher。
+	w.produceApproximateEvent10(rng)
+
 	// ④ 「來月」的設定生效（原版是一次 4 個 word 的複製）。
 	w.TaxRate, w.RecruitCap = w.NextTaxRate, w.NextRecruitCap
 
@@ -552,6 +932,13 @@ func (w *World) Tick(rng economy.Rand) Event {
 // 順序照原版：① 侵攻的財政檢查 → ② 預備兵維持費 → ③ 外交官。
 // 完整反組譯見 docs/re/08 §1–§3。
 func (w *World) hourly(ev *Event, rng economy.Rand) {
+	// 原版 sub_13E11 的第一個呼叫就是 sub_131AE；它與當小時輪到的
+	// 勢力財政檢查分開，不能把事件延後到月結或直接同步套用。
+	w.dispatchQueuedEvent(ev)
+	if w.diplomacy != nil || w.funding != nil {
+		return
+	}
+
 	i := w.hourFaction
 	w.hourFaction = (i + 1) % numFactions
 	ev.HourFaction = i
@@ -587,17 +974,6 @@ func (w *World) hourly(ev *Event, rng economy.Rand) {
 	//    所以要改的是「派遣方 → 這個勢力」那一格交友度。
 	ev.FriendshipUp = w.runDiplomat(i, rng)
 
-	// ④ 主動遷都（原版的事件 8，`sub_12D3A`）。
-	//    **沒有侵攻目標時**才會發，機率 rand(0..255) < 0x40 ＝ 25%。
-	//    「閒著沒仗打就把首都搬到最好的城」——與侵攻互斥。
-	if f.InvasionTarget == diplomacy.NoTarget && rng.Next()&0xFF < 0x40 {
-		if next := w.relocateCapital(i); next != capital.None {
-			if ev.Relocated == nil {
-				ev.Relocated = map[int]int{}
-			}
-			ev.Relocated[i] = next
-		}
-	}
 }
 
 // relocateCapital 把 faction 的首都搬到 `internal/rules/capital` 選出的據點。
@@ -620,8 +996,35 @@ func (w *World) relocateCapital(faction int) int {
 	if next == capital.None || next == w.Factions[faction].Capital {
 		return capital.None
 	}
+	old := w.Factions[faction].Capital
 	w.Factions[faction].Capital = next
+	// 原版 `sub_133FD`／`sub_14DF0` 在首都真的變更後都呼叫
+	// `sub_14502`：同勢力、以舊首都為 Home 的活軍團改掛新首都；
+	// 若目標正好是新首都，目標據點只改回舊首都，X/Y 保留原值。
+	// 這裡只接入已證實的三個欄位效果，不虛構原版的路徑重算。
+	w.syncCorpsAfterCapitalChange(faction, old, next)
 	return next
+}
+
+// syncCorpsAfterCapitalChange 是 `sub_14502` 的非破壞性欄位轉接。
+//
+// 原版掃描 127 筆軍團，條件是存在旗標 >= 0x80、勢力等於來源，且
+// `Corps+0x20` 等於舊首都；命中後寫 `+0x20 = newCapital`。若
+// `Corps+0x14` 等於新首都×8，另寫成舊首都×8，並保留 `+0x16/+0x18`。
+func (w *World) syncCorpsAfterCapitalChange(faction, oldCapital, newCapital int) {
+	if faction < 0 || faction >= len(w.Factions) || oldCapital < 0 || newCapital < 0 {
+		return
+	}
+	for i := range w.Corps {
+		c := &w.Corps[i]
+		if !c.Alive || c.Faction != faction || c.Home != oldCapital {
+			continue
+		}
+		c.Home = newCapital
+		if c.TargetNode == newCapital {
+			c.TargetNode = oldCapital
+		}
+	}
 }
 
 // runDiplomat 讓派駐在 target 的外交官工作一次，回報交友度有沒有提升。
@@ -670,6 +1073,25 @@ func (w *World) AliveFactions() []int {
 	return out
 }
 
+// EnableStrategicAI 啟用月結政略評估與敵方軍團編成。
+//
+// 這是執行期設定，不會寫入 SINARIO.DAT／SAVE.DAT；呼叫端應在設定 Player
+// 後呼叫。未啟用時，World 仍可作為純經濟／格式驗證模型使用。
+func (w *World) EnableStrategicAI() { w.strategicAI = true }
+
+// SetApproximateEvent10 控制事件 10 的 remake 近似自然 producer。
+// false 適合只驗證原始 queue／consumer 的 fixture；正常遊戲預設為 true。
+func (w *World) SetApproximateEvent10(enabled bool) {
+	if w != nil {
+		w.approximateEvent10 = enabled
+	}
+}
+
+// ApproximateEvent10Enabled 回傳目前是否啟用事件 10 近似 producer。
+func (w *World) ApproximateEvent10Enabled() bool {
+	return w != nil && w.approximateEvent10
+}
+
 // LordName 回傳某個勢力的君主姓名（原始 Big5 byte）。
 func (w *World) LordName(faction int) string {
 	f := w.Factions[faction]
@@ -701,6 +1123,16 @@ func putI24(b []byte, off, v int) {
 	b[off+2] = byte(u >> 16)
 }
 
+func clampU8(v int) int {
+	if v < 0 {
+		return 0
+	}
+	if v > 0xFF {
+		return 0xFF
+	}
+	return v
+}
+
 // Bytes 把世界狀態寫回一個 22,208 byte 的劇本／存檔區塊。
 //
 // **策略是「改寫」不是「重建」**：從載入時的原始位元組出發，
@@ -721,6 +1153,16 @@ func (w *World) Bytes() []byte {
 	b[0x03] = byte(w.Clock.Hour)
 	putU16(b, 0x04, w.Clock.Month)
 	putU16(b, 0x06, w.Clock.Year)
+	if w.Player >= 0 && w.Player < numFactions {
+		putU16(b, playerPtrOffset, w.Player*factionSize)
+		b[playerOffset] = byte(w.Player)
+	}
+	b[trustOffset] = byte(clampU8(w.Trust))
+	for i, e := range w.events {
+		off := eventQueueOffset + i*eventQueueEntrySize
+		putU16(b, off, int(e.Code))
+		putU16(b, off+2, int(e.Param))
+	}
 
 	b[taxOffset] = byte(w.TaxRate)
 	b[nextSettings] = byte(w.NextTaxRate)
@@ -834,9 +1276,9 @@ func (w *World) SaveInto(srcPath, dstPath string, index int) error {
 // `rand(0..15)`（期望 −7.5），補回來的就是這裡：AI 的據點每天有 9/16
 // 的機率 +1，月期望 +16.9。實作這一層之前，模擬跑 120 個月會出現
 // 1872 次暴動（`docs/re/07` §19）。
-func (w *World) tickCity(rng economy.Rand) {
+func (w *World) tickCity(rng economy.Rand) []StrategyEvent {
 	if len(w.Cities) == 0 {
-		return
+		return nil
 	}
 	w.cityCursor = (w.cityCursor + 1) % len(w.Cities)
 	c := &w.Cities[w.cityCursor]
@@ -867,5 +1309,60 @@ func (w *World) tickCity(rng economy.Rand) {
 	c.Garrison = gc.Garrison
 	if gov != nil {
 		w.Generals[c.Governor].Budget = gov.Budget
+	}
+	// 原版 sub_13EFD 在 sub_14194 之後無條件呼叫 sub_14269；
+	// 事件 11／12 寫入的 +0x15 marker 不是只有畫面效果。
+	w.applyCityDisasterEffect(w.cityCursor)
+	if w.strategicAI && c.Owner >= 0 && c.Owner < numFactions && c.Owner != w.Player {
+		if ev := w.formAICorps(c.Owner); ev != nil {
+			return []StrategyEvent{*ev}
+		}
+	}
+	return nil
+}
+
+// applyCityDisasterEffect 重現原版 sub_14269（IDA 線性位址 00014269）。
+//
+// marker 是事件 11／12 寫進城市 runtime record +0x15 的 byte：先從 +0x11
+// 防災值扣 marker；若不足，差額再依原版的 byte／word 算術扣 +0x10 的
+// 上昇值存值、+0x0E 的生產力與 +0x13 的城兵。這裡保留生產力的 16 位元
+// 減法，不把未證實的「飽和為零」套到原版沒有夾住的那一欄。
+func (w *World) applyCityDisasterEffect(cityID int) {
+	if cityID < 0 || cityID >= len(w.Cities) {
+		return
+	}
+	marker := int(w.disasterMarkerLevels[cityID])
+	if marker == 0 {
+		return
+	}
+	c := &w.Cities[cityID]
+	if c.Prevention >= marker {
+		c.Prevention -= marker
+		return
+	}
+
+	deficit := marker - c.Prevention
+	c.Prevention = 0
+
+	// 原版 +0x10 是存值（實際上昇值 + 100），sub 指令不足時寫 0。
+	storedGrowth := c.Growth + 100
+	if storedGrowth < deficit {
+		storedGrowth = 0
+	} else {
+		storedGrowth -= deficit
+	}
+	c.Growth = storedGrowth - 100
+
+	// +0x0F 是生產力 u16 的高 byte；原版 `mul byte ptr [si+84Fh]`
+	// 後右移兩位，再對 +0x0E 做 16 位元 sub。
+	productionLoss := (deficit * (c.Production >> 8)) >> 2
+	c.Production = int(uint16(uint16(c.Production) - uint16(productionLoss)))
+
+	// 原版把差額右移一位後對 +0x13 做 byte sub，不足即寫 0。
+	garrisonLoss := deficit >> 1
+	if c.Garrison < garrisonLoss {
+		c.Garrison = 0
+	} else {
+		c.Garrison -= garrisonLoss
 	}
 }

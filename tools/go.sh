@@ -25,6 +25,7 @@ fi
 if ! docker volume inspect "$CACHE_VOL" >/dev/null 2>&1 \
    || ! docker volume inspect "$BUILD_VOL" >/dev/null 2>&1; then
     docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
+        --network none --memory 128m --cpus 0.5 --pids-limit 64 \
         -v "$CACHE_VOL:/gomod" -v "$BUILD_VOL:/gocache" "$IMAGE" \
         chown -R "$(id -u):$(id -g)" /gomod /gocache
 fi
@@ -40,6 +41,7 @@ for v in GOOS GOARCH CGO_ENABLED GOARM GOAMD64; do
 done
 
 exec docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
+    --network none --memory 2g --cpus 2 --pids-limit 256 \
     "${CROSS_ENV[@]+"${CROSS_ENV[@]}"}" \
     -v "$REPO_ROOT:/src" \
     -v "$CACHE_VOL:/gomod" \
