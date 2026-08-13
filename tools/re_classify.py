@@ -181,8 +181,9 @@ def main():
     from re_coverage import scan_mentions, tier, segment_of, SEGMENTS, CATALOGUES
     exclude = [] if "--include-catalogue" in sys.argv else list(CATALOGUES)
     hits = scan_mentions(REPO, exclude=exclude)
+    named = hits.get("_named", {})
     for ea, f in funcs.items():
-        f["tier"] = tier(hits.get(ea, set()))
+        f["tier"] = tier(hits.get(ea, set()) | named.get(f["name"], set()))
         f["seg"] = segment_of(ea)
 
     if talk is None:

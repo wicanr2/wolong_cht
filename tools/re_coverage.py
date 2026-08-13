@@ -21,7 +21,11 @@ import os
 import re
 import sys
 
+# ⚠ `start` 與 `nullsub_N` 不是「前綴_十六進位」的形狀，所以要另外列。
+# 少了它們，這五支永遠到不了 T1——**指標會有一個永遠填不平的底**，
+# 而那看起來像「還有東西沒讀」。
 SYM = re.compile(r"\b(?:sub|loc|word|byte|off|unk|dword|asc|a)_([0-9A-Fa-f]{4,8})\b")
+NAMED = re.compile(r"\b(start|nullsub_\d+)\b")
 
 # KI.EXE 的模組分佈。位址是 IDA DOS/V linear address，
 # 邊界由 census 的函式起點聚類與既有筆記的主題對照得出，屬強推論不是 confirmed。
@@ -87,6 +91,7 @@ def scan_mentions(repo, exclude=()):
     指標歸零而實際上一支都沒多讀。排除它才量得到真正讀過的部分。
     """
     hits = collections.defaultdict(set)
+    named = {}
     roots = ["docs", "internal", "cmd", "tools", "translations"]
     files = []
     for root in roots:
@@ -112,6 +117,10 @@ def scan_mentions(repo, exclude=()):
             continue
         for m in SYM.finditer(text):
             hits[int(m.group(1), 16)].add(rel)
+        for m in NAMED.finditer(text):
+            named.setdefault(m.group(1), set()).add(rel)
+    # 具名函式沒有位址可以當 key，靠 census 的名字回填
+    hits["_named"] = named
     return hits
 
 
@@ -137,8 +146,9 @@ def main():
     if exclude:
         print("> 覆蓋率已排除目錄型文件：%s\n" % "、".join("`%s`" % x for x in exclude))
 
+    named = hits.get("_named", {})
     for ea, f in funcs.items():
-        f["files"] = hits.get(ea, set())
+        f["files"] = hits.get(ea, set()) | named.get(f["name"], set())
         f["tier"] = tier(f["files"])
         f["seg"] = segment_of(ea)
 
