@@ -125,10 +125,10 @@ D7OPEN  .EXE   KI      .EXE   D7END   .EXE   D7OVER  .EXE
 | 檔案 | 大小 | 已知 |
 |---|---|---|
 | **`KI.EXE`** | 67,099 B | **遊戲本體**。引用 16 個資料檔（見下）。**未打包**，字串明文可讀。錯誤訊息：`ERROR: Memory not enougth ! ( at least 560KB )`（原文拼字如此）、`ERROR: Mouse driver not install ?` → **需要滑鼠** |
-| `YNFONT.EXE` | 60,888 B | Borland C++ 1991。中文字型驅動（§3.6） |
+| `YNFONT.EXE` | 60,888 B | Borland C++ 1991。防拷畫面的中文由它畫；**不走 `INT 15h`**，與遊戲本體的字型鏈無關（§2.6）|
 | `LOGO.EXE` | 57,418 B | Borland C++ 1991。開機 logo |
 | `INSTALL.EXE` | 66,710 B | Borland C++ 1991。四片磁片安裝程式：`C:\DRAGON`、`copy %s*.* %s > NUL`、`Please type START to run DRAGON` |
-| `STR.EXE` | 916 B | 過場播放器，引用 `END_S1x.DAT` |
+| `STR.EXE` | 916 B | **DOS/V 字型服務 TSR**（`"DOSV"` 簽章，掛 `INT 15h AH=50h`）。引用的兩個 `END_S1x.DAT` 是字型檔不是過場圖（§2.6、[`../re/29`](../re/29-font-service-int15.md)）|
 | `D7OPEN.EXE` | 4,734 B | **開場播放器**，只引用 `OPENPAL.BRG`、`OPENBGM.DAT`、`OPEN_S1..S6.DAT` |
 | `D7END.EXE` | 6,677 B | 結局播放器 |
 | `D7OVER.EXE` | 2,747 B | 遊戲結束播放器 |
@@ -237,29 +237,29 @@ D7OPEN  .EXE   KI      .EXE   D7END   .EXE   D7OVER  .EXE
 > 教訓：**用「掃描掃出一堆短片段」反推機制是間接證據。**
 > 結論碰巧對，不代表推導過程站得住——格式要從讀取它的程式碼定案。
 
-### 2.6 中文字型：原版怎麼顯示中文仍未解
+### 2.6 中文字型
 
-DOS/V 版實跑（`../playtest/01-dosbox-dosv.md`）證明**玩家不必自備字型**：
-`STDFONT.24`／`ASCFONT.24`／`ASCFONT.15` 三個檔不在封裝裡，遊戲照樣顯示繁體中文。
-那三個檔名是倚天中文系統的檔名族，在 `INSTALL.EXE`、`LOGO.EXE`、`YNFONT.EXE`
-裡都被引用，是 fallback 路徑。
+`KI.EXE` 用 DOS/V 的 `INT 15h AH=50h` 向常駐服務要字模，服務由 `STR.EXE`
+（916 B 的 TSR，`"DOSV"` 簽章）提供，字模來自 `END_S13.DAT`（全形 16×15）
+與 `END_S14.DAT`（半形 8×15，與倚天 `ascfont.15` byte-for-byte 相同）。
+玩家不必自備 `STDFONT.24`／`ASCFONT.24`／`ASCFONT.15`——那三個檔名只出現在
+`INSTALL.EXE`／`LOGO.EXE`／`YNFONT.EXE`，是轉檔或 fallback 路徑。
+全鏈見 [`../re/29-font-service-int15.md`](../re/29-font-service-int15.md)。
 
-**但字型實際存在哪裡未解。** 把 `YNFONT.EXE` 整個當 1bpp 點陣圖畫出來沒有任何字形，
-熵 3.05（沒加殼，也不是壓縮資料）；而光是 192 個據點名加武將名就要 377 個相異字，
-60,888 B 放不下。
-
-兩版的字型架構差異是找答案的起點：
+兩版的字型架構差異：
 
 | | PC-98 日文版 | 松崗 DOS/V 版 |
 |---|---|---|
-| 字型程式 | `YNFONT.COM` **843 B** | `YNFONT.EXE` **60,888 B** |
-| 字型資料 | `FONTGRF.DAT` 1,216 B | 無，改引用 `STDFONT.24` 等三檔 |
+| 字型程式 | `YNFONT.COM` **843 B** | `YNFONT.EXE` **60,888 B** ＋ `STR.EXE` 916 B |
+| 字型資料 | `FONTGRF.DAT` 1,216 B | `END_S13.DAT` 404,992 B ＋ `END_S14.DAT` 3,840 B |
+| 存取方式 | 字型 ROM | `INT 15h AH=50h` |
 
-PC-98 有字型 ROM，843 B 的驅動加 1,216 B 的特殊字圖就夠。DOS/V 沒有 ROM，
-`YNFONT.EXE` 大了 72 倍是在補這一塊——但補的方式還沒讀出來。
+PC-98 有字型 ROM，843 B 的驅動加 1,216 B 的特殊字圖就夠；DOS/V 沒有 ROM，
+所以整套字型連同存取服務都要自己帶。`YNFONT.EXE` 不走 `INT 15h`
+（全檔 0 次），它畫防拷畫面的那條路徑仍未解，與本鏈無關。
 
-**這一項不擋 remake**：remake 走自己的字型路徑（`internal/assets/cjk`，
-`-font` 指定），已實作並在畫面上驗過。**倚天字型不隨本專案散布。**
+remake 走自己的字型路徑（`internal/assets/cjk`，`-font` 指定）。
+**倚天字型不隨本專案散布**，`END_S13.DAT` 是倚天字型的衍生物，同樣適用。
 
 ### 2.7 圖像與調色盤
 
@@ -427,9 +427,10 @@ workplace/ida/pc98/KI.EXE.i64   PC-98 日文版 65,823 B  725 函式
   **`.MCH` 仍未解**。
 - ~~`*GRF.DAT` 的圖像編碼~~ **✅ 全解**（4bpp planar，Go 解碼層與原版逐像素相同）。
 - DOS/V 側的音源（PC-98 側已定案為 OPN，見 §3.9）。
-- ~~那三個字型檔要不要玩家自備~~ **✅ 不擋 remake**：remake 走自己的字型路徑
-  （`internal/assets/cjk`）。**原版怎麼做到的仍未解**（§3.6 的補充）。
-- 松崗版多出來的 `END_S13/S14/S15` 是什麼。
+- ~~那三個字型檔要不要玩家自備~~ **✅ 不必**：字型內建，走 `INT 15h AH=50h`
+  （[`../re/29`](../re/29-font-service-int15.md)）。
+- ~~松崗版多出來的 `END_S13/S14` 是什麼~~ **✅ 是中文字型**（全形／半形）。
+  **`END_S15.DAT`（5,242 B）仍未解**——`KI.EXE` 引用它，既不是字型也不是過場圖。
 - `PASS.*` 為什麼只在松崗版有。
 - ~~有沒有防拷~~ **✅ 有，而且擋住了 DOS/V 的 oracle**（`docs/playtest/01`）：
   「密碼輸入：第 NN 頁」查說明書式，四個中文字，資料在 `PASS.MAP`／`PASS.SCH`，

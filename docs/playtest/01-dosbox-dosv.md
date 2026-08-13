@@ -23,7 +23,7 @@ INT 33 integration 輸入橋接後，空白確認、`0000`、`1234` 都會從密
 
 | 懸案 | 結果 |
 |---|---|
-| 字型檔要不要玩家自備 | **不用。** `STDFONT.24`／`ASCFONT.24`／`ASCFONT.15` 三個檔不在封裝裡，遊戲照樣顯示繁體中文 → `YNFONT.EXE`（60,888 B）自帶字型，那三個檔名是 fallback 路徑 |
+| 字型檔要不要玩家自備 | **不用。** `STDFONT.24`／`ASCFONT.24`／`ASCFONT.15` 三個檔不在封裝裡，畫面照樣顯示繁體中文。字型的實際來源後來由靜態分析定案：`END_S13/S14.DAT` ＋ `STR.EXE` 的 `INT 15h AH=50h` 服務，見 [`../re/29`](../re/29-font-service-int15.md) |
 | 有沒有防拷 | **有。** 開場之後跳出「密碼輸入：第 NN 頁」的查說明書式防拷 |
 
 ![防拷畫面](../images/dosv-copy-protection.png)
