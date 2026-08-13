@@ -102,6 +102,7 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 |---|---|
 | [`21`](21-function-census.md) | 全函式覆蓋普查；**§3.1 為什麼要排除目錄型文件** |
 | [`24`](24-unread-function-catalogue.md) | 未讀函式的證據與下手順序 |
+| [`39`](39-remaining-unread.md) | **剩餘 90 支的逐支歸屬**（生成的，可重跑）|
 | [`20`](20-ida-re-coverage-audit.md) | 手挑取樣的問題，與全量量測的差別 |
 | [`34`](34-corps-status-bits.md) §3 | IDAPython 的用法與兩個仍然成立的坑 |
 
@@ -120,6 +121,8 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
    （`CONTEXT.md` 的推翻表）。
 
 ## 8. 現況與缺口
+
+完整清單見 [`39`](39-remaining-unread.md)。
 
 | 模組 | 未讀 | T4 bytes |
 |---|---:|---:|

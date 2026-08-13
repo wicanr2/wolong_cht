@@ -74,6 +74,7 @@ def load_census(path):
 CATALOGUES = (
     "docs/re/24-unread-function-catalogue.md",
     "docs/re/21-function-census.md",
+    "docs/re/39-remaining-unread.md",
 )
 
 

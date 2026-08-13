@@ -96,6 +96,7 @@
 | [`docs/re/36-tactical-module-map.md`](re/36-tactical-module-map.md) | 36 — 戰術戰鬥模組全圖：主迴圈與它的十一個子系統 | 叢集歸屬 confirmed（呼叫圖精確）。角色標籤是強證據， 來自「呼叫哪些已定案語意的共用常式」與 I/O 埠使… | 2026-08-14 |
 | [`docs/re/37-graphics-and-runtime-module-map.md`](re/37-graphics-and-runtime-module-map.md) | 37 — 圖庫、繪圖底層與 C runtime 兩個模組的全圖 | 叢集歸屬 confirmed。硬體層的角色由 I/O 埠直接判定（精確）， 其餘角色標籤是強證據。 | 2026-08-14 |
 | [`docs/re/38-strategy-core-module-map.md`](re/38-strategy-core-module-map.md) | 38 — 戰略核心三個模組的全圖：指令樹、到站處理與月結 | 八個指令的 handler 全部定位，狀態列與選單索引一併對出（confirmed）。 到站處理與月結的叢集歸屬 c… | 2026-08-14 |
+| [`docs/re/39-remaining-unread.md`](re/39-remaining-unread.md) | 39 — 剩餘未讀函式的逐支歸屬 | 清單。90 支函式尚未逐行讀，共 2,918 bytes。 每一支都已有叢集歸屬與呼叫證據（模組全圖 [35](35… | 2026-08-14 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-13 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
