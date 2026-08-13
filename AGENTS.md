@@ -20,6 +20,7 @@
    的覆蓋地圖（這支函式有人讀過嗎）與
    [`docs/re/24`](docs/re/24-unread-function-catalogue.md)
    的未讀目錄（這支大概在做什麼、值不值得現在讀）。
+   要了解某個子系統整體，入口是 [`docs/re/00-index.md`](docs/re/00-index.md)。
 5. 執行 `git status --short`。**既有改動屬於使用者或前一輪工作，不得 reset、覆蓋或丟棄。**
 6. 讀 [`MEMORY.md`](MEMORY.md) 與 [`WORKLIST.md`](WORKLIST.md)，只當快速入口；
    具體狀態仍以 `CONTEXT.md`、`docs/INDEX.md`、目前程式與可重現測試為準。

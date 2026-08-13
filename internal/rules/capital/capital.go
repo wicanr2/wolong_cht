@@ -66,3 +66,20 @@ func Pick(sites []Site, faction int) int {
 	}
 	return best
 }
+
+// AcceptRelocation 回報君主會不會答應把首都從 from 遷到 to（原版 `sub_16909`）。
+//
+// 這是**玩家進言**那條路，與 Pick（AI 自己選，原版 `sub_16A3D`）不同：
+// 目標由玩家指定，君主只做驗收。兩個條件都要滿足：
+//
+//	from.Kind >= to.Kind        類型編號越小城越大，所以這是「不能往小的搬」
+//	to.Production > from.Production   嚴格大於，相等也不行
+//
+// ⚠ **只看生產力會誤判**——一個生產力更高的小都市仍然會被拒絕。
+// 出處與反組譯見 `docs/mechanics/70-ai.md` §1.3。
+func AcceptRelocation(from, to Site) bool {
+	if from.Kind&0x0F < to.Kind&0x0F {
+		return false
+	}
+	return to.Production > from.Production
+}

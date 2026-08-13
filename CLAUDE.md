@@ -504,6 +504,7 @@ grep `.asm` 只能從呼叫端的參數順序反推——那是間接證據，�
 | 這件事解了沒？ | [`docs/INDEX.md`](docs/INDEX.md) 的斷言總表（欄位／常數 → 推論等級 → 出處）|
 | 這支函式有人讀過嗎？ | [`docs/re/21`](docs/re/21-function-census.md) 的覆蓋地圖 |
 | 這支函式大概在做什麼？ | [`docs/re/24`](docs/re/24-unread-function-catalogue.md) 的未讀目錄 |
+| **想了解某個子系統？** | [`docs/re/00-index.md`](docs/re/00-index.md) 的 RE 知識庫入口 |
 
 `grep` 一次幾乎零成本，漏查的代價是重推一次已經有答案的東西——
 或更糟，繞著一道**已經不存在的閘**打轉。

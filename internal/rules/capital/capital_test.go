@@ -90,3 +90,24 @@ func TestPickAllowsBattlefieldWhenNothingElse(t *testing.T) {
 		t.Fatalf("只有戰場時也要選得出來，得到 %d", got)
 	}
 }
+
+func TestAcceptRelocation(t *testing.T) {
+	// 原版 sub_16909：先比類型（編號小＝城大），再比生產力，兩個都要過。
+	cases := []struct {
+		name     string
+		from, to Site
+		want     bool
+	}{
+		{"同級但生產力更高 → 接受", Site{Kind: 1, Production: 100}, Site{Kind: 1, Production: 200}, true},
+		{"目標是更大的城且生產力更高 → 接受", Site{Kind: 2, Production: 100}, Site{Kind: 0, Production: 150}, true},
+		{"生產力更高但城更小 → 拒絕", Site{Kind: 0, Production: 100}, Site{Kind: 2, Production: 9999}, false},
+		{"城更大但生產力較低 → 拒絕", Site{Kind: 2, Production: 300}, Site{Kind: 0, Production: 200}, false},
+		{"生產力相等 → 拒絕（嚴格大於）", Site{Kind: 1, Production: 100}, Site{Kind: 1, Production: 100}, false},
+		{"高 4 位不參與比較", Site{Kind: 0xF1, Production: 100}, Site{Kind: 0xA1, Production: 200}, true},
+	}
+	for _, c := range cases {
+		if got := AcceptRelocation(c.from, c.to); got != c.want {
+			t.Errorf("%s：AcceptRelocation(%+v, %+v) = %v，想要 %v", c.name, c.from, c.to, got, c.want)
+		}
+	}
+}
