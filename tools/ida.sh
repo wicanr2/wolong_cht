@@ -67,6 +67,13 @@ case "$MODE" in
           exit 3; }
         ;;
     esac
+    # 中斷的執行會在 SCRATCH 留下未打包的資料庫（.id0/.id1/.nam/.til）。
+    # IDA 看到它們就不肯開同名的 .i64，訊息是
+    # 「Failed to initialize IDA as library (error code 4)」——**看起來像授權或
+    # image 壞掉，其實只是殘檔**。每次開跑前清掉，只清 SCRATCH 裡的副本，
+    # 原始 .i64 在上一層目錄不受影響。
+    rm -f "$SCRATCH/${DB%.i64}".id0 "$SCRATCH/${DB%.i64}".id1 \
+          "$SCRATCH/${DB%.i64}".nam "$SCRATCH/${DB%.i64}".til
     echo "來源資料庫："; sha256sum "$WORK/$DB"
     echo "image：$IMG"
     cp -f "$WORK/$DB" "$SCRATCH/$DB"

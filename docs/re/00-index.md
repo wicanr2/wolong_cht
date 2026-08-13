@@ -123,14 +123,20 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 
 | 模組 | 未讀 | T4 bytes |
 |---|---:|---:|
-| 戰術戰鬥 | 71 | 3,222 |
-| 戰略 UI | 54 | 2,988 |
-| 圖庫解碼與繪圖底層 | 33 | 1,670 |
-| 啟動、C runtime 與低階 I/O | 30 | 1,510 |
-| 訊息格式化與 TALK 輸出 | 28 | 1,563 |
-| 月結、經濟、AI 決策 | 24 | 910 |
-| 戰略資料存取 | 11 | 370 |
-| 戰術呈現 | 1 | 26 |
+| 戰術戰鬥 | 37 | 1,144 |
+| 訊息格式化與 TALK 輸出 | 13 | 664 |
+| 月結、經濟、AI 決策 | 12 | 339 |
+| 圖庫解碼與繪圖底層 | 11 | 360 |
+| 啟動、C runtime 與低階 I/O | 9 | 200 |
+| 戰略資料存取 | 6 | 185 |
+| 戰略 UI | 2 | 26 |
+| 戰術呈現 | 0 | 0 |
+
+**合計 90 支、2,918 bytes（5%）。** 模組級全圖見
+[`35`](35-strategy-ui-module-map.md)（戰略 UI）、
+[`36`](36-tactical-module-map.md)（戰術戰鬥）、
+[`37`](37-graphics-and-runtime-module-map.md)（圖庫與 C runtime）、
+[`38`](38-strategy-core-module-map.md)（指令樹、到站處理、月結）。
 
 **數字是 2026-08-14 的快照，要現況一律重跑**
 （`tools/py.sh tools/re_coverage.py workplace/ida/dosv/census/census.tsv`）。
