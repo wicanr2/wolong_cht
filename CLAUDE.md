@@ -210,6 +210,8 @@ tools/ida.sh raw    dosv idat -A "-S/work/tools/ida_func.idc sub_12E89" KI.EXE.i
 | `ida_hot_helpers.idc` | 被大量未讀函式呼叫的共用常式 |
 | `ida_dump_bytes.idc` | 指定範圍的原始 bytes |
 | **`ida_scan.py`** | **IDAPython**：全庫掃「對 `[reg+disp]` 寫立即值」（解碼運算元，不比對文字）＋ 指定函式 dump。新腳本照這一支的骨架寫 |
+| **`ida_tables.py`** | **IDAPython**：每支函式碰哪幾張表（掃表基址立即值）。**函式層級不是指令層級**——暫存器會跨函式帶著走 |
+| **`ida_dump.py`** | **IDAPython**：通用 dumper，要看哪幾支寫在 `workplace/ida/<版本>/census/dump_list.txt`，不必為了換位址改工具 |
 
 三支 Python 把上面的輸出變成可查的表：
 

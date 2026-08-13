@@ -14,7 +14,11 @@
 // 這樣「這個欄位是誰寫的」不必另外查一次。
 //
 // 三件在這個 image 上實測過的事（~/.claude/knowledge-base/retro/ida-pro-9.4.md）：
-//   1. IDAPython 跑不起來，只能寫 IDC。
+//   1. **IDAPython 可用**，但要 ida-pro-9.4-idapython:py312-v1；
+//      基底 image 跑 .py 是零輸出的靜默失敗。tools/ida.sh 依副檔名自動選。
+//      新腳本優先寫 IDAPython（骨架見 tools/ida_scan.py），IDC 只當退路——
+//      IDC 缺一半內建函式（get_func_qty 就不存在），而缺函式在 headless
+//      底下是靜默中止：已寫的輸出一起消失，exit code 仍是 0。
 //   2. headless 的 print / Message() **不進 stdout**，一律 fopen 寫檔。
 //      不寫檔就等於沒跑，而且 exit code 還是 0。
 //   3. 讀寫判定用 XrefType()（dr_W=2／dr_R=3／dr_O=1），
