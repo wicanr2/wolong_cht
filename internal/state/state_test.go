@@ -728,14 +728,14 @@ func TestQueuedEventHandlers(t *testing.T) {
 	oldCapital := w.Factions[faction].Capital
 	otherFaction := (faction + 1) % numFactions
 	w.Corps[0] = Corps{
-		Alive: true, Faction: faction, Home: oldCapital, TargetNode: expected,
+		Alive: true, Faction: faction, Ordered: oldCapital, TargetNode: expected,
 		TargetX: 0x1234, TargetY: 0x5678,
 	}
 	w.Corps[1] = Corps{
-		Alive: true, Faction: faction, Home: oldCapital, TargetNode: oldCapital,
+		Alive: true, Faction: faction, Ordered: oldCapital, TargetNode: oldCapital,
 	}
 	w.Corps[2] = Corps{
-		Alive: true, Faction: otherFaction, Home: oldCapital, TargetNode: expected,
+		Alive: true, Faction: otherFaction, Ordered: oldCapital, TargetNode: expected,
 	}
 	w.events[0] = QueuedEvent{Code: uint16(faction)<<8 | 8, Param: 0xFFFF}
 	w.eventCursor, w.eventDelay = 0, 1
@@ -743,13 +743,13 @@ func TestQueuedEventHandlers(t *testing.T) {
 	if got := w.Factions[faction].Capital; got != expected {
 		t.Fatalf("事件 8 首都 = %d，want %d", got, expected)
 	}
-	if c := w.Corps[0]; c.Home != expected || c.TargetNode != oldCapital || c.TargetX != 0x1234 || c.TargetY != 0x5678 {
+	if c := w.Corps[0]; c.Ordered != expected || c.TargetNode != oldCapital || c.TargetX != 0x1234 || c.TargetY != 0x5678 {
 		t.Fatalf("事件 8 未照 sub_14502 同步軍團 0：%+v，舊首都=%d 新首都=%d", c, oldCapital, expected)
 	}
-	if c := w.Corps[1]; c.Home != expected || c.TargetNode != oldCapital {
+	if c := w.Corps[1]; c.Ordered != expected || c.TargetNode != oldCapital {
 		t.Fatalf("事件 8 不應改寫非新首都目標：%+v", c)
 	}
-	if c := w.Corps[2]; c.Home != oldCapital || c.TargetNode != expected {
+	if c := w.Corps[2]; c.Ordered != oldCapital || c.TargetNode != expected {
 		t.Fatalf("事件 8 不應同步其他勢力軍團：%+v", c)
 	}
 
@@ -2936,5 +2936,70 @@ func TestDiplomacyAndFundingAmountOutcomeBounds(t *testing.T) {
 	if w.Factions[0].Funds != 43_000 || w.Generals[officer].Budget != 7_000/128 {
 		t.Fatalf("撥款超額輸入結果錯誤：funds=%d budget=%d",
 			w.Factions[0].Funds, w.Generals[officer].Budget)
+	}
+}
+
+// 下行軍指令時，原版把目的地同時寫進兩個欄位：`+0x14`（×8，移動用）與
+// `+0x20`（無縮放，一覽表顯示與遷都的判準）。`sub_142AB` 直接示範兩者的關係
+// ——先 `mov [si+14h],bx` 再 `shr bx,1` ×3 後 `mov [si+20h],bl`。
+//
+// 這個測試盯的是**存檔內容**而不只是欄位：先前 `Ordered` 只在編成與遷都
+// 更新，所以下完行軍指令再存檔，`+0x20` 會停在首都，與原版分歧。
+func TestMarchWritesOrderedTargetIntoSave(t *testing.T) {
+	w := load(t, 0)
+	w.Player = 0
+	leader := -1
+	for i, g := range w.Generals {
+		if g.Alive && g.Faction == w.Player && !g.Posted {
+			leader = i
+			break
+		}
+	}
+	if leader < 0 {
+		t.Fatal("找不到可編成的武將")
+	}
+	var kinds [army.Positions]army.TroopType
+	var manned [army.Positions]bool
+	kinds[0] = army.Infantry
+	manned[0] = true
+	if err := w.FormCorps(leader, kinds, manned); err != nil {
+		t.Fatal(err)
+	}
+	corps := leader
+
+	// 編成之後目標就是所在地（＝首都），這一點本身也要成立：
+	// 原版 `sub_16F26` 把勢力的首都寫進 +0x20，而軍團就編在首都。
+	if got := w.Corps[corps].Ordered; got != w.Corps[corps].Node {
+		t.Fatalf("編成後 Ordered = %d，應該等於所在地 %d",
+			got, w.Corps[corps].Node)
+	}
+
+	start := w.Corps[corps].Node
+	dest := -1
+	for i := range w.Cities {
+		if i != start {
+			dest = i
+			break
+		}
+	}
+	if err := w.March(corps, dest); err != nil {
+		// 走不到時原版與 remake 都把目標退回原地，這也要一致。
+		if got := w.Corps[corps].Ordered; got != w.Corps[corps].Node {
+			t.Fatalf("行軍失敗後 Ordered = %d，應該退回原地 %d",
+				got, w.Corps[corps].Node)
+		}
+		return
+	}
+	if got := w.Corps[corps].Ordered; got != dest {
+		t.Fatalf("Ordered = %d，應該是行軍目的地 %d", got, dest)
+	}
+
+	b := w.Bytes()
+	r := b[corpsBase+corps*corpsSize:]
+	if int(r[0x20]) != dest {
+		t.Fatalf("存檔 +0x20 = %d，應該是目的地 %d", r[0x20], dest)
+	}
+	if int(u16(r, 0x14))/8 != dest {
+		t.Fatalf("存檔 +0x14÷8 = %d，應該是目的地 %d", u16(r, 0x14)/8, dest)
 	}
 }

@@ -95,7 +95,7 @@
 共 147 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
-### confirmed（74 條）
+### confirmed（75 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -173,8 +173,9 @@
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x1A | `docs/re/08-hourly-update.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x1C | `docs/re/08-hourly-update.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x1E | `docs/re/08-hourly-update.md` |
+| 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x20 | `docs/re/08-hourly-update.md` |
 
-### 強證據（30 條）
+### 強證據（29 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -200,7 +201,6 @@
 | 據點記錄再解出四個欄位 ▸ +12h | `docs/re/07-monthly-settlement.md` |
 | 據點記錄再解出四個欄位 ▸ +13h | `docs/re/07-monthly-settlement.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x04 | `docs/re/08-hourly-update.md` |
-| 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x20 | `docs/re/08-hourly-update.md` |
 | 連結記錄（16 byte） ▸ +0x00 | `docs/re/08-hourly-update.md` |
 | 連結記錄（16 byte） ▸ +0x02 | `docs/re/08-hourly-update.md` |
 | 連結記錄（16 byte） ▸ +0x06 | `docs/re/08-hourly-update.md` |

@@ -52,7 +52,15 @@ type Corps struct {
 	Node, X, Y                   int // +0x0E（÷8）／+0x10／+0x12
 	TargetNode, TargetX, TargetY int // +0x14（÷8）／+0x16／+0x18
 
-	Home int // +0x20，編成時寫首都據點編號
+	// Ordered 是**玩家下令的目標據點**（+0x20），TargetNode 是移動用的
+	// 同一個值（+0x14，原版存 ×8）。原版把同一個概念存成兩份：
+	// `sub_142AB` 一次寫兩個，`mov [si+14h],bx` 之後 `shr bx,1` ×3 再
+	// `mov [si+20h],bl`，所以 +0x20 恆等於 +0x14 ÷ 8。
+	//
+	// 兩份仍分開留著，因為遷都會讓它們暫時不一致（`sub_14502`：目標是
+	// 舊首都的改成新首都，但 +0x14 只在它等於新首都×8 時才改）。
+	// 合併成一個欄位會讓那一段自我抵銷。
+	Ordered int
 }
 
 // ⚠ **行軍路線刻意不放在 Corps 裡**，放在 `World.routes`。
@@ -83,7 +91,7 @@ func (w *World) loadCorps(b []byte) {
 			TargetX:    u16(r, 0x16),
 			TargetY:    u16(r, 0x18),
 			Interval:   int(r[0x1E]),
-			Home:       int(r[0x20]),
+			Ordered:       int(r[0x20]),
 		}
 		for k := range c.Units {
 			s := r[unitSlotBase+k*unitSlotSize:]
@@ -116,7 +124,7 @@ func (w *World) saveCorps(b []byte) {
 		putU16(r, 0x16, c.TargetX)
 		putU16(r, 0x18, c.TargetY)
 		r[0x1E] = byte(c.Interval)
-		r[0x20] = byte(c.Home)
+		r[0x20] = byte(c.Ordered)
 		for k, u := range c.Units {
 			s := r[unitSlotBase+k*unitSlotSize:]
 			s[1] = byte(u.Men)
@@ -199,7 +207,7 @@ func (w *World) FormCorps(leader int, kinds [army.Positions]army.TroopType,
 		Alive:   true,
 		Faction: g.Faction,
 		Morale:  f.MoraleBase,
-		Home:    f.Capital,
+		Ordered:    f.Capital,
 		Node:    home,
 		X:       w.Cities[home].X,
 		Y:       w.Cities[home].Y,
@@ -704,6 +712,10 @@ func (w *World) March(corps, node int) error {
 	}
 	c := &w.Corps[corps]
 	c.TargetNode = node
+	// 原版下行軍指令時兩個欄位都寫：`sub_17FDB` 的 `mov [si+20h], al`
+	// 寫的就是玩家剛選的目的地（`docs/re/27` §7）。少寫這一個，
+	// 存檔的 +0x20 會停在編成時的首都，與原版分歧。
+	c.Ordered = node
 	c.TargetX, c.TargetY = w.Cities[node].X, w.Cities[node].Y
 	w.routes[corps] = nil
 	if w.roads == nil || node == c.Node {
@@ -713,6 +725,7 @@ func (w *World) March(corps, node int) error {
 	if path == nil {
 		// **走不到要說走不到**，不要默默走直線穿過山河。
 		c.TargetNode = c.Node
+		c.Ordered = c.Node
 		c.TargetX, c.TargetY = w.Cities[w.clampCity(c.Node)].X, w.Cities[w.clampCity(c.Node)].Y
 		return fmt.Errorf("state: 從 %s 沒有路可以到 %s",
 			w.Cities[w.clampCity(c.Node)].Name, w.Cities[node].Name)

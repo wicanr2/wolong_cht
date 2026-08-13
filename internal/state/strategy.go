@@ -360,7 +360,7 @@ func (w *World) formAICorps(faction int) *StrategyEvent {
 	}
 	var c Corps
 	c.Alive, c.Faction, c.Morale = true, faction, f.MoraleBase
-	c.Home = f.Capital
+	c.Ordered = f.Capital
 	home := w.clampCity(f.Capital)
 	c.Node, c.X, c.Y = home, w.Cities[home].X, w.Cities[home].Y
 	c.TargetNode, c.TargetX, c.TargetY = c.Node, c.X, c.Y

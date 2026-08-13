@@ -999,7 +999,7 @@ func (w *World) relocateCapital(faction int) int {
 	old := w.Factions[faction].Capital
 	w.Factions[faction].Capital = next
 	// 原版 `sub_133FD`／`sub_14DF0` 在首都真的變更後都呼叫
-	// `sub_14502`：同勢力、以舊首都為 Home 的活軍團改掛新首都；
+	// `sub_14502`：同勢力、以舊首都為 Ordered 的活軍團改掛新首都；
 	// 若目標正好是新首都，目標據點只改回舊首都，X/Y 保留原值。
 	// 這裡只接入已證實的三個欄位效果，不虛構原版的路徑重算。
 	w.syncCorpsAfterCapitalChange(faction, old, next)
@@ -1017,10 +1017,10 @@ func (w *World) syncCorpsAfterCapitalChange(faction, oldCapital, newCapital int)
 	}
 	for i := range w.Corps {
 		c := &w.Corps[i]
-		if !c.Alive || c.Faction != faction || c.Home != oldCapital {
+		if !c.Alive || c.Faction != faction || c.Ordered != oldCapital {
 			continue
 		}
-		c.Home = newCapital
+		c.Ordered = newCapital
 		if c.TargetNode == newCapital {
 			c.TargetNode = oldCapital
 		}
