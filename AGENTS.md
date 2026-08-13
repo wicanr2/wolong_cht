@@ -16,12 +16,19 @@
 3. 讀 `CLAUDE.md` 的目標、硬規則與證據契約。
 4. 先看 [`docs/INDEX.md`](docs/INDEX.md) 的斷言總表，再讀任務直接相關的
    `docs/re/`、`docs/formats/`、`docs/mechanics/`、`docs/playtest/`。
+   要碰反組譯時另外兩張表也要查：[`docs/re/21`](docs/re/21-function-census.md)
+   的覆蓋地圖（這支函式有人讀過嗎）與
+   [`docs/re/24`](docs/re/24-unread-function-catalogue.md)
+   的未讀目錄（這支大概在做什麼、值不值得現在讀）。
 5. 執行 `git status --short`。**既有改動屬於使用者或前一輪工作，不得 reset、覆蓋或丟棄。**
 6. 讀 [`MEMORY.md`](MEMORY.md) 與 [`WORKLIST.md`](WORKLIST.md)，只當快速入口；
    具體狀態仍以 `CONTEXT.md`、`docs/INDEX.md`、目前程式與可重現測試為準。
 
-「動手之前查 `docs/INDEX.md`」是 `[HARD]`，時機是**動手之前**不是下結論之前——
+「動手之前查表」是 `[HARD]`，時機是**動手之前**不是下結論之前——
 「還沒解」與「我不記得解過」在動手那一刻長得一模一樣。
+
+**新增文件與規則時，不准寫進不存在的檔案、目錄、工具或 IDA 符號。**
+`tools/phantom_scan.py` 會擋（已接進 `tools/check.sh`），但寫之前先 `ls` 更便宜。
 
 ## 2. 外部知識引用
 
@@ -61,9 +68,13 @@
 
 ## 5. 提交前的閘
 
-至少跑 `tools/go.sh vet ./...`、`tools/go.sh test ./...`、`tools/index.py generate`
-與 `tools/denylist.py --selftest`，再做資產掃描、`git diff --check`、dirty-tree 檢查。
-`tools/check.sh` 是單一入口。
+`tools/check.sh` 是單一入口，它會跑 `go vet`、`go test`、`index.py generate`、
+`phantom_scan.py`、`denylist.py` 與 `talkdat_selftest.py`。
+另外自己做 `git diff --check` 與 dirty-tree 檢查。
+
+**快取會把「跑不起來」偽裝成「通過」**：`go test` 對沒重編的套件直接回 `(cached)`，
+所以需要顯示器的 Ebiten 測試在無 X 的環境下看起來是綠的。`tools/go.sh` 已內建 Xvfb，
+但驗收環境的完整性仍要靠 `tools/go.sh clean -testcache` 後冷跑一次。
 
 **測試綠不等於原版 parity。** 完成宣告還要有原版／reference 對照與正常玩家路徑證據。
 

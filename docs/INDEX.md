@@ -78,8 +78,9 @@
 | [`docs/re/19-outcome.md`](re/19-outcome.md) | DOS/V 已證實敗北 outcome 接線 | READY（只涵蓋兩種敗北；不涵蓋勝利、君主死亡或原版返回標題）。 | 2026-08-12 |
 | [`docs/re/20-ida-re-coverage-audit.md`](re/20-ida-re-coverage-audit.md) | 20 — DOS/V IDA 逆向覆蓋與 remake 差距審計 | REVIEWED。足以支撐可玩重製與多數規則，但不足以支撐高忠實度戰術呈現；主要缺口是原版顯示串列、相機狀態機、逐幀… | 2026-08-12 |
 | [`docs/re/21-function-census.md`](re/21-function-census.md) | 21 — DOS/V KI.EXE 全函式覆蓋普查 | 量測完成。739 支函式中 355 支（48%，佔程式碼 39%）從未在專案任何一處被提及； 缺口集中在戰略 UI … | 2026-08-13 |
-| [`docs/re/22-strategy-command-tree.md`](re/22-strategy-command-tree.md) | 22 — 戰略指令列與滑鼠熱區分派 | 指令列的八個槽位、兩層子選單、熱區查表定址式與狀態列提示常式 confirmed。指令列圖形來源與 sub_1628… | 2026-08-13 |
+| [`docs/re/22-strategy-command-tree.md`](re/22-strategy-command-tree.md) | 22 — 戰略指令列與滑鼠熱區分派 | 指令列的八個槽位、兩層子選單、財政四子項、編成入口、熱區查表定址式與 狀態列提示常式 confirmed。指令列圖形… | 2026-08-13 |
 | [`docs/re/23-bgm-resource-format.md`](re/23-bgm-resource-format.md) | 23 — BGM.DAT 音樂資源格式 | 容器索引與曲塊的聲軌指標表 confirmed，兩版都逐 byte 對齊到檔尾且餘 0。 聲軌資料本身的事件編碼、+… | 2026-08-13 |
+| [`docs/re/24-unread-function-catalogue.md`](re/24-unread-function-catalogue.md) | 24 — 未讀函式目錄：287 支的證據與下手順序 | 287 支未讀函式全部登記，其中 77 支已由共用常式與 TALK 訊息取得角色證據； 其餘 210 支只有結構資料… | 2026-08-13 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-07 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |

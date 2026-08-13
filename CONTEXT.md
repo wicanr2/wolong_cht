@@ -371,22 +371,18 @@ M8 實機驗收。細節見 §7.0。
    與六個聲軌指標已解（`docs/re/23`）。剩下的是聲軌資料本身怎麼編碼音高／長度／
    迴圈，以及 `+0x02`／`+0x04` 兩張表的內容。解開才談得上音樂 parity。
 
-4. **M3 的覆蓋缺口** —— 2026-08-13 全函式普查（`docs/re/21`）量出 739 支裡
-   355 支從未被任何文件提過，佔程式碼 39%。分佈**不是**先前以為的戰術呈現
-   （那塊 35 支只有 2 支未觸及），而是：
+4. **M3 的覆蓋缺口** —— 全函式普查（`docs/re/21`）量出 739 支裡有大量從未被
+   任何文件提過。分佈**不是**先前以為的戰術呈現（那塊 35 支只有 2 支未觸及），
+   而是戰略 UI 與月結／經濟／AI。739 支裡只有 1 支沒有直接呼叫者 →
+   **那些是會被執行的遊戲程式碼**，不是用不到的程式庫。
 
-   | 模組 | 未觸及 | bytes |
-   |---|---:|---:|
-   | 戰略 UI：選單、視窗、數值輸入 | 82 / 108 | 5,484 |
-   | 月結、經濟、AI 決策 | 72 / 96 | 4,456 |
-   | 戰術戰鬥：主迴圈、腳本、單位更新 | 72 / 180 | 3,310 |
-   | 圖庫解碼、繪圖底層 | 39 / 60 | 2,211 |
+   287 支未讀函式已全部登記在 `docs/re/24`，其中 77 支有 TALK 訊息層級的角色證據。
+   **動手讀任何一支之前先查那份**，並照它 §4 的順序挑：
+   有 TALK 證據的 → 被多支呼叫的共用常式 → 呼叫者已記錄的 → 整批同模組。
+   **不要用大小排優先度**：`sub_161CA` 只有 74 bytes 卻是整個戰略層的入口。
 
-   739 支裡只有 1 支沒有直接呼叫者 → **那 355 支是會被執行的遊戲程式碼**，
-   不是用不到的程式庫。第一塊已動工：戰略指令列與滑鼠熱區分派（`docs/re/22`）。
-
-   下手順序建議照「呼叫者已記錄」優先——那些函式的上下文已知，讀起來最省。
-   重跑覆蓋地圖：`tools/py.sh tools/re_coverage.py <census.tsv>`。
+   重跑：`tools/ida.sh script dosv tools/ida_call_trace.idc KI.EXE.i64` 後
+   `tools/py.sh tools/re_classify.py <calltrace.tsv> <census.tsv>`。
 
 #### 未解的小項（各自獨立，可平行）
 
@@ -449,10 +445,9 @@ M8 實機驗收。細節見 §7.0。
 | `tools/dosbox.sh` | `tools/dosbox.sh dosv "wait:2;type:START;key:Return;wait:10;shot:x"`。DOS/V oracle（會撞防拷）|
 | `tools/dosboxx.sh` | `tools/dosboxx.sh "until:<md5>,260;xkey:ctrl+F10;clickat:300,172;shot:x"`。**PC-98 oracle，無防拷**。timeline：`wait`／`until:md5,上限`／`settle`／`key`／`type`／`xkey`／`xtype`／`move`／`click`／`goto`／`clickat`／`probe`／`shot`。**要點滑鼠一定要先 `xkey:ctrl+F10`**，而且用 `clickat`（閉迴路）不要用 `click`（開迴路會被 8 bit 位移截斷）。滑鼠三個旋鈕：`WOLONG_SDL_AUTOLOCK`／`WOLONG_MOUSE_EMU`／`WOLONG_LOG_MOUSE`。原理見 `docs/playtest/06` |
 
-> ⚠ 舊版這裡寫著「還沒建但 `CLAUDE.md` §5.1 要求的：`tools/addr.py`、
-> `tools/dump_func.py`」。那兩支**從來沒有存在過**，而 `CLAUDE.md` §5.1
-> 也已經改成 `tools/ida_func.idc`。**待辦清單上掛著一個不存在的工具，
-> 比沒有那一行更糟**——照做的人會先花時間去找它。
+> ⚠ **這張表只列真的存在的工具。** 規則或待辦指向一支不存在的腳本，
+> 比沒有那一行更糟——照做的人會先花時間去找它，而那一項永遠不會完成。
+> `tools/phantom_scan.py` 會掃出這一類引用，已接進 `tools/check.sh`。
 
 ## 2026-08-09 最新接手狀態：事件 4／5
 

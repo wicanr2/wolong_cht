@@ -1333,7 +1333,7 @@ SHA-256 `fd7cbfa4cf2d4e0773a33181c4c4ea7944020552f5facc847750f69f670fa72b`。
   暴動物件；`sub_12533`（`00012533`）以 `type*8+frame` 查 `CS:[bx-67A6h]`，IDA
   資料庫的線性位置 `0001985A` 實際內容為：type 1
   `18 19 1A 1B 1C 18 19 1A`、type 2 `20 21 22 23 20 21 22 23`、type 3
-  `28 29 2A 2B 28 29 2A 2B`。`sub_1D51F`（`0001D51F`）再把 MCH 矩陣中的 tile ID
+  `28 29 2A 2B 28 29 2A 2B`。`0001D51F`（該區無函式邊界，由 `sub_12533`／`sub_12B3C` 呼叫）再把 MCH 矩陣中的 tile ID
   置入戰略地圖 40×23 cell buffer。
 - MCH `0xA000` metadata 的 4-byte entry 指向 `0xA100` 後的矩陣資料；原始資料確認
   type 1 pattern 為 16×9（144 tile IDs），type 2／3 為 5×5（25 tile IDs）。type 1
