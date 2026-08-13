@@ -86,7 +86,8 @@
 | [`docs/re/27-list-row-fields.md`](re/27-list-row-fields.md) | 27 — 一覽表的逐列繪製與外交關係等級 | 四個家族的逐列常式全部讀完，欄位對照 confirmed；兵力的 ×10 顯示、 三條換色規則與外交關係六級換算 c… | 2026-08-13 |
 | [`docs/re/28-text-number-rendering.md`](re/28-text-number-rendering.md) | 28 — 文字與數字的繪製層 | 數字繪製、兩支字串繪製與 EGA 平面寫入方式 confirmed。 單字元 blitter loc_1F75E 與… | 2026-08-13 |
 | [`docs/re/29-font-service-int15.md`](re/29-font-service-int15.md) | 29 — 原版怎麼顯示中文：INT 15h 字型服務與 END_S13/S14.DAT | 整條鏈 confirmed（靜態）。KI.EXE 側走 DOS/V 的 INT 15h AH=50h 向常駐服務要字… | 2026-08-13 |
-| [`docs/re/30-corps-formation-ui.md`](re/30-corps-formation-ui.md) | 30 — 軍團編成畫面：兵員池、兵種切換與派生數值 | 編成畫面的主迴圈與三支被它呼叫的常式 confirmed。 兵員池的搬運方向、兵種切換的循環、確定的前提條件與移動間… | 2026-08-13 |
+| [`docs/re/30-corps-formation-ui.md`](re/30-corps-formation-ui.md) | 30 — 軍團編成畫面：兵員池、兵種切換與派生數值 | 編成畫面的主迴圈與被它呼叫的常式 confirmed。 兵員池的搬運方向、兵種切換的循環、兵力的自動分配、確定的前提… | 2026-08-13 |
+| [`docs/re/31-faction-picker-screen.md`](re/31-faction-picker-screen.md) | 31 — 勢力選擇畫面：22 格的兩欄版面與選中狀態 | sub_15AFC 的版面、命中判定、顏色規則與兩個守門條件 confirmed。 畫詳情的兩支（sub_15DBB… | 2026-08-13 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-13 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -96,10 +97,10 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 146 條。**要查「這件事解了沒」先看這裡**，
+共 147 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
-### confirmed（77 條）
+### confirmed（78 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -135,6 +136,7 @@
 | 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x19 | `docs/formats/08-sinario-save.md` |
 | 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x1A | `docs/formats/08-sinario-save.md` |
 | 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x1C–+0x1F | `docs/formats/08-sinario-save.md` |
+| 1.7 軍團表：127 筆 × 64 B（區塊 +0x22C0） ▸ +0x09 | `docs/formats/08-sinario-save.md` |
 | 2. 地形類型對映表（confirmed） ▸ 1 | `docs/mechanics/30-combat.md` |
 | 2. 地形類型對映表（confirmed） ▸ 2 | `docs/mechanics/30-combat.md` |
 | 2. 地形類型對映表（confirmed） ▸ 6 | `docs/mechanics/30-combat.md` |
