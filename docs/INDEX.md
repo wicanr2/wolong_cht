@@ -25,7 +25,7 @@
 | [`docs/mechanics/20-military.md`](mechanics/20-military.md) | 20 — 行軍與軍團 | 道路網與行軍已解並實作；AI 軍團編成來源已解並接入，玩家編成的完整戰力換算仍未完。 | 2026-08-08 |
 | [`docs/mechanics/30-combat.md`](mechanics/30-combat.md) | 30 — 戰場（戰術） | 進場規則與戰略層的自動判定全解；戰術核心已接入並實作，完整結算與少數分支未完 | 2026-08-09 |
 | [`docs/mechanics/40-economy.md`](mechanics/40-economy.md) | 40 — 經濟：資金與預備兵 | 機制與公式都已解 | 2026-08-08 |
-| [`docs/mechanics/50-diplomacy.md`](mechanics/50-diplomacy.md) | 50 — 外交 | 成立條件與外交官的數值都已解 | 2026-08-08 |
+| [`docs/mechanics/50-diplomacy.md`](mechanics/50-diplomacy.md) | 50 — 外交 | 成立條件與外交官的數值都已解 | 2026-08-13 |
 | [`docs/mechanics/60-personnel.md`](mechanics/60-personnel.md) | 60 — 武將 | 三個能力值的作用與身分欄位已定案（說明書＋機器碼），數值公式部分已知。 政治如何影響內政效果與外交官要價仍未解。 | 2026-08-13 |
 | [`docs/mechanics/70-ai.md`](mechanics/70-ai.md) | 70 — 電腦 AI 的判斷邏輯 | 侵攻目標的決策鏈、友好度漂移、宣戰三閘與 AI 編成入口已由機器碼讀出；remake 已接上可重播的敵方出兵切片。 | 2026-08-09 |
 | [`docs/mechanics/80-victory.md`](mechanics/80-victory.md) | 80 — 勝負判定 | 勝負條件全部定案（說明書 1.1、1.2 節）。 | 2026-08-08 |
@@ -83,6 +83,7 @@
 | [`docs/re/24-unread-function-catalogue.md`](re/24-unread-function-catalogue.md) | 24 — 未讀函式目錄：287 支的證據與下手順序 | 287 支未讀函式全部登記，其中 77 支已由共用常式與 TALK 訊息取得角色證據； 其餘 210 支只有結構資料… | 2026-08-13 |
 | [`docs/re/25-message-variants-and-personnel.md`](re/25-message-variants-and-personnel.md) | 25 — 訊息變體展開與人事指令 | 訊息索引 ≥ 0x196 的 ×8 變體展開 confirmed，13 個呼叫值共 104 則變體已對出； 人事四支… | 2026-08-13 |
 | [`docs/re/26-list-window-engine.md`](re/26-list-window-engine.md) | 26 — 一覽表視窗引擎 | 視窗幾何、五個一覽表家族的描述子、選取迴圈、持久化排序狀態與四個描述子欄位 （兩個 callback ＋ 標題字串 … | 2026-08-13 |
+| [`docs/re/27-list-row-fields.md`](re/27-list-row-fields.md) | 27 — 一覽表的逐列繪製與外交關係等級 | 四個家族的逐列常式全部讀完，欄位對照 confirmed；兵力的 ×10 顯示、 三條換色規則與外交關係六級換算 c… | 2026-08-13 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-13 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -91,7 +92,7 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 148 條。**要查「這件事解了沒」先看這裡**，
+共 147 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（74 條）
@@ -115,6 +116,7 @@
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x20 | `docs/formats/08-sinario-save.md` |
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x23 | `docs/formats/08-sinario-save.md` |
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x3E | `docs/formats/08-sinario-save.md` |
+| 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x3F | `docs/formats/08-sinario-save.md` |
 | 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x00 | `docs/formats/08-sinario-save.md` |
 | 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x01 | `docs/formats/08-sinario-save.md` |
 | 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x02 | `docs/formats/08-sinario-save.md` |
@@ -123,7 +125,6 @@
 | 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x0C | `docs/formats/08-sinario-save.md` |
 | 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x0E | `docs/formats/08-sinario-save.md` |
 | 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x10 | `docs/formats/08-sinario-save.md` |
-| 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x13 | `docs/formats/08-sinario-save.md` |
 | 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x16 | `docs/formats/08-sinario-save.md` |
 | 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x19 | `docs/formats/08-sinario-save.md` |
 | 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x1A | `docs/formats/08-sinario-save.md` |
@@ -227,7 +228,7 @@
 |---|---|
 | 2.1 執行結構（已驗證） ▸ YNSOUND.COM | `docs/reference/04-first-survey.md` |
 
-### 未解（35 條）
+### 未解（34 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -236,7 +237,6 @@
 | 1. 檔案 ＝ 4 個劇本區塊 × 22,208 B ▸ +0x3AC0…+0x42C0 | `docs/formats/08-sinario-save.md` |
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x16 | `docs/formats/08-sinario-save.md` |
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x19 | `docs/formats/08-sinario-save.md` |
-| 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x3F | `docs/formats/08-sinario-save.md` |
 | 1.6 據點表：192 筆 × 32 B（區塊 +0x08C0） ▸ +0x17 | `docs/formats/08-sinario-save.md` |
 | 2. 記憶體佈局：sub_1CC31 ▸ ds:0D2F8 | `docs/re/11-tactical-battle.md` |
 | 2. 記憶體佈局：sub_1CC31 ▸ ds:0D2FC | `docs/re/11-tactical-battle.md` |
