@@ -59,7 +59,7 @@
 | 據點整備、威脅偵測與求援（`sub_13EFD` 鏈）| [`10-city-tick.md`](10-city-tick.md) | 已實作並對原版取樣驗過 |
 | 進言「請求君主出陣」（`sub_1699E`）| [`11-ai-sortie.md`](11-ai-sortie.md) | 可實作，**尚未實作** |
 | 主畫面的視窗外框與指令列 | [`12-strategy-chrome.md`](12-strategy-chrome.md) | 外框已符合原版；**右欄版面常數未對過原版** |
-| remake 原生存檔格式 | [`20-save-format.md`](20-save-format.md) | **DRAFT**——三個決策點待裁定 |
+| remake 原生存檔格式 | [`20-save-format.md`](20-save-format.md) | 套件已實作並驗過；**還沒接進遊戲** |
 
 ## 怎麼加一份
 

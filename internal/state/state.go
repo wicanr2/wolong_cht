@@ -420,8 +420,13 @@ func LoadScenario(path string, index int) (*World, error) {
 	if index < 0 || index >= numBlocks {
 		return nil, fmt.Errorf("劇本編號 %d 超出 0–%d", index, numBlocks-1)
 	}
-	b := raw[index*blockSize : (index+1)*blockSize]
+	return loadBlock(raw[index*blockSize : (index+1)*blockSize]), nil
+}
 
+// loadBlock 從一個劇本／存檔區塊建出 World。
+// LoadScenario 與 LoadBlock（`snapshot.go`）共用這一支——
+// **解碼只留一份實作**（`CLAUDE.md` §7 第 6 條）。
+func loadBlock(b []byte) *World {
 	// Trust 是原始全域區段的 byte_10D00（區塊 +0x10）。
 	player := -1
 	if p := int(b[playerOffset]); p >= 0 && p < numFactions &&
@@ -548,7 +553,7 @@ func LoadScenario(path string, index int) (*World, error) {
 	w.loadCorps(b)
 	// 記下據點數的基準差額，給不變量檢查用（見 invariant.go）。
 	w.snapshotBias()
-	return w, nil
+	return w
 }
 
 // ResolveTalkFormatter2 重現 DOS/V TALK formatter `\\2` 取字串的 raw 規則。

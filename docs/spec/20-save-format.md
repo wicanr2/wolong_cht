@@ -1,7 +1,7 @@
 # 20 — remake 原生存檔格式
 
-**狀態：DRAFT。設計與取捨寫完了，**三個決策點要使用者裁定**（§6）。
-裁定之前不動工。**
+**狀態：編解碼與匯出已實作並驗過（`internal/savefile`）；
+**還沒接進遊戲**——`cmd/wlgame` 目前仍只存原版格式。**
 
 - 日期：2026-08-14
 - 出處：[`docs/formats/08`](../formats/08-sinario-save.md)（原版區塊版面）、
@@ -83,21 +83,21 @@
 
 | 項目 | 位置 | 動作 |
 |---|---|---|
-| 新套件 | `internal/savefile`（**還不存在，這是計畫**）| 純編解碼，不依賴 Ebiten。`Encode(*state.World, raw []byte) ([]byte, error)`／`Decode([]byte) (*state.World, error)` |
+| 新套件 | `internal/savefile` ✅ | `Encode`／`Decode`／`ExportOriginal`／`VerifyExport`。純編解碼，不依賴 Ebiten |
 | 匯出 | 同上 | `ExportOriginal(*state.World, raw []byte) ([]byte, error)`，內部就是現行的 `SaveInto` 邏輯 |
-| 狀態層 | `internal/state` | 把 `routes`／`disasterObjects`／游標開放給序列化（getter／setter 或 `Snapshot` 型別），**不要把 JSON tag 灑進 World** |
-| 路徑 | `internal/savepath` | 多一種副檔名；原版 overlay 與原生檔各自獨立，互不覆蓋 |
-| 遊戲 | `cmd/wlgame/save.go` | 預設存原生檔；選單多一項「匯出成原版存檔」 |
+| 狀態層 | `internal/state/snapshot.go` ✅ | `Snapshot` 型別 ＋ `RawBlock`／`TakeSnapshot`／`Restore`／`LoadBlock`。JSON tag 只在 `Snapshot` 上，沒有灑進 World |
+| 路徑 | `internal/savepath` ⬜ | **未做**：多一種副檔名；原版 overlay 與原生檔各自獨立，互不覆蓋 |
+| 遊戲 | `cmd/wlgame/save.go` ⬜ | **未做**：預設存原生檔；選單多一項「匯出成原版存檔」 |
 
 ## 4. 驗證
 
-| 方式 | 內容 |
-|---|---|
-| 單元測試 | **來回一致**：原版 → 原生 → 匯出，與原版路徑的輸出 byte-for-byte 相同 |
-| 單元測試 | **`runtime` 真的活著**：存檔前後 `routes`／`cityCursor` 相同（現行行為會掉，所以這條在改之前是紅的）|
-| 單元測試 | **不一致要炸**：手動改壞 `state` 的一個欄位，載入必須失敗而不是靜靜採用 |
-| 單元測試 | 版本不合的檔案要有清楚訊息，不是 panic |
-| 對原版 | 匯出的檔案放回 DOSBox 能讀（原版側工具見 [`../playtest/21`](../playtest/21-dosboxx-bridge-sampling.md)）|
+| 方式 | 內容 | 狀態 |
+|---|---|---|
+| 單元測試 | **來回一致**：原版 → 原生 → 匯出，byte-for-byte 相同 | ✅ `TestRoundTripToOriginalIsByteForByte` |
+| 單元測試 | **`runtime` 真的活著**：`routes`／`cityCursor`／`eventCursor`／AI 開關 | ✅ `TestRuntimeStateSurvivesTheRoundTrip` |
+| 單元測試 | **改壞要炸**：動過 `raw`、版本不合、`runtime` 索引超界 | ✅ `TestDecodeRejectsTamperedFile` |
+| 單元測試 | 沒有原版檔案也載得動（決策 C）| ✅ `TestDecodeDoesNotNeedTheOriginalFiles` |
+| 對原版 | 匯出的檔案放回 DOSBox 能讀 | ⬜ **未做**（工具見 [`../playtest/21`](../playtest/21-dosboxx-bridge-sampling.md)）|
 
 ## 5. 未解
 
