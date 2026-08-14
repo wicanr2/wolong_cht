@@ -72,6 +72,8 @@ def load_census(path):
     return funcs, callers, icalls
 
 
+# 逐支登記未讀函式的目錄型文件。`43` 是缺口總表，它抄的是各文件未解表裡的
+# 符號名——不排除的話，「還沒解」會被算成「已寫進 docs/re/」，方向照例朝好看的那邊。
 # 逐支登記未讀函式的目錄型文件。它們提到某個符號不代表那支被讀懂了。
 # `24` 是整份目錄（268 支），`21` 是這份報告自己（T4 前 40 名那張表，多 16 支）。
 # 兩份都要排除，否則量測工具會把自己的輸出算成進度。
@@ -79,6 +81,7 @@ CATALOGUES = (
     "docs/re/24-unread-function-catalogue.md",
     "docs/re/21-function-census.md",
     "docs/re/39-remaining-unread.md",
+    "docs/re/43-open-questions.md",
 )
 
 
