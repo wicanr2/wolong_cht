@@ -1,8 +1,8 @@
 # 12 — 主畫面的視窗外框與指令列
 
-**狀態：DRAFT。原版的外框是格子屬性層堆出來的，不是圖塊 blit
-（[`docs/re/46`](../re/46-strategy-chrome-cell-layer.md)）。
-底層的像素產生方式還沒讀出來，**還不能照著實作**。**
+**狀態：READY。外框的圖塊來源與貼法都解出來了（`ICONGRF` 段 3 的三塊 8×8），
+而 remake 已經照著做。**剩下的差異不在外框**，在版面常數與自繪的色標——
+那要靠同狀態對拍逐項指認，不是再讀組語。**
 
 - 日期：2026-08-14
 - 出處：[`docs/re/46`](../re/46-strategy-chrome-cell-layer.md)（`sub_1614A`／`sub_1895D`／`sub_1D5D4`／`sub_10C14`／`sub_189DE`）
@@ -26,19 +26,24 @@ sub_1E3D7(熱區=0x0C, X=0x28, Y=0x18, 尺寸=0x0230)
 
 ## 2. 演算法
 
-**還沒解。** `sub_10C60`／`sub_10C77` 怎麼把框線變成像素、
-`cs:word_1D84E` 每格那 8 bytes 是什麼，都未讀
-（[`docs/re/46`](../re/46-strategy-chrome-cell-layer.md) §4）。
+```
+上下邊（sub_10C60）：每個 16 px 粗格貼兩塊 si=0x00 的 motif
+左右邊（sub_10C77）：si=0x20 柱頭 → 迴圈 si=0x40／0x60 柱身 → si=0x20 柱頭
+四個 si 是段 3 的 0x06C0／0x06E0／0x0700／0x0720（docs/formats/03 §5.4）
+blit 走 sub_1F9B0 → EGA Set/Reset → VRAM 0A0C8h
+```
 
-**這一節填不出來之前，這份規格不能升 READY。**
+**`cs:word_1D84E` 那一層（①）與框線像素無關**，是另一張以格為單位的表，
+內容未讀（[`docs/re/46`](../re/46-strategy-chrome-cell-layer.md) §4）。
 
 ## 3. remake 實作
 
 | 項目 | 位置 |
 |---|---|
 | 呈現層 | `cmd/wlgame/strategyhud.go` 的 `drawNaturalStrategyHUD`、`internal/ui/chrome` |
-| 差異 | **整段是自繪的近似**。外框用 `chrome.Window`、勢力色標用 `vector.DrawFilledRect`、顏色硬寫 RGBA |
-| 證據來源 | 該函式自己的註解寫明是「影片 `af6xqcicXoI` 的 478×360 影像經黑邊還原」——**壓縮過的參考影片，不是執行檔** |
+| 外框 | **照原版素材做的**：`internal/ui/chrome` 貼段 3 的三塊圖塊，順序與 `sub_10C77` 一致（柱頭在最上最下、柱身在中間）|
+| 自繪的部分 | 勢力色標（`vector.DrawFilledRect` ＋ 硬寫 RGBA）、底色 fill |
+| 版面常數 | 來源是「影片 `af6xqcicXoI` 的 478×360 影像經黑邊還原」——**壓縮過的參考影片，不是執行檔**。這是目前最可疑的一項 |
 
 **指令列這一項倒是結構對的**：原版就是「框 ＋ 文字」，remake 也是。
 不對的是框怎麼畫，以及字的來源（原版取 `cs:6181h`，remake 用自己的字串陣列）。
@@ -54,7 +59,8 @@ sub_1E3D7(熱區=0x0C, X=0x28, Y=0x18, 尺寸=0x0230)
 
 | 項目 | 現況 |
 |---|---|
-| `sub_10C60`／`sub_10C77` | 框線的實際畫法——**主畫面 parity 的關鍵路徑** |
+| 版面常數對不對 | 影片來源，**沒有對過原版執行期畫面**——這是主畫面 parity 的下一步 |
+| 勢力色標 | 原版怎麼畫未讀（`sub_15CE0` 是小地圖的四色點，不是這一列）|
 | `cs:word_1D84E` 每格 8 bytes | 內容意義未讀，消費端未找 |
 | `cs:6181h` 的八個指令名 | 字串 bytes 未 dump |
 | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝指令列 |
