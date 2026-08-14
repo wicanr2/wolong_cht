@@ -65,10 +65,36 @@ func TestDOSVNaturalStrategySkeleton(t *testing.T) {
 	if r := strategyCommandCellRect(7); r.Max.X != 24+384 {
 		t.Fatalf("命令列最後一格右緣 = %d，want %d", r.Max.X, 24+384)
 	}
-	if strategyInfoYOffset != 24 || strategyInfoRowStep != 17 || strategyInfoDividerXOffset != 120 ||
-		strategyInfoDividerH != 48 || strategyTrustYOffset != 88 || strategyResourceDividerY != 120 ||
-		strategyResourceBoxY != 128 || strategyResourceBoxH != 88 {
-		t.Fatal("DOS/V 情報列／分隔線／資源區幾何契約被改動")
+	// 自勢力情報視窗內部的絕對座標，出自 docs/re/47 §4.2。
+	// 用絕對值而不是位移來驗，是因為機器碼給的就是絕對值——
+	// 中間多一層減法就多一個算錯的機會。
+	inner := []struct {
+		name string
+		got  int
+		want int
+	}{
+		{"君主列 y", strategyFactionY + strategyInfoYOffset, 208},
+		{"軍師列 y", strategyFactionY + strategyInfoYOffset + 2*strategyInfoRowStep, 240},
+		{"值欄 x", strategySidebarX + strategyInfoValueXOffset, 576},
+		{"信賴度量條 x", strategySidebarX + strategyTrustXOffset, 456},
+		{"信賴度量條 y", strategyFactionY + strategyTrustYOffset, 292},
+		{"資金 x", strategySidebarX + strategyFundsXOffset, 560},
+		{"資金 y", strategyFactionY + strategyFundsYOffset, 312},
+		{"預備兵 x", strategySidebarX + strategyReserveXOffset, 568},
+		{"預備兵首列 y", strategyFactionY + strategyReserveYOffset, 328},
+		{"預備兵末列 y", strategyFactionY + strategyReserveYOffset + 2*strategyResourceRowStep, 360},
+	}
+	for _, c := range inner {
+		if c.got != c.want {
+			t.Errorf("%s = %d，want %d", c.name, c.got, c.want)
+		}
+	}
+	// 資金 7 位與預備兵 6 位在原版都右對齊到 x=616。
+	if r := strategySidebarX + strategyFundsXOffset + strategyFundsDigits*textdraw.HalfW; r != 616 {
+		t.Errorf("資金右端 = %d，want 616", r)
+	}
+	if r := strategySidebarX + strategyReserveXOffset + strategyReserveDigits*textdraw.HalfW; r != 616 {
+		t.Errorf("預備兵右端 = %d，want 616", r)
 	}
 }
 
@@ -79,8 +105,8 @@ func TestDOSVNaturalStrategyTextContainment(t *testing.T) {
 	// `cs:6181h` 的詞是兩個全形字（32 px），節距 48（詞 32 ＋ 全形空格 16）。
 	if strategyCommandTextW != 32 || strategyCommandCellW != 48 ||
 		strategyCommandX != 8 || strategyCommandLead != 24 ||
-		strategyInfoValueW != 72 {
-		t.Fatalf("命令列版面 = x%d lead%d cell%d text%d／info %d，want 8/24/48/32/72",
+		strategyInfoValueW != 56 {
+		t.Fatalf("命令列版面 = x%d lead%d cell%d text%d／info %d，want 8/24/48/32/56",
 			strategyCommandX, strategyCommandLead, strategyCommandCellW,
 			strategyCommandTextW, strategyInfoValueW)
 	}
@@ -89,23 +115,30 @@ func TestDOSVNaturalStrategyTextContainment(t *testing.T) {
 		7*strategyCommandCellW + strategyCommandTextW; right != 400 {
 		t.Fatalf("第八個詞右緣 = %d，want 400", right)
 	}
-	if strategyNumberSlots != 5 || strategyNumberW != 40 || strategyNumberXOffset != 160 {
-		t.Fatalf("數字欄 = slots %d width %d x-offset %d，want 5/40/160",
-			strategyNumberSlots, strategyNumberW, strategyNumberXOffset)
+	if strategyFundsDigits != 7 || strategyReserveDigits != 6 {
+		t.Fatalf("數字槽 = 資金 %d 位、預備兵 %d 位，want 7/6",
+			strategyFundsDigits, strategyReserveDigits)
 	}
 
-	for _, value := range []int{0, 1, 9999, 99999, -1, -9999} {
-		text := strategyHUDNumber(value)
-		if got := textdraw.StringWidth(text); got != strategyNumberW {
-			t.Errorf("%d 格式化為 %q、寬度 %d，want %d", value, text, got, strategyNumberW)
+	for _, digits := range []int{strategyFundsDigits, strategyReserveDigits} {
+		want := digits * textdraw.HalfW
+		for _, value := range []int{0, 1, 9999, 99999, -1, -9999} {
+			text := strategyHUDNumber(value, digits)
+			if got := textdraw.StringWidth(text); got != want {
+				t.Errorf("%d 以 %d 位格式化為 %q、寬度 %d，want %d", value, digits, text, got, want)
+			}
 		}
 	}
 	for _, test := range []struct {
-		value int
-		want  string
-	}{{100000, "99999"}, {655000, "99999"}, {-10000, "-9999"}, {-655000, "-9999"}} {
-		if got := strategyHUDNumber(test.value); got != test.want {
-			t.Errorf("超出五槽的 %d 顯示為 %q，want %q", test.value, got, test.want)
+		value  int
+		digits int
+		want   string
+	}{
+		{10000000, 7, "9999999"}, {-1000000, 7, "-999999"},
+		{1000000, 6, "999999"}, {-100000, 6, "-99999"},
+	} {
+		if got := strategyHUDNumber(test.value, test.digits); got != test.want {
+			t.Errorf("超出 %d 槽的 %d 顯示為 %q，want %q", test.digits, test.value, got, test.want)
 		}
 	}
 
