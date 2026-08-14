@@ -73,3 +73,9 @@ remake，也不繞過 DOS/V 密碼保護取得原版畫面。
 | `yt-remake-natural-difference.png` | `a16d3878766d4428dc9bf09f2de1ee83802486df3a3ca532e60af8e6f5cb6872` |
 | `yt-remake-natural-side-by-side.png` | `df76ffc1cdb21be11b309d746a8526d99ba20e04fbb124fae8384e3e27b5cd4e` |
 | `dosv-skeleton-compare.png` | `7e78ff252d1579a29f2ce93e10c9feabfdb1a392d4c67306812acc44d594042a` |
+
+## 未解
+
+| 項目 | 現況 |
+|---|---|
+| 中央 raw reserve glyph | 未解出原版圖形。remake 不冒充，改用自繪 |

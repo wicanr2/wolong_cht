@@ -266,3 +266,12 @@ remake 因而把事件 6 的 `RawFormatterWord` 改為 `-1` 且
 `TestQueuedDiplomacySecondaryTalkConditions` 固定這個邊界；
 `TestSecondaryTalkUsesCapturedRawFormatterWord` 只測呈現層對「真正已擷取的」通用 raw payload
 是否能畫出，不可被引用為事件 6 已知 payload 的證據。
+
+## 11. 未解
+
+| 項目 | 現況 |
+|---|---|
+| `AH` 的完整欄位名稱 | 語意由日中原文並列確認，欄位名本身未定（§3）|
+| #367–#372／#380–#385 的 AH／信賴度次要回覆 | 未解，不可當成完整的原版對話流程（§8）|
+| #73／#77 | 未定位，不得拿來補接事件 6／7（§9）|
+| 事件 6／7 次要 TALK 的 formatter 參數契約 | 缺參數且語意未知，維持 fail-closed（§10）|

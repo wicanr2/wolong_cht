@@ -17,7 +17,7 @@ echo "── go test ──"
 tools/go.sh test ./...
 echo "── 文件索引 ──"
 tools/py.sh tools/index.py generate
-tools/py.sh tools/re_open_questions.py > docs/re/43-open-questions.md
+tools/py.sh tools/re_open_questions.py --strict > docs/re/43-open-questions.md
 echo "── 幽靈引用 ──"
 tools/py.sh tools/phantom_scan.py
 echo "── 資產 deny-list ──"

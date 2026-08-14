@@ -171,3 +171,14 @@ producer、場景旗單 raw-unit producer，以及 `sub_1E011` 的
 仍保留的邊界：原版 flags/depth 的 dirty-cell 快速路徑、EGA planar AND/OR 的
 逐位元等價、逐幀相同狀態 oracle 與 renderer 效能調校。它們不再由全域排序或
 錯誤 tile 尺度遮蔽，但仍應分別驗證。
+
+## 9. 未解
+
+§5 的四個 gate 裡，前兩個已由 §7／§8 兩個切片收掉；剩下的是這些：
+
+| 項目 | 現況 |
+|---|---|
+| 同狀態動態 oracle | 沒有可重放的存檔／輸入序列，所以「原版等價」目前無法驗。**被防拷擋著**（[`../playtest/01`](../playtest/01-dosbox-dosv.md)）|
+| 逐幀執行順序 | 顯示串列與相機已重建，但整幀的呼叫順序沒有逐幀對過 |
+| `loc_1A065` 的 runtime bytes | 自我修改碼，靜態影像看不到每輪的實際內容（§2.2）|
+| 四層差分（terrain／display list／composited／HUD）| 沒有 machine-readable diff，目前只有 layout-only 比較 |

@@ -64,3 +64,9 @@ deterministic tests 涵蓋：
 
 - [信賴度歸零 modal](../images/wlgame-outcome-trust.png)
 - [玩家勢力消滅 modal](../images/wlgame-outcome-faction.png)
+
+## 未解
+
+| 項目 | 現況 |
+|---|---|
+| 勢力滅亡 selector | 未定位。remake 只顯示克制的 fallback 句，不冒充原版文字 |

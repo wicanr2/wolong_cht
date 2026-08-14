@@ -46,19 +46,36 @@ SELF = "docs/re/43-open-questions.md"
 SKIP = (SELF, "docs/INDEX.md")
 
 HEADING = re.compile(r"^(#{2,4})\s+(.*)$")
-OPEN_HEAD = re.compile(r"未解|未定|缺口|開放問題")
+OPEN_CELL = re.compile(r"未解|未定|假說|未驗|未定位|尚未")
+# 判斷「這份文件應該要有缺口」的字樣。刻意比 OPEN_CELL 窄：
+# 「尚未」「未知」在正常敘述裡太常出現，放進來會讓盲區清單灌水成全庫。
+SAW = re.compile(r"未解|未定案|未定位|缺口|開放問題|未驗")
 # 標題編號與裝飾，比對「是不是專門的未解小節」之前要先剝掉
 DECOR = re.compile(r"^[\d.\s]*|[⭐⚠🔵✅*\s]+")
-DEDICATED = re.compile(r"^.{0,10}(未解|未定案|未定|缺口|開放問題|未解範圍)$")
+DEDICATED = re.compile(r"^.{0,13}(未解|未定案|未定|缺口|開放問題|未解範圍|未完成項)$")
+# 同一件事的其他寫法。標題不是只有「未解」一種講法——
+# 「尚待補完的戰術分支與對拍」「還沒解的」都是缺口小節，漏認就整節看不見。
+DEDICATED2 = re.compile(r"^(尚待|還沒解|待解|待補|還缺|剩下的缺口)")
+# 未解小節裡的子標題：這兩組決定要不要繼續抓。
+# 「已證實／強推論」底下擺的是結論不是缺口，抓進來會得到一堆假缺口。
+SUB_STOP = re.compile(r"已證實|已解|已定案|強推論|已完成")
+SUB_GO = re.compile(r"未知|未解|未定|缺口|待")
+# 表頭就寫「缺口」的表，整張都是缺口清單
+GAP_HEADER = re.compile(r"缺口|未解|待辦|下手點")
 # 散句形式的缺口：`**未解**：…`、以及收尾是「…未解」的句子
 PROSE = re.compile(r"\*\*未解\*\*[：:]\s*(.+)$|^未解[：:]\s*(.+)$")
-TAIL = re.compile(r"(未解|未定案|仍未解|待驗|未驗)[。，）\)]?$")
+TAIL = re.compile(r"(未解|未定案|仍未解|待驗|未驗|未定位)[。，）\)]?$")
 # 談「未解」這件事本身，不是一條缺口
 META = re.compile(r"「未解」|未解表|未解的表|見下方|見上方|見 §|參見")
 SENT = re.compile(r"[^。\n]+[。]?")
 SOLVED = re.compile(r"✅|已解|已定案")
 STRUCK = re.compile(r"^~~")
 SEP = re.compile(r"^\|[\s:|-]+\|$")
+# 文件明講自己沒有缺口。有這一行就不算盲區——
+# 「解析不到」與「真的沒有」必須分得開，否則盲區清單永遠清不完。
+NO_GAPS = re.compile(r"<!--\s*缺口：無\s*-->")
+# 「…下列缺口：」之後接的條列就是缺口清單，不必另外開小節。
+LEAD_IN = re.compile(r"(缺口|未解|還沒解|未完成)[：:]\s*$")
 
 # 「怎麼裁決」——判不出來就是靜態。順序有意義：實測優先於兩版對照，
 # 因為兩版都一樣的東西還是可能要跑起來才知道語意。
@@ -105,19 +122,49 @@ def collect(path, rel):
     items = []
     section = ""          # 目前所在的小節標題
     open_level = None     # 「未解」小節的層級；None ＝ 不在未解小節裡
+    muted = False         # 在未解小節裡，但子標題是「已證實」那一類
     prev = ""             # 上一行非空的內文，給跨行句子補前綴
+    gap_table = False     # 目前這張表的表頭是不是寫著「缺口」
+    lead_done = set()     # 已經收過首句的小節
     for i, line in enumerate(lines):
         m = HEADING.match(line)
         if m:
             level, title = len(m.group(1)), m.group(2).strip()
             if open_level is not None and level <= open_level:
-                open_level = None
+                open_level, muted = None, False
+            elif open_level is not None:
+                # 未解小節裡的子標題
+                if SUB_STOP.search(title):
+                    muted = True
+                elif SUB_GO.search(title):
+                    muted = False
             bare = DECOR.sub("", title).strip()
-            if DEDICATED.match(bare) and not SOLVED.search(title):
-                open_level, section = level, title
+            if (DEDICATED.match(bare) or DEDICATED2.match(bare)) \
+                    and not SOLVED.search(title):
+                open_level, section, muted = level, title, False
             elif open_level is None:
                 section = title
             continue
+        if open_level is not None and not muted and not line.startswith("|"):
+            # 未解小節裡的散文與條列。docs/re/15 §5 那種「證據分級與未解範圍」
+            # 底下沒有表，只認表就會整節漏掉。
+            #
+            # 但**不能整節逐行收**：長敘述會被拆成幾十條假缺口，
+            # 總數從 231 衝到 358 而資訊量沒有增加。所以條列全收、
+            # 散文只收該小節的第一句當代表，細節留在原文。
+            body = line.strip(" -*`")
+            bullet = bool(re.match(r"^\s*([-*]|\d+\.)\s", line))
+            if len(body) >= 8 and not body.startswith((">", "#", "```")) \
+                    and not SOLVED.search(body) and not META.search(body) \
+                    and (bullet or section not in lead_done):
+                lead_done.add(section)
+                items.append((SENT.search(body).group(0).strip()[:120],
+                              "（未解小節內文）", section))
+                prev = body
+                continue
+        if LEAD_IN.search(line.rstrip()) and not SOLVED.search(line):
+            open_level, muted = 9, False   # 9 ＝ 比任何標題都深，下一個標題就關掉
+            section = section or "缺口條列"
         pm = PROSE.search(line)
         if pm and not SOLVED.search(line):
             items.append((pm.group(1) or pm.group(2), "（散句）", section))
@@ -137,18 +184,23 @@ def collect(path, rel):
             prev = line.strip(" -*`>")
         c = cells(line)
         if not c:
+            # 分隔線 `|---|---|` 也會讓 cells() 回 None——那時**不能**把
+            # gap_table 關掉，否則表頭剛認出來就被下一行清掉，整張表一列都收不到。
+            if not line.startswith("|"):
+                gap_table = False
             continue
-        # 表頭列：下一行是分隔線
+        # 表頭列：下一行是分隔線。表頭自己寫「缺口」的，整張表都收。
         if i + 1 < len(lines) and SEP.match(lines[i + 1].strip()):
+            gap_table = bool(GAP_HEADER.search(line))
             continue
         if SOLVED.search(line) or STRUCK.match(c[0]):
             continue
-        if open_level is not None:
+        if open_level is not None or gap_table:
             items.append((c[0], " / ".join(c[1:]), section))
-        elif OPEN_HEAD.search(c[-1]) and not SOLVED.search(c[-1]):
+        elif OPEN_CELL.search(c[-1]) and not SOLVED.search(c[-1]):
             # 欄位表：最後一欄標未解的列
             items.append((c[0], " / ".join(c[1:]), section))
-    return items, bool(OPEN_HEAD.search(text))
+    return items, bool(SAW.search(text)) and not NO_GAPS.search(text)
 
 
 def main():
@@ -236,6 +288,10 @@ def main():
         w("\n")
 
     w("## 3. 這支工具的盲區\n\n")
+    w("**目前是 0。** 每一份提到「未解／未定案／未定位／缺口／未驗」的文件，\n")
+    w("要嘛抽得出至少一條，要嘛在檔尾寫了 `<!-- 缺口：無 -->` 明講自己沒有。\n")
+    w("這一條由 `--strict` 把關，`check.sh` 帶著它跑——"
+      "**新文件寫了「未解」卻沒有未解小節，提交會被擋下來**。\n\n")
     w("抽取只認四種結構（專門的未解小節、表格最後一欄標未解的列、\n")
     w("`**未解**：…`、收尾是「…未解」的句子）。**寫在段落中段、\n")
     w("或用別的詞說「這個還不知道」的缺口抽不到**——下列檔案提到未解\n")
@@ -245,6 +301,12 @@ def main():
             w(f"- `{rel}`\n")
     else:
         w("（沒有）\n")
+    if silent and "--strict" in sys.argv:
+        sys.stderr.write(
+            "盲區 %d 份：這些文件提到未解卻抽不出任何一條。\n"
+            "要嘛補一個「未解」小節，要嘛在檔尾加 <!-- 缺口：無 -->。\n%s\n"
+            % (len(silent), "\n".join("  " + r for r in silent)))
+        sys.exit(1)
     w("\n只印抽得到的部分，會讓解析失敗長得像「那份文件沒有缺口」。\n")
     w("這一節就是為了讓那個差別看得見。\n")
 

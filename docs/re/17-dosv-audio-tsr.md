@@ -103,3 +103,12 @@ TSR 路徑分離。故「戰術效果」與「介面／TALK click」不能共用
 （[`23`](23-bgm-resource-format.md)），聲軌事件編碼未解，一樣不能宣稱音色 parity。若 remake 新增音效，
 應先保留 `0x0A`／`0x0B`／`0x0C` 這個已證實事件層，再把實際聲音標成替代資產；只有取得
 可重播的原版輸出或完整 resource parser 後，才可宣稱音色／時序 parity。
+
+## 7. 未解
+
+| 項目 | 現況 |
+|---|---|
+| 精確的音效卡／晶片型號 | register path 已解（§4），卡種未定案 |
+| `SOUND.DAT` 的格式 | 未解。`INT 61h` 傳的是 effect code，不是可聽音效的名字（§3）|
+| `BGM.DAT` 的聲軌事件編碼 | 未解（[`23`](23-bgm-resource-format.md)），所以不能宣稱音色 parity |
+| `INT 61h` 的四個服務號 | `ah=4`／`7`／`8` 與 `ax=09F2h`／`0C01h`，對應什麼動作要看 `YNSOUND.COM`（[`42`](42-leaf-functions.md) §7）|

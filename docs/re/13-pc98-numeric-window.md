@@ -213,3 +213,8 @@ go test -p=1 -vet=off ./internal/assets/gfx ./internal/assets/library ./cmd/wlga
 
 `cmd/wlgame` 測試在有界 Xvfb 下執行；完整長程遊戲測試仍依使用者要求略過。這一節
 封閉的是 DOS/V 資產解碼與接線，不宣稱 PC-98 或自然 DOS/V 整張截圖的逐像素對拍。
+
+<!-- 缺口：無 -->
+
+> 這份文件本身沒有未解項——內文出現的「缺口／未解」字樣指的是別處的缺口或方法論規則。
+> `tools/re_open_questions.py` 靠上面那行把「真的沒有」與「抽不到」分開。

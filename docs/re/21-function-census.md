@@ -217,3 +217,8 @@ tools/py.sh tools/re_coverage.py workplace/ida/dosv/census/census.tsv
 
 **而「變動」不只有一個方向。** 寫一份逐支登記的清單就能讓 T4 掉到個位數，
 所以看到覆蓋率突然改善時，先問改善來自讀懂還是來自被登記。
+
+<!-- 缺口：無 -->
+
+> 這份文件本身沒有未解項——內文出現的「缺口／未解」字樣指的是別處的缺口或方法論規則。
+> `tools/re_open_questions.py` 靠上面那行把「真的沒有」與「抽不到」分開。

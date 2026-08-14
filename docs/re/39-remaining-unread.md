@@ -40,3 +40,8 @@
 tools/ida.sh script dosv tools/ida_module.py KI.EXE.i64
 tools/py.sh tools/re_coverage.py workplace/ida/dosv/census/census.tsv
 ```
+
+<!-- 缺口：無 -->
+
+> 這份文件本身沒有未解項——內文出現的「缺口／未解」字樣指的是別處的缺口或方法論規則。
+> `tools/re_open_questions.py` 靠上面那行把「真的沒有」與「抽不到」分開。
