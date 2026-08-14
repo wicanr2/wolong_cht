@@ -19,12 +19,12 @@
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
 | 規則正確性 | 60 | 59 | 1 | 0 |
-| 資料保存 | 45 | 45 | 0 | 0 |
-| 程式碼理解 | 146 | 141 | 5 | 0 |
+| 資料保存 | 43 | 43 | 0 | 0 |
+| 程式碼理解 | 149 | 144 | 5 | 0 |
 | 驗收 | 3 | 3 | 0 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
 | 其他 | 5 | 5 | 0 | 0 |
-| **合計** | **277** | 270 | 6 | 1 |
+| **合計** | **278** | 271 | 6 | 1 |
 
 其中 **2 條明講被防拷擋著**——那條路沒通之前，它們不會因為多讀組語而前進。
 
@@ -93,7 +93,7 @@
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 君主陣亡時軍師怎麼辦 | 未知 | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | END_S1`–`END_S4`（結局動畫？）與四個劇本的結局有關，格式還沒碰。 | （未解小節內文） | 靜態 |
 
-## 2.2 資料保存（45 條）
+## 2.2 資料保存（43 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -127,8 +127,6 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x0080` | 2,112 / **勢力表：22 筆 × 64 B**（`docs/re/06` §5）＋ 其後未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x1EC0` | 7,168 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x3AC0`…`+0x42C0` | — / 未解 | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x16` | u16 / 恆 `FFFF` / 未解 | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x19` | u8 / 恆 `FF` / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0` | 1 / 旗標（7 種值）。**bit 4 ＝ 不事二主**：舊主已滅時被俘會自刎（`sub_129C3` → 訊息 0x43） / 其餘位元未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+16`（`0x10`） | 1 / 同格式，戰略層沒有呼叫點取得到（要模式 2）。**計入評價** / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+20`（`0x14`） | 1 / 值域 0–7 / 未解 | 靜態 |
@@ -143,7 +141,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（146 條）
+## 2.3 程式碼理解（149 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -284,15 +282,18 @@
 | [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | `sub_144A9`／`sub_144D6`／`sub_12880` | 表歸屬指向據點表，`or [si], 2`／`or [si], 20h` 的語意要另外讀 | 靜態 |
 | [`re/35-strategy-ui-module-map.md`](../re/35-strategy-ui-module-map.md) | `sub_18FC9` 叢 | — / 存檔畫面的槽位與按鈕對應未驗（§2.8） | 靜態 |
 | [`re/37-graphics-and-runtime-module-map.md`](../re/37-graphics-and-runtime-module-map.md) | `sub_1F7A4` | 212 / 字型 blitter，[`29`](29-font-service-int15.md) §9 已列為未解 | 靜態 |
-| [`re/40-garrison-relief-request.md`](../re/40-garrison-relief-request.md) | `sub_13FA9`（127 B） | 填那 16 B 威脅緩衝的，未讀 | 靜態 |
-| [`re/40-garrison-relief-request.md`](../re/40-garrison-relief-request.md) | `sub_140B3`（22 B） | 求援後的收尾，未讀 | 靜態 |
-| [`re/40-garrison-relief-request.md`](../re/40-garrison-relief-request.md) | `sub_14575`（76 B） | AI 側取「該勢力的某個目標」，未讀 | 靜態 |
-| [`re/40-garrison-relief-request.md`](../re/40-garrison-relief-request.md) | 據點 `+0x14`／`+0x18` | 一個被 `sub_13FA9` 寫、一個當門檻，語意未定 | 靜態 |
+| [`re/40-garrison-relief-request.md`](../re/40-garrison-relief-request.md) | 三支後續函式與兩個欄位由 [`44`](44-threat-and-reinforcement-ai.md) 收掉： | （未解小節內文） | 靜態 |
 | [`re/40-garrison-relief-request.md`](../re/40-garrison-relief-request.md) | `+0x20` 與 `+0x14` 的關係 | §5 的張力，要實測 | 實測 |
 | [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `INT 61h` 的四個服務號（`ah=4`／`7`／`8`、`ax=09F2h`／`0C01h`） | 對應什麼音效動作要看 `YNSOUND.COM`（[`17`](17-dosv-audio-tsr.md)） | 靜態 |
 | [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `cs:byte_198A6` 位元 3 | 對應 `sub_15FAA`，設定與清除端都沒找到 | 靜態 |
 | [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `sub_1E9A7` 的 8 bytes 參數表 | 表本身沒讀 | 靜態 |
 | [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `byte_1020E`／`byte_10CF9` | 音源相關的兩個旗標 | 靜態 |
+| [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | `sub_14194`／`sub_14269` | `sub_13EFD` 每 tick 還呼叫這兩支，未讀 | 靜態 |
+| [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | `sub_16E8F` | AI 側的編成常式，只在 [`34`](34-corps-status-bits.md) 出現過 `or 4`，內部未讀 | 靜態 |
+| [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | 軍團 `+0x23` | 兩條派兵路徑都寫 0、`sub_16F26` 寫 1、`sub_14155` 要求 `< 8`。像是階段計數，語意未定 | 靜態 |
+| [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | 據點 `+0x00` 的 bit 4／5 | bit 6／7 是威脅旗標、低 4 位是敵方鄰居，中間兩位仍未見寫入端 | 靜態 |
+| [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | 勢力 `+0x17` 的讀取端 | 寫入端在 §1，誰讀它未找 | 靜態 |
+| [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | `+0x20` 與 `+0x14` 的張力 | `sub_14575` 與 `sub_14155` 都只寫 `+0x20`，[`40`](40-garrison-relief-request.md) §5 的張力還在 | 靜態 |
 
 ## 2.4 驗收（3 條）
 
