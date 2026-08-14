@@ -114,6 +114,7 @@
 | [`docs/spec/10-city-tick.md`](spec/10-city-tick.md) | 10 — 據點整備、威脅偵測與求援 | CONFORMED。整條鏈已實作，並在 PC-98 原版的執行期記憶體上取樣驗過 （+0x18／+0x14 各 0/… | 2026-08-14 |
 | [`docs/spec/11-ai-sortie.md`](spec/11-ai-sortie.md) | 11 — 進言「請求君主出陣」 | READY。兩道閘都從機器碼讀出來了， | 2026-08-14 |
 | [`docs/spec/12-strategy-chrome.md`](spec/12-strategy-chrome.md) | 12 — 主畫面的視窗外框與指令列 | READY。外框的圖塊來源與貼法都解出來了（ICONGRF 段 3 的三塊 8×8）， 而 remake 已經照著做。 | 2026-08-14 |
+| [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | DRAFT。設計與取捨寫完了， | 2026-08-14 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 

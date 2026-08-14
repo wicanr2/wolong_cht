@@ -23,8 +23,8 @@
 | 程式碼理解 | 154 | 149 | 5 | 0 |
 | 驗收 | 6 | 5 | 1 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 17 | 17 | 0 | 0 |
-| **合計** | **298** | 290 | 7 | 1 |
+| 其他 | 19 | 19 | 0 | 0 |
+| **合計** | **300** | 292 | 7 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -332,7 +332,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（17 條）
+## 2.6 其他（19 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -353,6 +353,8 @@
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | `cs:word_1D84E` 每格 8 bytes | 內容意義未讀，消費端未找 | 靜態 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | `cs:6181h` 的八個指令名 | 字串 bytes 未 dump | 靜態 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝指令列 | 靜態 |
+| [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
+| [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 
 ## 3. 這支工具的盲區
 
