@@ -1,7 +1,7 @@
 # 20 — remake 原生存檔格式
 
-**狀態：編解碼與匯出已實作並驗過（`internal/savefile`）；
-**還沒接進遊戲**——`cmd/wlgame` 目前仍只存原版格式。**
+**狀態：CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。
+存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。**
 
 - 日期：2026-08-14
 - 出處：[`docs/formats/08`](../formats/08-sinario-save.md)（原版區塊版面）、
@@ -86,8 +86,12 @@
 | 新套件 | `internal/savefile` ✅ | `Encode`／`Decode`／`ExportOriginal`／`VerifyExport`。純編解碼，不依賴 Ebiten |
 | 匯出 | 同上 | `ExportOriginal(*state.World, raw []byte) ([]byte, error)`，內部就是現行的 `SaveInto` 邏輯 |
 | 狀態層 | `internal/state/snapshot.go` ✅ | `Snapshot` 型別 ＋ `RawBlock`／`TakeSnapshot`／`Restore`／`LoadBlock`。JSON tag 只在 `Snapshot` 上，沒有灑進 World |
-| 路徑 | `internal/savepath` ⬜ | **未做**：多一種副檔名；原版 overlay 與原生檔各自獨立，互不覆蓋 |
-| 遊戲 | `cmd/wlgame/save.go` ⬜ | **未做**：預設存原生檔；選單多一項「匯出成原版存檔」 |
+| 路徑 | `internal/savepath` | `NativePath(overlay, slot)`：`SAVE.DAT` → `SAVE-slot1.wlsave`。原版 overlay 與原生檔各自獨立，互不覆蓋 |
+| 遊戲 | `cmd/wlgame/save.go` | **一次存兩份**：原生檔（遊戲讀的）＋ 原版格式 overlay（拿去 DOSBox 的）。讀檔優先原生檔，沒有就退回原版格式 |
+
+> **為什麼不是「選單多一項匯出」**（原本 §3 這樣寫）：多一個動作就多一個
+> 「忘記匯出」的狀態，而原版格式正是這個專案的保存價值所在。
+> 兩份一起寫沒有額外 UI、也沒有不一致的中間態，代價只是每次多寫 22 KB。
 
 ## 4. 驗證
 
@@ -97,6 +101,8 @@
 | 單元測試 | **`runtime` 真的活著**：`routes`／`cityCursor`／`eventCursor`／AI 開關 | ✅ `TestRuntimeStateSurvivesTheRoundTrip` |
 | 單元測試 | **改壞要炸**：動過 `raw`、版本不合、`runtime` 索引超界 | ✅ `TestDecodeRejectsTamperedFile` |
 | 單元測試 | 沒有原版檔案也載得動（決策 C）| ✅ `TestDecodeDoesNotNeedTheOriginalFiles` |
+| 單元測試 | 存檔寫出兩份、讀檔優先原生檔、原生檔壞掉要炸、不存在要退回原版格式 | ✅ `TestSaveWritesBothFormatsAndReadsBackNative` |
+| 單元測試 | 路徑推導與「原生檔不會蓋掉原版 overlay」 | ✅ `TestNativePath` |
 | 對原版 | 匯出的檔案放回 DOSBox 能讀 | ⬜ **未做**（工具見 [`../playtest/21`](../playtest/21-dosboxx-bridge-sampling.md)）|
 
 ## 5. 未解
