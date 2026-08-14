@@ -98,7 +98,7 @@ M8 實機驗收。細節見 §7.0。
 | **⭐ 威脅偵測與 AI 出兵解出** | `docs/re/44`。據點每 tick 掃一個（192 tick 一輪）；`+0x18` ＝ 停在該格的軍團數（佔用圖抄回來的快取）、`+0x14` ＝ 周邊敵軍團數總和、`+0x1B` ＝ 相鄰敵據點數。**AI 軍團數上限 ＝ max(5, 資金 ÷ 8192)**，派將只看武力且只從「無職」挑。另解出勢力 `+0x16`（最近求援的據點）與 `+0x17`（被佔走的據點）|
 | **威脅偵測接進規則層** | 新套件 `internal/rules/threat`＋`state.refreshCityThreat`，接在既有的據點輪轉後面。`City` 多了 `Threat`／`Occupancy`／`EnemyNeighbours` 三個欄位，`Adjacency` 的語意改成「哪幾個鄰居是敵方」並改為每輪重算。**修掉一個 parity bug**：`formAICorps` 原本的門檻是 `f.Corps != 0`，AI 永遠只有一支軍團、資金再多也不擴軍；現在是 `max(5, 資金 ÷ 8192)` 扣掉現有數。求援也接上了：玩家的據點跳訊息 #38、AI 的據點依額度編軍團過來、`sub_14155` 把已在該據點的軍團調去威脅方向，冷卻計時器每輪 −1 |
 | **軍團位元 2 ＝「委任」** | `docs/re/45`。答案不在組合語言裡，在 `TALK.DAT` #76：「戰鬥指揮／委任／解體」三項對上 `sub_17FDB` 的三條分支。**求援只調得動委任中的軍團**——玩家自己指揮的不會被 AI 搶走；`+0x23 = 11` 是待解體，也調不動。君主親征那一支編完立刻被清掉委任旗標。「解體」只在目標是首都時才出現（兵要還回預備兵池）|
-| **⭐ 動態 oracle 打通（PC-98）** | `docs/playtest/21`。DOSBox-X ＋ Native AI Bridge 自己編（`docker/dosboxx-bridge`），`tools/dosboxx_probe.py` 直接讀 guest 記憶體。**第一輪就裁決了一條斷言**：據點 `+0x00` 低 4 位 ＝ 敵方鄰居遮罩 192/192，而舊讀法只對 12/192，兩者在 180 筆上不同。`+0x18`／`+0x14` **沒取到證據**——開局沒有軍團，全 0 的相符不算數 |
+| **⭐ 動態 oracle 打通（PC-98），三條斷言取到證據** | `docs/playtest/21`。自己編帶 Native AI Bridge 的 DOSBox-X（`docker/dosboxx-bridge`），`tools/dosboxx_probe.py` 直接讀 guest 記憶體（**不走 MCP**）。據點 `+0x00` 低 4 位 ＝ 敵方鄰居遮罩 192/192，舊讀法只對 12/192、兩者在 180 筆上不同；把遊戲開進本體跑到場上 21 支軍團之後，`+0x18` 與 `+0x14` 各 **0/192 不符**（非零 12–13 筆）。**中間四輪的假不符全部指回我沒寫進驗證器的原版濾網**（中立不算威脅、和平不算威脅、中立據點根本不做威脅判斷）|
 | **⭐ 模組級全圖：T4 從 252 降到 90** | `docs/re/35`–`38`。用 IDAPython `tools/ida_module.py` 逐模組攤開呼叫圖，每支函式給叢集歸屬與證據。未讀程式碼從 12,259 降到 **2,918 bytes（5%）**，只剩戰術戰鬥還成塊（37 支）。**叢集歸屬 confirmed，角色標籤是強證據**——呼叫圖精確，標籤來自共用常式的語意 |
 | **據點求援與援軍派遣全解** | docs/re/40。據點 +0x00 的 bit 7/6 是「受威脅／威脅在旁」，+0x17 是求援冷卻。派援軍只調「人已在該據點」的軍團，每支 25% 機率被跳過。距離算式裡 Y 分量減的是首都的 X——**兩版 byte 完全相同**，出自 1994 原始碼，照抄 |
 | **RE 知識庫入口建立** | `docs/re/00-index.md`。41 份筆記按子系統分類（資料表／時間／戰略／戰術／呈現／外交／方法論），含段內基址速查、四種反覆踩到的錯、每模組的未讀缺口，與「怎麼加一份新筆記」的規格 |
@@ -166,7 +166,7 @@ M8 實機驗收。細節見 §7.0。
 
 | 項目 | 狀態 |
 |---|---|
-| **DOS/V 防拷** | **確認有**（`docs/playtest/01`）：查說明書第 NN 頁的四字密碼，擋住 DOS/V 的 oracle。**繞路：PC-98 版沒有這一關**，規則類的 oracle 改跑 PC-98 |
+| **DOS/V 密碼頁** | **有，但不擋 oracle**（`docs/playtest/18`）：四格留白直接按「確定」就進開場，`0000`／`1234` 亦同、最終截圖雜湊相同。**數字不是必要條件。**密碼頁不重製到 remake。規則見 `CLAUDE.md` §4.0，`tools/index.py` 有一道檢查擋「被防拷擋著」這類寫法 |
 | PC-98 oracle 的滑鼠 | ✅ **已解**（`docs/playtest/06`）。三件事要同時到位：`until:<md5>` 認畫面到站、`Ctrl+F10` 鎖滑鼠走相對位移（PC-98 是匯流排滑鼠）、閉迴路移游標（8 bit 位移會截斷大跳躍） |
 | 日文說明書 | **有實質機制的都讀完了**，剩 p.6 啟動操作與 p.36–38 疑似附錄。純掃描無文字層 |
 | 交叉編譯 | 邏輯層 100% 純 Go，全平台可交叉；**Ebiten 只有 linux／mac 需 cgo**，windows 純 Go 可建（`tools/release.sh` 有實測矩陣） |
@@ -217,6 +217,7 @@ M8 實機驗收。細節見 §7.0。
 |---|---|---|
 | 戰術 AI 的腳本 VM 是新發現，`internal/rules/tactical` 沒有這一層（曾寫成一份獨立筆記）| **VM 早在 `docs/re/11` §3.5 就全解**（19 個指令逐一命名、側別寫死在 side 1），`internal/rules/tactical/script.go` 也早已實作並有原版 `BATTLE.DAT` 的實跑測試。那份筆記已刪除，只有分派表位址的訂正併回 `11` §3.1 | **動手前沒查三張表**（`CLAUDE.md` §10）。從模組全圖的「`sub_1A426` 底下 20 支未讀」出發，直接去讀組語而沒有先 grep `sub_1A426`。連帶推錯兩件事：把 564 個跳躍目標當成 `op 0` 指令（`op 0` 實際 1,788 次不是 2,352），以及「每個 word 都是一條指令」——分支指令是 4 bytes，這一點 `docs/formats/07` §6 早就寫明 |
 | 據點 `+0x00` 低 4 位 ＝ 四個方向哪幾個**有鄰接**（標 confirmed，證據是 `sub_12CDF`）| **是「哪幾個鄰接槽屬於別的勢力」**。`sub_1890A` 在據點換手時設／清這四位，並同步加減 `+0x1B`（相鄰敵據點數）。有沒有鄰接是 `+0x1C`–`+0x1F` 的 `0xFF` 哨兵在管 | **拿讀取端當語意證據**。`sub_12CDF` 只讀這四位去看鄰居的勢力，兩種解讀都能讓它說得通；寫入端只相容於一種。見 `docs/re/44` §5 |
+| DOS/V 的 oracle 被防拷擋著（寫在 `docs/re/20`／`29`／`playtest/21`／`reference/04`）| **密碼頁四格留白按「確定」就進開場**（`docs/playtest/18`，2026-08-12 三組受控實驗）。那幾份文件的「受阻」全部改成「還沒做」 | **答案早就在自己的 `docs/` 裡，而且寫過五次**。它長得像已知的專案背景，寫的時候不會想到要查——所以除了規則（`CLAUDE.md` §4.0）還加了 `tools/index.py` 的檢查。**只有規則擋不住會復發的斷言** |
 | M1 缺 **`BATTLE.MCH`** 的語意（掛在里程碑表上多輪） | **這個檔不存在。** `dosv`／`pc98` 都沒有，`KI.EXE` 的字串表也只引用 `MMAP.MCH` | 從 `BATTLE.MAP`／`.MDL`／`.SCH` 三件成套外推出「應該還有 `.MCH`」。**待辦清單上的樂觀判斷跟文件裡的斷言一樣要驗證**——這一項永遠不可能完成，卻一直佔著缺口欄 |
 | 戰術呈現是逆向覆蓋率最低的一塊（`docs/re/20` 的 25–40%） | **它是覆蓋率最高的模組**：35 支函式只有 1 支未觸及。低的是**移植度**不是**覆蓋度** | 兩個數字量的不是同一件事，而稽核只挑戰術函式評估深度，沒有全量比較。全量普查（`docs/re/21`）才顯出真正的缺口在戰略 UI 與月結／經濟／AI |
 | `sub_18810` 的 `cx ≥ 0x100` 指到空訊息，疑似 `−0x20` 偏移（記著不採用）| **門檻是 `0x196`，機制是 ×8 展開**：索引 ≥ `0x196` 時真正的索引是 `0x196 + (索引 − 0x196) × 8 + ah`，八格一組由 `ah` 選 | 門檻掛錯了函式（語意在 `sub_1075B` 不在 `sub_18810`），而「空訊息 → 一定有偏移」只考慮了平移，沒考慮**展開**。從觀察到的空格反推偏移量是猜，讀那一段換算碼才是解 |
@@ -475,7 +476,7 @@ M8 實機驗收。細節見 §7.0。
 | `tools/go.sh` | `tools/go.sh test ./...`。image 沿用 demonwinter-go，volume 是自己的 `wl-gomod`／`wl-gobuild` |
 | `tools/py.sh` | 在 demonwinter-go 內執行 Python 文件索引／deny-list 工具；`--network none`、固定資源、目前 UID/GID |
 | `tools/shot.sh` | `tools/shot.sh out.png KEYS=Right,Down [參數]`。Xvfb + xdotool，驗呈現層 |
-| `tools/dosbox.sh` | `tools/dosbox.sh dosv "wait:2;type:START;key:Return;wait:10;shot:x"`。DOS/V oracle（會撞防拷）|
+| `tools/dosbox.sh` | `tools/dosbox.sh dosv "wait:2;type:START;key:Return;wait:10;shot:x"`。DOS/V oracle（密碼頁按「確定」就過，`docs/playtest/18`）|
 | `tools/dosboxx.sh` | `tools/dosboxx.sh "until:<md5>,260;xkey:ctrl+F10;clickat:300,172;shot:x"`。**PC-98 oracle，無防拷**。timeline：`wait`／`until:md5,上限`／`settle`／`key`／`type`／`xkey`／`xtype`／`move`／`click`／`goto`／`clickat`／`probe`／`shot`。**要點滑鼠一定要先 `xkey:ctrl+F10`**，而且用 `clickat`（閉迴路）不要用 `click`（開迴路會被 8 bit 位移截斷）。滑鼠三個旋鈕：`WOLONG_SDL_AUTOLOCK`／`WOLONG_MOUSE_EMU`／`WOLONG_LOG_MOUSE`。原理見 `docs/playtest/06` |
 
 > ⚠ **這張表只列真的存在的工具。** 規則或待辦指向一支不存在的腳本，

@@ -178,7 +178,7 @@ producer、場景旗單 raw-unit producer，以及 `sub_1E011` 的
 
 | 項目 | 現況 |
 |---|---|
-| 同狀態動態 oracle | 沒有可重放的存檔／輸入序列，所以「原版等價」目前無法驗。**被防拷擋著**（[`../playtest/01`](../playtest/01-dosbox-dosv.md)）|
+| 同狀態動態 oracle | 沒有可重放的存檔／輸入序列，所以「原版等價」目前無法驗。**這是還沒做，不是做不了**——DOS/V 的密碼頁空白確認就會過（[`../playtest/18`](../playtest/18-dosv-password-verification.md)），PC-98 側連除錯器都接好了（[`../playtest/21`](../playtest/21-dosboxx-bridge-sampling.md)）|
 | 逐幀執行順序 | 顯示串列與相機已重建，但整幀的呼叫順序沒有逐幀對過 |
 | `loc_1A065` 的 runtime bytes | 自我修改碼，靜態影像看不到每輪的實際內容（§2.2）|
 | 四層差分（terrain／display list／composited／HUD）| 沒有 machine-readable diff，目前只有 layout-only 比較 |

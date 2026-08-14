@@ -21,12 +21,10 @@
 | 規則正確性 | 60 | 59 | 1 | 0 |
 | 資料保存 | 43 | 43 | 0 | 0 |
 | 程式碼理解 | 151 | 146 | 5 | 0 |
-| 驗收 | 8 | 7 | 1 | 0 |
+| 驗收 | 6 | 5 | 1 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
 | 其他 | 5 | 5 | 0 | 0 |
-| **合計** | **285** | 277 | 7 | 1 |
-
-其中 **3 條明講被防拷擋著**——那條路沒通之前，它們不會因為多讀組語而前進。
+| **合計** | **283** | 275 | 7 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -145,7 +143,7 @@
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
-| [`re/00-index.md`](../re/00-index.md) | [`43`](43-open-questions.md) | **缺口總表**：各文件「未解」表的集中版（生成的，`check.sh` 每次重出） | 靜態 |
+| [`re/00-index.md`](../re/00-index.md) | `43` | **缺口總表**：各文件「未解」表的集中版（生成的，`check.sh` 每次重出） | 靜態 |
 | [`re/00-index.md`](../re/00-index.md) | 739 支函式的 T4 全部歸零**——每一支都有 `docs/re/` 層級的記錄。 | （未解小節內文） | 靜態 |
 | [`re/01-first-recon.md`](../re/01-first-recon.md) | 是加了新過場、還是把原本的長段拆開，未解。 | （散句） | 靜態 |
 | [`re/01-first-recon.md`](../re/01-first-recon.md) | `YNMOUSE.COM` | pc98 / 滑鼠驅動。dosv 版把它併進 `KI.EXE`？未驗 | 靜態 |
@@ -220,16 +218,16 @@
 | [`re/13-pc98-numeric-window.md`](../re/13-pc98-numeric-window.md) | cmd/wlgame` 有 DOS/V 資源時直接繪製這張內框，缺資源才降級通用框；數值格的 raw | （未解小節內文） | 靜態 |
 | [`re/15-event10-producer.md`](../re/15-event10-producer.md) | 以下來源沒有證據，不能補成事實：未被 IDA 建成函式的 far code、以暫存器或指標 | （未解小節內文） | 靜態 |
 | [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | `SOUND.DAT` 的格式 | 未解。`INT 61h` 傳的是 effect code，不是可聽音效的名字（§3） | 靜態 |
-| [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | `BGM.DAT` 的聲軌事件編碼 | 未解（[`23`](23-bgm-resource-format.md)），所以不能宣稱音色 parity | 靜態 |
-| [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | `INT 61h` 的四個服務號 | `ah=4`／`7`／`8` 與 `ax=09F2h`／`0C01h`，對應什麼動作要看 `YNSOUND.COM`（[`42`](42-leaf-functions.md) §7） | 靜態 |
+| [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | `BGM.DAT` 的聲軌事件編碼 | 未解（`23`），所以不能宣稱音色 parity | 靜態 |
+| [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | `INT 61h` 的四個服務號 | `ah=4`／`7`／`8` 與 `ax=09F2h`／`0C01h`，對應什麼動作要看 `YNSOUND.COM`（`42` §7） | 靜態 |
 | [`re/19-outcome.md`](../re/19-outcome.md) | 勢力滅亡 selector | 未定位。remake 只顯示克制的 fallback 句，不冒充原版文字 | 靜態 |
 | [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | §5 的四個 gate 裡，前兩個已由 §7／§8 兩個切片收掉；剩下的是這些： | （未解小節內文） | 靜態 |
-| [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | 同狀態動態 oracle | 沒有可重放的存檔／輸入序列，所以「原版等價」目前無法驗。**被防拷擋著**（[`../playtest/01`](../playtest/01-dosbox-dosv.md)） | 實測・**防拷擋著** |
+| [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | 同狀態動態 oracle | 沒有可重放的存檔／輸入序列，所以「原版等價」目前無法驗。**這是還沒做，不是做不了**——DOS/V 的密碼頁空白確認就會過（`../playtest/18`），PC-98 側連除錯器都接好了（`../playtest/21`） | 實測 |
 | [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | 逐幀執行順序 | 顯示串列與相機已重建，但整幀的呼叫順序沒有逐幀對過 | 靜態 |
 | [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | `loc_1A065` 的 runtime bytes | 自我修改碼，靜態影像看不到每輪的實際內容（§2.2） | 靜態 |
 | [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | 四層差分（terrain／display list／composited／HUD） | 沒有 machine-readable diff，目前只有 layout-only 比較 | 靜態 |
 | [`re/22-strategy-command-tree.md`](../re/22-strategy-command-tree.md) | 指令列圖形來源與熱區圖的登記方式未解。 | （散句） | 靜態 |
-| [`re/22-strategy-command-tree.md`](../re/22-strategy-command-tree.md) | 指令列的圖形來源 | 八個 40×16 按鈕的圖從哪來未讀。`ICONGRF` 段 1 仍未解（[`../formats/03`](../formats/03-grf-images.md) §5.4），尺寸上是候選，但**沒有證據**，不要當結論 | 靜態 |
+| [`re/22-strategy-command-tree.md`](../re/22-strategy-command-tree.md) | 指令列的圖形來源 | 八個 40×16 按鈕的圖從哪來未讀。`ICONGRF` 段 1 仍未解（`../formats/03` §5.4），尺寸上是候選，但**沒有證據**，不要當結論 | 靜態 |
 | [`re/22-strategy-command-tree.md`](../re/22-strategy-command-tree.md) | 熱區圖怎麼登記 | 寫入端 `sub_1E41B` 沒有任何文件提過 | 靜態 |
 | [`re/22-strategy-command-tree.md`](../re/22-strategy-command-tree.md) | `off_159D2` 的其餘槽位 | 16 筆裡只有 [1] `0x1614A`、[2] `0x15E1E`、[3] `0x15A3A`、[4] `sub_15FAA`、[13] `sub_161CA` 非 `nullsub_1`。這是頂層模式分派表，[1]–[3] 未讀 | 靜態 |
 | [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | 聲軌資料本身的事件編碼、`+0x02`／`+0x04` 兩張表的內容與音色語意仍未解。 | （散句） | 靜態 |
@@ -257,7 +255,7 @@
 | [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `END_S13.DAT` 前 408 格的來源 | 不是 `stdfont.15` 的任何一段，也不是 `usrfont.15m`（256 B） | 靜態 |
 | [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `END_S15.DAT`（5,242 B） | `KI.EXE` 的字串表引用它，但**不是字型**（大小不是 30／15 的倍數），也不是過場圖（沒有 `00 F4 01` 檔頭），Big5 解碼是亂碼 → 疑似壓縮 | 靜態 |
 | [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `sub_1F7A4` | 把 32 B 緩衝畫上 VRAM 的實際迴圈，未逐行讀 | 靜態 |
-| [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `YNFONT.EXE` 怎麼顯示中文 | 它不走 INT 15h（0 次），防拷畫面的中文是它自己畫的。與本鏈無關，仍未解 | 靜態・**防拷擋著** |
+| [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `YNFONT.EXE` 怎麼顯示中文 | 它不走 INT 15h（0 次），密碼輸入畫面的中文是它自己畫的。與本鏈無關，仍未解 | 靜態 |
 | [`re/30-corps-formation-ui.md`](../re/30-corps-formation-ui.md) | 軍團 `+0x23` | `sub_16F26` 寫 1，用途未解 | 靜態 |
 | [`re/30-corps-formation-ui.md`](../re/30-corps-formation-ui.md) | `sub_1D4C7` | 大地圖上實際畫圖塊的常式，未讀 | 靜態 |
 | [`re/30-corps-formation-ui.md`](../re/30-corps-formation-ui.md) | `sub_16D6F`／`sub_16DA8` | 兩支印數字的常式，畫的是哪幾個欄位未逐一對過 | 靜態 |
@@ -272,7 +270,7 @@
 | [`re/32-strategy-detail-panels.md`](../re/32-strategy-detail-panels.md) | `+0x16` 高 4 位 | 仍未解（`0`–`14`），這兩支面板都沒用到它 | 靜態 |
 | [`re/33-shared-draw-helpers.md`](../re/33-shared-draw-helpers.md) | `sub_1E38C` | 從圖庫段載入 `di` bytes，內部未讀 | 靜態 |
 | [`re/33-shared-draw-helpers.md`](../re/33-shared-draw-helpers.md) | `cs:word_10D40` | 肖像圖庫所在的段，誰載入它未追 | 靜態 |
-| [`re/33-shared-draw-helpers.md`](../re/33-shared-draw-helpers.md) | `sub_1FA37` 的 `ax = 4004h` | 圖塊尺寸的編碼方式未逐位對過（[`18`](18-tactical-button-glyphs.md) §2 只定了「ax ＝ 尺寸」） | 靜態 |
+| [`re/33-shared-draw-helpers.md`](../re/33-shared-draw-helpers.md) | `sub_1FA37` 的 `ax = 4004h` | 圖塊尺寸的編碼方式未逐位對過（`18` §2 只定了「ax ＝ 尺寸」） | 靜態 |
 | [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | 0 | `sub_12459`／`sub_126FF`（候選） / `sub_12533`（候選） / 未定 | 靜態 |
 | [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | 4 | `sub_12B3C`（候選） / `sub_12BA8`（候選） / 未定。`sub_12B3C` 呼叫 `sub_15D19`（小地圖畫點） | 靜態 |
 | [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | 位元 0／4／5 的語意 | 有成對的設定與清除點，但那幾支函式的操作對象尚未逐支確認是軍團 | 靜態 |
@@ -280,10 +278,10 @@
 | [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | `sub_12977` 的 `mov byte [si], 8` | 該函式同時碰武將表與軍團表，`si` 指哪一張未確認 | 靜態 |
 | [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | `sub_144A9`／`sub_144D6`／`sub_12880` | 表歸屬指向據點表，`or [si], 2`／`or [si], 20h` 的語意要另外讀 | 靜態 |
 | [`re/35-strategy-ui-module-map.md`](../re/35-strategy-ui-module-map.md) | `sub_18FC9` 叢 | — / 存檔畫面的槽位與按鈕對應未驗（§2.8） | 靜態 |
-| [`re/37-graphics-and-runtime-module-map.md`](../re/37-graphics-and-runtime-module-map.md) | `sub_1F7A4` | 212 / 字型 blitter，[`29`](29-font-service-int15.md) §9 已列為未解 | 靜態 |
-| [`re/40-garrison-relief-request.md`](../re/40-garrison-relief-request.md) | 三支後續函式與兩個欄位由 [`44`](44-threat-and-reinforcement-ai.md) 收掉： | （未解小節內文） | 靜態 |
+| [`re/37-graphics-and-runtime-module-map.md`](../re/37-graphics-and-runtime-module-map.md) | `sub_1F7A4` | 212 / 字型 blitter，`29` §9 已列為未解 | 靜態 |
+| [`re/40-garrison-relief-request.md`](../re/40-garrison-relief-request.md) | 三支後續函式與兩個欄位由 `44` 收掉： | （未解小節內文） | 靜態 |
 | [`re/40-garrison-relief-request.md`](../re/40-garrison-relief-request.md) | `+0x20` 與 `+0x14` 的關係 | §5 的張力，要實測 | 實測 |
-| [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `INT 61h` 的四個服務號（`ah=4`／`7`／`8`、`ax=09F2h`／`0C01h`） | 對應什麼音效動作要看 `YNSOUND.COM`（[`17`](17-dosv-audio-tsr.md)） | 靜態 |
+| [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `INT 61h` 的四個服務號（`ah=4`／`7`／`8`、`ax=09F2h`／`0C01h`） | 對應什麼音效動作要看 `YNSOUND.COM`（`17`） | 靜態 |
 | [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `cs:byte_198A6` 位元 3 | 對應 `sub_15FAA`，設定與清除端都沒找到 | 靜態 |
 | [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `sub_1E9A7` 的 8 bytes 參數表 | 表本身沒讀 | 靜態 |
 | [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `byte_1020E`／`byte_10CF9` | 音源相關的兩個旗標 | 靜態 |
@@ -291,23 +289,21 @@
 | [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | 軍團 `+0x23` | 兩條派兵路徑都寫 0、`sub_16F26` 寫 1、`sub_14155` 要求 `< 8`。像是階段計數，語意未定 | 靜態 |
 | [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | 據點 `+0x00` 的 bit 4／5 | bit 6／7 是威脅旗標、低 4 位是敵方鄰居，中間兩位仍未見寫入端 | 靜態 |
 | [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | 勢力 `+0x17` 的讀取端 | 寫入端在 §1，誰讀它未找 | 靜態 |
-| [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | `+0x20` 與 `+0x14` 的張力 | `sub_14575` 與 `sub_14155` 都只寫 `+0x20`，[`40`](40-garrison-relief-request.md) §5 的張力還在 | 靜態 |
+| [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | `+0x20` 與 `+0x14` 的張力 | `sub_14575` 與 `sub_14155` 都只寫 `+0x20`，`40` §5 的張力還在 | 靜態 |
 | [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `+0x23 = 0x0B` 之後由誰處理解體 | 寫入端在這裡，消費端沒找 | 靜態 |
 | [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `sub_193E9` 的選單協定 | `ah = 1`、`cx` ＝ 首項索引、`dx`／`bx` ＝ 位置；回傳值怎麼編碼未逐位對過 | 靜態 |
 | [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `sub_1703C` | 選據點的那一支，未讀 | 靜態 |
 | [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `+0x23` 的其他值 | 只見過 0、1（`sub_16F26`）與 11 | 靜態 |
 
-## 2.4 驗收（8 條）
+## 2.4 驗收（6 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
 | [`playtest/10-event-message-modal.md`](../playtest/10-event-message-modal.md) | 直接證據為 `KI.EXE.asm` 的 IDA 線性位址 `0001237E`、`000134A6`、`000134B1`、 | （未解小節內文） | 靜態 |
 | [`playtest/14-m7-review.md`](../playtest/14-m7-review.md) | #195 | `3` / 4 / 10 / 1 / `嗯，現在的話，{3}\n也不至於拒絕。好，准\n許停戰！\n` / `sub_13C99` 的狀態值 1 直接取 #193–#195；此格需保留 `{3}`，重用目前 #193 的既有繁中譯文，避免另造未驗證句子。 | 靜態 |
 | [`playtest/17-expert-dosbox-remake.md`](../playtest/17-expert-dosbox-remake.md) | 松崗 DOS/V 原版 | **PASS（啟動至開場）** / 2026-08-12 證實空白確認／`0000`／`1234` 均越過密碼頁；完整自然長程驗證尚未執行 | 靜態 |
-| [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | `+0x18`／`+0x14` 的動態證據 | 要先把遊戲開到有軍團的狀態（§4.2） | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 據點換手之後遮罩會不會跟著變 | `sub_1890A` 的行為，靜態讀得出來，動態沒驗——要打下一座城才看得到 | 靜態 |
-| [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | MCP 那一層 | `.mcp.json` 已就位，但**要重啟 session 才載入**，本輪的取樣走的是 TCP 腳本 | 靜態 |
-| [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 松崗 DOS/V 側 | 防拷未解，這套工具在那一版上仍然用不了 | 靜態・**防拷擋著** |
+| [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 松崗 DOS/V 側 | 這套 bridge 還沒在 DOS/V 上跑過。**密碼頁不構成阻礙**（四格留白按「確定」即可通過，`18`）——是還沒做 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 上游授權 | `DOSBox-X-MCP-Debugger` 的原創碼**尚未選定授權條款**（README 明講是刻意留白）。本專案只在本機使用，未再散布 | 實測 |
 
 ## 2.5 外部資料（18 條）
@@ -324,7 +320,7 @@
 | [`reference/03-baked-japanese.md`](../reference/03-baked-japanese.md) | `OPEN_S1`–`S6` | 六張全相同 / 開場沒有燒字，文字是疊繪的 | 靜態 |
 | [`reference/03-baked-japanese.md`](../reference/03-baked-japanese.md) | **`ICONGRF.DAT`** | **相同** / **沒重繪 → 裡面的日文留著** | 靜態 |
 | [`reference/03-baked-japanese.md`](../reference/03-baked-japanese.md) | `KAOGRF`／`KYOGRF`／`IVENTGRF` | 相同 / 純圖像，目前看過的都沒有文字 | 靜態 |
-| [`reference/03-baked-japanese.md`](../reference/03-baked-japanese.md) | ![標題橫幅](../images/icongrf-r0-banner.png) | （未解小節內文） | 靜態 |
+| [`reference/03-baked-japanese.md`](../reference/03-baked-japanese.md) | !標題橫幅 | （未解小節內文） | 靜態 |
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | `YNSOUND.COM` | 3,463 B / 音效驅動，**假說**：常駐 TSR | 靜態 |
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | `SHOW.O` | 57,148 B / 被 `INSTALL.EXE` 與 `LOGO.EXE` 引用。開頭 `3c df 00 00 11 af 01 00 50 00 80 07`。**未解** | 靜態 |
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | LOGO.EXE`／`YNFONT.EXE`／`INSTALL.EXE` 都有 | （未解小節內文） | 靜態 |

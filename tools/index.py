@@ -175,6 +175,16 @@ def narrative_hits(path):
             out.append((i, line.strip()))
     return out
 
+# 「密碼頁擋住 oracle」的各種寫法。只認**斷言句**，不認事實描述——
+# 「有防拷」「防拷畫面」本身是對的（`docs/playtest/01` §2），
+# 錯的是「因此 oracle 過不去」。
+BLOCKED_BY_COPY_PROTECTION = re.compile(
+    r"(防拷|密碼頁|密碼畫面)[^。\n]{0,20}(擋住|擋著|阻擋|停擺|過不去|用不了)"
+    r"|(被|受)(防拷|密碼頁)[^。\n]{0,6}(擋|阻)")
+# 否定寫法（「不再是阻擋」「即可越過」）本身就是正確答案，不能誤報。
+NOT_BLOCKED = re.compile(r"不再|不是阻擋|不阻擋|不擋|已可|即可|可越過|越過|不會阻擋")
+
+
 def check(docs):
     problems = []
 
@@ -213,6 +223,28 @@ def check(docs):
                 f"{rel(d.path)}:{n}：正文在敘述當初怎麼錯的"
                 f"（{line[:34]}…）——改寫成正確答案，"
                 f"推翻紀錄放 CONTEXT.md 的「已被推翻的斷言」")
+
+    # ③.5 已經解決的阻擋，不准再被寫成阻擋。
+    #
+    # 現況：**松崗 DOS/V 的密碼頁不擋 oracle**——四格留白直接按「確定」
+    # 就進開場（`docs/playtest/18`，2026-08-12 三組受控實驗）。
+    #
+    # ⚠ 為什麼要做成檢查：這條在 `docs/playtest/01`／`13`／`17`／`18` 與
+    # `CONTEXT.md` §0.1 都寫過了，**還是在四份文件裡復發**，包括
+    # 同一個 session 剛寫的新筆記。原因是它長得像「已知的專案背景」，
+    # 寫的時候不會想到要查——**這種斷言只有機器擋得住**。
+    for d in docs:
+        try:
+            text = open(d.path, encoding="utf-8").read()
+        except OSError:
+            continue
+        for n, line in enumerate(text.split("\n"), 1):
+            if BLOCKED_BY_COPY_PROTECTION.search(line) \
+                    and not NOT_BLOCKED.search(line):
+                problems.append(
+                    f"{rel(d.path)}:{n}：又把密碼頁寫成 oracle 的阻擋"
+                    f"（{line.strip()[:34]}…）——空白確認就會過，"
+                    f"見 docs/playtest/18")
 
     # ④ 同一個鍵在不同文件等級不同。
 

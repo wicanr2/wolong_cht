@@ -82,29 +82,44 @@ def scenario_cities(path, block=0, block_size=0x5400, city_base=0x08C0):
 
 
 def locate(bridge, signature, probe=64):
-    """在 guest 的常規記憶體裡搜簽章，回傳 (segment, offset)。
+    """在 guest 的常規記憶體裡找據點表，回傳 (linear, 掃過的 bytes)。
 
-    一次讀 4 KB，640 KB 共 160 次請求。**找不到要能跟「沒跑到」分開**，
-    所以最後印掃了幾個 byte。
+    ⚠ **不能拿劇本檔的原始 bytes 當簽章。** 遊戲一跑起來，上昇值、防災值、
+    城兵、所屬、+0x14／+0x18 全都在變，整段比對必然落空——第一版就是這樣
+    在遊戲跑了三分鐘之後回「沒找到」，而表明明就在那裡。
+
+    改用**執行期不會變的欄位**：X 與 Y（`+0x08`／`+0x0A`）。
+    連續 16 筆的座標全中才算，等於 32 個 u16 同時對上，誤中機率可以忽略。
     """
-    needle = signature[:probe]
-    scanned = 0
+    want = []
+    for i in range(16):
+        r = signature[i * CITY_SIZE:(i + 1) * CITY_SIZE]
+        want.append((r[8] | (r[9] << 8), r[10] | (r[11] << 8)))
+
+    mem = bytearray()
     for base in range(0, 0xA0000, 0x1000):
-        seg, off = base >> 4, 0
         try:
-            chunk = bridge.read(seg, off, 0x1000 + probe)
+            mem += bridge.read(base >> 4, 0, 0x1000)
         except Exception as e:
             if "DEBUGGER_NOT_STOPPED" in str(e):
                 raise RuntimeError(
                     "除錯器沒有停住——先送 execution.pause。"
-                    "（沒有這一句，掃描會安靜地全部落空，看起來像「表不在記憶體裡」）")
-            continue
-        scanned += len(chunk)
-        idx = chunk.find(needle)
-        if idx >= 0:
-            linear = base + idx
-            return linear, scanned
-    return None, scanned
+                    "（沒有這一句，掃描會安靜地全部落空，"
+                    "看起來像「表不在記憶體裡」）")
+            mem += b"\x00" * 0x1000
+
+    need = 16 * CITY_SIZE
+    for off in range(0, len(mem) - need, 2):
+        hit = True
+        for k, (wx, wy) in enumerate(want):
+            b0 = off + k * CITY_SIZE
+            if (mem[b0 + 8] | (mem[b0 + 9] << 8)) != wx or \
+               (mem[b0 + 10] | (mem[b0 + 11] << 8)) != wy:
+                hit = False
+                break
+        if hit:
+            return off, len(mem)
+    return None, len(mem)
 
 
 def sample(bridge, linear):
@@ -161,11 +176,11 @@ def main():
               % (linear, linear >> 4, linear & 0x0F, scanned))
     elif cmd == "sample":
         sample(b, int(sys.argv[2], 16))
+    elif cmd == "verify":
+        return 0 if verify(b, int(sys.argv[2], 16)) else 2
     return 0
 
 
-if __name__ == "__main__":
-    sys.exit(main())
 
 # `sample` 的欄位分佈快照。**零值要能跟「前提沒滿足」分開**：
 # 開局沒有任何軍團，+0x18 與 +0x14 一定全 0，這時「相符」不構成證據。
@@ -173,3 +188,100 @@ def histogram(cities, off, label):
     from collections import Counter
     h = Counter(c[off] for c in cities)
     print("%s（+0x%02X）：%s" % (label, off, dict(sorted(h.items()))))
+
+
+CORPS_BASE_IN_SEG = 0x2240   # 軍團表：127 × 64 B
+CITY_BASE_IN_SEG = 0x0840    # 據點表：192 × 32 B
+CORPS_SIZE, NUM_CORPS = 64, 127
+FRIEND_BASE_IN_SEG = 0x0600  # 交友度表：22 列 × 24 B
+FRIEND_STRIDE, NEUTRAL, PEACE_BIT = 24, 0x18, 0x80
+
+
+def read_block(bridge, linear, length):
+    out = b""
+    cur = linear
+    while length > 0:
+        n = min(0x1000, length)
+        out += bridge.read(cur >> 4, cur & 0x0F, n)
+        cur += n
+        length -= n
+    return out
+
+
+def verify(bridge, city_linear):
+    """拿軍團表對據點的 +0x18／+0x14，補上 §4.2 缺的那兩條證據。
+
+    段基址由據點表反推：`ds` 基底 ＝ 據點表 linear − 0x840。
+    軍團表在同一段的 0x2240（`docs/re/44`）。**這是資料段的版面，
+    不是程式碼位址**，所以不算跨版本外推——而且下面會自己驗：
+    軍團記錄要嘛全零、要嘛欄位落在合理範圍，兩者都不成立就表示推錯了。
+    """
+    seg_base = city_linear - CITY_BASE_IN_SEG
+    cities = [read_block(bridge, city_linear, NUM_CITIES * CITY_SIZE)
+              [i * CITY_SIZE:(i + 1) * CITY_SIZE] for i in range(NUM_CITIES)]
+    craw = read_block(bridge, seg_base + CORPS_BASE_IN_SEG, NUM_CORPS * CORPS_SIZE)
+    corps = [craw[i * CORPS_SIZE:(i + 1) * CORPS_SIZE] for i in range(NUM_CORPS)]
+
+    friend = read_block(bridge, seg_base + FRIEND_BASE_IN_SEG, 22 * FRIEND_STRIDE)
+    alive = [c for c in corps if c[0x00] >= 0x80]
+    print("活著的軍團：%d 支" % len(alive))
+    if not alive:
+        print("⚠ 一支軍團都沒有——這一輪驗不了 +0x18／+0x14。"
+              "**全 0 相符不構成證據**，先讓遊戲跑到有軍團在動。")
+        return False
+    for c in alive[:5]:
+        print("   勢力 %2d  座標 (%3d,%3d)  節點 %3d  兵力 %5d"
+              % (c[0x01], c[0x10] | (c[0x11] << 8), c[0x12] | (c[0x13] << 8),
+                 (c[0x0E] | (c[0x0F] << 8)) // 8, c[0x04] | (c[0x05] << 8)))
+
+    occ = {}
+    for c in alive:
+        occ[(c[0x10] | (c[0x11] << 8), c[0x12] | (c[0x13] << 8))] = \
+            occ.get((c[0x10] | (c[0x11] << 8), c[0x12] | (c[0x13] << 8)), 0) + 1
+
+    bad18 = bad14 = 0
+    nonzero18 = nonzero14 = 0
+    for i, c in enumerate(cities):
+        x = c[0x08] | (c[0x09] << 8)
+        y = c[0x0A] | (c[0x0B] << 8)
+        want18 = occ.get((x, y), 0)
+        if c[0x18] != want18:
+            bad18 += 1
+            if bad18 <= 5:
+                print("  據點 %3d：+0x18 ＝ %d，實際站著 %d 支"
+                      % (i, c[0x18], want18))
+        nonzero18 += c[0x18] != 0
+        owner = c[0x01]
+        # 中立據點根本不做威脅判斷——`sub_13EFD` 的
+        # `cmp byte [si+841h], 18h / jz` 直接跳過 `sub_13F74`，
+        # 所以它們的 +0x14 永遠是 0。驗證器不跳過的話，
+        # 這幾筆會變成穩定的假不符（實測就是最後剩下的那四筆）。
+        if owner == NEUTRAL:
+            continue
+        # ⚠ 威脅量不是「所有非我方鄰居」的和。`sub_13FA9` 有兩道濾網，
+        # 第一版的驗證器沒照抄，於是穩定出現「算出來 1、實際 0」的假不符：
+        #   中立（0x18）不算威脅——原版是 `jz` 跳過累加那一段
+        #   交友度 bit 7 ＝ 和平 → 不算威脅
+        want14 = 0
+        for n in c[0x1C:0x20]:
+            if n >= NUM_CITIES:
+                continue
+            no = cities[n][0x01]
+            if no == owner or no == NEUTRAL:
+                continue
+            if owner < 22 and no < 22 and friend[owner * FRIEND_STRIDE + no] & PEACE_BIT:
+                continue
+            want14 += cities[n][0x18]
+        if c[0x14] != min(want14, 255):
+            bad14 += 1
+            if bad14 <= 5:
+                print("  據點 %3d：+0x14 ＝ %d，由鄰居算出來是 %d"
+                      % (i, c[0x14], want14))
+        nonzero14 += c[0x14] != 0
+    print("+0x18 不符：%d / %d（非零的有 %d 筆）" % (bad18, NUM_CITIES, nonzero18))
+    print("+0x14 不符：%d / %d（非零的有 %d 筆）" % (bad14, NUM_CITIES, nonzero14))
+    return bad18 == 0 and bad14 == 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

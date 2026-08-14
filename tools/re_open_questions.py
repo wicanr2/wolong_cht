@@ -68,6 +68,9 @@ TAIL = re.compile(r"(未解|未定案|仍未解|待驗|未驗|未定位)[。，�
 # 談「未解」這件事本身，不是一條缺口
 META = re.compile(r"「未解」|未解表|未解的表|見下方|見上方|見 §|參見")
 SENT = re.compile(r"[^。\n]+[。]?")
+# 原文裡的相對連結搬進這一份就會指錯地方（`../playtest/18` 從 docs/re/ 出發
+# 才成立）。每一列本來就標了出處，連結留著只會讓連結檢查失敗——拆成純文字。
+MDLINK = re.compile(r"\[([^\]]*)\]\([^)]*\)")
 SOLVED = re.compile(r"✅|已解|已定案")
 STRUCK = re.compile(r"^~~")
 SEP = re.compile(r"^\|[\s:|-]+\|$")
@@ -83,7 +86,6 @@ VERDICT = (
     (re.compile(r"實測|實跑|跑起來|畫出來|oracle|DOSBox|截圖"), "實測"),
     (re.compile(r"兩版|PC-98 對照"), "兩版對照"),
 )
-BLOCKED = re.compile(r"防拷|密碼畫面")
 
 DOMAIN = (
     ("docs/mechanics/", "規則正確性"),
@@ -232,7 +234,6 @@ def main():
                 "section": section,
                 "domain": domain_of(rel),
                 "verdict": verdict_of(item + " " + status),
-                "blocked": bool(BLOCKED.search(item + " " + status)),
             })
 
     out = sys.stdout
@@ -263,14 +264,10 @@ def main():
             continue
         c = lambda v: sum(1 for r in sel if r["verdict"] == v)
         w(f"| {dom} | {len(sel)} | {c('靜態')} | {c('實測')} | {c('兩版對照')} |\n")
-    nb = sum(1 for r in rows if r["blocked"])
     w(f"| **合計** | **{len(rows)}** | "
       f"{sum(1 for r in rows if r['verdict']=='靜態')} | "
       f"{sum(1 for r in rows if r['verdict']=='實測')} | "
       f"{sum(1 for r in rows if r['verdict']=='兩版對照')} |\n\n")
-    if nb:
-        w(f"其中 **{nb} 條明講被防拷擋著**——那條路沒通之前，"
-          "它們不會因為多讀組語而前進。\n\n")
 
     for dom in order:
         sel = [r for r in rows if r["domain"] == dom]
@@ -280,11 +277,12 @@ def main():
         w("| 出處 | 缺口 | 現況 | 裁決 |\n|---|---|---|---|\n")
         for r in sorted(sel, key=lambda r: (r["file"], r["section"])):
             link = "../" + r["file"][len("docs/"):]
-            v = r["verdict"] + ("・**防拷擋著**" if r["blocked"] else "")
-            st = r["status"].replace("\n", " ")
+            v = r["verdict"]
+            item = MDLINK.sub(r"\1", r["item"])
+            st = MDLINK.sub(r"\1", r["status"]).replace("\n", " ")
             if len(st) > 160:
                 st = st[:157] + "…"
-            w(f"| [`{r['file'][len('docs/'):]}`]({link}) | {r['item']} | {st} | {v} |\n")
+            w(f"| [`{r['file'][len('docs/'):]}`]({link}) | {item} | {st} | {v} |\n")
         w("\n")
 
     w("## 3. 這支工具的盲區\n\n")
