@@ -313,8 +313,8 @@
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 據點換手之後遮罩會不會跟著變 | `sub_1890A` 的行為，靜態讀得出來，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 松崗 DOS/V 側 | 這套 bridge 還沒在 DOS/V 上跑過。**密碼頁不構成阻礙**（四格留白按「確定」即可通過，`18`）——是還沒做 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 上游授權 | `DOSBox-X-MCP-Debugger` 的原創碼**尚未選定授權條款**（README 明講是刻意留白）。本專案只在本機使用，未再散布 | 實測 |
-| [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 原版「四窗全開」的截圖 | PC-98 上左鍵點那四個開關**沒有反應**（`../re/47` §6），原因未定 | 實測 |
-| [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 松崗 DOS/V 側的主畫面 | 開新遊戲流程停在「決定」按鈕不回應（`tools/dosv_live_capture.sh`）。密碼頁不是障礙（`18`） | 靜態 |
+| [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 原版「四窗全開」的截圖 | **主畫面在模擬器上收不到任何點擊**，不只是開關——鑑別測試見下 | 實測 |
+| [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 松崗 DOS/V 側的主畫面 | 開新遊戲流程停在「確定」按鈕不回應。座標已照 PC-98 換算（Y ＋40）重試，仍不動；密碼頁不是障礙（`18`） | 靜態 |
 | [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 同版本同調色盤的對拍 | 上面兩項任一個通了就能做。**在那之前 `banner` 的 49.6% 不代表 remake 有錯** | 靜態 |
 | [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 各視窗內部排版 | 頭像、信賴度列、資金／預備兵三行仍是影片估值，沒有機器碼證據 | 靜態 |
 
