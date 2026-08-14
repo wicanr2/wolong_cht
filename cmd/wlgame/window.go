@@ -200,13 +200,16 @@ func (g *game) updateListUI() {
 }
 
 // 四個視窗的位置與大小。都對齊 8 px，不然外框會切在半塊上。
+//
+// 系統視窗是**原版數值**：`sub_160CC` → `sub_1895D(bx=5, dx=0x0D, cx=0x0C0D)`，
+// 換算後 (208, 112, 208, 192)（docs/re/47 §4）。先前的 114/194 是從影片量的。
 var windowRect = [numWindows]struct{ X, Y, W, H int }{
-	winCommand: {208, 114, 208, 194},
+	winCommand: {208, 112, 208, 192},
 	winFaction: {168, 48, 240, 264},
 	// 縮小地圖底圖是 192×128，加上兩側各 8 px 外框與一列標題正好 208×176。
 	// 視窗小於底圖的話圖會蓋掉右邊與下邊的框——那個錯只有截圖看得出來。
 	winMinimap: {archorRight(208), 48, 208, 176},
-	winSystem:  {208, 114, 208, 194},
+	winSystem:  {208, 112, 208, 192},
 }
 
 // commandMenu 是原版命令視窗的八組指令（說明書 §3.2、§3.3，

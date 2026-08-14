@@ -13,15 +13,21 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
-// DOS/V 自然策略畫面的固定骨架。影片 oracle 與說明書主畫面圖都對應：
-// 橫幅下先有一列命令，再把右側 208 px 留給縮小地圖／自勢力情報；大地圖
-// 因而是左側 27×21 格。這不是把模態視窗硬貼到地圖上，而是主畫面的
-// resident HUD；命令／列表等暫存視窗仍由 window.go 疊在它上面。
+// DOS/V 自然策略畫面的固定骨架。**每一個數字都出自機器碼**
+// （`docs/spec/12-strategy-chrome.md` §1，來源 `docs/re/47`）：
+//
+//	橫幅        (0,   0, 640,  32)   sub_18755 的熱區 6
+//	命令        (0,  32, 432,  32)   sub_1614A → sub_1895D(cx=0x021B)
+//	縮小地圖    (432, 32, 208, 160)  sub_15A3A → sub_1895D(cx=0x0A0D)
+//	自勢力情報  (432,192, 208, 208)  sub_15E2D → sub_1895D(cx=0x0D0D)
+//
+// 右欄三段相加 32 + 160 + 208 = 400，剛好鋪滿畫面高度——這是「矩形讀對了」
+// 的算術檢查。原版四個視窗可以逐個開關，remake 目前固定顯示（spec §7）。
 const (
 	strategyCommandY          = bannerH
 	strategyCommandH          = 32
 	strategyMapY              = strategyCommandY + strategyCommandH
-	strategySidebarW          = 208 // 192 px minimap + 8 px 內縮與兩側 8 px 外框
+	strategySidebarW          = 208 // sub_1895D 的 cx 低 byte 0x0D → 13 × 16
 	strategySidebarX          = screenW - strategySidebarW
 	strategyMapW              = strategySidebarX
 	strategyMapH              = screenH - strategyMapY
@@ -30,37 +36,41 @@ const (
 	strategyMinimapX          = strategySidebarInnerX
 	strategyMinimapY          = bannerH + chrome.Tile
 	strategyMinimapW          = strategySidebarW - 2*chrome.Tile
-	// 上方右欄的內框內容是 128 px minimap，再留一列 8 px 高的勢力色標。
-	// 下方情報框與上方框共用一條 8 px 分隔邊；不能把兩個 Window
-	// 背靠背畫成 16 px 的雙邊，否則君主頭像會比原版低一格。
-	strategyMinimapH       = 152
-	strategyMinimapLegendY = bannerH + strategyMinimapH - 2*chrome.Tile
+	// 縮小地圖視窗的內框是 192×144：上面 128 px 是地圖本體
+	// （熱區 0x16 ＝ (440,40,192,128)），下面 16 px 是勢力篩選列
+	// （熱區 0x17 ＝ (536,168,96,16)，只有右半格可點）。
+	strategyMinimapH       = 160
+	strategyMinimapImageH  = 128
+	strategyMinimapLegendY = strategyMinimapY + strategyMinimapImageH
 	strategyMinimapSwatchY = strategyMinimapLegendY + 4
-	strategyFactionY       = bannerH + strategyMinimapH - chrome.Tile
+	strategyFactionY       = bannerH + strategyMinimapH
 	strategyFactionH       = screenH - strategyFactionY
 	strategyFactionInnerY  = strategyFactionY + chrome.Tile
 	strategyFactionInnerW  = strategySidebarW - 2*chrome.Tile
 
-	// 命令列的版面是**從原版讀出來的**，不是從影片量的（docs/re/46 §1）：
+	// 命令列的版面是**從原版讀出來的**，不是從影片量的（docs/re/47 §4.1）：
 	//
 	//	sub_1614A: sub_106F5(si = cs:6181h, bx = 0x28, dx = 8, ax = 0x0F01)
 	//	           sub_1E3D7(al = 0x0C, bx = 0x28, dx = 0x18, cx = 0x0230)
+	//
+	// **`dx` 是 X、`bx` 是 Y**（`sub_1F6DC` 每畫一個字就 `add dx, di`），
+	// 所以字串起點是 X=8、Y=40，熱區是 (24, 40, 384, 16)。
 	//
 	// `cs:6181h` 是**一整串**，不是八個標籤：
 	//
 	//	「　 進言　人事　財政　編成　軍團　據點　武將　勢力 　」
 	//	  ↑全形 ↑半形      ↑ 兩個字之間沒有空格，詞與詞之間才有一個全形空格
 	//
-	// 所以節距是 32（兩個全形字）＋ 16（一個全形空格）＝ **48**，
-	// 起點 40 ＋ 24（開頭的全形＋半形空格）＝ 第一個字在 **64**。
-	// 驗算：64 + 8×32 + 7×16 = 432，與框寬（cx=0x021B → 432×32）完全相符。
-	strategyCommandX     = 0x28
+	// 節距 ＝ 32（兩個全形字）＋ 16（一個全形空格）＝ **48**，
+	// 第一個字在 8 ＋ 24 ＝ **32**。驗算尾端：8 + 24 + 8×32 + 7×16 + 24 = 424，
+	// 落在框寬 432 之內；起點若讀成 40 會算到 456 而溢出框外。
+	strategyCommandX     = 8
 	strategyCommandLead  = 24 // 開頭的全形空格 ＋ 半形空格
 	strategyCommandCellW = 48
 	strategyCommandTextW = 32
-	// 命令列內容區是 8 個 52 px cell；左右各留 2 px，讓 cell 之間的
-	// 4 px gap 與外框不會誤觸。Y 只命中 16 px 內容區，不命中上下外框。
-	strategyCommandHitInset    = 2
+	// 命中判定照原版的 sub_161CA：索引 ＝ (x − 24) ÷ 48，
+	// 所以第 n 格是 [24 + 48n, 72 + 48n)，Y 只命中 40–56 的文字列。
+	strategyCommandHitX        = 24
 	strategyCommandHitY        = strategyCommandY + chrome.Tile
 	strategyCommandHitH        = strategyCommandH - 2*chrome.Tile
 	strategyInfoYOffset        = 24
@@ -118,13 +128,17 @@ var naturalCommandActions = [...]func(*game){
 }
 
 // strategyCommandCellRect 是自然策略頂端命令列的純幾何契約。
-// 不讀 game、不讀輸入狀態；外框、cell gap、地圖與右側 HUD 都不在矩形內。
+// 不讀 game、不讀輸入狀態；外框、地圖與右側 HUD 都不在矩形內。
+//
+// 分格照原版 `sub_161CA` 的 `索引 ＝ (x − 24) ÷ 48`：**格與格之間沒有間隙**，
+// 24–408 這一段每一個像素都屬於某一格。原版另外用 40 px 寬畫高亮，
+// 那是視覺不是命中範圍——照高亮寬度做命中會在每一格右緣留 8 px 死區。
 func strategyCommandCellRect(index int) image.Rectangle {
 	if index < 0 || index >= len(naturalCommandLabels) {
 		return image.Rectangle{}
 	}
-	x := strategyCommandX + index*strategyCommandCellW + strategyCommandHitInset
-	return image.Rect(x, strategyCommandHitY, x+strategyCommandCellW-2*strategyCommandHitInset,
+	x := strategyCommandHitX + index*strategyCommandCellW
+	return image.Rect(x, strategyCommandHitY, x+strategyCommandCellW,
 		strategyCommandHitY+strategyCommandHitH)
 }
 

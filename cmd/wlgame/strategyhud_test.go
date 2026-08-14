@@ -7,8 +7,9 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
-// DOS/V YouTube oracle 的自然策略常駐骨架：640×400、32 px banner、
-// 左側 432×336 地圖、右側 208 px；上方 minimap 與下方情報框共用分隔邊。
+// 自然策略常駐骨架，數值全部出自機器碼（docs/spec/12 §1、docs/re/47）：
+// 640×400、32 px 橫幅、命令 (0,32,432,32)、縮小地圖 (432,32,208,160)、
+// 自勢力情報 (432,192,208,208)、地圖 (0,64,432,336)。
 func TestDOSVNaturalStrategySkeleton(t *testing.T) {
 	checks := []struct {
 		name string
@@ -25,29 +26,44 @@ func TestDOSVNaturalStrategySkeleton(t *testing.T) {
 		{"map height", strategyMapH, 336},
 		{"sidebar x", strategySidebarX, 432},
 		{"sidebar width", strategySidebarW, 208},
-		{"minimap height", strategyMinimapH, 152},
+		{"minimap height", strategyMinimapH, 160},
 		{"minimap legend y", strategyMinimapLegendY, 168},
 		{"minimap swatch y", strategyMinimapSwatchY, 172},
-		{"faction y", strategyFactionY, 176},
-		{"faction height", strategyFactionH, 224},
+		{"faction y", strategyFactionY, 192},
+		{"faction height", strategyFactionH, 208},
+		{"command text x", strategyCommandX + strategyCommandLead, 32},
+		{"command hit x", strategyCommandHitX, 24},
 	}
 	for _, check := range checks {
 		if check.got != check.want {
 			t.Errorf("%s = %d，want %d", check.name, check.got, check.want)
 		}
 	}
-	if got := strategyFactionY + strategyFactionH; got != screenH {
-		t.Fatalf("右欄下方情報框未貼齊畫布底部：y+h=%d，want %d", got, screenH)
+	// 右欄三段相加剛好鋪滿畫面高度，是「矩形讀對了」的算術檢查。
+	if got := bannerH + strategyMinimapH + strategyFactionH; got != screenH {
+		t.Fatalf("右欄三段相加 = %d，want %d", got, screenH)
 	}
-	if got := strategyMinimapLegendY + textdraw.GlyphH; got > strategyFactionY+chrome.Tile {
-		t.Fatalf("minimap 色標越過共用分隔邊：end=%d，shared edge end=%d", got, strategyFactionY+chrome.Tile)
+	if got := strategyMinimapLegendY + textdraw.GlyphH; got > strategyFactionY-chrome.Tile {
+		t.Fatalf("minimap 色標越過視窗下緣：end=%d，內框下緣=%d", got, strategyFactionY-chrome.Tile)
 	}
 	if strategySidebarInnerX != 440 || strategyMinimapY != 40 || strategyMinimapW != 192 {
 		t.Fatalf("DOS/V minimap 內框 = x%d y%d w%d，want x440 y40 w192",
 			strategySidebarInnerX, strategyMinimapY, strategyMinimapW)
 	}
-	if strategyFactionInnerY != 184 || strategyFactionInnerW != 192 {
-		t.Fatalf("DOS/V 情報內框 = y%d w%d，want y184 w192", strategyFactionInnerY, strategyFactionInnerW)
+	if strategyFactionInnerY != 200 || strategyFactionInnerW != 192 {
+		t.Fatalf("DOS/V 情報內框 = y%d w%d，want y200 w192", strategyFactionInnerY, strategyFactionInnerW)
+	}
+	// 命令列的八個字與尾端空白要落在 432 的框寬內（docs/re/47 §4.1）。
+	if end := strategyCommandX + strategyCommandLead + 8*strategyCommandTextW +
+		7*(strategyCommandCellW-strategyCommandTextW) + 24; end > strategyMapW {
+		t.Fatalf("命令列字串尾端 = %d，超出框寬 %d", end, strategyMapW)
+	}
+	// 熱區照 sub_1E3D7(al=0x0C, X=24, Y=40, 384×16)。
+	if r := strategyCommandCellRect(0); r.Min.X != 24 || r.Min.Y != 40 || r.Dy() != 16 {
+		t.Fatalf("命令列第一格 = %v，want x24 y40 h16", r)
+	}
+	if r := strategyCommandCellRect(7); r.Max.X != 24+384 {
+		t.Fatalf("命令列最後一格右緣 = %d，want %d", r.Max.X, 24+384)
 	}
 	if strategyInfoYOffset != 24 || strategyInfoRowStep != 17 || strategyInfoDividerXOffset != 120 ||
 		strategyInfoDividerH != 48 || strategyTrustYOffset != 88 || strategyResourceDividerY != 120 ||
@@ -59,20 +75,19 @@ func TestDOSVNaturalStrategySkeleton(t *testing.T) {
 func TestDOSVNaturalStrategyTextContainment(t *testing.T) {
 	// 這些是 active 8/16 px bitmap 字寬的 containment 測試，不是新增的原版數值證據。
 	//
-	// 命令列那一項**是**原版數值：`cs:6181h` 的詞是兩個全形字（32 px），
-	// 節距 48 px（詞 32 ＋ 一個全形空格 16）。先前的 48/52 是照影片猜的，
-	// 那讓八個詞累積偏移，畫面上看起來像被切錯位（docs/re/46 §1）。
+	// 命令列那一項**是**原版數值：`sub_106F5(dx=8, bx=0x28)` → X=8、Y=40，
+	// `cs:6181h` 的詞是兩個全形字（32 px），節距 48（詞 32 ＋ 全形空格 16）。
 	if strategyCommandTextW != 32 || strategyCommandCellW != 48 ||
-		strategyCommandX != 0x28 || strategyCommandLead != 24 ||
+		strategyCommandX != 8 || strategyCommandLead != 24 ||
 		strategyInfoValueW != 72 {
-		t.Fatalf("命令列版面 = x%d lead%d cell%d text%d／info %d，want 40/24/48/32/72",
+		t.Fatalf("命令列版面 = x%d lead%d cell%d text%d／info %d，want 8/24/48/32/72",
 			strategyCommandX, strategyCommandLead, strategyCommandCellW,
 			strategyCommandTextW, strategyInfoValueW)
 	}
-	// 八個詞的右緣要落在框寬 432 內（框由 sub_1895D 的 cx=0x021B 決定）。
+	// 第八個詞的右緣，以及尾端「 　」之後的位置，都要在框寬 432 內。
 	if right := strategyCommandX + strategyCommandLead +
-		7*strategyCommandCellW + strategyCommandTextW; right != 432 {
-		t.Fatalf("命令列右緣 = %d，want 432（與原版框寬相同）", right)
+		7*strategyCommandCellW + strategyCommandTextW; right != 400 {
+		t.Fatalf("第八個詞右緣 = %d，want 400", right)
 	}
 	if strategyNumberSlots != 5 || strategyNumberW != 40 || strategyNumberXOffset != 160 {
 		t.Fatalf("數字欄 = slots %d width %d x-offset %d，want 5/40/160",

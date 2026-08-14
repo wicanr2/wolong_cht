@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 60 | 59 | 1 | 0 |
 | 資料保存 | 43 | 43 | 0 | 0 |
-| 程式碼理解 | 154 | 149 | 5 | 0 |
-| 驗收 | 6 | 5 | 1 | 0 |
+| 程式碼理解 | 159 | 153 | 6 | 0 |
+| 驗收 | 10 | 8 | 2 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
 | 其他 | 22 | 21 | 1 | 0 |
-| **合計** | **303** | 294 | 8 | 1 |
+| **合計** | **312** | 301 | 10 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -139,7 +139,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（154 條）
+## 2.3 程式碼理解（159 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -297,8 +297,13 @@
 | [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | `cs:word_10D4A` 指向段 3 的哪個位移 | §3 的對應是**由四個 si 與 §5.4 的內容互相印證**得出的強證據；載入端沒讀，沒有直接證據 | 靜態 |
 | [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | 樣式碼 | 只確定 `0` ＝ 擦除、`0x0B` ＝ 指令列、`0x0C`／`0x0F` 出現在別處；完整值域未列 | 靜態 |
 | [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | `ax = 0F01h`／`0801h` | 顏色／樣式的位元編碼未逐位對過 | 靜態 |
+| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 熱區 5（x 464–496） | 登記了，`off_159D2` 對應 `nullsub_1`。是保留槽還是別處會改寫這一格，未讀 | 靜態 |
+| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 各視窗內部的像素排版 | 本篇只解到「框的矩形」。頭像位置、信賴度列、資金／預備兵三行的座標未讀 | 靜態 |
+| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | `funcs_159C0` 的五筆內容 | 只確認是「擦除」對應表（`sub_1895D` 樣式 0），逐筆未 dump | 靜態 |
+| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 開關圖示的圖形來源 | 五格 32×32 的圖從哪個圖庫來未讀 | 靜態 |
+| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 原版執行期驗證 | **未做**。PC-98 oracle 上左鍵點這五格沒有反應（§6），原因未定 | 實測 |
 
-## 2.4 驗收（6 條）
+## 2.4 驗收（10 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -308,6 +313,10 @@
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 據點換手之後遮罩會不會跟著變 | `sub_1890A` 的行為，靜態讀得出來，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 松崗 DOS/V 側 | 這套 bridge 還沒在 DOS/V 上跑過。**密碼頁不構成阻礙**（四格留白按「確定」即可通過，`18`）——是還沒做 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 上游授權 | `DOSBox-X-MCP-Debugger` 的原創碼**尚未選定授權條款**（README 明講是刻意留白）。本專案只在本機使用，未再散布 | 實測 |
+| [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 原版「四窗全開」的截圖 | PC-98 上左鍵點那四個開關**沒有反應**（`../re/47` §6），原因未定 | 實測 |
+| [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 松崗 DOS/V 側的主畫面 | 開新遊戲流程停在「決定」按鈕不回應（`tools/dosv_live_capture.sh`）。密碼頁不是障礙（`18`） | 靜態 |
+| [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 同版本同調色盤的對拍 | 上面兩項任一個通了就能做。**在那之前 `banner` 的 49.6% 不代表 remake 有錯** | 靜態 |
+| [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 各視窗內部排版 | 頭像、信賴度列、資金／預備兵三行仍是影片估值，沒有機器碼證據 | 靜態 |
 
 ## 2.5 外部資料（18 條）
 
@@ -348,14 +357,14 @@
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 玩家據點求援的喇叭聲（`sub_10CDE`） | 呈現層未接 | 靜態 |
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | `資金高位 >= 0x80` 那一支 | `cmp bh, 80h / jnb` 會直接算「答應」，等於資金超過約 840 萬時門檻失效。**看起來像有號數的邊界處理**，未逐位對過 | 靜態 |
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | 君主出陣之後的行為 | 那支軍團跟一般軍團有沒有差別，未讀 | 靜態 |
-| [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | **右欄**版面常數對不對 | 影片來源，**沒有對過原版執行期畫面**——這是主畫面 parity 的下一步。指令列已由 §1.1 解決 | 靜態 |
+| [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | **四個視窗的開關** | remake 固定顯示四個視窗，原版可以逐個開關。這是**未實作**，不是 remake 差異——實作前要先決定關掉時大地圖怎麼放大 | 靜態 |
+| [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 各視窗內部排版 | 頭像、信賴度列、資金／預備兵三行的座標**沒有機器碼證據**，目前沿用影片估值 | 靜態 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 勢力色標 | 原版怎麼畫未讀（`sub_15CE0` 是小地圖的四色點，不是這一列） | 靜態 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | `cs:word_1D84E` 每格 8 bytes | 內容意義未讀，消費端未找 | 靜態 |
-| [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | `cs:6181h` 的八個指令名 | 字串 bytes 未 dump | 靜態 |
-| [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝指令列 | 靜態 |
+| [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝命令、`0x0Bh`／`0x10h`／`0x15h`／`0x1Fh` 各自出現在哪個視窗已知，完整值域未列 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
-| [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | `banner` 高度與右欄分界 | 沒有機器碼證據（§3） | 靜態 |
+| [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |
 

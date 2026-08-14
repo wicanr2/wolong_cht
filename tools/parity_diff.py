@@ -34,13 +34,15 @@ import struct
 import sys
 import zlib
 
-# 分區。座標 (x, y, w, h)，出自 docs/spec/90 §3。
+# 分區。座標 (x, y, w, h)，**每一個都出自機器碼**（docs/spec/12 §1）：
+# 橫幅是 sub_18755 的熱區 6，另外三個是各自的 sub_1895D 呼叫。
+# 右欄三段相加 32 + 160 + 208 = 400，剛好鋪滿畫面高度。
 REGIONS = [
-    ("banner", 0, 0, 640, 16),
-    ("command", 0, 16, 432, 32),
-    ("map", 0, 48, 432, 352),
-    ("minimap", 432, 16, 208, 144),
-    ("faction", 432, 160, 208, 240),
+    ("banner", 0, 0, 640, 32),
+    ("command", 0, 32, 432, 32),
+    ("map", 0, 64, 432, 336),
+    ("minimap", 432, 32, 208, 160),
+    ("faction", 432, 192, 208, 208),
 ]
 
 NEAR_RATIO = 0.005
@@ -49,28 +51,34 @@ NEAR_RATIO = 0.005
 def read_png(path):
     """回傳 (width, height, pixels)，pixels 是每點 (r, g, b) 的 list of rows。
 
-    只支援 8-bit 的 truecolor／truecolor+alpha／灰階，足夠處理截圖；
+    支援 8-bit 的灰階／truecolor／truecolor+alpha／**調色盤**。
+    調色盤那一項是必要的：兩邊的擷取管線對 16 色畫面都會輸出 color type 3，
+    少了它每一次對拍都要先手動轉檔，而「忘了轉」與「真的不一樣」看起來一樣。
     遇到別的格式**明確報錯**，不要猜著解——猜錯會產生看似合理的差分圖。
     """
     data = open(path, "rb").read()
     if data[:8] != b"\x89PNG\r\n\x1a\n":
         raise ValueError("%s 不是 PNG" % path)
-    pos, idat, w, h, depth, color = 8, [], 0, 0, 0, 0
+    pos, idat, w, h, depth, color, plte = 8, [], 0, 0, 0, 0, b""
     while pos < len(data):
         (length,) = struct.unpack(">I", data[pos:pos + 4])
         typ = data[pos + 4:pos + 8]
         body = data[pos + 8:pos + 8 + length]
         if typ == b"IHDR":
             w, h, depth, color = struct.unpack(">IIBB", body[:10])
+        elif typ == b"PLTE":
+            plte = body
         elif typ == b"IDAT":
             idat.append(body)
         elif typ == b"IEND":
             break
         pos += 12 + length
-    if depth != 8 or color not in (0, 2, 6):
-        raise ValueError("%s 是 depth=%d color=%d，這支工具只認 8-bit 灰階／RGB／RGBA"
+    if depth != 8 or color not in (0, 2, 3, 6):
+        raise ValueError("%s 是 depth=%d color=%d，這支工具只認 8-bit 灰階／RGB／RGBA／調色盤"
                          % (path, depth, color))
-    channels = {0: 1, 2: 3, 6: 4}[color]
+    if color == 3 and not plte:
+        raise ValueError("%s 是調色盤 PNG 卻沒有 PLTE" % path)
+    channels = {0: 1, 2: 3, 3: 1, 6: 4}[color]
     raw = zlib.decompress(b"".join(idat))
     stride = w * channels
     out, prev, p = [], bytearray(stride), 0
@@ -93,7 +101,9 @@ def read_png(path):
                 pr = a if (pa <= pb and pa <= pc) else (b if pb <= pc else c)
                 line[i] = (line[i] + pr) & 0xFF
         prev = line
-        if channels == 1:
+        if color == 3:
+            out.append([tuple(plte[3 * v:3 * v + 3]) for v in line])
+        elif channels == 1:
             out.append([(v, v, v) for v in line])
         else:
             out.append([tuple(line[i:i + 3]) for i in range(0, stride, channels)])

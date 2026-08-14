@@ -19,15 +19,15 @@ func TestNaturalCommandHitTestUsesOnlyInnerCells(t *testing.T) {
 		}
 	}
 
-	// 外框、上下留白、格間與地圖都不能命中。
+	// 原版的八格之間**沒有間隙**（索引 ＝ (x−24)÷48），所以這裡驗的是
+	// 左右兩端的邊界與上下留白，不是格間死區。
 	misses := []image.Point{
 		{X: 0, Y: strategyCommandY + strategyCommandH/2},
 		{X: strategyMapW - 1, Y: strategyCommandY + strategyCommandH/2},
 		{X: strategyCommandCellRect(0).Min.X - 1, Y: strategyCommandHitY + 4},
-		{X: strategyCommandCellRect(0).Max.X, Y: strategyCommandHitY + 4},
+		{X: strategyCommandCellRect(7).Max.X, Y: strategyCommandHitY + 4},
 		{X: strategyCommandCellRect(0).Min.X + 1, Y: strategyCommandHitY - 1},
 		{X: strategyCommandCellRect(0).Min.X + 1, Y: strategyCommandHitY + strategyCommandHitH},
-		{X: strategyCommandCellRect(0).Max.X + 2, Y: strategyCommandHitY + 4},
 		{X: strategyMapW / 2, Y: strategyMapY},
 		{X: strategySidebarX, Y: strategyCommandY + strategyCommandH/2},
 	}
