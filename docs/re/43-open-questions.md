@@ -21,12 +21,12 @@
 | 規則正確性 | 60 | 59 | 1 | 0 |
 | 資料保存 | 43 | 43 | 0 | 0 |
 | 程式碼理解 | 151 | 146 | 5 | 0 |
-| 驗收 | 3 | 3 | 0 | 0 |
+| 驗收 | 8 | 7 | 1 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
 | 其他 | 5 | 5 | 0 | 0 |
-| **合計** | **280** | 273 | 6 | 1 |
+| **合計** | **285** | 277 | 7 | 1 |
 
-其中 **2 條明講被防拷擋著**——那條路沒通之前，它們不會因為多讀組語而前進。
+其中 **3 條明講被防拷擋著**——那條路沒通之前，它們不會因為多讀組語而前進。
 
 ## 2.1 規則正確性（60 條）
 
@@ -297,13 +297,18 @@
 | [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `sub_1703C` | 選據點的那一支，未讀 | 靜態 |
 | [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `+0x23` 的其他值 | 只見過 0、1（`sub_16F26`）與 11 | 靜態 |
 
-## 2.4 驗收（3 條）
+## 2.4 驗收（8 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
 | [`playtest/10-event-message-modal.md`](../playtest/10-event-message-modal.md) | 直接證據為 `KI.EXE.asm` 的 IDA 線性位址 `0001237E`、`000134A6`、`000134B1`、 | （未解小節內文） | 靜態 |
 | [`playtest/14-m7-review.md`](../playtest/14-m7-review.md) | #195 | `3` / 4 / 10 / 1 / `嗯，現在的話，{3}\n也不至於拒絕。好，准\n許停戰！\n` / `sub_13C99` 的狀態值 1 直接取 #193–#195；此格需保留 `{3}`，重用目前 #193 的既有繁中譯文，避免另造未驗證句子。 | 靜態 |
 | [`playtest/17-expert-dosbox-remake.md`](../playtest/17-expert-dosbox-remake.md) | 松崗 DOS/V 原版 | **PASS（啟動至開場）** / 2026-08-12 證實空白確認／`0000`／`1234` 均越過密碼頁；完整自然長程驗證尚未執行 | 靜態 |
+| [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | `+0x18`／`+0x14` 的動態證據 | 要先把遊戲開到有軍團的狀態（§4.2） | 靜態 |
+| [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 據點換手之後遮罩會不會跟著變 | `sub_1890A` 的行為，靜態讀得出來，動態沒驗——要打下一座城才看得到 | 靜態 |
+| [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | MCP 那一層 | `.mcp.json` 已就位，但**要重啟 session 才載入**，本輪的取樣走的是 TCP 腳本 | 靜態 |
+| [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 松崗 DOS/V 側 | 防拷未解，這套工具在那一版上仍然用不了 | 靜態・**防拷擋著** |
+| [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 上游授權 | `DOSBox-X-MCP-Debugger` 的原創碼**尚未選定授權條款**（README 明講是刻意留白）。本專案只在本機使用，未再散布 | 實測 |
 
 ## 2.5 外部資料（18 條）
 
