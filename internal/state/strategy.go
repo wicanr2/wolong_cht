@@ -372,6 +372,8 @@ func (w *World) formAICorpsTo(faction, dest int) *StrategyEvent {
 	}
 	var c Corps
 	c.Alive, c.Faction, c.Morale = true, faction, f.MoraleBase
+	// AI 自己編的軍團預設是委任（`sub_16E8F` 的 `or [si], 4`）。
+	c.Delegated = true
 	c.Ordered = f.Capital
 	home := w.clampCity(f.Capital)
 	c.Node, c.X, c.Y = home, w.Cities[home].X, w.Cities[home].Y
@@ -569,12 +571,12 @@ func (w *World) dispatchGarrison(site, target, want, skip int, rng economy.Rand)
 	gs := make([]threat.Garrison, len(w.Corps))
 	for i := range w.Corps {
 		cp := &w.Corps[i]
-		// ⚠ 位元 2 的確切語意未解（docs/re/34 §2.2 只確定它由「下行軍指令」
-		// 與 AI 編成兩處設起）。這裡近似成「活著且屬於這個據點的勢力」，
-		// 差異記在 docs/re/44 §7，不要當成已經對齊。
+		// 位元 2 ＝「委任」（docs/re/45）：求援只調得動交給電腦指揮的軍團，
+		// 玩家自己指揮的不會被搶走。`+0x23 >= 8` 是待解體，也調不動。
 		gs[i] = threat.Garrison{
 			At:    cp.Node,
-			Ready: cp.Alive && cp.Faction == w.Cities[site].Owner,
+			Ready: cp.Alive && cp.Faction == w.Cities[site].Owner && cp.Delegated,
+			Stage: cp.Stage,
 		}
 		if !cp.Alive {
 			gs[i].At = -1

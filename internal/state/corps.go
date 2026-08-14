@@ -61,6 +61,21 @@ type Corps struct {
 	// 舊首都的改成新首都，但 +0x14 只在它等於新首都×8 時才改）。
 	// 合併成一個欄位會讓那一段自我抵銷。
 	Ordered int
+
+	// Delegated 是記錄 +0x00 的位元 2 ＝ **「委任」**（交給電腦指揮）。
+	//
+	// 玩家在軍團面板下完行軍目標之後，選單「戰鬥指揮／委任／解體」
+	// （TALK #76）決定它：選「戰鬥指揮」清掉、選「委任」設起。
+	// AI 自己編的軍團預設是委任（`sub_16E8F`），而**君主親征那一支會被清掉**
+	// （`sub_1699E` 編完立刻 `and [di], 0FBh`）。
+	//
+	// 求援只調得動委任中的軍團（`sub_14155` 的 `test byte [di], 4`）——
+	// **玩家自己指揮的軍團不會被 AI 搶走**。見 docs/re/45。
+	Delegated bool
+
+	// Stage 是記錄 +0x23。下完指令歸 0，選「解體」寫 11；
+	// 而求援要求 < 8，所以待解體的軍團調不動（docs/re/45 §3）。
+	Stage int
 }
 
 // ⚠ **行軍路線刻意不放在 Corps 裡**，放在 `World.routes`。
@@ -91,7 +106,9 @@ func (w *World) loadCorps(b []byte) {
 			TargetX:    u16(r, 0x16),
 			TargetY:    u16(r, 0x18),
 			Interval:   int(r[0x1E]),
-			Ordered:       int(r[0x20]),
+			Ordered:   int(r[0x20]),
+			Delegated: r[0x00]&0x04 != 0,
+			Stage:     int(r[0x23]),
 		}
 		for k := range c.Units {
 			s := r[unitSlotBase+k*unitSlotSize:]
@@ -110,6 +127,11 @@ func (w *World) saveCorps(b []byte) {
 			continue
 		}
 		r[0x00] = newCorps
+		if c.Delegated {
+			r[0x00] |= 0x04
+		} else {
+			r[0x00] &^= 0x04
+		}
 		r[0x01] = byte(c.Faction)
 		r[0x02] = byte(i)
 		putU16(r, 0x04, c.Men)
@@ -125,6 +147,7 @@ func (w *World) saveCorps(b []byte) {
 		putU16(r, 0x18, c.TargetY)
 		r[0x1E] = byte(c.Interval)
 		r[0x20] = byte(c.Ordered)
+		r[0x23] = byte(c.Stage)
 		for k, u := range c.Units {
 			s := r[unitSlotBase+k*unitSlotSize:]
 			s[1] = byte(u.Men)

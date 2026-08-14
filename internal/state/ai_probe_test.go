@@ -405,3 +405,47 @@ func TestPlayerCityAsksForRelief(t *testing.T) {
 		t.Fatalf("冷卻中還是又求援了：%+v", again)
 	}
 }
+
+// 求援只調得動「委任」中的軍團（原版 sub_14155 的 test byte [di],4）。
+// 玩家自己指揮的、以及等著解體的，都不該被調走。
+func TestReliefOnlyMovesDelegatedCorps(t *testing.T) {
+	w := load(t, 0)
+	site := 0
+	owner := w.Cities[site].Owner
+	if owner < 0 || owner >= numFactions {
+		t.Skip("第一個據點沒有勢力")
+	}
+	target := -1
+	for i := range w.Cities {
+		if i != site && w.Cities[i].Owner != owner {
+			target = i
+			break
+		}
+	}
+	if target < 0 {
+		t.Skip("找不到別的勢力的據點")
+	}
+	for i := range w.Corps {
+		w.Corps[i] = Corps{}
+	}
+	at := func(i int, delegated bool, stage int) {
+		w.Corps[i] = Corps{Alive: true, Faction: owner, Node: site,
+			X: w.Cities[site].X, Y: w.Cities[site].Y,
+			TargetNode: site, Delegated: delegated, Stage: stage}
+	}
+	at(0, false, 0) // 玩家自己指揮
+	at(1, true, 11) // 待解體
+	at(2, true, 0)  // 委任中 ✓
+
+	w.dispatchGarrison(site, target, 3, 0, rng.NewFixed(1))
+
+	if w.Corps[0].TargetNode != site {
+		t.Error("玩家自己指揮的軍團被調走了")
+	}
+	if w.Corps[1].TargetNode != site {
+		t.Error("等著解體的軍團被調走了")
+	}
+	if w.Corps[2].TargetNode == site {
+		t.Error("委任中的軍團沒有被調走")
+	}
+}
