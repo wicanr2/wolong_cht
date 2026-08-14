@@ -315,7 +315,14 @@ func (w *World) driftPlayerFriendship(player int, ordered []strategyai.Candidate
 // 分配、單槽上限 100」扣預備兵。它刻意不呼叫玩家 UI 的 FormCorps，因為
 // 玩家介面採固定 1,000 人一槽的現代輸入適配，而原版 AI 編成的預備兵尺度
 // 是 0–100 的軍團槽兵力。
+// formAICorps 編一支新軍團，目標由侵攻對象決定（原版的一般路徑）。
 func (w *World) formAICorps(faction int) *StrategyEvent {
+	return w.formAICorpsTo(faction, -1)
+}
+
+// formAICorpsTo 編一支新軍團。dest ≥ 0 時直接指定目標據點——
+// 求援走的就是這一條（原版 `sub_14575` 把 `ch` 寫進軍團 `+0x20`）。
+func (w *World) formAICorpsTo(faction, dest int) *StrategyEvent {
 	if faction < 0 || faction >= numFactions || faction == w.Player {
 		return nil
 	}
@@ -401,7 +408,10 @@ func (w *World) formAICorps(faction int) *StrategyEvent {
 	w.Generals[leader].Posted = true
 	f.Corps++
 
-	destination := w.nearestFactionCity(home, f.InvasionTarget)
+	destination := dest
+	if destination < 0 {
+		destination = w.nearestFactionCity(home, f.InvasionTarget)
+	}
 	if destination >= 0 {
 		_ = w.March(leader, destination)
 	}
@@ -486,20 +496,30 @@ func (w *World) occupancyAt(x, y int) int {
 
 // refreshCityThreat 重算一個據點的佔用數、敵方鄰接遮罩與威脅量
 // （原版 `sub_13EFD` 的佔用圖抄寫 ＋ `sub_13FA9`）。docs/re/44 §1–§2。
-func (w *World) refreshCityThreat(i int) {
+func (w *World) refreshCityThreat(i int, rng economy.Rand) []TalkNotice {
 	if i < 0 || i >= len(w.Cities) {
-		return
+		return nil
 	}
 	c := &w.Cities[i]
+	// 求援冷卻每輪 −1（原版 sub_13EFD 的第一件事）。
+	if c.ReliefCooldown > 0 {
+		c.ReliefCooldown--
+	}
+	// 據點易主時，原主的勢力記錄留下「被佔走的據點編號」。
+	if c.OwnerRecorded != c.Owner &&
+		c.OwnerRecorded >= 0 && c.OwnerRecorded < numFactions {
+		w.Factions[c.OwnerRecorded].LostSite = i
+	}
 	c.Occupancy = w.occupancyAt(c.X, c.Y)
 	ns := w.cityNeighbours(i)
 	c.Adjacency, c.EnemyNeighbours = threat.EnemyMask(c.Owner, ns)
 	if c.Owner == threat.Neutral || c.Owner < 0 || c.Owner >= numFactions {
 		c.Threat = 0
-		return
+		return nil
 	}
 	r := threat.Scan(c.Owner, w.invasionTarget(c.Owner), c.EnemyNeighbours, ns)
 	c.Threat = r.Level
+	return w.relieve(i, r, rng)
 }
 
 // invasionTarget 回傳勢力的侵攻目標，翻成規則層的哨兵值。
@@ -512,4 +532,91 @@ func (w *World) invasionTarget(faction int) int {
 		return threat.NoTarget
 	}
 	return t
+}
+
+// requestRelief 是據點求援（原版 `sub_140C9` ＋ `sub_140B3`，docs/re/40 §4）。
+//
+// 冷卻中就不重複求援。玩家的據點跳訊息 #38；AI 的據點直接編軍團過來，
+// 冷卻寫「離首都的距離」。兩條路最後都在勢力記錄留下求援的據點編號。
+func (w *World) requestRelief(site, want int, rng economy.Rand) []TalkNotice {
+	c := &w.Cities[site]
+	if c.ReliefCooldown != 0 {
+		return nil
+	}
+	f := &w.Factions[c.Owner]
+	var notices []TalkNotice
+	if c.Owner == w.Player {
+		notices = append(notices, TalkNotice{
+			Index: threat.ReliefMessage, City: site, Faction: c.Owner,
+		})
+		c.ReliefCooldown = threat.PlayerCooldown(rng.Next())
+	} else {
+		for n := threat.Budget(f.Funds, f.Corps); n > 0 && want > 0; n-- {
+			if w.formAICorpsTo(c.Owner, site) == nil {
+				break
+			}
+			want--
+		}
+		cap := w.clampCity(f.Capital)
+		c.ReliefCooldown = threat.AICooldown(c.X, c.Y, w.Cities[cap].X)
+	}
+	f.ReliefSite = site
+	return notices
+}
+
+// dispatchGarrison 把已經停在這個據點的軍團調去 target（原版 `sub_14155`）。
+func (w *World) dispatchGarrison(site, target, want, skip int, rng economy.Rand) {
+	gs := make([]threat.Garrison, len(w.Corps))
+	for i := range w.Corps {
+		cp := &w.Corps[i]
+		// ⚠ 位元 2 的確切語意未解（docs/re/34 §2.2 只確定它由「下行軍指令」
+		// 與 AI 編成兩處設起）。這裡近似成「活著且屬於這個據點的勢力」，
+		// 差異記在 docs/re/44 §7，不要當成已經對齊。
+		gs[i] = threat.Garrison{
+			At:    cp.Node,
+			Ready: cp.Alive && cp.Faction == w.Cities[site].Owner,
+		}
+		if !cp.Alive {
+			gs[i].At = -1
+		}
+	}
+	for _, i := range threat.Dispatch(gs, site, want, skip, func() int { return rng.Next() }) {
+		_ = w.March(i, target)
+	}
+}
+
+// relieve 跑一個據點的威脅反應（原版 `sub_13F74` → `sub_14028`／`sub_14057`）。
+//
+// 順序照抄：貼身威脅走立刻求援那條，其餘走機率路徑；機率路徑再依
+// 「這個據點站了幾支軍團」分成求援與派兵兩支。
+func (w *World) relieve(site int, r threat.Result, rng economy.Rand) []TalkNotice {
+	c := &w.Cities[site]
+	if !r.Threatened {
+		c.ReliefCooldown = 0
+		return nil
+	}
+	// sub_14028：有具體目標而且這一格沒有軍團 → 立刻求援一支。
+	if r.Specific && c.Occupancy == 0 {
+		return w.requestRelief(site, 1, rng)
+	}
+	// sub_14057：從最多四個威脅裡隨機挑一個。
+	if len(r.Targets) == 0 {
+		return nil
+	}
+	pick := r.Targets[rng.Next()&3%len(r.Targets)]
+	want := threat.Requested(c.Threat, c.Occupancy)
+	if c.Occupancy <= 1 {
+		// ⚠ 這一條**玩家的據點不走**（原版 `cmp cl, [si+841h] / jz 結束`）。
+		// 玩家只從上面那條貼身威脅的路徑收到求援訊息。
+		if want == 0 || c.Owner == w.Player {
+			return nil
+		}
+		return w.requestRelief(site, want, rng)
+	}
+	if want < 1 {
+		want = 1
+	}
+	w.dispatchGarrison(site, pick, want, c.Occupancy-want, rng)
+	c.ReliefCooldown = 0
+	return nil
 }

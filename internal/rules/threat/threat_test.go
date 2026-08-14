@@ -120,3 +120,66 @@ func TestEnemyMaskCountsOnlyForeignNeighbours(t *testing.T) {
 		t.Fatalf("mask ＝ %04b、count ＝ %d，期望 1010／2", mask, n)
 	}
 }
+
+func TestPlayerCooldownRange(t *testing.T) {
+	lo, hi := 0xFF, 0
+	for r := 0; r < 256; r++ {
+		v := PlayerCooldown(r)
+		if v < lo {
+			lo = v
+		}
+		if v > hi {
+			hi = v
+		}
+	}
+	if lo != 24 || hi != 39 {
+		t.Fatalf("玩家冷卻值域 ＝ %d–%d，期望 24–39", lo, hi)
+	}
+}
+
+// 距離算式的 Y 分量減的是首都的 X。這是原版行為（兩版 byte 相同），
+// 照抄不修正——所以這一條測的是「不對稱有沒有被好心改掉」。
+func TestAICooldownKeepsTheOriginalAsymmetry(t *testing.T) {
+	// 首都 X ＝ 100。據點 (100, 100)：對稱算式會得 0，原版也是 0。
+	if got := AICooldown(100, 100, 100); got != 0 {
+		t.Errorf("AICooldown(100,100,100) ＝ %d，期望 0", got)
+	}
+	// 據點 (100, 20)：|100−100| ＋ |20−100| ＝ 80 → 80÷8 ＝ 10。
+	// 若第二項改成減首都 Y，這個值就會不同——不對稱被改掉會在這裡爆。
+	if got := AICooldown(100, 20, 100); got != 10 {
+		t.Errorf("AICooldown(100,20,100) ＝ %d，期望 10", got)
+	}
+	// 上限 30
+	if got := AICooldown(370, 248, 4); got != 30 {
+		t.Errorf("遠距離沒有被夾到 30，得到 %d", got)
+	}
+}
+
+func TestDispatchOnlyTakesCorpsStandingAtTheSite(t *testing.T) {
+	gs := []Garrison{
+		{At: 9, Ready: true},          // 別的據點
+		{At: 5, Ready: true},          // ✓
+		{At: 5, Ready: false},         // 位元 2 沒設
+		{At: 5, Ready: true, Stage: 8}, // +0x23 到上限
+		{At: 5, Ready: true},          // ✓
+	}
+	got := Dispatch(gs, 5, 4, 0, func() int { return 0xFF })
+	want := []int{1, 4}
+	if len(got) != len(want) || got[0] != want[0] || got[1] != want[1] {
+		t.Fatalf("選出 %v，期望 %v", got, want)
+	}
+}
+
+// 還有跳過額度時，亂數 < 0x40 的那一支被跳過，而且**額度只在跳過時才減**。
+func TestDispatchSkipBudgetIsSpentOnlyWhenItSkips(t *testing.T) {
+	gs := []Garrison{{At: 5, Ready: true}, {At: 5, Ready: true}, {At: 5, Ready: true}}
+	rolls := []int{0x00, 0xFF, 0xFF} // 第一支被跳過，之後兩支都派
+	i := 0
+	got := Dispatch(gs, 5, 2, 1, func() int { r := rolls[i]; i++; return r })
+	if len(got) != 2 || got[0] != 1 || got[1] != 2 {
+		t.Fatalf("選出 %v，期望 [1 2]", got)
+	}
+	if i != 1 {
+		t.Fatalf("抽了 %d 次亂數，期望 1——額度用完之後不該再抽", i)
+	}
+}

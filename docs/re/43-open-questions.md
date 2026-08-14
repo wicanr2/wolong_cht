@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 60 | 59 | 1 | 0 |
 | 資料保存 | 43 | 43 | 0 | 0 |
-| 程式碼理解 | 149 | 144 | 5 | 0 |
+| 程式碼理解 | 150 | 145 | 5 | 0 |
 | 驗收 | 3 | 3 | 0 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
 | 其他 | 5 | 5 | 0 | 0 |
-| **合計** | **278** | 271 | 6 | 1 |
+| **合計** | **279** | 272 | 6 | 1 |
 
 其中 **2 條明講被防拷擋著**——那條路沒通之前，它們不會因為多讀組語而前進。
 
@@ -141,7 +141,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（149 條）
+## 2.3 程式碼理解（150 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -292,6 +292,7 @@
 | [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | `sub_16E8F` | AI 側的編成常式，只在 [`34`](34-corps-status-bits.md) 出現過 `or 4`，內部未讀 | 靜態 |
 | [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | 軍團 `+0x23` | 兩條派兵路徑都寫 0、`sub_16F26` 寫 1、`sub_14155` 要求 `< 8`。像是階段計數，語意未定 | 靜態 |
 | [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | 據點 `+0x00` 的 bit 4／5 | bit 6／7 是威脅旗標、低 4 位是敵方鄰居，中間兩位仍未見寫入端 | 靜態 |
+| [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | 軍團 `+0x00` 位元 2 | `sub_14155` 要求它設起才收新目標，而 [`34`](34-corps-status-bits.md) §2.2 只確定它由「下行軍指令」與 AI 編成兩處設起。remake 的 `dispatchGarrison` 目前近似成「活著且屬於該據點的勢力」，**這一項還沒對齊** | 靜態 |
 | [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | 勢力 `+0x17` 的讀取端 | 寫入端在 §1，誰讀它未找 | 靜態 |
 | [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | `+0x20` 與 `+0x14` 的張力 | `sub_14575` 與 `sub_14155` 都只寫 `+0x20`，[`40`](40-garrison-relief-request.md) §5 的張力還在 | 靜態 |
 

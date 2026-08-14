@@ -137,3 +137,74 @@ func EnemyMask(owner int, ns []Neighbour) (mask, count int) {
 	}
 	return mask, count
 }
+
+// ReliefMessage 是「{2}前來請求援軍。」的 TALK 索引（原版 `sub_18810` 的 `cx=26h`）。
+const ReliefMessage = 38
+
+// PlayerCooldown 是玩家的據點求援之後的冷卻：`亂數(0–15) ＋ 24`。
+// r 是原版 `sub_1ECE0` 回的那個 byte。
+func PlayerCooldown(r int) int { return r&0x0F + 0x18 }
+
+// AICooldown 是 AI 的據點求援之後的冷卻 ＝ 它離首都的曼哈頓距離 ÷ 8，上限 30。
+//
+// ⚠ **第二項減的是首都的 X，不是 Y。** 原版兩行的來源都對
+// （`+0x08` X、`+0x0A` Y），差別只在減數，所以 Y 分量算出來的是
+// `|Y − 首都X|`。**兩版執行檔的指令 bytes 完全相同**，出自 1994 年的
+// 原始程式碼，不是移植時打錯的——照抄，不要修正（docs/re/40 §4.1）。
+func AICooldown(x, y, capitalX int) int {
+	d := (abs(x-capitalX) + abs(y-capitalX)) >> 3
+	if d > 30 {
+		return 30
+	}
+	return d
+}
+
+func abs(v int) int {
+	if v < 0 {
+		return -v
+	}
+	return v
+}
+
+// Garrison 是 `sub_14155` 掃軍團表時看的三個欄位。
+type Garrison struct {
+	// At 是軍團目前所在的據點編號（+0x0E ÷ 8）。
+	At int
+	// Ready 對應軍團 +0x00 的位元 2（docs/re/34）。
+	Ready bool
+	// Stage 是軍團 +0x23；原版要求 < 8 才收得下新目標。
+	Stage int
+}
+
+// Dispatch 選出要調去 target 的軍團（原版 `sub_14155`，docs/re/40 §5）。
+//
+// 三件事照抄：
+//
+//   - **只調「人已經在這個據點」的軍團**——援軍不是憑空生的，是把守軍調去別處。
+//   - want 是要派幾支，skip 是可以跳過幾支（原版 `dh = +0x18 − dl`）。
+//     還有跳過額度時，每一支有 25% 機率被跳過（亂數 < 0x40）。
+//   - 位元 2 沒設、或 `+0x23 >= 8` 的軍團不收。
+//
+// rand 回傳 0–255，對應原版 `sub_1ECE0` 的 `al`。
+func Dispatch(gs []Garrison, site, want, skip int, rand func() int) []int {
+	var out []int
+	for i, g := range gs {
+		if len(out) >= want {
+			break
+		}
+		if g.At != site {
+			continue
+		}
+		if skip > 0 {
+			if rand()&0xFF < 0x40 {
+				skip--
+				continue
+			}
+		}
+		if !g.Ready || g.Stage >= 8 {
+			continue
+		}
+		out = append(out, i)
+	}
+	return out
+}

@@ -89,6 +89,12 @@ type Faction struct {
 
 	Corps int // 軍團數（記錄 +0x14）
 
+	// ReliefSite 是最近一次求援的據點編號（記錄 +0x16）。
+	// LostSite 是被別人佔走的據點編號（記錄 +0x17）——
+	// 據點的 +0x1A 記的原主是自己、+0x01 已經不是（docs/re/44 §1、§3）。
+	ReliefSite int
+	LostSite   int
+
 	Diplomat int // 派駐「這個」勢力的外交官（由別人派來），0xFF ＝ 無
 
 	// LowFunds 是記錄 +0x00 的 bit 6：資金低於「取消侵攻」門檻的**一半**
@@ -148,6 +154,11 @@ type City struct {
 	// EnemyNeighbours 是記錄 +0x1B ＝ Adjacency 的位元個數
 	// （相鄰的敵方據點數）。它是 0 時原版連威脅掃描都不做。
 	EnemyNeighbours int
+
+	// ReliefCooldown 是記錄 +0x17：求援冷卻計時器，每輪 −1，非 0 時不再求援。
+	// 玩家的據點求援後寫「亂數(0–15) ＋ 24」，AI 的據點寫「離首都的距離」
+	// （上限 30）。開局全 0 是因為還沒有人求過援（docs/re/40 §4）。
+	ReliefCooldown int
 
 	// Threat 是記錄 +0x14 ＝ 鄰接敵方據點的 Occupancy 總和（周邊威脅量），
 	// 每次輪到這個據點時由 `sub_13FA9` 重算。
@@ -462,6 +473,8 @@ func LoadScenario(path string, index int) (*World, error) {
 			Expense:        i24(r, 0x1A),
 			Corps:          int(r[0x14]),
 			InvasionTarget: int(r[0x19]),
+			ReliefSite:     int(r[0x16]),
+			LostSite:       int(r[0x17]),
 
 			// +0x1D 是**士氣基準值**，不是信賴度 —— 編成軍團時它被
 			// 複製進軍團的士氣欄位（docs/re/08 §4）。信賴度在全域 +0x10。
@@ -504,6 +517,7 @@ func LoadScenario(path string, index int) (*World, error) {
 			EnemyNeighbours: int(r[0x1B]),
 			Threat:          int(r[0x14]),
 			Occupancy:       int(r[0x18]),
+			ReliefCooldown:  int(r[0x17]),
 			Neighbours:    [4]int{int(r[0x1C]), int(r[0x1D]), int(r[0x1E]), int(r[0x1F])},
 		}
 	}
@@ -800,7 +814,9 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 	// ① 據點整備：**每 tick 一個**，游標輪轉（原版 `sub_13EFD` 的
 	// `mov si, word_10D1E` … `add si, 20h`）。192 個據點輪一圈，
 	// 而一天是 216 tick，所以每個據點大約每天一次。
-	ev.Strategy = append(ev.Strategy, w.tickCity(rng)...)
+	cityStrategy, cityNotices := w.tickCity(rng)
+	ev.Strategy = append(ev.Strategy, cityStrategy...)
+	ev.TalkNotices = append(ev.TalkNotices, cityNotices...)
 
 	// ② 軍團在時鐘進位前更新，使用尚未 Advance 的小時。
 	ev.Corps = w.tickCorps(w.Clock.Hour, rng)
@@ -1207,6 +1223,8 @@ func (w *World) Bytes() []byte {
 		r[0x14] = byte(f.Corps)
 		r[0x18] = byte(f.Generals)
 		r[0x19] = byte(f.InvasionTarget)
+		r[0x16] = byte(f.ReliefSite)
+		r[0x17] = byte(f.LostSite)
 		putI24(r, 0x1A, f.Expense)
 		r[0x1D] = byte(f.MoraleBase)
 		putI24(r, 0x20, f.Funds)
@@ -1242,6 +1260,7 @@ func (w *World) Bytes() []byte {
 		r[0x00] = r[0x00]&0xF0 | byte(c.Adjacency&0x0F)
 		r[0x14] = byte(c.Threat)
 		r[0x18] = byte(c.Occupancy)
+		r[0x17] = byte(c.ReliefCooldown)
 		r[0x1B] = byte(c.EnemyNeighbours)
 	}
 
@@ -1302,9 +1321,9 @@ func (w *World) SaveInto(srcPath, dstPath string, index int) error {
 // `rand(0..15)`（期望 −7.5），補回來的就是這裡：AI 的據點每天有 9/16
 // 的機率 +1，月期望 +16.9。實作這一層之前，模擬跑 120 個月會出現
 // 1872 次暴動（`docs/re/07` §19）。
-func (w *World) tickCity(rng economy.Rand) []StrategyEvent {
+func (w *World) tickCity(rng economy.Rand) ([]StrategyEvent, []TalkNotice) {
 	if len(w.Cities) == 0 {
-		return nil
+		return nil, nil
 	}
 	w.cityCursor = (w.cityCursor + 1) % len(w.Cities)
 	c := &w.Cities[w.cityCursor]
@@ -1342,13 +1361,13 @@ func (w *World) tickCity(rng economy.Rand) []StrategyEvent {
 	// 威脅偵測（原版 sub_13EFD 的佔用圖抄寫 ＋ sub_13F74 → sub_13FA9）。
 	// 中立據點只更新佔用數與鄰接遮罩，不做威脅判斷——
 	// 原版的 `cmp byte ptr [si+841h], 18h / jz` 只跳過 sub_13F74。
-	w.refreshCityThreat(w.cityCursor)
+	notices := w.refreshCityThreat(w.cityCursor, rng)
 	if w.strategicAI && c.Owner >= 0 && c.Owner < numFactions && c.Owner != w.Player {
 		if ev := w.formAICorps(c.Owner); ev != nil {
-			return []StrategyEvent{*ev}
+			return []StrategyEvent{*ev}, notices
 		}
 	}
-	return nil
+	return nil, notices
 }
 
 // applyCityDisasterEffect 重現原版 sub_14269（IDA 線性位址 00014269）。

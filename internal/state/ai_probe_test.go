@@ -305,8 +305,9 @@ func TestCityThreatIsRecomputedOnTick(t *testing.T) {
 	w.Corps[0] = Corps{Alive: true, Faction: foe,
 		X: w.Cities[nb].X, Y: w.Cities[nb].Y, Node: nb}
 
-	w.refreshCityThreat(nb)  // 先算鄰居的佔用數，威脅量才有東西可加
-	w.refreshCityThreat(site)
+	r := rng.NewFixed(1)
+	w.refreshCityThreat(nb, r)  // 先算鄰居的佔用數，威脅量才有東西可加
+	w.refreshCityThreat(site, r)
 
 	if got := w.Cities[nb].Occupancy; got != 1 {
 		t.Fatalf("敵方據點的佔用數 = %d，want 1", got)
@@ -352,5 +353,55 @@ func TestAICorpsCapFollowsFunds(t *testing.T) {
 	f.Funds = 81_920 // 上限 10
 	if ev := w.formAICorps(faction); ev == nil {
 		t.Fatal("資金 81,920 時上限是 10，第六支應該編得出來")
+	}
+}
+
+// 玩家的據點被侵攻目標貼著、而且那一格沒有軍團時，會跳訊息 #38。
+// 再跑一次不會重複跳——冷卻計時器擋著。
+func TestPlayerCityAsksForRelief(t *testing.T) {
+	w := load(t, 0)
+	site, foe := -1, -1
+	for i := range w.Cities {
+		c := &w.Cities[i]
+		if c.Owner < 0 || c.Owner >= numFactions {
+			continue
+		}
+		for _, n := range c.Neighbours {
+			if n < 0 || n >= len(w.Cities) {
+				continue
+			}
+			if o := w.Cities[n].Owner; o != c.Owner && o >= 0 && o < numFactions {
+				site, foe = i, o
+				break
+			}
+		}
+		if site >= 0 {
+			break
+		}
+	}
+	if site < 0 {
+		t.Skip("這個劇本沒有相鄰的敵方據點")
+	}
+	w.Player = w.Cities[site].Owner
+	w.Factions[w.Player].InvasionTarget = foe
+	w.Friendship[w.Player][foe] = diplomacy.Friendship(50) // 交戰
+	w.Cities[site].ReliefCooldown = 0
+	for i := range w.Corps { // 這一格不能有軍團，否則走的是另一條路
+		w.Corps[i].Alive = false
+	}
+
+	r := rng.NewFixed(3)
+	got := w.refreshCityThreat(site, r)
+	if len(got) != 1 || got[0].Index != 38 || got[0].City != site {
+		t.Fatalf("求援訊息 ＝ %+v，期望一則 #38 指向據點 %d", got, site)
+	}
+	if w.Cities[site].ReliefCooldown < 24 || w.Cities[site].ReliefCooldown > 39 {
+		t.Fatalf("玩家的冷卻 ＝ %d，期望 24–39", w.Cities[site].ReliefCooldown)
+	}
+	if w.Factions[w.Player].ReliefSite != site {
+		t.Errorf("勢力 +0x16 ＝ %d，期望 %d", w.Factions[w.Player].ReliefSite, site)
+	}
+	if again := w.refreshCityThreat(site, r); len(again) != 0 {
+		t.Fatalf("冷卻中還是又求援了：%+v", again)
 	}
 }
