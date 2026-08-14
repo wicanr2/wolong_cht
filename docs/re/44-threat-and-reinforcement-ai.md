@@ -211,14 +211,24 @@ cmp al, [bx+841h] / jz .同勢力
 中立（`0x18`）寫 `600h`，否則把 `勢力 × 24` 追加進一份不重複的清單
 （`es:[di]` 掃到 `0xFFFF` 才寫）——**那是在收集「這個據點鄰接哪幾個敵對勢力」**。
 
-## 6. 對 remake 的意義
+## 6. remake 的接線
 
-`internal/rules/` 目前沒有這一層。要重現 AI 的出兵節奏，四件事要照抄：
+規則層在 `internal/rules/threat`（純邏輯，不認識 World），
+狀態層在 `internal/state` 的 `refreshCityThreat`，接在既有的據點輪轉
+（`tickCity`）後面——**節奏照抄：每 tick 只處理一個據點，192 tick 一輪**。
+AI 的反應速度是被這個掃描週期限制的，不是被判斷邏輯限制的。
 
-1. **每 tick 只處理一個據點**，192 tick 一輪——AI 的反應速度是被這個掃描週期限制的。
-2. **`+0x18` 每 tick 從佔用圖重算**，不要當獨立狀態維護。
-3. **軍團數上限 `max(5, 資金 ÷ 8192)`**，扣掉現有軍團數。
-4. **派將只看武力**，且只從「無職」裡挑。
+| 原版 | remake |
+|---|---|
+| 佔用圖 `word_19872` | `occupancyAt(x, y)` 直接數軍團。**佔用數是導出值，記帳會漂** |
+| `sub_13FA9` 的威脅掃描 | `threat.Scan`；`City.Threat`／`EnemyNeighbours` 每輪重算 |
+| `sub_1890A` 的位元設清 | `threat.EnemyMask` 由現況算，結果相同而且不會因為漏掛 hook 而失同步 |
+| `sub_14575` 的軍團額度 | `threat.Budget`；`formAICorps` 的門檻**從「只能有一支」改成上限制** |
+| `sub_145C1` 的挑人 | 既有的 `formAICorps`（無職、武力最高）已經是對的 |
+
+還沒接的是求援本身：訊息 `#38`、玩家據點的喇叭聲、以及 `sub_14155`
+把「人已經在該據點」的軍團調過去（[`40`](40-garrison-relief-request.md) §5）。
+`City.Threat` 已經算得出來，那一層是下一片。
 
 ## 7. 未解
 

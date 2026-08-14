@@ -6,6 +6,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/rules/strategyai"
+	"github.com/wicanr2/wolong_cht/internal/rules/threat"
 )
 
 // aiFormationTable 是 CS:6C4C 的 18 byte 表，六個槽各有三個候選兵種。
@@ -319,7 +320,11 @@ func (w *World) formAICorps(faction int) *StrategyEvent {
 		return nil
 	}
 	f := &w.Factions[faction]
-	if !f.Alive || f.InvasionTarget == diplomacy.NoTarget || f.Corps != 0 {
+	// 上限是 `max(5, 資金 ÷ 8192)` 減掉現有軍團數（原版 `sub_14575`，
+	// docs/re/44 §4.1）。**先前這裡寫的是 `f.Corps != 0`**——那讓 AI
+	// 永遠只有一支軍團，資金再多也不會擴軍。
+	if !f.Alive || f.InvasionTarget == diplomacy.NoTarget ||
+		threat.Budget(f.Funds, f.Corps) == 0 {
 		return nil
 	}
 
@@ -439,3 +444,72 @@ func (w *World) nearestFactionCity(from, faction int) int {
 // capitalNone 避免 strategy.go 直接依賴 capital 套件的 None 命名，並讓
 // relocateCapital 的哨兵仍由 state 內部統一處理。
 const capitalNone = -1
+
+// cityNeighbours 把據點的四個鄰接槽翻成規則層的形狀。
+//
+// 槽的有效性看 +0x1C–+0x1F 的哨兵，**不看 +0x00 的低 4 位**——
+// 那四位是「哪幾個鄰居是敵方」，拿來當「有沒有鄰居」會在據點換手之後
+// 把真的鄰居濾掉（docs/re/44 §5）。
+func (w *World) cityNeighbours(i int) []threat.Neighbour {
+	c := &w.Cities[i]
+	out := make([]threat.Neighbour, 0, threat.Slots)
+	for _, n := range c.Neighbours {
+		if n < 0 || n >= len(w.Cities) {
+			out = append(out, threat.Neighbour{Site: -1})
+			continue
+		}
+		nb := &w.Cities[n]
+		f := 0
+		if c.Owner >= 0 && c.Owner < numFactions && nb.Owner >= 0 && nb.Owner < numFactions {
+			f = w.Friendship[c.Owner][nb.Owner].Raw()
+		}
+		out = append(out, threat.Neighbour{
+			Site: n, Owner: nb.Owner, Occupancy: nb.Occupancy, Friendship: f,
+		})
+	}
+	return out
+}
+
+// occupancyAt 數停在 (x, y) 那一格的軍團數。
+//
+// 原版存的是一張 384 × 256 的計數器陣列（`word_19872`），軍團出發時
+// `dec`、到站時 `inc`。remake 直接數——**佔用數是導出值，記帳會漂**。
+func (w *World) occupancyAt(x, y int) int {
+	n := 0
+	for i := range w.Corps {
+		if w.Corps[i].Alive && w.Corps[i].X == x && w.Corps[i].Y == y {
+			n++
+		}
+	}
+	return n
+}
+
+// refreshCityThreat 重算一個據點的佔用數、敵方鄰接遮罩與威脅量
+// （原版 `sub_13EFD` 的佔用圖抄寫 ＋ `sub_13FA9`）。docs/re/44 §1–§2。
+func (w *World) refreshCityThreat(i int) {
+	if i < 0 || i >= len(w.Cities) {
+		return
+	}
+	c := &w.Cities[i]
+	c.Occupancy = w.occupancyAt(c.X, c.Y)
+	ns := w.cityNeighbours(i)
+	c.Adjacency, c.EnemyNeighbours = threat.EnemyMask(c.Owner, ns)
+	if c.Owner == threat.Neutral || c.Owner < 0 || c.Owner >= numFactions {
+		c.Threat = 0
+		return
+	}
+	r := threat.Scan(c.Owner, w.invasionTarget(c.Owner), c.EnemyNeighbours, ns)
+	c.Threat = r.Level
+}
+
+// invasionTarget 回傳勢力的侵攻目標，翻成規則層的哨兵值。
+func (w *World) invasionTarget(faction int) int {
+	if faction < 0 || faction >= numFactions {
+		return threat.NoTarget
+	}
+	t := w.Factions[faction].InvasionTarget
+	if t == diplomacy.NoTarget {
+		return threat.NoTarget
+	}
+	return t
+}

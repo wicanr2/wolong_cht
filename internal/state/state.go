@@ -138,13 +138,30 @@ type City struct {
 	// 疑似大地圖上的外觀編號，**未解**——存著只為了寫回時不失真。
 	KindHigh int
 
-	// Adjacency 是記錄 +0x00 的低 4 位：四個方向哪幾個有鄰接
-	// （對應 +0x1C–+0x1F 的四個據點編號，docs/formats/08 §4.1）。
+	// Adjacency 是記錄 +0x00 的低 4 位：**四個鄰接槽裡哪幾個屬於別的勢力**。
+	//
+	// ⚠ 不是「哪幾個方向有鄰接」——有沒有鄰居由 +0x1C–+0x1F 的 0xFF
+	// 哨兵決定。原版 `sub_1890A` 在據點換手時逐位設／清，並同步加減
+	// +0x1B，所以這四位是會動的（docs/re/44 §5）。
 	Adjacency int
 
-	// Neighbours 是記錄 +0x1C–+0x1F 的四個鄰接據點編號。
-	// 只有 Adjacency 對應的 bit 設起時，該槽才有意義；未使用槽保留原始
-	// byte（通常是 0xFF）。這些槽是政略 AI 建立「相鄰勢力清單」的直接來源
+	// EnemyNeighbours 是記錄 +0x1B ＝ Adjacency 的位元個數
+	// （相鄰的敵方據點數）。它是 0 時原版連威脅掃描都不做。
+	EnemyNeighbours int
+
+	// Threat 是記錄 +0x14 ＝ 鄰接敵方據點的 Occupancy 總和（周邊威脅量），
+	// 每次輪到這個據點時由 `sub_13FA9` 重算。
+	Threat int
+
+	// Occupancy 是記錄 +0x18 ＝ 停在這個據點那一格的軍團數。
+	//
+	// ⚠ **是快取不是狀態。** 原版每次輪到這個據點就從單位佔用圖
+	// （98,304 B 的計數器陣列）重抄一次，所以 remake 要重算不要記帳
+	// （docs/re/44 §1）。
+	Occupancy int
+
+	// Neighbours 是記錄 +0x1C–+0x1F 的四個鄰接據點編號，0xFF ＝ 沒有。
+	// 這些槽是政略 AI 建立「相鄰勢力清單」的直接來源
 	// （原版 sub_12C52 → sub_12CDF），不能只用由地圖推導的道路圖替代。
 	Neighbours [4]int
 }
@@ -484,6 +501,9 @@ func LoadScenario(path string, index int) (*World, error) {
 			Kind:          int(r[0x16]) & 0x0F,
 			KindHigh:      int(r[0x16]) >> 4,
 			Adjacency:     int(r[0x00]) & 0x0F,
+			EnemyNeighbours: int(r[0x1B]),
+			Threat:          int(r[0x14]),
+			Occupancy:       int(r[0x18]),
 			Neighbours:    [4]int{int(r[0x1C]), int(r[0x1D]), int(r[0x1E]), int(r[0x1F])},
 		}
 	}
@@ -1217,6 +1237,12 @@ func (w *World) Bytes() []byte {
 		r[0x16] = byte(c.KindHigh<<4 | c.Kind&0x0F)
 		r[0x19] = byte(c.Governor)
 		r[0x1A] = byte(c.OwnerRecorded)
+		// 這四個欄位是執行期會動的（威脅掃描與據點換手），
+		// 所以存檔要帶著走；沒跑過 tick 的話寫回來的就是讀進去的值。
+		r[0x00] = r[0x00]&0xF0 | byte(c.Adjacency&0x0F)
+		r[0x14] = byte(c.Threat)
+		r[0x18] = byte(c.Occupancy)
+		r[0x1B] = byte(c.EnemyNeighbours)
 	}
 
 	for i, g := range w.Generals {
@@ -1313,6 +1339,10 @@ func (w *World) tickCity(rng economy.Rand) []StrategyEvent {
 	// 原版 sub_13EFD 在 sub_14194 之後無條件呼叫 sub_14269；
 	// 事件 11／12 寫入的 +0x15 marker 不是只有畫面效果。
 	w.applyCityDisasterEffect(w.cityCursor)
+	// 威脅偵測（原版 sub_13EFD 的佔用圖抄寫 ＋ sub_13F74 → sub_13FA9）。
+	// 中立據點只更新佔用數與鄰接遮罩，不做威脅判斷——
+	// 原版的 `cmp byte ptr [si+841h], 18h / jz` 只跳過 sub_13F74。
+	w.refreshCityThreat(w.cityCursor)
 	if w.strategicAI && c.Owner >= 0 && c.Owner < numFactions && c.Owner != w.Player {
 		if ev := w.formAICorps(c.Owner); ev != nil {
 			return []StrategyEvent{*ev}

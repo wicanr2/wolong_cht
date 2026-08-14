@@ -7,7 +7,10 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/rules/rng"
 	"github.com/wicanr2/wolong_cht/internal/rules/strategyai"
+	"github.com/wicanr2/wolong_cht/internal/rules/threat"
 )
+
+const threatNeutral = threat.Neutral
 
 func TestScenarioOneStrategyNeighbourOrder(t *testing.T) {
 	w := load(t, 0)
@@ -256,4 +259,98 @@ func chebyshev(a, b City) int {
 		return dx
 	}
 	return dy
+}
+
+// 威脅偵測要在據點輪到時算出來（原版 sub_13EFD → sub_13FA9）。
+// 這一條用的是原版劇本，所以鄰接關係與交友度都是真的。
+func TestCityThreatIsRecomputedOnTick(t *testing.T) {
+	w := load(t, 0)
+	// 找一個「鄰居裡有交戰勢力」的據點。開局交友度全是和平，
+	// 所以要自己把一組關係打成交戰，否則量到的一定是 0——
+	// **零值也可能只是前提沒滿足**，不是實作沒接上。
+	site, foe := -1, -1
+	for i := range w.Cities {
+		c := &w.Cities[i]
+		if c.Owner < 0 || c.Owner >= numFactions || c.Owner == threatNeutral {
+			continue
+		}
+		for _, n := range c.Neighbours {
+			if n < 0 || n >= len(w.Cities) {
+				continue
+			}
+			o := w.Cities[n].Owner
+			if o != c.Owner && o >= 0 && o < numFactions {
+				site, foe = i, o
+				break
+			}
+		}
+		if site >= 0 {
+			break
+		}
+	}
+	if site < 0 {
+		t.Skip("這個劇本沒有相鄰的敵方據點")
+	}
+	owner := w.Cities[site].Owner
+	w.Friendship[owner][foe] = diplomacy.Friendship(50)
+
+	// 在敵方鄰居那一格擺一支軍團，威脅量才會是非 0。
+	var nb int
+	for _, n := range w.Cities[site].Neighbours {
+		if n >= 0 && n < len(w.Cities) && w.Cities[n].Owner == foe {
+			nb = n
+			break
+		}
+	}
+	w.Corps[0] = Corps{Alive: true, Faction: foe,
+		X: w.Cities[nb].X, Y: w.Cities[nb].Y, Node: nb}
+
+	w.refreshCityThreat(nb)  // 先算鄰居的佔用數，威脅量才有東西可加
+	w.refreshCityThreat(site)
+
+	if got := w.Cities[nb].Occupancy; got != 1 {
+		t.Fatalf("敵方據點的佔用數 = %d，want 1", got)
+	}
+	if w.Cities[site].EnemyNeighbours == 0 {
+		t.Fatal("相鄰敵據點數是 0，但剛剛才找到一個敵方鄰居")
+	}
+	if got := w.Cities[site].Threat; got != 1 {
+		t.Fatalf("周邊威脅量 = %d，want 1", got)
+	}
+}
+
+// 軍團上限是 max(5, 資金 ÷ 8192) 減掉現有軍團數，不是「只能有一支」。
+func TestAICorpsCapFollowsFunds(t *testing.T) {
+	w := load(t, 0)
+	w.Player = 0
+	w.strategicAI = true
+	faction := -1
+	for i := 1; i < numFactions; i++ {
+		if w.Factions[i].Alive {
+			faction = i
+			break
+		}
+	}
+	if faction < 0 {
+		t.Skip("這個劇本只有一個勢力")
+	}
+	f := &w.Factions[faction]
+	f.InvasionTarget = 0
+	f.Funds = 0
+	for k := range f.Reserves {
+		f.Reserves[k] = 600
+	}
+
+	f.Corps = 1
+	if ev := w.formAICorps(faction); ev == nil {
+		t.Fatal("已有一支軍團就不再編成——上限應該是 5")
+	}
+	f.Corps = 5
+	if ev := w.formAICorps(faction); ev != nil {
+		t.Fatal("資金 0 時上限是 5，第六支不該編得出來")
+	}
+	f.Funds = 81_920 // 上限 10
+	if ev := w.formAICorps(faction); ev == nil {
+		t.Fatal("資金 81,920 時上限是 10，第六支應該編得出來")
+	}
 }
