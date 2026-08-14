@@ -27,7 +27,7 @@
  目前量到 **T4 ＝ 0**：739 支函式每一支都有
 `docs/re/` 層級的記錄。收尾的路徑是模組級掃描補歸屬
 （[`35`](35-strategy-ui-module-map.md)–[`38`](38-strategy-core-module-map.md)）
-再逐行讀葉節點（[`41`](41-tactical-script-vm.md)、[`42`](42-leaf-functions.md)）。
+再逐行讀葉節點（[`42`](42-leaf-functions.md)）。
 
 > **空清單不代表沒有缺口。** 真正的缺口在各文件的「未解」表裡——
 > 那些是「讀過但沒解出語意」的項目，不會出現在覆蓋率上。

@@ -136,7 +136,7 @@ sub_1ADC8 → sub_1AE56 / sub_1AEA9 / sub_1AED2(147) / sub_1AF69(164)
 
 ## 6. 葉節點逐行讀完的部分
 
-模組裡 37 支葉節點：**19 支是腳本 VM 的 opcode**（[`41`](41-tactical-script-vm.md)），
+模組裡 37 支葉節點：**19 支是腳本 VM 的 opcode**（[`11`](11-tactical-battle.md) §3.5），
 其餘 18 支分成四類。
 
 ### 6.1 自我修改碼的入口（`sub_1A04B`）
@@ -216,6 +216,6 @@ sub_1C39C:  cx = 510h / ah = 0 / call sub_1D9D1     ; 擦 → 再 call sub_1075B
 | `sub_1C863` | 242 | 底列按鈕的 13 個熱區對應哪些指令 |
 | `sub_1D66A` | 257 | 繪圖底層最大的一支 |
 | `sub_1A1C5` | 211 | 指令層第二大 |
-| ~~`sub_1A426` 的 20 支~~ | — | **✅ 已解**：那是腳本 VM 的 19 個 opcode，見 [`41`](41-tactical-script-vm.md) |
+| ~~`sub_1A426` 的 20 支~~ | — | **✅ 已解**：那是腳本 VM 的 19 個 opcode，見 [`11`](11-tactical-battle.md) §3.5 |
 | `sub_1ACD6` 的 `funcs_1ACF6` | — | 四支 9 B 的目標已定位，表本身還沒印出來 |
 | `sub_1BFF2` 的 `[bx-3FB8h]` | — | [`21`](21-function-census.md) §7 仍未攤開 |

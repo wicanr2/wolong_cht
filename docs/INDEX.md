@@ -57,7 +57,7 @@
 | [`docs/promo/dosv-adlib-and-tactical-review.md`](promo/dosv-adlib-and-tactical-review.md) | 推廣片原版 AdLib 與戰術骨架審查 | 原版音軌來源與影片縮放鏈已修正；戰術固定骨架的 16 px viewport 偏差已修正。完整同狀態戰術 parit… | 2026-08-12 |
 | [`docs/promo/dosv-live-comparison.md`](promo/dosv-live-comparison.md) | DOS/V 原版／remake 實機動態比較推廣片 | 已產出並完成畫面、媒體規格與來源界線驗收；這是同類型畫面／流程的推廣比較，不是同日期、同輸入、同狀態的逐像素 par… | 2026-08-12 |
 | [`docs/promo/yt-remake-pixel-review.md`](promo/yt-remake-pixel-review.md) | YouTube／remake 推廣片像素差異審查 | 已完成影片對照；確認像素差異，但不把不同遊戲狀態誤稱為同狀態 逐像素 parity。 | 2026-08-11 |
-| [`docs/re/00-index.md`](re/00-index.md) | 00 — RE 知識庫入口 | 索引。42 份反組譯筆記按子系統分類，每份一句話說它回答什麼問題。 | 2026-08-14 |
+| [`docs/re/00-index.md`](re/00-index.md) | 00 — RE 知識庫入口 | 索引。41 份反組譯筆記按子系統分類，每份一句話說它回答什麼問題。 | 2026-08-14 |
 | [`docs/re/01-first-recon.md`](re/01-first-recon.md) | 01 — 首輪偵查：兩版檔案清單與比對 | READY。兩版檔案清單、執行結構、逐檔比對都完成。 | 2026-08-07 |
 | [`docs/re/02-palette-routine.md`](re/02-palette-routine.md) | 02 — 調色盤常式：.BRG 的通道順序與亮度縮放 | READY。兩版調色盤常式互證，.BRG 格式定案。 | 2026-08-07 |
 | [`docs/re/03-image-blitter.md`](re/03-image-blitter.md) | 03 — 圖庫載入器與 VGA 繪製常式 | READY。圖庫載入器與四平面繪製常式都讀完。 | 2026-08-07 |
@@ -98,7 +98,6 @@
 | [`docs/re/38-strategy-core-module-map.md`](re/38-strategy-core-module-map.md) | 38 — 戰略核心三個模組的全圖：指令樹、到站處理與月結 | 八個指令的 handler 全部定位，狀態列與選單索引一併對出（confirmed）。 到站處理與月結的叢集歸屬 c… | 2026-08-14 |
 | [`docs/re/39-remaining-unread.md`](re/39-remaining-unread.md) | 39 — 剩餘未讀函式的逐支歸屬 | 清單。 | 2026-08-14 |
 | [`docs/re/40-garrison-relief-request.md`](re/40-garrison-relief-request.md) | 40 — 據點求援與援軍派遣 | 整條鏈 confirmed（每一支都逐行讀過）。 sub_140C9 的距離算式裡有一處 | 2026-08-14 |
-| [`docs/re/41-tactical-script-vm.md`](re/41-tactical-script-vm.md) | 41 — 戰術 AI 的腳本虛擬機：19 個 opcode | VM 的取指、指令編碼、分派表與 opcode 數量 confirmed （分派表與 BATTLE.DAT 互相印證… | 2026-08-14 |
 | [`docs/re/42-leaf-functions.md`](re/42-leaf-functions.md) | 42 — 戰術以外的 47 支葉節點 | 47 支全部逐行讀過。四件事因此定案：INT 61h 是音源 TSR 的介面、 byte_198A6 的位元圖完整、… | 2026-08-14 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-13 |

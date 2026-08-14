@@ -56,7 +56,7 @@
 | **合計** | **739** | | **50,586** | |
 
 **T4 ＝ 0：739 支函式每一支都有 `docs/re/` 層級的記錄。**
-路徑是「模組級掃描補歸屬（[`35`](35-strategy-ui-module-map.md)–[`38`](38-strategy-core-module-map.md)）→ 葉節點逐行讀（[`41`](41-tactical-script-vm.md)、[`42`](42-leaf-functions.md)）」。
+路徑是「模組級掃描補歸屬（[`35`](35-strategy-ui-module-map.md)–[`38`](38-strategy-core-module-map.md)）→ 葉節點逐行讀（[`42`](42-leaf-functions.md)）」。
 
 > **T4 ＝ 0 不等於「全部讀懂了」。** T1 只保證有人寫過，正確性由各文件自己的推論等級負責；模組全圖的角色標籤是**強證據**不是 confirmed。
 > 各文件的「未解」表才是真正的缺口清單。
@@ -112,7 +112,7 @@
 ### 4.2 真正的缺口在戰略側
 
 **八個模組的 T4 都是 0。** 最後補齊的是戰術戰鬥的 37 支葉節點，
-其中 19 支是腳本 VM 的 opcode（[`41`](41-tactical-script-vm.md)）。
+其中 19 支是腳本 VM 的 opcode（[`11`](11-tactical-battle.md) §3.5）。
 
 月結／經濟／AI 這一塊尤其值得注意：`CLAUDE.md` §6 把 `70-ai.md` 標成
 優先度最高，而 `docs/mechanics/70-ai.md` 確實對**個別決策的判定式**寫得很細。

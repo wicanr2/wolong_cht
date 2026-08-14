@@ -11,7 +11,7 @@
 - 位址空間：IDA DOS/V linear address，segment base `0x10000`
 
 [`39`](39-remaining-unread.md) 列的 90 支葉節點裡，戰術那 37 支由
-[`41`](41-tactical-script-vm.md) 與 [`36`](36-tactical-module-map.md) §6 收掉，
+[`11`](11-tactical-battle.md) §3.5 與 [`36`](36-tactical-module-map.md) §6 收掉，
 這一份收其餘 47 支（1,283 bytes）。
 
 ## 1. `INT 61h`：音源 TSR 的介面
