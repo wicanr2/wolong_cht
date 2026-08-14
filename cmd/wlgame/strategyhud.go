@@ -41,10 +41,23 @@ const (
 	strategyFactionInnerY  = strategyFactionY + chrome.Tile
 	strategyFactionInnerW  = strategySidebarW - 2*chrome.Tile
 
-	// 以下是從 DOS/V 右欄畫面量得的文字安全矩形，不是玩法數值證據。
-	// 8×15 半形字與 16×15 全形字必須共用同一個寬度契約。
-	strategyCommandCellW = 52
-	strategyCommandTextW = strategyCommandCellW - 4
+	// 命令列的版面是**從原版讀出來的**，不是從影片量的（docs/re/46 §1）：
+	//
+	//	sub_1614A: sub_106F5(si = cs:6181h, bx = 0x28, dx = 8, ax = 0x0F01)
+	//	           sub_1E3D7(al = 0x0C, bx = 0x28, dx = 0x18, cx = 0x0230)
+	//
+	// `cs:6181h` 是**一整串**，不是八個標籤：
+	//
+	//	「　 進言　人事　財政　編成　軍團　據點　武將　勢力 　」
+	//	  ↑全形 ↑半形      ↑ 兩個字之間沒有空格，詞與詞之間才有一個全形空格
+	//
+	// 所以節距是 32（兩個全形字）＋ 16（一個全形空格）＝ **48**，
+	// 起點 40 ＋ 24（開頭的全形＋半形空格）＝ 第一個字在 **64**。
+	// 驗算：64 + 8×32 + 7×16 = 432，與框寬（cx=0x021B → 432×32）完全相符。
+	strategyCommandX     = 0x28
+	strategyCommandLead  = 24 // 開頭的全形空格 ＋ 半形空格
+	strategyCommandCellW = 48
+	strategyCommandTextW = 32
 	// 命令列內容區是 8 個 52 px cell；左右各留 2 px，讓 cell 之間的
 	// 4 px gap 與外框不會誤觸。Y 只命中 16 px 內容區，不命中上下外框。
 	strategyCommandHitInset    = 2
@@ -70,9 +83,12 @@ const (
 	strategyNumberXOffset      = strategySidebarW - chrome.Tile - strategyNumberW
 )
 
+// naturalCommandLabels 是原版 `cs:6181h` 那一串裡的八個詞。
+// **兩個字之間沒有空格**——先前寫成「進　言」是照影片猜的，
+// 那讓每個詞多佔 16 px，八個詞累積起來就與原版對不上（docs/re/46 §1）。
 var naturalCommandLabels = [...]string{
-	"進　言", "人　事", "財　政", "編　成",
-	"軍　團", "據　點", "武　將", "勢　力",
+	"進言", "人事", "財政", "編成",
+	"軍團", "據點", "武將", "勢力",
 }
 
 // naturalCommandID 依畫面標籤命名，不依快捷鍵順序命名。快捷鍵只是另一個
@@ -107,7 +123,7 @@ func strategyCommandCellRect(index int) image.Rectangle {
 	if index < 0 || index >= len(naturalCommandLabels) {
 		return image.Rectangle{}
 	}
-	x := chrome.Tile + index*strategyCommandCellW + strategyCommandHitInset
+	x := strategyCommandX + index*strategyCommandCellW + strategyCommandHitInset
 	return image.Rect(x, strategyCommandHitY, x+strategyCommandCellW-2*strategyCommandHitInset,
 		strategyCommandHitY+strategyCommandHitH)
 }
@@ -202,7 +218,7 @@ func (g *game) drawNaturalStrategyHUD(screen *ebiten.Image) {
 	// 命令列使用與原版視窗相同的深藍底／紅金外框；文字沿 8 px 邊界排列。
 	g.chrome.Window(screen, 0, strategyCommandY, strategyMapW, strategyCommandH, chrome.Menu)
 	for i, label := range naturalCommandLabels {
-		x := chrome.Tile + i*strategyCommandCellW
+		x := strategyCommandX + strategyCommandLead + i*strategyCommandCellW
 		g.td.Draw(screen, strategyHUDSingleLine(label, strategyCommandTextW), x, strategyCommandY+8, chrome.Paper)
 	}
 

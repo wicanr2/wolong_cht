@@ -58,8 +58,21 @@ func TestDOSVNaturalStrategySkeleton(t *testing.T) {
 
 func TestDOSVNaturalStrategyTextContainment(t *testing.T) {
 	// 這些是 active 8/16 px bitmap 字寬的 containment 測試，不是新增的原版數值證據。
-	if strategyCommandTextW != 48 || strategyInfoValueW != 72 {
-		t.Fatalf("文字安全寬度 = command %d/info %d，want 48/72", strategyCommandTextW, strategyInfoValueW)
+	//
+	// 命令列那一項**是**原版數值：`cs:6181h` 的詞是兩個全形字（32 px），
+	// 節距 48 px（詞 32 ＋ 一個全形空格 16）。先前的 48/52 是照影片猜的，
+	// 那讓八個詞累積偏移，畫面上看起來像被切錯位（docs/re/46 §1）。
+	if strategyCommandTextW != 32 || strategyCommandCellW != 48 ||
+		strategyCommandX != 0x28 || strategyCommandLead != 24 ||
+		strategyInfoValueW != 72 {
+		t.Fatalf("命令列版面 = x%d lead%d cell%d text%d／info %d，want 40/24/48/32/72",
+			strategyCommandX, strategyCommandLead, strategyCommandCellW,
+			strategyCommandTextW, strategyInfoValueW)
+	}
+	// 八個詞的右緣要落在框寬 432 內（框由 sub_1895D 的 cx=0x021B 決定）。
+	if right := strategyCommandX + strategyCommandLead +
+		7*strategyCommandCellW + strategyCommandTextW; right != 432 {
+		t.Fatalf("命令列右緣 = %d，want 432（與原版框寬相同）", right)
 	}
 	if strategyNumberSlots != 5 || strategyNumberW != 40 || strategyNumberXOffset != 160 {
 		t.Fatalf("數字欄 = slots %d width %d x-offset %d，want 5/40/160",
