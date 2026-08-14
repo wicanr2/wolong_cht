@@ -23,8 +23,8 @@
 | 程式碼理解 | 154 | 149 | 5 | 0 |
 | 驗收 | 6 | 5 | 1 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 19 | 19 | 0 | 0 |
-| **合計** | **300** | 292 | 7 | 1 |
+| 其他 | 22 | 21 | 1 | 0 |
+| **合計** | **303** | 294 | 8 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -332,7 +332,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（19 條）
+## 2.6 其他（22 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -355,6 +355,9 @@
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝指令列 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
+| [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | `banner` 高度與右欄分界 | 沒有機器碼證據（§3） | 靜態 |
+| [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
+| [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |
 
 ## 3. 這支工具的盲區
 

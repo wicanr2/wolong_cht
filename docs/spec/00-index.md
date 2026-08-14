@@ -60,6 +60,7 @@
 | 進言「請求君主出陣」（`sub_1699E`）| [`11-ai-sortie.md`](11-ai-sortie.md) | 可實作，**尚未實作** |
 | 主畫面的視窗外框與指令列 | [`12-strategy-chrome.md`](12-strategy-chrome.md) | 外框已符合原版；**右欄版面常數未對過原版** |
 | remake 原生存檔格式 | [`20-save-format.md`](20-save-format.md) | 已接進遊戲並驗過；**只差放回 DOSBox 實測** |
+| 同狀態畫面對拍 | [`90-same-state-parity.md`](90-same-state-parity.md) | 差分工具已就緒；**第一輪對拍還沒跑** |
 
 ## 怎麼加一份
 

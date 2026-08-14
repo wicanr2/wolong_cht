@@ -20,6 +20,8 @@ tools/py.sh tools/index.py generate
 tools/py.sh tools/re_open_questions.py --strict > docs/re/43-open-questions.md
 echo "── 幽靈引用 ──"
 tools/py.sh tools/phantom_scan.py
+echo "── 對拍工具正對照 ──"
+tools/py.sh tools/parity_diff.py --selftest
 echo "── 資產 deny-list ──"
 tools/py.sh tools/denylist.py --selftest
 tools/py.sh tools/denylist.py
