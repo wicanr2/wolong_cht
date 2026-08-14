@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 60 | 59 | 1 | 0 |
 | 資料保存 | 43 | 43 | 0 | 0 |
-| 程式碼理解 | 153 | 148 | 5 | 0 |
+| 程式碼理解 | 151 | 146 | 5 | 0 |
 | 驗收 | 3 | 3 | 0 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
 | 其他 | 5 | 5 | 0 | 0 |
-| **合計** | **282** | 275 | 6 | 1 |
+| **合計** | **280** | 273 | 6 | 1 |
 
 其中 **2 條明講被防拷擋著**——那條路沒通之前，它們不會因為多讀組語而前進。
 
@@ -141,7 +141,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（153 條）
+## 2.3 程式碼理解（151 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -259,7 +259,6 @@
 | [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `sub_1F7A4` | 把 32 B 緩衝畫上 VRAM 的實際迴圈，未逐行讀 | 靜態 |
 | [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `YNFONT.EXE` 怎麼顯示中文 | 它不走 INT 15h（0 次），防拷畫面的中文是它自己畫的。與本鏈無關，仍未解 | 靜態・**防拷擋著** |
 | [`re/30-corps-formation-ui.md`](../re/30-corps-formation-ui.md) | 軍團 `+0x23` | `sub_16F26` 寫 1，用途未解 | 靜態 |
-| [`re/30-corps-formation-ui.md`](../re/30-corps-formation-ui.md) | 軍團 `+0x00` 的位元 | 建立時 `0xC0`，AI 路徑（`sub_16E8F`）另外 `or 4`。各位元語意未解 | 靜態 |
 | [`re/30-corps-formation-ui.md`](../re/30-corps-formation-ui.md) | `sub_1D4C7` | 大地圖上實際畫圖塊的常式，未讀 | 靜態 |
 | [`re/30-corps-formation-ui.md`](../re/30-corps-formation-ui.md) | `sub_16D6F`／`sub_16DA8` | 兩支印數字的常式，畫的是哪幾個欄位未逐一對過 | 靜態 |
 | [`re/31-faction-picker-screen.md`](../re/31-faction-picker-screen.md) | 分派表已印出，但 `sub_15AD1 → sub_15AFC` 的進入路徑仍未定位。 | （散句） | 靜態 |
@@ -289,7 +288,6 @@
 | [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `sub_1E9A7` 的 8 bytes 參數表 | 表本身沒讀 | 靜態 |
 | [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `byte_1020E`／`byte_10CF9` | 音源相關的兩個旗標 | 靜態 |
 | [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | `sub_14194`／`sub_14269` | `sub_13EFD` 每 tick 還呼叫這兩支，未讀 | 靜態 |
-| [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | `sub_16E8F` | AI 側的編成常式，只在 [`34`](34-corps-status-bits.md) 出現過 `or 4`，內部未讀 | 靜態 |
 | [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | 軍團 `+0x23` | 兩條派兵路徑都寫 0、`sub_16F26` 寫 1、`sub_14155` 要求 `< 8`。像是階段計數，語意未定 | 靜態 |
 | [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | 據點 `+0x00` 的 bit 4／5 | bit 6／7 是威脅旗標、低 4 位是敵方鄰居，中間兩位仍未見寫入端 | 靜態 |
 | [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | 勢力 `+0x17` 的讀取端 | 寫入端在 §1，誰讀它未找 | 靜態 |
