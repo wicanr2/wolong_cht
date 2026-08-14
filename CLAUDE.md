@@ -63,7 +63,7 @@
 
 | 素材 | 內容 | 位置 |
 |---|---|---|
-| 松崗 DOS/V 繁中版 | 72 檔，`KI.EXE` 是遊戲本體 | `workplace/orig/dosv/` |
+| 松崗 DOS/V 繁中版 | **69 檔**（原始 zip 是 72 個），`KI.EXE` 是遊戲本體 | `workplace/orig/dosv/` |
 | **PC-98 日文原版** | 五片 `.fdi`，已抽出 69 檔 | `workplace/orig/pc98/` |
 | 日文原版說明書 | 38 頁 200 dpi 掃描，無文字層 | 判讀結果在 `docs/reference/01` |
 | 追補頁 | 4 頁 | 同上 |
@@ -229,14 +229,16 @@ tools/ida.sh raw    dosv idat -A "-S/work/tools/ida_func.idc sub_12E89" KI.EXE.i
 | **`ida_scan.py`** | **IDAPython**：全庫掃「對 `[reg+disp]` 寫立即值」（解碼運算元，不比對文字）＋ 指定函式 dump。新腳本照這一支的骨架寫 |
 | **`ida_tables.py`** | **IDAPython**：每支函式碰哪幾張表（掃表基址立即值）。**函式層級不是指令層級**——暫存器會跨函式帶著走 |
 | **`ida_dump.py`** | **IDAPython**：通用 dumper，要看哪幾支寫在 `workplace/ida/<版本>/census/dump_list.txt`，不必為了換位址改工具 |
+| **`ida_disp_users.py`** | **IDAPython**：全庫掃「運算元位移等於指定值」的指令。段內欄位（`[si+858h]`）**沒有交叉參考**，grep 反組譯會漏掉換了基址暫存器的寫法，而漏掉的通常正是寫入端 |
 
-三支 Python 把上面的輸出變成可查的表：
+四支 Python 把上面的輸出變成可查的表：
 
 | 工具 | 產出 |
 |---|---|
 | `re_coverage.py` | 覆蓋地圖：哪些函式從沒被文件提過（[`docs/re/21`](docs/re/21-function-census.md)）|
 | `re_classify.py` | 未讀函式的角色證據，會把 TALK 索引翻成中文（[`docs/re/24`](docs/re/24-unread-function-catalogue.md)）|
 | `phantom_scan.py` | 掃出文件裡指向不存在的檔案、目錄、Go 識別字與 IDA 符號 |
+| `re_open_questions.py` | 缺口總表：各文件「未解」表的集中版（[`docs/re/43`](docs/re/43-open-questions.md)）。`check.sh --strict` 會擋下「提到未解卻沒有未解小節」的新文件 |
 
 **動手讀任何一支未命名函式之前，先查
 [`docs/re/24`](docs/re/24-unread-function-catalogue.md)**——
@@ -462,7 +464,7 @@ grep `.asm` 只能從呼叫端的參數順序反推——那是間接證據，�
 
 | | 里程碑 | 現況 | 內容 |
 |---|---|---|---|
-| M0 | 環境與偵查 | ✅ **完成** | 兩版素材入庫、兩版 `KI.EXE` 進 IDA、逐檔比對、DOSBox-X docker 化並確認可重現、防拷確認、說明書判讀完 |
+| M0 | 環境與偵查 | ✅ **完成** | 兩版素材入庫、兩版 `KI.EXE` 進 IDA、逐檔比對、DOSBox-X docker 化並確認可重現、**密碼頁確認可通過**（§4.0）、說明書判讀完 |
 | M1 | 資料格式全解 | ✅ **完成**（`ICONGRF` 段 1 的 UI 語意除外）| `.BRG`、`*GRF.DAT`、`.MAP/.MDL/.SCH/.MCH`、`OPEN_S*`／`END_S*`、`TALK.DAT`、`SINARIO/SAVE.DAT`、音訊。Go 解碼器 ＋ round-trip 測試 |
 | M2 | 文本抽取與日中對照 | ✅ **完成** | `TALK.DAT` 變數插入語意全解；兩版對照表產出；Big5 原文抽成語系檔並能 byte-for-byte 寫回 |
 | M3 | 執行檔反組譯 | ✅ **靜態分析完成** | 739 支函式**全部**有 `docs/re/` 記錄（T4 ＝ 0）。**這不等於全部讀懂**——各文件的「未解」表是真正的缺口（[`docs/re/21`](docs/re/21-function-census.md)）。**引用覆蓋率要用排除目錄後的數字**（`re/21` §3.1）。兩版對照當交叉驗證（§4.0） |
@@ -513,10 +515,10 @@ grep `.asm` 只能從呼叫端的參數順序反推——那是間接證據，�
   `CONTEXT.md` 的「進行中／受阻」表都中過
 - 連結壞掉、`CONTEXT.md` 提到不存在的文件
 
-### `[HARD]` **動手之前**查三張表（不是下結論之前）
+### `[HARD]` **動手之前**查這五張表（不是下結論之前）
 
 **「還沒解」與「我不記得解過」在動手那一刻長得一模一樣**，
-所以要在動手前分開，不是在收尾時。三張表各回答一個問題：
+所以要在動手前分開，不是在收尾時。每一張各回答一個問題：
 
 | 想知道 | 查 |
 |---|---|
@@ -574,7 +576,9 @@ internal/ui/      Ebiten 呈現層（textdraw、listwin、mobile；排版刻意�
 cmd/              wlgame（遊戲本體）、wlsim（規則層模擬）、wlandroid
 mobile/、android/ gomobile 綁定與 Android 專案（只收原始檔）
 packaging/        AppImage 與發行說明範本
-tools/            docker 包裝（go.sh、py.sh、ida.sh、dosbox.sh、dosboxx.sh、shot.sh）、
+docker/           自建映像（dosboxx＝PC-98 oracle、dosboxx-bridge＝帶原生除錯器的版本）
+tools/            docker 包裝（go.sh、py.sh、ida.sh、dosbox.sh、dosboxx.sh、shot.sh、
+                  dosboxx_bridge.sh ＋ dosboxx_probe.py＝動態取樣）、
                   check.sh（提交前的單一入口）、denylist.py ＋ release.sh（發行閘）、
                   index.py（文件索引）、re_coverage.py（RE 覆蓋地圖）、
                   re_open_questions.py（缺口總表）、
