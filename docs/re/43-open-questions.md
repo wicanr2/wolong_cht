@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 60 | 59 | 1 | 0 |
 | 資料保存 | 43 | 43 | 0 | 0 |
-| 程式碼理解 | 151 | 146 | 5 | 0 |
+| 程式碼理解 | 155 | 150 | 5 | 0 |
 | 驗收 | 6 | 5 | 1 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 12 | 12 | 0 | 0 |
-| **合計** | **290** | 282 | 7 | 1 |
+| 其他 | 17 | 17 | 0 | 0 |
+| **合計** | **299** | 291 | 7 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -139,7 +139,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（151 條）
+## 2.3 程式碼理解（155 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -227,7 +227,6 @@
 | [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | `loc_1A065` 的 runtime bytes | 自我修改碼，靜態影像看不到每輪的實際內容（§2.2） | 靜態 |
 | [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | 四層差分（terrain／display list／composited／HUD） | 沒有 machine-readable diff，目前只有 layout-only 比較 | 靜態 |
 | [`re/22-strategy-command-tree.md`](../re/22-strategy-command-tree.md) | 指令列圖形來源與熱區圖的登記方式未解。 | （散句） | 靜態 |
-| [`re/22-strategy-command-tree.md`](../re/22-strategy-command-tree.md) | 指令列的圖形來源 | 八個 40×16 按鈕的圖從哪來未讀。`ICONGRF` 段 1 仍未解（`../formats/03` §5.4），尺寸上是候選，但**沒有證據**，不要當結論 | 靜態 |
 | [`re/22-strategy-command-tree.md`](../re/22-strategy-command-tree.md) | 熱區圖怎麼登記 | 寫入端 `sub_1E41B` 沒有任何文件提過 | 靜態 |
 | [`re/22-strategy-command-tree.md`](../re/22-strategy-command-tree.md) | `off_159D2` 的其餘槽位 | 16 筆裡只有 [1] `0x1614A`、[2] `0x15E1E`、[3] `0x15A3A`、[4] `sub_15FAA`、[13] `sub_161CA` 非 `nullsub_1`。這是頂層模式分派表，[1]–[3] 未讀 | 靜態 |
 | [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | 聲軌資料本身的事件編碼、`+0x02`／`+0x04` 兩張表的內容與音色語意仍未解。 | （散句） | 靜態 |
@@ -294,6 +293,11 @@
 | [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `sub_193E9` 的選單協定 | `ah = 1`、`cx` ＝ 首項索引、`dx`／`bx` ＝ 位置；回傳值怎麼編碼未逐位對過 | 靜態 |
 | [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `sub_1703C` | 選據點的那一支，未讀 | 靜態 |
 | [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `+0x23` 的其他值 | 只見過 0、1（`sub_16F26`）與 11 | 靜態 |
+| [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | `cs:word_1D84E` 那張表怎麼變成像素 | 每格 8 bytes 的內容意義未讀；誰消費它未找 | 靜態 |
+| [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | `cs:word_10D4A` 與 `sub_10C60`／`sub_10C77` | 框線的實際畫法未讀——**這是主畫面 parity 的關鍵路徑** | 靜態 |
+| [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | 樣式碼 | 只確定 `0` ＝ 擦除、`0x0B` ＝ 指令列、`0x0C`／`0x0F` 出現在別處；完整值域未列 | 靜態 |
+| [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | `cs:6181h` 的字串表 | 八個指令名的實際 bytes 未 dump | 靜態 |
+| [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | `ax = 0F01h`／`0801h` | 顏色／樣式的位元編碼未逐位對過 | 靜態 |
 
 ## 2.4 驗收（6 條）
 
@@ -329,7 +333,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（12 條）
+## 2.6 其他（17 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -340,11 +344,16 @@
 | [`promo/yt-remake-pixel-review.md`](../promo/yt-remake-pixel-review.md) | 中央 raw reserve glyph | 未解出原版圖形。remake 不冒充，改用自繪 | 靜態 |
 | [`spec/00-index.md`](../spec/00-index.md) | **推論等級** | confirmed／強證據／假說／未知（`CLAUDE.md` §9）。假說也可以實作，但要標 | 靜態 |
 | [`spec/00-index.md`](../spec/00-index.md) | 進言「請求君主出陣」（`sub_1699E`） | `11-ai-sortie.md` / 可實作，**尚未實作** | 靜態 |
+| [`spec/00-index.md`](../spec/00-index.md) | 主畫面的視窗外框與指令列 | `12-strategy-chrome.md` / **還不能實作**——像素產生方式未解 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | `sub_14194`／`sub_14269` | 內政與災害 marker 的細節在別的規格（`docs/mechanics/40`），本規格只保證呼叫順序 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 據點換手之後 `+0x00` 低 4 位會不會跟著變 | `sub_1890A` 靜態讀過，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 玩家據點求援的喇叭聲（`sub_10CDE`） | 呈現層未接 | 靜態 |
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | `資金高位 >= 0x80` 那一支 | `cmp bh, 80h / jnb` 會直接算「答應」，等於資金超過約 840 萬時門檻失效。**看起來像有號數的邊界處理**，未逐位對過 | 靜態 |
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | 君主出陣之後的行為 | 那支軍團跟一般軍團有沒有差別，未讀 | 靜態 |
+| [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | `sub_10C60`／`sub_10C77` | 框線的實際畫法——**主畫面 parity 的關鍵路徑** | 靜態 |
+| [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | `cs:word_1D84E` 每格 8 bytes | 內容意義未讀，消費端未找 | 靜態 |
+| [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | `cs:6181h` 的八個指令名 | 字串 bytes 未 dump | 靜態 |
+| [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝指令列 | 靜態 |
 
 ## 3. 這支工具的盲區
 
