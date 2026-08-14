@@ -23,8 +23,8 @@
 | 程式碼理解 | 151 | 146 | 5 | 0 |
 | 驗收 | 6 | 5 | 1 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 5 | 5 | 0 | 0 |
-| **合計** | **283** | 275 | 7 | 1 |
+| 其他 | 12 | 12 | 0 | 0 |
+| **合計** | **290** | 282 | 7 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -329,7 +329,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（5 條）
+## 2.6 其他（12 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -338,6 +338,13 @@
 | [`promo/dosv-adlib-and-tactical-review.md`](../promo/dosv-adlib-and-tactical-review.md) | 原版底列按鈕 glyph、選取狀態與 remake 文字／簡化圖示仍有差異。 | （未解小節內文） | 靜態 |
 | [`promo/dosv-adlib-and-tactical-review.md`](../promo/dosv-adlib-and-tactical-review.md) | 地形、部隊編成、鏡頭中心、動畫 frame 與戰況不同，不能用目前推廣片判定物件 | （未解小節內文） | 靜態 |
 | [`promo/yt-remake-pixel-review.md`](../promo/yt-remake-pixel-review.md) | 中央 raw reserve glyph | 未解出原版圖形。remake 不冒充，改用自繪 | 靜態 |
+| [`spec/00-index.md`](../spec/00-index.md) | **推論等級** | confirmed／強證據／假說／未知（`CLAUDE.md` §9）。假說也可以實作，但要標 | 靜態 |
+| [`spec/00-index.md`](../spec/00-index.md) | 進言「請求君主出陣」（`sub_1699E`） | `11-ai-sortie.md` / 可實作，**尚未實作** | 靜態 |
+| [`spec/10-city-tick.md`](../spec/10-city-tick.md) | `sub_14194`／`sub_14269` | 內政與災害 marker 的細節在別的規格（`docs/mechanics/40`），本規格只保證呼叫順序 | 靜態 |
+| [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 據點換手之後 `+0x00` 低 4 位會不會跟著變 | `sub_1890A` 靜態讀過，動態沒驗——要打下一座城才看得到 | 靜態 |
+| [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 玩家據點求援的喇叭聲（`sub_10CDE`） | 呈現層未接 | 靜態 |
+| [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | `資金高位 >= 0x80` 那一支 | `cmp bh, 80h / jnb` 會直接算「答應」，等於資金超過約 840 萬時門檻失效。**看起來像有號數的邊界處理**，未逐位對過 | 靜態 |
+| [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | 君主出陣之後的行為 | 那支軍團跟一般軍團有沒有差別，未讀 | 靜態 |
 
 ## 3. 這支工具的盲區
 

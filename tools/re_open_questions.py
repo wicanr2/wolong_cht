@@ -43,7 +43,9 @@ import sys
 
 DOC_ROOTS = ("docs",)
 SELF = "docs/re/43-open-questions.md"
-SKIP = (SELF, "docs/INDEX.md")
+# TEMPLATE.md 是骨架不是文件：它的「未解」小節是空表頭，
+# 抽不到東西是正確行為，不是盲區。
+SKIP = (SELF, "docs/INDEX.md", "docs/spec/TEMPLATE.md")
 
 HEADING = re.compile(r"^(#{2,4})\s+(.*)$")
 OPEN_CELL = re.compile(r"未解|未定|假說|未驗|未定位|尚未")

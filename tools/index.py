@@ -63,7 +63,9 @@ OPEN_WORDS = ["未解", "受阻", "⛔", "沒解", "還沒"]
 def md_files():
     for dirpath, _, names in os.walk(DOCS):
         for n in sorted(names):
-            if n.endswith(".md") and n != "INDEX.md":
+            # TEMPLATE.md 是給人複製的骨架，日期／狀態欄本來就留空，
+            # 拿文件的規則檢查它只會得到永遠修不掉的一條問題。
+            if n.endswith(".md") and n not in ("INDEX.md", "TEMPLATE.md"):
                 yield os.path.join(dirpath, n)
 
 
