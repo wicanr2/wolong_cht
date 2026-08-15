@@ -19,6 +19,10 @@ workplace/
 /dragon
 /bin/
 /wlgame
+/wlscen
+/wlsim
+/wlview
+/wlshot
 *.test
 
 # Android：只收原始檔，build 產出與 gomobile 綁定不進版控

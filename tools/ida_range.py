@@ -18,8 +18,10 @@ import idc
 
 OUT = "/work/range.txt"
 RANGES = [
-    (0x1EA1F, 0x1EAE9, "顯示清單九個 opcode 的 handler"),
-    (0x1E9A7, 0x1E9C1, "sub_1E9A7：登記圖庫段"),
+    (0x1EAD0, 0x1EB20, "opcode 共用的座標設定"),
+    (0x1EDFE, 0x1EE60, "op 01 的繪圖"),
+    (0x1F020, 0x1F080, "op 02 的繪圖"),
+    (0x1F1A3, 0x1F1F0, "op 03 填矩形（對照組）"),
 ]
 
 

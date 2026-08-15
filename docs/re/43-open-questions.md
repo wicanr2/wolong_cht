@@ -23,8 +23,8 @@
 | 程式碼理解 | 185 | 179 | 6 | 0 |
 | 驗收 | 14 | 11 | 3 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 49 | 46 | 3 | 0 |
-| **合計** | **369** | 355 | 13 | 1 |
+| 其他 | 58 | 54 | 3 | 1 |
+| **合計** | **378** | 363 | 13 | 2 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -371,7 +371,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（49 條）
+## 2.6 其他（58 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -394,8 +394,10 @@
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝命令、`0x0Bh`／`0x10h`／`0x15h`／`0x1Fh` 各自出現在哪個視窗已知，完整值域未列 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 |
-| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 系統選單的六個 handler | 版面已照原版（§2.6），但六列的**滑鼠命中還沒接**——原版熱區 `0x20`–`0x25` 各自做什麼也沒讀（`docs/re/55` §4）。remake 目前只有鍵盤路徑（`S`／`L` 存讀、`+`／`−` 速度、`F10` 離開） | 靜態 |
-| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 中間四列的值 | 「畫面模式」是固定字、「音效」寫「未接入」（音訊層完全沒做）、兩個速度共用 `g.speed`——原版是兩個獨立設定 | 靜態 |
+| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 六列的語意 | **原版那六個 handler 沒讀**（`docs/re/55` §4）。remake 照標籤字面接：兩個速度左鍵 +1／右鍵 −1、「資料儲存」開四槽視窗、「遊戲結束」走 ＹＥＳ／ＮＯ 確認。**這是 remake 差異**，等 handler 讀出來要回頭對 | 靜態 |
+| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 「畫面模式」 | 固定字，沒有第二種模式 | 靜態 |
+| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 「音效」 | 寫「未接入」——音訊層完全沒做，`BGM.DAT` 的聲軌事件編碼未解（`docs/re/23`） | 靜態 |
+| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 速度的檔位 | 原版四個檔位各是什麼值未解（`docs/mechanics/15-realtime.md`）。remake 用 0–64 的「每畫面推進幾個 tick」，0 ＝ 暫停 | 靜態 |
 | [`spec/14-finance-window.md`](../spec/14-finance-window.md) | 收入的來源 | `cs:word_10D02` 由誰計算未讀（月結那一支是候選）。remake 的月結算得出 `res.Income` 但沒有留下來，所以這一格暫時顯示 0——**留白比填一個自己算的數字誠實** | 靜態 |
 | [`spec/14-finance-window.md`](../spec/14-finance-window.md) | 徵兵數的上限 | 只有稅率的 100 是機器碼常數；三個兵種的上限沒看到 | 靜態 |
 | [`spec/14-finance-window.md`](../spec/14-finance-window.md) | 數值輸入器 | `sub_17C6E` 已有 RE（`docs/re/13`），但 remake 的財政還沒接上去 | 靜態 |
@@ -421,6 +423,13 @@
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 事件佇列 | 這一輪不進 JSON。編輯器要動它得先有 UI 語意 | 靜態 |
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 未解區域 | `+0x1EC0` 那 7 KB 仍是黑盒，只能靠改寫保留 | 靜態 |
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 編輯器 | 這一份只做資料層。UI 是另一份規格 | 靜態 |
+| [`spec/29-audio.md`](../spec/29-audio.md) | 推論等級：容器與 INT 61h 介面 **confirmed**；播放 command **未解 | （散句） | 靜態 |
+| [`spec/29-audio.md`](../spec/29-audio.md) | **？** | **播放第 N 曲** / ⬜ **未解**——`sub_10210` 用 `AH=0x00`／`0x02`／`0x03`，作用未定案 | 靜態 |
+| [`spec/29-audio.md`](../spec/29-audio.md) | 播放 command | §3，擋住整個階段 B | 靜態 |
+| [`spec/29-audio.md`](../spec/29-audio.md) | `SOUND.DAT` | 音效資料的格式未解 | 靜態 |
+| [`spec/29-audio.md`](../spec/29-audio.md) | 音量 | 錄到的峰值只有滿刻度 4.7%，原因沒查 | 靜態 |
+| [`spec/29-audio.md`](../spec/29-audio.md) | 循環點 | 原版曲子怎麼循環未解——錄音只能錄固定長度 | 靜態 |
+| [`spec/29-audio.md`](../spec/29-audio.md) | PC-98 版 | 音源是 YM2203（FM 3 ＋ SSG 3），與 DOS/V 的 OPL 不同。**兩版音樂資料本來就有實質差異**（`re/23` §4），要錄哪一版是待裁定的問題 | 兩版對照 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |
@@ -436,7 +445,4 @@
 或用別的詞說「這個還不知道」的缺口抽不到**——下列檔案提到未解
 卻一列都沒抽出來，要嘛缺口寫成別的句式，要嘛那些字樣只是在講別的事：
 
-（沒有）
-
-只印抽得到的部分，會讓解析失敗長得像「那份文件沒有缺口」。
-這一節就是為了讓那個差別看得見。
+- `docs/playtest/25-audio-capture-feasibility.md`
