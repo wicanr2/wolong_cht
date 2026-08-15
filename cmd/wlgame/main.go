@@ -53,6 +53,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/savepath"
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
+	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
 	"github.com/wicanr2/wolong_cht/internal/ui/sound"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
@@ -350,27 +351,43 @@ func (g *game) drawList(screen *ebiten.Image) {
 
 func pressed(k ebiten.Key) bool { return inpututil.IsKeyJustPressed(k) }
 
-// updateMusic 依畫面狀態換背景音樂。
+// 大地圖的四季配樂：月 → 曲號。原版的表在 `cs:9309h`，
+// 由 `sub_19321` 以「月 − 1」查（docs/re/58 §2）。
+// **這不是照聽感排的**——同一個月份索引還有第二張表決定季節調色盤，
+// 兩張表逐月吻合，那是「曲 2–5 是四季」的交叉驗證。
+var seasonMusic = [12]int{5, 5, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5}
+
+// musicTrack 回傳目前該放哪一首。對應全部出自 `KI.EXE` 的呼叫端
+// （docs/re/58），不是聽出來的。
 //
-// ⚠ **只有開場那一首有證據**：`D7OPEN.EXE` 執行時錄到的音訊，
-// 頻譜與 `OPENBGM.DAT` 的渲染對得上（docs/playtest/26）。
-// 其餘三個對應是 **remake 的選擇**——`BGM.DAT` 的 11 首哪一首配哪個場景
-// 還沒對過（docs/re/23 §5）。檔名證據只能支持 `ENDBGM`／`OVERBGM`
-// 是結局與敗亡，那是二手推論。解出來之前不要把這張表寫進機制文件。
+// ⚠ 三件原版行為，remake 照做：
+//   - **戰術進場先停**，設定跑完才依戰場類別挑曲（`sub_19946`）
+//   - 換季那個月是**第 2 天**換曲，調色盤卻要漸變 16 天——兩者不同步
+//     是原版行為（docs/re/58 §2）。remake 目前只做換曲那一半
+//   - 曲 6（事件與對話）還沒接：原版由四支對話／事件常式呼叫，
+//     remake 這一側還沒有對應的單一進入點。**沒接就是沒接**，
+//     不要拿別的畫面狀態去湊
 func (g *game) musicTrack() string {
 	switch {
 	case g.launcher != nil:
-		return "openbgm-0"
+		// `sub_11A6E` 開機流程的第一件事就是曲 0（docs/re/58 §3）。
+		return "bgm-0"
 	case g.world == nil:
 		return ""
 	case g.world.Outcome() != state.InProgress:
-		// 規則層目前只有敗北（`internal/state/outcome.go`），所以
-		// `ENDBGM`（結局）還沒有地方接——**不要為了用上它而編一個勝利條件**。
+		// `OVERBGM.DAT` 是 `D7OVER.EXE`（遊戲結束）的（docs/re/58 §6）。
 		return "overbgm-0"
 	case g.battleActive():
-		return "bgm-1"
+		if p := g.world.PendingBattle(); p != nil && p.Mode == combat.Siege {
+			return "bgm-7" // 攻城戰
+		}
+		return "bgm-9" // 野戰
 	default:
-		return "bgm-0"
+		m := g.world.Clock.Month
+		if m < 1 || m > 12 {
+			return ""
+		}
+		return fmt.Sprintf("bgm-%d", seasonMusic[m-1])
 	}
 }
 

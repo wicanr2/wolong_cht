@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 60 | 59 | 1 | 0 |
 | 資料保存 | 43 | 43 | 0 | 0 |
-| 程式碼理解 | 190 | 184 | 6 | 0 |
+| 程式碼理解 | 195 | 189 | 6 | 0 |
 | 驗收 | 21 | 16 | 5 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 57 | 54 | 3 | 0 |
-| **合計** | **389** | 373 | 15 | 1 |
+| 其他 | 58 | 55 | 3 | 0 |
+| **合計** | **395** | 379 | 15 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -139,7 +139,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（190 條）
+## 2.3 程式碼理解（195 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -169,7 +169,6 @@
 | [`re/06-game-clock.md`](../re/06-game-clock.md) | 勢力記錄 64 B 的欄位表 | `+0`、`+1Ah`、`+1Ch` 已知，其餘未解 | 靜態 |
 | [`re/06-game-clock.md`](../re/06-game-clock.md) | `cs:0CF0h` 那 59 byte 裡除了時鐘的其餘部分 | 對照存檔 diff | 靜態 |
 | [`re/06-game-clock.md`](../re/06-game-clock.md) | `sub_10A65` 的內插演算法 | 直接讀 | 靜態 |
-| [`re/06-game-clock.md`](../re/06-game-clock.md) | `sub_193D7(al)` 的 2/3/4/5 是什麼索引 | 直接讀 | 靜態 |
 | [`re/06-game-clock.md`](../re/06-game-clock.md) | 戰術速度存在哪（`0CFAh` 是戰略速度） | 找 SYSTEM MENU 的寫入點 | 靜態 |
 | [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | 10 | `sub_13496` / 訊息-only：建立武將／參數 formatter 游標；持久狀態尚未找到 | 靜態 |
 | [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | `sub_15940` 的兩個分支 | 已派駐武將的每月行動，會發訊息 `0x41`／`0x42`。分支 2 有一行 `mov byte ptr [si+1Ch], 18h`（把所屬勢力寫成 24）**與「+1Ch 是勢力編號、只有 0–21」矛盾**，還沒解釋 | 靜態 |
@@ -333,6 +332,12 @@
 | [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | 全域音量偏移 `[0996h]` | 誰設、範圍多少未解 | 靜態 |
 | [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | 曲號 ↔ 場景 | `KI.EXE` 的呼叫端還沒對過（`23` §5） | 靜態 |
 | [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | PC-98 側的音源程式設計 | 完全沒讀。YM2203 的暫存器路徑與音色版面都未解 | 靜態 |
+| [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | 曲 1 | **沒有任何呼叫端傳 1**。八個呼叫點的立即值與兩張表都掃過了 | 靜態 |
+| [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | 曲 8 | 需要「攻城戰 ＋ `byte_10D35` bit 6」。但 `05` §1 的攻城路徑把 `byte_10D35` 寫死成 0，而 bit 6 是野戰的地形配對才設的（`11` §467）。⚠ **要嘛 `byte_10D34` 還有第三個寫入點，要嘛這一首在這一版不會被放到** | 靜態 |
+| [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | 曲 10 | 需要戰場編號 ≥ `0xD1`。同上，已知的兩條路徑都到不了 | 靜態 |
+| [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | `AX=09F2h` | 換曲前送的服務號，TSR 那一側還沒讀（`17` §7） | 靜態 |
+| [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | `AL` 的 6 vs 5 | `sub_10241` 對曲號 ≥ 2 把 `AL` 從 6 改成 5，語意未解 | 靜態 |
+| [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | 音色聽感 | 這一份只解「哪一首」。**渲染出來像不像原版是另一回事**（`../playtest/26` §5） | 靜態 |
 
 ## 2.4 驗收（21 條）
 
@@ -383,7 +388,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（57 條）
+## 2.6 其他（58 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -436,8 +441,9 @@
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 事件佇列 | 這一輪不進 JSON。編輯器要動它得先有 UI 語意 | 靜態 |
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 未解區域 | `+0x1EC0` 那 7 KB 仍是黑盒，只能靠改寫保留 | 靜態 |
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 編輯器 | 這一份只做資料層。UI 是另一份規格 | 靜態 |
-| [`spec/29-audio.md`](../spec/29-audio.md) | 曲號 ↔ 場景 | `KI.EXE` 哪裡放哪一首還沒對過（`re/23` §5）。⚠ `cmd/wlgame` 目前的對應**只有開場那一首有證據**（`playtest/26`），其餘是 remake 的選擇，寫在 `musicTrack` 的註解裡。**解出來之前不要把它寫進機制文件** | 靜態 |
-| [`spec/29-audio.md`](../spec/29-audio.md) | 找法 | 曲子由 INT 61h `AH=0x06` 交出 `DS:SI` 決定（`re/23` §1），所以要掃 `KI.EXE` 裡設這個指標的呼叫端 | 靜態 |
+| [`spec/29-audio.md`](../spec/29-audio.md) | 曲 1／8／10 | 已知路徑到不了（`re/58` §5） | 靜態 |
+| [`spec/29-audio.md`](../spec/29-audio.md) | 曲 6（事件與對話） | 原版由四支對話／事件常式呼叫，remake 這一側還沒有對應的單一進入點，**沒接** | 靜態 |
+| [`spec/29-audio.md`](../spec/29-audio.md) | 換季的兩段時序 | 原版第 1 天停、第 2 天換曲，調色盤另外漸變 16 天。remake 只做了換曲那一半 | 靜態 |
 | [`spec/29-audio.md`](../spec/29-audio.md) | 迴圈點怎麼呈現 | 原版靠控制事件 `C1`／`C3` 無限循環；ogg 是有限長度，要決定渲染幾輪或另存迴圈點 | 靜態 |
 | [`spec/29-audio.md`](../spec/29-audio.md) | 全域音量偏移 | `cs:0996h` 誰設、範圍多少未解（`re/57` §8） | 靜態 |
 | [`spec/29-audio.md`](../spec/29-audio.md) | PC-98 版 | 音源是 YM2203，暫存器路徑完全沒讀。要不要做是待裁定的問題 | 靜態 |

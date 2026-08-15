@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
-# 把原版的音樂渲染成 ogg。
+# 把原版的音樂與音效渲染成 ogg。
 #
-#   tools/bgm2ogg.sh                       # 全部（BGM.DAT 11 首 ＋ 三個單曲檔）
+#   tools/bgm2ogg.sh                       # 全部（14 首 ＋ 18 個音效）
 #   tools/bgm2ogg.sh BGM.DAT 0             # 只做一首
+#   tools/bgm2ogg.sh sfx                   # 只做音效
 #   SECONDS_PER_SONG=120 tools/bgm2ogg.sh  # 改長度
+#
+# 產出的檔名就是 `internal/ui/sound` 認的名字：
+# 音樂 `<檔名小寫>-<曲號>.ogg`、音效 `sfx-<兩位數>.ogg`。
 #
 # 兩段路：`cmd/wlaudio`（純 Go，OPL3 合成 → WAV）＋ docker ffmpeg（WAV → ogg）。
 # **Go 這邊沒有 vorbis 編碼器**，所以第二段一定要出去；這也是為什麼
@@ -35,6 +39,28 @@ render() { # <資料檔> <曲號>
   printf '  → %s.ogg（%s）\n' "$base" "$(du -h "$OUT/$base.ogg" | cut -f1)"
 }
 
+# 音效走另一條：一次渲染全部，再逐個轉檔。
+sfx() {
+  "$ROOT/tools/go.sh" run ./cmd/wlaudio \
+    -sound workplace/orig/dosv/SOUND.DAT -out workplace/audio
+  for w in "$OUT"/sfx-*.wav; do
+    [ -e "$w" ] || continue
+    b="$(basename "$w" .wav)"
+    docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
+      --network none -v "$OUT:/out" "$FFMPEG_IMAGE" \
+      -hide_banner -loglevel error -y -i "/out/$b.wav" \
+      -c:a libvorbis -q:a 5 "/out/$b.ogg"
+  done
+  docker run --rm --network none --entrypoint chown \
+    -v "$OUT:/out" "$FFMPEG_IMAGE" -R "$(id -u):$(id -g)" /out
+  printf '  → %d 個音效\n' "$(ls "$OUT"/sfx-*.ogg 2>/dev/null | wc -l)"
+}
+
+if [ "${1:-}" = sfx ]; then
+  sfx
+  exit 0
+fi
+
 if [ $# -eq 2 ]; then
   render "$1" "$2"
   exit 0
@@ -44,3 +70,4 @@ for n in $(seq 0 10); do render BGM.DAT "$n"; done
 for f in OPENBGM.DAT ENDBGM.DAT OVERBGM.DAT; do
   [ -f "$ORIG/$f" ] && render "$f" 0
 done
+sfx
