@@ -30,6 +30,8 @@ const (
 	numBlocks = 4
 
 	factionBase, factionSize, numFactions = 0x0080, 64, 22
+	// livingFactionsOffset 是存活勢力數在區塊裡的位置（docs/re/59 §3）。
+	livingFactionsOffset = 0x3A
 
 	// 交友度矩陣：列 ＝ 觀察者、欄 ＝ 對象，每列 24 byte（用到前 22 欄）。
 	// 位址算法出自 `sub_13119`：`0x600 + 觀察者 × 24 + 對象`（段內偏移），
@@ -375,6 +377,11 @@ type World struct {
 	// 因此它是可持久化的 u8。勢力記錄 +0x1D 是士氣基準，不是信賴度。
 	Trust int
 
+	// LivingFactions 是還沒滅亡的勢力數（區塊 +0x3A）。
+	// **只在 eliminateFaction 裡減**——原版也只有一個 `dec`
+	// （docs/re/59 §3）。減到 1 就是結局。
+	LivingFactions int
+
 	// 稅率與募兵數是**玩家專屬**的設定（AI 不用，見 docs/re/07 §8）。
 	// Next 那一組是玩家在財政視窗改的值，月結時才搬到生效那一組。
 	TaxRate        int
@@ -487,6 +494,10 @@ func loadBlock(b []byte) *World {
 		Month:   u16(b, 0x04),
 		Year:    u16(b, 0x06),
 	}
+	// 存活勢力數（區塊 +0x3A，59 byte 全域區塊的最後一格）。
+	// 原版 `cs:0D2Ah` 全庫只有一個 `dec`，靠這個欄位載入初值；
+	// 減到 1 就是結局（docs/re/59 §3）。
+	w.LivingFactions = int(b[livingFactionsOffset])
 	w.TaxRate = int(b[taxOffset])
 	w.NextTaxRate = int(b[nextSettings])
 	for i := 0; i < int(economy.NumTroopTypes); i++ {
@@ -987,7 +998,7 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 	for i := range w.Factions {
 		if w.Factions[i].Alive && w.Factions[i].Cities == 0 &&
 			w.Factions[i].Corps == 0 {
-			w.Factions[i].Alive = false
+			w.eliminateFaction(i)
 			ev.Eliminated = append(ev.Eliminated, i)
 		}
 	}
@@ -1215,6 +1226,7 @@ func (w *World) Bytes() []byte {
 
 	// 遊戲時鐘。+0x01 的該月天數是快取值，原版在換月時一起寫，
 	// 這裡也一起寫回去，否則進位判斷會用到舊的天數。
+	b[livingFactionsOffset] = byte(w.LivingFactions)
 	b[0x00] = byte(w.Clock.Day)
 	b[0x01] = byte(clock.DaysInMonth(w.Clock.Month))
 	b[0x02] = byte(w.Clock.Subtick)

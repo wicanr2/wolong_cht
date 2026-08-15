@@ -12,6 +12,10 @@ const (
 	InProgress OutcomeKind = iota
 	DefeatTrustZero
 	DefeatFactionEliminated
+	// Victory 是原版離開碼 2（`D7END.EXE`）。閘門只有一個：
+	// 存活勢力數減到 1（`sub_11CD0` 的 `cmp cs:byte_10D2A, 1`）。
+	// ⚠ 「佔領所有城池」在機器碼裡**不是**另一條規則（docs/re/59 §5）。
+	Victory
 )
 
 // Outcome 回傳目前結果。它是唯讀 accessor；結果一旦離開 InProgress 就不會
@@ -32,6 +36,10 @@ func (w *World) OutcomeMessageSelector() (uint16, bool) {
 	switch w.outcome {
 	case DefeatTrustZero:
 		return 0x019E, true
+	case Victory:
+		// 原版結局送 TALK #75 與 #407（docs/re/59 §2）；
+		// 內容還沒對出來，所以這裡只回前者。
+		return 0x004B, true
 	default:
 		return 0, false
 	}
@@ -62,6 +70,27 @@ func (w *World) AdjustTrust(delta int) int {
 		w.latchOutcome(DefeatTrustZero)
 	}
 	return w.Trust
+}
+
+// eliminateFaction 是**唯一**讓一個勢力滅亡的入口。
+//
+// 原版的順序有意義（`sub_14FCE`，docs/re/59 §4）：先判斷滅亡的是不是
+// 玩家所仕的勢力（→ 敗北），**才**減存活勢力數。反過來寫的話，
+// 玩家自己滅亡時會因為「剩一個」被誤判成結局。
+func (w *World) eliminateFaction(i int) {
+	if w == nil || i < 0 || i >= numFactions || !w.Factions[i].Alive {
+		return
+	}
+	w.Factions[i].Alive = false
+	if i == w.Player {
+		w.latchOutcome(DefeatFactionEliminated)
+	}
+	if w.LivingFactions > 0 {
+		w.LivingFactions--
+	}
+	if w.LivingFactions == 1 {
+		w.latchOutcome(Victory)
+	}
 }
 
 // DebugLatchOutcomeForShot 僅供 wlgame 的 -open-outcome 截圖 fixture 使用。

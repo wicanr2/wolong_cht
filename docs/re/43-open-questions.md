@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 56 | 55 | 1 | 0 |
 | 資料保存 | 38 | 38 | 0 | 0 |
-| 程式碼理解 | 193 | 187 | 6 | 0 |
+| 程式碼理解 | 197 | 191 | 6 | 0 |
 | 驗收 | 21 | 16 | 5 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 58 | 55 | 3 | 0 |
-| **合計** | **384** | 368 | 15 | 1 |
+| 其他 | 62 | 59 | 3 | 0 |
+| **合計** | **392** | 376 | 15 | 1 |
 
 ## 2.1 規則正確性（56 條）
 
@@ -83,7 +83,7 @@
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 信賴度的值域 | **0…255，byte 飽和**（`seg000:10D00`、`sub_13D91`／`13DC9`）→ confirmed | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 初始／新遊戲初始化值 | 原始劇本 `+0x10` 可直接讀；第 1 劇本目前為 `0xFF`；`sub_18B12` 完整時序 → 強證據／待 oracle | 實測 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 玩家進言／說得的信賴度增減量 | **已證實**：`sub_13830` 的第一反應為 `+20`／`−20`，多理由完成為 `+10`，錯選理由為 `−20`；事件 13 的 `−50` 另由 `sub_13507` 定案。事件 2／3 等外交回報的其他增減仍需逐分支對拍 | 靜態 |
-| [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 四個劇本的結束條件是否不同 | `OPEN_S*` / `END_S*` 檔（未解） | 靜態 |
+| [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 四個劇本的結束條件是否不同 | `OPEN_S*` / `END_S*` 檔（未解）。**觸發條件本身四劇本共用**——差別只在初始勢力數 | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 君主陣亡時軍師怎麼辦 | 未知 | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | END_S1`–`END_S4`（結局動畫？）與四個劇本的結局有關，格式還沒碰。 | （未解小節內文） | 靜態 |
 
@@ -130,7 +130,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（193 條）
+## 2.3 程式碼理解（197 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -327,6 +327,10 @@
 | [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | `AX=09F2h` | 換曲前送的服務號，TSR 那一側還沒讀（`17` §7） | 靜態 |
 | [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | `AL` 的 6 vs 5 | `sub_10241` 對曲號 ≥ 2 把 `AL` 從 6 改成 5，語意未解 | 靜態 |
 | [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | 音色聽感 | 這一份只解「哪一首」。**渲染出來像不像原版是另一回事**（`../playtest/26` §5） | 靜態 |
+| [`re/59-game-over-exit-codes.md`](../re/59-game-over-exit-codes.md) | 結局的兩則訊息 | TALK `#75` 與 `#407` 的內容還沒對出來 | 靜態 |
+| [`re/59-game-over-exit-codes.md`](../re/59-game-over-exit-codes.md) | `sub_14DF0` 的 CF | 「找不到替代據點」與「據點數 0」是不是同一件事，還沒逐行讀 | 靜態 |
+| [`re/59-game-over-exit-codes.md`](../re/59-game-over-exit-codes.md) | 無主城 `0x18` | 值 24 落在 22 個勢力之外，但劇本裡有沒有無主城沒查過 | 靜態 |
+| [`re/59-game-over-exit-codes.md`](../re/59-game-over-exit-codes.md) | `D7END.EXE` | 結局過場本身完全沒讀（`END_S*.DAT` 的用法未解） | 靜態 |
 
 ## 2.4 驗收（21 條）
 
@@ -377,7 +381,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（58 條）
+## 2.6 其他（62 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -436,6 +440,10 @@
 | [`spec/29-audio.md`](../spec/29-audio.md) | 迴圈點怎麼呈現 | 原版靠控制事件 `C1`／`C3` 無限循環；ogg 是有限長度，要決定渲染幾輪或另存迴圈點 | 靜態 |
 | [`spec/29-audio.md`](../spec/29-audio.md) | 全域音量偏移 | `cs:0996h` 誰設、範圍多少未解（`re/57` §8） | 靜態 |
 | [`spec/29-audio.md`](../spec/29-audio.md) | PC-98 版 | 音源是 YM2203，暫存器路徑完全沒讀。要不要做是待裁定的問題 | 靜態 |
+| [`spec/30-victory.md`](../spec/30-victory.md) | 結局畫面 | `D7END.EXE` 是另一支程式，`END_S*.DAT` 的過場沒有實作 | 靜態 |
+| [`spec/30-victory.md`](../spec/30-victory.md) | 四個劇本的結局是否不同 | `END_S*` 檔的對應未解（`mechanics/80-victory.md` §116） | 靜態 |
+| [`spec/30-victory.md`](../spec/30-victory.md) | 君主陣亡時軍師怎麼辦 | 未知（同上） | 靜態 |
+| [`spec/30-victory.md`](../spec/30-victory.md) | 結局的訊息 | `sub_11CD0` 送 TALK `#0x4B` 與 `#0x197`，內容還沒對出來 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |

@@ -772,10 +772,7 @@ func (w *World) capture(att int, ev *CorpsEvent) {
 			// sub_14DF0：首都失守且找不到替代據點時，capital=0xFF
 			// 並清除勢力 alive bit；sub_14FCE 隨後對玩家離開主循環。
 			w.Factions[old].Capital = noCity
-			w.Factions[old].Alive = false
-			if old == w.Player {
-				w.latchOutcome(DefeatFactionEliminated)
-			}
+			w.eliminateFaction(old)
 		}
 	}
 }

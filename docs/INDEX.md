@@ -28,7 +28,7 @@
 | [`docs/mechanics/50-diplomacy.md`](mechanics/50-diplomacy.md) | 50 — 外交 | 成立條件與外交官的數值都已解 | 2026-08-13 |
 | [`docs/mechanics/60-personnel.md`](mechanics/60-personnel.md) | 60 — 武將 | 三個能力值的作用與身分欄位已定案（說明書＋機器碼），數值公式部分已知。 政治如何影響內政效果與外交官要價仍未解。 | 2026-08-13 |
 | [`docs/mechanics/70-ai.md`](mechanics/70-ai.md) | 70 — 電腦 AI 的判斷邏輯 | 侵攻目標的決策鏈、友好度漂移、宣戰三閘與 AI 編成入口已由機器碼讀出；remake 已接上可重播的敵方出兵切片。 | 2026-08-09 |
-| [`docs/mechanics/80-victory.md`](mechanics/80-victory.md) | 80 — 勝負判定 | 勝負條件全部定案（說明書 1.1、1.2 節）。 | 2026-08-08 |
+| [`docs/mechanics/80-victory.md`](mechanics/80-victory.md) | 80 — 勝負判定 | 勝負條件全部定案。⭐ 結局的觸發已由機器碼定案 （[../re/59](../re/59-game-over-exi… | 2026-08-08 |
 | [`docs/mobile/android-plan.md`](mobile/android-plan.md) | Android 版規劃 | 規劃已啟動；觸控 shell 原型 debug APK 已產出，並已在 Android 模擬器完成安裝、啟動與有限觸… | 2026-08-11 |
 | [`docs/playtest/01-dosbox-dosv.md`](playtest/01-dosbox-dosv.md) | 01 — 松崗 DOS/V 版首次實跑（DOSBox） | DOS/V 版可開機並可由密碼頁進入開場；字型懸案結案。 | 2026-08-07 |
 | [`docs/playtest/02-dosboxx-pc98.md`](playtest/02-dosboxx-pc98.md) | 02 — PC-98 日文原版實跑（DOSBox-X）：oracle 建立完成 | PC-98 oracle 已建立，沒有防拷。 | 2026-08-07 |
@@ -120,6 +120,7 @@
 | [`docs/re/56-bgm-track-events.md`](re/56-bgm-track-events.md) | 56 — ⭐ BGM.DAT 的聲軌事件編碼解出來了 | 事件編碼、三張查表、播放引擎的迴圈、控制事件的分派全部 confirmed。 音符與控制事件都可以完整還原成語意（§… | 2026-08-15 |
 | [`docs/re/57-opl3-register-map.md`](re/57-opl3-register-map.md) | 57 — ⭐ DOS/V 的音源是 OPL3，六個聲軌各佔一組 4-operator 通道 | 晶片型號、通道配置、音色記錄版面、音量與速度換算、SOUND.DAT 的記錄結構全部 confirmed。剩兩張表的… | 2026-08-15 |
 | [`docs/re/58-bgm-scene-mapping.md`](re/58-bgm-scene-mapping.md) | 58 — ⭐ 哪一首配哪個場景：BGM.DAT 的 11 首全部對出來了 | 曲 0／2–10 全部 confirmed（呼叫端的立即值、查表或計算式）。 只剩曲 1 ——它在 DOS/V 的 … | 2026-08-15 |
+| [`docs/re/59-game-over-exit-codes.md`](re/59-game-over-exit-codes.md) | 59 — ⭐ 結局與敗北是靠離開碼交出去的 | 三個離開碼與各自的觸發點 confirmed。 ⭐ 結局的閘門是 | 2026-08-16 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-13 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -142,6 +143,7 @@
 | [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 「自定」（軍師命名）還沒接（§5）。 | 2026-08-15 |
 | [`docs/spec/28-scenario-json.md`](spec/28-scenario-json.md) | 28 — 劇本的 JSON 匯出與匯入 | CONFORMED。四個區塊 round-trip 全過。 | 2026-08-15 |
 | [`docs/spec/29-audio.md`](spec/29-audio.md) | 29 — 音樂與音效 | CONFORMED。音樂與音效都會出聲、與原版錄音比對過， ⭐ | 2026-08-15 |
+| [`docs/spec/30-victory.md`](spec/30-victory.md) | 30 — 結局：存活勢力數歸一 | READY。⭐ 觸發條件在機器碼裡是 | 2026-08-16 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | READY。管線的每一段都有現成工具，缺的是把它們接起來 與一支逐區差分工具。 | 2026-08-15 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）

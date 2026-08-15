@@ -25,18 +25,24 @@ func outcomeReason(kind state.OutcomeKind) string {
 		return "信賴度歸零，已被逐出勢力。"
 	case state.DefeatFactionEliminated:
 		return "玩家勢力失去最後可替代據點。"
+	case state.Victory:
+		return "天下已無他主，大業成矣。"
 	default:
 		return "遊戲已停止。"
 	}
 }
 
-// outcomeLines 優先沿用已證實 selector 0x019E 對應的 DOS/V TALK.DAT 訊息。
+// outcomeLines 優先沿用已證實 selector 對應的 DOS/V TALK.DAT 訊息。
 // 只有 TALK 資產不存在、索引失效或 marker/payload 無法安全代入時，才退回
 // 克制的 remake 原因句；不能在 GUI 顯示研究判定或反組譯備註。
 func (g *game) outcomeLines() []string {
-	if g != nil && g.world != nil && g.world.Outcome() == state.DefeatTrustZero {
-		if lines, ok := g.talkLines(0x019E, map[byte]string{}); ok && len(lines) > 0 {
-			return lines
+	// 兩個已定位的 selector：敗北 0x019E（docs/re/09）、結局 0x004B
+	// （docs/re/59 §2）。⚠ 結局那一則的內容還沒對過，代不進去就退回原因句。
+	if g != nil && g.world != nil {
+		if sel, ok := g.world.OutcomeMessageSelector(); ok {
+			if lines, ok := g.talkLines(int(sel), map[byte]string{}); ok && len(lines) > 0 {
+				return lines
+			}
 		}
 	}
 	return []string{outcomeReason(g.world.Outcome())}

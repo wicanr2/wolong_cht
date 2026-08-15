@@ -1,6 +1,7 @@
 package state
 
 import (
+	"os"
 	"reflect"
 	"testing"
 
@@ -104,5 +105,71 @@ func TestOutcomeLatchIsNotOverwritten(t *testing.T) {
 	}
 	if got := w.Outcome(); got != DefeatTrustZero {
 		t.Fatalf("Outcome 被覆蓋成 %v", got)
+	}
+}
+
+// 存活勢力數要從劇本區塊 +0x3A 載入，四個劇本的值是 22／11／6／4。
+//
+// 這一條直接讀原版檔案——**它是「+0x3A 是存活勢力數」的證據本身**
+// （`docs/re/59` §3），不是把實作反過來寫成期望值。
+func TestLivingFactionsComesFromScenarioBlock(t *testing.T) {
+	raw, err := os.ReadFile("../../workplace/orig/dosv/SINARIO.DAT")
+	if err != nil {
+		t.Skip("找不到原版 SINARIO.DAT，跳過")
+	}
+	want := []int{22, 11, 6, 4}
+	for i, n := range want {
+		if got := int(raw[i*blockSize+livingFactionsOffset]); got != n {
+			t.Errorf("劇本 %d 的 +0x3A ＝ %d，該劇本有 %d 個勢力", i, got, n)
+		}
+		w := loadBlock(raw[i*blockSize : (i+1)*blockSize])
+		if w.LivingFactions != n {
+			t.Errorf("劇本 %d 載入後 LivingFactions ＝ %d，want %d", i, w.LivingFactions, n)
+		}
+	}
+}
+
+// 滅到剩一個勢力就是結局。
+func TestEliminatingDownToOneFactionIsVictory(t *testing.T) {
+	w := &World{Player: 0, LivingFactions: 3}
+	for i := range w.Factions {
+		w.Factions[i].Alive = i < 3
+	}
+	w.eliminateFaction(2)
+	if got := w.Outcome(); got != InProgress {
+		t.Fatalf("還剩兩個勢力就判 %v", got)
+	}
+	w.eliminateFaction(1)
+	if got := w.Outcome(); got != Victory {
+		t.Fatalf("剩一個勢力時 Outcome ＝ %v，want Victory", got)
+	}
+}
+
+// ⚠ 玩家自己滅亡要走敗北，不能因為「剩一個」變成結局。
+//
+// 原版的順序（先判玩家、再減計數器）就是為了這件事（`docs/re/59` §4）。
+func TestPlayerEliminationBeatsVictory(t *testing.T) {
+	w := &World{Player: 0, LivingFactions: 2}
+	for i := range w.Factions {
+		w.Factions[i].Alive = i < 2
+	}
+	w.eliminateFaction(0)
+	if got := w.Outcome(); got != DefeatFactionEliminated {
+		t.Fatalf("玩家勢力滅亡時 Outcome ＝ %v，want DefeatFactionEliminated", got)
+	}
+}
+
+// 存活勢力數要能 round-trip 回同一個 byte。
+func TestLivingFactionsRoundTrips(t *testing.T) {
+	raw, err := os.ReadFile("../../workplace/orig/dosv/SINARIO.DAT")
+	if err != nil {
+		t.Skip("找不到原版 SINARIO.DAT，跳過")
+	}
+	block := append([]byte(nil), raw[:blockSize]...)
+	w := loadBlock(block)
+	out := w.Bytes()
+	if out[livingFactionsOffset] != block[livingFactionsOffset] {
+		t.Errorf("寫回後 +0x3A ＝ %d，原本是 %d",
+			out[livingFactionsOffset], block[livingFactionsOffset])
 	}
 }
