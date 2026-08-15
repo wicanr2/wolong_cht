@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 60 | 59 | 1 | 0 |
 | 資料保存 | 43 | 43 | 0 | 0 |
-| 程式碼理解 | 188 | 181 | 7 | 0 |
+| 程式碼理解 | 190 | 184 | 6 | 0 |
 | 驗收 | 19 | 15 | 4 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 62 | 58 | 3 | 1 |
-| **合計** | **390** | 373 | 15 | 2 |
+| 其他 | 56 | 53 | 3 | 0 |
+| **合計** | **386** | 371 | 14 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -139,7 +139,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（188 條）
+## 2.3 程式碼理解（190 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -217,8 +217,7 @@
 | [`re/13-pc98-numeric-window.md`](../re/13-pc98-numeric-window.md) | sub_17C6E` caller 的保存區仍從 `(80,176)`、112×80 開始；96×64 內框目的地是 | （未解小節內文） | 靜態 |
 | [`re/13-pc98-numeric-window.md`](../re/13-pc98-numeric-window.md) | cmd/wlgame` 有 DOS/V 資源時直接繪製這張內框，缺資源才降級通用框；數值格的 raw | （未解小節內文） | 靜態 |
 | [`re/15-event10-producer.md`](../re/15-event10-producer.md) | 以下來源沒有證據，不能補成事實：未被 IDA 建成函式的 far code、以暫存器或指標 | （未解小節內文） | 靜態 |
-| [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | `SOUND.DAT` 的格式 | 未解。`INT 61h` 傳的是 effect code，不是可聽音效的名字（§3） | 靜態 |
-| [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | `BGM.DAT` 的聲軌事件編碼 | 未解（`23`），所以不能宣稱音色 parity | 靜態 |
+| [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | `0x330` 的用途 | MPU-401 的標準埠，沒找到讀它的地方 | 靜態 |
 | [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | `INT 61h` 的四個服務號 | `ah=4`／`7`／`8` 與 `ax=09F2h`／`0C01h`，對應什麼動作要看 `YNSOUND.COM`（`42` §7） | 靜態 |
 | [`re/19-outcome.md`](../re/19-outcome.md) | 勢力滅亡 selector | 未定位。remake 只顯示克制的 fallback 句，不冒充原版文字 | 靜態 |
 | [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | §5 的四個 gate 裡，前兩個已由 §7／§8 兩個切片收掉；剩下的是這些： | （未解小節內文） | 靜態 |
@@ -230,11 +229,9 @@
 | [`re/22-strategy-command-tree.md`](../re/22-strategy-command-tree.md) | 熱區圖怎麼登記 | 寫入端 `sub_1E41B` 沒有任何文件提過 | 靜態 |
 | [`re/22-strategy-command-tree.md`](../re/22-strategy-command-tree.md) | `off_159D2` 的其餘槽位 | 16 筆裡只有 [1] `0x1614A`、[2] `0x15E1E`、[3] `0x15A3A`、[4] `sub_15FAA`、[13] `sub_161CA` 非 `nullsub_1`。這是頂層模式分派表，[1]–[3] 未讀 | 靜態 |
 | [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x00` | 2 B / 未解 | 靜態 |
-| [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x02` | 2 B / 指向靠近曲尾的一張表；載入時存進 `cs:099Ah`。**內容未解** | 靜態 |
-| [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x04` | 2 B / 指向另一張表；存進 `cs:099Ch`。它是曲塊的**最後一段**，長 `0x30` B。**內容未解** | 靜態 |
 | [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x06`–`+0x0F` | 10 B / 未解 | 靜態 |
+| [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x04` 那張表 | 大小與音效記錄相同（3 × 16 B），但驅動沒讀它。見 `57` §8 | 靜態 |
 | [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x00`、`+0x06`–`+0x0F` | 12 B 未解 | 靜態 |
-| [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | DOS/V 的實際音源晶片 | `17` §4 有 register path，卡種仍未定案 | 靜態 |
 | [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | 曲號 ↔ 場景的對應 | `KI.EXE` 呼叫端傳哪個索引還沒對過 | 靜態 |
 | [`re/25-message-variants-and-personnel.md`](../re/25-message-variants-and-personnel.md) | `sub_16B4F`／`sub_16C2A` | 解任的實際動作未讀 | 靜態 |
 | [`re/25-message-variants-and-personnel.md`](../re/25-message-variants-and-personnel.md) | `sub_17400`／`sub_17906`／`sub_17663` | 選據點／選勢力／選武將三支一覽表未讀 | 靜態 |
@@ -326,11 +323,16 @@
 | [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | 六個 handler | 熱區 `0x20`–`0x25` 各自做什麼沒讀（「資料儲存」通往四槽視窗是推測） | 靜態 |
 | [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | 中間四列的值 | 由誰填、值域多少未讀 | 靜態 |
 | [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | `sub_106F5` 的屬性解碼 | §3 的低 byte 讀法是強推論，沒逐行驗 | 靜態 |
-| [`re/56-bgm-track-events.md`](../re/56-bgm-track-events.md) | 控制事件（低 byte ≥ `0x80`） | 分派在 `0x1045B`，**未讀**。實測看到 `80 xx`（每軌開頭都有，值 08–0F）、`A0 xx`（遞增，音色候選）、`B0 xx`、`D0 xx`、`F0 xx`（遞增，段落候選）。**不要照長相猜語意** | 實測 |
-| [`re/56-bgm-track-events.md`](../re/56-bgm-track-events.md) | `0x10890` | 實際寫 I/O 埠的常式，還沒讀。基底埠存在 `cs:097Ch` | 靜態 |
-| [`re/56-bgm-track-events.md`](../re/56-bgm-track-events.md) | 兩組埠 | 聲軌 3–5 走 `基底+2`。是 OPL3 的第二 bank 還是雙 OPL2，沒有證據 | 靜態 |
-| [`re/56-bgm-track-events.md`](../re/56-bgm-track-events.md) | `+0x02`／`+0x04` 兩張表 | `23` §3 記的那兩張，仍未解。`+0x04` 固定 `0x30` B，是音色定義的候選 | 靜態 |
-| [`re/56-bgm-track-events.md`](../re/56-bgm-track-events.md) | 音色 | OPL 的 operator 參數（`20`／`40`／`60`／`80`／`C0` 那幾組）由誰寫、寫什麼，沒讀 | 靜態 |
+| [`re/56-bgm-track-events.md`](../re/56-bgm-track-events.md) | 全音符 ＝ 192 tick | 從長度表的二分序列推的，**強證據不是 confirmed**。沒有樂譜可對 | 靜態 |
+| [`re/56-bgm-track-events.md`](../re/56-bgm-track-events.md) | `+0x04` 那張表 | 見 `57` §8 | 靜態 |
+| [`re/56-bgm-track-events.md`](../re/56-bgm-track-events.md) | PC-98 側 | 事件編碼共用，但音色與音源程式設計完全沒讀 | 靜態 |
+| [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | 曲塊 `+0x04` 的表 | 固定 `0x30` B ＝ 3 × 16，與音效記錄同大小。但 parser 存進 `cs:099Ch` 之後，**整個驅動沒有任何一處讀它**（全庫掃立即值只有一筆寫入）。是舊版遺留還是由別處使用，未解 | 靜態 |
+| [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | 曲塊 `+0x00`、`+0x06`–`+0x0F` | 12 B 未解 | 靜態 |
+| [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | 音色記錄 `+0x16`–`+0x1F` | 驅動不讀，內容意義未解 | 靜態 |
+| [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | `word [097Eh]` ＝ `0x0330` | MPU-401 的標準埠，但沒找到讀它的地方 | 靜態 |
+| [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | 全域音量偏移 `[0996h]` | 誰設、範圍多少未解 | 靜態 |
+| [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | 曲號 ↔ 場景 | `KI.EXE` 的呼叫端還沒對過（`23` §5） | 靜態 |
+| [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | PC-98 側的音源程式設計 | 完全沒讀。YM2203 的暫存器路徑與音色版面都未解 | 靜態 |
 
 ## 2.4 驗收（19 條）
 
@@ -379,7 +381,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（62 條）
+## 2.6 其他（56 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -432,16 +434,10 @@
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 事件佇列 | 這一輪不進 JSON。編輯器要動它得先有 UI 語意 | 靜態 |
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 未解區域 | `+0x1EC0` 那 7 KB 仍是黑盒，只能靠改寫保留 | 靜態 |
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 編輯器 | 這一份只做資料層。UI 是另一份規格 | 靜態 |
-| [`spec/29-audio.md`](../spec/29-audio.md) | 推論等級：容器與 INT 61h 介面 **confirmed**；播放 command **未解 | （散句） | 靜態 |
-| [`spec/29-audio.md`](../spec/29-audio.md) | 控制事件 | 低 byte ≥ `0x80` 的分派在 `0x1045B`，**未讀**。音量、音色、段落都在裡面（`docs/re/56` §5） | 靜態 |
-| [`spec/29-audio.md`](../spec/29-audio.md) | 音色 | OPL 的 operator 參數（`20`／`40`／`60`／`80`／`C0` 那幾組）由誰寫、寫什麼未讀。**沒有音色就只能發出正弦波**，不是原版音響 | 靜態 |
-| [`spec/29-audio.md`](../spec/29-audio.md) | 兩組埠 | 聲軌 3–5 走 `基底+2`。OPL3 第二 bank 還是雙 OPL2，沒有證據 | 靜態 |
-| [`spec/29-audio.md`](../spec/29-audio.md) | `SOUND.DAT` | 音效資料的格式未解。戰術三個 effect code 已知（`docs/re/17` §3） | 靜態 |
-| [`spec/29-audio.md`](../spec/29-audio.md) | 播放 command | §3，擋住整個階段 B | 靜態 |
-| [`spec/29-audio.md`](../spec/29-audio.md) | `SOUND.DAT` | 音效資料的格式未解 | 靜態 |
-| [`spec/29-audio.md`](../spec/29-audio.md) | 音量 | 錄到的峰值只有滿刻度 4.7%，原因沒查 | 靜態 |
-| [`spec/29-audio.md`](../spec/29-audio.md) | 循環點 | 原版曲子怎麼循環未解——錄音只能錄固定長度 | 靜態 |
-| [`spec/29-audio.md`](../spec/29-audio.md) | PC-98 版 | 音源是 YM2203（FM 3 ＋ SSG 3），與 DOS/V 的 OPL 不同。**兩版音樂資料本來就有實質差異**（`re/23` §4），要錄哪一版是待裁定的問題 | 兩版對照 |
+| [`spec/29-audio.md`](../spec/29-audio.md) | 曲號 ↔ 場景 | `KI.EXE` 哪裡放哪一首還沒對過（`re/23` §5） | 靜態 |
+| [`spec/29-audio.md`](../spec/29-audio.md) | 迴圈點怎麼呈現 | 原版靠控制事件 `C1`／`C3` 無限循環；ogg 是有限長度，要決定渲染幾輪或另存迴圈點 | 靜態 |
+| [`spec/29-audio.md`](../spec/29-audio.md) | 全域音量偏移 | `cs:0996h` 誰設、範圍多少未解（`re/57` §8） | 靜態 |
+| [`spec/29-audio.md`](../spec/29-audio.md) | PC-98 版 | 音源是 YM2203，暫存器路徑完全沒讀。要不要做是待裁定的問題 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |

@@ -29,6 +29,30 @@ NOTE_NAMES = ["休", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#",
 
 EMPTY_TRACK = 0x22  # 未使用的聲軌一律指到這個 stub
 
+# INT 8 的頻率：PIT divisor 256（`docs/re/57` §5）。
+PIT_HZ = 1193182.0 / 256
+
+
+def control(lo, hi):
+    """控制事件（低 byte ≥ 0x80）。分派看 bit 4–6（`docs/re/56` §5）。"""
+    kind = (lo >> 4) & 7
+    if kind == 0:
+        return "音量%d" % hi
+    if kind == 1:
+        return "漸%s(量%d,每%d)" % ("弱" if lo & 1 else "強", hi >> 4, (hi & 0x0F) * 4)
+    if kind == 2:
+        return "音色%d" % hi
+    if kind == 3:
+        n = (0xFF - hi) * 11 // 8
+        return "速度%d(%.1f tick/s)" % (hi, PIT_HZ / n) if n else "速度%d" % hi
+    if kind == 4:
+        return {0xC1: "迴圈回跳", 0xC2: "呼叫子段", 0xC3: "子段返回"}.get(lo, "跳回記號")
+    if kind == 5:
+        return {0xD1: "迴圈起點×%d" % hi, 0xD2: "子段入口"}.get(lo, "記號")
+    if kind == 6:
+        return "無作用[%02X %02X]" % (lo, hi)
+    return "旗標%d" % hi
+
 
 def load_tables(path):
     com = open(path, "rb").read()
@@ -59,9 +83,7 @@ def describe(block, start, limit, tbl_len, tbl_b0, tbl_a0):
         lo, hi = block[i], block[i + 1]
         i += 2
         if lo >= 0x80:
-            # 控制事件。語意未解（docs/re/56 §4）——**照原樣印出來**，
-            # 不要猜成音量或音色寫進輸出，那會變成沒有證據的斷言。
-            out.append("[%02X %02X]" % (lo, hi))
+            out.append(control(lo, hi))
             continue
         note, octave = lo & 0x0F, (lo >> 4) & 0x07
         ticks = tbl_len[hi & 0x7F] if (hi & 0x7F) < len(tbl_len) else -1

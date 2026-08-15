@@ -1,8 +1,9 @@
 # 17 — 松崗 DOS/V 音源 TSR 與戰術效果碼
 
-**狀態：INT 61h 介面、遊戲端效果碼與硬體 register 寫入已證實；`*BGM.DAT` 的容器與
-聲軌指標結構已解（見 [`23`](23-bgm-resource-format.md)）；聲軌事件編碼、可聽音色與
-精確音效卡／晶片型號仍未知。**
+**狀態：INT 61h 介面、遊戲端效果碼與硬體 register 寫入已證實。
+⭐ 晶片是 **OPL3（YMF262）**，見 [`57`](57-opl3-register-map.md)；
+`*BGM.DAT` 的容器見 [`23`](23-bgm-resource-format.md)、事件編碼見
+[`56`](56-bgm-track-events.md)。**
 
 - 日期：2026-08-12
 - 原始輸入：`workplace/orig/dosv/YNSOUND.COM`，SHA-256
@@ -86,11 +87,13 @@ register = 0xB0 + channel, data = CH
 原始 data word `word_1097C` 預設為 `0x0220`，緊接著的 word 為 `0x0330`；啟動 `/A`
 參數的結果會更新前者。
 
-- **已證實：** 這是一組 address/data register pair，並使用 `A0`／`B0` channel register
-  family。
-- **強推論：** register 形狀與 FM／OPL 類可程式音源協定相近。
-- **未知：** `0x220` 的實際硬體型號／卡種、`0x330` 的用途、音效／音樂資源格式與各 code
-  的聲學語意。不能把「OPL 類」升格成確定晶片型號。
+⭐ **晶片已定案：OPL3（YMF262）**，六個聲軌各佔一組 4-operator 通道，
+音效走剩下的三個 2-operator 通道。決定性證據是初始化寫的 `0x104`／`0x105`
+兩個暫存器（OPL2 沒有），完整推導見 [`57`](57-opl3-register-map.md) §1。
+
+- **已證實：** address/data register pair、`A0`／`B0` channel family、
+  `0x222` 是 OPL3 的第二組暫存器（不是第二顆晶片）。
+- **未知：** `0x330` 的用途（MPU-401 的標準埠，但沒找到讀它的地方）。
 
 ## 5. UI 點擊音是另一條路
 
@@ -108,7 +111,6 @@ TSR 路徑分離。故「戰術效果」與「介面／TALK click」不能共用
 
 | 項目 | 現況 |
 |---|---|
-| 精確的音效卡／晶片型號 | register path 已解（§4），卡種未定案 |
-| `SOUND.DAT` 的格式 | 未解。`INT 61h` 傳的是 effect code，不是可聽音效的名字（§3）|
-| `BGM.DAT` 的聲軌事件編碼 | 未解（[`23`](23-bgm-resource-format.md)），所以不能宣稱音色 parity |
+| `0x330` 的用途 | MPU-401 的標準埠，沒找到讀它的地方 |
+| 效果碼 ↔ 聽起來像什麼 | `SOUND.DAT` 的記錄結構已解（[`57`](57-opl3-register-map.md) §6），但哪一號對應哪個動作只有 §3 的三個 |
 | `INT 61h` 的四個服務號 | `ah=4`／`7`／`8` 與 `ax=09F2h`／`0C01h`，對應什麼動作要看 `YNSOUND.COM`（[`42`](42-leaf-functions.md) §7）|

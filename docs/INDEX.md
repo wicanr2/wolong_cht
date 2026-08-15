@@ -78,7 +78,7 @@
 | [`docs/re/14-mmap-mch-objects.md`](re/14-mmap-mch-objects.md) | 14 — MMAP.MCH 戰略地圖物件 | 資產格式、事件 12 的火災／暴動圖形鏈與 typed 動畫／移動時序 confirmed； type 3 的事件語… | 2026-08-10 |
 | [`docs/re/15-event10-producer.md`](re/15-event10-producer.md) | 15 — 事件 10 producer 深度逆向 | 事件 10 dispatcher／consumer／queue writer 已證實；原版自然 producer 仍… | 2026-08-11 |
 | [`docs/re/16-idle-clock-event10.md`](re/16-idle-clock-event10.md) | 16 — DOS/V 無輸入自動時鐘與事件 10 關係 | 無輸入時的自動時鐘／軍團行軍已由 IDA .i64 證實；事件 10 是該路徑 中的受節流 queue consum… | 2026-08-11 |
-| [`docs/re/17-dosv-audio-tsr.md`](re/17-dosv-audio-tsr.md) | 17 — 松崗 DOS/V 音源 TSR 與戰術效果碼 | INT 61h 介面、遊戲端效果碼與硬體 register 寫入已證實；BGM.DAT 的容器與 聲軌指標結構已解（… | 2026-08-12 |
+| [`docs/re/17-dosv-audio-tsr.md`](re/17-dosv-audio-tsr.md) | 17 — 松崗 DOS/V 音源 TSR 與戰術效果碼 | INT 61h 介面、遊戲端效果碼與硬體 register 寫入已證實。 ⭐ 晶片是 | 2026-08-12 |
 | [`docs/re/18-tactical-button-glyphs.md`](re/18-tactical-button-glyphs.md) | 18 — DOS/V 戰術底列按鈕 glyph 候選資產研究 | 六個命令 glyph、底板、右欄複合面板與選取矩形已解出並接入 remake。 | 2026-08-12 |
 | [`docs/re/19-outcome.md`](re/19-outcome.md) | DOS/V 已證實敗北 outcome 接線 | READY（只涵蓋兩種敗北；不涵蓋勝利、君主死亡或原版返回標題）。 | 2026-08-12 |
 | [`docs/re/20-ida-re-coverage-audit.md`](re/20-ida-re-coverage-audit.md) | 20 — DOS/V IDA 逆向覆蓋與 remake 差距審計 | REVIEWED。足以支撐可玩重製與多數規則，但不足以支撐高忠實度戰術呈現；主要缺口是原版顯示串列、相機狀態機、逐幀… | 2026-08-12 |
@@ -116,7 +116,8 @@
 | [`docs/re/53-lord-select-window.md`](re/53-lord-select-window.md) | 53 — 君主選擇視窗（顯示清單場景 8） | 視窗矩形、靜態層、七個顯示值的座標與來源、兩個熱區的語意 全部解出來了。⭐ 「確定」在軍師還沒命名時會被導去「自定」… | 2026-08-15 |
 | [`docs/re/54-advisor-naming-window.md`](re/54-advisor-naming-window.md) | 54 — 軍師命名視窗（顯示清單場景 9，松崗版特有） | 視窗矩形、靜態層、九個熱區的位置與語意解出來了。 選字表的資料來源與翻頁邏輯未讀（§4）。 | 2026-08-15 |
 | [`docs/re/55-system-menu-window.md`](re/55-system-menu-window.md) | 55 — 系統選單視窗，以及 op 08 屬性的真正編碼 | 視窗矩形、六列版面、六個熱區全部解出來了。 ⭐ 順帶解出 op 08 的 arg2 高 byte 是 | 2026-08-15 |
-| [`docs/re/56-bgm-track-events.md`](re/56-bgm-track-events.md) | 56 — ⭐ BGM.DAT 的聲軌事件編碼解出來了 | 事件編碼、三張查表、播放引擎的迴圈 confirmed。 音符事件（低 byte < 0x80）的音高與長度可以完整… | 2026-08-15 |
+| [`docs/re/56-bgm-track-events.md`](re/56-bgm-track-events.md) | 56 — ⭐ BGM.DAT 的聲軌事件編碼解出來了 | 事件編碼、三張查表、播放引擎的迴圈、控制事件的分派全部 confirmed。 音符與控制事件都可以完整還原成語意（§… | 2026-08-15 |
+| [`docs/re/57-opl3-register-map.md`](re/57-opl3-register-map.md) | 57 — ⭐ DOS/V 的音源是 OPL3，六個聲軌各佔一組 4-operator 通道 | 晶片型號、通道配置、音色記錄版面、音量與速度換算、SOUND.DAT 的記錄結構全部 confirmed。剩兩張表的… | 2026-08-15 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-13 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -138,7 +139,7 @@
 | [`docs/spec/26-yes-no-dialog.md`](spec/26-yes-no-dialog.md) | 26 — ＹＥＳ／ＮＯ 對話框 | CONFORMED。版面與命中算式已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 「自定」（軍師命名）還沒接（§5）。 | 2026-08-15 |
 | [`docs/spec/28-scenario-json.md`](spec/28-scenario-json.md) | 28 — 劇本的 JSON 匯出與匯入 | CONFORMED。四個區塊 round-trip 全過。 | 2026-08-15 |
-| [`docs/spec/29-audio.md`](spec/29-audio.md) | 29 — 音樂與音效 | DRAFT。⭐ 路線改了：使用者裁定 | 2026-08-15 |
+| [`docs/spec/29-audio.md`](spec/29-audio.md) | 29 — 音樂與音效 | READY。⭐ 原版側全解了 | 2026-08-15 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | READY。管線的每一段都有現成工具，缺的是把它們接起來 與一支逐區差分工具。 | 2026-08-15 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
