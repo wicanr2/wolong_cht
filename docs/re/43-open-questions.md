@@ -21,10 +21,10 @@
 | 規則正確性 | 60 | 59 | 1 | 0 |
 | 資料保存 | 43 | 43 | 0 | 0 |
 | 程式碼理解 | 185 | 179 | 6 | 0 |
-| 驗收 | 14 | 11 | 3 | 0 |
+| 驗收 | 19 | 15 | 4 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
 | 其他 | 58 | 54 | 3 | 1 |
-| **合計** | **378** | 363 | 13 | 2 |
+| **合計** | **383** | 367 | 14 | 2 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -329,7 +329,7 @@
 | [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | 中間四列的值 | 由誰填、值域多少未讀 | 靜態 |
 | [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | `sub_106F5` 的屬性解碼 | §3 的低 byte 讀法是強推論，沒逐行驗 | 靜態 |
 
-## 2.4 驗收（14 條）
+## 2.4 驗收（19 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -347,6 +347,11 @@
 | [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 各視窗內部的像素 | 只對過邊線位置，沒有對過內容 | 靜態 |
 | [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 原版執行期的開關行為 | **沒驗過**：模擬器上主畫面收不到點擊（`23` §4.1） | 靜態 |
 | [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 系統視窗的四個項目 | 存檔／畫面模式／音源／戰略速度，不在這一輪範圍 | 靜態 |
+| [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | 這個實驗**沒有**證明下面這些事。 | （未解小節內文） | 靜態 |
+| [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | **逐曲觸發** | 只錄到開場動畫（`D7OPEN.EXE` 自己會播）。11 首要逐首、可重現地觸發，得先解出 `YNSOUND.COM` 的播放 command——`../re/17` §2 只定案了 `AH=0x05`（效果）、`0x06`／`0x07`（載入資源）、`0x0A`（查旗標），**播放音樂那一個還沒有證據** | 靜態 |
+| [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | **音效** | 戰術的三個 effect code 已知（`re/17` §3），但沒錄過 | 靜態 |
+| [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | **音量** | 峰值只有滿刻度的 4.7%。是 OPL 的音量設定還是遊戲本來就這樣，沒查 | 靜態 |
+| [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | **音源正確性** | DOSBox 用 `sbtype=sb16`／`oplmode=auto` 模擬，與真實硬體的音色差異沒有對照組 | 實測 |
 
 ## 2.5 外部資料（18 條）
 
@@ -445,4 +450,7 @@
 或用別的詞說「這個還不知道」的缺口抽不到**——下列檔案提到未解
 卻一列都沒抽出來，要嘛缺口寫成別的句式，要嘛那些字樣只是在講別的事：
 
-- `docs/playtest/25-audio-capture-feasibility.md`
+（沒有）
+
+只印抽得到的部分，會讓解析失敗長得像「那份文件沒有缺口」。
+這一節就是為了讓那個差別看得見。
