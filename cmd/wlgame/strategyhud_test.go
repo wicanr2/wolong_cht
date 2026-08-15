@@ -460,3 +460,68 @@ func TestSlotSelectWindowLayout(t *testing.T) {
 		}
 	}
 }
+
+// ＹＥＳ／ＮＯ 對話框的版面契約（docs/spec/26）。
+func TestYesNoDialogLayout(t *testing.T) {
+	checks := []struct {
+		name string
+		got  int
+		want int
+	}{
+		{"框寬", yesNoW, 208},
+		{"框高", yesNoH, 96},
+		{"水平線 dy", yesNoRuleDY, 31},
+		{"水平線長", yesNoRuleW, 191},
+		{"選項框 dx", yesNoBoxDX, 40},
+		{"ＹＥＳ dy", yesNoYesDY, 40},
+		{"ＮＯ dy", yesNoNoDY, 64},
+		{"選項框寬", yesNoBoxW, 128},
+		{"選項框高", yesNoBoxH, 16},
+		{"文字 dx", yesNoTextDX, 80},
+	}
+	for _, c := range checks {
+		if c.got != c.want {
+			t.Errorf("%s = %d，want %d", c.name, c.got, c.want)
+		}
+	}
+	// 兩個選項框都要落在框內，且中間留得下那條 8 px 的縫。
+	if yesNoNoDY+yesNoBoxH > yesNoH {
+		t.Errorf("ＮＯ 的下緣 %d 超出框高 %d", yesNoNoDY+yesNoBoxH, yesNoH)
+	}
+	if gap := yesNoNoDY - (yesNoYesDY + yesNoBoxH); gap != 8 {
+		t.Errorf("兩個選項之間的縫 = %d，want 8", gap)
+	}
+	if r := yesNoRect(216, 152); r.Dx() != yesNoW || r.Dy() != yesNoH {
+		t.Errorf("yesNoRect = %v", r)
+	}
+}
+
+// ⭐ 命中算式：原版把 Y 除以 8，**第 2 條是縫**——兩個選項都不算，
+// 不是四捨五入到最近的按鈕（docs/spec/26 §2）。
+func TestYesNoHitGap(t *testing.T) {
+	const x, y = 216, 152
+	yesY := y + yesNoYesDY
+	for _, c := range []struct {
+		name    string
+		px, py  int
+		wantHit bool
+		wantYes bool
+	}{
+		{"ＹＥＳ 上緣", x + yesNoBoxDX, yesY, true, true},
+		{"ＹＥＳ 下緣", x + yesNoBoxDX + 127, yesY + 15, true, true},
+		{"縫的上緣", x + yesNoBoxDX, yesY + 16, false, false},
+		{"縫的下緣", x + yesNoBoxDX, yesY + 23, false, false},
+		{"ＮＯ 上緣", x + yesNoBoxDX, yesY + 24, true, false},
+		{"ＮＯ 下緣", x + yesNoBoxDX, yesY + 71, true, false},
+		{"左邊界外", x + yesNoBoxDX - 1, yesY, false, false},
+		{"右邊界外", x + yesNoBoxDX + 128, yesY, false, false},
+		{"上邊界外", x + yesNoBoxDX, yesY - 1, false, false},
+		{"下邊界外", x + yesNoBoxDX, yesY + 72, false, false},
+	} {
+		hit, yes := hitTestYesNo(x, y, c.px, c.py)
+		if hit != c.wantHit || (hit && yes != c.wantYes) {
+			t.Errorf("%s (%d,%d) = hit%v yes%v，want hit%v yes%v",
+				c.name, c.px, c.py, hit, yes, c.wantHit, c.wantYes)
+		}
+	}
+}

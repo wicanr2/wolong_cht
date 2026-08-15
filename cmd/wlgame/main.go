@@ -199,6 +199,7 @@ type game struct {
 	lastEvent string
 	messages  []messageDialog
 	quitting  bool
+	quitYes   bool // ＹＥＳ／ＮＯ 對話框的選取（remake 的鍵盤操作）
 
 	// battleChoiceRow 是遭遇決策視窗目前反白的選項。
 	battleChoiceRow int
@@ -364,16 +365,33 @@ func (g *game) Update() error {
 	}
 	// [HARD] ESC 只取消／關視窗，F10 才離開（CLAUDE.md §10）。
 	if g.quitting {
+		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+			px, py := ebiten.CursorPosition()
+			if hit, yes := hitTestYesNo(quitDialogX, quitDialogY, px, py); hit {
+				if yes {
+					return ebiten.Termination
+				}
+				g.quitting = false
+			}
+			return nil
+		}
 		switch {
+		case pressed(ebiten.KeyArrowUp), pressed(ebiten.KeyArrowDown):
+			g.quitYes = !g.quitYes
 		case pressed(ebiten.KeyY):
 			return ebiten.Termination
+		case pressed(ebiten.KeyEnter):
+			if g.quitYes {
+				return ebiten.Termination
+			}
+			g.quitting = false
 		case pressed(ebiten.KeyN), pressed(ebiten.KeyEscape):
 			g.quitting = false
 		}
 		return nil
 	}
 	if pressed(ebiten.KeyF10) {
-		g.quitting = true
+		g.quitting, g.quitYes = true, false // 預設停在 ＮＯ
 		return nil
 	}
 	if g.launcher != nil {
@@ -719,9 +737,8 @@ func (g *game) Draw(screen *ebiten.Image) {
 	}
 
 	if g.quitting {
-		vector.DrawFilledRect(screen, float32(screenW/2-90), float32(screenH/2-14),
-			180, 28, color.RGBA{0, 0, 0, 230}, false)
-		g.td.Draw(screen, "確定離開？（Y／N）", screenW/2-80, screenH/2-8, white)
+		// 原版版面的 ＹＥＳ／ＮＯ 對話框（docs/spec/26），居中。
+		g.drawYesNo(screen, quitDialogX, quitDialogY, "確定離開？", g.quitYes)
 	}
 	g.maybeSaveShot(screen)
 }
