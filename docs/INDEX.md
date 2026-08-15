@@ -17,7 +17,7 @@
 | [`docs/formats/04-map-sch-container.md`](formats/04-map-sch-container.md) | 04 — .MAP／.SCH／.MCH：兩種完全不同的東西 | 容器格式的索引層 READY，壓縮演算法未解。 | 2026-08-07 |
 | [`docs/formats/05-mmap-worldmap.md`](formats/05-mmap-worldmap.md) | 05 — MMAP. 大地圖 | MMAP.MDL、地圖尺寸、自動連接與 MMAP.MCH 物件圖形入口 confirmed；MMAP.MAP 的 R… | 2026-08-07 |
 | [`docs/formats/06-mmap-rle.md`](formats/06-mmap-rle.md) | 06 — MMAP.MAP 的 RLE 壓縮 | READY。 | 2026-08-07 |
-| [`docs/formats/07-battle.md`](formats/07-battle.md) | 07 — BATTLE. 戰場資料 | 分段結構、圖塊定義與像素格式都 confirmed。 | 2026-08-07 |
+| [`docs/formats/07-battle.md`](formats/07-battle.md) | 07 — BATTLE. 戰場資料 | 分段結構、圖塊定義、子圖塊與人物圖形的像素格式都 confirmed。 剩三項未解（§10）。 | 2026-08-07 |
 | [`docs/formats/08-sinario-save.md`](formats/08-sinario-save.md) | 08 — SINARIO.DAT / SAVE.DAT：劇本與存檔 | 整體結構 confirmed，武將能力值 confirmed，其餘欄位進行中。 | 2026-08-07 |
 | [`docs/mechanics/00-index.md`](mechanics/00-index.md) | 00 — 遊戲機制索引 | 索引與推論等級定義，長期有效。 | 2026-08-08 |
 | [`docs/mechanics/10-strategy.md`](mechanics/10-strategy.md) | 10 — 大地圖政略 | 指令清單完整；部分戰略數值與 AI 決策已由機器碼解出並實作，仍有未解公式。 | 2026-08-13 |

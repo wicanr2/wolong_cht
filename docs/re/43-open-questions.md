@@ -19,12 +19,12 @@
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
 | 規則正確性 | 60 | 59 | 1 | 0 |
-| 資料保存 | 43 | 43 | 0 | 0 |
-| 程式碼理解 | 195 | 189 | 6 | 0 |
+| 資料保存 | 38 | 38 | 0 | 0 |
+| 程式碼理解 | 193 | 187 | 6 | 0 |
 | 驗收 | 21 | 16 | 5 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
 | 其他 | 58 | 55 | 3 | 0 |
-| **合計** | **395** | 379 | 15 | 1 |
+| **合計** | **388** | 372 | 15 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -91,7 +91,7 @@
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 君主陣亡時軍師怎麼辦 | 未知 | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | END_S1`–`END_S4`（結局動畫？）與四個劇本的結局有關，格式還沒碰。 | （未解小節內文） | 靜態 |
 
-## 2.2 資料保存（43 條）
+## 2.2 資料保存（38 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -110,17 +110,12 @@
 | [`formats/05-mmap-worldmap.md`](../formats/05-mmap-worldmap.md) | sub_1E717` 建出來的記錄實際被誰用（§3）。 | （未解小節內文） | 靜態 |
 | [`formats/05-mmap-worldmap.md`](../formats/05-mmap-worldmap.md) | byte_1E47E` 與 `byte_1E47F` 兩個流水號的分工（`sub_1E567` 寫前者、 | （未解小節內文） | 靜態 |
 | [`formats/05-mmap-worldmap.md`](../formats/05-mmap-worldmap.md) | 比對的正是方向碼那個欄位）。 強證據，未定案。 | （散句） | 靜態 |
-| [`formats/07-battle.md`](../formats/07-battle.md) | 推論等級：**分段、筆數、緩衝區大小 confirmed；圖塊尺寸未解 | （散句） | 靜態 |
+| [`formats/07-battle.md`](../formats/07-battle.md) | 戰場的 `64 × 62` 哪一邊是寬 | 格數確定（§2.1），方向沒定 | 靜態 |
+| [`formats/07-battle.md`](../formats/07-battle.md) | 每個戰場 4,096 B 的表頭與尾段各 64 byte | 內容未解（§2.1） | 靜態 |
+| [`formats/07-battle.md`](../formats/07-battle.md) | 表頭 16 筆但資料只有 3 組 | 多出來的 13 筆是什麼未解（§3） | 靜態 |
 | [`formats/07-battle.md`](../formats/07-battle.md) | mov     al, es:[bx+1]       ; → byte_1AB4F（用途未解） | （散句） | 靜態 |
 | [`formats/07-battle.md`](../formats/07-battle.md) | 表頭與尾段各 64 byte，內容未解。 | （散句） | 靜態 |
 | [`formats/07-battle.md`](../formats/07-battle.md) | ——表頭筆數多於資料組數，原因未解。 | （散句） | 靜態 |
-| [`formats/07-battle.md`](../formats/07-battle.md) | 其餘 61,440 B 是像素資料，格式未解。 | （散句） | 靜態 |
-| [`formats/07-battle.md`](../formats/07-battle.md) | BATTLE.MDL` 的像素格式與圖塊尺寸（§5）。 | （未解小節內文） | 靜態 |
-| [`formats/07-battle.md`](../formats/07-battle.md) | BATTLE.SCH`（115,200 B，熵 2.00）是什麼。 | （未解小節內文） | 靜態 |
-| [`formats/07-battle.md`](../formats/07-battle.md) | BATTLE.DAT`（8,192 B）的內容。 | （未解小節內文） | 靜態 |
-| [`formats/07-battle.md`](../formats/07-battle.md) | 戰場的 64 × 62 哪一邊是寬（§2.1）。 | （未解小節內文） | 靜態 |
-| [`formats/07-battle.md`](../formats/07-battle.md) | 每個戰場 4,096 B 裡的表頭與尾段各 64 byte 是什麼（§2.1）。 | （未解小節內文） | 靜態 |
-| [`formats/07-battle.md`](../formats/07-battle.md) | 表頭 16 筆但資料只有 3 組的原因（§3）。 | （未解小節內文） | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x0008` | 51 / 未解的全域狀態（一起載入 `cs:0CF0h`） | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x0080` | 2,112 / **勢力表：22 筆 × 64 B**（`docs/re/06` §5）＋ 其後未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x1EC0` | 7,168 / 未解 | 靜態 |
@@ -139,7 +134,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（195 條）
+## 2.3 程式碼理解（193 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -332,9 +327,7 @@
 | [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | 全域音量偏移 `[0996h]` | 誰設、範圍多少未解 | 靜態 |
 | [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | 曲號 ↔ 場景 | `KI.EXE` 的呼叫端還沒對過（`23` §5） | 靜態 |
 | [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | PC-98 側的音源程式設計 | 完全沒讀。YM2203 的暫存器路徑與音色版面都未解 | 靜態 |
-| [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | 曲 1 | **沒有任何呼叫端傳 1**。八個呼叫點的立即值與兩張表都掃過了 | 靜態 |
-| [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | 曲 8 | 需要「攻城戰 ＋ `byte_10D35` bit 6」。但 `05` §1 的攻城路徑把 `byte_10D35` 寫死成 0，而 bit 6 是野戰的地形配對才設的（`11` §467）。⚠ **要嘛 `byte_10D34` 還有第三個寫入點，要嘛這一首在這一版不會被放到** | 靜態 |
-| [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | 曲 10 | 需要戰場編號 ≥ `0xD1`。同上，已知的兩條路徑都到不了 | 靜態 |
+| [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | 曲 1 | **DOS/V 的 `KI.EXE` 裡沒有任何呼叫端傳 1。** 掃過的範圍：`sub_10241` 的八個直接呼叫點（立即值全部列在 §3）、`cs:9309h` 那張表（只有 2–5）、`sub_19946` 的計算式（只到 7–10），以及全庫搜 `sub_10241` 的位址有沒有被當立即值取走（**沒… | 靜態 |
 | [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | `AX=09F2h` | 換曲前送的服務號，TSR 那一側還沒讀（`17` §7） | 靜態 |
 | [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | `AL` 的 6 vs 5 | `sub_10241` 對曲號 ≥ 2 把 `AL` 從 6 改成 5，語意未解 | 靜態 |
 | [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | 音色聽感 | 這一份只解「哪一首」。**渲染出來像不像原版是另一回事**（`../playtest/26` §5） | 靜態 |
@@ -441,8 +434,8 @@
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 事件佇列 | 這一輪不進 JSON。編輯器要動它得先有 UI 語意 | 靜態 |
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 未解區域 | `+0x1EC0` 那 7 KB 仍是黑盒，只能靠改寫保留 | 靜態 |
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 編輯器 | 這一份只做資料層。UI 是另一份規格 | 靜態 |
-| [`spec/29-audio.md`](../spec/29-audio.md) | 曲 1／8／10 | 已知路徑到不了（`re/58` §5） | 靜態 |
-| [`spec/29-audio.md`](../spec/29-audio.md) | 曲 6（事件與對話） | 原版由四支對話／事件常式呼叫，remake 這一側還沒有對應的單一進入點，**沒接** | 靜態 |
+| [`spec/29-audio.md`](../spec/29-audio.md) | 曲 1 | DOS/V 的 `KI.EXE` 裡沒有任何呼叫端（`re/58` §5）。PC-98 版還沒掃 | 靜態 |
+| [`spec/29-audio.md`](../spec/29-audio.md) | 曲 6 的接法 | 原版是四支對話／事件常式，remake 用「事件訊息開著」與「進言對話開著」兩個狀態代替，**不是一對一** | 靜態 |
 | [`spec/29-audio.md`](../spec/29-audio.md) | 換季的兩段時序 | 原版第 1 天停、第 2 天換曲，調色盤另外漸變 16 天。remake 只做了換曲那一半 | 靜態 |
 | [`spec/29-audio.md`](../spec/29-audio.md) | 迴圈點怎麼呈現 | 原版靠控制事件 `C1`／`C3` 無限循環；ogg 是有限長度，要決定渲染幾輪或另存迴圈點 | 靜態 |
 | [`spec/29-audio.md`](../spec/29-audio.md) | 全域音量偏移 | `cs:0996h` 誰設、範圍多少未解（`re/57` §8） | 靜態 |

@@ -23,7 +23,7 @@
 
 | 已完成 | 進行中 | 尚未完成 |
 |---|---|---|
-| 素材格式、存檔改寫、時間模型、經濟、災害、中文顯示、外交、軍團結構、一覽表、進言與說得、行軍與戰術戰鬥垂直切片、四槽存檔 overlay、敵方 AI 正常遭遇接點、事件 2–10 的既定 fixture／時鐘驗收、Linux AppImage、三平台候選封裝、60 秒推廣片 | Windows／macOS 原生 GUI short smoke、Android 完整核心接入與實機、原版／remake 同狀態畫面對拍、完整戰術／長程遊戲抽樣 | `ICONGRF` 段 1 的 UI 語意／龍紋、DOS/V 音源的聲軌事件編碼與原版事件 10 自然 producer 等未解研究項 |
+| 素材格式、存檔改寫、時間模型、經濟、災害、中文顯示、外交、軍團結構、一覽表、進言與說得、行軍與戰術戰鬥垂直切片、四槽存檔 overlay、敵方 AI 正常遭遇接點、事件 2–10 的既定 fixture／時鐘驗收、**音樂與音效**（OPL3 合成 → ogg，含場景對應）、Linux AppImage、三平台候選封裝、60 秒推廣片 | Windows／macOS 原生 GUI short smoke、Android 完整核心接入與實機、原版／remake 同狀態畫面對拍、完整戰術／長程遊戲抽樣 | **勝利條件**（敗北已定案，勝利仍未知）、`ICONGRF` 段 1 的 UI 語意／龍紋、原版事件 10 的自然 producer 等未解研究項 |
 
 ### 候選封裝與推廣片
 
@@ -55,7 +55,9 @@ tools/shot.sh /tmp/wlgame-save.png KEYS=4,s,Return \
 | `MMAP.MDL` 地形圖塊 | READY，256 塊 16×16 | [`docs/formats/05`](docs/formats/05-mmap-worldmap.md) |
 | `MMAP.MAP` 世界地圖 | READY，RLE → 384×256 格 | [`docs/formats/06`](docs/formats/06-mmap-rle.md) |
 | `.MAP`/`.SCH` 容器 | 索引層 READY | [`docs/formats/04`](docs/formats/04-map-sch-container.md) |
-| `BATTLE.*` 戰場 | 分段結構與像素格式都已解 | [`docs/formats/07`](docs/formats/07-battle.md) |
+| `BATTLE.*` 戰場 | 分段結構、子圖塊與人物圖形的像素格式都已解 | [`docs/formats/07`](docs/formats/07-battle.md) |
+| `*BGM.DAT` 音樂 | 事件編碼、音色、音量、速度全解；**音源是 OPL3** | [`docs/re/56`](docs/re/56-bgm-track-events.md)、[`57`](docs/re/57-opl3-register-map.md) |
+| `SOUND.DAT` 音效 | 19 筆 × 16 B，含接續鏈 | [`docs/re/57`](docs/re/57-opl3-register-map.md) §6 |
 | `ICONGRF` 段 3 | 視窗外框圖塊（8×8） | [`docs/formats/03`](docs/formats/03-grf-images.md) |
 
 ### 引擎已經跑得出可玩的戰略／戰術垂直切片
@@ -339,6 +341,8 @@ internal/rules/persuasion 進言與說得（玩家扮軍師，指令要先說服
 internal/rules/rng        原版的亂數產生器（置換表 ＋ 兩個 byte）
 internal/rules/tactical   戰術戰鬥：立體格戰場、六個指令、陣形、疲勞、飛道具
 internal/rules/battlefield 野戰的戰場從大地圖即時算（地形配對 ＋ 旋轉）
+internal/audio            純 Go 的 OPL3（YMF262）＋ *BGM.DAT／SOUND.DAT 的重放
+internal/ui/sound         Ebiten 的 ogg 播放層（沒有音檔就靜音跑）
 internal/assets/battle    BATTLE.MAP／MDL／DAT：214 張戰場、圖塊堆疊、AI 腳本
 internal/state            劇本／存檔的載入與**寫回**（改寫而非重建）＋ 世界迴圈
                           （時鐘、月結、每小時的勢力更新、軍團編成與行軍、遭遇戰）
@@ -347,6 +351,7 @@ cmd/wlshot                解素材成 PNG，無頭環境可跑
 cmd/wlview                Ebiten 互動檢視器（素材模式 / 大地圖模式，Tab 切換）
 cmd/wlsim                 無頭世界模擬器，用長期行為驗證公式
 cmd/wlgame                戰略主畫面原型
+cmd/wlaudio               把原版音樂與音效渲染成 WAV（再由 tools/bgm2ogg.sh 轉 ogg）
 ```
 
 規則層的每一條公式都是從 `KI.EXE` 的機器碼讀出來的，不是猜的
@@ -363,6 +368,25 @@ tools/go.sh test ./...                                  # 全部測試
 tools/go.sh run ./cmd/wlgame -orig workplace/orig/dosv -font workplace/eten
 tools/go.sh run ./cmd/wlsim  -years 15 -tax 25          # 無頭模擬，看十五年的軌跡
 ```
+
+### 音樂與音效要自己從原版產生
+
+音檔是**原版衍生物**，不隨發行包散布。玩家用自己的原版跑一次：
+
+```sh
+tools/bgm2ogg.sh          # 14 首音樂 ＋ 18 個音效 → workplace/audio/*.ogg
+tools/go.sh run ./cmd/wlgame -audio workplace/audio …
+```
+
+`cmd/wlaudio` 用一顆純 Go 的 OPL3（YMF262）照原版的暫存器語意重放，
+不是近似合成——`YNSOUND.COM` 初始化就寫了 OPL3 的 `0x104`／`0x105`
+（[`docs/re/57`](docs/re/57-opl3-register-map.md)）。ogg 那一段走 docker ffmpeg，
+因為 Go 這邊沒有 vorbis 編碼器。
+
+沒有音檔時遊戲靜音跑，系統選單第 3 列顯示「未接入」。
+**哪一首配哪個場景是從機器碼讀出來的**——大地圖是四季配樂、
+事件與對話一首、攻城分玩家攻守兩首、野戰與地形戰場各一首
+（[`docs/re/58`](docs/re/58-bgm-scene-mapping.md)）。
 
 原版素材不隨本專案散布。自備之後放進 `workplace/orig/dosv/`（松崗版）
 或 `workplace/orig/pc98/`（PC-98 版）。PC-98 的磁片映像可以用
