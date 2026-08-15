@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 60 | 59 | 1 | 0 |
 | 資料保存 | 43 | 43 | 0 | 0 |
-| 程式碼理解 | 169 | 163 | 6 | 0 |
+| 程式碼理解 | 166 | 160 | 6 | 0 |
 | 驗收 | 14 | 11 | 3 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
 | 其他 | 25 | 23 | 2 | 0 |
-| **合計** | **329** | 316 | 12 | 1 |
+| **合計** | **326** | 313 | 12 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -139,7 +139,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（169 條）
+## 2.3 程式碼理解（166 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -293,7 +293,6 @@
 | [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `sub_193E9` 的選單協定 | `ah = 1`、`cx` ＝ 首項索引、`dx`／`bx` ＝ 位置；回傳值怎麼編碼未逐位對過 | 靜態 |
 | [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `sub_1703C` | 選據點的那一支，未讀 | 靜態 |
 | [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `+0x23` 的其他值 | 只見過 0、1（`sub_16F26`）與 11 | 靜態 |
-| [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | `cs:word_1D84E` 那張表怎麼變成像素 | **解了**：它不變成像素，是 40 欄 × 23 列的格子屬性表，bit `0x10` ＝ 這格歸地圖管、bit `0x60` ＝ 髒格。見 `47` §3.2 | 靜態 |
 | [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | `cs:word_10D4A` 指向段 3 的哪個位移 | §3 的對應是**由四個 si 與 §5.4 的內容互相印證**得出的強證據；載入端沒讀，沒有直接證據 | 靜態 |
 | [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | 樣式碼 | 只確定 `0` ＝ 擦除、`0x0B` ＝ 指令列、`0x0C`／`0x0F` 出現在別處；完整值域未列 | 靜態 |
 | [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | `ax = 0F01h`／`0801h` | 顏色／樣式的位元編碼未逐位對過 | 靜態 |
@@ -303,13 +302,11 @@
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 選完君主之後的相機 | `sub_1D615(170, 98)` 只管 NEW GAME 對話框背後那張圖。主畫面開始時相機在哪、由誰寫，未讀——`word_1988E`／`word_19890` 的六個參考**全是讀**，寫入端走 `ds:988Eh` 這種形式，要用 `tools/ida_disp_users.py` 掃 | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 格子屬性 bit `0x80` | 擦除時被清掉，沒找到設它的地方 | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 系統視窗開著時時間停止 | 說明書明講，機器碼的實作位置未找（`sub_15FAA` 的等待迴圈是候選） | 靜態 |
-| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 底圖 `sub_10337(al=0)` 的來源 | 頭像與各欄標籤合在同一張圖裡，圖從哪個圖庫取未讀 | 靜態 |
-| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 縮小地圖視窗內部 | `sub_15A3A` 的 `sub_1FA37(bx=0x34B7, ax=0x100C)` 與 `sub_15DBB` 未讀 | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | `funcs_159C0` 的五筆內容 | 只確認是「擦除」對應表（`sub_1895D` 樣式 0），逐筆未 dump | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 開關圖示的圖形來源 | 五格 32×32 的圖從哪個圖庫來未讀 | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 原版執行期驗證 | **未做**。PC-98 oracle 上左鍵點這五格沒有反應（§6），原因未定 | 實測 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | opcode `04`／`05` | handler 位址已知，語意未讀。`04` 成對出現且座標差 1 px，像是立體邊的兩條 | 靜態 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `08` 的屬性 byte | 場景 0 用 `0x0F`（一般）與 `0x09`（資金／預備兵那兩個標籤），語意未對過調色盤 | 靜態 |
+| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `08` 屬性 byte 的低位 | 高 byte 是調色盤索引（`0x0F` 一般、`0x09` 兩個資源標籤，與參考幀的白／金相符）；低 byte 固定 `0x03`，語意未讀 | 靜態 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `sub_1E9A7(bl=0, ax=1800h, cx=2020h)` | `sub_1030F` 登記的第二件事，未讀 | 靜態 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | 十個場景對十一個呼叫端 | 有兩個呼叫端共用同一個場景，哪兩個未查 | 靜態 |
 
