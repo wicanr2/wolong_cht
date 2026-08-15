@@ -18,23 +18,19 @@
 
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
-| 規則正確性 | 60 | 59 | 1 | 0 |
+| 規則正確性 | 56 | 55 | 1 | 0 |
 | 資料保存 | 38 | 38 | 0 | 0 |
 | 程式碼理解 | 193 | 187 | 6 | 0 |
 | 驗收 | 21 | 16 | 5 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
 | 其他 | 58 | 55 | 3 | 0 |
-| **合計** | **388** | 372 | 15 | 1 |
+| **合計** | **384** | 368 | 15 | 1 |
 
-## 2.1 規則正確性（60 條）
+## 2.1 規則正確性（56 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
-| [`mechanics/10-strategy.md`](../mechanics/10-strategy.md) | 稅率與收入的實際公式 | 反組譯月結程式 | 靜態 |
-| [`mechanics/10-strategy.md`](../mechanics/10-strategy.md) | 募兵數與資金的換算 | 同上 | 靜態 |
-| [`mechanics/10-strategy.md`](../mechanics/10-strategy.md) | 生產力／上昇值／防災值怎麼成長 | 同上（`40-economy.md`） | 靜態 |
-| [`mechanics/10-strategy.md`](../mechanics/10-strategy.md) | 三個兵種的相剋與數值 | 說明書第 6 章、第 11 章 | 靜態 |
-| [`mechanics/10-strategy.md`](../mechanics/10-strategy.md) | 士氣值的作用 | 說明書第 11 章 | 靜態 |
+| [`mechanics/10-strategy.md`](../mechanics/10-strategy.md) | **防災值**怎麼成長 | 欄位語意已知（據點 `+0x11`），成長規則未解 | 靜態 |
 | [`mechanics/10-strategy.md`](../mechanics/10-strategy.md) | 行軍費用 | **說明書 10.6「行軍の費用」有專節，還沒讀** | 靜態 |
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | **世界更新** | 每「時」 / `sub_13E11`（內容未解） | 靜態 |
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | `sub_13E11` 每「時」做什麼 | 行軍與 AI 的節拍，寫到那一層時再解 | 靜態 |
