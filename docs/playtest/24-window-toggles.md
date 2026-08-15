@@ -18,6 +18,7 @@
 |---|---|---|
 | 大地圖 | (0, 64, 432, 336) ＝ 27×21 格 | **(0, 32, 640, 368) ＝ 40×23 格** |
 | 四個視窗 | 固定顯示三個 | 疊在地圖上，左鍵開右鍵關 |
+| **開新遊戲的預設** | 三個視窗開著 | **四個全關**（`sub_11A6E` 的 `mov cs:byte_198A6, 0`）|
 | 系統視窗 | 有視窗但不影響時間 | 開著時**時間停止**（說明書 3.1）|
 
 地圖格數是原版數值：`sub_1D615` 的迴圈 `cx=0x28 / dx=0x17`。
@@ -43,10 +44,10 @@
 
 | 狀態 | 檔案 |
 |---|---|
-| 四窗全開 | [`parity/main-w-all-open.png`](parity/main-w-all-open.png) |
-| 四窗全關 | [`parity/main-w-all-closed.png`](parity/main-w-all-closed.png) |
+| **開新遊戲的預設狀態**（四窗全關）| [`parity/main-w-all-closed.png`](parity/main-w-all-closed.png) |
+| 點開三格之後 | [`parity/main-w-all-open.png`](parity/main-w-all-open.png) |
 
-全關那張的地圖鋪滿 640×368，與 PC-98 原版實跑的
+預設那張的地圖鋪滿 640×368，與 PC-98 原版實跑的
 [`parity/main-pc98-windows-closed.png`](parity/main-pc98-windows-closed.png)
 是同一個結構（那一版是日文，字不同）。
 
@@ -54,7 +55,6 @@
 
 | 項目 | 現況 |
 |---|---|
-| 原版新遊戲時哪幾個視窗是開的 | 未讀。remake 預設命令／自勢力情報／縮小地圖三個開、系統關，**標為 remake 差異** |
 | 各視窗內部的像素 | 只對過邊線位置，沒有對過內容 |
 | 原版執行期的開關行為 | **沒驗過**：模擬器上主畫面收不到點擊（[`23`](23-main-screen-geometry.md) §4.1）|
 | 系統視窗的四個項目 | 存檔／畫面模式／音源／戰略速度，不在這一輪範圍 |

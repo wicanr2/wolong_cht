@@ -1012,11 +1012,12 @@ func main() {
 	}
 	g := &game{lib: lib, rng: gameRNG, speed: *speed, td: textdraw.New(font, ascii),
 		shotPath: *shot, shotAt: *shotFrames, origDir: *dir, sourceFile: path,
-		saveFile: *saveFile, saveBase: path,
-		// 四個常駐視窗預設全開——與說明書主畫面圖、參考影片
-		// `docs/images/yt-wolong-natural-80s-640x400.png` 一致。
-		// 系統視窗預設關著：它開著時時間會停（docs/spec/13 §2.4）。
-		hud: hudCommand | hudFaction | hudMinimap}
+		saveFile: *saveFile, saveBase: path}
+	// 四個常駐視窗**預設全關**，這是原版數值：新遊戲流程的最後一行是
+	// `sub_11A6E` 的 `mov cs:byte_198A6, 0`（docs/re/47 §3.3），
+	// PC-98 實跑進到主畫面看到的也正是滿版地圖。玩家自己點橫幅右側
+	// 那幾格把要看的視窗叫出來。
+	g.hud = 0
 	g.chrome = chrome.Load(lib, 0)
 	if !g.chrome.Available() {
 		log.Printf("⚠ 取不到 ICONGRF 段 3 的視窗外框，改畫純色框")
