@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 60 | 59 | 1 | 0 |
 | 資料保存 | 43 | 43 | 0 | 0 |
-| 程式碼理解 | 185 | 179 | 6 | 0 |
+| 程式碼理解 | 188 | 181 | 7 | 0 |
 | 驗收 | 19 | 15 | 4 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 58 | 54 | 3 | 1 |
-| **合計** | **383** | 367 | 14 | 2 |
+| 其他 | 62 | 58 | 3 | 1 |
+| **合計** | **390** | 373 | 15 | 2 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -139,7 +139,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（185 條）
+## 2.3 程式碼理解（188 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -229,12 +229,10 @@
 | [`re/22-strategy-command-tree.md`](../re/22-strategy-command-tree.md) | 指令列圖形來源與熱區圖的登記方式未解。 | （散句） | 靜態 |
 | [`re/22-strategy-command-tree.md`](../re/22-strategy-command-tree.md) | 熱區圖怎麼登記 | 寫入端 `sub_1E41B` 沒有任何文件提過 | 靜態 |
 | [`re/22-strategy-command-tree.md`](../re/22-strategy-command-tree.md) | `off_159D2` 的其餘槽位 | 16 筆裡只有 [1] `0x1614A`、[2] `0x15E1E`、[3] `0x15A3A`、[4] `sub_15FAA`、[13] `sub_161CA` 非 `nullsub_1`。這是頂層模式分派表，[1]–[3] 未讀 | 靜態 |
-| [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | 聲軌資料本身的事件編碼、`+0x02`／`+0x04` 兩張表的內容與音色語意仍未解。 | （散句） | 靜態 |
 | [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x00` | 2 B / 未解 | 靜態 |
 | [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x02` | 2 B / 指向靠近曲尾的一張表；載入時存進 `cs:099Ah`。**內容未解** | 靜態 |
 | [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x04` | 2 B / 指向另一張表；存進 `cs:099Ch`。它是曲塊的**最後一段**，長 `0x30` B。**內容未解** | 靜態 |
 | [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x06`–`+0x0F` | 10 B / 未解 | 靜態 |
-| [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | 聲軌資料的事件編碼 | 完全未解。音高、長度、迴圈、包絡都還沒讀 | 靜態 |
 | [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x00`、`+0x06`–`+0x0F` | 12 B 未解 | 靜態 |
 | [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | DOS/V 的實際音源晶片 | `17` §4 有 register path，卡種仍未定案 | 靜態 |
 | [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | 曲號 ↔ 場景的對應 | `KI.EXE` 呼叫端傳哪個索引還沒對過 | 靜態 |
@@ -328,6 +326,11 @@
 | [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | 六個 handler | 熱區 `0x20`–`0x25` 各自做什麼沒讀（「資料儲存」通往四槽視窗是推測） | 靜態 |
 | [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | 中間四列的值 | 由誰填、值域多少未讀 | 靜態 |
 | [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | `sub_106F5` 的屬性解碼 | §3 的低 byte 讀法是強推論，沒逐行驗 | 靜態 |
+| [`re/56-bgm-track-events.md`](../re/56-bgm-track-events.md) | 控制事件（低 byte ≥ `0x80`） | 分派在 `0x1045B`，**未讀**。實測看到 `80 xx`（每軌開頭都有，值 08–0F）、`A0 xx`（遞增，音色候選）、`B0 xx`、`D0 xx`、`F0 xx`（遞增，段落候選）。**不要照長相猜語意** | 實測 |
+| [`re/56-bgm-track-events.md`](../re/56-bgm-track-events.md) | `0x10890` | 實際寫 I/O 埠的常式，還沒讀。基底埠存在 `cs:097Ch` | 靜態 |
+| [`re/56-bgm-track-events.md`](../re/56-bgm-track-events.md) | 兩組埠 | 聲軌 3–5 走 `基底+2`。是 OPL3 的第二 bank 還是雙 OPL2，沒有證據 | 靜態 |
+| [`re/56-bgm-track-events.md`](../re/56-bgm-track-events.md) | `+0x02`／`+0x04` 兩張表 | `23` §3 記的那兩張，仍未解。`+0x04` 固定 `0x30` B，是音色定義的候選 | 靜態 |
+| [`re/56-bgm-track-events.md`](../re/56-bgm-track-events.md) | 音色 | OPL 的 operator 參數（`20`／`40`／`60`／`80`／`C0` 那幾組）由誰寫、寫什麼，沒讀 | 靜態 |
 
 ## 2.4 驗收（19 條）
 
@@ -376,7 +379,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（58 條）
+## 2.6 其他（62 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -402,6 +405,7 @@
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 六列的語意 | **原版那六個 handler 沒讀**（`docs/re/55` §4）。remake 照標籤字面接：兩個速度左鍵 +1／右鍵 −1、「資料儲存」開四槽視窗、「遊戲結束」走 ＹＥＳ／ＮＯ 確認。**這是 remake 差異**，等 handler 讀出來要回頭對 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 「畫面模式」 | 固定字，沒有第二種模式 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 「音效」 | 寫「未接入」——音訊層完全沒做，`BGM.DAT` 的聲軌事件編碼未解（`docs/re/23`） | 靜態 |
+| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 戰場內調速度 | 戰場獨佔輸入，所以 `updateBattle` 自己接一次 ＋／−（調戰術速度），調完浮一行 1.5 秒的提示。**原版戰場沒有速度指示**，常駐顯示會破壞版面 parity | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 速度的檔位 | 原版四個檔位各是什麼值未解（`docs/mechanics/15-realtime.md`）。remake 用 0–64 的「每畫面推進幾個 tick」，0 ＝ 暫停 | 靜態 |
 | [`spec/14-finance-window.md`](../spec/14-finance-window.md) | 收入的來源 | `cs:word_10D02` 由誰計算未讀（月結那一支是候選）。remake 的月結算得出 `res.Income` 但沒有留下來，所以這一格暫時顯示 0——**留白比填一個自己算的數字誠實** | 靜態 |
 | [`spec/14-finance-window.md`](../spec/14-finance-window.md) | 徵兵數的上限 | 只有稅率的 100 是機器碼常數；三個兵種的上限沒看到 | 靜態 |
@@ -429,7 +433,10 @@
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 未解區域 | `+0x1EC0` 那 7 KB 仍是黑盒，只能靠改寫保留 | 靜態 |
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 編輯器 | 這一份只做資料層。UI 是另一份規格 | 靜態 |
 | [`spec/29-audio.md`](../spec/29-audio.md) | 推論等級：容器與 INT 61h 介面 **confirmed**；播放 command **未解 | （散句） | 靜態 |
-| [`spec/29-audio.md`](../spec/29-audio.md) | **？** | **播放第 N 曲** / ⬜ **未解**——`sub_10210` 用 `AH=0x00`／`0x02`／`0x03`，作用未定案 | 靜態 |
+| [`spec/29-audio.md`](../spec/29-audio.md) | 控制事件 | 低 byte ≥ `0x80` 的分派在 `0x1045B`，**未讀**。音量、音色、段落都在裡面（`docs/re/56` §5） | 靜態 |
+| [`spec/29-audio.md`](../spec/29-audio.md) | 音色 | OPL 的 operator 參數（`20`／`40`／`60`／`80`／`C0` 那幾組）由誰寫、寫什麼未讀。**沒有音色就只能發出正弦波**，不是原版音響 | 靜態 |
+| [`spec/29-audio.md`](../spec/29-audio.md) | 兩組埠 | 聲軌 3–5 走 `基底+2`。OPL3 第二 bank 還是雙 OPL2，沒有證據 | 靜態 |
+| [`spec/29-audio.md`](../spec/29-audio.md) | `SOUND.DAT` | 音效資料的格式未解。戰術三個 effect code 已知（`docs/re/17` §3） | 靜態 |
 | [`spec/29-audio.md`](../spec/29-audio.md) | 播放 command | §3，擋住整個階段 B | 靜態 |
 | [`spec/29-audio.md`](../spec/29-audio.md) | `SOUND.DAT` | 音效資料的格式未解 | 靜態 |
 | [`spec/29-audio.md`](../spec/29-audio.md) | 音量 | 錄到的峰值只有滿刻度 4.7%，原因沒查 | 靜態 |
