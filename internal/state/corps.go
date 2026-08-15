@@ -186,6 +186,21 @@ const (
 // 原版 `sub_14698` 的 `cmp ax, 64h`，而槽位本身也只有 1 byte。
 const MaxMenPerSlot = 100
 
+// PreviewFormation 算出「照現在這組兵種按下確定，六個槽會各分到多少兵」，
+// **不動任何狀態**——編成畫面每次重畫都要顯示這個結果（`docs/spec/22` §1.2）。
+//
+// 原版不需要這一支：它每次改兵種就真的把兵退回池再重分，畫面直接讀軍團記錄
+// （`docs/re/30` §4.1）。remake 的編成是到按確定才落地，所以預覽要另外算。
+func (w *World) PreviewFormation(faction int,
+	kinds [army.Positions]army.TroopType, manned [army.Positions]bool) [army.Positions]int {
+
+	if faction < 0 || faction >= len(w.Factions) {
+		return [army.Positions]int{}
+	}
+	pool := w.Factions[faction].Reserves // 值拷貝，分配只動這一份
+	return distributeReserves(&pool, kinds, manned)
+}
+
 // distributeReserves 照原版 `sub_14698` 把預備兵分給六個槽，並從池裡扣掉
 // 實際放進去的量。回傳每個槽分到幾點。
 //

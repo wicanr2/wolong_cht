@@ -176,3 +176,56 @@ func TestDOSVResourceIcons(t *testing.T) {
 		}
 	}
 }
+
+// 編成畫面的「兵種 4 ＝ 空槽」圖示（docs/re/49 §3）。
+//
+// 位移是從 `sub_16DA8` 的 `0x15C0 + (兵種−1)×0xC0` 推出來的，兵種 1–3 落在
+// 綠色那一組裡，兵種 4 落在**綠組後面一張**。所以這一張要單獨驗：
+// 它必須解得開、而且不是綠組最後一張的重複。
+func TestDOSVEmptySlotIcon(t *testing.T) {
+	raw := read(t, "ICONGRF.DAT")
+	segment := raw[IconRegions[3].Offset : IconRegions[3].Offset+IconRegions[3].Length]
+	empty, err := DOSVResourceIcon.DecodeAt(segment, DOSVEmptySlotIconOffset)
+	if err != nil {
+		t.Fatalf("空槽圖示：%v", err)
+	}
+	last, err := DOSVResourceIcon.DecodeAt(segment,
+		DOSVResourceIconGreenOffset+(DOSVResourceIconCount-1)*DOSVResourceIconStride)
+	if err != nil {
+		t.Fatalf("綠組最後一張：%v", err)
+	}
+	same := true
+	seen := map[byte]int{}
+	for i := range empty {
+		if empty[i] >= 16 {
+			t.Fatalf("空槽圖示超出 4bpp：%d", empty[i])
+		}
+		if empty[i] != last[i] {
+			same = false
+		}
+		seen[empty[i]]++
+	}
+	if same {
+		t.Error("空槽圖示與綠組最後一張逐像素相同——位移八成算錯了")
+	}
+	// 空槽本來就該是一格空白，所以**不驗顏色數 ≥ 2**——那條檢查對其他
+	// 圖示是「偏移有沒有落在空白區」的護欄，用在這一張會反過來擋住正解。
+	// 實測是 384 個像素全 0，也就是原版在空槽那一格貼一張全黑圖把前一張擦掉。
+	//
+	// ⚠ 但「全黑」與「位移落在段尾之外」長得一模一樣。分辨的方法是看
+	// **這一張後面還有沒有內容**：有，就表示這片空白是刻意留的。
+	if len(seen) == 1 {
+		tail := segment[DOSVEmptySlotIconOffset+DOSVResourceIconStride:]
+		nonzero := false
+		for _, v := range tail {
+			if v != 0 {
+				nonzero = true
+				break
+			}
+		}
+		if !nonzero {
+			t.Errorf("空槽圖示全 0 而它之後也全 0——0x%X 可能只是段尾，不是一張圖",
+				DOSVEmptySlotIconOffset)
+		}
+	}
+}

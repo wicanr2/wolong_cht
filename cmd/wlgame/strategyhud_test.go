@@ -3,6 +3,7 @@ package main
 import (
 	"testing"
 
+	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
@@ -224,5 +225,66 @@ func TestFinanceWindowLayout(t *testing.T) {
 	if financeFundsDigits != 7 || financeAmountDigits != 6 || financeRowDigits != 5 {
 		t.Errorf("位數 = %d/%d/%d，want 7/6/5",
 			financeFundsDigits, financeAmountDigits, financeRowDigits)
+	}
+}
+
+// TestCorpsFormationLayout 把編成視窗的版面釘成契約（docs/spec/22）。
+//
+// 座標全部出自機器碼：視窗來自 `sub_1895D(cx=0C0Fh)`，靜態層是顯示清單
+// 場景 5，數值座標由 `sub_16D6F`／`sub_16DA8` 的 VRAM 位移換算。
+func TestCorpsFormationLayout(t *testing.T) {
+	checks := []struct {
+		name string
+		got  int
+		want int
+	}{
+		{"視窗 x", formWinX, 144},
+		{"視窗 y", formWinY, 112},
+		{"視窗寬", formWinW, 240},
+		{"視窗高", formWinH, 192},
+		{"武將名 x", formNameX, 296},
+		{"總兵力值 x", formTotalValueX, 312},
+		{"總兵力 y", formTotalY, 152},
+		{"士氣值 x", formMoraleValueX, 320},
+		{"士氣值 y", formMoraleY, 168},
+		{"槽標籤 x", formSlotLabelX, 160},
+		{"槽圖示 x", formSlotIconX, 200},
+		{"槽數值 x", formSlotValueX, 232},
+		{"首槽 y", formSlotY, 192},
+		{"末槽 y", formSlotY + (army.Positions-1)*formSlotStep, 272},
+		{"預備兵圖示 x", formReserveIconX, 280},
+		{"預備兵數值 x", formReserveValueX, 312},
+		{"預備兵首列 y", formReserveY, 216},
+		{"確定鈕 x", formOKX, 280},
+		{"確定鈕 y", formOKY, 272},
+	}
+	for _, c := range checks {
+		if c.got != c.want {
+			t.Errorf("%s = %d，want %d", c.name, c.got, c.want)
+		}
+	}
+	// 熱區與兵種圖示逐格重合——原版 sub_16DFD 登記的六個 24×16 就是那六格。
+	for k := 0; k < army.Positions; k++ {
+		r := formSlotRect(k)
+		if r.Min.X != formSlotIconX || r.Dx() != 24 || r.Dy() != 16 {
+			t.Fatalf("第 %d 槽熱區 = %v，want x%d 24×16", k, r, formSlotIconX)
+		}
+		if r.Min.Y != formSlotY+k*formSlotStep {
+			t.Errorf("第 %d 槽熱區 y = %d，want %d", k, r.Min.Y, formSlotY+k*formSlotStep)
+		}
+	}
+	// 數字是半形 8 px：預備兵 6 位從 312 到 360，落在 (304,216) 64×48 的框內。
+	if right := formReserveValueX + formReserveDigits*textdraw.HalfW; right > 304+64 {
+		t.Errorf("預備兵數到 %d，超出值框右緣 %d", right, 304+64)
+	}
+	// 六槽的框是 (160,192) 112×96，末槽的數字不能溢出去。
+	if right := formSlotValueX + formSlotDigits*textdraw.HalfW; right > formSlotLabelX+112 {
+		t.Errorf("槽的兵力到 %d，超出六槽框右緣 %d", right, formSlotLabelX+112)
+	}
+	// 位數：總兵力 4、士氣 3、預備兵 6、槽 4（sub_16D6F/sub_16DA8 的 bx 低 byte）。
+	if formTotalDigits != 4 || formMoraleDigits != 3 ||
+		formReserveDigits != 6 || formSlotDigits != 4 {
+		t.Errorf("位數 = %d/%d/%d/%d，want 4/3/6/4", formTotalDigits,
+			formMoraleDigits, formReserveDigits, formSlotDigits)
 	}
 }

@@ -9,6 +9,7 @@ package main
 
 import (
 	"fmt"
+	"image"
 	"image/color"
 	"strings"
 
@@ -104,54 +105,169 @@ func (g *game) updateForm() {
 	}
 }
 
-// drawForm 畫編成畫面。六個位置的名稱照說明書 5.5 的編成畫面。
+// 編成視窗的版面**全部出自原版**（docs/spec/22）：視窗矩形來自
+// `sub_1895D(cx=0C0Fh)`，靜態層是顯示清單場景 5，數值座標由
+// `sub_16D6F`／`sub_16DA8` 的 VRAM 位移換算（一列 80 byte）。
+const (
+	formWinX, formWinY = 144, 112
+	formWinW, formWinH = 240, 192
+
+	formPortraitX, formPortraitY = 152, 120
+	formNameX, formNameY         = 296, 128
+
+	formHeadLabelX               = 248
+	formTitleY                   = 128
+	formTotalY, formMoraleY      = 152, 168
+	formTotalValueX              = 312
+	formMoraleValueX             = 320
+	formTotalDigits              = 4
+	formMoraleDigits             = 3
+
+	// 六個槽：標籤 → 兵種圖示 → 兵力，一列三段。
+	formSlotLabelX = 160
+	formSlotIconX  = 200
+	formSlotValueX = 232
+	formSlotY      = 192
+	formSlotStep   = 16
+	formSlotDigits = 4
+
+	// 右側預備兵欄：圖示在 280，數字在 312，三列。
+	formReserveLabelX, formReserveLabelY = 280, 192
+	formReserveIconX                     = 280
+	formReserveValueX                    = 312
+	formReserveY                         = 216
+	formReserveDigits                    = 6
+
+	formOKX, formOKY = 280, 272
+	formOKW, formOKH = 88, 16
+	formOKTextX      = 304
+
+	formIconW, formIconH = 24, 16
+
+	// remake 差異：操作提示自己一個框，接在原版視窗下面。
+	// 四列：錯誤訊息一列、操作三列——一列塞不下 240 的框寬。
+	formHintY = formWinY + formWinH
+	formHintH = 80
+)
+
+// formSlotLabels 是六個槽的標籤，取自顯示清單場景 5 的字串。
+//
+// **不用 `army.Position.String()`**：那一組是規則層的用語，第一個是「大將」
+// （原版 TALK #62 也這樣說），而編成視窗上印的是「主將」。
+var formSlotLabels = [army.Positions]string{"主將", "前鋒", "左翼", "右翼", "左備", "右備"}
+
+// formSlotRect 是第 k 個槽的可點矩形（原版熱區 0x3E+k），
+// **與兵種圖示逐格重合**。
+func formSlotRect(k int) image.Rectangle {
+	if k < 0 || k >= army.Positions {
+		return image.Rectangle{}
+	}
+	y := formSlotY + k*formSlotStep
+	return image.Rect(formSlotIconX, y, formSlotIconX+formIconW, y+formIconH)
+}
+
+// drawForm 畫編成畫面（docs/spec/22）。
 func (g *game) drawForm(screen *ebiten.Image) {
 	f := &g.form
 	if !f.active {
 		return
 	}
-	const x, y, w, h = 40, 56, 400, 216
-	g.chrome.Window(screen, x, y, w, h, chrome.Menu)
+	g.chrome.Window(screen, formWinX, formWinY, formWinW, formWinH, chrome.Menu)
 
-	white := color.RGBA{240, 240, 230, 255}
-	amber := color.RGBA{240, 200, 120, 255}
-	dim := color.RGBA{150, 150, 160, 255}
-	red := color.RGBA{240, 140, 140, 255}
+	ink := g.paletteInk(strategyInkNormal, chrome.Paper)
+	labelInk := g.paletteInk(strategyInkDim, color.RGBA{255, 223, 154, 255})
+	warnInk := g.paletteInk(strategyInkGauge, color.RGBA{210, 48, 40, 255})
+	season := int(g.world.Clock.Season())
 
-	g.td.Draw(screen, "軍隊編成　"+big5(g.world.Generals[f.leader].Name), x+8, y+6, amber)
-
-	// 剩餘預備兵。編成一個位置固定扣 1,000 人（說明書 5.5）。
-	res := g.world.Factions[g.world.Player].Reserves
-	g.td.Draw(screen, fmt.Sprintf("預備兵　騎馬%5d　弓兵%5d　步兵%5d",
-		res[0], res[1], res[2]), x+8, y+26, dim)
-
-	ry := y + 50
-	men := 0
+	// 靜態層（顯示清單場景 5）。
+	for _, box := range []struct{ x, y, w, h int }{
+		{240, 152, 112, 32}, {formSlotLabelX, formSlotY, 112, 96},
+		{304, formReserveY, 64, 48}, {formOKX, formOKY, formOKW, formOKH},
+	} {
+		vector.DrawFilledRect(screen, float32(box.x), float32(box.y),
+			float32(box.w), float32(box.h), color.Black, false)
+	}
+	g.td.Draw(screen, "將軍", formHeadLabelX, formTitleY, ink)
+	g.td.Draw(screen, "總兵力", formHeadLabelX, formTotalY, ink)
+	g.td.Draw(screen, "士氣值", formHeadLabelX, formMoraleY, ink)
+	g.td.Draw(screen, "預備兵數", formReserveLabelX, formReserveLabelY, labelInk)
+	g.td.Draw(screen, "確 定", formOKTextX, formOKY, ink)
 	for k := 0; k < army.Positions; k++ {
-		col := white
-		if k == f.slot {
-			vector.DrawFilledRect(screen, x+4, float32(ry-1), w-8,
-				float32(textdraw.GlyphH+2), color.RGBA{70, 60, 30, 255}, false)
-			col = amber
-		}
-		kind := "（空）"
-		if f.manned[k] {
-			kind = f.kinds[k].String()
-			men += army.MenPerUnit
-		}
-		g.td.Draw(screen, army.Position(k).String()+"　"+kind, x+12, ry, col)
-		ry += textdraw.GlyphH + 2
+		g.td.Draw(screen, formSlotLabels[k],
+			formSlotLabelX, formSlotY+k*formSlotStep, ink)
 	}
-	g.td.Draw(screen, fmt.Sprintf("合計 %d 人", men), x+240, y+50, white)
 
-	if f.err != "" {
-		g.td.Draw(screen, f.err, x+8, y+h-3*textdraw.GlyphH-12, red)
+	// 兵力照 `sub_14698` 的分配式預覽，**不是「槽數 × 1000」**——
+	// 兵不夠時原版就是分多少算多少（docs/spec/21 §2）。
+	men := g.world.PreviewFormation(g.world.Player, f.kinds, f.manned)
+
+	// 右側預備兵欄：三張紅色圖示（財政那一組的第 2–4 張）＋ 六位數。
+	//
+	// 顯示的是**扣掉這次編成之後**的餘額。原版每改一次兵種就真的退回池再
+	// 重分，所以它畫面上那個數字已經扣過了；remake 到按確定才落地，
+	// 這裡要自己減，否則玩家會看到一筆同時算在兩個地方的兵。
+	res := g.world.Factions[g.world.Player].Reserves
+	for k := 0; k < army.Positions; k++ {
+		if t := int(f.kinds[k]); f.manned[k] && t >= 0 && t < len(res) {
+			res[t] -= men[k]
+		}
 	}
-	// 提示分兩列——一列塞不下就會畫到視窗外面去。
-	g.td.Draw(screen, "↑↓ 選位置　1 騎馬　2 弓兵　3 步兵　空白 空位",
-		x+8, y+h-2*textdraw.GlyphH-8, dim)
-	g.td.Draw(screen, "Enter 編成　ESC 取消",
-		x+8, y+h-textdraw.GlyphH-4, dim)
+	for i := 0; i < 3; i++ {
+		y := formReserveY + i*formSlotStep
+		if img, err := g.lib.DOSVResourceIcon(i+1, false, season); err == nil {
+			op := &ebiten.DrawImageOptions{}
+			op.GeoM.Translate(float64(formReserveIconX), float64(y))
+			screen.DrawImage(ebiten.NewImageFromImage(img), op)
+		}
+		g.td.Draw(screen, strategyHUDNumber(res[i]*strategyReserveMenPerPoint,
+			formReserveDigits), formReserveValueX, y, labelInk)
+	}
+
+	// 動態層：主將、士氣、六個槽與總兵力。
+	gen := g.world.Generals[f.leader]
+	g.td.Draw(screen, big5(gen.Name), formNameX, formNameY, ink)
+	g.td.Draw(screen, strategyHUDNumber(
+		g.world.Factions[g.world.Player].MoraleBase, formMoraleDigits),
+		formMoraleValueX, formMoraleY, ink)
+
+	total := 0
+	for k := 0; k < army.Positions; k++ {
+		y := formSlotY + k*formSlotStep
+		kind := 4 // 原版的兵種 4 ＝ 空槽
+		if f.manned[k] {
+			kind = int(f.kinds[k]) + 1
+		}
+		if img, err := g.lib.DOSVTroopIcon(kind, season); err == nil {
+			op := &ebiten.DrawImageOptions{}
+			op.GeoM.Translate(float64(formSlotIconX), float64(y))
+			screen.DrawImage(ebiten.NewImageFromImage(img), op)
+		}
+		g.td.Draw(screen, strategyHUDNumber(men[k]*strategyReserveMenPerPoint,
+			formSlotDigits), formSlotValueX, y, labelInk)
+		total += men[k]
+	}
+	g.td.Draw(screen, strategyHUDNumber(total*strategyReserveMenPerPoint,
+		formTotalDigits), formTotalValueX, formTotalY, ink)
+
+	// ↓ 以下是 **remake 差異**，原版沒有：選取標記與操作提示。
+	// 原版點一下槽就是兵種 +1 循環，改完立刻重算，所以不需要選取狀態。
+	sel := formSlotRect(f.slot)
+	vector.StrokeRect(screen, float32(sel.Min.X-1), float32(sel.Min.Y-1),
+		float32(sel.Dx()+2), float32(sel.Dy()+2), 1, ink, false)
+
+	g.chrome.Window(screen, formWinX, formHintY, formWinW, formHintH, chrome.Menu)
+	hy := formHintY + 8
+	if f.err != "" {
+		g.td.Draw(screen, f.err, formWinX+8, hy, warnInk)
+	}
+	for i, line := range []string{
+		"↑↓ 選位置　1 騎馬",
+		"2 弓兵　3 步兵　空白 空位",
+		"Enter 編成　ESC 取消",
+	} {
+		g.td.Draw(screen, line, formWinX+8,
+			hy+(i+1)*(textdraw.GlyphH+2), labelInk)
+	}
 }
 
 // ---------------------------------------------------------------------------
@@ -397,12 +513,15 @@ func (g *game) demoCorps(list bool) {
 
 // affordable 依現有的預備兵湊一個編成：騎馬優先，其次弓兵、步兵。
 func (g *game) affordable() (kinds [army.Positions]army.TroopType, manned [army.Positions]bool) {
+	// **池的單位是點，不是人**（docs/spec/21 §1）：一個滿編槽是
+	// `state.MaxMenPerSlot` ＝ 100 點 ＝ 1,000 人。拿 `army.MenPerUnit`
+	// 來比會把門檻抬高十倍，六個槽裡只填得出一個。
 	res := g.world.Factions[g.world.Player].Reserves
 	slot := 0
 	for t := army.Cavalry; t <= army.Infantry && slot < army.Positions; t++ {
-		for res[t] >= army.MenPerUnit && slot < army.Positions {
+		for res[t] >= state.MaxMenPerSlot && slot < army.Positions {
 			kinds[slot], manned[slot] = t, true
-			res[t] -= army.MenPerUnit
+			res[t] -= state.MaxMenPerSlot
 			slot++
 		}
 	}

@@ -96,7 +96,7 @@
 | 方式 | 內容 |
 |---|---|
 | 單元測試 | `TestFinanceWindowLayout`：視窗矩形、數值座標與位數、熱區與綠色圖示欄逐格重合、兩欄的框不超出視窗 |
-| 截圖 | [`docs/playtest/parity/finance.png`](../playtest/parity/finance.png) |
+| 截圖 | `WOLONG_SHOT_CMD=wlgame tools/shot.sh <out> KEYS=F -direct -scenario 0 -player 0` → `docs/playtest/parity/finance.png`（**本地產物，`*.png` 不進版控**）|
 
 ## 5. 未解
 

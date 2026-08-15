@@ -260,6 +260,25 @@ func (l *Library) DOSVResourceIcon(index int, green bool, bank int) (*image.RGBA
 		base+index*gfx.DOSVResourceIconStride, l.Palette, bank)
 }
 
+// DOSVTroopIcon 解出編成畫面六個槽用的兵種圖示。
+//
+// kind 用原版的兵種編碼：1 騎馬／2 弓兵／3 步兵／4 空槽。
+// 前三個就是 `DOSVResourceIcon` 綠色組的第 2–4 張，空槽另有一張
+// （`docs/re/49` §3）。
+func (l *Library) DOSVTroopIcon(kind, bank int) (*image.RGBA, error) {
+	if l == nil || l.Chrome == nil {
+		return nil, fmt.Errorf("ICONGRF 段 3 沒有載入")
+	}
+	if kind < 1 || kind > 4 {
+		return nil, fmt.Errorf("兵種 %d 超出 1–4", kind)
+	}
+	if kind == 4 {
+		return gfx.DOSVResourceIcon.RenderRGBAAt(l.Chrome,
+			gfx.DOSVEmptySlotIconOffset, l.Palette, bank)
+	}
+	return l.DOSVResourceIcon(kind, true, bank)
+}
+
 // DOSVBattleCommandBase 解出 sub_1C7F4 在底列重複六次的 80×32 底板。
 func (l *Library) DOSVBattleCommandBase(bank int) (*image.RGBA, error) {
 	if l == nil || l.BattleUI == nil {

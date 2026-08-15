@@ -66,6 +66,11 @@ const (
 	DOSVResourceIconGreenOffset = 0x1EA0
 	DOSVResourceIconStride      = 0xC0
 	DOSVResourceIconCount       = 4
+
+	// DOSVEmptySlotIconOffset 是編成畫面「兵種 4 ＝ 空槽」用的圖示。
+	// `sub_16DA8` 以 `0x15C0 + (兵種−1)×0xC0` 取圖，兵種 1–3 落在綠色那
+	// 一組的第 2–4 張，兵種 4 落在**綠組後面一張**（`docs/re/49` §3）。
+	DOSVEmptySlotIconOffset = 0x21A0
 )
 
 // DOSVAmountPanel 是 sub_17D0D 以 AX=4006h 複製的 96×64 平面圖。
