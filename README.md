@@ -375,7 +375,7 @@ tools/go.sh run ./cmd/wlsim  -years 15 -tax 25          # 無頭模擬，看十�
 
 ```sh
 tools/bgm2ogg.sh          # 14 首音樂 ＋ 18 個音效 → workplace/audio/*.ogg
-tools/go.sh run ./cmd/wlgame -audio workplace/audio …
+tools/go.sh run ./cmd/wlgame -audio workplace/audio …   # 要給 -audio 才有聲音
 ```
 
 `cmd/wlaudio` 用一顆純 Go 的 OPL3（YMF262）照原版的暫存器語意重放，
@@ -383,7 +383,9 @@ tools/go.sh run ./cmd/wlgame -audio workplace/audio …
 （[`docs/re/57`](docs/re/57-opl3-register-map.md)）。ogg 那一段走 docker ffmpeg，
 因為 Go 這邊沒有 vorbis 編碼器。
 
-沒有音檔時遊戲靜音跑，系統選單第 3 列顯示「未接入」。
+**`-audio` 預設留白（靜音）**：Ebiten 的音訊錯誤沒有可查詢的 API，
+沒有音效裝置的機器（CI、無頭驗收）一開音訊就會整個結束。
+給了目錄但裡面沒有 ogg 時同樣靜音跑，系統選單第 3 列顯示「未接入」。
 **哪一首配哪個場景是從機器碼讀出來的**——大地圖是四季配樂、
 事件與對話一首、攻城分玩家攻守兩首、野戰與地形戰場各一首
 （[`docs/re/58`](docs/re/58-bgm-scene-mapping.md)）。

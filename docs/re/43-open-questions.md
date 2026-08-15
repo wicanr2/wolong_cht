@@ -21,10 +21,10 @@
 | 規則正確性 | 56 | 55 | 1 | 0 |
 | 資料保存 | 38 | 38 | 0 | 0 |
 | 程式碼理解 | 197 | 191 | 6 | 0 |
-| 驗收 | 21 | 16 | 5 | 0 |
+| 驗收 | 25 | 20 | 5 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
 | 其他 | 62 | 59 | 3 | 0 |
-| **合計** | **392** | 376 | 15 | 1 |
+| **合計** | **396** | 380 | 15 | 1 |
 
 ## 2.1 規則正確性（56 條）
 
@@ -332,7 +332,7 @@
 | [`re/59-game-over-exit-codes.md`](../re/59-game-over-exit-codes.md) | 無主城 `0x18` | 值 24 落在 22 個勢力之外，但劇本裡有沒有無主城沒查過 | 靜態 |
 | [`re/59-game-over-exit-codes.md`](../re/59-game-over-exit-codes.md) | `D7END.EXE` | 結局過場本身完全沒讀（`END_S*.DAT` 的用法未解） | 靜態 |
 
-## 2.4 驗收（21 條）
+## 2.4 驗收（25 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -357,6 +357,10 @@
 | [`playtest/26-bgm-render-vs-recording.md`](../playtest/26-bgm-render-vs-recording.md) | 音色的聽感 | 頻譜只驗了基頻。諧波結構（也就是「像不像那個音色」）沒有量化比對 | 靜態 |
 | [`playtest/26-bgm-render-vs-recording.md`](../playtest/26-bgm-render-vs-recording.md) | 相關係數為什麼不是 0.9 | DOSBox 的 OPL 模擬與這顆的包絡實作不同，加上錄音有系統噪訊。**沒有排除「還有小錯」的可能** | 實測 |
 | [`playtest/26-bgm-render-vs-recording.md`](../playtest/26-bgm-render-vs-recording.md) | 其他曲子 | 只有開場曲有錄音對照組。另外 13 首沒有 | 靜態 |
+| [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 逐像素 parity | 影片是再編碼的，做不到。要真的逐像素得回到模擬器，而主畫面的點擊閘還在 | 靜態 |
+| [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 色彩 | 只比了幾何。調色盤要另外用「同一格地形的色號」比，不能用影片的 RGB | 靜態 |
+| [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 戰術畫面 | 影片裡有攻城與野戰的實錄（第 4–6 排影格），**還沒量** | 靜態 |
+| [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 一覽表視窗 | 影片裡有武將／據點／財政的實錄，**還沒量** | 靜態 |
 
 ## 2.5 外部資料（18 條）
 

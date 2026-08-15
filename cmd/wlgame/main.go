@@ -1072,14 +1072,17 @@ func main() {
 	player := flag.Int("player", 0, "玩家所仕的勢力編號（直接啟動／驗收用）")
 	directStart := flag.Bool("direct", false, "跳過一般玩家啟動殼層，直接啟動指定劇本／玩家（驗收用）")
 	fontDir := flag.String("font", "workplace/eten", "倚天點陣字目錄（請自備）")
-	audioDir := flag.String("audio", "workplace/audio", "ogg 音檔目錄（自己用 tools/bgm2ogg.sh 產生）")
+	// ⚠ 預設是空的（靜音）。Ebiten 的音訊錯誤沒有可查詢的 API，
+	// 沒有音效裝置時 `RunGame` 會直接帶著 ALSA 的錯誤結束——
+	// 無頭驗收與 CI 全部會掛。**要有聲音就明確給目錄。**
+	audioDir := flag.String("audio", "", "ogg 音檔目錄（先跑 tools/bgm2ogg.sh 產生；留白＝靜音）")
 	speed := flag.Int("speed", 4, "戰略速度：每個畫面更新推進幾個遊戲 tick")
 	tacticalSpeed := flag.Int("tactical-speed", 4, "戰術速度：戰場每個畫面更新推進幾幀")
 	seed := flag.Int("seed", -1, "驗收用固定亂數種子；負值時照原版以時鐘播種")
 	shot := flag.String("shot", "", "跑 N 幀之後截圖到這個路徑就結束（驗收用）")
 	shotFrames := flag.Int("shot-frames", 120, "截圖前先跑幾幀")
 	saveFile := flag.String("save-file", "", "可寫的四槽存檔 overlay 路徑；一般啟動可選讀檔")
-	openWin := flag.Int("open-window", -1, "截圖前先打開第幾個視窗（0–3，驗收暫停規則用）")
+	openWin := flag.Int("open-window", -1, "截圖前先打開第幾個視窗（0–3；−2 ＝ 四窗全開，對拍用）")
 	openList := flag.Bool("open-list", false, "截圖前先開武將一覽（驗收用）")
 	openAdvise := flag.Bool("open-advise", false, "截圖前先跑到說服畫面（驗收用）")
 	openForm := flag.Bool("open-form", false, "截圖前先編一支軍團並開編成畫面（驗收用）")
@@ -1132,7 +1135,7 @@ func main() {
 		td: textdraw.New(font, ascii),
 		shotPath: *shot, shotAt: *shotFrames, origDir: *dir, sourceFile: path,
 		saveFile: *saveFile, saveBase: path, sound: sound.Open(*audioDir)}
-	if !g.sound.Available() {
+	if *audioDir != "" && !g.sound.Available() {
 		log.Printf("音檔目錄 %s 沒有 ogg，靜音跑。要有音樂請跑 tools/bgm2ogg.sh", *audioDir)
 	}
 	// 四個常駐視窗**預設全關**，這是原版數值：新遊戲流程的最後一行是
@@ -1326,6 +1329,11 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, openFor
 		w.DebugLatchOutcomeForShot(state.DefeatFactionEliminated)
 	}
 	// -open-window N 開第 N 個視窗（0–3），驗收用。
+	// −2 ＝ 四窗全開。原版實錄的主畫面就是這個狀態
+	// （docs/playtest/27），沒有它就沒辦法對拍。
+	if openWin == -2 {
+		g.hudSet(hudCommand|hudFaction|hudMinimap, true)
+	}
 	if w := hudSwitchWindow(openWin); openWin >= 0 && w != 0 {
 		g.hudSet(w, true)
 	}
