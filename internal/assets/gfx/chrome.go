@@ -57,6 +57,11 @@ const (
 	// 顯示清單 op 09 以 `word_10D50` 的 0x1200 起連號取用（`docs/re/48` §4），
 	// 換算後落在段 3 的 0x1BA0；同樣四張的綠色版在 0x1EA0。
 	// 紅色版用在自勢力情報與財政的「今月底」欄，綠色版用在財政的「次月」欄。
+	// DOSVFactionLegendOffset 是縮小地圖視窗下方那條勢力色標
+	// （左半紅、右半藍，各帶一個小色塊）。`sub_15A3A` 以
+	// `word_10D50:0000h` 貼在 (440,168)，換算後是段 3 的 0x09A0。
+	DOSVFactionLegendOffset = 0x09A0
+
 	DOSVResourceIconOffset      = 0x1BA0
 	DOSVResourceIconGreenOffset = 0x1EA0
 	DOSVResourceIconStride      = 0xC0
@@ -69,6 +74,9 @@ var DOSVAmountPanel = Spec{Name: "ICONGRF/DOSV amount panel", Width: 96, Height:
 
 // DOSVResourceIcon 是資金／預備兵欄左邊那一直排圖示。
 var DOSVResourceIcon = Spec{Name: "ICONGRF/DOSV resource icon", Width: 24, Height: 16}
+
+// DOSVFactionLegend 是縮小地圖下方那條 192×16 的勢力色標。
+var DOSVFactionLegend = Spec{Name: "ICONGRF/DOSV faction legend", Width: 192, Height: 16}
 
 // chromeBytes 是一塊 8×8 4bpp 的大小。
 const chromeBytes = ChromeTile * ChromeTile * Planes / 8

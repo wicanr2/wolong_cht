@@ -39,7 +39,7 @@ MAX_OP = 0x0F
 
 OPS = {
     0x03: "填矩形",
-    0x06: "未解",
+    0x06: "垂直線",
     0x07: "場景範圍",
     0x08: "字串",
     0x09: "貼圖",
@@ -97,6 +97,8 @@ def describe(data, rec):
     if op in (0x03, 0x07):
         return "%-6s (%3d,%3d)–(%3d,%3d)  ＝ %d×%d" % (
             name, x, y, a1, a2, a1 - x + 1, a2 - y + 1)
+    if op == 0x06:
+        return "%-6s (%3d,%3d)  長 %d  顏色 %X" % (name, x, y, a1, a2)
     return "%-6s (%3d,%3d)  arg %04X %04X" % (name, x, y, a1, a2)
 
 

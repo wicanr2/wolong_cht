@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 60 | 59 | 1 | 0 |
 | 資料保存 | 43 | 43 | 0 | 0 |
-| 程式碼理解 | 170 | 164 | 6 | 0 |
+| 程式碼理解 | 169 | 163 | 6 | 0 |
 | 驗收 | 14 | 11 | 3 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
 | 其他 | 25 | 23 | 2 | 0 |
-| **合計** | **330** | 317 | 12 | 1 |
+| **合計** | **329** | 316 | 12 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -139,7 +139,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（170 條）
+## 2.3 程式碼理解（169 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -308,8 +308,7 @@
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | `funcs_159C0` 的五筆內容 | 只確認是「擦除」對應表（`sub_1895D` 樣式 0），逐筆未 dump | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 開關圖示的圖形來源 | 五格 32×32 的圖從哪個圖庫來未讀 | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 原版執行期驗證 | **未做**。PC-98 oracle 上左鍵點這五格沒有反應（§6），原因未定 | 實測 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | 4 | 06 / (120,8) 48×15 / (560,208) / 未解 | 靜態 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | opcode `04`／`05`／`06` | handler 位址已知，語意未讀。`04` 成對出現且座標差 1 px | 靜態 |
+| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | opcode `04`／`05` | handler 位址已知，語意未讀。`04` 成對出現且座標差 1 px，像是立體邊的兩條 | 靜態 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `08` 的屬性 byte | 場景 0 用 `0x0F`（一般）與 `0x09`（資金／預備兵那兩個標籤），語意未對過調色盤 | 靜態 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `sub_1E9A7(bl=0, ax=1800h, cx=2020h)` | `sub_1030F` 登記的第二件事，未讀 | 靜態 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | 十個場景對十一個呼叫端 | 有兩個呼叫端共用同一個場景，哪兩個未查 | 靜態 |

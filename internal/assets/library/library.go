@@ -231,6 +231,15 @@ func (l *Library) DOSVAmountPanel(bank int) (*image.RGBA, error) {
 	return gfx.DOSVAmountPanel.RenderRGBAAt(l.Chrome, gfx.DOSVAmountPanelOffset, l.Palette, bank)
 }
 
+// DOSVFactionLegend 解出縮小地圖下方那條 192×16 勢力色標。
+func (l *Library) DOSVFactionLegend(bank int) (*image.RGBA, error) {
+	if l == nil || l.Chrome == nil {
+		return nil, fmt.Errorf("ICONGRF 段 3 沒有載入")
+	}
+	return gfx.DOSVFactionLegend.RenderRGBAAt(l.Chrome,
+		gfx.DOSVFactionLegendOffset, l.Palette, bank)
+}
+
 // DOSVResourceIcon 解出資金／預備兵欄左邊那一直排 24×16 圖示。
 //
 // index 0–3 依序是天秤（資金）、馬、弓、步；green 選綠色那一組

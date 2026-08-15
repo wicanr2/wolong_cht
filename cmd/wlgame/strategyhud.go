@@ -100,6 +100,9 @@ const (
 	strategyInfoLabelW       = 32
 	strategyInfoValueXOffset = 144 // 576 − 432
 	strategyInfoValueW       = strategySidebarInnerRight - (strategySidebarX + strategyInfoValueXOffset)
+	// 標籤與名字之間那條垂直線：顯示清單 op 06，(560,208) 長 48、顏色 0x0F。
+	strategyInfoDividerXOffset = 128 // 560 − 432
+	strategyInfoDividerH       = 48
 	strategyTrustLabelX      = 16  // 448 − 432
 	strategyTrustLabelY      = 80  // 272 − 192
 	strategyTrustSlotX       = 16  // 448 − 432
@@ -109,6 +112,9 @@ const (
 	strategyTrustYOffset     = 100 // 292 − 192
 	strategyTrustXOffset     = 24  // 456 − 432
 	strategyTrustMaxW        = 160
+	// 量條高 2 px：`sub_10AAA` 兩次呼叫都帶 `ch = 2`。滿長 160 來自
+	// `sub_15F27` 沒有重載的 `ch = 0A0h`（cx ＝ 總長<<8 ｜ 已填長度）。
+	strategyTrustBarH = 2
 	strategyResourceBoxX     = 16  // 448 − 432
 	strategyResourceBoxY     = 112 // 304 − 192
 	strategyResourceBoxW     = 176
@@ -288,6 +294,26 @@ const (
 	hudSwitchN  = 5
 )
 
+// 原版直接給的調色盤索引。**不要把 RGB 常數抄進呈現層**——
+// 調色盤有四季四組，抄死的顏色只會在其中一組看起來對。
+const (
+	strategyInkNormal = 0x0F
+	strategyInkDim    = 0x09
+	strategyInkGauge  = 0x0A
+)
+
+// paletteInk 取原版調色盤的指定色；取不到就用 fallback，不讓畫面消失。
+func (g *game) paletteInk(index int, fallback color.RGBA) color.RGBA {
+	if g.lib == nil || g.world == nil {
+		return fallback
+	}
+	c, err := g.lib.PaletteColor(int(g.world.Clock.Season()), index)
+	if err != nil {
+		return fallback
+	}
+	return c
+}
+
 // hudSwitchWindow 把開關編號（0 起）換成它控制的視窗；第五格回 0。
 func hudSwitchWindow(index int) hudWindow {
 	switch index {
@@ -377,18 +403,15 @@ func (g *game) drawHUDSidebar(screen *ebiten.Image) {
 		op.GeoM.Translate(float64(strategyMinimapX), float64(strategyMinimapY))
 		screen.DrawImage(ebiten.NewImageFromImage(img), op)
 	}
-	// 原版縮小地圖下方是兩個半欄寬的勢力色標；圖像本身不含 runtime
-	// 君主名，所以這一列由 state 填入。先前只有 8×8 色點，會讓右欄骨架
-	// 看起來少掉一整列 16 px 的紅／藍帶。
-	red := color.RGBA{210, 48, 40, 255}
-	blue := color.RGBA{45, 105, 210, 255}
+	// 勢力色標是**原版的一張 192×16 圖**（段 3 0x09A0，`sub_15A3A` 貼在
+	// (440,168)）：左半紅、右半藍，各帶一個小色塊。圖裡沒有君主名，
+	// 那一層由 state 填。
 	legendX := strategySidebarX + chrome.Tile
-	vector.DrawFilledRect(screen, float32(legendX), float32(strategyMinimapLegendY), 96, 16, red, false)
-	vector.DrawFilledRect(screen, float32(legendX+96), float32(strategyMinimapLegendY), 96, 16, blue, false)
-	vector.DrawFilledRect(screen, float32(legendX+8), float32(strategyMinimapSwatchY), 8, 8,
-		color.RGBA{85, 154, 69, 255}, false)
-	vector.DrawFilledRect(screen, float32(legendX+104), float32(strategyMinimapSwatchY), 8, 8,
-		color.RGBA{85, 154, 69, 255}, false)
+	if img, err := g.lib.DOSVFactionLegend(int(g.world.Clock.Season())); err == nil {
+		op := &ebiten.DrawImageOptions{}
+		op.GeoM.Translate(float64(legendX), float64(strategyMinimapLegendY))
+		screen.DrawImage(ebiten.NewImageFromImage(img), op)
+	}
 	g.td.Draw(screen, strategyHUDSingleLine(big5(g.world.LordName(g.world.Player)), 72), legendX+24, strategyMinimapLegendY, chrome.Paper)
 	enemyName := "敵"
 	for faction, f := range g.world.Factions {
@@ -413,9 +436,15 @@ func (g *game) drawNaturalFactionHUD(dst *ebiten.Image, x, y int) {
 		}
 	}
 
-	ink := chrome.Paper
-	// 原版頭像右側是「君主／首都／軍師」三列。值的座標是原版數值
-	// （576, 208/224/240）；標籤與分隔線在原版屬於底圖，位置是這裡自己定的。
+	// 顏色也是原版數值，不再自己挑：顯示清單 op 08 的屬性 byte 與繪製
+	// 常式的 `ax`／`bx` 高 byte 都是調色盤索引（docs/re/48 §4）。
+	//
+	//	0x0F  君主／首都／軍師的標籤與名字、資金與預備兵的數字
+	//	0x09  「資金」「預備兵」兩個標籤
+	//	0x0A  信賴度量條，以及資金為負時的數字
+	ink := g.paletteInk(strategyInkNormal, chrome.Paper)
+	labelInk := g.paletteInk(strategyInkDim, color.RGBA{255, 223, 154, 255})
+	gaugeInk := g.paletteInk(strategyInkGauge, color.RGBA{85, 154, 69, 255})
 	labelX := x + strategyInfoLabelXOffset
 	valueX := x + strategyInfoValueXOffset
 	infoY := y + strategyInfoYOffset
@@ -433,9 +462,12 @@ func (g *game) drawNaturalFactionHUD(dst *ebiten.Image, x, y int) {
 		g.td.Draw(dst, strategyHUDSingleLine(row.label, strategyInfoLabelW), labelX, py, ink)
 		g.td.Draw(dst, strategyHUDSingleLine(row.value, strategyInfoValueW), valueX, py, ink)
 	}
+	vector.DrawFilledRect(dst, float32(x+strategyInfoDividerXOffset), float32(infoY),
+		1, strategyInfoDividerH, ink, false)
 	// 信賴度：原版先畫一個 176×10 的槽（顯示清單 op 03），再在裡面畫量條
-	// （`sub_15F27`，長度 (信賴度×100 + 0x9F) ÷ 0xA0）。顏色是自己挑的，
-	// 原版的 `ax=0x0A00` 還沒對過調色盤。
+	// （`sub_15F27`，長度 (信賴度×100 + 0x9F) ÷ 0xA0，滿長 160）。
+	// 量條本體高 2 px，填色 0x0A、未填色 0x00——`sub_10AAA` 分兩段畫，
+	// 第二段把 `ah` 換成 `al`（0x00）。這裡的槽已經是黑的，只畫填滿那一段。
 	g.td.Draw(dst, "信賴度", x+strategyTrustLabelX, y+strategyTrustLabelY, ink)
 	vector.DrawFilledRect(dst, float32(x+strategyTrustSlotX), float32(y+strategyTrustSlotY),
 		strategyTrustSlotW, strategyTrustSlotH, color.RGBA{24, 24, 32, 255}, false)
@@ -445,17 +477,21 @@ func (g *game) drawNaturalFactionHUD(dst *ebiten.Image, x, y int) {
 	}
 	if trustW > 0 {
 		vector.DrawFilledRect(dst, float32(x+strategyTrustXOffset), float32(y+strategyTrustYOffset),
-			float32(trustW), 8, color.RGBA{85, 154, 69, 255}, false)
+			float32(trustW), strategyTrustBarH, gaugeInk, false)
 	}
 
 	// 資源區的黑底也是顯示清單畫的（op 03，(448,304) 176×80）。
 	vector.DrawFilledRect(dst, float32(x+strategyResourceBoxX), float32(y+strategyResourceBoxY),
 		strategyResourceBoxW, strategyResourceBoxH, color.Black, false)
-	resourceInk := color.RGBA{255, 223, 154, 255}
 	fundsY := y + strategyFundsYOffset
-	g.td.Draw(dst, "資金", x+strategyResourceLabelX, fundsY, resourceInk)
-	g.td.Draw(dst, "預備兵", x+strategyResourceLabelX, y+strategyReserveYOffset, resourceInk)
-	g.td.Draw(dst, strategyHUDNumber(f.Funds, strategyFundsDigits), x+strategyFundsXOffset, fundsY, ink)
+	g.td.Draw(dst, "資金", x+strategyResourceLabelX, fundsY, labelInk)
+	g.td.Draw(dst, "預備兵", x+strategyResourceLabelX, y+strategyReserveYOffset, labelInk)
+	// 資金為負時原版把顏色從 0x0F 換成 0x0A（`sub_15F5D` 的 `cmp dh, 80h`）。
+	fundsInk := ink
+	if f.Funds < 0 {
+		fundsInk = gaugeInk
+	}
+	g.td.Draw(dst, strategyHUDNumber(f.Funds, strategyFundsDigits), x+strategyFundsXOffset, fundsY, fundsInk)
 
 	// 顯示換算見常數區的 strategyReserveMenPerPoint。
 	reserveValues := [...]int{

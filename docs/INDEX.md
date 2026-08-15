@@ -124,7 +124,7 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 149 條。**要查「這件事解了沒」先看這裡**，
+共 148 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（79 條）
@@ -263,7 +263,7 @@
 |---|---|
 | 2.1 執行結構（已驗證） ▸ YNSOUND.COM | `docs/reference/04-first-survey.md` |
 
-### 未解（33 條）
+### 未解（32 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -283,7 +283,6 @@
 | 3. 武將記錄（32 byte） ▸ +25,+27 | `docs/formats/08-sinario-save.md` |
 | 3. 軍團記錄的欄位（部分） ▸ +0x08 | `docs/re/05-battle-selection.md` |
 | 3.2 ⭐ 大地圖是 640×368，四個視窗蓋在它上面 ▸ 0x80 | `docs/re/47-main-screen-window-registry.md` |
-| 4. ⭐ 場景 0 ＝ 自勢力情報視窗的內部 ▸ 4 | `docs/re/48-window-display-list.md` |
 | 4. 只在單邊存在的檔（confirmed） ▸ PASS.MAP／PASS.SCH | `docs/re/01-first-recon.md` |
 | 4. 據點記錄（32 byte） ▸ +0 | `docs/formats/08-sinario-save.md` |
 | 4. 據點記錄（32 byte） ▸ +12 | `docs/formats/08-sinario-save.md` |
