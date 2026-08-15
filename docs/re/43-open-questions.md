@@ -23,8 +23,8 @@
 | 程式碼理解 | 164 | 158 | 6 | 0 |
 | 驗收 | 14 | 11 | 3 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 28 | 26 | 2 | 0 |
-| **合計** | **327** | 314 | 12 | 1 |
+| 其他 | 31 | 29 | 2 | 0 |
+| **合計** | **330** | 317 | 12 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -350,7 +350,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（28 條）
+## 2.6 其他（31 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -374,6 +374,9 @@
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 系統視窗的內容 | 本規格只做開關與暫停，視窗內的四個項目（存檔／畫面模式／音源／戰略速度）不在範圍 | 靜態 |
+| [`spec/14-finance-window.md`](../spec/14-finance-window.md) | 收入的來源 | `cs:word_10D02` 由誰計算未讀（月結那一支是候選）。remake 的月結算得出 `res.Income` 但沒有留下來，所以這一格暫時顯示 0——**留白比填一個自己算的數字誠實** | 靜態 |
+| [`spec/14-finance-window.md`](../spec/14-finance-window.md) | 徵兵數的上限 | 只有稅率的 100 是機器碼常數；三個兵種的上限沒看到 | 靜態 |
+| [`spec/14-finance-window.md`](../spec/14-finance-window.md) | 數值輸入器 | `sub_17C6E` 已有 RE（`docs/re/13`），但 remake 的財政還沒接上去 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |

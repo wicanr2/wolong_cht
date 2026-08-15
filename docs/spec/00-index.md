@@ -61,6 +61,7 @@
 | 主畫面的視窗外框與指令列 | [`12-strategy-chrome.md`](12-strategy-chrome.md) | 版面常數全部改用機器碼值；各視窗**內部**排版仍有估值 |
 | 主畫面四個視窗的開關 | [`13-main-window-toggles.md`](13-main-window-toggles.md) | 已實作並留下截圖；原版執行期未驗 |
 | 編成時預備兵怎麼分配（`sub_14698`）| [`21-corps-formation-reserves.md`](21-corps-formation-reserves.md) | 已實作並有逐項單測 |
+| 財政視窗 | [`14-finance-window.md`](14-finance-window.md) | 版面已照原版重寫；數值輸入器未接 |
 | remake 原生存檔格式 | [`20-save-format.md`](20-save-format.md) | 已接進遊戲並驗過；**只差放回 DOSBox 實測** |
 | 同狀態畫面對拍 | [`90-same-state-parity.md`](90-same-state-parity.md) | 橫幅已對過；**四窗全開的整體對拍還沒跑** |
 

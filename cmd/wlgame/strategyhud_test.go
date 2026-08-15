@@ -179,3 +179,50 @@ func TestDOSVNaturalStrategyTextContainment(t *testing.T) {
 		}
 	}
 }
+
+// 財政視窗的版面契約（docs/spec/14）。視窗矩形來自 sub_1895D(cx=0A15h)，
+// 數值座標由 sub_16846 的 VRAM 位移換算（一列 80 byte）。
+func TestFinanceWindowLayout(t *testing.T) {
+	checks := []struct {
+		name string
+		got  int
+		want int
+	}{
+		{"視窗 x", financeWinX, 16},
+		{"視窗 y", financeWinY, 80},
+		{"視窗寬", financeWinW, 336},
+		{"視窗高", financeWinH, 160},
+		{"資金值 x", financeFundsValueX, 104},
+		{"資金值 y", financeFundsValueY, 112},
+		{"收入／支出值 x", financeIncomeValueX, 288},
+		{"今月底欄值 x", financeValueThisX, 120},
+		{"次月欄值 x", financeValueNextX, 280},
+		{"首列 y", financeRowY, 160},
+		{"末列 y", financeRowY + (financeRows-1)*financeRowStep, 208},
+		{"綠色圖示欄 x", financeIconNextX, 256},
+	}
+	for _, c := range checks {
+		if c.got != c.want {
+			t.Errorf("%s = %d，want %d", c.name, c.got, c.want)
+		}
+	}
+	// 視窗要裝得下所有內容：最後一列的框下緣是 224，視窗到 240。
+	if bottom := financeRowY + 64; bottom > financeWinY+financeWinH {
+		t.Errorf("兩欄的框到 %d，超出視窗下緣 %d", bottom, financeWinY+financeWinH)
+	}
+	// 熱區與綠色圖示欄逐格重合——原版 sub_168C3 的四個熱區就是那四格。
+	for i := 0; i < financeRows; i++ {
+		r := financeRowRect(i)
+		if r.Min.X != financeIconNextX || r.Dx() != 24 || r.Dy() != 16 {
+			t.Fatalf("第 %d 列熱區 = %v，want x%d 24×16", i, r, financeIconNextX)
+		}
+		if r.Min.Y != financeRowY+i*financeRowStep {
+			t.Errorf("第 %d 列熱區 y = %d，want %d", i, r.Min.Y, financeRowY+i*financeRowStep)
+		}
+	}
+	// 資金 7 位、收入／支出 6 位、兩欄各 5 位（sub_16846 的 bx 低 byte）。
+	if financeFundsDigits != 7 || financeAmountDigits != 6 || financeRowDigits != 5 {
+		t.Errorf("位數 = %d/%d/%d，want 7/6/5",
+			financeFundsDigits, financeAmountDigits, financeRowDigits)
+	}
+}
