@@ -20,7 +20,7 @@ import ida_xref
 import idc
 
 OUT = "/work/data_writers.txt"
-TARGETS = ["word_1988E", "word_19890"]
+TARGETS = ["dword_1EAE9"]
 BACK = 8
 
 

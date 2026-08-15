@@ -53,7 +53,7 @@
 | [`docs/playtest/21-command-window-parity.md`](playtest/21-command-window-parity.md) | 21 — 松崗 DOS/V 指揮／事件／一覽畫面 parity 重開 | PARTIAL（事件 TALK、系統面板與一覽第一層主要幾何已修正；一覽詳細層與捲軸未完成）。 | 2026-08-12 |
 | [`docs/playtest/21-dosboxx-bridge-sampling.md`](playtest/21-dosboxx-bridge-sampling.md) | 21 — DOSBox-X AI Bridge：第一次動態取樣 | 三條斷言全部取到證據。+0x00 低 4 位 ＝ 敵方鄰居遮罩（192/192， 對照讀法只對 12/192）；+0… | 2026-08-14 |
 | [`docs/playtest/22-field-siege-shared-layout.md`](playtest/22-field-siege-shared-layout.md) | 攻城／兩軍遭遇共用戰術骨架驗收 | PASS（共用幾何與原版指令面板已封口；不代表動畫逐像素 parity） | 2026-08-12 |
-| [`docs/playtest/23-main-screen-geometry.md`](playtest/23-main-screen-geometry.md) | 23 — 主畫面幾何：從機器碼定死，第一次逐區對拍 | 版面常數全部換成機器碼算出來的值，四項與先前不同。橫幅的位移掃描 落在 (0,0)，幾何對齊。整體對拍 | 2026-08-15 |
+| [`docs/playtest/23-main-screen-geometry.md`](playtest/23-main-screen-geometry.md) | 23 — 主畫面幾何：從機器碼定死，第一次逐區對拍 | 版面常數全部換成機器碼算出來的值（外框四項 ＋ 右欄內部一整組）。 橫幅的位移掃描落在 (0,0)，幾何對齊。逐像素… | 2026-08-15 |
 | [`docs/playtest/24-window-toggles.md`](playtest/24-window-toggles.md) | 24 — 四個常駐視窗的開關：實作驗收 | 開關可用，四窗全開與全關兩張截圖都拍到了。右欄的四條邊與原版 參考影片逐條對上（y = 168／184／192／19… | 2026-08-15 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | remake 推廣片、代表幀「經典再現」比較片與 DOS/V／remake 實機動態比較片均已產出並完成媒體規格驗證… | 2026-08-12 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
@@ -107,6 +107,7 @@
 | [`docs/re/45-corps-command-mode.md`](re/45-corps-command-mode.md) | 45 — 軍團的三種指令模式：戰鬥指揮／委任／解體 | 軍團 +0x00 位元 2 定案 ＝ | 2026-08-14 |
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |
 | [`docs/re/47-main-screen-window-registry.md`](re/47-main-screen-window-registry.md) | 47 — 主畫面的四個常駐視窗：開關、位元集與各自的矩形 | 四個常駐視窗的開關熱區、位元集、分派表與四個視窗各自的像素矩形 全部 confirmed。繪圖／熱區常式的參數對應（… | 2026-08-15 |
+| [`docs/re/48-window-display-list.md`](re/48-window-display-list.md) | 48 — 視窗內容是一份顯示清單，不是一張圖 | 清單的位置、記錄格式、場景切分與五個 opcode 的用途 confirmed。 自勢力情報視窗（場景 0）的每一個… | 2026-08-15 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-13 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -123,7 +124,7 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 147 條。**要查「這件事解了沒」先看這裡**，
+共 148 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（79 條）
@@ -261,7 +262,7 @@
 |---|---|
 | 2.1 執行結構（已驗證） ▸ YNSOUND.COM | `docs/reference/04-first-survey.md` |
 
-### 未解（32 條）
+### 未解（33 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -273,6 +274,7 @@
 | 2. 記憶體佈局：sub_1CC31 ▸ ds:0D306 | `docs/re/11-tactical-battle.md` |
 | 2. 記憶體佈局：sub_1CC31 ▸ ds:0D42 | `docs/re/11-tactical-battle.md` |
 | 2.7 圖像與調色盤 ▸ KYOGRF.DAT | `docs/reference/04-first-survey.md` |
+| 3. ⭐ 場景 0 ＝ 自勢力情報視窗的內部 ▸ 4 | `docs/re/48-window-display-list.md` |
 | 3. 曲塊內部 ▸ +0x00 | `docs/re/23-bgm-resource-format.md` |
 | 3. 曲塊內部 ▸ +0x06–+0x0F | `docs/re/23-bgm-resource-format.md` |
 | 3. 武將記錄（32 byte） ▸ +0 | `docs/formats/08-sinario-save.md` |

@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 60 | 59 | 1 | 0 |
 | 資料保存 | 43 | 43 | 0 | 0 |
-| 程式碼理解 | 165 | 159 | 6 | 0 |
-| 驗收 | 13 | 11 | 2 | 0 |
+| 程式碼理解 | 172 | 165 | 7 | 0 |
+| 驗收 | 14 | 11 | 3 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 28 | 26 | 2 | 0 |
-| **合計** | **327** | 315 | 11 | 1 |
+| 其他 | 27 | 24 | 3 | 0 |
+| **合計** | **334** | 319 | 14 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -139,7 +139,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（165 條）
+## 2.3 程式碼理解（172 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -308,8 +308,15 @@
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | `funcs_159C0` 的五筆內容 | 只確認是「擦除」對應表（`sub_1895D` 樣式 0），逐筆未 dump | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 開關圖示的圖形來源 | 五格 32×32 的圖從哪個圖庫來未讀 | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 原版執行期驗證 | **未做**。PC-98 oracle 上左鍵點這五格沒有反應（§6），原因未定 | 實測 |
+| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | 4 | 06 / (120,8) 48×15 / (560,208) / 未解 | 靜態 |
+| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | opcode `06` | 場景 0 只出現一次，尺寸 48×15。可能是分隔線或方框，未定 | 靜態 |
+| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | opcode 的完整值域 | 只看到 `03`／`06`／`07`／`08`／`09`；分派表 `[bx-15F3h]` 的長度未量 | 靜態 |
+| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `08` 的屬性 byte | 場景 0 用 `0x0F`（一般）與 `0x09`（資金／預備兵那兩個標籤），語意未對過調色盤 | 靜態 |
+| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `09` 的四張圖形 | 圖庫位移 `0x1200`／`0x12C0`／`0x1380`／`0x1440`，內容還沒畫出來看 | 實測 |
+| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | 其他 10 個場景 | 只確認場景 1 是財政視窗（字串「資金」「收入」）。逐場景解出是下一步 | 靜態 |
+| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `sub_1E9A7(bl=0, ax=1800h, cx=2020h)` | `sub_1030F` 登記的第二件事，未讀 | 靜態 |
 
-## 2.4 驗收（13 條）
+## 2.4 驗收（14 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -322,7 +329,8 @@
 | [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 原版「四窗全開」的截圖 | **主畫面在模擬器上收不到任何點擊**，不只是開關——鑑別測試見下 | 實測 |
 | [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 松崗 DOS/V 側的主畫面 | 開新遊戲流程停在「確定」按鈕不回應。座標已照 PC-98 換算（Y ＋40）重試，仍不動；密碼頁不是障礙（`18`） | 靜態 |
 | [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 同版本同調色盤的對拍 | 上面兩項任一個通了就能做。**在那之前 `banner` 的 49.6% 不代表 remake 有錯** | 靜態 |
-| [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 各視窗內部排版 | 頭像、信賴度列、資金／預備兵三行仍是影片估值，沒有機器碼證據 | 靜態 |
+| [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 四張 24×16 圖形的內容 | 顯示清單指到圖庫位移 `0x1200`／`0x12C0`／`0x1380`／`0x1440`，還沒畫出來看；remake 先用同位置同尺寸的色塊佔位 | 實測 |
+| [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 其他 10 個顯示清單場景 | 同一支直譯器有 11 個呼叫端，只讀了場景 0（`../re/48` §5） | 靜態 |
 | [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 各視窗內部的像素 | 只對過邊線位置，沒有對過內容 | 靜態 |
 | [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 原版執行期的開關行為 | **沒驗過**：模擬器上主畫面收不到點擊（`23` §4.1） | 靜態 |
 | [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 系統視窗的四個項目 | 存檔／畫面模式／音源／戰略速度，不在這一輪範圍 | 靜態 |
@@ -350,7 +358,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（28 條）
+## 2.6 其他（27 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -367,12 +375,11 @@
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 玩家據點求援的喇叭聲（`sub_10CDE`） | 呈現層未接 | 靜態 |
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | `資金高位 >= 0x80` 那一支 | `cmp bh, 80h / jnb` 會直接算「答應」，等於資金超過約 840 萬時門檻失效。**看起來像有號數的邊界處理**，未逐位對過 | 靜態 |
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | 君主出陣之後的行為 | 那支軍團跟一般軍團有沒有差別，未讀 | 靜態 |
-| [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | **四個視窗的開關** | remake 固定顯示四個視窗，原版可以逐個開關。這是**未實作**，不是 remake 差異——實作前要先決定關掉時大地圖怎麼放大 | 靜態 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | **預備兵的單位** | 原版顯示時乘 10（§3.1），remake 把 `Reserves` 當人數直接用於編成。兩者只能有一個對，**在找到原版編成的扣減端之前不動**——現在只改座標不改數值 | 靜態 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 信賴度的呈現 | 原版是量條，remake 是數字。改成量條之前要先確定顏色與底圖，否則會畫出一條沒有背景的裸色塊 | 靜態 |
-| [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 底圖與標籤 | 「君主／首都／軍師」等標籤在原版是底圖的一部分（`sub_10337`），remake 用文字畫。標籤的 X 因此沒有機器碼證據 | 靜態 |
+| [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 四張 24×16 圖形 | 顯示清單指到圖庫位移 `0x1200`／`0x12C0`／`0x1380`／`0x1440`，內容還沒畫出來看；remake 目前用自繪的紅色方塊代替 | 實測 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 勢力色標 | 原版怎麼畫未讀（`sub_15CE0` 是小地圖的四色點，不是這一列） | 靜態 |
-| [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | `cs:word_1D84E` 每格 8 bytes | 內容意義未讀，消費端未找 | 靜態 |
+| [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | opcode `06` 與其他 10 個場景 | 顯示清單解得開但只讀了場景 0（`docs/re/48` §5） | 靜態 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝命令、`0x0Bh`／`0x10h`／`0x15h`／`0x1Fh` 各自出現在哪個視窗已知，完整值域未列 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 |

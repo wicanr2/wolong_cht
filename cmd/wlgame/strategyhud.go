@@ -85,27 +85,41 @@ const (
 	//	資金 7 位          (560,312)   sub_1062F(di=0x61C6) → 一列 80 B
 	//	預備兵 ×3 6 位     (568, 328/344/360)  di=0x66C7、每列 +0x500
 	//
-	// **標籤的 X 沒有機器碼證據**：原版的「君主／首都／軍師」是底圖的一部分，
-	// 這裡用文字畫，位置定在值的左邊一格。
-	strategyInfoYOffset        = 16 // 208 − 192
-	strategyInfoRowStep        = 16 // 0xE0 − 0xD0
-	strategyInfoLabelXOffset   = 96
-	strategyInfoLabelW         = 32
-	strategyInfoValueXOffset   = 144 // 576 − 432
-	strategyInfoValueW         = strategySidebarInnerRight - (strategySidebarX + strategyInfoValueXOffset)
-	strategyInfoDividerXOffset = 136
-	strategyInfoDividerH       = 48
-	strategyTrustYOffset       = 100 // 292 − 192
-	strategyTrustXOffset       = 24  // 456 − 432
-	strategyTrustMaxW          = 160
-	strategyResourceDividerY   = 116
-	strategyResourceBoxY       = 120 // 312 − 192 − 8：資金那一列上方留一格
-	strategyResourceBoxH       = screenH - (strategyFactionY + strategyResourceBoxY) - chrome.Tile
-	strategyFundsYOffset       = 120 // 312 − 192
-	strategyFundsXOffset       = 128 // 560 − 432
-	strategyReserveYOffset     = 136 // 328 − 192
-	strategyReserveXOffset     = 136 // 568 − 432
-	strategyResourceRowStep    = 16
+	// 標籤與底層方塊的座標同樣是原版數值，來自**顯示清單**
+	// （`sub_10337(al=0)` 的場景 0，docs/re/48 §3）：
+	//
+	//	信賴度量條的槽  (448,288) 176×10   op 03
+	//	資金／預備兵黑底 (448,304) 176×80   op 03
+	//	「君主／首都／軍師」(512, 208/224/240)  op 08
+	//	「信賴度」        (448,272)          op 08
+	//	「資金」「預備兵」 (456, 312/328)     op 08
+	//	四張 24×16 圖形   (528, 312/328/344/360)  op 09
+	strategyInfoYOffset      = 16 // 208 − 192
+	strategyInfoRowStep      = 16 // 0xE0 − 0xD0
+	strategyInfoLabelXOffset = 80 // 512 − 432
+	strategyInfoLabelW       = 32
+	strategyInfoValueXOffset = 144 // 576 − 432
+	strategyInfoValueW       = strategySidebarInnerRight - (strategySidebarX + strategyInfoValueXOffset)
+	strategyTrustLabelX      = 16  // 448 − 432
+	strategyTrustLabelY      = 80  // 272 − 192
+	strategyTrustSlotX       = 16  // 448 − 432
+	strategyTrustSlotY       = 96  // 288 − 192
+	strategyTrustSlotW       = 176 // 623 − 448 + 1
+	strategyTrustSlotH       = 10
+	strategyTrustYOffset     = 100 // 292 − 192
+	strategyTrustXOffset     = 24  // 456 − 432
+	strategyTrustMaxW        = 160
+	strategyResourceBoxX     = 16  // 448 − 432
+	strategyResourceBoxY     = 112 // 304 − 192
+	strategyResourceBoxW     = 176
+	strategyResourceBoxH     = 80
+	strategyResourceLabelX   = 24  // 456 − 432
+	strategyFundsYOffset     = 120 // 312 − 192
+	strategyFundsXOffset     = 128 // 560 − 432
+	strategyReserveYOffset   = 136 // 328 − 192
+	strategyReserveXOffset   = 136 // 568 − 432
+	strategyIconXOffset      = 96  // 528 − 432：四張 24×16 圖形的欄
+	strategyResourceRowStep  = 16
 	// 原版是資金 7 位、預備兵 6 位，兩者右端都對齊 x=616。
 	strategyFundsDigits   = 7
 	strategyReserveDigits = 6
@@ -414,12 +428,12 @@ func (g *game) drawNaturalFactionHUD(dst *ebiten.Image, x, y int) {
 		g.td.Draw(dst, strategyHUDSingleLine(row.label, strategyInfoLabelW), labelX, py, ink)
 		g.td.Draw(dst, strategyHUDSingleLine(row.value, strategyInfoValueW), valueX, py, ink)
 	}
-	vector.DrawFilledRect(dst, float32(x+strategyInfoDividerXOffset), float32(infoY), 2, strategyInfoDividerH,
-		color.RGBA{190, 190, 190, 255}, false)
-
-	// 信賴度：原版是一條量條（`sub_15F27`），長度 (信賴度×100 + 0x9F) ÷ 0xA0。
-	// 這裡照同一條式子算長度；顏色是自己挑的，原版的 `ax=0x0A00` 還沒對過調色盤。
-	g.td.Draw(dst, "信賴度", x+16, y+strategyTrustYOffset-16, ink)
+	// 信賴度：原版先畫一個 176×10 的槽（顯示清單 op 03），再在裡面畫量條
+	// （`sub_15F27`，長度 (信賴度×100 + 0x9F) ÷ 0xA0）。顏色是自己挑的，
+	// 原版的 `ax=0x0A00` 還沒對過調色盤。
+	g.td.Draw(dst, "信賴度", x+strategyTrustLabelX, y+strategyTrustLabelY, ink)
+	vector.DrawFilledRect(dst, float32(x+strategyTrustSlotX), float32(y+strategyTrustSlotY),
+		strategyTrustSlotW, strategyTrustSlotH, color.RGBA{24, 24, 32, 255}, false)
 	trustW := (g.world.Trust*100 + 0x9F) / 0xA0
 	if trustW > strategyTrustMaxW {
 		trustW = strategyTrustMaxW
@@ -428,18 +442,14 @@ func (g *game) drawNaturalFactionHUD(dst *ebiten.Image, x, y int) {
 		vector.DrawFilledRect(dst, float32(x+strategyTrustXOffset), float32(y+strategyTrustYOffset),
 			float32(trustW), 8, color.RGBA{85, 154, 69, 255}, false)
 	}
-	vector.DrawFilledRect(dst, float32(x+8), float32(y+strategyResourceDividerY), float32(strategySidebarW-16), 2,
-		color.RGBA{192, 32, 32, 255}, false)
 
-	// 原版資源區是黑底內框，不是把四列數字直接寫在藍色情報底上。
-	// 中央三段紅色圖形的語意尚未取得獨立 raw asset，因此只重建已量到的
-	// 欄位骨架；數值仍使用同一份 state，不以向量圖形冒充原版 glyph。
-	vector.DrawFilledRect(dst, float32(strategySidebarInnerX), float32(y+strategyResourceBoxY),
-		float32(strategyFactionInnerW), float32(strategyResourceBoxH), color.Black, false)
+	// 資源區的黑底也是顯示清單畫的（op 03，(448,304) 176×80）。
+	vector.DrawFilledRect(dst, float32(x+strategyResourceBoxX), float32(y+strategyResourceBoxY),
+		strategyResourceBoxW, strategyResourceBoxH, color.Black, false)
 	resourceInk := color.RGBA{255, 223, 154, 255}
 	fundsY := y + strategyFundsYOffset
-	g.td.Draw(dst, "資金", x+16, fundsY, resourceInk)
-	g.td.Draw(dst, "預備兵", x+16, y+strategyReserveYOffset, resourceInk)
+	g.td.Draw(dst, "資金", x+strategyResourceLabelX, fundsY, resourceInk)
+	g.td.Draw(dst, "預備兵", x+strategyResourceLabelX, y+strategyReserveYOffset, resourceInk)
 	g.td.Draw(dst, strategyHUDNumber(f.Funds, strategyFundsDigits), x+strategyFundsXOffset, fundsY, ink)
 
 	// ⚠ 原版顯示預備兵時乘 10（docs/re/47 §4.2），這裡**沒有乘**：
@@ -450,12 +460,18 @@ func (g *game) drawNaturalFactionHUD(dst *ebiten.Image, x, y int) {
 		f.Reserves[economy.Archer],
 		f.Reserves[economy.Infantry],
 	}
+	// 原版在 (528, 312/328/344/360) 各貼一張 24×16 圖形（顯示清單 op 09，
+	// 圖庫位移 0x1200／0x12C0／0x1380／0x1440）。**那四張圖還沒畫出來看**，
+	// 所以這裡先用同尺寸同位置的色塊佔位，不拿向量圖形冒充原版 glyph。
+	for i := 0; i < 1+len(reserveValues); i++ {
+		iconY := y + strategyFundsYOffset + i*strategyResourceRowStep
+		vector.DrawFilledRect(dst, float32(x+strategyIconXOffset), float32(iconY), 24, 16,
+			color.RGBA{192, 32, 32, 255}, false)
+		vector.DrawFilledRect(dst, float32(x+strategyIconXOffset+8), float32(iconY+4), 8, 8,
+			color.RGBA{64, 0, 0, 255}, false)
+	}
 	for i, value := range reserveValues {
 		iconY := y + strategyReserveYOffset + i*strategyResourceRowStep
-		vector.DrawFilledRect(dst, float32(x+96), float32(iconY), 24, 16,
-			color.RGBA{192, 32, 32, 255}, false)
-		vector.DrawFilledRect(dst, float32(x+104), float32(iconY+4), 8, 8,
-			color.RGBA{64, 0, 0, 255}, false)
 		g.td.Draw(dst, strategyHUDNumber(value, strategyReserveDigits), x+strategyReserveXOffset, iconY, ink)
 	}
 }

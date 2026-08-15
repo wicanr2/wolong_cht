@@ -86,6 +86,16 @@ func TestDOSVNaturalStrategySkeleton(t *testing.T) {
 		{"預備兵 x", strategySidebarX + strategyReserveXOffset, 568},
 		{"預備兵首列 y", strategyFactionY + strategyReserveYOffset, 328},
 		{"預備兵末列 y", strategyFactionY + strategyReserveYOffset + 2*strategyResourceRowStep, 360},
+		// 顯示清單場景 0（docs/re/48 §3）：標籤與兩個底層方塊。
+		{"「君主」標籤 x", strategySidebarX + strategyInfoLabelXOffset, 512},
+		{"「信賴度」標籤 x", strategySidebarX + strategyTrustLabelX, 448},
+		{"「信賴度」標籤 y", strategyFactionY + strategyTrustLabelY, 272},
+		{"信賴度槽 x", strategySidebarX + strategyTrustSlotX, 448},
+		{"信賴度槽 y", strategyFactionY + strategyTrustSlotY, 288},
+		{"資源黑底 x", strategySidebarX + strategyResourceBoxX, 448},
+		{"資源黑底 y", strategyFactionY + strategyResourceBoxY, 304},
+		{"「資金」標籤 x", strategySidebarX + strategyResourceLabelX, 456},
+		{"圖形欄 x", strategySidebarX + strategyIconXOffset, 528},
 	}
 	for _, c := range inner {
 		if c.got != c.want {
