@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 60 | 59 | 1 | 0 |
 | 資料保存 | 43 | 43 | 0 | 0 |
-| 程式碼理解 | 167 | 161 | 6 | 0 |
+| 程式碼理解 | 169 | 163 | 6 | 0 |
 | 驗收 | 14 | 11 | 3 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 34 | 32 | 2 | 0 |
-| **合計** | **336** | 323 | 12 | 1 |
+| 其他 | 36 | 34 | 2 | 0 |
+| **合計** | **340** | 327 | 12 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -139,7 +139,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（167 條）
+## 2.3 程式碼理解（169 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -310,6 +310,8 @@
 | [`re/49-corps-formation-window.md`](../re/49-corps-formation-window.md) | `op 04` | 場景 5 用它一次，位置 (279,271) 剛好在確定鈕左上角外一格，`arg` ＝ `00D8`／`00A8`。像是外框或反白，語意未解（`48` §7 同一條） | 靜態 |
 | [`re/49-corps-formation-window.md`](../re/49-corps-formation-window.md) | `sub_1F9B0` 的 `ax = 1003h` | 貼圖的樣式參數；`sub_10C14` 用 `0801h`（`46` §3）。位元編碼未逐位對過 | 靜態 |
 | [`re/49-corps-formation-window.md`](../re/49-corps-formation-window.md) | 段 3 `0x21A0` 那張空槽圖 | **已驗**：解得開、與綠組最後一張不同，內容是 384 個像素全 0——原版在空槽那一格貼一張全黑圖把前一張擦掉。「全黑」與「位移落在段尾之外」長得一樣，分辨的方法是看它後面還有沒有內容（`TestDOSVEmptySlotIcon`） | 靜態 |
+| [`re/50-city-info-window.md`](../re/50-city-info-window.md) | `cs:word_1987C` | 據點圖的暫存段，由誰配置未讀 | 靜態 |
+| [`re/50-city-info-window.md`](../re/50-city-info-window.md) | 熱區 | 這個視窗**沒有登記任何熱區**：`sub_17E1F` 的迴圈只等右鍵離開，是純顯示 | 靜態 |
 
 ## 2.4 驗收（14 條）
 
@@ -353,7 +355,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（34 條）
+## 2.6 其他（36 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -388,6 +390,8 @@
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | `op 04` | 確定鈕左上角那一筆，語意未解（`docs/re/49` §6） | 靜態 |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 武將頭像 | remake 的編成畫面還沒有頭像；`sub_107D2` 的圖庫來源未讀 | 靜態 |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 兵種標籤 | 畫面用場景 5 的「主將」，規則層的 `army.Position` 第一個是「大將」（原版 TALK #62 也這樣說）。兩處用語不同是原版就有的，不要統一 | 靜態 |
+| [`spec/23-city-info-window.md`](../spec/23-city-info-window.md) | 進入方式 | 原版由地圖上點據點進來（`sub_11E46`），remake 走一覽表 | 靜態 |
+| [`spec/23-city-info-window.md`](../spec/23-city-info-window.md) | `cs:word_1987C` | 原版每次開視窗都重讀一次檔；remake 的 `library` 是整檔載入，不需要這一層 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |

@@ -242,11 +242,12 @@ func (g *game) openCityList() {
 	}
 	g.cityList(rows, "↑↓ 移動　Enter 選取／決定　1-5 排序　ESC 取消",
 		func(city int) bool {
-			// 說明書：「選了游標移過去」。這裡把鏡頭移到該據點。
+			// 說明書：「選了游標移過去」。這裡把鏡頭移到該據點，
+			// 並開原版的據點情報視窗（docs/spec/23）。
 			c := g.world.Cities[city]
 			g.camX, g.camY = c.X-viewCols/2, c.Y-viewRows/2
 			g.clampCam()
-			g.lastEvent = "移動到 " + big5(c.Name)
+			g.openCityInfo(city)
 			return true
 		})
 }

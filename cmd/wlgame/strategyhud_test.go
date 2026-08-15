@@ -288,3 +288,66 @@ func TestCorpsFormationLayout(t *testing.T) {
 			formMoraleDigits, formReserveDigits, formSlotDigits)
 	}
 }
+
+// 據點情報視窗的版面契約（docs/spec/23）。視窗矩形來自 sub_1895D(cx=810h)，
+// 數值座標由 sub_17E4A 的 VRAM 位移換算。
+func TestCityInfoWindowLayout(t *testing.T) {
+	checks := []struct {
+		name string
+		got  int
+		want int
+	}{
+		{"視窗 x", cityWinX, 0},
+		{"視窗 y", cityWinY, 272},
+		{"視窗寬", cityWinW, 256},
+		{"視窗高", cityWinH, 128},
+		{"景觀圖 x", cityViewX, 16},
+		{"景觀圖 y", cityViewY, 288},
+		{"景觀圖邊長", cityViewSize, 96},
+		{"據點名 x", cityNameX, 128},
+		{"據點名 y", cityNameY, 288},
+		{"類型 x", cityKindX, 192},
+		{"城主 y", cityLordY, 304},
+		{"標籤 x", cityLabelX, 128},
+		{"首列 y", cityRowY, 320},
+		{"末列 y", cityRowY + (cityRows-1)*cityRowStep, 368},
+		{"城兵數 x", cityGarrisonX, 208},
+		{"生產力 x", cityProductionX, 192},
+		{"上昇值 x", cityGrowthX, 208},
+		{"防災值 x", cityPreventionX, 216},
+	}
+	for _, c := range checks {
+		if c.got != c.want {
+			t.Errorf("%s = %d，want %d", c.name, c.got, c.want)
+		}
+	}
+	// 四個值的右端都落在 240——值框是 (128,320) 112×64，右緣正好 240。
+	// 這不是巧合，是原版四組（座標，位數）湊出來的，拿來當算術檢查。
+	for _, v := range []struct {
+		name   string
+		x      int
+		digits int
+	}{
+		{"城兵數", cityGarrisonX, cityGarrisonDigits},
+		{"生產力", cityProductionX, cityProductionDigits},
+		{"上昇值", cityGrowthX, cityGrowthDigits},
+		{"防災值", cityPreventionX, cityPreventionDigits},
+	} {
+		if right := v.x + v.digits*textdraw.HalfW; right != cityLabelX+112 {
+			t.Errorf("%s 右端 = %d，want %d", v.name, right, cityLabelX+112)
+		}
+	}
+	// 景觀圖不能壓到右半的標籤欄。
+	if cityViewX+cityViewSize > cityLabelX {
+		t.Errorf("景觀圖右緣 %d 越過標籤欄 %d", cityViewX+cityViewSize, cityLabelX)
+	}
+	// 類型字串：六個詞，首都覆寫（docs/re/50 §2.1）。
+	for kind, want := range map[int]string{0: "大都市", 1: "中都市", 2: "小都市", 3: "關卡", 4: "戰場"} {
+		if got := cityKindLabel(kind, false); got != want {
+			t.Errorf("類型 %d = %q，want %q", kind, got, want)
+		}
+		if got := cityKindLabel(kind, true); got != "首都" {
+			t.Errorf("類型 %d 是首都時 = %q，want 首都", kind, got)
+		}
+	}
+}

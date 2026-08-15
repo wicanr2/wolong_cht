@@ -328,6 +328,19 @@ func (l *Library) Portrait(page, bank int) (*image.RGBA, error) {
 	return nil, fmt.Errorf("KAOGRF 沒有載入")
 }
 
+// Location 畫出 KYOGRF 的第 page 張據點景觀（96×96）。
+//
+// page 要傳據點記錄 `+0x16` 的**高 4 位**（state.City.KindHigh），
+// 值域 0–14（`docs/re/50` §3）。
+func (l *Library) Location(page, bank int) (*image.RGBA, error) {
+	for i, e := range l.Entries {
+		if e.Spec.Name == gfx.Kyo.Name {
+			return l.Render(i, page, bank)
+		}
+	}
+	return nil, fmt.Errorf("KYOGRF 沒有載入")
+}
+
 // Banner 畫出最上方那條 640×32 的標題橫幅（ICONGRF 段 0）。
 func (l *Library) Banner(bank int) (*image.RGBA, error) {
 	for i, e := range l.Entries {
