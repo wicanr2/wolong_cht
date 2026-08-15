@@ -182,6 +182,48 @@ const (
 // leader 是帶兵的武將編號，units 是六個位置的兵種（空位傳 -1 的槽用
 // men[k] == 0 表示）。兵從勢力的預備兵扣，一個位置固定 1,000 人。
 //
+// MaxMenPerSlot 是一個編成槽的兵力上限，單位是**點**（一點 10 人）。
+// 原版 `sub_14698` 的 `cmp ax, 64h`，而槽位本身也只有 1 byte。
+const MaxMenPerSlot = 100
+
+// distributeReserves 照原版 `sub_14698` 把預備兵分給六個槽，並從池裡扣掉
+// 實際放進去的量。回傳每個槽分到幾點。
+//
+// 分配式（docs/spec/21 §2）：同一個兵種佔幾個槽就分成幾份，
+// **餘數整個給第一個槽**，之後的槽再對剩下的重分；每槽上限 100 點。
+//
+// ⚠ 扣掉的量與放進槽裡的量必須是同一個數。原版是
+// `sub es:[bx], ax` 之後緊接 `mov [si+1], al`——**同一個 ax**。
+// 先前 remake 扣 1000、放 100，等於每編一支軍團就吃掉十倍的池。
+func distributeReserves(pool *[economy.NumTroopTypes]int,
+	kinds [army.Positions]army.TroopType, manned [army.Positions]bool) [army.Positions]int {
+
+	var left [economy.NumTroopTypes]int
+	for k, ok := range manned {
+		if ok && int(kinds[k]) >= 0 && int(kinds[k]) < int(economy.NumTroopTypes) {
+			left[kinds[k]]++
+		}
+	}
+	var out [army.Positions]int
+	for k, ok := range manned {
+		if !ok {
+			continue
+		}
+		t := int(kinds[k])
+		if t < 0 || t >= int(economy.NumTroopTypes) || left[t] == 0 {
+			continue
+		}
+		n := pool[t]/left[t] + pool[t]%left[t]
+		left[t]--
+		if n > MaxMenPerSlot {
+			n = MaxMenPerSlot
+		}
+		pool[t] -= n
+		out[k] = n
+	}
+	return out
+}
+
 // 照原版的順序：武將標成出陣中、軍團繼承勢力的士氣基準、
 // 位置設在首都、勢力的軍團數 +1。
 func (w *World) FormCorps(leader int, kinds [army.Positions]army.TroopType,
@@ -209,21 +251,11 @@ func (w *World) FormCorps(leader int, kinds [army.Positions]army.TroopType,
 		return fmt.Errorf("state: 大將的位置一定要有兵")
 	}
 
-	// 先確認預備兵夠。**不足就整批不做**——原版沒有「編一半」這回事。
-	need := [economy.NumTroopTypes]int{}
-	for k, ok := range manned {
-		if ok {
-			need[kinds[k]] += army.MenPerUnit
-		}
-	}
-	for t, n := range need {
-		if f.Reserves[t] < n {
-			return fmt.Errorf("state: %v 預備兵只有 %d，需要 %d",
-				army.TroopType(t), f.Reserves[t], n)
-		}
-	}
-	for t, n := range need {
-		f.Reserves[t] -= n
+	// 兵力由 `sub_14698` 分配，**不是每槽固定 100 點**（docs/spec/21 §2）。
+	// 池裡有多少就分多少，所以「兵不夠」不是錯誤——分完主將槽是 0 才是。
+	men := distributeReserves(&f.Reserves, kinds, manned)
+	if men[0] == 0 {
+		return fmt.Errorf("state: 大將的位置分不到兵（預備兵 %v）", f.Reserves)
 	}
 
 	home := w.clampCity(f.Capital)
@@ -242,12 +274,11 @@ func (w *World) FormCorps(leader int, kinds [army.Positions]army.TroopType,
 	}
 	allCav := false
 	for k, ok := range manned {
-		if !ok {
+		if !ok || men[k] == 0 {
 			continue
 		}
-		// 一點兵力 ＝ 10 人。
-		c.Units[k] = combat.Unit{Men: army.MenPerUnit / 10, Kind: kinds[k]}
-		c.Men += army.MenPerUnit / 10
+		c.Units[k] = combat.Unit{Men: men[k], Kind: kinds[k]}
+		c.Men += men[k]
 	}
 	allCav = c.rules().AllCavalry()
 	c.Interval = IntervalMixed

@@ -1740,9 +1740,10 @@ func TestFormCorps(t *testing.T) {
 	if w.Factions[f].Corps != before+1 {
 		t.Errorf("勢力軍團數 %d，應為 %d", w.Factions[f].Corps, before+1)
 	}
-	// 騎馬扣 2,000、弓兵 2,000、步兵 2,000。
+	// 每個兵種兩個槽，各分到上限 100 點，所以池各少 200
+	// （docs/spec/21 §2：扣掉的量 ＝ 放進槽裡的量）。
 	for tp, want := range map[economy.TroopType]int{
-		economy.Cavalry: 4000, economy.Archer: 4000, economy.Infantry: 4000,
+		economy.Cavalry: 5800, economy.Archer: 5800, economy.Infantry: 5800,
 	} {
 		if got := w.Factions[f].Reserves[tp]; got != want {
 			t.Errorf("%v 預備兵剩 %d，應為 %d", tp, got, want)
@@ -1754,8 +1755,9 @@ func TestFormCorps(t *testing.T) {
 	}
 }
 
-// 預備兵不足就整批不做——原版沒有「編一半」這回事。
-func TestFormCorpsAllOrNothing(t *testing.T) {
+// 兵不夠不是錯誤——池裡有多少就分多少（docs/spec/21 §2）。
+// 唯一的錯誤條件是分配完主將槽還是 0（§4，原版只檢查 [si+29h]）。
+func TestFormCorpsDistributesWhateverIsLeft(t *testing.T) {
 	w := load(t, 0)
 	f := w.AliveFactions()[0]
 	lord := w.Factions[f].Lord
@@ -1765,14 +1767,69 @@ func TestFormCorpsAllOrNothing(t *testing.T) {
 		army.Cavalry, army.Cavalry, army.Archer, army.Archer, army.Cavalry, army.Cavalry,
 	}
 	manned := [army.Positions]bool{true, true, true, true, true, true}
+	if err := w.FormCorps(lord, kinds, manned); err != nil {
+		t.Fatalf("弓兵是 0，但主將槽是騎馬，應該編得出來：%v", err)
+	}
+	c := w.Corps[lord]
+	// 四個騎馬槽各 100 點；兩個弓兵槽分不到兵，是空槽。
+	for _, k := range []int{0, 1, 4, 5} {
+		if c.Units[k].Men != 100 {
+			t.Errorf("槽 %d 兵力 %d，應為 100", k, c.Units[k].Men)
+		}
+	}
+	for _, k := range []int{2, 3} {
+		if c.Units[k].Men != 0 {
+			t.Errorf("槽 %d 應該是空的，卻有 %d 點", k, c.Units[k].Men)
+		}
+	}
+	if got := w.Factions[f].Reserves[economy.Cavalry]; got != 6000-400 {
+		t.Errorf("騎馬池剩 %d，應為 %d——扣掉的要等於放進槽裡的", got, 6000-400)
+	}
+}
+
+// 主將槽分不到兵就不成立：原版按確定時只檢查 [si+29h]。
+func TestFormCorpsNeedsMenInGeneralSlot(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[0]
+	lord := w.Factions[f].Lord
+	w.Factions[f].Reserves = [economy.NumTroopTypes]int{0, 6000, 6000}
+
+	kinds := [army.Positions]army.TroopType{
+		army.Cavalry, army.Archer, army.Archer, army.Archer, army.Archer, army.Archer,
+	}
+	manned := [army.Positions]bool{true, true, true, true, true, true}
 	if err := w.FormCorps(lord, kinds, manned); err == nil {
-		t.Fatal("弓兵不足卻編成成功了")
+		t.Fatal("主將槽分不到兵卻編成成功了")
 	}
 	if w.Corps[lord].Alive {
 		t.Error("失敗卻留下了軍團")
 	}
-	if w.Factions[f].Reserves[economy.Cavalry] != 6000 {
-		t.Error("失敗卻扣了騎馬預備兵")
+}
+
+// 分配式本身：餘數整個給第一個同型槽，之後的槽對剩下的重分，每槽上限 100。
+func TestDistributeReservesFollowsOriginal(t *testing.T) {
+	// 池 250 點、三個同型槽：250/3=83 餘 1 → 第一槽 84，
+	// 剩 166 分兩槽 → 83，剩 83 分一槽 → 83。合計 250，池歸零。
+	pool := [economy.NumTroopTypes]int{250, 0, 0}
+	kinds := [army.Positions]army.TroopType{
+		army.Cavalry, army.Cavalry, army.Cavalry, army.Cavalry, army.Cavalry, army.Cavalry,
+	}
+	manned := [army.Positions]bool{true, true, true, false, false, false}
+	got := distributeReserves(&pool, kinds, manned)
+	want := [army.Positions]int{84, 83, 83, 0, 0, 0}
+	if got != want {
+		t.Fatalf("分配 = %v，want %v", got, want)
+	}
+	if pool[economy.Cavalry] != 0 {
+		t.Errorf("池剩 %d，應該全部分完", pool[economy.Cavalry])
+	}
+	// 扣掉的總量必須等於放進槽裡的總量。
+	sum := 0
+	for _, n := range got {
+		sum += n
+	}
+	if sum != 250 {
+		t.Errorf("放進槽裡 %d 點，池少了 250——兩者必須相等", sum)
 	}
 }
 
