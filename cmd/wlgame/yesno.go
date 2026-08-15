@@ -92,9 +92,10 @@ func (g *game) drawYesNo(screen *ebiten.Image, x, y int, question string, yesSel
 	} {
 		// 兩格是**凹槽**：底色 5、外圈 2／0、內圈 D／4（docs/re/48 §2.1）。
 		g.dlSunken(screen, x+yesNoBoxDX, y+row.dy, yesNoBoxW, yesNoBoxH)
+		// 原版這兩個字是**黑的**（arg2 ＝ 0003，docs/re/55 §3）。
 		// remake 的選取標記：文字換成選取色。**不用紅色**——
 		// 紅色在這個專案裡固定表示負值（資金、上昇值）。
-		col := ink
+		col := g.dlButtonInk()
 		if row.on {
 			col = chrome.Select
 		}

@@ -193,7 +193,7 @@ func (g *game) drawForm(screen *ebiten.Image) {
 	g.td.Draw(screen, "總兵力", formHeadLabelX, formTotalY, ink)
 	g.td.Draw(screen, "士氣值", formHeadLabelX, formMoraleY, ink)
 	g.td.Draw(screen, "預備兵數", formReserveLabelX, formReserveLabelY, labelInk)
-	g.td.Draw(screen, "確 定", formOKTextX, formOKY, ink)
+	g.td.Draw(screen, "確 定", formOKTextX, formOKY, g.dlButtonInk())
 	for k := 0; k < army.Positions; k++ {
 		g.td.Draw(screen, formSlotLabels[k],
 			formSlotLabelX, formSlotY+k*formSlotStep, ink)

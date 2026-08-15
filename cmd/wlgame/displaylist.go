@@ -30,10 +30,19 @@ const (
 	dlButtonFill  = 0x07
 	dlButtonLight = 0x09
 	dlButtonDark  = 0x06
+
+	// ⭐ 按鈕上的字是**黑的**（`op 08` 的 arg2 ＝ 0003，docs/re/55 §3）。
+	// 先前四個視窗都畫成白字。
+	dlButtonText = 0x00
+
+	// 系統選單值格的「 ＯＫ 」：黑字綠底（arg2 ＝ 5001）。
+	dlValueFill = 0x05
+	dlValueText = 0x00
 )
 
 // 取不到原版調色盤時的替代色。只在沒有素材的環境（測試、無 lib）出現。
 var (
+	dlTextFallback   = color.RGBA{20, 20, 20, 255}
 	dlSunkenFallback = color.RGBA{40, 40, 60, 255}
 	dlButtonFallback = color.RGBA{90, 90, 90, 255}
 	dlLightFallback  = color.RGBA{210, 210, 210, 255}
@@ -71,4 +80,14 @@ func (g *game) dlSunken(dst *ebiten.Image, x, y, w, h int) {
 func (g *game) dlButton(dst *ebiten.Image, x, y, w, h int) {
 	g.dlFill(dst, x, y, w, h, dlButtonFill, dlButtonFallback)
 	g.dlBevel(dst, x-1, y-1, w+2, h+2, dlButtonLight, dlButtonDark)
+}
+
+// dlButtonInk 是按鈕上那行字的顏色。
+func (g *game) dlButtonInk() color.RGBA { return g.paletteInk(dlButtonText, dlTextFallback) }
+
+// dlValueBox 是系統選單那種值格：**只有兩圈框沒有底**，
+// 底色由「 ＯＫ 」那個字串自己帶（docs/re/55 §2）。
+func (g *game) dlValueBox(dst *ebiten.Image, x, y, w, h int) {
+	g.dlBevel(dst, x-2, y-2, w+4, h+4, dlSunkenOuterLight, dlSunkenOuterDark)
+	g.dlBevel(dst, x-1, y-1, w+2, h+2, dlSunkenInnerLight, dlSunkenInnerDark)
 }

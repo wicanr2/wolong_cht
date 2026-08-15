@@ -578,3 +578,57 @@ func TestLordCardLayout(t *testing.T) {
 		t.Errorf("數字右端 %d 穿到按鈕欄 %d", right, lordCustomX)
 	}
 }
+
+// 系統選單的版面契約（docs/spec/13 §2.6、docs/re/55）。
+// 視窗矩形來自 sub_1895D(cx=0C0Dh)，六列由顯示清單場景 2 給。
+func TestSystemMenuLayout(t *testing.T) {
+	checks := []struct {
+		name string
+		got  int
+		want int
+	}{
+		{"視窗 x", sysWinX, 208},
+		{"視窗 y", sysWinY, 112},
+		{"視窗寬", sysWinW, 208},
+		{"視窗高", sysWinH, 192},
+		{"標題 x", sysTitleX, 228},
+		{"標題 y", sysTitleY, 124},
+		{"水平線 y", sysRuleY, 142},
+		{"水平線長", sysRuleW, 191},
+		{"標籤底 x", sysLabelBoxX, 222},
+		{"標籤底 y", sysLabelBoxY, 150},
+		{"標籤 x", sysLabelX, 232},
+		{"標籤 y", sysLabelY, 152},
+		{"值格 x", sysValueX, 352},
+		{"值格 y", sysValueY, 152},
+		{"列距", sysRowStep, 24},
+		{"列數", sysRows, 6},
+	}
+	for _, c := range checks {
+		if c.got != c.want {
+			t.Errorf("%s = %d，want %d", c.name, c.got, c.want)
+		}
+	}
+	// 六列要落在視窗內：末列的標籤底下緣是 270，視窗到 304。
+	if bottom := sysLabelBoxY + (sysRows-1)*sysRowStep + sysLabelBoxH; bottom > sysWinY+sysWinH {
+		t.Errorf("末列下緣 %d 超出視窗 %d", bottom, sysWinY+sysWinH)
+	}
+	// 值格不能疊到左邊的標籤底（128 寬，右緣 350）。
+	if sysValueX < sysLabelBoxX+sysLabelBoxW {
+		t.Errorf("值格 x=%d 疊到標籤底右緣 %d", sysValueX, sysLabelBoxX+sysLabelBoxW)
+	}
+	// 六個熱區（原版 0x20–0x25）與值格逐格重合、列距 24。
+	for k := 0; k < sysRows; k++ {
+		r := sysRowRect(k)
+		if r.Min.X != sysValueX || r.Dx() != sysValueW || r.Dy() != sysValueH {
+			t.Fatalf("第 %d 列熱區 = %v，want x%d %d×%d", k, r, sysValueX, sysValueW, sysValueH)
+		}
+		if r.Min.Y != sysValueY+k*sysRowStep {
+			t.Errorf("第 %d 列熱區 y = %d，want %d", k, r.Min.Y, sysValueY+k*sysRowStep)
+		}
+	}
+	// 六列的標籤照原版順序，最後一列是「遊戲結束」——**沒接功能也要留著**。
+	if sysMenuLabels[0] != "資料儲存" || sysMenuLabels[sysRows-1] != "遊戲結束" {
+		t.Errorf("六列標籤 = %v", sysMenuLabels)
+	}
+}

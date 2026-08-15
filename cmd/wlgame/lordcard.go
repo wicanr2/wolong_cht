@@ -59,7 +59,7 @@ func (g *game) drawLordCard(screen *ebiten.Image, p launcherPlayer, season int) 
 	}{{lordCustomX, lordCustomY, "自定"}, {lordOKX, lordOKY, "確定"}} {
 		// 兩顆是**按鈕**：底色 7 ＋ 一圈 9／6（docs/re/48 §2.1）。
 		g.dlButton(screen, b.x, b.y, lordButtonW, lordButtonH)
-		g.td.Draw(screen, b.label, lordButtonTextX, b.y, ink)
+		g.td.Draw(screen, b.label, lordButtonTextX, b.y, g.dlButtonInk())
 	}
 	g.td.Draw(screen, "君主", lordLabelX, 200, ink)
 	g.td.Draw(screen, "軍師", 312, 128, ink)

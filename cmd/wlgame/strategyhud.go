@@ -381,38 +381,70 @@ func (g *game) drawNaturalStrategyHUD(screen *ebiten.Image) {
 	}
 }
 
-// 系統視窗的版面：矩形出自 `sub_160CC` → `sub_1895D(cx=0C0Dh)`，
-// 內容是顯示清單場景 2（docs/re/48 §3）。
+// 系統選單的版面**全部出自原版**（docs/spec/13 §2.6）：視窗矩形來自
+// `sub_160CC` → `sub_1895D(cx=0C0Dh)`，內容是顯示清單場景 2，
+// 六個熱區由那一支的迴圈登記（docs/re/55）。
 const (
 	sysWinX, sysWinY = 208, 112
 	sysWinW, sysWinH = 208, 192
+
+	sysTitleX, sysTitleY = 228, 124
+	sysRuleX, sysRuleY   = 216, 142
+	sysRuleW             = 191
+
+	// 六列：標籤的黑底 ＋ 標籤 ＋ 值格。列距 24。
+	sysLabelBoxX, sysLabelBoxY = 222, 150
+	sysLabelBoxW, sysLabelBoxH = 128, 20
+	sysLabelX, sysLabelY       = 232, 152
+	sysValueX, sysValueY       = 352, 152
+	sysValueW, sysValueH       = 48, 16
+	sysRowStep                 = 24
+	sysRows                    = 6
 )
 
-// drawSystemWindow 畫系統設定面板。
+// sysMenuLabels 是六列的標籤，取自顯示清單場景 2 的字串。
+var sysMenuLabels = [sysRows]string{
+	"資料儲存", "畫面模式", "音　　效", "戰略速度", "戰術速度", "遊戲結束"}
+
+// sysRowRect 是第 k 列的可點矩形（原版熱區 0x20+k）。
+func sysRowRect(k int) image.Rectangle {
+	if k < 0 || k >= sysRows {
+		return image.Rectangle{}
+	}
+	y := sysValueY + k*sysRowStep
+	return image.Rect(sysValueX, y, sysValueX+sysValueW, y+sysValueH)
+}
+
+// drawSystemWindow 畫系統選單（docs/spec/13 §2.6）。
 //
-// 松崗 DOS/V 是中央五列設定 ＋ 右側綠底值格；**不能用一整頁 remake
-// 快捷鍵說明取代**。這一段原本在舊的 `drawWindow(winSystem)` 裡，
-// 舊那套整個拿掉時搬過來（docs/spec/13 §2.5）。
+// 原版第 1 列與第 6 列的值是清單裡就寫死的「 ＯＫ 」，中間四列由程式填。
+// remake 沿用這個形狀，把還沒接的功能寫成值——**不要因為沒做就把列拿掉**，
+// 那會讓缺口從畫面上消失。
 func (g *game) drawSystemWindow(dst *ebiten.Image) {
 	g.chrome.Window(dst, sysWinX, sysWinY, sysWinW, sysWinH, chrome.Menu)
-	ink := chrome.Paper
-	g.td.Draw(dst, "系　統　設　定", sysWinX+chrome.Tile+4, sysWinY+chrome.Tile+2, ink)
+	ink := g.paletteInk(strategyInkNormal, chrome.Paper)
+	labelInk := g.paletteInk(strategyInkDim, color.RGBA{255, 223, 154, 255})
 
-	labels := []string{"資料儲存", "畫面模式", "音　　效", "戰略速度", "戰術速度"}
-	values := []string{"S／L", "TYPE 1", "未接入",
-		fmt.Sprintf("%d", g.speed), fmt.Sprintf("%d", g.speed)}
-	rowY := sysWinY + chrome.Tile + textdraw.GlyphH + 8
-	valueX := sysWinX + sysWinW - chrome.Tile - 72
-	for i := range labels {
-		y := rowY + i*(textdraw.GlyphH+4)
-		g.td.Draw(dst, labels[i], sysWinX+chrome.Tile+4, y, ink)
-		vector.DrawFilledRect(dst, float32(valueX), float32(y-1), 64,
-			float32(textdraw.GlyphH+2), color.RGBA{45, 110, 55, 255}, false)
-		col := ink
-		if values[i] == "未接入" {
+	g.td.Draw(dst, "　系　 統　 選　 單　", sysTitleX, sysTitleY, ink)
+	vector.DrawFilledRect(dst, sysRuleX, sysRuleY, sysRuleW, 1, ink, false)
+
+	values := [sysRows]string{"　ＯＫ　", "TYPE 1", "未接入",
+		fmt.Sprintf("%d", g.speed), fmt.Sprintf("%d", g.speed), "　ＯＫ　"}
+	for k := 0; k < sysRows; k++ {
+		dy := k * sysRowStep
+		vector.DrawFilledRect(dst, sysLabelBoxX, float32(sysLabelBoxY+dy),
+			sysLabelBoxW, sysLabelBoxH, color.Black, false)
+		g.td.Draw(dst, sysMenuLabels[k], sysLabelX, sysLabelY+dy, labelInk)
+
+		// 值格只有兩圈框；底色由值自己帶（原版的「 ＯＫ 」是黑字綠底）。
+		g.dlValueBox(dst, sysValueX, sysValueY+dy, sysValueW, sysValueH)
+		g.dlFill(dst, sysValueX, sysValueY+dy, sysValueW, sysValueH,
+			dlValueFill, color.RGBA{45, 110, 55, 255})
+		col := g.paletteInk(dlValueText, dlTextFallback)
+		if values[k] == "未接入" {
 			col = color.RGBA{170, 170, 170, 255}
 		}
-		g.td.Draw(dst, values[i], valueX+4, y, col)
+		g.td.Draw(dst, strategyHUDSingleLine(values[k], sysValueW), sysValueX+2, sysValueY+dy, col)
 	}
 }
 
