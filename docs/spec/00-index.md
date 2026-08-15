@@ -68,6 +68,7 @@
 | 四槽選擇視窗 | [`25-slot-select-window.md`](25-slot-select-window.md) | 讀取／儲存已照原版；新遊戲未共用 |
 | ＹＥＳ／ＮＯ 對話框 | [`26-yes-no-dialog.md`](26-yes-no-dialog.md) | 版面與命中算式已照原版 |
 | 君主選擇視窗 | [`27-lord-select-window.md`](27-lord-select-window.md) | 版面已照原版；「自定」未接 |
+| 劇本 JSON | [`28-scenario-json.md`](28-scenario-json.md) | 匯出／匯入／round-trip 已可用（`cmd/wlscen`）|
 | remake 原生存檔格式 | [`20-save-format.md`](20-save-format.md) | 已接進遊戲並驗過；**只差放回 DOSBox 實測** |
 | 同狀態畫面對拍 | [`90-same-state-parity.md`](90-same-state-parity.md) | 橫幅已對過；**四窗全開的整體對拍還沒跑** |
 

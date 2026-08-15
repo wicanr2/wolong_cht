@@ -23,8 +23,8 @@
 | 程式碼理解 | 182 | 176 | 6 | 0 |
 | 驗收 | 14 | 11 | 3 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 45 | 42 | 3 | 0 |
-| **合計** | **362** | 348 | 13 | 1 |
+| 其他 | 48 | 45 | 3 | 0 |
+| **合計** | **365** | 351 | 13 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -368,7 +368,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（45 條）
+## 2.6 其他（48 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -414,6 +414,9 @@
 | [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 「自定」 | 軍師命名（場景 9 的注音輸入）還沒做，這顆按鈕目前無效 | 靜態 |
 | [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 換勢力 | 原版的換法在 `sub_11AC3`，未讀 | 靜態 |
 | [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 頭像尺寸 | 軍師頭像的下緣照原版座標會略微超出那個 208×104 的底框；沒有 oracle 可比，先照機器碼畫 | 實測 |
+| [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 事件佇列 | 這一輪不進 JSON。編輯器要動它得先有 UI 語意 | 靜態 |
+| [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 未解區域 | `+0x1EC0` 那 7 KB 仍是黑盒，只能靠改寫保留 | 靜態 |
+| [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 編輯器 | 這一份只做資料層。UI 是另一份規格 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |
