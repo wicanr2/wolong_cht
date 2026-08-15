@@ -22,8 +22,15 @@ func TestSaveSlotHitTargetsCoverExactlyFourRows(t *testing.T) {
 		if !(image.Point{X: r.Min.X + r.Dx()/2, Y: r.Min.Y + r.Dy()/2}).In(r) {
 			t.Fatalf("slot %d center does not hit %v", slot, r)
 		}
-		if slot > 0 && saveSlotRect(slot-1).Max.Y != r.Min.Y {
-			t.Fatalf("slot %d is not adjacent to previous row", slot)
+		// 原版四個熱區高 16、**間距 48**（sub_18BD1 的 `add bx, 30h`），
+		// 所以它們之間有 32 px 的空隙——不是相鄰的四列。
+		if prev := saveSlotRect(slot - 1); slot > 0 {
+			if r.Min.Y-prev.Min.Y != saveSlotStep {
+				t.Fatalf("slot %d 的間距 = %d，want %d", slot, r.Min.Y-prev.Min.Y, saveSlotStep)
+			}
+			if prev.Overlaps(r) {
+				t.Fatalf("slot %d 與上一列重疊", slot)
+			}
 		}
 	}
 	misses := []image.Point{
@@ -31,6 +38,8 @@ func TestSaveSlotHitTargetsCoverExactlyFourRows(t *testing.T) {
 		{X: saveSlotRect(3).Max.X, Y: saveSlotRect(3).Min.Y + 2},
 		{X: saveSlotRect(0).Min.X + 2, Y: saveSlotRect(0).Min.Y - 1},
 		{X: saveSlotRect(3).Min.X + 2, Y: saveSlotRect(3).Max.Y},
+		// 兩列之間的空隙也不能命中。
+		{X: saveSlotRect(0).Min.X + 2, Y: saveSlotRect(0).Max.Y + 4},
 	}
 	for _, p := range misses {
 		for slot := 0; slot < 4; slot++ {

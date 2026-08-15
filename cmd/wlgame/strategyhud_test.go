@@ -404,3 +404,59 @@ func TestCorpsInfoWindowLayout(t *testing.T) {
 			strategySidebarX, strategyFactionY, strategySidebarW, strategyFactionH)
 	}
 }
+
+// 四槽選擇視窗的版面契約（docs/spec/25）。視窗矩形來自 sub_1895D(cx=0F13h)，
+// 數值座標由 sub_18C20 的 VRAM 位移換算。
+func TestSlotSelectWindowLayout(t *testing.T) {
+	checks := []struct {
+		name string
+		got  int
+		want int
+	}{
+		{"視窗 x", savePanelX, 96},
+		{"視窗 y", savePanelY, 80},
+		{"視窗寬", savePanelW, 304},
+		{"視窗高", savePanelH, 240},
+		{"標題 x", saveTitleX, 184},
+		{"標題 y", saveTitleY, 91},
+		{"水平線 y", saveRuleY, 111},
+		{"水平線長", saveRuleW, 287},
+		{"名稱欄 x", saveNameBoxX, 120},
+		{"名稱欄 y", saveNameBoxY, 118},
+		{"名稱 y", saveNameY, 120},
+		{"日期欄 x", saveSlotX, 256},
+		{"日期欄 y", saveSlotY, 144},
+		{"列距", saveSlotStep, 48},
+		{"年 x", saveYearX, 264},
+		{"月 x", saveMonthX, 304},
+		{"日 x", saveDayX, 336},
+		{"「年月日」x", saveDateLabelX, 288},
+	}
+	for _, c := range checks {
+		if c.got != c.want {
+			t.Errorf("%s = %d，want %d", c.name, c.got, c.want)
+		}
+	}
+	// 三個數字各自嵌在「年　月　日」那三個字的前面：
+	// 年 3 位到 288（「年」），月 2 位到 320（「月」），日 2 位到 352（「日」）。
+	if right := saveYearX + saveYearDigits*textdraw.HalfW; right != saveDateLabelX {
+		t.Errorf("年的右端 = %d，want 接在「年」%d", right, saveDateLabelX)
+	}
+	if right := saveMonthX + saveMonthDigits*textdraw.HalfW; right != saveDateLabelX+2*textdraw.GlyphW {
+		t.Errorf("月的右端 = %d，want %d", right, saveDateLabelX+2*textdraw.GlyphW)
+	}
+	if right := saveDayX + saveMonthDigits*textdraw.HalfW; right != saveDateLabelX+4*textdraw.GlyphW {
+		t.Errorf("日的右端 = %d，want %d", right, saveDateLabelX+4*textdraw.GlyphW)
+	}
+	// 四個槽都要落在視窗內（末槽的日期欄下緣 304 < 320）。
+	if bottom := saveSlotY + 3*saveSlotStep + saveSlotH; bottom > savePanelY+savePanelH {
+		t.Errorf("末槽下緣 %d 超出視窗 %d", bottom, savePanelY+savePanelH)
+	}
+	// 熱區與日期欄逐格重合。
+	for i := 0; i < 4; i++ {
+		r := saveSlotRect(i)
+		if r.Min.X != saveSlotX || r.Dx() != saveSlotW || r.Dy() != saveSlotH {
+			t.Fatalf("第 %d 槽熱區 = %v，want x%d %d×%d", i, r, saveSlotX, saveSlotW, saveSlotH)
+		}
+	}
+}

@@ -3091,3 +3091,23 @@ func TestFormCorpsMarksEmptySlots(t *testing.T) {
 		t.Errorf("空槽寫回 = %d，want 4", got)
 	}
 }
+
+// 區塊 +0x40 是劇本／存檔的標題，四槽選擇視窗的名稱欄畫的就是它
+// （docs/re/52 §4）。四個劇本各有一個，而且不重複。
+func TestScenarioTitles(t *testing.T) {
+	seen := map[string]int{}
+	for i := 0; i < 4; i++ {
+		w := load(t, i)
+		if w.Title == "" {
+			t.Fatalf("劇本 %d 沒有標題", i)
+		}
+		if len(w.Title)%2 != 0 {
+			t.Errorf("劇本 %d 標題 %q 的長度是奇數——Big5 全形字應該成對", i, w.Title)
+		}
+		seen[w.Title]++
+	}
+	if len(seen) != 4 {
+		t.Errorf("四個劇本只有 %d 個不同的標題：%v", len(seen), seen)
+	}
+	t.Logf("劇本標題：%v", seen)
+}

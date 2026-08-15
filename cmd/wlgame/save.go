@@ -16,6 +16,7 @@ import (
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
+	"github.com/hajimehoshi/ebiten/v2/vector"
 
 	"github.com/wicanr2/wolong_cht/internal/savefile"
 	"github.com/wicanr2/wolong_cht/internal/savepath"
@@ -92,27 +93,52 @@ func (g *game) dispatchSaveUI(action saveUIAction) {
 	}
 }
 
+// 版面**全部出自原版**（docs/spec/25）：視窗矩形來自 `sub_1895D(cx=0F13h)`，
+// 靜態層是顯示清單場景 6，數值座標由 `sub_18C20` 的 VRAM 位移換算。
 const (
-	savePanelX = 112
-	savePanelY = 72
-	savePanelW = 416
-	savePanelH = 248
-	saveSlotX  = savePanelX + chrome.Tile + 4
-	saveSlotY  = savePanelY + chrome.Tile + 2 + 2*(textdraw.GlyphH+4) + 8
-	saveSlotW  = savePanelW - 2*chrome.Tile - 8
-	saveSlotH  = textdraw.GlyphH + 4
+	savePanelX = 96
+	savePanelY = 80
+	savePanelW = 304
+	savePanelH = 240
+
+	saveTitleX, saveTitleY = 184, 91
+
+	// 場景 6 的 op 05：一條橫跨內框的水平線，在標題與第一個槽之間。
+	saveRuleX, saveRuleY, saveRuleW = 104, 111, 287
+
+	// 名稱欄與日期欄。列距 48。
+	saveNameBoxX, saveNameBoxY = 120, 118
+	saveNameBoxW, saveNameBoxH = 256, 20
+	saveNameX, saveNameY       = 120, 120
+	saveSlotX, saveSlotY       = 256, 144
+	saveSlotW, saveSlotH       = 120, 16
+	saveSlotStep               = 48
+
+	// 年、月、日各自嵌在「年　月　日」那三個字的前面。
+	saveYearX, saveMonthX, saveDayX = 264, 304, 336
+	saveDateLabelX                  = 288
+	saveYearDigits                  = 3
+	saveMonthDigits                 = 2
+
+	// remake 差異：提示與兩個按鈕自己一個框，接在原版視窗下面。
+	saveHintY = savePanelY + savePanelH
+	saveHintH = 56
 )
 
+// saveSlotRect 是第 slot 個槽的可點矩形（原版熱區 0x20+slot），
+// **與日期欄逐格重合**——左邊的名稱欄不可點。
 func saveSlotRect(slot int) image.Rectangle {
 	if slot < 0 || slot >= 4 {
 		return image.Rectangle{}
 	}
-	return image.Rect(saveSlotX, saveSlotY+slot*(textdraw.GlyphH+4),
-		saveSlotX+saveSlotW, saveSlotY+(slot+1)*(textdraw.GlyphH+4))
+	y := saveSlotY + slot*saveSlotStep
+	return image.Rect(saveSlotX, y, saveSlotX+saveSlotW, y+saveSlotH)
 }
 
+// saveFooterRect 是「確定」與「取消」——**原版沒有這兩顆**，
+// 它按右鍵取消、點槽就決定。放在原版視窗外面的提示框裡。
 func saveFooterRect(confirm bool) image.Rectangle {
-	y := savePanelY + savePanelH - chrome.Tile - textdraw.GlyphH
+	y := saveHintY + saveHintH - textdraw.GlyphH - 8
 	if confirm {
 		return image.Rect(savePanelX+savePanelW-144, y,
 			savePanelX+savePanelW-72, y+textdraw.GlyphH+2)
@@ -310,44 +336,68 @@ func (g *game) drawSaveUI(screen *ebiten.Image) {
 	if !g.saveUI.active {
 		return
 	}
-	const x, y, w, h = savePanelX, savePanelY, savePanelW, savePanelH
-	g.chrome.Window(screen, x, y, w, h, chrome.Menu)
-	amber := color.RGBA{240, 200, 120, 255}
-	white := chrome.Paper
-	dim := color.RGBA{170, 170, 180, 255}
-	red := color.RGBA{240, 140, 140, 255}
-	tx := x + chrome.Tile + 4
-	ty := y + chrome.Tile + 2
-	title := "儲存資料"
-	if g.saveUI.action == saveRead {
-		title = "讀取資料"
-	}
-	g.td.Draw(screen, title, tx, ty, amber)
-	fileText := "未指定 -save-file（目前停用）"
-	fileCol := red
-	if g.saveFile != "" {
-		fileText = "檔案　" + filepath.Base(g.saveFile)
-		fileCol = dim
-	}
-	g.td.Draw(screen, fileText, tx, ty+textdraw.GlyphH+4, fileCol)
+	g.chrome.Window(screen, savePanelX, savePanelY, savePanelW, savePanelH, chrome.Menu)
 
-	ry := ty + 2*(textdraw.GlyphH+4) + 8
-	for i := 0; i < 4; i++ {
-		col := white
-		mark := "　"
-		if i == g.saveUI.slot {
-			col, mark = amber, "●"
-		}
-		label := fmt.Sprintf("%s%d　劇本／槽位 %d", mark, i+1, i+1)
-		if g.saveUI.action == saveRead && (i >= len(g.saveUI.slots) || !g.saveUI.slots[i].Available) {
-			col = dim
-			label = fmt.Sprintf("%s%d　空白槽位", mark, i+1)
-		}
-		g.td.Draw(screen, label, tx, ry, col)
-		ry += textdraw.GlyphH + 4
+	ink := g.paletteInk(strategyInkNormal, chrome.Paper)
+	labelInk := g.paletteInk(strategyInkDim, color.RGBA{255, 223, 154, 255})
+	dateInk := g.paletteInk(0x05, color.RGBA{200, 200, 255, 255})
+	warnInk := g.paletteInk(strategyInkGauge, color.RGBA{210, 48, 40, 255})
+	amber := color.RGBA{240, 200, 120, 255}
+
+	// 標題：原版是 ＮＥＷ　ＧＡＭＥ／ＬＯＡＤ　ＤＡＴＡ／ＳＡＶＥ　ＤＡＴＡ
+	// 三選一（docs/re/52 §2）。remake 這個視窗只做讀取與儲存。
+	title := "ＳＡＶＥ　ＤＡＴＡ"
+	if g.saveUI.action == saveRead {
+		title = "ＬＯＡＤ　ＤＡＴＡ"
 	}
-	footerY := y + h - chrome.Tile - textdraw.GlyphH
-	g.td.Draw(screen, "↑↓／1-4 選擇", tx, footerY, dim)
-	g.td.Draw(screen, "確定", saveFooterRect(true).Min.X+16, footerY, white)
-	g.td.Draw(screen, "取消", saveFooterRect(false).Min.X+16, footerY, white)
+	g.td.Draw(screen, title, saveTitleX, saveTitleY, ink)
+	vector.DrawFilledRect(screen, saveRuleX, saveRuleY, saveRuleW, 1, ink, false)
+
+	for i := 0; i < 4; i++ {
+		dy := i * saveSlotStep
+		vector.DrawFilledRect(screen, saveNameBoxX, float32(saveNameBoxY+dy),
+			saveNameBoxW, saveNameBoxH, color.Black, false)
+		vector.DrawFilledRect(screen, saveSlotX, float32(saveSlotY+dy),
+			saveSlotW, saveSlotH, color.Black, false)
+		// op 04：兩圈差 1 px 的外框，做出立體邊。
+		for _, o := range []int{2, 1} {
+			vector.StrokeRect(screen, float32(saveSlotX-o), float32(saveSlotY+dy-o),
+				float32(saveSlotW+2*o), float32(saveSlotH+2*o), 1, ink, false)
+		}
+		g.td.Draw(screen, "年　月　日", saveDateLabelX, saveSlotY+dy, ink)
+
+		slot, ok := launcherSlot{}, false
+		if i < len(g.saveUI.slots) {
+			slot, ok = g.saveUI.slots[i], g.saveUI.slots[i].Available
+		}
+		nameInk := labelInk
+		if i == g.saveUI.slot {
+			nameInk = amber
+		}
+		if !ok {
+			g.td.Draw(screen, "空白槽位", saveNameX, saveNameY+dy, warnInk)
+			continue
+		}
+		g.td.Draw(screen, strategyHUDSingleLine(slot.Title, saveNameBoxW-16),
+			saveNameX, saveNameY+dy, nameInk)
+		g.td.Draw(screen, strategyHUDNumber(slot.Year, saveYearDigits),
+			saveYearX, saveSlotY+dy, dateInk)
+		g.td.Draw(screen, strategyHUDNumber(slot.Month, saveMonthDigits),
+			saveMonthX, saveSlotY+dy, dateInk)
+		g.td.Draw(screen, strategyHUDNumber(slot.Day, saveMonthDigits),
+			saveDayX, saveSlotY+dy, dateInk)
+	}
+
+	// ↓ remake 差異：原版點槽就決定、右鍵取消，沒有這一框。
+	g.chrome.Window(screen, savePanelX, saveHintY, savePanelW, saveHintH, chrome.Menu)
+	hx, hy := savePanelX+8, saveHintY+8
+	if g.saveFile == "" {
+		g.td.Draw(screen, "未指定 -save-file（目前停用）", hx, hy, warnInk)
+	} else {
+		g.td.Draw(screen, "檔案　"+filepath.Base(g.saveFile), hx, hy, labelInk)
+	}
+	footerY := saveHintY + saveHintH - textdraw.GlyphH - 8
+	g.td.Draw(screen, "↑↓／1-4 選擇", hx, footerY, labelInk)
+	g.td.Draw(screen, "確定", saveFooterRect(true).Min.X+16, footerY, ink)
+	g.td.Draw(screen, "取消", saveFooterRect(false).Min.X+16, footerY, ink)
 }

@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 60 | 59 | 1 | 0 |
 | 資料保存 | 43 | 43 | 0 | 0 |
-| 程式碼理解 | 172 | 166 | 6 | 0 |
+| 程式碼理解 | 174 | 168 | 6 | 0 |
 | 驗收 | 14 | 11 | 3 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 38 | 36 | 2 | 0 |
-| **合計** | **345** | 332 | 12 | 1 |
+| 其他 | 40 | 38 | 2 | 0 |
+| **合計** | **349** | 336 | 12 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -139,7 +139,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（172 條）
+## 2.3 程式碼理解（174 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -302,10 +302,9 @@
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | `funcs_159C0` 的五筆內容 | 只確認是「擦除」對應表（`sub_1895D` 樣式 0），逐筆未 dump | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 開關圖示的圖形來源 | 五格 32×32 的圖從哪個圖庫來未讀 | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 原版執行期驗證 | **未做**。PC-98 oracle 上左鍵點這五格沒有反應（§6），原因未定 | 實測 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | opcode `04`／`05` | handler 位址已知，語意未讀。`04` 成對出現且座標差 1 px，像是立體邊的兩條 | 靜態 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `08` 屬性 byte 的低位 | 高 byte 是調色盤索引（`0x0F` 一般、`0x09` 兩個資源標籤，與參考幀的白／金相符）；低 byte 固定 `0x03`，語意未讀 | 靜態 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `sub_1E9A7(bl=0, ax=1800h, cx=2020h)` | `sub_1030F` 登記的第二件事，未讀 | 靜態 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | 十個場景對十一個呼叫端 | 有兩個呼叫端共用同一個場景，哪兩個未查 | 靜態 |
+| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | opcode `01`／`02` | 十個場景一次都沒用到，handler 未讀 | 靜態 |
 | [`re/49-corps-formation-window.md`](../re/49-corps-formation-window.md) | ？ | (279, 271) arg `00D8 00A8` / **04**，未解（§6） | 靜態 |
 | [`re/49-corps-formation-window.md`](../re/49-corps-formation-window.md) | `op 04` | 場景 5 用它一次，位置 (279,271) 剛好在確定鈕左上角外一格，`arg` ＝ `00D8`／`00A8`。像是外框或反白，語意未解（`48` §7 同一條） | 靜態 |
 | [`re/49-corps-formation-window.md`](../re/49-corps-formation-window.md) | `sub_1F9B0` 的 `ax = 1003h` | 貼圖的樣式參數；`sub_10C14` 用 `0801h`（`46` §3）。位元編碼未逐位對過 | 靜態 |
@@ -315,6 +314,9 @@
 | [`re/51-corps-info-window.md`](../re/51-corps-info-window.md) | `sub_17FDB` | 玩家軍團的指令輸入流程，未讀。`45` 解過「戰鬥指揮／委任／解體」那一段，兩者的接縫沒對過 | 靜態 |
 | [`re/51-corps-info-window.md`](../re/51-corps-info-window.md) | `sub_14325` | 下完指令之後跑的一支，未讀 | 靜態 |
 | [`re/51-corps-info-window.md`](../re/51-corps-info-window.md) | `or byte ptr [si], 2` | 位元 1 ＝「有指令」（`34`），這裡是它的其中一個寫入端 | 靜態 |
+| [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | `ds:987Ch` | 四筆槽頭的暫存段，由誰配置未讀 | 靜態 |
+| [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | 檔名 | `sub_18C20` 沒設 `dx`，靠 `sub_18B7C` 的 `push dx`／`pop dx` 從更上層傳進來 | 靜態 |
+| [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | `sub_18C9F` | 關閉時擦除的那一支，未讀 | 靜態 |
 
 ## 2.4 驗收（14 條）
 
@@ -358,7 +360,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（38 條）
+## 2.6 其他（40 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -397,6 +399,8 @@
 | [`spec/23-city-info-window.md`](../spec/23-city-info-window.md) | `cs:word_1987C` | 原版每次開視窗都重讀一次檔；remake 的 `library` 是整檔載入，不需要這一層 | 靜態 |
 | [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 指令流程 | `sub_17FDB` 未讀（`docs/re/51` §5）。remake 的行軍指令走自己的流程（`M`） | 靜態 |
 | [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 進入方式 | 原版也可以在地圖上直接點軍團（`sub_11E46`），remake 只有一覽表 | 靜態 |
+| [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 空槽標記 | 原版用名稱欄第一個字 `0xD0A1`；remake 用「載得起來且玩家勢力有效」判定，兩者不等價 | 靜態 |
+| [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 新遊戲共用 | remake 的啟動殼層是自己的畫面，還沒有換成這個四槽視窗 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |

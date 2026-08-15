@@ -9,6 +9,7 @@
 package state
 
 import (
+	"bytes"
 	"encoding/binary"
 	"fmt"
 	"os"
@@ -45,6 +46,11 @@ const (
 	playerPtrOffset  = 0x0D
 	playerOffset     = 0x0F
 	trustOffset      = 0x10
+
+	// titleOffset 是劇本／存檔的標題字串（Big5，NUL 結尾）。
+	// 原版四槽選擇視窗的名稱欄畫的就是它（docs/re/52 §4）。
+	titleOffset = 0x40
+	titleMax    = 0x3B // 到區塊 +0x7B，之後是第 ② 塊的起點 +0x80
 	taxOffset        = 0x18
 	recruitCapOffset = 0x1A
 	nextSettings     = 0x20 // 「來月」的同四項，月結時搬到上面兩處
@@ -325,6 +331,10 @@ type World struct {
 	// 不匯出——它是迴圈的內部游標，不是遊戲狀態的一部分。
 	hourFaction int
 
+	// Title 是劇本／存檔的標題（區塊 +0x40，Big5 原始 byte）：
+	// 「第一章」「呂布歸天」之類。四槽選擇視窗的名稱欄印的就是它。
+	Title string
+
 	// Player 是玩家所仕的勢力編號。原版存於 cs:0CFFh（區塊 +0x0F），
 	// 同一全域區段的 cs:0CFDh（+0x0D）保存勢力表位址；新劇本兩者都是
 	// 0xFF／0xFFFF，只有玩家選定或有效存檔才有值。
@@ -426,6 +436,15 @@ func LoadScenario(path string, index int) (*World, error) {
 	return loadBlock(raw[index*blockSize : (index+1)*blockSize]), nil
 }
 
+// blockTitle 取出區塊 +0x40 的標題（Big5，NUL 結尾）。
+func blockTitle(b []byte) string {
+	raw := b[titleOffset : titleOffset+titleMax]
+	if i := bytes.IndexByte(raw, 0); i >= 0 {
+		raw = raw[:i]
+	}
+	return string(raw)
+}
+
 // loadBlock 從一個劇本／存檔區塊建出 World。
 // LoadScenario 與 LoadBlock（`snapshot.go`）共用這一支——
 // **解碼只留一份實作**（`CLAUDE.md` §7 第 6 條）。
@@ -438,6 +457,7 @@ func loadBlock(b []byte) *World {
 	}
 	w := &World{
 		Player:      player,
+		Title:       blockTitle(b),
 		Trust:       int(b[trustOffset]),
 		raw:         append([]byte(nil), b...),
 		eventDelay:  7,

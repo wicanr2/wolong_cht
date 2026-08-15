@@ -62,6 +62,11 @@ type launcherSlot struct {
 	Slot      int
 	Available bool
 	Label     string
+
+	// Title／Year／Month／Day 是原版四槽視窗那四欄（docs/spec/25 §1.2）：
+	// 標題來自區塊 +0x40，日期是 +0x06／+0x04／+0x00。
+	Title            string
+	Year, Month, Day int
 }
 
 type launcherModel struct {
@@ -445,6 +450,8 @@ func inspectLauncherSlots(path string) []launcherSlot {
 			continue
 		}
 		slots[i].Available = true
+		slots[i].Title = big5(w.Title)
+		slots[i].Year, slots[i].Month, slots[i].Day = w.Clock.Year, w.Clock.Month, w.Clock.Day
 		slots[i].Label = fmt.Sprintf("%d年%d月%d日　%s", w.Clock.Year, w.Clock.Month,
 			w.Clock.Day, big5(w.LordName(w.Player)))
 	}
