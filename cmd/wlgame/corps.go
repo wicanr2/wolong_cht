@@ -361,7 +361,10 @@ func (g *game) openCorpsList() {
 		return
 	}
 	g.openCorpsListWith(rows, "↑↓ 移動　Enter 選取／決定　1-5 排序　ESC 取消",
-		func(int) bool { return true })
+		func(corps int) bool {
+			g.openCorpsInfo(corps) // 原版的軍團情報視窗（docs/spec/24）
+			return true
+		})
 }
 
 func (g *game) openCorpsListWith(rows []int, hint string, pick func(int) bool) {

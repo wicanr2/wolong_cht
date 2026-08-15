@@ -351,3 +351,56 @@ func TestCityInfoWindowLayout(t *testing.T) {
 		}
 	}
 }
+
+// 軍團情報視窗的版面契約（docs/spec/24）。視窗矩形來自 sub_1895D(cx=0D0Dh)，
+// 數值座標由 sub_1807B／sub_1812A 的 VRAM 位移換算。
+func TestCorpsInfoWindowLayout(t *testing.T) {
+	checks := []struct {
+		name string
+		got  int
+		want int
+	}{
+		{"視窗 x", corpsWinX, 432},
+		{"視窗 y", corpsWinY, 192},
+		{"視窗寬", corpsWinW, 208},
+		{"視窗高", corpsWinH, 208},
+		{"頭像 x", corpsPortraitX, 440},
+		{"頭像 y", corpsPortraitY, 200},
+		{"標籤 x", corpsHeadLabelX, 512},
+		{"名字 x", corpsHeadValueX, 576},
+		{"垂直線 x", corpsDividerX, 560},
+		{"總兵力 y", corpsTotalY, 272},
+		{"總兵力值 x", corpsTotalX, 536},
+		{"斜線 x", corpsSlashX, 568},
+		{"士氣 x", corpsMoraleX, 584},
+		{"槽標籤 x", corpsSlotLabelX, 464},
+		{"槽圖示 x", corpsSlotIconX, 520},
+		{"槽數值 x", corpsSlotValueX, 576},
+		{"首槽 y", corpsSlotY, 288},
+		{"末槽 y", corpsSlotY + (army.Positions-1)*corpsSlotStep, 368},
+	}
+	for _, c := range checks {
+		if c.got != c.want {
+			t.Errorf("%s = %d，want %d", c.name, c.got, c.want)
+		}
+	}
+	// 「總兵力 6000／200」是一列三段，接續但不重疊：
+	// 4 位半形數字到 568 剛好接上全形斜線，斜線 16 px 之後是士氣。
+	if right := corpsTotalX + corpsTotalDigits*textdraw.HalfW; right != corpsSlashX {
+		t.Errorf("總兵力右端 = %d，want 接在斜線 %d", right, corpsSlashX)
+	}
+	if corpsSlashX+textdraw.GlyphW != corpsMoraleX {
+		t.Errorf("斜線右端 = %d，want 接在士氣 %d", corpsSlashX+textdraw.GlyphW, corpsMoraleX)
+	}
+	// 六槽的數字 4 位到 608，落在視窗（右緣 640）內。
+	if right := corpsSlotValueX + corpsSlotDigits*textdraw.HalfW; right > corpsWinX+corpsWinW {
+		t.Errorf("槽的兵力到 %d，超出視窗右緣 %d", right, corpsWinX+corpsWinW)
+	}
+	// 這個視窗與自勢力情報是同一格——原版就是蓋上去的。
+	if corpsWinX != strategySidebarX || corpsWinY != strategyFactionY ||
+		corpsWinW != strategySidebarW || corpsWinH != strategyFactionH {
+		t.Errorf("軍團情報 (%d,%d,%d,%d) 與自勢力情報 (%d,%d,%d,%d) 不同格",
+			corpsWinX, corpsWinY, corpsWinW, corpsWinH,
+			strategySidebarX, strategyFactionY, strategySidebarW, strategyFactionH)
+	}
+}

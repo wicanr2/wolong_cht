@@ -3060,3 +3060,34 @@ func TestMarchWritesOrderedTargetIntoSave(t *testing.T) {
 		t.Fatalf("存檔 +0x14÷8 = %d，應該是目的地 %d", u16(r, 0x14)/8, dest)
 	}
 }
+
+// 空槽在原版的兵種欄是 **4**，不是「兵種 0 而人數 0」。
+//
+// 兩個地方靠這個值：`sub_14717` 退兵時看到 4 就跳過，兩個情報視窗取
+// 兵種圖示時 `(兵種−1)×0xC0` 也要算到第四張（docs/re/51 §4）。
+// 先前 remake 把沒編兵的槽留成騎馬，寫回存檔就變成一支「騎馬空隊」。
+func TestFormCorpsMarksEmptySlots(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[0]
+	leader := w.Factions[f].Lord
+	w.Factions[f].Reserves = [economy.NumTroopTypes]int{100, 0, 0}
+
+	var kinds [army.Positions]army.TroopType
+	manned := [army.Positions]bool{true}
+	if err := w.FormCorps(leader, kinds, manned); err != nil {
+		t.Fatalf("編成失敗：%v", err)
+	}
+	c := w.Corps[leader]
+	if c.Units[0].Men != 100 || c.Units[0].Kind != army.Cavalry {
+		t.Fatalf("主將槽 = %+v，want 100 點騎馬", c.Units[0])
+	}
+	for k := 1; k < army.Positions; k++ {
+		if c.Units[k].Men != 0 || c.Units[k].Kind != EmptySlotKind {
+			t.Errorf("第 %d 槽 = %+v，want 空槽（兵種 %d）", k, c.Units[k], EmptySlotKind)
+		}
+	}
+	// 寫回存檔時是 1-based 的 4。
+	if got := byteFromKind(EmptySlotKind); got != 4 {
+		t.Errorf("空槽寫回 = %d，want 4", got)
+	}
+}

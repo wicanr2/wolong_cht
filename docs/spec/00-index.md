@@ -64,6 +64,7 @@
 | 財政視窗 | [`14-finance-window.md`](14-finance-window.md) | 版面已照原版重寫；數值輸入器未接 |
 | 軍團編成視窗 | [`22-corps-formation-window.md`](22-corps-formation-window.md) | 版面已照原版重寫；頭像與滑鼠未接 |
 | 據點情報視窗 | [`23-city-info-window.md`](23-city-info-window.md) | 版面已照原版實作 |
+| 軍團情報視窗 | [`24-corps-info-window.md`](24-corps-info-window.md) | 版面已照原版實作；指令流程未接 |
 | remake 原生存檔格式 | [`20-save-format.md`](20-save-format.md) | 已接進遊戲並驗過；**只差放回 DOSBox 實測** |
 | 同狀態畫面對拍 | [`90-same-state-parity.md`](90-same-state-parity.md) | 橫幅已對過；**四窗全開的整體對拍還沒跑** |
 

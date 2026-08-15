@@ -110,6 +110,7 @@
 | [`docs/re/48-window-display-list.md`](re/48-window-display-list.md) | 48 — 視窗內容是一份顯示清單，不是一張圖 | 清單的位置、記錄格式、場景切分、opcode 值域（1–9）、十個場景與 op 09 的圖庫來源全部解出來了。圖庫段… | 2026-08-15 |
 | [`docs/re/49-corps-formation-window.md`](re/49-corps-formation-window.md) | 49 — 軍團編成視窗的版面與動態層 | 視窗矩形、靜態層、六個槽的圖示與數字、四個顯示值的來源與座標 全部解出來了。op 04 的語意仍未解（§6）。 | 2026-08-15 |
 | [`docs/re/50-city-info-window.md`](re/50-city-info-window.md) | 50 — 據點情報視窗，以及據點 +0x16 高 4 位的用途 | 視窗矩形、靜態層、五個顯示值的來源與座標、左半那張 96×96 圖的 出處全部解出來了。⭐ 據點 +0x16 的高 … | 2026-08-15 |
+| [`docs/re/51-corps-info-window.md`](re/51-corps-info-window.md) | 51 — 軍團情報視窗（顯示清單場景 4） | 視窗矩形、靜態層、九個顯示值的座標與來源全部解出來了。 ⭐ 這個視窗畫空槽時會取到 | 2026-08-15 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-13 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -126,6 +127,7 @@
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面已照原版重寫並有契約測試； 武將頭像與滑鼠點擊仍缺（§5）。 | 2026-08-15 |
 | [`docs/spec/23-city-info-window.md`](spec/23-city-info-window.md) | 23 — 據點情報視窗 | CONFORMED。版面已照原版實作並有契約測試。 | 2026-08-15 |
+| [`docs/spec/24-corps-info-window.md`](spec/24-corps-info-window.md) | 24 — 軍團情報視窗 | CONFORMED。版面已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | READY。管線的每一段都有現成工具，缺的是把它們接起來 與一支逐區差分工具。 | 2026-08-15 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）

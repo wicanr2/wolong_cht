@@ -183,6 +183,10 @@ type game struct {
 	// 按右鍵關掉。
 	cityInfo cityInfoState
 
+	// corpsInfo 是軍團情報視窗的狀態（docs/spec/24）。它蓋在自勢力情報
+	// 那一格上——原版就是同一個矩形。
+	corpsInfo corpsInfoState
+
 	// 進言的狀態機：選指令 → 選對象 → 說服。
 	advise    adviseStage
 	adviseCmd persuasion.Command
@@ -453,6 +457,11 @@ func (g *game) Update() error {
 		g.updateCityInfo()
 		return nil
 	}
+	// 軍團情報視窗是模態的，優先吃輸入。
+	if g.corpsInfo.active {
+		g.updateCorpsInfo()
+		return nil
+	}
 	// 自然策略頂端八格只在沒有 active modal／戰鬥／啟動器時接收滑鼠。
 	// 上面的 return 順序是輸入隔離閘；winSystem 是唯一非 resident 的原生
 	// 視窗，也必須阻止命令列點擊穿透。游標 hover 不改狀態，因為目前沒有
@@ -690,6 +699,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 	g.drawForm(screen)
 	g.drawFinance(screen)
 	g.drawCityInfo(screen)
+	g.drawCorpsInfo(screen)
 	g.drawAdvise(screen)
 	g.drawSaveUI(screen)
 	if choice := g.world.PendingEncounter(); choice != nil {

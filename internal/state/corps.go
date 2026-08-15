@@ -157,6 +157,11 @@ func (w *World) saveCorps(b []byte) {
 }
 
 // 兵種在檔案裡是 1-based（`sub_14F8A` 直接寫 3 表示步兵，docs/re/09 §7）。
+// EmptySlotKind 是「這個編成位置沒有兵」。原版的兵種欄寫 **4**
+// （`sub_14717` 掃到 4 就跳過，`docs/re/30` §4），而 remake 的
+// TroopType 是 0-based，所以是 3。
+const EmptySlotKind = army.TroopType(3)
+
 func kindFromByte(v byte) army.TroopType {
 	if v == 0 {
 		return army.Cavalry
@@ -177,11 +182,6 @@ const (
 	IntervalMixed   = 3
 )
 
-// FormCorps 編成一支軍團（原版 `sub_16F26`）。
-//
-// leader 是帶兵的武將編號，units 是六個位置的兵種（空位傳 -1 的槽用
-// men[k] == 0 表示）。兵從勢力的預備兵扣，一個位置固定 1,000 人。
-//
 // MaxMenPerSlot 是一個編成槽的兵力上限，單位是**點**（一點 10 人）。
 // 原版 `sub_14698` 的 `cmp ax, 64h`，而槽位本身也只有 1 byte。
 const MaxMenPerSlot = 100
@@ -239,6 +239,12 @@ func distributeReserves(pool *[economy.NumTroopTypes]int,
 	return out
 }
 
+// FormCorps 編成一支軍團（原版 `sub_16F26`）。
+//
+// leader 是帶兵的武將編號，kinds 是六個位置的兵種，manned 標哪幾個位置要有兵。
+// **兵力不由呼叫端決定**：照 `sub_14698` 從勢力的預備兵池分配
+// （docs/spec/21 §2），池裡有多少就分多少。
+//
 // 照原版的順序：武將標成出陣中、軍團繼承勢力的士氣基準、
 // 位置設在首都、勢力的軍團數 +1。
 func (w *World) FormCorps(leader int, kinds [army.Positions]army.TroopType,
@@ -290,6 +296,10 @@ func (w *World) FormCorps(leader int, kinds [army.Positions]army.TroopType,
 	allCav := false
 	for k, ok := range manned {
 		if !ok || men[k] == 0 {
+			// **空槽在原版是兵種 4**，不是「兵種 0 而人數 0」
+			// （`sub_14717` 看到 4 就跳過，docs/re/30 §4）。
+			// 寫回存檔與畫面取圖都靠這個值，不能留成騎馬。
+			c.Units[k] = combat.Unit{Kind: EmptySlotKind}
 			continue
 		}
 		c.Units[k] = combat.Unit{Men: men[k], Kind: kinds[k]}
