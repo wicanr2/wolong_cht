@@ -23,8 +23,8 @@
 | 程式碼理解 | 190 | 184 | 6 | 0 |
 | 驗收 | 21 | 16 | 5 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 56 | 53 | 3 | 0 |
-| **合計** | **388** | 372 | 15 | 1 |
+| 其他 | 57 | 54 | 3 | 0 |
+| **合計** | **389** | 373 | 15 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -383,7 +383,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（56 條）
+## 2.6 其他（57 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -436,7 +436,8 @@
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 事件佇列 | 這一輪不進 JSON。編輯器要動它得先有 UI 語意 | 靜態 |
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 未解區域 | `+0x1EC0` 那 7 KB 仍是黑盒，只能靠改寫保留 | 靜態 |
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 編輯器 | 這一份只做資料層。UI 是另一份規格 | 靜態 |
-| [`spec/29-audio.md`](../spec/29-audio.md) | 曲號 ↔ 場景 | `KI.EXE` 哪裡放哪一首還沒對過（`re/23` §5） | 靜態 |
+| [`spec/29-audio.md`](../spec/29-audio.md) | 曲號 ↔ 場景 | `KI.EXE` 哪裡放哪一首還沒對過（`re/23` §5）。⚠ `cmd/wlgame` 目前的對應**只有開場那一首有證據**（`playtest/26`），其餘是 remake 的選擇，寫在 `musicTrack` 的註解裡。**解出來之前不要把它寫進機制文件** | 靜態 |
+| [`spec/29-audio.md`](../spec/29-audio.md) | 找法 | 曲子由 INT 61h `AH=0x06` 交出 `DS:SI` 決定（`re/23` §1），所以要掃 `KI.EXE` 裡設這個指標的呼叫端 | 靜態 |
 | [`spec/29-audio.md`](../spec/29-audio.md) | 迴圈點怎麼呈現 | 原版靠控制事件 `C1`／`C3` 無限循環；ogg 是有限長度，要決定渲染幾輪或另存迴圈點 | 靜態 |
 | [`spec/29-audio.md`](../spec/29-audio.md) | 全域音量偏移 | `cs:0996h` 誰設、範圍多少未解（`re/57` §8） | 靜態 |
 | [`spec/29-audio.md`](../spec/29-audio.md) | PC-98 版 | 音源是 YM2203，暫存器路徑完全沒讀。要不要做是待裁定的問題 | 靜態 |

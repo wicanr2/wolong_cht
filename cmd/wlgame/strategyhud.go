@@ -446,6 +446,8 @@ func (g *game) dispatchSystemRow(row int, left bool) {
 		g.adjustSpeed(false, delta)
 	case sysRowTacticalSpeed:
 		g.adjustSpeed(true, delta)
+	case sysRowSound:
+		g.toggleSound()
 	case sysRowSave:
 		g.beginSaveUI(saveWrite)
 	case sysRowQuit:
@@ -472,6 +474,29 @@ func sysRowRect(k int) image.Rectangle {
 	return image.Rect(sysValueX, y, sysValueX+sysValueW, y+sysValueH)
 }
 
+// soundValue 是系統選單第 3 列的值。
+//
+// **沒有音檔時顯示「未接入」而不是「關」**——那是兩件事：
+// 「關」是玩家的選擇，「未接入」是玩家還沒跑過 `tools/bgm2ogg.sh`。
+// 混成同一個字會讓缺口從畫面上消失（`docs/spec/29` §5）。
+func (g *game) soundValue() string {
+	switch {
+	case !g.sound.Available():
+		return "未接入"
+	case g.sound.Enabled():
+		return "　開　"
+	default:
+		return "　關　"
+	}
+}
+
+func (g *game) toggleSound() {
+	if !g.sound.Available() {
+		return
+	}
+	g.sound.SetEnabled(!g.sound.Enabled())
+}
+
 // drawSystemWindow 畫系統選單（docs/spec/13 §2.6）。
 //
 // 原版第 1 列與第 6 列的值是清單裡就寫死的「 ＯＫ 」，中間四列由程式填。
@@ -485,7 +510,7 @@ func (g *game) drawSystemWindow(dst *ebiten.Image) {
 	g.td.Draw(dst, "　系　 統　 選　 單　", sysTitleX, sysTitleY, ink)
 	vector.DrawFilledRect(dst, sysRuleX, sysRuleY, sysRuleW, 1, ink, false)
 
-	values := [sysRows]string{"　ＯＫ　", "TYPE 1", "未接入",
+	values := [sysRows]string{"　ＯＫ　", "TYPE 1", g.soundValue(),
 		fmt.Sprintf("%d", g.speed), fmt.Sprintf("%d", g.tacticalSpeed), "　ＯＫ　"}
 	for k := 0; k < sysRows; k++ {
 		dy := k * sysRowStep

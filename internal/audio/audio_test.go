@@ -169,3 +169,55 @@ func TestFourOpSecondChannelIsNotMixedTwice(t *testing.T) {
 		t.Errorf("NEW 關掉後通道 0 應該只有兩個 operator，卻有 %d 個", len(ops))
 	}
 }
+
+// `SOUND.DAT` 要整除 16，而且接續鏈都要收得回來。
+//
+// 鏈結指到 0 是結束（記錄 #0 是靜音哨兵），指到自己或超出範圍就是解錯了。
+func TestEffectChainsTerminate(t *testing.T) {
+	list, err := Effects(loadOriginal(t, "SOUND.DAT"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(list) != 19 {
+		t.Errorf("SOUND.DAT 有 %d 筆，`docs/re/57` §6 記的是 19 筆", len(list))
+	}
+	if !list[0].Silent() {
+		t.Error("記錄 #0 應該是靜音哨兵（TL 兩個 0x3F）")
+	}
+	for i := 1; i < len(list); i++ {
+		seen := map[int]bool{}
+		for cur := i; ; {
+			if seen[cur] {
+				t.Fatalf("音效 %d 的接續鏈繞回 %d", i, cur)
+			}
+			seen[cur] = true
+			next := list[cur].Next()
+			if next == 0 {
+				break
+			}
+			if next >= len(list) {
+				t.Fatalf("音效 %d 接到不存在的 %d", cur, next)
+			}
+			cur = next
+		}
+	}
+}
+
+// 渲染一筆有接續鏈的音效要出得了聲、而且會衰減完。
+func TestRenderEffectDecays(t *testing.T) {
+	list, err := Effects(loadOriginal(t, "SOUND.DAT"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	pcm, err := RenderEffect(list, int(0x0C), 1.0) // 普通投射物發射（`docs/re/17` §3）
+	if err != nil {
+		t.Fatal(err)
+	}
+	seg := SegmentRMS(pcm, 4)
+	if seg[0] < 1e-3 {
+		t.Errorf("音效開頭沒聲音（RMS %.6f）", seg[0])
+	}
+	if seg[3] > seg[0]/4 {
+		t.Errorf("音效尾端 RMS %.6f 沒有明顯衰減（開頭 %.6f）", seg[3], seg[0])
+	}
+}

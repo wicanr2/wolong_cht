@@ -206,6 +206,7 @@ func (b *Battle) launchNormalProjectile(side int, s, e *Soldier) {
 	}
 	direction := attackDirection(s.X, s.Y, e.X, e.Y)
 	z := s.Z + 1
+	b.emitSFX(SFXNormalLaunch)
 	b.projectiles = append(b.projectiles, projectile{
 		side: side, x: stepProjectileX(s.X, direction), y: stepProjectileY(s.Y, direction), z: z,
 		tx: e.X, ty: e.Y, tz: e.Z, power: arrowPower,
@@ -251,6 +252,7 @@ func (b *Battle) launchSpecialProjectile(side int, s, e *Soldier) {
 	if !inBounds(x, y) {
 		return
 	}
+	b.emitSFX(SFXSpecialLaunch)
 	b.projectiles = append(b.projectiles, projectile{
 		side: side, x: x, y: y, z: s.Z + 1,
 		tx: e.X, ty: e.Y, tz: e.Z, power: specialProjectilePower,
@@ -294,6 +296,7 @@ func (b *Battle) stepProjectiles() {
 		// 原版 `sub_1B97E` 先讀目前的 +0x10；命中或撞到障礙時
 		// 都不應先把飛道具移到下一格。
 		if hitSoldier := b.soldierAt(1-p.side, p.x, p.y, p.z); hitSoldier != nil {
+			b.emitSFX(SFXProjectileHit)
 			b.hitByArrow(p.side, hitSoldier, p.power)
 			continue
 		}

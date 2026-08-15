@@ -18,6 +18,11 @@ import (
 const (
 	// ISR 的頻率：PIT divisor 256（`docs/re/57` §5）。
 	isrHz = 1193182.0 / 256.0
+	// ⭐ 音量漸變與音效鏈**不是**走音樂 tick，它們掛在 INT 1Ch 上，
+	// 而 TSR 每 16 次 ISR 才鏈一次原本的 INT 8（`docs/re/57` §5）。
+	// 音樂 tick 的速率跟著速度事件變，這一條不變——混在一起會讓
+	// 漸變的快慢隨曲速跑掉。
+	slowTickDiv = 16
 
 	trackCount = 6
 	// 未使用的聲軌一律指到這個 stub。
@@ -135,6 +140,7 @@ type Player struct {
 
 	tempoDiv int // cs:0B68 — ISR 的分頻值
 	isrLeft  int
+	slowLeft int // INT 1Ch 的分頻（固定 16）
 	Flag     uint8 // cs:0999 — 給遊戲讀的同步旗標
 
 	// Done 在所有聲軌都跑到資料尾端時變 true。原版靠控制事件無限循環，
@@ -144,7 +150,8 @@ type Player struct {
 
 // NewPlayer 準備一首曲子。晶片會照原版的初始化順序設好。
 func NewPlayer(song *Song, tbl *Tables, chip *OPL3) *Player {
-	p := &Player{song: song, tbl: tbl, chip: chip, tempoDiv: 1, isrLeft: 1}
+	p := &Player{song: song, tbl: tbl, chip: chip, tempoDiv: 1, isrLeft: 1,
+		slowLeft: slowTickDiv}
 	// 原版初始化（`docs/re/57` §1）：先開 NEW 再開六對 4-operator。
 	chip.Write(1, 0x05, 0x01)
 	chip.Write(1, 0x04, 0x3F)
@@ -274,6 +281,13 @@ func clampVolume(v int) uint8 {
 
 // ISR 走一步。回傳 true 表示這一步真的推進了音樂（不是被分頻擋掉）。
 func (p *Player) isr() bool {
+	p.slowLeft--
+	if p.slowLeft <= 0 {
+		p.slowLeft = slowTickDiv
+		for i := range p.tracks {
+			p.advanceFade(i)
+		}
+	}
 	p.isrLeft--
 	if p.isrLeft > 0 {
 		return false
@@ -286,7 +300,6 @@ func (p *Player) isr() bool {
 // tick 是音樂的一步：每軌各自倒數，歸零才處理事件。
 func (p *Player) tick() {
 	for i := 0; i < trackCount; i++ {
-		p.advanceFade(i)
 		t := &p.tracks[i]
 		if !t.live {
 			continue

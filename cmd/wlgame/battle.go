@@ -197,6 +197,11 @@ func (g *game) updateBattle() {
 		for i := 0; i < n && !b.Done; i++ {
 			b.Step()
 		}
+		// 規則層把原版的效果碼排隊，播放在這裡（docs/re/17 §3）。
+		// 碼就是 `SOUND.DAT` 的記錄編號，不必另外對照表。
+		for _, code := range b.TakeSoundEffects() {
+			g.sound.PlayEffect(int(code))
+		}
 		g.tickBattleTalk(n)
 		return
 	}

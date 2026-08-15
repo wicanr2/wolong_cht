@@ -54,6 +54,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
+	"github.com/wicanr2/wolong_cht/internal/ui/sound"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
@@ -134,6 +135,11 @@ type game struct {
 	speed         int // 戰略速度
 	tacticalSpeed int // 戰術速度
 	speedToast    int // 剛調過速度時在戰場浮一行提示，剩幾幀
+
+	// sound 是音訊播放層。**音檔不隨發行包散布**——玩家自己跑
+	// `tools/bgm2ogg.sh` 從原版產生（docs/spec/29 §5、§6）。
+	// 沒有音檔時 Bank 的每個方法都是 no-op，所以呼叫端不必判斷。
+	sound *sound.Bank
 
 	// idleGate 對應松崗繁中版 sub_11F7F 的「游標座標未變」判定。
 	// 它是讓自然世界迴圈開始的 UI 閘門；事件 queue 的 consumer 仍在
@@ -344,6 +350,36 @@ func (g *game) drawList(screen *ebiten.Image) {
 
 func pressed(k ebiten.Key) bool { return inpututil.IsKeyJustPressed(k) }
 
+// updateMusic 依畫面狀態換背景音樂。
+//
+// ⚠ **只有開場那一首有證據**：`D7OPEN.EXE` 執行時錄到的音訊，
+// 頻譜與 `OPENBGM.DAT` 的渲染對得上（docs/playtest/26）。
+// 其餘三個對應是 **remake 的選擇**——`BGM.DAT` 的 11 首哪一首配哪個場景
+// 還沒對過（docs/re/23 §5）。檔名證據只能支持 `ENDBGM`／`OVERBGM`
+// 是結局與敗亡，那是二手推論。解出來之前不要把這張表寫進機制文件。
+func (g *game) musicTrack() string {
+	switch {
+	case g.launcher != nil:
+		return "openbgm-0"
+	case g.world == nil:
+		return ""
+	case g.world.Outcome() != state.InProgress:
+		// 規則層目前只有敗北（`internal/state/outcome.go`），所以
+		// `ENDBGM`（結局）還沒有地方接——**不要為了用上它而編一個勝利條件**。
+		return "overbgm-0"
+	case g.battleActive():
+		return "bgm-1"
+	default:
+		return "bgm-0"
+	}
+}
+
+func (g *game) updateMusic() {
+	if name := g.musicTrack(); name != "" {
+		g.sound.PlayMusic(name)
+	}
+}
+
 func (g *game) Update() error {
 	g.frame++
 	// 截圖模式要等 Draw 真正取到像素後才結束；只用 `frame > shotAt`
@@ -382,6 +418,7 @@ func (g *game) Update() error {
 		g.quitting, g.quitYes = true, false // 預設停在 ＮＯ
 		return nil
 	}
+	g.updateMusic()
 	if g.launcher != nil {
 		return g.updateLauncher()
 	}
@@ -986,6 +1023,7 @@ func main() {
 	player := flag.Int("player", 0, "玩家所仕的勢力編號（直接啟動／驗收用）")
 	directStart := flag.Bool("direct", false, "跳過一般玩家啟動殼層，直接啟動指定劇本／玩家（驗收用）")
 	fontDir := flag.String("font", "workplace/eten", "倚天點陣字目錄（請自備）")
+	audioDir := flag.String("audio", "workplace/audio", "ogg 音檔目錄（自己用 tools/bgm2ogg.sh 產生）")
 	speed := flag.Int("speed", 4, "戰略速度：每個畫面更新推進幾個遊戲 tick")
 	tacticalSpeed := flag.Int("tactical-speed", 4, "戰術速度：戰場每個畫面更新推進幾幀")
 	seed := flag.Int("seed", -1, "驗收用固定亂數種子；負值時照原版以時鐘播種")
@@ -1044,7 +1082,10 @@ func main() {
 	g := &game{lib: lib, rng: gameRNG, speed: *speed, tacticalSpeed: *tacticalSpeed,
 		td: textdraw.New(font, ascii),
 		shotPath: *shot, shotAt: *shotFrames, origDir: *dir, sourceFile: path,
-		saveFile: *saveFile, saveBase: path}
+		saveFile: *saveFile, saveBase: path, sound: sound.Open(*audioDir)}
+	if !g.sound.Available() {
+		log.Printf("音檔目錄 %s 沒有 ogg，靜音跑。要有音樂請跑 tools/bgm2ogg.sh", *audioDir)
+	}
 	// 四個常駐視窗**預設全關**，這是原版數值：新遊戲流程的最後一行是
 	// `sub_11A6E` 的 `mov cs:byte_198A6, 0`（docs/re/47 §3.3），
 	// PC-98 實跑進到主畫面看到的也正是滿版地圖。玩家自己點橫幅右側

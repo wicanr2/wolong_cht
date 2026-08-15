@@ -1,7 +1,7 @@
 # 29 — 音樂與音效
 
-**狀態：READY。⭐ 原版側全解了**——事件編碼、控制事件、音色、音量、速度、
-晶片型號、`SOUND.DAT` 都有出處（§1）。剩下的是 remake 這一側的實作。**
+**狀態：CONFORMED（音樂與音效都會出聲，並與原版錄音比對過）。
+剩「哪一首配哪個場景」未解（§8），那一項擋不住播放。**
 
 - 日期：2026-08-15
 - 出處：[`docs/re/56`](../re/56-bgm-track-events.md)（事件與控制事件）、
@@ -28,8 +28,11 @@
 | 音色記錄（32 B）與音量換算 | ✅ [`re/57`](../re/57-opl3-register-map.md) §3–§4 |
 | 時間基準（PIT 256 → 4661.65 Hz、速度分頻）| ✅ [`re/57`](../re/57-opl3-register-map.md) §5 |
 | `SOUND.DAT`（19 × 16 B，含接續鏈）| ✅ [`re/57`](../re/57-opl3-register-map.md) §6 |
-| OPL3 合成核心 | ⬜ 要寫（§3）|
-| ogg 匯出與播放層 | ⬜ 要寫（§4–§5）|
+| OPL3 合成核心 | ✅ `internal/audio/opl3.go` |
+| 事件 → 暫存器序列 | ✅ `internal/audio/bgm.go`、`effect.go` |
+| 離線渲染 → ogg | ✅ `cmd/wlaudio` ＋ `tools/bgm2ogg.sh` |
+| remake 播放層 | ✅ `internal/ui/sound` ＋ 系統選單第 3 列 |
+| 驗證 | ✅ 與原版錄音比對（[`docs/playtest/26`](../playtest/26-bgm-render-vs-recording.md)）|
 
 ⭐ **晶片是 OPL3（YMF262）不是 OPL2。** 初始化寫了 `0x105`（NEW）與
 `0x104 = 0x3F`（六對 4-operator 通道全開），這兩個暫存器 OPL2 沒有。
@@ -80,12 +83,16 @@ BGM.DAT ─┬─ 容器索引 ─→ 曲塊
 
 ## 4. 離線渲染
 
-一支新的 `cmd/` 工具（名稱待定）：
+`cmd/wlaudio`：
 
 ```
-輸入：BGM.DAT ＋ 曲號 ＋ YNSOUND.COM（三張查表在 TSR 裡，不在資料裡）
-輸出：PCM ＋ 中介資料（暫存器序列、每軌事件、迴圈點）
+tools/bgm2ogg.sh                    # 14 首全做
+tools/bgm2ogg.sh OPENBGM.DAT 0      # 只做一首
+tools/go.sh run ./cmd/wlaudio -sound workplace/orig/dosv/SOUND.DAT -out workplace/audio/sfx
 ```
+
+Go 這邊沒有 vorbis 編碼器，所以 WAV → ogg 走 docker ffmpeg。
+**中介的 WAV 留著**：它是「合成對不對」與「編碼對不對」的分界。
 
 **三張查表一定要從 `YNSOUND.COM` 讀進來，不准寫死在程式裡**——
 那是原版資料，寫進去等於 commit 原版內容（`CLAUDE.md` §9），
@@ -101,7 +108,8 @@ BGM.DAT ─┬─ 容器索引 ─→ 曲塊
 | 檔案來源 | **玩家自己從原版產生**（§6）|
 | 缺檔案時 | 靜音跑，系統選單顯示「未接入」——**不要 fallback 到自製音樂** |
 | 開關 | 系統選單第 3 列（`cmd/wlgame/strategyhud.go` 的 `sysRowSound`）|
-| 音效 | `SOUND.DAT` 的 19 筆同樣離線渲染成短 ogg，接續鏈在渲染時攤平 |
+| 音效 | `SOUND.DAT` 的 19 筆離線渲染成短 ogg（`sfx-NN.ogg`），接續鏈在渲染時攤平 |
+| 效果碼怎麼來 | 規則層排隊（`tactical.Battle.TakeSoundEffects`），呈現層播。**碼就是 `SOUND.DAT` 的記錄編號**，不必另外對照表。已接的三個是原版證實的投射物發射／特殊發射／命中（[`docs/re/17`](../re/17-dosv-audio-tsr.md) §3）|
 
 ## 6. `[HARD]` 權利邊界
 
@@ -122,7 +130,8 @@ PCM、WAV 與 ogg 都是**原版衍生物**：`workplace/` 已 gitignore，
 
 | 項目 | 現況 |
 |---|---|
-| 曲號 ↔ 場景 | `KI.EXE` 哪裡放哪一首還沒對過（[`re/23`](../re/23-bgm-resource-format.md) §5）|
+| 曲號 ↔ 場景 | `KI.EXE` 哪裡放哪一首還沒對過（[`re/23`](../re/23-bgm-resource-format.md) §5）。⚠ `cmd/wlgame` 目前的對應**只有開場那一首有證據**（[`playtest/26`](../playtest/26-bgm-render-vs-recording.md)），其餘是 remake 的選擇，寫在 `musicTrack` 的註解裡。**解出來之前不要把它寫進機制文件** |
+| 找法 | 曲子由 INT 61h `AH=0x06` 交出 `DS:SI` 決定（[`re/23`](../re/23-bgm-resource-format.md) §1），所以要掃 `KI.EXE` 裡設這個指標的呼叫端 |
 | 迴圈點怎麼呈現 | 原版靠控制事件 `C1`／`C3` 無限循環；ogg 是有限長度，要決定渲染幾輪或另存迴圈點 |
 | 全域音量偏移 | `cs:0996h` 誰設、範圍多少未解（[`re/57`](../re/57-opl3-register-map.md) §8）|
 | PC-98 版 | 音源是 YM2203，暫存器路徑完全沒讀。要不要做是待裁定的問題 |

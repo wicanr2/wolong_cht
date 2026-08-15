@@ -140,7 +140,7 @@
 | [`docs/spec/26-yes-no-dialog.md`](spec/26-yes-no-dialog.md) | 26 — ＹＥＳ／ＮＯ 對話框 | CONFORMED。版面與命中算式已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 「自定」（軍師命名）還沒接（§5）。 | 2026-08-15 |
 | [`docs/spec/28-scenario-json.md`](spec/28-scenario-json.md) | 28 — 劇本的 JSON 匯出與匯入 | CONFORMED。四個區塊 round-trip 全過。 | 2026-08-15 |
-| [`docs/spec/29-audio.md`](spec/29-audio.md) | 29 — 音樂與音效 | READY。⭐ 原版側全解了 | 2026-08-15 |
+| [`docs/spec/29-audio.md`](spec/29-audio.md) | 29 — 音樂與音效 | CONFORMED（音樂與音效都會出聲，並與原版錄音比對過）。 剩「哪一首配哪個場景」未解（§8），那一項擋不住播放。 | 2026-08-15 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | READY。管線的每一段都有現成工具，缺的是把它們接起來 與一支逐區差分工具。 | 2026-08-15 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）

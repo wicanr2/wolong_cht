@@ -89,6 +89,23 @@ func Normalize(p *PCM, peak float64) float64 {
 	return gain
 }
 
+// Trim 砍掉尾端低於 threshold 的部分，至少留 pad 秒。
+//
+// 音效的殘響長短差很多，固定長度會讓短音效後面拖一整段靜音。
+func Trim(p *PCM, threshold float64, pad float64) *PCM {
+	last := 0
+	for i := range p.L {
+		if math.Abs(float64(p.L[i])) > threshold || math.Abs(float64(p.R[i])) > threshold {
+			last = i
+		}
+	}
+	end := last + int(pad*p.Rate)
+	if end >= len(p.L) {
+		return p
+	}
+	return &PCM{Rate: p.Rate, L: p.L[:end], R: p.R[:end], TickCount: p.TickCount}
+}
+
 // SegmentRMS 把 PCM 切成 n 段各算 RMS。
 //
 // **驗「不是靜音」一定要分段**：只渲染到片頭的話後段是 0，

@@ -136,6 +136,11 @@ type Battle struct {
 	// projectiles 是飛在空中的箭。原版是一張 32 筆的表（docs/re/11 §5.1）。
 	projectiles []projectile
 
+	// sfx 是這一輪要送給音源 TSR 的效果碼。原版走 INT 61h `AH=0x05`、
+	// `AL=`效果碼（docs/re/17 §3），碼本身就是 `SOUND.DAT` 的記錄編號
+	// （docs/re/57 §6）。規則層只排隊、不播——**它不認識畫面也不認識喇叭**。
+	sfx []uint8
+
 	// siegeTick 是攻城方大將體力遞減的計時器。
 	siegeTick int
 
@@ -165,6 +170,37 @@ type projectile struct {
 	previousX, previousY, previousZ int
 	heightFP                        int
 	velocityFP                      int
+}
+
+// 原版已證實的三個戰術效果碼（docs/re/17 §3）。
+const (
+	SFXSpecialLaunch uint8 = 0x0A // sub_1AD7F 特殊投射物發射
+	SFXProjectileHit uint8 = 0x0B // sub_1B97E 投射物命中
+	SFXNormalLaunch  uint8 = 0x0C // sub_1AD2D 普通投射物發射
+)
+
+func (b *Battle) emitSFX(code uint8) {
+	if b == nil {
+		return
+	}
+	// 同一幀重複的碼只留一個：原版一次只送一個 code 給 TSR，
+	// 而 TSR 只有三個 2-operator 通道（docs/re/57 §2）。
+	for _, c := range b.sfx {
+		if c == code {
+			return
+		}
+	}
+	b.sfx = append(b.sfx, code)
+}
+
+// TakeSoundEffects 取走並清空這一輪排隊的效果碼。
+func (b *Battle) TakeSoundEffects() []uint8 {
+	if b == nil || len(b.sfx) == 0 {
+		return nil
+	}
+	out := b.sfx
+	b.sfx = nil
+	return out
 }
 
 // ProjectileView 是畫面層可讀的飛道具快照；不暴露規則層的可變記錄。

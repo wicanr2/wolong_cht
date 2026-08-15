@@ -5,7 +5,7 @@
 #   tools/bgm2ogg.sh BGM.DAT 0             # 只做一首
 #   SECONDS_PER_SONG=120 tools/bgm2ogg.sh  # 改長度
 #
-# 兩段路：`cmd/wlbgm`（純 Go，OPL3 合成 → WAV）＋ docker ffmpeg（WAV → ogg）。
+# 兩段路：`cmd/wlaudio`（純 Go，OPL3 合成 → WAV）＋ docker ffmpeg（WAV → ogg）。
 # **Go 這邊沒有 vorbis 編碼器**，所以第二段一定要出去；這也是為什麼
 # 中介的 WAV 會留著——它是「合成對不對」與「編碼對不對」的分界。
 #
@@ -22,7 +22,7 @@ mkdir -p "$OUT"
 render() { # <資料檔> <曲號>
   local dat="$1" song="$2" base
   base="$(basename "$dat" .DAT | tr 'A-Z' 'a-z')-$song"
-  "$ROOT/tools/go.sh" run ./cmd/wlbgm \
+  "$ROOT/tools/go.sh" run ./cmd/wlaudio \
     -bgm "workplace/orig/dosv/$dat" -song "$song" \
     -seconds "$SECONDS_PER_SONG" -out "workplace/audio/$base.wav"
   docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
