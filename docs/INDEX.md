@@ -113,6 +113,7 @@
 | [`docs/re/51-corps-info-window.md`](re/51-corps-info-window.md) | 51 — 軍團情報視窗（顯示清單場景 4） | 視窗矩形、靜態層、九個顯示值的座標與來源全部解出來了。 ⭐ 這個視窗畫空槽時會取到 | 2026-08-15 |
 | [`docs/re/52-slot-select-window.md`](re/52-slot-select-window.md) | 52 — 四槽選擇視窗：新遊戲、讀取、儲存共用同一個 | 視窗矩形、靜態層、四個槽的內容與座標、三個標題、 「哪些槽不能選」的判定全部解出來了。⭐ 原版的「新遊戲」不是另一個… | 2026-08-15 |
 | [`docs/re/53-lord-select-window.md`](re/53-lord-select-window.md) | 53 — 君主選擇視窗（顯示清單場景 8） | 視窗矩形、靜態層、七個顯示值的座標與來源、兩個熱區的語意 全部解出來了。⭐ 「確定」在軍師還沒命名時會被導去「自定」… | 2026-08-15 |
+| [`docs/re/54-advisor-naming-window.md`](re/54-advisor-naming-window.md) | 54 — 軍師命名視窗（顯示清單場景 9，松崗版特有） | 視窗矩形、靜態層、九個熱區的位置與語意解出來了。 選字表的資料來源與翻頁邏輯未讀（§4）。 | 2026-08-15 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-13 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |

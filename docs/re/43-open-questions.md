@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 60 | 59 | 1 | 0 |
 | 資料保存 | 43 | 43 | 0 | 0 |
-| 程式碼理解 | 177 | 171 | 6 | 0 |
+| 程式碼理解 | 181 | 175 | 6 | 0 |
 | 驗收 | 14 | 11 | 3 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
 | 其他 | 45 | 42 | 3 | 0 |
-| **合計** | **357** | 343 | 13 | 1 |
+| **合計** | **361** | 347 | 13 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -139,7 +139,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（177 條）
+## 2.3 程式碼理解（181 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -302,7 +302,7 @@
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | `funcs_159C0` 的五筆內容 | 只確認是「擦除」對應表（`sub_1895D` 樣式 0），逐筆未 dump | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 開關圖示的圖形來源 | 五格 32×32 的圖從哪個圖庫來未讀 | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 原版執行期驗證 | **未做**。PC-98 oracle 上左鍵點這五格沒有反應（§6），原因未定 | 實測 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `08` 屬性 byte 的低位 | 高 byte 是調色盤索引（`0x0F` 一般、`0x09` 兩個資源標籤，與參考幀的白／金相符）；低 byte 固定 `0x03`，語意未讀 | 靜態 |
+| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `08` 屬性 byte 的低位 | 高 byte 是調色盤索引（`0x0F` 一般、`0x09` 兩個資源標籤，與參考幀的白／金相符）。低 byte 多數是 `0x03`，**但場景 9 的聲母列是 `0x01`**（`54` §3）——兩個值的差別未讀 | 靜態 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `sub_1E9A7(bl=0, ax=1800h, cx=2020h)` | `sub_1030F` 登記的第二件事，未讀 | 靜態 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | opcode `01`／`02` | 十個場景一次都沒用到，handler 未讀 | 靜態 |
 | [`re/49-corps-formation-window.md`](../re/49-corps-formation-window.md) | ？ | (279, 271) arg `00D8 00A8` / **04**，未解（§6） | 靜態 |
@@ -320,6 +320,10 @@
 | [`re/53-lord-select-window.md`](../re/53-lord-select-window.md) | 換勢力 | 這一支只顯示 `si` 指到的那一個勢力，**怎麼換下一個**在呼叫端 `sub_11AC3` 的迴圈裡，未讀 | 靜態 |
 | [`re/53-lord-select-window.md`](../re/53-lord-select-window.md) | `ds:5222h` | 軍師名字的位置（推測），配置端未讀 | 靜態 |
 | [`re/53-lord-select-window.md`](../re/53-lord-select-window.md) | `sub_18F6D`／`sub_18F7C` | 收尾與取消時擦除的兩支，未讀 | 靜態 |
+| [`re/54-advisor-naming-window.md`](../re/54-advisor-naming-window.md) | 選字表 | 十個聲母各自對應哪些候選字、資料在哪、怎麼翻頁——全部未讀。`sub_18FC9`（呼叫端）是入口 | 靜態 |
+| [`re/54-advisor-naming-window.md`](../re/54-advisor-naming-window.md) | 屬性低 byte | `01` 與 `03` 的差別未讀（§3） | 靜態 |
+| [`re/54-advisor-naming-window.md`](../re/54-advisor-naming-window.md) | 「別　號」 | 軍師除了名字還有別號，寫進哪裡未讀 | 靜態 |
+| [`re/54-advisor-naming-window.md`](../re/54-advisor-naming-window.md) | 「重來」「繼續」 | 三顆按鈕的 handler 未讀 | 靜態 |
 
 ## 2.4 驗收（14 條）
 
