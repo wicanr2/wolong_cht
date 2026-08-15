@@ -21,10 +21,10 @@
 | 規則正確性 | 60 | 59 | 1 | 0 |
 | 資料保存 | 43 | 43 | 0 | 0 |
 | 程式碼理解 | 190 | 184 | 6 | 0 |
-| 驗收 | 19 | 15 | 4 | 0 |
+| 驗收 | 21 | 16 | 5 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
 | 其他 | 56 | 53 | 3 | 0 |
-| **合計** | **386** | 371 | 14 | 1 |
+| **合計** | **388** | 372 | 15 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -334,7 +334,7 @@
 | [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | 曲號 ↔ 場景 | `KI.EXE` 的呼叫端還沒對過（`23` §5） | 靜態 |
 | [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | PC-98 側的音源程式設計 | 完全沒讀。YM2203 的暫存器路徑與音色版面都未解 | 靜態 |
 
-## 2.4 驗收（19 條）
+## 2.4 驗收（21 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -353,10 +353,12 @@
 | [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 原版執行期的開關行為 | **沒驗過**：模擬器上主畫面收不到點擊（`23` §4.1） | 靜態 |
 | [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 系統視窗的四個項目 | 存檔／畫面模式／音源／戰略速度，不在這一輪範圍 | 靜態 |
 | [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | 這個實驗**沒有**證明下面這些事。 | （未解小節內文） | 靜態 |
-| [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | **逐曲觸發** | 只錄到開場動畫（`D7OPEN.EXE` 自己會播）。11 首要逐首、可重現地觸發，得先解出 `YNSOUND.COM` 的播放 command——`../re/17` §2 只定案了 `AH=0x05`（效果）、`0x06`／`0x07`（載入資源）、`0x0A`（查旗標），**播放音樂那一個還沒有證據** | 靜態 |
+| [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | **逐曲觸發** | 只錄到開場動畫（`D7OPEN.EXE` 自己會播）。⚠ 這一項**不再擋住任何事**——音檔改由 `tools/bgm2ogg.sh` 離線渲染，不需要在模擬器裡逐首觸發。要當對照組才需要它 | 靜態 |
 | [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | **音效** | 戰術的三個 effect code 已知（`re/17` §3），但沒錄過 | 靜態 |
-| [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | **音量** | 峰值只有滿刻度的 4.7%。是 OPL 的音量設定還是遊戲本來就這樣，沒查 | 靜態 |
 | [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | **音源正確性** | DOSBox 用 `sbtype=sb16`／`oplmode=auto` 模擬，與真實硬體的音色差異沒有對照組 | 實測 |
+| [`playtest/26-bgm-render-vs-recording.md`](../playtest/26-bgm-render-vs-recording.md) | 音色的聽感 | 頻譜只驗了基頻。諧波結構（也就是「像不像那個音色」）沒有量化比對 | 靜態 |
+| [`playtest/26-bgm-render-vs-recording.md`](../playtest/26-bgm-render-vs-recording.md) | 相關係數為什麼不是 0.9 | DOSBox 的 OPL 模擬與這顆的包絡實作不同，加上錄音有系統噪訊。**沒有排除「還有小錯」的可能** | 實測 |
+| [`playtest/26-bgm-render-vs-recording.md`](../playtest/26-bgm-render-vs-recording.md) | 其他曲子 | 只有開場曲有錄音對照組。另外 13 首沒有 | 靜態 |
 
 ## 2.5 外部資料（18 條）
 

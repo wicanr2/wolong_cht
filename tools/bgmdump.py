@@ -10,9 +10,13 @@
 事件是 2 bytes 一筆，由 `YNSOUND.COM` 的 INT 8 播放引擎解譯
 （`docs/re/56` §2）。**三張查表在 TSR 裡不在資料裡**，所以要一起讀：
 
-    0x0AB0  長度表（高 byte & 0x7F → tick 數）
-    0x0AD0  B0 值表（低 byte → block ＋ F-Number 高 2 位）
-    0x0B50  A0 值表（低 4 位 → F-Number 低 8 位）
+    0x0AB0  長度表 32 筆（高 byte & 0x7F → tick 數）
+    0x0AD0  B0 值表 **128 筆**（整個低 byte → block ＋ F-Number 高 2 位）
+    0x0B50  A0 值表 16 筆（低 4 位 → F-Number 低 8 位）
+
+⚠ B0 表是 128 筆不是 32 筆——它用**整個**音符低 byte 當索引，
+八度 0–7 各佔 16 格。只讀前 32 筆的話八度 2 以上會全部退回低音域，
+而且聽起來仍然是「一首曲子」，只是低了幾個八度。
 
 ## 為什麼不把表寫死在工具裡
 
@@ -56,13 +60,13 @@ def control(lo, hi):
 
 def load_tables(path):
     com = open(path, "rb").read()
-    if len(com) < 0xB60:
+    if len(com) < TBL_A0 - 0x100 + 16:
         sys.exit("%s 太小（%d B），不像 YNSOUND.COM" % (path, len(com)))
 
     def at(com_off, n):
         return com[com_off - 0x100:com_off - 0x100 + n]
 
-    return at(TBL_LEN, 32), at(TBL_B0, 32), at(TBL_A0, 16)
+    return at(TBL_LEN, 32), at(TBL_B0, 128), at(TBL_A0, 16)
 
 
 def songs(data):
