@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 60 | 59 | 1 | 0 |
 | 資料保存 | 43 | 43 | 0 | 0 |
-| 程式碼理解 | 183 | 176 | 7 | 0 |
+| 程式碼理解 | 170 | 164 | 6 | 0 |
 | 驗收 | 14 | 11 | 3 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 26 | 23 | 3 | 0 |
-| **合計** | **344** | 329 | 14 | 1 |
+| 其他 | 25 | 23 | 2 | 0 |
+| **合計** | **330** | 317 | 12 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -139,7 +139,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（183 條）
+## 2.3 程式碼理解（170 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -311,21 +311,8 @@
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | 4 | 06 / (120,8) 48×15 / (560,208) / 未解 | 靜態 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | opcode `04`／`05`／`06` | handler 位址已知，語意未讀。`04` 成對出現且座標差 1 px | 靜態 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `08` 的屬性 byte | 場景 0 用 `0x0F`（一般）與 `0x09`（資金／預備兵那兩個標籤），語意未對過調色盤 | 靜態 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | **`09` 的圖庫段裝的是什麼** | `word_10D50` 是 `sub_100DF` 配的 6,656 B 緩衝，**沒找到誰把資料讀進去**。三個線索互相矛盾：`docs/formats/03` §5.4.1 推的「緩衝 0x0600 ↔ 段 3 0x14A0」換算後，場景 0 的四張圖落在段 3 0x20A0 起，解出來是雜訊；而段 3 *… | 靜態 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `sub_1E9A7(bl=0, ax=1800h, cx=2020h)` | `sub_1030F` 登記的第二件事，未讀 | 靜態 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | ICONGRF` 段 3（檔案 `0x9700`）**開頭就是一排 24×16 的圖示**， | （未解小節內文） | 靜態 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `0x0000` | 紅底的城門狀物 | 靜態 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `0x00C0` | 長槍 | 靜態 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `0x0180` | 紅旗 | 靜態 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `0x0240` | 城牆紋理 | 靜態 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `0x0300` | 弩／機械 | 靜態 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `0x03C0` | 白旗 | 靜態 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | **`0x0480`** | **馬頭（橙框）** | 靜態 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | **`0x0540`** | **弓兵（橙框）** | 靜態 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | **`0x0600`** | **步兵（橙框）** | 靜態 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | 圖示的**內容**已知（目視 ＋ 說明書截圖對照，強證據） | （未解小節內文） | 實測 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | 圖示在緩衝裡的**位址**已知（顯示清單，confirmed） | （未解小節內文） | 靜態 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | 兩者之間的對應**未知 | （未解小節內文） | 靜態 |
+| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | 十個場景對十一個呼叫端 | 有兩個呼叫端共用同一個場景，哪兩個未查 | 靜態 |
 
 ## 2.4 驗收（14 條）
 
@@ -369,7 +356,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（26 條）
+## 2.6 其他（25 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -387,7 +374,6 @@
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | `資金高位 >= 0x80` 那一支 | `cmp bh, 80h / jnb` 會直接算「答應」，等於資金超過約 840 萬時門檻失效。**看起來像有號數的邊界處理**，未逐位對過 | 靜態 |
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | 君主出陣之後的行為 | 那支軍團跟一般軍團有沒有差別，未讀 | 靜態 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 信賴度的呈現 | 原版是量條，remake 是數字。改成量條之前要先確定顏色與底圖，否則會畫出一條沒有背景的裸色塊 | 靜態 |
-| [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 四張 24×16 圖形 | 顯示清單指到圖庫位移 `0x1200`／`0x12C0`／`0x1380`／`0x1440`，內容還沒畫出來看；remake 目前用自繪的紅色方塊代替 | 實測 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 勢力色標 | 原版怎麼畫未讀（`sub_15CE0` 是小地圖的四色點，不是這一列） | 靜態 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | opcode `06` 與其他 10 個場景 | 顯示清單解得開但只讀了場景 0（`docs/re/48` §5） | 靜態 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝命令、`0x0Bh`／`0x10h`／`0x15h`／`0x1Fh` 各自出現在哪個視窗已知，完整值域未列 | 靜態 |

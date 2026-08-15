@@ -107,7 +107,7 @@
 | [`docs/re/45-corps-command-mode.md`](re/45-corps-command-mode.md) | 45 — 軍團的三種指令模式：戰鬥指揮／委任／解體 | 軍團 +0x00 位元 2 定案 ＝ | 2026-08-14 |
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |
 | [`docs/re/47-main-screen-window-registry.md`](re/47-main-screen-window-registry.md) | 47 — 主畫面的四個常駐視窗：開關、位元集與各自的矩形 | 四個常駐視窗的開關熱區、位元集、分派表與四個視窗各自的像素矩形 全部 confirmed。繪圖／熱區常式的參數對應（… | 2026-08-15 |
-| [`docs/re/48-window-display-list.md`](re/48-window-display-list.md) | 48 — 視窗內容是一份顯示清單，不是一張圖 | 清單的位置、記錄格式、場景切分、opcode 值域（1–9）與十個場景 全部解出來了。每個場景對到哪個視窗由字串內容… | 2026-08-15 |
+| [`docs/re/48-window-display-list.md`](re/48-window-display-list.md) | 48 — 視窗內容是一份顯示清單，不是一張圖 | 清單的位置、記錄格式、場景切分、opcode 值域（1–9）、十個場景與 op 09 的圖庫來源全部解出來了。圖庫段… | 2026-08-15 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-13 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -124,7 +124,7 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 148 條。**要查「這件事解了沒」先看這裡**，
+共 149 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（79 條）
@@ -242,7 +242,7 @@
 | 連結記錄（16 byte） ▸ +0x0E | `docs/re/08-hourly-update.md` |
 | 連結記錄（16 byte） ▸ +0x0F | `docs/re/08-hourly-update.md` |
 
-### 說明書（9 條）
+### 說明書（10 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -255,6 +255,7 @@
 | 3.4 其他戰術判定（說明書） ▸ 突擊時機 | `docs/mechanics/70-ai.md` |
 | 3.4 其他戰術判定（說明書） ▸ 陣形有利不利 | `docs/mechanics/70-ai.md` |
 | 5.8 ⭐ 十一個命令處理常式，隊長與隊員各一套 ▸ 命令 | `docs/re/11-tactical-battle.md` |
+| 6.1 圖庫段 ＝ ICONGRF 段 3 ＋ 0x9A0 ▸ 場景 0 的 0x1200–0x1440（4 張 24×16） | `docs/re/48-window-display-list.md` |
 
 ### 假說（1 條）
 

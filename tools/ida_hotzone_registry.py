@@ -30,7 +30,7 @@ import idautils
 import idc
 
 OUT = "/work/hotzone_registry.txt"
-TARGETS = ["sub_1E3D7", "sub_189DE", "sub_1895D"]
+TARGETS = ["sub_1E38C"]
 BACK = 24
 
 REGS = {"al": "al", "ah": "ah", "ax": "ax", "bx": "bx", "bl": "bl",
@@ -54,9 +54,13 @@ def preceding_immediates(call_ea, func_start):
             break
         if mnem == "mov":
             dst = idc.print_operand(ea, 0).lower()
-            if dst in REGS and idc.get_operand_type(ea, 1) == idc.o_imm:
-                if dst not in seen:
+            if dst in REGS and dst not in seen:
+                # 立即值記數值，其他來源記運算元字面——找「誰把某個段變數
+                # 餵進載入器」時，來源是變數名而不是立即值。
+                if idc.get_operand_type(ea, 1) == idc.o_imm:
                     seen[dst] = idc.get_operand_value(ea, 1)
+                else:
+                    seen[dst] = idc.print_operand(ea, 1)
         elif mnem == "xor":
             dst = idc.print_operand(ea, 0).lower()
             src = idc.print_operand(ea, 1).lower()
@@ -90,7 +94,8 @@ def main():
                 imm = preceding_immediates(x, start)
                 lines.append("  %08X  %-14s  %s" % (
                     x, fname(x),
-                    " ".join("%s=%Xh" % (k, v) for k, v in sorted(imm.items()))))
+                    " ".join("%s=%s" % (k, ("%Xh" % v) if isinstance(v, int) else v)
+                             for k, v in sorted(imm.items()))))
             x = ida_xref.get_next_cref_to(ea, x)
         lines.append("  呼叫點共 %d 個" % n)
     with open(OUT, "w", encoding="utf-8") as fh:

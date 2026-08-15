@@ -96,8 +96,9 @@ func TestDecodeBounds(t *testing.T) {
 	}
 }
 
-// DOS/V sub_17D0D 以 DS:SI=word_10D50:0600h、AX=4006h 複製數值視窗
-// 內框；由 sub_100DF 的段指標換算，它是 ICONGRF 第 3 段的 0x14A0h。
+// DOS/V sub_17D0D 以 DS:SI=word_10D50:0600h、AX=4006h 複製數值視窗內框。
+// word_10D50 ＝ 段 3 的載入位址 ＋ 0x9A0（docs/re/48 §6），所以段內位移
+// 是 0x0FA0。
 func TestDOSVAmountPanelResource(t *testing.T) {
 	raw := read(t, "ICONGRF.DAT")
 	segment := raw[IconRegions[3].Offset : IconRegions[3].Offset+IconRegions[3].Length]
@@ -141,6 +142,36 @@ func TestDOSVAmountPanelContainsStaticButtonGlyphs(t *testing.T) {
 			}
 			if different < 128 {
 				t.Fatalf("DOS/V 按鈕 glyph (%d,%d) 只有 %d 個非背景像素", row, col, different)
+			}
+		}
+	}
+}
+
+// 顯示清單 op 09 取的四張 24×16 圖示（docs/re/48 §4、§6）。
+// 這裡驗的是**位址換算**：`word_10D50` 的 0x1200 ＝ 段 3 的 0x1BA0。
+// 內容檢查只驗「不是一整片單色」：紅色那組是黑剪影配紅底（兩色），
+// 綠色那組多一圈邊框（更多色）。**兩組不是同一張圖的換色版**——
+// 剪影逐像素比不相等，所以這裡不驗那個。
+func TestDOSVResourceIcons(t *testing.T) {
+	raw := read(t, "ICONGRF.DAT")
+	segment := raw[IconRegions[3].Offset : IconRegions[3].Offset+IconRegions[3].Length]
+	for _, base := range []int{DOSVResourceIconOffset, DOSVResourceIconGreenOffset} {
+		for i := 0; i < DOSVResourceIconCount; i++ {
+			off := base + i*DOSVResourceIconStride
+			idx, err := DOSVResourceIcon.DecodeAt(segment, off)
+			if err != nil {
+				t.Fatalf("0x%X 第 %d 張：%v", base, i, err)
+			}
+			seen := map[byte]int{}
+			for _, v := range idx {
+				if v >= 16 {
+					t.Fatalf("0x%X 第 %d 張超出 4bpp：%d", base, i, v)
+				}
+				seen[v]++
+			}
+			if len(seen) < 2 {
+				t.Fatalf("0x%X 第 %d 張只有 %d 種顏色——偏移八成落在空白區",
+					base, i, len(seen))
 			}
 		}
 	}

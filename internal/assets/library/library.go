@@ -231,6 +231,26 @@ func (l *Library) DOSVAmountPanel(bank int) (*image.RGBA, error) {
 	return gfx.DOSVAmountPanel.RenderRGBAAt(l.Chrome, gfx.DOSVAmountPanelOffset, l.Palette, bank)
 }
 
+// DOSVResourceIcon 解出資金／預備兵欄左邊那一直排 24×16 圖示。
+//
+// index 0–3 依序是天秤（資金）、馬、弓、步；green 選綠色那一組
+// （財政視窗「次月」欄用它，「今月底」用紅色）。位址換算見
+// `docs/re/48` §6。
+func (l *Library) DOSVResourceIcon(index int, green bool, bank int) (*image.RGBA, error) {
+	if l == nil || l.Chrome == nil {
+		return nil, fmt.Errorf("ICONGRF 段 3 沒有載入")
+	}
+	if index < 0 || index >= gfx.DOSVResourceIconCount {
+		return nil, fmt.Errorf("資源圖示 %d 超出 0–%d", index, gfx.DOSVResourceIconCount-1)
+	}
+	base := gfx.DOSVResourceIconOffset
+	if green {
+		base = gfx.DOSVResourceIconGreenOffset
+	}
+	return gfx.DOSVResourceIcon.RenderRGBAAt(l.Chrome,
+		base+index*gfx.DOSVResourceIconStride, l.Palette, bank)
+}
+
 // DOSVBattleCommandBase 解出 sub_1C7F4 在底列重複六次的 80×32 底板。
 func (l *Library) DOSVBattleCommandBase(bank int) (*image.RGBA, error) {
 	if l == nil || l.BattleUI == nil {

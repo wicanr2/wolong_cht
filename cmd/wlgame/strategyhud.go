@@ -464,14 +464,17 @@ func (g *game) drawNaturalFactionHUD(dst *ebiten.Image, x, y int) {
 		f.Reserves[economy.Infantry],
 	}
 	// 原版在 (528, 312/328/344/360) 各貼一張 24×16 圖形（顯示清單 op 09，
-	// 圖庫位移 0x1200／0x12C0／0x1380／0x1440）。**那四張圖還沒畫出來看**，
-	// 所以這裡先用同尺寸同位置的色塊佔位，不拿向量圖形冒充原版 glyph。
+	// 圖庫位移 0x1200 起連號）。那四張是 ICONGRF 段 3 的天秤／馬／弓／步，
+	// 位址換算見 docs/re/48 §6——**用原版素材，不自繪**。
 	for i := 0; i < 1+len(reserveValues); i++ {
 		iconY := y + strategyFundsYOffset + i*strategyResourceRowStep
-		vector.DrawFilledRect(dst, float32(x+strategyIconXOffset), float32(iconY), 24, 16,
-			color.RGBA{192, 32, 32, 255}, false)
-		vector.DrawFilledRect(dst, float32(x+strategyIconXOffset+8), float32(iconY+4), 8, 8,
-			color.RGBA{64, 0, 0, 255}, false)
+		img, err := g.lib.DOSVResourceIcon(i, false, season)
+		if err != nil {
+			continue
+		}
+		op := &ebiten.DrawImageOptions{}
+		op.GeoM.Translate(float64(x+strategyIconXOffset), float64(iconY))
+		dst.DrawImage(ebiten.NewImageFromImage(img), op)
 	}
 	for i, value := range reserveValues {
 		iconY := y + strategyReserveYOffset + i*strategyResourceRowStep

@@ -42,15 +42,33 @@ const (
 	ChromeShaft = 0x0700
 
 	// DOSVAmountPanelOffset 是 DOS/V sub_17D0D 的數值視窗圖形在
-	// ICONGRF 第 3 段的 byte offset。sub_17D0D 以
-	// DS:SI=word_10D50:0600h 讀取；sub_100DF 的指標配置換算後，
-	// 該位址落在段 3 的相對 0x14A0h。
-	DOSVAmountPanelOffset = 0x14A0
+	// ICONGRF 第 3 段的 byte offset。
+	//
+	// 換算鏈（`docs/re/48` §6）：`sub_1006B` 把 `ICONGRF` 檔案位移 0x9700
+	// 起（＝第 3 段）讀進 `word_10D48`，而 `sub_100DF` 讓
+	// `word_10D50 = word_10D48 + 0x9A` 段 ＝ **+0x9A0 byte**。
+	// `sub_17D0D` 讀 `word_10D50:0600h`，所以段內位移是 0x600 + 0x9A0。
+	//
+	// 解出來是完整的數字鍵盤（7 8 9 ◀ 取消／4 5 6 0 最大／1 2 3 00 決定），
+	// 這是「換算對了」的內容檢查。
+	DOSVAmountPanelOffset = 0x0FA0
+
+	// ICONGRF 第 3 段尾段的四張 24×16 圖示：天秤（資金）、馬、弓、步。
+	// 顯示清單 op 09 以 `word_10D50` 的 0x1200 起連號取用（`docs/re/48` §4），
+	// 換算後落在段 3 的 0x1BA0；同樣四張的綠色版在 0x1EA0。
+	// 紅色版用在自勢力情報與財政的「今月底」欄，綠色版用在財政的「次月」欄。
+	DOSVResourceIconOffset      = 0x1BA0
+	DOSVResourceIconGreenOffset = 0x1EA0
+	DOSVResourceIconStride      = 0xC0
+	DOSVResourceIconCount       = 4
 )
 
 // DOSVAmountPanel 是 sub_17D0D 以 AX=4006h 複製的 96×64 平面圖。
 // 它不是可重複貼的 8×8 chrome tile，而是數值輸入器自己的完整內框。
 var DOSVAmountPanel = Spec{Name: "ICONGRF/DOSV amount panel", Width: 96, Height: 64}
+
+// DOSVResourceIcon 是資金／預備兵欄左邊那一直排圖示。
+var DOSVResourceIcon = Spec{Name: "ICONGRF/DOSV resource icon", Width: 24, Height: 16}
 
 // chromeBytes 是一塊 8×8 4bpp 的大小。
 const chromeBytes = ChromeTile * ChromeTile * Planes / 8
