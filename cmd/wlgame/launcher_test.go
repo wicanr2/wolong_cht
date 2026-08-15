@@ -47,7 +47,7 @@ func TestLauncherCancelReturnsToPreviousScreen(t *testing.T) {
 func TestLauncherRejectsIllegalPlayerSelection(t *testing.T) {
 	l := newLauncher(false, nil)
 	l.phase = launcherScenario
-	if l.setScenarioPlayers(0, launcherScenarioName(0), []launcherPlayer{{ID: 99, Lord: "不存在", Capital: "不存在"}}) == false {
+	if l.setScenarioPlayers(0, "劇本 1", []launcherPlayer{{ID: 99, Lord: "不存在", Capital: "不存在"}}) == false {
 		t.Fatal("state model should accept the preview payload; legality is checked at data boundary")
 	}
 	if l.selectPlayer(7) {

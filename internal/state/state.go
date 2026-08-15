@@ -65,10 +65,14 @@ const (
 )
 
 // Faction 是一個勢力的完整狀態。
+// NoAdvisor 是「這個勢力沒有軍師」。原版勢力記錄 +0x02 寫 0x7F
+// （docs/formats/08），君主選擇畫面看到它就連軍師的頭像都不畫。
+const NoAdvisor = 0x7F
+
 type Faction struct {
 	Alive    bool
 	Lord     int // 君主的武將編號
-	Advisor  int // 軍師的武將編號，0xFF ＝ 無
+	Advisor  int // 軍師的武將編號，**0x7F ＝ 無**（記錄 +0x02）
 	Capital  int // 首都的據點編號
 	Reserves [economy.NumTroopTypes]int
 

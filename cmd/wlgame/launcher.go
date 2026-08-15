@@ -12,6 +12,7 @@ import (
 
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
+	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
 // launcherPhase 是一般玩家啟動殼層的純狀態機。它不持有 World，避免
@@ -56,6 +57,14 @@ type launcherPlayer struct {
 	ID      int
 	Lord    string
 	Capital string
+
+	// 以下是原版君主選擇卡要用的欄位（docs/spec/27 §1.2）。
+	Portrait        int
+	Advisor         string
+	AdvisorPortrait int
+	HasAdvisor      bool // 勢力 +0x02 是 0x7F 就沒有軍師
+	Generals        int
+	Cities          int
 }
 
 type launcherSlot struct {
@@ -418,21 +427,39 @@ func launcherPlayers(w *state.World) []launcherPlayer {
 		if !validLauncherPlayer(w, id) {
 			continue
 		}
-		players = append(players, launcherPlayer{
-			ID:      id,
-			Lord:    big5(w.LordName(id)),
-			Capital: big5(w.Cities[f.Capital].Name),
-		})
+		p := launcherPlayer{
+			ID:       id,
+			Lord:     big5(w.LordName(id)),
+			Capital:  big5(w.Cities[f.Capital].Name),
+			Generals: f.Generals,
+			Cities:   f.Cities,
+		}
+		if f.Lord >= 0 && f.Lord < len(w.Generals) {
+			p.Portrait = w.Generals[f.Lord].Portrait
+		}
+		// 軍師欄 0x7F ＝ 無（docs/formats/08 勢力 +0x02）。
+		if f.Advisor >= 0 && f.Advisor < len(w.Generals) && f.Advisor != state.NoAdvisor {
+			p.HasAdvisor = true
+			p.Advisor = big5(w.Generals[f.Advisor].Name)
+			p.AdvisorPortrait = w.Generals[f.Advisor].Portrait
+		}
+		players = append(players, p)
 	}
 	return players
 }
 
-func launcherScenarioName(index int) string {
-	names := [...]string{"第一章　呂布歸天", "第二章　赤壁之戰", "第三章　蜀地偏安", "第四章　劉禪繼位"}
-	if index < 0 || index >= len(names) {
-		return fmt.Sprintf("劇本 %d", index+1)
+// launcherScenarioName 回傳劇本標題。
+//
+// **從資料取，不要憑印象編**（CLAUDE.md §7 第 5 條）：標題就在區塊 +0x40，
+// 原版四槽視窗畫的也是它（docs/re/52 §4）。先前這裡硬編四個名字，
+// 而原版寫的是「第一章・　　「呂布歸天」之卷」——連格式都不一樣。
+func (g *game) launcherScenarioName(index int) string {
+	if g != nil && g.scenarioTitles != nil {
+		if t, ok := g.scenarioTitles[index]; ok && t != "" {
+			return t
+		}
 	}
-	return names[index]
+	return fmt.Sprintf("劇本 %d", index+1)
 }
 
 func inspectLauncherSlots(path string) []launcherSlot {
@@ -523,7 +550,7 @@ func (g *game) applyLauncherResult(result launcherResult) error {
 			g.launcher.notice = fmt.Sprintf("讀取劇本失敗：%v", err)
 			return nil
 		}
-		if !g.launcher.setScenarioPlayers(result.scenario, launcherScenarioName(result.scenario), launcherPlayers(w)) {
+		if !g.launcher.setScenarioPlayers(result.scenario, g.launcherScenarioName(result.scenario), launcherPlayers(w)) {
 			return nil
 		}
 	case launcherStartNewGame:
@@ -555,6 +582,23 @@ func (g *game) drawLauncher(screen *ebiten.Image) {
 	white := chrome.Paper
 	dim := color.RGBA{200, 200, 210, 255}
 	amber := color.RGBA{240, 200, 120, 255}
+
+	// 選君主這一頁換成原版版面的卡片（docs/spec/27）：一次一個勢力，
+	// 上下鍵換。**不畫 launcher 自己的大框**——兩個框疊起來很難看，
+	// 而原版這一頁本來就只有那一個框。
+	l := g.launcher
+	if l.phase == launcherSelectPlayer && l.cursor >= 0 && l.cursor < len(l.players) {
+		g.drawLordCard(screen, l.players[l.cursor], 0)
+		g.td.Draw(screen, g.launcherScenarioName(l.scenario),
+			lordCardX, lordCardY-textdraw.GlyphH-8, amber)
+		g.td.Draw(screen, fmt.Sprintf("↑↓ 換君主（%d／%d）　Enter 決定　ESC 返回",
+			l.cursor+1, len(l.players)), lordCardX-88, lordCardY+lordCardH+8, dim)
+		if l.notice != "" {
+			g.td.Draw(screen, l.notice, lordCardX-88, lordCardY+lordCardH+8+textdraw.GlyphH+2,
+				color.RGBA{255, 180, 180, 255})
+		}
+		return
+	}
 	g.chrome.Window(screen, launcherPanelX, launcherPanelY, launcherPanelW, launcherPanelH, chrome.Menu)
 
 	drawRows := func(rows []string, startY int, selected int, rowH int) {
@@ -572,7 +616,6 @@ func (g *game) drawLauncher(screen *ebiten.Image) {
 		}
 	}
 
-	l := g.launcher
 	switch l.phase {
 	case launcherTitle:
 		rows := []string{"NEW GAME"}
@@ -588,7 +631,7 @@ func (g *game) drawLauncher(screen *ebiten.Image) {
 		g.td.Draw(screen, "選擇劇本", launcherListX+16, 88, amber)
 		rows := make([]string, 4)
 		for i := range rows {
-			rows[i] = launcherScenarioName(i)
+			rows[i] = g.launcherScenarioName(i)
 		}
 		drawRows(rows, launcherListY, l.cursor, launcherRowH)
 	case launcherSelectPlayer:

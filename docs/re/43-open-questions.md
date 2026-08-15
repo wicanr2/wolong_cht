@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 60 | 59 | 1 | 0 |
 | 資料保存 | 43 | 43 | 0 | 0 |
-| 程式碼理解 | 174 | 168 | 6 | 0 |
+| 程式碼理解 | 177 | 171 | 6 | 0 |
 | 驗收 | 14 | 11 | 3 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 42 | 40 | 2 | 0 |
-| **合計** | **351** | 338 | 12 | 1 |
+| 其他 | 45 | 42 | 3 | 0 |
+| **合計** | **357** | 343 | 13 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -139,7 +139,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（174 條）
+## 2.3 程式碼理解（177 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -317,6 +317,9 @@
 | [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | `ds:987Ch` | 四筆槽頭的暫存段，由誰配置未讀 | 靜態 |
 | [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | 檔名 | `sub_18C20` 沒設 `dx`，靠 `sub_18B7C` 的 `push dx`／`pop dx` 從更上層傳進來 | 靜態 |
 | [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | `sub_18C9F` | 關閉時擦除的那一支，未讀 | 靜態 |
+| [`re/53-lord-select-window.md`](../re/53-lord-select-window.md) | 換勢力 | 這一支只顯示 `si` 指到的那一個勢力，**怎麼換下一個**在呼叫端 `sub_11AC3` 的迴圈裡，未讀 | 靜態 |
+| [`re/53-lord-select-window.md`](../re/53-lord-select-window.md) | `ds:5222h` | 軍師名字的位置（推測），配置端未讀 | 靜態 |
+| [`re/53-lord-select-window.md`](../re/53-lord-select-window.md) | `sub_18F6D`／`sub_18F7C` | 收尾與取消時擦除的兩支，未讀 | 靜態 |
 
 ## 2.4 驗收（14 條）
 
@@ -360,7 +363,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（42 條）
+## 2.6 其他（45 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -403,6 +406,9 @@
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 新遊戲共用 | remake 的啟動殼層是自己的畫面，還沒有換成這個四槽視窗 | 靜態 |
 | [`spec/26-yes-no-dialog.md`](../spec/26-yes-no-dialog.md) | 原版的使用者 | `sub_18DC8` 只有一個呼叫端 `sub_11AC3`（新遊戲流程），問題文字由那裡給，內容未讀 | 靜態 |
 | [`spec/26-yes-no-dialog.md`](../spec/26-yes-no-dialog.md) | 背景保存 | `sub_19796`／`sub_197C3(cx=600Dh)` 是開關前後成對的一支，推測是保存／還原被蓋住的畫面，未讀 | 靜態 |
+| [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 「自定」 | 軍師命名（場景 9 的注音輸入）還沒做，這顆按鈕目前無效 | 靜態 |
+| [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 換勢力 | 原版的換法在 `sub_11AC3`，未讀 | 靜態 |
+| [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 頭像尺寸 | 軍師頭像的下緣照原版座標會略微超出那個 208×104 的底框；沒有 oracle 可比，先照機器碼畫 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |

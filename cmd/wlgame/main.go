@@ -198,6 +198,9 @@ type game struct {
 
 	lastEvent string
 	messages  []messageDialog
+	// scenarioTitles 是四個劇本的標題（區塊 +0x40），啟動時從 SINARIO.DAT 讀。
+	scenarioTitles map[int]string
+
 	quitting  bool
 	quitYes   bool // ＹＥＳ／ＮＯ 對話框的選取（remake 的鍵盤操作）
 
@@ -1068,6 +1071,13 @@ func main() {
 			*openBattle, *openSiege, *openBattleChoice, *openMessage, *openTalkIndex, *openOutcome)
 	} else {
 		slots := inspectLauncherSlots(*saveFile)
+		// 劇本標題從檔案讀，不硬編（docs/spec/25 §1.2）。
+		g.scenarioTitles = map[int]string{}
+		for i := 0; i < 4; i++ {
+			if w, err := state.LoadScenario(loadPath, i); err == nil {
+				g.scenarioTitles[i] = big5(w.Title)
+			}
+		}
 		g.launcher = newLauncher(hasAvailableLauncherSlot(slots), slots)
 	}
 

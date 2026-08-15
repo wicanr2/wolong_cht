@@ -525,3 +525,56 @@ func TestYesNoHitGap(t *testing.T) {
 		}
 	}
 }
+
+// 君主選擇卡的版面契約（docs/spec/27）。視窗矩形來自 sub_1895D(cx=0C0Fh)，
+// 數值座標由 sub_18EA0 的 VRAM 位移換算。
+func TestLordCardLayout(t *testing.T) {
+	checks := []struct {
+		name string
+		got  int
+		want int
+	}{
+		{"視窗 x", lordCardX, 160},
+		{"視窗 y", lordCardY, 112},
+		{"視窗寬", lordCardW, 240},
+		{"視窗高", lordCardH, 192},
+		{"君主頭像 x", lordPortraitX, 184},
+		{"君主頭像 y", lordPortraitY, 128},
+		{"君主名 x", lordNameX, 200},
+		{"君主名 y", lordNameY, 216},
+		{"軍師頭像 x", lordAdvPortraitX, 312},
+		{"軍師頭像 y", lordAdvPortraitY, 168},
+		{"軍師名 x", lordAdvNameX, 328},
+		{"軍師名 y", lordAdvNameY, 144},
+		{"標籤 x", lordLabelX, 184},
+		{"首都 y", lordCapitalY, 240},
+		{"武將數 y", lordGeneralsY, 256},
+		{"據點數 y", lordCitiesY, 272},
+		{"首都名 x", lordCapitalNameX, 264},
+		{"數字 x", lordCountX, 272},
+		{"垂直線 x", lordDividerX, 247},
+		{"自定 y", lordCustomY, 248},
+		{"確定 y", lordOKY, 272},
+	}
+	for _, c := range checks {
+		if c.got != c.want {
+			t.Errorf("%s = %d，want %d", c.name, c.got, c.want)
+		}
+	}
+	// ⚠ 熱區編號與畫面上下顛倒：0x20 是下面的「確定」、0x21 是上面的「自定」。
+	// 這裡至少要保證兩顆按鈕的上下關係沒被寫反。
+	if lordCustomY >= lordOKY {
+		t.Errorf("自定 (%d) 應該在確定 (%d) 上面", lordCustomY, lordOKY)
+	}
+	// 兩顆按鈕與左下的資訊框都要落在視窗內。
+	if right := lordOKX + lordButtonW; right > lordCardX+lordCardW {
+		t.Errorf("按鈕右緣 %d 超出視窗 %d", right, lordCardX+lordCardW)
+	}
+	if bottom := lordOKY + lordButtonH; bottom > lordCardY+lordCardH {
+		t.Errorf("按鈕下緣 %d 超出視窗 %d", bottom, lordCardY+lordCardH)
+	}
+	// 三位數的右端不能穿過「自定／確定」那一欄（左緣 328）。
+	if right := lordCountX + lordCountDigits*textdraw.HalfW; right > lordCustomX {
+		t.Errorf("數字右端 %d 穿到按鈕欄 %d", right, lordCustomX)
+	}
+}
