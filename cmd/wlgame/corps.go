@@ -182,11 +182,13 @@ func (g *game) drawForm(screen *ebiten.Image) {
 	// 靜態層（顯示清單場景 5）。
 	for _, box := range []struct{ x, y, w, h int }{
 		{240, 152, 112, 32}, {formSlotLabelX, formSlotY, 112, 96},
-		{304, formReserveY, 64, 48}, {formOKX, formOKY, formOKW, formOKH},
+		{304, formReserveY, 64, 48},
 	} {
 		vector.DrawFilledRect(screen, float32(box.x), float32(box.y),
 			float32(box.w), float32(box.h), color.Black, false)
 	}
+	// 確定鈕是**按鈕**：底色 7 ＋ 一圈 9／6（docs/re/48 §2.1）。
+	g.dlButton(screen, formOKX, formOKY, formOKW, formOKH)
 	g.td.Draw(screen, "將軍", formHeadLabelX, formTitleY, ink)
 	g.td.Draw(screen, "總兵力", formHeadLabelX, formTotalY, ink)
 	g.td.Draw(screen, "士氣值", formHeadLabelX, formMoraleY, ink)

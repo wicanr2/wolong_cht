@@ -57,12 +57,8 @@ func (g *game) drawLordCard(screen *ebiten.Image, p launcherPlayer, season int) 
 		x, y  int
 		label string
 	}{{lordCustomX, lordCustomY, "自定"}, {lordOKX, lordOKY, "確定"}} {
-		vector.DrawFilledRect(screen, float32(b.x), float32(b.y),
-			lordButtonW, lordButtonH, color.Black, false)
-		for _, o := range []int{2, 1} {
-			vector.StrokeRect(screen, float32(b.x-o), float32(b.y-o),
-				float32(lordButtonW+2*o), float32(lordButtonH+2*o), 1, ink, false)
-		}
+		// 兩顆是**按鈕**：底色 7 ＋ 一圈 9／6（docs/re/48 §2.1）。
+		g.dlButton(screen, b.x, b.y, lordButtonW, lordButtonH)
 		g.td.Draw(screen, b.label, lordButtonTextX, b.y, ink)
 	}
 	g.td.Draw(screen, "君主", lordLabelX, 200, ink)

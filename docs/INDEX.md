@@ -107,7 +107,7 @@
 | [`docs/re/45-corps-command-mode.md`](re/45-corps-command-mode.md) | 45 — 軍團的三種指令模式：戰鬥指揮／委任／解體 | 軍團 +0x00 位元 2 定案 ＝ | 2026-08-14 |
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |
 | [`docs/re/47-main-screen-window-registry.md`](re/47-main-screen-window-registry.md) | 47 — 主畫面的四個常駐視窗：開關、位元集與各自的矩形 | 四個常駐視窗的開關熱區、位元集、分派表與四個視窗各自的像素矩形 全部 confirmed。繪圖／熱區常式的參數對應（… | 2026-08-15 |
-| [`docs/re/48-window-display-list.md`](re/48-window-display-list.md) | 48 — 視窗內容是一份顯示清單，不是一張圖 | 清單的位置、記錄格式、場景切分、十個場景的歸屬與 opcode 03–09 的語意全部解出來了。圖庫段 word_1… | 2026-08-15 |
+| [`docs/re/48-window-display-list.md`](re/48-window-display-list.md) | 48 — 視窗內容是一份顯示清單，不是一張圖 | 清單的位置、記錄格式、場景切分、十個場景的歸屬與九個 opcode 的語意全部解出來了。⭐ 記錄的第六個 word … | 2026-08-15 |
 | [`docs/re/49-corps-formation-window.md`](re/49-corps-formation-window.md) | 49 — 軍團編成視窗的版面與動態層 | 視窗矩形、靜態層、六個槽的圖示與數字、四個顯示值的來源與座標 全部解出來了。op 04 的語意仍未解（§6）。 | 2026-08-15 |
 | [`docs/re/50-city-info-window.md`](re/50-city-info-window.md) | 50 — 據點情報視窗，以及據點 +0x16 高 4 位的用途 | 視窗矩形、靜態層、五個顯示值的來源與座標、左半那張 96×96 圖的 出處全部解出來了。⭐ 據點 +0x16 的高 … | 2026-08-15 |
 | [`docs/re/51-corps-info-window.md`](re/51-corps-info-window.md) | 51 — 軍團情報視窗（顯示清單場景 4） | 視窗矩形、靜態層、九個顯示值的座標與來源全部解出來了。 ⭐ 這個視窗畫空槽時會取到 | 2026-08-15 |

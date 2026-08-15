@@ -8,7 +8,6 @@ package main
 
 import (
 	"image"
-	"image/color"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/vector"
@@ -91,19 +90,14 @@ func (g *game) drawYesNo(screen *ebiten.Image, x, y int, question string, yesSel
 		{yesNoYesDY, "ＹＥＳ", yesSelected},
 		{yesNoNoDY, "Ｎ　Ｏ", !yesSelected},
 	} {
-		bx, by := float32(x+yesNoBoxDX), float32(y+row.dy)
-		vector.DrawFilledRect(screen, bx, by, yesNoBoxW, yesNoBoxH, color.Black, false)
-		// op 04：兩圈差 1 px 的外框。
-		for _, o := range []int{2, 1} {
-			vector.StrokeRect(screen, bx-float32(o), by-float32(o),
-				yesNoBoxW+float32(2*o), yesNoBoxH+float32(2*o), 1, ink, false)
-		}
+		// 兩格是**凹槽**：底色 5、外圈 2／0、內圈 D／4（docs/re/48 §2.1）。
+		g.dlSunken(screen, x+yesNoBoxDX, y+row.dy, yesNoBoxW, yesNoBoxH)
+		// remake 的選取標記：文字換成選取色。**不用紅色**——
+		// 紅色在這個專案裡固定表示負值（資金、上昇值）。
+		col := ink
 		if row.on {
-			// remake 的選取標記：再一圈框。**不換文字顏色**——
-			// 紅色在這個專案裡固定表示負值（資金、上昇值）。
-			vector.StrokeRect(screen, bx-3, by-3, yesNoBoxW+6, yesNoBoxH+6,
-				1, chrome.Select, false)
+			col = chrome.Select
 		}
-		g.td.Draw(screen, row.label, x+yesNoTextDX, y+row.dy, ink)
+		g.td.Draw(screen, row.label, x+yesNoTextDX, y+row.dy, col)
 	}
 }

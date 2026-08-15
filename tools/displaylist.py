@@ -9,7 +9,7 @@
 `sub_10337(al = 場景編號)` 是一支直譯器，不是一次 blit。清單在 `cs:0E16`
 （檔案位移 `0x1016`），每筆 12 bytes ＝ 六個 word：
 
-    op  X  Y  arg1  arg2  0
+    op  X  Y  arg1  arg2  色
 
 第一個 byte 為 0 的記錄是**場景分隔**，`al` 決定跳過幾個。
 `X`／`Y` 相對於呼叫端傳進去的原點。
@@ -38,7 +38,11 @@ MAX_SCENES = 64
 MAX_OP = 0x0F
 
 OPS = {
+    0x01: "直線",
+    0x02: "矩形框",
     0x03: "填矩形",
+    0x04: "立體框",
+    0x05: "水平線",
     0x06: "垂直線",
     0x07: "場景範圍",
     0x08: "字串",
@@ -84,7 +88,7 @@ def scenes(data):
 
 
 def describe(data, rec):
-    op, x, y, a1, a2, _ = rec
+    op, x, y, a1, a2, colour = rec
     name = OPS.get(op, "未知 op %02X" % op)
     if op == 0x08:
         return "%-6s (%3d,%3d)  字串 cs:%04X ＝ %r  屬性 %04X" % (
@@ -94,9 +98,21 @@ def describe(data, rec):
         # 場景 0 的四筆列距 16 px 正好等於解出來的高，是這個讀法的檢查。
         return "%-6s (%3d,%3d)  圖庫位移 %04X  %d×%d（寬×高）" % (
             name, x, y, a1, a2 & 0xFF, a2 >> 8)
-    if op in (0x03, 0x07):
+    if op == 0x03:
+        # ⭐ 第六個 word 的**低 byte**是填色（`sub_1EA30` 的 `mov ah,[si+0Ah]`）。
+        return "%-6s (%3d,%3d)–(%3d,%3d)  ＝ %d×%d  色 %X" % (
+            name, x, y, a1, a2, a1 - x + 1, a2 - y + 1, colour & 0xFF)
+    if op == 0x04:
+        # 四條邊分兩色：低 byte 畫上邊與左邊，高 byte 畫下邊與右邊
+        # （`sub_1F465` 每條線前 `xchg ah,al`）——立體邊就是這樣做出來的。
+        return "%-6s (%3d,%3d)–(%3d,%3d)  ＝ %d×%d  上左 %X／下右 %X" % (
+            name, x, y, a1, a2, a1 - x + 1, a2 - y + 1,
+            colour & 0xFF, colour >> 8)
+    if op == 0x07:
         return "%-6s (%3d,%3d)–(%3d,%3d)  ＝ %d×%d" % (
             name, x, y, a1, a2, a1 - x + 1, a2 - y + 1)
+    if op == 0x05:
+        return "%-6s (%3d,%3d)  長 %d  顏色 %X" % (name, x, y, a1, a2)
     if op == 0x06:
         return "%-6s (%3d,%3d)  長 %d  顏色 %X" % (name, x, y, a1, a2)
     return "%-6s (%3d,%3d)  arg %04X %04X" % (name, x, y, a1, a2)

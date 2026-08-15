@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 60 | 59 | 1 | 0 |
 | 資料保存 | 43 | 43 | 0 | 0 |
-| 程式碼理解 | 181 | 175 | 6 | 0 |
+| 程式碼理解 | 182 | 176 | 6 | 0 |
 | 驗收 | 14 | 11 | 3 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
 | 其他 | 45 | 42 | 3 | 0 |
-| **合計** | **361** | 347 | 13 | 1 |
+| **合計** | **362** | 348 | 13 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -139,7 +139,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（181 條）
+## 2.3 程式碼理解（182 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -304,7 +304,8 @@
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 原版執行期驗證 | **未做**。PC-98 oracle 上左鍵點這五格沒有反應（§6），原因未定 | 實測 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `08` 屬性 byte 的低位 | 高 byte 是調色盤索引（`0x0F` 一般、`0x09` 兩個資源標籤，與參考幀的白／金相符）。低 byte 多數是 `0x03`，**但場景 9 的聲母列是 `0x01`**（`54` §3）——兩個值的差別未讀 | 靜態 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `sub_1E9A7(bl=0, ax=1800h, cx=2020h)` | `sub_1030F` 登記的第二件事，未讀 | 靜態 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | opcode `01`／`02` | 十個場景一次都沒用到，handler 未讀 | 靜態 |
+| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `op 01` 的用法 | 它是直線（§2.2），但 handler 不展開座標而十個場景又沒用到它——**預期的呼叫方式無法驗證** | 靜態 |
+| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `op 02` 與 `op 03` 的差別 | 兩支都畫矩形（`sub_1F020` 對 `cs:F1A3`），前者另有五個戰術區呼叫者。哪一支是實心、哪一支帶遮罩，沒有資料可分辨 | 靜態 |
 | [`re/49-corps-formation-window.md`](../re/49-corps-formation-window.md) | ？ | (279, 271) arg `00D8 00A8` / **04**，未解（§6） | 靜態 |
 | [`re/49-corps-formation-window.md`](../re/49-corps-formation-window.md) | `op 04` | 場景 5 用它一次，位置 (279,271) 剛好在確定鈕左上角外一格，`arg` ＝ `00D8`／`00A8`。像是外框或反白，語意未解（`48` §7 同一條） | 靜態 |
 | [`re/49-corps-formation-window.md`](../re/49-corps-formation-window.md) | `sub_1F9B0` 的 `ax = 1003h` | 貼圖的樣式參數；`sub_10C14` 用 `0801h`（`46` §3）。位元編碼未逐位對過 | 靜態 |

@@ -357,13 +357,8 @@ func (g *game) drawSaveUI(screen *ebiten.Image) {
 		dy := i * saveSlotStep
 		vector.DrawFilledRect(screen, saveNameBoxX, float32(saveNameBoxY+dy),
 			saveNameBoxW, saveNameBoxH, color.Black, false)
-		vector.DrawFilledRect(screen, saveSlotX, float32(saveSlotY+dy),
-			saveSlotW, saveSlotH, color.Black, false)
-		// op 04：兩圈差 1 px 的外框，做出立體邊。
-		for _, o := range []int{2, 1} {
-			vector.StrokeRect(screen, float32(saveSlotX-o), float32(saveSlotY+dy-o),
-				float32(saveSlotW+2*o), float32(saveSlotH+2*o), 1, ink, false)
-		}
+		// 日期欄是**凹槽**：底色 5、外圈 2／0、內圈 D／4（docs/re/48 §2.1）。
+		g.dlSunken(screen, saveSlotX, saveSlotY+dy, saveSlotW, saveSlotH)
 		g.td.Draw(screen, "年　月　日", saveDateLabelX, saveSlotY+dy, ink)
 
 		slot, ok := launcherSlot{}, false
