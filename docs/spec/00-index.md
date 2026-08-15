@@ -58,9 +58,10 @@
 |---|---|---|
 | 據點整備、威脅偵測與求援（`sub_13EFD` 鏈）| [`10-city-tick.md`](10-city-tick.md) | 已實作並對原版取樣驗過 |
 | 進言「請求君主出陣」（`sub_1699E`）| [`11-ai-sortie.md`](11-ai-sortie.md) | 可實作，**尚未實作** |
-| 主畫面的視窗外框與指令列 | [`12-strategy-chrome.md`](12-strategy-chrome.md) | 外框已符合原版；**右欄版面常數未對過原版** |
+| 主畫面的視窗外框與指令列 | [`12-strategy-chrome.md`](12-strategy-chrome.md) | 版面常數全部改用機器碼值；各視窗**內部**排版仍有估值 |
+| 主畫面四個視窗的開關 | [`13-main-window-toggles.md`](13-main-window-toggles.md) | 已實作並留下截圖；原版執行期未驗 |
 | remake 原生存檔格式 | [`20-save-format.md`](20-save-format.md) | 已接進遊戲並驗過；**只差放回 DOSBox 實測** |
-| 同狀態畫面對拍 | [`90-same-state-parity.md`](90-same-state-parity.md) | 差分工具已就緒；**第一輪對拍還沒跑** |
+| 同狀態畫面對拍 | [`90-same-state-parity.md`](90-same-state-parity.md) | 橫幅已對過；**四窗全開的整體對拍還沒跑** |
 
 ## 怎麼加一份
 

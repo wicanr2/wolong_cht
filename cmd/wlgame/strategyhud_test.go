@@ -9,7 +9,7 @@ import (
 
 // 自然策略常駐骨架，數值全部出自機器碼（docs/spec/12 §1、docs/re/47）：
 // 640×400、32 px 橫幅、命令 (0,32,432,32)、縮小地圖 (432,32,208,160)、
-// 自勢力情報 (432,192,208,208)、地圖 (0,64,432,336)。
+// 自勢力情報 (432,192,208,208)、地圖 (0,32,640,368) ＝ 40×23 格。
 func TestDOSVNaturalStrategySkeleton(t *testing.T) {
 	checks := []struct {
 		name string
@@ -21,9 +21,12 @@ func TestDOSVNaturalStrategySkeleton(t *testing.T) {
 		{"banner height", bannerH, 32},
 		{"command y", strategyCommandY, 32},
 		{"command height", strategyCommandH, 32},
-		{"map y", strategyMapY, 64},
-		{"map width", strategyMapW, 432},
-		{"map height", strategyMapH, 336},
+		{"map y", strategyMapY, 32},
+		{"map width", strategyMapW, 640},
+		{"map height", strategyMapH, 368},
+		{"map cols", viewCols, 40},
+		{"map rows", viewRows, 23},
+		{"command width", strategyCommandW, 432},
 		{"sidebar x", strategySidebarX, 432},
 		{"sidebar width", strategySidebarW, 208},
 		{"minimap height", strategyMinimapH, 160},
@@ -55,8 +58,8 @@ func TestDOSVNaturalStrategySkeleton(t *testing.T) {
 	}
 	// 命令列的八個字與尾端空白要落在 432 的框寬內（docs/re/47 §4.1）。
 	if end := strategyCommandX + strategyCommandLead + 8*strategyCommandTextW +
-		7*(strategyCommandCellW-strategyCommandTextW) + 24; end > strategyMapW {
-		t.Fatalf("命令列字串尾端 = %d，超出框寬 %d", end, strategyMapW)
+		7*(strategyCommandCellW-strategyCommandTextW) + 24; end > strategyCommandW {
+		t.Fatalf("命令列字串尾端 = %d，超出框寬 %d", end, strategyCommandW)
 	}
 	// 熱區照 sub_1E3D7(al=0x0C, X=24, Y=40, 384×16)。
 	if r := strategyCommandCellRect(0); r.Min.X != 24 || r.Min.Y != 40 || r.Dy() != 16 {

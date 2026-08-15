@@ -3,7 +3,7 @@
 **狀態：生成的清單，跑 `tools/py.sh tools/re_open_questions.py` 重出。
 這一份不下結論，只把各文件的「未解」表集中到一處。**
 
-- 日期：2026-08-14
+- 日期：2026-08-15
 - 產生工具：`tools/re_open_questions.py`
 - 來源：`docs/` 底下所有文件的未解小節、表格裡標未解的列，與收尾是「…未解」的散句
 
@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 60 | 59 | 1 | 0 |
 | 資料保存 | 43 | 43 | 0 | 0 |
-| 程式碼理解 | 161 | 155 | 6 | 0 |
-| 驗收 | 10 | 8 | 2 | 0 |
+| 程式碼理解 | 164 | 158 | 6 | 0 |
+| 驗收 | 14 | 12 | 2 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 24 | 23 | 1 | 0 |
-| **合計** | **316** | 305 | 10 | 1 |
+| 其他 | 29 | 27 | 2 | 0 |
+| **合計** | **328** | 316 | 11 | 1 |
 
 ## 2.1 規則正確性（60 條）
 
@@ -139,7 +139,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（161 條）
+## 2.3 程式碼理解（164 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -293,11 +293,14 @@
 | [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `sub_193E9` 的選單協定 | `ah = 1`、`cx` ＝ 首項索引、`dx`／`bx` ＝ 位置；回傳值怎麼編碼未逐位對過 | 靜態 |
 | [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `sub_1703C` | 選據點的那一支，未讀 | 靜態 |
 | [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `+0x23` 的其他值 | 只見過 0、1（`sub_16F26`）與 11 | 靜態 |
-| [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | `cs:word_1D84E` 那張表怎麼變成像素 | 每格 8 bytes 的內容意義未讀；誰消費它未找。它是 ①，與框線像素是兩回事 | 靜態 |
+| [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | `cs:word_1D84E` 那張表怎麼變成像素 | **解了**：它不變成像素，是 40 欄 × 23 列的格子屬性表，bit `0x10` ＝ 這格歸地圖管、bit `0x60` ＝ 髒格。見 `47` §3.2 | 靜態 |
 | [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | `cs:word_10D4A` 指向段 3 的哪個位移 | §3 的對應是**由四個 si 與 §5.4 的內容互相印證**得出的強證據；載入端沒讀，沒有直接證據 | 靜態 |
 | [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | 樣式碼 | 只確定 `0` ＝ 擦除、`0x0B` ＝ 指令列、`0x0C`／`0x0F` 出現在別處；完整值域未列 | 靜態 |
 | [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | `ax = 0F01h`／`0801h` | 顏色／樣式的位元編碼未逐位對過 | 靜態 |
+| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | `0x80` | 擦除時 `and …, 7Fh` 清掉 / 未解 | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 熱區 5（x 464–496） | 登記了，`off_159D2` 對應 `nullsub_1`。是保留槽還是別處會改寫這一格，未讀 | 靜態 |
+| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 格子屬性 bit `0x80` | 擦除時被清掉，沒找到設它的地方 | 靜態 |
+| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 系統視窗開著時時間停止 | 說明書明講，機器碼的實作位置未找（`sub_15FAA` 的等待迴圈是候選） | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | **預備兵的單位** | 顯示端明確乘 10（§4.2）。那 remake 編成時直接扣 `Reserves[t]` 就對不上——**要嘛顯示要乘 10，要嘛編成要除以 10**，兩者只能有一個對。決定之前先找原版編成的扣減端 | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 底圖 `sub_10337(al=0)` 的來源 | 頭像與各欄標籤合在同一張圖裡，圖從哪個圖庫取未讀 | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 縮小地圖視窗內部 | `sub_15A3A` 的 `sub_1FA37(bx=0x34B7, ax=0x100C)` 與 `sub_15DBB` 未讀 | 靜態 |
@@ -305,7 +308,7 @@
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 開關圖示的圖形來源 | 五格 32×32 的圖從哪個圖庫來未讀 | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 原版執行期驗證 | **未做**。PC-98 oracle 上左鍵點這五格沒有反應（§6），原因未定 | 實測 |
 
-## 2.4 驗收（10 條）
+## 2.4 驗收（14 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -319,6 +322,10 @@
 | [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 松崗 DOS/V 側的主畫面 | 開新遊戲流程停在「確定」按鈕不回應。座標已照 PC-98 換算（Y ＋40）重試，仍不動；密碼頁不是障礙（`18`） | 靜態 |
 | [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 同版本同調色盤的對拍 | 上面兩項任一個通了就能做。**在那之前 `banner` 的 49.6% 不代表 remake 有錯** | 靜態 |
 | [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 各視窗內部排版 | 頭像、信賴度列、資金／預備兵三行仍是影片估值，沒有機器碼證據 | 靜態 |
+| [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 原版新遊戲時哪幾個視窗是開的 | 未讀。remake 預設命令／自勢力情報／縮小地圖三個開、系統關，**標為 remake 差異** | 靜態 |
+| [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 各視窗內部的像素 | 只對過邊線位置，沒有對過內容 | 靜態 |
+| [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 原版執行期的開關行為 | **沒驗過**：模擬器上主畫面收不到點擊（`23` §4.1） | 靜態 |
+| [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 系統視窗的四個項目 | 存檔／畫面模式／音源／戰略速度，不在這一輪範圍 | 靜態 |
 
 ## 2.5 外部資料（18 條）
 
@@ -343,7 +350,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（24 條）
+## 2.6 其他（29 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -354,6 +361,7 @@
 | [`promo/yt-remake-pixel-review.md`](../promo/yt-remake-pixel-review.md) | 中央 raw reserve glyph | 未解出原版圖形。remake 不冒充，改用自繪 | 靜態 |
 | [`spec/00-index.md`](../spec/00-index.md) | **推論等級** | confirmed／強證據／假說／未知（`CLAUDE.md` §9）。假說也可以實作，但要標 | 靜態 |
 | [`spec/00-index.md`](../spec/00-index.md) | 進言「請求君主出陣」（`sub_1699E`） | `11-ai-sortie.md` / 可實作，**尚未實作** | 靜態 |
+| [`spec/00-index.md`](../spec/00-index.md) | 主畫面四個視窗的開關 | `13-main-window-toggles.md` / 已實作並留下截圖；原版執行期未驗 | 實測 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | `sub_14194`／`sub_14269` | 內政與災害 marker 的細節在別的規格（`docs/mechanics/40`），本規格只保證呼叫順序 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 據點換手之後 `+0x00` 低 4 位會不會跟著變 | `sub_1890A` 靜態讀過，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 玩家據點求援的喇叭聲（`sub_10CDE`） | 呈現層未接 | 靜態 |
@@ -366,6 +374,10 @@
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 勢力色標 | 原版怎麼畫未讀（`sub_15CE0` 是小地圖的四色點，不是這一列） | 靜態 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | `cs:word_1D84E` 每格 8 bytes | 內容意義未讀，消費端未找 | 靜態 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝命令、`0x0Bh`／`0x10h`／`0x15h`／`0x1Fh` 各自出現在哪個視窗已知，完整值域未列 | 靜態 |
+| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |
+| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 原版新遊戲時 `byte_198A6` 的初值 | 未讀。remake 先用「四個全開」並標為差異（§2.1） | 靜態 |
+| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 |
+| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 系統視窗的內容 | 本規格只做開關與暫停，視窗內的四個項目（存檔／畫面模式／音源／戰略速度）不在範圍 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |

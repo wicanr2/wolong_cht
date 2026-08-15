@@ -24,13 +24,17 @@ import (
 // 右欄三段相加 32 + 160 + 208 = 400，剛好鋪滿畫面高度——這是「矩形讀對了」
 // 的算術檢查。原版四個視窗可以逐個開關，remake 目前固定顯示（spec §7）。
 const (
-	strategyCommandY          = bannerH
-	strategyCommandH          = 32
-	strategyMapY              = strategyCommandY + strategyCommandH
+	strategyCommandY = bannerH
+	strategyCommandH = 32
+	strategyCommandW = 432 // sub_1895D 的 cx 低 byte 0x1B → 27 × 16
+	// ⭐ 大地圖鋪滿橫幅以下的**整片畫面**，四個視窗疊在它上面
+	// （`sub_1D615` 的迴圈是 40 欄 × 23 列的 16×16 格，docs/re/47 §3.2）。
+	// 這不是「左邊地圖、右邊面板」的分割版面——關掉右欄看到的是地圖，不是空白。
+	strategyMapY              = bannerH
+	strategyMapW              = screenW
+	strategyMapH              = screenH - bannerH
 	strategySidebarW          = 208 // sub_1895D 的 cx 低 byte 0x0D → 13 × 16
 	strategySidebarX          = screenW - strategySidebarW
-	strategyMapW              = strategySidebarX
-	strategyMapH              = screenH - strategyMapY
 	strategySidebarInnerX     = strategySidebarX + chrome.Tile
 	strategySidebarInnerRight = strategySidebarX + strategySidebarW - chrome.Tile
 	strategyMinimapX          = strategySidebarInnerX
@@ -243,24 +247,109 @@ func strategyHUDNumber(value, digits int) string {
 	return fmt.Sprintf("%*d", digits, value)
 }
 
-// drawNaturalStrategyHUD 畫 DOS/V 自然策略畫面的常駐 GUI 骨架。
+// hudWindow 是主畫面上四個**可開關**的常駐視窗，對應原版 `byte_198A6`
+// 的 bit 0–3（`docs/spec/13-main-window-toggles.md`）。
+type hudWindow uint8
+
+const (
+	hudCommand hudWindow = 1 << iota // bit 0：命令
+	hudFaction                       // bit 1：自勢力情報
+	hudMinimap                       // bit 2：縮小地圖
+	hudSystem                        // bit 3：系統（開著時時間停止）
+)
+
+// hudSwitchRect 是橫幅右側五格開關的矩形。原版由 `sub_18755` 的迴圈
+// 登記：起點 x=336、每格 32×32、共五格，Y 是 0–32（docs/re/47 §2）。
 //
-// 證據等級：強推論。影片 `af6xqcicXoI` 的 478×360 影像經黑邊還原後，
-// 可量得同一個 640×400 內框；說明書主畫面則直接列出命令列與右側縮小地圖。
-// 影片是縮放後的參考，不把壓縮後像素當成原始 asset bytes。
+// 第五格原版接 `nullsub_1`，這裡照樣不接東西——**留著它是刻意的**，
+// 少一格會讓熱區編號與原版對不起來，之後想驗就得重推一次。
+const (
+	hudSwitchX0 = 336
+	hudSwitchW  = 32
+	hudSwitchN  = 5
+)
+
+// hudSwitchWindow 把開關編號（0 起）換成它控制的視窗；第五格回 0。
+func hudSwitchWindow(index int) hudWindow {
+	switch index {
+	case 0:
+		return hudCommand
+	case 1:
+		return hudFaction
+	case 2:
+		return hudMinimap
+	case 3:
+		return hudSystem
+	}
+	return 0
+}
+
+// hitTestHUDSwitch 回傳游標落在第幾格開關。
+func hitTestHUDSwitch(x, y int) (int, bool) {
+	if y < 0 || y >= bannerH || x < hudSwitchX0 {
+		return 0, false
+	}
+	i := (x - hudSwitchX0) / hudSwitchW
+	if i >= hudSwitchN {
+		return 0, false
+	}
+	return i, true
+}
+
+// hudOpen／hudSet 是四個視窗開關狀態的唯一入口。
+//
+// 系統視窗**不另存一個位元**：remake 早就有 `g.open[winSystem]`
+// 這個模態視窗，再開一個 bit 會變成兩份狀態各自漂移
+// （`CLAUDE.md` §7 第 6 條）。
+func (g *game) hudOpen(w hudWindow) bool {
+	if w == hudSystem {
+		return g.open[winSystem]
+	}
+	return g.hud&w != 0
+}
+
+func (g *game) hudSet(w hudWindow, open bool) {
+	if w == hudSystem {
+		g.open[winSystem] = open
+		return
+	}
+	if open {
+		g.hud |= w
+	} else {
+		g.hud &^= w
+	}
+}
+
+// drawNaturalStrategyHUD 畫主畫面的四個常駐視窗。
+//
+// 版面常數全部出自機器碼（`docs/spec/12-strategy-chrome.md` §1）；
+// 視窗是**疊在大地圖上的不透明層**，關掉哪個就露出底下的地圖
+// （docs/re/47 §3.2）。
 func (g *game) drawNaturalStrategyHUD(screen *ebiten.Image) {
+	if !g.hudOpen(hudCommand) {
+		g.drawHUDSidebar(screen)
+		return
+	}
 	// 命令列使用與原版視窗相同的深藍底／紅金外框；文字沿 8 px 邊界排列。
-	g.chrome.Window(screen, 0, strategyCommandY, strategyMapW, strategyCommandH, chrome.Menu)
+	g.chrome.Window(screen, 0, strategyCommandY, strategyCommandW, strategyCommandH, chrome.Menu)
 	for i, label := range naturalCommandLabels {
 		x := strategyCommandX + strategyCommandLead + i*strategyCommandCellW
 		g.td.Draw(screen, strategyHUDSingleLine(label, strategyCommandTextW), x, strategyCommandY+8, chrome.Paper)
 	}
+	g.drawHUDSidebar(screen)
+}
 
-	// 先畫下方情報框。它從 y=176 開始，讓上方 minimap 的底邊／勢力色標
-	// 覆蓋共用分隔邊；這正是原版右欄在 y=168–184 的 16 px 色標列，
-	// 避免兩個獨立 Window 疊出 16 px 厚的假分隔。
-	g.chrome.Window(screen, strategySidebarX, strategyFactionY, strategySidebarW, strategyFactionH, chrome.Menu)
-	g.drawNaturalFactionHUD(screen, strategySidebarX, strategyFactionY)
+// drawHUDSidebar 畫右欄的兩個視窗。**兩個各自可以關掉**，
+// 所以不能靠「上面那個蓋住下面那個的邊」來省一條分隔線——
+// 原版的兩個矩形是背靠背相鄰的（192 ＝ 32 + 160）。
+func (g *game) drawHUDSidebar(screen *ebiten.Image) {
+	if g.hudOpen(hudFaction) {
+		g.chrome.Window(screen, strategySidebarX, strategyFactionY, strategySidebarW, strategyFactionH, chrome.Menu)
+		g.drawNaturalFactionHUD(screen, strategySidebarX, strategyFactionY)
+	}
+	if !g.hudOpen(hudMinimap) {
+		return
+	}
 
 	// 右上縮小地圖。ICONGRF 段 2 本身就是 192×128，不能用大地圖降採樣替代。
 	g.chrome.Window(screen, strategySidebarX, bannerH, strategySidebarW, strategyMinimapH, chrome.Menu)

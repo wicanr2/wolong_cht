@@ -14,7 +14,7 @@ func TestNaturalCommandHitTestUsesOnlyInnerCells(t *testing.T) {
 		if got, ok := hitTestNaturalCommand(r.Min.X+r.Dx()/2, r.Min.Y+r.Dy()/2); !ok || got != naturalCommandID(i) {
 			t.Fatalf("第 %d 格中心命中 = (%d, %v)，want (%d, true)", i, got, ok, i)
 		}
-		if r.Min.X <= chrome.Tile || r.Max.X > strategyMapW-chrome.Tile {
+		if r.Min.X <= chrome.Tile || r.Max.X > strategyCommandW-chrome.Tile {
 			t.Fatalf("第 %d 格越過命令列內容外框：%v", i, r)
 		}
 	}
@@ -23,12 +23,12 @@ func TestNaturalCommandHitTestUsesOnlyInnerCells(t *testing.T) {
 	// 左右兩端的邊界與上下留白，不是格間死區。
 	misses := []image.Point{
 		{X: 0, Y: strategyCommandY + strategyCommandH/2},
-		{X: strategyMapW - 1, Y: strategyCommandY + strategyCommandH/2},
+		{X: strategyCommandW - 1, Y: strategyCommandY + strategyCommandH/2},
 		{X: strategyCommandCellRect(0).Min.X - 1, Y: strategyCommandHitY + 4},
 		{X: strategyCommandCellRect(7).Max.X, Y: strategyCommandHitY + 4},
 		{X: strategyCommandCellRect(0).Min.X + 1, Y: strategyCommandHitY - 1},
 		{X: strategyCommandCellRect(0).Min.X + 1, Y: strategyCommandHitY + strategyCommandHitH},
-		{X: strategyMapW / 2, Y: strategyMapY},
+		{X: strategyCommandW / 2, Y: strategyMapY + strategyCommandH},
 		{X: strategySidebarX, Y: strategyCommandY + strategyCommandH/2},
 	}
 	for _, p := range misses {
@@ -69,5 +69,58 @@ func TestNaturalCommandShortcutSharesLabelMapping(t *testing.T) {
 func TestNaturalCommandActionTableMatchesEightLabels(t *testing.T) {
 	if len(naturalCommandLabels) != 8 || len(naturalCommandActions) != len(naturalCommandLabels) {
 		t.Fatalf("畫面標籤／共享 action 數量 = %d/%d，want 8/8", len(naturalCommandLabels), len(naturalCommandActions))
+	}
+}
+
+// 橫幅右側五格開關的幾何與語意（docs/spec/13、docs/re/47 §2）。
+func TestHUDSwitchGeometryAndSemantics(t *testing.T) {
+	// 五格：336/368/400/432/464，各 32×32，Y 落在 0–32 的橫幅內。
+	for i := 0; i < hudSwitchN; i++ {
+		x := hudSwitchX0 + i*hudSwitchW
+		for _, p := range []image.Point{{X: x, Y: 0}, {X: x + hudSwitchW - 1, Y: bannerH - 1}} {
+			got, ok := hitTestHUDSwitch(p.X, p.Y)
+			if !ok || got != i {
+				t.Fatalf("%v 命中 = (%d, %v)，want (%d, true)", p, got, ok, i)
+			}
+		}
+	}
+	// 橫幅左段（熱區 6）與橫幅以下都不是開關。
+	for _, p := range []image.Point{
+		{X: hudSwitchX0 - 1, Y: 16}, {X: 0, Y: 0},
+		{X: hudSwitchX0 + hudSwitchN*hudSwitchW, Y: 16},
+		{X: hudSwitchX0, Y: bannerH},
+	} {
+		if _, ok := hitTestHUDSwitch(p.X, p.Y); ok {
+			t.Fatalf("%v 不該是開關", p)
+		}
+	}
+	// 第五格原版接 nullsub_1，這裡也不接東西。
+	if w := hudSwitchWindow(4); w != 0 {
+		t.Fatalf("第五格對到視窗 %d，原版是 nullsub_1", w)
+	}
+
+	// 左鍵開、右鍵關；重複同一個動作不翻轉。
+	g := &game{hud: hudCommand}
+	if !g.hudOpen(hudCommand) || g.hudOpen(hudMinimap) {
+		t.Fatal("初始狀態不對")
+	}
+	g.hudSet(hudCommand, false)
+	g.hudSet(hudCommand, false)
+	if g.hudOpen(hudCommand) {
+		t.Fatal("右鍵關了兩次反而變成開著——關／開被寫成 toggle")
+	}
+	g.hudSet(hudMinimap, true)
+	g.hudSet(hudMinimap, true)
+	if !g.hudOpen(hudMinimap) {
+		t.Fatal("左鍵開了兩次反而變成關著")
+	}
+	// 系統視窗共用既有的 g.open[winSystem]，不另存一個位元。
+	g.hudSet(hudSystem, true)
+	if !g.open[winSystem] || !g.hudOpen(hudSystem) {
+		t.Fatal("系統視窗沒有接到既有的 winSystem")
+	}
+	g.hudSet(hudSystem, false)
+	if g.open[winSystem] || g.hudOpen(hudSystem) {
+		t.Fatal("關系統視窗沒有反映到 winSystem")
 	}
 }

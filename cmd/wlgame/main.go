@@ -63,14 +63,14 @@ import (
 //
 // 這三個數字沿用 640×400 DOS/V 畫布與原版 16 px 格座標；歷史 PC-98 截圖只作
 // 交叉驗證，不作本輪 DOS/V 畫面 oracle：
-// 用水域分佈把畫面對回大地圖，狀態列高度掃 0／8／16／24／32 五種；再以
-// 使用者 YouTube oracle 核對右欄分界。地圖仍是**對齊格線**畫的、一格 16 px，
-// 自然策略 HUD 的可視範圍是左側 27×21 格。
+// 地圖是**對齊格線**畫的、一格 16 px，可視範圍 40×23 格 ＝ 640×368。
+// 這個格數是從原版讀出來的：`sub_1D615` 的迴圈 `cx=0x28 / dx=0x17`
+// （docs/re/47 §3.2），捲動上限 `cmp cx, 27Fh` 也照 640 寬算。
 const (
 	screenW, screenH = 640, 400
 	bannerH          = 32
-	viewCols         = strategyMapW / 16 // 27
-	viewRows         = strategyMapH / 16 // 21
+	viewCols         = strategyMapW / 16 // 40
+	viewRows         = strategyMapH / 16 // 23
 )
 
 // 橫幅右段那三個數字欄的右緣。橫幅本身（ICONGRF 段 0）已經印好
@@ -138,6 +138,11 @@ type game struct {
 
 	open       [numWindows]bool
 	camX, camY int
+
+	// hud 是主畫面四個常駐視窗的開關集合，對應原版 `byte_198A6` 的
+	// bit 0–3（docs/spec/13）。**初值四個全開是 remake 差異**——
+	// 原版新遊戲時的初值還沒讀出來。
+	hud hudWindow
 
 	// speed 是每個畫面更新要推進幾個遊戲 tick。
 	// 原版的速度設定是「每 tick 之後等 N 個計時中斷」，沒有固定 tick rate
@@ -443,11 +448,26 @@ func (g *game) Update() error {
 	// 上面的 return 順序是輸入隔離閘；winSystem 是唯一非 resident 的原生
 	// 視窗，也必須阻止命令列點擊穿透。游標 hover 不改狀態，因為目前沒有
 	// 足夠 DOS/V 證據證明原版頂端八格的 hover highlight。
-	if !g.open[winSystem] && inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+	// 橫幅右側五格開關：**左鍵開、右鍵關**（docs/spec/13 §2.3）。
+	// 它排在系統視窗的閘**之前**——不然系統視窗一開就再也關不掉。
+	// 位置上不會衝突：開關在 y<32，系統視窗在 y 112–304。
+	if left := inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft); left ||
+		inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) {
 		x, y := ebiten.CursorPosition()
-		if command, ok := hitTestNaturalCommand(x, y); ok {
-			g.dispatchNaturalCommand(command)
+		if i, ok := hitTestHUDSwitch(x, y); ok {
+			if w := hudSwitchWindow(i); w != 0 {
+				g.hudSet(w, left)
+			}
 			return nil
+		}
+	}
+	if !g.open[winSystem] {
+		if g.hudOpen(hudCommand) && inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+			x, y := ebiten.CursorPosition()
+			if command, ok := hitTestNaturalCommand(x, y); ok {
+				g.dispatchNaturalCommand(command)
+				return nil
+			}
 		}
 	}
 	for _, key := range []ebiten.Key{
@@ -534,9 +554,11 @@ func (g *game) Update() error {
 	if !g.idleGate.Allows(cursorX, cursorY, inputActive) {
 		return nil
 	}
+	// 系統視窗開著時時間停止（說明書 3.1，docs/spec/13 §2.4）。
+	// 另外三個視窗開著時時間照走——這是原版明講的差別。
 	// speed=0 是 remake 的明示暫停：保留原本可見 map-loop 的物件動畫，
 	// 但不推進據點／軍團／時鐘。
-	if g.speed == 0 {
+	if g.speed == 0 || g.hudOpen(hudSystem) {
 		g.world.AdvanceMapObjects(g.rng)
 		return nil
 	}
@@ -990,7 +1012,11 @@ func main() {
 	}
 	g := &game{lib: lib, rng: gameRNG, speed: *speed, td: textdraw.New(font, ascii),
 		shotPath: *shot, shotAt: *shotFrames, origDir: *dir, sourceFile: path,
-		saveFile: *saveFile, saveBase: path}
+		saveFile: *saveFile, saveBase: path,
+		// 四個常駐視窗預設全開——與說明書主畫面圖、參考影片
+		// `docs/images/yt-wolong-natural-80s-640x400.png` 一致。
+		// 系統視窗預設關著：它開著時時間會停（docs/spec/13 §2.4）。
+		hud: hudCommand | hudFaction | hudMinimap}
 	g.chrome = chrome.Load(lib, 0)
 	if !g.chrome.Available() {
 		log.Printf("⚠ 取不到 ICONGRF 段 3 的視窗外框，改畫純色框")

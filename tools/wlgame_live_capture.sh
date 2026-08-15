@@ -198,6 +198,21 @@ for step in "${steps[@]}"; do
             sleep 0.3
             trace "step end=$step"
             ;;
+        # click／rclick：x,y 是**邏輯 640×400 座標**，會依視窗實際大小換算。
+        # 主畫面的四個視窗開關只有滑鼠路徑（原版就沒有鍵盤，docs/re/22 §2），
+        # 少了這一步就拍不到「關掉視窗」的畫面。
+        click|rclick)
+            trace "step begin=$step"
+            window_geometry
+            cx=${arg%%,*}; cy=${arg##*,}
+            btn=1; [ "$kind" = rclick ] && btn=3
+            DISPLAY=:99 xdotool mousemove \
+                "$((X + cx * WIDTH / 640))" "$((Y + cy * HEIGHT / 400))"
+            sleep 0.15
+            DISPLAY=:99 xdotool click "$btn"
+            sleep 0.3
+            trace "step end=$step"
+            ;;
         record)
             trace "step begin=$step"
             IFS=',' read -r seconds fps prefix <<< "$arg"
