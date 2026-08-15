@@ -117,6 +117,26 @@ func (g *game) drawBattleChoice(screen *ebiten.Image, c *state.EncounterChoice) 
 		x+chrome.Tile+4, y+h-chrome.Tile-textdraw.GlyphH, dim)
 }
 
+// speedToastFrames 是調速度之後那行提示顯示幾幀（約 1.5 秒 @60fps）。
+//
+// **常駐顯示會破壞版面 parity**（原版戰場沒有速度指示），所以只在剛調過
+// 的時候浮一下。這是 remake 差異。
+const speedToastFrames = 90
+
+// drawSpeedToast 在戰場左下角浮一行「戰術速度 N」。
+func (g *game) drawSpeedToast(dst *ebiten.Image, l dosvBattleLayout) {
+	if g.speedToast <= 0 {
+		return
+	}
+	text := fmt.Sprintf("戰術速度 %d", g.tacticalSpeed)
+	w := g.td.Width(text) + 16
+	x := l.Field.X + 8
+	y := l.BottomCommands.Y - textdraw.GlyphH - 12
+	vector.DrawFilledRect(dst, float32(x), float32(y-4), float32(w),
+		float32(textdraw.GlyphH+8), color.RGBA{0, 0, 0, 200}, false)
+	g.td.Draw(dst, text, x+8, y, chrome.Paper)
+}
+
 // updateBattle 是戰場畫面的輸入。
 //
 // 說明書 4.1：「**戦闘中は絶対に時間を止められません**」——
@@ -127,6 +147,18 @@ func (g *game) updateBattle() {
 	l := dosvBattleLayoutFor(screenW, screenH)
 	if g.view == nil {
 		g.view = g.newBattleView(g.fieldNumber(p.Node, p.Mode == combat.Siege))
+	}
+
+	// ＋／− 調**戰術速度**。原版的戰術速度是獨立設定（系統選單第 5 列），
+	// 而戰場畫面獨佔輸入，所以這裡要自己接一次——不然進了戰場就調不到。
+	for i, k := range []ebiten.Key{ebiten.KeyMinus, ebiten.KeyEqual} {
+		if pressed(k) {
+			g.adjustSpeed(true, []int{-1, 1}[i])
+			g.speedToast = speedToastFrames
+		}
+	}
+	if g.speedToast > 0 {
+		g.speedToast--
 	}
 
 	if !b.Done {
@@ -222,6 +254,7 @@ func (g *game) drawBattle(screen *ebiten.Image) {
 	if g.view != nil {
 		g.drawBattleIso(screen, b, &me)
 		g.drawBattleChrome(screen, b, p, l)
+		g.drawSpeedToast(screen, l)
 		g.drawBattleResult(screen, b, p)
 		return
 	}

@@ -133,6 +133,7 @@ type game struct {
 	// 系統選單那兩列因此永遠一樣。
 	speed         int // 戰略速度
 	tacticalSpeed int // 戰術速度
+	speedToast    int // 剛調過速度時在戰場浮一行提示，剩幾幀
 
 	// idleGate 對應松崗繁中版 sub_11F7F 的「游標座標未變」判定。
 	// 它是讓自然世界迴圈開始的 UI 閘門；事件 queue 的 consumer 仍在
