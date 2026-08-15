@@ -74,7 +74,7 @@ func (g *game) returnToLauncher() error {
 	g.battleLib = nil
 	g.battleSprites = nil
 	g.view = nil
-	g.open = [numWindows]bool{}
+	g.hud = 0
 	g.list = nil
 	g.form = formState{}
 	g.finance = financeState{}

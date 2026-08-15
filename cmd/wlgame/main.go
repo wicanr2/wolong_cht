@@ -84,25 +84,6 @@ const (
 	bannerTextY      = 9
 )
 
-// windowKind 是四個視窗開關（說明書 3.1）。
-//
-// **前三個開著時時間照跑，第四個會讓時間停止。**
-// 這不是 UI 細節，是規則：docs/mechanics/15-realtime.md §2。
-type windowKind int
-
-const (
-	winCommand windowKind = iota // 命令
-	winFaction                   // 自勢力情報
-	winMinimap                   // 縮小地圖
-	winSystem                    // 系統
-	numWindows
-)
-
-var windowNames = [numWindows]string{"命令", "自勢力情報", "縮小地圖", "系統"}
-
-// residentWindows 是「開著也不會停時間」的那三個。
-var residentWindows = [numWindows]bool{winCommand: true, winFaction: true, winMinimap: true}
-
 type game struct {
 	lib    *library.Library
 	world  *state.World
@@ -136,7 +117,6 @@ type game struct {
 	saveUI     saveUIState
 	launcher   *launcherModel
 
-	open       [numWindows]bool
 	camX, camY int
 
 	// hud 是主畫面四個常駐視窗的開關集合，對應原版 `byte_198A6` 的
@@ -265,10 +245,10 @@ func (g *game) timeRuns() bool {
 		g.saveUI.active || g.messageActive() {
 		return false
 	}
-	for k := windowKind(0); k < numWindows; k++ {
-		if g.open[k] && !residentWindows[k] {
-			return false
-		}
+	// 四個常駐視窗裡**只有系統視窗會停時間**（說明書 3.1、
+	// docs/mechanics/15-realtime.md §2）。
+	if g.hudOpen(hudSystem) {
+		return false
 	}
 	return true
 }
@@ -447,7 +427,7 @@ func (g *game) Update() error {
 		return nil
 	}
 	// 系統視窗內才接受存檔快捷鍵；避免在地圖上誤觸而改變狀態。
-	if g.open[winSystem] {
+	if g.hudOpen(hudSystem) {
 		switch {
 		case pressed(ebiten.KeyS):
 			g.beginSaveUI(saveWrite)
@@ -500,7 +480,7 @@ func (g *game) Update() error {
 			return nil
 		}
 	}
-	if !g.open[winSystem] {
+	if !g.hudOpen(hudSystem) {
 		if g.hudOpen(hudCommand) && inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 			x, y := ebiten.CursorPosition()
 			if command, ok := hitTestNaturalCommand(x, y); ok {
@@ -535,17 +515,19 @@ func (g *game) Update() error {
 	if pressed(ebiten.KeyEscape) {
 		inputActive = true
 		// 由上而下關掉最上面那個開著的視窗。
-		for k := numWindows - 1; k >= 0; k-- {
-			if g.open[k] {
-				g.open[k] = false
+		for i := hudSwitchN - 1; i >= 0; i-- {
+			if w := hudSwitchWindow(i); w != 0 && g.hudOpen(w) {
+				g.hudSet(w, false)
 				break
 			}
 		}
 	}
+	// remake 差異：原版只有滑鼠點橫幅那五格，鍵盤 1–4 是自己加的。
 	for i, k := range []ebiten.Key{ebiten.Key1, ebiten.Key2, ebiten.Key3, ebiten.Key4} {
 		if pressed(k) {
 			inputActive = true
-			g.open[i] = !g.open[i]
+			w := hudSwitchWindow(i)
+			g.hudSet(w, !g.hudOpen(w))
 		}
 	}
 	for i, k := range []ebiten.Key{ebiten.KeyMinus, ebiten.KeyEqual} {
@@ -695,11 +677,6 @@ func (g *game) Draw(screen *ebiten.Image) {
 
 	// 自然策略 HUD 是原版主畫面的固定骨架；四個視窗仍是可獨立切換的暫存層。
 	g.drawNaturalStrategyHUD(screen)
-	for k := windowKind(0); k < numWindows; k++ {
-		if g.open[k] {
-			g.drawWindow(screen, k)
-		}
-	}
 
 	// 事件列只在有事的時候出現，而且畫成一個視窗而不是貼在畫面底部的黑條。
 	if g.lastEvent != "" {
@@ -1141,7 +1118,7 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 	g.battleCommandSelect = color.RGBA{240, 0, 0, 255}
 	g.installTactical(g.origDir)
 	g.saveBase = path
-	g.open = [numWindows]bool{}
+	g.hud = 0
 	g.list = nil
 	g.form = formState{}
 	g.finance = financeState{}
@@ -1243,8 +1220,9 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, openFor
 	case "faction":
 		w.DebugLatchOutcomeForShot(state.DefeatFactionEliminated)
 	}
-	if openWin >= 0 && openWin < int(numWindows) {
-		g.open[openWin] = true
+	// -open-window N 開第 N 個視窗（0–3），驗收用。
+	if w := hudSwitchWindow(openWin); openWin >= 0 && w != 0 {
+		g.hudSet(w, true)
 	}
 	if openList {
 		g.openGeneralList()

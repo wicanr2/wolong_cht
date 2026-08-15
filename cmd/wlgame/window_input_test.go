@@ -102,17 +102,17 @@ func TestListPageAndFooterCancelAreSharedActions(t *testing.T) {
 }
 
 func TestSaveModalActionsDoNotTouchBackgroundWindows(t *testing.T) {
-	g := &game{open: [numWindows]bool{winCommand: true}, saveUI: saveUIState{
+	g := &game{hud: hudCommand, saveUI: saveUIState{
 		active: true,
 		action: saveWrite,
 		slot:   0,
 	}}
 	g.dispatchSaveUI(saveUIAction{kind: saveActionNext})
-	if g.saveUI.slot != 1 || !g.open[winCommand] {
-		t.Fatalf("save selection changed background: slot=%d command=%v", g.saveUI.slot, g.open[winCommand])
+	if g.saveUI.slot != 1 || !g.hudOpen(hudCommand) {
+		t.Fatalf("存檔選取動到了背景：slot=%d command=%v", g.saveUI.slot, g.hudOpen(hudCommand))
 	}
 	g.dispatchSaveUI(saveUIAction{kind: saveActionCancel})
-	if g.saveUI.active || !g.open[winCommand] {
-		t.Fatalf("save cancel leaked into background: save=%v command=%v", g.saveUI.active, g.open[winCommand])
+	if g.saveUI.active || !g.hudOpen(hudCommand) {
+		t.Fatalf("取消存檔漏到了背景：save=%v command=%v", g.saveUI.active, g.hudOpen(hudCommand))
 	}
 }

@@ -114,13 +114,13 @@ func TestHUDSwitchGeometryAndSemantics(t *testing.T) {
 	if !g.hudOpen(hudMinimap) {
 		t.Fatal("左鍵開了兩次反而變成關著")
 	}
-	// 系統視窗共用既有的 g.open[winSystem]，不另存一個位元。
+	// 系統視窗與另外三個一樣，狀態就在 g.hud 裡（docs/spec/13 §2.5）。
 	g.hudSet(hudSystem, true)
-	if !g.open[winSystem] || !g.hudOpen(hudSystem) {
-		t.Fatal("系統視窗沒有接到既有的 winSystem")
+	if !g.hudOpen(hudSystem) {
+		t.Fatal("點第四格沒有開系統視窗")
 	}
 	g.hudSet(hudSystem, false)
-	if g.open[winSystem] || g.hudOpen(hudSystem) {
-		t.Fatal("關系統視窗沒有反映到 winSystem")
+	if g.hudOpen(hudSystem) {
+		t.Fatal("右鍵沒有關掉系統視窗")
 	}
 }

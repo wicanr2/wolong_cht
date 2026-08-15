@@ -341,23 +341,14 @@ func hitTestHUDSwitch(x, y int) (int, bool) {
 	return i, true
 }
 
-// hudOpen／hudSet 是四個視窗開關狀態的唯一入口。
+// hudOpen／hudSet 是主畫面視窗開關狀態的**唯一**入口。
 //
-// 系統視窗**不另存一個位元**：remake 早就有 `g.open[winSystem]`
-// 這個模態視窗，再開一個 bit 會變成兩份狀態各自漂移
-// （`CLAUDE.md` §7 第 6 條）。
-func (g *game) hudOpen(w hudWindow) bool {
-	if w == hudSystem {
-		return g.open[winSystem]
-	}
-	return g.hud&w != 0
-}
+// ⭐ 先前系統視窗另外存在 `g.open[winSystem]`，而 `g.open[]` 那一整套
+// 又自己畫了一次命令／自勢力情報／縮小地圖——兩套疊在畫面上。
+// 舊那套已整個拿掉（docs/spec/13 §2.5），四個視窗都在這一個 bitmask 裡。
+func (g *game) hudOpen(w hudWindow) bool { return g.hud&w != 0 }
 
 func (g *game) hudSet(w hudWindow, open bool) {
-	if w == hudSystem {
-		g.open[winSystem] = open
-		return
-	}
 	if open {
 		g.hud |= w
 	} else {
@@ -373,6 +364,9 @@ func (g *game) hudSet(w hudWindow, open bool) {
 func (g *game) drawNaturalStrategyHUD(screen *ebiten.Image) {
 	if !g.hudOpen(hudCommand) {
 		g.drawHUDSidebar(screen)
+		if g.hudOpen(hudSystem) {
+			g.drawSystemWindow(screen)
+		}
 		return
 	}
 	// 命令列使用與原版視窗相同的深藍底／紅金外框；文字沿 8 px 邊界排列。
@@ -382,6 +376,44 @@ func (g *game) drawNaturalStrategyHUD(screen *ebiten.Image) {
 		g.td.Draw(screen, strategyHUDSingleLine(label, strategyCommandTextW), x, strategyCommandY+8, chrome.Paper)
 	}
 	g.drawHUDSidebar(screen)
+	if g.hudOpen(hudSystem) {
+		g.drawSystemWindow(screen)
+	}
+}
+
+// 系統視窗的版面：矩形出自 `sub_160CC` → `sub_1895D(cx=0C0Dh)`，
+// 內容是顯示清單場景 2（docs/re/48 §3）。
+const (
+	sysWinX, sysWinY = 208, 112
+	sysWinW, sysWinH = 208, 192
+)
+
+// drawSystemWindow 畫系統設定面板。
+//
+// 松崗 DOS/V 是中央五列設定 ＋ 右側綠底值格；**不能用一整頁 remake
+// 快捷鍵說明取代**。這一段原本在舊的 `drawWindow(winSystem)` 裡，
+// 舊那套整個拿掉時搬過來（docs/spec/13 §2.5）。
+func (g *game) drawSystemWindow(dst *ebiten.Image) {
+	g.chrome.Window(dst, sysWinX, sysWinY, sysWinW, sysWinH, chrome.Menu)
+	ink := chrome.Paper
+	g.td.Draw(dst, "系　統　設　定", sysWinX+chrome.Tile+4, sysWinY+chrome.Tile+2, ink)
+
+	labels := []string{"資料儲存", "畫面模式", "音　　效", "戰略速度", "戰術速度"}
+	values := []string{"S／L", "TYPE 1", "未接入",
+		fmt.Sprintf("%d", g.speed), fmt.Sprintf("%d", g.speed)}
+	rowY := sysWinY + chrome.Tile + textdraw.GlyphH + 8
+	valueX := sysWinX + sysWinW - chrome.Tile - 72
+	for i := range labels {
+		y := rowY + i*(textdraw.GlyphH+4)
+		g.td.Draw(dst, labels[i], sysWinX+chrome.Tile+4, y, ink)
+		vector.DrawFilledRect(dst, float32(valueX), float32(y-1), 64,
+			float32(textdraw.GlyphH+2), color.RGBA{45, 110, 55, 255}, false)
+		col := ink
+		if values[i] == "未接入" {
+			col = color.RGBA{170, 170, 170, 255}
+		}
+		g.td.Draw(dst, values[i], valueX+4, y, col)
+	}
 }
 
 // drawHUDSidebar 畫右欄的兩個視窗。**兩個各自可以關掉**，
