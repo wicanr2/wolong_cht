@@ -22,7 +22,7 @@ import (
 //	自勢力情報  (432,192, 208, 208)  sub_15E2D → sub_1895D(cx=0x0D0D)
 //
 // 右欄三段相加 32 + 160 + 208 = 400，剛好鋪滿畫面高度——這是「矩形讀對了」
-// 的算術檢查。原版四個視窗可以逐個開關，remake 目前固定顯示（spec §7）。
+// 的算術檢查。四個視窗可以逐個開關（docs/spec/13）。
 const (
 	strategyCommandY = bannerH
 	strategyCommandH = 32
@@ -123,6 +123,11 @@ const (
 	// 原版是資金 7 位、預備兵 6 位，兩者右端都對齊 x=616。
 	strategyFundsDigits   = 7
 	strategyReserveDigits = 6
+	// 原版顯示預備兵時乘 10（`sub_15F7F` 的 `mul dx(=0x0A)`）：勢力記錄存的是
+	// 「點」，一點 10 人。**這裡只換算顯示**——規則層的 `Reserves` 語意
+	// 目前與原版不一致（`army.MenPerUnit` 是 1000，等於把存值當人數扣），
+	// 那要另外開規格處理，不在畫面這一輪動它（docs/re/47 §5）。
+	strategyReserveMenPerPoint = 10
 	strategyNumberSlots   = strategyFundsDigits
 	strategyNumberW       = strategyNumberSlots * textdraw.HalfW
 )
@@ -452,9 +457,7 @@ func (g *game) drawNaturalFactionHUD(dst *ebiten.Image, x, y int) {
 	g.td.Draw(dst, "預備兵", x+strategyResourceLabelX, y+strategyReserveYOffset, resourceInk)
 	g.td.Draw(dst, strategyHUDNumber(f.Funds, strategyFundsDigits), x+strategyFundsXOffset, fundsY, ink)
 
-	// ⚠ 原版顯示預備兵時乘 10（docs/re/47 §4.2），這裡**沒有乘**：
-	// remake 的規則層把 Reserves 當人數直接扣（internal/state/corps.go），
-	// 只改顯示會讓畫面與規則對不上。兩者哪一個要改，等原版的扣減端讀出來再定。
+	// 顯示換算見常數區的 strategyReserveMenPerPoint。
 	reserveValues := [...]int{
 		f.Reserves[economy.Cavalry],
 		f.Reserves[economy.Archer],
@@ -472,6 +475,7 @@ func (g *game) drawNaturalFactionHUD(dst *ebiten.Image, x, y int) {
 	}
 	for i, value := range reserveValues {
 		iconY := y + strategyReserveYOffset + i*strategyResourceRowStep
-		g.td.Draw(dst, strategyHUDNumber(value, strategyReserveDigits), x+strategyReserveXOffset, iconY, ink)
+		g.td.Draw(dst, strategyHUDNumber(value*strategyReserveMenPerPoint, strategyReserveDigits),
+			x+strategyReserveXOffset, iconY, ink)
 	}
 }

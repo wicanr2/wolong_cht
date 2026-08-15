@@ -107,7 +107,7 @@
 | [`docs/re/45-corps-command-mode.md`](re/45-corps-command-mode.md) | 45 — 軍團的三種指令模式：戰鬥指揮／委任／解體 | 軍團 +0x00 位元 2 定案 ＝ | 2026-08-14 |
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |
 | [`docs/re/47-main-screen-window-registry.md`](re/47-main-screen-window-registry.md) | 47 — 主畫面的四個常駐視窗：開關、位元集與各自的矩形 | 四個常駐視窗的開關熱區、位元集、分派表與四個視窗各自的像素矩形 全部 confirmed。繪圖／熱區常式的參數對應（… | 2026-08-15 |
-| [`docs/re/48-window-display-list.md`](re/48-window-display-list.md) | 48 — 視窗內容是一份顯示清單，不是一張圖 | 清單的位置、記錄格式、場景切分與五個 opcode 的用途 confirmed。 自勢力情報視窗（場景 0）的每一個… | 2026-08-15 |
+| [`docs/re/48-window-display-list.md`](re/48-window-display-list.md) | 48 — 視窗內容是一份顯示清單，不是一張圖 | 清單的位置、記錄格式、場景切分、opcode 值域（1–9）與十個場景 全部解出來了。每個場景對到哪個視窗由字串內容… | 2026-08-15 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-13 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -274,7 +274,6 @@
 | 2. 記憶體佈局：sub_1CC31 ▸ ds:0D306 | `docs/re/11-tactical-battle.md` |
 | 2. 記憶體佈局：sub_1CC31 ▸ ds:0D42 | `docs/re/11-tactical-battle.md` |
 | 2.7 圖像與調色盤 ▸ KYOGRF.DAT | `docs/reference/04-first-survey.md` |
-| 3. ⭐ 場景 0 ＝ 自勢力情報視窗的內部 ▸ 4 | `docs/re/48-window-display-list.md` |
 | 3. 曲塊內部 ▸ +0x00 | `docs/re/23-bgm-resource-format.md` |
 | 3. 曲塊內部 ▸ +0x06–+0x0F | `docs/re/23-bgm-resource-format.md` |
 | 3. 武將記錄（32 byte） ▸ +0 | `docs/formats/08-sinario-save.md` |
@@ -283,6 +282,7 @@
 | 3. 武將記錄（32 byte） ▸ +25,+27 | `docs/formats/08-sinario-save.md` |
 | 3. 軍團記錄的欄位（部分） ▸ +0x08 | `docs/re/05-battle-selection.md` |
 | 3.2 ⭐ 大地圖是 640×368，四個視窗蓋在它上面 ▸ 0x80 | `docs/re/47-main-screen-window-registry.md` |
+| 4. ⭐ 場景 0 ＝ 自勢力情報視窗的內部 ▸ 4 | `docs/re/48-window-display-list.md` |
 | 4. 只在單邊存在的檔（confirmed） ▸ PASS.MAP／PASS.SCH | `docs/re/01-first-recon.md` |
 | 4. 據點記錄（32 byte） ▸ +0 | `docs/formats/08-sinario-save.md` |
 | 4. 據點記錄（32 byte） ▸ +12 | `docs/formats/08-sinario-save.md` |

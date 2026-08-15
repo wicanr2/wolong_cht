@@ -18,8 +18,8 @@ import idc
 
 OUT = "/work/range.txt"
 RANGES = [
-    (0x159C0, 0x159E0, "主畫面視窗的兩張分派表"),
-    (0x11C8D, 0x11CD0, "關掉視窗之後補回地圖"),
+    (0x1EA1F, 0x1EAE9, "顯示清單九個 opcode 的 handler"),
+    (0x1E9A7, 0x1E9C1, "sub_1E9A7：登記圖庫段"),
 ]
 
 
