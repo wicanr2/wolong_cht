@@ -4,6 +4,8 @@ import (
 	"encoding/binary"
 	"os"
 	"testing"
+
+	"github.com/wicanr2/wolong_cht/internal/rules/battlefield"
 )
 
 // 原版那兩張表在 `KI.EXE` 的段內偏移 `0x9309`（docs/re/58 §2）。
@@ -69,5 +71,25 @@ func TestSeasonTransitionMonthsCarryPreviousSeason(t *testing.T) {
 		if want := byte((int(to) + 3) % 4); from != want {
 			t.Errorf("%d 月的來源盤是 %d，前一季應該是 %d", m, from, want)
 		}
+	}
+}
+
+// 戰場音樂的三個門檻要跟 `internal/rules/battlefield` 的常數對齊。
+//
+// 原版是 `cmp al, 0C0h` 與 `cmp al, 0D1h`（docs/re/58 §4）——
+// **門檻吃的是戰場編號，不是「攻城／野戰」這個布林值**，
+// 所以山地／林地／水域那一組（0xD1 起）才分得出來。
+func TestBattleMusicThresholdsMatchBattlefieldConstants(t *testing.T) {
+	if battlefield.FieldBase != 0xC0 {
+		t.Errorf("平原野戰的基底是 0x%X，原版是 0xC0", battlefield.FieldBase)
+	}
+	// 地形類型 1–7 → 0xCF–0xD5；門檻 0xD1 落在類型 2 與 3 之間。
+	if battlefield.TerrainBase+2 != 0xD0 || battlefield.TerrainBase+3 != 0xD1 {
+		t.Errorf("地形戰場基底 0x%X 讓 0xD1 的門檻切錯位置", battlefield.TerrainBase)
+	}
+	// 攻城戰的編號是據點編號，一定落在門檻以下。
+	if battlefield.NumCityFields > battlefield.FieldBase {
+		t.Errorf("據點戰場有 %d 張，會撞進野戰的編號區間",
+			battlefield.NumCityFields)
 	}
 }

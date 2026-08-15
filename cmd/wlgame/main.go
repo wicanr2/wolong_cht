@@ -53,6 +53,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/savepath"
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
+	"github.com/wicanr2/wolong_cht/internal/rules/battlefield"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
 	"github.com/wicanr2/wolong_cht/internal/ui/sound"
@@ -364,9 +365,9 @@ var seasonMusic = [12]int{5, 5, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5}
 //   - **戰術進場先停**，設定跑完才依戰場類別挑曲（`sub_19946`）
 //   - 換季那個月是**第 2 天**換曲，調色盤卻要漸變 16 天——兩者不同步
 //     是原版行為（docs/re/58 §2）。remake 目前只做換曲那一半
-//   - 曲 6（事件與對話）還沒接：原版由四支對話／事件常式呼叫，
-//     remake 這一側還沒有對應的單一進入點。**沒接就是沒接**，
-//     不要拿別的畫面狀態去湊
+//   - 事件與對話放曲 6，結束後回到當季那一首。原版是四支常式各自
+//     呼叫曲 6、收尾再呼叫 `sub_19321` 放回當季（docs/re/58 §3）；
+//     remake 這一側只要條件不成立就自然落回季節那一支，形狀一樣
 func (g *game) musicTrack() string {
 	switch {
 	case g.launcher != nil:
@@ -378,16 +379,47 @@ func (g *game) musicTrack() string {
 		// `OVERBGM.DAT` 是 `D7OVER.EXE`（遊戲結束）的（docs/re/58 §6）。
 		return "overbgm-0"
 	case g.battleActive():
-		if p := g.world.PendingBattle(); p != nil && p.Mode == combat.Siege {
-			return "bgm-7" // 攻城戰
-		}
-		return "bgm-9" // 野戰
+		return g.battleMusic()
+	case g.messageActive() || g.adviseActive():
+		// 曲 6 ＝ 事件與對話。⚠ 原版的四個呼叫端是外交對話、事件 2/3、
+		// 事件 4/5 與系統服務分派（docs/re/58 §3），**remake 這一側
+		// 不是一對一**：這裡用「事件訊息開著」與「進言對話開著」兩個狀態。
+		return "bgm-6"
 	default:
 		m := g.world.Clock.Month
 		if m < 1 || m > 12 {
 			return ""
 		}
 		return fmt.Sprintf("bgm-%d", seasonMusic[m-1])
+	}
+}
+
+// battleMusic 依戰場編號與玩家的攻守挑曲（docs/re/58 §4）。
+//
+// 原版是 `sub_19946` 算的：`byte_1D34B`（戰場編號分三類）＋ 7，
+// 而攻城戰那一格再看 `byte_10D35` 的 bit 6。設那個位元的是 `sub_14ED7`
+// ——它拿 `byte_10CFF`（玩家勢力）比對據點與軍團的持有者，
+// **玩家守城才走 `or 0C0h`**（同時設 bit 7 攻守對調、bit 6 戰場翻轉）。
+//
+// ⭐ 門檻用的是**戰場編號**不是「攻城／野戰」這個布林值：
+// 編號 ≥ 0xD1 是中心格為山地／林地／水域的特殊戰場
+// （`internal/rules/battlefield` 的 TerrainBase 那一組），原版給它另一首。
+func (g *game) battleMusic() string {
+	p := g.world.PendingBattle()
+	if p == nil {
+		return "bgm-9"
+	}
+	field := g.fieldNumber(p.Node, p.Mode == combat.Siege)
+	switch {
+	case field >= 0xD1:
+		return "bgm-10" // 山地／林地／水域的戰場
+	case field >= battlefield.FieldBase:
+		return "bgm-9" // 平原野戰
+	case p.Attacker >= 0 && p.Attacker < len(g.world.Corps) &&
+		g.world.Corps[p.Attacker].Faction == g.world.Player:
+		return "bgm-7" // 攻城戰，玩家是攻方
+	default:
+		return "bgm-8" // 攻城戰，玩家是守方
 	}
 }
 
