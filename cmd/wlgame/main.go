@@ -128,7 +128,11 @@ type game struct {
 	// 原版的速度設定是「每 tick 之後等 N 個計時中斷」，沒有固定 tick rate
 	// （docs/re/06 §4）；remake 改成固定 60 Hz 邏輯更新 ＋ 可調倍率，
 	// 並把這件事標記為 remake 差異（15-realtime.md §7）。
-	speed int
+	// 原版是**兩個獨立設定**：戰略速度在 `ds:0CFAh`，戰術速度存哪未解
+	// （docs/mechanics/15-realtime.md §211）。remake 先前共用一個變數，
+	// 系統選單那兩列因此永遠一樣。
+	speed         int // 戰略速度
+	tacticalSpeed int // 戰術速度
 
 	// idleGate 對應松崗繁中版 sub_11F7F 的「游標座標未變」判定。
 	// 它是讓自然世界迴圈開始的 UI 閘門；事件 queue 的 consumer 仍在
@@ -480,6 +484,19 @@ func (g *game) Update() error {
 			return nil
 		}
 	}
+	// 系統選單開著時，那六列吃滑鼠。**原版的六個 handler 沒讀**
+	// （docs/re/55 §4），所以這裡的接法是照標籤字面意思的 remake 差異：
+	// 左鍵 +1／右鍵 −1 調速度，兩個 ＯＫ 列接既有的存讀與離開確認。
+	if g.hudOpen(hudSystem) {
+		if left := inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft); left ||
+			inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) {
+			x, y := ebiten.CursorPosition()
+			if row, ok := hitTestSystemRow(x, y); ok {
+				g.dispatchSystemRow(row, left)
+				return nil
+			}
+		}
+	}
 	if !g.hudOpen(hudSystem) {
 		if g.hudOpen(hudCommand) && inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 			x, y := ebiten.CursorPosition()
@@ -530,17 +547,12 @@ func (g *game) Update() error {
 			g.hudSet(w, !g.hudOpen(w))
 		}
 	}
+	// ＋／− 調速度：戰術畫面調戰術速度，其餘調戰略速度。
 	for i, k := range []ebiten.Key{ebiten.KeyMinus, ebiten.KeyEqual} {
 		if pressed(k) {
 			inputActive = true
-			g.speed += []int{-1, 1}[i]
+			g.adjustSpeed(g.battleActive(), []int{-1, 1}[i])
 		}
-	}
-	if g.speed < 0 {
-		g.speed = 0
-	}
-	if g.speed > 64 {
-		g.speed = 64
 	}
 
 	step := 1
@@ -973,7 +985,8 @@ func main() {
 	player := flag.Int("player", 0, "玩家所仕的勢力編號（直接啟動／驗收用）")
 	directStart := flag.Bool("direct", false, "跳過一般玩家啟動殼層，直接啟動指定劇本／玩家（驗收用）")
 	fontDir := flag.String("font", "workplace/eten", "倚天點陣字目錄（請自備）")
-	speed := flag.Int("speed", 4, "每個畫面更新推進幾個遊戲 tick")
+	speed := flag.Int("speed", 4, "戰略速度：每個畫面更新推進幾個遊戲 tick")
+	tacticalSpeed := flag.Int("tactical-speed", 4, "戰術速度：戰場每個畫面更新推進幾幀")
 	seed := flag.Int("seed", -1, "驗收用固定亂數種子；負值時照原版以時鐘播種")
 	shot := flag.String("shot", "", "跑 N 幀之後截圖到這個路徑就結束（驗收用）")
 	shotFrames := flag.Int("shot-frames", 120, "截圖前先跑幾幀")
@@ -1027,7 +1040,8 @@ func main() {
 		gameRNG = rng.NewFixed(*seed)
 		log.Printf("驗收固定亂數種子：%d", *seed)
 	}
-	g := &game{lib: lib, rng: gameRNG, speed: *speed, td: textdraw.New(font, ascii),
+	g := &game{lib: lib, rng: gameRNG, speed: *speed, tacticalSpeed: *tacticalSpeed,
+		td: textdraw.New(font, ascii),
 		shotPath: *shot, shotAt: *shotFrames, origDir: *dir, sourceFile: path,
 		saveFile: *saveFile, saveBase: path}
 	// 四個常駐視窗**預設全關**，這是原版數值：新遊戲流程的最後一行是

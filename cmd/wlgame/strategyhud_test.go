@@ -632,3 +632,49 @@ func TestSystemMenuLayout(t *testing.T) {
 		t.Errorf("六列標籤 = %v", sysMenuLabels)
 	}
 }
+
+// 戰略速度與戰術速度是**兩個獨立設定**（原版說明書 3.5、系統選單第 4／5 列）。
+// remake 先前共用一個變數，選單那兩列因此永遠一樣。
+func TestSpeedsAreIndependent(t *testing.T) {
+	g := &game{speed: 4, tacticalSpeed: 4}
+	g.adjustSpeed(false, 3)
+	if g.speed != 7 || g.tacticalSpeed != 4 {
+		t.Fatalf("調戰略速度動到了戰術：%d／%d", g.speed, g.tacticalSpeed)
+	}
+	g.adjustSpeed(true, -2)
+	if g.speed != 7 || g.tacticalSpeed != 2 {
+		t.Fatalf("調戰術速度動到了戰略：%d／%d", g.speed, g.tacticalSpeed)
+	}
+	// 兩端都要夾住：0 是暫停，speedMax 是上限。
+	g.adjustSpeed(false, -100)
+	g.adjustSpeed(true, 1000)
+	if g.speed != 0 || g.tacticalSpeed != speedMax {
+		t.Fatalf("沒有夾在 0–%d：%d／%d", speedMax, g.speed, g.tacticalSpeed)
+	}
+}
+
+// 系統選單那六列的滑鼠命中：左鍵 +1、右鍵 −1，只動對應的那一個速度。
+func TestSystemRowAdjustsSpeed(t *testing.T) {
+	g := &game{speed: 4, tacticalSpeed: 4}
+	r := sysRowRect(sysRowStrategySpeed)
+	row, ok := hitTestSystemRow(r.Min.X+2, r.Min.Y+2)
+	if !ok || row != sysRowStrategySpeed {
+		t.Fatalf("點戰略速度那列 = %d, %v", row, ok)
+	}
+	g.dispatchSystemRow(row, true)
+	if g.speed != 5 || g.tacticalSpeed != 4 {
+		t.Errorf("左鍵沒有 +1：%d／%d", g.speed, g.tacticalSpeed)
+	}
+	g.dispatchSystemRow(sysRowTacticalSpeed, false)
+	if g.speed != 5 || g.tacticalSpeed != 3 {
+		t.Errorf("右鍵沒有 −1：%d／%d", g.speed, g.tacticalSpeed)
+	}
+	// 列與列之間不能互相命中。
+	for k := 0; k < sysRows; k++ {
+		rk := sysRowRect(k)
+		got, ok := hitTestSystemRow(rk.Min.X+1, rk.Min.Y+1)
+		if !ok || got != k {
+			t.Errorf("第 %d 列自己的中心命中 %d, %v", k, got, ok)
+		}
+	}
+}

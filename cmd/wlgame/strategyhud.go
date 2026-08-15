@@ -406,6 +406,63 @@ const (
 var sysMenuLabels = [sysRows]string{
 	"資料儲存", "畫面模式", "音　　效", "戰略速度", "戰術速度", "遊戲結束"}
 
+// 系統選單六列的索引。原版的六個 handler 沒讀（docs/re/55 §4），
+// 所以**哪一列做什麼是 remake 自己接的**，照標籤的字面意思。
+const (
+	sysRowSave = iota
+	sysRowVideo
+	sysRowSound
+	sysRowStrategySpeed
+	sysRowTacticalSpeed
+	sysRowQuit
+)
+
+// speedMax 是速度的上限。**這不是原版數值**——原版四個檔位各是什麼值
+// 還沒解（docs/mechanics/15-realtime.md 未解表），remake 用「每畫面推進
+// 幾個 tick」當語意，0 ＝ 暫停。
+const speedMax = 64
+
+// adjustSpeed 調速度。tactical 為 true 時調戰術速度。
+func (g *game) adjustSpeed(tactical bool, delta int) {
+	p := &g.speed
+	if tactical {
+		p = &g.tacticalSpeed
+	}
+	*p = clamp(*p+delta, 0, speedMax)
+}
+
+// dispatchSystemRow 處理點到系統選單某一列。left ＝ 左鍵。
+//
+// ⚠ **原版那六個 handler 沒讀**（docs/re/55 §4），這裡是照標籤字面
+// 接的 remake 行為：兩個速度左鍵加右鍵減，「資料儲存」開既有的四槽視窗，
+// 「遊戲結束」走既有的 ＹＥＳ／ＮＯ 離開確認。
+func (g *game) dispatchSystemRow(row int, left bool) {
+	delta := 1
+	if !left {
+		delta = -1
+	}
+	switch row {
+	case sysRowStrategySpeed:
+		g.adjustSpeed(false, delta)
+	case sysRowTacticalSpeed:
+		g.adjustSpeed(true, delta)
+	case sysRowSave:
+		g.beginSaveUI(saveWrite)
+	case sysRowQuit:
+		g.quitting, g.quitYes = true, false
+	}
+}
+
+// hitTestSystemRow 回傳點到系統選單的第幾列。
+func hitTestSystemRow(x, y int) (int, bool) {
+	for k := 0; k < sysRows; k++ {
+		if (image.Point{X: x, Y: y}).In(sysRowRect(k)) {
+			return k, true
+		}
+	}
+	return 0, false
+}
+
 // sysRowRect 是第 k 列的可點矩形（原版熱區 0x20+k）。
 func sysRowRect(k int) image.Rectangle {
 	if k < 0 || k >= sysRows {
@@ -429,7 +486,7 @@ func (g *game) drawSystemWindow(dst *ebiten.Image) {
 	vector.DrawFilledRect(dst, sysRuleX, sysRuleY, sysRuleW, 1, ink, false)
 
 	values := [sysRows]string{"　ＯＫ　", "TYPE 1", "未接入",
-		fmt.Sprintf("%d", g.speed), fmt.Sprintf("%d", g.speed), "　ＯＫ　"}
+		fmt.Sprintf("%d", g.speed), fmt.Sprintf("%d", g.tacticalSpeed), "　ＯＫ　"}
 	for k := 0; k < sysRows; k++ {
 		dy := k * sysRowStep
 		vector.DrawFilledRect(dst, sysLabelBoxX, float32(sysLabelBoxY+dy),

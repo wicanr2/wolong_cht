@@ -148,6 +148,7 @@ remake 沿用這個形狀，把還沒接的功能寫成值（「未接入」）�
 
 | 方式 | 內容 |
 |---|---|
+| 單元測試 | `TestSpeedsAreIndependent`（兩個速度互不影響、兩端夾住）、`TestSystemRowAdjustsSpeed`（左鍵 +1／右鍵 −1、列與列不互相命中）|
 | 單元測試 | `TestSystemMenuLayout`：視窗矩形、六列的座標與列距、值格不疊到標籤底、六個熱區逐格重合、末列是「遊戲結束」|
 | 單元測試 | `TestHUDSwitchGeometryAndSemantics`：五個熱區矩形、左開右關不是 toggle、第五格不接東西、系統視窗共用 `g.open[winSystem]` |
 | 截圖 | ✅ [`docs/playtest/24`](../playtest/24-window-toggles.md) §3 |
@@ -158,5 +159,7 @@ remake 沿用這個形狀，把還沒接的功能寫成值（「未接入」）�
 | 項目 | 現況 |
 |---|---|
 | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 |
-| 系統選單的六個 handler | 版面已照原版（§2.6），但六列的**滑鼠命中還沒接**——原版熱區 `0x20`–`0x25` 各自做什麼也沒讀（[`docs/re/55`](../re/55-system-menu-window.md) §4）。remake 目前只有鍵盤路徑（`S`／`L` 存讀、`+`／`−` 速度、`F10` 離開）|
-| 中間四列的值 | 「畫面模式」是固定字、「音效」寫「未接入」（音訊層完全沒做）、兩個速度共用 `g.speed`——原版是兩個獨立設定 |
+| 六列的語意 | **原版那六個 handler 沒讀**（[`docs/re/55`](../re/55-system-menu-window.md) §4）。remake 照標籤字面接：兩個速度左鍵 +1／右鍵 −1、「資料儲存」開四槽視窗、「遊戲結束」走 ＹＥＳ／ＮＯ 確認。**這是 remake 差異**，等 handler 讀出來要回頭對 |
+| 「畫面模式」 | 固定字，沒有第二種模式 |
+| 「音效」 | 寫「未接入」——音訊層完全沒做，`BGM.DAT` 的聲軌事件編碼未解（[`docs/re/23`](../re/23-bgm-resource-format.md)）|
+| 速度的檔位 | 原版四個檔位各是什麼值未解（`docs/mechanics/15-realtime.md`）。remake 用 0–64 的「每畫面推進幾個 tick」，0 ＝ 暫停 |

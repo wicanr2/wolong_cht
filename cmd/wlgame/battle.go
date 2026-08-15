@@ -156,8 +156,9 @@ func (g *game) updateBattle() {
 				}
 			}
 		}
-		// 每個畫面更新推進 speed 幀，與戰略層共用同一個倍率。
-		n := g.speed
+		// 每個畫面更新推進 tacticalSpeed 幀。**戰術速度與戰略速度是
+		// 兩個獨立設定**（原版說明書 3.5、系統選單第 4／5 列）。
+		n := g.tacticalSpeed
 		if n < 1 {
 			n = 1
 		}
@@ -827,6 +828,6 @@ func (g *game) demoBattle(siege, choose bool) {
 		for i := 0; i < 120; i++ {
 			g.world.PendingBattle().Battle.Step()
 		}
-		g.speed = 1
+		g.tacticalSpeed = 1
 	}
 }
