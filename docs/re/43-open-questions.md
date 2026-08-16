@@ -372,7 +372,7 @@
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | 1. **擋路的是「單位」，不是地形高度。 | （未解小節內文） | 靜態 |
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | 2. **低平面的水平跨格沒有高度差上限**——目標格地面比自己高就升一層、 | （未解小節內文） | 靜態 |
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | 3. **高平面要高度完全相等**，而 `[si+1Eh]`（`PlaneHigh`）決定讀哪一張。 | （未解小節內文） | 靜態 |
-| [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | **那兩張地面高度圖** | `es:[di+0x7000]`／`+0x8000`，低 3 位 ＝ 地面層。**誰填的還沒查**。這是登城機制的最後一塊 | 靜態 |
+| [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | **那兩張地面高度圖是誰填的** | `es:[di+0x7000]`（低平面）／`+0x8000`（高平面），低 3 位 ＝ 地面層。**全庫沒有用這個位移寫它的指令**（見上）。這是登城機制的最後一塊 | 靜態 |
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | `Field.gateX` 與登城點 | gateX 在三張抽樣圖上**正好就是可破壞城壁那一格**。`doScaleWall` 已經把它當目標，但爬不上去 | 靜態 |
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | 繞路點清單的演算法 | `0x1800 + 兵編號 × 128`，`loc_1BD46` 算（`../re/11` §5.15）。解出來之後 `FindPathForcing` 那條近似要換掉 | 靜態 |
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | 攻城計時器與突破時間的關係 | 大將體力 100 起、每 10 幀掉 1、50 觸發退卻 ⇒ **攻方只有約 500 幀**。爬牆接上之後要重量一次，確認這個預算合理 | 靜態 |
