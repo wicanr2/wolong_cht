@@ -7,7 +7,6 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
 	"github.com/wicanr2/wolong_cht/internal/rules/persuasion"
 	"github.com/wicanr2/wolong_cht/internal/state"
-	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
@@ -204,42 +203,40 @@ func TestAdviseReasonLabelsComeFromTalkMenu(t *testing.T) {
 	}
 }
 
-// 選單框的矩形（docs/spec/45 §2）。三個地方共用 `sub_13B7E`，
-// 座標與尺寸全是寫死的。
+// 選單框：位置是立即值，**大小由內容算**（docs/spec/45 §2）。
 func TestChoiceBoxMatchesOriginalRect(t *testing.T) {
 	for _, tc := range []struct {
 		name      string
 		got, want int
 	}{
-		{"X（sub_19796 的 dx=50h）", talkChoiceX, 80},
-		{"Y（sub_19796 的 bx=0B0h）", talkChoiceY, 176},
-		{"寬（cx=600Ah 的 0Ah×2 byte）", talkChoiceW, 160},
-		{"高（cx=600Ah 的 60h 列）", talkChoiceH, 96},
-		{"列數（框高 96 ÷ 16 減掉上下內縮）", talkChoiceRows, 5},
+		{"X（sub_193E9 的 dl=5 ⇒ 5×16）", talkChoiceX, 80},
+		{"Y（dh=0Bh ⇒ 11×16）", talkChoiceY, 176},
+		{"進言選單 X（sub_16224 的 dx=400h）", adviseMenuX, 0},
+		{"進言選單 Y", adviseMenuY, 64},
 	} {
 		if tc.got != tc.want {
 			t.Errorf("%s = %d，要 %d", tc.name, tc.got, tc.want)
 		}
 	}
-	// 列數是從框高回推的（96 − 上下各 8，每列 16），這裡把那個關係釘住。
-	if got := 2*chrome.Tile + talkChoiceRows*talkLinePitch; got != talkChoiceH {
-		t.Errorf("上下內縮 8 ＋ %d 列 × %d ＝ %d，與框高 %d 不符",
-			talkChoiceRows, talkLinePitch, got, talkChoiceH)
+	// 五列 6 個全形字（#102／#77 都是這個形狀）⇒ 112 × 96。
+	five := []string{"外交關係惡劣", "我國較有利　", "敵正侵攻他國", "敵勢力疲乏　", "撤回進言　　"}
+	if _, _, w, h := legacyChoiceRect(80, 176, five); w != 112 || h != 96 {
+		t.Errorf("五列選單 = %d×%d，要 112×96", w, h)
 	}
-}
-
-// 說服的選單有五列，外交／撥款只有三列——**框一樣大，能選的範圍才不同**
-// （docs/spec/45 §2.2）。
-func TestChoiceClickCoversRequestedRowsOnly(t *testing.T) {
-	rowAt := func(row int) int { return talkChoiceY + chrome.Tile + row*talkLinePitch }
-	if got := rowAt(talkChoiceRows) + chrome.Tile; got != talkChoiceY+talkChoiceH {
-		t.Errorf("第 %d 列的下緣 %d 與框底 %d 不符",
-			talkChoiceRows, got, talkChoiceY+talkChoiceH)
+	// 三列 5 個字（#363）⇒ 96 × 64。**列少了框要跟著縮。**
+	three := []string{"無條件同意", "提供資金　", "拒　　絕　"}
+	if _, _, w, h := legacyChoiceRect(80, 176, three); w != 96 || h != 64 {
+		t.Errorf("三列選單 = %d×%d，要 96×64", w, h)
 	}
-	// 第 5 列（索引 4）必須整列落在框內緣裡。
-	if last := rowAt(talkChoiceRows-1) + talkLinePitch; last > talkChoiceY+talkChoiceH-chrome.Tile {
-		t.Errorf("最後一列畫到 %d，超出框內緣 %d",
-			last, talkChoiceY+talkChoiceH-chrome.Tile)
+	// ⚠ 原版只看第一列，remake 取最大值（text.Decode 會砍掉行尾的
+	// 全形空白，拿不回 padding）。四則實際的選單兩種算法同值，
+	// 只有這種人造的參差資料分得出來。
+	ragged := []string{"拒　　絕", "很長很長的一列文字"}
+	if _, _, w, _ := legacyChoiceRect(0, 0, ragged); w != 10*16 {
+		t.Errorf("寬 = %d，取最大值的話要 %d", w, 10*16)
+	}
+	if _, _, w, h := legacyChoiceRect(0, 0, nil); w != 32 || h != 16 {
+		t.Errorf("空選單 = %d×%d，要 32×16（不要算出 0 或負數）", w, h)
 	}
 }
 
@@ -396,12 +393,22 @@ func TestAdviseCommandLabelsComeFromTalk(t *testing.T) {
 	for _, want := range []struct {
 		row  int
 		text string
-	}{{2, "請求協助"}, {3, "遷\u3000\u3000都"}, {4, "請求君主出陣"}} {
+		// 行首的全形空白**照原樣保留**（行尾的被 text.Decode 砍掉了）。
+	}{{2, "\u3000請求協助"}, {3, "\u3000遷\u3000\u3000都"}, {4, "請求君主出陣"}} {
 		if labels[want.row] != want.text {
 			t.Errorf("第 %d 列 = %q，要 %q", want.row+1, labels[want.row], want.text)
 		}
 	}
 	if labels[2] == persuasion.Cooperate.String() {
 		t.Error("第三列用了內部術語，不是原版選單的用字")
+	}
+	// 五列等寬 ⇒ 框寬 (6+1)×16；最長的一列（6 個字）放得進去。
+	if _, _, w, _ := legacyChoiceRect(adviseMenuX, adviseMenuY, labels); w != 112 {
+		t.Errorf("框寬 = %d，要 112——padding 被 trim 掉了嗎？", w)
+	}
+	for _, l := range labels {
+		if textdraw.StringWidth(l) > 112-2*8 {
+			t.Errorf("%q 寬 %d，超出框內 %d px", l, textdraw.StringWidth(l), 112-16)
+		}
 	}
 }

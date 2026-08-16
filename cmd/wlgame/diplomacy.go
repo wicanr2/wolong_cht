@@ -6,7 +6,6 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 
 	"github.com/wicanr2/wolong_cht/internal/state"
-	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 )
 
 // updateDiplomacy 是事件 2／3 的玩家三選一接縫。
@@ -60,7 +59,8 @@ func (g *game) updateDiplomacy() {
 		}
 		return
 	}
-	if row, ok := g.talkChoiceClick(3); ok {
+	if row, ok := g.talkChoiceClick(talkChoiceX, talkChoiceY,
+		g.diplomacyChoiceLines(*c)); ok {
 		g.diplomacyRow = row
 		if row == int(state.DiplomacyOfferFunds) {
 			g.diplomacyEditingAmount = true
@@ -237,6 +237,13 @@ func (g *game) diplomacyFactionName(id int) string {
 	return big5(g.world.LordName(id))
 }
 
+// diplomacyChoiceLines 是三選一的那三列。**不折行**——選單的字寬
+// 決定框寬（docs/spec/45 §2.2），折了框就跟著錯。
+func (g *game) diplomacyChoiceLines(c state.DiplomacyChoice) []string {
+	lines, _ := g.talkLines(diplomacyTalkBase(c.Kind)+3, g.diplomacyTalkVars(c, -1))
+	return lines
+}
+
 // drawDiplomacy 畫出事件 2／3 的原版 composite：IVENTGRF page 0、
 // 玩家君主肖像／TALK、三列 TALK 選項；只有選到資金列後才覆蓋原版
 // `(80,176)` 數值面板。
@@ -246,11 +253,10 @@ func (g *game) drawDiplomacy(screen *ebiten.Image, c *state.DiplomacyChoice) {
 		g.diplomacyTalkVars(*c, -1), talkTextWidth)
 	g.drawLegacyTalkBox(screen, talkUpperBoxX, talkUpperBoxY, talkBoxW, talkBoxH,
 		prompt, g.playerLordPortrait())
-	choice := g.legacyTalkLines(diplomacyTalkBase(c.Kind)+3,
-		g.diplomacyTalkVars(*c, -1), talkChoiceW-2*chrome.Tile)
 	if g.diplomacyEditingAmount {
 		g.drawAmountPanel(screen, c.OfferAmount, c.InitialAmount, true)
 		return
 	}
-	g.drawLegacyChoiceBox(screen, choice, g.diplomacyRow)
+	g.drawLegacyChoiceBox(screen, talkChoiceX, talkChoiceY,
+		g.diplomacyChoiceLines(*c), g.diplomacyRow)
 }

@@ -221,6 +221,9 @@ type game struct {
 	target    int
 	sess      *persuasion.Session
 	sessCur   int
+	// adviseCmdRow 是進言五項選單的游標。
+	adviseCmdRow int
+
 	// adviseNode 是遷都選到的據點（進言第四項）。
 	adviseNode int
 
@@ -1595,6 +1598,9 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 		g.beginPersuasion()
 		if g.sess != nil && !adviseMenu {
 			g.offerReason(persuasion.WeAreStronger)
+		}
+		// 驗收要看的是講完之後的畫面，把逐句節拍跑完（docs/spec/45 §1.1）。
+		for g.adviseAdvance() {
 		}
 	}
 }

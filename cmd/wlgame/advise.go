@@ -1,16 +1,12 @@
 package main
 
 import (
-	"fmt"
-	"image/color"
-	"strings"
 
 	"github.com/hajimehoshi/ebiten/v2"
 
 	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/rules/persuasion"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
-	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
 // 進言（說明書 3.2、3.9）。
@@ -51,9 +47,12 @@ func (g *game) adviseCommandLabels() []string {
 	if !ok || len(lines) != len(out) {
 		return out
 	}
+	// ⛔ **不要再自己 trim。** 那些全形空白是版面的一部分
+	// （框寬由字數決定，docs/spec/45 §2.2）。`text.Decode` 已經
+	// 砍掉行尾的部分，這裡再砍就連行首的也沒了。
 	for i, l := range lines {
-		if t := strings.TrimSpace(strings.Trim(l, "　")); t != "" {
-			out[i] = t
+		if l != "" {
+			out[i] = l
 		}
 	}
 	return out
@@ -72,6 +71,7 @@ func (g *game) adviseActive() bool { return g.advise != adviseNone }
 
 func (g *game) openAdvise() {
 	g.advise = advisePickCommand
+	g.adviseCmdRow = 0
 	g.sessCur = 0
 	g.ally = -1
 	g.target = -1
@@ -186,25 +186,29 @@ func (g *game) updateAdvise() bool {
 	}
 	switch g.advise {
 	case advisePickCommand:
-		for i := range adviseCommands {
-			if pressed(ebiten.Key1 + ebiten.Key(i)) {
-				g.adviseCmd = adviseCommands[i]
-				g.openTargetList()
-				if g.adviseCmd == persuasion.Cooperate {
-					g.advise = advisePickAlly
-				} else {
-					g.advise = advisePickTarget
-				}
-			}
+		labels := g.adviseCommandLabels()
+		if row, ok := g.talkChoiceClick(adviseMenuX, adviseMenuY, labels); ok {
+			g.adviseCmdRow = row
+			g.pickAdviseCommand(row)
+			return true
 		}
-		if pressed(ebiten.Key4) {
-			g.openCapitalList()
-		}
-		if pressed(ebiten.Key5) {
-			g.beginSortie()
-		}
-		if pressed(ebiten.KeyEscape) {
+		switch {
+		case pressed(ebiten.KeyArrowUp):
+			g.adviseCmdRow = (g.adviseCmdRow + len(labels) - 1) % len(labels)
+		case pressed(ebiten.KeyArrowDown):
+			g.adviseCmdRow = (g.adviseCmdRow + 1) % len(labels)
+		case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
+			g.pickAdviseCommand(g.adviseCmdRow)
+		case pressed(ebiten.KeyEscape):
 			g.closeAdvise()
+		}
+		// 數字鍵是 remake 加的捷徑；原版只有游標選取。
+		for i := range labels {
+			if pressed(ebiten.Key1 + ebiten.Key(i)) {
+				g.adviseCmdRow = i
+				g.pickAdviseCommand(i)
+				break
+			}
 		}
 
 	case advisePickCapital:
@@ -303,6 +307,27 @@ func (g *game) openTargetList() {
 		}
 	}
 	g.openFactionPicker(rows, "↑↓ 移動　Enter 選取／決定　1-6 排序　ESC 取消", nil)
+}
+
+// pickAdviseCommand 分派進言的五項（原版 `sub_16224` 的 `funcs_16255[選項×2]`）。
+func (g *game) pickAdviseCommand(row int) {
+	switch row {
+	case adviseRelocateRow:
+		g.openCapitalList()
+	case adviseSortieRow:
+		g.beginSortie()
+	default:
+		if row < 0 || row >= len(adviseCommands) {
+			return
+		}
+		g.adviseCmd = adviseCommands[row]
+		g.openTargetList()
+		if g.adviseCmd == persuasion.Cooperate {
+			g.advise = advisePickAlly
+		} else {
+			g.advise = advisePickTarget
+		}
+	}
 }
 
 // openCapitalList 列出自己的據點讓玩家挑遷都目標。
@@ -481,9 +506,10 @@ func (g *game) adviseReasonLabels(c persuasion.Command) []string {
 	if !ok || len(lines) != len(opts) {
 		return out
 	}
+	// 同 adviseCommandLabels：全形空白是版面的一部分，不要 trim。
 	for i, l := range lines {
-		if t := strings.TrimRight(l, "　 "); t != "" {
-			out[i] = t
+		if l != "" {
+			out[i] = l
 		}
 	}
 	return out
@@ -582,26 +608,12 @@ func (g *game) drawAdviseBoxes(screen *ebiten.Image) {
 
 // drawAdvise 畫進言流程。
 func (g *game) drawAdvise(screen *ebiten.Image) {
-	white := color.RGBA{240, 240, 230, 255}
-	amber := color.RGBA{240, 200, 120, 255}
-
-	// 進言的視窗也走原版外框（ICONGRF 段 3）。尺寸先進位到 8 的倍數，
-	// 不然邊框會切在半塊上。
-	box := func(x, y, w, h int) {
-		up := func(v int) int { return (v + chrome.Tile - 1) / chrome.Tile * chrome.Tile }
-		g.chrome.Window(screen, x, y, up(w), up(h), chrome.Menu)
-	}
-	lh := textdraw.GlyphH + 2
-
 	switch g.advise {
 	case advisePickCommand:
-		labels := g.adviseCommandLabels()
-		box(40, 60, 260, 30+len(labels)*lh)
-		g.td.Draw(screen, "進　言", 48, 66, amber)
-		for i, name := range labels {
-			g.td.Draw(screen, fmt.Sprintf("%d　%s", i+1, name),
-				48, 86+i*lh, white)
-		}
+		// 原版的位置：`sub_16224` 的 `dx = 400h` ⇒ 粗格 (0, 4) ⇒ (0, 64)。
+		// 大小由內容算（docs/spec/45 §2.2），所以不必再挑一個寬度。
+		g.drawLegacyChoiceBox(screen, adviseMenuX, adviseMenuY,
+			g.adviseCommandLabels(), g.adviseCmdRow)
 
 	case adviseVerdict:
 		// 第四、五項沒有說服迴圈，畫面就是 `sub_13B08` 的三句。
@@ -618,10 +630,7 @@ func (g *game) drawAdvise(screen *ebiten.Image) {
 		// 上框君主、下框軍師，兩個框各只顯示最新的一句。
 		// **說話者靠框的位置與肖像分辨**，句子裡不加標記。
 		g.drawIventScene(screen, 0)
-		g.drawLegacyTalkBox(screen, talkUpperBoxX, talkUpperBoxY,
-			talkBoxW, talkBoxH, g.adviseLordSaid, g.playerLordPortrait())
-		g.drawLegacyTalkBox(screen, talkLowerBoxX, talkLowerBoxY,
-			talkBoxW, talkBoxH, g.adviseAdvisorSaid, g.playerAdvisorPortrait())
+		g.drawAdviseBoxes(screen)
 		// 提示放在橫幅與上框之間，不要壓到畫面底部的事件視窗。
 		hintY := talkUpperBoxY - 4*chrome.Tile
 		if g.adviseTalking() {
@@ -632,7 +641,8 @@ func (g *game) drawAdvise(screen *ebiten.Image) {
 			g.drawLegacyHint(screen, "ESC 關閉", hintY)
 			return
 		}
-		g.drawLegacyChoiceBox(screen, g.adviseReasonLabels(g.adviseCmd), g.sessCur)
+		g.drawLegacyChoiceBox(screen, talkChoiceX, talkChoiceY,
+			g.adviseReasonLabels(g.adviseCmd), g.sessCur)
 		g.drawLegacyHint(screen, "↑↓ 選擇　Enter 提出　ESC 放棄", hintY)
 	}
 }

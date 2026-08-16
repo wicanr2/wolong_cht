@@ -6,7 +6,6 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 
 	"github.com/wicanr2/wolong_cht/internal/state"
-	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 )
 
 // updateFunding 是事件 4／5 的玩家三選一接縫。選到指定金額後才進入
@@ -59,7 +58,8 @@ func (g *game) updateFunding() {
 		}
 		return
 	}
-	if row, ok := g.talkChoiceClick(3); ok {
+	if row, ok := g.talkChoiceClick(talkChoiceX, talkChoiceY,
+		g.fundingChoiceLines(*c)); ok {
 		g.fundingRow = row
 		if row == int(state.FundingSetAmount) {
 			g.fundingEditingAmount = true
@@ -235,6 +235,13 @@ func (g *game) fundingSubjectName(c *state.FundingChoice) string {
 	return "－"
 }
 
+// fundingChoiceLines 是三選一的那三列。**不折行**——選單的字寬
+// 決定框寬（docs/spec/45 §2.2）。
+func (g *game) fundingChoiceLines(c state.FundingChoice) []string {
+	lines, _ := g.talkLines(fundingTalkBase(c)+5, g.fundingTalkVars(c, c.RequestedAmount))
+	return lines
+}
+
 // drawFunding 畫出事件 4／5 的原版 composite：IVENTGRF page 1、
 // 官員／TALK、三列選項；指定金額列確認後才顯示原版數值器。
 func (g *game) drawFunding(screen *ebiten.Image, c *state.FundingChoice) {
@@ -249,11 +256,10 @@ func (g *game) drawFunding(screen *ebiten.Image, c *state.FundingChoice) {
 	}
 	g.drawLegacyTalkBox(screen, talkUpperBoxX, talkUpperBoxY, talkBoxW, talkBoxH,
 		prompt, portrait)
-	choice := g.legacyTalkLines(fundingTalkBase(*c)+5,
-		vars, talkChoiceW-2*chrome.Tile)
 	if g.fundingEditingAmount {
 		g.drawAmountPanel(screen, c.OfferAmount, c.RequestedAmount, true)
 		return
 	}
-	g.drawLegacyChoiceBox(screen, choice, g.fundingRow)
+	g.drawLegacyChoiceBox(screen, talkChoiceX, talkChoiceY,
+		g.fundingChoiceLines(*c), g.fundingRow)
 }

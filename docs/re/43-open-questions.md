@@ -21,10 +21,10 @@
 | 規則正確性 | 54 | 52 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
 | 程式碼理解 | 217 | 210 | 7 | 0 |
-| 驗收 | 59 | 52 | 7 | 0 |
+| 驗收 | 58 | 51 | 7 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
 | 其他 | 108 | 103 | 5 | 0 |
-| **合計** | **492** | 470 | 21 | 1 |
+| **合計** | **491** | 469 | 21 | 1 |
 
 ## 2.1 規則正確性（54 條）
 
@@ -349,7 +349,7 @@
 | [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `sub_189A4(al=1, dx=0, bx=2, cx=151Bh)` | `sub_13D09` 在貼完 `IVENTGRF` 之後畫的框，與 `sub_1895D` 是不是同一組單位沒驗 | 靜態 |
 | [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `IVENTGRF` 插圖本身的位置 | `sub_13D09` 的 `dx = 0E07h` 是餵給 `sub_1E38C`（讀檔）的參數，不是座標。插圖在畫面上的位置沒量 | 靜態 |
 
-## 2.4 驗收（59 條）
+## 2.4 驗收（58 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -411,7 +411,6 @@
 | [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 插圖之外的畫面 | 原版這一頁底下是不是還留著大地圖沒驗過，remake 留著 | 靜態 |
 | [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 選單的反白樣式 | 原版怎麼畫游標列沒解，remake 用自己的反白條 ＋ `>` | 靜態 |
 | [`playtest/35-advise-verdict-screens.md`](../playtest/35-advise-verdict-screens.md) | 遷都的畫面 | 目標用一覽表挑，原版是地圖選點（`sub_17400`）。沒有截圖 | 實測 |
-| [`playtest/35-advise-verdict-screens.md`](../playtest/35-advise-verdict-screens.md) | 選單的位置 | 原版的進言選單在 (0, 64)（`sub_16224` 的 `dx = 400h`，`docs/spec/45` §2.1），remake 用自己的小視窗 | 靜態 |
 
 ## 2.5 外部資料（17 條）
 

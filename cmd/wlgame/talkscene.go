@@ -58,19 +58,20 @@ const (
 	talkSceneX = 64
 	talkSceneY = 144
 
-	// 選單框：外交三選一、撥款、說服五選一共用 `sub_13B7E`，
-	// 那一組座標與尺寸全是寫死的（docs/spec/45 §2）：
+	// 選單框的左上角：外交三選一、撥款、說服五選一共用 `sub_13B7E`，
+	// 那一組座標是寫死的（docs/spec/45 §2）：
 	//
-	//	sub_19796(dx=50h, bx=0B0h)  ⇒ 像素 (80, 176)
-	//	cx = 600Ah → sub_1FB11      ⇒ 每列 0Ah×2 ＝ 20 B ＝ 160 px、96 列
+	//	sub_193E9(dl=5, dh=0Bh)    粗格 ⇒ (5×16, 11×16) ＝ (80, 176)
+	//	sub_19796(dx=50h, bx=0B0h) 像素 ⇒ 同一個點
 	//
-	// 高 96 ＝ 上下各內縮 8 ＋ 五列 × 16。**選項少的時候框不縮**——
-	// `sub_13B5A` 傳 5、`sub_13902` 傳 3，而框三處相同。
-	talkChoiceX    = 80
-	talkChoiceY    = 176
-	talkChoiceW    = 160
-	talkChoiceH    = 96
-	talkChoiceRows = (talkChoiceH - 2*chrome.Tile) / talkLinePitch
+	// **大小不是常數**——`sub_19479` 由內容算（見 legacyChoiceRect）。
+	talkChoiceX = 80
+	talkChoiceY = 176
+
+	// adviseMenuX／Y 是進言那五項的選單（`sub_16224` 的 `dx = 400h`，
+	// 粗格 (0, 4)）。
+	adviseMenuX = 0
+	adviseMenuY = 64
 )
 
 // playerLordPortrait 是 composite TALK 的 fallback speaker。事件 3 fixture
@@ -183,59 +184,73 @@ func (g *game) drawLegacyTalkBox(screen *ebiten.Image, x, y, w, h int,
 	}
 }
 
-func (g *game) drawLegacyChoiceBox(screen *ebiten.Image, lines []string, selected int) {
-	g.chrome.Window(screen, talkChoiceX, talkChoiceY,
-		talkChoiceW, talkChoiceH, chrome.Menu)
-	for i, line := range lines {
-		if i >= talkChoiceRows {
-			break
+// legacyChoiceRect 是選單框的大小。**由內容算，不是常數**
+// （`sub_19479`，docs/spec/45 §2.2）：
+//
+//	cl ＝ 第一列的全形字數、ch ＝ 列數（呼叫端傳給 sub_193E9 的 al）
+//	inc cl / inc ch  ⇒  寬 (字數+1)×16、高 (列數+1)×16
+//
+// 那個 +1 就是四邊各 8 px 的框邊。
+//
+// ⭐ **原版只看第一列**——它靠選單文字全部用全形空白補到等寬
+// （#102 五列都是 6 個字，#77 也是）來保證第一列就是最寬的。
+//
+// ⚠ **remake 取所有列的最大值**，因為 `text.Decode` 會 `TrimRight`
+// 掉行尾的全形空白（那對武將名、據點名是對的），拿不回原本的 padding。
+// 四則選單（#77／#102／#363／#376）兩種算法的結果**相同**，
+// 差別只在原版會切掉「比第一列長的後面幾列」，這裡不會。
+func legacyChoiceRect(x, y int, lines []string) (int, int, int, int) {
+	cells := 0
+	for _, l := range lines {
+		if n := textdraw.StringWidth(l) / talkLinePitch; n > cells {
+			cells = n
 		}
-		y := talkChoiceY + chrome.Tile + i*talkLinePitch
+	}
+	if cells < 1 {
+		cells = 1
+	}
+	return x, y, (cells + 1) * talkLinePitch, (len(lines) + 1) * talkLinePitch
+}
+
+func (g *game) drawLegacyChoiceBox(screen *ebiten.Image, x, y int,
+	lines []string, selected int) {
+
+	bx, by, w, h := legacyChoiceRect(x, y, lines)
+	g.chrome.Window(screen, bx, by, w, h, chrome.Menu)
+	for i, line := range lines {
+		ly := by + chrome.Tile + i*talkLinePitch
 		if i == selected {
-			vector.DrawFilledRect(screen, float32(talkChoiceX+chrome.Tile),
-				float32(y-1), float32(talkChoiceW-2*chrome.Tile),
+			vector.DrawFilledRect(screen, float32(bx+chrome.Tile),
+				float32(ly-1), float32(w-2*chrome.Tile),
 				float32(talkLinePitch), chrome.Select, false)
-			vector.StrokeRect(screen, float32(talkChoiceX+chrome.Tile),
-				float32(y-1), float32(talkChoiceW-2*chrome.Tile),
+			vector.StrokeRect(screen, float32(bx+chrome.Tile),
+				float32(ly-1), float32(w-2*chrome.Tile),
 				float32(talkLinePitch), 1,
 				color.RGBA{255, 223, 154, 255}, false)
-			// ASCII `>` 與原版滑鼠／反白狀態一起保留，避免缺少中文字型
-			// 時把游標畫成不可辨識的空方框。
-			g.td.Draw(screen, ">", talkChoiceX+chrome.Tile, y, chrome.Paper)
-			g.td.Draw(screen, line, talkChoiceX+chrome.Tile+16, y, chrome.Paper)
-			continue
 		}
-		g.td.Draw(screen, line, talkChoiceX+chrome.Tile, y, chrome.Paper)
+		g.td.Draw(screen, line, bx+chrome.Tile, ly, chrome.Paper)
 	}
 }
 
-// talkChoiceClick 回報滑鼠點到第幾列。`rows` 是這一次有幾個選項——
-// 原版把它當 `al` 傳給 `sub_193E9`（`sub_13B5A` 給 5、`sub_13902` 給 3），
-// **框的大小不跟著變，能選的範圍才變**（docs/spec/45 §2.2）。
-func (g *game) talkChoiceClick(rows int) (int, bool) {
-	x, y := ebiten.CursorPosition()
-	if !inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) ||
-		x < talkChoiceX+chrome.Tile || x >= talkChoiceX+talkChoiceW-chrome.Tile ||
-		y < talkChoiceY+chrome.Tile || y >= talkChoiceY+talkChoiceH-chrome.Tile {
+// talkChoiceClick 回報滑鼠點到第幾列。命中範圍與畫出來的框同一個算式。
+func (g *game) talkChoiceClick(x0, y0 int, lines []string) (int, bool) {
+	if len(lines) == 0 {
 		return 0, false
 	}
-	if rows > talkChoiceRows {
-		rows = talkChoiceRows
+	bx, by, w, h := legacyChoiceRect(x0, y0, lines)
+	x, y := ebiten.CursorPosition()
+	if !inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) ||
+		x < bx+chrome.Tile || x >= bx+w-chrome.Tile ||
+		y < by+chrome.Tile || y >= by+h-chrome.Tile {
+		return 0, false
 	}
-	row := (y - (talkChoiceY + chrome.Tile)) / talkLinePitch
-	if row < 0 || row >= rows {
+	row := (y - (by + chrome.Tile)) / talkLinePitch
+	if row < 0 || row >= len(lines) {
 		return 0, false
 	}
 	return row, true
 }
 
-// drawLegacyHint 是 remake 自己加的按鍵提示，原版沒有這一條。
-//
-// 框高要 4 塊：`chrome.Window` 的邊框是 8 px，兩塊高的框整個都是邊，
-// 字會被切成看不出是什麼的東西。內容高 16 px ＝ 一個全形字。
-//
-// y 由呼叫端指定，因為**畫面底部 360–392 是事件視窗的位置**
-// （`main.go` 的 `lastEvent`），兩者同時出現會疊在一起。
 func (g *game) drawLegacyHint(screen *ebiten.Image, s string, y int) {
 	if s == "" {
 		return
