@@ -20,6 +20,9 @@ import ida_xref
 import idc
 
 OUT = "/work/data_writers.txt"
+# 要查哪些符號寫在 /work/census/data_writers_list.txt（一行一個）；
+# 檔案不在就用這裡的預設。**工具固定，要查什麼是輸入**（同 ida_dump.py）。
+LIST = "/work/data_writers_list.txt"
 TARGETS = ["word_10D50"]
 BACK = 8
 
@@ -29,12 +32,22 @@ def fname(ea):
     return ida_funcs.get_func_name(f.start_ea) if f else "（無函式）"
 
 
+def targets():
+    try:
+        with open(LIST, encoding="utf-8") as fh:
+            names = [ln.split()[0] for ln in fh if ln.strip() and
+                     not ln.lstrip().startswith("#")]
+    except OSError:
+        return TARGETS
+    return names or TARGETS
+
+
 def main():
     ida_auto.auto_wait()
     lines = ["資料讀寫端（IDA DOS/V linear address）",
              "輸入檔 SHA-256：%s" % ida_nalt.retrieve_input_file_sha256().hex(),
              "函式數：%d" % ida_funcs.get_func_qty()]
-    for name in TARGETS:
+    for name in targets():
         ea = idc.get_name_ea_simple(name)
         lines.append("")
         lines.append("==== %s EA=%08X ====" % (name, ea))

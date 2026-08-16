@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 55 | 53 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
-| 程式碼理解 | 213 | 206 | 7 | 0 |
+| 程式碼理解 | 211 | 204 | 7 | 0 |
 | 驗收 | 54 | 48 | 6 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 86 | 82 | 4 | 0 |
-| **合計** | **463** | 443 | 19 | 1 |
+| 其他 | 85 | 81 | 4 | 0 |
+| **合計** | **460** | 440 | 19 | 1 |
 
 ## 2.1 規則正確性（55 條）
 
@@ -128,7 +128,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（213 條）
+## 2.3 程式碼理解（211 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -273,7 +273,7 @@
 | [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `+0x23` 的其他值 | 只見過 0、1（`sub_16F26`）與 11 | 靜態 |
 | [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | 樣式碼 | 只確定 `0` ＝ 擦除、`0x0B` ＝ 指令列、`0x0C`／`0x0F` 出現在別處；完整值域未列 | 靜態 |
 | [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | `ax = 0F01h`／`0801h` | 顏色／樣式的位元編碼未逐位對過 | 靜態 |
-| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | `0x80` | 擦除時 `and …, 7Fh` 清掉 / 未解 | 靜態 |
+| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | `0x80` | 繪製時 `and …, 7Fh` 清掉 / 未解 | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 熱區 5（x 464–496） | 登記了，`off_159D2` 對應 `nullsub_1`。是保留槽還是別處會改寫這一格，未讀 | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 選完君主之後的相機 | `sub_1D615(170, 98)` 只管 NEW GAME 對話框背後那張圖。主畫面開始時相機在哪、由誰寫，未讀——`word_1988E`／`word_19890` 的六個參考**全是讀**，寫入端走 `ds:988Eh` 這種形式，要用 `tools/ida_disp_users.py` 掃 | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 格子屬性 bit `0x80` | 擦除時被清掉，沒找到設它的地方 | 靜態 |
@@ -285,8 +285,6 @@
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `sub_1E9A7(bl=0, ax=1800h, cx=2020h)` | `sub_1030F` 登記的第二件事，未讀 | 靜態 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `op 01` 的用法 | 它是直線（§2.2），但 handler 不展開座標而十個場景又沒用到它——**預期的呼叫方式無法驗證** | 靜態 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `op 02` 與 `op 03` 的差別 | 兩支都畫矩形（`sub_1F020` 對 `cs:F1A3`），前者另有五個戰術區呼叫者。哪一支是實心、哪一支帶遮罩，沒有資料可分辨 | 靜態 |
-| [`re/49-corps-formation-window.md`](../re/49-corps-formation-window.md) | ？ | (279, 271) arg `00D8 00A8` / **04**，未解（§6） | 靜態 |
-| [`re/49-corps-formation-window.md`](../re/49-corps-formation-window.md) | `op 04` | 場景 5 用它一次，位置 (279,271) 剛好在確定鈕左上角外一格，`arg` ＝ `00D8`／`00A8`。像是外框或反白，語意未解（`48` §7 同一條） | 靜態 |
 | [`re/49-corps-formation-window.md`](../re/49-corps-formation-window.md) | `sub_1F9B0` 的 `ax = 1003h` | 貼圖的樣式參數；`sub_10C14` 用 `0801h`（`46` §3）。位元編碼未逐位對過 | 靜態 |
 | [`re/49-corps-formation-window.md`](../re/49-corps-formation-window.md) | 段 3 `0x21A0` 那張空槽圖 | **已驗**：解得開、與綠組最後一張不同，內容是 384 個像素全 0——原版在空槽那一格貼一張全黑圖把前一張擦掉。「全黑」與「位移落在段尾之外」長得一樣，分辨的方法是看它後面還有沒有內容（`TestDOSVEmptySlotIcon`） | 靜態 |
 | [`re/50-city-info-window.md`](../re/50-city-info-window.md) | `cs:word_1987C` | 據點圖的暫存段，由誰配置未讀 | 靜態 |
@@ -389,7 +387,7 @@
 | [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 一幀能有幾個兵撞牆 | 原版沒量過。前排寬度決定破牆速度，而破牆速度決定攻城打不打得下來 | 靜態 |
 | [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 打壞城壁之後地面層表不更新 | 原版就不更新，而且不影響結果——城壁的地面層本來就是拿打壞後的圖塊算的（`../re/63` §2） | 靜態 |
 | [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 高平面的橫向移動沒有實測 | 守方站到牆頂的情境還沒跑過 | 實測 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 主畫面：視窗內部底紋 | 原版視窗內是**龍紋暗花**，remake 是純深藍 / 看得出來 / 底紋在 `ICONGRF` 段 3 附近，還沒定位 | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 主畫面：視窗內部底紋 | 原版視窗內是**黑底 ＋ 深藍龍紋**（兩色、32×32 平鋪，`../formats/03` §5.5），remake 是純深藍 / 看得出來 / 69 檔逐 byte 掃過都沒中；下一步是 `sub_11AC3` 與 `sub_1FAC2`／`word_1987C` | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 主畫面：大地圖地形色調 | 原版偏黃綠、remake 偏綠 / 存疑 / 可能是影片的色彩取樣。要驗就比**同一格的色號**，不要比 RGB | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 一覽表：捲軸 | 原版左邊有 ▲▼ 捲軸；remake 把「上一頁／下一頁」畫在視窗外 / 未對過 / 捲軸的矩形沒從機器碼解出來 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | **戰鬥指揮／委任選單** | 版面是 remake 自訂的；影片裡沒有這一格的對照 / 未對過 / 先找原版影格 | 靜態 |
@@ -428,7 +426,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（86 條）
+## 2.6 其他（85 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -465,7 +463,6 @@
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 退兵回池 | `sub_14717` 已讀（一點對一點、上限 65,500），remake 還沒有「解散軍團把兵退回去」的路徑 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 池的上限 | `sub_155EC` 的 `0xFFDC` 只在退兵路徑上驗過；月結加兵是不是同一支未查 | 靜態 |
-| [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | `op 04` | 確定鈕左上角那一筆，語意未解（`docs/re/49` §6） | 靜態 |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 頭像的邊框 | `sub_107D2` 只 blit 64×64 的圖塊，**框在哪裡畫的沒找到**——場景 5 的 op 清單裡沒有頭像那一格的框 | 靜態 |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 兵種標籤 | 畫面用場景 5 的「主將」，規則層的 `army.Position` 第一個是「大將」（原版 TALK #62 也這樣說）。兩處用語不同是原版就有的，不要統一 | 靜態 |
 | [`spec/23-city-info-window.md`](../spec/23-city-info-window.md) | 進入方式 | 原版由地圖上點據點進來（`sub_11E46`），remake 走一覽表 | 靜態 |

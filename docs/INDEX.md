@@ -115,7 +115,7 @@
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |
 | [`docs/re/47-main-screen-window-registry.md`](re/47-main-screen-window-registry.md) | 47 — 主畫面的四個常駐視窗：開關、位元集與各自的矩形 | 四個常駐視窗的開關熱區、位元集、分派表與四個視窗各自的像素矩形 全部 confirmed。繪圖／熱區常式的參數對應（… | 2026-08-15 |
 | [`docs/re/48-window-display-list.md`](re/48-window-display-list.md) | 48 — 視窗內容是一份顯示清單，不是一張圖 | 清單的位置、記錄格式、場景切分、十個場景的歸屬與九個 opcode 的語意全部解出來了。⭐ 記錄的第六個 word … | 2026-08-15 |
-| [`docs/re/49-corps-formation-window.md`](re/49-corps-formation-window.md) | 49 — 軍團編成視窗的版面與動態層 | 視窗矩形、靜態層、六個槽的圖示與數字、四個顯示值的來源與座標 全部解出來了。op 04 的語意仍未解（§6）。 | 2026-08-15 |
+| [`docs/re/49-corps-formation-window.md`](re/49-corps-formation-window.md) | 49 — 軍團編成視窗的版面與動態層 | 視窗矩形、靜態層、六個槽的圖示與數字、四個顯示值的來源與座標 全部解出來了。 | 2026-08-15 |
 | [`docs/re/50-city-info-window.md`](re/50-city-info-window.md) | 50 — 據點情報視窗，以及據點 +0x16 高 4 位的用途 | 視窗矩形、靜態層、五個顯示值的來源與座標、左半那張 96×96 圖的 出處全部解出來了。⭐ 據點 +0x16 的高 … | 2026-08-15 |
 | [`docs/re/51-corps-info-window.md`](re/51-corps-info-window.md) | 51 — 軍團情報視窗（顯示清單場景 4） | 視窗矩形、靜態層、九個顯示值的座標與來源全部解出來了。 ⭐ 這個視窗畫空槽時會取到 | 2026-08-15 |
 | [`docs/re/52-slot-select-window.md`](re/52-slot-select-window.md) | 52 — 四槽選擇視窗：新遊戲、讀取、儲存共用同一個 | 視窗矩形、靜態層、四個槽的內容與座標、三個標題、 「哪些槽不能選」的判定全部解出來了。⭐ 原版的「新遊戲」不是另一個… | 2026-08-15 |
@@ -165,7 +165,7 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 150 條。**要查「這件事解了沒」先看這裡**，
+共 149 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（79 條）
@@ -304,14 +304,13 @@
 |---|---|
 | 2.1 執行結構（已驗證） ▸ YNSOUND.COM | `docs/reference/04-first-survey.md` |
 
-### 未解（34 條）
+### 未解（33 條）
 
 | 鍵 | 出處 |
 |---|---|
 | 1. 檔案 ＝ 4 個劇本區塊 × 22,208 B ▸ +0x0008 | `docs/formats/08-sinario-save.md` |
 | 1. 檔案 ＝ 4 個劇本區塊 × 22,208 B ▸ +0x1EC0 | `docs/formats/08-sinario-save.md` |
 | 1. 檔案 ＝ 4 個劇本區塊 × 22,208 B ▸ +0x3AC0…+0x42C0 | `docs/formats/08-sinario-save.md` |
-| 1. 視窗與靜態層 ▸ ？ | `docs/re/49-corps-formation-window.md` |
 | 2. 記憶體佈局：sub_1CC31 ▸ ds:0D2F8 | `docs/re/11-tactical-battle.md` |
 | 2. 記憶體佈局：sub_1CC31 ▸ ds:0D2FC | `docs/re/11-tactical-battle.md` |
 | 2. 記憶體佈局：sub_1CC31 ▸ ds:0D306 | `docs/re/11-tactical-battle.md` |
