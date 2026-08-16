@@ -58,6 +58,7 @@
 | [`docs/playtest/25-audio-capture-feasibility.md`](playtest/25-audio-capture-feasibility.md) | 25 — 音訊擷取的可行性：DOSBox 錄得到，鏈路已打通 | 可行性 confirmed。開場動畫的 15 秒錄音有內容（RMS 424）， 轉成 ogg 再解回來仍是 RMS … | 2026-08-15 |
 | [`docs/playtest/26-bgm-render-vs-recording.md`](playtest/26-bgm-render-vs-recording.md) | 26 — 合成出來的音樂對得上原版錄音 | confirmed。internal/audio 渲染的 OPENBGM.DAT 與 DOSBox 錄的同一首， 包… | 2026-08-15 |
 | [`docs/playtest/27-original-video-frame-parity.md`](playtest/27-original-video-frame-parity.md) | 27 — ⭐ 拿原版實錄影片對版面：主畫面與戰術畫面的幾何都落在 3 px 內 | 主畫面與戰術畫面的 | 2026-08-16 |
+| [`docs/playtest/28-siege-breach-measurement.md`](playtest/28-siege-breach-measurement.md) | 28 — 量攻城：remake 的攻方打不進城，原因是城牆四格厚 | ⚠ 缺口已定位，只修掉一半。 | 2026-08-16 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | remake 推廣片、代表幀「經典再現」比較片與 DOS/V／remake 實機動態比較片均已產出並完成媒體規格驗證… | 2026-08-12 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
 | [`docs/promo/dosv-adlib-and-tactical-review.md`](promo/dosv-adlib-and-tactical-review.md) | 推廣片原版 AdLib 與戰術骨架審查 | 原版音軌來源與影片縮放鏈已修正；戰術固定骨架的 16 px viewport 偏差已修正。完整同狀態戰術 parit… | 2026-08-12 |

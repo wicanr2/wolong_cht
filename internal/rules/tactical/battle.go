@@ -41,9 +41,9 @@ type Side struct {
 	// 隊長正在退卻時，新兵一出來就跟著往回走，整個待機池會在幾百幀內流光。
 	Standing Command
 
-	// GateOpen 記錄守方是否已經開門。說明書 4.2：突擊會開門，
-	// 而**開了的門這場戰鬥不能再關**。
-	GateOpen bool
+	// Sortied 記錄守方是否已經下過突擊令（`sub_1B7CB` 那一發）。
+	// 說明書 4.2 說「開了就關不回去」，所以這是不可逆的。
+	Sortied bool
 
 	// Selected 是底列六格的選取位元圖（原版 `byte_1D310` 的位元 0–5，
 	// docs/spec/33）。**下完令就清空**，而且 0 表示「全隊」不是「沒有隊」。
@@ -55,6 +55,18 @@ type Side struct {
 
 // AllSquadsMask 是六隊全選（原版 `xchg` 取到 0 時代入的 `0xFF` 的有效位）。
 const AllSquadsMask = 1<<Squads - 1
+
+// 攻守的側別是固定的：側 0 是攻方、側 1 是守方。
+//
+// `hitStructure` 的「守方碰不壞自己的城壁」與 `Order` 的「守方突擊才拆城壁」
+// 都依賴這個約定。⚠ **原版的側別不是這樣**——原版側 0 恆為玩家、側 1 恆為
+// 對方（docs/re/60 §5），攻守由 `sub_14ED7` 互換兩個軍團指標來表達。
+// remake 選了「側別 ＝ 攻守」這一種，所以凡是原版寫「側 0／側 1」的地方，
+// 都要先換算成攻守再對照。
+const (
+	AttackerSide = 0
+	DefenderSide = 1
+)
 
 // SquadSelected 回傳第 k 隊有沒有被選中。
 func (s *Side) SquadSelected(k int) bool {
@@ -386,10 +398,11 @@ func (b *Battle) Order(side, squad int, c Command) {
 	if c == ScaleWal && !b.Field.IsSiege() {
 		c = Attack
 	}
-	if c == Charge && b.Field.IsSiege() {
-		// 說明書 4.2：突擊時守方會開門，而**開了就關不回去**。
-		b.Sides[side].GateOpen = true
-		b.OpenGates()
+	// ⚠ 只有**守方**的突擊會拆城壁（`sub_1B7CB` 的側別閘，
+	// 見 SortieBreaksWalls）。攻方突擊只是加快疲勞、火力全開。
+	if c == Charge && b.Field.IsSiege() && side == DefenderSide {
+		b.Sides[side].Sortied = true
+		b.SortieBreaksWalls()
 	}
 	lo, hi := 0, SoldiersOnFoot
 	if squad >= 0 {

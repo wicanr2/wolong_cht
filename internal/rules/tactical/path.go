@@ -57,6 +57,21 @@ const unreached = 0xFFFF
 // 走不到就回 nil。點數超過 MaxWaypoints 時只回前 64 個——與原版一致
 // （原版的緩衝區就只有那麼大，`dec cl / jz` 到了就停）。
 func (f *Field) FindPath(from, to Point, climb bool, penalty Penalty) []Point {
+	return f.FindPathForcing(from, to, climb, penalty, nil)
+}
+
+// FindPathForcing 與 FindPath 相同，但把 force(x, y) 為真的格子**當成可通行**，
+// 即使地形擋著。
+//
+// 它存在的理由只有一個：攻城時城體多半是打不壞的地形，可破壞的只有
+// gateX 那一小段城壁與 2–14 格門。純地形尋路在城封死時回空，兵就會
+// 整團停在城牆前不動，直到攻城計時器把大將耗光——**攻方永遠攻不進去**。
+//
+// ⚠ **這是 remake 的近似。** 原版走的是 `0x1800 + 兵編號 × 128` 那張
+// 預先算好的繞路點清單，而那個演算法還沒解出來
+// （docs/mechanics/30-combat.md「還沒解的」）。解出來之後這一支要換掉。
+func (f *Field) FindPathForcing(from, to Point, climb bool, penalty Penalty,
+	force func(x, y int) bool) []Point {
 	if !inBounds(from.X, from.Y) || !inBounds(to.X, to.Y) {
 		return nil
 	}
@@ -84,13 +99,13 @@ func (f *Field) FindPath(from, to Point, climb bool, penalty Penalty) []Point {
 		cur := queue[0]
 		queue = queue[1:]
 		cx, cy := cur%Width, cur/Width
-		cz := f.StandLevel(cx, cy)
+		cz := breachLevel(f, force, cx, cy)
 		for _, d := range [4][2]int{{-1, 0}, {1, 0}, {0, -1}, {0, 1}} {
 			nx, ny := cx+d[0], cy+d[1]
 			if !inBounds(nx, ny) {
 				continue
 			}
-			if !f.stepOK(cz, nx, ny, climb) {
+			if !f.stepOKAt(cz, nx, ny, climb, breachLevel(f, force, nx, ny)) {
 				continue
 			}
 			n := idx(nx, ny)
@@ -140,16 +155,30 @@ func (f *Field) FindPath(from, to Point, climb bool, penalty Penalty) []Point {
 	return out
 }
 
+// breachLevel 是「撞穿之後」那一格的可站立層：可破壞的實體被打壞會
+// 變成瓦礫（高度 0），所以尋路要照打壞後的高度算，否則兵會走上城壁
+// 頂端就下不來，那條路等於死路。
+func breachLevel(f *Field, force func(x, y int) bool, x, y int) int {
+	if force != nil && force(x, y) {
+		return 0
+	}
+	return f.StandLevel(x, y)
+}
+
 // stepOK 回報從高度 fromZ 的格子踏進 (x, y) 行不行。
 //
 // 與 tryMove 同一組規則：水平跨格允許同步一層高度；只有在同一格做
 // 純 Z 軸移動時，才由兵種能力限制爬牆（`cmp byte ptr [si+4], 12h / jbe`，
 // docs/re/11 §5.8j）。
 func (f *Field) stepOK(fromZ, x, y int, climb bool) bool {
+	return f.stepOKAt(fromZ, x, y, climb, f.StandLevel(x, y))
+}
+
+// stepOKAt 與 stepOK 相同，但可以指定目的格的可站立層（見 breachLevel）。
+func (f *Field) stepOKAt(fromZ, x, y int, climb bool, z int) bool {
 	// 尋路的自我修改分支仍依 `climb` 決定能否向上跨越高度；這讓非爬牆
 	// 兵繞過整道一層牆。實際逐格移動則另由 tryMove 重現
 	// `sub_1B1B1` 的水平一層高度同步，兩者不能混成同一個檢查。
-	z := f.StandLevel(x, y)
 	if abs(z-fromZ) > 1 {
 		return false
 	}

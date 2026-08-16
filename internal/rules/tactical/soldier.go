@@ -243,24 +243,28 @@ func (b *Battle) moveToward(side, k int) {
 	// `1B0AF`），而那些常式只有在走得動時才被呼叫——所以**被牆擋住的兵
 	// 保持原本的面向**。差別看得見：面向決定畫哪一張圖，也決定
 	// §5.9 那個城壁分支成不成立。
-	moved := false
+	moved, walled := false, false
 	if s.X != s.StepX {
 		d, face := 1, East
 		if s.X > s.StepX {
 			d, face = -1, West
 		}
-		if b.tryMove(side, k, s.X+d, s.Y, s.Z) {
+		ok, blocked := b.tryMove(side, k, s.X+d, s.Y, s.Z)
+		if ok {
 			s.Facing, moved = face, true
 		}
+		walled = walled || blocked
 	}
 	if !moved && s.Y != s.StepY {
 		d, face := 1, South
 		if s.Y > s.StepY {
 			d, face = -1, North
 		}
-		if b.tryMove(side, k, s.X, s.Y+d, s.Z) {
+		ok, blocked := b.tryMove(side, k, s.X, s.Y+d, s.Z)
+		if ok {
 			s.Facing, moved = face, true
 		}
+		walled = walled || blocked
 	}
 	// ★ 大將與騎馬不做 Z 移動 —— 爬不上城牆（`cmp [si+4], 12h / jbe`）。
 	if !moved && s.CanClimb() && s.Z != s.StepZ {
@@ -268,13 +272,18 @@ func (b *Battle) moveToward(side, k int) {
 		if s.Z > s.StepZ {
 			d = -1
 		}
-		if b.tryMove(side, k, s.X, s.Y, s.Z+d) {
+		if ok, _ := b.tryMove(side, k, s.X, s.Y, s.Z+d); ok {
 			moved = true
 		}
 	}
-	if !moved {
-		// 三個軸都走不動 → 算一條繞路。原版在 `sub_1AED2` 就是這樣
-		// 補上 `0x1800 + 兵編號 × 128` 那塊繞路點清單的（§5.15）。
+	// 三個軸都走不動 → 算一條繞路。原版在 `sub_1AED2` 就是這樣
+	// 補上 `0x1800 + 兵編號 × 128` 那塊繞路點清單的（§5.15）。
+	//
+	// ⚠ **被地形擋住時也要重算，即使這一幀靠跟同伴對調而「動了」。**
+	// 對調（`sub_1B732`）會回報成功，於是前排卡在城牆上的兵靠著跟後排
+	// 換位就一直算「有移動」，永遠不重算路——整團會在城牆前churn 到
+	// 攻城計時器把大將耗光。
+	if !moved || walled {
 		b.replan(side, k)
 	}
 	if moved && s.Stamina > 0 {
@@ -296,8 +305,15 @@ func (b *Battle) replan(side, k int) {
 		return
 	}
 	s.PathAt = b.Frame
-	pts := b.Field.FindPath(Point{X: s.X, Y: s.Y},
-		Point{X: s.GoalX, Y: s.GoalY}, s.CanClimb(), nil)
+	from, to := Point{X: s.X, Y: s.Y}, Point{X: s.GoalX, Y: s.GoalY}
+	pts := b.Field.FindPath(from, to, s.CanClimb(), nil)
+	if len(pts) == 0 {
+		// 地形走不通 → 改成「可以拆的就穿過去」。兵會走到那一格前面
+		// 撞上去，`tryMove` 把它算成一次耐久損傷，撞穿了地形就通了。
+		// 沒有這一步的話，攻城時攻方會整團卡在打不壞的城體前面。
+		pts = b.Field.FindPathForcing(from, to, s.CanClimb(),
+			b.breachCost, b.breakableAt)
+	}
 	if len(pts) == 0 {
 		return
 	}
@@ -305,10 +321,13 @@ func (b *Battle) replan(side, k int) {
 }
 
 // tryMove 試著走到一格。走得上去才動。
-func (b *Battle) tryMove(side, k, x, y, z int) bool {
+//
+// 第二個回傳值是「**被地形擋住**」——擋路的是牆或高低差，不是別的兵。
+// 呼叫端要靠它決定要不要重算繞路：撞到兵可以靠對調解決，撞到地形不行。
+func (b *Battle) tryMove(side, k, x, y, z int) (moved, walled bool) {
 	s := &b.Sides[side].Soldiers[k]
 	if !inBounds(x, y) {
-		return false
+		return false, true
 	}
 	// Z 沒指定成那一格的可站立層時，用那一格的頂。
 	if !b.Field.Walkable(x, y, z) {
@@ -318,14 +337,14 @@ func (b *Battle) tryMove(side, k, x, y, z int) bool {
 		// 在 X/Y 已到位後的分支），不能拿來阻擋退卻時跨過一格高度 1
 		// 的邊界地形。
 		if x == s.X && y == s.Y && z > s.Z && !s.CanClimb() {
-			return false
+			return false, true
 		}
 		// 一次只能上下一層。
 		if abs(z-s.Z) > 1 {
 			// 擋住去路的是城壁或門的話，這一撞要算耐久
 			// （原版在同一個碰撞路徑上 `dec [di+18h]`，docs/re/11 §5.9）。
 			b.hitStructure(side, s.Facing, x, y)
-			return false
+			return false, true
 		}
 	}
 	// 有人擋著 → 走碰撞處理（`loc_1B533`）。**敵我分兩條路**：
@@ -341,13 +360,13 @@ func (b *Battle) tryMove(side, k, x, y, z int) bool {
 			e := &b.Sides[side2].Soldiers[k2]
 			// 大將走 `sub_1B6BC`，其餘敵人走 `sub_1B618`。
 			b.attackCollision(side, s, e)
-			return false
+			return false, false
 		}
-		return b.swapWith(side, k, side2, k2)
+		return b.swapWith(side, k, side2, k2), false
 	}
 	s.X, s.Y, s.Z = x, y, z
 	s.syncTerrain(b.Field, x, y, z)
-	return true
+	return true, false
 }
 
 // swapWith 重現 `seg000:B56D`–`B598` ＋ `sub_1B732`：

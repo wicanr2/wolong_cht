@@ -155,26 +155,51 @@ func TestHitStructureBreaksAndFlattens(t *testing.T) {
 }
 
 // 突擊會把門全部打開，而且開了關不回去（說明書 4.2）。
-func TestChargeOpensGates(t *testing.T) {
-	f, _ := tiledField(32)
+// 守方突擊：`sub_1B7CB` 只挑**類型 1（城壁）**（`80 FC 01` ＝ `cmp ah, 1`），
+// **門不在裡面**，而且**只有守方**那一側會觸發。
+func TestDefenderChargeBreaksWallsNotGates(t *testing.T) {
+	f, tiles := tiledField(32)
 	b := NewBattle(f, SyntheticFormations(), &fixedRand{}, 0)
 	for k := 0; k < Squads; k++ {
-		b.Deploy(1, k, Infantry, 10)
+		b.Deploy(DefenderSide, k, Infantry, 10)
 	}
 	b.Place()
 
 	gate := Height / 2
-	if f.StandLevel(32, gate) == 0 {
-		t.Fatal("門那一格開場應該是擋著的")
+	wall := gate - 3
+	if f.StandLevel(32, wall) == 0 || f.StandLevel(32, gate) == 0 {
+		t.Fatal("城壁與門那兩格開場都該是擋著的")
 	}
-	b.Order(1, -1, Charge)
-	if f.StandLevel(32, gate) != 0 {
-		t.Error("突擊之後門那一格應該走得過去")
+
+	// 攻方突擊什麼都不拆。
+	b.Order(AttackerSide, -1, Charge)
+	if f.StandLevel(32, wall) == 0 {
+		t.Error("攻方突擊不該拆城壁")
+	}
+	if b.Sides[AttackerSide].Sortied {
+		t.Error("攻方不該被標成已出擊")
+	}
+
+	b.Order(DefenderSide, -1, Charge)
+	if !b.Sides[DefenderSide].Sortied {
+		t.Error("守方突擊之後要標成已出擊")
+	}
+	if f.StandLevel(32, wall) != 0 {
+		t.Error("守方突擊之後城壁那一格應該走得過去")
+	}
+	if got := tiles[wall][32]; got != TileWallLo+brokenWallDelta {
+		t.Errorf("城壁圖塊 = %#x，預期換成瓦礫 %#x", got, TileWallLo+brokenWallDelta)
 	}
 	for _, s := range b.Structures {
-		if s.Kind == KindGate && !s.Broken {
-			t.Error("突擊之後門應該全開")
+		if s.Kind == KindWall && !s.Broken {
+			t.Error("守方突擊之後城壁應該全破")
 		}
+		if s.Kind == KindGate && s.Broken {
+			t.Error("⚠ 門不該被突擊拆掉——sub_1B7CB 只挑類型 1")
+		}
+	}
+	if f.StandLevel(32, gate) == 0 {
+		t.Error("門那一格不該被突擊打通")
 	}
 }
 
@@ -452,5 +477,79 @@ func TestOrderSelectedRejectsScaleWallOffSiege(t *testing.T) {
 	siege := newTestBattle(walledField(32))
 	if !siege.OrderSelected(0, ScaleWal) {
 		t.Error("攻城戰的城壁令不該被拒絕")
+	}
+}
+
+// 純地形走不通時，尋路要改成「可以拆的就穿過去」——兵才會走到那一格
+// 撞上去，把耐久打掉。⚠ 這是 remake 的近似（原版用 0x1800 那張繞路點
+// 清單，演算法未解）。
+// sealedField 是一張被城壁完整封死的圖：X=32 整column 都是城壁，
+// 中間一格是門。純地形繞不過去。
+func sealedField() (*Field, [][]byte) {
+	tiles := make([][]byte, Height)
+	for y := range tiles {
+		tiles[y] = make([]byte, Width)
+		tiles[y][32] = TileWallLo
+	}
+	tiles[Height/2][32] = TileGateLo
+	var heights [256]int
+	heights[TileWallLo] = 4
+	heights[TileGateLo] = 4
+	heights[TileWallLo+brokenWallDelta] = 0
+	heights[TileGateLo+brokenGateDelta] = 0
+	return NewFieldFromTiles(tiles, &heights, 32), tiles
+}
+
+// 純地形走不通時，尋路要改成「可以拆的就穿過去」——兵才會走到那一格
+// 撞上去，把耐久打掉。⚠ 這是 remake 的近似（原版用 0x1800 那張繞路點
+// 清單，演算法未解）。
+func TestPathFallsBackThroughBreakableCells(t *testing.T) {
+	f, _ := sealedField()
+	b := NewBattle(f, SyntheticFormations(), &fixedRand{}, 0)
+
+	from, to := Point{X: 20, Y: Height / 2}, Point{X: 45, Y: Height / 2}
+	if pts := f.FindPath(from, to, true, nil); len(pts) != 0 {
+		t.Fatalf("這張圖被城壁封死，純地形尋路應該回空，得到 %d 段", len(pts))
+	}
+	if len(f.FindPathForcing(from, to, true, b.breachCost, b.breakableAt)) == 0 {
+		t.Fatal("允許撞穿之後應該找得到路")
+	}
+
+	// 門比城壁便宜（耐久 80 對上千），成本要反映這一點。
+	if b.breachCost(32, Height/2) >= b.breachCost(32, 1) {
+		t.Error("門的撞穿成本應該低於城壁")
+	}
+	if b.breachCost(20, 20) != 0 {
+		t.Error("空地不該有撞穿成本")
+	}
+
+	// 打壞之後純地形就通了，不必再靠 forcing。
+	b.breakRow(Height / 2)
+	if len(f.FindPath(from, to, true, nil)) == 0 {
+		t.Error("門破了之後純地形尋路應該通")
+	}
+}
+
+// 被地形擋住的兵要重算繞路，**即使這一幀靠跟同伴對調而「動了」**。
+// 沒有這一條的話，前排會靠著跟後排換位一直算「有移動」，永遠不重算路。
+func TestTryMoveReportsTerrainBlock(t *testing.T) {
+	f, _ := tiledField(32)
+	b := NewBattle(f, SyntheticFormations(), &fixedRand{}, 0)
+	b.Deploy(AttackerSide, 0, Infantry, 8)
+	b.Place()
+
+	s := &b.Sides[AttackerSide].Soldiers[0]
+	y := b.Structures[0].Y
+	s.X, s.Y, s.Z = 31, y, 0
+	moved, walled := b.tryMove(AttackerSide, 0, 32, y, 0)
+	if moved || !walled {
+		t.Errorf("撞城壁應該回 (false, true)，得到 (%v, %v)", moved, walled)
+	}
+
+	// 走得動的那一步不算被地形擋住。
+	s.X, s.Y, s.Z = 20, y, 0
+	moved, walled = b.tryMove(AttackerSide, 0, 21, y, 0)
+	if !moved || walled {
+		t.Errorf("空地應該回 (true, false)，得到 (%v, %v)", moved, walled)
 	}
 }

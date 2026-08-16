@@ -835,7 +835,7 @@ func TestFriendlyCollisionSwaps(t *testing.T) {
 	c.X, c.Y, c.Z = 21, 20, 0
 	a.Cmd, c.Cmd = Attack, Attack
 
-	if !b.tryMove(0, 10, 21, 20, 0) {
+	if ok, _ := b.tryMove(0, 10, 21, 20, 0); !ok {
 		t.Fatal("撞到自己人應該換位成功")
 	}
 	if a.X != 21 || c.X != 20 {
@@ -850,7 +850,7 @@ func TestFriendlyCollisionSwaps(t *testing.T) {
 	d := &b.Sides[0].Soldiers[12]
 	d.Kind = Infantry
 	d.X, d.Y, d.Z = 19, 20, 0
-	if b.tryMove(0, 12, 20, 20, 0) {
+	if ok, _ := b.tryMove(0, 12, 20, 20, 0); ok {
 		t.Error("這一幀已經被換過的兵，不該再被第三個人換走")
 	}
 	// 那個兵自己更新時會把旗標清掉（`and byte ptr [si], 0BFh`）。
@@ -871,7 +871,7 @@ func TestEnemyCollisionAttacks(t *testing.T) {
 	e.X, e.Y, e.Z = 21, 20, 0
 	hp := e.HP
 
-	if b.tryMove(0, 10, 21, 20, 0) {
+	if ok, _ := b.tryMove(0, 10, 21, 20, 0); ok {
 		t.Error("敵人擋著不該走得過去")
 	}
 	if a.X != 20 {
@@ -890,7 +890,7 @@ func TestGeneralNeverSwaps(t *testing.T) {
 	a.Kind = Infantry
 	g.X, g.Y, g.Z = 21, 20, 0
 	a.X, a.Y, a.Z = 20, 20, 0
-	if b.tryMove(0, 10, 21, 20, 0) {
+	if ok, _ := b.tryMove(0, 10, 21, 20, 0); ok {
 		t.Error("不該跟大將換位置")
 	}
 	if a.X != 20 || g.X != 21 {

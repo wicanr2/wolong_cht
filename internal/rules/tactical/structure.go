@@ -77,7 +77,8 @@ func (b *Battle) StructureBar() (durability int, shown bool) {
 	return b.bar.min, b.bar.shown
 }
 
-// noteStructureDamage 重現 `sub_1C407`：實體挨打時更新門強度條。
+// noteStructureDamage 重現 `sub_1C407`：**攻城戰的城壁**挨打時更新門強度條。
+// 呼叫端已經過濾過類型與戰場種類（docs/spec/32 §2）。
 func (b *Battle) noteStructureDamage(durability int) {
 	if !b.bar.shown {
 		// 原版在重建版面時把 word_1C405 一起設回 0xFFFF。
@@ -257,7 +258,7 @@ func (b *Battle) hitStructure(side, facing, x, y int) bool {
 		return false
 	}
 	// 守方碰不壞自己的城壁。
-	if side != 0 {
+	if side != AttackerSide {
 		return false
 	}
 	// 攻方背對城的方向 → 直接歸零。
@@ -266,11 +267,14 @@ func (b *Battle) hitStructure(side, facing, x, y int) bool {
 	}
 	if s.Durability > 0 {
 		s.Durability--
-		b.noteStructureDamage(s.Durability)
+		// 門強度條只在**攻城戰**、而且**只對城壁**顯示——呼叫端
+		// `0001B601` 兩道閘：`cmp byte_1D34B, 0` ＋ `cmp [di+1], 1`。
+		if b.Field.IsSiege() && s.Kind == KindWall {
+			b.noteStructureDamage(s.Durability)
+		}
 		return true
 	}
 	b.breakRow(s.Y)
-	b.noteStructureDamage(0)
 	return true
 }
 
@@ -279,6 +283,30 @@ func (b *Battle) hitStructure(side, facing, x, y int) bool {
 // 攻城圖的城壁一律在 X 33–46（186 張零例外），攻方的陣形原點在 X 5，
 // 所以朝城是 East、背對是 West。
 const awayFromCastle = West
+
+// breachPenalty 是「穿過還沒破的城壁／門」那一格的額外成本。
+//
+// 它只在純地形尋路已經回空之後才用得到，所以數值只要夠大到讓
+// 同一條路上寧可繞遠也不要多拆一格就好。
+const breachPenalty = 64
+
+// breakableAt 回答 (x, y) 是不是還沒破的城壁或門——也就是「撞得穿」。
+func (b *Battle) breakableAt(x, y int) bool {
+	i := b.structureAt(x, y)
+	return i >= 0 && !b.Structures[i].Broken
+}
+
+// breachCost 讓尋路寧可繞遠也不要多拆一格；門比城壁便宜（耐久 80 對上千）。
+func (b *Battle) breachCost(x, y int) int {
+	i := b.structureAt(x, y)
+	if i < 0 || b.Structures[i].Broken {
+		return 0
+	}
+	if b.Structures[i].Kind == KindGate {
+		return breachPenalty
+	}
+	return breachPenalty * 2
+}
 
 // structureAt 找出蓋住 (x, y) 的那一段。一段城壁蓋 Run 格。
 func (b *Battle) structureAt(x, y int) int {
@@ -311,17 +339,33 @@ func (b *Battle) breakRow(y int) {
 	}
 }
 
-// OpenGates 重現 `sub_1B7CB`：突擊時守方把門全部打開。
-// 說明書 4.2 說開了的門這場戰鬥不能再關，所以這裡也不還原。
-func (b *Battle) OpenGates() {
+// SortieBreaksWalls 重現 `sub_1B7CB`：**守方**下突擊令的那一刻，
+// 場上所有還完好的**城壁**一次全部打壞。
+//
+// 說明書 4.2 把它寫成「守方會開門出擊」，而機器碼做的比那句話更大：
+//
+//	0001B7F4  mov ax, [di]        ; 8B 05
+//	0001B7F6  cmp ah, 1           ; 80 FC 01  ★ 類型碼 1 ＝ 城壁（docs/re/11 §5.11）
+//	0001B7F9  jnz .skip
+//	0001B7FB  cmp al, 80h / jb .skip        ; bit 7 ＝ 這一格有實體
+//	0001B7FF  test al, 1 / jnz .skip        ; bit 0 ＝ 已經破了
+//	0001B803  call sub_1B824                ; 打壞它
+//
+// 掃的是 `0x0C00` 起那 16 筆實體，**只挑類型 1**。門（類型 2）不在裡面。
+// 開了就關不回去，所以這裡也不還原。
+//
+// ⚠ 呼叫端要自己確認是守方——原版的側別閘在 `sub_1B7CB` 開頭：
+// `cl = (si < 0x600 ? 0x80 : 0)`，要等於 `byte_10D35 & 0x80`
+// （bit 7 ＝ 玩家是守方）才往下走。兩種攻守情形算出來都是**守方那一側**。
+func (b *Battle) SortieBreaksWalls() {
 	for i := range b.Structures {
 		s := &b.Structures[i]
-		if s.Kind != KindGate || s.Broken {
+		if s.Kind != KindWall || s.Broken {
 			continue
 		}
 		s.Broken, s.Durability = true, 0
 		for r := 0; r < s.Run; r++ {
-			b.Field.Retile(s.X, s.Y+r, brokenGateDelta)
+			b.Field.Retile(s.X, s.Y+r, brokenWallDelta)
 		}
 	}
 }
