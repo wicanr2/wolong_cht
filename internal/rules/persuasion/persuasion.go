@@ -322,6 +322,17 @@ func (s *Session) Offer(r Reason) (Outcome, int) {
 	return Continue, 0
 }
 
+// Offered 回報這個理由這一輪講過了沒有。
+//
+// 原版對「同一個理由再講一次」有專屬台詞（TALK `base+45`，
+// docs/spec/44 §5），呈現層要靠這個分辨。
+func (s *Session) Offered(r Reason) bool {
+	if s == nil || r < 0 || r >= numReasons {
+		return false
+	}
+	return s.used[r]
+}
+
 // Exhausted 回報「符合狀況的理由都講完了，君主還是不點頭」。
 //
 // 這時玩家應該用進言撤回收手（信賴度不變），

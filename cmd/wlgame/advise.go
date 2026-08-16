@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"image/color"
+	"strings"
 
 	"github.com/hajimehoshi/ebiten/v2"
 
@@ -208,25 +209,95 @@ func (g *game) offerReason(r persuasion.Reason) {
 	if g.sess == nil {
 		return
 	}
+	repeat := g.sess.Offered(r)
 	out, dt := g.sess.Offer(r)
 	g.adjustTrust(dt)
-	g.adviseLog = append(g.adviseLog, "軍師：「"+r.String()+"。」")
+	base := adviseReasonBase(g.adviseCmd)
+	slot := adviseReasonSlot(g.adviseCmd, r)
+
+	// ① 軍師說出那個理由（原版 `sub_13B5A` 的 `cx = base + 位置 + 1`）。
+	if line := g.adviseLine("軍師", base+slot+1); line != "" {
+		g.adviseLog = append(g.adviseLog, line)
+	}
+	// ② 君主的反應（`sub_13BA9`）。
+	if line := g.adviseLine("君主",
+		adviseReasonReply(base, slot, out, repeat, g.playerTalkVariant())); line != "" {
+		g.adviseLog = append(g.adviseLog, line)
+	}
 
 	switch out {
 	case persuasion.Agreed:
 		g.commitAdvice()
 	case persuasion.Failed:
-		g.adviseLog = append(g.adviseLog,
-			fmt.Sprintf("君主：「此言不實。」　信賴度 %d", dt))
 		g.lastEvent = "說服失敗"
 		g.sess = nil
 	case persuasion.Withdrawn:
-		g.adviseLog = append(g.adviseLog, "軍師：「……此事容後再議。」")
 		g.lastEvent = "進言撤回"
 		g.sess = nil
-	default:
-		g.adviseLog = append(g.adviseLog, "君主：「唔……還有呢？」")
 	}
+}
+
+// adviseReasonBase 是說服迴圈的起點。原版在進迴圈前 `add [bp+0], 10h`
+// （`sub_13830`），所以理由那一段全部相對於 base + 16 —— 而 base + 16
+// 正好是那三則五選一的選單（#102／#166／#230，docs/spec/44 §1）。
+func adviseReasonBase(c persuasion.Command) int { return adviseTalkBase(c) + 0x10 }
+
+// adviseReasonSlot 是理由在這個指令的選單裡排第幾（0–4，4 是撤回）。
+// **順序也是資料**——原版的索引算式直接吃這個位置。
+func adviseReasonSlot(c persuasion.Command, r persuasion.Reason) int {
+	for i, o := range persuasion.Options(c) {
+		if o == r {
+			return i
+		}
+	}
+	return len(persuasion.Options(c)) - 1 // 找不到就當撤回，不要算出界
+}
+
+// adviseReasonReply 是君主對一個理由的反應（原版 `sub_13BA9` 的結尾）：
+//
+//	撤回（第 5 項）      base + 42
+//	同一個理由講第二次   base + 45
+//	否則                 base + 位置×9 + 結果×3 + 6
+//
+// 結果碼 0 ＝ 理由不成立、1 ＝ 湊夠了、2 ＝ 還要再一個。
+// 每個位置佔三則是君主的**說話型**變體（`sub_13C99` 的 `add cx, ax`）。
+func adviseReasonReply(base, slot int, out persuasion.Outcome, repeat bool, variant int) int {
+	switch {
+	case out == persuasion.Withdrawn:
+		return base + 42 + variant
+	case repeat:
+		return base + 45 + variant
+	}
+	code := 2 // Continue：還要再一個
+	switch out {
+	case persuasion.Failed:
+		code = 0
+	case persuasion.Agreed:
+		code = 1
+	}
+	return base + slot*9 + code*3 + 6 + variant
+}
+
+// adviseReasonLabels 是說服選單的五列。原版把它們放在一則五行的
+// TALK（#102／#166／#230，[`docs/re/66`](../../docs/re/66-message-box-geometry.md) §6
+// 記的四則五行訊息之三），**順序就是索引算式吃的位置**。
+// 讀不到就退回 Reason.String()，那份用字也是照原版選單抄的。
+func (g *game) adviseReasonLabels(c persuasion.Command) []string {
+	opts := persuasion.Options(c)
+	out := make([]string, len(opts))
+	for i, r := range opts {
+		out[i] = r.String()
+	}
+	lines, ok := g.talkLines(adviseReasonBase(c), g.adviseTalkVars())
+	if !ok || len(lines) != len(opts) {
+		return out
+	}
+	for i, l := range lines {
+		if t := strings.TrimRight(l, "　 "); t != "" {
+			out[i] = t
+		}
+	}
+	return out
 }
 
 // adjustTrust 對應原版 sub_13D91／sub_13DC9 的 byte 飽和行為。
@@ -318,7 +389,6 @@ func (g *game) commitAdvice() bool {
 		g.sess = nil
 		return false
 	}
-	g.adviseLog = append(g.adviseLog, "君主：「好，就依你所言。」")
 	g.lastEvent = g.adviseCmd.String() + " 成立"
 	if g.adviseCmd == persuasion.CeaseFire || g.adviseCmd == persuasion.Cooperate {
 		g.lastEvent += "（外交事件已排入）"
@@ -389,6 +459,7 @@ func (g *game) drawAdvise(screen *ebiten.Image) {
 			return
 		}
 		y += 8
+		labels := g.adviseReasonLabels(g.adviseCmd)
 		for i, r := range persuasion.Options(g.adviseCmd) {
 			col := white
 			mark := "　"
@@ -402,7 +473,7 @@ func (g *game) drawAdvise(screen *ebiten.Image) {
 					col = red
 				}
 			}
-			g.td.Draw(screen, mark+r.String(), 48, y, col)
+			g.td.Draw(screen, mark+labels[i], 48, y, col)
 			y += lh
 		}
 		g.td.Draw(screen, "↑↓ 選擇　Enter 提出　ESC 放棄", 48, y+4, dim)

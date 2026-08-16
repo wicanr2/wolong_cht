@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 54 | 52 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
-| 程式碼理解 | 216 | 209 | 7 | 0 |
+| 程式碼理解 | 217 | 210 | 7 | 0 |
 | 驗收 | 54 | 48 | 6 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 92 | 87 | 5 | 0 |
-| **合計** | **470** | 449 | 20 | 1 |
+| 其他 | 98 | 93 | 5 | 0 |
+| **合計** | **477** | 456 | 20 | 1 |
 
 ## 2.1 規則正確性（54 條）
 
@@ -127,7 +127,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（216 條）
+## 2.3 程式碼理解（217 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -341,12 +341,13 @@
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 命令 6 為什麼擋高平面橫移 | `[si+1Ah] == 6`，命令碼 6 是什麼沒對過 | 靜態 |
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 打壞城壁之後地面層表不更新 | `sub_1B824` 只重算通行層（`sub_1BB6D`）與佔用表，**沒有重跑 `sub_1BC39`**。而那不影響結果：城壁的地面層本來就是拿打壞後的圖塊算的（§2 的 +0x10） | 靜態 |
 | [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | 非玩家的四個 entry 掛在 §6 未解。 | （散句） | 靜態 |
-| [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | `sub_1487B` 的挑格邏輯 | `sub_1474A`（AI 編成後的第一個目標）與 `sub_14DA4` 用它挑相鄰格；讀了外框但沒逐條解 | 靜態 |
+| [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | `loc_1491B` 的完整成本模型 | 只解出「穿過非己方據點 ＋0xA6 並設高位元」（§8.1）。廣度優先搜尋本身的佇列結構與其他成本項沒逐條讀 | 靜態 |
+| [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | remake 的對應 | §8 已實作（`../spec/43`）；**§8.4 的「逐站前進」沒有移植**，remake 一次算完整條路 | 靜態 |
 | [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | `sub_128F4` 的 STC 分支 | 走到敵方據點時呼叫 `sub_1291A`（俘虜／脫離判定），之後 `di` 不可信。本文件的 `di` 推論只涵蓋一般路徑 | 靜態 |
 | [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `sub_10AD9` 的 `cx = 40B0h` | 肖像繪製的尺寸／來源參數，沒逐位元解 | 靜態 |
 | [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `sub_107D2` | `sub_1075B` 在畫肖像前呼叫一次，參數是 `bx + dx×2 + 1`，未讀 | 靜態 |
 | [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `sub_189A4(al=1, dx=0, bx=2, cx=151Bh)` | `sub_13D09` 在貼完 `IVENTGRF` 之後畫的框，與 `sub_1895D` 是不是同一組單位沒驗 | 靜態 |
-| [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | 事件場景的兩個講話位置 | `sub_13C99` 傳 `dx=0, bx=5`、`sub_13CDC` 傳 `dx=8, bx=12h`，換算成 (8, 88) 與 (136, 296)，**沒有影格覆驗** | 靜態 |
+| [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `IVENTGRF` 插圖本身的位置 | `sub_13D09` 的 `dx = 0E07h` 是餵給 `sub_1E38C`（讀檔）的參數，不是座標。插圖在畫面上的位置沒量 | 靜態 |
 
 ## 2.4 驗收（54 條）
 
@@ -429,7 +430,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（92 條）
+## 2.6 其他（98 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -520,8 +521,14 @@
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「委任」那一格的顏色 | 實錄影格上看起來是紅字，但影片是壓縮過的、也沒有機器碼證據。remake 先畫成一般色 | 靜態 |
 | [`spec/39-march-order-menu.md`](../spec/39-march-order-menu.md) | `sub_193E9` 的選單版面 | 只知道 `cx = 0x4Ch`；矩形與列高沒解，remake 先用既有的對話框樣式並標成差異 | 靜態 |
 | [`spec/40-ai-march-decision.md`](../spec/40-ai-march-decision.md) | `sub_1487B` | AI 編成後挑第一個目標用的相鄰格選擇，未逐條解；remake 沿用既有的 `nearestFactionCity` | 靜態 |
-| [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 事件場景的兩個講話位置 | (8, 88) 與 (136, 296) 由機器碼算出，**沒有影格覆驗**（`../re/66` §8）。remake 的事件場景版面暫不動 | 靜態 |
-| [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 框的底紋 | 龍紋底紋仍未解（`../formats/03` §5.5），remake 用純色 | 靜態 |
+| [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 君主那一側的回話 | 原版事件場景會同時出現兩個框（`docs/re/66` §5.1 的影格就是），remake 只畫一個 | 靜態 |
+| [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 框的底紋 | 龍紋的點陣找到了（`../formats/03` §5.5），但 96 列的排法還沒解，remake 仍用純色 | 靜態 |
+| [`spec/42-event-scene-speakers.md`](../spec/42-event-scene-speakers.md) | 上框在結果階段的內容 | 影格上君主會在上框回話（「好，來人啊…」）。那一句不是 `sub_13C3D` 的結果句（它走一般通知框），來源還沒找到 | 靜態 |
+| [`spec/42-event-scene-speakers.md`](../spec/42-event-scene-speakers.md) | 撥款事件（4／5） | 同上，還沒對過哪一則進下框 | 靜態 |
+| [`spec/43-rout-on-blocked-return.md`](../spec/43-rout-on-blocked-return.md) | `loc_1491B` 的其他成本項 | 只解出「非己方據點 ＋0xA6」，廣度優先搜尋本身沒逐條讀 | 靜態 |
+| [`spec/43-rout-on-blocked-return.md`](../spec/43-rout-on-blocked-return.md) | TALK #1F／#20／#23／#198 | remake 還沒把這四則接上 | 靜態 |
+| [`spec/44-advise-original-text.md`](../spec/44-advise-original-text.md) | 呈現層 | 兩個講話框的模態流程沒有移植（`../re/66` §5.2） | 靜態 |
+| [`spec/44-advise-original-text.md`](../spec/44-advise-original-text.md) | 「這項進言沒有成立」 | remake 專屬的守門句：君主點頭之後規則層才發現條件變了。原版沒有這條路徑，所以沒有對應的原文 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |
