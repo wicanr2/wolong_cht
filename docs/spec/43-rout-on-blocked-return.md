@@ -50,8 +50,7 @@ remake 已實作並有單測。
 | 單元測試 | `TestRoutLosesTheMen`：預備兵池沒有增加（對照解體會增加）|
 | 單元測試 | `TestRoutingSurvivesSaveRoundTrip`：旗標 8 與計時器 byte-for-byte 寫得回去 |
 | 單元測試 | `TestReturnBlockedNeedsForeignCityOnTheRoute`：路上有別人的據點才成立 |
-
-| 長跑 | `cmd/wlsim` 現在會自己掛道路圖（`-map`，預設 `MMAP.MAP`），5 年 60 個月跑完不變量不違反 |
+| 長跑 | `cmd/wlsim` 現在會自己掛道路圖（`-map`，預設 `MMAP.MAP`）。5 年 60 個月：**敗走 9 次、解體 78 次**，不變量不違反 |
 
 > ⚠ **這一條的判定需要道路圖。** `returnBlocked` 走的是算好的格子路徑，
 > 而 `wlsim` 先前沒有 `SetRoads`（規則層不讀檔案，道路圖由呼叫端注入），

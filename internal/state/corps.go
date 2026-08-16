@@ -418,8 +418,14 @@ type CorpsEvent struct {
 	// Captured 不是 −1 表示這個 tick 佔下了某個據點。
 	Captured int
 
-	// Disbanded 表示這支軍團在這個 tick 解體了（`docs/spec/39`）。
+	// Disbanded 表示這支軍團在這個 tick 解體了（`docs/spec/39`）——
+	// 兵**回**預備兵池。
 	Disbanded bool
+
+	// Routed 表示這支軍團在這個 tick 敗走了（`docs/spec/43`）——
+	// 兵**不回**池。兩者都會讓軍團從地圖上消失，但代價完全不同，
+	// 所以計數要分開，不然量出來的「軍團損耗」會把回收算成損失。
+	Routed bool
 
 	// Relocated 不是 −1 表示**舊主的首都被打下來，遷到了這個據點**
 	// （原版 `sub_14DF0`，訊息 30「首都被攻陷了！儘速遷都到\2」）。
@@ -464,7 +470,7 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 		if c.Node == c.TargetNode && c.X == c.TargetX && c.Y == c.TargetY {
 			w.arriveCorps(i, rng)
 			if !c.Alive {
-				ev.Disbanded = true
+				ev.Disbanded, ev.Routed = !c.Routing, c.Routing
 				return &ev
 			}
 		} else if w.step(i) {
@@ -473,7 +479,7 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 			if ev.Arrived {
 				w.arriveCorps(i, rng)
 				if !c.Alive {
-					ev.Disbanded = true
+					ev.Disbanded, ev.Routed = !c.Routing, c.Routing
 					return &ev
 				}
 			}

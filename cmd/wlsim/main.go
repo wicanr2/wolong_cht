@@ -73,6 +73,7 @@ func main() {
 	fmt.Fprintln(tw, "年月\t勢力數\t玩家據點\t玩家資金\t玩家預備兵\t平均生產力\t玩家上昇值\tAI上昇值\tAI低於−36\t火災\t暴動\t暴風雨")
 
 	var fires, riots, storms int
+	var disbands, routs int
 	months := 0
 	total := *years * 12
 
@@ -114,6 +115,15 @@ func main() {
 		}
 		ev := w.Tick(rng)
 		ticks++
+		// 解體與敗走要分開數：一個把兵還回池，一個是純損失（docs/spec/43）。
+		for _, ce := range ev.Corps {
+			if ce.Disbanded {
+				disbands++
+			}
+			if ce.Routed {
+				routs++
+			}
+		}
 		// ⭐ 不變量檢查：驗的是「規則組合起來對不對」，
 		// 不是單條公式對不對（單元測試已經釘住單條了）。
 		if *check {
@@ -195,6 +205,7 @@ func main() {
 
 	fmt.Printf("\n跑了 %d 個月（%d tick）。火災 %d 次、暴動 %d 次、暴風雨 %d 次。\n",
 		months, months*30*clock.TicksPerDay, fires, riots, storms)
+	fmt.Printf("軍團：解體 %d 次（兵回池）、敗走 %d 次（兵損失）\n", disbands, routs)
 	p := w.Factions[w.Player]
 	fmt.Printf("玩家勢力：據點 %d　資金 %d　君主好戰等級 %d　侵攻可持續 %v\n",
 		p.Cities, p.Funds, p.Aggression,
