@@ -22,9 +22,9 @@
 | 資料保存 | 37 | 37 | 0 | 0 |
 | 程式碼理解 | 210 | 203 | 7 | 0 |
 | 驗收 | 53 | 47 | 6 | 0 |
-| 外部資料 | 18 | 17 | 0 | 1 |
+| 外部資料 | 17 | 16 | 0 | 1 |
 | 其他 | 84 | 80 | 4 | 0 |
-| **合計** | **457** | 437 | 19 | 1 |
+| **合計** | **456** | 436 | 19 | 1 |
 
 ## 2.1 規則正確性（55 條）
 
@@ -401,12 +401,11 @@
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 同一場戰鬥的逐格對拍 | 需要同狀態，還沒做 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 勢力一覽的欄位 | 沒有逐欄比對 | 靜態 |
 
-## 2.5 外部資料（18 條）
+## 2.5 外部資料（17 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
 | [`reference/02-jp-cht-diff.md`](../reference/02-jp-cht-diff.md) | #360–#1021 的逐句文意審查 | 第二批已列出，逐句審查未完成（§12） | 靜態 |
-| [`reference/02-jp-cht-diff.md`](../reference/02-jp-cht-diff.md) | 八變體組裡的 27 筆 | 判讀基礎要補；`#406` 之後不能單獨判讀（§14） | 靜態 |
 | [`reference/02-jp-cht-diff.md`](../reference/02-jp-cht-diff.md) | 校訂後的畫面抽樣與排版 parity | 未做。M7 因此未封口 | 靜態 |
 | [`reference/02-jp-cht-diff.md`](../reference/02-jp-cht-diff.md) | `#223` 等訊息的欄位完整語意 | 只修已證實的標記編號，欄位語意仍未解（§9） | 靜態 |
 | [`reference/03-baked-japanese.md`](../reference/03-baked-japanese.md) | 松崗版是移植不是重寫——**23 個檔在兩版之間 byte-for-byte 完全相同 | （未解小節內文） | 兩版對照 |

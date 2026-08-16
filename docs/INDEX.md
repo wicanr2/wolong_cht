@@ -131,7 +131,7 @@
 | [`docs/re/62-strategy-minimap.md`](re/62-strategy-minimap.md) | 62 — 主畫面縮小地圖：據點標記的四種顏色、視野框、勢力篩選 | ✅ 內容組成全解。 | 2026-08-16 |
 | [`docs/re/63-ground-plane-map.md`](re/63-ground-plane-map.md) | 63 — ⭐ 登城機制解完了：地面層表在另一個段，城門那一格就是樓梯 | ✅ 解出來了。 | 2026-08-16 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
-| [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-13 |
+| [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-16 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
 | [`docs/reference/04-first-survey.md`](reference/04-first-survey.md) | 04 — 首輪偵查紀錄（2026-08-07） | 歷史快照。已解的項目由 docs/formats/、docs/re/ 與 docs/INDEX.md 接手；本檔只保… | 2026-08-07 |
 | [`docs/reference/05-eten-font-provenance.md`](reference/05-eten-font-provenance.md) | 05 — 松崗版的中文字型是倚天字型 | confirmed。END_S14.DAT 與倚天 ascfont.15 byte-for-byte 相同； END… | 2026-08-13 |
