@@ -609,3 +609,33 @@ func TestListScrollbarMatchesRawHotzones(t *testing.T) {
 		t.Errorf("捲到底的滑塊下緣 = %d，want %d", th.Max.Y, track.Max.Y)
 	}
 }
+
+// 行軍指示的三選一：三列不重疊、命中只在有效的列數內
+// （原版項目數平常是 2，目標是首都才給 3，docs/spec/39 §1.1）。
+func TestMarchModeRowsAndHitTest(t *testing.T) {
+	var last image.Rectangle
+	for i := 0; i < 3; i++ {
+		r := marchModeRowRect(i)
+		if r.Dx() != marchModeRowW || r.Dy() != marchModeRowH {
+			t.Errorf("第 %d 列 = %v，want 寬 %d 高 %d", i, r, marchModeRowW, marchModeRowH)
+		}
+		if i > 0 && r.Min.Y <= last.Max.Y-1 {
+			t.Errorf("第 %d 列 %v 與前一列 %v 重疊", i, r, last)
+		}
+		last = r
+	}
+	mid := marchModeRowRect(2)
+	cx, cy := mid.Min.X+2, mid.Min.Y+1
+	if _, ok := marchModeRowAt(cx, cy, 3); !ok {
+		t.Error("三項時第 3 列應該可以點")
+	}
+	if _, ok := marchModeRowAt(cx, cy, 2); ok {
+		t.Error("只有兩項時第 3 列不該可以點")
+	}
+	// 三列都要落在視窗裡。
+	win := image.Rect(marchModeWinX, marchModeWinY,
+		marchModeWinX+marchModeWinW, marchModeWinY+marchModeWinH)
+	if !marchModeRowRect(2).In(win) {
+		t.Errorf("第 3 列 %v 跑出視窗 %v", marchModeRowRect(2), win)
+	}
+}

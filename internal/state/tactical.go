@@ -124,7 +124,17 @@ func (w *World) wantsTactical(att, def int) bool {
 	if def < 0 {
 		return false
 	}
-	return w.Corps[att].Faction == w.Player || w.Corps[def].Faction == w.Player
+	// **委任中的軍團不跳選單**：`sub_14E5C` 先看玩家是攻方還是守方，
+	// **兩條路各檢查各自那一方的委任位元**（`test [si], 4` 與
+	// `test [di], 4`），設起來就退回自動判定（`docs/re/09` §2）。
+	// 所以判準是「**玩家那一方**委任中」，與攻守無關。
+	if w.Corps[att].Faction == w.Player {
+		return !w.Corps[att].Delegated
+	}
+	if w.Corps[def].Faction == w.Player {
+		return !w.Corps[def].Delegated
+	}
+	return false
 }
 
 // beginTactical 準備一場戰術戰鬥。回傳 false 表示開不成，呼叫端該自動判定。

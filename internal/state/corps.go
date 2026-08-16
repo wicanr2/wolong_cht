@@ -400,6 +400,9 @@ type CorpsEvent struct {
 	// Captured 不是 −1 表示這個 tick 佔下了某個據點。
 	Captured int
 
+	// Disbanded 表示這支軍團在這個 tick 解體了（`docs/spec/39`）。
+	Disbanded bool
+
 	// Relocated 不是 −1 表示**舊主的首都被打下來，遷到了這個據點**
 	// （原版 `sub_14DF0`，訊息 30「首都被攻陷了！儘速遷都到\2」）。
 	Relocated int
@@ -429,9 +432,28 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 	c.Timer--
 	if c.Timer <= 0 {
 		c.Timer = c.Interval
-		if w.step(i) {
+		// ⚠ **停在目標上也要跑抵達處理**：原版 `sub_12662` 一開頭就比
+		// 「現在節點 ＝ 目標節點」，相同就直接呼叫 `sub_14325` 分派，
+		// 不需要移動（`docs/re/64` §1）。解體下在「已經在首都」時就靠這條。
+		// ⚠ 判「到了」要連座標一起看：remake 的 `Node` 在**踩到據點座標**
+		// 時就更新（中繼據點也算），單看它會把「還在路上但經過目標據點」
+		// 誤判成抵達。
+		if c.Node == c.TargetNode && c.X == c.TargetX && c.Y == c.TargetY {
+			w.arriveCorps(i)
+			if !c.Alive {
+				ev.Disbanded = true
+				return &ev
+			}
+		} else if w.step(i) {
 			ev.Moved = true
 			ev.Arrived = c.Node == c.TargetNode
+			if ev.Arrived {
+				w.arriveCorps(i)
+				if !c.Alive {
+					ev.Disbanded = true
+					return &ev
+				}
+			}
 			w.resolveContact(i, &ev, rng)
 		}
 	}

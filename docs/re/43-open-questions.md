@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 55 | 53 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
-| 程式碼理解 | 211 | 204 | 7 | 0 |
+| 程式碼理解 | 213 | 206 | 7 | 0 |
 | 驗收 | 53 | 47 | 6 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 84 | 80 | 4 | 0 |
-| **合計** | **457** | 437 | 19 | 1 |
+| 其他 | 85 | 81 | 4 | 0 |
+| **合計** | **460** | 440 | 19 | 1 |
 
 ## 2.1 規則正確性（55 條）
 
@@ -128,7 +128,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（211 條）
+## 2.3 程式碼理解（213 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -266,10 +266,8 @@
 | [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | 據點 `+0x00` 的 bit 4／5 | bit 6／7 是威脅旗標、低 4 位是敵方鄰居，中間兩位仍未見寫入端 | 靜態 |
 | [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | 勢力 `+0x17` 的讀取端 | 寫入端在 §1，誰讀它未找 | 靜態 |
 | [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | `+0x20` 與 `+0x14` 的張力 | `sub_14575` 與 `sub_14155` 都只寫 `+0x20`，`40` §5 的張力還在 | 靜態 |
-| [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `+0x23 = 0x0B` 之後由誰處理解體 | 寫入端有三處（`sub_1440F`／`sub_14466`／這裡），**消費端仍沒找到**。全庫掃 `[reg+23h]` 得到 39 處（`tools/ida_disp_users.py`），讀取端十支：`sub_12EFB`／`sub_12F71`／`sub_13091`／`sub_13E11`／`sub_… | 靜態 |
 | [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `sub_193E9` 的選單協定 | `ah = 1`、`cx` ＝ 首項索引、`dx`／`bx` ＝ 位置；回傳值怎麼編碼未逐位對過 | 靜態 |
 | [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `sub_1703C` | 選據點的那一支，未讀 | 靜態 |
-| [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `+0x23` 的其他值 | **寫入端一共寫過八種值**：0、1、2、3、8、9、`0x0A`、`0x0B`——所以它是軍團的**狀態機**，不是旗標。哪個值代表哪個階段未解 | 靜態 |
 | [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `sub_13E11`（每「時」） | 已讀：它每次只處理**一支**軍團（`word_10D1C` 每次 `+0x40`，繞到 `0x580` 歸零 ＝ 22 支輪替），條件是 `+0x00` 位元 7 設起來；接著算 `[si+23h] × 8 + 0x18` 拿去和 `+0x21`（u16）比，過了就寫 `[si+19h] = 0xFF`，再比一… | 靜態 |
 | [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | 樣式碼 | 只確定 `0` ＝ 擦除、`0x0B` ＝ 指令列、`0x0C`／`0x0F` 出現在別處；完整值域未列 | 靜態 |
 | [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | `ax = 0F01h`／`0801h` | 顏色／樣式的位元編碼未逐位對過 | 靜態 |
@@ -343,6 +341,10 @@
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | `sub_1B186`／`sub_1B15D` | 爬升／下降時檢查上下一層的那兩支，沒讀 | 靜態 |
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 命令 6 為什麼擋高平面橫移 | `[si+1Ah] == 6`，命令碼 6 是什麼沒對過 | 靜態 |
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 打壞城壁之後地面層表不更新 | `sub_1B824` 只重算通行層（`sub_1BB6D`）與佔用表，**沒有重跑 `sub_1BC39`**。而那不影響結果：城壁的地面層本來就是拿打壞後的圖塊算的（§2 的 +0x10） | 靜態 |
+| [`re/64-corps-arrival-state-machine.md`](../re/64-corps-arrival-state-machine.md) | 非玩家的 Stage 0–3 | `sub_1439D`／`sub_143AF`／`sub_1440F`／`sub_14466` 是 AI 的行軍決策鏈：讀據點 `+0x00` 的位元 6／7、據點 `+0x18`（停在該格的軍團數）、勢力 `+0x18`（武將數），還有一次 `sub_1ECE0` 亂數決定 `+0x0B` 計時器。**逐條未讀** | 靜態 |
+| [`re/64-corps-arrival-state-machine.md`](../re/64-corps-arrival-state-machine.md) | `+0x21` | `sub_13E11` 每「時」拿 `+0x23 × 8 + 0x18` 去和它比，過了寫 `+0x19 = 0xFF` 再比半值設位元 6。語意未解 | 靜態 |
+| [`re/64-corps-arrival-state-machine.md`](../re/64-corps-arrival-state-machine.md) | `+0x00` 位元 1 | Stage 10／11 改目標時 `or byte [si], 2`；疑似「路線要重算」，沒找讀取端 | 靜態 |
+| [`re/64-corps-arrival-state-machine.md`](../re/64-corps-arrival-state-machine.md) | `sub_17F90` | `sub_14325` 的第二個呼叫端，未讀 | 靜態 |
 
 ## 2.4 驗收（53 條）
 
@@ -424,7 +426,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（84 條）
+## 2.6 其他（85 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -509,6 +511,7 @@
 | [`spec/37-tactical-player-controls.md`](../spec/37-tactical-player-controls.md) | 敵方陣形線要不要顯示 | 原版只畫側 0 那條（`word_1D33C`） | 靜態 |
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 俘虜身分 | remake 的 `Posted` 是 bool，存不下 `+0x17` 的 0–5；俘虜狀態目前推不出來 | 靜態 |
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「看」與「選」的內容差異 | 原版兩種取法的**列表內容**不同（`../re/26` §4.2），remake 只統一了欄位 | 靜態 |
+| [`spec/39-march-order-menu.md`](../spec/39-march-order-menu.md) | `sub_193E9` 的選單版面 | 只知道 `cx = 0x4Ch`；矩形與列高沒解，remake 先用既有的對話框樣式並標成差異 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |

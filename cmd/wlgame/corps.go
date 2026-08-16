@@ -407,8 +407,8 @@ func (g *game) pickDestination(corps int) {
 			g.setEvent(err.Error())
 			return true
 		}
-		g.lastEvent = big5(g.world.Generals[corps].Name) + " 向 " +
-			big5(cs[i].Name) + " 行軍"
+		// 原版選完據點還有第二段：戰鬥指揮／委任／解體（docs/spec/39）。
+		g.beginMarchMode(corps, i)
 		return true
 	}
 	g.listHint = "選擇目的地　Enter 選取／決定　1-4 排序　ESC 取消"

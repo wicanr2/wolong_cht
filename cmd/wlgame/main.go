@@ -199,6 +199,8 @@ type game struct {
 
 	// form 是編成流程的狀態。
 	form formState
+	// marchMode 是行軍指示的第二段（戰鬥指揮／委任／解體，docs/spec/39）。
+	marchMode marchModeState
 
 	// finance 是財政畫面的狀態。與 form 一樣是**非常駐視窗**，
 	// 開著的時候時間會停（15-realtime.md §2）。
@@ -286,7 +288,8 @@ func (g *game) timeRuns() bool {
 		return false
 	}
 	// 一覽表、進言、編成都是非常駐視窗 —— 開著就停時間。
-	if g.list != nil || g.adviseActive() || g.form.active || g.finance.active ||
+	if g.list != nil || g.adviseActive() || g.form.active || g.marchMode.active ||
+		g.finance.active ||
 		g.saveUI.active || g.messageActive() {
 		return false
 	}
@@ -648,6 +651,11 @@ func (g *game) Update() error {
 	}
 	// 一覽表開著時吃掉所有輸入 —— 它是模態的（說明書 3.8 的兩段式操作
 	// 只有在獨佔輸入時才成立）。
+	// 行軍指示的三選一是模態的，排在最前面（它會蓋在一覽表上）。
+	if g.marchMode.active {
+		g.updateMarchMode()
+		return nil
+	}
 	// 編成畫面排在一覽表**之前**：原版的編成視窗是畫在武將一覽上面的
 	// （docs/re/30 §1），一覽表留在背景但不吃輸入。
 	if g.form.active {
@@ -925,6 +933,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 		g.drawList(screen)
 	}
 	g.drawForm(screen)
+	g.drawMarchMode(screen)
 	g.drawFinance(screen)
 	g.drawCityInfo(screen)
 	g.drawCorpsInfo(screen)
@@ -1221,6 +1230,7 @@ func main() {
 	openBattle := flag.Bool("open-battle", false, "截圖前先開一場野戰的戰術戰鬥（驗收用）")
 	openSiege := flag.Bool("open-siege", false, "截圖前先開一場攻城的戰術戰鬥（驗收用）")
 	openBattleChoice := flag.Bool("open-battle-choice", false, "截圖前停在戰鬥指揮／委任選單（驗收用）")
+	openMarchMode := flag.Bool("open-march-mode", false, "截圖前停在行軍指示的三選一（驗收用）")
 	openMessage := flag.Bool("open-message", false, "截圖前先開玩家首都的暴風雨 TALK #70 通知（驗收用）")
 	openTalkIndex := flag.Int("open-talk-index", -1, "截圖前直接開指定 TALK.DAT 槽位（驗收用）")
 	openOutcome := flag.String("open-outcome", "", "只供截圖的敗北 modal fixture：trust 或 faction")
@@ -1284,7 +1294,8 @@ func main() {
 			log.Fatal(err)
 		}
 		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *openForm, *openCorps,
-			*openBattle, *openSiege, *openBattleChoice, *openMessage, *openTalkIndex, *openOutcome)
+			*openMarchMode, *openBattle, *openSiege, *openBattleChoice, *openMessage,
+			*openTalkIndex, *openOutcome)
 	} else {
 		slots := inspectLauncherSlots(*saveFile)
 		// 劇本標題從檔案讀，不硬編（docs/spec/25 §1.2）。
@@ -1368,6 +1379,7 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 	g.hud = 0
 	g.list = nil
 	g.form = formState{}
+	g.marchMode = marchModeState{}
 	g.finance = financeState{}
 	g.advise = adviseNone
 	g.messages = nil
@@ -1476,7 +1488,7 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 	return nil
 }
 
-func configureDirectFixtures(g *game, openWin int, openList, openAdvise, openForm, openCorps,
+func configureDirectFixtures(g *game, openWin int, openList, openAdvise, openForm, openCorps, openMarchMode,
 	openBattle, openSiege, openBattleChoice, openMessage bool, openTalkIndex int, openOutcome string) {
 	w := g.world
 	if w == nil {
@@ -1537,6 +1549,9 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, openFor
 	}
 	if openForm || openCorps {
 		g.demoCorps(openCorps)
+	}
+	if openMarchMode {
+		g.demoMarchMode()
 	}
 	if openAdvise {
 		g.openAdvise()
