@@ -5,7 +5,7 @@
 
 - 日期：2026-08-12
 
-可交付推廣片已集中在 [`dist-all/promo`](../../dist-all/promo)。主預告輸出為 `dist/promo/wolong-remake-trailer.mp4`，長度 60 秒、1280×720、
+可交付推廣片已集中在 [`dist-all/promo`](../../dist-all/promo)。主預告輸出為 `dist-all/promo/wolong-remake-trailer.mp4`，長度 60 秒、1280×720、
 H.264／AAC。內容只使用 remake 的 DOS/V 目標畫面截圖、事件／戰術驗收圖與
 本專案原創合成聲；沒有把原版影片、`BGM.DAT`、`SOUND.DAT` 或原版執行檔放進
 發行素材。
@@ -26,7 +26,7 @@ H.264／AAC。內容只使用 remake 的 DOS/V 目標畫面截圖、事件／戰
 在掛載本儲存庫、倚天字型與 `/usr/share/fonts` 的 ffmpeg Docker 容器內執行：
 
 ```text
-sh tools/promo_video.sh dist/promo/wolong-remake-trailer.mp4
+sh tools/promo_video.sh dist-all/promo/wolong-remake-trailer.mp4
 ```
 
 腳本會先由 `tools/promo_score.py` 產生 60 秒 WAV，再把最新 DOS/V 自然策略骨架、
@@ -56,7 +56,7 @@ sh tools/promo_video.sh dist/promo/wolong-remake-trailer.mp4
 
 ```text
 PROMO_FONTFILE=/fonts/NotoSansTC-Regular.otf \
-  tools/promo_classic_revival.sh dist/promo/wolong-remake-classic-revival.mp4
+  tools/promo_classic_revival.sh dist-all/promo/wolong-remake-classic-revival.mp4
 ```
 
 ## DOS/V／remake 實機動態比較片

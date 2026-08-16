@@ -38,7 +38,9 @@ producer。
 
 - Linux：amd64 主封裝含原生 `wlgame`／`wlview`、`wlsim`、`wlshot`；另有 Linux arm64 邏輯工具伴隨包，含 `wlsim`／`wlshot`。另提供 `wolong-remake-linux-amd64-20260812.AppImage`；arm64 的 Ebiten GUI 需在目標 Linux 原生工具鏈建置。
 - Windows：amd64 封裝含 PE32+ `wlgame.exe`／`wlview.exe`、`wlsim.exe`、`wlshot.exe`。
-- macOS：封裝同時含 Intel (`darwin-amd64`) 與 Apple Silicon (`darwin-arm64`) 目錄，各含 `wlgame`、`wlview`、`wlsim`、`wlshot`。
+- macOS：封裝同時含 Intel (`darwin-amd64`) 與 Apple Silicon (`darwin-arm64`) 目錄，各含 `wlgame`、`wlview`、`wlsim`、`wlshot`。macOS 的 Ebiten 本體要 cgo，由 osxcross 工具鏈交叉建置，`tools/release.sh` 與 `tools/release_all.sh` 都會做；沒有那顆映像時只會少掉 `wlgame`／`wlview`，其餘平台照跑。
+
+最近一次五平台重跑與 deny-list 結果見 [`01-cross-build-gate.md`](01-cross-build-gate.md)。
 
 Linux tar 封裝與 AppImage 已在 Docker／Xvfb 完成啟動與短截圖 smoke；兩者都由解壓／掛載後的執行檔自動找到同包公開校訂覆蓋。Windows／macOS 本輪完成目標 ABI 交叉建置與檔頭驗證，但沒有把原生視窗、輸入、音訊與字型載入寫成已在目標作業系統實機驗證；第一次啟動前請在目標平台做短 smoke。
 

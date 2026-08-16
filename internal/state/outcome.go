@@ -77,7 +77,9 @@ func (w *World) AdjustTrust(delta int) int {
 // 原版的順序有意義（`sub_14FCE`，docs/re/59 §4）：先判斷滅亡的是不是
 // 玩家所仕的勢力（→ 敗北），**才**減存活勢力數。反過來寫的話，
 // 玩家自己滅亡時會因為「剩一個」被誤判成結局。
-func (w *World) eliminateFaction(i int) {
+//
+// winner 是打下最後一個據點的勢力；沒有對象時傳 noFaction。
+func (w *World) eliminateFaction(i, winner int) {
 	if w == nil || i < 0 || i >= numFactions || !w.Factions[i].Alive {
 		return
 	}
@@ -88,9 +90,55 @@ func (w *World) eliminateFaction(i int) {
 	if w.LivingFactions > 0 {
 		w.LivingFactions--
 	}
+	w.disperseFaction(i, winner)
 	if w.LivingFactions == 1 {
 		w.latchOutcome(Victory)
 	}
+}
+
+// disperseFaction 是 `sub_14FCE` 的武將處置迴圈：滅亡的勢力**不會留下
+// 在外面的軍團**，127 名武將逐一按三條路處置。
+//
+//	俘虜（+0x1D ≠ 0xFF）      → sub_150D7 釋放，回原主或在野
+//	非君主且有職務            → sub_150B4 解散軍團、變成在野武將
+//	君主本人，或無職          → sub_129C3 軍團歸零，成為勝方的俘虜
+//
+// **這條規則先前是「還沒讀出來」的那一條**：舊寫法只清 Alive，
+// 於是首都被打下來的勢力會留下沒有主人的軍團。
+func (w *World) disperseFaction(i, winner int) {
+	lord := w.Factions[i].Lord
+	for gi := range w.Generals {
+		g := &w.Generals[gi]
+		if !g.Alive || g.Faction != i {
+			continue
+		}
+		if g.Captor != noFaction {
+			// 這一位是被 i 關著的俘虜，主人沒了就放出來。
+			w.releaseGeneral(gi)
+			continue
+		}
+		hadPost := g.Posted
+		g.Posted = false
+		if gi != lord && hadPost {
+			g.Faction = noFaction // 在野
+			continue
+		}
+		if winner >= 0 && winner < numFactions {
+			g.Captor, g.Faction = i, winner
+		} else {
+			g.Faction = noFaction
+		}
+	}
+	for ci := range w.Corps {
+		c := &w.Corps[ci]
+		if !c.Alive || c.Faction != i {
+			continue
+		}
+		c.Alive = false
+		c.Stage = StageNormal
+	}
+	w.Factions[i].Corps = 0
+	w.Factions[i].Generals = 0
 }
 
 // DebugLatchOutcomeForShot 僅供 wlgame 的 -open-outcome 截圖 fixture 使用。

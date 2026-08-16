@@ -439,7 +439,7 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 		// 時就更新（中繼據點也算），單看它會把「還在路上但經過目標據點」
 		// 誤判成抵達。
 		if c.Node == c.TargetNode && c.X == c.TargetX && c.Y == c.TargetY {
-			w.arriveCorps(i)
+			w.arriveCorps(i, rng)
 			if !c.Alive {
 				ev.Disbanded = true
 				return &ev
@@ -448,7 +448,7 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 			ev.Moved = true
 			ev.Arrived = c.Node == c.TargetNode
 			if ev.Arrived {
-				w.arriveCorps(i)
+				w.arriveCorps(i, rng)
 				if !c.Alive {
 					ev.Disbanded = true
 					return &ev
@@ -751,9 +751,13 @@ func (w *World) afterBattle(ev *CorpsEvent, i int, destroyed bool, victor int, r
 	case combat.Captured:
 		g.Captor = loser
 		g.Faction = winner
+		// 原版 `sub_12AD2(al=0FFh, ah=舊勢力)`：只從舊勢力扣，
+		// 不加給俘虜方——被俘期間這名武將不算在任何一方的武將數裡。
+		w.dropGeneralCount(loser)
 	case combat.Suicide:
 		g.Alive = false
 		g.Faction = noFaction
+		w.dropGeneralCount(loser)
 	}
 
 	ev.Destroyed = append(ev.Destroyed, i)
@@ -794,7 +798,7 @@ func (w *World) capture(att int, ev *CorpsEvent) {
 			// sub_14DF0：首都失守且找不到替代據點時，capital=0xFF
 			// 並清除勢力 alive bit；sub_14FCE 隨後對玩家離開主循環。
 			w.Factions[old].Capital = noCity
-			w.eliminateFaction(old)
+			w.eliminateFaction(old, next)
 		}
 	}
 }

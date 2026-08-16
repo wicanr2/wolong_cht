@@ -90,6 +90,12 @@ func (w *World) CheckInvariants() []Violation {
 		if !g.Alive {
 			continue
 		}
+		// **俘虜不算在任何一方的武將數裡。** 原版 `sub_12AD2` 在被俘時
+		// 只 `dec` 舊勢力，沒有 `inc` 新勢力；要等釋放（`sub_150D7`）
+		// 才重新入帳。被俘期間 +0x1C 雖然指向俘虜方，帳上卻是空的。
+		if g.Captor != noFaction {
+			continue
+		}
 		if g.Faction >= 0 && g.Faction < numFactions {
 			generals[g.Faction]++
 		}

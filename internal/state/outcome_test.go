@@ -135,11 +135,11 @@ func TestEliminatingDownToOneFactionIsVictory(t *testing.T) {
 	for i := range w.Factions {
 		w.Factions[i].Alive = i < 3
 	}
-	w.eliminateFaction(2)
+	w.eliminateFaction(2, noFaction)
 	if got := w.Outcome(); got != InProgress {
 		t.Fatalf("還剩兩個勢力就判 %v", got)
 	}
-	w.eliminateFaction(1)
+	w.eliminateFaction(1, noFaction)
 	if got := w.Outcome(); got != Victory {
 		t.Fatalf("剩一個勢力時 Outcome ＝ %v，want Victory", got)
 	}
@@ -153,7 +153,7 @@ func TestPlayerEliminationBeatsVictory(t *testing.T) {
 	for i := range w.Factions {
 		w.Factions[i].Alive = i < 2
 	}
-	w.eliminateFaction(0)
+	w.eliminateFaction(0, noFaction)
 	if got := w.Outcome(); got != DefeatFactionEliminated {
 		t.Fatalf("玩家勢力滅亡時 Outcome ＝ %v，want DefeatFactionEliminated", got)
 	}

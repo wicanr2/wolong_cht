@@ -132,11 +132,13 @@
 | [`docs/re/62-strategy-minimap.md`](re/62-strategy-minimap.md) | 62 — 主畫面縮小地圖：據點標記的四種顏色、視野框、勢力篩選 | ✅ 內容組成全解。 | 2026-08-16 |
 | [`docs/re/63-ground-plane-map.md`](re/63-ground-plane-map.md) | 63 — ⭐ 登城機制解完了：地面層表在另一個段，城門那一格就是樓梯 | ✅ 解出來了。 | 2026-08-16 |
 | [`docs/re/64-corps-arrival-state-machine.md`](re/64-corps-arrival-state-machine.md) | 64 — 軍團抵達時的狀態機：+0x23 的分派表與解體 | 分派表的結構、索引算式與 Stage 8–11 的語意 confirmed。 ⭐ 解體的消費端找到了——Stage … | 2026-08-16 |
+| [`docs/re/65-ai-march-decision-chain.md`](re/65-ai-march-decision-chain.md) | 65 — 電腦勢力的行軍決策鏈：Stage 0–3 與整條軍團生命週期 | 四支 AI handler 逐行讀完，Stage 0–3／8–11 的轉移條件全部 confirmed。 ⭐ 目標選… | 2026-08-17 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-16 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
 | [`docs/reference/04-first-survey.md`](reference/04-first-survey.md) | 04 — 首輪偵查紀錄（2026-08-07） | 歷史快照。已解的項目由 docs/formats/、docs/re/ 與 docs/INDEX.md 接手；本檔只保… | 2026-08-07 |
 | [`docs/reference/05-eten-font-provenance.md`](reference/05-eten-font-provenance.md) | 05 — 松崗版的中文字型是倚天字型 | confirmed。END_S14.DAT 與倚天 ascfont.15 byte-for-byte 相同； END… | 2026-08-13 |
+| [`docs/release/01-cross-build-gate.md`](release/01-cross-build-gate.md) | 01 — 發行閘重跑：五平台交叉建置 ＋ deny-list（2026-08-17） | 發行閘通過。五個平台建得出來、deny-list 掃過沒有原版資產。 ⭐ macOS 的 Ebiten 本體可以交叉… | 2026-08-17 |
 | [`docs/release/README-RELEASE.md`](release/README-RELEASE.md) | 臥龍傳 remake 可執行封裝 | 三平台候選封裝、Linux AppImage、推廣片與驗收紀錄已集中於 [dist-all](../../dist-… | 2026-08-12 |
 | [`docs/spec/00-index.md`](spec/00-index.md) | 00 — 規格索引：已解的規則有沒有被實作、有沒有被驗過 | 索引。規格是 docs/re/（程式碼在哪）與 internal/（我們寫了什麼） 之間的那一層——它回答「這條規則… | 2026-08-14 |
 | [`docs/spec/10-city-tick.md`](spec/10-city-tick.md) | 10 — 據點整備、威脅偵測與求援 | CONFORMED。整條鏈已實作，並在 PC-98 原版的執行期記憶體上取樣驗過 （+0x18／+0x14 各 0/… | 2026-08-14 |
@@ -164,14 +166,15 @@
 | [`docs/spec/37-tactical-player-controls.md`](spec/37-tactical-player-controls.md) | 37 — 戰術畫面的玩家操作：陣形選單與陣形線 | CONFORMED。 | 2026-08-16 |
 | [`docs/spec/38-list-windows.md`](spec/38-list-windows.md) | 38 — 一覽表：視窗幾何、欄位與逐列格式 | CONFORMED。 | 2026-08-16 |
 | [`docs/spec/39-march-order-menu.md`](spec/39-march-order-menu.md) | 39 — 行軍指示的三選一：戰鬥指揮／委任／解體 | CONFORMED。 | 2026-08-16 |
+| [`docs/spec/40-ai-march-decision.md`](spec/40-ai-march-decision.md) | 40 — 電腦勢力的行軍決策鏈（Stage 0–3／8／10） | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | READY。管線的每一段都有現成工具，缺的是把它們接起來 與一支逐區差分工具。 | 2026-08-15 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 149 條。**要查「這件事解了沒」先看這裡**，
+共 147 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
-### confirmed（79 條）
+### confirmed（77 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -181,14 +184,12 @@
 | 1. 戰場怎麼被選出來 ▸ 攻城戰 | `docs/mechanics/30-combat.md` |
 | 1. 戰場怎麼被選出來 ▸ 野戰 | `docs/mechanics/30-combat.md` |
 | 1.4 ⭐⭐ 兩個可直接寫成程式的定義 ▸ 國力 | `docs/mechanics/70-ai.md` |
-| 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x00 | `docs/formats/08-sinario-save.md` |
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x01 | `docs/formats/08-sinario-save.md` |
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x02 | `docs/formats/08-sinario-save.md` |
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x06 | `docs/formats/08-sinario-save.md` |
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x08 | `docs/formats/08-sinario-save.md` |
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x14 | `docs/formats/08-sinario-save.md` |
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x18 | `docs/formats/08-sinario-save.md` |
-| 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x19 | `docs/formats/08-sinario-save.md` |
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x1A | `docs/formats/08-sinario-save.md` |
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x1C | `docs/formats/08-sinario-save.md` |
 | 1.5 勢力表：22 筆 × 64 B（區塊 +0x80） ▸ +0x1D | `docs/formats/08-sinario-save.md` |

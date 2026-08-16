@@ -15,16 +15,20 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 )
 
-// 軍團記錄 `+0x23` 的 Stage。原版寫過八個值，remake 只實作玩家會走到的三個
-// （`docs/re/64` §2）：8「等士氣」與 10「回首都補兵的路上」的寫入端都在
-// AI 那一側，而非玩家的 Stage 0–3 決策鏈還沒解。
+// 軍團記錄 `+0x23` 的 Stage（`docs/re/64` §2）。八個值全部實作：
+// 0–3 分玩家與非玩家兩套 handler，8–11 不分（`docs/re/65`）。
 const (
 	// StageNormal 是一般行軍。戰鬥指揮與委任都寫這個值。
 	StageNormal = 0
+	// StageDone 是補完兵之後的值（原版 `sub_14499` 的 `[si+23h] = 3`）。
+	// 對 AI 來說它是「體檢」：六槽不足額就解體，否則等士氣。
+	StageDone = 3
+	// StageWaitMorale 是「等士氣」：士氣回到勢力基準才繼續行動。
+	StageWaitMorale = 8
 	// StageResupply 是「在首都補兵」：抵達處理會退回再重分，然後轉 StageDone。
 	StageResupply = 9
-	// StageDone 是補完兵之後的值（原版 `sub_14499` 的 `[si+23h] = 3`）。
-	StageDone = 3
+	// StageHomeResupply 是「回首都補兵的路上」：先把目標校正成首都。
+	StageHomeResupply = 10
 	// StageDisband 是「解體」：先回首都，到了就解散。
 	StageDisband = 11
 )
@@ -93,32 +97,45 @@ func (w *World) SetMarchMode(corps int, mode MarchMode) error {
 	return nil
 }
 
-// arriveCorps 是原版 `sub_14325` 的玩家那一半：軍團停在目標據點上時，
+// arriveCorps 是原版 `sub_14325`：軍團停在目標據點上時，
 // 每個 tick 依 Stage 分派一次。
 //
 // ⚠ **不是「剛抵達的那一刻」**：原版 `sub_12662` 一開頭就比較現在節點與
 // 目標節點，相同就直接走分派，所以停著不動的軍團每個 tick 都會跑一次。
 // 解體如果下在「軍團已經在首都」的情況，靠的正是這一點。
-func (w *World) arriveCorps(i int) {
+//
+// 分派表 12 筆：**Stage ≥ 8 不分玩家**，0–3 才分玩家與非玩家兩套。
+func (w *World) arriveCorps(i int, rng rander) {
 	c := &w.Corps[i]
 	switch c.Stage {
 	case StageDisband:
 		w.arriveDisband(i)
+		return
 	case StageResupply:
 		w.resupplyCorps(i)
-	default:
-		// 玩家的 Stage 0–3 走同一支（`sub_14370`）：歸零，然後看要不要補兵。
-		c.Stage = StageNormal
-		if c.Faction < 0 || c.Faction >= numFactions {
-			return
-		}
-		// **兵力滿編就不補**：0x258 ＝ 600 點 ＝ 六槽各 100。
-		if c.Men >= army60000Points {
-			return
-		}
-		if c.Node == w.Factions[c.Faction].Capital {
-			c.Stage = StageResupply
-		}
+		return
+	case StageWaitMorale:
+		w.waitMorale(i)
+		return
+	case StageHomeResupply:
+		w.headHomeResupply(i)
+		return
+	}
+	if c.Faction != w.Player {
+		w.aiArrive(i, rng)
+		return
+	}
+	// 玩家的 Stage 0–3 走同一支（`sub_14370`）：歸零，然後看要不要補兵。
+	c.Stage = StageNormal
+	if c.Faction < 0 || c.Faction >= numFactions {
+		return
+	}
+	// **兵力滿編就不補**：0x258 ＝ 600 點 ＝ 六槽各 100。
+	if c.Men >= army60000Points {
+		return
+	}
+	if c.Node == w.Factions[c.Faction].Capital {
+		c.Stage = StageResupply
 	}
 }
 

@@ -3,7 +3,7 @@
 **狀態：已產出並完成畫面、媒體規格與來源界線驗收；這是同類型畫面／流程的推廣比較，不是同日期、同輸入、同狀態的逐像素 parity 證明。**
 
 - 日期：2026-08-12
-- 成品：[`wolong-remake-dosv-live-comparison.mp4`](../../dist/promo/wolong-remake-dosv-live-comparison.mp4)
+- 成品：[`wolong-remake-dosv-live-comparison.mp4`](../../dist-all/promo/wolong-remake-dosv-live-comparison.mp4)
 - 長度／格式：60.000 秒、1280×720、30 fps、H.264／AAC（44.1 kHz、雙聲道）
 - 成品 SHA-256：`a00a221bf3c4213f4d9777c66a3e58a06dcae93aab2beecc146de67a7447973d`
 - 合成腳本：[`tools/promo_dosv_live_comparison.sh`](../../tools/promo_dosv_live_comparison.sh)

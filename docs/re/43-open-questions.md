@@ -18,15 +18,15 @@
 
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
-| 規則正確性 | 55 | 53 | 2 | 0 |
+| 規則正確性 | 54 | 52 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
-| 程式碼理解 | 213 | 206 | 7 | 0 |
+| 程式碼理解 | 215 | 208 | 7 | 0 |
 | 驗收 | 54 | 48 | 6 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 86 | 82 | 4 | 0 |
-| **合計** | **462** | 442 | 19 | 1 |
+| 其他 | 91 | 86 | 5 | 0 |
+| **合計** | **468** | 447 | 20 | 1 |
 
-## 2.1 規則正確性（55 條）
+## 2.1 規則正確性（54 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -78,7 +78,6 @@
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 交友關係的實際範圍、每月增量、協力成功的門檻值。 | （散句） | 靜態 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 10 | `sub_13496` / 訊息-only 邊界；保留事件取出，不虛構持久欄位 / handler 只把 `AH`／`DX` 組成 `sub_18810` formatter 參數，尚未完成 TALK.DAT 逐句顯示 | 靜態 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | cx` 在 `≥ 0x100` 時多半是另一個編號空間或帶旗標，未解。 | （散句） | 靜態 |
-| [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 勢力「滅亡」的精確判定（據點 0？君主死亡？） | 反組譯 | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 信賴度的值域 | **0…255，byte 飽和**（`seg000:10D00`、`sub_13D91`／`13DC9`）→ confirmed | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 初始／新遊戲初始化值 | 原始劇本 `+0x10` 可直接讀；第 1 劇本目前為 `0xFF`；`sub_18B12` 完整時序 → 強證據／待 oracle | 實測 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 玩家進言／說得的信賴度增減量 | **已證實**：`sub_13830` 的第一反應為 `+20`／`−20`，多理由完成為 `+10`，錯選理由為 `−20`；事件 13 的 `−50` 另由 `sub_13507` 定案。事件 2／3 等外交回報的其他增減仍需逐分支對拍 | 靜態 |
@@ -128,7 +127,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（213 條）
+## 2.3 程式碼理解（215 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -341,10 +340,12 @@
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | `sub_1B186`／`sub_1B15D` | 爬升／下降時檢查上下一層的那兩支，沒讀 | 靜態 |
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 命令 6 為什麼擋高平面橫移 | `[si+1Ah] == 6`，命令碼 6 是什麼沒對過 | 靜態 |
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 打壞城壁之後地面層表不更新 | `sub_1B824` 只重算通行層（`sub_1BB6D`）與佔用表，**沒有重跑 `sub_1BC39`**。而那不影響結果：城壁的地面層本來就是拿打壞後的圖塊算的（§2 的 +0x10） | 靜態 |
-| [`re/64-corps-arrival-state-machine.md`](../re/64-corps-arrival-state-machine.md) | 非玩家的 Stage 0–3 | `sub_1439D`／`sub_143AF`／`sub_1440F`／`sub_14466` 是 AI 的行軍決策鏈：讀據點 `+0x00` 的位元 6／7、據點 `+0x18`（停在該格的軍團數）、勢力 `+0x18`（武將數），還有一次 `sub_1ECE0` 亂數決定 `+0x0B` 計時器。**逐條未讀** | 靜態 |
-| [`re/64-corps-arrival-state-machine.md`](../re/64-corps-arrival-state-machine.md) | `+0x21` | `sub_13E11` 每「時」拿 `+0x23 × 8 + 0x18` 去和它比，過了寫 `+0x19 = 0xFF` 再比半值設位元 6。語意未解 | 靜態 |
-| [`re/64-corps-arrival-state-machine.md`](../re/64-corps-arrival-state-machine.md) | `+0x00` 位元 1 | Stage 10／11 改目標時 `or byte [si], 2`；疑似「路線要重算」，沒找讀取端 | 靜態 |
-| [`re/64-corps-arrival-state-machine.md`](../re/64-corps-arrival-state-machine.md) | `sub_17F90` | `sub_14325` 的第二個呼叫端，未讀 | 靜態 |
+| [`re/64-corps-arrival-state-machine.md`](../re/64-corps-arrival-state-machine.md) | `+0x00` 位元 1 | Stage 10／11 改目標時 `or byte [si], 2`；`sub_12662` 在 `0x126A0` 讀它、清掉並呼叫 `sub_147BB`，而 **`sub_147BB` 未讀**。疑似「路線要重算」 | 靜態 |
+| [`re/64-corps-arrival-state-machine.md`](../re/64-corps-arrival-state-machine.md) | 已經解掉的**：非玩家的 Stage 0–3 四支 handler 與 `sub_13E11 | （未解小節內文） | 靜態 |
+| [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | 非玩家的四個 entry 掛在 §6 未解。 | （散句） | 靜態 |
+| [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | `+0x00` 位元 1（`or byte [si], 2`） | Stage 2 改目標、Stage 10／11 校正目標、`sub_1474A` 都會設；`sub_12662` 在 `0x126A0` 讀它並清掉，接著呼叫 `sub_147BB`。**`sub_147BB` 未讀**，位元 1 疑似「路線要重算」但沒有確認 | 靜態 |
+| [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | `sub_1487B` 的挑格邏輯 | `sub_1474A`（AI 編成後的第一個目標）與 `sub_14DA4` 用它挑相鄰格；讀了外框但沒逐條解 | 靜態 |
+| [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | `sub_128F4` 的 STC 分支 | 走到敵方據點時呼叫 `sub_1291A`（俘虜／脫離判定），之後 `di` 不可信。本文件的 `di` 推論只涵蓋一般路徑 | 靜態 |
 
 ## 2.4 驗收（54 條）
 
@@ -427,7 +428,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（86 條）
+## 2.6 其他（91 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -436,6 +437,9 @@
 | [`promo/dosv-adlib-and-tactical-review.md`](../promo/dosv-adlib-and-tactical-review.md) | 原版底列按鈕 glyph、選取狀態與 remake 文字／簡化圖示仍有差異。 | （未解小節內文） | 靜態 |
 | [`promo/dosv-adlib-and-tactical-review.md`](../promo/dosv-adlib-and-tactical-review.md) | 地形、部隊編成、鏡頭中心、動畫 frame 與戰況不同，不能用目前推廣片判定物件 | （未解小節內文） | 靜態 |
 | [`promo/yt-remake-pixel-review.md`](../promo/yt-remake-pixel-review.md) | 中央 raw reserve glyph | 未解出原版圖形。remake 不冒充，改用自繪 | 靜態 |
+| [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | 目標 OS 實跑 | **做不到**：這台是 Linux，沒有 Mac／Windows。檔頭驗過（PE32+／Mach-O），但視窗、輸入、音訊、字型載入都沒有在目標系統上跑過 | 實測 |
+| [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | linux/arm64 的本體 | 要在 arm64 的 Linux 上建（Ebiten 的 cgo 沒有交叉工具鏈） | 靜態 |
+| [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | Windows 的 smoke | 同第一項 | 靜態 |
 | [`spec/00-index.md`](../spec/00-index.md) | **推論等級** | confirmed／強證據／假說／未知（`CLAUDE.md` §9）。假說也可以實作，但要標 | 靜態 |
 | [`spec/00-index.md`](../spec/00-index.md) | 進言「請求君主出陣」（`sub_1699E`） | `11-ai-sortie.md` / 可實作，**尚未實作** | 靜態 |
 | [`spec/00-index.md`](../spec/00-index.md) | 主畫面四個視窗的開關 | `13-main-window-toggles.md` / 已實作並留下截圖；原版執行期未驗 | 實測 |
@@ -514,6 +518,8 @@
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「看」與「選」的內容差異 | 原版兩種取法的**列表內容**不同（`../re/26` §4.2），remake 只統一了欄位 | 靜態 |
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「委任」那一格的顏色 | 實錄影格上看起來是紅字，但影片是壓縮過的、也沒有機器碼證據。remake 先畫成一般色 | 靜態 |
 | [`spec/39-march-order-menu.md`](../spec/39-march-order-menu.md) | `sub_193E9` 的選單版面 | 只知道 `cx = 0x4Ch`；矩形與列高沒解，remake 先用既有的對話框樣式並標成差異 | 靜態 |
+| [`spec/40-ai-march-decision.md`](../spec/40-ai-march-decision.md) | `+0x00` 位元 1 | 原版改目標時會設，`sub_12662` 讀它並呼叫未讀的 `sub_147BB`。remake 直接重下一次行軍（`March`），行為等價但不是同一條路 | 靜態 |
+| [`spec/40-ai-march-decision.md`](../spec/40-ai-march-decision.md) | `sub_1487B` | AI 編成後挑第一個目標用的相鄰格選擇，未逐條解；remake 沿用既有的 `nearestFactionCity` | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |

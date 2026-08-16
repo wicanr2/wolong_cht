@@ -130,7 +130,7 @@ func TestArriveAtCapitalDisbands(t *testing.T) {
 	if err := w.SetMarchMode(i, MarchDisband); err != nil {
 		t.Fatal(err)
 	}
-	w.arriveCorps(i)
+	w.arriveCorps(i, &testRand{})
 	if w.Corps[i].Alive {
 		t.Error("在首都上的解體軍團沒有被解散")
 	}
@@ -157,12 +157,12 @@ func TestArriveAtCapitalResupplies(t *testing.T) {
 	w.Factions[f].Reserves = [economy.NumTroopTypes]int{600, 600, 600}
 	hurt := c.Men
 
-	w.arriveCorps(i) // Stage 0 → 9
+	w.arriveCorps(i, &testRand{}) // Stage 0 → 9
 	if w.Corps[i].Stage != StageResupply {
 		t.Fatalf("未滿編的軍團回首都應該轉 Stage %d，得到 %d",
 			StageResupply, w.Corps[i].Stage)
 	}
-	w.arriveCorps(i) // Stage 9 → 補兵
+	w.arriveCorps(i, &testRand{}) // Stage 9 → 補兵
 	if w.Corps[i].Men <= hurt {
 		t.Errorf("補兵之後兵力 %d，補之前 %d", w.Corps[i].Men, hurt)
 	}
@@ -183,7 +183,7 @@ func TestFullCorpsDoesNotResupply(t *testing.T) {
 	if c.Men < army60000Points {
 		t.Skipf("這一支只有 %d 點，測不到滿編那條路", c.Men)
 	}
-	w.arriveCorps(i)
+	w.arriveCorps(i, &testRand{})
 	if w.Corps[i].Stage != StageNormal {
 		t.Errorf("滿編的軍團回首都不該轉補兵，Stage = %d", w.Corps[i].Stage)
 	}

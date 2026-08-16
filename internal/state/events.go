@@ -735,6 +735,9 @@ func (w *World) releaseGeneral(generalID int) bool {
 	g.Captor = noFaction
 	if oldCaptor >= 0 && oldCaptor < numFactions && w.Factions[oldCaptor].Alive {
 		g.Faction = oldCaptor
+		// 重新入帳（原版 `sub_150D7` → `sub_12AD2`）。回不去的（原勢力已滅）
+		// 是在野武將，不計入任何一方。
+		w.raiseGeneralCount(oldCaptor)
 	} else {
 		g.Faction = noFaction
 	}

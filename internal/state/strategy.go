@@ -517,10 +517,14 @@ func (w *World) refreshCityThreat(i int, rng economy.Rand) []TalkNotice {
 	c.Adjacency, c.EnemyNeighbours = threat.EnemyMask(c.Owner, ns)
 	if c.Owner == threat.Neutral || c.Owner < 0 || c.Owner >= numFactions {
 		c.Threat = 0
+		c.Threatened, c.Specific = false, false
 		return nil
 	}
 	r := threat.Scan(c.Owner, w.invasionTarget(c.Owner), c.EnemyNeighbours, ns)
 	c.Threat = r.Level
+	// 記錄 +0x00 的位元 7／6。原版 `sub_14028` 先清再設，所以是每輪
+	// 重算的派生旗標，不是狀態——AI 軍團的 Stage 0–2 讀它們。
+	c.Threatened, c.Specific = r.Threatened, r.Specific
 	return w.relieve(i, r, rng)
 }
 

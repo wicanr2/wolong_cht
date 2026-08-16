@@ -3,7 +3,7 @@
 **狀態：已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。**
 
 - 日期：2026-08-11
-- 影片：[`dist/promo/wolong-remake-classic-revival.mp4`](../../dist/promo/wolong-remake-classic-revival.mp4)
+- 影片：[`dist-all/promo/wolong-remake-classic-revival.mp4`](../../dist-all/promo/wolong-remake-classic-revival.mp4)
 - 規格：60 秒、1280×720、H.264／AAC、44.1 kHz 立體聲
 - SHA-256：`ca474a01c874739f9e4047e1bc5912ad72b4bdd73fb9eb6c2a64c58278c8d695`
 - 重現腳本：[`tools/promo_classic_revival.sh`](../../tools/promo_classic_revival.sh)

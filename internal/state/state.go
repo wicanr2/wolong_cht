@@ -110,7 +110,10 @@ type Faction struct {
 	Diplomat int // 派駐「這個」勢力的外交官（由別人派來），0xFF ＝ 無
 
 	// LowFunds 是記錄 +0x00 的 bit 6：資金低於「取消侵攻」門檻的**一半**
-	// 時設起。用途還沒解——原版設了它但還沒找到誰讀（docs/re/08 §1）。
+	// 時設起（docs/re/08 §1）。
+	//
+	// 消費端是 AI 軍團挑目標的 Stage 2：設起時**跳過 LostSite**，
+	// 只接 ReliefSite——沒錢就不主動反攻失土（docs/re/65 §4.1）。
 	LowFunds bool
 }
 
@@ -178,6 +181,14 @@ type City struct {
 	// Threat 是記錄 +0x14 ＝ 鄰接敵方據點的 Occupancy 總和（周邊威脅量），
 	// 每次輪到這個據點時由 `sub_13FA9` 重算。
 	Threat int
+
+	// Threatened 是記錄 +0x00 的位元 7、Specific 是位元 6：
+	// **受威脅**與**威脅裡有本勢力的侵攻目標**（docs/re/40 §2）。
+	//
+	// 兩個旗標由威脅掃描每輪重寫，AI 軍團的 Stage 0–2 讀它們決定
+	// 要駐守還是出擊（docs/re/65 §2–§4）。
+	Threatened bool
+	Specific   bool
 
 	// Occupancy 是記錄 +0x18 ＝ 停在這個據點那一格的軍團數。
 	//
@@ -557,6 +568,8 @@ func loadBlock(b []byte) *World {
 			Kind:          int(r[0x16]) & 0x0F,
 			KindHigh:      int(r[0x16]) >> 4,
 			Adjacency:     int(r[0x00]) & 0x0F,
+			Threatened:    r[0x00]&0x80 != 0,
+			Specific:      r[0x00]&0x40 != 0,
 			EnemyNeighbours: int(r[0x1B]),
 			Threat:          int(r[0x14]),
 			Occupancy:       int(r[0x18]),
@@ -981,24 +994,17 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 	// ④ 「來月」的設定生效（原版是一次 4 個 word 的複製）。
 	w.TaxRate, w.RecruitCap = w.NextTaxRate, w.NextRecruitCap
 
-	// ⑤ 勢力滅亡判定。**據點與軍團都沒了**才出局。
+	// ⑤ 勢力滅亡判定：**據點數歸零就出局**（原版 `sub_14CF3` 的
+	//    `dec [bx+23h]` → `sub_14DF0` 回 CF ＝ 1 → `sub_14FCE`，
+	//    docs/re/59 §4）。
 	//
-	//    ⚠ 原版「滅亡」的精確條件還沒反組譯出來
-	//    （docs/mechanics/80-victory.md §3），這裡是 remake 的暫定規則。
-	//
-	//    初版只看據點數歸零，於是**還有軍團在野外的勢力會被判死**，
-	//    留下一支沒有主人的軍團——不變量層的「已滅勢力還有軍團」抓到的
-	//    就是這個。兩種修法裡選了這一種而不是「判死時順手刪掉軍團」：
-	//    還有軍團在外的勢力仍然可能打下城來，直接刪軍團等於替原版
-	//    決定了一條我們還沒讀出來的規則。**暫定規則要往保守的方向定。**
-	//
-	//    ⚠ 這個 bug 是**實作內政官之後才炸出來的**：城兵數變了 → 戰況變了
-	//    → 才走到「最後一城被佔但軍團還在外面」那個組合。
-	//    加一個會改變長期軌跡的機制，等於幫舊程式做了一次隨機測試。
+	//    原版是在據點易主的當下判的，remake 那條路在 `capture`；
+	//    這個月結掃描是後備，接住不是由攻城造成的據點歸零。
+	//    軍團不必另外處理——`eliminateFaction` 會把在外的軍團一起收掉
+	//    （原版 `sub_14FCE` 的武將處置迴圈，docs/re/59 §4.1）。
 	for i := range w.Factions {
-		if w.Factions[i].Alive && w.Factions[i].Cities == 0 &&
-			w.Factions[i].Corps == 0 {
-			w.eliminateFaction(i)
+		if w.Factions[i].Alive && w.Factions[i].Cities == 0 {
+			w.eliminateFaction(i, noFaction)
 			ev.Eliminated = append(ev.Eliminated, i)
 		}
 	}
@@ -1034,7 +1040,7 @@ func (w *World) hourly(ev *Event, rng economy.Rand) {
 			ev.InvasionCancelled = true
 		}
 		f.InvasionTarget = diplomacy.NoTarget
-		// 再低一半就設 bit 6。原版設了它，但還沒找到誰讀。
+		// 再低一半就設 bit 6：AI 軍團挑目標時會跳過「奪回失土」。
 		f.LowFunds = !diplomacy.CanSustainInvasion(f.Funds*2, f.Cities)
 	} else {
 		f.LowFunds = false
@@ -1301,7 +1307,15 @@ func (w *World) Bytes() []byte {
 		r[0x1A] = byte(c.OwnerRecorded)
 		// 這四個欄位是執行期會動的（威脅掃描與據點換手），
 		// 所以存檔要帶著走；沒跑過 tick 的話寫回來的就是讀進去的值。
-		r[0x00] = r[0x00]&0xF0 | byte(c.Adjacency&0x0F)
+		// 位元 4／5 沒解，原樣保留（改寫不是重建）。
+		flags := byte(0)
+		if c.Threatened {
+			flags |= 0x80
+		}
+		if c.Specific {
+			flags |= 0x40
+		}
+		r[0x00] = r[0x00]&0x30 | flags | byte(c.Adjacency&0x0F)
 		r[0x14] = byte(c.Threat)
 		r[0x18] = byte(c.Occupancy)
 		r[0x17] = byte(c.ReliefCooldown)

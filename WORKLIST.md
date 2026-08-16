@@ -264,7 +264,7 @@
 ### 2026-08-12 DOS/V／remake 實機動態推廣片
 
 - [x] 依使用者指定錄製／剪輯 60 秒、1280×720、H.264/AAC 的
-  [`wolong-remake-dosv-live-comparison.mp4`](dist/promo/wolong-remake-dosv-live-comparison.mp4)。
+  [`wolong-remake-dosv-live-comparison.mp4`](dist-all/promo/wolong-remake-dosv-live-comparison.mp4)。
   原版側是使用者指定松崗 DOS/V 遊玩錄影與受控 DOSBox-X 新遊戲畫面；remake 側是正常
   鍵盤路徑的策略、編成、目的地與行軍實機擷取。
 - [x] 影片明示同類畫面比較「非同狀態逐像素判定」；戰術 remake 段標為獨立 fixture，
@@ -316,11 +316,11 @@
 
 ### 2026-08-11 Android 原型、AppImage 與「經典再現」推廣片封口
 
-- [x] Linux amd64 AppImage 已產出：[`wolong-remake-linux-amd64-20260811.AppImage`](dist/release-20260811/packages/wolong-remake-linux-amd64-20260811.AppImage)。
+- [x] Linux amd64 AppImage 已產出：`wolong-remake-linux-amd64-20260811.AppImage`（已被 8/12 的 [`dist-all/packages`](dist-all/packages) 取代）。
   AppDir 根目錄含 `.desktop`／`AppRun`，deny-list 通過，Docker／Xvfb `APPIMAGE_EXTRACT_AND_RUN=1`
   啟動與 640×400 固定 seed 截圖 smoke 通過；不含原版資料與字型。
 - [x] 新增「經典再現」原版／remake 比較片：
-  [`wolong-remake-classic-revival.mp4`](dist/promo/wolong-remake-classic-revival.mp4)，60 秒、
+  [`wolong-remake-classic-revival.mp4`](dist-all/promo/wolong-remake-classic-revival.mp4)，60 秒、
   1280×720、H.264/AAC。原版側使用使用者 YouTube 的代表幀，remake 側使用固定 `seed=17`
   實機代表幀；影片與 [`docs/promo/classic-revival.md`](docs/promo/classic-revival.md) 明示
   `core=normal`、`cputype=486`、`cycles=20000` 的 DOSBox 重播原則，以及不宣稱同狀態逐像素 parity。

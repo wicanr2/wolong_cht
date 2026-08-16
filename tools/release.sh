@@ -34,10 +34,12 @@ if [ $# -gt 0 ]; then PLATFORMS=("$@"); fi
 #   windows  ✅ 純 Go 就能建 —— Ebiten 走 syscall／purego 動態載 DLL
 #   linux    ❌ 要 cgo —— OpenGL 驅動綁 GLFW（C 函式庫），
 #                CGO_ENABLED=0 會停在 `undefined: glfw.Window`
-#   darwin   ❌ 同上（Cocoa／Metal）
+#   darwin   ⚠ 要 cgo（Cocoa／Metal），**但可以交叉建**——用 osxcross
+#                的工具鏈（`$MAC_IMAGE`）。沒有那顆 image 就跳過，
+#                darwin 目錄只會有純邏輯工具。
 #
-# 所以矩陣是「純邏輯工具全平台 ＋ 遊戲本體只交叉到 windows」，
-# linux／mac 的本體要在目標平台自己建。
+# 所以矩陣是「純邏輯工具全平台 ＋ 遊戲本體交叉到 windows 與 darwin
+# ＋ linux 本體在本機建」。
 CROSS_OK=(./cmd/wlsim ./cmd/wlshot)              # 不依賴 Ebiten
 CROSS_WINDOWS_OK=(./cmd/wlgame ./cmd/wlview)     # 依賴 Ebiten，但 windows 純 Go
 NATIVE_ONLY=(./cmd/wlgame ./cmd/wlview)
@@ -65,7 +67,40 @@ done
 
 # 本機平台額外建遊戲本體。linux／mac 的 Ebiten 要 cgo，只能在目標平台建；
 # windows 上面那圈已經建好了。
-echo "── 本機平台（linux／mac 的 Ebiten 要 cgo）──"
+# ── darwin 的 Ebiten：用 osxcross 的 clang 交叉建 ──
+#
+# ⚠ 這一段**沒有 image 就跳過**，不讓整支發行流程卡在一顆選用的工具鏈上。
+# image 的來源與版本見 `tools/release_all.sh`。
+MAC_IMAGE="${WOLONG_MAC_IMAGE:-wolong-osxcross-go:20260811-event10-r4}"
+if docker image inspect "$MAC_IMAGE" >/dev/null 2>&1; then
+    echo "── darwin 的 Ebiten（osxcross）──"
+    for p in "${PLATFORMS[@]}"; do
+        [ "${p%%/*}" = darwin ] || continue
+        arch="${p##*/}"
+        case "$arch" in
+            amd64) cc=/osxcross/bin/x86_64-apple-darwin24.5-clang ;;
+            arm64) cc=/osxcross/bin/aarch64-apple-darwin24.5-clang ;;
+            *) continue ;;
+        esac
+        for pkg in "${NATIVE_ONLY[@]}"; do
+            name="$(basename "$pkg")"
+            echo "  darwin/$arch  $name"
+            docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
+                --network none --memory 3g --cpus 2 --pids-limit 256 \
+                -u "$(id -u):$(id -g)" \
+                -v "$PWD:/src:ro" -v "$PWD/$DIST:/dist" -v wl-gomod:/gomod:ro \
+                -w /src "$MAC_IMAGE" bash -lc \
+                "export GOMODCACHE=/gomod GOCACHE=/tmp/gocache GOPROXY=off; \
+                 GOOS=darwin GOARCH=$arch CGO_ENABLED=1 CC=$cc \
+                 go build -trimpath -ldflags '-s -w -X main.version=$VERSION' \
+                 -o /dist/darwin-$arch/$name $pkg"
+        done
+    done
+else
+    echo "── darwin 的 Ebiten：跳過（沒有 $MAC_IMAGE）──"
+fi
+
+echo "── 本機平台（linux 的 Ebiten 要 cgo）──"
 host_os="$(tools/go.sh env GOOS)"
 host_arch="$(tools/go.sh env GOARCH)"
 native="$DIST/${host_os}-${host_arch}"
