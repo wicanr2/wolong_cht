@@ -21,10 +21,10 @@
 | 規則正確性 | 55 | 53 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
 | 程式碼理解 | 213 | 206 | 7 | 0 |
-| 驗收 | 53 | 47 | 6 | 0 |
+| 驗收 | 52 | 46 | 6 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
 | 其他 | 86 | 82 | 4 | 0 |
-| **合計** | **461** | 441 | 19 | 1 |
+| **合計** | **460** | 440 | 19 | 1 |
 
 ## 2.1 規則正確性（55 條）
 
@@ -346,7 +346,7 @@
 | [`re/64-corps-arrival-state-machine.md`](../re/64-corps-arrival-state-machine.md) | `+0x00` 位元 1 | Stage 10／11 改目標時 `or byte [si], 2`；疑似「路線要重算」，沒找讀取端 | 靜態 |
 | [`re/64-corps-arrival-state-machine.md`](../re/64-corps-arrival-state-machine.md) | `sub_17F90` | `sub_14325` 的第二個呼叫端，未讀 | 靜態 |
 
-## 2.4 驗收（53 條）
+## 2.4 驗收（52 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -374,7 +374,6 @@
 | [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 逐像素 parity | 影片是再編碼的，做不到。要真的逐像素得回到模擬器，而主畫面的點擊閘還在 | 靜態 |
 | [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 色彩 | 只比了幾何。調色盤要另外用「同一格地形的色號」比，不能用影片的 RGB | 靜態 |
 | [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 戰術側欄的逐格對拍 | 組成已對齊（§7.3、`../re/60`），**同一場戰鬥的逐格比對還沒做** | 靜態 |
-| [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 戰場圖塊組 | §7.4，城壁的顏色不同，原因沒驗 | 靜態 |
 | [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 一覽表視窗 | 影片裡有武將／據點／財政的實錄，**還沒量** | 靜態 |
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | 水平跨格的碰撞判定全在 `sub_1B1B1`（`0001B1B1`，143 B）： | （未解小節內文） | 靜態 |
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | 1. **擋路的是「單位」，不是地形高度。 | （未解小節內文） | 靜態 |

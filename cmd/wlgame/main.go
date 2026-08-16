@@ -1247,6 +1247,7 @@ func main() {
 	openSiege := flag.Bool("open-siege", false, "截圖前先開一場攻城的戰術戰鬥（驗收用）")
 	openBattleChoice := flag.Bool("open-battle-choice", false, "截圖前停在戰鬥指揮／委任選單（驗收用）")
 	openMarchMode := flag.Bool("open-march-mode", false, "截圖前停在行軍指示的三選一（驗收用）")
+	siegeNode := flag.Int("siege-node", -1, "指定攻城的戰場＝據點編號（驗收用，配 -open-siege）")
 	openMessage := flag.Bool("open-message", false, "截圖前先開玩家首都的暴風雨 TALK #70 通知（驗收用）")
 	openTalkIndex := flag.Int("open-talk-index", -1, "截圖前直接開指定 TALK.DAT 槽位（驗收用）")
 	openOutcome := flag.String("open-outcome", "", "只供截圖的敗北 modal fixture：trust 或 faction")
@@ -1311,7 +1312,7 @@ func main() {
 		}
 		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *openForm, *openCorps,
 			*openMarchMode, *openBattle, *openSiege, *openBattleChoice, *openMessage,
-			*openTalkIndex, *openOutcome)
+			*openTalkIndex, *openOutcome, *siegeNode)
 	} else {
 		slots := inspectLauncherSlots(*saveFile)
 		// 劇本標題從檔案讀，不硬編（docs/spec/25 §1.2）。
@@ -1505,7 +1506,8 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 }
 
 func configureDirectFixtures(g *game, openWin int, openList, openAdvise, openForm, openCorps, openMarchMode,
-	openBattle, openSiege, openBattleChoice, openMessage bool, openTalkIndex int, openOutcome string) {
+	openBattle, openSiege, openBattleChoice, openMessage bool, openTalkIndex int,
+	openOutcome string, siegeNode int) {
 	w := g.world
 	if w == nil {
 		return
@@ -1561,7 +1563,7 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, openFor
 		g.list.Confirm()
 	}
 	if openBattle || openSiege || openBattleChoice {
-		g.demoBattle(openSiege, !openBattleChoice)
+		g.demoBattle(openSiege, !openBattleChoice, siegeNode)
 	}
 	if openForm || openCorps {
 		g.demoCorps(openCorps)

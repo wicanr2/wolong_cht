@@ -1089,7 +1089,10 @@ func (g *game) playerHeading() int {
 
 // demoBattle 是**驗收用**的捷徑：直接擺一場戰術戰鬥出來。
 // choose=false 時停在正常遭遇決策選單，供畫面驗收。
-func (g *game) demoBattle(siege, choose bool) {
+// demoBattle 是驗收捷徑。siegeNode ≥ 0 時指定攻城的戰場（＝據點編號），
+// **為的是能在 remake 上開出與原版影格同一張戰場**——不同戰場的地形與
+// 圖塊組都不同，拿兩張不同的戰場比顏色不算數。
+func (g *game) demoBattle(siege, choose bool, siegeNode int) {
 	p := g.world.Player
 	var mine, theirs int = -1, -1
 	for i, gen := range g.world.Generals {
@@ -1125,6 +1128,15 @@ func (g *game) demoBattle(siege, choose bool) {
 		// 攻城：守方待在自己的城裡，攻方從隔壁一格走進去。
 		// 走的是**正常的遭遇判定**——`resolveContact` 先問據點再問野戰。
 		node := foe.Node
+		if siegeNode >= 0 && siegeNode < len(g.world.Cities) {
+			node = siegeNode
+			// 攻城要打的是**敵方的城**，所以驗收捷徑把這座城暫時
+			// 記到守方名下。只影響 fixture，不是規則。
+			g.world.Cities[node].Owner = g.world.Corps[theirs].Faction
+			foe.Node, foe.TargetNode = node, node
+			foe.X, foe.Y = g.world.Cities[node].X, g.world.Cities[node].Y
+			foe.TargetX, foe.TargetY = foe.X, foe.Y
+		}
 		me.Node = node
 		me.X, me.Y = g.world.Cities[node].X-1, g.world.Cities[node].Y
 		me.TargetNode = node
