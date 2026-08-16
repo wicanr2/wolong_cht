@@ -27,8 +27,20 @@ remake 已把「軍師說出自己挑的理由」接進下框。
   ↓ 玩家選一列
 下框：軍師說出那一列（TALK base+4+選項，`sub_13CDC`）
   ↓
-一般通知框：結果句（TALK #43–#45／#47–#49）
+一般通知框：結果句（TALK #43–#45／#47–#49，`sub_13C3D` → `sub_18810`）
 ```
+
+⭐ **結果句走的是一般通知框**（`sub_13C3D` 呼叫的是 `sub_18810`，
+不是兩個講話框的任何一個），但**肖像不是預設的 147**：
+
+```asm
+bl = 93h                       ; 預設
+cmp si, cs:word_10CFD / jz →   ; si 就是玩家的勢力 ⇒ 用預設
+bh = [si+2Ah]                  ; 那個勢力的「派駐外交官」
+bl = [bx+4241h]                ; ★ 那名武將的 +0x01 頭像
+```
+
+**回報結果的是派去的外交官。** 沒有外交官（`+0x2A` ＝ `0xFF`）退回預設。
 
 `base` ＝ 停戰 `0x168`、協力 `0x175`（`sub_138C7`／`sub_138E6` 傳給
 `sub_13902` 的 `cx`）。
@@ -40,7 +52,7 @@ remake 已把「軍師說出自己挑的理由」接進下框。
 | 訊息可以指定框的位置 | `messageDialog` 加 `lower bool`；`drawMessage` 用 `talkLowerBox*` |
 | 訊息可以帶著事件插圖 | `messageDialog` 加 `scene int`（−1 ＝ 沒有），`drawMessage` 先畫 `IVENTGRF` 那一頁 |
 | 軍師的肖像 | `playerAdvisorPortrait()`：勢力 `+0x02` → 武將 `+0x01`。沒有軍師（`0x7F`）時退回一般通知的肖像 |
-| 接線 | `enqueueDiplomacyTalk` 的第一則（玩家挑的理由）改成「軍師在下框說，背景留著事件插圖」；結果句仍走一般通知框 |
+| 接線 | `enqueueDiplomacyTalk` 的第一則（玩家挑的理由）改成「軍師在下框說，背景留著事件插圖」；結果句仍走一般通知框，但**肖像改成派駐外交官**（`diplomacyResultPortrait`）|
 
 **沒有改的**：撥款事件（4／5）的理由句仍走一般通知框——
 它的插圖是第 1 頁，但「哪一則該進下框」還沒對過原版順序。
@@ -52,10 +64,11 @@ remake 已把「軍師說出自己挑的理由」接進下框。
 | 單元測試 | `TestEventSceneBoxesMatchOriginal`：兩個框的位置 |
 | 單元測試 | `TestAdvisorLineUsesLowerBox`：外交理由句進下框、帶軍師肖像、帶插圖 |
 | 單元測試 | `TestAdvisorPortraitFallsBackWhenNoAdvisor`：沒有軍師時不會畫錯人 |
+| 單元測試 | `TestDiplomacyResultUsesEnvoyPortrait`：結果句用外交官的頭像，沒有外交官或對方是自己時退回預設 |
 
 ## 5. 未解
 
 | 項目 | 現況 |
 |---|---|
-| 上框在結果階段的內容 | 影格上君主會在上框回話（「好，來人啊…」），remake 的結果句走一般通知框 |
+| 上框在結果階段的內容 | 影格上君主會在上框回話（「好，來人啊…」）。那一句不是 `sub_13C3D` 的結果句（它走一般通知框），來源還沒找到 |
 | 撥款事件（4／5） | 同上，還沒對過哪一則進下框 |

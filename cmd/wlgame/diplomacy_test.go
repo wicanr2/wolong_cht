@@ -167,3 +167,43 @@ func TestAdvisorPortraitFallsBackWhenNoAdvisor(t *testing.T) {
 		t.Errorf("沒有 world 時肖像 = %d，want %d", got, defaultPortraitPage)
 	}
 }
+
+// 結果句由**派駐的外交官**回報，不是一般通知的那張臉（原版 sub_13C3D）。
+func TestDiplomacyResultUsesEnvoyPortrait(t *testing.T) {
+	w, err := state.LoadScenario("../../workplace/orig/dosv/SINARIO.DAT", 0)
+	if err != nil {
+		t.Skipf("沒有原版素材：%v", err)
+	}
+	w.Player = 0
+	g := &game{world: w}
+	other := 1
+	c := state.DiplomacyChoice{Kind: state.DiplomacyCeasefire, Source: other, Invader: other}
+
+	// 沒有外交官（開局全 0xFF）→ 退回預設，不畫錯人。
+	w.Factions[other].Diplomat = 0xFF
+	if got := g.diplomacyResultPortrait(c); got != defaultPortraitPage {
+		t.Errorf("沒有外交官時 = %d，want %d", got, defaultPortraitPage)
+	}
+
+	// 有外交官 → 用那名武將的頭像。
+	envoy := -1
+	for i := range w.Generals {
+		if w.Generals[i].Alive {
+			envoy = i
+			break
+		}
+	}
+	if envoy < 0 {
+		t.Skip("劇本裡沒有活著的武將")
+	}
+	w.Factions[other].Diplomat = envoy
+	if got, want := g.diplomacyResultPortrait(c), w.Generals[envoy].Portrait; got != want {
+		t.Errorf("外交官的頭像 = %d，want %d", got, want)
+	}
+
+	// 對方就是玩家自己 → 預設。
+	c.Source, c.Invader = w.Player, w.Player
+	if got := g.diplomacyResultPortrait(c); got != defaultPortraitPage {
+		t.Errorf("對方是自己時 = %d，want %d", got, defaultPortraitPage)
+	}
+}

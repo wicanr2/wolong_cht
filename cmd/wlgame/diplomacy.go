@@ -192,7 +192,35 @@ func (g *game) enqueueDiplomacyTalk(c state.DiplomacyChoice, option state.Diplom
 	if c.Kind == state.DiplomacyCooperation {
 		resultBase = 0x2F // TALK #47; event 2
 	}
-	g.enqueueTalk(resultBase+response, g.diplomacyTalkVars(c, resultAmount))
+	g.enqueueTalkWithPortrait(resultBase+response,
+		g.diplomacyTalkVars(c, resultAmount), g.diplomacyResultPortrait(c))
+}
+
+// diplomacyResultPortrait 是結果句的講話者（原版 `sub_13C3D` 開頭）：
+//
+//	bl = 93h                       ; 預設
+//	cmp si, cs:word_10CFD / jz →   ; si 就是玩家的勢力 ⇒ 用預設
+//	bh = [si+2Ah]                  ; 那個勢力的「派駐外交官」
+//	bl = [bx+4241h]                ; ★ 那名武將的 +0x01 頭像
+//
+// **回報結果的是派去的外交官**，不是一般通知的那張臉。
+// 沒有外交官（原版 `+0x2A` 寫 `0xFF`）就退回預設，不畫錯人。
+func (g *game) diplomacyResultPortrait(c state.DiplomacyChoice) int {
+	if g == nil || g.world == nil {
+		return defaultPortraitPage
+	}
+	id := c.Source
+	if c.Kind == state.DiplomacyCooperation {
+		id = c.Invader
+	}
+	if id < 0 || id >= len(g.world.Factions) || id == g.world.Player {
+		return defaultPortraitPage
+	}
+	envoy := g.world.Factions[id].Diplomat
+	if envoy < 0 || envoy >= len(g.world.Generals) || !g.world.Generals[envoy].Alive {
+		return defaultPortraitPage
+	}
+	return g.world.Generals[envoy].Portrait
 }
 
 func diplomacyTitle(kind state.DiplomacyKind) string {
