@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 55 | 53 | 2 | 0 |
 | 資料保存 | 38 | 38 | 0 | 0 |
-| 程式碼理解 | 209 | 202 | 7 | 0 |
-| 驗收 | 36 | 31 | 5 | 0 |
+| 程式碼理解 | 214 | 207 | 7 | 0 |
+| 驗收 | 35 | 30 | 5 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
 | 其他 | 76 | 72 | 4 | 0 |
-| **合計** | **432** | 413 | 18 | 1 |
+| **合計** | **436** | 417 | 18 | 1 |
 
 ## 2.1 規則正確性（55 條）
 
@@ -129,7 +129,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（209 條）
+## 2.3 程式碼理解（214 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -342,8 +342,13 @@
 | [`re/62-strategy-minimap.md`](../re/62-strategy-minimap.md) | 熱區 `0x16`（點地圖）做什麼 | 沒讀。合理猜測是把大地圖捲到該處，但**沒驗** | 靜態 |
 | [`re/62-strategy-minimap.md`](../re/62-strategy-minimap.md) | `sub_15A3A` 裡 `si += 200h`／`bx += 0A00h` | 算完沒用到，是遺留的死碼 | 靜態 |
 | [`re/62-strategy-minimap.md`](../re/62-strategy-minimap.md) | 圖例底圖在哪個資源 | `sub_1FA37` 的 `ds` 來自 `word_10D50`；`docs/re/47` 記成段 3 `0x09A0`，兩者沒對過 | 靜態 |
+| [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | `word_1D2FE`（第三塊）誰讀 | 移動時寫 0／8（`sub_1B240`／`sub_1B3B2`／`sub_1B824`），**全庫找不到讀它的指令**。形狀像「這一格有單位站著」的標記 | 靜態 |
+| [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 段變數的配置迴圈 | `word_1D2F6`–`word_1D30E` 沒有直接寫入的 xref，§1 的相鄰關係是推論 | 靜態 |
+| [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | `sub_1B186`／`sub_1B15D` | 爬升／下降時檢查上下一層的那兩支，沒讀 | 靜態 |
+| [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 命令 6 為什麼擋高平面橫移 | `[si+1Ah] == 6`，命令碼 6 是什麼沒對過 | 靜態 |
+| [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 打壞城壁之後地面層表不更新 | `sub_1B824` 只重算通行層（`sub_1BB6D`）與第三塊，**沒有重跑 `sub_1BC39`**。所以瓦礫格的地面層維持原值 | 靜態 |
 
-## 2.4 驗收（36 條）
+## 2.4 驗收（35 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -377,7 +382,6 @@
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | 1. **擋路的是「單位」，不是地形高度。 | （未解小節內文） | 靜態 |
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | 2. **低平面的水平跨格沒有高度差上限**——目標格地面比自己高就升一層、 | （未解小節內文） | 靜態 |
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | 3. **高平面要高度完全相等**，而 `[si+1Eh]`（`PlaneHigh`）決定讀哪一張。 | （未解小節內文） | 靜態 |
-| [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | **那兩張地面高度圖是誰填的** | `es:[di+0x7000]`（低平面）／`+0x8000`（高平面），低 3 位 ＝ 地面層。**全庫沒有用這個位移寫它的指令**（見上）。這是登城機制的最後一塊 | 靜態 |
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | `Field.gateX` 與登城點 | gateX 在三張抽樣圖上**正好就是可破壞城壁那一格**。`doScaleWall` 已經把它當目標，但爬不上去 | 靜態 |
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | 繞路點清單的演算法 | `0x1800 + 兵編號 × 128`，`loc_1BD46` 算（`../re/11` §5.15）。解出來之後 `FindPathForcing` 那條近似要換掉 | 靜態 |
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | 攻城計時器與突破時間的關係 | 大將體力 100 起、每 10 幀掉 1、50 觸發退卻 ⇒ **攻方只有約 500 幀**。爬牆接上之後要重量一次，確認這個預算合理 | 靜態 |
