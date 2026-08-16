@@ -124,6 +124,13 @@ type game struct {
 	// 門強度條的顏色：sub_1C4D2 的 ah=0x0B。
 	battleGateBarColor color.RGBA
 
+	// minimapInk 是縮小地圖標記用的六個色號（docs/re/62 §2）：
+	// 依序 0（黑）、15（白）、10（紅）、12（黃）、3（藍）、8（深藍）。
+	minimapInk [6]color.RGBA
+	// minimapFaction 是圖例第二格盯著的勢力（原版 `cs:byte_198A7`，
+	// 靜態初值 0）。它決定哪個勢力的據點畫成白框藍心。
+	minimapFaction int
+
 	// roads 與 tactical 是掛在 World 上的執行期來源，不屬於存檔本體。
 	// 讀取另一個槽位後要重新掛回，否則數值雖然恢復，行軍／戰鬥會悄悄退回
 	// 沒有道路圖與戰術資料的降級路徑。
@@ -585,6 +592,13 @@ func (g *game) Update() error {
 			if w := hudSwitchWindow(i); w != 0 {
 				g.hudSet(w, left)
 			}
+			return nil
+		}
+		// 縮小地圖圖例的右半格（熱區 0x17 ＝ (536,168,96,16)）換盯著的勢力。
+		// 原版點下去是開一個 22 勢力的選單（docs/re/62 §4.2），
+		// remake 簡化成換下一個——**remake 差異**（docs/spec/35 §2）。
+		if left && g.hudOpen(hudMinimap) && hitTestMinimapLegend(x, y) {
+			g.cycleWatchedFaction()
 			return nil
 		}
 	}
@@ -1333,6 +1347,19 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 		}
 		*c.dst = col
 	}
+	// 縮小地圖標記的六個色號（docs/re/62 §2）。取不到就留 fallback。
+	g.minimapInk = [6]color.RGBA{
+		{0, 0, 0, 255}, {255, 255, 255, 255}, {221, 0, 0, 255},
+		{255, 238, 0, 255}, {51, 68, 221, 255}, {0, 34, 102, 255}}
+	for i, idx := range [6]int{0, 15, 10, 12, 3, 8} {
+		col, err := g.lib.PaletteColor(season, idx)
+		if err != nil {
+			log.Printf("⚠ 取不到縮小地圖標記色 %d，使用 fallback：%v", idx, err)
+			continue
+		}
+		g.minimapInk[i] = col
+	}
+	g.minimapFaction = 0
 	if cap := w.Factions[w.Player].Capital; cap >= 0 && cap < len(w.Cities) {
 		g.camX = w.Cities[cap].X - viewCols/2
 		g.camY = w.Cities[cap].Y - viewRows/2

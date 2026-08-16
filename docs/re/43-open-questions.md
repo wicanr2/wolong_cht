@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 55 | 53 | 2 | 0 |
 | 資料保存 | 38 | 38 | 0 | 0 |
-| 程式碼理解 | 204 | 197 | 7 | 0 |
-| 驗收 | 34 | 29 | 5 | 0 |
+| 程式碼理解 | 209 | 202 | 7 | 0 |
+| 驗收 | 36 | 31 | 5 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 74 | 70 | 4 | 0 |
-| **合計** | **423** | 404 | 18 | 1 |
+| 其他 | 76 | 72 | 4 | 0 |
+| **合計** | **432** | 413 | 18 | 1 |
 
 ## 2.1 規則正確性（55 條）
 
@@ -129,7 +129,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（204 條）
+## 2.3 程式碼理解（209 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -337,8 +337,13 @@
 | [`re/61-timer-tick-source.md`](../re/61-timer-tick-source.md) | 音樂 tempo 分頻器 `cs:0B68h` 的算式 | `0x859` 那 20 條指令：`al = ((0FFh − ah) × 13) >> 3`，`ah` 從哪來沒讀 | 靜態 |
 | [`re/61-timer-tick-source.md`](../re/61-timer-tick-source.md) | `cs:099Eh` 的 bit 1 | 「音樂啟用」是從用法推的，寫入端沒讀 | 靜態 |
 | [`re/61-timer-tick-source.md`](../re/61-timer-tick-source.md) | 無音效驅動時的行為 | §3 推論「會卡死」，**沒有實測**——DOSBox 拿掉 `YNSOUND.COM` 跑一次就能驗 | 實測 |
+| [`re/62-strategy-minimap.md`](../re/62-strategy-minimap.md) | 視野框的美術與確切尺寸 | `word_10D4C` offset 0，`sub_19752` 沒讀。20×12 是從畫面格數推的 | 靜態 |
+| [`re/62-strategy-minimap.md`](../re/62-strategy-minimap.md) | `byte_198A7` 的初值 | 靜態影像裡是 `0`。**開新遊戲時有沒有被寫過沒查** | 靜態 |
+| [`re/62-strategy-minimap.md`](../re/62-strategy-minimap.md) | 熱區 `0x16`（點地圖）做什麼 | 沒讀。合理猜測是把大地圖捲到該處，但**沒驗** | 靜態 |
+| [`re/62-strategy-minimap.md`](../re/62-strategy-minimap.md) | `sub_15A3A` 裡 `si += 200h`／`bx += 0A00h` | 算完沒用到，是遺留的死碼 | 靜態 |
+| [`re/62-strategy-minimap.md`](../re/62-strategy-minimap.md) | 圖例底圖在哪個資源 | `sub_1FA37` 的 `ds` 來自 `word_10D50`；`docs/re/47` 記成段 3 `0x09A0`，兩者沒對過 | 靜態 |
 
-## 2.4 驗收（34 條）
+## 2.4 驗收（36 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -376,6 +381,8 @@
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | `Field.gateX` 與登城點 | gateX 在三張抽樣圖上**正好就是可破壞城壁那一格**。`doScaleWall` 已經把它當目標，但爬不上去 | 靜態 |
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | 繞路點清單的演算法 | `0x1800 + 兵編號 × 128`，`loc_1BD46` 算（`../re/11` §5.15）。解出來之後 `FindPathForcing` 那條近似要換掉 | 靜態 |
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | 攻城計時器與突破時間的關係 | 大將體力 100 起、每 10 幀掉 1、50 觸發退卻 ⇒ **攻方只有約 500 幀**。爬牆接上之後要重量一次，確認這個預算合理 | 靜態 |
+| [`playtest/29-strategy-minimap-markers.md`](../playtest/29-strategy-minimap-markers.md) | 視野框的美術 | 原版在 `word_10D4C`，尺寸沒從程式碼讀到 | 靜態 |
+| [`playtest/29-strategy-minimap-markers.md`](../playtest/29-strategy-minimap-markers.md) | 點地圖區（熱區 `0x16`） | 原版做什麼沒讀 | 靜態 |
 
 ## 2.5 外部資料（18 條）
 
@@ -400,7 +407,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（74 條）
+## 2.6 其他（76 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -475,6 +482,8 @@
 | [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 最高速在原版實機是多少 | 機器相依。DOSBox 固定 cycles 量得到「那台的上限」，量不到「原版的答案」 | 實測 |
 | [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 戰場幀是否等於 remake 的一次 `Step()` | 原版一幀做完整條戰場迴圈；remake 的 `Step()` 是規則層一步。**兩者對齊過但沒逐項比** | 靜態 |
 | [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 音效驅動不在時的行為 | `../re/61` §6 | 靜態 |
+| [`spec/35-strategy-minimap.md`](../spec/35-strategy-minimap.md) | 視野框的美術 | 原版是 `word_10D4C` 的圖，尺寸沒從程式碼讀到（`../re/62` §5） | 靜態 |
+| [`spec/35-strategy-minimap.md`](../spec/35-strategy-minimap.md) | 點地圖區（熱區 `0x16`） | 原版做什麼沒讀 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |

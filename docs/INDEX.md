@@ -59,6 +59,7 @@
 | [`docs/playtest/26-bgm-render-vs-recording.md`](playtest/26-bgm-render-vs-recording.md) | 26 — 合成出來的音樂對得上原版錄音 | confirmed。internal/audio 渲染的 OPENBGM.DAT 與 DOSBox 錄的同一首， 包… | 2026-08-15 |
 | [`docs/playtest/27-original-video-frame-parity.md`](playtest/27-original-video-frame-parity.md) | 27 — ⭐ 拿原版實錄影片對版面：主畫面與戰術畫面的幾何都落在 3 px 內 | 主畫面與戰術畫面的 | 2026-08-16 |
 | [`docs/playtest/28-siege-breach-measurement.md`](playtest/28-siege-breach-measurement.md) | 28 — 量攻城：remake 的攻方打不進城，原因是城牆四格厚 | ⚠ 缺口已定位，只修掉一半。 | 2026-08-16 |
+| [`docs/playtest/29-strategy-minimap-markers.md`](playtest/29-strategy-minimap-markers.md) | 29 — 縮小地圖的據點標記接上原版的四種顏色 | ✅ 已實作並留下截圖。 | 2026-08-16 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | remake 推廣片、代表幀「經典再現」比較片與 DOS/V／remake 實機動態比較片均已產出並完成媒體規格驗證… | 2026-08-12 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
 | [`docs/promo/dosv-adlib-and-tactical-review.md`](promo/dosv-adlib-and-tactical-review.md) | 推廣片原版 AdLib 與戰術骨架審查 | 原版音軌來源與影片縮放鏈已修正；戰術固定骨架的 16 px viewport 偏差已修正。完整同狀態戰術 parit… | 2026-08-12 |
@@ -125,6 +126,7 @@
 | [`docs/re/59-game-over-exit-codes.md`](re/59-game-over-exit-codes.md) | 59 — ⭐ 結局與敗北是靠離開碼交出去的 | 三個離開碼與各自的觸發點 confirmed。 ⭐ 結局的閘門是 | 2026-08-16 |
 | [`docs/re/60-tactical-sidebar.md`](re/60-tactical-sidebar.md) | 60 — 戰術側欄：那一欄畫了什麼，每一格由誰畫 | 側欄七格的內容全部解出（confirmed）。 | 2026-08-16 |
 | [`docs/re/61-timer-tick-source.md`](re/61-timer-tick-source.md) | 61 — 計時中斷是誰發的：節流的頻率終於有數字了 | ✅ 解出來了。 | 2026-08-16 |
+| [`docs/re/62-strategy-minimap.md`](re/62-strategy-minimap.md) | 62 — 主畫面縮小地圖：據點標記的四種顏色、視野框、勢力篩選 | ✅ 內容組成全解。 | 2026-08-16 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-13 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -152,6 +154,7 @@
 | [`docs/spec/32-gate-strength-bar.md`](spec/32-gate-strength-bar.md) | 32 — 攻城的「門強度」條 | READY。 | 2026-08-16 |
 | [`docs/spec/33-squad-selection.md`](spec/33-squad-selection.md) | 33 — 底列六格是選部隊，不是第二套命令列 | READY。 | 2026-08-16 |
 | [`docs/spec/34-speed-steps.md`](spec/34-speed-steps.md) | 34 — 兩個速度設定：五檔、各檔的實際節奏 | READY。 | 2026-08-16 |
+| [`docs/spec/35-strategy-minimap.md`](spec/35-strategy-minimap.md) | 35 — 縮小地圖的據點標記與視野框 | READY。 | 2026-08-16 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | READY。管線的每一段都有現成工具，缺的是把它們接起來 與一支逐區差分工具。 | 2026-08-15 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）

@@ -1,9 +1,11 @@
 package main
 
 import (
+	"image/color"
 	"testing"
 
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
+	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
@@ -739,5 +741,90 @@ func TestTacticalThrottleIsSixteenTimesCoarser(t *testing.T) {
 	}
 	if n != 18 {
 		t.Errorf("高速一秒 %d 幀，預期 18（18.2 fps）", n)
+	}
+}
+
+// 縮小地圖標記的四種顏色出自 `sub_15CE0`（docs/re/62 §2）：
+// 無所屬 0x0F、自勢力 0xAC、盯著的勢力 0xF3、其餘 0x83。
+func TestMinimapMarkerColoursFollowOwnership(t *testing.T) {
+	w := &state.World{Player: 1}
+	for i := range w.Factions {
+		w.Factions[i].Alive = true
+	}
+	g := &game{world: w, minimapFaction: 3}
+	// 六個色號各給一個可分辨的假色，才看得出挑錯。
+	for i := range g.minimapInk {
+		g.minimapInk[i] = color.RGBA{uint8(i + 1), 0, 0, 255}
+	}
+	cases := []struct {
+		name           string
+		owner          int
+		border, centre int
+	}{
+		{"無所屬", 24, 0, 1},
+		{"自勢力", 1, 2, 3},
+		{"盯著的勢力", 3, 1, 4},
+		{"其餘勢力", 5, 5, 4},
+	}
+	for _, c := range cases {
+		border, centre := g.minimapMarkerColours(c.owner)
+		if border != g.minimapInk[c.border] || centre != g.minimapInk[c.centre] {
+			t.Errorf("%s：外框 %v／中心 %v，預期 minimapInk[%d]／[%d]",
+				c.name, border, centre, c.border, c.centre)
+		}
+	}
+}
+
+// 標記座標 ＝ 原點 + 格/2 − 2（docs/re/62 §2 的 `1B6h`／`26h`）。
+func TestMinimapMarkerGeometryMatchesRaw(t *testing.T) {
+	// 原版的 x 原點是 0x1B6 ＝ 438 ＝ 地圖區 440 減 2；y 是 0x26 ＝ 38 ＝ 40 減 2。
+	if x, y := minimapMarkerPos(0, 0); x != strategyMinimapX-2 || y != strategyMinimapY-2 {
+		t.Errorf("(0,0) → (%d,%d)，預期 (%d,%d)", x, y, strategyMinimapX-2, strategyMinimapY-2)
+	}
+	// 世界 384×256 格對地圖區 192×128 px：右下角那一格要落在區內。
+	x, y := minimapMarkerPos(383, 255)
+	if x != strategyMinimapX+191-2 || y != strategyMinimapY+127-2 {
+		t.Errorf("(383,255) → (%d,%d)，預期 (%d,%d)",
+			x, y, strategyMinimapX+189, strategyMinimapY+125)
+	}
+}
+
+// 圖例第二格不能停在自勢力，也不能停在已滅亡的勢力
+// （原版 `sub_15AFC` 明文擋掉自勢力，docs/re/62 §4.2）。
+func TestMinimapFactionSkipsSelfAndDead(t *testing.T) {
+	w := &state.World{Player: 0}
+	w.Factions[0].Alive = true
+	w.Factions[2].Alive = true
+	g := &game{world: w, minimapFaction: 0}
+	if got := g.watchedFaction(); got != 2 {
+		t.Errorf("watchedFaction = %d，預期 2（0 是自己、1 已滅）", got)
+	}
+	g.cycleWatchedFaction()
+	if g.minimapFaction != 2 {
+		t.Errorf("換一次之後 = %d，預期 2（只剩它可選）", g.minimapFaction)
+	}
+	// 全部滅亡時不能無限迴圈，也不能挑到自己。
+	w.Factions[2].Alive = false
+	if got := g.watchedFaction(); got != -1 {
+		t.Errorf("沒有可盯的勢力時應回 −1，得到 %d", got)
+	}
+}
+
+// 圖例的右半格是原版熱區 0x17 ＝ (536, 168, 96, 16)。
+func TestMinimapLegendHitBoxMatchesRawHotzone(t *testing.T) {
+	if strategyMinimapLegendY != 168 {
+		t.Fatalf("圖例 y = %d，原版是 168", strategyMinimapLegendY)
+	}
+	inside := [][2]int{{536, 168}, {631, 183}}
+	outside := [][2]int{{535, 168}, {536, 167}, {632, 168}, {536, 184}}
+	for _, p := range inside {
+		if !hitTestMinimapLegend(p[0], p[1]) {
+			t.Errorf("(%d,%d) 應該在熱區內", p[0], p[1])
+		}
+	}
+	for _, p := range outside {
+		if hitTestMinimapLegend(p[0], p[1]) {
+			t.Errorf("(%d,%d) 不該在熱區內", p[0], p[1])
+		}
 	}
 }

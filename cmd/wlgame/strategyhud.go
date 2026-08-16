@@ -329,6 +329,15 @@ func hudSwitchWindow(index int) hudWindow {
 	return 0
 }
 
+// hitTestMinimapLegend 是縮小地圖圖例的右半格（原版熱區 0x17）。
+// 原版是 (536, 168, 96, 16)，**只有右半格可點**——左半格是自勢力，
+// 沒得選（docs/re/62 §1）。
+func hitTestMinimapLegend(x, y int) bool {
+	x0 := strategyMinimapX + strategyMinimapW/2
+	return x >= x0 && x < strategyMinimapX+strategyMinimapW &&
+		y >= strategyMinimapLegendY && y < strategyMinimapLegendY+16
+}
+
 // hitTestHUDSwitch 回傳游標落在第幾格開關。
 func hitTestHUDSwitch(x, y int) (int, bool) {
 	if y < 0 || y >= bannerH || x < hudSwitchX0 {
@@ -580,9 +589,11 @@ func (g *game) drawHUDSidebar(screen *ebiten.Image) {
 		op.GeoM.Translate(float64(strategyMinimapX), float64(strategyMinimapY))
 		screen.DrawImage(ebiten.NewImageFromImage(img), op)
 	}
+	g.drawMinimapMarkers(screen)
+	g.drawMinimapViewBox(screen)
 	// 勢力色標是**原版的一張 192×16 圖**（段 3 0x09A0，`sub_15A3A` 貼在
 	// (440,168)）：左半紅、右半藍，各帶一個小色塊。圖裡沒有君主名，
-	// 那一層由 state 填。
+	// 那一層由 state 填（原版是 `sub_15DBB`，docs/re/62 §4.1）。
 	legendX := strategySidebarX + chrome.Tile
 	if img, err := g.lib.DOSVFactionLegend(int(g.world.Clock.Season())); err == nil {
 		op := &ebiten.DrawImageOptions{}
@@ -590,14 +601,95 @@ func (g *game) drawHUDSidebar(screen *ebiten.Image) {
 		screen.DrawImage(ebiten.NewImageFromImage(img), op)
 	}
 	g.td.Draw(screen, strategyHUDSingleLine(big5(g.world.LordName(g.world.Player)), 72), legendX+24, strategyMinimapLegendY, chrome.Paper)
-	enemyName := "敵"
-	for faction, f := range g.world.Factions {
-		if faction != g.world.Player && f.Alive {
-			enemyName = big5(g.world.LordName(faction))
-			break
+	watched := "敵"
+	if f := g.watchedFaction(); f >= 0 {
+		watched = big5(g.world.LordName(f))
+	}
+	g.td.Draw(screen, strategyHUDSingleLine(watched, 72), legendX+120, strategyMinimapLegendY, chrome.Paper)
+}
+
+// watchedFaction 是圖例第二格盯著的勢力（原版的 `cs:byte_198A7`）。
+// 選到自勢力或已滅亡的勢力時往後找，找不到回 −1
+// （原版的 `sub_15AFC` 也擋掉自勢力，見 docs/re/62 §4.2）。
+func (g *game) watchedFaction() int {
+	n := len(g.world.Factions)
+	for i := 0; i < n; i++ {
+		f := (g.minimapFaction + i) % n
+		if f != g.world.Player && g.world.Factions[f].Alive {
+			return f
 		}
 	}
-	g.td.Draw(screen, strategyHUDSingleLine(enemyName, 72), legendX+120, strategyMinimapLegendY, chrome.Paper)
+	return -1
+}
+
+// cycleWatchedFaction 換下一個可盯的勢力。
+//
+// ⚠ 原版點圖例右半格是開一個 22 個勢力的選單視窗（`sub_15AFC`），
+// remake 簡化成「點一下換下一個」——**這是 remake 差異**（docs/spec/35 §2）。
+func (g *game) cycleWatchedFaction() {
+	if g.world == nil {
+		return
+	}
+	n := len(g.world.Factions)
+	for i := 1; i <= n; i++ {
+		f := (g.minimapFaction + i) % n
+		if f != g.world.Player && g.world.Factions[f].Alive {
+			g.minimapFaction = f
+			return
+		}
+	}
+}
+
+// minimapMarkerColours 挑一個據點的（外框, 中心）色。
+// 四種所屬的屬性出自 `sub_15CE0`（docs/re/62 §2）：
+// 無所屬 0x0F、自勢力 0xAC、盯著的勢力 0xF3、其餘 0x83。
+func (g *game) minimapMarkerColours(owner int) (border, centre color.RGBA) {
+	switch {
+	case owner < 0 || owner >= len(g.world.Factions):
+		return g.minimapInk[0], g.minimapInk[1] // 0x0F
+	case owner == g.world.Player:
+		return g.minimapInk[2], g.minimapInk[3] // 0xAC
+	case owner == g.watchedFaction():
+		return g.minimapInk[1], g.minimapInk[4] // 0xF3
+	default:
+		return g.minimapInk[5], g.minimapInk[4] // 0x83
+	}
+}
+
+// minimapMarkerPos 把格座標換算成標記左上角。原版是
+// `dx = [si+8] >> 1 + 1B6h`／`bx = [si+0Ah] >> 1 + 26h`，
+// 那個 −2 是把 4×4 的方塊對準格子中心（docs/re/62 §2）。
+func minimapMarkerPos(cx, cy int) (int, int) {
+	return strategyMinimapX + cx/2 - 2, strategyMinimapY + cy/2 - 2
+}
+
+// drawMinimapMarkers 畫 192 個據點（原版 `sub_15CC6` → `sub_15CE0`）。
+// 圖形是 4×4：外框一圈背景色、中心 2×2 前景色（`sub_15D19`）。
+// 座標是 `原點 + 格/2 − 2`，那個 −2 就是把 4×4 置中。
+func (g *game) drawMinimapMarkers(dst *ebiten.Image) {
+	for i := range g.world.Cities {
+		c := &g.world.Cities[i]
+		x, y := minimapMarkerPos(c.X, c.Y)
+		if x < strategyMinimapX-2 || y < strategyMinimapY-2 ||
+			x > strategyMinimapX+strategyMinimapW || y > strategyMinimapY+strategyMinimapImageH {
+			continue
+		}
+		border, centre := g.minimapMarkerColours(c.Owner)
+		vector.DrawFilledRect(dst, float32(x), float32(y), 4, 4, border, false)
+		vector.DrawFilledRect(dst, float32(x+1), float32(y+1), 2, 2, centre, false)
+	}
+}
+
+// drawMinimapViewBox 畫視野框（原版 `sub_15C58` → `sub_196ED`）。
+// 大小 ＝ 畫面格數的一半：40×23 格 → 20×12 px。
+//
+// ⚠ 原版那是一張美術（`word_10D4C`），remake 畫線——**remake 差異**。
+func (g *game) drawMinimapViewBox(dst *ebiten.Image) {
+	x := float32(strategyMinimapX + g.camX/2)
+	y := float32(strategyMinimapY + g.camY/2)
+	w, h := float32(viewCols/2), float32((viewRows+1)/2)
+	ink := g.minimapInk[1]
+	vector.StrokeRect(dst, x, y, w, h, 1, ink, false)
 }
 
 func (g *game) drawNaturalFactionHUD(dst *ebiten.Image, x, y int) {
