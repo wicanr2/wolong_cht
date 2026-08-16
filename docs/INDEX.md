@@ -172,6 +172,7 @@
 | [`docs/spec/41-message-box-geometry.md`](spec/41-message-box-geometry.md) | 41 — 訊息框的版面常數 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/42-event-scene-speakers.md`](spec/42-event-scene-speakers.md) | 42 — 事件場景上誰在說話 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/43-rout-on-blocked-return.md`](spec/43-rout-on-blocked-return.md) | 43 — 回不了家的軍團會敗走 | CONFORMED。 | 2026-08-17 |
+| [`docs/spec/44-advise-original-text.md`](spec/44-advise-original-text.md) | 44 — 進言用原版的原文，不用改寫的句子 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | READY。管線的每一段都有現成工具，缺的是把它們接起來 與一支逐區差分工具。 | 2026-08-15 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）

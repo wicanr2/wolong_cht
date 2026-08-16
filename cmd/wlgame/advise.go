@@ -172,9 +172,16 @@ func (g *game) beginPersuasion() {
 	s := g.situation(g.target)
 	g.sessCur = 0
 	g.advise = advisePersuade
-	g.adviseLog = []string{
-		big5(g.world.LordName(g.world.Player)) + "：「" +
-			big5(g.world.LordName(g.target)) + "？說來聽聽。」",
+	// ① 君主開場、② 軍師的進言——兩則都是原版的原文（docs/spec/44 §2）。
+	base := adviseTalkBase(g.adviseCmd)
+	g.adviseLog = nil
+	for _, l := range []string{
+		g.adviseLine("君主", base+g.playerTalkVariant()),
+		g.adviseLine("軍師", base+3),
+	} {
+		if l != "" {
+			g.adviseLog = append(g.adviseLog, l)
+		}
 	}
 	queued := false
 	if g.adviseCmd == persuasion.Hostility {
@@ -186,7 +193,11 @@ func (g *game) beginPersuasion() {
 	default:
 		g.sess = nil
 		g.adjustTrust(persuasion.ReactionTrustDelta(reaction))
-		g.adviseLog = append(g.adviseLog, reactionLine(reaction))
+		base := adviseTalkBase(g.adviseCmd)
+		if line := g.adviseLine("君主",
+			adviseReplyIndex(base, reaction, g.playerTalkVariant())); line != "" {
+			g.adviseLog = append(g.adviseLog, line)
+		}
 		if reaction == persuasion.Agree {
 			g.commitAdvice()
 		}
@@ -225,22 +236,67 @@ func (g *game) adjustTrust(delta int) {
 	}
 }
 
-// reactionLine 是原版 sub_13830 的第一反應接縫。訊息編號已由
-// persuasion.FirstReaction 固定；完整 TALK.DAT 原文與逐頁排版仍在
-// 本地化 parity 清單，這裡先讓流程不再把所有分支都誤導進說服迴圈。
-func reactionLine(r persuasion.Reaction) string {
-	switch r {
-	case persuasion.Refuse:
-		return "君主：「不可答允，別平白增加敵人。」"
-	case persuasion.Agree:
-		return "君主：「我也有同樣的想法，立刻準備行動！」"
-	case persuasion.AlreadyAtWar:
-		return "君主：「不是已經在交戰狀態中了嗎？」"
-	case persuasion.SameFaction:
-		return "君主：「協力對象與侵攻對象不能是同一家。」"
+// adviseTalkBase 是三個進言指令的 TALK 起點——`sub_16405`／`sub_164F1`／
+// `sub_16623` 傳給 `sub_13830` 的 `cx`（docs/spec/44 §1）。
+//
+// ⚠ **三組措辭各不相同**，不能共用一組。
+func adviseTalkBase(c persuasion.Command) int {
+	switch c {
+	case persuasion.CeaseFire:
+		return 0x96 // 150
+	case persuasion.Cooperate:
+		return 0xD6 // 214
 	default:
-		return "君主：「聽你這麼說，看來是有勝算囉？」"
+		return 0x56 // 86，敵對（進兵）
 	}
+}
+
+// adviseReplyIndex 是君主回答的 TALK 索引：`base + 4 + 結果碼×3`
+// （`sub_13830` 的 `cx = base + al×3 + 4`）。碼 ≥ 4 一律用 83。
+//
+// 每個位置佔三則，因為 `sub_13C99` 會把君主的**說話型**加進索引。
+func adviseReplyIndex(base int, r persuasion.Reaction, variant int) int {
+	if r >= persuasion.SameFaction {
+		return 0x53 + variant // #83「我想軍師並不是來談笑的。」
+	}
+	return base + 4 + 3*int(r) + variant
+}
+
+// adviseLine 把一則 TALK 展開成一行，前面加說話者標記。
+//
+// 標記是 **remake 差異**：原版用兩個講話框 ＋ 肖像分辨誰在說
+// （docs/re/66 §5.2），而這裡的清單視窗沒有肖像可以放。
+func (g *game) adviseLine(speaker string, index int) string {
+	lines, ok := g.talkLines(index, g.adviseTalkVars())
+	if !ok || len(lines) == 0 {
+		return ""
+	}
+	joined := ""
+	for _, l := range lines {
+		if l == "" {
+			continue
+		}
+		joined += l
+	}
+	if joined == "" {
+		return ""
+	}
+	return speaker + "：「" + joined + "」"
+}
+
+// adviseTalkVars 是進言那幾則的變數：`{3}` 交涉對象、`{4}` 軍師（玩家）、
+// `{6}` 排版標記（空字串，原版 handler 只調 X 不輸出字元）。
+func (g *game) adviseTalkVars() map[byte]string {
+	vars := map[byte]string{'6': ""}
+	if g.target >= 0 && g.target < len(g.world.Factions) {
+		vars['3'] = big5(g.world.LordName(g.target))
+	}
+	if p := g.world.Player; p >= 0 && p < len(g.world.Factions) {
+		if a := g.world.Factions[p].Advisor; a >= 0 && a < len(g.world.Generals) {
+			vars['4'] = big5(g.world.Generals[a].Name)
+		}
+	}
+	return vars
 }
 
 // commitAdvice 將第一反應直接同意或說服成功接到原版 producer：敵對
