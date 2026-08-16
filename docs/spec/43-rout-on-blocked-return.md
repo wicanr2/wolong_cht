@@ -51,11 +51,13 @@ remake 已實作並有單測。
 | 單元測試 | `TestRoutingSurvivesSaveRoundTrip`：旗標 8 與計時器 byte-for-byte 寫得回去 |
 | 單元測試 | `TestReturnBlockedNeedsForeignCityOnTheRoute`：路上有別人的據點才成立 |
 
-⚠ **`cmd/wlsim` 驗不到這一條。** `returnBlocked` 走的是算好的格子路徑，
-而 `wlsim` 沒有 `SetRoads`（規則層不讀檔案，道路圖由呼叫端注入），
-所以那邊的路徑永遠是空的、判定永遠不成立。
-接上前後跑同一顆種子 43 個月，結果**逐字相同**——
-這證明的是「沒有回歸」，不是「規則有效」。**要驗行為得在 `wlgame` 裡跑。**
+| 長跑 | `cmd/wlsim` 現在會自己掛道路圖（`-map`，預設 `MMAP.MAP`），5 年 60 個月跑完不變量不違反 |
+
+> ⚠ **這一條的判定需要道路圖。** `returnBlocked` 走的是算好的格子路徑，
+> 而 `wlsim` 先前沒有 `SetRoads`（規則層不讀檔案，道路圖由呼叫端注入），
+> 路徑永遠是空的、判定永遠不成立——接上規則前後跑同一顆種子，
+> 結果**逐字相同**。那證明的是「沒有回歸」，不是「規則有效」。
+> 現在 `wlsim` 自己載 `MMAP.MAP`（253 條路），走的才是原版的道路。
 
 ## 4. 未解
 

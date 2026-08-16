@@ -23,9 +23,11 @@ import (
 	"text/tabwriter"
 
 	"github.com/wicanr2/wolong_cht/internal/assets/text"
+	"github.com/wicanr2/wolong_cht/internal/assets/world"
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
 	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
+	"github.com/wicanr2/wolong_cht/internal/rules/march"
 	"github.com/wicanr2/wolong_cht/internal/rules/rng"
 	"github.com/wicanr2/wolong_cht/internal/state"
 )
@@ -41,6 +43,8 @@ func main() {
 	check := flag.Bool("check", false,
 		"每個 tick 檢查資料模型的不變量，第一個違反就停（見 internal/state/invariant.go）")
 	every := flag.Int("every", 12, "每幾個月印一列")
+	mmap := flag.String("map", "workplace/orig/dosv/MMAP.MAP",
+		"大地圖（推導道路圖用；空字串或讀不到就退回直線行軍）")
 	flag.Parse()
 
 	w, err := state.LoadScenario(*path, *scenario)
@@ -49,6 +53,12 @@ func main() {
 	}
 	w.Player = *player
 	w.EnableStrategicAI()
+	// ⭐ **沒有道路圖，行軍就退回直線**，而「回家的路要穿過別人的地」
+	//    這一條（docs/spec/43）判的正是路徑上的據點——沒有路徑就永遠不成立。
+	//    所以這支程式要自己把道路圖掛上，否則長跑量不到那條規則。
+	if roads := loadRoads(*mmap, w); roads != nil {
+		w.SetRoads(roads)
+	}
 	if *tax >= 0 {
 		w.TaxRate, w.NextTaxRate = *tax, *tax
 	}
@@ -200,6 +210,38 @@ func big5(s string) string {
 		return "?"
 	}
 	return text.Decode([]byte(s), text.Big5)
+}
+
+// loadRoads 從 MMAP 推出道路圖。讀不到就回 nil，行軍退回直線——
+// **缺素材要能降級跑**，不是整個動不了。
+//
+// 這裡不經 `internal/assets/library`：那一包 import 了 Ebiten，
+// 而這支程式刻意不碰顯示器。`world.ParseMap` 吃的是原始位元組。
+func loadRoads(path string, w *state.World) *march.Graph {
+	if path == "" {
+		return nil
+	}
+	data, err := os.ReadFile(path)
+	if err != nil {
+		fmt.Printf("（沒有道路圖：%v；行軍走直線）\n", err)
+		return nil
+	}
+	m, err := world.ParseMap(data)
+	if err != nil {
+		fmt.Printf("（大地圖解不開：%v；行軍走直線）\n", err)
+		return nil
+	}
+	xy := make([][2]int, len(w.Cities))
+	for i := range w.Cities {
+		xy[i] = [2]int{w.Cities[i].X, w.Cities[i].Y}
+	}
+	edges, err := world.RoadEdges(m, xy)
+	if err != nil {
+		fmt.Printf("（推不出道路圖：%v；行軍走直線）\n", err)
+		return nil
+	}
+	fmt.Printf("道路圖：%d 條路\n", len(edges))
+	return march.New(len(w.Cities), world.MarchEdges(edges, xy))
 }
 
 // blockedBy 回報世界停在哪一種「等玩家決定」上，沒有就回空字串。

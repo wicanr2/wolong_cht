@@ -1,6 +1,10 @@
 package world
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/wicanr2/wolong_cht/internal/rules/march"
+)
 
 // 道路網。**這是原版建表常式的直接移植**，不是等價的重寫：
 //
@@ -303,4 +307,20 @@ func less(a, b RoadEdge) bool {
 		return a.A < b.A
 	}
 	return a.B < b.B
+}
+
+// MarchEdges 把 RoadEdges 的結果轉成規則層的邊。
+//
+// 這一步只是換型別，但**兩個呼叫端（wlgame 與 wlsim）不該各寫一份**——
+// 少填一個欄位的 bug 會只在其中一支出現，而那正是最難查的那種。
+func MarchEdges(edges []RoadEdge, cities [][2]int) []march.Edge {
+	out := make([]march.Edge, len(edges))
+	for i, e := range edges {
+		var start [2]int
+		if e.A >= 0 && e.A < len(cities) {
+			start = cities[e.A]
+		}
+		out[i] = march.Edge{A: e.A, B: e.B, Steps: e.Steps, Path: e.Path, ACell: start}
+	}
+	return out
 }
