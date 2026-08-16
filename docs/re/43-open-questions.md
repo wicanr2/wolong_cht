@@ -21,10 +21,10 @@
 | 規則正確性 | 55 | 53 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
 | 程式碼理解 | 213 | 206 | 7 | 0 |
-| 驗收 | 52 | 46 | 6 | 0 |
+| 驗收 | 54 | 48 | 6 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
 | 其他 | 86 | 82 | 4 | 0 |
-| **合計** | **460** | 440 | 19 | 1 |
+| **合計** | **462** | 442 | 19 | 1 |
 
 ## 2.1 規則正確性（55 條）
 
@@ -346,7 +346,7 @@
 | [`re/64-corps-arrival-state-machine.md`](../re/64-corps-arrival-state-machine.md) | `+0x00` 位元 1 | Stage 10／11 改目標時 `or byte [si], 2`；疑似「路線要重算」，沒找讀取端 | 靜態 |
 | [`re/64-corps-arrival-state-machine.md`](../re/64-corps-arrival-state-machine.md) | `sub_17F90` | `sub_14325` 的第二個呼叫端，未讀 | 靜態 |
 
-## 2.4 驗收（52 條）
+## 2.4 驗收（54 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -402,6 +402,8 @@
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 戰鬥指揮／委任選單 | 影片裡沒有對照影格 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 同一場戰鬥的逐格對拍 | 需要同狀態，還沒做 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 勢力一覽的欄位 | 沒有逐欄比對 | 靜態 |
+| [`playtest/32-talk-layout-fit.md`](../playtest/32-talk-layout-fit.md) | 肖像框的寬度 | remake 用 160 px，出處是 `sub_18810`／`sub_1895D` 的常數；**原版實錄影格上那個框的文字區看起來更寬**（f008 量到約 275 px）。要嘛常數讀錯、要嘛影格上那個是另一種框 | 靜態 |
+| [`playtest/32-talk-layout-fit.md`](../playtest/32-talk-layout-fit.md) | 變數的實際長度分布 | 這一輪用固定三全形替身。人名多半是 2–3 全形、地名 2–3，但**軍團名與勢力名沒有逐一量過** | 靜態 |
 
 ## 2.5 外部資料（17 條）
 

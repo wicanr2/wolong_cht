@@ -28,6 +28,9 @@ const (
 	talkTextY     = 96
 	talkTextWidth = 160
 	talkLinePitch = 16 // sub_18810／sub_1895D 的 CL=10h
+	// talkBoxRows 是肖像框裡放得下幾列：框高 80、上下各內縮 8、
+	// 一列 16 px ⇒ 4 列。
+	talkBoxRows = (talkBoxH - 16) / talkLinePitch
 
 	talkSceneX = 64
 	talkSceneY = 144
