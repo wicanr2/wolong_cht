@@ -66,6 +66,7 @@
 | [`docs/playtest/33-ai-march-long-run.md`](playtest/33-ai-march-long-run.md) | 33 — AI 行軍鏈接上之後的長跑觀察 | 量完了。世界會動了——軍團有生有滅、不變量全程成立。 ⭐ 最重要的發現不是 AI 的行為，是 | 2026-08-17 |
 | [`docs/playtest/34-advise-scene-screens.md`](playtest/34-advise-scene-screens.md) | 34 — 進言的畫面驗收：插圖 ＋ 兩個框 ＋ 五列選單 | 通過。 | 2026-08-17 |
 | [`docs/playtest/35-advise-verdict-screens.md`](playtest/35-advise-verdict-screens.md) | 35 — 進言的五項與「請求君主出陣」的定案畫面 | 通過。 | 2026-08-17 |
+| [`docs/playtest/36-window-texture.md`](playtest/36-window-texture.md) | 36 — 視窗底紋畫上去了 | 通過。 | 2026-08-17 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | remake 推廣片、代表幀「經典再現」比較片與 DOS/V／remake 實機動態比較片均已產出並完成媒體規格驗證… | 2026-08-12 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
 | [`docs/promo/dosv-adlib-and-tactical-review.md`](promo/dosv-adlib-and-tactical-review.md) | 推廣片原版 AdLib 與戰術骨架審查 | 原版音軌來源與影片縮放鏈已修正；戰術固定骨架的 16 px viewport 偏差已修正。完整同狀態戰術 parit… | 2026-08-12 |

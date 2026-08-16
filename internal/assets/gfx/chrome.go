@@ -139,3 +139,60 @@ func RenderChrome(seg []byte, off int, p *palette.Palette, bankIdx int) (*image.
 	}
 	return img, nil
 }
+
+// ---------------------------------------------------------------------------
+// 視窗內部的龍紋
+// ---------------------------------------------------------------------------
+
+const (
+	// WindowTextureOffset 是龍紋點陣在 `ICONGRF` 段 3 的位移。
+	// 檔案位移 `0xBA20`（段 3 從 `0x9700` 起）**正好是檔尾**，
+	// 而段 3 由 `sub_1006B` 以 `di = 0FFFFh` ＝「讀到檔尾」載入。
+	WindowTextureOffset = 0x2320
+	// WindowTextureSize 是磚塊的邊長：32×32、1 bpp、每列 4 byte ＝ 128 B。
+	WindowTextureSize = 32
+	// windowTextureBytes 是那 128 byte。
+	windowTextureBytes = WindowTextureSize * WindowTextureSize / 8
+
+	// 只有兩色（docs/formats/03 §5.5）。
+	windowTextureInk   = 8 // 深藍
+	windowTexturePaper = 0 // 黑
+)
+
+// DecodeWindowTexture 解出 32×32 的調色盤索引（只會是 0 或 8）。
+func DecodeWindowTexture(seg []byte, off int) ([]byte, error) {
+	if off < 0 || off+windowTextureBytes > len(seg) {
+		return nil, fmt.Errorf("gfx: 視窗底紋位移 0x%X 超出段長 %d", off, len(seg))
+	}
+	out := make([]byte, WindowTextureSize*WindowTextureSize)
+	for y := 0; y < WindowTextureSize; y++ {
+		row := seg[off+y*4 : off+y*4+4]
+		for x := 0; x < WindowTextureSize; x++ {
+			if row[x>>3]>>(7-(x&7))&1 == 1 {
+				out[y*WindowTextureSize+x] = windowTextureInk
+			} else {
+				out[y*WindowTextureSize+x] = windowTexturePaper
+			}
+		}
+	}
+	return out, nil
+}
+
+// RenderWindowTexture 解出龍紋並上色。
+func RenderWindowTexture(seg []byte, off int, p *palette.Palette, bankIdx int) (*image.RGBA, error) {
+	idx, err := DecodeWindowTexture(seg, off)
+	if err != nil {
+		return nil, err
+	}
+	bank, err := p.Bank(bankIdx)
+	if err != nil {
+		return nil, err
+	}
+	img := image.NewRGBA(image.Rect(0, 0, WindowTextureSize, WindowTextureSize))
+	for y := 0; y < WindowTextureSize; y++ {
+		for x := 0; x < WindowTextureSize; x++ {
+			img.SetRGBA(x, y, bank[idx[y*WindowTextureSize+x]])
+		}
+	}
+	return img, nil
+}

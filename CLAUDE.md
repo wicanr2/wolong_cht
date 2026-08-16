@@ -476,7 +476,7 @@ grep `.asm` 只能從呼叫端的參數順序反推——那是間接證據，�
 | M3 | 執行檔反組譯 | ✅ **靜態分析完成** | 739 支函式**全部**有 `docs/re/` 記錄（T4 ＝ 0）。**這不等於全部讀懂**——各文件的「未解」表是真正的缺口（[`docs/re/21`](docs/re/21-function-census.md)）。**引用覆蓋率要用排除目錄後的數字**（`re/21` §3.1）。兩版對照當交叉驗證（§4.0） |
 | M4 | 規則規格 ＋ 機制文件 | 🔵 進行中 | 政略、行軍、戰鬥、經濟、外交、勝負。**同步產出 `docs/mechanics/`（§5）** |
 | M5 | Go 引擎（規則層） | 🔵 大致完成 | 純邏輯，不認識畫面。以 tick 驅動。時鐘／月結／內政官／外交／說服／戰術／遷都／沿原版道路的行軍都在 |
-| M6 | 呈現層 | 🔵 **可玩，但不是原版畫面** | Ebiten、大地圖 ＋ 45 度戰場。外框與縮小地圖取自原版素材（`ICONGRF` 段 3／段 2），但**版面常數來自參考影片、勢力色標是自繪的**；戰術版面 PARTIAL（[`docs/playtest/20`](docs/playtest/20-tactical-layout-parity.md)）。**音樂與音效完全沒有實作**——`BGM.DAT` 的聲軌事件編碼未解（[`docs/re/23`](docs/re/23-bgm-resource-format.md)）|
+| M6 | 呈現層 | 🔵 **可玩，但不是原版畫面** | Ebiten、大地圖 ＋ 45 度戰場。外框與縮小地圖取自原版素材（`ICONGRF` 段 3／段 2），戰術版面 PARTIAL（[`docs/playtest/20`](docs/playtest/20-tactical-layout-parity.md)）。**音樂與音效已實作並與原版錄音比對過**（[`docs/spec/29`](docs/spec/29-audio.md)）|
 | M7 | 日文原版對照與校訂 | 🔵 校訂可套用 | 60 筆校訂可重跑；畫面抽樣與排版 parity 未完成 |
 | M8 | 打包發行 | 🔵 進行中 | 發行閘（`denylist.py` ＋ `release.sh`）已接進 `check.sh`；缺各目標平台實機驗收 |
 

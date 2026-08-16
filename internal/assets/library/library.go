@@ -206,6 +206,14 @@ func (l *Library) RenderChrome(off, bank int) (*image.RGBA, error) {
 	return gfx.RenderChrome(l.Chrome, off, l.Palette, bank)
 }
 
+// RenderWindowTexture 解出視窗內部的龍紋（`ICONGRF` 段 3 的最後 128 byte）。
+func (l *Library) RenderWindowTexture(bank int) (*image.RGBA, error) {
+	if l.Chrome == nil {
+		return nil, fmt.Errorf("ICONGRF 段 3 沒有載入")
+	}
+	return gfx.RenderWindowTexture(l.Chrome, gfx.WindowTextureOffset, l.Palette, bank)
+}
+
 // PaletteColor 回傳原版調色盤指定色，供反組譯已直接給出 palette index
 // 的向量 overlay 使用；不把 RGB 常數重抄進呈現層。
 func (l *Library) PaletteColor(bank, index int) (color.RGBA, error) {

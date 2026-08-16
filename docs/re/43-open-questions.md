@@ -21,10 +21,10 @@
 | 規則正確性 | 54 | 52 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
 | 程式碼理解 | 217 | 210 | 7 | 0 |
-| 驗收 | 58 | 51 | 7 | 0 |
+| 驗收 | 58 | 50 | 8 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
 | 其他 | 108 | 103 | 5 | 0 |
-| **合計** | **491** | 469 | 21 | 1 |
+| **合計** | **491** | 468 | 22 | 1 |
 
 ## 2.1 規則正確性（54 條）
 
@@ -391,9 +391,7 @@
 | [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 一幀能有幾個兵撞牆 | 原版沒量過。前排寬度決定破牆速度，而破牆速度決定攻城打不打得下來 | 靜態 |
 | [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 打壞城壁之後地面層表不更新 | 原版就不更新，而且不影響結果——城壁的地面層本來就是拿打壞後的圖塊算的（`../re/63` §2） | 靜態 |
 | [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 高平面的橫向移動沒有實測 | 守方站到牆頂的情境還沒跑過 | 實測 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 主畫面：視窗內部底紋 | 原版視窗內是**黑底 ＋ 深藍龍紋**（兩色、寬 32 的直條水平重複，`../formats/03` §5.5），remake 是純深藍 / 看得出來 / 靜態找法走完（69 檔、四段、8×8 拼塊都掃過）；下一步是動態追 VRAM 寫入 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 主畫面：大地圖地形色調 | 原版偏黃綠、remake 偏綠 / 存疑 / 可能是影片的色彩取樣。要驗就比**同一格的色號**，不要比 RGB | 靜態 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | **戰鬥指揮／委任選單** | 版面是 remake 自訂的（`sub_193E9` 的矩形沒解）；**選項字串已改成原版的 TALK #76**，行軍指示的三選一也接上了（`../spec/39`） / 部分 / 缺 `sub_193E9` 的版面 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 戰場：同一場的逐格對拍 | 沒做過 / 未對過 / 需要同狀態，難度同主畫面 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 攻方大多數不前進 | 六個指令都能指揮部隊動作（`../spec/37` §4）；**AI 自己撞不進城是設計**——說明書第 11 章整章在講破城要換陣形 / 玩家要自己操作 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | `sub_13E11` 每「時」做什麼 | 未讀 / 行軍與 AI 的節拍 | 靜態 |
@@ -411,6 +409,8 @@
 | [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 插圖之外的畫面 | 原版這一頁底下是不是還留著大地圖沒驗過，remake 留著 | 靜態 |
 | [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 選單的反白樣式 | 原版怎麼畫游標列沒解，remake 用自己的反白條 ＋ `>` | 靜態 |
 | [`playtest/35-advise-verdict-screens.md`](../playtest/35-advise-verdict-screens.md) | 遷都的畫面 | 目標用一覽表挑，原版是地圖選點（`sub_17400`）。沒有截圖 | 實測 |
+| [`playtest/36-window-texture.md`](../playtest/36-window-texture.md) | 取用端 | `KI.EXE` 裡哪一段程式把這 128 byte 鋪上去的還沒找到（三條路都排除了）。**排法已經由實機畫面定案**，取用端只影響「還有沒有別的用法」 | 靜態 |
+| [`playtest/36-window-texture.md`](../playtest/36-window-texture.md) | 米色視窗 | 一覽表那種米色底原版有沒有紋路沒量過（截圖裡那一片是純色） | 實測 |
 
 ## 2.5 外部資料（17 條）
 

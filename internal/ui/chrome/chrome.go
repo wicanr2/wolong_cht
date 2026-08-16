@@ -16,6 +16,7 @@
 package chrome
 
 import (
+	"image"
 	"image/color"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -46,11 +47,13 @@ var (
 	fallbackCap  = color.RGBA{240, 200, 80, 255}
 )
 
-// Set 是畫外框要用的三塊圖。Load 失敗時三塊都是 nil，畫成純色框。
+// Set 是畫外框要用的三塊圖，外加視窗內部的龍紋。
+// Load 失敗時全是 nil，畫成純色框。
 type Set struct {
-	edge  *ebiten.Image // 上下邊
-	cap   *ebiten.Image // 柱頭
-	shaft *ebiten.Image // 柱身
+	edge    *ebiten.Image // 上下邊
+	cap     *ebiten.Image // 柱頭
+	shaft   *ebiten.Image // 柱身
+	texture *ebiten.Image // 內部的龍紋，32×32
 }
 
 // Load 從素材庫取出外框圖塊。**缺素材不算錯**——回傳的 Set 仍可用，
@@ -68,7 +71,47 @@ func Load(lib *library.Library, bank int) *Set {
 		return ebiten.NewImageFromImage(img)
 	}
 	s.edge, s.cap, s.shaft = get(gfx.ChromeEdge), get(gfx.ChromeCap), get(gfx.ChromeShaft)
+	if img, err := lib.RenderWindowTexture(bank); err == nil {
+		s.texture = ebiten.NewImageFromImage(img)
+	}
 	return s
+}
+
+// TextureSize 是龍紋磚塊的邊長。**底紋是螢幕對齊的**，
+// 所以它同時是水平與垂直的週期（docs/formats/03 §5.5）。
+const TextureSize = gfx.WindowTextureSize
+
+// fillInterior 鋪視窗底色。深藍的選單視窗鋪的是**龍紋**，不是純色。
+//
+// ⭐ **磚塊釘在螢幕上，不是釘在視窗左上角**：
+// 像素 (x, y) 取 tile[y mod 32][x mod 32]。
+// 先前幾輪都從視窗角落開始平鋪，所以怎麼試都對不上實機
+// （docs/formats/03 §5.5）。
+func (s *Set) fillInterior(dst *ebiten.Image, x, y, w, h int, fill color.RGBA) {
+	if s == nil || s.texture == nil || fill != Menu || w <= 0 || h <= 0 {
+		vector.DrawFilledRect(dst, float32(x), float32(y), float32(w), float32(h),
+			fill, false)
+		return
+	}
+	clip, ok := dst.SubImage(image.Rect(x, y, x+w, y+h)).(*ebiten.Image)
+	if !ok {
+		vector.DrawFilledRect(dst, float32(x), float32(y), float32(w), float32(h),
+			fill, false)
+		return
+	}
+	floorTo := func(v int) int {
+		if v < 0 {
+			return -((-v + TextureSize - 1) / TextureSize) * TextureSize
+		}
+		return v / TextureSize * TextureSize
+	}
+	for ty := floorTo(y); ty < y+h; ty += TextureSize {
+		for tx := floorTo(x); tx < x+w; tx += TextureSize {
+			op := &ebiten.DrawImageOptions{}
+			op.GeoM.Translate(float64(tx), float64(ty))
+			clip.DrawImage(s.texture, op)
+		}
+	}
 }
 
 // Available 回報有沒有真的拿到原版圖塊。
@@ -79,7 +122,7 @@ func (s *Set) Available() bool { return s != nil && s.edge != nil }
 // x、y、w、h 用像素。邊框**畫在矩形內側**，所以內容區是
 // (x+Tile, y+Tile) 到 (x+w-Tile, y+h-Tile)。
 func (s *Set) Window(dst *ebiten.Image, x, y, w, h int, fill color.RGBA) {
-	vector.DrawFilledRect(dst, float32(x), float32(y), float32(w), float32(h), fill, false)
+	s.fillInterior(dst, x, y, w, h, fill)
 	if !s.Available() {
 		vector.StrokeRect(dst, float32(x), float32(y), float32(w), float32(h),
 			2, fallbackCap, false)
