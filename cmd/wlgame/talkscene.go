@@ -45,6 +45,16 @@ const (
 	// 幾乎清一色 `mov al, 93h`）。KAOGRF 第 147 張。
 	defaultPortraitPage = 0x93
 
+	// 事件場景（IVENTGRF 插圖）上的兩個講話框。**寬高與訊息框完全一樣**
+	// ——`sub_1075B` 把 cx = 0510h 寫死，位置才由呼叫端決定。
+	//
+	//	sub_13C99（講話的武將）dx=0, bx=5   ⇒ 框 (0, 80)
+	//	sub_13CDC（君主）      dx=8, bx=12h ⇒ 框 (128, 288)
+	//
+	// 兩個位置都在原版實錄影格上量過（docs/re/66 §5.1）。
+	talkUpperBoxX, talkUpperBoxY = 0, 80
+	talkLowerBoxX, talkLowerBoxY = 128, 288
+
 	talkSceneX = 64
 	talkSceneY = 144
 

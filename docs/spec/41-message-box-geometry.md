@@ -63,9 +63,25 @@
 | 單元測試 | `TestAllTalkLinesFitTheirBox`（既有）：門檻改成 4 列 |
 | 截圖 | `-open-talk` 與原版 `f008` 對位 |
 
-## 5. 未解
+## 5. 事件場景的兩個講話框
+
+`IVENTGRF` 插圖上的兩個框**寬高與訊息框完全一樣**，只有位置不同
+（[`../re/66`](../re/66-message-box-geometry.md) §5.1）：
+
+| 誰 | 常式 | 框 | remake 常數 |
+|---|---|---|---|
+| 講話的武將 | `sub_13C99` | **(0, 80, 256, 80)** | `talkUpperBoxX/Y` |
+| 君主 | `sub_13CDC` | **(128, 288, 256, 80)** | `talkLowerBoxX/Y` |
+
+兩個位置都在原版實錄影格上量過。`cmd/wlgame` 的事件 2／3
+（`diplomacy.go`）與事件 4／5（`funding.go`）改用上框。
+**下框還沒有呼叫端**——remake 的事件流程目前只畫一個講話框。
+
+驗證：`TestEventSceneBoxesMatchOriginal`。
+
+## 6. 未解
 
 | 項目 | 現況 |
 |---|---|
-| 事件場景的兩個講話位置 | (8, 88) 與 (136, 296) 由機器碼算出，**沒有影格覆驗**（[`../re/66`](../re/66-message-box-geometry.md) §8）。remake 的事件場景版面暫不動 |
-| 框的底紋 | 龍紋底紋仍未解（[`../formats/03`](../formats/03-grf-images.md) §5.5），remake 用純色 |
+| 君主那一側的回話 | 原版事件場景會同時出現兩個框（`docs/re/66` §5.1 的影格就是），remake 只畫一個 |
+| 框的底紋 | 龍紋的點陣找到了（[`../formats/03`](../formats/03-grf-images.md) §5.5），但 96 列的排法還沒解，remake 仍用純色 |

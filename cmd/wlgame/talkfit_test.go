@@ -127,3 +127,24 @@ func TestTextDoesNotOverlapPortrait(t *testing.T) {
 			talkBoxRows, bottom, talkBoxY+talkBoxH)
 	}
 }
+
+// 事件場景的兩個講話框：位置對原版，寬高與訊息框相同（docs/re/66 §5.1）。
+func TestEventSceneBoxesMatchOriginal(t *testing.T) {
+	for _, tc := range []struct {
+		name       string
+		x, y       int
+		wantX, wantY int
+	}{
+		{"講話者的框", talkUpperBoxX, talkUpperBoxY, 0, 80},
+		{"君主的框", talkLowerBoxX, talkLowerBoxY, 128, 288},
+	} {
+		if tc.x != tc.wantX || tc.y != tc.wantY {
+			t.Errorf("%s = (%d,%d)，原版是 (%d,%d)",
+				tc.name, tc.x, tc.y, tc.wantX, tc.wantY)
+		}
+		// 三個框共用同一組寬高，所以只要位置對，內容區就對。
+		if tc.y+talkBoxH > screenH || tc.x+talkBoxW > screenW {
+			t.Errorf("%s 畫出畫面外", tc.name)
+		}
+	}
+}

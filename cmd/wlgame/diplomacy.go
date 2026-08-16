@@ -213,7 +213,7 @@ func (g *game) drawDiplomacy(screen *ebiten.Image, c *state.DiplomacyChoice) {
 	g.drawIventScene(screen, 0)
 	prompt := g.legacyTalkLines(g.diplomacyTalkPromptIndex(*c),
 		g.diplomacyTalkVars(*c, -1), talkTextWidth)
-	g.drawLegacyTalkBox(screen, talkBoxX, talkBoxY, talkBoxW, talkBoxH,
+	g.drawLegacyTalkBox(screen, talkUpperBoxX, talkUpperBoxY, talkBoxW, talkBoxH,
 		prompt, g.playerLordPortrait())
 	choice := g.legacyTalkLines(diplomacyTalkBase(c.Kind)+3,
 		g.diplomacyTalkVars(*c, -1), talkChoiceW-2*chrome.Tile)

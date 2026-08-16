@@ -247,7 +247,7 @@ func (g *game) drawFunding(screen *ebiten.Image, c *state.FundingChoice) {
 	} else {
 		portrait = g.playerLordPortrait()
 	}
-	g.drawLegacyTalkBox(screen, talkBoxX, talkBoxY, talkBoxW, talkBoxH,
+	g.drawLegacyTalkBox(screen, talkUpperBoxX, talkUpperBoxY, talkBoxW, talkBoxH,
 		prompt, portrait)
 	choice := g.legacyTalkLines(fundingTalkBase(*c)+5,
 		vars, talkChoiceW-2*chrome.Tile)
