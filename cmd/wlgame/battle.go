@@ -951,8 +951,10 @@ func (g *game) buildField(node int, siege bool) *tactical.Field {
 	}
 	// 用原始圖塊值建，不只用堆疊高度——城壁與門是從圖塊值認出來的，
 	// 而且打壞時要換圖塊再重算高度（docs/re/11 §5.9）。
-	return tactical.NewFieldFromTiles(
-		g.battleLib.Tiles(n), g.battleLib.Heights(n), g.battleLib.GateX(n))
+	// 再加上七層子圖塊表：兩個平面的地面圖與登城都靠它算（docs/spec/36）。
+	return tactical.NewFieldFromTileLayers(
+		g.battleLib.Tiles(n), g.battleLib.Heights(n),
+		g.battleLib.TileLayers(n), g.battleLib.GateX(n))
 }
 
 // fieldNumber 回傳這一場用第幾張戰場：攻城就是據點編號，野戰現算。

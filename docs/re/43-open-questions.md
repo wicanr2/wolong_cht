@@ -21,10 +21,10 @@
 | 規則正確性 | 55 | 53 | 2 | 0 |
 | 資料保存 | 38 | 38 | 0 | 0 |
 | 程式碼理解 | 214 | 207 | 7 | 0 |
-| 驗收 | 35 | 30 | 5 | 0 |
+| 驗收 | 39 | 33 | 6 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 76 | 72 | 4 | 0 |
-| **合計** | **436** | 417 | 18 | 1 |
+| 其他 | 80 | 76 | 4 | 0 |
+| **合計** | **444** | 424 | 19 | 1 |
 
 ## 2.1 規則正確性（55 條）
 
@@ -348,7 +348,7 @@
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 命令 6 為什麼擋高平面橫移 | `[si+1Ah] == 6`，命令碼 6 是什麼沒對過 | 靜態 |
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 打壞城壁之後地面層表不更新 | `sub_1B824` 只重算通行層（`sub_1BB6D`）與第三塊，**沒有重跑 `sub_1BC39`**。所以瓦礫格的地面層維持原值 | 靜態 |
 
-## 2.4 驗收（35 條）
+## 2.4 驗收（39 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -387,6 +387,10 @@
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | 攻城計時器與突破時間的關係 | 大將體力 100 起、每 10 幀掉 1、50 觸發退卻 ⇒ **攻方只有約 500 幀**。爬牆接上之後要重量一次，確認這個預算合理 | 靜態 |
 | [`playtest/29-strategy-minimap-markers.md`](../playtest/29-strategy-minimap-markers.md) | 視野框的美術 | 原版在 `word_10D4C`，尺寸沒從程式碼讀到 | 靜態 |
 | [`playtest/29-strategy-minimap-markers.md`](../playtest/29-strategy-minimap-markers.md) | 點地圖區（熱區 `0x16`） | 原版做什麼沒讀 | 靜態 |
+| [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | **攻方大多數不前進** | §3。目標選擇的問題，與地形無關 | 靜態 |
+| [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 一幀能有幾個兵撞牆 | 原版沒量過。前排寬度決定破牆速度，而破牆速度決定攻城打不打得下來 | 靜態 |
+| [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 打壞城壁之後地面層表不更新 | 原版就不更新，而且不影響結果——城壁的地面層本來就是拿打壞後的圖塊算的（`../re/63` §2） | 靜態 |
+| [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 高平面的橫向移動沒有實測 | 守方站到牆頂的情境還沒跑過 | 實測 |
 
 ## 2.5 外部資料（18 條）
 
@@ -411,7 +415,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（76 條）
+## 2.6 其他（80 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -488,6 +492,10 @@
 | [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 音效驅動不在時的行為 | `../re/61` §6 | 靜態 |
 | [`spec/35-strategy-minimap.md`](../spec/35-strategy-minimap.md) | 視野框的美術 | 原版是 `word_10D4C` 的圖，尺寸沒從程式碼讀到（`../re/62` §5） | 靜態 |
 | [`spec/35-strategy-minimap.md`](../spec/35-strategy-minimap.md) | 點地圖區（熱區 `0x16`） | 原版做什麼沒讀 | 靜態 |
+| [`spec/36-ground-planes-and-climbing.md`](../spec/36-ground-planes-and-climbing.md) | 攻方大多數不前進 | `../playtest/30` §3。目標選擇的問題，與地形無關 | 靜態 |
+| [`spec/36-ground-planes-and-climbing.md`](../spec/36-ground-planes-and-climbing.md) | 打壞城壁之後不重算地面表 | 原版不重算，而且**不影響結果**：城壁的地面層本來就是拿打壞後的圖塊算的。remake 為了合成戰場仍會重算，在真實資料上是恆等變換 | 靜態 |
+| [`spec/36-ground-planes-and-climbing.md`](../spec/36-ground-planes-and-climbing.md) | 命令 6 為什麼擋高平面橫移 | 命令碼 6 是什麼沒對過 | 靜態 |
+| [`spec/36-ground-planes-and-climbing.md`](../spec/36-ground-planes-and-climbing.md) | `sub_1B186`／`sub_1B15D` | 爬升／下降時檢查上下一層的那兩支沒讀，remake 用「目標平面有地面」代替 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |

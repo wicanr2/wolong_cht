@@ -93,7 +93,7 @@ func (b *Battle) doFormation(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
 	x, y := b.formationSpot(side, k)
 	s.GoalX, s.GoalY = x, y
-	s.GoalZ = b.Field.StandLevel(x, y)
+	s.GoalZ = b.standZ(s, x, y)
 	if s.X == x && s.Y == y {
 		s.Stamina = StaminaFull
 		s.Cmd, s.Next = Holding, Holding
@@ -137,7 +137,7 @@ func (b *Battle) doScaleWall(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
 	x := b.Field.GateX()
 	s.GoalX, s.GoalY = clamp(x), s.Y
-	s.GoalZ = b.Field.StandLevel(s.GoalX, s.GoalY)
+	s.GoalZ = b.standZ(s, s.GoalX, s.GoalY)
 	if s.X == s.GoalX && s.Z == s.GoalZ {
 		s.Cmd, s.Next = Attack, Attack // 上去了就轉成攻擊
 	}
@@ -228,13 +228,13 @@ func (b *Battle) moveToward(side, k int) {
 	// 目前的 X/Y/Z 後才消費它；不能每幀直接取下一個點，否則兵只
 	// 走一步就會跳過轉角（§5.15）。
 	if p, ok := s.Path.Current(); ok {
-		pz := b.Field.StandLevel(p.X, p.Y)
+		pz := b.standZ(s, p.X, p.Y)
 		if s.X == p.X && s.Y == p.Y && s.Z == pz {
 			s.Path.Advance()
 			p, ok = s.Path.Current()
 		}
 		if ok {
-			s.StepX, s.StepY, s.StepZ = p.X, p.Y, b.Field.StandLevel(p.X, p.Y)
+			s.StepX, s.StepY, s.StepZ = p.X, p.Y, b.standZ(s, p.X, p.Y)
 		}
 	}
 
@@ -266,13 +266,11 @@ func (b *Battle) moveToward(side, k int) {
 		}
 		walled = walled || blocked
 	}
-	// ★ 大將與騎馬不做 Z 移動 —— 爬不上城牆（`cmp [si+4], 12h / jbe`）。
-	if !moved && s.CanClimb() && s.Z != s.StepZ {
-		d := 1
-		if s.Z > s.StepZ {
-			d = -1
-		}
-		if ok, _ := b.tryMove(side, k, s.X, s.Y, s.Z+d); ok {
+	// ★ 純 Z 移動：**只在門那一格**，而且大將與騎馬不做
+	// （`sub_1B0D3` 開頭的 `cmp al, 0F0h`，加上 `sub_1AF69` 的
+	// `cmp [si+4], 12h / jbe`，docs/re/63 §4）。
+	if !moved && s.X == s.StepX && s.Y == s.StepY && s.Z != s.StepZ {
+		if b.tryClimb(side, k) {
 			moved = true
 		}
 	}
@@ -289,6 +287,25 @@ func (b *Battle) moveToward(side, k int) {
 	if moved && s.Stamina > 0 {
 		s.Stamina-- // 移動每幀 −1（`sub_1ADC8`）
 	}
+}
+
+// standZ 是一個兵走到 (x, y) 之後會站在哪一層。
+//
+// 先看**自己所在的平面**；那個平面在那一格沒有地面時看另一個平面——
+// 這正是「走到門那一格然後爬上去」的訊號：`moveToward` 的 X／Y 都到位
+// 之後 Z 還差，就會去叫 `tryClimb`（docs/re/63 §4）。
+func (b *Battle) standZ(s *Soldier, x, y int) int {
+	if lv, ok := b.Field.GroundLevel(x, y, s.Plane()); ok {
+		return lv
+	}
+	other := PlaneHigh
+	if s.OnWall {
+		other = PlaneLow
+	}
+	if lv, ok := b.Field.GroundLevel(x, y, other); ok {
+		return lv
+	}
+	return b.Field.StandLevel(x, y)
 }
 
 // replanInterval 是重算繞路的最短間隔（幀）。
@@ -329,22 +346,38 @@ func (b *Battle) tryMove(side, k, x, y, z int) (moved, walled bool) {
 	if !inBounds(x, y) {
 		return false, true
 	}
-	// Z 沒指定成那一格的可站立層時，用那一格的頂。
-	if !b.Field.Walkable(x, y, z) {
-		z = b.Field.StandLevel(x, y)
-		// 水平跨格時，原版 `sub_1B1B1` 會把兵的 Z 同步調整一層；
-		// 「大將／騎馬不能爬牆」只限制純 Z 軸移動（`sub_1AF69`
-		// 在 X/Y 已到位後的分支），不能拿來阻擋退卻時跨過一格高度 1
-		// 的邊界地形。
-		if x == s.X && y == s.Y && z > s.Z && !s.CanClimb() {
-			return false, true
-		}
-		// 一次只能上下一層。
-		if abs(z-s.Z) > 1 {
-			// 擋住去路的是城壁或門的話，這一撞要算耐久
-			// （原版在同一個碰撞路徑上 `dec [di+18h]`，docs/re/11 §5.9）。
+	// 水平跨格照 `sub_1B1B1`（docs/re/63 §5）：讀**自己所在平面**的
+	// 地面層，沒有地面就是撞到牆；有地面就把 Z 同步一層。
+	// 「大將／騎馬不能爬牆」限制的是純 Z 移動（tryClimb），不在這裡。
+	lv, ok := b.Field.GroundLevel(x, y, s.Plane())
+	if !ok {
+		// 擋住去路的是城壁或門的話，這一撞要算耐久
+		// （原版在同一個碰撞路徑上 `dec [di+18h]`，docs/re/11 §5.9）。
+		b.hitStructure(side, s.Facing, x, y)
+		return false, true
+	}
+	// `sub_1B1B1` 的第一段：目標格**自己那一層之上**有地形就擋
+	// （`ah = es:[bx+1000h] / and ah, ah / jnz 失敗`）。城壁就是這樣擋人的
+	// ——它的地面層表是拿「打壞後的圖塊」算的，本來就有地面（docs/re/63 §2）。
+	if b.Field.Blocked(x, y, s.Z+1) {
+		b.hitStructure(side, s.Facing, x, y)
+		return false, true
+	}
+	if s.Plane() == PlaneHigh {
+		// 高平面要高度完全相等，而且未破的門橫向穿不過去。
+		if lv != s.Z || b.Field.GateBlocksHighPlane(x, y) {
 			b.hitStructure(side, s.Facing, x, y)
 			return false, true
+		}
+		z = lv
+	} else {
+		switch {
+		case lv > s.Z:
+			z = s.Z + 1
+		case lv < s.Z:
+			z = s.Z - 1
+		default:
+			z = s.Z
 		}
 	}
 	// 有人擋著 → 走碰撞處理（`loc_1B533`）。**敵我分兩條路**：
@@ -367,6 +400,37 @@ func (b *Battle) tryMove(side, k, x, y, z int) (moved, walled bool) {
 	s.X, s.Y, s.Z = x, y, z
 	s.syncTerrain(b.Field, x, y, z)
 	return true, false
+}
+
+// tryClimb 重現 `sub_1B0D3`／`sub_1B116`：在門那一格上下城牆。
+//
+// 三個條件缺一不可（docs/re/63 §4）：
+//
+//	兵種 > 0x12（大將與騎馬不做 Z 移動）
+//	腳下那一格的圖塊 ≥ 0xF0，也就是門
+//	要去的那個平面在這一格有地面
+func (b *Battle) tryClimb(side, k int) bool {
+	s := &b.Sides[side].Soldiers[k]
+	if !s.CanClimb() || !b.Field.IsGateCell(s.X, s.Y) {
+		return false
+	}
+	other := PlaneHigh
+	if s.OnWall {
+		other = PlaneLow
+	}
+	lv, ok := b.Field.GroundLevel(s.X, s.Y, other)
+	if !ok {
+		return false
+	}
+	// 目標層有別人就上不去（原版 `sub_1B186` 檢查上一層）。
+	// **自己不算**：低平面與高平面同高時，站著的就是自己。
+	if side2, k2 := b.anyoneAt(s.X, s.Y, lv); k2 >= 0 && !(side2 == side && k2 == k) {
+		return false
+	}
+	s.OnWall = other == PlaneHigh
+	s.Z = lv
+	s.syncTerrain(b.Field, s.X, s.Y, s.Z)
+	return true
 }
 
 // swapWith 重現 `seg000:B56D`–`B598` ＋ `sub_1B732`：

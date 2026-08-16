@@ -74,21 +74,21 @@ func TestPathRespectsClimb(t *testing.T) {
 
 // 走不到的目標要回 nil，不能回半條路。
 func TestPathUnreachable(t *testing.T) {
-	// 一道**沒有門**、只有一層高的坎：爬得上去的兵跨得過，其餘不行。
+	// 一道只有一層高的坎：**所有兵種都跨得過**。
 	//
-	// ⚠ 高度只取 1 是有意的——`stepOK` 一次只准上下一層（原版同），
-	// 四層的牆**連爬得上去的兵也翻不過**，那是正確行為，不是 bug。
+	// ⚠ 高度差 ≤ 1 的連通與兵種無關（`sub_1BD07`，docs/re/63 §3）；
+	// 兵種只擋**純 Z 移動**（`sub_1AF69` 的 `cmp [si+4], 12h`），
+	// 而純 Z 只在門那一格發生。四層的牆連爬得上去的兵也翻不過。
 	stack := make([][]int, Height)
 	for y := range stack {
 		stack[y] = make([]int, Width)
 		stack[y][32] = 1
 	}
 	f := NewField(stack, 32)
-	if got := f.FindPath(Point{X: 20, Y: 30}, Point{X: 40, Y: 30}, false, nil); got != nil {
-		t.Errorf("爬不上去的兵被整道坎擋住，卻回了 %v", got)
-	}
-	if got := f.FindPath(Point{X: 20, Y: 30}, Point{X: 40, Y: 30}, true, nil); got == nil {
-		t.Error("爬得上去的兵應該跨得過一層高的坎")
+	for _, climb := range []bool{false, true} {
+		if got := f.FindPath(Point{X: 20, Y: 30}, Point{X: 40, Y: 30}, climb, nil); got == nil {
+			t.Errorf("一層高的坎應該跨得過（climb=%v）", climb)
+		}
 	}
 
 	// 四層的牆連爬得上去的兵也過不去（一次只能上下一層）。

@@ -152,6 +152,31 @@ func (l *Library) TileAttributes(n int) []byte {
 	return append([]byte(nil), l.mdl[start:start+TileDefs]...)
 }
 
+// TileLayers 回傳第 n 張戰場那一組圖塊的**七層子圖塊表**。
+//
+// 這是 `BATTLE.MDL` 圖塊定義的 `[1..7]`，也就是原版 `word_1D302` 段裡
+// 每個圖塊 8 byte 記錄的後七個 byte。地面層與導航位元都是從它算的
+// （子圖塊 ≥ 0x70 ＝ 可以站的頂面，docs/re/63 §2）——
+// **不要拿 Heights 代替**，那只是 `[0]` 的層數。
+//
+// 回傳複本；沒載入時回 nil。
+func (l *Library) TileLayers(n int) *[TileDefs][MaxStack]byte {
+	if l == nil || n < 0 || n >= NumFields {
+		return nil
+	}
+	t := l.TileSet(n)
+	if t < 0 || t >= NumTileSets {
+		return nil
+	}
+	var out [TileDefs][MaxStack]byte
+	base := MDLHeader + t*TileSetSize
+	for i := 0; i < TileDefs; i++ {
+		r := l.mdl[base+i*TileDefLen : base+(i+1)*TileDefLen]
+		copy(out[i][:], r[1:1+MaxStack])
+	}
+	return &out
+}
+
 // Script 回傳一段 AI 腳本。
 //
 // 段編號 ＝ **武將記錄 `+0x16` × 4 ＋ 戰場類別**（`sub_1CBE5`，docs/re/11 §3.2）。

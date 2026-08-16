@@ -532,8 +532,9 @@ func TestCavalryCannotClimb(t *testing.T) {
 		}
 	}
 
+	// 城牆本身走不上去——不論兵種。牆頂只能從**門那一格**爬
+	// （`sub_1B0D3` 的 `cmp al, 0F0h`，docs/re/63 §4）。
 	b := newTestBattle(walledField(32))
-	// 把一個騎馬放在牆邊，要它走到牆上。
 	s := &b.Sides[0].Soldiers[1]
 	s.Kind = Cavalry
 	s.X, s.Y, s.Z = 31, 10, 0
@@ -542,18 +543,61 @@ func TestCavalryCannotClimb(t *testing.T) {
 	if s.X == 32 {
 		t.Error("騎馬爬上城牆了")
 	}
-	// 換成步兵就上得去（一次一層，所以要走四幀）。
 	s.Kind = Infantry
-	for i := 0; i < 8 && s.X != 32; i++ {
-		s.Z = b.Field.StandLevel(s.X, s.Y)
-		b.moveToward(0, 1)
-		if s.Z == 4 {
-			break
-		}
-		s.Z++ // 逐層往上
+	s.X, s.Y, s.Z = 31, 10, 0
+	b.moveToward(0, 1)
+	if s.X == 32 {
+		t.Error("步兵也不該直接走上城牆——城壁那一格沒有低平面地面")
 	}
-	if !s.CanClimb() {
-		t.Error("步兵應該爬得上去")
+}
+
+// 上下城牆只在門那一格，而且大將與騎馬不做（docs/re/63 §4）。
+func TestClimbOnlyAtGateCells(t *testing.T) {
+	f, _ := tiledField(32)
+	b := NewBattle(f, SyntheticFormations(), &fixedRand{}, 0)
+	b.Deploy(AttackerSide, 0, Infantry, 8)
+	b.Place()
+	gateY := Height / 2
+	if !f.IsGateCell(32, gateY) {
+		t.Fatalf("(32,%d) 應該是門格", gateY)
+	}
+	if f.IsGateCell(32, gateY-1) {
+		t.Fatalf("(32,%d) 是城壁，不該是門格", gateY-1)
+	}
+	top, ok := f.GroundLevel(32, gateY, PlaneHigh)
+	if !ok {
+		t.Fatal("門格的高平面應該有地面（跟旁邊的牆頂同高）")
+	}
+
+	s := &b.Sides[AttackerSide].Soldiers[0]
+	s.Kind = Infantry
+	s.X, s.Y, s.Z, s.OnWall = 32, gateY, 4, false
+	if !b.tryClimb(AttackerSide, 0) {
+		t.Fatal("步兵站在門格上應該爬得上去")
+	}
+	if !s.OnWall || s.Z != top {
+		t.Errorf("爬上去之後 OnWall=%v Z=%d，預期 true／%d", s.OnWall, s.Z, top)
+	}
+	if !b.tryClimb(AttackerSide, 0) {
+		t.Error("站在牆頂的門格上應該下得來")
+	}
+	if s.OnWall {
+		t.Error("下來之後 OnWall 還是 true")
+	}
+
+	// 騎馬與大將不做 Z 移動。
+	for _, kind := range []Kind{Cavalry, General} {
+		s.Kind, s.OnWall, s.Z = kind, false, 4
+		if b.tryClimb(AttackerSide, 0) {
+			t.Errorf("%v 不該爬得上城牆", kind)
+		}
+	}
+
+	// 不是門的那一格，步兵也上不去。
+	s.Kind, s.OnWall = Infantry, false
+	s.X, s.Y = 32, gateY-1
+	if b.tryClimb(AttackerSide, 0) {
+		t.Error("城壁那一格不該爬得上去")
 	}
 }
 

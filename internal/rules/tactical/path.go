@@ -6,7 +6,7 @@ package tactical
 //
 //  1. **擴散**：把成本圖（`ds:0D300`，16 KB）全部填成 `0xFFFF`，
 //     從起點放 1，用一個環狀佇列往外長。每走一格加的**不是 1，
-//     而是那一格的地形成本**（`mov al, es:[bx+2000h]`）——
+//     而是那一格的佔用成本**（`mov al, es:[bx+2000h]`）——
 //     所以這是 uniform-cost 搜尋，不是單純的 BFS。
 //  2. **回溯**：從終點沿著遞減的波數走回去，
 //     **只有轉彎時才寫一個點**（`ch` 記著上一步是橫的還是縱的）。
@@ -15,16 +15,12 @@ package tactical
 // ＝ 128 byte，正好是每個兵那塊 `0x1800 + 兵編號 × 128` 的大小（§5.8k）。
 // 兩邊對得上，這條路徑才走得完。
 //
-// ⭐ **那張地形成本表在出貨版裡永遠是 0。**
+// ⭐ **那張表是「有沒有兵站著」，不是地形。**
 //
-// `sub_1BBA6` 最後 `mov es, cs:word_1D2FE / xor ax, ax / mov cx, 1000h /
-// rep stosw` 把它全部歸零，而**整支程式再也沒有人寫它**——
-// `word_1D2FE` 這個符號總共只出現兩次（資料定義 ＋ 那一次歸零），
-// 從其他基底也搆不到（`+0x2000`／`+0x3000` 那些寫入的 `ds`／`es`
-// 都是 `word_1D2FA` 的七層通行圖）。
-//
-// 所以 `[bx] = 地形成本 + dx = dx`，**實際行為就是純 BFS**。
-// 這個欄位是留著沒用的設計。
+// `sub_1BBA6` 先把它歸零，之後由移動落定的 `sub_1B240` 維護：
+// 舊格寫 0、新格寫 8（透過 `word_1D2FA` 加 `0x9000` 的位移，
+// 也就是 `word_1D2FE` 的開頭，docs/re/63 §1）。
+// 所以尋路會**繞開有兵的格子**，繞路的代價是 8 格。
 
 // MaxWaypoints 是一條路徑最多幾個轉彎點（原版 `mov cl, 40h`）。
 const MaxWaypoints = 64
@@ -34,9 +30,8 @@ type Point struct{ X, Y int }
 
 // Penalty 是走進 (x, y) 的**額外**成本（0 ＝ 沒有額外成本）。
 //
-// 原版從 `es:[bx+2000h]` 讀一個 byte 加上去，但那張表永遠是 0（見上）。
-// 留這個鉤子是為了「解出誰該寫它」時不必動演算法；
-// **能不能走是地形決定的，不是這裡**。
+// 原版從 `es:[bx+2000h]` 讀一個 byte 加上去，值是「這一格有兵 ＝ 8」（見上）。
+// **能不能走是導航位元決定的，不是這裡**——這裡只影響繞不繞路。
 type Penalty func(x, y int) int
 
 // pathNode 是擴散時每一格的狀態。
@@ -82,46 +77,77 @@ func (f *Field) FindPathForcing(from, to Point, climb bool, penalty Penalty,
 		penalty = func(int, int) int { return 0 }
 	}
 
-	idx := func(x, y int) int { return y*Width + x }
-	nodes := make([]pathNode, Width*Height)
+	// 節點是 (格, 平面)。原版就是這樣走的：位址的 bit 12 是平面，
+	// 擴散時 `test al, 08h` 那一支（`loc_1BFBF`）用 `xor bh, 20h`
+	// 換到另一個平面，成本是兩邊地面層的差（docs/re/63 §5）。
+	const cells = Width * Height
+	idx := func(x, y, plane int) int { return plane*cells + y*Width + x }
+	nodes := make([]pathNode, numPlanes*cells)
 	for i := range nodes {
 		nodes[i] = pathNode{cost: unreached, from: -1}
 	}
 
 	// ① 擴散。原版是環狀佇列 ＋ 逐層推進；這裡用同樣的「先進先出、
 	// 成本較低才覆蓋」語意，結果一致。
-	start := idx(from.X, from.Y)
-	goal := idx(to.X, to.Y)
+	startPlane := f.planeAt(from.X, from.Y, PlaneLow)
+	start := idx(from.X, from.Y, startPlane)
 	nodes[start].cost = 1
 	queue := []int{start}
-	found := false
-	for len(queue) > 0 && !found {
+	goal := -1
+	for len(queue) > 0 && goal < 0 {
 		cur := queue[0]
 		queue = queue[1:]
-		cx, cy := cur%Width, cur/Width
-		cz := breachLevel(f, force, cx, cy)
-		for _, d := range [4][2]int{{-1, 0}, {1, 0}, {0, -1}, {0, 1}} {
-			nx, ny := cx+d[0], cy+d[1]
+		plane := cur / cells
+		cx, cy := cur%cells%Width, cur%cells/Width
+		push := func(nx, ny, np, extra int) bool {
+			n := idx(nx, ny, np)
+			v := nodes[cur].cost + extra + penalty(nx, ny)
+			if v >= nodes[n].cost {
+				return false
+			}
+			nodes[n] = pathNode{cost: v, from: cur}
+			if nx == to.X && ny == to.Y {
+				goal = n
+				return true
+			}
+			queue = append(queue, n)
+			return false
+		}
+		for _, d := range navSteps {
+			nx, ny := cx+d.dx, cy+d.dy
 			if !inBounds(nx, ny) {
 				continue
 			}
-			if !f.stepOKAt(cz, nx, ny, climb, breachLevel(f, force, nx, ny)) {
+			// 導航位元就是原版的通行圖（`0001BE10` 的四個 test）。
+			// force 是 remake 的補丁：可破壞的城壁當成走得過去。
+			if !f.Linked(cx, cy, plane, d.dx, d.dy) &&
+				!(plane == PlaneLow && f.breachLinked(cx, cy, nx, ny, force)) {
 				continue
 			}
-			n := idx(nx, ny)
-			// 原版是 `[bx] = 地形成本 + dx`（dx 是波數）；成本恆為 0
-			// 的話就等於每走一格加 1。
-			if v := nodes[cur].cost + 1 + penalty(nx, ny); v < nodes[n].cost {
-				nodes[n] = pathNode{cost: v, from: cur}
-				if n == goal {
-					found = true
-					break
-				}
-				queue = append(queue, n)
+			if push(nx, ny, plane, 1) {
+				break
 			}
 		}
+		if goal >= 0 {
+			break
+		}
+		// 換平面：只有門格可以，而且只有爬得上去的兵種
+		// （`sub_1AF69` 的 `cmp [si+4], 12h`，docs/re/63 §4）。
+		if !climb || !f.IsGateCell(cx, cy) {
+			continue
+		}
+		other := PlaneHigh
+		if plane == PlaneHigh {
+			other = PlaneLow
+		}
+		zHere, okHere := f.GroundLevel(cx, cy, plane)
+		zThere, okThere := f.GroundLevel(cx, cy, other)
+		if !okHere || !okThere {
+			continue
+		}
+		push(cx, cy, other, abs(zThere-zHere))
 	}
-	if !found {
+	if goal < 0 {
 		return nil
 	}
 
@@ -134,11 +160,19 @@ func (f *Field) FindPathForcing(from, to Point, climb bool, penalty Penalty,
 		if prev < 0 {
 			break
 		}
-		dx := cur%Width - prev%Width
-		dy := cur/Width - prev/Width
+		dx := cur%cells%Width - prev%cells%Width
+		dy := cur%cells/Width - prev%cells/Width
+		if dx == 0 && dy == 0 {
+			// 換平面那一步：位置沒變，一定要留一個點，
+			// 不然兵走到門那一格就會直接跳過爬牆。
+			back = append(back, Point{X: cur % cells % Width, Y: cur % cells / Width})
+			lastDX, lastDY = 0, 0
+			cur = prev
+			continue
+		}
 		// 方向變了 → 前一格是轉彎點。
 		if (dx != lastDX || dy != lastDY) && lastDX|lastDY != 0 {
-			back = append(back, Point{X: cur % Width, Y: cur / Width})
+			back = append(back, Point{X: cur % cells % Width, Y: cur % cells / Width})
 		}
 		lastDX, lastDY = dx, dy
 		cur = prev
@@ -155,34 +189,44 @@ func (f *Field) FindPathForcing(from, to Point, climb bool, penalty Penalty,
 	return out
 }
 
-// breachLevel 是「撞穿之後」那一格的可站立層：可破壞的實體被打壞會
-// 變成瓦礫（高度 0），所以尋路要照打壞後的高度算，否則兵會走上城壁
-// 頂端就下不來，那條路等於死路。
-func breachLevel(f *Field, force func(x, y int) bool, x, y int) int {
-	if force != nil && force(x, y) {
-		return 0
+// planeAt 挑一個位置該用哪個平面：優先用 want，那個平面沒有地面就換另一個。
+func (f *Field) planeAt(x, y, want int) int {
+	if _, ok := f.GroundLevel(x, y, want); ok {
+		return want
 	}
-	return f.StandLevel(x, y)
+	other := PlaneHigh
+	if want == PlaneHigh {
+		other = PlaneLow
+	}
+	if _, ok := f.GroundLevel(x, y, other); ok {
+		return other
+	}
+	return want
 }
 
-// stepOK 回報從高度 fromZ 的格子踏進 (x, y) 行不行。
+// breachLinked 是 remake 的補丁：把「可以撞穿的城壁」當成走得過去。
 //
-// 與 tryMove 同一組規則：水平跨格允許同步一層高度；只有在同一格做
-// 純 Z 軸移動時，才由兵種能力限制爬牆（`cmp byte ptr [si+4], 12h / jbe`，
-// docs/re/11 §5.8j）。
-func (f *Field) stepOK(fromZ, x, y int, climb bool) bool {
-	return f.stepOKAt(fromZ, x, y, climb, f.StandLevel(x, y))
-}
-
-// stepOKAt 與 stepOK 相同，但可以指定目的格的可站立層（見 breachLevel）。
-func (f *Field) stepOKAt(fromZ, x, y int, climb bool, z int) bool {
-	// 尋路的自我修改分支仍依 `climb` 決定能否向上跨越高度；這讓非爬牆
-	// 兵繞過整道一層牆。實際逐格移動則另由 tryMove 重現
-	// `sub_1B1B1` 的水平一層高度同步，兩者不能混成同一個檢查。
-	if abs(z-fromZ) > 1 {
+// 導航位元是照**沒打壞**的地形算的，所以城壁那一格與兩邊都不連通。
+// 撞穿之後那一格會變瓦礫（高度 0），這裡就照打壞後的高度判連通——
+// 兵才會走到牆前撞上去，`tryMove` 把它算成一次耐久損傷。
+//
+// ⚠ 原版不需要這一段：它的攻方走的是門那一格爬上牆頂（docs/re/63 §4）。
+// 這條路徑在 remake 也接上了，這個補丁只剩「連門都沒有的圖」在用。
+func (f *Field) breachLinked(cx, cy, nx, ny int, force func(x, y int) bool) bool {
+	if force == nil {
 		return false
 	}
-	return z <= fromZ || climb
+	a, aok := f.breachLevel(cx, cy, force)
+	b, bok := f.breachLevel(nx, ny, force)
+	return aok && bok && abs(a-b) <= 1
+}
+
+// breachLevel 回傳「撞穿之後」那一格的可站立層。
+func (f *Field) breachLevel(x, y int, force func(x, y int) bool) (int, bool) {
+	if force != nil && force(x, y) {
+		return 0, true
+	}
+	return f.GroundLevel(x, y, PlaneLow)
 }
 
 // Waypoints 讓一個兵沿著算好的路徑走。

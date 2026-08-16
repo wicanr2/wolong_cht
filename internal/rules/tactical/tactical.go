@@ -163,6 +163,11 @@ type Soldier struct {
 	// 高位平面 0x10，再回到 0；它不是 Z 高度本身。
 	PlaneHigh byte
 
+	// OnWall 是原版的 `[si+0x1E]`（PlaneHigh）：這個兵在不在城牆頂那個
+	// 平面上。只有 `sub_1B0D3`／`sub_1B116` 會改它，也就是**在門那一格
+	// 上下**（docs/re/63 §4）。
+	OnWall bool
+
 	// HighTerrain 是原版 +0x00 bit 1。`sub_1B240` 依目前圖塊堆疊高度
 	// 是否至少 4 層設定它，鎖敵與換位都會讀這個旗標。
 	HighTerrain bool
@@ -228,6 +233,14 @@ func (s *Soldier) planeHigh() byte {
 }
 
 // syncTerrain 把目前座標同步成原版的 +0x1E 與 +0x00 bit 1。
+// Plane 回傳這個兵所在的平面（PlaneLow／PlaneHigh）。
+func (s *Soldier) Plane() int {
+	if s.OnWall {
+		return PlaneHigh
+	}
+	return PlaneLow
+}
+
 func (s *Soldier) syncTerrain(f *Field, x, y, z int) {
 	s.PlaneHigh = PlaneHighGround
 	s.Climbing = false
@@ -262,6 +275,15 @@ type Field struct {
 	// 沒有它們就退化成「打壞了但地形不變」。
 	tiles   [][]byte
 	heights *[256]int
+	// layers[圖塊] 是那個圖塊由下往上七層的子圖塊（`BATTLE.MDL` 的 [1..7]）。
+	// 兩個平面的地面層與導航位元都是從它算的（docs/re/63 §2）。
+	layers *[256][Levels]byte
+
+	// nav[平面][y][x] 是導航 byte（門旗標 ＋ 四個方向位元），
+	// lvl[平面][y][x] 是站得上去的 Z（noLevel ＝ 沒有地面）。
+	// 建法見 ground.go，出處 `sub_1BC39`。
+	nav [numPlanes][Height][Width]uint8
+	lvl [numPlanes][Height][Width]int8
 }
 
 // NewField 從每格的堆疊高度建一張戰場。
@@ -283,6 +305,7 @@ func NewField(stack [][]int, gateX int) *Field {
 			f.top[y][x] = h
 		}
 	}
+	f.buildNav()
 	return f
 }
 
@@ -292,13 +315,33 @@ func NewField(stack [][]int, gateX int) *Field {
 // 與 NewField 的差別是這個版本記得住圖塊值，所以城壁被打壞時
 // 可以換成瓦礫的圖塊再重算高度——原版 `sub_1B824` 做的正是這件事。
 func NewFieldFromTiles(tiles [][]byte, heights *[256]int, gateX int) *Field {
-	f := &Field{gateX: gateX, tiles: tiles, heights: heights}
+	return NewFieldFromTileLayers(tiles, heights, nil, gateX)
+}
+
+// NewFieldFromTileLayers 與 NewFieldFromTiles 相同，但多吃一張七層子圖塊表
+// （`internal/assets/battle` 的 `TileLayers`）。**有它才算得出兩個平面的
+// 地面圖與導航位元**（docs/spec/36）；傳 nil 會退化成單平面。
+func NewFieldFromTileLayers(tiles [][]byte, heights *[256]int, layers *[256][Levels]byte, gateX int) *Field {
+	f := &Field{gateX: gateX, tiles: tiles, heights: heights, layers: layers}
 	for y := 0; y < Height && y < len(tiles); y++ {
 		for x := 0; x < Width && x < len(tiles[y]); x++ {
 			f.setCell(x, y, heights[tiles[y][x]])
 		}
 	}
+	f.buildNav()
 	return f
+}
+
+// setSolidFromLayers 重現 `sub_1BB6D`：一層擋不擋人看它的子圖塊——
+// **0 與 ≥ 0x70 不擋，1–0x6F 擋**。`setCell` 那套「堆疊高度以下全實心」
+// 只在沒有子圖塊表時才對；有表的時候差很多（例如圖塊 0xC9 堆七層，
+// 實際只有第 3 層擋人）。
+func (f *Field) setSolidFromLayers(x, y int) {
+	rec := f.layers[f.tiles[y][x]]
+	for z := 0; z < Levels; z++ {
+		v := rec[z]
+		f.solid[z][y][x] = v != 0 && v < topFace
+	}
 }
 
 func (f *Field) setCell(x, y, h int) {
@@ -331,6 +374,15 @@ func (f *Field) Retile(x, y, delta int) {
 	}
 	f.tiles[y][x] = byte(t)
 	f.setCell(x, y, f.heights[t])
+	if f.layers != nil {
+		f.setSolidFromLayers(x, y)
+	}
+	// 原版打壞城壁時**不重算地面表**（`sub_1B824` 只重跑 `sub_1BB6D`），
+	// 而那不影響結果：城壁的地面層本來就是拿**打壞後那個圖塊**算的
+	// （`sub_1BCA6` 把 0xD0–0xDF 換成 +0x10，docs/re/63 §2），
+	// 所以重算是恆等變換。真正需要它的是沒有子圖塊表的合成戰場——
+	// 那種戰場的高度直接來自 heights，不重算就會留著舊的連通性。
+	f.buildNav()
 }
 
 // Tile 回傳 (x, y) 目前的圖塊值。沒有圖塊資料時回 0。
@@ -365,6 +417,18 @@ func (f *Field) StandLevel(x, y int) int {
 // 目前格子的堆疊高度至少 4 層。
 func (f *Field) HighTerrain(x, y int) bool {
 	return f.StandLevel(x, y) >= 4
+}
+
+// Blocked 回報 (x, y) 的第 z 層有沒有地形擋著。
+//
+// 對應原版通行圖的 bit 7（`sub_1BB6D`）。移動時檢查的是**兵頭頂那一層**
+// 在目標格的值（原版的 `es:[bx+1000h]`，docs/re/63 §5）——
+// 兵腳下那一層是頂面，本來就不擋人。
+func (f *Field) Blocked(x, y, z int) bool {
+	if !inBounds(x, y) || z < 0 || z >= Levels {
+		return false
+	}
+	return f.solid[z][y][x]
 }
 
 // Walkable 回報 (x, y, z) 站不站得上去：那一層本身不能是實心的，
