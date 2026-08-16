@@ -19,6 +19,13 @@ type messageDialog struct {
 	lines        []string
 	page         int
 	portraitPage int // -1 表示這則訊息沒有可回查的 speaker 肖像。
+
+	// lower 表示這一則要畫在**事件場景的下框**（原版 `sub_13CDC`）。
+	// 下框寫死是軍師在說話，也就是玩家自己（docs/spec/42 §1）。
+	lower bool
+	// scene 是要留在背後的 IVENTGRF 頁；−1 表示不畫插圖。
+	// 原版的事件對話是疊在插圖上的，插圖不會因為換一句話而消失。
+	scene int
 }
 
 const (
@@ -156,7 +163,35 @@ func (g *game) enqueueTalkWithPortrait(index int, vars map[byte]string, portrait
 	g.messages = append(g.messages, messageDialog{
 		lines:        textdraw.WrapLines(lines, lineWidth),
 		portraitPage: portraitPage,
+		scene:        -1,
 	})
+}
+
+// enqueueAdvisorTalk 把一則放進**事件場景的下框**：軍師的肖像、
+// 下框的位置，背後留著 IVENTGRF 的那一頁（docs/spec/42 §3）。
+func (g *game) enqueueAdvisorTalk(index int, vars map[byte]string, scene int) {
+	before := len(g.messages)
+	g.enqueueTalkWithPortrait(index, vars, g.playerAdvisorPortrait())
+	if len(g.messages) == before {
+		return // 空槽，enqueueTalkWithPortrait 已經擋掉了
+	}
+	d := &g.messages[len(g.messages)-1]
+	d.lower, d.scene = true, scene
+}
+
+// playerAdvisorPortrait 是軍師的頭像（勢力 +0x02 → 武將 +0x01）。
+// 沒有軍師（原版寫 0x7F）就退回一般通知的那一張，不要畫錯人。
+func (g *game) playerAdvisorPortrait() int {
+	if g == nil || g.world == nil || g.world.Player < 0 ||
+		g.world.Player >= len(g.world.Factions) {
+		return defaultPortraitPage
+	}
+	advisor := g.world.Factions[g.world.Player].Advisor
+	if advisor < 0 || advisor >= len(g.world.Generals) ||
+		!g.world.Generals[advisor].Alive {
+		return defaultPortraitPage
+	}
+	return g.world.Generals[advisor].Portrait
 }
 
 func isCompositeDiplomacyNotice(notice state.TalkNotice) bool {
@@ -239,17 +274,25 @@ func (g *game) drawMessage(screen *ebiten.Image) {
 	if !ok {
 		return
 	}
-	// **原版只有一個訊息框**（docs/spec/41）：位置固定，有沒有講話的人
-	// 不改變版面。沒有指定肖像時用一般通知的那一張（KAOGRF 第 147 張）。
+	// **原版只有一種訊息框**（docs/spec/41）：寬高固定、有沒有講話的人
+	// 不改變版面，變的只有位置。沒有指定肖像時用一般通知的那一張
+	// （KAOGRF 第 147 張）。
 	portrait := d.portraitPage
 	if portrait < 0 {
 		portrait = defaultPortraitPage
 	}
-	g.drawLegacyTalkBox(screen, talkBoxX, talkBoxY, talkBoxW, talkBoxH,
-		lines, portrait)
+	x, y := talkBoxX, talkBoxY
+	if d.lower {
+		// 事件場景的下框：軍師在說話（docs/spec/42）。
+		x, y = talkLowerBoxX, talkLowerBoxY
+	}
+	if d.scene >= 0 {
+		g.drawIventScene(screen, d.scene)
+	}
+	g.drawLegacyTalkBox(screen, x, y, talkBoxW, talkBoxH, lines, portrait)
 	// 翻頁提示是 remake 加的：原版靠等待輸入，沒有頁碼。
 	if pages > 1 {
 		g.td.Draw(screen, fmt.Sprintf("%d／%d", d.page+1, pages),
-			talkBoxX+talkBoxW-48, talkBoxY+talkBoxH-24, chrome.Paper)
+			x+talkBoxW-48, y+talkBoxH-24, chrome.Paper)
 	}
 }

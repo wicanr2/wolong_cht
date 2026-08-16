@@ -115,3 +115,55 @@ func TestDiplomacyTalkExpansionUsesOriginalRequestMarkers(t *testing.T) {
 		t.Fatalf("事件 2 選擇／結果 TALK 展開錯誤：choice=%q result=%q", choice, result)
 	}
 }
+
+// 玩家挑的理由由**軍師**在事件場景的下框說出來（docs/spec/42 §2）。
+func TestAdvisorLineUsesLowerBox(t *testing.T) {
+	lib, err := library.Load("../../workplace/orig/dosv")
+	if err != nil {
+		t.Skipf("沒有原版素材：%v", err)
+	}
+	w, err := state.LoadScenario("../../workplace/orig/dosv/SINARIO.DAT", 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	w.Player = 0
+	g := &game{lib: lib, world: w}
+
+	c := state.DiplomacyChoice{
+		Kind: state.DiplomacyCeasefire, Source: 1, Invader: 1,
+		InitialAmount: 100, OfferAmount: 100,
+	}
+	g.enqueueDiplomacyTalk(c, state.DiplomacyAcceptFree)
+	if len(g.messages) < 2 {
+		t.Fatalf("外交收尾應該有理由句 ＋ 結果句，得到 %d 則", len(g.messages))
+	}
+
+	reason := g.messages[0]
+	if !reason.lower {
+		t.Error("理由句沒有進下框")
+	}
+	if reason.scene != 0 {
+		t.Errorf("理由句的插圖頁 = %d，事件 2／3 是第 0 頁", reason.scene)
+	}
+	if want := g.playerAdvisorPortrait(); reason.portraitPage != want {
+		t.Errorf("理由句的肖像 = %d，軍師是 %d", reason.portraitPage, want)
+	}
+	// 結果句仍走一般通知框。
+	if g.messages[1].lower || g.messages[1].scene >= 0 {
+		t.Error("結果句不該進下框，也不該帶插圖")
+	}
+}
+
+// 沒有軍師時退回一般通知的肖像，不要畫錯人（原版 +0x02 寫 0x7F）。
+func TestAdvisorPortraitFallsBackWhenNoAdvisor(t *testing.T) {
+	w := &state.World{Player: 0}
+	w.Factions[0].Advisor = state.NoAdvisor
+	g := &game{world: w}
+	if got := g.playerAdvisorPortrait(); got != defaultPortraitPage {
+		t.Errorf("沒有軍師時肖像 = %d，want %d", got, defaultPortraitPage)
+	}
+	var nilGame *game
+	if got := nilGame.playerAdvisorPortrait(); got != defaultPortraitPage {
+		t.Errorf("沒有 world 時肖像 = %d，want %d", got, defaultPortraitPage)
+	}
+}

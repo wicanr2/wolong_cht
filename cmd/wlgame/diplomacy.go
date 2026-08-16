@@ -183,7 +183,10 @@ func (g *game) enqueueDiplomacyTalk(c state.DiplomacyChoice, option state.Diplom
 	if option == state.DiplomacyOfferFunds {
 		choiceAmount = c.OfferAmount
 	}
-	g.enqueueTalk(diplomacyTalkChoiceIndex(c, option), g.diplomacyTalkVars(c, choiceAmount))
+	// 玩家挑的那一列由**軍師**在事件場景的下框說出來（原版 `sub_13CDC`，
+	// docs/spec/42 §2）。插圖是事件 2／3 的第 0 頁，留在背後。
+	g.enqueueAdvisorTalk(diplomacyTalkChoiceIndex(c, option),
+		g.diplomacyTalkVars(c, choiceAmount), 0)
 	response, resultAmount := diplomacyTalkResponse(c, option)
 	resultBase := 0x2B // TALK #43; event 3
 	if c.Kind == state.DiplomacyCooperation {

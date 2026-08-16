@@ -170,6 +170,7 @@
 | [`docs/spec/39-march-order-menu.md`](spec/39-march-order-menu.md) | 39 — 行軍指示的三選一：戰鬥指揮／委任／解體 | CONFORMED。 | 2026-08-16 |
 | [`docs/spec/40-ai-march-decision.md`](spec/40-ai-march-decision.md) | 40 — 電腦勢力的行軍決策鏈（Stage 0–3／8／10） | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/41-message-box-geometry.md`](spec/41-message-box-geometry.md) | 41 — 訊息框的版面常數 | CONFORMED。 | 2026-08-17 |
+| [`docs/spec/42-event-scene-speakers.md`](spec/42-event-scene-speakers.md) | 42 — 事件場景上誰在說話 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | READY。管線的每一段都有現成工具，缺的是把它們接起來 與一支逐區差分工具。 | 2026-08-15 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
