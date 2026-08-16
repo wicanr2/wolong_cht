@@ -89,5 +89,5 @@ remake 一直有兩個空轉的欄位：勢力的 `ReliefSite`（求援）與 `L
 
 | 項目 | 現況 |
 |---|---|
-| `+0x00` 位元 1 | 原版改目標時會設，`sub_12662` 讀它並呼叫未讀的 `sub_147BB`。remake 直接重下一次行軍（`March`），行為等價但不是同一條路 |
+| `sub_147BB` 的 `0x8000` 分支 | 位元 1 已解 ＝「下一步要重算」（[`../re/64`](../re/64-corps-arrival-state-machine.md) §6），remake 用 `March` 重算整條路徑，行為等價。剩下那條「道路表高位元 ＋ Stage ≥ 10 → `sub_1291A`」的觸發條件沒對上 |
 | `sub_1487B` | AI 編成後挑第一個目標用的相鄰格選擇，未逐條解；remake 沿用既有的 `nearestFactionCity` |

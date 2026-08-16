@@ -152,8 +152,9 @@ func (w *World) arriveDisband(i int) {
 	}
 	capital := w.clampCity(w.Factions[c.Faction].Capital)
 	if c.Ordered != capital {
-		// 原版還會設 `+0x00` 位元 1（疑似「路線要重算」，讀取端沒找到）。
-		// remake 直接重下一次行軍——結果相同而且不必猜那個位元。
+		// 原版還會設 `+0x00` 位元 1 ＝「下一步要重算」，由 `sub_12662`
+		// 清掉並呼叫 `sub_147BB` 重查道路表（`docs/re/64` §6）。
+		// remake 的 `March` 一次算完整條路徑，重下一次就等價。
 		_ = w.March(i, capital)
 		return
 	}

@@ -103,7 +103,7 @@
 | [`docs/re/31-faction-picker-screen.md`](re/31-faction-picker-screen.md) | 31 — 勢力一覽：22 格的兩欄版面與領地重繪 | 版面、命中判定、顏色規則、兩個守門條件與介面字串 confirmed。 分派表已印出，但 sub_15AD1 → s… | 2026-08-14 |
 | [`docs/re/32-strategy-detail-panels.md`](re/32-strategy-detail-panels.md) | 32 — 戰略側的兩個詳情面板：據點與軍團 | 兩支面板函式與軍團面板的外層 confirmed，欄位與字串表全部對出。 畫肖像的 sub_107D2 與兩支收尾常… | 2026-08-14 |
 | [`docs/re/33-shared-draw-helpers.md`](re/33-shared-draw-helpers.md) | 33 — 共用繪圖層：字串包裝、肖像快取、小地圖上色 | 六支共用常式 confirmed。肖像快取的替換策略、小地圖的座標換算與 據點標記的畫法都定案。實際載入 bytes… | 2026-08-14 |
-| [`docs/re/34-corps-status-bits.md`](re/34-corps-status-bits.md) | 34 — 軍團記錄 +0x00 的位元圖，與改用 IDAPython 之後的掃法 | 位元 1／2 的設定與清除點 confirmed（設定端與清除端都有已定案語意的函式）。 位元 0／4／5 找到成對… | 2026-08-14 |
+| [`docs/re/34-corps-status-bits.md`](re/34-corps-status-bits.md) | 34 — 軍團記錄 +0x00 的位元圖，與改用 IDAPython 之後的掃法 | 位元 1／2 的設定端、清除端與語意 confirmed （位元 1 ＝ 下一步要重算、位元 2 ＝ 委任）。 位元… | 2026-08-14 |
 | [`docs/re/35-strategy-ui-module-map.md`](re/35-strategy-ui-module-map.md) | 35 — 戰略 UI 模組全圖：108 支函式的叢集歸屬 | 叢集歸屬 confirmed（呼叫圖是精確的，不是啟發式）。 各叢集的角色標籤是強證據——來自「它呼叫哪些已定案語意… | 2026-08-14 |
 | [`docs/re/36-tactical-module-map.md`](re/36-tactical-module-map.md) | 36 — 戰術戰鬥模組全圖：主迴圈與它的十一個子系統 | 叢集歸屬 confirmed（呼叫圖精確）。角色標籤是強證據， 來自「呼叫哪些已定案語意的共用常式」與 I/O 埠使… | 2026-08-14 |
 | [`docs/re/37-graphics-and-runtime-module-map.md`](re/37-graphics-and-runtime-module-map.md) | 37 — 圖庫、繪圖底層與 C runtime 兩個模組的全圖 | 叢集歸屬 confirmed。硬體層的角色由 I/O 埠直接判定（精確）， 其餘角色標籤是強證據。 | 2026-08-14 |
