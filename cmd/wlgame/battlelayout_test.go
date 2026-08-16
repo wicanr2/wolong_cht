@@ -66,10 +66,13 @@ func TestDOSVBattleLayoutUsesMeasured640x400Regions(t *testing.T) {
 		"bottom commands": l.BottomCommands,
 		"top talk":        l.TopTalk,
 		"bottom talk":     l.BottomTalk,
-		"attacker":        l.SideAttacker,
+		"title":           l.SideTitle,
+		"foe":             l.SideFoe,
 		"mini map":        l.SideMiniMap,
-		"defender":        l.SideDefender,
+		"ally":            l.SideAlly,
+		"formation":       l.SideFormation,
 		"side commands":   l.SideCommands,
+		"footer":          l.SideFooter,
 	} {
 		if r.X < 0 || r.Y < 0 || r.W <= 0 || r.H <= 0 ||
 			r.right() > dosvBattleScreenW || r.bottom() > dosvBattleScreenH {
@@ -80,16 +83,31 @@ func TestDOSVBattleLayoutUsesMeasured640x400Regions(t *testing.T) {
 	if !l.Field.contains(l.TopTalk) || !l.Field.contains(l.BottomTalk) {
 		t.Fatal("TALK overlay 必須留在戰場 viewport 內")
 	}
-	if !l.Sidebar.contains(l.SideAttacker) || !l.Sidebar.contains(l.SideMiniMap) ||
-		!l.Sidebar.contains(l.SideDefender) || !l.Sidebar.contains(l.SideCommands) {
-		t.Fatal("右欄子區域必須留在右欄內")
+	for _, r := range []battleRect{l.SideTitle, l.SideFoe, l.SideMiniMap, l.SideAlly,
+		l.SideFormation, l.SideCommands, l.SideFooter} {
+		if !l.Sidebar.contains(r) {
+			t.Fatalf("右欄子區域 %#v 必須留在右欄內", r)
+		}
 	}
-	if l.SideMiniMap.Y-l.SideAttacker.bottom() != chromeTileForContract ||
-		l.SideDefender.Y-l.SideMiniMap.bottom() != chromeTileForContract {
-		t.Fatal("右欄狀態／縮圖區之間必須保留 8 px 原版框距")
-	}
-	if got, want := l.SideCommands, (battleRect{496, 280, 128, 96}); got != want {
-		t.Fatalf("右欄命令面板 = %#v，預期 sub_1C863 直接坐標 %#v", got, want)
+	// docs/re/60 §1.2／§2：七格全部是 sub_1C7A9 那一串的直接座標。
+	// ⚠ 上格（對方）與小地圖之間**沒有間隙**——原版靠 sub_1CA3B 的
+	// 橫帶分隔，不是靠 8 px 框距。
+	for _, c := range []struct {
+		name string
+		got  battleRect
+		want battleRect
+	}{
+		{"標題", l.SideTitle, battleRect{496, 8, 128, 32}},
+		{"上格（對方）", l.SideFoe, battleRect{496, 48, 128, 32}},
+		{"小地圖", l.SideMiniMap, battleRect{496, 80, 128, 128}},
+		{"下格（我方）", l.SideAlly, battleRect{496, 208, 128, 32}},
+		{"陣形列", l.SideFormation, battleRect{496, 248, 128, 32}},
+		{"命令面板", l.SideCommands, battleRect{496, 280, 128, 96}},
+		{"底列", l.SideFooter, battleRect{496, 376, 128, 16}},
+	} {
+		if c.got != c.want {
+			t.Fatalf("%s = %#v，預期 sub_1C863 的直接座標 %#v", c.name, c.got, c.want)
+		}
 	}
 
 	// 這是正規化原版的 240:80 邏輯比例，避免之後只為了填黑邊而任意放大右欄。
@@ -138,22 +156,95 @@ func TestDOSVBattleCommandLabelsFit80PixelCells(t *testing.T) {
 	}
 }
 
-func TestDOSVBattleSideStatusColumnsDoNotOverlap(t *testing.T) {
+// 上下兩格的排列是相反的（docs/re/60 §3／§5）：上格名 y=52、條 y=72／75，
+// 下格條 y=211／214、名 y=221。這一項照抄，不要對稱化。
+func TestDOSVBattleSideCellLayoutMatchesRawCoordinates(t *testing.T) {
 	l := dosvBattleLayoutFor(dosvBattleScreenW, dosvBattleScreenH)
-	for _, panel := range []battleRect{l.SideAttacker, l.SideDefender} {
-		cols := battleSideStatusColumns(panel)
-		if cols.HP.overlaps(cols.Advantage) {
-			t.Fatal("體力與優劣欄不得重疊")
+	for _, c := range []struct {
+		name                     string
+		cell                     battleRect
+		top                      bool
+		nameY, menBarY, healthY  int
+	}{
+		{"上格（對方）", l.SideFoe, true, 52, 72, 75},
+		{"下格（我方）", l.SideAlly, false, 221, 211, 214},
+	} {
+		got := battleSideCellLayoutFor(c.cell, c.top)
+		if got.Name.X != 528 || got.Name.Y != c.nameY || got.Name.W != 48 {
+			t.Errorf("%s 主將名 = %#v，預期 (528,%d) 寬 48", c.name, got.Name, c.nameY)
 		}
-		if gap := cols.Advantage.X - cols.HP.right(); gap < battleCommandMinPad {
-			t.Fatalf("體力與優劣欄間距 = %d，至少需要 %d", gap, battleCommandMinPad)
+		if got.MenBar.X != 498 || got.MenBar.Y != c.menBarY ||
+			got.MenBar.W != 124 || got.MenBar.H != 2 {
+			t.Errorf("%s 兵力條 = %#v，預期 (498,%d) 124×2", c.name, got.MenBar, c.menBarY)
 		}
-		if got := battleCommandTextWidth("體力 100"); got > cols.HP.W {
-			t.Fatalf("最大體力文字寬 %d 超出安全欄 %d", got, cols.HP.W)
+		if got.HealthBar.X != 498 || got.HealthBar.Y != c.healthY ||
+			got.HealthBar.W != 124 || got.HealthBar.H != 2 {
+			t.Errorf("%s 體力條 = %#v，預期 (498,%d) 124×2", c.name, got.HealthBar, c.healthY)
 		}
-		if got := battleCommandTextWidth("不利"); got > cols.Advantage.W {
-			t.Fatalf("優劣文字寬 %d 超出安全欄 %d", got, cols.Advantage.W)
+	}
+}
+
+// sub_1C775 是 `值 >> 2`、sub_1C78E 是 `值 × 3 ÷ 4`，兩者上限都是 0x7C。
+func TestDOSVBattleSideBarLengthsMatchRawFormulas(t *testing.T) {
+	for _, c := range []struct{ men, health, wantMen, wantHealth int }{
+		{0, 0, 0, 0},
+		{100, 100, 25, 75},
+		{400, 160, 100, 120},
+		{9999, 9999, 124, 124}, // 兩條都夾在 0x7C
+		{-5, -5, 0, 0},
+	} {
+		gotMen, gotHealth := battleSideBarLengths(c.men, c.health)
+		if gotMen != c.wantMen || gotHealth != c.wantHealth {
+			t.Errorf("battleSideBarLengths(%d,%d) = %d,%d，預期 %d,%d",
+				c.men, c.health, gotMen, gotHealth, c.wantMen, c.wantHealth)
 		}
+	}
+}
+
+// docs/re/60 §6.1：sub_1C863 在 (496, 280+16k) 註冊的熱區碼是
+// 0x09/0x08/0x07/0x0A/0x0B/0x0C，handler 0x1C1B9 算 `命令碼 = 熱區碼 − 7`。
+func TestBattleSideCommandRowsMatchRawHotspotCodes(t *testing.T) {
+	rawHotspots := [...]int{0x09, 0x08, 0x07, 0x0A, 0x0B, 0x0C}
+	wantLabels := [...]string{"突擊", "攻擊", "陣形", "城壁", "守陣", "退却"}
+	for row, hot := range rawHotspots {
+		if got, want := battleSideCommandRowCode[row], hot-7; got != want {
+			t.Errorf("第 %d 列命令碼 = %d，預期熱區 0x%02X − 7 = %d", row, got, hot, want)
+		}
+		if got := battleSideCommandRowLabel(row); got != wantLabels[row] {
+			t.Errorf("第 %d 列 = %q，預期 %q", row, got, wantLabels[row])
+		}
+		if got := battleSideCommandRowOf(battleSideCommandRowCode[row]); got != row {
+			t.Errorf("命令碼 %d 反查列 = %d，預期 %d", battleSideCommandRowCode[row], got, row)
+		}
+	}
+	if got := battleSideCommandRowOf(99); got != -1 {
+		t.Errorf("未知命令碼應回 −1，得到 %d", got)
+	}
+}
+
+// handler 0x1C11A：col = (游標X − 0x1F0) >> 4，(游標Y − 0xF8) >= 0x10 再 +8。
+func TestBattleFormationStripIndexMatchesRawHitMath(t *testing.T) {
+	r := dosvBattleLayoutFor(dosvBattleScreenW, dosvBattleScreenH).SideFormation
+	for _, c := range []struct {
+		x, y, want int
+	}{
+		{496, 248, 0}, {511, 263, 0},
+		{512, 248, 1}, {624 - 16, 248, 7},
+		{496, 264, 8}, {624 - 16, 279, 15},
+	} {
+		got, ok := battleFormationIndexAt(r, c.x, c.y)
+		if !ok || got != c.want {
+			t.Errorf("(%d,%d) → %d,%v，預期 %d", c.x, c.y, got, ok, c.want)
+		}
+	}
+	if _, ok := battleFormationIndexAt(r, 495, 248); ok {
+		t.Error("陣形列左緣外不應命中")
+	}
+	if _, ok := battleFormationIndexAt(r, 496, 280); ok {
+		t.Error("陣形列下緣外不應命中")
+	}
+	if got := battleFormationCellRect(r, 9); got != (battleRect{512, 264, 16, 16}) {
+		t.Errorf("第 9 格 = %#v，預期 (512,264) 16×16", got)
 	}
 }
 

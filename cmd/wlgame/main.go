@@ -44,7 +44,9 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
 	"github.com/wicanr2/wolong_cht/internal/assets/text"
 	"github.com/wicanr2/wolong_cht/internal/assets/world"
+	"github.com/wicanr2/wolong_cht/internal/rules/battlefield"
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
+	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/rules/general"
 	"github.com/wicanr2/wolong_cht/internal/rules/march"
@@ -53,8 +55,6 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/savepath"
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
-	"github.com/wicanr2/wolong_cht/internal/rules/battlefield"
-	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
 	"github.com/wicanr2/wolong_cht/internal/ui/sound"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
@@ -105,6 +105,21 @@ type game struct {
 	battleCommandGlyphs [6]*ebiten.Image
 	battleSideCommands  *ebiten.Image
 	battleCommandSelect color.RGBA
+
+	// 側欄另外四塊美術（docs/re/60 §1.2）。battleSideFlags[0] 是下格
+	// （我方，段 1 0x1000）、[1] 是上格（對方，0x0800）。
+	battleSideFlags      [2]*ebiten.Image
+	battleFormationStrip *ebiten.Image
+	battleSideFooter     *ebiten.Image
+
+	// battleFormation 是陣形選單目前選中的那一格（原版 byte_1D346），
+	// 值域 0–15；−1 表示還沒選。
+	battleFormation int
+
+	// 小地圖上的部隊點：sub_1B240 用調色盤索引 10（側 0 ＝ 我方）
+	// 與 3（側 1 ＝ 對方）。
+	battleUnitDotAlly color.RGBA
+	battleUnitDotFoe  color.RGBA
 
 	// roads 與 tactical 是掛在 World 上的執行期來源，不屬於存檔本體。
 	// 讀取另一個槽位後要重新掛回，否則數值雖然恢復，行軍／戰鬥會悄悄退回
@@ -194,8 +209,8 @@ type game struct {
 	// scenarioTitles 是四個劇本的標題（區塊 +0x40），啟動時從 SINARIO.DAT 讀。
 	scenarioTitles map[int]string
 
-	quitting  bool
-	quitYes   bool // ＹＥＳ／ＮＯ 對話框的選取（remake 的鍵盤操作）
+	quitting bool
+	quitYes  bool // ＹＥＳ／ＮＯ 對話框的選取（remake 的鍵盤操作）
 
 	// battleChoiceRow 是遭遇決策視窗目前反白的選項。
 	battleChoiceRow int
@@ -1132,7 +1147,7 @@ func main() {
 		log.Printf("驗收固定亂數種子：%d", *seed)
 	}
 	g := &game{lib: lib, rng: gameRNG, speed: *speed, tacticalSpeed: *tacticalSpeed,
-		td: textdraw.New(font, ascii),
+		td:       textdraw.New(font, ascii),
 		shotPath: *shot, shotAt: *shotFrames, origDir: *dir, sourceFile: path,
 		saveFile: *saveFile, saveBase: path, sound: sound.Open(*audioDir)}
 	if *audioDir != "" && !g.sound.Available() {
@@ -1224,6 +1239,12 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 	g.battleCommandGlyphs = [6]*ebiten.Image{}
 	g.battleSideCommands = nil
 	g.battleCommandSelect = color.RGBA{240, 0, 0, 255}
+	g.battleSideFlags = [2]*ebiten.Image{}
+	g.battleFormationStrip = nil
+	g.battleSideFooter = nil
+	g.battleFormation = -1
+	g.battleUnitDotAlly = color.RGBA{110, 235, 110, 255}
+	g.battleUnitDotFoe = color.RGBA{110, 200, 235, 255}
 	g.installTactical(g.origDir)
 	g.saveBase = path
 	g.hud = 0
@@ -1274,6 +1295,35 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 		log.Printf("⚠ 取不到 DOS/V 戰術指令選取色 0x0C，使用紅色 fallback：%v", err)
 	} else {
 		g.battleCommandSelect = selected
+	}
+	for i, foe := range [2]bool{false, true} {
+		flag, err := g.lib.DOSVBattleFlag(foe, season)
+		if err != nil {
+			log.Printf("⚠ 取不到 DOS/V 戰術將旗 %d，那一格改畫通用框：%v", i, err)
+			continue
+		}
+		g.battleSideFlags[i] = ebiten.NewImageFromImage(flag)
+	}
+	if strip, err := g.lib.DOSVBattleFormationStrip(season); err != nil {
+		log.Printf("⚠ 取不到 DOS/V 戰術陣形列，那一格改畫通用框：%v", err)
+	} else {
+		g.battleFormationStrip = ebiten.NewImageFromImage(strip)
+	}
+	if footer, err := g.lib.DOSVBattleSideFooter(season); err != nil {
+		log.Printf("⚠ 取不到 DOS/V 戰術側欄底列：%v", err)
+	} else {
+		g.battleSideFooter = ebiten.NewImageFromImage(footer)
+	}
+	for _, c := range []struct {
+		idx int
+		dst *color.RGBA
+	}{{10, &g.battleUnitDotAlly}, {3, &g.battleUnitDotFoe}} {
+		col, err := g.lib.PaletteColor(season, c.idx)
+		if err != nil {
+			log.Printf("⚠ 取不到小地圖部隊點色 %d，使用 fallback：%v", c.idx, err)
+			continue
+		}
+		*c.dst = col
 	}
 	if cap := w.Factions[w.Player].Capital; cap >= 0 && cap < len(w.Cities) {
 		g.camX = w.Cities[cap].X - viewCols/2

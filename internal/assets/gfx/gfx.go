@@ -56,12 +56,28 @@ const (
 	DOSVBattleCommandGlyphOffset = 0x3900
 	DOSVBattleCommandGlyphStride = 0x00C0
 	DOSVBattleCommandGlyphCount  = 6
+
+	// 側欄另外三塊，出處 docs/re/60 §1.2（sub_1C863 的直接 blit）：
+	//   0x0800 AX=0x2008 → (496,48)   上格＝對方的將旗
+	//   0x1000 AX=0x2008 → (496,208)  下格＝我方的將旗
+	//   0x0000 AX=0x2008 → (496,248)  十六個陣形（8 欄 × 2 列的 16×16）
+	//   0x3500 AX=0x1008 → (496,376)  底部那一條
+	DOSVBattleFlagFoeOffset    = 0x0800
+	DOSVBattleFlagAllyOffset   = 0x1000
+	DOSVBattleFormationOffset  = 0x0000
+	DOSVBattleSideFooterOffset = 0x3500
 )
 
 var (
 	DOSVBattleSideCommands = Spec{Name: "ICONGRF/DOSV battle side commands", Width: 128, Height: 96}
 	DOSVBattleCommandBase  = Spec{Name: "ICONGRF/DOSV battle command base", Width: 80, Height: 32}
 	DOSVBattleCommandGlyph = Spec{Name: "ICONGRF/DOSV battle command glyph", Width: 24, Height: 16}
+
+	// AX 的高位元組是列數：0x2008 ＝ 32 列、0x1008 ＝ 16 列；
+	// 低位元組 8 是每列 8 bytes／平面 ＝ 128 px 寬。
+	DOSVBattleFlag       = Spec{Name: "ICONGRF/DOSV battle flag", Width: 128, Height: 32}
+	DOSVBattleFormation  = Spec{Name: "ICONGRF/DOSV battle formation strip", Width: 128, Height: 32}
+	DOSVBattleSideFooter = Spec{Name: "ICONGRF/DOSV battle side footer", Width: 128, Height: 16}
 )
 
 // FrameBytes 是一張圖佔的位元組數。

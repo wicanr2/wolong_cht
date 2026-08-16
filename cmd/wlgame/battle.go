@@ -493,39 +493,170 @@ func (g *game) battleCommander(p *state.Pending, side int) int {
 func (g *game) drawBattleSidebar(screen *ebiten.Image, b *tactical.Battle, p *state.Pending, l dosvBattleLayout) {
 	vector.DrawFilledRect(screen, float32(l.Sidebar.X), float32(l.Sidebar.Y),
 		float32(l.Sidebar.W), float32(l.Sidebar.H), chrome.Menu, false)
-	g.drawBattleSideStatus(screen, b, p, l.SideAttacker, 0)
+	// 上格是對方、下格是我方（docs/spec/31 §1）。原版靠互換
+	// word_10D2E／word_10D30 做到這件事；這裡直接用玩家所在的側別，
+	// 效果相同而且不必動 tactical 的側別編號。
+	ally := g.battleSide()
+	foe := 1 - ally
+	g.drawBattleSideTitle(screen, p, l.SideTitle, ally, foe)
+	g.drawBattleSideCell(screen, b, p, l.SideFoe, foe, true)
 	g.drawBattleMiniMap(screen, b, l.SideMiniMap)
-	g.drawBattleSideStatus(screen, b, p, l.SideDefender, 1)
+	g.drawBattleSideCell(screen, b, p, l.SideAlly, ally, false)
+	g.drawBattleFormationStrip(screen, b, l.SideFormation)
 	g.drawBattleSideCommands(screen, b, l.SideCommands)
+	g.drawBattleSideFooter(screen, l.SideFooter)
 }
 
-func (g *game) drawBattleSideStatus(screen *ebiten.Image, b *tactical.Battle, p *state.Pending, r battleRect, side int) {
-	g.chrome.Window(screen, r.X, r.Y, r.W, r.H, chrome.Menu)
-	white := chrome.Paper
-	amber := color.RGBA{240, 200, 120, 255}
-	dim := color.RGBA{190, 190, 200, 255}
-	s := &b.Sides[side]
+// drawBattleSideTitle 畫標題兩行（docs/re/60 §3）：
+//
+//	(512,8)  戰場地名     (560,8)  「作戰」
+//	(512,24) 我方君主     (560,24) 「對」    (576,24) 對方君主
+//
+// 原版每一段都是固定三個全形字（48 px），所以三個 x 是 512／560／576。
+func (g *game) drawBattleSideTitle(screen *ebiten.Image,
+	p *state.Pending, r battleRect, ally, foe int) {
+	vector.DrawFilledRect(screen, float32(r.X), float32(r.Y),
+		float32(r.W), float32(r.H), chrome.Menu, false)
+	place := color.RGBA{150, 190, 235, 255} // 原版調色盤索引 9
+	lord := color.RGBA{140, 225, 225, 255}  // 原版調色盤索引 11
+	x0 := r.X + 16                          // 512 − 496
+	g.td.Draw(screen, g.battleFieldName(p), x0, r.Y, place)
+	g.td.Draw(screen, "作戰", x0+48, r.Y, place)
+	g.td.Draw(screen, g.battleLordName(p, ally), x0, r.Y+16, lord)
+	g.td.Draw(screen, "對", x0+48, r.Y+16, lord)
+	g.td.Draw(screen, g.battleLordName(p, foe), x0+64, r.Y+16, lord)
+}
+
+// drawBattleSideCell 畫一格將旗：主將名 ＋ 兵力條 ＋ 大將體力條。
+// top 為真時用上格（對方）的排列，否則用下格（我方）的（docs/re/60 §5）。
+func (g *game) drawBattleSideCell(screen *ebiten.Image, b *tactical.Battle,
+	p *state.Pending, r battleRect, side int, top bool) {
+	slot := 0
+	if top {
+		slot = 1
+	}
+	if img := g.battleSideFlags[slot]; img != nil {
+		op := &ebiten.DrawImageOptions{}
+		op.GeoM.Translate(float64(r.X), float64(r.Y))
+		screen.DrawImage(img, op)
+	} else {
+		g.chrome.Window(screen, r.X, r.Y, r.W, r.H, chrome.Menu)
+	}
+	cell := battleSideCellLayoutFor(r, top)
 	name := sideLabel(side)
 	if commander := g.battleCommander(p, side); commander >= 0 && commander < len(g.world.Generals) {
 		name = big5(g.world.Generals[commander].Name)
 	}
-	g.td.Draw(screen, name, r.X+chrome.Tile+4, r.Y+chrome.Tile+1, amber)
-	g.td.Draw(screen, fmt.Sprintf("%4d 兵", s.Remaining()), r.X+chrome.Tile+4,
-		r.Y+chrome.Tile+1+textdraw.GlyphH+2, white)
-	cols := battleSideStatusColumns(r)
-	statsY := r.Y + chrome.Tile + 2*(textdraw.GlyphH+2)
+	g.td.Draw(screen, name, cell.Name.X, cell.Name.Y, chrome.Paper)
+
+	s := &b.Sides[side]
+	health := 0
 	if len(s.Soldiers) > 0 {
-		g.td.Draw(screen, fmt.Sprintf("體力 %d", s.Soldiers[0].HP),
-			cols.HP.X, statsY, dim)
+		health = s.Soldiers[0].HP
 	}
-	g.td.Draw(screen, advName(b.Advantage[side]), cols.Advantage.X, statsY, dim)
+	menLen, healthLen := battleSideBarLengths(s.Remaining(), health)
+	// 索引 12／11；未填的部分原版畫成色 0。
+	g.drawBattleBar(screen, cell.MenBar, menLen, color.RGBA{235, 120, 110, 255})
+	g.drawBattleBar(screen, cell.HealthBar, healthLen, color.RGBA{140, 225, 225, 255})
 }
 
-// drawBattleMiniMap 畫出戰術初始化時建立的 DOS/V 128×128 base minimap。
+// drawBattleBar 照 sub_10AAA：先畫 filled px 的實色，其餘畫色 0。
+func (g *game) drawBattleBar(screen *ebiten.Image, r battleRect, filled int, col color.RGBA) {
+	if filled > 0 {
+		vector.DrawFilledRect(screen, float32(r.X), float32(r.Y),
+			float32(filled), float32(r.H), col, false)
+	}
+	if rest := r.W - filled; rest > 0 {
+		vector.DrawFilledRect(screen, float32(r.X+filled), float32(r.Y),
+			float32(rest), float32(r.H), color.RGBA{0, 0, 0, 255}, false)
+	}
+}
+
+// drawBattleFormationStrip 畫十六個陣形那一格（docs/re/60 §8）。
+// 選取框是格內縮 1 px 的 14×14；原版選中色 12、取消色 10。
+func (g *game) drawBattleFormationStrip(screen *ebiten.Image, b *tactical.Battle, r battleRect) {
+	if img := g.battleFormationStrip; img != nil {
+		op := &ebiten.DrawImageOptions{}
+		op.GeoM.Translate(float64(r.X), float64(r.Y))
+		screen.DrawImage(img, op)
+	} else {
+		g.chrome.Window(screen, r.X, r.Y, r.W, r.H, chrome.Menu)
+	}
+	idx := g.battleFormation
+	if idx < 0 || idx >= battleFormationCols*battleFormationRows {
+		return
+	}
+	cell := battleFormationCellRect(r, idx)
+	vector.StrokeRect(screen, float32(cell.X+1), float32(cell.Y+1), 14, 14,
+		1, g.battleCommandSelect, false)
+}
+
+// drawBattleSideFooter 只畫 segment1+0x3500 那一條。
+// 原版按下去會切 loc_1A065 的自我修改碼，語意未解，所以不接行為
+// （docs/spec/31 §5）。
+func (g *game) drawBattleSideFooter(screen *ebiten.Image, r battleRect) {
+	if img := g.battleSideFooter; img != nil {
+		op := &ebiten.DrawImageOptions{}
+		op.GeoM.Translate(float64(r.X), float64(r.Y))
+		screen.DrawImage(img, op)
+		return
+	}
+	vector.DrawFilledRect(screen, float32(r.X), float32(r.Y),
+		float32(r.W), float32(r.H), chrome.Menu, false)
+}
+
+// battleFieldName 對應 sub_1C955：攻城戰用據點名，野戰依戰場類別
+// 取「陸上」或「海上」。
 //
-// 原版 `sub_1C83E`／`sub_1C4FA`／`sub_1C51E` 只證實了 MAP tile → MDL
-// attribute → 2×2 palette block；沒有證實單位或城壁變更的局部更新位址。
-// 所以兵、旗與結構不混進 base minimap，也不把高度圖 fallback 冒充原版。
+// 戰場類別由 sub_19A33 依戰場編號分三段（docs/re/58 §4）：
+// < 0xC0 攻城、0xC0–0xD0 類別 1、≥ 0xD1 類別 2。
+func (g *game) battleFieldName(p *state.Pending) string {
+	if p == nil {
+		return ""
+	}
+	siege := p.Mode == combat.Siege
+	field := g.fieldNumber(p.Node, siege)
+	if siege {
+		if field >= 0 && field < len(g.world.Cities) {
+			return big5(g.world.Cities[field].Name)
+		}
+		return ""
+	}
+	if field >= 0xD1 {
+		return "海上"
+	}
+	return "陸上"
+}
+
+// battleLordName 對應 sub_1C9AB：主將 → 所屬勢力 → 君主 → 武將名。
+// 原版沒有「勢力名」欄位，畫面上的勢力名就是君主的姓名
+// （docs/re/33 §1 的 sub_188B0）。
+func (g *game) battleLordName(p *state.Pending, side int) string {
+	commander := g.battleCommander(p, side)
+	if commander < 0 || commander >= len(g.world.Generals) {
+		return ""
+	}
+	f := g.world.Generals[commander].Faction
+	if f < 0 || f >= len(g.world.Factions) {
+		return ""
+	}
+	lord := g.world.Factions[f].Lord
+	if lord < 0 || lord >= len(g.world.Generals) {
+		return ""
+	}
+	return big5(g.world.Generals[lord].Name)
+}
+
+// drawBattleMiniMap 畫出戰術初始化時建立的 DOS/V 128×128 base minimap，
+// 再疊上部隊點。
+//
+// 底圖：`sub_1C83E`／`sub_1C4FA`／`sub_1C51E`，MAP tile → MDL attribute
+// → 2×2 palette block。
+//
+// 部隊點：`sub_1B240` 在 `0001B284` 依單位記錄的位址分色——
+// `si < 0x600` 用調色盤索引 10、否則用 3。那個 `0x600` 就是兩側單位陣列
+// 的分界（`word_1D30E` 每側 0x600 B），也就是**側 0 一色、側 1 一色**。
+// 原版的側 0 恆為玩家（docs/re/60 §5），所以這裡用 g.battleSide() 對齊。
 func (g *game) drawBattleMiniMap(screen *ebiten.Image, b *tactical.Battle, r battleRect) {
 	if g.view == nil || g.view.minimap == nil || r.W < battle.TacticalMinimapWidth ||
 		r.H < battle.TacticalMinimapHeight {
@@ -536,10 +667,41 @@ func (g *game) drawBattleMiniMap(screen *ebiten.Image, b *tactical.Battle, r bat
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(float64(r.X), float64(r.Y))
 	screen.DrawImage(g.view.minimap, op)
+	g.drawBattleMiniMapUnits(screen, b, r)
 	// 只畫外框，不縮放或裁切 128×128 原版 base image。
 	vector.StrokeRect(screen, float32(r.X), float32(r.Y),
 		float32(battle.TacticalMinimapWidth), float32(battle.TacticalMinimapHeight),
 		1, chrome.Paper, false)
+}
+
+// drawBattleMiniMapUnits 把每個活著的兵畫成一個 2×2 點。
+//
+// 座標換算與底圖同一條（sub_1C51E）：
+//
+//	x = 2 × mapY        y = 2 × (63 − mapX)
+func (g *game) drawBattleMiniMapUnits(screen *ebiten.Image, b *tactical.Battle, r battleRect) {
+	if b == nil {
+		return
+	}
+	ally := g.battleSide()
+	for side := range b.Sides {
+		col := g.battleUnitDotFoe
+		if side == ally {
+			col = g.battleUnitDotAlly
+		}
+		for i := range b.Sides[side].Soldiers {
+			s := &b.Sides[side].Soldiers[i]
+			if !s.Alive {
+				continue
+			}
+			x := r.X + 2*s.Y
+			y := r.Y + 2*(battle.Width-1-s.X)
+			if x < r.X || y < r.Y || x+2 > r.right() || y+2 > r.bottom() {
+				continue
+			}
+			vector.DrawFilledRect(screen, float32(x), float32(y), 2, 2, col, false)
+		}
+	}
 }
 
 func (g *game) drawBattleSideCommands(screen *ebiten.Image, b *tactical.Battle, r battleRect) {
@@ -551,8 +713,8 @@ func (g *game) drawBattleSideCommands(screen *ebiten.Image, b *tactical.Battle, 
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Translate(float64(r.X), float64(r.Y))
 		screen.DrawImage(g.battleSideCommands, op)
-		if selected >= 0 {
-			cell := battleSideCommandCells(r)[selected]
+		if row := battleSideCommandRowOf(selected); row >= 0 {
+			cell := battleSideCommandCells(r)[row]
 			vector.StrokeRect(screen, float32(cell.X), float32(cell.Y),
 				float32(cell.W), float32(cell.H), 1, g.battleCommandSelect, false)
 			vector.StrokeRect(screen, float32(cell.X+1), float32(cell.Y+1),
@@ -562,8 +724,8 @@ func (g *game) drawBattleSideCommands(screen *ebiten.Image, b *tactical.Battle, 
 	}
 	g.chrome.Window(screen, r.X, r.Y, r.W, r.H, chrome.Menu)
 	for i, cell := range battleSideCommandCells(r) {
-		label := fmt.Sprintf("%d%s", i+1, battleCommandLabels[i])
-		if i == selected {
+		label := battleSideCommandRowLabel(i)
+		if battleSideCommandRowCode[i] == selected {
 			vector.DrawFilledRect(screen, float32(cell.X), float32(cell.Y),
 				float32(cell.W), float32(cell.H), chrome.Select, false)
 		}

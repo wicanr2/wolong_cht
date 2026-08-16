@@ -309,6 +309,37 @@ func (l *Library) DOSVBattleSideCommands(bank int) (*image.RGBA, error) {
 		gfx.DOSVBattleSideCommandsOffset, l.Palette, bank)
 }
 
+// DOSVBattleFlag 解出側欄上／下兩格的將旗底圖（各 128×32）。
+// foe 為真時取上格（對方，段 1 `0x0800`），否則取下格（我方，`0x1000`）。
+func (l *Library) DOSVBattleFlag(foe bool, bank int) (*image.RGBA, error) {
+	if l == nil || l.BattleUI == nil {
+		return nil, fmt.Errorf("ICONGRF 段 1 沒有載入")
+	}
+	off := gfx.DOSVBattleFlagAllyOffset
+	if foe {
+		off = gfx.DOSVBattleFlagFoeOffset
+	}
+	return gfx.DOSVBattleFlag.RenderRGBAAt(l.BattleUI, off, l.Palette, bank)
+}
+
+// DOSVBattleFormationStrip 解出十六個陣形那一格（128×32，8 欄 × 2 列）。
+func (l *Library) DOSVBattleFormationStrip(bank int) (*image.RGBA, error) {
+	if l == nil || l.BattleUI == nil {
+		return nil, fmt.Errorf("ICONGRF 段 1 沒有載入")
+	}
+	return gfx.DOSVBattleFormation.RenderRGBAAt(l.BattleUI,
+		gfx.DOSVBattleFormationOffset, l.Palette, bank)
+}
+
+// DOSVBattleSideFooter 解出側欄最底那一條（128×16）。
+func (l *Library) DOSVBattleSideFooter(bank int) (*image.RGBA, error) {
+	if l == nil || l.BattleUI == nil {
+		return nil, fmt.Errorf("ICONGRF 段 1 沒有載入")
+	}
+	return gfx.DOSVBattleSideFooter.RenderRGBAAt(l.BattleUI,
+		gfx.DOSVBattleSideFooterOffset, l.Palette, bank)
+}
+
 // DOSVCursor 畫出 DOS/V KI.EXE 內建的 16×16 白框／紅填游標。
 func (l *Library) DOSVCursor(bank int) (*image.RGBA, error) {
 	if l == nil || len(l.cursorPixels) == 0 {

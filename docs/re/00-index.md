@@ -87,6 +87,7 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 | [`29`](29-font-service-int15.md) | **原版怎麼顯示中文**：`INT 15h AH=50h` ＋ 倚天字型 |
 | [`33`](33-shared-draw-helpers.md) | 共用繪圖層：字串包裝、肖像四格快取、小地圖上色 |
 | [`18`](18-tactical-button-glyphs.md) | 戰術底列按鈕的 glyph 資產 |
+| [`60`](60-tactical-sidebar.md) | **戰術側欄那一欄畫了什麼**：七格的美術／文字／計量條、小地圖上四種標記的顏色、30 個熱區碼的分派表，順帶解掉攻城的門強度條 |
 | [`17`](17-dosv-audio-tsr.md) | DOS/V 音源 TSR 與戰術效果碼 |
 | [`23`](23-bgm-resource-format.md) | `*BGM.DAT` 的音樂資源格式 |
 

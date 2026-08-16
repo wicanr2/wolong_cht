@@ -3,7 +3,7 @@
 **狀態：生成的清單，跑 `tools/py.sh tools/re_open_questions.py` 重出。
 這一份不下結論，只把各文件的「未解」表集中到一處。**
 
-- 日期：2026-08-15
+- 日期：2026-08-16
 - 產生工具：`tools/re_open_questions.py`
 - 來源：`docs/` 底下所有文件的未解小節、表格裡標未解的列，與收尾是「…未解」的散句
 
@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 56 | 55 | 1 | 0 |
 | 資料保存 | 38 | 38 | 0 | 0 |
-| 程式碼理解 | 197 | 191 | 6 | 0 |
-| 驗收 | 27 | 22 | 5 | 0 |
+| 程式碼理解 | 203 | 197 | 6 | 0 |
+| 驗收 | 26 | 21 | 5 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 62 | 59 | 3 | 0 |
-| **合計** | **398** | 382 | 15 | 1 |
+| 其他 | 66 | 63 | 3 | 0 |
+| **合計** | **407** | 391 | 15 | 1 |
 
 ## 2.1 規則正確性（56 條）
 
@@ -130,7 +130,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（197 條）
+## 2.3 程式碼理解（203 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -331,8 +331,14 @@
 | [`re/59-game-over-exit-codes.md`](../re/59-game-over-exit-codes.md) | `sub_14DF0` 的 CF | 「找不到替代據點」與「據點數 0」是不是同一件事，還沒逐行讀 | 靜態 |
 | [`re/59-game-over-exit-codes.md`](../re/59-game-over-exit-codes.md) | 無主城 `0x18` | 值 24 落在 22 個勢力之外，但劇本裡有沒有無主城沒查過 | 靜態 |
 | [`re/59-game-over-exit-codes.md`](../re/59-game-over-exit-codes.md) | `D7END.EXE` | 結局過場本身完全沒讀（`END_S*.DAT` 的用法未解） | 靜態 |
+| [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | `▶▶` 列切換的語意 | 機制 confirmed（`byte_1A06A` 在 `0xEB`／`0x74` 間切、視點回 (128,128)），但 `loc_1A065` 那段自我修改碼還沒逐行讀，所以**擋掉的是什麼未解** | 靜態 |
+| [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | 城兵臨時軍團的主將名 | §4.1：`0x4200` 照索引算式會指到武將表全零的那一筆。`sub_14F58`（`cx=0x1B`／`0x1C`）還沒讀 | 靜態 |
+| [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | 段 1 `0x0000`／`0x0800`／`0x1000`／`0x1800`／`0x3500` 的圖形內容 | 貼點與尺寸 confirmed，**圖上畫了什麼**要另外解碼（`../formats/03` §5.3 的 UI 語意缺口） | 靜態 |
+| [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | 熱區 `0x01`／`0x1F` | 表裡有 handler，但沒找到註冊它們的 `sub_1E3D7` 呼叫點 | 靜態 |
+| [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | `0x1C21A`（退却）的 `sub_1A8F6` | 只知道它回 CF 與 `ah`，內容未讀 | 靜態 |
+| [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | 側欄美術的調色盤 | 本份記的都是**調色盤索引**，不是 RGB。要比顏色得用 `GAMEPAL.BRG` 的當季 bank | 靜態 |
 
-## 2.4 驗收（27 條）
+## 2.4 驗收（26 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -359,9 +365,8 @@
 | [`playtest/26-bgm-render-vs-recording.md`](../playtest/26-bgm-render-vs-recording.md) | 其他曲子 | 只有開場曲有錄音對照組。另外 13 首沒有 | 靜態 |
 | [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 逐像素 parity | 影片是再編碼的，做不到。要真的逐像素得回到模擬器，而主畫面的點擊閘還在 | 靜態 |
 | [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 色彩 | 只比了幾何。調色盤要另外用「同一格地形的色號」比，不能用影片的 RGB | 靜態 |
-| [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 戰術側欄的五項差異 | §7.3 列出來了，還沒逐項解原版怎麼畫 | 靜態 |
+| [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 戰術側欄的逐格對拍 | 組成已對齊（§7.3、`../re/60`），**同一場戰鬥的逐格比對還沒做** | 靜態 |
 | [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 戰場圖塊組 | §7.4，城壁的顏色不同，原因沒驗 | 靜態 |
-| [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 門強度條 | §7.5，remake 沒有 | 靜態 |
 | [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 一覽表視窗 | 影片裡有武將／據點／財政的實錄，**還沒量** | 靜態 |
 
 ## 2.5 外部資料（18 條）
@@ -387,7 +392,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（62 條）
+## 2.6 其他（66 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -450,6 +455,10 @@
 | [`spec/30-victory.md`](../spec/30-victory.md) | 四個劇本的結局是否不同 | `END_S*` 檔的對應未解（`mechanics/80-victory.md` §116） | 靜態 |
 | [`spec/30-victory.md`](../spec/30-victory.md) | 君主陣亡時軍師怎麼辦 | 未知（同上） | 靜態 |
 | [`spec/30-victory.md`](../spec/30-victory.md) | 結局的訊息 | `sub_11CD0` 送 TALK `#0x4B` 與 `#0x197`，內容還沒對出來 | 靜態 |
+| [`spec/31-tactical-sidebar.md`](../spec/31-tactical-sidebar.md) | 差異 | `▶▶` 列只畫美術，**不接行為**（原版切換的是 `loc_1A065` 的自我修改碼，語意未解）；兩面將旗的熱區原版是 `retn`，remake 同樣不接 | 靜態 |
+| [`spec/31-tactical-sidebar.md`](../spec/31-tactical-sidebar.md) | `▶▶` 列的行為 | `byte_1A06A` 在 `0xEB`／`0x74` 間切，`loc_1A065` 未逐行讀（`../re/60` §12） | 靜態 |
+| [`spec/31-tactical-sidebar.md`](../spec/31-tactical-sidebar.md) | 段 1 五塊美術的圖形語意 | 貼點與尺寸 confirmed，圖上畫什麼要另外解（`../formats/03` §5.3） | 靜態 |
+| [`spec/31-tactical-sidebar.md`](../spec/31-tactical-sidebar.md) | 城兵臨時軍團的主將名 | `0x4200` 的索引算式指到武將表全零那一筆（`../re/60` §4.1） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |

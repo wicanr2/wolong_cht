@@ -1,8 +1,9 @@
 # 19 — DOS/V 戰術縮圖 raw producer 驗收
 
-**狀態：PASS（已證實 producer 的 remake 實作）；局部更新與原版精確外框素材仍為 unknown。**
+**狀態：PASS（已證實 producer 的 remake 實作）。底圖與部隊點都已接上；
+陣形線、游標十字與城壁受損的局部更新已有位址但尚未實作。**
 
-- 日期：2026-08-12
+- 日期：2026-08-12（部隊點：2026-08-16）
 
 本切片只處理松崗 DOS/V 戰術縮圖，不涵蓋 launcher、自然 HUD、戰術其他面板、按鈕
 glyph、規則或事件。
@@ -33,8 +34,21 @@ remake 對應如下：
 - `battleView.minimap` 在 `newBattleView` 初始化時建立一次，之後畫面只重用快取。
 - `SideMiniMap` 對齊 DOS/V 原點 `(496,80)`，不再將 128×128 base image 壓進
   108×96 的高度圖 fallback 內。
-- 單位、旗與城壁局部更新沒有已證實的 producer 位址，本切片不混入 base minimap，
-  也不以獨立 overlay 假稱原版 parity。
+- 部隊點：`sub_1B240` 在 `0001B284` 依單位記錄的位址分色——`si < 0x600`
+  用調色盤索引 10、否則用 3，也就是**側 0 一色、側 1 一色**
+  （[`../re/60`](../re/60-tactical-sidebar.md) §7）。`drawBattleMiniMapUnits`
+  照同一條座標換算把每個活著的兵畫成 2×2 點，顏色取自
+  `GAMEPAL.BRG` 當季 bank 的索引 10／3。
+
+## 還沒接的局部更新
+
+位址都已定位（[`../re/60`](../re/60-tactical-sidebar.md) §7），實作還沒做：
+
+| 標記 | producer | 調色盤索引 |
+|---|---|---:|
+| 陣形線（側 0 的陣形原點那一整行）| `sub_1C5AE` | 11 |
+| 游標十字（一行 ＋ 一列）| `sub_1C577` | 0 |
+| 城壁受損（圖塊值 `+0x10`／`+8` 後重畫）| `sub_1B824` | 隨新圖塊 |
 
 ## 自動化驗收
 
