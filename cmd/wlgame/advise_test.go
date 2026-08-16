@@ -92,6 +92,7 @@ func TestAdviseLinesComeFromTalkDat(t *testing.T) {
 	for _, c := range adviseCommands {
 		g.clearAdviseBoxes()
 		g.adviseSay(adviseAdvisor, adviseTalkBase(c)+3)
+		g.adviseAdvance()
 		line := strings.Join(g.adviseAdvisorSaid, "")
 		if line == "" {
 			t.Fatalf("%v 的進言句是空的", c)
@@ -262,6 +263,16 @@ func TestAdviseSceneLinesGoToTheRightBox(t *testing.T) {
 	g.clearAdviseBoxes()
 	g.adviseSay(adviseLord, base) // #86「{4}啊，是怎麼了？」
 	g.adviseSay(adviseAdvisor, base+3)
+	// ⭐ 排隊之後畫面上還是空的——**原版每一句都要等按鍵**。
+	if len(g.adviseLordSaid) != 0 || len(g.adviseAdvisorSaid) != 0 {
+		t.Fatal("還沒推進就把句子寫進框裡了")
+	}
+	if !g.adviseAdvance() || !g.adviseAdvance() {
+		t.Fatal("排了兩句卻推不動兩次")
+	}
+	if g.adviseTalking() {
+		t.Error("兩句都演完了還說在講話")
+	}
 	lord, advisor := strings.Join(g.adviseLordSaid, ""), strings.Join(g.adviseAdvisorSaid, "")
 	if lord == "" || advisor == "" {
 		t.Fatalf("兩個框要各有一句：上 %q 下 %q", lord, advisor)
@@ -271,6 +282,7 @@ func TestAdviseSceneLinesGoToTheRightBox(t *testing.T) {
 	}
 	// 君主再說一句：上框換掉，下框不動。
 	g.adviseSay(adviseLord, adviseReplyIndex(base, persuasion.Agree, 0))
+	g.adviseAdvance()
 	if got := strings.Join(g.adviseLordSaid, ""); got == lord {
 		t.Errorf("上框沒有換句：%q", got)
 	}
@@ -279,6 +291,7 @@ func TestAdviseSceneLinesGoToTheRightBox(t *testing.T) {
 	}
 	// 索引查不到時保留原句，不顯示半句（fail-closed）。
 	g.adviseSay(adviseLord, 1<<20)
+	g.adviseAdvance()
 	if len(g.adviseLordSaid) == 0 {
 		t.Error("查不到的索引把上框清空了")
 	}
@@ -346,12 +359,20 @@ func TestVerdictLinesGoToTheRightBoxes(t *testing.T) {
 	if g.advise != adviseVerdict {
 		t.Errorf("階段 = %d，要 adviseVerdict", g.advise)
 	}
+	// sayVerdict 排三句、先演第一句；剩下兩句要按鍵才會出來。
+	if !g.adviseTalking() {
+		t.Fatal("三句應該還沒演完")
+	}
+	for g.adviseAdvance() {
+	}
 	yes := strings.Join(g.adviseLordSaid, "")
 	advisor := strings.Join(g.adviseAdvisorSaid, "")
 	if yes == "" || advisor == "" {
 		t.Fatalf("兩個框要各有一句：上 %q 下 %q", yes, advisor)
 	}
 	g.sayVerdict(adviseSortieTalkBase, false)
+	for g.adviseAdvance() {
+	}
 	if no := strings.Join(g.adviseLordSaid, ""); no == yes {
 		t.Errorf("接受與拒絕拿到同一句：%q", no)
 	}

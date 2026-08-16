@@ -21,10 +21,10 @@
 | 規則正確性 | 54 | 52 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
 | 程式碼理解 | 217 | 210 | 7 | 0 |
-| 驗收 | 60 | 53 | 7 | 0 |
+| 驗收 | 59 | 52 | 7 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 109 | 104 | 5 | 0 |
-| **合計** | **494** | 472 | 21 | 1 |
+| 其他 | 108 | 103 | 5 | 0 |
+| **合計** | **492** | 470 | 21 | 1 |
 
 ## 2.1 規則正確性（54 條）
 
@@ -349,7 +349,7 @@
 | [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `sub_189A4(al=1, dx=0, bx=2, cx=151Bh)` | `sub_13D09` 在貼完 `IVENTGRF` 之後畫的框，與 `sub_1895D` 是不是同一組單位沒驗 | 靜態 |
 | [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `IVENTGRF` 插圖本身的位置 | `sub_13D09` 的 `dx = 0E07h` 是餵給 `sub_1E38C`（讀檔）的參數，不是座標。插圖在畫面上的位置沒量 | 靜態 |
 
-## 2.4 驗收（60 條）
+## 2.4 驗收（59 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -410,7 +410,6 @@
 | [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 逐句節拍 | 原版每句要等玩家按鍵才往下走；remake 直接顯示最新一句 | 靜態 |
 | [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 插圖之外的畫面 | 原版這一頁底下是不是還留著大地圖沒驗過，remake 留著 | 靜態 |
 | [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 選單的反白樣式 | 原版怎麼畫游標列沒解，remake 用自己的反白條 ＋ `>` | 靜態 |
-| [`playtest/35-advise-verdict-screens.md`](../playtest/35-advise-verdict-screens.md) | 逐句節拍 | 原版三句要按鍵才往下走，remake 直接顯示最後的狀態（上框是 ③、下框是 ②） | 靜態 |
 | [`playtest/35-advise-verdict-screens.md`](../playtest/35-advise-verdict-screens.md) | 遷都的畫面 | 目標用一覽表挑，原版是地圖選點（`sub_17400`）。沒有截圖 | 實測 |
 | [`playtest/35-advise-verdict-screens.md`](../playtest/35-advise-verdict-screens.md) | 選單的位置 | 原版的進言選單在 (0, 64)（`sub_16224` 的 `dx = 400h`，`docs/spec/45` §2.1），remake 用自己的小視窗 | 靜態 |
 
@@ -436,7 +435,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（109 條）
+## 2.6 其他（108 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -535,7 +534,6 @@
 | [`spec/43-rout-on-blocked-return.md`](../spec/43-rout-on-blocked-return.md) | TALK #1F／#20／#23／#198 | remake 還沒把這四則接上 | 靜態 |
 | [`spec/44-advise-original-text.md`](../spec/44-advise-original-text.md) | 逐句節拍 | 原版每句要等玩家按鍵才往下走，remake 直接顯示最新一句（`45` §3.1） | 靜態 |
 | [`spec/44-advise-original-text.md`](../spec/44-advise-original-text.md) | 「這項進言沒有成立」 | remake 專屬的守門句：君主點頭之後規則層才發現條件變了。原版沒有這條路徑，所以沒有對應的原文 | 靜態 |
-| [`spec/45-advise-scene-layout.md`](../spec/45-advise-scene-layout.md) | 逐句節拍 | 原版每句要等玩家按鍵，`sub_10241`／`sub_102C2` 那一段還沒讀 | 靜態 |
 | [`spec/45-advise-scene-layout.md`](../spec/45-advise-scene-layout.md) | 選單的反白樣式 | 原版怎麼畫游標列沒解，remake 用自己的反白條 | 靜態 |
 | [`spec/46-post-battle-retreat.md`](../spec/46-post-battle-retreat.md) | `loc_1491B` 的方向回傳 | `±4` 決定讀哪一個鄰接槽，remake 用 `Route` 的第 2 個節點取代，沒有逐條對過兩者選的是不是同一站 | 靜態 |
 | [`spec/46-post-battle-retreat.md`](../spec/46-post-battle-retreat.md) | 野外那一格的鄰接槽 | remake 的 `Node` 在行軍途中停在上一個據點，所以走的是「從上一個據點找路」，不是原版的「從野外那一格的鄰接槽挑」 | 靜態 |

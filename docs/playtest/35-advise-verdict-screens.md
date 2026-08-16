@@ -31,7 +31,11 @@
 
 ## 2. 請求君主出陣
 
-![請求君主出陣的定案](../images/wlgame-advise-sortie-verdict.png)
+![請求君主出陣的第一句](../images/wlgame-advise-sortie-verdict.png)
+
+截圖停在**第一句**——`sub_12216` 讓原版每一句都等按鍵，
+remake 照做了（[`../spec/45`](../spec/45-advise-scene-layout.md) §1.1），
+所以還沒講話的下框整個不畫。
 
 三句都對得上（`sub_13B08`，[`../spec/49`](../spec/49-advise-relocate-and-sortie.md) §1）：
 
@@ -53,6 +57,5 @@
 
 | 項目 | 現況 |
 |---|---|
-| 逐句節拍 | 原版三句要按鍵才往下走，remake 直接顯示最後的狀態（上框是 ③、下框是 ②）|
 | 遷都的畫面 | 目標用一覽表挑，原版是地圖選點（`sub_17400`）。沒有截圖 |
 | 選單的位置 | 原版的進言選單在 (0, 64)（`sub_16224` 的 `dx = 400h`，`docs/spec/45` §2.1），remake 用自己的小視窗 |

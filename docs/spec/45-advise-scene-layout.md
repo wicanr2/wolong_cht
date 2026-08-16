@@ -29,6 +29,33 @@
 
 三個講話框的寬高完全一樣（`sub_1075B` 把 `cx = 0510h` 寫死），只有位置不同。
 
+### 1.1 每一句都停下來等按鍵
+
+`sub_13C99` 與 `sub_13CDC` 畫完之後都 `call sub_12216`：
+
+```asm
+00012216  push cs:word_12239
+0001221B  mov  cs:word_12239, 9090h   ; ★ 把兩個 byte 換成 NOP NOP
+00012222  call loc_1222B
+00012225  pop  cs:word_12239          ; 換回來
+```
+
+`0x12239` 的靜態內容是 `EB 0F`（`jmp short +0Fh`），
+patch 成 `90 90` 之後那 15 個 byte 才會執行——而那一段是
+`mov ax, 5 / mov bx, 0 / far call`＋`mov bx, 1 / far call` 的**輸入輪詢**。
+
+⭐ **同一支 `loc_1222B` 有兩種模式**：不 patch 就只是把事件跑一遍，
+patch 成 NOP 就變成「等到有輸入為止」。`sub_18810`（一般通知）
+直接呼叫 `loc_1222B`，走的是不等的那一種。
+
+> ⚠ 這是本專案第三處自我修改碼（`CLAUDE.md` §7 第 28 條）。
+> IDA 把 `0x1223B` 之後整段 render 成 `db`，判準一樣是
+> 有沒有 `mov cs:[…], imm` 寫進自己的程式碼區段。
+
+⛔ **`sub_10241`／`sub_102C2` 不是等待**——那是 BGM 的播與停
+（[`../re/58`](../re/58-bgm-scene-mapping.md) §1），`sub_13B08` 開頭停、
+貼完插圖播第 6 曲、結束再停。
+
 ## 2. 選單框：(80, 176) 160×96，五列
 
 `sub_13B7E` 是三個地方共用的選單：外交三選一（`sub_13902`）、
@@ -100,7 +127,9 @@ dh = 0Bh ⇒ y = 11 × 16 = 176
 | 項目 | 作法 |
 |---|---|
 | 說服畫面 | `drawAdvise` 的 `advisePersuade` 畫 composite：`drawIventScene(0)` ＋ 兩個 `drawLegacyTalkBox` ＋ `drawLegacyChoiceBox` |
-| 兩個框的內容 | `game.adviseLordSaid`／`adviseAdvisorSaid` 各存**一句**（已折好的行）；`adviseSay(who, index)` 換掉其中一個 |
+| 兩個框的內容 | `game.adviseLordSaid`／`adviseAdvisorSaid` 各存**一句**（已折好的行）|
+| 逐句節拍 | `adviseSay` 只**排隊**，`adviseAdvance` 才寫進框裡。Enter／Space／ESC 推進一句；還在講話時不接受任何選擇，選單也不畫（§1.1）|
+| 空框不畫 | 還沒講話的框整個不畫——原版的框是講那一句時才畫出來的 |
 | 說話者 | 靠框的位置與肖像，句子裡沒有標記。上框 `playerLordPortrait()`、下框 `playerAdvisorPortrait()` |
 | 選單框 | `talkChoiceW/H = 160 × 96`、`talkChoiceRows = 5`；`drawLegacyChoiceBox` 與 `talkChoiceClick` 都用 `talkChoiceRows` |
 | 能選幾列 | `talkChoiceClick(rows)` 由呼叫端傳——說服 5、外交與撥款 3，對應原版的 `al`（§2.2）|
@@ -112,8 +141,6 @@ dh = 0Bh ⇒ y = 11 × 16 = 176
 
 - **選指令那一階段**（敵對／停戰／協力）仍是自己的小視窗。
   原版走的是戰略指令樹（`docs/re/22`），那一層還沒重做。
-- **原版一次只顯示一句、按鍵才往下走**；remake 沒有這個逐句節拍，
-  兩個框直接顯示最新一句。
 - **按鍵提示**是 remake 加的細框，放在橫幅與上框之間——
   畫面底部 360–392 是事件視窗的位置，放那裡會疊在一起。
 
@@ -130,5 +157,4 @@ dh = 0Bh ⇒ y = 11 × 16 = 176
 
 | 項目 | 現況 |
 |---|---|
-| 逐句節拍 | 原版每句要等玩家按鍵，`sub_10241`／`sub_102C2` 那一段還沒讀 |
 | 選單的反白樣式 | 原版怎麼畫游標列沒解，remake 用自己的反白條 |

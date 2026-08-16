@@ -96,21 +96,45 @@ const (
 func (g *game) clearAdviseBoxes() {
 	g.adviseLordSaid = nil
 	g.adviseAdvisorSaid = nil
+	g.adviseQueue = nil
 }
 
-// adviseSay 讓其中一個框說一則 TALK。查不到就維持原來那句，
+// adviseStep 是一句待演的話。**原版每一句演完都停下來等按鍵**
+// （`sub_13C99`／`sub_13CDC` 結尾的 `sub_12216`，docs/spec/45 §1.1），
+// 所以句子要排隊，不能一次全寫進框裡。
+type adviseStep struct {
+	who   adviseSpeaker
+	index int
+}
+
+// adviseSay 把一句排進隊伍。查不到的索引直接不排——
 // **不顯示半句、也不把索引當文字**（同 talkLines 的 fail-closed）。
 func (g *game) adviseSay(who adviseSpeaker, index int) {
-	lines := g.legacyTalkLines(index, g.adviseTalkVars(), talkTextWidth)
-	if len(lines) == 0 {
+	if len(g.legacyTalkLines(index, g.adviseTalkVars(), talkTextWidth)) == 0 {
 		return
 	}
-	if who == adviseLord {
-		g.adviseLordSaid = lines
-		return
-	}
-	g.adviseAdvisorSaid = lines
+	g.adviseQueue = append(g.adviseQueue, adviseStep{who: who, index: index})
 }
+
+// adviseAdvance 演下一句，回傳還有沒有下一句可以演。
+func (g *game) adviseAdvance() bool {
+	if len(g.adviseQueue) == 0 {
+		return false
+	}
+	step := g.adviseQueue[0]
+	g.adviseQueue = g.adviseQueue[1:]
+	lines := g.legacyTalkLines(step.index, g.adviseTalkVars(), talkTextWidth)
+	if step.who == adviseLord {
+		g.adviseLordSaid = lines
+	} else {
+		g.adviseAdvisorSaid = lines
+	}
+	return true
+}
+
+// adviseTalking 回報還有句子沒演完。**還在講話時不接受任何選擇**——
+// 原版也是這樣，選單要等對話走完才出現。
+func (g *game) adviseTalking() bool { return len(g.adviseQueue) > 0 }
 
 // situation 把目前的世界狀態換成說服判定要的局勢。
 //
@@ -208,7 +232,9 @@ func (g *game) updateAdvise() bool {
 	case adviseVerdict:
 		if pressed(ebiten.KeyEscape) || pressed(ebiten.KeyEnter) ||
 			pressed(ebiten.KeySpace) {
-			g.closeAdvise()
+			if !g.adviseAdvance() {
+				g.closeAdvise()
+			}
 		}
 
 	case advisePickAlly, advisePickTarget:
@@ -247,6 +273,13 @@ func (g *game) updateAdvise() bool {
 		}
 
 	case advisePersuade:
+		if g.adviseTalking() {
+			if pressed(ebiten.KeyEnter) || pressed(ebiten.KeySpace) ||
+				pressed(ebiten.KeyEscape) {
+				g.adviseAdvance()
+			}
+			return true
+		}
 		opts := persuasion.Options(g.adviseCmd)
 		switch {
 		case pressed(ebiten.KeyArrowUp):
@@ -330,6 +363,7 @@ func (g *game) sayVerdict(base int, accepted bool) {
 		reply += 3
 	}
 	g.adviseSay(adviseLord, reply+g.playerTalkVariant())
+	g.adviseAdvance()
 }
 
 func (g *game) beginPersuasion() {
@@ -359,6 +393,7 @@ func (g *game) beginPersuasion() {
 			g.commitAdvice()
 		}
 	}
+	g.adviseAdvance() // 先演第一句，其餘等玩家按鍵
 }
 
 func (g *game) offerReason(r persuasion.Reason) {
@@ -377,6 +412,7 @@ func (g *game) offerReason(r persuasion.Reason) {
 	g.adviseSay(adviseAdvisor, base+slot+1)
 	g.adviseSay(adviseLord,
 		adviseReasonReply(base, slot, out, repeat, g.playerTalkVariant()))
+	g.adviseAdvance()
 
 	switch out {
 	case persuasion.Agreed:
@@ -530,6 +566,20 @@ func (g *game) commitAdvice() bool {
 	return true
 }
 
+// drawAdviseBoxes 畫上下兩個講話框。**還沒講話的框不畫**——
+// 原版的框是 `sub_13C99`／`sub_13CDC` 在講那一句時才畫出來的，
+// 不是一直掛在那裡的空框。
+func (g *game) drawAdviseBoxes(screen *ebiten.Image) {
+	if len(g.adviseLordSaid) > 0 {
+		g.drawLegacyTalkBox(screen, talkUpperBoxX, talkUpperBoxY,
+			talkBoxW, talkBoxH, g.adviseLordSaid, g.playerLordPortrait())
+	}
+	if len(g.adviseAdvisorSaid) > 0 {
+		g.drawLegacyTalkBox(screen, talkLowerBoxX, talkLowerBoxY,
+			talkBoxW, talkBoxH, g.adviseAdvisorSaid, g.playerAdvisorPortrait())
+	}
+}
+
 // drawAdvise 畫進言流程。
 func (g *game) drawAdvise(screen *ebiten.Image) {
 	white := color.RGBA{240, 240, 230, 255}
@@ -556,11 +606,12 @@ func (g *game) drawAdvise(screen *ebiten.Image) {
 	case adviseVerdict:
 		// 第四、五項沒有說服迴圈，畫面就是 `sub_13B08` 的三句。
 		g.drawIventScene(screen, 0)
-		g.drawLegacyTalkBox(screen, talkUpperBoxX, talkUpperBoxY,
-			talkBoxW, talkBoxH, g.adviseLordSaid, g.playerLordPortrait())
-		g.drawLegacyTalkBox(screen, talkLowerBoxX, talkLowerBoxY,
-			talkBoxW, talkBoxH, g.adviseAdvisorSaid, g.playerAdvisorPortrait())
-		g.drawLegacyHint(screen, "Enter／ESC 關閉", talkUpperBoxY-4*chrome.Tile)
+		g.drawAdviseBoxes(screen)
+		hint := "Enter／ESC 關閉"
+		if g.adviseTalking() {
+			hint = "Enter 繼續"
+		}
+		g.drawLegacyHint(screen, hint, talkUpperBoxY-4*chrome.Tile)
 
 	case advisePersuade:
 		// 原版的說服畫面（docs/spec/45 §1）：`IVENTGRF` 第 0 頁的插圖，
@@ -573,6 +624,10 @@ func (g *game) drawAdvise(screen *ebiten.Image) {
 			talkBoxW, talkBoxH, g.adviseAdvisorSaid, g.playerAdvisorPortrait())
 		// 提示放在橫幅與上框之間，不要壓到畫面底部的事件視窗。
 		hintY := talkUpperBoxY - 4*chrome.Tile
+		if g.adviseTalking() {
+			g.drawLegacyHint(screen, "Enter 繼續", hintY)
+			return
+		}
 		if g.sess == nil {
 			g.drawLegacyHint(screen, "ESC 關閉", hintY)
 			return

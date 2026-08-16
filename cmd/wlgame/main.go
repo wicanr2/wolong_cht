@@ -224,6 +224,9 @@ type game struct {
 	// adviseNode 是遷都選到的據點（進言第四項）。
 	adviseNode int
 
+	// adviseQueue 是還沒演到的句子（docs/spec/45 §1.1）。
+	adviseQueue []adviseStep
+
 	// 進言畫面上兩個框各自的最新一句（docs/spec/45 §1）。
 	adviseLordSaid    []string // 上框：君主
 	adviseAdvisorSaid []string // 下框：軍師，也就是玩家自己
