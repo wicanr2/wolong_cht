@@ -17,6 +17,9 @@ import ida_pro
 import idc
 
 OUT = "/work/range.txt"
+# 要看哪幾段寫在 /work/range_list.txt，一行一筆「起 迄 說明」（十六進位）；
+# 檔案不在就用下面的預設。**工具固定，要看什麼是輸入**（同 tools/ida_dump.py）。
+LIST = "/work/range_list.txt"
 RANGES = [
     (0x10300, 0x10480, "聲軌狀態 0A02 的三個使用點（播放引擎候選）"),
     (0x10270, 0x102A0, "099A 的使用點"),
@@ -24,12 +27,30 @@ RANGES = [
 ]
 
 
+def ranges():
+    out = []
+    try:
+        with open(LIST, encoding="utf-8") as fh:
+            for ln in fh:
+                ln = ln.strip()
+                if not ln or ln.startswith("#"):
+                    continue
+                parts = ln.split(None, 2)
+                if len(parts) < 2:
+                    continue
+                out.append((int(parts[0], 16), int(parts[1], 16),
+                            parts[2] if len(parts) > 2 else ""))
+    except OSError:
+        return RANGES
+    return out or RANGES
+
+
 def main():
     ida_auto.auto_wait()
     lines = ["位址區間反組譯（IDA DOS/V linear address）",
              "輸入檔 SHA-256：%s" % ida_nalt.retrieve_input_file_sha256().hex(),
              "函式數：%d" % ida_funcs.get_func_qty()]
-    for start, end, note in RANGES:
+    for start, end, note in ranges():
         lines.append("")
         lines.append("==== %08X–%08X  %s ====" % (start, end, note))
         ea = start

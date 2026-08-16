@@ -30,7 +30,20 @@ import idautils
 import idc
 
 OUT = "/work/hotzone_registry.txt"
-TARGETS = ["sub_1E38C"]
+# 要掃哪幾支寫在 /work/hotzone_targets.txt（一行一個符號名）；
+# 檔案不在就用預設。**工具固定，要查什麼是輸入**（同 tools/ida_dump.py）。
+LIST = "/work/hotzone_targets.txt"
+TARGETS = ["sub_1E3D7"]
+
+
+def targets():
+    try:
+        with open(LIST, encoding="utf-8") as fh:
+            names = [ln.split()[0] for ln in fh if ln.strip() and
+                     not ln.lstrip().startswith("#")]
+    except OSError:
+        return TARGETS
+    return names or TARGETS
 BACK = 24
 
 REGS = {"al": "al", "ah": "ah", "ax": "ax", "bx": "bx", "bl": "bl",
@@ -76,7 +89,7 @@ def main():
     lines.append("熱區登記表（IDA DOS/V linear address）")
     lines.append("輸入檔 SHA-256：%s" % ida_nalt.retrieve_input_file_sha256().hex())
     lines.append("函式數：%d" % ida_funcs.get_func_qty())
-    for tgt in TARGETS:
+    for tgt in targets():
         ea = idc.get_name_ea_simple(tgt)
         lines.append("")
         lines.append("==== %s EA=%08X ====" % (tgt, ea))
