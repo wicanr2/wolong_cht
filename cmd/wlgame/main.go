@@ -121,6 +121,9 @@ type game struct {
 	battleUnitDotAlly color.RGBA
 	battleUnitDotFoe  color.RGBA
 
+	// 門強度條的顏色：sub_1C4D2 的 ah=0x0B。
+	battleGateBarColor color.RGBA
+
 	// roads 與 tactical 是掛在 World 上的執行期來源，不屬於存檔本體。
 	// 讀取另一個槽位後要重新掛回，否則數值雖然恢復，行軍／戰鬥會悄悄退回
 	// 沒有道路圖與戰術資料的降級路徑。
@@ -1245,6 +1248,7 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 	g.battleFormation = -1
 	g.battleUnitDotAlly = color.RGBA{110, 235, 110, 255}
 	g.battleUnitDotFoe = color.RGBA{110, 200, 235, 255}
+	g.battleGateBarColor = color.RGBA{140, 225, 225, 255}
 	g.installTactical(g.origDir)
 	g.saveBase = path
 	g.hud = 0
@@ -1317,7 +1321,7 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 	for _, c := range []struct {
 		idx int
 		dst *color.RGBA
-	}{{10, &g.battleUnitDotAlly}, {3, &g.battleUnitDotFoe}} {
+	}{{10, &g.battleUnitDotAlly}, {3, &g.battleUnitDotFoe}, {11, &g.battleGateBarColor}} {
 		col, err := g.lib.PaletteColor(season, c.idx)
 		if err != nil {
 			log.Printf("⚠ 取不到小地圖部隊點色 %d，使用 fallback：%v", c.idx, err)

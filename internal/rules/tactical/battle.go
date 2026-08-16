@@ -128,6 +128,10 @@ type Battle struct {
 	// Advantage[i] 是第 i 側目前的有利／不利。
 	Advantage [2]Advantage
 
+	// bar 是「門強度」條的狀態（docs/spec/32）。它是純呈現用的暫態，
+	// 不進存檔。
+	bar structureBar
+
 	// Structures 是城壁與門，最多 16 段（docs/re/11 §5.9）。
 	Structures []Structure
 
@@ -341,6 +345,8 @@ func (b *Battle) Step() {
 		return
 	}
 	b.Frame++
+	// 原版在同一個地方（0001A12A）遞增計時器並檢查三個 UI 的到期。
+	b.expireStructureBar()
 
 	// 腳本先跑：原版的主迴圈是「執行一個腳本指令 → 更新實體」。
 	for i := range b.scripts {

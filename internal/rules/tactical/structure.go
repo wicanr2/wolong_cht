@@ -57,6 +57,48 @@ func SiegeWallDurability(cityWall int) int {
 	return (cityWall + wallDurabilityBase) * wallDurabilityScale
 }
 
+// StructureBarLifetime 是門強度條從最後一次更新起還會顯示幾幀
+// （原版 `0001C493` 的 `add al, 14h`）。
+const StructureBarLifetime = 0x14
+
+// structureBar 是「門強度」條的狀態（docs/spec/32）。
+//
+// 原版把它拆成兩個全域：`word_1C405` 記已經畫過的最小耐久、
+// `word_1D326` 記到期時刻（`0xFFFF` ＝ 沒有在顯示）。
+// **只在更小的值出現時才重畫**，所以這條只會往下掉。
+type structureBar struct {
+	shown    bool
+	min      int // 已經畫過的最小耐久
+	expireAt int // 到期的幀序；等於 Battle.Frame 時收掉
+}
+
+// StructureBar 回傳目前要顯示的耐久與「有沒有在顯示」。
+func (b *Battle) StructureBar() (durability int, shown bool) {
+	return b.bar.min, b.bar.shown
+}
+
+// noteStructureDamage 重現 `sub_1C407`：實體挨打時更新門強度條。
+func (b *Battle) noteStructureDamage(durability int) {
+	if !b.bar.shown {
+		// 原版在重建版面時把 word_1C405 一起設回 0xFFFF。
+		b.bar = structureBar{shown: true, min: durability}
+		b.bar.expireAt = b.Frame + StructureBarLifetime
+		return
+	}
+	if durability >= b.bar.min {
+		return
+	}
+	b.bar.min = durability
+	b.bar.expireAt = b.Frame + StructureBarLifetime
+}
+
+// expireStructureBar 重現 `0001A14B`：目前幀等於到期時刻就收掉。
+func (b *Battle) expireStructureBar() {
+	if b.bar.shown && b.Frame == b.bar.expireAt {
+		b.bar = structureBar{}
+	}
+}
+
 // Structure 是一段城壁或一道門。
 type Structure struct {
 	Kind int // KindWall／KindGate
@@ -224,9 +266,11 @@ func (b *Battle) hitStructure(side, facing, x, y int) bool {
 	}
 	if s.Durability > 0 {
 		s.Durability--
+		b.noteStructureDamage(s.Durability)
 		return true
 	}
 	b.breakRow(s.Y)
+	b.noteStructureDamage(0)
 	return true
 }
 

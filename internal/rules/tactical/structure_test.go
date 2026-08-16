@@ -315,3 +315,61 @@ func TestFacingOnlyUpdatesOnSuccessfulMove(t *testing.T) {
 		t.Errorf("被牆擋住卻把面向改成 %d，應該保持 West(%d)", s.Facing, West)
 	}
 }
+
+// 門強度條：只在更小的耐久出現時更新，20 幀後自己收掉（docs/spec/32）。
+func TestStructureBarFollowsRawMinimumAndExpiry(t *testing.T) {
+	f, _ := tiledField(32)
+	b := NewBattle(f, SyntheticFormations(), &fixedRand{}, 0)
+	if _, shown := b.StructureBar(); shown {
+		t.Fatal("還沒挨打就不該有門強度條")
+	}
+
+	s := &b.Structures[0]
+	y, start := s.Y, s.Durability
+	b.hitStructure(0, East, 32, y)
+	got, shown := b.StructureBar()
+	if !shown || got != start-1 {
+		t.Fatalf("第一次挨打後 = %d,%v，預期 %d,true", got, shown, start-1)
+	}
+
+	// 更大的耐久不覆蓋已畫過的最小值——原版 word_1C405 只往下走。
+	b.noteStructureDamage(start + 100)
+	if got, _ := b.StructureBar(); got != start-1 {
+		t.Errorf("更大的耐久不該覆蓋，得到 %d", got)
+	}
+
+	// 到期：原版 word_1D318 每幀 +1，**等於** word_1D326 才收。
+	for i := 0; i < StructureBarLifetime-1; i++ {
+		b.Frame++
+		b.expireStructureBar()
+		if _, shown := b.StructureBar(); !shown {
+			t.Fatalf("第 %d 幀就收掉了，預期撐滿 %d 幀", i+1, StructureBarLifetime)
+		}
+	}
+	b.Frame++
+	b.expireStructureBar()
+	if _, shown := b.StructureBar(); shown {
+		t.Fatalf("第 %d 幀應該收掉", StructureBarLifetime)
+	}
+
+	// 收掉之後重新挨打會重建，最小值也跟著重設。
+	b.hitStructure(0, East, 32, y)
+	if got, shown := b.StructureBar(); !shown || got != start-2 {
+		t.Fatalf("重建後 = %d,%v，預期 %d,true", got, shown, start-2)
+	}
+}
+
+// Step 有把到期檢查接進去（原版 0001A12A 是遞增計時器的同一支）。
+func TestStructureBarExpiresThroughStep(t *testing.T) {
+	b := newTestBattle(walledField(32))
+	b.noteStructureDamage(500)
+	for i := 0; i < StructureBarLifetime; i++ {
+		if b.Done {
+			t.Fatalf("第 %d 幀戰鬥就結束了，這個 fixture 撐不到到期", i)
+		}
+		b.Step()
+	}
+	if _, shown := b.StructureBar(); shown {
+		t.Fatal("Step 應該在第 0x14 幀收掉門強度條")
+	}
+}

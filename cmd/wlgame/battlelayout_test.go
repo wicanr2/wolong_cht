@@ -345,3 +345,34 @@ func TestBattleKeyboardAndPointerResolveSameCommandIndex(t *testing.T) {
 }
 
 const chromeTileForContract = 8
+
+// 門強度條的版面（docs/spec/32 §2）。這幾個數字全部是原版直接座標，
+// 而且 264 正好是 TALK 框右緣 256 再 +8——條不會被 TALK 蓋掉。
+func TestGateBarGeometryMatchesRawConstants(t *testing.T) {
+	l := dosvBattleLayoutFor(dosvBattleScreenW, dosvBattleScreenH)
+	if gateBarLabelX != 264 || gateBarLabelY != 8 {
+		t.Errorf("標籤 = (%d,%d)，預期 sub_1C407 的 (264,8)", gateBarLabelX, gateBarLabelY)
+	}
+	if gateBarX != 320 || gateBarY != 16 || gateBarLen != 0x97 || gateBarH != 2 {
+		t.Errorf("條 = (%d,%d) %d×%d，預期 sub_1C4D2 的 (320,16) 151×2",
+			gateBarX, gateBarY, gateBarLen, gateBarH)
+	}
+	// sub_10BCD 清到 471（含），條蓋 320..470——原版就差這 1 px，照抄。
+	if right := gateBarX + gateBarLen - 1; right != gateBarClearX1-1 {
+		t.Errorf("條的右緣 = %d，預期清除區右緣 %d 再往左 1 px",
+			right, gateBarClearX1)
+	}
+	if gateBarLabelX != l.TopTalk.right()+8 {
+		t.Errorf("標籤 x=%d 應在 TALK 框右緣 %d 之後 8 px",
+			gateBarLabelX, l.TopTalk.right())
+	}
+	bar := battleRect{X: gateBarX, Y: gateBarY, W: gateBarLen, H: gateBarH}
+	label := battleRect{X: gateBarLabelX, Y: gateBarLabelY,
+		W: gateBarClearX1 - gateBarLabelX + 1, H: 15}
+	if !l.Field.contains(bar) || !l.Field.contains(label) {
+		t.Error("門強度條與標籤必須落在戰場 viewport 內")
+	}
+	if bar.overlaps(l.Sidebar) || label.overlaps(l.Sidebar) {
+		t.Error("門強度條不得壓到側欄")
+	}
+}

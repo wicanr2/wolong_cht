@@ -404,6 +404,7 @@ func (g *game) drawBattleResult(screen *ebiten.Image, b *tactical.Battle, p *sta
 // 不在本批修改範圍內，因此沒有 payload 時只顯示可診斷的版面 fallback。
 func (g *game) drawBattleChrome(screen *ebiten.Image, b *tactical.Battle, p *state.Pending, l dosvBattleLayout) {
 	g.drawBattleSidebar(screen, b, p, l)
+	g.drawBattleGateBar(screen, b)
 	talks := g.battleTalkState(b, p)
 	if talks.visible(0) {
 		g.drawBattleTalk(screen, talks.text(0), l.TopTalk, 0, talks.portrait(0), p)
@@ -589,6 +590,48 @@ func (g *game) drawBattleFormationStrip(screen *ebiten.Image, b *tactical.Battle
 	cell := battleFormationCellRect(r, idx)
 	vector.StrokeRect(screen, float32(cell.X+1), float32(cell.Y+1), 14, 14,
 		1, g.battleCommandSelect, false)
+}
+
+// 門強度條的版面（docs/spec/32 §2，全部是原版直接座標）。
+const (
+	gateBarLabelX  = 264 // sub_1C407 的 dx=0x108
+	gateBarLabelY  = 8
+	gateBarClearX1 = 471 // sub_10BCD 算出的右緣
+	gateBarX       = 320 // sub_1C4D2 的 dx=0x140
+	gateBarY       = 16  // sub_1C4D2 的 bx=0x10
+	gateBarLen     = 0x97
+	gateBarH       = 2
+	gateBarShift   = 4 // 耐久 >> 4
+)
+
+// drawBattleGateBar 畫「門強度」＋進度條（docs/spec/32）。
+//
+// 它不是常駐 HUD：城壁或城門挨打才出現，20 幀後自己收掉，
+// 而且**只在更小的耐久出現時才更新**——所以這條只會往下掉。
+func (g *game) drawBattleGateBar(screen *ebiten.Image, b *tactical.Battle) {
+	if b == nil {
+		return
+	}
+	durability, shown := b.StructureBar()
+	if !shown {
+		return
+	}
+	// 原版先把 (264,8)-(471,23) 填色 0 再畫字（sub_10BCD）。
+	vector.DrawFilledRect(screen, gateBarLabelX, gateBarLabelY,
+		gateBarClearX1-gateBarLabelX+1, textdraw.GlyphH,
+		color.RGBA{0, 0, 0, 255}, false)
+	g.td.Draw(screen, "門強度", gateBarLabelX, gateBarLabelY, chrome.Paper)
+
+	filled := durability >> gateBarShift
+	if filled > gateBarLen {
+		filled = gateBarLen
+	}
+	if filled < 0 {
+		filled = 0
+	}
+	g.drawBattleBar(screen,
+		battleRect{X: gateBarX, Y: gateBarY, W: gateBarLen, H: gateBarH},
+		filled, g.battleGateBarColor)
 }
 
 // drawBattleSideFooter 只畫 segment1+0x3500 那一條。
