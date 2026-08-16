@@ -214,13 +214,13 @@ func TestChoiceBoxMatchesOriginalRect(t *testing.T) {
 		{"Y（sub_19796 的 bx=0B0h）", talkChoiceY, 176},
 		{"寬（cx=600Ah 的 0Ah×2 byte）", talkChoiceW, 160},
 		{"高（cx=600Ah 的 60h 列）", talkChoiceH, 96},
-		{"列數（sub_193E9 的 dl）", talkChoiceRows, 5},
+		{"列數（框高 96 ÷ 16 減掉上下內縮）", talkChoiceRows, 5},
 	} {
 		if tc.got != tc.want {
 			t.Errorf("%s = %d，要 %d", tc.name, tc.got, tc.want)
 		}
 	}
-	// ⭐ 高度與列數是兩條互不相干的路徑算出來的，這裡讓它們互相驗證。
+	// 列數是從框高回推的（96 − 上下各 8，每列 16），這裡把那個關係釘住。
 	if got := 2*chrome.Tile + talkChoiceRows*talkLinePitch; got != talkChoiceH {
 		t.Errorf("上下內縮 8 ＋ %d 列 × %d ＝ %d，與框高 %d 不符",
 			talkChoiceRows, talkLinePitch, got, talkChoiceH)
@@ -287,5 +287,100 @@ func TestAdviseSceneLinesGoToTheRightBox(t *testing.T) {
 		if w := textdraw.StringWidth(line); w > talkTextWidth {
 			t.Errorf("%q 寬 %d，超過框內 %d px", line, w, talkTextWidth)
 		}
+	}
+}
+
+// 第四、五項的六個位置（docs/spec/49 §1）。
+func TestVerdictTalkIndicesMatchOriginal(t *testing.T) {
+	for _, tc := range []struct {
+		name                            string
+		base, open, advisor, yes, no    int
+	}{
+		{"遷都", adviseRelocateTalkBase, 386, 389, 390, 393},
+		{"請求出陣", adviseSortieTalkBase, 396, 399, 400, 403},
+	} {
+		if tc.base != tc.open {
+			t.Errorf("%s 的起點 = %d，要 %d", tc.name, tc.base, tc.open)
+		}
+		if got := tc.base + 3; got != tc.advisor {
+			t.Errorf("%s 的軍師句 = %d，要 %d", tc.name, got, tc.advisor)
+		}
+		if got := tc.base + 4; got != tc.yes {
+			t.Errorf("%s 的接受句 = %d，要 %d", tc.name, got, tc.yes)
+		}
+		if got := tc.base + 7; got != tc.no {
+			t.Errorf("%s 的拒絕句 = %d，要 %d", tc.name, got, tc.no)
+		}
+	}
+	// 兩項共用 `sub_13B08`，所以區塊等寬（10 則）。
+	if adviseSortieTalkBase-adviseRelocateTalkBase != 10 {
+		t.Errorf("兩個起點差 %d，要 10", adviseSortieTalkBase-adviseRelocateTalkBase)
+	}
+}
+
+// 第四、五項在選單上排第 4、5，而且**沒有說服迴圈**。
+func TestAdviseMenuHasFiveRows(t *testing.T) {
+	if got := len(adviseFallbackNames); got != 5 {
+		t.Fatalf("進言選單 %d 列，要 5", got)
+	}
+	if adviseRelocateRow != len(adviseCommands) || adviseSortieRow != len(adviseCommands)+1 {
+		t.Errorf("第四、五項的列號不對：%d／%d", adviseRelocateRow, adviseSortieRow)
+	}
+}
+
+// 君主定案那三句進對的框（上／下／上），而且接受與拒絕拿到不同的第三句。
+func TestVerdictLinesGoToTheRightBoxes(t *testing.T) {
+	lib, err := library.Load("../../workplace/orig/dosv")
+	if err != nil {
+		t.Skipf("沒有原版素材：%v", err)
+	}
+	w, err := state.LoadScenario("../../workplace/orig/dosv/SINARIO.DAT", 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	w.Player = 0
+	g := &game{lib: lib, world: w}
+	g.target = -1
+
+	g.sayVerdict(adviseSortieTalkBase, true)
+	if g.advise != adviseVerdict {
+		t.Errorf("階段 = %d，要 adviseVerdict", g.advise)
+	}
+	yes := strings.Join(g.adviseLordSaid, "")
+	advisor := strings.Join(g.adviseAdvisorSaid, "")
+	if yes == "" || advisor == "" {
+		t.Fatalf("兩個框要各有一句：上 %q 下 %q", yes, advisor)
+	}
+	g.sayVerdict(adviseSortieTalkBase, false)
+	if no := strings.Join(g.adviseLordSaid, ""); no == yes {
+		t.Errorf("接受與拒絕拿到同一句：%q", no)
+	}
+	if got := strings.Join(g.adviseAdvisorSaid, ""); got != advisor {
+		t.Errorf("軍師那一句不該跟著結果變：%q ≠ %q", got, advisor)
+	}
+}
+
+// 進言選單的五列取自 TALK #77（`sub_16224` 的 `cx = 4Dh`），
+// **不是拿內部術語頂替**——原版第三項寫「請求協助」不是「協力要請」。
+func TestAdviseCommandLabelsComeFromTalk(t *testing.T) {
+	lib, err := library.Load("../../workplace/orig/dosv")
+	if err != nil {
+		t.Skipf("沒有原版素材：%v", err)
+	}
+	g := &game{lib: lib}
+	labels := g.adviseCommandLabels()
+	if len(labels) != 5 {
+		t.Fatalf("%d 列，要 5", len(labels))
+	}
+	for _, want := range []struct {
+		row  int
+		text string
+	}{{2, "請求協助"}, {3, "遷\u3000\u3000都"}, {4, "請求君主出陣"}} {
+		if labels[want.row] != want.text {
+			t.Errorf("第 %d 列 = %q，要 %q", want.row+1, labels[want.row], want.text)
+		}
+	}
+	if labels[2] == persuasion.Cooperate.String() {
+		t.Error("第三列用了內部術語，不是原版選單的用字")
 	}
 }

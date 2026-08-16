@@ -25,6 +25,47 @@ var adviseCommands = []persuasion.Command{
 	persuasion.Hostility, persuasion.CeaseFire, persuasion.Cooperate,
 }
 
+// 第四項與第五項不走說服迴圈——君主只做一次驗收（docs/spec/49）。
+// 用字照原版的指令列（`docs/re/22`）。
+const (
+	adviseRelocateRow = 3 // 遷都
+	adviseSortieRow   = 4 // 請求君主出陣
+)
+
+// adviseFallbackNames 只在讀不到 `TALK.DAT` 時用。**正常路徑走 #77**
+// （`sub_16224` 傳給 `sub_193E9` 的 `cx = 4Dh`，五列剛好對上）。
+var adviseFallbackNames = []string{
+	"敵對提案", "停戰提案", "請求協助", "遷　都", "請求君主出陣",
+}
+
+// adviseMenuTalk 是進言那五項的選單訊息。
+const adviseMenuTalk = 0x4D // 77
+
+// adviseCommandLabels 是進言選單的五列，直接取自 `TALK.DAT`。
+//
+// ⚠ 原版寫「請求協助」，而 `persuasion.Cooperate.String()` 是「協力要請」
+// ——**選單文字屬於松崗版的原文，不要拿內部術語頂替**。
+func (g *game) adviseCommandLabels() []string {
+	out := append([]string(nil), adviseFallbackNames...)
+	lines, ok := g.talkLines(adviseMenuTalk, nil)
+	if !ok || len(lines) != len(out) {
+		return out
+	}
+	for i, l := range lines {
+		if t := strings.TrimSpace(strings.Trim(l, "　")); t != "" {
+			out[i] = t
+		}
+	}
+	return out
+}
+
+// adviseVerdictBase 是那兩項的 TALK 起點——`sub_16909`／`sub_1699E`
+// 傳給 `sub_13B08` 的 `cx`（docs/spec/49 §1）。
+const (
+	adviseRelocateTalkBase = 0x182 // 386
+	adviseSortieTalkBase   = 0x18C // 396
+)
+
 // adviseActive 回報進言流程是不是開著。開著時時間會停——
 // 它是非常駐視窗（15-realtime.md §2）。
 func (g *game) adviseActive() bool { return g.advise != adviseNone }
@@ -132,7 +173,41 @@ func (g *game) updateAdvise() bool {
 				}
 			}
 		}
+		if pressed(ebiten.Key4) {
+			g.openCapitalList()
+		}
+		if pressed(ebiten.Key5) {
+			g.beginSortie()
+		}
 		if pressed(ebiten.KeyEscape) {
+			g.closeAdvise()
+		}
+
+	case advisePickCapital:
+		if g.list == nil {
+			g.closeAdvise()
+			return true
+		}
+		switch {
+		case pressed(ebiten.KeyArrowUp):
+			g.list.Move(-1)
+		case pressed(ebiten.KeyArrowDown):
+			g.list.Move(1)
+		case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
+			if node, ok := g.list.Confirm(); ok {
+				g.list = nil
+				g.beginRelocate(node)
+			}
+		case pressed(ebiten.KeyEscape):
+			if g.list.Cancel() {
+				g.list = nil
+				g.advise = advisePickCommand
+			}
+		}
+
+	case adviseVerdict:
+		if pressed(ebiten.KeyEscape) || pressed(ebiten.KeyEnter) ||
+			pressed(ebiten.KeySpace) {
 			g.closeAdvise()
 		}
 
@@ -195,6 +270,66 @@ func (g *game) openTargetList() {
 		}
 	}
 	g.openFactionPicker(rows, "↑↓ 移動　Enter 選取／決定　1-6 排序　ESC 取消", nil)
+}
+
+// openCapitalList 列出自己的據點讓玩家挑遷都目標。
+// 原版是 `sub_18853(cx=0Fh)` ＋ `sub_17400` 的地圖選點；
+// remake 用一覽表挑，**這是操作方式的差異，不是規則的差異**。
+func (g *game) openCapitalList() {
+	var rows []int
+	for i := range g.world.Cities {
+		if g.world.Cities[i].Owner == g.world.Player {
+			rows = append(rows, i)
+		}
+	}
+	if len(rows) == 0 {
+		return
+	}
+	g.openCityPicker(rows, "↑↓ 移動　Enter 選取／決定　ESC 取消", nil)
+	g.advise = advisePickCapital
+}
+
+// beginRelocate 是進言第四項：君主看一眼就定案，沒有說服迴圈。
+func (g *game) beginRelocate(node int) {
+	g.adviseNode = node
+	ok := g.world.AdviseRelocateAccepted(node)
+	g.sayVerdict(adviseRelocateTalkBase, ok)
+	if ok && g.world.AdviseRelocate(node) {
+		g.lastEvent = "遷都 " + big5(g.world.Cities[node].Name)
+	} else {
+		g.lastEvent = "遷都：君主不同意"
+	}
+}
+
+// beginSortie 是進言第五項：兩道閘都過君主才親自出陣。
+//
+// ⚠ **看到君主說話不代表提議被接受**——原版無論通不通過都跳 #396，
+// 差別只在第三句（`docs/mechanics/70-ai.md`）。
+func (g *game) beginSortie() {
+	ok := g.world.AdviseSortieAccepted()
+	g.sayVerdict(adviseSortieTalkBase, ok)
+	if ok && g.world.AdviseSortie() {
+		g.lastEvent = "君主親自出陣"
+	} else {
+		g.lastEvent = "請求出陣：君主不同意"
+	}
+}
+
+// sayVerdict 演 `sub_13B08` 的三句：上框君主開場、下框軍師、上框君主定案。
+//
+//	cx        君主開場（`sub_13C99` 自己加說話型變體）
+//	cx + 3    軍師（`sub_13CDC`，不加變體）
+//	cx + 4    接受；cx + 7 拒絕（原版 `and bp, bp / jz` 之後 `add cx, 3`）
+func (g *game) sayVerdict(base int, accepted bool) {
+	g.advise = adviseVerdict
+	g.clearAdviseBoxes()
+	g.adviseSay(adviseLord, base+g.playerTalkVariant())
+	g.adviseSay(adviseAdvisor, base+3)
+	reply := base + 4
+	if !accepted {
+		reply += 3
+	}
+	g.adviseSay(adviseLord, reply+g.playerTalkVariant())
 }
 
 func (g *game) beginPersuasion() {
@@ -410,12 +545,22 @@ func (g *game) drawAdvise(screen *ebiten.Image) {
 
 	switch g.advise {
 	case advisePickCommand:
-		box(40, 60, 260, 30+len(adviseCommands)*lh)
+		labels := g.adviseCommandLabels()
+		box(40, 60, 260, 30+len(labels)*lh)
 		g.td.Draw(screen, "進　言", 48, 66, amber)
-		for i, c := range adviseCommands {
-			g.td.Draw(screen, fmt.Sprintf("%d　%s", i+1, c.String()),
+		for i, name := range labels {
+			g.td.Draw(screen, fmt.Sprintf("%d　%s", i+1, name),
 				48, 86+i*lh, white)
 		}
+
+	case adviseVerdict:
+		// 第四、五項沒有說服迴圈，畫面就是 `sub_13B08` 的三句。
+		g.drawIventScene(screen, 0)
+		g.drawLegacyTalkBox(screen, talkUpperBoxX, talkUpperBoxY,
+			talkBoxW, talkBoxH, g.adviseLordSaid, g.playerLordPortrait())
+		g.drawLegacyTalkBox(screen, talkLowerBoxX, talkLowerBoxY,
+			talkBoxW, talkBoxH, g.adviseAdvisorSaid, g.playerAdvisorPortrait())
+		g.drawLegacyHint(screen, "Enter／ESC 關閉", talkUpperBoxY-4*chrome.Tile)
 
 	case advisePersuade:
 		// 原版的說服畫面（docs/spec/45 §1）：`IVENTGRF` 第 0 頁的插圖，

@@ -441,3 +441,41 @@ func weakerThanHalf(s Situation) bool {
 	ours, theirs := power(s.OurCities, s.TheirCities, s.Aggression)
 	return ours < theirs/2
 }
+
+// ---------------------------------------------------------------------------
+// 請求君主出陣（進言的第五項，原版 `sub_1699E`）
+// ---------------------------------------------------------------------------
+
+// Sortie 是「請求君主出陣」要看的三個數。**兩道閘都不看敵情**，
+// 只看自己的錢與兵（`docs/mechanics/70-ai.md` §1.2）。
+type Sortie struct {
+	Funds      int // 勢力資金
+	Aggression int // 君主的好戰等級 0–15（勢力記錄 +0x28）
+	Reserves   int // 三種預備兵的總點數
+}
+
+// SortieReserveGate 是兵源那道閘：三種預備兵**總和** ≥ 600 點（6,000 人）。
+// 原版 `cmp ax, 258h`。
+const SortieReserveGate = 600
+
+// SortieFundsGate 是國庫那道閘：資金 ≥ (15 − 好戰等級) × 1,024。
+//
+// 原版算的是 `(0Fh − 好戰) × 4` 再與**資金 ÷ 256** 比，所以換回資金
+// 本身就是 × 1,024。好戰 15 的君主門檻是 0，好戰 0 的要 15,360。
+func SortieFundsGate(aggression int) int {
+	if aggression < 0 {
+		aggression = 0
+	}
+	if aggression > 15 {
+		aggression = 15
+	}
+	return (15 - aggression) * 1024
+}
+
+// AcceptSortie 回報君主會不會親自出陣。
+//
+// ⚠ **兩道閘是「而且」的關係**——任一不過就整個擋下（原版用同一個
+// `dl` 旗標，任一條成立就寫 1）。
+func AcceptSortie(s Sortie) bool {
+	return s.Funds >= SortieFundsGate(s.Aggression) && s.Reserves >= SortieReserveGate
+}

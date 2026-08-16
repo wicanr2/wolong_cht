@@ -320,34 +320,17 @@ func (w *World) formAICorps(faction int) *StrategyEvent {
 	return w.formAICorpsTo(faction, -1)
 }
 
-// formAICorpsTo 編一支新軍團。dest ≥ 0 時直接指定目標據點——
-// 求援走的就是這一條（原版 `sub_14575` 把 `ch` 寫進軍團 `+0x20`）。
-func (w *World) formAICorpsTo(faction, dest int) *StrategyEvent {
-	if faction < 0 || faction >= numFactions || faction == w.Player {
-		return nil
+// autoFormCorps 是 `sub_1461D`（＋`sub_16F26`）：照預備兵自動配六個槽、
+// 把軍團掛到 leader 身上。任一槽湊不到 0x32 點就編不出來，回 false。
+//
+// 兩個呼叫端：AI 擴軍（`sub_14575`）與**君主親自出陣**（`sub_16E8F`）。
+// `delegated` 是軍團 `+0x00` 的位元 2——`sub_16E8F` 一律 `or [si], 4`，
+// 而君主出陣那一支 `sub_1699E` 緊接著 `and [di], 0FBh` 把它清掉。
+func (w *World) autoFormCorps(faction, leader int, delegated bool) bool {
+	if faction < 0 || faction >= numFactions || leader < 0 || leader >= numCorps {
+		return false
 	}
 	f := &w.Factions[faction]
-	// 上限是 `max(5, 資金 ÷ 8192)` 減掉現有軍團數（原版 `sub_14575`，
-	// docs/re/44 §4.1）。**先前這裡寫的是 `f.Corps != 0`**——那讓 AI
-	// 永遠只有一支軍團，資金再多也不會擴軍。
-	if !f.Alive || f.InvasionTarget == diplomacy.NoTarget ||
-		threat.Budget(f.Funds, f.Corps) == 0 {
-		return nil
-	}
-
-	leader := -1
-	for i, g := range w.Generals {
-		if !g.Alive || g.Faction != faction || g.Posted || g.Captor != noFaction {
-			continue
-		}
-		if leader < 0 || g.Martial > w.Generals[leader].Martial {
-			leader = i
-		}
-	}
-	if leader < 0 || leader >= numCorps {
-		return nil
-	}
-
 	var kinds [army.Positions]army.TroopType
 	probe := f.Reserves
 	for slot, choices := range aiFormationTable {
@@ -362,7 +345,7 @@ func (w *World) formAICorpsTo(faction, dest int) *StrategyEvent {
 			break
 		}
 		if !found {
-			return nil
+			return false
 		}
 	}
 
@@ -372,8 +355,7 @@ func (w *World) formAICorpsTo(faction, dest int) *StrategyEvent {
 	}
 	var c Corps
 	c.Alive, c.Faction, c.Morale = true, faction, f.MoraleBase
-	// AI 自己編的軍團預設是委任（`sub_16E8F` 的 `or [si], 4`）。
-	c.Delegated = true
+	c.Delegated = delegated
 	c.Ordered = f.Capital
 	home := w.clampCity(f.Capital)
 	c.Node, c.X, c.Y = home, w.Cities[home].X, w.Cities[home].Y
@@ -409,6 +391,42 @@ func (w *World) formAICorpsTo(faction, dest int) *StrategyEvent {
 	w.Corps[leader] = c
 	w.Generals[leader].Posted = true
 	f.Corps++
+
+	return true
+}
+
+// formAICorpsTo 編一支新軍團。dest ≥ 0 時直接指定目標據點——
+// 求援走的就是這一條（原版 `sub_14575` 把 `ch` 寫進軍團 `+0x20`）。
+func (w *World) formAICorpsTo(faction, dest int) *StrategyEvent {
+	if faction < 0 || faction >= numFactions || faction == w.Player {
+		return nil
+	}
+	f := &w.Factions[faction]
+	// 上限是 `max(5, 資金 ÷ 8192)` 減掉現有軍團數（原版 `sub_14575`，
+	// docs/re/44 §4.1）。**先前這裡寫的是 `f.Corps != 0`**——那讓 AI
+	// 永遠只有一支軍團，資金再多也不會擴軍。
+	if !f.Alive || f.InvasionTarget == diplomacy.NoTarget ||
+		threat.Budget(f.Funds, f.Corps) == 0 {
+		return nil
+	}
+
+	leader := -1
+	for i, g := range w.Generals {
+		if !g.Alive || g.Faction != faction || g.Posted || g.Captor != noFaction {
+			continue
+		}
+		if leader < 0 || g.Martial > w.Generals[leader].Martial {
+			leader = i
+		}
+	}
+	if leader < 0 || leader >= numCorps {
+		return nil
+	}
+
+	if !w.autoFormCorps(faction, leader, true) {
+		return nil
+	}
+	home := w.clampCity(f.Capital)
 
 	destination := dest
 	if destination < 0 {

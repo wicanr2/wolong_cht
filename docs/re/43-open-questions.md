@@ -21,10 +21,10 @@
 | 規則正確性 | 54 | 52 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
 | 程式碼理解 | 217 | 210 | 7 | 0 |
-| 驗收 | 57 | 51 | 6 | 0 |
+| 驗收 | 60 | 53 | 7 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 108 | 103 | 5 | 0 |
-| **合計** | **490** | 469 | 20 | 1 |
+| 其他 | 109 | 104 | 5 | 0 |
+| **合計** | **494** | 472 | 21 | 1 |
 
 ## 2.1 規則正確性（54 條）
 
@@ -349,7 +349,7 @@
 | [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `sub_189A4(al=1, dx=0, bx=2, cx=151Bh)` | `sub_13D09` 在貼完 `IVENTGRF` 之後畫的框，與 `sub_1895D` 是不是同一組單位沒驗 | 靜態 |
 | [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `IVENTGRF` 插圖本身的位置 | `sub_13D09` 的 `dx = 0E07h` 是餵給 `sub_1E38C`（讀檔）的參數，不是座標。插圖在畫面上的位置沒量 | 靜態 |
 
-## 2.4 驗收（57 條）
+## 2.4 驗收（60 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -410,6 +410,9 @@
 | [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 逐句節拍 | 原版每句要等玩家按鍵才往下走；remake 直接顯示最新一句 | 靜態 |
 | [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 插圖之外的畫面 | 原版這一頁底下是不是還留著大地圖沒驗過，remake 留著 | 靜態 |
 | [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 選單的反白樣式 | 原版怎麼畫游標列沒解，remake 用自己的反白條 ＋ `>` | 靜態 |
+| [`playtest/35-advise-verdict-screens.md`](../playtest/35-advise-verdict-screens.md) | 逐句節拍 | 原版三句要按鍵才往下走，remake 直接顯示最後的狀態（上框是 ③、下框是 ②） | 靜態 |
+| [`playtest/35-advise-verdict-screens.md`](../playtest/35-advise-verdict-screens.md) | 遷都的畫面 | 目標用一覽表挑，原版是地圖選點（`sub_17400`）。沒有截圖 | 實測 |
+| [`playtest/35-advise-verdict-screens.md`](../playtest/35-advise-verdict-screens.md) | 選單的位置 | 原版的進言選單在 (0, 64)（`sub_16224` 的 `dx = 400h`，`docs/spec/45` §2.1），remake 用自己的小視窗 | 靜態 |
 
 ## 2.5 外部資料（17 條）
 
@@ -433,7 +436,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（108 條）
+## 2.6 其他（109 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -527,13 +530,11 @@
 | [`spec/40-ai-march-decision.md`](../spec/40-ai-march-decision.md) | `sub_1487B` | AI 編成後挑第一個目標用的相鄰格選擇，未逐條解；remake 沿用既有的 `nearestFactionCity` | 靜態 |
 | [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 君主那一側的回話 | 原版事件場景會同時出現兩個框（`docs/re/66` §5.1 的影格就是），remake 只畫一個 | 靜態 |
 | [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 框的底紋 | 龍紋的點陣找到了（`../formats/03` §5.5），但 96 列的排法還沒解，remake 仍用純色 | 靜態 |
-| [`spec/42-event-scene-speakers.md`](../spec/42-event-scene-speakers.md) | 上框在結果階段的內容 | 影格上君主會在上框回話（「好，來人啊…」）。那一句不是 `sub_13C3D` 的結果句（它走一般通知框），來源還沒找到 | 靜態 |
 | [`spec/42-event-scene-speakers.md`](../spec/42-event-scene-speakers.md) | 撥款事件（4／5） | 同上，還沒對過哪一則進下框 | 靜態 |
 | [`spec/43-rout-on-blocked-return.md`](../spec/43-rout-on-blocked-return.md) | `loc_1491B` 的其他成本項 | 只解出「非己方據點 ＋0xA6」，廣度優先搜尋本身沒逐條讀 | 靜態 |
 | [`spec/43-rout-on-blocked-return.md`](../spec/43-rout-on-blocked-return.md) | TALK #1F／#20／#23／#198 | remake 還沒把這四則接上 | 靜態 |
 | [`spec/44-advise-original-text.md`](../spec/44-advise-original-text.md) | 逐句節拍 | 原版每句要等玩家按鍵才往下走，remake 直接顯示最新一句（`45` §3.1） | 靜態 |
 | [`spec/44-advise-original-text.md`](../spec/44-advise-original-text.md) | 「這項進言沒有成立」 | remake 專屬的守門句：君主點頭之後規則層才發現條件變了。原版沒有這條路徑，所以沒有對應的原文 | 靜態 |
-| [`spec/45-advise-scene-layout.md`](../spec/45-advise-scene-layout.md) | `dh = 0Bh` | 選單本體的第二個立即值，語意未定（不是框寬——框寬由 `cx = 600Ah` 決定） | 靜態 |
 | [`spec/45-advise-scene-layout.md`](../spec/45-advise-scene-layout.md) | 逐句節拍 | 原版每句要等玩家按鍵，`sub_10241`／`sub_102C2` 那一段還沒讀 | 靜態 |
 | [`spec/45-advise-scene-layout.md`](../spec/45-advise-scene-layout.md) | 選單的反白樣式 | 原版怎麼畫游標列沒解，remake 用自己的反白條 | 靜態 |
 | [`spec/46-post-battle-retreat.md`](../spec/46-post-battle-retreat.md) | `loc_1491B` 的方向回傳 | `±4` 決定讀哪一個鄰接槽，remake 用 `Route` 的第 2 個節點取代，沒有逐條對過兩者選的是不是同一站 | 靜態 |
@@ -542,6 +543,9 @@
 | [`spec/47-city-fall-corps-redirect.md`](../spec/47-city-fall-corps-redirect.md) | `[si+1Ah]` | 據點記錄記下舊主，remake 的 `OwnerRecorded` 是同一格但語意沒逐位元對過 | 靜態 |
 | [`spec/48-governor-returns-on-city-fall.md`](../spec/48-governor-returns-on-city-fall.md) | 武將 `+0x1E` 的值域 | 534/535/536 與 542 是空的，所以實際用到的變體大概只有 3–6。哪些武將拿到哪個值沒統計過 | 靜態 |
 | [`spec/48-governor-returns-on-city-fall.md`](../spec/48-governor-returns-on-city-fall.md) | `sub_10CE7` 的變數表 | 這裡推出 `{1}` ＝ 武將、`{2}` ＝ 據點（照 push 的順序與譯文），沒有逐個 handler 讀 | 靜態 |
+| [`spec/49-advise-relocate-and-sortie.md`](../spec/49-advise-relocate-and-sortie.md) | `sub_16EC9` | `sub_16E8F` 編成前的檢查，只確認「君主還沒帶軍團」這一條，其餘沒逐行讀 | 靜態 |
+| [`spec/49-advise-relocate-and-sortie.md`](../spec/49-advise-relocate-and-sortie.md) | 遷都的地圖選點 | `sub_17400` 沒讀，remake 用一覽表代替 | 靜態 |
+| [`spec/49-advise-relocate-and-sortie.md`](../spec/49-advise-relocate-and-sortie.md) | 進言的指令列 | 五項在原版指令樹裡的排法（`docs/re/22`）沒有逐格對過，remake 用自己的小視窗 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |

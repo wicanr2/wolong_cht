@@ -221,6 +221,9 @@ type game struct {
 	target    int
 	sess      *persuasion.Session
 	sessCur   int
+	// adviseNode 是遷都選到的據點（進言第四項）。
+	adviseNode int
+
 	// 進言畫面上兩個框各自的最新一句（docs/spec/45 §1）。
 	adviseLordSaid    []string // 上框：君主
 	adviseAdvisorSaid []string // 下框：軍師，也就是玩家自己
@@ -268,15 +271,17 @@ type game struct {
 	disasterImages map[int]*ebiten.Image
 }
 
-// adviseStage 是進言的三個階段。
+// adviseStage 是進言流程的階段。
 type adviseStage int
 
 const (
 	adviseNone        adviseStage = iota
-	advisePickCommand             // 選敵對／停戰／協力
+	advisePickCommand             // 選五項進言
 	advisePickAlly                // 協力要請先選協力方
 	advisePickTarget              // 選對象勢力
 	advisePersuade                // 君主拒絕了，開始說服
+	advisePickCapital             // 遷都：選要搬去的據點
+	adviseVerdict                 // 遷都／出陣：君主一句話定案，沒有說服迴圈
 )
 
 // timeRuns 是暫停規則。
@@ -1243,7 +1248,8 @@ func main() {
 	openWin := flag.Int("open-window", -1, "截圖前先打開第幾個視窗（0–3；−2 ＝ 四窗全開，對拍用）")
 	openList := flag.Bool("open-list", false, "截圖前先開武將一覽（驗收用）")
 	openAdvise := flag.Bool("open-advise", false, "截圖前先跑到說服畫面（驗收用）")
-	adviseMenu := flag.Bool("advise-menu", false, "配 -open-advise：停在五選一的理由選單，不自動提出理由（驗收用）")
+	adviseMenu := flag.Bool("advise-menu", false, "單獨用：停在進言的五項選單；配 -open-advise：停在五選一的理由選單（驗收用）")
+	adviseSortie := flag.Bool("advise-sortie", false, "截圖前跑「請求君主出陣」的三句定案畫面（驗收用）")
 	openForm := flag.Bool("open-form", false, "截圖前先編一支軍團並開編成畫面（驗收用）")
 	openCorps := flag.Bool("open-corps", false, "截圖前先編兩支軍團並開軍團一覽（驗收用）")
 	openBattle := flag.Bool("open-battle", false, "截圖前先開一場野戰的戰術戰鬥（驗收用）")
@@ -1313,7 +1319,7 @@ func main() {
 		if err := g.startWorld(loadPath, *scenario, *player, true); err != nil {
 			log.Fatal(err)
 		}
-		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *openForm, *openCorps,
+		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *openForm, *openCorps,
 			*openMarchMode, *openBattle, *openSiege, *openBattleChoice, *openMessage,
 			*openTalkIndex, *openOutcome, *siegeNode)
 	} else {
@@ -1504,7 +1510,7 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 	return nil
 }
 
-func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, openForm, openCorps, openMarchMode,
+func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, openForm, openCorps, openMarchMode,
 	openBattle, openSiege, openBattleChoice, openMessage bool, openTalkIndex int,
 	openOutcome string, siegeNode int) {
 	w := g.world
@@ -1569,6 +1575,15 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 	}
 	if openMarchMode {
 		g.demoMarchMode()
+	}
+	if adviseMenu && !openAdvise {
+		g.openAdvise() // 停在五項選單
+		return
+	}
+	if adviseSortie {
+		g.openAdvise()
+		g.beginSortie()
+		return
 	}
 	if openAdvise {
 		g.openAdvise()

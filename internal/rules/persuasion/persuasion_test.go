@@ -415,3 +415,38 @@ func TestPowerTieFavoursNeither(t *testing.T) {
 		t.Error("打平不該算「對我國較不利」")
 	}
 }
+
+// 兩道閘各自擋得住，都過才出陣（docs/spec/49 §3）。
+func TestAcceptSortieNeedsBothGates(t *testing.T) {
+	base := Sortie{Funds: 20000, Aggression: 5, Reserves: 700}
+	if !AcceptSortie(base) {
+		t.Fatal("兩道都過卻不出陣")
+	}
+	poor := base
+	poor.Funds = SortieFundsGate(base.Aggression) - 1
+	if AcceptSortie(poor) {
+		t.Error("錢不夠還出陣")
+	}
+	thin := base
+	thin.Reserves = SortieReserveGate - 1
+	if AcceptSortie(thin) {
+		t.Error("兵不夠還出陣")
+	}
+	// 邊界：兩個都是「大於等於」。
+	edge := Sortie{Funds: SortieFundsGate(5), Aggression: 5, Reserves: SortieReserveGate}
+	if !AcceptSortie(edge) {
+		t.Error("剛好踩線應該過")
+	}
+}
+
+// 好戰等級越高門檻越低（`(15 − 好戰) × 1,024`）。
+func TestSortieFundsGateScalesWithAggression(t *testing.T) {
+	for _, tc := range []struct{ aggression, want int }{
+		{15, 0}, {14, 1024}, {0, 15360},
+		{-3, 15360}, {99, 0}, // 值域外要收斂，不要算出負門檻
+	} {
+		if got := SortieFundsGate(tc.aggression); got != tc.want {
+			t.Errorf("好戰 %d ⇒ %d，要 %d", tc.aggression, got, tc.want)
+		}
+	}
+}
