@@ -704,7 +704,7 @@ func (w *World) resolveCorpsBattle(ev *CorpsEvent, att, def int, m combat.Mode, 
 	w.afterBattle(ev, def, defDead, att, rng)
 
 	if defDead && !attDead && m == combat.Siege {
-		w.capture(att, ev)
+		w.capture(att, ev, rng)
 	}
 }
 
@@ -727,7 +727,7 @@ func (w *World) fightGarrison(att int, ev *CorpsEvent, rng combat.Rand) {
 	attDead := r.AttackerDestroyed || w.retreatOrPerish(att, !r.DefenderWins)
 	w.afterBattle(ev, att, attDead, -1, rng)
 	if !r.DefenderWins && !attDead {
-		w.capture(att, ev)
+		w.capture(att, ev, rng)
 	}
 }
 
@@ -759,13 +759,25 @@ func (w *World) afterBattle(ev *CorpsEvent, i int, destroyed bool, victor int, r
 	if !destroyed {
 		return
 	}
-	c := &w.Corps[i]
-	loser := c.Faction
 	winner := combat.NeutralFaction
 	if victor >= 0 {
 		winner = w.Corps[victor].Faction
 	} else if n := w.Corps[i].Node; army.KindOf(n) == army.CityNode {
 		winner = w.Cities[n].Owner
+	}
+	w.corpsPerishes(ev, i, winner, rng)
+}
+
+// corpsPerishes 是「這支軍團沒了」的共同出口：軍團消失、勢力軍團數 −1、
+// 主將擲一次下場（原版 `sub_1291A`）。
+//
+// 兩個入口：戰敗壞滅（`sub_1474A`）與**據點失守後無處可退**
+// （`sub_14DA4` 的 `jb` 分支，[`docs/spec/47`](../../docs/spec/47-city-fall-corps-redirect.md)）。
+func (w *World) corpsPerishes(ev *CorpsEvent, i, winner int, rng combat.Rand) {
+	c := &w.Corps[i]
+	loser := c.Faction
+	if loser < 0 || loser >= numFactions || i >= len(w.Generals) {
+		return
 	}
 
 	f := &w.Factions[loser]
@@ -804,7 +816,7 @@ func (w *World) afterBattle(ev *CorpsEvent, i int, destroyed bool, victor int, r
 }
 
 // capture 把據點換手（`sub_14CF3`）。
-func (w *World) capture(att int, ev *CorpsEvent) {
+func (w *World) capture(att int, ev *CorpsEvent, rng combat.Rand) {
 	node := w.Corps[att].Node
 	if army.KindOf(node) != army.CityNode {
 		return
@@ -823,19 +835,50 @@ func (w *World) capture(att int, ev *CorpsEvent) {
 	}
 	city.Owner = next
 	city.OwnerRecorded = next
-	w.Factions[next].Cities++
 	ev.Captured = node
-	// 首都被打下來就遷都（原版 `sub_14DF0`：先比 `[bx+3]` 再挑新的）。
-	// **舊主還活著才遷**——一個據點都不剩時 `sub_16A3D` 回 CF ＝ 1，
-	// 滅亡由別的地方判定，這裡不越權。
+	// 原版的順序是**遷都 → 調頭 → 滅亡判定 → 新主據點數 +1**
+	// （`sub_14CF3` 逐行）。調頭排在遷都之後不是細節——
+	// `sub_1487B` 找的是**新首都**的方向。
+	finished := false
 	if old >= 0 && old < numFactions && w.Factions[old].Capital == node {
 		ev.Relocated = w.relocateCapital(old)
 		if ev.Relocated == capital.None {
 			// sub_14DF0：首都失守且找不到替代據點時，capital=0xFF
 			// 並清除勢力 alive bit；sub_14FCE 隨後對玩家離開主循環。
 			w.Factions[old].Capital = noCity
-			w.eliminateFaction(old, next)
+			finished = true
 		}
+	}
+	w.redirectFallenCityCorps(ev, node, old, next, rng)
+	if finished {
+		w.eliminateFaction(old, next)
+	}
+	w.Factions[next].Cities++
+}
+
+// redirectFallenCityCorps 是 `sub_14DA4`：據點易主之後，**舊主留在那一格上
+// 的軍團**逐一改成「回家的下一站」；退不了的走 `sub_1291A`（主將擲下場）。
+//
+// 名單是 `sub_14C72` 在開打前收的——同一格、同一勢力、還活著的軍團，
+// 最多 127 支。所以這一條處理的是**疊在同一格上、沒被捲進那一場的守軍**。
+func (w *World) redirectFallenCityCorps(ev *CorpsEvent, node, old, winner int, rng combat.Rand) {
+	if old < 0 || old >= numFactions || node < 0 || node >= len(w.Cities) {
+		return
+	}
+	for i := range w.Corps {
+		c := &w.Corps[i]
+		if !c.Alive || c.Faction != old || c.Node != node {
+			continue
+		}
+		hop := w.nextHopHome(i)
+		if hop < 0 {
+			w.corpsPerishes(ev, i, winner, rng)
+			continue
+		}
+		_ = w.March(i, hop)
+		// 原版還會 `mov byte ptr [si+0Bh], 1` ＋ `or byte ptr [si], 2`：
+		// 下一個 tick 就重算並起步。
+		c.Timer = 1
 	}
 }
 

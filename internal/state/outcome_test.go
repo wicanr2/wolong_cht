@@ -62,7 +62,7 @@ func outcomeCaptureWorld(player, old int, withAlternative bool) *World {
 func TestOutcomeCaptureLastCapitalDefeatsPlayer(t *testing.T) {
 	w := outcomeCaptureWorld(1, 1, false)
 	ev := &CorpsEvent{Captured: -1}
-	w.capture(0, ev)
+	w.capture(0, ev, &testRand{s: 1})
 	if w.Factions[1].Alive || w.Factions[1].Capital != noCity {
 		t.Fatalf("玩家勢力未按最後首都邊界清除：%+v", w.Factions[1])
 	}
@@ -74,7 +74,7 @@ func TestOutcomeCaptureLastCapitalDefeatsPlayer(t *testing.T) {
 func TestOutcomeCaptureWithAlternativeCapitalDoesNotDefeat(t *testing.T) {
 	w := outcomeCaptureWorld(1, 1, true)
 	ev := &CorpsEvent{Captured: -1}
-	w.capture(0, ev)
+	w.capture(0, ev, &testRand{s: 1})
 	if !w.Factions[1].Alive || w.Factions[1].Capital != 1 {
 		t.Fatalf("仍有替代據點卻未遷都：%+v", w.Factions[1])
 	}
@@ -86,7 +86,7 @@ func TestOutcomeCaptureWithAlternativeCapitalDoesNotDefeat(t *testing.T) {
 func TestOutcomeNonPlayerEliminationDoesNotSetPlayerOutcome(t *testing.T) {
 	w := outcomeCaptureWorld(1, 2, false)
 	ev := &CorpsEvent{Captured: -1}
-	w.capture(0, ev)
+	w.capture(0, ev, &testRand{s: 1})
 	if w.Factions[2].Alive || w.Factions[2].Capital != noCity {
 		t.Fatalf("非玩家勢力未清除：%+v", w.Factions[2])
 	}

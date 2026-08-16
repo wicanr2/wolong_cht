@@ -550,3 +550,144 @@ func TestNoRetreatMeansDestroyed(t *testing.T) {
 		t.Fatal("退不了卻沒判成壞滅")
 	}
 }
+
+// ---------------------------------------------------------------------------
+// 據點易主之後的調頭（docs/spec/47）
+// ---------------------------------------------------------------------------
+
+// stackedDefender 在 node 上放一支 faction 的軍團（不參戰，只是疊在那裡）。
+func stackedDefender(t *testing.T, w *World, faction, node int) int {
+	t.Helper()
+	i := formOne(t, w, faction)
+	c := &w.Corps[i]
+	c.Node, c.TargetNode, c.Ordered = node, node, node
+	c.X, c.Y = w.Cities[node].X, w.Cities[node].Y
+	c.TargetX, c.TargetY = c.X, c.Y
+	return i
+}
+
+// 疊在那一格上、沒被捲進戰鬥的守軍，易主之後退一站回家。
+func TestFallenCityCorpsRetreatOneHop(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[1]
+	a, b, c := threeInARow(t, w, f)
+	i := stackedDefender(t, w, f, c)
+
+	attacker := -1
+	for _, g := range w.AliveFactions() {
+		if g != f {
+			attacker = g
+			break
+		}
+	}
+	att := stackedDefender(t, w, attacker, c)
+
+	ev := &CorpsEvent{Captured: -1}
+	w.capture(att, ev, &testRand{s: 1})
+
+	if w.Cities[c].Owner != attacker {
+		t.Fatalf("據點沒換手：%d", w.Cities[c].Owner)
+	}
+	if !w.Corps[i].Alive {
+		t.Fatal("有退路的守軍不該消失")
+	}
+	if got := w.Corps[i].Ordered; got != b {
+		t.Errorf("調頭到 %d，要退一站到 %d（首都在 %d）", got, b, a)
+	}
+	if got := w.Corps[i].Timer; got != 1 {
+		t.Errorf("計時器 = %d，原版寫 1（下一個 tick 起步）", got)
+	}
+}
+
+// 退不了就走壞滅同一個出口（原版 `sub_1291A`）。
+func TestFallenCityCorpsWithNoRetreatPerish(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[1]
+	_, b, c := threeInARow(t, w, f)
+	i := stackedDefender(t, w, f, c)
+
+	attacker := -1
+	for _, g := range w.AliveFactions() {
+		if g != f {
+			attacker = g
+			break
+		}
+	}
+	w.Cities[b].Owner = attacker // 回家的下一站是別人的地
+	att := stackedDefender(t, w, attacker, c)
+
+	before := w.Factions[f].Corps
+	ev := &CorpsEvent{Captured: -1}
+	w.capture(att, ev, &testRand{s: 1})
+
+	if w.Corps[i].Alive {
+		t.Fatal("退不了的守軍還在")
+	}
+	if w.Factions[f].Corps != before-1 {
+		t.Errorf("勢力軍團數 %d，要 %d", w.Factions[f].Corps, before-1)
+	}
+	found := false
+	for _, d := range ev.Destroyed {
+		if d == i {
+			found = true
+		}
+	}
+	if !found {
+		t.Error("沒有進 ev.Destroyed，事件層看不到這支軍團沒了")
+	}
+}
+
+// 首都被打下來時，那一格上的守軍最後是朝**新首都**走。
+//
+// ⚠ **這一條驗的是結果，不是順序。** 原版 `sub_14CF3` 先遷都
+// （`sub_14DF0`）再調頭（`sub_14DA4`），remake 照抄了這個順序；
+// 但把兩者對調也會得到同一個答案——遷都會呼叫 `sub_14502`
+// （`syncCorpsAfterCapitalChange`），把「目標還是舊首都」的軍團
+// 一律改掛新首都。**兩條路在這裡收斂**，所以測試擋不住順序寫反。
+// 實際跑過負對照確認：把調頭提前，這一條照樣綠。
+func TestFallenCapitalRedirectsTowardTheNewCapital(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[1]
+	picked := []int{}
+	for n := range w.Cities {
+		if len(picked) == 3 {
+			break
+		}
+		picked = append(picked, n)
+	}
+	if len(picked) < 3 {
+		t.Skip("據點不夠三個")
+	}
+	a, b, c := picked[0], picked[1], picked[2]
+	for _, n := range picked {
+		w.Cities[n].Owner = f
+	}
+	w.Factions[f].Capital = c // ★ 首都就是等一下要陷落的那一格
+	w.SetRoads(march.New(len(w.Cities), []march.Edge{
+		{A: c, B: a, Steps: 1}, {A: c, B: b, Steps: 1},
+	}))
+	i := stackedDefender(t, w, f, c)
+
+	attacker := -1
+	for _, g := range w.AliveFactions() {
+		if g != f {
+			attacker = g
+			break
+		}
+	}
+	att := stackedDefender(t, w, attacker, c)
+
+	ev := &CorpsEvent{Captured: -1}
+	w.capture(att, ev, &testRand{s: 1})
+
+	newCapital := w.Factions[f].Capital
+	if newCapital == c || newCapital == noCity {
+		t.Fatalf("首都被打下來卻沒遷都：%d", newCapital)
+	}
+	if !w.Corps[i].Alive {
+		t.Fatal("遷都之後應該還有地方可去")
+	}
+	if got := w.Corps[i].Ordered; got != newCapital {
+		t.Errorf("調頭到 %d，新首都是 %d（星形拓樸下下一站就是它）", got, newCapital)
+	}
+}

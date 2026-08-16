@@ -293,7 +293,7 @@ func (w *World) ResolvePending(rng combat.Rand) *CorpsEvent {
 	w.afterBattle(ev, p.Attacker, attDead, p.Defender, rng)
 	w.afterBattle(ev, p.Defender, defDead, p.Attacker, rng)
 	if o.AttackerWins && p.Mode == combat.Siege && !attDead {
-		w.capture(p.Attacker, ev)
+		w.capture(p.Attacker, ev, rng)
 	}
 	return ev
 }
