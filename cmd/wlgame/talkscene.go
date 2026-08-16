@@ -58,10 +58,19 @@ const (
 	talkSceneX = 64
 	talkSceneY = 144
 
-	talkChoiceX = 80
-	talkChoiceY = 176
-	talkChoiceW = 128
-	talkChoiceH = 64
+	// 選單框：外交三選一、撥款、說服五選一共用 `sub_13B7E`，
+	// 那一組座標與尺寸全是寫死的（docs/spec/45 §2）：
+	//
+	//	sub_19796(dx=50h, bx=0B0h)  ⇒ 像素 (80, 176)
+	//	cx = 600Ah → sub_1FB11      ⇒ 每列 0Ah×2 ＝ 20 B ＝ 160 px、96 列
+	//
+	// 高 96 ＝ 上下各內縮 8 ＋ 五列 × 16。**選項少的時候框不縮**——
+	// `sub_13B5A` 傳 5、`sub_13902` 傳 3，而框三處相同。
+	talkChoiceX    = 80
+	talkChoiceY    = 176
+	talkChoiceW    = 160
+	talkChoiceH    = 96
+	talkChoiceRows = (talkChoiceH - 2*chrome.Tile) / talkLinePitch
 )
 
 // playerLordPortrait 是 composite TALK 的 fallback speaker。事件 3 fixture
@@ -178,7 +187,7 @@ func (g *game) drawLegacyChoiceBox(screen *ebiten.Image, lines []string, selecte
 	g.chrome.Window(screen, talkChoiceX, talkChoiceY,
 		talkChoiceW, talkChoiceH, chrome.Menu)
 	for i, line := range lines {
-		if i >= 3 {
+		if i >= talkChoiceRows {
 			break
 		}
 		y := talkChoiceY + chrome.Tile + i*talkLinePitch
@@ -200,22 +209,34 @@ func (g *game) drawLegacyChoiceBox(screen *ebiten.Image, lines []string, selecte
 	}
 }
 
-func (g *game) talkChoiceClick() (int, bool) {
+// talkChoiceClick 回報滑鼠點到第幾列。`rows` 是這一次有幾個選項——
+// 原版把它當 `al` 傳給 `sub_193E9`（`sub_13B5A` 給 5、`sub_13902` 給 3），
+// **框的大小不跟著變，能選的範圍才變**（docs/spec/45 §2.2）。
+func (g *game) talkChoiceClick(rows int) (int, bool) {
 	x, y := ebiten.CursorPosition()
 	if !inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) ||
 		x < talkChoiceX+chrome.Tile || x >= talkChoiceX+talkChoiceW-chrome.Tile ||
 		y < talkChoiceY+chrome.Tile || y >= talkChoiceY+talkChoiceH-chrome.Tile {
 		return 0, false
 	}
+	if rows > talkChoiceRows {
+		rows = talkChoiceRows
+	}
 	row := (y - (talkChoiceY + chrome.Tile)) / talkLinePitch
-	if row < 0 || row >= 3 {
+	if row < 0 || row >= rows {
 		return 0, false
 	}
 	return row, true
 }
 
-func (g *game) drawLegacyHint(screen *ebiten.Image, s string) {
-	// Hint 放在場景下方的細框，不覆蓋 IVENTGRF 或原版 TALK 內容。
+// drawLegacyHint 是 remake 自己加的按鍵提示，原版沒有這一條。
+//
+// 框高要 4 塊：`chrome.Window` 的邊框是 8 px，兩塊高的框整個都是邊，
+// 字會被切成看不出是什麼的東西。內容高 16 px ＝ 一個全形字。
+//
+// y 由呼叫端指定，因為**畫面底部 360–392 是事件視窗的位置**
+// （`main.go` 的 `lastEvent`），兩者同時出現會疊在一起。
+func (g *game) drawLegacyHint(screen *ebiten.Image, s string, y int) {
 	if s == "" {
 		return
 	}
@@ -224,9 +245,9 @@ func (g *game) drawLegacyHint(screen *ebiten.Image, s string) {
 		w = screenW - 2*chrome.Tile
 	}
 	x := (screenW - w) / 2 / chrome.Tile * chrome.Tile
-	y := screenH - 2*chrome.Tile
-	g.chrome.Window(screen, x, y, w, 2*chrome.Tile, chrome.Menu)
-	g.td.Draw(screen, s, x+chrome.Tile, y+1, color.RGBA{170, 170, 180, 255})
+	g.chrome.Window(screen, x, y, w, 4*chrome.Tile, chrome.Menu)
+	g.td.Draw(screen, s, x+chrome.Tile, y+chrome.Tile,
+		color.RGBA{170, 170, 180, 255})
 }
 
 func diplomacyTalkPromptIndex(c state.DiplomacyChoice, variant int) int {

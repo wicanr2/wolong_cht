@@ -60,7 +60,7 @@ func (g *game) updateDiplomacy() {
 		}
 		return
 	}
-	if row, ok := g.talkChoiceClick(); ok {
+	if row, ok := g.talkChoiceClick(3); ok {
 		g.diplomacyRow = row
 		if row == int(state.DiplomacyOfferFunds) {
 			g.diplomacyEditingAmount = true

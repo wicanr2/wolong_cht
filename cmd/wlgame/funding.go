@@ -59,7 +59,7 @@ func (g *game) updateFunding() {
 		}
 		return
 	}
-	if row, ok := g.talkChoiceClick(); ok {
+	if row, ok := g.talkChoiceClick(3); ok {
 		g.fundingRow = row
 		if row == int(state.FundingSetAmount) {
 			g.fundingEditingAmount = true

@@ -7,6 +7,8 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
 	"github.com/wicanr2/wolong_cht/internal/rules/persuasion"
 	"github.com/wicanr2/wolong_cht/internal/state"
+	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
+	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
 // sub_13D91／sub_13DC9 對 byte_10D00 在 0 與 255 飽和；GUI 的直接反應與
@@ -88,7 +90,9 @@ func TestAdviseLinesComeFromTalkDat(t *testing.T) {
 
 	seen := map[string]persuasion.Command{}
 	for _, c := range adviseCommands {
-		line := g.adviseLine("軍師", adviseTalkBase(c)+3)
+		g.clearAdviseBoxes()
+		g.adviseSay(adviseAdvisor, adviseTalkBase(c)+3)
+		line := strings.Join(g.adviseAdvisorSaid, "")
 		if line == "" {
 			t.Fatalf("%v 的進言句是空的", c)
 		}
@@ -196,5 +200,92 @@ func TestAdviseReasonLabelsComeFromTalkMenu(t *testing.T) {
 			t.Errorf("%v 與 %v 的選單一樣：%s", c, prev, key)
 		}
 		seen[key] = c
+	}
+}
+
+// 選單框的矩形（docs/spec/45 §2）。三個地方共用 `sub_13B7E`，
+// 座標與尺寸全是寫死的。
+func TestChoiceBoxMatchesOriginalRect(t *testing.T) {
+	for _, tc := range []struct {
+		name      string
+		got, want int
+	}{
+		{"X（sub_19796 的 dx=50h）", talkChoiceX, 80},
+		{"Y（sub_19796 的 bx=0B0h）", talkChoiceY, 176},
+		{"寬（cx=600Ah 的 0Ah×2 byte）", talkChoiceW, 160},
+		{"高（cx=600Ah 的 60h 列）", talkChoiceH, 96},
+		{"列數（sub_193E9 的 dl）", talkChoiceRows, 5},
+	} {
+		if tc.got != tc.want {
+			t.Errorf("%s = %d，要 %d", tc.name, tc.got, tc.want)
+		}
+	}
+	// ⭐ 高度與列數是兩條互不相干的路徑算出來的，這裡讓它們互相驗證。
+	if got := 2*chrome.Tile + talkChoiceRows*talkLinePitch; got != talkChoiceH {
+		t.Errorf("上下內縮 8 ＋ %d 列 × %d ＝ %d，與框高 %d 不符",
+			talkChoiceRows, talkLinePitch, got, talkChoiceH)
+	}
+}
+
+// 說服的選單有五列，外交／撥款只有三列——**框一樣大，能選的範圍才不同**
+// （docs/spec/45 §2.2）。
+func TestChoiceClickCoversRequestedRowsOnly(t *testing.T) {
+	rowAt := func(row int) int { return talkChoiceY + chrome.Tile + row*talkLinePitch }
+	if got := rowAt(talkChoiceRows) + chrome.Tile; got != talkChoiceY+talkChoiceH {
+		t.Errorf("第 %d 列的下緣 %d 與框底 %d 不符",
+			talkChoiceRows, got, talkChoiceY+talkChoiceH)
+	}
+	// 第 5 列（索引 4）必須整列落在框內緣裡。
+	if last := rowAt(talkChoiceRows-1) + talkLinePitch; last > talkChoiceY+talkChoiceH-chrome.Tile {
+		t.Errorf("最後一列畫到 %d，超出框內緣 %d",
+			last, talkChoiceY+talkChoiceH-chrome.Tile)
+	}
+}
+
+// 誰說話就進誰的框（docs/spec/45 §1）：君主 → 上框、軍師 → 下框，
+// 而且**兩個框各自只換掉最新的那一句**。
+func TestAdviseSceneLinesGoToTheRightBox(t *testing.T) {
+	lib, err := library.Load("../../workplace/orig/dosv")
+	if err != nil {
+		t.Skipf("沒有原版素材：%v", err)
+	}
+	w, err := state.LoadScenario("../../workplace/orig/dosv/SINARIO.DAT", 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	w.Player = 0
+	g := &game{lib: lib, world: w}
+	g.target = 1
+	g.adviseCmd = persuasion.Hostility
+
+	base := adviseTalkBase(g.adviseCmd)
+	g.clearAdviseBoxes()
+	g.adviseSay(adviseLord, base) // #86「{4}啊，是怎麼了？」
+	g.adviseSay(adviseAdvisor, base+3)
+	lord, advisor := strings.Join(g.adviseLordSaid, ""), strings.Join(g.adviseAdvisorSaid, "")
+	if lord == "" || advisor == "" {
+		t.Fatalf("兩個框要各有一句：上 %q 下 %q", lord, advisor)
+	}
+	if lord == advisor {
+		t.Errorf("兩個框拿到同一句：%q", lord)
+	}
+	// 君主再說一句：上框換掉，下框不動。
+	g.adviseSay(adviseLord, adviseReplyIndex(base, persuasion.Agree, 0))
+	if got := strings.Join(g.adviseLordSaid, ""); got == lord {
+		t.Errorf("上框沒有換句：%q", got)
+	}
+	if got := strings.Join(g.adviseAdvisorSaid, ""); got != advisor {
+		t.Errorf("下框被動到了：%q ≠ %q", got, advisor)
+	}
+	// 索引查不到時保留原句，不顯示半句（fail-closed）。
+	g.adviseSay(adviseLord, 1<<20)
+	if len(g.adviseLordSaid) == 0 {
+		t.Error("查不到的索引把上框清空了")
+	}
+	// 每列都在框裡放得下。
+	for _, line := range append(append([]string{}, g.adviseLordSaid...), g.adviseAdvisorSaid...) {
+		if w := textdraw.StringWidth(line); w > talkTextWidth {
+			t.Errorf("%q 寬 %d，超過框內 %d px", line, w, talkTextWidth)
+		}
 	}
 }

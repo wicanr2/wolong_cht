@@ -21,10 +21,10 @@
 | 規則正確性 | 54 | 52 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
 | 程式碼理解 | 217 | 210 | 7 | 0 |
-| 驗收 | 54 | 48 | 6 | 0 |
+| 驗收 | 57 | 51 | 6 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 98 | 93 | 5 | 0 |
-| **合計** | **477** | 456 | 20 | 1 |
+| 其他 | 102 | 97 | 5 | 0 |
+| **合計** | **484** | 463 | 20 | 1 |
 
 ## 2.1 規則正確性（54 條）
 
@@ -349,7 +349,7 @@
 | [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `sub_189A4(al=1, dx=0, bx=2, cx=151Bh)` | `sub_13D09` 在貼完 `IVENTGRF` 之後畫的框，與 `sub_1895D` 是不是同一組單位沒驗 | 靜態 |
 | [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `IVENTGRF` 插圖本身的位置 | `sub_13D09` 的 `dx = 0E07h` 是餵給 `sub_1E38C`（讀檔）的參數，不是座標。插圖在畫面上的位置沒量 | 靜態 |
 
-## 2.4 驗收（54 條）
+## 2.4 驗收（57 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -407,6 +407,9 @@
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 勢力一覽的欄位 | 沒有逐欄比對 | 靜態 |
 | [`playtest/32-talk-layout-fit.md`](../playtest/32-talk-layout-fit.md) | 變數的實際長度分布 | 這一輪用固定三全形替身。人名多半是 2–3 全形、地名 2–3，但**軍團名與勢力名沒有逐一量過** | 靜態 |
 | [`playtest/32-talk-layout-fit.md`](../playtest/32-talk-layout-fit.md) | 框的尺寸已經解掉**：影格上量到的 275 px 是**框**（256 px ＋ 量測誤差）， | （未解小節內文） | 靜態 |
+| [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 逐句節拍 | 原版每句要等玩家按鍵才往下走；remake 直接顯示最新一句 | 靜態 |
+| [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 插圖之外的畫面 | 原版這一頁底下是不是還留著大地圖沒驗過，remake 留著 | 靜態 |
+| [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 選單的反白樣式 | 原版怎麼畫游標列沒解，remake 用自己的反白條 ＋ `>` | 靜態 |
 
 ## 2.5 外部資料（17 條）
 
@@ -430,7 +433,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（98 條）
+## 2.6 其他（102 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -447,6 +450,7 @@
 | [`spec/00-index.md`](../spec/00-index.md) | 主畫面四個視窗的開關 | `13-main-window-toggles.md` / 已實作並留下截圖；原版執行期未驗 | 實測 |
 | [`spec/00-index.md`](../spec/00-index.md) | 底列六格是選部隊 | `33-squad-selection.md` / 已實作並有單測；命令圖示的來源段未定案 | 靜態 |
 | [`spec/00-index.md`](../spec/00-index.md) | 一覽表的欄位與版面 | `38-list-windows.md` / 四個家族照原版重做；捲軸未解 | 靜態 |
+| [`spec/00-index.md`](../spec/00-index.md) | 事件場景上誰在說話 | `42-event-scene-speakers.md` / 兩個框已實作；結果階段的上框未解 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | `sub_14194`／`sub_14269` | 內政與災害 marker 的細節在別的規格（`docs/mechanics/40`），本規格只保證呼叫順序 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 據點換手之後 `+0x00` 低 4 位會不會跟著變 | `sub_1890A` 靜態讀過，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 玩家據點求援的喇叭聲（`sub_10CDE`） | 呈現層未接 | 靜態 |
@@ -527,8 +531,11 @@
 | [`spec/42-event-scene-speakers.md`](../spec/42-event-scene-speakers.md) | 撥款事件（4／5） | 同上，還沒對過哪一則進下框 | 靜態 |
 | [`spec/43-rout-on-blocked-return.md`](../spec/43-rout-on-blocked-return.md) | `loc_1491B` 的其他成本項 | 只解出「非己方據點 ＋0xA6」，廣度優先搜尋本身沒逐條讀 | 靜態 |
 | [`spec/43-rout-on-blocked-return.md`](../spec/43-rout-on-blocked-return.md) | TALK #1F／#20／#23／#198 | remake 還沒把這四則接上 | 靜態 |
-| [`spec/44-advise-original-text.md`](../spec/44-advise-original-text.md) | 呈現層 | 兩個講話框的模態流程沒有移植（`../re/66` §5.2） | 靜態 |
+| [`spec/44-advise-original-text.md`](../spec/44-advise-original-text.md) | 逐句節拍 | 原版每句要等玩家按鍵才往下走，remake 直接顯示最新一句（`45` §3.1） | 靜態 |
 | [`spec/44-advise-original-text.md`](../spec/44-advise-original-text.md) | 「這項進言沒有成立」 | remake 專屬的守門句：君主點頭之後規則層才發現條件變了。原版沒有這條路徑，所以沒有對應的原文 | 靜態 |
+| [`spec/45-advise-scene-layout.md`](../spec/45-advise-scene-layout.md) | `dh = 0Bh` | 選單本體的第二個立即值，語意未定（不是框寬——框寬由 `cx = 600Ah` 決定） | 靜態 |
+| [`spec/45-advise-scene-layout.md`](../spec/45-advise-scene-layout.md) | 逐句節拍 | 原版每句要等玩家按鍵，`sub_10241`／`sub_102C2` 那一段還沒讀 | 靜態 |
+| [`spec/45-advise-scene-layout.md`](../spec/45-advise-scene-layout.md) | 選單的反白樣式 | 原版怎麼畫游標列沒解，remake 用自己的反白條 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |

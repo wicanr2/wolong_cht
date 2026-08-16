@@ -64,6 +64,7 @@
 | [`docs/playtest/31-parity-inventory.md`](playtest/31-parity-inventory.md) | 31 — 原版 vs remake 逐畫面盤點（2026-08-16） | 盤點，不是量測。 | 2026-08-16 |
 | [`docs/playtest/32-talk-layout-fit.md`](playtest/32-talk-layout-fit.md) | 32 — M7 排版 parity：1,022 則逐則量進訊息框 | 量完了。單行超寬 | 2026-08-16 |
 | [`docs/playtest/33-ai-march-long-run.md`](playtest/33-ai-march-long-run.md) | 33 — AI 行軍鏈接上之後的長跑觀察 | 量完了。世界會動了——軍團有生有滅、不變量全程成立。 ⭐ 最重要的發現不是 AI 的行為，是 | 2026-08-17 |
+| [`docs/playtest/34-advise-scene-screens.md`](playtest/34-advise-scene-screens.md) | 34 — 進言的畫面驗收：插圖 ＋ 兩個框 ＋ 五列選單 | 通過。 | 2026-08-17 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | remake 推廣片、代表幀「經典再現」比較片與 DOS/V／remake 實機動態比較片均已產出並完成媒體規格驗證… | 2026-08-12 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
 | [`docs/promo/dosv-adlib-and-tactical-review.md`](promo/dosv-adlib-and-tactical-review.md) | 推廣片原版 AdLib 與戰術骨架審查 | 原版音軌來源與影片縮放鏈已修正；戰術固定骨架的 16 px viewport 偏差已修正。完整同狀態戰術 parit… | 2026-08-12 |
@@ -173,11 +174,12 @@
 | [`docs/spec/42-event-scene-speakers.md`](spec/42-event-scene-speakers.md) | 42 — 事件場景上誰在說話 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/43-rout-on-blocked-return.md`](spec/43-rout-on-blocked-return.md) | 43 — 回不了家的軍團會敗走 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/44-advise-original-text.md`](spec/44-advise-original-text.md) | 44 — 進言用原版的原文，不用改寫的句子 | CONFORMED。 | 2026-08-17 |
+| [`docs/spec/45-advise-scene-layout.md`](spec/45-advise-scene-layout.md) | 45 — 進言的畫面：插圖 ＋ 兩個框輪流講話 ＋ 五列選單 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | READY。管線的每一段都有現成工具，缺的是把它們接起來 與一支逐區差分工具。 | 2026-08-15 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 147 條。**要查「這件事解了沒」先看這裡**，
+共 148 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（77 條）
@@ -314,7 +316,7 @@
 |---|---|
 | 2.1 執行結構（已驗證） ▸ YNSOUND.COM | `docs/reference/04-first-survey.md` |
 
-### 未解（33 條）
+### 未解（34 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -346,6 +348,7 @@
 | 6. 月結與季節掛在時鐘的哪裡（confirmed） ▸ 世界更新 | `docs/mechanics/15-realtime.md` |
 | 檔案 ▸ 40-economy.md | `docs/mechanics/00-index.md` |
 | 索引 ▸ 一覽表的欄位與版面 | `docs/spec/00-index.md` |
+| 索引 ▸ 事件場景上誰在說話 | `docs/spec/00-index.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x08 | `docs/re/08-hourly-update.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x0C | `docs/re/08-hourly-update.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x23 | `docs/re/08-hourly-update.md` |

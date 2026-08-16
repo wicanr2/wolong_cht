@@ -157,9 +157,8 @@ al = 結果碼 / cx = base + al×3 + 4
 信賴度的 `±20` 就是 `mov al, 14h`，與
 [`../mechanics/70-ai.md`](../mechanics/70-ai.md) §1 記的一致。
 
-**remake 的差別**：進言走的是自成一格的清單視窗（`cmd/wlgame/advise.go`），
-不是「插圖 ＋ 兩個框輪流講話」。規則層（信賴度增減、理由判定）是對的，
-**呈現層整段沒有照原版**。
+remake 對應在 [`../spec/45`](../spec/45-advise-scene-layout.md)：
+插圖、上下兩個框、五列理由選單都照這個順序畫。
 
 ## 6. 原文本身就折好了，遊戲不換行
 

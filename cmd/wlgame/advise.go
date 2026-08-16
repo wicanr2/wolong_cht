@@ -34,13 +34,41 @@ func (g *game) openAdvise() {
 	g.sessCur = 0
 	g.ally = -1
 	g.target = -1
-	g.adviseLog = nil
+	g.clearAdviseBoxes()
 }
 
 func (g *game) closeAdvise() {
 	g.advise = adviseNone
 	g.sess = nil
-	g.adviseLog = nil
+	g.clearAdviseBoxes()
+}
+
+// adviseSpeaker 是進言畫面上的兩個講話框。**原版靠框的位置與肖像
+// 分辨誰在說話**，文字裡沒有說話者標記（docs/spec/45 §1）。
+type adviseSpeaker int
+
+const (
+	adviseLord    adviseSpeaker = iota // 上框，`sub_13C99`
+	adviseAdvisor                      // 下框，`sub_13CDC`，一定是玩家自己
+)
+
+func (g *game) clearAdviseBoxes() {
+	g.adviseLordSaid = nil
+	g.adviseAdvisorSaid = nil
+}
+
+// adviseSay 讓其中一個框說一則 TALK。查不到就維持原來那句，
+// **不顯示半句、也不把索引當文字**（同 talkLines 的 fail-closed）。
+func (g *game) adviseSay(who adviseSpeaker, index int) {
+	lines := g.legacyTalkLines(index, g.adviseTalkVars(), talkTextWidth)
+	if len(lines) == 0 {
+		return
+	}
+	if who == adviseLord {
+		g.adviseLordSaid = lines
+		return
+	}
+	g.adviseAdvisorSaid = lines
 }
 
 // situation 把目前的世界狀態換成說服判定要的局勢。
@@ -173,17 +201,12 @@ func (g *game) beginPersuasion() {
 	s := g.situation(g.target)
 	g.sessCur = 0
 	g.advise = advisePersuade
-	// ① 君主開場、② 軍師的進言——兩則都是原版的原文（docs/spec/44 §2）。
+	// ① 君主開場（上框）、② 軍師的進言（下框）——原文與框的分工
+	// 都照原版（docs/spec/44 §2、docs/spec/45 §1）。
 	base := adviseTalkBase(g.adviseCmd)
-	g.adviseLog = nil
-	for _, l := range []string{
-		g.adviseLine("君主", base+g.playerTalkVariant()),
-		g.adviseLine("軍師", base+3),
-	} {
-		if l != "" {
-			g.adviseLog = append(g.adviseLog, l)
-		}
-	}
+	g.clearAdviseBoxes()
+	g.adviseSay(adviseLord, base+g.playerTalkVariant())
+	g.adviseSay(adviseAdvisor, base+3)
 	queued := false
 	if g.adviseCmd == persuasion.Hostility {
 		queued = g.world.HasQueuedDeclaration(g.world.Player, g.target)
@@ -195,10 +218,8 @@ func (g *game) beginPersuasion() {
 		g.sess = nil
 		g.adjustTrust(persuasion.ReactionTrustDelta(reaction))
 		base := adviseTalkBase(g.adviseCmd)
-		if line := g.adviseLine("君主",
-			adviseReplyIndex(base, reaction, g.playerTalkVariant())); line != "" {
-			g.adviseLog = append(g.adviseLog, line)
-		}
+		// ③ 君主的回答又回到上框（`sub_13830` 的最後一步）。
+		g.adviseSay(adviseLord, adviseReplyIndex(base, reaction, g.playerTalkVariant()))
 		if reaction == persuasion.Agree {
 			g.commitAdvice()
 		}
@@ -215,15 +236,12 @@ func (g *game) offerReason(r persuasion.Reason) {
 	base := adviseReasonBase(g.adviseCmd)
 	slot := adviseReasonSlot(g.adviseCmd, r)
 
-	// ① 軍師說出那個理由（原版 `sub_13B5A` 的 `cx = base + 位置 + 1`）。
-	if line := g.adviseLine("軍師", base+slot+1); line != "" {
-		g.adviseLog = append(g.adviseLog, line)
-	}
-	// ② 君主的反應（`sub_13BA9`）。
-	if line := g.adviseLine("君主",
-		adviseReasonReply(base, slot, out, repeat, g.playerTalkVariant())); line != "" {
-		g.adviseLog = append(g.adviseLog, line)
-	}
+	// 軍師說出那個理由 → 下框（`sub_13B5A` 的 `cx = base + 位置 + 1`
+	// 之後接 `sub_13CDC`）；君主的反應 → 上框（`sub_13BA9` 結尾接
+	// `sub_13C99`）。**兩個框各自只換掉最新的那一句。**
+	g.adviseSay(adviseAdvisor, base+slot+1)
+	g.adviseSay(adviseLord,
+		adviseReasonReply(base, slot, out, repeat, g.playerTalkVariant()))
 
 	switch out {
 	case persuasion.Agreed:
@@ -333,28 +351,6 @@ func adviseReplyIndex(base int, r persuasion.Reaction, variant int) int {
 	return base + 4 + 3*int(r) + variant
 }
 
-// adviseLine 把一則 TALK 展開成一行，前面加說話者標記。
-//
-// 標記是 **remake 差異**：原版用兩個講話框 ＋ 肖像分辨誰在說
-// （docs/re/66 §5.2），而這裡的清單視窗沒有肖像可以放。
-func (g *game) adviseLine(speaker string, index int) string {
-	lines, ok := g.talkLines(index, g.adviseTalkVars())
-	if !ok || len(lines) == 0 {
-		return ""
-	}
-	joined := ""
-	for _, l := range lines {
-		if l == "" {
-			continue
-		}
-		joined += l
-	}
-	if joined == "" {
-		return ""
-	}
-	return speaker + "：「" + joined + "」"
-}
-
 // adviseTalkVars 是進言那幾則的變數：`{3}` 交涉對象、`{4}` 軍師（玩家）、
 // `{6}` 排版標記（空字串，原版 handler 只調 X 不輸出字元）。
 func (g *game) adviseTalkVars() map[byte]string {
@@ -384,7 +380,9 @@ func (g *game) commitAdvice() bool {
 		ok = g.world.QueuePlayerCooperation(g.ally, g.target)
 	}
 	if !ok {
-		g.adviseLog = append(g.adviseLog, "君主：「局勢已變，這項進言沒有成立。」")
+		// remake 專屬的守門句：君主點頭之後規則層才發現條件變了。
+		// 原版沒有這條路徑，所以沒有對應的原文（docs/spec/44 §6）。
+		g.adviseLordSaid = []string{"局勢已變，這項進言", "沒有成立。"}
 		g.lastEvent = "進言失效"
 		g.sess = nil
 		return false
@@ -401,8 +399,6 @@ func (g *game) commitAdvice() bool {
 func (g *game) drawAdvise(screen *ebiten.Image) {
 	white := color.RGBA{240, 240, 230, 255}
 	amber := color.RGBA{240, 200, 120, 255}
-	dim := color.RGBA{150, 150, 160, 255}
-	red := color.RGBA{240, 140, 140, 255}
 
 	// 進言的視窗也走原版外框（ICONGRF 段 3）。尺寸先進位到 8 的倍數，
 	// 不然邊框會切在半塊上。
@@ -422,60 +418,21 @@ func (g *game) drawAdvise(screen *ebiten.Image) {
 		}
 
 	case advisePersuade:
-		// 高度要含最後那一行提示，否則會被框邊切掉。
-		h := 46 + len(g.adviseLog)*lh
-		if g.sess != nil {
-			h += 8 + 7*lh
-		}
-		box(40, 44, 496, h)
-		// 說得是在跟**自己的君主**對話（玩家是軍師），所以右上角放君主頭像。
-		// 頁碼取武將記錄的 +0x01，不是武將編號（見 state.General.Portrait）。
-		if lord := g.world.Factions[g.world.Player].Lord; lord >= 0 &&
-			lord < len(g.world.Generals) {
-			if img, err := g.lib.Portrait(g.world.Generals[lord].Portrait,
-				int(g.world.Clock.Season())); err == nil {
-				op := &ebiten.DrawImageOptions{}
-				op.GeoM.Translate(float64(40+496-8-64), 52)
-				screen.DrawImage(ebiten.NewImageFromImage(img), op)
-			}
-		}
-		subject := big5(g.world.LordName(g.target))
-		if g.adviseCmd == persuasion.Cooperate {
-			subject = big5(g.world.LordName(g.ally)) + " → " + subject
-		}
-		g.td.Draw(screen, "說　得　　對象 "+subject,
-			48, 50, amber)
-		y := 70
-		for _, ln := range g.adviseLog {
-			col := white
-			if len(ln) > 3 && ln[:3] == "軍師" {
-				col = dim
-			}
-			g.td.Draw(screen, ln, 48, y, col)
-			y += lh
-		}
+		// 原版的說服畫面（docs/spec/45 §1）：`IVENTGRF` 第 0 頁的插圖，
+		// 上框君主、下框軍師，兩個框各只顯示最新的一句。
+		// **說話者靠框的位置與肖像分辨**，句子裡不加標記。
+		g.drawIventScene(screen, 0)
+		g.drawLegacyTalkBox(screen, talkUpperBoxX, talkUpperBoxY,
+			talkBoxW, talkBoxH, g.adviseLordSaid, g.playerLordPortrait())
+		g.drawLegacyTalkBox(screen, talkLowerBoxX, talkLowerBoxY,
+			talkBoxW, talkBoxH, g.adviseAdvisorSaid, g.playerAdvisorPortrait())
+		// 提示放在橫幅與上框之間，不要壓到畫面底部的事件視窗。
+		hintY := talkUpperBoxY - 4*chrome.Tile
 		if g.sess == nil {
-			g.td.Draw(screen, "ESC 關閉", 48, y+6, dim)
+			g.drawLegacyHint(screen, "ESC 關閉", hintY)
 			return
 		}
-		y += 8
-		labels := g.adviseReasonLabels(g.adviseCmd)
-		for i, r := range persuasion.Options(g.adviseCmd) {
-			col := white
-			mark := "　"
-			if i == g.sessCur {
-				mark = "●"
-				col = amber
-			}
-			if r == persuasion.Withdraw {
-				col = dim
-				if i == g.sessCur {
-					col = red
-				}
-			}
-			g.td.Draw(screen, mark+labels[i], 48, y, col)
-			y += lh
-		}
-		g.td.Draw(screen, "↑↓ 選擇　Enter 提出　ESC 放棄", 48, y+4, dim)
+		g.drawLegacyChoiceBox(screen, g.adviseReasonLabels(g.adviseCmd), g.sessCur)
+		g.drawLegacyHint(screen, "↑↓ 選擇　Enter 提出　ESC 放棄", hintY)
 	}
 }

@@ -221,7 +221,9 @@ type game struct {
 	target    int
 	sess      *persuasion.Session
 	sessCur   int
-	adviseLog []string
+	// 進言畫面上兩個框各自的最新一句（docs/spec/45 §1）。
+	adviseLordSaid    []string // 上框：君主
+	adviseAdvisorSaid []string // 下框：軍師，也就是玩家自己
 
 	lastEvent string
 	messages  []messageDialog
@@ -1241,6 +1243,7 @@ func main() {
 	openWin := flag.Int("open-window", -1, "截圖前先打開第幾個視窗（0–3；−2 ＝ 四窗全開，對拍用）")
 	openList := flag.Bool("open-list", false, "截圖前先開武將一覽（驗收用）")
 	openAdvise := flag.Bool("open-advise", false, "截圖前先跑到說服畫面（驗收用）")
+	adviseMenu := flag.Bool("advise-menu", false, "配 -open-advise：停在五選一的理由選單，不自動提出理由（驗收用）")
 	openForm := flag.Bool("open-form", false, "截圖前先編一支軍團並開編成畫面（驗收用）")
 	openCorps := flag.Bool("open-corps", false, "截圖前先編兩支軍團並開軍團一覽（驗收用）")
 	openBattle := flag.Bool("open-battle", false, "截圖前先開一場野戰的戰術戰鬥（驗收用）")
@@ -1310,7 +1313,7 @@ func main() {
 		if err := g.startWorld(loadPath, *scenario, *player, true); err != nil {
 			log.Fatal(err)
 		}
-		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *openForm, *openCorps,
+		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *openForm, *openCorps,
 			*openMarchMode, *openBattle, *openSiege, *openBattleChoice, *openMessage,
 			*openTalkIndex, *openOutcome, *siegeNode)
 	} else {
@@ -1501,7 +1504,7 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 	return nil
 }
 
-func configureDirectFixtures(g *game, openWin int, openList, openAdvise, openForm, openCorps, openMarchMode,
+func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, openForm, openCorps, openMarchMode,
 	openBattle, openSiege, openBattleChoice, openMessage bool, openTalkIndex int,
 	openOutcome string, siegeNode int) {
 	w := g.world
@@ -1572,7 +1575,7 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, openFor
 		g.adviseCmd = persuasion.Hostility
 		g.target = 13
 		g.beginPersuasion()
-		if g.sess != nil {
+		if g.sess != nil && !adviseMenu {
 			g.offerReason(persuasion.WeAreStronger)
 		}
 	}
