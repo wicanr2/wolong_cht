@@ -21,10 +21,10 @@
 | 規則正確性 | 55 | 53 | 2 | 0 |
 | 資料保存 | 36 | 36 | 0 | 0 |
 | 程式碼理解 | 213 | 206 | 7 | 0 |
-| 驗收 | 56 | 50 | 6 | 0 |
+| 驗收 | 54 | 48 | 6 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
 | 其他 | 87 | 83 | 4 | 0 |
-| **合計** | **465** | 445 | 19 | 1 |
+| **合計** | **463** | 443 | 19 | 1 |
 
 ## 2.1 規則正確性（55 條）
 
@@ -345,7 +345,7 @@
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 命令 6 為什麼擋高平面橫移 | `[si+1Ah] == 6`，命令碼 6 是什麼沒對過 | 靜態 |
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 打壞城壁之後地面層表不更新 | `sub_1B824` 只重算通行層（`sub_1BB6D`）與佔用表，**沒有重跑 `sub_1BC39`**。而那不影響結果：城壁的地面層本來就是拿打壞後的圖塊算的（§2 的 +0x10） | 靜態 |
 
-## 2.4 驗收（56 條）
+## 2.4 驗收（54 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -391,11 +391,9 @@
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 主畫面：視窗內部底紋 | 原版視窗內是**龍紋暗花**，remake 是純深藍 / 看得出來 / 底紋在 `ICONGRF` 段 3 附近，還沒定位 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 主畫面：大地圖地形色調 | 原版偏黃綠、remake 偏綠 / 存疑 / 可能是影片的色彩取樣。要驗就比**同一格的色號**，不要比 RGB | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 一覽表：捲軸 | 原版左邊有 ▲▼ 捲軸；remake 把「上一頁／下一頁」畫在視窗外 / 未對過 / 捲軸的矩形沒從機器碼解出來 | 靜態 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | **編成畫面** | 六個位置、兵種圖示、預備兵三欄、確定鈕都對上；**缺武將肖像**，而且原版是「一覽表 ＋ 編成面板並排」，remake 是單一對話框 / 看得出來 / `../re/30` | 靜態 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 編成畫面：鍵盤提示 | remake 在面板下半塞了一整塊操作說明，原版沒有 / remake 差異 / 原版戰略層沒有鍵盤（`../re/22` §2） | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | **戰鬥指揮／委任選單** | 版面是 remake 自訂的；影片裡沒有這一格的對照 / 未對過 / 先找原版影格 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 戰場：同一場的逐格對拍 | 沒做過 / 未對過 / 需要同狀態，難度同主畫面 | 靜態 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | **攻方大多數不前進** | 48 個兵只有 4 個在撞牆（`30` §3） / **攻城打不下來** | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 攻方大多數不前進 | 六個指令都能指揮部隊動作（`../spec/37` §4）；**AI 自己撞不進城是設計**——說明書第 11 章整章在講破城要換陣形 / 玩家要自己操作 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | `sub_13E11` 每「時」做什麼 | 未讀 / 行軍與 AI 的節拍 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 防災值怎麼成長 | 欄位已知、規則未解 / 天災的長期經濟 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 行軍費用 | 說明書 10.6 有專節，沒讀 / 經濟 | 靜態 |
@@ -467,7 +465,7 @@
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 退兵回池 | `sub_14717` 已讀（一點對一點、上限 65,500），remake 還沒有「解散軍團把兵退回去」的路徑 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 池的上限 | `sub_155EC` 的 `0xFFDC` 只在退兵路徑上驗過；月結加兵是不是同一支未查 | 靜態 |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | `op 04` | 確定鈕左上角那一筆，語意未解（`docs/re/49` §6） | 靜態 |
-| [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 武將頭像 | remake 的編成畫面還沒有頭像；`sub_107D2` 的圖庫來源未讀 | 靜態 |
+| [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 頭像的邊框 | `sub_107D2` 只 blit 64×64 的圖塊，**框在哪裡畫的沒找到**——場景 5 的 op 清單裡沒有頭像那一格的框 | 靜態 |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 兵種標籤 | 畫面用場景 5 的「主將」，規則層的 `army.Position` 第一個是「大將」（原版 TALK #62 也這樣說）。兩處用語不同是原版就有的，不要統一 | 靜態 |
 | [`spec/23-city-info-window.md`](../spec/23-city-info-window.md) | 進入方式 | 原版由地圖上點據點進來（`sub_11E46`），remake 走一覽表 | 靜態 |
 | [`spec/23-city-info-window.md`](../spec/23-city-info-window.md) | `cs:word_1987C` | 原版每次開視窗都重讀一次檔；remake 的 `library` 是整檔載入，不需要這一層 | 靜態 |

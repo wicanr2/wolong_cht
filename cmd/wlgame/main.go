@@ -618,6 +618,12 @@ func (g *game) Update() error {
 	}
 	// 一覽表開著時吃掉所有輸入 —— 它是模態的（說明書 3.8 的兩段式操作
 	// 只有在獨佔輸入時才成立）。
+	// 編成畫面排在一覽表**之前**：原版的編成視窗是畫在武將一覽上面的
+	// （docs/re/30 §1），一覽表留在背景但不吃輸入。
+	if g.form.active {
+		g.updateForm()
+		return nil
+	}
 	if g.list != nil {
 		g.updateListUI()
 		return nil
@@ -625,11 +631,6 @@ func (g *game) Update() error {
 	// 財政畫面是模態的，優先吃輸入。
 	if g.finance.active {
 		g.updateFinance()
-		return nil
-	}
-	// 編成畫面是模態的，優先吃輸入。
-	if g.form.active {
-		g.updateForm()
 		return nil
 	}
 	// 據點情報視窗是模態的，優先吃輸入。

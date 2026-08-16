@@ -15,6 +15,7 @@ import (
 	"strings"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/hajimehoshi/ebiten/v2/vector"
 
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
@@ -22,7 +23,6 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
-	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
 // formState 是編成畫面的狀態：選好武將之後，逐槽指定兵種。
@@ -32,15 +32,18 @@ type formState struct {
 	slot   int
 	kinds  [army.Positions]army.TroopType
 	manned [army.Positions]bool
-	err    string
+	// keyboard 記「玩家用過鍵盤沒有」。原版沒有選取狀態——六個槽都是
+	// 滑鼠熱區，點一下就循環（docs/re/49 §5）。remake 的鍵盤是額外加的，
+	// 所以選取框也只在用過鍵盤之後才畫，滑鼠操作時畫面與原版一致。
+	keyboard bool
 }
 
 // ---------------------------------------------------------------------------
 // 編成
 // ---------------------------------------------------------------------------
 
-// beginForm 開始編成：先選一名還沒帶兵的武將。
-func (g *game) beginForm() {
+// formCandidates 是還可以帶兵的武將。
+func (g *game) formCandidates() []int {
 	var rows []int
 	for i, gen := range g.world.Generals {
 		if gen.Alive && gen.Faction == g.world.Player &&
@@ -48,6 +51,16 @@ func (g *game) beginForm() {
 			rows = append(rows, i)
 		}
 	}
+	return rows
+}
+
+// beginForm 開始編成：先選一名還沒帶兵的武將。
+//
+// **原版是「選武將 → 編成 → 回到選武將」的迴圈**（`sub_16C5E`，docs/re/30 §1），
+// 編成視窗畫在武將一覽**上面**，一覽表不會被擦掉。所以這裡選完不關一覽表，
+// 編成完或取消就回到它繼續選下一位，右鍵／ESC 才離開整條流程。
+func (g *game) beginForm() {
+	rows := g.formCandidates()
 	if len(rows) == 0 {
 		g.lastEvent = "沒有可以帶兵的武將"
 		return
@@ -59,38 +72,112 @@ func (g *game) beginForm() {
 		for k := range g.form.manned {
 			g.form.manned[k] = true
 		}
-		return true
+		return false // 一覽表留在背景（原版不擦掉它）
 	}
-	g.listHint = "選擇帶兵的武將　Enter 選取／決定　1-5 排序　ESC 取消"
 }
 
-// updateForm 是編成畫面的輸入。
+// refreshFormCandidates 在編成完成之後更新背景那張一覽表——
+// 剛帶兵的那位已經 `Posted`，不該還留在候選裡。
+func (g *game) refreshFormCandidates() {
+	if g.list == nil {
+		return
+	}
+	rows := g.formCandidates()
+	if len(rows) == 0 {
+		g.list = nil
+		return
+	}
+	g.list.Rows = rows
+	if g.list.Cursor >= len(rows) {
+		g.list.Cursor = len(rows) - 1
+	}
+	if g.list.Top > g.list.Cursor {
+		g.list.Top = g.list.Cursor
+	}
+}
+
+// formCycleKind 是原版點一下槽的動作：**兵種 +1，`1 → 2 → 3 → 1` 循環**
+// （docs/re/30 §3）。空槽的兵種是 4，`inc` 之後也落回 1，
+// 所以**點過的槽不會再變回空槽**——這與鍵盤的空白鍵不同。
+func (f *formState) cycleKind(k int) {
+	if k < 0 || k >= army.Positions {
+		return
+	}
+	if !f.manned[k] {
+		f.kinds[k], f.manned[k] = army.Cavalry, true
+		return
+	}
+	f.kinds[k] = (f.kinds[k] + 1) % 3
+}
+
+// updateForm 是編成畫面的輸入。滑鼠照原版的熱區（docs/spec/22 §2），
+// 鍵盤是 remake 加的。
 func (g *game) updateForm() {
 	f := &g.form
+	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) {
+		f.active = false // 原版 sub_121E7 回 CF=1 ＝ 右鍵取消
+		return
+	}
+	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+		x, y := ebiten.CursorPosition()
+		if k, ok := formSlotAt(x, y); ok {
+			f.keyboard, f.slot = false, k
+			f.cycleKind(k)
+			return
+		}
+		if image.Pt(x, y).In(formOKRect()) {
+			f.keyboard = false
+			g.commitForm()
+			return
+		}
+		return
+	}
 	switch {
 	case pressed(ebiten.KeyEscape):
 		f.active = false
 	case pressed(ebiten.KeyArrowUp):
+		f.keyboard = true
 		f.slot = (f.slot + army.Positions - 1) % army.Positions
 	case pressed(ebiten.KeyArrowDown):
+		f.keyboard = true
 		f.slot = (f.slot + 1) % army.Positions
 	case pressed(ebiten.KeySpace):
+		f.keyboard = true
 		f.manned[f.slot] = !f.manned[f.slot]
 	case pressed(ebiten.Key1):
+		f.keyboard = true
 		f.kinds[f.slot], f.manned[f.slot] = army.Cavalry, true
 	case pressed(ebiten.Key2):
+		f.keyboard = true
 		f.kinds[f.slot], f.manned[f.slot] = army.Archer, true
 	case pressed(ebiten.Key3):
+		f.keyboard = true
 		f.kinds[f.slot], f.manned[f.slot] = army.Infantry, true
 	case pressed(ebiten.KeyEnter):
-		if err := g.world.FormCorps(f.leader, f.kinds, f.manned); err != nil {
-			f.err = plainErr(err)
-			return
-		}
-		g.lastEvent = big5(g.world.Generals[f.leader].Name) + " 編成完畢"
-		f.active = false
+		f.keyboard = true
+		g.commitForm()
 	}
 }
+
+// commitForm 是「確定」：編成成功就關掉編成視窗**回到武將一覽**
+// （原版 sub_16C5E 的迴圈，docs/re/30 §1）。主將槽沒兵時原版走
+// TALK #62，remake 照走同一則訊息。
+func (g *game) commitForm() {
+	f := &g.form
+	// 原版的確定鈕只有一種拒絕理由：主將槽沒有兵（docs/re/30 §3.1），
+	// 所以 state 回什麼錯誤都走同一則訊息。
+	if err := g.world.FormCorps(f.leader, f.kinds, f.manned); err != nil {
+		g.enqueueTalk(formNoLeaderTroopsTalk, nil)
+		return
+	}
+	g.lastEvent = big5(g.world.Generals[f.leader].Name) + " 編成完畢"
+	f.active = false
+	g.refreshFormCandidates()
+}
+
+// formNoLeaderTroopsTalk 是 TALK #62「大將的部隊的兵員不足啊。」，
+// 原版在確定鈕上主將槽為空時走 `sub_18810(cx=3Eh)`（docs/re/30 §3.1）。
+const formNoLeaderTroopsTalk = 0x3E
 
 // 編成視窗的版面**全部出自原版**（docs/spec/22）：視窗矩形來自
 // `sub_1895D(cx=0C0Fh)`，靜態層是顯示清單場景 5，數值座標由
@@ -130,11 +217,6 @@ const (
 	formOKTextX      = 304
 
 	formIconW, formIconH = 24, 16
-
-	// remake 差異：操作提示自己一個框，接在原版視窗下面。
-	// 四列：錯誤訊息一列、操作三列——一列塞不下 240 的框寬。
-	formHintY = formWinY + formWinH
-	formHintH = 80
 )
 
 // formSlotLabels 是六個槽的標籤，取自顯示清單場景 5 的字串。
@@ -153,6 +235,22 @@ func formSlotRect(k int) image.Rectangle {
 	return image.Rect(formSlotIconX, y, formSlotIconX+formIconW, y+formIconH)
 }
 
+// formSlotAt 反查點到哪一個槽。
+func formSlotAt(x, y int) (int, bool) {
+	p := image.Pt(x, y)
+	for k := 0; k < army.Positions; k++ {
+		if p.In(formSlotRect(k)) {
+			return k, true
+		}
+	}
+	return 0, false
+}
+
+// formOKRect 是確定鈕（原版熱區 0x44），與它的底框逐格重合。
+func formOKRect() image.Rectangle {
+	return image.Rect(formOKX, formOKY, formOKX+formOKW, formOKY+formOKH)
+}
+
 // drawForm 畫編成畫面（docs/spec/22）。
 func (g *game) drawForm(screen *ebiten.Image) {
 	f := &g.form
@@ -163,7 +261,6 @@ func (g *game) drawForm(screen *ebiten.Image) {
 
 	ink := g.paletteInk(strategyInkNormal, chrome.Paper)
 	labelInk := g.paletteInk(strategyInkDim, color.RGBA{255, 223, 154, 255})
-	warnInk := g.paletteInk(strategyInkGauge, color.RGBA{210, 48, 40, 255})
 	season := int(g.world.Clock.Season())
 
 	// 靜態層（顯示清單場景 5）。
@@ -213,7 +310,16 @@ func (g *game) drawForm(screen *ebiten.Image) {
 	}
 
 	// 動態層：主將、士氣、六個槽與總兵力。
+	//
+	// 頭像走 `sub_107D2`（docs/re/33 §2），頁碼取武將記錄的 +0x01
+	// 不是武將編號。原版那裡是四格 round-robin 快取，remake 一次全載入——
+	// **只差在載入時機，畫出來的東西相同**。
 	gen := g.world.Generals[f.leader]
+	if img, err := g.lib.Portrait(gen.Portrait, season); err == nil {
+		op := &ebiten.DrawImageOptions{}
+		op.GeoM.Translate(float64(formPortraitX), float64(formPortraitY))
+		screen.DrawImage(ebiten.NewImageFromImage(img), op)
+	}
 	g.td.Draw(screen, big5(gen.Name), formNameX, formNameY, ink)
 	g.td.Draw(screen, strategyHUDNumber(
 		g.world.Factions[g.world.Player].MoraleBase, formMoraleDigits),
@@ -238,24 +344,12 @@ func (g *game) drawForm(screen *ebiten.Image) {
 	g.td.Draw(screen, strategyHUDNumber(total*strategyReserveMenPerPoint,
 		formTotalDigits), formTotalValueX, formTotalY, ink)
 
-	// ↓ 以下是 **remake 差異**，原版沒有：選取標記與操作提示。
-	// 原版點一下槽就是兵種 +1 循環，改完立刻重算，所以不需要選取狀態。
-	sel := formSlotRect(f.slot)
-	vector.StrokeRect(screen, float32(sel.Min.X-1), float32(sel.Min.Y-1),
-		float32(sel.Dx()+2), float32(sel.Dy()+2), 1, ink, false)
-
-	g.chrome.Window(screen, formWinX, formHintY, formWinW, formHintH, chrome.Menu)
-	hy := formHintY + 8
-	if f.err != "" {
-		g.td.Draw(screen, f.err, formWinX+8, hy, warnInk)
-	}
-	for i, line := range []string{
-		"↑↓ 選位置　1 騎馬",
-		"2 弓兵　3 步兵　空白 空位",
-		"Enter 編成　ESC 取消",
-	} {
-		g.td.Draw(screen, line, formWinX+8,
-			hy+(i+1)*(textdraw.GlyphH+2), labelInk)
+	// ↓ **remake 差異**：原版沒有選取狀態——六個槽都是滑鼠熱區，
+	// 點一下兵種就 +1。所以選取框只在玩家用過鍵盤之後才畫。
+	if f.keyboard {
+		sel := formSlotRect(f.slot)
+		vector.StrokeRect(screen, float32(sel.Min.X-1), float32(sel.Min.Y-1),
+			float32(sel.Dx()+2), float32(sel.Dy()+2), 1, ink, false)
 	}
 }
 
@@ -465,10 +559,18 @@ func (g *game) demoCorps(list bool) {
 	kinds, manned := g.affordable()
 
 	if !list {
-		// 編成畫面：**不要先幫他編好**，否則按 Enter 會撞到
-		// 「已經帶著軍團」而看不到正常流程。
-		g.form = formState{active: true, leader: leaders[0], slot: 2,
-			kinds: kinds, manned: manned}
+		// 編成畫面：走**真實流程**（選武將 → 編成），這樣截圖裡的
+		// 武將一覽會像原版一樣留在編成視窗底下。
+		// **不要先幫他編好**，否則按確定會撞到「已經帶著軍團」。
+		g.beginForm()
+		if g.list == nil {
+			return
+		}
+		g.confirmListSelection() // 反白
+		g.confirmListSelection() // 決定
+		if g.form.active {
+			g.form.slot, g.form.kinds, g.form.manned = 2, kinds, manned
+		}
 		return
 	}
 	for _, l := range leaders {

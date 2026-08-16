@@ -828,3 +828,49 @@ func TestMinimapLegendHitBoxMatchesRawHotzone(t *testing.T) {
 		}
 	}
 }
+
+// TestFormSlotHitBoxesMatchRaw 釘住編成畫面的滑鼠熱區（docs/re/49 §5）：
+// 六個槽 (200, 192+16k) 24×16、確定鈕 (280, 272) 88×16。
+func TestFormSlotHitBoxesMatchRaw(t *testing.T) {
+	for k := 0; k < army.Positions; k++ {
+		y := 192 + k*16
+		for _, p := range [][2]int{{200, y}, {223, y + 15}} {
+			got, ok := formSlotAt(p[0], p[1])
+			if !ok || got != k {
+				t.Errorf("(%d,%d) → 槽 %d ok=%v，want 槽 %d", p[0], p[1], got, ok, k)
+			}
+		}
+		// 圖示左邊與右邊各一格外不算，否則相鄰的標籤與數字也會被吃掉。
+		for _, p := range [][2]int{{199, y}, {224, y}} {
+			if _, ok := formSlotAt(p[0], p[1]); ok {
+				t.Errorf("(%d,%d) 不該落在第 %d 槽", p[0], p[1], k)
+			}
+		}
+	}
+	ok := formOKRect()
+	if ok.Min.X != 280 || ok.Min.Y != 272 || ok.Dx() != 88 || ok.Dy() != 16 {
+		t.Errorf("確定鈕熱區 = %v，want (280,272) 88×16", ok)
+	}
+}
+
+// TestFormSlotClickCyclesKind 釘住原版點一下槽的動作（docs/re/30 §3）：
+// 兵種 +1，`1 → 2 → 3 → 1`；**空槽（兵種 4）也落回 1**，
+// 所以點過的槽不會再變回空槽。
+func TestFormSlotClickCyclesKind(t *testing.T) {
+	var f formState
+	f.manned[0] = false // 空槽
+	f.cycleKind(0)
+	if !f.manned[0] || f.kinds[0] != army.Cavalry {
+		t.Fatalf("空槽點一下 = manned %v／兵種 %v，want 騎馬", f.manned[0], f.kinds[0])
+	}
+	want := []army.TroopType{army.Archer, army.Infantry, army.Cavalry}
+	for i, w := range want {
+		f.cycleKind(0)
+		if f.kinds[0] != w {
+			t.Errorf("第 %d 次循環 = %v，want %v", i+1, f.kinds[0], w)
+		}
+		if !f.manned[0] {
+			t.Errorf("第 %d 次循環之後變成空槽了", i+1)
+		}
+	}
+}

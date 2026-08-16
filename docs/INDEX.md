@@ -144,7 +144,7 @@
 | [`docs/spec/14-finance-window.md`](spec/14-finance-window.md) | 14 — 財政視窗 | CONFORMED。版面已照原版重寫並有契約測試； 數值輸入器與「收入」的來源仍缺（§5）。 | 2026-08-15 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
-| [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面已照原版重寫並有契約測試； 武將頭像與滑鼠點擊仍缺（§5）。 | 2026-08-15 |
+| [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |
 | [`docs/spec/23-city-info-window.md`](spec/23-city-info-window.md) | 23 — 據點情報視窗 | CONFORMED。版面已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/24-corps-info-window.md`](spec/24-corps-info-window.md) | 24 — 軍團情報視窗 | CONFORMED。版面已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/25-slot-select-window.md`](spec/25-slot-select-window.md) | 25 — 四槽選擇視窗（新遊戲／讀取／儲存） | CONFORMED。讀取／儲存已照原版版面實作； 新遊戲仍走 remake 自己的啟動殼層（§5）。 | 2026-08-15 |
