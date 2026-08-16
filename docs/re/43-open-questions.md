@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 54 | 52 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
-| 程式碼理解 | 219 | 212 | 7 | 0 |
+| 程式碼理解 | 216 | 209 | 7 | 0 |
 | 驗收 | 54 | 48 | 6 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 93 | 88 | 5 | 0 |
-| **合計** | **474** | 453 | 20 | 1 |
+| 其他 | 92 | 87 | 5 | 0 |
+| **合計** | **470** | 449 | 20 | 1 |
 
 ## 2.1 規則正確性（54 條）
 
@@ -127,7 +127,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（219 條）
+## 2.3 程式碼理解（216 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -340,10 +340,7 @@
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | `sub_1B186`／`sub_1B15D` | 爬升／下降時檢查上下一層的那兩支，沒讀 | 靜態 |
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 命令 6 為什麼擋高平面橫移 | `[si+1Ah] == 6`，命令碼 6 是什麼沒對過 | 靜態 |
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 打壞城壁之後地面層表不更新 | `sub_1B824` 只重算通行層（`sub_1BB6D`）與佔用表，**沒有重跑 `sub_1BC39`**。而那不影響結果：城壁的地面層本來就是拿打壞後的圖塊算的（§2 的 +0x10） | 靜態 |
-| [`re/64-corps-arrival-state-machine.md`](../re/64-corps-arrival-state-machine.md) | `+0x00` 位元 1 | Stage 10／11 改目標時 `or byte [si], 2`；`sub_12662` 在 `0x126A0` 讀它、清掉並呼叫 `sub_147BB`，而 **`sub_147BB` 未讀**。疑似「路線要重算」 | 靜態 |
-| [`re/64-corps-arrival-state-machine.md`](../re/64-corps-arrival-state-machine.md) | 已經解掉的**：非玩家的 Stage 0–3 四支 handler 與 `sub_13E11 | （未解小節內文） | 靜態 |
 | [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | 非玩家的四個 entry 掛在 §6 未解。 | （散句） | 靜態 |
-| [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | `+0x00` 位元 1（`or byte [si], 2`） | Stage 2 改目標、Stage 10／11 校正目標、`sub_1474A` 都會設；`sub_12662` 在 `0x126A0` 讀它並清掉，接著呼叫 `sub_147BB`。**`sub_147BB` 未讀**，位元 1 疑似「路線要重算」但沒有確認 | 靜態 |
 | [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | `sub_1487B` 的挑格邏輯 | `sub_1474A`（AI 編成後的第一個目標）與 `sub_14DA4` 用它挑相鄰格；讀了外框但沒逐條解 | 靜態 |
 | [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | `sub_128F4` 的 STC 分支 | 走到敵方據點時呼叫 `sub_1291A`（俘虜／脫離判定），之後 `di` 不可信。本文件的 `di` 推論只涵蓋一般路徑 | 靜態 |
 | [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `sub_10AD9` 的 `cx = 40B0h` | 肖像繪製的尺寸／來源參數，沒逐位元解 | 靜態 |
@@ -432,7 +429,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（93 條）
+## 2.6 其他（92 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -522,7 +519,6 @@
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「看」與「選」的內容差異 | 原版兩種取法的**列表內容**不同（`../re/26` §4.2），remake 只統一了欄位 | 靜態 |
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「委任」那一格的顏色 | 實錄影格上看起來是紅字，但影片是壓縮過的、也沒有機器碼證據。remake 先畫成一般色 | 靜態 |
 | [`spec/39-march-order-menu.md`](../spec/39-march-order-menu.md) | `sub_193E9` 的選單版面 | 只知道 `cx = 0x4Ch`；矩形與列高沒解，remake 先用既有的對話框樣式並標成差異 | 靜態 |
-| [`spec/40-ai-march-decision.md`](../spec/40-ai-march-decision.md) | `+0x00` 位元 1 | 原版改目標時會設，`sub_12662` 讀它並呼叫未讀的 `sub_147BB`。remake 直接重下一次行軍（`March`），行為等價但不是同一條路 | 靜態 |
 | [`spec/40-ai-march-decision.md`](../spec/40-ai-march-decision.md) | `sub_1487B` | AI 編成後挑第一個目標用的相鄰格選擇，未逐條解；remake 沿用既有的 `nearestFactionCity` | 靜態 |
 | [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 事件場景的兩個講話位置 | (8, 88) 與 (136, 296) 由機器碼算出，**沒有影格覆驗**（`../re/66` §8）。remake 的事件場景版面暫不動 | 靜態 |
 | [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 框的底紋 | 龍紋底紋仍未解（`../formats/03` §5.5），remake 用純色 | 靜態 |
