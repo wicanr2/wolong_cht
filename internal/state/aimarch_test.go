@@ -1,5 +1,8 @@
 package state
 
+import "github.com/wicanr2/wolong_cht/internal/rules/march"
+
+
 import (
 	"testing"
 
@@ -381,5 +384,169 @@ func TestReturnBlockedNeedsForeignCityOnTheRoute(t *testing.T) {
 	w.routIfBlocked(i)
 	if !w.Corps[i].Routing {
 		t.Error("被擋住之後沒有進敗走狀態")
+	}
+}
+
+// ---------------------------------------------------------------------------
+// 戰後退一站回家（docs/spec/46）
+// ---------------------------------------------------------------------------
+
+// threeInARow 建一條 A—B—C 的線形道路圖，回傳三個據點編號。
+// A 當首都，C 是軍團現在站的地方。
+func threeInARow(t *testing.T, w *World, faction int) (a, b, c int) {
+	t.Helper()
+	picked := []int{}
+	for n := range w.Cities {
+		if len(picked) == 3 {
+			break
+		}
+		picked = append(picked, n)
+	}
+	if len(picked) < 3 {
+		t.Skip("據點不夠三個")
+	}
+	a, b, c = picked[0], picked[1], picked[2]
+	for _, n := range picked {
+		w.Cities[n].Owner = faction
+	}
+	w.Factions[faction].Capital = a
+	w.SetRoads(march.New(len(w.Cities), []march.Edge{
+		{A: a, B: b, Steps: 1}, {A: b, B: c, Steps: 1},
+	}))
+	return a, b, c
+}
+
+
+// standOnForeignGround 把軍團腳下那一格換成別人的，
+// 好讓它走「不在自家據點上」那一支。
+func standOnForeignGround(w *World, node, faction int) {
+	for other := range w.Factions {
+		if other != faction {
+			w.Cities[node].Owner = other
+			return
+		}
+	}
+}
+
+// `sub_1487B` 的第二個歸屬檢查：下一站不是自己的地就退不了。
+func TestNextHopHomeStopsAtForeignGround(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[1]
+	a, b, c := threeInARow(t, w, f)
+	i := aiCorps(t, w, f, c)
+
+	if got := w.nextHopHome(i); got != b {
+		t.Fatalf("下一站 = %d，要 %d（首都是 %d）", got, b, a)
+	}
+	// 中間那一站換人 ⇒ 退不了。
+	for other := range w.Factions {
+		if other != f {
+			w.Cities[b].Owner = other
+			break
+		}
+	}
+	if got := w.nextHopHome(i); got != -1 {
+		t.Errorf("下一站是別人的地，應該回 −1，實際 %d", got)
+	}
+}
+
+// `cmp al, 0FFh`：沒有首都就無處可退。
+func TestNextHopHomeWithoutCapital(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[1]
+	_, _, c := threeInARow(t, w, f)
+	i := aiCorps(t, w, f, c)
+	w.Factions[f].Capital = noCity
+	if got := w.nextHopHome(i); got != -1 {
+		t.Errorf("沒有首都應該回 −1，實際 %d", got)
+	}
+}
+
+// 敗方退**一站**，不是直接回首都。
+func TestLoserRetreatsOneHop(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[1]
+	a, b, c := threeInARow(t, w, f)
+	i := aiCorps(t, w, f, c)
+	standOnForeignGround(w, c, f)
+	w.Corps[i].Men = army60000Points // 兵力夠 ⇒ 不轉 Stage 10
+
+	if dead := w.retreatOrPerish(i, false); dead {
+		t.Fatal("有退路卻判成壞滅")
+	}
+	if got := w.Corps[i].Ordered; got != b {
+		t.Errorf("退到 %d，要退一站到 %d（首都在 %d）", got, b, a)
+	}
+	if got := w.Corps[i].Stage; got != StageWaitMorale {
+		t.Errorf("Stage = %d，兵力還夠時要 %d", got, StageWaitMorale)
+	}
+}
+
+// 兵力 ≤ 300 就轉 Stage 10（`cmp word [si+4], 12Ch`）。
+func TestWeakLoserSwitchesToHomeResupply(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[1]
+	_, _, c := threeInARow(t, w, f)
+	i := aiCorps(t, w, f, c)
+	standOnForeignGround(w, c, f)
+	w.Corps[i].Men = aiHomeThreshold
+
+	if dead := w.retreatOrPerish(i, false); dead {
+		t.Fatal("有退路卻判成壞滅")
+	}
+	if got := w.Corps[i].Stage; got != StageHomeResupply {
+		t.Errorf("Stage = %d，兵力 ≤ %d 時要 %d", got, aiHomeThreshold, StageHomeResupply)
+	}
+}
+
+// 勝方（原版的 `cl == 0`）原地不動。
+func TestWinnerStandsStill(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[1]
+	_, _, c := threeInARow(t, w, f)
+	i := aiCorps(t, w, f, c)
+
+	if dead := w.retreatOrPerish(i, true); dead {
+		t.Fatal("勝方被判成壞滅")
+	}
+	if got := w.Corps[i].Ordered; got != c {
+		t.Errorf("勝方動了：Ordered = %d，要 %d", got, c)
+	}
+	if got := w.Corps[i].Stage; got != StageWaitMorale {
+		t.Errorf("Stage = %d，要 %d", got, StageWaitMorale)
+	}
+}
+
+// 站在自家據點上就不退——攻城時守方走的正是這一支。
+func TestDefenderInOwnCityDoesNotRetreat(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[1]
+	_, _, c := threeInARow(t, w, f)
+	i := aiCorps(t, w, f, c) // c 已經是自己的地
+
+	if dead := w.retreatOrPerish(i, false); dead {
+		t.Fatal("守在自家城裡卻被判成壞滅")
+	}
+	if got := w.Corps[i].Ordered; got != c {
+		t.Errorf("守方動了：Ordered = %d，要 %d", got, c)
+	}
+}
+
+// ⭐ 壞滅的第三個入口：退不了。
+func TestNoRetreatMeansDestroyed(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[1]
+	_, b, c := threeInARow(t, w, f)
+	i := aiCorps(t, w, f, c)
+	// 現在站的那一格換成別人的（才不會走「站在自家城裡」那一支），
+	// 回家的下一站也換成別人的。
+	for other := range w.Factions {
+		if other != f {
+			w.Cities[c].Owner, w.Cities[b].Owner = other, other
+			break
+		}
+	}
+	if dead := w.retreatOrPerish(i, false); !dead {
+		t.Fatal("退不了卻沒判成壞滅")
 	}
 }

@@ -288,9 +288,11 @@ func (w *World) ResolvePending(rng combat.Rand) *CorpsEvent {
 	ev.BattleAfter = [2]int{w.Corps[p.Attacker].Men, w.Corps[p.Defender].Men}
 	ev.BattleCityDamage = r.CityDamage
 	w.damageCity(p.Node, p.Mode, r)
-	w.afterBattle(ev, p.Attacker, r.AttackerDestroyed, p.Defender, rng)
-	w.afterBattle(ev, p.Defender, r.DefenderDestroyed, p.Attacker, rng)
-	if o.AttackerWins && p.Mode == combat.Siege && !r.AttackerDestroyed {
+	attDead := r.AttackerDestroyed || w.retreatOrPerish(p.Attacker, !r.DefenderWins)
+	defDead := r.DefenderDestroyed || w.retreatOrPerish(p.Defender, r.DefenderWins)
+	w.afterBattle(ev, p.Attacker, attDead, p.Defender, rng)
+	w.afterBattle(ev, p.Defender, defDead, p.Attacker, rng)
+	if o.AttackerWins && p.Mode == combat.Siege && !attDead {
 		w.capture(p.Attacker, ev)
 	}
 	return ev

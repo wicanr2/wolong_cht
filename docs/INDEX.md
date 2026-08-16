@@ -175,6 +175,7 @@
 | [`docs/spec/43-rout-on-blocked-return.md`](spec/43-rout-on-blocked-return.md) | 43 — 回不了家的軍團會敗走 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/44-advise-original-text.md`](spec/44-advise-original-text.md) | 44 — 進言用原版的原文，不用改寫的句子 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/45-advise-scene-layout.md`](spec/45-advise-scene-layout.md) | 45 — 進言的畫面：插圖 ＋ 兩個框輪流講話 ＋ 五列選單 | CONFORMED。 | 2026-08-17 |
+| [`docs/spec/46-post-battle-retreat.md`](spec/46-post-battle-retreat.md) | 46 — 戰後敗方退一站回家，退不了就壞滅 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | READY。管線的每一段都有現成工具，缺的是把它們接起來 與一支逐區差分工具。 | 2026-08-15 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）

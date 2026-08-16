@@ -245,10 +245,14 @@ func scaleMorale(before, base, now, was int) int {
 	return base * now / was
 }
 
-// Destroyed 回報軍團戰後是否壞滅（原版 `sub_1474A` 的前兩個檢查）。
+// Destroyed 回報軍團戰後是否壞滅（原版 `sub_1474A` 的**前兩個**檢查）。
 //
-// 自動判定裡大將槽保底 1，所以實際上唯一的入口是**士氣 0**，
+// 自動判定裡大將槽保底 1，所以這兩條裡實際上只有士氣 0 會成立，
 // 也就是「戰前士氣不足 100」。大將槽那一條是留給戰術層的。
+//
+// ⚠ **壞滅還有第三個入口：敗方找不到退路**（`sub_1487B`）。
+// 那一條需要道路圖與據點歸屬，所以在 `internal/state`
+// （`retreatOrPerish`，docs/spec/46），不在這一層。
 func Destroyed(c Corps) bool { return c.Morale == 0 || c.Units[0].Men == 0 }
 
 // ---------------------------------------------------------------------------

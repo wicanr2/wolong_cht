@@ -163,6 +163,75 @@ func (w *World) headHomeResupply(i int) {
 	}
 }
 
+// nextHopHome 是 `sub_1487B`：回首都的路上「下一個自己的據點」。
+// 回傳 −1 表示**退不了**（沒有首都、沒有下一站，或下一站不是自己的地）。
+//
+// ⚠ 這支不是 Stage 10／11 用的。那兩檔走 `sub_144A9`／`sub_144D6`，
+// 直接把目標設成首都、不逐站（[`docs/spec/46`](../../docs/spec/46-post-battle-retreat.md) §3）。
+// 用到它的是戰後（`sub_1474A`）與據點失守（`sub_14DA4`）。
+func (w *World) nextHopHome(i int) int {
+	if i < 0 || i >= numCorps {
+		return -1
+	}
+	c := &w.Corps[i]
+	if c.Faction < 0 || c.Faction >= numFactions {
+		return -1
+	}
+	capital := w.Factions[c.Faction].Capital
+	if !validCity(capital) {
+		return -1 // `cmp al, 0FFh` ⇒ 沒有首都就無處可退
+	}
+	if c.Node == capital || w.roads == nil {
+		return capital
+	}
+	path := w.roads.Route(c.Node, capital)
+	if len(path) < 2 {
+		// 廣度優先回 carry 時原版拿首都本身當下一站，而且**不再檢查歸屬**
+		// （`loc_1490C` 直接 CLC）。
+		return capital
+	}
+	next := path[1]
+	if !validCity(next) || w.Cities[next].Owner != c.Faction {
+		return -1 // `cmp dl, [bx+841h]` 不符 ⇒ STC
+	}
+	return next
+}
+
+// retreatOrPerish 是 `sub_1474A` 的後半段：敗方退一站回家。
+// 回傳 true 表示**退不了 ⇒ 壞滅**——那是壞滅的第三個入口，
+// 士氣 0 與大將槽 0 之外的那一個（`docs/spec/46` §1）。
+//
+// won 對應原版的 `cl`：勝方（`cl == 0`）原地不動。
+func (w *World) retreatOrPerish(i int, won bool) bool {
+	if i < 0 || i >= numCorps || !w.Corps[i].Alive {
+		return false
+	}
+	c := &w.Corps[i]
+	if won {
+		c.Stage = StageWaitMorale
+		return false
+	}
+	// 站在自家據點上就不退（`cmp al, [si+1] / jz .stay`）。
+	// 攻城時守方正是這一支，所以據點易主不受這條規則影響。
+	if army.KindOf(c.Node) == army.CityNode && c.Node >= 0 && c.Node < len(w.Cities) &&
+		w.Cities[c.Node].Owner == c.Faction {
+		c.Stage = StageWaitMorale
+		return false
+	}
+	next := w.nextHopHome(i)
+	if next < 0 {
+		return true
+	}
+	_ = w.March(i, next)
+	// 兵力 ≤ 300 或退到首都就轉回首都補兵，否則先等士氣。
+	if c.Men <= aiHomeThreshold || next == w.Factions[c.Faction].Capital {
+		c.Stage = StageHomeResupply
+		return false
+	}
+	c.Stage = StageWaitMorale
+	return false
+}
+
 // routIfBlocked 是 `sub_147BB` 的 `0x8000` 分支（`docs/spec/43`）：
 // **回家的路要穿過別人的地，這支軍團就敗走。**
 //

@@ -695,10 +695,15 @@ func (w *World) resolveCorpsBattle(ev *CorpsEvent, att, def int, m combat.Mode, 
 	ev.BattleCityDamage = r.CityDamage
 	w.damageCity(w.Corps[att].Node, m, r)
 
-	w.afterBattle(ev, att, r.AttackerDestroyed, def, rng)
-	w.afterBattle(ev, def, r.DefenderDestroyed, att, rng)
+	// 原版兩邊各跑一次 `sub_1474A`：士氣判定之外，**敗方退不了也算壞滅**
+	// （docs/spec/46 §1）。守方站在自家城裡走「不退」那一支，
+	// 所以攻城的易主判定不受影響。
+	attDead := r.AttackerDestroyed || w.retreatOrPerish(att, !r.DefenderWins)
+	defDead := r.DefenderDestroyed || w.retreatOrPerish(def, r.DefenderWins)
+	w.afterBattle(ev, att, attDead, def, rng)
+	w.afterBattle(ev, def, defDead, att, rng)
 
-	if r.DefenderDestroyed && !r.AttackerDestroyed && m == combat.Siege {
+	if defDead && !attDead && m == combat.Siege {
 		w.capture(att, ev)
 	}
 }
@@ -718,8 +723,10 @@ func (w *World) fightGarrison(att int, ev *CorpsEvent, rng combat.Rand) {
 	ev.BattleCityDamage = r.CityDamage
 	w.damageCity(node, combat.Siege, r)
 
-	w.afterBattle(ev, att, r.AttackerDestroyed, -1, rng)
-	if !r.DefenderWins && !r.AttackerDestroyed {
+	// 守方是城兵不是軍團，所以只有攻方要跑 `sub_1474A`。
+	attDead := r.AttackerDestroyed || w.retreatOrPerish(att, !r.DefenderWins)
+	w.afterBattle(ev, att, attDead, -1, rng)
+	if !r.DefenderWins && !attDead {
 		w.capture(att, ev)
 	}
 }

@@ -23,8 +23,8 @@
 | 程式碼理解 | 217 | 210 | 7 | 0 |
 | 驗收 | 57 | 51 | 6 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 102 | 97 | 5 | 0 |
-| **合計** | **484** | 463 | 20 | 1 |
+| 其他 | 105 | 100 | 5 | 0 |
+| **合計** | **487** | 466 | 20 | 1 |
 
 ## 2.1 規則正確性（54 條）
 
@@ -433,7 +433,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（102 條）
+## 2.6 其他（105 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -536,6 +536,9 @@
 | [`spec/45-advise-scene-layout.md`](../spec/45-advise-scene-layout.md) | `dh = 0Bh` | 選單本體的第二個立即值，語意未定（不是框寬——框寬由 `cx = 600Ah` 決定） | 靜態 |
 | [`spec/45-advise-scene-layout.md`](../spec/45-advise-scene-layout.md) | 逐句節拍 | 原版每句要等玩家按鍵，`sub_10241`／`sub_102C2` 那一段還沒讀 | 靜態 |
 | [`spec/45-advise-scene-layout.md`](../spec/45-advise-scene-layout.md) | 選單的反白樣式 | 原版怎麼畫游標列沒解，remake 用自己的反白條 | 靜態 |
+| [`spec/46-post-battle-retreat.md`](../spec/46-post-battle-retreat.md) | `loc_1491B` 的方向回傳 | `±4` 決定讀哪一個鄰接槽，remake 用 `Route` 的第 2 個節點取代，沒有逐條對過兩者選的是不是同一站 | 靜態 |
+| [`spec/46-post-battle-retreat.md`](../spec/46-post-battle-retreat.md) | 野外那一格的鄰接槽 | remake 的 `Node` 在行軍途中停在上一個據點，所以走的是「從上一個據點找路」，不是原版的「從野外那一格的鄰接槽挑」 | 靜態 |
+| [`spec/46-post-battle-retreat.md`](../spec/46-post-battle-retreat.md) | `sub_14DA4` | 據點失守時把受影響的軍團調頭，還沒接 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |
