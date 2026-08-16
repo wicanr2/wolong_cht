@@ -167,3 +167,38 @@ func TestSiegeWallBlocksUntilBroken(t *testing.T) {
 	}
 }
 
+
+// ⭐ 打壞城門那一格就開得出通道。
+//
+// `docs/playtest/28` §2 曾經量到「城牆四格厚、可破壞的只有一格，
+// 撞穿也開不出通道」——那是舊模型（「堆疊高度以下全實心」）的結論。
+// 照原版的判準（子圖塊 ≥ 0x70 不擋人）重算之後，城門那一列**只有一格擋著**。
+func TestBreakingWallOpensCorridor(t *testing.T) {
+	lib := realLib(t)
+	for _, n := range []int{0, 5, 20} {
+		f := realField(t, lib, n)
+		gx, y := f.GateX(), 32
+		blocked := 0
+		for x := gx - 4; x <= gx+4; x++ {
+			if f.Blocked(x, y, 1) {
+				blocked++
+			}
+		}
+		if blocked != 1 {
+			t.Errorf("戰場 %d：城門那一列有 %d 格擋著，預期 1", n, blocked)
+		}
+		for x := gx - 4; x <= gx+4; x++ {
+			switch tl := f.Tile(x, y); {
+			case tl >= 0xD0 && tl <= 0xDF:
+				f.Retile(x, y, 0x10)
+			case tl >= 0xF0 && tl < 0xF8:
+				f.Retile(x, y, 8)
+			}
+		}
+		for x := gx - 4; x <= gx+4; x++ {
+			if f.Blocked(x, y, 1) {
+				t.Errorf("戰場 %d：打壞之後 (%d,%d) 還擋著", n, x, y)
+			}
+		}
+	}
+}

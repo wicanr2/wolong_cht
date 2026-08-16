@@ -289,6 +289,35 @@ func (b *Battle) moveToward(side, k int) {
 	}
 }
 
+// occupancyCost 是尋路的額外成本：**有兵站著的格子加 8**。
+//
+// 原版把它存在另一張表（`word_1D2FE`），移動落定時舊格寫 0、新格寫 8，
+// 尋路擴散時 `mov al, es:[bx+2000h]` 讀出來加進波數
+// （docs/re/63 §1、docs/re/11 §5.15）。**這不是「不能走」，是「繞得過就繞」。**
+//
+// 回傳的是一個查表函式：一次掃完 96 個兵建表，不要每查一格掃一次——
+// 尋路一次會查上千格，逐格掃會讓無頭模擬慢一個數量級。
+func (b *Battle) occupancyCost() Penalty {
+	var occupied [Height][Width]bool
+	for i := range b.Sides {
+		for k := range b.Sides[i].Soldiers {
+			s := &b.Sides[i].Soldiers[k]
+			if s.Alive && s.X >= 0 && s.X < Width && s.Y >= 0 && s.Y < Height {
+				occupied[s.Y][s.X] = true
+			}
+		}
+	}
+	return func(x, y int) int {
+		if x < 0 || x >= Width || y < 0 || y >= Height || !occupied[y][x] {
+			return 0
+		}
+		return occupiedPenalty
+	}
+}
+
+// occupiedPenalty 是原版寫進佔用表的值（`sub_1B240` 的 `mov byte …, 8`）。
+const occupiedPenalty = 8
+
 // standZ 是一個兵走到 (x, y) 之後會站在哪一層。
 //
 // 先看**自己所在的平面**；那個平面在那一格沒有地面時看另一個平面——
@@ -323,13 +352,15 @@ func (b *Battle) replan(side, k int) {
 	}
 	s.PathAt = b.Frame
 	from, to := Point{X: s.X, Y: s.Y}, Point{X: s.GoalX, Y: s.GoalY}
-	pts := b.Field.FindPath(from, to, s.CanClimb(), nil)
+	occupied := b.occupancyCost()
+	pts := b.Field.FindPath(from, to, s.CanClimb(), occupied)
 	if len(pts) == 0 {
 		// 地形走不通 → 改成「可以拆的就穿過去」。兵會走到那一格前面
 		// 撞上去，`tryMove` 把它算成一次耐久損傷，撞穿了地形就通了。
 		// 沒有這一步的話，攻城時攻方會整團卡在打不壞的城體前面。
 		pts = b.Field.FindPathForcing(from, to, s.CanClimb(),
-			b.breachCost, b.breakableAt)
+			func(x, y int) int { return b.breachCost(x, y) + occupied(x, y) },
+			b.breakableAt)
 	}
 	if len(pts) == 0 {
 		return

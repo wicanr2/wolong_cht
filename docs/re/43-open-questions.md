@@ -19,12 +19,12 @@
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
 | 規則正確性 | 55 | 53 | 2 | 0 |
-| 資料保存 | 38 | 38 | 0 | 0 |
-| 程式碼理解 | 214 | 207 | 7 | 0 |
-| 驗收 | 39 | 33 | 6 | 0 |
+| 資料保存 | 36 | 36 | 0 | 0 |
+| 程式碼理解 | 213 | 206 | 7 | 0 |
+| 驗收 | 57 | 51 | 6 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
 | 其他 | 80 | 76 | 4 | 0 |
-| **合計** | **444** | 424 | 19 | 1 |
+| **合計** | **459** | 439 | 19 | 1 |
 
 ## 2.1 規則正確性（55 條）
 
@@ -86,7 +86,7 @@
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 君主陣亡時軍師怎麼辦 | 未知 | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | END_S1`–`END_S4`（結局動畫？）與四個劇本的結局有關，格式還沒碰。 | （未解小節內文） | 靜態 |
 
-## 2.2 資料保存（38 條）
+## 2.2 資料保存（36 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -94,10 +94,8 @@
 | [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 偏移表 `[1023] = 0` 是保留還是有意義。 | （未解小節內文） | 靜態 |
 | [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 78 則空訊息的索引位置有沒有規律。 | （未解小節內文） | 靜態 |
 | [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 訊息索引與遊戲事件的對應（哪一則在什麼時候顯示）。 | （未解小節內文） | 靜態 |
-| [`formats/02-brg-palette.md`](../formats/02-brg-palette.md) | 4–7 | **未解**，高飽和純色。假說見 `docs/re/02` §6.2 | 靜態 |
 | [`formats/02-brg-palette.md`](../formats/02-brg-palette.md) | 誰載入、誰選組（`docs/re/02` §7）。 | （未解小節內文） | 靜態 |
 | [`formats/02-brg-palette.md`](../formats/02-brg-palette.md) | OPENPAL` 6 組與 `ENDPAL` 12 組各自對應哪些畫面。 | （未解小節內文） | 靜態 |
-| [`formats/02-brg-palette.md`](../formats/02-brg-palette.md) | banks 4–7 的用途。 | （未解小節內文） | 靜態 |
 | [`formats/03-grf-images.md`](../formats/03-grf-images.md) | 3 | `0x9700` / `0x23A0` (9,120) / `sub_1006B` / 走 `sub_1F888`（**位元對齊**的繪製常式，可放在非 8 倍數的 x）。未解 | 靜態 |
 | [`formats/04-map-sch-container.md`](../formats/04-map-sch-container.md) | 狀態：容器格式的索引層 READY，壓縮演算法未解。 | （散句） | 靜態 |
 | [`formats/05-mmap-worldmap.md`](../formats/05-mmap-worldmap.md) | MMAP.MAP`（80,716 B）的編碼**。 | （未解小節內文） | 靜態 |
@@ -129,7 +127,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（214 條）
+## 2.3 程式碼理解（213 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -342,13 +340,12 @@
 | [`re/62-strategy-minimap.md`](../re/62-strategy-minimap.md) | 熱區 `0x16`（點地圖）做什麼 | 沒讀。合理猜測是把大地圖捲到該處，但**沒驗** | 靜態 |
 | [`re/62-strategy-minimap.md`](../re/62-strategy-minimap.md) | `sub_15A3A` 裡 `si += 200h`／`bx += 0A00h` | 算完沒用到，是遺留的死碼 | 靜態 |
 | [`re/62-strategy-minimap.md`](../re/62-strategy-minimap.md) | 圖例底圖在哪個資源 | `sub_1FA37` 的 `ds` 來自 `word_10D50`；`docs/re/47` 記成段 3 `0x09A0`，兩者沒對過 | 靜態 |
-| [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | `word_1D2FE`（第三塊）誰讀 | 移動時寫 0／8（`sub_1B240`／`sub_1B3B2`／`sub_1B824`），**全庫找不到讀它的指令**。形狀像「這一格有單位站著」的標記 | 靜態 |
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 段變數的配置迴圈 | `word_1D2F6`–`word_1D30E` 沒有直接寫入的 xref，§1 的相鄰關係是推論 | 靜態 |
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | `sub_1B186`／`sub_1B15D` | 爬升／下降時檢查上下一層的那兩支，沒讀 | 靜態 |
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 命令 6 為什麼擋高平面橫移 | `[si+1Ah] == 6`，命令碼 6 是什麼沒對過 | 靜態 |
-| [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 打壞城壁之後地面層表不更新 | `sub_1B824` 只重算通行層（`sub_1BB6D`）與第三塊，**沒有重跑 `sub_1BC39`**。所以瓦礫格的地面層維持原值 | 靜態 |
+| [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 打壞城壁之後地面層表不更新 | `sub_1B824` 只重算通行層（`sub_1BB6D`）與佔用表，**沒有重跑 `sub_1BC39`**。而那不影響結果：城壁的地面層本來就是拿打壞後的圖塊算的（§2 的 +0x10） | 靜態 |
 
-## 2.4 驗收（39 條）
+## 2.4 驗收（57 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -391,6 +388,24 @@
 | [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 一幀能有幾個兵撞牆 | 原版沒量過。前排寬度決定破牆速度，而破牆速度決定攻城打不打得下來 | 靜態 |
 | [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 打壞城壁之後地面層表不更新 | 原版就不更新，而且不影響結果——城壁的地面層本來就是拿打壞後的圖塊算的（`../re/63` §2） | 靜態 |
 | [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 高平面的橫向移動沒有實測 | 守方站到牆頂的情境還沒跑過 | 實測 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 主畫面：視窗內部底紋 | 原版視窗內是**龍紋暗花**，remake 是純深藍 / 看得出來 / 底紋在 `ICONGRF` 段 3 附近，還沒定位 | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 主畫面：大地圖地形色調 | 原版偏黃綠、remake 偏綠 / 存疑 / 可能是影片的色彩取樣。要驗就比**同一格的色號**，不要比 RGB | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 一覽表：捲軸 | 原版左邊有 ▲▼ 捲軸；remake 用「上一頁／下一頁」文字 / 看得出來 / `../re/26` | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 一覽表：視窗大小 | 原版的一覽視窗只佔左半，remake 是置中大視窗 / 看得出來 / 同上，矩形沒抄 | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | **編成畫面** | 六個位置、兵種圖示、預備兵三欄、確定鈕都對上；**缺武將肖像**，而且原版是「一覽表 ＋ 編成面板並排」，remake 是單一對話框 / 看得出來 / `../re/30` | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 編成畫面：鍵盤提示 | remake 在面板下半塞了一整塊操作說明，原版沒有 / remake 差異 / 原版戰略層沒有鍵盤（`../re/22` §2） | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | **戰鬥指揮／委任選單** | 版面是 remake 自訂的；影片裡沒有這一格的對照 / 未對過 / 先找原版影格 | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 戰場：同一場的逐格對拍 | 沒做過 / 未對過 / 需要同狀態，難度同主畫面 | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | **攻方大多數不前進** | 48 個兵只有 4 個在撞牆（`30` §3） / **攻城打不下來** | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | `sub_13E11` 每「時」做什麼 | 未讀 / 行軍與 AI 的節拍 | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 防災值怎麼成長 | 欄位已知、規則未解 / 天災的長期經濟 | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 行軍費用 | 說明書 10.6 有專節，沒讀 / 經濟 | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 預備兵維持費單價 | `sub_15358` 尾段沒讀 / 經濟 | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 士氣值存在哪 | 戰術層 / 戰鬥判定 | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 地形色調差 | 分不出是影片取樣還是調色盤，要比色號 | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 戰鬥指揮／委任選單 | 影片裡沒有對照影格 | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 同一場戰鬥的逐格對拍 | 需要同狀態，還沒做 | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 勢力一覽的欄位 | 沒有逐欄比對 | 靜態 |
 
 ## 2.5 外部資料（18 條）
 

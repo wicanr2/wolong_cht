@@ -57,7 +57,7 @@ PC-98 走 GRCG）。**`*GRF.DAT` 的圖像因此是 4 bpp。**
 | 1 | 夏（`#55aa11` 鮮綠） |
 | 2 | 秋（`#dd8800` 橙褐） |
 | 3 | 冬（`#ffffff` 雪白） |
-| 4–7 | **未解**，高飽和純色。假說見 `docs/re/02` §6.2 |
+| 4–7 | **「液晶」畫面模式**的四季（`docs/re/02` §6.2）|
 
 **季節只換色號 14 這一個顏色**，其餘 15 色四季共用。
 地表植被統一畫成色號 14，換調色盤就換季。
@@ -82,4 +82,3 @@ tools/py.sh tools/brg.py swatch workplace/orig/dosv/GAMEPAL.BRG out.png 24
 
 - 誰載入、誰選組（`docs/re/02` §7）。
 - `OPENPAL` 6 組與 `ENDPAL` 12 組各自對應哪些畫面。
-- banks 4–7 的用途。

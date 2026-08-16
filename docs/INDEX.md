@@ -61,6 +61,7 @@
 | [`docs/playtest/28-siege-breach-measurement.md`](playtest/28-siege-breach-measurement.md) | 28 — 量攻城：remake 的攻方打不進城，原因是城牆四格厚 | ⚠ 缺口已定位，三個 parity bug 已修並有單測； | 2026-08-16 |
 | [`docs/playtest/29-strategy-minimap-markers.md`](playtest/29-strategy-minimap-markers.md) | 29 — 縮小地圖的據點標記接上原版的四種顏色 | ✅ 已實作並留下截圖。 | 2026-08-16 |
 | [`docs/playtest/30-ground-planes-implemented.md`](playtest/30-ground-planes-implemented.md) | 30 — 兩個平面的地面圖接上規則層：攻方終於會打城牆了 | ⚠ 機制接上並有測試，攻城仍打不進去——但卡點換了。 | 2026-08-16 |
+| [`docs/playtest/31-parity-inventory.md`](playtest/31-parity-inventory.md) | 31 — 原版 vs remake 逐畫面盤點（2026-08-16） | 盤點，不是量測。 | 2026-08-16 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | remake 推廣片、代表幀「經典再現」比較片與 DOS/V／remake 實機動態比較片均已產出並完成媒體規格驗證… | 2026-08-12 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
 | [`docs/promo/dosv-adlib-and-tactical-review.md`](promo/dosv-adlib-and-tactical-review.md) | 推廣片原版 AdLib 與戰術骨架審查 | 原版音軌來源與影片縮放鏈已修正；戰術固定骨架的 16 px viewport 偏差已修正。完整同狀態戰術 parit… | 2026-08-12 |
