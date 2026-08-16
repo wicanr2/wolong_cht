@@ -148,6 +148,7 @@
 | [`docs/spec/30-victory.md`](spec/30-victory.md) | 30 — 結局：存活勢力數歸一 | READY。⭐ 觸發條件在機器碼裡是 | 2026-08-16 |
 | [`docs/spec/31-tactical-sidebar.md`](spec/31-tactical-sidebar.md) | 31 — 戰術側欄的內容組成 | READY。 | 2026-08-16 |
 | [`docs/spec/32-gate-strength-bar.md`](spec/32-gate-strength-bar.md) | 32 — 攻城的「門強度」條 | READY。 | 2026-08-16 |
+| [`docs/spec/33-squad-selection.md`](spec/33-squad-selection.md) | 33 — 底列六格是選部隊，不是第二套命令列 | READY。 | 2026-08-16 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | READY。管線的每一段都有現成工具，缺的是把它們接起來 與一支逐區差分工具。 | 2026-08-15 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）

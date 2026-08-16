@@ -320,7 +320,9 @@ func TestBattleChoiceRowsHoverOnlyInsideGlyphBands(t *testing.T) {
 	}
 }
 
-func TestBattleKeyboardAndPointerResolveSameCommandIndex(t *testing.T) {
+// 鍵盤 1–6 直接下命令是 **remake 加的**（原版這一層只有滑鼠）；
+// 底列六格在原版是**選部隊**，兩者不再是同一個索引（docs/spec/33）。
+func TestBattleKeyboardIssuesCommandsAndBottomRowPicksSquads(t *testing.T) {
 	l := dosvBattleLayoutFor(dosvBattleScreenW, dosvBattleScreenH)
 	cells := splitBattleCommandCells(l.BottomCommands)
 	keys := [...]ebiten.Key{
@@ -330,17 +332,59 @@ func TestBattleKeyboardAndPointerResolveSameCommandIndex(t *testing.T) {
 	for i, key := range keys {
 		fromKey, ok := battleCommandIndexForKey(key)
 		if !ok || fromKey != i {
-			t.Fatalf("按鍵 %v 映射 = %d, %v；預期 %d", key, fromKey, ok, i)
+			t.Fatalf("按鍵 %v 映射 = %d, %v；預期命令碼 %d", key, fromKey, ok, i)
 		}
 		hit, ok := battleHitRect(cells[i])
 		if !ok {
-			t.Fatalf("命令 %d 沒有 hit rect", i+1)
+			t.Fatalf("底列第 %d 格沒有 hit rect", i+1)
 		}
-		fromPointer, ok := splitBattleCommandIndexAt(l.BottomCommands,
+		slot, ok := splitBattleCommandIndexAt(l.BottomCommands,
 			hit.X+hit.W/2, hit.Y+hit.H/2)
-		if !ok || fromPointer != fromKey {
-			t.Fatalf("命令 %d 鍵鼠結果不同：key=%d pointer=%d", i+1, fromKey, fromPointer)
+		if !ok || slot != i {
+			t.Fatalf("底列第 %d 格命中 = %d, %v", i+1, slot, ok)
 		}
+	}
+}
+
+// cs:0xD2E4 與 cs:0xD2EA 互為反排列——六格全部成立才算對得上。
+func TestBottomSlotSquadTablesAreInverse(t *testing.T) {
+	if len(battleBottomSlotSquad) != 6 || len(battleSquadSlotX) != 6 {
+		t.Fatal("兩張順序表都必須是 6 筆")
+	}
+	seen := map[int]bool{}
+	for slot, squad := range battleBottomSlotSquad {
+		if squad < 0 || squad > 5 || seen[squad] {
+			t.Fatalf("第 %d 格對到的隊 %d 不合法或重複", slot, squad)
+		}
+		seen[squad] = true
+		if got, want := battleSquadSlotX[squad], slot*battleBottomSlotW; got != want {
+			t.Errorf("隊 %d 的 X = %d，預期第 %d 格的 %d", squad, got, slot, want)
+		}
+		if got := battleSquadSlot(squad); got != slot {
+			t.Errorf("隊 %d 反查格 = %d，預期 %d", squad, got, slot)
+		}
+	}
+	// 畫面由左到右：左翼 左備 主將 前鋒 右備 右翼。
+	want := []string{"左翼", "左備", "主將", "前鋒", "右備", "右翼"}
+	for slot, squad := range battleBottomSlotSquad {
+		if battleSquadLabels[squad] != want[slot] {
+			t.Errorf("第 %d 格 = %q，預期 %q", slot, battleSquadLabels[squad], want[slot])
+		}
+	}
+}
+
+// sub_1C6BF 的兩個同心矩形：外框 (x+2,372)-(x+77,392)、內框各縮 1 px。
+func TestSquadSelectRectsMatchRawGeometry(t *testing.T) {
+	outer, inner := battleSlotSelectRects(80)
+	if outer != (battleRect{82, 372, 76, 21}) {
+		t.Errorf("外框 = %#v，預期 (82,372) 76×21", outer)
+	}
+	if inner != (battleRect{83, 373, 74, 19}) {
+		t.Errorf("內框 = %#v，預期 (83,373) 74×19", inner)
+	}
+	l := dosvBattleLayoutFor(dosvBattleScreenW, dosvBattleScreenH)
+	if !l.BottomCommands.contains(outer) {
+		t.Errorf("選取框 %#v 必須留在底列內", outer)
 	}
 }
 

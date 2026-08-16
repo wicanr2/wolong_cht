@@ -44,6 +44,72 @@ type Side struct {
 	// GateOpen 記錄守方是否已經開門。說明書 4.2：突擊會開門，
 	// 而**開了的門這場戰鬥不能再關**。
 	GateOpen bool
+
+	// Selected 是底列六格的選取位元圖（原版 `byte_1D310` 的位元 0–5，
+	// docs/spec/33）。**下完令就清空**，而且 0 表示「全隊」不是「沒有隊」。
+	//
+	// 原版只有玩家那一側有這個位元圖（`sub_1A8CC` 的 `cmp si, 600h`），
+	// 這裡放在 Side 上，AI 那一側永遠是 0。
+	Selected uint8
+}
+
+// AllSquadsMask 是六隊全選（原版 `xchg` 取到 0 時代入的 `0xFF` 的有效位）。
+const AllSquadsMask = 1<<Squads - 1
+
+// SquadSelected 回傳第 k 隊有沒有被選中。
+func (s *Side) SquadSelected(k int) bool {
+	if k < 0 || k >= Squads {
+		return false
+	}
+	return s.Selected&(1<<uint(k)) != 0
+}
+
+// ToggleSquadSelection 重現熱區 0x15–0x1A 的 `xor byte_1D310, 1<<k`。
+func (b *Battle) ToggleSquadSelection(side, squad int) {
+	if side < 0 || side >= len(b.Sides) || squad < 0 || squad >= Squads {
+		return
+	}
+	b.Sides[side].Selected ^= 1 << uint(squad)
+}
+
+// TakeSquadSelection 重現 `0001C1CE` 的 `xchg`：取出選取位元圖並清空，
+// **取到 0 就回全隊**。
+func (b *Battle) TakeSquadSelection(side int) uint8 {
+	if side < 0 || side >= len(b.Sides) {
+		return AllSquadsMask
+	}
+	mask := b.Sides[side].Selected & AllSquadsMask
+	b.Sides[side].Selected = 0
+	if mask == 0 {
+		return AllSquadsMask
+	}
+	return mask
+}
+
+// OrderSelected 是**玩家**下令那一條路（`0001C1B9`）：命令只送給被選中的隊，
+// 一隊都沒選就送給全隊，送完把選取清空。
+//
+// ⚠ 回 false 表示**被拒絕**——城壁令在沒有城的戰場，原版是跳
+// 「這哪裡有城壁啊！！」而不下令。這與腳本那一條（指令 3 自動降級成
+// 指令 1，見 Order）是兩條不同的路，不要合併。
+func (b *Battle) OrderSelected(side int, c Command) bool {
+	if side < 0 || side >= len(b.Sides) {
+		return false
+	}
+	if c == ScaleWal && !b.Field.IsSiege() {
+		return false
+	}
+	mask := b.TakeSquadSelection(side)
+	if mask == AllSquadsMask {
+		b.Order(side, -1, c)
+		return true
+	}
+	for k := 0; k < Squads; k++ {
+		if mask&(1<<uint(k)) != 0 {
+			b.Order(side, k, c)
+		}
+	}
+	return true
 }
 
 // Alive 回傳這一側還活著的兵數（不含待機的）。

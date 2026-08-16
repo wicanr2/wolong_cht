@@ -107,6 +107,45 @@ func battleSideCommandRowLabel(row int) string {
 	return battleCommandLabels[battleSideCommandRowCode[row]]
 }
 
+// battleBottomSlotSquad 是底列由左到右第 i 格對應哪一個編成位置
+// （原版 `cs:0xD2E4`，docs/spec/33 §1.1）。
+//
+// 六個編成位置是 0 主將／1 前鋒／2 左翼／3 右翼／4 左備／5 右備，
+// 所以畫面上是「左翼 左備 主將 前鋒 右備 右翼」——**空間排列**。
+var battleBottomSlotSquad = [...]int{2, 4, 0, 1, 5, 3}
+
+// battleSquadSlotX 是第 k 個編成位置畫在哪個 X（原版 `cs:0xD2EA`）。
+// 它與 battleBottomSlotSquad 互為反排列。
+var battleSquadSlotX = [...]int{160, 240, 0, 400, 80, 320}
+
+// battleSquadSlot 回傳第 k 個編成位置在底列的第幾格。
+func battleSquadSlot(squad int) int {
+	if squad < 0 || squad >= len(battleSquadSlotX) {
+		return -1
+	}
+	return battleSquadSlotX[squad] / battleBottomSlotW
+}
+
+const battleBottomSlotW = 80
+
+// 底列每一格內的三樣東西（docs/spec/33 §1.2）。
+const (
+	battleSlotGlyphX = 4   // 位置名 glyph
+	battleSlotGlyphY = 6
+	battleSlotBarX   = 2   // 待機兵條
+	battleSlotBarY   = 396 // sub_1C74C 的 bx=0x18C
+	battleSlotBarLen = 0x4C
+	battleSlotBarH   = 2
+)
+
+// battleSlotSelectRects 是 sub_1C6BF 的兩個同心矩形，
+// 相對於格左緣 x0：外框 (x0+2,372)-(x0+77,392)、內框各縮 1 px。
+func battleSlotSelectRects(x0 int) (outer, inner battleRect) {
+	outer = battleRect{X: x0 + 2, Y: 372, W: 77 - 2 + 1, H: 392 - 372 + 1}
+	inner = battleRect{X: x0 + 3, Y: 373, W: 76 - 3 + 1, H: 391 - 373 + 1}
+	return outer, inner
+}
+
 // battleSideCommandRowOf 是 battleSideCommandRowCode 的反查：命令碼在第幾列。
 func battleSideCommandRowOf(code int) int {
 	for row, c := range battleSideCommandRowCode {

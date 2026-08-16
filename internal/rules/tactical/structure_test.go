@@ -373,3 +373,84 @@ func TestStructureBarExpiresThroughStep(t *testing.T) {
 		t.Fatal("Step 應該在第 0x14 幀收掉門強度條")
 	}
 }
+
+// 選取位元圖：切換、取出即清空、0 代表全隊（docs/spec/33 §1.3）。
+func TestSquadSelectionMatchesRawBitfield(t *testing.T) {
+	b := newTestBattle(walledField(32))
+	if got := b.TakeSquadSelection(0); got != AllSquadsMask {
+		t.Fatalf("一隊都沒選時應回全隊 %#x，得到 %#x", AllSquadsMask, got)
+	}
+
+	b.ToggleSquadSelection(0, 2)
+	b.ToggleSquadSelection(0, 5)
+	if !b.Sides[0].SquadSelected(2) || !b.Sides[0].SquadSelected(5) ||
+		b.Sides[0].SquadSelected(0) {
+		t.Fatalf("選取狀態錯誤：%#x", b.Sides[0].Selected)
+	}
+	b.ToggleSquadSelection(0, 2) // 再點一次取消
+	if b.Sides[0].SquadSelected(2) {
+		t.Error("再點一次應該取消")
+	}
+
+	if got, want := b.TakeSquadSelection(0), uint8(1<<5); got != want {
+		t.Fatalf("取出 = %#x，預期 %#x", got, want)
+	}
+	if b.Sides[0].Selected != 0 {
+		t.Error("取出之後位元圖必須清空（原版是 xchg）")
+	}
+	// 越界不得改到別人。
+	b.ToggleSquadSelection(0, -1)
+	b.ToggleSquadSelection(0, Squads)
+	if b.Sides[0].Selected != 0 {
+		t.Errorf("越界的隊編號不該改動位元圖：%#x", b.Sides[0].Selected)
+	}
+}
+
+// 只有被選中的隊收到命令；選取在下令後清空。
+func TestOrderSelectedOnlyReachesPickedSquads(t *testing.T) {
+	b := newTestBattle(walledField(32))
+	b.ToggleSquadSelection(0, 1)
+	if !b.OrderSelected(0, Charge) {
+		t.Fatal("突擊不該被拒絕")
+	}
+	for k := 0; k < Squads; k++ {
+		got := b.Sides[0].Soldiers[k*PerSquad].Next
+		want := Command(Charge)
+		if k != 1 {
+			want = b.Sides[0].Soldiers[k*PerSquad].Cmd
+		}
+		if k == 1 && got != want {
+			t.Errorf("第 %d 隊應收到突擊，得到 %v", k, got)
+		}
+		if k != 1 && got == Charge {
+			t.Errorf("第 %d 隊沒被選中，不該收到突擊", k)
+		}
+	}
+	if b.Sides[0].Selected != 0 {
+		t.Error("下完令選取要清空")
+	}
+}
+
+// ⚠ 城壁令對**玩家**是拒絕，對腳本是降級成攻擊——兩條路不同。
+func TestOrderSelectedRejectsScaleWallOffSiege(t *testing.T) {
+	field := newTestBattle(NewField(make([][]int, Height), 0)) // gateX=0 ＝ 沒有城
+	if field.Field.IsSiege() {
+		t.Fatal("這個 fixture 應該是野戰")
+	}
+	if field.OrderSelected(0, ScaleWal) {
+		t.Error("野戰的城壁令應該被拒絕")
+	}
+	if field.Sides[0].Soldiers[0].Next == ScaleWal {
+		t.Error("被拒絕就不該下令")
+	}
+	// 腳本那一條仍然是降級，不是拒絕。
+	field.Order(0, -1, ScaleWal)
+	if got := field.Sides[0].Soldiers[0].Next; got != Attack {
+		t.Errorf("腳本路徑應降級成攻擊，得到 %v", got)
+	}
+
+	siege := newTestBattle(walledField(32))
+	if !siege.OrderSelected(0, ScaleWal) {
+		t.Error("攻城戰的城壁令不該被拒絕")
+	}
+}

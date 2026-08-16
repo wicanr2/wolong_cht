@@ -23,8 +23,8 @@
 | 程式碼理解 | 203 | 197 | 6 | 0 |
 | 驗收 | 26 | 21 | 5 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 69 | 66 | 3 | 0 |
-| **合計** | **410** | 394 | 15 | 1 |
+| 其他 | 72 | 69 | 3 | 0 |
+| **合計** | **413** | 397 | 15 | 1 |
 
 ## 2.1 規則正確性（56 條）
 
@@ -392,7 +392,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（69 條）
+## 2.6 其他（72 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -404,6 +404,7 @@
 | [`spec/00-index.md`](../spec/00-index.md) | **推論等級** | confirmed／強證據／假說／未知（`CLAUDE.md` §9）。假說也可以實作，但要標 | 靜態 |
 | [`spec/00-index.md`](../spec/00-index.md) | 進言「請求君主出陣」（`sub_1699E`） | `11-ai-sortie.md` / 可實作，**尚未實作** | 靜態 |
 | [`spec/00-index.md`](../spec/00-index.md) | 主畫面四個視窗的開關 | `13-main-window-toggles.md` / 已實作並留下截圖；原版執行期未驗 | 實測 |
+| [`spec/00-index.md`](../spec/00-index.md) | 底列六格是選部隊 | `33-squad-selection.md` / 已實作並有單測；命令圖示的來源段未定案 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | `sub_14194`／`sub_14269` | 內政與災害 marker 的細節在別的規格（`docs/mechanics/40`），本規格只保證呼叫順序 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 據點換手之後 `+0x00` 低 4 位會不會跟著變 | `sub_1890A` 靜態讀過，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 玩家據點求援的喇叭聲（`sub_10CDE`） | 呈現層未接 | 靜態 |
@@ -462,6 +463,8 @@
 | [`spec/32-gate-strength-bar.md`](../spec/32-gate-strength-bar.md) | 右鍵提前收掉 | 原版是熱區 `0x1D` 的右鍵 handler（`../re/60` §10）；remake 沒有戰場區的右鍵熱區層 | 靜態 |
 | [`spec/32-gate-strength-bar.md`](../spec/32-gate-strength-bar.md) | 「門強度」這三個字對城壁也照用 | 原版不分城壁與門，都用同一個標籤。照抄 | 靜態 |
 | [`spec/32-gate-strength-bar.md`](../spec/32-gate-strength-bar.md) | ⚠ **攻方只在第 24–44 幀打城壁，之後就不再打** | 上面那次量測的副產品。城壁耐久 500，撞一次掉 1，照理應該持續撞；**這像是規則層的缺口**（攻方接觸城壁後停止攻擊），但本輪沒有查，也不當結論 | 靜態 |
+| [`spec/33-squad-selection.md`](../spec/33-squad-selection.md) | 命令圖示的來源 | `sub_1C673` 讀 `word_10D48` 段的 `命令碼 × 0xC0`。`word_10D48` 是 `ICONGRF` 段 3 的載入段（`../formats/03` §5），但 `sub_100DF` 之後它被加了偏移，**實際基址要讀那一支才算數** | 靜態 |
+| [`spec/33-squad-selection.md`](../spec/33-squad-selection.md) | 待機兵條的欄位語意 | `word_1D30A:+0x09 + 4k` 在 `../re/11` §3.9 記成「第 k 隊的待機兵數」；條的上限 76 遠小於一隊 100 兵，所以開局會頂在上限 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |

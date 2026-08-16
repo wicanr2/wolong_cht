@@ -179,12 +179,14 @@ func (g *game) updateBattle() {
 					g.view.setCameraFromMiniMap(x, y)
 					return
 				}
-				command, ok := splitBattleCommandIndexAt(l.BottomCommands, x, y)
-				if !ok {
-					command, ok = battleSideCommandIndexAt(l.SideCommands, x, y)
+				// 底列六格是**選部隊**，不是命令（docs/spec/33）。
+				if slot, ok := splitBattleCommandIndexAt(l.BottomCommands, x, y); ok {
+					g.toggleBattleSquad(b, slot)
+					return
 				}
-				if ok {
-					g.issueBattleCommand(b, command)
+				// 側欄面板：畫面列序不是命令碼順序，要查表。
+				if row, ok := battleSideCommandIndexAt(l.SideCommands, x, y); ok {
+					g.issueBattleCommand(b, battleSideCommandRowCode[row])
 				}
 			}
 		}
@@ -227,14 +229,28 @@ func battleCommandIndexForKey(k ebiten.Key) (int, bool) {
 	return 0, false
 }
 
+// issueBattleCommand 走玩家那一條下令路（docs/spec/33 §1.3）：
+// 命令只送給被選中的隊，一隊都沒選就送給全隊，送完把選取清空。
 func (g *game) issueBattleCommand(b *tactical.Battle, command int) {
 	if b == nil || b.Done || command < 0 || command >= len(battleCommandLabels) {
 		return
 	}
 	side := g.battleSide()
 	order := tactical.Command(command)
-	b.Order(side, -1, order)
+	if !b.OrderSelected(side, order) {
+		// 原版跳 TALK 582「這哪裡有城壁啊！！」並且不下令。
+		g.setEvent("這哪裡有城壁啊！！")
+		return
+	}
 	g.setEvent("下令：" + order.String())
+}
+
+// toggleBattleSquad 切換底列第 slot 格對應那一隊的選取（熱區 0x15–0x1A）。
+func (g *game) toggleBattleSquad(b *tactical.Battle, slot int) {
+	if b == nil || b.Done || slot < 0 || slot >= len(battleBottomSlotSquad) {
+		return
+	}
+	b.ToggleSquadSelection(g.battleSide(), battleBottomSlotSquad[slot])
 }
 
 // battleSide 回傳玩家在這一場裡是哪一側。
@@ -778,50 +794,70 @@ func (g *game) drawBattleSideCommands(screen *ebiten.Image, b *tactical.Battle, 
 	}
 }
 
-// drawBattleKeys 畫底部六格原版指令。sub_1C7F4 在 (0,368) 起每 80 px
-// 重貼 80×32 底板，並把六張連續 24×16 glyph 放在各格 (4,6)。
+// drawBattleKeys 畫底列六格。**那是玩家的六個編成位置，不是命令按鈕**
+// （docs/spec/33）：`sub_1C7F4` 在 (0,368) 起每 80 px 重貼 80×32 底板，
+// 把位置名 glyph 放在各格 (4,6)，`sub_1C74C` 在 y=396 畫待機兵條，
+// `sub_1C6BF` 在選中的格上畫兩個同心框。
+//
+// 由左到右是「左翼 左備 主將 前鋒 右備 右翼」——順序來自 `cs:0xD2E4`。
 func (g *game) drawBattleKeys(screen *ebiten.Image, b *tactical.Battle, r battleRect) {
 	amber := color.RGBA{240, 200, 120, 255}
 	dim := color.RGBA{190, 190, 200, 255}
-	selected := -1
-	if !b.Done && len(b.Sides) > 0 && len(b.Sides[g.battleSide()].Soldiers) > 0 {
-		selected = int(b.Sides[g.battleSide()].Soldiers[0].Cmd)
-	}
+	side := &b.Sides[g.battleSide()]
 	for i, cell := range splitBattleCommandCells(r) {
+		squad := battleBottomSlotSquad[i]
+		picked := side.SquadSelected(squad)
 		if g.battleCommandBase != nil && g.battleCommandGlyphs[i] != nil {
 			op := &ebiten.DrawImageOptions{}
 			op.GeoM.Translate(float64(cell.X), float64(cell.Y))
 			screen.DrawImage(g.battleCommandBase, op)
 			op = &ebiten.DrawImageOptions{}
-			op.GeoM.Translate(float64(cell.X+4), float64(cell.Y+6))
+			op.GeoM.Translate(float64(cell.X+battleSlotGlyphX),
+				float64(cell.Y+battleSlotGlyphY))
 			screen.DrawImage(g.battleCommandGlyphs[i], op)
-			if i == selected {
-				// sub_1C6BF：外層 x..x+77/y=372..392，內層各縮 1 px；
-				// AH=0x0C 由 GAMEPAL.BRG 直接取色。
-				vector.StrokeRect(screen, float32(cell.X+1), float32(cell.Y+4),
-					78, 21, 1, g.battleCommandSelect, false)
-				vector.StrokeRect(screen, float32(cell.X+2), float32(cell.Y+5),
-					76, 19, 1, g.battleCommandSelect, false)
+		} else {
+			vector.StrokeRect(screen, float32(cell.X+1), float32(cell.Y+1),
+				float32(cell.W-2), float32(cell.H-2), 1,
+				color.RGBA{90, 170, 90, 255}, false)
+			col := dim
+			if picked {
+				col = amber
 			}
-			continue
+			label := battleSquadLabels[squad]
+			x := cell.X + (cell.W-battleCommandTextWidth(label))/2
+			g.td.Draw(screen, label, x, r.Y+5, col)
 		}
-		label := fmt.Sprintf("%d %s", i+1, battleCommandLabels[i])
-		if i == selected {
-			vector.DrawFilledRect(screen, float32(cell.X+2), float32(cell.Y+2),
-				float32(cell.W-4), float32(cell.H-4), chrome.Select, false)
+		// 待機兵條：sub_1C74C 的長度上限 0x4C，色 12。
+		g.drawBattleBar(screen,
+			battleRect{X: cell.X + battleSlotBarX, Y: battleSlotBarY,
+				W: battleSlotBarLen, H: battleSlotBarH},
+			clampBarLen(side.Reserve[squad], battleSlotBarLen),
+			g.battleCommandSelect)
+		if picked {
+			outer, inner := battleSlotSelectRects(cell.X)
+			vector.StrokeRect(screen, float32(outer.X), float32(outer.Y),
+				float32(outer.W), float32(outer.H), 1, g.battleCommandSelect, false)
+			vector.StrokeRect(screen, float32(inner.X), float32(inner.Y),
+				float32(inner.W), float32(inner.H), 1, g.battleCommandSelect, false)
 		}
-		vector.StrokeRect(screen, float32(cell.X+1), float32(cell.Y+1),
-			float32(cell.W-2), float32(cell.H-2), 1, color.RGBA{90, 170, 90, 255}, false)
-		col := dim
-		if i == selected {
-			col = amber
-		}
-		x := cell.X + (cell.W-battleCommandTextWidth(label))/2
-		g.td.Draw(screen, label, x, r.Y+5, col)
 	}
 	if b.Done {
 		g.td.Draw(screen, "Enter 回戰略", r.X+r.W-112, r.Y+5, amber)
 	}
+}
+
+// battleSquadLabels 以**編成位置編號**為索引（0 主將…5 右備），
+// 只在取不到原版 glyph 時當 fallback。
+var battleSquadLabels = [...]string{"主將", "前鋒", "左翼", "右翼", "左備", "右備"}
+
+func clampBarLen(v, max int) int {
+	if v < 0 {
+		return 0
+	}
+	if v > max {
+		return max
+	}
+	return v
 }
 
 func advName(a tactical.Advantage) string {
