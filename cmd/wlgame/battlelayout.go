@@ -61,6 +61,8 @@ type dosvBattleLayout struct {
 	SideAlly      battleRect
 	SideFormation battleRect
 	SideCommands  battleRect
+	// SideLines 是陣形線那三格（熱區 0x04–0x06，docs/spec/37 §2.2）。
+	SideLines [3]battleRect
 	SideFooter    battleRect
 }
 
@@ -385,6 +387,7 @@ func dosvBattleLayoutFor(w, h int) dosvBattleLayout {
 		SideFormation: battleRect{X: sideX + 16, Y: 248, W: 128, H: 32},
 		// sub_1C863：segment1+0x1800，AX=0x6008，目的 (496,280)。
 		SideCommands: battleRect{X: sideX + 16, Y: 280, W: 128, H: 96},
+		SideLines: battleLineRects(sideX),
 		// sub_1C863：segment1+0x3500，AX=0x1008，目的 (496,376)。
 		SideFooter: battleRect{X: sideX + 16, Y: 376, W: 128, H: 16},
 	}
@@ -412,6 +415,27 @@ func battleFormationIndexAt(r battleRect, x, y int) (int, bool) {
 		col += battleFormationCols
 	}
 	return col, true
+}
+
+// battleLineRects 是陣形線那三格（熱區 0x04／0x05／0x06，docs/re/60 §10）。
+// 由上而下是**敵軍側／中央／自軍側**，寫進 word_1D33C 的值是 48／28／5。
+func battleLineRects(sideX int) [3]battleRect {
+	x := sideX + 72 // 原版 552 ＝ 側欄 480 + 72
+	return [3]battleRect{
+		{X: x, Y: 288, W: 64, H: 24},
+		{X: x, Y: 312, W: 64, H: 32},
+		{X: x, Y: 344, W: 64, H: 24},
+	}
+}
+
+// battleLineIndexAt 回傳點到第幾格陣形線。
+func battleLineIndexAt(rects [3]battleRect, x, y int) (int, bool) {
+	for i, r := range rects {
+		if r.containsPoint(x, y) {
+			return i, true
+		}
+	}
+	return 0, false
 }
 
 // battleFormationCellRect 是第 idx 格的 16×16 矩形；選取框再內縮 1 px

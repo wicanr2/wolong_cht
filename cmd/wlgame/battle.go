@@ -184,6 +184,17 @@ func (g *game) updateBattle() {
 					g.toggleBattleSquad(b, slot)
 					return
 				}
+				// 陣形選單：8 欄 × 2 列 ＝ 十六個陣形（docs/spec/37 §2.1）。
+				if idx, ok := battleFormationIndexAt(l.SideFormation, x, y); ok {
+					g.setBattleFormation(b, idx)
+					return
+				}
+				// 陣形線三選一（同上 §2.2）：由上而下 ＝ 敵軍側／中央／自軍側。
+				if k, ok := battleLineIndexAt(l.SideLines, x, y); ok {
+					side := g.battleSide()
+					b.Sides[side].Line = tactical.LineFor(side, 2-k)
+					return
+				}
 				// 側欄面板：畫面列序不是命令碼順序，要查表。
 				if row, ok := battleSideCommandIndexAt(l.SideCommands, x, y); ok {
 					g.issueBattleCommand(b, battleSideCommandRowCode[row])
@@ -606,6 +617,18 @@ func (g *game) drawBattleFormationStrip(screen *ebiten.Image, b *tactical.Battle
 		1, g.battleCommandSelect, false)
 }
 
+// setBattleFormation 選一個陣形（原版 handler `0x1C11A`）。
+//
+// 原版只把 `byte_1D346` 與 `word_1D342`（＝ 格 × 96）寫下去，
+// **沒有立刻重排部隊**——要等下一次「陣形」命令生效才走過去。
+func (g *game) setBattleFormation(b *tactical.Battle, idx int) {
+	if idx < 0 || idx >= tactical.NumFormations {
+		return
+	}
+	g.battleFormation = idx
+	b.Sides[g.battleSide()].Formation = idx
+}
+
 // 門強度條的版面（docs/spec/32 §2，全部是原版直接座標）。
 const (
 	gateBarLabelX  = 264 // sub_1C407 的 dx=0x108
@@ -725,10 +748,27 @@ func (g *game) drawBattleMiniMap(screen *ebiten.Image, b *tactical.Battle, r bat
 	op.GeoM.Translate(float64(r.X), float64(r.Y))
 	screen.DrawImage(g.view.minimap, op)
 	g.drawBattleMiniMapUnits(screen, b, r)
+	g.drawBattleMiniMapLine(screen, b, r)
 	// 只畫外框，不縮放或裁切 128×128 原版 base image。
 	vector.StrokeRect(screen, float32(r.X), float32(r.Y),
 		float32(battle.TacticalMinimapWidth), float32(battle.TacticalMinimapHeight),
 		1, chrome.Paper, false)
+}
+
+// drawBattleMiniMapLine 在小地圖上畫玩家的陣形線（原版 `sub_1C5AE`，色 11）。
+//
+// 換算與部隊點同一條：戰場 X 對應小地圖的 y ＝ 2 × (63 − X)，
+// 所以一條「固定 X」的陣形線在小地圖上是**水平線**。
+func (g *game) drawBattleMiniMapLine(screen *ebiten.Image, b *tactical.Battle, r battleRect) {
+	if b == nil {
+		return
+	}
+	y := r.Y + 2*(battle.Width-1-b.Sides[g.battleSide()].Line)
+	if y < r.Y || y >= r.bottom() {
+		return
+	}
+	vector.DrawFilledRect(screen, float32(r.X), float32(y),
+		float32(battle.TacticalMinimapWidth), 1, g.battleGateBarColor, false)
 }
 
 // drawBattleMiniMapUnits 把每個活著的兵畫成一個 2×2 點。

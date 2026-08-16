@@ -941,3 +941,107 @@ func TestGeneralNeverSwaps(t *testing.T) {
 		t.Error("大將被換走了")
 	}
 }
+
+// ⭐ 六個指令下下去，部隊要真的動。
+//
+// 這一條釘的是「戰術畫面能不能指揮」，不是「攻城打不打得下來」——
+// 破城要靠玩家換陣形、挑時機（說明書第 11 章），不是 AI 自己會。
+func TestSixCommandsMakeSoldiersAct(t *testing.T) {
+	type outcome struct {
+		moved, attacked, retreating bool
+	}
+	run := func(t *testing.T, cmd Command, siege bool) outcome {
+		t.Helper()
+		f := walledField(32)
+		if !siege {
+			f = flatField()
+		}
+		b := newTestBattle(f)
+		// Place() 已經把兵擺在陣形位置上，所以「陣形」「守陣」下去
+		// 本來就不必動。先把他們往前推三格，才看得出有沒有回位。
+		for k := range b.Sides[AttackerSide].Soldiers {
+			if s := &b.Sides[AttackerSide].Soldiers[k]; s.Alive {
+				s.X = clamp(s.X + 3)
+			}
+		}
+		b.Order(AttackerSide, -1, cmd)
+		b.Order(DefenderSide, -1, Guard)
+		before := make([][3]int, SoldiersOnFoot)
+		for k := range b.Sides[AttackerSide].Soldiers {
+			s := &b.Sides[AttackerSide].Soldiers[k]
+			before[k] = [3]int{s.X, s.Y, s.Z}
+		}
+		var out outcome
+		for i := 0; i < 400 && !b.Done; i++ {
+			b.Step()
+			for k := range b.Sides[AttackerSide].Soldiers {
+				s := &b.Sides[AttackerSide].Soldiers[k]
+				if !s.Alive {
+					continue
+				}
+				if [3]int{s.X, s.Y, s.Z} != before[k] {
+					out.moved = true
+				}
+				if s.Cmd == Retreat {
+					out.retreating = true
+				}
+			}
+			if b.Sides[DefenderSide].Remaining() < Squads*PerSquad {
+				out.attacked = true
+			}
+		}
+		return out
+	}
+
+	for _, tc := range []struct {
+		cmd   Command
+		siege bool
+		want  string
+	}{
+		{Form, false, "moved"},
+		{Attack, false, "moved"},
+		{Charge, false, "moved"},
+		{ScaleWal, true, "moved"},
+		{Guard, false, "moved"},
+		{Retreat, false, "retreating"},
+	} {
+		got := run(t, tc.cmd, tc.siege)
+		switch tc.want {
+		case "moved":
+			if !got.moved {
+				t.Errorf("命令「%v」下了 400 幀，部隊一格都沒動", tc.cmd)
+			}
+		case "retreating":
+			if !got.retreating {
+				t.Errorf("命令「%v」下了 400 幀，沒有任何兵在退卻", tc.cmd)
+			}
+		}
+	}
+}
+
+// 陣形與陣形線是玩家可以改的（說明書 4.4／4.5，docs/spec/37）。
+// 改完之後下「陣形」令，部隊要走到新的位置。
+func TestFormationAndLineChangeWhereSoldiersGather(t *testing.T) {
+	gather := func(formation, line int) (sumX int) {
+		b := newTestBattle(flatField())
+		b.Sides[AttackerSide].Formation = formation
+		b.Sides[AttackerSide].Line = LineFor(AttackerSide, line)
+		b.Order(AttackerSide, -1, Form)
+		for i := 0; i < 600 && !b.Done; i++ {
+			b.Step()
+		}
+		for k := range b.Sides[AttackerSide].Soldiers {
+			if s := &b.Sides[AttackerSide].Soldiers[k]; s.Alive {
+				sumX += s.X
+			}
+		}
+		return sumX
+	}
+	own, centre := gather(0, 0), gather(0, 1)
+	if own >= centre {
+		t.Errorf("陣形線「自軍側」的 X 總和 %d 應該小於「中央」的 %d", own, centre)
+	}
+	if a, b2 := gather(0, 1), gather(5, 1); a == b2 {
+		t.Errorf("換陣形之後部隊位置沒變（兩次都是 %d）", a)
+	}
+}

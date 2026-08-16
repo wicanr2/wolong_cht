@@ -6,6 +6,7 @@ import (
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
+	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
 )
 
 // 戰術外框在原版是模式無關的硬體畫布；攻城與兩軍遭遇只能交換戰場
@@ -418,5 +419,62 @@ func TestGateBarGeometryMatchesRawConstants(t *testing.T) {
 	}
 	if bar.overlaps(l.Sidebar) || label.overlaps(l.Sidebar) {
 		t.Error("門強度條不得壓到側欄")
+	}
+}
+
+// 陣形選單是 8 欄 × 2 列的 16×16 格（原版 handler 0x1C11A，docs/spec/37 §2.1）。
+func TestBattleFormationPickerMatchesRawGeometry(t *testing.T) {
+	l := dosvBattleLayoutFor(dosvBattleScreenW, dosvBattleScreenH)
+	r := l.SideFormation
+	if r.X != 496 || r.Y != 248 || r.W != 128 || r.H != 32 {
+		t.Fatalf("陣形選單 = (%d,%d,%d×%d)，原版是 (496,248,128×32)", r.X, r.Y, r.W, r.H)
+	}
+	// 左上第一格、右上第八格、左下第九格、右下第十六格。
+	for _, tc := range []struct {
+		x, y, want int
+	}{
+		{496, 248, 0}, {496 + 7*16, 248, 7},
+		{496, 264, 8}, {496 + 7*16, 279, 15},
+	} {
+		got, ok := battleFormationIndexAt(r, tc.x, tc.y)
+		if !ok || got != tc.want {
+			t.Errorf("(%d,%d) → %d/%v，預期 %d", tc.x, tc.y, got, ok, tc.want)
+		}
+	}
+	if _, ok := battleFormationIndexAt(r, 495, 248); ok {
+		t.Error("左緣外一格不該命中")
+	}
+	// 選取框：格內縮 1 px 畫 14×14。
+	cell := battleFormationCellRect(r, 9)
+	if cell.X != 496+16 || cell.Y != 264 || cell.W != 16 || cell.H != 16 {
+		t.Errorf("第 9 格 = (%d,%d,%d×%d)", cell.X, cell.Y, cell.W, cell.H)
+	}
+}
+
+// 陣形線三格（熱區 0x04–0x06）的矩形照原版（docs/spec/37 §2.2）。
+func TestBattleFormationLineHitBoxes(t *testing.T) {
+	l := dosvBattleLayoutFor(dosvBattleScreenW, dosvBattleScreenH)
+	want := [3]battleRect{
+		{X: 552, Y: 288, W: 64, H: 24},
+		{X: 552, Y: 312, W: 64, H: 32},
+		{X: 552, Y: 344, W: 64, H: 24},
+	}
+	if l.SideLines != want {
+		t.Fatalf("陣形線三格 = %v，原版是 %v", l.SideLines, want)
+	}
+	for i, r := range want {
+		got, ok := battleLineIndexAt(l.SideLines, r.X, r.Y)
+		if !ok || got != i {
+			t.Errorf("第 %d 格左上角命中 %d/%v", i, got, ok)
+		}
+	}
+	if _, ok := battleLineIndexAt(l.SideLines, 552, 287); ok {
+		t.Error("第一格上緣外不該命中")
+	}
+	// 由上而下寫進去的是 48／28／5（敵軍側／中央／自軍側）。
+	for k, want := range [3]int{48, 28, 5} {
+		if got := tactical.LineFor(tactical.AttackerSide, 2-k); got != want {
+			t.Errorf("第 %d 格 → 陣形線 %d，預期 %d", k, got, want)
+		}
 	}
 }
