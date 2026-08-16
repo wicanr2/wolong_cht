@@ -93,7 +93,7 @@
 | [`docs/re/23-bgm-resource-format.md`](re/23-bgm-resource-format.md) | 23 — BGM.DAT 音樂資源格式 | 容器索引與曲塊的聲軌指標表 confirmed，兩版都逐 byte 對齊到檔尾且餘 0。 ⭐ | 2026-08-13 |
 | [`docs/re/24-unread-function-catalogue.md`](re/24-unread-function-catalogue.md) | 24 — 未讀函式目錄：252 支的證據與下手順序 | 252 支未讀函式全部登記，附上由共用常式與 TALK 訊息取得的角色證據。 計數要排除本檔自己（§5），否則登記等… | 2026-08-13 |
 | [`docs/re/25-message-variants-and-personnel.md`](re/25-message-variants-and-personnel.md) | 25 — 訊息變體展開與人事指令 | 訊息索引 ≥ 0x196 的 ×8 變體展開 confirmed，13 個呼叫值共 104 則變體已對出； 人事四支… | 2026-08-13 |
-| [`docs/re/26-list-window-engine.md`](re/26-list-window-engine.md) | 26 — 一覽表視窗引擎 | 視窗幾何、五個一覽表家族的描述子、選取迴圈、持久化排序狀態與四個描述子欄位 （兩個 callback ＋ 標題字串 … | 2026-08-13 |
+| [`docs/re/26-list-window-engine.md`](re/26-list-window-engine.md) | 26 — 一覽表視窗引擎 | 視窗幾何、五個一覽表家族的描述子、選取迴圈、持久化排序狀態、四個描述子欄位 （兩個 callback ＋ 標題字串 … | 2026-08-13 |
 | [`docs/re/27-list-row-fields.md`](re/27-list-row-fields.md) | 27 — 一覽表的逐列繪製與外交關係等級 | 四個家族的逐列常式全部讀完，欄位對照 confirmed；兵力的 ×10 顯示、 三條換色規則與外交關係六級換算 c… | 2026-08-13 |
 | [`docs/re/28-text-number-rendering.md`](re/28-text-number-rendering.md) | 28 — 文字與數字的繪製層 | 數字繪製、兩支字串繪製與 EGA 平面寫入方式 confirmed。 單字元 blitter loc_1F75E 與… | 2026-08-13 |
 | [`docs/re/29-font-service-int15.md`](re/29-font-service-int15.md) | 29 — 原版怎麼顯示中文：INT 15h 字型服務與 END_S13/S14.DAT | 整條鏈 confirmed（靜態）。KI.EXE 側走 DOS/V 的 INT 15h AH=50h 向常駐服務要字… | 2026-08-13 |

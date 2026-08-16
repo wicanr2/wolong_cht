@@ -1,9 +1,9 @@
 package main
 
 import (
+	"image"
 	"strings"
 
-	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
@@ -21,9 +21,52 @@ const (
 	// listRowsPerPage 是一頁幾列：**原版的畫列 callback 就是十次迴圈**
 	// （docs/re/26 §8.2），而 16（標題）＋ 10 × 16 ＝ 176 正好是視窗高。
 	listRowsPerPage = 10
-	// listTextInset 是文字距離視窗左緣的內縮。
+	// listTextInset 是文字距離清單本體左緣的內縮。
 	listTextInset = 2
+	// listScrollW 是左邊那條捲軸的寬度。**清單本體從 x+16 起，不是 x**
+	// ——原版的清單熱區與反白列都從 `word_181AE + 0x10` 開始
+	// （docs/re/26 §10）。
+	listScrollW = 16
 )
+
+// listBodyX 是清單本體的左緣（捲軸右邊）。
+func listBodyX() int { return listWinX + listScrollW }
+
+// listBodyW 是清單本體的寬度。
+func listBodyW() int { return listWinW - listScrollW }
+
+// 捲軸三段（docs/re/26 §10 的熱區 0x3F–0x41）。三段在垂直方向接續：
+// ▲ 佔 y+16–y+32、槽佔到 y+H−16、▼ 到 y+H。
+func listScrollUpRect() image.Rectangle {
+	return image.Rect(listWinX, listWinY+listRowH,
+		listWinX+listScrollW, listWinY+2*listRowH)
+}
+
+func listScrollDownRect() image.Rectangle {
+	return image.Rect(listWinX, listWinY+listWinH-listRowH,
+		listWinX+listScrollW, listWinY+listWinH)
+}
+
+func listScrollTrackRect() image.Rectangle {
+	return image.Rect(listWinX, listWinY+2*listRowH,
+		listWinX+listScrollW, listWinY+listWinH-listRowH)
+}
+
+// listScrollThumbRect 是滑塊。**原版畫滑塊的常式沒讀**（docs/spec/38 §4），
+// 這裡照 `top ÷ (筆數 − 一頁)` 取比例，是 remake 的畫法。
+func listScrollThumbRect(top, total int) image.Rectangle {
+	track := listScrollTrackRect()
+	span := total - listRowsPerPage
+	if span <= 0 {
+		return track
+	}
+	h := track.Dy() * listRowsPerPage / total
+	if h < listRowH {
+		h = listRowH
+	}
+	y := track.Min.Y + (track.Dy()-h)*clamp(top, 0, span)/span
+	return image.Rect(track.Min.X, y, track.Max.X, y+h)
+}
 
 // listFamily 是一組欄位定義。**標題與分隔線都是原版字串照抄**
 // （docs/re/26 §4.1）——分隔線同時就是欄寬定義：
@@ -105,26 +148,20 @@ func listRowY(visible int) int {
 	return listWinY + listRowH + visible*listRowH
 }
 
-// listFooterStripY 是「上一頁／下一頁／確定／取消」那一條的 y。
-//
-// ⚠ **原版沒有這一條**：它靠捲軸翻頁、右鍵取消（說明書 3.8）。
-// remake 把它畫在視窗**外面**，才不會吃掉第 10 列。
-func listFooterStripY() int { return listWinY + listWinH + chrome.Tile }
-
 // listFieldX 是第 col 欄的左緣。
 func listFieldX(fields []listField, col int) int {
 	if col < 0 || col >= len(fields) {
-		return listWinX + listTextInset
+		return listBodyX() + listTextInset
 	}
-	return listWinX + listTextInset + fields[col].X
+	return listBodyX() + listTextInset + fields[col].X
 }
 
 // listFieldRight 是第 col 欄的右緣（數字欄靠右對齊用）。
 func listFieldRight(fields []listField, col int) int {
 	if col < 0 || col >= len(fields) {
-		return listWinX + listTextInset
+		return listBodyX() + listTextInset
 	}
-	return listWinX + listTextInset + fields[col].X + fields[col].W
+	return listBodyX() + listTextInset + fields[col].X + fields[col].W
 }
 
 // listRankNames 是身分名稱表（docs/re/26 §9，段內 0x75A4）。

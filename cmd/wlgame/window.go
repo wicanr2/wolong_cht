@@ -14,31 +14,19 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 
 	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
-	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
-
-const listFooterButtonW = 88
 
 // 一覽表的幾何全部來自原版（docs/spec/38 §1.1）：視窗 (24,88,384,176)、
 // 一列 16 px、一頁 10 列。**滑鼠命中與繪製共用這一組**，不會漂開。
 
+// listRowRect 是第 visible 列的可點矩形。**從清單本體的左緣起算**——
+// 左邊那 16 px 是捲軸（docs/re/26 §10）。
 func listRowRect(l *listwin.List, visible int) image.Rectangle {
 	if l == nil || visible < 0 || visible >= l.Height {
 		return image.Rectangle{}
 	}
 	y := listRowY(visible)
-	return image.Rect(listWinX, y, listWinX+listWinW, y+listRowH)
-}
-
-func listFooterY(l *listwin.List) int { return listFooterStripY() }
-
-func listFooterRect(l *listwin.List, button int) image.Rectangle {
-	if l == nil || button < 0 || button > 3 {
-		return image.Rectangle{}
-	}
-	x := listWinX + button*listFooterButtonW
-	return image.Rect(x, listFooterY(l), x+listFooterButtonW,
-		listFooterY(l)+textdraw.GlyphH+2)
+	return image.Rect(listBodyX(), y, listBodyX()+listBodyW(), y+listRowH)
 }
 
 // listHeaderRect 是點標題排序的命中區：**一欄一格**，寬度就是分隔線
@@ -77,6 +65,11 @@ const (
 	listActionConfirm
 	listActionCancel
 	listActionSort
+	// listActionScroll 是 ▲／▼：捲一列（原版 sub_1851A／sub_18546）。
+	listActionScroll
+	// listActionScrollTo 是點捲軸槽：把游標 Y 換算成新的 top
+	// （原版 sub_184DD 按住不放時每輪做一次，remake 只在按下時做）。
+	listActionScrollTo
 )
 
 type listUIAction struct {
@@ -113,6 +106,33 @@ func (g *game) dispatchListAction(action listUIAction) {
 		}
 	case listActionSort:
 		g.list.SortBy(action.value)
+	case listActionScroll:
+		g.scrollListTo(g.list.Top + action.value)
+	case listActionScrollTo:
+		track := listScrollTrackRect()
+		span := len(g.list.Rows) - listRowsPerPage
+		if span <= 0 || track.Dy() <= 0 {
+			return
+		}
+		g.scrollListTo((action.value - track.Min.Y) * span / track.Dy())
+	}
+}
+
+// scrollListTo 把 top 夾在 0–(筆數 − 一頁) 之間，並把游標拉進可見範圍。
+// **原版的 top 上限就是「筆數 − (高格 − 1)」**（sub_18546，docs/re/26 §10）。
+func (g *game) scrollListTo(top int) {
+	if g.list == nil {
+		return
+	}
+	span := len(g.list.Rows) - listRowsPerPage
+	if span < 0 {
+		span = 0
+	}
+	g.list.Top = clamp(top, 0, span)
+	g.list.Cursor = clamp(g.list.Cursor, g.list.Top,
+		g.list.Top+listRowsPerPage-1)
+	if g.list.Cursor >= len(g.list.Rows) {
+		g.list.Cursor = len(g.list.Rows) - 1
 	}
 }
 
@@ -139,19 +159,19 @@ func (g *game) updateListUI() {
 			g.dispatchListAction(listUIAction{kind: listActionClickRow, value: row})
 			return
 		}
-		for button, kind := range []listUIActionKind{
-			listActionPage, listActionPage, listActionConfirm, listActionCancel,
-		} {
-			if (image.Point{X: x, Y: y}).In(listFooterRect(g.list, button)) {
-				value := 0
-				if button == 0 {
-					value = -1
-				} else if button == 1 {
-					value = 1
-				}
-				g.dispatchListAction(listUIAction{kind: kind, value: value})
-				return
-			}
+		// 捲軸三段（原版熱區 0x3F–0x41，docs/re/26 §10）。
+		p := image.Point{X: x, Y: y}
+		if p.In(listScrollUpRect()) {
+			g.dispatchListAction(listUIAction{kind: listActionScroll, value: -1})
+			return
+		}
+		if p.In(listScrollDownRect()) {
+			g.dispatchListAction(listUIAction{kind: listActionScroll, value: 1})
+			return
+		}
+		if p.In(listScrollTrackRect()) {
+			g.dispatchListAction(listUIAction{kind: listActionScrollTo, value: y})
+			return
 		}
 		for col := range g.list.Columns {
 			if (image.Point{X: x, Y: y}).In(listHeaderRect(g.list, col)) {

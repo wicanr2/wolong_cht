@@ -372,7 +372,7 @@ func (g *game) drawList(screen *ebiten.Image) {
 	// 一整條字串（docs/re/26 §4.1），不是逐欄拼出來的。
 	vector.DrawFilledRect(screen, float32(listWinX), float32(listWinY),
 		float32(listWinW), float32(listRowH), color.RGBA{0, 0, 0, 255}, false)
-	g.td.Draw(screen, g.listTitle, listWinX+listTextInset, listWinY,
+	g.td.Draw(screen, g.listTitle, listBodyX()+listTextInset, listWinY,
 		color.RGBA{255, 255, 255, 255})
 
 	rows, first := l.Visible()
@@ -383,8 +383,10 @@ func (g *game) drawList(screen *ebiten.Image) {
 			if l.Phase() == listwin.Selected {
 				hl = chrome.Select // 反白：原版就是這個綠
 			}
-			vector.DrawFilledRect(screen, float32(listWinX), float32(y),
-				float32(listWinW), float32(listRowH), hl, false)
+			// 反白列從清單本體的左緣起（原版 sub_184BC 是
+			// `word_181AE + 0x10`、寬 `word_181B2 − 0x10`）。
+			vector.DrawFilledRect(screen, float32(listBodyX()), float32(y),
+				float32(listBodyW()), float32(listRowH), hl, false)
 		}
 		cells := g.listRow(r)
 		for col, cell := range cells {
@@ -407,21 +409,46 @@ func (g *game) drawList(screen *ebiten.Image) {
 		}
 	}
 
-	// ⚠ 頁尾那一條**原版沒有**（它用捲軸翻頁、右鍵取消，說明書 3.8）。
-	// 畫在視窗外面才不會吃掉第 10 列。
-	footerY := listFooterY(l)
-	vector.DrawFilledRect(screen, float32(listWinX-chrome.Tile), float32(footerY-2),
-		float32(listWinW+2*chrome.Tile), float32(textdraw.GlyphH+4),
-		color.RGBA{40, 30, 20, 200}, false)
-	footerLabels := [...]string{"上一頁", "下一頁", "確定", "取消"}
-	for i, label := range footerLabels {
-		r := listFooterRect(l, i)
-		col := dim
-		if (i == 2 && l.Phase() == listwin.Selected) || i == 3 {
-			col = ink
-		}
-		g.td.Draw(screen, label, r.Min.X, footerY, col)
+	g.drawListScrollbar(screen, l, dim, ink)
+}
+
+// drawListScrollbar 畫左邊那條捲軸（docs/re/26 §10 的三個熱區）。
+// ▲／▼ 是實心三角，滑塊照 top 的比例——**原版畫滑塊的常式沒讀**，
+// 這一格是 remake 的畫法（docs/spec/38 §4）。
+func (g *game) drawListScrollbar(screen *ebiten.Image, l *listwin.List,
+	dim, ink color.RGBA) {
+
+	slot := color.RGBA{120, 140, 110, 255}
+	for _, r := range []image.Rectangle{
+		image.Rect(listWinX, listWinY, listWinX+listScrollW, listWinY+listRowH),
+		listScrollUpRect(), listScrollTrackRect(), listScrollDownRect(),
+	} {
+		vector.DrawFilledRect(screen, float32(r.Min.X), float32(r.Min.Y),
+			float32(r.Dx()), float32(r.Dy()), slot, false)
+		vector.StrokeRect(screen, float32(r.Min.X)+0.5, float32(r.Min.Y)+0.5,
+			float32(r.Dx())-1, float32(r.Dy())-1, 1, dim, false)
 	}
+	thumb := listScrollThumbRect(l.Top, len(l.Rows))
+	vector.DrawFilledRect(screen, float32(thumb.Min.X)+2, float32(thumb.Min.Y)+1,
+		float32(thumb.Dx())-4, float32(thumb.Dy())-2,
+		color.RGBA{190, 205, 175, 255}, false)
+	vector.StrokeRect(screen, float32(thumb.Min.X)+2.5, float32(thumb.Min.Y)+1.5,
+		float32(thumb.Dx())-5, float32(thumb.Dy())-3, 1, ink, false)
+	// 三角形用三條水平線疊出來，不另外拉多邊形。
+	tri := func(r image.Rectangle, up bool) {
+		cx := float32(r.Min.X+r.Dx()/2) - 0.5
+		for i := 0; i < 5; i++ {
+			// ▲ 是上窄下寬，▼ 相反。
+			w := float32(2*i + 1)
+			y := float32(r.Min.Y + 5 + i)
+			if !up {
+				y = float32(r.Max.Y - 6 - i)
+			}
+			vector.DrawFilledRect(screen, cx-w/2, y, w, 1, ink, false)
+		}
+	}
+	tri(listScrollUpRect(), true)
+	tri(listScrollDownRect(), false)
 }
 
 // listFieldsFor 取這張一覽表的欄位定義；沒設過就用武將那一組。

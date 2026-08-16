@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"image"
 	"testing"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -550,5 +551,43 @@ func TestListDiplomacyLevelsFollowRaw(t *testing.T) {
 				tc.raw, tc.atWar, got, listDiplomacyNames[got],
 				tc.want, listDiplomacyNames[tc.want])
 		}
+	}
+}
+
+// TestListScrollbarMatchesRawHotzones 釘住捲軸的三段與清單本體
+// （docs/re/26 §10 的熱區 0x3E–0x41）。三段在垂直方向要接續，
+// 清單本體要從 x+16 起——左邊那 16 px 是捲軸。
+func TestListScrollbarMatchesRawHotzones(t *testing.T) {
+	up, track, down := listScrollUpRect(), listScrollTrackRect(), listScrollDownRect()
+	checks := []struct {
+		name string
+		got  image.Rectangle
+		want image.Rectangle
+	}{
+		{"▲", up, image.Rect(24, 104, 40, 120)},
+		{"槽", track, image.Rect(24, 120, 40, 248)},
+		{"▼", down, image.Rect(24, 248, 40, 264)},
+	}
+	for _, c := range checks {
+		if c.got != c.want {
+			t.Errorf("%s = %v，want %v", c.name, c.got, c.want)
+		}
+	}
+	if up.Max.Y != track.Min.Y || track.Max.Y != down.Min.Y {
+		t.Errorf("三段沒有接續：%v %v %v", up, track, down)
+	}
+	if listBodyX() != listWinX+16 || listBodyW() != listWinW-16 {
+		t.Errorf("清單本體 = (%d, 寬 %d)，want (%d, 寬 %d)",
+			listBodyX(), listBodyW(), listWinX+16, listWinW-16)
+	}
+	// 滑塊永遠落在槽裡，而且 top 到頂時貼著槽底。
+	for _, tc := range []struct{ top, total int }{{0, 100}, {50, 100}, {90, 100}, {0, 5}} {
+		th := listScrollThumbRect(tc.top, tc.total)
+		if th.Min.Y < track.Min.Y || th.Max.Y > track.Max.Y {
+			t.Errorf("top=%d 筆數=%d 的滑塊 %v 跑出槽 %v", tc.top, tc.total, th, track)
+		}
+	}
+	if th := listScrollThumbRect(90, 100); th.Max.Y != track.Max.Y {
+		t.Errorf("捲到底的滑塊下緣 = %d，want %d", th.Max.Y, track.Max.Y)
 	}
 }

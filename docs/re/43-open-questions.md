@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 55 | 53 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
-| 程式碼理解 | 211 | 204 | 7 | 0 |
-| 驗收 | 54 | 48 | 6 | 0 |
+| 程式碼理解 | 210 | 203 | 7 | 0 |
+| 驗收 | 53 | 47 | 6 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 85 | 81 | 4 | 0 |
-| **合計** | **460** | 440 | 19 | 1 |
+| 其他 | 84 | 80 | 4 | 0 |
+| **合計** | **457** | 437 | 19 | 1 |
 
 ## 2.1 規則正確性（55 條）
 
@@ -128,7 +128,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（211 條）
+## 2.3 程式碼理解（210 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -223,7 +223,6 @@
 | [`re/25-message-variants-and-personnel.md`](../re/25-message-variants-and-personnel.md) | `sub_1075B` 尾端的 `sub_106F9` | 收到 `ax = 0xFF00 \ / ah`；`al=[武將+1]`（頭像編號）在這條路徑上似乎沒被用到，要再讀 | 靜態 |
 | [`re/26-list-window-engine.md`](../re/26-list-window-engine.md) | `sub_1748F` | 畫一列的實作（193 B），未讀 | 靜態 |
 | [`re/26-list-window-engine.md`](../re/26-list-window-engine.md) | `word_183D3` | `si` 也存進這裡，讀取端還沒找 | 靜態 |
-| [`re/26-list-window-engine.md`](../re/26-list-window-engine.md) | `funcs_18450` 五個 handler | 捲動與選取的實際行為（`nullsub_2`／`sub_18463`／`sub_184DD`／`sub_1851A`／`sub_18546`） | 靜態 |
 | [`re/26-list-window-engine.md`](../re/26-list-window-engine.md) | `sub_11D46` | 17 個呼叫點，人事四支離開前都呼叫，未讀 | 靜態 |
 | [`re/27-list-row-fields.md`](../re/27-list-row-fields.md) | 開局選勢力的逐列 `sub_17BC0` | 未逐欄對照（欄位與勢力一覽重疊，但少了外交兩欄） | 靜態 |
 | [`re/28-text-number-rendering.md`](../re/28-text-number-rendering.md) | `sub_1F7A4` | 把 32 B 字模緩衝畫上 VRAM 的實際迴圈，未逐行讀 | 靜態 |
@@ -344,7 +343,7 @@
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 命令 6 為什麼擋高平面橫移 | `[si+1Ah] == 6`，命令碼 6 是什麼沒對過 | 靜態 |
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 打壞城壁之後地面層表不更新 | `sub_1B824` 只重算通行層（`sub_1BB6D`）與佔用表，**沒有重跑 `sub_1BC39`**。而那不影響結果：城壁的地面層本來就是拿打壞後的圖塊算的（§2 的 +0x10） | 靜態 |
 
-## 2.4 驗收（54 條）
+## 2.4 驗收（53 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -389,7 +388,6 @@
 | [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 高平面的橫向移動沒有實測 | 守方站到牆頂的情境還沒跑過 | 實測 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 主畫面：視窗內部底紋 | 原版視窗內是**黑底 ＋ 深藍龍紋**（兩色、32×32 平鋪，`../formats/03` §5.5），remake 是純深藍 / 看得出來 / 69 檔逐 byte 掃過都沒中；下一步是 `sub_11AC3` 與 `sub_1FAC2`／`word_1987C` | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 主畫面：大地圖地形色調 | 原版偏黃綠、remake 偏綠 / 存疑 / 可能是影片的色彩取樣。要驗就比**同一格的色號**，不要比 RGB | 靜態 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 一覽表：捲軸 | 原版左邊有 ▲▼ 捲軸；remake 把「上一頁／下一頁」畫在視窗外 / 未對過 / 捲軸的矩形沒從機器碼解出來 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | **戰鬥指揮／委任選單** | 版面是 remake 自訂的；影片裡沒有這一格的對照 / 未對過 / 先找原版影格 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 戰場：同一場的逐格對拍 | 沒做過 / 未對過 / 需要同狀態，難度同主畫面 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 攻方大多數不前進 | 六個指令都能指揮部隊動作（`../spec/37` §4）；**AI 自己撞不進城是設計**——說明書第 11 章整章在講破城要換陣形 / 玩家要自己操作 | 靜態 |
@@ -426,7 +424,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（85 條）
+## 2.6 其他（84 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -509,7 +507,6 @@
 | [`spec/37-tactical-player-controls.md`](../spec/37-tactical-player-controls.md) | 選了陣形之後原版有沒有立刻重排 | 機器碼只寫偏移，**沒有看到立刻移動的呼叫**；remake 照抄（等命令） | 靜態 |
 | [`spec/37-tactical-player-controls.md`](../spec/37-tactical-player-controls.md) | 陣形線在小地圖上的線寬與端點 | `sub_1C5AE` 沒逐行讀，remake 畫整條 1 px 的線 | 靜態 |
 | [`spec/37-tactical-player-controls.md`](../spec/37-tactical-player-controls.md) | 敵方陣形線要不要顯示 | 原版只畫側 0 那條（`word_1D33C`） | 靜態 |
-| [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 捲軸 | 原版畫面左邊有 ▲▼ 與滑塊（影片影格看得到），**矩形與行為沒有從機器碼解出來** | 靜態 |
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 俘虜身分 | remake 的 `Posted` 是 bool，存不下 `+0x17` 的 0–5；俘虜狀態目前推不出來 | 靜態 |
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「看」與「選」的內容差異 | 原版兩種取法的**列表內容**不同（`../re/26` §4.2），remake 只統一了欄位 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
