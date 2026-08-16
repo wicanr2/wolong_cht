@@ -145,16 +145,15 @@ type game struct {
 	// 原版新遊戲時的初值還沒讀出來。
 	hud hudWindow
 
-	// speed 是每個畫面更新要推進幾個遊戲 tick。
-	// 原版的速度設定是「每 tick 之後等 N 個計時中斷」，沒有固定 tick rate
-	// （docs/re/06 §4）；remake 改成固定 60 Hz 邏輯更新 ＋ 可調倍率，
-	// 並把這件事標記為 remake 差異（15-realtime.md §7）。
-	// 原版是**兩個獨立設定**：戰略速度在 `ds:0CFAh`，戰術速度存哪未解
-	// （docs/mechanics/15-realtime.md §211）。remake 先前共用一個變數，
-	// 系統選單那兩列因此永遠一樣。
-	speed         int // 戰略速度
-	tacticalSpeed int // 戰術速度
-	speedToast    int // 剛調過速度時在戰場浮一行提示，剩幾幀
+	// speed／tacticalSpeed 是**原版的檔位 0–4**（0 ＝ 最高速、4 ＝ 最低速），
+	// 不是「每畫面幾 tick」。原版是兩個獨立設定：戰略速度在 `ds:0CFAh`
+	// 直接當等待量，戰術速度在 `ds:0CFBh` 要先 ×16（`sub_160A5`）。
+	// 每一檔實際多快由 speedThrottle 換算（docs/spec/34、docs/re/61）。
+	speed            int // 戰略速度檔位
+	tacticalSpeed    int // 戰術速度檔位
+	strategyThrottle speedThrottle
+	tacticalThrottle speedThrottle
+	speedToast       int // 剛調過速度時在戰場浮一行提示，剩幾幀
 
 	// sound 是音訊播放層。**音檔不隨發行包散布**——玩家自己跑
 	// `tools/bgm2ogg.sh` 從原版產生（docs/spec/29 §5、§6）。
@@ -694,13 +693,18 @@ func (g *game) Update() error {
 	}
 	// 系統視窗開著時時間停止（說明書 3.1，docs/spec/13 §2.4）。
 	// 另外三個視窗開著時時間照走——這是原版明講的差別。
-	// speed=0 是 remake 的明示暫停：保留原本可見 map-loop 的物件動畫，
-	// 但不推進據點／軍團／時鐘。
-	if g.speed == 0 || g.hudOpen(hudSystem) {
+	// **戰略層沒有別的暫停鍵**：檔位 0 在原版是最快不是暫停。
+	if g.hudOpen(hudSystem) {
 		g.world.AdvanceMapObjects(g.rng)
 		return nil
 	}
-	for i := 0; i < g.speed; i++ {
+	// 這一個畫面推進幾個子刻，由節流累加器決定（docs/spec/34）。
+	steps := g.strategyThrottle.steps(g.speed, 1, highSpeedStrategySteps)
+	if steps == 0 {
+		g.world.AdvanceMapObjects(g.rng)
+		return nil
+	}
+	for i := 0; i < steps; i++ {
 		// 第一個規則 tick 跑完整的原版順序「據點／軍團／物件／時鐘」；
 		// 同一畫面的額外 speed tick 不重跑物件。
 		var ev state.Event
@@ -1094,8 +1098,8 @@ func main() {
 	// 沒有音效裝置時 `RunGame` 會直接帶著 ALSA 的錯誤結束——
 	// 無頭驗收與 CI 全部會掛。**要有聲音就明確給目錄。**
 	audioDir := flag.String("audio", "", "ogg 音檔目錄（先跑 tools/bgm2ogg.sh 產生；留白＝靜音）")
-	speed := flag.Int("speed", 4, "戰略速度：每個畫面更新推進幾個遊戲 tick")
-	tacticalSpeed := flag.Int("tactical-speed", 4, "戰術速度：戰場每個畫面更新推進幾幀")
+	speed := flag.Int("speed", 2, "戰略速度檔位 0–4（0 ＝ 最高速、4 ＝ 最低速）")
+	tacticalSpeed := flag.Int("tactical-speed", 2, "戰術速度檔位 0–4（0 ＝ 最高速、4 ＝ 最低速）")
 	seed := flag.Int("seed", -1, "驗收用固定亂數種子；負值時照原版以時鐘播種")
 	shot := flag.String("shot", "", "跑 N 幀之後截圖到這個路徑就結束（驗收用）")
 	shotFrames := flag.Int("shot-frames", 120, "截圖前先跑幾幀")

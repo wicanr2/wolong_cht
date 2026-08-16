@@ -636,45 +636,108 @@ func TestSystemMenuLayout(t *testing.T) {
 // 戰略速度與戰術速度是**兩個獨立設定**（原版說明書 3.5、系統選單第 4／5 列）。
 // remake 先前共用一個變數，選單那兩列因此永遠一樣。
 func TestSpeedsAreIndependent(t *testing.T) {
-	g := &game{speed: 4, tacticalSpeed: 4}
-	g.adjustSpeed(false, 3)
-	if g.speed != 7 || g.tacticalSpeed != 4 {
+	g := &game{speed: 2, tacticalSpeed: 2}
+	// ＋ ＝ 更快 ＝ 檔位往 0 走（原版的檔位越大越慢）。
+	g.adjustSpeed(false, 1)
+	if g.speed != 1 || g.tacticalSpeed != 2 {
 		t.Fatalf("調戰略速度動到了戰術：%d／%d", g.speed, g.tacticalSpeed)
 	}
 	g.adjustSpeed(true, -2)
-	if g.speed != 7 || g.tacticalSpeed != 2 {
+	if g.speed != 1 || g.tacticalSpeed != 4 {
 		t.Fatalf("調戰術速度動到了戰略：%d／%d", g.speed, g.tacticalSpeed)
 	}
-	// 兩端都要夾住：0 是暫停，speedMax 是上限。
+	// 兩端都要夾在原版的 0–4，沒有第六檔也沒有負檔。
 	g.adjustSpeed(false, -100)
 	g.adjustSpeed(true, 1000)
-	if g.speed != 0 || g.tacticalSpeed != speedMax {
-		t.Fatalf("沒有夾在 0–%d：%d／%d", speedMax, g.speed, g.tacticalSpeed)
+	if g.speed != speedSteps-1 || g.tacticalSpeed != 0 {
+		t.Fatalf("沒有夾在 0–%d：%d／%d", speedSteps-1, g.speed, g.tacticalSpeed)
 	}
 }
 
-// 系統選單那六列的滑鼠命中：左鍵 +1、右鍵 −1，只動對應的那一個速度。
-func TestSystemRowAdjustsSpeed(t *testing.T) {
-	g := &game{speed: 4, tacticalSpeed: 4}
-	r := sysRowRect(sysRowStrategySpeed)
-	row, ok := hitTestSystemRow(r.Min.X+2, r.Min.Y+2)
-	if !ok || row != sysRowStrategySpeed {
-		t.Fatalf("點戰略速度那列 = %d, %v", row, ok)
-	}
-	g.dispatchSystemRow(row, true)
-	if g.speed != 5 || g.tacticalSpeed != 4 {
-		t.Errorf("左鍵沒有 +1：%d／%d", g.speed, g.tacticalSpeed)
-	}
-	g.dispatchSystemRow(sysRowTacticalSpeed, false)
-	if g.speed != 5 || g.tacticalSpeed != 3 {
-		t.Errorf("右鍵沒有 −1：%d／%d", g.speed, g.tacticalSpeed)
-	}
-	// 列與列之間不能互相命中。
-	for k := 0; k < sysRows; k++ {
-		rk := sysRowRect(k)
-		got, ok := hitTestSystemRow(rk.Min.X+1, rk.Min.Y+1)
-		if !ok || got != k {
-			t.Errorf("第 %d 列自己的中心命中 %d, %v", k, got, ok)
+// 系統選單的速度列是**五檔循環**（原版 `sub_16062`：+1，到頂繞回 0），
+// 不是 ±1 的數值微調。標籤在 `ds:6033h`，選項數 5 出自 `ds:5FF4h`。
+func TestSystemRowCyclesSpeedThroughFiveOriginalSteps(t *testing.T) {
+	g := &game{}
+	for i := 1; i <= speedSteps; i++ {
+		g.dispatchSystemRow(sysRowStrategySpeed, true)
+		if want := i % speedSteps; g.speed != want {
+			t.Fatalf("第 %d 次左鍵：檔位 ＝ %d，預期 %d", i, g.speed, want)
 		}
+	}
+	if g.speed != 0 {
+		t.Errorf("繞一圈之後應該回到第 0 檔，得到 %d", g.speed)
+	}
+	// 右鍵往回一檔（remake 的便利，不是原版行為）。
+	g.dispatchSystemRow(sysRowStrategySpeed, false)
+	if g.speed != speedSteps-1 {
+		t.Errorf("右鍵應該退到最後一檔 %d，得到 %d", speedSteps-1, g.speed)
+	}
+	// 戰術速度是另一個設定，不能被戰略速度帶著動。
+	if g.tacticalSpeed != 0 {
+		t.Errorf("戰術速度被連動了：%d", g.tacticalSpeed)
+	}
+	g.dispatchSystemRow(sysRowTacticalSpeed, true)
+	if g.tacticalSpeed != 1 {
+		t.Errorf("戰術速度 ＝ %d，預期 1", g.tacticalSpeed)
+	}
+}
+
+// 五個標籤照 `ds:6033h` 的順序，值就是檔位本身。
+func TestSpeedLabelsMatchOriginalFiveSteps(t *testing.T) {
+	if len(speedLabels) != speedSteps {
+		t.Fatalf("原版是 %d 檔，標籤有 %d 個", speedSteps, len(speedLabels))
+	}
+	want := [speedSteps]string{"最高速", " 高速 ", " 普通 ", " 低速 ", "最低速"}
+	if speedLabels != want {
+		t.Errorf("標籤 = %v，預期 ds:6033h 的 %v", speedLabels, want)
+	}
+}
+
+// 節流換算要對得上原版的實際速率：戰略每個子刻等「檔位」個 291.3 Hz 中斷。
+// 出處 docs/re/61 §4、docs/spec/34 §3。
+func TestSpeedThrottleMatchesOriginalRates(t *testing.T) {
+	// 每檔十秒（600 個畫面更新）該推進幾個子刻 ＝ 2913 ÷ 檔位。
+	// 量十秒而不是一秒，是為了讓「累加器剩下不滿一步」的量化誤差
+	// 小於要驗的 1%——一秒的殘量在最低速那一檔就佔 1.1%。
+	for level := 1; level < speedSteps; level++ {
+		var th speedThrottle
+		got := 0
+		for f := 0; f < 600; f++ {
+			got += th.steps(level, 1, highSpeedStrategySteps)
+		}
+		want := 2913.0 / float64(level)
+		if d := float64(got) - want; d > want/100 || d < -want/100 {
+			t.Errorf("檔位 %d：十秒 %d 個子刻，原版 %.1f", level, got, want)
+		}
+	}
+	// 檔位 0 是 remake 差異：原版不等待，這裡給固定上限。
+	var th speedThrottle
+	if n := th.steps(0, 1, highSpeedStrategySteps); n != highSpeedStrategySteps {
+		t.Errorf("最高速 = %d，預期 %d", n, highSpeedStrategySteps)
+	}
+}
+
+// 戰術層的值要先 ×16 才當等待量（`sub_160A5`），所以同檔位下
+// 戰場幀數是戰略子刻數的 1/16——「高速」正好是 18.2 fps。
+func TestTacticalThrottleIsSixteenTimesCoarser(t *testing.T) {
+	for level := 1; level < speedSteps; level++ {
+		var strat, tact speedThrottle
+		s, t2 := 0, 0
+		for f := 0; f < 600; f++ {
+			s += strat.steps(level, 1, highSpeedStrategySteps)
+			t2 += tact.steps(level, tacticalThrottleMul, highSpeedTacticalSteps)
+		}
+		if d := s - t2*tacticalThrottleMul; d > tacticalThrottleMul || d < -tacticalThrottleMul {
+			t.Errorf("檔位 %d：戰略 %d 子刻／戰術 %d 幀，差得太多", level, s, t2)
+		}
+	}
+	// 高速（檔位 1）＝ 18.2 fps ＝ 標準 BIOS tick。
+	var th speedThrottle
+	n := 0
+	for f := 0; f < 60; f++ {
+		n += th.steps(1, tacticalThrottleMul, highSpeedTacticalSteps)
+	}
+	if n != 18 {
+		t.Errorf("高速一秒 %d 幀，預期 18（18.2 fps）", n)
 	}
 }

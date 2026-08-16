@@ -417,18 +417,50 @@ const (
 	sysRowQuit
 )
 
-// speedMax 是速度的上限。**這不是原版數值**——原版四個檔位各是什麼值
-// 還沒解（docs/mechanics/15-realtime.md 未解表），remake 用「每畫面推進
-// 幾個 tick」當語意，0 ＝ 暫停。
-const speedMax = 64
+// videoModeLabels 是「畫面模式」那一列的兩個選項（原版字串表 `ds:6002h`）。
+// 值切換的是 `GAMEPAL.BRG` 的四季組：0 ＝ bank 0–3、1 ＝ bank 4–7
+// （`sub_16097` → `sub_109AF`，docs/re/02 §6.2）。
+// **remake 只做了第 0 組**——液晶那一組是給 8 階調液晶用的高飽和純色，
+// 現代螢幕上沒有對應的顯示器，接上去也沒有可對照的原版畫面。
+var videoModeLabels = [2]string{"１６色", " 液晶 "}
 
-// adjustSpeed 調速度。tactical 為 true 時調戰術速度。
+// speedLabels 是原版兩個速度設定的**五個檔位**，字串在 `ds:6033h` 起
+// 五筆各 7 bytes（Big5，含前後的半形空白）。
+//
+// 檔位數不是猜的：系統設定表 `ds:5FF2h` 每筆的第 3 個 byte 就是選項數，
+// 四個可調設定分別是 2／5／5／5（畫面模式／音效／戰略速度／戰術速度），
+// 而 `sub_16062` 就是「點一下 +1，到頂繞回 0」。
+// 值存在 `ds:0CF8h` 起一列一個 byte：`+0` 畫面模式、`+1` 音效、
+// `+2` 戰略速度、`+3` 戰術速度（docs/re/55 §4）。
+//
+// **檔位就是 g.speed／g.tacticalSpeed 的值**：0 ＝ 最高速、4 ＝ 最低速。
+// 每一檔實際多快由 speedThrottle 換算（docs/spec/34）。
+var speedLabels = [speedSteps]string{"最高速", " 高速 ", " 普通 ", " 低速 ", "最低速"}
+
+// cycleSpeed 重現 `sub_16062`：點一下換下一檔，到頂繞回第 0 檔。
+//
+// ⚠ 原版只有「往下一檔」一個方向（`inc al / cmp al, ah / jb` 之後
+// `xor al, al`）。remake 讓右鍵往回一檔，那是額外的便利，不是原版行為。
+func (g *game) cycleSpeed(tactical bool, forward bool) {
+	p := &g.speed
+	if tactical {
+		p = &g.tacticalSpeed
+	}
+	step := 1
+	if !forward {
+		step = speedSteps - 1
+	}
+	*p = (clamp(*p, 0, speedSteps-1) + step) % speedSteps
+}
+
+// adjustSpeed 是 remake 額外的細調（＋／− 鍵），不是原版行為。
+// delta > 0 ＝ 更快 ＝ 檔位往 0 走（原版的檔位越大越慢）。
 func (g *game) adjustSpeed(tactical bool, delta int) {
 	p := &g.speed
 	if tactical {
 		p = &g.tacticalSpeed
 	}
-	*p = clamp(*p+delta, 0, speedMax)
+	*p = clamp(*p-delta, 0, speedSteps-1)
 }
 
 // dispatchSystemRow 處理點到系統選單某一列。left ＝ 左鍵。
@@ -437,15 +469,11 @@ func (g *game) adjustSpeed(tactical bool, delta int) {
 // 接的 remake 行為：兩個速度左鍵加右鍵減，「資料儲存」開既有的四槽視窗，
 // 「遊戲結束」走既有的 ＹＥＳ／ＮＯ 離開確認。
 func (g *game) dispatchSystemRow(row int, left bool) {
-	delta := 1
-	if !left {
-		delta = -1
-	}
 	switch row {
 	case sysRowStrategySpeed:
-		g.adjustSpeed(false, delta)
+		g.cycleSpeed(false, left)
 	case sysRowTacticalSpeed:
-		g.adjustSpeed(true, delta)
+		g.cycleSpeed(true, left)
 	case sysRowSound:
 		g.toggleSound()
 	case sysRowSave:
@@ -510,8 +538,11 @@ func (g *game) drawSystemWindow(dst *ebiten.Image) {
 	g.td.Draw(dst, "　系　 統　 選　 單　", sysTitleX, sysTitleY, ink)
 	vector.DrawFilledRect(dst, sysRuleX, sysRuleY, sysRuleW, 1, ink, false)
 
-	values := [sysRows]string{"　ＯＫ　", "TYPE 1", g.soundValue(),
-		fmt.Sprintf("%d", g.speed), fmt.Sprintf("%d", g.tacticalSpeed), "　ＯＫ　"}
+	// 第 2 列的兩個選項是「１６色」與「 液晶 」（原版字串表 ds:6002h，
+	// 對應 GAMEPAL 的 bank 0–3 與 4–7，docs/re/55 §4）。
+	// remake 只做了 1６色那一組，所以這一格是固定值。
+	values := [sysRows]string{"　ＯＫ　", videoModeLabels[0], g.soundValue(),
+		speedLabels[clamp(g.speed, 0, speedSteps-1)], speedLabels[clamp(g.tacticalSpeed, 0, speedSteps-1)], "　ＯＫ　"}
 	for k := 0; k < sysRows; k++ {
 		dy := k * sysRowStep
 		vector.DrawFilledRect(dst, sysLabelBoxX, float32(sysLabelBoxY+dy),

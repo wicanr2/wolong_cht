@@ -148,7 +148,7 @@ remake 沿用這個形狀，把還沒接的功能寫成值（「未接入」）�
 
 | 方式 | 內容 |
 |---|---|
-| 單元測試 | `TestSpeedsAreIndependent`（兩個速度互不影響、兩端夾住）、`TestSystemRowAdjustsSpeed`（左鍵 +1／右鍵 −1、列與列不互相命中）|
+| 單元測試 | `TestSpeedsAreIndependent`（兩個速度互不影響、夾在 0–4）、`TestSystemRowCyclesSpeedThroughFiveOriginalSteps`（五檔循環、列與列不互相命中）|
 | 單元測試 | `TestSystemMenuLayout`：視窗矩形、六列的座標與列距、值格不疊到標籤底、六個熱區逐格重合、末列是「遊戲結束」|
 | 單元測試 | `TestHUDSwitchGeometryAndSemantics`：五個熱區矩形、左開右關不是 toggle、第五格不接東西、系統視窗共用 `g.open[winSystem]` |
 | 截圖 | ✅ [`docs/playtest/24`](../playtest/24-window-toggles.md) §3 |
@@ -159,8 +159,8 @@ remake 沿用這個形狀，把還沒接的功能寫成值（「未接入」）�
 | 項目 | 現況 |
 |---|---|
 | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 |
-| 六列的語意 | **原版那六個 handler 沒讀**（[`docs/re/55`](../re/55-system-menu-window.md) §4）。remake 照標籤字面接：兩個速度左鍵 +1／右鍵 −1、「資料儲存」開四槽視窗、「遊戲結束」走 ＹＥＳ／ＮＯ 確認。**這是 remake 差異**，等 handler 讀出來要回頭對 |
-| 「畫面模式」 | 固定字，沒有第二種模式 |
-| 「音效」 | 寫「未接入」——音訊層完全沒做，`BGM.DAT` 的聲軌事件編碼未解（[`docs/re/23`](../re/23-bgm-resource-format.md)）|
+| 六列的語意 | handler 讀到四支（[`docs/re/55`](../re/55-system-menu-window.md) §5）：畫面模式換調色盤組、音效走驅動、戰略速度只存值、戰術速度存值 ×16。**「資料儲存」與「遊戲結束」那兩支沒讀**，remake 照標籤字面接（開四槽視窗／走 ＹＥＳ／ＮＯ 確認）|
+| 「畫面模式」 | 兩個選項是「１６色」與「 液晶 」，切的是 `GAMEPAL.BRG` 的 bank 0–3 ↔ 4–7（[`docs/re/02`](../re/02-palette-routine.md) §6.2）。**remake 只做第 0 組**，這一格固定顯示「１６色」——液晶那組是給 8 階調液晶的高飽和純色，現代螢幕沒有對照物 |
+| 「音效」 | 值由 `g.soundValue()` 填。原版五個選項是 ＯＦＦ／TYPE 1–4（音源型別），remake 只有開／關 |
 | 戰場內調速度 | 戰場獨佔輸入，所以 `updateBattle` 自己接一次 ＋／−（調戰術速度），調完浮一行 1.5 秒的提示。**原版戰場沒有速度指示**，常駐顯示會破壞版面 parity |
-| 速度的檔位 | 原版四個檔位各是什麼值未解（`docs/mechanics/15-realtime.md`）。remake 用 0–64 的「每畫面推進幾個 tick」，0 ＝ 暫停 |
+| ~~速度的檔位~~ | **已解**：五檔，各檔等幾個 291.3 Hz 中斷都有數字（[`docs/re/61`](../re/61-timer-tick-source.md) §4）。remake 的換算與驗收見 [`34`](34-speed-steps.md) |

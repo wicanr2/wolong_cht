@@ -18,15 +18,15 @@
 
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
-| 規則正確性 | 56 | 55 | 1 | 0 |
+| 規則正確性 | 55 | 53 | 2 | 0 |
 | 資料保存 | 38 | 38 | 0 | 0 |
-| 程式碼理解 | 203 | 197 | 6 | 0 |
+| 程式碼理解 | 204 | 197 | 7 | 0 |
 | 驗收 | 34 | 29 | 5 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 72 | 69 | 3 | 0 |
-| **合計** | **421** | 405 | 15 | 1 |
+| 其他 | 74 | 70 | 4 | 0 |
+| **合計** | **423** | 404 | 18 | 1 |
 
-## 2.1 規則正確性（56 條）
+## 2.1 規則正確性（55 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -34,9 +34,8 @@
 | [`mechanics/10-strategy.md`](../mechanics/10-strategy.md) | 行軍費用 | **說明書 10.6「行軍の費用」有專節，還沒讀** | 靜態 |
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | **世界更新** | 每「時」 / `sub_13E11`（內容未解） | 靜態 |
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | `sub_13E11` 每「時」做什麼 | 行軍與 AI 的節拍，寫到那一層時再解 | 靜態 |
-| [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | 戰術速度存在哪（`0CFAh` 是戰略速度） | 只影響戰術層 | 靜態 |
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | `sub_10A65` 的內插演算法 | 只影響畫面 | 靜態 |
-| [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | 速度設定的四個檔位各是什麼值 | 只影響手感調校 | 靜態 |
+| [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | 最高速那一檔在原版實機上是多少 | 機器相依，要實測才有數字；只影響手感調校 | 實測 |
 | [`mechanics/20-military.md`](../mechanics/20-military.md) | 玩家六個位置如何完整影響戰力仍未解 | （散句） | 靜態 |
 | [`mechanics/20-military.md`](../mechanics/20-military.md) | 軍團編成的數值判定（六個位置怎麼影響戰力，見 `30-combat.md`） | （未解小節內文） | 靜態 |
 | [`mechanics/20-military.md`](../mechanics/20-military.md) | 路上（192–255）與野外（≥256）節點：remake 目前只用據點層的圖。 | （未解小節內文） | 靜態 |
@@ -130,7 +129,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（203 條）
+## 2.3 程式碼理解（204 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -139,12 +138,9 @@
 | [`re/01-first-recon.md`](../re/01-first-recon.md) | 是加了新過場、還是把原本的長段拆開，未解。 | （散句） | 靜態 |
 | [`re/01-first-recon.md`](../re/01-first-recon.md) | `YNMOUSE.COM` | pc98 / 滑鼠驅動。dosv 版把它併進 `KI.EXE`？未驗 | 靜態 |
 | [`re/01-first-recon.md`](../re/01-first-recon.md) | `PASS.MAP`／`PASS.SCH` | dosv / **PC-98 沒有**。關隘資料，移植時新增或改名。未解 | 靜態 |
-| [`re/02-palette-routine.md`](../re/02-palette-routine.md) | 特徵是高飽和純色（青、白、藍、黑、綠、紅、黃、洋紅），色 0 與色 15 固定。 | （未解小節內文） | 靜態 |
-| [`re/02-palette-routine.md`](../re/02-palette-routine.md) | 1. **勢力識別色**。 | （未解小節內文） | 靜態 |
-| [`re/02-palette-routine.md`](../re/02-palette-routine.md) | 2. **「畫面模式」的第二套色盤**（說明書第 3.5 節的類比彩色 ↔ 8 階調液晶）。 | （未解小節內文） | 靜態 |
-| [`re/02-palette-routine.md`](../re/02-palette-routine.md) | 誰把 `.BRG` 的內容載到 `cs:1964h`，以及選組的邏輯。 | （未解小節內文） | 靜態 |
+| [`re/02-palette-routine.md`](../re/02-palette-routine.md) | 誰把 `.BRG` 的內容載到 `cs:1964h`（`sub_109AF` 載到 `cs:18A4h`， | （未解小節內文） | 靜態 |
 | [`re/02-palette-routine.md`](../re/02-palette-routine.md) | OPENPAL`（6 組）、`ENDPAL`（12 組）的分組對應哪些畫面。 | （未解小節內文） | 靜態 |
-| [`re/02-palette-routine.md`](../re/02-palette-routine.md) | banks 4–7 的用途（§6.2）。 | （未解小節內文） | 靜態 |
+| [`re/02-palette-routine.md`](../re/02-palette-routine.md) | 設定表 `cs:0x5FF4` 每筆後三個 byte 是什麼（第 4 筆的第二個 word | （未解小節內文） | 靜態 |
 | [`re/03-image-blitter.md`](../re/03-image-blitter.md) | ICONGRF`／`KYOGRF`／`IVENTGRF` 的尺寸。 | （未解小節內文） | 靜態 |
 | [`re/03-image-blitter.md`](../re/03-image-blitter.md) | sub_1E38C`（帶位移的讀檔）與 `sub_1F4A2`（開檔／讀檔／關檔）的完整介面。 | （未解小節內文） | 靜態 |
 | [`re/03-image-blitter.md`](../re/03-image-blitter.md) | sub_1FAC2` 是另一支繪製常式（`shl al, 1` 後才 `mov cx, ax`），用途未解。 | （未解小節內文） | 靜態 |
@@ -160,7 +156,6 @@
 | [`re/06-game-clock.md`](../re/06-game-clock.md) | 勢力記錄 64 B 的欄位表 | `+0`、`+1Ah`、`+1Ch` 已知，其餘未解 | 靜態 |
 | [`re/06-game-clock.md`](../re/06-game-clock.md) | `cs:0CF0h` 那 59 byte 裡除了時鐘的其餘部分 | 對照存檔 diff | 靜態 |
 | [`re/06-game-clock.md`](../re/06-game-clock.md) | `sub_10A65` 的內插演算法 | 直接讀 | 靜態 |
-| [`re/06-game-clock.md`](../re/06-game-clock.md) | 戰術速度存在哪（`0CFAh` 是戰略速度） | 找 SYSTEM MENU 的寫入點 | 靜態 |
 | [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | 10 | `sub_13496` / 訊息-only：建立武將／參數 formatter 游標；持久狀態尚未找到 | 靜態 |
 | [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | `sub_15940` 的兩個分支 | 已派駐武將的每月行動，會發訊息 `0x41`／`0x42`。分支 2 有一行 `mov byte ptr [si+1Ch], 18h`（把所屬勢力寫成 24）**與「+1Ch 是勢力編號、只有 0–21」矛盾**，還沒解釋 | 靜態 |
 | [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | `sub_12BD9` | 已讀：對 22 個勢力各建 0x30 的候選緩衝區，串起交友度排序、協力／停戰／宣戰產生器與遷都事件 8 | 靜態 |
@@ -310,9 +305,10 @@
 | [`re/54-advisor-naming-window.md`](../re/54-advisor-naming-window.md) | 屬性低 byte | `01` 與 `03` 的差別未讀（§3） | 靜態 |
 | [`re/54-advisor-naming-window.md`](../re/54-advisor-naming-window.md) | 「別　號」 | 軍師除了名字還有別號，寫進哪裡未讀 | 靜態 |
 | [`re/54-advisor-naming-window.md`](../re/54-advisor-naming-window.md) | 「重來」「繼續」 | 三顆按鈕的 handler 未讀 | 靜態 |
-| [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | 六個 handler | 熱區 `0x20`–`0x25` 各自做什麼沒讀（「資料儲存」通往四槽視窗是推測） | 靜態 |
-| [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | 中間四列的值 | 由誰填、值域多少未讀 | 靜態 |
+| [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | 「資料儲存」與「遊戲結束」的 handler | `0x6084`／`0x60B4` 沒讀 | 靜態 |
+| [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | `sub_15FAA` 的 `cmp bx, 0Ah` | 熱區碼 `0x2A` 不在這個視窗的 `0x20`–`0x25` 裡，哪來的沒查 | 靜態 |
 | [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | `sub_106F5` 的屬性解碼 | §3 的低 byte 讀法是強推論，沒逐行驗 | 靜態 |
+| [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | 設定表每筆的第 4 個 byte | 四筆都是 `00`，用途不明 | 靜態 |
 | [`re/56-bgm-track-events.md`](../re/56-bgm-track-events.md) | 全音符 ＝ 192 tick | 從長度表的二分序列推的，**強證據不是 confirmed**。沒有樂譜可對 | 靜態 |
 | [`re/56-bgm-track-events.md`](../re/56-bgm-track-events.md) | `+0x04` 那張表 | 見 `57` §8 | 靜態 |
 | [`re/56-bgm-track-events.md`](../re/56-bgm-track-events.md) | PC-98 側 | 事件編碼共用，但音色與音源程式設計完全沒讀 | 靜態 |
@@ -337,6 +333,10 @@
 | [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | 熱區 `0x01`／`0x1F` | 兩張表裡都有 handler，但沒找到註冊它們的 `sub_1E3D7` 呼叫點 | 靜態 |
 | [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | `0x1C21A`（退却）的 `sub_1A8F6` | 只知道它回 CF 與 `ah`，內容未讀 | 靜態 |
 | [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | 側欄美術的調色盤 | 本份記的都是**調色盤索引**，不是 RGB。要比顏色得用 `GAMEPAL.BRG` 的當季 bank | 靜態 |
+| [`re/61-timer-tick-source.md`](../re/61-timer-tick-source.md) | `ds:98A5h` 那個延時器實際在等什麼 | §5。呼叫端 `sub_11BE0` 沒讀 | 靜態 |
+| [`re/61-timer-tick-source.md`](../re/61-timer-tick-source.md) | 音樂 tempo 分頻器 `cs:0B68h` 的算式 | `0x859` 那 20 條指令：`al = ((0FFh − ah) × 13) >> 3`，`ah` 從哪來沒讀 | 靜態 |
+| [`re/61-timer-tick-source.md`](../re/61-timer-tick-source.md) | `cs:099Eh` 的 bit 1 | 「音樂啟用」是從用法推的，寫入端沒讀 | 靜態 |
+| [`re/61-timer-tick-source.md`](../re/61-timer-tick-source.md) | 無音效驅動時的行為 | §3 推論「會卡死」，**沒有實測**——DOSBox 拿掉 `YNSOUND.COM` 跑一次就能驗 | 實測 |
 
 ## 2.4 驗收（34 條）
 
@@ -400,7 +400,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（72 條）
+## 2.6 其他（74 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -424,11 +424,10 @@
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝命令、`0x0Bh`／`0x10h`／`0x15h`／`0x1Fh` 各自出現在哪個視窗已知，完整值域未列 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 |
-| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 六列的語意 | **原版那六個 handler 沒讀**（`docs/re/55` §4）。remake 照標籤字面接：兩個速度左鍵 +1／右鍵 −1、「資料儲存」開四槽視窗、「遊戲結束」走 ＹＥＳ／ＮＯ 確認。**這是 remake 差異**，等 handler 讀出來要回頭對 | 靜態 |
-| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 「畫面模式」 | 固定字，沒有第二種模式 | 靜態 |
-| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 「音效」 | 寫「未接入」——音訊層完全沒做，`BGM.DAT` 的聲軌事件編碼未解（`docs/re/23`） | 靜態 |
+| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 六列的語意 | handler 讀到四支（`docs/re/55` §5）：畫面模式換調色盤組、音效走驅動、戰略速度只存值、戰術速度存值 ×16。**「資料儲存」與「遊戲結束」那兩支沒讀**，remake 照標籤字面接（開四槽視窗／走 ＹＥＳ／ＮＯ 確認） | 靜態 |
+| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 「畫面模式」 | 兩個選項是「１６色」與「 液晶 」，切的是 `GAMEPAL.BRG` 的 bank 0–3 ↔ 4–7（`docs/re/02` §6.2）。**remake 只做第 0 組**，這一格固定顯示「１６色」——液晶那組是給 8 階調液晶的高飽和純色，現代螢幕沒有對照物 | 靜態 |
+| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 「音效」 | 值由 `g.soundValue()` 填。原版五個選項是 ＯＦＦ／TYPE 1–4（音源型別），remake 只有開／關 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 戰場內調速度 | 戰場獨佔輸入，所以 `updateBattle` 自己接一次 ＋／−（調戰術速度），調完浮一行 1.5 秒的提示。**原版戰場沒有速度指示**，常駐顯示會破壞版面 parity | 靜態 |
-| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 速度的檔位 | 原版四個檔位各是什麼值未解（`docs/mechanics/15-realtime.md`）。remake 用 0–64 的「每畫面推進幾個 tick」，0 ＝ 暫停 | 靜態 |
 | [`spec/14-finance-window.md`](../spec/14-finance-window.md) | 收入的來源 | `cs:word_10D02` 由誰計算未讀（月結那一支是候選）。remake 的月結算得出 `res.Income` 但沒有留下來，所以這一格暫時顯示 0——**留白比填一個自己算的數字誠實** | 靜態 |
 | [`spec/14-finance-window.md`](../spec/14-finance-window.md) | 徵兵數的上限 | 只有稅率的 100 是機器碼常數；三個兵種的上限沒看到 | 靜態 |
 | [`spec/14-finance-window.md`](../spec/14-finance-window.md) | 數值輸入器 | `sub_17C6E` 已有 RE（`docs/re/13`），但 remake 的財政還沒接上去 | 靜態 |
@@ -473,6 +472,9 @@
 | [`spec/32-gate-strength-bar.md`](../spec/32-gate-strength-bar.md) | ⚠ **攻方只在第 24–44 幀打城壁，之後就不再打** | 上面那次量測的副產品。城壁耐久 500，撞一次掉 1，照理應該持續撞；**這像是規則層的缺口**（攻方接觸城壁後停止攻擊），但本輪沒有查，也不當結論 | 靜態 |
 | [`spec/33-squad-selection.md`](../spec/33-squad-selection.md) | 命令圖示的來源 | `sub_1C673` 讀 `word_10D48` 段的 `命令碼 × 0xC0`。`word_10D48` 是 `ICONGRF` 段 3 的載入段（`../formats/03` §5），但 `sub_100DF` 之後它被加了偏移，**實際基址要讀那一支才算數** | 靜態 |
 | [`spec/33-squad-selection.md`](../spec/33-squad-selection.md) | 待機兵條的欄位語意 | `word_1D30A:+0x09 + 4k` 在 `../re/11` §3.9 記成「第 k 隊的待機兵數」；條的上限 76 遠小於一隊 100 兵，所以開局會頂在上限 | 靜態 |
+| [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 最高速在原版實機是多少 | 機器相依。DOSBox 固定 cycles 量得到「那台的上限」，量不到「原版的答案」 | 實測 |
+| [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 戰場幀是否等於 remake 的一次 `Step()` | 原版一幀做完整條戰場迴圈；remake 的 `Step()` 是規則層一步。**兩者對齊過但沒逐項比** | 靜態 |
+| [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 音效驅動不在時的行為 | `../re/61` §6 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |

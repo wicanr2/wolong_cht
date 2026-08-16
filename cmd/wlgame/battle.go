@@ -128,7 +128,7 @@ func (g *game) drawSpeedToast(dst *ebiten.Image, l dosvBattleLayout) {
 	if g.speedToast <= 0 {
 		return
 	}
-	text := fmt.Sprintf("戰術速度 %d", g.tacticalSpeed)
+	text := "戰術速度" + speedLabels[clamp(g.tacticalSpeed, 0, speedSteps-1)]
 	w := g.td.Width(text) + 16
 	x := l.Field.X + 8
 	y := l.BottomCommands.Y - textdraw.GlyphH - 12
@@ -190,12 +190,10 @@ func (g *game) updateBattle() {
 				}
 			}
 		}
-		// 每個畫面更新推進 tacticalSpeed 幀。**戰術速度與戰略速度是
-		// 兩個獨立設定**（原版說明書 3.5、系統選單第 4／5 列）。
-		n := g.tacticalSpeed
-		if n < 1 {
-			n = 1
-		}
+		// 這一個畫面推進幾個戰場幀。**戰術速度是獨立設定，而且值要 ×16**
+		// ——原版第 5 列的 handler `sub_160A5` 就做這一件事
+		// （docs/re/61 §4、docs/spec/34）。
+		n := g.tacticalThrottle.steps(g.tacticalSpeed, tacticalThrottleMul, highSpeedTacticalSteps)
 		for i := 0; i < n && !b.Done; i++ {
 			b.Step()
 		}

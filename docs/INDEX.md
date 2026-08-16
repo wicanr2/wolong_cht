@@ -118,12 +118,13 @@
 | [`docs/re/52-slot-select-window.md`](re/52-slot-select-window.md) | 52 — 四槽選擇視窗：新遊戲、讀取、儲存共用同一個 | 視窗矩形、靜態層、四個槽的內容與座標、三個標題、 「哪些槽不能選」的判定全部解出來了。⭐ 原版的「新遊戲」不是另一個… | 2026-08-15 |
 | [`docs/re/53-lord-select-window.md`](re/53-lord-select-window.md) | 53 — 君主選擇視窗（顯示清單場景 8） | 視窗矩形、靜態層、七個顯示值的座標與來源、兩個熱區的語意 全部解出來了。⭐ 「確定」在軍師還沒命名時會被導去「自定」… | 2026-08-15 |
 | [`docs/re/54-advisor-naming-window.md`](re/54-advisor-naming-window.md) | 54 — 軍師命名視窗（顯示清單場景 9，松崗版特有） | 視窗矩形、靜態層、九個熱區的位置與語意解出來了。 選字表的資料來源與翻頁邏輯未讀（§4）。 | 2026-08-15 |
-| [`docs/re/55-system-menu-window.md`](re/55-system-menu-window.md) | 55 — 系統選單視窗，以及 op 08 屬性的真正編碼 | 視窗矩形、六列版面、六個熱區全部解出來了。 ⭐ 順帶解出 op 08 的 arg2 高 byte 是 | 2026-08-15 |
+| [`docs/re/55-system-menu-window.md`](re/55-system-menu-window.md) | 55 — 系統選單視窗，以及 op 08 屬性的真正編碼 | 視窗矩形、六列版面、六個熱區、⭐ 中間四列的設定值與選項字串 全部解出來了（§4）。六個 handler 讀到四支（… | 2026-08-15 |
 | [`docs/re/56-bgm-track-events.md`](re/56-bgm-track-events.md) | 56 — ⭐ BGM.DAT 的聲軌事件編碼解出來了 | 事件編碼、三張查表、播放引擎的迴圈、控制事件的分派全部 confirmed。 音符與控制事件都可以完整還原成語意（§… | 2026-08-15 |
 | [`docs/re/57-opl3-register-map.md`](re/57-opl3-register-map.md) | 57 — ⭐ DOS/V 的音源是 OPL3，六個聲軌各佔一組 4-operator 通道 | 晶片型號、通道配置、音色記錄版面、音量與速度換算、SOUND.DAT 的記錄結構全部 confirmed。剩兩張表的… | 2026-08-15 |
 | [`docs/re/58-bgm-scene-mapping.md`](re/58-bgm-scene-mapping.md) | 58 — ⭐ 哪一首配哪個場景：BGM.DAT 的 11 首全部對出來了 | 曲 0／2–10 全部 confirmed（呼叫端的立即值、查表或計算式）。 只剩曲 1 ——它在 DOS/V 的 … | 2026-08-15 |
 | [`docs/re/59-game-over-exit-codes.md`](re/59-game-over-exit-codes.md) | 59 — ⭐ 結局與敗北是靠離開碼交出去的 | 三個離開碼與各自的觸發點 confirmed。 ⭐ 結局的閘門是 | 2026-08-16 |
 | [`docs/re/60-tactical-sidebar.md`](re/60-tactical-sidebar.md) | 60 — 戰術側欄：那一欄畫了什麼，每一格由誰畫 | 側欄七格的內容全部解出（confirmed）。 | 2026-08-16 |
+| [`docs/re/61-timer-tick-source.md`](re/61-timer-tick-source.md) | 61 — 計時中斷是誰發的：節流的頻率終於有數字了 | ✅ 解出來了。 | 2026-08-16 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-13 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -150,6 +151,7 @@
 | [`docs/spec/31-tactical-sidebar.md`](spec/31-tactical-sidebar.md) | 31 — 戰術側欄的內容組成 | READY。 | 2026-08-16 |
 | [`docs/spec/32-gate-strength-bar.md`](spec/32-gate-strength-bar.md) | 32 — 攻城的「門強度」條 | READY。 | 2026-08-16 |
 | [`docs/spec/33-squad-selection.md`](spec/33-squad-selection.md) | 33 — 底列六格是選部隊，不是第二套命令列 | READY。 | 2026-08-16 |
+| [`docs/spec/34-speed-steps.md`](spec/34-speed-steps.md) | 34 — 兩個速度設定：五檔、各檔的實際節奏 | READY。 | 2026-08-16 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | READY。管線的每一段都有現成工具，缺的是把它們接起來 與一支逐區差分工具。 | 2026-08-15 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
