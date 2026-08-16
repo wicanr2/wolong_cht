@@ -1,6 +1,9 @@
 package state
 
-import "github.com/wicanr2/wolong_cht/internal/rules/march"
+import (
+	"github.com/wicanr2/wolong_cht/internal/rules/combat"
+	"github.com/wicanr2/wolong_cht/internal/rules/march"
+)
 
 
 import (
@@ -689,5 +692,71 @@ func TestFallenCapitalRedirectsTowardTheNewCapital(t *testing.T) {
 	}
 	if got := w.Corps[i].Ordered; got != newCapital {
 		t.Errorf("調頭到 %d，新首都是 %d（星形拓樸下下一站就是它）", got, newCapital)
+	}
+}
+
+// ---------------------------------------------------------------------------
+// 內政官被遣回（docs/spec/48）
+// ---------------------------------------------------------------------------
+
+// 據點被攻陷 → 內政官槽清空、那名武將不再「出陣中」、事件帶出編號。
+func TestCityFallReturnsGovernor(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[1]
+	_, _, node := threeInARow(t, w, f)
+
+	gov := -1
+	for i, g := range w.Generals {
+		if g.Alive && g.Faction == f {
+			gov = i
+			break
+		}
+	}
+	if gov < 0 {
+		t.Skip("這個勢力沒有武將")
+	}
+	w.Cities[node].Governor = gov
+	w.Generals[gov].Posted = true
+
+	attacker := -1
+	for _, g := range w.AliveFactions() {
+		if g != f {
+			attacker = g
+			break
+		}
+	}
+	att := stackedDefender(t, w, attacker, node)
+
+	ev := &CorpsEvent{Captured: -1, GovernorReturned: noGovernor}
+	w.capture(att, ev, &testRand{s: 1})
+
+	if got := w.Cities[node].Governor; got != noGovernorSlot {
+		t.Errorf("內政官槽 = %d，要 0xFF", got)
+	}
+	if w.Generals[gov].Posted {
+		t.Error("被遣回的內政官還掛著「出陣中」")
+	}
+	if ev.GovernorReturned != gov {
+		t.Errorf("事件帶出 %d，要 %d", ev.GovernorReturned, gov)
+	}
+}
+
+// 無主的據點被佔下時整段跳過（原版 `cmp bh, 18h / jz`）。
+func TestNeutralCityFallKeepsNoGovernor(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[1]
+	_, _, node := threeInARow(t, w, f)
+	w.Cities[node].Owner = combat.NeutralFaction
+	w.Cities[node].Governor = 3
+
+	att := stackedDefender(t, w, f, node)
+	ev := &CorpsEvent{Captured: -1, GovernorReturned: noGovernor}
+	w.capture(att, ev, &testRand{s: 1})
+
+	if ev.GovernorReturned != noGovernor {
+		t.Errorf("無主的據點不該跑遣回那一段，卻回了 %d", ev.GovernorReturned)
+	}
+	if got := w.Cities[node].Governor; got != 3 {
+		t.Errorf("內政官槽被動了：%d", got)
 	}
 }

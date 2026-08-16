@@ -107,7 +107,8 @@ func (w *World) ChooseBattleDelegate(rng combat.Rand) *CorpsEvent {
 	c := *w.encounter
 	w.encounter = nil
 	w.rng = rng
-	ev := &CorpsEvent{Corps: c.Attacker, Enemy: c.Defender, Mode: c.Mode}
+	ev := &CorpsEvent{Corps: c.Attacker, Enemy: c.Defender, Mode: c.Mode,
+		Captured: -1, Relocated: -1, GovernorReturned: noGovernor}
 	w.resolveCorpsBattle(ev, c.Attacker, c.Defender, c.Mode, c.Garrison, rng)
 	return ev
 }
@@ -245,7 +246,8 @@ func (w *World) ResolvePending(rng combat.Rand) *CorpsEvent {
 	w.pending = nil
 	o := p.Battle.Result()
 
-	ev := &CorpsEvent{Corps: p.Attacker, Enemy: p.Defender, Captured: -1}
+	ev := &CorpsEvent{Corps: p.Attacker, Enemy: p.Defender, Captured: -1,
+		Relocated: -1, GovernorReturned: noGovernor}
 	ev.BattleBefore = [2]int{w.Corps[p.Attacker].Men, w.Corps[p.Defender].Men}
 	r := combat.Result{DefenderWins: !o.AttackerWins}
 	ev.Battle = &r

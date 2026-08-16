@@ -470,6 +470,7 @@ func (g *game) openCorpsListWith(rows []int, hint string, pick func(int) bool) {
 // 只報**與玩家有關**的——二十二個勢力天天在打，全報會刷屏。
 func (g *game) reportCorps(ev state.Event) {
 	for _, e := range ev.Corps {
+		g.reportGovernorReturn(e)
 		if e.Battle == nil {
 			continue
 		}
@@ -541,6 +542,39 @@ func battleLine(g *game, e state.CorpsEvent) string {
 	}
 	return line
 }
+
+// reportGovernorReturn 是 `sub_14D63` 的兩則訊息（docs/spec/48）：
+// 據點被攻陷時派駐的內政官回來了，先跳一般通知，再由他自己說一句。
+//
+// 第二則的索引在八格變體的範圍裡，要走 `resolveBattleTalkIndex`——
+// 直接拿 `0x1A6` 當索引會落到 422「．．．．」那一組去。
+func (g *game) reportGovernorReturn(e state.CorpsEvent) {
+	id := e.GovernorReturned
+	if id < 0 || id >= len(g.world.Generals) {
+		return
+	}
+	gen := &g.world.Generals[id]
+	if gen.Faction != g.world.Player {
+		return // 只報自己人的，二十二個勢力天天在丟城
+	}
+	city := ""
+	if e.Captured >= 0 && e.Captured < len(g.world.Cities) {
+		city = big5(g.world.Cities[e.Captured].Name)
+	}
+	vars := map[byte]string{'1': big5(gen.Name), '2': city, '6': ""}
+	g.enqueueTalk(governorReturnTalk, vars)
+	g.enqueueTalkWithPortrait(
+		resolveBattleTalkIndex(governorRegretTalkBase, gen.TalkVariant),
+		vars, gen.Portrait)
+}
+
+const (
+	// governorReturnTalk 是「{2}內政官的{1}大人因為據點被攻陷而歸來了。」
+	governorReturnTalk = 0x44
+	// governorRegretTalkBase 是內政官自己那一句的**組編號**（不是索引）。
+	// 實際落在 534–541（docs/spec/48 §2）。
+	governorRegretTalkBase = 0x1A6
+)
 
 // demoCorps 是**驗收用**的捷徑：直接把畫面帶到編成或軍團一覽，
 // 免得截圖前要按一長串鍵。正常玩不會走到這裡。

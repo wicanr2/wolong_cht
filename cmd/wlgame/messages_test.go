@@ -196,3 +196,21 @@ func TestSecondaryTalk76UsesNoPortraitMode(t *testing.T) {
 		t.Fatalf("#76 次要 TALK 應以無肖像 modal 排入：%#v", g.messages)
 	}
 }
+
+// 內政官那一句在**八格變體**的範圍裡：`0x1A6` 是組編號不是索引，
+// 實際落在 534–541（docs/spec/48 §2）。
+//
+// ⚠ 把它當索引會拿到 422「．．．．」——語意上也講得通（一句省略號），
+// **所以錯了不會被發現**。這條測試就是為了擋那個。
+func TestGovernorRegretTalkIndex(t *testing.T) {
+	for variant, want := range []int{534, 535, 536, 537, 538, 539, 540, 541} {
+		if got := resolveBattleTalkIndex(governorRegretTalkBase, variant); got != want {
+			t.Errorf("變體 %d ⇒ %d，要 %d", variant, got, want)
+		}
+	}
+	// `0x1A6` 的十進位就是 422——**組編號與那個誤讀的索引長得一樣**，
+	// 所以只能靠算式分辨，不能靠看數字。
+	if resolveBattleTalkIndex(governorRegretTalkBase, 0) == governorRegretTalkBase {
+		t.Error("組編號被直接當成索引了")
+	}
+}

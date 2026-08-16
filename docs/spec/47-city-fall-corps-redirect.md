@@ -42,7 +42,7 @@ remake 已實作並有單測。
 00014CF5  xchg bh, [si+1]         ; 換旗，bh ＝ 舊主
 00014CF8  mov [si+1Ah], bh        ; 據點記錄記下舊主
 00014CFC  舊主 ＝ 18h（無主）⇒ 跳過下面整段
-00014D01  call sub_14D63          ; 內政官歸來（TALK #68）
+00014D01  call sub_14D63          ; 內政官歸來（TALK #68，[`48`](48-governor-returns-on-city-fall.md)）
 00014D0A  dec byte [bx+23h]       ; 舊主據點數 −1
 00014D0D  call sub_14DF0          ; ★ 遷都（TALK #30）；回 carry ＝ 這一家完了
 00014D11  名單筆數 ≠ 0 ⇒ call sub_14DA4   ; ★ 調頭
@@ -109,5 +109,4 @@ loc_14DDC:
 
 | 項目 | 現況 |
 |---|---|
-| `sub_14D63` | 「內政官因為據點被攻陷而歸來」（TALK #68）——remake 還沒把內政官送回去 |
 | `[si+1Ah]` | 據點記錄記下舊主，remake 的 `OwnerRecorded` 是同一格但語意沒逐位元對過 |

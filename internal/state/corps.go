@@ -427,6 +427,10 @@ type CorpsEvent struct {
 	// 所以計數要分開，不然量出來的「軍團損耗」會把回收算成損失。
 	Routed bool
 
+	// GovernorReturned 不是 −1 表示**那個據點派駐的內政官被遣回了**
+	// （原版 `sub_14D63`，docs/spec/48），值是武將編號。
+	GovernorReturned int
+
 	// Relocated 不是 −1 表示**舊主的首都被打下來，遷到了這個據點**
 	// （原版 `sub_14DF0`，訊息 30「首都被攻陷了！儘速遷都到\2」）。
 	Relocated int
@@ -455,7 +459,8 @@ func (w *World) tickCorps(hour int, rng combat.Rand) []CorpsEvent {
 
 func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 	c := &w.Corps[i]
-	ev := CorpsEvent{Corps: i, Enemy: -1, Captured: -1, Relocated: capital.None}
+	ev := CorpsEvent{Corps: i, Enemy: -1, Captured: -1,
+		Relocated: capital.None, GovernorReturned: noGovernor}
 
 	// ① 移動的節拍。原版先減再判斷：間隔 N 表示每 N 個 tick 走一步。
 	c.Timer--
@@ -815,6 +820,34 @@ func (w *World) corpsPerishes(ev *CorpsEvent, i, winner int, rng combat.Rand) {
 	ev.Fate[i] = fate
 }
 
+// noGovernor 是「這個據點沒有派駐內政官」。原版的哨兵是 0xFF，
+// 而 remake 的事件層用 −1——**兩個都不是 0**，因為 0 是合法的武將編號
+// （`CLAUDE.md` §7 第 11 條）。
+const noGovernor = -1
+
+// returnGovernor 是 `sub_14D63`：據點易主時把派駐的內政官遣回。
+// 回傳被遣回的武將編號，沒有內政官就回 `noGovernor`。
+//
+// 只動兩個欄位：據點的內政官槽清成 0xFF、那名武將的「出陣中」歸零。
+// **不降職、不處分**——原版就只有這兩行。
+func (w *World) returnGovernor(node int) int {
+	if node < 0 || node >= len(w.Cities) {
+		return noGovernor
+	}
+	city := &w.Cities[node]
+	id := city.Governor
+	if id < 0 || id >= len(w.Generals) {
+		return noGovernor
+	}
+	city.Governor = noGovernorSlot
+	w.Generals[id].Posted = false
+	return id
+}
+
+// noGovernorSlot 是據點記錄 `+0x19` 的哨兵（原版寫 `0xFF`）。
+// 存檔要 byte-for-byte 寫得回去，所以這裡存的是原始值不是 −1。
+const noGovernorSlot = 0xFF
+
 // capture 把據點換手（`sub_14CF3`）。
 func (w *World) capture(att int, ev *CorpsEvent, rng combat.Rand) {
 	node := w.Corps[att].Node
@@ -836,6 +869,11 @@ func (w *World) capture(att int, ev *CorpsEvent, rng combat.Rand) {
 	city.Owner = next
 	city.OwnerRecorded = next
 	ev.Captured = node
+	// 換旗之後第一件事是把派駐的內政官遣回（`sub_14D63`，docs/spec/48）。
+	// **舊主是無主時整段跳過**（原版 `cmp bh, 18h / jz`）。
+	if old != combat.NeutralFaction {
+		ev.GovernorReturned = w.returnGovernor(node)
+	}
 	// 原版的順序是**遷都 → 調頭 → 滅亡判定 → 新主據點數 +1**
 	// （`sub_14CF3` 逐行）。調頭排在遷都之後不是細節——
 	// `sub_1487B` 找的是**新首都**的方向。

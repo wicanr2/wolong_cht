@@ -87,7 +87,8 @@
 | 進言的原文 | [`44-advise-original-text.md`](44-advise-original-text.md) | 三個指令 × 64 則全部改查 `TALK.DAT` |
 | 進言的畫面 | [`45-advise-scene-layout.md`](45-advise-scene-layout.md) | 插圖 ＋ 兩個框 ＋ 五列選單已實作並留下截圖 |
 | 戰後退一站回家 | [`46-post-battle-retreat.md`](46-post-battle-retreat.md) | 已實作並有單測 |
-| 據點易主之後守軍調頭 | [`47-city-fall-corps-redirect.md`](47-city-fall-corps-redirect.md) | 已實作並有單測；內政官歸來（`sub_14D63`）未接 |
+| 據點易主之後守軍調頭 | [`47-city-fall-corps-redirect.md`](47-city-fall-corps-redirect.md) | 已實作並有單測 |
+| 據點被攻陷時內政官被遣回 | [`48-governor-returns-on-city-fall.md`](48-governor-returns-on-city-fall.md) | 已實作並有單測，兩則訊息也接了 |
 | 同狀態畫面對拍 | [`90-same-state-parity.md`](90-same-state-parity.md) | 橫幅已對過；**四窗全開的整體對拍還沒跑** |
 
 ## 怎麼加一份
