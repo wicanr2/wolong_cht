@@ -76,6 +76,16 @@ type Corps struct {
 	// Stage 是記錄 +0x23。下完指令歸 0，選「解體」寫 11；
 	// 而求援要求 < 8，所以待解體的軍團調不動（docs/re/45 §3）。
 	Stage int
+
+	// Routing 是記錄 +0x00 的旗標 **8**：**敗走中**。
+	// 回首都的路要穿過別人的地時進這個狀態（docs/spec/43）。
+	//
+	// ⚠ 旗標 8 < 0x80，所以這支軍團**不算活著**——地圖上不畫、
+	// 勢力的軍團數已經減掉；但它還沒消失，`sub_12A7E` 每 tick 處理它。
+	Routing bool
+	// RoutTimer 是記錄 +0x03：敗走的倒數，進狀態時寫 48，
+	// 每 tick 減 1，歸零時軍團記錄歸零、主將解職。
+	RoutTimer int
 }
 
 // ⚠ **行軍路線刻意不放在 Corps 裡**，放在 `World.routes`。
@@ -109,6 +119,9 @@ func (w *World) loadCorps(b []byte) {
 			Ordered:   int(r[0x20]),
 			Delegated: r[0x00]&0x04 != 0,
 			Stage:     int(r[0x23]),
+			// 旗標 8 而且不到 0x80 ＝ 敗走中（docs/spec/43）。
+			Routing:   r[0x00] < aliveFlag && r[0x00]&0x08 != 0,
+			RoutTimer: int(r[0x03]),
 		}
 		for k := range c.Units {
 			s := r[unitSlotBase+k*unitSlotSize:]
@@ -122,8 +135,13 @@ func (w *World) saveCorps(b []byte) {
 	for i, c := range w.Corps {
 		r := b[corpsBase+i*corpsSize:]
 		if !c.Alive {
-			// 不存在的軍團**一個 byte 都不動**。原版解散時只把旗標
-			// 改成 8（`sub_12977`），其餘欄位留著；重建會抹掉那些痕跡。
+			// 敗走中的軍團要把旗標 8 與倒數寫回去，其餘欄位不動
+			// （原版 `sub_12977` 也只改這兩個，docs/spec/43）。
+			if c.Routing {
+				r[0x00] = 0x08
+				r[0x03] = byte(c.RoutTimer)
+			}
+			// 其餘不存在的軍團**一個 byte 都不動**——重建會抹掉痕跡。
 			continue
 		}
 		r[0x00] = newCorps
@@ -415,6 +433,11 @@ func (w *World) tickCorps(hour int, rng combat.Rand) []CorpsEvent {
 		i := w.corpsCursor
 		w.corpsCursor = (w.corpsCursor + 1) % numCorps
 		if !w.Corps[i].Alive {
+			// 敗走中的軍團不算活著，但還有一個倒數要跑
+			// （原版 `sub_125A3` 的 `test byte [si+2240h], 8`）。
+			if w.Corps[i].Routing {
+				w.tickRout(i)
+			}
 			continue
 		}
 		if ev := w.tickOneCorps(i, hour, rng); ev != nil {

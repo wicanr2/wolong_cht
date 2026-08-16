@@ -156,6 +156,7 @@ func (w *World) arriveDisband(i int) {
 		// 清掉並呼叫 `sub_147BB` 重查道路表（`docs/re/64` §6）。
 		// remake 的 `March` 一次算完整條路徑，重下一次就等價。
 		_ = w.March(i, capital)
+		w.routIfBlocked(i)
 		return
 	}
 	if c.Node != capital {
@@ -237,4 +238,67 @@ func (w *World) disbandCorps(i int) {
 	c.Stage = StageNormal
 	// ⑤ 大地圖佔用圖 −1：remake 的佔用是每 tick 由位置推導的，
 	// 沒有要維護的計數器（`docs/re/44` §1 記的那張表是快取）。
+}
+
+// routDuration 是敗走的倒數（原版 `sub_12977` 的 `mov byte [si+3], 30h`）。
+const routDuration = 48
+
+// returnBlocked 回報「回家的這條路要不要穿過別人的地」。
+//
+// 原版是在路徑搜尋裡算的：`loc_1491B` 每碰到一個 `+0x01` 不等於自己的
+// 據點就加 0xA6 的成本並在回傳值設高位元（`docs/re/65` §8.1）。
+// remake 的路徑一次算完，所以改成走一次算好的格子序列。
+//
+// 野外節點沒有歸屬，不算。
+func (w *World) returnBlocked(i int) bool {
+	c := &w.Corps[i]
+	for _, cell := range w.routes[i] {
+		n := w.cityAt(cell[0], cell[1])
+		if n < 0 || n >= len(w.Cities) {
+			continue
+		}
+		if w.Cities[n].Owner != c.Faction {
+			return true
+		}
+	}
+	return false
+}
+
+// routCorps 讓一支軍團進入敗走（原版 `sub_12977`）。
+//
+// ⚠ **兵員不回預備兵池**——這是它與解體最大的差別。
+// 解體是回收，敗走是損失（`docs/spec/43` §1）。
+func (w *World) routCorps(i int) {
+	c := &w.Corps[i]
+	if !c.Alive {
+		return
+	}
+	c.Alive, c.Routing, c.RoutTimer = false, true, routDuration
+	if c.Faction >= 0 && c.Faction < numFactions {
+		if f := &w.Factions[c.Faction]; f.Corps > 0 {
+			f.Corps--
+		}
+	}
+}
+
+// tickRout 是 `sub_12A7E`：倒數歸零才真的清乾淨。
+func (w *World) tickRout(i int) {
+	c := &w.Corps[i]
+	if c.RoutTimer > 0 {
+		c.RoutTimer--
+	}
+	if c.RoutTimer > 0 {
+		return
+	}
+	c.Routing = false
+	c.Stage = StageNormal
+	if i < 0 || i >= len(w.Generals) {
+		return
+	}
+	g := &w.Generals[i]
+	g.Posted = false // 主將 +0x17 職務 ＝ 無職
+	// 原勢力已經滅了就變成在野武將（原版寫 +0x1C = 0xFF）。
+	if g.Faction >= 0 && g.Faction < numFactions && !w.Factions[g.Faction].Alive {
+		g.Faction = noFaction
+	}
 }

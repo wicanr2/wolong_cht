@@ -264,3 +264,122 @@ func pickTwoCities(w *World, skip int) (int, int) {
 	}
 	return got[0], got[1]
 }
+
+// 敗走：倒數歸零之後軍團才真的消失，主將回到無職（docs/spec/43）。
+func TestRoutedCorpsDisappearsAfterTimer(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[1]
+	node := w.clampCity(w.Factions[f].Capital)
+	i := aiCorps(t, w, f, node)
+	before := w.Factions[f].Corps
+
+	w.routCorps(i)
+	if w.Corps[i].Alive {
+		t.Error("敗走中的軍團不該算活著")
+	}
+	if !w.Corps[i].Routing || w.Corps[i].RoutTimer != routDuration {
+		t.Fatalf("敗走狀態 = %v／%d，want true／%d",
+			w.Corps[i].Routing, w.Corps[i].RoutTimer, routDuration)
+	}
+	if w.Factions[f].Corps != before-1 {
+		t.Errorf("勢力軍團數 = %d，want %d", w.Factions[f].Corps, before-1)
+	}
+	if !w.Generals[i].Posted {
+		t.Error("倒數還沒歸零，主將不該解職")
+	}
+
+	for n := 0; n < routDuration; n++ {
+		w.tickRout(i)
+	}
+	if w.Corps[i].Routing {
+		t.Error("倒數歸零之後還在敗走狀態")
+	}
+	if w.Generals[i].Posted {
+		t.Error("倒數歸零之後主將沒解職")
+	}
+}
+
+// 敗走**不回收兵員**——這是它與解體最大的差別。
+func TestRoutLosesTheMen(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[1]
+	node := w.clampCity(w.Factions[f].Capital)
+	i := aiCorps(t, w, f, node)
+	pool := w.Factions[f].Reserves
+
+	w.routCorps(i)
+	if w.Factions[f].Reserves != pool {
+		t.Errorf("敗走之後預備兵變成 %v，原本 %v——兵不該回池",
+			w.Factions[f].Reserves, pool)
+	}
+	if w.Corps[i].Men == 0 {
+		t.Error("敗走不該把六槽清空，原版只改旗標與倒數")
+	}
+}
+
+// 旗標 8 與倒數要寫得回存檔（原版 `sub_12977` 只改這兩個 byte）。
+func TestRoutingSurvivesSaveRoundTrip(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[1]
+	node := w.clampCity(w.Factions[f].Capital)
+	i := aiCorps(t, w, f, node)
+	w.routCorps(i)
+	w.Corps[i].RoutTimer = 17
+
+	raw := make([]byte, corpsBase+numCorps*corpsSize)
+	w.saveCorps(raw)
+	r := raw[corpsBase+i*corpsSize:]
+	if r[0x00] != 0x08 || r[0x03] != 17 {
+		t.Fatalf("寫回去的旗標／倒數 = %#x／%d，want 0x08／17", r[0x00], r[0x03])
+	}
+
+	var back World
+	back.loadCorps(raw)
+	if !back.Corps[i].Routing || back.Corps[i].RoutTimer != 17 {
+		t.Errorf("讀回來 = %v／%d，want true／17",
+			back.Corps[i].Routing, back.Corps[i].RoutTimer)
+	}
+	if back.Corps[i].Alive {
+		t.Error("旗標 8 不到 0x80，不該算活著")
+	}
+}
+
+// 回家的路穿過別人的地 → 敗走；全是自己的地 → 不敗走（docs/spec/43 §1）。
+//
+// ⚠ 這一條**只有掛了道路圖才會生效**：`returnBlocked` 走的是
+// `w.routes[i]`，而 `wlsim` 沒有 `SetRoads`，路徑永遠是空的。
+func TestReturnBlockedNeedsForeignCityOnTheRoute(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[1]
+	node := w.clampCity(w.Factions[f].Capital)
+	i := aiCorps(t, w, f, node)
+
+	// 自己的地就用首都；另外找一個別人的據點。
+	own, foreign := node, -1
+	for n := range w.Cities {
+		if w.Cities[n].Owner != f {
+			foreign = n
+			break
+		}
+	}
+	if foreign < 0 {
+		t.Skip("這個劇本裡沒有別人的據點")
+	}
+
+	w.routes[i] = [][2]int{{w.Cities[own].X, w.Cities[own].Y}}
+	if w.returnBlocked(i) {
+		t.Error("整條路都是自己的地，不該算被擋")
+	}
+	w.routes[i] = [][2]int{
+		{w.Cities[own].X, w.Cities[own].Y},
+		{w.Cities[foreign].X, w.Cities[foreign].Y},
+	}
+	if !w.returnBlocked(i) {
+		t.Fatal("路上有別人的據點，應該算被擋")
+	}
+
+	w.routIfBlocked(i)
+	if !w.Corps[i].Routing {
+		t.Error("被擋住之後沒有進敗走狀態")
+	}
+}

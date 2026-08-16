@@ -155,10 +155,22 @@ func (w *World) headHomeResupply(i int) {
 	capital := w.clampCity(w.Factions[c.Faction].Capital)
 	if c.Ordered != capital {
 		_ = w.March(i, capital)
+		w.routIfBlocked(i)
 		return
 	}
 	if c.Node == capital {
 		c.Stage = StageResupply
+	}
+}
+
+// routIfBlocked 是 `sub_147BB` 的 `0x8000` 分支（`docs/spec/43`）：
+// **回家的路要穿過別人的地，這支軍團就敗走。**
+//
+// ⚠ 條件裡的 `Stage ≥ 10` 由呼叫端保證——只有 `headHomeResupply`
+// 與 `arriveDisband` 會叫它，那兩支正是 Stage 10 與 11。
+func (w *World) routIfBlocked(i int) {
+	if w.Corps[i].Alive && w.returnBlocked(i) {
+		w.routCorps(i)
 	}
 }
 
