@@ -446,10 +446,15 @@ func (g *game) openCorpsListWith(rows []int, hint string, pick func(int) bool) {
 		listRowsPerPage, &g.sortMem)
 	g.listTitle = listFamilyCorps.Title
 	g.listRow = g.listRowCorps
-	// 士氣 < 100 換色：再戰必壞滅（docs/re/27 §2、docs/re/09 §4.4）。
+	// 兩條換色（docs/re/27 §5）：**總兵數 < 300 點**（＝ 3,000 人，半編）
+	// 與**士氣 < 100**。兩者都是「值得注意」不是錯誤。
 	g.listCellInk = func(id, col int) (color.RGBA, bool) {
-		if col == 2 && g.world.Corps[id].Morale < 100 {
-			return color.RGBA{200, 60, 40, 255}, true
+		c := g.world.Corps[id]
+		switch {
+		case col == 1 && c.Men < corpsHalfStrength:
+			return listWarnInk, true
+		case col == 2 && c.Morale < 100:
+			return listWarnInk, true
 		}
 		return color.RGBA{}, false
 	}

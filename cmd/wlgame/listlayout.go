@@ -2,6 +2,7 @@ package main
 
 import (
 	"image"
+	"image/color"
 	"strings"
 
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
@@ -108,6 +109,9 @@ var (
 type listField struct {
 	X, W    int
 	Numeric bool
+	// NoDash 標記「這一欄在空列不印破折號」——軍團表最右端那個
+	// 無標題的委任格就是這樣（原版實錄影格上空列只有五組破折號）。
+	NoDash bool
 }
 
 // fields 把分隔線切成欄。**欄數要與標題的欄位個數相同**，
@@ -148,7 +152,7 @@ func (f listFamily) fields() []listField {
 	if f.Extra > 0 {
 		// 無標題欄接在分隔線右邊，中間空一個全形字。
 		x += textdraw.GlyphW
-		out = append(out, listField{X: x, W: f.Extra * textdraw.GlyphW})
+		out = append(out, listField{X: x, W: f.Extra * textdraw.GlyphW, NoDash: true})
 	}
 	return out
 }
@@ -173,6 +177,14 @@ func listFieldRight(fields []listField, col int) int {
 	}
 	return listBodyX() + listTextInset + fields[col].X + fields[col].W
 }
+
+// listWarnInk 是換色用的前景色。原版把屬性的低 4 位由 0 改成 A
+// （`bh = 0x9A`，docs/re/27 §5），這裡用一個接近的紅。
+var listWarnInk = color.RGBA{200, 60, 40, 255}
+
+// corpsHalfStrength 是「總兵數換色」的門檻：原版 `< 0x12C` ＝ 300 點
+// ＝ 3,000 人（半編）。
+const corpsHalfStrength = 300
 
 // listRankNames 是身分名稱表（docs/re/26 §9，段內 0x75A4）。
 // **松崗版用「俘虜」不是日文的「捕虜」。**
@@ -199,6 +211,22 @@ func listDiplomacyLevel(raw int, atWar bool) int {
 		v = 99
 	}
 	return v/20 + 1
+}
+
+// listDashes 是**沒有資料的那一列**在這一欄要印的東西：分隔線本身。
+// 全形欄印 `－`、半形欄印 `-`，數量照欄寬（docs/spec/38 §1.4）。
+func listDashes(f listField) string {
+	if f.NoDash {
+		return ""
+	}
+	if f.Numeric {
+		return strings.Repeat("-", f.W/textdraw.HalfW)
+	}
+	n := f.W / textdraw.GlyphW
+	if n <= 0 {
+		return ""
+	}
+	return strings.Repeat("－", n)
 }
 
 // listBlank 是空欄要印的東西（原版印同寬的全形空白）。

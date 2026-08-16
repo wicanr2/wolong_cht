@@ -327,13 +327,20 @@ func (g *game) openGeneralPicker(rows []int, hint string, pick func(int) bool) {
 	g.listPick = pick
 }
 
-// openCityPicker 開一張據點清單。
+// openCityPicker 開一張據點清單。**上昇率 0 換色**（docs/re/27 §5）。
 func (g *game) openCityPicker(rows []int, hint string, pick func(int) bool) {
 	g.list = listwin.New(listwin.Cities, g.listColumnsCities(), rows,
 		listRowsPerPage, &g.sortMem)
 	g.listTitle = listFamilyCities.Title
 	g.listRow = g.listRowCity
-	g.listCellInk = nil
+	g.listCellInk = func(id, col int) (color.RGBA, bool) {
+		// 原版比的是存值 100（存值 ＝ 實際成長 ＋ 100），remake 的
+		// `Growth` 已經是實際成長，所以門檻是 0。
+		if col == 2 && g.world.Cities[id].Growth == 0 {
+			return listWarnInk, true
+		}
+		return color.RGBA{}, false
+	}
 	g.listHint = hint
 	g.listPick = pick
 }
@@ -346,7 +353,7 @@ func (g *game) openFactionPicker(rows []int, hint string, pick func(int) bool) {
 	g.listRow = g.listRowFaction
 	g.listCellInk = func(id, col int) (color.RGBA, bool) {
 		if col == 4 && g.factionDiplomacy(id) == 0 {
-			return color.RGBA{200, 60, 40, 255}, true
+			return listWarnInk, true
 		}
 		return color.RGBA{}, false
 	}
@@ -379,6 +386,15 @@ func (g *game) drawList(screen *ebiten.Image) {
 		color.RGBA{255, 255, 255, 255})
 
 	rows, first := l.Visible()
+	// ⭐ **一頁永遠畫滿十列**：原版沒有資料的那幾列印的是分隔線那一行
+	// （全形欄印 `－`、半形欄印 `-`），不是留白。證據是 DOS/V 實錄影格
+	// 的軍團一覽——兩支軍團，下面八列全是破折號（docs/spec/38 §1.4）。
+	for i := len(rows); i < listRowsPerPage; i++ {
+		y := listRowY(i)
+		for _, f := range fields {
+			g.td.Draw(screen, listDashes(f), listBodyX()+listTextInset+f.X, y, ink)
+		}
+	}
 	for i, r := range rows {
 		y := listRowY(i)
 		if first+i == l.Cursor {
