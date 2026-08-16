@@ -155,7 +155,7 @@
 | [`docs/spec/30-victory.md`](spec/30-victory.md) | 30 — 結局：存活勢力數歸一 | READY。⭐ 觸發條件在機器碼裡是 | 2026-08-16 |
 | [`docs/spec/31-tactical-sidebar.md`](spec/31-tactical-sidebar.md) | 31 — 戰術側欄的內容組成 | READY。 | 2026-08-16 |
 | [`docs/spec/32-gate-strength-bar.md`](spec/32-gate-strength-bar.md) | 32 — 攻城的「門強度」條 | READY。 | 2026-08-16 |
-| [`docs/spec/33-squad-selection.md`](spec/33-squad-selection.md) | 33 — 底列六格是選部隊，不是第二套命令列 | READY。 | 2026-08-16 |
+| [`docs/spec/33-squad-selection.md`](spec/33-squad-selection.md) | 33 — 底列六格是選部隊，不是第二套命令列 | CONFORMED。 | 2026-08-16 |
 | [`docs/spec/34-speed-steps.md`](spec/34-speed-steps.md) | 34 — 兩個速度設定：五檔、各檔的實際節奏 | READY。 | 2026-08-16 |
 | [`docs/spec/35-strategy-minimap.md`](spec/35-strategy-minimap.md) | 35 — 縮小地圖的據點標記與視野框 | READY。 | 2026-08-16 |
 | [`docs/spec/36-ground-planes-and-climbing.md`](spec/36-ground-planes-and-climbing.md) | 36 — 兩個平面的地面圖、導航位元與登城 | CONFORMED。 | 2026-08-16 |

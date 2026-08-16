@@ -102,6 +102,9 @@ type game struct {
 	// DOS/V ICONGRF 段 1 的原版戰術指令素材；nil 時才用文字 fallback。
 	battleCommandBase   *ebiten.Image
 	battleCommandGlyphs [6]*ebiten.Image
+	// battleOrderIcons 是底列每格右半那張「目前命令」的圖示
+	// （ICONGRF 段 3 的 `碼 × 0xC0`，docs/spec/33 §1.2）。
+	battleOrderIcons [6]*ebiten.Image
 	battleSideCommands  *ebiten.Image
 	battleCommandSelect color.RGBA
 
@@ -1323,6 +1326,7 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 	g.view = nil
 	g.battleCommandBase = nil
 	g.battleCommandGlyphs = [6]*ebiten.Image{}
+	g.battleOrderIcons = [6]*ebiten.Image{}
 	g.battleSideCommands = nil
 	g.battleCommandSelect = color.RGBA{240, 0, 0, 255}
 	g.battleSideFlags = [2]*ebiten.Image{}
@@ -1372,6 +1376,15 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 			break
 		}
 		g.battleCommandGlyphs[i] = ebiten.NewImageFromImage(glyph)
+	}
+	for i := range g.battleOrderIcons {
+		icon, err := g.lib.DOSVOrderIcon(i, season)
+		if err != nil {
+			log.Printf("⚠ 取不到 DOS/V 戰術命令圖示 %d，底列只畫位置名：%v", i, err)
+			g.battleOrderIcons = [6]*ebiten.Image{}
+			break
+		}
+		g.battleOrderIcons[i] = ebiten.NewImageFromImage(icon)
 	}
 	if panel, err := g.lib.DOSVBattleSideCommands(season); err != nil {
 		log.Printf("⚠ 取不到 DOS/V 戰術右欄命令面板，改用文字 fallback：%v", err)

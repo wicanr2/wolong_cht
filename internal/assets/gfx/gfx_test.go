@@ -229,3 +229,53 @@ func TestDOSVEmptySlotIcon(t *testing.T) {
 		}
 	}
 }
+
+// TestDOSVOrderIcons 驗戰術底列那六張「目前命令」的圖示
+// （`sub_1C673` 取 `碼 × 0xC0`，段內位移從 0 起算）。
+//
+// 六張要**互不相同**——它們是六個命令的圖示，任兩張一樣就表示
+// stride 或起點算錯了。
+func TestDOSVOrderIcons(t *testing.T) {
+	raw := read(t, "ICONGRF.DAT")
+	segment := raw[IconRegions[3].Offset : IconRegions[3].Offset+IconRegions[3].Length]
+	icons := make([][]byte, DOSVOrderIconCount)
+	for i := range icons {
+		px, err := DOSVResourceIcon.DecodeAt(segment,
+			DOSVOrderIconOffset+i*DOSVOrderIconStride)
+		if err != nil {
+			t.Fatalf("命令圖示 %d：%v", i, err)
+		}
+		seen := map[byte]bool{}
+		for _, v := range px {
+			if v >= 16 {
+				t.Fatalf("命令圖示 %d 超出 4bpp：%d", i, v)
+			}
+			seen[v] = true
+		}
+		// 六張都是有內容的圖示（不像空槽那張是刻意的全黑）。
+		if len(seen) < 2 {
+			t.Errorf("命令圖示 %d 只有 %d 種顏色——位移可能落在空白區", i, len(seen))
+		}
+		icons[i] = px
+	}
+	for i := range icons {
+		for j := i + 1; j < len(icons); j++ {
+			same := true
+			for k := range icons[i] {
+				if icons[i][k] != icons[j][k] {
+					same = false
+					break
+				}
+			}
+			if same {
+				t.Errorf("命令圖示 %d 與 %d 逐像素相同", i, j)
+			}
+		}
+	}
+	// 第六張（退卻）之後接的是外框 motif（ChromeEdge），
+	// 六張 × 0xC0 ＝ 0x480 還在 0x6C0 之前，不會撞到它。
+	if DOSVOrderIconOffset+DOSVOrderIconCount*DOSVOrderIconStride > ChromeEdge {
+		t.Errorf("六張命令圖示的尾端 0x%X 撞進外框圖塊 0x%X",
+			DOSVOrderIconOffset+DOSVOrderIconCount*DOSVOrderIconStride, ChromeEdge)
+	}
+}

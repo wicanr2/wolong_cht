@@ -853,6 +853,15 @@ func (g *game) drawBattleKeys(screen *ebiten.Image, b *tactical.Battle, r battle
 			op.GeoM.Translate(float64(cell.X+battleSlotGlyphX),
 				float64(cell.Y+battleSlotGlyphY))
 			screen.DrawImage(g.battleCommandGlyphs[i], op)
+			// 格子右半是**這一隊目前的命令**（sub_1C673，docs/spec/33 §1.2）。
+			// 每隊的第一個兵是隊長，命令看它的 Cmd。
+			if code := int(side.Soldiers[squad*tactical.PerSquad].Cmd); code >= 0 &&
+				code < len(g.battleOrderIcons) && g.battleOrderIcons[code] != nil {
+				op = &ebiten.DrawImageOptions{}
+				op.GeoM.Translate(float64(cell.X+battleSlotOrderX),
+					float64(cell.Y+battleSlotOrderY))
+				screen.DrawImage(g.battleOrderIcons[code], op)
+			}
 		} else {
 			vector.StrokeRect(screen, float32(cell.X+1), float32(cell.Y+1),
 				float32(cell.W-2), float32(cell.H-2), 1,

@@ -41,6 +41,20 @@ const (
 	// 那是因為柱身在垂直方向同紋，不是有五塊不同的圖。
 	ChromeShaft = 0x0700
 
+	// DOSVOrderIconOffset 是戰術底列那六張「目前命令」圖示的起點。
+	//
+	// `sub_1C673` 從 `word_10D48` 段取 `命令碼 × 0xC0`，而 `word_10D48`
+	// 就是段 3 本身的載入段（`sub_1006B` 把檔案位移 0x9700 讀進去，
+	// `docs/re/48` §6.1），所以段內位移就是 `碼 × 0xC0`，從 0 起算。
+	//
+	// 解出來的六張與命令碼逐張相符：0 陣形（陣地）／1 攻擊（長槍）／
+	// 2 突擊（軍旗）／3 城壁（磚牆）／4 守陣（盾）／5 退卻（白旗），
+	// 這是「換算對了」的內容檢查。後面第 7–9 張是兵種圖示的**橘色版**
+	// （馬／弓／步），與 0x1BA0 的紅版、0x1EA0 的綠版同一批。
+	DOSVOrderIconOffset = 0x0000
+	DOSVOrderIconStride = 0xC0
+	DOSVOrderIconCount  = 6
+
 	// DOSVAmountPanelOffset 是 DOS/V sub_17D0D 的數值視窗圖形在
 	// ICONGRF 第 3 段的 byte offset。
 	//

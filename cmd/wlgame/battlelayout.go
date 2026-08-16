@@ -132,9 +132,11 @@ const battleBottomSlotW = 80
 
 // 底列每一格內的三樣東西（docs/spec/33 §1.2）。
 const (
-	battleSlotGlyphX = 4   // 位置名 glyph
+	battleSlotGlyphX = 4 // 位置名 glyph
 	battleSlotGlyphY = 6
-	battleSlotBarX   = 2   // 待機兵條
+	battleSlotOrderX = 54 // 目前命令的圖示（sub_1C673）
+	battleSlotOrderY = 6
+	battleSlotBarX   = 2 // 待機兵條
 	battleSlotBarY   = 396 // sub_1C74C 的 bx=0x18C
 	battleSlotBarLen = 0x4C
 	battleSlotBarH   = 2

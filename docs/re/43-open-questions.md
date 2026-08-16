@@ -19,11 +19,11 @@
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
 | 規則正確性 | 55 | 53 | 2 | 0 |
-| 資料保存 | 36 | 36 | 0 | 0 |
+| 資料保存 | 37 | 37 | 0 | 0 |
 | 程式碼理解 | 213 | 206 | 7 | 0 |
 | 驗收 | 54 | 48 | 6 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 87 | 83 | 4 | 0 |
+| 其他 | 86 | 82 | 4 | 0 |
 | **合計** | **463** | 443 | 19 | 1 |
 
 ## 2.1 規則正確性（55 條）
@@ -86,7 +86,7 @@
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 君主陣亡時軍師怎麼辦 | 未知 | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | END_S1`–`END_S4`（結局動畫？）與四個劇本的結局有關，格式還沒碰。 | （未解小節內文） | 靜態 |
 
-## 2.2 資料保存（36 條）
+## 2.2 資料保存（37 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -97,6 +97,7 @@
 | [`formats/02-brg-palette.md`](../formats/02-brg-palette.md) | 誰載入、誰選組（`docs/re/02` §7）。 | （未解小節內文） | 靜態 |
 | [`formats/02-brg-palette.md`](../formats/02-brg-palette.md) | OPENPAL` 6 組與 `ENDPAL` 12 組各自對應哪些畫面。 | （未解小節內文） | 靜態 |
 | [`formats/03-grf-images.md`](../formats/03-grf-images.md) | 3 | `0x9700` / `0x23A0` (9,120) / `sub_1006B` / 走 `sub_1F888`（**位元對齊**的繪製常式，可放在非 8 倍數的 x）。未解 | 靜態 |
+| [`formats/03-grf-images.md`](../formats/03-grf-images.md) | `0x0480` | 24×16 × 3 / 兵種圖示的**橘色版**：馬／弓／步 / 尚未找到取用端 | 靜態 |
 | [`formats/04-map-sch-container.md`](../formats/04-map-sch-container.md) | 狀態：容器格式的索引層 READY，壓縮演算法未解。 | （散句） | 靜態 |
 | [`formats/05-mmap-worldmap.md`](../formats/05-mmap-worldmap.md) | MMAP.MAP`（80,716 B）的編碼**。 | （未解小節內文） | 靜態 |
 | [`formats/05-mmap-worldmap.md`](../formats/05-mmap-worldmap.md) | MMAP.MCH` 的 256×160-byte MCH 圖塊、0xA000 metadata、事件 12 火災／暴動 | （未解小節內文） | 靜態 |
@@ -427,7 +428,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（87 條）
+## 2.6 其他（86 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -498,7 +499,6 @@
 | [`spec/32-gate-strength-bar.md`](../spec/32-gate-strength-bar.md) | 右鍵提前收掉 | 原版是熱區 `0x1D` 的右鍵 handler（`../re/60` §10）；remake 沒有戰場區的右鍵熱區層 | 靜態 |
 | [`spec/32-gate-strength-bar.md`](../spec/32-gate-strength-bar.md) | 「門強度」這三個字對城壁也照用 | 原版不分城壁與門，都用同一個標籤。照抄 | 靜態 |
 | [`spec/32-gate-strength-bar.md`](../spec/32-gate-strength-bar.md) | ⚠ **攻方只在第 24–44 幀打城壁，之後就不再打** | 上面那次量測的副產品。城壁耐久 500，撞一次掉 1，照理應該持續撞；**這像是規則層的缺口**（攻方接觸城壁後停止攻擊），但本輪沒有查，也不當結論 | 靜態 |
-| [`spec/33-squad-selection.md`](../spec/33-squad-selection.md) | 命令圖示的來源 | `sub_1C673` 讀 `word_10D48` 段的 `命令碼 × 0xC0`。`word_10D48` 是 `ICONGRF` 段 3 的載入段（`../formats/03` §5），但 `sub_100DF` 之後它被加了偏移，**實際基址要讀那一支才算數** | 靜態 |
 | [`spec/33-squad-selection.md`](../spec/33-squad-selection.md) | 待機兵條的欄位語意 | `word_1D30A:+0x09 + 4k` 在 `../re/11` §3.9 記成「第 k 隊的待機兵數」；條的上限 76 遠小於一隊 100 兵，所以開局會頂在上限 | 靜態 |
 | [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 最高速在原版實機是多少 | 機器相依。DOSBox 固定 cycles 量得到「那台的上限」，量不到「原版的答案」 | 實測 |
 | [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 戰場幀是否等於 remake 的一次 `Step()` | 原版一幀做完整條戰場迴圈；remake 的 `Step()` 是規則層一步。**兩者對齊過但沒逐項比** | 靜態 |

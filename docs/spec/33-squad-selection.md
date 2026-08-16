@@ -1,7 +1,7 @@
 # 33 — 底列六格是選部隊，不是第二套命令列
 
-**狀態：READY。** 兩張順序表、選取位元圖、下令時的取用方式與
-「沒選 ＝ 全隊」都有機器碼出處。命令圖示的來源段還沒定案（§5）。
+**狀態：CONFORMED。** 兩張順序表、選取位元圖、下令時的取用方式、
+「沒選 ＝ 全隊」與六張命令圖示都有機器碼出處，已實作並有單測。
 
 - 日期：2026-08-16
 - 出處：[`../re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) §6.2、§10
@@ -44,7 +44,7 @@
 | 東西 | 位置 | 來源 |
 |---|---|---|
 | 位置名 glyph | 格內 (4, 6)，24×16 | `ICONGRF` 段 1 `0x3900 + 螢幕格 × 0xC0` |
-| **目前命令的圖示** | 格內 (54, 6)，24×16 | `word_10D48` 段的 `命令碼 × 0xC0`（§5）|
+| **目前命令的圖示** | 格內 (54, 6)，24×16 | `ICONGRF` 段 3 的 `命令碼 × 0xC0`（§1.5）|
 | **待機兵條** | (格 X ＋ 2, 396)，長上限 `0x4C` ＝ 76，2 px 高，色 12 | `word_1D30A:+0x09 + 4×隊` |
 
 命令圖示由 `sub_1A8CC` 更新，而它開頭就是：
@@ -96,6 +96,29 @@
 內框 (X + 3, 373) – (X + 76, 391)
 ```
 
+### 1.5 ⭐ 六張命令圖示就在段 3 的最前面，而且圖畫的是什麼可以逐張核對
+
+`sub_1C673` 從 `word_10D48` 段取 `命令碼 × 0xC0`。`sub_1006B` 把 `ICONGRF`
+的檔案位移 `0x9700`（＝段 3 的起點）讀進 `word_10D48`，`sub_100DF` 只再往後
+配置 `word_10D4A = word_10D48 + 0x6C` 段等指標（[`../re/48`](../re/48-window-display-list.md) §6.1），
+**`word_10D48` 本身就是段 3 的位移 0**。所以段內位移就是 `碼 × 0xC0`。
+
+解出來的六張與命令碼**逐張相符**：
+
+| 碼 | 段 3 位移 | 圖 | 命令 |
+|---:|---|---|---|
+| 0 | `0x0000` | 紅色的陣地 | 陣形 |
+| 1 | `0x00C0` | 長槍 | 攻擊 |
+| 2 | `0x0180` | 紅黃軍旗 | 突擊 |
+| 3 | `0x0240` | 磚牆 | 城壁 |
+| 4 | `0x0300` | 盾牌 | 守陣 |
+| 5 | `0x03C0` | 白旗 | 退卻 |
+
+⭐ **這是內容檢查，不是推論**：碼 3 過去只能由「六個命令扣掉已知的四個」
+反推，磚牆那張圖把它獨立驗了一次。六張的尾端 `0x480` 落在外框 motif
+（`0x6C0`）之前，中間第 7–9 張是兵種圖示的橘色版（馬／弓／步），
+與 `0x1BA0` 的紅版、`0x1EA0` 的綠版同一批。
+
 ## 2. 演算法
 
 ```
@@ -124,14 +147,16 @@
 | 選取位元圖 | `internal/rules/tactical`：`Side.Selected`、`Battle.ToggleSquadSelection`、`Battle.TakeSquadSelection` |
 | 玩家下令 | `Battle.OrderSelected`（城壁在非攻城戰回 `false` ＝ 拒絕）|
 | 兩張順序表 | `cmd/wlgame/battlelayout.go`：`battleBottomSlotSquad`、`battleSquadSlotX` |
-| 底列繪製 | `cmd/wlgame/battle.go` `drawBattleKeys`：位置名 glyph ＋ 待機兵條 ＋ 選取框 |
+| 底列繪製 | `cmd/wlgame/battle.go` `drawBattleKeys`：位置名 glyph ＋ **命令圖示** ＋ 待機兵條 ＋ 選取框 |
+| 命令圖示 | `library.DOSVOrderIcon(碼, 季)`；圖示畫的是**該隊隊長的 `Cmd`**（每隊第一個兵）|
 | 輸入 | 底列點擊 → 切換選取；側欄面板點擊 → `battleSideCommandRowCode[列]` |
-| 差異 | **鍵盤 1–6 直接下命令**是 remake 加的（原版這一層只有滑鼠）；它一樣走 `OrderSelected`，所以選取的行為一致。命令圖示未實作（§5）|
+| 差異 | **鍵盤 1–6 直接下命令**是 remake 加的（原版這一層只有滑鼠）；它一樣走 `OrderSelected`，所以選取的行為一致 |
 
 ## 4. 驗證
 
 | 方式 | 證據 |
 |---|---|
+| 單元測試 | `TestDOSVOrderIcons`（`internal/assets/gfx`）：六張互不相同、都有內容、尾端不撞到外框圖塊 |
 | 單元測試 | `TestSquadSelectionMatchesRawBitfield`、`TestOrderSelectedRejectsScaleWallOffSiege`（`internal/rules/tactical`）；`TestBottomSlotSquadTablesAreInverse`、`TestBattleSideCommandClickUsesRowCode`（`cmd/wlgame`）|
 | 對原版 | 兩張順序表的值直接取自 `cs:0xD2E4`／`cs:0xD2EA`；畫面證據見 `docs/images/wlgame-tactical-squad-select.png` |
 
@@ -139,5 +164,4 @@
 
 | 項目 | 現況 |
 |---|---|
-| 命令圖示的來源 | `sub_1C673` 讀 `word_10D48` 段的 `命令碼 × 0xC0`。`word_10D48` 是 `ICONGRF` 段 3 的載入段（[`../formats/03`](../formats/03-grf-images.md) §5），但 `sub_100DF` 之後它被加了偏移，**實際基址要讀那一支才算數** |
 | 待機兵條的欄位語意 | `word_1D30A:+0x09 + 4k` 在 [`../re/11`](../re/11-tactical-battle.md) §3.9 記成「第 k 隊的待機兵數」；條的上限 76 遠小於一隊 100 兵，所以開局會頂在上限 |

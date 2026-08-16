@@ -279,6 +279,22 @@ func (l *Library) DOSVTroopIcon(kind, bank int) (*image.RGBA, error) {
 	return l.DOSVResourceIcon(kind, true, bank)
 }
 
+// DOSVOrderIcon 解出戰術底列每一格右半那張「目前命令」的圖示。
+//
+// code 是命令碼 0–5（陣形／攻擊／突擊／城壁／守陣／退卻），
+// 與 `tactical.Command` 同一組編碼。原版走 `sub_1C673`，
+// 位址換算與內容檢查見 `gfx.DOSVOrderIconOffset`。
+func (l *Library) DOSVOrderIcon(code, bank int) (*image.RGBA, error) {
+	if l == nil || l.Chrome == nil {
+		return nil, fmt.Errorf("ICONGRF 段 3 沒有載入")
+	}
+	if code < 0 || code >= gfx.DOSVOrderIconCount {
+		return nil, fmt.Errorf("命令碼 %d 超出 0–%d", code, gfx.DOSVOrderIconCount-1)
+	}
+	return gfx.DOSVResourceIcon.RenderRGBAAt(l.Chrome,
+		gfx.DOSVOrderIconOffset+code*gfx.DOSVOrderIconStride, l.Palette, bank)
+}
+
 // DOSVBattleCommandBase 解出 sub_1C7F4 在底列重複六次的 80×32 底板。
 func (l *Library) DOSVBattleCommandBase(bank int) (*image.RGBA, error) {
 	if l == nil || l.BattleUI == nil {
