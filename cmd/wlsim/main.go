@@ -68,6 +68,40 @@ func main() {
 
 	ticks := 0
 	for months < total {
+		// ⭐ 結局定了之後 Tick 就不再有任何副作用（`sub_11CB1` 之後
+		// 原版也離開主循環），`ev.Settled` 永遠是 false——**沒有這道
+		// 出口，月數就永遠加不上去**，迴圈會空轉到天荒地老。
+		if o := w.Outcome(); o != state.InProgress {
+			tw.Flush()
+			fmt.Printf("\n第 %d 個 tick（%d 年 %d 月 %d 日）結局定案：%v\n",
+				ticks, w.Clock.Year, w.Clock.Month, w.Clock.Day, o)
+			break
+		}
+		// 世界也會停在「等玩家決定」上，而這支程式沒有玩家。
+		// **無頭模擬一律委任**（原版遭遇選單的第二項），其餘等待
+		// 沒有自動解法，報一行就停——空轉比停下來難查得多。
+		if w.PendingEncounter() != nil {
+			w.ChooseBattleDelegate(rng)
+			continue
+		}
+		// 外交提案與撥款請求一律拒絕。**這是這支程式的政策，不是原版規則**
+		// ——長期經濟量測要的是「玩家不介入時世界怎麼走」，
+		// 拒絕是唯一不花錢、不改變勢力關係的答案。
+		if w.PendingDiplomacy() != nil {
+			w.ResolveDiplomacy(state.DiplomacyReject)
+			continue
+		}
+		if w.PendingFunding() != nil {
+			w.ResolveFunding(state.FundingReject)
+			continue
+		}
+		if blocked := blockedBy(w); blocked != "" {
+			tw.Flush()
+			fmt.Printf("\n第 %d 個 tick（%d 年 %d 月 %d 日）停在「%s」，"+
+				"這支程式沒有玩家可以回答\n",
+				ticks, w.Clock.Year, w.Clock.Month, w.Clock.Day, blocked)
+			break
+		}
 		ev := w.Tick(rng)
 		ticks++
 		// ⭐ 不變量檢查：驗的是「規則組合起來對不對」，
@@ -166,4 +200,22 @@ func big5(s string) string {
 		return "?"
 	}
 	return text.Decode([]byte(s), text.Big5)
+}
+
+// blockedBy 回報世界停在哪一種「等玩家決定」上，沒有就回空字串。
+//
+// `World.tick` 對這四種狀態一律直接回傳，所以外面看到的是
+// 「時間不走、月份不增」——**要能講出停在哪裡，否則只會看到空轉**。
+func blockedBy(w *state.World) string {
+	switch {
+	case w.PendingBattle() != nil:
+		return "戰術戰鬥"
+	case w.PendingEncounter() != nil:
+		return "遭遇選單"
+	case w.PendingDiplomacy() != nil:
+		return "外交提案"
+	case w.PendingFunding() != nil:
+		return "撥款請求"
+	}
+	return ""
 }

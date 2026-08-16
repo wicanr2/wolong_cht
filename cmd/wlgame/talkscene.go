@@ -13,24 +13,37 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
-// 事件 2／3 的畫面位置以 DOS/V `sub_13D09`／`sub_13D68` 的
-// IVENTGRF 288×176 blit 與 640×400 畫布為主；既有 PC-98 fixture 只作
-// 歷史交叉驗證，不是本輪畫面 oracle。
+// 訊息框的版面常數。**原版只有一個框**，有沒有講話的人不改變版面
+// （docs/spec/41、docs/re/66）。
+//
+//	框     sub_1895D(bx=8, dx=0Ah, cx=0510h)  ⇒ (160, 160, 256, 80)
+//	內容區 sub_10BCD 四邊各內縮 8            ⇒ (168, 168) 240×64
+//	肖像   dx×16 + 72 是右緣，64×64          ⇒ (168, 168)
+//	文字   dx×16 + 80 ／ bx×16 + 16          ⇒ (240, 176)
+//
+// 事件 2／3 的 IVENTGRF 288×176 場景（`sub_13D09`／`sub_13D68`）另計，
+// 那兩個講話位置目前只有機器碼、沒有影格覆驗。
 const (
-	talkBoxX = 24
-	talkBoxY = 80
-	talkBoxW = 232
+	talkBoxX = 160
+	talkBoxY = 160
+	talkBoxW = 256
 	talkBoxH = 80
 
-	talkPortraitX = 32
-	talkPortraitY = 88
-	talkTextX     = 80
-	talkTextY     = 96
+	talkPortraitX = 168
+	talkPortraitY = 168
+	// 文字讓開 64 px 的肖像：框內 +8 起、+72 結束，字從 +80 開始。
+	talkTextX = 240
+	talkTextY = 176
+	// 每列 10 個全形字。TALK.DAT 的原文就折在這個寬度上（825 行剛好
+	// 160 px），遊戲本身不換行。
 	talkTextWidth = 160
-	talkLinePitch = 16 // sub_18810／sub_1895D 的 CL=10h
-	// talkBoxRows 是肖像框裡放得下幾列：框高 80、上下各內縮 8、
-	// 一列 16 px ⇒ 4 列。
+	talkLinePitch = 16 // 全形字高；sub_106F9 每畫一個字前進 16 px
+	// talkBoxRows 是框裡放得下幾列：框高 80、上下各內縮 8、一列 16 px ⇒ 4 列。
 	talkBoxRows = (talkBoxH - 16) / talkLinePitch
+
+	// defaultPortraitPage 是一般通知的肖像（原版 `sub_18810` 的呼叫端
+	// 幾乎清一色 `mov al, 93h`）。KAOGRF 第 147 張。
+	defaultPortraitPage = 0x93
 
 	talkSceneX = 64
 	talkSceneY = 144

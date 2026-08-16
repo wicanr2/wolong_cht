@@ -22,13 +22,16 @@ type messageDialog struct {
 }
 
 const (
-	// messagePageRows 對齊原版 sub_18810／sub_1895D 的 CX=510h：
-	// 5 個 16 px TALK 文字列。TALK.DAT 尾端的空行是結構終止符，
-	// 不應佔掉這五列之一。
-	messagePageRows = 5
-	// 22 個全形 cell = 352 px；這個寬度與 talkdat_selftest 的 modal
-	// safety guard 對齊，並以 textdraw 的半形／全形實測寬度為準。
-	messageContentWidth = 22 * textdraw.GlyphW
+	// messagePageRows ＝ 訊息框裡放得下幾列。原版的框高 80 px、
+	// 內容區 64 px（sub_10BCD 四邊各內縮 8），一列 16 px ⇒ **4 列**。
+	// TALK.DAT 尾端的空行是結構終止符，不佔這四列之一。
+	//
+	// 原文本來就折好了：1,022 則裡只有 4 則有 5 行，而那四則全是
+	// 五選一的選單，由選單常式畫、不進這個框（docs/re/66 §6）。
+	messagePageRows = talkBoxRows
+	// 每列 10 個全形字 ＝ 160 px，出處是框右內緣減文字起點
+	// （docs/re/66 §3）。TALK.DAT 有 825 行剛好是這個寬度。
+	messageContentWidth = talkTextWidth
 )
 
 func layoutMessageLines(lines []string) []string {
@@ -236,31 +239,17 @@ func (g *game) drawMessage(screen *ebiten.Image) {
 	if !ok {
 		return
 	}
-	if d.portraitPage >= 0 {
-		g.drawLegacyTalkBox(screen, 0, 320, 256, 80,
-			lines, d.portraitPage)
-		return
+	// **原版只有一個訊息框**（docs/spec/41）：位置固定，有沒有講話的人
+	// 不改變版面。沒有指定肖像時用一般通知的那一張（KAOGRF 第 147 張）。
+	portrait := d.portraitPage
+	if portrait < 0 {
+		portrait = defaultPortraitPage
 	}
-	// 文字在 enqueue 時已依同一個 Drawer 寬度換行；視窗寬固定，避免
-	// 同一則 TALK 因頁面不同而左右跳動，也讓原生 640×400 的截圖可重播。
-	width := messageContentWidth + chrome.Tile*2 + 16
-	height := chrome.Tile*2 + (len(lines)+1)*(textdraw.GlyphH+textdraw.LineGap) + 8
-	if height < 96 {
-		height = 96
-	}
-	height = (height/chrome.Tile + 1) * chrome.Tile
-	x := (screenW - width) / 2
-	y := (screenH - height) / 2
-	g.chrome.Window(screen, x, y, width, height, chrome.Menu)
-	lineY := y + chrome.Tile + 4
-	for _, line := range lines {
-		g.td.Draw(screen, line, x+chrome.Tile+4, lineY, chrome.Paper)
-		lineY += textdraw.GlyphH + textdraw.LineGap
-	}
-	hint := "Enter／Space　繼續"
+	g.drawLegacyTalkBox(screen, talkBoxX, talkBoxY, talkBoxW, talkBoxH,
+		lines, portrait)
+	// 翻頁提示是 remake 加的：原版靠等待輸入，沒有頁碼。
 	if pages > 1 {
-		hint = fmt.Sprintf("第 %d／%d 頁　Enter／Space　繼續", d.page+1, pages)
+		g.td.Draw(screen, fmt.Sprintf("%d／%d", d.page+1, pages),
+			talkBoxX+talkBoxW-48, talkBoxY+talkBoxH-24, chrome.Paper)
 	}
-	g.td.Draw(screen, hint, x+chrome.Tile+4,
-		y+height-chrome.Tile-textdraw.GlyphH-2, chrome.Paper)
 }

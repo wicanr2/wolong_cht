@@ -10,8 +10,9 @@ import (
 )
 
 func TestMessagePagePreservesTalkHardBoundaries(t *testing.T) {
-	if messagePageRows != 5 || talkLinePitch != 16 {
-		t.Fatalf("原版 TALK page contract = rows %d／pitch %d，want 5／16", messagePageRows, talkLinePitch)
+	// 框高 80 px、上下各內縮 8、一列 16 px ⇒ 4 列（docs/spec/41 §1）。
+	if messagePageRows != 4 || talkLinePitch != 16 {
+		t.Fatalf("原版 TALK page contract = rows %d／pitch %d，want 4／16", messagePageRows, talkLinePitch)
 	}
 	lines := make([]string, messagePageRows+2)
 	for i := range lines {

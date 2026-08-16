@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 54 | 52 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
-| 程式碼理解 | 215 | 208 | 7 | 0 |
+| 程式碼理解 | 219 | 212 | 7 | 0 |
 | 驗收 | 54 | 48 | 6 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 91 | 86 | 5 | 0 |
-| **合計** | **468** | 447 | 20 | 1 |
+| 其他 | 93 | 88 | 5 | 0 |
+| **合計** | **474** | 453 | 20 | 1 |
 
 ## 2.1 規則正確性（54 條）
 
@@ -127,7 +127,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（215 條）
+## 2.3 程式碼理解（219 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -346,6 +346,10 @@
 | [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | `+0x00` 位元 1（`or byte [si], 2`） | Stage 2 改目標、Stage 10／11 校正目標、`sub_1474A` 都會設；`sub_12662` 在 `0x126A0` 讀它並清掉，接著呼叫 `sub_147BB`。**`sub_147BB` 未讀**，位元 1 疑似「路線要重算」但沒有確認 | 靜態 |
 | [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | `sub_1487B` 的挑格邏輯 | `sub_1474A`（AI 編成後的第一個目標）與 `sub_14DA4` 用它挑相鄰格；讀了外框但沒逐條解 | 靜態 |
 | [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | `sub_128F4` 的 STC 分支 | 走到敵方據點時呼叫 `sub_1291A`（俘虜／脫離判定），之後 `di` 不可信。本文件的 `di` 推論只涵蓋一般路徑 | 靜態 |
+| [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `sub_10AD9` 的 `cx = 40B0h` | 肖像繪製的尺寸／來源參數，沒逐位元解 | 靜態 |
+| [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `sub_107D2` | `sub_1075B` 在畫肖像前呼叫一次，參數是 `bx + dx×2 + 1`，未讀 | 靜態 |
+| [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `sub_189A4(al=1, dx=0, bx=2, cx=151Bh)` | `sub_13D09` 在貼完 `IVENTGRF` 之後畫的框，與 `sub_1895D` 是不是同一組單位沒驗 | 靜態 |
+| [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | 事件場景的兩個講話位置 | `sub_13C99` 傳 `dx=0, bx=5`、`sub_13CDC` 傳 `dx=8, bx=12h`，換算成 (8, 88) 與 (136, 296)，**沒有影格覆驗** | 靜態 |
 
 ## 2.4 驗收（54 條）
 
@@ -403,8 +407,8 @@
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 戰鬥指揮／委任選單 | 影片裡沒有對照影格 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 同一場戰鬥的逐格對拍 | 需要同狀態，還沒做 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 勢力一覽的欄位 | 沒有逐欄比對 | 靜態 |
-| [`playtest/32-talk-layout-fit.md`](../playtest/32-talk-layout-fit.md) | 肖像框的寬度 | remake 用 160 px，出處是 `sub_18810`／`sub_1895D` 的常數；**原版實錄影格上那個框的文字區看起來更寬**（f008 量到約 275 px）。要嘛常數讀錯、要嘛影格上那個是另一種框 | 靜態 |
 | [`playtest/32-talk-layout-fit.md`](../playtest/32-talk-layout-fit.md) | 變數的實際長度分布 | 這一輪用固定三全形替身。人名多半是 2–3 全形、地名 2–3，但**軍團名與勢力名沒有逐一量過** | 靜態 |
+| [`playtest/32-talk-layout-fit.md`](../playtest/32-talk-layout-fit.md) | 框的尺寸已經解掉**：影格上量到的 275 px 是**框**（256 px ＋ 量測誤差）， | （未解小節內文） | 靜態 |
 
 ## 2.5 外部資料（17 條）
 
@@ -428,7 +432,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（91 條）
+## 2.6 其他（93 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -520,6 +524,8 @@
 | [`spec/39-march-order-menu.md`](../spec/39-march-order-menu.md) | `sub_193E9` 的選單版面 | 只知道 `cx = 0x4Ch`；矩形與列高沒解，remake 先用既有的對話框樣式並標成差異 | 靜態 |
 | [`spec/40-ai-march-decision.md`](../spec/40-ai-march-decision.md) | `+0x00` 位元 1 | 原版改目標時會設，`sub_12662` 讀它並呼叫未讀的 `sub_147BB`。remake 直接重下一次行軍（`March`），行為等價但不是同一條路 | 靜態 |
 | [`spec/40-ai-march-decision.md`](../spec/40-ai-march-decision.md) | `sub_1487B` | AI 編成後挑第一個目標用的相鄰格選擇，未逐條解；remake 沿用既有的 `nearestFactionCity` | 靜態 |
+| [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 事件場景的兩個講話位置 | (8, 88) 與 (136, 296) 由機器碼算出，**沒有影格覆驗**（`../re/66` §8）。remake 的事件場景版面暫不動 | 靜態 |
+| [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 框的底紋 | 龍紋底紋仍未解（`../formats/03` §5.5），remake 用純色 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |
