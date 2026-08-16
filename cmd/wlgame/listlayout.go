@@ -74,6 +74,10 @@ func listScrollThumbRect(top, total int) image.Rectangle {
 type listFamily struct {
 	Title string
 	Sep   string
+	// Extra 是分隔線之後那個**無標題**欄的全形字數。
+	// 軍團表最右端有一格：委任中印「委任」，否則印兩個全形空白
+	// （docs/re/27 §2）。它不在分隔線裡，所以要另外給。
+	Extra int
 }
 
 // 四個家族（外加開局選勢力）。**「看」與「選」用同一組欄位**——
@@ -83,6 +87,7 @@ var (
 	listFamilyCorps = listFamily{
 		Title: "武將名　總兵數　士氣值 現在位置 目標據點",
 		Sep:   "－－－　 ----　　---　　－－－　 －－－",
+		Extra: 2,
 	}
 	listFamilyCities = listFamily{
 		Title: "據點名　生產力　上昇率　防災　城兵　內政官",
@@ -140,6 +145,11 @@ func (f listFamily) fields() []listField {
 		x += w
 	}
 	flush()
+	if f.Extra > 0 {
+		// 無標題欄接在分隔線右邊，中間空一個全形字。
+		x += textdraw.GlyphW
+		out = append(out, listField{X: x, W: f.Extra * textdraw.GlyphW})
+	}
 	return out
 }
 

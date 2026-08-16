@@ -170,10 +170,16 @@ func (g *game) listRowCorps(id int) []string {
 		}
 		return big5(g.world.Cities[node].Name)
 	}
+	// 最右端那一格無標題：委任中印「委任」，否則兩個全形空白
+	// （docs/re/27 §2、§7）。
+	delegated := "　　"
+	if c.Delegated {
+		delegated = "委任"
+	}
 	// 總兵數**先 ×10**（docs/re/27 §3）。
 	return []string{
 		big5(g.world.Generals[g.world.Leader(id)].Name),
 		listNum(c.Men*10, 4), listNum(c.Morale, 3),
-		name(c.Node), name(c.Ordered),
+		name(c.Node), name(c.Ordered), delegated,
 	}
 }

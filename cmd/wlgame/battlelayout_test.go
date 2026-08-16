@@ -503,7 +503,9 @@ func TestListFamilyHeadersMatchRawStrings(t *testing.T) {
 		title string
 		cols  int
 	}{
-		{listFamilyCorps, "武將名　總兵數　士氣值 現在位置 目標據點", 5},
+		// 軍團表分隔線切出 5 欄，**再加最右端那個無標題的委任格**
+		// （docs/re/27 §2）——所以 fields() 是 6 個。
+		{listFamilyCorps, "武將名　總兵數　士氣值 現在位置 目標據點", 6},
 		{listFamilyCities, "據點名　生產力　上昇率　防災　城兵　內政官", 6},
 		{listFamilyGenerals, "武將名　武術 統率 政治　　勢力　　　身分", 6},
 		{listFamilyFactions, "勢力名　武將　據點　首都　　外交　　外交官", 6},
@@ -514,6 +516,22 @@ func TestListFamilyHeadersMatchRawStrings(t *testing.T) {
 		if got := len(tc.fam.fields()); got != tc.cols {
 			t.Errorf("%q 切出 %d 欄，原版的欄數是 %d", tc.title, got, tc.cols)
 		}
+	}
+}
+
+// 軍團表最右端那個無標題欄：接在分隔線右邊、兩個全形寬（docs/re/27 §2）。
+func TestListCorpsHasDelegatedCell(t *testing.T) {
+	f := listFamilyCorps.fields()
+	last, prev := f[len(f)-1], f[len(f)-2]
+	if last.W != 32 {
+		t.Errorf("委任格寬 %d，want 32", last.W)
+	}
+	if last.X <= prev.X+prev.W {
+		t.Errorf("委任格 x=%d 沒有落在第 5 欄（x=%d w=%d）右邊",
+			last.X, prev.X, prev.W)
+	}
+	if last.Numeric {
+		t.Error("委任格是文字欄，不該靠右對齊")
 	}
 }
 
