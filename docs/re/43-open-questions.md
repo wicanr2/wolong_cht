@@ -21,10 +21,10 @@
 | 規則正確性 | 55 | 53 | 2 | 0 |
 | 資料保存 | 36 | 36 | 0 | 0 |
 | 程式碼理解 | 213 | 206 | 7 | 0 |
-| 驗收 | 57 | 51 | 6 | 0 |
+| 驗收 | 56 | 50 | 6 | 0 |
 | 外部資料 | 18 | 17 | 0 | 1 |
-| 其他 | 83 | 79 | 4 | 0 |
-| **合計** | **462** | 442 | 19 | 1 |
+| 其他 | 87 | 83 | 4 | 0 |
+| **合計** | **465** | 445 | 19 | 1 |
 
 ## 2.1 規則正確性（55 條）
 
@@ -345,7 +345,7 @@
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 命令 6 為什麼擋高平面橫移 | `[si+1Ah] == 6`，命令碼 6 是什麼沒對過 | 靜態 |
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 打壞城壁之後地面層表不更新 | `sub_1B824` 只重算通行層（`sub_1BB6D`）與佔用表，**沒有重跑 `sub_1BC39`**。而那不影響結果：城壁的地面層本來就是拿打壞後的圖塊算的（§2 的 +0x10） | 靜態 |
 
-## 2.4 驗收（57 條）
+## 2.4 驗收（56 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -390,8 +390,7 @@
 | [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 高平面的橫向移動沒有實測 | 守方站到牆頂的情境還沒跑過 | 實測 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 主畫面：視窗內部底紋 | 原版視窗內是**龍紋暗花**，remake 是純深藍 / 看得出來 / 底紋在 `ICONGRF` 段 3 附近，還沒定位 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 主畫面：大地圖地形色調 | 原版偏黃綠、remake 偏綠 / 存疑 / 可能是影片的色彩取樣。要驗就比**同一格的色號**，不要比 RGB | 靜態 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 一覽表：捲軸 | 原版左邊有 ▲▼ 捲軸；remake 用「上一頁／下一頁」文字 / 看得出來 / `../re/26` | 靜態 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 一覽表：視窗大小 | 原版的一覽視窗只佔左半，remake 是置中大視窗 / 看得出來 / 同上，矩形沒抄 | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 一覽表：捲軸 | 原版左邊有 ▲▼ 捲軸；remake 把「上一頁／下一頁」畫在視窗外 / 未對過 / 捲軸的矩形沒從機器碼解出來 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | **編成畫面** | 六個位置、兵種圖示、預備兵三欄、確定鈕都對上；**缺武將肖像**，而且原版是「一覽表 ＋ 編成面板並排」，remake 是單一對話框 / 看得出來 / `../re/30` | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 編成畫面：鍵盤提示 | remake 在面板下半塞了一整塊操作說明，原版沒有 / remake 差異 / 原版戰略層沒有鍵盤（`../re/22` §2） | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | **戰鬥指揮／委任選單** | 版面是 remake 自訂的；影片裡沒有這一格的對照 / 未對過 / 先找原版影格 | 靜態 |
@@ -430,7 +429,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（83 條）
+## 2.6 其他（87 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -443,6 +442,7 @@
 | [`spec/00-index.md`](../spec/00-index.md) | 進言「請求君主出陣」（`sub_1699E`） | `11-ai-sortie.md` / 可實作，**尚未實作** | 靜態 |
 | [`spec/00-index.md`](../spec/00-index.md) | 主畫面四個視窗的開關 | `13-main-window-toggles.md` / 已實作並留下截圖；原版執行期未驗 | 實測 |
 | [`spec/00-index.md`](../spec/00-index.md) | 底列六格是選部隊 | `33-squad-selection.md` / 已實作並有單測；命令圖示的來源段未定案 | 靜態 |
+| [`spec/00-index.md`](../spec/00-index.md) | 一覽表的欄位與版面 | `38-list-windows.md` / 四個家族照原版重做；捲軸未解 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | `sub_14194`／`sub_14269` | 內政與災害 marker 的細節在別的規格（`docs/mechanics/40`），本規格只保證呼叫順序 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 據點換手之後 `+0x00` 低 4 位會不會跟著變 | `sub_1890A` 靜態讀過，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 玩家據點求援的喇叭聲（`sub_10CDE`） | 呈現層未接 | 靜態 |
@@ -514,6 +514,9 @@
 | [`spec/37-tactical-player-controls.md`](../spec/37-tactical-player-controls.md) | 選了陣形之後原版有沒有立刻重排 | 機器碼只寫偏移，**沒有看到立刻移動的呼叫**；remake 照抄（等命令） | 靜態 |
 | [`spec/37-tactical-player-controls.md`](../spec/37-tactical-player-controls.md) | 陣形線在小地圖上的線寬與端點 | `sub_1C5AE` 沒逐行讀，remake 畫整條 1 px 的線 | 靜態 |
 | [`spec/37-tactical-player-controls.md`](../spec/37-tactical-player-controls.md) | 敵方陣形線要不要顯示 | 原版只畫側 0 那條（`word_1D33C`） | 靜態 |
+| [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 捲軸 | 原版畫面左邊有 ▲▼ 與滑塊（影片影格看得到），**矩形與行為沒有從機器碼解出來** | 靜態 |
+| [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 俘虜身分 | remake 的 `Posted` 是 bool，存不下 `+0x17` 的 0–5；俘虜狀態目前推不出來 | 靜態 |
+| [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「看」與「選」的內容差異 | 原版兩種取法的**列表內容**不同（`../re/26` §4.2），remake 只統一了欄位 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |

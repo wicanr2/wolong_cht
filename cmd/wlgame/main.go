@@ -48,7 +48,6 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
-	"github.com/wicanr2/wolong_cht/internal/rules/general"
 	"github.com/wicanr2/wolong_cht/internal/rules/march"
 	"github.com/wicanr2/wolong_cht/internal/rules/persuasion"
 	"github.com/wicanr2/wolong_cht/internal/rules/rng"
@@ -182,9 +181,15 @@ type game struct {
 	list    *listwin.List
 	sortMem listwin.Memory
 
-	// listRow 把一列資料格式化成「名稱 ＋ 右邊那串數字」。
-	// 一覽表本身只管狀態機（listwin），顯示什麼由開啟它的人決定。
-	listRow func(id int) (name, cols string)
+	// listRow 把一列資料格式化成**逐欄**的字串，欄數與該家族的欄位定義
+	// 相同（docs/spec/38）。一覽表本身只管狀態機（listwin），
+	// 顯示什麼由開啟它的人決定。
+	listRow func(id int) []string
+	// listTitle 是那一組欄位的標題字串（原版是一整條，不是逐欄拼的）。
+	listTitle string
+	// listCellInk 讓某一格換色：士氣 < 100、外交「交戰」都要換
+	// （docs/re/27 §2、§4）。回 false 就用預設墨色。
+	listCellInk func(id, col int) (color.RGBA, bool)
 	// listPick 是決定一列之後要做的事。回傳 true 表示關掉一覽表。
 	listPick func(id int) bool
 	listHint string
@@ -290,7 +295,7 @@ func (g *game) timeRuns() bool {
 	return true
 }
 
-// openGeneralList 開武將一覽。欄位與說明書 5.3 的一覽表一致。
+// openGeneralList 開武將一覽。欄位照原版的六欄（docs/spec/38 §1.2）。
 func (g *game) openGeneralList() {
 	var rows []int
 	for i, gen := range g.world.Generals {
@@ -298,27 +303,49 @@ func (g *game) openGeneralList() {
 			rows = append(rows, i)
 		}
 	}
-	gs := g.world.Generals
-	rating := func(i int) int { return gs[i].Rules().Rating() }
-	g.list = listwin.New(listwin.Generals, []listwin.Column{
-		{Title: "武將名", Less: func(a, b int) bool { return gs[a].Name < gs[b].Name }},
-		{Title: "武術", Less: func(a, b int) bool { return gs[a].Martial > gs[b].Martial }},
-		{Title: "統率", Less: func(a, b int) bool { return gs[a].Command > gs[b].Command }},
-		{Title: "政治", Less: func(a, b int) bool { return gs[a].Politics > gs[b].Politics }},
-		{Title: "評價", Less: func(a, b int) bool { return rating(a) > rating(b) }},
-	}, rows, 12, &g.sortMem)
-	g.listRow = func(i int) (string, string) {
-		gen := gs[i]
-		rr := general.General{Aptitude: gen.Aptitude, Martial: gen.Martial,
-			Command: gen.Command, Politics: gen.Politics}
-		return big5(gen.Name), fmt.Sprintf("%4d%8d%8d%8d",
-			gen.Martial, gen.Command, gen.Politics, rr.Rating())
+	g.openGeneralPicker(rows, "↑↓ 移動　Enter 選取／決定　1-6 排序　ESC 取消",
+		func(i int) bool {
+			g.lastEvent = "選擇了 " + big5(g.world.Generals[i].Name)
+			return true
+		})
+}
+
+// openGeneralPicker 開一張武將清單（看或選都用這一張，docs/re/26 §4.2）。
+func (g *game) openGeneralPicker(rows []int, hint string, pick func(int) bool) {
+	g.list = listwin.New(listwin.Generals, g.listColumnsGenerals(), rows,
+		listRowsPerPage, &g.sortMem)
+	g.listTitle = listFamilyGenerals.Title
+	g.listRow = g.listRowGeneral
+	g.listCellInk = nil
+	g.listHint = hint
+	g.listPick = pick
+}
+
+// openCityPicker 開一張據點清單。
+func (g *game) openCityPicker(rows []int, hint string, pick func(int) bool) {
+	g.list = listwin.New(listwin.Cities, g.listColumnsCities(), rows,
+		listRowsPerPage, &g.sortMem)
+	g.listTitle = listFamilyCities.Title
+	g.listRow = g.listRowCity
+	g.listCellInk = nil
+	g.listHint = hint
+	g.listPick = pick
+}
+
+// openFactionPicker 開一張勢力清單。「交戰」那一格換色（docs/re/27 §4）。
+func (g *game) openFactionPicker(rows []int, hint string, pick func(int) bool) {
+	g.list = listwin.New(listwin.Factions, g.listColumnsFactions(), rows,
+		listRowsPerPage, &g.sortMem)
+	g.listTitle = listFamilyFactions.Title
+	g.listRow = g.listRowFaction
+	g.listCellInk = func(id, col int) (color.RGBA, bool) {
+		if col == 4 && g.factionDiplomacy(id) == 0 {
+			return color.RGBA{200, 60, 40, 255}, true
+		}
+		return color.RGBA{}, false
 	}
-	g.listPick = func(i int) bool {
-		g.lastEvent = "選擇了 " + big5(gs[i].Name)
-		return true
-	}
-	g.listHint = "↑↓ 移動　Enter 選取／決定　1-5 排序　ESC 取消"
+	g.listHint = hint
+	g.listPick = pick
 }
 
 // drawList 畫一覽表。
@@ -329,40 +356,60 @@ func (g *game) openGeneralList() {
 // 這在原版的君主選擇畫面上實際看得到。
 func (g *game) drawList(screen *ebiten.Image) {
 	l := g.list
-	const x, y, w = listWindowX, listWindowY, listWindowW
-	h := listWindowHeight(l)
-	g.chrome.Window(screen, x, y, w, h, chrome.Sheet)
+	fields := listFieldsFor(l)
+	// 外框畫在客戶區**外面**：原版的 (24,88,384,176) 是內容區，
+	// 16（標題）＋ 10 × 16 剛好填滿（docs/spec/38 §1.1）。
+	g.chrome.Window(screen, listWinX-chrome.Tile, listWinY-chrome.Tile,
+		listWinW+2*chrome.Tile, listWinH+2*chrome.Tile, chrome.Sheet)
 
 	ink := chrome.Ink
-	head := color.RGBA{120, 40, 20, 255}
 	dim := color.RGBA{90, 80, 70, 255}
-	inner := x + chrome.Tile + 4
 
-	// 欄位名。數字鍵 1–5 對應排序，對應說明書「點欄位名排序」。
-	cx := inner
-	for i, c := range l.Columns {
-		g.td.Draw(screen, fmt.Sprintf("%d%s", i+1, c.Title), cx, y+chrome.Tile+2, head)
-		cx += 80
-	}
+	// 標題列是**黑底白字**（影片影格看得到），而標題本身是原版的
+	// 一整條字串（docs/re/26 §4.1），不是逐欄拼出來的。
+	vector.DrawFilledRect(screen, float32(listWinX), float32(listWinY),
+		float32(listWinW), float32(listRowH), color.RGBA{0, 0, 0, 255}, false)
+	g.td.Draw(screen, g.listTitle, listWinX+listTextInset, listWinY,
+		color.RGBA{255, 255, 255, 255})
 
 	rows, first := l.Visible()
-	ry := y + chrome.Tile + 2 + textdraw.GlyphH + 6
 	for i, r := range rows {
+		y := listRowY(i)
 		if first+i == l.Cursor {
 			hl := color.RGBA{200, 210, 170, 255}
 			if l.Phase() == listwin.Selected {
 				hl = chrome.Select // 反白：原版就是這個綠
 			}
-			vector.DrawFilledRect(screen, float32(x+chrome.Tile), float32(ry-1),
-				float32(w-2*chrome.Tile), float32(textdraw.GlyphH+2), hl, false)
+			vector.DrawFilledRect(screen, float32(listWinX), float32(y),
+				float32(listWinW), float32(listRowH), hl, false)
 		}
-		name, cols := g.listRow(r)
-		g.td.Draw(screen, name, inner, ry, ink)
-		g.td.Draw(screen, cols, inner+80, ry, ink)
-		ry += textdraw.GlyphH + 2
+		cells := g.listRow(r)
+		for col, cell := range cells {
+			if col >= len(fields) {
+				break
+			}
+			c := ink
+			if g.listCellInk != nil {
+				if got, ok := g.listCellInk(r, col); ok {
+					c = got
+				}
+			}
+			// 數字欄靠右對齊到欄的右緣，文字欄靠左（原版數字走
+			// sub_1062F 的位數對齊，文字走 loc_10701）。
+			x := listFieldX(fields, col)
+			if fields[col].Numeric {
+				x = listFieldRight(fields, col) - textdraw.StringWidth(cell)
+			}
+			g.td.Draw(screen, cell, x, y, c)
+		}
 	}
 
+	// ⚠ 頁尾那一條**原版沒有**（它用捲軸翻頁、右鍵取消，說明書 3.8）。
+	// 畫在視窗外面才不會吃掉第 10 列。
 	footerY := listFooterY(l)
+	vector.DrawFilledRect(screen, float32(listWinX-chrome.Tile), float32(footerY-2),
+		float32(listWinW+2*chrome.Tile), float32(textdraw.GlyphH+4),
+		color.RGBA{40, 30, 20, 200}, false)
 	footerLabels := [...]string{"上一頁", "下一頁", "確定", "取消"}
 	for i, label := range footerLabels {
 		r := listFooterRect(l, i)
@@ -370,7 +417,24 @@ func (g *game) drawList(screen *ebiten.Image) {
 		if (i == 2 && l.Phase() == listwin.Selected) || i == 3 {
 			col = ink
 		}
-		g.td.Draw(screen, label, r.Min.X+16, footerY, col)
+		g.td.Draw(screen, label, r.Min.X, footerY, col)
+	}
+}
+
+// listFieldsFor 取這張一覽表的欄位定義；沒設過就用武將那一組。
+func listFieldsFor(l *listwin.List) []listField {
+	if l == nil {
+		return nil
+	}
+	switch l.Kind {
+	case listwin.Cities:
+		return listFamilyCities.fields()
+	case listwin.Corps:
+		return listFamilyCorps.fields()
+	case listwin.Factions:
+		return listFamilyFactions.fields()
+	default:
+		return listFamilyGenerals.fields()
 	}
 }
 

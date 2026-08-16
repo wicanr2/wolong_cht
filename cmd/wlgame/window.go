@@ -13,56 +13,46 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 
-	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
-const (
-	listWindowX       = 98
-	listWindowY       = 82
-	listWindowW       = 448
-	listFooterButtonW = 80
-)
+const listFooterButtonW = 88
 
-// listWindowHeight、listRowRect 與 drawList 共用同一組幾何，讓滑鼠／觸控
-// 命中區不會漂離畫面上實際畫出的列。
-func listWindowHeight(l *listwin.List) int {
-	if l == nil {
-		return 0
-	}
-	return (5+(l.Height+2)*(textdraw.GlyphH+2))/chrome.Tile*chrome.Tile + 2*chrome.Tile
-}
+// 一覽表的幾何全部來自原版（docs/spec/38 §1.1）：視窗 (24,88,384,176)、
+// 一列 16 px、一頁 10 列。**滑鼠命中與繪製共用這一組**，不會漂開。
 
 func listRowRect(l *listwin.List, visible int) image.Rectangle {
 	if l == nil || visible < 0 || visible >= l.Height {
 		return image.Rectangle{}
 	}
-	const x, y, w = listWindowX, listWindowY, listWindowW
-	ry := y + chrome.Tile + 2 + textdraw.GlyphH + 6 + visible*(textdraw.GlyphH+2)
-	return image.Rect(x+chrome.Tile, ry, x+w-chrome.Tile, ry+textdraw.GlyphH+2)
+	y := listRowY(visible)
+	return image.Rect(listWinX, y, listWinX+listWinW, y+listRowH)
 }
 
-func listFooterY(l *listwin.List) int {
-	return listWindowY + listWindowHeight(l) - chrome.Tile - textdraw.GlyphH
-}
+func listFooterY(l *listwin.List) int { return listFooterStripY() }
 
 func listFooterRect(l *listwin.List, button int) image.Rectangle {
 	if l == nil || button < 0 || button > 3 {
 		return image.Rectangle{}
 	}
-	x := listWindowX + chrome.Tile + button*listFooterButtonW
+	x := listWinX + button*listFooterButtonW
 	return image.Rect(x, listFooterY(l), x+listFooterButtonW,
 		listFooterY(l)+textdraw.GlyphH+2)
 }
 
+// listHeaderRect 是點標題排序的命中區：**一欄一格**，寬度就是分隔線
+// 定義的欄寬（docs/re/26 §4.1）。
 func listHeaderRect(l *listwin.List, col int) image.Rectangle {
 	if l == nil || col < 0 || col >= len(l.Columns) {
 		return image.Rectangle{}
 	}
-	x := listWindowX + chrome.Tile + 4 + col*80
-	y := listWindowY + chrome.Tile
-	return image.Rect(x, y, x+80, y+textdraw.GlyphH+4)
+	f := listFieldsFor(l)
+	if col >= len(f) {
+		return image.Rectangle{}
+	}
+	x := listFieldX(f, col)
+	return image.Rect(x, listWinY, x+f[col].W, listWinY+listRowH)
 }
 
 func listRowAt(l *listwin.List, x, y int) (int, bool) {

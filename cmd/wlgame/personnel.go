@@ -34,10 +34,13 @@ func (g *game) openPersonnel() {
 	names := []string{"內政官任命", "內政官解任", "外交官任命", "外交官解任"}
 	rows := []int{assignGov, removeGov, assignDip, removeDip}
 
+	// 人事是**選單**不是一覽表（原版 3.2 的子選單），所以不套家族欄位。
 	g.list = listwin.New(listwin.Generals, []listwin.Column{
 		{Title: "人　事", Less: func(a, b int) bool { return a < b }},
-	}, rows, 8, &g.sortMem)
-	g.listRow = func(i int) (string, string) { return names[i], "" }
+	}, rows, listRowsPerPage, &g.sortMem)
+	g.listTitle = "人　事"
+	g.listCellInk = nil
+	g.listRow = func(i int) []string { return []string{names[i]} }
 	g.listHint = "↑↓ 移動　Enter 選取／決定　ESC 取消"
 	g.listPick = func(i int) bool {
 		switch i {
@@ -80,46 +83,17 @@ func (g *game) freeGenerals() []int {
 	return out
 }
 
-// cityList 開一張據點清單，選完呼叫 pick。
+// cityList 開一張據點清單，選完呼叫 pick。欄位照原版家族（docs/spec/38）。
 func (g *game) cityList(rows []int, hint string, pick func(int) bool) {
-	cs := g.world.Cities
-	g.list = listwin.New(listwin.Generals, []listwin.Column{
-		{Title: "據點名", Less: func(a, b int) bool { return cs[a].Name < cs[b].Name }},
-		{Title: "生產力", Less: func(a, b int) bool { return cs[a].Production > cs[b].Production }},
-		{Title: "上昇", Less: func(a, b int) bool { return cs[a].Growth > cs[b].Growth }},
-		{Title: "防災", Less: func(a, b int) bool { return cs[a].Prevention > cs[b].Prevention }},
-		{Title: "內政官", Less: func(a, b int) bool { return cs[a].Governor < cs[b].Governor }},
-	}, rows, 12, &g.sortMem)
-	g.listRow = func(i int) (string, string) {
-		c := cs[i]
-		who := "－"
-		if c.Governor >= 0 && c.Governor < len(g.world.Generals) {
-			who = big5(g.world.Generals[c.Governor].Name)
-		}
-		return big5(c.Name), fmt.Sprintf("%6d %+4d %4d  %s",
-			c.Production, c.Growth, c.Prevention, who)
-	}
-	g.listHint = hint
-	g.listPick = pick
+	g.openCityPicker(rows, hint, pick)
 }
 
-// generalList 開一張武將清單，選完呼叫 pick。
+// generalList 開一張武將清單，選完呼叫 pick。欄位照原版家族。
 func (g *game) generalList(rows []int, hint string, pick func(int) bool) {
-	gs := g.world.Generals
-	g.list = listwin.New(listwin.Generals, []listwin.Column{
-		{Title: "武將名", Less: func(a, b int) bool { return gs[a].Name < gs[b].Name }},
-		{Title: "政治", Less: func(a, b int) bool { return gs[a].Politics > gs[b].Politics }},
-		{Title: "武力", Less: func(a, b int) bool { return gs[a].Martial > gs[b].Martial }},
-		{Title: "統率", Less: func(a, b int) bool { return gs[a].Command > gs[b].Command }},
-	}, rows, 12, &g.sortMem)
-	g.listRow = func(i int) (string, string) {
-		gen := gs[i]
-		return big5(gen.Name), fmt.Sprintf("%4d %4d %4d",
-			gen.Politics, gen.Martial, gen.Command)
-	}
-	g.listHint = hint
-	g.listPick = pick
+	g.openGeneralPicker(rows, hint, pick)
 }
+
+
 
 func (g *game) pickCityForGovernor() {
 	rows := g.playerCities()
@@ -222,22 +196,7 @@ func (g *game) removeDiplomat() {
 
 // factionList 開一張勢力清單。交友度是外交官要不要派的主要依據。
 func (g *game) factionList(rows []int, hint string, pick func(int) bool) {
-	fs := g.world.Factions
-	g.list = listwin.New(listwin.Generals, []listwin.Column{
-		{Title: "勢力名", Less: func(a, b int) bool { return a < b }},
-		{Title: "據點", Less: func(a, b int) bool { return fs[a].Cities > fs[b].Cities }},
-		{Title: "武將", Less: func(a, b int) bool { return fs[a].Generals > fs[b].Generals }},
-		{Title: "外交官", Less: func(a, b int) bool { return fs[a].Diplomat < fs[b].Diplomat }},
-	}, rows, 12, &g.sortMem)
-	g.listRow = func(i int) (string, string) {
-		f := fs[i]
-		who := "－"
-		if f.Diplomat >= 0 && f.Diplomat < len(g.world.Generals) {
-			who = big5(g.world.Generals[f.Diplomat].Name)
-		}
-		return big5(g.world.LordName(i)), fmt.Sprintf("%4d %4d  %s",
-			f.Cities, f.Generals, who)
-	}
-	g.listHint = hint
-	g.listPick = pick
+	g.openFactionPicker(rows, hint, pick)
 }
+
+

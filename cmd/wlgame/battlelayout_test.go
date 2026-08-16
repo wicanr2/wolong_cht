@@ -478,3 +478,77 @@ func TestBattleFormationLineHitBoxes(t *testing.T) {
 		}
 	}
 }
+
+// 一覽視窗的幾何照原版：(24,88,384,176)、一列 16 px、一頁 10 列
+// （docs/re/26 §2，規格 docs/spec/38 §1.1）。
+func TestListWindowGeometryMatchesRaw(t *testing.T) {
+	if listWinX != 24 || listWinY != 88 || listWinW != 384 || listWinH != 176 {
+		t.Fatalf("一覽視窗 = (%d,%d,%d×%d)，原版是 (24,88,384×176)",
+			listWinX, listWinY, listWinW, listWinH)
+	}
+	if listRowH != 16 || listRowsPerPage != 10 {
+		t.Fatalf("列高 %d／一頁 %d 列，原版是 16／10", listRowH, listRowsPerPage)
+	}
+	// 第 0 列緊接在標題那一列之下。
+	if got := listRowY(0); got != listWinY+listRowH {
+		t.Errorf("第 0 列 y = %d，預期 %d", got, listWinY+listRowH)
+	}
+}
+
+// 四個家族的標題與欄數照原版（docs/re/26 §4.1）。
+func TestListFamilyHeadersMatchRawStrings(t *testing.T) {
+	for _, tc := range []struct {
+		fam   listFamily
+		title string
+		cols  int
+	}{
+		{listFamilyCorps, "武將名　總兵數　士氣值 現在位置 目標據點", 5},
+		{listFamilyCities, "據點名　生產力　上昇率　防災　城兵　內政官", 6},
+		{listFamilyGenerals, "武將名　武術 統率 政治　　勢力　　　身分", 6},
+		{listFamilyFactions, "勢力名　武將　據點　首都　　外交　　外交官", 6},
+	} {
+		if tc.fam.Title != tc.title {
+			t.Errorf("標題 = %q，原版是 %q", tc.fam.Title, tc.title)
+		}
+		if got := len(tc.fam.fields()); got != tc.cols {
+			t.Errorf("%q 切出 %d 欄，原版的欄數是 %d", tc.title, got, tc.cols)
+		}
+	}
+}
+
+// 欄的 x 與寬度是**從分隔線算出來的**，不是自己編的。
+func TestListFieldsComeFromSeparator(t *testing.T) {
+	f := listFamilyGenerals.fields()
+	// 武將名是三個全形 ＝ 48 px，從 0 開始。
+	if f[0].X != 0 || f[0].W != 48 || f[0].Numeric {
+		t.Errorf("第 0 欄 = %+v，預期 x0 w48 文字欄", f[0])
+	}
+	// 武術是兩個半形 ＝ 16 px 的數字欄。
+	if f[1].W != 16 || !f[1].Numeric {
+		t.Errorf("第 1 欄 = %+v，預期 w16 數字欄", f[1])
+	}
+	// 最後一欄不能超出視窗內緣。
+	last := f[len(f)-1]
+	if listWinX+last.X+last.W > listWinX+listWinW {
+		t.Errorf("最後一欄右緣 %d 超出視窗", last.X+last.W)
+	}
+}
+
+// 外交六級的換算照 `sub_17A7A`（docs/re/27 §4）。
+func TestListDiplomacyLevelsFollowRaw(t *testing.T) {
+	for _, tc := range []struct {
+		raw   int
+		atWar bool
+		want  int
+	}{
+		{50, true, 0}, {0, false, 1}, {19, false, 1}, {20, false, 2},
+		{59, false, 3}, {60, false, 4}, {80, false, 5}, {100, false, 5},
+		{101, false, 6},
+	} {
+		if got := listDiplomacyLevel(tc.raw, tc.atWar); got != tc.want {
+			t.Errorf("交友度 %d（交戰 %v）→ %d（%s），預期 %d（%s）",
+				tc.raw, tc.atWar, got, listDiplomacyNames[got],
+				tc.want, listDiplomacyNames[tc.want])
+		}
+	}
+}

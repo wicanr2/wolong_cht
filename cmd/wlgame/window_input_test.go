@@ -61,8 +61,8 @@ func TestListRowHitTargetsRejectMarginsAndGaps(t *testing.T) {
 		}
 	}
 	misses := []image.Point{
-		{X: listWindowX, Y: listRowRect(l, 0).Min.Y + 2},
-		{X: listWindowX + listWindowW, Y: listRowRect(l, 0).Min.Y + 2},
+		{X: listWinX - 1, Y: listRowRect(l, 0).Min.Y + 2},
+		{X: listWinX + listWinW, Y: listRowRect(l, 0).Min.Y + 2},
 		{X: listRowRect(l, 0).Min.X + 2, Y: listRowRect(l, 0).Min.Y - 1},
 		{X: listRowRect(l, 2).Min.X + 2, Y: listRowRect(l, 2).Max.Y},
 	}

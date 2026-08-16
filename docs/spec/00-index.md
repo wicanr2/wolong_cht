@@ -74,6 +74,7 @@
 | 戰術側欄的內容組成 | [`31-tactical-sidebar.md`](31-tactical-sidebar.md) | 七格已照原版實作；`▶▶` 列只畫美術不接行為 |
 | 攻城的「門強度」條 | [`32-gate-strength-bar.md`](32-gate-strength-bar.md) | 已實作並有單測；右鍵提前收掉未接 |
 | 底列六格是選部隊 | [`33-squad-selection.md`](33-squad-selection.md) | 已實作並有單測；命令圖示的來源段未定案 |
+| 一覽表的欄位與版面 | [`38-list-windows.md`](38-list-windows.md) | 四個家族照原版重做；捲軸未解 |
 | 戰術畫面的玩家操作 | [`37-tactical-player-controls.md`](37-tactical-player-controls.md) | 陣形選單與陣形線已接；說明書 4.2–4.6 的功能逐條對照過 |
 | 兩個平面的地面圖與登城 | [`36-ground-planes-and-climbing.md`](36-ground-planes-and-climbing.md) | 已實作並有單測；攻城仍打不下來，卡點換成攻方不前進 |
 | 縮小地圖的據點標記 | [`35-strategy-minimap.md`](35-strategy-minimap.md) | 已實作並有單測；22 勢力的選擇視窗用「點一下換下一個」代替 |

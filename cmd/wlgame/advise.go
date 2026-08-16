@@ -9,7 +9,6 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/rules/persuasion"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
-	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
@@ -166,19 +165,7 @@ func (g *game) openTargetList() {
 			rows = append(rows, i)
 		}
 	}
-	fs := &g.world.Factions
-	g.list = listwin.New(listwin.Factions, []listwin.Column{
-		{Title: "君主", Less: func(a, b int) bool {
-			return g.world.LordName(a) < g.world.LordName(b)
-		}},
-		{Title: "據點", Less: func(a, b int) bool { return fs[a].Cities > fs[b].Cities }},
-		{Title: "武將", Less: func(a, b int) bool { return fs[a].Generals > fs[b].Generals }},
-	}, rows, 10, &g.sortMem)
-	g.listRow = func(i int) (string, string) {
-		f := g.world.Factions[i]
-		return big5(g.world.LordName(i)), fmt.Sprintf("%4d%8d", f.Cities, f.Generals)
-	}
-	g.listHint = "↑↓ 移動　Enter 選取／決定　1-3 排序　ESC 取消"
+	g.openFactionPicker(rows, "↑↓ 移動　Enter 選取／決定　1-6 排序　ESC 取消", nil)
 }
 
 func (g *game) beginPersuasion() {

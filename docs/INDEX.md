@@ -160,11 +160,12 @@
 | [`docs/spec/35-strategy-minimap.md`](spec/35-strategy-minimap.md) | 35 — 縮小地圖的據點標記與視野框 | READY。 | 2026-08-16 |
 | [`docs/spec/36-ground-planes-and-climbing.md`](spec/36-ground-planes-and-climbing.md) | 36 — 兩個平面的地面圖、導航位元與登城 | CONFORMED。 | 2026-08-16 |
 | [`docs/spec/37-tactical-player-controls.md`](spec/37-tactical-player-controls.md) | 37 — 戰術畫面的玩家操作：陣形選單與陣形線 | CONFORMED。 | 2026-08-16 |
+| [`docs/spec/38-list-windows.md`](spec/38-list-windows.md) | 38 — 一覽表：視窗幾何、欄位與逐列格式 | CONFORMED。 | 2026-08-16 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | READY。管線的每一段都有現成工具，缺的是把它們接起來 與一支逐區差分工具。 | 2026-08-15 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 149 條。**要查「這件事解了沒」先看這裡**，
+共 150 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（79 條）
@@ -303,7 +304,7 @@
 |---|---|
 | 2.1 執行結構（已驗證） ▸ YNSOUND.COM | `docs/reference/04-first-survey.md` |
 
-### 未解（33 條）
+### 未解（34 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -335,6 +336,7 @@
 | 4. 據點記錄（32 byte） ▸ +27–+31 | `docs/formats/08-sinario-save.md` |
 | 6. 月結與季節掛在時鐘的哪裡（confirmed） ▸ 世界更新 | `docs/mechanics/15-realtime.md` |
 | 檔案 ▸ 40-economy.md | `docs/mechanics/00-index.md` |
+| 索引 ▸ 一覽表的欄位與版面 | `docs/spec/00-index.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x08 | `docs/re/08-hourly-update.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x0C | `docs/re/08-hourly-update.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x23 | `docs/re/08-hourly-update.md` |

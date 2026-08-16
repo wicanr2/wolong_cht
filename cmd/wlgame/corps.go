@@ -9,6 +9,7 @@ package main
 
 import (
 	"fmt"
+	"sort"
 	"image"
 	"image/color"
 	"strings"
@@ -51,21 +52,7 @@ func (g *game) beginForm() {
 		g.lastEvent = "沒有可以帶兵的武將"
 		return
 	}
-	gs := g.world.Generals
-	g.list = listwin.New(listwin.Generals, []listwin.Column{
-		{Title: "武將名", Less: func(a, b int) bool { return gs[a].Name < gs[b].Name }},
-		{Title: "武術", Less: func(a, b int) bool { return gs[a].Martial > gs[b].Martial }},
-		{Title: "統率", Less: func(a, b int) bool { return gs[a].Command > gs[b].Command }},
-		{Title: "攻城", Less: func(a, b int) bool { return gs[a].Aptitude[0] > gs[b].Aptitude[0] }},
-		{Title: "野戰", Less: func(a, b int) bool { return gs[a].Aptitude[1] > gs[b].Aptitude[1] }},
-	}, rows, 12, &g.sortMem)
-	g.listRow = func(i int) (string, string) {
-		gen := gs[i]
-		// 適性是**場合適性**不是兵種適性（docs/re/09 §3.3），
-		// 所以這裡的欄位名是「攻城／野戰」。
-		return big5(gen.Name), fmt.Sprintf("%4d%8d%8d%8d",
-			gen.Martial, gen.Command, gen.Aptitude[0], gen.Aptitude[1])
-	}
+	g.openGeneralPicker(rows, "選帶兵的武將　Enter 選取／決定　1-6 排序　ESC 取消", nil)
 	g.listPick = func(i int) bool {
 		g.form = formState{active: true, leader: i}
 		// 預設六槽全滿的騎馬編成——玩家再逐槽改。
@@ -316,20 +303,11 @@ func (g *game) pickDestination(corps int) {
 			rows = append(rows, i)
 		}
 	}
-	g.list = listwin.New(listwin.Cities, []listwin.Column{
-		{Title: "據點", Less: func(a, b int) bool { return cs[a].Name < cs[b].Name }},
-		{Title: "距離", Less: func(a, b int) bool { return dist(a) < dist(b) }},
-		{Title: "所屬", Less: func(a, b int) bool { return cs[a].Owner < cs[b].Owner }},
-		{Title: "城兵", Less: func(a, b int) bool { return cs[a].Garrison > cs[b].Garrison }},
-	}, rows, 12, &g.sortMem)
-	g.list.SortBy(1) // 預設照距離排，最近的在最上面
-	g.listRow = func(i int) (string, string) {
-		owner := "無主"
-		if o := cs[i].Owner; o >= 0 && o < 22 && g.world.Factions[o].Alive {
-			owner = big5(g.world.LordName(o))
-		}
-		return big5(cs[i].Name), fmt.Sprintf("%4d  %s  %4d", dist(i), owner, cs[i].Garrison)
-	}
+	// 預設照距離排：一張 192 列的表按編號排，玩家要翻半天才找得到隔壁。
+	// **原版的欄位裡沒有「距離」**（docs/re/26 §4.1），所以只排順序、
+	// 不加欄——這是 remake 的便利，不是原版行為。
+	sort.SliceStable(rows, func(a, b int) bool { return dist(rows[a]) < dist(rows[b]) })
+	g.openCityPicker(rows, "選擇目的地　Enter 選取／決定　1-6 排序　ESC 取消", nil)
 	g.listPick = func(i int) bool {
 		if err := g.world.March(corps, i); err != nil {
 			g.setEvent(err.Error())
@@ -370,23 +348,16 @@ func (g *game) openCorpsList() {
 }
 
 func (g *game) openCorpsListWith(rows []int, hint string, pick func(int) bool) {
-	cp := g.world.Corps
-	gs := g.world.Generals
-	g.list = listwin.New(listwin.Corps, []listwin.Column{
-		{Title: "大將", Less: func(a, b int) bool { return gs[a].Name < gs[b].Name }},
-		{Title: "兵力", Less: func(a, b int) bool { return cp[a].Men > cp[b].Men }},
-		{Title: "士氣", Less: func(a, b int) bool { return cp[a].Morale > cp[b].Morale }},
-		{Title: "所在", Less: func(a, b int) bool { return cp[a].Node < cp[b].Node }},
-		{Title: "目標", Less: func(a, b int) bool { return cp[a].TargetNode < cp[b].TargetNode }},
-	}, rows, 12, &g.sortMem)
-	g.listRow = func(i int) (string, string) {
-		c := cp[i]
-		// 一點兵力 ＝ 10 人。士氣低於 100 的軍團再戰必壞滅
-		// （docs/re/09 §4.4），所以這個數字要看得到。
-		return big5(gs[i].Name), fmt.Sprintf("%5d %4d  %s → %s",
-			c.Men*10, c.Morale,
-			big5(g.world.Cities[c.Node].Name),
-			big5(g.world.Cities[c.TargetNode].Name))
+	g.list = listwin.New(listwin.Corps, g.listColumnsCorps(), rows,
+		listRowsPerPage, &g.sortMem)
+	g.listTitle = listFamilyCorps.Title
+	g.listRow = g.listRowCorps
+	// 士氣 < 100 換色：再戰必壞滅（docs/re/27 §2、docs/re/09 §4.4）。
+	g.listCellInk = func(id, col int) (color.RGBA, bool) {
+		if col == 2 && g.world.Corps[id].Morale < 100 {
+			return color.RGBA{200, 60, 40, 255}, true
+		}
+		return color.RGBA{}, false
 	}
 	g.listPick = pick
 	g.listHint = hint
