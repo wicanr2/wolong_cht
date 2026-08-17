@@ -5,6 +5,7 @@ import (
 	"image"
 	"image/color"
 	"log"
+	"strings"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/vector"
@@ -524,14 +525,22 @@ func sysRowRect(k int) image.Rectangle {
 // **沒有音檔時顯示「未接入」而不是「關」**——那是兩件事：
 // 「關」是玩家的選擇，「未接入」是玩家還沒跑過 `tools/bgm2ogg.sh`。
 // 混成同一個字會讓缺口從畫面上消失（`docs/spec/29` §5）。
+// soundValue 是系統選單「音　效」那一格的值。
+//
+// ⭐ **字串用原版的**：`ds:6010h` 的五個選項是 ＯＦＦ／TYPE 1／2／3／4
+// （docs/re/55 §4）。remake 只有開與關，所以對到 TYPE 1 與 ＯＦＦ——
+// TYPE 1 就是 DOS/V 的 OPL3 那一組（docs/re/57）。
+//
+// ⚠ 「未接入」是 **remake 才有的狀態**（跑在沒有音訊裝置的機器上，
+// 或沒給 `-audio`）。原版永遠有 YNSOUND，所以它沒有這個選項。
 func (g *game) soundValue() string {
 	switch {
 	case !g.sound.Available():
 		return "未接入"
 	case g.sound.Enabled():
-		return "　開　"
+		return "TYPE 1"
 	default:
-		return "　關　"
+		return "ＯＦＦ"
 	}
 }
 
@@ -547,6 +556,21 @@ func (g *game) toggleSound() {
 // 原版第 1 列與第 6 列的值是清單裡就寫死的「 ＯＫ 」，中間四列由程式填。
 // remake 沿用這個形狀，把還沒接的功能寫成值——**不要因為沒做就把列拿掉**，
 // 那會讓缺口從畫面上消失。
+// sysValueLine 把設定值置中排進 48 px 的值格，**用半形空白補**。
+//
+// ⭐ 原版就是這樣排的：「 ＯＫ 」的兩個空白是**半形**（8 ＋ 16 ＋ 16 ＋ 8 ＝ 48），
+// 「 普通 」同理。用全形空白會變成 64 px，字就往右擠出去
+// （實機上量到 remake 的字比原版右 10 px，docs/playtest/39）。
+//
+// 值本身若已經滿 48 px（「１６色」「TYPE 1」）就原樣回傳。
+func sysValueLine(s string) string {
+	pad := (sysValueW - textdraw.StringWidth(s)) / 2 / textdraw.HalfW
+	if pad <= 0 {
+		return s
+	}
+	return strings.Repeat(" ", pad) + s + strings.Repeat(" ", pad)
+}
+
 func (g *game) drawSystemWindow(dst *ebiten.Image) {
 	g.chrome.Window(dst, sysWinX, sysWinY, sysWinW, sysWinH, chrome.Menu)
 	ink := g.paletteInk(strategyInkNormal, chrome.Paper)
@@ -558,8 +582,8 @@ func (g *game) drawSystemWindow(dst *ebiten.Image) {
 	// 第 2 列的兩個選項是「１６色」與「 液晶 」（原版字串表 ds:6002h，
 	// 對應 GAMEPAL 的 bank 0–3 與 4–7，docs/re/55 §4）。
 	// remake 只做了 1６色那一組，所以這一格是固定值。
-	values := [sysRows]string{"　ＯＫ　", videoModeLabels[0], g.soundValue(),
-		speedLabels[clamp(g.speed, 0, speedSteps-1)], speedLabels[clamp(g.tacticalSpeed, 0, speedSteps-1)], "　ＯＫ　"}
+	values := [sysRows]string{"ＯＫ", videoModeLabels[0], g.soundValue(),
+		speedLabels[clamp(g.speed, 0, speedSteps-1)], speedLabels[clamp(g.tacticalSpeed, 0, speedSteps-1)], "ＯＫ"}
 	for k := 0; k < sysRows; k++ {
 		dy := k * sysRowStep
 		vector.DrawFilledRect(dst, sysLabelBoxX, float32(sysLabelBoxY+dy),
@@ -574,7 +598,7 @@ func (g *game) drawSystemWindow(dst *ebiten.Image) {
 		if values[k] == "未接入" {
 			col = color.RGBA{170, 170, 170, 255}
 		}
-		g.td.Draw(dst, strategyHUDSingleLine(values[k], sysValueW), sysValueX+2, sysValueY+dy, col)
+		g.td.Draw(dst, sysValueLine(values[k]), sysValueX, sysValueY+dy, col)
 	}
 }
 

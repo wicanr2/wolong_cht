@@ -190,6 +190,7 @@ def main():
     ap.add_argument("remake", nargs="?")
     ap.add_argument("--out", help="差分圖輸出路徑")
     ap.add_argument("--selftest", action="store_true")
+    ap.add_argument("--rect", help="改比一個自訂矩形 `x,y,w,h`（單一視窗用）")
     ns = ap.parse_args()
     if ns.selftest:
         return selftest()
@@ -204,7 +205,14 @@ def main():
               % (aw, ah, bw, bh))
         return 2
 
-    stats, diff = compare(a, b, aw, ah)
+    regions = REGIONS
+    if ns.rect:
+        try:
+            rx, ry, rw, rh = (int(v) for v in ns.rect.split(","))
+        except ValueError:
+            ap.error("--rect 要四個整數 x,y,w,h")
+        regions = [("rect", rx, ry, rw, rh)]
+    stats, diff = compare(a, b, aw, ah, regions)
     print("| 區 | 不同像素 | 佔比 | 最大色差 | 判定 |")
     print("|---|---:|---:|---:|---|")
     worst = "PASS"

@@ -41,7 +41,7 @@ remake 讀原版 `SAVE.DAT` 建立狀態，之後每一輪對拍都從同一份�
 
 | 側 | 怎麼凍 |
 |---|---|
-| 原版 | 用除錯器 `execution.pause`（[`../playtest/21`](../playtest/21-dosboxx-bridge-sampling.md)），停住之後再截圖 |
+| 原版 | ⭐ **開系統選單**——它開著時遊戲時間停止（說明書 3.1），畫面也不再變（[`../playtest/39`](../playtest/39-system-window-parity.md)）。比接除錯器便宜得多。要更精細才用 `execution.pause`（[`../playtest/21`](../playtest/21-dosboxx-bridge-sampling.md)）|
 | remake | 固定亂數種子 ＋ 固定 tick 數，截圖前不再 `Tick`（`CLAUDE.md` §9）|
 
 **沒有凍結就不要對拍**——差出來的像素會混進「時間差」，

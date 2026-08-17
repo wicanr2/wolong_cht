@@ -1270,7 +1270,7 @@ func main() {
 	shot := flag.String("shot", "", "跑 N 幀之後截圖到這個路徑就結束（驗收用）")
 	shotFrames := flag.Int("shot-frames", 120, "截圖前先跑幾幀")
 	saveFile := flag.String("save-file", "", "可寫的四槽存檔 overlay 路徑；一般啟動可選讀檔")
-	openWin := flag.Int("open-window", -1, "截圖前先打開第幾個視窗（0–3；−2 ＝ 四窗全開，對拍用）")
+	openWin := flag.Int("open-window", -1, "截圖前先打開第幾個視窗（0–3；−2 ＝ 三個常駐視窗；−3 ＝ 再加系統選單。對拍用）")
 	camAt := flag.String("cam", "", "把大地圖鏡頭移到指定格 `X,Y`（對拍用；原版點過視窗開關之後鏡頭就不在開局位置了）")
 	openList := flag.Bool("open-list", false, "截圖前先開武將一覽（驗收用）")
 	openAdvise := flag.Bool("open-advise", false, "截圖前先跑到說服畫面（驗收用）")
@@ -1586,6 +1586,11 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 	// （docs/playtest/27），沒有它就沒辦法對拍。
 	if openWin == -2 {
 		g.hudSet(hudCommand|hudFaction|hudMinimap, true)
+	}
+	// −3 連系統選單一起開。原版開著它時**時間停止**，所以這一組也是
+	// 「時間凍住」那個對拍狀態（docs/spec/90 §2.1）。
+	if openWin == -3 {
+		g.hudSet(hudCommand|hudFaction|hudMinimap|hudSystem, true)
 	}
 	if camAt != "" {
 		var cx, cy int

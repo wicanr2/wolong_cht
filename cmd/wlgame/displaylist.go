@@ -60,10 +60,14 @@ func (g *game) dlBevel(dst *ebiten.Image, x, y, w, h, light, dark int) {
 	l := g.paletteInk(light, dlLightFallback)
 	d := g.paletteInk(dark, dlDarkFallback)
 	fx, fy, fw, fh := float32(x), float32(y), float32(w), float32(h)
+	// ⭐ **畫的順序決定兩個角的顏色。** 實機上量到的是
+	// **左下角亮、右上角暗**，所以四條邊要照「上、下、右、左」畫：
+	// 上先鋪、右覆蓋掉右上、下先鋪、左覆蓋掉左下。
+	// 反過來畫的話六個值格的左下角會各差兩點（docs/playtest/39）。
 	vector.DrawFilledRect(dst, fx, fy, fw, 1, l, false)      // 上
-	vector.DrawFilledRect(dst, fx, fy, 1, fh, l, false)      // 左
 	vector.DrawFilledRect(dst, fx, fy+fh-1, fw, 1, d, false) // 下
 	vector.DrawFilledRect(dst, fx+fw-1, fy, 1, fh, d, false) // 右
+	vector.DrawFilledRect(dst, fx, fy, 1, fh, l, false)      // 左
 }
 
 // dlSunken 畫一個凹槽：底色 ＋ 兩圈立體邊。
