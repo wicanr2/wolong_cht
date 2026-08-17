@@ -192,8 +192,10 @@ func (g *game) updateBattle() {
 				}
 				// 陣形線三選一（同上 §2.2）：由上而下 ＝ 敵軍側／中央／自軍側。
 				if k, ok := battleLineIndexAt(l.SideLines, x, y); ok {
-					side := g.battleSide()
-					b.Sides[side].Line = tactical.LineFor(side, 2-k)
+					// 三格改的是**玩家自己**的陣形線，所以永遠取原版
+					// 「玩家」那一組（`LineFor` 的 side 0），與玩家站
+					// 攻方還是守方無關（docs/spec/56 §1）。
+					b.Sides[g.battleSide()].Line = tactical.LineFor(0, 2-k)
 					return
 				}
 				// 側欄面板：畫面列序不是命令碼順序，要查表。

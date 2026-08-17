@@ -159,6 +159,11 @@ func (w *World) beginTactical(att, def int, m combat.Mode, garrison int) bool {
 		cityWall = w.Cities[node].Garrison
 	}
 	b := tactical.NewBattle(f, w.tactical.Forms, w.rng, cityWall)
+	// ⭐ 原版的 side 0 永遠是玩家（`sub_14E5C`／`sub_14ED7` 在玩家守方
+	// 那一支互換兩個記錄）。陣形原點與鏡射跟著玩家走，不跟攻守走。
+	if def >= 0 && def < len(w.Corps) && w.Corps[def].Faction == w.Player {
+		b.SetPlayerSide(tactical.DefenderSide)
+	}
 
 	deploy := func(side, corps int) {
 		c := w.Corps[corps]

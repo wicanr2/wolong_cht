@@ -52,6 +52,32 @@
 有方向性的圖塊要跟著鏡射，那正是 ② 那三段規則在做的事。
 ② 分三段代表圖塊表在這三個值域用了三種排列慣例，**照抄，不要合併**。
 
+### 2.1 ⭐ 翻轉的另一半：side 0 永遠是玩家
+
+翻轉不是單獨的一件事。`sub_14ED7`（攻城）與 `sub_14E5C`（野戰）在
+**玩家是守方**那一支同時做兩件：`or byte_10D35, 0C0h`（bit 7 攻守對調 ＋
+bit 6 翻轉）與互換 `word_10D2E`／`word_10D30`。互換之後
+**原版的 side 0 永遠是玩家**。
+
+而陣形原點綁的是「玩家／腳本」不是「攻方／守方」：
+
+```
+word_1D33C  玩家    初值 (X=5,  Y=32)
+word_1D33E  腳本    初值 (X=58, Y=32)
+```
+
+⭐ **兩件事合起來才說得通**：玩家永遠從 X=5 那一端出發，而**地形被轉到
+讓 X=5 落在該落的地方**——玩家攻城時 X=5 在城外，玩家守城時
+（地形轉了 180 度）X=5 就是城內。原版因此不必為兩種情形各寫一套佈陣。
+
+remake 的 `Sides[0]` 固定是攻方（城壁、突擊、優勢度都靠這個判），
+所以玩家守城時要把**陣形原點與鏡射**這兩樣換過來，其餘不動。
+
+⚠ **只做一半會讓戰鬥打不完。** 換了邊卻沒轉地形，玩家會出現在攻方的
+進場區、AI 在城裡，雙方都達不成結束條件——`TestNormalScenarioTacticalBattleTerminates`
+量到 **341 秒跑完 200,000 步仍未結束**；兩半都接上之後**0.23 秒**就打完。
+兩件事在原版是同一個 `or byte_10D35, 0C0h` 設的，拆開實作就會遇到這個。
+
 ## 3. remake 實作
 
 | 項目 | 位置 |
@@ -59,6 +85,7 @@
 | ①② 純函式 | `internal/assets/battle`：`Rotate180(cells [][]byte)`、`RotateTile(v byte)` |
 | ③ | `internal/assets/battle`：`RotateGateX(x int)` |
 | 什麼時候轉 | `internal/state`：`beginTactical` 算出「玩家是不是守方」傳給 `TacticalSetup.Field` 回呼；野戰用 `battlefield.Select` 回的 `rotate` |
+| side 0 ＝ 玩家 | `tactical.Battle.SetPlayerSide`（換陣形原點與鏡射）；`beginTactical` 在玩家守方時呼叫。三格陣形線的 UI 一律取 `LineFor(0, …)` |
 | 套用點 | `cmd/wlgame/battle.go` 的 `buildField`（規則層的地形）與 `newBattleView`（小地圖與繪圖） |
 
 **兩個套用點要用同一份轉好的格子**，否則畫面與規則層會不一致
@@ -72,11 +99,13 @@
 | 單元測試 ✅ | `TestRotate180IsInvolution`：整張轉兩次回原樣，而且**轉了跟沒轉不一樣**（正對照）|
 | 單元測試 ✅ | `TestRotateKeepsWallAndGateCounts`：214 張逐張轉，城壁與門的格數不變——這是值對映表的正對照，換錯就對不上 |
 | 對原版 ✅ | [`../playtest/40`](../playtest/40-tactical-parity.md) §4。另外攻方那一張改動前後**逐像素相同**，證明沒有動到不該轉的那一半 |
+| 迴歸 ✅ | `TestNormalScenarioTacticalBattleTerminates`：玩家守城的正常劇本戰鬥要在 200,000 步內結束。**只換邊不翻轉時它會掛**（341 秒未結束），是這一組耦合最直接的守門員 |
+| 單元測試 ✅ | `TestSetPlayerSideFollowsPlayerNotAttacker`：兩種攻守下，玩家那一側都拿 `LineFor(0,…)` 且不鏡射 |
 
 ## 5. 未解
 
 | 項目 | 現況 |
 |---|---|
 | 表頭與尾段那各 64 byte | 轉的時候原版**不動它們**（迴圈只掃 `0x40`–`0xFBF`）。內容仍未解 |
-| 兵的初始位置 | 翻轉之後雙方的佈陣點跟著換邊，還沒接。**症狀看得到**：原版玩家守城時陣形線在 X=5（`sub_199F3` 的 `word_1D33C` 初值），remake 畫在 X≈58（[`../playtest/40`](../playtest/40-tactical-parity.md) §3.2）|
+
 | 鏡頭差一個等角格 | 翻轉之後戰場區還差 (−16, −8)（`../playtest/40` §4.1）。小地圖沒有位移，所以不是翻轉中心的問題 |

@@ -1045,3 +1045,45 @@ func TestFormationAndLineChangeWhereSoldiersGather(t *testing.T) {
 		t.Errorf("換陣形之後部隊位置沒變（兩次都是 %d）", a)
 	}
 }
+
+// TestSetPlayerSideFollowsPlayerNotAttacker 釘住 docs/spec/56 §2.1：
+// **陣形原點與鏡射跟著「玩家／腳本」走，不跟「攻方／守方」走。**
+//
+// 原版在玩家守方時互換 `word_10D2E`／`word_10D30`，互換之後 side 0 永遠是
+// 玩家；而原點是 `word_1D33C`（玩家，X=5）與 `word_1D33E`（腳本，X=58）。
+// remake 的 `Sides[0]` 固定是攻方，所以玩家守城時要把這兩樣換過來。
+//
+// ⭐ 這一條擋的是「照 side 索引取值」那個很自然的寫法——它在玩家攻城時
+// 完全正確，只有玩家守城時錯，而守城的畫面平常不會拿來對拍。
+func TestSetPlayerSideFollowsPlayerNotAttacker(t *testing.T) {
+	player, script := LineFor(0, 0), LineFor(1, 0)
+	if player == script {
+		t.Fatal("玩家與腳本的陣形原點相同，這個測試沒有鑑別力")
+	}
+	for _, tc := range []struct {
+		name string
+		side int
+	}{{"玩家攻城", AttackerSide}, {"玩家守城", DefenderSide}} {
+		t.Run(tc.name, func(t *testing.T) {
+			b := NewBattle(nil, SyntheticFormations(), &fixedRand{seq: []int{1}}, 0)
+			b.SetPlayerSide(tc.side)
+			if got := b.Sides[tc.side].Line; got != player {
+				t.Errorf("玩家那一側的原點是 %d，應為 %d", got, player)
+			}
+			if got := b.Sides[1-tc.side].Line; got != script {
+				t.Errorf("腳本那一側的原點是 %d，應為 %d", got, script)
+			}
+			if b.Sides[tc.side].Mirror {
+				t.Error("玩家那一側不該鏡射")
+			}
+			if !b.Sides[1-tc.side].Mirror {
+				t.Error("腳本那一側要鏡射")
+			}
+		})
+	}
+	// 沒呼叫過就等同「玩家是攻方」——NewBattle 的預設。
+	b := NewBattle(nil, SyntheticFormations(), &fixedRand{seq: []int{1}}, 0)
+	if b.PlayerSide != AttackerSide || b.Sides[0].Line != player {
+		t.Error("預設不是「玩家在攻方」")
+	}
+}

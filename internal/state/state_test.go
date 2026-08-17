@@ -2367,8 +2367,15 @@ func TestNormalScenarioTacticalBattleTerminates(t *testing.T) {
 			if !siege || node < 0 || node >= battle.NumFields {
 				return nil
 			}
-			return tactical.NewFieldFromTiles(
-				battleLib.Tiles(node), battleLib.Heights(node), battleLib.GateX(node))
+			// ⭐ **rotate 一定要接。** 翻轉（地形）與換邊（佈陣原點）是
+			// 同一件事的兩半（docs/spec/56 §2.1）：玩家守城時原版把玩家
+			// 放在 X=5 並把地形轉 180 度，只做後者不做前者，玩家會出現在
+			// 攻方的進場區、AI 在城裡，**這場戰鬥永遠打不完**。
+			tiles, gate := battleLib.Tiles(node), battleLib.GateX(node)
+			if rotate {
+				tiles, gate = battle.Rotate180(tiles), battle.RotateGateX(gate)
+			}
+			return tactical.NewFieldFromTiles(tiles, battleLib.Heights(node), gate)
 		},
 		Script: func(node int, siege bool, tactic int) []byte {
 			if !siege {

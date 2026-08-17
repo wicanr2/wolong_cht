@@ -192,6 +192,10 @@ func computeAdvantage(mine, theirs int) Advantage {
 // Battle 是一場進行中的戰術戰鬥。
 type Battle struct {
 	Field *Field
+	// PlayerSide 是玩家在哪一側（0 攻／1 守）。**原版的 side 0 永遠是玩家**，
+	// remake 的 Sides[0] 固定是攻方，所以要另外記——見 SetPlayerSide。
+	PlayerSide int
+
 	// Sides[0] 是攻方、Sides[1] 是守方。
 	Sides [2]Side
 
@@ -321,13 +325,33 @@ func NewBattle(f *Field, forms *Formations, rng Rand, cityWall int) *Battle {
 	// 原版把兩側的陣形原點分開存（side 0 → word_1D33C，side 1 → word_1D33E），
 	// 而 side 1 是**把陣形表的 dx 取負**來鏡射（`sub_1AA2C` 的 `neg dl`），
 	// 不是把原點對稱過去。
-	b.Sides[1].Mirror = true
-	b.Sides[0].Line = LineFor(0, 0)
-	b.Sides[1].Line = LineFor(1, 0)
+	b.SetPlayerSide(AttackerSide)
 	if f != nil {
 		b.Structures = buildStructures(f.tiles, f.IsSiege(), cityWall)
 	}
 	return b
+}
+
+// SetPlayerSide 指定哪一側是玩家。**要在 Place() 之前呼叫。**
+//
+// ⭐ 原版的 side 0 **永遠是玩家**：`sub_14E5C`（野戰）與 `sub_14ED7`（攻城）
+// 在玩家是守方那一支互換 `word_10D2E`／`word_10D30` 並設 `byte_10D35` bit 7
+// （docs/re/11 §5.11、docs/re/58 §4）。而陣形原點與鏡射綁的是
+// **玩家／腳本**不是攻方／守方——`word_1D33C`（玩家）＝ X 5、
+// `word_1D33E`（腳本）＝ X 58。
+//
+// remake 的 `Sides[0]` 固定是攻方（城壁、突擊、優勢度的判定都靠這個），
+// 所以玩家守城時要把陣形原點與鏡射這兩樣換過來，其餘不動。
+//
+// 攻城時戰場另外會轉 180 度（docs/spec/56），兩件事合起來才對得上原版：
+// 玩家永遠從 X=5 那一端出發，而地形被轉到讓 X=5 落在該落的地方。
+func (b *Battle) SetPlayerSide(side int) {
+	if side != DefenderSide {
+		side = AttackerSide
+	}
+	b.PlayerSide = side
+	b.Sides[side].Line, b.Sides[side].Mirror = LineFor(0, 0), false
+	b.Sides[1-side].Line, b.Sides[1-side].Mirror = LineFor(1, 0), true
 }
 
 // Deploy 把一隊放上戰場。kind 是六個編成位置的兵種，men 是各位置的兵數
