@@ -392,32 +392,42 @@ M6 的版面幾何對得上原版，但畫的內容還有缺。**
 > 接手的人得讀完才找得到下一步。查「某件事解了沒」一律先看
 > [`docs/INDEX.md`](docs/INDEX.md) 的斷言總表。
 
-#### ⭐ 接手順序（2026-08-17 更新，第四版）
+#### ⭐ 接手順序（2026-08-17 更新，第五版）
 
-**開局主畫面對完了，五區全部 PASS**（[`docs/playtest/37`](docs/playtest/37-main-screen-parity.md)）
-——五個區鋪滿整張 640×400，所以那是**256,000 個像素一個不差**。
-一開始是每一區都 99% 不同。四件以前沒量過的事在這一輪釘死：
-松崗版的白色是 `#F3F3F3`（[`docs/spec/51`](docs/spec/51-vga-dac-palette-scale.md)）、
-開局鏡頭是首都 −(16,12)、日期用原版自己的數字字模
-（[`docs/spec/52`](docs/spec/52-main-screen-camera-and-banner-date.md)）、
-據點的圖塊跟著歸屬換（[`docs/spec/53`](docs/spec/53-city-tile-by-ownership.md)、
-[`docs/re/67`](docs/re/67-city-emblem-on-strategy-map.md)）。
+**主畫面的靜態層對完了。** 開局（四窗全關）**五區全部 PASS**
+（[`docs/playtest/37`](docs/playtest/37-main-screen-parity.md)），
+三個視窗開著時**命令列／自勢力情報／縮小地圖三區也 PASS**
+（[`docs/playtest/38`](docs/playtest/38-window-parity.md)）。
+一開始是每一區都 99% 不同。這一輪釘死的東西：
 
-**對拍管線現在是可重跑的**：`tools/dosv_capture.sh`（原版）→
-`tools/parity_crop.py` → `tools/parity_shot.sh`（remake 的 640×400）→
-`tools/parity_diff.py`。分辨「位移」與「畫錯」用 `tools/parity_shift.py`
-與 `tools/parity_locate.py`；要回答「換成哪一張圖塊」用
-`tools/mdl_match.py`／`tools/mch_match.py`；看差在哪一種用 `tools/patch_zoom.py`。
+| 解出來的 | 規格 |
+|---|---|
+| 松崗版的白色是 `#F3F3F3`——DOS/V 走 VGA 的 6 bit DAC，上限 60/63 | [`spec/51`](docs/spec/51-vga-dac-palette-scale.md) |
+| 開局鏡頭是首都 −(16,12)，不是置中；日期用原版自己的數字字模 | [`spec/52`](docs/spec/52-main-screen-camera-and-banner-date.md) |
+| 據點的圖塊跟著歸屬換（自勢力 −2／他勢力 −1），首都再疊 MCH 255 | [`spec/53`](docs/spec/53-city-tile-by-ownership.md)、[`re/67`](docs/re/67-city-emblem-on-strategy-map.md) |
+| 介面顏色一律查調色盤；命令列的底是純黑，龍紋不是每個深藍視窗都有 | [`spec/54`](docs/spec/54-ui-colours-from-palette.md) |
+| 縮小地圖的視野框是點陣，⭐ 而且解掉了「鏡頭變數比看到的那一欄小 4」 | [`spec/55`](docs/spec/55-minimap-view-box.md) |
+
+**對拍管線可重跑**：`tools/dosv_capture.sh`（原版）→ `tools/parity_crop.py`
+→ `tools/parity_shot.sh`（remake 的 640×400，`-cam X,Y` 可對齊鏡頭）→
+`tools/parity_diff.py`。輔助：`parity_shift.py`／`parity_locate.py`
+（位移還是畫錯）、`mdl_match.py`／`mch_match.py`（換成哪一張圖塊）、
+`find_camera.py`（從畫面反推鏡頭）、`patch_zoom.py`（並排放大）。
+
+⚠ **點原版的主畫面要用 `click:x,y;press` 成對送**，而且進到大地圖之後
+INT 33 的範圍變成整個世界（一個主機像素 ≈ 9.6 個遊戲像素）。
+先把游標推到左上角讓座標歸零最好算（`docs/playtest/38` §1）。
 
 | # | 工作 | 為什麼現在做 | 下手點 |
 |---:|---|---|---|
-| **1** | **戰場的逐格對拍** | 同一個問題的戰術版，`docs/playtest/31` §1 記著「沒做過」。管線現在整條都有了，缺的是讓兩邊開同一張戰場 | `-open-siege -siege-node N` 對 remake，原版用存檔定位（`docs/spec/90` §2）|
-| **2** | **五個開關圖示的來源段** | 主畫面右上角那五個小圖示 remake 是自繪的，原版素材的段與位移沒定位 | `docs/re/48` 的顯示清單裡找貼圖那幾筆的來源位移 |
+| **1** | **戰場的逐格對拍** | 靜態層在戰略面已經對到底了，同一條管線該往戰術面推。`docs/playtest/31` §1 記著「沒做過」 | 難的是**讓兩邊開同一張戰場**：remake 有 `-open-siege -siege-node N`，原版要用存檔定位（`docs/spec/90` §2）。先確認原版存檔能載進 remake |
+| **2** | **系統選單視窗** | 主畫面第四個視窗，這一輪沒開。**開著時原版時間停止**，所以它同時是「靜態層」與「時間模型」的交集 | 版面已解（[`docs/re/55`](docs/re/55-system-menu-window.md)），照 §1 的點法多送一組 `click;press` 就有原版側 |
+| **3** | **五個開關圖示的來源段** | 主畫面右上角那五個小圖示 remake 是自繪的，原版素材的段與位移沒定位。橫幅那一區已經 PASS，所以**它們現在是唯一還在猜的主畫面素材** | `docs/re/48` 的顯示清單裡找貼圖那幾筆的來源位移 |
+| **4** | **那 4 格從哪裡加的** | 兩處量到 −4 都一致，規則可用了，但機器碼裡還沒找到加它的那一行。**留著會讓下一個碰到鏡頭的人重推一次** | 讀 `sub_1D66A` 的畫面起點（`es=0A0C8h` ＋ `di=0A00h`）與 `sub_1D615` 的索引（`docs/spec/55` §5）|
 
-> ⚠ **量到的贏推的。** 這一輪有一個沒解開的矛盾：`sub_12151` 的五個呼叫點
-> 都寫 `ax=14h`（20），而實機兩例都指向 16。**採用量到的 16**，
-> 並把矛盾寫進 `docs/spec/52` §4 配一個下手點（讀 `sub_1D66A` 的畫面起點），
-> 沒有把推的值寫成定論。
+> ⭐ **這一輪最有用的一招**：差異的**形狀會騙人**。整片 99% 不同可能只是
+> 調色盤刻度差 4%；「少畫了一個徽記」可能是整張圖塊換掉了。
+> 統計只回答「不一樣」，要回答「差在哪一種」得拿圖庫逐張去比。
 
 **已經不擋路的事**（不要再排進計畫）：
 
