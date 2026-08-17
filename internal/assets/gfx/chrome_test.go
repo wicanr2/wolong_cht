@@ -147,3 +147,46 @@ func TestViewBoxShape(t *testing.T) {
 		}
 	}
 }
+
+// TestBattleFrameTilesFillSegment 釘住 docs/spec/31 §1.1：側欄外框的四塊
+// （橫帶／角／左柱／右柱）在 `ICONGRF` 段 1 的最後，**四塊剛好用完整段**。
+//
+// 這一條擋的是「位移抄錯一格」：位移各差 0x40／0x40／0x80，
+// 而最後一塊的結尾必須等於段長，錯一格就對不起來。
+// 另外驗四塊都不是空的——全 0 會畫成一條黑柱，而黑柱在藍底上看起來
+// 就像「沒畫」，與真的沒畫分不出來。
+func TestBattleFrameTilesFillSegment(t *testing.T) {
+	seg := iconSegment(t, "tiles")
+	tiles := []struct {
+		name string
+		off  int
+		spec Spec
+	}{
+		{"橫帶", DOSVBattleFrameBandOffset, DOSVBattleFrameHalf},
+		{"角", DOSVBattleFrameCornerOffset, DOSVBattleFrameHalf},
+		{"左柱", DOSVBattleFrameLeftOffset, DOSVBattleFrameCell},
+		{"右柱", DOSVBattleFrameRightOffset, DOSVBattleFrameCell},
+	}
+	end := 0
+	for _, tc := range tiles {
+		idx, err := tc.spec.DecodeAt(seg, tc.off)
+		if err != nil {
+			t.Fatalf("%s 解不出來：%v", tc.name, err)
+		}
+		nonZero := 0
+		for _, v := range idx {
+			if v != 0 {
+				nonZero++
+			}
+		}
+		if nonZero == 0 {
+			t.Errorf("%s（+%#x）整塊都是索引 0", tc.name, tc.off)
+		}
+		if e := tc.off + tc.spec.FrameBytes(); e > end {
+			end = e
+		}
+	}
+	if end != len(seg) {
+		t.Errorf("四塊結束在 %#x，段長 %#x——位移或尺寸有一個抄錯了", end, len(seg))
+	}
+}

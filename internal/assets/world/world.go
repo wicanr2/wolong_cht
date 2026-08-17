@@ -27,24 +27,41 @@ const (
 	TileCount = 256
 )
 
+// MapHeader 是解壓後**開頭**那 4 byte：小端 u32，值就是地圖本體的長度
+// （`00 80 01 00` ＝ 98,304 ＝ 384×256）。
+//
+// ⭐ **它是頭不是尾。** 從 offset 0 當成圖塊讀，整張地圖會往左移四格——
+// 而那四格會以「據點中心在記錄座標 +4」「鏡頭比看到的那一欄小 4」的
+// 形式散到各處，看起來像兩個獨立的怪癖（docs/formats/05 §6）。
+const MapHeader = 4
+
 // Map 是解出來的世界地圖。
 type Map struct {
 	// Tiles 是 Height×Width 的圖塊編號，逐列排列。
 	Tiles []byte
-	// Extra 是 RLE 解出來超過 Width*Height 的尾巴。
-	// 原版的解壓器不知道目標長度，一路解到檔尾，所以會多出幾個 byte。
-	// 保留而不丟棄，是為了寫回時能還原（未解區域一個 byte 都不動）。
+	// Header 是本體前面那 4 byte（見 MapHeader）。寫回時要原樣放回去。
+	Header []byte
+	// Extra 是解出來超過「頭 ＋ 本體」的部分。原版的解壓器不知道目標長度、
+	// 一路解到檔尾，所以可能多出幾個 byte；保留而不丟棄是為了寫回。
 	Extra []byte
 }
 
 // ParseMap 解 `MMAP.MAP`（RLE 壓縮的圖塊編號表）。
 func ParseMap(data []byte) (*Map, error) {
 	raw := rle.Decode(data)
-	if len(raw) < Width*Height {
-		return nil, fmt.Errorf("world: 解壓後只有 %d B，不足 %d B（%d×%d）",
-			len(raw), Width*Height, Width, Height)
+	if len(raw) < MapHeader+Width*Height {
+		return nil, fmt.Errorf("world: 解壓後只有 %d B，不足 %d B（4 ＋ %d×%d）",
+			len(raw), MapHeader+Width*Height, Width, Height)
 	}
-	return &Map{Tiles: raw[:Width*Height], Extra: raw[Width*Height:]}, nil
+	if got := int(raw[0]) | int(raw[1])<<8 | int(raw[2])<<16 | int(raw[3])<<24; got != Width*Height {
+		return nil, fmt.Errorf("world: 開頭那 4 byte 是 %d，不是 %d——"+
+			"這一版的 MMAP.MAP 不是「長度 ＋ 本體」的排法", got, Width*Height)
+	}
+	return &Map{
+		Header: raw[:MapHeader],
+		Tiles:  raw[MapHeader : MapHeader+Width*Height],
+		Extra:  raw[MapHeader+Width*Height:],
+	}, nil
 }
 
 // Tile 取 (x, y) 的圖塊編號。

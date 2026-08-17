@@ -14,9 +14,11 @@ import (
 
 // CityCentreDX 是據點中心格相對於據點記錄座標的位移。
 //
-// ⭐ **記錄座標不是圖案中心**——中心在它右邊四格、同一列。
-// 原版 `MMAP.MAP` 的 192 座據點逐座驗過（`docs/spec/53` §5）。
-const CityCentreDX = 4
+// ⭐ **是 0：記錄座標就是中心格。** 192 座據點的記錄座標逐座落在
+// 值 205／208／211 的中心格上，零例外（`docs/spec/53` §5）。
+// 這個常數留著是因為位移曾經被算成 4——成因是 `MMAP.MAP` 解壓後
+// 開頭那 4 byte 是長度欄位（`world.MapHeader`），從 offset 0 讀會整張左移四格。
+const CityCentreDX = 0
 
 // NoOwner 是「無所屬」的勢力編號（原版 `0x18`，docs/re/62 §2）。
 const NoOwner = 0x18

@@ -9,7 +9,7 @@
 - 出處：[`../re/55`](../re/55-system-menu-window.md)（版面與四列設定值）
 - 原版側：`workplace/promo-live/parity-sys/s1-system.png`（松崗 DOS/V，196年4月9日）
 - remake 側：`tools/parity_shot.sh out.png -direct -scenario 0 -player 0
-  -seed 7 -open-window -3 -cam 4,0 -audio workplace/audio -shot-frames 1`
+  -seed 7 -open-window -3 -cam 0,0 -audio workplace/audio -shot-frames 1`
 
 ## 1. 怎麼拍到
 

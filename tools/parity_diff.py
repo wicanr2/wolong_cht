@@ -2,6 +2,7 @@
 """逐區比對原版與 remake 的畫面（規格：`docs/spec/90-same-state-parity.md`）。
 
     tools/py.sh tools/parity_diff.py 原版.png remake.png [--out 差分.png]
+    tools/py.sh tools/parity_diff.py 原版.png remake.png --regions tactical
     tools/py.sh tools/parity_diff.py --selftest
 
 分區座標出自 `docs/re/46`，是**從機器碼算出來的**不是量的——指令列的
@@ -44,6 +45,23 @@ REGIONS = [
     ("minimap", 432, 32, 208, 160),
     ("faction", 432, 192, 208, 208),
 ]
+
+# 戰場的分區（docs/spec/91 §2）。側欄七段相加 48+32+128+40+32+96+24 = 400。
+# ⭐ 側欄切成七段是為了把「圖庫解錯」與「狀態沒對上」分開：
+# sb-formation／sb-command／sb-arrow 是純美術，不隨戰況變。
+TACTICAL_REGIONS = [
+    ("field", 0, 0, 480, 368),
+    ("bottom", 0, 368, 480, 32),
+    ("sb-title", 480, 0, 160, 48),
+    ("sb-enemy", 480, 48, 160, 32),
+    ("sb-minimap", 480, 80, 160, 128),
+    ("sb-self", 480, 208, 160, 40),
+    ("sb-formation", 480, 248, 160, 32),
+    ("sb-command", 480, 280, 160, 96),
+    ("sb-arrow", 480, 376, 160, 24),
+]
+
+REGION_SETS = {"strategy": REGIONS, "tactical": TACTICAL_REGIONS}
 
 NEAR_RATIO = 0.005
 
@@ -169,18 +187,21 @@ def selftest():
     w, h = 640, 400
     base = [[((x * 7 + y * 3) % 256, (x * 5) % 256, (y * 11) % 256)
              for x in range(w)] for y in range(h)]
-    stats, _ = compare(base, base, w, h)
-    for name, n, _, _, _, verdict in stats:
-        if n != 0 or verdict != "PASS":
-            print("✗ 同一張圖比自己，%s 竟然有 %d 個不同像素" % (name, n))
-            return 1
     shifted = [row[1:] + [row[-1]] for row in base]
-    stats, _ = compare(base, shifted, w, h)
-    for name, n, _, _, _, _ in stats:
-        if n == 0:
-            print("✗ 平移 1 px 之後 %s 仍回 0——這支工具沒有真的在比" % name)
-            return 1
-    print("✓ 正對照通過：同圖每區 0、平移 1 px 每區非 0")
+    for set_name, regions in REGION_SETS.items():
+        stats, _ = compare(base, base, w, h, regions)
+        for name, n, _, _, _, verdict in stats:
+            if n != 0 or verdict != "PASS":
+                print("✗ %s：同一張圖比自己，%s 竟然有 %d 個不同像素" % (set_name, name, n))
+                return 1
+        stats, _ = compare(base, shifted, w, h, regions)
+        for name, n, _, _, _, _ in stats:
+            if n == 0:
+                print("✗ %s：平移 1 px 之後 %s 仍回 0——這支工具沒有真的在比"
+                      % (set_name, name))
+                return 1
+    print("✓ 正對照通過（%s）：同圖每區 0、平移 1 px 每區非 0"
+          % "／".join(REGION_SETS))
     return 0
 
 
@@ -191,6 +212,8 @@ def main():
     ap.add_argument("--out", help="差分圖輸出路徑")
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--rect", help="改比一個自訂矩形 `x,y,w,h`（單一視窗用）")
+    ap.add_argument("--regions", choices=sorted(REGION_SETS), default="strategy",
+                    help="分區組：strategy ＝ 主畫面五區、tactical ＝ 戰場九區")
     ns = ap.parse_args()
     if ns.selftest:
         return selftest()
@@ -205,7 +228,7 @@ def main():
               % (aw, ah, bw, bh))
         return 2
 
-    regions = REGIONS
+    regions = REGION_SETS[ns.regions]
     if ns.rect:
         try:
             rx, ry, rw, rh = (int(v) for v in ns.rect.split(","))

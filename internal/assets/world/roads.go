@@ -34,9 +34,13 @@ const (
 	nodeLo, nodeHi = 0xCB, 0xD3
 	gateLo         = 0xD4
 
-	// nodeDX 是節點格相對於據點座標的偏移。據點記錄的 X 是城圖左緣，
-	// 節點在右邊四格（191/192 個是 `+4`，剩下一個是 `−4`）。
-	nodeDX = 4
+	// nodeDX 是節點格相對於據點記錄座標的偏移：**0，據點記錄座標就是節點格**。
+	// 192 座逐座驗過（`TestRoadGraphAgainstCityRecords`）。
+	//
+	// ⚠ 這裡曾經是 4，還配了一個「有一座是 −4」的例外——那是把
+	// `MMAP.MAP` 解壓後開頭那 4 byte 長度欄位當成圖塊讀造成的整張左移
+	// （`world.MapHeader`）。修好 offset 之後例外一起消失。
+	nodeDX = 0
 )
 
 // RoadEdge 是兩個據點之間的一條路。

@@ -50,8 +50,9 @@ const (
 	strategyMinimapH       = 160
 	strategyMinimapImageH  = 128
 	strategyMinimapLegendY = strategyMinimapY + strategyMinimapImageH
-	// ⚠ 原版的鏡頭變數比畫面上看到的那一欄小 4 格（docs/spec/55 §2）。
-	minimapCamBias = 4
+	// 視野框直接照 `sub_15C58` 的 `camX/2 + 440`：鏡頭變數就是畫面上
+	// x=0 那一欄，沒有偏移（docs/spec/55 §2）。
+	minimapCamBias = 0
 	// 圖例上兩個君主名的左緣，原版數值（docs/re/62 §4.1）。
 	strategyLegendSelfX    = 480
 	strategyLegendWatchedX = 576

@@ -66,6 +66,15 @@ const (
 	DOSVBattleFlagAllyOffset   = 0x1000
 	DOSVBattleFormationOffset  = 0x0000
 	DOSVBattleSideFooterOffset = 0x3500
+
+	// 側欄外框的四塊（docs/re/60 §1.1 的 sub_1CA3B）。
+	// **柱子與橫帶是圖不是填色**——照填色畫會少掉那一整條花紋。
+	// 四個位移相差 0x40／0x40／0x80，最後一塊結束在 0x3F00 ＝ 段 1 的長度，
+	// 這是尺寸讀對了的算術檢查。
+	DOSVBattleFrameBandOffset   = 0x3D80 // 16×8，橫排 8 塊 ＝ 128 px
+	DOSVBattleFrameCornerOffset = 0x3DC0 // 16×8，四個角
+	DOSVBattleFrameLeftOffset   = 0x3E00 // 16×16，左柱疊 25 塊
+	DOSVBattleFrameRightOffset  = 0x3E80 // 16×16，右柱疊 25 塊
 )
 
 var (
@@ -78,6 +87,10 @@ var (
 	DOSVBattleFlag       = Spec{Name: "ICONGRF/DOSV battle flag", Width: 128, Height: 32}
 	DOSVBattleFormation  = Spec{Name: "ICONGRF/DOSV battle formation strip", Width: 128, Height: 32}
 	DOSVBattleSideFooter = Spec{Name: "ICONGRF/DOSV battle side footer", Width: 128, Height: 16}
+
+	// 外框：一塊 16×8（橫帶／角）與一塊 16×16（柱），各自重複貼。
+	DOSVBattleFrameHalf = Spec{Name: "ICONGRF/DOSV battle frame half", Width: 16, Height: 8}
+	DOSVBattleFrameCell = Spec{Name: "ICONGRF/DOSV battle frame cell", Width: 16, Height: 16}
 )
 
 // FrameBytes 是一張圖佔的位元組數。

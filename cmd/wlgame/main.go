@@ -78,11 +78,14 @@ const (
 // 把某一格移到畫面上的哪一格（原版 `sub_12151` 的兩個入口參數，
 // docs/spec/52）。開新遊戲、點縮小地圖、跳到某個據點都走這一條。
 //
-// ⚠ **不是 viewCols/2、viewRows/2。** 40×23 的正中央是 (20, 11.5)，
-// 而原版把目標放在第 16 欄、第 12 列——**水平偏左四格**。
-// 這是拿松崗實機對兩個不同首都量出來的（docs/playtest/37）。
+// `sub_12151` 的立即值就是 `ax=14h`／`cx=0Ch` ＝ (20, 12)：
+// 水平放在 40 欄的正中央、垂直比 23 列的中央高半列。
+//
+// ⚠ 這裡曾經寫 16——那是為了抵銷「地圖整張左移四格」而來的，
+// 而左移的成因是 `MMAP.MAP` 解壓後開頭有 4 byte 長度欄位
+// （`world.MapHeader`）。兩邊一起修好之後，這裡照機器碼寫 20。
 const (
-	centreCol = 16
+	centreCol = 20
 	centreRow = 12
 )
 
@@ -128,6 +131,16 @@ type game struct {
 	battleSideFlags      [2]*ebiten.Image
 	battleFormationStrip *ebiten.Image
 	battleSideFooter     *ebiten.Image
+
+	// 側欄外框的四塊（docs/spec/31 §1.1）：橫帶、角、左柱、右柱。
+	// 索引與 library.BattleFramePart 相同。
+	battleFrame [4]*ebiten.Image
+
+	// 標題兩行與兩條計量條的顏色，一律查調色盤（docs/spec/54）。
+	battleTitlePlace color.RGBA // 索引 9：地名與「作戰」
+	battleTitleLord  color.RGBA // 索引 11：君主名與「對」
+	battleMenBar     color.RGBA // 索引 12：兵力條
+	battleHealthBar  color.RGBA // 索引 11：大將體力條
 
 	// battleFormation 是陣形選單目前選中的那一格（原版 byte_1D346），
 	// 值域 0–15；−1 表示還沒選。
@@ -1502,10 +1515,26 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 	} else {
 		g.battleSideFooter = ebiten.NewImageFromImage(footer)
 	}
+	// 取不到調色盤時的替代色（無素材的測試環境）。真正的值在下面那個迴圈裡覆蓋。
+	g.battleTitlePlace = color.RGBA{150, 190, 235, 255}
+	g.battleTitleLord = color.RGBA{140, 225, 225, 255}
+	g.battleMenBar = color.RGBA{235, 120, 110, 255}
+	g.battleHealthBar = color.RGBA{140, 225, 225, 255}
+	for part := range g.battleFrame {
+		img, err := g.lib.DOSVBattleFrame(library.BattleFramePart(part), season)
+		if err != nil {
+			log.Printf("⚠ 取不到 DOS/V 戰術側欄外框第 %d 塊：%v", part, err)
+			g.battleFrame = [4]*ebiten.Image{}
+			break
+		}
+		g.battleFrame[part] = ebiten.NewImageFromImage(img)
+	}
 	for _, c := range []struct {
 		idx int
 		dst *color.RGBA
-	}{{10, &g.battleUnitDotAlly}, {3, &g.battleUnitDotFoe}, {11, &g.battleGateBarColor}} {
+	}{{10, &g.battleUnitDotAlly}, {3, &g.battleUnitDotFoe}, {11, &g.battleGateBarColor},
+		{9, &g.battleTitlePlace}, {11, &g.battleTitleLord},
+		{12, &g.battleMenBar}, {11, &g.battleHealthBar}} {
 		col, err := g.lib.PaletteColor(season, c.idx)
 		if err != nil {
 			log.Printf("⚠ 取不到小地圖部隊點色 %d，使用 fallback：%v", c.idx, err)

@@ -18,6 +18,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/vector"
 
 	"github.com/wicanr2/wolong_cht/internal/assets/battle"
+	"github.com/wicanr2/wolong_cht/internal/assets/library"
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/rules/battlefield"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
@@ -531,7 +532,40 @@ func (g *game) drawBattleSidebar(screen *ebiten.Image, b *tactical.Battle, p *st
 	g.drawBattleFormationStrip(screen, b, l.SideFormation)
 	g.drawBattleSideCommands(screen, b, l.SideCommands)
 	g.drawBattleSideFooter(screen, l.SideFooter)
+	g.drawBattleSideFrame(screen, l.Sidebar)
 }
+
+// drawBattleSideFrame 貼側欄的兩根柱子、四個角與四條橫帶（docs/spec/31 §1.1）。
+//
+// 原版是 `sub_1CA3B` 一塊一塊貼圖，不是畫線；少了它側欄兩側是空的。
+// 畫在最後：橫帶壓在七格的邊界上，與原版的繪製順序一致。
+func (g *game) drawBattleSideFrame(screen *ebiten.Image, r battleRect) {
+	blit := func(img *ebiten.Image, x, y int) {
+		if img == nil {
+			return
+		}
+		op := &ebiten.DrawImageOptions{}
+		op.GeoM.Translate(float64(x), float64(y))
+		screen.DrawImage(img, op)
+	}
+	left, right := r.X, r.right()-16
+	for y := 0; y < r.H; y += 16 { // 25 × 16 ＝ 400
+		blit(g.battleFrame[library.BattleFrameLeft], left, r.Y+y)
+		blit(g.battleFrame[library.BattleFrameRight], right, r.Y+y)
+	}
+	for _, y := range battleSideBandY {
+		for i := 0; i < 8; i++ { // 8 × 16 ＝ 128
+			blit(g.battleFrame[library.BattleFrameBand], r.X+16+i*16, r.Y+y)
+		}
+	}
+	for _, y := range [2]int{0, r.H - 8} {
+		blit(g.battleFrame[library.BattleFrameCorner], left, r.Y+y)
+		blit(g.battleFrame[library.BattleFrameCorner], right, r.Y+y)
+	}
+}
+
+// battleSideBandY 是四條橫帶的 y（docs/spec/31 §1.1）——七格的分隔線。
+var battleSideBandY = [4]int{0, 40, 240, 392}
 
 // drawBattleSideTitle 畫標題兩行（docs/re/60 §3）：
 //
@@ -541,11 +575,13 @@ func (g *game) drawBattleSidebar(screen *ebiten.Image, b *tactical.Battle, p *st
 // 原版每一段都是固定三個全形字（48 px），所以三個 x 是 512／560／576。
 func (g *game) drawBattleSideTitle(screen *ebiten.Image,
 	p *state.Pending, r battleRect, ally, foe int) {
+	// ⭐ 標題格的底是**色 0（黑）**：原版先 sub_1F1A3 填 (496,8)–(623,39)
+	// 再寫字（docs/spec/31 §1.1）。畫成視窗底色會讓這一格整片不同。
 	vector.DrawFilledRect(screen, float32(r.X), float32(r.Y),
-		float32(r.W), float32(r.H), chrome.Menu, false)
-	place := color.RGBA{150, 190, 235, 255} // 原版調色盤索引 9
-	lord := color.RGBA{140, 225, 225, 255}  // 原版調色盤索引 11
-	x0 := r.X + 16                          // 512 − 496
+		float32(r.W), float32(r.H), chrome.Blank, false)
+	place := g.battleTitlePlace // 調色盤索引 9
+	lord := g.battleTitleLord   // 調色盤索引 11
+	x0 := r.X + 16              // 512 − 496
 	g.td.Draw(screen, g.battleFieldName(p), x0, r.Y, place)
 	g.td.Draw(screen, "作戰", x0+48, r.Y, place)
 	g.td.Draw(screen, g.battleLordName(p, ally), x0, r.Y+16, lord)
@@ -581,9 +617,9 @@ func (g *game) drawBattleSideCell(screen *ebiten.Image, b *tactical.Battle,
 		health = s.Soldiers[0].HP
 	}
 	menLen, healthLen := battleSideBarLengths(s.Remaining(), health)
-	// 索引 12／11；未填的部分原版畫成色 0。
-	g.drawBattleBar(screen, cell.MenBar, menLen, color.RGBA{235, 120, 110, 255})
-	g.drawBattleBar(screen, cell.HealthBar, healthLen, color.RGBA{140, 225, 225, 255})
+	// 索引 12／11 一律查調色盤（docs/spec/54）；未填的部分原版畫成色 0。
+	g.drawBattleBar(screen, cell.MenBar, menLen, g.battleMenBar)
+	g.drawBattleBar(screen, cell.HealthBar, healthLen, g.battleHealthBar)
 }
 
 // drawBattleBar 照 sub_10AAA：先畫 filled px 的實色，其餘畫色 0。

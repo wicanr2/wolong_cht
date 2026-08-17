@@ -396,6 +396,36 @@ func (l *Library) DOSVBattleSideFooter(bank int) (*image.RGBA, error) {
 		gfx.DOSVBattleSideFooterOffset, l.Palette, bank)
 }
 
+// BattleFramePart 指名側欄外框的哪一塊（docs/spec/31 §1.1）。
+type BattleFramePart int
+
+const (
+	BattleFrameBand   BattleFramePart = iota // 橫帶，16×8，橫排 8 塊
+	BattleFrameCorner                        // 四角，16×8
+	BattleFrameLeft                          // 左柱，16×16
+	BattleFrameRight                         // 右柱，16×16
+)
+
+// DOSVBattleFrame 解出側欄外框的一塊。
+//
+// 原版把柱子與橫帶當成**圖**一塊一塊貼（`sub_1CA3B`），
+// 不是畫出來的線；填色會少掉整條花紋。
+func (l *Library) DOSVBattleFrame(part BattleFramePart, bank int) (*image.RGBA, error) {
+	if l == nil || l.BattleUI == nil {
+		return nil, fmt.Errorf("ICONGRF 段 1 沒有載入")
+	}
+	spec, off := gfx.DOSVBattleFrameHalf, gfx.DOSVBattleFrameBandOffset
+	switch part {
+	case BattleFrameCorner:
+		off = gfx.DOSVBattleFrameCornerOffset
+	case BattleFrameLeft:
+		spec, off = gfx.DOSVBattleFrameCell, gfx.DOSVBattleFrameLeftOffset
+	case BattleFrameRight:
+		spec, off = gfx.DOSVBattleFrameCell, gfx.DOSVBattleFrameRightOffset
+	}
+	return spec.RenderRGBAAt(l.BattleUI, off, l.Palette, bank)
+}
+
 // DOSVCursor 畫出 DOS/V KI.EXE 內建的 16×16 白框／紅填游標。
 func (l *Library) DOSVCursor(bank int) (*image.RGBA, error) {
 	if l == nil || len(l.cursorPixels) == 0 {

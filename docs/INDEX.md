@@ -70,6 +70,7 @@
 | [`docs/playtest/37-main-screen-parity.md`](playtest/37-main-screen-parity.md) | 37 — 開局主畫面的逐區對拍：第一次真的對原版跑 | ⭐⭐ 五區全部 PASS。開局主畫面的 640×400 逐像素等於原版。 | 2026-08-17 |
 | [`docs/playtest/38-window-parity.md`](playtest/38-window-parity.md) | 38 — 三個視窗開著時的對拍：三個視窗區逐像素相同 | 通過。 | 2026-08-17 |
 | [`docs/playtest/39-system-window-parity.md`](playtest/39-system-window-parity.md) | 39 — 系統選單開著時的對拍：五區裡四區 PASS，選單本身也 PASS | 通過。 | 2026-08-17 |
+| [`docs/playtest/40-tactical-parity.md`](playtest/40-tactical-parity.md) | 40 — 戰場的第一次逐區對拍：側欄兩區 PASS，戰場本身差在沒轉 180 度 | 部分通過。 | 2026-08-17 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | remake 推廣片、代表幀「經典再現」比較片與 DOS/V／remake 實機動態比較片均已產出並完成媒體規格驗證… | 2026-08-12 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
 | [`docs/promo/dosv-adlib-and-tactical-review.md`](promo/dosv-adlib-and-tactical-review.md) | 推廣片原版 AdLib 與戰術骨架審查 | 原版音軌來源與影片縮放鏈已修正；戰術固定骨架的 16 px viewport 偏差已修正。完整同狀態戰術 parit… | 2026-08-12 |
@@ -141,7 +142,7 @@
 | [`docs/re/64-corps-arrival-state-machine.md`](re/64-corps-arrival-state-machine.md) | 64 — 軍團抵達時的狀態機：+0x23 的分派表與解體 | 分派表的結構、索引算式與 Stage 8–11 的語意 confirmed。 ⭐ 解體的消費端找到了——Stage … | 2026-08-16 |
 | [`docs/re/65-ai-march-decision-chain.md`](re/65-ai-march-decision-chain.md) | 65 — 電腦勢力的行軍決策鏈：Stage 0–3 與整條軍團生命週期 | 四支 AI handler 逐行讀完，Stage 0–3／8–11 的轉移條件全部 confirmed。 ⭐ 目標選… | 2026-08-17 |
 | [`docs/re/66-message-box-geometry.md`](re/66-message-box-geometry.md) | 66 — 訊息框的版面：一個框、一張肖像、四列字 | 全部 confirmed，而且機器碼與原版實錄影格兩條獨立證據對上。 ⭐ 框是固定的 (160, 160, 256,… | 2026-08-17 |
-| [`docs/re/67-city-emblem-on-strategy-map.md`](re/67-city-emblem-on-strategy-map.md) | 67 — 大地圖上的據點徽記：位置在記錄座標 +4，顏色照勢力分三類 | ✅ 全解並實作。 | 2026-08-17 |
+| [`docs/re/67-city-emblem-on-strategy-map.md`](re/67-city-emblem-on-strategy-map.md) | 67 — 大地圖上的據點徽記：位置就在記錄座標，顏色照勢力分三類 | ✅ 全解並實作。 | 2026-08-17 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-16 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -192,6 +193,7 @@
 | [`docs/spec/54-ui-colours-from-palette.md`](spec/54-ui-colours-from-palette.md) | 54 — 介面顏色一律查調色盤，命令列的底是黑的 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/55-minimap-view-box.md`](spec/55-minimap-view-box.md) | 55 — 縮小地圖的視野框是點陣，而且解開了「差四格」 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | CONFORMED。管線接起來了，也對原版跑過一輪 （[../playtest/37](../playtest/37… | 2026-08-15 |
+| [`docs/spec/91-tactical-parity.md`](spec/91-tactical-parity.md) | 91 — 戰場的逐區對拍：分區、同狀態怎麼達成 | DRAFT。分區與判定沿用 docs/spec/90，差別在 | 2026-08-17 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 

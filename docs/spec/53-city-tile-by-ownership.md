@@ -80,11 +80,15 @@
 
 ## 5. 中心格在哪
 
-**據點記錄座標的右邊四格、同一列**（`X + 4, Y`）。
-六座據點（3×3、5×5、關各有樣本）都成立。
+**就是據點記錄座標那一格**（`world.CityCentreDX = 0`）。
+192 座逐座驗過，零例外。
+
+⚠ 這裡曾經寫「右邊四格」。成因是 `MMAP.MAP` 解壓後開頭那 4 byte 是
+長度欄位（[`../formats/05`](../formats/05-mmap-worldmap.md) §2.1），
+從 offset 0 讀會讓整張地圖左移四格。**跳過那 4 byte 之後 192 座全部歸位。**
 
 remake 在載入時**逐座檢查**那一格是不是 205／208／211，
-不是就記一筆 warning——這樣「+4 這個假設哪天不成立」會當場現形，
+不是就記一筆 warning——這樣「哪天這個假設不成立」會當場現形，
 而不是變成畫面上一個安靜的錯誤。
 
 ## 6. remake 實作
@@ -94,7 +98,7 @@ remake 在載入時**逐座檢查**那一格是不是 205／208／211，
 | 換圖塊與疊圖的規則 | `internal/assets/world/citymark.go`（純函式，不認識遊戲狀態）|
 | 每幀套用 | `Map.RenderMarked` → `Library.RenderWorldMarked`；`cmd/wlgame` 的 `cityMarks()` 從世界狀態算出 `[]CityMark` |
 | 歸屬分類 | `world.OwnershipOf(c.Owner, w.Player)`，`0x18` ＝ 無所屬 |
-| +4 的自我檢查 | `cmd/wlgame` 的 `checkCityCentres()`：載入時對不上就 log 一行 |
+| 中心格的自我檢查 | `cmd/wlgame` 的 `checkCityCentres()`：載入時對不上就 log 一行 |
 
 ## 7. 驗證
 

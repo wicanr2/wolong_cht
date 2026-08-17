@@ -12,6 +12,15 @@
 #    遊戲畫面 640×400 置中，而 INT 33 把**整個視窗**等比對映到遊戲畫面
 #    （量法與證據見 tools/dosv_capture.sh 的說明）。減 40 會差十幾 px，
 #    正好落進按鈕之間的空隙，看起來就跟「事件沒送到」一樣。
+# ⚠ **一次按下會被兩層各吃一次。** 量到的：在指令列上送 `click;press` 之後，
+#    「軍團」選單**開了，而且同一瞬間被選走第一列**（位置確認）。
+#    成因是 INT 33 `AX=5` 回的 BX 是**當下的按鍵狀態**，不是計數——
+#    `clickat`／`press_here` 把鍵按住 0.12 秒，這段時間內剛開起來的選單
+#    再 poll 一次就看到「按著」，於是拿當時的游標位置選列
+#    （`sub_193E9` 把框外的游標夾到列 0）。清單視窗不會，因為框外的點被忽略。
+#    ⇒ **目前沒有可靠的辦法點到選單的第二列以後**。要繞開就別走那條路：
+#    這一款的戰場可以用「編成一支軍團然後等 AI 來打」取得
+#    （docs/playtest/40），不必碰「軍團 → 行軍指示」。
 # record 產生前綴-000001.png … 的連續實機畫面，可交給影片容器編碼。
 # audio-start／audio-stop 觸發 DOSBox-X 自身的 WAV mixer capture；這是原版
 # YNSOUND.COM 經模擬硬體後的實際輸出，不是由 remake 或外部合成器重建。
@@ -71,12 +80,21 @@ log_file=/tmp/wolong-dosv-capture.log
 XVFB=""
 DB=""
 cleanup() {
+    # ⭐ 遊戲還在跑的時候送 SIGTERM，DOSBox-X 會彈一個 xmessage 確認框
+    # （"Are you sure to quit anyway now?"）等一個永遠不會來的答案，
+    # 於是 `wait` 掛住、**容器永遠不退出**——即使 --rm、即使工作早就做完。
+    # 症狀是看起來完全正常：docker ps 一排同名容器、CPU 各 0.1%、輸出一張不少。
+    # 兩道一起做：設定裡關掉確認框（quit warning=false），這裡五秒後直接砍。
     if [ -n "$DB" ]; then
         kill "$DB" 2>/dev/null || true
+        for _ in $(seq 1 20); do kill -0 "$DB" 2>/dev/null || break; sleep 0.25; done
+        kill -9 "$DB" 2>/dev/null || true
         wait "$DB" 2>/dev/null || true
     fi
     if [ -n "$XVFB" ]; then
         kill "$XVFB" 2>/dev/null || true
+        for _ in $(seq 1 20); do kill -0 "$XVFB" 2>/dev/null || break; sleep 0.25; done
+        kill -9 "$XVFB" 2>/dev/null || true
         wait "$XVFB" 2>/dev/null || true
     fi
     # 即使中途失敗也保留執行器日誌；它不是原版資產，能分辨遊戲自然轉場與
@@ -103,6 +121,7 @@ printf '%s\n' \
 	    '[dosbox]' \
 	    'machine=vgaonly' \
 	    'memsize=16' \
+	    'quit warning=false' \
 	    "captures=$out_dir" \
 	    'show recorded filename=false' \
     '[cpu]' \

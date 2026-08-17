@@ -15,7 +15,7 @@ import sys
 sys.path.insert(0, "tools")
 from parity_diff import read_png
 from mdl_match import mdl_tile, bank_colours
-from map_tile import decode
+from map_tile import load_map
 
 WIDTH, HEIGHT = 384, 256
 TILE = 16
@@ -27,7 +27,9 @@ def main():
         raise SystemExit("用法: find_camera.py 截圖.png MMAP.MDL MMAP.MAP [欄 列 邊長]")
     _, _, img = read_png(sys.argv[1])
     mdl = open(sys.argv[2], "rb").read()
-    raw = decode(open(sys.argv[3], "rb").read())
+    # load_map 會跳過開頭那 4 byte 的長度欄位；少跳它反推出來的鏡頭
+    # 會一律多 4 欄，而那 4 欄看起來像原版的怪癖（docs/formats/05 §2.1）。
+    raw = load_map(sys.argv[3])
     col0 = int(sys.argv[4]) if len(sys.argv) > 4 else 2
     row0 = int(sys.argv[5]) if len(sys.argv) > 5 else 4
     side = int(sys.argv[6]) if len(sys.argv) > 6 else 3
