@@ -49,6 +49,8 @@ const (
 	strategyMinimapH       = 160
 	strategyMinimapImageH  = 128
 	strategyMinimapLegendY = strategyMinimapY + strategyMinimapImageH
+	// ⚠ 原版的鏡頭變數比畫面上看到的那一欄小 4 格（docs/spec/55 §2）。
+	minimapCamBias = 4
 	// 圖例上兩個君主名的左緣，原版數值（docs/re/62 §4.1）。
 	strategyLegendSelfX    = 480
 	strategyLegendWatchedX = 576
@@ -698,12 +700,34 @@ func (g *game) drawMinimapMarkers(dst *ebiten.Image) {
 // 大小 ＝ 畫面格數的一半：40×23 格 → 20×12 px。
 //
 // ⚠ 原版那是一張美術（`word_10D4C`），remake 畫線——**remake 差異**。
+// drawMinimapViewBox 畫縮小地圖上的視野框。
+//
+// ⭐ **框是原版的點陣**（`ICONGRF` 段 3 `+0x8F0`，24×11 的 4 bpp 小圖），
+// 不是描一個矩形——它有白邊 ＋ 右下黑影的立體感（docs/spec/55）。
+//
+// ⚠ **X 要減 4 格。** 原版的鏡頭變數 `word_1988E` 比畫面上實際看到的
+// 那一欄小 4（docs/spec/55 §2），而 remake 的 camX 存的是**看到的那一欄**。
 func (g *game) drawMinimapViewBox(dst *ebiten.Image) {
-	x := float32(strategyMinimapX + g.camX/2)
-	y := float32(strategyMinimapY + g.camY/2)
-	w, h := float32(viewCols/2), float32((viewRows+1)/2)
-	ink := g.minimapInk[1]
-	vector.StrokeRect(dst, x, y, w, h, 1, ink, false)
+	pix, err := g.lib.ViewBox()
+	if err != nil {
+		return
+	}
+	x := strategyMinimapX + (g.camX-minimapCamBias)/2
+	y := strategyMinimapY + g.camY/2
+	season := int(g.world.Clock.Season())
+	for dy := 0; dy < gfx.ViewBoxRows; dy++ {
+		for dx := 0; dx < gfx.ViewBoxWidth; dx++ {
+			c := pix[dy*gfx.ViewBoxWidth+dx]
+			if c == gfx.ViewBoxTransparent {
+				continue
+			}
+			col, err := g.lib.PaletteColor(season, int(c))
+			if err != nil {
+				continue
+			}
+			dst.Set(x+dx, y+dy, col)
+		}
+	}
 }
 
 func (g *game) drawNaturalFactionHUD(dst *ebiten.Image, x, y int) {

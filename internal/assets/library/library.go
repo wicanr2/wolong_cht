@@ -228,6 +228,16 @@ func (l *Library) DigitMask(index int) ([]byte, error) {
 	return gfx.DecodeDigit(l.Chrome, index)
 }
 
+// ViewBox 解出縮小地圖的視野框（`ICONGRF` 段 3 的 `+0x8F0`）。
+//
+// 回傳 24×11 的調色盤索引，`gfx.ViewBoxTransparent` ＝ 不畫。
+func (l *Library) ViewBox() ([]byte, error) {
+	if l == nil || l.Chrome == nil {
+		return nil, fmt.Errorf("ICONGRF 段 3 沒有載入")
+	}
+	return gfx.DecodeViewBox(l.Chrome, gfx.ViewBoxOffset)
+}
+
 // RenderWindowTexture 解出視窗內部的龍紋（`ICONGRF` 段 3 的最後 128 byte）。
 func (l *Library) RenderWindowTexture(bank int) (*image.RGBA, error) {
 	if l.Chrome == nil {

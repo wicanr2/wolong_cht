@@ -241,3 +241,58 @@ func DecodeDigit(seg []byte, index int) ([]byte, error) {
 	}
 	return out, nil
 }
+
+// 縮小地圖的視野框。規格 docs/spec/55。
+//
+// ⭐ **它是點陣不是矩形指令。** `sub_196ED` 把 `ds` 設成 `cs:word_10D4C`
+// ——`ICONGRF` 段 3 的 `+0x8F0`，緊接在數字字模後面的另一塊 176 byte。
+// `sub_19752` 每列讀 **3 byte ＝ 24 px**、跑 **11 列**，被呼叫五次
+// （set/reset 值 0、1、2、4、8），所以是「先清成黑、再 OR 四個色平面」
+// 的 4 bpp 小圖：5 × 33 ＝ 165 byte。
+const (
+	// ViewBoxOffset 是視野框點陣在 `ICONGRF` 段 3 的位移。
+	ViewBoxOffset = 0x8F0
+	// ViewBoxRows 是列數（`sub_19752` 的 `bp = 0Bh`）。
+	ViewBoxRows = 11
+	// ViewBoxBytes 是每列的 byte 數（`lodsw` ＋ 一個 byte）。
+	ViewBoxBytes = 3
+	// ViewBoxWidth 是點陣寬度。實際畫出來的圖形只用到左邊 20 px。
+	ViewBoxWidth = ViewBoxBytes * 8
+	// ViewBoxPlanes 是 `sub_196ED` 呼叫 `sub_19752` 的次數：
+	// 一張遮罩 ＋ 四個色平面。
+	ViewBoxPlanes = 5
+	viewBoxPlaneBytes = ViewBoxRows * ViewBoxBytes
+	// ViewBoxTransparent 是遮罩外的格子。
+	ViewBoxTransparent = 0xFF
+)
+
+// DecodeViewBox 解出縮小地圖的視野框，回傳 ViewBoxWidth×ViewBoxRows 的
+// 調色盤索引；遮罩外是 ViewBoxTransparent。
+func DecodeViewBox(seg []byte, off int) ([]byte, error) {
+	need := off + ViewBoxPlanes*viewBoxPlaneBytes
+	if need > len(seg) {
+		return nil, fmt.Errorf("gfx: `ICONGRF` 段 3 只有 %d byte，視野框要 %d",
+			len(seg), need)
+	}
+	row := func(plane, y int) uint32 {
+		o := off + plane*viewBoxPlaneBytes + y*ViewBoxBytes
+		return uint32(seg[o])<<16 | uint32(seg[o+1])<<8 | uint32(seg[o+2])
+	}
+	out := make([]byte, ViewBoxWidth*ViewBoxRows)
+	for y := 0; y < ViewBoxRows; y++ {
+		mask := row(0, y)
+		for x := 0; x < ViewBoxWidth; x++ {
+			shift := uint(ViewBoxWidth - 1 - x)
+			if mask>>shift&1 == 0 {
+				out[y*ViewBoxWidth+x] = ViewBoxTransparent
+				continue
+			}
+			var c byte
+			for p := 0; p < 4; p++ {
+				c |= byte(row(1+p, y)>>shift&1) << uint(p)
+			}
+			out[y*ViewBoxWidth+x] = c
+		}
+	}
+	return out, nil
+}

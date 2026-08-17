@@ -111,3 +111,39 @@ func TestDigitFontShape(t *testing.T) {
 		t.Errorf("負號有 %d 列墨水，預期 1", rows)
 	}
 }
+
+// TestViewBoxShape 釘住 docs/spec/55：縮小地圖的視野框是 24×11 的點陣，
+// 只用兩個顏色，而且**只有左邊 20 px 有圖**。
+func TestViewBoxShape(t *testing.T) {
+	seg := iconSegment(t, "unknown3")
+	pix, err := DecodeViewBox(seg, ViewBoxOffset)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(pix) != ViewBoxWidth*ViewBoxRows {
+		t.Fatalf("解出 %d 點，預期 %d", len(pix), ViewBoxWidth*ViewBoxRows)
+	}
+	for i, v := range pix {
+		if v != ViewBoxTransparent && v != 0 && v != 15 {
+			t.Fatalf("第 %d 點是色 %d，框只該有色 0、色 15 與透明", i, v)
+		}
+	}
+	// 第 0 列：第 1–17 欄是白邊，這 17 px 與實機量到的白線等長。
+	white := 0
+	for x := 0; x < ViewBoxWidth; x++ {
+		if pix[x] == 15 {
+			white++
+		}
+	}
+	if white != 17 {
+		t.Errorf("第 0 列有 %d 個白點，預期 17", white)
+	}
+	// 右邊四欄整列透明——圖只有 20 px 寬。
+	for y := 0; y < ViewBoxRows; y++ {
+		for x := 20; x < ViewBoxWidth; x++ {
+			if pix[y*ViewBoxWidth+x] != ViewBoxTransparent {
+				t.Fatalf("(%d,%d) 不是透明，框應該只有 20 px 寬", x, y)
+			}
+		}
+	}
+}
