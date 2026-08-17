@@ -38,6 +38,22 @@ func isoProject(x, y, z int) (col, row int) {
 	return x + y, floorDiv2(y-x) + isoOriginY - z
 }
 
+// cellOffset 是「這一格在顯示格裡的第幾欄第幾列」，**相對於鏡頭算**。
+//
+// ⭐ 不能寫成 `isoProject(x,y,z) − isoProject(cam)`：
+// `floorDiv2(a) − floorDiv2(b) ≠ floorDiv2(a − b)`，兩者在 **b 是奇數**時
+// 對一半的格子差一列。原版根本不做這個減法——`sub_1DC9D` 從鏡頭那一格
+// 開始走，交替 `di += 40h`（y+1）與 `di += 1`（x+1），
+// 顯示格的位置是**走出來的**，所以鏡頭的奇偶不影響任何一格。
+//
+// 推導（`sub_1DC9D` 的兩層迴圈）：第 r 列從 (camX−r, camY+r) 起走，
+// 第 s 格的半列位移 h ＝ (y−x) − (camY−camX) ＝ 2r ＋ (s mod 2)，
+// 而 s 與 h 恆同奇偶，所以 r ＝ floorDiv2(h)。
+func (v *battleView) cellOffset(x, y, z int) (dcol, drow int) {
+	return (x + y) - (v.camWorldX + v.camWorldY),
+		floorDiv2((y-x)-(v.camWorldY-v.camWorldX)) - z
+}
+
 // floorDiv2 是原版的 `sar bx, 1`——算術右移，負數往下取整。
 // 用 Go 的 `/2` 會往零取整，**在 Y < X 的那半邊會差一列**。
 func floorDiv2(v int) int {
@@ -269,16 +285,17 @@ func (v *battleView) drawTerrain(dst *ebiten.Image, ox, oy int) {
 	for y := 0; y < len(v.subs); y++ {
 		for x := 0; x < len(v.subs[y]); x++ {
 			for z, n := range v.subs[y][x] {
-				col, row := isoProject(x, y, z)
-				if col < v.camCol || col >= v.camCol+isoCols {
+				dcol, drow := v.cellOffset(x, y, z)
+				if dcol < 0 || dcol >= isoCols {
 					continue
 				}
-				r := row - v.camRow + above
+				col := dcol
+				r := drow + above
 				if r < 0 || r >= len(buckets) {
 					continue
 				}
 				// 一筆 ＝ 欄（低 16 位）＋ 子圖塊編號（高 16 位）。
-				buckets[r] = append(buckets[r], int32(col-v.camCol)|int32(n)<<16)
+				buckets[r] = append(buckets[r], int32(col)|int32(n)<<16)
 			}
 		}
 	}
@@ -299,7 +316,12 @@ func (v *battleView) drawTerrain(dst *ebiten.Image, ox, oy int) {
 	}
 }
 
-// ScreenPos 回傳一個戰場座標在畫面上的位置（左上角）。
+// ScreenPos 回傳一個**物件**（兵、投射物、旗）在畫面上的位置（左上角）。
+//
+// 走的是 `sub_1DAAA`：各自投影再減鏡頭原點，連 `jl`／`cmp 1Fh`／`cmp 18h`
+// 的裁切也一樣。**不要換成 cellOffset**——那一支是地形走訪用的，
+// 兩者在鏡頭是奇數時對一半的格子差一列，而原版的物件走的就是這一條
+// （docs/spec/57 §2）。
 func (v *battleView) ScreenPos(ox, oy, x, y, z int) (int, int, bool) {
 	col, row := isoProject(x, y, z)
 	if col < v.camCol || col >= v.camCol+isoCols ||
@@ -417,8 +439,9 @@ func (v *battleView) buildDisplayList(b *tactical.Battle) []battleDisplayEntry {
 		for x := 0; x < len(v.subs[y]); x++ {
 			for z, raw := range v.subs[y][x] {
 				col, row := isoProject(x, y, z)
+				dcol, drow := v.cellOffset(x, y, z)
 				entries = append(entries, battleDisplayEntry{kind: displayTerrain,
-					col: col, row: row, cellCol: col - v.camCol, cellRow: row - v.camRow,
+					col: col, row: row, cellCol: dcol, cellRow: drow,
 					layer: z, lane: 0, x: x, y: y, z: z, raw: int(raw), order: order})
 				order++
 			}

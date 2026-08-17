@@ -176,3 +176,55 @@ func TestSoldierPoseUsesPerRecordBit(t *testing.T) {
 		}
 	}
 }
+
+// TestCellOffsetFollowsOriginalWalk 釘住 `sub_1DC9D` 的走法：
+// 顯示格第 r 列從 (camX−r, camY+r) 起，交替走 y+1 與 x+1，一步一格。
+// `cellOffset` 對那條路徑上的每一格都必須回 (s, r)。
+//
+// ⭐ **鏡頭的奇偶要一起測。** 原版縮圖點選的公式
+// `(((x − 0x1F0) >> 1) | 1) − 0x13` 把 `camWorldY` 強制成奇數，
+// 所以奇數是常態不是邊角；而「先各自 floorDiv2 再相減」在鏡頭是奇數時
+// 會對一半的格子差一列——只測偶數的話這個 bug 測不出來。
+func TestCellOffsetFollowsOriginalWalk(t *testing.T) {
+	for _, cam := range [][2]int{{36, 14}, {36, 11}, {35, 14}, {35, 11}, {0, 0}, {12, 41}} {
+		v := &battleView{camWorldX: cam[0], camWorldY: cam[1]}
+		for r := 0; r < 30; r++ {
+			x, y := cam[0]-r, cam[1]+r
+			for s := 0; s <= 30; s++ {
+				dcol, drow := v.cellOffset(x, y, 0)
+				if dcol != s || drow != r {
+					t.Fatalf("鏡頭 %v 的第 %d 列第 %d 格是 (%d,%d)，cellOffset 回 (%d,%d)",
+						cam, r, s, x, y, dcol, drow)
+				}
+				if s%2 == 0 { // 走法：先 y+1，再 x+1
+					y++
+				} else {
+					x++
+				}
+			}
+		}
+	}
+}
+
+// TestCellOffsetIsNotTwoProjections 明寫「不能各自投影再相減」這件事，
+// 免得之後有人為了「看起來對稱」把 cellOffset 改回去。
+func TestCellOffsetIsNotTwoProjections(t *testing.T) {
+	v := &battleView{camWorldX: 36, camWorldY: 11} // (camY−camX) 是奇數
+	camCol, camRow := isoProject(v.camWorldX, v.camWorldY, 0)
+	diff := 0
+	for y := 0; y < 62; y++ {
+		for x := 0; x < 64; x++ {
+			_, drow := v.cellOffset(x, y, 0)
+			_, row := isoProject(x, y, 0)
+			if drow != row-camRow {
+				diff++
+			}
+			if dcol, _ := v.cellOffset(x, y, 0); dcol != (x+y)-camCol {
+				t.Fatalf("(%d,%d) 的欄位移不該有差", x, y)
+			}
+		}
+	}
+	if diff == 0 {
+		t.Error("鏡頭是奇數時兩種算法竟然一致——這個測試沒有鑑別力")
+	}
+}
