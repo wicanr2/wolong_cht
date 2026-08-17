@@ -217,6 +217,17 @@ func (l *Library) RenderChrome(off, bank int) (*image.RGBA, error) {
 	return gfx.RenderChrome(l.Chrome, off, l.Palette, bank)
 }
 
+// DigitMask 解出原版數字字模的第 index 格（`ICONGRF` 段 3 的 `+0x840`）。
+//
+// 回傳 8×16 的 0／1 遮罩；上色由呼叫端決定，因為原版是用 EGA 的
+// Set/Reset 把前景色填進去（`docs/re/28` §1），點陣本身不帶顏色。
+func (l *Library) DigitMask(index int) ([]byte, error) {
+	if l == nil || l.Chrome == nil {
+		return nil, fmt.Errorf("ICONGRF 段 3 沒有載入")
+	}
+	return gfx.DecodeDigit(l.Chrome, index)
+}
+
 // RenderWindowTexture 解出視窗內部的龍紋（`ICONGRF` 段 3 的最後 128 byte）。
 func (l *Library) RenderWindowTexture(bank int) (*image.RGBA, error) {
 	if l.Chrome == nil {

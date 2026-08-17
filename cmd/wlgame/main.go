@@ -91,10 +91,12 @@ const (
 // 三個值是拿松崗實機的主畫面量出來的（docs/spec/52 §2），
 // 不是量橫幅圖檔——圖檔只給得出「年」在哪，給不出數字靠右靠到哪。
 const (
+	// 三個右緣剛好等距 32 px —— 這是「量對了」的算術檢查。
 	bannerYearRight  = 496
 	bannerMonthRight = 528
-	bannerDayRight   = 562
-	bannerTextY      = 9
+	bannerDayRight   = 560
+	// 字模的 16 列裡上下各留一列空白，所以墨水落在 y 9–22。
+	bannerTextY = 8
 	// 日期的字色是調色盤第 9 色（#F3D392），與橫幅上「年 月 日」同色。
 	bannerDateInk = 9
 )
@@ -955,10 +957,9 @@ func (g *game) Draw(screen *ebiten.Image) {
 	if col, err := g.lib.PaletteColor(season, bannerDateInk); err == nil {
 		ink = col
 	}
-	right := func(s string, xr, y int) { g.td.Draw(screen, s, xr-g.td.Width(s), y, ink) }
-	right(fmt.Sprintf("%d", c.Year), bannerYearRight, bannerTextY)
-	right(fmt.Sprintf("%d", c.Month), bannerMonthRight, bannerTextY)
-	right(fmt.Sprintf("%d", c.Day), bannerDayRight, bannerTextY)
+	g.drawBannerNumber(screen, c.Year, bannerYearRight, ink)
+	g.drawBannerNumber(screen, c.Month, bannerMonthRight, ink)
+	g.drawBannerNumber(screen, c.Day, bannerDayRight, ink)
 
 	// 自然策略 HUD 是原版主畫面的固定骨架；四個視窗仍是可獨立切換的暫存層。
 	g.drawNaturalStrategyHUD(screen)

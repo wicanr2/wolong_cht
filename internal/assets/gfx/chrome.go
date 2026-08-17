@@ -196,3 +196,48 @@ func RenderWindowTexture(seg []byte, off int, p *palette.Palette, bankIdx int) (
 	}
 	return img, nil
 }
+
+// 數字字模。規格 docs/spec/52 §5。
+//
+// ⭐ **它就在 `ICONGRF` 段 3 裡**，不是另一個檔案。
+// `sub_100DF` 在開機時把段 3 切成五塊，`word_10D54` 那一塊是
+// `+0x840` 起的 **0x0B paragraph ＝ 176 byte ＝ 11 個字 × 16 列**
+// ——0–9 再加一個負號（`docs/re/28` §2：負號是字型的第 10 格）。
+// 五塊的長度加起來剛好等於段 3 的 0x23A0，這是「切對了」的算術檢查。
+const (
+	// DigitFontOffset 是數字字模在 `ICONGRF` 段 3 的位移。
+	DigitFontOffset = 0x840
+	// DigitWidth、DigitHeight 是一個數字的點陣尺寸。
+	// 一列一個 byte，所以寬固定 8；`sub_1062F` 每印一位 `dec di` ＝ 退 8 px。
+	DigitWidth  = 8
+	DigitHeight = 16
+	// DigitCount 是字模的格數：0–9 加負號。
+	DigitCount = 11
+	// DigitMinus 是負號在字模裡的格號。
+	DigitMinus = 10
+)
+
+// DecodeDigit 解出第 index 格數字字模，回傳 DigitWidth×DigitHeight 的
+// 0／1 遮罩（1 ＝ 前景）。
+//
+// 這一組是**單平面**的：`sub_1069A` 先用前景色畫一次點陣，
+// 再用背景色畫一次反相，所以點陣本身只有一個 bit plane。
+func DecodeDigit(seg []byte, index int) ([]byte, error) {
+	if index < 0 || index >= DigitCount {
+		return nil, fmt.Errorf("gfx: 數字字模只有 %d 格，要不到第 %d 格",
+			DigitCount, index)
+	}
+	off := DigitFontOffset + index*DigitHeight
+	if off+DigitHeight > len(seg) {
+		return nil, fmt.Errorf("gfx: `ICONGRF` 段 3 只有 %d byte，取不到 0x%X",
+			len(seg), off)
+	}
+	out := make([]byte, DigitWidth*DigitHeight)
+	for y := 0; y < DigitHeight; y++ {
+		row := seg[off+y]
+		for x := 0; x < DigitWidth; x++ {
+			out[y*DigitWidth+x] = (row >> uint(DigitWidth-1-x)) & 1
+		}
+	}
+	return out, nil
+}

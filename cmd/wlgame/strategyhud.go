@@ -9,6 +9,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/vector"
 
+	"github.com/wicanr2/wolong_cht/internal/assets/gfx"
 	"github.com/wicanr2/wolong_cht/internal/assets/world"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
@@ -835,5 +836,38 @@ func (g *game) checkCityCentres() {
 	}
 	if bad > 0 {
 		log.Printf("⚠ %d 座據點的 (X+4, Y) 不是據點中心圖塊，徽記會少畫（docs/spec/53 §5）", bad)
+	}
+}
+
+// drawBannerNumber 用**原版的數字字模**把日期填進橫幅（docs/spec/52 §5）。
+//
+// ⭐ 字模在 `ICONGRF` 段 3 的 `+0x840`，8×16、11 格（0–9 ＋ 負號）。
+// 倚天的 ASCII 數字墨水只有 9 列，原版的是 14 列——**同一個位置、
+// 同樣的顏色，字形不同還是差得出來**，所以這裡不共用文字層。
+//
+// 右對齊，從個位往左印（原版 `sub_1062F` 也是這個方向）。
+func (g *game) drawBannerNumber(screen *ebiten.Image, value, right int, ink color.RGBA) {
+	if g.lib == nil {
+		return
+	}
+	digits := fmt.Sprintf("%d", value)
+	x := right - len(digits)*gfx.DigitWidth
+	for _, r := range digits {
+		if r < '0' || r > '9' {
+			continue
+		}
+		mask, err := g.lib.DigitMask(int(r - '0'))
+		if err != nil {
+			return
+		}
+		for dy := 0; dy < gfx.DigitHeight; dy++ {
+			for dx := 0; dx < gfx.DigitWidth; dx++ {
+				if mask[dy*gfx.DigitWidth+dx] == 0 {
+					continue
+				}
+				screen.Set(x+dx, bannerTextY+dy, ink)
+			}
+		}
+		x += gfx.DigitWidth
 	}
 }
