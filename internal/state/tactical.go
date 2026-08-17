@@ -25,7 +25,10 @@ import (
 // node 是據點編號（攻城戰）或戰場編號（野戰，見 docs/re/05）；
 // 回傳 nil 表示這一場開不了戰術畫面，退回自動判定。
 type TacticalSetup struct {
-	Field func(node int, siege bool) *tactical.Field
+	// Field 造這一場的戰場。**rotate 為真時整張轉 180 度**——
+	// 攻城戰玩家守城時原版 `sub_14ED7` 會 `or byte_10D35, 0C0h`，
+	// bit 6 就是這件事（docs/spec/56）。
+	Field func(node int, siege, rotate bool) *tactical.Field
 
 	// Script 回傳一側的 AI 腳本。tactic 是武將記錄 `+0x16`（0–7），
 	// 段編號 ＝ tactic × 4 ＋ 戰場類別（`sub_1CBE5`，docs/re/11 §3.2）。
@@ -141,7 +144,11 @@ func (w *World) wantsTactical(att, def int) bool {
 // beginTactical 準備一場戰術戰鬥。回傳 false 表示開不成，呼叫端該自動判定。
 func (w *World) beginTactical(att, def int, m combat.Mode, garrison int) bool {
 	node := w.Corps[att].Node
-	f := w.tactical.Field(node, m == combat.Siege)
+	// ⭐ **玩家守城 → 戰場轉 180 度**（docs/spec/56 §1）。判準是「玩家在哪一邊」，
+	// 不是誰攻誰守：原版兩個位元一起設，側欄換邊與戰場翻轉是同一件事的兩面。
+	rotate := m == combat.Siege && def >= 0 && def < len(w.Corps) &&
+		w.Corps[def].Faction == w.Player
+	f := w.tactical.Field(node, m == combat.Siege, rotate)
 	if f == nil {
 		return false
 	}

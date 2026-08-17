@@ -682,7 +682,8 @@ func (w *World) fight(att, def int, ev *CorpsEvent, m combat.Mode, garrison int,
 		// 先確認這場的地形來源確實能建出來；沒有對應戰場時照原版的
 		// 委任退路，不讓玩家卡在一個永遠選不了的空選單。
 		node := w.Corps[att].Node
-		if w.tactical.Field(node, m == combat.Siege) != nil {
+		// 這裡只是探路（能不能建得出來），翻不翻轉不影響，一律傳 false。
+		if w.tactical.Field(node, m == combat.Siege, false) != nil {
 			w.encounter = &EncounterChoice{
 				Attacker: att, Defender: def, Node: node,
 				Mode: m, Garrison: garrison,

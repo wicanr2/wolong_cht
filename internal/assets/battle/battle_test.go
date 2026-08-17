@@ -453,3 +453,92 @@ func TestBannerAnimation(t *testing.T) {
 		t.Errorf("一張圖上的旗只有 %d 種相位，應該是分散的", len(phases))
 	}
 }
+
+// TestRotateTileRanges 釘住 docs/spec/56 §2 的第二段：三個值域三種規則。
+//
+// 每一段都取邊界值，因為**三段的交界是最容易抄錯一格的地方**。
+func TestRotateTileRanges(t *testing.T) {
+	cases := []struct{ in, want byte }{
+		{0x00, 0x00}, {0x2F, 0x2F}, // < 0x30 不變
+		{0x30, 0x40}, {0x40, 0x30}, // 每 0x10 一組配對
+		{0xCF, 0xBF}, {0xBF, 0xCF},
+		{0xD0, 0xD3}, {0xD3, 0xD0}, // & 3 是 0/3 → ^3
+		{0xD1, 0xD1}, {0xD2, 0xD2}, // 1/2 不變
+		{0xEC, 0xEF}, {0xEF, 0xEC}, {0xED, 0xED},
+		{0xF0, 0xF1}, {0xF1, 0xF0}, // ≥ 0xF0 → ^1
+		{0xFF, 0xFE},
+	}
+	for _, c := range cases {
+		if got := RotateTile(c.in); got != c.want {
+			t.Errorf("RotateTile(%#x) ＝ %#x，預期 %#x", c.in, got, c.want)
+		}
+	}
+	// 轉兩次要回到原樣——三段規則各自都是對合（involution），
+	// 這一條擋的是「某一段的配對不對稱」。
+	for v := 0; v < 256; v++ {
+		if got := RotateTile(RotateTile(byte(v))); got != byte(v) {
+			t.Fatalf("%#x 轉兩次變成 %#x", v, got)
+		}
+	}
+}
+
+// TestRotate180IsInvolution 驗整張戰場轉兩次回到原樣，而且真的有轉。
+func TestRotate180IsInvolution(t *testing.T) {
+	cells := make([][]byte, Height)
+	for y := range cells {
+		cells[y] = make([]byte, Width)
+		for x := range cells[y] {
+			cells[y][x] = byte((y*Width + x) % 256)
+		}
+	}
+	once := Rotate180(cells)
+	if once[0][0] == cells[0][0] && once[Height-1][Width-1] == cells[Height-1][Width-1] {
+		t.Error("轉了跟沒轉一樣——正對照不成立")
+	}
+	twice := Rotate180(once)
+	for y := range cells {
+		for x := range cells[y] {
+			if twice[y][x] != cells[y][x] {
+				t.Fatalf("(%d,%d) 轉兩次變成 %#x，原本 %#x", x, y, twice[y][x], cells[y][x])
+			}
+		}
+	}
+	if got := RotateGateX(0); got != 0 {
+		t.Errorf("RotateGateX(0) ＝ %d，野戰的 0 不該動", got)
+	}
+	if got := RotateGateX(0x10); got != 0x2F {
+		t.Errorf("RotateGateX(0x10) ＝ %#x，預期 0x2F", got)
+	}
+}
+
+// TestRotateKeepsWallAndGateCounts 用原版素材：214 張戰場逐張轉一次，
+// 城壁與門的格數必須不變。
+//
+// ⭐ 這一條是**值對映表的正對照**：`sub_1CBBC` 把 `0xD0`–`0xEF` 與
+// `≥0xF0` 換成鏡射版，換錯就會把城壁換成別的東西，格數立刻對不上。
+func TestRotateKeepsWallAndGateCounts(t *testing.T) {
+	lib := load(t)
+	count := func(cells [][]byte, lo, hi byte) int {
+		n := 0
+		for _, row := range cells {
+			for _, v := range row {
+				if v >= lo && v <= hi {
+					n++
+				}
+			}
+		}
+		return n
+	}
+	for f := 0; f < NumFields; f++ {
+		src := lib.Tiles(f)
+		dst := Rotate180(src)
+		for _, r := range []struct {
+			name   string
+			lo, hi byte
+		}{{"城壁", 0xD0, 0xDF}, {"門", 0xF0, 0xF7}} {
+			if a, b := count(src, r.lo, r.hi), count(dst, r.lo, r.hi); a != b {
+				t.Fatalf("戰場 %d 的%s轉完從 %d 格變成 %d 格", f, r.name, a, b)
+			}
+		}
+	}
+}

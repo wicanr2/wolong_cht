@@ -988,8 +988,8 @@ func (g *game) installTactical(dir string) {
 	}
 	setup := &state.TacticalSetup{
 		Forms: forms,
-		Field: func(node int, siege bool) *tactical.Field {
-			return g.buildField(node, siege)
+		Field: func(node int, siege, rotate bool) *tactical.Field {
+			return g.buildField(node, siege, rotate)
 		},
 		Script: func(node int, siege bool, tactic int) []byte {
 			if g.battleLib == nil {
@@ -1029,17 +1029,26 @@ func loadBattleLibrary(dir string) *battle.Library {
 //   - **攻城戰**：戰場編號就是據點編號（`docs/re/05`）
 //   - **野戰**：從大地圖上即時算（`internal/rules/battlefield`）——
 //     取軍團所在格與下方四格的地形類型去配一張 21 筆的表
-func (g *game) buildField(node int, siege bool) *tactical.Field {
+func (g *game) buildField(node int, siege, rotate bool) *tactical.Field {
 	n := g.fieldNumber(node, siege)
 	if g.battleLib == nil || n < 0 || n >= battle.NumFields {
 		return syntheticField(siege)
 	}
+	// 野戰的翻轉來自地形配對（`sub_14BDD` 換順序才配上），
+	// 攻城的來自「玩家守城」（`sub_14ED7`）——兩條路合成同一個旗標。
+	if !siege {
+		rotate = g.fieldRotates(node)
+	}
+	g.battleRotate = rotate
 	// 用原始圖塊值建，不只用堆疊高度——城壁與門是從圖塊值認出來的，
 	// 而且打壞時要換圖塊再重算高度（docs/re/11 §5.9）。
 	// 再加上七層子圖塊表：兩個平面的地面圖與登城都靠它算（docs/spec/36）。
+	tiles, gate := g.battleLib.Tiles(n), g.battleLib.GateX(n)
+	if rotate {
+		tiles, gate = battle.Rotate180(tiles), battle.RotateGateX(gate)
+	}
 	return tactical.NewFieldFromTileLayers(
-		g.battleLib.Tiles(n), g.battleLib.Heights(n),
-		g.battleLib.TileLayers(n), g.battleLib.GateX(n))
+		tiles, g.battleLib.Heights(n), g.battleLib.TileLayers(n), gate)
 }
 
 // fieldNumber 回傳這一場用第幾張戰場：攻城就是據點編號，野戰現算。
@@ -1085,6 +1094,30 @@ func (g *game) fieldForNode(node int) int {
 	return f
 }
 
+// fieldRotates 回報野戰的戰場要不要轉 180 度：`sub_14BDD` 的配對
+// **換過順序才中**時 `xor dh, 40h`（docs/spec/56 §1）。
+func (g *game) fieldRotates(node int) bool {
+	if g.lib == nil || g.lib.World == nil || node < 0 || node >= len(g.world.Cities) {
+		return false
+	}
+	cx, cy := g.world.Cities[node].X, g.world.Cities[node].Y
+	at := func(dx, dy int) int {
+		t, err := g.lib.World.Tile(cx+dx, cy+dy)
+		if err != nil {
+			return 0
+		}
+		return battlefield.Terrain(t)
+	}
+	_, rot := battlefield.Select(g.playerHeading(), battlefield.Neighbours{
+		Centre:    at(0, 0),
+		Down:      at(0, 1),
+		DownLeft:  at(-1, 1),
+		DownRight: at(1, 1),
+		TwoDown:   at(0, 2),
+	})
+	return rot
+}
+
 // syntheticField 是沒有原版戰場資料時的替代品。幾何同尺寸，內容是自己生的。
 func syntheticField(siege bool) *tactical.Field {
 	stack := make([][]int, tactical.Height)
@@ -1128,7 +1161,7 @@ func (g *game) playerHeading() int {
 // demoBattle 是驗收捷徑。siegeNode ≥ 0 時指定攻城的戰場（＝據點編號），
 // **為的是能在 remake 上開出與原版影格同一張戰場**——不同戰場的地形與
 // 圖塊組都不同，拿兩張不同的戰場比顏色不算數。
-func (g *game) demoBattle(siege, choose bool, siegeNode int) {
+func (g *game) demoBattle(siege, choose bool, siegeNode int, defend bool) {
 	p := g.world.Player
 	var mine, theirs int = -1, -1
 	for i, gen := range g.world.Generals {
@@ -1160,15 +1193,20 @@ func (g *game) demoBattle(siege, choose bool, siegeNode int) {
 	}
 	me := &g.world.Corps[mine]
 	foe := &g.world.Corps[theirs]
+	if defend {
+		// 玩家守城：兩個角色對調。原版這一支會 `or byte_10D35, 0C0h`，
+		// 也就是**側欄換邊 ＋ 戰場轉 180 度**（docs/spec/56 §1）。
+		me, foe = foe, me
+	}
 	if siege {
 		// 攻城：守方待在自己的城裡，攻方從隔壁一格走進去。
 		// 走的是**正常的遭遇判定**——`resolveContact` 先問據點再問野戰。
 		node := foe.Node
 		if siegeNode >= 0 && siegeNode < len(g.world.Cities) {
 			node = siegeNode
-			// 攻城要打的是**敵方的城**，所以驗收捷徑把這座城暫時
+			// 攻城要打的是**守方的城**，所以驗收捷徑把這座城暫時
 			// 記到守方名下。只影響 fixture，不是規則。
-			g.world.Cities[node].Owner = g.world.Corps[theirs].Faction
+			g.world.Cities[node].Owner = foe.Faction
 			foe.Node, foe.TargetNode = node, node
 			foe.X, foe.Y = g.world.Cities[node].X, g.world.Cities[node].Y
 			foe.TargetX, foe.TargetY = foe.X, foe.Y

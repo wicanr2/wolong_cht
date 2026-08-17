@@ -136,6 +136,10 @@ type game struct {
 	// 索引與 library.BattleFramePart 相同。
 	battleFrame [4]*ebiten.Image
 
+	// battleRotate 是這一場的戰場有沒有轉 180 度（docs/spec/56）。
+	// `buildField` 決定，繪圖層要用同一個值，否則畫面與規則層會不一致。
+	battleRotate bool
+
 	// 標題兩行與兩條計量條的顏色，一律查調色盤（docs/spec/54）。
 	battleTitlePlace color.RGBA // 索引 9：地名與「作戰」
 	battleTitleLord  color.RGBA // 索引 11：君主名與「對」
@@ -1297,6 +1301,7 @@ func main() {
 	openMarchMode := flag.Bool("open-march-mode", false, "截圖前停在行軍指示的三選一（驗收用）")
 	openMarchList := flag.Bool("open-march-list", false, "截圖前編一支軍團並停在行軍目的地一覽（驗收用）")
 	siegeNode := flag.Int("siege-node", -1, "指定攻城的戰場＝據點編號（驗收用，配 -open-siege）")
+	siegeDefend := flag.Bool("siege-defend", false, "攻城時玩家當守方（原版會把戰場轉 180 度，docs/spec/56）")
 	openMessage := flag.Bool("open-message", false, "截圖前先開玩家首都的暴風雨 TALK #70 通知（驗收用）")
 	openTalkIndex := flag.Int("open-talk-index", -1, "截圖前直接開指定 TALK.DAT 槽位（驗收用）")
 	openOutcome := flag.String("open-outcome", "", "只供截圖的敗北 modal fixture：trust 或 faction")
@@ -1361,7 +1366,7 @@ func main() {
 		}
 		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *openForm, *openCorps, *openMarchList,
 			*openMarchMode, *openBattle, *openSiege, *openBattleChoice, *openMessage,
-			*openTalkIndex, *openOutcome, *siegeNode, *camAt)
+			*openTalkIndex, *openOutcome, *siegeNode, *siegeDefend, *camAt)
 	} else {
 		slots := inspectLauncherSlots(*saveFile)
 		// 劇本標題從檔案讀，不硬編（docs/spec/25 §1.2）。
@@ -1569,7 +1574,7 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 
 func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, openForm, openCorps, openMarchList, openMarchMode,
 	openBattle, openSiege, openBattleChoice, openMessage bool, openTalkIndex int,
-	openOutcome string, siegeNode int, camAt string) {
+	openOutcome string, siegeNode int, siegeDefend bool, camAt string) {
 	w := g.world
 	if w == nil {
 		return
@@ -1639,7 +1644,7 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 		g.list.Confirm()
 	}
 	if openBattle || openSiege || openBattleChoice {
-		g.demoBattle(openSiege, !openBattleChoice, siegeNode)
+		g.demoBattle(openSiege, !openBattleChoice, siegeNode, siegeDefend)
 	}
 	if openForm || openCorps {
 		g.demoCorps(openCorps)

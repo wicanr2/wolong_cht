@@ -290,15 +290,68 @@ func decodePlanar(b []byte) *SubTile {
 
 // SubTiles 回傳第 n 張戰場每一格由下往上要疊哪幾個子圖塊。
 func (l *Library) SubTiles(n int) [][][]byte {
+	return l.SubTilesFor(n, l.Tiles(n))
+}
+
+// SubTilesFor 同 SubTiles，但格子由呼叫端給——戰場轉 180 度時
+// 傳進來的是轉過的那一份（docs/spec/56 §3）。
+// **繪圖層與規則層一定要用同一份**，否則兵走的路與看到的地形會不一致。
+func (l *Library) SubTilesFor(n int, cells [][]byte) [][][]byte {
 	t := l.TileSet(n)
-	off := FieldsBase + n*FieldSize + CellsOff
-	cells := l.mapData[off : off+NumCells]
 	out := make([][][]byte, Height)
 	for y := 0; y < Height; y++ {
 		out[y] = make([][]byte, Width)
 		for x := 0; x < Width; x++ {
-			out[y][x] = l.stacks[t][cells[y*Width+x]]
+			out[y][x] = l.stacks[t][cells[y][x]]
 		}
 	}
 	return out
+}
+
+// RotateTile 是 `sub_1CBBC` 的值對映：戰場轉 180 度時，
+// **有方向性的圖塊要換成鏡射版**（斜坡、河岸、路口）。
+//
+// 三段不同的規則代表圖塊表在這三個值域用了三種排列慣例
+// （docs/formats/07 §2.3）。**照抄，不要合併成一條算式。**
+func RotateTile(v byte) byte {
+	switch {
+	case v < 0x30:
+		return v
+	case v <= 0xCF:
+		return ((v - 0x30) ^ 0x10) + 0x30
+	case v <= 0xEF:
+		if n := v & 3; n == 0 || n == 3 {
+			return v ^ 3
+		}
+		return v
+	default:
+		return v ^ 1
+	}
+}
+
+// Rotate180 把一張戰場的格子轉 180 度（`sub_1CB9B`）。
+//
+// 原版是在載入的 4,096 B 緩衝區上就地首尾對調 1,984 次
+// （`0x40`–`0xFBF` ＝ 64×62 格），對調的同時每一格的值走 RotateTile。
+// 這裡回傳新的一份，載入的檔案不動。
+func Rotate180(cells [][]byte) [][]byte {
+	out := make([][]byte, len(cells))
+	for y := range cells {
+		row := make([]byte, len(cells[y]))
+		src := cells[len(cells)-1-y]
+		for x := range row {
+			row[x] = RotateTile(src[len(src)-1-x])
+		}
+		out[y] = row
+	}
+	return out
+}
+
+// RotateGateX 是索引第二欄（城壁移動的目標 X）的鏡射：`0x3F − v`。
+// **0 不動**——0 表示這是野戰用的戰場，沒有門（docs/formats/07 §2.2）。
+func RotateGateX(x int) int {
+	if x == 0 {
+		return 0
+	}
+	return 0x3F - x
 }

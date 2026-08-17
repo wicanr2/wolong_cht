@@ -89,14 +89,21 @@ func (g *game) newBattleView(field int) *battleView {
 		return nil
 	}
 	var minimap *ebiten.Image
+	var subs [][][]byte
 	if field >= 0 && field < battle.NumFields {
-		raw := battle.RenderTacticalMinimap(
-			g.battleLib.Tiles(field), g.battleLib.TileAttributes(field))
+		// 與 buildField 用同一個旗標：翻轉的戰場連小地圖一起翻
+		// （docs/spec/56 §3）。
+		tiles := g.battleLib.Tiles(field)
+		if g.battleRotate {
+			tiles = battle.Rotate180(tiles)
+		}
+		raw := battle.RenderTacticalMinimap(tiles, g.battleLib.TileAttributes(field))
 		minimap = ebiten.NewImageFromImage(raw.RGBA(bank))
+		subs = g.battleLib.SubTilesFor(field, tiles)
 	}
 	return &battleView{
 		lib: g.battleLib, set: g.battleLib.TileSet(field),
-		subs:  g.battleLib.SubTiles(field),
+		subs:  subs,
 		cache: map[int]*ebiten.Image{}, pal: bank,
 		sprites: g.battleSprites, spCache: map[int]*ebiten.Image{},
 		sourceCache: map[int]*ebiten.Image{},

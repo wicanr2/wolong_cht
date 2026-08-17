@@ -70,7 +70,7 @@
 | [`docs/playtest/37-main-screen-parity.md`](playtest/37-main-screen-parity.md) | 37 — 開局主畫面的逐區對拍：第一次真的對原版跑 | ⭐⭐ 五區全部 PASS。開局主畫面的 640×400 逐像素等於原版。 | 2026-08-17 |
 | [`docs/playtest/38-window-parity.md`](playtest/38-window-parity.md) | 38 — 三個視窗開著時的對拍：三個視窗區逐像素相同 | 通過。 | 2026-08-17 |
 | [`docs/playtest/39-system-window-parity.md`](playtest/39-system-window-parity.md) | 39 — 系統選單開著時的對拍：五區裡四區 PASS，選單本身也 PASS | 通過。 | 2026-08-17 |
-| [`docs/playtest/40-tactical-parity.md`](playtest/40-tactical-parity.md) | 40 — 戰場的第一次逐區對拍：側欄兩區 PASS，戰場本身差在沒轉 180 度 | 部分通過。 | 2026-08-17 |
+| [`docs/playtest/40-tactical-parity.md`](playtest/40-tactical-parity.md) | 40 — 戰場的第一次逐區對拍：側欄兩區 PASS，戰場翻轉補上 | 部分通過。 | 2026-08-17 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | remake 推廣片、代表幀「經典再現」比較片與 DOS/V／remake 實機動態比較片均已產出並完成媒體規格驗證… | 2026-08-12 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
 | [`docs/promo/dosv-adlib-and-tactical-review.md`](promo/dosv-adlib-and-tactical-review.md) | 推廣片原版 AdLib 與戰術骨架審查 | 原版音軌來源與影片縮放鏈已修正；戰術固定骨架的 16 px viewport 偏差已修正。完整同狀態戰術 parit… | 2026-08-12 |
@@ -192,6 +192,7 @@
 | [`docs/spec/53-city-tile-by-ownership.md`](spec/53-city-tile-by-ownership.md) | 53 — 據點中心的圖塊跟著歸屬換，首都再疊一張 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/54-ui-colours-from-palette.md`](spec/54-ui-colours-from-palette.md) | 54 — 介面顏色一律查調色盤，命令列的底是黑的 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/55-minimap-view-box.md`](spec/55-minimap-view-box.md) | 55 — 縮小地圖的視野框是點陣，而且解開了「差四格」 | CONFORMED。 | 2026-08-17 |
+| [`docs/spec/56-battlefield-rotation.md`](spec/56-battlefield-rotation.md) | 56 — 戰場轉 180 度：什麼時候轉、轉的時候圖塊值要換 | CONFORMED。三段算式都接上了，並用原版的許昌攻防戰驗過： field 區 87.8% → 46.1%、小地圖… | 2026-08-17 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | CONFORMED。管線接起來了，也對原版跑過一輪 （[../playtest/37](../playtest/37… | 2026-08-15 |
 | [`docs/spec/91-tactical-parity.md`](spec/91-tactical-parity.md) | 91 — 戰場的逐區對拍：分區、同狀態怎麼達成 | DRAFT。分區與判定沿用 docs/spec/90，差別在 | 2026-08-17 |
 

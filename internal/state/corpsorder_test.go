@@ -200,7 +200,7 @@ func TestDelegatedPlayerSideSkipsEncounter(t *testing.T) {
 	// 假的戰場來源：只要不是 nil，wantsTactical 就會走到委任那一段。
 	w.SetTactical(&TacticalSetup{
 		Forms: &tactical.Formations{},
-		Field: func(int, bool) *tactical.Field { return nil },
+		Field: func(int, bool, bool) *tactical.Field { return nil },
 	})
 
 	for _, tc := range []struct {

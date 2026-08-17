@@ -15,7 +15,9 @@
 import sys
 
 sys.path.insert(0, "tools")
-from parity_diff import read_png, REGIONS
+from parity_diff import read_png, REGIONS, TACTICAL_REGIONS
+
+ALL = REGIONS + TACTICAL_REGIONS
 
 
 def main():
@@ -27,10 +29,10 @@ def main():
     wb, hb, b = read_png(sys.argv[2])
     if (wa, ha) != (wb, hb):
         raise SystemExit("尺寸不同：%dx%d vs %dx%d" % (wa, ha, wb, hb))
-    region = next((r for r in REGIONS if r[0] == name), None)
+    region = next((r for r in ALL if r[0] == name), None)
     if region is None:
         raise SystemExit("沒有這一區：%s（有 %s）"
-                         % (name, "、".join(r[0] for r in REGIONS)))
+                         % (name, "、".join(r[0] for r in ALL)))
     _, rx, ry, rw, rh = region
     # 取區的內縮部分，讓平移之後兩側都還在圖內。
     x0, y0 = rx + radius, ry + radius

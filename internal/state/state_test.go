@@ -2025,7 +2025,7 @@ func TestPlayerBattleGoesTactical(t *testing.T) {
 	w := load(t, 0)
 	w.SetTactical(&TacticalSetup{
 		Forms: tactical.SyntheticFormations(),
-		Field: func(int, bool) *tactical.Field {
+		Field: func(int, bool, bool) *tactical.Field {
 			stack := make([][]int, tactical.Height)
 			for y := range stack {
 				stack[y] = make([]int, tactical.Width)
@@ -2110,7 +2110,7 @@ func TestPlayerBattleCanBeDelegated(t *testing.T) {
 	w := load(t, 0)
 	w.SetTactical(&TacticalSetup{
 		Forms: tactical.SyntheticFormations(),
-		Field: func(int, bool) *tactical.Field {
+		Field: func(int, bool, bool) *tactical.Field {
 			stack := make([][]int, tactical.Height)
 			for y := range stack {
 				stack[y] = make([]int, tactical.Width)
@@ -2363,7 +2363,7 @@ func TestNormalScenarioTacticalBattleTerminates(t *testing.T) {
 	}
 	w.SetTactical(&TacticalSetup{
 		Forms: forms,
-		Field: func(node int, siege bool) *tactical.Field {
+		Field: func(node int, siege, rotate bool) *tactical.Field {
 			if !siege || node < 0 || node >= battle.NumFields {
 				return nil
 			}
