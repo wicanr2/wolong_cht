@@ -1306,6 +1306,9 @@ func main() {
 	openMarchList := flag.Bool("open-march-list", false, "截圖前編一支軍團並停在行軍目的地一覽（驗收用）")
 	siegeNode := flag.Int("siege-node", -1, "指定攻城的戰場＝據點編號（驗收用，配 -open-siege）")
 	siegeDefend := flag.Bool("siege-defend", false, "攻城時玩家當守方（原版會把戰場轉 180 度，docs/spec/56）")
+	siegeCorps := flag.String("siege-corps", "", "拿**存檔裡現成的**兩支軍團開攻城戰：`攻,守`（編號用 -list-corps 看，docs/spec/90 §2.3）")
+	battleSteps := flag.Int("battle-steps", 120, "截圖前推進幾個戰術 tick；0 ＝ 原版開場對白那一幀")
+	listCorps := flag.Bool("list-corps", false, "把載入後還活著的軍團印出來（編號、勢力、主將、兵力）")
 	battleCam := flag.String("battle-cam", "", "覆寫戰術鏡頭的世界格 `X,Y`（驗收用；原版初值是 36,14）")
 	openMessage := flag.Bool("open-message", false, "截圖前先開玩家首都的暴風雨 TALK #70 通知（驗收用）")
 	openTalkIndex := flag.Int("open-talk-index", -1, "截圖前直接開指定 TALK.DAT 槽位（驗收用）")
@@ -1377,6 +1380,13 @@ func main() {
 			if err := g.readSave(*loadSlot); err != nil {
 				log.Fatalf("-load-slot %d 讀不起來：%v", *loadSlot, err)
 			}
+			// **空的槽要當錯誤**：載進來的是一塊沒有內容的區塊，
+			// 解出來是一堆看似合理的垃圾（武將名字都在，據點編號卻超出範圍），
+			// 而對拍會把那些垃圾算成「remake 畫錯了」。年份 0 只可能是空槽——
+			// 四個劇本都從 190 年以後開始。
+			if g.world.Clock.Year == 0 {
+				log.Fatalf("-load-slot %d 是空的（年份 0）——那一槽沒有存檔", *loadSlot)
+			}
 			log.Printf("從第 %d 槽載入：%d年%d月%d日，玩家勢力 %d",
 				*loadSlot+1, g.world.Clock.Year, g.world.Clock.Month,
 				g.world.Clock.Day, g.world.Player)
@@ -1385,9 +1395,13 @@ func main() {
 			// 而原版載入完什麼都不留。驗收路徑清掉它。
 			g.lastEvent = ""
 		}
+		if *listCorps {
+			logAliveCorps(g)
+		}
 		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *openForm, *openCorps, *openMarchList,
 			*openMarchMode, *openBattle, *openSiege, *openBattleChoice, *openMessage,
-			*openTalkIndex, *openOutcome, *siegeNode, *siegeDefend, *camAt, *battleCam)
+			*openTalkIndex, *openOutcome, parseSiegeFixture(*siegeNode, *siegeDefend, *siegeCorps, *battleSteps),
+			*camAt, *battleCam)
 	} else {
 		slots := inspectLauncherSlots(*saveFile)
 		// 劇本標題從檔案讀，不硬編（docs/spec/25 §1.2）。
@@ -1593,9 +1607,58 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 	return nil
 }
 
+// siegeFixture 是 `-siege-*`／`-battle-steps` 那一組驗收旗標。
+//
+// corps 兩格是「攻方軍團、守方軍團」的編號，**−1 ＝ 現編**
+// （`demoBattle` 的舊行為）。指定既有軍團時兵種與人數照存檔，
+// 側欄的名字與計量條才有機會與原版一致（docs/spec/90 §2.3）。
+type siegeFixture struct {
+	node   int
+	defend bool
+	corps  [2]int
+	steps  int
+}
+
+// parseSiegeFixture 把 `-siege-corps 攻,守` 解成兩個編號。
+// 格式不對就退回「現編」，並在 log 說明——**驗收旗標不要靜默失敗**，
+// 否則對出來的差異會被算到別的成因頭上。
+func parseSiegeFixture(node int, defend bool, corps string, steps int) siegeFixture {
+	f := siegeFixture{node: node, defend: defend, corps: [2]int{-1, -1}, steps: steps}
+	if corps == "" {
+		return f
+	}
+	var att, def int
+	if _, err := fmt.Sscanf(corps, "%d,%d", &att, &def); err != nil || att < 0 || def < 0 {
+		log.Printf("⚠ -siege-corps 要 `攻,守` 兩個非負整數，收到 %q：改用現編的軍團", corps)
+		return f
+	}
+	f.corps = [2]int{att, def}
+	return f
+}
+
+// logAliveCorps 印出載入後還活著的軍團，給 `-siege-corps` 挑編號用。
+// 軍團與武將同索引（`state.World.Leader`），所以編號就是主將的編號。
+func logAliveCorps(g *game) {
+	if g.world == nil {
+		return
+	}
+	n := 0
+	for i := range g.world.Corps {
+		c := &g.world.Corps[i]
+		if !c.Alive {
+			continue
+		}
+		n++
+		log.Printf("軍團 %3d：勢力 %2d　主將 %-8s　兵 %5d　據點 %3d　位置 (%3d,%3d)",
+			i, c.Faction, big5(g.world.Generals[g.world.Leader(i)].Name),
+			c.Men, c.Node, c.X, c.Y)
+	}
+	log.Printf("還活著的軍團共 %d 支", n)
+}
+
 func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, openForm, openCorps, openMarchList, openMarchMode,
 	openBattle, openSiege, openBattleChoice, openMessage bool, openTalkIndex int,
-	openOutcome string, siegeNode int, siegeDefend bool, camAt, battleCam string) {
+	openOutcome string, siege siegeFixture, camAt, battleCam string) {
 	w := g.world
 	if w == nil {
 		return
@@ -1665,7 +1728,7 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 		g.list.Confirm()
 	}
 	if openBattle || openSiege || openBattleChoice {
-		g.demoBattle(openSiege, !openBattleChoice, siegeNode, siegeDefend)
+		g.demoBattle(openSiege, !openBattleChoice, siege)
 	}
 	if battleCam != "" {
 		var bx, by int

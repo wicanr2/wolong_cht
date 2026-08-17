@@ -1189,7 +1189,12 @@ func (g *game) playerHeading() int {
 // demoBattle 是驗收捷徑。siegeNode ≥ 0 時指定攻城的戰場（＝據點編號），
 // **為的是能在 remake 上開出與原版影格同一張戰場**——不同戰場的地形與
 // 圖塊組都不同，拿兩張不同的戰場比顏色不算數。
-func (g *game) demoBattle(siege, choose bool, siegeNode int, defend bool) {
+func (g *game) demoBattle(siege, choose bool, f siegeFixture) {
+	siegeNode, defend := f.node, f.defend
+	if att, def := f.corps[0], f.corps[1]; att >= 0 && def >= 0 {
+		g.demoBattleWithCorps(siege, choose, siegeNode, att, def, f.steps)
+		return
+	}
 	p := g.world.Player
 	var mine, theirs int = -1, -1
 	for i, gen := range g.world.Generals {
@@ -1226,6 +1231,32 @@ func (g *game) demoBattle(siege, choose bool, siegeNode int, defend bool) {
 		// 也就是**側欄換邊 ＋ 戰場轉 180 度**（docs/spec/56 §1）。
 		me, foe = foe, me
 	}
+	g.stageEncounter(siege, choose, siegeNode, f.steps, me, foe)
+}
+
+// demoBattleWithCorps 拿**存檔裡現成的**兩支軍團開一場，不現編
+// （`-siege-corps`，docs/spec/90 §2.3）。兵種、人數、主將都照存檔，
+// 所以側欄的名字與計量條才有機會與原版一致。
+//
+// 攻守由參數直接指定，**不再看 `-siege-defend`**——玩家站哪一邊
+// 由那兩支軍團的勢力決定，戰場要不要轉 180 度也跟著（docs/spec/56 §1）。
+func (g *game) demoBattleWithCorps(siege, choose bool, siegeNode, att, def, steps int) {
+	if att >= len(g.world.Corps) || def >= len(g.world.Corps) || att == def {
+		g.setEvent("-siege-corps 的編號超出範圍")
+		return
+	}
+	me, foe := &g.world.Corps[att], &g.world.Corps[def]
+	if !me.Alive || !foe.Alive {
+		g.setEvent("-siege-corps 指到的軍團不存在（用 -list-corps 看有哪些）")
+		return
+	}
+	g.stageEncounter(siege, choose, siegeNode, steps, me, foe)
+}
+
+// stageEncounter 把攻方與守方擺到會遭遇的位置，跑到開打，
+// 再推進 steps 個戰術 tick。兩條 fixture 路徑共用這一支——
+// **擺位與遭遇的規則只留一份實作**（`CLAUDE.md` §7 第 6 條）。
+func (g *game) stageEncounter(siege, choose bool, siegeNode, steps int, me, foe *state.Corps) {
 	if siege {
 		// 攻城：守方待在自己的城裡，攻方從隔壁一格走進去。
 		// 走的是**正常的遭遇判定**——`resolveContact` 先問據點再問野戰。
@@ -1267,7 +1298,8 @@ func (g *game) demoBattle(siege, choose bool, siegeNode int, defend bool) {
 	if g.battleActive() {
 		// 只跑到部隊展開。900 tick 會使野戰 fixture 在第一幀 GUI
 		// 前就結束，造成「攻城有戰場、兩軍遭遇只有戰果」的假差異。
-		for i := 0; i < 120; i++ {
+		// steps ＝ 0 是**原版開場對白那一幀**：一個兵都還沒動。
+		for i := 0; i < steps; i++ {
 			g.world.PendingBattle().Battle.Step()
 		}
 		g.tacticalSpeed = 1

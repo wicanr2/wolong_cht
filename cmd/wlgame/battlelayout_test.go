@@ -639,3 +639,29 @@ func TestMarchModeRowsAndHitTest(t *testing.T) {
 		t.Errorf("第 3 列 %v 跑出視窗 %v", marchModeRowRect(2), win)
 	}
 }
+
+// TestParseSiegeFixture 釘住 `-siege-corps` 的解析：格式不對要**退回現編**
+// 而不是拿一組半殘的編號去開戰（docs/spec/90 §2.3）。
+func TestParseSiegeFixture(t *testing.T) {
+	for _, tc := range []struct {
+		name  string
+		in    string
+		corps [2]int
+	}{
+		{name: "空字串＝現編", in: "", corps: [2]int{-1, -1}},
+		{name: "兩個編號", in: "29,68", corps: [2]int{29, 68}},
+		{name: "少一個＝退回現編", in: "29", corps: [2]int{-1, -1}},
+		{name: "負數＝退回現編", in: "29,-1", corps: [2]int{-1, -1}},
+		{name: "不是數字＝退回現編", in: "張遼,夏侯惇", corps: [2]int{-1, -1}},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			f := parseSiegeFixture(82, true, tc.in, 7)
+			if f.corps != tc.corps {
+				t.Fatalf("corps = %v，預期 %v", f.corps, tc.corps)
+			}
+			if f.node != 82 || !f.defend || f.steps != 7 {
+				t.Fatalf("其他欄位被動到：%+v", f)
+			}
+		})
+	}
+}
