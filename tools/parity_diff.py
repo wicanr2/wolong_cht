@@ -51,9 +51,16 @@ NEAR_RATIO = 0.005
 def read_png(path):
     """回傳 (width, height, pixels)，pixels 是每點 (r, g, b) 的 list of rows。
 
-    支援 8-bit 的灰階／truecolor／truecolor+alpha／**調色盤**。
+    支援 8-bit 的灰階／truecolor／truecolor+alpha／**調色盤**，
+    調色盤另外支援 **1/2/4 bit**。
     調色盤那一項是必要的：兩邊的擷取管線對 16 色畫面都會輸出 color type 3，
     少了它每一次對拍都要先手動轉檔，而「忘了轉」與「真的不一樣」看起來一樣。
+
+    ⚠ **sub-byte 深度不是理論情況**：原版主畫面只用 16 色，ImageMagick
+    因此輸出 `depth=4`，同一條管線的別張圖卻是 `depth=8`——
+    差別只在那張圖用了幾個顏色。少了這一段，對拍會在「剛好夠簡單的畫面」
+    上失敗，而那正是最該拿來比的畫面。
+
     遇到別的格式**明確報錯**，不要猜著解——猜錯會產生看似合理的差分圖。
     """
     data = open(path, "rb").read()
@@ -73,23 +80,28 @@ def read_png(path):
         elif typ == b"IEND":
             break
         pos += 12 + length
-    if depth != 8 or color not in (0, 2, 3, 6):
-        raise ValueError("%s 是 depth=%d color=%d，這支工具只認 8-bit 灰階／RGB／RGBA／調色盤"
-                         % (path, depth, color))
+    ok = (depth == 8 and color in (0, 2, 3, 6)) or (depth in (1, 2, 4) and color == 3)
+    if not ok:
+        raise ValueError("%s 是 depth=%d color=%d，這支工具只認 8-bit 灰階／RGB／RGBA／"
+                         "調色盤，或 1/2/4-bit 調色盤" % (path, depth, color))
     if color == 3 and not plte:
         raise ValueError("%s 是調色盤 PNG 卻沒有 PLTE" % path)
     channels = {0: 1, 2: 3, 3: 1, 6: 4}[color]
     raw = zlib.decompress(b"".join(idat))
-    stride = w * channels
+    # sub-byte 深度的解濾波以 byte 為單位（濾波器不認識像素邊界），
+    # 展開成一像素一 byte 要等解完濾波之後。
+    stride = (w * depth + 7) // 8 if depth < 8 else w * channels
+    # 濾波器的「左邊那一點」是 bpp（byte 為單位，不足 1 byte 算 1）。
+    bpp = max(1, channels * depth // 8)
     out, prev, p = [], bytearray(stride), 0
     for _ in range(h):
         f = raw[p]
         line = bytearray(raw[p + 1:p + 1 + stride])
         p += 1 + stride
         for i in range(stride):
-            a = line[i - channels] if i >= channels else 0
+            a = line[i - bpp] if i >= bpp else 0
             b = prev[i]
-            c = prev[i - channels] if i >= channels else 0
+            c = prev[i - bpp] if i >= bpp else 0
             if f == 1:
                 line[i] = (line[i] + a) & 0xFF
             elif f == 2:
@@ -101,7 +113,14 @@ def read_png(path):
                 pr = a if (pa <= pb and pa <= pc) else (b if pb <= pc else c)
                 line[i] = (line[i] + pr) & 0xFF
         prev = line
-        if color == 3:
+        if depth < 8:
+            idx, mask = [], (1 << depth) - 1
+            for byte in line:
+                for shift in range(8 - depth, -1, -depth):
+                    idx.append((byte >> shift) & mask)
+            idx = idx[:w]
+            out.append([tuple(plte[3 * v:3 * v + 3]) for v in idx])
+        elif color == 3:
             out.append([tuple(plte[3 * v:3 * v + 3]) for v in line])
         elif channels == 1:
             out.append([(v, v, v) for v in line])

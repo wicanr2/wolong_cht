@@ -39,10 +39,11 @@ func TestSeasonColor(t *testing.T) {
 		season  Season
 		r, g, b uint8
 	}{
-		{Spring, 0x88, 0xaa, 0x66},
-		{Summer, 0x55, 0xaa, 0x11},
-		{Autumn, 0xdd, 0x88, 0x00},
-		{Winter, 0xff, 0xff, 0xff},
+		// 走 DOS/V 的 VGA DAC（docs/spec/51）：4 bit 的 f 是 0xF3 不是 0xFF。
+		{Spring, 0x82, 0xa2, 0x61},
+		{Summer, 0x51, 0xa2, 0x10},
+		{Autumn, 0xd3, 0x82, 0x00},
+		{Winter, 0xf3, 0xf3, 0xf3},
 	}
 	for _, w := range want {
 		c := pal.Banks[w.season][14]
@@ -76,10 +77,19 @@ func TestScale(t *testing.T) {
 	}
 }
 
-// TestWhiteIsPureWhite 防止用 v<<4 —— 那會讓白色變成 #f0f0f0。
-func TestWhiteIsPureWhite(t *testing.T) {
+// TestDACScaleNeverReachesFullScale 釘住 docs/spec/51：DOS/V 的 4 bit 通道
+// 走 `shl ah,1` 兩次進 VGA DAC，最大只到 60/63，**畫面上沒有純白**。
+//
+// 這條同時擋住兩種寫法：`v*255/15`（15 → 255，整張畫面亮 4%）
+// 與 `v<<4`（15 → 240，白色發灰）。兩者都不是原版。
+func TestDACScaleNeverReachesFullScale(t *testing.T) {
 	c := load(t, "GAMEPAL.BRG").Banks[0][15]
-	if c.R != 0xff || c.G != 0xff || c.B != 0xff {
-		t.Errorf("色 15 是 #%02x%02x%02x，預期純白", c.R, c.G, c.B)
+	if c.R != 0xf3 || c.G != 0xf3 || c.B != 0xf3 {
+		t.Errorf("色 15 是 #%02x%02x%02x，預期 #f3f3f3", c.R, c.G, c.B)
+	}
+	for v := byte(0); v <= 15; v++ {
+		if got := toSRGB(v, FullBrightness); got > 0xf3 {
+			t.Errorf("toSRGB(%d) = %d，超過 DAC 60 能到的 243", v, got)
+		}
 	}
 }

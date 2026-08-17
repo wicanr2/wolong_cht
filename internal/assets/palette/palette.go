@@ -39,11 +39,21 @@ func Scale(v byte, brightness int) byte {
 	return byte(((int(v) << 4 * brightness) + 0x80) >> 8)
 }
 
-// toSRGB 把 4 bit 通道轉成 8 bit。
+// toSRGB 把 4 bit 通道轉成 8 bit，走的是 **DOS/V 的硬體路徑**。
 //
-// 用 v*255/15 而不是 v<<4：後者會讓 15 變成 240，白色發灰。
+// 規格 docs/spec/51。原版在 DOS/V 多做兩次 `shl ah,1` 才寫進 VGA DAC
+// （docs/re/02 §5），所以 DAC 值是 `4v`——**上限 60，不是 63**。
+// 類比輸出因此永遠到不了滿刻度：色號 15 出來是 `#F3`，不是 `#FF`。
+//
+// 6 → 8 bit 用 VGA 慣用的位元複製。這不是美感選擇：拿松崗 DOS/V 的
+// 實機截圖比對，`GAMEPAL.BRG` 春組 16 色**整組**都出現在畫面上，
+// 而舊的 `v*255/15` 只中黑色一色（tools/palette_dacscale.py）。
+//
+// ⚠ PC-98 的類比調色盤本來就是 4 bit／通道，那一版 15 就是滿刻度。
+// **兩版的顏色本來就不一樣**，這條只管 DOS/V。
 func toSRGB(v byte, brightness int) uint8 {
-	return uint8(int(Scale(v, brightness)) * 0xff / 0x0f)
+	dac := Scale(v, brightness) << 2 // 4 bit → VGA DAC 的 6 bit（0–60）
+	return uint8(dac<<2 | dac>>4)
 }
 
 // Parse 解一個 `.BRG` 檔。每色 3 byte，順序是 B、R、G

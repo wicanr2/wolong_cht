@@ -1,7 +1,8 @@
 # 90 — 同狀態畫面對拍
 
-**狀態：READY。管線的每一段都有現成工具，缺的是把它們接起來
-與一支逐區差分工具。**
+**狀態：CONFORMED。管線接起來了，也對原版跑過一輪
+（[`../playtest/37`](../playtest/37-main-screen-parity.md)）。**
+⭐ 開局用不到存檔——兩邊天然同狀態。
 
 - 日期：2026-08-15
 - 出處：[`docs/re/20`](../re/20-ida-re-coverage-audit.md) §5 第四道 gate（逐層差分）、
@@ -79,8 +80,10 @@ remake 讀原版 `SAVE.DAT` 建立狀態，之後每一輪對拍都從同一份�
 
 | 項目 | 位置 |
 |---|---|
-| 原版擷取 | `tools/dosv_live_capture.sh`（已有）＋ `tools/dosboxx_bridge.sh` 的 pause（已有）|
-| remake 擷取 | `tools/wlgame_live_capture.sh`（已有）|
+| 原版擷取 | `tools/dosv_capture.sh`（主機端入口）→ `tools/dosv_live_capture.sh`（容器內），再 `tools/parity_crop.py` 切成 640×400 |
+| remake 擷取 | `tools/parity_shot.sh`——用 `wlgame -shot` 直接寫**邏輯畫面** 640×400。`tools/shot.sh` 抓的是 1600×900 桌面，尺寸對不上 |
+| 分辨「位移」與「畫錯」 | `tools/parity_shift.py`（平移搜尋）、`tools/parity_locate.py`（拿地標去另一張找）|
+| 看差在哪一種 | `tools/patch_zoom.py`（同一小塊並排放大）、`tools/palette_compare.py`（先排除調色盤刻度）|
 | 逐區差分 | `tools/parity_diff.py` ✅ 正對照已接進 `tools/check.sh` |
 | 紀錄 | `docs/playtest/` 的一份新文件 ＋ 差分圖放 `docs/playtest/parity/` |
 
@@ -90,12 +93,13 @@ remake 讀原版 `SAVE.DAT` 建立狀態，之後每一輪對拍都從同一份�
 |---|---|
 | 自我檢查 ✅ | `--selftest`：同圖每區 0、平移 1 px 每區非 0。**沒有這個正對照，「全 PASS」可能只是工具沒在比**。已接進 `check.sh` |
 | 尺寸不合 ✅ | 大小不同直接報錯——縮放後硬比會把「尺寸不對」這個最重要的線索洗掉 |
-| 對原版 | 第一輪的實際結果寫進 `docs/playtest/` |
+| 對原版 ✅ | 第一輪的實際結果在 [`../playtest/37`](../playtest/37-main-screen-parity.md)：地圖區 0.5%，`faction` 區逐像素 PASS |
 
 ## 7. 未解
 
 | 項目 | 現況 |
 |---|---|
 | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（[`docs/spec/12`](12-strategy-chrome.md) §7）|
-| 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 |
+| 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該就 1:1，還沒試 |
+| 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 |
 | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`）|

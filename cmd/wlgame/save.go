@@ -298,7 +298,7 @@ func (g *game) readSave(slot int) error {
 	if player >= 0 && player < len(w.Factions) {
 		cap := w.Factions[player].Capital
 		if cap >= 0 && cap < len(w.Cities) {
-			g.camX, g.camY = w.Cities[cap].X-viewCols/2, w.Cities[cap].Y-viewRows/2
+			g.camX, g.camY = w.Cities[cap].X-centreCol, w.Cities[cap].Y-centreRow
 			g.clampCam()
 		}
 	}

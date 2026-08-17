@@ -18,18 +18,19 @@
 
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
-| 規則正確性 | 49 | 47 | 2 | 0 |
+| 規則正確性 | 50 | 48 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
 | 程式碼理解 | 217 | 210 | 7 | 0 |
-| 驗收 | 53 | 45 | 8 | 0 |
+| 驗收 | 59 | 49 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 108 | 103 | 5 | 0 |
-| **合計** | **481** | 458 | 22 | 1 |
+| 其他 | 111 | 106 | 5 | 0 |
+| **合計** | **491** | 466 | 24 | 1 |
 
-## 2.1 規則正確性（49 條）
+## 2.1 規則正確性（50 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
+| [`mechanics/10-strategy.md`](../mechanics/10-strategy.md) | 六個編成位置的**效果**未解（名稱有了，效果沒有） | 說明書 11.2「陣形の有利不利」；`20-military.md` 也還掛著 | 靜態 |
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | `sub_10A65` 的內插演算法 | 只影響畫面 | 靜態 |
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | 最高速那一檔在原版實機上是多少 | 機器相依，要實測才有數字；只影響手感調校 | 實測 |
 | [`mechanics/20-military.md`](../mechanics/20-military.md) | 玩家六個位置如何完整影響戰力仍未解 | （散句） | 靜態 |
@@ -344,7 +345,7 @@
 | [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `sub_189A4(al=1, dx=0, bx=2, cx=151Bh)` | `sub_13D09` 在貼完 `IVENTGRF` 之後畫的框，與 `sub_1895D` 是不是同一組單位沒驗 | 靜態 |
 | [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `IVENTGRF` 插圖本身的位置 | `sub_13D09` 的 `dx = 0E07h` 是餵給 `sub_1E38C`（讀檔）的參數，不是座標。插圖在畫面上的位置沒量 | 靜態 |
 
-## 2.4 驗收（53 條）
+## 2.4 驗收（59 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -360,7 +361,7 @@
 | [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 四張 24×16 圖形的內容 | 顯示清單指到圖庫位移 `0x1200`／`0x12C0`／`0x1380`／`0x1440`，還沒畫出來看；remake 先用同位置同尺寸的色塊佔位 | 實測 |
 | [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 其他 10 個顯示清單場景 | 同一支直譯器有 11 個呼叫端，只讀了場景 0（`../re/48` §5） | 靜態 |
 | [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 各視窗內部的像素 | 只對過邊線位置，沒有對過內容 | 靜態 |
-| [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 原版執行期的開關行為 | **沒驗過**：模擬器上主畫面收不到點擊（`23` §4.1） | 靜態 |
+| [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 原版執行期的開關行為 | **點得到了**（2026-08-17）：松崗 DOS/V 實跑點開了縮小地圖。但要送對座標得先過兩層——視窗的 640×480 對遊戲的 640×400 是等比對映（送 y 乘 1.2），而**進到大地圖之後 INT 33 的範圍又換成整個世界**（`sub_120D6` 的 `0..0x17FF × 0..0… | 實測 |
 | [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 系統視窗的四個項目 | 存檔／畫面模式／音源／戰略速度，不在這一輪範圍 | 靜態 |
 | [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | 這個實驗**沒有**證明下面這些事。 | （未解小節內文） | 靜態 |
 | [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | **逐曲觸發** | 只錄到開場動畫（`D7OPEN.EXE` 自己會播）。⚠ 這一項**不再擋住任何事**——音檔改由 `tools/bgm2ogg.sh` 離線渲染，不需要在模擬器裡逐首觸發。要當對照組才需要它 | 靜態 |
@@ -401,6 +402,12 @@
 | [`playtest/35-advise-verdict-screens.md`](../playtest/35-advise-verdict-screens.md) | 遷都的畫面 | 目標用一覽表挑，原版是地圖選點（`sub_17400`）。沒有截圖 | 實測 |
 | [`playtest/36-window-texture.md`](../playtest/36-window-texture.md) | 取用端 | `KI.EXE` 裡哪一段程式把這 128 byte 鋪上去的還沒找到（三條路都排除了）。**排法已經由實機畫面定案**，取用端只影響「還有沒有別的用法」 | 靜態 |
 | [`playtest/36-window-texture.md`](../playtest/36-window-texture.md) | 米色視窗 | 一覽表那種米色底原版有沒有紋路沒量過（截圖裡那一片是純色） | 實測 |
+| [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 據點中央的勢力徽記 | remake 沒畫（§4） / 找出原版換圖塊的規則 | 靜態 |
+| [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 橫幅數字的字模 | 原版墨水高 14 列，remake 的倚天 ASCII 只有 9 列 / 找出原版畫數字用的字模 | 靜態 |
+| [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 四個視窗開著時的對拍 | **還沒做**。原版要先移游標再按同一點才會分派（`../re/47` §3.1），單純 `click` 會被當成移動吃掉 / timeline 用 `click:x,y;press` 成對送 | 靜態 |
+| [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | DOSBox 的滑鼠座標 | 視窗 640×480、遊戲 640×400 置中，而 INT 33 把**整個視窗**等比對映到遊戲畫面（送 y 要乘 1.2）。這是本機設定的性質，不是原版的 / 把 `int33 max y` 改成 400 再量一次 | 實測 |
+| [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 進到大地圖之後的滑鼠座標 | **又換一套**：`sub_120D6` 把 INT 33 的範圍改成 `0..0x17FF × 0..0x101F`（6143×4127 ＝ 整個世界的像素），螢幕座標 ＝ 原始座標 − 鏡頭原點。所以同一個視窗位置在選單裡與在地圖上指到完全不同的地方 / 用 `tools/cursor_probe.py` 在… | 靜態 |
+| [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 鏡頭 `sub_12151` 的水平參數 | 機器碼是 20，實機量到 16（`../spec/52` §4） / 讀 `sub_1D66A` 的畫面起點（`es=0A0C8h`＋`di=0A00h`） | 靜態 |
 
 ## 2.5 外部資料（17 條）
 
@@ -424,7 +431,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（108 條）
+## 2.6 其他（111 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -533,8 +540,11 @@
 | [`spec/49-advise-relocate-and-sortie.md`](../spec/49-advise-relocate-and-sortie.md) | `sub_16EC9` | `sub_16E8F` 編成前的檢查，只確認「君主還沒帶軍團」這一條，其餘沒逐行讀 | 靜態 |
 | [`spec/49-advise-relocate-and-sortie.md`](../spec/49-advise-relocate-and-sortie.md) | 遷都的地圖選點 | `sub_17400` 沒讀，remake 用一覽表代替 | 靜態 |
 | [`spec/49-advise-relocate-and-sortie.md`](../spec/49-advise-relocate-and-sortie.md) | 進言的指令列 | 五項在原版指令樹裡的排法（`docs/re/22`）沒有逐格對過，remake 用自己的小視窗 | 靜態 |
+| [`spec/52-main-screen-camera-and-banner-date.md`](../spec/52-main-screen-camera-and-banner-date.md) | `sub_12151` 的入口 `ax` | 五個呼叫點都是 `ax=14h`（20）／`cx=0Ch`（12）。**垂直的 12 與量到的一致，水平的 20 與量到的 16 差 4**，原因未解——`sub_1D66A` 的 `es=0A0C8h` ＋ `di=0A00h` 這組畫面起點還沒讀懂。**採用量到的值**，不採用推的值 | 靜態 |
+| [`spec/52-main-screen-camera-and-banner-date.md`](../spec/52-main-screen-camera-and-banner-date.md) | 日期的數字字模 | 原版的數字墨水高 **14 列**（y 9–22），remake 的倚天 ASCII 只有 **9 列**（y 12–20）。字寬相同、形狀不同，原版那一套字模還沒找到 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
-| [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
+| [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |
+| [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |
 
 ## 3. 這支工具的盲區
@@ -548,4 +558,7 @@
 或用別的詞說「這個還不知道」的缺口抽不到**——下列檔案提到未解
 卻一列都沒抽出來，要嘛缺口寫成別的句式，要嘛那些字樣只是在講別的事：
 
-- `docs/mechanics/10-strategy.md`
+（沒有）
+
+只印抽得到的部分，會讓解析失敗長得像「那份文件沒有缺口」。
+這一節就是為了讓那個差別看得見。

@@ -245,7 +245,7 @@ func (g *game) openCityList() {
 			// 說明書：「選了游標移過去」。這裡把鏡頭移到該據點，
 			// 並開原版的據點情報視窗（docs/spec/23）。
 			c := g.world.Cities[city]
-			g.camX, g.camY = c.X-viewCols/2, c.Y-viewRows/2
+			g.camX, g.camY = c.X-centreCol, c.Y-centreRow
 			g.clampCam()
 			g.openCityInfo(city)
 			return true

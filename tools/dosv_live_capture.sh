@@ -5,8 +5,13 @@
 # 只會把 X11 實際畫面寫到 /out；它不修改原版資料，也不把原版檔案複製到輸出。
 #
 # 預設會在密碼頁按原始「確定」，接著依 WOLONG_DOSV_TIMELINE 執行：
-#   wait:秒;shot:名稱;key:鍵;type:字串;click:x,y;press;record:秒,fps,前綴;
-#   audio-start;audio-stop
+#   wait:秒;shot:名稱;key:鍵;type:字串;click:x,y;rclick:x,y;press;
+#   record:秒,fps,前綴;audio-start;audio-stop
+#
+# ⚠ **click／rclick 的 y 要用「遊戲座標 × 1.2」**：視窗是 640×480，
+#    遊戲畫面 640×400 置中，而 INT 33 把**整個視窗**等比對映到遊戲畫面
+#    （量法與證據見 tools/dosv_capture.sh 的說明）。減 40 會差十幾 px，
+#    正好落進按鈕之間的空隙，看起來就跟「事件沒送到」一樣。
 # record 產生前綴-000001.png … 的連續實機畫面，可交給影片容器編碼。
 # audio-start／audio-stop 觸發 DOSBox-X 自身的 WAV mixer capture；這是原版
 # YNSOUND.COM 經模擬硬體後的實際輸出，不是由 remake 或外部合成器重建。
@@ -195,6 +200,18 @@ clickat() {
     sleep 0.45
 }
 
+rclickat() {
+    local px=$1
+    local py=$2
+    window_geometry
+    DISPLAY=:99 xdotool mousemove "$((X + px))" "$((Y + py))"
+    sleep 0.15
+    DISPLAY=:99 xdotool mousedown 3
+    sleep 0.12
+    DISPLAY=:99 xdotool mouseup 3
+    sleep 0.45
+}
+
 press_here() {
     # 原版清單的第一下會藏起 guest 游標；第二下不應重新以游標辨識定位。
     DISPLAY=:99 xdotool mousedown 1
@@ -299,6 +316,12 @@ for step in "${steps[@]}"; do
         click)
             trace "step begin=$step"
             clickat "${arg%%,*}" "${arg##*,}"
+            trace "step end=$step"
+            ;;
+        rclick)
+            # 原版的取消是右鍵（docs/re/53 §3「右鍵取消走 sub_18F7C」）。
+            trace "step begin=$step"
+            rclickat "${arg%%,*}" "${arg##*,}"
             trace "step end=$step"
             ;;
         press)

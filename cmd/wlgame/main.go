@@ -75,15 +75,28 @@ const (
 	viewRows         = strategyMapH / 16 // 23
 )
 
+// 把某一格移到畫面上的哪一格（原版 `sub_12151` 的兩個入口參數，
+// docs/spec/52）。開新遊戲、點縮小地圖、跳到某個據點都走這一條。
+//
+// ⚠ **不是 viewCols/2、viewRows/2。** 40×23 的正中央是 (20, 11.5)，
+// 而原版把目標放在第 16 欄、第 12 列——**水平偏左四格**。
+// 這是拿松崗實機對兩個不同首都量出來的（docs/playtest/37）。
+const (
+	centreCol = 16
+	centreRow = 12
+)
+
 // 橫幅右段那三個數字欄的右緣。橫幅本身（ICONGRF 段 0）已經印好
 // 「年 月 日」三個字，數字要填在每個字**左邊**那塊黑底上。
-// 座標是量橫幅圖檔得到的：文字色 (255,223,154) 的三段分別在
-// x 496–511（年）、528–541（月）、562–573（日）。
+// 三個值是拿松崗實機的主畫面量出來的（docs/spec/52 §2），
+// 不是量橫幅圖檔——圖檔只給得出「年」在哪，給不出數字靠右靠到哪。
 const (
-	bannerYearRight  = 494
-	bannerMonthRight = 526
-	bannerDayRight   = 560
+	bannerYearRight  = 496
+	bannerMonthRight = 528
+	bannerDayRight   = 562
 	bannerTextY      = 9
+	// 日期的字色是調色盤第 9 色（#F3D392），與橫幅上「年 月 日」同色。
+	bannerDateInk = 9
 )
 
 type game struct {
@@ -936,8 +949,12 @@ func (g *game) Draw(screen *ebiten.Image) {
 		g.td.Draw(screen, "臥龍傳", 10, 8, color.RGBA{240, 200, 120, 255})
 	}
 	c := g.world.Clock
-	white := color.RGBA{240, 240, 230, 255}
-	right := func(s string, xr, y int) { g.td.Draw(screen, s, xr-g.td.Width(s), y, white) }
+	// 原版的日期與橫幅上的「年 月 日」同色；硬寫的白色在實機對拍上差得出來。
+	ink := color.RGBA{240, 240, 230, 255}
+	if col, err := g.lib.PaletteColor(season, bannerDateInk); err == nil {
+		ink = col
+	}
+	right := func(s string, xr, y int) { g.td.Draw(screen, s, xr-g.td.Width(s), y, ink) }
 	right(fmt.Sprintf("%d", c.Year), bannerYearRight, bannerTextY)
 	right(fmt.Sprintf("%d", c.Month), bannerMonthRight, bannerTextY)
 	right(fmt.Sprintf("%d", c.Day), bannerDayRight, bannerTextY)
@@ -1507,8 +1524,8 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 	}
 	g.minimapFaction = 0
 	if cap := w.Factions[w.Player].Capital; cap >= 0 && cap < len(w.Cities) {
-		g.camX = w.Cities[cap].X - viewCols/2
-		g.camY = w.Cities[cap].Y - viewRows/2
+		g.camX = w.Cities[cap].X - centreCol
+		g.camY = w.Cities[cap].Y - centreRow
 	}
 	g.clampCam()
 	log.Printf("劇本 %d：%d年%d月%d日，勢力 %d 個，玩家所仕 %d（君主 %s）",
