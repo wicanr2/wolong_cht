@@ -415,7 +415,7 @@
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 「液晶」畫面模式 | 原版的畫面模式有兩個選項，對應 `GAMEPAL.BRG` 的 bank 0–3 與 4–7（`../re/55` §4）。remake 只做了 16 色那一組 / 載 bank 4–7 再對拍一次 | 靜態 |
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 音效的 TYPE 2/3/4 | 原版有四種音源型別，remake 只有開／關 / 看 `sub_102D0` 那四型的差別 | 靜態 |
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 日期對不上 | 原版跑到 4月9日才截到 / 要嘛用存檔定位，要嘛加一個「跑到指定日期」的驗收旗標 | 靜態 |
-| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | ⭐ 城壁的面有缺口 | 同一個局面之下 `field` 仍有 19.9%（扣訊息框 12.8%），集中在城壁：原版是連續的磚面，remake 有黑色缺口與相位不對的磚 / 讀 `sub_1DE95`／`sub_1E085`／`sub_1E0E1`／`sub_1DFE8`／`sub_1E011` 這五支，對 `drawDisplayGri… | 靜態 |
+| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | ⭐ 城壁的面有缺口 | 同一個局面之下 `field` 仍有 19.9%（扣訊息框 12.8%），集中在城壁：原版是連續的磚面，remake 有黑色缺口與相位不對的磚 / 五個貢獻與 `dx` 配對**已核對過，與 remake 一致**（`../re/11` §5.13b）。差的是另外三件：**起始深度與層數**（原版由 `[si+2… | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-minimap` 的 8% | 同一個局面之下幾乎沒降，所以也不是部隊點 / 與城壁那一項可能同源（小地圖的底圖走 `RenderTacticalMinimap`） | 靜態 |
 
 ## 2.5 外部資料（17 條）
