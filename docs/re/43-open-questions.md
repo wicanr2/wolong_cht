@@ -21,10 +21,10 @@
 | 規則正確性 | 50 | 48 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
 | 程式碼理解 | 220 | 213 | 7 | 0 |
-| 驗收 | 66 | 56 | 10 | 0 |
+| 驗收 | 64 | 54 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
 | 其他 | 121 | 115 | 6 | 0 |
-| **合計** | **511** | 485 | 25 | 1 |
+| **合計** | **509** | 483 | 25 | 1 |
 
 ## 2.1 規則正確性（50 條）
 
@@ -348,7 +348,7 @@
 | [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 「圖例選中的勢力」 | 縮小地圖有第四種顏色（`62` §2），大地圖有沒有對應的圖塊沒驗 / 開縮小地圖、切圖例第二格再截一張 | 靜態 |
 | [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 230 為什麼分位置 | 關隘上下換、大城左右不換。remake 照位置實作，但沒有機器碼解釋 / 同第一列 | 靜態 |
 
-## 2.4 驗收（66 條）
+## 2.4 驗收（64 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -415,9 +415,7 @@
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 「液晶」畫面模式 | 原版的畫面模式有兩個選項，對應 `GAMEPAL.BRG` 的 bank 0–3 與 4–7（`../re/55` §4）。remake 只做了 16 色那一組 / 載 bank 4–7 再對拍一次 | 靜態 |
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 音效的 TYPE 2/3/4 | 原版有四種音源型別，remake 只有開／關 / 看 `sub_102D0` 那四型的差別 | 靜態 |
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 日期對不上 | 原版跑到 4月9日才截到 / 要嘛用存檔定位，要嘛加一個「跑到指定日期」的驗收旗標 | 靜態 |
-| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | 原版的鏡頭為什麼從 14 移到 13 | 初值是 `sub_199F3` 的常數，這一張已經開打 40 秒 / 找誰設鏡頭的 dirty flag（`byte_1D348`） | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | 同一場戰鬥 | 這一輪只對「同一張戰場」，雙方的軍團組成不同 / 要對就得讓 remake 從原版存檔載入同一個局面 | 靜態 |
-| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-command` 的選取框 | remake 畫了、原版那一刻沒畫 / 確認原版是「有選中才畫」還是「從不畫」 | 靜態 |
 
 ## 2.5 外部資料（17 條）
 
@@ -558,7 +556,7 @@
 | [`spec/55-minimap-view-box.md`](../spec/55-minimap-view-box.md) | 剩下的 11 byte | `+0x8F0` 那一塊有 176 byte，框只用 165 | 靜態 |
 | [`spec/56-battlefield-rotation.md`](../spec/56-battlefield-rotation.md) | 表頭與尾段那各 64 byte | 轉的時候原版**不動它們**（迴圈只掃 `0x40`–`0xFBF`）。內容仍未解 | 靜態 |
 | [`spec/56-battlefield-rotation.md`](../spec/56-battlefield-rotation.md) | 鏡頭差一個等角格 | 翻轉之後戰場區還差 (−16, −8)（`../playtest/40` §4.1）。小地圖沒有位移，所以不是翻轉中心的問題 | 靜態 |
-| [`spec/57-tactical-projection.md`](../spec/57-tactical-projection.md) | 原版的鏡頭為什麼從 (36,14) 移到 (36,13) | 那一張已經開打約 40 秒。初值是 `sub_199F3` 的常數，中途改鏡頭的路徑（`byte_1D348` dirty flag）還沒讀 | 靜態 |
+| [`spec/57-tactical-projection.md`](../spec/57-tactical-projection.md) | `byte_1D348`（鏡頭 dirty flag）誰讀 | 三處寫、**零處讀**（`tools/ida_var_writers.py`）。直接參考掃得到的只有寫入端，讀取端可能走別的段基址 | 靜態 |
 | [`spec/57-tactical-projection.md`](../spec/57-tactical-projection.md) | 物件與地形差一列會不會看得出來 | 奇數鏡頭時 anchor 那一半的物件比自己腳下的地形低一格。**原版就是這樣算的**，但沒有找到能單獨驗證這一點的畫面 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |

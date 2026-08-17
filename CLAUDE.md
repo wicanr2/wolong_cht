@@ -229,6 +229,8 @@ tools/ida.sh raw    dosv idat -A "-S/work/tools/ida_func.idc sub_12E89" KI.EXE.i
 | **`ida_scan.py`** | **IDAPython**：全庫掃「對 `[reg+disp]` 寫立即值」（解碼運算元，不比對文字）＋ 指定函式 dump。新腳本照這一支的骨架寫 |
 | **`ida_tables.py`** | **IDAPython**：每支函式碰哪幾張表（掃表基址立即值）。**函式層級不是指令層級**——暫存器會跨函式帶著走 |
 | **`ida_dump.py`** | **IDAPython**：通用 dumper，要看哪幾支寫在 `workplace/ida/<版本>/census/dump_list.txt`，不必為了換位址改工具 |
+| **`ida_var_writers.py`** | **IDAPython**：一組全域變數的交叉參考，用 `XrefType()` 分讀／寫／取址，每筆寫入附前後幾條指令。回答「這個值是誰改的」——一次就分得出「執行期被改過」與「兩邊的座標框不一樣」 |
+| **`ida_range.py`** | **IDAPython**：逐條反組譯一段位址區間（跳表選中的 handler 不是函式，`ida_dump.py` dump 不到）|
 | **`ida_disp_users.py`** | **IDAPython**：全庫掃「運算元位移等於指定值」的指令。段內欄位（`[si+858h]`）**沒有交叉參考**，grep 反組譯會漏掉換了基址暫存器的寫法，而漏掉的通常正是寫入端 |
 
 四支 Python 把上面的輸出變成可查的表：

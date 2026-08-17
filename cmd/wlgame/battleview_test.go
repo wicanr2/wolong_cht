@@ -40,17 +40,55 @@ func TestBattleViewBufferMatchesDOSVVisibleViewport(t *testing.T) {
 }
 
 func TestBattleCameraStartsAtOriginalWorldOrigin(t *testing.T) {
-	v := &battleView{camWorldX: 0x24, camWorldY: 0x0e}
+	// 鏡頭存的是**原版的框**（含表頭那一列），所以初值就是 sub_199F3 的
+	// (0x24, 0x0E)；地形列號在 isoProject／cellOffset 的入口才換算
+	// （docs/spec/57 §2）。
+	if battleCamInitX != 0x24 || battleCamInitY != 0x0e {
+		t.Fatalf("鏡頭初值 = (%#x,%#x)，預期 (0x24,0x0e)", battleCamInitX, battleCamInitY)
+	}
+	v := &battleView{camWorldX: battleCamInitX, camWorldY: battleCamInitY}
 	v.applyCameraOrigin()
 	if v.camCol != 0x32 || v.camRow != 0x15 {
 		t.Fatalf("sub_1DC9D 投影原點 = (%#x,%#x)，預期 (0x32,0x15)",
 			v.camCol, v.camRow)
 	}
+	// 地形列號 13（＝原版的 14）投影出來要與鏡頭同一格——
+	// 這是兩個框有對上的正對照。
+	if col, row := isoProject(battleCamInitX, battleCamInitY-originalRowBias, 0); col != v.camCol ||
+		row != v.camRow {
+		t.Fatalf("地形列號 %d 投影 = (%#x,%#x)，預期與鏡頭原點相同 (%#x,%#x)",
+			battleCamInitY-originalRowBias, col, row, v.camCol, v.camRow)
+	}
 
 	// 相機不再從兵座標推導。改變任意兵的位置，不應改寫保存的 world origin。
 	v.applyCameraOrigin()
-	if v.camWorldX != 0x24 || v.camWorldY != 0x0e {
+	if v.camWorldX != battleCamInitX || v.camWorldY != battleCamInitY {
 		t.Fatalf("相機 world origin 被繪圖改寫：(%#x,%#x)", v.camWorldX, v.camWorldY)
+	}
+}
+
+// TestBattleCursorCrossMatchesCameraOffsets 釘住游標十字與鏡頭之間的兩個偏移。
+//
+// 正對照是原版自己的初值：`sub_199F3` 同時設鏡頭 (0x24,0x0E) 與十字
+// (0x20,0x21)，而縮圖點選（`0001C103`／`0001C106`）用的是
+// 「X − 4」與「原版 Y ＋ 0x13」。兩者要能互推，偏移才是對的。
+func TestBattleCursorCrossMatchesCameraOffsets(t *testing.T) {
+	if got := battleCamInitX + cursorBiasX; got != 0x20 {
+		t.Fatalf("十字 X 初值 = %#x，預期 0x20", got)
+	}
+	if got := battleCamInitY + cursorBiasY; got != 0x21 {
+		t.Fatalf("十字 Y 初值 = %#x，預期 0x21", got)
+	}
+	// 點在十字自己身上（原版量到的 562,142，docs/playtest/40 §3.1）
+	// 應該把鏡頭與十字都留在初值——這是這條換算的閉環檢查。
+	v := &battleView{}
+	v.setCameraFromMiniMap(562, 142)
+	if v.camWorldX != battleCamInitX || v.camWorldY != battleCamInitY {
+		t.Fatalf("點十字之後鏡頭 = (%d,%d)，預期 (%d,%d)",
+			v.camWorldX, v.camWorldY, battleCamInitX, battleCamInitY)
+	}
+	if v.cursorX != 0x20 || v.cursorY != 0x21 {
+		t.Fatalf("點十字之後十字 = (%#x,%#x)，預期 (0x20,0x21)", v.cursorX, v.cursorY)
 	}
 }
 
@@ -75,7 +113,7 @@ func TestBattleCameraMiniMapFormula(t *testing.T) {
 				t.Fatalf("縮圖相機=(%d,%d)，預期 (%d,%d)",
 					v.camWorldX, v.camWorldY, tc.worldX, tc.worldY)
 			}
-			wantCol, wantRow := isoProject(tc.worldX, tc.worldY, 0)
+			wantCol, wantRow := isoProjectOriginal(tc.worldX, tc.worldY, 0)
 			if v.camCol != wantCol || v.camRow != wantRow {
 				t.Fatalf("投影原點=(%d,%d)，預期 (%d,%d)",
 					v.camCol, v.camRow, wantCol, wantRow)
@@ -186,12 +224,14 @@ func TestSoldierPoseUsesPerRecordBit(t *testing.T) {
 // 所以奇數是常態不是邊角；而「先各自 floorDiv2 再相減」在鏡頭是奇數時
 // 會對一半的格子差一列——只測偶數的話這個 bug 測不出來。
 func TestCellOffsetFollowsOriginalWalk(t *testing.T) {
+	// 鏡頭與走訪都用**原版的框**（含表頭那一列）；cellOffset 吃的是
+	// 地形列號，所以傳進去之前要減掉 originalRowBias。
 	for _, cam := range [][2]int{{36, 14}, {36, 11}, {35, 14}, {35, 11}, {0, 0}, {12, 41}} {
 		v := &battleView{camWorldX: cam[0], camWorldY: cam[1]}
 		for r := 0; r < 30; r++ {
 			x, y := cam[0]-r, cam[1]+r
 			for s := 0; s <= 30; s++ {
-				dcol, drow := v.cellOffset(x, y, 0)
+				dcol, drow := v.cellOffset(x, y-originalRowBias, 0)
 				if dcol != s || drow != r {
 					t.Fatalf("鏡頭 %v 的第 %d 列第 %d 格是 (%d,%d)，cellOffset 回 (%d,%d)",
 						cam, r, s, x, y, dcol, drow)
@@ -210,16 +250,16 @@ func TestCellOffsetFollowsOriginalWalk(t *testing.T) {
 // 免得之後有人為了「看起來對稱」把 cellOffset 改回去。
 func TestCellOffsetIsNotTwoProjections(t *testing.T) {
 	v := &battleView{camWorldX: 36, camWorldY: 11} // (camY−camX) 是奇數
-	camCol, camRow := isoProject(v.camWorldX, v.camWorldY, 0)
+	camCol, camRow := isoProjectOriginal(v.camWorldX, v.camWorldY, 0)
 	diff := 0
-	for y := 0; y < 62; y++ {
+	for y := 0; y < 62; y++ { // y 是地形列號
 		for x := 0; x < 64; x++ {
 			_, drow := v.cellOffset(x, y, 0)
 			_, row := isoProject(x, y, 0)
 			if drow != row-camRow {
 				diff++
 			}
-			if dcol, _ := v.cellOffset(x, y, 0); dcol != (x+y)-camCol {
+			if dcol, _ := v.cellOffset(x, y, 0); dcol != (x+y+originalRowBias)-camCol {
 				t.Fatalf("(%d,%d) 的欄位移不該有差", x, y)
 			}
 		}

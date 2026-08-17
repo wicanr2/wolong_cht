@@ -31,10 +31,43 @@ const (
 	isoColPx   = 16
 	isoRowPx   = 16
 	isoOriginY = 32 // `add bx, 20h`
+
+	// originalRowBias 是原版的 Y 與我們的地形列號之間的差。
+	//
+	// 原版的繪圖端用**整塊 4,096 B** 的線性索引定址（`di = Y × 64 + X`，
+	// 邊界是 `cmp di, 1000h` 不是 `0xF80`），而每張戰場的前 64 B 是表頭
+	// ——所以原版的 `Y = 0` 是表頭那一列，第一列地形是 `Y = 1`
+	// （docs/formats/07 §2.1）。`Tiles()` 只回 62 列地形、列號從 0 起算，
+	// 兩個框差 1（docs/spec/57 §2）。
+	//
+	// **這一層只在投影的入口換一次**：規則層、小地圖、存檔全部用地形列號，
+	// isoProject／cellOffset 收到之後才加上去。
+	//
+	// ⚠ 不能改成「鏡頭那一側減 1」——地形那條式子（走訪）減得掉，
+	// 物件那條（各自投影再相減）減不掉：`floorDiv2` 不是線性的，
+	// 兩邊各差一列會讓一半的物件比自己腳下的地形低一列。
+	originalRowBias = 1
+
+	// 戰場鏡頭的初值（`sub_199F3`：word_1D328=0x24、word_1D32A=0x0E）。
+	// **鏡頭存的是原版的框**（含表頭那一列），換算集中在
+	// isoProject／cellOffset 兩支的入口。
+	battleCamInitX = 0x24
+	battleCamInitY = 0x0e
+
+	// 游標十字與鏡頭的兩個偏移（`0001C106` 的 −4、`0001C103` 的 +0x13）。
+	cursorBiasX = -4
+	cursorBiasY = 0x13
 )
 
-// isoProject 把戰場座標換成「欄、列」。
+// isoProject 把**地形列號**（我們的框）換成「欄、列」。
+// 入口先加 originalRowBias 換成原版的框——`floorDiv2` 不是線性的，
+// 「兩邊各差一列」不會自己抵消，所以框一定要在進投影之前對齊。
 func isoProject(x, y, z int) (col, row int) {
+	return isoProjectOriginal(x, y+originalRowBias, z)
+}
+
+// isoProjectOriginal 吃**原版框**的 Y（含表頭那一列），給鏡頭自己用。
+func isoProjectOriginal(x, y, z int) (col, row int) {
 	return x + y, floorDiv2(y-x) + isoOriginY - z
 }
 
@@ -50,8 +83,9 @@ func isoProject(x, y, z int) (col, row int) {
 // 第 s 格的半列位移 h ＝ (y−x) − (camY−camX) ＝ 2r ＋ (s mod 2)，
 // 而 s 與 h 恆同奇偶，所以 r ＝ floorDiv2(h)。
 func (v *battleView) cellOffset(x, y, z int) (dcol, drow int) {
-	return (x + y) - (v.camWorldX + v.camWorldY),
-		floorDiv2((y-x)-(v.camWorldY-v.camWorldX)) - z
+	oy := y + originalRowBias // 換成原版的框（鏡頭本來就存那個框）
+	return (x + oy) - (v.camWorldX + v.camWorldY),
+		floorDiv2((oy-x)-(v.camWorldY-v.camWorldX)) - z
 }
 
 // floorDiv2 是原版的 `sar bx, 1`——算術右移，負數往下取整。
@@ -131,12 +165,12 @@ func (g *game) newBattleView(field int) *battleView {
 		// sub_199F3：word_1D328=0x24、word_1D32A=0x0E，接著由
 		// sub_1DC9D 換成投影 origin。原版只有 dirty flag 設定時才更新，
 		// 不是每幀追著大將。
-		camWorldX: 0x24,
-		camWorldY: 0x0e,
+		camWorldX: battleCamInitX,
+		camWorldY: battleCamInitY,
 		// 游標十字的位置是**另一組變數**（`sub_199F3` 的 word_1D32C／
 		// word_1D32E ＝ 0x20／0x21），不是鏡頭；縮圖點選時兩者一起更新。
-		cursorX: 0x20,
-		cursorY: 0x21,
+		cursorX: battleCamInitX + cursorBiasX,
+		cursorY: battleCamInitY + cursorBiasY,
 	}
 	if g.battleCamAt != nil {
 		v.camWorldX, v.camWorldY = g.battleCamAt[0], g.battleCamAt[1]
@@ -249,7 +283,7 @@ func (v *battleView) sourceImage(raw int) *ebiten.Image {
 // 這裡刻意不把原點夾到 remake 自訂範圍。原版 producer 自己用 31×24
 // 邊界裁切，負 row 也是有效相機狀態。
 func (v *battleView) applyCameraOrigin() {
-	v.camCol, v.camRow = isoProject(v.camWorldX, v.camWorldY, 0)
+	v.camCol, v.camRow = isoProjectOriginal(v.camWorldX, v.camWorldY, 0)
 }
 
 // setCameraFromMiniMap 重現 DOS/V `0001C0C6` 起的縮圖點選公式。
@@ -260,12 +294,18 @@ func (v *battleView) setCameraFromMiniMap(screenX, screenY int) {
 	v.camWorldX = (((0xcf - screenY) >> 1) &^ 1) + 4
 	// 十字跟著點選走：原版 `0x1C0C6` 先用舊的 word_1D32C／word_1D32E
 	// 還原十字，再寫新值（docs/re/60 §7）。
-	v.cursorX, v.cursorY = v.camWorldX, v.camWorldY
+	//
+	// **兩軸各有一個偏移**，不是直接抄鏡頭：`0001C106  add dx, 0FFFCh`
+	// ＝ X − 4、`0001C103  add bx, 13h` ＝ 原版的 Y ＋ 19。
+	// 用初值對一次就知道：鏡頭 (0x24, 0x0E) → 十字 (0x20, 0x21) ✓。
+	v.cursorX = v.camWorldX + cursorBiasX
+	v.cursorY = v.camWorldY + cursorBiasY
 	v.applyCameraOrigin()
 }
 
 // setCameraWorld 直接指定鏡頭的世界格。**驗收用**：對拍時要讓 remake
-// 跟原版停在同一個鏡頭（原版初值是 `sub_199F3` 的 36, 14）。
+// 跟原版停在同一個鏡頭。吃的是**原版的框**（含表頭那一列），
+// 所以 `sub_199F3` 的初值就是 `-battle-cam 36,14`。
 func (v *battleView) setCameraWorld(x, y int) {
 	v.camWorldX, v.camWorldY = x, y
 	v.applyCameraOrigin()
