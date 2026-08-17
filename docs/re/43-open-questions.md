@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 50 | 48 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
-| 程式碼理解 | 217 | 210 | 7 | 0 |
+| 程式碼理解 | 222 | 215 | 7 | 0 |
 | 驗收 | 59 | 49 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
 | 其他 | 111 | 106 | 5 | 0 |
-| **合計** | **491** | 466 | 24 | 1 |
+| **合計** | **496** | 471 | 24 | 1 |
 
 ## 2.1 規則正確性（50 條）
 
@@ -123,7 +123,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（217 條）
+## 2.3 程式碼理解（222 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -344,6 +344,11 @@
 | [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `sub_107D2` | `sub_1075B` 在畫肖像前呼叫一次，參數是 `bx + dx×2 + 1`，未讀 | 靜態 |
 | [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `sub_189A4(al=1, dx=0, bx=2, cx=151Bh)` | `sub_13D09` 在貼完 `IVENTGRF` 之後畫的框，與 `sub_1895D` 是不是同一組單位沒驗 | 靜態 |
 | [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `IVENTGRF` 插圖本身的位置 | `sub_13D09` 的 `dx = 0E07h` 是餵給 `sub_1E38C`（讀檔）的參數，不是座標。插圖在畫面上的位置沒量 | 靜態 |
+| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 推論等級：位置與顏色分類 **強證據**（四座 × 三種歸屬）；繪製常式 **未解 | （散句） | 靜態 |
+| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 畫徽記的那一支 | `sub_11CC9` 只呼叫 `sub_12AF4`（軍團，掃 127 筆 `0x2240`）與 `sub_12533`（災害物件，掃 32 筆 `0x2040`），**沒有據點那一輪**。所以它不在每幀的疊圖路徑上 / 找誰在據點換手時寫格子記錄，或找 `loc_1D51F` 的其他呼叫端 | 靜態 |
+| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 徽記的圖形 | 在 `word_1D84C` 那個段（`MMAP.MCH` 物件圖塊）的哪一張沒定位 / `internal/assets/world/mmapmch.go` 已能解 MCH 物件，逐張比對原版那 16×16 | 靜態 |
+| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 九個值對應哪九種據點 | 樣本只覆蓋 205 與 211 / 掃全圖列出每個值出現的據點，對 `Kind` | 靜態 |
+| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 記錄座標 +4 是什麼 | 四座據點都是 +4，但據點記錄裡沒有這個欄位 / 見 `../spec/52` §4——鏡頭那個「差四格」很可能是同一件事 | 靜態 |
 
 ## 2.4 驗收（59 條）
 
@@ -540,8 +545,8 @@
 | [`spec/49-advise-relocate-and-sortie.md`](../spec/49-advise-relocate-and-sortie.md) | `sub_16EC9` | `sub_16E8F` 編成前的檢查，只確認「君主還沒帶軍團」這一條，其餘沒逐行讀 | 靜態 |
 | [`spec/49-advise-relocate-and-sortie.md`](../spec/49-advise-relocate-and-sortie.md) | 遷都的地圖選點 | `sub_17400` 沒讀，remake 用一覽表代替 | 靜態 |
 | [`spec/49-advise-relocate-and-sortie.md`](../spec/49-advise-relocate-and-sortie.md) | 進言的指令列 | 五項在原版指令樹裡的排法（`docs/re/22`）沒有逐格對過，remake 用自己的小視窗 | 靜態 |
-| [`spec/52-main-screen-camera-and-banner-date.md`](../spec/52-main-screen-camera-and-banner-date.md) | `sub_12151` 的入口 `ax` | 五個呼叫點都是 `ax=14h`（20）／`cx=0Ch`（12）。**垂直的 12 與量到的一致，水平的 20 與量到的 16 差 4**，原因未解——`sub_1D66A` 的 `es=0A0C8h` ＋ `di=0A00h` 這組畫面起點還沒讀懂。**採用量到的值**，不採用推的值 | 靜態 |
-| [`spec/52-main-screen-camera-and-banner-date.md`](../spec/52-main-screen-camera-and-banner-date.md) | 日期的數字字模 | 原版的數字墨水高 **14 列**（y 9–22），remake 的倚天 ASCII 只有 **9 列**（y 12–20）。字寬相同、形狀不同，原版那一套字模還沒找到 | 靜態 |
+| [`spec/52-main-screen-camera-and-banner-date.md`](../spec/52-main-screen-camera-and-banner-date.md) | `sub_12151` 的入口 `ax` | 五個呼叫點都是 `ax=14h`（20）／`cx=0Ch`（12）。**垂直的 12 與量到的一致，水平的 20 與量到的 16 差 4。採用量到的值。** ⭐ 最像的解釋：據點的**圖案中心在記錄座標右邊四格**（`../re/67` §1，四座據點都是 +4），所以「把圖案中心放在第 20 欄」＝「把記錄座標… | 靜態 |
+| [`spec/52-main-screen-camera-and-banner-date.md`](../spec/52-main-screen-camera-and-banner-date.md) | 日期的數字字模 | 原版的數字墨水高 **14 列**（y 9–22），remake 的倚天 ASCII 只有 **9 列**（y 12–20）。字寬相同、形狀不同 / 找原版畫數字的那一支（`sub_106F5` 一帶）吃哪一套字模 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 | 靜態 |
