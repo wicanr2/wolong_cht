@@ -346,7 +346,7 @@
 | [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `IVENTGRF` 插圖本身的位置 | `sub_13D09` 的 `dx = 0E07h` 是餵給 `sub_1E38C`（讀檔）的參數，不是座標。插圖在畫面上的位置沒量 | 靜態 |
 | [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 推論等級：位置與顏色分類 **強證據**（四座 × 三種歸屬）；繪製常式 **未解 | （散句） | 靜態 |
 | [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 畫徽記的那一支 | `sub_11CC9` 只呼叫 `sub_12AF4`（軍團，掃 127 筆 `0x2240`）與 `sub_12533`（災害物件，掃 32 筆 `0x2040`），**沒有據點那一輪**。所以它不在每幀的疊圖路徑上 / 找誰在據點換手時寫格子記錄，或找 `loc_1D51F` 的其他呼叫端 | 靜態 |
-| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 徽記的圖形 | 在 `word_1D84C` 那個段（`MMAP.MCH` 物件圖塊）的哪一張沒定位 / `internal/assets/world/mmapmch.go` 已能解 MCH 物件，逐張比對原版那 16×16 | 靜態 |
+| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 徽記的圖形 | **不是 `MMAP.MCH` 的單張圖塊，也不是它的物件矩陣**（§4.1 逐張比過） / 換個方向：從畫面找不到就從程式碼找——`loc_1D51F` 之外還有誰寫格子的 `[si+3]`–`[si+7]` | 靜態 |
 | [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 九個值對應哪九種據點 | 樣本只覆蓋 205 與 211 / 掃全圖列出每個值出現的據點，對 `Kind` | 靜態 |
 | [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 記錄座標 +4 是什麼 | 四座據點都是 +4，但據點記錄裡沒有這個欄位 / 見 `../spec/52` §4——鏡頭那個「差四格」很可能是同一件事 | 靜態 |
 
