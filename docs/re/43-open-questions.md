@@ -23,8 +23,8 @@
 | 程式碼理解 | 217 | 210 | 7 | 0 |
 | 驗收 | 53 | 45 | 8 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 110 | 105 | 5 | 0 |
-| **合計** | **483** | 460 | 22 | 1 |
+| 其他 | 108 | 103 | 5 | 0 |
+| **合計** | **481** | 458 | 22 | 1 |
 
 ## 2.1 規則正確性（49 條）
 
@@ -424,7 +424,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（110 條）
+## 2.6 其他（108 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -533,8 +533,6 @@
 | [`spec/49-advise-relocate-and-sortie.md`](../spec/49-advise-relocate-and-sortie.md) | `sub_16EC9` | `sub_16E8F` 編成前的檢查，只確認「君主還沒帶軍團」這一條，其餘沒逐行讀 | 靜態 |
 | [`spec/49-advise-relocate-and-sortie.md`](../spec/49-advise-relocate-and-sortie.md) | 遷都的地圖選點 | `sub_17400` 沒讀，remake 用一覽表代替 | 靜態 |
 | [`spec/49-advise-relocate-and-sortie.md`](../spec/49-advise-relocate-and-sortie.md) | 進言的指令列 | 五項在原版指令樹裡的排法（`docs/re/22`）沒有逐格對過，remake 用自己的小視窗 | 靜態 |
-| [`spec/50-corps-upkeep-charges-funds.md`](../spec/50-corps-upkeep-charges-funds.md) | `sub_135ED` | 同時呼叫加與減，還沒讀 | 靜態 |
-| [`spec/50-corps-upkeep-charges-funds.md`](../spec/50-corps-upkeep-charges-funds.md) | `0x15604` | 資金 `+=` 的另一個包裝（`si` 已經是勢力位移），呼叫端沒查 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |
