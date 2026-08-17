@@ -1262,6 +1262,7 @@ func main() {
 	openSiege := flag.Bool("open-siege", false, "截圖前先開一場攻城的戰術戰鬥（驗收用）")
 	openBattleChoice := flag.Bool("open-battle-choice", false, "截圖前停在戰鬥指揮／委任選單（驗收用）")
 	openMarchMode := flag.Bool("open-march-mode", false, "截圖前停在行軍指示的三選一（驗收用）")
+	openMarchList := flag.Bool("open-march-list", false, "截圖前編一支軍團並停在行軍目的地一覽（驗收用）")
 	siegeNode := flag.Int("siege-node", -1, "指定攻城的戰場＝據點編號（驗收用，配 -open-siege）")
 	openMessage := flag.Bool("open-message", false, "截圖前先開玩家首都的暴風雨 TALK #70 通知（驗收用）")
 	openTalkIndex := flag.Int("open-talk-index", -1, "截圖前直接開指定 TALK.DAT 槽位（驗收用）")
@@ -1325,7 +1326,7 @@ func main() {
 		if err := g.startWorld(loadPath, *scenario, *player, true); err != nil {
 			log.Fatal(err)
 		}
-		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *openForm, *openCorps,
+		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *openForm, *openCorps, *openMarchList,
 			*openMarchMode, *openBattle, *openSiege, *openBattleChoice, *openMessage,
 			*openTalkIndex, *openOutcome, *siegeNode)
 	} else {
@@ -1516,7 +1517,7 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 	return nil
 }
 
-func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, openForm, openCorps, openMarchMode,
+func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, openForm, openCorps, openMarchList, openMarchMode,
 	openBattle, openSiege, openBattleChoice, openMessage bool, openTalkIndex int,
 	openOutcome string, siegeNode int) {
 	w := g.world
@@ -1581,6 +1582,9 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 	}
 	if openMarchMode {
 		g.demoMarchMode()
+	}
+	if openMarchList {
+		g.demoMarchList()
 	}
 	if adviseMenu && !openAdvise {
 		g.openAdvise() // 停在五項選單

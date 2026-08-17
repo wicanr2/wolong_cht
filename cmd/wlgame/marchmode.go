@@ -180,6 +180,22 @@ func marchModePromptFallback(dest string) []string {
 
 // demoMarchMode 是**驗收用**的捷徑：編一支軍團、對首都下行軍，
 // 停在三選一那一格（第三項「解體」因此會出現）。正常玩不會走到這裡。
+// demoMarchList 是**驗收用**的捷徑：編一支軍團，停在行軍目的地一覽。
+// 與 demoMarchMode 差在少走最後一步（選完目的地才有三選一）。
+func (g *game) demoMarchList() {
+	rows := g.formCandidates()
+	if len(rows) == 0 {
+		return
+	}
+	kinds, manned := g.affordable()
+	leader := rows[0]
+	if err := g.world.FormCorps(leader, kinds, manned); err != nil {
+		g.setEvent(err.Error())
+		return
+	}
+	g.pickDestination(leader)
+}
+
 func (g *game) demoMarchMode() {
 	rows := g.formCandidates()
 	if len(rows) == 0 {
