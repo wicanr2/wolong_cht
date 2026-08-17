@@ -4,10 +4,12 @@ import (
 	"fmt"
 	"image"
 	"image/color"
+	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/vector"
 
+	"github.com/wicanr2/wolong_cht/internal/assets/world"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
@@ -785,5 +787,53 @@ func (g *game) drawNaturalFactionHUD(dst *ebiten.Image, x, y int) {
 		iconY := y + strategyReserveYOffset + i*strategyResourceRowStep
 		g.td.Draw(dst, strategyHUDNumber(value*strategyReserveMenPerPoint, strategyReserveDigits),
 			x+strategyReserveXOffset, iconY, ink)
+	}
+}
+
+// cityMarks 把世界狀態換成大地圖上要改的據點格（docs/spec/53）。
+//
+// ⭐ **中心格在據點記錄座標的右邊四格**（`world.CityCentreDX`）。
+// 原版 `MMAP.MAP` 的 192 座據點逐座驗過，所以這裡不做例外處理；
+// 真的對不上時 `RenderMarked` 會跳過那一座，並由 `checkCityCentres`
+// 在載入時就記一筆 warning——**安靜畫錯比畫不出來難發現**。
+func (g *game) cityMarks() []world.CityMark {
+	if g.world == nil {
+		return nil
+	}
+	marks := make([]world.CityMark, 0, len(g.world.Cities))
+	capital := -1
+	if p := g.world.Player; p >= 0 && p < len(g.world.Factions) {
+		capital = g.world.Factions[p].Capital
+	}
+	for i := range g.world.Cities {
+		c := &g.world.Cities[i]
+		marks = append(marks, world.CityMark{
+			X:       c.X + world.CityCentreDX,
+			Y:       c.Y,
+			Own:     world.OwnershipOf(c.Owner, g.world.Player),
+			Capital: i == capital,
+		})
+	}
+	return marks
+}
+
+// checkCityCentres 在載入後驗一次「記錄座標 +4 是據點中心」。
+//
+// 這是 docs/spec/53 §5 的假設，**假設要有現形的機制**：
+// 對不上就在 log 留一行，而不是讓畫面上少幾個徽記。
+func (g *game) checkCityCentres() {
+	if g.world == nil || g.lib == nil || g.lib.World == nil {
+		return
+	}
+	bad := 0
+	for i := range g.world.Cities {
+		c := &g.world.Cities[i]
+		t, err := g.lib.World.Tile(c.X+world.CityCentreDX, c.Y)
+		if err != nil || !world.IsCityCentre(t) {
+			bad++
+		}
+	}
+	if bad > 0 {
+		log.Printf("⚠ %d 座據點的 (X+4, Y) 不是據點中心圖塊，徽記會少畫（docs/spec/53 §5）", bad)
 	}
 }

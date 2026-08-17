@@ -198,6 +198,17 @@ func (l *Library) RenderWorld(x0, y0, cols, rows, bank int) (*image.RGBA, error)
 	return l.World.Render(l.Tiles, l.Palette, bank, x0, y0, cols, rows)
 }
 
+// RenderWorldMarked 與 RenderWorld 相同，但把據點中心的圖塊換成
+// 「跟著歸屬走」的那一張，首都再疊一張 MCH（docs/spec/53）。
+func (l *Library) RenderWorldMarked(x0, y0, cols, rows, bank int,
+	marks []world.CityMark) (*image.RGBA, error) {
+	if l.World == nil || l.Tiles == nil {
+		return nil, fmt.Errorf("大地圖沒有載入成功，看 Warns")
+	}
+	return l.World.RenderMarked(l.Tiles, l.MCH, l.Palette, bank,
+		x0, y0, cols, rows, marks)
+}
+
 // RenderChrome 畫出一塊視窗外框圖塊（8×8）。
 func (l *Library) RenderChrome(off, bank int) (*image.RGBA, error) {
 	if l.Chrome == nil {

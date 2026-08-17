@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 50 | 48 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
-| 程式碼理解 | 222 | 215 | 7 | 0 |
+| 程式碼理解 | 222 | 214 | 8 | 0 |
 | 驗收 | 59 | 49 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
 | 其他 | 111 | 106 | 5 | 0 |
-| **合計** | **496** | 471 | 24 | 1 |
+| **合計** | **496** | 470 | 25 | 1 |
 
 ## 2.1 規則正確性（50 條）
 
@@ -345,10 +345,10 @@
 | [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `sub_189A4(al=1, dx=0, bx=2, cx=151Bh)` | `sub_13D09` 在貼完 `IVENTGRF` 之後畫的框，與 `sub_1895D` 是不是同一組單位沒驗 | 靜態 |
 | [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `IVENTGRF` 插圖本身的位置 | `sub_13D09` 的 `dx = 0E07h` 是餵給 `sub_1E38C`（讀檔）的參數，不是座標。插圖在畫面上的位置沒量 | 靜態 |
 | [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 推論等級：位置與顏色分類 **強證據**（四座 × 三種歸屬）；繪製常式 **未解 | （散句） | 靜態 |
-| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 畫徽記的那一支 | `sub_11CC9` 只呼叫 `sub_12AF4`（軍團，掃 127 筆 `0x2240`）與 `sub_12533`（災害物件，掃 32 筆 `0x2040`），**沒有據點那一輪**。所以它不在每幀的疊圖路徑上 / 找誰在據點換手時寫格子記錄，或找 `loc_1D51F` 的其他呼叫端 | 靜態 |
-| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 徽記的圖形 | **不是 `MMAP.MCH` 的單張圖塊，也不是它的物件矩陣**（§4.1 逐張比過） / 換個方向：從畫面找不到就從程式碼找——`loc_1D51F` 之外還有誰寫格子的 `[si+3]`–`[si+7]` | 靜態 |
-| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 九個值對應哪九種據點 | 樣本只覆蓋 205 與 211 / 掃全圖列出每個值出現的據點，對 `Kind` | 靜態 |
-| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 記錄座標 +4 是什麼 | 四座據點都是 +4，但據點記錄裡沒有這個欄位 / 見 `../spec/52` §4——鏡頭那個「差四格」很可能是同一件事 | 靜態 |
+| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 換圖塊的那一支機器碼 | **規則是從資料與畫面反推的，不是讀出來的。** 每一格都對得上，但「原版在哪裡做這件事」還沒定位——`sub_1D615` 只複製圖塊編號，`sub_11CC9` 的兩個 overlay 只畫軍團與災害 / 找誰在據點換手時改地圖或格子記錄（`sub_188CC` 一帶） | 靜態 |
+| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 208 那一組 | 全圖 4 格，這一輪的兩張截圖裡沒有入鏡 / 找一局讓它入鏡，驗 206／207／208 | 實測 |
+| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 「圖例選中的勢力」 | 縮小地圖有第四種顏色（`62` §2），大地圖有沒有對應的圖塊沒驗 / 開縮小地圖、切圖例第二格再截一張 | 靜態 |
+| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 230 為什麼分位置 | 關隘上下換、大城左右不換。remake 照位置實作，但沒有機器碼解釋 / 同第一列 | 靜態 |
 
 ## 2.4 驗收（59 條）
 
@@ -407,7 +407,7 @@
 | [`playtest/35-advise-verdict-screens.md`](../playtest/35-advise-verdict-screens.md) | 遷都的畫面 | 目標用一覽表挑，原版是地圖選點（`sub_17400`）。沒有截圖 | 實測 |
 | [`playtest/36-window-texture.md`](../playtest/36-window-texture.md) | 取用端 | `KI.EXE` 裡哪一段程式把這 128 byte 鋪上去的還沒找到（三條路都排除了）。**排法已經由實機畫面定案**，取用端只影響「還有沒有別的用法」 | 靜態 |
 | [`playtest/36-window-texture.md`](../playtest/36-window-texture.md) | 米色視窗 | 一覽表那種米色底原版有沒有紋路沒量過（截圖裡那一片是純色） | 實測 |
-| [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 據點中央的勢力徽記 | remake 沒畫（§4） / 找出原版換圖塊的規則 | 靜態 |
+| [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 換圖塊的那一支機器碼 | 規則是從資料與畫面反推的，每一格都對得上，但**原版在哪裡做這件事**還沒定位（`../re/67` §5） / 找誰在據點換手時改地圖或格子記錄 | 靜態 |
 | [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 橫幅數字的字模 | 原版墨水高 14 列，remake 的倚天 ASCII 只有 9 列 / 找出原版畫數字用的字模 | 靜態 |
 | [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 四個視窗開著時的對拍 | **還沒做**。原版要先移游標再按同一點才會分派（`../re/47` §3.1），單純 `click` 會被當成移動吃掉 / timeline 用 `click:x,y;press` 成對送 | 靜態 |
 | [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | DOSBox 的滑鼠座標 | 視窗 640×480、遊戲 640×400 置中，而 INT 33 把**整個視窗**等比對映到遊戲畫面（送 y 要乘 1.2）。這是本機設定的性質，不是原版的 / 把 `int33 max y` 改成 400 再量一次 | 實測 |

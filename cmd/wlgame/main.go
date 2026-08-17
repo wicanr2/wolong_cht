@@ -930,7 +930,8 @@ func (g *game) Draw(screen *ebiten.Image) {
 
 	// 大地圖鋪滿橫幅以下的全部畫面。四季調色盤直接吃時鐘算出來的季節——
 	// 所以畫面會隨遊戲時間換季，不需要另外驅動。
-	if img, err := g.lib.RenderWorld(g.camX, g.camY, viewCols, viewRows, season); err == nil {
+	if img, err := g.lib.RenderWorldMarked(g.camX, g.camY, viewCols, viewRows,
+		season, g.cityMarks()); err == nil {
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Translate(0, strategyMapY)
 		screen.DrawImage(ebiten.NewImageFromImage(img), op)
@@ -1528,6 +1529,7 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 		g.camY = w.Cities[cap].Y - centreRow
 	}
 	g.clampCam()
+	g.checkCityCentres()
 	log.Printf("劇本 %d：%d年%d月%d日，勢力 %d 個，玩家所仕 %d（君主 %s）",
 		slot+1, w.Clock.Year, w.Clock.Month, w.Clock.Day,
 		len(w.AliveFactions()), w.Player, text.Decode([]byte(w.LordName(w.Player)), text.Big5))

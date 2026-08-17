@@ -67,7 +67,7 @@
 | [`docs/playtest/34-advise-scene-screens.md`](playtest/34-advise-scene-screens.md) | 34 — 進言的畫面驗收：插圖 ＋ 兩個框 ＋ 五列選單 | 通過。 | 2026-08-17 |
 | [`docs/playtest/35-advise-verdict-screens.md`](playtest/35-advise-verdict-screens.md) | 35 — 進言的五項與「請求君主出陣」的定案畫面 | 通過。 | 2026-08-17 |
 | [`docs/playtest/36-window-texture.md`](playtest/36-window-texture.md) | 36 — 視窗底紋畫上去了 | 通過。 | 2026-08-17 |
-| [`docs/playtest/37-main-screen-parity.md`](playtest/37-main-screen-parity.md) | 37 — 開局主畫面的逐區對拍：第一次真的對原版跑 | 通過（三項改完之後）。 | 2026-08-17 |
+| [`docs/playtest/37-main-screen-parity.md`](playtest/37-main-screen-parity.md) | 37 — 開局主畫面的逐區對拍：第一次真的對原版跑 | 通過。 | 2026-08-17 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | remake 推廣片、代表幀「經典再現」比較片與 DOS/V／remake 實機動態比較片均已產出並完成媒體規格驗證… | 2026-08-12 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
 | [`docs/promo/dosv-adlib-and-tactical-review.md`](promo/dosv-adlib-and-tactical-review.md) | 推廣片原版 AdLib 與戰術骨架審查 | 原版音軌來源與影片縮放鏈已修正；戰術固定骨架的 16 px viewport 偏差已修正。完整同狀態戰術 parit… | 2026-08-12 |
@@ -139,7 +139,7 @@
 | [`docs/re/64-corps-arrival-state-machine.md`](re/64-corps-arrival-state-machine.md) | 64 — 軍團抵達時的狀態機：+0x23 的分派表與解體 | 分派表的結構、索引算式與 Stage 8–11 的語意 confirmed。 ⭐ 解體的消費端找到了——Stage … | 2026-08-16 |
 | [`docs/re/65-ai-march-decision-chain.md`](re/65-ai-march-decision-chain.md) | 65 — 電腦勢力的行軍決策鏈：Stage 0–3 與整條軍團生命週期 | 四支 AI handler 逐行讀完，Stage 0–3／8–11 的轉移條件全部 confirmed。 ⭐ 目標選… | 2026-08-17 |
 | [`docs/re/66-message-box-geometry.md`](re/66-message-box-geometry.md) | 66 — 訊息框的版面：一個框、一張肖像、四列字 | 全部 confirmed，而且機器碼與原版實錄影格兩條獨立證據對上。 ⭐ 框是固定的 (160, 160, 256,… | 2026-08-17 |
-| [`docs/re/67-city-emblem-on-strategy-map.md`](re/67-city-emblem-on-strategy-map.md) | 67 — 大地圖上的據點徽記：位置在記錄座標 +4，顏色照勢力分三類 | 位置與顏色分類都是實機量到的（四座據點、三種歸屬）。 畫的那一支還沒定位，所以 remake 還沒接。 | 2026-08-17 |
+| [`docs/re/67-city-emblem-on-strategy-map.md`](re/67-city-emblem-on-strategy-map.md) | 67 — 大地圖上的據點徽記：位置在記錄座標 +4，顏色照勢力分三類 | ✅ 全解並實作。 | 2026-08-17 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-16 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -186,6 +186,7 @@
 | [`docs/spec/50-corps-upkeep-charges-funds.md`](spec/50-corps-upkeep-charges-funds.md) | 50 — 軍費直接扣資金，不進「本月支出」 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/51-vga-dac-palette-scale.md`](spec/51-vga-dac-palette-scale.md) | 51 — DOS/V 的顏色到不了滿刻度：4 bit → VGA 6 bit DAC → 8 bit | READY。 | 2026-08-17 |
 | [`docs/spec/52-main-screen-camera-and-banner-date.md`](spec/52-main-screen-camera-and-banner-date.md) | 52 — 開局的鏡頭位置與橫幅日期 | READY。 | 2026-08-17 |
+| [`docs/spec/53-city-tile-by-ownership.md`](spec/53-city-tile-by-ownership.md) | 53 — 據點中心的圖塊跟著歸屬換，首都再疊一張 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | CONFORMED。管線接起來了，也對原版跑過一輪 （[../playtest/37](../playtest/37… | 2026-08-15 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
