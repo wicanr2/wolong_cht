@@ -419,6 +419,7 @@ M6 的版面幾何對得上原版，但畫的內容還有缺。**
 | ⭐ 戰術投影有兩條路：地形是**走出來**的、物件才是算出來的 | [`spec/57`](docs/spec/57-tactical-projection.md) |
 | ⭐ 原版的戰場 Y 比地形列號大 1（每張戰場前 64 B 是表頭，繪圖端定址整塊 4,096 B）| [`formats/07`](docs/formats/07-battle.md) §2.1、[`spec/57`](docs/spec/57-tactical-projection.md) §2 |
 | 原版存檔搬進 remake：capture 的 `savefile:` ＋ `wlgame -load-slot N` | [`spec/90`](docs/spec/90-same-state-parity.md) §2.2 |
+| ⭐ 戰場的同狀態對拍：`-siege-corps` 拿存檔裡現成的兩支軍團開戰，側欄標題逐像素 PASS | [`spec/90`](docs/spec/90-same-state-parity.md) §2.3、[`playtest/40`](docs/playtest/40-tactical-parity.md) §5 |
 | 戰場側欄逐像素對過：陣形列／指令面板／`▶▶` 列三區 PASS | [`spec/31`](docs/spec/31-tactical-sidebar.md)、[`playtest/40`](docs/playtest/40-tactical-parity.md) |
 
 **對拍管線可重跑**：`tools/dosv_capture.sh`（原版）→ `tools/parity_crop.py`
@@ -433,8 +434,8 @@ INT 33 的範圍變成整個世界（一個主機像素 ≈ 9.6 個遊戲像素�
 
 | # | 工作 | 為什麼現在做 | 下手點 |
 |---:|---|---|---|
-| **1** | **戰場對拍的第二輪：同一個局面** | 靜態層已經對到 `field` 23.1%（扣掉訊息框 12.0%），剩下的全是「雙方軍團不一樣」。要再往下就得讓兩邊站同一個局面 | remake 讀原版 `SAVE.DAT`；原版側的取得方式已固定（`docs/playtest/40` §1）|
-| **2** | **戰術對拍的第二個狀態** | 側欄的三個 FAIL 區（`sb-title`／`sb-enemy`／`sb-self`）剩下的全是「雙方是誰、兵有多少」，與 #1 是同一件事；版面本身已經逐像素對過 | 先做 #1，這一項會跟著收斂 |
+| **1** | **城壁的面畫得不對** | 同一個局面已經對過了（`docs/playtest/40` §5）：側欄四區 PASS、將旗降到 1.3–1.5%，而 `field` 幾乎沒動——所以那 19.9% 不是「雙方部隊不一樣」，是繪圖缺陷。原版的磚牆是連續的面，remake 有黑色缺口與相位不對的磚 | 讀 `sub_1DE95`／`sub_1E085`／`sub_1E0E1`／`sub_1DFE8`／`sub_1E011`，對 `drawDisplayGrid` 的五個貢獻（`0x30`／`0x20`／`0x10`／`0`）逐一核對；對照圖 `workplace/parity/zoom-wall3.png` |
+| **2** | **小地圖的底圖 8%** | 同一個局面之下也幾乎沒降，所以不是部隊點 | 可能與 #1 同源（`RenderTacticalMinimap` 也吃圖塊屬性）|
 
 > ⭐ **這一輪最有用的一招**：差異的**形狀會騙人**。整片 99% 不同可能只是
 > 調色盤刻度差 4%；「少畫了一個徽記」可能是整張圖塊換掉了。
