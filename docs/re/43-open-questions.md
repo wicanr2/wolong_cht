@@ -3,7 +3,7 @@
 **狀態：生成的清單，跑 `tools/py.sh tools/re_open_questions.py` 重出。
 這一份不下結論，只把各文件的「未解」表集中到一處。**
 
-- 日期：2026-08-16
+- 日期：2026-08-17
 - 產生工具：`tools/re_open_questions.py`
 - 來源：`docs/` 底下所有文件的未解小節、表格裡標未解的列，與收尾是「…未解」的散句
 
@@ -18,22 +18,18 @@
 
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
-| 規則正確性 | 54 | 52 | 2 | 0 |
+| 規則正確性 | 49 | 47 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
 | 程式碼理解 | 217 | 210 | 7 | 0 |
-| 驗收 | 58 | 50 | 8 | 0 |
+| 驗收 | 53 | 45 | 8 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 108 | 103 | 5 | 0 |
-| **合計** | **491** | 468 | 22 | 1 |
+| 其他 | 110 | 105 | 5 | 0 |
+| **合計** | **483** | 460 | 22 | 1 |
 
-## 2.1 規則正確性（54 條）
+## 2.1 規則正確性（49 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
-| [`mechanics/10-strategy.md`](../mechanics/10-strategy.md) | **防災值**怎麼成長 | 欄位語意已知（據點 `+0x11`），成長規則未解 | 靜態 |
-| [`mechanics/10-strategy.md`](../mechanics/10-strategy.md) | 行軍費用 | **說明書 10.6「行軍の費用」有專節，還沒讀** | 靜態 |
-| [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | **世界更新** | 每「時」 / `sub_13E11`（內容未解） | 靜態 |
-| [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | `sub_13E11` 每「時」做什麼 | 行軍與 AI 的節拍，寫到那一層時再解 | 靜態 |
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | `sub_10A65` 的內插演算法 | 只影響畫面 | 靜態 |
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | 最高速那一檔在原版實機上是多少 | 機器相依，要實測才有數字；只影響手感調校 | 實測 |
 | [`mechanics/20-military.md`](../mechanics/20-military.md) | 玩家六個位置如何完整影響戰力仍未解 | （散句） | 靜態 |
@@ -56,7 +52,6 @@
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 步兵 | 近戰，而且**挨箭只吃四分之一傷害** | 靜態 |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 繞路點是誰算出來的（真正的尋路演算法），以及士氣值存在哪。 | （未解小節內文） | 靜態 |
 | [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 預備兵維持費的單價（三兵種是否不同） | `sub_15358` 尾段的批次呼叫 | 靜態 |
-| [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 支出（`+0x1A`／`+0x1C`）是**誰累加**的 | 找寫入點 | 靜態 |
 | [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 防災值、城兵數的月度變化 | `sub_15358` 尾段剩下的六支 | 靜態 |
 | [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 「北方／南方」的判定邊界（座標？據點旗標？） | `SINARIO.DAT` 據點表 ＋ 反組譯募兵 | 靜態 |
 | [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 行軍啟動費用的計算基準 | 反組譯 | 靜態 |
@@ -349,7 +344,7 @@
 | [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `sub_189A4(al=1, dx=0, bx=2, cx=151Bh)` | `sub_13D09` 在貼完 `IVENTGRF` 之後畫的框，與 `sub_1895D` 是不是同一組單位沒驗 | 靜態 |
 | [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `IVENTGRF` 插圖本身的位置 | `sub_13D09` 的 `dx = 0E07h` 是餵給 `sub_1E38C`（讀檔）的參數，不是座標。插圖在畫面上的位置沒量 | 靜態 |
 
-## 2.4 驗收（58 條）
+## 2.4 驗收（53 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -394,11 +389,6 @@
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 主畫面：大地圖地形色調 | 原版偏黃綠、remake 偏綠 / 存疑 / 可能是影片的色彩取樣。要驗就比**同一格的色號**，不要比 RGB | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 戰場：同一場的逐格對拍 | 沒做過 / 未對過 / 需要同狀態，難度同主畫面 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 攻方大多數不前進 | 六個指令都能指揮部隊動作（`../spec/37` §4）；**AI 自己撞不進城是設計**——說明書第 11 章整章在講破城要換陣形 / 玩家要自己操作 | 靜態 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | `sub_13E11` 每「時」做什麼 | 未讀 / 行軍與 AI 的節拍 | 靜態 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 防災值怎麼成長 | 欄位已知、規則未解 / 天災的長期經濟 | 靜態 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 行軍費用 | 說明書 10.6 有專節，沒讀 / 經濟 | 靜態 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 預備兵維持費單價 | `sub_15358` 尾段沒讀 / 經濟 | 靜態 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 士氣值存在哪 | 戰術層 / 戰鬥判定 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 地形色調差 | 分不出是影片取樣還是調色盤，要比色號 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 戰鬥指揮／委任選單 | 影片裡沒有對照影格 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 同一場戰鬥的逐格對拍 | 需要同狀態，還沒做 | 靜態 |
@@ -434,7 +424,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（108 條）
+## 2.6 其他（110 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -543,6 +533,8 @@
 | [`spec/49-advise-relocate-and-sortie.md`](../spec/49-advise-relocate-and-sortie.md) | `sub_16EC9` | `sub_16E8F` 編成前的檢查，只確認「君主還沒帶軍團」這一條，其餘沒逐行讀 | 靜態 |
 | [`spec/49-advise-relocate-and-sortie.md`](../spec/49-advise-relocate-and-sortie.md) | 遷都的地圖選點 | `sub_17400` 沒讀，remake 用一覽表代替 | 靜態 |
 | [`spec/49-advise-relocate-and-sortie.md`](../spec/49-advise-relocate-and-sortie.md) | 進言的指令列 | 五項在原版指令樹裡的排法（`docs/re/22`）沒有逐格對過，remake 用自己的小視窗 | 靜態 |
+| [`spec/50-corps-upkeep-charges-funds.md`](../spec/50-corps-upkeep-charges-funds.md) | `sub_135ED` | 同時呼叫加與減，還沒讀 | 靜態 |
+| [`spec/50-corps-upkeep-charges-funds.md`](../spec/50-corps-upkeep-charges-funds.md) | `0x15604` | 資金 `+=` 的另一個包裝（`si` 已經是勢力位移），呼叫端沒查 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 原版的畫面輸出是 640×400 還是 640×480 | DOSBox-X 的視窗尺寸與 VGA 模式要確認，否則兩邊尺寸對不上 | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |
@@ -558,7 +550,4 @@
 或用別的詞說「這個還不知道」的缺口抽不到**——下列檔案提到未解
 卻一列都沒抽出來，要嘛缺口寫成別的句式，要嘛那些字樣只是在講別的事：
 
-（沒有）
-
-只印抽得到的部分，會讓解析失敗長得像「那份文件沒有缺口」。
-這一節就是為了讓那個差別看得見。
+- `docs/mechanics/10-strategy.md`

@@ -20,7 +20,7 @@
 | [`docs/formats/07-battle.md`](formats/07-battle.md) | 07 — BATTLE. 戰場資料 | 分段結構、圖塊定義、子圖塊與人物圖形的像素格式都 confirmed。 剩三項未解（§10）。 | 2026-08-07 |
 | [`docs/formats/08-sinario-save.md`](formats/08-sinario-save.md) | 08 — SINARIO.DAT / SAVE.DAT：劇本與存檔 | 整體結構 confirmed，武將能力值 confirmed，其餘欄位進行中。 | 2026-08-07 |
 | [`docs/mechanics/00-index.md`](mechanics/00-index.md) | 00 — 遊戲機制索引 | 索引與推論等級定義，長期有效。 | 2026-08-08 |
-| [`docs/mechanics/10-strategy.md`](mechanics/10-strategy.md) | 10 — 大地圖政略 | 指令清單完整；戰略數值與 AI 決策大多已由機器碼解出並實作。 剩防災值成長、六個位置的效果、行軍費用三項（§7）。 | 2026-08-13 |
+| [`docs/mechanics/10-strategy.md`](mechanics/10-strategy.md) | 10 — 大地圖政略 | 指令清單完整；戰略數值與 AI 決策大多已由機器碼解出並實作。 剩六個位置的效果一項（§7）。 | 2026-08-13 |
 | [`docs/mechanics/15-realtime.md`](mechanics/15-realtime.md) | 15 — 即時制的時間模型 | ✅ READY。整條時間鏈已在機器碼裡讀出來。 | 2026-08-08 |
 | [`docs/mechanics/20-military.md`](mechanics/20-military.md) | 20 — 行軍與軍團 | 道路網與行軍已解並實作；AI 與玩家的編成流程都已解； 六個位置怎麼換算成戰力仍未完。 | 2026-08-13 |
 | [`docs/mechanics/30-combat.md`](mechanics/30-combat.md) | 30 — 戰場（戰術） | 進場規則與戰略層的自動判定全解；戰術核心已接入並實作，完整結算與少數分支未完 | 2026-08-09 |
@@ -114,7 +114,7 @@
 | [`docs/re/39-remaining-unread.md`](re/39-remaining-unread.md) | 39 — 剩餘未讀函式的逐支歸屬 | 清單。 | 2026-08-14 |
 | [`docs/re/40-garrison-relief-request.md`](re/40-garrison-relief-request.md) | 40 — 據點求援與援軍派遣 | 整條鏈 confirmed（每一支都逐行讀過）。 sub_140C9 的距離算式裡有一處 | 2026-08-14 |
 | [`docs/re/42-leaf-functions.md`](re/42-leaf-functions.md) | 42 — 戰術以外的 47 支葉節點 | 47 支全部逐行讀過。四件事因此定案：INT 61h 是音源 TSR 的介面、 byte_198A6 的位元圖完整、… | 2026-08-14 |
-| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的） | 生成的清單，跑 tools/py.sh tools/re_open_questions.py 重出。 這一份不下結論… | 2026-08-16 |
+| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的） | 生成的清單，跑 tools/py.sh tools/re_open_questions.py 重出。 這一份不下結論… | 2026-08-17 |
 | [`docs/re/44-threat-and-reinforcement-ai.md`](re/44-threat-and-reinforcement-ai.md) | 44 — 威脅偵測與 AI 出兵：據點每 tick 掃一次 | 整條鏈逐行讀完。三件事定案：據點 +0x18 是佔用圖讀回來的軍團數、 +0x00 低 4 位是「哪幾個鄰居是敵方」… | 2026-08-14 |
 | [`docs/re/45-corps-command-mode.md`](re/45-corps-command-mode.md) | 45 — 軍團的三種指令模式：戰鬥指揮／委任／解體 | 軍團 +0x00 位元 2 定案 ＝ | 2026-08-14 |
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |
@@ -181,6 +181,7 @@
 | [`docs/spec/47-city-fall-corps-redirect.md`](spec/47-city-fall-corps-redirect.md) | 47 — 據點易主之後，舊主留在那一格的軍團調頭回家 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/48-governor-returns-on-city-fall.md`](spec/48-governor-returns-on-city-fall.md) | 48 — 據點被攻陷，派駐的內政官被遣回 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/49-advise-relocate-and-sortie.md`](spec/49-advise-relocate-and-sortie.md) | 49 — 進言的第四、五項：遷都與請求君主出陣 | CONFORMED。 | 2026-08-17 |
+| [`docs/spec/50-corps-upkeep-charges-funds.md`](spec/50-corps-upkeep-charges-funds.md) | 50 — 軍費直接扣資金，不進「本月支出」 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | READY。管線的每一段都有現成工具，缺的是把它們接起來 與一支逐區差分工具。 | 2026-08-15 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
@@ -301,7 +302,7 @@
 | 連結記錄（16 byte） ▸ +0x0E | `docs/re/08-hourly-update.md` |
 | 連結記錄（16 byte） ▸ +0x0F | `docs/re/08-hourly-update.md` |
 
-### 說明書（10 條）
+### 說明書（11 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -309,6 +310,7 @@
 | 1. 三個能力值 ▸ +18 | `docs/mechanics/60-personnel.md` |
 | 1. 三個能力值 ▸ +19 | `docs/mechanics/60-personnel.md` |
 | 1. 改了什麼 ▸ 系統視窗 | `docs/playtest/24-window-toggles.md` |
+| 3. 規則層還缺什麼 ▸ 六個編成位置怎麼影響戰力 | `docs/playtest/31-parity-inventory.md` |
 | 3.4 其他戰術判定（說明書） ▸ 中央突破戰法 | `docs/mechanics/70-ai.md` |
 | 3.4 其他戰術判定（說明書） ▸ 擊破狀態 | `docs/mechanics/70-ai.md` |
 | 3.4 其他戰術判定（說明書） ▸ 突擊時機 | `docs/mechanics/70-ai.md` |
@@ -322,7 +324,7 @@
 |---|---|
 | 2.1 執行結構（已驗證） ▸ YNSOUND.COM | `docs/reference/04-first-survey.md` |
 
-### 未解（34 條）
+### 未解（33 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -351,7 +353,6 @@
 | 4. 據點記錄（32 byte） ▸ +18 | `docs/formats/08-sinario-save.md` |
 | 4. 據點記錄（32 byte） ▸ +22 | `docs/formats/08-sinario-save.md` |
 | 4. 據點記錄（32 byte） ▸ +27–+31 | `docs/formats/08-sinario-save.md` |
-| 6. 月結與季節掛在時鐘的哪裡（confirmed） ▸ 世界更新 | `docs/mechanics/15-realtime.md` |
 | 檔案 ▸ 40-economy.md | `docs/mechanics/00-index.md` |
 | 索引 ▸ 一覽表的欄位與版面 | `docs/spec/00-index.md` |
 | 索引 ▸ 事件場景上誰在說話 | `docs/spec/00-index.md` |

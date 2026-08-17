@@ -1637,6 +1637,7 @@ func TestHourlyRotation(t *testing.T) {
 func TestTickRunsCorpsBeforeClockAdvance(t *testing.T) {
 	w := load(t, 0)
 	faction := w.AliveFactions()[0]
+	w.Factions[faction].Funds = 100000
 	w.Factions[faction].Expense = 0
 	w.Factions[faction].Reserves = [economy.NumTroopTypes]int{}
 	w.Corps[0] = Corps{
@@ -1651,9 +1652,13 @@ func TestTickRunsCorpsBeforeClockAdvance(t *testing.T) {
 	if !got.Clock.Hour || w.Clock.Hour != 2 || w.Clock.Subtick != 0 {
 		t.Fatalf("clock = %+v／event=%+v，want 從 1:8 進位至 2:0", w.Clock, got.Clock)
 	}
-	wantExpense := combat.Upkeep(32, false)
-	if got := w.Factions[faction].Expense; got != wantExpense {
-		t.Fatalf("軍團在 clock advance 後才更新：expense=%d，want %d", got, wantExpense)
+	// 軍費當場從資金扣（docs/spec/50），不進「本月支出」。
+	wantFunds := 100000 - combat.Upkeep(32, false)
+	if got := w.Factions[faction].Funds; got != wantFunds {
+		t.Fatalf("軍團在 clock advance 後才更新：funds=%d，want %d", got, wantFunds)
+	}
+	if got := w.Factions[faction].Expense; got != 0 {
+		t.Errorf("軍費不該記進本月支出，卻加了 %d", got)
 	}
 }
 

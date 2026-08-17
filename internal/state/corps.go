@@ -494,10 +494,16 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 
 	// ② 軍費與士氣。每天「一時」那個小時才收。
 	// 這一步壞滅的軍團不收——它已經不在了。
+	//
+	// ⭐ **軍費是當場從資金扣的**（原版 `sub_12600` → `sub_1562B`），
+	// 不進「本月支出」那個累加器——那一格只有預備兵維持費在寫
+	// （`sub_13E65`，docs/spec/50）。總額一個月下來一樣，
+	// 差在月中：出兵中的勢力資金會即時往下掉，而每小時的侵攻財政閘
+	// 讀的正是資金。
 	if hour == upkeepHour && c.Alive {
 		inField := army.KindOf(c.Node) == army.FieldNode
 		f := &w.Factions[c.Faction]
-		f.Expense = economy.ClampFunds(f.Expense + combat.Upkeep(c.Men, inField))
+		f.Funds = economy.ClampFunds(f.Funds - combat.Upkeep(c.Men, inField))
 		cc := combat.Corps{Morale: c.Morale}
 		combat.Recover(&cc, f.MoraleBase, inField)
 		c.Morale = cc.Morale

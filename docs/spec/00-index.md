@@ -90,6 +90,7 @@
 | 據點易主之後守軍調頭 | [`47-city-fall-corps-redirect.md`](47-city-fall-corps-redirect.md) | 已實作並有單測 |
 | 據點被攻陷時內政官被遣回 | [`48-governor-returns-on-city-fall.md`](48-governor-returns-on-city-fall.md) | 已實作並有單測，兩則訊息也接了 |
 | 進言第四、五項（遷都／請求出陣）| [`49-advise-relocate-and-sortie.md`](49-advise-relocate-and-sortie.md) | 已接進畫面並留下截圖 |
+| 軍費直接扣資金 | [`50-corps-upkeep-charges-funds.md`](50-corps-upkeep-charges-funds.md) | 已改正並有單測；長跑數字跟著變 |
 | 同狀態畫面對拍 | [`90-same-state-parity.md`](90-same-state-parity.md) | 橫幅已對過；**四窗全開的整體對拍還沒跑** |
 
 ## 怎麼加一份

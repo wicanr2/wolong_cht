@@ -1,6 +1,10 @@
 package state
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/wicanr2/wolong_cht/internal/rules/combat"
+)
 
 // 君主親自出陣的那一支**不是委任**——`sub_16E8F` 設了委任位元，
 // `sub_1699E` 緊接著把它清掉（docs/spec/49 §3）。
@@ -143,5 +147,55 @@ func TestAdviseRelocateRejectsBadTargets(t *testing.T) {
 	}
 	if w.AdviseRelocateAccepted(-1) || w.AdviseRelocateAccepted(len(w.Cities)) {
 		t.Error("界外的編號要擋掉")
+	}
+}
+
+// ---------------------------------------------------------------------------
+// 帳務：軍費 vs 預備兵維持費（docs/spec/50）
+// ---------------------------------------------------------------------------
+
+// ⭐ 軍費當場從資金扣（`sub_12600` → `sub_1562B`），**不進本月支出**。
+func TestCorpsUpkeepChargesFundsNotExpense(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[0]
+	i := formOne(t, w, f)
+	men := w.Corps[i].Men
+	if men == 0 {
+		t.Skip("編不出兵")
+	}
+	w.Factions[f].Funds = 100000
+	w.Factions[f].Expense = 0
+	w.corpsCursor = i
+
+	// 直接跑軍團那一輪的「一時」結算。走完整的 Tick 會把補兵、
+	// 預備兵維持費一起拉進來，驗不到想驗的那一筆。
+	w.tickCorps(upkeepHour, &testRand{s: 7})
+
+	want := 100000 - combat.Upkeep(men, false)
+	if got := w.Factions[f].Funds; got != want {
+		t.Errorf("資金 = %d，要 %d（兵力 %d ÷ 32 ＋ 1）", got, want, men)
+	}
+	if got := w.Factions[f].Expense; got != 0 {
+		t.Errorf("軍費記進了本月支出：%d", got)
+	}
+}
+
+// 預備兵維持費仍走「本月支出」（`sub_13E65` → `sub_15673`）。
+func TestReserveUpkeepGoesToExpense(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[0]
+	w.Factions[f].Expense = 0
+	w.Factions[f].Reserves = [3]int{3200, 0, 0} // ÷32 ＝ 100／次
+	before := w.Factions[f].Funds
+
+	ev := &Event{}
+	w.hourFaction = f
+	w.hourly(ev, &testRand{s: 3})
+
+	if got := w.Factions[f].Expense; got != 100 {
+		t.Errorf("本月支出 = %d，要 100（3200 ÷ 32）", got)
+	}
+	if w.Factions[f].Funds != before {
+		t.Errorf("預備兵維持費不該當場扣資金：%d → %d", before, w.Factions[f].Funds)
 	}
 }
