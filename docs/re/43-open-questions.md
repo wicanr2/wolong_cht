@@ -557,7 +557,7 @@
 | [`spec/54-ui-colours-from-palette.md`](../spec/54-ui-colours-from-palette.md) | 季節換色 | 五個索引在四季調色盤裡的值只有色 14 會變（`../formats/02` §4），而這五個都不是 14，所以目前用第 0 組。**若之後有視窗在別的調色盤組下畫，要改成跟著組走** | 靜態 |
 | [`spec/55-minimap-view-box.md`](../spec/55-minimap-view-box.md) | 剩下的 11 byte | `+0x8F0` 那一塊有 176 byte，框只用 165 | 靜態 |
 | [`spec/56-battlefield-rotation.md`](../spec/56-battlefield-rotation.md) | 表頭與尾段那各 64 byte | 轉的時候原版**不動它們**（迴圈只掃 `0x40`–`0xFBF`）。內容仍未解 | 靜態 |
-| [`spec/56-battlefield-rotation.md`](../spec/56-battlefield-rotation.md) | 兵的初始位置 | 翻轉之後雙方的佈陣點怎麼算，還沒對過 | 靜態 |
+| [`spec/56-battlefield-rotation.md`](../spec/56-battlefield-rotation.md) | 兵的初始位置 | 翻轉之後雙方的佈陣點跟著換邊，還沒接。**症狀看得到**：原版玩家守城時陣形線在 X=5（`sub_199F3` 的 `word_1D33C` 初值），remake 畫在 X≈58（`../playtest/40` §3.2） | 靜態 |
 | [`spec/56-battlefield-rotation.md`](../spec/56-battlefield-rotation.md) | 鏡頭差一個等角格 | 翻轉之後戰場區還差 (−16, −8)（`../playtest/40` §4.1）。小地圖沒有位移，所以不是翻轉中心的問題 | 靜態 |
 | [`spec/57-tactical-projection.md`](../spec/57-tactical-projection.md) | 原版的鏡頭為什麼從 (36,14) 移到 (36,13) | 那一張已經開打約 40 秒。初值是 `sub_199F3` 的常數，中途改鏡頭的路徑（`byte_1D348` dirty flag）還沒讀 | 靜態 |
 | [`spec/57-tactical-projection.md`](../spec/57-tactical-projection.md) | 物件與地形差一列會不會看得出來 | 奇數鏡頭時 anchor 那一半的物件比自己腳下的地形低一格。**原版就是這樣算的**，但沒有找到能單獨驗證這一點的畫面 | 靜態 |

@@ -783,12 +783,39 @@ func (g *game) drawBattleMiniMap(screen *ebiten.Image, b *tactical.Battle, r bat
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(float64(r.X), float64(r.Y))
 	screen.DrawImage(g.view.minimap, op)
-	g.drawBattleMiniMapUnits(screen, b, r)
+	// 順序照原版的抹除規則反推（docs/re/60 §7）：抹掉一個部隊點時，
+	// 落在陣形線上還原成 11、落在十字上還原成 0——**所以部隊點在最上面，
+	// 陣形線壓在十字上面**。
+	g.drawBattleMiniMapCross(screen, r)
 	g.drawBattleMiniMapLine(screen, b, r)
-	// 只畫外框，不縮放或裁切 128×128 原版 base image。
-	vector.StrokeRect(screen, float32(r.X), float32(r.Y),
-		float32(battle.TacticalMinimapWidth), float32(battle.TacticalMinimapHeight),
-		1, chrome.Paper, false)
+	g.drawBattleMiniMapUnits(screen, b, r)
+	// ⚠ **不畫外框。** 原版的小地圖直接貼在側欄的黑底上，四周沒有線；
+	// 先前那一圈白框是 remake 自己加的，逐像素對拍一眼就看得出來
+	// （docs/playtest/40 §3.1）。側欄的分隔是四條橫帶（docs/spec/31 §1.1）。
+}
+
+// drawBattleMiniMapCross 畫小地圖上的游標十字（原版 `sub_1C577`，色 0）。
+//
+// ⭐ **十字不是鏡頭。** 它自己有一組變數（`word_1D32C`／`word_1D32E`，
+// 初值 `0x20`／`0x21`），只是縮圖點選會把兩者一起改
+// （docs/re/60 §7）。拿十字的位置去反推鏡頭會得到一個看似合理的錯值。
+//
+// 換算與地形同一條：`x = 496 + 2×Y`、`y = 80 + 2×(63 − X)`，
+// 所以「固定 X」是一條水平線、「固定 Y」是一條垂直線。
+func (g *game) drawBattleMiniMapCross(screen *ebiten.Image, r battleRect) {
+	if g.view == nil {
+		return
+	}
+	ink := chrome.Ink
+	if x := r.X + 2*g.view.cursorY; x >= r.X && x < r.X+battle.TacticalMinimapWidth {
+		vector.DrawFilledRect(screen, float32(x), float32(r.Y), 2,
+			float32(battle.TacticalMinimapHeight), ink, false)
+	}
+	if y := r.Y + 2*(battle.Width-1-g.view.cursorX); y >= r.Y &&
+		y < r.Y+battle.TacticalMinimapHeight {
+		vector.DrawFilledRect(screen, float32(r.X), float32(y),
+			float32(battle.TacticalMinimapWidth), 2, ink, false)
+	}
 }
 
 // drawBattleMiniMapLine 在小地圖上畫玩家的陣形線（原版 `sub_1C5AE`，色 11）。
@@ -846,13 +873,12 @@ func (g *game) drawBattleSideCommands(screen *ebiten.Image, b *tactical.Battle, 
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Translate(float64(r.X), float64(r.Y))
 		screen.DrawImage(g.battleSideCommands, op)
-		if row := battleSideCommandRowOf(selected); row >= 0 {
-			cell := battleSideCommandCells(r)[row]
-			vector.StrokeRect(screen, float32(cell.X), float32(cell.Y),
-				float32(cell.W), float32(cell.H), 1, g.battleCommandSelect, false)
-			vector.StrokeRect(screen, float32(cell.X+1), float32(cell.Y+1),
-				float32(cell.W-2), float32(cell.H-2), 1, g.battleCommandSelect, false)
-		}
+		// ⭐ **指令面板不畫選取框。** 原版的選取框只有兩處：底列六個 slot
+		// （`sub_1C6BF`）與陣形選單（`sub_1C61F`），指令那六列一處都沒有
+		// （docs/re/60 §6、§9）。實機截圖裡雙方都在交戰、命令一定不是空的，
+		// 那六列上仍然沒有框（docs/playtest/40 §3.1）。
+		// **目前命令要看底列**——每一格右半就是那一隊的命令圖示，
+		// 那是原版放這個資訊的地方（docs/spec/33 §1.2）。
 		return
 	}
 	g.chrome.Window(screen, r.X, r.Y, r.W, r.H, chrome.Menu)

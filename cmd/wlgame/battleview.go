@@ -91,6 +91,9 @@ type battleView struct {
 	// sub_1DC9D 會在建立畫面串列後，才把它們換算成投影的 col／row
 	// origin（word_1E160／word_1E162）；兩套座標不可混為一談。
 	camWorldX, camWorldY int
+	// cursorX, cursorY 是小地圖上那個十字的位置（原版 word_1D32C／
+	// word_1D32E）。**與鏡頭是兩組變數**，只是被同一個點選一起改。
+	cursorX, cursorY int
 	camCol, camRow       int
 }
 
@@ -130,6 +133,10 @@ func (g *game) newBattleView(field int) *battleView {
 		// 不是每幀追著大將。
 		camWorldX: 0x24,
 		camWorldY: 0x0e,
+		// 游標十字的位置是**另一組變數**（`sub_199F3` 的 word_1D32C／
+		// word_1D32E ＝ 0x20／0x21），不是鏡頭；縮圖點選時兩者一起更新。
+		cursorX: 0x20,
+		cursorY: 0x21,
 	}
 	if g.battleCamAt != nil {
 		v.camWorldX, v.camWorldY = g.battleCamAt[0], g.battleCamAt[1]
@@ -251,6 +258,9 @@ func (v *battleView) applyCameraOrigin() {
 func (v *battleView) setCameraFromMiniMap(screenX, screenY int) {
 	v.camWorldY = (((screenX - 0x1f0) >> 1) | 1) - 0x13
 	v.camWorldX = (((0xcf - screenY) >> 1) &^ 1) + 4
+	// 十字跟著點選走：原版 `0x1C0C6` 先用舊的 word_1D32C／word_1D32E
+	// 還原十字，再寫新值（docs/re/60 §7）。
+	v.cursorX, v.cursorY = v.camWorldX, v.camWorldY
 	v.applyCameraOrigin()
 }
 

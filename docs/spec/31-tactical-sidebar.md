@@ -1,7 +1,9 @@
 # 31 — 戰術側欄的內容組成
 
-**狀態：READY。** 七格的幾何、美術來源、文字座標、計量條算式與
-熱區碼分派全部有機器碼出處；`▶▶` 列只實作外觀，不實作行為（§5）。
+**狀態：CONFORMED。** 七格的幾何、美術來源、文字座標、計量條算式與
+熱區碼分派全部有機器碼出處，並拿原版的許昌攻防戰逐像素對過——
+陣形列、指令面板、`▶▶` 列三區 PASS（[`../playtest/40`](../playtest/40-tactical-parity.md)）。
+`▶▶` 列只實作外觀，不實作行為（§5）。
 
 - 日期：2026-08-16
 - 出處：[`../re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md)
@@ -144,6 +146,8 @@ x 都是 498，高 2 px，總長上限 124，未填的部分畫色 0。
 | 側欄繪製 | `cmd/wlgame/battle.go` `drawBattleSidebar` |
 | 段 1 美術 | `internal/assets/gfx`＋`internal/assets/library`：`DOSVBattleFlagAlly`／`DOSVBattleFlagFoe`／`DOSVBattleFormationStrip`／`DOSVBattleFooter` |
 | 小地圖標記 | `cmd/wlgame/battleview.go` `drawMiniMapMarkers` |
+| 小地圖 | 底圖 ＋ **游標十字**（`sub_1C577`，色 0，位置是 `word_1D32C`／`word_1D32E` 不是鏡頭）＋ 陣形線 ＋ 部隊點。**不描外框**——原版直接貼在黑底上 |
+| 指令面板 | 只貼段 1 `0x1800` 那張圖，**不畫選取框**：原版的選取框只有底列六格與陣形選單兩處 |
 | 差異 | `▶▶` 列只畫美術，**不接行為**（原版切換的是 `loc_1A065` 的自我修改碼，語意未解）；兩面將旗的熱區原版是 `retn`，remake 同樣不接 |
 
 ## 4. 驗證
@@ -152,6 +156,7 @@ x 都是 498，高 2 px，總長上限 124，未填的部分畫色 0。
 |---|---|
 | 單元測試 | `TestDOSVBattleSidebarLayoutMatchesRaw`、`TestBattleCommandRowToCodeMatchesRawHotspots`（`cmd/wlgame`）|
 | 對原版 | [`../playtest/27`](../playtest/27-original-video-frame-parity.md) §7 的影片對拍——幾何 ≤3 px；本規格補的是內容 |
+| 對原版（逐像素）✅ | [`../playtest/40`](../playtest/40-tactical-parity.md)：陣形列、指令面板、`▶▶` 列**三區逐像素 PASS**；標題與兩格將旗剩 2–6%，全是狀態差 |
 
 ## 5. 未解
 
