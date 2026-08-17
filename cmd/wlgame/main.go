@@ -1290,6 +1290,7 @@ func main() {
 	shot := flag.String("shot", "", "跑 N 幀之後截圖到這個路徑就結束（驗收用）")
 	shotFrames := flag.Int("shot-frames", 120, "截圖前先跑幾幀")
 	saveFile := flag.String("save-file", "", "可寫的四槽存檔 overlay 路徑；一般啟動可選讀檔")
+	loadSlot := flag.Int("load-slot", -1, "直接啟動時先從 -save-file 的第 N 槽（0–3）載入（驗收用；原版存檔也讀得動）")
 	openWin := flag.Int("open-window", -1, "截圖前先打開第幾個視窗（0–3；−2 ＝ 三個常駐視窗；−3 ＝ 再加系統選單。對拍用）")
 	camAt := flag.String("cam", "", "把大地圖鏡頭移到指定格 `X,Y`（對拍用；原版點過視窗開關之後鏡頭就不在開局位置了）")
 	openList := flag.Bool("open-list", false, "截圖前先開武將一覽（驗收用）")
@@ -1367,6 +1368,22 @@ func main() {
 	if *directStart || directStartFlagWasPassed() {
 		if err := g.startWorld(loadPath, *scenario, *player, true); err != nil {
 			log.Fatal(err)
+		}
+		// -load-slot 讓驗收路徑直接從存檔開局，不必走讀檔選單。
+		// **原版存檔也讀得動**（`readSave` 找不到原生檔就退回
+		// `state.LoadScenario`），所以可以拿原版存的那一份做同狀態對拍
+		// （docs/spec/90 §2）。
+		if *loadSlot >= 0 {
+			if err := g.readSave(*loadSlot); err != nil {
+				log.Fatalf("-load-slot %d 讀不起來：%v", *loadSlot, err)
+			}
+			log.Printf("從第 %d 槽載入：%d年%d月%d日，玩家勢力 %d",
+				*loadSlot+1, g.world.Clock.Year, g.world.Clock.Month,
+				g.world.Clock.Day, g.world.Player)
+			// readSave 會在事件列留一句「已讀取第 N 槽」。那是給玩家看的，
+			// **對拍時它會蓋掉畫面下緣**（`map` 與 `faction` 兩區各差一成以上），
+			// 而原版載入完什麼都不留。驗收路徑清掉它。
+			g.lastEvent = ""
 		}
 		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *openForm, *openCorps, *openMarchList,
 			*openMarchMode, *openBattle, *openSiege, *openBattleChoice, *openMessage,

@@ -47,6 +47,35 @@ remake 讀原版 `SAVE.DAT` 建立狀態，之後每一輪對拍都從同一份�
 **沒有凍結就不要對拍**——差出來的像素會混進「時間差」，
 而那種雜訊看起來跟真的版面錯誤一模一樣。
 
+### 2.2 ⭐ 從原版存檔開局：整條管線可跑了
+
+`readSave` 找不到原生存檔就退回 `state.LoadScenario`，而那一支吃的
+**就是原版的四區塊格式**——所以原版存的 `SAVE.DAT` 直接載得動，
+不必另外寫轉檔。
+
+原版側（座標是視窗座標 ＝ 遊戲座標 × 1.2）：
+
+```
+click:46,0;press      系統選單（開著時時間停止，§2.1）
+click:376,192         資料儲存 → 跳出 SAVE DATA 四格
+press                 存到第 1 格（游標還停在那一列）
+rclick:376,192        關掉 SAVE DATA，系統選單留著
+savefile:SAVE.DAT     把 guest 寫的存檔複製到輸出目錄
+```
+
+remake 側：
+
+```
+tools/parity_shot.sh out.png -direct -scenario 0 -player 0     -save-file <那份 SAVE.DAT> -load-slot 0 -open-window -3 -cam X,Y
+```
+
+⚠ **鏡頭不在存檔裡**：remake 載入後把鏡頭移到首都，原版停在玩家最後
+捲到的地方，所以還是要用 `-cam` 對齊（`tools/find_camera.py` 反推）。
+
+⚠ 存檔也裝不下**執行期狀態**（天候物件、事件佇列的部分內容）。
+存得越晚，這一類差異越多——所以要對「載入後的畫面」就存得早一點，
+要量「存檔漏了什麼」就故意存晚一點。
+
 ## 3. 分區
 
 座標出自 [`docs/re/47`](../re/47-main-screen-window-registry.md)，
@@ -81,6 +110,7 @@ remake 讀原版 `SAVE.DAT` 建立狀態，之後每一輪對拍都從同一份�
 | 項目 | 位置 |
 |---|---|
 | 原版擷取 | `tools/dosv_capture.sh`（主機端入口）→ `tools/dosv_live_capture.sh`（容器內），再 `tools/parity_crop.py` 切成 640×400 |
+| 原版存檔 | `dosv_live_capture.sh` 的 `savefile:檔名` 步驟——把 guest 寫的 `SAVE.DAT` 複製到輸出目錄（**原版資產，只落在 gitignore 的 workplace/**）|
 | remake 擷取 | `tools/parity_shot.sh`——用 `wlgame -shot` 直接寫**邏輯畫面** 640×400。`tools/shot.sh` 抓的是 1600×900 桌面，尺寸對不上 |
 | 對齊鏡頭 | `wlgame -cam X,Y`（驗收旗標）。**進到大地圖之後移動滑鼠就會捲動**（`docs/re/47` §3.1），所以原版側只要點過視窗開關，鏡頭就不在開局位置了；要比縮小地圖的視野框就得讓 remake 跟著搬 |
 | 分辨「位移」與「畫錯」 | `tools/parity_shift.py`（平移搜尋）、`tools/parity_locate.py`（拿地標去另一張找）|

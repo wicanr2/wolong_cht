@@ -6,7 +6,7 @@
 #
 # 預設會在密碼頁按原始「確定」，接著依 WOLONG_DOSV_TIMELINE 執行：
 #   wait:秒;shot:名稱;key:鍵;type:字串;click:x,y;rclick:x,y;press;
-#   record:秒,fps,前綴;audio-start;audio-stop
+#   record:秒,fps,前綴;audio-start;audio-stop;savefile:檔名
 #
 # ⚠ **click／rclick 的 y 要用「遊戲座標 × 1.2」**：視窗是 640×480，
 #    遊戲畫面 640×400 置中，而 INT 33 把**整個視窗**等比對映到遊戲畫面
@@ -360,6 +360,20 @@ for step in "${steps[@]}"; do
 	            sleep 0.5
 	            trace "step end=$step"
 	            ;;
+        savefile)
+            # 把 guest 寫的存檔複製出去。**這是原版資產**，只會落在
+            # workplace/（gitignore），不進版控（CLAUDE.md §9）。
+            # 用途：讓 remake 從同一份存檔開局，做中局的同狀態對拍
+            # （docs/spec/90 §2）。
+            trace "step begin=$step"
+            if [ -f "$game_dir/SAVE.DAT" ]; then
+                cp "$game_dir/SAVE.DAT" "$out_dir/$arg"
+                trace "step end=$step bytes=$(stat -c%s "$out_dir/$arg")"
+            else
+                echo "找不到 $game_dir/SAVE.DAT，沒有東西可複製" >&2
+                exit 1
+            fi
+            ;;
         *)
             echo "不支援的擷取步驟：$step" >&2
             exit 1
