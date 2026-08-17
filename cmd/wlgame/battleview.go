@@ -101,7 +101,7 @@ func (g *game) newBattleView(field int) *battleView {
 		minimap = ebiten.NewImageFromImage(raw.RGBA(bank))
 		subs = g.battleLib.SubTilesFor(field, tiles)
 	}
-	return &battleView{
+	v := &battleView{
 		lib: g.battleLib, set: g.battleLib.TileSet(field),
 		subs:  subs,
 		cache: map[int]*ebiten.Image{}, pal: bank,
@@ -115,6 +115,11 @@ func (g *game) newBattleView(field int) *battleView {
 		camWorldX: 0x24,
 		camWorldY: 0x0e,
 	}
+	if g.battleCamAt != nil {
+		v.camWorldX, v.camWorldY = g.battleCamAt[0], g.battleCamAt[1]
+	}
+	v.applyCameraOrigin()
+	return v
 }
 
 // image 把一個子圖塊轉成 Ebiten 的圖，解過就快取起來。
@@ -230,6 +235,13 @@ func (v *battleView) applyCameraOrigin() {
 func (v *battleView) setCameraFromMiniMap(screenX, screenY int) {
 	v.camWorldY = (((screenX - 0x1f0) >> 1) | 1) - 0x13
 	v.camWorldX = (((0xcf - screenY) >> 1) &^ 1) + 4
+	v.applyCameraOrigin()
+}
+
+// setCameraWorld 直接指定鏡頭的世界格。**驗收用**：對拍時要讓 remake
+// 跟原版停在同一個鏡頭（原版初值是 `sub_199F3` 的 36, 14）。
+func (v *battleView) setCameraWorld(x, y int) {
+	v.camWorldX, v.camWorldY = x, y
 	v.applyCameraOrigin()
 }
 

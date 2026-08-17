@@ -140,6 +140,9 @@ type game struct {
 	// `buildField` 決定，繪圖層要用同一個值，否則畫面與規則層會不一致。
 	battleRotate bool
 
+	// battleCamAt 是 `-battle-cam` 的覆寫值（驗收用；nil ＝ 照原版初值）。
+	battleCamAt *[2]int
+
 	// 標題兩行與兩條計量條的顏色，一律查調色盤（docs/spec/54）。
 	battleTitlePlace color.RGBA // 索引 9：地名與「作戰」
 	battleTitleLord  color.RGBA // 索引 11：君主名與「對」
@@ -1302,6 +1305,7 @@ func main() {
 	openMarchList := flag.Bool("open-march-list", false, "截圖前編一支軍團並停在行軍目的地一覽（驗收用）")
 	siegeNode := flag.Int("siege-node", -1, "指定攻城的戰場＝據點編號（驗收用，配 -open-siege）")
 	siegeDefend := flag.Bool("siege-defend", false, "攻城時玩家當守方（原版會把戰場轉 180 度，docs/spec/56）")
+	battleCam := flag.String("battle-cam", "", "覆寫戰術鏡頭的世界格 `X,Y`（驗收用；原版初值是 36,14）")
 	openMessage := flag.Bool("open-message", false, "截圖前先開玩家首都的暴風雨 TALK #70 通知（驗收用）")
 	openTalkIndex := flag.Int("open-talk-index", -1, "截圖前直接開指定 TALK.DAT 槽位（驗收用）")
 	openOutcome := flag.String("open-outcome", "", "只供截圖的敗北 modal fixture：trust 或 faction")
@@ -1366,7 +1370,7 @@ func main() {
 		}
 		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *openForm, *openCorps, *openMarchList,
 			*openMarchMode, *openBattle, *openSiege, *openBattleChoice, *openMessage,
-			*openTalkIndex, *openOutcome, *siegeNode, *siegeDefend, *camAt)
+			*openTalkIndex, *openOutcome, *siegeNode, *siegeDefend, *camAt, *battleCam)
 	} else {
 		slots := inspectLauncherSlots(*saveFile)
 		// 劇本標題從檔案讀，不硬編（docs/spec/25 §1.2）。
@@ -1574,7 +1578,7 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 
 func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, openForm, openCorps, openMarchList, openMarchMode,
 	openBattle, openSiege, openBattleChoice, openMessage bool, openTalkIndex int,
-	openOutcome string, siegeNode int, siegeDefend bool, camAt string) {
+	openOutcome string, siegeNode int, siegeDefend bool, camAt, battleCam string) {
 	w := g.world
 	if w == nil {
 		return
@@ -1645,6 +1649,18 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 	}
 	if openBattle || openSiege || openBattleChoice {
 		g.demoBattle(openSiege, !openBattleChoice, siegeNode, siegeDefend)
+	}
+	if battleCam != "" {
+		var bx, by int
+		if _, err := fmt.Sscanf(battleCam, "%d,%d", &bx, &by); err != nil {
+			log.Printf("⚠ -battle-cam 要 `X,Y` 兩個整數，收到 %q：%v", battleCam, err)
+		} else {
+			// 戰術 view 是進戰場那一幀才建的，所以存起來由 newBattleView 套用。
+			g.battleCamAt = &[2]int{bx, by}
+			if g.view != nil {
+				g.view.setCameraWorld(bx, by)
+			}
+		}
 	}
 	if openForm || openCorps {
 		g.demoCorps(openCorps)

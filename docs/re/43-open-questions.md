@@ -21,10 +21,10 @@
 | 規則正確性 | 50 | 48 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
 | 程式碼理解 | 220 | 213 | 7 | 0 |
-| 驗收 | 66 | 56 | 10 | 0 |
+| 驗收 | 67 | 57 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
 | 其他 | 120 | 114 | 6 | 0 |
-| **合計** | **510** | 484 | 25 | 1 |
+| **合計** | **511** | 485 | 25 | 1 |
 
 ## 2.1 規則正確性（50 條）
 
@@ -348,7 +348,7 @@
 | [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 「圖例選中的勢力」 | 縮小地圖有第四種顏色（`62` §2），大地圖有沒有對應的圖塊沒驗 / 開縮小地圖、切圖例第二格再截一張 | 靜態 |
 | [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 230 為什麼分位置 | 關隘上下換、大城左右不換。remake 照位置實作，但沒有機器碼解釋 / 同第一列 | 靜態 |
 
-## 2.4 驗收（66 條）
+## 2.4 驗收（67 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -415,7 +415,8 @@
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 「液晶」畫面模式 | 原版的畫面模式有兩個選項，對應 `GAMEPAL.BRG` 的 bank 0–3 與 4–7（`../re/55` §4）。remake 只做了 16 色那一組 / 載 bank 4–7 再對拍一次 | 靜態 |
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 音效的 TYPE 2/3/4 | 原版有四種音源型別，remake 只有開／關 / 看 `sub_102D0` 那四型的差別 | 靜態 |
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 日期對不上 | 原版跑到 4月9日才截到 / 要嘛用存檔定位，要嘛加一個「跑到指定日期」的驗收旗標 | 靜態 |
-| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | 鏡頭差一個等角格 | 量到 (−16, −8)，而初始鏡頭是 `sub_199F3` 的 `word_1D328=0x24`／`word_1D32A=0x0E`（§4.1） / 那個差在世界座標上是半格，湊不出來——要讀原版守城時的鏡頭初值是不是另一組 | 靜態 |
+| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | **remake 畫不出奇數的 `camWorldY`** | 對齊點在 11，而 remake 的 11 有 423/1024 對不上（§4.1）。原版縮圖點選一律產生奇數，所以這不是邊角 / 讀 `sub_1DD22` 的兩趟交錯（`add di, 40h`／`add si, 20h`）怎麼處理 `(Y−X)` 的奇偶 | 靜態 |
+| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | 原版的鏡頭為什麼從 14 移到 11 | 初值是 `sub_199F3` 的常數，這一張已經開打 40 秒 / 找誰設鏡頭的 dirty flag（`byte_1D348`） | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | 同一場戰鬥 | 這一輪只對「同一張戰場」，雙方的軍團組成不同 / 要對就得讓 remake 從原版存檔載入同一個局面 | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-command` 的選取框 | remake 畫了、原版那一刻沒畫 / 確認原版是「有選中才畫」還是「從不畫」 | 靜態 |
 
