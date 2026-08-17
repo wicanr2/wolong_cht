@@ -796,17 +796,26 @@ func TestMinimapFactionSkipsSelfAndDead(t *testing.T) {
 	w.Factions[0].Alive = true
 	w.Factions[2].Alive = true
 	g := &game{world: w, minimapFaction: 0}
-	if got := g.watchedFaction(); got != 2 {
-		t.Errorf("watchedFaction = %d，預期 2（0 是自己、1 已滅）", got)
+	// ⭐ **開局盯的就是勢力 0，即使那是自己。** 原版沒有初始化
+	// `cs:byte_198A7`，資料段開機是 0——實機截圖上圖例兩格都是「曹操」
+	// （docs/playtest/38）。擋自勢力的是選單，不是初值。
+	if got := g.watchedFaction(); got != 0 {
+		t.Errorf("watchedFaction = %d，預期 0（開局盯的就是勢力 0）", got)
 	}
+	// 換一個就不能是自己了（原版 `sub_15AFC` 的 `cmp al, cs:byte_10CFF`）。
 	g.cycleWatchedFaction()
 	if g.minimapFaction != 2 {
 		t.Errorf("換一次之後 = %d，預期 2（只剩它可選）", g.minimapFaction)
 	}
-	// 全部滅亡時不能無限迴圈，也不能挑到自己。
+	// 盯著的勢力滅亡就往後找，找到還活著的 0。
 	w.Factions[2].Alive = false
+	if got := g.watchedFaction(); got != 0 {
+		t.Errorf("盯著的滅亡後應往後找到 0，得到 %d", got)
+	}
+	// 全部滅亡時不能無限迴圈。
+	w.Factions[0].Alive = false
 	if got := g.watchedFaction(); got != -1 {
-		t.Errorf("沒有可盯的勢力時應回 −1，得到 %d", got)
+		t.Errorf("沒有活著的勢力時應回 −1，得到 %d", got)
 	}
 }
 

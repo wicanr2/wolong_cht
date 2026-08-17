@@ -1271,6 +1271,7 @@ func main() {
 	shotFrames := flag.Int("shot-frames", 120, "截圖前先跑幾幀")
 	saveFile := flag.String("save-file", "", "可寫的四槽存檔 overlay 路徑；一般啟動可選讀檔")
 	openWin := flag.Int("open-window", -1, "截圖前先打開第幾個視窗（0–3；−2 ＝ 四窗全開，對拍用）")
+	camAt := flag.String("cam", "", "把大地圖鏡頭移到指定格 `X,Y`（對拍用；原版點過視窗開關之後鏡頭就不在開局位置了）")
 	openList := flag.Bool("open-list", false, "截圖前先開武將一覽（驗收用）")
 	openAdvise := flag.Bool("open-advise", false, "截圖前先跑到說服畫面（驗收用）")
 	adviseMenu := flag.Bool("advise-menu", false, "單獨用：停在進言的五項選單；配 -open-advise：停在五選一的理由選單（驗收用）")
@@ -1347,7 +1348,7 @@ func main() {
 		}
 		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *openForm, *openCorps, *openMarchList,
 			*openMarchMode, *openBattle, *openSiege, *openBattleChoice, *openMessage,
-			*openTalkIndex, *openOutcome, *siegeNode)
+			*openTalkIndex, *openOutcome, *siegeNode, *camAt)
 	} else {
 		slots := inspectLauncherSlots(*saveFile)
 		// 劇本標題從檔案讀，不硬編（docs/spec/25 §1.2）。
@@ -1539,7 +1540,7 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 
 func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, openForm, openCorps, openMarchList, openMarchMode,
 	openBattle, openSiege, openBattleChoice, openMessage bool, openTalkIndex int,
-	openOutcome string, siegeNode int) {
+	openOutcome string, siegeNode int, camAt string) {
 	w := g.world
 	if w == nil {
 		return
@@ -1585,6 +1586,15 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 	// （docs/playtest/27），沒有它就沒辦法對拍。
 	if openWin == -2 {
 		g.hudSet(hudCommand|hudFaction|hudMinimap, true)
+	}
+	if camAt != "" {
+		var cx, cy int
+		if _, err := fmt.Sscanf(camAt, "%d,%d", &cx, &cy); err != nil {
+			log.Printf("⚠ -cam 要 `X,Y` 兩個整數，收到 %q：%v", camAt, err)
+		} else {
+			g.camX, g.camY = cx, cy
+			g.clampCam()
+		}
 	}
 	if w := hudSwitchWindow(openWin); openWin >= 0 && w != 0 {
 		g.hudSet(w, true)

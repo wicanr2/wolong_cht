@@ -49,6 +49,9 @@ const (
 	strategyMinimapH       = 160
 	strategyMinimapImageH  = 128
 	strategyMinimapLegendY = strategyMinimapY + strategyMinimapImageH
+	// 圖例上兩個君主名的左緣，原版數值（docs/re/62 §4.1）。
+	strategyLegendSelfX    = 480
+	strategyLegendWatchedX = 576
 	strategyMinimapSwatchY = strategyMinimapLegendY + 4
 	strategyFactionY       = bannerH + strategyMinimapH
 	strategyFactionH       = screenH - strategyFactionY
@@ -381,8 +384,8 @@ func (g *game) drawNaturalStrategyHUD(screen *ebiten.Image) {
 		}
 		return
 	}
-	// 命令列使用與原版視窗相同的深藍底／紅金外框；文字沿 8 px 邊界排列。
-	g.chrome.Window(screen, 0, strategyCommandY, strategyCommandW, strategyCommandH, chrome.Menu)
+	// 外框與其他視窗相同，**但內部是純黑、沒有龍紋**（docs/spec/54 §2）。
+	g.chrome.Window(screen, 0, strategyCommandY, strategyCommandW, strategyCommandH, chrome.Blank)
 	for i, label := range naturalCommandLabels {
 		x := strategyCommandX + strategyCommandLead + i*strategyCommandCellW
 		g.td.Draw(screen, strategyHUDSingleLine(label, strategyCommandTextW), x, strategyCommandY+8, chrome.Paper)
@@ -603,22 +606,30 @@ func (g *game) drawHUDSidebar(screen *ebiten.Image) {
 		op.GeoM.Translate(float64(legendX), float64(strategyMinimapLegendY))
 		screen.DrawImage(ebiten.NewImageFromImage(img), op)
 	}
-	g.td.Draw(screen, strategyHUDSingleLine(big5(g.world.LordName(g.world.Player)), 72), legendX+24, strategyMinimapLegendY, chrome.Paper)
-	watched := "敵"
+	// 兩個君主名的座標是原版數值：(480, 168) 與 (576, 168)（docs/re/62 §4.1）。
+	g.td.Draw(screen, strategyHUDSingleLine(big5(g.world.LordName(g.world.Player)), 72),
+		strategyLegendSelfX, strategyMinimapLegendY, chrome.Paper)
+	watched := ""
 	if f := g.watchedFaction(); f >= 0 {
 		watched = big5(g.world.LordName(f))
 	}
-	g.td.Draw(screen, strategyHUDSingleLine(watched, 72), legendX+120, strategyMinimapLegendY, chrome.Paper)
+	g.td.Draw(screen, strategyHUDSingleLine(watched, 72),
+		strategyLegendWatchedX, strategyMinimapLegendY, chrome.Paper)
 }
 
 // watchedFaction 是圖例第二格盯著的勢力（原版的 `cs:byte_198A7`）。
-// 選到自勢力或已滅亡的勢力時往後找，找不到回 −1
-// （原版的 `sub_15AFC` 也擋掉自勢力，見 docs/re/62 §4.2）。
+//
+// ⭐ **開局時它是 0，而且可以等於自勢力**——原版沒有初始化那個 byte，
+// 資料段開機是 0，所以第一次進主畫面時圖例右格顯示的是**勢力 0**
+// （曹操局的實機截圖上兩格都是「曹操」）。**選單擋自勢力，初值不擋**
+// （`sub_15AFC` 的 `cmp al, cs:byte_10CFF / jz 忽略`，docs/re/62 §4.2）。
+//
+// 已滅亡的勢力往後找；全都不行才回 −1。
 func (g *game) watchedFaction() int {
 	n := len(g.world.Factions)
 	for i := 0; i < n; i++ {
 		f := (g.minimapFaction + i) % n
-		if f != g.world.Player && g.world.Factions[f].Alive {
+		if g.world.Factions[f].Alive {
 			return f
 		}
 	}
@@ -739,10 +750,11 @@ func (g *game) drawNaturalFactionHUD(dst *ebiten.Image, x, y int) {
 	// 信賴度：原版先畫一個 176×10 的槽（顯示清單 op 03），再在裡面畫量條
 	// （`sub_15F27`，長度 (信賴度×100 + 0x9F) ÷ 0xA0，滿長 160）。
 	// 量條本體高 2 px，填色 0x0A、未填色 0x00——`sub_10AAA` 分兩段畫，
-	// 第二段把 `ah` 換成 `al`（0x00）。這裡的槽已經是黑的，只畫填滿那一段。
+	// 第二段把 `ah` 換成 `al`（0x00）。
+	// **槽是純黑（色 0）**，不是深色調——實機上量到的（docs/spec/54 §2 同源）。
 	g.td.Draw(dst, "信賴度", x+strategyTrustLabelX, y+strategyTrustLabelY, ink)
 	vector.DrawFilledRect(dst, float32(x+strategyTrustSlotX), float32(y+strategyTrustSlotY),
-		strategyTrustSlotW, strategyTrustSlotH, color.RGBA{24, 24, 32, 255}, false)
+		strategyTrustSlotW, strategyTrustSlotH, chrome.Blank, false)
 	trustW := (g.world.Trust*100 + 0x9F) / 0xA0
 	if trustW > strategyTrustMaxW {
 		trustW = strategyTrustMaxW
@@ -763,7 +775,8 @@ func (g *game) drawNaturalFactionHUD(dst *ebiten.Image, x, y int) {
 	if f.Funds < 0 {
 		fundsInk = gaugeInk
 	}
-	g.td.Draw(dst, strategyHUDNumber(f.Funds, strategyFundsDigits), x+strategyFundsXOffset, fundsY, fundsInk)
+	g.drawOriginalNumber(dst, f.Funds, x+strategyFundsXOffset, fundsY,
+		strategyFundsDigits, fundsInk)
 
 	// 顯示換算見常數區的 strategyReserveMenPerPoint。
 	reserveValues := [...]int{
@@ -786,8 +799,8 @@ func (g *game) drawNaturalFactionHUD(dst *ebiten.Image, x, y int) {
 	}
 	for i, value := range reserveValues {
 		iconY := y + strategyReserveYOffset + i*strategyResourceRowStep
-		g.td.Draw(dst, strategyHUDNumber(value*strategyReserveMenPerPoint, strategyReserveDigits),
-			x+strategyReserveXOffset, iconY, ink)
+		g.drawOriginalNumber(dst, value*strategyReserveMenPerPoint,
+			x+strategyReserveXOffset, iconY, strategyReserveDigits, ink)
 	}
 }
 
@@ -839,35 +852,51 @@ func (g *game) checkCityCentres() {
 	}
 }
 
-// drawBannerNumber 用**原版的數字字模**把日期填進橫幅（docs/spec/52 §5）。
+// drawOriginalNumber 用**原版的數字字模**把一個數字右對齊畫進 digits 個格子。
 //
-// ⭐ 字模在 `ICONGRF` 段 3 的 `+0x840`，8×16、11 格（0–9 ＋ 負號）。
-// 倚天的 ASCII 數字墨水只有 9 列，原版的是 14 列——**同一個位置、
-// 同樣的顏色，字形不同還是差得出來**，所以這裡不共用文字層。
+// ⭐ 字模在 `ICONGRF` 段 3 的 `+0x840`，8×16、11 格（0–9 ＋ 負號），
+// 規格 docs/spec/52 §4。倚天的 ASCII 數字墨水只有 9 列、字形也不同，
+// **同樣的位置同樣的顏色還是逐像素差得出來**，所以數字不共用文字層。
 //
-// 右對齊，從個位往左印（原版 `sub_1062F` 也是這個方向）。
-func (g *game) drawBannerNumber(screen *ebiten.Image, value, right int, ink color.RGBA) {
-	if g.lib == nil {
+// leftX 是**最左一格**的左緣（原版 `sub_1062F` 的 `di` 就是這一格），
+// topY 是格子頂端——墨水落在 topY+1 … topY+14。
+//
+// 原版把前導的空位用**背景色**填滿；這裡只畫墨水，因為目前用到的地方
+// 底本來就是那個背景色。哪天底不是純色了要回來補這一段。
+func (g *game) drawOriginalNumber(dst *ebiten.Image, value, leftX, topY, digits int,
+	ink color.RGBA) {
+	if g.lib == nil || digits <= 0 {
 		return
 	}
-	digits := fmt.Sprintf("%d", value)
-	x := right - len(digits)*gfx.DigitWidth
-	for _, r := range digits {
-		if r < '0' || r > '9' {
+	text := fmt.Sprintf("%d", value)
+	if len(text) > digits {
+		text = text[len(text)-digits:] // 溢位保留低位，與原版的位數上限一致
+	}
+	x := leftX + (digits-len(text))*gfx.DigitWidth
+	for _, r := range text {
+		idx := int(r - '0')
+		if r == '-' {
+			idx = gfx.DigitMinus
+		} else if r < '0' || r > '9' {
 			continue
 		}
-		mask, err := g.lib.DigitMask(int(r - '0'))
+		mask, err := g.lib.DigitMask(idx)
 		if err != nil {
 			return
 		}
 		for dy := 0; dy < gfx.DigitHeight; dy++ {
 			for dx := 0; dx < gfx.DigitWidth; dx++ {
-				if mask[dy*gfx.DigitWidth+dx] == 0 {
-					continue
+				if mask[dy*gfx.DigitWidth+dx] != 0 {
+					dst.Set(x+dx, topY+dy, ink)
 				}
-				screen.Set(x+dx, bannerTextY+dy, ink)
 			}
 		}
 		x += gfx.DigitWidth
 	}
+}
+
+// drawBannerNumber 把日期填進橫幅。right 是數字欄的右緣。
+func (g *game) drawBannerNumber(screen *ebiten.Image, value, right int, ink color.RGBA) {
+	digits := len(fmt.Sprintf("%d", value))
+	g.drawOriginalNumber(screen, value, right-digits*gfx.DigitWidth, bannerTextY, digits, ink)
 }

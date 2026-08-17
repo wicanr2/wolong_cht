@@ -82,6 +82,7 @@ remake 讀原版 `SAVE.DAT` 建立狀態，之後每一輪對拍都從同一份�
 |---|---|
 | 原版擷取 | `tools/dosv_capture.sh`（主機端入口）→ `tools/dosv_live_capture.sh`（容器內），再 `tools/parity_crop.py` 切成 640×400 |
 | remake 擷取 | `tools/parity_shot.sh`——用 `wlgame -shot` 直接寫**邏輯畫面** 640×400。`tools/shot.sh` 抓的是 1600×900 桌面，尺寸對不上 |
+| 對齊鏡頭 | `wlgame -cam X,Y`（驗收旗標）。**進到大地圖之後移動滑鼠就會捲動**（`docs/re/47` §3.1），所以原版側只要點過視窗開關，鏡頭就不在開局位置了；要比縮小地圖的視野框就得讓 remake 跟著搬 |
 | 分辨「位移」與「畫錯」 | `tools/parity_shift.py`（平移搜尋）、`tools/parity_locate.py`（拿地標去另一張找）|
 | 看差在哪一種 | `tools/patch_zoom.py`（同一小塊並排放大）、`tools/palette_compare.py`（先排除調色盤刻度）|
 | 逐區差分 | `tools/parity_diff.py` ✅ 正對照已接進 `tools/check.sh` |

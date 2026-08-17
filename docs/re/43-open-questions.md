@@ -21,10 +21,10 @@
 | 規則正確性 | 50 | 48 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
 | 程式碼理解 | 222 | 214 | 8 | 0 |
-| 驗收 | 59 | 49 | 10 | 0 |
+| 驗收 | 62 | 52 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 114 | 109 | 5 | 0 |
-| **合計** | **499** | 473 | 25 | 1 |
+| 其他 | 115 | 110 | 5 | 0 |
+| **合計** | **503** | 477 | 25 | 1 |
 
 ## 2.1 規則正確性（50 條）
 
@@ -350,7 +350,7 @@
 | [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 「圖例選中的勢力」 | 縮小地圖有第四種顏色（`62` §2），大地圖有沒有對應的圖塊沒驗 / 開縮小地圖、切圖例第二格再截一張 | 靜態 |
 | [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 230 為什麼分位置 | 關隘上下換、大城左右不換。remake 照位置實作，但沒有機器碼解釋 / 同第一列 | 靜態 |
 
-## 2.4 驗收（59 條）
+## 2.4 驗收（62 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -413,6 +413,9 @@
 | [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | DOSBox 的滑鼠座標 | 視窗 640×480、遊戲 640×400 置中，而 INT 33 把**整個視窗**等比對映到遊戲畫面（送 y 要乘 1.2）。這是本機設定的性質，不是原版的 / 把 `int33 max y` 改成 400 再量一次 | 實測 |
 | [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 進到大地圖之後的滑鼠座標 | **又換一套**：`sub_120D6` 把 INT 33 的範圍改成 `0..0x17FF × 0..0x101F`（6143×4127 ＝ 整個世界的像素），螢幕座標 ＝ 原始座標 − 鏡頭原點。所以同一個視窗位置在選單裡與在地圖上指到完全不同的地方 / 用 `tools/cursor_probe.py` 在… | 靜態 |
 | [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 鏡頭 `sub_12151` 的水平參數 | 機器碼是 20，實機量到 16（`../spec/52` §4） / 讀 `sub_1D66A` 的畫面起點（`es=0A0C8h`＋`di=0A00h`） | 靜態 |
+| [`playtest/38-window-parity.md`](../playtest/38-window-parity.md) | 視野框 | §4：位置的算式量到了，圖形沒解 / 解 `ICONGRF` 段 3 `+0x8F0` 的 176 byte，配 `sub_19752` 的兩趟畫法 | 靜態 |
+| [`playtest/38-window-parity.md`](../playtest/38-window-parity.md) | 天候物件 | 原版跑了 10 天才截到，remake 停在第 1 天。**這是狀態差** / 要對就得讓兩邊同一天——用存檔定位（`../spec/90` §2） | 靜態 |
+| [`playtest/38-window-parity.md`](../playtest/38-window-parity.md) | 四個視窗全開 | 這一輪只開了三個。第四個是**系統選單**，開著時原版**時間停止**，是另一種狀態 / 另外拍一張 | 靜態 |
 
 ## 2.5 外部資料（17 條）
 
@@ -436,7 +439,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（114 條）
+## 2.6 其他（115 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -550,6 +553,7 @@
 | [`spec/52-main-screen-camera-and-banner-date.md`](../spec/52-main-screen-camera-and-banner-date.md) | `+0x08F0` | 0x0B0 / `word_10D4C` / 另一組 11 格（未解，可能是別的字重） | 靜態 |
 | [`spec/52-main-screen-camera-and-banner-date.md`](../spec/52-main-screen-camera-and-banner-date.md) | `sub_12151` 的入口 `ax` | 五個呼叫點都是 `ax=14h`（20）／`cx=0Ch`（12）。**垂直的 12 與量到的一致，水平的 20 與量到的 16 差 4。採用量到的值。** ⭐ 最像的解釋：據點的**圖案中心在記錄座標右邊四格**（`../re/67` §1，四座據點都是 +4），所以「把圖案中心放在第 20 欄」＝「把記錄座標… | 靜態 |
 | [`spec/52-main-screen-camera-and-banner-date.md`](../spec/52-main-screen-camera-and-banner-date.md) | `word_10D4C` 那一組 | 與數字字模同樣是 11 格 × 16 列，緊接在後面，用途未解 / 找誰把 `ds` 設成 `cs:word_10D4C`（`KI.EXE.asm` 只有一處） | 靜態 |
+| [`spec/54-ui-colours-from-palette.md`](../spec/54-ui-colours-from-palette.md) | 季節換色 | 五個索引在四季調色盤裡的值只有色 14 會變（`../formats/02` §4），而這五個都不是 14，所以目前用第 0 組。**若之後有視窗在別的調色盤組下畫，要改成跟著組走** | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 | 靜態 |

@@ -68,6 +68,7 @@
 | [`docs/playtest/35-advise-verdict-screens.md`](playtest/35-advise-verdict-screens.md) | 35 — 進言的五項與「請求君主出陣」的定案畫面 | 通過。 | 2026-08-17 |
 | [`docs/playtest/36-window-texture.md`](playtest/36-window-texture.md) | 36 — 視窗底紋畫上去了 | 通過。 | 2026-08-17 |
 | [`docs/playtest/37-main-screen-parity.md`](playtest/37-main-screen-parity.md) | 37 — 開局主畫面的逐區對拍：第一次真的對原版跑 | ⭐⭐ 五區全部 PASS。開局主畫面的 640×400 逐像素等於原版。 | 2026-08-17 |
+| [`docs/playtest/38-window-parity.md`](playtest/38-window-parity.md) | 38 — 三個視窗開著時的對拍：命令列與自勢力情報逐像素相同 | 通過。 | 2026-08-17 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | remake 推廣片、代表幀「經典再現」比較片與 DOS/V／remake 實機動態比較片均已產出並完成媒體規格驗證… | 2026-08-12 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
 | [`docs/promo/dosv-adlib-and-tactical-review.md`](promo/dosv-adlib-and-tactical-review.md) | 推廣片原版 AdLib 與戰術骨架審查 | 原版音軌來源與影片縮放鏈已修正；戰術固定骨架的 16 px viewport 偏差已修正。完整同狀態戰術 parit… | 2026-08-12 |
@@ -187,6 +188,7 @@
 | [`docs/spec/51-vga-dac-palette-scale.md`](spec/51-vga-dac-palette-scale.md) | 51 — DOS/V 的顏色到不了滿刻度：4 bit → VGA 6 bit DAC → 8 bit | READY。 | 2026-08-17 |
 | [`docs/spec/52-main-screen-camera-and-banner-date.md`](spec/52-main-screen-camera-and-banner-date.md) | 52 — 開局的鏡頭位置與橫幅日期 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/53-city-tile-by-ownership.md`](spec/53-city-tile-by-ownership.md) | 53 — 據點中心的圖塊跟著歸屬換，首都再疊一張 | CONFORMED。 | 2026-08-17 |
+| [`docs/spec/54-ui-colours-from-palette.md`](spec/54-ui-colours-from-palette.md) | 54 — 介面顏色一律查調色盤，命令列的底是黑的 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | CONFORMED。管線接起來了，也對原版跑過一輪 （[../playtest/37](../playtest/37… | 2026-08-15 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）

@@ -30,18 +30,37 @@ import (
 // 不然邊會切在半塊上。
 const Tile = gfx.ChromeTile
 
+// 介面顏色的調色盤索引（`GAMEPAL.BRG`，規格 docs/spec/54）。
+//
+// ⭐ **不要手抄 RGB。** 這五個顏色以前是抄實機截圖抄下來的常數，
+// 而 docs/spec/51 把調色盤換算改成走 VGA 的 6 bit DAC 之後，
+// 抄下來的值全部差了 2–4——**解碼修好了，常數不會跟著修**。
+const (
+	MenuIndex   = 8  // 選單／情報視窗的深藍底
+	SheetIndex  = 9  // 清單視窗的米色底
+	SelectIndex = 5  // 反白條
+	InkIndex    = 0  // 米色底上的字（也是命令列的底）
+	PaperIndex  = 15 // 深藍底上的字
+)
+
 // 內部底色。原版的選單視窗是深藍底 ＋ 龍紋，清單視窗是米色底。
+// **`Load` 會照上面的索引從 `GAMEPAL.BRG` 覆寫這幾個值**；
+// 這裡的初值只是沒有素材時的 fallback。
 var (
-	// Menu 是選單／情報視窗的底色（原版量到的 (0,32,101)）。
-	Menu = color.RGBA{0, 32, 101, 255}
-	// Sheet 是清單視窗的底色（原版量到的 (255,223,154)）。
-	Sheet = color.RGBA{255, 223, 154, 255}
-	// Select 是反白條的顏色（原版量到的 (85,154,69)）。
-	Select = color.RGBA{85, 154, 69, 255}
-	// Ink 是米色底上的字色。
+	// Menu 是選單／情報視窗的底色。
+	Menu = color.RGBA{0, 32, 97, 255}
+	// Sheet 是清單視窗的底色。
+	Sheet = color.RGBA{243, 211, 146, 255}
+	// Select 是反白條的顏色。
+	Select = color.RGBA{81, 146, 65, 255}
+	// Ink 是米色底上的字色，**也是命令列的底色**（docs/spec/54 §2）。
 	Ink = color.RGBA{0, 0, 0, 255}
+	// Blank 是「純色平塗」的底。值與 Ink 相同（都是色 0），
+	// 名字分開是為了讀得出意圖：Ink 是字色、Blank 是底色。
+	// 它**不等於 Menu**，所以 fillInterior 不會鋪龍紋——命令列用這一個。
+	Blank = color.RGBA{0, 0, 0, 255}
 	// Paper 是深藍底上的字色。
-	Paper = color.RGBA{255, 255, 255, 255}
+	Paper = color.RGBA{243, 243, 243, 255}
 
 	fallbackEdge = color.RGBA{200, 40, 40, 255}
 	fallbackCap  = color.RGBA{240, 200, 80, 255}
@@ -69,6 +88,16 @@ func Load(lib *library.Library, bank int) *Set {
 			return nil
 		}
 		return ebiten.NewImageFromImage(img)
+	}
+	// 顏色跟著調色盤走，不要手抄（docs/spec/54）。取不到就留 fallback。
+	for _, c := range []struct {
+		dst *color.RGBA
+		idx int
+	}{{&Menu, MenuIndex}, {&Sheet, SheetIndex}, {&Select, SelectIndex},
+		{&Ink, InkIndex}, {&Blank, InkIndex}, {&Paper, PaperIndex}} {
+		if col, err := lib.PaletteColor(bank, c.idx); err == nil {
+			*c.dst = col
+		}
 	}
 	s.edge, s.cap, s.shaft = get(gfx.ChromeEdge), get(gfx.ChromeCap), get(gfx.ChromeShaft)
 	if img, err := lib.RenderWindowTexture(bank); err == nil {
