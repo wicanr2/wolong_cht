@@ -90,6 +90,7 @@ func (g *game) returnToLauncher() error {
 	g.battleLib = nil
 	g.battleSprites = nil
 	g.view = nil
+	g.ending, g.endingShown, g.endingCache = nil, false, nil
 	g.hud = 0
 	g.list = nil
 	g.form = formState{}

@@ -1,18 +1,16 @@
 # 67 — 結局的播放
 
-**狀態：DRAFT。** 原版的順序、版面、節拍與文字都解出來了
-（[`../re/70`](../re/70-d7end-ending-player.md)、
-[`../formats/09`](../formats/09-cutscene-images.md)），這一份把它換算成
-remake 要做什麼。**還沒實作**。
+**狀態：CONFORMED。** 十二幕、色盤、節拍與逐字文字都接上了；
+第一幕的三塊合成與「終」那一頁也照原版分開。
 
 - 日期：2026-08-18
 - 出處：`D7END.EXE`（`sub_10094`／`sub_10293`／`sub_1035F`／`sub_1178A`）
 - 推論等級：來源 **confirmed**；絕對秒數 **強證據**（18.2 Hz 未改頻的前提）
 
-## 1. 現況與目標
+## 1. 這一段在做什麼
 
-存活勢力數減到 1 時 `internal/state` 會 latch `Victory`，
-`cmd/wlgame` 現在只彈一個對話框（兩則訊息，[`30`](30-victory.md)）。
+存活勢力數減到 1 時 `internal/state` latch `Victory`，
+`cmd/wlgame` 先放結局過場，放完才回到結果對話框（兩則訊息，[`30`](30-victory.md)）。
 原版接的是 `D7END.EXE`：十二幕過場 ＋ 一段逐字打出來的結尾文字。
 
 ## 2. 要照抄的
@@ -33,7 +31,7 @@ remake 要做什麼。**還沒實作**。
 | 差異 | 為什麼 |
 |---|---|
 | 鍵盤也能結束 | 原版只認滑鼠鍵；remake 的其他畫面一律 Enter／Space 可用，只認滑鼠會讓人以為當掉 |
-| 第一幕的捲動先不做 | `sub_10094` 的 `si -= 0x50`／`dx += 0x50` 那一段是逐列捲上來；先用整張淡入代替 |
+| 第一幕的捲動不做 | `sub_10094` 的 `si -= 0x50`／`dx += 0x50` 那一段是逐列捲上來；改用整張淡入 |
 | 固定時間步 | 原版的節拍綁在 18.2 Hz 的 BIOS tick；remake 用自己的固定 tick（同 `15-realtime.md` 的 remake 差異）|
 
 ## 4. 資料來源
@@ -42,18 +40,31 @@ remake 要做什麼。**還沒實作**。
 - 文字：**燒在 `D7END.EXE` 的資料段**（段內 `0x5F0`，400 B Big5），
   執行期從玩家自備的原版目錄讀，**不進版控**（同 `CLAUDE.md` §9 的資產政策）
 
-## 5. 驗證
+## 5. remake 實作
+
+| 項目 | 位置 |
+|---|---|
+| 素材 | `internal/assets/cutscene`：`LoadEnding`（十二幕 ＋「終」那一頁 ＋ 文字）、`FirstScenePixels`（第一幕的三塊合成）|
+| 播放 | `cmd/wlgame/ending.go`：`endingState` 的四個階段（淡入／打字／停留／淡出）|
+| 接線 | `Update`／`Draw` 在 `Victory` latch 之後先跑 `maybeBeginEnding`；素材載不到就退回原本的對話框並把原因寫進 `lastEvent` |
+| 節拍換算 | `endingFrames(units)`：一個單位 ＝ 四分之一個 BIOS tick，60 fps 下 ≈ 0.824 幀 |
+| 驗收旗標 | `-open-ending N` 直接跳到第 N 幕（第 0 幕停在「字打完、還沒換成『終』」那一格）|
+
+## 6. 驗證
 
 | 方式 | 內容 |
 |---|---|
-| 單元測試 | 文字抽取：從 `D7END.EXE` 取出 200 字並切成 10 行 × 20 字 |
-| 單元測試 | 幕序與色盤組：第 n 幕配第 n 組 |
-| 畫面 | `-shot` 抓每一幕，確認十二張都畫得出來 |
+| 單元測試 ✅ | `TestEndingTextLayout`：從 `D7END.EXE` 取出文字，切成 10 行、每行 20 字，首尾兩行的定錨字對得上 |
+| 單元測試 ✅ | `TestLoadEndingFrames`：十二幕都是 640×400，相鄰兩幕不會逐像素相同（色盤組接錯時最先壞的就是這一項）|
+| 單元測試 ✅ | `TestEndingDelayConversion`：四個延遲常數換成幀數落在預期範圍，且不會歸零 |
+| 單元測試 ✅ | `TestEndingPlaysAllScenesInOrder`：十二幕依序播完、第一幕有打字段、最後一幕停住不自己收 |
+| 畫面 ✅ | `-open-ending 0` 是月下的亭子 ＋ 十行文字；`-open-ending 1` 是「三國志街道」|
 
-## 6. 未解
+## 7. 未解
 
 | 項目 | 現況 |
 |---|---|
-| 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`）|
+| 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`）；remake 先用疊黑 |
 | `END_S12` 右半 | 用 640 版面畫出來右邊是雜訊，可能還有第二塊（`formats/09` §6）|
 | 第一幕的捲動 | §3 標成 remake 差異；要做就得先對 `sub_10094` 那一段的逐列位移 |
+| 音樂 | `ENDBGM.DAT` 已可播（`endbgm-0`），但還沒接進這一段的起訖 |

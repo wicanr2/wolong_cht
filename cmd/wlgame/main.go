@@ -179,6 +179,11 @@ type game struct {
 
 	// 存檔採明確指定的可寫 overlay；空字串代表這次執行沒有開啟持久化。
 	origDir    string
+	// 結局過場（docs/spec/67）。ending 是正在播的那一次，
+	// endingShown 擋住「收掉之後又自己跳出來」。
+	ending      *endingState
+	endingShown bool
+	endingCache map[int]*ebiten.Image
 	sourceFile string
 	saveFile   string
 	saveBase   string
@@ -660,6 +665,13 @@ func (g *game) Update() error {
 		return g.updateLauncher()
 	}
 	if g.world != nil && g.world.Outcome() != state.InProgress {
+		// 勝利先放結局過場，放完（或載不到素材）才回到結果對話框。
+		g.maybeBeginEnding()
+	}
+	if g.endingActive() {
+		return g.updateEnding()
+	}
+	if g.world != nil && g.world.Outcome() != state.InProgress {
 		return g.updateOutcome()
 	}
 	// 戰場畫面獨佔一切——戰鬥中不能停時間，也不能開別的視窗。
@@ -940,6 +952,11 @@ func (g *game) clampCam() {
 func (g *game) Draw(screen *ebiten.Image) {
 	if g.launcher != nil {
 		g.drawLauncher(screen)
+		g.maybeSaveShot(screen)
+		return
+	}
+	if g.endingActive() {
+		g.drawEnding(screen)
 		g.maybeSaveShot(screen)
 		return
 	}
@@ -1304,6 +1321,7 @@ func main() {
 	openCorps := flag.Bool("open-corps", false, "截圖前先編兩支軍團並開軍團一覽（驗收用）")
 	openBattle := flag.Bool("open-battle", false, "截圖前先開一場野戰的戰術戰鬥（驗收用）")
 	openSiege := flag.Bool("open-siege", false, "截圖前先開一場攻城的戰術戰鬥（驗收用）")
+	openEnding := flag.Int("open-ending", -1, "直接跳到結局的第幾幕（0–11，驗收用）")
 	openBattleChoice := flag.Bool("open-battle-choice", false, "截圖前停在戰鬥指揮／委任選單（驗收用）")
 	openMarchMode := flag.Bool("open-march-mode", false, "截圖前停在行軍指示的三選一（驗收用）")
 	openMarchList := flag.Bool("open-march-list", false, "截圖前編一支軍團並停在行軍目的地一覽（驗收用）")
@@ -1400,6 +1418,9 @@ func main() {
 		}
 		if *listCorps {
 			logAliveCorps(g)
+		}
+		if *openEnding >= 0 {
+			openEndingFixture(g, *openEnding)
 		}
 		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *openForm, *openCorps, *openMarchList,
 			*openMarchMode, *openBattle, *openSiege, *openBattleChoice, *openMessage,

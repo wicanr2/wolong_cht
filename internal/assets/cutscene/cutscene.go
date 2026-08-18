@@ -89,3 +89,71 @@ func Image(buf []byte, pal []color.RGBA) (*image.RGBA, error) {
 	}
 	return img, nil
 }
+
+// 第一幕的三塊（`sub_1016D`／`sub_101B5`／`sub_10204`，docs/re/70 §5）。
+// 位移是**解壓後**緩衝區裡的 byte 位置。
+const (
+	// FirstPlane01Off 是平面 0／1 交錯那一塊（每列 40 B ＋ 40 B）。
+	FirstPlane01Off = 0x3E80 // 16,000
+	// FirstPlane2Off／FirstPlane2Rows 是平面 2 那一塊，從第 120 列起。
+	FirstPlane2Off  = 0xBB8 * 16 // 47,744
+	FirstPlane2Row  = 120
+	FirstPlane2Rows = 280
+	// FirstPlane3Off 是平面 3 那一塊，整張 640 × 400。
+	FirstPlane3Off = 0xE74 * 16 // 59,072
+)
+
+// FirstScenePixels 是第一幕的色號圖。
+//
+// ⭐ 它**不是** §2 那種整張 640×400：平面 0／1 是 320 px 寬貼在 x = 160，
+// 平面 2 只蓋下面 280 列，平面 3 才是整張。拿整張的版面去畫，
+// 畫面上的亭子會左右各出現一份。
+//
+// final 決定要不要疊平面 3。原版的平面 3 是**打完字之後**才換上去的那一頁
+// （`sub_10204` 在淡出之後才跑），內容是一個大大的「終」——
+// 打字的時候疊上去會把畫面蓋掉一半。
+func FirstScenePixels(buf []byte, final bool) []byte {
+	px := make([]byte, Width*Height)
+	set := func(x, y, p int, v byte) {
+		if v == 0 || x < 0 || x >= Width || y < 0 || y >= Height {
+			return
+		}
+		for bit := 0; bit < 8; bit++ {
+			if v&(0x80>>bit) != 0 {
+				px[y*Width+x+bit] |= 1 << p
+			}
+		}
+	}
+	half := FirstSceneWidth / 8 // 40 B
+	for y := 0; y < Height; y++ {
+		off := FirstPlane01Off + y*half*2
+		for b := 0; b < half; b++ {
+			if off+half+b >= len(buf) {
+				break
+			}
+			set(FirstSceneX+b*8, y, 0, buf[off+b])
+			set(FirstSceneX+b*8, y, 1, buf[off+half+b])
+		}
+	}
+	for r := 0; r < FirstPlane2Rows; r++ {
+		off := FirstPlane2Off + r*half
+		for b := 0; b < half; b++ {
+			if off+b >= len(buf) {
+				break
+			}
+			set(FirstSceneX+b*8, FirstPlane2Row+r, 2, buf[off+b])
+		}
+	}
+	if final {
+		for y := 0; y < Height; y++ {
+			off := FirstPlane3Off + y*Stride
+			for b := 0; b < Stride; b++ {
+				if off+b >= len(buf) {
+					break
+				}
+				set(b*8, y, 3, buf[off+b])
+			}
+		}
+	}
+	return px
+}

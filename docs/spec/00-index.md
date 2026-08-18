@@ -108,7 +108,7 @@
 | 遷都之後說什麼 | [`64-capital-relocation-report.md`](64-capital-relocation-report.md) | 已實作並有單測；他國遷都要有外交官才報得回來 |
 | 退到畫面外的兵算生還 | [`65-retreated-soldiers-survive.md`](65-retreated-soldiers-survive.md) | 已實作並有單測 |
 | 打壞的城壁與門要在畫面上換掉 | [`66-broken-walls-repaint.md`](66-broken-walls-repaint.md) | 已實作並有單測；繪圖層跟著規則層的圖塊版本走 |
-| 結局的播放 | [`67-ending-playback.md`](67-ending-playback.md) | **DRAFT**：十二幕的順序、色盤、節拍與文字都對出來了，還沒實作 |
+| 結局的播放 | [`67-ending-playback.md`](67-ending-playback.md) | 已實作並有單測；十二幕 ＋ 逐字文字 ＋ 十七階淡入淡出 |
 | 同狀態畫面對拍（方法）| [`90-same-state-parity.md`](90-same-state-parity.md) | 主畫面五區逐像素相同；§4.1 記下「參考影格本身會有東西」 |
 | 戰場的逐區對拍（分區）| [`91-tactical-parity.md`](91-tactical-parity.md) | 九區裡六區逐像素相同，戰場區 0.17% |
 
