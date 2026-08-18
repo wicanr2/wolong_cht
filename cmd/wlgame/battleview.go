@@ -726,9 +726,23 @@ func displayUnfoldDestination(part int) (x, y int) {
 	return (part & 1) * battle.SubTileW, (part >> 1) * (battle.SubTileH / 4)
 }
 
+// displaySlotEmpty 回報這一格是不是空的。
+//
+// ⭐ **圖號 0 ＝ 空**：原版每幀先把整個顯示格緩衝區 `rep stosw` 清成 0
+// （`sub_1D971`），所以「沒有東西」與「圖號 0」是同一個狀態——
+// 圖塊堆疊中間的 0 只是那一層沒東西，不是「畫第 0 張圖」。
+//
+// 照著把 0 畫出來會在城門那一帶多出一圈白色的菱形邊：第 0 張子圖塊
+// 是有外框的，而堆疊裡的 0 又剛好出現在門洞那幾層
+// （docs/playtest/40 §12）。`makeDisplayInfo` 早就跳過 `raw == 0`，
+// 畫的那一邊漏了同一條。
+func displaySlotEmpty(s battleDisplaySlot) bool {
+	return !s.set || s.entry.raw == 0
+}
+
 func (v *battleView) drawDisplayFull(dst *ebiten.Image, slots [2]battleDisplaySlot) {
 	for lane := 0; lane < 2; lane++ {
-		if !slots[lane].set {
+		if displaySlotEmpty(slots[lane]) {
 			continue
 		}
 		if img := v.rawImage(slots[lane].entry.raw); img != nil {
@@ -739,7 +753,7 @@ func (v *battleView) drawDisplayFull(dst *ebiten.Image, slots [2]battleDisplaySl
 
 func (v *battleView) drawDisplaySlice(dst *ebiten.Image, slots [2]battleDisplaySlot, srcY, dstY int) {
 	for lane := 0; lane < 2; lane++ {
-		if !slots[lane].set {
+		if displaySlotEmpty(slots[lane]) {
 			continue
 		}
 		img := v.rawImage(slots[lane].entry.raw)
@@ -788,48 +802,6 @@ func (v *battleView) drawDisplayEntry(dst *ebiten.Image, b *tactical.Battle, e b
 	}
 }
 
-// drawProjectiles 將規則層的 raw 格座標畫成原版 BATTLE.SCH 投射物。
-//
-// `sub_1AD2D` 以 DX=0x210／0x211 選普通箭，方向只取奇偶；
-// `sub_1AD7F` 以 DX=0x214／0x215 選特殊效果。特殊效果的低位由發射兵
-// 記錄 +0x02 bit 0 帶出，規則層的 ProjectileView 以 SpecialFrame 保留，
-// 因此兩張原版 raw frame 都能被取到。
-func (v *battleView) drawProjectiles(dst *ebiten.Image, b *tactical.Battle) {
-	for _, p := range b.Projectiles() {
-		px, py, ok := v.ScreenPos(0, 0, p.X, p.Y, p.Z)
-		if !ok {
-			continue
-		}
-		raw := projectileSourceIndex(p)
-		if img := v.sourceImage(raw); img != nil {
-			op := &ebiten.DrawImageOptions{}
-			op.GeoM.Translate(float64(px-battle.SubTileW/2), float64(py))
-			dst.DrawImage(img, op)
-			continue
-		}
-		c := color.RGBA{235, 90, 70, 255}
-		if p.Side == 1 {
-			c = color.RGBA{90, 150, 245, 255}
-		}
-		if p.Special {
-			c = color.RGBA{245, 220, 110, 255}
-			vector.DrawFilledRect(dst, float32(px-1), float32(py-7), 2, 6, c, false)
-			continue
-		}
-		dx, dy := 0, 0
-		switch p.Direction & 3 {
-		case tactical.West:
-			dx = -3
-		case tactical.North:
-			dy = -3
-		case tactical.East:
-			dx = 3
-		case tactical.South:
-			dy = 3
-		}
-		vector.DrawFilledRect(dst, float32(px-1+dx/2), float32(py-3+dy/2), 2, 2, c, false)
-	}
-}
 
 // projectileSourceIndex 是原版 `sub_1AD2D`／`sub_1AD7F` 的 raw 圖號。
 // 這些值是合併圖形表索引，不是 BATTLE.SCH 的直接單位編號。
