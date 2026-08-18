@@ -23,8 +23,8 @@
 | 程式碼理解 | 232 | 225 | 7 | 0 |
 | 驗收 | 69 | 59 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 142 | 134 | 8 | 0 |
-| **合計** | **547** | 518 | 28 | 1 |
+| 其他 | 141 | 133 | 8 | 0 |
+| **合計** | **546** | 517 | 28 | 1 |
 
 ## 2.1 規則正確性（47 條）
 
@@ -456,7 +456,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（142 條）
+## 2.6 其他（141 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -529,7 +529,6 @@
 | [`spec/31-tactical-sidebar.md`](../spec/31-tactical-sidebar.md) | 城兵臨時軍團的主將名 | `0x4200` 的索引算式指到武將表全零那一筆（`../re/60` §4.1） | 靜態 |
 | [`spec/32-gate-strength-bar.md`](../spec/32-gate-strength-bar.md) | 右鍵提前收掉 | 原版是熱區 `0x1D` 的右鍵 handler（`../re/60` §10）；remake 沒有戰場區的右鍵熱區層 | 靜態 |
 | [`spec/32-gate-strength-bar.md`](../spec/32-gate-strength-bar.md) | 「門強度」這三個字對城壁也照用 | 原版不分城壁與門，都用同一個標籤。照抄 | 靜態 |
-| [`spec/32-gate-strength-bar.md`](../spec/32-gate-strength-bar.md) | ⚠ **攻方只在第 24–44 幀打城壁，之後就不再打** | 上面那次量測的副產品。城壁耐久 500，撞一次掉 1，照理應該持續撞；**這像是規則層的缺口**（攻方接觸城壁後停止攻擊），但本輪沒有查，也不當結論 | 靜態 |
 | [`spec/33-squad-selection.md`](../spec/33-squad-selection.md) | 待機兵條的欄位語意 | `word_1D30A:+0x09 + 4k` 在 `../re/11` §3.9 記成「第 k 隊的待機兵數」；條的上限 76 遠小於一隊 100 兵，所以開局會頂在上限 | 靜態 |
 | [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 最高速在原版實機是多少 | 機器相依。DOSBox 固定 cycles 量得到「那台的上限」，量不到「原版的答案」 | 實測 |
 | [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 戰場幀是否等於 remake 的一次 `Step()` | 原版一幀做完整條戰場迴圈；remake 的 `Step()` 是規則層一步。**兩者對齊過但沒逐項比** | 靜態 |
