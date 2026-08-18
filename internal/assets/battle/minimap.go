@@ -30,8 +30,11 @@ type TacticalMinimap struct {
 // screenX=2*mapY、screenY=2*(63-mapX)。因此這裡保留原版的轉置與
 // Y 反轉，不能改成常見的 screenX=mapX、screenY=mapY。
 //
-// BATTLE.MAP 實際檔案資料是 64×62；缺少的最後兩列以 tile 0 處理，
-// 以保留原版 64×64 緩衝區／sub_1C83E 迴圈的完整輸出範圍。
+// ⭐ 吃的是**整塊 4,096 B 的 64 列**（`Library.MinimapRows`）：
+// 第 0 列是表頭、第 63 列是尾段，原版連它們一起畫。
+// 傳只含地形的 62 列進來會讓整張圖在 Y 軸上少一格
+// （症狀：左右兩邊各差一欄，中間因為地形多是橫帶而看不出來）。
+// 列數不足時缺的以 tile 0 補，範圍仍是原版的 64×64。
 func RenderTacticalMinimap(tiles [][]byte, attributes []byte) TacticalMinimap {
 	var out TacticalMinimap
 	for mapY := 0; mapY < Width; mapY++ {

@@ -189,15 +189,29 @@ func (w *World) beginTactical(att, def int, m combat.Mode, garrison int) bool {
 	// 免得沒有腳本的那一場開局所有人都站著不動。
 	corpsOf := [2]int{att, def}
 	for side := range b.Sides {
-		b.Order(side, -1, tactical.Attack)
-		if w.Corps[corpsOf[side]].Faction == w.Player || w.tactical.Script == nil {
+		var code []byte
+		if w.Corps[corpsOf[side]].Faction != w.Player && w.tactical.Script != nil {
+			code = w.tactical.Script(node, m == combat.Siege,
+				w.Generals[w.Leader(corpsOf[side])].Tactic)
+		}
+		if code == nil {
+			if w.Corps[corpsOf[side]].Faction == w.Player {
+				// ⭐ **玩家那一側開場不動**：原版的兵站在陣形線上等玩家下令
+				// （實機截圖：開打之後玩家的兵仍在陣形上，docs/spec/59 §3）。
+				b.Order(side, -1, tactical.Form)
+				continue
+			}
+			// 沒有腳本的那一側代表「規則層自己跑的 AI」。給一發「攻擊」當底，
+			// 免得開局所有人都站著不動、野戰永遠打不完。
+			b.Order(side, -1, tactical.Attack)
 			continue
 		}
-		code := w.tactical.Script(node, m == combat.Siege,
-			w.Generals[w.Leader(corpsOf[side])].Tactic)
-		if code != nil {
-			b.SetScript(side, tactical.NewScript(code, side))
-		}
+		// ⭐ **有腳本就不要先下攻擊**：原版的第一批指令是
+		// `line` → `form` → `order 全軍 命令0`（走到陣形），
+		// 先衝出去的話等腳本說話時人已經散開，再也回不到原版那張圖
+		// （docs/spec/59）。
+		b.Order(side, -1, tactical.Form)
+		b.SetScript(side, tactical.NewScript(code, side))
 	}
 
 	w.pending = &Pending{Battle: b, Attacker: att, Defender: def,

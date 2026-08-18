@@ -542,3 +542,43 @@ func TestRotateKeepsWallAndGateCounts(t *testing.T) {
 		}
 	}
 }
+
+// TestMinimapRowsIncludeHeaderAndTrailer 釘住小地圖吃的是**整塊 64 列**。
+//
+// 原版的縮圖畫的是那個 64×64 的緩衝區本身，表頭（第 0 列）與尾段
+// （第 63 列）也會被畫出來；`Tiles` 只有中間 62 列。拿 `Tiles` 去畫
+// 會讓整張圖在 Y 軸上少一格——中間看不出來（地形多是橫帶），
+// **左右兩邊各差一欄**（docs/formats/07 §2.1）。
+func TestMinimapRowsIncludeHeaderAndTrailer(t *testing.T) {
+	l := load(t)
+	const field = 82
+	rows := l.MinimapRows(field)
+	if len(rows) != FieldSize/Width {
+		t.Fatalf("回了 %d 列，預期 %d", len(rows), FieldSize/Width)
+	}
+	tiles := l.Tiles(field)
+	if len(tiles) != Height {
+		t.Fatalf("Tiles 回了 %d 列，預期 %d", len(tiles), Height)
+	}
+	// 中間 62 列要與 Tiles 逐 byte 相同——兩支讀的是同一塊，差在起點。
+	for y := 0; y < Height; y++ {
+		for x := 0; x < Width; x++ {
+			if rows[y+1][x] != tiles[y][x] {
+				t.Fatalf("第 %d 列第 %d 格：整塊 %#x、Tiles %#x",
+					y+1, x, rows[y+1][x], tiles[y][x])
+			}
+		}
+	}
+	// 表頭那一列不該與第一列地形相同——相同的話代表偏移算錯了
+	// （這是正對照：沒有它，把 rows[0] 誤設成 tiles[0] 也會通過上面那圈）。
+	same := true
+	for x := 0; x < Width; x++ {
+		if rows[0][x] != tiles[0][x] {
+			same = false
+			break
+		}
+	}
+	if same {
+		t.Fatal("表頭那一列與第一列地形完全相同，偏移可能算錯了")
+	}
+}

@@ -124,6 +124,22 @@ func (l *Library) Tiles(n int) [][]byte {
 	return out
 }
 
+// MinimapRows 回傳第 n 張戰場**整塊 4,096 B 的 64 列**：
+// 第 0 列是表頭、第 1–62 列是地形、第 63 列是尾段（docs/formats/07 §2.1）。
+//
+// 小地圖畫的是原版那個 64×64 的緩衝區本身，所以表頭與尾段那兩列
+// **也會被畫出來**（值查同一張屬性表）。`Tiles` 回的是只含地形的 62 列，
+// 拿它去畫縮圖會讓整張圖在 Y 軸上少一格——症狀是左右兩邊各差一欄。
+func (l *Library) MinimapRows(n int) [][]byte {
+	off := FieldsBase + n*FieldSize
+	block := l.mapData[off : off+FieldSize]
+	out := make([][]byte, FieldSize/Width)
+	for y := range out {
+		out[y] = append([]byte(nil), block[y*Width:(y+1)*Width]...)
+	}
+	return out
+}
+
 // Heights 回傳第 n 張戰場那一組圖塊的堆疊高度表（圖塊值 → 層數）。
 func (l *Library) Heights(n int) *[256]int {
 	t := l.TileSet(n)

@@ -195,6 +195,7 @@
 | [`docs/spec/56-battlefield-rotation.md`](spec/56-battlefield-rotation.md) | 56 — 戰場轉 180 度：什麼時候轉、轉的時候圖塊值要換 | CONFORMED。三段算式都接上了，並用原版的許昌攻防戰驗過： field 區 87.8% → 46.1%、小地圖… | 2026-08-17 |
 | [`docs/spec/57-tactical-projection.md`](spec/57-tactical-projection.md) | 57 — 戰術畫面的等角投影：地形走出來、物件算出來，兩者不是同一條式子 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/58-display-slot-depth-range.md`](spec/58-display-slot-depth-range.md) | 58 — 顯示格的深度範圍與 8 列的帶 | CONFORMED。 | 2026-08-18 |
+| [`docs/spec/59-battle-opening-orders.md`](spec/59-battle-opening-orders.md) | 59 — 開場的常令：腳本那一側不要先下「攻擊」 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | CONFORMED。管線接起來了，也對原版跑過一輪 （[../playtest/37](../playtest/37… | 2026-08-15 |
 | [`docs/spec/91-tactical-parity.md`](spec/91-tactical-parity.md) | 91 — 戰場的逐區對拍：分區、同狀態怎麼達成 | DRAFT。分區與判定沿用 docs/spec/90，差別在 | 2026-08-17 |
 

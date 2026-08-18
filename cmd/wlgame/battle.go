@@ -832,8 +832,10 @@ func (g *game) drawBattleMiniMapLine(screen *ebiten.Image, b *tactical.Battle, r
 	if y < r.Y || y >= r.bottom() {
 		return
 	}
+	// ⭐ **高 2 px**：小地圖上一格戰場 ＝ 2 px（`sub_1C5AE` 畫的是一整行格子）。
+	// 畫 1 px 的話原版那條線會少掉一半——實測原版佔 y 與 y+1 兩列。
 	vector.DrawFilledRect(screen, float32(r.X), float32(y),
-		float32(battle.TacticalMinimapWidth), 1, g.battleGateBarColor, false)
+		float32(battle.TacticalMinimapWidth), 2, g.battleGateBarColor, false)
 }
 
 // drawBattleMiniMapUnits 把每個活著的兵畫成一個 2×2 點。

@@ -154,7 +154,11 @@ func (g *game) newBattleView(field int) *battleView {
 		if g.battleRotate {
 			tiles = battle.Rotate180(tiles)
 		}
-		raw := battle.RenderTacticalMinimap(tiles, g.battleLib.TileAttributes(field))
+		// 縮圖畫的是原版那個 64×64 緩衝區：表頭那一列也在裡面
+		// （docs/formats/07 §2.1）。地形那 62 列換成可能已翻轉的版本。
+		rows := g.battleLib.MinimapRows(field)
+		copy(rows[1:1+len(tiles)], tiles)
+		raw := battle.RenderTacticalMinimap(rows, g.battleLib.TileAttributes(field))
 		minimap = ebiten.NewImageFromImage(raw.RGBA(bank))
 		subs = g.battleLib.SubTilesFor(field, tiles)
 	}
