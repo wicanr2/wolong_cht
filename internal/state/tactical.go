@@ -169,6 +169,8 @@ func (w *World) beginTactical(att, def int, m combat.Mode, garrison int) bool {
 		c := w.Corps[corps]
 		// 戰力由士氣來（原版 `sub_19B6D` 把軍團士氣寫進每個兵的 +0x18）。
 		b.Sides[side].Power = c.Morale
+		// 士氣同時是每個兵的開場體力（docs/spec/61）。
+		b.Sides[side].Morale = c.Morale
 		for k, u := range c.Units {
 			if u.Men == 0 {
 				continue

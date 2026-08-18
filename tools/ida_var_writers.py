@@ -31,10 +31,7 @@ OUT_TXT = "/work/var-writers.txt"
 
 # 要追的全域。戰術鏡頭與它的 dirty flag（docs/re/60 §9、docs/spec/57）
 NAMES = [
-    "word_1D318",   # 戰場的節拍計數器？
-    "word_1D322",   # 側 0 的訊息框到期時刻？
-    "word_1D324",   # 側 1
-    "byte_1D349",   # 訊息要不要顯示的閘
+    "word_1D31C",   # 兩側的「還剩幾隊」？sub_1A6FA 拿它判勝負
 ]
 
 CONTEXT_BEFORE = 6

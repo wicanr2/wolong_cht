@@ -1661,9 +1661,9 @@ func logAliveCorps(g *game) {
 			continue
 		}
 		n++
-		log.Printf("軍團 %3d：勢力 %2d　主將 %-8s　兵 %5d　據點 %3d　位置 (%3d,%3d)",
+		log.Printf("軍團 %3d：勢力 %2d　主將 %-8s　兵 %5d　士氣 %3d　據點 %3d　位置 (%3d,%3d)",
 			i, c.Faction, big5(g.world.Generals[g.world.Leader(i)].Name),
-			c.Men, c.Node, c.X, c.Y)
+			c.Men, c.Morale, c.Node, c.X, c.Y)
 	}
 	log.Printf("還活著的軍團共 %d 支", n)
 }

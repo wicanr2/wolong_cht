@@ -198,6 +198,7 @@
 | [`docs/spec/58-display-slot-depth-range.md`](spec/58-display-slot-depth-range.md) | 58 — 顯示格的深度範圍與 8 列的帶 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/59-battle-opening-orders.md`](spec/59-battle-opening-orders.md) | 59 — 開場的常令：腳本那一側不要先下「攻擊」 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/60-battle-talk-duration.md`](spec/60-battle-talk-duration.md) | 60 — 戰場對白顯示多久：60 個 tick，每側各一個 | CONFORMED。 | 2026-08-18 |
+| [`docs/spec/61-soldier-initial-hp-from-morale.md`](spec/61-soldier-initial-hp-from-morale.md) | 61 — 兵的開場體力 ＝ 軍團士氣 | READY，但先不要接。 | 2026-08-18 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | CONFORMED。管線接起來了，也對原版跑過一輪 （[../playtest/37](../playtest/37… | 2026-08-15 |
 | [`docs/spec/91-tactical-parity.md`](spec/91-tactical-parity.md) | 91 — 戰場的逐區對拍：分區、同狀態怎麼達成 | DRAFT。分區與判定沿用 docs/spec/90，差別在 | 2026-08-17 |
 
