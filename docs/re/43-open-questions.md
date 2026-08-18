@@ -18,23 +18,22 @@
 
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
-| 規則正確性 | 50 | 48 | 2 | 0 |
+| 規則正確性 | 49 | 47 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
 | 程式碼理解 | 227 | 220 | 7 | 0 |
 | 驗收 | 69 | 59 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 136 | 129 | 7 | 0 |
-| **合計** | **536** | 509 | 26 | 1 |
+| 其他 | 138 | 131 | 7 | 0 |
+| **合計** | **537** | 510 | 26 | 1 |
 
-## 2.1 規則正確性（50 條）
+## 2.1 規則正確性（49 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
-| [`mechanics/10-strategy.md`](../mechanics/10-strategy.md) | 六個編成位置的**效果**未解（名稱有了，效果沒有） | 說明書 11.2「陣形の有利不利」；`20-military.md` 也還掛著 | 靜態 |
+| [`mechanics/10-strategy.md`](../mechanics/10-strategy.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | `sub_10A65` 的內插演算法 | 只影響畫面 | 靜態 |
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | 最高速那一檔在原版實機上是多少 | 機器相依，要實測才有數字；只影響手感調校 | 實測 |
-| [`mechanics/20-military.md`](../mechanics/20-military.md) | 玩家六個位置如何完整影響戰力仍未解 | （散句） | 靜態 |
-| [`mechanics/20-military.md`](../mechanics/20-military.md) | 軍團編成的數值判定（六個位置怎麼影響戰力，見 `30-combat.md`） | （未解小節內文） | 靜態 |
+| [`mechanics/20-military.md`](../mechanics/20-military.md) | （`byte_1D31E`，`30-combat.md`），與編成的六個位置是兩回事。 這兩件事先前被記成同一條未解。 | （散句） | 靜態 |
 | [`mechanics/20-military.md`](../mechanics/20-military.md) | 路上（192–255）與野外（≥256）節點：remake 目前只用據點層的圖。 | （未解小節內文） | 靜態 |
 | [`mechanics/20-military.md`](../mechanics/20-military.md) | sub_14502` 第二段的方向（`docs/re/08` §7.7） | （未解小節內文） | 靜態 |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 戰術層不再是空白：`sub_19FA0` 的入口、腳本、戰場資料模型、核心移動／一般近戰／ | （未解小節內文） | 靜態 |
@@ -423,8 +422,8 @@
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 音效的 TYPE 2/3/4 | 原版有四種音源型別，remake 只有開／關 / 看 `sub_102D0` 那四型的差別 | 靜態 |
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 日期對不上 | 原版跑到 4月9日才截到 / 要嘛用存檔定位，要嘛加一個「跑到指定日期」的驗收旗標 | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-enemy` 的 44 px | 兩條都頂在上限，原版那一格已經打了 20 秒（§10） / 要對就得讓兩邊的**時刻**對齊，不是改算式 | 靜態 |
-| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | 旗桿旁的木樁與一小塊地形（96 px） | §13 的兩項。這是 `field` 區**真正**剩下的缺口 / 木樁在旗（30,22）左邊那一格（29,22，堆疊 `[47 30 31 29 125]`，頂端 125）。先確認它是被深度範圍濾掉還是根本沒進顯示格 | 靜態 |
-| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | 旗的揮舞相位（116 px）｜滑鼠游標（95 px） | ⛔ **都不可消**（§13） / — | 靜態 |
+| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | 右下那一小塊地形色（8 px，(361..364, 192..194)） | `field` 區剩下唯一沒歸類的一群 / 拿 §13.1 那一招再跑一次：把 192 個子圖塊逐張套進那個顯示格比一次。**假說**是同一類（另一個實體破損的時刻不同），但還沒驗 | 靜態 |
+| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | 旗的揮舞相位（116 px）｜滑鼠游標（95 px）｜破門的時刻（88 px） | ⛔ **都不可消**（§13） / — | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-enemy`／`sb-self` 1.5% | 兩格將旗的內容 / — | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sub_1DFBB` 的快路徑 | remake 一律走合成。兩條路在全畫面重繪下應該畫出同樣的像素（`../spec/58` §4），但沒有逐格驗過 / — | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | unit 0 的第二趟 | 深度迴圈跑完後 `dl & 0x20` 成立時會對五個鄰格各跑一次 `ax = 0`；**觸發條件（旗標 bit 5）誰設還沒解** / 掃誰對顯示格的 `+0` 寫 `0x20` | 靜態 |
@@ -451,7 +450,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（136 條）
+## 2.6 其他（138 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -585,6 +584,8 @@
 | [`spec/64-capital-relocation-report.md`](../spec/64-capital-relocation-report.md) | 首都被打下來的被動遷都 | 走 `sub_14DF0`／訊息 30，與這一支不同路（`internal/state/corps.go` 的 `Relocated`） | 靜態 |
 | [`spec/65-retreated-soldiers-survive.md`](../spec/65-retreated-soldiers-survive.md) | `sub_19F2C` 打完那一次數的是什麼 | `../re/11` §3.9 記成「打完時數」；是不是把還站在場上的補進存活數，還沒逐行讀 | 靜態 |
 | [`spec/65-retreated-soldiers-survive.md`](../spec/65-retreated-soldiers-survive.md) | 隊長離場時清掉待機數 | remake 的 `squadLeaderGone` 這樣做（`docs/re/11` §5.9），原版是否也把那些待機兵算掉還沒對 | 靜態 |
+| [`spec/66-broken-walls-repaint.md`](../spec/66-broken-walls-repaint.md) | 縮小地圖要不要跟著換 | 側欄的縮圖也是從同一個緩衝區來的，但重畫時機還沒讀。這一版只換戰場本身 | 靜態 |
+| [`spec/66-broken-walls-repaint.md`](../spec/66-broken-walls-repaint.md) | 對拍那 88 px | 兩邊的時刻不同（§1.2），要對就得讓門在同一個 tick 破 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 | 靜態 |

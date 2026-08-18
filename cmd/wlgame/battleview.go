@@ -105,7 +105,11 @@ func floorDiv2(v int) int {
 type battleView struct {
 	lib   *battle.Library
 	set   int
+	field int        // 這一張戰場的編號，重新展開堆疊時要用
 	subs  [][][]byte // subs[y][x] 是那一格由下往上的子圖塊
+	// tileRev 是 subs 是照哪一個版本的圖塊展開的。城壁或門被打壞時
+	// 規則層會改圖塊值並把版本 +1，這裡就要重新展開（docs/spec/66）。
+	tileRev int
 	cache map[int]*ebiten.Image
 	pal   [16]color.RGBA
 	// buf 是原生解析度的離屏畫布，畫完再整張放大。
@@ -168,6 +172,7 @@ func (g *game) newBattleView(field int) *battleView {
 	}
 	v := &battleView{
 		lib: g.battleLib, set: g.battleLib.TileSet(field),
+		field: field,
 		subs:  subs,
 		cache: map[int]*ebiten.Image{}, pal: bank,
 		sprites: g.battleSprites, spCache: map[int]*ebiten.Image{},
@@ -402,6 +407,7 @@ func (g *game) drawBattleIso(screen *ebiten.Image, b *tactical.Battle, me *tacti
 		v.buf = ebiten.NewImage(isoNativeW, isoNativeH)
 	}
 	v.buf.Fill(color.RGBA{16, 18, 20, 255})
+	v.syncTiles(b)
 	entries := v.buildDisplayList(b)
 	v.drawDisplayGrid(v.buf, entries)
 
@@ -492,6 +498,39 @@ type battleDisplayEntry struct {
 	side, index  int
 	raw, order   int
 	pxOff, pyOff int
+}
+
+// syncTiles 把打壞的城壁與門換到畫面上。
+//
+// 原版 `sub_1B824` 直接改戰場緩衝區、再由 `sub_1BB6D` 重新展開那一格的堆疊，
+// 而繪圖端每一幀都從同一個緩衝區重建顯示格——所以牆一垮，下一幀畫的就是瓦礫。
+// remake 的 `v.subs` 是進戰場那一幀展開的靜態副本，規則層的 `Field.Retile`
+// 看不到它，於是「走得過去但牆還立著」（docs/spec/66 §2）。
+//
+// ⭐ 旗**不重掃**：`sub_19E10` 只在開場跑一次，重掃會重擲揮舞相位，
+// 旗會在牆垮的那一幀跳一下。
+func (v *battleView) syncTiles(b *tactical.Battle) {
+	if v == nil || b == nil || v.lib == nil || v.subs == nil {
+		return
+	}
+	rev := b.Field.Revision()
+	if rev == v.tileRev {
+		return
+	}
+	v.tileRev = rev
+	if !b.Field.HasTiles() {
+		return
+	}
+	cells := make([][]byte, len(v.subs))
+	for y := range cells {
+		cells[y] = make([]byte, len(v.subs[y]))
+		for x := range cells[y] {
+			cells[y][x] = b.Field.Tile(x, y)
+		}
+	}
+	if next := v.lib.SubTilesFor(v.field, cells); next != nil {
+		v.subs = next
+	}
 }
 
 func (v *battleView) buildDisplayList(b *tactical.Battle) []battleDisplayEntry {

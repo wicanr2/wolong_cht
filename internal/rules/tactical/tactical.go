@@ -286,6 +286,11 @@ type Field struct {
 	// 兩個平面的地面層與導航位元都是從它算的（docs/re/63 §2）。
 	layers *[256][Levels]byte
 
+	// rev 是圖塊值改過幾次。繪圖層拿它當「要不要重新展開堆疊」的判準——
+	// 原版打壞城壁時就地改戰場緩衝區，而繪圖端每一幀都從那個緩衝區重建，
+	// 所以「規則變了」與「畫面變了」是同一件事（docs/spec/66）。
+	rev int
+
 	// nav[平面][y][x] 是導航 byte（門旗標 ＋ 四個方向位元），
 	// lvl[平面][y][x] 是站得上去的 Z（noLevel ＝ 沒有地面）。
 	// 建法見 ground.go，出處 `sub_1BC39`。
@@ -380,6 +385,7 @@ func (f *Field) Retile(x, y, delta int) {
 		t = 0xFF
 	}
 	f.tiles[y][x] = byte(t)
+	f.rev++
 	f.setCell(x, y, f.heights[t])
 	if f.layers != nil {
 		f.setSolidFromLayers(x, y)
@@ -398,6 +404,15 @@ func (f *Field) Tile(x, y int) byte {
 		return 0
 	}
 	return f.tiles[y][x]
+}
+
+// Revision 回報圖塊值被改過幾次。繪圖層比對它決定要不要重建地形
+// （docs/spec/66 §3）。沒有圖塊資料的合成戰場永遠是 0。
+func (f *Field) Revision() int {
+	if f == nil {
+		return 0
+	}
+	return f.rev
 }
 
 // HasTiles 回報這張戰場帶不帶原始圖塊值。
