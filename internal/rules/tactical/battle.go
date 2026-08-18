@@ -254,6 +254,11 @@ type Battle struct {
 	// projectiles 是飛在空中的箭。原版是一張 32 筆的表（docs/re/11 §5.1）。
 	projectiles []projectile
 
+	// deaths 是正在播的倒地動畫。它**不參與規則**——原版把「在場」
+	// 那個位元清掉了，所以那四幀不擋路、不被打、不算場上人數
+	// （docs/spec/68 §1.2）。
+	deaths []Death
+
 	// sfx 是這一輪要送給音源 TSR 的效果碼。原版走 INT 61h `AH=0x05`、
 	// `AL=`效果碼（docs/re/17 §3），碼本身就是 `SOUND.DAT` 的記錄編號
 	// （docs/re/57 §6）。規則層只排隊、不播——**它不認識畫面也不認識喇叭**。
@@ -523,6 +528,7 @@ func (b *Battle) Step() {
 		}
 	}
 	b.stepProjectiles()
+	b.stepDeaths()
 	b.reinforce()
 
 	b.Advantage[0] = computeAdvantage(b.Sides[0].Fresh(), b.Sides[1].Fresh())

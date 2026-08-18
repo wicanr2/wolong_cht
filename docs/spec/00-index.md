@@ -109,6 +109,7 @@
 | 退到畫面外的兵算生還 | [`65-retreated-soldiers-survive.md`](65-retreated-soldiers-survive.md) | 已實作並有單測 |
 | 打壞的城壁與門要在畫面上換掉 | [`66-broken-walls-repaint.md`](66-broken-walls-repaint.md) | 已實作並有單測；繪圖層跟著規則層的圖塊版本走 |
 | 結局的播放 | [`67-ending-playback.md`](67-ending-playback.md) | 已實作並有單測；十二幕 ＋ 逐字文字 ＋ 十七階淡入淡出 |
+| 倒地動畫 | [`68-death-animation.md`](68-death-animation.md) | 已實作並有單測；四幀、三個兵種組、後兩幀換第二張 |
 | 同狀態畫面對拍（方法）| [`90-same-state-parity.md`](90-same-state-parity.md) | 主畫面五區逐像素相同；§4.1 記下「參考影格本身會有東西」 |
 | 戰場的逐區對拍（分區）| [`91-tactical-parity.md`](91-tactical-parity.md) | 九區裡六區逐像素相同，戰場區 0.17% |
 

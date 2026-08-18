@@ -572,6 +572,14 @@ func (v *battleView) buildDisplayList(b *tactical.Battle) []battleDisplayEntry {
 				side: p.Side, index: i, raw: projectileSourceIndex(p), order: order})
 			order++
 		}
+		// 倒地動畫：原版每幀由 `sub_1B360` 換一組圖重畫（docs/spec/68）。
+		// 圖號已經是「這一側這一幀該用哪一張」，直接走人物那條路。
+		for _, d := range b.Deaths() {
+			col, row := isoProject(d.X, d.Y, d.Z)
+			raw := battle.CombinedSourceTerrainTiles + d.Sprite()*2
+			entries, order = v.appendTallDisplayUnits(entries, order, col, row,
+				d.X, d.Y, d.Z, raw)
+		}
 		for side := range b.Sides {
 			for i := range b.Sides[side].Soldiers {
 				s := &b.Sides[side].Soldiers[i]

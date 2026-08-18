@@ -127,6 +127,9 @@ func (b *Battle) applyHit(e *Soldier, damage int) bool {
 	}
 	e.HP = 0
 	e.Alive = false
+	// 倒地那四幀只是畫面（docs/spec/68）。記在這裡而不是留在 Soldiers 裡，
+	// 是因為原版把「在場」位元清掉了——它不擋路也不算場上人數。
+	b.addDeathFor(e)
 	b.squadLeaderGoneFor(e)
 	return true
 }
