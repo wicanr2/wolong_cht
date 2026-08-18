@@ -450,24 +450,28 @@ func (g *game) battleTalkState(b *tactical.Battle, p *state.Pending) battleTalkS
 		return battleTalkState{}
 	}
 	g.startBattleTalk(p)
-	if len(g.battleTalkSession.queue.entries) == 0 {
-		return battleTalkState{}
-	}
 	s := &g.battleTalkSession
-	entry, ok := s.queue.current()
-	if !ok || s.battle != b {
+	if s.battle != b || !s.queue.active() {
 		return battleTalkState{}
 	}
-	text, ok := g.battleTalkText(entry)
-	if !ok {
-		s.queue.advance()
-		return battleTalkState{}
-	}
+	// **兩側各一個框，可以同時掛著**（原版 word_1D322／word_1D324，
+	// docs/spec/60）——上框是側 0、下框是側 1。
 	result := battleTalkState{}
-	if entry.Side == 0 {
-		result.Top, result.TopPortrait = text, entry.Portrait
-	} else {
-		result.Bottom, result.BottomPortrait = text, entry.Portrait
+	for side := 0; side < 2; side++ {
+		entry, ok := s.queue.current(side)
+		if !ok {
+			continue
+		}
+		text, ok := g.battleTalkText(entry)
+		if !ok {
+			s.queue.clear(side)
+			continue
+		}
+		if side == 0 {
+			result.Top, result.TopPortrait = text, entry.Portrait
+		} else {
+			result.Bottom, result.BottomPortrait = text, entry.Portrait
+		}
 	}
 	return result
 }
@@ -1304,6 +1308,11 @@ func (g *game) stageEncounter(siege, choose bool, siegeNode, steps int, me, foe 
 		for i := 0; i < steps; i++ {
 			g.world.PendingBattle().Battle.Step()
 		}
+		// ⭐ 對白框的時鐘要跟著推：正常迴圈是 `updateBattle` 推 n 格戰場
+		// **同時** `tickBattleTalk(n)`，驗收路徑漏掉的話框永遠不消失
+		// （原版 60 tick 到期，docs/spec/60）。
+		g.startBattleTalk(g.world.PendingBattle())
+		g.tickBattleTalk(steps)
 		g.tacticalSpeed = 1
 	}
 }

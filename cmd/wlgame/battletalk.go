@@ -20,8 +20,11 @@ type BattleTalkEntry struct {
 }
 
 const (
-	battleTalkQueueLimit = 2
-	battleTalkDuration   = 90
+	battleTalkSides = 2 // 上下各一個框，對應原版的 word_1D322／word_1D324
+	// battleTalkDuration 是對白框掛多久：原版 `sub_1C315` 設的到期時刻是
+	// **目前節拍 ＋ 0x3C（60）**，由 `sub_1A12A` 每 tick 比對後擦掉
+	// （docs/spec/60）。門強度條走同一個機制但常數是 0x14（20）。
+	battleTalkDuration = 60
 )
 
 // resolveBattleTalkIndex 重現 sub_1075B 的 base／variant 索引公式。
@@ -32,57 +35,77 @@ func resolveBattleTalkIndex(base, variant int) int {
 	return 0x196 + ((base - 0x196) << 3) + variant
 }
 
-type battleTalkQueue struct {
-	entries   []BattleTalkEntry
-	remaining int
+// battleTalkSlots 是**每一側一個框**的對白狀態。
+//
+// ⭐ 原版就是這樣：`sub_1C315` 依側別（`dl`）把到期時刻寫進
+// `word_1D322`（側 0）或 `word_1D324`（側 1），`sub_1A12A` 每 tick
+// 各自比對後擦掉（docs/spec/60）。開場那一段你一句我一句，
+// **兩個框是同時掛著的**——原版實錄截圖上兩個都在。
+type battleTalkSlots struct {
+	entry     [2]BattleTalkEntry
+	remaining [2]int // 0 ＝ 這一側沒有框
 }
 
-func (q *battleTalkQueue) enqueue(entry BattleTalkEntry) bool {
-	if len(q.entries) >= battleTalkQueueLimit {
+// set 掛上（或換掉）某一側的框。新的一句會把到期時刻整個覆寫，不疊加。
+func (q *battleTalkSlots) set(entry BattleTalkEntry) bool {
+	side := entry.Side
+	if side < 0 || side > 1 {
 		return false
 	}
 	if entry.Duration <= 0 {
 		entry.Duration = battleTalkDuration
 	}
-	q.entries = append(q.entries, entry)
-	if len(q.entries) == 1 {
-		q.remaining = entry.Duration
-	}
+	q.entry[side], q.remaining[side] = entry, entry.Duration
 	return true
 }
 
-func (q *battleTalkQueue) current() (BattleTalkEntry, bool) {
-	if len(q.entries) == 0 {
+// current 取某一側目前掛著的框。
+func (q *battleTalkSlots) current(side int) (BattleTalkEntry, bool) {
+	if side < 0 || side > 1 || q.remaining[side] <= 0 {
 		return BattleTalkEntry{}, false
 	}
-	return q.entries[0], true
+	return q.entry[side], true
 }
 
-func (q *battleTalkQueue) advance() bool {
-	if len(q.entries) == 0 {
+// active 回報有沒有任何一側掛著框。
+func (q *battleTalkSlots) active() bool {
+	return q.remaining[0] > 0 || q.remaining[1] > 0
+}
+
+// clear 收掉某一側的框。
+func (q *battleTalkSlots) clear(side int) bool {
+	if side < 0 || side > 1 || q.remaining[side] <= 0 {
 		return false
 	}
-	q.entries = q.entries[1:]
-	q.remaining = 0
-	if len(q.entries) > 0 {
-		q.remaining = q.entries[0].Duration
-	}
+	q.remaining[side] = 0
+	q.entry[side] = BattleTalkEntry{}
 	return true
 }
 
-func (q *battleTalkQueue) tick(frames int) {
-	if frames <= 0 || len(q.entries) == 0 {
+// clearAll 兩側一起收（玩家按鍵推進走這一條）。
+func (q *battleTalkSlots) clearAll() bool {
+	ok := q.clear(0)
+	return q.clear(1) || ok
+}
+
+// tick 推進兩側各自的計時器。
+func (q *battleTalkSlots) tick(frames int) {
+	if frames <= 0 {
 		return
 	}
-	q.remaining -= frames
-	for q.remaining <= 0 && len(q.entries) > 0 {
-		q.advance()
+	for side := range q.remaining {
+		if q.remaining[side] <= 0 {
+			continue
+		}
+		if q.remaining[side] -= frames; q.remaining[side] <= 0 {
+			q.clear(side)
+		}
 	}
 }
 
 type battleTalkSession struct {
 	battle      *tactical.Battle
-	queue       battleTalkQueue
+	queue       battleTalkSlots
 	initialized bool
 }
 
@@ -109,7 +132,7 @@ func (s *battleTalkSession) initialize(battle *tactical.Battle, entries []Battle
 	// 即使 entries 全部因 fail-closed 被丟棄，也必須封住本 battle 的初始化。
 	s.initialized = true
 	for _, entry := range entries {
-		s.queue.enqueue(entry)
+		s.queue.set(entry)
 	}
 }
 
@@ -122,7 +145,7 @@ func (g *game) startBattleTalk(p *state.Pending) {
 	if s.initialized {
 		return
 	}
-	entries := make([]BattleTalkEntry, 0, battleTalkQueueLimit)
+	entries := make([]BattleTalkEntry, 0, battleTalkSides)
 
 	// sub_1A3C3 的開戰 pair：第一句使用 0x1BA，第二句使用 0x1BB。
 	// 上／下 slot 與攻／守的最終對應仍是強推論；採影片位置的最小接線。
@@ -174,18 +197,14 @@ func (g *game) advanceBattleTalkInput() bool {
 		return false
 	}
 	s := &g.battleTalkSession
-	if len(s.queue.entries) == 0 {
-		return false
-	}
-	if _, ok := s.queue.current(); !ok {
+	if !s.queue.active() {
 		return false
 	}
 	if !pressed(ebiten.KeyEnter) && !pressed(ebiten.KeySpace) &&
 		!inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		return false
 	}
-	s.queue.advance()
-	return true
+	return s.queue.clearAll()
 }
 
 func (g *game) tickBattleTalk(frames int) {
