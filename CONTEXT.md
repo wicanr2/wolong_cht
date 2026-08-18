@@ -427,6 +427,10 @@ M6 的版面幾何對得上原版，但畫的內容還有缺。**
 | ⭐ 原版的戰場 Y 比地形列號大 1（每張戰場前 64 B 是表頭，繪圖端定址整塊 4,096 B）| [`formats/07`](docs/formats/07-battle.md) §2.1、[`spec/57`](docs/spec/57-tactical-projection.md) §2 |
 | 原版存檔搬進 remake：capture 的 `savefile:` ＋ `wlgame -load-slot N` | [`spec/90`](docs/spec/90-same-state-parity.md) §2.2 |
 | ⭐ 戰場的同狀態對拍：`-siege-corps` 拿存檔裡現成的兩支軍團開戰，側欄標題逐像素 PASS | [`spec/90`](docs/spec/90-same-state-parity.md) §2.3、[`playtest/40`](docs/playtest/40-tactical-parity.md) §5 |
+| ⭐ 城壁面上那排亮邊：一帶是 **8 列**不是 16（`sub_1E0E1` 的 `mov cx, 8`）；深度範圍從自己的地面畫到最高的鄰居 | [`spec/58`](docs/spec/58-display-slot-depth-range.md) |
+| ⭐ 小地圖畫的是**整塊 64 列**（含表頭與尾段），不是只含地形的 62 列 | [`formats/07`](docs/formats/07-battle.md) §2.1、[`playtest/40`](docs/playtest/40-tactical-parity.md) §7 |
+| 開場常令：玩家側與腳本側都是「命令 0（陣形）」，不是攻擊 | [`spec/59`](docs/spec/59-battle-opening-orders.md) |
+| 顯示格表頭 `+1`（含物件的高度）與 `+3`（只有地形）的分工 | [`re/68`](docs/re/68-t3-frontier-functions.md) §2.1 |
 | 戰場側欄逐像素對過：陣形列／指令面板／`▶▶` 列三區 PASS | [`spec/31`](docs/spec/31-tactical-sidebar.md)、[`playtest/40`](docs/playtest/40-tactical-parity.md) |
 
 **對拍管線可重跑**：`tools/dosv_capture.sh`（原版）→ `tools/parity_crop.py`
@@ -441,8 +445,9 @@ INT 33 的範圍變成整個世界（一個主機像素 ≈ 9.6 個遊戲像素�
 
 | # | 工作 | 為什麼現在做 | 下手點 |
 |---:|---|---|---|
-| **1** | **城壁的面畫得不對** | 同一個局面已經對過了（`docs/playtest/40` §5）：側欄四區 PASS、將旗降到 1.3–1.5%，而 `field` 幾乎沒動——所以那 19.9% 不是「雙方部隊不一樣」，是繪圖缺陷。原版的磚牆是連續的面，remake 有黑色缺口與相位不對的磚 | 五個貢獻已核對，與 remake 一致；差的是**起始深度與層數**、**兩條路**（`sub_1DFBB` vs `sub_1DE95`）、**unit 0 的第二趟**（`docs/re/11` §5.13b）。「只畫最上面一層」試過更差（12.8% → 24.3%）。對照圖 `workplace/parity/zoom-wall3.png` |
-| **2** | **小地圖的底圖 8%** | 同一個局面之下也幾乎沒降，所以不是部隊點 | 可能與 #1 同源（`RenderTacticalMinimap` 也吃圖塊屬性）|
+| **1** | **腳本側的陣形** | 戰場的 `field` 已經降到 3.4%（扣掉 remake 的開場訊息框），小地圖降到 1.6%。剩下的部隊點差異只有一件事：原版的腳本側站定在**陣形 1**（腳本第 8 個 byte 就是 `form 1`），remake 停在 0 | 實測把腳本側的 `Formation` 設成 1 再 `Place()`，部隊點與原版**逐點相同**——差的是「腳本跑到 `form` 的時機 vs 佈陣的時機」。對腳本的節奏（`docs/spec/34`）|
+| **2** | **remake 的開場訊息框** | `field` 那 11.8% 裡有 8.4 pp 是它：原版那一刻已經關掉，remake 還開著 | 確認原版的戰鬥開場對白顯示多久、由誰關 |
+| **3** | **M3 的 T2 那 18 支** | T3 已歸零（`docs/re/68`），T2 是下一批：只在其他 `docs/` 被提過、沒有 `docs/re/` 筆記，合計 714 bytes | `tools/py.sh tools/re_coverage.py workplace/ida/dosv/census/census.tsv` 的 T2 表 |
 
 > ⭐ **這一輪最有用的一招**：差異的**形狀會騙人**。整片 99% 不同可能只是
 > 調色盤刻度差 4%；「少畫了一個徽記」可能是整張圖塊換掉了。
