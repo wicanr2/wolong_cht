@@ -2,7 +2,7 @@
 
 **狀態：CONFORMED。⭐ 觸發條件在機器碼裡是**單一一個**——存活勢力數 `== 1`。
 「佔領所有城池」不是另一條規則（§3）。** 規則層已實作並驗過（§4、§5）；
-§6 剩下的是**結局的呈現**（過場、訊息），不是判定。
+§6 剩下的是**結局的過場畫面**，不是判定；兩則結局訊息已對出並接上。
 
 - 日期：2026-08-16
 - 出處：[`docs/re/59`](../re/59-game-over-exit-codes.md)（離開碼與結局閘門）
@@ -65,6 +65,7 @@
 | 結局 | 減量之後 `LivingFactions == 1` → latch `Victory` |
 | 敗北 | 滅亡的是玩家所仕勢力 → latch `DefeatFactionEliminated`（先判、再減） |
 | 呈現 | `cmd/wlgame` 的 `updateOutcome`；音樂走 `endbgm-0`（`D7END` 的曲子）|
+| 結局訊息 | 兩則：`#0x4B`（不帶肖像的捷報）＋ 組編號 `0x197` 由**君主**說（`World.VictoryLordTalkIndex`，展開 ＝ 414 ＋ 說話型）|
 
 ⚠ **不要用「每幀掃描」補設結果**（`outcome.go` 開頭的既有規則）：
 結局要在真實的 mutation 邊界 latch，否則載入舊存檔會被瞬間判定。
@@ -85,4 +86,3 @@
 | 結局畫面 | `D7END.EXE` 是另一支程式，`END_S*.DAT` 的過場沒有實作 |
 | 四個劇本的結局是否不同 | `END_S*` 檔的對應未解（[`mechanics/80-victory.md`](../mechanics/80-victory.md) §116）|
 | 君主陣亡時軍師怎麼辦 | 未知（同上）|
-| 結局的訊息 | `sub_11CD0` 送 TALK `#0x4B` 與 `#0x197`，內容還沒對出來 |

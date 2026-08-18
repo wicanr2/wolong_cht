@@ -23,8 +23,8 @@
 | 程式碼理解 | 227 | 220 | 7 | 0 |
 | 驗收 | 69 | 59 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 138 | 131 | 7 | 0 |
-| **合計** | **535** | 508 | 26 | 1 |
+| 其他 | 137 | 130 | 7 | 0 |
+| **合計** | **534** | 507 | 26 | 1 |
 
 ## 2.1 規則正確性（47 條）
 
@@ -448,7 +448,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（138 條）
+## 2.6 其他（137 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -515,7 +515,6 @@
 | [`spec/30-victory.md`](../spec/30-victory.md) | 結局畫面 | `D7END.EXE` 是另一支程式，`END_S*.DAT` 的過場沒有實作 | 靜態 |
 | [`spec/30-victory.md`](../spec/30-victory.md) | 四個劇本的結局是否不同 | `END_S*` 檔的對應未解（`mechanics/80-victory.md` §116） | 靜態 |
 | [`spec/30-victory.md`](../spec/30-victory.md) | 君主陣亡時軍師怎麼辦 | 未知（同上） | 靜態 |
-| [`spec/30-victory.md`](../spec/30-victory.md) | 結局的訊息 | `sub_11CD0` 送 TALK `#0x4B` 與 `#0x197`，內容還沒對出來 | 靜態 |
 | [`spec/31-tactical-sidebar.md`](../spec/31-tactical-sidebar.md) | 差異 | `▶▶` 列只畫美術，**不接行為**（原版切換的是 `loc_1A065` 的自我修改碼，語意未解）；兩面將旗的熱區原版是 `retn`，remake 同樣不接 | 靜態 |
 | [`spec/31-tactical-sidebar.md`](../spec/31-tactical-sidebar.md) | `▶▶` 列的行為 | `byte_1A06A` 在 `0xEB`／`0x74` 間切，`loc_1A065` 未逐行讀（`../re/60` §12） | 靜態 |
 | [`spec/31-tactical-sidebar.md`](../spec/31-tactical-sidebar.md) | 段 1 五塊美術的圖形語意 | 貼點與尺寸 confirmed，圖上畫什麼要另外解（`../formats/03` §5.3） | 靜態 |

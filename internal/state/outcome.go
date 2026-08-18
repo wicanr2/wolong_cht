@@ -37,8 +37,8 @@ func (w *World) OutcomeMessageSelector() (uint16, bool) {
 	case DefeatTrustZero:
 		return 0x019E, true
 	case Victory:
-		// 原版結局送 TALK #75 與 #407（docs/re/59 §2）；
-		// 內容還沒對出來，所以這裡只回前者。
+		// 原版結局送兩則：先 #0x4B（無肖像的捷報），再由君主說一句
+		// （組編號 `0x197`，見 VictoryLordTalkIndex）。docs/re/59 §2。
 		return 0x004B, true
 	default:
 		return 0, false
@@ -146,4 +146,30 @@ func (w *World) disperseFaction(i, winner int) {
 // 的真實 mutation 邊界產生。
 func (w *World) DebugLatchOutcomeForShot(kind OutcomeKind) {
 	w.latchOutcome(kind)
+}
+
+// VictoryLordTalkBase 是結局那一句的**組編號**。`sub_11CD0` 送的是
+// `cx = 197h`，而 `TALK.DAT` 索引 ≥ `0x196` 是八格一組——展開成
+// `0x196 + (0x197 − 0x196) × 8 + 說話型` ＝ **414 ＋ 變體**。
+//
+// 君主是主公型，說話型落在 0–2，對到的三則正好都是君主對軍師的褒獎；
+// 3–7 那五格是空的。**不是 `#407`**——那一則是財政赤字的催促。
+const VictoryLordTalkBase = 0x197
+
+// VictoryLordTalkIndex 回傳結局第二則要用的組編號與說話者。
+//
+// 說話者是玩家所仕勢力的**君主**（`sub_11CD0` 取 `[bx+425Eh]` 的說話型
+// 與 `[bx+4241h]` 的肖像，bx 就是君主的武將記錄）。
+func (w *World) VictoryLordTalkIndex() (index, general int, ok bool) {
+	if w == nil || w.outcome != Victory {
+		return 0, 0, false
+	}
+	if w.Player < 0 || w.Player >= len(w.Factions) {
+		return 0, 0, false
+	}
+	lord := w.Factions[w.Player].Lord
+	if lord < 0 || lord >= len(w.Generals) {
+		return 0, 0, false
+	}
+	return VictoryLordTalkBase, lord, true
 }

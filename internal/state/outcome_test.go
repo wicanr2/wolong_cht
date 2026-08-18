@@ -173,3 +173,29 @@ func TestLivingFactionsRoundTrips(t *testing.T) {
 			out[livingFactionsOffset], block[livingFactionsOffset])
 	}
 }
+
+// 結局的第二則是**組編號** `0x197`，說話者是玩家所仕勢力的君主
+// （`sub_11CD0` 取君主記錄的說話型與肖像，docs/re/59 §2）。
+func TestVictoryLordTalkIndex(t *testing.T) {
+	w := &World{Player: 3}
+	w.Factions[3].Lord = 7
+	if _, _, ok := w.VictoryLordTalkIndex(); ok {
+		t.Fatal("還沒結局就給了結局訊息")
+	}
+	w.outcome = Victory
+	index, lord, ok := w.VictoryLordTalkIndex()
+	if !ok {
+		t.Fatal("結局了卻拿不到君主那一句")
+	}
+	if index != VictoryLordTalkBase {
+		t.Fatalf("組編號 = %#x，預期 %#x", index, VictoryLordTalkBase)
+	}
+	if lord != 7 {
+		t.Fatalf("說話者 = %d，預期君主 7", lord)
+	}
+	// 沒有君主（例如剛滅亡）就不硬給。
+	w.Factions[3].Lord = noFaction
+	if _, _, ok := w.VictoryLordTalkIndex(); ok {
+		t.Fatal("沒有君主卻給了訊息")
+	}
+}

@@ -37,15 +37,25 @@ func outcomeReason(kind state.OutcomeKind) string {
 // 克制的 remake 原因句；不能在 GUI 顯示研究判定或反組譯備註。
 func (g *game) outcomeLines() []string {
 	// 兩個已定位的 selector：敗北 0x019E（docs/re/09）、結局 0x004B
-	// （docs/re/59 §2）。⚠ 結局那一則的內容還沒對過，代不進去就退回原因句。
+	// （docs/re/59 §2）。結局還有第二則——君主的褒獎，組編號 `0x197`。
+	var out []string
 	if g != nil && g.world != nil {
 		if sel, ok := g.world.OutcomeMessageSelector(); ok {
-			if lines, ok := g.talkLines(int(sel), map[byte]string{}); ok && len(lines) > 0 {
-				return lines
+			if lines, ok := g.talkLines(int(sel), map[byte]string{}); ok {
+				out = append(out, lines...)
+			}
+		}
+		if base, lord, ok := g.world.VictoryLordTalkIndex(); ok {
+			idx := g.noticeTalkIndex(state.TalkNotice{Index: base, General: lord})
+			if lines, ok := g.talkLines(idx, map[byte]string{}); ok {
+				out = append(out, lines...)
 			}
 		}
 	}
-	return []string{outcomeReason(g.world.Outcome())}
+	if len(out) == 0 {
+		return []string{outcomeReason(g.world.Outcome())}
+	}
+	return out
 }
 
 // updateOutcome 是 outcome latch 後唯一接受的遊戲內輸入：Enter／Space 或
