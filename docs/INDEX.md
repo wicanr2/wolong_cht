@@ -70,7 +70,7 @@
 | [`docs/playtest/37-main-screen-parity.md`](playtest/37-main-screen-parity.md) | 37 — 開局主畫面的逐區對拍：第一次真的對原版跑 | ⭐⭐ 五區全部 PASS。開局主畫面的 640×400 逐像素等於原版。 | 2026-08-17 |
 | [`docs/playtest/38-window-parity.md`](playtest/38-window-parity.md) | 38 — 三個視窗開著時的對拍：三個視窗區逐像素相同 | 通過。 | 2026-08-17 |
 | [`docs/playtest/39-system-window-parity.md`](playtest/39-system-window-parity.md) | 39 — 系統選單開著時的對拍：五區裡四區 PASS，選單本身也 PASS | 通過。 | 2026-08-17 |
-| [`docs/playtest/40-tactical-parity.md`](playtest/40-tactical-parity.md) | 40 — 戰場的逐區對拍：五區逐像素相同，戰場區 0.84% | 部分通過。 | 2026-08-18 |
+| [`docs/playtest/40-tactical-parity.md`](playtest/40-tactical-parity.md) | 40 — 戰場的逐區對拍：六區逐像素相同，戰場區 0.84% | 部分通過。 | 2026-08-18 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | remake 推廣片、代表幀「經典再現」比較片與 DOS/V／remake 實機動態比較片均已產出並完成媒體規格驗證… | 2026-08-12 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
 | [`docs/promo/dosv-adlib-and-tactical-review.md`](promo/dosv-adlib-and-tactical-review.md) | 推廣片原版 AdLib 與戰術骨架審查 | 原版音軌來源與影片縮放鏈已修正；戰術固定骨架的 16 px viewport 偏差已修正。完整同狀態戰術 parit… | 2026-08-12 |
@@ -198,7 +198,8 @@
 | [`docs/spec/58-display-slot-depth-range.md`](spec/58-display-slot-depth-range.md) | 58 — 顯示格的深度範圍與 8 列的帶 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/59-battle-opening-orders.md`](spec/59-battle-opening-orders.md) | 59 — 開場的常令：腳本那一側不要先下「攻擊」 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/60-battle-talk-duration.md`](spec/60-battle-talk-duration.md) | 60 — 戰場對白顯示多久：60 個 tick，每側各一個 | CONFORMED。 | 2026-08-18 |
-| [`docs/spec/61-soldier-initial-hp-from-morale.md`](spec/61-soldier-initial-hp-from-morale.md) | 61 — 兵的開場體力 ＝ 軍團士氣 | READY，但先不要接。 | 2026-08-18 |
+| [`docs/spec/61-soldier-initial-hp-from-morale.md`](spec/61-soldier-initial-hp-from-morale.md) | 61 — 兵的開場體力 ＝ 軍團士氣 | CONFORMED。 | 2026-08-18 |
+| [`docs/spec/62-swapped-unit-skips-its-turn.md`](spec/62-swapped-unit-skips-its-turn.md) | 62 — 被換位的兵，這一幀不動 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | CONFORMED。管線接起來了，也對原版跑過一輪 （[../playtest/37](../playtest/37… | 2026-08-15 |
 | [`docs/spec/91-tactical-parity.md`](spec/91-tactical-parity.md) | 91 — 戰場的逐區對拍：分區、同狀態怎麼達成 | DRAFT。分區與判定沿用 docs/spec/90，差別在 | 2026-08-17 |
 

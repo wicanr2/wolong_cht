@@ -418,7 +418,7 @@
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 「液晶」畫面模式 | 原版的畫面模式有兩個選項，對應 `GAMEPAL.BRG` 的 bank 0–3 與 4–7（`../re/55` §4）。remake 只做了 16 色那一組 / 載 bank 4–7 再對拍一次 | 靜態 |
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 音效的 TYPE 2/3/4 | 原版有四種音源型別，remake 只有開／關 / 看 `sub_102D0` 那四型的差別 | 靜態 |
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 日期對不上 | 原版跑到 4月9日才截到 / 要嘛用存檔定位，要嘛加一個「跑到指定日期」的驗收旗標 | 靜態 |
-| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | 將旗兩格各 1.5% | 兩條計量條的**值**不同，不是算式：兵力條原版 121 px（值 484–487）／remake 124 px（值 600 頂到上限），體力條原版 105 px（值 140）／remake 70 px（值 93）。原版那一格是打了 20 秒之後的樣子，remake 第 61 步才剛接觸 / 兵力那條是時刻差；體… | 靜態 |
+| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-enemy` 的 44 px | 兩條都頂在上限，原版那一格已經打了 20 秒（§10） / 要對就得讓兩邊的**時刻**對齊，不是改算式 | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `field` 剩下的 0.84% | 1,477 px，散在各處 / 逐塊看，先排除部隊的次像素位置差 | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-enemy`／`sb-self` 1.5% | 兩格將旗的內容 / — | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sub_1DFBB` 的快路徑 | remake 一律走合成。兩條路在全畫面重繪下應該畫出同樣的像素（`../spec/58` §4），但沒有逐格驗過 / — | 靜態 |
@@ -571,9 +571,9 @@
 | [`spec/59-battle-opening-orders.md`](../spec/59-battle-opening-orders.md) | 腳本節奏與原版的 tick 對應 | 第 40 步對上那一張截圖，但「原版的 40 個 tick 是多久」還沒對過（`34`） | 實測 |
 | [`spec/60-battle-talk-duration.md`](../spec/60-battle-talk-duration.md) | `byte_1D349` 的三個值 | `sub_1A69F` 拿它當「這句要不要顯示」的閘（`al & 6` 那一段還沒逐位讀）。0／1／2 三種值由 `sub_1A6FA` 切換 | 靜態 |
 | [`spec/60-battle-talk-duration.md`](../spec/60-battle-talk-duration.md) | 玩家按鍵能不能提早關掉 | remake 可以按鍵推進；原版是否有這條路沒讀 | 靜態 |
-| [`spec/61-soldier-initial-hp-from-morale.md`](../spec/61-soldier-initial-hp-from-morale.md) | **擠在目標旁邊時互換把攻擊擋掉**（§5） | 這是接這一條之前要解的。重現可重跑，機制已經定位到 `moveToward` 的互換 | 靜態 |
 | [`spec/61-soldier-initial-hp-from-morale.md`](../spec/61-soldier-initial-hp-from-morale.md) | `+0x18`（戰力）的算式 | `sub_19B6D` 由士氣、`ch` 與 `cs:[bx-63F1h]` 的每兵種係數算出來，還沒逐項拆；remake 目前直接用士氣 | 靜態 |
-| [`spec/61-soldier-initial-hp-from-morale.md`](../spec/61-soldier-initial-hp-from-morale.md) | 大將的體力怎麼掉 | 側欄那條在原版 20 秒內從 200 掉到 140，remake 從 100 掉到 93——兩邊的掉法還沒對過 | 靜態 |
+| [`spec/61-soldier-initial-hp-from-morale.md`](../spec/61-soldier-initial-hp-from-morale.md) | 大將的體力怎麼掉 | 原版那一格在 20 秒內從 200 掉到 140；remake 第 61 步還是滿的。兩邊的時刻本來就不同，**掉法還沒對過** | 靜態 |
+| [`spec/62-swapped-unit-skips-its-turn.md`](../spec/62-swapped-unit-skips-its-turn.md) | `[si+1]` 的硬直計時 | `sub_1ADC8` 的 `0001ADF1`–`0001ADFE`：`[si+1]` 不為 0 時也跳過移動，歸零時 `and [si+2], 1` 才清掉受擊旗標。remake 目前每幀開頭無條件清 `Hurt`，兩者不同 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 | 靜態 |

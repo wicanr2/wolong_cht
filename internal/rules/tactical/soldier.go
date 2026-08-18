@@ -57,9 +57,22 @@ func (s *Soldier) applyNewOrder() bool {
 // updateSoldier 是一個兵的一幀。
 func (b *Battle) updateSoldier(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
+	// ⭐ **這一幀被別人換走的兵不動**（`sub_1ADC8` 的
+	// `0001ADED test al, 40h / jnz loc_1AE26`，docs/spec/62）：
+	// 直接跳到重畫，不移動也不攻擊。旗標在那裡清掉，所以壽命是
+	// 「從被換走那一刻，到自己這一格輪到為止」。
+	//
+	// 少了這一條，被推開的兵下一幀馬上又往前擠，把剛換到前排的同伴
+	// 再換回去——前排那一格一直換人，而換進去的永遠不是下一個輪到
+	// 更新的那個，於是圍著打卻一次也打不到（docs/spec/61 §5.1）。
+	if s.Swapped {
+		s.Swapped = false
+		s.PoseStep ^= 1
+		return
+	}
 	// 原版每個兵更新時先清掉這一幀的暫態旗標
 	// （`and byte ptr [si], 0BFh`、`and byte ptr [si+2], 1`）。
-	s.Swapped, s.Hurt, s.HitGeneral = false, false, false
+	s.Hurt, s.HitGeneral = false, false
 	b.lockOnNearest(side, k)
 	s.applyNewOrder()
 

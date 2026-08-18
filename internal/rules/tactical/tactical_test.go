@@ -1087,3 +1087,66 @@ func TestSetPlayerSideFollowsPlayerNotAttacker(t *testing.T) {
 		t.Error("預設不是「玩家在攻方」")
 	}
 }
+
+// TestSwappedSoldierSkipsItsTurn 釘住「被換位的兵這一幀不動」。
+//
+// 原版 `sub_1ADC8` 的 `0001ADED test al, 40h / jnz loc_1AE26`：
+// 旗標立著就直接跳到重畫，不移動也不攻擊，旗標在那裡才清掉
+// （docs/spec/62）。少了它，被推開的兵下一幀馬上又往前擠，
+// 前排那一格一直換人，圍著打卻打不到（docs/spec/61 §5.1）。
+func TestSwappedSoldierSkipsItsTurn(t *testing.T) {
+	b := NewBattle(flatField(), SyntheticFormations(), &fixedRand{seq: []int{1, 7, 3}}, 0)
+	s := &b.Sides[0].Soldiers[0]
+	*s = Soldier{Alive: true, Kind: Infantry, HP: MaxHP, Stamina: StaminaFull,
+		X: 10, Y: 20, Z: 0, Target: -1, Cmd: Form, Next: Form}
+	s.GoalX, s.GoalY = 14, 20
+	s.Swapped = true
+
+	b.updateSoldier(0, 0)
+	if s.X != 10 || s.Y != 20 {
+		t.Fatalf("被換位的兵這一幀不該移動，卻走到 (%d,%d)", s.X, s.Y)
+	}
+	if s.Swapped {
+		t.Fatal("跳過那一幀之後旗標要清掉，否則它會永遠不動")
+	}
+
+	// 旗標清掉之後，下一幀照常走。
+	b.updateSoldier(0, 0)
+	if s.X == 10 && s.Y == 20 {
+		t.Fatal("旗標清掉後應該恢復移動")
+	}
+}
+
+// TestDeployStartsHPAtMorale 釘住「開場體力 ＝ 軍團士氣」（docs/spec/61）。
+func TestDeployStartsHPAtMorale(t *testing.T) {
+	b := NewBattle(flatField(), SyntheticFormations(), &fixedRand{seq: []int{1}}, 0)
+	b.Sides[0].Morale = 200
+	b.Deploy(0, 1, Infantry, 8)
+	if got := b.Sides[0].Soldiers[PerSquad].HP; got != 200 {
+		t.Fatalf("士氣 200 的隊開場體力 = %d，預期 200", got)
+	}
+	if MaxHP != 100 {
+		t.Fatalf("MaxHP = %d：那是 sub_1B97E 的回復上限，不該跟著開場值走", MaxHP)
+	}
+
+	// 沒給士氣時退回預設，否則兵一上場就是 0 點。
+	b2 := NewBattle(flatField(), SyntheticFormations(), &fixedRand{seq: []int{1}}, 0)
+	b2.Deploy(0, 1, Infantry, 8)
+	if got := b2.Sides[0].Soldiers[PerSquad].HP; got != DefaultPower {
+		t.Fatalf("沒給士氣時開場體力 = %d，預期 %d", got, DefaultPower)
+	}
+}
+
+// TestReinforcementUsesMoraleHP 釘住增援與開場走同一個值。
+func TestReinforcementUsesMoraleHP(t *testing.T) {
+	b := NewBattle(flatField(), SyntheticFormations(), &fixedRand{seq: []int{1}}, 0)
+	b.Sides[0].Morale = 150
+	b.Deploy(0, 1, Infantry, 20) // 8 上場、12 待機
+	b.Place()
+	k := PerSquad + 3
+	b.Sides[0].Soldiers[k].Alive = false
+	b.reinforce()
+	if got := b.Sides[0].Soldiers[k].HP; got != 150 {
+		t.Fatalf("補進來的兵體力 = %d，預期與開場同值 150", got)
+	}
+}

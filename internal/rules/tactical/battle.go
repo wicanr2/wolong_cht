@@ -375,6 +375,18 @@ func (b *Battle) Role(side int) int {
 	return 1
 }
 
+// startHP 是這一側新上場的兵的體力：**軍團士氣**（docs/spec/61）。
+//
+// `MaxHP` 是 `sub_1B97E` 的**回復**上限，不是開場值——士氣 200 的軍團
+// 開場每個兵 200 點，掉到 100 以下才開始回，回也只回到 100。
+// 呼叫端沒給士氣時（測試、無頭模擬）退回 DefaultPower，與 Power 同一套預設。
+func (s *Side) startHP() int {
+	if s.Morale > 0 {
+		return s.Morale
+	}
+	return DefaultPower
+}
+
 // Deploy 把一隊放上戰場。kind 是六個編成位置的兵種，men 是各位置的兵數
 // （以「兵」為單位，一個位置滿編 100）。
 //
@@ -398,7 +410,7 @@ func (b *Battle) Deploy(side int, squad int, kind Kind, men int) {
 			k = General // 第 0 隊的隊長是大將
 		}
 		s.Soldiers[squad*PerSquad+i] = Soldier{
-			Alive: true, Kind: k, HP: MaxHP, Stamina: StaminaFull,
+			Alive: true, Kind: k, HP: s.startHP(), Stamina: StaminaFull,
 			Power: s.Power, Target: -1, Cmd: Form, Next: Form,
 		}
 	}
@@ -559,7 +571,7 @@ func (b *Battle) reinforce() {
 				x, y := b.formationSpot(i, j)
 				s.Soldiers[j] = Soldier{
 					Alive: true, Kind: s.Kinds[k], Power: s.Power,
-					HP: MaxHP, Stamina: StaminaFull, Target: -1,
+					HP: s.startHP(), Stamina: StaminaFull, Target: -1,
 					Cmd: Form, Next: s.Standing,
 					X: x, Y: y, Z: b.Field.StandLevel(x, y),
 				}
