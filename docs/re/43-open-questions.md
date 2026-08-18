@@ -18,15 +18,15 @@
 
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
-| 規則正確性 | 49 | 47 | 2 | 0 |
+| 規則正確性 | 47 | 45 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
 | 程式碼理解 | 227 | 220 | 7 | 0 |
 | 驗收 | 69 | 59 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
 | 其他 | 138 | 131 | 7 | 0 |
-| **合計** | **537** | 510 | 26 | 1 |
+| **合計** | **535** | 508 | 26 | 1 |
 
-## 2.1 規則正確性（49 條）
+## 2.1 規則正確性（47 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -57,9 +57,7 @@
 | [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 行軍啟動費用的計算基準 | 反組譯 | 靜態 |
 | [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 災害的實際傷害量 | `sub_12FBF` 的事件表（`010Ch` 火災／`020Ch` 暴動／`0Bh` 暴風雨） | 靜態 |
 | [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 那兩個歸零的欄位很可能就是**本月累計的收入與支出 → 假說，待驗 | （散句） | 靜態 |
-| [`mechanics/50-diplomacy.md`](../mechanics/50-diplomacy.md) | **六階的門檻** | 反組譯顯示程式 | 靜態 |
 | [`mechanics/50-diplomacy.md`](../mechanics/50-diplomacy.md) | `g(對方君主好戰等級)` 的實際修正量 | 反組譯外交結算 | 靜態 |
-| [`mechanics/50-diplomacy.md`](../mechanics/50-diplomacy.md) | 「良好」對應的實際交友值 | 反組譯 ＋ `SINARIO.DAT` | 靜態 |
 | [`mechanics/50-diplomacy.md`](../mechanics/50-diplomacy.md) | 外交官每月提升的量與金額的關係 | 反組譯月結 | 靜態 |
 | [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 政治如何影響內政效果與外交官要價仍未解。 | （散句） | 靜態 |
 | [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武術的勝敗判定分布 | 反組譯一騎打ち | 靜態 |

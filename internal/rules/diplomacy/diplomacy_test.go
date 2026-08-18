@@ -223,3 +223,34 @@ func TestScenario1CaoCaoCanInvade(t *testing.T) {
 		t.Error("資金掉到 30,000 就該取消侵攻")
 	}
 }
+
+// 六階的門檻出自 `sub_17A7A`（docs/re/27 §4）：一級 20 分，
+// 100 因為先 `dec al` 而落在「親密」，> 100 是自己那一格的 `－－`。
+func TestFriendshipLevelThresholds(t *testing.T) {
+	cases := []struct {
+		v    int
+		want Level
+	}{
+		{0, Worst}, {19, Worst}, {20, Bad}, {39, Bad},
+		{40, Normal}, {59, Normal}, {60, Good}, {79, Good},
+		{80, Intimate}, {99, Intimate}, {100, Intimate},
+	}
+	for _, c := range cases {
+		if got := Peace(c.v).Level(); got != c.want {
+			t.Errorf("交友度 %d 應為 %v，得到 %v", c.v, c.want, got)
+		}
+	}
+	if got := Friendship(0x80 | 101).Level(); got != Blank {
+		t.Errorf("> 100 應為 －－，得到 %v", got)
+	}
+	if got := Peace(100).WithWar(true).Level(); got != AtWar {
+		t.Errorf("交戰壓過一切，得到 %v", got)
+	}
+	// 顯示索引就是原版那張文字表的筆序。
+	for raw, want := range map[int]int{0x00 | 100: 0, 0x80 | 0: 1, 0x80 | 20: 2,
+		0x80 | 40: 3, 0x80 | 60: 4, 0x80 | 80: 5, 0x80 | 101: 6} {
+		if got := DisplayIndex(raw); got != want {
+			t.Errorf("DisplayIndex(0x%02X) ＝ %d，預期 %d", raw, got, want)
+		}
+	}
+}

@@ -64,7 +64,7 @@ func (f Friendship) WithWar(at bool) Friendship {
 // 直接寫 Friendship(50) 會得到「交戰中」，那幾乎不會是呼叫端要的。
 func Peace(v int) Friendship { return Friendship(peaceBit).WithValue(v) }
 
-// Level 是說明書 5.1 的六階顯示。
+// Level 是勢力一覽「外交」欄的七種顯示。
 type Level int
 
 const (
@@ -74,33 +74,47 @@ const (
 	Bad                   // 險惡
 	Worst                 // 最惡
 	AtWar                 // 交戰
+	Blank                 // －－（> 100，只出現在自己那一格）
 )
 
 func (l Level) String() string {
-	return [...]string{"親密", "良好", "普通", "險惡", "最惡", "交戰"}[l]
+	return [...]string{"親密", "良好", "普通", "險惡", "最惡", "交戰", "－－"}[l]
 }
 
-// Level 把交友值換成六階。
+// displayOrder 是原版那張 7 byte 一筆的文字表的筆序（`docs/re/27` §4）：
+// 交戰、最惡、險惡、普通、良好、親密、－－。`DisplayIndex` 回傳的就是它，
+// 而 Level 用的是「好到壞」的順序，兩者只差一個對照。
+var displayOrder = [7]Level{AtWar, Worst, Bad, Normal, Good, Intimate, Blank}
+
+// DisplayIndex 重現 `sub_17A7A`：交友度換成勢力一覽那張文字表的筆序。
 //
-// ⚠ **六階的實際門檻還沒反組譯出來。** 這裡先用等分，
-// 並標成 remake 的暫定值——顯示層可以先跑，等解出真值再換。
-// 唯一確定的是「交戰」壓過一切（說明書：交戰中固定顯示交戰）。
+//	最高位元未設        → 0 交戰
+//	> 100              → 6 －－（自己那一格）
+//	其餘 (v−1)/20 + 1  → 1–5（**一級 20 分**）
+//
+// raw 是**含和平位元**的原始 byte。原版是 `dec al` 之後才除，
+// 所以 100 落在「親密」而不是自成一級。
+func DisplayIndex(raw int) int {
+	if raw&peaceBit == 0 {
+		return 0
+	}
+	v := raw & 0x7F
+	if v > MaxFriendship {
+		return 6
+	}
+	if v == MaxFriendship {
+		v = MaxFriendship - 1
+	}
+	return v/friendshipPerLevel + 1
+}
+
+// friendshipPerLevel 是 `sub_17A7A` 的 `dh = 14h`——**一級 20 分**。
+const friendshipPerLevel = 20
+
+// Level 把交友值換成七種顯示之一。門檻出自 `sub_17A7A`（confirmed，
+// `docs/re/27` §4），不是估的；玩家看得到的只有等級，看不到數值。
 func (f Friendship) Level() Level {
-	if f.AtWar() {
-		return AtWar
-	}
-	switch v := f.Value(); {
-	case v >= 80:
-		return Intimate
-	case v >= 60:
-		return Good
-	case v >= 40:
-		return Normal
-	case v >= 20:
-		return Bad
-	default:
-		return Worst
-	}
+	return displayOrder[DisplayIndex(f.Raw())]
 }
 
 // Diplomat 是一名派駐中的外交官。

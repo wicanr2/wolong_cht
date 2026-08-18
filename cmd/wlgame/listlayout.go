@@ -5,6 +5,7 @@ import (
 	"image/color"
 	"strings"
 
+	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
@@ -194,23 +195,15 @@ var listRankNames = [6]string{"－－－", "軍團長", "內政官", "外交官"
 // 索引就是原版表的筆序；交戰那一筆在畫面上會換色。
 var listDiplomacyNames = [7]string{"交戰　", "最惡　", "險惡　", "普通　", "良好　", "親密　", "－－　"}
 
-// listDiplomacyLevel 重現 `sub_17A7A`：交友度換成上表的索引。
+// listDiplomacyLevel 把交友度換成上表的索引。
 //
-//	最高位元未設      → 0 交戰
-//	> 100            → 6 －－（自己那一格）
-//	其餘 (v−1)/20 +1 → 1–5
+// 算式在規則層（`diplomacy.DisplayIndex`，出處 `sub_17A7A`）——
+// **一條規則只留一份實作**，這裡只負責把 UI 的兩個參數併回原始 byte。
 func listDiplomacyLevel(raw int, atWar bool) int {
 	if atWar {
 		return 0
 	}
-	v := raw & 0x7F
-	if v > 100 {
-		return 6
-	}
-	if v == 100 {
-		v = 99
-	}
-	return v/20 + 1
+	return diplomacy.DisplayIndex(raw&0x7F | 0x80)
 }
 
 // listDashes 是**沒有資料的那一列**在這一欄要印的東西：分隔線本身。
