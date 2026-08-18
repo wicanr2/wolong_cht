@@ -92,11 +92,10 @@ loc_1AE26:
 | 方式 | 內容 |
 |---|---|
 | 單元測試 | `TestSwappedSoldierSkipsItsTurn`（`internal/rules/tactical`）：旗標立著那一幀不動、旗標要清掉、下一幀恢復移動 |
-| 迴歸 | 開場體力改成士氣之後，一場 48 對 48 的野戰在 5,000 tick 內分出勝負（之前 95 萬 tick 不動）|
+| 迴歸 | `TestTacticalBattleAlwaysResolves`（`internal/state`）：開場體力改成士氣之後，一場 48 對 48 的野戰在 5,000 tick 內分出勝負（之前 95 萬 tick 不動）|
 | 對原版 | 側欄的兩格計量條（[`../playtest/40`](../playtest/40-tactical-parity.md) §10）|
 
-## 6. 未解
+## 6. 相鄰的那一格
 
-| 項目 | 現況 |
-|---|---|
-| `[si+1]` 的硬直計時 | `sub_1ADC8` 的 `0001ADF1`–`0001ADFE`：`[si+1]` 不為 0 時也跳過移動，歸零時 `and [si+2], 1` 才清掉受擊旗標。remake 目前每幀開頭無條件清 `Hurt`，兩者不同 |
+同一個迴圈緊接著測 `[si+1]`——挨打之後的硬直計時。
+兩者接力擋掉三幀，見 [`63`](63-hit-stun.md)。

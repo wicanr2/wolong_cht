@@ -439,6 +439,7 @@ M6 的版面幾何對得上原版，但畫的內容還有缺。**
 | ⭐ 底列一格裡有**四樣**東西：位置名、兵種圖示（`sub_19B6D`，段 3 `0x480`）、命令圖示、待機兵條；命令圖示是**下令時畫一次就不更新**，所以就位（7）顯示的是陣形（0）| [`spec/33`](docs/spec/33-squad-selection.md) §1.6 |
 | ⭐ 兵的**開場體力 ＝ 軍團士氣**（`sub_19B6D`），`MaxHP` 100 是回復上限不是開場值 | [`spec/61`](docs/spec/61-soldier-initial-hp-from-morale.md) |
 | ⭐ 被換位的兵**這一幀不動**（`sub_1ADC8` 的 `test al, 40h`）——少了它，圍著打會一次也打不到 | [`spec/62`](docs/spec/62-swapped-unit-skips-its-turn.md) |
+| ⭐ 挨打之後有**三幀硬直**（`sub_1B618` 寫 `[di+1]=2` ＋ bit 6），而且「剛被打中」的旗標**撐到硬直結束才清**——它同時是換位的擋條件 | [`spec/63`](docs/spec/63-hit-stun.md) |
 | 顯示格表頭 `+1`（含物件的高度）與 `+3`（只有地形）的分工 | [`re/68`](docs/re/68-t3-frontier-functions.md) §2.1 |
 | 戰場側欄逐像素對過：陣形列／指令面板／`▶▶` 列三區 PASS | [`spec/31`](docs/spec/31-tactical-sidebar.md)、[`playtest/40`](docs/playtest/40-tactical-parity.md) |
 
@@ -455,8 +456,8 @@ INT 33 的範圍變成整個世界（一個主機像素 ≈ 9.6 個遊戲像素�
 | # | 工作 | 為什麼現在做 | 下手點 |
 |---:|---|---|---|
 | **1** | **M3 的 T2 那 18 支** | T3 已歸零（`docs/re/68`），T2 是下一批：只在其他 `docs/` 被提過、沒有 `docs/re/` 筆記，合計 714 bytes | `tools/py.sh tools/re_coverage.py workplace/ida/dosv/census/census.tsv` 的 T2 表 |
-| **2** | **`[si+1]` 的硬直計時** | `sub_1ADC8` 的 `0001ADF1`–`0001ADFE`：那個計數器不為 0 時**也跳過移動**，歸零時才 `and [si+2], 1` 清掉受擊旗標。remake 每幀開頭無條件清 `Hurt`，兩者不同（[`spec/62`](docs/spec/62-swapped-unit-skips-its-turn.md) §6）| 與 bit 6 是同一個迴圈的相鄰兩個分支，接法一樣 |
-| **3** | **`field` 剩下的 0.84%** | 1,477 px 散在各處。⚠ 先確認有多少是**時刻差**——`sb-enemy` 那 44 px 已經證實是（原版那一格打了 20 秒）| 逐塊看，先排除部隊的次像素位置差 |
+| **2** | **`field` 剩下的 0.84%** | 1,477 px 散在各處。⚠ 先確認有多少是**時刻差**——`sb-enemy` 那 44 px 已經證實是（原版那一格打了 20 秒）| 逐塊看，先排除部隊的次像素位置差 |
+| **3** | **倒地動畫** | 血歸零時原版改走另一條（`+0x00` 只留 bit 4、設 bit 0、`[di+1]=4`），數完四幀由 `sub_1B4B8` 收掉；remake 直接把 `Alive` 設成 false（[`spec/63`](docs/spec/63-hit-stun.md) §5）| 與硬直是同一個計時器，接法一樣 |
 
 > ⭐ **這一輪最有用的一招**：差異的**形狀會騙人**。整片 99% 不同可能只是
 > 調色盤刻度差 4%；「少畫了一個徽記」可能是整張圖塊換掉了。

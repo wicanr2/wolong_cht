@@ -40,6 +40,13 @@ func (b *Battle) hitByArrow(from int, e *Soldier, power int) {
 // 數值依據就在這裡：步兵是唯一扛得住城牆上箭雨的兵種。
 const InfantryArrowDivisor = 4
 
+// HitStunFrames 是挨打之後的硬直幀數（原版 `sub_1B618` 的
+// `mov byte ptr [di+1], 2`，docs/spec/63）。
+//
+// 它與同時設下的「這一幀不動」旗標接力：那一幀 ＋ 這裡的兩幀
+// ＝ 一共三幀站著不動，第四幀才恢復。
+const HitStunFrames = 2
+
 // meleeHit 是一般兵士碰撞命中的處理（原版 `sub_1B618`）。
 //
 // 原版不是固定威力：先取 `rand & 0x7F`，加上攻擊者 `+0x18` 戰力
@@ -95,10 +102,12 @@ func (b *Battle) applyHit(e *Soldier, damage int) bool {
 		return false
 	}
 
-	// 原版受擊同時設 +0x02 bit 4、面向歸零，以及 +0x00 bit 6。
+	// 原版受擊同時設 +0x02 bit 4、面向歸零、+0x00 bit 6，
+	// 以及 `+0x01` 的硬直計時（docs/spec/63）。
 	e.Hurt = true
 	e.Facing = West
 	e.Swapped = true
+	e.Stun = HitStunFrames
 
 	// 扣血前處理退卻：體力滿 100 的不排退卻；已經是退卻中的也不改。
 	if !e.IsGeneral() && e.HP < MaxHP && e.Cmd != Retreat && e.Next != Retreat {
@@ -481,6 +490,7 @@ func (b *Battle) hitGeneral(attacker *Soldier, g *Soldier) bool {
 		}
 	}
 	g.Hurt, g.Swapped, g.Facing = true, true, West
+	g.Stun = HitStunFrames
 	dmg := attacker.Power >> generalDamageShift
 	if dmg < 1 {
 		dmg = 1

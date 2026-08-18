@@ -70,9 +70,18 @@ func (b *Battle) updateSoldier(side, k int) {
 		s.PoseStep ^= 1
 		return
 	}
-	// 原版每個兵更新時先清掉這一幀的暫態旗標
-	// （`and byte ptr [si], 0BFh`、`and byte ptr [si+2], 1`）。
-	s.Hurt, s.HitGeneral = false, false
+	// ⭐ **挨打之後的硬直**（`sub_1ADC8` 的 `0001ADF1`–`0001ADFE`，
+	// docs/spec/63）：計時器大於 0 就遞減後跳過，**歸零那一幀才清掉
+	// `Hurt`**。`Hurt` 同時是換位的擋條件之一，所以硬直期間也不會
+	// 被同伴換走——站著挨完。
+	if s.Stun > 0 {
+		if s.Stun--; s.Stun == 0 {
+			s.Hurt = false
+		}
+		s.PoseStep ^= 1
+		return
+	}
+	s.HitGeneral = false
 	b.lockOnNearest(side, k)
 	s.applyNewOrder()
 

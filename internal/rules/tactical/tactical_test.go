@@ -1150,3 +1150,38 @@ func TestReinforcementUsesMoraleHP(t *testing.T) {
 		t.Fatalf("補進來的兵體力 = %d，預期與開場同值 150", got)
 	}
 }
+
+// TestHitStunSkipsThreeFrames 釘住挨打之後的硬直（docs/spec/63）。
+//
+// 原版 `sub_1B618` 命中時把 `+0x01` 寫成 2 並設 `+0x00` bit 6，
+// 兩者接力擋掉三幀；`Hurt` 撐到硬直歸零那一幀才清，
+// 因為它同時是換位的擋條件（`docs/re/11` §5.16）。
+func TestHitStunSkipsThreeFrames(t *testing.T) {
+	b := NewBattle(flatField(), SyntheticFormations(), &fixedRand{seq: []int{1, 7, 3}}, 0)
+	s := &b.Sides[0].Soldiers[0]
+	*s = Soldier{Alive: true, Kind: Infantry, HP: MaxHP, Stamina: StaminaFull,
+		X: 10, Y: 20, Z: 0, Target: -1, Cmd: Form, Next: Form}
+	s.GoalX, s.GoalY = 14, 20
+
+	b.applyHit(s, 1)
+	if !s.Swapped || s.Stun != HitStunFrames || !s.Hurt {
+		t.Fatalf("挨打後 = 不動:%v 硬直:%d 受擊:%v", s.Swapped, s.Stun, s.Hurt)
+	}
+
+	for frame := 1; frame <= 3; frame++ {
+		b.updateSoldier(0, 0)
+		if s.X != 10 || s.Y != 20 {
+			t.Fatalf("硬直第 %d 幀就動了：(%d,%d)", frame, s.X, s.Y)
+		}
+		if frame < 3 && !s.Hurt {
+			t.Fatalf("硬直還沒結束（第 %d 幀）就清掉受擊旗標，換位會擋不住", frame)
+		}
+	}
+	if s.Hurt {
+		t.Fatal("硬直歸零那一幀要清掉受擊旗標")
+	}
+	b.updateSoldier(0, 0)
+	if s.X == 10 && s.Y == 20 {
+		t.Fatal("第四幀應該恢復移動")
+	}
+}
