@@ -423,8 +423,8 @@
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 音效的 TYPE 2/3/4 | 原版有四種音源型別，remake 只有開／關 / 看 `sub_102D0` 那四型的差別 | 靜態 |
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 日期對不上 | 原版跑到 4月9日才截到 / 要嘛用存檔定位，要嘛加一個「跑到指定日期」的驗收旗標 | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-enemy` 的 44 px | 兩條都頂在上限，原版那一格已經打了 20 秒（§10） / 要對就得讓兩邊的**時刻**對齊，不是改算式 | 靜態 |
-| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | 少一支旗、一根木樁與一小塊地形（191 px） | §13 的三項。三支旗的 `Z` 都是 6（單格），所以不是「兩格高的旗只畫了一半」 / 逐支列出旗的螢幕位置，比對原版那五群紅布，看是哪一支沒進畫面 | 靜態 |
-| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | 旗的揮舞相位（116 px） | ⛔ **不可消**：兩邊各自 `rand & 3` 起手（§13） / — | 靜態 |
+| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | 旗桿旁的木樁與一小塊地形（96 px） | §13 的兩項。這是 `field` 區**真正**剩下的缺口 / 木樁在旗（30,22）左邊那一格（29,22，堆疊 `[47 30 31 29 125]`，頂端 125）。先確認它是被深度範圍濾掉還是根本沒進顯示格 | 靜態 |
+| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | 旗的揮舞相位（116 px）｜滑鼠游標（95 px） | ⛔ **都不可消**（§13） / — | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-enemy`／`sb-self` 1.5% | 兩格將旗的內容 / — | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sub_1DFBB` 的快路徑 | remake 一律走合成。兩條路在全畫面重繪下應該畫出同樣的像素（`../spec/58` §4），但沒有逐格驗過 / — | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | unit 0 的第二趟 | 深度迴圈跑完後 `dl & 0x20` 成立時會對五個鄰格各跑一次 `ax = 0`；**觸發條件（旗標 bit 5）誰設還沒解** / 掃誰對顯示格的 `+0` 寫 `0x20` | 靜態 |
