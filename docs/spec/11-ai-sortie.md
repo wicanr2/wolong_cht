@@ -1,6 +1,6 @@
 # 11 — 進言「請求君主出陣」
 
-**狀態：READY。兩道閘都從機器碼讀出來了，**remake 尚未實作**。**
+**狀態：CONFORMED。** 兩道閘都從機器碼讀出來了，remake 也接上了（§3），驗證見 §4。
 
 - 日期：2026-08-14
 - 出處：[`docs/re/45`](../re/45-corps-command-mode.md) §3（`sub_1699E`）、
@@ -36,18 +36,20 @@ if 答應:
 
 | 項目 | 位置 |
 |---|---|
-| 規則層 | **無** |
-| 狀態層 | **無** |
-| 差異 | 整項未實作。玩家在 remake 裡沒有這個進言選項 |
+| 規則層 | `internal/rules/persuasion`：`Sortie`、`SortieFundsGate`、`SortieReserveGate`、`AcceptSortie` |
+| 狀態層 | `internal/state/advise.go`：`AdviseSortieAccepted`（含「君主已經帶著軍團」那道擋，原版 `sub_16EC9`）、`AdviseSortie` → `autoFormCorps(..., false)` |
+| 呈現層 | `cmd/wlgame/advise.go` 的 `beginSortie`：三句定案畫面走 `sayVerdict`，答應才編軍團 |
+| 差異 | 無 |
 
-實作時的落點建議：規則層放 `internal/rules/strategyai`（判斷式純函式），
-狀態層借用既有的 `formAICorpsTo`，編完把 `Delegated` 設成 `false`。
+⭐ **編出來的軍團不是委任的**：`sub_16E8F` 一律把委任位元設起來，
+`sub_1699E` 緊接著 `and byte ptr [di], 0FBh` 把它清掉——
+君主親自出陣，指揮權在玩家手上，所以 `autoFormCorps` 的最後一個參數是 `false`。
 
 ## 4. 驗證
 
 | 方式 | 證據 |
 |---|---|
-| 單元測試 | **未做** |
+| 單元測試 ✅ | `TestAcceptSortieNeedsBothGates`（兩道閘是「而且」）、`TestAdviseSortieFormsUndelegatedCorps`（編出來的軍團 `Delegated == false`）、`TestAdviseSortieBlockedLeavesNothing` |
 | 對原版 | **未做**。可用 `docs/playtest/21` 的取樣管線：湊出資金／預備兵剛好跨過門檻的兩個狀態，看君主答不答應 |
 
 ## 5. 未解

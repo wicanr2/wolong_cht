@@ -118,7 +118,7 @@
 | [`docs/re/39-remaining-unread.md`](re/39-remaining-unread.md) | 39 — 剩餘未讀函式的逐支歸屬 | 清單。 | 2026-08-14 |
 | [`docs/re/40-garrison-relief-request.md`](re/40-garrison-relief-request.md) | 40 — 據點求援與援軍派遣 | 整條鏈 confirmed（每一支都逐行讀過）。 sub_140C9 的距離算式裡有一處 | 2026-08-14 |
 | [`docs/re/42-leaf-functions.md`](re/42-leaf-functions.md) | 42 — 戰術以外的 47 支葉節點 | 47 支全部逐行讀過。四件事因此定案：INT 61h 是音源 TSR 的介面、 byte_198A6 的位元圖完整、… | 2026-08-14 |
-| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的） | 生成的清單，跑 tools/py.sh tools/re_open_questions.py 重出。 這一份不下結論… | 2026-08-17 |
+| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的） | 生成的清單，跑 tools/py.sh tools/re_open_questions.py 重出。 這一份不下結論… | 2026-08-18 |
 | [`docs/re/44-threat-and-reinforcement-ai.md`](re/44-threat-and-reinforcement-ai.md) | 44 — 威脅偵測與 AI 出兵：據點每 tick 掃一次 | 整條鏈逐行讀完。三件事定案：據點 +0x18 是佔用圖讀回來的軍團數、 +0x00 低 4 位是「哪幾個鄰居是敵方」… | 2026-08-14 |
 | [`docs/re/45-corps-command-mode.md`](re/45-corps-command-mode.md) | 45 — 軍團的三種指令模式：戰鬥指揮／委任／解體 | 軍團 +0x00 位元 2 定案 ＝ | 2026-08-14 |
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |
@@ -152,7 +152,7 @@
 | [`docs/release/README-RELEASE.md`](release/README-RELEASE.md) | 臥龍傳 remake 可執行封裝 | 三平台候選封裝、Linux AppImage、推廣片與驗收紀錄已集中於 [dist-all](../../dist-… | 2026-08-12 |
 | [`docs/spec/00-index.md`](spec/00-index.md) | 00 — 規格索引：已解的規則有沒有被實作、有沒有被驗過 | 索引。規格是 docs/re/（程式碼在哪）與 internal/（我們寫了什麼） 之間的那一層——它回答「這條規則… | 2026-08-14 |
 | [`docs/spec/10-city-tick.md`](spec/10-city-tick.md) | 10 — 據點整備、威脅偵測與求援 | CONFORMED。整條鏈已實作，並在 PC-98 原版的執行期記憶體上取樣驗過 （+0x18／+0x14 各 0/… | 2026-08-14 |
-| [`docs/spec/11-ai-sortie.md`](spec/11-ai-sortie.md) | 11 — 進言「請求君主出陣」 | READY。兩道閘都從機器碼讀出來了， | 2026-08-14 |
+| [`docs/spec/11-ai-sortie.md`](spec/11-ai-sortie.md) | 11 — 進言「請求君主出陣」 | CONFORMED。 | 2026-08-14 |
 | [`docs/spec/12-strategy-chrome.md`](spec/12-strategy-chrome.md) | 12 — 主畫面的視窗外框、指令列與右欄 | READY。主畫面的四個常駐視窗矩形、指令列版面與縮小地圖／勢力篩選鈕的 位置全部由機器碼定死（[docs/re/4… | 2026-08-15 |
 | [`docs/spec/13-main-window-toggles.md`](spec/13-main-window-toggles.md) | 13 — 主畫面四個視窗的開關 | CONFORMED。已實作並留下四窗全開／全關的截圖； 舊的 g.open[] 那一套已整個拿掉，主畫面視窗只剩一份… | 2026-08-15 |
 | [`docs/spec/14-finance-window.md`](spec/14-finance-window.md) | 14 — 財政視窗 | CONFORMED。版面已照原版重寫並有契約測試； 數值輸入器與「收入」的來源仍缺（§5）。 | 2026-08-15 |
