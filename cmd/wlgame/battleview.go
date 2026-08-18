@@ -513,16 +513,7 @@ func (v *battleView) buildDisplayList(b *tactical.Battle) []battleDisplayEntry {
 		col, row := isoProject(banner.X, banner.Y, banner.Z)
 		// sub_1BB10 → sub_1DC03：一般高度用 base+phase*2；Z=6
 		// 的特殊分支用 base+8+phase，且兩者都只登錄一個 raw unit。
-		phase := (banner.Phase + frame) % battle.BannerFrames
-		raw := 0x150
-		if banner.Side == 1 {
-			raw = 0x204
-		}
-		if banner.Z == 6 {
-			raw += 8 + phase
-		} else {
-			raw += phase * 2
-		}
+		raw := banner.SourceTile(frame)
 		entries = append(entries, battleDisplayEntry{kind: displayRawUnit,
 			col: col, row: row, cellCol: col - v.camCol, cellRow: row - v.camRow,
 			layer: banner.Z, lane: 0, x: banner.X, y: banner.Y, z: banner.Z,
@@ -845,25 +836,3 @@ func projectileSourceIndex(p tactical.ProjectileView) int {
 	return 0x210 + (p.Direction & 1)
 }
 
-// drawBanners 畫場上插的旗（`sub_19E10`，docs/re/11 §5.14）。
-//
-// 位置開場就決定好，旗色由圖塊編號的最低位選、與交戰雙方無關；
-// **但旗子會飄**——`sub_1BB10` 每幀把相位加一再 `and 3`，四張一循環。
-// 建立時的亂數初值讓滿場的旗不會同步揮舞。
-func (v *battleView) drawBanners(dst *ebiten.Image, frame int) {
-	op := &ebiten.DrawImageOptions{}
-	for _, b := range v.banners {
-		px, py, ok := v.ScreenPos(0, 0, b.X, b.Y, b.Z)
-		if !ok {
-			continue
-		}
-		img := v.frame(b.Side, b.Sprite(frame))
-		if img == nil {
-			continue
-		}
-		op.GeoM.Reset()
-		op.GeoM.Translate(float64(px-battle.SpriteW/2),
-			float64(py-battle.SpriteH+isoRowPx))
-		dst.DrawImage(img, op)
-	}
-}

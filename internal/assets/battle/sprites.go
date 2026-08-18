@@ -252,7 +252,49 @@ func (l *Library) Banners(n int, rand func() int) []Banner {
 // BannerFrames 是旗子飄動的張數（`and byte ptr [si+1Bh], 3`）。
 const BannerFrames = 4
 
-// Sprite 回傳一支旗在第 frame 幀該用哪一張圖。
+// BannerSingleCellZ 是「這支旗只佔一格」的堆疊高度（`sub_1BB10` 的
+// `cmp al, 6`）。`al` 是實體的 `+0x0A`，也就是 Z。
+const BannerSingleCellZ = 6
+
+// bannerSourceBase 是軍旗那一組在**合併圖形表**裡的起點
+// （`sub_19E10` 寫進 `+0x1C` 的 `0x150`／`0x204`）。
+//
+// 與 `Sprite(側, BannerSprite)` 是同一個位置：合併表索引 ＝
+// 子圖塊索引 ＋ 192，而 `Sprite` 的子圖塊基底是 `側 × 180 + n × 2`
+// ——側 0 得 336（`0x150`）、側 1 得 516（`0x204`）。
+var bannerSourceBase = [2]int{0x150, 0x204}
+
+// bannerSingleCellOffset 是單格那四張圖與組起點的距離（`add cl, 8`）。
+const bannerSingleCellOffset = 8
+
+// SingleCell 回報這支旗是不是**只佔一個顯示格**。
+//
+// ⭐ `sub_1BB10` 對 Z ＝ 6 的旗走另一條：圖號是「基底 ＋ 相位 ＋ 8」
+// 而不是「基底 ＋ 相位 × 2」，而且傳給 `sub_1DC03` 的 `ah` ＝ 1
+// ——那個參數決定畫一格還是兩格（`byte_1DC02`）。
+// 兩格的物件會寫兩筆（上面那一列用 `cx`、下面用 `cx+1`），
+// 單格只寫下面那一筆。
+func (b Banner) SingleCell() bool { return b.Z == BannerSingleCellZ }
+
+// Sprite 回傳一支**兩格高**的旗在第 frame 幀該用哪一張 16×64 圖。
 func (b Banner) Sprite(frame int) int {
 	return BannerSprite + (b.Phase+frame)%BannerFrames
+}
+
+// SourceTile 回傳這支旗在第 frame 幀該用**合併圖形表**的哪一格。
+//
+// 兩條路的差別在 `sub_1BB10`：
+//
+//	Z ＝ 6  → 基底 ＋ 8 ＋ 相位        單格（16×32）
+//	其餘    → 基底 ＋ 相位 × 2         兩格（上面用 cx、下面用 cx+1）
+//
+// **兩格那條的 ×2 不是動畫幀距**，是因為一個兩格物件吃掉兩個連號的
+// 圖——所以它換算回 `Sprite(側, BannerSprite+相位)` 剛好是同一張。
+func (b Banner) SourceTile(frame int) int {
+	base := bannerSourceBase[b.Side&1]
+	phase := (b.Phase + frame) % BannerFrames
+	if b.SingleCell() {
+		return base + bannerSingleCellOffset + phase
+	}
+	return base + phase*2
 }
