@@ -147,6 +147,7 @@ func (g *game) newBattleView(field int) *battleView {
 	}
 	var minimap *ebiten.Image
 	var subs [][][]byte
+	var banners []battle.Banner
 	if field >= 0 && field < battle.NumFields {
 		// 與 buildField 用同一個旗標：翻轉的戰場連小地圖一起翻
 		// （docs/spec/56 §3）。
@@ -161,6 +162,9 @@ func (g *game) newBattleView(field int) *battleView {
 		raw := battle.RenderTacticalMinimap(rows, g.battleLib.TileAttributes(field))
 		minimap = ebiten.NewImageFromImage(raw.RGBA(bank))
 		subs = g.battleLib.SubTilesFor(field, tiles)
+		// 旗與地形要用**同一份**格子：翻轉的戰場連旗一起翻
+		// （docs/playtest/40 §11）。
+		banners = g.battleLib.BannersFor(field, tiles, g.rng.Next)
 	}
 	v := &battleView{
 		lib: g.battleLib, set: g.battleLib.TileSet(field),
@@ -168,7 +172,7 @@ func (g *game) newBattleView(field int) *battleView {
 		cache: map[int]*ebiten.Image{}, pal: bank,
 		sprites: g.battleSprites, spCache: map[int]*ebiten.Image{},
 		sourceCache: map[int]*ebiten.Image{},
-		banners:     g.battleLib.Banners(field, g.rng.Next),
+		banners:     banners,
 		minimap:     minimap,
 		// sub_199F3：word_1D328=0x24、word_1D32A=0x0E，接著由
 		// sub_1DC9D 換成投影 origin。原版只有 dirty flag 設定時才更新，

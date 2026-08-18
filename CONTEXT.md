@@ -406,7 +406,7 @@ M6 的版面幾何對得上原版，但畫的內容還有缺。**
 
 **主畫面與戰場都對到同一個局面了。** 戰場九區裡**六區逐像素 PASS**
 （底列／標題／我方將旗／陣形列／指令面板／`▶▶` 列），小地圖 0.04%（8 px），
-⭐ **`field` 從 87.8% 一路降到 0.84%**（176,640 px 裡 1,477 px，第 61 步）。
+⭐ **`field` 從 87.8% 一路降到 0.42%**（176,640 px 裡 737 px，第 61 步，NEAR）。
 剩下兩處都是**兩邊的時刻不同**，不是算式錯：`field` 的 1,477 px 與
 對方將旗的 44 px——原版那一格已經打了 20 秒
 （[`docs/playtest/40`](docs/playtest/40-tactical-parity.md) §8–§10）。
@@ -441,6 +441,7 @@ M6 的版面幾何對得上原版，但畫的內容還有缺。**
 | ⭐ 被換位的兵**這一幀不動**（`sub_1ADC8` 的 `test al, 40h`）——少了它，圍著打會一次也打不到 | [`spec/62`](docs/spec/62-swapped-unit-skips-its-turn.md) |
 | ⭐ 挨打之後有**三幀硬直**（`sub_1B618` 寫 `[di+1]=2` ＋ bit 6），而且「剛被打中」的旗標**撐到硬直結束才清**——它同時是換位的擋條件 | [`spec/63`](docs/spec/63-hit-stun.md) |
 | ⭐ 別的勢力遷都要**有外交官駐在那裡**才收得到報告（`sub_133FD` 的 `[si+2Ah] == 0xFF → 一句話都不報`）——外交官也是情報站 | [`spec/64`](docs/spec/64-capital-relocation-report.md)、[`re/69`](docs/re/69-t2-cross-reference.md) §2.4 |
+| ⭐ **旗也要跟著戰場翻**（`sub_19E10` 掃的是翻好之後的緩衝區）——只翻地形會讓旗散在鏡射位置 | [`spec/56`](docs/spec/56-battlefield-rotation.md) §3、[`playtest/40`](docs/playtest/40-tactical-parity.md) §11 |
 | 顯示格表頭 `+1`（含物件的高度）與 `+3`（只有地形）的分工 | [`re/68`](docs/re/68-t3-frontier-functions.md) §2.1 |
 | 戰場側欄逐像素對過：陣形列／指令面板／`▶▶` 列三區 PASS | [`spec/31`](docs/spec/31-tactical-sidebar.md)、[`playtest/40`](docs/playtest/40-tactical-parity.md) |
 
@@ -456,7 +457,8 @@ INT 33 的範圍變成整個世界（一個主機像素 ≈ 9.6 個遊戲像素�
 
 | # | 工作 | 為什麼現在做 | 下手點 |
 |---:|---|---|---|
-| **1** | **旗子沒有布** | `field` 剩下的 1,477 px **全部**是這個：原版是白桿 ＋ 紅旗，remake 只有白桿（桿子是地形子圖塊，旗面是實體）。位置、圖號、顯示串列都對——旗有進 `buildDisplayList`、`raw` 也是對的（[`playtest/40`](docs/playtest/40-tactical-parity.md) §11）| 卡在顯示格那一層：旗算出來的格是 `grid[0][7][6]`，同一格的地形（z=5）在 `grid[1][7][5]`。對 `sub_1DC03` 的 `si = 4Z+4+bx` 與 `sub_1DC9D` 的走訪是不是同一個框 |
+| **1** | **城門那一帶多出白色菱形邊** | `field` 剩下的 737 px 裡最大的一塊（234 px），原版那裡是磚牆。與旗無關（[`playtest/40`](docs/playtest/40-tactical-parity.md) §11.2）| 看起來是多畫了一層；對 `sub_1DDB4`／`sub_1DE95` 的深度範圍在門格附近的行為 |
+| **1b** | **少一支旗與一根木樁**（183 px）| 同上 §11.2 的後兩項 | 先確認那兩個是不是同一支旗的兩半（兩格高的旗上下各一格）|
 | **2** | **倒地動畫** | 血歸零時原版改走另一條（`+0x00` 只留 bit 4、設 bit 0、`[di+1]=4`），數完四幀由 `sub_1B4B8` 收掉；remake 直接把 `Alive` 設成 false（[`spec/63`](docs/spec/63-hit-stun.md) §5）| 與硬直是同一個計時器，接法一樣 |
 
 > ⭐ **這一輪最有用的一招**：差異的**形狀會騙人**。整片 99% 不同可能只是

@@ -21,10 +21,10 @@
 | 規則正確性 | 50 | 48 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
 | 程式碼理解 | 227 | 220 | 7 | 0 |
-| 驗收 | 68 | 58 | 10 | 0 |
+| 驗收 | 70 | 60 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
 | 其他 | 133 | 126 | 7 | 0 |
-| **合計** | **532** | 505 | 26 | 1 |
+| **合計** | **534** | 507 | 26 | 1 |
 
 ## 2.1 規則正確性（50 條）
 
@@ -355,7 +355,7 @@
 | [`re/69-t2-cross-reference.md`](../re/69-t2-cross-reference.md) | 據點 `+0x1A` | `sub_14236` 在停戰／滅亡時改回 `+0x01`（自己）；語意像「侵攻目標勢力」但沒有正對照 / 找讀它的那一支 | 靜態 |
 | [`re/69-t2-cross-reference.md`](../re/69-t2-cross-reference.md) | `sub_1E6FF` 那張待繪表 | 欄位對應到什麼還沒查 / `byte_1E47F` 的其他使用端 | 靜態 |
 
-## 2.4 驗收（68 條）
+## 2.4 驗收（70 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -423,7 +423,9 @@
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 音效的 TYPE 2/3/4 | 原版有四種音源型別，remake 只有開／關 / 看 `sub_102D0` 那四型的差別 | 靜態 |
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 日期對不上 | 原版跑到 4月9日才截到 / 要嘛用存檔定位，要嘛加一個「跑到指定日期」的驗收旗標 | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-enemy` 的 44 px | 兩條都頂在上限，原版那一格已經打了 20 秒（§10） / 要對就得讓兩邊的**時刻**對齊，不是改算式 | 靜態 |
-| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `field` 剩下的 0.84% | **全部是旗面沒畫**（§11）。位置、圖號、顯示串列都對，卡在顯示格那一層 / 對 `sub_1DC03` 的 `si = 4Z+4+bx` 與 `sub_1DC9D` 的走訪是不是同一個框 | 靜態 |
+| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | 城門那一帶多出白色菱形邊（234 px） | `field` 剩下的 737 px 裡最大的一塊，與旗無關（§11.2） / 那是多畫了一層的樣子；對 `sub_1DDB4`／`sub_1DE95` 的深度範圍在門格附近的行為 | 靜態 |
+| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | 少一支旗與一根木樁（183 px） | §11.2 的後兩項 / 先確認那兩個是不是同一支旗的兩半（兩格高的旗上下各一格） | 靜態 |
+| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | 旗的揮舞相位（116 px） | **不可消**：兩邊各自 `rand & 3` 起手 / — | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-enemy`／`sb-self` 1.5% | 兩格將旗的內容 / — | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sub_1DFBB` 的快路徑 | remake 一律走合成。兩條路在全畫面重繪下應該畫出同樣的像素（`../spec/58` §4），但沒有逐格驗過 / — | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | unit 0 的第二趟 | 深度迴圈跑完後 `dl & 0x20` 成立時會對五個鄰格各跑一次 `ax = 0`；**觸發條件（旗標 bit 5）誰設還沒解** / 掃誰對顯示格的 `+0` 寫 `0x20` | 靜態 |

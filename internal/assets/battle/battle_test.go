@@ -582,3 +582,49 @@ func TestMinimapRowsIncludeHeaderAndTrailer(t *testing.T) {
 		t.Fatal("表頭那一列與第一列地形完全相同，偏移可能算錯了")
 	}
 }
+
+// TestBannersFollowRotation 釘住「旗跟著戰場一起翻」。
+//
+// 原版 `sub_19E10` 掃的是**已經翻好**的緩衝區（docs/spec/56 §3）。
+// 拿沒翻的那一份掃，地形會對得上而旗散在鏡射位置。
+func TestBannersFollowRotation(t *testing.T) {
+	l := load(t)
+	field := -1
+	for n := 0; n < NumFields; n++ {
+		if len(l.Banners(n, nil)) > 0 {
+			field = n
+			break
+		}
+	}
+	if field < 0 {
+		t.Skip("沒有帶旗的戰場")
+	}
+	tiles := l.Tiles(field)
+	plain := l.BannersFor(field, tiles, nil)
+	rotated := l.BannersFor(field, Rotate180(tiles), nil)
+	if len(plain) == 0 {
+		t.Fatal("這一張應該有旗")
+	}
+	same := len(plain) == len(rotated)
+	if same {
+		for i := range plain {
+			if plain[i] != rotated[i] {
+				same = false
+				break
+			}
+		}
+	}
+	if same {
+		t.Fatal("翻轉之後旗的位置沒有跟著動——正對照失效，這個測試就守不住東西")
+	}
+	// 轉兩次要回到原樣，否則值對映或座標鏡射其中一邊寫錯了。
+	back := l.BannersFor(field, Rotate180(Rotate180(tiles)), nil)
+	if len(back) != len(plain) {
+		t.Fatalf("轉兩次的旗數 = %d，want %d", len(back), len(plain))
+	}
+	for i := range plain {
+		if back[i] != plain[i] {
+			t.Fatalf("轉兩次沒回到原樣：第 %d 支 %+v ≠ %+v", i, back[i], plain[i])
+		}
+	}
+}

@@ -220,13 +220,22 @@ type Banner struct {
 // rand 每支旗會被呼叫一次，對應原版的 `call sub_1ECE0 / and al, 3`。
 // 傳 nil 就一律用 0。
 func (l *Library) Banners(n int, rand func() int) []Banner {
+	return l.BannersFor(n, l.Tiles(n), rand)
+}
+
+// BannersFor 對**指定的一份格子**掃旗，用在戰場轉 180 度時
+// （`Rotate180` 之後的那一份，docs/spec/56）。
+//
+// ⚠ **旗要跟著轉。** 原版的 `sub_19E10` 掃的是**已經翻好**的緩衝區，
+// 所以旗的座標與圖塊值都是翻轉後的。拿沒翻的那一份掃，
+// 旗會插在鏡射位置——地形對得上、旗卻散在別處
+// （docs/playtest/40 §11）。
+func (l *Library) BannersFor(n int, cells [][]byte, rand func() int) []Banner {
 	t := l.TileSet(n)
-	off := FieldsBase + n*FieldSize + CellsOff
-	cells := l.mapData[off : off+NumCells]
 	var out []Banner
-	for y := 0; y < Height; y++ {
-		for x := 0; x < Width; x++ {
-			st := l.stacks[t][cells[y*Width+x]]
+	for y := 0; y < Height && y < len(cells); y++ {
+		for x := 0; x < Width && x < len(cells[y]); x++ {
+			st := l.stacks[t][cells[y][x]]
 			if len(st) == 0 {
 				continue
 			}

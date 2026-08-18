@@ -2,7 +2,9 @@
 
 **狀態：CONFORMED。三段算式都接上了，並用原版的許昌攻防戰驗過：
 `field` 區 87.8% → 46.1%、小地圖 41.5% → 13.4%
-（[`../playtest/40`](../playtest/40-tactical-parity.md) §4）。**
+（[`../playtest/40`](../playtest/40-tactical-parity.md) §4）。
+**⚠ 翻轉是**整份格子**的事：地形、小地圖、子圖塊與**旗**都要餵同一份
+（§3）。**
 
 - 日期：2026-08-17
 - 出處：[`../formats/07`](../formats/07-battle.md) §2.2／§2.3（`sub_1CAEB`
@@ -86,10 +88,17 @@ remake 的 `Sides[0]` 固定是攻方（城壁、突擊、優勢度都靠這個�
 | ③ | `internal/assets/battle`：`RotateGateX(x int)` |
 | 什麼時候轉 | `internal/state`：`beginTactical` 算出「玩家是不是守方」傳給 `TacticalSetup.Field` 回呼；野戰用 `battlefield.Select` 回的 `rotate` |
 | side 0 ＝ 玩家 | `tactical.Battle.SetPlayerSide`（換陣形原點與鏡射）；`beginTactical` 在玩家守方時呼叫。三格陣形線的 UI 一律取 `LineFor(0, …)` |
-| 套用點 | `cmd/wlgame/battle.go` 的 `buildField`（規則層的地形）與 `newBattleView`（小地圖與繪圖） |
+| 套用點 | `cmd/wlgame/battle.go` 的 `buildField`（規則層的地形）與 `newBattleView`（小地圖、子圖塊與**旗**）|
 
-**兩個套用點要用同一份轉好的格子**，否則畫面與規則層會不一致
-（兵走的路是規則層的、看起來的地形是繪圖層的）。
+**每一個從格子長出來的東西都要用同一份轉好的格子**，否則畫面與規則層
+會不一致（兵走的路是規則層的、看起來的地形是繪圖層的）。
+
+⭐ **旗也是從格子長出來的。** 原版的 `sub_19E10` 掃的是**已經翻好**的
+緩衝區，所以旗的座標與圖塊值都是翻轉後的。拿沒翻的那一份掃，
+地形會對得上而旗散在鏡射位置——這正是 `field` 區最後那 1,477 px 的
+主要成因（[`../playtest/40`](../playtest/40-tactical-parity.md) §11）。
+`BannersFor(場, 格子, 亂數)` 與 `SubTilesFor` 同一個形狀，就是為了讓
+「餵哪一份」在呼叫端一眼看得出來。
 
 ## 4. 驗證
 
@@ -101,6 +110,8 @@ remake 的 `Sides[0]` 固定是攻方（城壁、突擊、優勢度都靠這個�
 | 對原版 ✅ | [`../playtest/40`](../playtest/40-tactical-parity.md) §4。另外攻方那一張改動前後**逐像素相同**，證明沒有動到不該轉的那一半 |
 | 迴歸 ✅ | `TestNormalScenarioTacticalBattleTerminates`：玩家守城的正常劇本戰鬥要在 200,000 步內結束。**只換邊不翻轉時它會掛**（341 秒未結束），是這一組耦合最直接的守門員 |
 | 單元測試 ✅ | `TestSetPlayerSideFollowsPlayerNotAttacker`：兩種攻守下，玩家那一側都拿 `LineFor(0,…)` 且不鏡射 |
+| 單元測試 ✅ | `TestBannersFollowRotation`：同一張戰場翻轉前後的旗**位置不同**，而且轉兩次回到原樣 |
+| 對原版 ✅ | 旗跟著翻之後 `field` 從 0.84% 降到 **0.42%（NEAR）**，六支旗的紅布逐群對上（[`../playtest/40`](../playtest/40-tactical-parity.md) §11）|
 
 ## 5. 未解
 
