@@ -69,6 +69,19 @@ def md_files():
                 yield os.path.join(dirpath, n)
 
 
+def root_md_files():
+    """repo 根目錄的 markdown（WORKLIST／README／計畫書那一批）。
+
+    ⭐ 這些檔案**不進 `docs/` 的索引規則**（沒有狀態行、沒有日期欄），
+    但「密碼頁擋住 oracle」那條斷言檢查一樣要涵蓋它們——
+    WORKLIST.md 就同時留著 2026-08-12 的勘誤與三處未改的舊寫法，
+    因為檢查只走 `docs/`。**會復發的斷言，檢查範圍要跟著它跑。**
+    """
+    for n in sorted(os.listdir(ROOT)):
+        if n.endswith(".md") and os.path.isfile(os.path.join(ROOT, n)):
+            yield os.path.join(ROOT, n)
+
+
 def rel(path):
     return os.path.relpath(path, ROOT).replace(os.sep, "/")
 
@@ -182,9 +195,18 @@ def narrative_hits(path):
 # 錯的是「因此 oracle 過不去」。
 BLOCKED_BY_COPY_PROTECTION = re.compile(
     r"(防拷|密碼頁|密碼畫面)[^。\n]{0,20}(擋住|擋著|阻擋|停擺|過不去|用不了)"
-    r"|(被|受)(防拷|密碼頁)[^。\n]{0,6}(擋|阻)")
+    r"|(被|受)(防拷|密碼頁)[^。\n]{0,6}(擋|阻)"
+    # ⭐ 換個說法一樣是同一個斷言：「密碼保護使 parity 不可證實」
+    # 「密碼保護造成的對拍邊界」。WORKLIST.md 三處就是這樣躲過第一版的。
+    r"|(防拷|密碼保護|密碼頁)[^。\n]{0,24}"
+    r"(不可證實|無法證實|不能證實|邊界|限制|受限)")
 # 否定寫法（「不再是阻擋」「即可越過」）本身就是正確答案，不能誤報。
 NOT_BLOCKED = re.compile(r"不再|不是阻擋|不阻擋|不擋|已可|即可|可越過|越過|不會阻擋")
+
+# ⭐ 這兩份是**correction 本身的家**：`CLAUDE.md` §4.0 與 `CONTEXT.md` 的
+# 「已被推翻的斷言」表就是用來寫下「密碼頁不擋 oracle」的，
+# 裡面必然引用舊斷言的字樣。對它們套這條檢查只會得到永遠修不掉的誤報。
+ASSERTION_CHECK_EXEMPT = {"CLAUDE.md", "CONTEXT.md"}
 
 
 def check(docs):
@@ -235,16 +257,18 @@ def check(docs):
     # `CONTEXT.md` §0.1 都寫過了，**還是在四份文件裡復發**，包括
     # 同一個 session 剛寫的新筆記。原因是它長得像「已知的專案背景」，
     # 寫的時候不會想到要查——**這種斷言只有機器擋得住**。
-    for d in docs:
+    for path in [d.path for d in docs] + list(root_md_files()):
+        if os.path.basename(path) in ASSERTION_CHECK_EXEMPT:
+            continue
         try:
-            text = open(d.path, encoding="utf-8").read()
+            text = open(path, encoding="utf-8").read()
         except OSError:
             continue
         for n, line in enumerate(text.split("\n"), 1):
             if BLOCKED_BY_COPY_PROTECTION.search(line) \
                     and not NOT_BLOCKED.search(line):
                 problems.append(
-                    f"{rel(d.path)}:{n}：又把密碼頁寫成 oracle 的阻擋"
+                    f"{rel(path)}:{n}：又把密碼頁寫成 oracle 的阻擋"
                     f"（{line.strip()[:34]}…）——空白確認就會過，"
                     f"見 docs/playtest/18")
 

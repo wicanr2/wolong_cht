@@ -91,7 +91,23 @@
 | 據點被攻陷時內政官被遣回 | [`48-governor-returns-on-city-fall.md`](48-governor-returns-on-city-fall.md) | 已實作並有單測，兩則訊息也接了 |
 | 進言第四、五項（遷都／請求出陣）| [`49-advise-relocate-and-sortie.md`](49-advise-relocate-and-sortie.md) | 已接進畫面並留下截圖 |
 | 軍費直接扣資金 | [`50-corps-upkeep-charges-funds.md`](50-corps-upkeep-charges-funds.md) | 已改正並有單測；長跑數字跟著變 |
-| 同狀態畫面對拍 | [`90-same-state-parity.md`](90-same-state-parity.md) | 橫幅已對過；**四窗全開的整體對拍還沒跑** |
+| 顏色到不了滿刻度（6 bit DAC）| [`51-vga-dac-palette-scale.md`](51-vga-dac-palette-scale.md) | **READY**，尚未全面套用 |
+| 開局鏡頭與橫幅日期 | [`52-main-screen-camera-and-banner-date.md`](52-main-screen-camera-and-banner-date.md) | 已實作，主畫面逐像素對過 |
+| 據點圖塊跟著歸屬換 | [`53-city-tile-by-ownership.md`](53-city-tile-by-ownership.md) | 已實作，主畫面逐像素對過 |
+| 介面顏色一律查調色盤 | [`54-ui-colours-from-palette.md`](54-ui-colours-from-palette.md) | 已實作 |
+| 縮小地圖的視野框 | [`55-minimap-view-box.md`](55-minimap-view-box.md) | 已實作 |
+| 戰場轉 180 度 | [`56-battlefield-rotation.md`](56-battlefield-rotation.md) | 已實作；地形、小地圖、子圖塊與**旗**都餵同一份 |
+| 戰術的等角投影 | [`57-tactical-projection.md`](57-tactical-projection.md) | 已實作；地形走出來、物件算出來 |
+| 顯示格的深度範圍與 8 列的帶 | [`58-display-slot-depth-range.md`](58-display-slot-depth-range.md) | 已實作 |
+| 開場的常令 | [`59-battle-opening-orders.md`](59-battle-opening-orders.md) | 已實作並有單測 |
+| 戰場對白的壽命與每側一個框 | [`60-battle-talk-duration.md`](60-battle-talk-duration.md) | 已實作並有單測 |
+| 兵的開場體力 ＝ 軍團士氣 | [`61-soldier-initial-hp-from-morale.md`](61-soldier-initial-hp-from-morale.md) | 已實作；要與 `62` 一起看 |
+| 被換位的兵這一幀不動 | [`62-swapped-unit-skips-its-turn.md`](62-swapped-unit-skips-its-turn.md) | 已實作並有迴歸閘 |
+| 挨打的三幀硬直 | [`63-hit-stun.md`](63-hit-stun.md) | 已實作並有單測 |
+| 遷都之後說什麼 | [`64-capital-relocation-report.md`](64-capital-relocation-report.md) | 已實作並有單測；他國遷都要有外交官才報得回來 |
+| 退到畫面外的兵算生還 | [`65-retreated-soldiers-survive.md`](65-retreated-soldiers-survive.md) | 已實作並有單測 |
+| 同狀態畫面對拍（方法）| [`90-same-state-parity.md`](90-same-state-parity.md) | 主畫面五區逐像素相同；§4.1 記下「參考影格本身會有東西」 |
+| 戰場的逐區對拍（分區）| [`91-tactical-parity.md`](91-tactical-parity.md) | 九區裡六區逐像素相同，戰場區 0.17% |
 
 ## 怎麼加一份
 

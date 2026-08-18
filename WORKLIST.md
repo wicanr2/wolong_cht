@@ -1,8 +1,19 @@
 # 臥龍傳 remake 工作清單
 
-> 本檔是唯一的交接與待辦來源。自 2026-08-10 起不再建立或更新
-> `HANDOFF.md`；歷史交接內容已濃縮到本檔，深層證據請回查
-> `RESEARCH-LOG.md`、`CONTEXT.md` 與 `docs/`。
+> ⚠ **待辦看 [`CONTEXT.md`](CONTEXT.md) §7，不是這裡。**
+> 本檔是**按日期的完成紀錄**：每一節記下那一天封口了什麼、當時的邊界在哪。
+> 每一輪都會更新的「現在該做什麼」在 `CONTEXT.md` §7.0
+> （`CLAUDE.md` §10 也指向那裡）。
+>
+> 兩邊都寫「唯一來源」會讓接手的人拿到舊快照——本檔最後一次補紀錄是
+> 2026-08-17，而 `CONTEXT.md` §7 每一輪都動。
+>
+> 自 2026-08-10 起不再建立或更新 `HANDOFF.md`；歷史交接內容已濃縮到本檔，
+> 深層證據請回查 `RESEARCH-LOG.md`、`CONTEXT.md` 與 `docs/`。
+>
+> ⚠ **日期節裡的敘述是「當時的認知」**，其中有些後來被推翻
+> （例如密碼頁一度被當成 oracle 的阻擋，2026-08-12 測出**不擋**）。
+> 推翻紀錄集中在 `CONTEXT.md` §6。
 
 ## 目前目標
 
@@ -227,7 +238,7 @@
   寬度、標點、尾端空行與戰場命令；完整表與畫面連結見
   [`docs/playtest/14-m7-review.md`](docs/playtest/14-m7-review.md)。
 - [x] 本項完成的是 60 筆已定案校訂的人工審查，不把它擴大宣稱成 1,022 則全部重譯或
-  DOS/V 密碼保護下的同狀態逐像素 parity。
+  同狀態逐像素 parity。
 
 ### 2026-08-11 事件 2–5 完整 TALK 抽樣封口
 
@@ -250,7 +261,7 @@
 - [x] 完整 fixture、raw index、通知條件與代表幀見
   [`docs/playtest/16-event9-long-route.md`](docs/playtest/16-event9-long-route.md)。
 - [x] 本項封口的是可重跑的長程 queue／通知流程；完整原版自然劇本仍依使用者要求不跑，
-  並保留密碼保護造成的逐像素對拍邊界。
+  當時也沒有做同狀態逐像素對拍。
 
 ### 2026-08-11 推廣影片產出
 
@@ -347,7 +358,7 @@
 - YouTube 原版遊玩影片與 remake 推廣片已完成並排比較，並以 640×400 自然畫面保存
   raw pixel diff、差異圖與 24 秒研究對照片；這已封閉可見像素差異／畫面骨架的驗收，
   詳見 [`docs/promo/yt-remake-pixel-review.md`](docs/promo/yt-remake-pixel-review.md)。
-  DOS/V 密碼保護仍使「同日期／同輸入／同狀態」逐像素 parity 不可證實，不繞過密碼。
+  當時還沒做「同日期／同輸入／同狀態」的逐像素 parity。
 - Windows／macOS 目前有交叉建置／檔頭 gate，沒有目標作業系統原生 GUI runtime；三平台候選
   封裝已產出，但原生 GUI smoke 尚未完成。本輪推廣影片已產出，不取代目標平台驗收。
 - Android 目前只有已在模擬器驗證的觸控 shell debug APK；完整核心、自然 clock、事件流程、存檔／

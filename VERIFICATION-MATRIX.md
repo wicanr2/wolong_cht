@@ -142,7 +142,7 @@ AH／信賴度次要訊息、PC-98 數值視窗與長程路徑
 - [x] full test and static analysis in Docker（長程完整遊玩依使用者指示略過）
 - [x] `tools/index.py generate/check` and documentation links
 - [x] translation／encoding checks and 60 corrections review（`tools/m7_review.py`、TALK selftest、
-  runtime 寬度 gate 與 6 張 DOS/V modal 代表幀通過；完整逐像素原版對拍仍受密碼保護限制）
+  runtime 寬度 gate 與 6 張 DOS/V modal 代表幀通過；文字層的逐像素原版對拍尚未做）
 - [x] normal player path without debug hooks（策略／戰術短路徑已驗）
 - [x] writable save and pristine-original check
 - [x] video-oracle／remake screenshot review with metadata（嚴格同狀態逐像素 diff 仍未宣稱）
@@ -182,8 +182,9 @@ AH／信賴度次要訊息、PC-98 數值視窗與長程路徑
 - 事件 10：`World.QueueEvent10` 只建立已證實的 `(general<<8)|0x0A`／raw `Param`，
   使用完整 256 格受控注入口；`TestEvent10ProducerWritesRawTalkPayload` 固定 payload、
   前 64 格滿時的搜尋與輸入邊界。IDA 直接 caller 仍未找到原版自然 producer，保留負證據。
-- 自然 DOS/V：Docker／DOSBox／Xvfb 只能到「密碼輸入：第 09 頁」；沒有合法答案，
-  因此原版／remake 自然逐像素 gate 不誤判通過。remake 短 smoke 截圖是
+- 自然 DOS/V：當時 Docker／DOSBox／Xvfb 只跑到「密碼輸入：第 09 頁」就停下，
+  所以那一輪沒有做原版／remake 的自然逐像素 gate。
+  （**密碼頁本身不擋**——空白確認就進開場，`docs/playtest/18`。）remake 短 smoke 截圖是
   `docs/images/wlgame-dosv-natural-remake.png`，SHA-256 為
   `8420d97955be60af16da403544b47e84b3f44363ef75f867930e022d1bc2f916`。
 - 目標 GUI：Linux／Xvfb smoke 通過；Windows amd64 為 `PE32+ x86-64`，macOS amd64／
@@ -282,7 +283,7 @@ AH／信賴度次要訊息、PC-98 數值視窗與長程路徑
 tools/parity_gate.sh
 ```
 
-完整長程遊戲、DOS/V 密碼頁後的原版自然畫面，以及 Windows／macOS 原生 GUI 仍依
+完整長程遊戲、DOS/V 的原版自然畫面，以及 Windows／macOS 原生 GUI 仍依
 使用者決策不作為本輪小型 gate 的必要條件。
 
 ### 2026-08-11 三平台候選包與 Android 規劃（歷史起點）

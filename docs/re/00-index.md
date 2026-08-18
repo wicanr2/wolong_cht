@@ -114,6 +114,8 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 | [`43`](43-open-questions.md) | **缺口總表**：各文件「未解」表的集中版（生成的，`check.sh` 每次重出）|
 | [`42`](42-leaf-functions.md) | 戰術以外的 47 支葉節點；`INT 61h`、`byte_198A6` 位元圖、第三處自我修改碼 |
 | [`20`](20-ida-re-coverage-audit.md) | 手挑取樣的問題，與全量量測的差別 |
+| [`68`](68-t3-frontier-functions.md) | T3 那九支逐支讀完；順帶解出顯示格表頭 `+1`／`+3` 的分工 |
+| [`69`](69-t2-cross-reference.md) | T2 那 18 支逐支讀完；**新讀的與只是指路的分開標** |
 | [`34`](34-corps-status-bits.md) §3 | IDAPython 的用法與兩個仍然成立的坑 |
 
 ### 這個專案反覆踩到的四種錯
@@ -132,11 +134,17 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 
 ## 8. 現況與缺口
 
-**739 支函式的 T4 全部歸零**——每一支都有 `docs/re/` 層級的記錄。
+**四個分級全部收斂到 T1**——739 支函式每一支都有 `docs/re/` 層級的記錄。
+最後兩批是 T3 九支（441 bytes，[`68`](68-t3-frontier-functions.md)）
+與 T2 十八支（714 bytes，[`69`](69-t2-cross-reference.md)）。
 
-> **T4 ＝ 0 不等於「全部讀懂了」。** T1 只保證有人寫過；
+> **收斂到 T1 不等於「全部讀懂了」。** T1 只保證**有人寫過**；
 > 模組全圖的角色標籤是**強證據**不是 confirmed，各文件的「未解」表
 > 才是真正的缺口清單。
+>
+> ⚠ T2 那一批**多半只是登記**：18 支裡有 5 支的機制早就逐行解過，
+> 只是解釋寫在 `docs/spec/` 或 `docs/mechanics/`，分級卻因為
+> 「`docs/re/` 沒提到符號名」算成未讀（[`69`](69-t2-cross-reference.md) §1）。
 
 模組級全圖見
 [`35`](35-strategy-ui-module-map.md)（戰略 UI）、
@@ -144,7 +152,7 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 [`37`](37-graphics-and-runtime-module-map.md)（圖庫與 C runtime）、
 [`38`](38-strategy-core-module-map.md)（指令樹、到站處理、月結）。
 
-**數字是 2026-08-14 的快照，要現況一律重跑**
+**數字是 2026-08-18 的快照，要現況一律重跑**
 （`tools/py.sh tools/re_coverage.py workplace/ida/dosv/census/census.tsv`）。
 
 ## 9. 怎麼加一份新筆記

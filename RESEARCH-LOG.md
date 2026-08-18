@@ -1485,8 +1485,9 @@ SHA-256 `fd7cbfa4cf2d4e0773a33181c4c4ea7944020552f5facc847750f69f670fa72b`。
 ### DOS/V 自然畫面與目標平台 GUI
 
 - Docker／DOSBox／Xvfb 固定 `machine=vgaonly`、`cputype=486`、`cycles=fixed 20000`
-  執行 DOS/V `START`，自然啟動停在「密碼輸入：第 09 頁」。沒有合法密碼頁答案，
-  因此不繞過複製保護、不把原版密碼頁與 remake 策略畫面宣稱為同狀態 parity。
+  執行 DOS/V `START`，自然啟動停在「密碼輸入：第 09 頁」，那一輪就沒有再往下走，
+  也沒有把原版密碼頁與 remake 策略畫面宣稱為同狀態 parity。
+  （**後來測出密碼頁不擋**：四格留白按確定就進開場，`docs/playtest/18`。）
 - remake 使用 DOS/V `workplace/orig/dosv`、倚天字型、`scenario=0`、`player=0`、
   `seed=17`、`speed=0`，30 幀輸出 `docs/images/wlgame-dosv-natural-remake.png`；
   SHA-256 `8420d97955be60af16da403544b47e84b3f44363ef75f867930e022d1bc2f916`。
