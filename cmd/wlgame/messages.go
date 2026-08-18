@@ -219,6 +219,26 @@ func (g *game) noticePortraitPage(notice state.TalkNotice) int {
 	return g.playerLordPortrait()
 }
 
+// noticeTalkIndex 把**組編號**展開成實際索引。
+//
+// `TALK.DAT` 索引 ≥ `0x196` 是八格一組，`sub_18810` 以說話者的
+// `+0x1E` 選組內第幾個（docs/re/25 §1）。
+//
+// ⚠ 展開用的是**原始** `+0x1E`，不是 `talkVariant()` 收斂過的 0–2：
+// 那個「≥3 減 3」只適用 `sub_13C99` 的君主路徑，而臣下型的變體就在 3–7。
+// 收斂過會讓外交官的回報變成君主的命令句。
+func (g *game) noticeTalkIndex(notice state.TalkNotice) int {
+	if notice.Index < talkVariantGroupBase {
+		return notice.Index
+	}
+	variant := 0
+	if g != nil && g.world != nil &&
+		notice.General >= 0 && notice.General < len(g.world.Generals) {
+		variant = g.world.Generals[notice.General].TalkVariant
+	}
+	return resolveBattleTalkIndex(notice.Index, variant)
+}
+
 func (g *game) enqueueTalkNotice(notice state.TalkNotice) {
 	vars := make(map[byte]string, 6)
 	// IDA 線性位址 0001097E 的原版 handler 只消耗一個 formatter
@@ -265,7 +285,7 @@ func (g *game) enqueueTalkNotice(notice state.TalkNotice) {
 	if notice.NoPortrait {
 		portrait = -1
 	}
-	g.enqueueTalkWithPortrait(notice.Index, vars, portrait)
+	g.enqueueTalkWithPortrait(g.noticeTalkIndex(notice), vars, portrait)
 }
 
 func (g *game) drawMessage(screen *ebiten.Image) {

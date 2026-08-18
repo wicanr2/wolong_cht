@@ -23,8 +23,8 @@
 | 程式碼理解 | 227 | 220 | 7 | 0 |
 | 驗收 | 68 | 58 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 131 | 124 | 7 | 0 |
-| **合計** | **530** | 503 | 26 | 1 |
+| 其他 | 133 | 126 | 7 | 0 |
+| **合計** | **532** | 505 | 26 | 1 |
 
 ## 2.1 規則正確性（50 條）
 
@@ -450,7 +450,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（131 條）
+## 2.6 其他（133 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -579,6 +579,8 @@
 | [`spec/61-soldier-initial-hp-from-morale.md`](../spec/61-soldier-initial-hp-from-morale.md) | 大將的體力怎麼掉 | 原版那一格在 20 秒內從 200 掉到 140；remake 第 61 步還是滿的。兩邊的時刻本來就不同，**掉法還沒對過** | 靜態 |
 | [`spec/63-hit-stun.md`](../spec/63-hit-stun.md) | `+0x13` ← 8 | `sub_1B618` 寫、`sub_1B6BC` 不寫。那個欄位誰讀還沒查 | 靜態 |
 | [`spec/63-hit-stun.md`](../spec/63-hit-stun.md) | 倒地動畫（§1.2） | 4 幀之後 `sub_1B4B8` 收掉，remake 直接把 `Alive` 設成 false | 靜態 |
+| [`spec/64-capital-relocation-report.md`](../spec/64-capital-relocation-report.md) | `sub_15E60` | 玩家那條路在說完之後多呼叫一支，還沒讀 | 靜態 |
+| [`spec/64-capital-relocation-report.md`](../spec/64-capital-relocation-report.md) | 首都被打下來的被動遷都 | 走 `sub_14DF0`／訊息 30，與這一支不同路（`internal/state/corps.go` 的 `Relocated`） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 | 靜態 |

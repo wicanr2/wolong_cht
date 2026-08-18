@@ -815,6 +815,13 @@ func (w *World) StormAreaSnapshot() (economy.StormArea, bool) {
 // Go 結構的零值把「未提供」誤當成原版 word 0。
 // 這裡不直接保存展開後文字，讓 Big5 round-trip 與 UI 排版仍由資產／呈現層
 // 負責，也避免把尚未解出的 formatter 參數誤升格成語意。
+// CapitalMovedTalkBase 是遷都之後那一句的**組編號**（不是索引）。
+//
+// `sub_133FD` 對兩條路都傳 `cx = 0x1A4`，展開後是 518–525
+// （docs/spec/64）：0–2 是自國君主下令，3–7 是他國遷都的情報回報。
+// 說話者不同，取到的變體就不同——展開要用**原始** `+0x1E`。
+const CapitalMovedTalkBase = 0x1A4
+
 type TalkNotice struct {
 	Index                 int
 	City                  int

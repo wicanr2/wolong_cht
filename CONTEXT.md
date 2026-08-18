@@ -440,7 +440,7 @@ M6 的版面幾何對得上原版，但畫的內容還有缺。**
 | ⭐ 兵的**開場體力 ＝ 軍團士氣**（`sub_19B6D`），`MaxHP` 100 是回復上限不是開場值 | [`spec/61`](docs/spec/61-soldier-initial-hp-from-morale.md) |
 | ⭐ 被換位的兵**這一幀不動**（`sub_1ADC8` 的 `test al, 40h`）——少了它，圍著打會一次也打不到 | [`spec/62`](docs/spec/62-swapped-unit-skips-its-turn.md) |
 | ⭐ 挨打之後有**三幀硬直**（`sub_1B618` 寫 `[di+1]=2` ＋ bit 6），而且「剛被打中」的旗標**撐到硬直結束才清**——它同時是換位的擋條件 | [`spec/63`](docs/spec/63-hit-stun.md) |
-| ⭐ 別的勢力遷都要**有外交官駐在那裡**才收得到報告（`sub_133FD` 的 `[si+2Ah] == 0xFF → 一句話都不報`）——外交官也是情報站 | [`re/69`](docs/re/69-t2-cross-reference.md) §2.4、[`mechanics/50`](docs/mechanics/50-diplomacy.md) §9.6 |
+| ⭐ 別的勢力遷都要**有外交官駐在那裡**才收得到報告（`sub_133FD` 的 `[si+2Ah] == 0xFF → 一句話都不報`）——外交官也是情報站 | [`spec/64`](docs/spec/64-capital-relocation-report.md)、[`re/69`](docs/re/69-t2-cross-reference.md) §2.4 |
 | 顯示格表頭 `+1`（含物件的高度）與 `+3`（只有地形）的分工 | [`re/68`](docs/re/68-t3-frontier-functions.md) §2.1 |
 | 戰場側欄逐像素對過：陣形列／指令面板／`▶▶` 列三區 PASS | [`spec/31`](docs/spec/31-tactical-sidebar.md)、[`playtest/40`](docs/playtest/40-tactical-parity.md) |
 
@@ -456,9 +456,8 @@ INT 33 的範圍變成整個世界（一個主機像素 ≈ 9.6 個遊戲像素�
 
 | # | 工作 | 為什麼現在做 | 下手點 |
 |---:|---|---|---|
-| **1** | **AI 遷都的報告** | 剛解出來的機制沒有實作端：別的勢力遷都時原版走 `sub_133FD`，**沒有外交官就一句話都不報**（[`mechanics/50`](docs/mechanics/50-diplomacy.md) §9.6）。remake 只有玩家自己遷都那一半 | 訊息 #57 ＋ #521–525，閘是勢力 `+0x2A`；接在 `internal/state` 的事件 8 |
-| **2** | **`field` 剩下的 0.84%** | 1,477 px 散在各處。⚠ 先確認有多少是**時刻差**——`sb-enemy` 那 44 px 已經證實是（原版那一格打了 20 秒）| 逐塊看，先排除部隊的次像素位置差 |
-| **3** | **倒地動畫** | 血歸零時原版改走另一條（`+0x00` 只留 bit 4、設 bit 0、`[di+1]=4`），數完四幀由 `sub_1B4B8` 收掉；remake 直接把 `Alive` 設成 false（[`spec/63`](docs/spec/63-hit-stun.md) §5）| 與硬直是同一個計時器，接法一樣 |
+| **1** | **`field` 剩下的 0.84%** | 1,477 px 散在各處。⚠ 先確認有多少是**時刻差**——`sb-enemy` 那 44 px 已經證實是（原版那一格打了 20 秒）| 逐塊看，先排除部隊的次像素位置差 |
+| **2** | **倒地動畫** | 血歸零時原版改走另一條（`+0x00` 只留 bit 4、設 bit 0、`[di+1]=4`），數完四幀由 `sub_1B4B8` 收掉；remake 直接把 `Alive` 設成 false（[`spec/63`](docs/spec/63-hit-stun.md) §5）| 與硬直是同一個計時器，接法一樣 |
 
 > ⭐ **這一輪最有用的一招**：差異的**形狀會騙人**。整片 99% 不同可能只是
 > 調色盤刻度差 4%；「少畫了一個徽記」可能是整張圖塊換掉了。

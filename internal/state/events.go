@@ -387,12 +387,28 @@ func (w *World) dispatchQueuedEvent(ev *Event) {
 		if source < 0 || source >= numFactions || source == w.Player || !w.Factions[source].Alive {
 			return
 		}
-		if next := w.relocateCapital(source); next != capitalNone {
-			if ev.Relocated == nil {
-				ev.Relocated = map[int]int{}
-			}
-			ev.Relocated[source] = next
+		next := w.relocateCapital(source)
+		if next == capitalNone {
+			return
 		}
+		if ev.Relocated == nil {
+			ev.Relocated = map[int]int{}
+		}
+		ev.Relocated[source] = next
+		// ⭐ **沒有外交官就一句話都不報**（`sub_133FD` 的
+		// `mov ch, [si+2Ah] / cmp ch, 0FFh / jz retn`，docs/spec/64 §1.2）：
+		// 別的勢力遷都是一則情報，不是公開事實。
+		envoy := w.Factions[source].Diplomat
+		if envoy == noFaction || envoy < 0 || envoy >= len(w.Generals) {
+			return
+		}
+		// #57「駐{3}勢力的外交官{1}大人前來報告。」
+		appendDiplomacyReportNotice(ev, 0x39, source, envoy, -1)
+		// 0x1A4 是**組編號**，由呈現層以外交官的原始說話型展開成 521–525。
+		ev.TalkNotices = append(ev.TalkNotices, TalkNotice{
+			Index: CapitalMovedTalkBase, City: next, Faction: source,
+			General: envoy, Amount: -1,
+		})
 	case 9:
 		// sub_13485 先把 AX（完整事件 Code）右移三次後加上
 		// General 基址；因此高 byte 是武將索引，低 byte 9 不是勢力。

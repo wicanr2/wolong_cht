@@ -27,12 +27,22 @@ const (
 	battleTalkDuration = 60
 )
 
+// talkVariantGroupBase 是 TALK.DAT 開始「八格一組」的門檻（`sub_1075B`
+// 的 `cmp cx, 196h`）。之後的索引是**組編號**，不是訊息本身。
+const talkVariantGroupBase = 0x196
+
 // resolveBattleTalkIndex 重現 sub_1075B 的 base／variant 索引公式。
 func resolveBattleTalkIndex(base, variant int) int {
-	if base < 0x196 {
+	if base < talkVariantGroupBase {
 		return base
 	}
-	return 0x196 + ((base - 0x196) << 3) + variant
+	if variant < 0 {
+		variant = 0
+	}
+	if variant > 7 {
+		variant = 7
+	}
+	return talkVariantGroupBase + ((base - talkVariantGroupBase) << 3) + variant
 }
 
 // battleTalkSlots 是**每一側一個框**的對白狀態。

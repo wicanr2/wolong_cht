@@ -202,6 +202,7 @@
 | [`docs/spec/61-soldier-initial-hp-from-morale.md`](spec/61-soldier-initial-hp-from-morale.md) | 61 — 兵的開場體力 ＝ 軍團士氣 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/62-swapped-unit-skips-its-turn.md`](spec/62-swapped-unit-skips-its-turn.md) | 62 — 被換位的兵，這一幀不動 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/63-hit-stun.md`](spec/63-hit-stun.md) | 63 — 被打中的兵有硬直：當幀 ＋ 之後兩幀都不動 | CONFORMED。 | 2026-08-18 |
+| [`docs/spec/64-capital-relocation-report.md`](spec/64-capital-relocation-report.md) | 64 — 遷都之後說什麼：自國君主下令，他國要有外交官才報得回來 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | CONFORMED。管線接起來了，也對原版跑過一輪 （[../playtest/37](../playtest/37… | 2026-08-15 |
 | [`docs/spec/91-tactical-parity.md`](spec/91-tactical-parity.md) | 91 — 戰場的逐區對拍：分區、同狀態怎麼達成 | DRAFT。分區與判定沿用 docs/spec/90，差別在 | 2026-08-17 |
 

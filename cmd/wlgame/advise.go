@@ -6,6 +6,7 @@ import (
 
 	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/rules/persuasion"
+	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 )
 
@@ -353,10 +354,39 @@ func (g *game) beginRelocate(node int) {
 	ok := g.world.AdviseRelocateAccepted(node)
 	g.sayVerdict(adviseRelocateTalkBase, ok)
 	if ok && g.world.AdviseRelocate(node) {
+		// 搬成之後君主再講一句（`sub_133FD` 的玩家分支，docs/spec/64 §1.1）：
+		// 組編號 0x1A4 配**君主自己的原始說話型**，主公型落在 0–2。
+		g.sayCapitalMoved(node)
 		g.lastEvent = "遷都 " + big5(g.world.Cities[node].Name)
 	} else {
 		g.lastEvent = "遷都：君主不同意"
 	}
+}
+
+// sayCapitalMoved 是遷都定案之後君主講的那一句（docs/spec/64 §1.1）。
+// 說話者與肖像都是**君主**（原版 `[si+1]` → `[bx+425Eh]`／`[bx+4241h]`）。
+func (g *game) sayCapitalMoved(node int) {
+	if g == nil || g.world == nil || g.world.Player < 0 ||
+		g.world.Player >= len(g.world.Factions) {
+		return
+	}
+	lord := g.world.Factions[g.world.Player].Lord
+	if lord < 0 || lord >= len(g.world.Generals) {
+		return
+	}
+	city := ""
+	if node >= 0 && node < len(g.world.Cities) {
+		city = big5(g.world.Cities[node].Name)
+	}
+	// #519 的 {4} 是軍師的名字（原版 marker \\4，00010939）。
+	advisorName := ""
+	if a := g.world.Factions[g.world.Player].Advisor; a >= 0 && a < len(g.world.Generals) {
+		advisorName = big5(g.world.Generals[a].Name)
+	}
+	gen := g.world.Generals[lord]
+	g.enqueueTalkWithPortrait(
+		resolveBattleTalkIndex(state.CapitalMovedTalkBase, gen.TalkVariant),
+		map[byte]string{'2': city, '6': "", '4': advisorName}, gen.Portrait)
 }
 
 // beginSortie 是進言第五項：兩道閘都過君主才親自出陣。

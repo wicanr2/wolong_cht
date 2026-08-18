@@ -263,10 +263,7 @@ cmp ch, 0FFh / jz retn                  ; ★ 沒有外交官 → 一句話都�
 這讓外交官的定位比說明書寫的多一層：它不只是外交行動的前置佈署（§3），
 也是**看得見那個國家在做什麼**的條件。
 
-| remake 現況 | |
-|---|---|
-| 玩家遷都 | `World.AdviseRelocate`（`internal/state/advise.go`）|
-| **AI 遷都的報告** | ⛔ 還沒接，也還沒有外交官這道閘 |
+兩條路的實作與訊息對照見 [`../spec/64`](../spec/64-capital-relocation-report.md)。
 
 ## 10. 還沒解的
 

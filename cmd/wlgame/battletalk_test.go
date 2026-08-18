@@ -6,6 +6,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
 	"github.com/wicanr2/wolong_cht/internal/assets/text"
 	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
+	"github.com/wicanr2/wolong_cht/internal/state"
 )
 
 func TestResolveBattleTalkIndex(t *testing.T) {
@@ -170,5 +171,34 @@ func TestBattleTalkDurationMatchesOriginal(t *testing.T) {
 	}
 	if battleTalkDuration == 0x14 {
 		t.Fatal("對白框用了門強度條的 0x14——那是另一個計時器")
+	}
+}
+
+// TestNoticeExpandsGroupIndexByTalkVariant 釘住通知的組編號展開。
+//
+// TALK.DAT 索引 ≥ 0x196 是八格一組，`sub_18810` 用說話者的**原始**
+// `+0x1E` 選組內第幾個（docs/re/25 §1）。遷都那一組（0x1A4 → 518–525）
+// 剛好橫跨主公型（0–2）與臣下型（3–7）——收斂成 0–2 會把外交官的
+// 回報變成君主的命令句（docs/spec/64 §3）。
+func TestNoticeExpandsGroupIndexByTalkVariant(t *testing.T) {
+	g := &game{world: &state.World{}}
+	g.world.Generals[0].TalkVariant = 1 // 主公型
+	g.world.Generals[1].TalkVariant = 5 // 臣下型
+
+	for _, tc := range []struct {
+		name   string
+		notice state.TalkNotice
+		want   int
+	}{
+		{"門檻以下不展開", state.TalkNotice{Index: 0x39, General: 1}, 0x39},
+		{"君主下令", state.TalkNotice{Index: state.CapitalMovedTalkBase, General: 0}, 519},
+		{"外交官回報", state.TalkNotice{Index: state.CapitalMovedTalkBase, General: 1}, 523},
+		{"沒有說話者取第 0 格", state.TalkNotice{Index: state.CapitalMovedTalkBase, General: -1}, 518},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			if got := g.noticeTalkIndex(tc.notice); got != tc.want {
+				t.Fatalf("展開 = %d，want %d", got, tc.want)
+			}
+		})
 	}
 }
