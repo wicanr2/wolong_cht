@@ -91,6 +91,7 @@
 | 據點被攻陷時內政官被遣回 | [`48-governor-returns-on-city-fall.md`](48-governor-returns-on-city-fall.md) | 已實作並有單測，兩則訊息也接了 |
 | 進言第四、五項（遷都／請求出陣）| [`49-advise-relocate-and-sortie.md`](49-advise-relocate-and-sortie.md) | 已接進畫面並留下截圖 |
 | 軍費直接扣資金 | [`50-corps-upkeep-charges-funds.md`](50-corps-upkeep-charges-funds.md) | 已改正並有單測；長跑數字跟著變 |
+| 結局：存活勢力數歸一 | [`30-victory.md`](30-victory.md) | 判定已實作並驗過；**結局的過場與訊息未做** |
 | 顏色到不了滿刻度（6 bit DAC）| [`51-vga-dac-palette-scale.md`](51-vga-dac-palette-scale.md) | **READY**，尚未全面套用 |
 | 開局鏡頭與橫幅日期 | [`52-main-screen-camera-and-banner-date.md`](52-main-screen-camera-and-banner-date.md) | 已實作，主畫面逐像素對過 |
 | 據點圖塊跟著歸屬換 | [`53-city-tile-by-ownership.md`](53-city-tile-by-ownership.md) | 已實作，主畫面逐像素對過 |

@@ -23,8 +23,8 @@
 | 程式碼理解 | 227 | 220 | 7 | 0 |
 | 驗收 | 69 | 59 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 135 | 128 | 7 | 0 |
-| **合計** | **535** | 508 | 26 | 1 |
+| 其他 | 136 | 129 | 7 | 0 |
+| **合計** | **536** | 509 | 26 | 1 |
 
 ## 2.1 規則正確性（50 條）
 
@@ -128,7 +128,7 @@
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
 | [`re/00-index.md`](../re/00-index.md) | `43` | **缺口總表**：各文件「未解」表的集中版（生成的，`check.sh` 每次重出） | 靜態 |
-| [`re/00-index.md`](../re/00-index.md) | 739 支函式的 T4 全部歸零**——每一支都有 `docs/re/` 層級的記錄。 | （未解小節內文） | 靜態 |
+| [`re/00-index.md`](../re/00-index.md) | 四個分級全部收斂到 T1**——739 支函式每一支都有 `docs/re/` 層級的記錄。 | （未解小節內文） | 靜態 |
 | [`re/01-first-recon.md`](../re/01-first-recon.md) | 是加了新過場、還是把原本的長段拆開，未解。 | （散句） | 靜態 |
 | [`re/01-first-recon.md`](../re/01-first-recon.md) | `YNMOUSE.COM` | pc98 / 滑鼠驅動。dosv 版把它併進 `KI.EXE`？未驗 | 靜態 |
 | [`re/01-first-recon.md`](../re/01-first-recon.md) | `PASS.MAP`／`PASS.SCH` | dosv / **PC-98 沒有**。關隘資料，移植時新增或改名。未解 | 靜態 |
@@ -451,7 +451,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（135 條）
+## 2.6 其他（136 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -469,6 +469,7 @@
 | [`spec/00-index.md`](../spec/00-index.md) | 底列六格是選部隊 | `33-squad-selection.md` / 已實作並有單測；命令圖示的來源段未定案 | 靜態 |
 | [`spec/00-index.md`](../spec/00-index.md) | 一覽表的欄位與版面 | `38-list-windows.md` / 四個家族照原版重做；捲軸未解 | 靜態 |
 | [`spec/00-index.md`](../spec/00-index.md) | 事件場景上誰在說話 | `42-event-scene-speakers.md` / 兩個框已實作；結果階段的上框未解 | 靜態 |
+| [`spec/00-index.md`](../spec/00-index.md) | 顏色到不了滿刻度（6 bit DAC） | `51-vga-dac-palette-scale.md` / **READY**，尚未全面套用 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | `sub_14194`／`sub_14269` | 內政與災害 marker 的細節在別的規格（`docs/mechanics/40`），本規格只保證呼叫順序 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 據點換手之後 `+0x00` 低 4 位會不會跟著變 | `sub_1890A` 靜態讀過，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 玩家據點求援的喇叭聲（`sub_10CDE`） | 呈現層未接 | 靜態 |

@@ -461,8 +461,19 @@ INT 33 的範圍變成整個世界（一個主機像素 ≈ 9.6 個遊戲像素�
 
 | # | 工作 | 為什麼現在做 | 下手點 |
 |---:|---|---|---|
-| **1** | **旗桿旁的木樁**（96 px）| `field` 剩下 307 px，其中 **211 px 原理上消不掉**（旗的揮舞相位 116 ＋ **原版錄影裡的滑鼠游標** 95），真正的缺口只剩木樁 88 ＋ 一小塊 8（[`playtest/40`](docs/playtest/40-tactical-parity.md) §13）**已經確認木樁有進顯示格、深度也在範圍內**（`0x7d` 在 (29..30,19..21) 五格的 z=4，`row=1 anchor=1` 的 `z1=4`）。差的是切片落到哪一段——`drawDisplaySlice` 的四組 `(srcY,dstY)` 與 `unfoldDisplayTile` 的四象限要一起算（[`playtest/40`](docs/playtest/40-tactical-parity.md) §13.1）|
-| **2** | **倒地動畫** | 血歸零時原版改走另一條（`+0x00` 只留 bit 4、設 bit 0、`[di+1]=4`），四幀之間由 `sub_1B360` 畫倒地圖、數完由 `sub_1B4B8(ah=1)` 收掉；remake 直接把 `Alive` 設成 false | 圖號已解：`0x168`（側 0）／`0x21C`（側 1）＋ 兵種組（大將騎馬 +0、弓 +4、步 +8）＋ 後兩幀再 +2。**純呈現**，帳已經由 [`spec/65`](docs/spec/65-retreated-soldiers-survive.md) 分開了 |
+| **1** | **六個編成位置的效果** | 名稱有了、效果沒有（[`mechanics/10`](docs/mechanics/10-strategy.md)、[`20`](docs/mechanics/20-military.md)）。這是玩家最有感的一條規則——編成怎麼影響戰力——而規則層現在等於沒有它 | 從 `sub_14698`（編成分配）往下追戰力換算；`docs/spec/21` 已解分配，缺的是**效果** |
+| **2** | **旗桿旁的木樁**（96 px）| `field` 唯一真正的缺口。已確認木樁進了顯示格、深度也在範圍內（[`playtest/40`](docs/playtest/40-tactical-parity.md) §13.1）| 差的是切片落到哪一段：`drawDisplaySlice` 的四組 `(srcY,dstY)` 與 `unfoldDisplayTile` 的四象限要一起算 |
+| **3** | **六階外交的門檻** | 交友關係六階已解，**升降門檻**還沒逐條對（[`mechanics/50`](docs/mechanics/50-diplomacy.md)）| `sub_13E8E`（外交官每小時）已解，缺的是階與階之間的邊界值 |
+| **4** | **結局的呈現** | 判定已 CONFORMED（[`spec/30`](docs/spec/30-victory.md)），但 `END_S*` 過場與 `#0x4B`／`#0x197` 兩則訊息沒做——**遊戲現在贏了沒有結局畫面** | `END_S*.DAT` 的格式已解（M1），缺的是接線與訊息內容 |
+| **5** | **倒地動畫** | 純呈現。圖號已解：`0x168`（側 0）／`0x21C`（側 1）＋ 兵種組（大將騎馬 +0、弓 +4、步 +8）＋ 後兩幀再 +2（`sub_1B360`）| 帳已由 [`spec/65`](docs/spec/65-retreated-soldiers-survive.md) 分開，這一項只差畫 |
+| **6** | **六份 READY 規格收尾** | `12`（各視窗內部排版仍有估值）、`32`（右鍵提前收掉未接）、`34`（最高速上限是 remake 差異）、`35`（22 勢力選擇視窗是簡化版）、`51`（DAC 算式未全面套用）、`91`（DRAFT）| 每一份的「remake 實作」欄留白處就是缺口 |
+| **7** | **Windows／macOS 原生 GUI 實機驗收** | M8 唯一的閘。三平台候選包已產出，但沒有在目標作業系統跑過 | 需要實機或 VM，不是 Docker 能代的 |
+| **8** | **Android 完整核心接入** | M9。觸控 shell 原型 APK 已產出並在模擬器跑過，遊戲核心還沒接 | [`docs/mobile/android-plan.md`](docs/mobile/android-plan.md) |
+
+> ⚠ **`sb-enemy` 那 44 px 不在這張表上**：兩條計量條都頂在上限，
+> 原版那一格已經打了 20 秒——要對就得讓兩邊的**時刻**對齊，不是改算式。
+> 同理 `field` 剩下的 211 px（旗的揮舞相位、原版錄影裡的滑鼠游標）
+> 也標明不可消（[`playtest/40`](docs/playtest/40-tactical-parity.md) §13）。
 
 > ⭐ **這一輪最有用的一招**：差異的**形狀會騙人**。整片 99% 不同可能只是
 > 調色盤刻度差 4%；「少畫了一個徽記」可能是整張圖塊換掉了。
