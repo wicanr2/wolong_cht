@@ -21,7 +21,10 @@ DIST = Path(
     os.environ.get("WOLONG_DIST_ROOT", str(REPO / "dist-all"))
 ).resolve()
 WORK = DIST / ".work"
-RELEASE_VERSION = "wolong-remake-20260812"
+# 版本字串。預設維持 20260812 那一次的三平台交付，單獨重打 AppImage 時
+# 由 `WOLONG_RELEASE_VERSION` 覆寫——**兩批產物的名字要分得開**，
+# 否則 dist-all 裡會出現同名卻不同建置的檔案。
+RELEASE_VERSION = os.environ.get("WOLONG_RELEASE_VERSION", "wolong-remake-20260812")
 PROMO_FILES = (
     "wolong-remake-trailer.mp4",
     "wolong-remake-classic-revival.mp4",
