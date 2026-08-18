@@ -268,3 +268,73 @@ func TestCellOffsetIsNotTwoProjections(t *testing.T) {
 		t.Error("鏡頭是奇數時兩種算法竟然一致——這個測試沒有鑑別力")
 	}
 }
+
+// TestDisplayBandIsEightRows 釘住 `sub_1E0E1` 的 `mov cx, 8`：一帶是 **8 列**。
+//
+// 這是實際踩到的 bug：先前用 `isoRowPx`（16）當帶高，下一帶的內容會被
+// 上一帶蓋掉一半，城壁的面上多出一排亮邊。四帶要**剛好**鋪滿 32 列——
+// 這個算術檢查比「看起來對」可靠（docs/spec/58 §5）。
+func TestDisplayBandIsEightRows(t *testing.T) {
+	if displayBandRows != 8 {
+		t.Fatalf("一帶 %d 列，預期 8（sub_1E0E1 的 mov cx, 8）", displayBandRows)
+	}
+	if got := displayBandRows * 4; got != battle.SubTileH {
+		t.Fatalf("四帶共 %d 列，預期鋪滿 %d", got, battle.SubTileH)
+	}
+	// 四帶的來源列與目的列：0x30/0x20/0x10/0 → 源 24／16／8／0 → 目 0／8／16／24
+	for i, tc := range [4][2]int{{24, 0}, {16, 8}, {8, 16}, {0, 24}} {
+		if tc[0]+tc[1] != battle.SubTileH-displayBandRows {
+			t.Fatalf("第 %d 帶 (源 %d, 目 %d) 不符 `di = 0x30 − dx` 的鏡射", i, tc[0], tc[1])
+		}
+	}
+}
+
+// TestDisplaySlotHeightAndStart 釘住 `sub_1DD22` 寫在表頭的兩個欄位：
+// 高度看**任何**非零 unit、起始只看**小 unit**（< 0x20），兩者都取最大的 z，
+// 而且單位是 2z（docs/spec/58 §2）。
+func TestDisplaySlotHeightAndStart(t *testing.T) {
+	var grid battleDisplayGrid
+	set := func(z, raw int) {
+		grid[3][5][z][0] = battleDisplaySlot{set: true,
+			entry: battleDisplayEntry{raw: raw}}
+	}
+	set(0, 0x40) // 大
+	set(1, 0x10) // 小
+	set(2, 0)    // 空的不算
+	set(3, 0x80) // 大
+	info := makeDisplayInfo(&grid)
+	if got := info[3][5].height; got != 2*3 {
+		t.Fatalf("高度 = %d，預期 %d（最高的非零 unit 在 z=3）", got, 2*3)
+	}
+	if got := info[3][5].start; got != 2*1 {
+		t.Fatalf("起始 = %d，預期 %d（唯一的小 unit 在 z=1）", got, 2*1)
+	}
+	// 一格都沒有 → 兩個欄位都是 0（原版是 `mov word ptr [si+1], 0`）
+	if info[0][0].height != 0 || info[0][0].start != 0 {
+		t.Fatalf("空格的表頭不是 0：%+v", info[0][0])
+	}
+}
+
+// TestDisplayDepthRangeFollowsNeighbours 釘住範圍算式：從自己的起始深度畫到
+// **自己與四個斜鄰格之中最高的**那一層（含頭含尾，docs/spec/58 §3）。
+func TestDisplayDepthRangeFollowsNeighbours(t *testing.T) {
+	var info [battleDisplayGridRows][battleDisplayGridCols]battleDisplaySlotInfo
+	const row, anchor = 5, 9
+	info[row][anchor] = battleDisplaySlotInfo{height: 2 * 1, start: 2 * 1}
+	info[row][anchor+1] = battleDisplaySlotInfo{height: 2 * 4} // 最高的鄰居
+	info[row+1][anchor-1] = battleDisplaySlotInfo{height: 2 * 2}
+	z0, z1 := displayDepthRange(&info, row, anchor)
+	if z0 != 1 || z1 != 4 {
+		t.Fatalf("深度範圍 = %d..%d，預期 1..4", z0, z1)
+	}
+	// 自己最高時就只看自己
+	info[row][anchor].height = 2 * 6
+	if _, z1 := displayDepthRange(&info, row, anchor); z1 != 6 {
+		t.Fatalf("自己最高時 z1 = %d，預期 6", z1)
+	}
+	// 沒有鄰居也不會越界
+	info[row][anchor] = battleDisplaySlotInfo{}
+	if a, b := displayDepthRange(&info, 0, 1); a != 0 || b != 0 {
+		t.Fatalf("空格的範圍 = %d..%d，預期 0..0", a, b)
+	}
+}

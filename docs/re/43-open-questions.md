@@ -21,10 +21,10 @@
 | 規則正確性 | 50 | 48 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
 | 程式碼理解 | 220 | 213 | 7 | 0 |
-| 驗收 | 65 | 55 | 10 | 0 |
+| 驗收 | 67 | 57 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 121 | 115 | 6 | 0 |
-| **合計** | **510** | 484 | 25 | 1 |
+| 其他 | 123 | 117 | 6 | 0 |
+| **合計** | **514** | 488 | 25 | 1 |
 
 ## 2.1 規則正確性（50 條）
 
@@ -348,7 +348,7 @@
 | [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 「圖例選中的勢力」 | 縮小地圖有第四種顏色（`62` §2），大地圖有沒有對應的圖塊沒驗 / 開縮小地圖、切圖例第二格再截一張 | 靜態 |
 | [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 230 為什麼分位置 | 關隘上下換、大城左右不換。remake 照位置實作，但沒有機器碼解釋 / 同第一列 | 靜態 |
 
-## 2.4 驗收（65 條）
+## 2.4 驗收（67 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -415,7 +415,9 @@
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 「液晶」畫面模式 | 原版的畫面模式有兩個選項，對應 `GAMEPAL.BRG` 的 bank 0–3 與 4–7（`../re/55` §4）。remake 只做了 16 色那一組 / 載 bank 4–7 再對拍一次 | 靜態 |
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 音效的 TYPE 2/3/4 | 原版有四種音源型別，remake 只有開／關 / 看 `sub_102D0` 那四型的差別 | 靜態 |
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 日期對不上 | 原版跑到 4月9日才截到 / 要嘛用存檔定位，要嘛加一個「跑到指定日期」的驗收旗標 | 靜態 |
-| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | ⭐ 城壁的面有缺口 | 同一個局面之下 `field` 仍有 19.9%（扣訊息框 12.8%），集中在城壁：原版是連續的磚面，remake 有黑色缺口與相位不對的磚 / 五個貢獻與 `dx` 配對**已核對過，與 remake 一致**（`../re/11` §5.13b）。差的是另外三件：**起始深度與層數**（原版由 `[si+2… | 靜態 |
+| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `field` 剩下的 3.4% | 扣掉訊息框之後散在各處的小塊（8–104 px／格），多半是雙方部隊的位置差 / 先確認 remake 的開場訊息框要不要畫（原版那一刻已經關掉）；再逐塊看 | 靜態 |
+| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sub_1DFBB` 的快路徑 | remake 一律走合成。兩條路在全畫面重繪下應該畫出同樣的像素（`../spec/58` §4），但沒有逐格驗過 / — | 靜態 |
+| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | unit 0 的第二趟 | 深度迴圈跑完後 `dl & 0x20` 成立時會對五個鄰格各跑一次 `ax = 0`；**觸發條件（旗標 bit 5）誰設還沒解** / 掃誰對顯示格的 `+0` 寫 `0x20` | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-minimap` 的 8% | 同一個局面之下幾乎沒降，所以也不是部隊點 / 與城壁那一項可能同源（小地圖的底圖走 `RenderTacticalMinimap`） | 靜態 |
 
 ## 2.5 外部資料（17 條）
@@ -440,7 +442,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（121 條）
+## 2.6 其他（123 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -559,6 +561,8 @@
 | [`spec/56-battlefield-rotation.md`](../spec/56-battlefield-rotation.md) | 鏡頭差一個等角格 | 翻轉之後戰場區還差 (−16, −8)（`../playtest/40` §4.1）。小地圖沒有位移，所以不是翻轉中心的問題 | 靜態 |
 | [`spec/57-tactical-projection.md`](../spec/57-tactical-projection.md) | `byte_1D348`（鏡頭 dirty flag）誰讀 | 三處寫、**零處讀**（`tools/ida_var_writers.py`）。直接參考掃得到的只有寫入端，讀取端可能走別的段基址 | 靜態 |
 | [`spec/57-tactical-projection.md`](../spec/57-tactical-projection.md) | 物件與地形差一列會不會看得出來 | 奇數鏡頭時 anchor 那一半的物件比自己腳下的地形低一格。**原版就是這樣算的**，但沒有找到能單獨驗證這一點的畫面 | 靜態 |
+| [`spec/58-display-slot-depth-range.md`](../spec/58-display-slot-depth-range.md) | 旗標 bit 5（`0x20`）／bit 6（`0x40`）誰設 | `sub_1DD22` 只設 bit 7。bit 6 是快路徑那道 `dl & 0x50` 的一半，bit 5 決定要不要跑「unit 0 的第二趟」 | 靜態 |
+| [`spec/58-display-slot-depth-range.md`](../spec/58-display-slot-depth-range.md) | unit 0 的第二趟 | 深度迴圈跑完後，`dl & 0x20` 成立時對五個鄰格各跑一次 `ax = 0`。**remake 沒做**，而觸發條件還沒解 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 | 靜態 |

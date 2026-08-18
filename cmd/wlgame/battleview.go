@@ -57,6 +57,10 @@ const (
 	// 游標十字與鏡頭的兩個偏移（`0001C106` 的 −4、`0001C103` 的 +0x13）。
 	cursorBiasX = -4
 	cursorBiasY = 0x13
+
+	// displayBandRows 是 `sub_1E0E1` 一次搬幾列：`mov cx, 8`。
+	// 16×32 的編碼單位切成四帶，四帶依序落在輸出的第 0／8／16／24 列。
+	displayBandRows = battle.SubTileH / 4
 )
 
 // isoProject 把**地形列號**（我們的框）換成「欄、列」。
@@ -596,6 +600,67 @@ func makeDisplayGrid(entries []battleDisplayEntry) battleDisplayGrid {
 	return grid
 }
 
+// battleDisplaySlotInfo 是顯示格表頭的兩個記帳欄位（`+1` 與 `+2`），
+// **單位照原版是 2z**（docs/spec/58 §1）。
+type battleDisplaySlotInfo struct {
+	height int // +1：最後一個非零 unit 的 2z
+	start  int // +2：最後一個**小 unit**（< 0x20）的 2z
+}
+
+// battleSmallUnit 是 `sub_1DD22` 的 `cmp al, 20h`——子圖塊編號 < 0x20 算「小」，
+// 只有小的才會更新起始深度。
+const battleSmallUnit = 0x20
+
+// makeDisplayInfo 重算 `sub_1DD22` 寫在表頭的兩個欄位。
+//
+// 原版是邊走邊寫，而**每個（格, 深度）只有一個 producer**（docs/spec/58 §1），
+// 各層又是依 z 遞增寫進來的，所以結果等於「取最大的那個 z」——
+// 不必模擬走訪順序。地形只在 lane 0，lane 1 是人物／旗那一組。
+func makeDisplayInfo(grid *battleDisplayGrid) [battleDisplayGridRows][battleDisplayGridCols]battleDisplaySlotInfo {
+	var info [battleDisplayGridRows][battleDisplayGridCols]battleDisplaySlotInfo
+	for row := range grid {
+		for col := range grid[row] {
+			for z := 0; z < battle.MaxStack; z++ {
+				s := grid[row][col][z][0]
+				if !s.set || s.entry.raw == 0 {
+					continue
+				}
+				info[row][col].height = 2 * z
+				if s.entry.raw < battleSmallUnit {
+					info[row][col].start = 2 * z
+				}
+			}
+		}
+	}
+	return info
+}
+
+// displayDepthRange 回傳這個錨點要畫的深度範圍（含頭含尾），照 `sub_1DDB4`：
+// 自己與**四個斜鄰格**的高度取最大，減掉自己的起始深度。
+//
+// 低於自己地面的深度被自己的地面擋住；要畫到最高的鄰居，
+// 因為高的鄰居有半截探進這一格的圖裡（docs/spec/58 §3）。
+func displayDepthRange(info *[battleDisplayGridRows][battleDisplayGridCols]battleDisplaySlotInfo,
+	row, anchor int) (z0, z1 int) {
+	high := info[row][anchor].height
+	for _, n := range [...][2]int{{row, anchor - 1}, {row, anchor + 1},
+		{row + 1, anchor - 1}, {row + 1, anchor + 1}} {
+		r, c := n[0], n[1]
+		if r < 0 || r >= battleDisplayGridRows || c < 0 || c >= battleDisplayGridCols {
+			continue
+		}
+		if info[r][c].height > high {
+			high = info[r][c].height
+		}
+	}
+	z0 = info[row][anchor].start / 2
+	z1 = high / 2
+	if z1 >= battle.MaxStack {
+		z1 = battle.MaxStack - 1
+	}
+	return z0, z1
+}
+
 func (v *battleView) rawImage(raw int) *ebiten.Image {
 	if raw < battle.CombinedSourceTerrainTiles {
 		return v.image(raw)
@@ -612,6 +677,7 @@ func (v *battleView) rawImage(raw int) *ebiten.Image {
 // 畫完整 32 px。這正是高物件跨相鄰菱形遮擋的來源。
 func (v *battleView) drawDisplayGrid(dst *ebiten.Image, entries []battleDisplayEntry) {
 	grid := makeDisplayGrid(entries)
+	info := makeDisplayInfo(&grid)
 	// sub_1E085／sub_1E0E1 先在 16×32 的暫存格式合成；sub_1DFE8／
 	// sub_1E011 最後才把四段 16×8 重排成 VGA 上的 32×16。
 	encoded := ebiten.NewImage(battle.SubTileW, battle.SubTileH)
@@ -621,7 +687,11 @@ func (v *battleView) drawDisplayGrid(dst *ebiten.Image, entries []battleDisplayE
 		for ai := 0; ai < battleDisplayAnchors; ai++ {
 			anchor := 1 + ai*2
 			encoded.Clear()
-			for layer := 0; layer < battle.MaxStack; layer++ {
+			// 深度不是 0–6 全畫：從自己的地面畫到最高的鄰居
+			// （`sub_1DDB4` ＋ `sub_1DE95`，docs/spec/58 §3）。
+			// 多畫低於地面的那幾層，城壁的面上會多出一排亮邊。
+			z0, z1 := displayDepthRange(&info, row, anchor)
+			for layer := z0; layer <= z1; layer++ {
 				v.drawDisplaySlice(encoded, grid[row][anchor-1][layer], 24, 0)
 				v.drawDisplaySlice(encoded, grid[row][anchor+1][layer], 16, 8)
 				v.drawDisplayFull(encoded, grid[row][anchor][layer])
@@ -677,7 +747,11 @@ func (v *battleView) drawDisplaySlice(dst *ebiten.Image, slots [2]battleDisplayS
 		if img == nil {
 			continue
 		}
-		slice := img.SubImage(image.Rect(0, srcY, battle.SubTileW, srcY+isoRowPx)).(*ebiten.Image)
+		// ⭐ 一帶是 **8 列**不是 16：`sub_1E0E1` 的遮罩與四個色平面各只搬
+		// `mov cx, 8` 個 word。搬 16 列會讓下一帶的內容被上一帶蓋掉一半，
+		// 症狀是城壁的面上多出一排亮邊（docs/spec/58 §5）。
+		slice := img.SubImage(image.Rect(0, srcY, battle.SubTileW,
+			srcY+displayBandRows)).(*ebiten.Image)
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Translate(0, float64(dstY))
 		dst.DrawImage(slice, op)

@@ -4,6 +4,10 @@
 #   printf '858\n85B\n' > workplace/ida/dosv/census/disp_list.txt
 #   tools/ida.sh script dosv tools/ida_disp_users.py KI.EXE.i64
 #
+# 位移與**立即值**都會列出來（後者標「立即」）：同一個數字在
+# `[si+858h]` 是欄位、在 `mov di, 0E164h` 是指標常數，
+# 而「誰指到這塊緩衝區」常常正是要找的答案。
+#
 # 為什麼要有這一支：`[si+858h]` 這種段內欄位存取**沒有交叉參考**——
 # IDA 的 xref 只涵蓋直接位址參考，`基址暫存器 + 常數位移` 完全不在裡面。
 # 想知道「誰讀寫據點 +0x18」，grep 反組譯文字會漏掉換了寫法的那些
@@ -46,13 +50,15 @@ def main():
             if not ida_ua.decode_insn(insn, head):
                 continue
             for k, op in enumerate(insn.ops):
-                if op.type != ida_ua.o_displ:
-                    continue
-                if op.addr not in want:
-                    continue
                 mnem = insn.get_canon_mnem()
-                kind = "寫" if (k == 0 and mnem in WRITE) else "讀"
-                rows.append((op.addr, fn, head, kind, idc.GetDisasm(head)))
+                if op.type == ida_ua.o_displ and op.addr in want:
+                    kind = "寫" if (k == 0 and mnem in WRITE) else "讀"
+                    rows.append((op.addr, fn, head, kind, idc.GetDisasm(head)))
+                # 同一個數字也可能是**立即值**（`mov di, 0E164h` 那種指標常數）。
+                # 只掃位移會漏掉「誰指到這塊緩衝區」——那正是要找的東西。
+                elif op.type == ida_ua.o_imm and (op.value & 0xFFFF) in want:
+                    rows.append((op.value & 0xFFFF, fn, head, "立即",
+                                 idc.GetDisasm(head)))
     with open(OUT, "w", encoding="utf-8") as fh:
         fh.write("probe: %d 支函式, sha256=%s, 位移 %s\n"
                  % (nfunc, ida_nalt.retrieve_input_file_sha256().hex()[:16],
