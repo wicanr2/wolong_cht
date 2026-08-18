@@ -440,6 +440,7 @@ M6 的版面幾何對得上原版，但畫的內容還有缺。**
 | ⭐ 兵的**開場體力 ＝ 軍團士氣**（`sub_19B6D`），`MaxHP` 100 是回復上限不是開場值 | [`spec/61`](docs/spec/61-soldier-initial-hp-from-morale.md) |
 | ⭐ 被換位的兵**這一幀不動**（`sub_1ADC8` 的 `test al, 40h`）——少了它，圍著打會一次也打不到 | [`spec/62`](docs/spec/62-swapped-unit-skips-its-turn.md) |
 | ⭐ 挨打之後有**三幀硬直**（`sub_1B618` 寫 `[di+1]=2` ＋ bit 6），而且「剛被打中」的旗標**撐到硬直結束才清**——它同時是換位的擋條件 | [`spec/63`](docs/spec/63-hit-stun.md) |
+| ⭐ 別的勢力遷都要**有外交官駐在那裡**才收得到報告（`sub_133FD` 的 `[si+2Ah] == 0xFF → 一句話都不報`）——外交官也是情報站 | [`re/69`](docs/re/69-t2-cross-reference.md) §2.4、[`mechanics/50`](docs/mechanics/50-diplomacy.md) §9.6 |
 | 顯示格表頭 `+1`（含物件的高度）與 `+3`（只有地形）的分工 | [`re/68`](docs/re/68-t3-frontier-functions.md) §2.1 |
 | 戰場側欄逐像素對過：陣形列／指令面板／`▶▶` 列三區 PASS | [`spec/31`](docs/spec/31-tactical-sidebar.md)、[`playtest/40`](docs/playtest/40-tactical-parity.md) |
 
@@ -455,7 +456,7 @@ INT 33 的範圍變成整個世界（一個主機像素 ≈ 9.6 個遊戲像素�
 
 | # | 工作 | 為什麼現在做 | 下手點 |
 |---:|---|---|---|
-| **1** | **M3 的 T2 那 18 支** | T3 已歸零（`docs/re/68`），T2 是下一批：只在其他 `docs/` 被提過、沒有 `docs/re/` 筆記，合計 714 bytes | `tools/py.sh tools/re_coverage.py workplace/ida/dosv/census/census.tsv` 的 T2 表 |
+| **1** | **AI 遷都的報告** | 剛解出來的機制沒有實作端：別的勢力遷都時原版走 `sub_133FD`，**沒有外交官就一句話都不報**（[`mechanics/50`](docs/mechanics/50-diplomacy.md) §9.6）。remake 只有玩家自己遷都那一半 | 訊息 #57 ＋ #521–525，閘是勢力 `+0x2A`；接在 `internal/state` 的事件 8 |
 | **2** | **`field` 剩下的 0.84%** | 1,477 px 散在各處。⚠ 先確認有多少是**時刻差**——`sb-enemy` 那 44 px 已經證實是（原版那一格打了 20 秒）| 逐塊看，先排除部隊的次像素位置差 |
 | **3** | **倒地動畫** | 血歸零時原版改走另一條（`+0x00` 只留 bit 4、設 bit 0、`[di+1]=4`），數完四幀由 `sub_1B4B8` 收掉；remake 直接把 `Alive` 設成 false（[`spec/63`](docs/spec/63-hit-stun.md) §5）| 與硬直是同一個計時器，接法一樣 |
 
@@ -718,7 +719,7 @@ UI 還沒有。
 | | 缺什麼 |
 |---|---|
 | M1 資料格式 | 只剩 `ICONGRF` 段 1 的 UI 語意（圖塊已定位）。`.MCH` 三個檔全解：`MMAP.MCH` 見 `docs/re/14`、`MOUSE.MCH` 見 `docs/formats/04`、**`BATTLE.MCH` 不存在** |
-| M3 反組譯 | **T4 ＝ 0**，739 支全部有筆記。剩的是各文件「未解」表裡的細節（`docs/re/21`，數字要用排除目錄後的）；另有上表的小項 |
+| M3 反組譯 | **四個分級全部收斂到 T1**：739 支每一支都有 `docs/re/` 筆記（T3 記在 `docs/re/68`、T2 記在 `docs/re/69`）。⚠ **那只代表「每一支都有人寫過」**——T2 那批多半是登記不是新理解；缺口一律以各文件「未解」表與 `docs/re/43` 為準 |
 | M4 機制文件 | 跟著 M3 的缺口走。**勝負判定已補上機器碼出處**（`docs/mechanics/80-victory.md` ＋ `docs/re/59`）|
 | M5 規則層 | 大致完成；缺的規則跟著上表走 |
 | M6 呈現層 | 主畫面逐像素 PASS、戰場側欄四區 PASS。**只剩戰場地形的合成**：城壁的面有黑色缺口（`field` 19.9%），成因縮到三件（`docs/re/11` §5.13b）|

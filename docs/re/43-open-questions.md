@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 50 | 48 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
-| 程式碼理解 | 223 | 216 | 7 | 0 |
+| 程式碼理解 | 227 | 220 | 7 | 0 |
 | 驗收 | 68 | 58 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
 | 其他 | 131 | 124 | 7 | 0 |
-| **合計** | **526** | 499 | 26 | 1 |
+| **合計** | **530** | 503 | 26 | 1 |
 
 ## 2.1 規則正確性（50 條）
 
@@ -123,7 +123,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（223 條）
+## 2.3 程式碼理解（227 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -350,6 +350,10 @@
 | [`re/68-t3-frontier-functions.md`](../re/68-t3-frontier-functions.md) | `sub_1304E(al=7)` 到底登記了什麼 | `sub_1676F` 只看它的進位旗標。那一支是 T1，但 `al` 的七種值各代表什麼還沒逐一對過 | 靜態 |
 | [`re/68-t3-frontier-functions.md`](../re/68-t3-frontier-functions.md) | `sub_16D56` 的 `1,1,3,3,2,2` 對應哪三個兵種 | 位移確定是六個編成槽的兵種欄；值到兵種的對映要與 `kindFromByte` 對一次 | 靜態 |
 | [`re/68-t3-frontier-functions.md`](../re/68-t3-frontier-functions.md) | `sub_1B069` 的 `loc_1B533` | 攀爬那一支還沒讀 | 靜態 |
+| [`re/69-t2-cross-reference.md`](../re/69-t2-cross-reference.md) | `0x2040` 那張 16 筆表 | `sub_12438` 依 `(dx, bx)` 作廢一筆，`[si] ≥ 0x80` 是「這筆有效」 / 找誰寫 `[si+2]`／`[si+4]` | 靜態 |
+| [`re/69-t2-cross-reference.md`](../re/69-t2-cross-reference.md) | 勢力 `+0x19` | `sub_145F8` 把互指的清成 `0xFF`。勢力記錄 64 B 的欄位表本來就大半未解（`06`） / 與 `+0x2A`（外交官）同一組欄位，一起掃 | 靜態 |
+| [`re/69-t2-cross-reference.md`](../re/69-t2-cross-reference.md) | 據點 `+0x1A` | `sub_14236` 在停戰／滅亡時改回 `+0x01`（自己）；語意像「侵攻目標勢力」但沒有正對照 / 找讀它的那一支 | 靜態 |
+| [`re/69-t2-cross-reference.md`](../re/69-t2-cross-reference.md) | `sub_1E6FF` 那張待繪表 | 欄位對應到什麼還沒查 / `byte_1E47F` 的其他使用端 | 靜態 |
 
 ## 2.4 驗收（68 條）
 
