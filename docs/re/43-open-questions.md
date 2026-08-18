@@ -19,12 +19,12 @@
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
 | 規則正確性 | 47 | 45 | 2 | 0 |
-| 資料保存 | 37 | 37 | 0 | 0 |
-| 程式碼理解 | 233 | 226 | 7 | 0 |
+| 資料保存 | 41 | 40 | 1 | 0 |
+| 程式碼理解 | 232 | 225 | 7 | 0 |
 | 驗收 | 69 | 59 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
 | 其他 | 137 | 130 | 7 | 0 |
-| **合計** | **540** | 513 | 26 | 1 |
+| **合計** | **543** | 515 | 27 | 1 |
 
 ## 2.1 規則正確性（47 條）
 
@@ -78,7 +78,7 @@
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 君主陣亡時軍師怎麼辦 | 未知 | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | END_S1`–`END_S4`（結局動畫？）與四個劇本的結局有關，格式還沒碰。 | （未解小節內文） | 靜態 |
 
-## 2.2 資料保存（37 條）
+## 2.2 資料保存（41 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -119,8 +119,12 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+22` | 1 / 值域 0–226，22 種 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
+| [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `END_S1` 只有 91,118 B | 第一幕由三支不同的 consumer 分塊貼（`sub_1016D` 從 0、`sub_101B5` 從 47,744、`sub_10204` 從 59,072），不是整張 640×400。那三塊的幾何還沒對 | 靜態 |
+| [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `END_S12` 的右半 | 用 §2 的版面畫出來左邊是完整封面、右邊是雜訊——那一幕可能還有第二塊 | 實測 |
+| [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `OPEN_S2`–`S5` 的 384,000 B | 是 §2 的三倍，多半是多張或多幀。開場播放器 `D7OPEN.EXE` 還沒反組譯 | 靜態 |
+| [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`） | 靜態 |
 
-## 2.3 程式碼理解（233 條）
+## 2.3 程式碼理解（232 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -351,8 +355,7 @@
 | [`re/69-t2-cross-reference.md`](../re/69-t2-cross-reference.md) | 勢力 `+0x19` | `sub_145F8` 把互指的清成 `0xFF`。勢力記錄 64 B 的欄位表本來就大半未解（`06`） / 與 `+0x2A`（外交官）同一組欄位，一起掃 | 靜態 |
 | [`re/69-t2-cross-reference.md`](../re/69-t2-cross-reference.md) | 據點 `+0x1A` | `sub_14236` 在停戰／滅亡時改回 `+0x01`（自己）；語意像「侵攻目標勢力」但沒有正對照 / 找讀它的那一支 | 靜態 |
 | [`re/69-t2-cross-reference.md`](../re/69-t2-cross-reference.md) | `sub_1E6FF` 那張待繪表 | 欄位對應到什麼還沒查 / `byte_1E47F` 的其他使用端 | 靜態 |
-| [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | 狀態：播放順序、版面與結尾文字全解；`END_S*.DAT` 的像素格式未解。 | （散句） | 靜態 |
-| [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | `END_S*.DAT` 的像素格式 | §5：至少三塊、平面分開、總長對不上檔案大小 / 三個 consumer（`sub_1016D`／`sub_101B5`／`sub_10204`）的來源位移 `0`／`0xBB8`／`0xE74` 是段位移，換算成 byte 是 `0`／`47,744`／`59,072`——**比檔案還大**，所以載入時一定做過… | 靜態 |
+| [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | 第一幕那三塊的幾何 | `sub_1016D`／`sub_101B5`／`sub_10204` 各畫 320 px 寬的一段，怎麼拼成一張還沒對（`../formats/09` §6） / 逐支對 `di` 的起點與跨距 | 靜態 |
 | [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | `sub_1041E`（`ENDPAL.BRG`）怎麼套 | 只知道它載檔 / 與 `GAMEPAL.BRG` 同格式的話直接沿用（`../formats/02`） | 靜態 |
 | [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | 淡入淡出的階數與色階 | 17 階（`cx` 0–0x10）已確定，每階怎麼算沒讀 / `sub_1035F`／`sub_103DC` | 靜態 |
 | [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | `sub_10293` 每一幕做什麼 | 只知道它先 `sub_1033D` 載下一張 / 逐行讀 | 靜態 |

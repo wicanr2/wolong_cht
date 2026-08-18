@@ -26,7 +26,7 @@
 四條主線：
 
 1. **資料格式全解**：`.MAP`／`.MDL`／`.SCH`／`.MCH` 地圖族、`*GRF.DAT` 圖庫、
-   `.BRG` 調色盤、`OPEN_S*`／`END_S*` 過場、`*BGM.DAT`／`SOUND.DAT` 音訊、
+   `.BRG` 調色盤、`OPEN_S*`／`END_S*` 過場（外層與 `MMAP.MAP` 同一種 RLE）、`*BGM.DAT`／`SOUND.DAT` 音訊、
    `SINARIO.DAT`／`SAVE.DAT` 存檔、`TALK.DAT` 訊息表。
 2. **規則還原**：`KI.EXE` 是遊戲本體，政略、戰鬥、存檔全在裡面。
    **這一款是即時制**，不是回合制——時間怎麼推進是第一等問題（§3.1）。
@@ -473,7 +473,7 @@ grep `.asm` 只能從呼叫端的參數順序反推——那是間接證據，�
 | | 里程碑 | 現況 | 內容 |
 |---|---|---|---|
 | M0 | 環境與偵查 | ✅ **完成** | 兩版素材入庫、兩版 `KI.EXE` 進 IDA、逐檔比對、DOSBox-X docker 化並確認可重現、**密碼頁確認可通過**（§4.0）、說明書判讀完 |
-| M1 | 遊戲本體的資料格式全解 | 🔵 **本體完成**；過場（`OPEN_S*`／`END_S*`）未解 | `.BRG`、`*GRF.DAT`、`.MAP/.MDL/.SCH/.MCH`、`TALK.DAT`、`SINARIO/SAVE.DAT`、音訊都有 Go 解碼器 ＋ round-trip 測試。**過場圖只有播放器那一側解了**（[`docs/re/70`](docs/re/70-d7end-ending-player.md)），像素格式沒有解碼器也沒有規格 |
+| M1 | 資料格式全解 | ✅ **完成**（`ICONGRF` 段 1 的 UI 語意除外）| `.BRG`、`*GRF.DAT`、`.MAP/.MDL/.SCH/.MCH`、`TALK.DAT`、`SINARIO/SAVE.DAT`、音訊、**過場 `OPEN_S*`／`END_S*`**（[`docs/formats/09`](docs/formats/09-cutscene-images.md)）都有 Go 解碼器 ＋ 測試 |
 | M2 | 文本抽取與日中對照 | ✅ **完成** | `TALK.DAT` 變數插入語意全解；兩版對照表產出；Big5 原文抽成語系檔並能 byte-for-byte 寫回 |
 | M3 | 執行檔反組譯 | ✅ **靜態分析完成** | 739 支函式**全部**有 `docs/re/` 記錄（四個分級全部收斂到 T1，最後兩批記在 [`docs/re/68`](docs/re/68-t3-frontier-functions.md)／[`69`](docs/re/69-t2-cross-reference.md)）。**這不等於全部讀懂**——各文件的「未解」表是真正的缺口（[`docs/re/21`](docs/re/21-function-census.md)）。**引用覆蓋率要用排除目錄後的數字**（`re/21` §3.1）。兩版對照當交叉驗證（§4.0） |
 | M4 | 規則規格 ＋ 機制文件 | 🔵 進行中 | 政略、行軍、戰鬥、經濟、外交、勝負。**同步產出 `docs/mechanics/`（§5）**。規格已到 `docs/spec/65`，索引在 [`docs/spec/00-index.md`](docs/spec/00-index.md) |

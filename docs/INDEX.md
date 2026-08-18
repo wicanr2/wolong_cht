@@ -19,6 +19,7 @@
 | [`docs/formats/06-mmap-rle.md`](formats/06-mmap-rle.md) | 06 — MMAP.MAP 的 RLE 壓縮 | READY。 | 2026-08-07 |
 | [`docs/formats/07-battle.md`](formats/07-battle.md) | 07 — BATTLE. 戰場資料 | 分段結構、圖塊定義、子圖塊與人物圖形的像素格式都 confirmed。 剩三項未解（§10）。 | 2026-08-07 |
 | [`docs/formats/08-sinario-save.md`](formats/08-sinario-save.md) | 08 — SINARIO.DAT / SAVE.DAT：劇本與存檔 | 整體結構 confirmed，武將能力值 confirmed，其餘欄位進行中。 | 2026-08-07 |
+| [`docs/formats/09-cutscene-images.md`](formats/09-cutscene-images.md) | 09 — OPEN_S.DAT／END_S.DAT：過場畫面 | READY。 | 2026-08-18 |
 | [`docs/mechanics/00-index.md`](mechanics/00-index.md) | 00 — 遊戲機制索引 | 索引與推論等級定義，長期有效。 | 2026-08-08 |
 | [`docs/mechanics/10-strategy.md`](mechanics/10-strategy.md) | 10 — 大地圖政略 | 指令清單完整；戰略數值與 AI 決策大多已由機器碼解出並實作。 剩六個位置的效果一項（§7）。 | 2026-08-13 |
 | [`docs/mechanics/15-realtime.md`](mechanics/15-realtime.md) | 15 — 即時制的時間模型 | ✅ READY。整條時間鏈已在機器碼裡讀出來。 | 2026-08-08 |
@@ -145,7 +146,7 @@
 | [`docs/re/67-city-emblem-on-strategy-map.md`](re/67-city-emblem-on-strategy-map.md) | 67 — 大地圖上的據點徽記：位置就在記錄座標，顏色照勢力分三類 | ✅ 全解並實作。 | 2026-08-17 |
 | [`docs/re/68-t3-frontier-functions.md`](re/68-t3-frontier-functions.md) | 68 — T3 那九支：只在狀態檔與程式碼裡出現過的函式 | 九支全部讀完。 | 2026-08-18 |
 | [`docs/re/69-t2-cross-reference.md`](re/69-t2-cross-reference.md) | 69 — T2 那 18 支：逐支讀過，各自歸位 | 完成。 | 2026-08-18 |
-| [`docs/re/70-d7end-ending-player.md`](re/70-d7end-ending-player.md) | 70 — D7END.EXE：結局播放器與結局全文 | 播放順序、版面與結尾文字全解；END_S.DAT 的像素格式未解。 | 2026-08-18 |
+| [`docs/re/70-d7end-ending-player.md`](re/70-d7end-ending-player.md) | 70 — D7END.EXE：結局播放器與結局全文 | 播放順序、版面、結尾文字與過場圖的格式都解出來了。 | 2026-08-18 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-16 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
