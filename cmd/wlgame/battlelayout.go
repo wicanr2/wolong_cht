@@ -2,6 +2,8 @@ package main
 
 import (
 	"github.com/wicanr2/wolong_cht/internal/assets/cjk"
+	"github.com/wicanr2/wolong_cht/internal/assets/gfx"
+	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
@@ -130,11 +132,14 @@ func battleSquadSlot(squad int) int {
 
 const battleBottomSlotW = 80
 
-// 底列每一格內的三樣東西（docs/spec/33 §1.2）。
+// 底列每一格內的四樣東西（docs/spec/33 §1.2）。
+// 三張圖示都是 24×16，橫向接續填滿 80 px 的格子。
 const (
 	battleSlotGlyphX = 4 // 位置名 glyph
 	battleSlotGlyphY = 6
-	battleSlotOrderX = 54 // 目前命令的圖示（sub_1C673）
+	battleSlotArmX   = 29 // 兵種圖示（sub_19B6D 的 `add dx, 1Dh`）
+	battleSlotArmY   = 6
+	battleSlotOrderX = 54 // 目前命令的圖示（sub_1C673 的 `add dx, 36h`）
 	battleSlotOrderY = 6
 	battleSlotBarX   = 2 // 待機兵條
 	battleSlotBarY   = 396 // sub_1C74C 的 bx=0x18C
@@ -452,4 +457,35 @@ func battleFormationCellRect(r battleRect, idx int) battleRect {
 		W: battleFormationCell,
 		H: battleFormationCell,
 	}
+}
+
+// battleSlotOrderIcon 把一隊隊長的命令換成底列要畫的圖示編號。
+//
+// ⭐ 原版的圖示是**下令當時畫一次**就不再更新（docs/spec/33 §1.6）：
+// `sub_1A92E` 在全隊走到定位時把單位記錄改成 7（就位）卻不重畫，
+// 所以格子裡留著的是「陣形」那一張。照著把目前的命令碼直接畫，
+// 整列會在就位之後變空——7 不在 0–5 裡。
+//
+// 回傳 −1 表示這一格不畫圖示。
+func battleSlotOrderIcon(cmd tactical.Command) int {
+	if cmd == tactical.Holding {
+		return int(tactical.Form)
+	}
+	if cmd < 0 || int(cmd) >= gfx.DOSVOrderIconCount {
+		return -1
+	}
+	return int(cmd)
+}
+
+// battleSlotArmIcon 把一隊的兵種換成兵種圖示編號（0 馬／1 弓／2 步）。
+// 原版存的是兵種 × 18，圖示索引是 `兵種 − 1`；大將（0）沒有圖示。
+func battleSlotArmIcon(kind tactical.Kind) int {
+	if kind <= tactical.General {
+		return -1
+	}
+	idx := int(kind)/18 - 1
+	if idx < 0 || idx >= gfx.DOSVSquadArmIconCount {
+		return -1
+	}
+	return idx
 }

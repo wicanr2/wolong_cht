@@ -123,6 +123,9 @@ type game struct {
 	// battleOrderIcons 是底列每格右半那張「目前命令」的圖示
 	// （ICONGRF 段 3 的 `碼 × 0xC0`，docs/spec/33 §1.2）。
 	battleOrderIcons [6]*ebiten.Image
+	// battleArmIcons 是底列每格中間那張兵種圖示
+	// （ICONGRF 段 3 的 `0x480 + (兵種−1) × 0xC0`，docs/spec/33 §1.6）。
+	battleArmIcons [3]*ebiten.Image
 	battleSideCommands  *ebiten.Image
 	battleCommandSelect color.RGBA
 
@@ -1526,6 +1529,15 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 			break
 		}
 		g.battleOrderIcons[i] = ebiten.NewImageFromImage(icon)
+	}
+	for i := range g.battleArmIcons {
+		icon, err := g.lib.DOSVSquadArmIcon(i, season)
+		if err != nil {
+			log.Printf("⚠ 取不到 DOS/V 戰術兵種圖示 %d，底列不畫兵種：%v", i, err)
+			g.battleArmIcons = [3]*ebiten.Image{}
+			break
+		}
+		g.battleArmIcons[i] = ebiten.NewImageFromImage(icon)
 	}
 	if panel, err := g.lib.DOSVBattleSideCommands(season); err != nil {
 		log.Printf("⚠ 取不到 DOS/V 戰術右欄命令面板，改用文字 fallback：%v", err)

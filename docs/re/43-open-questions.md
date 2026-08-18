@@ -21,10 +21,10 @@
 | 規則正確性 | 50 | 48 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
 | 程式碼理解 | 223 | 216 | 7 | 0 |
-| 驗收 | 68 | 58 | 10 | 0 |
+| 驗收 | 67 | 57 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
 | 其他 | 127 | 120 | 7 | 0 |
-| **合計** | **522** | 495 | 26 | 1 |
+| **合計** | **521** | 494 | 26 | 1 |
 
 ## 2.1 規則正確性（50 條）
 
@@ -351,7 +351,7 @@
 | [`re/68-t3-frontier-functions.md`](../re/68-t3-frontier-functions.md) | `sub_16D56` 的 `1,1,3,3,2,2` 對應哪三個兵種 | 位移確定是六個編成槽的兵種欄；值到兵種的對映要與 `kindFromByte` 對一次 | 靜態 |
 | [`re/68-t3-frontier-functions.md`](../re/68-t3-frontier-functions.md) | `sub_1B069` 的 `loc_1B533` | 攀爬那一支還沒讀 | 靜態 |
 
-## 2.4 驗收（68 條）
+## 2.4 驗收（67 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -418,7 +418,6 @@
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 「液晶」畫面模式 | 原版的畫面模式有兩個選項，對應 `GAMEPAL.BRG` 的 bank 0–3 與 4–7（`../re/55` §4）。remake 只做了 16 色那一組 / 載 bank 4–7 再對拍一次 | 靜態 |
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 音效的 TYPE 2/3/4 | 原版有四種音源型別，remake 只有開／關 / 看 `sub_102D0` 那四型的差別 | 靜態 |
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 日期對不上 | 原版跑到 4月9日才截到 / 要嘛用存檔定位，要嘛加一個「跑到指定日期」的驗收旗標 | 靜態 |
-| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `bottom` 12.70% | 待機兵條那一列**與步數無關**（0/40/61/75/90 都是 1,950 px），所以不是時刻對不準 / 那一區畫什麼還沒逐格拆；先切成「條」與「底」兩塊分開量 | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `field` 剩下的 0.84% | 1,477 px，散在各處 / 逐塊看，先排除部隊的次像素位置差 | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-enemy`／`sb-self` 1.5% | 兩格將旗的內容 / — | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sub_1DFBB` 的快路徑 | remake 一律走合成。兩條路在全畫面重繪下應該畫出同樣的像素（`../spec/58` §4），但沒有逐格驗過 / — | 靜態 |

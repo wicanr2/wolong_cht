@@ -55,6 +55,16 @@ const (
 	DOSVOrderIconStride = 0xC0
 	DOSVOrderIconCount  = 6
 
+	// DOSVSquadArmIconOffset 是底列每格中間那張兵種圖示的起點。
+	//
+	// `sub_19B6D`（編一隊上場）算 `si = 0x480 + (兵種 − 1) × 0xC0`，
+	// 貼在格內 (29, 6)（`docs/spec/33` §1.6）。0x480 ＝ 六張命令圖示的尾端，
+	// 所以三張兵種圖示緊接在命令圖示後面，共用同一個 0xC0 跨距。
+	//
+	// 三張的內容是馬／弓／步的橘色版，與 0x1BA0 的紅版、0x1EA0 的綠版同一批。
+	DOSVSquadArmIconOffset = DOSVOrderIconOffset + DOSVOrderIconCount*DOSVOrderIconStride
+	DOSVSquadArmIconCount  = 3
+
 	// DOSVAmountPanelOffset 是 DOS/V sub_17D0D 的數值視窗圖形在
 	// ICONGRF 第 3 段的 byte offset。
 	//

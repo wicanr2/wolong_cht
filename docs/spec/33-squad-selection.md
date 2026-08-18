@@ -1,12 +1,14 @@
 # 33 — 底列六格是選部隊，不是第二套命令列
 
 **狀態：CONFORMED。** 兩張順序表、選取位元圖、下令時的取用方式、
-「沒選 ＝ 全隊」與六張命令圖示都有機器碼出處，已實作並有單測。
+「沒選 ＝ 全隊」、六張命令圖示與每格的兵種圖示都有機器碼出處，
+已實作並有單測。
 
-- 日期：2026-08-16
+- 日期：2026-08-18
 - 出處：[`../re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) §6.2、§10
   （`sub_1C7F4` `0001C7F4`、`sub_1C6BF` `0001C6BF`、`sub_1C74C` `0001C74C`、
-  handler `0001C1B9`、`sub_1A8CC` `0001A8CC`）
+  handler `0001C1B9`、`sub_1A8CC` `0001A8CC`）；
+  兵種圖示 `sub_19B6D` `00019BDE`–`00019C05`（§1.6）
 - 推論等級：confirmed
 
 ## 1. 原版做什麼
@@ -39,13 +41,17 @@
 `sub_1C7F4` 用 `cs:0xD2E4` 決定每格的熱區碼（`表值 + 0x15`）；
 `sub_1C6BF`（選取框）與 `sub_1C74C`（兵條）用 `cs:0xD2EA` 決定 X。
 
-### 1.2 一格裡有三樣東西
+### 1.2 一格裡有四樣東西
 
 | 東西 | 位置 | 來源 |
 |---|---|---|
 | 位置名 glyph | 格內 (4, 6)，24×16 | `ICONGRF` 段 1 `0x3900 + 螢幕格 × 0xC0` |
+| **兵種圖示** | 格內 (29, 6)，24×16 | `ICONGRF` 段 3 的 `0x480 + (兵種 − 1) × 0xC0`（§1.6）|
 | **目前命令的圖示** | 格內 (54, 6)，24×16 | `ICONGRF` 段 3 的 `命令碼 × 0xC0`（§1.5）|
 | **待機兵條** | (格 X ＋ 2, 396)，長上限 `0x4C` ＝ 76，2 px 高，色 12 | `word_1D30A:+0x09 + 4×隊` |
+
+三張圖示橫向接續：4 ＋ 24 ＝ 28、29 ＋ 24 ＝ 53、54 ＋ 24 ＝ 78，
+剛好填滿 80 px 寬的格子。
 
 命令圖示由 `sub_1A8CC` 更新，而它開頭就是：
 
@@ -119,6 +125,40 @@
 （`0x6C0`）之前，中間第 7–9 張是兵種圖示的橘色版（馬／弓／步），
 與 `0x1BA0` 的紅版、`0x1EA0` 的綠版同一批。
 
+### 1.6 ⭐ 兵種圖示在編隊時畫一次，命令圖示在下令時畫一次
+
+兩張圖示都**不在每幀重繪的路徑上**。整個戰場的重畫（`sub_1C7A9`）只貼底板
+與位置名（`sub_1C7F4`），另外兩張各由自己的事件畫：
+
+| 圖示 | 誰畫 | 什麼時候 |
+|---|---|---|
+| 兵種 | `sub_19B6D`（編一隊上場）| 佈陣時，每隊一次 |
+| 命令 | `sub_1C673`（經 `sub_1A8CC`）| 下令時，而且 `cmp al, ah / jz` ——命令沒變就不重畫 |
+
+`sub_19B6D` 的那一段：
+
+```asm
+00019BDE  shr si, 1
+00019BE0  mov dx, cs:[si-2D16h]     ; ＝ cs:0xD2EA[隊]，格的 X
+00019BE8  xchg bl, bh               ; bx ＝ (兵種 − 1) << 8
+00019BEA  shr bx, 1 / mov si, bx
+00019BEE  shr bx, 1 / add si, bx    ; si ＝ (兵種 − 1) × 0xC0
+00019BF2  add si, 480h              ; ★ 六張命令圖示之後
+00019BF7  mov ds, cs:word_10D48     ; 段 3
+00019BFC  add dx, 1Dh               ; ★ X ＝ 格 X ＋ 29
+00019BFF  mov bx, 176h              ; Y ＝ 374（格內 6）
+00019C02  mov cx, 1018h             ; 24 × 16
+00019C05  call sub_1F888
+```
+
+⭐ **「畫一次就不動」決定了命令圖示顯示的是哪一個值。**
+`sub_1A92E`（陣形）在隊走到定位時把單位記錄的 `+0x1A`／`+0x1B` 改成 **7**
+（就位），但**不重畫圖示**——所以格子裡留著的是下令當時那張「陣形」。
+
+照著把「目前的命令碼」直接畫成圖示，就會在全隊就位之後整列變空：
+7 不在 0–5 裡。原版另一處也把 7 當成 0 讀（`0001B49E`
+`cmp ah, 7 / jnz / mov ah, 0`），所以**顯示層要把就位（7）看成陣形（0）**。
+
 ## 2. 演算法
 
 ```
@@ -147,8 +187,9 @@
 | 選取位元圖 | `internal/rules/tactical`：`Side.Selected`、`Battle.ToggleSquadSelection`、`Battle.TakeSquadSelection` |
 | 玩家下令 | `Battle.OrderSelected`（城壁在非攻城戰回 `false` ＝ 拒絕）|
 | 兩張順序表 | `cmd/wlgame/battlelayout.go`：`battleBottomSlotSquad`、`battleSquadSlotX` |
-| 底列繪製 | `cmd/wlgame/battle.go` `drawBattleKeys`：位置名 glyph ＋ **命令圖示** ＋ 待機兵條 ＋ 選取框 |
-| 命令圖示 | `library.DOSVOrderIcon(碼, 季)`；圖示畫的是**該隊隊長的 `Cmd`**（每隊第一個兵）|
+| 底列繪製 | `cmd/wlgame/battle.go` `drawBattleKeys`：位置名 glyph ＋ **兵種圖示** ＋ **命令圖示** ＋ 待機兵條 ＋ 選取框 |
+| 兵種圖示 | `library.DOSVSquadArmIcon(兵種索引, 季)`，索引 ＝ `Side.Kinds[隊] / 18 − 1`；大將（0）不畫 |
+| 命令圖示 | `library.DOSVOrderIcon(碼, 季)`；碼取自該隊隊長的 `Cmd`，**就位（7）當成陣形（0）**，其餘超出 0–5 的值不畫（§1.6）|
 | 輸入 | 底列點擊 → 切換選取；側欄面板點擊 → `battleSideCommandRowCode[列]` |
 | 差異 | **鍵盤 1–6 直接下命令**是 remake 加的（原版這一層只有滑鼠）；它一樣走 `OrderSelected`，所以選取的行為一致 |
 
@@ -157,6 +198,8 @@
 | 方式 | 證據 |
 |---|---|
 | 單元測試 | `TestDOSVOrderIcons`（`internal/assets/gfx`）：六張互不相同、都有內容、尾端不撞到外框圖塊 |
+| 單元測試 | `TestBattleSlotIconGeometry`、`TestBattleSlotOrderIconTreatsHoldingAsForm`（`cmd/wlgame`）|
+| 對原版 | 同一個局面的 `bottom` 區（[`../playtest/40`](../playtest/40-tactical-parity.md) §9）|
 | 單元測試 | `TestSquadSelectionMatchesRawBitfield`、`TestOrderSelectedRejectsScaleWallOffSiege`（`internal/rules/tactical`）；`TestBottomSlotSquadTablesAreInverse`、`TestBattleSideCommandClickUsesRowCode`（`cmd/wlgame`）|
 | 對原版 | 兩張順序表的值直接取自 `cs:0xD2E4`／`cs:0xD2EA`；畫面證據見 `docs/images/wlgame-tactical-squad-select.png` |
 

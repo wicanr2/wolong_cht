@@ -335,6 +335,22 @@ func (l *Library) DOSVOrderIcon(code, bank int) (*image.RGBA, error) {
 		gfx.DOSVOrderIconOffset+code*gfx.DOSVOrderIconStride, l.Palette, bank)
 }
 
+// DOSVSquadArmIcon 解出戰術底列每一格中間那張兵種圖示。
+//
+// index 是 0 馬／1 弓／2 步，也就是原版 `(兵種 − 1)`——
+// `Side.Kinds` 存的是兵種 × 18，所以 index ＝ `Kind/18 − 1`，
+// 大將（0）沒有圖示。原版走 `sub_19B6D`（`docs/spec/33` §1.6）。
+func (l *Library) DOSVSquadArmIcon(index, bank int) (*image.RGBA, error) {
+	if l == nil || l.Chrome == nil {
+		return nil, fmt.Errorf("ICONGRF 段 3 沒有載入")
+	}
+	if index < 0 || index >= gfx.DOSVSquadArmIconCount {
+		return nil, fmt.Errorf("兵種索引 %d 超出 0–%d", index, gfx.DOSVSquadArmIconCount-1)
+	}
+	return gfx.DOSVResourceIcon.RenderRGBAAt(l.Chrome,
+		gfx.DOSVSquadArmIconOffset+index*gfx.DOSVOrderIconStride, l.Palette, bank)
+}
+
 // DOSVBattleCommandBase 解出 sub_1C7F4 在底列重複六次的 80×32 底板。
 func (l *Library) DOSVBattleCommandBase(bank int) (*image.RGBA, error) {
 	if l == nil || l.BattleUI == nil {

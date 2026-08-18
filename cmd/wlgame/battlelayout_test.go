@@ -665,3 +665,67 @@ func TestParseSiegeFixture(t *testing.T) {
 		})
 	}
 }
+
+// TestBattleSlotIconGeometry 釘住底列一格裡三張 24×16 圖示的位置。
+//
+// 出處是原版三個貼點：位置名 `sub_1C7F4` 的 dx＝4、兵種 `sub_19B6D` 的
+// `add dx, 1Dh`、命令 `sub_1C673` 的 `add dx, 36h`（docs/spec/33 §1.2）。
+// 三張橫向接續，最後一張的右緣正好落在 80 px 格內。
+func TestBattleSlotIconGeometry(t *testing.T) {
+	const iconW = 24
+	for _, tc := range []struct{ name string; x int }{
+		{"位置名", battleSlotGlyphX},
+		{"兵種", battleSlotArmX},
+		{"命令", battleSlotOrderX},
+	} {
+		if tc.x+iconW > battleBottomSlotW {
+			t.Fatalf("%s 圖示 x=%d ＋ %d 超出格寬 %d", tc.name, tc.x, iconW, battleBottomSlotW)
+		}
+	}
+	if battleSlotGlyphX+iconW > battleSlotArmX {
+		t.Fatalf("位置名與兵種重疊：%d+%d > %d", battleSlotGlyphX, iconW, battleSlotArmX)
+	}
+	if battleSlotArmX+iconW > battleSlotOrderX+1 {
+		t.Fatalf("兵種與命令重疊：%d+%d > %d", battleSlotArmX, iconW, battleSlotOrderX)
+	}
+	if battleSlotGlyphY != 6 || battleSlotArmY != 6 || battleSlotOrderY != 6 {
+		t.Fatal("三張圖示的 Y 都是格內 6（原版 bx=0x176，y=374）")
+	}
+}
+
+// TestBattleSlotOrderIconTreatsHoldingAsForm 釘住「就位畫成陣形」。
+//
+// 原版的命令圖示是下令當時畫一次就不更新，而 `sub_1A92E` 在全隊到位時
+// 把記錄改成 7 卻不重畫，所以格子裡留著的是陣形（docs/spec/33 §1.6）。
+// 照著把目前的命令碼直接畫，整列會在就位之後變空。
+func TestBattleSlotOrderIconTreatsHoldingAsForm(t *testing.T) {
+	if got := battleSlotOrderIcon(tactical.Holding); got != int(tactical.Form) {
+		t.Fatalf("就位的圖示 = %d，預期陣形 %d", got, tactical.Form)
+	}
+	for _, cmd := range []tactical.Command{tactical.Form, tactical.Attack,
+		tactical.Charge, tactical.ScaleWal, tactical.Guard, tactical.Retreat} {
+		if got := battleSlotOrderIcon(cmd); got != int(cmd) {
+			t.Fatalf("命令 %d 的圖示 = %d", cmd, got)
+		}
+	}
+	if got := battleSlotOrderIcon(tactical.Command(8)); got != -1 {
+		t.Fatalf("未知狀態 8 應不畫（−1），得到 %d", got)
+	}
+}
+
+// TestBattleSlotArmIcon 釘住兵種 × 18 → 圖示索引的換算。
+func TestBattleSlotArmIcon(t *testing.T) {
+	for _, tc := range []struct {
+		kind tactical.Kind
+		want int
+	}{
+		{tactical.General, -1}, // 大將沒有兵種圖示
+		{tactical.Cavalry, 0},
+		{tactical.Archer, 1},
+		{tactical.Infantry, 2},
+	} {
+		if got := battleSlotArmIcon(tc.kind); got != tc.want {
+			t.Fatalf("%v 的兵種圖示 = %d，want %d", tc.kind, got, tc.want)
+		}
+	}
+}

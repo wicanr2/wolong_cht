@@ -923,9 +923,17 @@ func (g *game) drawBattleKeys(screen *ebiten.Image, b *tactical.Battle, r battle
 			op.GeoM.Translate(float64(cell.X+battleSlotGlyphX),
 				float64(cell.Y+battleSlotGlyphY))
 			screen.DrawImage(g.battleCommandGlyphs[i], op)
+			// 格子中間是**這一隊的兵種**（sub_19B6D，docs/spec/33 §1.6）。
+			if arm := battleSlotArmIcon(side.Kinds[squad]); arm >= 0 &&
+				arm < len(g.battleArmIcons) && g.battleArmIcons[arm] != nil {
+				op = &ebiten.DrawImageOptions{}
+				op.GeoM.Translate(float64(cell.X+battleSlotArmX),
+					float64(cell.Y+battleSlotArmY))
+				screen.DrawImage(g.battleArmIcons[arm], op)
+			}
 			// 格子右半是**這一隊目前的命令**（sub_1C673，docs/spec/33 §1.2）。
-			// 每隊的第一個兵是隊長，命令看它的 Cmd。
-			if code := int(side.Soldiers[squad*tactical.PerSquad].Cmd); code >= 0 &&
+			// 每隊的第一個兵是隊長，命令看它的 Cmd；就位（7）畫成陣形。
+			if code := battleSlotOrderIcon(side.Soldiers[squad*tactical.PerSquad].Cmd); code >= 0 &&
 				code < len(g.battleOrderIcons) && g.battleOrderIcons[code] != nil {
 				op = &ebiten.DrawImageOptions{}
 				op.GeoM.Translate(float64(cell.X+battleSlotOrderX),
