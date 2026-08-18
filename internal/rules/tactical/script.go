@@ -118,7 +118,9 @@ func (s *Script) exec(b *Battle, op, par, arg int) {
 
 	case opLine:
 		// 三個常數 58／36／16，由**運算元**選（不是參數）。
-		b.Sides[side].Line = LineFor(side, arg)
+		// ⚠ 查表要用**角色**（玩家／腳本）不是側編號——玩家守城時
+		// remake 的 side 0 是攻方，拿它去查會設成玩家那一條線（`Battle.Role`）。
+		b.Sides[side].Line = LineFor(b.Role(side), arg)
 
 	case opOrder:
 		// 參數 7 ＝ 全軍，0–5 ＝ 指定一隊。

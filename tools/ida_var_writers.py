@@ -31,11 +31,11 @@ OUT_TXT = "/work/var-writers.txt"
 
 # 要追的全域。戰術鏡頭與它的 dirty flag（docs/re/60 §9、docs/spec/57）
 NAMES = [
-    "word_1D328",   # 鏡頭 world X
-    "word_1D32A",   # 鏡頭 world Y
-    "word_1D32C",   # 縮圖十字 X（不是鏡頭）
-    "word_1D32E",   # 縮圖十字 Y
-    "byte_1D348",   # 鏡頭 dirty flag
+    "word_1D342",   # 側 0 的陣形表偏移（＝陣形編號 × 96）
+    "word_1D344",   # 側 1 的陣形表偏移
+    "byte_1D346",   # 陣形選單選中的格
+    "word_1D33C",   # 側 0 的陣形原點
+    "word_1D33E",   # 側 1 的陣形原點
 ]
 
 CONTEXT_BEFORE = 6

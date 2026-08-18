@@ -354,6 +354,19 @@ func (b *Battle) SetPlayerSide(side int) {
 	b.Sides[1-side].Line, b.Sides[1-side].Mirror = LineFor(1, 0), true
 }
 
+// Role 回傳這一側在**原版的框**裡是哪一個角色：0 ＝ 玩家、1 ＝ 腳本。
+//
+// ⭐ 陣形原點那兩組常數（`lineX`）綁的是**玩家／腳本**，不是攻方／守方，
+// 也不是 remake 的側編號——原版的 side 0 永遠是玩家（docs/spec/56 §1）。
+// remake 的 side 0 是攻方，玩家守城時就對不上，拿側編號去查表會讓
+// **腳本把自己的陣形線設成玩家那一條（X=5）**，整支軍團往對面走。
+func (b *Battle) Role(side int) int {
+	if side == b.PlayerSide {
+		return 0
+	}
+	return 1
+}
+
 // Deploy 把一隊放上戰場。kind 是六個編成位置的兵種，men 是各位置的兵數
 // （以「兵」為單位，一個位置滿編 100）。
 //

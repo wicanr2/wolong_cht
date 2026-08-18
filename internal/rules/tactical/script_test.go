@@ -156,3 +156,33 @@ func TestRealScriptsSiege(t *testing.T) {
 	}
 	t.Logf("32 段腳本裡有 %d 段打到城壁", hit)
 }
+
+// TestScriptLineUsesRoleNotSideIndex 釘住陣形線查表要用**角色**不是側編號。
+//
+// 原版的 side 0 永遠是玩家（docs/spec/56 §1），而 remake 的 side 0 是攻方。
+// 玩家守城時兩者對不上：拿側編號去查 `lineX`，腳本會把自己的陣形線設成
+// **玩家那一條（X=5）**，整支軍團往對面走——實測小地圖上敵方的部隊點
+// 從 X=58 一路掉到 38（docs/spec/59 §6）。
+func TestScriptLineUsesRoleNotSideIndex(t *testing.T) {
+	b := &Battle{}
+	b.SetPlayerSide(DefenderSide) // 玩家守城：side 1 是玩家、side 0 是腳本
+	if b.Role(0) != 1 || b.Role(1) != 0 {
+		t.Fatalf("角色對應錯了：side0=%d side1=%d", b.Role(0), b.Role(1))
+	}
+	// 腳本側（side 0）下 `line 0`：要拿到腳本那一列的 58，不是玩家的 5。
+	s := &Script{side: 0}
+	s.exec(b, opLine, 0, 0)
+	if got, want := b.Sides[0].Line, LineFor(1, 0); got != want {
+		t.Fatalf("腳本側的陣形線 = %d，預期 %d（腳本那一列）", got, want)
+	}
+	if b.Sides[0].Line == LineFor(0, 0) {
+		t.Fatal("腳本側拿到了玩家那一條線")
+	}
+	// 玩家當攻方時側編號與角色一致，行為不能被這個修正改掉。
+	b2 := &Battle{}
+	s2 := &Script{side: 1}
+	s2.exec(b2, opLine, 0, 0)
+	if got, want := b2.Sides[1].Line, LineFor(1, 0); got != want {
+		t.Fatalf("玩家攻方時腳本側的線 = %d，預期 %d", got, want)
+	}
+}

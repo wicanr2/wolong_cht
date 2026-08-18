@@ -567,7 +567,7 @@
 | [`spec/58-display-slot-depth-range.md`](../spec/58-display-slot-depth-range.md) | 旗標 bit 5（`0x20`）／bit 6（`0x40`）誰設 | `sub_1DD22` 只設 bit 7。bit 6 是快路徑那道 `dl & 0x50` 的一半，bit 5 決定要不要跑「unit 0 的第二趟」 | 靜態 |
 | [`spec/58-display-slot-depth-range.md`](../spec/58-display-slot-depth-range.md) | unit 0 的第二趟 | 深度迴圈跑完後，`dl & 0x20` 成立時對五個鄰格各跑一次 `ax = 0`。**remake 沒做**，而觸發條件還沒解 | 靜態 |
 | [`spec/59-battle-opening-orders.md`](../spec/59-battle-opening-orders.md) | 玩家側的開場常令 | 畫面上看起來是「站在陣形上」，但原版是哪一個命令碼（`Form` 還是 `Holding`）沒有直接證據 | 靜態 |
-| [`spec/59-battle-opening-orders.md`](../spec/59-battle-opening-orders.md) | ⭐ 腳本側的陣形 | 原版那張截圖裡腳本側**站定在陣形 1**（腳本第 8 個 byte 是 `form 1`），remake 停在陣形 0。實測把腳本側的 `Formation` 設成 1 再 `Place()`，部隊點與原版**逐點相同**——所以差的只是「腳本跑到 `form` 那一步的時機 vs 佈陣的時機」。remake … | 實測 |
+| [`spec/59-battle-opening-orders.md`](../spec/59-battle-opening-orders.md) | 腳本節奏與原版的 tick 對應 | 第 40 步對上那一張截圖，但「原版的 40 個 tick 是多久」還沒對過（`34`） | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 | 靜態 |
