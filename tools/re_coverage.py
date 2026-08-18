@@ -202,6 +202,28 @@ def main():
     print(f"\nT4 共 {len(t4)} 支，"
           f"合計 {sum(f['bytes'] for f in t4):,} bytes。")
 
+    # T4 歸零之後，**下一條界線是 T3 與 T2**：它們沒有 docs/re/ 層級的筆記，
+    # 只是在狀態檔、程式碼註解或別的 docs 裡被提到過。
+    # 不印出來的話「T4 ＝ 0」會被當成「讀完了」。
+    for level, title in (("T3", "只在狀態檔／程式碼"), ("T2", "只在其他 docs/")):
+        sel = sorted((f for f in funcs.values() if f["tier"] == level),
+                     key=lambda f: -f["bytes"])
+        if not sel:
+            continue
+        print(f"\n## {level}（{title}）：還沒有 `docs/re/` 筆記的函式\n")
+        print("| 函式 | bytes | 指令 | 直接呼叫者 | 已記錄的呼叫者 | 模組 |")
+        print("|---|---:|---:|---:|---|---|")
+        for f in sel:
+            known = sorted(funcs[c]["name"] for c in callers.get(f["start"], ())
+                           if c in funcs and funcs[c]["tier"] == "T1")
+            kn = "、".join(f"`{k}`" for k in known[:3]) or "—"
+            if len(known) > 3:
+                kn += f" 等 {len(known)} 支"
+            print(f"| `{f['name']}` | {f['bytes']} | {f['insns']} | "
+                  f"{f['callers']} | {kn} | {f['seg']} |")
+        print(f"\n{level} 共 {len(sel)} 支，"
+              f"合計 {sum(f['bytes'] for f in sel):,} bytes。")
+
     orphans = [f for f in funcs.values() if f["callers"] == 0]
     print(f"\n## 沒有直接呼叫者的函式：{len(orphans)} 支\n")
     print("直接 xref 抓不到間接分派與取址後呼叫，所以「零呼叫者」不等於死碼。"

@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 50 | 48 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
-| 程式碼理解 | 220 | 213 | 7 | 0 |
+| 程式碼理解 | 223 | 216 | 7 | 0 |
 | 驗收 | 67 | 57 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
 | 其他 | 125 | 118 | 7 | 0 |
-| **合計** | **516** | 489 | 26 | 1 |
+| **合計** | **519** | 492 | 26 | 1 |
 
 ## 2.1 規則正確性（50 條）
 
@@ -123,7 +123,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（220 條）
+## 2.3 程式碼理解（223 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -347,6 +347,9 @@
 | [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 208 那一組 | 全圖 4 格，這一輪的兩張截圖裡沒有入鏡 / 找一局讓它入鏡，驗 206／207／208 | 實測 |
 | [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 「圖例選中的勢力」 | 縮小地圖有第四種顏色（`62` §2），大地圖有沒有對應的圖塊沒驗 / 開縮小地圖、切圖例第二格再截一張 | 靜態 |
 | [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 230 為什麼分位置 | 關隘上下換、大城左右不換。remake 照位置實作，但沒有機器碼解釋 / 同第一列 | 靜態 |
+| [`re/68-t3-frontier-functions.md`](../re/68-t3-frontier-functions.md) | `sub_1304E(al=7)` 到底登記了什麼 | `sub_1676F` 只看它的進位旗標。那一支是 T1，但 `al` 的七種值各代表什麼還沒逐一對過 | 靜態 |
+| [`re/68-t3-frontier-functions.md`](../re/68-t3-frontier-functions.md) | `sub_16D56` 的 `1,1,3,3,2,2` 對應哪三個兵種 | 位移確定是六個編成槽的兵種欄；值到兵種的對映要與 `kindFromByte` 對一次 | 靜態 |
+| [`re/68-t3-frontier-functions.md`](../re/68-t3-frontier-functions.md) | `sub_1B069` 的 `loc_1B533` | 攀爬那一支還沒讀 | 靜態 |
 
 ## 2.4 驗收（67 條）
 
