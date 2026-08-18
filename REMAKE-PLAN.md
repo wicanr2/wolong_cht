@@ -1,5 +1,10 @@
 # 臥龍傳 remake 計畫
 
+> ⚠ **待辦看 [`CONTEXT.md`](CONTEXT.md) §7，不是這裡。**
+> 本檔是**架構與垂直切片的定位**：法務邊界、素材盤點、資料流、
+> 刻意的 remake 差異，以及各切片的驗收方式。
+> 下半部按日期的節是**當時的封口紀錄**，不是現況。
+
 ## Legal and integrity boundary
 
 - Original files are user-supplied and not distributed.
@@ -31,11 +36,11 @@ Android 先沿用同一條資料流，只在平台殼增加安全區、視口轉
 
 | Slice | Original oracle | Parser/rule/UI/save path | Verification | Status |
 |---|---|---|---|---|
-| TALK.DAT text | `dosv` + `pc98` byte data | `tools/talkdat.py` + translations + `internal/ui/textdraw.WrapLines` | byte-for-byte round-trip、日中對照、實測字寬／硬斷行測試 | READY；60 筆校訂、ASCII／CJK 實測寬度、原始 hard line、結構尾空行與五行／16 px TALK 分頁已接；未定位 formatter 分支與自然整張畫面逐像素 parity 未完；DOS/V cursor／ICONGRF button glyph 已解碼 |
+| TALK.DAT text | `dosv` + `pc98` byte data | `tools/talkdat.py` + translations + `internal/ui/textdraw.WrapLines` | byte-for-byte round-trip、日中對照、實測字寬／硬斷行測試 | READY；60 筆校訂、ASCII／CJK 實測寬度、原始 hard line、結構尾空行與五行／16 px TALK 分頁已接；未定位 formatter 分支未完；DOS/V cursor／ICONGRF button glyph 已解碼 |
 | world/time | PC-98／`SINARIO.DAT` | `internal/assets/world` + `internal/rules/clock` + `cmd/wlgame` | fixed-cycle DOSBox、歷史截圖 | 已實作；2026-08-10 Docker／Xvfb gate 已重跑 |
-| strategy settlement | `KI.EXE` monthly/hourly paths | `internal/rules/economy`、diplomacy、persuasion、`internal/rules/strategyai` | deterministic tests + RE notes + PC-98 event3 fixture | 月結評估／事件 1 宣戰／事件 2 合作產生器、狀態、玩家三選一與 `sub_17C6E` 數值語意／事件 3 停戰產生器、狀態、玩家三選一與 `sub_17C6E` 數值語意／事件 4／5 官員撥款產生器、狀態、玩家三選一與 `sub_17C6E` 數值語意／事件 6／7 外交官回報狀態、主要 TALK #57／#58／#43–#45／#47–#49 與玩家進言 producer／事件 8 遷都與 `sub_14502` 軍團同步／事件 9 指定武將釋放狀態與可見 `#37` 通知（`#409` 是空槽 no-op）／事件 10 訊息邊界／事件 11／12 runtime 災害 marker、`sub_14269` 持久效果與 `TALK.DAT #70/#71/#72` 通知／事件 13 `#51` 通知／敵方編成狀態切片已接；事件 2／3 raw fixture→前置 TALK→三選一→3×6 滑鼠格位與消像、事件 4／5 共用數值選取與 TALK 五行分頁、DOS/V cursor／button glyph 資產已驗；自然整張畫面 parity、事件 6／7 次要反應、事件 10 訊息、事件 11／12 物件 timer parity、多軍團請求與完整行軍狀態機未完 |
-| tactical battle | `KI.EXE` tactical paths + BATTLE data | `internal/rules/tactical`／battle renderer／遭遇決策 | parser invariants、公式測試、畫面／正常路徑 | 遭遇選單→戰鬥指揮→攻城戰場→攻擊命令→戰後結果報告已由正常 UI 路徑驗證；一般近戰／大將／投射物核心、退卻／繞路點修正與 `sub_1AD7F` CH=0x20 特殊效果已接；`sub_1B941` 的投射物先命中／再移動／後威力更新、raw 格索引與戰場標記已接；正常真實攻城狀態層結算、結果資料流與 GUI 回戰略已通過；`+0x1E` 的寫入端、鎖敵分支與 `sub_1AC55` raw 平面條件已接成 `PlaneHigh`；`sub_1AD2D` 初始速度公式與 `sub_1ECE0`／`sub_1EC82` RNG 已接並有單測；特殊投射物保留發射兵 `+0x02 bit 0` 並可取 raw `0x214/0x215`；原版完整投射物畫面／timer 與同狀態對拍未完 |
-| save/load | `SINARIO.DAT`／`SAVE.DAT` 四槽 | `state.SaveInto` + `cmd/wlgame` system modal + `internal/savepath` | round-trip、overlay 差異、pristine hash、Trust `+0x10`／Player `+0x0D,+0x0F` round-trip、事件佇列 raw／節拍／月壓縮／1／2／3／4／5／6／7／8／9／13 handler 測試、`TestQueuedTalkNotices`／`TestQueuedDiplomacyReportTalkNotices`／`TestRawAmountEditorSemantics`、event3 fixture、Xvfb `4→S→Return` | 可玩 overlay、Trust、Player 雙欄、事件佇列原始 256 筆、每十次節拍、月度壓縮與事件 1／2／3／4／5／6／7／8／9（狀態、主要 TALK 句型取用）／13 handler、事件 11／12／13 的 `TalkNotice` 與 modal GUI 已接、玩家外交／撥款三選一與 raw 3×6 數值選取、event3 raw fixture→composite→消像已接；事件 6／7 次要反應／原版數值排版、事件 10、事件 11／12 物件動畫、原版外框／游標逐像素與完整原版 save parity 仍未完 |
+| strategy settlement | `KI.EXE` monthly/hourly paths | `internal/rules/economy`、diplomacy、persuasion、`internal/rules/strategyai` | deterministic tests + RE notes + PC-98 event3 fixture | 月結評估／事件 1 宣戰／事件 2 合作產生器、狀態、玩家三選一與 `sub_17C6E` 數值語意／事件 3 停戰產生器、狀態、玩家三選一與 `sub_17C6E` 數值語意／事件 4／5 官員撥款產生器、狀態、玩家三選一與 `sub_17C6E` 數值語意／事件 6／7 外交官回報狀態、主要 TALK #57／#58／#43–#45／#47–#49 與玩家進言 producer／事件 8 遷都與 `sub_14502` 軍團同步／事件 9 指定武將釋放狀態與可見 `#37` 通知（`#409` 是空槽 no-op）／事件 10 訊息邊界／事件 11／12 runtime 災害 marker、`sub_14269` 持久效果與 `TALK.DAT #70/#71/#72` 通知／事件 13 `#51` 通知／敵方編成狀態切片已接；事件 2／3 raw fixture→前置 TALK→三選一→3×6 滑鼠格位與消像、事件 4／5 共用數值選取與 TALK 五行分頁、DOS/V cursor／button glyph 資產已驗；事件 6／7 次要反應、事件 10 訊息、事件 11／12 物件 timer parity、多軍團請求與完整行軍狀態機未完 |
+| tactical battle | `KI.EXE` tactical paths + BATTLE data | `internal/rules/tactical`／battle renderer／遭遇決策 | parser invariants、公式測試、畫面／正常路徑 | 遭遇選單→戰鬥指揮→攻城戰場→攻擊命令→戰後結果報告已由正常 UI 路徑驗證；一般近戰／大將／投射物核心、退卻／繞路點修正與 `sub_1AD7F` CH=0x20 特殊效果已接；`sub_1B941` 的投射物先命中／再移動／後威力更新、raw 格索引與戰場標記已接；正常真實攻城狀態層結算、結果資料流與 GUI 回戰略已通過；`+0x1E` 的寫入端、鎖敵分支與 `sub_1AC55` raw 平面條件已接成 `PlaneHigh`；`sub_1AD2D` 初始速度公式與 `sub_1ECE0`／`sub_1EC82` RNG 已接並有單測；特殊投射物保留發射兵 `+0x02 bit 0` 並可取 raw `0x214/0x215`；⭐ **同狀態逐區對拍：九區裡六區逐像素相同、戰場區 0.17%**（`docs/playtest/40`）；原版完整投射物畫面／timer 未完 |
+| save/load | `SINARIO.DAT`／`SAVE.DAT` 四槽 | `state.SaveInto` + `cmd/wlgame` system modal + `internal/savepath` | round-trip、overlay 差異、pristine hash、Trust `+0x10`／Player `+0x0D,+0x0F` round-trip、事件佇列 raw／節拍／月壓縮／1／2／3／4／5／6／7／8／9／13 handler 測試、`TestQueuedTalkNotices`／`TestQueuedDiplomacyReportTalkNotices`／`TestRawAmountEditorSemantics`、event3 fixture、Xvfb `4→S→Return` | 可玩 overlay、Trust、Player 雙欄、事件佇列原始 256 筆、每十次節拍、月度壓縮與事件 1／2／3／4／5／6／7／8／9（狀態、主要 TALK 句型取用）／13 handler、事件 11／12／13 的 `TalkNotice` 與 modal GUI 已接、玩家外交／撥款三選一與 raw 3×6 數值選取、event3 raw fixture→composite→消像已接；事件 6／7 次要反應／原版數值排版、事件 10、事件 11／12 物件動畫與完整原版 save parity 仍未完 |
 | release | remake builds only | `tools/release.sh` + Docker 等價封裝流程 + deny-list | PE/ELF/Mach-O 檔頭、unpacked smoke、asset scan | Linux amd64、Windows amd64、macOS Intel／Apple Silicon 候選包已產出；Linux 封裝 Xvfb smoke 與 deny-list 通過；Windows／macOS GUI 目標 runtime 實跑仍未完 |
 
 ### 2026-08-09 事件指定金額 outcome 勘誤
@@ -67,10 +72,10 @@ IDA `CS:08A4` handler 表已證實 `\4` 是玩家軍師、`\6` 是不可見欄�
 | M7-A | 60 筆 `translations/corrections.json` | `TALK.DAT` 兩版索引、IDA 槽位索引證據、逐句內容對照 | `talkdat.py correct`／`verify` + selftest + `WrapLines`／Xvfb 抽樣 | 60 筆已可重跑套用並接入 `wlgame`；#0–#1021 第一輪已讀；remake 實測行寬／hard line／五行分頁／尾空行已測，未定位 formatter 與逐句畫面抽樣未完 |
 | M7-B | 1,022 則文意層校訂 | 日文／繁中逐句對照 | 變數、名詞、漏譯、刪節與決策可回查 | 第一輪逐句讀取完成；60 筆 runtime 產出已鎖定，硬換行／行寬、formatter 與畫面 parity 進行中 |
 | M8-A | 目標平台建置 | `tools/release.sh` 等價 Docker 矩陣、PE/ELF/Mach-O 檢查、packaged Linux `-shot` | 交叉編譯目標正確、產物非同一平台假成功、發行目錄可啟動 | Linux／Windows／Darwin 純 Go 產物、Linux 原生本體與封裝 smoke 通過；Windows／macOS GUI runtime 未實機驗證 |
-| M8-B | 正常玩家路徑與畫面 | PC-98 固定狀態 oracle、event3 raw fixture、有效時鐘的原版／AI 存檔 | 無 debug hook、同狀態截圖／狀態對拍 | 編成／行軍／城兵攻城／敵方 AI 遭遇選單／戰術畫面、攻擊命令、結果報告與 GUI 回戰略接縫已完成；事件 3 raw fixture→前置 TALK→三選一→3×6 實際點擊→消像短路徑已完成；DOS/V 96×64 內框、3×6 button glyph、`KI.EXE` 16×16 hardware cursor 已解碼接線；仍缺自然整張畫面对拍、其他事件物件與跨平台實機 |
+| M8-B | 正常玩家路徑與畫面 | PC-98 固定狀態 oracle、event3 raw fixture、有效時鐘的原版／AI 存檔 | 無 debug hook、同狀態截圖／狀態對拍 | 編成／行軍／城兵攻城／敵方 AI 遭遇選單／戰術畫面、攻擊命令、結果報告與 GUI 回戰略接縫已完成；事件 3 raw fixture→前置 TALK→三選一→3×6 實際點擊→消像短路徑已完成；DOS/V 96×64 內框、3×6 button glyph、`KI.EXE` 16×16 hardware cursor 已解碼接線；⭐ **同狀態逐區對拍已完成**（主畫面五區逐像素相同、戰場九區裡六區；`docs/playtest/37`／`40`）；仍缺其他事件物件與跨平台實機 |
 | M8-C | 發行隔離 | deny-list、可寫 save overlay | 原始資產零命中、解包 smoke | deny-list／overlay smoke 已通過；完整目標平台矩陣未完成 |
-| M9-A | Android 手機版規劃 | `docs/mobile/android-plan.md`、固定 Android Docker 工具鏈、`arm64-v8a` debug APK | 橫向安全區、觸控 hitbox、TALK／數值二段確認、pause/resume 不重複 tick | 規格已建立；尚未實作觸控層、Android 工具鏈或 APK |
-| RE-1 | ICONGRF 段 1／龍紋／MCH 等 | IDA／原版畫面或檔案不變量 | `docs/re/` + `docs/mechanics/` 雙寫 | `MMAP.MCH` type 1／2 已完成格式與接線；ICONGRF 段 1／龍紋仍待排程 |
+| M9-A | Android 手機版規劃 | `docs/mobile/android-plan.md`、固定 Android Docker 工具鏈、`arm64-v8a` debug APK | 橫向安全區、觸控 hitbox、TALK／數值二段確認、pause/resume 不重複 tick | 觸控 shell 原型 debug APK 已產出，模擬器安裝／啟動／有限觸控 smoke 已跑；**完整遊戲核心尚未接入 Android** |
+| RE-1 | ICONGRF 段 1／龍紋／MCH 等 | IDA／原版畫面或檔案不變量 | `docs/re/` + `docs/mechanics/` 雙寫 | `MMAP.MCH` type 1／2 已完成；⭐ **全函式靜態分析收斂到 T1**（739/739 有 `docs/re/` 筆記）；ICONGRF 段 1 的 UI 語意／龍紋仍待排程 |
 
 ## Intentional differences
 

@@ -203,6 +203,18 @@ BLOCKED_BY_COPY_PROTECTION = re.compile(
 # 否定寫法（「不再是阻擋」「即可越過」）本身就是正確答案，不能誤報。
 NOT_BLOCKED = re.compile(r"不再|不是阻擋|不阻擋|不擋|已可|即可|可越過|越過|不會阻擋")
 
+
+def quoted(line, span):
+    """命中的字串是不是包在「」裡（＝**指稱**那個斷言，不是主張它）。
+
+    ⭐ 沒有這一條，檢查就描述不了自己：一句
+    「`tools/index.py` 的『密碼頁擋住 oracle』檢查只走 docs/」
+    會被自己擋下來。**規則要能寫下自己的名字。**
+    """
+    lo, hi = span
+    return line.rfind("\u300c", 0, lo) > line.rfind("\u300d", 0, lo) \
+        and line.find("\u300d", hi) != -1
+
 # ⭐ 這兩份是**correction 本身的家**：`CLAUDE.md` §4.0 與 `CONTEXT.md` 的
 # 「已被推翻的斷言」表就是用來寫下「密碼頁不擋 oracle」的，
 # 裡面必然引用舊斷言的字樣。對它們套這條檢查只會得到永遠修不掉的誤報。
@@ -265,8 +277,9 @@ def check(docs):
         except OSError:
             continue
         for n, line in enumerate(text.split("\n"), 1):
-            if BLOCKED_BY_COPY_PROTECTION.search(line) \
-                    and not NOT_BLOCKED.search(line):
+            m = BLOCKED_BY_COPY_PROTECTION.search(line)
+            if m and not NOT_BLOCKED.search(line) \
+                    and not quoted(line, m.span()):
                 problems.append(
                     f"{rel(path)}:{n}：又把密碼頁寫成 oracle 的阻擋"
                     f"（{line.strip()[:34]}…）——空白確認就會過，"

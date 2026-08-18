@@ -145,7 +145,9 @@ AH／信賴度次要訊息、PC-98 數值視窗與長程路徑
   runtime 寬度 gate 與 6 張 DOS/V modal 代表幀通過；文字層的逐像素原版對拍尚未做）
 - [x] normal player path without debug hooks（策略／戰術短路徑已驗）
 - [x] writable save and pristine-original check
-- [x] video-oracle／remake screenshot review with metadata（嚴格同狀態逐像素 diff 仍未宣稱）
+- [x] video-oracle／remake screenshot review with metadata
+- [x] ⭐ 同狀態逐區對拍：拿原版存檔開同一個局面比像素。主畫面五區逐像素相同、
+      戰場九區裡六區逐像素相同（`docs/playtest/37`、`40`；方法與判定在 `docs/spec/90`／`91`）
 - [ ] packaged build smoke on target platforms
 - [ ] deny-list scan and final dirty-tree review
 
@@ -204,9 +206,11 @@ AH／信賴度次要訊息、PC-98 數值視窗與長程路徑
   map、右側 208 px sidebar、192×128 minimap 與自勢力數值欄；`strategyhud.go` 已
   接入自然 HUD，remake 截圖 `wlgame-dosv-natural-remake.png` SHA-256 為
   `961e583915d2e0e7b65cd51f637ec214530b68040ba0da5770add4b35cb46e30`。
-- 影片視覺／幾何對拍 gate 通過；因影片為有損縮放且與 remake 的日期／鏡頭不同，嚴格
-  同狀態逐像素 diff 仍不宣稱。Windows／macOS 原生 GUI gate 與正式包 gate 不受此項
-  取代。
+- 影片視覺／幾何對拍 gate 通過；因影片為有損縮放且與 remake 的日期／鏡頭不同，
+  **影片這條路**不宣稱嚴格同狀態逐像素 diff。
+  （同狀態逐像素是另一條路走出來的：拿原版存檔開同一個局面、640×400 原尺寸逐區比，
+  見 `docs/spec/90`／`91` 與 `docs/playtest/37`／`40`。）
+  Windows／macOS 原生 GUI gate 與正式包 gate 不受此項取代。
 - 依使用者要求，另產出 `dist/promo/wolong-remake-yt-comparison.mp4`、自然畫面並排圖與
   差異圖；骨架調整前的 640×400 自然幀基線為 `AE=255003/256000 (99.61%)`、
   `RMSE=0.338208`。這封閉的是 YouTube／推廣片可見像素差異與畫面骨架比較，不把
@@ -267,11 +271,11 @@ AH／信賴度次要訊息、PC-98 數值視窗與長程路徑
 
 | 範圍 | 執行方式／證據 | 結果 | 邊界 |
 |---|---|---|---|
-| DOS/V 原版啟動 | `wolong-dosboxx:latest`、`START.BAT`、`mouse_emulation=integration`、固定 `cycles=20000`；playtest 18 | **PASS（密碼頁後開場）** | 空白確認、`0000`、`1234` 均進入開場；完整自然長程／同狀態 pixel parity 尚未執行 |
+| DOS/V 原版啟動 | `wolong-dosboxx:latest`、`START.BAT`、`mouse_emulation=integration`、固定 `cycles=20000`；playtest 18 | **PASS（密碼頁後開場）** | 空白確認、`0000`、`1234` 均進入開場；⭐ 同狀態逐區對拍已做（`docs/playtest/37`／`40`），完整自然長程尚未執行 |
 | PC-98 原版 oracle | `wolong-dosboxx:latest`、`machine=pc98`；`pc98-oracle-scenarios.png`、`pc98-oracle-in-game.png` | **PASS（oracle）** | 目前 headless image 缺 window manager，bus-mouse 完整重播仍待輸入橋接 |
 | remake 正常策略 | 目前工作樹建置、`-seed 17`、無 `-open-*`；編成／行軍／速度／196/6/28 遭遇截圖 | **PASS** | 有一輪因等待／速度窗口越過遭遇；不把短 replay 當完整長程測試 |
 | remake 存檔／讀檔 | 系統視窗 `4 → S → 1 → Enter → L → 1 → Enter`；overlay 88,832 bytes | **PASS** | 原始資料唯讀，驗證的是 remake overlay contract |
-| remake 戰術 GUI | `-open-siege` current-build debug smoke；既有無旗標正常 tactical path | **PASS（smoke）** | current-build smoke 不取代原版同狀態逐像素 parity |
+| remake 戰術 GUI | `-open-siege` current-build debug smoke；既有無旗標正常 tactical path | **PASS（smoke）** | ⭐ 同狀態逐區對拍另外做過：九區裡六區逐像素相同、戰場區 0.17%（`docs/playtest/40`）|
 
 詳細報告與截圖 hash：[`docs/playtest/17-expert-dosbox-remake.md`](docs/playtest/17-expert-dosbox-remake.md)。
 
