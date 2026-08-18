@@ -124,23 +124,44 @@ def load_orig_names():
     return names
 
 
+# `sub_10094       proc near` —— IDA 匯出的 .asm 每支函式的定義行。
+ASM_PROC_RE = re.compile(r"^(sub_[0-9A-Fa-f]+)\s+proc\b")
+
+
 def load_symbols():
-    """兩版的符號都要收。
+    """兩版、**每一個執行檔**的符號都要收。
 
     `docs/re/02` 引用的 `sub_1EF24` 是 PC-98 側的符號——只比對 DOS/V 會誤報。
     版本混淆正是 CLAUDE.md §7 第 9 條要防的事，掃描器自己不能犯。
+
+    ⭐ 同一個理由也適用**執行檔**：這裡有八個，而 `census.tsv` 只涵蓋
+    `KI.EXE`。`docs/re/70` 引用的 `sub_10094` 是 `D7END.EXE` 的符號，
+    只比對 census 會把它整份判成幽靈。所以同時收 `*.asm` 裡的
+    `sub_xxxxx proc` ——那是「這個符號真的存在於某個資料庫」的直接證據。
     """
     syms, found = set(), False
     for ver in ("dosv", "pc98"):
         p = os.path.join(REPO, "workplace", "ida", ver, "census", "census.tsv")
-        if not os.path.exists(p):
+        if os.path.exists(p):
+            found = True
+            with open(p, encoding="utf-8", errors="replace") as fh:
+                for line in fh:
+                    f = line.split("\t")
+                    if f[0] == "FUNC" and len(f) >= 6:
+                        syms.add(f[5].strip())
+        d = os.path.join(REPO, "workplace", "ida", ver)
+        if not os.path.isdir(d):
             continue
-        found = True
-        with open(p, encoding="utf-8", errors="replace") as fh:
-            for line in fh:
-                f = line.split("\t")
-                if f[0] == "FUNC" and len(f) >= 6:
-                    syms.add(f[5].strip())
+        for name in os.listdir(d):
+            if not name.endswith(".asm"):
+                continue
+            found = True
+            with open(os.path.join(d, name), encoding="utf-8",
+                      errors="replace") as fh:
+                for line in fh:
+                    m = ASM_PROC_RE.match(line)
+                    if m:
+                        syms.add(m.group(1))
     return syms if found else None
 
 

@@ -20,11 +20,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 47 | 45 | 2 | 0 |
 | 資料保存 | 37 | 37 | 0 | 0 |
-| 程式碼理解 | 227 | 220 | 7 | 0 |
+| 程式碼理解 | 233 | 226 | 7 | 0 |
 | 驗收 | 69 | 59 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
 | 其他 | 137 | 130 | 7 | 0 |
-| **合計** | **534** | 507 | 26 | 1 |
+| **合計** | **540** | 513 | 26 | 1 |
 
 ## 2.1 規則正確性（47 條）
 
@@ -120,7 +120,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 
-## 2.3 程式碼理解（227 條）
+## 2.3 程式碼理解（233 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -351,6 +351,12 @@
 | [`re/69-t2-cross-reference.md`](../re/69-t2-cross-reference.md) | 勢力 `+0x19` | `sub_145F8` 把互指的清成 `0xFF`。勢力記錄 64 B 的欄位表本來就大半未解（`06`） / 與 `+0x2A`（外交官）同一組欄位，一起掃 | 靜態 |
 | [`re/69-t2-cross-reference.md`](../re/69-t2-cross-reference.md) | 據點 `+0x1A` | `sub_14236` 在停戰／滅亡時改回 `+0x01`（自己）；語意像「侵攻目標勢力」但沒有正對照 / 找讀它的那一支 | 靜態 |
 | [`re/69-t2-cross-reference.md`](../re/69-t2-cross-reference.md) | `sub_1E6FF` 那張待繪表 | 欄位對應到什麼還沒查 / `byte_1E47F` 的其他使用端 | 靜態 |
+| [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | 狀態：播放順序、版面與結尾文字全解；`END_S*.DAT` 的像素格式未解。 | （散句） | 靜態 |
+| [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | `END_S*.DAT` 的像素格式 | §5：至少三塊、平面分開、總長對不上檔案大小 / 三個 consumer（`sub_1016D`／`sub_101B5`／`sub_10204`）的來源位移 `0`／`0xBB8`／`0xE74` 是段位移，換算成 byte 是 `0`／`47,744`／`59,072`——**比檔案還大**，所以載入時一定做過… | 靜態 |
+| [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | `sub_1041E`（`ENDPAL.BRG`）怎麼套 | 只知道它載檔 / 與 `GAMEPAL.BRG` 同格式的話直接沿用（`../formats/02`） | 靜態 |
+| [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | 淡入淡出的階數與色階 | 17 階（`cx` 0–0x10）已確定，每階怎麼算沒讀 / `sub_1035F`／`sub_103DC` | 靜態 |
+| [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | `sub_10293` 每一幕做什麼 | 只知道它先 `sub_1033D` 載下一張 / 逐行讀 | 靜態 |
+| [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | BGM | `ENDBGM.DAT` 走 INT 61h，與 `KI.EXE` 同一條音源路徑 / remake 已有 `endbgm-0`（`../spec/29`） | 靜態 |
 
 ## 2.4 驗收（69 條）
 

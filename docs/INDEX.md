@@ -145,6 +145,7 @@
 | [`docs/re/67-city-emblem-on-strategy-map.md`](re/67-city-emblem-on-strategy-map.md) | 67 — 大地圖上的據點徽記：位置就在記錄座標，顏色照勢力分三類 | ✅ 全解並實作。 | 2026-08-17 |
 | [`docs/re/68-t3-frontier-functions.md`](re/68-t3-frontier-functions.md) | 68 — T3 那九支：只在狀態檔與程式碼裡出現過的函式 | 九支全部讀完。 | 2026-08-18 |
 | [`docs/re/69-t2-cross-reference.md`](re/69-t2-cross-reference.md) | 69 — T2 那 18 支：逐支讀過，各自歸位 | 完成。 | 2026-08-18 |
+| [`docs/re/70-d7end-ending-player.md`](re/70-d7end-ending-player.md) | 70 — D7END.EXE：結局播放器與結局全文 | 播放順序、版面與結尾文字全解；END_S.DAT 的像素格式未解。 | 2026-08-18 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-16 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
