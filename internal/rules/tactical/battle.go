@@ -29,6 +29,17 @@ type Side struct {
 	// `sub_1B97E` 的**回復**上限，不是開場值——兩者可以不同。
 	Morale int
 
+	// Escaped[k] 是第 k 隊**退到畫面外**的兵數（原版 `+0x0B + 4k`，
+	// 由 `sub_1B4B8(ah=0)` 加一，docs/spec/65）。
+	//
+	// ⭐ **退卻是保命，不是損失**：打完的寫回是
+	// 「Σ（各隊存活 ＋ 各隊待機）」，退場的兵跟著軍團回去。
+	// 戰死的走同一支移除常式但 `ah = 1`，不加。
+	//
+	// ⚠ **不能加進 `Remaining()`**——那個是勝負判定用的「還補得出兵嗎」，
+	// 把離場的加回去，戰鬥就永遠打不完（§1.1）。
+	Escaped [Squads]int
+
 	// Reserve[k] 是第 k 隊還在畫面外待機的兵數。
 	//
 	// 說明書 4.1：「1つの戦場に全軍がはいることは出来ませんので、
@@ -157,6 +168,19 @@ func (s *Side) Fresh() int {
 
 // Remaining 回傳這一側的總戰力：場上的 ＋ 待機的。
 // **兩邊都歸零才算補不出兵**（說明書 4.1 的勝負條件）。
+// Survivors 是**打完之後跟著軍團回去**的兵數：場上還站著的、
+// 還在待機的，加上退到畫面外的（docs/spec/65）。
+//
+// 與 `Remaining()` 的差別只有最後一項，而那一項正是「退卻」與
+// 「戰死」的分界——兩者在畫面上都是離場，帳卻不一樣。
+func (s *Side) Survivors() int {
+	n := s.Remaining()
+	for _, e := range s.Escaped {
+		n += e
+	}
+	return n
+}
+
 func (s *Side) Remaining() int {
 	n := s.Alive()
 	for _, r := range s.Reserve {
@@ -618,7 +642,7 @@ type Outcome struct {
 func (b *Battle) Result() Outcome {
 	o := Outcome{AttackerWins: b.Winner == 0, Frames: b.Frame}
 	for i := range b.Sides {
-		o.Men[i] = b.Sides[i].Remaining() * MenPerSoldier
+		o.Men[i] = b.Sides[i].Survivors() * MenPerSoldier
 		o.GeneralHP[i] = b.Sides[i].Soldiers[0].HP
 	}
 	return o

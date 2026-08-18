@@ -1185,3 +1185,39 @@ func TestHitStunSkipsThreeFrames(t *testing.T) {
 		t.Fatal("第四幀應該恢復移動")
 	}
 }
+
+// TestRetreatedSoldiersCountAsSurvivors 釘住「退卻算生還、戰死不算」。
+//
+// 原版兩種離場走同一支 `sub_1B4B8`，差別只有 `ah`：退卻那條
+// （`sub_1AAED`）傳 0 會把該隊的存活數 +1，倒地數完四幀那條傳 1 不加
+// （docs/spec/65）。打完的寫回是「Σ（存活 ＋ 待機）」。
+//
+// ⚠ 生還**不能**進 `Remaining()`：那個是勝負判定用的「還補得出兵嗎」。
+func TestRetreatedSoldiersCountAsSurvivors(t *testing.T) {
+	b := NewBattle(flatField(), SyntheticFormations(), &fixedRand{seq: []int{1}}, 0)
+	b.Sides[0].Morale = 100
+	b.Deploy(0, 0, Infantry, 8)
+	base := b.Sides[0].Remaining()
+
+	// 一個兵走到畫面邊緣：離場，但算生還。
+	s := &b.Sides[0].Soldiers[1]
+	s.Cmd, s.Next = Retreat, Retreat
+	s.X, s.Y = MinCoord, 0x20
+	b.doRetreat(0, 1)
+	if s.Alive {
+		t.Fatal("走到邊緣應該離場")
+	}
+	if got := b.Sides[0].Remaining(); got != base-1 {
+		t.Fatalf("離場之後 Remaining = %d，預期 %d（生還不能算進去）", got, base-1)
+	}
+	if got := b.Sides[0].Survivors(); got != base {
+		t.Fatalf("退卻的兵要算生還：Survivors = %d，預期 %d", got, base)
+	}
+
+	// 戰死：兩邊都不算。
+	d := &b.Sides[0].Soldiers[2]
+	d.Alive = false
+	if got := b.Sides[0].Survivors(); got != base-1 {
+		t.Fatalf("戰死的不該算生還：Survivors = %d，預期 %d", got, base-1)
+	}
+}

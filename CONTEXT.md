@@ -444,6 +444,7 @@ M6 的版面幾何對得上原版，但畫的內容還有缺。**
 | ⭐ 別的勢力遷都要**有外交官駐在那裡**才收得到報告（`sub_133FD` 的 `[si+2Ah] == 0xFF → 一句話都不報`）——外交官也是情報站 | [`spec/64`](docs/spec/64-capital-relocation-report.md)、[`re/69`](docs/re/69-t2-cross-reference.md) §2.4 |
 | ⭐ **旗也要跟著戰場翻**（`sub_19E10` 掃的是翻好之後的緩衝區）——只翻地形會讓旗散在鏡射位置 | [`spec/56`](docs/spec/56-battlefield-rotation.md) §3、[`playtest/40`](docs/playtest/40-tactical-parity.md) §11 |
 | ⭐ 顯示格的**圖號 0 ＝ 空**（原版每幀 `rep stosw` 清成 0，寫 0 等於沒寫）——拿 0 去查圖會在門洞那幾層各補一圈白邊 | [`playtest/40`](docs/playtest/40-tactical-parity.md) §12 |
+| ⭐ **退卻是保命不是損失**：兵離場只有一支常式，`ah=0`（退到畫面外）算生還、`ah=1`（倒地）不算；打完的兵力是 Σ（存活 ＋ 待機）| [`spec/65`](docs/spec/65-retreated-soldiers-survive.md)、[`mechanics/30`](docs/mechanics/30-combat.md) §3.8 |
 | 顯示格表頭 `+1`（含物件的高度）與 `+3`（只有地形）的分工 | [`re/68`](docs/re/68-t3-frontier-functions.md) §2.1 |
 | 戰場側欄逐像素對過：陣形列／指令面板／`▶▶` 列三區 PASS | [`spec/31`](docs/spec/31-tactical-sidebar.md)、[`playtest/40`](docs/playtest/40-tactical-parity.md) |
 
@@ -460,7 +461,7 @@ INT 33 的範圍變成整個世界（一個主機像素 ≈ 9.6 個遊戲像素�
 | # | 工作 | 為什麼現在做 | 下手點 |
 |---:|---|---|---|
 | **1** | **少一支旗、一根木樁與一小塊地形**（191 px）| `field` 剩下 307 px，其中 116 px 是**原理上消不掉的**旗揮舞相位，真正的缺口只剩這三小塊（[`playtest/40`](docs/playtest/40-tactical-parity.md) §13）| 逐支列出旗的螢幕位置，比對原版那五群紅布，看是哪一支沒進畫面 |
-| **2** | **倒地動畫** | 血歸零時原版改走另一條（`+0x00` 只留 bit 4、設 bit 0、`[di+1]=4`），數完四幀由 `sub_1B4B8` 收掉；remake 直接把 `Alive` 設成 false（[`spec/63`](docs/spec/63-hit-stun.md) §5）| 與硬直是同一個計時器，接法一樣 |
+| **2** | **倒地動畫** | 血歸零時原版改走另一條（`+0x00` 只留 bit 4、設 bit 0、`[di+1]=4`），四幀之間由 `sub_1B360` 畫倒地圖、數完由 `sub_1B4B8(ah=1)` 收掉；remake 直接把 `Alive` 設成 false | 圖號已解：`0x168`（側 0）／`0x21C`（側 1）＋ 兵種組（大將騎馬 +0、弓 +4、步 +8）＋ 後兩幀再 +2。**純呈現**，帳已經由 [`spec/65`](docs/spec/65-retreated-soldiers-survive.md) 分開了 |
 
 > ⭐ **這一輪最有用的一招**：差異的**形狀會騙人**。整片 99% 不同可能只是
 > 調色盤刻度差 4%；「少畫了一個徽記」可能是整張圖塊換掉了。

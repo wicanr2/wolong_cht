@@ -214,6 +214,9 @@ func (b *Battle) doRetreat(side, k int) {
 	s.GoalX, s.GoalY, s.GoalZ = edge, retreatY, 0
 	if s.X == edge {
 		s.Alive = false
+		// ⭐ 走到畫面外的兵**算生還**（原版 `sub_1B4B8` 的 `ah = 0`
+		// 那條路加一，docs/spec/65）。戰死的走同一支但不加。
+		b.Sides[side].Escaped[k/PerSquad]++
 		b.squadLeaderGone(side, k)
 	}
 }
