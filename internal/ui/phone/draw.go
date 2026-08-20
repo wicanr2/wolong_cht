@@ -29,6 +29,13 @@ var (
 // Draw 把一局畫進 960×540 的邏輯畫布。
 func (s *Session) Draw(dst *ebiten.Image, td *textdraw.Drawer) {
 	dst.Fill(inkVoid)
+	// ⭐ 戰場開著時**整個主區換成戰場**，大地圖不畫——
+	// 原版進戰術畫面時戰略畫面也整個換掉。
+	if s.BattleActive() {
+		s.drawBattle(dst, td)
+		s.drawStatusBar(dst, td)
+		return
+	}
 	s.drawMap(dst)
 	switch {
 	case s.advise.stage != adviseIdle:

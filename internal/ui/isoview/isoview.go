@@ -1,4 +1,12 @@
-package main
+// Package isoview 是戰場的等角投影繪製。
+//
+// **桌面版與手機版共用這一份。** 投影公式、顯示格、深度關係全部照原版
+// （`sub_1DAAA`／`sub_1DC9D`／`sub_1DDB4`），而那幾支的細節有好幾個
+// 「差一列」的坑；各寫一份必然會有一邊踩到（`CLAUDE.md` §7 第 6 條）。
+//
+// 這一層**不認識版面**：它畫出一張原生解析度的畫布，
+// 要放在畫面哪裡、放大幾倍由呼叫端決定。
+package isoview
 
 import (
 	"image"
@@ -86,7 +94,7 @@ func isoProjectOriginal(x, y, z int) (col, row int) {
 // 推導（`sub_1DC9D` 的兩層迴圈）：第 r 列從 (camX−r, camY+r) 起走，
 // 第 s 格的半列位移 h ＝ (y−x) − (camY−camX) ＝ 2r ＋ (s mod 2)，
 // 而 s 與 h 恆同奇偶，所以 r ＝ floorDiv2(h)。
-func (v *battleView) cellOffset(x, y, z int) (dcol, drow int) {
+func (v *View) cellOffset(x, y, z int) (dcol, drow int) {
 	oy := y + originalRowBias // 換成原版的框（鏡頭本來就存那個框）
 	return (x + oy) - (v.camWorldX + v.camWorldY),
 		floorDiv2((oy-x)-(v.camWorldY-v.camWorldX)) - z
@@ -101,8 +109,8 @@ func floorDiv2(v int) int {
 	return v / 2
 }
 
-// battleView 是戰場畫面的資源：解好的子圖塊圖與相機。
-type battleView struct {
+// View 是戰場畫面的資源：解好的子圖塊圖與相機。
+type View struct {
 	lib   *battle.Library
 	set   int
 	field int        // 這一張戰場的編號，重新展開堆疊時要用
@@ -139,65 +147,8 @@ type battleView struct {
 	camCol, camRow       int
 }
 
-// newBattleView 準備一張戰場的繪圖資源。lib 為 nil 就回 nil，
-// 呼叫端會退回沒有美術的畫法。
-func (g *game) newBattleView(field int) *battleView {
-	if g.battleLib == nil || g.lib == nil || g.lib.Palette == nil {
-		return nil
-	}
-	bank, err := g.lib.Palette.Bank(0)
-	if err != nil {
-		return nil
-	}
-	var minimap *ebiten.Image
-	var subs [][][]byte
-	var banners []battle.Banner
-	if field >= 0 && field < battle.NumFields {
-		// 與 buildField 用同一個旗標：翻轉的戰場連小地圖一起翻
-		// （docs/spec/56 §3）。
-		tiles := g.battleLib.Tiles(field)
-		if g.battleRotate {
-			tiles = battle.Rotate180(tiles)
-		}
-		// 縮圖畫的是原版那個 64×64 緩衝區：表頭那一列也在裡面
-		// （docs/formats/07 §2.1）。地形那 62 列換成可能已翻轉的版本。
-		rows := g.battleLib.MinimapRows(field)
-		copy(rows[1:1+len(tiles)], tiles)
-		raw := battle.RenderTacticalMinimap(rows, g.battleLib.TileAttributes(field))
-		minimap = ebiten.NewImageFromImage(raw.RGBA(bank))
-		subs = g.battleLib.SubTilesFor(field, tiles)
-		// 旗與地形要用**同一份**格子：翻轉的戰場連旗一起翻
-		// （docs/playtest/40 §11）。
-		banners = g.battleLib.BannersFor(field, tiles, g.rng.Next)
-	}
-	v := &battleView{
-		lib: g.battleLib, set: g.battleLib.TileSet(field),
-		field: field,
-		subs:  subs,
-		cache: map[int]*ebiten.Image{}, pal: bank,
-		sprites: g.battleSprites, spCache: map[int]*ebiten.Image{},
-		sourceCache: map[int]*ebiten.Image{},
-		banners:     banners,
-		minimap:     minimap,
-		// sub_199F3：word_1D328=0x24、word_1D32A=0x0E，接著由
-		// sub_1DC9D 換成投影 origin。原版只有 dirty flag 設定時才更新，
-		// 不是每幀追著大將。
-		camWorldX: battleCamInitX,
-		camWorldY: battleCamInitY,
-		// 游標十字的位置是**另一組變數**（`sub_199F3` 的 word_1D32C／
-		// word_1D32E ＝ 0x20／0x21），不是鏡頭；縮圖點選時兩者一起更新。
-		cursorX: battleCamInitX + cursorBiasX,
-		cursorY: battleCamInitY + cursorBiasY,
-	}
-	if g.battleCamAt != nil {
-		v.camWorldX, v.camWorldY = g.battleCamAt[0], g.battleCamAt[1]
-	}
-	v.applyCameraOrigin()
-	return v
-}
-
 // image 把一個子圖塊轉成 Ebiten 的圖，解過就快取起來。
-func (v *battleView) image(n int) *ebiten.Image {
+func (v *View) image(n int) *ebiten.Image {
 	if img, ok := v.cache[int(n)]; ok {
 		return img
 	}
@@ -227,7 +178,7 @@ func (v *battleView) image(n int) *ebiten.Image {
 // flags 目前餵兩個位元：**走路的動畫幀**（bit 0，原版每次更新完
 // `xor [si+2], 1`）與**受擊**（bit 4，原版 `sub_1B618` 設，
 // 效果是面向一律當成正面）。bit 3 對應的狀態還沒解。
-func (v *battleView) soldierImage(s *tactical.Soldier, side int) *ebiten.Image {
+func (v *View) soldierImage(s *tactical.Soldier, side int) *ebiten.Image {
 	flags := int(s.PoseStep) & battle.PoseFlagStep
 	if s.HitGeneral {
 		flags |= battle.PoseFlagHitGeneral // sub_1B6BC：+0x02 bit 3
@@ -238,7 +189,7 @@ func (v *battleView) soldierImage(s *tactical.Soldier, side int) *ebiten.Image {
 	return v.frame(side, battle.SpriteFor(int(s.Kind), s.Facing, flags))
 }
 
-func (v *battleView) frame(side, n int) *ebiten.Image {
+func (v *View) frame(side, n int) *ebiten.Image {
 	if v.sprites == nil {
 		return nil
 	}
@@ -266,7 +217,7 @@ func (v *battleView) frame(side, n int) *ebiten.Image {
 
 // sourceImage 取原版 render 合併表裡的 16×32 單位。
 // BATTLE.SCH 的人物是兩個單位疊成 16×64；投射物則直接用單一單位。
-func (v *battleView) sourceImage(raw int) *ebiten.Image {
+func (v *View) sourceImage(raw int) *ebiten.Image {
 	if v.sprites == nil {
 		return nil
 	}
@@ -299,14 +250,14 @@ func (v *battleView) sourceImage(raw int) *ebiten.Image {
 //
 // 這裡刻意不把原點夾到 remake 自訂範圍。原版 producer 自己用 31×24
 // 邊界裁切，負 row 也是有效相機狀態。
-func (v *battleView) applyCameraOrigin() {
+func (v *View) applyCameraOrigin() {
 	v.camCol, v.camRow = isoProjectOriginal(v.camWorldX, v.camWorldY, 0)
 }
 
-// setCameraFromMiniMap 重現 DOS/V `0001C0C6` 起的縮圖點選公式。
+// SetCameraFromMiniMap 重現 DOS/V `0001C0C6` 起的縮圖點選公式。
 // 輸入是 640×400 邏輯畫布座標；原版直接使用 0x1F0（496）與
 // 0xCF（207）作縮圖基準，再寫回 word_1D32A／word_1D328 並設 dirty flag。
-func (v *battleView) setCameraFromMiniMap(screenX, screenY int) {
+func (v *View) SetCameraFromMiniMap(screenX, screenY int) {
 	v.camWorldY = (((screenX - 0x1f0) >> 1) | 1) - 0x13
 	v.camWorldX = (((0xcf - screenY) >> 1) &^ 1) + 4
 	// 十字跟著點選走：原版 `0x1C0C6` 先用舊的 word_1D32C／word_1D32E
@@ -320,10 +271,10 @@ func (v *battleView) setCameraFromMiniMap(screenX, screenY int) {
 	v.applyCameraOrigin()
 }
 
-// setCameraWorld 直接指定鏡頭的世界格。**驗收用**：對拍時要讓 remake
+// SetCameraWorld 直接指定鏡頭的世界格。**驗收用**：對拍時要讓 remake
 // 跟原版停在同一個鏡頭。吃的是**原版的框**（含表頭那一列），
 // 所以 `sub_199F3` 的初值就是 `-battle-cam 36,14`。
-func (v *battleView) setCameraWorld(x, y int) {
+func (v *View) SetCameraWorld(x, y int) {
 	v.camWorldX, v.camWorldY = x, y
 	v.applyCameraOrigin()
 }
@@ -333,9 +284,14 @@ func (v *battleView) setCameraWorld(x, y int) {
 // 最後仍由硬體 viewport 裁掉；不能先建立 496 × 384 畫布，再靠 remake 的
 // sidebar／命令列覆蓋，否則鏡頭與物件裁切的責任會落在錯誤圖層。
 const (
-	isoNativeW = dosvBattleNativeFieldW * 2 // 480
-	isoNativeH = dosvBattleNativeFieldH * 2 // 368
-	isoScale   = 1
+	// nativeFieldW／H 是松崗 DOS/V 實際可見的 viewport 的一半
+	// （版面常數在 `cmd/wlgame/battlelayout.go`，這裡不依賴那一層）。
+	nativeFieldW = 240
+	nativeFieldH = 184
+
+	// NativeW／NativeH 是這張畫布的大小。
+	NativeW = nativeFieldW * 2 // 480
+	NativeH = nativeFieldH * 2 // 368
 )
 
 // drawTerrain 畫地形。
@@ -345,7 +301,7 @@ const (
 //
 // 畫的順序用畫家演算法：**依畫面列由上往下**。子圖塊是往下長 32 px 的，
 // 所以列數大（畫面上比較低）的後畫，正好蓋住後面的。
-func (v *battleView) drawTerrain(dst *ebiten.Image, ox, oy int) {
+func (v *View) drawTerrain(dst *ebiten.Image, ox, oy int) {
 	// 依畫面列分桶就排好了，不必真的排序（列數是有界的）。
 	const above = 4 // 子圖塊高 4 列，上面那幾列的圖還會露出來
 	buckets := make([][]int32, isoRows+above)
@@ -389,7 +345,7 @@ func (v *battleView) drawTerrain(dst *ebiten.Image, ox, oy int) {
 // 的裁切也一樣。**不要換成 cellOffset**——那一支是地形走訪用的，
 // 兩者在鏡頭是奇數時對一半的格子差一列，而原版的物件走的就是這一條
 // （docs/spec/57 §2）。
-func (v *battleView) ScreenPos(ox, oy, x, y, z int) (int, int, bool) {
+func (v *View) ScreenPos(ox, oy, x, y, z int) (int, int, bool) {
 	col, row := isoProject(x, y, z)
 	if col < v.camCol || col >= v.camCol+isoCols ||
 		row < v.camRow || row >= v.camRow+isoRows {
@@ -399,59 +355,6 @@ func (v *battleView) ScreenPos(ox, oy, x, y, z int) (int, int, bool) {
 }
 
 // drawBattleIso 用原版的子圖塊畫戰場。
-func (g *game) drawBattleIso(screen *ebiten.Image, b *tactical.Battle, me *tactical.Soldier) {
-	v := g.view
-	l := dosvBattleLayoutFor(screenW, screenH)
-	v.applyCameraOrigin()
-	if v.buf == nil {
-		v.buf = ebiten.NewImage(isoNativeW, isoNativeH)
-	}
-	v.buf.Fill(color.RGBA{16, 18, 20, 255})
-	v.syncTiles(b)
-	entries := v.buildDisplayList(b)
-	v.drawDisplayGrid(v.buf, entries)
-
-	// 人物圖形載不到時的明確 fallback；正常 raw 資產路徑已由同一份
-	// display list 畫完，不再依 side／陣列順序覆蓋原版深度關係。
-	if v.sprites == nil {
-		for i := range b.Sides {
-			base := color.RGBA{235, 90, 70, 255}
-			if i == 1 {
-				base = color.RGBA{90, 150, 245, 255}
-			}
-			for k := range b.Sides[i].Soldiers {
-				s := &b.Sides[i].Soldiers[k]
-				if !s.Alive {
-					continue
-				}
-				px, py, ok := v.ScreenPos(0, 0, s.X, s.Y, s.Z)
-				if !ok {
-					continue
-				}
-				c := base
-				size := 4
-				if s.Cmd == tactical.Retreat {
-					c = color.RGBA{130, 130, 130, 255}
-				}
-				if s.IsGeneral() {
-					size = 6
-					c = color.RGBA{250, 220, 130, 255}
-					if i == 1 {
-						c = color.RGBA{210, 230, 255, 255}
-					}
-				}
-				vector.DrawFilledRect(v.buf, float32(px-size/2), float32(py-size),
-					float32(size), float32(size), c, false)
-			}
-		}
-	}
-
-	op := &ebiten.DrawImageOptions{}
-	op.GeoM.Scale(isoScale, isoScale)
-	op.GeoM.Translate(float64(l.Field.X), float64(l.Field.Y))
-	screen.DrawImage(v.buf, op)
-}
-
 type displayEntryKind uint8
 
 const (
@@ -509,7 +412,7 @@ type battleDisplayEntry struct {
 //
 // ⭐ 旗**不重掃**：`sub_19E10` 只在開場跑一次，重掃會重擲揮舞相位，
 // 旗會在牆垮的那一幀跳一下。
-func (v *battleView) syncTiles(b *tactical.Battle) {
+func (v *View) syncTiles(b *tactical.Battle) {
 	if v == nil || b == nil || v.lib == nil || v.subs == nil {
 		return
 	}
@@ -533,7 +436,7 @@ func (v *battleView) syncTiles(b *tactical.Battle) {
 	}
 }
 
-func (v *battleView) buildDisplayList(b *tactical.Battle) []battleDisplayEntry {
+func (v *View) buildDisplayList(b *tactical.Battle) []battleDisplayEntry {
 	entries := make([]battleDisplayEntry, 0, 4096+2*tactical.SoldiersOnFoot)
 	order := 0
 	for y := 0; y < len(v.subs); y++ {
@@ -569,7 +472,7 @@ func (v *battleView) buildDisplayList(b *tactical.Battle) []battleDisplayEntry {
 			entries = append(entries, battleDisplayEntry{kind: displayProjectile,
 				col: col, row: row, cellCol: col - v.camCol, cellRow: row - v.camRow,
 				layer: p.Z, lane: 0, x: p.X, y: p.Y, z: p.Z,
-				side: p.Side, index: i, raw: projectileSourceIndex(p), order: order})
+				side: p.Side, index: i, raw: ProjectileSourceIndex(p), order: order})
 			order++
 		}
 		// 倒地動畫：原版每幀由 `sub_1B360` 換一組圖重畫（docs/spec/68）。
@@ -607,7 +510,7 @@ func (v *battleView) buildDisplayList(b *tactical.Battle) []battleDisplayEntry {
 // appendTallDisplayUnits 重現 sub_1DA1C 的兩次寫入。raw 必須是整張
 // 16×64 圖的偶數（下半）unit；raw+1 是上半。實際像素位置仍維持
 // Sprite() 已驗證的「奇數在上、偶數在下」。
-func (v *battleView) appendTallDisplayUnits(entries []battleDisplayEntry, order, col, row,
+func (v *View) appendTallDisplayUnits(entries []battleDisplayEntry, order, col, row,
 	x, y, z, raw int) ([]battleDisplayEntry, int) {
 	entries = append(entries,
 		battleDisplayEntry{kind: displayRawUnit, col: col, row: row,
@@ -707,7 +610,7 @@ func displayDepthRange(info *[battleDisplayGridRows][battleDisplayGridCols]battl
 	return z0, z1
 }
 
-func (v *battleView) rawImage(raw int) *ebiten.Image {
+func (v *View) rawImage(raw int) *ebiten.Image {
 	if raw < battle.CombinedSourceTerrainTiles {
 		return v.image(raw)
 	}
@@ -721,7 +624,7 @@ func (v *battleView) rawImage(raw int) *ebiten.Image {
 // 0x30／0x20／0x10／0 分別選來源 unit 的第 24／16／8／0 列，
 // 各取 8 px 放到輸出第 0／8／16／24 列；目前 cell 則由 sub_1E085
 // 畫完整 32 px。這正是高物件跨相鄰菱形遮擋的來源。
-func (v *battleView) drawDisplayGrid(dst *ebiten.Image, entries []battleDisplayEntry) {
+func (v *View) drawDisplayGrid(dst *ebiten.Image, entries []battleDisplayEntry) {
 	grid := makeDisplayGrid(entries)
 	info := makeDisplayInfo(&grid)
 	// sub_1E085／sub_1E0E1 先在 16×32 的暫存格式合成；sub_1DFE8／
@@ -787,7 +690,7 @@ func displaySlotEmpty(s battleDisplaySlot) bool {
 	return !s.set || s.entry.raw == 0
 }
 
-func (v *battleView) drawDisplayFull(dst *ebiten.Image, slots [2]battleDisplaySlot) {
+func (v *View) drawDisplayFull(dst *ebiten.Image, slots [2]battleDisplaySlot) {
 	for lane := 0; lane < 2; lane++ {
 		if displaySlotEmpty(slots[lane]) {
 			continue
@@ -798,7 +701,7 @@ func (v *battleView) drawDisplayFull(dst *ebiten.Image, slots [2]battleDisplaySl
 	}
 }
 
-func (v *battleView) drawDisplaySlice(dst *ebiten.Image, slots [2]battleDisplaySlot, srcY, dstY int) {
+func (v *View) drawDisplaySlice(dst *ebiten.Image, slots [2]battleDisplaySlot, srcY, dstY int) {
 	for lane := 0; lane < 2; lane++ {
 		if displaySlotEmpty(slots[lane]) {
 			continue
@@ -818,7 +721,7 @@ func (v *battleView) drawDisplaySlice(dst *ebiten.Image, slots [2]battleDisplayS
 	}
 }
 
-func (v *battleView) drawDisplayEntry(dst *ebiten.Image, b *tactical.Battle, e battleDisplayEntry) {
+func (v *View) drawDisplayEntry(dst *ebiten.Image, b *tactical.Battle, e battleDisplayEntry) {
 	px, py, ok := v.ScreenPos(0, 0, e.x, e.y, e.z)
 	if !ok {
 		return
@@ -850,12 +753,158 @@ func (v *battleView) drawDisplayEntry(dst *ebiten.Image, b *tactical.Battle, e b
 }
 
 
-// projectileSourceIndex 是原版 `sub_1AD2D`／`sub_1AD7F` 的 raw 圖號。
+// ProjectileSourceIndex 是原版 `sub_1AD2D`／`sub_1AD7F` 的 raw 圖號。
 // 這些值是合併圖形表索引，不是 BATTLE.SCH 的直接單位編號。
-func projectileSourceIndex(p tactical.ProjectileView) int {
+func ProjectileSourceIndex(p tactical.ProjectileView) int {
 	if p.Special {
 		return 0x214 + (p.SpecialFrame & 1)
 	}
 	return 0x210 + (p.Direction & 1)
 }
 
+
+// Options 是開一張戰場要的東西。
+type Options struct {
+	Lib     *battle.Library
+	Palette [16]color.RGBA
+	Sprites *battle.Sprites
+
+	// Field 是戰場編號。超出範圍時只建相機，不建地形——
+	// 呼叫端仍拿得到一張（空的）畫布，不必為此分兩條路。
+	Field int
+
+	// Rotate 是翻轉的戰場（docs/spec/56 §3）。**地形、小地圖與旗要用
+	// 同一個旗標**，否則旗會插在翻轉前的位置。
+	Rotate bool
+
+	// Rand 是插旗用的亂數（`sub_19E10` 只在開場跑一次）。
+	Rand func() int
+
+	// CamAt 不是 nil 就覆寫鏡頭初值，給驗收路徑定位用。
+	CamAt *[2]int
+}
+
+// New 準備一張戰場的繪圖資源。缺素材就回 nil，
+// 呼叫端會退回沒有美術的畫法。
+func New(opt Options) *View {
+	if opt.Lib == nil {
+		return nil
+	}
+	var minimap *ebiten.Image
+	var subs [][][]byte
+	var banners []battle.Banner
+	if opt.Field >= 0 && opt.Field < battle.NumFields {
+		// 與規則層的戰場建構用同一個旗標：翻轉的戰場連小地圖一起翻
+		// （docs/spec/56 §3）。
+		tiles := opt.Lib.Tiles(opt.Field)
+		if opt.Rotate {
+			tiles = battle.Rotate180(tiles)
+		}
+		// 縮圖畫的是原版那個 64×64 緩衝區：表頭那一列也在裡面
+		// （docs/formats/07 §2.1）。地形那 62 列換成可能已翻轉的版本。
+		rows := opt.Lib.MinimapRows(opt.Field)
+		copy(rows[1:1+len(tiles)], tiles)
+		raw := battle.RenderTacticalMinimap(rows, opt.Lib.TileAttributes(opt.Field))
+		minimap = ebiten.NewImageFromImage(raw.RGBA(opt.Palette))
+		subs = opt.Lib.SubTilesFor(opt.Field, tiles)
+		// 旗與地形要用**同一份**格子：翻轉的戰場連旗一起翻
+		// （docs/playtest/40 §11）。
+		rnd := opt.Rand
+		if rnd == nil {
+			rnd = func() int { return 0 }
+		}
+		banners = opt.Lib.BannersFor(opt.Field, tiles, rnd)
+	}
+	v := &View{
+		lib: opt.Lib, set: opt.Lib.TileSet(opt.Field),
+		field: opt.Field,
+		subs:  subs,
+		cache: map[int]*ebiten.Image{}, pal: opt.Palette,
+		sprites: opt.Sprites, spCache: map[int]*ebiten.Image{},
+		sourceCache: map[int]*ebiten.Image{},
+		banners:     banners,
+		minimap:     minimap,
+		// sub_199F3：word_1D328=0x24、word_1D32A=0x0E，接著由
+		// sub_1DC9D 換成投影 origin。原版只有 dirty flag 設定時才更新，
+		// 不是每幀追著大將。
+		camWorldX: battleCamInitX,
+		camWorldY: battleCamInitY,
+		// 游標十字的位置是**另一組變數**（`sub_199F3` 的 word_1D32C／
+		// word_1D32E ＝ 0x20／0x21），不是鏡頭；縮圖點選時兩者一起更新。
+		cursorX: battleCamInitX + cursorBiasX,
+		cursorY: battleCamInitY + cursorBiasY,
+	}
+	if opt.CamAt != nil {
+		v.camWorldX, v.camWorldY = opt.CamAt[0], opt.CamAt[1]
+	}
+	v.applyCameraOrigin()
+	return v
+}
+
+// Render 畫出這一幀的戰場，回傳原生解析度（480×368）的畫布。
+//
+// ⚠ 回傳的是**內部重用的畫布**，不要保留它的參考跨幀使用。
+func (v *View) Render(b *tactical.Battle) *ebiten.Image {
+	v.applyCameraOrigin()
+	if v.buf == nil {
+		v.buf = ebiten.NewImage(NativeW, NativeH)
+	}
+	v.buf.Fill(color.RGBA{16, 18, 20, 255})
+	v.syncTiles(b)
+	v.drawDisplayGrid(v.buf, v.buildDisplayList(b))
+	v.drawFallbackDots(b)
+	return v.buf
+}
+
+// drawFallbackDots 是人物圖形載不到時的明確 fallback。
+//
+// ⚠ 正常路徑由同一份 display list 畫完，**不再依 side／陣列順序覆蓋**
+// 原版的深度關係——那樣畫出來的遮擋是錯的。
+func (v *View) drawFallbackDots(b *tactical.Battle) {
+	if v.sprites != nil {
+		return
+	}
+	for i := range b.Sides {
+		base := color.RGBA{235, 90, 70, 255}
+		if i == 1 {
+			base = color.RGBA{90, 150, 245, 255}
+		}
+		for k := range b.Sides[i].Soldiers {
+			s := &b.Sides[i].Soldiers[k]
+			if !s.Alive {
+				continue
+			}
+			px, py, ok := v.ScreenPos(0, 0, s.X, s.Y, s.Z)
+			if !ok {
+				continue
+			}
+			c := base
+			size := 4
+			if s.Cmd == tactical.Retreat {
+				c = color.RGBA{130, 130, 130, 255}
+			}
+			if s.IsGeneral() {
+				size = 6
+				c = color.RGBA{250, 220, 130, 255}
+				if i == 1 {
+					c = color.RGBA{210, 230, 255, 255}
+				}
+			}
+			vector.DrawFilledRect(v.buf, float32(px-size/2), float32(py-size),
+				float32(size), float32(size), c, false)
+		}
+	}
+}
+
+// Minimap 是戰術初始化時產生的 128×128 底圖，沒有素材時是 nil。
+func (v *View) Minimap() *ebiten.Image { return v.minimap }
+
+// Cursor 是小地圖上那個十字的位置。**與鏡頭是兩組變數**，
+// 只是被同一個點選一起改。
+func (v *View) Cursor() (x, y int) { return v.cursorX, v.cursorY }
+
+// Camera 是鏡頭的世界格原點（原版的框，含表頭那一列）。
+func (v *View) Camera() (x, y int) { return v.camWorldX, v.camWorldY }
+
+// Field 是這一張戰場的編號。
+func (v *View) Field() int { return v.field }

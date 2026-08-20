@@ -11,6 +11,10 @@ import "github.com/wicanr2/wolong_cht/internal/assets/world"
 // 順序就是遮蔽順序：指令列永遠在最上面，其次是開著的面板，最後才是地圖。
 // **反過來的話**，面板底下的地圖會跟著被點到，而玩家看不到那件事發生。
 func (s *Session) Tap(lx, ly float64) bool {
+	// 戰場優先：它佔滿主區，底下的大地圖看不見也點不到。
+	if s.BattleActive() {
+		return s.tapBattle(lx, ly)
+	}
 	if i, ok := commandAt(lx, ly); ok {
 		s.OpenSheet(Command(i))
 		return true

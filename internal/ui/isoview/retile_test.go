@@ -1,4 +1,4 @@
-package main
+package isoview
 
 import (
 	"os"
@@ -48,7 +48,7 @@ func TestBrokenStructureRepaintsTerrain(t *testing.T) {
 	f := tactical.NewFieldFromTileLayers(lib.Tiles(field), lib.Heights(field),
 		lib.TileLayers(field), lib.GateX(field))
 	b := &tactical.Battle{Field: f}
-	v := &battleView{lib: lib, set: lib.TileSet(field), field: field,
+	v := &View{lib: lib, set: lib.TileSet(field), field: field,
 		subs: lib.SubTiles(field)}
 
 	before := append([]byte(nil), v.subs[wy][wx]...)

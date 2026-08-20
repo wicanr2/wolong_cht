@@ -27,7 +27,8 @@ docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
     -e WOLONG_SELECT="${WOLONG_SELECT:-}" -e WOLONG_ZOOM="${WOLONG_ZOOM:-}" \
     -e WOLONG_PAUSED="${WOLONG_PAUSED:-}" \
     -e WOLONG_SHEET="${WOLONG_SHEET:-}" -e WOLONG_TAB="${WOLONG_TAB:-}" \
-    -e WOLONG_ADVISE="${WOLONG_ADVISE:-}" \
+    -e WOLONG_ADVISE="${WOLONG_ADVISE:-}" -e WOLONG_SIEGE="${WOLONG_SIEGE:-}" \
+    -e WOLONG_FP_FRAMES="${WOLONG_FP_FRAMES:-}" \
     -w /src "${WOLONG_GO_IMAGE:-demonwinter-go}" bash -c '
 set -e
 export PATH=/usr/local/go/bin:$PATH

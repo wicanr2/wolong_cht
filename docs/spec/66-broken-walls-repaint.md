@@ -72,7 +72,7 @@ sub_1B824:
 | 項目 | 位置 |
 |---|---|
 | 圖塊版本 | `internal/rules/tactical/tactical.go`：`Field.rev` 由 `Retile` 遞增，`Field.Revision()` 對外 |
-| 每幀比對 | `cmd/wlgame/battleview.go` 的 `syncTiles`，由 `drawBattleIso` 呼叫；版本變了才從 `Field` 的現值重建 `v.subs` |
+| 每幀比對 | `internal/ui/isoview/isoview.go` 的 `syncTiles`，由 `drawBattleIso` 呼叫；版本變了才從 `Field` 的現值重建 `v.subs` |
 | 旗**不重建** | `sub_19E10` 只在開場掃一次；重掃會重擲揮舞相位，旗會在牆垮的那一幀跳一下 |
 | 座標框 | 規則層與繪圖層拿的都是**轉過的**那一份（`battle.go` 的 `Rotate180`），可以直接對位 |
 

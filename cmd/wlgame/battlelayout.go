@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/wicanr2/wolong_cht/internal/assets/battle"
 	"github.com/wicanr2/wolong_cht/internal/assets/cjk"
 	"github.com/wicanr2/wolong_cht/internal/assets/gfx"
 	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
@@ -101,7 +102,9 @@ var battleCommandLabels = [...]string{"陣形", "攻擊", "突擊", "城壁", "�
 // `命令碼 = 熱區碼 − 7`。**畫面順序不是命令碼順序**——第 0 列送命令 2。
 // 台詞把三個名字釘死了（TALK 0x1B1+命令碼，×8 展開後 622／630／638）：
 // 命令 0「擺出陣形！！」、命令 1「前進！轉為攻擊！」、命令 2「好啊！衝啊！！！」。
-var battleSideCommandRowCode = [...]int{2, 1, 0, 3, 4, 5}
+// battleSideCommandRowCode 與 battleBottomSlotSquad 是**原版資料**，
+// 放在 `internal/assets/battle`，手機版用同一份。
+var battleSideCommandRowCode = battle.SideCommandRowCode
 
 // battleSideCommandRowLabel 回傳指令面板第 row 列該顯示的字。
 func battleSideCommandRowLabel(row int) string {
@@ -111,12 +114,7 @@ func battleSideCommandRowLabel(row int) string {
 	return battleCommandLabels[battleSideCommandRowCode[row]]
 }
 
-// battleBottomSlotSquad 是底列由左到右第 i 格對應哪一個編成位置
-// （原版 `cs:0xD2E4`，docs/spec/33 §1.1）。
-//
-// 六個編成位置是 0 主將／1 前鋒／2 左翼／3 右翼／4 左備／5 右備，
-// 所以畫面上是「左翼 左備 主將 前鋒 右備 右翼」——**空間排列**。
-var battleBottomSlotSquad = [...]int{2, 4, 0, 1, 5, 3}
+var battleBottomSlotSquad = battle.BottomSlotSquad
 
 // battleSquadSlotX 是第 k 個編成位置畫在哪個 X（原版 `cs:0xD2EA`）。
 // 它與 battleBottomSlotSquad 互為反排列。

@@ -91,7 +91,7 @@
 目前相關入口在：
 
 - `cmd/wlgame/battle.go`：戰鬥輸入、簡化 banner／按鍵列／結果視窗；
-- `cmd/wlgame/battleview.go`：等角投影、地形、士兵、軍旗、投射物；
+- `internal/ui/isoview/isoview.go`：等角投影、地形、士兵、軍旗、投射物；
 - `internal/assets/battle/`：`BATTLE.MAP`／`BATTLE.MDL`／`BATTLE.SCH` 解碼；
 - `internal/rules/tactical/`：戰術規則、路徑、傷害與投射物；
 - `docs/re/11-tactical-battle.md`、`docs/playtest/09-wlgame-normal-tactical-path.md`。

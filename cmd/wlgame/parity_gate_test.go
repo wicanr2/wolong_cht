@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/wicanr2/wolong_cht/internal/ui/isoview"
 	"encoding/json"
 	"os"
 	"strings"
@@ -204,7 +205,7 @@ func TestProjectileParityGate(t *testing.T) {
 	}
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
-			if got := projectileSourceIndex(tc.view); got != tc.want {
+			if got := isoview.ProjectileSourceIndex(tc.view); got != tc.want {
 				t.Fatalf("raw projectile image = %#x，want %#x", got, tc.want)
 			}
 		})

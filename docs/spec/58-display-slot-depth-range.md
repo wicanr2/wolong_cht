@@ -97,7 +97,7 @@ remake 每幀全畫，清成黑色與不清實測**逐像素相同**，所以不
 
 | 項目 | 位置 |
 |---|---|
-| 高度／起始 | `cmd/wlgame/battleview.go` `makeDisplayInfo` |
+| 高度／起始 | `internal/ui/isoview/isoview.go` `makeDisplayInfo` |
 | 深度範圍 | 同檔 `displayDepthRange`，`drawDisplayGrid` 的迴圈改成 `for layer := z0; layer <= z1; layer++` |
 | 帶高 | 同檔 `displayBandRows`（＝ `battle.SubTileH / 4` ＝ 8），`drawDisplaySlice` 用它切來源 |
 | 五個貢獻 | 不動（`sub_1DE95` 的順序與 `dx` 配對已核對過）|

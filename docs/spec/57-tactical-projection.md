@@ -93,7 +93,7 @@ camX = (((0xCF − 滑鼠y) >> 1) & ~1) + 4
 
 | 項目 | 位置 |
 |---|---|
-| 地形（顯示格）| `cmd/wlgame/battleview.go` `cellOffset` — **相對鏡頭算，不要各自投影再相減** |
+| 地形（顯示格）| `internal/ui/isoview/isoview.go` `cellOffset` — **相對鏡頭算，不要各自投影再相減** |
 | 物件 | 同檔 `ScreenPos` 與 `buildDisplayList` 裡的旗／投射物／高單位 — 照 `sub_1DAAA` |
 | 鏡頭 | `camWorldX/Y`；`setCameraFromMiniMap` 已含 `\| 1` 與 `& ~1` |
 | 座標框（§2）| 同檔 `originalRowBias`：`isoProject`／`cellOffset` 的入口加 1；鏡頭與游標十字都存原版的框（`isoProjectOriginal` 給鏡頭自己用）|

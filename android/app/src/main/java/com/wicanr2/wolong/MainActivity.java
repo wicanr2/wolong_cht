@@ -16,6 +16,11 @@ public final class MainActivity extends Activity {
         super.onCreate(state);
         Seq.setContext(getApplicationContext());
         Wolongmobile.setDataRoot(dataRoot());
+        // 驗收參數走 Intent extra——**app 不繼承 adb 的環境變數**。
+        String frames = getIntent().getStringExtra("fp_frames");
+        if (frames != null) {
+            Wolongmobile.setFingerprintFrames(frames);
+        }
         setContentView(new EbitenView(this));
     }
 

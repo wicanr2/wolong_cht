@@ -13,6 +13,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"sync"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -118,6 +119,11 @@ func (g *game) ensure() {
 	if v, err := strconv.Atoi(os.Getenv("WOLONG_ADVISE")); err == nil && v >= 0 {
 		sess.PickAdvise(v)
 	}
+	if v, err := strconv.Atoi(os.Getenv("WOLONG_SIEGE")); err == nil && v >= 0 {
+		if err := sess.OpenDemoBattle(v); err != nil {
+			log.Printf("WOLONG_SIEGE：%v", err)
+		}
+	}
 }
 
 func (g *game) Update() error {
@@ -138,7 +144,40 @@ func (g *game) Update() error {
 // 同一個 seed、同樣的幀數，手機與桌面要算出同一個指紋（docs/spec/69）。
 // 幀數是規則層的 tick 數，與機器快慢無關，所以兩邊可比。
 // ⚠ 只有在**完全沒有輸入**的情況下可比——smoke 期間不要點畫面。
-var fingerprintFrames = map[int]bool{1: true, 60: true, 600: true}
+var fingerprintFrames = parseFingerprintFrames(os.Getenv("WOLONG_FP_FRAMES"))
+
+// SetFingerprintFrames 由 Java 側轉交 Intent 的 `fp_frames`。
+//
+// ⚠ **Android 的 app 不繼承 adb 的環境變數**，所以桌面那條 `WOLONG_*`
+// 的路在手機上一律無效；要從外面帶參數只能走 Intent 或檔案。
+func SetFingerprintFrames(s string) {
+	if s == "" {
+		return
+	}
+	fingerprintFrames = parseFingerprintFrames(s)
+}
+
+// parseFingerprintFrames 讀 `WOLONG_FP_FRAMES`（逗號分隔的幀號）。
+//
+// ⚠ 模擬器在忙碌的機器上只跑到個位數 fps，而 Ebiten 在 GL context
+// 遺失時會結束整個 app——跑到第 600 幀要好幾分鐘，中途被砍的機率不低。
+// 幀號可設定是為了讓驗收能挑一組跑得完的，**不是為了放寬判準**：
+// 同一組幀號兩邊仍然要一模一樣。
+func parseFingerprintFrames(s string) map[int]bool {
+	out := map[int]bool{}
+	if s == "" {
+		for _, n := range []int{1, 60, 600} {
+			out[n] = true
+		}
+		return out
+	}
+	for _, f := range strings.Split(s, ",") {
+		if n, err := strconv.Atoi(strings.TrimSpace(f)); err == nil && n > 0 {
+			out[n] = true
+		}
+	}
+	return out
+}
 
 func (g *game) logFingerprint() {
 	if !fingerprintFrames[g.frame] {

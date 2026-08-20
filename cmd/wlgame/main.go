@@ -25,6 +25,8 @@
 package main
 
 import (
+	"github.com/wicanr2/wolong_cht/internal/battlesetup"
+	"github.com/wicanr2/wolong_cht/internal/ui/isoview"
 	"github.com/wicanr2/wolong_cht/internal/rules/speed"
 	"flag"
 	"fmt"
@@ -140,9 +142,9 @@ type game struct {
 	// 索引與 library.BattleFramePart 相同。
 	battleFrame [4]*ebiten.Image
 
-	// battleRotate 是這一場的戰場有沒有轉 180 度（docs/spec/56）。
-	// `buildField` 決定，繪圖層要用同一個值，否則畫面與規則層會不一致。
-	battleRotate bool
+	// battle 是戰場來源（`internal/battlesetup`）。翻轉旗標也在它身上——
+	// 繪圖層要與建場用同一個值，否則畫面與規則層會不一致（docs/spec/56）。
+	battle *battlesetup.Provider
 
 	// battleCamAt 是 `-battle-cam` 的覆寫值（驗收用；nil ＝ 照原版初值）。
 	battleCamAt *[2]int
@@ -222,7 +224,7 @@ type game struct {
 	// 所以開著的時候時間會停（15-realtime.md §2）。
 	battleLib *battle.Library
 	// view 是戰場的等角繪圖資源。沒有原版美術時是 nil，畫面退回高度圖。
-	view          *battleView
+	view          *isoview.View
 	battleSprites *battle.Sprites
 
 	list    *listwin.List
@@ -603,7 +605,7 @@ func (g *game) battleMusic() string {
 	if p == nil {
 		return "bgm-9"
 	}
-	field := g.fieldNumber(p.Node, p.Mode == combat.Siege)
+	field := g.battle.FieldNumber(p.Node, p.Mode == combat.Siege)
 	switch {
 	case field >= 0xD1:
 		return "bgm-10" // 山地／林地／水域的戰場
@@ -1772,7 +1774,7 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 			// 戰術 view 是進戰場那一幀才建的，所以存起來由 newBattleView 套用。
 			g.battleCamAt = &[2]int{bx, by}
 			if g.view != nil {
-				g.view.setCameraWorld(bx, by)
+				g.view.SetCameraWorld(bx, by)
 			}
 		}
 	}

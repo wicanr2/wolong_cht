@@ -27,7 +27,7 @@ mkdir -p "$OUT_DIR"
 docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
     --device /dev/kvm --memory 6g --cpus 2 --pids-limit 512 \
     -v "$REPO_ROOT:/src:ro" -v "$OUT_DIR:/out" \
-    -e HOME=/tmp \
+    -e HOME=/tmp -e FP_FRAMES="${WOLONG_FP_FRAMES:-1,60,180}" \
     -w /src "$IMAGE" bash -c '
 set -euo pipefail
 export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$PATH
@@ -67,8 +67,18 @@ for i in $(seq 1 120); do
     sleep 2
 done
 
+# ⚠ 關掉安裝時的完整性驗證。機器忙的時候它會逾時，
+# 症狀是 `INSTALL_FAILED_VERIFICATION_FAILURE: Integrity verification timed out`
+# ——那是**驗收環境太慢**，不是 APK 有問題。
+adb shell settings put global package_verifier_enable 0 || true
+adb shell settings put global verifier_verify_adb_installs 0 || true
+
 echo "── 安裝 ──"
-adb install -r -g /src/android/app/build/outputs/apk/debug/app-debug.apk
+for i in 1 2 3; do
+    adb install -r -g /src/android/app/build/outputs/apk/debug/app-debug.apk && break
+    echo "（第 $i 次安裝失敗，重試）"
+    sleep 10
+done
 
 # ⭐ 資料要進 **app 的內部目錄**，不是 /sdcard。
 # `/sdcard/Android/data/<pkg>/` 看起來剛好是給這個 app 的，但 Android 11 以上
@@ -99,11 +109,12 @@ echo "orig 檔數：$(adb shell "run-as $PKG ls $FILES/orig" | wc -l)"
 echo "── 重新啟動，抓指紋 ──"
 adb shell am force-stop "$PKG"
 adb logcat -c
-adb shell am start -n "$PKG/.MainActivity" >/dev/null
-# 600 幀 ≒ 10 秒，但模擬器不保證跑滿 60 fps，機器忙的時候差很多。
-# 等到指紋出現為止，不要用固定秒數賭它跑到了。
+adb shell am start --es fp_frames "$FP_FRAMES" -n "$PKG/.MainActivity" >/dev/null
+# 指紋的幀數 ≒ 幀數 ÷ 60 秒，但模擬器不保證跑滿 60 fps，機器忙的時候差很多。
+# 等到最後一個幀號出現為止，不要用固定秒數賭它跑到了。
+LAST=${FP_FRAMES##*,}
 for i in $(seq 1 60); do
-    adb logcat -d | grep -q "WOLONG_FP frame=600" && break
+    adb logcat -d | grep -q "WOLONG_FP frame=$LAST" && break
     sleep 5
 done
 adb logcat -d > /out/logcat.txt

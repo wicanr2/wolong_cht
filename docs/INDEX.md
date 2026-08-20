@@ -30,8 +30,8 @@
 | [`docs/mechanics/60-personnel.md`](mechanics/60-personnel.md) | 60 — 武將 | 三個能力值的作用與身分欄位已定案（說明書＋機器碼），數值公式部分已知。 政治如何影響內政效果與外交官要價仍未解。 | 2026-08-13 |
 | [`docs/mechanics/70-ai.md`](mechanics/70-ai.md) | 70 — 電腦 AI 的判斷邏輯 | 侵攻目標的決策鏈、友好度漂移、宣戰三閘與 AI 編成入口已由機器碼讀出；remake 已接上可重播的敵方出兵切片。 | 2026-08-09 |
 | [`docs/mechanics/80-victory.md`](mechanics/80-victory.md) | 80 — 勝負判定 | 勝負條件全部定案。⭐ 結局的觸發已由機器碼定案 （[../re/59](../re/59-game-over-exi… | 2026-08-08 |
-| [`docs/mobile/android-plan.md`](mobile/android-plan.md) | Android 版規劃 | 核心已接入，手機 UI 的主畫面與四個入口可用；戰場與 SAF 匯入未做。 | 2026-08-20 |
-| [`docs/mobile/android-ux.md`](mobile/android-ux.md) | Android UX 規格 | 主畫面、四個入口與進言流程已實作，戰場未做。 | 2026-08-20 |
+| [`docs/mobile/android-plan.md`](mobile/android-plan.md) | Android 版規劃 | 核心已接入，主畫面、四個入口與戰場都可用；SAF 匯入未做。 | 2026-08-20 |
+| [`docs/mobile/android-ux.md`](mobile/android-ux.md) | Android UX 規格 | 主畫面、四個入口、進言流程與戰場都已實作。 | 2026-08-20 |
 | [`docs/playtest/01-dosbox-dosv.md`](playtest/01-dosbox-dosv.md) | 01 — 松崗 DOS/V 版首次實跑（DOSBox） | DOS/V 版可開機並可由密碼頁進入開場；字型懸案結案。 | 2026-08-07 |
 | [`docs/playtest/02-dosboxx-pc98.md`](playtest/02-dosboxx-pc98.md) | 02 — PC-98 日文原版實跑（DOSBox-X）：oracle 建立完成 | PC-98 oracle 已建立，沒有防拷。 | 2026-08-07 |
 | [`docs/playtest/03-verification-log.md`](playtest/03-verification-log.md) | 03 — 補驗紀錄：哪些結論撐得住，哪些撐不住 | 持續累加。專記驗證與失敗的驗證嘗試。 | 2026-08-07 |

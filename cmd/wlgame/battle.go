@@ -8,11 +8,12 @@ package main
 // （64 × 62 的格、立體的層、陣形位置、鎖敵）。
 
 import (
+	"github.com/wicanr2/wolong_cht/internal/assets/world"
+	"github.com/wicanr2/wolong_cht/internal/battlesetup"
 	"github.com/wicanr2/wolong_cht/internal/rules/speed"
 	"fmt"
 	"image/color"
 	"log"
-	"os"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
@@ -21,7 +22,6 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/assets/battle"
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
-	"github.com/wicanr2/wolong_cht/internal/rules/battlefield"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
 	"github.com/wicanr2/wolong_cht/internal/state"
@@ -148,7 +148,7 @@ func (g *game) updateBattle() {
 	b := p.Battle
 	l := dosvBattleLayoutFor(screenW, screenH)
 	if g.view == nil {
-		g.view = g.newBattleView(g.fieldNumber(p.Node, p.Mode == combat.Siege))
+		g.view = g.newBattleView(g.battle.FieldNumber(p.Node, p.Mode == combat.Siege))
 	}
 
 	// ＋／− 調**戰術速度**。原版的戰術速度是獨立設定（系統選單第 5 列），
@@ -178,7 +178,7 @@ func (g *game) updateBattle() {
 			}
 			if x, y := ebiten.CursorPosition(); inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 				if g.view != nil && l.SideMiniMap.containsPoint(x, y) {
-					g.view.setCameraFromMiniMap(x, y)
+					g.view.SetCameraFromMiniMap(x, y)
 					return
 				}
 				// 底列六格是**選部隊**，不是命令（docs/spec/33）。
@@ -738,7 +738,7 @@ func (g *game) battleFieldName(p *state.Pending) string {
 		return ""
 	}
 	siege := p.Mode == combat.Siege
-	field := g.fieldNumber(p.Node, siege)
+	field := g.battle.FieldNumber(p.Node, siege)
 	if siege {
 		if field >= 0 && field < len(g.world.Cities) {
 			return big5(g.world.Cities[field].Name)
@@ -781,7 +781,7 @@ func (g *game) battleLordName(p *state.Pending, side int) string {
 // 的分界（`word_1D30E` 每側 0x600 B），也就是**側 0 一色、側 1 一色**。
 // 原版的側 0 恆為玩家（docs/re/60 §5），所以這裡用 g.battleSide() 對齊。
 func (g *game) drawBattleMiniMap(screen *ebiten.Image, b *tactical.Battle, r battleRect) {
-	if g.view == nil || g.view.minimap == nil || r.W < battle.TacticalMinimapWidth ||
+	if g.view == nil || g.view.Minimap() == nil || r.W < battle.TacticalMinimapWidth ||
 		r.H < battle.TacticalMinimapHeight {
 		// 缺少 raw MAP/MDL 或 palette 時明確留空；不能重新引入高度／
 		// 每兩格取樣的假 minimap。
@@ -789,7 +789,7 @@ func (g *game) drawBattleMiniMap(screen *ebiten.Image, b *tactical.Battle, r bat
 	}
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(float64(r.X), float64(r.Y))
-	screen.DrawImage(g.view.minimap, op)
+	screen.DrawImage(g.view.Minimap(), op)
 	// 順序照原版的抹除規則反推（docs/re/60 §7）：抹掉一個部隊點時，
 	// 落在陣形線上還原成 11、落在十字上還原成 0——**所以部隊點在最上面，
 	// 陣形線壓在十字上面**。
@@ -814,11 +814,11 @@ func (g *game) drawBattleMiniMapCross(screen *ebiten.Image, r battleRect) {
 		return
 	}
 	ink := chrome.Ink
-	if x := r.X + 2*g.view.cursorY; x >= r.X && x < r.X+battle.TacticalMinimapWidth {
+	if x := r.X + 2*g.viewCursorY(); x >= r.X && x < r.X+battle.TacticalMinimapWidth {
 		vector.DrawFilledRect(screen, float32(x), float32(r.Y), 2,
 			float32(battle.TacticalMinimapHeight), ink, false)
 	}
-	if y := r.Y + 2*(battle.Width-1-g.view.cursorX); y >= r.Y &&
+	if y := r.Y + 2*(battle.Width-1-g.viewCursorX()); y >= r.Y &&
 		y < r.Y+battle.TacticalMinimapHeight {
 		vector.DrawFilledRect(screen, float32(r.X), float32(y),
 			float32(battle.TacticalMinimapWidth), 2, ink, false)
@@ -1013,190 +1013,27 @@ func sideLabel(i int) string {
 // AI 腳本在 `BATTLE.DAT`。**少一份就退一級**，不會讓遊戲開不起來——
 // 最差的情況是玩家的戰鬥也走自動判定。
 func (g *game) installTactical(dir string) {
-	forms, err := tactical.LoadFormations(dir + "/KI.EXE")
+	p, setup, err := battlesetup.Load(battlesetup.Options{
+		Dir: dir, World: g.world, Map: worldMapOf(g.lib),
+		Warn: func(m string) { log.Print("⚠ " + m) },
+	})
 	if err != nil {
-		log.Printf("⚠ 載不到陣形表（%v）；玩家的戰鬥會走自動判定", err)
+		log.Printf("⚠ %v；玩家的戰鬥會走自動判定", err)
 		return
 	}
-	lib := loadBattleLibrary(dir)
-	g.battleLib = lib
-	if raw, err := os.ReadFile(dir + "/BATTLE.SCH"); err == nil {
-		if sp, err := battle.ParseSprites(raw); err == nil {
-			g.battleSprites = sp
-		} else {
-			log.Printf("⚠ %v；兵會畫成色點", err)
-		}
-	} else {
-		log.Printf("⚠ 載不到 BATTLE.SCH（%v）；兵會畫成色點", err)
-	}
-	setup := &state.TacticalSetup{
-		Forms: forms,
-		Field: func(node int, siege, rotate bool) *tactical.Field {
-			return g.buildField(node, siege, rotate)
-		},
-		Script: func(node int, siege bool, tactic int) []byte {
-			if g.battleLib == nil {
-				return nil
-			}
-			return g.battleLib.Script(tactic, battle.Category(g.fieldNumber(node, siege)))
-		},
-	}
+	g.battle = p
+	g.battleLib = p.Library()
+	g.battleSprites = p.Sprites()
 	g.tactical = setup
 	g.world.SetTactical(setup)
 }
 
-func loadBattleLibrary(dir string) *battle.Library {
-	read := func(name string) []byte {
-		b, err := os.ReadFile(dir + "/" + name)
-		if err != nil {
-			log.Printf("⚠ 載不到 %s（%v）", name, err)
-			return nil
-		}
-		return b
-	}
-	m, mdl := read("BATTLE.MAP"), read("BATTLE.MDL")
-	if m == nil || mdl == nil {
-		log.Print("⚠ 沒有戰場地形，會用生成的替代")
+// worldMapOf 取大地圖，缺席時回 nil（野戰會走預設戰場）。
+func worldMapOf(l *library.Library) *world.Map {
+	if l == nil {
 		return nil
 	}
-	lib, err := battle.Parse(m, mdl, read("BATTLE.DAT"))
-	if err != nil {
-		log.Printf("⚠ %v；會用生成的地形", err)
-		return nil
-	}
-	return lib
-}
-
-// buildField 取一張戰場。
-//
-//   - **攻城戰**：戰場編號就是據點編號（`docs/re/05`）
-//   - **野戰**：從大地圖上即時算（`internal/rules/battlefield`）——
-//     取軍團所在格與下方四格的地形類型去配一張 21 筆的表
-func (g *game) buildField(node int, siege, rotate bool) *tactical.Field {
-	n := g.fieldNumber(node, siege)
-	if g.battleLib == nil || n < 0 || n >= battle.NumFields {
-		return syntheticField(siege)
-	}
-	// 野戰的翻轉來自地形配對（`sub_14BDD` 換順序才配上），
-	// 攻城的來自「玩家守城」（`sub_14ED7`）——兩條路合成同一個旗標。
-	if !siege {
-		rotate = g.fieldRotates(node)
-	}
-	g.battleRotate = rotate
-	// 用原始圖塊值建，不只用堆疊高度——城壁與門是從圖塊值認出來的，
-	// 而且打壞時要換圖塊再重算高度（docs/re/11 §5.9）。
-	// 再加上七層子圖塊表：兩個平面的地面圖與登城都靠它算（docs/spec/36）。
-	tiles, gate := g.battleLib.Tiles(n), g.battleLib.GateX(n)
-	if rotate {
-		tiles, gate = battle.Rotate180(tiles), battle.RotateGateX(gate)
-	}
-	return tactical.NewFieldFromTileLayers(
-		tiles, g.battleLib.Heights(n), g.battleLib.TileLayers(n), gate)
-}
-
-// fieldNumber 回傳這一場用第幾張戰場：攻城就是據點編號，野戰現算。
-func (g *game) fieldNumber(node int, siege bool) int {
-	if siege {
-		return node
-	}
-	return g.fieldForNode(node)
-}
-
-// fieldForNode 依大地圖的地形算出野戰要用哪一張戰場。
-//
-// 取樣的五格與 `sub_14B63` 一致（中心、下、左下、右下、兩格下方），
-// 取樣方向用**玩家那一側軍團的朝向**（軍團記錄 `+0x08`）——原版是
-// `cmp ah, [si+1] / mov al, [si+8]`，只在勢力等於玩家時才取。
-func (g *game) fieldForNode(node int) int {
-	if g.lib == nil || g.lib.World == nil {
-		return battlefield.FieldBase + 6
-	}
-	// 野外的節點編號沒有座標，只有據點有；用據點的格座標取樣。
-	if node < 0 || node >= len(g.world.Cities) {
-		return battlefield.FieldBase + 6
-	}
-	cx, cy := g.world.Cities[node].X, g.world.Cities[node].Y
-	at := func(dx, dy int) int {
-		t, err := g.lib.World.Tile(cx+dx, cy+dy)
-		if err != nil {
-			return 0
-		}
-		return battlefield.Terrain(t)
-	}
-	n := battlefield.Neighbours{
-		Centre:    at(0, 0),
-		Down:      at(0, 1),
-		DownLeft:  at(-1, 1),
-		DownRight: at(1, 1),
-		TwoDown:   at(0, 2),
-	}
-	f, _ := battlefield.Select(g.playerHeading(), n)
-	if f >= 209 && f <= 213 {
-		f = battlefield.SelectWater(f-battlefield.TerrainBase, g.rng.Next())
-	}
-	return f
-}
-
-// fieldRotates 回報野戰的戰場要不要轉 180 度：`sub_14BDD` 的配對
-// **換過順序才中**時 `xor dh, 40h`（docs/spec/56 §1）。
-func (g *game) fieldRotates(node int) bool {
-	if g.lib == nil || g.lib.World == nil || node < 0 || node >= len(g.world.Cities) {
-		return false
-	}
-	cx, cy := g.world.Cities[node].X, g.world.Cities[node].Y
-	at := func(dx, dy int) int {
-		t, err := g.lib.World.Tile(cx+dx, cy+dy)
-		if err != nil {
-			return 0
-		}
-		return battlefield.Terrain(t)
-	}
-	_, rot := battlefield.Select(g.playerHeading(), battlefield.Neighbours{
-		Centre:    at(0, 0),
-		Down:      at(0, 1),
-		DownLeft:  at(-1, 1),
-		DownRight: at(1, 1),
-		TwoDown:   at(0, 2),
-	})
-	return rot
-}
-
-// syntheticField 是沒有原版戰場資料時的替代品。幾何同尺寸，內容是自己生的。
-func syntheticField(siege bool) *tactical.Field {
-	stack := make([][]int, tactical.Height)
-	for y := range stack {
-		stack[y] = make([]int, tactical.Width)
-	}
-	if !siege {
-		return tactical.NewField(stack, 0)
-	}
-	const wallX, top, bottom = 40, 8, tactical.Height - 9
-	gate := tactical.Height / 2
-	for y := top; y <= bottom; y++ {
-		if y != gate {
-			stack[y][wallX] = 4
-		}
-	}
-	for x := wallX; x < tactical.Width-1; x++ {
-		stack[top][x] = 4
-		stack[bottom][x] = 4
-	}
-	return tactical.NewField(stack, wallX)
-}
-
-// playerHeading 回傳玩家目前在動的那一支軍團的朝向。
-//
-// 原版只在「軍團的勢力 ＝ 玩家的勢力」時才拿 `+0x08`（`sub_14B63` 開頭那兩個
-// `cmp ah, [si+1]`），所以戰場的取樣方向是**從玩家的視角**定的。
-// 玩家沒有在移動的軍團時退回靜止（4），配對表會走預設那一支。
-func (g *game) playerHeading() int {
-	for i := range g.world.Corps {
-		c := &g.world.Corps[i]
-		if c.Alive && c.Faction == g.world.Player && c.Heading != state.HeadingStill {
-			return c.Heading
-		}
-	}
-	return state.HeadingStill
+	return l.World
 }
 
 // demoBattle 是**驗收用**的捷徑：直接擺一場戰術戰鬥出來。
@@ -1272,35 +1109,11 @@ func (g *game) demoBattleWithCorps(siege, choose bool, siegeNode, att, def, step
 // 再推進 steps 個戰術 tick。兩條 fixture 路徑共用這一支——
 // **擺位與遭遇的規則只留一份實作**（`CLAUDE.md` §7 第 6 條）。
 func (g *game) stageEncounter(siege, choose bool, siegeNode, steps int, me, foe *state.Corps) {
-	if siege {
-		// 攻城：守方待在自己的城裡，攻方從隔壁一格走進去。
-		// 走的是**正常的遭遇判定**——`resolveContact` 先問據點再問野戰。
-		node := foe.Node
-		if siegeNode >= 0 && siegeNode < len(g.world.Cities) {
-			node = siegeNode
-			// 攻城要打的是**守方的城**，所以驗收捷徑把這座城暫時
-			// 記到守方名下。只影響 fixture，不是規則。
-			g.world.Cities[node].Owner = foe.Faction
-			foe.Node, foe.TargetNode = node, node
-			foe.X, foe.Y = g.world.Cities[node].X, g.world.Cities[node].Y
-			foe.TargetX, foe.TargetY = foe.X, foe.Y
-		}
-		me.Node = node
-		me.X, me.Y = g.world.Cities[node].X-1, g.world.Cities[node].Y
-		me.TargetNode = node
-		me.TargetX, me.TargetY = g.world.Cities[node].X, g.world.Cities[node].Y
-		me.Timer = 1
-	} else {
-		// 野戰：把敵方放在隔壁一格、目標設成我方所在的那一格——
-		// 下一次輪到它移動就會撞上（遭遇條件是「同格、不同勢力」）。
-		foe.X, foe.Y = me.X-1, me.Y
-		foe.TargetX, foe.TargetY = me.X, me.Y
-		foe.TargetNode = me.Node
-		foe.Timer = 1
-	}
-	for i := 0; i < 64 && !g.battleActive() && g.world.PendingEncounter() == nil; i++ {
-		g.world.Tick(g.rng)
-	}
+	// 擺位與遭遇的規則在 `internal/battlesetup`，手機版的驗收路徑用同一支。
+	att, def := corpsIndex(g.world, me), corpsIndex(g.world, foe)
+	battlesetup.StageEncounter(g.world, g.rng, battlesetup.StageOptions{
+		Siege: siege, Node: siegeNode, Attacker: att, Defender: def,
+	})
 	// demoBattle 是驗收捷徑，但仍經過與正常行軍相同的遭遇決策狀態；
 	// 這個旗標的語意是「最後開戰場」，所以在這裡選擇戰鬥指揮。
 	if choose && g.world.PendingEncounter() != nil {
@@ -1324,4 +1137,14 @@ func (g *game) stageEncounter(siege, choose bool, siegeNode, steps int, me, foe 
 		g.tickBattleTalk(steps)
 		g.tacticalSpeed = 1
 	}
+}
+
+// corpsIndex 反查一支軍團在表裡的編號。
+func corpsIndex(w *state.World, c *state.Corps) int {
+	for i := range w.Corps {
+		if &w.Corps[i] == c {
+			return i
+		}
+	}
+	return -1
 }

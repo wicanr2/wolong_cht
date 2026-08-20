@@ -167,7 +167,7 @@
 
 - `sub_1B941` 的實體更新順序已確認為先 `sub_1B97E`、再 `sub_1BA2E`、後 `sub_1BAB7`。remake 已接方向、三維格索引、固定點高度、速度夾限／衰減、障礙清除與上升／下降威力變化。
 - `TestProjectileRawDirectionGridAndHeightPower`、`TestProjectileChecksCurrentCellBeforeMoving`、`TestProjectileStopsAtSolidLayerAfterMoving` 通過；CH=0x20 的既有測試現在也驗證下降加成後的真實步兵傷害，而非固定 `0x20/4`。
-- `Battle.Projectiles()` 與 `cmd/wlgame/battleview.go` 已接戰場內標記；使用 248×192 原生區域的空間標記，不冒充尚未解出的原版投射物圖形。普通箭 `sub_1AD2D` 初始速度公式與 `sub_1ECE0`／`sub_1EC82` RNG 已接入並有單測；原版同狀態時序／畫面對拍仍未完成。
+- `Battle.Projectiles()` 與 `internal/ui/isoview/isoview.go` 已接戰場內標記；使用 248×192 原生區域的空間標記，不冒充尚未解出的原版投射物圖形。普通箭 `sub_1AD2D` 初始速度公式與 `sub_1ECE0`／`sub_1EC82` RNG 已接入並有單測；原版同狀態時序／畫面對拍仍未完成。
 - 證據：`KI.EXE.asm` SHA-256 `FFFEBA2D9E6EE947A4CF7ABF8FEF6D4B8D0FB4E6E0EC66D9D34D7B5A0D43868`；IDA Pro 9.4 `seg000:1B941`／`1B97E`／`1BA2E`／`1BAB7`；原始 `.i64` 以唯讀掛載並在容器內副本匯出，runtime／測試使用 `wolong-go:20260809`。
 
 ## 2026-08-09 最新增量：事件 11／12 災害 marker 持久效果
@@ -199,7 +199,7 @@
 
 - `sub_1B941` 的實體更新順序已確認為先 `sub_1B97E`、再 `sub_1BA2E`、後 `sub_1BAB7`。remake 已接方向、三維格索引、固定點高度、速度夾限／衰減、障礙清除與上升／下降威力變化。
 - `TestProjectileRawDirectionGridAndHeightPower`、`TestProjectileChecksCurrentCellBeforeMoving`、`TestProjectileStopsAtSolidLayerAfterMoving` 通過；CH=0x20 的既有測試現在也驗證下降加成後的真實步兵傷害，而非固定 `0x20/4`。
-- `Battle.Projectiles()` 與 `cmd/wlgame/battleview.go` 已接戰場內標記；使用 248×192 原生區域的空間標記，不冒充尚未解出的原版投射物圖形。普通箭 `sub_1AD2D` 初始速度公式與 `sub_1ECE0`／`sub_1EC82` RNG 已接入並有單測；原版同狀態時序／畫面對拍仍未完成。
+- `Battle.Projectiles()` 與 `internal/ui/isoview/isoview.go` 已接戰場內標記；使用 248×192 原生區域的空間標記，不冒充尚未解出的原版投射物圖形。普通箭 `sub_1AD2D` 初始速度公式與 `sub_1ECE0`／`sub_1EC82` RNG 已接入並有單測；原版同狀態時序／畫面對拍仍未完成。
 - 證據：`KI.EXE.asm` SHA-256 `FFFEBA2D9E6EE947A4CF7ABF8FEF6D4B8D0FB4E6E0EC66D9D34D7B5A0D43868`；IDA Pro 9.4 `seg000:1B941`／`1B97E`／`1BA2E`／`1BAB7`；原始 `.i64` 以唯讀掛載並在容器內副本匯出，runtime／測試使用 `wolong-go:20260809`。
 ## 2026-08-09 最新增量：`sub_17C6E` 數值編輯核心
 

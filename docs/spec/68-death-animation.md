@@ -88,7 +88,7 @@ raw 0x21C ＝ 540 ＝ 192 + 174 × 2  → 圖號 174 ＝ 84 + 90（側 1）
 | 倒地清單 | `internal/rules/tactical`：`Battle.deaths`，`Deaths()` 給呈現層讀 |
 | 產生 | `damage.go` 的致命傷那一條，與既有的 `Alive = false` 同一處 |
 | 每幀遞減 | `Battle.Step` 的同一輪，與投射物同級 |
-| 畫 | `cmd/wlgame/battleview.go` 的 `buildDisplayList`，走既有的 `appendTallDisplayUnits` |
+| 畫 | `internal/ui/isoview/isoview.go` 的 `buildDisplayList`，走既有的 `appendTallDisplayUnits` |
 
 ⭐ **不擋路是照 §1.2 做的**：倒地的兵一離開 `Soldiers` 就不再參與規則，
 只留一筆給畫面用。這也讓「四幀不動的屍體」不會把戰鬥卡住。

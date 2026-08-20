@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
+	"github.com/wicanr2/wolong_cht/internal/battlesetup"
 	"github.com/wicanr2/wolong_cht/internal/assets/world"
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
 	"github.com/wicanr2/wolong_cht/internal/rules/march"
@@ -44,6 +45,13 @@ type Session struct {
 	// form 是編成中的軍團（corps.go）。
 	form corpsForm
 
+	// battle 是進行中的戰術戰鬥（battle.go）。
+	battle battleState
+
+	// setup 是戰場來源。載不到就是 nil——玩家的戰鬥會走自動判定，
+	// **那是降級不是錯誤**（`internal/battlesetup`）。
+	setup *battlesetup.Provider
+
 	// lastErr 是最後一次存讀檔的結果。**失敗一定要看得到**——
 	// 手機上沒有終端機，靜靜失敗等於資料不見了卻沒人知道。
 	lastErr error
@@ -83,8 +91,25 @@ func NewSession(opt Options) (*Session, error) {
 		zoom: 1, selected: -1, speed: DefaultSpeed, form: newCorpsForm(),
 	}
 	s.attachRoads()
+	s.attachBattlefield()
 	s.centreOnCapital()
 	return s, nil
+}
+
+// attachBattlefield 掛上戰場來源。
+//
+// ⚠ 載不到就維持 nil：**玩家的戰鬥會走自動判定**，遊戲照樣跑得起來
+//（`internal/battlesetup`）。這是刻意的降級——手機上使用者匯入的資料
+// 可能不齊，為此開不了遊戲比少一個畫面糟得多。
+func (s *Session) attachBattlefield() {
+	p, setup, err := battlesetup.Load(battlesetup.Options{
+		Dir: s.origDir, World: s.world, Map: s.lib.World,
+	})
+	if err != nil {
+		return
+	}
+	s.setup = p
+	s.world.SetTactical(setup)
 }
 
 // attachRoads 掛上道路圖。
@@ -131,7 +156,16 @@ const DefaultSpeed = 2
 // 檔位不同步數就不同。節流器與桌面版共用（docs/spec/34），
 // 兩邊的時間流速因此對得起來。
 func (s *Session) Tick() {
-	if s.paused || s.world == nil {
+	if s.world == nil {
+		return
+	}
+	// ⭐ 戰場開著時**戰略時間停住**——原版進戰術畫面時就是這樣
+	//（docs/mechanics/15-realtime.md §2）。戰術層自己有一組獨立的節流。
+	if s.BattleActive() {
+		s.tickBattle()
+		return
+	}
+	if s.paused {
 		return
 	}
 	for n := s.throttle.Steps(s.speed, 1, speed.HighSpeedStrategy); n > 0; n-- {

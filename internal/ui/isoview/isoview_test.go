@@ -1,4 +1,4 @@
-package main
+package isoview
 
 import (
 	"github.com/wicanr2/wolong_cht/internal/assets/battle"
@@ -18,24 +18,10 @@ func TestProjectileSourceIndex(t *testing.T) {
 		{name: "special second frame", p: tactical.ProjectileView{Special: true, SpecialFrame: 1, Direction: tactical.South | 0x80}, want: 0x215},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			if got := projectileSourceIndex(tc.p); got != tc.want {
+			if got := ProjectileSourceIndex(tc.p); got != tc.want {
 				t.Fatalf("raw 圖號 = %#x，預期 %#x", got, tc.want)
 			}
 		})
-	}
-}
-
-func TestBattleViewBufferMatchesDOSVVisibleViewport(t *testing.T) {
-	l := dosvBattleLayoutFor(dosvBattleScreenW, dosvBattleScreenH)
-	if got, want := isoNativeW*isoScale, l.Field.W; got != want {
-		t.Fatalf("戰場 buffer 寬度 = %d，DOS/V viewport = %d", got, want)
-	}
-	if got, want := isoNativeH*isoScale, l.Field.H; got != want {
-		t.Fatalf("戰場 buffer 高度 = %d，DOS/V viewport = %d", got, want)
-	}
-	// 原版投影仍檢查 31×24 欄列；最後一欄／列由 240×184 viewport 裁切。
-	if isoCols*isoColPx <= isoNativeW || isoRows*isoRowPx <= isoNativeH {
-		t.Fatal("投影測試範圍必須大於可見 viewport，才能保留原版邊界裁切")
 	}
 }
 
@@ -46,7 +32,7 @@ func TestBattleCameraStartsAtOriginalWorldOrigin(t *testing.T) {
 	if battleCamInitX != 0x24 || battleCamInitY != 0x0e {
 		t.Fatalf("鏡頭初值 = (%#x,%#x)，預期 (0x24,0x0e)", battleCamInitX, battleCamInitY)
 	}
-	v := &battleView{camWorldX: battleCamInitX, camWorldY: battleCamInitY}
+	v := &View{camWorldX: battleCamInitX, camWorldY: battleCamInitY}
 	v.applyCameraOrigin()
 	if v.camCol != 0x32 || v.camRow != 0x15 {
 		t.Fatalf("sub_1DC9D 投影原點 = (%#x,%#x)，預期 (0x32,0x15)",
@@ -81,8 +67,8 @@ func TestBattleCursorCrossMatchesCameraOffsets(t *testing.T) {
 	}
 	// 點在十字自己身上（原版量到的 562,142，docs/playtest/40 §3.1）
 	// 應該把鏡頭與十字都留在初值——這是這條換算的閉環檢查。
-	v := &battleView{}
-	v.setCameraFromMiniMap(562, 142)
+	v := &View{}
+	v.SetCameraFromMiniMap(562, 142)
 	if v.camWorldX != battleCamInitX || v.camWorldY != battleCamInitY {
 		t.Fatalf("點十字之後鏡頭 = (%d,%d)，預期 (%d,%d)",
 			v.camWorldX, v.camWorldY, battleCamInitX, battleCamInitY)
@@ -92,38 +78,8 @@ func TestBattleCursorCrossMatchesCameraOffsets(t *testing.T) {
 	}
 }
 
-func TestBattleCameraMiniMapFormula(t *testing.T) {
-	l := dosvBattleLayoutFor(dosvBattleScreenW, dosvBattleScreenH)
-	if l.SideMiniMap.X != 0x1f0 || l.SideMiniMap.Y != 0x50 ||
-		l.SideMiniMap.right()-1 != 0x26f || l.SideMiniMap.bottom()-1 != 0xcf {
-		t.Fatalf("縮圖命中矩形=%+v，未對齊原版 0x1f0..0x26f／0x50..0xcf", l.SideMiniMap)
-	}
-	for _, tc := range []struct {
-		name           string
-		x, y           int
-		worldX, worldY int
-	}{
-		{name: "left bottom", x: 0x1f0, y: 0xcf, worldX: 4, worldY: -18},
-		{name: "right top", x: 0x26f, y: 0x50, worldX: 66, worldY: 44},
-	} {
-		t.Run(tc.name, func(t *testing.T) {
-			v := &battleView{}
-			v.setCameraFromMiniMap(tc.x, tc.y)
-			if v.camWorldX != tc.worldX || v.camWorldY != tc.worldY {
-				t.Fatalf("縮圖相機=(%d,%d)，預期 (%d,%d)",
-					v.camWorldX, v.camWorldY, tc.worldX, tc.worldY)
-			}
-			wantCol, wantRow := isoProjectOriginal(tc.worldX, tc.worldY, 0)
-			if v.camCol != wantCol || v.camRow != wantRow {
-				t.Fatalf("投影原點=(%d,%d)，預期 (%d,%d)",
-					v.camCol, v.camRow, wantCol, wantRow)
-			}
-		})
-	}
-}
-
 func TestBattleDisplayListSplitsSoldiersIntoOriginalRawUnits(t *testing.T) {
-	v := &battleView{camCol: 0, camRow: 0}
+	v := &View{camCol: 0, camRow: 0}
 	b := &tactical.Battle{}
 	b.Sides[0].Soldiers[0] = tactical.Soldier{Alive: true, Kind: tactical.General,
 		X: 20, Y: 24, Z: 0}
@@ -227,7 +183,7 @@ func TestCellOffsetFollowsOriginalWalk(t *testing.T) {
 	// 鏡頭與走訪都用**原版的框**（含表頭那一列）；cellOffset 吃的是
 	// 地形列號，所以傳進去之前要減掉 originalRowBias。
 	for _, cam := range [][2]int{{36, 14}, {36, 11}, {35, 14}, {35, 11}, {0, 0}, {12, 41}} {
-		v := &battleView{camWorldX: cam[0], camWorldY: cam[1]}
+		v := &View{camWorldX: cam[0], camWorldY: cam[1]}
 		for r := 0; r < 30; r++ {
 			x, y := cam[0]-r, cam[1]+r
 			for s := 0; s <= 30; s++ {
@@ -249,7 +205,7 @@ func TestCellOffsetFollowsOriginalWalk(t *testing.T) {
 // TestCellOffsetIsNotTwoProjections 明寫「不能各自投影再相減」這件事，
 // 免得之後有人為了「看起來對稱」把 cellOffset 改回去。
 func TestCellOffsetIsNotTwoProjections(t *testing.T) {
-	v := &battleView{camWorldX: 36, camWorldY: 11} // (camY−camX) 是奇數
+	v := &View{camWorldX: 36, camWorldY: 11} // (camY−camX) 是奇數
 	camCol, camRow := isoProjectOriginal(v.camWorldX, v.camWorldY, 0)
 	diff := 0
 	for y := 0; y < 62; y++ { // y 是地形列號
@@ -336,5 +292,32 @@ func TestDisplayDepthRangeFollowsNeighbours(t *testing.T) {
 	info[row][anchor] = battleDisplaySlotInfo{}
 	if a, b := displayDepthRange(&info, 0, 1); a != 0 || b != 0 {
 		t.Fatalf("空格的範圍 = %d..%d，預期 0..0", a, b)
+	}
+}
+
+// 點縮圖換算成鏡頭的公式（原版 `0x1C0C6`，docs/re/60 §7）。
+// 座標是**原版的螢幕座標**，公式裡就寫死了，所以這裡不必知道版面。
+func TestCameraFromMiniMapFormula(t *testing.T) {
+	for _, tc := range []struct {
+		name           string
+		x, y           int
+		worldX, worldY int
+	}{
+		{name: "left bottom", x: 0x1f0, y: 0xcf, worldX: 4, worldY: -18},
+		{name: "right top", x: 0x26f, y: 0x50, worldX: 66, worldY: 44},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			v := &View{}
+			v.SetCameraFromMiniMap(tc.x, tc.y)
+			if v.camWorldX != tc.worldX || v.camWorldY != tc.worldY {
+				t.Fatalf("縮圖相機=(%d,%d)，預期 (%d,%d)",
+					v.camWorldX, v.camWorldY, tc.worldX, tc.worldY)
+			}
+			wantCol, wantRow := isoProjectOriginal(tc.worldX, tc.worldY, 0)
+			if v.camCol != wantCol || v.camRow != wantRow {
+				t.Fatalf("投影原點=(%d,%d)，預期 (%d,%d)",
+					v.camCol, v.camRow, wantCol, wantRow)
+			}
+		})
 	}
 }

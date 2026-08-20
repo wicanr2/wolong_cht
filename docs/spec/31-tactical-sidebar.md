@@ -145,7 +145,7 @@ x 都是 498，高 2 px，總長上限 124，未填的部分畫色 0。
 | 指令列順序 | `cmd/wlgame/battlelayout.go` `battleCommandLabels` ＋ `battleCommandRowToCode` |
 | 側欄繪製 | `cmd/wlgame/battle.go` `drawBattleSidebar` |
 | 段 1 美術 | `internal/assets/gfx`＋`internal/assets/library`：`DOSVBattleFlagAlly`／`DOSVBattleFlagFoe`／`DOSVBattleFormationStrip`／`DOSVBattleFooter` |
-| 小地圖標記 | `cmd/wlgame/battleview.go` `drawMiniMapMarkers` |
+| 小地圖標記 | `internal/ui/isoview/isoview.go` `drawMiniMapMarkers` |
 | 小地圖 | 底圖 ＋ **游標十字**（`sub_1C577`，色 0，位置是 `word_1D32C`／`word_1D32E` 不是鏡頭）＋ 陣形線 ＋ 部隊點。**不描外框**——原版直接貼在黑底上 |
 | 指令面板 | 只貼段 1 `0x1800` 那張圖，**不畫選取框**：原版的選取框只有底列六格與陣形選單兩處 |
 | 差異 | `▶▶` 列只畫美術，**不接行為**（原版切換的是 `loc_1A065` 的自我修改碼，語意未解）；兩面將旗的熱區原版是 `retn`，remake 同樣不接 |

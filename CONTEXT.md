@@ -852,7 +852,7 @@ UI 還沒有。
 
 - `sub_1B941` 已由 IDA 函式邊界確認為 `sub_1B97E` → `sub_1BA2E` → `sub_1BAB7`；remake 先查目前格再移動，保留 `+0x05` 方向、`+0x0A` 固定點高度、`+0x0B` 整數 Z、`+0x0E` 前 Z、`+0x10`／`+0x12` 格索引與 `+0x14` 速度的可對照狀態。
 - `sub_1BA2E` 的 ±0x100 速度夾限、每幀 −0x14、特殊方向 `0x80` 不改 X/Y、實心／越界清除，以及 `sub_1BAB7` 上升扣／下降加威力已接入。普通箭的 `sub_1AD2D` 初始速度公式與 `sub_1ECE0`／`sub_1EC82` RNG 已接入並有單測；完整圖形／動畫與同狀態對拍仍未完成。
-- `Battle.Projectiles()` 已接到 `cmd/wlgame/battleview.go`；以戰場內側別／CH=0x20 標記可觀測，不把缺少的 `BATTLE.SCH` 投射物圖形或動畫寫成已完成。
+- `Battle.Projectiles()` 已接到 `internal/ui/isoview/isoview.go`；以戰場內側別／CH=0x20 標記可觀測，不把缺少的 `BATTLE.SCH` 投射物圖形或動畫寫成已完成。
 - 測試：`TestProjectileRawDirectionGridAndHeightPower`、`TestProjectileChecksCurrentCellBeforeMoving`、`TestProjectileStopsAtSolidLayerAfterMoving`，以及全量 Docker vet／test／build 通過。原版普通箭同狀態、完整動畫、戰後訊息、M7／M8 仍未完成。
 
 ## 2026-08-09 最新接手狀態：事件 11／12 災害 marker 持久效果
@@ -885,7 +885,7 @@ UI 還沒有。
 
 - `sub_1B941` 已由 IDA 函式邊界確認為 `sub_1B97E` → `sub_1BA2E` → `sub_1BAB7`；remake 先查目前格再移動，保留 `+0x05` 方向、`+0x0A` 固定點高度、`+0x0B` 整數 Z、`+0x0E` 前 Z、`+0x10`／`+0x12` 格索引與 `+0x14` 速度的可對照狀態。
 - `sub_1BA2E` 的 ±0x100 速度夾限、每幀 −0x14、特殊方向 `0x80` 不改 X/Y、實心／越界清除，以及 `sub_1BAB7` 上升扣／下降加威力已接入。普通箭的 `sub_1AD2D` 初始速度公式與 `sub_1ECE0`／`sub_1EC82` RNG 已接入並有單測；完整圖形／動畫與同狀態對拍仍未完成。
-- `Battle.Projectiles()` 已接到 `cmd/wlgame/battleview.go`；以戰場內側別／CH=0x20 標記可觀測，不把缺少的 `BATTLE.SCH` 投射物圖形或動畫寫成已完成。
+- `Battle.Projectiles()` 已接到 `internal/ui/isoview/isoview.go`；以戰場內側別／CH=0x20 標記可觀測，不把缺少的 `BATTLE.SCH` 投射物圖形或動畫寫成已完成。
 - 測試：`TestProjectileRawDirectionGridAndHeightPower`、`TestProjectileChecksCurrentCellBeforeMoving`、`TestProjectileStopsAtSolidLayerAfterMoving`，以及全量 Docker vet／test／build 通過。原版普通箭同狀態、完整動畫、戰後訊息、M7／M8 仍未完成。
 ## 2026-08-09 最新接手狀態：`sub_17C6E` 數值編輯語意
 

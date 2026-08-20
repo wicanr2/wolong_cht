@@ -391,7 +391,7 @@ remake 第 61 步才剛接觸。`sb-self` 逐像素相同正是因為玩家那�
 
 ### 11.1 順帶清掉的重複實作
 
-`cmd/wlgame/battleview.go` 的 `drawBanners` **沒有任何呼叫者**，
+`internal/ui/isoview/isoview.go` 的 `drawBanners` **沒有任何呼叫者**，
 卻把圖號規則寫了第二遍（§7 第 6 條）。公式收進
 `battle.Banner.SourceTile`（Z ＝ 6 走「基底 ＋ 8 ＋ 相位」單格，
 其餘「基底 ＋ 相位 × 2」兩格），`buildDisplayList` 改用它，函式刪掉。

@@ -23,8 +23,8 @@
 | 程式碼理解 | 230 | 223 | 7 | 0 |
 | 驗收 | 69 | 59 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 156 | 145 | 11 | 0 |
-| **合計** | **558** | 525 | 32 | 1 |
+| 其他 | 154 | 143 | 11 | 0 |
+| **合計** | **556** | 523 | 32 | 1 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **9** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -36,7 +36,7 @@
 | `docs/mechanics/` | 46 |
 | `docs/formats/` | 40 |
 | `docs/reference/` | 17 |
-| `docs/mobile/` | 11 |
+| `docs/mobile/` | 9 |
 | `docs/release/` | 6 |
 | `docs/promo/` | 5 |
 
@@ -467,21 +467,19 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（156 條）
+## 2.6 其他（154 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
 | [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | 實機驗收 | ⛔ 沒有裝置。里程碑 H 保持未完成 | 靜態 |
 | [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | SAF 匯入 | 沒做。目前資料靠 `adb` 推進 app 內部目錄，那是驗收路徑不是玩家路徑 | 靜態 |
-| [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | 軍團編成與戰場 | 沒做（里程碑 D 的後半與 E） | 靜態 |
 | [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | 高 DPI 下的點陣字 | 原版字型是 16×15 點陣，手機上要整數放大幾倍才讀得清楚沒量過 | 靜態 |
 | [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | release signing | A–G 之前不談 | 靜態 |
 | [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 點陣字在高 DPI 上要放大幾倍 | 沒量過（§6） | 靜態 |
 | [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 小卡要放哪些欄位 | 目前放名稱／歸屬／生產力／防災／城兵五項。原版一覽表的欄位全表在 `docs/spec/38`，還沒逐項比對過取捨 | 靜態 |
-| [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 軍團編成 | 六個編成位置的介面沒做。規則層已經有（`internal/state/corps.go`） | 靜態 |
-| [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 戰場 | §5 的版面沒做 | 靜態 |
 | [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 縮放的下限 | 整張大地圖 384×256 格全塞進手機會小到看不見，最小縮放級距還沒定 | 靜態 |
-| [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 戰場的縮放 | 戰場 64×62 格，比大地圖小，可能不需要縮放；沒試過 | 靜態 |
+| [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 戰場的縮放 | 目前固定 1×（原版的 480×368 剛好塞進主區）。放大之後看得到的格子會變少，**那會改變決策**，所以沒有做 | 靜態 |
+| [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 戰場縮圖的點選 | 原版點縮圖可以移動鏡頭，手機版目前只顯示 | 靜態 |
 | [`promo/dosv-adlib-and-tactical-review.md`](../promo/dosv-adlib-and-tactical-review.md) | 原版雙 TALK 的 payload、肖像、文字 baseline 與出現時序尚未在同一戰況對拍。 | （未解小節內文） | 靜態 |
 | [`promo/dosv-adlib-and-tactical-review.md`](../promo/dosv-adlib-and-tactical-review.md) | 原版右欄完整狀態資訊、旗標、軍名、命令 glyph 與裝飾仍未逐區等價。 | （未解小節內文） | 靜態 |
 | [`promo/dosv-adlib-and-tactical-review.md`](../promo/dosv-adlib-and-tactical-review.md) | 原版底列按鈕 glyph、選取狀態與 remake 文字／簡化圖示仍有差異。 | （未解小節內文） | 靜態 |
