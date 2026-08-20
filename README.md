@@ -86,7 +86,7 @@
 - Linux AppImage：[`wolong-remake-linux-amd64-20260820.AppImage`](dist-all/packages/wolong-remake-linux-amd64-20260820.AppImage)。已通過 Linux／Xvfb 固定種子 smoke（含結局過場）；仍要由玩家提供合法 DOS/V 資料與中文字型。
 - 三平台候選包與 SHA-256：[`dist-all/packages`](dist-all/packages)。Windows／macOS 是交叉建置候選，尚未在目標作業系統完成原生 GUI runtime 驗收。
 - 「經典再現」實機比較片：[`wolong-remake-dosv-live-comparison.mp4`](dist-all/promo/wolong-remake-dosv-live-comparison.mp4)。原版側是使用者指定的松崗 DOS/V 推廣比較素材，remake 側為實機 GUI；不是同日期／同輸入逐像素 parity。
-- Android：手機版已接上**真的規則層**。模擬器與桌面在同一組幀算出相同的世界指紋（frame 1／60／180），主畫面、進言、一覽、軍團、系統與戰場都可用，原版資料走系統的資料夾選擇器匯入。**仍不宣稱 Android release**：沒有實機驗收，也還沒 release signing。細節見 [`docs/mobile/android-plan.md`](docs/mobile/android-plan.md) 與 [`docs/mobile/android-ux.md`](docs/mobile/android-ux.md)。`dist-all/experimental/android/` 底下那支 `20260811` 的 APK 是更早的觸控 shell 原型，與現在這一版無關。
+- Android：手機版已接上**真的規則層**。模擬器與桌面在同一組幀算出相同的世界指紋（frame 1／60／120），主畫面、進言、一覽、軍團、系統與戰場都可用，原版資料走系統的資料夾選擇器匯入。**仍不宣稱 Android release**：沒有實機驗收，也還沒 release signing。細節見 [`docs/mobile/android-plan.md`](docs/mobile/android-plan.md) 與 [`docs/mobile/android-ux.md`](docs/mobile/android-ux.md)。`dist-all/experimental/android/` 底下那支 `20260811` 的 APK 是更早的觸控 shell 原型，與現在這一版無關。
 
 `wlgame` 的持久化要明確指定可寫路徑，例如：
 

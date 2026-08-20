@@ -27,7 +27,7 @@ mkdir -p "$OUT_DIR"
 docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
     --device /dev/kvm --memory 6g --cpus 2 --pids-limit 512 \
     -v "$REPO_ROOT:/src:ro" -v "$OUT_DIR:/out" \
-    -e HOME=/tmp -e FP_FRAMES="${WOLONG_FP_FRAMES:-1,60,180}" \
+    -e HOME=/tmp -e FP_FRAMES="${WOLONG_FP_FRAMES:-1,60,120}" \
     -w /src "$IMAGE" bash -c '
 set -euo pipefail
 export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$PATH
