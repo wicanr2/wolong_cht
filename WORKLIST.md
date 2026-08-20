@@ -51,6 +51,37 @@
 - Docker 內已有 Go test／vet、翻譯 selftest、文件索引與 Linux/Xvfb 截圖 smoke；
   完整長程遊戲測試依使用者要求略過。
 
+### 2026-08-20 Android 手機版：核心接入、四個入口、戰場與資料匯入
+
+**里程碑 A 通過**：模擬器與桌面在同一組幀算出**完全相同的指紋**
+（frame 1／60／180 ＝ `2b58e7b58f4796f9`／`5b3585cf005a6ec5`／`86db440bb5c25004`，
+`World.Fingerprint`，[`docs/spec/69`](docs/spec/69-world-fingerprint.md)）。
+這一條不看畫面就能驗，是整條路線最強的驗收。
+
+手機呈現層在 `internal/ui/phone`，**只共用規則層、畫面重畫**
+（[`docs/mobile/android-ux.md`](docs/mobile/android-ux.md)）：
+
+- 主畫面：大地圖（可縮放拖曳）、狀態列、四個入口、據點小卡
+- 進言五項齊全：三個外交提案走完整說服迴圈，遷都與請求出陣走一次驗收
+- 一覽四張表（唯讀）、軍團（現有 ＋ 編成）、系統（速度／四槽存檔／關於）
+- 戰場：45 度視角、六個編成位置、六個命令、兩軍資訊與縮圖
+- 資料匯入：`ImportActivity` 是啟動入口，走系統的 SAF 選擇器
+
+**七塊東西從 `cmd/wlgame` 抽成共用套件**（`internal/ui/isoview`、
+`internal/battlesetup`、`internal/rules/speed`、`persuasion/talk.go`、
+`state/persuade.go`、`assets/battle/order.go`、`text.Table.Lines` ＋
+`ui/talkmenu`）。抽完桌面版的戰場畫面**byte-for-byte 沒有變**
+（同一個固定局面截圖雜湊 `a450b80e…`）。
+
+⭐ **順手抓到一個存檔的真缺陷**：`savefile.Encode` 存的是**載入當時**的
+區塊，所以開檔之後的進度不會進原生存檔，而讀檔又優先讀原生檔——
+存了等於沒存。既有的三個測試從來沒有推進過時鐘，所以完全看不出來。
+（推翻紀錄見 `CONTEXT.md` §6。）
+
+**還沒完成**：SAF 選資料夾之後的複製流程沒有自動驗（要驅動系統的檔案
+選擇器）；實機驗收 ⛔ 沒有裝置。工具鏈與踩過的坑寫在
+[`docs/mobile/android-plan.md`](docs/mobile/android-plan.md) §6。
+
 ### 2026-08-20 數量斷言複驗 ＋ 三平台重新交付 ＋ Android 路線定案
 
 **數量斷言複驗**（使用者要求）：README 寫的「反組譯 549 條未解」**兩層都錯**。

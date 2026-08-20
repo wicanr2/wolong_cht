@@ -18,7 +18,7 @@
 
 ## 現在做到哪裡
 
-**核心規則與可玩垂直切片已接通；完整交付已集中在 `dist-all/`（三平台桌面包、Linux AppImage、推廣片與 Android 觸控 shell 原型）。Windows／macOS 原生 GUI 實機驗收仍待完成。**
+**核心規則與可玩垂直切片已接通；完整交付已集中在 `dist-all/`（三平台桌面包、Linux AppImage、推廣片）。Windows／macOS 原生 GUI 實機驗收仍待完成。**
 
 ⭐ **靜態反組譯收斂**：739 支函式每一支都有 `docs/re/` 筆記
 （[`docs/re/21`](docs/re/21-function-census.md)）。那代表「每一支都有人寫過」，
@@ -35,7 +35,7 @@
 
 | 已完成 | 進行中 | 尚未完成 |
 |---|---|---|
-| 素材格式、存檔改寫、時間模型、經濟、災害、中文顯示、外交、軍團結構、一覽表、進言與說得、行軍與戰術戰鬥垂直切片、四槽存檔 overlay、敵方 AI 正常遭遇接點、事件 2–10 的既定 fixture／時鐘驗收、**勝負條件**（存活勢力數減到 1）、**音樂與音效**（OPL3 合成 → ogg，含場景對應）、**原版／remake 同狀態逐區對拍**（主畫面五區逐像素相同；戰場九區裡六區逐像素相同、戰場區 0.17%）、**結局過場**（十二幕 ＋ 逐字結尾文字）、**倒地動畫**、Linux AppImage、三平台候選封裝、60 秒推廣片 | Windows／macOS 原生 GUI short smoke、Android 核心接入（路線已定案，見 [`docs/mobile/android-plan.md`](docs/mobile/android-plan.md)）、完整戰術／長程遊戲抽樣 | `ICONGRF` 段 1 的 UI 語意／龍紋、原版事件 10 的自然 producer 等未解研究項 |
+| 素材格式、存檔改寫、時間模型、經濟、災害、中文顯示、外交、軍團結構、一覽表、進言與說得、行軍與戰術戰鬥垂直切片、四槽存檔 overlay、敵方 AI 正常遭遇接點、事件 2–10 的既定 fixture／時鐘驗收、**勝負條件**（存活勢力數減到 1）、**音樂與音效**（OPL3 合成 → ogg，含場景對應）、**原版／remake 同狀態逐區對拍**（主畫面五區逐像素相同；戰場九區裡六區逐像素相同、戰場區 0.17%）、**結局過場**（十二幕 ＋ 逐字結尾文字）、**倒地動畫**、Linux AppImage、三平台候選封裝、60 秒推廣片 | Windows／macOS 原生 GUI short smoke、**Android 實機驗收**（模擬器已驗指紋與畫面，見 [`docs/mobile/android-plan.md`](docs/mobile/android-plan.md)）、完整戰術／長程遊戲抽樣 | `ICONGRF` 段 1 的 UI 語意／龍紋、原版事件 10 的自然 producer 等未解研究項 |
 
 ### 與原版差多少（2026-08-20）
 
@@ -86,7 +86,7 @@
 - Linux AppImage：[`wolong-remake-linux-amd64-20260820.AppImage`](dist-all/packages/wolong-remake-linux-amd64-20260820.AppImage)。已通過 Linux／Xvfb 固定種子 smoke（含結局過場）；仍要由玩家提供合法 DOS/V 資料與中文字型。
 - 三平台候選包與 SHA-256：[`dist-all/packages`](dist-all/packages)。Windows／macOS 是交叉建置候選，尚未在目標作業系統完成原生 GUI runtime 驗收。
 - 「經典再現」實機比較片：[`wolong-remake-dosv-live-comparison.mp4`](dist-all/promo/wolong-remake-dosv-live-comparison.mp4)。原版側是使用者指定的松崗 DOS/V 推廣比較素材，remake 側為實機 GUI；不是同日期／同輸入逐像素 parity。
-- Android 原型：[`wolong-remake-touch-prototype-debug-20260811.apk`](dist-all/experimental/android/wolong-remake-touch-prototype-debug-20260811.apk)（檔名帶的是它自己的建置日期，不是發行日期——這個附件沒有跟著重編）已在 Android 35 x86_64 模擬器驗證橫向啟動與 `CONTINUE`／`MENU` 觸控；它是操作 shell 原型，不是完整 Android release。細節見 [`docs/mobile/android-plan.md`](docs/mobile/android-plan.md)。
+- Android：手機版已接上**真的規則層**。模擬器與桌面在同一組幀算出相同的世界指紋（frame 1／60／180），主畫面、進言、一覽、軍團、系統與戰場都可用，原版資料走系統的資料夾選擇器匯入。**仍不宣稱 Android release**：沒有實機驗收，也還沒 release signing。細節見 [`docs/mobile/android-plan.md`](docs/mobile/android-plan.md) 與 [`docs/mobile/android-ux.md`](docs/mobile/android-ux.md)。`dist-all/experimental/android/` 底下那支 `20260811` 的 APK 是更早的觸控 shell 原型，與現在這一版無關。
 
 `wlgame` 的持久化要明確指定可寫路徑，例如：
 
