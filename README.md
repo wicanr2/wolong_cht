@@ -27,14 +27,15 @@
 
 ⭐ **同狀態逐區對拍**：拿原版存檔開同一個局面逐區比像素。主畫面五區逐像素相同；
 戰場九區裡六區逐像素相同，戰場區 0.17%（307 px），
-而其中 211 px 是原理上消不掉的（旗的揮舞相位、原版錄影裡的滑鼠游標）
-——[`docs/playtest/40`](docs/playtest/40-tactical-parity.md)。
+而其中 **299 px 是原理上消不掉的**（旗的揮舞相位 116、原版錄影裡的滑鼠游標 95、
+兩邊的門破在不同 tick 88）——**真正未歸類的只剩 8 px**
+（[`docs/playtest/40`](docs/playtest/40-tactical-parity.md)）。
 
 狀態的單一真相來源是 [`CONTEXT.md`](CONTEXT.md)。
 
 | 已完成 | 進行中 | 尚未完成 |
 |---|---|---|
-| 素材格式、存檔改寫、時間模型、經濟、災害、中文顯示、外交、軍團結構、一覽表、進言與說得、行軍與戰術戰鬥垂直切片、四槽存檔 overlay、敵方 AI 正常遭遇接點、事件 2–10 的既定 fixture／時鐘驗收、**勝負條件**（存活勢力數減到 1）、**音樂與音效**（OPL3 合成 → ogg，含場景對應）、**原版／remake 同狀態逐區對拍**（主畫面五區逐像素相同；戰場九區裡六區逐像素相同、戰場區 0.17%）、**結局過場**（十二幕 ＋ 逐字結尾文字）、**倒地動畫**、Linux AppImage、三平台候選封裝、60 秒推廣片 | Windows／macOS 原生 GUI short smoke、Android 完整核心接入與實機、完整戰術／長程遊戲抽樣 | `ICONGRF` 段 1 的 UI 語意／龍紋、原版事件 10 的自然 producer 等未解研究項 |
+| 素材格式、存檔改寫、時間模型、經濟、災害、中文顯示、外交、軍團結構、一覽表、進言與說得、行軍與戰術戰鬥垂直切片、四槽存檔 overlay、敵方 AI 正常遭遇接點、事件 2–10 的既定 fixture／時鐘驗收、**勝負條件**（存活勢力數減到 1）、**音樂與音效**（OPL3 合成 → ogg，含場景對應）、**原版／remake 同狀態逐區對拍**（主畫面五區逐像素相同；戰場九區裡六區逐像素相同、戰場區 0.17%）、**結局過場**（十二幕 ＋ 逐字結尾文字）、**倒地動畫**、Linux AppImage、三平台候選封裝、60 秒推廣片 | Windows／macOS 原生 GUI short smoke、Android 核心接入（路線已定案，見 [`docs/mobile/android-plan.md`](docs/mobile/android-plan.md)）、完整戰術／長程遊戲抽樣 | `ICONGRF` 段 1 的 UI 語意／龍紋、原版事件 10 的自然 producer 等未解研究項 |
 
 ### 與原版差多少（2026-08-20）
 
@@ -53,7 +54,7 @@
 | 文字 | 1,022 則全保存、byte-for-byte round-trip；**單行超寬 0 行**；60 筆校訂可重跑 | [`playtest/32`](docs/playtest/32-talk-layout-fit.md) |
 | 結局文字 | 200 字 10 行，從 `D7END.EXE` 取出（不在 `TALK.DAT` 裡）| [`re/70`](docs/re/70-d7end-ending-player.md) |
 | 音訊 | 會出聲、場景對應已解、與原版錄音比對過；**音色的諧波結構沒量化比對** | [`spec/29`](docs/spec/29-audio.md) |
-| 規則規格 | 58 份：**50 CONFORMED**／5 READY／2 DRAFT | [`spec/00`](docs/spec/00-index.md) |
+| 規則規格 | **56 份**（不含索引與 `TEMPLATE.md`）：**50 CONFORMED**／5 READY／1 DRAFT | [`spec/00`](docs/spec/00-index.md) |
 | 反組譯 | 739/739 支有筆記；`docs/re/` 自己標成未解的有 **230 列** | [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
 | 全專案的未解 | **553 列**（含 spec 132、playtest 69、mechanics 46、formats 40…）。⚠ **那是列數不是獨立問題數**——索引檔的「現況」欄是別的文件的摘要，同一個缺口會被數兩次（這類 9 列）| [`re/43`](docs/re/43-open-questions.md) §1 |
 
