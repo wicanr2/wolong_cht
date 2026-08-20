@@ -3,7 +3,7 @@
 **狀態：生成的清單，跑 `tools/py.sh tools/re_open_questions.py` 重出。
 這一份不下結論，只把各文件的「未解」表集中到一處。**
 
-- 日期：2026-08-18
+- 日期：2026-08-20
 - 產生工具：`tools/re_open_questions.py`
 - 來源：`docs/` 底下所有文件的未解小節、表格裡標未解的列，與收尾是「…未解」的散句
 
@@ -23,8 +23,8 @@
 | 程式碼理解 | 232 | 225 | 7 | 0 |
 | 驗收 | 69 | 59 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 144 | 136 | 8 | 0 |
-| **合計** | **549** | 520 | 28 | 1 |
+| 其他 | 144 | 135 | 9 | 0 |
+| **合計** | **549** | 519 | 29 | 1 |
 
 ## 2.1 規則正確性（47 條）
 
@@ -468,9 +468,9 @@
 | [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | 目標 OS 實跑 | **做不到**：這台是 Linux，沒有 Mac／Windows。檔頭驗過（PE32+／Mach-O），但視窗、輸入、音訊、字型載入都沒有在目標系統上跑過 | 實測 |
 | [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | linux/arm64 的本體 | 要在 arm64 的 Linux 上建（Ebiten 的 cgo 沒有交叉工具鏈） | 靜態 |
 | [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | Windows 的 smoke | 同第一項 | 靜態 |
-| [`release/02-appimage-20260818.md`](../release/02-appimage-20260818.md) | Windows／macOS 的實機驗收 | 仍未做（M8 唯一的閘）。這一輪只重打 Linux | 靜態 |
-| [`release/02-appimage-20260818.md`](../release/02-appimage-20260818.md) | `dist/promo/` 的四支影片 | 只剩 `dist-all/promo/` 的成品，重跑 `release_all.sh` 之前要先把來源補回來或改成從 `dist-all` 取 | 靜態 |
-| [`release/02-appimage-20260818.md`](../release/02-appimage-20260818.md) | 三平台重新對齊 | `20260812` 那批沒有跟著重打，要交完整版就得補上 | 靜態 |
+| [`release/02-three-platform-20260820.md`](../release/02-three-platform-20260820.md) | Windows／macOS 的實機驗收 | 仍未做（M8 唯一的閘）。這一批只有 Linux 有 GUI smoke，另兩個平台只驗了檔頭 | 靜態 |
+| [`release/02-three-platform-20260820.md`](../release/02-three-platform-20260820.md) | `verification/` 的截圖不在管線裡 | `promote` 每次都會清掉，要另外跑 `tools/release_smoke.sh` 再 `release_all_fs.py refresh` | 實測 |
+| [`release/02-three-platform-20260820.md`](../release/02-three-platform-20260820.md) | Android 原型沒有重編 | 內容仍是 2026-08-11 那次（檔名已如實反映） | 靜態 |
 | [`spec/00-index.md`](../spec/00-index.md) | **推論等級** | confirmed／強證據／假說／未知（`CLAUDE.md` §9）。假說也可以實作，但要標 | 靜態 |
 | [`spec/00-index.md`](../spec/00-index.md) | 進言「請求君主出陣」（`sub_1699E`） | `11-ai-sortie.md` / 可實作，**尚未實作** | 靜態 |
 | [`spec/00-index.md`](../spec/00-index.md) | 主畫面四個視窗的開關 | `13-main-window-toggles.md` / 已實作並留下截圖；原版執行期未驗 | 實測 |

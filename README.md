@@ -34,15 +34,15 @@
 
 | 已完成 | 進行中 | 尚未完成 |
 |---|---|---|
-| 素材格式、存檔改寫、時間模型、經濟、災害、中文顯示、外交、軍團結構、一覽表、進言與說得、行軍與戰術戰鬥垂直切片、四槽存檔 overlay、敵方 AI 正常遭遇接點、事件 2–10 的既定 fixture／時鐘驗收、**勝負條件**（存活勢力數減到 1）、**音樂與音效**（OPL3 合成 → ogg，含場景對應）、**原版／remake 同狀態逐區對拍**（主畫面五區逐像素相同；戰場九區裡六區逐像素相同、戰場區 0.17%）、Linux AppImage、三平台候選封裝、60 秒推廣片 | Windows／macOS 原生 GUI short smoke、Android 完整核心接入與實機、完整戰術／長程遊戲抽樣 | `ICONGRF` 段 1 的 UI 語意／龍紋、原版事件 10 的自然 producer 等未解研究項 |
+| 素材格式、存檔改寫、時間模型、經濟、災害、中文顯示、外交、軍團結構、一覽表、進言與說得、行軍與戰術戰鬥垂直切片、四槽存檔 overlay、敵方 AI 正常遭遇接點、事件 2–10 的既定 fixture／時鐘驗收、**勝負條件**（存活勢力數減到 1）、**音樂與音效**（OPL3 合成 → ogg，含場景對應）、**原版／remake 同狀態逐區對拍**（主畫面五區逐像素相同；戰場九區裡六區逐像素相同、戰場區 0.17%）、**結局過場**（十二幕 ＋ 逐字結尾文字）、**倒地動畫**、Linux AppImage、三平台候選封裝、60 秒推廣片 | Windows／macOS 原生 GUI short smoke、Android 完整核心接入與實機、完整戰術／長程遊戲抽樣 | `ICONGRF` 段 1 的 UI 語意／龍紋、原版事件 10 的自然 producer 等未解研究項 |
 
 ### 候選封裝與推廣片
 
-- 完整交付根目錄：[`dist-all`](dist-all)，包含三平台桌面候選包、Linux AppImage、四支推廣片、雜湊與 Linux GUI smoke 截圖。
-- Linux AppImage：[`wolong-remake-linux-amd64-20260812.AppImage`](dist-all/packages/wolong-remake-linux-amd64-20260812.AppImage)。已通過 Linux／Xvfb 固定種子 smoke；仍要由玩家提供合法 DOS/V 資料與中文字型。
+- 完整交付根目錄：[`dist-all`](dist-all)，包含三平台桌面候選包、Linux AppImage、四支推廣片、雜湊與 Linux GUI smoke 截圖。目前是一致的 `wolong-remake-20260820` 批次（[`docs/release/02`](docs/release/02-three-platform-20260820.md)）。
+- Linux AppImage：[`wolong-remake-linux-amd64-20260820.AppImage`](dist-all/packages/wolong-remake-linux-amd64-20260820.AppImage)。已通過 Linux／Xvfb 固定種子 smoke（含結局過場）；仍要由玩家提供合法 DOS/V 資料與中文字型。
 - 三平台候選包與 SHA-256：[`dist-all/packages`](dist-all/packages)。Windows／macOS 是交叉建置候選，尚未在目標作業系統完成原生 GUI runtime 驗收。
 - 「經典再現」實機比較片：[`wolong-remake-dosv-live-comparison.mp4`](dist-all/promo/wolong-remake-dosv-live-comparison.mp4)。原版側是使用者指定的松崗 DOS/V 推廣比較素材，remake 側為實機 GUI；不是同日期／同輸入逐像素 parity。
-- Android 原型：[`wolong-remake-touch-prototype-debug-20260812.apk`](dist-all/experimental/android/wolong-remake-touch-prototype-debug-20260812.apk) 已在 Android 35 x86_64 模擬器驗證橫向啟動與 `CONTINUE`／`MENU` 觸控；它是操作 shell 原型，不是完整 Android release。細節見 [`docs/mobile/android-plan.md`](docs/mobile/android-plan.md)。
+- Android 原型：[`wolong-remake-touch-prototype-debug-20260811.apk`](dist-all/experimental/android/wolong-remake-touch-prototype-debug-20260811.apk)（檔名帶的是它自己的建置日期，不是發行日期——這個附件沒有跟著重編）已在 Android 35 x86_64 模擬器驗證橫向啟動與 `CONTINUE`／`MENU` 觸控；它是操作 shell 原型，不是完整 Android release。細節見 [`docs/mobile/android-plan.md`](docs/mobile/android-plan.md)。
 
 `wlgame` 的持久化要明確指定可寫路徑，例如：
 

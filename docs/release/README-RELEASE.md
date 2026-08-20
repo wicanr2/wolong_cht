@@ -1,6 +1,6 @@
 # 臥龍傳 remake 可執行封裝
 
-**狀態：三平台候選封裝、Linux AppImage、推廣片與驗收紀錄已集中於 [`dist-all`](../../dist-all)；事件 10 的閒置自動 clock 已接入，Windows／macOS 原生 GUI 尚未實機驗證。**
+**狀態：三平台候選封裝、Linux AppImage、推廣片與驗收紀錄已集中於 [`dist-all`](../../dist-all)，目前是一致的 `wolong-remake-20260820` 批次（[`02`](02-three-platform-20260820.md)）；Windows／macOS 原生 GUI 尚未實機驗證。**
 
 - 日期：2026-08-12
 

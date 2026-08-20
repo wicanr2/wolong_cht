@@ -7,6 +7,7 @@
 """
 from __future__ import annotations
 
+import datetime
 import hashlib
 import json
 import os
@@ -21,10 +22,12 @@ DIST = Path(
     os.environ.get("WOLONG_DIST_ROOT", str(REPO / "dist-all"))
 ).resolve()
 WORK = DIST / ".work"
-# 版本字串。預設維持 20260812 那一次的三平台交付，單獨重打 AppImage 時
-# 由 `WOLONG_RELEASE_VERSION` 覆寫——**兩批產物的名字要分得開**，
-# 否則 dist-all 裡會出現同名卻不同建置的檔案。
+# 版本字串。由 `WOLONG_RELEASE_VERSION` 決定，預設是 20260812 那一次的三平台交付。
+# **所有產物的檔名都從這裡長出來**——先前是逐處硬寫 `20260812`，
+# 於是「換一次版本」等於改十幾個字串，而漏改一處會產出名字對不上內容的檔案。
 RELEASE_VERSION = os.environ.get("WOLONG_RELEASE_VERSION", "wolong-remake-20260812")
+# RELEASE_STAMP 是版本字串尾端的日期，檔名用它。
+RELEASE_STAMP = RELEASE_VERSION.rsplit("-", 1)[-1]
 PROMO_FILES = (
     "wolong-remake-trailer.mp4",
     "wolong-remake-classic-revival.mp4",
@@ -174,6 +177,34 @@ def rebuild() -> None:
     DIST.mkdir(parents=True, exist_ok=True)
 
 
+def android_apk_name(apk: Path) -> str:
+    """Android 附件用**它自己的建置日期**命名，不是發行日期。
+
+    ⭐ 這個附件不是每次發行都重編的——`release_all.sh` 只是把既有的
+    `app-debug.apk` 複製過來。掛上發行日期會讓檔名宣稱一個沒發生過的建置，
+    而雜湊會與上一批一模一樣：**名字變了、內容沒變**，看起來像重編過。
+    改用 APK 自己的 mtime，名字就說得出實話。
+    """
+    stamp = datetime.date.fromtimestamp(apk.stat().st_mtime).strftime("%Y%m%d")
+    return f"wolong-remake-touch-prototype-debug-{stamp}.apk"
+
+
+def promo_source(name: str) -> Path:
+    """找推廣片的來源。
+
+    ⭐ **`dist-all/promo` 也算來源。** 影片是另外一條管線產的，重打發行時
+    未必還留在 `dist/promo/`；而 `stage` 寫的是 staging 目錄、`promote` 之後
+    才換掉 `dist-all`，所以這時候讀 `dist-all/promo` 是安全的。
+    少了這條退路，整批重建會在編完三平台之後才因為缺影片而停掉。
+    """
+    for base in (REPO / "dist" / "promo", REPO / "dist-all" / "promo"):
+        candidate = base / name
+        if candidate.is_file():
+            return candidate
+    raise SystemExit(
+        f"找不到推廣片 {name}：dist/promo 與 dist-all/promo 都沒有")
+
+
 def stage() -> None:
     raw = WORK / "raw"
     correction = REPO / "translations" / "corrections.json"
@@ -187,7 +218,7 @@ def stage() -> None:
         copy_file(correction, target)
 
     package_stage(
-        "wolong-remake-linux-amd64-20260812",
+        f"wolong-remake-linux-amd64-{RELEASE_STAMP}",
         [
             ("linux-amd64/wlgame", "wlgame", True),
             ("linux-amd64/wlview", "wlview", True),
@@ -197,7 +228,7 @@ def stage() -> None:
         [("linux-amd64/translations", "translations")],
     )
     package_stage(
-        "wolong-remake-windows-amd64-20260812",
+        f"wolong-remake-windows-amd64-{RELEASE_STAMP}",
         [
             ("windows-amd64/wlgame.exe", "wlgame.exe", True),
             ("windows-amd64/wlview.exe", "wlview.exe", True),
@@ -207,7 +238,7 @@ def stage() -> None:
         [("windows-amd64/translations", "translations")],
     )
     package_stage(
-        "wolong-remake-macos-universal-20260812",
+        f"wolong-remake-macos-universal-{RELEASE_STAMP}",
         [
             ("darwin-amd64/wlgame", "darwin-amd64/wlgame", True),
             ("darwin-amd64/wlview", "darwin-amd64/wlview", True),
@@ -224,7 +255,7 @@ def stage() -> None:
         ],
     )
     package_stage(
-        "wolong-remake-linux-arm64-tools-20260812",
+        f"wolong-remake-linux-arm64-tools-{RELEASE_STAMP}",
         [
             ("linux-arm64-tools/wlsim", "wlsim", True),
             ("linux-arm64-tools/wlshot", "wlshot", True),
@@ -233,11 +264,11 @@ def stage() -> None:
     )
 
     for name in PROMO_FILES:
-        copy_file(REPO / "dist" / "promo" / name, DIST / "promo" / name)
+        copy_file(promo_source(name), DIST / "promo" / name)
     write_template("PROMO-README.md", DIST / "promo" / "README.md")
 
     apk = REPO / "android" / "app" / "build" / "outputs" / "apk" / "debug" / "app-debug.apk"
-    copy_file(apk, DIST / "experimental" / "android" / "wolong-remake-touch-prototype-debug-20260812.apk")
+    copy_file(apk, DIST / "experimental" / "android" / android_apk_name(apk))
     write_template("ANDROID-EXPERIMENTAL.md", DIST / "experimental" / "android" / "README.md")
 
     write_template("ROOT-README.md", DIST / "README.md")
@@ -295,21 +326,21 @@ def record_verification() -> None:
 
 
 def finalise() -> None:
-    if not (DIST / "packages" / "wolong-remake-linux-amd64-20260812.AppImage").is_file():
+    if not (DIST / "packages" / f"wolong-remake-linux-amd64-{RELEASE_STAMP}.AppImage").is_file():
         raise SystemExit("缺少已建立的 AppImage")
     record_verification()
     write_template("VERIFICATION.md", DIST / "verification" / "README.md")
     manifest = {
         "release_version": RELEASE_VERSION,
         "desktop_full_packages": [
-            "packages/wolong-remake-linux-amd64-20260812.tar.gz",
-            "packages/wolong-remake-windows-amd64-20260812.tar.gz",
-            "packages/wolong-remake-macos-universal-20260812.tar.gz",
+            f"packages/wolong-remake-linux-amd64-{RELEASE_STAMP}.tar.gz",
+            f"packages/wolong-remake-windows-amd64-{RELEASE_STAMP}.tar.gz",
+            f"packages/wolong-remake-macos-universal-{RELEASE_STAMP}.tar.gz",
         ],
-        "linux_appimage": "packages/wolong-remake-linux-amd64-20260812.AppImage",
-        "linux_arm64_tools": "packages/wolong-remake-linux-arm64-tools-20260812.tar.gz",
+        "linux_appimage": f"packages/wolong-remake-linux-amd64-{RELEASE_STAMP}.AppImage",
+        "linux_arm64_tools": f"packages/wolong-remake-linux-arm64-tools-{RELEASE_STAMP}.tar.gz",
         "promo_videos": [f"promo/{name}" for name in PROMO_FILES],
-        "android_experimental": "experimental/android/wolong-remake-touch-prototype-debug-20260812.apk",
+        "android_experimental": f"experimental/android/{android_apk_name(REPO / 'android' / 'app' / 'build' / 'outputs' / 'apk' / 'debug' / 'app-debug.apk')}",
         "original_assets_included": False,
         "complete_original_talk_table_included": False,
         "native_gui_smoke": {"linux_amd64": True, "windows_amd64": False, "macos": False},
