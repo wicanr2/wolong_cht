@@ -8,6 +8,18 @@
 - 實作：`internal/ui/phone`（版面、面板、進言、存讀檔）、`mobile/wolong`（平台殼）
 - 驗收：`tools/phone_shot.sh`（桌面截圖，約 30 秒一輪）、`tools/android_smoke.sh`（模擬器）
 
+## 0. 現在長什麼樣
+
+| | |
+|---|---|
+| ![主畫面](../images/phone-main.png) | 主畫面：大地圖、狀態列、四個入口、點中據點的小卡 |
+| ![進言](../images/phone-advise.png) | 進言：選對象。用字取自 `TALK.DAT` #77 |
+| ![戰場](../images/phone-battle.png) | 戰場：45 度視角、六個編成位置、六個命令、兩軍資訊與縮圖 |
+| ![匯入](../images/phone-import.png) | 第一次啟動：選原版資料夾（§8）|
+
+前三張是桌面驗收迴圈（`tools/phone_shot.sh`）截的，
+第四張出自模擬器（`tools/android_smoke.sh`）。
+
 ## 1. 設計前提
 
 原版是 **640×400 的滑鼠式視窗 UI**：命令列一格 16×16、一覽表一列 16 px 高、
