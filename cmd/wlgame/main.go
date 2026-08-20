@@ -25,6 +25,7 @@
 package main
 
 import (
+	"github.com/wicanr2/wolong_cht/internal/rules/speed"
 	"flag"
 	"fmt"
 	"image"
@@ -200,11 +201,11 @@ type game struct {
 	// speed／tacticalSpeed 是**原版的檔位 0–4**（0 ＝ 最高速、4 ＝ 最低速），
 	// 不是「每畫面幾 tick」。原版是兩個獨立設定：戰略速度在 `ds:0CFAh`
 	// 直接當等待量，戰術速度在 `ds:0CFBh` 要先 ×16（`sub_160A5`）。
-	// 每一檔實際多快由 speedThrottle 換算（docs/spec/34、docs/re/61）。
+	// 每一檔實際多快由 speed.Throttle 換算（docs/spec/34、docs/re/61）。
 	speed            int // 戰略速度檔位
 	tacticalSpeed    int // 戰術速度檔位
-	strategyThrottle speedThrottle
-	tacticalThrottle speedThrottle
+	strategyThrottle speed.Throttle
+	tacticalThrottle speed.Throttle
 	speedToast       int // 剛調過速度時在戰場浮一行提示，剩幾幀
 
 	// sound 是音訊播放層。**音檔不隨發行包散布**——玩家自己跑
@@ -895,7 +896,7 @@ func (g *game) Update() error {
 		return nil
 	}
 	// 這一個畫面推進幾個子刻，由節流累加器決定（docs/spec/34）。
-	steps := g.strategyThrottle.steps(g.speed, 1, highSpeedStrategySteps)
+	steps := g.strategyThrottle.Steps(g.speed, 1, speed.HighSpeedStrategy)
 	if steps == 0 {
 		g.world.AdvanceMapObjects(g.rng)
 		return nil

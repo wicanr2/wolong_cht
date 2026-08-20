@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"strconv"
-	"strings"
 
 	"github.com/hajimehoshi/ebiten/v2"
 
@@ -71,33 +70,10 @@ func (g *game) messageActive() bool {
 // talkLines 取出 TALK.DAT 的原始行並代入目前已證實可用的 marker。
 // 缺少 marker 時整則訊息 fail-closed，不顯示半句或把錯誤索引當成文字。
 func (g *game) talkLines(index int, vars map[byte]string) ([]string, bool) {
-	if g == nil || g.lib == nil || g.lib.Talk == nil || index < 0 ||
-		index >= len(g.lib.Talk.Messages) {
+	if g == nil || g.lib == nil {
 		return nil, false
 	}
-	lines := make([]string, 0, len(g.lib.Talk.Messages[index].Lines))
-	for _, line := range g.lib.Talk.Messages[index].Lines {
-		var b strings.Builder
-		for _, part := range line.Parts {
-			if part.Marker != 0 {
-				value, ok := vars[part.Marker]
-				if !ok {
-					return nil, false
-				}
-				b.WriteString(value)
-				continue
-			}
-			b.WriteString(textDecodeBig5(part.Raw))
-		}
-		lines = append(lines, b.String())
-	}
-	// text.Parse 會保留 TALK.DAT 每則訊息的最後一個 NUL 結束空行。
-	// 原版 sub_1084A 在讀到這個終止空行時停止，不把它畫成可見列；
-	// 中間真正存在的空行仍必須保留。
-	if len(lines) > 0 && lines[len(lines)-1] == "" {
-		lines = lines[:len(lines)-1]
-	}
-	return lines, true
+	return g.lib.Talk.Lines(index, vars)
 }
 
 // textDecodeBig5 讓訊息檔的解碼集中在既有 Big5 呈現路徑；獨立成小函式

@@ -44,7 +44,7 @@ func TestAdviseTalkBasesMatchOriginal(t *testing.T) {
 		{persuasion.CeaseFire, 150},
 		{persuasion.Cooperate, 214},
 	} {
-		if got := adviseTalkBase(tc.cmd); got != tc.want {
+		if got := persuasion.TalkBase(tc.cmd); got != tc.want {
 			t.Errorf("%v 的起點 = %d，原版是 %d", tc.cmd, got, tc.want)
 		}
 	}
@@ -63,12 +63,12 @@ func TestAdviseReplyIndexFollowsReactionCode(t *testing.T) {
 		{persuasion.AlreadyAtWar, 99},
 		{persuasion.SameFaction, 83},
 	} {
-		if got := adviseReplyIndex(base, tc.r, 0); got != tc.want {
+		if got := persuasion.TalkReplyIndex(base, tc.r, 0); got != tc.want {
 			t.Errorf("碼 %d 的索引 = %d，原版是 %d", tc.r, got, tc.want)
 		}
 	}
 	// 說話型直接加進索引（sub_13C99 的 add cx, ax）。
-	if got := adviseReplyIndex(base, persuasion.Refuse, 2); got != 92 {
+	if got := persuasion.TalkReplyIndex(base, persuasion.Refuse, 2); got != 92 {
 		t.Errorf("說話型 2 的索引 = %d，want 92", got)
 	}
 }
@@ -90,7 +90,7 @@ func TestAdviseLinesComeFromTalkDat(t *testing.T) {
 	seen := map[string]persuasion.Command{}
 	for _, c := range adviseCommands {
 		g.clearAdviseBoxes()
-		g.adviseSay(adviseAdvisor, adviseTalkBase(c)+3)
+		g.adviseSay(adviseAdvisor, persuasion.TalkBase(c)+3)
 		g.adviseAdvance()
 		line := strings.Join(g.adviseAdvisorSaid, "")
 		if line == "" {
@@ -109,10 +109,10 @@ func TestAdviseLinesComeFromTalkDat(t *testing.T) {
 // 說服迴圈的索引算式（docs/spec/44 §5）。原版在進迴圈前 `add [bp+0], 10h`，
 // 所以整段相對於 base+16，而那一格正好是五選一的選單。
 func TestAdviseReasonIndicesFollowOriginalArithmetic(t *testing.T) {
-	if got := adviseReasonBase(persuasion.Hostility); got != 102 {
+	if got := persuasion.TalkReasonBase(persuasion.Hostility); got != 102 {
 		t.Fatalf("敵對的說服起點 = %d，要 102", got)
 	}
-	base := adviseReasonBase(persuasion.Hostility)
+	base := persuasion.TalkReasonBase(persuasion.Hostility)
 	for slot, want := range []int{103, 104, 105, 106, 107} {
 		if got := base + slot + 1; got != want {
 			t.Errorf("第 %d 列的軍師句 = %d，要 %d", slot, got, want)
@@ -124,19 +124,19 @@ func TestAdviseReasonIndicesFollowOriginalArithmetic(t *testing.T) {
 		for code, out := range []persuasion.Outcome{
 			persuasion.Failed, persuasion.Agreed, persuasion.Continue,
 		} {
-			if got := adviseReasonReply(base, slot, out, false, 0); got != row[code] {
+			if got := persuasion.TalkReasonReply(base, slot, out, false, 0); got != row[code] {
 				t.Errorf("第 %d 列的 %v = %d，要 %d", slot, out, got, row[code])
 			}
 		}
 	}
-	if got := adviseReasonReply(base, 4, persuasion.Withdrawn, false, 0); got != 144 {
+	if got := persuasion.TalkReasonReply(base, 4, persuasion.Withdrawn, false, 0); got != 144 {
 		t.Errorf("撤回 = %d，要 144", got)
 	}
-	if got := adviseReasonReply(base, 1, persuasion.Continue, true, 0); got != 147 {
+	if got := persuasion.TalkReasonReply(base, 1, persuasion.Continue, true, 0); got != 147 {
 		t.Errorf("重複同一個理由 = %d，要 147", got)
 	}
 	// 說話型變體佔三則，所以每個位置的下一則就是變體 1。
-	if got := adviseReasonReply(base, 0, persuasion.Failed, false, 2); got != 110 {
+	if got := persuasion.TalkReasonReply(base, 0, persuasion.Failed, false, 2); got != 110 {
 		t.Errorf("變體 2 = %d，要 110", got)
 	}
 	// ⭐ 一個指令佔 16 + 48 則，所以下一個指令的起點正好接在後面。
@@ -145,9 +145,9 @@ func TestAdviseReasonIndicesFollowOriginalArithmetic(t *testing.T) {
 		{persuasion.Hostility, persuasion.CeaseFire},
 		{persuasion.CeaseFire, persuasion.Cooperate},
 	} {
-		if got := adviseReasonBase(tc[0]) + 48; got != adviseTalkBase(tc[1]) {
+		if got := persuasion.TalkReasonBase(tc[0]) + 48; got != persuasion.TalkBase(tc[1]) {
 			t.Errorf("%v 之後接 %v：%d ≠ %d",
-				tc[0], tc[1], got, adviseTalkBase(tc[1]))
+				tc[0], tc[1], got, persuasion.TalkBase(tc[1]))
 		}
 	}
 }
@@ -155,11 +155,11 @@ func TestAdviseReasonIndicesFollowOriginalArithmetic(t *testing.T) {
 // 撤回那一列的軍師句是「既然不和主公之意…」，位置在選單第 5 列。
 func TestAdviseReasonSlotPutsWithdrawLast(t *testing.T) {
 	for _, c := range adviseCommands {
-		if got := adviseReasonSlot(c, persuasion.Withdraw); got != 4 {
+		if got := persuasion.TalkReasonSlot(c, persuasion.Withdraw); got != 4 {
 			t.Errorf("%v 的撤回排第 %d，要第 4", c, got)
 		}
 		for i, r := range persuasion.Options(c) {
-			if got := adviseReasonSlot(c, r); got != i {
+			if got := persuasion.TalkReasonSlot(c, r); got != i {
 				t.Errorf("%v 的 %v 排第 %d，要第 %d", c, r, got, i)
 			}
 		}
@@ -256,7 +256,7 @@ func TestAdviseSceneLinesGoToTheRightBox(t *testing.T) {
 	g.target = 1
 	g.adviseCmd = persuasion.Hostility
 
-	base := adviseTalkBase(g.adviseCmd)
+	base := persuasion.TalkBase(g.adviseCmd)
 	g.clearAdviseBoxes()
 	g.adviseSay(adviseLord, base) // #86「{4}啊，是怎麼了？」
 	g.adviseSay(adviseAdvisor, base+3)
@@ -278,7 +278,7 @@ func TestAdviseSceneLinesGoToTheRightBox(t *testing.T) {
 		t.Errorf("兩個框拿到同一句：%q", lord)
 	}
 	// 君主再說一句：上框換掉，下框不動。
-	g.adviseSay(adviseLord, adviseReplyIndex(base, persuasion.Agree, 0))
+	g.adviseSay(adviseLord, persuasion.TalkReplyIndex(base, persuasion.Agree, 0))
 	g.adviseAdvance()
 	if got := strings.Join(g.adviseLordSaid, ""); got == lord {
 		t.Errorf("上框沒有換句：%q", got)

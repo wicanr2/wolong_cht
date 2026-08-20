@@ -1,6 +1,7 @@
 package savefile
 
 import (
+	"github.com/wicanr2/wolong_cht/internal/rules/rng"
 	"encoding/json"
 	"os"
 	"testing"
@@ -38,6 +39,35 @@ func TestRoundTripToOriginalIsByteForByte(t *testing.T) {
 	}
 	if err := VerifyExport(back, want); err != nil {
 		t.Fatal(err)
+	}
+}
+
+// 存檔要存**目前的**狀態，不是開檔當時的。
+//
+// ⚠ 這一條沒有的話，前面那個 byte-for-byte 測試會通過而檔案是壞的：
+// 它從來沒有推進過時鐘，於是「載入當時的區塊」與「目前狀態」剛好相同。
+// 存檔的價值全在推進之後。
+func TestEncodeCapturesTheCurrentState(t *testing.T) {
+	w := load(t)
+	r := rng.NewFixed(7)
+	for i := 0; i < 600; i++ {
+		w.Tick(r)
+	}
+	want := ExportOriginal(w)
+
+	data, err := Encode(w, Origin{Source: "SAVE.DAT", Block: 0})
+	if err != nil {
+		t.Fatal(err)
+	}
+	back, _, err := Decode(data)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := VerifyExport(back, want); err != nil {
+		t.Fatalf("讀回來的不是存檔當時的狀態：%v", err)
+	}
+	if got, w0 := back.Clock, w.Clock; got != w0 {
+		t.Fatalf("時鐘讀回來是 %v，存的時候是 %v", got, w0)
 	}
 }
 

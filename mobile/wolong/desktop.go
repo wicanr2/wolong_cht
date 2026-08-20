@@ -2,12 +2,32 @@
 
 package wolongmobile
 
-import "github.com/hajimehoshi/ebiten/v2"
+import (
+	"os"
+	"strconv"
 
-// RunDesktop is excluded from the Android binding. Keeping the game type
-// private prevents gomobile from trying to expose Ebiten's Layout signature.
+	"github.com/hajimehoshi/ebiten/v2"
+)
+
+// RunDesktop 在桌面跑手機版。
+//
+// ⚠ 這**不是**給玩家的桌面版（那是 `cmd/wlgame`，也是唯一的對拍基準）。
+// 它是手機 UI 的開發與驗收入口：同一份 `internal/ui/phone`，
+// 用桌面的快迴圈驗，最後才進 APK。
+//
+// 環境變數：`WOLONG_ORIG`／`WOLONG_FONT`／`WOLONG_SCENARIO`／
+// `WOLONG_PLAYER`／`WOLONG_SEED`／`WOLONG_SHOT`／`WOLONG_SHOT_FRAME`。
 func RunDesktop() error {
-	ebiten.SetWindowSize(1280, 992)
-	ebiten.SetWindowTitle("臥龍傳 Remake — Android touch prototype")
-	return ebiten.RunGame(newGame())
+	opt, font := optionsFromEnv()
+	shot := os.Getenv("WOLONG_SHOT")
+	at, err := strconv.Atoi(os.Getenv("WOLONG_SHOT_FRAME"))
+	if err != nil || at <= 0 {
+		at = 60
+	}
+	ebiten.SetWindowSize(960, 540)
+	ebiten.SetWindowTitle("臥龍傳 Remake — 手機版")
+	return ebiten.RunGame(newGame(opt, font, shot, at))
 }
+
+// defaultDirs 是桌面驗收的預設路徑（repo 相對）。
+func defaultDirs() (orig, font string) { return "workplace/orig/dosv", "workplace/eten" }

@@ -4,10 +4,10 @@ import (
 
 	"github.com/hajimehoshi/ebiten/v2"
 
-	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 	"github.com/wicanr2/wolong_cht/internal/rules/persuasion"
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
+	"github.com/wicanr2/wolong_cht/internal/ui/talkmenu"
 )
 
 // 進言（說明書 3.2、3.9）。
@@ -36,34 +36,24 @@ var adviseFallbackNames = []string{
 }
 
 // adviseMenuTalk 是進言那五項的選單訊息。
-const adviseMenuTalk = 0x4D // 77
+const adviseMenuTalk = persuasion.TalkMenu
 
 // adviseCommandLabels 是進言選單的五列，直接取自 `TALK.DAT`。
 //
 // ⚠ 原版寫「請求協助」，而 `persuasion.Cooperate.String()` 是「協力要請」
 // ——**選單文字屬於松崗版的原文，不要拿內部術語頂替**。
 func (g *game) adviseCommandLabels() []string {
-	out := append([]string(nil), adviseFallbackNames...)
-	lines, ok := g.talkLines(adviseMenuTalk, nil)
-	if !ok || len(lines) != len(out) {
-		return out
+	if g == nil || g.lib == nil {
+		return append([]string(nil), adviseFallbackNames...)
 	}
-	// ⛔ **不要再自己 trim。** 那些全形空白是版面的一部分
-	// （框寬由字數決定，docs/spec/45 §2.2）。`text.Decode` 已經
-	// 砍掉行尾的部分，這裡再砍就連行首的也沒了。
-	for i, l := range lines {
-		if l != "" {
-			out[i] = l
-		}
-	}
-	return out
+	return talkmenu.Labels(g.lib.Talk, adviseMenuTalk, nil, adviseFallbackNames)
 }
 
 // adviseVerdictBase 是那兩項的 TALK 起點——`sub_16909`／`sub_1699E`
 // 傳給 `sub_13B08` 的 `cx`（docs/spec/49 §1）。
 const (
-	adviseRelocateTalkBase = 0x182 // 386
-	adviseSortieTalkBase   = 0x18C // 396
+	adviseRelocateTalkBase = persuasion.TalkRelocateBase
+	adviseSortieTalkBase   = persuasion.TalkSortieBase
 )
 
 // adviseActive 回報進言流程是不是開著。開著時時間會停——
@@ -138,46 +128,9 @@ func (g *game) adviseAdvance() bool {
 func (g *game) adviseTalking() bool { return len(g.adviseQueue) > 0 }
 
 // situation 把目前的世界狀態換成說服判定要的局勢。
-//
-// 每一欄都對應已解出的資料：國力用據點數、疲弊用資金 < 0、
-// 侵攻狀態用勢力記錄 +0x19（docs/re/08 §1）。
+// 組法在 `internal/state`，桌面版與手機版共用同一份。
 func (g *game) situation(target int) persuasion.Situation {
-	me := g.world.Factions[g.world.Player]
-	them := g.world.Factions[target]
-	// 「有別的勢力正在侵攻我方」——停戰提案的「我正在防禦戰」用這個，
-	// 原版是 `sub_16577` 裡掃 22 個勢力的迴圈，**而且跳過交涉對象本身**。
-	anyone := false
-	for i := range g.world.Factions {
-		f := &g.world.Factions[i]
-		if f.Alive && i != target && f.InvasionTarget == g.world.Player {
-			anyone = true
-			break
-		}
-	}
-	s := persuasion.Situation{
-		Trust:       g.world.Trust,
-		Aggression:  me.Aggression,
-		OurCities:   me.Cities,
-		TheirCities: them.Cities,
-		OurFunds:    me.Funds,
-		TheirFunds:  them.Funds,
-
-		// 交友度是**有向的**，而且判定式要的是**含和平位元的原始值**
-		// （`0x80` ＝ 和平）——門檻常數本身就帶著它。
-		Friendship: g.world.Friendship[g.world.Player][target].Raw(),
-
-		TheyInvadeThirdParty: them.InvasionTarget != diplomacy.NoTarget &&
-			them.InvasionTarget != g.world.Player,
-		TheyInvadeUs:    them.InvasionTarget == g.world.Player,
-		AnyoneInvadesUs: anyone,
-	}
-	if g.adviseCmd == persuasion.Cooperate && g.ally >= 0 &&
-		g.ally < len(g.world.Factions) {
-		s.AllyCities = g.world.Factions[g.ally].Cities
-		s.AllyFriendship = g.world.Friendship[g.world.Player][g.ally].Raw()
-		s.SameFactionPicked = g.ally == target
-	}
-	return s
+	return g.world.PersuasionSituation(g.adviseCmd, target, g.ally)
 }
 
 // updateAdvise 處理進言流程的輸入。回傳 true 表示它吃掉了這一幀的輸入。
@@ -427,7 +380,7 @@ func (g *game) beginPersuasion() {
 	g.advise = advisePersuade
 	// ① 君主開場（上框）、② 軍師的進言（下框）——原文與框的分工
 	// 都照原版（docs/spec/44 §2、docs/spec/45 §1）。
-	base := adviseTalkBase(g.adviseCmd)
+	base := persuasion.TalkBase(g.adviseCmd)
 	g.clearAdviseBoxes()
 	g.adviseSay(adviseLord, base+g.playerTalkVariant())
 	g.adviseSay(adviseAdvisor, base+3)
@@ -441,9 +394,9 @@ func (g *game) beginPersuasion() {
 	default:
 		g.sess = nil
 		g.adjustTrust(persuasion.ReactionTrustDelta(reaction))
-		base := adviseTalkBase(g.adviseCmd)
+		base := persuasion.TalkBase(g.adviseCmd)
 		// ③ 君主的回答又回到上框（`sub_13830` 的最後一步）。
-		g.adviseSay(adviseLord, adviseReplyIndex(base, reaction, g.playerTalkVariant()))
+		g.adviseSay(adviseLord, persuasion.TalkReplyIndex(base, reaction, g.playerTalkVariant()))
 		if reaction == persuasion.Agree {
 			g.commitAdvice()
 		}
@@ -458,15 +411,15 @@ func (g *game) offerReason(r persuasion.Reason) {
 	repeat := g.sess.Offered(r)
 	out, dt := g.sess.Offer(r)
 	g.adjustTrust(dt)
-	base := adviseReasonBase(g.adviseCmd)
-	slot := adviseReasonSlot(g.adviseCmd, r)
+	base := persuasion.TalkReasonBase(g.adviseCmd)
+	slot := persuasion.TalkReasonSlot(g.adviseCmd, r)
 
 	// 軍師說出那個理由 → 下框（`sub_13B5A` 的 `cx = base + 位置 + 1`
 	// 之後接 `sub_13CDC`）；君主的反應 → 上框（`sub_13BA9` 結尾接
 	// `sub_13C99`）。**兩個框各自只換掉最新的那一句。**
 	g.adviseSay(adviseAdvisor, base+slot+1)
 	g.adviseSay(adviseLord,
-		adviseReasonReply(base, slot, out, repeat, g.playerTalkVariant()))
+		persuasion.TalkReasonReply(base, slot, out, repeat, g.playerTalkVariant()))
 	g.adviseAdvance()
 
 	switch out {
@@ -481,68 +434,21 @@ func (g *game) offerReason(r persuasion.Reason) {
 	}
 }
 
-// adviseReasonBase 是說服迴圈的起點。原版在進迴圈前 `add [bp+0], 10h`
-// （`sub_13830`），所以理由那一段全部相對於 base + 16 —— 而 base + 16
-// 正好是那三則五選一的選單（#102／#166／#230，docs/spec/44 §1）。
-func adviseReasonBase(c persuasion.Command) int { return adviseTalkBase(c) + 0x10 }
-
-// adviseReasonSlot 是理由在這個指令的選單裡排第幾（0–4，4 是撤回）。
-// **順序也是資料**——原版的索引算式直接吃這個位置。
-func adviseReasonSlot(c persuasion.Command, r persuasion.Reason) int {
-	for i, o := range persuasion.Options(c) {
-		if o == r {
-			return i
-		}
-	}
-	return len(persuasion.Options(c)) - 1 // 找不到就當撤回，不要算出界
-}
-
-// adviseReasonReply 是君主對一個理由的反應（原版 `sub_13BA9` 的結尾）：
-//
-//	撤回（第 5 項）      base + 42
-//	同一個理由講第二次   base + 45
-//	否則                 base + 位置×9 + 結果×3 + 6
-//
-// 結果碼 0 ＝ 理由不成立、1 ＝ 湊夠了、2 ＝ 還要再一個。
-// 每個位置佔三則是君主的**說話型**變體（`sub_13C99` 的 `add cx, ax`）。
-func adviseReasonReply(base, slot int, out persuasion.Outcome, repeat bool, variant int) int {
-	switch {
-	case out == persuasion.Withdrawn:
-		return base + 42 + variant
-	case repeat:
-		return base + 45 + variant
-	}
-	code := 2 // Continue：還要再一個
-	switch out {
-	case persuasion.Failed:
-		code = 0
-	case persuasion.Agreed:
-		code = 1
-	}
-	return base + slot*9 + code*3 + 6 + variant
-}
-
 // adviseReasonLabels 是說服選單的五列。原版把它們放在一則五行的
 // TALK（#102／#166／#230，[`docs/re/66`](../../docs/re/66-message-box-geometry.md) §6
-// 記的四則五行訊息之三），**順序就是索引算式吃的位置**。
-// 讀不到就退回 Reason.String()，那份用字也是照原版選單抄的。
+// 記的四則五行訊息之三）。讀不到就退回 Reason.String()，
+// 那份用字也是照原版選單抄的。
 func (g *game) adviseReasonLabels(c persuasion.Command) []string {
 	opts := persuasion.Options(c)
-	out := make([]string, len(opts))
+	fallback := make([]string, len(opts))
 	for i, r := range opts {
-		out[i] = r.String()
+		fallback[i] = r.String()
 	}
-	lines, ok := g.talkLines(adviseReasonBase(c), g.adviseTalkVars())
-	if !ok || len(lines) != len(opts) {
-		return out
+	if g == nil || g.lib == nil {
+		return fallback
 	}
-	// 同 adviseCommandLabels：全形空白是版面的一部分，不要 trim。
-	for i, l := range lines {
-		if l != "" {
-			out[i] = l
-		}
-	}
-	return out
+	return talkmenu.Labels(g.lib.Talk, persuasion.TalkReasonBase(c),
+		g.adviseTalkVars(), fallback)
 }
 
 // adjustTrust 對應原版 sub_13D91／sub_13DC9 的 byte 飽和行為。
@@ -550,32 +456,6 @@ func (g *game) adjustTrust(delta int) {
 	if g.world != nil {
 		g.world.AdjustTrust(delta)
 	}
-}
-
-// adviseTalkBase 是三個進言指令的 TALK 起點——`sub_16405`／`sub_164F1`／
-// `sub_16623` 傳給 `sub_13830` 的 `cx`（docs/spec/44 §1）。
-//
-// ⚠ **三組措辭各不相同**，不能共用一組。
-func adviseTalkBase(c persuasion.Command) int {
-	switch c {
-	case persuasion.CeaseFire:
-		return 0x96 // 150
-	case persuasion.Cooperate:
-		return 0xD6 // 214
-	default:
-		return 0x56 // 86，敵對（進兵）
-	}
-}
-
-// adviseReplyIndex 是君主回答的 TALK 索引：`base + 4 + 結果碼×3`
-// （`sub_13830` 的 `cx = base + al×3 + 4`）。碼 ≥ 4 一律用 83。
-//
-// 每個位置佔三則，因為 `sub_13C99` 會把君主的**說話型**加進索引。
-func adviseReplyIndex(base int, r persuasion.Reaction, variant int) int {
-	if r >= persuasion.SameFaction {
-		return 0x53 + variant // #83「我想軍師並不是來談笑的。」
-	}
-	return base + 4 + 3*int(r) + variant
 }
 
 // adviseTalkVars 是進言那幾則的變數：`{3}` 交涉對象、`{4}` 軍師（玩家）、

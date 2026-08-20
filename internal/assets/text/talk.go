@@ -9,6 +9,7 @@ package text
 import (
 	"encoding/binary"
 	"fmt"
+	"strings"
 )
 
 const (
@@ -188,4 +189,41 @@ func (t *Table) Bytes() []byte {
 		binary.LittleEndian.PutUint16(out[i*2:], v)
 	}
 	return append(out, body...)
+}
+
+// Lines 取出一則訊息的原始行並代入變數。
+//
+// ⚠ **缺變數時整則 fail-closed**（回 false），不顯示半句、也不把錯誤的索引
+// 當成文字印出去。半句訊息在畫面上看起來像遊戲內容，會被當成原版行為記下來。
+//
+// ⚠ 最後一行的空行是 `TALK.DAT` 每則訊息的 NUL 結束行，原版 `sub_1084A`
+// 讀到它就停，不畫成可見列——所以要砍掉。**中間**真正存在的空行必須保留。
+//
+// 桌面版與手機版共用這一份；兩邊各寫一份會長出不同的變數展開行為。
+func (t *Table) Lines(index int, vars map[byte]string) ([]string, bool) {
+	if t == nil || index < 0 || index >= len(t.Messages) {
+		return nil, false
+	}
+	out := make([]string, 0, len(t.Messages[index].Lines))
+	for _, line := range t.Messages[index].Lines {
+		var b strings.Builder
+		for _, part := range line.Parts {
+			if part.Marker != 0 {
+				value, ok := vars[part.Marker]
+				if !ok {
+					return nil, false
+				}
+				b.WriteString(value)
+				continue
+			}
+			if len(part.Raw) > 0 {
+				b.WriteString(Decode(part.Raw, Big5))
+			}
+		}
+		out = append(out, b.String())
+	}
+	if len(out) > 0 && out[len(out)-1] == "" {
+		out = out[:len(out)-1]
+	}
+	return out, true
 }

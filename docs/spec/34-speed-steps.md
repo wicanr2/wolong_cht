@@ -113,12 +113,16 @@ remake 給它一個固定上限，取先前 remake 的最快值，
 | 檔案 | 改什麼 |
 |---|---|
 | `cmd/wlgame/strategyhud.go` | `speedTicks`／`speedLevel` 拿掉；`g.speed`／`g.tacticalSpeed` 直接存檔位 0–4；`cycleSpeed` 變成 `(檔位+1) mod 5`；`adjustSpeed` 改成調檔位（＋ ＝ 更快 ＝ 檔位 −1）|
-| `cmd/wlgame/speed.go`（新）| `speedThrottle` 累加器 ＋ `steps()` |
+| `internal/rules/speed`（新）| `Throttle` 累加器 ＋ `Steps()` ＋ 五個檔位的字。**桌面版與手機版共用** |
 | `cmd/wlgame/main.go` | 主迴圈用累加器決定這一畫面推進幾個子刻；旗標改收檔位 |
+| `internal/ui/phone/session.go` | 手機版的 `Tick()` 用同一個累加器；檔位在系統面板調 |
 | `cmd/wlgame/battle.go` | 戰場迴圈用累加器（乘 16）決定推進幾幀 |
 
-規則層（`internal/rules`、`internal/state`）**不動**——
-節流是呈現層的事，規則層照舊以 tick 驅動。
+`internal/state` **不動**——節流不改任何規則，規則層照舊以 tick 驅動。
+
+⚠ 節流器本身放在 `internal/rules/speed` 而不是某個呈現層底下：
+**手機版也要用同一份**。兩個 UI 各寫一份累加器必然會長出差異，
+而時間流速的差異是最難查的一種（`CLAUDE.md` §7 第 6 條）。
 
 ## 5. 驗證
 

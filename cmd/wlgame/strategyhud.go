@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/wicanr2/wolong_cht/internal/rules/speed"
 	"fmt"
 	"image"
 	"image/color"
@@ -443,7 +444,7 @@ const (
 // 現代螢幕上沒有對應的顯示器，接上去也沒有可對照的原版畫面。
 var videoModeLabels = [2]string{"１６色", " 液晶 "}
 
-// speedLabels 是原版兩個速度設定的**五個檔位**，字串在 `ds:6033h` 起
+// speed.Labels 是原版兩個速度設定的**五個檔位**，字串在 `ds:6033h` 起
 // 五筆各 7 bytes（Big5，含前後的半形空白）。
 //
 // 檔位數不是猜的：系統設定表 `ds:5FF2h` 每筆的第 3 個 byte 就是選項數，
@@ -453,8 +454,7 @@ var videoModeLabels = [2]string{"１６色", " 液晶 "}
 // `+2` 戰略速度、`+3` 戰術速度（docs/re/55 §4）。
 //
 // **檔位就是 g.speed／g.tacticalSpeed 的值**：0 ＝ 最高速、4 ＝ 最低速。
-// 每一檔實際多快由 speedThrottle 換算（docs/spec/34）。
-var speedLabels = [speedSteps]string{"最高速", " 高速 ", " 普通 ", " 低速 ", "最低速"}
+// 每一檔實際多快由 speed.Throttle 換算（docs/spec/34）。
 
 // cycleSpeed 重現 `sub_16062`：點一下換下一檔，到頂繞回第 0 檔。
 //
@@ -467,9 +467,9 @@ func (g *game) cycleSpeed(tactical bool, forward bool) {
 	}
 	step := 1
 	if !forward {
-		step = speedSteps - 1
+		step = speed.Levels - 1
 	}
-	*p = (clamp(*p, 0, speedSteps-1) + step) % speedSteps
+	*p = (clamp(*p, 0, speed.Levels-1) + step) % speed.Levels
 }
 
 // adjustSpeed 是 remake 額外的細調（＋／− 鍵），不是原版行為。
@@ -479,7 +479,7 @@ func (g *game) adjustSpeed(tactical bool, delta int) {
 	if tactical {
 		p = &g.tacticalSpeed
 	}
-	*p = clamp(*p-delta, 0, speedSteps-1)
+	*p = clamp(*p-delta, 0, speed.Levels-1)
 }
 
 // dispatchSystemRow 處理點到系統選單某一列。left ＝ 左鍵。
@@ -584,7 +584,7 @@ func (g *game) drawSystemWindow(dst *ebiten.Image) {
 	// 對應 GAMEPAL 的 bank 0–3 與 4–7，docs/re/55 §4）。
 	// remake 只做了 1６色那一組，所以這一格是固定值。
 	values := [sysRows]string{"ＯＫ", videoModeLabels[0], g.soundValue(),
-		speedLabels[clamp(g.speed, 0, speedSteps-1)], speedLabels[clamp(g.tacticalSpeed, 0, speedSteps-1)], "ＯＫ"}
+		speed.Labels[clamp(g.speed, 0, speed.Levels-1)], speed.Labels[clamp(g.tacticalSpeed, 0, speed.Levels-1)], "ＯＫ"}
 	for k := 0; k < sysRows; k++ {
 		dy := k * sysRowStep
 		vector.DrawFilledRect(dst, sysLabelBoxX, float32(sysLabelBoxY+dy),

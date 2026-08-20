@@ -39,7 +39,12 @@ type File struct {
 	Format string `json:"format"`
 	Origin Origin `json:"origin"`
 
-	// Raw 是載入當時的原始區塊。**保存錨點**：未解區域原樣帶著走。
+	// Raw 是**存檔當時**的狀態寫成原版格式的那 22,208 B。
+	//
+	// ⭐ 它同時是保存錨點與進度：`w.Bytes()` 從載入時的原始位元組出發，
+	// 只蓋已解欄位，所以未解區域原樣帶著走，而已解欄位是現在的值。
+	// **不可以改成 `RawBlock()`**——那是載入當時的區塊，
+	// 存進去等於把開檔之後的進度全部丟掉，而檔案看起來完全正常。
 	Raw []byte `json:"raw"`
 
 	// State 是已解欄位的可讀版本。與 Raw 重複是**刻意的**——
@@ -55,7 +60,7 @@ func Encode(w *state.World, origin Origin) ([]byte, error) {
 	if w == nil {
 		return nil, fmt.Errorf("世界是 nil")
 	}
-	raw := w.RawBlock()
+	raw := w.Bytes()
 	sum := sha256.Sum256(raw)
 	origin.BlockSHA256 = hex.EncodeToString(sum[:])
 

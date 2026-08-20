@@ -8,6 +8,7 @@ package main
 // （64 × 62 的格、立體的層、陣形位置、鎖敵）。
 
 import (
+	"github.com/wicanr2/wolong_cht/internal/rules/speed"
 	"fmt"
 	"image/color"
 	"log"
@@ -129,7 +130,7 @@ func (g *game) drawSpeedToast(dst *ebiten.Image, l dosvBattleLayout) {
 	if g.speedToast <= 0 {
 		return
 	}
-	text := "戰術速度" + speedLabels[clamp(g.tacticalSpeed, 0, speedSteps-1)]
+	text := "戰術速度" + speed.Labels[clamp(g.tacticalSpeed, 0, speed.Levels-1)]
 	w := g.td.Width(text) + 16
 	x := l.Field.X + 8
 	y := l.BottomCommands.Y - textdraw.GlyphH - 12
@@ -207,7 +208,7 @@ func (g *game) updateBattle() {
 		// 這一個畫面推進幾個戰場幀。**戰術速度是獨立設定，而且值要 ×16**
 		// ——原版第 5 列的 handler `sub_160A5` 就做這一件事
 		// （docs/re/61 §4、docs/spec/34）。
-		n := g.tacticalThrottle.steps(g.tacticalSpeed, tacticalThrottleMul, highSpeedTacticalSteps)
+		n := g.tacticalThrottle.Steps(g.tacticalSpeed, speed.TacticalMul, speed.HighSpeedTactical)
 		for i := 0; i < n && !b.Done; i++ {
 			b.Step()
 		}
