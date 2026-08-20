@@ -215,7 +215,7 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 152 條。**要查「這件事解了沒」先看這裡**，
+共 151 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（77 條）
@@ -337,7 +337,7 @@
 | 連結記錄（16 byte） ▸ +0x0E | `docs/re/08-hourly-update.md` |
 | 連結記錄（16 byte） ▸ +0x0F | `docs/re/08-hourly-update.md` |
 
-### 說明書（11 條）
+### 說明書（10 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -345,7 +345,6 @@
 | 1. 三個能力值 ▸ +18 | `docs/mechanics/60-personnel.md` |
 | 1. 三個能力值 ▸ +19 | `docs/mechanics/60-personnel.md` |
 | 1. 改了什麼 ▸ 系統視窗 | `docs/playtest/24-window-toggles.md` |
-| 3. 規則層還缺什麼 ▸ 六個編成位置怎麼影響戰力 | `docs/playtest/31-parity-inventory.md` |
 | 3.4 其他戰術判定（說明書） ▸ 中央突破戰法 | `docs/mechanics/70-ai.md` |
 | 3.4 其他戰術判定（說明書） ▸ 擊破狀態 | `docs/mechanics/70-ai.md` |
 | 3.4 其他戰術判定（說明書） ▸ 突擊時機 | `docs/mechanics/70-ai.md` |

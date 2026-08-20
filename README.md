@@ -36,6 +36,48 @@
 |---|---|---|
 | 素材格式、存檔改寫、時間模型、經濟、災害、中文顯示、外交、軍團結構、一覽表、進言與說得、行軍與戰術戰鬥垂直切片、四槽存檔 overlay、敵方 AI 正常遭遇接點、事件 2–10 的既定 fixture／時鐘驗收、**勝負條件**（存活勢力數減到 1）、**音樂與音效**（OPL3 合成 → ogg，含場景對應）、**原版／remake 同狀態逐區對拍**（主畫面五區逐像素相同；戰場九區裡六區逐像素相同、戰場區 0.17%）、**結局過場**（十二幕 ＋ 逐字結尾文字）、**倒地動畫**、Linux AppImage、三平台候選封裝、60 秒推廣片 | Windows／macOS 原生 GUI short smoke、Android 完整核心接入與實機、完整戰術／長程遊戲抽樣 | `ICONGRF` 段 1 的 UI 語意／龍紋、原版事件 10 的自然 producer 等未解研究項 |
 
+### 與原版差多少（2026-08-20）
+
+先講量法的邊界，數字才有意義：**逐像素對拍只在三個局面做過**——開局主畫面、
+系統選單開著、以及一場攻城戰的第 61 步。其餘畫面是「版面照機器碼重做並目視驗收」，
+沒有逐像素數字。**「照著機器碼做」與「量過等於原版」不是同一件事。**
+
+| 層 | 量到的差距 | 出處 |
+|---|---|---|
+| 開局主畫面（5 區）| **0 px**（256,000 px 一個不差）| [`playtest/37`](docs/playtest/37-main-screen-parity.md) |
+| 三個視窗開著（命令列／自勢力／縮小地圖）| **0 px** | [`playtest/38`](docs/playtest/38-window-parity.md) |
+| 系統選單開著（選單本身 ＋ 4 區）| **0 px** | [`playtest/39`](docs/playtest/39-system-window-parity.md) |
+| 戰場（9 區）| 6 區 **0 px**；`field` 307 / 176,640 ＝ **0.17%**、小地圖 8 px、對方將旗 44 px | [`playtest/40`](docs/playtest/40-tactical-parity.md) |
+| ↳ 其中**原理上消不掉**的 | 299 px：旗的揮舞相位 116（兩邊各自擲骰）、原版錄影裡的滑鼠游標 95、兩邊的門破在不同 tick 88 | 同上 §13 |
+| ↳ **真正未歸類的** | **8 px** | 同上 §14 |
+| 文字 | 1,022 則全保存、byte-for-byte round-trip；**單行超寬 0 行**；60 筆校訂可重跑 | [`playtest/32`](docs/playtest/32-talk-layout-fit.md) |
+| 結局文字 | 200 字 10 行，從 `D7END.EXE` 取出（不在 `TALK.DAT` 裡）| [`re/70`](docs/re/70-d7end-ending-player.md) |
+| 音訊 | 會出聲、場景對應已解、與原版錄音比對過；**音色的諧波結構沒量化比對** | [`spec/29`](docs/spec/29-audio.md) |
+| 規則規格 | 58 份：**50 CONFORMED**／5 READY／2 DRAFT | [`spec/00`](docs/spec/00-index.md) |
+| 反組譯 | 739/739 支有筆記；**549 條「未解」散在各文件** | [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
+
+#### 還沒對過的
+
+| 項目 | 現況 |
+|---|---|
+| 一覽表、編成、進言、財政等視窗 | 版面照機器碼重做並目視驗收過，**沒有逐像素數字** |
+| 野戰（非攻城）的戰場 | 沒對過。野戰的地形是從大地圖即時長出來的，同狀態更難湊 |
+| 跑完一整局 | 沒對過。目前最長的是規則層長跑，不是畫面 |
+| 日文原版逐句對照 | 1,022 則的逐句對照沒做（校訂 60 筆） |
+
+#### 刻意不一樣的（remake 差異）
+
+這些是**有意的**，不是缺口，各自在規格裡標記：
+
+| 差異 | 為什麼 |
+|---|---|
+| 固定時間基準 | 原版沒有固定 tick rate，速度上限跟著機器跑（說明書 3.5）；照抄會得到一個在現代機器上快到不能玩的遊戲（[`spec/34`](docs/spec/34-speed-steps.md)）|
+| 鍵盤操作 | 原版是純滑鼠；remake 保留滑鼠熱區，另外加鍵盤（[`spec/26`](docs/spec/26-yes-no-dialog.md)、[`27`](docs/spec/27-lord-select-window.md)）|
+| 遷都與勢力選擇的視窗 | 原版在地圖上選點／有專屬視窗，remake 先用簡化版（[`spec/49`](docs/spec/49-advise-relocate-and-sortie.md)、[`35`](docs/spec/35-strategy-minimap.md)）|
+| 存檔多幾個欄位 | 原版沒有的欄位另外存，**未解區域一個 byte 都不動**（[`spec/20`](docs/spec/20-save-format.md)）|
+| 結局第一幕不捲動 | 原版是逐列捲上來，remake 用整張淡入（[`spec/67`](docs/spec/67-ending-playback.md) §3）|
+| 訊息模板 | 原版是「片段 ＋ 控制位元組」，remake 用具名參數；原版機制仍完整記錄在 `docs/formats/` |
+
 ### 候選封裝與推廣片
 
 - 完整交付根目錄：[`dist-all`](dist-all)，包含三平台桌面候選包、Linux AppImage、四支推廣片、雜湊與 Linux GUI smoke 截圖。目前是一致的 `wolong-remake-20260820` 批次（[`docs/release/02`](docs/release/02-three-platform-20260820.md)）。
