@@ -24,6 +24,9 @@ var (
 	inkDim    = color.RGBA{150, 168, 205, 255}
 	inkSelect = color.RGBA{255, 214, 102, 255}
 	inkVoid   = color.RGBA{8, 10, 18, 255}
+	// inkOverlay 是擋住世界的決定壓在地圖上那一層。**半透明**：
+	// 地圖還看得見，玩家才知道這個決定發生在哪。
+	inkOverlay = color.RGBA{8, 10, 18, 210}
 )
 
 // Draw 把一局畫進 960×540 的邏輯畫布。
@@ -37,6 +40,13 @@ func (s *Session) Draw(dst *ebiten.Image, td *textdraw.Drawer) {
 		return
 	}
 	s.drawMap(dst)
+	// 擋住世界的決定優先：不選它時間不會走（modal.go）。
+	if s.ModalKind() != modalNone {
+		s.drawModal(dst, td)
+		s.drawStatusBar(dst, td)
+		s.drawCommandBar(dst, td)
+		return
+	}
 	switch {
 	case s.advise.stage != adviseIdle:
 		s.drawAdvise(dst, td)

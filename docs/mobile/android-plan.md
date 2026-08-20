@@ -117,7 +117,7 @@ internal/state ＋ internal/rules ＋ internal/assets    ← 原封不動共用
 
 | # | 里程碑 | 做完的判準 |
 |---|---|---|
-| **A** | **核心在 Android 上真的跑起來** | 同一個 seed 跑 N tick，Android 與桌面算出**相同的指紋**（`World.Fingerprint`，[`../spec/69`](../spec/69-world-fingerprint.md)）。⭐ 這一條不需要畫面就能驗，是整條路線最強的驗收 |
+| **A** | **核心在 Android 上真的跑起來** | ✅ 同一個 seed 跑 N tick，Android 與桌面算出**相同的指紋**（`World.Fingerprint`，[`../spec/69`](../spec/69-world-fingerprint.md)）。⭐ 這一條不需要畫面就能驗，是整條路線最強的驗收 |
 | **B** | SAF 匯入 | 🔵 入口做完了（`ImportActivity` 是啟動入口，模擬器上畫得出來）。**選資料夾之後的複製流程沒有自動驗過**——那要驅動系統的檔案選擇器，模擬器的 UI 自動化沒做 |
 | **C** | 手機 UI v1 | ✅ 大地圖可縮放拖曳、頂部狀態列、底部指令列；日期會走（[`android-ux.md`](android-ux.md) §2–§4）|
 | **D** | 進言／一覽／編成 | ✅ 三個都做完了；送出的是既有指令，不直接改 `World` |
@@ -125,6 +125,11 @@ internal/state ＋ internal/rules ＋ internal/assets    ← 原封不動共用
 | **F** | 存檔／讀檔 | ✅ 四槽，寫 `<root>/save/`，來源目錄不變；區塊 byte-for-byte 與游標都驗過 |
 | **G** | 模擬器 smoke | ✅ 見 §6。安裝、啟動、匯入畫面、指紋、截圖一輪跑完 |
 | **H** | 實機驗收 | ⛔ **沒有裝置，這一格保持未完成** |
+
+⚠ **指紋比的是前 180 幀**，涵蓋時鐘、據點整備游標、軍團 tick 與亂數——
+也就是**跨平台最會出事的那幾條**（整數寬度、浮點、map 走訪順序）。
+政略 AI 是按月的節拍，180 幀還沒動到它；它與其餘規則走的是同一份 Go 碼，
+由規則層自己的測試守著。**這是判準的範圍，不是「驗過整個遊戲」。**
 
 ⚠ **畫面在桌面上開發與驗收**（`tools/phone_shot.sh`，一輪約 30 秒），
 Android 上的第一個驗收是 A 的指紋。**A 通過之前不宣稱手機版能跑**——

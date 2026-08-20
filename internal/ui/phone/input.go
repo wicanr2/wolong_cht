@@ -15,6 +15,10 @@ func (s *Session) Tap(lx, ly float64) bool {
 	if s.BattleActive() {
 		return s.tapBattle(lx, ly)
 	}
+	// 擋住世界的決定要先選掉，別的都不作用——**時間停在那裡**。
+	if s.ModalKind() != modalNone {
+		return s.tapModal(lx, ly)
+	}
 	if i, ok := commandAt(lx, ly); ok {
 		s.OpenSheet(Command(i))
 		return true

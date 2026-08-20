@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/wicanr2/wolong_cht/internal/assets/battle"
+	"github.com/wicanr2/wolong_cht/internal/battlesetup"
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
 	"github.com/wicanr2/wolong_cht/internal/ui/isoview"
@@ -91,4 +92,85 @@ func TestBattleTakesOverTheScreen(t *testing.T) {
 	if s.Battle() != nil && s.Battle().Frame == before {
 		t.Fatal("戰場的時鐘沒有走——戰術層沒有暫停")
 	}
+}
+
+// ⚠ **不接遭遇決策的話世界會停住**：`World.tick` 開頭就檢查它。
+// 這一條驗的是「選了之後時間會再走」。
+func TestEncounterChoiceUnblocksTheWorld(t *testing.T) {
+	s := newTestSession(t)
+	// 用驗收捷徑擺一場，但**不自動選**——停在遭遇決策上。
+	if !stageEncounterForTest(s) {
+		t.Skip("擺不出遭遇")
+	}
+	if s.ModalKind() != modalEncounter {
+		t.Fatalf("停在 %v，預期遭遇決策", s.ModalKind())
+	}
+	before := s.World().Clock
+	for i := 0; i < 300; i++ {
+		s.Tick()
+	}
+	if s.World().Clock != before {
+		t.Fatal("遭遇決策擋著世界，時鐘卻走了")
+	}
+	if opts := s.ModalOptions(); len(opts) != 2 {
+		t.Fatalf("遭遇有 %d 個選項，預期戰鬥指揮與委任", len(opts))
+	}
+	s.PickModal(1) // 委任：不開戰術畫面，直接判定
+	if s.ModalKind() != modalNone {
+		t.Fatal("選完了還擋著")
+	}
+	for i := 0; i < 300; i++ {
+		s.Tick()
+	}
+	if s.World().Clock == before {
+		t.Fatal("選完之後時鐘還是沒走")
+	}
+}
+
+// stageEncounterForTest 擺一場遭遇但不選處理方式。
+func stageEncounterForTest(s *Session) bool {
+	att, def, err := s.formDemoCorps()
+	if err != nil {
+		return false
+	}
+	return battlesetup.StageEncounter(s.world, s.rand, battlesetup.StageOptions{
+		Siege: true, Node: 82, Attacker: att, Defender: def,
+	}) && s.world.PendingEncounter() != nil
+}
+
+// 長跑：連續推進二十萬幀（約六年遊戲時間），每次有東西擋著就選一個，看時鐘是不是一直在走。
+//
+// ⭐ 這一條擋的是「玩到某一天畫面不動了」——**擋住世界的四種狀態少接一個
+// 就會這樣**，而且從畫面上看不出原因。委任與拒絕是這裡的選擇，
+// 因為它們不需要再開任何畫面。
+func TestLongRunNeverStalls(t *testing.T) {
+	if testing.Short() {
+		t.Skip("長跑，-short 時跳過")
+	}
+	s := newTestSession(t)
+	start := s.World().Clock
+	blocked := 0
+	for i := 0; i < 200000; i++ {
+		switch {
+		case s.BattleActive():
+			// 戰場自己會走完，不必介入。
+		case s.ModalKind() != modalNone:
+			s.PickModal(len(s.ModalOptions()) - 1) // 委任／拒絕
+			blocked++
+		}
+		before := s.World().Clock
+		s.Tick()
+		if s.World().Clock == before && !s.BattleActive() &&
+			s.ModalKind() == modalNone && s.Speed() == DefaultSpeed {
+			// 節流器不是每一幀都推進，所以時鐘不動很正常；
+			// 這裡只是不讓迴圈永遠空轉，實際判準在迴圈外。
+			continue
+		}
+	}
+	end := s.World().Clock
+	if end == start {
+		t.Fatalf("跑了二十萬幀時鐘完全沒動（擋住 %d 次）", blocked)
+	}
+	t.Logf("%d年%d月%d日 → %d年%d月%d日，中途擋住 %d 次",
+		start.Year, start.Month, start.Day, end.Year, end.Month, end.Day, blocked)
 }

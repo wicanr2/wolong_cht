@@ -92,6 +92,9 @@ func NewSession(opt Options) (*Session, error) {
 	}
 	s.attachRoads()
 	s.attachBattlefield()
+	// ⭐ **一定要開政略 AI**，不然電腦勢力什麼都不做：不出兵、不外交、
+	// 不編軍團，玩家會看到一個安靜到不像遊戲的世界。桌面版在同一個位置開。
+	s.world.EnableStrategicAI()
 	s.centreOnCapital()
 	return s, nil
 }

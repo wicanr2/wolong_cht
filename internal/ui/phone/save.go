@@ -125,6 +125,9 @@ func (s *Session) LoadSlot(slot int) error {
 	// 讀檔換掉了整個 World，道路圖要重新掛上——**它不在存檔裡**，
 	// 是從 `MMAP.MAP` 推出來的常量（`internal/assets/world.RoadEdges`）。
 	s.attachRoads()
+	// 讀檔換掉了整個 World；政略 AI 的開關**不在原版格式的存檔裡**
+	//（原生檔有，但兩條路都要能玩），所以一律重新開。
+	s.world.EnableStrategicAI()
 	s.centreOnCapital()
 	return nil
 }
