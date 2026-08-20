@@ -47,6 +47,7 @@ func (s *Session) Draw(dst *ebiten.Image, td *textdraw.Drawer) {
 		s.drawCommandBar(dst, td)
 		return
 	}
+	s.drawNotice(dst, td)
 	switch {
 	case s.advise.stage != adviseIdle:
 		s.drawAdvise(dst, td)

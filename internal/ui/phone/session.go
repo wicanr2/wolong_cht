@@ -52,6 +52,9 @@ type Session struct {
 	// **那是降級不是錯誤**（`internal/battlesetup`）。
 	setup *battlesetup.Provider
 
+	// notices 是等著顯示的事件訊息（notice.go）。
+	notices []notice
+
 	// lastErr 是最後一次存讀檔的結果。**失敗一定要看得到**——
 	// 手機上沒有終端機，靜靜失敗等於資料不見了卻沒人知道。
 	lastErr error
@@ -171,8 +174,9 @@ func (s *Session) Tick() {
 	if s.paused {
 		return
 	}
+	s.tickNotices()
 	for n := s.throttle.Steps(s.speed, 1, speed.HighSpeedStrategy); n > 0; n-- {
-		s.world.Tick(s.rand)
+		s.pushNotices(s.world.Tick(s.rand))
 	}
 }
 

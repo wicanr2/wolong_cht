@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 
 	"github.com/hajimehoshi/ebiten/v2"
 
@@ -216,46 +215,10 @@ func (g *game) noticeTalkIndex(notice state.TalkNotice) int {
 }
 
 func (g *game) enqueueTalkNotice(notice state.TalkNotice) {
-	vars := make(map[byte]string, 6)
-	// IDA 線性位址 0001097E 的原版 handler 只消耗一個 formatter
-	// 參數並調整 X 位置，不輸出字元；在文字 modal 中保留成空字串，
-	// 不把排版控制誤顯示成「6」。
-	vars['6'] = ""
-	if g.world.Player >= 0 && g.world.Player < len(g.world.Factions) {
-		advisor := g.world.Factions[g.world.Player].Advisor
-		if advisor >= 0 && advisor < len(g.world.Generals) && g.world.Generals[advisor].Alive {
-			// 原版 marker \\4（00010939）取玩家勢力的軍師姓名。
-			vars['4'] = big5(g.world.Generals[advisor].Name)
-		}
-	}
-	if notice.RawFormatterWordValid {
-		if notice.RawFormatterWord < 0 || notice.RawFormatterWord > 0xFFFF {
-			return
-		}
-		raw, ok := g.world.ResolveTalkFormatter2(uint16(notice.RawFormatterWord))
-		if !ok {
-			// 原版 formatter 的 SS／DS 位址無法安全回查時，不能猜城市
-			// 或顯示未代入的半句。
-			return
-		}
-		vars['2'] = textDecodeBig5(raw)
-	} else if notice.City >= 0 && notice.City < len(g.world.Cities) {
-		// TALK.DAT 的 marker 是 ASCII '2'，不是 state 裡的數值欄位 2。
-		vars['2'] = big5(g.world.Cities[notice.City].Name)
-	}
-	if notice.General >= 0 && notice.General < len(g.world.Generals) {
-		// TALK.DAT 的 marker 是 ASCII '1'，不是 state 裡的數值欄位 1。
-		vars['1'] = big5(g.world.Generals[notice.General].Name)
-	}
-	if notice.Faction >= 0 && notice.Faction < len(g.world.Factions) {
-		// 原版 marker \\3 顯示的是該勢力君主名（「{3}勢力」），
-		// 不是把 faction 編號直接轉成文字。
-		vars['3'] = big5(g.world.LordName(notice.Faction))
-	}
-	if notice.Amount >= 0 {
-		// 原版 marker \\7 由 sub_1062F 以十進位數值繪製；這裡保留
-		// 數值語意，字型／欄寬仍是 remake modal 的呈現責任。
-		vars['7'] = strconv.Itoa(notice.Amount)
+	// 變數的組法在 `internal/state`，手機版用同一支。
+	vars, ok := g.world.TalkNoticeVars(notice, big5)
+	if !ok {
+		return
 	}
 	portrait := g.noticePortraitPage(notice)
 	if notice.NoPortrait {

@@ -258,3 +258,27 @@ func TestSlotCycleReachesEmptyExceptForTheLeader(t *testing.T) {
 		t.Fatal("主將的位置變成空了")
 	}
 }
+
+// 事件訊息要真的出現過——**不顯示的話事件是無聲的**。
+//
+// ⚠ 這一條也擋「訊息卡住不消失」：跑完之後佇列要是空的。
+func TestEventNoticesAppearAndExpire(t *testing.T) {
+	s := newTestSession(t)
+	seen := 0
+	for i := 0; i < 20000 && seen == 0; i++ {
+		s.Tick()
+		if len(s.Notice()) > 0 {
+			seen++
+		}
+	}
+	if seen == 0 {
+		t.Fatal("跑了兩萬幀一則事件訊息都沒有")
+	}
+	for i := 0; i < noticeHold*4; i++ {
+		s.SetPaused(true)
+		s.tickNotices()
+	}
+	if len(s.Notice()) > 0 {
+		t.Fatal("訊息過了四倍停留時間還在")
+	}
+}

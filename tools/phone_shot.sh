@@ -12,6 +12,9 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 OUT="${1:?用法: tools/phone_shot.sh <輸出.png> [幀數]}"
 FRAME="${2:-60}"
 mkdir -p "$(dirname "$OUT")"
+# ⚠ 先刪掉舊的：程式沒截成時**舊圖還在**，看起來像「拍到了但內容不對」。
+# 沒有輸出要長得像沒有輸出。
+rm -f "$OUT"
 OUT_ABS="$(cd "$(dirname "$OUT")" && pwd)/$(basename "$OUT")"
 
 docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
@@ -29,6 +32,8 @@ docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
     -e WOLONG_SHEET="${WOLONG_SHEET:-}" -e WOLONG_TAB="${WOLONG_TAB:-}" \
     -e WOLONG_ADVISE="${WOLONG_ADVISE:-}" -e WOLONG_SIEGE="${WOLONG_SIEGE:-}" \
     -e WOLONG_FP_FRAMES="${WOLONG_FP_FRAMES:-}" \
+    -e WOLONG_SHOT_NOTICE="${WOLONG_SHOT_NOTICE:-}" \
+    -e WOLONG_SPEED="${WOLONG_SPEED:-}" \
     -w /src "${WOLONG_GO_IMAGE:-demonwinter-go}" bash -c '
 set -e
 export PATH=/usr/local/go/bin:$PATH

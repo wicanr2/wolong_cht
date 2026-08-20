@@ -19,6 +19,14 @@ func (s *Session) Tap(lx, ly float64) bool {
 	if s.ModalKind() != modalNone {
 		return s.tapModal(lx, ly)
 	}
+	// 事件訊息貼在地圖上緣，點它是「知道了」。
+	if lines := s.Notice(); len(lines) > 0 {
+		_, my, _, _ := MapRect()
+		if ly < float64(my+len(lines)*26+16) {
+			s.dismissNotice()
+			return true
+		}
+	}
 	if i, ok := commandAt(lx, ly); ok {
 		s.OpenSheet(Command(i))
 		return true

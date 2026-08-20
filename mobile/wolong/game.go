@@ -110,6 +110,9 @@ func (g *game) ensure() {
 	if os.Getenv("WOLONG_PAUSED") != "" {
 		sess.SetPaused(true)
 	}
+	if v, err := strconv.Atoi(os.Getenv("WOLONG_SPEED")); err == nil {
+		sess.SetSpeed(v)
+	}
 	if v, err := strconv.Atoi(os.Getenv("WOLONG_SHEET")); err == nil && v >= 0 {
 		sess.OpenSheet(phone.Command(v))
 		if t, err := strconv.Atoi(os.Getenv("WOLONG_TAB")); err == nil {
@@ -341,6 +344,12 @@ func dist(x0, y0, x1, y1 int) float64 {
 // 而不是每次都起模擬器（docs/mobile/android-plan.md §6）。
 func (g *game) maybeShot(screen *ebiten.Image) {
 	if g.shotPath == "" || g.frame < g.shotAt {
+		return
+	}
+	// 等到畫面上真的有事件訊息才截。**沒有這個鉤子就只能碰運氣**：
+	// 訊息六秒就消失，固定幀號多半拍到沒有訊息的那一刻。
+	if os.Getenv("WOLONG_SHOT_NOTICE") != "" && g.sess != nil &&
+		len(g.sess.Notice()) == 0 {
 		return
 	}
 	f, err := os.Create(g.shotPath)
