@@ -5,15 +5,29 @@
         android:label="臥龍傳 Remake"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!-- ⭐ **入口是匯入畫面，不是遊戲**。原版資料要使用者自備，
+             沒有它遊戲開不起來；而 Ebiten 的 view 一建起來就佔住整個視窗，
+             之後叫不出系統的資料夾選擇器。資料齊了它會直接轉給遊戲。
+
+             ⚠ `hardwareAccelerated="false"`：模擬器的 SwiftShader 把這個
+             活動的一般 view 階層畫成**全黑**（logcat 照樣寫 Displayed，
+             而遊戲那個 SurfaceView 完全正常）。關掉硬體加速就畫得出來。
+             這是一個表單畫面，軟體繪製綽綽有餘。 -->
         <activity
-            android:name=".MainActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:name=".ImportActivity"
             android:exported="true"
+            android:hardwareAccelerated="false"
+            
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="true"
+            android:screenOrientation="landscape" />
     </application>
 </manifest>

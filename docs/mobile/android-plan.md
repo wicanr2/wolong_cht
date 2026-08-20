@@ -1,6 +1,6 @@
 # Android 版規劃
 
-**狀態：核心已接入，主畫面、四個入口與戰場都可用；SAF 匯入未做。**
+**狀態：核心已接入，主畫面、四個入口、戰場與 SAF 匯入都可用。**
 手機端**只共用規則層**，畫面與操作重新設計（使用者裁定 2026-08-20）。
 
 - 日期：2026-08-20
@@ -118,12 +118,12 @@ internal/state ＋ internal/rules ＋ internal/assets    ← 原封不動共用
 | # | 里程碑 | 做完的判準 |
 |---|---|---|
 | **A** | **核心在 Android 上真的跑起來** | 同一個 seed 跑 N tick，Android 與桌面算出**相同的指紋**（`World.Fingerprint`，[`../spec/69`](../spec/69-world-fingerprint.md)）。⭐ 這一條不需要畫面就能驗，是整條路線最強的驗收 |
-| **B** | SAF 匯入 | 選資料夾 → 69 檔複製進 `filesDir/orig/` → Go 端讀得到；缺檔逐檔列出 |
+| **B** | SAF 匯入 | 🔵 入口做完了（`ImportActivity` 是啟動入口，模擬器上畫得出來）。**選資料夾之後的複製流程沒有自動驗過**——那要驅動系統的檔案選擇器，模擬器的 UI 自動化沒做 |
 | **C** | 手機 UI v1 | ✅ 大地圖可縮放拖曳、頂部狀態列、底部指令列；日期會走（[`android-ux.md`](android-ux.md) §2–§4）|
 | **D** | 進言／一覽／編成 | ✅ 三個都做完了；送出的是既有指令，不直接改 `World` |
 | **E** | 戰場 | ✅ 45 度視角沿用原版資產（`internal/ui/isoview`，桌面版同一份）；控制改成「點編成位置 → 底列命令」（§5）|
 | **F** | 存檔／讀檔 | ✅ 四槽，寫 `<root>/save/`，來源目錄不變；區塊 byte-for-byte 與游標都驗過 |
-| **G** | 模擬器 smoke | 見 §6 |
+| **G** | 模擬器 smoke | ✅ 見 §6。安裝、啟動、匯入畫面、指紋、截圖一輪跑完 |
 | **H** | 實機驗收 | ⛔ **沒有裝置，這一格保持未完成** |
 
 ⚠ **畫面在桌面上開發與驗收**（`tools/phone_shot.sh`，一輪約 30 秒），
@@ -160,6 +160,8 @@ Android 上的第一個驗收是 A 的指紋。**A 通過之前不宣稱手機�
 
 | 症狀 | 成因 |
 |---|---|
+| 匯入畫面全黑（logcat 照樣寫 `Displayed`）| 模擬器的 SwiftShader 把 app 的**一般 view 階層**畫成全黑；遊戲那個 SurfaceView 完全正常。那個活動關掉硬體加速就好 |
+| 截圖全黑、`mCurrentFocus=null` | 上一條的兩個症狀。**不要先懷疑活動沒起來**——logcat 的 `Displayed` 是一手證據 |
 | Java 檔每個中文字一行 `unmappable character` | gobind 把 Go 註解抄進 Java，javac 沒帶 `-encoding`，用**平台預設字集**——容器是 US-ASCII |
 | `missing go.sum entry for golang.org/x/tools` | `ebitenmobile` 自己的相依。要用 `go install pkg@version` 裝（在主模組之外解析），不能 `go run` |
 | adb 推進 `/sdcard/Android/data/<pkg>/` 之後 app `permission denied` | Android 11 以上那條路徑是 FUSE 掛的。改推 `/data/local/tmp` 再 `run-as` 複製進內部目錄 |
@@ -193,6 +195,6 @@ arm64 的 image 要模擬指令集，慢到不適合當驗收迴圈。
 | 項目 | 現況 |
 |---|---|
 | 實機驗收 | ⛔ 沒有裝置。里程碑 H 保持未完成 |
-| SAF 匯入 | 沒做。目前資料靠 `adb` 推進 app 內部目錄，那是驗收路徑不是玩家路徑 |
+| SAF 匯入的複製流程 | 入口做完了，但「選資料夾 → 複製 69 檔」沒有自動驗過：要驅動系統的檔案選擇器。smoke 走的是 `adb` ＋ `run-as`，那是驗收路徑不是玩家路徑 |
 | 高 DPI 下的點陣字 | 原版字型是 16×15 點陣，手機上要整數放大幾倍才讀得清楚沒量過 |
 | release signing | A–G 之前不談 |

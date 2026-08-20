@@ -80,6 +80,35 @@ for i in 1 2 3; do
     sleep 10
 done
 
+# ⭐ 先在**沒有資料**的狀態下啟動一次：該看到匯入畫面，不是崩潰也不是黑屏。
+# 這一步驗的是里程碑 B 的入口（docs/mobile/android-plan.md §3）。
+adb shell pm clear "$PKG" >/dev/null || true
+adb logcat -c
+adb shell am start -n "$PKG/.ImportActivity" >/dev/null
+# ⚠ 這台機器上第一次啟動要十幾秒才畫得出來（logcat 的 `Displayed` 是
+# +14s）。截太早只會拍到系統的啟動畫面，看起來像「匯入畫面沒出現」。
+for i in $(seq 1 20); do
+    adb logcat -d | grep -q "Displayed $PKG/.ImportActivity" && break
+    sleep 3
+done
+sleep 3
+# ⚠ 截圖前先叫醒螢幕。這台機器上一輪 smoke 要跑好幾分鐘，
+# 中途螢幕會睡著——**睡著時 screencap 拍到的是全黑**，
+# 看起來像「畫面沒畫出來」，實際上 logcat 明明寫著 Displayed。
+wake() {
+    adb shell input keyevent KEYCODE_WAKEUP >/dev/null 2>&1 || true
+    adb shell wm dismiss-keyguard >/dev/null 2>&1 || true
+    sleep 2
+}
+wake
+adb shell dumpsys window | grep -E "mCurrentFocus|mFocusedApp" || true
+for i in 1 2 3; do
+    adb exec-out screencap -p > /out/import.png
+    sleep 2
+done
+adb logcat -d > /out/logcat-import.txt
+adb shell am force-stop "$PKG"
+
 # ⭐ 資料要進 **app 的內部目錄**，不是 /sdcard。
 # `/sdcard/Android/data/<pkg>/` 看起來剛好是給這個 app 的，但 Android 11 以上
 # 它是 FUSE 掛的：adb 寫進去的檔案 app 讀不到（permission denied），
@@ -118,6 +147,7 @@ for i in $(seq 1 60); do
     sleep 5
 done
 adb logcat -d > /out/logcat.txt
+wake
 adb exec-out screencap -p > /out/screen.png
 grep -E "WOLONG_FP|FATAL|AndroidRuntime" /out/logcat.txt | tail -20 || true
 adb emu kill >/dev/null 2>&1 || true

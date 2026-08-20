@@ -472,7 +472,7 @@
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
 | [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | 實機驗收 | ⛔ 沒有裝置。里程碑 H 保持未完成 | 靜態 |
-| [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | SAF 匯入 | 沒做。目前資料靠 `adb` 推進 app 內部目錄，那是驗收路徑不是玩家路徑 | 靜態 |
+| [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | SAF 匯入的複製流程 | 入口做完了，但「選資料夾 → 複製 69 檔」沒有自動驗過：要驅動系統的檔案選擇器。smoke 走的是 `adb` ＋ `run-as`，那是驗收路徑不是玩家路徑 | 靜態 |
 | [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | 高 DPI 下的點陣字 | 原版字型是 16×15 點陣，手機上要整數放大幾倍才讀得清楚沒量過 | 靜態 |
 | [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | release signing | A–G 之前不談 | 靜態 |
 | [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 點陣字在高 DPI 上要放大幾倍 | 沒量過（§6） | 靜態 |
