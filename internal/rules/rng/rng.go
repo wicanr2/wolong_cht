@@ -35,6 +35,18 @@ type Rand struct {
 	c, s  byte
 }
 
+// State 回傳決定「接下來會出什麼」的兩個 byte。
+//
+// ⭐ **表不用回傳**：`table` 在播種之後就不再改，`c` 與 `s` 完全決定後續輸出。
+// 這是給 `state.World.Fingerprint` 用的（docs/spec/69 §3）——把 256 B 的表
+// 算進指紋只是讓每次多算 256 B，不會多抓到任何一種分歧。
+func (r *Rand) State() (c, s byte) {
+	if r == nil {
+		return 0, 0
+	}
+	return r.c, r.s
+}
+
 // Next 取一個 0–255 的亂數。
 func (r *Rand) Next() int {
 	r.s = r.table[r.s] + r.c

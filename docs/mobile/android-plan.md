@@ -90,7 +90,7 @@ internal/state ＋ internal/rules ＋ internal/assets    ← 原封不動共用
 
 | # | 里程碑 | 做完的判準 |
 |---|---|---|
-| **A** | **核心在 Android 上真的跑起來** | 同一個 seed 跑 N tick，Android 與桌面算出**相同的 state hash**。⭐ 這一條不需要畫面就能驗，是整條路線最強的驗收 |
+| **A** | **核心在 Android 上真的跑起來** | 同一個 seed 跑 N tick，Android 與桌面算出**相同的指紋**（`World.Fingerprint`，[`../spec/69`](../spec/69-world-fingerprint.md)）。⭐ 這一條不需要畫面就能驗，是整條路線最強的驗收 |
 | **B** | SAF 匯入 | 選資料夾 → 69 檔複製進 `filesDir/orig/` → Go 端讀得到；缺檔逐檔列出 |
 | **C** | 手機 UI v1 | 大地圖可縮放拖曳、頂部狀態列、底部指令列；日期會走（[`android-ux.md`](android-ux.md) §2–§4）|
 | **D** | 進言／一覽／編成 | 三個全螢幕 sheet；送出的是既有指令，不直接改 `World` |
@@ -148,6 +148,5 @@ SDK platform `35`、NDK `27.2.12479018`、`gomobile bind -androidapi 29`、
 |---|---|
 | 實機驗收 | ⛔ 沒有裝置。里程碑 H 保持未完成 |
 | `gomobile bind` 的可重現建置腳本 | 手動步驟，還沒寫成 `android_build.sh` |
-| state hash 怎麼算 | 里程碑 A 的判準需要一個穩定的 hash 函式，`internal/state` 目前沒有 |
 | 高 DPI 下的點陣字 | 原版字型是 16×15 點陣，手機上要整數放大幾倍才讀得清楚沒量過 |
 | release signing | A–G 之前不談 |

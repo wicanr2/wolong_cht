@@ -463,6 +463,7 @@ M6 的版面幾何對得上原版，但畫的內容還有缺。**
 | ⭐ **過場圖 `OPEN_S*`／`END_S*` 的格式**：外層是 `MMAP.MAP` 那一種 RLE，內層 640×400 四平面、上下兩半各 200 列、一半之內平面優先，一幕配一組色盤 | [`formats/09`](docs/formats/09-cutscene-images.md) |
 | ⭐ **結局會播了**：十二幕 ＋ 逐字文字 ＋ 十七階淡入淡出，第一幕是三塊合成 | [`spec/67`](docs/spec/67-ending-playback.md) |
 | ⭐ **倒地動畫**：四幀、圖號 84 ＋ 側 ×90 ＋ 兵種組 ×2 ＋ 後兩幀 +1；那四幀不擋路也不算場上人數 | [`spec/68`](docs/spec/68-death-animation.md) |
+| ⭐ **世界指紋**：`World.Fingerprint()` 把整個世界縮成一個值，同一個 seed 跑兩次要相同；**15 欄的正對照擋「漏掉某個欄位」** | [`spec/69`](docs/spec/69-world-fingerprint.md) |
 | 顯示格表頭 `+1`（含物件的高度）與 `+3`（只有地形）的分工 | [`re/68`](docs/re/68-t3-frontier-functions.md) §2.1 |
 | 戰場側欄逐像素對過：陣形列／指令面板／`▶▶` 列三區 PASS | [`spec/31`](docs/spec/31-tactical-sidebar.md)、[`playtest/40`](docs/playtest/40-tactical-parity.md) |
 
@@ -480,7 +481,7 @@ INT 33 的範圍變成整個世界（一個主機像素 ≈ 9.6 個遊戲像素�
 |---:|---|---|---|
 | **1** | **六份 READY 規格收尾** | `12`（各視窗內部排版仍有估值）、`32`（右鍵提前收掉未接）、`34`（最高速上限是 remake 差異）、`35`（22 勢力選擇視窗是簡化版）、`51`（DAC 算式未全面套用）、`91`（DRAFT）| 每一份的「remake 實作」欄留白處就是缺口 |
 | **2** | **Windows／macOS 原生 GUI 實機驗收** | M8 唯一的閘。⭐ **三平台已重新對齊成一致的 `20260820` 批次**（[`release/02`](docs/release/02-three-platform-20260820.md)），Linux 有 GUI smoke，另兩個平台只驗了檔頭 | 需要實機或 VM，不是 Docker 能代的 |
-| **3** | **Android 里程碑 A：核心在 Android 上跑出與桌面相同的 state hash** | M9。⚠ 現在那支 APK 是**沒有核心的假畫面**（`mobile/wolong/game.go` 畫的是寫死的矩形）。路線已定案：**只共用規則層、UI 重畫**（[`docs/mobile/android-plan.md`](docs/mobile/android-plan.md)、[`docs/mobile/android-ux.md`](docs/mobile/android-ux.md)）| **A 之前不做任何 UI。** 缺的第一塊是 `internal/state` 沒有穩定的 state hash 函式；再來是 SAF 匯入——`os.ReadFile` 拿不到 `content://` |
+| **3** | **Android 里程碑 A：核心在 Android 上跑出與桌面相同的 state hash** | M9。⚠ 現在那支 APK 是**沒有核心的假畫面**（`mobile/wolong/game.go` 畫的是寫死的矩形）。路線已定案：**只共用規則層、UI 重畫**（[`docs/mobile/android-plan.md`](docs/mobile/android-plan.md)、[`docs/mobile/android-ux.md`](docs/mobile/android-ux.md)）| **A 之前不做任何 UI。** ⭐ 指紋已經做好了（[`spec/69`](docs/spec/69-world-fingerprint.md)），下一塊是 `gomobile bind` 的可重現建置腳本，再來是 SAF 匯入——`os.ReadFile` 拿不到 `content://` |
 
 > ⚠ **`sb-enemy` 那 44 px 不在這張表上**：兩條計量條都頂在上限，
 > 原版那一格已經打了 20 秒——要對就得讓兩邊的**時刻**對齊，不是改算式。
