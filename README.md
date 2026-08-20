@@ -86,7 +86,7 @@
 - Linux AppImage：[`wolong-remake-linux-amd64-20260820.AppImage`](dist-all/packages/wolong-remake-linux-amd64-20260820.AppImage)。已通過 Linux／Xvfb 固定種子 smoke（含結局過場）；仍要由玩家提供合法 DOS/V 資料與中文字型。
 - 三平台候選包與 SHA-256：[`dist-all/packages`](dist-all/packages)。Windows／macOS 是交叉建置候選，尚未在目標作業系統完成原生 GUI runtime 驗收。
 - 「經典再現」實機比較片：[`wolong-remake-dosv-live-comparison.mp4`](dist-all/promo/wolong-remake-dosv-live-comparison.mp4)。原版側是使用者指定的松崗 DOS/V 推廣比較素材，remake 側為實機 GUI；不是同日期／同輸入逐像素 parity。
-- Android：手機版已接上**真的規則層**。模擬器與桌面在同一組幀算出相同的世界指紋（frame 1／60／120），主畫面、進言、一覽、軍團、系統與戰場都可用，原版資料走系統的資料夾選擇器匯入。**仍不宣稱 Android release**：沒有實機驗收，也還沒 release signing。細節見 [`docs/mobile/android-plan.md`](docs/mobile/android-plan.md) 與 [`docs/mobile/android-ux.md`](docs/mobile/android-ux.md)。`dist-all/experimental/android/` 底下那支 `20260811` 的 APK 是更早的觸控 shell 原型，與現在這一版無關。
+- Android：見下一節。APK 在 [`dist-all/experimental/android`](dist-all/experimental/android)，**仍不宣稱 Android release**。
 
 `wlgame` 的持久化要明確指定可寫路徑，例如：
 
@@ -487,6 +487,71 @@ Python 與 Go 兩套解碼器是刻意重複的——**兩邊的輸出逐像素�
 驗收條件是 round-trip：四個劇本載入後原封不動寫回，
 必須與原始位元組**完全相同**。另外有一條測試會先跑 24 個月的模擬再存檔，
 確認未解區域仍然一致——那才是最容易把不懂的地方寫壞的時機。
+
+
+## Android 版
+
+手機版接的是**與桌面同一套規則層**（`internal/state`、`internal/rules`、
+`internal/assets`），畫面與操作為手機重新設計——原版是 640×400 的滑鼠式
+視窗 UI，命令列一格 16×16，在五吋螢幕上約 2–3 mm，手指按不準。
+
+![手機主畫面](docs/images/phone-main.png)
+
+**規則、原版美術、原版文字三樣都不動**，重畫的是「怎麼擺、怎麼按」。
+版面規格在 [`docs/mobile/android-ux.md`](docs/mobile/android-ux.md)，
+工具鏈與踩過的坑在 [`docs/mobile/android-plan.md`](docs/mobile/android-plan.md)。
+
+### 核心真的在 Android 上跑
+
+最強的一條驗收不看畫面：同一個 seed 跑同樣的幀數，**Android 與桌面要算出
+相同的世界指紋**（`World.Fingerprint`，[`docs/spec/69`](docs/spec/69-world-fingerprint.md)）。
+模擬器實測 frame 1／60／120 三個取樣點與桌面完全相同：
+
+```text
+2b58e7b58f4796f9   5b3585cf005a6ec5   36eb02d379333f95
+```
+
+指紋涵蓋時鐘、據點整備游標、軍團 tick 與亂數——跨平台最會出事的那幾條
+（整數寬度、浮點、map 走訪順序）。**這是判準的範圍，不是「驗過整個遊戲」。**
+
+### 畫面
+
+| | |
+|---|---|
+| ![戰場](docs/images/phone-battle.png) | 戰場：45 度視角沿用原版子圖塊，上排是六個編成位置（原版的空間排列：左翼 左備 主將 前鋒 右備 右翼），下排六個命令，兩側是兩軍資訊與戰場縮圖 |
+| ![進言](docs/images/phone-advise.png) | 進言：玩家是軍師，指令要先過君主那一關。五項齊全，用字取自 `TALK.DAT` |
+| ![事件訊息](docs/images/phone-notice.png) | 事件訊息貼在地圖上緣，六秒自己消 |
+
+底部四個入口：**進言**（五項）、**一覽**（武將／據點／勢力／軍團四張表）、
+**軍團**（現有 ＋ 編成）、**系統**（速度檔位 0–4、四個存檔槽、關於）。
+
+### 第一次啟動要匯入原版資料
+
+**原版資料與倚天點陣字都不隨程式散布**（與桌面版同一條界線），要自己準備。
+Android 11 以上，使用者選的資料夾給的是 `content://`，而遊戲讀的是檔案路徑
+——所以 app 的入口是匯入畫面：選一次資料夾，檔案會複製進 app 的私有目錄，
+字型自動分到另一個目錄。
+
+![匯入畫面](docs/images/phone-import.png)
+
+### 自己建與驗
+
+```bash
+tools/android_build.sh          # ebitenmobile bind → AAR → gradle assembleDebug
+tools/android_smoke.sh          # 起模擬器 → 安裝 → 推資料 → 抓指紋 → 截圖
+tools/phone_shot.sh out.png 60  # 手機 UI 的桌面截圖（一輪約 30 秒）
+```
+
+手機 UI 的開發迴圈**在桌面上跑**：同一份 `internal/ui/phone`，用 Xvfb 截圖，
+最後才進模擬器。模擬器一輪要好幾分鐘，拿來當開發迴圈太慢。
+
+### 還沒完成的
+
+- **實機驗收**：手上只有 Docker 模擬器，它驗不到觸控手感、真實 GPU、
+  高 DPI 上點陣字的可讀性，也驗不到各廠商的瀏海與手勢列。
+- **release signing**：目前是 debug 建置。
+- 外交提案的「指定金額」要數值輸入器，還沒做；SAF 選完資料夾之後的複製
+  流程沒有自動驗（要驅動系統的檔案選擇器）。
 
 ## 這個專案的兩條硬性原則
 
