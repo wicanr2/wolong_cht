@@ -47,6 +47,9 @@ type game struct {
 	// shotAt／shotPath 是驗收路徑：跑到第 N 幀存一張圖就離開。
 	shotAt   int
 	shotPath string
+
+	// rec 是推廣片的逐幀輸出（demo.go）。手機上永遠是 nil。
+	rec *demoRecorder
 }
 
 // dragThreshold 是「這是拖曳不是點擊」的門檻（螢幕像素）。
@@ -306,7 +309,18 @@ func (g *game) Draw(screen *ebiten.Image) {
 		g.maybeShot(screen)
 		return
 	}
+	if g.rec != nil {
+		// ⭐ 動作在**畫之前**做，這一張就會拍到動作的結果。
+		g.rec.step(g.sess)
+	}
 	g.sess.Draw(screen, g.td)
+	if g.rec != nil {
+		if g.rec.shot(screen) {
+			g.rec.close()
+			os.Exit(0)
+		}
+		return
+	}
 	g.maybeShot(screen)
 }
 

@@ -70,7 +70,7 @@ func (s *Session) tickBattle() {
 		return
 	}
 	if s.battle.view == nil {
-		s.battle.view = s.newBattleView()
+		s.battle = battleState{view: s.newBattleView(), tacSpeed: DefaultSpeed}
 	}
 	if s.paused {
 		return // 只有驗收路徑會停，那不是遊戲內的暫停
@@ -87,7 +87,7 @@ func (s *Session) tickBattle() {
 // finishBattle 把打完的結果交回戰略層，並丟掉這一場的繪圖資源。
 func (s *Session) finishBattle() {
 	s.world.ResolvePending(s.rand)
-	s.battle = battleState{}
+	s.battle = battleState{tacSpeed: DefaultSpeed}
 }
 
 func (s *Session) newBattleView() *isoview.View {
@@ -355,7 +355,7 @@ func (s *Session) OpenDemoBattle(node int) error {
 			return err
 		}
 	}
-	s.battle.view = s.newBattleView()
+	s.battle = battleState{view: s.newBattleView(), tacSpeed: DefaultSpeed}
 	return nil
 }
 

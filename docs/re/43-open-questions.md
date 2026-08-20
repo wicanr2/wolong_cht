@@ -23,8 +23,8 @@
 | 程式碼理解 | 230 | 223 | 7 | 0 |
 | 驗收 | 69 | 59 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 156 | 145 | 11 | 0 |
-| **合計** | **558** | 525 | 32 | 1 |
+| 其他 | 158 | 147 | 11 | 0 |
+| **合計** | **560** | 527 | 32 | 1 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **9** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -37,8 +37,8 @@
 | `docs/formats/` | 40 |
 | `docs/reference/` | 17 |
 | `docs/mobile/` | 11 |
+| `docs/promo/` | 7 |
 | `docs/release/` | 6 |
-| `docs/promo/` | 5 |
 
 ## 2.1 規則正確性（46 條）
 
@@ -467,7 +467,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（156 條）
+## 2.6 其他（158 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -482,6 +482,8 @@
 | [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 戰場縮圖的點選 | 原版點縮圖可以移動鏡頭，手機版目前只顯示 | 靜態 |
 | [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 外交提案的「指定金額」 | 要數值輸入器（`docs/spec/12`），手機上沒做。**先不給那一項**——給了會是一個點下去什麼都不會發生的選項 | 靜態 |
 | [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 事件訊息的停留時間 | 六秒是估的。原版沒有這個機制（它要按鍵才消），所以沒有可抄的數字 | 靜態 |
+| [`promo/android.md`](../promo/android.md) | 實機錄影 | ⛔ 沒有裝置。片中畫面出自桌面的同一份 `internal/ui/phone`，與 APK 是同一份程式碼，但**不是實機錄影** | 靜態 |
+| [`promo/android.md`](../promo/android.md) | 模擬器錄影 | 模擬器在這台機器上只有個位數 fps，錄出來會頓 | 靜態 |
 | [`promo/dosv-adlib-and-tactical-review.md`](../promo/dosv-adlib-and-tactical-review.md) | 原版雙 TALK 的 payload、肖像、文字 baseline 與出現時序尚未在同一戰況對拍。 | （未解小節內文） | 靜態 |
 | [`promo/dosv-adlib-and-tactical-review.md`](../promo/dosv-adlib-and-tactical-review.md) | 原版右欄完整狀態資訊、旗標、軍名、命令 glyph 與裝飾仍未逐區等價。 | （未解小節內文） | 靜態 |
 | [`promo/dosv-adlib-and-tactical-review.md`](../promo/dosv-adlib-and-tactical-review.md) | 原版底列按鈕 glyph、選取狀態與 remake 文字／簡化圖示仍有差異。 | （未解小節內文） | 靜態 |

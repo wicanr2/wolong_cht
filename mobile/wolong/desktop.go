@@ -26,7 +26,10 @@ func RunDesktop() error {
 	}
 	ebiten.SetWindowSize(960, 540)
 	ebiten.SetWindowTitle("臥龍傳 Remake — 手機版")
-	return ebiten.RunGame(newGame(opt, font, shot, at))
+	g := newGame(opt, font, shot, at)
+	// 推廣片的逐幀輸出（`WOLONG_FRAMES_DIR`），手機上不存在。
+	g.rec = newDemoRecorder()
+	return ebiten.RunGame(g)
 }
 
 // defaultDirs 是桌面驗收的預設路徑（repo 相對）。

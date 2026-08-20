@@ -79,7 +79,7 @@ func (s *Session) PickModal(i int) {
 		if i == 0 {
 			s.lastErr = s.world.ChooseBattleCommand()
 			if s.lastErr == nil {
-				s.battle = battleState{view: s.newBattleView()}
+				s.battle = battleState{view: s.newBattleView(), tacSpeed: DefaultSpeed}
 			}
 			return
 		}
