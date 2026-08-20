@@ -54,7 +54,8 @@
 | 結局文字 | 200 字 10 行，從 `D7END.EXE` 取出（不在 `TALK.DAT` 裡）| [`re/70`](docs/re/70-d7end-ending-player.md) |
 | 音訊 | 會出聲、場景對應已解、與原版錄音比對過；**音色的諧波結構沒量化比對** | [`spec/29`](docs/spec/29-audio.md) |
 | 規則規格 | 58 份：**50 CONFORMED**／5 READY／2 DRAFT | [`spec/00`](docs/spec/00-index.md) |
-| 反組譯 | 739/739 支有筆記；**549 條「未解」散在各文件** | [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
+| 反組譯 | 739/739 支有筆記；`docs/re/` 自己標成未解的有 **230 列** | [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
+| 全專案的未解 | **553 列**（含 spec 132、playtest 69、mechanics 46、formats 40…）。⚠ **那是列數不是獨立問題數**——索引檔的「現況」欄是別的文件的摘要，同一個缺口會被數兩次（這類 9 列）| [`re/43`](docs/re/43-open-questions.md) §1 |
 
 #### 還沒對過的
 

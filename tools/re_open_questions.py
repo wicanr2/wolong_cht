@@ -278,6 +278,24 @@ def main():
       f"{sum(1 for r in rows if r['verdict']=='實測')} | "
       f"{sum(1 for r in rows if r['verdict']=='兩版對照')} |\n\n")
 
+    # ⚠ 這個合計是**列數**，不是獨立問題數。兩件事會讓它偏高，
+    # 兩件都印出來讓讀的人自己扣：
+    #   1. 索引檔（`00-index.md`）的「現況」欄是**別的文件的摘要**——
+    #      同一個缺口在那份文件自己的未解表裡還有一列。
+    #   2. 圖例列與「這一份是缺口總表」這種**只是提到「未解」兩個字**的列。
+    idx = [r for r in rows if r["file"].endswith("00-index.md")]
+    by_dir = {}
+    for r in rows:
+        top = r["file"].split("/")[1] if r["file"].startswith("docs/") else r["file"].split("/")[0]
+        by_dir[top] = by_dir.get(top, 0) + 1
+    w("⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，"
+      f"同一個缺口在那份文件自己的未解表裡還有一列——這類共 **{len(idx)}** 列"
+      "（另有少數只是提到「未解」兩個字的圖例列）。\n\n")
+    w("| 來源目錄 | 列數 |\n|---|---:|\n")
+    for d in sorted(by_dir, key=lambda k: -by_dir[k]):
+        w(f"| `docs/{d}/` | {by_dir[d]} |\n")
+    w("\n")
+
     for dom in order:
         sel = [r for r in rows if r["domain"] == dom]
         if not sel:
