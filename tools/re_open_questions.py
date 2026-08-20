@@ -98,6 +98,13 @@ DOMAIN = (
 )
 
 
+# repo 根目錄實際存在的頂層目錄；顯示名撞到它們就不能砍 `docs/`。
+TOP_LEVEL_DIRS = {
+    "mobile", "android", "tools", "internal", "cmd",
+    "translations", "packaging", "docker", "workplace", "dist-all",
+}
+
+
 def domain_of(rel):
     for prefix, name in DOMAIN:
         if rel.startswith(prefix):
@@ -278,13 +285,20 @@ def main():
         w(f"## 2.{order.index(dom)+1} {dom}（{len(sel)} 條）\n\n")
         w("| 出處 | 缺口 | 現況 | 裁決 |\n|---|---|---|---|\n")
         for r in sorted(sel, key=lambda r: (r["file"], r["section"])):
-            link = "../" + r["file"][len("docs/"):]
+            short = r["file"][len("docs/"):]
+            link = "../" + short
+            # ⚠ 顯示名去掉 `docs/` 是為了短，但**去掉之後可能撞到真的目錄**：
+            # `docs/mobile/` 砍成 `mobile/…`，而 repo 根目錄真的有一個
+            # `mobile/`（gomobile 綁定）。幽靈掃描會把它當成指不到的路徑，
+            # 而那不是誤報——同一個字串在 repo 裡確實有兩個意思。
+            # 撞到的時候就留完整路徑。
+            label = short if short.split("/")[0] not in TOP_LEVEL_DIRS else r["file"]
             v = r["verdict"]
             item = MDLINK.sub(r"\1", r["item"])
             st = MDLINK.sub(r"\1", r["status"]).replace("\n", " ")
             if len(st) > 160:
                 st = st[:157] + "…"
-            w(f"| [`{r['file'][len('docs/'):]}`]({link}) | {item} | {st} | {v} |\n")
+            w(f"| [`{label}`]({link}) | {item} | {st} | {v} |\n")
         w("\n")
 
     w("## 3. 這支工具的盲區\n\n")
