@@ -21,10 +21,10 @@
 | 規則正確性 | 42 | 39 | 3 | 0 |
 | 資料保存 | 35 | 34 | 1 | 0 |
 | 程式碼理解 | 223 | 216 | 7 | 0 |
-| 驗收 | 69 | 59 | 10 | 0 |
+| 驗收 | 58 | 48 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
 | 其他 | 160 | 150 | 10 | 0 |
-| **合計** | **546** | 514 | 31 | 1 |
+| **合計** | **535** | 503 | 31 | 1 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **5** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -32,7 +32,7 @@
 |---|---:|
 | `docs/re/` | 223 |
 | `docs/spec/` | 128 |
-| `docs/playtest/` | 69 |
+| `docs/playtest/` | 58 |
 | `docs/mechanics/` | 42 |
 | `docs/formats/` | 35 |
 | `docs/reference/` | 17 |
@@ -355,7 +355,7 @@
 | [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | BGM | `ENDBGM.DAT` 走 INT 61h，與 `KI.EXE` 同一條音源路徑 / remake 已有 `endbgm-0`（`../spec/29`） | 靜態 |
 | [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | 三塊分別在 16,000（平面 0／1 交錯）、47,744（平面 2）、59,072（平面 3） | （未解小節內文） | 靜態 |
 
-## 2.4 驗收（69 條）
+## 2.4 驗收（58 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -380,30 +380,22 @@
 | [`playtest/26-bgm-render-vs-recording.md`](../playtest/26-bgm-render-vs-recording.md) | 音色的聽感 | 頻譜只驗了基頻。諧波結構（也就是「像不像那個音色」）沒有量化比對 | 靜態 |
 | [`playtest/26-bgm-render-vs-recording.md`](../playtest/26-bgm-render-vs-recording.md) | 相關係數為什麼不是 0.9 | DOSBox 的 OPL 模擬與這顆的包絡實作不同，加上錄音有系統噪訊。**沒有排除「還有小錯」的可能** | 實測 |
 | [`playtest/26-bgm-render-vs-recording.md`](../playtest/26-bgm-render-vs-recording.md) | 其他曲子 | 只有開場曲有錄音對照組。另外 13 首沒有 | 靜態 |
-| [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 逐像素 parity | 影片是再編碼的，做不到。要真的逐像素得回到模擬器，而主畫面的點擊閘還在 | 靜態 |
-| [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 色彩 | 只比了幾何。調色盤要另外用「同一格地形的色號」比，不能用影片的 RGB | 靜態 |
-| [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 戰術側欄的逐格對拍 | 組成已對齊（§7.3、`../re/60`），**同一場戰鬥的逐格比對還沒做** | 靜態 |
+| [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 逐像素 parity | 影片是再編碼的，這一份做不到。**後來回到模擬器做成了**——主畫面五區、系統選單與戰場九區裡六區都逐像素相同（`37`–`40`）。「主畫面的點擊閘」也不存在，是座標算錯（`38` §1） | 靜態 |
+| [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 色彩 | 這一份只比了幾何。**後來解出來是調色盤刻度差 4%**——DOS/V 走 VGA 的 6 bit DAC（`../spec/51`），改完主畫面就逐像素相同了 | 靜態 |
 | [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 一覽表視窗 | 影片裡有武將／據點／財政的實錄，**還沒量** | 靜態 |
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | 水平跨格的碰撞判定全在 `sub_1B1B1`（`0001B1B1`，143 B）： | （未解小節內文） | 靜態 |
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | 1. **擋路的是「單位」，不是地形高度。 | （未解小節內文） | 靜態 |
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | 2. **低平面的水平跨格沒有高度差上限**——目標格地面比自己高就升一層、 | （未解小節內文） | 靜態 |
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | 3. **高平面要高度完全相等**，而 `[si+1Eh]`（`PlaneHigh`）決定讀哪一張。 | （未解小節內文） | 靜態 |
-| [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | `Field.gateX` 與登城點 | gateX 在三張抽樣圖上**正好就是可破壞城壁那一格**。`doScaleWall` 已經把它當目標，但爬不上去 | 靜態 |
-| [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | 繞路點清單的演算法 | `0x1800 + 兵編號 × 128`，`loc_1BD46` 算（`../re/11` §5.15）。解出來之後 `FindPathForcing` 那條近似要換掉 | 靜態 |
 | [`playtest/28-siege-breach-measurement.md`](../playtest/28-siege-breach-measurement.md) | 攻城計時器與突破時間的關係 | 大將體力 100 起、每 10 幀掉 1、50 觸發退卻 ⇒ **攻方只有約 500 幀**。爬牆接上之後要重量一次，確認這個預算合理 | 靜態 |
 | [`playtest/29-strategy-minimap-markers.md`](../playtest/29-strategy-minimap-markers.md) | 視野框的美術 | 原版在 `word_10D4C`，尺寸沒從程式碼讀到 | 靜態 |
 | [`playtest/29-strategy-minimap-markers.md`](../playtest/29-strategy-minimap-markers.md) | 點地圖區（熱區 `0x16`） | 原版做什麼沒讀 | 靜態 |
-| [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | **攻方大多數不前進** | §3。目標選擇的問題，與地形無關 | 靜態 |
 | [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 一幀能有幾個兵撞牆 | 原版沒量過。前排寬度決定破牆速度，而破牆速度決定攻城打不打得下來 | 靜態 |
-| [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 打壞城壁之後地面層表不更新 | 原版就不更新，而且不影響結果——城壁的地面層本來就是拿打壞後的圖塊算的（`../re/63` §2） | 靜態 |
 | [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 高平面的橫向移動沒有實測 | 守方站到牆頂的情境還沒跑過 | 實測 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 主畫面：大地圖地形色調 | 原版偏黃綠、remake 偏綠 / 存疑 / 可能是影片的色彩取樣。要驗就比**同一格的色號**，不要比 RGB | 靜態 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 戰場：同一場的逐格對拍 | 沒做過 / 未對過 / 需要同狀態，難度同主畫面 | 靜態 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 攻方大多數不前進 | 六個指令都能指揮部隊動作（`../spec/37` §4）；**AI 自己撞不進城是設計**——說明書第 11 章整章在講破城要換陣形 / 玩家要自己操作 | 靜態 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 地形色調差 | 分不出是影片取樣還是調色盤，要比色號 | 靜態 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 戰鬥指揮／委任選單 | 影片裡沒有對照影格 | 靜態 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 同一場戰鬥的逐格對拍 | 需要同狀態，還沒做 | 靜態 |
+| [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | ⚠ **打壞城壁之後地面層表不更新是原版行為**，而且不影響結果——城壁的 | （未解小節內文） | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 戰鬥指揮／委任選單 | 影片裡沒有對照影格，也還沒做同狀態對拍 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 勢力一覽的欄位 | 沒有逐欄比對 | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 「委任」那一格的顏色 | 實錄影格上看起來是紅字，但影片是壓縮過的、也沒有機器碼證據。remake 先畫成一般色（`../spec/38`） | 靜態 |
 | [`playtest/32-talk-layout-fit.md`](../playtest/32-talk-layout-fit.md) | 變數的實際長度分布 | 這一輪用固定三全形替身。人名多半是 2–3 全形、地名 2–3，但**軍團名與勢力名沒有逐一量過** | 靜態 |
 | [`playtest/32-talk-layout-fit.md`](../playtest/32-talk-layout-fit.md) | 框的尺寸已經解掉**：影格上量到的 275 px 是**框**（256 px ＋ 量測誤差）， | （未解小節內文） | 靜態 |
 | [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 逐句節拍 | 原版每句要等玩家按鍵才往下走；remake 直接顯示最新一句 | 靜態 |
@@ -413,11 +405,8 @@
 | [`playtest/36-window-texture.md`](../playtest/36-window-texture.md) | 取用端 | `KI.EXE` 裡哪一段程式把這 128 byte 鋪上去的還沒找到（三條路都排除了）。**排法已經由實機畫面定案**，取用端只影響「還有沒有別的用法」 | 靜態 |
 | [`playtest/36-window-texture.md`](../playtest/36-window-texture.md) | 米色視窗 | 一覽表那種米色底原版有沒有紋路沒量過（截圖裡那一片是純色） | 實測 |
 | [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 換圖塊的那一支機器碼 | 規則是從資料與畫面反推的，每一格都對得上，但**原版在哪裡做這件事**還沒定位（`../re/67` §5） / 找誰在據點換手時改地圖或格子記錄 | 靜態 |
-| [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 橫幅數字的字模 | 原版墨水高 14 列，remake 的倚天 ASCII 只有 9 列 / 找出原版畫數字用的字模 | 靜態 |
-| [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 四個視窗開著時的對拍 | **還沒做**。原版要先移游標再按同一點才會分派（`../re/47` §3.1），單純 `click` 會被當成移動吃掉 / timeline 用 `click:x,y;press` 成對送 | 靜態 |
 | [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | DOSBox 的滑鼠座標 | 視窗 640×480、遊戲 640×400 置中，而 INT 33 把**整個視窗**等比對映到遊戲畫面（送 y 要乘 1.2）。這是本機設定的性質，不是原版的 / 把 `int33 max y` 改成 400 再量一次 | 實測 |
 | [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 進到大地圖之後的滑鼠座標 | **又換一套**：`sub_120D6` 把 INT 33 的範圍改成 `0..0x17FF × 0..0x101F`（6143×4127 ＝ 整個世界的像素），螢幕座標 ＝ 原始座標 − 鏡頭原點。所以同一個視窗位置在選單裡與在地圖上指到完全不同的地方 / 用 `tools/cursor_probe.py` 在… | 靜態 |
-| [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 鏡頭 `sub_12151` 的水平參數 | 機器碼是 20，實機量到 16（`../spec/52` §4） / 讀 `sub_1D66A` 的畫面起點（`es=0A0C8h`＋`di=0A00h`） | 靜態 |
 | [`playtest/38-window-parity.md`](../playtest/38-window-parity.md) | 天候物件 | 原版跑了 10 天才截到，remake 停在第 1 天。**這是狀態差** / 要對就得讓兩邊同一天——用存檔定位（`../spec/90` §2） | 靜態 |
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 「液晶」畫面模式 | 原版的畫面模式有兩個選項，對應 `GAMEPAL.BRG` 的 bank 0–3 與 4–7（`../re/55` §4）。remake 只做了 16 色那一組 / 載 bank 4–7 再對拍一次 | 靜態 |
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 音效的 TYPE 2/3/4 | 原版有四種音源型別，remake 只有開／關 / 看 `sub_102D0` 那四型的差別 | 靜態 |

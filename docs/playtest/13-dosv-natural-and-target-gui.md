@@ -1,6 +1,9 @@
 # DOS/V 自然畫面與目標平台 GUI 驗收
 
-**狀態：影片 oracle 對拍通過；嚴格同狀態逐像素差異仍不宣稱，Windows／macOS 原生 runtime 仍受阻。**
+**狀態：歷史驗收紀錄（2026-08-11，影片 oracle）。**
+⭐ **「嚴格同狀態逐像素差異」後來做到了**——主畫面五區、系統選單、
+戰場九區裡六區都逐像素相同（[`37`](37-main-screen-parity.md)–[`40`](40-tactical-parity.md)）。
+**Windows／macOS 原生 runtime 仍未在目標 OS 上跑過**，那一條至今成立。
 
 - 日期：2026-08-11
 - 目標：松崗 DOS/V；PC-98 不列入本輪畫面 oracle

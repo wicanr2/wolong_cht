@@ -56,7 +56,7 @@
 | 音訊 | 會出聲、場景對應已解、與原版錄音比對過；**音色的諧波結構沒量化比對** | [`spec/29`](docs/spec/29-audio.md) |
 | 規則規格 | **59 份**（不含索引與 `TEMPLATE.md`）：**56 CONFORMED**／3 READY／0 DRAFT | [`spec/00`](docs/spec/00-index.md) |
 | 反組譯 | 739/739 支有筆記；`docs/re/` 自己標成未解的有 **223 列** | [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
-| 全專案的未解 | **546 列**（含 spec 128、playtest 69、mechanics 42、formats 35…）。⚠ **那是列數不是獨立問題數**——索引檔的「現況」欄是別的文件的摘要，同一個缺口會被數兩次（這類 5 列）| [`re/43`](docs/re/43-open-questions.md) §1 |
+| 全專案的未解 | **535 列**（含 spec 128、playtest 58、mechanics 42、formats 35…）。⚠ **那是列數不是獨立問題數**——索引檔的「現況」欄是別的文件的摘要，同一個缺口會被數兩次（這類 5 列）| [`re/43`](docs/re/43-open-questions.md) §1 |
 
 #### 還沒對過的
 

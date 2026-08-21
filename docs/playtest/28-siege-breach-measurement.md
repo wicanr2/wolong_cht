@@ -1,9 +1,13 @@
 # 28 — 量攻城：remake 的攻方打不進城，原因是城牆四格厚
 
-**狀態：⚠ 缺口已定位，三個 parity bug 已修並有單測；
-**攻方仍然攻不進城**。原版靠爬上牆頂，而**機制已經在同一天解完**
-（[`../re/63`](../re/63-ground-plane-map.md)）：登城點是圖塊 ≥ `0xF0` 的門格。
-這一份記的是量測與當時的追查過程，**實作還沒做**。
+**狀態：歷史量測紀錄。** 這一份記的是 2026-08-16 那天「攻方打不進城」的
+量測與追查過程，**當時的結論已經被後續實作取代**：登城機制在同一天解完
+（[`../re/63`](../re/63-ground-plane-map.md)：登城點是圖塊 ≥ `0xF0` 的門格），
+規則層照著重做並有三張攻城圖的迴歸測試
+（`internal/rules/tactical/ground.go`／`ground_test.go`，量測見
+[`30`](30-ground-planes-implemented.md)）。
+⭐ **「攻方撞不進城」不是缺陷**——說明書第 11 章整章在講破城要換陣形，
+那是玩家要自己操作的（[`../spec/37`](../spec/37-tactical-player-controls.md) §4）。
 
 - 日期：2026-08-16
 - 素材：`workplace/orig/dosv/BATTLE.MAP`／`BATTLE.MDL`／`BATTLE.DAT`、
@@ -154,10 +158,14 @@
 
 | 項目 | 現況 |
 |---|---|
-| ~~那兩張地面高度圖是誰填的~~ | **已解**：`sub_1BBA6` → `sub_1BC39`，在 `word_1D2FC` 段（[`../re/63`](../re/63-ground-plane-map.md)）|
-| `Field.gateX` 與登城點 | gateX 在三張抽樣圖上**正好就是可破壞城壁那一格**。`doScaleWall` 已經把它當目標，但爬不上去 |
-| 繞路點清單的演算法 | `0x1800 + 兵編號 × 128`，`loc_1BD46` 算（[`../re/11`](../re/11-tactical-battle.md) §5.15）。解出來之後 `FindPathForcing` 那條近似要換掉 |
 | 攻城計時器與突破時間的關係 | 大將體力 100 起、每 10 幀掉 1、50 觸發退卻 ⇒ **攻方只有約 500 幀**。爬牆接上之後要重量一次，確認這個預算合理 |
+
+已解的三條（都在同一天或稍後補上）：那兩張地面高度圖由
+`sub_1BBA6` → `sub_1BC39` 填在 `word_1D2FC` 段
+（[`../re/63`](../re/63-ground-plane-map.md)）；`Field.gateX` 與登城點的關係
+與爬牆都已實作（[`30`](30-ground-planes-implemented.md)）；繞路點清單由
+`loc_1BD46` 算——**uniform-cost 波前擴散**，remake 照著移植在
+`internal/rules/tactical/path.go`（[`../re/11`](../re/11-tactical-battle.md) §5.15）。
 
 ## 6. 怎麼重跑
 

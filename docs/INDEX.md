@@ -44,15 +44,15 @@
 | [`docs/playtest/10-event-message-modal.md`](playtest/10-event-message-modal.md) | 10 — 事件 TALK 通知 modal | 已完成通知資料接縫、Linux/Xvfb 視覺抽樣與 remake TALK 五行分頁；原版未知 事件流程／未定位 … | 2026-08-09 |
 | [`docs/playtest/11-event6-original-fixture.md`](playtest/11-event6-original-fixture.md) | 11 — 原版事件 6 fixture oracle | 事件 6 主要結果畫面已由原版 fixture 證實；不是自然長程存檔，也不封閉次要 formatter。 | 2026-08-10 |
 | [`docs/playtest/12-event3-same-state-parity.md`](playtest/12-event3-same-state-parity.md) | event3 同狀態對拍（2026-08-10） | 同狀態事件接線、原版式 composite、3×6 實際格位選取、TALK 五行分頁、 DOS/V 內框／按鍵 gl… | 2026-08-10 |
-| [`docs/playtest/13-dosv-natural-and-target-gui.md`](playtest/13-dosv-natural-and-target-gui.md) | DOS/V 自然畫面與目標平台 GUI 驗收 | 影片 oracle 對拍通過；嚴格同狀態逐像素差異仍不宣稱，Windows／macOS 原生 runtime 仍受阻。 | 2026-08-11 |
-| [`docs/playtest/14-m7-review.md`](playtest/14-m7-review.md) | M7 校訂文字人工審查報告 | 60 筆定案校訂已完成逐筆語意、marker、硬換行、寬度與代表畫面抽樣；不宣稱 1,022 則全文重譯或密碼保護下… | 2026-08-11 |
+| [`docs/playtest/13-dosv-natural-and-target-gui.md`](playtest/13-dosv-natural-and-target-gui.md) | DOS/V 自然畫面與目標平台 GUI 驗收 | 歷史驗收紀錄（2026-08-11，影片 oracle）。 | 2026-08-11 |
+| [`docs/playtest/14-m7-review.md`](playtest/14-m7-review.md) | M7 校訂文字人工審查報告 | 60 筆定案校訂已完成逐筆語意、marker、硬換行、寬度與代表畫面抽樣。 | 2026-08-11 |
 | [`docs/playtest/15-event2-5-talk-sampling.md`](playtest/15-event2-5-talk-sampling.md) | 事件 2–5 TALK 完整分支抽樣 | 36 個 raw TALK 頁面、18 組雙頁回應的分支、marker、硬換行、字寬與五列版面 抽樣通過；不宣稱完整… | 2026-08-11 |
 | [`docs/playtest/16-event9-long-route.md`](playtest/16-event9-long-route.md) | 事件 9 長程通知流程 | 27 小時 bounded queue、玩家／非玩家／在野通知條件與 #409 no-op 已通過； 完整自然劇本依… | 2026-08-11 |
 | [`docs/playtest/17-expert-dosbox-remake.md`](playtest/17-expert-dosbox-remake.md) | 17 — DOSBox 原版／remake 可玩性專家驗證 | remake 正常策略路徑與存檔／讀檔通過；DOS/V 原版密碼頁已可進入開場，尚未展開完整自然長程驗證；PC-98… | 2026-08-11 |
 | [`docs/playtest/18-dosv-password-verification.md`](playtest/18-dosv-password-verification.md) | 18 — 松崗 DOS/V 密碼頁輸入驗證 | 已證實，在受控 DOSBox-X 重播中按「確定」即可越過密碼頁；密碼頁不再是 DOS/V 原版行為驗證的阻擋。 | 2026-08-12 |
 | [`docs/playtest/19-tactical-minimap.md`](playtest/19-tactical-minimap.md) | 19 — DOS/V 戰術縮圖 raw producer 驗收 | PASS（已證實 producer 的 remake 實作）。底圖與部隊點都已接上； 陣形線、游標十字與城壁受損的局… | 2026-08-12 |
-| [`docs/playtest/20-tactical-layout-parity.md`](playtest/20-tactical-layout-parity.md) | 20 — 松崗 DOS/V 戰術版面 parity 重開 | PARTIAL（主要幾何、右欄命令面板、底列 glyph、原版初始相機、 32×30 display grid、鄰格… | 2026-08-12 |
-| [`docs/playtest/21-command-window-parity.md`](playtest/21-command-window-parity.md) | 21 — 松崗 DOS/V 指揮／事件／一覽畫面 parity 重開 | PARTIAL（事件 TALK、系統面板與一覽第一層主要幾何已修正；一覽詳細層與捲軸未完成）。 | 2026-08-12 |
+| [`docs/playtest/20-tactical-layout-parity.md`](playtest/20-tactical-layout-parity.md) | 20 — 松崗 DOS/V 戰術版面 parity 重開 | 歷史量測紀錄（2026-08-12，影片幀對幾何）。 | 2026-08-12 |
+| [`docs/playtest/21-command-window-parity.md`](playtest/21-command-window-parity.md) | 21 — 松崗 DOS/V 指揮／事件／一覽畫面 parity 重開 | 歷史量測紀錄（2026-08-12，影片幀對幾何）。 | 2026-08-12 |
 | [`docs/playtest/21-dosboxx-bridge-sampling.md`](playtest/21-dosboxx-bridge-sampling.md) | 21 — DOSBox-X AI Bridge：第一次動態取樣 | 三條斷言全部取到證據。+0x00 低 4 位 ＝ 敵方鄰居遮罩（192/192， 對照讀法只對 12/192）；+0… | 2026-08-14 |
 | [`docs/playtest/22-field-siege-shared-layout.md`](playtest/22-field-siege-shared-layout.md) | 攻城／兩軍遭遇共用戰術骨架驗收 | PASS（共用幾何與原版指令面板已封口；不代表動畫逐像素 parity） | 2026-08-12 |
 | [`docs/playtest/23-main-screen-geometry.md`](playtest/23-main-screen-geometry.md) | 23 — 主畫面幾何：從機器碼定死，第一次逐區對拍 | 版面常數全部換成機器碼算出來的值（外框四項 ＋ 右欄內部一整組）。 橫幅的位移掃描落在 (0,0)，幾何對齊。逐像素… | 2026-08-15 |
@@ -60,9 +60,9 @@
 | [`docs/playtest/25-audio-capture-feasibility.md`](playtest/25-audio-capture-feasibility.md) | 25 — 音訊擷取的可行性：DOSBox 錄得到，鏈路已打通 | 可行性 confirmed。開場動畫的 15 秒錄音有內容（RMS 424）， 轉成 ogg 再解回來仍是 RMS … | 2026-08-15 |
 | [`docs/playtest/26-bgm-render-vs-recording.md`](playtest/26-bgm-render-vs-recording.md) | 26 — 合成出來的音樂對得上原版錄音 | confirmed。internal/audio 渲染的 OPENBGM.DAT 與 DOSBox 錄的同一首， 包… | 2026-08-15 |
 | [`docs/playtest/27-original-video-frame-parity.md`](playtest/27-original-video-frame-parity.md) | 27 — ⭐ 拿原版實錄影片對版面：主畫面與戰術畫面的幾何都落在 3 px 內 | 主畫面與戰術畫面的 | 2026-08-16 |
-| [`docs/playtest/28-siege-breach-measurement.md`](playtest/28-siege-breach-measurement.md) | 28 — 量攻城：remake 的攻方打不進城，原因是城牆四格厚 | ⚠ 缺口已定位，三個 parity bug 已修並有單測； | 2026-08-16 |
+| [`docs/playtest/28-siege-breach-measurement.md`](playtest/28-siege-breach-measurement.md) | 28 — 量攻城：remake 的攻方打不進城，原因是城牆四格厚 | 歷史量測紀錄。 | 2026-08-16 |
 | [`docs/playtest/29-strategy-minimap-markers.md`](playtest/29-strategy-minimap-markers.md) | 29 — 縮小地圖的據點標記接上原版的四種顏色 | ✅ 已實作並留下截圖。 | 2026-08-16 |
-| [`docs/playtest/30-ground-planes-implemented.md`](playtest/30-ground-planes-implemented.md) | 30 — 兩個平面的地面圖接上規則層：攻方終於會打城牆了 | ⚠ 機制接上並有測試，攻城仍打不進去——但卡點換了。 | 2026-08-16 |
+| [`docs/playtest/30-ground-planes-implemented.md`](playtest/30-ground-planes-implemented.md) | 30 — 兩個平面的地面圖接上規則層：攻方終於會打城牆了 | 通過。 | 2026-08-16 |
 | [`docs/playtest/31-parity-inventory.md`](playtest/31-parity-inventory.md) | 31 — 原版 vs remake 逐畫面盤點（2026-08-16） | 盤點，不是量測。 | 2026-08-16 |
 | [`docs/playtest/32-talk-layout-fit.md`](playtest/32-talk-layout-fit.md) | 32 — M7 排版 parity：1,022 則逐則量進訊息框 | 量完了。單行超寬 | 2026-08-16 |
 | [`docs/playtest/33-ai-march-long-run.md`](playtest/33-ai-march-long-run.md) | 33 — AI 行軍鏈接上之後的長跑觀察 | 量完了。世界會動了——軍團有生有滅、不變量全程成立。 ⭐ 最重要的發現不是 AI 的行為，是 | 2026-08-17 |

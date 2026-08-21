@@ -45,4 +45,6 @@ DISPLAY=:99 go test -p=1 -vet=off ./cmd/wlgame \
 
 代表幀確認文字框位置、DOS/V 外框、繁中字寬、硬換行、數值 marker 與
 `Enter／Space` 分頁提示。此項完成的是所有已接入分支的 TALK／排版抽樣，
-不宣稱密碼保護下的原版自然長程逐像素對拍。
+不宣稱原版自然長程的逐像素對拍。
+（⚠ **密碼頁不擋**——四格留白按「確定」就進開場，
+[`18`](18-dosv-password-verification.md)；長程對拍是還沒做。）
