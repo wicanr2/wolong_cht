@@ -51,6 +51,29 @@
 - Docker 內已有 Go test／vet、翻譯 selftest、文件索引與 Linux/Xvfb 截圖 smoke；
   完整長程遊戲測試依使用者要求略過。
 
+### 2026-08-21（第七輪）掃完最後四個目錄：稽核收尾
+
+`docs/reference/`（17）、`docs/release/`（13）、`docs/mobile/`（12）、
+`docs/promo/`（7）。這四個目錄的缺口大半是真的——**沒有硬體就是沒有硬體**，
+Windows／macOS 實機、Android 實機、release signing、16 KB page size 裝置
+這四條至今成立，一條都沒動。
+
+改掉的五處：
+
+| 文件 | 曾經寫過 | 實際 |
+|---|---|---|
+| `04-first-survey.md` | 「即時制的時間單位：一個月在真實時間是多久」 | 計時中斷是 291.3 Hz，一個遊戲日在五檔分別 0.74／1.48／2.22／2.97 秒（`re/61`、`spec/34`）|
+| `yt-remake-pixel-review.md` | 「中央 raw reserve glyph 未解出原版圖形，remake 不冒充，改用自繪」 | 是 `ICONGRF` 段 3 `0x1BA0` 起的四張 24×16（天秤／馬／弓／步），`DOSVResourceIcon` 用的就是原版素材；那一區後來逐像素 PASS |
+| `dosv-adlib-and-tactical-review.md` | 整節在說「下一個有效驗收是建立同攻城節點、同攻守方、同編成、同鏡頭的 capture pair」 | **那正是 `playtest/40` 做的事。** 改寫成「推廣片證不了什麼」——那是媒材的性質，不是缺口 |
+| `android-ux.md` | 數值輸入器引 `docs/spec/12` | `spec/12` 是主畫面外框；數值輸入器是 `sub_17C6E`，在 `re/13` |
+
+⭐ **`--strict` 在這裡抓到一個我自己製造的問題**：把兩份 promo 的未解列
+清空之後，它們變成「提到未解卻抽不出任何一條」的盲區。
+**清掉最後一條缺口時要順手宣告「沒有缺口」**（`<!-- 缺口：無 -->`），
+否則下一輪會分不出「沒有缺口」與「表壞了」。
+
+未解列數：535 → **530**（promo 7 → 2）。全六輪合計 **570 → 530**。
+
 ### 2026-08-21（第六輪）稽核 docs/playtest/：三份文件的「受阻」都已不成立
 
 `docs/playtest/` 是**有日期的實驗紀錄**，「當時的認知」本來就該保留，

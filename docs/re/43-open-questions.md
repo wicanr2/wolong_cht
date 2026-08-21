@@ -23,8 +23,8 @@
 | 程式碼理解 | 223 | 216 | 7 | 0 |
 | 驗收 | 58 | 48 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 160 | 150 | 10 | 0 |
-| **合計** | **535** | 503 | 31 | 1 |
+| 其他 | 155 | 145 | 10 | 0 |
+| **合計** | **530** | 498 | 31 | 1 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **5** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -38,7 +38,7 @@
 | `docs/reference/` | 17 |
 | `docs/release/` | 13 |
 | `docs/mobile/` | 12 |
-| `docs/promo/` | 7 |
+| `docs/promo/` | 2 |
 
 ## 2.1 規則正確性（42 條）
 
@@ -440,7 +440,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（160 條）
+## 2.6 其他（155 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -454,15 +454,10 @@
 | [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 縮放的下限 | 整張大地圖 384×256 格全塞進手機會小到看不見，最小縮放級距還沒定 | 靜態 |
 | [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 戰場的縮放 | 目前固定 1×（原版的 480×368 剛好塞進主區）。放大之後看得到的格子會變少，**那會改變決策**，所以沒有做 | 靜態 |
 | [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 戰場縮圖的點選 | 原版點縮圖可以移動鏡頭，手機版目前只顯示 | 靜態 |
-| [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 外交提案的「指定金額」 | 要數值輸入器（`docs/spec/12`），手機上沒做。**先不給那一項**——給了會是一個點下去什麼都不會發生的選項 | 靜態 |
+| [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 外交提案的「指定金額」 | 要數值輸入器（原版是 `sub_17C6E`，`../re/13`），手機上沒做。**先不給那一項**——給了會是一個點下去什麼都不會發生的選項 | 靜態 |
 | [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 事件訊息的停留時間 | 六秒是估的。原版沒有這個機制（它要按鍵才消），所以沒有可抄的數字 | 靜態 |
 | [`promo/android.md`](../promo/android.md) | 實機錄影 | ⛔ 沒有裝置。片中畫面出自桌面的同一份 `internal/ui/phone`，與 APK 是同一份程式碼，但**不是實機錄影** | 靜態 |
 | [`promo/android.md`](../promo/android.md) | 模擬器錄影 | 模擬器在這台機器上只有個位數 fps，錄出來會頓 | 靜態 |
-| [`promo/dosv-adlib-and-tactical-review.md`](../promo/dosv-adlib-and-tactical-review.md) | 原版雙 TALK 的 payload、肖像、文字 baseline 與出現時序尚未在同一戰況對拍。 | （未解小節內文） | 靜態 |
-| [`promo/dosv-adlib-and-tactical-review.md`](../promo/dosv-adlib-and-tactical-review.md) | 原版右欄完整狀態資訊、旗標、軍名、命令 glyph 與裝飾仍未逐區等價。 | （未解小節內文） | 靜態 |
-| [`promo/dosv-adlib-and-tactical-review.md`](../promo/dosv-adlib-and-tactical-review.md) | 原版底列按鈕 glyph、選取狀態與 remake 文字／簡化圖示仍有差異。 | （未解小節內文） | 靜態 |
-| [`promo/dosv-adlib-and-tactical-review.md`](../promo/dosv-adlib-and-tactical-review.md) | 地形、部隊編成、鏡頭中心、動畫 frame 與戰況不同，不能用目前推廣片判定物件 | （未解小節內文） | 靜態 |
-| [`promo/yt-remake-pixel-review.md`](../promo/yt-remake-pixel-review.md) | 中央 raw reserve glyph | 未解出原版圖形。remake 不冒充，改用自繪 | 靜態 |
 | [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | 目標 OS 實跑 | **做不到**：這台是 Linux，沒有 Mac／Windows。檔頭驗過（PE32+／Mach-O），但視窗、輸入、音訊、字型載入都沒有在目標系統上跑過 | 實測 |
 | [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | linux/arm64 的本體 | 要在 arm64 的 Linux 上建（Ebiten 的 cgo 沒有交叉工具鏈） | 靜態 |
 | [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | Windows 的 smoke | 同第一項 | 靜態 |

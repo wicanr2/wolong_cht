@@ -48,7 +48,7 @@
 - minimap 下方改成原版 16 px 紅／藍勢力色標列；下方情報框與 minimap 共用一條
   8 px 分隔邊，避免原 remake 產生雙倍 16 px 假分隔。
 - 情報框改為原版常駐順序：64×64 頭像、君主／首都／軍師三列、信賴度、紅色分隔線，
-  以及黑底資金／預備兵區。未解出的中央 raw reserve glyph 仍不冒充原版資產。
+  以及黑底資金／預備兵區。（中央那一直排圖示後來解出來了，見檔尾。）
 
 ## 解讀與範圍決定
 
@@ -74,8 +74,12 @@ remake，也不繞過 DOS/V 密碼保護取得原版畫面。
 | `yt-remake-natural-side-by-side.png` | `df76ffc1cdb21be11b309d746a8526d99ba20e04fbb124fae8384e3e27b5cd4e` |
 | `dosv-skeleton-compare.png` | `7e78ff252d1579a29f2ce93e10c9feabfdb1a392d4c67306812acc44d594042a` |
 
-## 未解
+## 這一輪之後怎麼了
 
-| 項目 | 現況 |
-|---|---|
-| 中央 raw reserve glyph | 未解出原版圖形。remake 不冒充，改用自繪 |
+當時唯一列為未解的「中央 raw reserve glyph」已經解出來了：資金／預備兵欄
+左邊那一直排是 `ICONGRF` 段 3 `0x1BA0` 起的四張 24×16（天秤／馬／弓／步），
+`library.DOSVResourceIcon` 用的是原版素材
+（[`../re/48`](../re/48-window-display-list.md) §6）。那一區後來逐像素 PASS
+（[`../playtest/37`](../playtest/37-main-screen-parity.md)）。
+
+<!-- 缺口：無 -->

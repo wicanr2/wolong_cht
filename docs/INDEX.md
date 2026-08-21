@@ -76,7 +76,7 @@
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告的遊戲段落是逐幀錄下來的實跑畫面； 三平台候選包與 Linux AppImag… | 2026-08-21 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
-| [`docs/promo/dosv-adlib-and-tactical-review.md`](promo/dosv-adlib-and-tactical-review.md) | 推廣片原版 AdLib 與戰術骨架審查 | 原版音軌來源與影片縮放鏈已修正；戰術固定骨架的 16 px viewport 偏差已修正。完整同狀態戰術 parit… | 2026-08-12 |
+| [`docs/promo/dosv-adlib-and-tactical-review.md`](promo/dosv-adlib-and-tactical-review.md) | 推廣片原版 AdLib 與戰術骨架審查 | 歷史審查紀錄（2026-08-12）。 | 2026-08-12 |
 | [`docs/promo/dosv-live-comparison.md`](promo/dosv-live-comparison.md) | DOS/V 原版／remake 實機動態比較推廣片 | 已產出並完成畫面、媒體規格與來源界線驗收；這是同類型畫面／流程的推廣比較，不是同日期、同輸入、同狀態的逐像素 par… | 2026-08-12 |
 | [`docs/promo/yt-remake-pixel-review.md`](promo/yt-remake-pixel-review.md) | YouTube／remake 推廣片像素差異審查 | 已完成影片對照；確認像素差異，但不把不同遊戲狀態誤稱為同狀態 逐像素 parity。 | 2026-08-11 |
 | [`docs/re/00-index.md`](re/00-index.md) | 00 — RE 知識庫入口 | 索引。44 份反組譯筆記按子系統分類，每份一句話說它回答什麼問題。 | 2026-08-14 |
