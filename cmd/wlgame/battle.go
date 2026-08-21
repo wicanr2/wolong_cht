@@ -986,16 +986,6 @@ func clampBarLen(v, max int) int {
 	return v
 }
 
-func advName(a tactical.Advantage) string {
-	switch a {
-	case tactical.Advantaged:
-		return "有利"
-	case tactical.Disadvantaged:
-		return "不利"
-	}
-	return "普通"
-}
-
 func sideLabel(i int) string {
 	if i == 0 {
 		return "攻方"

@@ -212,29 +212,6 @@ func fundingTitle(kind state.FundingKind) string {
 	return "內政官撥款"
 }
 
-func (g *game) fundingOfficerName(id int) string {
-	if id < 0 || id >= len(g.world.Generals) || !g.world.Generals[id].Alive {
-		return "－"
-	}
-	return big5(g.world.Generals[id].Name)
-}
-
-func (g *game) fundingSubjectName(c *state.FundingChoice) string {
-	if c == nil {
-		return "－"
-	}
-	if c.Kind == state.FundingGovernor {
-		if c.Subject >= 0 && c.Subject < len(g.world.Cities) {
-			return big5(g.world.Cities[c.Subject].Name)
-		}
-		return "－"
-	}
-	if c.Subject >= 0 && c.Subject < len(g.world.Factions) {
-		return g.diplomacyFactionName(c.Subject)
-	}
-	return "－"
-}
-
 // fundingChoiceLines 是三選一的那三列。**不折行**——選單的字寬
 // 決定框寬（docs/spec/45 §2.2）。
 func (g *game) fundingChoiceLines(c state.FundingChoice) []string {

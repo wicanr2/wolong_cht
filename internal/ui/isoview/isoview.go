@@ -725,37 +725,6 @@ func (v *View) drawDisplaySlice(dst *ebiten.Image, slots [2]battleDisplaySlot, s
 	}
 }
 
-func (v *View) drawDisplayEntry(dst *ebiten.Image, b *tactical.Battle, e battleDisplayEntry) {
-	px, py, ok := v.ScreenPos(0, 0, e.x, e.y, e.z)
-	if !ok {
-		return
-	}
-	op := &ebiten.DrawImageOptions{}
-	switch e.kind {
-	case displayTerrain:
-		img := v.image(e.raw)
-		if img == nil {
-			return
-		}
-		op.GeoM.Translate(float64(px-battle.SubTileW/2), float64(py))
-		dst.DrawImage(img, op)
-	case displayProjectile:
-		img := v.sourceImage(e.raw)
-		if img == nil {
-			return
-		}
-		op.GeoM.Translate(float64(px-battle.SubTileW/2), float64(py))
-		dst.DrawImage(img, op)
-	case displayRawUnit:
-		img := v.sourceImage(e.raw)
-		if img == nil {
-			return
-		}
-		op.GeoM.Translate(float64(px-battle.SubTileW/2+e.pxOff), float64(py+e.pyOff))
-		dst.DrawImage(img, op)
-	}
-}
-
 
 // ProjectileSourceIndex 是原版 `sub_1AD2D`／`sub_1AD7F` 的 raw 圖號。
 // 這些值是合併圖形表索引，不是 BATTLE.SCH 的直接單位編號。

@@ -64,22 +64,37 @@
 ⭐ **數值層面的斷言基本上是乾淨的。** 真正的問題是另一類：
 **死程式碼與指錯的指標**。
 
-`internal/ui/mobile`（package `mobileui`）**沒有任何 Go 檔 import 它**——
+舊的 `mobileui` 套件（當時在 `internal/ui/` 底下）**沒有任何 Go 檔 import 它**——
 Android 綁定 `mobile/wolong` 走的是 `internal/ui/phone`。它是 2026-08-20
 換路線前那條「照原版版面」留下的原型。連帶三處錯的登記：
 
 | 位置 | 曾經寫過 | 實際 |
 |---|---|---|
-| `android-plan.md` §4 架構圖 | 呈現層畫成 `internal/ui/mobile` | 是 `internal/ui/phone` |
-| `phone/layout.go` 檔頭 | 「平台無關的幾何在 `internal/ui/mobile`」 | 那個套件沒人用 |
+| `android-plan.md` §4 架構圖 | 呈現層畫成 `mobileui` | 是 `internal/ui/phone` |
+| `phone/layout.go` 檔頭 | 「平台無關的幾何在 `mobileui`」 | 那個套件沒人用 |
 | `phone/layout.go` 兩處 | 座標「由 `Viewport` 換算到實際螢幕」 | **`Viewport` 只定義在那個死套件裡**，live path 上根本沒有它——縮放是 Ebiten 的 `Layout` 契約做的（`game.Layout` 回傳 `phone.LogicalW/H`）|
 
 ⭐ **這一類比數值錯更難發現**：數值錯了會有人算不出來，而「指向一個
 不存在於設計裡的套件」不會有任何症狀，只會讓讀的人多花半小時。
 
-使用者裁定（2026-08-21）：`mobileui` **留著但標清楚已被取代**——
-檔頭寫明現行鏈路、Viewport 不在任何執行路徑上、要改版面請改
-`internal/ui/phone`；`android-plan.md` §4 同步補上。
+使用者裁定（2026-08-21）：**刪掉**。`mobileui` 那兩個檔（164 行）整個移除，
+`android-plan.md` §4 改成「這條鏈上只有這三層」，不留「保留供參考」
+那種會長回來的但書。
+
+順手掃全庫的其他死程式碼：**沒有第二個沒人 import 的套件**；
+函式層級找到 8 支零呼叫，刪掉其中 7 支
+（`amountButtonIsEdit`／`amountPanelValues`／`advName`／`plainErr`／
+`fundingOfficerName`／`fundingSubjectName`／`drawDisplayEntry`，共 85 行）。
+
+⚠ **第 8 支 `march.Swap` 不能刪**——它是 `heap.Interface` 的一員，
+靠介面派發，靜態掃描看不到呼叫端。**「零呼叫」在 Go 裡不等於死碼。**
+
+⚠ **刪 `drawDisplayEntry` 之後差點連帶刪錯**：它是 `battleDisplayEntry.kind`
+唯一的**產品碼**讀者，所以 `kind` 與那個 enum 看起來也死了。實際上
+`isoview_test.go` 用它過濾 raw-unit entry，釘的是 `sub_1DA1C` 的奇偶配對。
+⭐ **測試是合法的消費端**——刪掉欄位會讓那條不變量無法表達。
+（順帶確認繪圖層不看 `kind` 是**對的**：live path 是 `drawDisplayGrid`，
+照原版 `sub_1DDB4` 統一用圖號畫，不分型別。）
 
 順帶收掉術語漂移（`CONTEXT.md` §5 明寫「不寫城市」、能力值是「武術」）：
 註解 24 行的「城市」→「據點」、9 行的「武力」→「武術」，

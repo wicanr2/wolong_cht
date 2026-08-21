@@ -138,10 +138,6 @@ func amountPanelCellRect(row, col int) image.Rectangle {
 	)
 }
 
-func amountPanelValues(current, initial int) [amountPanelRows]int {
-	return [amountPanelRows]int{current, initial, amountDisplayMax}
-}
-
 func displayAmountDigits(value int) string {
 	if value < 0 {
 		value = 0

@@ -112,11 +112,10 @@ internal/state ＋ internal/rules ＋ internal/assets    ← 原封不動共用
 回傳 `phone.LogicalW`／`phone.LogicalH`（960×540），之後所有座標都在那個
 邏輯畫布上算，不必自己換算螢幕像素。
 
-⛔ **`internal/ui/mobile`（package `mobileui`）不在這條鏈上。** 它是換路線
-之前那條「照原版 640×400 版面」的產物，現在**沒有任何檔案 import 它**；
-裡面的 `Viewport`／`SafeArea`／`CellAt` 不在任何執行路徑上。
-使用者裁定保留供參考（2026-08-21），**但要改手機版的版面請改
-`internal/ui/phone`**。
+這條鏈上**只有這三層**。換路線之前那條「照原版 640×400 版面」的路留下過一個
+`mobileui` 套件（`Viewport`／`SafeArea`／`CellAt`），
+它從來沒被任何檔案 import，2026-08-21 刪掉了（使用者裁定）。
+**要改手機版的版面請改 `internal/ui/phone`。**
 
 **規則層不會知道自己跑在手機上。** 手機端唯一能對規則層做的事，
 是送出與桌面同一組指令；不得為了觸控方便改時鐘、事件順序、數值邊界或存檔格式。

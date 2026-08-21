@@ -58,7 +58,3 @@ func (g *game) amountPointerButton() (amountPanelButton, bool) {
 	}
 	return button, true
 }
-
-func amountButtonIsEdit(button amountPanelButton, edit state.AmountEdit) bool {
-	return button.edit == edit
-}

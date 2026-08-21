@@ -648,5 +648,3 @@ func (g *game) affordable() (kinds [army.Positions]army.TroopType, manned [army.
 // setEvent 把訊息放到事件列。錯誤訊息帶著 Go 的套件前綴（`state: …`），
 // 那是給 log 看的，不是給玩家看的。
 func (g *game) setEvent(msg string) { g.lastEvent = strings.TrimPrefix(msg, "state: ") }
-
-func plainErr(err error) string { return strings.TrimPrefix(err.Error(), "state: ") }
