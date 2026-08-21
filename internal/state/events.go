@@ -706,9 +706,9 @@ func (w *World) diplomacyRepresentative(si, di int) (int, bool) {
 	}
 	dl := w.Generals[lord].Politics
 	if w.Generals[lord].Posted {
-		// sub_13771 first reads the parallel corps record at ds:2240h
-		// (+0x00). A posted lord without an existing corps fails the same
-		// validity gate; do not let the General flag alone invent a representative.
+		// `sub_13771` 先讀平行的軍團記錄（段內 `2240h`，64 B／筆、127 筆，
+		// docs/re/08 §4）的 `+0x00`。**出陣中但沒有對應軍團的君主過不了
+		// 同一道有效性閘**——不要只憑武將的出陣旗標就生出一個代表。
 		if lord >= len(w.Corps) || !w.Corps[lord].Alive {
 			return 0, false
 		}

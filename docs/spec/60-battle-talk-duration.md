@@ -58,9 +58,20 @@ mov cs:[bx-2CDEh], dx               ; bx ＝ 側 × 2 → word_1D322／word_1D32
 | 單元測試 | `TestBattleTalkDurationMatchesOriginal`（常數 ＝ 60，且與門強度條的 20 是兩個不同的值）、`TestBattleTalkSlotsAreIndexedBySide`、`TestBattleTalkSlotsExpireIndependently` |
 | 對原版 | 同一個局面的 `field` 在第 61 步 ＝ **0.84%**（[`../playtest/40`](../playtest/40-tactical-parity.md) §8）|
 
+## 3.5 開戰那一對台詞的 TALK 索引
+
+`sub_1A3C3` 在開戰時送**一對**台詞：第一句 `0x1BA`、第二句 `0x1BB`。
+兩者都是八格一組的組編號（索引 ≥ `0x196`，[`../formats/01`](../formats/01-talk-dat.md) §3），
+所以實際取到哪一則要看說話者的說話型。
+
+⚠ **「上格是攻方、下格是守方」只是強推論**——remake 照原版實錄影格上的
+位置接線（`cmd/wlgame/battletalk.go`），`sub_1A3C3` 的側別參數沒有逐行讀。
+與 §1 的「每側各一個框」不衝突：那一對是分別掛到兩側，不是同一側兩句。
+
 ## 4. 未解
 
 | 項目 | 現況 |
 |---|---|
+| 開戰 pair 的側別對應 | `0x1BA` → 上格、`0x1BB` → 下格是**強推論**（照影格位置接的）；`sub_1A3C3` 怎麼決定側別沒讀（§3.5）|
 | `byte_1D349` 的三個值 | `sub_1A69F` 拿它當「這句要不要顯示」的閘（`al & 6` 那一段還沒逐位讀）。0／1／2 三種值由 `sub_1A6FA` 切換 |
 | 玩家按鍵能不能提早關掉 | remake 可以按鍵推進；原版是否有這條路沒讀 |

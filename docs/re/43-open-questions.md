@@ -23,15 +23,15 @@
 | 程式碼理解 | 223 | 216 | 7 | 0 |
 | 驗收 | 58 | 48 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 155 | 145 | 10 | 0 |
-| **合計** | **530** | 498 | 31 | 1 |
+| 其他 | 156 | 146 | 10 | 0 |
+| **合計** | **531** | 499 | 31 | 1 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **5** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/re/` | 223 |
-| `docs/spec/` | 128 |
+| `docs/spec/` | 129 |
 | `docs/playtest/` | 58 |
 | `docs/mechanics/` | 42 |
 | `docs/formats/` | 35 |
@@ -440,7 +440,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（155 條）
+## 2.6 其他（156 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -572,6 +572,7 @@
 | [`spec/58-display-slot-depth-range.md`](../spec/58-display-slot-depth-range.md) | unit 0 的第二趟 | 深度迴圈跑完後，`dl & 0x20` 成立時對五個鄰格各跑一次 `ax = 0`。**remake 沒做**，而觸發條件還沒解 | 靜態 |
 | [`spec/59-battle-opening-orders.md`](../spec/59-battle-opening-orders.md) | 玩家側的開場常令 | 畫面上看起來是「站在陣形上」，但原版是哪一個命令碼（`Form` 還是 `Holding`）沒有直接證據 | 靜態 |
 | [`spec/59-battle-opening-orders.md`](../spec/59-battle-opening-orders.md) | 腳本節奏與原版的 tick 對應 | 第 40 步對上那一張截圖，但「原版的 40 個 tick 是多久」還沒對過（`34`） | 實測 |
+| [`spec/60-battle-talk-duration.md`](../spec/60-battle-talk-duration.md) | 開戰 pair 的側別對應 | `0x1BA` → 上格、`0x1BB` → 下格是**強推論**（照影格位置接的）；`sub_1A3C3` 怎麼決定側別沒讀（§3.5） | 靜態 |
 | [`spec/60-battle-talk-duration.md`](../spec/60-battle-talk-duration.md) | `byte_1D349` 的三個值 | `sub_1A69F` 拿它當「這句要不要顯示」的閘（`al & 6` 那一段還沒逐位讀）。0／1／2 三種值由 `sub_1A6FA` 切換 | 靜態 |
 | [`spec/60-battle-talk-duration.md`](../spec/60-battle-talk-duration.md) | 玩家按鍵能不能提早關掉 | remake 可以按鍵推進；原版是否有這條路沒讀 | 靜態 |
 | [`spec/61-soldier-initial-hp-from-morale.md`](../spec/61-soldier-initial-hp-from-morale.md) | `+0x18`（戰力）的算式 | `sub_19B6D` 由士氣、`ch` 與 `cs:[bx-63F1h]` 的每兵種係數算出來，還沒逐項拆；remake 目前直接用士氣 | 靜態 |

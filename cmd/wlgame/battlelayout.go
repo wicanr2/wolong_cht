@@ -173,9 +173,9 @@ func battleCommandLabelFits(label string, cellW int) bool {
 	return battleCommandTextWidth(label)+2*battleCommandMinPad <= cellW
 }
 
-// battleCommandTextWidth mirrors textdraw.RuneWidth without importing Ebiten's
-// Drawer into the geometry-only test. This is the same fixed DOS/V contract:
-// ASCII 8 px, CJK／全形 16 px。
+// battleCommandTextWidth 複製 `textdraw.RuneWidth` 的規則，
+// 好讓只驗幾何的測試不必把 Ebiten 的 Drawer 拉進來。
+// 契約與 DOS/V 一樣是固定的：ASCII 8 px、CJK／全形 16 px。
 func battleCommandTextWidth(s string) int {
 	w := 0
 	for _, ch := range s {

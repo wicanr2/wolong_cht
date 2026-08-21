@@ -494,9 +494,8 @@ func hasAvailableLauncherSlot(slots []launcherSlot) bool {
 	return false
 }
 
-// launcherNewGamePath deliberately ignores the existing overlay. A new game
-// must always be created from SINARIO.DAT; the overlay is only a LOAD DATA
-// source or a later write target.
+// launcherNewGamePath **刻意忽略既有的 overlay**：開新遊戲一律從
+// `SINARIO.DAT` 建，overlay 只是「讀取存檔」的來源或之後的寫入目標。
 func launcherNewGamePath(sourceFile, overlay string) string {
 	_ = overlay
 	return sourceFile

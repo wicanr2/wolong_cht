@@ -90,9 +90,9 @@ func TestLauncherSaveSlotsUseOneOverlayAndRejectEmptyBlocks(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	// Make only slot 1 look like a player save. The other three blocks remain
-	// the original empty-player data, so inspectLauncherSlots must still return
-	// exactly four logical slots from this one overlay file.
+	// 只把第 1 槽做成「玩家存過的」，另外三個區塊維持原版的空玩家資料——
+	// 所以 inspectLauncherSlots 必須從這**一個** overlay 檔裡
+	// 仍然回報**四個**邏輯槽位。
 	w.Player = 0
 	overlay := filepath.Join(t.TempDir(), "SAVE.DAT")
 	if err := w.SaveInto(sourcePath, overlay, 0); err != nil {

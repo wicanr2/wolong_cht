@@ -45,9 +45,9 @@ func RenderTacticalMinimap(tiles [][]byte, attributes []byte) TacticalMinimap {
 			}
 			attr := byte(0)
 			if int(tile) < len(attributes) {
-				// EGA set/reset consumes plane select bits 0–3. The upper
-				// bits are retained in the source table but do not become a
-				// palette index in sub_1C51E.
+				// EGA 的 set/reset 只吃平面選擇位元 0–3。
+				// 高位元在來源表裡留著，但 `sub_1C51E` 不會把它們
+				// 當成調色盤索引。
 				attr = attributes[tile] & 0x0f
 			}
 			x0 := mapY * 2
