@@ -23,20 +23,20 @@
 | 程式碼理解 | 175 | 168 | 7 | 0 |
 | 驗收 | 50 | 40 | 10 | 0 |
 | 外部資料 | 7 | 7 | 0 | 0 |
-| 其他 | 151 | 140 | 11 | 0 |
-| **合計** | **442** | 409 | 33 | 0 |
+| 其他 | 143 | 132 | 11 | 0 |
+| **合計** | **434** | 401 | 33 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/re/` | 175 |
-| `docs/spec/` | 124 |
+| `docs/spec/` | 118 |
 | `docs/playtest/` | 50 |
 | `docs/formats/` | 33 |
 | `docs/mechanics/` | 26 |
-| `docs/release/` | 13 |
 | `docs/mobile/` | 12 |
+| `docs/release/` | 11 |
 | `docs/reference/` | 7 |
 | `docs/promo/` | 2 |
 
@@ -356,7 +356,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（151 條）
+## 2.6 其他（143 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -377,9 +377,7 @@
 | [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | 目標 OS 實跑 | **做不到**：這台是 Linux，沒有 Mac／Windows。檔頭驗過（PE32+／Mach-O），但視窗、輸入、音訊、字型載入都沒有在目標系統上跑過 | 實測 |
 | [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | linux/arm64 的本體 | 要在 arm64 的 Linux 上建（Ebiten 的 cgo 沒有交叉工具鏈） | 靜態 |
 | [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | Windows 的 smoke | 同第一項 | 靜態 |
-| [`release/02-three-platform-20260820.md`](../release/02-three-platform-20260820.md) | Windows／macOS 的實機驗收 | 仍未做（M8 唯一的閘）。這一批只有 Linux 有 GUI smoke，另兩個平台只驗了檔頭 | 靜態 |
 | [`release/02-three-platform-20260820.md`](../release/02-three-platform-20260820.md) | `verification/` 的截圖不在管線裡 | `promote` 每次都會清掉，要另外跑 `tools/release_smoke.sh` 再 `release_all_fs.py refresh` | 實測 |
-| [`release/02-three-platform-20260820.md`](../release/02-three-platform-20260820.md) | Android 原型沒有重編 | 內容仍是 2026-08-11 那次（檔名已如實反映） | 靜態 |
 | [`release/03-three-platform-20260821.md`](../release/03-three-platform-20260821.md) | Windows／macOS 原生 GUI 實機驗收 | 沒有硬體，Docker 代不了 | 靜態 |
 | [`release/03-three-platform-20260821.md`](../release/03-three-platform-20260821.md) | Android 實機驗收 | 只有模擬器 | 靜態 |
 | [`release/03-three-platform-20260821.md`](../release/03-three-platform-20260821.md) | Android 正式簽章 | 還沒決定 keystore 怎麼保管 | 靜態 |
@@ -409,10 +407,8 @@
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 池的上限 | `sub_155EC` 的 `0xFFDC` 只在退兵路徑上驗過；月結加兵是不是同一支未查 | 靜態 |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 頭像的邊框 | `sub_107D2` 只 blit 64×64 的圖塊，**框在哪裡畫的沒找到**——場景 5 的 op 清單裡沒有頭像那一格的框 | 靜態 |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 兵種標籤 | 畫面用場景 5 的「主將」，規則層的 `army.Position` 第一個是「大將」（原版 TALK #62 也這樣說）。兩處用語不同是原版就有的，不要統一 | 靜態 |
-| [`spec/23-city-info-window.md`](../spec/23-city-info-window.md) | 進入方式 | 原版由地圖上點據點進來（`sub_11E46`），remake 走一覽表 | 靜態 |
-| [`spec/23-city-info-window.md`](../spec/23-city-info-window.md) | `cs:word_1987C` | 原版每次開視窗都重讀一次檔；remake 的 `library` 是整檔載入，不需要這一層 | 靜態 |
+| [`spec/23-city-info-window.md`](../spec/23-city-info-window.md) | `cs:word_1987C` 由誰配置 | 原版每次開視窗都重讀一次檔（`../re/50` §4）；remake 的 `library` 是整檔載入，不需要這一層 | 靜態 |
 | [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 指令流程與 remake 不同 | `sub_17FDB` 已解（`../re/45` §1：選據點 → 選「戰鬥指揮／委任／解體」→ 寫 `+0x00` 位元 2、`+0x0B`、`+0x20`）。**remake 的行軍指令走自己的流程（`M`），沒有那三個選項** | 靜態 |
-| [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 進入方式 | 原版也可以在地圖上直接點軍團（`sub_11E46`），remake 只有一覽表 | 靜態 |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 空槽標記 | 原版用名稱欄第一個字 `0xD0A1`；remake 用「載得起來且玩家勢力有效」判定，兩者不等價 | 靜態 |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 新遊戲共用 | remake 的啟動殼層是自己的畫面，還沒有換成這個四槽視窗 | 靜態 |
 | [`spec/26-yes-no-dialog.md`](../spec/26-yes-no-dialog.md) | 原版的使用者 | `sub_18DC8` 只有一個呼叫端 `sub_11AC3`（新遊戲流程），問題文字由那裡給，內容未讀 | 靜態 |
@@ -436,7 +432,6 @@
 | [`spec/31-tactical-sidebar.md`](../spec/31-tactical-sidebar.md) | 段 1 五塊美術的圖形語意 | 貼點與尺寸 confirmed，圖上畫什麼要另外解（`../formats/03` §5.3） | 靜態 |
 | [`spec/31-tactical-sidebar.md`](../spec/31-tactical-sidebar.md) | 城兵臨時軍團的主將名 | `0x4200` 的索引算式指到武將表全零那一筆（`../re/60` §4.1） | 靜態 |
 | [`spec/32-gate-strength-bar.md`](../spec/32-gate-strength-bar.md) | 右鍵提前收掉 | 原版是熱區 `0x1D` 的右鍵 handler（`../re/60` §10）；remake 沒有戰場區的右鍵熱區層 | 靜態 |
-| [`spec/32-gate-strength-bar.md`](../spec/32-gate-strength-bar.md) | 「門強度」這三個字對城壁也照用 | 原版不分城壁與門，都用同一個標籤。照抄 | 靜態 |
 | [`spec/33-squad-selection.md`](../spec/33-squad-selection.md) | 待機兵條的欄位語意 | `word_1D30A:+0x09 + 4k` 在 `../re/11` §3.9 記成「第 k 隊的待機兵數」；條的上限 76 遠小於一隊 100 兵，所以開局會頂在上限 | 靜態 |
 | [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 最高速在原版實機是多少 | 機器相依。DOSBox 固定 cycles 量得到「那台的上限」，量不到「原版的答案」 | 實測 |
 | [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 戰場幀是否等於 remake 的一次 `Step()` | 原版一幀做完整條戰場迴圈；remake 的 `Step()` 是規則層一步。**兩者對齊過但沒逐項比** | 靜態 |
@@ -447,7 +442,6 @@
 | [`spec/36-ground-planes-and-climbing.md`](../spec/36-ground-planes-and-climbing.md) | 爬升／下降的通行判定與原版不同 | `sub_1B15D`／`sub_1B186` 已解（`../re/36` §6.3：同一張地圖兩層各 `0x1000` B，`al & 0x7F` 有單位就擋，否則看地形值是否 ≥ `0xF8`）。**remake 用「目標平面有地面」代替，還沒照這條改** | 靜態 |
 | [`spec/37-tactical-player-controls.md`](../spec/37-tactical-player-controls.md) | 選了陣形之後原版有沒有立刻重排 | 機器碼只寫偏移，**沒有看到立刻移動的呼叫**；remake 照抄（等命令） | 靜態 |
 | [`spec/37-tactical-player-controls.md`](../spec/37-tactical-player-controls.md) | 陣形線在小地圖上的線寬與端點 | `sub_1C5AE` 沒逐行讀，remake 畫整條 1 px 的線 | 靜態 |
-| [`spec/37-tactical-player-controls.md`](../spec/37-tactical-player-controls.md) | 敵方陣形線要不要顯示 | 原版只畫側 0 那條（`word_1D33C`） | 靜態 |
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 滑塊的樣式 | 熱區與 `top` 的換算已解，但**畫滑塊的常式（`sub_18713` 的反向）沒讀**，remake 依比例自己畫 | 靜態 |
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 俘虜身分 | remake 的 `Posted` 是 bool，存不下 `+0x17` 的 0–5；俘虜狀態目前推不出來 | 靜態 |
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「看」與「選」的內容差異 | 原版兩種取法的**列表內容**不同（`../re/26` §4.2），remake 只統一了欄位 | 靜態 |
@@ -460,7 +454,6 @@
 | [`spec/43-rout-on-blocked-return.md`](../spec/43-rout-on-blocked-return.md) | `loc_1491B` 的其他成本項 | 只解出「非己方據點 ＋0xA6」，廣度優先搜尋本身沒逐條讀 | 靜態 |
 | [`spec/43-rout-on-blocked-return.md`](../spec/43-rout-on-blocked-return.md) | TALK #1F／#20／#23／#198 | remake 還沒把這四則接上 | 靜態 |
 | [`spec/44-advise-original-text.md`](../spec/44-advise-original-text.md) | 逐句節拍 | 原版每句要等玩家按鍵才往下走，remake 直接顯示最新一句（`45` §3.1） | 靜態 |
-| [`spec/44-advise-original-text.md`](../spec/44-advise-original-text.md) | 「這項進言沒有成立」 | remake 專屬的守門句：君主點頭之後規則層才發現條件變了。原版沒有這條路徑，所以沒有對應的原文 | 靜態 |
 | [`spec/45-advise-scene-layout.md`](../spec/45-advise-scene-layout.md) | 選單的反白樣式 | 原版怎麼畫游標列沒解，remake 用自己的反白條 | 靜態 |
 | [`spec/46-post-battle-retreat.md`](../spec/46-post-battle-retreat.md) | `loc_1491B` 的方向回傳 | `±4` 決定讀哪一個鄰接槽，remake 用 `Route` 的第 2 個節點取代，沒有逐條對過兩者選的是不是同一站 | 靜態 |
 | [`spec/46-post-battle-retreat.md`](../spec/46-post-battle-retreat.md) | 野外那一格的鄰接槽 | remake 的 `Node` 在行軍途中停在上一個據點，所以走的是「從上一個據點找路」，不是原版的「從野外那一格的鄰接槽挑」 | 靜態 |
@@ -490,7 +483,6 @@
 | [`spec/63-hit-stun.md`](../spec/63-hit-stun.md) | `+0x13` ← 8 | `sub_1B618` 寫、`sub_1B6BC` 不寫。那個欄位誰讀還沒查 | 靜態 |
 | [`spec/63-hit-stun.md`](../spec/63-hit-stun.md) | 倒地動畫（§1.2） | 4 幀之後 `sub_1B4B8` 收掉，remake 直接把 `Alive` 設成 false | 靜態 |
 | [`spec/64-capital-relocation-report.md`](../spec/64-capital-relocation-report.md) | `sub_15E60` | 玩家那條路在說完之後多呼叫一支，還沒讀 | 靜態 |
-| [`spec/64-capital-relocation-report.md`](../spec/64-capital-relocation-report.md) | 首都被打下來的被動遷都 | 走 `sub_14DF0`／訊息 30，與這一支不同路（`internal/state/corps.go` 的 `Relocated`） | 靜態 |
 | [`spec/65-retreated-soldiers-survive.md`](../spec/65-retreated-soldiers-survive.md) | `sub_19F2C` 打完那一次數的是什麼 | `../re/11` §3.9 記成「打完時數」；是不是把還站在場上的補進存活數，還沒逐行讀 | 靜態 |
 | [`spec/65-retreated-soldiers-survive.md`](../spec/65-retreated-soldiers-survive.md) | 隊長離場時清掉待機數 | remake 的 `squadLeaderGone` 這樣做（`docs/re/11` §5.9），原版是否也把那些待機兵算掉還沒對 | 靜態 |
 | [`spec/66-broken-walls-repaint.md`](../spec/66-broken-walls-repaint.md) | 縮小地圖要不要跟著換 | 側欄的縮圖也是從同一個緩衝區來的，但重畫時機還沒讀。這一版只換戰場本身 | 靜態 |

@@ -64,10 +64,16 @@ Android 觸控原型是**實驗性附件**，不計入三平台完整發行。
 順帶把兩個建置容器改用共用的 `wl-gobuild` 快取（原本每次 `/tmp/gocache` 冷啟動），
 第二次重跑從十幾分鐘降到約一分半。
 
-## 5. 未解
+## 5. 這一批當時的未解
+
+> **這一批已被 [`03`](03-three-platform-20260821.md) 取代**，現行的閘看那一份。
+> 當時列的三條裡兩條已經不算在這裡：「Android 原型沒有重編」在 `20260821`
+> 那一批**已經解掉**（APK 由同一輪原始碼建出）；「Windows／macOS 實機驗收」
+> 仍然成立但登記在 [`03`](03-three-platform-20260821.md) 與
+> [`README-RELEASE`](README-RELEASE.md)，不在這裡重複數一次。
 
 | 項目 | 現況 |
 |---|---|
-| Windows／macOS 的實機驗收 | 仍未做（M8 唯一的閘）。這一批只有 Linux 有 GUI smoke，另兩個平台只驗了檔頭 |
 | `verification/` 的截圖不在管線裡 | `promote` 每次都會清掉，要另外跑 `tools/release_smoke.sh` 再 `release_all_fs.py refresh` |
-| Android 原型沒有重編 | 內容仍是 2026-08-11 那次（檔名已如實反映）|
+| ~~Windows／macOS 的實機驗收~~ | 見 [`03`](03-three-platform-20260821.md) |
+| ~~Android 原型沒有重編~~ | 內容是 2026-08-11 那次（檔名已如實反映）|
