@@ -1,15 +1,16 @@
 # 12 — 主畫面的視窗外框、指令列與右欄
 
-**狀態：READY。主畫面的四個常駐視窗矩形、指令列版面與縮小地圖／勢力篩選鈕的
+**狀態：CONFORMED。主畫面的四個常駐視窗矩形、指令列版面與縮小地圖／勢力篩選鈕的
 位置全部由機器碼定死（[`docs/re/47`](../re/47-main-screen-window-registry.md)），
 不再有「從影片量的」版面常數。外框的圖塊來源與貼法也已解出（`ICONGRF` 段 3）。
 各視窗內部的靜態排版也解出來了——那是一份顯示清單
-（[`docs/re/48`](../re/48-window-display-list.md)），不是估值。**
+（[`docs/re/48`](../re/48-window-display-list.md)），不是估值。
+畫面已與原版逐像素對過（§6）。**
 
-- 日期：2026-08-15
+- 日期：2026-08-15（對拍結果 2026-08-17）
 - 出處：[`docs/re/47`](../re/47-main-screen-window-registry.md)（`sub_18755`／`sub_1E3D7`／`sub_1895D`／`sub_11BE0`）、
   [`docs/re/46`](../re/46-strategy-chrome-cell-layer.md)（框線圖塊）
-- 推論等級：**矩形與呼叫鏈 confirmed（靜態）**；原版執行期畫面**未對拍**
+- 推論等級：**矩形與呼叫鏈 confirmed（靜態）**；原版執行期畫面**逐像素對過**
 
 ## 1. 主畫面是「橫幅 ＋ 四個可開關的常駐視窗 ＋ 大地圖」
 
@@ -120,7 +121,9 @@ blit 走 sub_1F9B0 → EGA Set/Reset → VRAM 0A0C8h
 | 外框 | `internal/ui/chrome` | 照原版素材貼段 3 的三塊圖塊，順序與 `sub_10C77` 一致 |
 | 版面常數 | 同上檔案的 `const` 區 | **已全部改成 §1–§3 的原版值** |
 | 資源圖示 | `library.DOSVResourceIcon` | **用原版素材**（段 3 `0x1BA0` 起四張）|
-| 自繪的部分 | 勢力色標（`vector.DrawFilledRect` ＋ 硬寫 RGBA）、底色 fill | 原版怎麼畫未讀 |
+| 顏色 | `g.paletteInk(索引, fallback)` | 一律查 `GAMEPAL.BRG`，硬寫的 RGBA 只是缺素材時的 fallback（[`54`](54-ui-colours-from-palette.md)）|
+| 信賴度量條 | `drawStrategyInfo` | 槽 176×10（顯示清單 op 03）＋ 條高 2 px，長度照原版的 `(信賴度×100 + 0x9F) ÷ 0xA0`（`sub_10AAA`／`sub_15F27`）|
+| 縮小地圖的據點標記 | `drawMinimapMarkers` | 4×4 外框 ＋ 中心 2×2，四組顏色照 `sub_15CE0` 的位元組對（[`35`](35-strategy-minimap.md)）|
 
 ## 6. 驗證
 
@@ -128,13 +131,10 @@ blit 走 sub_1F9B0 → EGA Set/Reset → VRAM 0A0C8h
 |---|---|
 | 單元測試 | `cmd/wlgame/strategyhud_test.go` 把 §1–§3 的矩形釘成常數契約 |
 | 對原版靜態 | 三條算術檢查：右欄三段和 ＝ 400、字串尾端 424 < 432、熱區上下限與 `sub_161CA` 一致 |
-| 對原版執行期 | 邊線位置對過（[`docs/playtest/24`](../playtest/24-window-toggles.md) §2）；**逐像素沒比**——參考幀是壓縮過的影片，而模擬器上主畫面收不到點擊 |
+| 對原版執行期 ✅ | 開局五區逐像素相同（[`docs/playtest/37`](../playtest/37-main-screen-parity.md)）；三個視窗開著時命令列、自勢力情報、縮小地圖三區逐像素相同（[`38`](../playtest/38-window-parity.md)）；系統選單開著時選單本身 ＋ 四區逐像素相同（[`39`](../playtest/39-system-window-parity.md)）|
 
 ## 7. 未解
 
 | 項目 | 現況 |
 |---|---|
-| 信賴度的呈現 | 原版是量條，remake 是數字。改成量條之前要先確定顏色與底圖，否則會畫出一條沒有背景的裸色塊 |
-| 勢力色標 | 原版怎麼畫未讀（`sub_15CE0` 是小地圖的四色點，不是這一列）|
-| opcode `06` 與其他 10 個場景 | 顯示清單解得開但只讀了場景 0（[`docs/re/48`](../re/48-window-display-list.md) §5）|
 | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝命令、`0x0Bh`／`0x10h`／`0x15h`／`0x1Fh` 各自出現在哪個視窗已知，完整值域未列 |

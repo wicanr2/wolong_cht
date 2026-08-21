@@ -161,7 +161,7 @@
 | [`docs/spec/00-index.md`](spec/00-index.md) | 00 — 規格索引：已解的規則有沒有被實作、有沒有被驗過 | 索引。規格是 docs/re/（程式碼在哪）與 internal/（我們寫了什麼） 之間的那一層——它回答「這條規則… | 2026-08-14 |
 | [`docs/spec/10-city-tick.md`](spec/10-city-tick.md) | 10 — 據點整備、威脅偵測與求援 | CONFORMED。整條鏈已實作，並在 PC-98 原版的執行期記憶體上取樣驗過 （+0x18／+0x14 各 0/… | 2026-08-14 |
 | [`docs/spec/11-ai-sortie.md`](spec/11-ai-sortie.md) | 11 — 進言「請求君主出陣」 | CONFORMED。 | 2026-08-14 |
-| [`docs/spec/12-strategy-chrome.md`](spec/12-strategy-chrome.md) | 12 — 主畫面的視窗外框、指令列與右欄 | READY。主畫面的四個常駐視窗矩形、指令列版面與縮小地圖／勢力篩選鈕的 位置全部由機器碼定死（[docs/re/4… | 2026-08-15 |
+| [`docs/spec/12-strategy-chrome.md`](spec/12-strategy-chrome.md) | 12 — 主畫面的視窗外框、指令列與右欄 | CONFORMED。主畫面的四個常駐視窗矩形、指令列版面與縮小地圖／勢力篩選鈕的 位置全部由機器碼定死（[docs/… | 2026-08-15 |
 | [`docs/spec/13-main-window-toggles.md`](spec/13-main-window-toggles.md) | 13 — 主畫面四個視窗的開關 | CONFORMED。已實作並留下四窗全開／全關的截圖； 舊的 g.open[] 那一套已整個拿掉，主畫面視窗只剩一份… | 2026-08-15 |
 | [`docs/spec/14-finance-window.md`](spec/14-finance-window.md) | 14 — 財政視窗 | CONFORMED。版面已照原版重寫並有契約測試； 數值輸入器與「收入」的來源仍缺（§5）。 | 2026-08-15 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
@@ -195,7 +195,7 @@
 | [`docs/spec/48-governor-returns-on-city-fall.md`](spec/48-governor-returns-on-city-fall.md) | 48 — 據點被攻陷，派駐的內政官被遣回 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/49-advise-relocate-and-sortie.md`](spec/49-advise-relocate-and-sortie.md) | 49 — 進言的第四、五項：遷都與請求君主出陣 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/50-corps-upkeep-charges-funds.md`](spec/50-corps-upkeep-charges-funds.md) | 50 — 軍費直接扣資金，不進「本月支出」 | CONFORMED。 | 2026-08-17 |
-| [`docs/spec/51-vga-dac-palette-scale.md`](spec/51-vga-dac-palette-scale.md) | 51 — DOS/V 的顏色到不了滿刻度：4 bit → VGA 6 bit DAC → 8 bit | READY。 | 2026-08-17 |
+| [`docs/spec/51-vga-dac-palette-scale.md`](spec/51-vga-dac-palette-scale.md) | 51 — DOS/V 的顏色到不了滿刻度：4 bit → VGA 6 bit DAC → 8 bit | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/52-main-screen-camera-and-banner-date.md`](spec/52-main-screen-camera-and-banner-date.md) | 52 — 開局的鏡頭位置與橫幅日期 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/53-city-tile-by-ownership.md`](spec/53-city-tile-by-ownership.md) | 53 — 據點中心的圖塊跟著歸屬換，首都再疊一張 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/54-ui-colours-from-palette.md`](spec/54-ui-colours-from-palette.md) | 54 — 介面顏色一律查調色盤，命令列的底是黑的 | CONFORMED。 | 2026-08-17 |
@@ -217,11 +217,11 @@
 | [`docs/spec/70-phone-chrome.md`](spec/70-phone-chrome.md) | 70 — 手機版的按鈕與面板用原版的底色與外框 | CONFORMED。 | 2026-08-21 |
 | [`docs/spec/71-promo-live-capture.md`](spec/71-promo-live-capture.md) | 71 — 桌面版的逐幀錄製（推廣片的動態素材） | CONFORMED。 | 2026-08-21 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | CONFORMED。管線接起來了，也對原版跑過一輪 （[../playtest/37](../playtest/37… | 2026-08-15 |
-| [`docs/spec/91-tactical-parity.md`](spec/91-tactical-parity.md) | 91 — 戰場的逐區對拍：分區、同狀態怎麼達成 | DRAFT。分區與判定沿用 docs/spec/90，差別在 | 2026-08-17 |
+| [`docs/spec/91-tactical-parity.md`](spec/91-tactical-parity.md) | 91 — 戰場的逐區對拍：分區、同狀態怎麼達成 | CONFORMED。 | 2026-08-17 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 151 條。**要查「這件事解了沒」先看這裡**，
+共 149 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（77 條）
@@ -306,12 +306,6 @@
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x1E | `docs/re/08-hourly-update.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x20 | `docs/re/08-hourly-update.md` |
 
-### READY（1 條）
-
-| 鍵 | 出處 |
-|---|---|
-| 索引 ▸ 顏色到不了滿刻度（6 bit DAC） | `docs/spec/00-index.md` |
-
 ### 強證據（26 條）
 
 | 鍵 | 出處 |
@@ -364,7 +358,7 @@
 |---|---|
 | 2.1 執行結構（已驗證） ▸ YNSOUND.COM | `docs/reference/04-first-survey.md` |
 
-### 未解（36 條）
+### 未解（35 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -397,7 +391,6 @@
 | 4. 數字字模在 ICONGRF 段 3 裡 ▸ +0x06C0 | `docs/spec/52-main-screen-camera-and-banner-date.md` |
 | 4. 數字字模在 ICONGRF 段 3 裡 ▸ +0x08F0 | `docs/spec/52-main-screen-camera-and-banner-date.md` |
 | 檔案 ▸ 40-economy.md | `docs/mechanics/00-index.md` |
-| 索引 ▸ 一覽表的欄位與版面 | `docs/spec/00-index.md` |
 | 索引 ▸ 事件場景上誰在說話 | `docs/spec/00-index.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x08 | `docs/re/08-hourly-update.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x0C | `docs/re/08-hourly-update.md` |

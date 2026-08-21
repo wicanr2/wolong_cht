@@ -326,6 +326,35 @@ def check(docs):
                     f"{rel(d.path)}：狀態行說 `{t}` 未解，"
                     f"但 {'、'.join(closed[t])} 說它已經好了")
 
+    # ⑦ `docs/spec/00-index.md` 的狀態欄不能與規格自己的狀態行相反。
+    #
+    # 那一欄是散文，所以 ② 的「狀態行與內文矛盾」完全看不到它——
+    # ② 比的是同一份文件內部，這裡矛盾的是兩份文件。
+    # 實際踩過（2026-08-21 稽核，`CONTEXT.md` §6.1）：索引把 `29-audio` 記成
+    # 「**DRAFT**：播放層未做」而那份規格是 CONFORMED、音效整條接通；
+    # `51-vga-dac` 記成「**READY**，尚未全面套用」而換算早就在 `toSRGB` 裡。
+    #
+    # ⚠ **只擋得到狀態碼那一種。** 散文形式的但書（「捲軸未解」「頭像與滑鼠未接」）
+    # 沒有可比的 token，那八列還是要靠人逐列對 code。
+    # **擋一半不是白做**——狀態碼相反是最誤導的一種，它會讓人以為整份規格不能用。
+    spec_dir = os.path.join(DOCS, "spec")
+    spec_index = os.path.join(spec_dir, "00-index.md")
+    if os.path.exists(spec_index):
+        own = {}
+        for d in docs:
+            if os.path.dirname(d.path) != spec_dir:
+                continue
+            m = re.match(r"([A-Z]{4,})", d.raw_status.replace("狀態：", ""))
+            if m:
+                own[os.path.basename(d.path)] = m.group(1)
+        row = re.compile(r"\[`([0-9]+[^`]*\.md)`\]\([^)]*\)\s*\|([^|]*)\|")
+        for name, cell in row.findall(open(spec_index, encoding="utf-8").read()):
+            said = set(re.findall(r"(DRAFT|READY|CONFORMED)", cell))
+            if said and name in own and own[name] not in said:
+                problems.append(
+                    f"docs/spec/00-index.md：那一列把 `{name}` 記成 "
+                    f"{'／'.join(sorted(said))}，但它自己的狀態行是 {own[name]}")
+
     # ④ 相對連結指得到檔案。
     for d in docs:
         for target in LINK_RE.findall(d.text):

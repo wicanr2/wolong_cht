@@ -1,9 +1,11 @@
 # 91 — 戰場的逐區對拍：分區、同狀態怎麼達成
 
-**狀態：DRAFT。分區與判定沿用 `docs/spec/90`，差別在**同狀態怎麼湊**——
-戰略層開局就天然同狀態，戰場沒有這種好事。**
+**狀態：CONFORMED。** 分區與判定沿用 `docs/spec/90`，差別在**同狀態怎麼湊**——
+戰略層開局就天然同狀態，戰場沒有這種好事。九區的對拍已經跑過並可重跑，
+結果在 [`../playtest/40`](../playtest/40-tactical-parity.md)：**六區逐像素相同**，
+`field` 0.17%。
 
-- 日期：2026-08-17
+- 日期：2026-08-17（對拍結果 2026-08-18）
 - 出處：[`31`](31-tactical-sidebar.md) §2.1（側欄 x 480、七條橫帶）、
   [`33`](33-squad-selection.md) §1.1（底列六格 × 80 px ＝ 480）、
   [`../playtest/20`](../playtest/20-tactical-layout-parity.md)（戰場／側欄分界 x=480）
@@ -12,9 +14,11 @@
 ## 1. 這份規格要解決什麼
 
 戰略層的主畫面已經逐像素對完（[`../playtest/37`](../playtest/37-main-screen-parity.md)、
-[`39`](../playtest/39-system-window-parity.md)）。戰場這一層目前**一次都沒有
-對過同一場**——[`../playtest/20`](../playtest/20-tactical-layout-parity.md) 是拿
+[`39`](../playtest/39-system-window-parity.md)）。戰場這一層要的是同一件事，
+但難處不同：[`../playtest/20`](../playtest/20-tactical-layout-parity.md) 是拿
 不同戰況的錄影幀量幾何，只能證明版面骨架，證明不了畫得對。
+**要證明畫得對，兩邊得站在同一個局面上**——這一份規定分區怎麼切、
+同狀態怎麼湊。
 
 ## 2. 分區
 
@@ -47,29 +51,29 @@
 |---|---|
 | 原版要**玩到**開戰 | 全程滑鼠腳本：編成 → 選武將 → 確定 → 軍團 → 行軍指示 → 選軍團 → 選目的地。**`sub_1716D`（選軍團）是清單視窗不是地圖點選**（[`../re/22`](../re/22-strategy-command-tree.md) §3.3），所以整條路徑都在 ×1.2 的選單座標系裡，只有指令列那兩下要用地圖模式的 ÷9.6 |
 | 開戰之後畫面**每幀都在動** | 戰術速度調到最慢；原版側的截圖時機以「剛進戰場」為準——那一刻雙方還在初始佈陣 |
-| 兩邊的**部隊組成**要一樣 | remake 用 `-open-siege -siege-node N` 指定同一座城；兵力組成先不強求，`field` 區的差異先當狀態差記著（同 `../playtest/38` 的天候物件）|
+| 兩邊的**部隊組成**要一樣 | `-siege-corps` 直接拿存檔裡現成的兩支軍團開戰，兵種、人數、主將都照存檔（[`90`](90-same-state-parity.md) §2.3）。攻守由參數指定，不看 `-siege-defend` |
 
 **先求靜態層**：`sb-formation`／`sb-command`／`sb-arrow`／`bottom` 四區
-不吃戰況，是這一輪的第一個可驗收目標。
+不吃戰況，是最先能驗收的一組。
 
 ## 4. remake 實作
 
 | 項目 | 位置 |
 |---|---|
 | 分區 | `tools/parity_diff.py --regions tactical`（預設 `strategy` ＝ `90` §3 那五區）|
-| remake 側截圖 | `tools/parity_shot.sh out.png -direct -open-siege -siege-node N -shot-frames 1` |
+| remake 側截圖 | `tools/parity_shot.sh out.png -direct -open-siege -siege-node N -shot-frames 1`；要對部隊組成再加 `-siege-corps` |
 | 原版側截圖 | `tools/dosv_capture.sh <目錄> "<timeline>"` → `tools/parity_crop.py` |
 
 ## 5. 驗證
 
 | 方式 | 內容 |
 |---|---|
-| 自我檢查 | `--selftest` 同時跑兩組分區：同圖每區 0、平移 1 px 每區非 0 |
-| 對原版 | 記錄在 `docs/playtest/`（本輪的紀錄見該目錄最新一份）|
+| 自我檢查 | `--selftest` 同時跑兩組分區：同圖每區 0、平移 1 px 每區非 0（在 `tools/check.sh` 裡）|
+| 對原版 ✅ | [`../playtest/40`](../playtest/40-tactical-parity.md)：九區裡**六區逐像素相同**，`field` 0.17%、小地圖 8 px、對方將旗 44 px |
 
 ## 6. 未解
 
 | 項目 | 現況 |
 |---|---|
-| 部隊組成要不要對 | 先不對。要對就得讓兩邊用同一份編成，代價是再解一輪初始佈陣 |
-| 動畫幀序 | 原版的兵有 `PoseStep`，截圖時機差一幀就整批不同 |
+| 動畫幀序 | 原版的兵有 `PoseStep`，截圖時機差一幀就整批不同。這是 `field` 剩下那 299 px 的來源之一（[`../playtest/40`](../playtest/40-tactical-parity.md) §13）|
+| 野戰的戰場 | 沒對過。野戰的地形是從大地圖即時長出來的，同狀態比攻城更難湊 |

@@ -57,26 +57,26 @@
 | 主題 | 規格 | 狀態 |
 |---|---|---|
 | 據點整備、威脅偵測與求援（`sub_13EFD` 鏈）| [`10-city-tick.md`](10-city-tick.md) | 已實作並對原版取樣驗過 |
-| 進言「請求君主出陣」（`sub_1699E`）| [`11-ai-sortie.md`](11-ai-sortie.md) | 可實作，**尚未實作** |
-| 主畫面的視窗外框與指令列 | [`12-strategy-chrome.md`](12-strategy-chrome.md) | 版面常數全部改用機器碼值；各視窗**內部**排版仍有估值 |
-| 主畫面四個視窗的開關 | [`13-main-window-toggles.md`](13-main-window-toggles.md) | 已實作並留下截圖；原版執行期未驗 |
+| 進言「請求君主出陣」（`sub_1699E`）| [`11-ai-sortie.md`](11-ai-sortie.md) | 已實作並有單測；兩道閘都從機器碼讀出來 |
+| 主畫面的視窗外框與指令列 | [`12-strategy-chrome.md`](12-strategy-chrome.md) | 版面與各視窗內部排版都照機器碼；主畫面五區逐像素對過 |
+| 主畫面四個視窗的開關 | [`13-main-window-toggles.md`](13-main-window-toggles.md) | 已實作；主畫面逐像素對過。原版執行期的**開關行為**仍未驗 |
 | 編成時預備兵怎麼分配（`sub_14698`）| [`21-corps-formation-reserves.md`](21-corps-formation-reserves.md) | 已實作並有逐項單測 |
 | 財政視窗 | [`14-finance-window.md`](14-finance-window.md) | 版面已照原版重寫；數值輸入器未接 |
-| 軍團編成視窗 | [`22-corps-formation-window.md`](22-corps-formation-window.md) | 版面已照原版重寫；頭像與滑鼠未接 |
+| 軍團編成視窗 | [`22-corps-formation-window.md`](22-corps-formation-window.md) | 版面、武將頭像與六個槽的滑鼠熱區都照原版 |
 | 據點情報視窗 | [`23-city-info-window.md`](23-city-info-window.md) | 版面已照原版實作 |
 | 軍團情報視窗 | [`24-corps-info-window.md`](24-corps-info-window.md) | 版面已照原版實作；指令流程未接 |
 | 四槽選擇視窗 | [`25-slot-select-window.md`](25-slot-select-window.md) | 讀取／儲存已照原版；新遊戲未共用 |
 | ＹＥＳ／ＮＯ 對話框 | [`26-yes-no-dialog.md`](26-yes-no-dialog.md) | 版面與命中算式已照原版 |
 | 君主選擇視窗 | [`27-lord-select-window.md`](27-lord-select-window.md) | 版面已照原版；「自定」未接 |
 | 劇本 JSON | [`28-scenario-json.md`](28-scenario-json.md) | 匯出／匯入／round-trip 已可用（`cmd/wlscen`）|
-| 音樂與音效 | [`29-audio.md`](29-audio.md) | **DRAFT**：錄音鏈路已驗，逐曲觸發缺 RE，播放層未做 |
+| 音樂與音效 | [`29-audio.md`](29-audio.md) | 已實作；場景對應已解（`docs/re/58`），音色的諧波結構未量化比對 |
 | remake 原生存檔格式 | [`20-save-format.md`](20-save-format.md) | 已接進遊戲並驗過；**只差放回 DOSBox 實測** |
 | 戰術側欄的內容組成 | [`31-tactical-sidebar.md`](31-tactical-sidebar.md) | 七格已照原版實作；`▶▶` 列只畫美術不接行為 |
 | 攻城的「門強度」條 | [`32-gate-strength-bar.md`](32-gate-strength-bar.md) | 已實作並有單測；右鍵提前收掉未接 |
-| 底列六格是選部隊 | [`33-squad-selection.md`](33-squad-selection.md) | 已實作並有單測；命令圖示的來源段未定案 |
-| 一覽表的欄位與版面 | [`38-list-windows.md`](38-list-windows.md) | 四個家族照原版重做；捲軸未解 |
+| 底列六格是選部隊 | [`33-squad-selection.md`](33-squad-selection.md) | 已實作並有單測；六張命令圖示照 `ICONGRF` 段 3 的 `碼 × 0xC0` |
+| 一覽表的欄位與版面 | [`38-list-windows.md`](38-list-windows.md) | 四個家族、捲軸的四個熱區與欄寬定義都照原版 |
 | 戰術畫面的玩家操作 | [`37-tactical-player-controls.md`](37-tactical-player-controls.md) | 陣形選單與陣形線已接；說明書 4.2–4.6 的功能逐條對照過 |
-| 兩個平面的地面圖與登城 | [`36-ground-planes-and-climbing.md`](36-ground-planes-and-climbing.md) | 已實作並有單測；攻城仍打不下來，卡點換成攻方不前進 |
+| 兩個平面的地面圖與登城 | [`36-ground-planes-and-climbing.md`](36-ground-planes-and-climbing.md) | 已實作並有單測，拿三張原版攻城圖對過數字 |
 | 縮小地圖的據點標記 | [`35-strategy-minimap.md`](35-strategy-minimap.md) | 已實作並有單測；22 勢力的選擇視窗用「點一下換下一個」代替 |
 | 兩個速度設定的五檔 | [`34-speed-steps.md`](34-speed-steps.md) | 已實作並有單測；「最高速」的上限是 remake 差異 |
 | 行軍指示的三選一 | [`39-march-order-menu.md`](39-march-order-menu.md) | 已接進畫面並有單測 |
@@ -91,8 +91,8 @@
 | 據點被攻陷時內政官被遣回 | [`48-governor-returns-on-city-fall.md`](48-governor-returns-on-city-fall.md) | 已實作並有單測，兩則訊息也接了 |
 | 進言第四、五項（遷都／請求出陣）| [`49-advise-relocate-and-sortie.md`](49-advise-relocate-and-sortie.md) | 已接進畫面並留下截圖 |
 | 軍費直接扣資金 | [`50-corps-upkeep-charges-funds.md`](50-corps-upkeep-charges-funds.md) | 已改正並有單測；長跑數字跟著變 |
-| 結局：存活勢力數歸一 | [`30-victory.md`](30-victory.md) | 判定已實作並驗過；**結局的過場與訊息未做** |
-| 顏色到不了滿刻度（6 bit DAC）| [`51-vga-dac-palette-scale.md`](51-vga-dac-palette-scale.md) | **READY**，尚未全面套用 |
+| 結局：存活勢力數歸一 | [`30-victory.md`](30-victory.md) | 判定與兩則結局訊息已實作並驗過；結局的過場見 [`67`](67-ending-playback.md) |
+| 顏色到不了滿刻度（6 bit DAC）| [`51-vga-dac-palette-scale.md`](51-vga-dac-palette-scale.md) | 已全面套用（介面顏色一律查調色盤）；主畫面逐像素對過 |
 | 開局鏡頭與橫幅日期 | [`52-main-screen-camera-and-banner-date.md`](52-main-screen-camera-and-banner-date.md) | 已實作，主畫面逐像素對過 |
 | 據點圖塊跟著歸屬換 | [`53-city-tile-by-ownership.md`](53-city-tile-by-ownership.md) | 已實作，主畫面逐像素對過 |
 | 介面顏色一律查調色盤 | [`54-ui-colours-from-palette.md`](54-ui-colours-from-palette.md) | 已實作 |

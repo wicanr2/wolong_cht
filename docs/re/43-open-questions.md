@@ -23,15 +23,15 @@
 | 程式碼理解 | 230 | 223 | 7 | 0 |
 | 驗收 | 69 | 59 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 168 | 157 | 11 | 0 |
-| **合計** | **570** | 537 | 32 | 1 |
+| 其他 | 160 | 150 | 10 | 0 |
+| **合計** | **562** | 530 | 31 | 1 |
 
-⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **9** 列（另有少數只是提到「未解」兩個字的圖例列）。
+⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **5** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/re/` | 230 |
-| `docs/spec/` | 136 |
+| `docs/spec/` | 128 |
 | `docs/playtest/` | 69 |
 | `docs/mechanics/` | 46 |
 | `docs/formats/` | 40 |
@@ -467,7 +467,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（168 條）
+## 2.6 其他（160 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -504,20 +504,13 @@
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 正式簽章 | 出的是 debug 簽章，keystore 怎麼保管還沒決定 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | 16 KB page size 裝置 | `.so` 的 LOAD 段已是 `0x4000`，但沒有那種裝置或 AVD 實際載過 | 靜態 |
 | [`spec/00-index.md`](../spec/00-index.md) | **推論等級** | confirmed／強證據／假說／未知（`CLAUDE.md` §9）。假說也可以實作，但要標 | 靜態 |
-| [`spec/00-index.md`](../spec/00-index.md) | 進言「請求君主出陣」（`sub_1699E`） | `11-ai-sortie.md` / 可實作，**尚未實作** | 靜態 |
-| [`spec/00-index.md`](../spec/00-index.md) | 主畫面四個視窗的開關 | `13-main-window-toggles.md` / 已實作並留下截圖；原版執行期未驗 | 實測 |
-| [`spec/00-index.md`](../spec/00-index.md) | 底列六格是選部隊 | `33-squad-selection.md` / 已實作並有單測；命令圖示的來源段未定案 | 靜態 |
-| [`spec/00-index.md`](../spec/00-index.md) | 一覽表的欄位與版面 | `38-list-windows.md` / 四個家族照原版重做；捲軸未解 | 靜態 |
+| [`spec/00-index.md`](../spec/00-index.md) | 主畫面四個視窗的開關 | `13-main-window-toggles.md` / 已實作；主畫面逐像素對過。原版執行期的**開關行為**仍未驗 | 靜態 |
 | [`spec/00-index.md`](../spec/00-index.md) | 事件場景上誰在說話 | `42-event-scene-speakers.md` / 兩個框已實作；結果階段的上框未解 | 靜態 |
-| [`spec/00-index.md`](../spec/00-index.md) | 顏色到不了滿刻度（6 bit DAC） | `51-vga-dac-palette-scale.md` / **READY**，尚未全面套用 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | `sub_14194`／`sub_14269` | 內政與災害 marker 的細節在別的規格（`docs/mechanics/40`），本規格只保證呼叫順序 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 據點換手之後 `+0x00` 低 4 位會不會跟著變 | `sub_1890A` 靜態讀過，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 玩家據點求援的喇叭聲（`sub_10CDE`） | 呈現層未接 | 靜態 |
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | `資金高位 >= 0x80` 那一支 | `cmp bh, 80h / jnb` 會直接算「答應」，等於資金超過約 840 萬時門檻失效。**看起來像有號數的邊界處理**，未逐位對過 | 靜態 |
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | 君主出陣之後的行為 | 那支軍團跟一般軍團有沒有差別，未讀 | 靜態 |
-| [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 信賴度的呈現 | 原版是量條，remake 是數字。改成量條之前要先確定顏色與底圖，否則會畫出一條沒有背景的裸色塊 | 靜態 |
-| [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 勢力色標 | 原版怎麼畫未讀（`sub_15CE0` 是小地圖的四色點，不是這一列） | 靜態 |
-| [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | opcode `06` 與其他 10 個場景 | 顯示清單解得開但只讀了場景 0（`docs/re/48` §5） | 靜態 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝命令、`0x0Bh`／`0x10h`／`0x15h`／`0x1Fh` 各自出現在哪個視窗已知，完整值域未列 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 |
@@ -567,8 +560,7 @@
 | [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 最高速在原版實機是多少 | 機器相依。DOSBox 固定 cycles 量得到「那台的上限」，量不到「原版的答案」 | 實測 |
 | [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 戰場幀是否等於 remake 的一次 `Step()` | 原版一幀做完整條戰場迴圈；remake 的 `Step()` 是規則層一步。**兩者對齊過但沒逐項比** | 靜態 |
 | [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 音效驅動不在時的行為 | `../re/61` §6 | 靜態 |
-| [`spec/35-strategy-minimap.md`](../spec/35-strategy-minimap.md) | 視野框的美術 | 原版是 `word_10D4C` 的圖，尺寸沒從程式碼讀到（`../re/62` §5） | 靜態 |
-| [`spec/35-strategy-minimap.md`](../spec/35-strategy-minimap.md) | 點地圖區（熱區 `0x16`） | 原版做什麼沒讀 | 靜態 |
+| [`spec/35-strategy-minimap.md`](../spec/35-strategy-minimap.md) | 點地圖區（熱區 `0x16`） | 原版做什麼沒讀（`../re/62` §5） | 靜態 |
 | [`spec/36-ground-planes-and-climbing.md`](../spec/36-ground-planes-and-climbing.md) | 攻方大多數不前進 | `../playtest/30` §3。目標選擇的問題，與地形無關 | 靜態 |
 | [`spec/36-ground-planes-and-climbing.md`](../spec/36-ground-planes-and-climbing.md) | 打壞城壁之後不重算地面表 | 原版不重算，而且**不影響結果**：城壁的地面層本來就是拿打壞後的圖塊算的。remake 為了合成戰場仍會重算，在真實資料上是恆等變換 | 靜態 |
 | [`spec/36-ground-planes-and-climbing.md`](../spec/36-ground-planes-and-climbing.md) | 命令 6 為什麼擋高平面橫移 | 命令碼 6 是什麼沒對過 | 靜態 |
@@ -637,8 +629,8 @@
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |
-| [`spec/91-tactical-parity.md`](../spec/91-tactical-parity.md) | 部隊組成要不要對 | 先不對。要對就得讓兩邊用同一份編成，代價是再解一輪初始佈陣 | 靜態 |
-| [`spec/91-tactical-parity.md`](../spec/91-tactical-parity.md) | 動畫幀序 | 原版的兵有 `PoseStep`，截圖時機差一幀就整批不同 | 實測 |
+| [`spec/91-tactical-parity.md`](../spec/91-tactical-parity.md) | 動畫幀序 | 原版的兵有 `PoseStep`，截圖時機差一幀就整批不同。這是 `field` 剩下那 299 px 的來源之一（`../playtest/40` §13） | 實測 |
+| [`spec/91-tactical-parity.md`](../spec/91-tactical-parity.md) | 野戰的戰場 | 沒對過。野戰的地形是從大地圖即時長出來的，同狀態比攻城更難湊 | 靜態 |
 
 ## 3. 這支工具的盲區
 

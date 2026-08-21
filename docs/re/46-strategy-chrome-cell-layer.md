@@ -117,8 +117,10 @@ EGA 暫存器就 `sub_1FA1B` 搬 bytes 到 VRAM `0A0C8h`。**si 是段內位移�
 
 > 所以「主畫面不像原版」的原因**不在外框**。版面常數已由
 > [`47`](47-main-screen-window-registry.md) §4 從機器碼定死，
-> 各視窗內部的靜態排版由 [`48`](48-window-display-list.md) 的顯示清單給出。
-> 剩下的是視窗內部那張龍紋底圖（[`../formats/03`](../formats/03-grf-images.md) §5.5）。
+> 各視窗內部的靜態排版由 [`48`](48-window-display-list.md) 的顯示清單給出，
+> 視窗內部那張龍紋底圖在 `ICONGRF.DAT` 的最後 128 byte
+> （[`../formats/03`](../formats/03-grf-images.md) §5.5）。三層都接上之後，
+> 主畫面已與原版逐像素相同（[`../playtest/37`](../playtest/37-main-screen-parity.md)）。
 
 ### 3.1 一個可以直接驗的細節
 
