@@ -221,7 +221,7 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 145 條。**要查「這件事解了沒」先看這裡**，
+共 143 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（77 條）
@@ -352,13 +352,7 @@
 | 5.8 ⭐ 十一個命令處理常式，隊長與隊員各一套 ▸ 命令 | `docs/re/11-tactical-battle.md` |
 | 6.1 圖庫段 ＝ ICONGRF 段 3 ＋ 0x9A0 ▸ 場景 0 的 0x1200–0x1440（4 張 24×16） | `docs/re/48-window-display-list.md` |
 
-### 假說（1 條）
-
-| 鍵 | 出處 |
-|---|---|
-| 2.1 執行結構（已驗證） ▸ YNSOUND.COM | `docs/reference/04-first-survey.md` |
-
-### 未解（31 條）
+### 未解（30 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -368,7 +362,6 @@
 | 2. 記憶體佈局：sub_1CC31 ▸ ds:0D2F8 | `docs/re/11-tactical-battle.md` |
 | 2. 記憶體佈局：sub_1CC31 ▸ ds:0D306 | `docs/re/11-tactical-battle.md` |
 | 2. 記憶體佈局：sub_1CC31 ▸ ds:0D42 | `docs/re/11-tactical-battle.md` |
-| 2.7 圖像與調色盤 ▸ KYOGRF.DAT | `docs/reference/04-first-survey.md` |
 | 3. 曲塊內部 ▸ +0x00 | `docs/re/23-bgm-resource-format.md` |
 | 3. 曲塊內部 ▸ +0x06–+0x0F | `docs/re/23-bgm-resource-format.md` |
 | 3. 武將記錄（32 byte） ▸ +0 | `docs/formats/08-sinario-save.md` |

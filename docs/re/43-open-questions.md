@@ -19,12 +19,12 @@
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
 | 規則正確性 | 26 | 22 | 4 | 0 |
-| 資料保存 | 34 | 33 | 1 | 0 |
+| 資料保存 | 33 | 32 | 1 | 0 |
 | 程式碼理解 | 175 | 168 | 7 | 0 |
-| 驗收 | 51 | 41 | 10 | 0 |
-| 外部資料 | 10 | 10 | 0 | 0 |
-| 其他 | 151 | 141 | 10 | 0 |
-| **合計** | **447** | 415 | 32 | 0 |
+| 驗收 | 50 | 40 | 10 | 0 |
+| 外部資料 | 7 | 7 | 0 | 0 |
+| 其他 | 151 | 140 | 11 | 0 |
+| **合計** | **442** | 409 | 33 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -32,12 +32,12 @@
 |---|---:|
 | `docs/re/` | 175 |
 | `docs/spec/` | 124 |
-| `docs/playtest/` | 51 |
-| `docs/formats/` | 34 |
+| `docs/playtest/` | 50 |
+| `docs/formats/` | 33 |
 | `docs/mechanics/` | 26 |
 | `docs/release/` | 13 |
 | `docs/mobile/` | 12 |
-| `docs/reference/` | 10 |
+| `docs/reference/` | 7 |
 | `docs/promo/` | 2 |
 
 ## 2.1 規則正確性（26 條）
@@ -71,7 +71,7 @@
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 事件 2／3 等外交回報的信賴度增減 | 逐分支對拍。玩家進言／說得那幾條已證實（見下） | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 新遊戲的信賴度初始值 | 原始劇本 `+0x10` 可直接讀（第 1 劇本是 `0xFF`）；`sub_18B12` 的完整時序**待 oracle** | 實測 |
 
-## 2.2 資料保存（34 條）
+## 2.2 資料保存（33 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -80,7 +80,6 @@
 | [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 78 則空訊息的索引位置有沒有規律 | 未查 | 靜態 |
 | [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 訊息索引與遊戲事件的對應 | 逐則的顯示時機沒有全表。**已對出來的散在各規格**（進言 `../spec/44`、遷都 `../spec/64`、結局 `../spec/30`），未讀的部分見 `../re/24` | 靜態 |
 | [`formats/02-brg-palette.md`](../formats/02-brg-palette.md) | `OPENPAL` 的 6 組各對應哪一幕 | `ENDPAL` 那邊已解（一幕配一組，`09-cutscene-images.md`、`../spec/67` 已實作）。開場這邊要先反組譯 `D7OPEN.EXE`，還沒做 | 靜態 |
-| [`formats/03-grf-images.md`](../formats/03-grf-images.md) | 3 | `0x9700` / `0x23A0` (9,120) / `sub_1006B` / 走 `sub_1F888`（**位元對齊**的繪製常式，可放在非 8 倍數的 x）。未解 | 靜態 |
 | [`formats/03-grf-images.md`](../formats/03-grf-images.md) | `0x0480` | 24×16 × 3 / 兵種圖示的**橘色版**：馬／弓／步 / 尚未找到取用端 | 靜態 |
 | [`formats/04-map-sch-container.md`](../formats/04-map-sch-container.md) | 狀態：容器格式的索引層 READY，壓縮演算法未解。 | （散句） | 靜態 |
 | [`formats/05-mmap-worldmap.md`](../formats/05-mmap-worldmap.md) | `MMAP.MCH` 的 object **type 3** | 圖塊、`0xA000` metadata 與事件 12 的火災／暴動（type 1／2）查表已解（`../re/14`）。type 3 的事件語意、object timer 與逐 frame 的原版時序仍未知——remake 的 timer 是呈現層 substitute | 靜態 |
@@ -290,7 +289,7 @@
 | [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | `cs:0x780` 那張字幕描述子表 | §3.1 解出結構（幕序索引 → 筆數 ＋ 每筆三個 word），**表的內容沒 dump** / `ida_dump.py` 對 `D7END.EXE` 的 `0x780` 起 | 靜態 |
 | [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | BGM 的起訖 | `ENDBGM.DAT` 走 INT 61h、與 `KI.EXE` 同一條音源路徑（已解），remake 也有 `endbgm-0`（`../spec/29`），但**還沒接進結局播放的起訖**（`../spec/67` §7） / 對 `sub_10500` 的呼叫點與 `loc_1007A` 的收尾 | 靜態 |
 
-## 2.4 驗收（51 條）
+## 2.4 驗收（50 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -320,7 +319,7 @@
 | [`playtest/29-strategy-minimap-markers.md`](../playtest/29-strategy-minimap-markers.md) | 點地圖區（熱區 `0x16`） | 原版做什麼沒讀 | 靜態 |
 | [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 一幀能有幾個兵撞牆 | 原版沒量過。前排寬度決定破牆速度，而破牆速度決定攻城打不打得下來 | 靜態 |
 | [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 高平面的橫向移動沒有實測 | 守方站到牆頂的情境還沒跑過 | 實測 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | **戰鬥指揮／委任選單** | 選項字串是原版的 TALK #76，行軍指示的三選一也接上了（`../spec/39`）。`sub_193E9` 的版面算式已解（`../spec/45` §2.2），但這個選單自己的 `dl`／`dh` 還沒查 / 部分 / 用 `tools/ida_callsite_args.py` 取那個呼叫端的 `dx` | 靜態 |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | **戰鬥指揮／委任選單** | 選項字串是原版的 TALK #76，行軍指示的三選一也接上了（`../spec/39`）。版面算式與位置都解了——**選單開在上一次點擊的位置，並夾住不出畫面**（`../spec/39` §3.5）。remake 畫在固定位置 / 部分 / 要跟游標就得把那兩個全域接進來 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 戰鬥指揮／委任選單 | 影片裡沒有對照影格，也還沒做同狀態對拍 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 勢力一覽的欄位 | 沒有逐欄比對 | 靜態 |
 | [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 「委任」那一格的顏色 | 實錄影格上看起來是紅字，但影片是壓縮過的、也沒有機器碼證據。remake 先畫成一般色（`../spec/38`） | 靜態 |
@@ -341,12 +340,11 @@
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 日期對不上 | 原版跑到 4月9日才截到 / 要嘛用存檔定位，要嘛加一個「跑到指定日期」的驗收旗標 | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-enemy` 的 44 px | 兩條都頂在上限，原版那一格已經打了 20 秒（§10） / 要對就得讓兩邊的**時刻**對齊，不是改算式 | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | 右下那一小塊地形色（8 px，(361..364, 192..194)） | `field` 區剩下唯一沒歸類的一群 / 拿 §13.1 那一招再跑一次：把 192 個子圖塊逐張套進那個顯示格比一次。**假說**是同一類（另一個實體破損的時刻不同），但還沒驗 | 靜態 |
-| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | 旗的揮舞相位（116 px）｜滑鼠游標（95 px）｜破門的時刻（88 px） | ⛔ **都不可消**（§13） / — | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-enemy`／`sb-self` 1.5% | 兩格將旗的內容 / — | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sub_1DFBB` 的快路徑 | remake 一律走合成。兩條路在全畫面重繪下應該畫出同樣的像素（`../spec/58` §4），但沒有逐格驗過 / — | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | unit 0 的第二趟 | 深度迴圈跑完後 `dl & 0x20` 成立時會對五個鄰格各跑一次 `ax = 0`；**觸發條件（旗標 bit 5）誰設還沒解** / 掃誰對顯示格的 `+0` 寫 `0x20` | 靜態 |
 
-## 2.5 外部資料（10 條）
+## 2.5 外部資料（7 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -354,11 +352,8 @@
 | [`reference/02-jp-cht-diff.md`](../reference/02-jp-cht-diff.md) | 校訂後的畫面抽樣與排版 parity | 未做。M7 因此未封口 | 靜態 |
 | [`reference/02-jp-cht-diff.md`](../reference/02-jp-cht-diff.md) | `#223` 等訊息的欄位完整語意 | 只修已證實的標記編號，欄位語意仍未解（§9） | 靜態 |
 | [`reference/03-baked-japanese.md`](../reference/03-baked-japanese.md) | 橫幅上寫的是**「臥竜伝」**——日文漢字，不是「臥龍傳」。 | （未解小節內文） | 靜態 |
-| [`reference/04-first-survey.md`](../reference/04-first-survey.md) | `YNSOUND.COM` | 3,463 B / 音效驅動，**假說**：常駐 TSR | 靜態 |
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | `SHOW.O` | 57,148 B / 被 `INSTALL.EXE` 與 `LOGO.EXE` 引用。開頭 `3c df 00 00 11 af 01 00 50 00 80 07`。**未解** | 靜態 |
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
-| [`reference/04-first-survey.md`](../reference/04-first-survey.md) | `KAOGRF.DAT` | 307,200 / 頭像（日文「顔」）。**假說**：307,200 ÷ 2,048 = **150 張 64×64 4bpp**，而武將 146 人 + 4 → 對得起來，但**這是算術巧合等級的證據，要驗** | 靜態 |
-| [`reference/04-first-survey.md`](../reference/04-first-survey.md) | `KYOGRF.DAT` | 69,120 / 未解 | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
 ## 2.6 其他（151 條）
@@ -457,7 +452,7 @@
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 俘虜身分 | remake 的 `Posted` 是 bool，存不下 `+0x17` 的 0–5；俘虜狀態目前推不出來 | 靜態 |
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「看」與「選」的內容差異 | 原版兩種取法的**列表內容**不同（`../re/26` §4.2），remake 只統一了欄位 | 靜態 |
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「委任」那一格的顏色 | 實錄影格上看起來是紅字，但影片是壓縮過的、也沒有機器碼證據。remake 先畫成一般色 | 靜態 |
-| [`spec/39-march-order-menu.md`](../spec/39-march-order-menu.md) | `sub_193E9` 的選單版面 | 只知道 `cx = 0x4Ch`；矩形與列高沒解，remake 先用既有的對話框樣式並標成差異 | 靜態 |
+| [`spec/39-march-order-menu.md`](../spec/39-march-order-menu.md) | `word_19896`／`word_19898` 的寫入端 | 語意是強證據（見 §3.5），但**直接 xref 掃不到寫入端**，所以「就是滑鼠座標」還沒 confirmed / 找取址的那幾筆，或用 DOSBox-X bridge 下寫入中斷點 | 實測 |
 | [`spec/40-ai-march-decision.md`](../spec/40-ai-march-decision.md) | （無。 | （未解小節內文） | 靜態 |
 | [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 君主那一側的回話 | 原版事件場景會同時出現兩個框（`docs/re/66` §5.1 的影格就是），remake 只畫一個 | 靜態 |
 | [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 框的底紋 | 龍紋的點陣找到了（`../formats/03` §5.5），但 96 列的排法還沒解，remake 仍用純色 | 靜態 |

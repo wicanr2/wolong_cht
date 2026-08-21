@@ -133,7 +133,7 @@ D7OPEN  .EXE   KI      .EXE   D7END   .EXE   D7OVER  .EXE
 | `D7OPEN.EXE` | 4,734 B | **開場播放器**，只引用 `OPENPAL.BRG`、`OPENBGM.DAT`、`OPEN_S1..S6.DAT` |
 | `D7END.EXE` | 6,677 B | 結局播放器 |
 | `D7OVER.EXE` | 2,747 B | 遊戲結束播放器 |
-| `YNSOUND.COM` | 3,463 B | 音效驅動，**假說**：常駐 TSR |
+| `YNSOUND.COM` | 3,463 B | 音效驅動。⭐ **已 confirmed 是常駐 TSR**，介面是 `INT 61h`，晶片 OPL3（`../re/17`、`../re/57`）|
 | `SHOW.O` | 57,148 B | 被 `INSTALL.EXE` 與 `LOGO.EXE` 引用。開頭 `3c df 00 00 11 af 01 00 50 00 80 07`。**未解** |
 
 `KI.EXE` 引用的資料檔（字串表原序）：
@@ -284,9 +284,9 @@ remake 走自己的字型路徑（`internal/assets/cjk`，`-font` 指定）。
 
 | 檔案 | 大小 | 推測 |
 |---|---|---|
-| `KAOGRF.DAT` | 307,200 | 頭像（日文「顔」）。**假說**：307,200 ÷ 2,048 = **150 張 64×64 4bpp**，而武將 146 人 + 4 → 對得起來，但**這是算術巧合等級的證據，要驗** |
+| `KAOGRF.DAT` | 307,200 | 頭像（日文「顔」）。⭐ **已 confirmed：150 張 64×64 4bpp**（`sub_1FA37` 的 `ax = 4004h` 逐位拆過、渲染出可辨識的頭像，`../re/03` §2–§4）|
 | `IVENTGRF.DAT` | 76,032 | 事件圖（`IVENT` 是 `EVENT` 的拼法） |
-| `KYOGRF.DAT` | 69,120 | 未解 |
+| `KYOGRF.DAT` | 69,120 | ⭐ **已解：15 張 96×96**（據點情報視窗的景觀圖，`../formats/03` §3）|
 | `ICONGRF.DAT` | 47,776 | 圖示 |
 
 ### 2.8 地圖族：`.MAP` / `.MDL` / `.SCH` / `.MCH`
