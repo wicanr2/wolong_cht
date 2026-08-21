@@ -19,22 +19,22 @@
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
 | 規則正確性 | 42 | 39 | 3 | 0 |
-| 資料保存 | 35 | 34 | 1 | 0 |
-| 程式碼理解 | 223 | 216 | 7 | 0 |
+| 資料保存 | 34 | 33 | 1 | 0 |
+| 程式碼理解 | 220 | 213 | 7 | 0 |
 | 驗收 | 58 | 48 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
 | 其他 | 156 | 146 | 10 | 0 |
-| **合計** | **531** | 499 | 31 | 1 |
+| **合計** | **527** | 495 | 31 | 1 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **5** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/re/` | 223 |
+| `docs/re/` | 220 |
 | `docs/spec/` | 129 |
 | `docs/playtest/` | 58 |
 | `docs/mechanics/` | 42 |
-| `docs/formats/` | 35 |
+| `docs/formats/` | 34 |
 | `docs/reference/` | 17 |
 | `docs/release/` | 13 |
 | `docs/mobile/` | 12 |
@@ -87,7 +87,7 @@
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 玩家進言／說得的增減量 | `sub_13830`：第一反應 `+20`／`−20`，多理由完成 `+10`，錯選理由 `−20`；事件 13 的 `−50` 由 `sub_13507` 定案 | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 勢力「滅亡」的判定 | **據點數歸 0**（`sub_14CF3` 的 `dec [bx+23h]`，`../re/59` §4）。滅亡當下 127 名武將逐一處置、在外的軍團全部消失（同份 §4.1） | 靜態 |
 
-## 2.2 資料保存（35 條）
+## 2.2 資料保存（34 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -103,7 +103,6 @@
 | [`formats/05-mmap-worldmap.md`](../formats/05-mmap-worldmap.md) | 比對的正是方向碼那個欄位）。 強證據，未定案。 | （散句） | 靜態 |
 | [`formats/07-battle.md`](../formats/07-battle.md) | 每個戰場 4,096 B 的表頭與尾段各 64 byte | 內容未解（§2.1） | 靜態 |
 | [`formats/07-battle.md`](../formats/07-battle.md) | 表頭 16 筆但資料只有 3 組 | 多出來的 13 筆是什麼未解（§3） | 靜態 |
-| [`formats/07-battle.md`](../formats/07-battle.md) | mov     al, es:[bx+1]       ; → byte_1AB4F（用途未解） | （散句） | 靜態 |
 | [`formats/07-battle.md`](../formats/07-battle.md) | 所以地形是 **64 寬 × 62 列**，而整塊 4,096 B 是 **64 × 64**—— 兩者內容未解。 | （散句） | 靜態 |
 | [`formats/07-battle.md`](../formats/07-battle.md) | ——表頭筆數多於資料組數，原因未解。 | （散句） | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x0008` | 51 / 未解的全域狀態（一起載入 `cs:0CF0h`） | 靜態 |
@@ -127,7 +126,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `OPEN_S2`–`S5` 的 384,000 B | 是 §2 的三倍，多半是多張或多幀。開場播放器 `D7OPEN.EXE` 還沒反組譯 | 靜態 |
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`） | 靜態 |
 
-## 2.3 程式碼理解（223 條）
+## 2.3 程式碼理解（220 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -136,13 +135,11 @@
 | [`re/01-first-recon.md`](../re/01-first-recon.md) | 是加了新過場、還是把原本的長段拆開，未解。 | （散句） | 靜態 |
 | [`re/01-first-recon.md`](../re/01-first-recon.md) | `YNMOUSE.COM` | pc98 / 滑鼠驅動。dosv 版把它併進 `KI.EXE`？未驗 | 靜態 |
 | [`re/01-first-recon.md`](../re/01-first-recon.md) | `PASS.MAP`／`PASS.SCH` | dosv / **PC-98 沒有**。關隘資料，移植時新增或改名。未解 | 靜態 |
-| [`re/02-palette-routine.md`](../re/02-palette-routine.md) | 誰把 `.BRG` 的內容載到 `cs:1964h`（`sub_109AF` 載到 `cs:18A4h`， | （未解小節內文） | 靜態 |
 | [`re/02-palette-routine.md`](../re/02-palette-routine.md) | OPENPAL`（6 組）、`ENDPAL`（12 組）的分組對應哪些畫面。 | （未解小節內文） | 靜態 |
 | [`re/02-palette-routine.md`](../re/02-palette-routine.md) | 設定表 `cs:0x5FF4` 每筆後三個 byte 是什麼（第 4 筆的第二個 word | （未解小節內文） | 靜態 |
-| [`re/03-image-blitter.md`](../re/03-image-blitter.md) | ICONGRF`／`KYOGRF`／`IVENTGRF` 的尺寸。 | （未解小節內文） | 靜態 |
+| [`re/03-image-blitter.md`](../re/03-image-blitter.md) | ICONGRF` **段 1 前三塊**（`0x0000`／`0x0800`／`0x1000`）的尺寸與 UI 語意。 | （未解小節內文） | 靜態 |
 | [`re/03-image-blitter.md`](../re/03-image-blitter.md) | sub_1E38C`（帶位移的讀檔）與 `sub_1F4A2`（開檔／讀檔／關檔）的完整介面。 | （未解小節內文） | 靜態 |
 | [`re/03-image-blitter.md`](../re/03-image-blitter.md) | sub_1FAC2` 是另一支繪製常式（`shl al, 1` 後才 `mov cx, ax`），用途未解。 | （未解小節內文） | 靜態 |
-| [`re/04-mmap-entry-points.md`](../re/04-mmap-entry-points.md) | call sub_1E3C0                    ; ← 未解 | （散句） | 靜態 |
 | [`re/04-mmap-entry-points.md`](../re/04-mmap-entry-points.md) | MMAP.MCH` 的 object **type 3**：事件語意、原版 object timer 與畫面 | （未解小節內文） | 靜態 |
 | [`re/04-mmap-entry-points.md`](../re/04-mmap-entry-points.md) | word_19872` 的 98,304 B 畫布怎麼對應到螢幕 | （未解小節內文） | 靜態 |
 | [`re/05-battle-selection.md`](../re/05-battle-selection.md) | 推論等級：**兩條路徑的存在與參數 confirmed**；地形對映表的內容未解 | （散句） | 靜態 |
@@ -261,7 +258,6 @@
 | [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | `+0x20` 與 `+0x14` 的張力 | `sub_14575` 與 `sub_14155` 都只寫 `+0x20`，`40` §5 的張力還在 | 靜態 |
 | [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `sub_193E9` 的選單協定 | `ah = 1`、`cx` ＝ 首項索引、`dx`／`bx` ＝ 位置；回傳值怎麼編碼未逐位對過 | 靜態 |
 | [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `sub_1703C` | 選據點的那一支，未讀 | 靜態 |
-| [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `sub_13E11`（每「時」） | 已讀：它每次只處理**一支**軍團（`word_10D1C` 每次 `+0x40`，繞到 `0x580` 歸零 ＝ 22 支輪替），條件是 `+0x00` 位元 7 設起來；接著算 `[si+23h] × 8 + 0x18` 拿去和 `+0x21`（u16）比，過了就寫 `[si+19h] = 0xFF`，再比一… | 靜態 |
 | [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | 樣式碼 | 只確定 `0` ＝ 擦除、`0x0B` ＝ 指令列、`0x0C`／`0x0F` 出現在別處；完整值域未列 | 靜態 |
 | [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | `ax = 0F01h`／`0801h` | 顏色／樣式的位元編碼未逐位對過 | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | `0x80` | 繪製時 `and …, 7Fh` 清掉 / 未解 | 靜態 |

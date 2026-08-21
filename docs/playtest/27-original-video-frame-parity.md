@@ -104,8 +104,6 @@ WOLONG_SHOT_CMD=wlgame tools/shot.sh workplace/parity/remake.png \
 |---|---|
 | 逐像素 parity | 影片是再編碼的，這一份做不到。**後來回到模擬器做成了**——主畫面五區、系統選單與戰場九區裡六區都逐像素相同（[`37`](37-main-screen-parity.md)–[`40`](40-tactical-parity.md)）。「主畫面的點擊閘」也不存在，是座標算錯（[`38`](38-window-parity.md) §1）|
 | 色彩 | 這一份只比了幾何。**後來解出來是調色盤刻度差 4%**——DOS/V 走 VGA 的 6 bit DAC（[`../spec/51`](../spec/51-vga-dac-palette-scale.md)），改完主畫面就逐像素相同了 |
-| 戰術側欄的逐格對拍 | ✅ **做了**：`-siege-corps` 讓兩邊站同一個局面，側欄六區裡四區逐像素相同（[`40`](40-tactical-parity.md)）|
-| 戰場圖塊組 | ✅ §7.4：同一張戰場（濟陰）逐項相符，先前的差異是拿兩張不同戰場比出來的 |
 | 門強度條 | §7.5。已解並實作（[`../re/60`](../re/60-tactical-sidebar.md) §11、[`../spec/32`](../spec/32-gate-strength-bar.md)）；**remake 側沒有截圖**——這條只亮 20 幀 |
 | 一覽表視窗 | 影片裡有武將／據點／財政的實錄，**還沒量** |
 

@@ -471,6 +471,40 @@ def check(docs):
             problems.append(
                 f"{rel(path)}:{n}：註解引用 {m.group(0)}，但那份文件沒有這個小節")
 
+    # ⑩ 「未解」表裡的列，自己的說明不能以「已解／已讀／✅」開頭。
+    #
+    # ② 比的是**狀態行 vs 內文**，而且只在狀態行說未解時才跑
+    # （`if not d.open_status(): continue`）。所以**狀態行寫 READY 的文件，
+    # 它的未解小節可以無限期過期而完全不被碰到**——`docs/re/03` 的
+    # 「`KYOGRF`／`IVENTGRF` 的尺寸未解」就這樣活了兩週，而那兩個
+    # 在 `docs/formats/03` 是 confirmed 並且渲染驗收過。
+    #
+    # 這一條擋的是最明確的一種：**列自己就承認解了**。
+    # 2026-08-21 的稽核在 `docs/re/` 掃到 54 列這種形狀。
+    solved_cell = re.compile(r"^\s*(?:\*\*)?(?:✅|已解|已讀|已實作|已接入)")
+    for d in docs:
+        inopen = False
+        for n, line in enumerate(d.text.split("\n"), 1):
+            if re.match(r"^#{2,4} .*(未解|還沒解|未讀)", line):
+                inopen = True
+                continue
+            if inopen and re.match(r"^#{2,4} ", line):
+                inopen = False
+            if not inopen or not line.startswith("|"):
+                continue
+            cells = [c.strip() for c in line.split("|")]
+            if len(cells) < 4:
+                continue
+            # 第一格被刪除線劃掉的是「已收掉但保留編號」，那是允許的寫法；
+            # 這裡抓的是**第一格還是活的、第二格卻說已解**。
+            if cells[1].startswith("~~"):
+                continue
+            if solved_cell.match(cells[2]):
+                problems.append(
+                    f"{rel(d.path)}:{n}：未解表裡有一列自己寫著已解"
+                    f"（{cells[1][:24]} → {cells[2][:24]}…）"
+                    f"——解掉了就把那一列刪掉")
+
     # ④ 相對連結指得到檔案。
     for d in docs:
         for target in LINK_RE.findall(d.text):

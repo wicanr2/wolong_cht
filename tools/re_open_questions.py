@@ -137,7 +137,18 @@ def collect(path, rel):
     prev = ""             # 上一行非空的內文，給跨行句子補前綴
     gap_table = False     # 目前這張表的表頭是不是寫著「缺口」
     lead_done = set()     # 已經收過首句的小節
+    in_fence = False      # 在 ``` 區塊裡
     for i, line in enumerate(lines):
+        # ⭐ **反組譯區塊裡的註解不是缺口。** 那些行長這樣：
+        #     call sub_1E3C0                    ; ← 未解
+        # 它是「這一行在做什麼還沒讀」的旁註，不是一條獨立登記的缺口；
+        # 收進來會讓同一個未解被數兩次（旁註一次、未解表一次），
+        # 而且沒有出處欄可以回查。2026-08-21 稽核量到 2 筆。
+        if line.lstrip().startswith("```"):
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            continue
         m = HEADING.match(line)
         if m:
             level, title = len(m.group(1)), m.group(2).strip()
