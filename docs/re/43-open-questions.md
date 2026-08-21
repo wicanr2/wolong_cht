@@ -18,13 +18,13 @@
 
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
-| 規則正確性 | 26 | 22 | 4 | 0 |
+| 規則正確性 | 24 | 20 | 4 | 0 |
 | 資料保存 | 33 | 32 | 1 | 0 |
 | 程式碼理解 | 175 | 168 | 7 | 0 |
-| 驗收 | 50 | 40 | 10 | 0 |
+| 驗收 | 49 | 40 | 9 | 0 |
 | 外部資料 | 7 | 7 | 0 | 0 |
 | 其他 | 143 | 132 | 11 | 0 |
-| **合計** | **434** | 401 | 33 | 0 |
+| **合計** | **431** | 399 | 32 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -32,15 +32,15 @@
 |---|---:|
 | `docs/re/` | 175 |
 | `docs/spec/` | 118 |
-| `docs/playtest/` | 50 |
+| `docs/playtest/` | 49 |
 | `docs/formats/` | 33 |
-| `docs/mechanics/` | 26 |
+| `docs/mechanics/` | 24 |
 | `docs/mobile/` | 12 |
 | `docs/release/` | 11 |
 | `docs/reference/` | 7 |
 | `docs/promo/` | 2 |
 
-## 2.1 規則正確性（26 條）
+## 2.1 規則正確性（24 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -56,14 +56,12 @@
 | [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 沒有內政官時據點會不會自然變化 | 防災值、上昇值與城兵的成長都掛在內政官那一支 `sub_14194`（同上 §20）。**沒派內政官的據點是否有另一條月度路徑，沒讀** | 靜態 |
 | [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 那兩個歸零的欄位很可能就是**本月累計的收入與支出 → 假說，待驗 | （散句） | 靜態 |
 | [`mechanics/50-diplomacy.md`](../mechanics/50-diplomacy.md) | `g(對方君主好戰等級)` 的實際修正量 | 反組譯外交結算。⚠ 好戰等級（勢力 `+0x28`）在**出陣判斷**裡的用法已解——`(15 − 好戰等級) × 4` 與資金高位元組比（`../re/45` §3）——但那是別的判定，**不能外推到外交** | 靜態 |
-| [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 政治如何影響內政效果與外交官要價仍未解。 | （散句） | 靜態 |
 | [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武術的勝敗判定分布 | 反組譯一騎打ち | 靜態 |
 | [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 評價實際餵進哪些判定 | 反組譯戰鬥結算 | 靜態 |
 | [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0Eh`／`+0Fh`／`+10h` 是不是兵種適性 | 與戰鬥程式對照。⚠ **軍團記錄的 `+0x0E` 是別的東西**（所在據點編號 × 8，`../re/08` §4）——兩張表的同一個位移不是同一個欄位 | 靜態 |
 | [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0` 旗標的 7 種值代表什麼 | 身分已確定在 `+0x17`，`+0` 是別的東西。只知道 bit 4 ＝ 不事二主 | 靜態 |
 | [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0x1E` 為什麼 0–2 恆空 | 掃 127 筆武將的 `+0x1E` 值分佈 | 靜態 |
-| [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 被俘之後的處理 | 未知 | 靜態 |
-| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 交友關係的實際範圍、每月增量、協力成功的門檻值。 | （散句） | 靜態 |
+| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 協力成功的門檻值——判定用的是交友值的哪一段，還沒在機器碼裡找到。 | （散句） | 靜態 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 10 | `sub_13496` / 訊息-only 邊界；保留事件取出，不虛構持久欄位 / handler 只把 `AH`／`DX` 組成 `sub_18810` formatter 參數，尚未完成 TALK.DAT 逐句顯示 | 靜態 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | cx` 在 `≥ 0x100` 時多半是另一個編號空間或帶旗標，未解。 | （散句） | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 四個劇本的結局是否不同 | **觸發條件四劇本共用**，差別只在初始勢力數；結局的十二幕也是一條路播完，沒有依劇本分支的證據（`../re/70` §3）。**但沒有實跑四個劇本對過** | 實測 |
@@ -289,14 +287,13 @@
 | [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | `cs:0x780` 那張字幕描述子表 | §3.1 解出結構（幕序索引 → 筆數 ＋ 每筆三個 word），**表的內容沒 dump** / `ida_dump.py` 對 `D7END.EXE` 的 `0x780` 起 | 靜態 |
 | [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | BGM 的起訖 | `ENDBGM.DAT` 走 INT 61h、與 `KI.EXE` 同一條音源路徑（已解），remake 也有 `endbgm-0`（`../spec/29`），但**還沒接進結局播放的起訖**（`../spec/67` §7） / 對 `sub_10500` 的呼叫點與 `loc_1007A` 的收尾 | 靜態 |
 
-## 2.4 驗收（50 條）
+## 2.4 驗收（49 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
 | [`playtest/10-event-message-modal.md`](../playtest/10-event-message-modal.md) | 事件 10 producer 仍未定位。 | （未解小節內文） | 靜態 |
 | [`playtest/10-event-message-modal.md`](../playtest/10-event-message-modal.md) | 事件 6 #72 的缺失 formatter payload 維持 fail-closed。 | （未解小節內文） | 靜態 |
 | [`playtest/10-event-message-modal.md`](../playtest/10-event-message-modal.md) | 原版／remake 同狀態畫面對拍仍是剩餘驗收項。 | （未解小節內文） | 靜態 |
-| [`playtest/14-m7-review.md`](../playtest/14-m7-review.md) | #195 | `3` / 4 / 10 / 1 / `嗯，現在的話，{3}\n也不至於拒絕。好，准\n許停戰！\n` / `sub_13C99` 的狀態值 1 直接取 #193–#195；此格需保留 `{3}`，重用目前 #193 的既有繁中譯文，避免另造未驗證句子。 | 靜態 |
 | [`playtest/17-expert-dosbox-remake.md`](../playtest/17-expert-dosbox-remake.md) | 松崗 DOS/V 原版 | **PASS（啟動至開場）** / 2026-08-12 證實空白確認／`0000`／`1234` 均越過密碼頁；完整自然長程驗證尚未執行 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 據點換手之後遮罩會不會跟著變 | `sub_1890A` 的行為，靜態讀得出來，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 松崗 DOS/V 側 | 這套 bridge 還沒在 DOS/V 上跑過。**密碼頁不構成阻礙**（四格留白按「確定」即可通過，`18`）——是還沒做 | 靜態 |
@@ -304,7 +301,7 @@
 | [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 四張 24×16 圖形的內容 | 顯示清單指到圖庫位移 `0x1200`／`0x12C0`／`0x1380`／`0x1440`，還沒畫出來看；remake 先用同位置同尺寸的色塊佔位 | 實測 |
 | [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 其他 10 個顯示清單場景 | 同一支直譯器有 11 個呼叫端，只讀了場景 0（`../re/48` §5） | 靜態 |
 | [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 各視窗內部的像素 | 只對過邊線位置，沒有對過內容 | 靜態 |
-| [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 原版執行期的開關行為 | **點得到了**（2026-08-17）：松崗 DOS/V 實跑點開了縮小地圖。但要送對座標得先過兩層——視窗的 640×480 對遊戲的 640×400 是等比對映（送 y 乘 1.2），而**進到大地圖之後 INT 33 的範圍又換成整個世界**（`sub_120D6` 的 `0..0x17FF × 0..0… | 實測 |
+| [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 四個視窗**同時**開著的對拍 | 三個視窗開著已做完、三區逐像素 PASS（`38`），系統選單開著也做了（`39`）；**四個一起開的那一張還沒拍** | 靜態 |
 | [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 系統視窗的四個項目 | 存檔／畫面模式／音源／戰略速度，不在這一輪範圍 | 靜態 |
 | [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | **逐曲觸發** | 只錄到開場動畫（`D7OPEN.EXE` 自己會播）。⚠ 這一項**不再擋住任何事**——音檔改由 `tools/bgm2ogg.sh` 離線渲染，不需要在模擬器裡逐首觸發。要當對照組才需要它 | 靜態 |
 | [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | **音效** | 戰術的三個 effect code 已知（`re/17` §3），但沒錄過 | 靜態 |
@@ -412,7 +409,7 @@
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 空槽標記 | 原版用名稱欄第一個字 `0xD0A1`；remake 用「載得起來且玩家勢力有效」判定，兩者不等價 | 靜態 |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 新遊戲共用 | remake 的啟動殼層是自己的畫面，還沒有換成這個四槽視窗 | 靜態 |
 | [`spec/26-yes-no-dialog.md`](../spec/26-yes-no-dialog.md) | 原版的使用者 | `sub_18DC8` 只有一個呼叫端 `sub_11AC3`（新遊戲流程），問題文字由那裡給，內容未讀 | 靜態 |
-| [`spec/26-yes-no-dialog.md`](../spec/26-yes-no-dialog.md) | 背景保存 | `sub_19796`／`sub_197C3(cx=600Dh)` 是開關前後成對的一支，推測是保存／還原被蓋住的畫面，未讀 | 靜態 |
+| [`spec/26-yes-no-dialog.md`](../spec/26-yes-no-dialog.md) | `cx = 600Dh` 的尺寸編碼 | `sub_19796`／`sub_197C3` 是**保存／還原被蓋住的畫面**，`dx`／`bx` 是像素座標、換算成 VRAM 位址（`45` §2 逐行解過）。這個呼叫端的 `cx` 高低位元組怎麼對到寬高沒逐位對過 | 靜態 |
 | [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 「自定」 | 軍師命名（場景 9 的注音輸入）還沒做，這顆按鈕目前無效 | 靜態 |
 | [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 換勢力 | 原版的換法在 `sub_11AC3`，未讀 | 靜態 |
 | [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 頭像尺寸 | 軍師頭像的下緣照原版座標會略微超出那個 208×104 的底框；沒有 oracle 可比，先照機器碼畫 | 實測 |
