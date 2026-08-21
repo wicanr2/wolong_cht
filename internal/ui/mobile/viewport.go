@@ -1,5 +1,20 @@
-// Package mobileui contains platform-neutral layout and touch geometry for the
-// Android shell. It deliberately does not import Android or Ebiten APIs.
+// Package mobileui 是平台無關的版面與觸控幾何，不 import Android 或 Ebiten。
+//
+// ⛔ **這個套件已被取代，現在沒有任何檔案 import 它。**
+//
+// 它是 2026-08-20 之前那條「Android 照原版 640×400 版面」路線的產物。
+// 使用者當天改了方向：手機版**只共用規則層、版面與操作重新設計**
+// （docs/mobile/android-ux.md）。現行路徑是
+//
+//	Android Activity → mobile/wolong（gomobile 綁定）→ internal/ui/phone
+//
+// 而**縮放由 Ebiten 的 Layout 契約負責**——`game.Layout` 回傳
+// `phone.LogicalW`／`phone.LogicalH`，之後所有座標都在那個邏輯畫布上算。
+// 所以下面的 Viewport／SafeArea／CellAt **不在任何執行路徑上**。
+//
+// ⚠ 保留的理由只有一個：那條路線如果哪天要回頭做「照原版版面」的手機版，
+// 這裡的螢幕↔邏輯換算還有參考價值。**不要因為看到這些名字就以為它們是
+// 現行設計的一部分**——要改手機版的版面請改 internal/ui/phone。
 package mobileui
 
 import "math"
