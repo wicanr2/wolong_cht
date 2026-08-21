@@ -28,7 +28,9 @@ func RunDesktop() error {
 	ebiten.SetWindowTitle("臥龍傳 Remake — 手機版")
 	g := newGame(opt, font, shot, at)
 	// 推廣片的逐幀輸出（`WOLONG_FRAMES_DIR`），手機上不存在。
-	g.rec = newDemoRecorder()
+	if r := newDemoRecorder(); r != nil {
+		g.rec = r
+	}
 	return ebiten.RunGame(g)
 }
 

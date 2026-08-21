@@ -52,7 +52,13 @@ GOBIN=/tmp/bin go install "github.com/hajimehoshi/ebiten/v2/cmd/ebitenmobile@$EB
 
 echo "── ebitenmobile bind（$ABIS）──"
 mkdir -p android/app/libs
+# ⚠ **`.so` 要 16 KB 對齊**。Android 15 起有 16 KB page size 的裝置，
+# 而 Go 產出的 `libgojni.so` 預設是 4 KB（LOAD 段 align=0x1000）——
+# 那種 `.so` 在 16 KB 的機器上**載不起來**，症狀是一啟動就掛，
+# 而 4 KB 的機器上完全正常，所以測不出來。
+# `zipalign -P 16` 驗的是 zip 那一層，**驗不到 ELF 這一層**。
 /tmp/bin/ebitenmobile bind \
+    -ldflags "-extldflags=-Wl,-z,max-page-size=16384" \
     -target "$ABIS" \
     -androidapi 29 \
     -javapkg com.wicanr2.wolong.mobile \
@@ -65,5 +71,32 @@ cd android
 '
 
 APK="$REPO_ROOT/android/app/build/outputs/apk/debug/app-debug.apk"
+
+# ⭐ **對齊要驗，不能只靠旗標**。旗標打錯字、工具鏈換版、`ebitenmobile`
+# 換掉傳遞方式，任何一種都會讓對齊悄悄掉回 4 KB——而 4 KB 的機器上一切正常，
+# 只有 16 KB page size 的裝置會一啟動就掛。
+docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
+    --network none --memory 2g --cpus 1 --pids-limit 64 \
+    -v "$REPO_ROOT:/src:ro" -u "$(id -u):$(id -g)" -e HOME=/tmp \
+    "$IMAGE" bash -c '
+set -euo pipefail
+cd /tmp && rm -rf apkcheck
+unzip -o -q /src/android/app/build/outputs/apk/debug/app-debug.apk "lib/*" -d apkcheck
+bad=0
+for f in apkcheck/lib/*/*.so; do
+    for a in $(readelf -lW "$f" | awk "/LOAD/ {print \$NF}"); do
+        if [ "$a" != "0x4000" ]; then
+            echo "⚠ $f 的 LOAD 段對齊是 $a，不是 16 KB（0x4000）" >&2
+            bad=1
+        fi
+    done
+done
+[ "$bad" = 0 ] || { echo "16 KB page size 的裝置載不起這個 .so" >&2; exit 1; }
+echo "✓ .so 的 LOAD 段都是 16 KB 對齊"
+$ANDROID_HOME/build-tools/35.0.0/zipalign -c -P 16 -v 4 \
+    /src/android/app/build/outputs/apk/debug/app-debug.apk >/dev/null
+echo "✓ zip 內的 .so 也照 16 KB 對齊"
+'
+
 ls -l "$APK"
 echo "$APK"

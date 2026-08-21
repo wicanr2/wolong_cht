@@ -48,8 +48,19 @@ type game struct {
 	shotAt   int
 	shotPath string
 
-	// rec 是推廣片的逐幀輸出（demo.go）。手機上永遠是 nil。
-	rec *demoRecorder
+	// rec 是推廣片的逐幀輸出（demo.go）。**手機上永遠是 nil**——
+	// 那一支只在桌面編（`//go:build !android`），所以這裡用介面接，
+	// 不是具體型別：具體型別會讓 Android 那一邊編不過。
+	rec frameRecorder
+}
+
+// frameRecorder 是逐幀輸出的介面。實作在 demo.go（只在桌面編）。
+type frameRecorder interface {
+	// step 跑到這一張圖該做的動作。
+	step(*phone.Session)
+	// shot 寫出這一張，回傳 true 表示錄完了。
+	shot(*ebiten.Image) bool
+	close()
 }
 
 // dragThreshold 是「這是拖曳不是點擊」的門檻（螢幕像素）。
