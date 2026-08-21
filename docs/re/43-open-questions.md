@@ -23,15 +23,15 @@
 | 程式碼理解 | 175 | 168 | 7 | 0 |
 | 驗收 | 49 | 40 | 9 | 0 |
 | 外部資料 | 7 | 7 | 0 | 0 |
-| 其他 | 143 | 132 | 11 | 0 |
-| **合計** | **431** | 399 | 32 | 0 |
+| 其他 | 142 | 131 | 11 | 0 |
+| **合計** | **430** | 398 | 32 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/re/` | 175 |
-| `docs/spec/` | 118 |
+| `docs/spec/` | 117 |
 | `docs/playtest/` | 49 |
 | `docs/formats/` | 33 |
 | `docs/mechanics/` | 24 |
@@ -353,7 +353,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（143 條）
+## 2.6 其他（142 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -488,7 +488,6 @@
 | [`spec/67-ending-playback.md`](../spec/67-ending-playback.md) | `END_S12` 右半 | 用 640 版面畫出來右邊是雜訊，可能還有第二塊（`formats/09` §6） | 實測 |
 | [`spec/67-ending-playback.md`](../spec/67-ending-playback.md) | 第一幕的捲動 | §3 標成 remake 差異；要做就得先對 `sub_10094` 那一段的逐列位移 | 靜態 |
 | [`spec/67-ending-playback.md`](../spec/67-ending-playback.md) | 音樂 | `ENDBGM.DAT` 已可播（`endbgm-0`），但還沒接進這一段的起訖 | 靜態 |
-| [`spec/67-ending-playback.md`](../spec/67-ending-playback.md) | 第 2–11 幕的節拍 | 與原版不符，每幕快約 10 秒。**算式與差異表在 §8**，缺的是實作 | 靜態 |
 | [`spec/68-death-animation.md`](../spec/68-death-animation.md) | 大將陣亡 | 大將不會死（`sub_1B618` 的 `IsGeneral` 那一條），所以 `+0` 那一組實際只有騎馬會用到；大將的倒地圖是不是死碼還沒查 | 靜態 |
 | [`spec/69-world-fingerprint.md`](../spec/69-world-fingerprint.md) | 跨平台實測 | Android 端還沒有東西可以跑（里程碑 A 本身） | 實測 |
 | [`spec/69-world-fingerprint.md`](../spec/69-world-fingerprint.md) | 戰術戰鬥要不要進指紋 | 目前不進。要驗戰場的決定性得另外做一個，`tactical.Battle` 的欄位更多 | 靜態 |

@@ -211,7 +211,7 @@
 | [`docs/spec/64-capital-relocation-report.md`](spec/64-capital-relocation-report.md) | 64 — 遷都之後說什麼：自國君主下令，他國要有外交官才報得回來 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/65-retreated-soldiers-survive.md`](spec/65-retreated-soldiers-survive.md) | 65 — 退到畫面外的兵算生還，不算戰死 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/66-broken-walls-repaint.md`](spec/66-broken-walls-repaint.md) | 66 — 城壁與門打壞之後，畫面上的地形要跟著換 | CONFORMED。 | 2026-08-18 |
-| [`docs/spec/67-ending-playback.md`](spec/67-ending-playback.md) | 67 — 結局的播放 | READY（幕序、色盤、文字與第一幕 CONFORMED；第 2–11 幕的節拍不符）。 | 2026-08-18 |
+| [`docs/spec/67-ending-playback.md`](spec/67-ending-playback.md) | 67 — 結局的播放 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/68-death-animation.md`](spec/68-death-animation.md) | 68 — 倒地動畫：四幀，換一組圖 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/69-world-fingerprint.md`](spec/69-world-fingerprint.md) | 69 — 世界指紋：同一個 seed 兩次跑出同一個值 | CONFORMED。⚠ 這一份沒有原版出處——它是 remake 的驗證設施，不是原版機制。 | 2026-08-20 |
 | [`docs/spec/70-phone-chrome.md`](spec/70-phone-chrome.md) | 70 — 手機版的按鈕與面板用原版的底色與外框 | CONFORMED。 | 2026-08-21 |

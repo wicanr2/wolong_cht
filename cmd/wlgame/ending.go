@@ -24,11 +24,28 @@ const (
 	// endingUnitNum／endingUnitDen 把原版的延遲單位換成幀：18.2 Hz × 4。
 	endingUnitNum = endingFPS * 10
 	endingUnitDen = 728
-	// 原版的四個延遲常數（docs/re/70 §4）。
-	endingFadeStepUnits  = 0x0A
-	endingTypeUnits      = 0x12
-	endingSceneHoldUnits = 0x32
-	endingFinalHoldUnits = 0x258
+
+	// 原版的延遲常數。**三段各有各的一組**，不要互相套用——
+	// 先前把第一幕的 0x0A 套到第 2–11 幕，每幕就快了約 10 秒
+	// （docs/spec/67 §8）。
+	endingTypeUnits = 0x12 // 第一幕打字，每個字
+
+	// 第一幕（sub_10094，docs/re/70 §4）
+	endingFirstFadeInUnits  = 0x0A  // 淡入每階
+	endingFirstFadeOutUnits = 0x07  // 打完字之後的淡出每階
+	endingFinalFadeOutUnits = 0x0E  // 「終」那一頁的淡出每階
+	endingFinalHoldUnits    = 0x258 // 「終」那一頁停多久
+
+	// 幕 0 與幕 1 之間，start 還有一段黑畫面（docs/re/70 §3）
+	endingInterludeUnits = 0xC8
+
+	// 第 2–11 幕（sub_10293，docs/re/70 §3.1）
+	endingSceneFadeUnits = 0x02  // 淡入淡出每階
+	endingSceneHoldUnits = 0x32  // ★ 淡入**之前**的黑幕停留
+	endingSceneViewUnits = 0x320 // ★ 全亮之後的看圖時間
+
+	// 最後一幕（END_S12，docs/re/70 §3）
+	endingLastFadeUnits = 0x08
 )
 
 // endingFrames 把原版的延遲單位換成 remake 的幀數，至少一幀。
@@ -43,12 +60,51 @@ func endingFrames(units int) int {
 type endingPhase int
 
 const (
-	endingFadeIn endingPhase = iota
-	endingType               // 只有第一幕：逐字打出結尾文字
+	// endingPreHold 是**淡入之前的黑幕停留**。原版第 2–11 幕的 0x32 落在
+	// 這裡（貼完圖與字幕、色盤還是黑的時候），不是看圖時間。
+	endingPreHold endingPhase = iota
+	endingFadeIn
+	endingType // 只有第一幕：逐字打出結尾文字
 	endingHold
 	endingFadeOut
 	endingDone
 )
+
+// scenePace 給一幕的三個參數：淡入前的黑幕停留、每階的淡入淡出、全亮的停留。
+// 單位是原版的延遲單位，換算在 endingFrames。出處逐格列在 docs/spec/67 §8.1。
+//
+// fadeOut 與 fadeIn 只有第一幕不同（0x0A 進、0x07 出），其餘各幕進出同值。
+func scenePace(scene int, finalPage bool) (pre, fade, hold int) {
+	switch {
+	case scene == 0 && !finalPage:
+		// END_S1 ＋ 逐字文字：淡入 0x0A，打完字用 0x07 淡出（hold 由打字取代）
+		return 0, endingFirstFadeInUnits, 0
+	case scene == 0:
+		// 「終」那一頁
+		return 0, endingFirstFadeInUnits, endingFinalHoldUnits
+	case scene == 1:
+		// 幕 0 之後的 delay(0xC8) 與這一幕自己的 0x32 中間畫面都是黑的，合併
+		return endingInterludeUnits + endingSceneHoldUnits, endingSceneFadeUnits, endingSceneViewUnits
+	case scene == cutscene.Scenes-1:
+		// END_S12：淡入之後停住等輸入，沒有停留也沒有淡出
+		return 0, endingLastFadeUnits, 0
+	default:
+		return endingSceneHoldUnits, endingSceneFadeUnits, endingSceneViewUnits
+	}
+}
+
+// fadeOutUnits 是這一幕**淡出**每階的延遲。只有第一幕的兩趟不同。
+func fadeOutUnits(scene int, finalPage bool) int {
+	switch {
+	case scene == 0 && !finalPage:
+		return endingFirstFadeOutUnits
+	case scene == 0:
+		return endingFinalFadeOutUnits
+	default:
+		_, fade, _ := scenePace(scene, finalPage)
+		return fade
+	}
+}
 
 type endingState struct {
 	art   *cutscene.Ending
@@ -57,6 +113,9 @@ type endingState struct {
 	step  int // 淡入淡出走到第幾階
 	chars int // 已經打出幾個字
 	wait  int // 還要等幾幀
+	// finalPage 只在第一幕有意義：打完字、淡出到黑之後翻成 true，
+	// 這時畫的是「終」那一頁（原版 sub_10204 換整頁，docs/re/70 §4）。
+	finalPage bool
 }
 
 // beginEnding 準備結局播放。素材載不到就回 nil，呼叫端退回原本的對話框——
@@ -70,7 +129,14 @@ func (g *game) beginEnding() *endingState {
 		g.lastEvent = "結局過場載入失敗：" + err.Error()
 		return nil
 	}
-	return &endingState{art: art, wait: endingFrames(endingFadeStepUnits)}
+	pre, fade, _ := scenePace(0, false)
+	e := &endingState{art: art}
+	if pre > 0 {
+		e.phase, e.wait = endingPreHold, endingFrames(pre)
+	} else {
+		e.phase, e.wait = endingFadeIn, endingFrames(fade)
+	}
+	return e
 }
 
 // update 推一幀。回傳 true 表示放完了。
@@ -82,42 +148,60 @@ func (e *endingState) update() bool {
 		e.wait--
 		return false
 	}
+	_, fade, hold := scenePace(e.scene, e.finalPage)
 	switch e.phase {
+	case endingPreHold:
+		// 黑幕停留跑完才開始淡入。
+		e.step, e.phase, e.wait = 0, endingFadeIn, endingFrames(fade)
 	case endingFadeIn:
 		e.step++
 		if e.step >= cutscene.FadeSteps {
 			e.step = cutscene.FadeSteps - 1
-			if e.scene == 0 {
+			switch {
+			case e.scene == 0 && !e.finalPage:
+				// 第一趟：淡入之後開始打字，沒有停留。
 				e.phase, e.wait = endingType, endingFrames(endingTypeUnits)
-			} else {
-				e.phase, e.wait = endingHold, endingFrames(endingSceneHoldUnits)
+			case e.scene == cutscene.Scenes-1:
+				// 最後一幕淡入完就停住等輸入，沒有停留也沒有淡出。
+				e.phase, e.wait = endingDone, 0
+				return true
+			default:
+				e.phase, e.wait = endingHold, endingFrames(hold)
 			}
 			return false
 		}
-		e.wait = endingFrames(endingFadeStepUnits)
+		e.wait = endingFrames(fade)
 	case endingType:
 		e.chars++
 		if e.chars >= e.totalChars() {
-			e.phase, e.wait = endingHold, endingFrames(endingSceneHoldUnits)
+			// 打完字先淡出到黑，再換成「終」那一頁——原版不是在全亮時換頁。
+			e.phase, e.wait = endingFadeOut, endingFrames(fadeOutUnits(e.scene, e.finalPage))
 			return false
 		}
 		e.wait = endingFrames(endingTypeUnits)
 	case endingHold:
-		if e.scene == cutscene.Scenes-1 {
-			// 最後一幕停久一點，然後留在畫面上等玩家。
-			e.phase, e.wait = endingDone, 0
-			return true
-		}
-		e.phase, e.wait = endingFadeOut, endingFrames(endingFadeStepUnits)
+		e.phase, e.wait = endingFadeOut, endingFrames(fadeOutUnits(e.scene, e.finalPage))
 	case endingFadeOut:
 		e.step--
 		if e.step < 0 {
+			e.step = 0
+			if e.scene == 0 && !e.finalPage {
+				// 同一幕的第二趟：翻頁再淡入一次。
+				e.finalPage = true
+				_, f2, _ := scenePace(e.scene, true)
+				e.phase, e.wait = endingFadeIn, endingFrames(f2)
+				return false
+			}
 			e.scene++
-			e.step, e.phase = 0, endingFadeIn
-			e.wait = endingFrames(endingFadeStepUnits)
+			p2, f2, _ := scenePace(e.scene, false)
+			if p2 > 0 {
+				e.phase, e.wait = endingPreHold, endingFrames(p2)
+			} else {
+				e.phase, e.wait = endingFadeIn, endingFrames(f2)
+			}
 			return false
 		}
-		e.wait = endingFrames(endingFadeStepUnits)
+		e.wait = endingFrames(fadeOutUnits(e.scene, e.finalPage))
 	}
 	return false
 }
@@ -166,8 +250,9 @@ func (g *game) drawEnding(screen *ebiten.Image) {
 	screen.Fill(color.RGBA{0, 0, 0, 255})
 	img := e.art.Frames[e.scene]
 	key := e.scene
-	if e.scene == 0 && e.phase != endingType && e.art.Final != nil {
-		// 「終」那一頁是打完字之後才換上去的（docs/formats/09 §6）。
+	if e.finalPage && e.art.Final != nil {
+		// 「終」那一頁是打完字、**淡出到黑之後**才換上去的
+		// （原版 sub_10204 換整頁，docs/re/70 §4）。
 		img, key = e.art.Final, -1
 	}
 	if img != nil {
@@ -181,7 +266,7 @@ func (g *game) drawEnding(screen *ebiten.Image) {
 		}
 		screen.DrawImage(tex, nil)
 	}
-	if e.scene == 0 && e.chars > 0 {
+	if e.scene == 0 && !e.finalPage && e.chars > 0 {
 		g.drawEndingText(screen, e)
 	}
 	// 淡入淡出：階數照原版的 17 階，疊一層黑。
