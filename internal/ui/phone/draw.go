@@ -7,31 +7,98 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/vector"
 
+	"github.com/wicanr2/wolong_cht/internal/assets/library"
 	"github.com/wicanr2/wolong_cht/internal/assets/world"
 	"github.com/wicanr2/wolong_cht/internal/assets/text"
 	"github.com/wicanr2/wolong_cht/internal/state"
+	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
-// 手機版的配色。⚠ **這不是原版調色盤**——原版的介面色是從
-// `GAMEPAL.BRG` 查出來的（docs/spec/54），那一套綁在 640×400 的版面上。
-// 這裡是重畫的外殼，用自己的色票，並且刻意壓低彩度讓原版美術站在前面。
-var (
-	inkBar    = color.RGBA{16, 22, 38, 255}
-	inkPanel  = color.RGBA{24, 33, 56, 255}
-	inkEdge   = color.RGBA{92, 116, 168, 255}
-	inkText   = color.RGBA{232, 238, 250, 255}
-	inkDim    = color.RGBA{150, 168, 205, 255}
-	inkSelect = color.RGBA{255, 214, 102, 255}
-	inkVoid   = color.RGBA{8, 10, 18, 255}
-	// inkOverlay 是擋住世界的決定壓在地圖上那一層。**半透明**：
-	// 地圖還看得見，玩家才知道這個決定發生在哪。
-	inkOverlay = color.RGBA{8, 10, 18, 210}
-)
+// 手機版的顏色與外框**全部取自原版**（docs/spec/70）：
+// 底色查 `GAMEPAL.BRG`、外框是 `ICONGRF.DAT` 的 8×8 點陣圖塊，
+// 兩者都由 `internal/ui/chrome` 提供——**與桌面版同一份**。
+//
+// ⛔ **不要在這一層抄 RGB。** `chrome` 的顏色是載入素材時查調色盤覆寫的；
+// 抄一份常數就會在調色盤換算改動時悄悄脫鉤（docs/spec/54 §1 記的就是那個事故）。
+// 下面每一支都是**現查**，不是快取。
+//
+// 對應關係（哪一塊算原版的哪一種視窗）見 docs/spec/70 §2。
+
+// inkVoid() 是畫面最底層。原版的命令列與四周都是色 0。
+func inkVoid() color.RGBA { return chrome.Blank }
+
+// inkBar() 是狀態列與指令列的底：原版的命令列是**純黑，沒有龍紋**
+//（docs/spec/54 §2）。
+func inkBar() color.RGBA { return chrome.Blank }
+
+// inkPanel() 是選單／情報視窗的底：深藍 ＋ 龍紋。
+func inkPanel() color.RGBA { return chrome.Menu }
+
+// inkSheet 是清單視窗的底：米色。一覽的四張表用它。
+func inkSheet() color.RGBA { return chrome.Sheet }
+
+// inkText() 是深藍底上的字（色 15）。
+func inkText() color.RGBA { return chrome.Paper }
+
+// inkInk 是米色底上的字（色 0）。
+func inkInk() color.RGBA { return chrome.Ink }
+
+// inkSelect() 是反白條（色 5）。
+func inkSelect() color.RGBA { return chrome.Select }
+
+// inkDim() 是次要文字。原版側欄的「君主名與『對』」用色 11
+//（docs/spec/31 §2.1），這裡沿用它當次要色。
+func inkDim() color.RGBA { return palSecondary }
+
+// inkEdge() 是分隔線。沒有原版對應（原版用圖塊框，不畫線），
+// 取次要色讓它與外框同一個色系。
+func inkEdge() color.RGBA { return palSecondary }
+
+// inkOverlay() 是擋住世界的決定壓在地圖上那一層：**半透明的選單底色**，
+// 地圖還看得見，玩家才知道這個決定發生在哪。
+func inkOverlay() color.RGBA {
+	c := chrome.Menu
+	c.A = 214
+	return c
+}
+
+// palSecondary 是調色盤索引 11。載入素材時更新，取不到就留 fallback。
+var palSecondary = color.RGBA{130, 150, 190, 255}
+
+// secondaryIndex 是次要文字的調色盤索引（docs/spec/31 §2.1）。
+const secondaryIndex = 11
+
+// setPalette 把跟著調色盤走的顏色更新一次。**與 `chrome.Load` 同一個做法**：
+// 顏色是查出來的，不是抄的。
+func setPalette(lib *library.Library, bank int) {
+	if lib == nil {
+		return
+	}
+	if c, err := lib.PaletteColor(bank, secondaryIndex); err == nil {
+		palSecondary = c
+	}
+}
+
+// window 畫一個原版樣式的視窗：底色 ＋ `ICONGRF` 的外框圖塊。
+//
+// ⚠ **外框圖塊是 8×8**，寬高不是 8 的倍數時邊會切在半塊上。底色照原來的
+// 矩形填滿，框則向下取到 8 的倍數——寧可框小一圈，不要切半塊（docs/spec/70 §2）。
+func (s *Session) window(dst *ebiten.Image, x, y, w, h int, fill color.RGBA) {
+	fillRect(dst, x, y, w, h, fill)
+	if s.ch == nil {
+		return
+	}
+	fw, fh := w/chrome.Tile*chrome.Tile, h/chrome.Tile*chrome.Tile
+	if fw < chrome.Tile*2 || fh < chrome.Tile*2 {
+		return
+	}
+	s.ch.Window(dst, x, y, fw, fh, fill)
+}
 
 // Draw 把一局畫進 960×540 的邏輯畫布。
 func (s *Session) Draw(dst *ebiten.Image, td *textdraw.Drawer) {
-	dst.Fill(inkVoid)
+	dst.Fill(inkVoid())
 	// ⭐ 戰場開著時**整個主區換成戰場**，大地圖不畫——
 	// 原版進戰術畫面時戰略畫面也整個換掉。
 	if s.BattleActive() {
@@ -63,8 +130,14 @@ func (s *Session) Draw(dst *ebiten.Image, td *textdraw.Drawer) {
 // drawSheet 畫指令列打開的面板。
 func (s *Session) drawSheet(dst *ebiten.Image, td *textdraw.Drawer) {
 	mx, my, mw, mh := MapRect()
-	vector.DrawFilledRect(dst, float32(mx), float32(my), float32(mw), float32(mh), inkPanel, false)
-	s.drawTabs(dst, td)
+	// ⭐ **一覽是原版的「清單視窗」**：米色底、黑字。其餘的面板是
+	// 「選單／情報視窗」：深藍底 ＋ 龍紋、白字（docs/spec/70 §2）。
+	bg, fg, dim := inkPanel(), inkText(), inkDim()
+	if s.sheet.cmd == CmdList {
+		bg, fg, dim = inkSheet(), inkInk(), inkInk()
+	}
+	s.window(dst, mx, my, mw, mh, bg)
+	s.drawTabs(dst, td, bg, fg)
 	rows := s.sheetRows()
 	if td == nil || !td.Available() {
 		return
@@ -74,13 +147,9 @@ func (s *Session) drawSheet(dst *ebiten.Image, td *textdraw.Drawer) {
 	for i := 0; i < visible && i+s.sheet.scroll < len(rows); i++ {
 		r := rows[i+s.sheet.scroll]
 		y := top + i*rowH
-		if (i+s.sheet.scroll)%2 == 1 {
-			vector.DrawFilledRect(dst, float32(mx), float32(y),
-				float32(mw), float32(rowH), inkBar, false)
-		}
-		ink := inkText
+		ink := fg
 		if r.dim {
-			ink = inkDim
+			ink = dim
 		}
 		td.Draw(dst, r.name, mx+sheetPadX, y+sheetHeadDY, ink)
 		// 欄位從右往左排：欄數不固定，靠右對齊才不會因為某一頁少一欄
@@ -92,48 +161,44 @@ func (s *Session) drawSheet(dst *ebiten.Image, td *textdraw.Drawer) {
 				continue
 			}
 			x -= td.Width(c)
-			td.Draw(dst, c, x, y+sheetHeadDY, inkDim)
+			td.Draw(dst, c, x, y+sheetHeadDY, dim)
 			x -= rowTextDX * 2
 		}
 	}
 	if f := s.sheetFooter(); f != "" {
-		td.Draw(dst, f, mx+sheetPadX, my+mh-rowH, inkDim)
+		td.Draw(dst, f, mx+sheetPadX, my+mh-rowH, dim)
 	}
 	if s.lastErr != nil {
-		td.Draw(dst, s.lastErr.Error(), mx+sheetPadX, my+mh-rowH*2, inkSelect)
+		td.Draw(dst, s.lastErr.Error(), mx+sheetPadX, my+mh-rowH*2, fg)
 	}
 }
 
-func (s *Session) drawTabs(dst *ebiten.Image, td *textdraw.Drawer) {
+func (s *Session) drawTabs(dst *ebiten.Image, td *textdraw.Drawer, bg, fg color.RGBA) {
 	tabs := s.Tabs()
 	mx, my, mw, _ := MapRect()
 	if len(tabs) == 0 {
 		// 沒有分頁的面板仍然要有一條標題列，否則第一列會貼著狀態列，
 		// 看起來像地圖的一部分。
-		vector.DrawFilledRect(dst, float32(mx), float32(my), float32(mw), tabH, inkBar, false)
+		fillRect(dst, mx+chrome.Tile, my+chrome.Tile, mw-chrome.Tile*2, tabH-chrome.Tile, inkBar())
 		if td != nil && td.Available() && s.sheet.cmd >= 0 {
-			td.Draw(dst, s.sheet.cmd.Label(), mx+sheetPadX, my+sheetHeadDY+2, inkText)
+			td.Draw(dst, s.sheet.cmd.Label(), mx+sheetPadX, my+sheetHeadDY+2, inkText())
 		}
 		return
 	}
 	cell := mw / len(tabs)
 	for i, t := range tabs {
 		x := mx + i*cell
-		bg := inkBar
+		// 選中的分頁用**反白條**（色 5），其餘留視窗底色——
+		// 原版清單的選取就是這樣標的。
+		ink := fg
 		if i == s.sheet.tab {
-			bg = inkPanel
-		}
-		vector.DrawFilledRect(dst, float32(x), float32(my), float32(cell), tabH, bg, false)
-		if i == s.sheet.tab {
-			vector.DrawFilledRect(dst, float32(x), float32(my+tabH-3),
-				float32(cell), 3, inkSelect, false)
+			fillRect(dst, x, my+chrome.Tile, cell, tabH-chrome.Tile, inkSelect())
+			ink = inkInk()
+		} else {
+			fillRect(dst, x, my+chrome.Tile, cell, tabH-chrome.Tile, bg)
 		}
 		if td == nil || !td.Available() {
 			continue
-		}
-		ink := inkDim
-		if i == s.sheet.tab {
-			ink = inkText
 		}
 		td.Draw(dst, t, x+(cell-td.Width(t))/2, my+sheetHeadDY+2, ink)
 	}
@@ -146,25 +211,27 @@ func (s *Session) drawTabs(dst *ebiten.Image, td *textdraw.Drawer) {
 // 記在 docs/mobile/android-ux.md §7。
 func (s *Session) drawAdvise(dst *ebiten.Image, td *textdraw.Drawer) {
 	mx, my, mw, mh := MapRect()
-	vector.DrawFilledRect(dst, float32(mx), float32(my), float32(mw), float32(mh), inkPanel, false)
-	vector.DrawFilledRect(dst, float32(mx), float32(my), float32(mw), tabH, inkBar, false)
+	// ⭐ **選對象是一張清單**（就是勢力一覽的內容），用原版的清單視窗：
+	// 米色底黑字。對白那一段是原版的**對白框**，深藍 ＋ 龍紋。
+	picking := s.advise.stage == advisePickAlly || s.advise.stage == advisePickTarget
+	bg, fg := inkPanel(), inkText()
+	if picking {
+		bg, fg = inkSheet(), inkInk()
+	}
+	s.window(dst, mx, my, mw, mh, bg)
 	if td == nil || !td.Available() {
 		return
 	}
-	td.Draw(dst, s.adviseTitle(), mx+sheetPadX, my+sheetHeadDY+2, inkText)
+	td.Draw(dst, s.adviseTitle(), mx+sheetPadX, my+sheetHeadDY+2, fg)
 
-	if s.advise.stage == advisePickAlly || s.advise.stage == advisePickTarget {
+	if picking {
 		// 對象可能有二十幾個，底部的選項條放不下——用可捲的清單。
 		choices := s.AdviseChoices()
 		top := my + tabH
 		visible := (mh - tabH) / rowH
 		for i := 0; i < visible && i+s.sheet.scroll < len(choices); i++ {
 			y := top + i*rowH
-			if (i+s.sheet.scroll)%2 == 1 {
-				vector.DrawFilledRect(dst, float32(mx), float32(y),
-					float32(mw), float32(rowH), inkBar, false)
-			}
-			td.Draw(dst, choices[i+s.sheet.scroll], mx+sheetPadX, y+sheetHeadDY, inkText)
+			td.Draw(dst, choices[i+s.sheet.scroll], mx+sheetPadX, y+sheetHeadDY, fg)
 		}
 		return
 	}
@@ -180,20 +247,20 @@ func (s *Session) drawAdvise(dst *ebiten.Image, td *textdraw.Drawer) {
 	for i, l := range said {
 		y := my + tabH + sheetHeadDY + i*rowH
 		if l.lord {
-			td.Draw(dst, l.text, mx+sheetPadX, y, inkSelect)
+			td.Draw(dst, l.text, mx+sheetPadX, y, inkSelect())
 			continue
 		}
 		// 軍師（玩家）的話靠右，與君主分開。
-		td.Draw(dst, l.text, mx+mw-sheetPadX-td.Width(l.text), y, inkText)
+		td.Draw(dst, l.text, mx+mw-sheetPadX-td.Width(l.text), y, inkText())
 	}
 	for i, c := range choices {
 		y := bottom + i*rowH
-		vector.DrawFilledRect(dst, float32(mx), float32(y), float32(mw), float32(rowH-2), inkBar, false)
-		td.Draw(dst, c, mx+sheetPadX, y+4, inkText)
+		fillRect(dst, mx+chrome.Tile, y, mw-chrome.Tile*2, rowH-2, inkBar())
+		td.Draw(dst, c, mx+sheetPadX, y+4, inkText())
 	}
 	if len(choices) == 0 {
 		td.Draw(dst, "點畫面繼續", mx+mw-sheetPadX-td.Width("點畫面繼續"),
-			my+mh-rowH, inkDim)
+			my+mh-rowH, inkDim())
 	}
 }
 
@@ -254,8 +321,11 @@ func (s *Session) drawSelectionRing(dst *ebiten.Image) {
 	x := float32(mx) + (float32(c.X+world.CityCentreDX-s.camX)-half)*px
 	y := float32(my) + (float32(c.Y-s.camY)-half)*px
 	side := px * ringTiles
-	vector.StrokeRect(dst, x-1, y-1, side+2, side+2, 5, inkVoid, false)
-	vector.StrokeRect(dst, x, y, side, side, 3, inkSelect, false)
+	// ⚠ 內圈用**色 15**（白）不是反白條的色 5：原版沒有「選中的據點」這個
+	// 東西，色 5 是清單反白用的綠，疊在土黃城與草地上分不出來。
+	// 白配黑在大地圖的每一種地形上都看得見（docs/spec/70 §2 的例外）。
+	vector.StrokeRect(dst, x-1, y-1, side+2, side+2, 5, inkVoid(), false)
+	vector.StrokeRect(dst, x, y, side, side, 3, inkText(), false)
 }
 
 func (s *Session) cityMarks() []world.CityMark {
@@ -276,23 +346,22 @@ func (s *Session) cityMarks() []world.CityMark {
 }
 
 func (s *Session) drawStatusBar(dst *ebiten.Image, td *textdraw.Drawer) {
-	vector.DrawFilledRect(dst, 0, 0, LogicalW, StatusH, inkBar, false)
-	vector.StrokeLine(dst, 0, StatusH, LogicalW, StatusH, 1, inkEdge, false)
+	s.window(dst, 0, 0, LogicalW, StatusH, inkBar())
 	if td == nil || !td.Available() {
 		return
 	}
 	c := s.world.Clock
-	td.Draw(dst, fmt.Sprintf("%d年%d月%d日", c.Year, c.Month, c.Day), 16, 18, inkText)
+	td.Draw(dst, fmt.Sprintf("%d年%d月%d日", c.Year, c.Month, c.Day), 16, 18, inkText())
 
 	p := s.world.Player
 	if p < 0 || p >= len(s.world.Factions) {
 		return
 	}
 	f := &s.world.Factions[p]
-	td.Draw(dst, "資金", LogicalW-330, 18, inkDim)
-	td.Draw(dst, fmt.Sprintf("%d", f.Funds), LogicalW-268, 18, inkText)
-	td.Draw(dst, "預備兵", LogicalW-150, 18, inkDim)
-	td.Draw(dst, fmt.Sprintf("%d", totalReserves(f)*MenPerPoint), LogicalW-62, 18, inkText)
+	td.Draw(dst, "資金", LogicalW-330, 18, inkDim())
+	td.Draw(dst, fmt.Sprintf("%d", f.Funds), LogicalW-268, 18, inkText())
+	td.Draw(dst, "預備兵", LogicalW-150, 18, inkDim())
+	td.Draw(dst, fmt.Sprintf("%d", totalReserves(f)*MenPerPoint), LogicalW-62, 18, inkText())
 }
 
 func totalReserves(f *state.Faction) int {
@@ -304,23 +373,22 @@ func totalReserves(f *state.Faction) int {
 }
 
 func (s *Session) drawCommandBar(dst *ebiten.Image, td *textdraw.Drawer) {
-	vector.DrawFilledRect(dst, 0, LogicalH-CommandH, LogicalW, CommandH, inkBar, false)
-	vector.StrokeLine(dst, 0, LogicalH-CommandH, LogicalW, LogicalH-CommandH, 1, inkEdge, false)
+	fillRect(dst, 0, LogicalH-CommandH, LogicalW, CommandH, inkBar())
 	for i := 0; i < int(numCommands); i++ {
 		x, y, w, h := CommandRect(i)
-		bg := inkPanel
-		// 開著的那個入口要看得出來——手機上沒有游標，
-		// 不標的話玩家分不出「面板是誰開的」。
+		// 開著的那個入口用**反白條的顏色**——手機上沒有游標，
+		// 不標的話玩家分不出「面板是誰開的」。原版的反白就是色 5。
+		bg := inkBar()
+		ink := inkText()
 		if s.sheet.open && s.sheet.cmd == Command(i) {
-			bg = inkEdge
+			bg, ink = inkSelect(), inkInk()
 		}
-		vector.DrawFilledRect(dst, float32(x), float32(y), float32(w), float32(h), bg, false)
-		vector.StrokeRect(dst, float32(x), float32(y), float32(w), float32(h), 1, inkEdge, false)
+		s.window(dst, x, y, w, h, bg)
 		if td == nil || !td.Available() {
 			continue
 		}
 		label := Command(i).Label()
-		td.Draw(dst, label, x+(w-td.Width(label))/2, y+(h-16)/2, inkText)
+		td.Draw(dst, label, x+(w-td.Width(label))/2, y+(h-16)/2, ink)
 	}
 }
 
@@ -328,13 +396,12 @@ func (s *Session) drawCityCard(dst *ebiten.Image, td *textdraw.Drawer) {
 	_, my, _, mh := MapRect()
 	x := LogicalW - CardW - CardMargin
 	y := my + mh - CardH - CardMargin
-	vector.DrawFilledRect(dst, float32(x), float32(y), CardW, CardH, inkPanel, false)
-	vector.StrokeRect(dst, float32(x), float32(y), CardW, CardH, 2, inkSelect, false)
+	s.window(dst, x, y, CardW, CardH, inkPanel())
 	if td == nil || !td.Available() {
 		return
 	}
 	c := &s.world.Cities[s.selected]
-	td.Draw(dst, big5(c.Name), x+16, y+14, inkSelect)
+	td.Draw(dst, big5(c.Name), x+16, y+14, inkText())
 	rows := [][2]string{
 		{"歸屬", s.ownerName(c.Owner)},
 		{"生產力", fmt.Sprintf("%d", c.Production)},
@@ -343,8 +410,8 @@ func (s *Session) drawCityCard(dst *ebiten.Image, td *textdraw.Drawer) {
 	}
 	for i, r := range rows {
 		ry := y + 46 + i*28
-		td.Draw(dst, r[0], x+16, ry, inkDim)
-		td.Draw(dst, r[1], x+CardW-16-td.Width(r[1]), ry, inkText)
+		td.Draw(dst, r[0], x+16, ry, inkDim())
+		td.Draw(dst, r[1], x+CardW-16-td.Width(r[1]), ry, inkText())
 	}
 }
 

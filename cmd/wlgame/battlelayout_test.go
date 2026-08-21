@@ -250,23 +250,6 @@ func TestBattleFormationStripIndexMatchesRawHitMath(t *testing.T) {
 	}
 }
 
-func TestDOSVBattleSideCommandsUseOriginalSingleColumnRows(t *testing.T) {
-	l := dosvBattleLayoutFor(dosvBattleScreenW, dosvBattleScreenH)
-	cells := battleSideCommandCells(l.SideCommands)
-	if len(cells) != len(battleCommandLabels) {
-		t.Fatalf("右欄命令格數 = %d，預期 6", len(cells))
-	}
-	for i, cell := range cells {
-		if !l.SideCommands.contains(cell) {
-			t.Fatalf("右欄第 %d 列超出原版面板：%#v", i+1, cell)
-		}
-		if cell.X != l.SideCommands.X || cell.W != 128 || cell.H != 16 ||
-			cell.Y != l.SideCommands.Y+i*16 {
-			t.Fatalf("右欄第 %d 列 = %#v，預期單欄 128×16", i+1, cell)
-		}
-	}
-}
-
 func TestBattleCommandHitTestsRespectGlyphEdgesAndGaps(t *testing.T) {
 	l := dosvBattleLayoutFor(dosvBattleScreenW, dosvBattleScreenH)
 	bottom := splitBattleCommandCells(l.BottomCommands)

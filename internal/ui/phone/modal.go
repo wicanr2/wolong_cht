@@ -128,17 +128,16 @@ func (s *Session) tapModal(lx, ly float64) bool {
 func (s *Session) drawModal(dst *ebiten.Image, td *textdraw.Drawer) {
 	mx, my, mw, mh := MapRect()
 	// 半透明壓在地圖上：**地圖還看得見**，玩家才知道這個決定發生在哪。
-	fillRect(dst, mx, my, mw, mh, inkOverlay)
+	fillRect(dst, mx, my, mw, mh, inkOverlay())
 	if td == nil || !td.Available() {
 		return
 	}
 	title := s.ModalTitle()
-	td.Draw(dst, title, mx+(mw-td.Width(title))/2, my+mh/2-40, inkText)
+	td.Draw(dst, title, mx+(mw-td.Width(title))/2, my+mh/2-40, inkText())
 	opts := s.ModalOptions()
 	for i, o := range opts {
 		x, y, w, h := modalOptionRect(i, len(opts))
-		fillRect(dst, x, y, w, h, inkPanel)
-		strokeRect(dst, x, y, w, h, inkSelect)
-		td.Draw(dst, o, x+(w-td.Width(o))/2, y+(h-16)/2, inkText)
+		s.window(dst, x, y, w, h, inkBar())
+		td.Draw(dst, o, x+(w-td.Width(o))/2, y+(h-16)/2, inkText())
 	}
 }

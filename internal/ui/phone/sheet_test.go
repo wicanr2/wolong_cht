@@ -1,10 +1,12 @@
 package phone
 
 import (
+	"image/color"
 	"strings"
 	"testing"
 
 	"github.com/wicanr2/wolong_cht/internal/rules/persuasion"
+	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 )
 
 // 點指令列要開對應的面板，再點一次收掉。
@@ -280,5 +282,42 @@ func TestEventNoticesAppearAndExpire(t *testing.T) {
 	}
 	if len(s.Notice()) > 0 {
 		t.Fatal("訊息過了四倍停留時間還在")
+	}
+}
+
+// 顏色一律取自原版調色盤，**不得是手機層自己的常數**（docs/spec/70）。
+//
+// ⚠ 判準是「與 `chrome` 相同」而不是「等於某個 RGB」：抄一份 RGB 進來的話
+// 這個測試照樣會綠，而那正是 docs/spec/54 §1 記的那個事故。
+func TestPhoneUsesOriginalPalette(t *testing.T) {
+	s := newTestSession(t)
+	if s.ch == nil {
+		t.Fatal("沒有載入原版的視窗外框")
+	}
+	if !s.ch.Available() {
+		t.Fatal("外框圖塊沒拿到——面板會畫成純色框")
+	}
+	for _, c := range []struct {
+		name string
+		got  color.RGBA
+		want color.RGBA
+	}{
+		{"面板底", inkPanel(), chrome.Menu},
+		{"清單底", inkSheet(), chrome.Sheet},
+		{"命令列底", inkBar(), chrome.Blank},
+		{"深藍底上的字", inkText(), chrome.Paper},
+		{"米色底上的字", inkInk(), chrome.Ink},
+		{"反白條", inkSelect(), chrome.Select},
+	} {
+		if c.got != c.want {
+			t.Errorf("%s = %v，原版調色盤是 %v", c.name, c.got, c.want)
+		}
+	}
+	// 次要色要真的從調色盤查過，不是留在 fallback。
+	if want, err := s.lib.Palette.Bank(0); err == nil {
+		if inkDim() != want[secondaryIndex] {
+			t.Errorf("次要色 = %v，調色盤第 %d 色是 %v",
+				inkDim(), secondaryIndex, want[secondaryIndex])
+		}
 	}
 }

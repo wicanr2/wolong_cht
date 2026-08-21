@@ -11,6 +11,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/rng"
 	"github.com/wicanr2/wolong_cht/internal/rules/speed"
 	"github.com/wicanr2/wolong_cht/internal/state"
+	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 )
 
 // Session 是手機版的一局。它擁有**真的**規則層——與桌面版共用
@@ -23,6 +24,10 @@ type Session struct {
 
 	// origDir 是原版素材的目錄。存讀檔要用它推出來源與 overlay 的位置。
 	origDir string
+
+	// ch 是原版的視窗外框（`ICONGRF.DAT` 的三塊 8×8 圖塊 ＋ 龍紋）。
+	// **與桌面版同一份**（docs/spec/70）。缺素材時仍可用，畫成純色框。
+	ch *chrome.Set
 
 	// camX／camY 是鏡頭左上角的世界格；zoom 只允許整數倍。
 	camX, camY, zoom int
@@ -93,6 +98,10 @@ func NewSession(opt Options) (*Session, error) {
 		lib: lib, world: w, rand: rng.NewFixed(opt.Seed), origDir: opt.OrigDir,
 		zoom: 1, selected: -1, speed: DefaultSpeed, form: newCorpsForm(),
 	}
+	// 顏色與外框都跟著調色盤走，不抄常數（docs/spec/70）。
+	// 第 0 組是原版介面色所在的那一組（docs/spec/54）。
+	s.ch = chrome.Load(lib, 0)
+	setPalette(lib, 0)
 	s.attachRoads()
 	s.attachBattlefield()
 	// ⭐ **一定要開政略 AI**，不然電腦勢力什麼都不做：不出兵、不外交、

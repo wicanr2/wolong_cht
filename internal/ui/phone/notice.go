@@ -87,9 +87,9 @@ func (s *Session) drawNotice(dst *ebiten.Image, td *textdraw.Drawer) {
 	}
 	mx, my, mw, _ := MapRect()
 	h := len(lines)*26 + 16
-	fillRect(dst, mx, my, mw, h, inkOverlay)
-	strokeRect(dst, mx, my, mw, h, inkEdge)
+	fillRect(dst, mx, my, mw, h, inkOverlay())
+	strokeRect(dst, mx, my, mw, h, inkEdge())
 	for i, l := range lines {
-		td.Draw(dst, l, mx+20, my+10+i*26, inkText)
+		td.Draw(dst, l, mx+20, my+10+i*26, inkText())
 	}
 }

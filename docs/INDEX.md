@@ -213,6 +213,7 @@
 | [`docs/spec/67-ending-playback.md`](spec/67-ending-playback.md) | 67 — 結局的播放 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/68-death-animation.md`](spec/68-death-animation.md) | 68 — 倒地動畫：四幀，換一組圖 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/69-world-fingerprint.md`](spec/69-world-fingerprint.md) | 69 — 世界指紋：同一個 seed 兩次跑出同一個值 | CONFORMED。⚠ 這一份沒有原版出處——它是 remake 的驗證設施，不是原版機制。 | 2026-08-20 |
+| [`docs/spec/70-phone-chrome.md`](spec/70-phone-chrome.md) | 70 — 手機版的按鈕與面板用原版的底色與外框 | READY。 | 2026-08-21 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | CONFORMED。管線接起來了，也對原版跑過一輪 （[../playtest/37](../playtest/37… | 2026-08-15 |
 | [`docs/spec/91-tactical-parity.md`](spec/91-tactical-parity.md) | 91 — 戰場的逐區對拍：分區、同狀態怎麼達成 | DRAFT。分區與判定沿用 docs/spec/90，差別在 | 2026-08-17 |
 

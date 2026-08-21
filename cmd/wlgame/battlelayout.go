@@ -206,14 +206,26 @@ func splitBattleCommandCells(r battleRect) []battleRect {
 	return out
 }
 
+// battleSideCommandCellW 是一列命令的寬度。
+//
+// ⭐ **48，不是面板的 128**。`sub_1C863` 貼的是一張 128×96 的複合圖，
+// 但六個熱區只有左邊那 48 px：`(496, 280+16k, 48×16)`（docs/spec/31 §2.1）。
+// 右邊那 80 px 是**陣線三格**（0x04–0x06，x 552 起）——把命令格算成整條寬，
+// 點陣線的右半也會送出命令。
+const battleSideCommandCellW = 48
+
 // battleSideCommandCells 對應 sub_1C863 貼在 (496,280) 的 128×96
-// 原版複合面板：六個命令是單欄六列，每列 16 px。
+// 原版複合面板：六個命令是單欄六列，每列 48×16。
 func battleSideCommandCells(r battleRect) []battleRect {
 	out := make([]battleRect, len(battleCommandLabels))
+	w := battleSideCommandCellW
+	if r.W < w {
+		w = r.W
+	}
 	for row := range out {
 		y0 := r.Y + row*r.H/len(out)
 		y1 := r.Y + (row+1)*r.H/len(out)
-		out[row] = battleRect{X: r.X, Y: y0, W: r.W, H: y1 - y0}
+		out[row] = battleRect{X: r.X, Y: y0, W: w, H: y1 - y0}
 	}
 	return out
 }

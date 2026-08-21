@@ -193,7 +193,7 @@ func (s *Session) drawBattle(dst *ebiten.Image, td *textdraw.Drawer) {
 		return
 	}
 	fx, fy, fw, fh := BattleFieldRect()
-	fillRect(dst, fx, fy, fw, fh, inkVoid)
+	fillRect(dst, fx, fy, fw, fh, inkVoid())
 
 	if s.battle.view != nil {
 		buf := s.battle.view.Render(b)
@@ -246,12 +246,14 @@ func (s *Session) drawBattleSides(dst *ebiten.Image, td *textdraw.Drawer,
 	}
 	for i, r := range rows {
 		y := fy + 24 + i*30
-		ink := inkText
+		// 玩家那一側用色 15（白），對方用次要色——**不要用反白條的色 5**：
+		// 那是清單選取用的綠，拿來標「哪一側是我」會讀成「選中了它」。
+		ink := inkDim()
 		if (i < 2) == (s.playerSide() == tactical.AttackerSide) {
-			ink = inkSelect // 玩家那一側
+			ink = inkText()
 		}
 		if r[0] != "" {
-			td.Draw(dst, r[0], fx+16, y, inkDim)
+			td.Draw(dst, r[0], fx+16, y, inkDim())
 		}
 		td.Draw(dst, r[1], fx+48, y, ink)
 	}
@@ -268,19 +270,20 @@ func (s *Session) drawSquadStrip(dst *ebiten.Image, td *textdraw.Drawer, b *tact
 	side := s.playerSide()
 	for i := 0; i < army.Positions; i++ {
 		x, y, w, h := SquadRect(i)
-		bg := inkPanel
+		// 選中的那一格用**反白條**（色 5），其餘是命令列的黑底——
+		// 原版底列六格的選取也是靠框與反白標的（docs/spec/33 §1.1）。
+		bg, ink := inkBar(), inkText()
 		if squadSlot(i) == s.battle.squad {
-			bg = inkEdge
+			bg, ink = inkSelect(), inkInk()
 		}
-		fillRect(dst, x, y, w, h, bg)
-		strokeRect(dst, x, y, w, h, inkEdge)
+		s.window(dst, x, y, w, h, bg)
 		if td == nil || !td.Available() {
 			continue
 		}
 		label := unitLabel(squadSlot(i))
-		td.Draw(dst, label, x+(w-td.Width(label))/2, y+6, inkText)
+		td.Draw(dst, label, x+(w-td.Width(label))/2, y+6, ink)
 		men := fmt.Sprintf("%d", squadMen(b, side, squadSlot(i)))
-		td.Draw(dst, men, x+(w-td.Width(men))/2, y+h-24, inkDim)
+		td.Draw(dst, men, x+(w-td.Width(men))/2, y+h-24, ink)
 	}
 }
 
@@ -288,13 +291,12 @@ func (s *Session) drawBattleCommands(dst *ebiten.Image, td *textdraw.Drawer) {
 	for i := range battle.SideCommandRowCode {
 		c := battleCommandRow(i)
 		x, y, w, h := BattleCommandRect(i)
-		fillRect(dst, x, y, w, h, inkBar)
-		strokeRect(dst, x, y, w, h, inkEdge)
+		s.window(dst, x, y, w, h, inkBar())
 		if td == nil || !td.Available() {
 			continue
 		}
 		label := c.String()
-		td.Draw(dst, label, x+(w-td.Width(label))/2, y+(h-16)/2, inkText)
+		td.Draw(dst, label, x+(w-td.Width(label))/2, y+(h-16)/2, inkText())
 	}
 }
 
