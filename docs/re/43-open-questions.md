@@ -20,18 +20,18 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 24 | 20 | 4 | 0 |
 | 資料保存 | 33 | 32 | 1 | 0 |
-| 程式碼理解 | 175 | 168 | 7 | 0 |
+| 程式碼理解 | 177 | 170 | 7 | 0 |
 | 驗收 | 49 | 40 | 9 | 0 |
 | 外部資料 | 7 | 7 | 0 | 0 |
-| 其他 | 142 | 131 | 11 | 0 |
-| **合計** | **430** | 398 | 32 | 0 |
+| 其他 | 141 | 130 | 11 | 0 |
+| **合計** | **431** | 399 | 32 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/re/` | 175 |
-| `docs/spec/` | 117 |
+| `docs/re/` | 177 |
+| `docs/spec/` | 116 |
 | `docs/playtest/` | 49 |
 | `docs/formats/` | 33 |
 | `docs/mechanics/` | 24 |
@@ -107,7 +107,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `OPEN_S2`–`S5` 的 384,000 B | 是 §2 的三倍，多半是多張或多幀。開場播放器 `D7OPEN.EXE` 還沒反組譯 | 靜態 |
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`） | 靜態 |
 
-## 2.3 程式碼理解（175 條）
+## 2.3 程式碼理解（177 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -164,7 +164,7 @@
 | [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | 逐幀執行順序 | 顯示串列與相機已重建，但整幀的呼叫順序沒有逐幀對過 | 靜態 |
 | [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | `loc_1A065` 的 runtime bytes | 自我修改碼，靜態影像看不到每輪的實際內容（§2.2） | 靜態 |
 | [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | 四層差分（terrain／display list／composited／HUD） | 沒有 machine-readable diff，目前只有 layout-only 比較 | 靜態 |
-| [`re/22-strategy-command-tree.md`](../re/22-strategy-command-tree.md) | `off_159D2` 的其餘槽位 | 16 筆裡只有 [1] `0x1614A`、[2] `0x15E1E`、[3] `0x15A3A`、[4] `sub_15FAA`、[13] `sub_161CA` 非 `nullsub_1`。這是頂層模式分派表，[1]–[3] 未讀 | 靜態 |
+| [`re/22-strategy-command-tree.md`](../re/22-strategy-command-tree.md) | （無。 | （未解小節內文） | 靜態 |
 | [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x00` | 2 B / 未解 | 靜態 |
 | [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x06`–`+0x0F` | 10 B / 未解 | 靜態 |
 | [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x04` 那張表 | 大小與音效記錄相同（3 × 16 B），但驅動沒讀它。見 `57` §8 | 靜態 |
@@ -186,7 +186,6 @@
 | [`re/30-corps-formation-ui.md`](../re/30-corps-formation-ui.md) | `sub_1D4C7` | 大地圖上實際畫圖塊的常式，未讀 | 靜態 |
 | [`re/31-faction-picker-screen.md`](../re/31-faction-picker-screen.md) | 分派表已印出，但 `sub_15AD1 → sub_15AFC` 的進入路徑仍未定位。 | （散句） | 靜態 |
 | [`re/31-faction-picker-screen.md`](../re/31-faction-picker-screen.md) | `cs:6056` 表的長度 | 前六筆是一組小 handler，後五筆疑似越過表尾（§1.2） | 靜態 |
-| [`re/31-faction-picker-screen.md`](../re/31-faction-picker-screen.md) | `sub_15AD1 → sub_15AFC` 的進入路徑 | 不在 `off_159D2` 表裡，未定位 | 靜態 |
 | [`re/32-strategy-detail-panels.md`](../re/32-strategy-detail-panels.md) | `sub_1817D` | 軍團面板的收尾，未讀（`sub_1812A` 已解，見 `51` §3） | 靜態 |
 | [`re/32-strategy-detail-panels.md`](../re/32-strategy-detail-panels.md) | 軍團 `+0x00` 的位元怎麼清 | 三處設定都找到了，清除點未找到 | 靜態 |
 | [`re/33-shared-draw-helpers.md`](../re/33-shared-draw-helpers.md) | `cs:word_10D40` | 肖像圖庫所在的段，誰載入它未追 | 靜態 |
@@ -210,11 +209,10 @@
 | [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | 樣式碼 | 只確定 `0` ＝ 擦除、`0x0B` ＝ 指令列、`0x0C`／`0x0F` 出現在別處；完整值域未列 | 靜態 |
 | [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | `ax = 0F01h`／`0801h` | 顏色／樣式的位元編碼未逐位對過 | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | `0x80` | 繪製時 `and …, 7Fh` 清掉 / 未解 | 靜態 |
-| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 熱區 5（x 464–496） | 登記了，`off_159D2` 對應 `nullsub_1`。是保留槽還是別處會改寫這一格，未讀 | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 選完君主之後的相機 | `sub_1D615(170, 98)` 只管 NEW GAME 對話框背後那張圖。主畫面開始時相機在哪、由誰寫，未讀——`word_1988E`／`word_19890` 的六個參考**全是讀**，寫入端走 `ds:988Eh` 這種形式，要用 `tools/ida_disp_users.py` 掃 | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 格子屬性 bit `0x80` | 擦除時被清掉，沒找到設它的地方 | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 系統視窗開著時時間停止 | 說明書明講，機器碼的實作位置未找（`sub_15FAA` 的等待迴圈是候選） | 靜態 |
-| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | `funcs_159C0` 的五筆內容 | 只確認是「擦除」對應表（`sub_1895D` 樣式 0），逐筆未 dump | 靜態 |
+| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 右鍵表 `funcs_159C0` 的真實表長 | 已 dump（`71` §2.1）：它與左鍵表 `off_159D2` **只差 9 個 word 且內容重疊**，前九筆沒有一筆是函式起點。是「表只有 9 筆」還是「兩張刻意重疊」，靜態分不出來 | 靜態 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `08` 的模式 byte | `03` 只畫字、`01` 連背景一起填，是**強推論**——兩個用例（系統選單的「 ＯＫ 」、注音聲母列）都只有這個讀法說得通，但 `sub_106F5` 沒逐行讀（`55` §3） | 靜態 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `sub_1E9A7(bl=0, ax=1800h, cx=2020h)` | `sub_1030F` 登記的第二件事，未讀 | 靜態 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `op 01` 的用法 | 它是直線（§2.2），但 handler 不展開座標而十個場景又沒用到它——**預期的呼叫方式無法驗證** | 靜態 |
@@ -263,8 +261,8 @@
 | [`re/61-timer-tick-source.md`](../re/61-timer-tick-source.md) | `cs:099Eh` 的 bit 1 | 「音樂啟用」是從用法推的，寫入端沒讀 | 靜態 |
 | [`re/61-timer-tick-source.md`](../re/61-timer-tick-source.md) | 無音效驅動時的行為 | §3 推論「會卡死」，**沒有實測**——DOSBox 拿掉 `YNSOUND.COM` 跑一次就能驗 | 實測 |
 | [`re/62-strategy-minimap.md`](../re/62-strategy-minimap.md) | `byte_198A7` 的初值 | 靜態影像裡是 `0`。**開新遊戲時有沒有被寫過沒查** | 靜態 |
-| [`re/62-strategy-minimap.md`](../re/62-strategy-minimap.md) | 熱區 `0x16`（點地圖）做什麼 | 沒讀。合理猜測是把大地圖捲到該處，但**沒驗** | 靜態 |
 | [`re/62-strategy-minimap.md`](../re/62-strategy-minimap.md) | 圖例底圖在哪個資源 | `sub_1FA37` 的 `ds` 來自 `word_10D50`；`47` 記成段 3 `0x09A0`，兩者沒對過 | 靜態 |
+| [`re/62-strategy-minimap.md`](../re/62-strategy-minimap.md) | ⭐ **熱區 `0x16` ＝ 點地圖捲鏡頭**：`sub_15AB6` 把螢幕座標減掉地圖區原點、 | （未解小節內文） | 靜態 |
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 段變數的配置迴圈 | `word_1D2F6`–`word_1D30E` 沒有直接寫入的 xref，§1 的相鄰關係是推論 | 靜態 |
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 命令 6 為什麼擋高平面橫移 | `[si+1Ah] == 6`，命令碼 6 是什麼沒對過 | 靜態 |
 | [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | `loc_1491B` 的完整成本模型 | 只解出「穿過非己方據點 ＋0xA6 並設高位元」（§8.1）。廣度優先搜尋本身的佇列結構與其他成本項沒逐條讀 | 靜態 |
@@ -286,6 +284,10 @@
 | [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | 淡入淡出的階數與色階 | 17 階（`cx` 0–0x10）已確定，每階怎麼算沒讀 / `sub_1035F`／`sub_103DC` | 靜態 |
 | [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | `cs:0x780` 那張字幕描述子表 | §3.1 解出結構（幕序索引 → 筆數 ＋ 每筆三個 word），**表的內容沒 dump** / `ida_dump.py` 對 `D7END.EXE` 的 `0x780` 起 | 靜態 |
 | [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | BGM 的起訖 | `ENDBGM.DAT` 走 INT 61h、與 `KI.EXE` 同一條音源路徑（已解），remake 也有 `endbgm-0`（`../spec/29`），但**還沒接進結局播放的起訖**（`../spec/67` §7） / 對 `sub_10500` 的呼叫點與 `loc_1007A` 的收尾 | 靜態 |
+| [`re/71-strategy-hotspot-dispatch.md`](../re/71-strategy-hotspot-dispatch.md) | 右鍵表的真實表長 | §2.1。兩種讀法都說得通，靜態影像分不出來，要動態取樣哪些碼會配右鍵 | 靜態 |
+| [`re/71-strategy-hotspot-dispatch.md`](../re/71-strategy-hotspot-dispatch.md) | `funcs_159C0[0x00]`–`[0x08]` 那九筆 | 都不是函式起點。是別的資料還是真的 handler，沒查 | 靜態 |
+| [`re/71-strategy-hotspot-dispatch.md`](../re/71-strategy-hotspot-dispatch.md) | `sub_188B0` | 畫勢力名的那一支，沒讀（`sub_15C14` 在勢力存在時呼叫它） | 靜態 |
+| [`re/71-strategy-hotspot-dispatch.md`](../re/71-strategy-hotspot-dispatch.md) | `22` 的「`off_159D2` 的其餘槽位」、 | （未解小節內文） | 靜態 |
 
 ## 2.4 驗收（49 條）
 
@@ -353,7 +355,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（142 條）
+## 2.6 其他（141 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -433,8 +435,7 @@
 | [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 最高速在原版實機是多少 | 機器相依。DOSBox 固定 cycles 量得到「那台的上限」，量不到「原版的答案」 | 實測 |
 | [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 戰場幀是否等於 remake 的一次 `Step()` | 原版一幀做完整條戰場迴圈；remake 的 `Step()` 是規則層一步。**兩者對齊過但沒逐項比** | 靜態 |
 | [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 音效驅動不在時的行為 | `../re/61` §6 | 靜態 |
-| [`spec/35-strategy-minimap.md`](../spec/35-strategy-minimap.md) | 勢力選擇視窗 | 行為已解、版面未解，remake 用「點一下換下一個」代替 | 靜態 |
-| [`spec/35-strategy-minimap.md`](../spec/35-strategy-minimap.md) | 點地圖區（熱區 `0x16`） | 原版做什麼沒讀（`../re/62` §5） | 靜態 |
+| [`spec/35-strategy-minimap.md`](../spec/35-strategy-minimap.md) | `sub_188B0`（畫勢力名） | `sub_15C14` 在勢力存在時呼叫它，沒讀。remake 直接畫 `Faction.Name` | 靜態 |
 | [`spec/36-ground-planes-and-climbing.md`](../spec/36-ground-planes-and-climbing.md) | 命令 6 為什麼擋高平面橫移 | 命令碼 6 是什麼沒對過 | 靜態 |
 | [`spec/36-ground-planes-and-climbing.md`](../spec/36-ground-planes-and-climbing.md) | 爬升／下降的通行判定與原版不同 | `sub_1B15D`／`sub_1B186` 已解（`../re/36` §6.3：同一張地圖兩層各 `0x1000` B，`al & 0x7F` 有單位就擋，否則看地形值是否 ≥ `0xF8`）。**remake 用「目標平面有地面」代替，還沒照這條改** | 靜態 |
 | [`spec/37-tactical-player-controls.md`](../spec/37-tactical-player-controls.md) | 選了陣形之後原版有沒有立刻重排 | 機器碼只寫偏移，**沒有看到立刻移動的呼叫**；remake 照抄（等命令） | 靜態 |

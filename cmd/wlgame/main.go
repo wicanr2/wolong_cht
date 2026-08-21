@@ -173,6 +173,9 @@ type game struct {
 	// minimapFaction 是圖例第二格盯著的勢力（原版 `cs:byte_198A7`，
 	// 靜態初值 0）。它決定哪個勢力的據點畫成白框藍心。
 	minimapFaction int
+	// factionPicker：22 勢力的選擇視窗開著沒有（原版熱區 0x17 →
+	// sub_15AFC，docs/spec/35 §2.5.2）。
+	factionPicker bool
 
 	// roads 與 tactical 是掛在 World 上的執行期來源，不屬於存檔本體。
 	// 讀取另一個槽位後要重新掛回，否則數值雖然恢復，行軍／戰鬥會悄悄退回
@@ -719,6 +722,11 @@ func (g *game) Update() error {
 		g.updateFunding()
 		return nil
 	}
+	// 勢力選擇視窗是模態的（原版 sub_15AFC 自己跑一個等待迴圈，
+	// 只認自己的熱區 0x20 與右鍵，docs/spec/35 §2.5.2）。
+	if g.updateFactionPicker() {
+		return nil
+	}
 	// 進言流程是模態的，優先吃輸入。
 	if g.adviseActive() {
 		g.updateAdvise()
@@ -788,12 +796,17 @@ func (g *game) Update() error {
 			}
 			return nil
 		}
-		// 縮小地圖圖例的右半格（熱區 0x17 ＝ (536,168,96,16)）換盯著的勢力。
-		// 原版點下去是開一個 22 勢力的選單（docs/re/62 §4.2），
-		// remake 簡化成換下一個——**remake 差異**（docs/spec/35 §2）。
+		// 縮小地圖圖例的右半格（熱區 0x17 ＝ (536,168,96,16)）開勢力選擇視窗。
 		if left && g.hudOpen(hudMinimap) && hitTestMinimapLegend(x, y) {
-			g.cycleWatchedFaction()
+			g.factionPicker = true
 			return nil
+		}
+		// 熱區 0x16：點地圖區把鏡頭捲過去（docs/spec/35 §2.5.1）。
+		if left && g.hudOpen(hudMinimap) {
+			if col, row, ok := minimapWorldAt(x, y); ok {
+				g.centreCamOn(col, row)
+				return nil
+			}
 		}
 	}
 	// 系統選單開著時，那六列吃滑鼠。**原版的六個 handler 沒讀**

@@ -149,6 +149,7 @@
 | [`docs/re/68-t3-frontier-functions.md`](re/68-t3-frontier-functions.md) | 68 — T3 那九支：只在狀態檔與程式碼裡出現過的函式 | 九支全部讀完。 | 2026-08-18 |
 | [`docs/re/69-t2-cross-reference.md`](re/69-t2-cross-reference.md) | 69 — T2 那 18 支：逐支讀過，各自歸位 | 完成。 | 2026-08-18 |
 | [`docs/re/70-d7end-ending-player.md`](re/70-d7end-ending-player.md) | 70 — D7END.EXE：結局播放器與結局全文 | 播放順序、版面、結尾文字與過場圖的格式都解出來了。 | 2026-08-18 |
+| [`docs/re/71-strategy-hotspot-dispatch.md`](re/71-strategy-hotspot-dispatch.md) | 71 — 戰略層的兩張熱區分派表，以及點縮小地圖會發生什麼 | 左鍵表 off_159D2 的 32 筆全部攤開，索引就是熱區碼。⭐ 熱區 0x16 （點縮小地圖）＝ 把大地圖鏡頭… | 2026-08-22 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-16 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -179,7 +180,7 @@
 | [`docs/spec/32-gate-strength-bar.md`](spec/32-gate-strength-bar.md) | 32 — 攻城的「門強度」條 | CONFORMED。 | 2026-08-16 |
 | [`docs/spec/33-squad-selection.md`](spec/33-squad-selection.md) | 33 — 底列六格是選部隊，不是第二套命令列 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/34-speed-steps.md`](spec/34-speed-steps.md) | 34 — 兩個速度設定：五檔、各檔的實際節奏 | READY。 | 2026-08-16 |
-| [`docs/spec/35-strategy-minimap.md`](spec/35-strategy-minimap.md) | 35 — 縮小地圖的據點標記與視野框 | READY。 | 2026-08-16 |
+| [`docs/spec/35-strategy-minimap.md`](spec/35-strategy-minimap.md) | 35 — 縮小地圖的據點標記與視野框 | CONFORMED。 | 2026-08-16 |
 | [`docs/spec/36-ground-planes-and-climbing.md`](spec/36-ground-planes-and-climbing.md) | 36 — 兩個平面的地面圖、導航位元與登城 | CONFORMED。 | 2026-08-16 |
 | [`docs/spec/37-tactical-player-controls.md`](spec/37-tactical-player-controls.md) | 37 — 戰術畫面的玩家操作：陣形選單與陣形線 | CONFORMED。 | 2026-08-16 |
 | [`docs/spec/38-list-windows.md`](spec/38-list-windows.md) | 38 — 一覽表：視窗幾何、欄位與逐列格式 | CONFORMED。 | 2026-08-16 |

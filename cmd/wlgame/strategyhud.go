@@ -387,6 +387,7 @@ func (g *game) drawNaturalStrategyHUD(screen *ebiten.Image) {
 		if g.hudOpen(hudSystem) {
 			g.drawSystemWindow(screen)
 		}
+		g.drawFactionPicker(screen)
 		return
 	}
 	// 外框與其他視窗相同，**但內部是純黑、沒有龍紋**（docs/spec/54 §2）。
@@ -399,6 +400,7 @@ func (g *game) drawNaturalStrategyHUD(screen *ebiten.Image) {
 	if g.hudOpen(hudSystem) {
 		g.drawSystemWindow(screen)
 	}
+	g.drawFactionPicker(screen)
 }
 
 // 系統選單的版面**全部出自原版**（docs/spec/13 §2.6）：視窗矩形來自
@@ -661,24 +663,6 @@ func (g *game) watchedFaction() int {
 		}
 	}
 	return -1
-}
-
-// cycleWatchedFaction 換下一個可盯的勢力。
-//
-// ⚠ 原版點圖例右半格是開一個 22 個勢力的選單視窗（`sub_15AFC`），
-// remake 簡化成「點一下換下一個」——**這是 remake 差異**（docs/spec/35 §2）。
-func (g *game) cycleWatchedFaction() {
-	if g.world == nil {
-		return
-	}
-	n := len(g.world.Factions)
-	for i := 1; i <= n; i++ {
-		f := (g.minimapFaction + i) % n
-		if f != g.world.Player && g.world.Factions[f].Alive {
-			g.minimapFaction = f
-			return
-		}
-	}
 }
 
 // minimapMarkerColours 挑一個據點的（外框, 中心）色。

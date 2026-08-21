@@ -70,7 +70,8 @@ mov al, [bx]                        ; ds = cs:word_1E479
 
 ## 3. 指令列：八個槽位
 
-`sub_161CA`（`000161CA`）由 `sub_119CA` 經 `off_159D2[13]` 呼叫，
+`sub_161CA`（`000161CA`）由 `sub_119CA` 經 `off_159D2[0x0C]` 呼叫
+（完整的表見 [`71`](71-strategy-hotspot-dispatch.md) §2），
 輸入 `cx` 是游標的像素 x：
 
 ```asm
@@ -232,9 +233,11 @@ mov cx, 510h / call sub_189A4
 
 ## 5. 未解
 
-| 項目 | 現況 |
-|---|---|
-| `off_159D2` 的其餘槽位 | 16 筆裡只有 [1] `0x1614A`、[2] `0x15E1E`、[3] `0x15A3A`、[4] `sub_15FAA`、[13] `sub_161CA` 非 `nullsub_1`。這是頂層模式分派表，[1]–[3] 未讀 |
+（無。原先掛在這裡的兩條都收掉了：熱區怎麼登記見
+[`47`](47-main-screen-window-registry.md) §1，
+`off_159D2` 的 32 筆見 [`71`](71-strategy-hotspot-dispatch.md) §2。）
+
+<!-- 缺口：無 -->
 
 ## 6. remake 對照
 
