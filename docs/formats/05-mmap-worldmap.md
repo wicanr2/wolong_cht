@@ -142,11 +142,16 @@ mov     es:[di], al         ;     蓋回地圖格
 
 ## 4. 還沒解的
 
-- **`MMAP.MAP`（80,716 B）的編碼**。展開成 98,304 B，`sub_1E48A` →
-  `sub_1E4CE`／`sub_1E717` 是入口。熵 6.01。
-- `MMAP.MCH` 的 256×160-byte MCH 圖塊、0xA000 metadata、事件 12 火災／暴動
-  object type 1／2 查表已解，見 [`docs/re/14`](../re/14-mmap-mch-objects.md)。
-  type 3 的事件語意、object timer 與逐 frame 原版時序仍未知。
-- `sub_1E717` 建出來的記錄實際被誰用（§3）。
-- `byte_1E47E` 與 `byte_1E47F` 兩個流水號的分工（`sub_1E567` 寫前者、
-  `sub_1E68C` 寫後者，程式碼其餘部分完全相同）。
+| 缺口 | 現況 |
+|---|---|
+| `MMAP.MCH` 的 object **type 3** | 圖塊、`0xA000` metadata 與事件 12 的火災／暴動（type 1／2）查表已解（[`../re/14`](../re/14-mmap-mch-objects.md)）。type 3 的事件語意、object timer 與逐 frame 的原版時序仍未知——remake 的 timer 是呈現層 substitute |
+
+已解的幾條：`MMAP.MAP` 的編碼是 RLE，解法整份在
+[`06-mmap-rle.md`](06-mmap-rle.md)（`sub_1F5E7`，80,716 → 98,304 B，
+已用實機畫面與縮小地圖雙重驗證）；⭐ **解壓後開頭 4 byte 是長度欄位**，
+從 offset 0 讀會讓整張地圖左移四格（§2.1）。
+`sub_1E717` 是 192 圈的建表迴圈（＝據點數），
+`byte_1E47E` 從 192 往下數、`byte_1E47F` 從 0 往上數，
+建出來的 8 byte 記錄就是行軍用的道路圖
+（[`../re/08`](../re/08-hourly-update.md) §7.1–§7.3，移植在
+`internal/assets/world/roads.go`）。

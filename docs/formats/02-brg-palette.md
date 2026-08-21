@@ -84,5 +84,13 @@ tools/py.sh tools/brg.py swatch workplace/orig/dosv/GAMEPAL.BRG out.png 24
 
 ## 6. 還沒解的
 
-- 誰載入、誰選組（`docs/re/02` §7）。
-- `OPENPAL` 6 組與 `ENDPAL` 12 組各自對應哪些畫面。
+| 缺口 | 現況 |
+|---|---|
+| `OPENPAL` 的 6 組各對應哪一幕 | `ENDPAL` 那邊已解（一幕配一組，[`09-cutscene-images.md`](09-cutscene-images.md)、[`../spec/67`](../spec/67-ending-playback.md) 已實作）。開場這邊要先反組譯 `D7OPEN.EXE`，還沒做 |
+
+已解的：載入是 `sub_109AF`、換組後由 `sub_19336` 重送硬體，
+**選組的邏輯在載入端不在送硬體端**；`al` 直接當 bank 編號，
+而系統選單「畫面模式」的兩個選項（１６色／液晶）就是 8 個 bank
+分成兩組的原因（[`../re/55`](../re/55-system-menu-window.md) §4）。
+4 bit 通道到 8 bit 的換算走 VGA 的 6 bit DAC，
+所以**白色到不了 `#FFFFFF`，是 `#F3F3F3`**（[`../spec/51`](../spec/51-vga-dac-palette-scale.md)）。

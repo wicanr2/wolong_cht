@@ -18,38 +18,37 @@
 
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
-| 規則正確性 | 46 | 43 | 3 | 0 |
-| 資料保存 | 40 | 39 | 1 | 0 |
-| 程式碼理解 | 230 | 223 | 7 | 0 |
+| 規則正確性 | 42 | 39 | 3 | 0 |
+| 資料保存 | 35 | 34 | 1 | 0 |
+| 程式碼理解 | 229 | 222 | 7 | 0 |
 | 驗收 | 69 | 59 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
 | 其他 | 160 | 150 | 10 | 0 |
-| **合計** | **562** | 530 | 31 | 1 |
+| **合計** | **552** | 520 | 31 | 1 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **5** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/re/` | 230 |
+| `docs/re/` | 229 |
 | `docs/spec/` | 128 |
 | `docs/playtest/` | 69 |
-| `docs/mechanics/` | 46 |
-| `docs/formats/` | 40 |
+| `docs/mechanics/` | 42 |
+| `docs/formats/` | 35 |
 | `docs/reference/` | 17 |
 | `docs/release/` | 13 |
 | `docs/mobile/` | 12 |
 | `docs/promo/` | 7 |
 
-## 2.1 規則正確性（46 條）
+## 2.1 規則正確性（42 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
-| [`mechanics/10-strategy.md`](../mechanics/10-strategy.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | `sub_10A65` 的內插演算法 | 只影響畫面 | 靜態 |
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | 最高速那一檔在原版實機上是多少 | 機器相依，要實測才有數字；只影響手感調校 | 實測 |
 | [`mechanics/20-military.md`](../mechanics/20-military.md) | （`byte_1D31E`，`30-combat.md`），與編成的六個位置是兩回事。 這兩件事先前被記成同一條未解。 | （散句） | 靜態 |
-| [`mechanics/20-military.md`](../mechanics/20-military.md) | 路上（192–255）與野外（≥256）節點：remake 目前只用據點層的圖。 | （未解小節內文） | 靜態 |
-| [`mechanics/20-military.md`](../mechanics/20-military.md) | sub_14502` 第二段的方向（`docs/re/08` §7.7） | （未解小節內文） | 靜態 |
+| [`mechanics/20-military.md`](../mechanics/20-military.md) | 軍團在行軍途中的**節點編號** | 原版的 `[si+0Eh]` 分三段：0–191 據點、192–255 路上的中間節點、≥256 野外（`../re/08` §5）。remake 的 `army.KindOf` 有這三段的判定、AI 也用到了，**但沒有寫入端**——行軍途中 `Corps.Node` 只在踩到據點座標時更新（`internal… | 靜態 |
+| [`mechanics/20-military.md`](../mechanics/20-military.md) | ⚠ 這一條**不影響行軍路線**，影響的是任何拿 `Node` 當位置判斷的規則 | （未解小節內文） | 靜態 |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 戰術層不再是空白：`sub_19FA0` 的入口、腳本、戰場資料模型、核心移動／一般近戰／ | （未解小節內文） | 靜態 |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 0 | **陣形** / 走到指定座標，到位就轉成「已就位」狀態 | 靜態 |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 1 | **攻擊** / 大將（`+0x04 == 0`）不攻擊，只移動 | 靜態 |
@@ -64,56 +63,48 @@
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 大將／騎馬 | 目標座標 ← 敵人的座標，**追過去打** | 靜態 |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | **弓兵** | 目標 ← **自己的**座標（不動），依與敵人的**高度差**分支 | 靜態 |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 步兵 | 近戰，而且**挨箭只吃四分之一傷害** | 靜態 |
-| [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 繞路點是誰算出來的（真正的尋路演算法），以及士氣值存在哪。 | （未解小節內文） | 靜態 |
-| [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 預備兵維持費的單價（三兵種是否不同） | `sub_15358` 尾段的批次呼叫 | 靜態 |
-| [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 防災值、城兵數的月度變化 | `sub_15358` 尾段剩下的六支 | 靜態 |
-| [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 「北方／南方」的判定邊界（座標？據點旗標？） | `SINARIO.DAT` 據點表 ＋ 反組譯募兵 | 靜態 |
-| [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 行軍啟動費用的計算基準 | 反組譯 | 靜態 |
-| [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 災害的實際傷害量 | `sub_12FBF` 的事件表（`010Ch` 火災／`020Ch` 暴動／`0Bh` 暴風雨） | 靜態 |
+| [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 重算路徑的時機 | 原版只在命令生效時算一次；remake 的兵每幀都可能被別人擋住，所以改成**每 30 幀可重算一次**（`replanInterval`，`internal/rules/tactical/soldier.go`）。這是 **remake 差異**，不是原版行為——原版被擋住之後怎麼處理沒有讀 | 靜態 |
+| [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 沒有內政官時據點會不會自然變化 | 防災值、上昇值與城兵的成長都掛在內政官那一支 `sub_14194`（同上 §19）。**沒派內政官的據點是否有另一條月度路徑，沒讀** | 靜態 |
+| [`mechanics/40-economy.md`](../mechanics/40-economy.md) | `../re/07` §7／§11、募兵的地域配比 | （未解小節內文） | 靜態 |
 | [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 那兩個歸零的欄位很可能就是**本月累計的收入與支出 → 假說，待驗 | （散句） | 靜態 |
-| [`mechanics/50-diplomacy.md`](../mechanics/50-diplomacy.md) | `g(對方君主好戰等級)` 的實際修正量 | 反組譯外交結算 | 靜態 |
-| [`mechanics/50-diplomacy.md`](../mechanics/50-diplomacy.md) | 外交官每月提升的量與金額的關係 | 反組譯月結 | 靜態 |
+| [`mechanics/50-diplomacy.md`](../mechanics/50-diplomacy.md) | 交友度表在區塊 `+0x680`（22 列 × 24 B，`../formats/08` §1.55）、 | （未解小節內文） | 靜態 |
 | [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 政治如何影響內政效果與外交官要價仍未解。 | （散句） | 靜態 |
 | [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武術的勝敗判定分布 | 反組譯一騎打ち | 靜態 |
 | [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 評價實際餵進哪些判定 | 反組譯戰鬥結算 | 靜態 |
-| [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | `+0Eh`／`+0Fh`／`+10h` 是不是兵種適性 | 與戰鬥程式對照 | 靜態 |
-| [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 政治如何影響內政效果與外交官要價 | 反組譯 | 靜態 |
-| [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | `+0` 旗標的 7 種值代表什麼 | 身分已確定在 `+0x17`，`+0` 是別的東西。只知道 bit 4 ＝ 不事二主 | 靜態 |
-| [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | `+0x1E` 為什麼 0–2 恆空 | 掃 127 筆武將的 `+0x1E` 值分佈 | 靜態 |
+| [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0Eh`／`+0Fh`／`+10h` 是不是兵種適性 | 與戰鬥程式對照。⚠ **軍團記錄的 `+0x0E` 是別的東西**（所在據點編號 × 8，`../re/08` §4）——兩張表的同一個位移不是同一個欄位 | 靜態 |
+| [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0` 旗標的 7 種值代表什麼 | 身分已確定在 `+0x17`，`+0` 是別的東西。只知道 bit 4 ＝ 不事二主 | 靜態 |
+| [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0x1E` 為什麼 0–2 恆空 | 掃 127 筆武將的 `+0x1E` 值分佈 | 靜態 |
 | [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 被俘之後的處理 | 未知 | 靜態 |
-| [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 信賴度存在哪 | `SINARIO.DAT`／`SAVE.DAT` 每區塊 `+0x10`，對應 `cs:0D00h`／IDA `byte_10D00`；勢力 `+0x1D` 是士氣基準 | 靜態 |
+| [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | `../re/07` §14）； | （未解小節內文） | 靜態 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 交友關係的實際範圍、每月增量、協力成功的門檻值。 | （散句） | 靜態 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 10 | `sub_13496` / 訊息-only 邊界；保留事件取出，不虛構持久欄位 / handler 只把 `AH`／`DX` 組成 `sub_18810` formatter 參數，尚未完成 TALK.DAT 逐句顯示 | 靜態 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | cx` 在 `≥ 0x100` 時多半是另一個編號空間或帶旗標，未解。 | （散句） | 靜態 |
-| [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 信賴度的值域 | **0…255，byte 飽和**（`seg000:10D00`、`sub_13D91`／`13DC9`）→ confirmed | 靜態 |
-| [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 初始／新遊戲初始化值 | 原始劇本 `+0x10` 可直接讀；第 1 劇本目前為 `0xFF`；`sub_18B12` 完整時序 → 強證據／待 oracle | 實測 |
-| [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 玩家進言／說得的信賴度增減量 | **已證實**：`sub_13830` 的第一反應為 `+20`／`−20`，多理由完成為 `+10`，錯選理由為 `−20`；事件 13 的 `−50` 另由 `sub_13507` 定案。事件 2／3 等外交回報的其他增減仍需逐分支對拍 | 靜態 |
-| [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 四個劇本的結束條件是否不同 | **觸發條件四劇本共用**——差別只在初始勢力數。結局的十二幕也是一條路播完，沒有依劇本分支的證據（`../re/70` §3），但沒有實跑四個劇本對過 | 實測 |
+| [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 四個劇本的結局是否不同 | **觸發條件四劇本共用**，差別只在初始勢力數；結局的十二幕也是一條路播完，沒有依劇本分支的證據（`../re/70` §3）。**但沒有實跑四個劇本對過** | 實測 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 君主陣亡時軍師怎麼辦 | 未知 | 靜態 |
+| [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 事件 2／3 等外交回報的信賴度增減 | 逐分支對拍。玩家進言／說得那幾條已證實（見下） | 靜態 |
+| [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 新遊戲的信賴度初始值 | 原始劇本 `+0x10` 可直接讀（第 1 劇本是 `0xFF`）；`sub_18B12` 的完整時序**待 oracle** | 實測 |
+| [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 信賴度的值域 | **0–255，byte 飽和**（`seg000:10D00`、`sub_13D91`／`13DC9`） | 靜態 |
+| [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 玩家進言／說得的增減量 | `sub_13830`：第一反應 `+20`／`−20`，多理由完成 `+10`，錯選理由 `−20`；事件 13 的 `−50` 由 `sub_13507` 定案 | 靜態 |
+| [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 勢力「滅亡」的判定 | **據點數歸 0**（`sub_14CF3` 的 `dec [bx+23h]`，`../re/59` §4）。滅亡當下 127 名武將逐一處置、在外的軍團全部消失（同份 §4.1） | 靜態 |
 
-## 2.2 資料保存（40 條）
+## 2.2 資料保存（35 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
-| [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 六個變數標記各自代表什麼（要從 `KI.EXE` 反追）。 | （未解小節內文） | 靜態 |
-| [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 偏移表 `[1023] = 0` 是保留還是有意義。 | （未解小節內文） | 靜態 |
-| [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 78 則空訊息的索引位置有沒有規律。 | （未解小節內文） | 靜態 |
-| [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 訊息索引與遊戲事件的對應（哪一則在什麼時候顯示）。 | （未解小節內文） | 靜態 |
-| [`formats/02-brg-palette.md`](../formats/02-brg-palette.md) | 誰載入、誰選組（`docs/re/02` §7）。 | （未解小節內文） | 靜態 |
-| [`formats/02-brg-palette.md`](../formats/02-brg-palette.md) | OPENPAL` 6 組與 `ENDPAL` 12 組各自對應哪些畫面。 | （未解小節內文） | 靜態 |
+| [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 偏移表 `[1023] = 0` | 是保留還是有意義，未讀 | 靜態 |
+| [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 78 則空訊息的索引位置有沒有規律 | 未查 | 靜態 |
+| [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 訊息索引與遊戲事件的對應 | 逐則的顯示時機沒有全表。**已對出來的散在各規格**（進言 `../spec/44`、遷都 `../spec/64`、結局 `../spec/30`），未讀的部分見 `../re/24` | 靜態 |
+| [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 帶通用字樣的 fallback（`'1': "武將"`、`'2': "據點"`…），畫面上看起來合理， | （未解小節內文） | 靜態 |
+| [`formats/02-brg-palette.md`](../formats/02-brg-palette.md) | 選組的邏輯在載入端不在送硬體端**；`al` 直接當 bank 編號， | （未解小節內文） | 靜態 |
 | [`formats/03-grf-images.md`](../formats/03-grf-images.md) | 3 | `0x9700` / `0x23A0` (9,120) / `sub_1006B` / 走 `sub_1F888`（**位元對齊**的繪製常式，可放在非 8 倍數的 x）。未解 | 靜態 |
 | [`formats/03-grf-images.md`](../formats/03-grf-images.md) | `0x0480` | 24×16 × 3 / 兵種圖示的**橘色版**：馬／弓／步 / 尚未找到取用端 | 靜態 |
 | [`formats/04-map-sch-container.md`](../formats/04-map-sch-container.md) | 狀態：容器格式的索引層 READY，壓縮演算法未解。 | （散句） | 靜態 |
-| [`formats/05-mmap-worldmap.md`](../formats/05-mmap-worldmap.md) | MMAP.MAP`（80,716 B）的編碼**。 | （未解小節內文） | 靜態 |
-| [`formats/05-mmap-worldmap.md`](../formats/05-mmap-worldmap.md) | MMAP.MCH` 的 256×160-byte MCH 圖塊、0xA000 metadata、事件 12 火災／暴動 | （未解小節內文） | 靜態 |
-| [`formats/05-mmap-worldmap.md`](../formats/05-mmap-worldmap.md) | sub_1E717` 建出來的記錄實際被誰用（§3）。 | （未解小節內文） | 靜態 |
-| [`formats/05-mmap-worldmap.md`](../formats/05-mmap-worldmap.md) | byte_1E47E` 與 `byte_1E47F` 兩個流水號的分工（`sub_1E567` 寫前者、 | （未解小節內文） | 靜態 |
+| [`formats/05-mmap-worldmap.md`](../formats/05-mmap-worldmap.md) | `06-mmap-rle.md`（`sub_1F5E7`，80,716 → 98,304 B， | （未解小節內文） | 靜態 |
 | [`formats/05-mmap-worldmap.md`](../formats/05-mmap-worldmap.md) | 比對的正是方向碼那個欄位）。 強證據，未定案。 | （散句） | 靜態 |
-| [`formats/07-battle.md`](../formats/07-battle.md) | 戰場的 `64 × 62` 哪一邊是寬 | 格數確定（§2.1），方向沒定 | 靜態 |
 | [`formats/07-battle.md`](../formats/07-battle.md) | 每個戰場 4,096 B 的表頭與尾段各 64 byte | 內容未解（§2.1） | 靜態 |
 | [`formats/07-battle.md`](../formats/07-battle.md) | 表頭 16 筆但資料只有 3 組 | 多出來的 13 筆是什麼未解（§3） | 靜態 |
 | [`formats/07-battle.md`](../formats/07-battle.md) | mov     al, es:[bx+1]       ; → byte_1AB4F（用途未解） | （散句） | 靜態 |
-| [`formats/07-battle.md`](../formats/07-battle.md) | 表頭與尾段各 64 byte，內容未解。 | （散句） | 靜態 |
+| [`formats/07-battle.md`](../formats/07-battle.md) | 所以地形是 **64 寬 × 62 列**，而整塊 4,096 B 是 **64 × 64**—— 兩者內容未解。 | （散句） | 靜態 |
 | [`formats/07-battle.md`](../formats/07-battle.md) | ——表頭筆數多於資料組數，原因未解。 | （散句） | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x0008` | 51 / 未解的全域狀態（一起載入 `cs:0CF0h`） | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x0080` | 2,112 / **勢力表：22 筆 × 64 B**（`docs/re/06` §5）＋ 其後未解 | 靜態 |
@@ -136,7 +127,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `OPEN_S2`–`S5` 的 384,000 B | 是 §2 的三倍，多半是多張或多幀。開場播放器 `D7OPEN.EXE` 還沒反組譯 | 靜態 |
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`） | 靜態 |
 
-## 2.3 程式碼理解（230 條）
+## 2.3 程式碼理解（229 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -152,8 +143,7 @@
 | [`re/03-image-blitter.md`](../re/03-image-blitter.md) | sub_1E38C`（帶位移的讀檔）與 `sub_1F4A2`（開檔／讀檔／關檔）的完整介面。 | （未解小節內文） | 靜態 |
 | [`re/03-image-blitter.md`](../re/03-image-blitter.md) | sub_1FAC2` 是另一支繪製常式（`shl al, 1` 後才 `mov cx, ax`），用途未解。 | （未解小節內文） | 靜態 |
 | [`re/04-mmap-entry-points.md`](../re/04-mmap-entry-points.md) | call sub_1E3C0                    ; ← 未解 | （散句） | 靜態 |
-| [`re/04-mmap-entry-points.md`](../re/04-mmap-entry-points.md) | MMAP.MAP`（80,716 B）的編碼**——展開成 98,304 B（＝ 384 × 256 格）。 | （未解小節內文） | 靜態 |
-| [`re/04-mmap-entry-points.md`](../re/04-mmap-entry-points.md) | sub_20000` 的三次呼叫在設定什麼（參數像是範圍：`17FFh`、`101Fh`）。 | （未解小節內文） | 靜態 |
+| [`re/04-mmap-entry-points.md`](../re/04-mmap-entry-points.md) | MMAP.MCH` 的 object **type 3**：事件語意、原版 object timer 與畫面 | （未解小節內文） | 靜態 |
 | [`re/04-mmap-entry-points.md`](../re/04-mmap-entry-points.md) | word_19872` 的 98,304 B 畫布怎麼對應到螢幕 | （未解小節內文） | 靜態 |
 | [`re/05-battle-selection.md`](../re/05-battle-selection.md) | 推論等級：**兩條路徑的存在與參數 confirmed**；地形對映表的內容未解 | （散句） | 靜態 |
 | [`re/05-battle-selection.md`](../re/05-battle-selection.md) | `sub_14C4C` 是「地圖圖塊值 → 地形類型」的對映 | **未解** | 靜態 |
