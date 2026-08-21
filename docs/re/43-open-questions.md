@@ -18,29 +18,29 @@
 
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
-| 規則正確性 | 30 | 26 | 4 | 0 |
+| 規則正確性 | 26 | 22 | 4 | 0 |
 | 資料保存 | 34 | 33 | 1 | 0 |
 | 程式碼理解 | 175 | 168 | 7 | 0 |
-| 驗收 | 56 | 45 | 11 | 0 |
+| 驗收 | 51 | 41 | 10 | 0 |
 | 外部資料 | 10 | 10 | 0 | 0 |
-| 其他 | 154 | 144 | 10 | 0 |
-| **合計** | **459** | 426 | 33 | 0 |
+| 其他 | 151 | 141 | 10 | 0 |
+| **合計** | **447** | 415 | 32 | 0 |
 
-⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **3** 列（另有少數只是提到「未解」兩個字的圖例列）。
+⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/re/` | 175 |
-| `docs/spec/` | 127 |
-| `docs/playtest/` | 56 |
+| `docs/spec/` | 124 |
+| `docs/playtest/` | 51 |
 | `docs/formats/` | 34 |
-| `docs/mechanics/` | 30 |
+| `docs/mechanics/` | 26 |
 | `docs/release/` | 13 |
 | `docs/mobile/` | 12 |
 | `docs/reference/` | 10 |
 | `docs/promo/` | 2 |
 
-## 2.1 規則正確性（30 條）
+## 2.1 規則正確性（26 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -70,10 +70,6 @@
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 君主陣亡時軍師怎麼辦 | 未知 | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 事件 2／3 等外交回報的信賴度增減 | 逐分支對拍。玩家進言／說得那幾條已證實（見下） | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 新遊戲的信賴度初始值 | 原始劇本 `+0x10` 可直接讀（第 1 劇本是 `0xFF`）；`sub_18B12` 的完整時序**待 oracle** | 實測 |
-| [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 信賴度的值域 | **0–255，byte 飽和**（`seg000:10D00`、`sub_13D91`／`13DC9`） | 靜態 |
-| [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 玩家進言／說得的增減量 | `sub_13830`：第一反應 `+20`／`−20`，多理由完成 `+10`，錯選理由 `−20`；事件 13 的 `−50` 由 `sub_13507` 定案 | 靜態 |
-| [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 勢力「滅亡」的判定 | **據點數歸 0**（`sub_14CF3` 的 `dec [bx+23h]`，`../re/59` §4）。滅亡當下 127 名武將逐一處置、在外的軍團全部消失（同份 §4.1） | 靜態 |
-| [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 結局的十二幕 | `END_S1`–`END_S12`，格式已解（`../formats/09`）並已實作（`../spec/67`） | 靜態 |
 
 ## 2.2 資料保存（34 條）
 
@@ -294,7 +290,7 @@
 | [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | `cs:0x780` 那張字幕描述子表 | §3.1 解出結構（幕序索引 → 筆數 ＋ 每筆三個 word），**表的內容沒 dump** / `ida_dump.py` 對 `D7END.EXE` 的 `0x780` 起 | 靜態 |
 | [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | BGM 的起訖 | `ENDBGM.DAT` 走 INT 61h、與 `KI.EXE` 同一條音源路徑（已解），remake 也有 `endbgm-0`（`../spec/29`），但**還沒接進結局播放的起訖**（`../spec/67` §7） / 對 `sub_10500` 的呼叫點與 `loc_1007A` 的收尾 | 靜態 |
 
-## 2.4 驗收（56 條）
+## 2.4 驗收（51 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -306,9 +302,6 @@
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 據點換手之後遮罩會不會跟著變 | `sub_1890A` 的行為，靜態讀得出來，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 松崗 DOS/V 側 | 這套 bridge 還沒在 DOS/V 上跑過。**密碼頁不構成阻礙**（四格留白按「確定」即可通過，`18`）——是還沒做 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 上游授權 | `DOSBox-X-MCP-Debugger` 的原創碼**尚未選定授權條款**（README 明講是刻意留白）。本專案只在本機使用，未再散布 | 實測 |
-| [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 原版「四窗全開」的截圖 | **主畫面在模擬器上收不到任何點擊**，不只是開關——鑑別測試見下 | 實測 |
-| [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 松崗 DOS/V 側的主畫面 | 開新遊戲流程停在「確定」按鈕不回應。座標已照 PC-98 換算（Y ＋40）重試，仍不動；密碼頁不是障礙（`18`） | 靜態 |
-| [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 同版本同調色盤的對拍 | 上面兩項任一個通了就能做。**在那之前 `banner` 的 49.6% 不代表 remake 有錯** | 靜態 |
 | [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 四張 24×16 圖形的內容 | 顯示清單指到圖庫位移 `0x1200`／`0x12C0`／`0x1380`／`0x1440`，還沒畫出來看；remake 先用同位置同尺寸的色塊佔位 | 實測 |
 | [`playtest/23-main-screen-geometry.md`](../playtest/23-main-screen-geometry.md) | 其他 10 個顯示清單場景 | 同一支直譯器有 11 個呼叫端，只讀了場景 0（`../re/48` §5） | 靜態 |
 | [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 各視窗內部的像素 | 只對過邊線位置，沒有對過內容 | 靜態 |
@@ -320,9 +313,7 @@
 | [`playtest/26-bgm-render-vs-recording.md`](../playtest/26-bgm-render-vs-recording.md) | 音色的聽感 | 頻譜只驗了基頻。諧波結構（也就是「像不像那個音色」）沒有量化比對 | 靜態 |
 | [`playtest/26-bgm-render-vs-recording.md`](../playtest/26-bgm-render-vs-recording.md) | 相關係數為什麼不是 0.9 | DOSBox 的 OPL 模擬與這顆的包絡實作不同，加上錄音有系統噪訊。**沒有排除「還有小錯」的可能** | 實測 |
 | [`playtest/26-bgm-render-vs-recording.md`](../playtest/26-bgm-render-vs-recording.md) | 其他曲子 | 只有開場曲有錄音對照組。另外 13 首沒有 | 靜態 |
-| [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 逐像素 parity | 影片是再編碼的，這一份做不到。**後來回到模擬器做成了**——主畫面五區、系統選單與戰場九區裡六區都逐像素相同（`37`–`40`）。「主畫面的點擊閘」也不存在，是座標算錯（`38` §1） | 靜態 |
-| [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 色彩 | 這一份只比了幾何。**後來解出來是調色盤刻度差 4%**——DOS/V 走 VGA 的 6 bit DAC（`../spec/51`），改完主畫面就逐像素相同了 | 靜態 |
-| [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 門強度條 | §7.5。已解並實作（`../re/60` §11、`../spec/32`）；**remake 側沒有截圖**——這條只亮 20 幀 | 實測 |
+| [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 門強度條的 remake 截圖 | 規則與版面已解並實作（`../re/60` §11、`../spec/32`），但 remake 側沒截到——**這條只亮 20 幀** | 實測 |
 | [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 一覽表視窗 | 影片裡有武將／據點／財政的實錄，**還沒量** | 靜態 |
 | [`playtest/29-strategy-minimap-markers.md`](../playtest/29-strategy-minimap-markers.md) | 22 勢力的選擇視窗 | 原版點圖例右半格會開一個兩欄的選單（`../re/62` §4.2）。**行為已解、版面未解**，remake 先用「點一下換下一個」代替 | 靜態 |
 | [`playtest/29-strategy-minimap-markers.md`](../playtest/29-strategy-minimap-markers.md) | 視野框的美術 | 原版在 `word_10D4C`，尺寸沒從程式碼讀到 | 靜態 |
@@ -337,7 +328,7 @@
 | [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 逐句節拍 | 原版每句要等玩家按鍵才往下走；remake 直接顯示最新一句 | 靜態 |
 | [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 插圖之外的畫面 | 原版這一頁底下是不是還留著大地圖沒驗過，remake 留著 | 靜態 |
 | [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 選單的反白樣式 | 原版怎麼畫游標列沒解，remake 用自己的反白條 ＋ `>` | 靜態 |
-| [`playtest/35-advise-verdict-screens.md`](../playtest/35-advise-verdict-screens.md) | 遷都的畫面 | 目標用一覽表挑，原版是地圖選點（`sub_17400`）。沒有截圖 | 實測 |
+| [`playtest/35-advise-verdict-screens.md`](../playtest/35-advise-verdict-screens.md) | 遷都的畫面 | 沒有截圖。⚠ 目標用一覽表挑**與原版相同**——`sub_17400` 是據點一覽的呼叫端（`../re/26` §4），不是地圖選點 | 實測 |
 | [`playtest/36-window-texture.md`](../playtest/36-window-texture.md) | 取用端 | `KI.EXE` 裡哪一段程式把這 128 byte 鋪上去的還沒找到（三條路都排除了）。**排法已經由實機畫面定案**，取用端只影響「還有沒有別的用法」 | 靜態 |
 | [`playtest/36-window-texture.md`](../playtest/36-window-texture.md) | 米色視窗 | 一覽表那種米色底原版有沒有紋路沒量過（截圖裡那一片是純色） | 實測 |
 | [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 換圖塊的那一支機器碼 | 規則是從資料與畫面反推的，每一格都對得上，但**原版在哪裡做這件事**還沒定位（`../re/67` §5） / 找誰在據點換手時改地圖或格子記錄 | 靜態 |
@@ -370,7 +361,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | `KYOGRF.DAT` | 69,120 / 未解 | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（154 條）
+## 2.6 其他（151 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -401,7 +392,6 @@
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 實機驗收 | 只有 Docker 模擬器；觸控手感、真實 GPU、高 DPI 上的點陣字可讀性都驗不到 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 正式簽章 | 出的是 debug 簽章，keystore 怎麼保管還沒決定 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | 16 KB page size 裝置 | `.so` 的 LOAD 段已是 `0x4000`，但沒有那種裝置或 AVD 實際載過 | 靜態 |
-| [`spec/00-index.md`](../spec/00-index.md) | **推論等級** | confirmed／強證據／假說／未知（`CLAUDE.md` §9）。假說也可以實作，但要標 | 靜態 |
 | [`spec/00-index.md`](../spec/00-index.md) | 事件場景上誰在說話 | `42-event-scene-speakers.md` / 兩個框已實作；結果階段的上框未解 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 據點換手之後 `+0x00` 低 4 位會不會跟著變 | `sub_1890A` 靜態讀過，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 玩家據點求援的喇叭聲（`sub_10CDE`） | 呈現層未接 | 靜態 |
@@ -426,7 +416,7 @@
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 兵種標籤 | 畫面用場景 5 的「主將」，規則層的 `army.Position` 第一個是「大將」（原版 TALK #62 也這樣說）。兩處用語不同是原版就有的，不要統一 | 靜態 |
 | [`spec/23-city-info-window.md`](../spec/23-city-info-window.md) | 進入方式 | 原版由地圖上點據點進來（`sub_11E46`），remake 走一覽表 | 靜態 |
 | [`spec/23-city-info-window.md`](../spec/23-city-info-window.md) | `cs:word_1987C` | 原版每次開視窗都重讀一次檔；remake 的 `library` 是整檔載入，不需要這一層 | 靜態 |
-| [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 指令流程 | `sub_17FDB` 未讀（`docs/re/51` §5）。remake 的行軍指令走自己的流程（`M`） | 靜態 |
+| [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 指令流程與 remake 不同 | `sub_17FDB` 已解（`../re/45` §1：選據點 → 選「戰鬥指揮／委任／解體」→ 寫 `+0x00` 位元 2、`+0x0B`、`+0x20`）。**remake 的行軍指令走自己的流程（`M`），沒有那三個選項** | 靜態 |
 | [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 進入方式 | 原版也可以在地圖上直接點軍團（`sub_11E46`），remake 只有一覽表 | 靜態 |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 空槽標記 | 原版用名稱欄第一個字 `0xD0A1`；remake 用「載得起來且玩家勢力有效」判定，兩者不等價 | 靜態 |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 新遊戲共用 | remake 的啟動殼層是自己的畫面，還沒有換成這個四槽視窗 | 靜態 |
@@ -483,10 +473,8 @@
 | [`spec/48-governor-returns-on-city-fall.md`](../spec/48-governor-returns-on-city-fall.md) | 武將 `+0x1E` 的值域 | 534/535/536 與 542 是空的，所以實際用到的變體大概只有 3–6。哪些武將拿到哪個值沒統計過 | 靜態 |
 | [`spec/48-governor-returns-on-city-fall.md`](../spec/48-governor-returns-on-city-fall.md) | `sub_10CE7` 的變數表 | 這裡推出 `{1}` ＝ 武將、`{2}` ＝ 據點（照 push 的順序與譯文），沒有逐個 handler 讀 | 靜態 |
 | [`spec/49-advise-relocate-and-sortie.md`](../spec/49-advise-relocate-and-sortie.md) | `sub_16E8F` 編成前的其餘檢查 | 只確認「君主還沒帶軍團」這一條。⚠ 它呼叫的 `sub_16EC9` 本身已解（六槽 × 三候選兵種表、每槽門檻 `0x32`、試算在堆疊副本上做，見 `../re/30` §7.3） | 靜態 |
-| [`spec/49-advise-relocate-and-sortie.md`](../spec/49-advise-relocate-and-sortie.md) | 遷都的地圖選點 | `sub_17400` 沒讀，remake 用一覽表代替 | 靜態 |
 | [`spec/49-advise-relocate-and-sortie.md`](../spec/49-advise-relocate-and-sortie.md) | 進言的指令列 | 五項在原版指令樹裡的排法（`docs/re/22`）沒有逐格對過，remake 用自己的小視窗 | 靜態 |
 | [`spec/52-main-screen-camera-and-banner-date.md`](../spec/52-main-screen-camera-and-banner-date.md) | `+0x0000` | 0x6C0 / — / 未解 | 靜態 |
-| [`spec/52-main-screen-camera-and-banner-date.md`](../spec/52-main-screen-camera-and-banner-date.md) | `+0x06C0` | 0x180 / `word_10D4A` / 未解 | 靜態 |
 | [`spec/52-main-screen-camera-and-banner-date.md`](../spec/52-main-screen-camera-and-banner-date.md) | `+0x08F0` | 0x0B0 / `word_10D4C` / 另一組 11 格（未解，可能是別的字重） | 靜態 |
 | [`spec/52-main-screen-camera-and-banner-date.md`](../spec/52-main-screen-camera-and-banner-date.md) | `word_10D4C` 那一組 | 與數字字模同樣是 11 格 × 16 列，緊接在後面，用途未解 / 找誰把 `ds` 設成 `cs:word_10D4C`（`KI.EXE.asm` 只有一處） | 靜態 |
 | [`spec/54-ui-colours-from-palette.md`](../spec/54-ui-colours-from-palette.md) | 季節換色 | 五個索引在四季調色盤裡的值只有色 14 會變（`../formats/02` §4），而這五個都不是 14，所以目前用第 0 組。**若之後有視窗在別的調色盤組下畫，要改成跟著組走** | 靜態 |

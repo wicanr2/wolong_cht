@@ -55,7 +55,7 @@
 | [`docs/playtest/21-command-window-parity.md`](playtest/21-command-window-parity.md) | 21 — 松崗 DOS/V 指揮／事件／一覽畫面 parity 重開 | 歷史量測紀錄（2026-08-12，影片幀對幾何）。 | 2026-08-12 |
 | [`docs/playtest/21-dosboxx-bridge-sampling.md`](playtest/21-dosboxx-bridge-sampling.md) | 21 — DOSBox-X AI Bridge：第一次動態取樣 | 三條斷言全部取到證據。+0x00 低 4 位 ＝ 敵方鄰居遮罩（192/192， 對照讀法只對 12/192）；+0… | 2026-08-14 |
 | [`docs/playtest/22-field-siege-shared-layout.md`](playtest/22-field-siege-shared-layout.md) | 攻城／兩軍遭遇共用戰術骨架驗收 | PASS（共用幾何與原版指令面板已封口；不代表動畫逐像素 parity） | 2026-08-12 |
-| [`docs/playtest/23-main-screen-geometry.md`](playtest/23-main-screen-geometry.md) | 23 — 主畫面幾何：從機器碼定死，第一次逐區對拍 | 版面常數全部換成機器碼算出來的值（外框四項 ＋ 右欄內部一整組）。 橫幅的位移掃描落在 (0,0)，幾何對齊。逐像素… | 2026-08-15 |
+| [`docs/playtest/23-main-screen-geometry.md`](playtest/23-main-screen-geometry.md) | 23 — 主畫面幾何：從機器碼定死，第一次逐區對拍 | 版面常數全部換成機器碼算出來的值（外框四項 ＋ 右欄內部一整組）。 橫幅的位移掃描落在 (0,0)，幾何對齊。 | 2026-08-15 |
 | [`docs/playtest/24-window-toggles.md`](playtest/24-window-toggles.md) | 24 — 四個常駐視窗的開關：實作驗收 | 開關可用，四窗全開與全關兩張截圖都拍到了。右欄的四條邊與原版 參考影片逐條對上（y = 168／184／192／19… | 2026-08-15 |
 | [`docs/playtest/25-audio-capture-feasibility.md`](playtest/25-audio-capture-feasibility.md) | 25 — 音訊擷取的可行性：DOSBox 錄得到，鏈路已打通 | 可行性 confirmed。開場動畫的 15 秒錄音有內容（RMS 424）， 轉成 ogg 再解回來仍是 RMS … | 2026-08-15 |
 | [`docs/playtest/26-bgm-render-vs-recording.md`](playtest/26-bgm-render-vs-recording.md) | 26 — 合成出來的音樂對得上原版錄音 | confirmed。internal/audio 渲染的 OPENBGM.DAT 與 DOSBox 錄的同一首， 包… | 2026-08-15 |
@@ -221,7 +221,7 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 146 條。**要查「這件事解了沒」先看這裡**，
+共 145 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（77 條）
@@ -358,7 +358,7 @@
 |---|---|
 | 2.1 執行結構（已驗證） ▸ YNSOUND.COM | `docs/reference/04-first-survey.md` |
 
-### 未解（32 條）
+### 未解（31 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -387,7 +387,6 @@
 | 4. 據點記錄（32 byte） ▸ +22 | `docs/formats/08-sinario-save.md` |
 | 4. 據點記錄（32 byte） ▸ +27–+31 | `docs/formats/08-sinario-save.md` |
 | 4. 數字字模在 ICONGRF 段 3 裡 ▸ +0x0000 | `docs/spec/52-main-screen-camera-and-banner-date.md` |
-| 4. 數字字模在 ICONGRF 段 3 裡 ▸ +0x06C0 | `docs/spec/52-main-screen-camera-and-banner-date.md` |
 | 4. 數字字模在 ICONGRF 段 3 裡 ▸ +0x08F0 | `docs/spec/52-main-screen-camera-and-banner-date.md` |
 | 檔案 ▸ 40-economy.md | `docs/mechanics/00-index.md` |
 | 索引 ▸ 事件場景上誰在說話 | `docs/spec/00-index.md` |

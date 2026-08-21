@@ -238,7 +238,10 @@ def collect(path, rel):
         if "✅" in line or STRUCK.match(c[0]) \
                 or any(SOLVED_LEAD.match(x) for x in c):
             continue
-        if open_level is not None or gap_table:
+        # ⭐ `muted` 以前只擋散文，不擋表格列——於是「### 3.1 已解的」底下
+        # 整張表照樣被收進缺口總表（`mechanics/80` 四列都是答案）。
+        # 子標題說「已解」就是說「以下不是缺口」，表格也算。
+        if (open_level is not None and not muted) or gap_table:
             items.append((c[0], " / ".join(c[1:]), section))
         elif OPEN_CELL.search(c[-1]) and not SOLVED.search(c[-1]):
             # 欄位表：最後一欄標未解的列
