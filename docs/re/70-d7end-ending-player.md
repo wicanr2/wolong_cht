@@ -7,6 +7,8 @@
   SHA-256 `73d97e19edf83538c7fb51d5ceda9cf498d8f5521b45a32d855b15603d313896`）
   ＋ `workplace/orig/pc98/D7END.EXE`（3,889 B）
 - 推論等級：**confirmed（靜態）**，絕對秒數是**強證據**（§4 的前提）
+- §3.1（2026-08-21 補）：`tools/ida_dump.py` 對
+  `D7END.EXE.i64`（SHA-256 `3741a6b53b66b34b24f51d5fc8e683b88f6e61d2619d4f2f7b4e4fb79f17d44d`）
 - 相關：[`59`](59-game-over-exit-codes.md)（誰啟動它）、
   [`../spec/30`](../spec/30-victory.md)（判定）
 
@@ -79,6 +81,37 @@ start:
 ⭐ **結束條件是滑鼠鍵，不是按鍵**——`sub_104C7` 只開了 INT 33h，
 而 INT 1Ch 的處理常式每次都問 INT 33h AX=5 的兩顆鍵。
 
+### 3.1 `sub_10293`：第 2–11 幕的節拍
+
+```asm
+00010293  push ax
+00010294  call sub_1033D            ; 載 END_S(n+1)
+00010297  call sub_10335
+0001029A  ds = word_1053B / si = 0     / bx = 0     / ax = 0C828h / call sub_1178A
+000102AA  ds = word_1053B + 0FA0h / si = 0 / bx = 3E80h / ax = 0C828h / call sub_1178A
+000102BE  bx = 幕序 − 2 / jb → 沒有字幕
+000102C7  si = cs:[bx*2 + 780h]     ; ★ 每幕的字幕描述子
+000102D0  cx = [si]                 ; 筆數
+  loop:   dx = [si+2] / bx = [si+4] / ...  ax = 0F01h / call sub_115DE   ; 逐筆畫字串
+000102E4  ax = 32h  / call sub_104B5   ; ★ 停 0x32
+000102EB  cx = 0..10h：sub_1035F(ah=cx) + delay(2)     ; 17 階淡入
+00010302  ax = 320h / call sub_104B5   ; ★ 停 0x320
+00010309  cx = 10h..0：sub_1035F(ah=cx) + delay(2)     ; 17 階淡出
+```
+
+一幕的節拍是**貼兩半 → 畫字幕 → 停 `0x32` → 淡入 → 停 `0x320` → 淡出**。
+以 §4 的單位（1/4 BIOS tick、18.2 Hz）換算：
+
+| 參數 | 單位 | 秒 |
+|---:|---:|---:|
+| `0x32` | 50 | ≈ 0.69 |
+| `0x320` | 800 | ≈ 11.0 |
+
+⭐ **每一幕都有字幕，而且是資料不是程式**：`cs:0x780` 起是一張以幕序索引的
+描述子表（幕序 2 起才有，所以第一幕由 `sub_10094` 自己處理），
+每筆的開頭是筆數，後面每筆三個 word 交給 `sub_115DE` 畫。
+`ax = 0F01h` 與 [`46`](46-strategy-chrome-cell-layer.md) §1 的字串繪製屬性同一組編碼。
+
 ## 4. 第一幕的節拍（`sub_10094`）
 
 ```
@@ -128,7 +161,7 @@ sub_10204 換整頁 → 一邊 si -= 0x50、一邊 dx += 0x50 的捲動，每步
 |---|---|---|
 | `sub_1041E`（`ENDPAL.BRG`）怎麼套 | 只知道它載檔 | 與 `GAMEPAL.BRG` 同格式的話直接沿用（[`../formats/02`](../formats/02-brg-palette.md)）|
 | 淡入淡出的階數與色階 | 17 階（`cx` 0–0x10）已確定，每階怎麼算沒讀 | `sub_1035F`／`sub_103DC` |
-| `sub_10293` 每一幕做什麼 | 只知道它先 `sub_1033D` 載下一張 | 逐行讀 |
+| `cs:0x780` 那張字幕描述子表 | §3.1 解出結構（幕序索引 → 筆數 ＋ 每筆三個 word），**表的內容沒 dump** | `ida_dump.py` 對 `D7END.EXE` 的 `0x780` 起 |
 | BGM | `ENDBGM.DAT` 走 INT 61h，與 `KI.EXE` 同一條音源路徑 | remake 已有 `endbgm-0`（[`../spec/29`](../spec/29-audio.md)）|
 
 已解：第一幕是 **320 px 寬**、貼在 x ＝ 160（`sub_1016D` 的 `di = 0x14`），

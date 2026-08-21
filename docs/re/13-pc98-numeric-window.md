@@ -49,7 +49,7 @@ composite 與 pending 結束後消像已接入，並由 Docker／Xvfb 短 smoke 
 - `word_10D50` 指向的圖像內容已由 `ICONGRF.DAT` 第 3 段直接解出；其下半部含原版
   3×6 靜態按鍵 glyph。硬體游標則由 `KI.EXE` 的兩層 mask 重建；因此本項已不再以
   替代高亮框冒充 glyph。尚未宣稱的是原版自然執行畫面與 remake 的整張截圖逐像素
-  對拍，因 DOS/V 執行檔仍受複製保護。
+  對拍——這個視窗還沒去拍，密碼頁不擋（`CLAUDE.md` §4.0）。
 
 ## 2. CJK 比較參考
 
@@ -156,7 +156,7 @@ prompt、選項與消像（pending 結束後由地圖重畫）已接在同一呈
 
 本輪以 DOS/V `KI.EXE`（SHA-256
 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`）的
-IDA Pro 9.4 線性位址為準，補足先前只記錄 blit 尺寸、尚未接資源的缺口：
+IDA Pro 9.4 線性位址為準。先前只記錄 blit 尺寸、沒有接上資源，這一輪補上：
 
 - `sub_17D0D`（`00017D0D`）使用 `DS:SI=word_10D50:0600h`、`AX=4006h`；
   `sub_1FA37`／`sub_1FAA2` 的實際來源是 ICONGRF 第 3 段內的 96×64 平面圖。
@@ -170,8 +170,11 @@ IDA Pro 9.4 線性位址為準，補足先前只記錄 blit 尺寸、尚未接�
   靜態按鍵 glyph 已分開驗證；`KI.EXE` 游標 overlay 由 `Library.DOSVCursor` 提供，
   fallback 只在資產缺失時啟用。
 
-這項接線把「外框位置／尺寸／3×6 靜態 glyph／硬體游標來源」提升到 DOS/V 資源 parity；
-不把缺少自然 DOS/V 畫面（原版執行檔仍受複製保護）寫成整張截圖逐像素驗收完成。
+這項接線把「外框位置／尺寸／3×6 靜態 glyph／硬體游標來源」提升到 DOS/V 資源 parity。
+**數值輸入視窗本身還沒做整張截圖的逐像素對拍**——缺的是那張截圖，
+不是取得截圖的手段：松崗 DOS/V 的密碼頁四格留白直接確認就會過
+（`CLAUDE.md` §4.0、[`../playtest/18`](../playtest/18-dosv-password-verification.md)），
+主畫面已經這樣拍完並逐區對拍（[`../playtest/37`](../playtest/37-main-screen-parity.md)）。
 
 ## 9. 2026-08-10 DOS/V 硬體游標與按鍵 glyph 解碼
 

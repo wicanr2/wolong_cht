@@ -146,5 +146,6 @@ loc_1FAAD:
   照 §1 的路徑走：grep 檔名偏移的立即值（`0D6Dh` 等）→ 載入器 → 繪製呼叫端的 `ax`。
   （`KYOGRF` 15 張 96×96、`IVENTGRF` 3 張 288×176 都已 confirmed，
   見 [`../formats/03`](../formats/03-grf-images.md) §3／§4。）
-- `sub_1E38C`（帶位移的讀檔）與 `sub_1F4A2`（開檔／讀檔／關檔）的完整介面。
+- `sub_1F4A2`（開檔／讀檔／關檔）的完整介面。
+  （`sub_1E38C` 的介面已解，見 [`50`](50-city-info-window.md) §3.1。）
 - `sub_1FAC2` 是另一支繪製常式（`shl al, 1` 後才 `mov cx, ax`），用途未解。

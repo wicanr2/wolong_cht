@@ -328,7 +328,7 @@ Android 產物與限制詳見 [`docs/mobile/android-plan.md`](docs/mobile/androi
 | 穩定游標 UI 閘門 | `cmd/wlgame/TestIdleClockGateRequiresStablePointerAndNoCommand` | **PASS** | 首次座標、移動、按鈕／命令均停住；下一個穩定無輸入 frame 才允許世界更新 |
 | 已注入事件 10 的每時節拍 | `internal/state/TestIdleClockDispatchesQueuedEvent10OnHourlyCadence` | **PASS** | 第 7 個每時邊界才得到 `Code=0x030A`／`Param=0x42` 的 TALK；不是原版 dynamic trace |
 | substitute 月結 producer | `TestApproximateEvent10*` | **PASS** | `0x41`／`0x42`、raw queue 與狀態原子性固定；仍是 substitute／強推論 |
-| 松崗繁中自然畫面 smoke | Docker/Xvfb，`seed=17`、速度 1、30 frame | **PASS** | hash `45a68852335420dd7b22b4e240192dcd7a38fbbc62f72c8c59ec95acdc137b24`；不是受密碼保護原版的同狀態 trace |
+| 松崗繁中自然畫面 smoke | Docker/Xvfb，`seed=17`、速度 1、30 frame | **PASS** | hash `45a68852335420dd7b22b4e240192dcd7a38fbbc62f72c8c59ec95acdc137b24`；這是 remake 單邊的 smoke，不是與原版的同狀態 trace（同狀態對拍另見 `docs/playtest/37`） |
 
 本輪唯一驗證 oracle 是松崗繁中版；`workplace/orig/dosv` 為既有資料夾名稱。PC-98 與其他
 版本不再是本輪事件 10 的行為或 release gate。原版自然低碼 `0x0A` writer 維持 **unknown**，

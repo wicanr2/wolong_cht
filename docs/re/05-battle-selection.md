@@ -4,7 +4,8 @@
 
 - 日期：2026-08-07
 - 輸入：`workplace/ida/dosv/KI.EXE.i64`　SHA-256 `fffeba98…3868`
-- 推論等級：**兩條路徑的存在與參數 confirmed**；地形對映表的內容未解
+- 推論等級：**兩條路徑的存在與參數 confirmed**；地形對映表的內容也已解出，
+  見 [`../mechanics/30-combat.md`](../mechanics/30-combat.md) §2
 
 ## 0. 為什麼追這一條
 
@@ -85,7 +86,8 @@ xor     ch, ch
 | **野戰的戰場不是查固定表，是依大地圖地形產生的** | confirmed |
 | 取樣的是軍團所在格與其下方四格 | confirmed |
 | 地形類型值域 1–7，戰場編號 ＝ `0xCE` ＋ 類型（`0xCF`–`0xD5`） | confirmed |
-| `sub_14C4C` 是「地圖圖塊值 → 地形類型」的對映 | **未解** |
+| `sub_14C4C` 是「地圖圖塊值 → 地形類型」的對映 | **confirmed**，14 筆範圍查表已攤開在
+  [`../mechanics/30-combat.md`](../mechanics/30-combat.md) §2 |
 
 > **這解釋了 214 個戰場的組成**：一部分是據點專屬的固定戰場，
 > 另一部分（至少 `0xCF`–`0xD5` 這 7 個）是野戰用的地形樣板。
@@ -107,8 +109,8 @@ xor     ch, ch
 
 ## 4. 下一輪
 
-1. **`sub_14C4C`** —— 地圖圖塊值 → 地形類型的對映。解開它，
-   野戰的地形決定規則就完整了。這是 `docs/mechanics/30-combat.md` 的第一批內容。
+1. ~~`sub_14C4C` 的對映~~ —— 已解，14 筆 × 3 byte 的範圍查表與各類型的
+   驗證方法在 [`../mechanics/30-combat.md`](../mechanics/30-combat.md) §2。
 2. `loc_14BD0`／`loc_14BD5` 兩條分支（正下方為 0、或類型 ≥ 8）。
 3. 據點記錄 32 byte 的欄位表 —— 基址 `0x840`，配合 `SINARIO.DAT` 與
    `SAVE.DAT` 的 diff 應該能快速定位。

@@ -101,7 +101,7 @@
 | [`docs/re/19-outcome.md`](re/19-outcome.md) | DOS/V 已證實敗北 outcome 接線 | READY（只涵蓋兩種敗北；不涵蓋勝利、君主死亡或原版返回標題）。 | 2026-08-12 |
 | [`docs/re/20-ida-re-coverage-audit.md`](re/20-ida-re-coverage-audit.md) | 20 — DOS/V IDA 逆向覆蓋與 remake 差距審計 | REVIEWED。足以支撐可玩重製與多數規則，但不足以支撐高忠實度戰術呈現；主要缺口是原版顯示串列、相機狀態機、逐幀… | 2026-08-12 |
 | [`docs/re/21-function-census.md`](re/21-function-census.md) | 21 — DOS/V KI.EXE 全函式覆蓋普查 | 量測完成， | 2026-08-14 |
-| [`docs/re/22-strategy-command-tree.md`](re/22-strategy-command-tree.md) | 22 — 戰略指令列與滑鼠熱區分派 | 指令列的八個槽位、兩層子選單、財政四子項、編成入口、熱區查表定址式與 狀態列提示常式 confirmed。指令列圖形… | 2026-08-13 |
+| [`docs/re/22-strategy-command-tree.md`](re/22-strategy-command-tree.md) | 22 — 戰略指令列與滑鼠熱區分派 | 指令列的八個槽位、兩層子選單、財政四子項、編成入口、熱區查表定址式與 狀態列提示常式 confirmed。指令列的圖… | 2026-08-13 |
 | [`docs/re/23-bgm-resource-format.md`](re/23-bgm-resource-format.md) | 23 — BGM.DAT 音樂資源格式 | 容器索引與曲塊的聲軌指標表 confirmed，兩版都逐 byte 對齊到檔尾且餘 0。 ⭐ | 2026-08-13 |
 | [`docs/re/24-unread-function-catalogue.md`](re/24-unread-function-catalogue.md) | 24 — 未讀函式目錄：252 支的證據與下手順序 | 252 支未讀函式全部登記，附上由共用常式與 TALK 訊息取得的角色證據。 計數要排除本檔自己（§5），否則登記等… | 2026-08-13 |
 | [`docs/re/25-message-variants-and-personnel.md`](re/25-message-variants-and-personnel.md) | 25 — 訊息變體展開與人事指令 | 訊息索引 ≥ 0x196 的 ×8 變體展開 confirmed，13 個呼叫值共 104 則變體已對出； 人事四支… | 2026-08-13 |
@@ -111,7 +111,7 @@
 | [`docs/re/29-font-service-int15.md`](re/29-font-service-int15.md) | 29 — 原版怎麼顯示中文：INT 15h 字型服務與 END_S13/S14.DAT | 整條鏈 confirmed（靜態）。KI.EXE 側走 DOS/V 的 INT 15h AH=50h 向常駐服務要字… | 2026-08-13 |
 | [`docs/re/30-corps-formation-ui.md`](re/30-corps-formation-ui.md) | 30 — 軍團編成畫面：兵員池、兵種切換與派生數值 | 編成畫面的主迴圈與被它呼叫的常式 confirmed。 兵員池的搬運方向、兵種切換的循環、兵力的自動分配、確定的前提… | 2026-08-13 |
 | [`docs/re/31-faction-picker-screen.md`](re/31-faction-picker-screen.md) | 31 — 勢力一覽：22 格的兩欄版面與領地重繪 | 版面、命中判定、顏色規則、兩個守門條件與介面字串 confirmed。 分派表已印出，但 sub_15AD1 → s… | 2026-08-14 |
-| [`docs/re/32-strategy-detail-panels.md`](re/32-strategy-detail-panels.md) | 32 — 戰略側的兩個詳情面板：據點與軍團 | 兩支面板函式與軍團面板的外層 confirmed，欄位與字串表全部對出。 畫肖像的 sub_107D2 與兩支收尾常… | 2026-08-14 |
+| [`docs/re/32-strategy-detail-panels.md`](re/32-strategy-detail-panels.md) | 32 — 戰略側的兩個詳情面板：據點與軍團 | 兩支面板函式與軍團面板的外層 confirmed，欄位與字串表全部對出。 畫肖像的 sub_107D2 見 [33]… | 2026-08-14 |
 | [`docs/re/33-shared-draw-helpers.md`](re/33-shared-draw-helpers.md) | 33 — 共用繪圖層：字串包裝、肖像快取、小地圖上色 | 六支共用常式 confirmed。肖像快取的替換策略、小地圖的座標換算與 據點標記的畫法都定案。實際載入 bytes… | 2026-08-14 |
 | [`docs/re/34-corps-status-bits.md`](re/34-corps-status-bits.md) | 34 — 軍團記錄 +0x00 的位元圖，與改用 IDAPython 之後的掃法 | 位元 1／2 的設定端、清除端與語意 confirmed （位元 1 ＝ 下一步要重算、位元 2 ＝ 委任）。 位元… | 2026-08-14 |
 | [`docs/re/35-strategy-ui-module-map.md`](re/35-strategy-ui-module-map.md) | 35 — 戰略 UI 模組全圖：108 支函式的叢集歸屬 | 叢集歸屬 confirmed（呼叫圖是精確的，不是啟發式）。 各叢集的角色標籤是強證據——來自「它呼叫哪些已定案語意… | 2026-08-14 |
@@ -211,7 +211,7 @@
 | [`docs/spec/64-capital-relocation-report.md`](spec/64-capital-relocation-report.md) | 64 — 遷都之後說什麼：自國君主下令，他國要有外交官才報得回來 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/65-retreated-soldiers-survive.md`](spec/65-retreated-soldiers-survive.md) | 65 — 退到畫面外的兵算生還，不算戰死 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/66-broken-walls-repaint.md`](spec/66-broken-walls-repaint.md) | 66 — 城壁與門打壞之後，畫面上的地形要跟著換 | CONFORMED。 | 2026-08-18 |
-| [`docs/spec/67-ending-playback.md`](spec/67-ending-playback.md) | 67 — 結局的播放 | CONFORMED。 | 2026-08-18 |
+| [`docs/spec/67-ending-playback.md`](spec/67-ending-playback.md) | 67 — 結局的播放 | READY（幕序、色盤、文字與第一幕 CONFORMED；第 2–11 幕的節拍不符）。 | 2026-08-18 |
 | [`docs/spec/68-death-animation.md`](spec/68-death-animation.md) | 68 — 倒地動畫：四幀，換一組圖 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/69-world-fingerprint.md`](spec/69-world-fingerprint.md) | 69 — 世界指紋：同一個 seed 兩次跑出同一個值 | CONFORMED。⚠ 這一份沒有原版出處——它是 remake 的驗證設施，不是原版機制。 | 2026-08-20 |
 | [`docs/spec/70-phone-chrome.md`](spec/70-phone-chrome.md) | 70 — 手機版的按鈕與面板用原版的底色與外框 | CONFORMED。 | 2026-08-21 |

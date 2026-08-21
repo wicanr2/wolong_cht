@@ -16,7 +16,8 @@
   `ax` ＝ 目標據點記錄位址（`0x840 + 據點編號 × 32`）
 
 [`64`](64-corps-arrival-state-machine.md) 解出分派表與玩家那一半，
-非玩家的四個 entry 掛在 §6 未解。這一份把它們讀完。
+[`64`](64-corps-arrival-state-machine.md) §6 把非玩家的四個 entry 留給這一份，
+這裡把它們讀完。
 
 ## 1. 整條生命週期
 

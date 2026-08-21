@@ -74,6 +74,12 @@ SENT = re.compile(r"[^。\n]+[。]?")
 # 才成立）。每一列本來就標了出處，連結留著只會讓連結檢查失敗——拆成純文字。
 MDLINK = re.compile(r"\[([^\]]*)\]\([^)]*\)")
 SOLVED = re.compile(r"✅|已解|已定案")
+# ⭐ 「這一列自己承認已經解了」——只認**開頭**。
+# 「已證實 A，但 B 仍未完」是合法的缺口列，整列比對會把它一起吃掉；
+# 反過來，`| 段 3 0x21A0 那張空槽圖 | **已驗**：… |` 這種列是答案不是缺口，
+# 而 SOLVED 只認「已解／已定案」，漏掉「已驗／已證實／已讀」這幾種寫法。
+SOLVED_LEAD = re.compile(
+    r"^(?:\*\*)?(?:✅|已解|已驗|已讀|已證實|已確認|已定案|已實作|已接入)")
 STRUCK = re.compile(r"^~~")
 SEP = re.compile(r"^\|[\s:|-]+\|$")
 # 文件明講自己沒有缺口。有這一行就不算盲區——
@@ -138,6 +144,7 @@ def collect(path, rel):
     gap_table = False     # 目前這張表的表頭是不是寫著「缺口」
     lead_done = set()     # 已經收過首句的小節
     in_fence = False      # 在 ``` 區塊裡
+    solved_para = False   # 正處在一段「已解…」的敘述裡
     for i, line in enumerate(lines):
         # ⭐ **反組譯區塊裡的註解不是缺口。** 那些行長這樣：
         #     call sub_1E3C0                    ; ← 未解
@@ -176,7 +183,15 @@ def collect(path, rel):
             # 散文只收該小節的第一句當代表，細節留在原文。
             body = line.strip(" -*`")
             bullet = bool(re.match(r"^\s*([-*]|\d+\.)\s", line))
-            if len(body) >= 8 and not body.startswith((">", "#", "```")) \
+            # ⭐ 「已解的兩條：…」那種段落，**整段**都不是缺口。
+            # 只擋第一行沒有用：第二行不含「已解」，會被當成該小節的代表句
+            # 抽進總表（docs/re/62 的「那一區逐像素 PASS」就是這樣進來的）。
+            if not body:
+                solved_para = False
+            elif SOLVED.search(body):
+                solved_para = True
+            if len(body) >= 8 and not solved_para \
+                    and not body.startswith((">", "#", "```")) \
                     and not SOLVED.search(body) and not META.search(body) \
                     and (bullet or section not in lead_done):
                 lead_done.add(section)
@@ -215,7 +230,11 @@ def collect(path, rel):
         if i + 1 < len(lines) and SEP.match(lines[i + 1].strip()):
             gap_table = bool(GAP_HEADER.search(line))
             continue
-        if SOLVED.search(line) or STRUCK.match(c[0]):
+        # ⚠ 這裡**不能**用整列比對「已解」。缺口列常常把已解的部分寫進說明
+        # （「`ENDPAL` 那邊已解，開場這邊還沒做」），整列比對會把真缺口一起吃掉，
+        # 而那份文件就變成盲區——看起來像「沒有缺口」。只認**開頭**。
+        if "✅" in line or STRUCK.match(c[0]) \
+                or any(SOLVED_LEAD.match(x) for x in c):
             continue
         if open_level is not None or gap_table:
             items.append((c[0], " / ".join(c[1:]), section))

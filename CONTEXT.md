@@ -538,7 +538,7 @@ grep `.go`，實際踩到六筆）。
 | ⭐ **結局的兩則訊息**：`#0x4B` 捷報（不帶肖像）＋ 組編號 `0x197` 由君主說 | [`spec/30`](docs/spec/30-victory.md)、[`re/59`](docs/re/59-game-over-exit-codes.md) §2 |
 | ⭐ **結局的全文**（松崗版 200 字 10 行、日文原版 180 字 9 行）燒在 `D7END.EXE` 的資料段，不在 `TALK.DAT` 裡；播放順序與節拍也解了 | [`re/70`](docs/re/70-d7end-ending-player.md) |
 | ⭐ **過場圖 `OPEN_S*`／`END_S*` 的格式**：外層是 `MMAP.MAP` 那一種 RLE，內層 640×400 四平面、上下兩半各 200 列、一半之內平面優先，一幕配一組色盤 | [`formats/09`](docs/formats/09-cutscene-images.md) |
-| ⭐ **結局會播了**：十二幕 ＋ 逐字文字 ＋ 十七階淡入淡出，第一幕是三塊合成 | [`spec/67`](docs/spec/67-ending-playback.md) |
+| ⭐ **結局會播了**：十二幕 ＋ 逐字文字 ＋ 十七階淡入淡出，第一幕是三塊合成。⚠ 第 2–11 幕的節拍與原版不符（[`spec/67`](docs/spec/67-ending-playback.md) §7.1）| [`spec/67`](docs/spec/67-ending-playback.md) |
 | ⭐ **倒地動畫**：四幀、圖號 84 ＋ 側 ×90 ＋ 兵種組 ×2 ＋ 後兩幀 +1；那四幀不擋路也不算場上人數 | [`spec/68`](docs/spec/68-death-animation.md) |
 | ⭐ **世界指紋**：`World.Fingerprint()` 把整個世界縮成一個值，同一個 seed 跑兩次要相同；**15 欄的正對照擋「漏掉某個欄位」** | [`spec/69`](docs/spec/69-world-fingerprint.md) |
 | 顯示格表頭 `+1`（含物件的高度）與 `+3`（只有地形）的分工 | [`re/68`](docs/re/68-t3-frontier-functions.md) §2.1 |
