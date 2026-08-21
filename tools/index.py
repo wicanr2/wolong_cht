@@ -30,6 +30,8 @@
 | A 的狀態行說某識別字未解，B 的狀態行說它 READY | `formats/05` 說 `MMAP.MAP` 未解，`formats/06` 就是它的解法 |
 | 斷言表的同一個鍵在不同文件有不同等級 | 兩份文件對同一件事說法不同 |
 | 文件內的相對連結指得到檔案 | 改檔名時最容易漏 |
+| `[…](x.md) §N` 的小節真的存在 | 七筆引用把**行號**寫成小節號（`§590`、`§1065`…），而它們都指得到檔案，所以連結檢查一路放行 |
+| `docs/spec/00-index.md` 的狀態欄與規格自己的狀態行一致 | 索引那一欄是散文，一份文件內部的檢查看不到跨文件矛盾 |
 | `CONTEXT.md` 提到的 docs 路徑都存在，且有指向 `docs/INDEX.md` | 完整清單交給生成的那份，人只維護指標 |
 
 只用標準函式庫。
@@ -354,6 +356,32 @@ def check(docs):
                 problems.append(
                     f"docs/spec/00-index.md：那一列把 `{name}` 記成 "
                     f"{'／'.join(sorted(said))}，但它自己的狀態行是 {own[name]}")
+
+    # ⑧ `[…](檔案.md) §N` 的 `§N` 要真的存在於那份文件。
+    #
+    # ④ 只驗檔案存不存在，驗不到小節。實際踩過（2026-08-21 稽核）：
+    # 七筆引用寫的是**行號**不是小節號（`§1065`、`§590`、`§467`、`§150`、`§91`…），
+    # 而它們全部指得到檔案，所以 ④ 一路放行。⭐ **一份長文件裡「§590」
+    # 看起來完全合理**——沒有機械檢查就只能靠讀的人自己去翻。
+    #
+    # 只驗 `[…](x.md) §N` 這一種形式；`§2.1` 允許只有子節存在。
+    sec_cite = re.compile(r"\]\(([^)\s]+\.md)\)\s*(?:的\s*)?§([0-9]+(?:\.[0-9]+)*)")
+    heads = {}
+    for d in docs:
+        heads[os.path.normpath(d.path)] = {
+            m.group(1) for m in re.finditer(r"^#{2,6}\s+([0-9]+(?:\.[0-9]+)*)", d.text, re.M)}
+    for d in docs:
+        if os.path.basename(d.path) == "43-open-questions.md":
+            continue  # 生成的彙總檔，內容是別份文件的原文（引用連同上下文一起搬過來）
+        for target, num in sec_cite.findall(d.text):
+            full = os.path.normpath(os.path.join(os.path.dirname(d.path), target))
+            own = heads.get(full)
+            if own is None or num in own:
+                continue
+            if any(h.startswith(num + ".") for h in own):
+                continue  # 父節沒編號但子節有
+            problems.append(
+                f"{rel(d.path)}：引用 {target} §{num}，但那份文件沒有這個小節")
 
     # ④ 相對連結指得到檔案。
     for d in docs:

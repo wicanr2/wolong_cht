@@ -89,9 +89,9 @@
 
 | 呼叫者 | `al` | 那是什麼 |
 |---|--:|---|
-| `sub_11A6E` | 0 | **開機流程的第一件事**（[`38`](38-strategy-core-module-map.md) §112）|
+| `sub_11A6E` | 0 | **開機流程的第一件事**（[`38`](38-strategy-core-module-map.md) §5）|
 | `sub_13830` | 6 | 外交對話（[`12`](12-diplomacy-dialogue.md)）|
-| `sub_13902` | 6 | 事件 2／3（[`07`](07-monthly-settlement.md) §1065）|
+| `sub_13902` | 6 | 事件 2／3（[`07`](07-monthly-settlement.md) §22）|
 | `sub_139E8` | 6 | 事件 4／5（同上）|
 | `sub_13B08` | 6 | 系統服務分派（[`24`](24-unread-function-catalogue.md)）|
 | `sub_19321` | 表 | 四季（§2）|
@@ -179,10 +179,10 @@
 | 平原野戰／跨水構造 | `0xC0`–`0xD0` | 1 | 不看 | **9** |
 | 山地／林地／水域 | `0xD1`–`0xD5` | 2 | 不看 | **10** |
 
-bit 7 的語意（攻守對調）在 [`09`](09-combat.md) §590 已記載：
+bit 7 的語意（攻守對調）在 [`09`](09-combat.md) §10 已記載：
 `cmp cs:byte_10D35, 80h / jb .1 / xor al,1 / xchg si,di`。
 **兩個位元一起設，所以「玩家守城」同時換邊也翻轉戰場**——
-這與 [`11`](11-tactical-battle.md) §467 的旋轉旗標是同一個位元。
+這與 [`11`](11-tactical-battle.md) §4 的旋轉旗標是同一個位元。
 
 ## 5. 未解
 

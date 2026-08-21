@@ -126,8 +126,12 @@ sub_10204 換整頁 → 一邊 si -= 0x50、一邊 dx += 0x50 的捲動，每步
 
 | 項目 | 現況 | 下手點 |
 |---|---|---|
-| 第一幕那三塊的幾何 | `sub_1016D`／`sub_101B5`／`sub_10204` 各畫 320 px 寬的一段，怎麼拼成一張還沒對（[`../formats/09`](../formats/09-cutscene-images.md) §6）| 逐支對 `di` 的起點與跨距 |
 | `sub_1041E`（`ENDPAL.BRG`）怎麼套 | 只知道它載檔 | 與 `GAMEPAL.BRG` 同格式的話直接沿用（[`../formats/02`](../formats/02-brg-palette.md)）|
 | 淡入淡出的階數與色階 | 17 階（`cx` 0–0x10）已確定，每階怎麼算沒讀 | `sub_1035F`／`sub_103DC` |
 | `sub_10293` 每一幕做什麼 | 只知道它先 `sub_1033D` 載下一張 | 逐行讀 |
 | BGM | `ENDBGM.DAT` 走 INT 61h，與 `KI.EXE` 同一條音源路徑 | remake 已有 `endbgm-0`（[`../spec/29`](../spec/29-audio.md)）|
+
+已解：第一幕是 **320 px 寬**、貼在 x ＝ 160（`sub_1016D` 的 `di = 0x14`），
+三塊分別在 16,000（平面 0／1 交錯）、47,744（平面 2）、59,072（平面 3）
+（[`../formats/09`](../formats/09-cutscene-images.md) §2.1，已實作於
+[`../spec/67`](../spec/67-ending-playback.md)）。

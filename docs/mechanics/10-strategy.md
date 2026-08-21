@@ -228,7 +228,7 @@ oracle 實測「對話框完全不吃鍵盤」（`docs/playtest/04`）；
 | 稅率與收入 | `收入 = Σ(生產力 ÷ 距離除數) × 稅率 ÷ 100`（[`../re/07`](../re/07-monthly-settlement.md) §7），實作在 `internal/rules/economy` |
 | 募兵數與資金的換算 | [`40-economy.md`](40-economy.md) |
 | 生產力／上昇值怎麼成長 | 遞迴式與稅率的中性點 30%（[`../re/07`](../re/07-monthly-settlement.md) §11）|
-| 防災值怎麼成長 | 內政官那一支 `sub_14194` 的第二條：`rand(0..15) ≤ cl` 時 `+= (ch>>1)+1`，上限 200（[`../re/07`](../re/07-monthly-settlement.md) §19），實作在 `internal/rules/governor` |
+| 防災值怎麼成長 | 內政官那一支 `sub_14194` 的第二條：`rand(0..15) ≤ cl` 時 `+= (ch>>1)+1`，上限 200（[`../re/07`](../re/07-monthly-settlement.md) §20），實作在 `internal/rules/governor` |
 | 三個兵種的相剋與數值 | 地形係數表與三支攻擊常式（[`30-combat.md`](30-combat.md) §4）|
 | 士氣值的作用 | 戰力乘數與壞滅的開關（[`30-combat.md`](30-combat.md) §4.4）|
 | 行軍費用 | **每天**收一次，野外 `兵力 × 3/4`、據點或路上 `兵力 ÷ 32 ＋ 1`（`sub_12600`，[`../re/09`](../re/09-combat.md) §9），當場從資金扣（[`../spec/50`](../spec/50-corps-upkeep-charges-funds.md)）|
