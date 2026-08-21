@@ -479,7 +479,7 @@ grep `.asm` 只能從呼叫端的參數順序反推——那是間接證據，�
 | M4 | 規則規格 ＋ 機制文件 | 🔵 進行中 | 政略、行軍、戰鬥、經濟、外交、勝負。**同步產出 `docs/mechanics/`（§5）**。規格已到 `docs/spec/71`（另有對拍規格 `90`／`91`），索引在 [`docs/spec/00-index.md`](docs/spec/00-index.md) |
 | M5 | Go 引擎（規則層） | 🔵 大致完成 | 純邏輯，不認識畫面。以 tick 驅動。時鐘／月結／內政官／外交／說服／戰術／遷都／沿原版道路的行軍都在 |
 | M6 | 呈現層 | 🔵 **同狀態逐區對拍到位** | Ebiten、大地圖 ＋ 45 度戰場。⭐ 拿原版存檔開同一個局面比像素：**主畫面五區逐像素相同**（[`docs/playtest/37`](docs/playtest/37-main-screen-parity.md)）、**戰場九區裡六區逐像素相同、戰場區 0.17%**（[`docs/playtest/40`](docs/playtest/40-tactical-parity.md)）。**音樂與音效已實作並與原版錄音比對過**（[`docs/spec/29`](docs/spec/29-audio.md)）|
-| M7 | 日文原版對照與校訂 | 🔵 校訂可套用 | 60 筆校訂可重跑；**排版 parity 已全量量過**（1,022 則逐則量進訊息框，單行超寬 0 行，[`docs/playtest/32`](docs/playtest/32-talk-layout-fit.md)）。缺的是**逐句日中對照**（第一輪已讀完，逐句比對未做）|
+| M7 | 日文原版對照與校訂 | 🔵 只差兩版並排 | 60 筆校訂可重跑；**1,022 則兩批逐句讀完**（[`docs/reference/02`](docs/reference/02-jp-cht-diff.md) §11／§12）；**排版 parity 全量量過**（單行超寬 0 行，[`docs/playtest/32`](docs/playtest/32-talk-layout-fit.md)）；**校訂後的畫面抽樣也做了**（18 則，[`docs/playtest/41`](docs/playtest/41-m7-corrected-text-on-screen.md)）。缺的是**兩版並排的畫面對照** |
 | M8 | 打包發行 | 🔵 進行中 | 發行閘（`denylist.py` ＋ `release.sh`）已接進 `check.sh`；缺各目標平台實機驗收 |
 
 **里程碑不是嚴格的先後關係。** M1 的格式解析與 M5 的規則層交錯進行是對的：

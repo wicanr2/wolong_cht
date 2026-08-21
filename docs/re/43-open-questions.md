@@ -21,10 +21,10 @@
 | 規則正確性 | 24 | 20 | 4 | 0 |
 | 資料保存 | 33 | 32 | 1 | 0 |
 | 程式碼理解 | 177 | 170 | 7 | 0 |
-| 驗收 | 49 | 40 | 9 | 0 |
-| 外部資料 | 7 | 7 | 0 | 0 |
+| 驗收 | 51 | 41 | 10 | 0 |
+| 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 141 | 130 | 11 | 0 |
-| **合計** | **431** | 399 | 32 | 0 |
+| **合計** | **432** | 398 | 34 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -32,12 +32,12 @@
 |---|---:|
 | `docs/re/` | 177 |
 | `docs/spec/` | 116 |
-| `docs/playtest/` | 49 |
+| `docs/playtest/` | 51 |
 | `docs/formats/` | 33 |
 | `docs/mechanics/` | 24 |
 | `docs/mobile/` | 12 |
 | `docs/release/` | 11 |
-| `docs/reference/` | 7 |
+| `docs/reference/` | 6 |
 | `docs/promo/` | 2 |
 
 ## 2.1 規則正確性（24 條）
@@ -289,7 +289,7 @@
 | [`re/71-strategy-hotspot-dispatch.md`](../re/71-strategy-hotspot-dispatch.md) | `sub_188B0` | 畫勢力名的那一支，沒讀（`sub_15C14` 在勢力存在時呼叫它） | 靜態 |
 | [`re/71-strategy-hotspot-dispatch.md`](../re/71-strategy-hotspot-dispatch.md) | `22` 的「`off_159D2` 的其餘槽位」、 | （未解小節內文） | 靜態 |
 
-## 2.4 驗收（49 條）
+## 2.4 驗收（51 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -342,13 +342,14 @@
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-enemy`／`sb-self` 1.5% | 兩格將旗的內容 / — | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sub_1DFBB` 的快路徑 | remake 一律走合成。兩條路在全畫面重繪下應該畫出同樣的像素（`../spec/58` §4），但沒有逐格驗過 / — | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | unit 0 的第二趟 | 深度迴圈跑完後 `dl & 0x20` 成立時會對五個鄰格各跑一次 `ax = 0`；**觸發條件（旗標 bit 5）誰設還沒解** / 掃誰對顯示格的 `+0` 寫 `0x20` | 靜態 |
+| [`playtest/41-m7-corrected-text-on-screen.md`](../playtest/41-m7-corrected-text-on-screen.md) | 原版側的同狀態對照 | 這一份只驗 remake 自己「有沒有溢出」。**原版同一則長什麼樣沒有並排比過**——要用 `-open-talk-index` 對應的原版操作序列，還沒做 | 靜態 |
+| [`playtest/41-m7-corrected-text-on-screen.md`](../playtest/41-m7-corrected-text-on-screen.md) | 變數的實際長度分布 | 截圖用的是實際遊戲值（如「袁胤」兩字），而 `TestAllTalkLinesFitTheirBox` 用三全形替身。**軍團名與勢力名的長端沒有逐一量過**（`32`） | 實測 |
 
-## 2.5 外部資料（7 條）
+## 2.5 外部資料（6 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
-| [`reference/02-jp-cht-diff.md`](../reference/02-jp-cht-diff.md) | #360–#1021 的逐句文意審查 | 第二批已列出，逐句審查未完成（§12） | 靜態 |
-| [`reference/02-jp-cht-diff.md`](../reference/02-jp-cht-diff.md) | 校訂後的畫面抽樣與排版 parity | 未做。M7 因此未封口 | 靜態 |
+| [`reference/02-jp-cht-diff.md`](../reference/02-jp-cht-diff.md) | 逐句對照的**日文原版側畫面** | 兩版的同一則並排截圖沒有做過——這一輪的畫面抽樣只驗 remake 自己（`../playtest/41` §6） | 實測 |
 | [`reference/02-jp-cht-diff.md`](../reference/02-jp-cht-diff.md) | `#223` 等訊息的欄位完整語意 | 只修已證實的標記編號，欄位語意仍未解（§9） | 靜態 |
 | [`reference/03-baked-japanese.md`](../reference/03-baked-japanese.md) | 橫幅上寫的是**「臥竜伝」**——日文漢字，不是「臥龍傳」。 | （未解小節內文） | 靜態 |
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | `SHOW.O` | 57,148 B / 被 `INSTALL.EXE` 與 `LOGO.EXE` 引用。開頭 `3c df 00 00 11 af 01 00 50 00 80 07`。**未解** | 靜態 |

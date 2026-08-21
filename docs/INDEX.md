@@ -73,6 +73,7 @@
 | [`docs/playtest/38-window-parity.md`](playtest/38-window-parity.md) | 38 — 三個視窗開著時的對拍：三個視窗區逐像素相同 | 通過。 | 2026-08-17 |
 | [`docs/playtest/39-system-window-parity.md`](playtest/39-system-window-parity.md) | 39 — 系統選單開著時的對拍：五區裡四區 PASS，選單本身也 PASS | 通過。 | 2026-08-17 |
 | [`docs/playtest/40-tactical-parity.md`](playtest/40-tactical-parity.md) | 40 — 戰場的逐區對拍：六區逐像素相同，戰場區 0.17% | 部分通過。 | 2026-08-18 |
+| [`docs/playtest/41-m7-corrected-text-on-screen.md`](playtest/41-m7-corrected-text-on-screen.md) | 41 — M7 校訂後的畫面抽樣：18 則實跑截圖，沒有一行超寬 | 通過。 | 2026-08-22 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告的遊戲段落是逐幀錄下來的實跑畫面； 三平台候選包與 Linux AppImag… | 2026-08-21 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
