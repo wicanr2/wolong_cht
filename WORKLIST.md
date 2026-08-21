@@ -51,6 +51,40 @@
 - Docker 內已有 Go test／vet、翻譯 selftest、文件索引與 Linux/Xvfb 截圖 smoke；
   完整長程遊戲測試依使用者要求略過。
 
+### 2026-08-21 改寫歷史：373 個 commit 的作者信箱一律換成 `wicanr2@gmail.com`
+
+`git config user.email` 一直是 `~/.gitconfig` 的 **`cy.wang@coretronic.com`**
+（公司信箱），而 `rules/10` 的 `[HARD]` 要求個人 repo 用 `wicanr2@gmail.com`。
+⭐ **全域設定讓「不檢查」的預設值就是違規的**——規則要求「動手前先看」，
+而沒看的結果不是中性，是錯的。
+
+盤點出四種身分，使用者裁定**一律**換成 `Chun-Yu Wang <wicanr2@gmail.com>`：
+
+| 原本 | 筆數 |
+|---|---:|
+| `Chun-Yu Wang <cy.wang@coretronic.com>` | 279 |
+| `Claude <noreply@anthropic.com>` | 48 |
+| `x <x@y>`（沒設身分時的佔位） | 40 |
+| `Chun-Yu Wang <wicanr2@gmail.com>` | 6 |
+
+作法與驗證（這台沒有 `git-filter-repo`，用 `filter-branch`）：
+
+1. 備份到 `refs/backup/pre-mail-rewrite`——**放 tag 會被
+   `--tag-name-filter` 一起改寫**，放 `refs/backup/*` 才不在
+   `--branches --tags` 範圍內。
+2. `--env-filter` 四個變數都設（**只設 `GIT_AUTHOR_*` 不夠**，
+   committer 也會留信箱）。
+3. ⭐ 驗證是逐 commit 比 **tree ＋ 作者日期 ＋ 標題**：373 筆完全相同，
+   HEAD 的 tree 也是同一個雜湊（`32e6de68`）——**只有 metadata 變了**。
+4. `--force-with-lease=refs/heads/main:<舊SHA>`，不用裸 `--force`。
+
+⚠ **`git log --all` 會把 `refs/original/` 與備份 ref 一起算進去**，
+驗證時看起來像「沒改到」。要指定 `main`。
+
+repo-local 身分已設成 gmail，**全域沒動**（那是公司專案在用的）。
+舊 HEAD `1258cee` 留在 `refs/backup/pre-mail-rewrite` 與
+`refs/original/refs/heads/main`。新 HEAD `ca1c4ec`。
+
 ### 2026-08-21（第十四輪）其餘五個目錄也逐列核完：570 → 431
 
 第十三輪只核了 `docs/re/`。這一輪把 `spec`／`playtest`／`mechanics`／
