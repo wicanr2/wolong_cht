@@ -1,14 +1,25 @@
 # 推廣片產出紀錄
 
-**狀態：remake 推廣片、代表幀「經典再現」比較片與 DOS/V／remake 實機動態比較片均已產出並完成媒體規格驗證；
-三平台候選可執行包與 Linux AppImage 已產出，Windows／macOS 原生 GUI 仍是獨立 release gate。**
+**狀態：五支影片都已產出並驗過媒體規格。主預告的遊戲段落是逐幀錄下來的實跑畫面；
+三平台候選包與 Linux AppImage 已產出，Windows／macOS 原生 GUI 仍是獨立 release gate。**
 
-- 日期：2026-08-12
+- 日期：2026-08-21
 
-可交付推廣片已集中在 [`dist-all/promo`](../../dist-all/promo)。主預告輸出為 `dist-all/promo/wolong-remake-trailer.mp4`，長度 60 秒、1280×720、
-H.264／AAC。內容只使用 remake 的 DOS/V 目標畫面截圖、事件／戰術驗收圖與
-本專案原創合成聲；沒有把原版影片、`BGM.DAT`、`SOUND.DAT` 或原版執行檔放進
-發行素材。
+可交付推廣片已集中在 [`dist-all/promo`](../../dist-all/promo)。主預告輸出為
+`dist-all/promo/wolong-remake-trailer.mp4`，長度 60 秒、1280×720、H.264／AAC。
+內容只使用 remake 自己的畫面與本專案原創合成聲；沒有把原版影片、`BGM.DAT`、
+`SOUND.DAT` 或原版執行檔放進發行素材。
+
+## 主預告的遊戲段落是實跑錄製
+
+大地圖、野戰與攻城三段由 [`tools/promo_live_capture.sh`](../../tools/promo_live_capture.sh)
+逐幀錄出來（機制見 [`../spec/71`](../spec/71-promo-live-capture.md)）：程式自己把每一張
+畫出來的圖寫成 PNG，不做螢幕擷取，所以同一組旗標跑兩次得到同一批圖。
+2026-08-21 那一批是大地圖 330 張、野戰 390 張、攻城 270 張，
+不重複的張數分別是 44／119／28。
+
+事件視窗、繁中校訂與存檔那幾段仍是截圖——**那些畫面本來就不動**，
+錄成影片與截圖沒有差別。
 
 ## YouTube 原版／remake 畫面比較
 

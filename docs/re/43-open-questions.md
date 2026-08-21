@@ -23,8 +23,8 @@
 | 程式碼理解 | 230 | 223 | 7 | 0 |
 | 驗收 | 69 | 59 | 10 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
-| 其他 | 160 | 149 | 11 | 0 |
-| **合計** | **562** | 529 | 32 | 1 |
+| 其他 | 168 | 157 | 11 | 0 |
+| **合計** | **570** | 537 | 32 | 1 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **9** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -36,9 +36,9 @@
 | `docs/mechanics/` | 46 |
 | `docs/formats/` | 40 |
 | `docs/reference/` | 17 |
-| `docs/mobile/` | 11 |
+| `docs/release/` | 13 |
+| `docs/mobile/` | 12 |
 | `docs/promo/` | 7 |
-| `docs/release/` | 6 |
 
 ## 2.1 規則正確性（46 條）
 
@@ -467,14 +467,15 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。 DOS/V 側未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（160 條）
+## 2.6 其他（168 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
 | [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | 實機驗收 | ⛔ 沒有裝置。里程碑 H 保持未完成 | 靜態 |
 | [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | SAF 匯入的複製流程 | 入口做完了，但「選資料夾 → 複製 69 檔」沒有自動驗過：要驅動系統的檔案選擇器。smoke 走的是 `adb` ＋ `run-as`，那是驗收路徑不是玩家路徑 | 靜態 |
 | [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | 高 DPI 下的點陣字 | 原版字型是 16×15 點陣，手機上要整數放大幾倍才讀得清楚沒量過 | 靜態 |
-| [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | release signing | A–G 之前不談 | 靜態 |
+| [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | release signing | keystore 怎麼保管還沒決定；目前出的是 debug 簽章 | 靜態 |
+| [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | 16 KB 對齊只驗到建置那一層 | `readelf` 確認 LOAD 段是 `0x4000`，但**沒有 16 KB page size 的裝置或 AVD 實際載過**。這一條與「實機驗收」是同一個缺口 | 靜態 |
 | [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 點陣字在高 DPI 上要放大幾倍 | 沒量過（§6） | 靜態 |
 | [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 小卡要放哪些欄位 | 目前放名稱／歸屬／生產力／防災／城兵五項。原版一覽表的欄位全表在 `docs/spec/38`，還沒逐項比對過取捨 | 靜態 |
 | [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 縮放的下限 | 整張大地圖 384×256 格全塞進手機會小到看不見，最小縮放級距還沒定 | 靜態 |
@@ -495,6 +496,13 @@
 | [`release/02-three-platform-20260820.md`](../release/02-three-platform-20260820.md) | Windows／macOS 的實機驗收 | 仍未做（M8 唯一的閘）。這一批只有 Linux 有 GUI smoke，另兩個平台只驗了檔頭 | 靜態 |
 | [`release/02-three-platform-20260820.md`](../release/02-three-platform-20260820.md) | `verification/` 的截圖不在管線裡 | `promote` 每次都會清掉，要另外跑 `tools/release_smoke.sh` 再 `release_all_fs.py refresh` | 實測 |
 | [`release/02-three-platform-20260820.md`](../release/02-three-platform-20260820.md) | Android 原型沒有重編 | 內容仍是 2026-08-11 那次（檔名已如實反映） | 靜態 |
+| [`release/03-three-platform-20260821.md`](../release/03-three-platform-20260821.md) | Windows／macOS 原生 GUI 實機驗收 | 沒有硬體，Docker 代不了 | 靜態 |
+| [`release/03-three-platform-20260821.md`](../release/03-three-platform-20260821.md) | Android 實機驗收 | 只有模擬器 | 靜態 |
+| [`release/03-three-platform-20260821.md`](../release/03-three-platform-20260821.md) | Android 正式簽章 | 還沒決定 keystore 怎麼保管 | 靜態 |
+| [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Windows／macOS 原生 GUI | 交叉建置的產物只驗了檔頭，沒有在目標作業系統跑過。M8 唯一的閘 | 靜態 |
+| [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 實機驗收 | 只有 Docker 模擬器；觸控手感、真實 GPU、高 DPI 上的點陣字可讀性都驗不到 | 靜態 |
+| [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 正式簽章 | 出的是 debug 簽章，keystore 怎麼保管還沒決定 | 靜態 |
+| [`release/README-RELEASE.md`](../release/README-RELEASE.md) | 16 KB page size 裝置 | `.so` 的 LOAD 段已是 `0x4000`，但沒有那種裝置或 AVD 實際載過 | 靜態 |
 | [`spec/00-index.md`](../spec/00-index.md) | **推論等級** | confirmed／強證據／假說／未知（`CLAUDE.md` §9）。假說也可以實作，但要標 | 靜態 |
 | [`spec/00-index.md`](../spec/00-index.md) | 進言「請求君主出陣」（`sub_1699E`） | `11-ai-sortie.md` / 可實作，**尚未實作** | 靜態 |
 | [`spec/00-index.md`](../spec/00-index.md) | 主畫面四個視窗的開關 | `13-main-window-toggles.md` / 已實作並留下截圖；原版執行期未驗 | 實測 |

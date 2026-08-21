@@ -51,6 +51,35 @@
 - Docker 內已有 Go test／vet、翻譯 selftest、文件索引與 Linux/Xvfb 截圖 smoke；
   完整長程遊戲測試依使用者要求略過。
 
+### 2026-08-21（下半）16 KB 對齊、實跑推廣片、`20260821` 批次
+
+⭐ **APK 的 `.so` 原本是 4 KB 對齊。** Android 15 起有 16 KB page size 的裝置，
+Go 產出的 `libgojni.so` 預設 LOAD 段 `align=0x1000`，那種 `.so` 在 16 KB 的機器上
+**載不起來**——而 4 KB 的機器上完全正常，所以測不出來。
+`zipalign -c -P 16` 早就通過了，**它驗的是 zip 那一層，驗不到 ELF 這一層**。
+修法是 `ebitenmobile bind` 帶 `-ldflags "-extldflags=-Wl,-z,max-page-size=16384"`，
+並在 `tools/android_build.sh` 建完之後用 `readelf` 逐段檢查，不是 `0x4000` 就讓建置失敗
+（[`docs/release/03`](docs/release/03-three-platform-20260821.md) §4）。
+
+⭐ **推廣主片以前每一段都是靜止截圖。** 畫面是 remake 真的畫的，但影片裡沒有一格在動
+（量得到：`freezedetect` 在 60 秒裡標出約 52 秒凍結）。現在大地圖、野戰與攻城
+三段改成**逐幀錄下來的實跑畫面**（[`docs/spec/71`](docs/spec/71-promo-live-capture.md)）：
+`cmd/wlgame` 加 `-frames-dir`／`-frames`，程式自己寫 PNG，不做螢幕擷取。
+錄的時候踩到三個都長得像「錄成功了」的坑：戰場開場那一幀是雙方對白、兩軍還沒接觸
+（240 張裡只有 4 張不同），要先 `-battle-steps 200`；原版初值的戰術鏡頭 `36,14` 對著城牆、
+部隊在畫面外，要 `-battle-cam 20,15`；大地圖低速檔八秒只走幾天，要 `-speed 0`。
+`tools/promo_live_capture.sh` 逐段數「不重複的張數」，低於 20 就擋下來。
+
+**發行盤點的三個發現**：`release-manifest.json` 的 `android_experimental` 指向一個
+**不存在的檔名**（手動換過 APK，清單沒跟著換）；`PROMO_FILES` 漏了 Android 推廣片；
+`ANDROID-EXPERIMENTAL.md` 還寫著「觸控 shell 原型、尚未接入遊戲核心」，
+而那份斷言在 2026-08-20 就不成立了。三處都改掉，APK 命名也從
+`touch-prototype` 改成 `android`。
+
+`dist-all` 重打成一致的 `wolong-remake-20260821` 批次：五個桌面包 ＋ Android APK，
+`sha256sum -c` 二十筆全部相符，Linux GUI smoke 截圖補回去
+（`promote` 每次都會清掉 `verification/`，要另外跑 `tools/release_smoke.sh` 再 `refresh`）。
+
 ### 2026-08-21 手機版套原版配色 ＋ 推廣片 ＋ 側欄熱區勘誤
 
 **手機版的按鈕與面板改用原版的底色與外框**（[`docs/spec/70`](docs/spec/70-phone-chrome.md)）：

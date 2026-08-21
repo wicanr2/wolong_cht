@@ -1,6 +1,6 @@
 # 臥龍傳 remake 可執行封裝
 
-**狀態：三平台候選封裝、Linux AppImage、推廣片與驗收紀錄已集中於 [`dist-all`](../../dist-all)，目前是一致的 `wolong-remake-20260820` 批次（[`02`](02-three-platform-20260820.md)）；Windows／macOS 原生 GUI 尚未實機驗證。**
+**狀態：三平台候選封裝、Linux AppImage、Android APK、推廣片與驗收紀錄已集中於 [`dist-all`](../../dist-all)，目前是一致的 `wolong-remake-20260821` 批次（[`03`](03-three-platform-20260821.md)）；Windows／macOS 原生 GUI 與 Android 實機都尚未驗證。**
 
 - 日期：2026-08-12
 
@@ -50,6 +50,15 @@ Linux tar 封裝與 AppImage 已在 Docker／Xvfb 完成啟動與短截圖 smoke
 
 ## 統一交付目錄
 
-[`dist-all`](../../dist-all) 是本輪唯一的可交付根目錄，內含三平台桌面包、AppImage、四支推廣影片、雜湊、Linux GUI smoke 截圖與 Android 觸控 shell 原型。Android APK 明確列為實驗性附件，不計入三平台完整遊戲發行。
+[`dist-all`](../../dist-all) 是本輪唯一的可交付根目錄，內含三平台桌面包、AppImage、五支推廣影片、雜湊、Linux GUI smoke 截圖與 Android 版的 debug 包。Android 的界線是簽章與實機驗收，不是功能：它是完整的遊戲，但只有 debug 簽章，也只在模擬器上驗過。
 
-Android 目前提供觸控 shell 原型 debug APK，不宣稱完整遊戲支援；手機操作規格與模擬器 smoke 見 [`docs/mobile/android-plan.md`](../mobile/android-plan.md)。第一版橫向保留 640×400 邏輯畫布，再加觸控抽屜與安全區 hitbox。
+Android 版是**為手機重新設計的介面**（960×540 邏輯畫布、狀態列 ＋ 四個入口的指令列），不是把 640×400 的桌面版面搬過去；規則層與桌面版共用同一份程式碼。操作規格與模擬器 smoke 見 [`docs/mobile/android-plan.md`](../mobile/android-plan.md) 與 [`docs/mobile/android-ux.md`](../mobile/android-ux.md)。
+
+## 未解
+
+| 項目 | 現況 |
+|---|---|
+| Windows／macOS 原生 GUI | 交叉建置的產物只驗了檔頭，沒有在目標作業系統跑過。M8 唯一的閘 |
+| Android 實機驗收 | 只有 Docker 模擬器；觸控手感、真實 GPU、高 DPI 上的點陣字可讀性都驗不到 |
+| Android 正式簽章 | 出的是 debug 簽章，keystore 怎麼保管還沒決定 |
+| 16 KB page size 裝置 | `.so` 的 LOAD 段已是 `0x4000`，但沒有那種裝置或 AVD 實際載過 |

@@ -73,7 +73,7 @@
 | [`docs/playtest/38-window-parity.md`](playtest/38-window-parity.md) | 38 — 三個視窗開著時的對拍：三個視窗區逐像素相同 | 通過。 | 2026-08-17 |
 | [`docs/playtest/39-system-window-parity.md`](playtest/39-system-window-parity.md) | 39 — 系統選單開著時的對拍：五區裡四區 PASS，選單本身也 PASS | 通過。 | 2026-08-17 |
 | [`docs/playtest/40-tactical-parity.md`](playtest/40-tactical-parity.md) | 40 — 戰場的逐區對拍：六區逐像素相同，戰場區 0.17% | 部分通過。 | 2026-08-18 |
-| [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | remake 推廣片、代表幀「經典再現」比較片與 DOS/V／remake 實機動態比較片均已產出並完成媒體規格驗證… | 2026-08-12 |
+| [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告的遊戲段落是逐幀錄下來的實跑畫面； 三平台候選包與 Linux AppImag… | 2026-08-21 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
 | [`docs/promo/dosv-adlib-and-tactical-review.md`](promo/dosv-adlib-and-tactical-review.md) | 推廣片原版 AdLib 與戰術骨架審查 | 原版音軌來源與影片縮放鏈已修正；戰術固定骨架的 16 px viewport 偏差已修正。完整同狀態戰術 parit… | 2026-08-12 |
@@ -156,7 +156,8 @@
 | [`docs/reference/05-eten-font-provenance.md`](reference/05-eten-font-provenance.md) | 05 — 松崗版的中文字型是倚天字型 | confirmed。END_S14.DAT 與倚天 ascfont.15 byte-for-byte 相同； END… | 2026-08-13 |
 | [`docs/release/01-cross-build-gate.md`](release/01-cross-build-gate.md) | 01 — 發行閘重跑：五平台交叉建置 ＋ deny-list（2026-08-17） | 發行閘通過。五個平台建得出來、deny-list 掃過沒有原版資產。 ⭐ macOS 的 Ebiten 本體可以交叉… | 2026-08-17 |
 | [`docs/release/02-three-platform-20260820.md`](release/02-three-platform-20260820.md) | 02 — 2026-08-20 三平台重新交付 | 已交付並驗過。 | 2026-08-20 |
-| [`docs/release/README-RELEASE.md`](release/README-RELEASE.md) | 臥龍傳 remake 可執行封裝 | 三平台候選封裝、Linux AppImage、推廣片與驗收紀錄已集中於 [dist-all](../../dist-… | 2026-08-12 |
+| [`docs/release/03-three-platform-20260821.md`](release/03-three-platform-20260821.md) | 03 — 2026-08-21 三平台重新交付（含 Android 版） | 已交付並驗過。 | 2026-08-21 |
+| [`docs/release/README-RELEASE.md`](release/README-RELEASE.md) | 臥龍傳 remake 可執行封裝 | 三平台候選封裝、Linux AppImage、Android APK、推廣片與驗收紀錄已集中於 [dist-all]… | 2026-08-12 |
 | [`docs/spec/00-index.md`](spec/00-index.md) | 00 — 規格索引：已解的規則有沒有被實作、有沒有被驗過 | 索引。規格是 docs/re/（程式碼在哪）與 internal/（我們寫了什麼） 之間的那一層——它回答「這條規則… | 2026-08-14 |
 | [`docs/spec/10-city-tick.md`](spec/10-city-tick.md) | 10 — 據點整備、威脅偵測與求援 | CONFORMED。整條鏈已實作，並在 PC-98 原版的執行期記憶體上取樣驗過 （+0x18／+0x14 各 0/… | 2026-08-14 |
 | [`docs/spec/11-ai-sortie.md`](spec/11-ai-sortie.md) | 11 — 進言「請求君主出陣」 | CONFORMED。 | 2026-08-14 |
@@ -214,6 +215,7 @@
 | [`docs/spec/68-death-animation.md`](spec/68-death-animation.md) | 68 — 倒地動畫：四幀，換一組圖 | CONFORMED。 | 2026-08-18 |
 | [`docs/spec/69-world-fingerprint.md`](spec/69-world-fingerprint.md) | 69 — 世界指紋：同一個 seed 兩次跑出同一個值 | CONFORMED。⚠ 這一份沒有原版出處——它是 remake 的驗證設施，不是原版機制。 | 2026-08-20 |
 | [`docs/spec/70-phone-chrome.md`](spec/70-phone-chrome.md) | 70 — 手機版的按鈕與面板用原版的底色與外框 | CONFORMED。 | 2026-08-21 |
+| [`docs/spec/71-promo-live-capture.md`](spec/71-promo-live-capture.md) | 71 — 桌面版的逐幀錄製（推廣片的動態素材） | CONFORMED。 | 2026-08-21 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | CONFORMED。管線接起來了，也對原版跑過一輪 （[../playtest/37](../playtest/37… | 2026-08-15 |
 | [`docs/spec/91-tactical-parity.md`](spec/91-tactical-parity.md) | 91 — 戰場的逐區對拍：分區、同狀態怎麼達成 | DRAFT。分區與判定沿用 docs/spec/90，差別在 | 2026-08-17 |
 

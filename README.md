@@ -82,9 +82,10 @@
 
 ### 候選封裝與推廣片
 
-- 完整交付根目錄：[`dist-all`](dist-all)，包含三平台桌面候選包、Linux AppImage、四支推廣片、雜湊與 Linux GUI smoke 截圖。目前是一致的 `wolong-remake-20260820` 批次（[`docs/release/02`](docs/release/02-three-platform-20260820.md)）。
-- Linux AppImage：[`wolong-remake-linux-amd64-20260820.AppImage`](dist-all/packages/wolong-remake-linux-amd64-20260820.AppImage)。已通過 Linux／Xvfb 固定種子 smoke（含結局過場）；仍要由玩家提供合法 DOS/V 資料與中文字型。
+- 完整交付根目錄：[`dist-all`](dist-all)，包含三平台桌面候選包、Linux AppImage、Android APK、五支推廣片、雜湊與 Linux GUI smoke 截圖。目前是一致的 `wolong-remake-20260821` 批次（[`docs/release/03`](docs/release/03-three-platform-20260821.md)）。
+- Linux AppImage：[`wolong-remake-linux-amd64-20260821.AppImage`](dist-all/packages/wolong-remake-linux-amd64-20260821.AppImage)。已通過 Linux／Xvfb 固定種子 smoke（含結局過場）；仍要由玩家提供合法 DOS/V 資料與中文字型。
 - 三平台候選包與 SHA-256：[`dist-all/packages`](dist-all/packages)。Windows／macOS 是交叉建置候選，尚未在目標作業系統完成原生 GUI runtime 驗收。
+- 主預告：[`wolong-remake-trailer.mp4`](dist-all/promo/wolong-remake-trailer.mp4)。大地圖、野戰與攻城三段是**逐幀錄下來的實跑畫面**（[`docs/spec/71`](docs/spec/71-promo-live-capture.md)），事件視窗與存檔那幾段是截圖——那些畫面本來就不動。
 - 「經典再現」實機比較片：[`wolong-remake-dosv-live-comparison.mp4`](dist-all/promo/wolong-remake-dosv-live-comparison.mp4)。原版側是使用者指定的松崗 DOS/V 推廣比較素材，remake 側為實機 GUI；不是同日期／同輸入逐像素 parity。
 - Android：見下一節。APK 在 [`dist-all/experimental/android`](dist-all/experimental/android)，**仍不宣稱 Android release**。48 秒的手機版推廣片：[`wolong-remake-android.mp4`](dist-all/promo/wolong-remake-android.mp4)（畫面全是 remake 自己算的，配樂是原創合成音，[`docs/promo/android.md`](docs/promo/android.md)）。
 

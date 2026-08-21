@@ -318,6 +318,10 @@ type game struct {
 	frame    int
 	shotDone bool
 
+	// 逐幀錄製（docs/spec/71）。nil ＝ 沒開。
+	rec     *recorder
+	recDone bool
+
 	// 災害物件圖像快取。key 內含季節、原版 object type 與 8 相位；
 	// Level 不進 key，因為它是 marker 強度，不是動畫幀。
 	disasterImages map[int]*ebiten.Image
@@ -630,6 +634,11 @@ func (g *game) Update() error {
 	// 截圖模式要等 Draw 真正取到像素後才結束；只用 `frame > shotAt`
 	// 會在高更新速率下跳過那一幀，讓 packaged smoke 沒有 PNG 卻仍 exit 0。
 	if g.shotPath != "" && g.shotDone {
+		return ebiten.Termination
+	}
+	// 錄滿了才結束，而且與截圖模式同一個理由放在 Update：
+	// Draw 取到像素之後要等下一次 Update 才收工，否則最後一張可能還沒寫完。
+	if g.recDone {
 		return ebiten.Termination
 	}
 	// [HARD] ESC 只取消／關視窗，F10 才離開（CLAUDE.md §10）。
@@ -1190,7 +1199,13 @@ func (g *game) drawStormArea(screen *ebiten.Image, area economy.StormArea) {
 
 // maybeSaveShot 在達到目標幀後的第一個 Draw 取像素，下一次 Update 才結束。
 // 它不依賴 Draw 與 Update 恰好一對一，對 Xvfb 與不同平台的繪製節奏都安全。
+//
+// 逐幀錄製（docs/spec/71）也掛在這裡：`Draw` 有四個 return 點，
+// 每一個都呼叫這一支，掛在別處會漏掉戰場或結局那幾條路徑。
 func (g *game) maybeSaveShot(screen *ebiten.Image) {
+	if g.rec != nil && !g.recDone {
+		g.recDone = g.rec.shot(screen)
+	}
 	if g.shotPath == "" || g.shotDone || g.frame < g.shotAt {
 		return
 	}
@@ -1311,6 +1326,8 @@ func main() {
 	tacticalSpeed := flag.Int("tactical-speed", 2, "戰術速度檔位 0–4（0 ＝ 最高速、4 ＝ 最低速）")
 	seed := flag.Int("seed", -1, "驗收用固定亂數種子；負值時照原版以時鐘播種")
 	shot := flag.String("shot", "", "跑 N 幀之後截圖到這個路徑就結束（驗收用）")
+	framesDir := flag.String("frames-dir", "", "把每一張畫出來的圖寫成 fNNNNN.png（推廣片素材，docs/spec/71）")
+	framesN := flag.Int("frames", 300, "配 -frames-dir：錄幾張就結束")
 	shotFrames := flag.Int("shot-frames", 120, "截圖前先跑幾幀")
 	saveFile := flag.String("save-file", "", "可寫的四槽存檔 overlay 路徑；一般啟動可選讀檔")
 	loadSlot := flag.Int("load-slot", -1, "直接啟動時先從 -save-file 的第 N 槽（0–3）載入（驗收用；原版存檔也讀得動）")
@@ -1378,6 +1395,7 @@ func main() {
 	g := &game{lib: lib, rng: gameRNG, speed: *speed, tacticalSpeed: *tacticalSpeed,
 		td:       textdraw.New(font, ascii),
 		shotPath: *shot, shotAt: *shotFrames, origDir: *dir, sourceFile: path,
+		rec: newRecorder(*framesDir, *framesN),
 		saveFile: *saveFile, saveBase: path, sound: sound.Open(*audioDir)}
 	if *audioDir != "" && !g.sound.Available() {
 		log.Printf("音檔目錄 %s 沒有 ogg，靜音跑。要有音樂請跑 tools/bgm2ogg.sh", *audioDir)

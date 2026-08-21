@@ -33,6 +33,7 @@ PROMO_FILES = (
     "wolong-remake-classic-revival.mp4",
     "wolong-remake-yt-comparison.mp4",
     "wolong-remake-dosv-live-comparison.mp4",
+    "wolong-remake-android.mp4",
 )
 
 
@@ -178,15 +179,13 @@ def rebuild() -> None:
 
 
 def android_apk_name(apk: Path) -> str:
-    """Android 附件用**它自己的建置日期**命名，不是發行日期。
+    """APK 的發行檔名。
 
-    ⭐ 這個附件不是每次發行都重編的——`release_all.sh` 只是把既有的
-    `app-debug.apk` 複製過來。掛上發行日期會讓檔名宣稱一個沒發生過的建置，
-    而雜湊會與上一批一模一樣：**名字變了、內容沒變**，看起來像重編過。
-    改用 APK 自己的 mtime，名字就說得出實話。
+    日期取**檔案本身的 mtime**，不是發行日期：APK 是另一條管線建的，
+    重打發行時未必重建，掛上發行日期會讓檔名宣稱一個沒發生過的建置。
     """
     stamp = datetime.date.fromtimestamp(apk.stat().st_mtime).strftime("%Y%m%d")
-    return f"wolong-remake-touch-prototype-debug-{stamp}.apk"
+    return f"wolong-remake-android-debug-{stamp}.apk"
 
 
 def promo_source(name: str) -> Path:

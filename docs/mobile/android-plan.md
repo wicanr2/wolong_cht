@@ -176,6 +176,7 @@ Android 上的第一個驗收是 A 的指紋。**A 通過之前不宣稱手機�
 | `missing go.sum entry for golang.org/x/tools` | `ebitenmobile` 自己的相依。要用 `go install pkg@version` 裝（在主模組之外解析），不能 `go run` |
 | adb 推進 `/sdcard/Android/data/<pkg>/` 之後 app `permission denied` | Android 11 以上那條路徑是 FUSE 掛的。改推 `/data/local/tmp` 再 `run-as` 複製進內部目錄 |
 | logcat 只留 `The application was killed due to context loss` | 機器忙時 System UI 被判 ANR，對話框搶走焦點導致 GL context 遺失。smoke 先關掉錯誤對話框 |
+| （只會在 16 KB page size 的裝置上）一啟動就掛 | Go 產出的 `libgojni.so` 預設是 4 KB 對齊（LOAD 段 `align=0x1000`），Android 15 起的 16 KB 裝置載不起來。`bind` 要帶 `-ldflags "-extldflags=-Wl,-z,max-page-size=16384"`。⚠ **`zipalign -P 16` 驗不到這一層**——它看的是 zip 裡的檔案位移，ELF 段對齊是另一回事，兩者都要對 |
 
 ## 7. 不做的事
 
@@ -207,4 +208,5 @@ arm64 的 image 要模擬指令集，慢到不適合當驗收迴圈。
 | 實機驗收 | ⛔ 沒有裝置。里程碑 H 保持未完成 |
 | SAF 匯入的複製流程 | 入口做完了，但「選資料夾 → 複製 69 檔」沒有自動驗過：要驅動系統的檔案選擇器。smoke 走的是 `adb` ＋ `run-as`，那是驗收路徑不是玩家路徑 |
 | 高 DPI 下的點陣字 | 原版字型是 16×15 點陣，手機上要整數放大幾倍才讀得清楚沒量過 |
-| release signing | A–G 之前不談 |
+| release signing | keystore 怎麼保管還沒決定；目前出的是 debug 簽章 |
+| 16 KB 對齊只驗到建置那一層 | `readelf` 確認 LOAD 段是 `0x4000`，但**沒有 16 KB page size 的裝置或 AVD 實際載過**。這一條與「實機驗收」是同一個缺口 |
