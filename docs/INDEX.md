@@ -221,7 +221,7 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 148 條。**要查「這件事解了沒」先看這裡**，
+共 146 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（77 條）
@@ -358,7 +358,7 @@
 |---|---|
 | 2.1 執行結構（已驗證） ▸ YNSOUND.COM | `docs/reference/04-first-survey.md` |
 
-### 未解（34 條）
+### 未解（32 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -391,9 +391,7 @@
 | 4. 數字字模在 ICONGRF 段 3 裡 ▸ +0x08F0 | `docs/spec/52-main-screen-camera-and-banner-date.md` |
 | 檔案 ▸ 40-economy.md | `docs/mechanics/00-index.md` |
 | 索引 ▸ 事件場景上誰在說話 | `docs/spec/00-index.md` |
-| 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x08 | `docs/re/08-hourly-update.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x0C | `docs/re/08-hourly-update.md` |
-| 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x23 | `docs/re/08-hourly-update.md` |
 | 連結記錄（16 byte） ▸ +0x04 | `docs/re/08-hourly-update.md` |
 | 連結記錄（16 byte） ▸ +0x08 | `docs/re/08-hourly-update.md` |
 

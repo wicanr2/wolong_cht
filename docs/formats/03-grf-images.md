@@ -255,7 +255,10 @@ NEW GAME 的 LOAD DATA 面板（`workplace/dosbox/shots/x04.png`，DOS/V 實跑�
 把整段當同尺寸陣列切出來是雜訊。
 
 七個偏移已由 `KI.EXE` 的呼叫端逐一追出（完整證據、blit 參數與目視描述見
-[`../re/18-tactical-button-glyphs.md`](../re/18-tactical-button-glyphs.md) §2）：
+[`../re/18-tactical-button-glyphs.md`](../re/18-tactical-button-glyphs.md) §2）。
+**段首那一批（`0x0000`／`0x0800`／`0x1000`／`0x1800`）不在這張表裡**——
+它們是戰術側欄的將旗與面板，尺寸與貼點在
+[`../re/60`](../re/60-tactical-sidebar.md) §2／§4／§6：
 
 | 段內偏移 | 尺寸 | 消費者 |
 |---|---|---|

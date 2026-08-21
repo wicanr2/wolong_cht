@@ -20,17 +20,17 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 42 | 39 | 3 | 0 |
 | 資料保存 | 34 | 33 | 1 | 0 |
-| 程式碼理解 | 187 | 180 | 7 | 0 |
+| 程式碼理解 | 175 | 168 | 7 | 0 |
 | 驗收 | 62 | 51 | 11 | 0 |
 | 外部資料 | 17 | 16 | 0 | 1 |
 | 其他 | 162 | 152 | 10 | 0 |
-| **合計** | **504** | 471 | 32 | 1 |
+| **合計** | **492** | 459 | 32 | 1 |
 
-⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **4** 列（另有少數只是提到「未解」兩個字的圖例列）。
+⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **3** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/re/` | 187 |
+| `docs/re/` | 175 |
 | `docs/spec/` | 135 |
 | `docs/playtest/` | 62 |
 | `docs/mechanics/` | 42 |
@@ -126,19 +126,17 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `OPEN_S2`–`S5` 的 384,000 B | 是 §2 的三倍，多半是多張或多幀。開場播放器 `D7OPEN.EXE` 還沒反組譯 | 靜態 |
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`） | 靜態 |
 
-## 2.3 程式碼理解（187 條）
+## 2.3 程式碼理解（175 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
 | [`re/00-index.md`](../re/00-index.md) | `43` | **缺口總表**：各文件「未解」表的集中版（生成的，`check.sh` 每次重出） | 靜態 |
-| [`re/00-index.md`](../re/00-index.md) | `35`（戰略 UI）、 | （未解小節內文） | 靜態 |
 | [`re/01-first-recon.md`](../re/01-first-recon.md) | 是加了新過場、還是把原本的長段拆開，未解。 | （散句） | 靜態 |
 | [`re/01-first-recon.md`](../re/01-first-recon.md) | `YNMOUSE.COM` | pc98 / 滑鼠驅動。dosv 版把它併進 `KI.EXE`？未驗 | 靜態 |
 | [`re/01-first-recon.md`](../re/01-first-recon.md) | `PASS.MAP`／`PASS.SCH` | dosv / **PC-98 沒有**。關隘資料，移植時新增或改名。未解 | 靜態 |
 | [`re/02-palette-routine.md`](../re/02-palette-routine.md) | OPENPAL`（6 組）、`ENDPAL`（12 組）的分組對應哪些畫面。 | （未解小節內文） | 靜態 |
 | [`re/02-palette-routine.md`](../re/02-palette-routine.md) | 設定表 `cs:0x5FF4` 每筆後三個 byte 是什麼（第 4 筆的第二個 word | （未解小節內文） | 靜態 |
-| [`re/03-image-blitter.md`](../re/03-image-blitter.md) | ICONGRF` **段 1 前三塊**（`0x0000`／`0x0800`／`0x1000`）的尺寸與 UI 語意。 | （未解小節內文） | 靜態 |
-| [`re/03-image-blitter.md`](../re/03-image-blitter.md) | sub_1F4A2`（開檔／讀檔／關檔）的完整介面。 | （未解小節內文） | 靜態 |
+| [`re/03-image-blitter.md`](../re/03-image-blitter.md) | ICONGRF` **段 1 `0x0000` 那一塊畫了什麼**。 | （未解小節內文） | 靜態 |
 | [`re/03-image-blitter.md`](../re/03-image-blitter.md) | sub_1FAC2` 是另一支繪製常式（`shl al, 1` 後才 `mov cx, ax`），用途未解。 | （散句） | 靜態 |
 | [`re/04-mmap-entry-points.md`](../re/04-mmap-entry-points.md) | MMAP.MCH` 的 object **type 3**：事件語意、原版 object timer 與畫面 | （未解小節內文） | 靜態 |
 | [`re/05-battle-selection.md`](../re/05-battle-selection.md) | `+0x08` | 勢力相符時取用的值 / 未解 | 靜態 |
@@ -155,11 +153,8 @@
 | [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | 123 個武將裡有 80 人只有一欄非零、32 人兩欄、9 人三欄—— → 強證據，待驗 | （散句） | 靜態 |
 | [`re/08-hourly-update.md`](../re/08-hourly-update.md) | `sub_15456` 用 stride 32 掃軍團表 | 與 64 矛盾，疑似原版 bug | 靜態 |
 | [`re/08-hourly-update.md`](../re/08-hourly-update.md) | 信賴度的初始化時序 | 值存在**區塊 `+0x10`**（`cs:0D00h`／IDA `byte_10D00`）已 confirmed；`sub_18B12` 的新遊戲初始化完整時序與所有事件的增減量仍待 oracle | 實測 |
-| [`re/08-hourly-update.md`](../re/08-hourly-update.md) | 軍團 `+0x08`／`+0x23` 的建立初值 | 建立時寫 4 與 1，**為什麼是這兩個值**沒讀（`+0x08` 是朝向、`+0x23` 是狀態機階段，語意本身已解） | 靜態 |
 | [`re/08-hourly-update.md`](../re/08-hourly-update.md) | `+0x00` bit 6 | 資金低於門檻一半時設起（用途未解） | 靜態 |
-| [`re/08-hourly-update.md`](../re/08-hourly-update.md) | `+0x08` | 建立時寫 `4` / 未解 | 靜態 |
 | [`re/08-hourly-update.md`](../re/08-hourly-update.md) | `+0x0C` | 行軍中的暫存（`sub_12708` 寫） / 未解 | 靜態 |
-| [`re/08-hourly-update.md`](../re/08-hourly-update.md) | `+0x23` | 建立時寫 `1` / 未解 | 靜態 |
 | [`re/08-hourly-update.md`](../re/08-hourly-update.md) | `+0x04` | byte / `sub_1E81C` 的回傳 `ah` / 未解 | 靜態 |
 | [`re/08-hourly-update.md`](../re/08-hourly-update.md) | `+0x08` | word / 另一張表的索引（`bx << 3`） / 未解 | 靜態 |
 | [`re/09-combat.md`](../re/09-combat.md) | **戰術完整結算** | `TestNormalScenarioTacticalBattleTerminates` 已證實真實正常攻城的狀態層勝負／傷亡回寫，`wlgame-ai-postbattle.png` 證明正常 GUI 回戰略；GUI 戰後訊息、完整狀態對拍與少數分支仍未完 | 靜態 |
@@ -206,7 +201,6 @@
 | [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `END_S15.DAT`（5,242 B） | `KI.EXE` 的字串表引用它，但**不是字型**（大小不是 30／15 的倍數），也不是過場圖（沒有 `00 F4 01` 檔頭），Big5 解碼是亂碼 → 疑似壓縮 | 靜態 |
 | [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `sub_1F7A4` | 把 32 B 緩衝畫上 VRAM 的實際迴圈，未逐行讀 | 靜態 |
 | [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `YNFONT.EXE` 怎麼顯示中文 | 它不走 INT 15h（0 次），密碼輸入畫面的中文是它自己畫的。與本鏈無關，仍未解 | 靜態 |
-| [`re/30-corps-formation-ui.md`](../re/30-corps-formation-ui.md) | 軍團 `+0x23` | `sub_16F26` 寫 1，用途未解 | 靜態 |
 | [`re/30-corps-formation-ui.md`](../re/30-corps-formation-ui.md) | 軍團 `+0x00` 的位元 3／4／5 | 位元 1（有指令）、2（委任，`45`）已解；其餘仍未見成對的寫入端（`34` §4） | 靜態 |
 | [`re/30-corps-formation-ui.md`](../re/30-corps-formation-ui.md) | `sub_1D4C7` | 大地圖上實際畫圖塊的常式，未讀 | 靜態 |
 | [`re/31-faction-picker-screen.md`](../re/31-faction-picker-screen.md) | 分派表已印出，但 `sub_15AD1 → sub_15AFC` 的進入路徑仍未定位。 | （散句） | 靜態 |
@@ -214,7 +208,6 @@
 | [`re/31-faction-picker-screen.md`](../re/31-faction-picker-screen.md) | `sub_15AD1 → sub_15AFC` 的進入路徑 | 不在 `off_159D2` 表裡，未定位 | 靜態 |
 | [`re/32-strategy-detail-panels.md`](../re/32-strategy-detail-panels.md) | `sub_1817D` | 軍團面板的收尾，未讀（`sub_1812A` 已解，見 `51` §3） | 靜態 |
 | [`re/32-strategy-detail-panels.md`](../re/32-strategy-detail-panels.md) | 軍團 `+0x00` 的位元怎麼清 | 三處設定都找到了，清除點未找到 | 靜態 |
-| [`re/32-strategy-detail-panels.md`](../re/32-strategy-detail-panels.md) | `+0x16` 高 4 位 | 仍未解（`0`–`14`），這兩支面板都沒用到它 | 靜態 |
 | [`re/33-shared-draw-helpers.md`](../re/33-shared-draw-helpers.md) | `cs:word_10D40` | 肖像圖庫所在的段，誰載入它未追 | 靜態 |
 | [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | 0 | `sub_12459`／`sub_126FF`（候選） / `sub_12533`（候選） / 未定 | 靜態 |
 | [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | 4 | `sub_12B3C`（候選） / `sub_12BA8`（候選） / 未定。`sub_12B3C` 呼叫 `sub_15D19`（小地圖畫點） | 靜態 |
@@ -230,9 +223,7 @@
 | [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `cs:byte_198A6` 位元 3 | 對應 `sub_15FAA`，設定與清除端都沒找到 | 靜態 |
 | [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `sub_1E9A7` 的 8 bytes 參數表 | 表本身沒讀 | 靜態 |
 | [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `byte_1020E`／`byte_10CF9` | 音源相關的兩個旗標 | 靜態 |
-| [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | 軍團 `+0x23` | 兩條派兵路徑都寫 0、`sub_16F26` 寫 1、`sub_14155` 要求 `< 8`。像是階段計數，語意未定 | 靜態 |
 | [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | 據點 `+0x00` 的 bit 4／5 | bit 6／7 是威脅旗標、低 4 位是敵方鄰居，中間兩位仍未見寫入端 | 靜態 |
-| [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | 勢力 `+0x17` 的讀取端 | 寫入端在 §1，誰讀它未找 | 靜態 |
 | [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | `+0x20` 與 `+0x14` 的張力 | `sub_14575` 與 `sub_14155` 都只寫 `+0x20`，`40` §5 的張力還在 | 靜態 |
 | [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `sub_1703C` | 選據點的那一支，未讀 | 靜態 |
 | [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | 樣式碼 | 只確定 `0` ＝ 擦除、`0x0B` ＝ 指令列、`0x0C`／`0x0F` 出現在別處；完整值域未列 | 靜態 |
@@ -308,15 +299,12 @@
 | [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 230 為什麼分位置 | 關隘上下換、大城左右不換。remake 照位置實作，但沒有機器碼解釋 / 同第一列 | 靜態 |
 | [`re/68-t3-frontier-functions.md`](../re/68-t3-frontier-functions.md) | `sub_1304E(al=7)` 到底登記了什麼 | `sub_1676F` 只看它的進位旗標。那一支是 T1，但 `al` 的七種值各代表什麼還沒逐一對過 | 靜態 |
 | [`re/68-t3-frontier-functions.md`](../re/68-t3-frontier-functions.md) | `sub_16D56` 的 `1,1,3,3,2,2` 對應哪三個兵種 | 位移確定是六個編成槽的兵種欄；值到兵種的對映要與 `kindFromByte` 對一次 | 靜態 |
-| [`re/68-t3-frontier-functions.md`](../re/68-t3-frontier-functions.md) | `sub_1B069` 的 `loc_1B533` | 攀爬那一支還沒讀 | 靜態 |
 | [`re/69-t2-cross-reference.md`](../re/69-t2-cross-reference.md) | `0x2040` 那張 16 筆表 | `sub_12438` 依 `(dx, bx)` 作廢一筆，`[si] ≥ 0x80` 是「這筆有效」 / 找誰寫 `[si+2]`／`[si+4]` | 靜態 |
-| [`re/69-t2-cross-reference.md`](../re/69-t2-cross-reference.md) | 勢力 `+0x19` | `sub_145F8` 把互指的清成 `0xFF`。勢力記錄 64 B 的欄位表本來就大半未解（`06`） / 與 `+0x2A`（外交官）同一組欄位，一起掃 | 靜態 |
-| [`re/69-t2-cross-reference.md`](../re/69-t2-cross-reference.md) | 據點 `+0x1A` | `sub_14236` 在停戰／滅亡時改回 `+0x01`（自己）；語意像「侵攻目標勢力」但沒有正對照 / 找讀它的那一支 | 靜態 |
 | [`re/69-t2-cross-reference.md`](../re/69-t2-cross-reference.md) | `sub_1E6FF` 那張待繪表 | 欄位對應到什麼還沒查 / `byte_1E47F` 的其他使用端 | 靜態 |
 | [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | `sub_1041E`（`ENDPAL.BRG`）怎麼套 | 只知道它載檔 / 與 `GAMEPAL.BRG` 同格式的話直接沿用（`../formats/02`） | 靜態 |
 | [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | 淡入淡出的階數與色階 | 17 階（`cx` 0–0x10）已確定，每階怎麼算沒讀 / `sub_1035F`／`sub_103DC` | 靜態 |
 | [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | `cs:0x780` 那張字幕描述子表 | §3.1 解出結構（幕序索引 → 筆數 ＋ 每筆三個 word），**表的內容沒 dump** / `ida_dump.py` 對 `D7END.EXE` 的 `0x780` 起 | 靜態 |
-| [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | BGM | `ENDBGM.DAT` 走 INT 61h，與 `KI.EXE` 同一條音源路徑 / remake 已有 `endbgm-0`（`../spec/29`） | 靜態 |
+| [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | BGM 的起訖 | `ENDBGM.DAT` 走 INT 61h、與 `KI.EXE` 同一條音源路徑（已解），remake 也有 `endbgm-0`（`../spec/29`），但**還沒接進結局播放的起訖**（`../spec/67` §7） / 對 `sub_10500` 的呼叫點與 `loc_1007A` 的收尾 | 靜態 |
 
 ## 2.4 驗收（62 條）
 
