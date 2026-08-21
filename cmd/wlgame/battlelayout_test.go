@@ -712,3 +712,64 @@ func TestBattleSlotArmIcon(t *testing.T) {
 		}
 	}
 }
+
+// ⭐ 右鍵熱區 0x1D：點戰場區上緣那一帶會提前收掉門強度條（docs/spec/32 §2.1）。
+//
+// 三件事要一起釘住：熱區的矩形照原版（比條本身大得多）、
+// **條沒在顯示時那一格不存在**（原版是建立版面時才註冊）、
+// 以及**左鍵不該有反應**——左鍵表裡那一格是預設值（docs/re/60 §10）。
+func TestBattleGateBarRightClickDismisses(t *testing.T) {
+	b := &fakeBarTarget{}
+	// 條沒顯示時，熱區不存在。
+	if handleBattleRightClick(b, gateBarHotX+1, gateBarHotY+1) {
+		t.Error("門強度條沒在顯示，右鍵不該被接走")
+	}
+
+	show := func() { b.shown, b.durability = true, 1000 }
+
+	// 矩形四角都要接得到。
+	for _, pt := range [][2]int{
+		{gateBarHotX, gateBarHotY},
+		{gateBarHotX + gateBarHotW - 1, gateBarHotY},
+		{gateBarHotX, gateBarHotY + gateBarHotH - 1},
+		{gateBarHotX + gateBarHotW - 1, gateBarHotY + gateBarHotH - 1},
+	} {
+		show()
+		if !handleBattleRightClick(b, pt[0], pt[1]) {
+			t.Errorf("(%d,%d) 在熱區裡卻沒被接走", pt[0], pt[1])
+		}
+		if _, shown := b.StructureBar(); shown {
+			t.Errorf("(%d,%d) 右鍵之後條還在", pt[0], pt[1])
+		}
+	}
+
+	// 矩形外不接。⚠ 熱區比條大得多，這幾個點都在條的旁邊但在熱區外。
+	for _, pt := range [][2]int{
+		{gateBarHotX - 1, gateBarHotY},
+		{gateBarHotX + gateBarHotW, gateBarHotY},
+		{gateBarHotX, gateBarHotY + gateBarHotH},
+	} {
+		show()
+		if handleBattleRightClick(b, pt[0], pt[1]) {
+			t.Errorf("(%d,%d) 在熱區外卻被接走", pt[0], pt[1])
+		}
+		if _, shown := b.StructureBar(); !shown {
+			t.Errorf("(%d,%d) 在熱區外卻把條收掉了", pt[0], pt[1])
+		}
+	}
+
+	// 熱區必須涵蓋條本身，否則玩家點得到條卻收不掉。
+	show()
+	if !handleBattleRightClick(b, gateBarX+gateBarLen/2, gateBarY) {
+		t.Error("條的正中央不在熱區裡")
+	}
+}
+
+// fakeBarTarget 只實作熱區 handler 真正碰得到的那兩個方法。
+type fakeBarTarget struct {
+	durability int
+	shown      bool
+}
+
+func (f *fakeBarTarget) StructureBar() (int, bool) { return f.durability, f.shown }
+func (f *fakeBarTarget) DismissStructureBar()      { f.shown, f.durability = false, 0 }

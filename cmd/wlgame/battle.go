@@ -165,6 +165,13 @@ func (g *game) updateBattle() {
 
 	if !b.Done {
 		g.startBattleTalk(p)
+		// 右鍵先過熱區表（docs/spec/32 §2.1）。放在對白推進之前，
+		// 因為原版的右鍵分派（0x1C01D）不看對白狀態。
+		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) {
+			if x, y := ebiten.CursorPosition(); handleBattleRightClick(b, x, y) {
+				return
+			}
+		}
 		talkAdvanced := g.advanceBattleTalkInput()
 		// 六個戰術指令。編號與原版一致（docs/re/11 §5.8b）。
 		if !talkAdvanced {
@@ -682,7 +689,64 @@ const (
 	gateBarLen     = 0x97
 	gateBarH       = 2
 	gateBarShift   = 4 // 耐久 >> 4
+
+	// 熱區 0x1D 的矩形（0001C43C 的註冊）。⚠ **比條本身大得多**——
+	// 條只有 (320,16) 起 151×2 px，熱區涵蓋 (256,0)–(479,31) 整塊。
+	// 照抄，不要縮到條的大小：原版讓玩家點那一帶就收掉。
+	gateBarHotX = 256
+	gateBarHotY = 0
+	gateBarHotW = 224
+	gateBarHotH = 32
 )
+
+// battleRightClickHotspots 是戰場畫面的**右鍵**熱區表。
+//
+// 原版的熱區碼有兩張分派表（docs/re/60 §10）：左鍵 `cs:0xC048`、
+// 右鍵 `cs:0xC086`。⭐ **`0x1B`／`0x1C`／`0x1D` 在左鍵表裡全是預設值**——
+// 點門強度條左鍵沒有反應，要右鍵才有（TALK.DAT #4「以滑鼠的右鍵回復。」）。
+//
+// 右鍵表只有四筆有 handler，其中三筆在 remake 不適用：`0x1B`／`0x1C` 是
+// 大將名牌（remake 沒做），`0x1F` 沒有註冊點（docs/re/60 §12）。
+// **做成表而不是寫死成「右鍵就收掉」**——原版本來就是按熱區碼分派的。
+// battleRightClickTarget 是熱區 handler 碰得到的戰場狀態。
+// 用介面而不是 *tactical.Battle，測試才能只餵它真正需要的那幾個方法。
+type battleRightClickTarget interface {
+	StructureBar() (durability int, shown bool)
+	DismissStructureBar()
+}
+
+var battleRightClickHotspots = []struct {
+	code int // 原版的熱區碼
+	rect battleRect
+	// live 回報這一格現在存不存在。原版的熱區是**建立版面時才註冊**、
+	// 收掉時清除，所以不能一直掛著。
+	live func(battleRightClickTarget) bool
+	do   func(battleRightClickTarget)
+}{
+	{
+		code: 0x1D,
+		rect: battleRect{X: gateBarHotX, Y: gateBarHotY, W: gateBarHotW, H: gateBarHotH},
+		live: func(b battleRightClickTarget) bool { _, shown := b.StructureBar(); return shown },
+		do:   func(b battleRightClickTarget) { b.DismissStructureBar() },
+	},
+}
+
+// handleBattleRightClick 送一次右鍵到熱區表。回傳有沒有人接走。
+func handleBattleRightClick(b battleRightClickTarget, x, y int) bool {
+	if b == nil {
+		return false
+	}
+	for _, h := range battleRightClickHotspots {
+		if h.live != nil && !h.live(b) {
+			continue
+		}
+		if h.rect.containsPoint(x, y) {
+			h.do(b)
+			return true
+		}
+	}
+	return false
+}
 
 // drawBattleGateBar 畫「門強度」＋進度條（docs/spec/32）。
 //

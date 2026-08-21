@@ -1,6 +1,7 @@
 # 32 — 攻城的「門強度」條
 
-**狀態：READY。** 版面、算式與出現／消失的時機都有機器碼出處。
+**狀態：CONFORMED。** 版面、算式、出現／消失的時機與**右鍵提前收掉**
+都有機器碼出處，remake 已實作並有單測。
 
 - 日期：2026-08-16
 - 出處：[`../re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) §11
@@ -63,6 +64,34 @@ if 實體記錄[+0x00] >= 0x80:            # 這一格有實體（0x0180 城壁�
 ⚠ `word_1D318` 是 **byte**，會在 256 回繞；到期判定用的是**相等**不是「≥」。
 remake 的幀計數不回繞，而每幀固定 +1，所以相等判定等價。
 
+## 2.1 右鍵提前收掉：戰場區的右鍵熱區層
+
+原版的熱區碼有**兩張分派表**（[`../re/60`](../re/60-tactical-sidebar.md) §10）：
+左鍵 `cs:0xC048`、右鍵 `cs:0xC086`，索引都是熱區碼。
+⭐ **左鍵表裡 `0x1B`／`0x1C`／`0x1D` 全是預設值（不做事）**——
+點門強度條沒有反應，**要右鍵才有**（`TALK.DAT` #4「以滑鼠的右鍵回復。」）。
+
+右鍵表只有四筆有 handler：
+
+| 碼 | 原版 handler | remake |
+|---|---|---|
+| `0x1B`／`0x1C` | 雙方大將的名牌 → `sub_1C3B8` 收掉 | **不適用**：remake 沒有大將名牌 |
+| **`0x1D`** | **`sub_1C4A6`：門強度條收掉** | 本節要做的 |
+| `0x1F` | `sub_1C300` | **不適用**：那個碼**沒有註冊點**（[`../re/60`](../re/60-tactical-sidebar.md) §12：兩張表裡都有 handler，但找不到 `sub_1E3D7` 的呼叫點）|
+
+所以這一層目前只有一格。**照原版的幾何做成一張表**，不要寫死成
+「右鍵就收掉」——右鍵表本來就是按熱區碼分派的，之後補別的碼才不用重寫。
+
+| 項目 | 值 | 出處 |
+|---|---|---|
+| 熱區 `0x1D` 的矩形 | **(256, 0, 224 × 32)** | `0001C43C`–`0001C479` 的註冊 |
+| 動作 | 收掉門強度條（同 20 幀到期那條路）| `sub_1C4A6` |
+| 熱區在什麼時候存在 | **只有條在顯示時**——建立版面時才註冊，`sub_1C4A6` 會清掉 | 同上 |
+
+⚠ **矩形比條本身大得多**：條畫在 (320, 16)、151 × 2 px，而熱區涵蓋
+(256,0)–(479,31) 整塊。**照抄矩形，不要縮到條的大小**——
+原版讓玩家點那一帶就收掉，不必瞄準那條 2 px 高的線。
+
 ## 3. remake 實作
 
 | 項目 | 位置 |
@@ -70,7 +99,8 @@ remake 的幀計數不回繞，而每幀固定 +1，所以相等判定等價。
 | 規則層 | `internal/rules/tactical/structure.go`：`Battle.noteStructureDamage`、`Battle.StructureBar`；`hitStructure` 扣完耐久後呼叫 |
 | 每幀到期 | `internal/rules/tactical/battle.go` `Battle.Step` |
 | 呈現層 | `cmd/wlgame/battle.go` `drawBattleGateBar` |
-| 差異 | 熱區 `0x1D` 的右鍵提前收掉**未實作**——remake 的戰場區還沒有右鍵熱區層 |
+| 右鍵熱區層 | `cmd/wlgame/battle.go` 的 `battleRightClickHotspots`（一張表）＋ `updateBattle` 的右鍵分支 |
+| 收掉 | `internal/rules/tactical/structure.go` 的 `Battle.DismissStructureBar`（同 `sub_1C4A6`）|
 
 ## 4. 驗證
 
@@ -78,6 +108,7 @@ remake 的幀計數不回繞，而每幀固定 +1，所以相等判定等價。
 |---|---|
 | 單元測試（規則） | `TestStructureBarFollowsRawMinimumAndExpiry`、`TestStructureBarExpiresThroughStep`（`internal/rules/tactical`）|
 | 單元測試（版面） | `TestGateBarGeometryMatchesRawConstants`（`cmd/wlgame`）。它同時釘住一件事：標籤的 x=264 正好是 TALK 框右緣 256 再 +8——**條不會被 TALK 蓋掉**，而這解釋了原版為什麼選 264 |
+| 單元測試（右鍵）| `TestBattleGateBarRightClickDismisses`（`cmd/wlgame`）：熱區四角接得到、矩形外不接、**條沒在顯示時那一格不存在**，而且熱區必須涵蓋條本身 |
 | 對原版 | [`../playtest/27`](../playtest/27-original-video-frame-parity.md) §7.5 的影片影格。**remake 側沒有截圖**——原因見下 |
 
 ⚠ **沒有 remake 截圖不是漏做。** 這條只在實體挨打後亮 `0x14` 幀，

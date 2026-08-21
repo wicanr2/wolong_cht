@@ -93,6 +93,15 @@ func (b *Battle) noteStructureDamage(durability int) {
 	b.bar.expireAt = b.Frame + StructureBarLifetime
 }
 
+// DismissStructureBar 重現 `sub_1C4A6`：**提前**收掉門強度條。
+//
+// 原版的觸發是右鍵點熱區 `0x1D`（(256,0,224×32)，docs/spec/32 §2.1）——
+// ⚠ **左鍵沒有反應**，左鍵表裡那一格是預設值（docs/re/60 §10）。
+// 收掉的動作與 20 幀到期那條路完全相同，所以共用同一個歸零。
+func (b *Battle) DismissStructureBar() {
+	b.bar = structureBar{}
+}
+
 // expireStructureBar 重現 `0001A14B`：目前幀等於到期時刻就收掉。
 func (b *Battle) expireStructureBar() {
 	if b.bar.shown && b.Frame == b.bar.expireAt {
