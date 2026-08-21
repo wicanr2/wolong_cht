@@ -120,8 +120,10 @@ func (a *app) Draw(screen *ebiten.Image) {
 
 	// ⚠ 狀態列刻意全用 ASCII。`ebitenutil.DebugPrint` 用的是內建的
 	// ASCII 點陣字，中文字會被**靜靜吃掉**——畫面上看起來像少了東西，
-	// 很容易被誤判成排版 bug。中文顯示要等倚天 16×15 點陣字那一項
-	// （原版的字型來源見 CLAUDE.md §3.6，還沒結案）。
+	// 很容易被誤判成排版 bug。要顯示中文得換成倚天 16×15 點陣字
+	// （`internal/assets/cjk`）——**字型來源早就結案了**：原版的中文字模
+	// 內建在 END_S13/S14.DAT，走 INT 15h AH=50h（docs/re/29）。
+	// 這一支只是還沒接，不是缺資料。
 	ebitenutil.DebugPrint(screen, fmt.Sprintf(
 		"%s  %d/%d  %dx%d  season=%s  [<-/->]page [up/dn]asset [1-4]season [tab]world [F10]quit",
 		e.Label, a.page+1, e.Count, e.Spec.Width, e.Spec.Height,

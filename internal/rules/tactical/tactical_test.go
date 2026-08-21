@@ -1093,7 +1093,7 @@ func TestSetPlayerSideFollowsPlayerNotAttacker(t *testing.T) {
 // 原版 `sub_1ADC8` 的 `0001ADED test al, 40h / jnz loc_1AE26`：
 // 旗標立著就直接跳到重畫，不移動也不攻擊，旗標在那裡才清掉
 // （docs/spec/62）。少了它，被推開的兵下一幀馬上又往前擠，
-// 前排那一格一直換人，圍著打卻打不到（docs/spec/61 §5.1）。
+// 前排那一格一直換人，圍著打卻打不到（docs/spec/61 §5）。
 func TestSwappedSoldierSkipsItsTurn(t *testing.T) {
 	b := NewBattle(flatField(), SyntheticFormations(), &fixedRand{seq: []int{1, 7, 3}}, 0)
 	s := &b.Sides[0].Soldiers[0]

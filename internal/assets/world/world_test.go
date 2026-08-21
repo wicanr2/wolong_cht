@@ -233,7 +233,7 @@ func TestRoadGraphAgainstCityRecords(t *testing.T) {
 	}
 }
 
-// 兩版的 MMAP.MAP 是 byte-for-byte 相同的（CLAUDE.md §3.10），
+// 兩版的 MMAP.MAP 是 byte-for-byte 相同的（docs/re/01 §2，兩邊都是 80,716 B），
 // 所以推出來的道路圖也必須一模一樣。這條在防「解碼路徑摻進版本相依」。
 func TestRoadGraphIdenticalAcrossVersions(t *testing.T) {
 	xy, _ := cityRecords(t)

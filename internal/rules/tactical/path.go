@@ -62,9 +62,15 @@ func (f *Field) FindPath(from, to Point, climb bool, penalty Penalty) []Point {
 // gateX 那一小段城壁與 2–14 格門。純地形尋路在城封死時回空，兵就會
 // 整團停在城牆前不動，直到攻城計時器把大將耗光——**攻方永遠攻不進去**。
 //
-// ⚠ **這是 remake 的近似。** 原版走的是 `0x1800 + 兵編號 × 128` 那張
-// 預先算好的繞路點清單，而那個演算法還沒解出來
-// （docs/mechanics/30-combat.md「還沒解的」）。解出來之後這一支要換掉。
+// ⚠ **`force` 這個參數是 remake 加的，原版沒有。** 演算法本身不是近似——
+// 檔頭那段就是 `loc_1BD46` 的移植（docs/re/11 §5.15）；原版把算出來的
+// 轉角點存進 `0x1800 + 兵編號 × 128`，remake 存進 `Soldier.Path`。
+//
+// 加 `force` 的理由是**驗收路徑要能終止**：AI 對 AI 的自動戰鬥沒有玩家
+// 換陣形，城封死時純地形尋路回空，兵會整團停在牆前直到攻城計時器把大將
+// 耗光。⭐ **原版不需要這一條，因為破城本來就是玩家的工作**
+// （說明書第 11 章，docs/spec/37 §4）——所以這是 remake 差異，
+// 不是待補的缺口。
 func (f *Field) FindPathForcing(from, to Point, climb bool, penalty Penalty,
 	force func(x, y int) bool) []Point {
 	if !inBounds(from.X, from.Y) || !inBounds(to.X, to.Y) {

@@ -32,6 +32,8 @@
 | 文件內的相對連結指得到檔案 | 改檔名時最容易漏 |
 | `[…](x.md) §N` 的小節真的存在 | 七筆引用把**行號**寫成小節號（`§590`、`§1065`…），而它們都指得到檔案，所以連結檢查一路放行 |
 | `docs/spec/00-index.md` 的狀態欄與規格自己的狀態行一致 | 索引那一欄是散文，一份文件內部的檢查看不到跨文件矛盾 |
+| **程式碼與腳本的註解**也要過斷言檢查 | `tools/dosboxx.sh` 的檔頭把「跑 PC-98」的理由寫成「松崗版有防拷」，躲過六輪文件稽核——因為檢查只走 `docs/` 與根目錄的 markdown |
+| 註解裡的 `docs/xx/NN §M`、`CLAUDE.md §N` 指得到那個小節 | 改文件章節時沒有人會去 grep `.go`；實際踩過六筆，其中一筆還宣稱早就結案的字型懸案「還沒結案」|
 | `CONTEXT.md` 提到的 docs 路徑都存在，且有指向 `docs/INDEX.md` | 完整清單交給生成的那份，人只維護指標 |
 
 只用標準函式庫。
@@ -82,6 +84,27 @@ def root_md_files():
     for n in sorted(os.listdir(ROOT)):
         if n.endswith(".md") and os.path.isfile(os.path.join(ROOT, n)):
             yield os.path.join(ROOT, n)
+
+
+def source_files():
+    """程式碼與工具腳本。**斷言檢查要涵蓋它們。**
+
+    ⚠ 為什麼：`tools/dosboxx.sh` 的檔頭把「跑 PC-98 而不是松崗版」的理由
+    寫成「松崗版有防拷」，而那正是 `CLAUDE.md` §4.0 明文禁止的理由
+    （選 PC-98 可以，但理由只能是「那一版的腳本比較齊」）。
+    那句話躲過了六輪文件稽核，因為**檢查只走 `docs/` 與根目錄的 markdown**。
+
+    ⭐ **註解裡的斷言比文件裡的更難發現**：沒有人會為了查一條結論去
+    grep 建置腳本的檔頭，而照著它做的人會直接改用另一個工具。
+    """
+    skip = {".git", "workplace", "dist", "dist-all", "node_modules",
+            "android", "vendor"}
+    exts = (".go", ".py", ".sh")
+    for dirpath, names, files in os.walk(ROOT):
+        names[:] = [n for n in names if n not in skip and not n.startswith(".")]
+        for f in sorted(files):
+            if f.endswith(exts):
+                yield os.path.join(dirpath, f)
 
 
 def rel(path):
@@ -276,8 +299,13 @@ def check(docs):
     # `CONTEXT.md` §0.1 都寫過了，**還是在四份文件裡復發**，包括
     # 同一個 session 剛寫的新筆記。原因是它長得像「已知的專案背景」，
     # 寫的時候不會想到要查——**這種斷言只有機器擋得住**。
-    for path in [d.path for d in docs] + list(root_md_files()):
+    scanned = [d.path for d in docs] + list(root_md_files()) + list(source_files())
+    for path in scanned:
         if os.path.basename(path) in ASSERTION_CHECK_EXEMPT:
+            continue
+        # 檢查自己的定義與說明必然引用舊斷言的字樣，`quoted()` 擋不到
+        # 正規表示式那幾行。
+        if os.path.abspath(path) == os.path.abspath(__file__):
             continue
         try:
             text = open(path, encoding="utf-8").read()
@@ -387,6 +415,61 @@ def check(docs):
                 continue  # 父節沒編號但子節有
             problems.append(
                 f"{rel(d.path)}：引用 {target} §{num}，但那份文件沒有這個小節")
+
+    # ⑨ 原始碼註解裡的 `docs/xx/NN §M` 也要指得到那個小節。
+    #
+    # ⑧ 驗的是 markdown 的連結形式；註解寫的是**裸路徑**
+    # （`docs/re/11 §5.15`），形狀不同所以 ⑧ 比不到。
+    # 實際踩過（2026-08-21）：五筆註解指向不存在的小節，其中
+    # `docs/spec/61 §5.1` 有兩處、`docs/formats/05 §6` 那條還是在解釋
+    # 「地圖左移四格」這個核心結論時引的。
+    #
+    # ⭐ **註解的引用比文件的更容易爛**：改文件章節時沒有人會去 grep `.go`。
+    src_cite = re.compile(
+        r"docs/(re|spec|formats|mechanics|playtest|reference|release|mobile|promo)"
+        r"/(\d+)[A-Za-z0-9_.-]*\s*§(\d+(?:\.\d+)*)")
+    # `CLAUDE.md §N`／`CONTEXT.md §N` 同理——那兩份的章節會重編，
+    # 而註解寫下的編號不會跟著動（實際踩過：`CLAUDE.md §3.10`、`§3.6`
+    # 兩個都不存在，其中一個還宣稱字型懸案「還沒結案」）。
+    top_cite = re.compile(r"(CLAUDE|CONTEXT)\.md\s*§\s*(\d+(?:\.\d+)*)")
+    top_heads = {}
+    for name in ("CLAUDE.md", "CONTEXT.md"):
+        full = os.path.join(ROOT, name)
+        if os.path.exists(full):
+            top_heads[name.split(".")[0]] = {
+                m.group(1) for m in re.finditer(
+                    r"^#{2,6}\s+(\d+(?:\.\d+)*)",
+                    open(full, encoding="utf-8").read(), re.M)}
+    by_prefix = {}
+    for full, own in heads.items():
+        d, f = os.path.split(full)
+        by_prefix.setdefault((os.path.basename(d), f.split("-")[0]), own)
+    for path in source_files():
+        # 這一支自己的說明必然引用「壞掉的引用」當例子。
+        if os.path.abspath(path) == os.path.abspath(__file__):
+            continue
+        try:
+            text = open(path, encoding="utf-8").read()
+        except OSError:
+            continue
+        for m in src_cite.finditer(text):
+            own = by_prefix.get((m.group(1), m.group(2)))
+            if own is None or m.group(3) in own:
+                continue
+            if any(h.startswith(m.group(3) + ".") for h in own):
+                continue
+            n = text[:m.start()].count("\n") + 1
+            problems.append(
+                f"{rel(path)}:{n}：註解引用 {m.group(0)}，但那份文件沒有這個小節")
+        for m in top_cite.finditer(text):
+            own = top_heads.get(m.group(1))
+            if own is None or m.group(2) in own:
+                continue
+            if any(h.startswith(m.group(2) + ".") for h in own):
+                continue
+            n = text[:m.start()].count("\n") + 1
+            problems.append(
+                f"{rel(path)}:{n}：註解引用 {m.group(0)}，但那份文件沒有這個小節")
 
     # ④ 相對連結指得到檔案。
     for d in docs:

@@ -64,7 +64,7 @@ func (b *Battle) updateSoldier(side, k int) {
 	//
 	// 少了這一條，被推開的兵下一幀馬上又往前擠，把剛換到前排的同伴
 	// 再換回去——前排那一格一直換人，而換進去的永遠不是下一個輪到
-	// 更新的那個，於是圍著打卻一次也打不到（docs/spec/61 §5.1）。
+	// 更新的那個，於是圍著打卻一次也打不到（docs/spec/62；docs/spec/61 §5 講它為什麼與開場體力綁在一起）。
 	if s.Swapped {
 		s.Swapped = false
 		s.PoseStep ^= 1

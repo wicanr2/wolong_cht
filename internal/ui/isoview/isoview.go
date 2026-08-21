@@ -133,8 +133,12 @@ type View struct {
 	banners []battle.Banner
 
 	// minimap 是戰術初始化時由 BATTLE.MAP raw tile 與 BATTLE.MDL
-	// attribute table 產生的一次性 128×128 base image。原版是否在
-	// 城壁破壞後做局部更新尚未知，因此不把兵或結構變更混入這個快取。
+	// attribute table 產生的一次性 128×128 base image。
+	//
+	// ⚠ **原版會在城壁破壞後局部更新**（`sub_1B824` → `sub_1BB6D`，
+	// docs/spec/66；戰場本體 remake 已經跟著換了）。**這張縮圖沒有**——
+	// 它建一次就不再更新，是明知的 remake 差異，缺口記在
+	// docs/playtest/19。不把兵混進這個快取則是刻意的：兵每幀都在動。
 	minimap *ebiten.Image
 
 	// camWorldX／camWorldY 保存原版 word_1D328／word_1D32A 的世界格原點。

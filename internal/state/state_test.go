@@ -1987,7 +1987,7 @@ func TestCorpsMeetAndFight(t *testing.T) {
 		fought.Battle.DefenderWins, fought.Destroyed)
 
 	// 敗方的士氣被重設成 100 × 兵力比，所以打輸一場之後必定低於 100
-	// （docs/re/09 §4.4）。這是接起來之後才看得到的行為。
+	// （docs/re/09 §4.3）。這是接起來之後才看得到的行為。
 	loser := fought.Corps
 	if !fought.Battle.DefenderWins {
 		loser = fought.Enemy
