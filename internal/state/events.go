@@ -7,7 +7,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/strategyai"
 )
 
-// runtimeCityBase 是原版事件 Param 指向城市記錄的段內位址；它與
+// runtimeCityBase 是原版事件 Param 指向據點記錄的段內位址；它與
 // SAVE.DAT 的 cityBase（檔案偏移 0x08C0）不同，不能混用。
 const runtimeCityBase = 0x0840
 
@@ -291,7 +291,7 @@ func (w *World) dispatchQueuedEvent(ev *Event) {
 			RequestedAmount: int(e.Param),
 		}) && ev != nil {
 			// sub_132A9 在進入 sub_139E8 前先以 CX=38h 顯示
-			// TALK #56；DI 指向城市、堆疊參數指向內政官。
+			// TALK #56；DI 指向據點、堆疊參數指向內政官。
 			ev.TalkNotices = append(ev.TalkNotices, TalkNotice{
 				Index: 0x38, City: cityID, Faction: -1, General: officer, Amount: -1,
 			})
@@ -432,7 +432,7 @@ func (w *World) dispatchQueuedEvent(ev *Event) {
 			})
 		}
 	case 11:
-		// sub_134A6 更新的是城市 +0x15 的暴風雨動畫標記。這個欄位
+		// sub_134A6 更新的是據點 +0x15 的暴風雨動畫標記。這個欄位
 		// 不被月結規則讀取，因此只保留在 runtime，不寫回 City 持久欄位。
 		w.applyQueuedStormMarker(ev)
 	case 12:
@@ -463,7 +463,7 @@ func cityIDFromRuntimeParam(param uint16) (int, bool) {
 }
 
 // applyQueuedStormMarker 是 sub_134A6 → sub_1237E 的 runtime marker
-// 轉接。原版以暴風雨中心的曼哈頓距離圈選城市，並把強度減去距離的
+// 轉接。原版以暴風雨中心的曼哈頓距離圈選據點，並把強度減去距離的
 // 一半；這個 +0x15 marker 由 sub_14269 在據點輪轉時消耗。
 func (w *World) applyQueuedStormMarker(ev *Event) {
 	if w.stormArea == nil || w.rng == nil {
@@ -488,7 +488,7 @@ func (w *World) applyQueuedStormMarker(ev *Event) {
 		w.disasterMarkers[i] = economy.Storm
 		w.disasterMarkerLevels[i] = byte(level)
 		if ev != nil && c.Owner == w.Player {
-			// sub_1237E 以城市記錄作為 TALK.DAT \\2 的 formatter
+			// sub_1237E 以據點記錄作為 TALK.DAT \\2 的 formatter
 			// 游標，CX=46h 對應 #70「發生了暴風雨」。
 			ev.TalkNotices = append(ev.TalkNotices, TalkNotice{
 				Index: 0x46, City: i, Faction: -1, General: -1, Amount: -1,
@@ -525,7 +525,7 @@ func (w *World) applyQueuedDisasterMarker(ev *Event, source int, param uint16) {
 		return
 	}
 	w.disasterMarkers[city] = kind
-	// sub_134B1 先以城市座標建立 MCH runtime object，再由後續 map
+	// sub_134B1 先以據點座標建立 MCH runtime object，再由後續 map
 	// loop 依 +0Ch／+0Fh 驅動動畫；物件滿 32 筆時保留 marker，但不
 	// 虛構一個不存在的動畫槽。
 	w.createDisasterObject(city, kind)
@@ -543,7 +543,7 @@ func (w *World) applyQueuedDisasterMarker(ev *Event, source int, param uint16) {
 		ev.Disaster[city] = kind
 		if w.Cities[city].Owner == w.Player {
 			// sub_134B1 的 CX=46h + AH：AH=1／2 分別得到
-			// #71／#72；DI 指向同一筆城市記錄，供 TALK.DAT \\2 使用。
+			// #71／#72；DI 指向同一筆據點記錄，供 TALK.DAT \\2 使用。
 			ev.TalkNotices = append(ev.TalkNotices, TalkNotice{
 				Index: 0x46 + source, City: city, Faction: -1, General: -1, Amount: -1,
 			})

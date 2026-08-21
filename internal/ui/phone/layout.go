@@ -4,14 +4,16 @@
 // （使用者裁定 2026-08-20，規格 docs/mobile/android-ux.md）。
 // 桌面版仍是唯一的對拍基準——這裡的任何取捨都不影響那邊。
 //
-// 這一層認識 Ebiten；平台無關的幾何在 internal/ui/mobile。
+// 這一層認識 Ebiten。**縮放交給 Ebiten 的 Layout 契約**——
+// mobile/wolong 的 game.Layout 回傳 LogicalW／LogicalH，之後所有座標
+// 都在這個邏輯畫布上算，不必自己換算螢幕像素。
 package phone
 
-// 版面常數。單位是**邏輯像素**，由 Viewport 換算到實際螢幕。
+// 版面常數。單位是**邏輯像素**。
 //
 // 手機的邏輯畫布不是原版的 640×400：原版那個比例在現代手機上會留很寬的
 // 黑邊，而且熱區只有 16×16。這裡用 16:9 的 960×540 當基準，
-// 再由 Viewport 等比縮放到實際螢幕（docs/mobile/android-ux.md §2）。
+// Ebiten 再等比縮放到實際螢幕（docs/mobile/android-ux.md §2）。
 const (
 	LogicalW = 960
 	LogicalH = 540

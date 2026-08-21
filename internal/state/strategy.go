@@ -311,7 +311,7 @@ func (w *World) driftPlayerFriendship(player int, ordered []strategyai.Candidate
 }
 
 // formAICorps 是 sub_145C1 → sub_16E8F 的保真垂直切片：選同勢力且未出陣
-// 的最高武力武將，照 CS:6C4C 的六槽表挑兵種，再按原版的「每型剩餘槽平均
+// 的最高武術武將，照 CS:6C4C 的六槽表挑兵種，再按原版的「每型剩餘槽平均
 // 分配、單槽上限 100」扣預備兵。它刻意不呼叫玩家 UI 的 FormCorps，因為
 // 玩家介面採固定 1,000 人一槽的現代輸入適配，而原版 AI 編成的預備兵尺度
 // 是 0–100 的軍團槽兵力。

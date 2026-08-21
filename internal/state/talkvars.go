@@ -5,7 +5,7 @@ import "strconv"
 // TalkNoticeVars 把一則事件通知換成 `TALK.DAT` 的變數表。
 //
 // 回傳 false 表示**這一則不能顯示**：原版 formatter 的位址回查不安全時，
-// 顯示半句或猜一個城市都比不顯示糟（fail-closed）。
+// 顯示半句或猜一個據點都比不顯示糟（fail-closed）。
 //
 // decode 把記錄裡的原始 Big5 位元組換成可以畫的字。**由呼叫端提供**——
 // `state` 存的是原始位元組（存檔要 byte-for-byte 寫回），
@@ -13,7 +13,7 @@ import "strconv"
 //
 // ⚠ 桌面版與手機版共用這一份。每個 marker 的語意都是從原版反推的
 //（`\3` 是**君主名**不是勢力編號、`\6` 只調 X 不輸出字元、
-// `\2` 在 formatter 有效時要走回查而不是城市名），各寫一份必然會有一邊
+// `\2` 在 formatter 有效時要走回查而不是據點名），各寫一份必然會有一邊
 // 把某個 marker 印成錯的東西。
 func (w *World) TalkNoticeVars(n TalkNotice, decode func(string) string) (map[byte]string, bool) {
 	if decode == nil {

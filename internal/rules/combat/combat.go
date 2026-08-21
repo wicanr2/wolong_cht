@@ -57,7 +57,7 @@ func rowFor(m Mode, attacker bool) int {
 
 // Leader 是帶兵的武將。欄位對應武將記錄（docs/formats/08 §3）。
 type Leader struct {
-	Martial int // +0x11 武力，1–15
+	Martial int // +0x11 武術，1–15
 	Command int // +0x12 統率，1–15
 
 	// SiegeAptitude 與 FieldAptitude 是 +0x0E／+0x0F 的**高半位元組**（0–10）。
@@ -66,7 +66,7 @@ type Leader struct {
 	// 野戰 1），不是兵種 —— 見 docs/re/09 §3.3。
 	SiegeAptitude, FieldAptitude int
 
-	// Rating 是評價（＝適性和 ＋ 2×武力 ＋ 2×統率，見 internal/rules/general）。
+	// Rating 是評價（＝適性和 ＋ 2×武術 ＋ 2×統率，見 internal/rules/general）。
 	// 只在戰敗被擒的判定裡用到。
 	Rating int
 }
@@ -95,11 +95,11 @@ type Corps struct {
 
 // leaderValue 是將領修正（原版 `sub_152D7` 前半段）。
 //
-//	武力 ≥ 統率  →  75% 用 武力 × 2、25% 用 武力 × 3/4 ＋ 統率
-//	武力 < 統率  →  統率 × 3/4 ＋ 統率
+//	武術 ≥ 統率  →  75% 用 武術 × 2、25% 用 武術 × 3/4 ＋ 統率
+//	武術 < 統率  →  統率 × 3/4 ＋ 統率
 //
 // 那個 25% 的分支是原版擲 `rand & 3` 擲出來的，**不是筆誤**：
-// 武力高的將領大多數時候發揮兩倍武力，偶爾退回混合值。
+// 武術高的將領大多數時候發揮兩倍武術，偶爾退回混合值。
 func leaderValue(l Leader, rng Rand) int {
 	m, c := l.Martial, l.Command
 	if m >= c {
@@ -145,7 +145,7 @@ type Result struct {
 	DefenderWins bool
 
 	// Ratio 是戰力比值 ＝ 強的一方 × 8 ÷ 弱的一方，上限 100。
-	// 它同時決定敗方的傷亡量與城市的損傷量。
+	// 它同時決定敗方的傷亡量與據點的損傷量。
 	Ratio int
 
 	// AttackerDestroyed／DefenderDestroyed 對應原版回傳的 ah bit 0／bit 1。

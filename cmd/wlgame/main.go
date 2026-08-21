@@ -1071,7 +1071,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 // runtime object 的 [si+0F]／[si+0C] 已由 state 保存為非存檔欄位，
 // 由 map-loop timer 驅動；這裡只負責把本次 render 取得的相位交給 MCH。
 //
-// 暴風雨事件 11 的已證實 handler 只更新城市 +0x15 與範圍，不會呼叫
+// 暴風雨事件 11 的已證實 handler 只更新據點 +0x15 與範圍，不會呼叫
 // sub_123FF；所以它仍畫範圍輪廓。若 MCH 缺檔，才退回低干擾向量 marker，
 // 不把 fallback 說成原版 parity。
 func (g *game) drawDisasterOverlay(screen *ebiten.Image) {
@@ -1181,7 +1181,7 @@ func (g *game) drawDisasterMarker(screen *ebiten.Image, x, y int, marker state.D
 }
 
 func (g *game) drawStormArea(screen *ebiten.Image, area economy.StormArea) {
-	// 範圍本身只畫輪廓，避免把地圖地形整片蓋掉；城市 marker 才是目前
+	// 範圍本身只畫輪廓，避免把地圖地形整片蓋掉；據點 marker 才是目前
 	// 受影響據點的狀態提示。座標與 StormArea 同樣以地圖格為單位。
 	x := (area.MinX - g.camX) * world.TileSize
 	y := strategyMapY + (area.MinY-g.camY)*world.TileSize

@@ -171,7 +171,7 @@ func TestSecondaryTalkUsesCapturedRawFormatterWord(t *testing.T) {
 		t.Fatalf("原版 \\2 raw payload 未進入 #72：raw=%q messages=%#v", textDecodeBig5(raw), g.messages)
 	}
 
-	// 沒有顯式 raw word 時，不能把零值誤當成 word 0，也不能猜城市。
+	// 沒有顯式 raw word 時，不能把零值誤當成 word 0，也不能猜據點。
 	g.messages = nil
 	g.enqueueTalkNotice(state.TalkNotice{
 		Index: 0x48, City: -1, Faction: -1, General: -1, Amount: -1, Secondary: true,

@@ -64,7 +64,7 @@ func disasterObjectType(kind economy.Disaster) (uint8, bool) {
 }
 
 // createDisasterObject 是 sub_123FF 的最小已證實轉接。
-// 原版掃到第一筆 [si] < 80h 的空槽；不對同一城市做去重。
+// 原版掃到第一筆 [si] < 80h 的空槽；不對同一據點做去重。
 func (w *World) createDisasterObject(city int, kind economy.Disaster) bool {
 	if city < 0 || city >= len(w.Cities) {
 		return false
@@ -95,7 +95,7 @@ func (w *World) createDisasterObject(city int, kind economy.Disaster) bool {
 }
 
 // clearDisasterObjects 是 sub_12438 的座標比對清除。
-// 原版會清掉所有相同城市座標的 active record，而不是只清第一筆。
+// 原版會清掉所有相同據點座標的 active record，而不是只清第一筆。
 func (w *World) clearDisasterObjects(city int) {
 	for i := range w.disasterObjects {
 		if w.disasterObjects[i].active && w.disasterObjects[i].city == city {

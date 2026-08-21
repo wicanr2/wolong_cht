@@ -103,7 +103,7 @@ Android Activity（Java）
             ↓ lifecycle、safe-area、touch
 mobile/wolong（gomobile 綁定）
             ↓
-internal/ui/mobile   ← 新的手機呈現層（畫面 ＋ 手勢）
+internal/ui/phone    ← 手機呈現層（畫面 ＋ 手勢），只共用規則層
             ↓
 internal/state ＋ internal/rules ＋ internal/assets    ← 原封不動共用
 ```

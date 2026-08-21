@@ -680,7 +680,7 @@ sub_131AE:
 | 8 | `sub_133EA` | — |
 | 9 | `sub_13485` | 指定武將釋放；`World.releaseGeneral` 已接入 `sub_150D7` 的狀態寫入，`Event.ReleasedGenerals` 與 `wlgame` 的 `TALK.DAT` 0x25 句型取用已接入，`TestQueuedEventReleaseGeneral` 驗證存活／已滅俘虜方分支；remake 結構化訊息佇列已接入，原版完整通知流程仍未接 |
 | 10 | `sub_13496` | 訊息-only：建立武將／參數 formatter 游標；持久狀態尚未找到 |
-| 11 | `sub_134A6` | `sub_1237E` 更新城市 runtime `+0x15` 暴風雨動畫標記；`World.applyQueuedStormMarker` 與 `TALK.DAT #70` 結構化通知已接，完整物件動畫仍未接 |
+| 11 | `sub_134A6` | `sub_1237E` 更新據點 runtime `+0x15` 暴風雨動畫標記；`World.applyQueuedStormMarker` 與 `TALK.DAT #70` 結構化通知已接，完整物件動畫仍未接 |
 | **12** | **`sub_134B1`** | 事件字 `0x010C`／`0x020C` ＝ 火災／暴動（低位元組 `0x0C` ＝ 12）；`World.applyQueuedDisasterMarker` 已接高 byte、runtime 標記、`#71/#72` 通知與延遲清除 |
 | 13 | `sub_13507` | 事件字 `0x000D` ＝ 資金深度赤字；`TALK.DAT #51` 玩家通知已接 |
 
@@ -844,7 +844,7 @@ AI 的據點走預設分支 `cl = 8`：每天有 **9/16** 的機率上昇值 `+1
 
 ### 19.1 ⭐⭐ 災害 marker 的持久效果：`sub_14269`
 
-事件 11／12 的處理端先寫城市 runtime record `+0x15`；它不是只供物件
+事件 11／12 的處理端先寫據點 runtime record `+0x15`；它不是只供物件
 動畫使用。`sub_13EFD`（`00013EFD`）在 `sub_14194`（內政官整備）之後，
 於 `00013F5A` 無條件呼叫 `sub_14269`（`00014269`），所以據點每輪到一次
 就會消耗目前 marker：
@@ -1119,7 +1119,7 @@ PC-98 數字視窗與原版訊息排版仍未宣稱完成。
 | 缺口 | 位置 |
 |---|---|
 | `sub_15940` 的兩個分支 | 已派駐武將的每月行動，會發訊息 `0x41`／`0x42`。分支 2 有一行 `mov byte ptr [si+1Ch], 18h`（把所屬勢力寫成 24）**與「+1Ch 是勢力編號、只有 0–21」矛盾**，還沒解釋 |
-| `sub_14269`／`sub_13EFD` | 事件 11／12 寫入的城市 `+0x15` marker 在據點輪轉時先扣防災值；不足時再扣上昇值、生產力與城兵，已接入 `World.applyCityDisasterEffect`；物件動畫仍未完 |
+| `sub_14269`／`sub_13EFD` | 事件 11／12 寫入的據點 `+0x15` marker 在據點輪轉時先扣防災值；不足時再扣上昇值、生產力與城兵，已接入 `World.applyCityDisasterEffect`；物件動畫仍未完 |
 | 武將 `+1Ah` | 官員「要錢中」的旗標／金額，`sub_12FBF` 的事件會寫它 |
 | 武將 `+0Eh`／`+0Fh`／`+10h` 是不是兵種適性 | 需要與戰鬥程式對照 |
 | `sub_157FE` 觸發的事件內容 | `sub_12FBF(ax=0Dh, dx=196h)` |

@@ -98,7 +98,7 @@ type 3：28 29 2A 2B 28 29 2A 2B
 | 3 | `0x28`–`0x2B`，循環重用 | 5×5 tile | 查表已證實，事件語意未知 |
 
 `internal/assets/world/mmapmch.go` 以這份位址／bytes 對照解碼，
-`cmd/wlgame` 已將 type 1／2 接到 `drawDisasterOverlay`。物件以城市的
+`cmd/wlgame` 已將 type 1／2 接到 `drawDisasterOverlay`。物件以據點的
 地圖格座標置中，與 `loc_1D51F` 的 `width/2`、`height/2` 算法一致。
 
 ## 5. runtime timer 接線與尚未升格成 parity 的部分
@@ -109,14 +109,14 @@ type 3：28 29 2A 2B 28 29 2A 2B
 非序列化 typed runtime record 接入這三段：每一筆物件各自保存 `Phase`／`Timer`／
 `Interval`／`Dirty`，`cmd/wlgame` 只在可見 map-loop Update 呼叫 advance，modal 不穿透。
 `TestDisasterObjectAnimationTiming` 固定建立初值、16-update cadence、dirty render
-舊 phase、八相位遞增與城市清除；因此已移除先前的固定 presentation frame clock
+舊 phase、八相位遞增與據點清除；因此已移除先前的固定 presentation frame clock
 替代方案。`World.DisasterMarker` 仍只保存持久 marker／level，不把 runtime 欄位寫入存檔。
 
 `sub_12459` 對 raw slots 16–31 逐筆走 `sub_1248A`；它不是只處理最後一筆物件。
 此移動分支已由 typed runtime record 接線並以 fixed-point／signed-byte／wrap 測試固定；
 火災／暴動圖像的 type 1／2 時序也不依賴它。
 
-事件 11 的 `sub_134A6` → `sub_1237E` 只確認城市 `+0x15` marker 與
+事件 11 的 `sub_134A6` → `sub_1237E` 只確認據點 `+0x15` marker 與
 暴風雨範圍，沒有呼叫 `sub_123FF`；因此暴風雨仍不套用 type 1／2／3 圖形。
 
 ## 6. 2026-08-12 再審：type 3 與 `sub_1248A` 的直接證據邊界

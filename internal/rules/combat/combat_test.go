@@ -66,7 +66,7 @@ func TestTerrainFactorTable(t *testing.T) {
 // 在數值上的體現。同一支騎兵軍團換個場合，戰力就要換方向。
 func TestCavalryStrongInFieldWeakAtWalls(t *testing.T) {
 	l := Leader{Martial: 10, Command: 10, SiegeAptitude: 5, FieldAptitude: 5}
-	rng := &fixedRand{seq: []int{1}} // 武力 ≥ 統率 且 rand&3 != 0 → 一律用 武力×2
+	rng := &fixedRand{seq: []int{1}} // 武術 ≥ 統率 且 rand&3 != 0 → 一律用 武術×2
 
 	cav := fullCorps(army.Cavalry, l, 200)
 	arc := fullCorps(army.Archer, l, 200)
@@ -84,7 +84,7 @@ func TestCavalryStrongInFieldWeakAtWalls(t *testing.T) {
 	}
 }
 
-// 將領值的三個分支。原版擲 `rand & 3`：非 0（75%）用 武力×2。
+// 將領值的三個分支。原版擲 `rand & 3`：非 0（75%）用 武術×2。
 func TestLeaderValue(t *testing.T) {
 	for _, tc := range []struct {
 		name    string
@@ -102,7 +102,7 @@ func TestLeaderValue(t *testing.T) {
 			t.Errorf("%s：leaderValue ＝ %d，應為 %d（%s）", tc.name, got, tc.want, tc.comment)
 		}
 	}
-	// 武力 < 統率時不擲骰——原版 `cmp dl, dh / jb` 直接跳過。
+	// 武術 < 統率時不擲骰——原版 `cmp dl, dh / jb` 直接跳過。
 	rng := &fixedRand{seq: []int{0}}
 	leaderValue(Leader{Martial: 1, Command: 9}, rng)
 	if rng.i != 0 {
@@ -112,7 +112,7 @@ func TestLeaderValue(t *testing.T) {
 
 // 說明書 10.5：「武術と統率はその合計が同じであれば強さは同じ」。
 // 那是**評價**的性質（internal/rules/general 已釘住）；戰力不是這樣。
-// 這一條記錄差異：同樣的和，武力偏重的一方戰力較高。
+// 這一條記錄差異：同樣的和，武術偏重的一方戰力較高。
 func TestMartialBeatsCommandAtEqualSum(t *testing.T) {
 	rng := &fixedRand{seq: []int{1}}
 	base := Leader{SiegeAptitude: 5, FieldAptitude: 5}
@@ -143,7 +143,7 @@ func TestLeaderDominatesPower(t *testing.T) {
 	}
 }
 
-// 城市損傷的形狀：苦戰傷得多、輾壓傷得少——直到比值超過 63 繞回去。
+// 據點損傷的形狀：苦戰傷得多、輾壓傷得少——直到比值超過 63 繞回去。
 // **這個溢位是原版行為**，測試把它釘住，免得日後被當成 bug「修掉」。
 func TestCityDamageOverflow(t *testing.T) {
 	for _, tc := range []struct{ ratio, want int }{

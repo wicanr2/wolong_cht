@@ -119,7 +119,7 @@ type Faction struct {
 
 // City 是一個據點的完整狀態。
 type City struct {
-	// Name 是城市名稱（6 byte Big5，原始位元組）。北京、涿郡、武陵…
+	// Name 是據點名稱（6 byte Big5，原始位元組）。北京、涿郡、武陵…
 	Name string
 
 	// Owner 是**執行期**的所屬勢力（記錄 +0x01）。
@@ -236,7 +236,7 @@ type General struct {
 
 	// Tactic 是戰場行動腳本編號（記錄 +0x16，值域 0–7）。
 	// `BATTLE.DAT` 的段編號 ＝ 本值 × 4 ＋ 戰場類別（docs/re/11 §3.3）。
-	// 它與能力值單調對應：0 是呂布那型（平均武力 13.6），7 是純文官（1.5）。
+	// 它與能力值單調對應：0 是呂布那型（平均武術 13.6），7 是純文官（1.5）。
 	Tactic int
 
 	// LoyalToDeath 是記錄 +0x00 的 bit 4：**舊主已滅時寧可自刎也不改事二主**
@@ -297,7 +297,7 @@ type World struct {
 	// 存檔 round-trip、時鐘／壓縮，以及已有獨立證據的 1／2／3／4／5／6／7／8／9／10／11／12／13 handler（10 為訊息邊界、11／12 為 runtime marker 與延遲效果）。
 	events [eventQueueEntries]QueuedEvent
 
-	// disasterMarkers 是事件 11／12 在執行期寫入城市記錄 +0x15 的
+	// disasterMarkers 是事件 11／12 在執行期寫入據點記錄 +0x15 的
 	// 災害 marker。原版 sub_14269 會在該據點輪到時消耗這個 marker，
 	// 並把防災值／上昇值／生產力／城兵寫回 City；marker 本身是 runtime
 	// 欄位，事件 12 的清除事件到達後才歸零。這兩個陣列不序列化。
@@ -766,7 +766,7 @@ type Event struct {
 	ReleasedGenerals []int
 }
 
-// DisasterMarker 是事件 11／12 留在執行期城市記錄上的災害標記。
+// DisasterMarker 是事件 11／12 留在執行期據點記錄上的災害標記。
 //
 // 這不是存檔欄位，也不代表已解出原版物件動畫；呈現層只能把它當成
 // 「目前有一個待套用／仍在顯示中的災害狀態」來讀。Level 保留原版
@@ -1437,7 +1437,7 @@ func (w *World) tickCity(rng economy.Rand) ([]StrategyEvent, []TalkNotice) {
 
 // applyCityDisasterEffect 重現原版 sub_14269（IDA 線性位址 00014269）。
 //
-// marker 是事件 11／12 寫進城市 runtime record +0x15 的 byte：先從 +0x11
+// marker 是事件 11／12 寫進據點 runtime record +0x15 的 byte：先從 +0x11
 // 防災值扣 marker；若不足，差額再依原版的 byte／word 算術扣 +0x10 的
 // 上昇值存值、+0x0E 的生產力與 +0x13 的城兵。這裡保留生產力的 16 位元
 // 減法，不把未證實的「飽和為零」套到原版沒有夾住的那一欄。

@@ -163,7 +163,7 @@ func TestKnownOwnerDiscrepancies(t *testing.T) {
 	}
 }
 
-// 城市名稱要解得出來。
+// 據點名稱要解得出來。
 func TestCityNames(t *testing.T) {
 	w := load(t, 0)
 	want := map[int]string{0: "北京", 2: "涿郡"}
@@ -851,7 +851,7 @@ func TestEvent10ProducerWritesRawTalkPayload(t *testing.T) {
 	}
 }
 
-// 事件 11／12 的 handler 寫入城市 runtime 的 +0x15 marker；sub_14269
+// 事件 11／12 的 handler 寫入據點 runtime 的 +0x15 marker；sub_14269
 // 在後續據點輪轉才套用持久傷害。事件 12 的高 byte 與 Param 位址、延遲
 // 清除事件也要保留。
 func TestQueuedDisasterAnimationHandlers(t *testing.T) {
@@ -966,7 +966,7 @@ func TestDisasterMarkerReadOnlySnapshots(t *testing.T) {
 
 // 事件 11／12／13 的通知索引是原版 handler 直接傳入 sub_18810 的值：
 // #70 暴風雨、#71 大火、#72 暴動、#51 君主赤字警告。state 只回傳索引
-// 與城市目標，文字與 Big5 展開留給呈現層。
+// 與據點目標，文字與 Big5 展開留給呈現層。
 func TestQueuedTalkNotices(t *testing.T) {
 	w := load(t, 0)
 	player := 0
@@ -1077,7 +1077,7 @@ func TestDisasterObjectAnimationTiming(t *testing.T) {
 		t.Fatalf("16 次 map update 後應畫 phase=2：%#v", objects)
 	}
 
-	// sub_12438 會清掉同城市的所有 runtime object，與 marker 清除同步。
+	// sub_12438 會清掉同據點的所有 runtime object，與 marker 清除同步。
 	w.events[1] = QueuedEvent{Code: 0x000C, Param: runtimeCityBase}
 	w.eventCursor, w.eventDelay = eventQueueEntrySize, 1
 	w.dispatchQueuedEvent(&Event{})
