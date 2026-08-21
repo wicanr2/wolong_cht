@@ -108,7 +108,7 @@
 | 遷都之後說什麼 | [`64-capital-relocation-report.md`](64-capital-relocation-report.md) | 已實作並有單測；他國遷都要有外交官才報得回來 |
 | 退到畫面外的兵算生還 | [`65-retreated-soldiers-survive.md`](65-retreated-soldiers-survive.md) | 已實作並有單測 |
 | 打壞的城壁與門要在畫面上換掉 | [`66-broken-walls-repaint.md`](66-broken-walls-repaint.md) | 已實作並有單測；繪圖層跟著規則層的圖塊版本走 |
-| 結局的播放 | [`67-ending-playback.md`](67-ending-playback.md) | 已實作並有單測；十二幕 ＋ 逐字文字 ＋ 十七階淡入淡出。⚠ **第 2–11 幕的節拍與原版不符**（每幕快約 10 秒，[`67`](67-ending-playback.md) §7.1）|
+| 結局的播放 | [`67-ending-playback.md`](67-ending-playback.md) | 已實作並有單測；十二幕 ＋ 逐字文字 ＋ 十七階淡入淡出。⚠ **第 2–11 幕的節拍與原版不符**（每幕快約 10 秒，[`67`](67-ending-playback.md) §8）|
 | 倒地動畫 | [`68-death-animation.md`](68-death-animation.md) | 已實作並有單測；四幀、三個兵種組、後兩幀換第二張 |
 | 世界指紋（**remake 設施，無原版出處**）| [`69-world-fingerprint.md`](69-world-fingerprint.md) | 已實作並有單測（含 15 欄的正對照）；決定性迴歸 ＋ Android 里程碑 A 的判準 |
 | 手機版的底色與外框取自原版 | [`70-phone-chrome.md`](70-phone-chrome.md) | 已實作並有單測；顏色與外框與桌面版共用 `internal/ui/chrome` |

@@ -70,7 +70,7 @@
 在[`30`](30-ground-planes-implemented.md) 才修掉。
 **這一份不宣稱攻城已經可玩。**
 
-## 5. 未解
+## 5. 當時的未解，以及後來的答案
 
 ### 5.1 ⭐ 登城機制：`sub_1B1B1` 已經讀了一半，缺的是那兩張地面高度圖
 
@@ -109,12 +109,15 @@
 ⇒ **登城 ＝ 先用純 Z 爬到高平面，再在高平面上水平走。**
 這同時解釋了「騎馬爬不上城牆」——**限制在純 Z 那一支，不在水平跨格**。
 
-⚠ **還沒解的是那兩張地面高度圖本身**（`es:[di+0x7000]` 與
-`es:[di+0x8000]`，各 4,096 格、低 3 位是地面層）：誰填的、
-高平面的值怎麼來的。沒有這一段就不知道「爬到哪一層算上牆」，
-所以本輪**沒有實作**——試著照低平面那條規則改，會讓
-`TestCavalryCannotClimb` 與 `TestFacingOnlyUpdatesOnSuccessfulMove` 同時翻掉，
-而那兩條測試釘的是既有 RE 的結論。**訂正比新結論需要更硬的證據。**
+那兩張地面高度圖（`es:[di+0x7000]` 與 `es:[di+0x8000]`，各 4,096 格、
+低 3 位是地面層）當時擋住了實作——不知道誰填的，就不知道「爬到哪一層算上牆」。
+**同一天解掉了**，見 §5.2 與 [`../re/63`](../re/63-ground-plane-map.md)；
+規則層照著重做並有迴歸測試（[`30`](30-ground-planes-implemented.md)）。
+
+> 當時試著照低平面那條規則直接改，會讓 `TestCavalryCannotClimb` 與
+> `TestFacingOnlyUpdatesOnSuccessfulMove` 同時翻掉，而那兩條測試釘的是
+> 既有 RE 的結論。**訂正比新結論需要更硬的證據**——正確的做法是先去解
+> 那兩張圖，不是改測試。
 
 ### 5.2 ⭐ 那兩張地面高度圖：在另一個段，已經解出來了
 
@@ -173,3 +176,8 @@
 用 `battle.Parse` 讀三個原版檔、`NewFieldFromTiles(lib.Tiles(n), lib.Heights(n), lib.GateX(n))`
 建戰場、`LoadFormations` 讀陣形表，雙方 `Deploy` ＋ `Place` 之後
 每幀累加各實體的 `Durability` 看有沒有變。
+
+這一份是歷史量測，當時的未解都已由 [`../re/63`](../re/63-ground-plane-map.md)
+與 [`30`](30-ground-planes-implemented.md) 收掉，沒有現行缺口。
+
+<!-- 缺口：無 -->

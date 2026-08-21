@@ -190,8 +190,10 @@ def collect(path, rel):
                 solved_para = False
             elif SOLVED.search(body):
                 solved_para = True
+            # `![說明](../images/x.png)` 去掉連結之後剩「!說明」，
+            # 看起來像一句話。圖片行不會是缺口。
             if len(body) >= 8 and not solved_para \
-                    and not body.startswith((">", "#", "```")) \
+                    and not body.startswith((">", "#", "```", "![")) \
                     and not SOLVED.search(body) and not META.search(body) \
                     and (bullet or section not in lead_done):
                 lead_done.add(section)

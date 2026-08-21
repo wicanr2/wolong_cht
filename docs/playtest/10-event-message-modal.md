@@ -35,13 +35,17 @@ wlgame -orig workplace/orig/dosv -font workplace/eten \
   實際 ASCII／CJK 字寬與五行／16 px 分頁，TALK composite 另使用原版肖像／場景位置。
   這仍不等於未定位事件的原版肖像、逐頁動畫、音效或完整 formatter parity。
 
-## 3. 證據與未完成項
+## 3. 證據
 
 直接證據為 `KI.EXE.asm` 的 IDA 線性位址 `0001237E`、`000134A6`、`000134B1`、
 `00013507`，以及唯讀 `TALK.DAT`；完整輸入雜湊、工具版本與推論等級記在
-[`RESEARCH-LOG.md`](../../RESEARCH-LOG.md)。事件 10 的 raw consumer、事件 6／7
-次要 TALK raw 條件／索引與災害物件 timer 已在 2026-08-10 接入；事件 10 producer
-仍未定位，事件 6 #72 的缺失 formatter payload 維持 fail-closed，原版／remake
-同狀態畫面對拍仍是剩餘驗收項。事件 10 的受控 raw producer 與事件 6／7 的 raw
-formatter word 邊界已補上；事件 10 自然 producer 仍只有負證據，不能把受控注入口
-寫成原版劇本來源。
+[`RESEARCH-LOG.md`](../../RESEARCH-LOG.md)。
+事件 10 的 raw consumer、事件 6／7 次要 TALK raw 條件／索引與災害物件 timer
+已在 2026-08-10 接入；事件 10 的受控 raw producer 與事件 6／7 的 raw
+formatter word 邊界也已補上。
+
+### 3.1 未完成項
+
+- 事件 10 producer 仍未定位。**只有負證據**，不能把受控注入口寫成原版劇本來源。
+- 事件 6 #72 的缺失 formatter payload 維持 fail-closed。
+- 原版／remake 同狀態畫面對拍仍是剩餘驗收項。

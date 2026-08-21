@@ -147,13 +147,13 @@ D7OPEN  .EXE   KI      .EXE   D7END   .EXE   D7OVER  .EXE
 > 但**不要把 `D7OPEN` 的結論直接外推到 `KI`**（§8 第 9 條），
 > 每個結論要標明是在哪個 binary 上驗的。
 
-### 2.2 編譯器：三支確定，四支未解
+### 2.2 編譯器：三支是 Borland，四支不確定
 
 `LOGO.EXE`／`YNFONT.EXE`／`INSTALL.EXE` 都有
 `Borland C++ - Copyright 1991 Borland Intl.` banner。
 **`KI.EXE`、`STR.EXE`、`D7OPEN/END/OVER.EXE` 沒有這個 banner**，
 也沒有 PKLITE／LZEXE 指紋。可能是組語寫的、或編譯選項不同。
-**未解，不要憑「同一份專案應該用同一個編譯器」外推。**
+不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。**
 
 ### 2.3 `SINARIO.DAT` 與 `SAVE.DAT` 同一結構（強證據）
 
@@ -317,9 +317,11 @@ INSTALL.MAP  30,831    INSTALL.SCH  11,041
 （第 3.5 節「サウンド」，§2）。那就是 PC-98 標準的 **YM2203／OPN**——
 FM 3 聲 ＋ SSG 3 聲，埠 `0x188`／`0x18A`。
 
-**DOS/V 側未解。** `dosbox.conf` 開了 `sb16` 與 `oplmode=auto`，
-但那是打包者的設定，不是原版需求。
-候選：AdLib／OPL2（`0x388`／`0x389`）、SB（`0x220` 族）、PC speaker。
+⭐ **DOS/V 側已解：是 OPL3（YMF262）**，六個聲軌各佔一組 4-operator 通道
+（[`../re/57`](../re/57-opl3-register-map.md)，晶片型號 confirmed）。
+偵查當下只列得出候選（AdLib／OPL2、SB、PC speaker），
+因為 `dosbox.conf` 的 `sb16`／`oplmode=auto` 是打包者的設定不是原版需求——
+**答案在 `YNSOUND.COM` 的 register 寫入，不在打包設定裡。**
 
 > **⚠ 這是「不要跨檔案外推」（§8 第 9 條）的教科書案例。**
 > 兩版的 `YNSOUND.COM` 大小不同（3,463 B ↔ 4,553 B），

@@ -87,7 +87,9 @@ remake 一直有兩個空轉的欄位：勢力的 `ReliefSite`（求援）與 `L
 
 ## 6. 未解
 
-| 項目 | 現況 |
-|---|---|
-| `sub_147BB` 的 `0x8000` 分支 | 位元 1 已解 ＝「下一步要重算」（[`../re/64`](../re/64-corps-arrival-state-machine.md) §6），remake 用 `March` 重算整條路徑，行為等價。剩下那條「道路表高位元 ＋ Stage ≥ 10 → `sub_1291A`」的觸發條件沒對上 |
-| `sub_1487B` | AI 編成後挑第一個目標用的相鄰格選擇，未逐條解；remake 沿用既有的 `nearestFactionCity` |
+（無。原先掛在這裡的兩條都已收掉：`sub_147BB` 的 `0x8000` 分支由
+[`43`](43-rout-on-blocked-return.md) 完整實作並驗過，`sub_1487B` 的
+演算法在 [`46`](46-post-battle-retreat.md) §2、消費端在
+[`47`](47-city-fall-corps-redirect.md) §3。）
+
+<!-- 缺口：無 -->

@@ -493,25 +493,22 @@ remake 只要把兩條規則各自實作對，這個戰法會自己長出來。
 被擒的武將改隸勝方，舊主記在武將記錄 `+0x1D`；
 月結時判定是否歸降，成功就清掉那個欄位。**「不事二主」是一個位元。**
 
-## 5. 尚待補完的戰術分支與對拍
+## 5. 戰術層與機器碼的對應
 
-戰術層不再是空白：`sub_19FA0` 的入口、腳本、戰場資料模型、核心移動／一般近戰／
-大將命中／一般投射物命中與隊長退卻接縫，已在 [`docs/re/11`](../re/11-tactical-battle.md)
-與 `internal/rules/tactical` 建立可測試切片。日文說明書第 11 章仍只作玩家視角 oracle，
-不能代替機器碼公式。
+`sub_19FA0` 的入口、腳本、戰場資料模型、核心移動／一般近戰／大將命中／
+一般投射物命中與隊長退卻接縫，都在 [`docs/re/11`](../re/11-tactical-battle.md)
+與 `internal/rules/tactical` 有可測試切片。
+⚠ 日文說明書第 11 章只是玩家視角的 oracle，**不能代替機器碼公式**。
 
-正常真實攻城的狀態層戰後結算已由 `TestNormalScenarioTacticalBattleTerminates` 通過，
-正常 GUI 完成戰鬥後回戰略層也有 `wlgame-ai-postbattle.png` 證據；尚待補完的是 GUI 戰後勝負／傷亡訊息、
-`sub_1AD7F` 使用 `CH=0x20` 的另一個攻擊分支已接入特殊效果測試；`+0x1E` 的初始化／移動／交換寫入端、
-鎖敵條件與 `sub_1AC55` 的 raw 平面比較已確認並接成 `PlaneHigh`，尚待補完的是
-完整投射物／動畫對拍、
-少數戰術腳本／BATTLE 資料欄位，以及原版與 remake 同狀態的畫面／狀態對拍。
+已接上的：正常真實攻城的狀態層戰後結算（`TestNormalScenarioTacticalBattleTerminates`）、
+正常 GUI 完成戰鬥後回戰略層（`wlgame-ai-postbattle.png`）、
+`sub_1AD7F` 的 `CH=0x20` 攻擊分支與特殊效果、`+0x1E` 的初始化／移動／交換寫入端、
+鎖敵條件與 `sub_1AC55` 的 raw 平面比較（接成 `PlaneHigh`）、
+`sub_1B941` 的「先命中、再移動、後威力更新」順序，
+以及普通箭的 `sub_1AD2D`／`sub_1ECE0` 初始公式與 RNG。
 
-投射物目前另有可重跑的 raw 狀態切片：`sub_1B941` 的先命中、再移動、後威力更新
-順序已接到 `internal/rules/tactical`；`Battle.Projectiles()` 讓畫面層在 248×192
-原生戰場內顯示側別／特殊效果標記。這個標記是「尚未解出原版投射物圖形」的觀測
-接縫，不是 `BATTLE.SCH` parity；普通箭初始 `sub_1AD2D`／`sub_1ECE0` 公式與 RNG 已接入，
-但完整投射物圖形、動畫與同狀態畫面仍未完成。
+`Battle.Projectiles()` 讓畫面層在 248×192 原生戰場內顯示側別／特殊效果標記。
+**那個標記是觀測接縫，不是 `BATTLE.SCH` parity**——原版的投射物圖形還沒解出來。
 
 戰術 AI 的腳本已經解開，見 [`docs/re/11`](../re/11-tactical-battle.md)：
 `BATTLE.DAT` 是 32 段 × 256 B 的腳本，段編號 ＝ 武將 `+0x16` × 4 ＋ 戰場類別，
@@ -636,4 +633,8 @@ cmp byte ptr [si+4], 12h / jbe .skipZ    ; ★ 大將與騎馬（≤18）跳過 
 
 | 缺口 | 下手點 |
 |---|---|
+| GUI 的戰後勝負／傷亡訊息 | 狀態層已結算，畫面上還沒顯示 |
+| 原版投射物的圖形與動畫 | `BATTLE.SCH` 裡的圖形沒對出來，目前畫的是側別標記 |
+| 少數戰術腳本與 `BATTLE` 資料欄位 | 十九個指令已全讀，剩的是資料側的殘留欄位 |
+| 原版／remake 同狀態的畫面對拍 | 需要有效時序的原版存檔或可重建的同狀態 oracle |
 | 重算路徑的時機 | 原版只在命令生效時算一次；remake 的兵每幀都可能被別人擋住，所以改成**每 30 幀可重算一次**（`replanInterval`，`internal/rules/tactical/soldier.go`）。這是 **remake 差異**，不是原版行為——原版被擋住之後怎麼處理沒有讀 |
