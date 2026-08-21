@@ -497,8 +497,28 @@ grep `.go`，實際踩到六筆）。
 ⚠ 所以 527 → 492 的 −35 **不是純粹的減少**：清掉的更多，同時補回 17 列。
 **同一次修正讓數字同時變小與變大**，只看總數會互相抵銷。
 
-⚠ **其餘五個目錄（spec 135、playtest 62、mechanics 42、formats 34、
-reference 17）還沒逐列核**，同樣的形狀應該還在裡面。
+### 6.5 2026-08-21 九個目錄全部逐列核完：492 → 431
+
+第十三輪只核了 `docs/re/`。這一輪把其餘目錄也核完
+（`spec` 135→118、`playtest` 62→49、`mechanics` 42→24、`formats` 34→33、
+`reference` 17→7、`release` 13→11）。清單在 [`WORKLIST.md`](WORKLIST.md) 第十四輪。
+四個形狀值得記成規則：
+
+1. ⚠ **把正確的實作標成 remake 差異，比漏標更難發現。**
+   `spec/49` 與 `playtest/35` 都寫「遷都原版是地圖選點（`sub_17400`），
+   remake 用一覽表是差異」，而 `sub_17400` 是**據點一覽**的呼叫端
+   （`re/26` §4）——remake 的做法與原版相同。
+   **沒有人會去質疑一條「我們知道自己不一樣」的登記。**
+2. **未解表混著三種東西**：真缺口、刻意的 remake 差異、已定案的決定。
+   後兩種被算成缺口，總表因此虛胖。分出去的辦法是開一個標題含「已定案」
+   的子小節——`re_open_questions.py` 的 `SUB_STOP` 會把它靜音。
+3. **歷史快照文件會一直供應假缺口。** `playtest/23`／`28`、`reference/04`
+   記的是當時的判斷，而它們的「未解」小節照樣被當成現行缺口。
+   ⭐ **被推翻的結論如果寫在標題上更難發現**——標題會被當成目錄用
+   （`playtest/23` §4.1「不是座標錯，是收不到按鍵」）。
+4. **工具的旗標要一路帶到底。** `muted`（子標題說「已解」）只擋了散文，
+   沒擋表格列，於是 `mechanics/80` 的「已解的」整張表都進了缺口總表。
+   **在一半的路徑上生效的過濾器，比沒有過濾器更難察覺。**
 
 ## 7. Worklist（狀態的單一真相來源）
 
@@ -559,7 +579,7 @@ reference 17）還沒逐列核**，同樣的形狀應該還在裡面。
 | ⭐ **結局的兩則訊息**：`#0x4B` 捷報（不帶肖像）＋ 組編號 `0x197` 由君主說 | [`spec/30`](docs/spec/30-victory.md)、[`re/59`](docs/re/59-game-over-exit-codes.md) §2 |
 | ⭐ **結局的全文**（松崗版 200 字 10 行、日文原版 180 字 9 行）燒在 `D7END.EXE` 的資料段，不在 `TALK.DAT` 裡；播放順序與節拍也解了 | [`re/70`](docs/re/70-d7end-ending-player.md) |
 | ⭐ **過場圖 `OPEN_S*`／`END_S*` 的格式**：外層是 `MMAP.MAP` 那一種 RLE，內層 640×400 四平面、上下兩半各 200 列、一半之內平面優先，一幕配一組色盤 | [`formats/09`](docs/formats/09-cutscene-images.md) |
-| ⭐ **結局會播了**：十二幕 ＋ 逐字文字 ＋ 十七階淡入淡出，第一幕是三塊合成。⚠ 第 2–11 幕的節拍與原版不符（[`spec/67`](docs/spec/67-ending-playback.md) §7.1）| [`spec/67`](docs/spec/67-ending-playback.md) |
+| ⭐ **結局會播了**：十二幕 ＋ 逐字文字 ＋ 十七階淡入淡出，第一幕是三塊合成。⚠ 第 2–11 幕的節拍與原版不符（[`spec/67`](docs/spec/67-ending-playback.md) §8）| [`spec/67`](docs/spec/67-ending-playback.md) |
 | ⭐ **倒地動畫**：四幀、圖號 84 ＋ 側 ×90 ＋ 兵種組 ×2 ＋ 後兩幀 +1；那四幀不擋路也不算場上人數 | [`spec/68`](docs/spec/68-death-animation.md) |
 | ⭐ **世界指紋**：`World.Fingerprint()` 把整個世界縮成一個值，同一個 seed 跑兩次要相同；**15 欄的正對照擋「漏掉某個欄位」** | [`spec/69`](docs/spec/69-world-fingerprint.md) |
 | 顯示格表頭 `+1`（含物件的高度）與 `+3`（只有地形）的分工 | [`re/68`](docs/re/68-t3-frontier-functions.md) §2.1 |
@@ -578,7 +598,7 @@ INT 33 的範圍變成整個世界（一個主機像素 ≈ 9.6 個遊戲像素�
 | # | 工作 | 為什麼現在做 | 下手點 |
 |---:|---|---|---|
 | **1** | **兩份規格的真缺口** | 六份「未收尾」裡有四份是登記不實（2026-08-21 稽核，明細在 §6.1）。真的還缺的只有兩件：`32` 的**戰場區右鍵熱區層**（原版熱區 `0x1D` 右鍵提前收掉門強度條，remake 的戰場層完全沒有右鍵處理）、`35` 的**22 勢力選擇視窗版面**與**熱區 `0x16`（點地圖）原版做什麼** | `cmd/wlgame/battle.go` 沒有 `MouseButtonRight` 分支；`0x16` 要讀 `sub_15A3A` 那一帶 |
-| **2** | **結局第 2–11 幕的節拍** | 已知與原版不符且**規格已經寫好**（[`spec/67`](docs/spec/67-ending-playback.md) §7.1）：原版是「停 `0x32` → 淡入 → 停 `0x320` → 淡出」，remake 是「淡入 → 停 `0x32` → 淡出」，每幕快約 10 秒。改之前要先實跑量 18.2 Hz 這個前提 | `cmd/wlgame/ending.go` 的 `endingPhase` 狀態機；`endingFinalHoldUnits` 目前宣告了沒人用 |
+| **2** | **結局第 2–11 幕的節拍** | 已知與原版不符且**規格已經寫好**（[`spec/67`](docs/spec/67-ending-playback.md) §8）：原版是「停 `0x32` → 淡入 → 停 `0x320` → 淡出」，remake 是「淡入 → 停 `0x32` → 淡出」，每幕快約 10 秒。改之前要先實跑量 18.2 Hz 這個前提 | `cmd/wlgame/ending.go` 的 `endingPhase` 狀態機；`endingFinalHoldUnits` 目前宣告了沒人用 |
 | **3** | **Windows／macOS 原生 GUI 實機驗收** | M8 唯一的閘。⭐ **三平台已重新對齊成一致的 `20260821` 批次**（[`release/03`](docs/release/03-three-platform-20260821.md)，含 Android APK），Linux 有 GUI smoke，另兩個平台只驗了檔頭 | 需要實機或 VM，不是 Docker 能代的 |
 | **4** | **Android：實機驗收與 release signing** | M9。⭐ **里程碑 A–G 都過了**：模擬器與桌面在 frame 1／60／120 的指紋完全相同；主畫面、進言、一覽、軍團編成、戰場、存讀檔、事件訊息、擋住世界的三個決定與 SAF 匯入都可用（[`docs/mobile/android-ux.md`](docs/mobile/android-ux.md)）| 剩下的兩件都不是程式：**實機驗收** ⛔ 沒有裝置（模擬器驗不到觸控手感、真實 GPU、高 DPI 上的點陣字可讀性）、**release signing** 要先決定金鑰怎麼保管。另有三個小缺口：外交提案的「指定金額」要數值輸入器、SAF 選資料夾之後的複製流程沒有自動驗、**`.so` 的 16 KB 對齊只驗到 `readelf` 那一層**（沒有 16 KB page size 的裝置或 AVD 實際載過，[`release/03`](docs/release/03-three-platform-20260821.md) §4）|
 
