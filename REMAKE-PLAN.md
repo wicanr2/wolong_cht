@@ -69,8 +69,8 @@ IDA `CS:08A4` handler 表已證實 `\4` 是玩家軍師、`\6` 是不可見欄�
 
 | ID | Deliverable | Evidence needed | Acceptance gate | Status |
 |---|---|---|---|---|
-| M7-A | 60 筆 `translations/corrections.json` | `TALK.DAT` 兩版索引、IDA 槽位索引證據、逐句內容對照 | `talkdat.py correct`／`verify` + selftest + `WrapLines`／Xvfb 抽樣 | 60 筆已可重跑套用並接入 `wlgame`；#0–#1021 第一輪已讀；remake 實測行寬／hard line／五行分頁／尾空行已測，未定位 formatter 與逐句畫面抽樣未完 |
-| M7-B | 1,022 則文意層校訂 | 日文／繁中逐句對照 | 變數、名詞、漏譯、刪節與決策可回查 | 第一輪逐句讀取完成；60 筆 runtime 產出已鎖定，硬換行／行寬、formatter 與畫面 parity 進行中 |
+| M7-A | 60 筆 `translations/corrections.json` | `TALK.DAT` 兩版索引、IDA 槽位索引證據、逐句內容對照 | `talkdat.py correct`／`verify` + selftest + `WrapLines`／Xvfb 抽樣 | 60 筆已可重跑套用並接入 `wlgame`；**#0–#1021 兩批逐句讀完**（`docs/reference/02` §11／§12）；remake 實測行寬／hard line／五行分頁／尾空行已測；**校訂後的畫面抽樣已做**（18 則，`docs/playtest/41`）。未定位 formatter 仍未完 |
+| M7-B | 1,022 則文意層校訂 | 日文／繁中逐句對照 | 變數、名詞、漏譯、刪節與決策可回查 | **兩批逐句讀取完成**；60 筆 runtime 產出已鎖定；**排版 parity 全量量過**（`docs/playtest/32`，單行超寬 0 行）、**畫面抽樣已做**（`docs/playtest/41`）。缺的是**兩版並排的畫面對照** |
 | M8-A | 目標平台建置 | `tools/release.sh` 等價 Docker 矩陣、PE/ELF/Mach-O 檢查、packaged Linux `-shot` | 交叉編譯目標正確、產物非同一平台假成功、發行目錄可啟動 | Linux／Windows／Darwin 純 Go 產物、Linux 原生本體與封裝 smoke 通過；Windows／macOS GUI runtime 未實機驗證 |
 | M8-B | 正常玩家路徑與畫面 | PC-98 固定狀態 oracle、event3 raw fixture、有效時鐘的原版／AI 存檔 | 無 debug hook、同狀態截圖／狀態對拍 | 編成／行軍／城兵攻城／敵方 AI 遭遇選單／戰術畫面、攻擊命令、結果報告與 GUI 回戰略接縫已完成；事件 3 raw fixture→前置 TALK→三選一→3×6 實際點擊→消像短路徑已完成；DOS/V 96×64 內框、3×6 button glyph、`KI.EXE` 16×16 hardware cursor 已解碼接線；⭐ **同狀態逐區對拍已完成**（主畫面五區逐像素相同、戰場九區裡六區；`docs/playtest/37`／`40`）；仍缺其他事件物件與跨平台實機 |
 | M8-C | 發行隔離 | deny-list、可寫 save overlay | 原始資產零命中、解包 smoke | deny-list／overlay smoke 已通過；完整目標平台矩陣未完成 |
