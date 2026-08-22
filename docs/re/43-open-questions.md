@@ -23,8 +23,8 @@
 | 程式碼理解 | 177 | 170 | 7 | 0 |
 | 驗收 | 51 | 41 | 10 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 142 | 131 | 11 | 0 |
-| **合計** | **433** | 399 | 34 | 0 |
+| 其他 | 141 | 130 | 11 | 0 |
+| **合計** | **432** | 398 | 34 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -36,7 +36,7 @@
 | `docs/formats/` | 33 |
 | `docs/mechanics/` | 24 |
 | `docs/mobile/` | 12 |
-| `docs/release/` | 12 |
+| `docs/release/` | 11 |
 | `docs/reference/` | 6 |
 | `docs/promo/` | 2 |
 
@@ -356,7 +356,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（142 條）
+## 2.6 其他（141 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -378,7 +378,6 @@
 | [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | linux/arm64 的本體 | 要在 arm64 的 Linux 上建（Ebiten 的 cgo 沒有交叉工具鏈） | 靜態 |
 | [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | Windows 的 smoke | 同第一項 | 靜態 |
 | [`release/02-three-platform-20260820.md`](../release/02-three-platform-20260820.md) | `verification/` 的截圖不在管線裡 | `promote` 每次都會清掉，要另外跑 `tools/release_smoke.sh` 再 `release_all_fs.py refresh` | 實測 |
-| [`release/03-three-platform-20260821.md`](../release/03-three-platform-20260821.md) | §4 的 16 KB 對齊做法**仍然是現行做法**，`20260822` 的 APK 也照它建、照它驗。 | （未解小節內文） | 靜態 |
 | [`release/04-three-platform-20260822.md`](../release/04-three-platform-20260822.md) | Windows／macOS 原生 GUI 實機驗收 | 沒有硬體，Docker 代不了 | 靜態 |
 | [`release/04-three-platform-20260822.md`](../release/04-three-platform-20260822.md) | Android 實機驗收 | 只有模擬器；16 KB page size 的裝置也還沒實際載過 | 靜態 |
 | [`release/04-three-platform-20260822.md`](../release/04-three-platform-20260822.md) | Android 正式簽章 | 還沒決定 keystore 怎麼保管 | 靜態 |
