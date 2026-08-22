@@ -28,6 +28,19 @@ WORK = DIST / ".work"
 RELEASE_VERSION = os.environ.get("WOLONG_RELEASE_VERSION", "wolong-remake-20260812")
 # RELEASE_STAMP 是版本字串尾端的日期，檔名用它。
 RELEASE_STAMP = RELEASE_VERSION.rsplit("-", 1)[-1]
+# ⭐ **內含遊戲檔案的完整版**（docs/spec/72）。預設開啟——使用者裁定
+# 2026-08-22：dist-all 就是四平台完整版。設 `WOLONG_BUNDLE_DATA=0`
+# 回到「不含原版資產、可散布」的舊行為。
+#
+# ⚠ 開著的時候 dist-all **不可外流**：裡面有松崗 DOS/V 的 69 個原版檔
+# 與倚天字型。`DO-NOT-DISTRIBUTE.md` 與 manifest 的 `distributable: false`
+# 是給人與機器各一份的標記。
+BUNDLE_DATA = os.environ.get("WOLONG_BUNDLE_DATA", "1") != "0"
+ORIG_SRC = REPO / "workplace" / "orig" / "dosv"
+FONT_SRC = REPO / "workplace" / "eten"
+# 包內的目錄名，與 cmd/wlgame 的 bundledOrigDir／bundledFontDir 對應。
+BUNDLED_ORIG = "gamedata"
+BUNDLED_FONT = "fonts"
 PROMO_FILES = (
     "wolong-remake-trailer.mp4",
     "wolong-remake-classic-revival.mp4",
@@ -61,16 +74,63 @@ def copy_tree(src: Path, dst: Path) -> None:
     shutil.copytree(src, dst)
 
 
+def template_vars() -> dict[str, str]:
+    """模板的代換表。
+
+    ⭐ **界線敘述由 `BUNDLE_DATA` 決定，不是手寫的。** 兩種批次的說明只差
+    這幾段；分成兩份模板的話，改一份忘了改另一份，就會出現一份說
+    「不含原版資產」的說明躺在含原版資產的包裡——而那正是最危險的錯誤方向。
+    """
+    if BUNDLE_DATA:
+        return {
+            "@RELEASE_VERSION@": RELEASE_VERSION,
+            "@ROOT_BOUNDARY@": (
+                "⛔ **這一批內含原版資產，不可外流**（見 `DO-NOT-DISTRIBUTE.md`）。"
+                "四個平台的完整包裡都有松崗 DOS/V 的 69 個原版檔與倚天點陣字，"
+                "解開就能玩，不必自備資料。\n\n"
+                "要一份可散布的：`WOLONG_BUNDLE_DATA=0 tools/release_all.sh <YYYYMMDD>`。"
+            ),
+            "@PKG_BOUNDARY@": (
+                "⛔ **此封裝內含原版資產，不可外流。** `gamedata/` 是松崗 DOS/V 的"
+                "原版資料，`fonts/` 是倚天點陣字；兩者都不得散布。"
+            ),
+            "@PKG_LAUNCH@": (
+                "解開之後直接跑，**不必帶任何旗標**——`gamedata/` 與 `fonts/`"
+                "就在執行檔旁邊：\n\n"
+                "```text\n./wlgame\n```\n\n"
+                "要換成別的資料目錄再明講 `-orig` 與 `-font`；"
+                "明講的旗標一律優先。"
+            ),
+        }
+    return {
+        "@RELEASE_VERSION@": RELEASE_VERSION,
+        "@ROOT_BOUNDARY@": (
+            "桌面包與 APK 都不含任何原版執行檔、資料、美術、音樂、字型或完整原版"
+            "文字表；玩家必須自行提供合法松崗 DOS/V 資料與字型。"
+        ),
+        "@PKG_BOUNDARY@": (
+            "此封裝只包含 remake 程式與公開的 `translations/corrections.json`。"
+            "**不包含**松崗 DOS/V 的執行檔、資料檔、圖像、音樂、完整 TALK 文字表"
+            "或倚天字型；請自行準備合法的松崗繁中版資料與中文字型。"
+        ),
+        "@PKG_LAUNCH@": (
+            "```text\n./wlgame -orig /path/to/songgang-cht -font /path/to/eten-fonts\n```\n\n"
+            "Windows：\n\n"
+            "```text\nwlgame.exe -orig C:\\path\\to\\songgang-cht -font C:\\path\\to\\eten-fonts\n```"
+        ),
+    }
+
+
 def write_template(template: str, dest: Path) -> None:
     source = REPO / "packaging" / "release" / template
     if not source.is_file():
         raise SystemExit(f"缺少說明模板：{source}")
     checked(dest)
     dest.parent.mkdir(parents=True, exist_ok=True)
-    dest.write_text(
-        source.read_text(encoding="utf-8").replace("@RELEASE_VERSION@", RELEASE_VERSION),
-        encoding="utf-8",
-    )
+    text = source.read_text(encoding="utf-8")
+    for key, value in template_vars().items():
+        text = text.replace(key, value)
+    dest.write_text(text, encoding="utf-8")
 
 
 def sha256(path: Path) -> str:
@@ -109,10 +169,58 @@ def package_dir(source: Path, target: Path) -> None:
                 archive.addfile(info)
 
 
+def copy_bundled_tree(src: Path, dst: Path) -> None:
+    """複製原版資料並**正規化權限**。
+
+    ⚠ `workplace/orig/` 整個是 `chmod a-w`（原版資產唯讀），而 `copytree`
+    連目錄的 mode 一起複製——於是 staging 目錄自己也變成不可寫，
+    收尾的 `shutil.rmtree(WORK)` 會在 `unlink` 時吃 `PermissionError`
+    （unlink 要的是**父目錄**的寫入權，不是檔案的）。
+
+    ⭐ 目錄放寬到 0755、檔案維持 0444：清得掉，而玩家拿到的資料仍然唯讀。
+    """
+    checked(dst)
+    if not src.is_dir():
+        raise SystemExit(f"缺少封裝輸入目錄：{src}")
+    dst.mkdir(parents=True, exist_ok=True)
+    # ⭐ **只收最上層、不收隱藏項**——與 `tools/android_build.sh` 的
+    # `cp "$ORIG_DIR"/*` 同一個檔案集。`workplace/orig/dosv` 底下有一個
+    # `.jsdos/`（js-dos 的 dosbox.conf），`copytree` 會把它一起帶走，
+    # 於是桌面包 73 個檔、APK 69 個。**兩條管線挑不同的集合，
+    # 之後任何「兩邊對不起來」的問題都會先被誤判成別的原因。**
+    n = 0
+    for entry in sorted(src.iterdir()):
+        if entry.name.startswith(".") or not entry.is_file():
+            continue
+        shutil.copy2(entry, dst / entry.name)
+        (dst / entry.name).chmod(0o444)
+        n += 1
+    if n == 0:
+        raise SystemExit(f"{src} 裡沒有可收的檔案")
+    dst.chmod(0o755)
+
+
+def bundled_trees() -> list[tuple[Path, str]]:
+    """完整包要另外收進去的兩棵樹：原版資料與點陣字。
+
+    ⚠ 只給**完整遊戲**的包用。`linux-arm64-tools` 只有 wlsim／wlshot，
+    塞 4.4 MB 進去只是讓包變大（docs/spec/72 §2）。
+    """
+    if not BUNDLE_DATA:
+        return []
+    if not (ORIG_SRC / "SINARIO.DAT").is_file():
+        raise SystemExit(f"要內嵌遊戲檔案卻找不到 {ORIG_SRC}/SINARIO.DAT")
+    trees = [(ORIG_SRC, BUNDLED_ORIG)]
+    if FONT_SRC.is_dir():
+        trees.append((FONT_SRC, BUNDLED_FONT))
+    return trees
+
+
 def package_stage(
     name: str,
     files: list[tuple[str, str, bool]],
     directories: list[tuple[str, str]] | None = None,
+    extra_trees: list[tuple[Path, str]] | None = None,
 ) -> None:
     stage = WORK / "stage" / name
     if stage.exists():
@@ -123,6 +231,8 @@ def package_stage(
         copy_file(WORK / "raw" / src, stage / relative, executable)
     for src, relative in directories or []:
         copy_tree(WORK / "raw" / src, stage / relative)
+    for src, relative in extra_trees or []:
+        copy_bundled_tree(src, stage / relative)
     write_hashes(stage)
     package_dir(stage, DIST / "packages" / f"{name}.tar.gz")
 
@@ -134,7 +244,7 @@ def prepare() -> None:
         )
     DIST.mkdir(parents=True, exist_ok=True)
     WORK.mkdir(parents=True, exist_ok=True)
-    for rel in ("packages", "promo", "verification", "experimental/android"):
+    for rel in ("packages", "promo", "verification"):
         (DIST / rel).mkdir(parents=True, exist_ok=True)
 
 
@@ -155,6 +265,7 @@ def rebuild() -> None:
         "README.md",
         "SHA256SUMS.txt",
         "release-manifest.json",
+        "DO-NOT-DISTRIBUTE.md",
     }
     if DIST.exists():
         unknown = [
@@ -181,6 +292,10 @@ def rebuild() -> None:
 def android_apk_name(apk: Path) -> str:
     """APK 的發行檔名。
 
+    ⭐ Android 與另外三個平台**並列在 `packages/`**（docs/spec/72 §2）。
+    先前它在 `experimental/android/`，界線是簽章與驗收——那是驗收狀態，
+    寫在 README 就夠，用目錄分級表達會讓人以為它功能不完整。
+
     日期取**檔案本身的 mtime**，不是發行日期：APK 是另一條管線建的，
     重打發行時未必重建，掛上發行日期會讓檔名宣稱一個沒發生過的建置。
     """
@@ -199,13 +314,27 @@ def sync_android(apk: Path | None = None) -> str:
     if apk is None:
         apk = REPO / "android" / "app" / "build" / "outputs" / "apk" / "debug" / "app-debug.apk"
     name = android_apk_name(apk)
-    target = DIST / "experimental" / "android"
+    target = DIST / "packages"
     copy_file(apk, target / name)
-    for stale in target.glob("wolong-remake-android-debug-*.apk"):
+    for stale in target.glob("wolong-remake-android-*.apk"):
         if stale.name != name:
             checked(stale).unlink()
-    write_template("ANDROID-EXPERIMENTAL.md", target / "README.md")
     return name
+
+
+def write_distribution_marker() -> None:
+    """散布界線的標記。**兩個方向都要寫**，不能只在內嵌時放一個檔。
+
+    ⚠ 只在內嵌時建立、不內嵌時不刪除的話，一份舊的
+    `DO-NOT-DISTRIBUTE.md` 會留在一個其實乾淨的交付目錄裡，
+    而下一個人會照著它把一批可散布的東西當成機密收起來——
+    反過來也一樣危險。
+    """
+    marker = DIST / "DO-NOT-DISTRIBUTE.md"
+    if BUNDLE_DATA:
+        write_template("DO-NOT-DISTRIBUTE.md", marker)
+    elif marker.is_file():
+        checked(marker).unlink()
 
 
 def verify_manifest_paths(manifest: dict) -> None:
@@ -218,7 +347,7 @@ def verify_manifest_paths(manifest: dict) -> None:
     paths: list[str] = []
     for key in ("desktop_full_packages", "promo_videos"):
         paths.extend(manifest[key])
-    for key in ("linux_appimage", "linux_arm64_tools", "android_experimental"):
+    for key in ("linux_appimage", "linux_arm64_tools", "android_full_package"):
         paths.append(manifest[key])
     missing = [rel for rel in paths if not (DIST / rel).is_file()]
     if missing:
@@ -262,6 +391,7 @@ def stage() -> None:
             ("linux-amd64/wlshot", "wlshot", True),
         ],
         [("linux-amd64/translations", "translations")],
+        bundled_trees(),
     )
     package_stage(
         f"wolong-remake-windows-amd64-{RELEASE_STAMP}",
@@ -272,6 +402,7 @@ def stage() -> None:
             ("windows-amd64/wlshot.exe", "wlshot.exe", True),
         ],
         [("windows-amd64/translations", "translations")],
+        bundled_trees(),
     )
     package_stage(
         f"wolong-remake-macos-universal-{RELEASE_STAMP}",
@@ -289,6 +420,10 @@ def stage() -> None:
             ("darwin-amd64/translations", "darwin-amd64/translations"),
             ("darwin-arm64/translations", "darwin-arm64/translations"),
         ],
+        # ⚠ macOS 包是**兩個架構共用一份資料**：資料放包根，
+        # 而執行檔在 darwin-<arch>/ 底下——resolveDataDir 的
+        # `<exe 目錄>/../<名稱>` 那一條正好對上（docs/spec/72 §3）。
+        bundled_trees(),
     )
     package_stage(
         f"wolong-remake-linux-arm64-tools-{RELEASE_STAMP}",
@@ -322,6 +457,11 @@ def appdir() -> None:
         REPO / "translations" / "corrections.json",
         root / "usr" / "share" / "wolong-remake" / "translations" / "corrections.json",
     )
+    # ⭐ 資料放 `usr/share/wolong-remake/`：執行檔在 `usr/bin/`，
+    # resolveDataDir 的 `<exe 目錄>/../share/wolong-remake/<名稱>`
+    # 那一條正好對上（docs/spec/72 §3）。**這兩處要一起改**。
+    for src, name in bundled_trees():
+        copy_bundled_tree(src, root / "usr" / "share" / "wolong-remake" / name)
     write_template("README-RELEASE.md", root / "usr" / "share" / "doc" / "wolong-remake" / "README-RELEASE.md")
 
 
@@ -375,12 +515,14 @@ def finalise() -> None:
         "linux_appimage": f"packages/wolong-remake-linux-amd64-{RELEASE_STAMP}.AppImage",
         "linux_arm64_tools": f"packages/wolong-remake-linux-arm64-tools-{RELEASE_STAMP}.tar.gz",
         "promo_videos": [f"promo/{name}" for name in PROMO_FILES],
-        "android_experimental": f"experimental/android/{android_name}",
-        "original_assets_included": False,
+        "android_full_package": f"packages/{android_name}",
+        "original_assets_included": BUNDLE_DATA,
+        "distributable": not BUNDLE_DATA,
         "complete_original_talk_table_included": False,
         "native_gui_smoke": {"linux_amd64": True, "windows_amd64": False, "macos": False},
     }
     verify_manifest_paths(manifest)
+    write_distribution_marker()
     (DIST / "release-manifest.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
@@ -427,8 +569,12 @@ def refresh() -> None:
     # ⭐ APK 要重新同步再回填 manifest：Android 是另一條管線，
     # 重建之後 `refresh` 是唯一會跑到的一步。
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    manifest["android_experimental"] = f"experimental/android/{sync_android()}"
+    manifest.pop("android_experimental", None)
+    manifest["android_full_package"] = f"packages/{sync_android()}"
+    manifest["original_assets_included"] = BUNDLE_DATA
+    manifest["distributable"] = not BUNDLE_DATA
     verify_manifest_paths(manifest)
+    write_distribution_marker()
     manifest_path.write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )

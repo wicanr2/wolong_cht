@@ -2,6 +2,7 @@
 # Android smoke：起模擬器 → 裝 APK → 推原版資料 → 抓指紋與截圖。
 #
 #   tools/android_smoke.sh [輸出目錄]
+#   WOLONG_BUNDLED=1 tools/android_smoke.sh   # 驗內嵌資料的 APK
 #
 # 驗的是三件事（docs/mobile/android-plan.md §5–§6）：
 #
@@ -9,6 +10,11 @@
 #      而且與桌面同幀的指紋**一模一樣**（docs/spec/69）。
 #   G. 安裝、啟動、橫向鎖定不崩。
 #   UI. 截一張圖，肉眼看版面（模擬器驗不到真實 DPI 的可讀性）。
+#
+# ⭐ `WOLONG_BUNDLED=1` 換掉的是**入口那一段**（docs/spec/72 §4）：
+# 內嵌資料的 APK 在乾淨安裝之後應該**自己解開並直接進遊戲**，
+# 而不是停在匯入畫面。所以那一版驗的是「有沒有轉到 MainActivity」，
+# 而且**不推任何資料**——推了就分不出「內嵌生效」與「我剛推進去的」。
 #
 # ⚠ **smoke 期間不可以送任何觸控**。指紋只在「完全沒有輸入」時兩邊可比，
 # 點一下畫面就會改到選取狀態以外的東西（例如指令列），比出來的差異沒有意義。
@@ -28,6 +34,7 @@ docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
     --device /dev/kvm --memory 6g --cpus 2 --pids-limit 512 \
     -v "$REPO_ROOT:/src:ro" -v "$OUT_DIR:/out" \
     -e HOME=/tmp -e FP_FRAMES="${WOLONG_FP_FRAMES:-1,60,120}" \
+    -e BUNDLED="${WOLONG_BUNDLED:-0}" \
     -w /src "$IMAGE" bash -c '
 set -euo pipefail
 export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$PATH
@@ -55,6 +62,12 @@ adb shell settings put global hide_error_dialogs 1 || true
 #（`The application was killed due to context loss`）。
 # 那看起來像 app 崩潰，其實是驗收環境把它的畫布收走了。
 adb shell svc power stayon true || true
+# ⚠ `svc power stayon true` **擋不住這台機器上的睡眠**。實測指紋那一段
+# （約 24 秒）跑到一半螢幕就關了並上鎖，logcat 留下
+# `LockscreenSmartspaceController: Starting smartspace session for lockscreen`；
+# 之後叫醒只會回到**桌面**，截到的是 Android 的主畫面而不是遊戲——
+# 而那張圖是合法的 PNG、大小也正常，**看起來完全像截成功了**。
+adb shell settings put system screen_off_timeout 1800000 || true
 adb shell settings put secure lockscreen.disabled 1 || true
 adb shell input keyevent KEYCODE_WAKEUP || true
 
@@ -80,32 +93,76 @@ for i in 1 2 3; do
     sleep 10
 done
 
-# ⭐ 先在**沒有資料**的狀態下啟動一次：該看到匯入畫面，不是崩潰也不是黑屏。
-# 這一步驗的是里程碑 B 的入口（docs/mobile/android-plan.md §3）。
+# ⭐ 先在**沒有資料**的狀態下啟動一次。
+#   一般 APK：該看到匯入畫面（里程碑 B 的入口，docs/mobile/android-plan.md §3）。
+#   內嵌 APK：該**自己解開並轉進遊戲**（docs/spec/72 §4）。
 adb shell pm clear "$PKG" >/dev/null || true
 adb logcat -c
 adb shell am start -n "$PKG/.ImportActivity" >/dev/null
+if [ "$BUNDLED" = 1 ]; then
+    WANT=".MainActivity"
+else
+    WANT=".ImportActivity"
+fi
 # ⚠ 這台機器上第一次啟動要十幾秒才畫得出來（logcat 的 `Displayed` 是
 # +14s）。截太早只會拍到系統的啟動畫面，看起來像「匯入畫面沒出現」。
-for i in $(seq 1 20); do
-    adb logcat -d | grep -q "Displayed $PKG/.ImportActivity" && break
+for i in $(seq 1 30); do
+    adb logcat -d | grep -q "Displayed $PKG/$WANT" && break
     sleep 3
 done
+adb logcat -d | grep -q "Displayed $PKG/$WANT" || {
+    echo "⚠ 等不到 Displayed $PKG/$WANT" >&2
+    adb logcat -d | tail -40 >&2
+    exit 1
+}
 sleep 3
 # ⚠ 截圖前先叫醒螢幕。這台機器上一輪 smoke 要跑好幾分鐘，
 # 中途螢幕會睡著——**睡著時 screencap 拍到的是全黑**，
 # 看起來像「畫面沒畫出來」，實際上 logcat 明明寫著 Displayed。
 wake() {
-    adb shell input keyevent KEYCODE_WAKEUP >/dev/null 2>&1 || true
-    adb shell wm dismiss-keyguard >/dev/null 2>&1 || true
-    sleep 2
+    # ⚠ **等到真的醒著再拍。** `KEYCODE_WAKEUP` 是非同步的，送完就 screencap
+    # 有機會拍到還在睡的那一瞬間。`mWakefulness` 是唯一講實話的那個值。
+    # ⚠ **grep 要在裝置上跑，不要在 host 這一端接管線。**
+    # 這支腳本開著 `set -o pipefail`，而 `grep -q` 命中就提早結束，
+    # 上游的 `tr` 吃到 SIGPIPE（141）——**整條 pipeline 於是回非零，
+    # 明明命中了卻被判成沒命中**。實測 `mWakefulness=Awake`、
+    # Display State=ON，而這個檢查照樣報「叫不醒」（2026-08-22）。
+    for i in $(seq 1 8); do
+        adb shell input keyevent KEYCODE_WAKEUP >/dev/null 2>&1 || true
+        adb shell wm dismiss-keyguard >/dev/null 2>&1 || true
+        adb shell svc power stayon true >/dev/null 2>&1 || true
+        sleep 2
+        state=$(adb shell "dumpsys power | grep -m1 mWakefulness=" 2>/dev/null | tr -d "\r" || true)
+        case "$state" in *Awake*) return 0 ;; esac
+    done
+    echo "⚠ 螢幕叫不醒（最後看到：$state）" >&2
 }
-wake
+
+# ⭐ 全黑的截圖要當成失敗，不能寫進輸出目錄就算數。
+# 睡著時 `screencap` 回的是一張合法的 PNG，大小固定約 12 KB——
+# **它看起來完全像一張成功的截圖**，只有內容是空的。
+# 沒有輸出要長得像沒有輸出。
+shoot() {
+    want="${2:-}"
+    for i in 1 2 3 4; do
+        wake
+        # ⭐ **前景是誰要查**。螢幕睡過一輪再叫醒會停在桌面，
+        # 那張截圖不黑、大小也正常，只是拍到別的東西。
+        if [ -n "$want" ] &&
+           ! adb shell "dumpsys window | grep -m1 mCurrentFocus" 2>/dev/null |
+             tr -d "\r" | grep -q "$want"; then
+            adb shell am start -n "$want" >/dev/null 2>&1 || true
+            sleep 4
+        fi
+        adb exec-out screencap -p > "$1"
+        [ "$(wc -c < "$1")" -gt 102400 ] && return 0
+        echo "（第 $i 次截到全黑，重試）" >&2
+        sleep 3
+    done
+    echo "⚠ $1 連續四次都是全黑——這一張不是有效證據" >&2
+}
 adb shell dumpsys window | grep -E "mCurrentFocus|mFocusedApp" || true
-for i in 1 2 3; do
-    adb exec-out screencap -p > /out/import.png
-    sleep 2
-done
+shoot /out/import.png "$PKG/$WANT"
 adb logcat -d > /out/logcat-import.txt
 adb shell am force-stop "$PKG"
 
@@ -117,6 +174,21 @@ adb shell am force-stop "$PKG"
 STAGE=/data/local/tmp/wolong
 adb shell rm -rf "$STAGE"
 adb shell mkdir -p "$STAGE/orig" "$STAGE/eten"
+
+if [ "$BUNDLED" = 1 ]; then
+    # ⚠ **一個 byte 都不推。** 這一段要證明的正是「資料本來就在 APK 裡」，
+    # 推了就什麼都證明不了。
+    echo "── 內嵌版：不推資料，直接查 app 私有目錄 ──"
+    FILES=/data/data/$PKG/files
+    n=$(adb shell "run-as $PKG ls $FILES/orig 2>/dev/null" | tr -d "\r" | grep -c . || true)
+    echo "APK 自己解出來的 orig 檔數：$n"
+    [ "$n" -ge 60 ] || { echo "⚠ 只解出 $n 個檔，內嵌沒生效" >&2; exit 1; }
+    adb shell "run-as $PKG ls $FILES/orig" | tr -d "\r" | grep -q SINARIO.DAT || {
+        echo "⚠ 解出來的資料裡沒有 SINARIO.DAT" >&2; exit 1; }
+    # ⚠ `.part` 留下來代表改名那一步沒完成，資料可能是半套的。
+    adb shell "run-as $PKG ls $FILES" | tr -d "\r" | grep -q ".part" && {
+        echo "⚠ 留下了 .part，解包沒有跑完" >&2; exit 1; } || true
+else
 
 echo "── 推原版資料（唯讀來源，不進 APK）──"
 push_flat() {
@@ -134,6 +206,7 @@ push_flat /src/workplace/eten "$STAGE/eten"
 FILES=/data/data/$PKG/files
 adb shell "run-as $PKG sh -c \"mkdir -p $FILES/orig $FILES/eten && cp $STAGE/orig/* $FILES/orig/ && cp $STAGE/eten/* $FILES/eten/\""
 echo "orig 檔數：$(adb shell "run-as $PKG ls $FILES/orig" | wc -l)"
+fi
 
 echo "── 重新啟動，抓指紋 ──"
 adb shell am force-stop "$PKG"
@@ -147,8 +220,7 @@ for i in $(seq 1 60); do
     sleep 5
 done
 adb logcat -d > /out/logcat.txt
-wake
-adb exec-out screencap -p > /out/screen.png
+shoot /out/screen.png "$PKG/.MainActivity"
 grep -E "WOLONG_FP|FATAL|AndroidRuntime" /out/logcat.txt | tail -20 || true
 adb emu kill >/dev/null 2>&1 || true
 '

@@ -37,6 +37,18 @@ DISPLAY=:99 timeout 180 /tmp/app.AppImage --appimage-extract-and-run \$common -o
 mkdir -p /tmp/tarpkg && tar -xzf /pkg/${TARBALL} -C /tmp/tarpkg
 BIN=\$(find /tmp/tarpkg -name wlgame -type f | head -1)
 DISPLAY=:99 timeout 180 \"\$BIN\" \$common -shot /out/linux-tar-smoke-${STAMP}.png
+# ⭐ 內含遊戲檔案的完整包還要驗**不帶資料旗標**那條路（docs/spec/72 §3）：
+# 從包的根目錄跑起來，wlgame 要自己找到旁邊的 gamedata/ 與 fonts/。
+# ⚠ 這一條的失敗方式很安靜——載不到字型只會噴一行警告，畫面照常出來，
+# 中文變成方框。所以要**同時**看 exit code 與那一行警告。
+if [ -d /tmp/tarpkg/*/gamedata ] 2>/dev/null || ls -d /tmp/tarpkg/*/gamedata >/dev/null 2>&1; then
+    cd \"\$(dirname \"\$BIN\")\"
+    DISPLAY=:99 timeout 180 ./wlgame -direct -scenario 0 -player 0 -seed 7 \
+        -shot /out/bundled-nodflags-${STAMP}.png 2>/tmp/bundled.log
+    cat /tmp/bundled.log
+    grep -q '載不到' /tmp/bundled.log && { echo '⚠ 完整包裡的資料沒被自己找到' >&2; exit 1; }
+    echo '✓ 不帶任何資料旗標就跑得起來，字型也載到了'
+fi
 "
 
 echo "截圖 → dist-all/verification/{appimage-smoke,appimage-ending,linux-tar-smoke}-${STAMP}.png"

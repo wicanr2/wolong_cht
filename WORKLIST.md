@@ -142,6 +142,55 @@
 **第二層才是閘**：第一層只修這一次的成因，第二層擋的是下一次任何一個檔案漏掉。
 少一個檔不會讓任何一步失敗，這正是沉默的成功比失敗難發現。
 
+### 2026-08-22（下半）四平台完整版：`dist-all` 內含遊戲檔案
+
+使用者裁定：`dist-all` 就是四平台完整版，包裡要有原版資料。
+**我先指出這抵觸 `CLAUDE.md` §9 的「不得打包原版資產」，使用者重申後照做。**
+規格寫在 [`docs/spec/72`](docs/spec/72-bundled-game-data.md)（CONFORMED）。
+
+「commit」那半邊**沒有例外**：`dist-all/` 與 Android 建置時才臨時
+生出來的 assets 目錄都在 `.gitignore`（後者建完就刪，所以平常不存在），
+deny-list 掃的是 git 追蹤的檔案，一個原版 byte 都不會進版控。
+
+#### 做了什麼
+
+| 層 | 改動 |
+|---|---|
+| `cmd/wlgame` | `resolveDataDir`：明講的旗標一律優先，沒講才找 repo 路徑 → 執行檔旁 → AppImage 版面。照抄既有的 `bundledTalkCorrectionsPath` 形狀 |
+| `tools/release_all_fs.py` | 三個桌面包收 `gamedata/` ＋ `fonts/`；Android 從 `experimental/` 提到 `packages/`；manifest 加 `distributable`；模板的界線敘述由 `BUNDLE_DATA` 決定，不手寫 |
+| `tools/android_build.sh` | `WOLONG_BUNDLE_DATA=1` 把資料放進 `assets/`，**建完就清**，並驗 APK 裡到底有沒有 |
+| `ImportActivity.java` | 沒資料時先試從 assets 解開，成功就直接進遊戲；SAF 那條留著 |
+| `tools/release_smoke.sh` | 多驗一條「不帶任何資料旗標」 |
+| `tools/android_smoke.sh` | `WOLONG_BUNDLED=1`：**一個 byte 都不推**，驗 APK 自己解得出來 |
+
+#### ⭐ 三個安靜的失敗
+
+**一、`refresh` 不會複製 APK。** 交付目錄少一個檔，manifest 與
+`SHA256SUMS.txt` 照樣產得出來。修法兩層，第二層
+（`verify_manifest_paths`：manifest 指到不存在的路徑就當場失敗）才是閘。
+
+**二、兩條管線挑了不同的檔案集。** `copytree` 收隱藏項，桌面包多了
+`.jsdos/`（js-dos 的 dosbox.conf）變成 73 個檔，而 Android 的
+`cp "$ORIG_DIR"/*` 是 69 個。**這種差異不會當場壞掉**，但之後任何
+「兩邊對不起來」都會先被誤判成別的原因。
+
+**三、我自己寫的「螢幕醒沒醒」檢查是壞的。**
+`set -o pipefail` 配 `grep -q`——命中就提早結束，上游的 `tr` 吃 SIGPIPE，
+整條 pipeline 回非零，**明明命中卻被判成沒命中**。
+探測出來 `mWakefulness=Awake`、`Display State=ON`，檢查照樣報「叫不醒」。
+⭐ 教訓不是「pipefail 很煩」，是**檢查本身也要有正對照**：
+我連續兩輪相信那句警告，去修一個不存在的問題。
+
+順帶修掉真正的成因：模擬器螢幕在指紋那 24 秒睡著並上鎖，叫醒後停在
+Android 桌面——拍到的圖不黑、大小也正常，**只是拍到別的東西**。
+現在開機就把 `screen_off_timeout` 拉到 30 分鐘，截圖前查 `mCurrentFocus`。
+
+#### 驗收
+
+四個平台都實跑過。最強的一條是 **APK 的指紋與桌面逐位元組相同**
+（frame 1／60／120）——資料只要差一個 byte 世界狀態就會分岔，
+這比逐檔比對便宜也更強。
+
 ### 2026-08-21 改寫歷史：373 個 commit 的作者信箱一律換成 `wicanr2@gmail.com`
 
 `git config user.email` 一直是 `~/.gitconfig` 的 **`cy.wang@coretronic.com`**

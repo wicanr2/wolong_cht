@@ -5,6 +5,11 @@
 # 每次明確重建前只清除 dist-all 的已知發行輸出；未知項目會使流程停止。
 #
 #   tools/release_all.sh [版本日期]        # 預設今天，格式 YYYYMMDD
+#   WOLONG_BUNDLE_DATA=0 tools/release_all.sh …   # 不含原版資產的可散布批次
+#
+# ⚠ **預設是內含遊戲檔案的完整版**（docs/spec/72，使用者裁定 2026-08-22）：
+# 四個平台的包裡都有原版資料與倚天字型，解開就能玩，**而整個 dist-all
+# 不可外流**。要交付給別人的版本請明講 `WOLONG_BUNDLE_DATA=0`。
 #
 # 版本字串只在這裡定一次，檔名與 ldflags 都從它長出來。
 set -euo pipefail
@@ -17,11 +22,21 @@ GO_IMAGE="${WOLONG_GO_IMAGE:-demonwinter-go:latest}"
 MAC_IMAGE="${WOLONG_MAC_IMAGE:-wolong-osxcross-go:20260811-event10-r4}"
 APPIMAGE_IMAGE="${WOLONG_APPIMAGE_IMAGE:-u5cht/appimage:latest}"
 UID_GID="$(id -u):$(id -g)"
+BUNDLE_DATA="${WOLONG_BUNDLE_DATA:-1}"
+
+if [ "$BUNDLE_DATA" = 0 ]; then
+    echo "── 可散布批次：不含原版資產 ──"
+else
+    echo "⛔ 完整版批次：內含原版資料與倚天字型，dist-all 不可外流 ──"
+    [ -f "$REPO_ROOT/workplace/orig/dosv/SINARIO.DAT" ] || {
+        echo "找不到 workplace/orig/dosv/SINARIO.DAT" >&2; exit 1; }
+fi
 
 run_repo_write() {
     docker run --rm --network none --memory 1g --cpus 1 --pids-limit 128 \
         -u "$UID_GID" -e WOLONG_DIST_ROOT=/src/$(basename "$STAGING_ROOT") \
         -e WOLONG_RELEASE_VERSION="$RELEASE_VERSION" \
+        -e WOLONG_BUNDLE_DATA="$BUNDLE_DATA" \
         -v "$REPO_ROOT:/src" -w /src "$GO_IMAGE" "$@"
 }
 
@@ -92,4 +107,8 @@ run_repo_write python3 tools/release_all_fs.py finalise
 # 只有 staging 完成編譯、封裝、雜湊與 deny-list 後才交換到 dist-all。
 run_repo_write python3 tools/release_all_fs.py promote
 
-echo "完成：$REPO_ROOT/dist-all"
+if [ "$BUNDLE_DATA" = 0 ]; then
+    echo "完成：$REPO_ROOT/dist-all（可散布）"
+else
+    echo "完成：$REPO_ROOT/dist-all ⛔ 內含原版資產，不可外流"
+fi

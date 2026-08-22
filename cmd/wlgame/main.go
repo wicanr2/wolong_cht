@@ -1289,7 +1289,11 @@ func (g *game) advisorName() string {
 	return g.world.Generals[f.Advisor].Name
 }
 
-const defaultTalkCorrections = "translations/corrections.json"
+const (
+	defaultTalkCorrections = "translations/corrections.json"
+	defaultOrigDir         = "workplace/orig/dosv"
+	defaultFontDir         = "workplace/eten"
+)
 
 // bundledTalkCorrectionsPath 保持「發行包不含完整原版文字表」的同時，讓
 // corrections.json 可隨可執行檔安裝。先尊重明確環境設定與目前工作目錄，
@@ -1324,13 +1328,61 @@ func fileExists(path string) bool {
 	return err == nil && !info.IsDir()
 }
 
+func dirExists(path string) bool {
+	info, err := os.Stat(path)
+	return err == nil && info.IsDir()
+}
+
+// 完整包裡原版資料與點陣字的目錄名（docs/spec/72 §2）。
+const (
+	bundledOrigDir = "gamedata"
+	bundledFontDir = "fonts"
+)
+
+// resolveDataDir 決定實際要用的資料目錄。
+//
+// `-orig`／`-font` 的預設值是 **repo 相對路徑**，解開的發行包裡不成立；
+// 使用者跑 `./wlgame` 會靜靜地少掉字型，中文變成方框。這一支照
+// bundledTalkCorrectionsPath 的形狀補上同一組退路。
+//
+// ⭐ 三條性質缺一不可（docs/spec/72 §3）：
+//
+//  1. **不覆蓋明講的旗標**——`value != def` 就直接回傳。對拍與驗收
+//     全部明講 `-orig`，一個字都不受影響。
+//  2. **repo 內行為不變**——`workplace/orig/dosv` 在的時候第二條就命中。
+//  3. **都找不到就回預設值**，讓既有的載入器噴可診斷的錯。
+//     ⚠ 不要靜默跳過——沉默的成功比失敗難發現。
+func resolveDataDir(value, def, bundled string) string {
+	if value != def {
+		return value
+	}
+	if dirExists(def) {
+		return def
+	}
+	executable, err := os.Executable()
+	if err != nil {
+		return def
+	}
+	dir := filepath.Dir(executable)
+	for _, candidate := range []string{
+		filepath.Join(dir, bundled),
+		filepath.Join(dir, "..", bundled),
+		filepath.Join(dir, "..", "share", "wolong-remake", bundled),
+	} {
+		if dirExists(candidate) {
+			return candidate
+		}
+	}
+	return def
+}
+
 func main() {
-	dir := flag.String("orig", "workplace/orig/dosv", "原版素材目錄（請自備）")
+	dir := flag.String("orig", defaultOrigDir, "原版素材目錄（請自備）")
 	scenPath := flag.String("scenario-file", "", "劇本檔路徑（預設 <orig>/SINARIO.DAT）")
 	scenario := flag.Int("scenario", 0, "劇本編號 0–3（直接啟動／驗收用）")
 	player := flag.Int("player", 0, "玩家所仕的勢力編號（直接啟動／驗收用）")
 	directStart := flag.Bool("direct", false, "跳過一般玩家啟動殼層，直接啟動指定劇本／玩家（驗收用）")
-	fontDir := flag.String("font", "workplace/eten", "倚天點陣字目錄（請自備）")
+	fontDir := flag.String("font", defaultFontDir, "倚天點陣字目錄（請自備）")
 	// ⚠ 預設是空的（靜音）。Ebiten 的音訊錯誤沒有可查詢的 API，
 	// 沒有音效裝置時 `RunGame` 會直接帶著 ALSA 的錯誤結束——
 	// 無頭驗收與 CI 全部會掛。**要有聲音就明確給目錄。**
@@ -1370,6 +1422,10 @@ func main() {
 	talkJSON := flag.String("talk-json", "", "完整繁中 TALK JSON（研究用）")
 	talkCorrections := flag.String("talk-corrections", bundledTalkCorrectionsPath(), "繁中 TALK 校訂覆蓋")
 	flag.Parse()
+
+	// 解開的完整包裡，預設的 repo 相對路徑不成立（docs/spec/72 §3）。
+	*dir = resolveDataDir(*dir, defaultOrigDir, bundledOrigDir)
+	*fontDir = resolveDataDir(*fontDir, defaultFontDir, bundledFontDir)
 	flagVisit = func(fn func(string)) { flag.CommandLine.Visit(func(f *flag.Flag) { fn(f.Name) }) }
 
 	lib, err := library.LoadWithOptions(*dir, library.LoadOptions{TalkJSON: *talkJSON, TalkCorrections: *talkCorrections})

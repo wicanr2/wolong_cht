@@ -23,20 +23,20 @@
 | 程式碼理解 | 177 | 170 | 7 | 0 |
 | 驗收 | 51 | 41 | 10 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 141 | 130 | 11 | 0 |
-| **合計** | **432** | 398 | 34 | 0 |
+| 其他 | 145 | 133 | 12 | 0 |
+| **合計** | **436** | 401 | 35 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/re/` | 177 |
-| `docs/spec/` | 116 |
+| `docs/spec/` | 119 |
 | `docs/playtest/` | 51 |
 | `docs/formats/` | 33 |
 | `docs/mechanics/` | 24 |
 | `docs/mobile/` | 12 |
-| `docs/release/` | 11 |
+| `docs/release/` | 12 |
 | `docs/reference/` | 6 |
 | `docs/promo/` | 2 |
 
@@ -356,7 +356,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（141 條）
+## 2.6 其他（145 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -381,6 +381,7 @@
 | [`release/04-three-platform-20260822.md`](../release/04-three-platform-20260822.md) | Windows／macOS 原生 GUI 實機驗收 | 沒有硬體，Docker 代不了 | 靜態 |
 | [`release/04-three-platform-20260822.md`](../release/04-three-platform-20260822.md) | Android 實機驗收 | 只有模擬器；16 KB page size 的裝置也還沒實際載過 | 靜態 |
 | [`release/04-three-platform-20260822.md`](../release/04-three-platform-20260822.md) | Android 正式簽章 | 還沒決定 keystore 怎麼保管 | 靜態 |
+| [`release/04-three-platform-20260822.md`](../release/04-three-platform-20260822.md) | 完整版在低容量裝置上 | APK 25 MB ＋ 解包後約 4.8 MB，安裝失敗的門檻沒量過 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Windows／macOS 原生 GUI | 交叉建置的產物只驗了檔頭，沒有在目標作業系統跑過。M8 唯一的閘 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 實機驗收 | 只有 Docker 模擬器；觸控手感、真實 GPU、高 DPI 上的點陣字可讀性都驗不到 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 正式簽章 | 出的是 debug 簽章，keystore 怎麼保管還沒決定 | 靜態 |
@@ -495,6 +496,9 @@
 | [`spec/69-world-fingerprint.md`](../spec/69-world-fingerprint.md) | 戰術戰鬥要不要進指紋 | 目前不進。要驗戰場的決定性得另外做一個，`tactical.Battle` 的欄位更多 | 靜態 |
 | [`spec/70-phone-chrome.md`](../spec/70-phone-chrome.md) | 外框在高 DPI 上的觀感 | 8×8 的點陣框在 960×540 上是原尺寸；實機的高 DPI 上要不要整數放大**沒量過**（同 `docs/mobile/android-ux.md` §9 的點陣字問題） | 靜態 |
 | [`spec/70-phone-chrome.md`](../spec/70-phone-chrome.md) | 龍紋的對齊 | 手機版的面板不是 640×400 的格子，龍紋仍釘在螢幕上，與原版的相位不同。**視覺上看得出來的差異只有相位，不是圖案** | 靜態 |
+| [`spec/72-bundled-game-data.md`](../spec/72-bundled-game-data.md) | Windows／macOS 上「解開就能跑」 | ⛔ 沒有那兩個平台的機器。包內版面驗過（`gamedata/`、`fonts/` 位置正確），但 `resolveDataDir` 在那兩個 OS 上沒實跑過 | 實測 |
+| [`spec/72-bundled-game-data.md`](../spec/72-bundled-game-data.md) | APK 內嵌後的實機驗收 | ⛔ 沒有裝置。模擬器驗到了解包與指紋，驗不到真實儲存空間與 DPI | 靜態 |
+| [`spec/72-bundled-game-data.md`](../spec/72-bundled-game-data.md) | 25 MB 的 APK 在低容量裝置上 | 解包後 app 私有目錄再佔約 4.8 MB，總共約 30 MB。**沒有量過安裝失敗的門檻** | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 | 靜態 |

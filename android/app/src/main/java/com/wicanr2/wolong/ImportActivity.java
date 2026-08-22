@@ -2,6 +2,7 @@ package com.wicanr2.wolong;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -48,12 +49,33 @@ public final class ImportActivity extends Activity {
     /** 缺了它就不是原版資料夾——用它當「挑對了沒」的判準。 */
     private static final String REQUIRED = "SINARIO.DAT";
 
+    /**
+     * APK 內嵌原版資料的 assets 根目錄（docs/spec/72 §4）。
+     *
+     * <p>底下是 {@code orig/} 與 {@code eten/} 兩個子目錄，與解開後
+     * 在 {@code getFilesDir()} 裡的版面**一模一樣**——兩邊同名，
+     * 之後改動只要改一處。
+     *
+     * <p>⚠ **不是每個建置都有它。** 內嵌由 {@code WOLONG_BUNDLE_DATA}
+     * 在建置時決定，預設不內嵌；沒有內嵌時這個目錄不存在，
+     * 流程要安靜地退回 SAF 匯入，不能當成錯誤。
+     */
+    private static final String BUNDLE_ROOT = "gamedata";
+
+    /** 解開時的暫存後綴。**先解完再改名**，中斷不會留下半套資料。 */
+    private static final String PART_SUFFIX = ".part";
+
     private TextView status;
 
     @Override
     protected void onCreate(Bundle state) {
         super.onCreate(state);
         if (hasData()) {
+            startGame();
+            return;
+        }
+        // ⭐ 內嵌資料的建置：解開就走，使用者不必挑資料夾。
+        if (unpackBundled()) {
             startGame();
             return;
         }
@@ -108,6 +130,78 @@ public final class ImportActivity extends Activity {
             startGame();
         } catch (Exception e) {
             status.setText("匯入失敗：" + e);
+        }
+    }
+
+    /**
+     * 從 APK 內嵌的 assets 解開原版資料，回傳資料是不是因此就齊了。
+     *
+     * <p>沒有內嵌（一般建置）就回 {@code false}，由 SAF 那條路接手。
+     *
+     * <p>⚠ **先解到 {@code .part} 再改名**。半途被殺掉的話，
+     * 留下的是一個沒有人會去讀的 {@code orig.part}，而不是一個
+     * 「{@code SINARIO.DAT} 在、其他檔缺一半」的 {@code orig}——
+     * 後者會讓 {@link #hasData()} 回 true，之後每次開機都直接進遊戲然後爆掉。
+     */
+    private boolean unpackBundled() {
+        AssetManager am = getAssets();
+        try {
+            String[] top = am.list(BUNDLE_ROOT);
+            if (top == null || top.length == 0) {
+                return false;
+            }
+            for (String sub : new String[] {"orig", "eten"}) {
+                String[] names = am.list(BUNDLE_ROOT + "/" + sub);
+                if (names == null || names.length == 0) {
+                    continue;
+                }
+                File part = new File(getFilesDir(), sub + PART_SUFFIX);
+                deleteTree(part);
+                if (!part.mkdirs()) {
+                    return false;
+                }
+                for (String name : names) {
+                    copyAsset(am, BUNDLE_ROOT + "/" + sub + "/" + name,
+                        new File(part, name));
+                }
+                File dst = new File(getFilesDir(), sub);
+                deleteTree(dst);
+                if (!part.renameTo(dst)) {
+                    return false;
+                }
+            }
+            return hasData();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /** 遞迴刪一棵目錄樹。只用在 app 自己的私有目錄底下。 */
+    private static void deleteTree(File f) {
+        File[] kids = f.listFiles();
+        if (kids != null) {
+            for (File k : kids) {
+                deleteTree(k);
+            }
+        }
+        f.delete();
+    }
+
+    private static void copyAsset(AssetManager am, String name, File dst)
+            throws Exception {
+        InputStream in = am.open(name);
+        try {
+            OutputStream out = new FileOutputStream(dst);
+            try {
+                byte[] buf = new byte[64 * 1024];
+                for (int k = in.read(buf); k > 0; k = in.read(buf)) {
+                    out.write(buf, 0, k);
+                }
+            } finally {
+                out.close();
+            }
+        } finally {
+            in.close();
         }
     }
 

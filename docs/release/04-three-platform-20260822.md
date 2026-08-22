@@ -1,84 +1,114 @@
-# 04 — 2026-08-22 三平台重新交付（含 Android 完整版）
+# 04 — 2026-08-22 四平台完整版（內含遊戲檔案）
 
-**狀態：已交付並驗過。** `dist-all` 是一致的 `wolong-remake-20260822` 批次：
-五個桌面包與 Android APK 都由這一輪的原始碼建出來，雜湊、deny-list 與
-Linux GUI smoke 都過。
+**狀態：已交付並驗過。⛔ 這一批內含原版資產，不可外流。**
+`dist-all` 是一致的 `wolong-remake-20260822` 批次：四個平台的包裡都有
+松崗 DOS/V 的 69 個原版檔與倚天點陣字，解開或裝上去就能玩。
 
 - 日期：2026-08-22
-- 工具：`tools/release_all.sh 20260822` ＋ `tools/android_build.sh`
-  ＋ `tools/release_smoke.sh 20260822`
-  ＋ `tools/py.sh tools/release_all_fs.py refresh`
+- 使用者裁定：`dist-all` 就是四平台完整版（規格 [`../spec/72`](../spec/72-bundled-game-data.md)）
+- 工具：`tools/release_all.sh 20260822` ＋ `WOLONG_BUNDLE_DATA=1 tools/android_build.sh`
+  ＋ `tools/release_smoke.sh 20260822` ＋ `WOLONG_BUNDLED=1 tools/android_smoke.sh`
 - 前一批：`wolong-remake-20260821`（[`03`](03-three-platform-20260821.md)，已被本批取代）
 
-## 1. 產物
+## 1. ⛔ 散布界線
+
+這一批**不可外流**——不上傳、不轉傳、不放進會被同步到公開位置的目錄。
+`CLAUDE.md` §9 的 `[HARD]` 規則寫著「不得 commit 或**打包**任何原版
+`.EXE/.COM/.DAT/…`，也不得散布倚天字型」；使用者在我指出衝突後裁定
+打包這半邊要做，**commit 那半邊沒有例外**：`dist-all/` 在 `.gitignore`，
+deny-list 掃的是 git 追蹤的檔案，兩者都碰不到這裡。
+
+保存專案的定位沒有改變：公開產出仍然只有引擎程式碼與譯文校訂紀錄。
+
+**怎麼分辨手上這一批是哪一種**（⚠ 看檔名分不出來，兩種的名字一模一樣）：
+
+| 判準 | 完整版 | 可散布 |
+|---|---|---|
+| `DO-NOT-DISTRIBUTE.md` | 存在 | 不存在 |
+| manifest 的 `distributable` | `false` | `true` |
+| manifest 的 `original_assets_included` | `true` | `false` |
+| 包裡有沒有 `gamedata/` | 有 | 沒有 |
+
+要一份可散布的：`WOLONG_BUNDLE_DATA=0 tools/release_all.sh <YYYYMMDD>`。
+
+## 2. 產物
 
 | 檔 | 大小 (B) | SHA-256 |
 |---|---:|---|
-| `wolong-remake-linux-amd64-20260822.AppImage` | 9,942,208 | `5755504dc09bf3915966abf7caa14a92f7ddab123ec3dbdb1f6f5484296dc176` |
-| `wolong-remake-linux-amd64-20260822.tar.gz` | 9,593,572 | `79157e8ac0118dd82d87fd970d5683a1e8e0c76fb301bf9cd7134a7f54387c51` |
-| `wolong-remake-linux-arm64-tools-20260822.tar.gz` | 2,156,200 | `a598c88e1666f2c2f83a09cd7b765996ca1f4db5b2e1772a6017629bfe6ee649` |
-| `wolong-remake-macos-universal-20260822.tar.gz` | 18,131,358 | `837c0b8d0b6136f495bb8e9822977df3a2540d458f23c0fd3af662f9a563c5a6` |
-| `wolong-remake-windows-amd64-20260822.tar.gz` | 9,548,723 | `9734da94ad7a98dfc59a9478f309d2f2f64b51a29e61bc209040e34bd3984de0` |
-| `wolong-remake-android-debug-20260822.apk` | 22,718,998 | `2797a4edd321305fb1b3990ac3e83be0db467f5d897d7e3bf6b4a6dc55bcfdec` |
+| `wolong-remake-linux-amd64-20260822.AppImage` | 12,133,568 | `2fd66558e92f2e1bc09a16c8fbd653362b4bc952f252a576d9e592ec420487dc` |
+| `wolong-remake-linux-amd64-20260822.tar.gz` | 11,755,451 | `1a38f835a5e840b4a5a26118a5d5242d9c18b730ae8d3ecc7848adaeb0785c45` |
+| `wolong-remake-windows-amd64-20260822.tar.gz` | 11,710,024 | `c243bd86f4e91e0ef9f5907b7216d660c80c349391ebee3f73df5bdb65e5cb64` |
+| `wolong-remake-macos-universal-20260822.tar.gz` | 20,296,128 | `fc8a6959b56ea45ee310e13f64c3d347c028dced8a2706fbfc17398517f774c2` |
+| `wolong-remake-android-debug-20260822.apk` | 25,136,585 | `33e2c55f933553b409bd39d3dffa7669cda339a0b379bc2416f9bf59fbc7d076` |
+| `wolong-remake-linux-arm64-tools-20260822.tar.gz` | 2,156,295 | `5aff2ea654f7a7dac7f4e5bb7acb1fe3b29b8be48bd598690a6b5884f1b9de02` |
 
-Android 版仍列在 `experimental/android/`，界線是**簽章與驗收**不是功能：
-它是完整的遊戲，規則層與桌面版是同一份程式碼，但只有 debug 簽章，
-而且只在 Docker 的模擬器上驗過。
+⭐ **Android 移到 `packages/`**，與另外三個平台並列。它先前在
+`experimental/android/`，界線是簽章與驗收——那是**驗收狀態**，
+寫在說明裡就夠，用目錄分級表達會讓人以為它功能不完整。
+它仍然只有 debug 簽章、也還沒實機驗收。
 
-## 2. 這一批比 `20260821` 多了什麼
+⚠ **`linux-arm64-tools` 不含資料**：它只有 `wlsim`／`wlshot`，不是完整遊戲。
 
-| 項目 | 出處 |
+## 3. 資料在包裡的位置
+
+| 平台 | 版面 |
 |---|---|
-| 結局的節拍照原版重做：每一幕多了 11 秒看圖時間，整段 1 分 47 秒 → 3 分 21 秒 | [`../spec/67`](../spec/67-ending-playback.md) §8 |
-| 戰場的右鍵熱區層：熱區 `0x1D` 右鍵提前收掉門強度條 | [`../spec/32`](../spec/32-gate-strength-bar.md) |
-| 點縮小地圖捲鏡頭（熱區 `0x16`）、22 勢力選擇視窗（熱區 `0x17`） | [`../re/71`](../re/71-strategy-hotspot-dispatch.md)、[`../spec/35`](../spec/35-strategy-minimap.md) §2.5 |
-| M7 的校訂文字實跑抽樣：18 則全部在框內 | [`../playtest/41`](../playtest/41-m7-corrected-text-on-screen.md) |
-| 九個文件目錄逐列稽核，未解總表 570 → 431 列 | [`../re/43`](../re/43-open-questions.md) |
+| Linux／Windows tar | 包根的 `gamedata/`（69）＋ `fonts/`（3）|
+| macOS tar | 同上，**兩個架構共用一份**（執行檔在 `darwin-<arch>/`）|
+| AppImage | `usr/share/wolong-remake/gamedata`、`.../fonts` |
+| APK | `assets/gamedata/{orig,eten}`，第一次啟動由 `ImportActivity` 解到私有目錄 |
 
-## 3. ⭐ APK 沒被複製進交付目錄——`refresh` 少了一步
-
-重建 APK 之後只跑 `refresh`，交付目錄的 `experimental/android/` 會**只剩
-`README.md`**，而 `release-manifest.json` 照樣寫著上一批的檔名。
-`SHA256SUMS.txt` 也照樣產得出來，因為它只雜湊真的存在的檔——
-**少一個檔不會讓任何一步失敗**。
-
-成因是 APK 的複製寫在 `stage()` 裡，而 `refresh` 不呼叫 `stage`；
-`android_experimental` 這個欄位又寫在 `finalise()`，`refresh` 也不碰。
-Android 是另一條管線（`tools/android_build.sh`）建的，
-於是「重建 APK ＋ refresh」這條最自然的路徑正好兩步都跳過。
-
-修法兩層，都在 `tools/release_all_fs.py`：
-
-1. `sync_android()` 抽成一支，`stage()` 與 `refresh()` 都呼叫它——
-   複製當批 APK、清掉別批的、重寫 `README.md`，回傳發行檔名。
-   `refresh()` 拿回傳值回填 manifest。
-2. `verify_manifest_paths()`：manifest 裡列到的每一個路徑都要真的存在，
-   不存在就讓 `finalise` 與 `refresh` 當場失敗。
-
-第二層才是真正的閘。第一層修的是這一次的成因，第二層擋的是
-**下一次任何一個檔案漏掉**——沉默的成功比失敗難發現。
+`wlgame` 的 `-orig`／`-font` 預設是 repo 相對路徑，解開的包裡不成立。
+新的 `resolveDataDir` 照 `bundledTalkCorrectionsPath` 的形狀補上退路：
+**明講的旗標一律優先**，沒講才依序找 repo 路徑、執行檔旁、AppImage 版面
+（[`../spec/72`](../spec/72-bundled-game-data.md) §3）。
 
 ## 4. 驗收
 
 | 項目 | 結果 |
 |---|---|
-| AppImage 啟動 ＋ 大地圖 | ✅ `verification/appimage-smoke-20260822.png`（196年4月2日）|
+| AppImage 啟動 ＋ 大地圖 | ✅ `verification/appimage-smoke-20260822.png` |
 | AppImage 結局過場 | ✅ `verification/appimage-ending-20260822.png` |
-| Linux tar 解開直接跑 | ✅ `verification/linux-tar-smoke-20260822.png`，與 AppImage 那張逐位元組相同 |
+| Linux tar 解開直接跑 | ✅ `verification/linux-tar-smoke-20260822.png` |
+| **不帶任何資料旗標** | ✅ `verification/bundled-nodflags-20260822.png`，而且**沒有「載不到字型」那行警告** |
+| **Android 乾淨安裝、不推資料** | ✅ 自己解出 69 個檔並轉進遊戲，`verification/android-bundled-20260822.png` |
+| APK 的資料與桌面一致 | ✅ 指紋 1／60／120 三幀與桌面**逐位元組相同** |
+| 四平台同一個檔案集 | ✅ 各 69 ＋ 3 |
 | 交叉建置檔頭 | ✅ ELF x86-64／PE32+ x86-64／Mach-O x86_64／Mach-O arm64 |
-| `.so` 的 16 KB 對齊 | ✅ ELF LOAD 段與 zip 內位移都過（[`03`](03-three-platform-20260821.md) §4）|
-| deny-list | ✅ 沒有原版資產 |
-| 雜湊 | ✅ `sha256sum -c dist-all/SHA256SUMS.txt` 二十筆全部相符 |
-| manifest 路徑 | ✅ 六個交付路徑逐一存在（§3 的新檢查）|
+| `.so` 的 16 KB 對齊 | ✅ ELF LOAD 段與 zip 內位移都過 |
+| manifest 路徑 | ✅ 六個交付路徑逐一存在 |
+| 雜湊 | ✅ `sha256sum -c dist-all/SHA256SUMS.txt` 二十二筆相符 |
 | Windows／macOS 原生 GUI | ❌ **仍未實機驗收**，是 M8 唯一的閘 |
 
-⚠ **結局那一幕的截圖上沒有文字**，那不是缺陷：容器裡沒有倚天字型，
-`textdraw` 不可用時整段文字就不畫。字型與原版資料一律由玩家自備。
+⚠ **結局那一幕的截圖上沒有文字**：容器裡跑的是 AppImage 內建的字型路徑，
+而那一張是在 `-orig` 明講的舊路徑下拍的。文字本身在 §4 第四列那張裡是正常的。
 
-## 5. 未解
+## 5. ⭐ 三個安靜的失敗
+
+**一、`refresh` 不會複製 APK。** 重建 APK 之後只跑 `refresh`，
+`experimental/android/` 會只剩 `README.md`，而 manifest 照樣寫著上一批的檔名、
+`SHA256SUMS.txt` 也照樣產得出來——**少一個檔不會讓任何一步失敗**。
+修法兩層：`sync_android()` 給 `stage` 與 `refresh` 共用，
+以及 `verify_manifest_paths()` 讓 manifest 指到不存在的路徑當場失敗。
+第二層才是閘。
+
+**二、模擬器截圖睡著時會拍到全黑，而那是一張合法的 PNG。**
+指紋那一段跑 24 秒，中途螢幕關掉並上鎖；叫醒之後停在 Android 桌面，
+拍到的圖不黑、大小也正常，**只是拍到別的東西**。
+現在：開機就把 `screen_off_timeout` 拉到 30 分鐘、截圖前查 `mCurrentFocus`
+是不是我們的 activity、拍完檢查檔案大小，全黑就重試。
+
+**三、我自己寫的醒沒醒檢查是壞的。**
+`set -o pipefail` 配 `grep -q`——命中就提早結束，上游的 `tr` 吃 SIGPIPE，
+**整條 pipeline 回非零，明明命中卻被判成沒命中**。
+實測 `mWakefulness=Awake`、`Display State=ON`，而檢查照樣報「叫不醒」。
+現在 grep 在裝置上跑，不在 host 這端接管線。
+
+## 6. 未解
 
 | 項目 | 現況 |
 |---|---|
 | Windows／macOS 原生 GUI 實機驗收 | 沒有硬體，Docker 代不了 |
 | Android 實機驗收 | 只有模擬器；16 KB page size 的裝置也還沒實際載過 |
 | Android 正式簽章 | 還沒決定 keystore 怎麼保管 |
+| 完整版在低容量裝置上 | APK 25 MB ＋ 解包後約 4.8 MB，安裝失敗的門檻沒量過 |

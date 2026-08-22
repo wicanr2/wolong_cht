@@ -4,6 +4,11 @@
 #   tools/android_build.sh              # 兩個 ABI（arm64 + amd64）
 #   WOLONG_ABIS=android/arm64 tools/android_build.sh
 #   WOLONG_NET=none tools/android_build.sh   # 相依都在快取裡時可以斷網跑
+#   WOLONG_BUNDLE_DATA=1 tools/android_build.sh  # 把原版資料內嵌進 APK
+#
+# ⚠ **`WOLONG_BUNDLE_DATA=1` 建出來的 APK 內含原版資料與倚天字型，
+# 絕對不可外流**（docs/spec/72）。預設不內嵌——內嵌要明講，
+# 而且建完就把 assets 清掉，下一次建置不會默默沿用上一次的資料。
 #
 # ⚠ **容器要跑在 UTF-8 locale 底下**。gobind 會把 Go 的文件註解原封不動抄進
 # 產生的 Java 檔，而 javac 沒有帶 `-encoding`，用的是**平台預設字集**。
@@ -21,6 +26,32 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 IMAGE="${WOLONG_ANDROID_IMAGE:-wolong-go-android:20260820}"
 ABIS="${WOLONG_ABIS:-android/arm64,android/amd64}"
 NET="${WOLONG_NET:-host}"
+BUNDLE="${WOLONG_BUNDLE_DATA:-0}"
+ASSETS="$REPO_ROOT/android/app/src/main/assets"
+ORIG_DIR="${WOLONG_ORIG_DIR:-$REPO_ROOT/workplace/orig/dosv}"
+FONT_DIR="${WOLONG_FONT_DIR:-$REPO_ROOT/workplace/eten}"
+
+# ⭐ **每一次都先清乾淨。** 沒有這一步，上一次 `WOLONG_BUNDLE_DATA=1`
+# 留下的資料會被下一次的一般建置默默包進去——而那個 APK 看起來
+# 與正常的一模一樣。
+rm -rf "$ASSETS"
+
+if [ "$BUNDLE" = 1 ]; then
+    [ -d "$ORIG_DIR" ] || { echo "[android_build] 找不到原版資料 $ORIG_DIR" >&2; exit 1; }
+    [ -f "$ORIG_DIR/SINARIO.DAT" ] || { echo "[android_build] $ORIG_DIR 裡沒有 SINARIO.DAT" >&2; exit 1; }
+    mkdir -p "$ASSETS/gamedata/orig" "$ASSETS/gamedata/eten"
+    cp "$ORIG_DIR"/* "$ASSETS/gamedata/orig/"
+    if [ -d "$FONT_DIR" ]; then
+        cp "$FONT_DIR"/* "$ASSETS/gamedata/eten/"
+    else
+        echo "[android_build] ⚠ 沒有 $FONT_DIR，APK 裡不會有字型，中文會是方框" >&2
+    fi
+    echo "── 內嵌原版資料：$(find "$ASSETS/gamedata" -type f | wc -l) 個檔 ──"
+fi
+
+# 不論成功失敗都把 assets 清掉：原版資料不留在工作區裡。
+cleanup_assets() { rm -rf "$ASSETS"; }
+trap cleanup_assets EXIT
 
 if ! docker image inspect "$IMAGE" >/dev/null 2>&1; then
     echo "[android_build] 找不到 $IMAGE；先建：" >&2
@@ -96,6 +127,26 @@ echo "✓ .so 的 LOAD 段都是 16 KB 對齊"
 $ANDROID_HOME/build-tools/35.0.0/zipalign -c -P 16 -v 4 \
     /src/android/app/build/outputs/apk/debug/app-debug.apk >/dev/null
 echo "✓ zip 內的 .so 也照 16 KB 對齊"
+'
+
+# ⭐ **內嵌與否要驗，不能只靠旗標。** 兩個方向都會安靜地出錯：
+# 該內嵌卻沒進去（玩家裝上去打不開），或不該內嵌卻混進去
+# （把原版資產送出門）。兩種 APK 從外觀完全分不出來。
+docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
+    --network none --memory 1g --cpus 1 --pids-limit 64 \
+    -v "$REPO_ROOT:/src:ro" -u "$(id -u):$(id -g)" -e HOME=/tmp \
+    -e BUNDLE="$BUNDLE" \
+    "$IMAGE" bash -c '
+set -euo pipefail
+list=$(unzip -Z1 /src/android/app/build/outputs/apk/debug/app-debug.apk \
+    "assets/gamedata/*" 2>/dev/null | wc -l)
+if [ "$BUNDLE" = 1 ]; then
+    [ "$list" -gt 60 ] || { echo "⚠ 說要內嵌，APK 裡卻只有 $list 個資料檔" >&2; exit 1; }
+    echo "✓ APK 內嵌了 $list 個原版資料檔（⚠ 這個 APK 不可外流）"
+else
+    [ "$list" = 0 ] || { echo "⚠ 沒說要內嵌，APK 裡卻有 $list 個原版資料檔" >&2; exit 1; }
+    echo "✓ APK 不含原版資產"
+fi
 '
 
 ls -l "$APK"

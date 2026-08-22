@@ -52,3 +52,8 @@ __pycache__/
 workplace/shots/
 dist/
 dist-all/
+
+# 內嵌進 APK 的原版資料（docs/spec/72 §4）。由 tools/android_build.sh 在
+# WOLONG_BUNDLE_DATA=1 時複製進去，建完就清掉。⚠ 這是原版資產，
+# 一個 byte 都不准進版控——CLAUDE.md §9 的「不得 commit」那半邊沒有例外。
+android/app/src/main/assets/
