@@ -188,6 +188,43 @@ def android_apk_name(apk: Path) -> str:
     return f"wolong-remake-android-debug-{stamp}.apk"
 
 
+def sync_android(apk: Path | None = None) -> str:
+    """把最新的 debug APK 放進交付目錄，回傳它的發行檔名。
+
+    ⭐ **這一步不能只留在 `stage()`。** APK 是另一條管線（`tools/android_build.sh`）
+    建的，重建之後若只跑 `refresh`，交付目錄會留著上一批的檔案——或者更糟，
+    一個都沒有，而 manifest 照樣寫著那個不存在的路徑（2026-08-22 踩過）。
+    複製完順手清掉別批的 APK，避免同一個目錄裡並存兩個日期。
+    """
+    if apk is None:
+        apk = REPO / "android" / "app" / "build" / "outputs" / "apk" / "debug" / "app-debug.apk"
+    name = android_apk_name(apk)
+    target = DIST / "experimental" / "android"
+    copy_file(apk, target / name)
+    for stale in target.glob("wolong-remake-android-debug-*.apk"):
+        if stale.name != name:
+            checked(stale).unlink()
+    write_template("ANDROID-EXPERIMENTAL.md", target / "README.md")
+    return name
+
+
+def verify_manifest_paths(manifest: dict) -> None:
+    """manifest 列到的每一個路徑都必須真的存在。
+
+    ⚠ 少了這一關，「交付目錄缺一個檔」會安靜地通過——manifest 與 SHA256SUMS
+    都照樣產出，直到有人照著清單去抓才發現。沉默的成功比失敗難發現
+    （CLAUDE.md §7 第 21 條）。
+    """
+    paths: list[str] = []
+    for key in ("desktop_full_packages", "promo_videos"):
+        paths.extend(manifest[key])
+    for key in ("linux_appimage", "linux_arm64_tools", "android_experimental"):
+        paths.append(manifest[key])
+    missing = [rel for rel in paths if not (DIST / rel).is_file()]
+    if missing:
+        raise SystemExit("manifest 指到不存在的檔案：" + "、".join(missing))
+
+
 def promo_source(name: str) -> Path:
     """找推廣片的來源。
 
@@ -266,9 +303,7 @@ def stage() -> None:
         copy_file(promo_source(name), DIST / "promo" / name)
     write_template("PROMO-README.md", DIST / "promo" / "README.md")
 
-    apk = REPO / "android" / "app" / "build" / "outputs" / "apk" / "debug" / "app-debug.apk"
-    copy_file(apk, DIST / "experimental" / "android" / android_apk_name(apk))
-    write_template("ANDROID-EXPERIMENTAL.md", DIST / "experimental" / "android" / "README.md")
+    sync_android()
 
     write_template("ROOT-README.md", DIST / "README.md")
 
@@ -327,6 +362,7 @@ def record_verification() -> None:
 def finalise() -> None:
     if not (DIST / "packages" / f"wolong-remake-linux-amd64-{RELEASE_STAMP}.AppImage").is_file():
         raise SystemExit("缺少已建立的 AppImage")
+    android_name = sync_android()
     record_verification()
     write_template("VERIFICATION.md", DIST / "verification" / "README.md")
     manifest = {
@@ -339,11 +375,12 @@ def finalise() -> None:
         "linux_appimage": f"packages/wolong-remake-linux-amd64-{RELEASE_STAMP}.AppImage",
         "linux_arm64_tools": f"packages/wolong-remake-linux-arm64-tools-{RELEASE_STAMP}.tar.gz",
         "promo_videos": [f"promo/{name}" for name in PROMO_FILES],
-        "android_experimental": f"experimental/android/{android_apk_name(REPO / 'android' / 'app' / 'build' / 'outputs' / 'apk' / 'debug' / 'app-debug.apk')}",
+        "android_experimental": f"experimental/android/{android_name}",
         "original_assets_included": False,
         "complete_original_talk_table_included": False,
         "native_gui_smoke": {"linux_amd64": True, "windows_amd64": False, "macos": False},
     }
+    verify_manifest_paths(manifest)
     (DIST / "release-manifest.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
@@ -380,13 +417,21 @@ def refresh() -> None:
 
     只可在已完成的發行根目錄上執行；不重建、不讀取原版資料，也不修改包檔。
     """
-    if not (DIST / "release-manifest.json").is_file():
+    manifest_path = DIST / "release-manifest.json"
+    if not manifest_path.is_file():
         raise SystemExit("缺少完成的 release-manifest.json；不能 refresh 未完成的發行目錄")
     if WORK.exists():
         shutil.rmtree(WORK)
     write_template("ROOT-README.md", DIST / "README.md")
     write_template("PROMO-README.md", DIST / "promo" / "README.md")
-    write_template("ANDROID-EXPERIMENTAL.md", DIST / "experimental" / "android" / "README.md")
+    # ⭐ APK 要重新同步再回填 manifest：Android 是另一條管線，
+    # 重建之後 `refresh` 是唯一會跑到的一步。
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["android_experimental"] = f"experimental/android/{sync_android()}"
+    verify_manifest_paths(manifest)
+    manifest_path.write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
     write_template("VERIFICATION.md", DIST / "verification" / "README.md")
     write_hashes(DIST, prefix="dist-all/")
 

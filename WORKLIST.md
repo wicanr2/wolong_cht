@@ -125,6 +125,23 @@
 `影像寬 ÷ 640` 本身就不成立。
 ⭐ **量測結果不隨輸入變動時，先懷疑量錯了，不要先解釋現象。**
 
+#### 5. 重打 `20260822` 批次：五個桌面包 ＋ Android 完整版
+
+`tools/release_all.sh 20260822` ＋ `tools/android_build.sh` 重建，
+`tools/release_smoke.sh 20260822` 的三張 GUI smoke 都過，
+產物與雜湊記在 [`docs/release/04`](docs/release/04-three-platform-20260822.md)。
+
+⭐ **APK 差點沒進交付目錄。** `release_all.sh` 只是把上一批的 APK 帶著走，
+重建之後改跑 `refresh`——結果 `experimental/android/` **只剩 `README.md`**，
+而 `release-manifest.json` 照樣寫著 `...20260821.apk`，`SHA256SUMS.txt` 也照樣產得出來。
+成因是 APK 的複製寫在 `stage()`、manifest 欄位寫在 `finalise()`，`refresh` 兩步都不碰，
+而 Android 是另一條管線建的，「重建 APK ＋ refresh」正好把兩步都跳過。
+
+修法兩層：`sync_android()` 抽出來給 `stage` 與 `refresh` 共用，
+以及 `verify_manifest_paths()`——manifest 列到的路徑不存在就當場失敗。
+**第二層才是閘**：第一層只修這一次的成因，第二層擋的是下一次任何一個檔案漏掉。
+少一個檔不會讓任何一步失敗，這正是沉默的成功比失敗難發現。
+
 ### 2026-08-21 改寫歷史：373 個 commit 的作者信箱一律換成 `wicanr2@gmail.com`
 
 `git config user.email` 一直是 `~/.gitconfig` 的 **`cy.wang@coretronic.com`**

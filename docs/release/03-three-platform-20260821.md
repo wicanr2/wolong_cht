@@ -1,12 +1,14 @@
 # 03 — 2026-08-21 三平台重新交付（含 Android 版）
 
-**狀態：已交付並驗過。** `dist-all` 是一致的 `wolong-remake-20260821` 批次：
+**狀態：已交付並驗過，已被 `wolong-remake-20260822` 那一批取代。**
+當時的 `dist-all` 是一致的 `wolong-remake-20260821` 批次：
 五個桌面包與 Android APK 都由這一輪的原始碼建出來，雜湊、deny-list 與
 Linux GUI smoke 都過。
 
 - 日期：2026-08-21
 - 工具：`tools/release_all.sh 20260821` ＋ `tools/release_smoke.sh 20260821`
   ＋ `tools/py.sh tools/release_all_fs.py refresh`
+- 後續：`wolong-remake-20260822`（[`04`](04-three-platform-20260822.md)）
 - 前一批：`wolong-remake-20260820`（[`02`](02-three-platform-20260820.md)，已被本批取代）
 
 ## 1. 產物
@@ -66,10 +68,16 @@ Android 15 起有 16 KB page size 的裝置。Go 產出的 `libgojni.so` 預設�
 不是 `0x4000` 就讓建置失敗。**旗標打錯字、工具鏈換版都會讓對齊悄悄掉回去，
 而那個世界與正常世界在 4 KB 的機器上長得一模一樣。**
 
-## 5. 未解
+## 5. 這一批當時的未解
+
+> **這一批已被 [`04`](04-three-platform-20260822.md) 取代**，現行的閘看那一份。
+> 三條當時都成立，也全部原封不動延續到 `20260822`，登記在 `04` §5，
+> 不在這裡重複數一次。
 
 | 項目 | 現況 |
 |---|---|
-| Windows／macOS 原生 GUI 實機驗收 | 沒有硬體，Docker 代不了 |
-| Android 實機驗收 | 只有模擬器 |
-| Android 正式簽章 | 還沒決定 keystore 怎麼保管 |
+| ~~Windows／macOS 原生 GUI 實機驗收~~ | 見 [`04`](04-three-platform-20260822.md) |
+| ~~Android 實機驗收~~ | 見 [`04`](04-three-platform-20260822.md) |
+| ~~Android 正式簽章~~ | 見 [`04`](04-three-platform-20260822.md) |
+
+§4 的 16 KB 對齊做法**仍然是現行做法**，`20260822` 的 APK 也照它建、照它驗。

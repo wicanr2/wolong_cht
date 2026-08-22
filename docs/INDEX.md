@@ -158,7 +158,8 @@
 | [`docs/reference/05-eten-font-provenance.md`](reference/05-eten-font-provenance.md) | 05 — 松崗版的中文字型是倚天字型 | confirmed。END_S14.DAT 與倚天 ascfont.15 byte-for-byte 相同； END… | 2026-08-13 |
 | [`docs/release/01-cross-build-gate.md`](release/01-cross-build-gate.md) | 01 — 發行閘重跑：五平台交叉建置 ＋ deny-list（2026-08-17） | 發行閘通過。五個平台建得出來、deny-list 掃過沒有原版資產。 ⭐ macOS 的 Ebiten 本體可以交叉… | 2026-08-17 |
 | [`docs/release/02-three-platform-20260820.md`](release/02-three-platform-20260820.md) | 02 — 2026-08-20 三平台重新交付 | 已交付並驗過。 | 2026-08-20 |
-| [`docs/release/03-three-platform-20260821.md`](release/03-three-platform-20260821.md) | 03 — 2026-08-21 三平台重新交付（含 Android 版） | 已交付並驗過。 | 2026-08-21 |
+| [`docs/release/03-three-platform-20260821.md`](release/03-three-platform-20260821.md) | 03 — 2026-08-21 三平台重新交付（含 Android 版） | 已交付並驗過，已被 wolong-remake-20260822 那一批取代。 | 2026-08-21 |
+| [`docs/release/04-three-platform-20260822.md`](release/04-three-platform-20260822.md) | 04 — 2026-08-22 三平台重新交付（含 Android 完整版） | 已交付並驗過。 | 2026-08-22 |
 | [`docs/release/README-RELEASE.md`](release/README-RELEASE.md) | 臥龍傳 remake 可執行封裝 | 三平台候選封裝、Linux AppImage、Android APK、推廣片與驗收紀錄已集中於 [dist-all]… | 2026-08-12 |
 | [`docs/spec/00-index.md`](spec/00-index.md) | 00 — 規格索引：已解的規則有沒有被實作、有沒有被驗過 | 索引。規格是 docs/re/（程式碼在哪）與 internal/（我們寫了什麼） 之間的那一層——它回答「這條規則… | 2026-08-14 |
 | [`docs/spec/10-city-tick.md`](spec/10-city-tick.md) | 10 — 據點整備、威脅偵測與求援 | CONFORMED。整條鏈已實作，並在 PC-98 原版的執行期記憶體上取樣驗過 （+0x18／+0x14 各 0/… | 2026-08-14 |
