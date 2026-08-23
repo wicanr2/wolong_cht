@@ -120,6 +120,7 @@
 | 主君能不能編成 | [`76-lord-not-in-formation.md`](76-lord-not-in-formation.md) | 已實作並有單測；⚠ **預設「可」是 remake 差異**，原版不能 |
 | 敗走的兩段訊息 | [`77-rout-talk-messages.md`](77-rout-talk-messages.md) | 已實作並有單測；#1F 與 #23 ＋ 組 `0x198`。⚠ 敗走走不到 #20 |
 | 數值輸入器的上限語意 ＋ 財政 | [`78-amount-input-editor.md`](78-amount-input-editor.md) | 已實作並有單測；`sub_17C6E` 的 `ax` 是**上限**不是初值，錨點由呼叫端給 |
+| 新遊戲的勢力清單 | [`79-new-game-faction-list.md`](79-new-game-faction-list.md) | 已實作並有單測；視窗 (136,104)、五欄、一頁 10 列。⚠ 點擊路徑無頭驗不到（§3.1）|
 | 同狀態畫面對拍（方法）| [`90-same-state-parity.md`](90-same-state-parity.md) | 主畫面五區逐像素相同；§4.1 記下「參考影格本身會有東西」 |
 | 戰場的逐區對拍（分區）| [`91-tactical-parity.md`](91-tactical-parity.md) | 九區裡六區逐像素相同，戰場區 0.17% |
 

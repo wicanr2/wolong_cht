@@ -23,6 +23,9 @@ const (
 	launcherTitle launcherPhase = iota
 	launcherNewGameConfirm
 	launcherScenario
+	// launcherSelectFaction 是原版的勢力清單（docs/spec/79）。
+	// 原版的新遊戲是四層：ＹＥＳ／ＮＯ → 劇本 → **清單** → 君主卡。
+	launcherSelectFaction
 	launcherSelectPlayer
 	launcherGameConfirm
 	launcherLoad
@@ -89,6 +92,9 @@ type launcherModel struct {
 	confirmedPlayer int
 	confirmLord     string
 	notice          string
+	// factionTop 是勢力清單的捲動位置（docs/spec/79）。選中的是 cursor，
+	// 清單與君主卡**共用同一個 cursor**，不另存一份。
+	factionTop      int
 	pointerSeen     bool
 	pointerX        int
 	pointerY        int
@@ -114,7 +120,7 @@ func (l *launcherModel) rowCount() int {
 		return 2
 	case launcherScenario:
 		return 4
-	case launcherSelectPlayer:
+	case launcherSelectFaction, launcherSelectPlayer:
 		return len(l.players)
 	case launcherLoad:
 		return len(l.slots)
@@ -143,6 +149,11 @@ func (l *launcherModel) move(delta int) {
 	}
 	l.cursor += delta
 	l.clampCursor()
+	// 勢力清單要讓選中的那一列留在畫面上（docs/spec/79 §2）。
+	// 君主卡的 ↑↓ 也算——退回清單時才不會停在看不到的位置。
+	if l.phase == launcherSelectFaction || l.phase == launcherSelectPlayer {
+		l.scrollFactionListToCursor()
+	}
 }
 
 func (l *launcherModel) selectRow(row int) bool {
@@ -154,7 +165,7 @@ func (l *launcherModel) selectRow(row int) bool {
 }
 
 func (l *launcherModel) selectPlayer(id int) bool {
-	if l.phase != launcherSelectPlayer {
+	if l.phase != launcherSelectPlayer && l.phase != launcherSelectFaction {
 		return false
 	}
 	for i, p := range l.players {
@@ -181,9 +192,12 @@ func (l *launcherModel) setScenarioPlayers(index int, name string, players []lau
 		l.notice = "本劇本沒有可用的玩家勢力"
 		return false
 	}
-	l.phase = launcherSelectPlayer
+	l.phase = launcherSelectFaction
+	l.factionTop = 0
 	return true
 }
+
+
 
 func (l *launcherModel) back() {
 	l.notice = ""
@@ -194,12 +208,14 @@ func (l *launcherModel) back() {
 	case launcherScenario:
 		l.phase = launcherNewGameConfirm
 		l.cursor = 0
-	case launcherSelectPlayer:
+	case launcherSelectFaction:
 		l.phase = launcherScenario
 		l.cursor = l.scenario
+	case launcherSelectPlayer:
+		// 君主卡退回清單——原版就是這一層（docs/re/73 §1）。
+		l.phase = launcherSelectFaction
 	case launcherGameConfirm:
 		l.phase = launcherSelectPlayer
-		l.cursor = 0
 	}
 }
 
@@ -245,6 +261,13 @@ func (l *launcherModel) confirm() launcherResult {
 		}
 	case launcherScenario:
 		return launcherResult{kind: launcherPreviewScenario, scenario: l.cursor}
+	case launcherSelectFaction:
+		if l.cursor < 0 || l.cursor >= len(l.players) {
+			l.notice = "玩家勢力無效"
+			return launcherResult{}
+		}
+		l.phase = launcherSelectPlayer
+		l.notice = ""
 	case launcherSelectPlayer:
 		if l.cursor < 0 || l.cursor >= len(l.players) {
 			l.notice = "玩家勢力無效"
@@ -285,20 +308,6 @@ func (l *launcherModel) playerIndex() int {
 	return l.players[l.cursor].ID
 }
 
-func (l *launcherModel) visiblePlayers(max int) (start, end int) {
-	if max <= 0 || len(l.players) <= max {
-		return 0, len(l.players)
-	}
-	start = l.cursor - max/2
-	if start < 0 {
-		start = 0
-	}
-	if start+max > len(l.players) {
-		start = len(l.players) - max
-	}
-	return start, start + max
-}
-
 const (
 	launcherPanelX      = 112
 	launcherPanelY      = 56
@@ -309,8 +318,6 @@ const (
 	launcherListY       = 112
 	launcherListW       = launcherPanelW - launcherTextInset*2
 	launcherRowH        = 24
-	launcherPlayerMax   = 8
-	launcherPlayerListY = 88
 	launcherLoadListY   = 96
 	launcherLoadRowH    = 32
 	launcherNoticeY     = 288
@@ -341,9 +348,10 @@ func launcherRowRect(phase launcherPhase, row int) image.Rectangle {
 	case launcherScenario:
 		return image.Rect(launcherListX, launcherListY+row*launcherRowH,
 			launcherListX+launcherListW, launcherListY+(row+1)*launcherRowH)
-	case launcherSelectPlayer:
-		return image.Rect(launcherListX, launcherPlayerListY+row*launcherRowH,
-			launcherListX+launcherListW, launcherPlayerListY+(row+1)*launcherRowH)
+	case launcherSelectFaction, launcherSelectPlayer:
+		// 這兩頁都不走殼層的清單列：清單有自己的幾何（docs/spec/79），
+		// 君主卡只有兩個熱區（docs/spec/27 §2.1）。
+		return image.Rectangle{}
 	case launcherLoad:
 		return image.Rect(launcherListX, launcherLoadListY+row*launcherLoadRowH,
 			launcherListX+launcherListW, launcherLoadListY+(row+1)*launcherLoadRowH)
@@ -360,7 +368,7 @@ func launcherRowRect(phase launcherPhase, row int) image.Rectangle {
 // 滑鼠一移過去就換君主、一點下去就直接決定。
 // **那一頁的滑鼠改走卡片自己的兩個熱區**（`lordCardHotspotAt`）。
 func (l *launcherModel) pointerRow(x, y int) (int, bool) {
-	if l.phase == launcherSelectPlayer {
+	if l.phase == launcherSelectPlayer || l.phase == launcherSelectFaction {
 		return 0, false
 	}
 	for row := 0; row < l.rowCount(); row++ {
@@ -516,11 +524,19 @@ func (g *game) updateLauncher() error {
 			g.launcher.selectRow(row)
 		}
 	}
-	if g.launcher.phase == launcherSelectPlayer {
+	switch g.launcher.phase {
+	case launcherSelectPlayer:
 		if handled, err := g.updateLordCardPointer(); handled {
 			return err
 		}
-	} else if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+	case launcherSelectFaction:
+		if handled, err := g.updateFactionListPointer(); handled {
+			return err
+		}
+	}
+	if g.launcher.phase != launcherSelectPlayer &&
+		g.launcher.phase != launcherSelectFaction &&
+		inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		if row, ok := g.launcher.pointerRow(ebiten.CursorPosition()); ok {
 			g.launcher.selectRow(row)
 			if result := g.launcher.apply(launcherConfirm); result.kind != launcherNoResult {
@@ -625,6 +641,19 @@ func (g *game) drawLauncher(screen *ebiten.Image) {
 	// 上下鍵換。**不畫 launcher 自己的大框**——兩個框疊起來很難看，
 	// 而原版這一頁本來就只有那一個框。
 	l := g.launcher
+	if l.phase == launcherSelectFaction {
+		g.td.Draw(screen, g.launcherScenarioName(l.scenario),
+			factionListWinX, factionListWinY-textdraw.GlyphH-8, amber)
+		g.drawFactionList(screen)
+		g.td.Draw(screen, "點一列選君主　↑↓ 移動　Enter 決定　ESC 返回",
+			factionListWinX, factionListWinY+factionListWinH+8, dim)
+		if l.notice != "" {
+			g.td.Draw(screen, l.notice, factionListWinX,
+				factionListWinY+factionListWinH+8+textdraw.GlyphH+2,
+				color.RGBA{255, 180, 180, 255})
+		}
+		return
+	}
 	if l.phase == launcherSelectPlayer && l.cursor >= 0 && l.cursor < len(l.players) {
 		g.drawLordCard(screen, l.players[l.cursor], 0)
 		g.td.Draw(screen, g.launcherScenarioName(l.scenario),
@@ -672,31 +701,6 @@ func (g *game) drawLauncher(screen *ebiten.Image) {
 			rows[i] = g.launcherScenarioName(i)
 		}
 		drawRows(rows, launcherListY, l.cursor, launcherRowH)
-	case launcherSelectPlayer:
-		g.td.Draw(screen, "選擇君主／玩家勢力", launcherListX, 72, amber)
-		start, end := l.visiblePlayers(launcherPlayerMax)
-		rows := make([]string, 0, end-start)
-		for i := start; i < end; i++ {
-			rows = append(rows, launcherPlayerLabel(l.players[i]))
-		}
-		selected := l.cursor - start
-		for i, label := range rows {
-			y := launcherPlayerListY + i*launcherRowH
-			if start+i == l.cursor {
-				vector.DrawFilledRect(screen, float32(launcherListX), float32(y),
-					float32(launcherListW), launcherRowH, chrome.Select, false)
-			}
-			col := dim
-			if start+i == l.cursor {
-				col = white
-			}
-			g.td.Draw(screen, label, launcherListX, y+4, col)
-		}
-		if selected < 0 || selected >= len(rows) {
-			selected = 0
-		}
-		_ = selected
-		g.td.Draw(screen, launcherHint, launcherListX, launcherHintY, dim)
 	case launcherGameConfirm:
 		g.td.Draw(screen, "確認新遊戲", launcherListX+16, 112, amber)
 		lord := l.confirmLord
@@ -717,11 +721,6 @@ func (g *game) drawLauncher(screen *ebiten.Image) {
 	if l.notice != "" {
 		g.td.Draw(screen, l.notice, launcherListX, launcherNoticeY, color.RGBA{255, 180, 180, 255})
 	}
-	if l.phase != launcherSelectPlayer {
-		g.td.Draw(screen, launcherHint, launcherListX, launcherHintY, dim)
-	}
+	g.td.Draw(screen, launcherHint, launcherListX, launcherHintY, dim)
 }
 
-func launcherPlayerLabel(p launcherPlayer) string {
-	return fmt.Sprintf("%s　（%s）", p.Lord, p.Capital)
-}

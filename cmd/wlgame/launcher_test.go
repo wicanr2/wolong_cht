@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/wicanr2/wolong_cht/internal/state"
-	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
 func TestLauncherNewGameSelectionReachesConfirmedWorldRequest(t *testing.T) {
@@ -20,6 +19,10 @@ func TestLauncherNewGameSelectionReachesConfirmedWorldRequest(t *testing.T) {
 	players := []launcherPlayer{{ID: 7, Lord: "曹操", Capital: "許昌"}}
 	if !l.setScenarioPlayers(2, "第三章　蜀地偏安", players) {
 		t.Fatal("valid scenario player list was rejected")
+	}
+	// 選完劇本先進**勢力清單**，再進君主卡（docs/spec/79 §1）。
+	if got := l.apply(launcherConfirm); got.kind != launcherNoResult || l.phase != launcherSelectPlayer {
+		t.Fatalf("faction confirm = %#v phase=%v", got, l.phase)
 	}
 	if got := l.apply(launcherConfirm); got.kind != launcherNoResult || l.phase != launcherGameConfirm {
 		t.Fatalf("player confirm = %#v phase=%v", got, l.phase)
@@ -40,7 +43,7 @@ func TestLauncherCancelReturnsToPreviousScreen(t *testing.T) {
 	l.apply(launcherConfirm)
 	l.setScenarioPlayers(1, "第二章　赤壁之戰", []launcherPlayer{{ID: 3, Lord: "劉備", Capital: "成都"}})
 	if got := l.apply(launcherCancel); got.kind != launcherNoResult || l.phase != launcherScenario || l.cursor != 1 {
-		t.Fatalf("cancel player selection = %#v phase=%v cursor=%d", got, l.phase, l.cursor)
+		t.Fatalf("cancel faction list = %#v phase=%v cursor=%d", got, l.phase, l.cursor)
 	}
 }
 
@@ -139,37 +142,10 @@ func TestLauncherConfirmHitRectsMatchDrawnRows(t *testing.T) {
 	}
 }
 
-func TestLauncherLayoutContainsTenPlayerListAndHint(t *testing.T) {
-	safe := launcherTextSafeRect()
-	assertRectInside(t, image.Rect(launcherListX, 72,
-		launcherListX+textdraw.StringWidth("選擇君主／玩家勢力"), 72+textdraw.GlyphH), safe)
-	players := make([]launcherPlayer, 10)
-	for i := range players {
-		players[i] = launcherPlayer{
-			ID:      i,
-			Lord:    "司馬懿仲達",
-			Capital: "長安郿城",
-		}
-	}
-	l := newLauncher(false, nil)
-	l.phase = launcherSelectPlayer
-	l.players = players
-	l.cursor = len(players) - 1
-	start, end := l.visiblePlayers(launcherPlayerMax)
-	if got := end - start; got != launcherPlayerMax {
-		t.Fatalf("visible player rows = %d, want %d", got, launcherPlayerMax)
-	}
-	for row, playerIndex := 0, start; playerIndex < end; row, playerIndex = row+1, playerIndex+1 {
-		rect := launcherRowRect(launcherSelectPlayer, row)
-		assertRectInside(t, rect, safe)
-		label := launcherPlayerLabel(players[playerIndex])
-		assertRectInside(t, image.Rect(launcherListX, rect.Min.Y+4,
-			launcherListX+textdraw.StringWidth(label), rect.Min.Y+4+textdraw.GlyphH), safe)
-	}
-	hint := image.Rect(launcherListX, launcherHintY,
-		launcherListX+textdraw.StringWidth(launcherHint), launcherHintY+textdraw.GlyphH)
-	assertRectInside(t, hint, safe)
-}
+// ⚠ 這裡原本有一份 `TestLauncherLayoutContainsTenPlayerListAndHint`：
+// 它驗的是啟動殼層自己的「選君主」清單，而那份清單在 2026-08-24 被原版的
+// 勢力清單取代了（docs/spec/79）。**留著會驗一個畫不出來的畫面**——
+// 那正是這一輪要修掉的那種東西。現在的版面測試在 `factionlist_test.go`。
 
 func assertRectInside(t *testing.T, got, container image.Rectangle) {
 	t.Helper()

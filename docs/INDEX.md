@@ -231,6 +231,7 @@
 | [`docs/spec/76-lord-not-in-formation.md`](spec/76-lord-not-in-formation.md) | 76 — 主君能不能編成：系統選單裡的開關 | CONFORMED。系統選單多一列「主君編成」，遊戲中可隨時切； ⚠ 預設「可」——與原版行為不同，是使用者裁定的 … | 2026-08-23 |
 | [`docs/spec/77-rout-talk-messages.md`](spec/77-rout-talk-messages.md) | 77 — 敗走的兩段訊息：TALK #1F 與 #23 ＋ 八變體 | CONFORMED。 | 2026-08-23 |
 | [`docs/spec/78-amount-input-editor.md`](spec/78-amount-input-editor.md) | 78 — 數值輸入器的上限語意，以及把它接進財政視窗 | CONFORMED。 | 2026-08-23 |
+| [`docs/spec/79-new-game-faction-list.md`](spec/79-new-game-faction-list.md) | 79 — 新遊戲的勢力清單 | CONFORMED。 | 2026-08-24 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | CONFORMED。管線接起來了，也對原版跑過一輪 （[../playtest/37](../playtest/37… | 2026-08-15 |
 | [`docs/spec/91-tactical-parity.md`](spec/91-tactical-parity.md) | 91 — 戰場的逐區對拍：分區、同狀態怎麼達成 | CONFORMED。 | 2026-08-17 |
 
