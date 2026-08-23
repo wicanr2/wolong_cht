@@ -42,7 +42,7 @@ cmp dx, 28h / jnb 不畫      ; 可視 40 行
 bx = (Y*40 + X) * 8         ; 每格 8 bytes
 ds = cs:word_1D84E          ; 顯示表段
 bl = [si+1]                 ; 這格已經疊了幾張
-cmp bl, 4 / jnb 不畫        ; ⭐ 每格最多 4 層
+cmp bl, 4 / jnb 不畫        ; ⭐ 推入端最多 4 張（槽位其實有五個，見 ../re/72 §3）
 xchg al, [bx+si+3]          ; 疊到第 bl 層
 [si+1] = bl + 1
 if 值有變 → or [si], 20h    ; 標記這格要重畫
@@ -102,7 +102,7 @@ for each 軍團 c where c.Alive:
 | 繪製 | `internal/assets/library` 的 `RenderWorldMarked` 增一個疊圖參數 |
 | 差異 | 無。座標、圖塊編號與圖庫都照原版 |
 
-⚠ **每格最多 4 層那條先不做。** remake 的疊圖只有據點與軍團兩種來源，
+⚠ **推入上限那條先不做。** remake 的疊圖只有據點與軍團兩種來源，
 還碰不到上限；照抄一個沒有機會觸發的限制只會讓程式更難讀。
 **這是刻意的省略，不是漏掉**——真的要疊到四層時再補。
 

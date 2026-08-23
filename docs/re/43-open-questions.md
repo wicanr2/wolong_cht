@@ -20,22 +20,22 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 24 | 20 | 4 | 0 |
 | 資料保存 | 33 | 32 | 1 | 0 |
-| 程式碼理解 | 181 | 174 | 7 | 0 |
+| 程式碼理解 | 180 | 173 | 7 | 0 |
 | 驗收 | 51 | 41 | 10 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 162 | 148 | 14 | 0 |
-| **合計** | **457** | 420 | 37 | 0 |
+| 其他 | 159 | 145 | 14 | 0 |
+| **合計** | **453** | 416 | 37 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/re/` | 181 |
+| `docs/re/` | 180 |
 | `docs/spec/` | 129 |
 | `docs/playtest/` | 51 |
 | `docs/formats/` | 33 |
 | `docs/mechanics/` | 24 |
-| `docs/release/` | 16 |
+| `docs/release/` | 13 |
 | `docs/mobile/` | 12 |
 | `docs/reference/` | 6 |
 | `docs/promo/` | 5 |
@@ -107,7 +107,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `OPEN_S2`–`S5` 的 384,000 B | 是 §2 的三倍，多半是多張或多幀。開場播放器 `D7OPEN.EXE` 還沒反組譯 | 靜態 |
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`） | 靜態 |
 
-## 2.3 程式碼理解（181 條）
+## 2.3 程式碼理解（180 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -183,7 +183,6 @@
 | [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `sub_1F7A4` | 把 32 B 緩衝畫上 VRAM 的實際迴圈，未逐行讀 | 靜態 |
 | [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `YNFONT.EXE` 怎麼顯示中文 | 它不走 INT 15h（0 次），密碼輸入畫面的中文是它自己畫的。與本鏈無關，仍未解 | 靜態 |
 | [`re/30-corps-formation-ui.md`](../re/30-corps-formation-ui.md) | 軍團 `+0x00` 的位元 3／4／5 | 位元 1（有指令）、2（委任，`45`）已解；其餘仍未見成對的寫入端（`34` §4） | 靜態 |
-| [`re/30-corps-formation-ui.md`](../re/30-corps-formation-ui.md) | `sub_1D4C7` | 大地圖上實際畫圖塊的常式，未讀 | 靜態 |
 | [`re/31-faction-picker-screen.md`](../re/31-faction-picker-screen.md) | 分派表已印出，但 `sub_15AD1 → sub_15AFC` 的進入路徑仍未定位。 | （散句） | 靜態 |
 | [`re/31-faction-picker-screen.md`](../re/31-faction-picker-screen.md) | `cs:6056` 表的長度 | 前六筆是一組小 handler，後五筆疑似越過表尾（§1.2） | 靜態 |
 | [`re/32-strategy-detail-panels.md`](../re/32-strategy-detail-panels.md) | `sub_1817D` | 軍團面板的收尾，未讀（`sub_1812A` 已解，見 `51` §3） | 靜態 |
@@ -360,7 +359,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（162 條）
+## 2.6 其他（159 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -385,10 +384,7 @@
 | [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | linux/arm64 的本體 | 要在 arm64 的 Linux 上建（Ebiten 的 cgo 沒有交叉工具鏈） | 靜態 |
 | [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | Windows 的 smoke | 同第一項 | 靜態 |
 | [`release/02-three-platform-20260820.md`](../release/02-three-platform-20260820.md) | `verification/` 的截圖不在管線裡 | `promote` 每次都會清掉，要另外跑 `tools/release_smoke.sh` 再 `release_all_fs.py refresh` | 實測 |
-| [`release/04-three-platform-20260822.md`](../release/04-three-platform-20260822.md) | Windows／macOS 原生 GUI 實機驗收 | 沒有硬體，Docker 代不了 | 靜態 |
-| [`release/04-three-platform-20260822.md`](../release/04-three-platform-20260822.md) | Android 實機驗收 | 只有模擬器；16 KB page size 的裝置也還沒實際載過 | 靜態 |
-| [`release/04-three-platform-20260822.md`](../release/04-three-platform-20260822.md) | Android 正式簽章 | 還沒決定 keystore 怎麼保管 | 靜態 |
-| [`release/04-three-platform-20260822.md`](../release/04-three-platform-20260822.md) | 完整版在低容量裝置上 | APK 25 MB ＋ 解包後約 4.8 MB，安裝失敗的門檻沒量過 | 靜態 |
+| [`release/04-three-platform-20260822.md`](../release/04-three-platform-20260822.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
 | [`release/05-full-20260823.md`](../release/05-full-20260823.md) | 沒有音效裝置的**真實玩家** | ⛔ 一般啟動仍會掛。驗收模式擋住的是截圖路徑；Ebiten 沒有可查詢的音訊 API，目前沒有乾淨的偵測法 | 實測 |
 | [`release/05-full-20260823.md`](../release/05-full-20260823.md) | 軍團疊圖與原版同狀態對拍 | 算式與圖庫定案、抽驗過一張，**沒有逐張比對** 22 × 5 | 靜態 |
 | [`release/05-full-20260823.md`](../release/05-full-20260823.md) | Windows／macOS 原生 GUI 實機驗收 | 沒有硬體 | 靜態 |

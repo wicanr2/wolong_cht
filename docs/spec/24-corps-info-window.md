@@ -54,7 +54,7 @@
 [`../re/45`](../re/45-corps-command-mode.md) §1）；
 **別人的軍團**只是看，狀態列掛 TALK #4，按右鍵關掉。
 
-remake 這一輪只做顯示，兩種都是按 ESC 關掉。
+remake 這一輪只做顯示，兩種都是**右鍵或 ESC** 關掉（2026-08-23 起，[`73`](73-right-click-cancel.md)）。
 
 ## 3. remake 要做什麼
 

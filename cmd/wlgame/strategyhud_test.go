@@ -584,6 +584,8 @@ func TestLordCardLayout(t *testing.T) {
 
 // 系統選單的版面契約（docs/spec/13 §2.6、docs/re/55）。
 // 視窗矩形來自 sub_1895D(cx=0C0Dh)，六列由顯示清單場景 2 給。
+// ⚠ remake 在那六列**後面**多加一列「主君編成」（docs/spec/76），
+// 所以視窗比原版高一個列距；原版那六列的座標一格都沒動。
 func TestSystemMenuLayout(t *testing.T) {
 	checks := []struct {
 		name string

@@ -128,8 +128,13 @@ ImportActivity.onCreate:
 |---|---|
 | 單元測試 | ✅ `TestResolveDataDir`／`TestBundledDirNames`（`cmd/wlgame`）：明講的旗標、repo 路徑、exe 旁、全都找不到，四條各一個子測試 |
 | 解開就能跑 | ✅ tar 解到空目錄，`./wlgame` 不帶任何資料旗標，**沒有「載不到字型」那行警告**（接進 `tools/release_smoke.sh`）|
-| AppImage | ✅ `--appimage-extract-and-run` 不帶旗標，中文正常（`dist-all/verification/appimage-smoke-20260822.png`）|
-| Android | ✅ 模擬器乾淨安裝、**一個 byte 都沒推**，`ImportActivity` 自己解開 69 個檔並轉進 `MainActivity`（`dist-all/verification/android-bundled-20260822.png`）|
+| AppImage | ✅ `--appimage-extract-and-run` 不帶旗標，中文正常（`20260822` 批次）|
+| Android | ✅ 模擬器乾淨安裝、**一個 byte 都沒推**，`ImportActivity` 自己解開 69 個檔並轉進 `MainActivity`（`20260822` 批次的 APK）|
+
+⚠ **這裡刻意不寫 `dist-all/verification/…` 的路徑。** 那個目錄
+**每次重打發行都會被 `promote` 整個換掉**（`tools/release_smoke.sh` 的檔頭
+寫過這件事），所以拿它當長期證據的引用，下一批一產出就指向不存在的檔。
+⭐ **會被清掉的路徑不能當證據**——要留就寫批次號，重跑的指令寫在 §6。
 | APK 的資料與桌面一致 | ✅ 指紋 frame 1／60／120 ＝ `2b58e7b5…`／`5b3585cf…`／`36eb02d3…`，**與桌面逐位元組相同**。⭐ 資料只要差一個 byte，世界狀態就會分岔——這比逐檔比對便宜也更強 |
 | 四個平台同一個檔案集 | ✅ 桌面三包各 69 ＋ 3，APK 也是 69 ＋ 3 |
 | 沒有內嵌時不退步 | ✅ `WOLONG_BUNDLE_DATA` 沒開時 `tools/android_build.sh` 會驗 APK 裡**沒有**原版資產，有就讓建置失敗 |

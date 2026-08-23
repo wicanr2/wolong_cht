@@ -199,7 +199,8 @@ func (l *Library) RenderWorld(x0, y0, cols, rows, bank int) (*image.RGBA, error)
 }
 
 // RenderWorldMarked 與 RenderWorld 相同，但把據點中心的圖塊換成
-// 「跟著歸屬走」的那一張，首都再疊一張 MCH（docs/spec/53）。
+// 「跟著歸屬走」的那一張，首都再疊一張 MCH（docs/spec/53），
+// 最後把軍團疊上去（docs/spec/74）。
 func (l *Library) RenderWorldMarked(x0, y0, cols, rows, bank int,
 	marks []world.CityMark, corps []world.CorpsMark) (*image.RGBA, error) {
 	if l.World == nil || l.Tiles == nil {

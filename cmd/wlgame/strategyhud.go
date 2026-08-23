@@ -403,9 +403,13 @@ func (g *game) drawNaturalStrategyHUD(screen *ebiten.Image) {
 	g.drawFactionPicker(screen)
 }
 
-// 系統選單的版面**全部出自原版**（docs/spec/13 §2.6）：視窗矩形來自
+// 系統選單的版面出自原版（docs/spec/13 §2.6）：視窗矩形來自
 // `sub_160CC` → `sub_1895D(cx=0C0Dh)`，內容是顯示清單場景 2，
 // 六個熱區由那一支的迴圈登記（docs/re/55）。
+//
+// ⚠ **只有前六列出自原版。** 第七列「主君編成」是 remake 加的開關
+// （docs/spec/76），視窗因此比原版高一個列距。
+// 原版那六列的座標一格都沒動——新列只加在下面。
 const (
 	sysWinX, sysWinY = 208, 112
 	// ⚠ **原版是 192（六列）。** remake 多了「主君編成」那一列

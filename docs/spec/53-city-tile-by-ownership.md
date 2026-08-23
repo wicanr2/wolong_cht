@@ -96,7 +96,7 @@ remake 在載入時**逐座檢查**那一格是不是 205／208／211，
 | 項目 | 位置 |
 |---|---|
 | 換圖塊與疊圖的規則 | `internal/assets/world/citymark.go`（純函式，不認識遊戲狀態）|
-| 每幀套用 | `Map.RenderMarked` → `Library.RenderWorldMarked`；`cmd/wlgame` 的 `cityMarks()` 從世界狀態算出 `[]CityMark` |
+| 每幀套用 | `Map.RenderMarked` → `Library.RenderWorldMarked`；`cmd/wlgame` 的 `cityMarks()` 從世界狀態算出 `[]CityMark`。⚠ 2026-08-23 起同一支還收 `[]CorpsMark`（軍團疊圖，[`74`](74-corps-on-world-map.md)）——**這一份只管據點那一層** |
 | 歸屬分類 | `world.OwnershipOf(c.Owner, w.Player)`，`0x18` ＝ 無所屬 |
 | 中心格的自我檢查 | `cmd/wlgame` 的 `checkCityCentres()`：載入時對不上就 log 一行 |
 

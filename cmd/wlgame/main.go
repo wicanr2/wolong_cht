@@ -674,7 +674,10 @@ func (g *game) Update() error {
 				return ebiten.Termination
 			}
 			g.quitting = false
-		case pressed(ebiten.KeyN), pressed(ebiten.KeyEscape):
+		// ⚠ 右鍵也要能取消。這個對話框先前只認 N／ESC，是 2026-08-23
+		// 那一輪掃七個面板時漏掉的第八個（docs/spec/73 §2）——它不在
+		// `docs/spec/73` 的清單裡，因為它不是「面板」而是離開確認。
+		case pressed(ebiten.KeyN), g.cancelled():
 			g.quitting = false
 		}
 		return nil

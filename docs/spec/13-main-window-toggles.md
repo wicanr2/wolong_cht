@@ -134,6 +134,11 @@ remake 沿用這個形狀，把還沒接的功能寫成值（「未接入」）�
 **不要因為沒做就把列拿掉**，那會讓缺口從畫面上消失。
 先前 remake 只有五列，漏掉「遊戲結束」。
 
+⚠ **2026-08-23 起 remake 多了第七列「主君編成」**（開關，
+[`76`](76-lord-not-in-formation.md)），視窗從 192 高變成 216。
+⭐ **新列加在原版六列的後面**，所以上面那張座標表對前六列仍然逐項成立；
+變的只有視窗下緣多出來的 24 px。
+
 ⚠ 值格**只有框沒有底**：底色是「 ＯＫ 」那個字串自己帶的
 （`arg2` ＝ `5001`，[`docs/re/55`](../re/55-system-menu-window.md) §3）。
 
@@ -149,7 +154,7 @@ remake 沿用這個形狀，把還沒接的功能寫成值（「未接入」）�
 | 方式 | 內容 |
 |---|---|
 | 單元測試 | `TestSpeedsAreIndependent`（兩個速度互不影響、夾在 0–4）、`TestSystemRowCyclesSpeedThroughFiveOriginalSteps`（五檔循環、列與列不互相命中）|
-| 單元測試 | `TestSystemMenuLayout`：視窗矩形、六列的座標與列距、值格不疊到標籤底、六個熱區逐格重合、末列是「遊戲結束」|
+| 單元測試 | `TestSystemMenuLayout`：視窗矩形、各列座標與列距、值格不疊到標籤底、熱區逐格重合、**原版六列的標籤與順序沒被動到**（遊戲結束仍是索引 5）|
 | 單元測試 | `TestHUDSwitchGeometryAndSemantics`：五個熱區矩形、左開右關不是 toggle、第五格不接東西、系統視窗共用 `g.open[winSystem]` |
 | 截圖 | ✅ [`docs/playtest/24`](../playtest/24-window-toggles.md) §3 |
 | 對原版 | ✅ 邊線位置對上（168／184／192／199），見 [`docs/playtest/24`](../playtest/24-window-toggles.md) §2。**逐像素沒比**——參考幀是壓縮過的影片 |

@@ -166,9 +166,13 @@ func (m *Map) applyDecor(mark CityMark, base byte, put func(x, y int, tile byte)
 }
 
 // RenderMarked 與 Render 相同，但先照 marks 換掉據點中心（與大城的四個角）
-// 的圖塊，再把首都的 MCH 圖塊疊上去。
+// 的圖塊，再把首都的 MCH 圖塊疊上去，最後疊 corps（docs/spec/74）。
 //
-// mch 可以是 nil（沒載到 `MMAP.MCH`）——那樣只少了首都那一張，
+// ⚠ **軍團畫在首都疊圖之後**：同一格可能兩者都有（軍團在自己的首都裡），
+// 而原版的顯示表是後推的層蓋在前面的層上（`sub_1D66A` 依序消費 si+3 起
+// 那幾個槽，docs/re/72 §3）。
+//
+// mch 可以是 nil（沒載到 `MMAP.MCH`）——那樣少的是首都與軍團那幾張，
 // 其餘照畫，不要整張失敗。
 func (m *Map) RenderMarked(ts *TileSet, mch *MCH, pal *palette.Palette, bank,
 	x0, y0, cols, rows int, marks []CityMark, corps []CorpsMark) (*image.RGBA, error) {
