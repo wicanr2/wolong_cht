@@ -427,6 +427,11 @@ type CorpsEvent struct {
 	// 所以計數要分開，不然量出來的「軍團損耗」會把回收算成損失。
 	Routed bool
 
+	// RoutEnded 表示這支軍團的敗走倒數在這個 tick 歸零（原版 `sub_12A7E`）：
+	// 軍團記錄清掉、主將解職。**訊息掛在這一刻**，不是敗走的當下
+	// （`docs/spec/77`）。
+	RoutEnded bool
+
 	// GovernorReturned 不是 −1 表示**那個據點派駐的內政官被遣回了**
 	// （原版 `sub_14D63`，docs/spec/48），值是武將編號。
 	GovernorReturned int
@@ -445,8 +450,10 @@ func (w *World) tickCorps(hour int, rng combat.Rand) []CorpsEvent {
 		if !w.Corps[i].Alive {
 			// 敗走中的軍團不算活著，但還有一個倒數要跑
 			// （原版 `sub_125A3` 的 `test byte [si+2240h], 8`）。
-			if w.Corps[i].Routing {
-				w.tickRout(i)
+			if w.Corps[i].Routing && w.tickRout(i) {
+				out = append(out, CorpsEvent{Corps: i, Enemy: -1, Captured: -1,
+					Relocated: capital.None, GovernorReturned: noGovernor,
+					RoutEnded: true})
 			}
 			continue
 		}

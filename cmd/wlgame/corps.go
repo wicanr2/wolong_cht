@@ -488,6 +488,7 @@ func (g *game) openCorpsListWith(rows []int, hint string, pick func(int) bool) {
 func (g *game) reportCorps(ev state.Event) {
 	for _, e := range ev.Corps {
 		g.reportGovernorReturn(e)
+		g.reportRout(e)
 		if e.Battle == nil {
 			continue
 		}
@@ -584,6 +585,52 @@ func (g *game) reportGovernorReturn(e state.CorpsEvent) {
 		resolveBattleTalkIndex(governorRegretTalkBase, gen.TalkVariant),
 		vars, gen.Portrait)
 }
+
+// reportRout 是敗走的兩段訊息（docs/spec/77）。
+//
+// ⭐ **兩段掛在不同時刻**：`sub_12977` 在敗走成立的當下出 #1F，
+// `sub_12A7E` 在 48 tick 的倒數歸零時出 #23 ＋ 主將自己的檢討句。
+// 中間那 48 個 tick 軍團已經從地圖上消失，但主將還沒回來。
+//
+// ⚠ **這條路徑到不了 #20**（「沒能將{1}捉拿到手」）。原版第二個
+// `cmp` 比的是呼叫端傳進來的勢力，而敗走傳的就是軍團自己的勢力——
+// 第一個沒中，第二個也不會中。#20 屬於戰鬥脫身那條路。
+func (g *game) reportRout(e state.CorpsEvent) {
+	if !e.Routed && !e.RoutEnded {
+		return
+	}
+	if e.Corps < 0 || e.Corps >= len(g.world.Corps) {
+		return
+	}
+	if g.world.Corps[e.Corps].Faction != g.world.Player {
+		return // 原版只對玩家自己的軍團出訊息
+	}
+	lead := g.world.Leader(e.Corps)
+	if lead < 0 || lead >= len(g.world.Generals) {
+		return
+	}
+	gen := &g.world.Generals[lead]
+	vars := map[byte]string{'1': big5(gen.Name), '6': ""}
+	if e.Routed {
+		g.enqueueTalk(routTalk, vars)
+		return
+	}
+	g.enqueueTalk(routReturnTalk, vars)
+	g.enqueueTalkWithPortrait(
+		resolveBattleTalkIndex(routRegretTalkBase, gen.TalkVariant),
+		vars, gen.Portrait)
+}
+
+const (
+	// routTalk 是「{1}大人的部隊遭殲滅！幸好已逃過敵軍之手。」
+	routTalk = 0x1F
+	// routReturnTalk 是「{1}大人平安歸來了。」
+	routReturnTalk = 0x23
+	// routRegretTalkBase 是主將自己那一句的**組編號**（不是索引），
+	// 展開後落在 422–429。⚠ 內政官那一組是 `0x1A6`（534–541），
+	// 兩組長得一樣但句子不同。
+	routRegretTalkBase = 0x198
+)
 
 const (
 	// governorReturnTalk 是「{2}內政官的{1}大人因為據點被攻陷而歸來了。」

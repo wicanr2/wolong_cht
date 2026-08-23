@@ -242,6 +242,13 @@ func clampFunds(v int) int {
 	return v
 }
 
+// ClampReserve 把預備兵夾進 0–MaxReserve。
+//
+// ⚠ **退兵回池那條也要用它**（`internal/state` 的 `poolBack`）。
+// 原版 `sub_155EC` 的 `0xFFDC` 是在退兵路徑上驗到的（docs/spec/21 §5），
+// 而 remake 先前只有月結加兵那一邊夾——**同一條規則兩份實作，其中一份漏了**。
+func ClampReserve(v int) int { return clampReserve(v) }
+
 func clampReserve(v int) int {
 	if v > MaxReserve {
 		return MaxReserve

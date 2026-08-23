@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**449 列分布在 169 份文件，平均每份 2.7 列。**
+**448 列分布在 169 份文件，平均每份 2.7 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,15 +44,15 @@
 | 程式碼理解 | 176 | 169 | 7 | 0 |
 | 驗收 | 51 | 41 | 10 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 159 | 145 | 14 | 0 |
-| **合計** | **449** | 412 | 37 | 0 |
+| 其他 | 158 | 144 | 14 | 0 |
+| **合計** | **448** | 411 | 37 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/re/` | 176 |
-| `docs/spec/` | 129 |
+| `docs/spec/` | 128 |
 | `docs/playtest/` | 51 |
 | `docs/formats/` | 33 |
 | `docs/mechanics/` | 24 |
@@ -300,7 +300,7 @@
 | [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | `sub_1041E`（`ENDPAL.BRG`）怎麼套 | 只知道它載檔 / 與 `GAMEPAL.BRG` 同格式的話直接沿用（`../formats/02`） | 靜態 |
 | [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | 淡入淡出的階數與色階 | 17 階（`cx` 0–0x10）已確定，每階怎麼算沒讀 / `sub_1035F`／`sub_103DC` | 靜態 |
 | [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | `cs:0x780` 那張字幕描述子表 | §3.1 解出結構（幕序索引 → 筆數 ＋ 每筆三個 word），**表的內容沒 dump** / `ida_dump.py` 對 `D7END.EXE` 的 `0x780` 起 | 靜態 |
-| [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | BGM 的起訖 | `ENDBGM.DAT` 走 INT 61h、與 `KI.EXE` 同一條音源路徑（已解），remake 也有 `endbgm-0`（`../spec/29`），但**還沒接進結局播放的起訖**（`../spec/67` §7） / 對 `sub_10500` 的呼叫點與 `loc_1007A` 的收尾 | 靜態 |
+| [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | BGM 的**起訖時點** | `ENDBGM.DAT` 走 INT 61h、與 `KI.EXE` 同一條音源路徑（已解）。⚠ 2026-08-23 起 remake **整段結局都放 `endbgm-0`**（`musicTrack()`）——先前放的是 `overbgm-0`，那是 `D7OVER.EXE` 的遊戲結束曲。**剩下的缺口只有… | 靜態 |
 | [`re/71-strategy-hotspot-dispatch.md`](../re/71-strategy-hotspot-dispatch.md) | 右鍵表的真實表長 | §2.1。兩種讀法都說得通，靜態影像分不出來，要動態取樣哪些碼會配右鍵 | 靜態 |
 | [`re/71-strategy-hotspot-dispatch.md`](../re/71-strategy-hotspot-dispatch.md) | `funcs_159C0[0x00]`–`[0x08]` 那九筆 | 都不是函式起點。是別的資料還是真的 handler，沒查 | 靜態 |
 | [`re/71-strategy-hotspot-dispatch.md`](../re/71-strategy-hotspot-dispatch.md) | `sub_188B0` | 畫勢力名的那一支，沒讀（`sub_15C14` 在勢力存在時呼叫它） | 靜態 |
@@ -376,7 +376,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（159 條）
+## 2.6 其他（158 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -428,12 +428,11 @@
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |
-| [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 退兵回池 | `sub_14717` 已讀（一點對一點、上限 65,500），remake 還沒有「解散軍團把兵退回去」的路徑 | 靜態 |
-| [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 池的上限 | `sub_155EC` 的 `0xFFDC` 只在退兵路徑上驗過；月結加兵是不是同一支未查 | 靜態 |
+| [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 池的上限 | `sub_155EC` 的 `0xFFDC` 只在退兵路徑上驗過；月結加兵是不是同一支未查。**remake 兩條路徑現在都夾**（`economy.ClampReserve`），但那是照著同一個常數做的，不是證明原版共用同一支 | 靜態 |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 頭像的邊框 | `sub_107D2` 只 blit 64×64 的圖塊，**框在哪裡畫的沒找到**——場景 5 的 op 清單裡沒有頭像那一格的框 | 靜態 |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 兵種標籤 | 畫面用場景 5 的「主將」，規則層的 `army.Position` 第一個是「大將」（原版 TALK #62 也這樣說）。兩處用語不同是原版就有的，不要統一 | 靜態 |
 | [`spec/23-city-info-window.md`](../spec/23-city-info-window.md) | `cs:word_1987C` 由誰配置 | 原版每次開視窗都重讀一次檔（`../re/50` §4）；remake 的 `library` 是整檔載入，不需要這一層 | 靜態 |
-| [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 指令流程與 remake 不同 | `sub_17FDB` 已解（`../re/45` §1：選據點 → 選「戰鬥指揮／委任／解體」→ 寫 `+0x00` 位元 2、`+0x0B`、`+0x20`）。**remake 的行軍指令走自己的流程（`M`），沒有那三個選項** | 靜態 |
+| [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 指令流程的**入口**與 remake 不同 | `sub_17FDB` 已解（`../re/45` §1：選據點 → 選「戰鬥指揮／委任／解體」→ 寫 `+0x00` 位元 2、`+0x0B`、`+0x20`）。⚠ 先前這一列寫「remake 沒有那三個選項」——**那是錯的**：`cmd/wlgame/marchmode.go` 三個選項都在（`docs/s… | 靜態 |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 空槽標記 | 原版用名稱欄第一個字 `0xD0A1`；remake 用「載得起來且玩家勢力有效」判定，兩者不等價 | 靜態 |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 新遊戲共用 | remake 的啟動殼層是自己的畫面，還沒有換成這個四槽視窗 | 靜態 |
 | [`spec/26-yes-no-dialog.md`](../spec/26-yes-no-dialog.md) | 原版的使用者 | `sub_18DC8` 只有一個呼叫端 `sub_11AC3`（新遊戲流程），問題文字由那裡給，內容未讀 | 靜態 |
@@ -456,12 +455,11 @@
 | [`spec/31-tactical-sidebar.md`](../spec/31-tactical-sidebar.md) | `▶▶` 列的行為 | `byte_1A06A` 在 `0xEB`／`0x74` 間切，`loc_1A065` 未逐行讀（`../re/60` §12） | 靜態 |
 | [`spec/31-tactical-sidebar.md`](../spec/31-tactical-sidebar.md) | 段 1 五塊美術的圖形語意 | 貼點與尺寸 confirmed，圖上畫什麼要另外解（`../formats/03` §5.3） | 靜態 |
 | [`spec/31-tactical-sidebar.md`](../spec/31-tactical-sidebar.md) | 城兵臨時軍團的主將名 | `0x4200` 的索引算式指到武將表全零那一筆（`../re/60` §4.1） | 靜態 |
-| [`spec/32-gate-strength-bar.md`](../spec/32-gate-strength-bar.md) | 右鍵提前收掉 | 原版是熱區 `0x1D` 的右鍵 handler（`../re/60` §10）；remake 沒有戰場區的右鍵熱區層 | 靜態 |
 | [`spec/33-squad-selection.md`](../spec/33-squad-selection.md) | 待機兵條的欄位語意 | `word_1D30A:+0x09 + 4k` 在 `../re/11` §3.9 記成「第 k 隊的待機兵數」；條的上限 76 遠小於一隊 100 兵，所以開局會頂在上限 | 靜態 |
 | [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 最高速在原版實機是多少 | 機器相依。DOSBox 固定 cycles 量得到「那台的上限」，量不到「原版的答案」 | 實測 |
 | [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 戰場幀是否等於 remake 的一次 `Step()` | 原版一幀做完整條戰場迴圈；remake 的 `Step()` 是規則層一步。**兩者對齊過但沒逐項比** | 靜態 |
 | [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 音效驅動不在時的行為 | `../re/61` §6 | 靜態 |
-| [`spec/35-strategy-minimap.md`](../spec/35-strategy-minimap.md) | `sub_188B0`（畫勢力名） | `sub_15C14` 在勢力存在時呼叫它，沒讀。remake 直接畫 `Faction.Name` | 靜態 |
+| [`spec/35-strategy-minimap.md`](../spec/35-strategy-minimap.md) | `sub_188B0`（畫勢力名） | `sub_15C14` 在勢力存在時呼叫它，沒讀。remake 走 `g.diplomacyFactionName(n)`（與外交視窗同一支，慣例是「勢力 ＝ 君主名」）——⚠ 先前這一列寫成 `Faction.Name`，**那個欄位不存在** | 靜態 |
 | [`spec/36-ground-planes-and-climbing.md`](../spec/36-ground-planes-and-climbing.md) | 命令 6 為什麼擋高平面橫移 | 命令碼 6 是什麼沒對過 | 靜態 |
 | [`spec/36-ground-planes-and-climbing.md`](../spec/36-ground-planes-and-climbing.md) | 爬升／下降的通行判定與原版不同 | `sub_1B15D`／`sub_1B186` 已解（`../re/36` §6.3：同一張地圖兩層各 `0x1000` B，`al & 0x7F` 有單位就擋，否則看地形值是否 ≥ `0xF8`）。**remake 用「目標平面有地面」代替，還沒照這條改** | 靜態 |
 | [`spec/37-tactical-player-controls.md`](../spec/37-tactical-player-controls.md) | 選了陣形之後原版有沒有立刻重排 | 機器碼只寫偏移，**沒有看到立刻移動的呼叫**；remake 照抄（等命令） | 靜態 |
@@ -476,7 +474,6 @@
 | [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 框的底紋 | 龍紋的點陣找到了（`../formats/03` §5.5），但 96 列的排法還沒解，remake 仍用純色 | 靜態 |
 | [`spec/42-event-scene-speakers.md`](../spec/42-event-scene-speakers.md) | 撥款事件（4／5） | 同上，還沒對過哪一則進下框 | 靜態 |
 | [`spec/43-rout-on-blocked-return.md`](../spec/43-rout-on-blocked-return.md) | `loc_1491B` 的其他成本項 | 只解出「非己方據點 ＋0xA6」，廣度優先搜尋本身沒逐條讀 | 靜態 |
-| [`spec/43-rout-on-blocked-return.md`](../spec/43-rout-on-blocked-return.md) | TALK #1F／#20／#23／#198 | remake 還沒把這四則接上 | 靜態 |
 | [`spec/44-advise-original-text.md`](../spec/44-advise-original-text.md) | 逐句節拍 | 原版每句要等玩家按鍵才往下走，remake 直接顯示最新一句（`45` §3.1） | 靜態 |
 | [`spec/45-advise-scene-layout.md`](../spec/45-advise-scene-layout.md) | 選單的反白樣式 | 原版怎麼畫游標列沒解，remake 用自己的反白條 | 靜態 |
 | [`spec/46-post-battle-retreat.md`](../spec/46-post-battle-retreat.md) | `loc_1491B` 的方向回傳 | `±4` 決定讀哪一個鄰接槽，remake 用 `Route` 的第 2 個節點取代，沒有逐條對過兩者選的是不是同一站 | 靜態 |
@@ -514,7 +511,7 @@
 | [`spec/67-ending-playback.md`](../spec/67-ending-playback.md) | 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`）；remake 先用疊黑 | 靜態 |
 | [`spec/67-ending-playback.md`](../spec/67-ending-playback.md) | `END_S12` 右半 | 用 640 版面畫出來右邊是雜訊，可能還有第二塊（`formats/09` §6） | 實測 |
 | [`spec/67-ending-playback.md`](../spec/67-ending-playback.md) | 第一幕的捲動 | §3 標成 remake 差異；要做就得先對 `sub_10094` 那一段的逐列位移 | 靜態 |
-| [`spec/67-ending-playback.md`](../spec/67-ending-playback.md) | 音樂 | `ENDBGM.DAT` 已可播（`endbgm-0`），但還沒接進這一段的起訖 | 靜態 |
+| [`spec/67-ending-playback.md`](../spec/67-ending-playback.md) | 音樂的**起訖時點** | ⚠ 2026-08-23 起整段結局都放 `endbgm-0`（`cmd/wlgame` 的 `musicTrack()`，排在 `world == nil` 之前——`-open-ending` 那條 fixture 沒有世界）。**先前放的是 `overbgm-0`**，那是另一支執行檔的遊戲結束曲。剩下的缺… | 靜態 |
 | [`spec/68-death-animation.md`](../spec/68-death-animation.md) | 大將陣亡 | 大將不會死（`sub_1B618` 的 `IsGeneral` 那一條），所以 `+0` 那一組實際只有騎馬會用到；大將的倒地圖是不是死碼還沒查 | 靜態 |
 | [`spec/69-world-fingerprint.md`](../spec/69-world-fingerprint.md) | 跨平台實測 | Android 端還沒有東西可以跑（里程碑 A 本身） | 實測 |
 | [`spec/69-world-fingerprint.md`](../spec/69-world-fingerprint.md) | 戰術戰鬥要不要進指紋 | 目前不進。要驗戰場的決定性得另外做一個，`tactical.Battle` 的欄位更多 | 靜態 |
@@ -533,6 +530,8 @@
 | [`spec/76-lord-not-in-formation.md`](../spec/76-lord-not-in-formation.md) | `sub_1820E` 的候選過濾條件 | 未讀。定案要靠它——現在是強證據 | 靜態 |
 | [`spec/76-lord-not-in-formation.md`](../spec/76-lord-not-in-formation.md) | 君主被編成之後原版會怎樣 | 沒試過。若原版其實允許、只是清單排序讓人以為不行，§2 要推翻（但開關本身照樣成立） | 靜態 |
 | [`spec/76-lord-not-in-formation.md`](../spec/76-lord-not-in-formation.md) | 開關要不要進存檔 | **不進**。與旁邊的速度設定一樣是 session 設定，讀檔不會帶回來 | 靜態 |
+| [`spec/77-rout-talk-messages.md`](../spec/77-rout-talk-messages.md) | `sub_10CDE` 做什麼 | `#23` 前面那一個呼叫。變數推得出是主將名，但那支本身沒讀 | 靜態 |
+| [`spec/77-rout-talk-messages.md`](../spec/77-rout-talk-messages.md) | 戰鬥脫身的 `#1F`／`#20` | 同一支 `sub_12977` 也服務戰鬥脫身；remake 那條路現在畫的是自己的句子，沒接原文 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 | 靜態 |

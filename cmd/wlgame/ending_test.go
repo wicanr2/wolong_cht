@@ -153,3 +153,19 @@ func TestEndingIsLongEnoughToRead(t *testing.T) {
 			"看圖時間大概又被拿掉了", frames, frames/endingFPS)
 	}
 }
+
+// ⭐ 結局要放 `endbgm-0`，不是 `overbgm-0`。
+// 結局播的時候勝負早就定了，所以這一格若排在 Outcome 之後，
+// 整段結局會放成遊戲結束曲——而那是另一支執行檔的配樂（docs/re/58 §6）。
+func TestEndingUsesEndingMusic(t *testing.T) {
+	g := &game{}
+	g.ending = &endingState{art: &cutscene.Ending{Lines: []string{"一"}}}
+	if got := g.musicTrack(); got != "endbgm-0" {
+		t.Errorf("結局播 %q，應該是 endbgm-0", got)
+	}
+	// 反向對照：結局收掉之後不可以還黏在 endbgm。
+	g.ending = nil
+	if got := g.musicTrack(); got == "endbgm-0" {
+		t.Error("結局結束了還在播 endbgm-0")
+	}
+}

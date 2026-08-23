@@ -584,6 +584,16 @@ func (g *game) musicTrack() string {
 	case g.launcher != nil:
 		// `sub_11A6E` 開機流程的第一件事就是曲 0（docs/re/58 §3）。
 		return "bgm-0"
+	case g.endingActive():
+		// ⭐ **結局這一格要排在很前面。** 排在 `Outcome` 之後的話，
+		// 整段結局會放成 `overbgm-0`（遊戲結束曲，那是 `D7OVER.EXE` 的）
+		// ——結局播的時候勝負早就定了。排在 `world == nil` 之後也不行：
+		// `-open-ending` 那條驗收 fixture 根本沒有世界。
+		//
+		// ⚠ **起訖仍未解**：原版由 `sub_10500` 的呼叫點起、`loc_1007A` 收尾，
+		// 兩處都沒讀（docs/spec/67 §7）。這裡是「整段結局都放」，
+		// 不是照原版的時點——那一半仍是缺口。
+		return "endbgm-0"
 	case g.world == nil:
 		return ""
 	case g.world.Outcome() != state.InProgress:

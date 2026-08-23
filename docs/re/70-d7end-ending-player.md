@@ -162,7 +162,7 @@ sub_10204 換整頁 → 一邊 si -= 0x50、一邊 dx += 0x50 的捲動，每步
 | `sub_1041E`（`ENDPAL.BRG`）怎麼套 | 只知道它載檔 | 與 `GAMEPAL.BRG` 同格式的話直接沿用（[`../formats/02`](../formats/02-brg-palette.md)）|
 | 淡入淡出的階數與色階 | 17 階（`cx` 0–0x10）已確定，每階怎麼算沒讀 | `sub_1035F`／`sub_103DC` |
 | `cs:0x780` 那張字幕描述子表 | §3.1 解出結構（幕序索引 → 筆數 ＋ 每筆三個 word），**表的內容沒 dump** | `ida_dump.py` 對 `D7END.EXE` 的 `0x780` 起 |
-| BGM 的起訖 | `ENDBGM.DAT` 走 INT 61h、與 `KI.EXE` 同一條音源路徑（已解），remake 也有 `endbgm-0`（[`../spec/29`](../spec/29-audio.md)），但**還沒接進結局播放的起訖**（[`../spec/67`](../spec/67-ending-playback.md) §7）| 對 `sub_10500` 的呼叫點與 `loc_1007A` 的收尾 |
+| BGM 的**起訖時點** | `ENDBGM.DAT` 走 INT 61h、與 `KI.EXE` 同一條音源路徑（已解）。⚠ 2026-08-23 起 remake **整段結局都放 `endbgm-0`**（`musicTrack()`）——先前放的是 `overbgm-0`，那是 `D7OVER.EXE` 的遊戲結束曲。**剩下的缺口只有「原版什麼時候起、什麼時候停」** | 對 `sub_10500` 的呼叫點與 `loc_1007A` 的收尾 |
 
 已解：第一幕是 **320 px 寬**、貼在 x ＝ 160（`sub_1016D` 的 `di = 0x14`），
 三塊分別在 16,000（平面 0／1 交錯）、47,744（平面 2）、59,072（平面 3）

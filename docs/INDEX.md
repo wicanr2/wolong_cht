@@ -227,6 +227,7 @@
 | [`docs/spec/74-corps-on-world-map.md`](spec/74-corps-on-world-map.md) | 74 — 軍團要畫在大地圖上 | CONFORMED。軍團以 MMAP.MCH 的原版圖塊疊在大地圖上，桌面與手機共用同一條算式。 | 2026-08-23 |
 | [`docs/spec/75-bundled-audio.md`](spec/75-bundled-audio.md) | 75 — 完整版要出得了聲 | CONFORMED。完整版收 32 個 ogg，wlgame 沒給 -audio 時會自己找執行檔旁邊的 audio/。 | 2026-08-23 |
 | [`docs/spec/76-lord-not-in-formation.md`](spec/76-lord-not-in-formation.md) | 76 — 主君能不能編成：系統選單裡的開關 | CONFORMED。系統選單多一列「主君編成」，遊戲中可隨時切； ⚠ 預設「可」——與原版行為不同，是使用者裁定的 … | 2026-08-23 |
+| [`docs/spec/77-rout-talk-messages.md`](spec/77-rout-talk-messages.md) | 77 — 敗走的兩段訊息：TALK #1F 與 #23 ＋ 八變體 | CONFORMED。 | 2026-08-23 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | CONFORMED。管線接起來了，也對原版跑過一輪 （[../playtest/37](../playtest/37… | 2026-08-15 |
 | [`docs/spec/91-tactical-parity.md`](spec/91-tactical-parity.md) | 91 — 戰場的逐區對拍：分區、同狀態怎麼達成 | CONFORMED。 | 2026-08-17 |
 

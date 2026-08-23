@@ -760,3 +760,21 @@ func TestNeutralCityFallKeepsNoGovernor(t *testing.T) {
 		t.Errorf("內政官槽被動了：%d", got)
 	}
 }
+
+// 倒數歸零那一 tick 才回 true——訊息掛在這一刻（docs/spec/77）。
+func TestRoutEndSignalsOnlyOnce(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[1]
+	node := w.clampCity(w.Factions[f].Capital)
+	i := aiCorps(t, w, f, node)
+	w.routCorps(i)
+
+	for n := 0; n < routDuration-1; n++ {
+		if w.tickRout(i) {
+			t.Fatalf("第 %d tick 就宣告結束，倒數還有 %d", n+1, w.Corps[i].RoutTimer)
+		}
+	}
+	if !w.tickRout(i) {
+		t.Fatal("倒數歸零那一 tick 沒有回 true")
+	}
+}

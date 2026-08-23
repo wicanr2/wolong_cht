@@ -113,6 +113,12 @@
 | 世界指紋（**remake 設施，無原版出處**）| [`69-world-fingerprint.md`](69-world-fingerprint.md) | 已實作並有單測（含 15 欄的正對照）；決定性迴歸 ＋ Android 里程碑 A 的判準 |
 | 手機版的底色與外框取自原版 | [`70-phone-chrome.md`](70-phone-chrome.md) | 已實作並有單測；顏色與外框與桌面版共用 `internal/ui/chrome` |
 | 桌面版逐幀錄製（**remake 工具，無原版出處**）| [`71-promo-live-capture.md`](71-promo-live-capture.md) | 已實作；推廣主片的大地圖與兩場戰鬥改成實跑錄製 |
+| 內含遊戲檔案的四平台完整版（**發行設施，無原版出處**）| [`72-bundled-game-data.md`](72-bundled-game-data.md) | 已實作並實跑驗過；`dist-all` 是私人批次，不可外流 |
+| 右鍵取消是輸入層的語意 | [`73-right-click-cancel.md`](73-right-click-cancel.md) | 已實作並有單測；七個面板共用同一支 `cancelled()` |
+| 軍團要畫在大地圖上 | [`74-corps-on-world-map.md`](74-corps-on-world-map.md) | 已實作並有單測；用 `MMAP.MCH` 的原版圖塊，桌面與手機共用算式 |
+| 完整版要出得了聲（**發行設施**）| [`75-bundled-audio.md`](75-bundled-audio.md) | 已實作；沒給 `-audio` 時自己找執行檔旁邊的 `audio/` |
+| 主君能不能編成 | [`76-lord-not-in-formation.md`](76-lord-not-in-formation.md) | 已實作並有單測；⚠ **預設「可」是 remake 差異**，原版不能 |
+| 敗走的兩段訊息 | [`77-rout-talk-messages.md`](77-rout-talk-messages.md) | 已實作並有單測；#1F 與 #23 ＋ 組 `0x198`。⚠ 敗走走不到 #20 |
 | 同狀態畫面對拍（方法）| [`90-same-state-parity.md`](90-same-state-parity.md) | 主畫面五區逐像素相同；§4.1 記下「參考影格本身會有東西」 |
 | 戰場的逐區對拍（分區）| [`91-tactical-parity.md`](91-tactical-parity.md) | 九區裡六區逐像素相同，戰場區 0.17% |
 

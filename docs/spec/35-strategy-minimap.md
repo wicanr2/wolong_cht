@@ -120,4 +120,4 @@
 
 | 項目 | 現況 |
 |---|---|
-| `sub_188B0`（畫勢力名）| `sub_15C14` 在勢力存在時呼叫它，沒讀。remake 直接畫 `Faction.Name` |
+| `sub_188B0`（畫勢力名）| `sub_15C14` 在勢力存在時呼叫它，沒讀。remake 走 `g.diplomacyFactionName(n)`（與外交視窗同一支，慣例是「勢力 ＝ 君主名」）——⚠ 先前這一列寫成 `Faction.Name`，**那個欄位不存在** |

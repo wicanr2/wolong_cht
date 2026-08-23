@@ -12,6 +12,7 @@ import (
 	"fmt"
 
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
+	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 )
 
@@ -203,6 +204,10 @@ func (c Corps) slots() (kinds [army.Positions]army.TroopType,
 }
 
 // poolBack 是 `sub_14717`：六個槽的兵員全部退回勢力的預備兵池。
+//
+// ⚠ **要夾 `MaxReserve`（65,500）**。原版 `sub_155EC` 的 `0xFFDC` 正是在
+// 退兵這條路徑上驗到的（docs/spec/21 §5），而 remake 先前只有月結加兵
+// 那一邊夾——同一條規則兩份實作，退兵這份漏掉了。
 func (w *World) poolBack(i int) {
 	c := &w.Corps[i]
 	f := &w.Factions[c.Faction]
@@ -211,7 +216,7 @@ func (w *World) poolBack(i int) {
 			continue
 		}
 		if t := int(u.Kind); t >= 0 && t < len(f.Reserves) {
-			f.Reserves[t] += u.Men
+			f.Reserves[t] = economy.ClampReserve(f.Reserves[t] + u.Men)
 		}
 		c.Units[k] = combat.Unit{Kind: u.Kind}
 	}
@@ -282,18 +287,19 @@ func (w *World) routCorps(i int) {
 }
 
 // tickRout 是 `sub_12A7E`：倒數歸零才真的清乾淨。
-func (w *World) tickRout(i int) {
+// 回傳 true 表示**這一 tick 剛歸零**——訊息掛在這一刻（`docs/spec/77`）。
+func (w *World) tickRout(i int) bool {
 	c := &w.Corps[i]
 	if c.RoutTimer > 0 {
 		c.RoutTimer--
 	}
 	if c.RoutTimer > 0 {
-		return
+		return false
 	}
 	c.Routing = false
 	c.Stage = StageNormal
 	if i < 0 || i >= len(w.Generals) {
-		return
+		return true
 	}
 	g := &w.Generals[i]
 	g.Posted = false // 主將 +0x17 職務 ＝ 無職
@@ -301,4 +307,5 @@ func (w *World) tickRout(i int) {
 	if g.Faction >= 0 && g.Faction < numFactions && !w.Factions[g.Faction].Alive {
 		g.Faction = noFaction
 	}
+	return true
 }
