@@ -1,12 +1,15 @@
 # DOS/V 原版／remake 實機動態比較推廣片
 
-**狀態：已產出並完成畫面、媒體規格與來源界線驗收；這是同類型畫面／流程的推廣比較，不是同日期、同輸入、同狀態的逐像素 parity 證明。**
+**狀態：已產出並驗過，已被 `dosv-realmachine` 取代。**
+當時的原版畫面九成來自使用者提供的 YouTube 錄影；新的那一支原版側是自己跑的實機。
+這是同類型畫面／流程的推廣比較，不是同日期、同輸入、同狀態的逐像素 parity 證明。
 
 - 日期：2026-08-12
-- 成品：[`wolong-remake-dosv-live-comparison.mp4`](../../dist-all/promo/wolong-remake-dosv-live-comparison.mp4)
+- 成品：`wolong-remake-dosv-live-comparison.mp4`（**已不在 `dist-all/promo/`**，換成 `dosv-realmachine`；要重播照 §離線重播 再產一次）
 - 長度／格式：60.000 秒、1280×720、30 fps、H.264／AAC（44.1 kHz、雙聲道）
 - 成品 SHA-256：`a00a221bf3c4213f4d9777c66a3e58a06dcae93aab2beecc146de67a7447973d`
 - 合成腳本：[`tools/promo_dosv_live_comparison.sh`](../../tools/promo_dosv_live_comparison.sh)
+- 後續：[`dosv-realmachine.md`](dosv-realmachine.md)（2026-08-23，原版側改成自己的實機擷取）
 
 ## 影片主軸與素材界線
 

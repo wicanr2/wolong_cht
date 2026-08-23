@@ -6,7 +6,7 @@
 #
 # 預設會在密碼頁按原始「確定」，接著依 WOLONG_DOSV_TIMELINE 執行：
 #   wait:秒;shot:名稱;key:鍵;type:字串;click:x,y;rclick:x,y;press;
-#   record:秒,fps,前綴;audio-start;audio-stop;savefile:檔名
+#   record:秒,fps,前綴;grab-start:fps,名稱;grab-stop;audio-start;audio-stop;savefile:檔名
 #
 # ⚠ **click／rclick 的 y 要用「遊戲座標 × 1.2」**：視窗是 640×480，
 #    遊戲畫面 640×400 置中，而 INT 33 把**整個視窗**等比對映到遊戲畫面
@@ -257,6 +257,72 @@ record() {
     done
 }
 
+# grab_video 用 ffmpeg 的 x11grab 錄一段**真實時間**的畫面。
+#
+# ⭐ 為什麼不是 `record:`。`record:` 是逐幀 `import`，一張 280–330 ms：
+# 要 8 秒 10 fps 會拿到橫跨 25.7 秒的 80 張圖（實測 3.08 fps）。
+# 照標稱 fps 編出來，**原版會播快 3.2 倍**——這一款是即時制、
+# 畫面上有時鐘，對照片那樣做等於謊報原版的速度。
+# `record:` 留著給「幾張可辨識的代表畫面」用。
+#
+# ⚠ **不要用 DOSBox-X 的 ctrl+alt+F5。** 實測熱鍵沒生效：log 只在啟動時
+# 印一行 `USING AVI+ZMBV`（那是編碼器宣告，不是開始錄），輸出目錄沒有檔案。
+# grab-start／grab-stop：用 ffmpeg 的 x11grab 在**背景**錄一段真實時間的畫面。
+#
+# ⭐ 為什麼不是 `record:`。`record:` 是逐幀 `import`，一張 280–330 ms：
+# 要 8 秒 10 fps 會拿到橫跨 25.7 秒的 80 張圖（實測 3.08 fps）。
+# 照標稱 fps 編出來，**原版會播快 3.2 倍**——這一款是即時制、
+# 畫面上有時鐘，對照片那樣做等於謊報原版的速度。
+# `record:` 留著給「幾張可辨識的代表畫面」用。
+#
+# ⭐ 為什麼是 start／stop 兩步而不是「錄 N 秒」。同步錄的話 timeline
+# 會卡在 ffmpeg 上，**錄得到閒置畫面，錄不到操作**——而推廣片要的正是
+# 「有人在玩」。背景錄之後，click／press 照跑，錄下來的就是真的操作過程。
+#
+# ⚠ **不要用 DOSBox-X 的 ctrl+alt+F5。** 實測熱鍵沒生效：log 只在啟動時
+# 印一行 `USING AVI+ZMBV`（那是編碼器宣告，不是開始錄），輸出目錄沒有檔案。
+GRAB_PID=""
+GRAB_NAME=""
+
+grab_start() {
+    local fps=$1 name=$2
+    if [ -n "$GRAB_PID" ]; then
+        echo "上一段錄影還沒 grab-stop：$GRAB_NAME" >&2
+        exit 1
+    fi
+    if ! kill -0 "$DB" 2>/dev/null; then
+        echo 'DOSBox-X 在錄影前已結束。' >&2
+        tail -80 "$log_file" >&2 || true
+        exit 1
+    fi
+    # window_geometry 用 `xdotool --shell` eval 出 WIDTH／HEIGHT／X／Y。
+    window_geometry
+    : "${WIDTH:?未能取得 DOSBox-X 視窗寬度}"
+    : "${X:?未能取得 DOSBox-X 視窗 X 座標}"
+    trace "grab-start ${WIDTH}x${HEIGHT}+${X}+${Y} fps=$fps name=$name"
+    DISPLAY=:99 ffmpeg -hide_banner -loglevel error -y \
+        -f x11grab -draw_mouse 0 -framerate "$fps" \
+        -video_size "${WIDTH}x${HEIGHT}" -i ":99.0+${X},${Y}" \
+        -c:v libx264 -preset veryfast -crf 16 -pix_fmt yuv420p \
+        "$out_dir/$name.mp4" </dev/null >/tmp/wolong-grab.log 2>&1 &
+    GRAB_PID=$!
+    GRAB_NAME=$name
+    # ffmpeg 要一點時間才真的開始抓；沒等的話開頭幾秒是空的。
+    sleep 1.5
+}
+
+grab_stop() {
+    [ -n "$GRAB_PID" ] || { echo 'grab-stop 之前沒有 grab-start' >&2; exit 1; }
+    # ⚠ **一定要 SIGINT，不能 SIGKILL。** mp4 的 moov atom 在收尾時才寫，
+    # 被硬砍的話檔案存在、大小正常，**但播不動**——又一個「看起來成功」。
+    kill -INT "$GRAB_PID" 2>/dev/null || true
+    wait "$GRAB_PID" 2>/dev/null || true
+    trace "grab-stop name=$GRAB_NAME"
+    printf '%s.mp4\n' "$GRAB_NAME" >> "$out_dir/manifest.txt"
+    GRAB_PID=""
+    GRAB_NAME=""
+}
+
 wait_for_password() {
     local deadline root_png orange
     sleep "$password_wait"
@@ -358,6 +424,17 @@ for step in "${steps[@]}"; do
 	            trace "step begin=$step"
 	            DISPLAY=:99 xdotool key --clearmodifiers ctrl+F6
 	            sleep 0.5
+	            trace "step end=$step"
+	            ;;
+	        grab-start)
+	            trace "step begin=$step"
+	            IFS=',' read -r fps name <<< "$arg"
+	            grab_start "$fps" "$name"
+	            trace "step end=$step"
+	            ;;
+	        grab-stop)
+	            trace "step begin=$step"
+	            grab_stop
 	            trace "step end=$step"
 	            ;;
         savefile)

@@ -78,7 +78,8 @@
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
 | [`docs/promo/dosv-adlib-and-tactical-review.md`](promo/dosv-adlib-and-tactical-review.md) | 推廣片原版 AdLib 與戰術骨架審查 | 歷史審查紀錄（2026-08-12）。 | 2026-08-12 |
-| [`docs/promo/dosv-live-comparison.md`](promo/dosv-live-comparison.md) | DOS/V 原版／remake 實機動態比較推廣片 | 已產出並完成畫面、媒體規格與來源界線驗收；這是同類型畫面／流程的推廣比較，不是同日期、同輸入、同狀態的逐像素 par… | 2026-08-12 |
+| [`docs/promo/dosv-live-comparison.md`](promo/dosv-live-comparison.md) | DOS/V 原版／remake 實機動態比較推廣片 | 已產出並驗過，已被 dosv-realmachine 取代。 | 2026-08-12 |
+| [`docs/promo/dosv-realmachine.md`](promo/dosv-realmachine.md) | 原版實機遊玩 × remake 實機的對照推廣片 | 已產出並驗過。原版側是自己跑的受控 DOSBox-X 實機遊玩， 只有戰術戰場那一格仍取自使用者提供的錄影。 | 2026-08-23 |
 | [`docs/promo/yt-remake-pixel-review.md`](promo/yt-remake-pixel-review.md) | YouTube／remake 推廣片像素差異審查 | 已完成影片對照；確認像素差異，但不把不同遊戲狀態誤稱為同狀態 逐像素 parity。 | 2026-08-11 |
 | [`docs/re/00-index.md`](re/00-index.md) | 00 — RE 知識庫入口 | 索引。44 份反組譯筆記按子系統分類，每份一句話說它回答什麼問題。 | 2026-08-14 |
 | [`docs/re/01-first-recon.md`](re/01-first-recon.md) | 01 — 首輪偵查：兩版檔案清單與比對 | READY。兩版檔案清單、執行結構、逐檔比對都完成。 | 2026-08-07 |
@@ -122,7 +123,7 @@
 | [`docs/re/39-remaining-unread.md`](re/39-remaining-unread.md) | 39 — 剩餘未讀函式的逐支歸屬 | 清單。 | 2026-08-14 |
 | [`docs/re/40-garrison-relief-request.md`](re/40-garrison-relief-request.md) | 40 — 據點求援與援軍派遣 | 整條鏈 confirmed（每一支都逐行讀過）。 sub_140C9 的距離算式裡有一處 | 2026-08-14 |
 | [`docs/re/42-leaf-functions.md`](re/42-leaf-functions.md) | 42 — 戰術以外的 47 支葉節點 | 47 支全部逐行讀過。四件事因此定案：INT 61h 是音源 TSR 的介面、 byte_198A6 的位元圖完整、… | 2026-08-14 |
-| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的） | 生成的清單，跑 tools/py.sh tools/re_open_questions.py 重出。 這一份不下結論… | 2026-08-22 |
+| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的） | 生成的清單，跑 tools/py.sh tools/re_open_questions.py 重出。 這一份不下結論… | 2026-08-23 |
 | [`docs/re/44-threat-and-reinforcement-ai.md`](re/44-threat-and-reinforcement-ai.md) | 44 — 威脅偵測與 AI 出兵：據點每 tick 掃一次 | 整條鏈逐行讀完。三件事定案：據點 +0x18 是佔用圖讀回來的軍團數、 +0x00 低 4 位是「哪幾個鄰居是敵方」… | 2026-08-14 |
 | [`docs/re/45-corps-command-mode.md`](re/45-corps-command-mode.md) | 45 — 軍團的三種指令模式：戰鬥指揮／委任／解體 | 軍團 +0x00 位元 2 定案 ＝ | 2026-08-14 |
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |

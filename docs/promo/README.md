@@ -70,13 +70,18 @@ PROMO_FONTFILE=/fonts/NotoSansTC-Regular.otf \
   tools/promo_classic_revival.sh dist-all/promo/wolong-remake-classic-revival.mp4
 ```
 
-## DOS/V／remake 實機動態比較片
+## DOS/V／remake 實機對照片
 
-使用者要求「要有遊戲實際遊玩畫面」，因此新增
-[`wolong-remake-dosv-live-comparison.mp4`](../../dist-all/promo/wolong-remake-dosv-live-comparison.mp4)。
-這支 60 秒影片以松崗 DOS/V 原版動態遊玩錄影、受控 DOSBox-X 原版新遊戲畫面，以及
-remake 實機 GUI 擷取組成；內容涵蓋自然策略、編成／行軍、事件訊息與戰術畫面。
+現行的是
+[`wolong-remake-dosv-realmachine.mp4`](../../dist-all/promo/wolong-remake-dosv-realmachine.mp4)，
+72 秒。**原版側是自己跑的受控 DOSBox-X 實機遊玩**：開新遊戲、劇本與君主選擇、
+大地圖與時鐘、軍團編成、事件訊息、行軍指示，全部照 timeline 可以重跑。
+只有戰術戰場那一格取自使用者提供的錄影，並在片上標明。
 
-完整來源界線、秒數、正常鍵盤路徑／獨立戰術 fixture 的區別、原版音訊排除、SHA-256、
-抽樣驗收與離線重播命令見 [dosv-live-comparison.md](dosv-live-comparison.md)。它是使用者
-指定的推廣比較媒體，不會被包入任何目標平台的遊戲封裝。
+分鏡、來源界線、SHA-256、抽樣驗收與重跑命令見
+[dosv-realmachine.md](dosv-realmachine.md)。
+
+前一支 [`dosv-live-comparison.md`](dosv-live-comparison.md)（2026-08-12，60 秒）
+的原版畫面九成來自 YouTube 錄影，已被取代，不再放在 `dist-all/promo/`。
+
+兩支都是推廣比較媒體，不會被包入任何目標平台的遊戲封裝。

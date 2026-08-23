@@ -157,7 +157,7 @@ parity 量的是「**我們做出來的東西對不對**」。
 - Linux AppImage：[`wolong-remake-linux-amd64-20260822.AppImage`](dist-all/packages/wolong-remake-linux-amd64-20260822.AppImage)。已通過 Linux／Xvfb 固定種子 smoke（含結局過場）。**公開散布的版本仍要由玩家提供合法 DOS/V 資料與中文字型。**
 - 三平台候選包與 SHA-256：[`dist-all/packages`](dist-all/packages)。Windows／macOS 是交叉建置候選，尚未在目標作業系統完成原生 GUI runtime 驗收。
 - 主預告：[`wolong-remake-trailer.mp4`](dist-all/promo/wolong-remake-trailer.mp4)。大地圖、野戰與攻城三段是**逐幀錄下來的實跑畫面**（[`docs/spec/71`](docs/spec/71-promo-live-capture.md)），事件視窗與存檔那幾段是截圖——那些畫面本來就不動。
-- 「經典再現」實機比較片：[`wolong-remake-dosv-live-comparison.mp4`](dist-all/promo/wolong-remake-dosv-live-comparison.mp4)。原版側是使用者指定的松崗 DOS/V 推廣比較素材，remake 側為實機 GUI；不是同日期／同輸入逐像素 parity。
+- 原版實機對照片：[`wolong-remake-dosv-realmachine.mp4`](dist-all/promo/wolong-remake-dosv-realmachine.mp4)，72 秒。**原版側是自己跑的受控 DOSBox-X 實機遊玩**——開新遊戲、劇本與君主選擇、大地圖與時鐘、軍團編成、事件訊息、行軍指示，照 timeline 可以重跑；只有戰術戰場那一格取自使用者提供的錄影並在片上標明（[`docs/promo/dosv-realmachine.md`](docs/promo/dosv-realmachine.md)）。不是同日期／同輸入的逐像素 parity。
 - Android：見下一節。APK 與另外三個平台並列在 [`dist-all/packages`](dist-all/packages)，**仍不宣稱 Android release**（只有 debug 簽章、沒有實機驗收）。48 秒的手機版推廣片：[`wolong-remake-android.mp4`](dist-all/promo/wolong-remake-android.mp4)（畫面全是 remake 自己算的，配樂是原創合成音，[`docs/promo/android.md`](docs/promo/android.md)）。
 
 `wlgame` 的持久化要明確指定可寫路徑，例如：

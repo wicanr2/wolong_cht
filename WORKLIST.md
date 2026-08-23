@@ -191,6 +191,47 @@ Android 桌面——拍到的圖不黑、大小也正常，**只是拍到別的�
 （frame 1／60／120）——資料只要差一個 byte 世界狀態就會分岔，
 這比逐檔比對便宜也更強。
 
+### 2026-08-23 推廣片改成自己跑的原版實機對照
+
+使用者要「實機遊玩 DOSBox 對照」。既有的 `dosv-live-comparison`
+**原版畫面九成來自 YouTube 錄影**，只有一格是自己的實機——缺的正是這塊。
+裁定：重做對照片，原版側以實機為主、錄影只補實機拉不到的段落。
+成品與分鏡在 [`docs/promo/dosv-realmachine.md`](docs/promo/dosv-realmachine.md)。
+
+#### ⭐ `record:` 錄不出即時制的真實速度
+
+原本的 `record:秒,fps,前綴` 是逐幀 `import`，一張 280–330 ms。
+量出來：要 8 秒 10 fps，拿到 80 張圖，**橫跨 25.67 秒**——實際 3.08 fps。
+照標稱 fps 編出來，原版會播快 3.2 倍；這一款是即時制、畫面上有時鐘，
+對照片那樣做等於**謊報原版的速度**。
+
+⭐ **這個錯誤不會自己浮現。** 80 張圖、檔名連號、每張都是真的畫面，
+產出看起來完全正常——要去量檔案的 mtime 才看得到它橫跨多久。
+
+改用 `grab-start:fps,名稱`／`grab-stop`（`ffmpeg -f x11grab` 錄同一個 Xvfb）。
+兩個設計上的取捨：
+
+- **start／stop 兩步而不是「錄 N 秒」**：同步錄的話 timeline 會卡在 ffmpeg 上，
+  錄得到閒置畫面、錄不到操作——而推廣片要的正是「有人在玩」。
+- **停止一定要 SIGINT 不能 SIGKILL**：mp4 的 moov atom 收尾才寫，
+  硬砍的話檔案存在、大小正常，**但播不動**。
+
+⚠ DOSBox-X 自己的 `ctrl+alt+F5` 沒有用：log 只在啟動時印一行
+`USING AVI+ZMBV`（編碼器宣告，不是開始錄），輸出目錄一個檔都沒有。
+
+#### ⚠ 原版戰術戰場四次都沒擷取到
+
+原版開戰場的方法是「編成軍團然後等 AI 來打」（`docs/playtest/40` §1）。
+四次分別等 150／270／280／250 秒，都沒等到——**原版以時鐘播種**，
+每次 RNG 不同（`CLAUDE.md` §3.1）。同一組操作在 `probe-march` 那次
+第 45 天開戰，這四次都沒有。這一格用錄影補，片上標明。
+
+#### 產出
+
+72 秒、1280×720、30 fps、H.264 ＋ AAC；音軌平均 −21.9 dB、峰值 −4.5 dB。
+原版側五段各取樣 7–51 張，相異率 7/8 – 40/51，確認不是靜止畫面。
+`dist-all/promo/` 換掉舊的那一支。
+
 ### 2026-08-21 改寫歷史：373 個 commit 的作者信箱一律換成 `wicanr2@gmail.com`
 
 `git config user.email` 一直是 `~/.gitconfig` 的 **`cy.wang@coretronic.com`**
@@ -1137,7 +1178,7 @@ Go 產出的 `libgojni.so` 預設 LOAD 段 `align=0x1000`，那種 `.so` 在 16 
 ### 2026-08-12 DOS/V／remake 實機動態推廣片
 
 - [x] 依使用者指定錄製／剪輯 60 秒、1280×720、H.264/AAC 的
-  [`wolong-remake-dosv-live-comparison.mp4`](dist-all/promo/wolong-remake-dosv-live-comparison.mp4)。
+  `wolong-remake-dosv-live-comparison.mp4`。
   原版側是使用者指定松崗 DOS/V 遊玩錄影與受控 DOSBox-X 新遊戲畫面；remake 側是正常
   鍵盤路徑的策略、編成、目的地與行軍實機擷取。
 - [x] 影片明示同類畫面比較「非同狀態逐像素判定」；戰術 remake 段標為獨立 fixture，

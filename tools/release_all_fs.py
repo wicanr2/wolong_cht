@@ -45,7 +45,9 @@ PROMO_FILES = (
     "wolong-remake-trailer.mp4",
     "wolong-remake-classic-revival.mp4",
     "wolong-remake-yt-comparison.mp4",
-    "wolong-remake-dosv-live-comparison.mp4",
+    # ⭐ 2026-08-23 換成自己跑的原版實機對照（docs/promo/dosv-realmachine.md）。
+    # 先前那支 `dosv-live-comparison` 的原版畫面九成來自 YouTube 錄影。
+    "wolong-remake-dosv-realmachine.mp4",
     "wolong-remake-android.mp4",
 )
 
@@ -571,6 +573,9 @@ def refresh() -> None:
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     manifest.pop("android_experimental", None)
     manifest["android_full_package"] = f"packages/{sync_android()}"
+    # 推廣片清單由 PROMO_FILES 決定，不沿用舊 manifest——換片之後
+    # 沿用舊清單會讓 verify_manifest_paths 指向一個已經不存在的檔名。
+    manifest["promo_videos"] = [f"promo/{name}" for name in PROMO_FILES]
     manifest["original_assets_included"] = BUNDLE_DATA
     manifest["distributable"] = not BUNDLE_DATA
     verify_manifest_paths(manifest)

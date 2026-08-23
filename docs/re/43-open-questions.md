@@ -3,7 +3,7 @@
 **狀態：生成的清單，跑 `tools/py.sh tools/re_open_questions.py` 重出。
 這一份不下結論，只把各文件的「未解」表集中到一處。**
 
-- 日期：2026-08-22
+- 日期：2026-08-23
 - 產生工具：`tools/re_open_questions.py`
 - 來源：`docs/` 底下所有文件的未解小節、表格裡標未解的列，與收尾是「…未解」的散句
 
@@ -23,8 +23,8 @@
 | 程式碼理解 | 177 | 170 | 7 | 0 |
 | 驗收 | 51 | 41 | 10 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 145 | 133 | 12 | 0 |
-| **合計** | **436** | 401 | 35 | 0 |
+| 其他 | 148 | 136 | 12 | 0 |
+| **合計** | **439** | 404 | 35 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -38,7 +38,7 @@
 | `docs/mobile/` | 12 |
 | `docs/release/` | 12 |
 | `docs/reference/` | 6 |
-| `docs/promo/` | 2 |
+| `docs/promo/` | 5 |
 
 ## 2.1 規則正確性（24 條）
 
@@ -356,7 +356,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（145 條）
+## 2.6 其他（148 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -374,6 +374,9 @@
 | [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 事件訊息的停留時間 | 六秒是估的。原版沒有這個機制（它要按鍵才消），所以沒有可抄的數字 | 靜態 |
 | [`promo/android.md`](../promo/android.md) | 實機錄影 | ⛔ 沒有裝置。片中畫面出自桌面的同一份 `internal/ui/phone`，與 APK 是同一份程式碼，但**不是實機錄影** | 靜態 |
 | [`promo/android.md`](../promo/android.md) | 模擬器錄影 | 模擬器在這台機器上只有個位數 fps，錄出來會頓 | 靜態 |
+| [`promo/dosv-realmachine.md`](../promo/dosv-realmachine.md) | 原版戰術戰場的實機擷取 | 四次未觸發（§4）。要嘛接受原版 RNG 的變異多跑幾次，要嘛從存檔直接進戰場——後者要先解「怎麼從存檔載入到開戰的那一刻」 | 靜態 |
+| [`promo/dosv-realmachine.md`](../promo/dosv-realmachine.md) | 原版 AdLib 的同場錄音 | `ctrl+F6` 的 WAV 擷取這次沒生效，配樂沿用 2026-08-12 那次的實錄 | 靜態 |
+| [`promo/dosv-realmachine.md`](../promo/dosv-realmachine.md) | 兩側時鐘速度可比 | remake 用最高速檔才看得到動靜；要真的可比，得先量原版預設檔的每日實時秒數 | 靜態 |
 | [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | 目標 OS 實跑 | **做不到**：這台是 Linux，沒有 Mac／Windows。檔頭驗過（PE32+／Mach-O），但視窗、輸入、音訊、字型載入都沒有在目標系統上跑過 | 實測 |
 | [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | linux/arm64 的本體 | 要在 arm64 的 Linux 上建（Ebiten 的 cgo 沒有交叉工具鏈） | 靜態 |
 | [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | Windows 的 smoke | 同第一項 | 靜態 |

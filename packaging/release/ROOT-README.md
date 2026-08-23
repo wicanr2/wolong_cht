@@ -8,9 +8,10 @@
 - `packages/`：**四個平台的完整包**——Linux amd64、Windows amd64、
   macOS（Intel＋Apple Silicon）與 Android，另有 Linux amd64 的 AppImage。
   Linux arm64 是無頭工具伴隨包（只有 `wlsim`／`wlshot`），不是完整平台包。
-- `promo/`：三支 60 秒、1280×720 的主片，一支 48 秒的 Android 版推廣片，與一支 24 秒、
-  1280×400 的代表幀比較短片。主預告與 Android 片的遊戲段落是逐幀錄下來的實跑畫面；
-  `dosv-live-comparison.mp4` 是松崗 DOS/V 與 remake 的實機動態比較。影片不含原版音訊。
+- `promo/`：兩支 60 秒的主片、一支 72 秒的原版實機對照片、一支 48 秒的 Android 版
+  推廣片，與一支 24 秒、1280×400 的代表幀比較短片。主預告與 Android 片的遊戲段落
+  是逐幀錄下來的實跑畫面；`dosv-realmachine.mp4` 的原版側是自己跑的受控 DOSBox-X
+  實機遊玩，只有戰術戰場那一格取自使用者提供的錄影並在片上標明。
 - `verification/`：Linux tar 與 AppImage 的 Xvfb GUI smoke 截圖、ABI 檔頭摘要與封裝檢查。
 - `SHA256SUMS.txt`：本根目錄所有檔案的 SHA-256。
 - `release-manifest.json`：機器可讀的清單，含 `distributable` 與
