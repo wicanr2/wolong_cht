@@ -458,16 +458,24 @@ func (b *Battle) tryMove(side, k, x, y, z int) (moved, walled bool) {
 	return true, false
 }
 
-// tryClimb 重現 `sub_1B0D3`／`sub_1B116`：在門那一格上下城牆。
+// tryClimb 重現 `sub_1B0D3`／`sub_1B116` ＋ 它們呼叫的
+// `sub_1B186`／`sub_1B15D`：在**打破的**門那一格上下城牆。
 //
-// 三個條件缺一不可（docs/re/63 §4）：
+// 四個條件缺一不可（docs/spec/36 §1.4）：
 //
 //	兵種 > 0x12（大將與騎馬不做 Z 移動）
-//	腳下那一格的圖塊 ≥ 0xF0，也就是門
-//	要去的那個平面在這一格有地面
+//	腳下那一格的圖塊 ≥ 0xF0，也就是門          （呼叫端擋的）
+//	同一格的圖塊 ≥ 0xF8，也就是**已經打破**    （被呼叫的那一支擋的）
+//	要去的那個平面在這一格有地面、而且沒有別人站著
+//
+// ⚠ **未破的門爬不上去。** 兩層檢查讀的是同一格的同一個 byte
+// （原版 `di = bx & 0FFFh` 把平面位元遮掉了），所以 `≥ 0xF0` 那一關
+// 其實被 `≥ 0xF8` 蓋過去。尋路那邊**沒有**這一關，路徑會規劃穿過未破的
+// 門，走到才被擋——這個不對稱是原版行為，照抄。
 func (b *Battle) tryClimb(side, k int) bool {
 	s := &b.Sides[side].Soldiers[k]
-	if !s.CanClimb() || !b.Field.IsGateCell(s.X, s.Y) {
+	if !s.CanClimb() || !b.Field.IsGateCell(s.X, s.Y) ||
+		b.Field.GateBlocksHighPlane(s.X, s.Y) {
 		return false
 	}
 	other := PlaneHigh

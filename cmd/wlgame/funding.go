@@ -45,7 +45,7 @@ func (g *game) updateFunding() {
 		case pressed(ebiten.KeyDelete):
 			keyboardEdit = state.AmountClear
 		case pressed(ebiten.KeyHome):
-			keyboardEdit = state.AmountRestoreInitial
+			keyboardEdit = state.AmountSetMax
 		case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
 			g.setAmountCursorAction(state.AmountFinishInput, 0)
 			g.fundingEditingAmount = false
@@ -63,7 +63,7 @@ func (g *game) updateFunding() {
 		g.fundingRow = row
 		if row == int(state.FundingSetAmount) {
 			g.fundingEditingAmount = true
-			g.beginAmountEditor(amountCursorFunding)
+			g.beginAmountEditor(amountCursorFunding, amountAnchorEventX, amountAnchorEventY)
 			return
 		}
 		g.resolveFunding(*c, state.FundingOption(row))
@@ -93,7 +93,7 @@ func (g *game) updateFunding() {
 	if option == state.FundingSetAmount &&
 		(pressed(ebiten.KeyEnter) || pressed(ebiten.KeySpace)) {
 		g.fundingEditingAmount = true
-		g.beginAmountEditor(amountCursorFunding)
+		g.beginAmountEditor(amountCursorFunding, amountAnchorEventX, amountAnchorEventY)
 		return
 	}
 	g.resolveFunding(*c, option)
@@ -234,7 +234,7 @@ func (g *game) drawFunding(screen *ebiten.Image, c *state.FundingChoice) {
 	g.drawLegacyTalkBox(screen, talkUpperBoxX, talkUpperBoxY, talkBoxW, talkBoxH,
 		prompt, portrait)
 	if g.fundingEditingAmount {
-		g.drawAmountPanel(screen, c.OfferAmount, c.RequestedAmount, true)
+		g.drawAmountPanel(screen, c.OfferAmount, true)
 		return
 	}
 	g.drawLegacyChoiceBox(screen, talkChoiceX, talkChoiceY,

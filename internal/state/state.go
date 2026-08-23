@@ -682,7 +682,10 @@ const (
 	AmountAppendDigit AmountEdit = iota
 	AmountAppendHundred
 	AmountDeleteDigit
-	AmountRestoreInitial
+	// AmountSetMax 是原版 `sub_17DEC` 的 `mov si, [bp+0]`——那一格是
+	// **上限**，不是呼叫端給的初值（`si` 開場就是 0，呼叫端沒有機會給初值）。
+	// 圖庫上那顆鍵的字樣本來就寫著「最大」（docs/spec/78 §1）。
+	AmountSetMax
 	AmountClear
 	AmountFinishInput
 )

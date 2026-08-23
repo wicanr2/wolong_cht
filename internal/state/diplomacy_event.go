@@ -7,8 +7,11 @@ const maxDiplomacyOffer = 0x7530
 const diplomacyOverOfferTrustPenalty = -0x1E
 
 // editAmount 是 sub_17C6E 的數值核心：數字鍵把目前值左移一位再加數字，
-// 另有 00／退位／還原／清零／結束輸入動作；所有結果都鉗在呼叫端給的最大值。
-func editAmount(current, initial, max int, edit AmountEdit, digit int) (int, bool) {
+// 另有 00／退位／最大／清零／結束輸入動作；所有結果都鉗在呼叫端給的上限。
+//
+// ⚠ **呼叫端只給一個數：上限。** 原版 `[bp+0]` 同時是夾值的上界與
+// 「最大」鍵取的值，`si` 開場一律是 0（docs/spec/78 §1）。
+func editAmount(current, max int, edit AmountEdit, digit int) (int, bool) {
 	if max < 0 {
 		return 0, false
 	}
@@ -22,8 +25,8 @@ func editAmount(current, initial, max int, edit AmountEdit, digit int) (int, boo
 		current *= 100
 	case AmountDeleteDigit:
 		current /= 10
-	case AmountRestoreInitial:
-		current = initial
+	case AmountSetMax:
+		current = max
 	case AmountClear:
 		current = 0
 	case AmountFinishInput:
@@ -39,6 +42,14 @@ func editAmount(current, initial, max int, edit AmountEdit, digit int) (int, boo
 		current = max
 	}
 	return current, true
+}
+
+// EditAmountValue 是 `sub_17C6E` 數值核心的公開入口，給沒有自己的 pending
+// 狀態的呼叫端用（財政視窗那四個熱區，docs/spec/78）。
+//
+// **規則只有這一份實作**——不要在呈現層再寫一次乘十與夾上限。
+func EditAmountValue(current, max int, edit AmountEdit, digit int) (int, bool) {
+	return editAmount(current, max, edit, digit)
 }
 
 // PendingDiplomacy 回傳事件 2／3 等待玩家處理的外交視窗副本。
@@ -73,8 +84,7 @@ func (w *World) EditDiplomacyOfferAmount(edit AmountEdit, digit int) bool {
 	if w.diplomacy == nil {
 		return false
 	}
-	amount, ok := editAmount(w.diplomacy.OfferAmount, w.diplomacy.InitialAmount,
-		maxDiplomacyOffer, edit, digit)
+	amount, ok := editAmount(w.diplomacy.OfferAmount, maxDiplomacyOffer, edit, digit)
 	if !ok {
 		return false
 	}

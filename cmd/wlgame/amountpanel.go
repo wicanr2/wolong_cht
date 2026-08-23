@@ -50,7 +50,7 @@ func amountPanelButtonAt(row, col int) (amountPanelButton, bool) {
 	case value == 12:
 		button.edit = state.AmountClear
 	case value == 13:
-		button.edit = state.AmountRestoreInitial
+		button.edit = state.AmountSetMax
 	case value == 14:
 		button.edit = state.AmountFinishInput
 	default:
@@ -74,10 +74,10 @@ func amountPanelButtonCell(edit state.AmountEdit, digit int) (int, int, bool) {
 	return 0, 0, false
 }
 
-func amountPanelButtonAtPoint(x, y int) (amountPanelButton, int, int, bool) {
+func amountPanelButtonAtPoint(ax, ay, x, y int) (amountPanelButton, int, int, bool) {
 	for row := 0; row < amountPanelRows; row++ {
 		for col := 0; col < amountPanelCols; col++ {
-			if image.Pt(x, y).In(amountPanelCellRect(row, col)) {
+			if image.Pt(x, y).In(amountPanelCellRect(ax, ay, row, col)) {
 				button, ok := amountPanelButtonAt(row, col)
 				return button, row, col, ok
 			}
@@ -86,55 +86,69 @@ func amountPanelButtonAtPoint(x, y int) (amountPanelButton, int, int, bool) {
 	return amountPanelButton{}, 0, 0, false
 }
 
+// amountPanelButtonLabel 只在原始 96×64 資源缺失時用得到。
+// 字樣照原版圖庫上解出來的那幾個（docs/re/48 §6），不要自己另取名字。
 func amountPanelButtonLabel(button amountPanelButton) string {
 	if button.edit == state.AmountAppendDigit {
 		return fmt.Sprintf("%d", button.digit)
 	}
 	switch button.edit {
 	case state.AmountAppendHundred:
-		return "百"
+		return "00"
 	case state.AmountDeleteDigit:
-		return "退"
+		return "◀"
 	case state.AmountClear:
-		return "清"
-	case state.AmountRestoreInitial:
-		return "初"
+		return "消"
+	case state.AmountSetMax:
+		return "大"
 	case state.AmountFinishInput:
-		return "完"
+		return "定"
 	default:
 		return "?"
 	}
 }
 
+// 幾何全部由**錨點**推出來（docs/spec/78 §1.2）：
+//
+//	存／還原區  (錨點 − 8)        112 × 80    sub_19796 ／ sub_197C3
+//	外框 blit   錨點               96 × 64     sub_17D0D
+//	3×6 格      (錨點X, 錨點Y+16) 每格 16×16  sub_17D5F 的 add bx,10h
+//
+// ⚠ **不要寫死 (88,184)。** 那只是事件 2／3／4／5 的錨點；
+// 財政的四個熱區傳的是 (296,184)。
 const (
-	amountPanelX     = 80
-	amountPanelY     = 176
-	amountPanelW     = 112
-	amountPanelH     = 80
-	amountFrameX     = 88
-	amountFrameY     = 184
-	amountPanelGridX = 88
-	amountPanelGridY = 200
-	amountPanelCols  = 6
-	amountPanelRows  = 3
-	amountPanelCellW = 16
-	amountPanelCellH = 16
-	amountDisplayMax = 0x7530 // sub_17C6E 的已證實輸入上限 30,000
+	amountAnchorEventX, amountAnchorEventY = 88, 184
+	amountPanelMargin                      = 8
+	amountPanelW                           = 112
+	amountPanelH                           = 80
+	amountGridDY                           = 16
+	amountPanelCols                        = 6
+	amountPanelRows                        = 3
+	amountPanelCellW                       = 16
+	amountPanelCellH                       = 16
+	amountDisplayMax                       = 0x7530 // 事件 2／3／4／5 的上限 30,000
 )
 
-var amountPanelRect = image.Rect(
-	amountPanelX,
-	amountPanelY,
-	amountPanelX+amountPanelW,
-	amountPanelY+amountPanelH,
-)
+// amountAnchor 回傳目前這一次輸入的錨點。沒設過就是事件那一組。
+func (g *game) amountAnchor() (int, int) {
+	if g.amountAnchorX == 0 && g.amountAnchorY == 0 {
+		return amountAnchorEventX, amountAnchorEventY
+	}
+	return g.amountAnchorX, g.amountAnchorY
+}
 
-func amountPanelCellRect(row, col int) image.Rectangle {
+func amountPanelRectAt(ax, ay int) image.Rectangle {
+	x, y := ax-amountPanelMargin, ay-amountPanelMargin
+	return image.Rect(x, y, x+amountPanelW, y+amountPanelH)
+}
+
+func amountPanelCellRect(ax, ay, row, col int) image.Rectangle {
+	gx, gy := ax, ay+amountGridDY
 	return image.Rect(
-		amountPanelGridX+col*amountPanelCellW,
-		amountPanelGridY+row*amountPanelCellH,
-		amountPanelGridX+(col+1)*amountPanelCellW,
-		amountPanelGridY+(row+1)*amountPanelCellH,
+		gx+col*amountPanelCellW,
+		gy+row*amountPanelCellH,
+		gx+(col+1)*amountPanelCellW,
+		gy+(row+1)*amountPanelCellH,
 	)
 }
 
@@ -149,22 +163,25 @@ func displayAmountDigits(value int) string {
 }
 
 // drawAmountPanel 是兩種事件選單共用的原版 3×6 數值選取器。
-func (g *game) drawAmountPanel(screen *ebiten.Image, current, initial int, selected bool) {
+func (g *game) drawAmountPanel(screen *ebiten.Image, current int, selected bool) {
+	ax, ay := g.amountAnchor()
+	rect := amountPanelRectAt(ax, ay)
 	if g.amountFrame != nil {
-		// DOS/V sub_17D0D 的目的座標是 (88,184)，資源尺寸為 96×64；
-		// sub_19796 另保存外圍 (80,176) 的 112×80 背景，供 modal 結束時還原。
+		// sub_17D0D 把 96×64 的資源貼在錨點上；sub_19796 另外保存外圍
+		// 112×80 的背景，供 modal 結束時還原。
 		op := &ebiten.DrawImageOptions{}
-		op.GeoM.Translate(amountFrameX, amountFrameY)
+		op.GeoM.Translate(float64(ax), float64(ay))
 		screen.DrawImage(g.amountFrame, op)
 	} else {
-		g.chrome.Window(screen, amountPanelX, amountPanelY, amountPanelW, amountPanelH, chrome.Menu)
+		g.chrome.Window(screen, rect.Min.X, rect.Min.Y,
+			rect.Dx(), rect.Dy(), chrome.Menu)
 		g.drawAmountPanelFallbackButtons(screen, selected)
 	}
 	// 原版 sub_17C6E 在每次等待輸入前以 sub_1062F 重繪目前 SI；
-	// 這個動態值仍疊在 DOS/V 靜態內框上。初值／上限是 state 語意，
+	// 這個動態值仍疊在靜態內框上。上限是 state 語意，
 	// 不在此新增原版沒有的面板外文字。
-	g.td.Draw(screen, displayAmountDigits(current), amountPanelGridX,
-		amountPanelY+chrome.Tile+1, chrome.Paper)
+	g.td.Draw(screen, displayAmountDigits(current), ax,
+		rect.Min.Y+chrome.Tile+1, chrome.Paper)
 	if selected {
 		g.drawDOSVAmountCursor(screen)
 	}
@@ -173,9 +190,10 @@ func (g *game) drawAmountPanel(screen *ebiten.Image, current, initial int, selec
 // drawAmountPanelFallbackButtons 只在原始 96×64 資源缺失時使用；有資源
 // 時絕不覆蓋它，因為 DOS/V 內框的下半部已包含真正的 3×6 button glyph。
 func (g *game) drawAmountPanelFallbackButtons(screen *ebiten.Image, selected bool) {
+	ax, ay := g.amountAnchor()
 	for row := 0; row < amountPanelRows; row++ {
 		for col := 0; col < amountPanelCols; col++ {
-			cell := amountPanelCellRect(row, col)
+			cell := amountPanelCellRect(ax, ay, row, col)
 			button, _ := amountPanelButtonAt(row, col)
 			fill := color.RGBA{0, 20, 70, 255}
 			border := color.RGBA{120, 150, 180, 255}
@@ -207,9 +225,10 @@ func (g *game) drawDOSVAmountCursor(screen *ebiten.Image) {
 	if g.cursorImage == nil || !g.amountCursorActive {
 		return
 	}
+	ax, ay := g.amountAnchor()
 	x, y := ebiten.CursorPosition()
-	if !image.Pt(x, y).In(amountPanelRect) {
-		cell := amountPanelCellRect(g.amountCursorRow, g.amountCursorCol)
+	if !image.Pt(x, y).In(amountPanelRectAt(ax, ay)) {
+		cell := amountPanelCellRect(ax, ay, g.amountCursorRow, g.amountCursorCol)
 		x, y = cell.Min.X, cell.Min.Y
 	}
 	op := &ebiten.DrawImageOptions{}

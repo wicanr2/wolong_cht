@@ -22,7 +22,7 @@ composite 與 pending 結束後消像已接入，並由 Docker／Xvfb 短 smoke 
 | 項目 | 原始證據 | 結論 | 等級 |
 |---|---|---|---|
 | 畫布 | `sub_1EB6C` 設定 640×400 EGA 模式；`docs/formats/07` 亦由 80 byte 列跨距交叉確認 | 保留 640×400 邏輯畫布 | 已證實 |
-| 呼叫位置 | `sub_13902`／`sub_139E8` 呼叫 `sub_17C6E` 前設 `DX=0058h`、`BX=00B8h` | 輸入視窗的原始 anchor 是 `(88,184)` | 已證實 |
+| 呼叫位置 | `sub_13902`／`sub_139E8` 呼叫 `sub_17C6E` 前設 `DX=0058h`、`BX=00B8h` | **錨點由呼叫端給**；事件那四支是 `(88,184)`，財政的四支是 `(296,184)`（[`../spec/78`](../spec/78-amount-input-editor.md) §1.2）| 已證實 |
 | 保存範圍 | `sub_17C6E` 先把 `DX`／`BX` 各減 `8` 呼叫 `sub_19796`，結束前由 `sub_197C3` 還原 | 保存／還原區域從 `(80,176)` 起 | 已證實 |
 | 輸入格起點 | `sub_17D5F` 先 `add bx,10h`，再以目前 `DX`／`BX` 呼叫 `sub_1E3D7` | 內容首格從 `(88,200)` 起 | 已證實 |
 | 格子排列 | `sub_17D5F`：`CH=3`、`CL=6`；每欄 `DX += 10h`，每列 `BX += 10h` | 3 列 × 6 欄、16×16 格 | 已證實 |
@@ -77,11 +77,19 @@ composite 與 pending 結束後消像已接入，並由 Docker／Xvfb 短 smoke 
 | `5Ch` | 第 3 列第 4 格 | 目前值 × 100 | `AmountAppendHundred` |
 | `5Dh` | 第 1 列第 4 格 | 除以 10 | `AmountDeleteDigit` |
 | `5Eh` | 第 1 列第 5／6 格 | 清零 | `AmountClear` |
-| `5Fh` | 第 2 列第 5／6 格 | 還原呼叫端初值 | `AmountRestoreInitial` |
+| `5Fh` | 第 2 列第 5／6 格 | **設成上限**（`si = [bp+0]`）| `AmountSetMax` |
 | `60h` | 第 3 列第 5／6 格 | `STC` 結束輸入、保留目前值 | `AmountFinishInput` |
 
 `sub_17DA5` 的 `xchg AX,SI` 後以 `SI = SI×10 + AL`，所以前一版把它簡化成
 「加十」是勘誤；目前 `internal/state.editAmount` 與 UI 格位已按這個資料流固定。
+
+⭐ **`ax` 是上限，不是初值。** `sub_17C6E` 把它存進 `[bp+0]`，
+而三個地方都只把那一格當上界用：`sub_17DA5` 與 `sub_17DC3` 算完各 `cmp/jbe`
+夾一次，`sub_17DEC` 直接 `si = [bp+0]`。**`si` 開場是 `xor si, si`**——
+呼叫端沒有任何管道給初值。六個呼叫端傳的分別是 `7530h`（事件 2／3／4／5）、
+`64h`（稅率）與三個 `2710h`（募兵），
+與 [`48`](48-window-display-list.md) §6 從圖庫解出來的按鍵字樣「最大」一致。
+完整的參數表與 remake 實作在 [`../spec/78`](../spec/78-amount-input-editor.md)。
 
 ## 4. 本專案決策
 

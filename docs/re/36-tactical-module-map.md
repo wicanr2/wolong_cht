@@ -179,11 +179,19 @@ al = es:[bx]                           ; 或 es:[bx+1000h]
 test al, 7Fh / jnz → 回傳 al & 7Fh     ; 有東西擋著
 ds = cs:word_1D2F6 / di = bx & 0FFFh   ; ← 換到另一張表，位址取低 12 位
 dl = [di]
-cmp dl, 0F8h / jb → 回傳 0             ; 地形值 ≥ 0xF8 才擋
+xor al, al
+cmp dl, 0F8h / jb → 失敗（STC）        ; ★ 地形值 ≥ 0xF8 才**過得去**
+clc / retn
 ```
 
 **地圖每層 `0x1000` bytes（4,096 格）**，而 `and di, 0FFFh` 把位址折回同一層——
-所以兩層是**同尺寸疊在一起**的。`0xF8` 是地形的通行門檻。
+所以兩層是**同尺寸疊在一起**的。
+
+⭐ **`0xF8` 是「非過不可」的門檻，不是「擋住」的門檻。** `jb` 跳到的
+`loc_1B182`／`loc_1B1AD` 是 `stc; retn`（＝ 失敗），落下來才是 `clc`。
+這兩支的呼叫端（`sub_1B0D3`／`sub_1B116`）已經先驗過同一格 `≥ 0xF0`，
+所以合起來的語意是**只有打破的門（≥ 0xF8）上得去、下得來**。
+規格與 remake 的實作在 [`../spec/36`](../spec/36-ground-planes-and-climbing.md) §1.4。
 
 ### 6.4 戰術畫面的小常式（其餘 11 支）
 

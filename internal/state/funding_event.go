@@ -34,14 +34,13 @@ func (w *World) SetFundingAmount(amount int) bool {
 	return true
 }
 
-// EditFundingAmount 接入事件 4／5 共用的 sub_17C6E 數值核心。原始初值
-// 對應 RequestedAmount；畫面只負責把按鍵轉成 AmountEdit。
+// EditFundingAmount 接入事件 4／5 共用的 sub_17C6E 數值核心。
+// 上限是 `maxFundingOffer`，畫面只負責把按鍵轉成 AmountEdit。
 func (w *World) EditFundingAmount(edit AmountEdit, digit int) bool {
 	if w.funding == nil {
 		return false
 	}
-	amount, ok := editAmount(w.funding.OfferAmount, w.funding.RequestedAmount,
-		maxFundingOffer, edit, digit)
+	amount, ok := editAmount(w.funding.OfferAmount, maxFundingOffer, edit, digit)
 	if !ok {
 		return false
 	}

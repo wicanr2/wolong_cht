@@ -10,6 +10,7 @@ import (
 const (
 	amountCursorDiplomacy = 1
 	amountCursorFunding   = 2
+	amountCursorFinance   = 3
 )
 
 // pressedAmountDigit 將一般鍵盤數字鍵映射成狀態層的十進位數字。
@@ -28,8 +29,11 @@ func pressedAmountDigit() (int, bool) {
 	return 0, false
 }
 
-func (g *game) beginAmountEditor(owner int) {
+// beginAmountEditor 對應 `sub_17C6E` 開場：錨點由呼叫端給
+// （docs/spec/78 §1.2），目前值一律從 0 起（原版 `xor si, si`）。
+func (g *game) beginAmountEditor(owner, anchorX, anchorY int) {
 	g.amountCursorOwner = owner
+	g.amountAnchorX, g.amountAnchorY = anchorX, anchorY
 	// 原版游標由滑鼠硬體提供；跨平台第一次進入時停在「0」格，
 	// 後續移動／鍵盤操作都會留下最後選取的原生格位。
 	g.amountCursorRow, g.amountCursorCol = 1, 3
@@ -46,8 +50,9 @@ func (g *game) setAmountCursorAction(edit state.AmountEdit, digit int) {
 }
 
 func (g *game) amountPointerButton() (amountPanelButton, bool) {
+	ax, ay := g.amountAnchor()
 	x, y := ebiten.CursorPosition()
-	button, row, col, ok := amountPanelButtonAtPoint(x, y)
+	button, row, col, ok := amountPanelButtonAtPoint(ax, ay, x, y)
 	if !ok {
 		return amountPanelButton{}, false
 	}

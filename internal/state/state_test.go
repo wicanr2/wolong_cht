@@ -1414,8 +1414,10 @@ func TestRawAmountEditorSemantics(t *testing.T) {
 	if !w.EditDiplomacyOfferAmount(AmountDeleteDigit, 0) || w.diplomacy.OfferAmount != 1_230 {
 		t.Fatalf("外交退位 = %d，want 1230", w.diplomacy.OfferAmount)
 	}
-	if !w.EditDiplomacyOfferAmount(AmountRestoreInitial, 0) || w.diplomacy.OfferAmount != 1_200 {
-		t.Fatalf("外交還原 = %d，want 1200", w.diplomacy.OfferAmount)
+	// 「最大」鍵拿的是**上限**，不是原始請求額（docs/spec/78 §1）。
+	if !w.EditDiplomacyOfferAmount(AmountSetMax, 0) ||
+		w.diplomacy.OfferAmount != maxDiplomacyOffer {
+		t.Fatalf("外交最大 = %d，want %d", w.diplomacy.OfferAmount, maxDiplomacyOffer)
 	}
 	if !w.EditDiplomacyOfferAmount(AmountClear, 0) || w.diplomacy.OfferAmount != 0 {
 		t.Fatalf("外交清零 = %d，want 0", w.diplomacy.OfferAmount)
@@ -1428,8 +1430,9 @@ func TestRawAmountEditorSemantics(t *testing.T) {
 	if !w.EditFundingAmount(AmountAppendDigit, 9) || w.funding.OfferAmount != 30_000 {
 		t.Fatalf("撥款上限 = %d，want 30000", w.funding.OfferAmount)
 	}
-	if !w.EditFundingAmount(AmountRestoreInitial, 0) || w.funding.OfferAmount != 6_500 {
-		t.Fatalf("撥款還原 = %d，want 6500", w.funding.OfferAmount)
+	if !w.EditFundingAmount(AmountSetMax, 0) ||
+		w.funding.OfferAmount != maxFundingOffer {
+		t.Fatalf("撥款最大 = %d，want %d", w.funding.OfferAmount, maxFundingOffer)
 	}
 }
 

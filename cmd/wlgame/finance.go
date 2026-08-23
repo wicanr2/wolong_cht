@@ -13,9 +13,11 @@ import (
 	"image/color"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/hajimehoshi/ebiten/v2/vector"
 
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
+	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
@@ -25,23 +27,41 @@ import (
 type financeState struct {
 	active bool
 	row    int
+	// editing／value 是開著數值輸入器時的狀態。原版 `sub_17C6E` 的
+	// `si` 從 0 起，離開前不寫回任何東西——所以編輯中的值不能直接
+	// 塞進 world，取消時會留下痕跡。
+	editing bool
+	value   int
 }
 
-// TaxMax 是稅率的上限。
-//
-// ⚠ 這個值**還沒從原版讀出來**，先用 100 當上界。
-// 平衡點在 33.75%（`internal/state` 的 TestTaxTippingPoint 有推導），
-// 所以上限只要遠高於它就不影響玩法判斷。標成 remake 的暫定值。
+// TaxMax 是稅率的上限：`sub_167CD` 傳給 `sub_17C6E` 的 `ax = 64h`
+// （docs/spec/78 §1.2）。
 const TaxMax = 100
 
-// recruitStep 是募兵數的調整刻度。原版用小算盤直接輸入數字，
-// remake 先用固定刻度——**這是操作方式的差異，不是規則的差異**。
-const recruitStep = 100
+// recruitMenMax 是三個兵種各自的募集人數上限：`ax = 2710h` ＝ 10,000 人。
+// 原版寫回前 `div 10`，所以存進勢力記錄的是**點數**（≤ 1,000）。
+const recruitMenMax = 10000
+
+// financeAnchorX／Y 是財政四個熱區共用的數值器錨點
+// （`sub_167CD` 等四支的 `dx = 128h`／`bx = 0B8h`）。
+const financeAnchorX, financeAnchorY = 296, 184
 
 func (g *game) beginFinance() { g.finance = financeState{active: true} }
 
+// financeRowMax 是第 n 列開數值器時傳進去的上限。
+func financeRowMax(row int) int {
+	if row == 0 {
+		return TaxMax
+	}
+	return recruitMenMax
+}
+
 func (g *game) updateFinance() {
 	f := &g.finance
+	if f.editing {
+		g.updateFinanceAmount()
+		return
+	}
 	switch {
 	case g.cancelled():
 		f.active = false
@@ -51,23 +71,94 @@ func (g *game) updateFinance() {
 	case pressed(ebiten.KeyArrowDown):
 		f.row = (f.row + 1) % 4
 	}
-	delta := 0
-	if pressed(ebiten.KeyArrowRight) || pressed(ebiten.KeyEqual) {
-		delta = 1
-	}
-	if pressed(ebiten.KeyArrowLeft) || pressed(ebiten.KeyMinus) {
-		delta = -1
-	}
-	if delta == 0 {
+	// 原版只能點綠色圖示欄那四格（熱區 0x20–0x23）。
+	if row, ok := financeRowAtPointer(); ok {
+		f.row = row
+		g.beginFinanceAmount(row)
 		return
 	}
+	if pressed(ebiten.KeyEnter) || pressed(ebiten.KeySpace) {
+		g.beginFinanceAmount(f.row)
+	}
+}
+
+func financeRowAtPointer() (int, bool) {
+	if !inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+		return 0, false
+	}
+	x, y := ebiten.CursorPosition()
+	for row := 0; row < financeRows; row++ {
+		if image.Pt(x, y).In(financeRowRect(row)) {
+			return row, true
+		}
+	}
+	return 0, false
+}
+
+func (g *game) beginFinanceAmount(row int) {
+	g.finance.editing, g.finance.value, g.finance.row = true, 0, row
+	g.beginAmountEditor(amountCursorFinance, financeAnchorX, financeAnchorY)
+}
+
+// updateFinanceAmount 是四個熱區共用的那一段：`sub_17C6E` 的操作迴圈。
+// 取消（右鍵／ESC）走原版 `jb locret_167E5` ——**什麼都不寫回**。
+func (g *game) updateFinanceAmount() {
+	f := &g.finance
+	if g.cancelled() {
+		f.editing = false
+		return
+	}
+	max := financeRowMax(f.row)
+	apply := func(edit state.AmountEdit, digit int) {
+		if v, ok := state.EditAmountValue(f.value, max, edit, digit); ok {
+			f.value = v
+		}
+	}
+	if button, ok := g.amountPointerButton(); ok {
+		if button.edit == state.AmountFinishInput {
+			g.commitFinanceAmount()
+			return
+		}
+		apply(button.edit, button.digit)
+		return
+	}
+	if digit, ok := pressedAmountDigit(); ok {
+		g.setAmountCursorAction(state.AmountAppendDigit, digit)
+		apply(state.AmountAppendDigit, digit)
+		return
+	}
+	edit := state.AmountEdit(255)
+	switch {
+	case pressed(ebiten.KeyBackspace):
+		edit = state.AmountDeleteDigit
+	case pressed(ebiten.KeyInsert):
+		edit = state.AmountAppendHundred
+	case pressed(ebiten.KeyDelete):
+		edit = state.AmountClear
+	case pressed(ebiten.KeyHome):
+		edit = state.AmountSetMax
+	case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
+		g.setAmountCursorAction(state.AmountFinishInput, 0)
+		g.commitFinanceAmount()
+		return
+	}
+	if edit != state.AmountEdit(255) {
+		g.setAmountCursorAction(edit, 0)
+		apply(edit, 0)
+	}
+}
+
+// commitFinanceAmount 是四支 handler 的寫回：稅率直接存，
+// 三個兵種的**人數要先除以 10**（原版 `mov bx, 0Ah / div bx`）。
+func (g *game) commitFinanceAmount() {
+	f := &g.finance
+	f.editing = false
 	if f.row == 0 {
-		g.world.NextTaxRate = clamp(g.world.NextTaxRate+delta, 0, TaxMax)
+		g.world.NextTaxRate = clamp(f.value, 0, TaxMax)
 		return
 	}
 	t := f.row - 1
-	g.world.NextRecruitCap[t] = clamp(
-		g.world.NextRecruitCap[t]+delta*recruitStep, 0, 60000)
+	g.world.NextRecruitCap[t] = f.value / strategyReserveMenPerPoint
 }
 
 func clamp(v, lo, hi int) int {
@@ -229,8 +320,13 @@ func (g *game) drawFinance(screen *ebiten.Image) {
 		float32(sel.Dx()+2), float32(sel.Dy()+2), 1, ink, false)
 	g.chrome.Window(screen, financeWinX, financeHintY, financeWinW, financeHintH, chrome.Menu)
 	g.td.Draw(screen, "設定值於次月末生效", financeWinX+8, financeHintY+8, labelInk)
-	g.td.Draw(screen, "↑↓ 選欄　←→ 增減　ESC 關閉",
+	g.td.Draw(screen, "↑↓ 選欄　Enter 輸入　ESC 關閉",
 		financeWinX+8, financeHintY+8+textdraw.GlyphH+2, labelInk)
+
+	// 數值輸入器疊在最上面（原版 sub_17C6E 會先存下底下的畫面）。
+	if g.finance.editing {
+		g.drawAmountPanel(screen, g.finance.value, true)
+	}
 }
 
 // openCityList 是命令視窗的「據點」：自勢力據點一覽。

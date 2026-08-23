@@ -551,7 +551,8 @@ func TestCavalryCannotClimb(t *testing.T) {
 	}
 }
 
-// 上下城牆只在門那一格，而且大將與騎馬不做（docs/re/63 §4）。
+// 上下城牆只在**打破的**門那一格，而且大將與騎馬不做
+// （docs/spec/36 §1.4：呼叫端擋 ≥ 0xF0，被呼叫的那一支再擋 ≥ 0xF8）。
 func TestClimbOnlyAtGateCells(t *testing.T) {
 	f, _ := tiledField(32)
 	b := NewBattle(f, SyntheticFormations(), &fixedRand{}, 0)
@@ -564,16 +565,26 @@ func TestClimbOnlyAtGateCells(t *testing.T) {
 	if f.IsGateCell(32, gateY-1) {
 		t.Fatalf("(32,%d) 是城壁，不該是門格", gateY-1)
 	}
-	top, ok := f.GroundLevel(32, gateY, PlaneHigh)
-	if !ok {
-		t.Fatal("門格的高平面應該有地面（跟旁邊的牆頂同高）")
-	}
 
 	s := &b.Sides[AttackerSide].Soldiers[0]
 	s.Kind = Infantry
 	s.X, s.Y, s.Z, s.OnWall = 32, gateY, 4, false
+
+	// ★ 門還沒破：上不去。這一格是門（bit 3 有設），擋下來的是 0xF8 那一關。
+	if b.tryClimb(AttackerSide, 0) {
+		t.Fatal("未破的門不該爬得上去")
+	}
+
+	f.Retile(32, gateY, brokenGateDelta)
+	if f.Tile(32, gateY) < gateSolid {
+		t.Fatalf("撞開之後的圖塊 = %#x，應該 ≥ %#x", f.Tile(32, gateY), gateSolid)
+	}
+	top, ok := f.GroundLevel(32, gateY, PlaneHigh)
+	if !ok {
+		t.Fatal("門格的高平面應該有地面（跟旁邊的牆頂同高）")
+	}
 	if !b.tryClimb(AttackerSide, 0) {
-		t.Fatal("步兵站在門格上應該爬得上去")
+		t.Fatal("撞開之後步兵應該爬得上去")
 	}
 	if !s.OnWall || s.Z != top {
 		t.Errorf("爬上去之後 OnWall=%v Z=%d，預期 true／%d", s.OnWall, s.Z, top)

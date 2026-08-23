@@ -46,7 +46,7 @@ func (g *game) updateDiplomacy() {
 		case pressed(ebiten.KeyDelete):
 			keyboardEdit = state.AmountClear
 		case pressed(ebiten.KeyHome):
-			keyboardEdit = state.AmountRestoreInitial
+			keyboardEdit = state.AmountSetMax
 		case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
 			g.setAmountCursorAction(state.AmountFinishInput, 0)
 			g.diplomacyEditingAmount = false
@@ -64,7 +64,7 @@ func (g *game) updateDiplomacy() {
 		g.diplomacyRow = row
 		if row == int(state.DiplomacyOfferFunds) {
 			g.diplomacyEditingAmount = true
-			g.beginAmountEditor(amountCursorDiplomacy)
+			g.beginAmountEditor(amountCursorDiplomacy, amountAnchorEventX, amountAnchorEventY)
 			return
 		}
 		g.resolveDiplomacy(*c, state.DiplomacyOption(row))
@@ -94,7 +94,7 @@ func (g *game) updateDiplomacy() {
 	if option == state.DiplomacyOfferFunds &&
 		(pressed(ebiten.KeyEnter) || pressed(ebiten.KeySpace)) {
 		g.diplomacyEditingAmount = true
-		g.beginAmountEditor(amountCursorDiplomacy)
+		g.beginAmountEditor(amountCursorDiplomacy, amountAnchorEventX, amountAnchorEventY)
 		return
 	}
 	g.resolveDiplomacy(*c, option)
@@ -254,7 +254,7 @@ func (g *game) drawDiplomacy(screen *ebiten.Image, c *state.DiplomacyChoice) {
 	g.drawLegacyTalkBox(screen, talkUpperBoxX, talkUpperBoxY, talkBoxW, talkBoxH,
 		prompt, g.playerLordPortrait())
 	if g.diplomacyEditingAmount {
-		g.drawAmountPanel(screen, c.OfferAmount, c.InitialAmount, true)
+		g.drawAmountPanel(screen, c.OfferAmount, true)
 		return
 	}
 	g.drawLegacyChoiceBox(screen, talkChoiceX, talkChoiceY,

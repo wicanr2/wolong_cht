@@ -320,6 +320,10 @@ type game struct {
 	amountCursorRow, amountCursorCol int
 	amountCursorActive               bool
 	amountCursorOwner                int
+	// amountAnchorX／Y 是 `sub_17C6E` 的 `dx`／`bx`——**錨點由呼叫端給**，
+	// 事件 2／3／4／5 是 (88,184)，財政的四個熱區是 (296,184)
+	// （docs/spec/78 §1.2）。0 表示還沒設，一律當成事件那一組。
+	amountAnchorX, amountAnchorY int
 
 	// 截圖模式：跑 shotAt 幀之後把畫面存成 PNG 然後結束。
 	// 這是這支程式**唯一**的自動驗收方式——Ebiten 要顯示器，
