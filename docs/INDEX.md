@@ -71,7 +71,7 @@
 | [`docs/playtest/36-window-texture.md`](playtest/36-window-texture.md) | 36 — 視窗底紋畫上去了 | 通過。 | 2026-08-17 |
 | [`docs/playtest/37-main-screen-parity.md`](playtest/37-main-screen-parity.md) | 37 — 開局主畫面的逐區對拍：第一次真的對原版跑 | ⭐⭐ 五區全部 PASS。開局主畫面的 640×400 逐像素等於原版。 | 2026-08-17 |
 | [`docs/playtest/38-window-parity.md`](playtest/38-window-parity.md) | 38 — 三個視窗開著時的對拍：三個視窗區逐像素相同 | 通過。 | 2026-08-17 |
-| [`docs/playtest/39-system-window-parity.md`](playtest/39-system-window-parity.md) | 39 — 系統選單開著時的對拍：五區裡四區 PASS，選單本身也 PASS | 通過。 | 2026-08-17 |
+| [`docs/playtest/39-system-window-parity.md`](playtest/39-system-window-parity.md) | 39 — 系統選單開著時的對拍：五區裡四區 PASS，選單本身也 PASS | 通過（2026-08-17 的量測），但 2026-08-23 之後 | 2026-08-17 |
 | [`docs/playtest/40-tactical-parity.md`](playtest/40-tactical-parity.md) | 40 — 戰場的逐區對拍：六區逐像素相同，戰場區 0.17% | 部分通過。 | 2026-08-18 |
 | [`docs/playtest/41-m7-corrected-text-on-screen.md`](playtest/41-m7-corrected-text-on-screen.md) | 41 — M7 校訂後的畫面抽樣：18 則實跑截圖，沒有一行超寬 | 通過。 | 2026-08-22 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告的遊戲段落是逐幀錄下來的實跑畫面； 三平台候選包與 Linux AppImag… | 2026-08-21 |
@@ -226,7 +226,7 @@
 | [`docs/spec/73-right-click-cancel.md`](spec/73-right-click-cancel.md) | 73 — 右鍵取消是輸入層的語意，不是每個視窗各自的功能 | CONFORMED。七個面板改成問同一支 cancelled()，右鍵與 ESC 都退回上一層。 | 2026-08-23 |
 | [`docs/spec/74-corps-on-world-map.md`](spec/74-corps-on-world-map.md) | 74 — 軍團要畫在大地圖上 | CONFORMED。軍團以 MMAP.MCH 的原版圖塊疊在大地圖上，桌面與手機共用同一條算式。 | 2026-08-23 |
 | [`docs/spec/75-bundled-audio.md`](spec/75-bundled-audio.md) | 75 — 完整版要出得了聲 | CONFORMED。完整版收 32 個 ogg，wlgame 沒給 -audio 時會自己找執行檔旁邊的 audio/。 | 2026-08-23 |
-| [`docs/spec/76-lord-not-in-formation.md`](spec/76-lord-not-in-formation.md) | 76 — 編成的候選武將不含君主 | CONFORMED。編成候選排除君主；出陣那條照舊讓君主帶兵。 | 2026-08-23 |
+| [`docs/spec/76-lord-not-in-formation.md`](spec/76-lord-not-in-formation.md) | 76 — 主君能不能編成：系統選單裡的開關 | CONFORMED。系統選單多一列「主君編成」，遊戲中可隨時切； ⚠ 預設「可」——與原版行為不同，是使用者裁定的 … | 2026-08-23 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | CONFORMED。管線接起來了，也對原版跑過一輪 （[../playtest/37](../playtest/37… | 2026-08-15 |
 | [`docs/spec/91-tactical-parity.md`](spec/91-tactical-parity.md) | 91 — 戰場的逐區對拍：分區、同狀態怎麼達成 | CONFORMED。 | 2026-08-17 |
 

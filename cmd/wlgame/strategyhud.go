@@ -408,7 +408,10 @@ func (g *game) drawNaturalStrategyHUD(screen *ebiten.Image) {
 // 六個熱區由那一支的迴圈登記（docs/re/55）。
 const (
 	sysWinX, sysWinY = 208, 112
-	sysWinW, sysWinH = 208, 192
+	// ⚠ **原版是 192（六列）。** remake 多了「主君編成」那一列
+	// （docs/spec/76，使用者裁定），視窗因此加高一個列距。
+	// 代價寫在 docs/playtest/39：系統選單開著時不再與原版逐像素相同。
+	sysWinW, sysWinH = 208, 192+sysRowStep
 
 	sysTitleX, sysTitleY = 228, 124
 	sysRuleX, sysRuleY   = 216, 142
@@ -421,12 +424,13 @@ const (
 	sysValueX, sysValueY       = 352, 152
 	sysValueW, sysValueH       = 48, 16
 	sysRowStep                 = 24
-	sysRows                    = 6
+	// ⚠ 原版六列；第 7 列是 remake 加的「主君編成」（docs/spec/76）。
+	sysRows = 7
 )
 
 // sysMenuLabels 是六列的標籤，取自顯示清單場景 2 的字串。
 var sysMenuLabels = [sysRows]string{
-	"資料儲存", "畫面模式", "音　　效", "戰略速度", "戰術速度", "遊戲結束"}
+	"資料儲存", "畫面模式", "音　　效", "戰略速度", "戰術速度", "遊戲結束", "主君編成"}
 
 // 系統選單六列的索引。原版的六個 handler 沒讀（docs/re/55 §4），
 // 所以**哪一列做什麼是 remake 自己接的**，照標籤的字面意思。
@@ -437,6 +441,13 @@ const (
 	sysRowStrategySpeed
 	sysRowTacticalSpeed
 	sysRowQuit
+	// ⭐ sysRowLordCorps 是 remake 加的第 7 列，原版沒有（docs/spec/76）。
+	//
+	// ⚠ **加在最後，不是插在「遊戲結束」之前。** 插進去會把原版最後那一列
+	// 往下推一格，於是**原版六列沒有一列還在原座標**；加在後面的話那六列
+	// 一個 px 都不動，docs/playtest/39 對那六列的比對仍然成立。
+	// 代價是「遊戲結束」不再是視覺上的最後一列——換到的是原版版面不被動到。
+	sysRowLordCorps
 )
 
 // videoModeLabels 是「畫面模式」那一列的兩個選項（原版字串表 `ds:6002h`）。
@@ -497,6 +508,10 @@ func (g *game) dispatchSystemRow(row int, left bool) {
 		g.cycleSpeed(true, left)
 	case sysRowSound:
 		g.toggleSound()
+	case sysRowLordCorps:
+		// ⚠ 左右鍵都是 toggle：這一列只有兩個值，原版那套
+		// 「左鍵下一檔／右鍵上一檔」在兩個值上沒有意義。
+		g.lordCorps = !g.lordCorps
 	case sysRowSave:
 		g.beginSaveUI(saveWrite)
 	case sysRowQuit:
@@ -521,6 +536,17 @@ func sysRowRect(k int) image.Rectangle {
 	}
 	y := sysValueY + k*sysRowStep
 	return image.Rect(sysValueX, y, sysValueX+sysValueW, y+sysValueH)
+}
+
+// lordCorpsValue 是「主君編成」那一列的值。
+//
+// ⚠ 兩個值都是三個半形寬的全形字，與旁邊的速度檔位對齊
+// （速度是「 最速 」這種前後帶半形空白的七 byte 字串）。
+func lordCorpsValue(allowed bool) string {
+	if allowed {
+		return " 可 "
+	}
+	return "不可"
 }
 
 // soundValue 是系統選單第 3 列的值。
@@ -586,7 +612,9 @@ func (g *game) drawSystemWindow(dst *ebiten.Image) {
 	// 對應 GAMEPAL 的 bank 0–3 與 4–7，docs/re/55 §4）。
 	// remake 只做了 1６色那一組，所以這一格是固定值。
 	values := [sysRows]string{"ＯＫ", videoModeLabels[0], g.soundValue(),
-		speed.Labels[clamp(g.speed, 0, speed.Levels-1)], speed.Labels[clamp(g.tacticalSpeed, 0, speed.Levels-1)], "ＯＫ"}
+		speed.Labels[clamp(g.speed, 0, speed.Levels-1)],
+		speed.Labels[clamp(g.tacticalSpeed, 0, speed.Levels-1)],
+		"ＯＫ", lordCorpsValue(g.lordCorps)}
 	for k := 0; k < sysRows; k++ {
 		dy := k * sysRowStep
 		vector.DrawFilledRect(dst, sysLabelBoxX, float32(sysLabelBoxY+dy),

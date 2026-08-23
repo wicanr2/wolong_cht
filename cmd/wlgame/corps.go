@@ -44,17 +44,22 @@ type formState struct {
 
 // formCandidates 是還可以帶兵的武將。
 //
-// ⚠ **君主不在裡面**（docs/spec/76）。原版讓君主帶兵走的是**另一條路**：
-// 請求出陣時 `sub_16E8F` 由君主本人帶一支軍團，而且 `sub_16EC9` 專門擋
-// 「君主已經帶著軍團」（docs/spec/11）。如果一般編成本來就選得到君主，
-// 那條專用路徑與那道擋都沒有存在的必要。
+// ⚠ **君主在不在裡面由系統選單那一列決定**（docs/spec/76）。
+// 原版讓君主帶兵走的是**另一條路**：請求出陣時 `sub_16E8F` 由君主本人
+// 帶一支軍團，而且 `sub_16EC9` 專門擋「君主已經帶著軍團」（docs/spec/11）。
+// 如果一般編成本來就選得到君主，那條專用路徑與那道擋都沒有存在的必要。
+//
+// ⚠ **remake 預設放行**（`g.lordCorps` 初值 true），與原版不同——
+// 使用者裁定的差異。切成「不可」才是原版行為。
 //
 // ⚠ **這道擋只在玩家的編成指令上**，`autoFormCorps` 不受影響——
 // 出陣那條本來就是要讓君主帶兵。
 func (g *game) formCandidates() []int {
 	lord := -1
-	if p := g.world.Player; p >= 0 && p < len(g.world.Factions) {
-		lord = g.world.Factions[p].Lord
+	if !g.lordCorps {
+		if p := g.world.Player; p >= 0 && p < len(g.world.Factions) {
+			lord = g.world.Factions[p].Lord
+		}
 	}
 	var rows []int
 	for i, gen := range g.world.Generals {

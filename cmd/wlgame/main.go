@@ -180,6 +180,11 @@ type game struct {
 	// cancelFn 讓測試注入「取消被按下」（docs/spec/73）。nil ＝ 讀真的輸入。
 	cancelFn func() bool
 
+	// lordCorps ＝ 允許把君主編成軍團長（docs/spec/76）。
+	// ⚠ **預設 true，與原版不同**——使用者裁定的 remake 差異。
+	// 想要原版行為就在系統選單把那一列切成「不可」。
+	lordCorps bool
+
 	// roads 與 tactical 是掛在 World 上的執行期來源，不屬於存檔本體。
 	// 讀取另一個槽位後要重新掛回，否則數值雖然恢復，行軍／戰鬥會悄悄退回
 	// 沒有道路圖與戰術資料的降級路徑。
@@ -1510,6 +1515,7 @@ func main() {
 		log.Printf("驗收固定亂數種子：%d", *seed)
 	}
 	g := &game{lib: lib, rng: gameRNG, speed: *speed, tacticalSpeed: *tacticalSpeed,
+		lordCorps: true, // docs/spec/76：預設放行（remake 差異）
 		td:       textdraw.New(font, ascii),
 		shotPath: *shot, shotAt: *shotFrames, origDir: *dir, sourceFile: path,
 		rec: newRecorder(*framesDir, *framesN),
