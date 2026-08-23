@@ -43,11 +43,23 @@ type formState struct {
 // ---------------------------------------------------------------------------
 
 // formCandidates 是還可以帶兵的武將。
+//
+// ⚠ **君主不在裡面**（docs/spec/76）。原版讓君主帶兵走的是**另一條路**：
+// 請求出陣時 `sub_16E8F` 由君主本人帶一支軍團，而且 `sub_16EC9` 專門擋
+// 「君主已經帶著軍團」（docs/spec/11）。如果一般編成本來就選得到君主，
+// 那條專用路徑與那道擋都沒有存在的必要。
+//
+// ⚠ **這道擋只在玩家的編成指令上**，`autoFormCorps` 不受影響——
+// 出陣那條本來就是要讓君主帶兵。
 func (g *game) formCandidates() []int {
+	lord := -1
+	if p := g.world.Player; p >= 0 && p < len(g.world.Factions) {
+		lord = g.world.Factions[p].Lord
+	}
 	var rows []int
 	for i, gen := range g.world.Generals {
 		if gen.Alive && gen.Faction == g.world.Player &&
-			!gen.Posted && gen.Captor == 0xFF {
+			!gen.Posted && gen.Captor == 0xFF && i != lord {
 			rows = append(rows, i)
 		}
 	}
@@ -582,18 +594,16 @@ const (
 // 編成的內容照**實際的預備兵**湊——開局的勢力大多湊不滿六個位置，
 // 驗收畫面就該長成那個樣子，不然截出來的是假的。
 func (g *game) demoCorps(list bool) {
-	p := g.world.Player
-	var leaders []int
-	for i, gen := range g.world.Generals {
-		if gen.Alive && gen.Faction == p && !gen.Posted {
-			leaders = append(leaders, i)
-		}
-		if len(leaders) == 2 {
-			break
-		}
-	}
+	// ⚠ **不要在這裡自己抄一份資格判定。** 先前這支自己掃 Generals，
+	// 於是 `formCandidates()` 把君主擋掉之後，驗收 fixture 仍然把曹操
+	// 編成軍團長——修好的規則沒有套到驗收路徑上，而截圖看起來像沒修。
+	// 一條規則只留一份實作（CLAUDE.md §7 第 6 條）。
+	leaders := g.formCandidates()
 	if len(leaders) == 0 {
 		return
+	}
+	if len(leaders) > 2 {
+		leaders = leaders[:2]
 	}
 	kinds, manned := g.affordable()
 

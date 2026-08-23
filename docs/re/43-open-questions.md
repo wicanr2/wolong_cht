@@ -20,18 +20,18 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 24 | 20 | 4 | 0 |
 | 資料保存 | 33 | 32 | 1 | 0 |
-| 程式碼理解 | 180 | 173 | 7 | 0 |
+| 程式碼理解 | 181 | 174 | 7 | 0 |
 | 驗收 | 51 | 41 | 10 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 159 | 145 | 14 | 0 |
-| **合計** | **453** | 416 | 37 | 0 |
+| 其他 | 161 | 147 | 14 | 0 |
+| **合計** | **456** | 419 | 37 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/re/` | 180 |
-| `docs/spec/` | 126 |
+| `docs/re/` | 181 |
+| `docs/spec/` | 128 |
 | `docs/playtest/` | 51 |
 | `docs/formats/` | 33 |
 | `docs/mechanics/` | 24 |
@@ -107,7 +107,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `OPEN_S2`–`S5` 的 384,000 B | 是 §2 的三倍，多半是多張或多幀。開場播放器 `D7OPEN.EXE` 還沒反組譯 | 靜態 |
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`） | 靜態 |
 
-## 2.3 程式碼理解（180 條）
+## 2.3 程式碼理解（181 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -224,8 +224,9 @@
 | [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | 檔名 | `sub_18C20` 沒設 `dx`，靠 `sub_18B7C` 的 `push dx`／`pop dx` 從更上層傳進來 | 靜態 |
 | [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | `sub_18C9F` | 關閉時擦除的那一支，未讀 | 靜態 |
 | [`re/53-lord-select-window.md`](../re/53-lord-select-window.md) | 換勢力 | 這一支只顯示 `si` 指到的那一個勢力，**怎麼換下一個**在呼叫端 `sub_11AC3` 的迴圈裡，未讀 | 靜態 |
-| [`re/53-lord-select-window.md`](../re/53-lord-select-window.md) | `ds:5222h` | 軍師名字的位置（推測），配置端未讀 | 靜態 |
-| [`re/53-lord-select-window.md`](../re/53-lord-select-window.md) | `sub_18F6D`／`sub_18F7C` | 收尾與取消時擦除的兩支，未讀 | 靜態 |
+| [`re/53-lord-select-window.md`](../re/53-lord-select-window.md) | **自訂軍師名存不存得進 SAVE.DAT** | ⛔ **這是接「自定」的前提**。`SAVE.DAT` 的勢力記錄只有 `+0x02`（軍師的武將編號，`0x7F` ＝ 無），`../formats/08` 沒有任何自訂名字的欄位。`ds:5222h` 在遊戲的資料段裡，**有沒有被寫進存檔、寫在哪一段，未讀** | 靜態 |
+| [`re/53-lord-select-window.md`](../re/53-lord-select-window.md) | `sub_190C0` | 名字寫入端已定位，但**注音輸入盤本身（場景 9）的版面與鍵位未讀** | 靜態 |
+| [`re/53-lord-select-window.md`](../re/53-lord-select-window.md) | `sub_18F6D` | 收尾時擦除的那一支，未讀 | 靜態 |
 | [`re/54-advisor-naming-window.md`](../re/54-advisor-naming-window.md) | 選字表 | 十個聲母各自對應哪些候選字、資料在哪、怎麼翻頁——全部未讀。`sub_18FC9`（呼叫端）是入口 | 靜態 |
 | [`re/54-advisor-naming-window.md`](../re/54-advisor-naming-window.md) | 屬性低 byte | `01` 與 `03` 的差別未讀（§3） | 靜態 |
 | [`re/54-advisor-naming-window.md`](../re/54-advisor-naming-window.md) | 「別　號」 | 軍師除了名字還有別號，寫進哪裡未讀 | 靜態 |
@@ -359,7 +360,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（159 條）
+## 2.6 其他（161 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -424,7 +425,7 @@
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 新遊戲共用 | remake 的啟動殼層是自己的畫面，還沒有換成這個四槽視窗 | 靜態 |
 | [`spec/26-yes-no-dialog.md`](../spec/26-yes-no-dialog.md) | 原版的使用者 | `sub_18DC8` 只有一個呼叫端 `sub_11AC3`（新遊戲流程），問題文字由那裡給，內容未讀 | 靜態 |
 | [`spec/26-yes-no-dialog.md`](../spec/26-yes-no-dialog.md) | `cx = 600Dh` 的尺寸編碼 | `sub_19796`／`sub_197C3` 是**保存／還原被蓋住的畫面**，`dx`／`bx` 是像素座標、換算成 VRAM 位址（`45` §2 逐行解過）。這個呼叫端的 `cx` 高低位元組怎麼對到寬高沒逐位對過 | 靜態 |
-| [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 「自定」 | 軍師命名（場景 9 的注音輸入）還沒做，這顆按鈕目前無效 | 靜態 |
+| [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 「自定」 | 軍師命名還沒做，這顆按鈕目前無效。⛔ **卡在存檔**：`ds:5222h` 的寫入端已定位（`../re/53` §4），但 `SAVE.DAT` 的勢力記錄只有 `+0x02`（軍師的武將編號），**沒有自訂名字的欄位**——名字存不回去的話，做出來會在存檔後消失，比現在更糟。要先解「原版把這個名字寫進存檔的哪裡」 | 靜態 |
 | [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 換勢力 | 原版的換法在 `sub_11AC3`，未讀 | 靜態 |
 | [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 頭像尺寸 | 軍師頭像的下緣照原版座標會略微超出那個 208×104 的底框；沒有 oracle 可比，先照機器碼畫 | 實測 |
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 事件佇列 | 這一輪不進 JSON。編輯器要動它得先有 UI 語意 | 靜態 |
@@ -516,6 +517,8 @@
 | [`spec/75-bundled-audio.md`](../spec/75-bundled-audio.md) | 音檔大小 | ogg 全套 19 MB，桌面包從 11.7 MB 漲到 29 MB | 靜態 |
 | [`spec/75-bundled-audio.md`](../spec/75-bundled-audio.md) | 沒有音效裝置的**真實玩家** | ⛔ 仍然會掛。驗收模式擋住的是截圖路徑，一般啟動沒有擋——Ebiten 沒有可查詢的音訊 API，目前沒有乾淨的偵測法 | 實測 |
 | [`spec/75-bundled-audio.md`](../spec/75-bundled-audio.md) | 音效與場景的對應完整度 | 見 `29`，本規格不重複 | 靜態 |
+| [`spec/76-lord-not-in-formation.md`](../spec/76-lord-not-in-formation.md) | `sub_1820E` 的候選過濾條件 | 未讀。定案要靠它——現在是強證據 | 靜態 |
+| [`spec/76-lord-not-in-formation.md`](../spec/76-lord-not-in-formation.md) | 君主被編成之後原版會怎樣 | 沒試過。若原版其實允許、只是清單排序讓人以為不行，這一條要推翻 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 | 靜態 |
