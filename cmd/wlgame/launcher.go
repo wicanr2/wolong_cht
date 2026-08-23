@@ -352,19 +352,20 @@ func launcherRowRect(phase launcherPhase, row int) image.Rectangle {
 	}
 }
 
+// pointerRow 回傳游標所在的列。
+//
+// ⚠ **選君主那一頁沒有列可以指。** 它畫的是原版版面的卡片（docs/spec/27），
+// 啟動殼層自己的清單一列都沒畫出來——而那些命中格的範圍
+// （x 128–512、y 88–280）幾乎蓋滿整張卡片。沿用它們的結果是
+// 滑鼠一移過去就換君主、一點下去就直接決定。
+// **那一頁的滑鼠改走卡片自己的兩個熱區**（`lordCardHotspotAt`）。
 func (l *launcherModel) pointerRow(x, y int) (int, bool) {
-	if l.phase != launcherSelectPlayer {
-		for row := 0; row < l.rowCount(); row++ {
-			if image.Pt(x, y).In(launcherRowRect(l.phase, row)) {
-				return row, true
-			}
-		}
+	if l.phase == launcherSelectPlayer {
 		return 0, false
 	}
-	start, end := l.visiblePlayers(launcherPlayerMax)
-	for row := 0; start+row < end; row++ {
+	for row := 0; row < l.rowCount(); row++ {
 		if image.Pt(x, y).In(launcherRowRect(l.phase, row)) {
-			return start + row, true
+			return row, true
 		}
 	}
 	return 0, false
@@ -515,7 +516,11 @@ func (g *game) updateLauncher() error {
 			g.launcher.selectRow(row)
 		}
 	}
-	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+	if g.launcher.phase == launcherSelectPlayer {
+		if handled, err := g.updateLordCardPointer(); handled {
+			return err
+		}
+	} else if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		if row, ok := g.launcher.pointerRow(ebiten.CursorPosition()); ok {
 			g.launcher.selectRow(row)
 			if result := g.launcher.apply(launcherConfirm); result.kind != launcherNoResult {
@@ -535,10 +540,44 @@ func (g *game) updateLauncher() error {
 	case pressed(ebiten.KeyEscape):
 		action = launcherCancel
 	}
+	// 右鍵在原版就是「退回上一層」（`sub_121E7` 回 CF=1）。
+	if action == 0 && g.cancelled() {
+		action = launcherCancel
+	}
 	if action == 0 {
 		return nil
 	}
 	return g.applyLauncherResult(g.launcher.apply(action))
+}
+
+// updateLordCardPointer 是選君主那一頁的滑鼠：**只認卡片自己的兩個熱區**
+// （docs/spec/27 §2.1）。回傳 handled=true 表示這一幀的滑鼠已經處理完，
+// 不要再走鍵盤那一段。
+func (g *game) updateLordCardPointer() (bool, error) {
+	if !inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+		return false, nil
+	}
+	return true, g.applyLordCardHotspot(lordCardHotspotAt(ebiten.CursorPosition()))
+}
+
+// applyLordCardHotspot 是上面那一支的決定部分，**與讀滑鼠分開**。
+//
+// ⚠ 理由與 `cancelled()` 那一支相同：`inpututil` 讀的是 Ebiten 的全域輸入
+// 狀態，無頭測試裡永遠是 false。分開之後測試驗的是行為，
+// 不是「有沒有寫這一行」。
+func (g *game) applyLordCardHotspot(h lordCardHotspot) error {
+	switch h {
+	case lordCardConfirm:
+		return g.applyLauncherResult(g.launcher.apply(launcherConfirm))
+	case lordCardCustom:
+		// 「自定」＝ 軍師命名。⛔ 卡在存檔（docs/spec/27 §5）：
+		// `SAVE.DAT` 沒有自訂名字的欄位，做出來會在存檔後消失。
+		g.launcher.notice = "「自定」尚未實作"
+		return nil
+	default:
+		// 原版：其他位置的點擊回到等待迴圈，什麼都不做。
+		return nil
+	}
 }
 
 func (g *game) applyLauncherResult(result launcherResult) error {

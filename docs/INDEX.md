@@ -153,6 +153,7 @@
 | [`docs/re/70-d7end-ending-player.md`](re/70-d7end-ending-player.md) | 70 — D7END.EXE：結局播放器與結局全文 | 播放順序、版面、結尾文字與過場圖的格式都解出來了。 | 2026-08-18 |
 | [`docs/re/71-strategy-hotspot-dispatch.md`](re/71-strategy-hotspot-dispatch.md) | 71 — 戰略層的兩張熱區分派表，以及點縮小地圖會發生什麼 | 左鍵表 off_159D2 的 32 筆全部攤開，索引就是熱區碼。⭐ 熱區 0x16 （點縮小地圖）＝ 把大地圖鏡頭… | 2026-08-22 |
 | [`docs/re/72-world-map-display-list.md`](re/72-world-map-display-list.md) | 72 — 大地圖的顯示表：地形一層 ＋ 最多四層疊圖 | 已解。 | 2026-08-23 |
+| [`docs/re/73-new-game-faction-list.md`](re/73-new-game-faction-list.md) | 73 — 新遊戲怎麼選君主：先一張清單，再一張卡 | 整條流程解出來了。⭐ 君主卡上沒有「換勢力」的熱區—— 換勢力是退回上一層的 | 2026-08-24 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-16 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -178,7 +179,7 @@
 | [`docs/spec/24-corps-info-window.md`](spec/24-corps-info-window.md) | 24 — 軍團情報視窗 | CONFORMED。版面已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/25-slot-select-window.md`](spec/25-slot-select-window.md) | 25 — 四槽選擇視窗（新遊戲／讀取／儲存） | CONFORMED。讀取／儲存已照原版版面實作； 新遊戲仍走 remake 自己的啟動殼層（§5）。 | 2026-08-15 |
 | [`docs/spec/26-yes-no-dialog.md`](spec/26-yes-no-dialog.md) | 26 — ＹＥＳ／ＮＯ 對話框 | CONFORMED。版面與命中算式已照原版實作並有契約測試。 | 2026-08-15 |
-| [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 「自定」（軍師命名）還沒接（§5）。 | 2026-08-15 |
+| [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 輸入照原版收斂成兩個熱區（§2.1）。「自定」（軍師命名）還沒接… | 2026-08-15 |
 | [`docs/spec/28-scenario-json.md`](spec/28-scenario-json.md) | 28 — 劇本的 JSON 匯出與匯入 | CONFORMED。四個區塊 round-trip 全過。 | 2026-08-15 |
 | [`docs/spec/29-audio.md`](spec/29-audio.md) | 29 — 音樂與音效 | CONFORMED。音樂與音效都會出聲、與原版錄音比對過， ⭐ | 2026-08-15 |
 | [`docs/spec/30-victory.md`](spec/30-victory.md) | 30 — 結局：存活勢力數歸一 | CONFORMED。⭐ 觸發條件在機器碼裡是 | 2026-08-16 |

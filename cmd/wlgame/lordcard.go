@@ -7,6 +7,7 @@ package main
 // remake 的啟動殼層保留自己的流程，只把這一頁換成原版版面。
 
 import (
+	"image"
 	"image/color"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -21,18 +22,18 @@ const (
 	lordCardX, lordCardY = 160, 112
 	lordCardW, lordCardH = 240, 192
 
-	lordPortraitX, lordPortraitY   = 184, 128
-	lordNameX, lordNameY           = 200, 216
+	lordPortraitX, lordPortraitY       = 184, 128
+	lordNameX, lordNameY               = 200, 216
 	lordAdvPortraitX, lordAdvPortraitY = 312, 168
-	lordAdvNameX, lordAdvNameY     = 328, 144
+	lordAdvNameX, lordAdvNameY         = 328, 144
 
-	lordLabelX                 = 184
-	lordCapitalY               = 240
-	lordGeneralsY              = 256
-	lordCitiesY                = 272
-	lordCapitalNameX           = 264
-	lordCountX                 = 272
-	lordCountDigits            = 3
+	lordLabelX       = 184
+	lordCapitalY     = 240
+	lordGeneralsY    = 256
+	lordCitiesY      = 272
+	lordCapitalNameX = 264
+	lordCountX       = 272
+	lordCountDigits  = 3
 
 	lordDividerX, lordDividerY = 247, 240
 	lordDividerH               = 48
@@ -43,6 +44,44 @@ const (
 	lordButtonW, lordButtonH = 48, 16
 	lordButtonTextX          = 336
 )
+
+// lordCardHotspot 是卡片上會回應滑鼠的兩個位置。
+type lordCardHotspot int
+
+const (
+	lordCardNone lordCardHotspot = iota
+	lordCardConfirm
+	lordCardCustom
+)
+
+func lordCardConfirmRect() image.Rectangle {
+	return image.Rect(lordOKX, lordOKY, lordOKX+lordButtonW, lordOKY+lordButtonH)
+}
+
+func lordCardCustomRect() image.Rectangle {
+	return image.Rect(lordCustomX, lordCustomY,
+		lordCustomX+lordButtonW, lordCustomY+lordButtonH)
+}
+
+// lordCardHotspotAt 是 `sub_18E5A` 的 `sub al, 20h` 分派：
+// **只有這兩個熱區會動**，其他位置一律回 `lordCardNone`
+// （原版 `jb short loc_18E70` ＝ 回去等，什麼都不做，docs/spec/27 §2.1）。
+//
+// ⚠ 這一支存在的理由是一個真實的 bug：先前這一頁沿用啟動殼層的清單
+// 命中格，而那些格子**沒有畫出來**、範圍又幾乎蓋滿整張卡片，
+// 於是滑鼠一移過去就換君主、一點下去就直接決定。
+// **看不見的熱區是最難發現的一種**——畫面上沒有任何東西指向成因。
+func lordCardHotspotAt(x, y int) lordCardHotspot {
+	p := image.Pt(x, y)
+	switch {
+	case p.In(lordCardConfirmRect()):
+		return lordCardConfirm
+	case p.In(lordCardCustomRect()):
+		return lordCardCustom
+	default:
+		return lordCardNone
+	}
+}
 
 // drawLordCard 畫一張原版版面的君主選擇卡。
 func (g *game) drawLordCard(screen *ebiten.Image, p launcherPlayer, season int) {

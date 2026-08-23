@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**449 列分布在 170 份文件，平均每份 2.6 列。**
+**452 列分布在 171 份文件，平均每份 2.6 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -41,17 +41,17 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 24 | 20 | 4 | 0 |
 | 資料保存 | 33 | 32 | 1 | 0 |
-| 程式碼理解 | 176 | 169 | 7 | 0 |
+| 程式碼理解 | 179 | 171 | 8 | 0 |
 | 驗收 | 49 | 40 | 9 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 161 | 146 | 15 | 0 |
-| **合計** | **449** | 412 | 37 | 0 |
+| **合計** | **452** | 414 | 38 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/re/` | 176 |
+| `docs/re/` | 179 |
 | `docs/spec/` | 128 |
 | `docs/playtest/` | 49 |
 | `docs/formats/` | 33 |
@@ -128,7 +128,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `OPEN_S2`–`S5` 的 384,000 B | 是 §2 的三倍，多半是多張或多幀。開場播放器 `D7OPEN.EXE` 還沒反組譯 | 靜態 |
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`） | 靜態 |
 
-## 2.3 程式碼理解（176 條）
+## 2.3 程式碼理解（179 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -239,7 +239,6 @@
 | [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | `ds:987Ch` | 四筆槽頭的暫存段，由誰配置未讀 | 靜態 |
 | [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | 檔名 | `sub_18C20` 沒設 `dx`，靠 `sub_18B7C` 的 `push dx`／`pop dx` 從更上層傳進來 | 靜態 |
 | [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | `sub_18C9F` | 關閉時擦除的那一支，未讀 | 靜態 |
-| [`re/53-lord-select-window.md`](../re/53-lord-select-window.md) | 換勢力 | 這一支只顯示 `si` 指到的那一個勢力，**怎麼換下一個**在呼叫端 `sub_11AC3` 的迴圈裡，未讀 | 靜態 |
 | [`re/53-lord-select-window.md`](../re/53-lord-select-window.md) | **自訂軍師名存不存得進 SAVE.DAT** | ⛔ **這是接「自定」的前提**。`SAVE.DAT` 的勢力記錄只有 `+0x02`（軍師的武將編號，`0x7F` ＝ 無），`../formats/08` 沒有任何自訂名字的欄位。`ds:5222h` 在遊戲的資料段裡，**有沒有被寫進存檔、寫在哪一段，未讀** | 靜態 |
 | [`re/53-lord-select-window.md`](../re/53-lord-select-window.md) | `sub_190C0` | 名字寫入端已定位，但**注音輸入盤本身（場景 9）的版面與鍵位未讀** | 靜態 |
 | [`re/53-lord-select-window.md`](../re/53-lord-select-window.md) | `sub_18F6D` | 收尾時擦除的那一支，未讀 | 靜態 |
@@ -308,6 +307,10 @@
 | [`re/72-world-map-display-list.md`](../re/72-world-map-display-list.md) | `sub_12B3C` | 軍團旗標 `0x20` 成立時呼叫，推測是擦除舊位置，未讀 | 靜態 |
 | [`re/72-world-map-display-list.md`](../re/72-world-map-display-list.md) | `sub_1D782`／`sub_1D7E7`／`sub_1D804` | 三支實際搬像素的常式，未讀 | 靜態 |
 | [`re/72-world-map-display-list.md`](../re/72-world-map-display-list.md) | 那 110 張軍團圖的逐張外觀 | 算式定案、抽驗過勢力 0 靜止那一張（紅色軍旗），**22 × 5 沒有逐張看過** | 靜態 |
+| [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | `sub_18B12` 那一層 | 名義上是劇本選擇／初始化，只讀到「CF=1 退回 ＹＥＳ／ＮＯ」。信賴度初值的時序也掛在它身上（`08` §，待 oracle） | 實測 |
+| [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | `sub_18DC8` 的 `si=98C8h` | 那一則字串沒取出來看 | 靜態 |
+| [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | 欄位表的「型別」與「屬性」兩個 word | `0x76`／`0x73` 與 `0x0206`／`0x0204` 只由「名字欄 vs 數字欄」的對應推出語意，沒有讀 `sub_1820E` 裡消費它們的那一段 | 靜態 |
+| [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | `sub_18607` | 清單區清除，未讀 | 靜態 |
 
 ## 2.4 驗收（49 條）
 
@@ -437,7 +440,7 @@
 | [`spec/26-yes-no-dialog.md`](../spec/26-yes-no-dialog.md) | 原版的使用者 | `sub_18DC8` 只有一個呼叫端 `sub_11AC3`（新遊戲流程），問題文字由那裡給，內容未讀 | 靜態 |
 | [`spec/26-yes-no-dialog.md`](../spec/26-yes-no-dialog.md) | `cx = 600Dh` 的尺寸編碼 | `sub_19796`／`sub_197C3` 是**保存／還原被蓋住的畫面**，`dx`／`bx` 是像素座標、換算成 VRAM 位址（`45` §2 逐行解過）。這個呼叫端的 `cx` 高低位元組怎麼對到寬高沒逐位對過 | 靜態 |
 | [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 「自定」 | 軍師命名還沒做，這顆按鈕目前無效。⛔ **卡在存檔**：`ds:5222h` 的寫入端已定位（`../re/53` §4），但 `SAVE.DAT` 的勢力記錄只有 `+0x02`（軍師的武將編號），**沒有自訂名字的欄位**——名字存不回去的話，做出來會在存檔後消失，比現在更糟。要先解「原版把這個名字寫進存檔的哪裡」 | 靜態 |
-| [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 換勢力 | 原版的換法在 `sub_11AC3`，未讀 | 靜態 |
+| [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 勢力清單那一步 | remake 還沒做。視窗 (136,104) 384×176、五欄（君主／軍師／武將數／據點數／首都）、一頁 10 列、候選條件「勢力存在」都定案了（`../re/73` §2–§4），差實作 | 靜態 |
 | [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 頭像尺寸 | 軍師頭像的下緣照原版座標會略微超出那個 208×104 的底框；沒有 oracle 可比，先照機器碼畫 | 實測 |
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 事件佇列 | 這一輪不進 JSON。編輯器要動它得先有 UI 語意 | 靜態 |
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 未解區域 | `+0x1EC0` 那 7 KB 仍是黑盒，只能靠改寫保留 | 靜態 |
