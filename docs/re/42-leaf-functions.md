@@ -146,7 +146,7 @@ sub_12216:
 
 | 項目 | 現況 |
 |---|---|
-| `INT 61h` 的四個服務號（`ah=4`／`7`／`8`、`ax=09F2h`／`0C01h`）| 對應什麼音效動作要看 `YNSOUND.COM`（[`17`](17-dosv-audio-tsr.md)）|
+| `INT 61h` 的四個服務號（`ah=4`／`7`／`8`、`ax=09F2h`／`0C01h`）`[DOS/BIOS]` | 對應什麼音效動作要看 `YNSOUND.COM`（[`17`](17-dosv-audio-tsr.md)）。⚠ 原版與音效 TSR 的介面，**不擋 remake** |
 | `cs:byte_198A6` 位元 3 | 對應 `sub_15FAA`，設定與清除端都沒找到 |
 | `sub_1E9A7` 的 8 bytes 參數表 | 表本身沒讀 |
 | `byte_1020E`／`byte_10CF9` | 音源相關的兩個旗標 |

@@ -113,4 +113,4 @@ TSR 路徑分離。故「戰術效果」與「介面／TALK click」不能共用
 |---|---|
 | `0x330` 的用途 | MPU-401 的標準埠，沒找到讀它的地方 |
 | 效果碼 ↔ 聽起來像什麼 | `SOUND.DAT` 的記錄結構已解（[`57`](57-opl3-register-map.md) §6），但哪一號對應哪個動作只有 §3 的三個 |
-| `INT 61h` 的四個服務號 | `ah=4`／`7`／`8` 與 `ax=09F2h`／`0C01h`，對應什麼動作要看 `YNSOUND.COM`（[`42`](42-leaf-functions.md) §7）|
+| `INT 61h` 的四個服務號 `[DOS/BIOS]` | `ah=4`／`7`／`8` 與 `ax=09F2h`／`0C01h`，對應什麼動作要看 `YNSOUND.COM`（[`42`](42-leaf-functions.md) §7）。⚠ **這是原版與音效 TSR 的介面，不擋 remake**——音訊走純 Go 的 OPL3 渲染（[`../spec/29`](../spec/29-audio.md)），不經過 DOS |

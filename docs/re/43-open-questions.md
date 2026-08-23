@@ -14,23 +14,44 @@
 > 「擋住什麼」由來源目錄決定，「怎麼裁決」由關鍵字決定——兩欄都是機械算出來的，
 > **不是逐條判斷過的優先序**。要排優先序請自己讀那一列指到的小節。
 
+## 0. ⚠ 這個數字在量什麼
+
+**449 列分布在 169 份文件，平均每份 2.7 列。**
+
+⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
+每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
+**要求**每份文件要嘛有未解小節、要嘛明講 `<!-- 缺口：無 -->`。
+於是「解出新東西 → 寫一份文件 → 總數上升」是這個指標的常態，
+不是退步。
+
+⚠ 反過來也一樣：**數字變小不自動等於進度**。2026-08-21 的稽核
+把它從 570 降到 431，而那 −139 沒有一列是靠解出新東西減掉的。
+
+**要看進度請看別的東西**：`docs/spec/` 的 CONFORMED 份數、
+`docs/playtest/` 的逐像素數字、`docs/re/21` 的覆蓋地圖。
+這一份回答的是「還有什麼沒解」，**不是「還剩多少」**。
+
+> ⭐ 另有 **4 列標成 `[DOS/BIOS]`**，**不計入下面的總數**——那是原版與 DOS／BIOS 之間的介面
+> （`INT` 服務號、顯示卡暫存器、磁碟服務），而 remake 跑在 Go／Ebiten 上不跟它們講話。
+> 清單在 §9。
+
 ## 1. 總量
 
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
 | 規則正確性 | 24 | 20 | 4 | 0 |
 | 資料保存 | 33 | 32 | 1 | 0 |
-| 程式碼理解 | 180 | 173 | 7 | 0 |
+| 程式碼理解 | 176 | 169 | 7 | 0 |
 | 驗收 | 51 | 41 | 10 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 159 | 145 | 14 | 0 |
-| **合計** | **453** | 416 | 37 | 0 |
+| **合計** | **449** | 412 | 37 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/re/` | 180 |
+| `docs/re/` | 176 |
 | `docs/spec/` | 129 |
 | `docs/playtest/` | 51 |
 | `docs/formats/` | 33 |
@@ -107,7 +128,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `OPEN_S2`–`S5` 的 384,000 B | 是 §2 的三倍，多半是多張或多幀。開場播放器 `D7OPEN.EXE` 還沒反組譯 | 靜態 |
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`） | 靜態 |
 
-## 2.3 程式碼理解（180 條）
+## 2.3 程式碼理解（176 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -158,7 +179,6 @@
 | [`re/15-event10-producer.md`](../re/15-event10-producer.md) | 以下來源沒有證據，不能補成事實：未被 IDA 建成函式的 far code、以暫存器或指標 | （未解小節內文） | 靜態 |
 | [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | `0x330` 的用途 | MPU-401 的標準埠，沒找到讀它的地方 | 靜態 |
 | [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | 效果碼 ↔ 聽起來像什麼 | `SOUND.DAT` 的記錄結構已解（`57` §6），但哪一號對應哪個動作只有 §3 的三個 | 靜態 |
-| [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | `INT 61h` 的四個服務號 | `ah=4`／`7`／`8` 與 `ax=09F2h`／`0C01h`，對應什麼動作要看 `YNSOUND.COM`（`42` §7） | 靜態 |
 | [`re/19-outcome.md`](../re/19-outcome.md) | 勢力滅亡 selector | 未定位。remake 只顯示克制的 fallback 句，不冒充原版文字 | 靜態 |
 | [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | 同狀態動態 oracle | 沒有可重放的存檔／輸入序列，所以「原版等價」目前無法驗。**這是還沒做，不是做不了**——DOS/V 的密碼頁空白確認就會過（`../playtest/18`），PC-98 側連除錯器都接好了（`../playtest/21`） | 實測 |
 | [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | 逐幀執行順序 | 顯示串列與相機已重建，但整幀的呼叫順序沒有逐幀對過 | 靜態 |
@@ -180,8 +200,6 @@
 | [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `END_S10/S11` 與 `STR.EXE` 檔名不同步 | §6，要實跑裁決 | 實測 |
 | [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `END_S13.DAT` 前 408 格的來源 | 不是 `stdfont.15` 的任何一段，也不是 `usrfont.15m`（256 B） | 靜態 |
 | [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `END_S15.DAT`（5,242 B） | `KI.EXE` 的字串表引用它，但**不是字型**（大小不是 30／15 的倍數），也不是過場圖（沒有 `00 F4 01` 檔頭），Big5 解碼是亂碼 → 疑似壓縮 | 靜態 |
-| [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `sub_1F7A4` | 把 32 B 緩衝畫上 VRAM 的實際迴圈，未逐行讀 | 靜態 |
-| [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `YNFONT.EXE` 怎麼顯示中文 | 它不走 INT 15h（0 次），密碼輸入畫面的中文是它自己畫的。與本鏈無關，仍未解 | 靜態 |
 | [`re/30-corps-formation-ui.md`](../re/30-corps-formation-ui.md) | 軍團 `+0x00` 的位元 3／4／5 | 位元 1（有指令）、2（委任，`45`）已解；其餘仍未見成對的寫入端（`34` §4） | 靜態 |
 | [`re/31-faction-picker-screen.md`](../re/31-faction-picker-screen.md) | 分派表已印出，但 `sub_15AD1 → sub_15AFC` 的進入路徑仍未定位。 | （散句） | 靜態 |
 | [`re/31-faction-picker-screen.md`](../re/31-faction-picker-screen.md) | `cs:6056` 表的長度 | 前六筆是一組小 handler，後五筆疑似越過表尾（§1.2） | 靜態 |
@@ -198,7 +216,6 @@
 | [`re/37-graphics-and-runtime-module-map.md`](../re/37-graphics-and-runtime-module-map.md) | `sub_1F7A4` | 212 / 字型 blitter，`29` §9 已列為未解 | 靜態 |
 | [`re/40-garrison-relief-request.md`](../re/40-garrison-relief-request.md) | `+0x20` 與 `+0x14` 的關係 | §5 的張力，要實測 | 實測 |
 | [`re/40-garrison-relief-request.md`](../re/40-garrison-relief-request.md) | 據點 `+0x00` 的 bit 4／5 | bit 6／7 已解（§2），中間兩位未見 | 靜態 |
-| [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `INT 61h` 的四個服務號（`ah=4`／`7`／`8`、`ax=09F2h`／`0C01h`） | 對應什麼音效動作要看 `YNSOUND.COM`（`17`） | 靜態 |
 | [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `cs:byte_198A6` 位元 3 | 對應 `sub_15FAA`，設定與清除端都沒找到 | 靜態 |
 | [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `sub_1E9A7` 的 8 bytes 參數表 | 表本身沒讀 | 靜態 |
 | [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `byte_1020E`／`byte_10CF9` | 音源相關的兩個旗標 | 靜態 |
@@ -538,3 +555,19 @@
 
 只印抽得到的部分，會讓解析失敗長得像「那份文件沒有缺口」。
 這一節就是為了讓那個差別看得見。
+
+## 9. DOS／BIOS 平台層（不計入總數）
+
+原版與 DOS／BIOS 之間的介面：`INT` 服務號、顯示卡暫存器、磁碟服務。
+**remake 跑在 Go／Ebiten 上，不跟它們講話**——知道 `INT 61h` 的
+`ah=4` 是什麼，不會改變任何一行 Go。使用者裁定 2026-08-23：不算缺口。
+
+⚠ **分開數不是不數。** 這些仍然是原版的未解之處，只是**不擋 remake**；
+哪天要寫「原版怎麼跟 DOS 講話」的文件，這一節就是清單。
+
+| 出處 | 缺口 | 現況 |
+|---|---|---|
+| [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | `INT 61h` 的四個服務號 `[DOS/BIOS]` | `ah=4`／`7`／`8` 與 `ax=09F2h`／`0C01h`，對應什麼動作要看 `YNSOUND.COM`（[`42`](42-leaf-functions.md) §7）。⚠ **這是原版與音效 TSR 的介面，不擋 remake**——音訊走純 Go 的 OPL3 渲染（[`../spec/29`](../spec/29-audio.md)），不經過 DOS |
+| [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `sub_1F7A4` `[DOS/BIOS]` | 把 32 B 緩衝畫上 VRAM 的實際迴圈，未逐行讀。⚠ remake 要的是**畫什麼**（字模版面，已解），不是**怎麼寫 VRAM** |
+| [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `YNFONT.EXE` 怎麼顯示中文 `[DOS/BIOS]` | 它不走 INT 15h（0 次），密碼輸入畫面的中文是它自己畫的。⚠ 那是一支 DOS TSR，remake 沒有對應物；密碼頁本身也不擋任何事（`CLAUDE.md` §4.0） |
+| [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `INT 61h` 的四個服務號（`ah=4`／`7`／`8`、`ax=09F2h`／`0C01h`）`[DOS/BIOS]` | 對應什麼音效動作要看 `YNSOUND.COM`（[`17`](17-dosv-audio-tsr.md)）。⚠ 原版與音效 TSR 的介面，**不擋 remake** |
