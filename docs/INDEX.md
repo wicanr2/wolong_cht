@@ -152,6 +152,7 @@
 | [`docs/re/69-t2-cross-reference.md`](re/69-t2-cross-reference.md) | 69 — T2 那 18 支：逐支讀過，各自歸位 | 完成。 | 2026-08-18 |
 | [`docs/re/70-d7end-ending-player.md`](re/70-d7end-ending-player.md) | 70 — D7END.EXE：結局播放器與結局全文 | 播放順序、版面、結尾文字與過場圖的格式都解出來了。 | 2026-08-18 |
 | [`docs/re/71-strategy-hotspot-dispatch.md`](re/71-strategy-hotspot-dispatch.md) | 71 — 戰略層的兩張熱區分派表，以及點縮小地圖會發生什麼 | 左鍵表 off_159D2 的 32 筆全部攤開，索引就是熱區碼。⭐ 熱區 0x16 （點縮小地圖）＝ 把大地圖鏡頭… | 2026-08-22 |
+| [`docs/re/72-world-map-display-list.md`](re/72-world-map-display-list.md) | 72 — 大地圖的顯示表：地形一層 ＋ 最多四層疊圖 | 已解。 | 2026-08-23 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-16 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -160,7 +161,8 @@
 | [`docs/release/01-cross-build-gate.md`](release/01-cross-build-gate.md) | 01 — 發行閘重跑：五平台交叉建置 ＋ deny-list（2026-08-17） | 發行閘通過。五個平台建得出來、deny-list 掃過沒有原版資產。 ⭐ macOS 的 Ebiten 本體可以交叉… | 2026-08-17 |
 | [`docs/release/02-three-platform-20260820.md`](release/02-three-platform-20260820.md) | 02 — 2026-08-20 三平台重新交付 | 已交付並驗過。 | 2026-08-20 |
 | [`docs/release/03-three-platform-20260821.md`](release/03-three-platform-20260821.md) | 03 — 2026-08-21 三平台重新交付（含 Android 版） | 已交付並驗過，已被 wolong-remake-20260822 那一批取代。 | 2026-08-21 |
-| [`docs/release/04-three-platform-20260822.md`](release/04-three-platform-20260822.md) | 04 — 2026-08-22 四平台完整版（內含遊戲檔案） | 已交付並驗過。⛔ 這一批內含原版資產，不可外流。 | 2026-08-22 |
+| [`docs/release/04-three-platform-20260822.md`](release/04-three-platform-20260822.md) | 04 — 2026-08-22 四平台完整版（內含遊戲檔案） | 已交付並驗過，已被 wolong-remake-20260823 那一批取代。 | 2026-08-22 |
+| [`docs/release/05-full-20260823.md`](release/05-full-20260823.md) | 05 — 2026-08-23 四平台完整版（修掉玩家回報的三個問題） | 已交付並驗過。⛔ 內含原版資產，不可外流。 | 2026-08-23 |
 | [`docs/release/README-RELEASE.md`](release/README-RELEASE.md) | 臥龍傳 remake 可執行封裝 | 四平台完整包、Linux AppImage、推廣片與驗收紀錄已集中於 [dist-all](../../dist-a… | 2026-08-12 |
 | [`docs/spec/00-index.md`](spec/00-index.md) | 00 — 規格索引：已解的規則有沒有被實作、有沒有被驗過 | 索引。規格是 docs/re/（程式碼在哪）與 internal/（我們寫了什麼） 之間的那一層——它回答「這條規則… | 2026-08-14 |
 | [`docs/spec/10-city-tick.md`](spec/10-city-tick.md) | 10 — 據點整備、威脅偵測與求援 | CONFORMED。整條鏈已實作，並在 PC-98 原版的執行期記憶體上取樣驗過 （+0x18／+0x14 各 0/… | 2026-08-14 |
@@ -221,6 +223,9 @@
 | [`docs/spec/70-phone-chrome.md`](spec/70-phone-chrome.md) | 70 — 手機版的按鈕與面板用原版的底色與外框 | CONFORMED。 | 2026-08-21 |
 | [`docs/spec/71-promo-live-capture.md`](spec/71-promo-live-capture.md) | 71 — 桌面版的逐幀錄製（推廣片的動態素材） | CONFORMED。 | 2026-08-21 |
 | [`docs/spec/72-bundled-game-data.md`](spec/72-bundled-game-data.md) | 72 — 內含遊戲檔案的四平台完整版 | CONFORMED。四平台的完整包都內含原版資料與倚天字型並實跑驗過； dist-all 因此從「可散布」翻成「私人… | 2026-08-22 |
+| [`docs/spec/73-right-click-cancel.md`](spec/73-right-click-cancel.md) | 73 — 右鍵取消是輸入層的語意，不是每個視窗各自的功能 | CONFORMED。七個面板改成問同一支 cancelled()，右鍵與 ESC 都退回上一層。 | 2026-08-23 |
+| [`docs/spec/74-corps-on-world-map.md`](spec/74-corps-on-world-map.md) | 74 — 軍團要畫在大地圖上 | CONFORMED。軍團以 MMAP.MCH 的原版圖塊疊在大地圖上，桌面與手機共用同一條算式。 | 2026-08-23 |
+| [`docs/spec/75-bundled-audio.md`](spec/75-bundled-audio.md) | 75 — 完整版要出得了聲 | CONFORMED。完整版收 32 個 ogg，wlgame 沒給 -audio 時會自己找執行檔旁邊的 audio/。 | 2026-08-23 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | CONFORMED。管線接起來了，也對原版跑過一輪 （[../playtest/37](../playtest/37… | 2026-08-15 |
 | [`docs/spec/91-tactical-parity.md`](spec/91-tactical-parity.md) | 91 — 戰場的逐區對拍：分區、同狀態怎麼達成 | CONFORMED。 | 2026-08-17 |
 

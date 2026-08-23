@@ -864,6 +864,27 @@ func (g *game) cityMarks() []world.CityMark {
 	return marks
 }
 
+// corpsMarks 回傳要疊在大地圖上的軍團圖塊（docs/spec/74）。
+//
+// ⚠ 原版是掃整張軍團表、`[si+0] >= 0xC0` 才畫；remake 的對應欄位是
+// `Corps.Alive`（`internal/state/corps.go`），不要另外發明存在判定。
+func (g *game) corpsMarks() []world.CorpsMark {
+	if g.world == nil {
+		return nil
+	}
+	marks := make([]world.CorpsMark, 0, 8)
+	for i := range g.world.Corps {
+		c := &g.world.Corps[i]
+		if !c.Alive {
+			continue
+		}
+		marks = append(marks, world.CorpsMark{
+			X: c.X, Y: c.Y, Tile: world.CorpsTile(c.Faction, c.Heading),
+		})
+	}
+	return marks
+}
+
 // checkCityCentres 在載入後驗一次「記錄座標 +4 是據點中心」。
 //
 // 這是 docs/spec/53 §5 的假設，**假設要有現形的機制**：

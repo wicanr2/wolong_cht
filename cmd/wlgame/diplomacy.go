@@ -19,7 +19,7 @@ func (g *game) updateDiplomacy() {
 		return
 	}
 	if g.diplomacyEditingAmount {
-		if pressed(ebiten.KeyEscape) {
+		if g.cancelled() {
 			g.diplomacyEditingAmount = false
 			return
 		}
@@ -81,11 +81,11 @@ func (g *game) updateDiplomacy() {
 			g.diplomacyRow = i
 		}
 	}
-	if pressed(ebiten.KeyEscape) {
+	if g.cancelled() {
 		g.diplomacyRow = int(state.DiplomacyReject)
 	}
 	if !pressed(ebiten.KeyEnter) && !pressed(ebiten.KeySpace) &&
-		!pressed(ebiten.KeyEscape) &&
+		!g.cancelled() &&
 		!pressed(ebiten.Key1) && !pressed(ebiten.Key2) && !pressed(ebiten.Key3) {
 		return
 	}

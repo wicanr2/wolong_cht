@@ -153,7 +153,7 @@ func (g *game) updateAdvise() bool {
 			g.adviseCmdRow = (g.adviseCmdRow + 1) % len(labels)
 		case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
 			g.pickAdviseCommand(g.adviseCmdRow)
-		case pressed(ebiten.KeyEscape):
+		case g.cancelled():
 			g.closeAdvise()
 		}
 		// 數字鍵是 remake 加的捷徑；原版只有游標選取。
@@ -180,7 +180,7 @@ func (g *game) updateAdvise() bool {
 				g.list = nil
 				g.beginRelocate(node)
 			}
-		case pressed(ebiten.KeyEscape):
+		case g.cancelled():
 			if g.list.Cancel() {
 				g.list = nil
 				g.advise = advisePickCommand
@@ -188,7 +188,7 @@ func (g *game) updateAdvise() bool {
 		}
 
 	case adviseVerdict:
-		if pressed(ebiten.KeyEscape) || pressed(ebiten.KeyEnter) ||
+		if g.cancelled() || pressed(ebiten.KeyEnter) ||
 			pressed(ebiten.KeySpace) {
 			if !g.adviseAdvance() {
 				g.closeAdvise()
@@ -218,7 +218,7 @@ func (g *game) updateAdvise() bool {
 					g.beginPersuasion()
 				}
 			}
-		case pressed(ebiten.KeyEscape):
+		case g.cancelled():
 			if g.list.Cancel() {
 				g.list = nil
 				if g.advise == advisePickTarget && g.adviseCmd == persuasion.Cooperate {
@@ -246,7 +246,7 @@ func (g *game) updateAdvise() bool {
 			g.sessCur = (g.sessCur + 1) % len(opts)
 		case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
 			g.offerReason(opts[g.sessCur])
-		case pressed(ebiten.KeyEscape):
+		case g.cancelled():
 			g.closeAdvise()
 		}
 	}

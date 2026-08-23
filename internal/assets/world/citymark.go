@@ -95,6 +95,35 @@ func CityCentreTile(base byte, own Ownership) byte {
 // 非首都疊上去反而差 75 點，所以**只有首都疊**。
 const CapitalOverlayTile = 0xFF
 
+// CorpsMark 是一支軍團要疊在大地圖上的圖塊（docs/spec/74）。
+//
+// Tile 是 **MMAP.MCH 的圖塊編號**，由呼叫端算好：原版 `sub_12B2A` 取
+// 軍團記錄 `+0x09`（勢力編號 × 5）加 `+0x08`（朝向），每個勢力五張圖
+// ——四個方向 ＋ 靜止。
+type CorpsMark struct {
+	// X、Y 是軍團所在的地圖格（原版軍團記錄 +0x10／+0x12）。
+	X, Y int
+	Tile byte
+}
+
+// CorpsHeadings 是朝向的值域：0／1 是 X 減增、2／3 是 Y 減增、4 是靜止。
+const CorpsHeadings = 5
+
+// CorpsTile 算一支軍團該畫哪一張 MCH 圖塊（docs/spec/74 §3）。
+//
+// 原版 `sub_12B2A`：`al = [si+9]`（勢力編號 × 5）`+ [si+8]`（朝向）。
+// **每個勢力五張圖**，22 個勢力共 110 張。
+//
+// ⭐ 算式只寫在這裡一處。桌面與手機各自建疊圖清單，但**規則不重複**
+// （CLAUDE.md §7 第 6 條）。
+func CorpsTile(faction, heading int) byte {
+	if heading < 0 || heading >= CorpsHeadings {
+		// 朝向越界時退回「靜止」那一張，而不是畫出別的勢力的圖。
+		heading = CorpsHeadings - 1
+	}
+	return byte(faction*CorpsHeadings + heading)
+}
+
 // CityMark 是一座據點要在大地圖上改的東西。
 type CityMark struct {
 	// X、Y 是**中心格**的地圖座標（＝據點記錄座標 + CityCentreDX）。
@@ -142,7 +171,7 @@ func (m *Map) applyDecor(mark CityMark, base byte, put func(x, y int, tile byte)
 // mch 可以是 nil（沒載到 `MMAP.MCH`）——那樣只少了首都那一張，
 // 其餘照畫，不要整張失敗。
 func (m *Map) RenderMarked(ts *TileSet, mch *MCH, pal *palette.Palette, bank,
-	x0, y0, cols, rows int, marks []CityMark) (*image.RGBA, error) {
+	x0, y0, cols, rows int, marks []CityMark, corps []CorpsMark) (*image.RGBA, error) {
 	swap := make(map[int]byte, len(marks)*5)
 	overlay := make(map[int]byte, len(marks))
 	put := func(x, y int, tile byte) { swap[y*Width+x] = tile }
@@ -158,6 +187,11 @@ func (m *Map) RenderMarked(ts *TileSet, mch *MCH, pal *palette.Palette, bank,
 		if mark.Capital {
 			overlay[mark.Y*Width+mark.X] = CapitalOverlayTile
 		}
+	}
+
+	corpsAt := make(map[int]byte, len(corps))
+	for _, c := range corps {
+		corpsAt[c.Y*Width+c.X] = c.Tile
 	}
 
 	img := image.NewRGBA(image.Rect(0, 0, cols*TileSize, rows*TileSize))
@@ -180,25 +214,40 @@ func (m *Map) RenderMarked(ts *TileSet, mch *MCH, pal *palette.Palette, bank,
 					img.SetRGBA(rx*TileSize+px, ry*TileSize+py, tile.RGBAAt(px, py))
 				}
 			}
-			id, ok := overlay[my*Width+mx]
-			if !ok || mch == nil {
-				continue
+			if id, ok := overlay[my*Width+mx]; ok {
+				blitMCH(img, mch, pal, bank, id, rx, ry)
 			}
-			over := mch.Tile(id)
-			colours, err := pal.Bank(bank)
-			if err != nil || over == nil {
-				continue
-			}
-			for py := 0; py < TileSize; py++ {
-				for px := 0; px < TileSize; px++ {
-					c := over.Pix[py*TileSize+px]
-					if c == MCHTransparent || int(c) >= len(colours) {
-						continue
-					}
-					img.SetRGBA(rx*TileSize+px, ry*TileSize+py, colours[c])
-				}
+			// ⭐ 軍團**畫在首都疊圖之後**：同一格可能兩者都有
+			// （軍團在自己的首都裡），而原版的顯示表是後推的層蓋在
+			// 前面的層上（`sub_1D66A` 依序消費 si+3..si+6）。
+			if id, ok := corpsAt[my*Width+mx]; ok {
+				blitMCH(img, mch, pal, bank, id, rx, ry)
 			}
 		}
 	}
 	return img, nil
+}
+
+// blitMCH 把一張 MCH 圖塊疊到 img 的第 (rx, ry) 格。
+//
+// ⚠ MCH 的 0xFF 是**遮罩判定的透明像素**，不是色號——照畫會蓋掉地形。
+func blitMCH(img *image.RGBA, mch *MCH, pal *palette.Palette, bank int,
+	id byte, rx, ry int) {
+	if mch == nil {
+		return
+	}
+	over := mch.Tile(id)
+	colours, err := pal.Bank(bank)
+	if err != nil || over == nil {
+		return
+	}
+	for py := 0; py < TileSize; py++ {
+		for px := 0; px < TileSize; px++ {
+			c := over.Pix[py*TileSize+px]
+			if c == MCHTransparent || int(c) >= len(colours) {
+				continue
+			}
+			img.SetRGBA(rx*TileSize+px, ry*TileSize+py, colours[c])
+		}
+	}
 }

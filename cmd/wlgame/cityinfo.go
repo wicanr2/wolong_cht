@@ -78,7 +78,7 @@ func (g *game) openCityInfo(city int) {
 }
 
 func (g *game) updateCityInfo() {
-	if pressed(ebiten.KeyEscape) || pressed(ebiten.KeyEnter) {
+	if g.cancelled() || pressed(ebiten.KeyEnter) {
 		g.cityInfo.active = false
 	}
 }

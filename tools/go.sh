@@ -36,7 +36,8 @@ fi
 # （同一個 BuildID），而且每一個都 exit 0。
 # 踩過：拿這個當「Ebiten 可以交叉編譯」的證據，證的其實是本機建置成功。
 CROSS_ENV=()
-for v in GOOS GOARCH CGO_ENABLED GOARM GOAMD64; do
+# WOLONG_DUMP_DIR 讓測試把圖寫出來供肉眼複驗（容器內路徑）。
+for v in GOOS GOARCH CGO_ENABLED GOARM GOAMD64 WOLONG_DUMP_DIR; do
     if [ -n "${!v:-}" ]; then CROSS_ENV+=(-e "$v=${!v}"); fi
 done
 

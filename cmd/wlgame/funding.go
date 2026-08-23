@@ -18,7 +18,7 @@ func (g *game) updateFunding() {
 		return
 	}
 	if g.fundingEditingAmount {
-		if pressed(ebiten.KeyEscape) {
+		if g.cancelled() {
 			g.fundingEditingAmount = false
 			return
 		}
@@ -80,11 +80,11 @@ func (g *game) updateFunding() {
 			g.fundingRow = i
 		}
 	}
-	if pressed(ebiten.KeyEscape) {
+	if g.cancelled() {
 		g.fundingRow = int(state.FundingReject)
 	}
 	if !pressed(ebiten.KeyEnter) && !pressed(ebiten.KeySpace) &&
-		!pressed(ebiten.KeyEscape) && !pressed(ebiten.Key1) &&
+		!g.cancelled() && !pressed(ebiten.Key1) &&
 		!pressed(ebiten.Key2) && !pressed(ebiten.Key3) {
 		return
 	}

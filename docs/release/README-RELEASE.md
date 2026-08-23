@@ -1,6 +1,6 @@
 # 臥龍傳 remake 可執行封裝
 
-**狀態：四平台完整包、Linux AppImage、推廣片與驗收紀錄已集中於 [`dist-all`](../../dist-all)，目前是一致的 `wolong-remake-20260822` 批次（[`04`](04-three-platform-20260822.md)）；Windows／macOS 原生 GUI 與 Android 實機都尚未驗證。⛔ 本機那一批內含原版資產，不可外流。**
+**狀態：四平台完整包、Linux AppImage、推廣片與驗收紀錄已集中於 [`dist-all`](../../dist-all)，目前是一致的 `wolong-remake-20260823` 批次（[`05`](05-full-20260823.md)）；Windows／macOS 原生 GUI 與 Android 實機都尚未驗證。⛔ 本機那一批內含原版資產，不可外流。**
 
 - 日期：2026-08-12
 

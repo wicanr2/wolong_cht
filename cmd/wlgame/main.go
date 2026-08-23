@@ -177,6 +177,9 @@ type game struct {
 	// sub_15AFC，docs/spec/35 §2.5.2）。
 	factionPicker bool
 
+	// cancelFn 讓測試注入「取消被按下」（docs/spec/73）。nil ＝ 讀真的輸入。
+	cancelFn func() bool
+
 	// roads 與 tactical 是掛在 World 上的執行期來源，不屬於存檔本體。
 	// 讀取另一個槽位後要重新掛回，否則數值雖然恢復，行軍／戰鬥會悄悄退回
 	// 沒有道路圖與戰術資料的降級路徑。
@@ -998,7 +1001,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 	// 大地圖鋪滿橫幅以下的全部畫面。四季調色盤直接吃時鐘算出來的季節——
 	// 所以畫面會隨遊戲時間換季，不需要另外驅動。
 	if img, err := g.lib.RenderWorldMarked(g.camX, g.camY, viewCols, viewRows,
-		season, g.cityMarks()); err == nil {
+		season, g.cityMarks(), g.corpsMarks()); err == nil {
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Translate(0, strategyMapY)
 		screen.DrawImage(ebiten.NewImageFromImage(img), op)
@@ -1335,8 +1338,9 @@ func dirExists(path string) bool {
 
 // 完整包裡原版資料與點陣字的目錄名（docs/spec/72 §2）。
 const (
-	bundledOrigDir = "gamedata"
-	bundledFontDir = "fonts"
+	bundledOrigDir  = "gamedata"
+	bundledFontDir  = "fonts"
+	bundledAudioDir = "audio"
 )
 
 // resolveDataDir 決定實際要用的資料目錄。
@@ -1352,6 +1356,35 @@ const (
 //  2. **repo 內行為不變**——`workplace/orig/dosv` 在的時候第二條就命中。
 //  3. **都找不到就回預設值**，讓既有的載入器噴可診斷的錯。
 //     ⚠ 不要靜默跳過——沉默的成功比失敗難發現。
+// resolveAudioDir 決定音檔目錄（docs/spec/75 §2）。
+//
+// ⚠ **判準與 resolveDataDir 不同，不要湊成一支。** `-orig` 的預設值是一個
+// repo 相對路徑，判準是「那個路徑不存在才去找」；`-audio` 的預設值是
+// **空字串**，判準是「**沒給才去找**」。兩者湊在一起會讓其中一邊在某個
+// 情況下錯。
+//
+// 找不到就回空字串，維持既有的靜音行為——完整包以外的批次不含音檔。
+func resolveAudioDir(value string) string {
+	if value != "" {
+		return value
+	}
+	executable, err := os.Executable()
+	if err != nil {
+		return ""
+	}
+	dir := filepath.Dir(executable)
+	for _, candidate := range []string{
+		filepath.Join(dir, bundledAudioDir),
+		filepath.Join(dir, "..", bundledAudioDir),
+		filepath.Join(dir, "..", "share", "wolong-remake", bundledAudioDir),
+	} {
+		if dirExists(candidate) {
+			return candidate
+		}
+	}
+	return ""
+}
+
 func resolveDataDir(value, def, bundled string) string {
 	if value != def {
 		return value
@@ -1385,8 +1418,11 @@ func main() {
 	fontDir := flag.String("font", defaultFontDir, "倚天點陣字目錄（請自備）")
 	// ⚠ 預設是空的（靜音）。Ebiten 的音訊錯誤沒有可查詢的 API，
 	// 沒有音效裝置時 `RunGame` 會直接帶著 ALSA 的錯誤結束——
-	// 無頭驗收與 CI 全部會掛。**要有聲音就明確給目錄。**
-	audioDir := flag.String("audio", "", "ogg 音檔目錄（先跑 tools/bgm2ogg.sh 產生；留白＝靜音）")
+	// 無頭驗收與 CI 全部會掛。
+	//
+	// ⭐ 完整包會自己找執行檔旁邊的 `audio/`（docs/spec/75），
+	// 所以「留白＝靜音」這道防護在**驗收模式**另外補（見 flag.Parse 之後）。
+	audioDir := flag.String("audio", "", "ogg 音檔目錄（先跑 tools/bgm2ogg.sh 產生；留白＝靜音；完整包會自己找旁邊的 audio/）")
 	speed := flag.Int("speed", 2, "戰略速度檔位 0–4（0 ＝ 最高速、4 ＝ 最低速）")
 	tacticalSpeed := flag.Int("tactical-speed", 2, "戰術速度檔位 0–4（0 ＝ 最高速、4 ＝ 最低速）")
 	seed := flag.Int("seed", -1, "驗收用固定亂數種子；負值時照原版以時鐘播種")
@@ -1426,6 +1462,18 @@ func main() {
 	// 解開的完整包裡，預設的 repo 相對路徑不成立（docs/spec/72 §3）。
 	*dir = resolveDataDir(*dir, defaultOrigDir, bundledOrigDir)
 	*fontDir = resolveDataDir(*fontDir, defaultFontDir, bundledFontDir)
+	*audioDir = resolveAudioDir(*audioDir)
+	// ⭐ **驗收模式一律靜音。** 這是 `-audio` 預設留白原本擋住的東西：
+	// 沒有音效裝置時 Ebiten 的 `RunGame` 會直接帶著 ALSA 的錯誤結束，
+	// 而截圖與逐幀錄製都跑在沒有音效卡的容器裡。
+	//
+	// ⚠ 完整包會自己找到旁邊的 `audio/`，那道防護就失效了——所以改成
+	// 依**用途**關掉：要截圖或錄影就不需要聲音，關掉沒有代價。
+	// 判準不是「有沒有顯示器」（Xvfb 有 DISPLAY 卻沒有音效卡），
+	// 也不是猜 `/dev/snd`（那是平台細節）。
+	if *shot != "" || *framesDir != "" {
+		*audioDir = ""
+	}
 	flagVisit = func(fn func(string)) { flag.CommandLine.Visit(func(f *flag.Flag) { fn(f.Name) }) }
 
 	lib, err := library.LoadWithOptions(*dir, library.LoadOptions{TalkJSON: *talkJSON, TalkCorrections: *talkCorrections})

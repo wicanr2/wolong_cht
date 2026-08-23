@@ -1,6 +1,7 @@
 # 04 — 2026-08-22 四平台完整版（內含遊戲檔案）
 
-**狀態：已交付並驗過。⛔ 這一批內含原版資產，不可外流。**
+**狀態：已交付並驗過，已被 `wolong-remake-20260823` 那一批取代。**
+⛔ 這一批內含原版資產，不可外流。
 `dist-all` 是一致的 `wolong-remake-20260822` 批次：四個平台的包裡都有
 松崗 DOS/V 的 69 個原版檔與倚天點陣字，解開或裝上去就能玩。
 
@@ -8,6 +9,7 @@
 - 使用者裁定：`dist-all` 就是四平台完整版（規格 [`../spec/72`](../spec/72-bundled-game-data.md)）
 - 工具：`tools/release_all.sh 20260822` ＋ `WOLONG_BUNDLE_DATA=1 tools/android_build.sh`
   ＋ `tools/release_smoke.sh 20260822` ＋ `WOLONG_BUNDLED=1 tools/android_smoke.sh`
+- 後續：`wolong-remake-20260823`（[`05`](05-full-20260823.md)）
 - 前一批：`wolong-remake-20260821`（[`03`](03-three-platform-20260821.md)，已被本批取代）
 
 ## 1. ⛔ 散布界線

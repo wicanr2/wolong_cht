@@ -43,7 +43,7 @@ func (g *game) beginFinance() { g.finance = financeState{active: true} }
 func (g *game) updateFinance() {
 	f := &g.finance
 	switch {
-	case pressed(ebiten.KeyEscape):
+	case g.cancelled():
 		f.active = false
 		return
 	case pressed(ebiten.KeyArrowUp):

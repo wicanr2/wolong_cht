@@ -73,7 +73,7 @@ func (g *game) openCorpsInfo(corps int) {
 }
 
 func (g *game) updateCorpsInfo() {
-	if pressed(ebiten.KeyEscape) || pressed(ebiten.KeyEnter) {
+	if g.cancelled() || pressed(ebiten.KeyEnter) {
 		g.corpsInfo.active = false
 	}
 }

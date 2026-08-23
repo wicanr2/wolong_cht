@@ -1,12 +1,38 @@
 package world
 
 import (
+	"image"
+	"image/png"
 	"os"
 	"path/filepath"
 	"testing"
 
+	"github.com/wicanr2/wolong_cht/internal/assets/palette"
 	"github.com/wicanr2/wolong_cht/internal/assets/rle"
 )
+
+// loadWorldForTest 把畫一張大地圖需要的四樣東西讀進來。
+// 缺任何一樣就 skip——原版素材不進版控。
+func loadWorldForTest(t *testing.T) (*Map, *TileSet, *MCH, *palette.Palette) {
+	t.Helper()
+	m, err := ParseMap(read(t, "dosv", "MMAP.MAP"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	ts, err := ParseTileSet(read(t, "dosv", "MMAP.MDL"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	mch, err := ParseMCH(read(t, "dosv", "MMAP.MCH"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	pal, err := palette.Parse(read(t, "dosv", "GAMEPAL.BRG"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return m, ts, mch, pal
+}
 
 func read(t *testing.T, ver, name string) []byte {
 	t.Helper()
@@ -410,5 +436,82 @@ func TestRoadPathNotShorterThanStraightLine(t *testing.T) {
 			t.Errorf("邊 %d–%d 只有 %d 格，直線下限是 %d",
 				e.A, e.B, len(e.Path), straightLine)
 		}
+	}
+}
+
+// ⭐ 圖塊算式釘死：勢力 × 5 ＋ 朝向（docs/spec/74 §3，原版 sub_12B2A）。
+// 22 個勢力 × 5 張 ＝ 110 張，最後一張是 109。
+func TestCorpsTile(t *testing.T) {
+	cases := []struct {
+		faction, heading int
+		want             byte
+	}{
+		{0, 0, 0}, {0, 4, 4},
+		{1, 0, 5}, {1, 3, 8},
+		{21, 4, 109},
+	}
+	for _, c := range cases {
+		if got := CorpsTile(c.faction, c.heading); got != c.want {
+			t.Errorf("CorpsTile(%d,%d) = %d，want %d", c.faction, c.heading, got, c.want)
+		}
+	}
+	// ⚠ 朝向越界要退回「靜止」，**不可以**溢位成別的勢力那五張。
+	for _, h := range []int{-1, 5, 99} {
+		if got := CorpsTile(3, h); got != CorpsTile(3, CorpsHeadings-1) {
+			t.Errorf("朝向 %d 沒有退回靜止：得到 %d", h, got)
+		}
+	}
+	// 兩個勢力的圖塊區間不可以重疊。
+	for f := 0; f < 21; f++ {
+		if CorpsTile(f, CorpsHeadings-1) >= CorpsTile(f+1, 0) {
+			t.Fatalf("勢力 %d 與 %d 的圖塊撞了", f, f+1)
+		}
+	}
+}
+
+// 軍團疊圖真的會蓋在地形上，而且死掉的軍團不畫。
+func TestRenderMarkedDrawsCorps(t *testing.T) {
+	m, ts, mch, pal := loadWorldForTest(t)
+	base, err := m.RenderMarked(ts, mch, pal, 0, 0, 0, 4, 4, nil, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	with, err := m.RenderMarked(ts, mch, pal, 0, 0, 0, 4, 4, nil,
+		[]CorpsMark{{X: 1, Y: 1, Tile: CorpsTile(0, 4)}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	diff := 0
+	for i := range base.Pix {
+		if base.Pix[i] != with.Pix[i] {
+			diff++
+		}
+	}
+	if diff == 0 {
+		t.Fatal("疊了軍團卻一個像素都沒變")
+	}
+	// ⚠ 只能改到那一格：16×16×4 ＝ 1024 個 byte 是上限。
+	if diff > TileSize*TileSize*4 {
+		t.Errorf("軍團疊圖改了 %d 個 byte，超出一格的範圍", diff)
+	}
+	// ⭐ 像素有變不等於畫對了。設 WOLONG_DUMP_DIR 就把圖存出來用眼睛看——
+	// 畫面的錯測試看不到（CLAUDE.md §7 第 13 條）。
+	dumpPNG(t, with, "corps-overlay.png")
+}
+
+// dumpPNG 在 WOLONG_DUMP_DIR 有設時把圖寫出來，方便肉眼複驗。
+func dumpPNG(t *testing.T, img *image.RGBA, name string) {
+	t.Helper()
+	dir := os.Getenv("WOLONG_DUMP_DIR")
+	if dir == "" {
+		return
+	}
+	f, err := os.Create(filepath.Join(dir, name))
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer f.Close()
+	if err := png.Encode(f, img); err != nil {
+		t.Fatal(err)
 	}
 }

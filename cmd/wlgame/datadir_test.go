@@ -90,3 +90,38 @@ func TestBundledDirNames(t *testing.T) {
 		t.Fatal("資料與字型不能放同一個目錄：ImportActivity 也是分開的")
 	}
 }
+
+// ⚠ `-audio` 的判準與 `-orig` 不同：預設值是**空字串**，
+// 所以是「沒給才找」，不是「預設路徑不存在才找」（docs/spec/75 §2）。
+func TestResolveAudioDir(t *testing.T) {
+	exe, err := os.Executable()
+	if err != nil {
+		t.Fatalf("取不到執行檔路徑：%v", err)
+	}
+	exeDir := filepath.Dir(exe)
+
+	t.Run("明講的路徑一律尊重", func(t *testing.T) {
+		if got := resolveAudioDir("/tmp/沒有這個目錄"); got != "/tmp/沒有這個目錄" {
+			t.Errorf("明講的路徑被換掉了：%s", got)
+		}
+	})
+
+	t.Run("沒給就找 exe 旁邊", func(t *testing.T) {
+		want := filepath.Join(exeDir, bundledAudioDir)
+		if err := os.MkdirAll(want, 0o755); err != nil {
+			t.Skipf("造不出 %s：%v", want, err)
+		}
+		t.Cleanup(func() { os.RemoveAll(want) })
+		if got := resolveAudioDir(""); got != want {
+			t.Errorf("應該找到 %s，得到 %q", want, got)
+		}
+	})
+
+	t.Run("都找不到就維持靜音", func(t *testing.T) {
+		// ⚠ 回空字串，不是回一個不存在的路徑——空字串是既有的靜音約定，
+		// 換成路徑會讓 sound.Open 去讀一個永遠不存在的目錄。
+		if got := resolveAudioDir(""); got != "" {
+			t.Errorf("沒有音檔目錄時應該回空字串，得到 %q", got)
+		}
+	})
+}

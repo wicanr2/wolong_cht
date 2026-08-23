@@ -38,9 +38,13 @@ RELEASE_STAMP = RELEASE_VERSION.rsplit("-", 1)[-1]
 BUNDLE_DATA = os.environ.get("WOLONG_BUNDLE_DATA", "1") != "0"
 ORIG_SRC = REPO / "workplace" / "orig" / "dosv"
 FONT_SRC = REPO / "workplace" / "eten"
+# 音檔是原版音樂的合成渲染，屬於原版衍生資產——**只有完整版收**
+# （docs/spec/75 §2）。可散布批次一個都不收，與 gamedata 同一條界線。
+AUDIO_SRC = REPO / "workplace" / "audio"
 # 包內的目錄名，與 cmd/wlgame 的 bundledOrigDir／bundledFontDir 對應。
 BUNDLED_ORIG = "gamedata"
 BUNDLED_FONT = "fonts"
+BUNDLED_AUDIO = "audio"
 PROMO_FILES = (
     "wolong-remake-trailer.mp4",
     "wolong-remake-classic-revival.mp4",
@@ -194,6 +198,11 @@ def copy_bundled_tree(src: Path, dst: Path) -> None:
     for entry in sorted(src.iterdir()):
         if entry.name.startswith(".") or not entry.is_file():
             continue
+        # ⚠ `workplace/audio` 裡 ogg 旁邊還躺著合成中間產物 wav
+        # （整包 239 MB，其中 ogg 只有 19 MB）。**只收 ogg**——
+        # 照單全收會讓每個桌面包多出兩百多 MB 的中間檔。
+        if src == AUDIO_SRC and entry.suffix.lower() != ".ogg":
+            continue
         shutil.copy2(entry, dst / entry.name)
         (dst / entry.name).chmod(0o444)
         n += 1
@@ -215,6 +224,8 @@ def bundled_trees() -> list[tuple[Path, str]]:
     trees = [(ORIG_SRC, BUNDLED_ORIG)]
     if FONT_SRC.is_dir():
         trees.append((FONT_SRC, BUNDLED_FONT))
+    if AUDIO_SRC.is_dir():
+        trees.append((AUDIO_SRC, BUNDLED_AUDIO))
     return trees
 
 

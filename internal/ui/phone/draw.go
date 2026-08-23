@@ -287,7 +287,7 @@ func (s *Session) drawMap(dst *ebiten.Image) {
 	cols, rows := s.viewTiles()
 	// 多畫一格，右下角才不會在鏡頭落在半格時露出底色。
 	img, err := s.lib.RenderWorldMarked(s.camX, s.camY, cols+1, rows+1,
-		int(s.world.Clock.Season()), s.cityMarks())
+		int(s.world.Clock.Season()), s.cityMarks(), s.corpsMarks())
 	if err != nil {
 		return
 	}
@@ -340,6 +340,21 @@ func (s *Session) cityMarks() []world.CityMark {
 			X: c.X + world.CityCentreDX, Y: c.Y,
 			Own:     world.OwnershipOf(c.Owner, s.world.Player),
 			Capital: i == capital,
+		})
+	}
+	return marks
+}
+
+// corpsMarks 與桌面同一條規則（docs/spec/74）；圖塊算式在 world.CorpsTile。
+func (s *Session) corpsMarks() []world.CorpsMark {
+	marks := make([]world.CorpsMark, 0, 8)
+	for i := range s.world.Corps {
+		c := &s.world.Corps[i]
+		if !c.Alive {
+			continue
+		}
+		marks = append(marks, world.CorpsMark{
+			X: c.X, Y: c.Y, Tile: world.CorpsTile(c.Faction, c.Heading),
 		})
 	}
 	return marks
