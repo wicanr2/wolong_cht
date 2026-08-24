@@ -41,6 +41,9 @@ go build -o /tmp/app ./cmd/wlgame
 Xvfb :99 -screen 0 1600x900x24 >/tmp/xvfb.log 2>&1 &
 XVFB_PID=\$!
 for i in \$(seq 1 50); do xdpyinfo -display :99 >/dev/null 2>&1 && break; sleep 0.1; done
+# 指標停到左上角：Xvfb 預設把指標放在桌面中央，映進遊戲畫面正中，
+# remake 的游標會畫在那裡，對拍時吃掉一塊（playtest/42 §3）。
+DISPLAY=:99 xdotool mousemove 0 0 2>/dev/null || true
 DISPLAY=:99 timeout 120 /tmp/app $* -shot /out/$OUT_BASE
 kill -9 \$XVFB_PID 2>/dev/null || true
 "

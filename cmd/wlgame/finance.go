@@ -27,6 +27,9 @@ import (
 type financeState struct {
 	active bool
 	row    int
+	// keyboard：選取框只在用過鍵盤之後畫——原版沒有選取狀態
+	// （對拍 playtest/42；與編成視窗的 f.keyboard 同一個先例）。
+	keyboard bool
 	// editing／value 是開著數值輸入器時的狀態。原版 `sub_17C6E` 的
 	// `si` 從 0 起，離開前不寫回任何東西——所以編輯中的值不能直接
 	// 塞進 world，取消時會留下痕跡。
@@ -67,9 +70,9 @@ func (g *game) updateFinance() {
 		f.active = false
 		return
 	case pressed(ebiten.KeyArrowUp):
-		f.row = (f.row + 3) % 4
+		f.row, f.keyboard = (f.row+3)%4, true
 	case pressed(ebiten.KeyArrowDown):
-		f.row = (f.row + 1) % 4
+		f.row, f.keyboard = (f.row+1)%4, true
 	}
 	// 原版只能點綠色圖示欄那四格（熱區 0x20–0x23）。
 	if row, ok := financeRowAtPointer(); ok {
@@ -78,6 +81,7 @@ func (g *game) updateFinance() {
 		return
 	}
 	if pressed(ebiten.KeyEnter) || pressed(ebiten.KeySpace) {
+		f.keyboard = true
 		g.beginFinanceAmount(f.row)
 	}
 }
@@ -288,9 +292,11 @@ func (g *game) drawFinance(screen *ebiten.Image) {
 	// ⚠ 收入在原版是全域 `cs:word_10D02`，由誰算未讀（docs/spec/14 §5）。
 	// remake 的月結算得出 `res.Income` 但沒有留下來，所以這一格暫時是 0——
 	// **留白比填一個自己算的數字誠實**：那會變成看起來對的假值。
-	g.drawOriginalNumber(screen, 0,
+	// 收入與支出是**月結快照**（原版 sub_1548F 寫的顯示用全域，
+	// docs/spec/14 §5）：讀檔後、月結前顯示 0。
+	g.drawOriginalNumber(screen, g.world.IncomeSnap,
 		financeIncomeValueX, financeIncomeLabelY, financeAmountDigits, valueInk)
-	g.drawOriginalNumber(screen, f.Expense,
+	g.drawOriginalNumber(screen, g.world.ExpenseSnap,
 		financeIncomeValueX, financeExpenseLabelY, financeAmountDigits, valueInk)
 
 	cols := []struct {
@@ -322,9 +328,11 @@ func (g *game) drawFinance(screen *ebiten.Image) {
 	//
 	// 提示放在**原版視窗外面**的另一個框裡：擠進去會蓋到兩欄的值框，
 	// 而那個框的矩形是原版數值，不該為了塞說明去動它。
-	sel := financeRowRect(g.finance.row)
-	vector.StrokeRect(screen, float32(sel.Min.X-1), float32(sel.Min.Y-1),
-		float32(sel.Dx()+2), float32(sel.Dy()+2), 1, ink, false)
+	if g.finance.keyboard {
+		sel := financeRowRect(g.finance.row)
+		vector.StrokeRect(screen, float32(sel.Min.X-1), float32(sel.Min.Y-1),
+			float32(sel.Dx()+2), float32(sel.Dy()+2), 1, ink, false)
+	}
 	g.chrome.Window(screen, financeWinX, financeHintY, financeWinW, financeHintH, chrome.Menu)
 	g.td.Draw(screen, "設定值於次月末生效", financeWinX+8, financeHintY+8, labelInk)
 	g.td.Draw(screen, "↑↓ 選欄　Enter 輸入　ESC 關閉",

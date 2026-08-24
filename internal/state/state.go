@@ -269,6 +269,12 @@ func (g General) Rules() general.General {
 
 // World 是一整個遊戲狀態。
 type World struct {
+	// IncomeSnap／ExpenseSnap 是財政視窗的月結快照（原版顯示用全域
+	// `cs:0D02h`／`0D05h`，`sub_1548F` 寫入；docs/spec/14 §5）。
+	// **不序列化**：原版讀檔後歸零。
+	IncomeSnap  int `json:"-"`
+	ExpenseSnap int `json:"-"`
+
 	// cityCursor 是據點整備的輪轉游標（原版 `word_10D1E`）。
 	// 每 tick 前進一格，192 個據點輪一圈 ≈ 一天。
 	cityCursor int
@@ -919,9 +925,17 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 			Expense:    f.Expense,
 			AI:         i != w.Player,
 		}
+		expense := f.Expense
 		res := economy.Settle(&ef, cities, i, rng)
 		f.Funds, f.Reserves, f.Expense = ef.Funds, ef.Reserves, ef.Expense
 		f.Cities = res.Cities
+		if i == w.Player {
+			// 財政視窗的收入／支出是**月結快照**，不是活值：原版
+			// `sub_1548F` 算完寫顯示用全域 `cs:0D02h`／`0D05h`
+			// （docs/spec/14 §5）。讀檔後、月結前顯示 0——所以這兩個
+			// 欄位不進存檔。
+			w.IncomeSnap, w.ExpenseSnap = res.Income, expense
+		}
 		// 月結會照實際的據點重算，開局那個差額到此消失
 		// （劇本 3、4 的資料瑕疵，見 invariant.go）。
 		w.cityBias[i] = 0

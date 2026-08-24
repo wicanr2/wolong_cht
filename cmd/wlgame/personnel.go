@@ -38,6 +38,7 @@ func (g *game) openPersonnel() {
 	g.list = listwin.New(listwin.Generals, []listwin.Column{
 		{Title: "人　事", Less: func(a, b int) bool { return a < b }},
 	}, rows, listRowsPerPage, &g.sortMem)
+	g.listTouched = false
 	g.listTitle = "人　事"
 	g.listCellInk = nil
 	g.listRow = func(i int) []string { return []string{names[i]} }

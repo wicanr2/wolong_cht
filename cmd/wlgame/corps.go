@@ -55,16 +55,20 @@ type formState struct {
 // ⚠ **這道擋只在玩家的編成指令上**，`autoFormCorps` 不受影響——
 // 出陣那條本來就是要讓君主帶兵。
 func (g *game) formCandidates() []int {
-	lord := -1
-	if !g.lordCorps {
-		if p := g.world.Player; p >= 0 && p < len(g.world.Factions) {
+	lord, advisor := -1, -1
+	if p := g.world.Player; p >= 0 && p < len(g.world.Factions) {
+		if !g.lordCorps {
 			lord = g.world.Factions[p].Lord
 		}
+		// 軍師也不在候選裡：原版實機 confirmed（playtest/42 §4 的 q0，
+		// 荀彧不在編成清單），機制上是執行期寫進 +0x17 的身分
+		// （寫入者未讀，docs/spec/76 §2）。
+		advisor = g.world.Factions[p].Advisor
 	}
 	var rows []int
 	for i, gen := range g.world.Generals {
 		if gen.Alive && gen.Faction == g.world.Player &&
-			!gen.Posted && gen.Captor == 0xFF && i != lord {
+			!gen.Posted && gen.Captor == 0xFF && i != lord && i != advisor {
 			rows = append(rows, i)
 		}
 	}
@@ -85,7 +89,12 @@ func (g *game) beginForm() {
 	g.openGeneralPicker(rows, "選帶兵的武將　Enter 選取／決定　1-6 排序　ESC 取消", nil)
 	g.listPick = func(i int) bool {
 		g.form = formState{active: true, leader: i}
-		// 預設六槽全滿的騎馬編成——玩家再逐槽改。
+		// 開窗預設編成照原版 sub_16D56：騎騎步步弓弓
+		// （docs/spec/22「開窗初值」，confirmed）。
+		g.form.kinds = [army.Positions]army.TroopType{
+			army.Cavalry, army.Cavalry, army.Infantry,
+			army.Infantry, army.Archer, army.Archer,
+		}
 		for k := range g.form.manned {
 			g.form.manned[k] = true
 		}
@@ -322,8 +331,8 @@ func (g *game) drawForm(screen *ebiten.Image) {
 			op.GeoM.Translate(float64(formReserveIconX), float64(y))
 			screen.DrawImage(ebiten.NewImageFromImage(img), op)
 		}
-		g.td.Draw(screen, strategyHUDNumber(res[i]*strategyReserveMenPerPoint,
-			formReserveDigits), formReserveValueX, y, labelInk)
+		g.drawOriginalNumber(screen, res[i]*strategyReserveMenPerPoint,
+			formReserveValueX, y, formReserveDigits, labelInk)
 	}
 
 	// 動態層：主將、士氣、六個槽與總兵力。
@@ -338,9 +347,8 @@ func (g *game) drawForm(screen *ebiten.Image) {
 		screen.DrawImage(ebiten.NewImageFromImage(img), op)
 	}
 	g.td.Draw(screen, big5(gen.Name), formNameX, formNameY, ink)
-	g.td.Draw(screen, strategyHUDNumber(
-		g.world.Factions[g.world.Player].MoraleBase, formMoraleDigits),
-		formMoraleValueX, formMoraleY, ink)
+	g.drawOriginalNumber(screen, g.world.Factions[g.world.Player].MoraleBase,
+		formMoraleValueX, formMoraleY, formMoraleDigits, ink)
 
 	total := 0
 	for k := 0; k < army.Positions; k++ {
@@ -354,12 +362,12 @@ func (g *game) drawForm(screen *ebiten.Image) {
 			op.GeoM.Translate(float64(formSlotIconX), float64(y))
 			screen.DrawImage(ebiten.NewImageFromImage(img), op)
 		}
-		g.td.Draw(screen, strategyHUDNumber(men[k]*strategyReserveMenPerPoint,
-			formSlotDigits), formSlotValueX, y, labelInk)
+		g.drawOriginalNumber(screen, men[k]*strategyReserveMenPerPoint,
+			formSlotValueX, y, formSlotDigits, labelInk)
 		total += men[k]
 	}
-	g.td.Draw(screen, strategyHUDNumber(total*strategyReserveMenPerPoint,
-		formTotalDigits), formTotalValueX, formTotalY, ink)
+	g.drawOriginalNumber(screen, total*strategyReserveMenPerPoint,
+		formTotalValueX, formTotalY, formTotalDigits, ink)
 
 	// ↓ **remake 差異**：原版沒有選取狀態——六個槽都是滑鼠熱區，
 	// 點一下兵種就 +1。所以選取框只在玩家用過鍵盤之後才畫。
@@ -461,6 +469,7 @@ func (g *game) openCorpsList() {
 func (g *game) openCorpsListWith(rows []int, hint string, pick func(int) bool) {
 	g.list = listwin.New(listwin.Corps, g.listColumnsCorps(), rows,
 		listRowsPerPage, &g.sortMem)
+	g.listTouched = false
 	g.listTitle = listFamilyCorps.Title
 	g.listRow = g.listRowCorps
 	// 兩條換色（docs/re/27 §5）：**總兵數 < 300 點**（＝ 3,000 人，半編）
@@ -645,7 +654,7 @@ const (
 //
 // 編成的內容照**實際的預備兵**湊——開局的勢力大多湊不滿六個位置，
 // 驗收畫面就該長成那個樣子，不然截出來的是假的。
-func (g *game) demoCorps(list bool) {
+func (g *game) demoCorps(list bool, pickRow int) {
 	// ⚠ **不要在這裡自己抄一份資格判定。** 先前這支自己掃 Generals，
 	// 於是 `formCandidates()` 把君主擋掉之後，驗收 fixture 仍然把曹操
 	// 編成軍團長——修好的規則沒有套到驗收路徑上，而截圖看起來像沒修。
@@ -667,11 +676,13 @@ func (g *game) demoCorps(list bool) {
 		if g.list == nil {
 			return
 		}
+		for i := 0; i < pickRow; i++ {
+			g.list.Move(1)
+		}
 		g.confirmListSelection() // 反白
 		g.confirmListSelection() // 決定
-		if g.form.active {
-			g.form.slot, g.form.kinds, g.form.manned = 2, kinds, manned
-		}
+		// 編成內容照 beginForm 的原版預設（sub_16D56 騎騎步步弓弓），
+		// 不再覆蓋成「騎優先塞滿」——對拍要的是開窗那一刻的原樣。
 		return
 	}
 	for _, l := range leaders {

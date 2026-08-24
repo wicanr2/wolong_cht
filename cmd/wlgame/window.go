@@ -83,6 +83,7 @@ func (g *game) dispatchListAction(action listUIAction) {
 	if g.list == nil {
 		return
 	}
+	g.listTouched = true
 	switch action.kind {
 	case listActionMove:
 		g.list.Move(action.value)

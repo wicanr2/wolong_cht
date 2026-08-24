@@ -47,6 +47,9 @@ func (g *game) setAmountCursorAction(edit state.AmountEdit, digit int) {
 	}
 	g.amountCursorRow, g.amountCursorCol = row, col
 	g.amountCursorActive = true
+	// 鍵盤 fallback 游標只在用過鍵盤後畫（原版游標＝滑鼠本體，
+	// playtest/42 §3；與清單／財政同一個先例）。
+	g.amountKeyboard = true
 }
 
 func (g *game) amountPointerButton() (amountPanelButton, bool) {

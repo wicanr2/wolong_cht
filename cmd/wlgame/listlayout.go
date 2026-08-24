@@ -23,8 +23,9 @@ const (
 	// listRowsPerPage 是一頁幾列：**原版的畫列 callback 就是十次迴圈**
 	// （docs/re/26 §8.2），而 16（標題）＋ 10 × 16 ＝ 176 正好是視窗高。
 	listRowsPerPage = 10
-	// listTextInset 是文字距離清單本體左緣的內縮。
-	listTextInset = 2
+	// listTextInset 是**資料列文字欄**距離欄起點的縮排：實機量測是
+	// 半格 8 px（docs/spec/38 §1.5）。標題列、空列分隔線與數字欄不縮。
+	listTextInset = 8
 	// listScrollW 是左邊那條捲軸的寬度。**清單本體從 x+16 起，不是 x**
 	// ——原版的清單熱區與反白列都從 `word_181AE + 0x10` 開始
 	// （docs/re/26 §10）。
@@ -163,20 +164,22 @@ func listRowY(visible int) int {
 	return listWinY + listRowH + visible*listRowH
 }
 
-// listFieldX 是第 col 欄的左緣。
+// listFieldX 是第 col 欄**文字**的左緣：欄起點＋半格縮排
+// （docs/spec/38 §1.5 的實機量測）。
 func listFieldX(fields []listField, col int) int {
 	if col < 0 || col >= len(fields) {
-		return listBodyX() + listTextInset
+		return listBodyX()
 	}
-	return listBodyX() + listTextInset + fields[col].X
+	return listBodyX() + fields[col].X + listTextInset
 }
 
-// listFieldRight 是第 col 欄的右緣（數字欄靠右對齊用）。
+// listFieldRight 是第 col 欄的右緣（數字右靠在分隔線那段的右緣，
+// 沒有縮排——武術 128／統率 168／政治 208，docs/spec/38 §1.5）。
 func listFieldRight(fields []listField, col int) int {
 	if col < 0 || col >= len(fields) {
-		return listBodyX() + listTextInset
+		return listBodyX()
 	}
-	return listBodyX() + listTextInset + fields[col].X + fields[col].W
+	return listBodyX() + fields[col].X + fields[col].W
 }
 
 // listWarnInk 是換色用的前景色。原版把屬性的低 4 位由 0 改成 A

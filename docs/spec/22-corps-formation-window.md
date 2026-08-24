@@ -94,6 +94,18 @@
 | 截圖 | `WOLONG_SHOT_CMD=wlgame tools/shot.sh <out> -direct -scenario 0 -player 0 -open-form` → `docs/playtest/parity/corps-formation.png`（**本地產物，`*.png` 不進版控**）。曹操開局：六槽 4 騎馬 ＋ 2 弓兵、各 1,000 人、總兵力 6,000，預備兵欄同步扣成 0／4,000／10,000 |
 | 對原版 | **靜態**：座標逐項出自機器碼。執行期沒驗——模擬器上主畫面收不到點擊（[`docs/playtest/23`](../playtest/23-main-screen-geometry.md) §4.1）|
 
+### 開窗初值（2026-08-24 補）
+
+`sub_16C92` 進畫面先 `call sub_16D56`：六槽兵種寫死
+**1,1,3,3,2,2 ＝ 主將騎／前鋒騎／左翼步／右翼步／左備弓／右備弓**
+（`00016D56`–`00016D6A`，confirmed），接著 `sub_14698` 立即分配——
+所以**開窗那一刻預備兵已經扣了預設編成**，畫面上的池是扣後餘額。
+劇本 0 曹操初始 騎400／弓600／步1000 點，開窗顯示 2000／4000／8000 人
+（各扣 200 點），實機截圖逐數吻合（[`../playtest/42`](../playtest/42-window-parity.md) §4 的訂正）。
+
+remake：`beginForm` 的預設編成照抄 1,1,3,3,2,2；
+驗收旗標 `-open-form` 不再覆蓋成「騎優先塞滿」。
+
 ## 5. 未解
 
 | 項目 | 現況 |

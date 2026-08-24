@@ -235,12 +235,15 @@ func (g *game) drawAmountPanelFallbackButtons(screen *ebiten.Image, selected boo
 // 的畫面滑鼠位置，鍵盤 fallback 會把箭頭放到同一個 raw action 格位；
 // 這只決定呈現位置，不改變 amountPanelButtonAtPoint 的命中規則。
 func (g *game) drawDOSVAmountCursor(screen *ebiten.Image) {
-	if g.cursorImage == nil || !g.amountCursorActive {
+	if g.cursorImage == nil || !g.amountCursorActive || g.hideAmountCursor {
 		return
 	}
 	ax, ay := g.amountAnchor()
 	x, y := ebiten.CursorPosition()
 	if !image.Pt(x, y).In(amountPanelRectAt(ax, ay)) {
+		if !g.amountKeyboard {
+			return // 滑鼠不在盤上、也沒用過鍵盤：原版此時的游標在盤外
+		}
 		cell := amountPanelCellRect(ax, ay, g.amountCursorRow, g.amountCursorCol)
 		x, y = cell.Min.X, cell.Min.Y
 	}

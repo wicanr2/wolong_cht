@@ -74,7 +74,7 @@
 | [`docs/playtest/39-system-window-parity.md`](playtest/39-system-window-parity.md) | 39 — 系統選單開著時的對拍：五區裡四區 PASS，選單本身也 PASS | 通過（2026-08-17 的量測），但 2026-08-23 之後 | 2026-08-17 |
 | [`docs/playtest/40-tactical-parity.md`](playtest/40-tactical-parity.md) | 40 — 戰場的逐區對拍：六區逐像素相同，戰場區 0.17% | 部分通過。 | 2026-08-18 |
 | [`docs/playtest/41-m7-corrected-text-on-screen.md`](playtest/41-m7-corrected-text-on-screen.md) | 41 — M7 校訂後的畫面抽樣：18 則實跑截圖，沒有一行超寬 | 通過。 | 2026-08-22 |
-| [`docs/playtest/42-window-parity.md`](playtest/42-window-parity.md) | 42 — 四類視窗的實機對拍：財政收斂到 NEAR，一覽表與編成抓出五項實質差異 | 財政視窗 0.40% NEAR（唯一剩餘是支出欄語意）、數值輸入器 1.06% （唯一剩餘是游標位置）；武將一覽與編… | 2026-08-24 |
+| [`docs/playtest/42-window-parity.md`](playtest/42-window-parity.md) | 42 — 四類視窗的實機對拍：財政收斂到 NEAR，一覽表與編成抓出五項實質差異 | （2026-08-25 第二輪收斂）武將一覽（編成清單）、財政視窗、 數值輸入器 | 2026-08-24 |
 | [`docs/playtest/43-field-battle-parity.md`](playtest/43-field-battle-parity.md) | 43 — 野戰的同狀態對拍：九區裡七區逐像素相同，地形 0 差 | 野戰第一次量到逐像素。底列、標題、敵我將旗、陣形列、指令面板、 ▶▶ 列 | 2026-08-24 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告的遊戲段落是逐幀錄下來的實跑畫面； 三平台候選包與 Linux AppImag… | 2026-08-21 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
@@ -240,10 +240,10 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 143 條。**要查「這件事解了沒」先看這裡**，
+共 144 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
-### confirmed（77 條）
+### confirmed（78 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -282,6 +282,7 @@
 | 2. 地形類型對映表（confirmed） ▸ 1 | `docs/mechanics/30-combat.md` |
 | 2. 地形類型對映表（confirmed） ▸ 2 | `docs/mechanics/30-combat.md` |
 | 2. 地形類型對映表（confirmed） ▸ 6 | `docs/mechanics/30-combat.md` |
+| 2. 憑什麼說原版不行 ▸ 4 | `docs/spec/76-lord-not-in-formation.md` |
 | 3. 武將記錄（32 byte） ▸ +1 | `docs/formats/08-sinario-save.md` |
 | 3. 武將記錄（32 byte） ▸ +14（0x0E） | `docs/formats/08-sinario-save.md` |
 | 3. 武將記錄（32 byte） ▸ +15（0x0F） | `docs/formats/08-sinario-save.md` |

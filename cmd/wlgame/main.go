@@ -36,6 +36,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -44,6 +45,7 @@ import (
 
 	"github.com/wicanr2/wolong_cht/internal/assets/battle"
 	"github.com/wicanr2/wolong_cht/internal/assets/cjk"
+	"github.com/wicanr2/wolong_cht/internal/assets/gfx"
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
 	"github.com/wicanr2/wolong_cht/internal/assets/text"
 	"github.com/wicanr2/wolong_cht/internal/assets/world"
@@ -253,6 +255,10 @@ type game struct {
 	// listPick 是決定一列之後要做的事。回傳 true 表示關掉一覽表。
 	listPick func(id int) bool
 	listHint string
+	// listTouched：游標列的淡色提示只在玩家操作過清單之後才畫——
+	// 原版剛開窗沒有任何反白（playtest/42 §4 的 q0），游標由滑鼠本體表示。
+	// 與編成視窗的 f.keyboard 同一個先例。
+	listTouched bool
 
 	// form 是編成流程的狀態。
 	form formState
@@ -319,6 +325,11 @@ type game struct {
 	// 對應 CS:7D93h 的 3×6 格；鍵盤只是把同一個格動作映射出來。
 	amountCursorRow, amountCursorCol int
 	amountCursorActive               bool
+	// amountKeyboard：鍵盤 fallback 游標只在用過鍵盤後畫（playtest/42 §3）。
+	amountKeyboard bool
+	// hideAmountCursor：對拍 fixture 用——headless 的指標位置不可控，
+	// 會把游標畫進比對框（playtest/42 §3）。
+	hideAmountCursor bool
 	amountCursorOwner                int
 	// amountAnchorX／Y 是 `sub_17C6E` 的 `dx`／`bx`——**錨點由呼叫端給**，
 	// 事件 2／3／4／5 是 (88,184)，財政的四個熱區是 (296,184)
@@ -398,6 +409,7 @@ func (g *game) openGeneralList() {
 func (g *game) openGeneralPicker(rows []int, hint string, pick func(int) bool) {
 	g.list = listwin.New(listwin.Generals, g.listColumnsGenerals(), rows,
 		listRowsPerPage, &g.sortMem)
+	g.listTouched = false
 	g.listTitle = listFamilyGenerals.Title
 	g.listRow = g.listRowGeneral
 	g.listCellInk = nil
@@ -409,6 +421,7 @@ func (g *game) openGeneralPicker(rows []int, hint string, pick func(int) bool) {
 func (g *game) openCityPicker(rows []int, hint string, pick func(int) bool) {
 	g.list = listwin.New(listwin.Cities, g.listColumnsCities(), rows,
 		listRowsPerPage, &g.sortMem)
+	g.listTouched = false
 	g.listTitle = listFamilyCities.Title
 	g.listRow = g.listRowCity
 	g.listCellInk = func(id, col int) (color.RGBA, bool) {
@@ -427,6 +440,7 @@ func (g *game) openCityPicker(rows []int, hint string, pick func(int) bool) {
 func (g *game) openFactionPicker(rows []int, hint string, pick func(int) bool) {
 	g.list = listwin.New(listwin.Factions, g.listColumnsFactions(), rows,
 		listRowsPerPage, &g.sortMem)
+	g.listTouched = false
 	g.listTitle = listFamilyFactions.Title
 	g.listRow = g.listRowFaction
 	g.listCellInk = func(id, col int) (color.RGBA, bool) {
@@ -460,8 +474,10 @@ func (g *game) drawList(screen *ebiten.Image) {
 	// 一整條字串（docs/re/26 §4.1），不是逐欄拼出來的。
 	vector.DrawFilledRect(screen, float32(listWinX), float32(listWinY),
 		float32(listWinW), float32(listRowH), color.RGBA{0, 0, 0, 255}, false)
+	// 標題整條與文字欄一樣有半格縮排（實機量測：「武將名」ink 從 48 起，
+	// docs/spec/38 §1.5）。
 	g.td.Draw(screen, g.listTitle, listBodyX()+listTextInset, listWinY,
-		color.RGBA{255, 255, 255, 255})
+		g.paletteInk(strategyInkNormal, chrome.Paper))
 
 	rows, first := l.Visible()
 	// ⭐ **一頁永遠畫滿十列**：原版沒有資料的那幾列印的是分隔線那一行
@@ -470,12 +486,13 @@ func (g *game) drawList(screen *ebiten.Image) {
 	for i := len(rows); i < listRowsPerPage; i++ {
 		y := listRowY(i)
 		for _, f := range fields {
-			g.td.Draw(screen, listDashes(f), listBodyX()+listTextInset+f.X, y, ink)
+			g.td.Draw(screen, listDashes(f), listBodyX()+f.X+listTextInset, y, ink)
 		}
 	}
 	for i, r := range rows {
 		y := listRowY(i)
-		if first+i == l.Cursor {
+		if first+i == l.Cursor &&
+			(g.listTouched || l.Phase() == listwin.Selected) {
 			hl := color.RGBA{200, 210, 170, 255}
 			if l.Phase() == listwin.Selected {
 				hl = chrome.Select // 反白：原版就是這個綠
@@ -496,56 +513,81 @@ func (g *game) drawList(screen *ebiten.Image) {
 					c = got
 				}
 			}
-			// 數字欄靠右對齊到欄的右緣，文字欄靠左（原版數字走
-			// sub_1062F 的位數對齊，文字走 loc_10701）。
-			x := listFieldX(fields, col)
+			// 數字欄右靠到分隔線右緣、用 8×16 原版字模（sub_1062F 那一套，
+			// docs/spec/38 §1.5）；文字欄在欄起點＋8。
 			if fields[col].Numeric {
-				x = listFieldRight(fields, col) - textdraw.StringWidth(cell)
+				if v, err := strconv.Atoi(strings.TrimSpace(cell)); err == nil {
+					digits := fields[col].W / textdraw.HalfW
+					g.drawOriginalNumber(screen, v,
+						listFieldRight(fields, col)-digits*gfx.DigitWidth, y, digits, c)
+					continue
+				}
+				g.td.Draw(screen, cell,
+					listFieldRight(fields, col)-textdraw.StringWidth(cell), y, c)
+				continue
 			}
-			g.td.Draw(screen, cell, x, y, c)
+			g.td.Draw(screen, cell, listFieldX(fields, col), y, c)
 		}
 	}
 
 	g.drawListScrollbar(screen, l, dim, ink)
 }
 
-// drawListScrollbar 畫左邊那條捲軸（docs/re/26 §10 的三個熱區）。
-// ▲／▼ 是實心三角，滑塊照 top 的比例——**原版畫滑塊的常式沒讀**，
-// 這一格是 remake 的畫法（docs/spec/38 §4）。
+// drawListScrollbar 照實機量測畫（docs/spec/38 §1.6）：標題列那格純黑、
+// ▲▼ 是 3D 綠鈕（面＝色 13、高光＝色 2、影＝黑）、槽是實心綠加左右黑邊、
+// **沒有滑塊**——原版對捲動位置沒有視覺回饋。
 func (g *game) drawListScrollbar(screen *ebiten.Image, l *listwin.List,
 	dim, ink color.RGBA) {
 
-	slot := color.RGBA{120, 140, 110, 255}
-	for _, r := range []image.Rectangle{
-		image.Rect(listWinX, listWinY, listWinX+listScrollW, listWinY+listRowH),
-		listScrollUpRect(), listScrollTrackRect(), listScrollDownRect(),
-	} {
+	face := g.paletteInk(13, color.RGBA{130, 162, 97, 255})
+	hi := g.paletteInk(strategyInkNormal, chrome.Paper) // 高光是白（色 15），量測 m15
+	grey := g.paletteInk(2, color.RGBA{162, 178, 178, 255})
+	shade := g.paletteInk(1, color.RGBA{97, 113, 113, 255})
+	black := color.RGBA{0, 0, 0, 255}
+	fill := func(r image.Rectangle, c color.RGBA) {
 		vector.DrawFilledRect(screen, float32(r.Min.X), float32(r.Min.Y),
-			float32(r.Dx()), float32(r.Dy()), slot, false)
-		vector.StrokeRect(screen, float32(r.Min.X)+0.5, float32(r.Min.Y)+0.5,
-			float32(r.Dx())-1, float32(r.Dy())-1, 1, dim, false)
+			float32(r.Dx()), float32(r.Dy()), c, false)
 	}
-	thumb := listScrollThumbRect(l.Top, len(l.Rows))
-	vector.DrawFilledRect(screen, float32(thumb.Min.X)+2, float32(thumb.Min.Y)+1,
-		float32(thumb.Dx())-4, float32(thumb.Dy())-2,
-		color.RGBA{190, 205, 175, 255}, false)
-	vector.StrokeRect(screen, float32(thumb.Min.X)+2.5, float32(thumb.Min.Y)+1.5,
-		float32(thumb.Dx())-5, float32(thumb.Dy())-3, 1, ink, false)
-	// 三角形用三條水平線疊出來，不另外拉多邊形。
-	tri := func(r image.Rectangle, up bool) {
-		cx := float32(r.Min.X+r.Dx()/2) - 0.5
-		for i := 0; i < 5; i++ {
-			// ▲ 是上窄下寬，▼ 相反。
-			w := float32(2*i + 1)
-			y := float32(r.Min.Y + 5 + i)
+	// 標題列左邊那格：純黑。
+	fill(image.Rect(listWinX, listWinY, listWinX+listScrollW, listWinY+listRowH), black)
+	// 槽（m13/m14 逐像素）：黑外框（左 1、右 2）、內部 3D 凹槽——
+	// 左緣與頂列白（色 15）、右內緣與底列暗（色 1）、其餘綠。沒有滑塊。
+	white := hi
+	track := listScrollTrackRect()
+	fill(track, face)
+	fill(image.Rect(track.Min.X, track.Min.Y, track.Min.X+1, track.Max.Y), black)
+	fill(image.Rect(track.Max.X-2, track.Min.Y, track.Max.X, track.Max.Y), black)
+	fill(image.Rect(track.Min.X+1, track.Min.Y, track.Min.X+2, track.Max.Y), white)
+	fill(image.Rect(track.Min.X+2, track.Min.Y, track.Max.X-2, track.Min.Y+1), white)
+	fill(image.Rect(track.Max.X-3, track.Min.Y+1, track.Max.X-2, track.Max.Y), shade)
+	fill(image.Rect(track.Min.X+2, track.Max.Y-1, track.Max.X-3, track.Max.Y), shade)
+	// ▲▼ 鈕（m10/m11 逐像素）：高光 2px 厚（頂兩列＋左兩欄）、
+	// 右緣黑從第 2 列起、底列只留左角一點高光；箭頭十列
+	// 寬 2,2,4,4,6,6,8,8,10,10、以 x＝Min+8 為中線；
+	// ▲ 的箭頭從第 3 列起、▼ 從第 5 列起。
+	button := func(r image.Rectangle, up bool) {
+		fill(r, face)
+		fill(image.Rect(r.Min.X, r.Min.Y, r.Max.X, r.Min.Y+1), hi)
+		fill(image.Rect(r.Min.X, r.Min.Y, r.Min.X+1, r.Max.Y-1), hi)
+		fill(image.Rect(r.Min.X+1, r.Min.Y+1, r.Max.X-1, r.Min.Y+2), grey)
+		fill(image.Rect(r.Min.X+1, r.Min.Y+1, r.Min.X+2, r.Max.Y-1), grey)
+		fill(image.Rect(r.Max.X-2, r.Min.Y+2, r.Max.X-1, r.Max.Y-2), shade)
+		fill(image.Rect(r.Min.X+2, r.Max.Y-2, r.Max.X-1, r.Max.Y-1), shade)
+		fill(image.Rect(r.Max.X-1, r.Min.Y+1, r.Max.X, r.Max.Y), black)
+		fill(image.Rect(r.Min.X+1, r.Max.Y-1, r.Max.X, r.Max.Y), black)
+		fill(image.Rect(r.Min.X, r.Max.Y-1, r.Min.X+1, r.Max.Y), hi)
+		for i := 0; i < 10; i++ {
+			w := (i/2)*2 + 2
+			y := r.Min.Y + 2 + i
 			if !up {
-				y = float32(r.Max.Y - 6 - i)
+				w = 10 - (i/2)*2
+				y = r.Min.Y + 4 + i
 			}
-			vector.DrawFilledRect(screen, cx-w/2, y, w, 1, ink, false)
+			fill(image.Rect(r.Min.X+8-w/2, y, r.Min.X+8-w/2+w, y+1), black)
 		}
 	}
-	tri(listScrollUpRect(), true)
-	tri(listScrollDownRect(), false)
+	button(listScrollUpRect(), true)
+	button(listScrollDownRect(), false)
 }
 
 // listFieldsFor 取這張一覽表的欄位定義；沒設過就用武將那一組。
@@ -1464,7 +1506,10 @@ func main() {
 	loadSlot := flag.Int("load-slot", -1, "直接啟動時先從 -save-file 的第 N 槽（0–3）載入（驗收用；原版存檔也讀得動）")
 	openWin := flag.Int("open-window", -1, "截圖前先打開第幾個視窗（0–3；−2 ＝ 三個常駐視窗；−3 ＝ 再加系統選單。對拍用）")
 	camAt := flag.String("cam", "", "把大地圖鏡頭移到指定格 `X,Y`（對拍用；原版點過視窗開關之後鏡頭就不在開局位置了）")
-	openList := flag.Bool("open-list", false, "截圖前先開武將一覽（驗收用）")
+	openList := flag.Bool("open-list", false, "截圖前先開武將一覽（驗收用；開著、無選取）")
+	openFormPick := flag.Bool("open-form-pick", false, "截圖前停在編成的武將一覽（對拍用，與原版指令列 #3 剛開的狀態相同）")
+	formPickRow := flag.Int("form-pick-row", 0, "配 -open-form：選候選清單的第 N 列當主將（對拍用）")
+	lordCorpsFlag := flag.Bool("lord-corps", true, "允許把君主編成軍團長（docs/spec/76；對拍原版行為時給 false）")
 	openAdvise := flag.Bool("open-advise", false, "截圖前先跑到說服畫面（驗收用）")
 	adviseMenu := flag.Bool("advise-menu", false, "單獨用：停在進言的五項選單；配 -open-advise：停在五選一的理由選單（驗收用）")
 	adviseSortie := flag.Bool("advise-sortie", false, "截圖前跑「請求君主出陣」的三句定案畫面（驗收用）")
@@ -1595,8 +1640,9 @@ func main() {
 			openEndingFixture(g, *openEnding)
 		}
 		autoEncounterChoose = *encounterChoose
+		g.lordCorps = *lordCorpsFlag
 		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *openForm, *openCorps, *openMarchList,
-			*openMarchMode, *openBattle, *openSiege, *openBattleChoice, *openMessage, *openFinance, *financeAmount,
+			*openMarchMode, *openBattle, *openSiege, *openBattleChoice, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow,
 			*openTalkIndex, *openOutcome, parseSiegeFixture(*siegeNode, *siegeDefend, *siegeCorps, *battleSteps),
 			*camAt, *battleCam)
 	} else {
@@ -1866,7 +1912,7 @@ func logAliveCorps(g *game) {
 var autoEncounterChoose bool
 
 func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, openForm, openCorps, openMarchList, openMarchMode,
-	openBattle, openSiege, openBattleChoice, openMessage, openFinance bool, financeAmount, openTalkIndex int,
+	openBattle, openSiege, openBattleChoice, openMessage, openFinance bool, financeAmount int, openFormPick bool, formPickRow, openTalkIndex int,
 	openOutcome string, siege siegeFixture, camAt, battleCam string) {
 	w := g.world
 	if w == nil {
@@ -1932,9 +1978,12 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 		g.hudSet(w, true)
 	}
 	if openList {
+		// 開著、無選取——原版剛開窗沒有反白列（playtest/42 §4）。
 		g.openGeneralList()
-		g.list.Move(2)
-		g.list.Confirm()
+	}
+	if openFormPick {
+		// 編成的武將一覽（原版指令列 #3 剛開的狀態：候選已濾、無選取）。
+		g.beginForm()
 	}
 	if openBattle || openSiege || openBattleChoice {
 		g.demoBattle(openSiege, !openBattleChoice, siege)
@@ -1952,7 +2001,7 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 		}
 	}
 	if openForm || openCorps {
-		g.demoCorps(openCorps)
+		g.demoCorps(openCorps, formPickRow)
 	}
 	// 財政視窗（對拍用，docs/spec/14 §4）。原版是命令列 #2 直接開視窗，
 	// -finance-amount N 再開第 N 列的數值輸入器（docs/spec/78）。
@@ -1960,6 +2009,9 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 		g.beginFinance()
 		if financeAmount >= 0 && financeAmount < financeRows {
 			g.beginFinanceAmount(financeAmount)
+			// 對拍截圖不畫游標：原版那一刻的游標在存還原區外
+			// （p6-amount.png），headless 的指標位置又不可控。
+			g.hideAmountCursor = true
 		}
 	}
 	if openMarchMode {
