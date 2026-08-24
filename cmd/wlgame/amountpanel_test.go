@@ -46,10 +46,10 @@ func TestDisplayAmountDigitsIsSixColumnsAndClamped(t *testing.T) {
 		value int
 		want  string
 	}{
-		{0, "000000"},
-		{1234, "001234"},
-		{-1, "000000"},
-		{999999, "030000"},
+		{0, "     0"},
+		{1234, "  1234"},
+		{-1, "     0"},
+		{999999, " 30000"},
 	} {
 		if got := displayAmountDigits(tt.value); got != tt.want {
 			t.Errorf("displayAmountDigits(%d) = %q，want %q", tt.value, got, tt.want)

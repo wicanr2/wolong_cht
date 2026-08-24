@@ -271,20 +271,27 @@ func (g *game) drawFinance(screen *ebiten.Image) {
 	}
 
 	// 動態層：資金／收入／支出，以及兩欄各四列。
+	// 數值一律用色 9（米黃）：2026-08-24 實機對拍 orig-w4-finance.png，
+	// 資金／收入／支出／兩欄各列／％ 全是 (243,211,146) ＝ 調色盤索引 9；
+	// 白色（索引 15）只用在「資金」「收入」等標籤。
+	valueInk := labelInk
 	f := g.world.Factions[g.world.Player]
-	fundsInk := ink
+	fundsInk := valueInk
 	if f.Funds < 0 {
 		fundsInk = warnInk
 	}
-	g.td.Draw(screen, strategyHUDNumber(f.Funds, financeFundsDigits),
-		financeFundsValueX, financeFundsValueY, fundsInk)
+	// 數字用原版 8×16 字模（ICONGRF 段 3 +0x840）：2026-08-24 對拍
+	// orig-w4-finance.png 的墨水列 113..126 ＝ mask topY 112，倚天 ASCII
+	// 只有 9 列、字形不同，同位置同色仍逐像素差得出來。
+	g.drawOriginalNumber(screen, f.Funds,
+		financeFundsValueX, financeFundsValueY, financeFundsDigits, fundsInk)
 	// ⚠ 收入在原版是全域 `cs:word_10D02`，由誰算未讀（docs/spec/14 §5）。
 	// remake 的月結算得出 `res.Income` 但沒有留下來，所以這一格暫時是 0——
 	// **留白比填一個自己算的數字誠實**：那會變成看起來對的假值。
-	g.td.Draw(screen, strategyHUDNumber(0, financeAmountDigits),
-		financeIncomeValueX, financeIncomeLabelY, ink)
-	g.td.Draw(screen, strategyHUDNumber(f.Expense, financeAmountDigits),
-		financeIncomeValueX, financeExpenseLabelY, ink)
+	g.drawOriginalNumber(screen, 0,
+		financeIncomeValueX, financeIncomeLabelY, financeAmountDigits, valueInk)
+	g.drawOriginalNumber(screen, f.Expense,
+		financeIncomeValueX, financeExpenseLabelY, financeAmountDigits, valueInk)
 
 	cols := []struct {
 		x    int
@@ -305,8 +312,8 @@ func (g *game) drawFinance(screen *ebiten.Image) {
 	}
 	for _, col := range cols {
 		for i, v := range col.vals {
-			g.td.Draw(screen, strategyHUDNumber(v, financeRowDigits),
-				col.x, financeRowY+i*financeRowStep, ink)
+			g.drawOriginalNumber(screen, v,
+				col.x, financeRowY+i*financeRowStep, financeRowDigits, valueInk)
 		}
 	}
 

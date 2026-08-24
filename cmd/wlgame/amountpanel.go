@@ -152,20 +152,33 @@ func amountPanelCellRect(ax, ay, row, col int) image.Rectangle {
 	)
 }
 
-func displayAmountDigits(value int) string {
+// displayAmountValue 只做顯示夾限（負值歸零、上限 30,000）。
+func displayAmountValue(value int) int {
 	if value < 0 {
-		value = 0
+		return 0
 	}
 	if value > amountDisplayMax {
-		value = amountDisplayMax
+		return amountDisplayMax
 	}
-	return fmt.Sprintf("%0*d", amountPanelCols, value)
+	return value
+}
+
+func displayAmountDigits(value int) string {
+	// 原版值列不補零：值 0 畫成一個「0」右靠（2026-08-24 實機對拍
+	// workplace/promo-live/parity-windows/p6-amount.png，單一白字
+	// 落在欄位最右一格）。六格欄位以空白補位。
+	return fmt.Sprintf("%*d", amountPanelCols, displayAmountValue(value))
 }
 
 // drawAmountPanel 是兩種事件選單共用的原版 3×6 數值選取器。
 func (g *game) drawAmountPanel(screen *ebiten.Image, current int, selected bool) {
 	ax, ay := g.amountAnchor()
 	rect := amountPanelRectAt(ax, ay)
+	// 原版在 96×64 資源外面還有一圈標準視窗框（112×80，內部剛好
+	// 112−16 × 80−16 ＝ 96×64 被資源蓋滿）——2026-08-24 實機對拍
+	// p6-amount.png：紅紋上下邊 ＋ 黃柱兩側。先畫框再貼資源。
+	g.chrome.Window(screen, rect.Min.X, rect.Min.Y,
+		rect.Dx(), rect.Dy(), chrome.Menu)
 	if g.amountFrame != nil {
 		// sub_17D0D 把 96×64 的資源貼在錨點上；sub_19796 另外保存外圍
 		// 112×80 的背景，供 modal 結束時還原。
@@ -173,15 +186,15 @@ func (g *game) drawAmountPanel(screen *ebiten.Image, current int, selected bool)
 		op.GeoM.Translate(float64(ax), float64(ay))
 		screen.DrawImage(g.amountFrame, op)
 	} else {
-		g.chrome.Window(screen, rect.Min.X, rect.Min.Y,
-			rect.Dx(), rect.Dy(), chrome.Menu)
 		g.drawAmountPanelFallbackButtons(screen, selected)
 	}
 	// 原版 sub_17C6E 在每次等待輸入前以 sub_1062F 重繪目前 SI；
 	// 這個動態值仍疊在靜態內框上。上限是 state 語意，
 	// 不在此新增原版沒有的面板外文字。
-	g.td.Draw(screen, displayAmountDigits(current), ax,
-		rect.Min.Y+chrome.Tile+1, chrome.Paper)
+	// 數字用原版 8×16 字模、不補零（2026-08-24 對拍 p6-amount.png：
+	// 值 0 是單一白字右靠，墨水列 185..198 ＝ mask topY 184 ＝ 錨點 Y）。
+	g.drawOriginalNumber(screen, displayAmountValue(current), ax, ay,
+		amountPanelCols, chrome.Paper)
 	if selected {
 		g.drawDOSVAmountCursor(screen)
 	}

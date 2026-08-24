@@ -1474,6 +1474,8 @@ func main() {
 	battleSteps := flag.Int("battle-steps", 120, "截圖前推進幾個戰術 tick；0 ＝ 原版開場對白那一幀")
 	listCorps := flag.Bool("list-corps", false, "把載入後還活著的軍團印出來（編號、勢力、主將、兵力）")
 	battleCam := flag.String("battle-cam", "", "覆寫戰術鏡頭的世界格 `X,Y`（驗收用；原版初值是 36,14）")
+	openFinance := flag.Bool("open-finance", false, "截圖前先開財政視窗（對拍用，docs/spec/14 §4）")
+	financeAmount := flag.Int("finance-amount", -1, "配 -open-finance：再開第 N 列（0–3）的數值輸入器（docs/spec/78）")
 	openMessage := flag.Bool("open-message", false, "截圖前先開玩家首都的暴風雨 TALK #70 通知（驗收用）")
 	openTalkIndex := flag.Int("open-talk-index", -1, "截圖前直接開指定 TALK.DAT 槽位（驗收用）")
 	openOutcome := flag.String("open-outcome", "", "只供截圖的敗北 modal fixture：trust 或 faction")
@@ -1584,7 +1586,7 @@ func main() {
 			openEndingFixture(g, *openEnding)
 		}
 		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *openForm, *openCorps, *openMarchList,
-			*openMarchMode, *openBattle, *openSiege, *openBattleChoice, *openMessage,
+			*openMarchMode, *openBattle, *openSiege, *openBattleChoice, *openMessage, *openFinance, *financeAmount,
 			*openTalkIndex, *openOutcome, parseSiegeFixture(*siegeNode, *siegeDefend, *siegeCorps, *battleSteps),
 			*camAt, *battleCam)
 	} else {
@@ -1851,7 +1853,7 @@ func logAliveCorps(g *game) {
 }
 
 func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, openForm, openCorps, openMarchList, openMarchMode,
-	openBattle, openSiege, openBattleChoice, openMessage bool, openTalkIndex int,
+	openBattle, openSiege, openBattleChoice, openMessage, openFinance bool, financeAmount, openTalkIndex int,
 	openOutcome string, siege siegeFixture, camAt, battleCam string) {
 	w := g.world
 	if w == nil {
@@ -1938,6 +1940,14 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 	}
 	if openForm || openCorps {
 		g.demoCorps(openCorps)
+	}
+	// 財政視窗（對拍用，docs/spec/14 §4）。原版是命令列 #2 直接開視窗，
+	// -finance-amount N 再開第 N 列的數值輸入器（docs/spec/78）。
+	if openFinance || financeAmount >= 0 {
+		g.beginFinance()
+		if financeAmount >= 0 && financeAmount < financeRows {
+			g.beginFinanceAmount(financeAmount)
+		}
 	}
 	if openMarchMode {
 		g.demoMarchMode()

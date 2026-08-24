@@ -98,11 +98,13 @@
 |---|---|
 | 單元測試 | `TestFinanceWindowLayout`：視窗矩形、數值座標與位數、熱區與綠色圖示欄逐格重合、兩欄的框不超出視窗 |
 | 截圖 | `WOLONG_SHOT_CMD=wlgame tools/shot.sh <out> KEYS=F -direct -scenario 0 -player 0` → `docs/playtest/parity/finance.png`（**本地產物，`*.png` 不進版控**）|
+| 對拍 | ✅ `tools/parity_shot.sh <out> … -open-finance [-finance-amount N]` 出 640×400 邏輯畫面，與原版（命令列 #2，`sub_1678D`）比 `--rect 16,80,336,160`。結果 **0.40% NEAR**（[`../playtest/42`](../playtest/42-window-parity.md) §2）：數值一律**調色盤索引 9** ＋ **8×16 原版字模**（`drawOriginalNumber`）；剩餘全是支出欄語意（§5）|
 
 ## 5. 未解
 
 | 項目 | 現況 |
 |---|---|
 | 收入的來源 | `cs:word_10D02` 由誰計算未讀（月結那一支是候選）。remake 的月結算得出 `res.Income` 但沒有留下來，所以這一格暫時顯示 0——**留白比填一個自己算的數字誠實** |
+| **支出欄顯示的是哪個欄位** | 同一份存檔原版顯示 0、remake 顯示 430（`Faction.Expense`），且原版 4月13日仍是 0（[`../playtest/42`](../playtest/42-window-parity.md) §6）。要讀 `sub_1678D` 一帶支出那一格從哪個位址取值 |
 | ~~徵兵數的上限~~ | ✅ **10,000 人**：`sub_167E6`／`sub_16806`／`sub_16826` 傳給 `sub_17C6E` 的 `ax = 2710h`（[`78`](78-amount-input-editor.md) §1.2）。寫回前 `div 10`，所以存的是 ≤ 1,000 點 |
 | ~~數值輸入器~~ | ✅ **已接上**（2026-08-23，[`78`](78-amount-input-editor.md)）|

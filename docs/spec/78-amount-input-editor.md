@@ -107,7 +107,7 @@ jb  → 玩家取消，不要寫回                ; CF ＝ 取消
 | 單元測試 | `TestAmountSetMaxTakesTheCap`（`internal/state`）：「最大」鍵拿到的是上限，不是原始請求額 |
 | 單元測試 | `TestFinanceEditorLimits`（`cmd/wlgame`）：四列的上限與人／點換算 |
 | 截圖 | `WOLONG_SHOT_CMD=wlgame tools/shot.sh <out> KEYS=F,Return,7,5 -direct -scenario 0 -player 0`：面板落在 (296,184)，貼出來的原版資源上就寫著「7 8 9 ◀ 取消／4 5 6 0 最大／1 2 3 00 決定」——**畫面自己證實了 `5Fh` 是「最大」** |
-| 對原版 | **未做**——財政視窗開著數值器的原版畫面還沒對拍 |
+| 對原版 | ✅ **已做**（[`../playtest/42`](../playtest/42-window-parity.md) §3）：`-open-finance -finance-amount 0` 對原版實機，存還原區 `--rect 288,176,112,80` 剩 1.06%＝游標位置。修掉兩項：**外框**（96×64 資源外還有一圈 112×80 標準視窗框）、**值列不補零**（值 0 是單一「0」右靠、8×16 字模、topY ＝ 錨點 Y）|
 
 ## 5. 未解
 
