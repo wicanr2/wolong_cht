@@ -156,3 +156,45 @@ func TestLauncherFlowGoesThroughFactionList(t *testing.T) {
 			l.phase, l.confirmedPlayer)
 	}
 }
+
+// 背景的鏡頭就是 `sub_11A6E` 在 `sub_1D615` 前設的那兩個立即值
+// （docs/spec/79 §1.1.1）。**不帶 marks**，所以據點沒有勢力徽記。
+func TestLauncherCameraMatchesOriginal(t *testing.T) {
+	if launcherCamX != 0xAA || launcherCamY != 0x62 {
+		t.Errorf("鏡頭 = (%d,%d)，want (0xAA,0x62) ＝ (170,98)",
+			launcherCamX, launcherCamY)
+	}
+	// 鏡頭要落在可視範圍內：世界 384×256、視野 40×23。
+	if launcherCamX < 0 || launcherCamX > 384-viewCols {
+		t.Errorf("camX %d 超出可視範圍", launcherCamX)
+	}
+	if launcherCamY < 0 || launcherCamY > 256-viewRows {
+		t.Errorf("camY %d 超出可視範圍", launcherCamY)
+	}
+}
+
+// 滾輪捲的是**視野**，不動選取列（原版的 top 與選取列是兩個獨立狀態）。
+func TestFactionListWheelMovesViewNotCursor(t *testing.T) {
+	l := &launcherModel{phase: launcherSelectFaction}
+	for i := 0; i < 22; i++ {
+		l.players = append(l.players, launcherPlayer{ID: i})
+	}
+	l.cursor = 0
+
+	l.factionTop = clampFactionTop(l.factionListTop()+1, len(l.players))
+	if l.factionListTop() != 1 {
+		t.Fatalf("捲一格之後 top = %d，want 1", l.factionListTop())
+	}
+	if l.cursor != 0 {
+		t.Errorf("捲動不該動到選取列，cursor = %d", l.cursor)
+	}
+	// 捲動之後第一列對到的是第 1 個勢力。
+	if n, ok := l.factionListSelectAt(200, 121); !ok || n != 1 {
+		t.Errorf("捲動後第一列 = (%d,%v)，want (1,true)", n, ok)
+	}
+	// ↑↓ 那一邊才把視野拉回來。
+	l.move(0)
+	if l.factionListTop() != 0 {
+		t.Errorf("移動游標之後 top = %d，want 0（要把 cursor 拉回畫面）", l.factionListTop())
+	}
+}

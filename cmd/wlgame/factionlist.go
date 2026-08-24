@@ -48,6 +48,14 @@ const (
 	factionColDigits    = 3
 )
 
+// 新遊戲那幾層的背景鏡頭：`sub_11A6E` 在 `sub_1D615` 前設的兩個立即值
+// （`dx=0AAh`／`bx=62h`），單位是**格**（docs/spec/79 §1.1.1）。
+// 調色盤是 `sub_10241(al=0)` 的第 0 組。
+const (
+	launcherCamX, launcherCamY = 170, 98
+	launcherSeason             = 0
+)
+
 // 標題與分隔線是原版字串照抄（`cs:7AC6`／`cs:7AEB`）。
 // 空槽那一列直接照印分隔線——原版就是同一份資料兩用。
 const (
@@ -240,13 +248,26 @@ func (g *game) drawFactionListScrollbar(screen *ebiten.Image, top, total int, in
 		float32(track.Dx()-6), float32(h), ink, false)
 }
 
-// updateFactionListPointer 是清單的滑鼠：點一列選它並進君主卡，
-// 點上下箭頭捲一列。回傳 handled=true 表示這一幀的滑鼠處理完了。
+// updateFactionListPointer 是清單的滑鼠：滾輪捲、點一列選它並進君主卡、
+// 點上下箭頭捲一列。
+// 回傳 handled=true 表示這一幀的**點擊**處理完了，不要再走鍵盤那一段。
+//
+// ⚠ **滑鼠移動不改變選中的勢力**——那是上一輪修掉的那個 bug 的規則
+// （docs/spec/27 §2.1），這一頁照同一條走。滾輪捲的是**視野**，
+// 與 ▲▼ 同一個語意，也不動選取列（原版的 `top` 與選取列本來就是
+// 兩個獨立狀態）。滾輪本身是 remake 加的，原版只有 ▲▼。
 func (g *game) updateFactionListPointer() (bool, error) {
+	l := g.launcher
+	if _, dy := ebiten.Wheel(); dy != 0 {
+		step := 1
+		if dy > 0 {
+			step = -1
+		}
+		l.factionTop = clampFactionTop(l.factionListTop()+step, len(l.players))
+	}
 	if !inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		return false, nil
 	}
-	l := g.launcher
 	x, y := ebiten.CursorPosition()
 	p := image.Pt(x, y)
 	switch {

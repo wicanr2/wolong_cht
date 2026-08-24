@@ -623,10 +623,34 @@ func (g *game) applyLauncherResult(result launcherResult) error {
 	return nil
 }
 
+// drawLauncherCaption 畫一行疊在大地圖上的字。
+//
+// ⚠ **一定要先鋪底。** 這幾行（劇本名、操作提示、錯誤訊息）都是 remake 加的，
+// 原版沒有；背景換成大地圖之後，直接畫上去在草地與河流上完全讀不出來。
+func (g *game) drawLauncherCaption(screen *ebiten.Image, text string, x, y int, col color.RGBA) {
+	if text == "" {
+		return
+	}
+	w := textdraw.StringWidth(text)
+	vector.DrawFilledRect(screen, float32(x-4), float32(y-2),
+		float32(w+8), float32(textdraw.GlyphH+4), color.Black, false)
+	g.td.Draw(screen, text, x, y, col)
+}
+
 func (g *game) drawLauncher(screen *ebiten.Image) {
+	// ⭐ **背景是大地圖**，鏡頭固定在 (170, 98)——原版 `sub_11A6E` 在進
+	// 新遊戲選單前就把 40×23 的顯示清單畫好了（docs/spec/79 §1.1.1）。
+	// **不帶 marks**：`sub_1D615` 只複製圖塊編號，所以據點沒有勢力徽記。
+	// 底色先鋪一層，地圖畫不出來（缺素材）時才看得到。
 	vector.DrawFilledRect(screen, 0, 0, screenW, screenH, color.RGBA{12, 14, 26, 255}, false)
 	if g.lib != nil {
-		if banner, err := g.lib.Banner(0); err == nil {
+		if img, err := g.lib.RenderWorld(launcherCamX, launcherCamY,
+			viewCols, viewRows, launcherSeason); err == nil {
+			op := &ebiten.DrawImageOptions{}
+			op.GeoM.Translate(0, strategyMapY)
+			screen.DrawImage(ebiten.NewImageFromImage(img), op)
+		}
+		if banner, err := g.lib.Banner(launcherSeason); err == nil {
 			screen.DrawImage(ebiten.NewImageFromImage(banner), nil)
 		}
 	}
@@ -642,28 +666,25 @@ func (g *game) drawLauncher(screen *ebiten.Image) {
 	// 而原版這一頁本來就只有那一個框。
 	l := g.launcher
 	if l.phase == launcherSelectFaction {
-		g.td.Draw(screen, g.launcherScenarioName(l.scenario),
+		g.drawLauncherCaption(screen, g.launcherScenarioName(l.scenario),
 			factionListWinX, factionListWinY-textdraw.GlyphH-8, amber)
 		g.drawFactionList(screen)
-		g.td.Draw(screen, "點一列選君主　↑↓ 移動　Enter 決定　ESC 返回",
+		g.drawLauncherCaption(screen, "點一列選君主　↑↓ 移動　Enter 決定　ESC 返回",
 			factionListWinX, factionListWinY+factionListWinH+8, dim)
-		if l.notice != "" {
-			g.td.Draw(screen, l.notice, factionListWinX,
-				factionListWinY+factionListWinH+8+textdraw.GlyphH+2,
-				color.RGBA{255, 180, 180, 255})
-		}
+		g.drawLauncherCaption(screen, l.notice, factionListWinX,
+			factionListWinY+factionListWinH+8+textdraw.GlyphH+2,
+			color.RGBA{255, 180, 180, 255})
 		return
 	}
 	if l.phase == launcherSelectPlayer && l.cursor >= 0 && l.cursor < len(l.players) {
-		g.drawLordCard(screen, l.players[l.cursor], 0)
-		g.td.Draw(screen, g.launcherScenarioName(l.scenario),
+		g.drawLordCard(screen, l.players[l.cursor], launcherSeason)
+		g.drawLauncherCaption(screen, g.launcherScenarioName(l.scenario),
 			lordCardX, lordCardY-textdraw.GlyphH-8, amber)
-		g.td.Draw(screen, fmt.Sprintf("↑↓ 換君主（%d／%d）　Enter 決定　ESC 返回",
+		g.drawLauncherCaption(screen, fmt.Sprintf("↑↓ 換君主（%d／%d）　Enter 決定　ESC 回清單",
 			l.cursor+1, len(l.players)), lordCardX-88, lordCardY+lordCardH+8, dim)
-		if l.notice != "" {
-			g.td.Draw(screen, l.notice, lordCardX-88, lordCardY+lordCardH+8+textdraw.GlyphH+2,
-				color.RGBA{255, 180, 180, 255})
-		}
+		g.drawLauncherCaption(screen, l.notice, lordCardX-88,
+			lordCardY+lordCardH+8+textdraw.GlyphH+2,
+			color.RGBA{255, 180, 180, 255})
 		return
 	}
 	g.chrome.Window(screen, launcherPanelX, launcherPanelY, launcherPanelW, launcherPanelH, chrome.Menu)
