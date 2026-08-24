@@ -79,5 +79,6 @@ exec docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
     -e HOME=/tmp \
     -e "WOLONG_DOSV_TIMELINE=$timeline" \
     -e "WOLONG_DOSV_BOOT_MODE=$boot_mode" \
+    -e "WOLONG_DOSV_SEED_SAVE=${WOLONG_DOSV_SEED_SAVE:-}" \
     -w /tmp \
     "$IMAGE" bash /capture.sh

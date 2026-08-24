@@ -105,6 +105,21 @@ remake 這一側因此需要「拿既有的兩支軍團開戰」而不是現編�
 `-siege-node` 仍然決定打哪一張戰場；`-siege-defend` 仍然決定玩家站哪一邊
 （守方要把戰場轉 180 度，[`56`](56-battlefield-rotation.md)）。
 
+### 2.4 ⭐ 野戰的同狀態：改造存檔 ＋ LOAD DATA
+
+野戰要兩支軍團在野外同格，而原版的「行軍指示」在選單第二列、
+滑鼠時間線點不到（[`../playtest/40`](../playtest/40-tactical-parity.md) §1.2）。
+繞法是**直接改存檔**（格式已全解）把玩家軍團擺到 AI 軍團的行進路徑上，
+原版從標題畫面 LOAD DATA 讀入（NEW GAME 答 NO；槽的熱區是日期鈕），
+幾個遊戲時辰後自然遭遇。配方、欄位與「佔用圖快取欄 `+0x1A`/`+0x1C`
+不搬就是幽靈」的坑見 [`../playtest/43`](../playtest/43-field-battle-parity.md) §2–§3。
+
+原版側用 `WOLONG_DOSV_SEED_SAVE` 預置存檔；remake 側
+`-save-file … -load-slot 0 -encounter-choose`（遭遇出現時自動選戰鬥指揮，
+照自然流程進戰場、不重擺軍團——`-siege-corps` 那條會重擺，戰場格會跑掉）。
+⚠ 像素比對一律用 `shot:` 的 PNG，`grab-start:` 的 mp4 是失真編碼，
+逐區 diff 會全部 99%。
+
 ## 3. 分區
 
 座標出自 [`docs/re/47`](../re/47-main-screen-window-registry.md)，

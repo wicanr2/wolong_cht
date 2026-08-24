@@ -721,6 +721,14 @@ func (g *game) Update() error {
 	}
 	// 玩家捲入遭遇但尚未決定戰鬥方式時，戰略時間也不能前進。
 	if g.world.PendingEncounter() != nil {
+		// -encounter-choose：對拍 fixture，照原版自然流程進戰場
+		// （不重擺軍團位置，攻守與戰場格照遭遇當下）。
+		if autoEncounterChoose {
+			if err := g.world.ChooseBattleCommand(); err == nil {
+				g.startBattleTalk(g.world.PendingBattle())
+				return nil
+			}
+		}
 		g.updateBattleChoice()
 		return nil
 	}
@@ -1475,6 +1483,7 @@ func main() {
 	listCorps := flag.Bool("list-corps", false, "把載入後還活著的軍團印出來（編號、勢力、主將、兵力）")
 	battleCam := flag.String("battle-cam", "", "覆寫戰術鏡頭的世界格 `X,Y`（驗收用；原版初值是 36,14）")
 	openFinance := flag.Bool("open-finance", false, "截圖前先開財政視窗（對拍用，docs/spec/14 §4）")
+	encounterChoose := flag.Bool("encounter-choose", false, "遭遇出現時自動選戰鬥指揮（野戰對拍用，docs/spec/90）")
 	financeAmount := flag.Int("finance-amount", -1, "配 -open-finance：再開第 N 列（0–3）的數值輸入器（docs/spec/78）")
 	openMessage := flag.Bool("open-message", false, "截圖前先開玩家首都的暴風雨 TALK #70 通知（驗收用）")
 	openTalkIndex := flag.Int("open-talk-index", -1, "截圖前直接開指定 TALK.DAT 槽位（驗收用）")
@@ -1585,6 +1594,7 @@ func main() {
 		if *openEnding >= 0 {
 			openEndingFixture(g, *openEnding)
 		}
+		autoEncounterChoose = *encounterChoose
 		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *openForm, *openCorps, *openMarchList,
 			*openMarchMode, *openBattle, *openSiege, *openBattleChoice, *openMessage, *openFinance, *financeAmount,
 			*openTalkIndex, *openOutcome, parseSiegeFixture(*siegeNode, *siegeDefend, *siegeCorps, *battleSteps),
@@ -1851,6 +1861,9 @@ func logAliveCorps(g *game) {
 	}
 	log.Printf("還活著的軍團共 %d 支", n)
 }
+
+// autoEncounterChoose 由 -encounter-choose 設定（野戰對拍 fixture）。
+var autoEncounterChoose bool
 
 func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, openForm, openCorps, openMarchList, openMarchMode,
 	openBattle, openSiege, openBattleChoice, openMessage, openFinance bool, financeAmount, openTalkIndex int,

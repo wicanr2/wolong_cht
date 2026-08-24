@@ -108,6 +108,17 @@ trap cleanup EXIT INT TERM
 # DOSBox-X 的 guest 會寫 SAVE.DAT；複製只存在於容器的明確暫存目錄。
 cp -a "$orig_dir"/. "$game_dir"/
 chmod -R u+w "$game_dir"
+# 預置存檔（野戰對拍用，docs/playtest/43）：把 /out 裡的指定檔案放進
+# 遊戲目錄當 SAVE.DAT，原版從標題畫面 LOAD DATA 讀入同一個局面。
+if [ -n "${WOLONG_DOSV_SEED_SAVE:-}" ]; then
+    if [ -f "/out/$WOLONG_DOSV_SEED_SAVE" ]; then
+        cp "/out/$WOLONG_DOSV_SEED_SAVE" "$game_dir/SAVE.DAT"
+        echo "[capture] 預置存檔 $WOLONG_DOSV_SEED_SAVE → SAVE.DAT"
+    else
+        echo "[capture] 找不到預置存檔 /out/$WOLONG_DOSV_SEED_SAVE" >&2
+        exit 1
+    fi
+fi
 trace "copied original to container temporary game directory"
 
 # surface 讓 ImageMagick 的 X11 擷取讀到實際 framebuffer；OpenGL 在
@@ -215,6 +226,22 @@ clickat() {
     sleep 0.15
     DISPLAY=:99 xdotool mousedown 1
     sleep 0.12
+    DISPLAY=:99 xdotool mouseup 1
+    sleep 0.45
+}
+
+# tapat 是「瞬按」：按住只 0.03 秒。彈出選單開起來之後的下一次 INT 33
+# AX=5 poll 若還看到按著（clickat 按住 0.12 秒），會用當時游標位置立刻
+# 選列——框外游標被夾到列 0，第二列以後永遠點不到（docs/playtest/40
+# §1.2、42 §5）。瞬按讓選單開起來時按鍵已放開，之後才能移進框內選列。
+tapat() {
+    local px=$1
+    local py=$2
+    window_geometry
+    DISPLAY=:99 xdotool mousemove "$((X + px))" "$((Y + py))"
+    sleep 0.15
+    DISPLAY=:99 xdotool mousedown 1
+    sleep 0.03
     DISPLAY=:99 xdotool mouseup 1
     sleep 0.45
 }
@@ -407,6 +434,11 @@ for step in "${steps[@]}"; do
             # 原版的取消是右鍵（docs/re/53 §3「右鍵取消走 sub_18F7C」）。
             trace "step begin=$step"
             rclickat "${arg%%,*}" "${arg##*,}"
+            trace "step end=$step"
+            ;;
+        tap)
+            trace "step begin=$step"
+            tapat "${arg%%,*}" "${arg##*,}"
             trace "step end=$step"
             ;;
         press)

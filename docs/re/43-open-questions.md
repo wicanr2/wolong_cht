@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**470 列分布在 174 份文件，平均每份 2.7 列。**
+**475 列分布在 175 份文件，平均每份 2.7 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 24 | 20 | 4 | 0 |
 | 資料保存 | 33 | 32 | 1 | 0 |
 | 程式碼理解 | 179 | 171 | 8 | 0 |
-| 驗收 | 56 | 45 | 11 | 0 |
+| 驗收 | 61 | 50 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 172 | 157 | 15 | 0 |
-| **合計** | **470** | 430 | 40 | 0 |
+| **合計** | **475** | 435 | 40 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,7 +53,7 @@
 |---|---:|
 | `docs/re/` | 179 |
 | `docs/spec/` | 134 |
-| `docs/playtest/` | 56 |
+| `docs/playtest/` | 61 |
 | `docs/formats/` | 33 |
 | `docs/mechanics/` | 24 |
 | `docs/release/` | 21 |
@@ -312,7 +312,7 @@
 | [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | 欄位表的「型別」與「屬性」兩個 word | `0x76`／`0x73` 與 `0x0206`／`0x0204` 只由「名字欄 vs 數字欄」的對應推出語意，沒有讀 `sub_1820E` 裡消費它們的那一段 | 靜態 |
 | [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | `sub_18607` | 清單區清除，未讀 | 靜態 |
 
-## 2.4 驗收（56 條）
+## 2.4 驗收（61 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -372,6 +372,11 @@
 | [`playtest/42-window-parity.md`](../playtest/42-window-parity.md) | 交戰提案目標清單的對拍 | 原版截圖已有，remake 缺 fixture 旗標 / 加 `-advise-target` 類旗標停在目標選擇 | 實測 |
 | [`playtest/42-window-parity.md`](../playtest/42-window-parity.md) | 勢力一覽／據點一覽／軍團一覽 | 據點與軍團一覽要點選單第二列，被 §5 同一個限制擋住；勢力一覽可由指令列 #7 直接開（下一輪） / 指令列 #7 ⇒ 主機 x ≈ 34 | 靜態 |
 | [`playtest/42-window-parity.md`](../playtest/42-window-parity.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
+| [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | **野戰開場對白怎麼選句** | 原版「下賤的奸賊！我呂布親自來打倒你！！」，remake 抽到「其他人別出手！我來收拾他！」——同一組開場台詞的不同一句 / 讀開場對白的 TALK 索引怎麼算（雙方武將？亂數？信賴度？），`spec/60` 只解了壽命沒解選句 | 靜態 |
+| [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | 野戰開場**誰先講、兩框會不會同掛** | 原版 b0/b1 只有呂布（攻方）一框；remake 兩框同出 / 同上，讀出框的時序 | 靜態 |
+| [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | 遭遇訊息畫面的對拍 | 「遇上兵馬了」訊息與 remake 的遭遇戰選單版面沒有比 / 原版是 TALK 訊息框，remake 是自製選單——先讀原版遭遇後的選擇 UI 是什麼樣（影片 `parity-field13/enc.mp4` 15 秒附近有素材） | 靜態 |
+| [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | 佔用圖快取欄的讀檔重建 | §3 是強證據不是 confirmed / 讀原版的讀檔常式（`sub_18CAE` 一帶）確認重建走哪個欄位 | 靜態 |
+| [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
