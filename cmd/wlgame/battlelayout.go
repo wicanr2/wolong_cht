@@ -74,6 +74,16 @@ type dosvBattleLayout struct {
 type battleTalkState struct {
 	Top, Bottom                 string
 	TopPortrait, BottomPortrait int
+	// TopSpeaker／BottomSpeaker 是 \1 代入的武將名——句中那一段
+	// 原版畫成色 9（playtest/43 的實機量測），renderer 要能認出它。
+	TopSpeaker, BottomSpeaker string
+}
+
+func (s battleTalkState) speaker(side int) string {
+	if side == 0 {
+		return s.TopSpeaker
+	}
+	return s.BottomSpeaker
 }
 
 func (s battleTalkState) text(side int) string {

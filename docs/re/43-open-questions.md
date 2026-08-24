@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**475 列分布在 175 份文件，平均每份 2.7 列。**
+**476 列分布在 176 份文件，平均每份 2.7 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -41,19 +41,19 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 24 | 20 | 4 | 0 |
 | 資料保存 | 33 | 32 | 1 | 0 |
-| 程式碼理解 | 179 | 171 | 8 | 0 |
-| 驗收 | 61 | 50 | 11 | 0 |
+| 程式碼理解 | 185 | 176 | 9 | 0 |
+| 驗收 | 57 | 45 | 12 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 172 | 157 | 15 | 0 |
-| **合計** | **475** | 435 | 40 | 0 |
+| 其他 | 171 | 155 | 16 | 0 |
+| **合計** | **476** | 433 | 43 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/re/` | 179 |
-| `docs/spec/` | 134 |
-| `docs/playtest/` | 61 |
+| `docs/re/` | 185 |
+| `docs/spec/` | 133 |
+| `docs/playtest/` | 57 |
 | `docs/formats/` | 33 |
 | `docs/mechanics/` | 24 |
 | `docs/release/` | 21 |
@@ -128,7 +128,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `OPEN_S2`–`S5` 的 384,000 B | 是 §2 的三倍，多半是多張或多幀。開場播放器 `D7OPEN.EXE` 還沒反組譯 | 靜態 |
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`） | 靜態 |
 
-## 2.3 程式碼理解（179 條）
+## 2.3 程式碼理解（185 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -311,8 +311,14 @@
 | [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | `sub_18DC8` 的 `si=98C8h` | 那一則字串沒取出來看 | 靜態 |
 | [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | 欄位表的「型別」與「屬性」兩個 word | `0x76`／`0x73` 與 `0x0206`／`0x0204` 只由「名字欄 vs 數字欄」的對應推出語意，沒有讀 `sub_1820E` 裡消費它們的那一段 | 靜態 |
 | [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | `sub_18607` | 清單區清除，未讀 | 靜態 |
+| [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | `byte_1D34B` 誰寫、何時＝1 | 單挑開場的總開關。寫入者未讀——remake 暫以「玩家戰開打」當觸發，**推定不是原版條件** | 靜態 |
+| [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | `loc_1A341`（勢均接受單挑之後）與 `sub_1A298` | 未讀；單挑本體（兩大將對移、迴圈、體力 < 0x46 決著）整段未實作 | 靜態 |
+| [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | `sub_1A34F` 的亂數項精確語意 | dl／dh 進入值與 `sub_19C13` 的輸出未逐位讀完；remake 只實作核心（兵×體力）與 4800／一半兩道門檻 | 靜態 |
+| [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | `word_1D311 += 6` | 疑似喊話框位置位移，未驗 | 靜態 |
+| [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | 攻城戰走不走同一條 | 呼叫鏈在 `sub_19FA0`，兩種戰場推定共用；未在攻城實測分辨 | 實測 |
+| [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
 
-## 2.4 驗收（61 條）
+## 2.4 驗收（57 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -365,15 +371,11 @@
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | unit 0 的第二趟 | 深度迴圈跑完後 `dl & 0x20` 成立時會對五個鄰格各跑一次 `ax = 0`；**觸發條件（旗標 bit 5）誰設還沒解** / 掃誰對顯示格的 `+0` 寫 `0x20` | 靜態 |
 | [`playtest/41-m7-corrected-text-on-screen.md`](../playtest/41-m7-corrected-text-on-screen.md) | 原版側的同狀態對照 | 這一份只驗 remake 自己「有沒有溢出」。**原版同一則長什麼樣沒有並排比過**——要用 `-open-talk-index` 對應的原版操作序列，還沒做 | 靜態 |
 | [`playtest/41-m7-corrected-text-on-screen.md`](../playtest/41-m7-corrected-text-on-screen.md) | 變數的實際長度分布 | 截圖用的是實際遊戲值（如「袁胤」兩字），而 `TestAllTalkLinesFitTheirBox` 用三全形替身。**軍團名與勢力名的長端沒有逐一量過**（`32`） | 實測 |
-| [`playtest/42-window-parity.md`](../playtest/42-window-parity.md) | **支出欄顯示的是哪個欄位** | 同一份存檔原版顯示 0、remake 顯示 430（`Faction.Expense`）；且原版 4月13日仍是 0，與「預備兵維持費逐時計入本月支出」（`spec/50`）的直覺不合 / 讀財政視窗繪製端（`sub_1678D` 一帶）支出那一格從哪個位址取值；對照 `SAVE.DAT` 偏移裡的實際值 | 靜態 |
-| [`playtest/42-window-parity.md`](../playtest/42-window-parity.md) | 一覽表欄位對齊（§4 #2）與捲軸美術（#3） | 量測數據已在 §4 / `internal/ui/listwin` 幾何；欄位 x 先對照 `re/26` §4.1 的分隔線表再改 | 靜態 |
-| [`playtest/42-window-parity.md`](../playtest/42-window-parity.md) | 編成清單不含君主（#1）、預備兵扣減時點（#4） | 實機證據已到手 / `spec/22` 補規則來源（`sub_17663` 的過濾條件）再改 `cmd/wlgame` | 靜態 |
+| [`playtest/42-window-parity.md`](../playtest/42-window-parity.md) | 捲軸綠是色 13 還是 14 | 兩色春天同值，要換季截圖才分得出（`spec/38` §1.6） | 實測 |
 | [`playtest/42-window-parity.md`](../playtest/42-window-parity.md) | 進言五項選單的原版截圖 | §5 的輸入模型限制 / 需要能送「瞬時 click」的擷取動作（縮短按住時間），或改用鍵盤路徑（未驗證原版是否支援） | 實測 |
 | [`playtest/42-window-parity.md`](../playtest/42-window-parity.md) | 交戰提案目標清單的對拍 | 原版截圖已有，remake 缺 fixture 旗標 / 加 `-advise-target` 類旗標停在目標選擇 | 實測 |
 | [`playtest/42-window-parity.md`](../playtest/42-window-parity.md) | 勢力一覽／據點一覽／軍團一覽 | 據點與軍團一覽要點選單第二列，被 §5 同一個限制擋住；勢力一覽可由指令列 #7 直接開（下一輪） / 指令列 #7 ⇒ 主機 x ≈ 34 | 靜態 |
 | [`playtest/42-window-parity.md`](../playtest/42-window-parity.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
-| [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | **野戰開場對白怎麼選句** | 原版「下賤的奸賊！我呂布親自來打倒你！！」，remake 抽到「其他人別出手！我來收拾他！」——同一組開場台詞的不同一句 / 讀開場對白的 TALK 索引怎麼算（雙方武將？亂數？信賴度？），`spec/60` 只解了壽命沒解選句 | 靜態 |
-| [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | 野戰開場**誰先講、兩框會不會同掛** | 原版 b0/b1 只有呂布（攻方）一框；remake 兩框同出 / 同上，讀出框的時序 | 靜態 |
 | [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | 遭遇訊息畫面的對拍 | 「遇上兵馬了」訊息與 remake 的遭遇戰選單版面沒有比 / 原版是 TALK 訊息框，remake 是自製選單——先讀原版遭遇後的選擇 UI 是什麼樣（影片 `parity-field13/enc.mp4` 15 秒附近有素材） | 靜態 |
 | [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | 佔用圖快取欄的讀檔重建 | §3 是強證據不是 confirmed / 讀原版的讀檔常式（`sub_18CAE` 一帶）確認重建走哪個欄位 | 靜態 |
 | [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
@@ -389,7 +391,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（172 條）
+## 2.6 其他（171 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -443,8 +445,7 @@
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 「畫面模式」 | 兩個選項是「１６色」與「 液晶 」，切的是 `GAMEPAL.BRG` 的 bank 0–3 ↔ 4–7（`docs/re/02` §6.2）。**remake 只做第 0 組**，這一格固定顯示「１６色」——液晶那組是給 8 階調液晶的高飽和純色，現代螢幕沒有對照物 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 「音效」 | 值由 `g.soundValue()` 填。原版五個選項是 ＯＦＦ／TYPE 1–4（音源型別），remake 只有開／關 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 戰場內調速度 | 戰場獨佔輸入，所以 `updateBattle` 自己接一次 ＋／−（調戰術速度），調完浮一行 1.5 秒的提示。**原版戰場沒有速度指示**，常駐顯示會破壞版面 parity | 靜態 |
-| [`spec/14-finance-window.md`](../spec/14-finance-window.md) | 收入的來源 | `cs:word_10D02` 由誰計算未讀（月結那一支是候選）。remake 的月結算得出 `res.Income` 但沒有留下來，所以這一格暫時顯示 0——**留白比填一個自己算的數字誠實** | 靜態 |
-| [`spec/14-finance-window.md`](../spec/14-finance-window.md) | **支出欄顯示的是哪個欄位** | 同一份存檔原版顯示 0、remake 顯示 430（`Faction.Expense`），且原版 4月13日仍是 0（`../playtest/42` §6）。要讀 `sub_1678D` 一帶支出那一格從哪個位址取值 | 靜態 |
+| [`spec/14-finance-window.md`](../spec/14-finance-window.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |
@@ -483,7 +484,7 @@
 | [`spec/36-ground-planes-and-climbing.md`](../spec/36-ground-planes-and-climbing.md) | 擋路時的換位 | 原版被兵擋住還會試 `loc_1B533`（§1.4），remake 的 `tryClimb` 直接失敗。水平移動那條路的換位已經有了（`swapWith`） | 靜態 |
 | [`spec/37-tactical-player-controls.md`](../spec/37-tactical-player-controls.md) | 選了陣形之後原版有沒有立刻重排 | 機器碼只寫偏移，**沒有看到立刻移動的呼叫**；remake 照抄（等命令） | 靜態 |
 | [`spec/37-tactical-player-controls.md`](../spec/37-tactical-player-controls.md) | 陣形線在小地圖上的線寬與端點 | `sub_1C5AE` 沒逐行讀，remake 畫整條 1 px 的線 | 靜態 |
-| [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 滑塊的樣式 | 熱區與 `top` 的換算已解，但**畫滑塊的常式（`sub_18713` 的反向）沒讀**，remake 依比例自己畫 | 靜態 |
+| [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 捲軸綠是色 13 還是 14 | 兩色春天同值；要換季截圖才分得出（§1.6） | 實測 |
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 俘虜身分 | remake 的 `Posted` 是 bool，存不下 `+0x17` 的 0–5；俘虜狀態目前推不出來 | 靜態 |
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「看」與「選」的內容差異 | 原版兩種取法的**列表內容**不同（`../re/26` §4.2），remake 只統一了欄位 | 靜態 |
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「委任」那一格的顏色 | 實錄影格上看起來是紅字，但影片是壓縮過的、也沒有機器碼證據。remake 先畫成一般色 | 靜態 |

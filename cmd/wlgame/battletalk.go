@@ -13,6 +13,9 @@ import (
 // BattleTalkEntry 是戰術呈現層的最小 TALK payload。
 // 文案不存入 state；Index 仍由目前載入的 TALK.DAT 解碼。
 type BattleTalkEntry struct {
+	// Speaker 是說話武將的名字（Big5 已轉），供 \1 標記代入；
+	// 空字串表示這一則沒有名字可代（fail-closed 會把帶 \1 的訊息丟棄）。
+	Speaker string
 	Index    int
 	Portrait int
 	Side     int
@@ -157,31 +160,55 @@ func (g *game) startBattleTalk(p *state.Pending) {
 	}
 	entries := make([]BattleTalkEntry, 0, battleTalkSides)
 
-	// sub_1A3C3 的開戰 pair：第一句使用 0x1BA，第二句使用 0x1BB。
-	// 上／下 slot 與攻／守的最終對應仍是強推論；採影片位置的最小接線。
-	for _, spec := range []struct {
-		base int
-		side int
-	}{
-		{base: 0x1BA, side: 0}, // 攻方 → 上方（強推論）
-		{base: 0x1BB, side: 1}, // 守方 → 下方（強推論）
-	} {
-		commander := g.battleCommander(p, spec.side)
+	// 開戰喊話照 sub_1A2E8 的挑戰段（docs/re/74 §2）：
+	//
+	//	氣勢 ＝ 隊長隊兵數 × 大將體力（sub_1A34F 的核心；亂數修正項未實作）
+	//	強側氣勢 ≥ 0x12C0 → 強側喊組 0x1B7；氣勢相同時攻方當強側
+	//	弱側 < 0x12C0 或 < 強側一半 → 弱側以組 0x1B9 拒戰，否則沉默
+	//
+	// ⚠ 先前無條件出 0x1BA／0x1BB pair 是錯的——那兩組是**單挑回合的
+	// 互嗆**（re/74 §3），不是開場對白。單挑本體（byte_1D34B 閘、
+	// 回合迴圈、決著）未實作（re/74 §5）。
+	strength := func(side int) int {
+		corps := p.Attacker
+		if side == 1 {
+			corps = p.Defender
+		}
+		if corps < 0 || corps >= len(g.world.Corps) || !g.world.Corps[corps].Alive {
+			return 0
+		}
+		c := g.world.Corps[corps]
+		return c.Units[0].Men * c.Morale
+	}
+	say := func(side, base int) {
+		commander := g.battleCommander(p, side)
 		if commander < 0 || commander >= len(g.world.Generals) {
-			continue
+			return
 		}
 		general := g.world.Generals[commander]
 		entry := BattleTalkEntry{
-			Index:    resolveBattleTalkIndex(spec.base, talkVariant(general.TalkVariant)),
+			Speaker:  big5(general.Name),
+			Index:    resolveBattleTalkIndex(base, talkVariant(general.TalkVariant)),
 			Portrait: general.Portrait,
-			Side:     spec.side,
+			Side:     side,
 			Duration: battleTalkDuration,
 		}
 		// 不能安全代入的 marker 直接丟棄該 entry，不顯示 debug／半句文字。
 		if _, ok := g.battleTalkText(entry); !ok {
-			continue
+			return
 		}
 		entries = append(entries, entry)
+	}
+	strong, weak := 0, 1
+	if strength(weak) > strength(strong) {
+		strong, weak = weak, strong
+	}
+	const duelThreshold = 0x12C0 // sub_1A2E8 的 4800
+	if hi, lo := strength(strong), strength(weak); hi >= duelThreshold {
+		say(strong, 0x1B7)
+		if lo < duelThreshold || lo < hi/2 {
+			say(weak, 0x1B9)
+		}
 	}
 	s.initialize(p.Battle, entries)
 }
@@ -190,8 +217,13 @@ func (g *game) battleTalkText(entry BattleTalkEntry) (string, bool) {
 	if g == nil {
 		return "", false
 	}
-	// 開戰 pair 的未知 payload 尚未有可證實的欄位映射；不猜 marker 值。
-	lines, ok := g.talkLines(entry.Index, nil)
+	// \1 ＝ 說話武將名、\6 ＝ 排版控制（docs/formats/01 §3）。
+	// 標記鍵在既有呼叫端有 raw byte 與 ASCII 兩種寫法，兩種都給。
+	vars := map[byte]string{6: "", '6': ""}
+	if entry.Speaker != "" {
+		vars[1], vars['1'] = entry.Speaker, entry.Speaker
+	}
+	lines, ok := g.talkLines(entry.Index, vars)
 	if !ok || len(lines) == 0 {
 		return "", false
 	}

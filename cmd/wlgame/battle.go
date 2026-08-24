@@ -8,6 +8,7 @@ package main
 // （64 × 62 的格、立體的層、陣形位置、鎖敵）。
 
 import (
+	"strings"
 	"github.com/wicanr2/wolong_cht/internal/assets/world"
 	"github.com/wicanr2/wolong_cht/internal/battlesetup"
 	"github.com/wicanr2/wolong_cht/internal/rules/speed"
@@ -443,10 +444,10 @@ func (g *game) drawBattleChrome(screen *ebiten.Image, b *tactical.Battle, p *sta
 	g.drawBattleGateBar(screen, b)
 	talks := g.battleTalkState(b, p)
 	if talks.visible(0) {
-		g.drawBattleTalk(screen, talks.text(0), l.TopTalk, 0, talks.portrait(0), p)
+		g.drawBattleTalk(screen, talks.text(0), talks.speaker(0), l.TopTalk, 0, talks.portrait(0), p)
 	}
 	if talks.visible(1) {
-		g.drawBattleTalk(screen, talks.text(1), l.BottomTalk, 1, talks.portrait(1), p)
+		g.drawBattleTalk(screen, talks.text(1), talks.speaker(1), l.BottomTalk, 1, talks.portrait(1), p)
 	}
 	g.drawBattleKeys(screen, b, l.BottomCommands)
 }
@@ -476,47 +477,67 @@ func (g *game) battleTalkState(b *tactical.Battle, p *state.Pending) battleTalkS
 			continue
 		}
 		if side == 0 {
-			result.Top, result.TopPortrait = text, entry.Portrait
+			result.Top, result.TopPortrait, result.TopSpeaker = text, entry.Portrait, entry.Speaker
 		} else {
-			result.Bottom, result.BottomPortrait = text, entry.Portrait
+			result.Bottom, result.BottomPortrait, result.BottomSpeaker = text, entry.Portrait, entry.Speaker
 		}
 	}
 	return result
 }
 
-func (g *game) drawBattleTalk(screen *ebiten.Image, text string, r battleRect, side, portraitPage int, p *state.Pending) {
+func (g *game) drawBattleTalk(screen *ebiten.Image, text, speaker string, r battleRect, side, portraitPage int, p *state.Pending) {
 	if text == "" {
 		return
 	}
-	g.chrome.Window(screen, r.X, r.Y, r.W, r.H, chrome.Menu)
-	white := chrome.Paper
-	amber := color.RGBA{240, 200, 120, 255}
+	// 框內是**純黑**、沒有龍紋，也沒有獨立的姓名列——說話者的名字由
+	// \1 直接代在句中，畫成色 9（playtest/43 的實機逐像素）。
+	g.chrome.Window(screen, r.X, r.Y, r.W, r.H, chrome.Blank)
+	white := g.paletteInk(strategyInkNormal, chrome.Paper)
+	nameInk := g.paletteInk(strategyInkDim, color.RGBA{243, 211, 146, 255})
 
 	commander := g.battleCommander(p, side)
-	name := sideLabel(side)
-	if commander >= 0 && commander < len(g.world.Generals) {
-		name = big5(g.world.Generals[commander].Name)
-		if g.lib != nil && portraitPage >= 0 {
-			if portrait, err := g.lib.Portrait(portraitPage, int(g.world.Clock.Season())); err == nil {
-				op := &ebiten.DrawImageOptions{}
-				op.GeoM.Translate(float64(r.X+chrome.Tile), float64(r.Y+chrome.Tile))
-				screen.DrawImage(ebiten.NewImageFromImage(portrait), op)
-			}
+	if commander >= 0 && commander < len(g.world.Generals) && g.lib != nil && portraitPage >= 0 {
+		if portrait, err := g.lib.Portrait(portraitPage, int(g.world.Clock.Season())); err == nil {
+			op := &ebiten.DrawImageOptions{}
+			op.GeoM.Translate(float64(r.X+chrome.Tile), float64(r.Y+chrome.Tile))
+			screen.DrawImage(ebiten.NewImageFromImage(portrait), op)
 		}
 	}
 
 	tx := r.X + chrome.Tile + 72
-	// 原版 TALK 區的 80 px 高度扣掉上下各 8 px 框後，恰好只有四個
-	// 16 px 字格：姓名一格、本文三格。此處不可沿用一般文字視窗的
-	// 4 px 行距，否則第三行字腳會被下框吃掉。
-	ty := r.Y + chrome.Tile
-	g.td.Draw(screen, name, tx, ty, amber)
+	// 文字從框頂下 16 px 起、**行距 16**（⚠ textdraw.GlyphH 是 15，
+	// 拿它當行距會整行高 1px——實機量測 m23：行1 墨水 16 起、行2 32 起）。
+	ty := r.Y + 16
 	maxWidth := r.W - (tx - r.X) - chrome.Tile - 4
 	for i, line := range textdraw.WrapLine(text, maxWidth) {
 		if i >= 3 {
 			break
 		}
-		g.td.Draw(screen, line, tx, ty+(i+1)*textdraw.GlyphH, white)
+		g.drawTalkLineWithName(screen, line, speaker, tx, ty+i*16, white, nameInk)
+	}
+}
+
+// drawTalkLineWithName 畫一行對白，句中等於 speaker 的那一段換色
+// （原版把 \1 代入的名字畫成色 9）。
+func (g *game) drawTalkLineWithName(screen *ebiten.Image, line, speaker string, x, y int, ink, nameInk color.RGBA) {
+	if speaker == "" {
+		g.td.Draw(screen, line, x, y, ink)
+		return
+	}
+	rest := line
+	for {
+		idx := strings.Index(rest, speaker)
+		if idx < 0 {
+			g.td.Draw(screen, rest, x, y, ink)
+			return
+		}
+		if idx > 0 {
+			g.td.Draw(screen, rest[:idx], x, y, ink)
+			x += textdraw.StringWidth(rest[:idx])
+		}
+		g.td.Draw(screen, speaker, x, y, nameInk)
+		x += textdraw.StringWidth(speaker)
+		rest = rest[idx+len(speaker):]
 	}
 }
 
