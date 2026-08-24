@@ -732,7 +732,7 @@ IDA 資料庫、原始素材或反組譯輸出。
 
 ### Remake 接入與邊界
 
-- 新增 `internal/state.AmountEdit`，以 `editAmount` 集中實作追加數字、追加 `00`、退位、還原初值、清零與結束輸入；`World.EditDiplomacyOfferAmount`／`World.EditFundingAmount` 分別接入事件 2／3、4／5。`DiplomacyChoice.InitialAmount` 保存 `sub_17C6E` 的初值語意。
+- 新增 `internal/state.AmountEdit`，以 `editAmount` 集中實作追加數字、追加 `00`、退位、**設成上限**、清零與結束輸入；`World.EditDiplomacyOfferAmount`／`World.EditFundingAmount` 分別接入事件 2／3、4／5。（2026-08-24 訂正：那一鍵是「最大」不是「還原初值」，`sub_17C6E` 收到的是上限——`docs/spec/78`。）
 - `cmd/wlgame` 指定金額列現在接受跨平台數字鍵、退格、Insert、Delete、Home；原有方向鍵仍保留為 remake 輔助控制。`TestRawAmountEditorSemantics` 驗證追加、`00`、退位、還原、清零、非法數字 fail-closed 與 `30,000` 上限。
 - 本段沒有把 PC-98 掃描碼、原版數字視窗字型／欄寬／游標或 TALK.DAT 順序外推成已完成；事件 2／3、4／5 的原版畫面與完整訊息流程仍是未完成邊界。此前把「numeric input 尚未接入」寫在現況中的說法，現在由本段修正為「核心語意與跨平台輸入已接，原版呈現仍未知」。
 ## 2026-08-09 — 事件 4／5 前置 TALK #56／#57 接入

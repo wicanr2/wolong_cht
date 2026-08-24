@@ -203,7 +203,7 @@
 - 證據：`KI.EXE.asm` SHA-256 `FFFEBA2D9E6EE947A4CF7ABF8FEF6D4B8D0FB4E6E0EC66D9D34D7B5A0D43868`；IDA Pro 9.4 `seg000:1B941`／`1B97E`／`1BA2E`／`1BAB7`；原始 `.i64` 以唯讀掛載並在容器內副本匯出，runtime／測試使用 `wolong-go:20260809`。
 ## 2026-08-09 最新增量：`sub_17C6E` 數值編輯核心
 
-- IDA 線性位址 `00017C6E` 呼叫的操作表已確認：`00017DA5` 追加數字、`00017DC3` 追加 `00`、`00017DDD` 退位、`00017DEC` 還原初值、`00017DF1` 清零、`00017DEA` 結束並保留目前值；上限由呼叫端傳入，本專案事件 2／3／4／5 為 `0x7530`。
+- IDA 線性位址 `00017C6E` 呼叫的操作表已確認：`00017DA5` 追加數字、`00017DC3` 追加 `00`、`00017DDD` 退位、`00017DEC` **設成上限**、`00017DF1` 清零、`00017DEA` 結束並保留目前值；呼叫端傳的那一個值**就是上限**（`si` 開場一律 0，沒有初值可傳），事件 2／3／4／5 是 `0x7530`、財政四支是 `0x64`／`0x2710`（`docs/spec/78`）。
 - `AmountEdit`、`EditDiplomacyOfferAmount`、`EditFundingAmount` 與 `TestRawAmountEditorSemantics` 已接入；跨平台 `wlgame` 指定金額列支援數字鍵、退格、Insert、Delete、Home。這是狀態／輸入語意接入，不是 PC-98 掃描碼或原版數字視窗 parity。
 - 原始輸入為唯讀 DOS/V `KI.EXE.i64`／`KI.EXE.asm`／`KI.EXE`；工具 `ida-pro-9.4-ver2:uidfix-v1`／IDA Pro 9.4，位址均為 IDA 線性位址；Go 驗證在 `wolong-go:20260809` Docker 內完成。
 ## 2026-08-09 最新增量：事件 4／5 前置回報通知

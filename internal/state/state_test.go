@@ -1401,7 +1401,7 @@ func TestQueuedDiplomacyReportHandlers(t *testing.T) {
 }
 
 // sub_17C6E 的數值核心不是每次加固定步長：數字鍵追加一位，另有
-// 00、退位、還原初值與清零。事件 2／3、4／5 必須共用同一組上限語意。
+// 00、退位、設成上限與清零。事件 2／3、4／5 必須共用同一組上限語意。
 func TestRawAmountEditorSemantics(t *testing.T) {
 	w := load(t, 0)
 	w.diplomacy = &DiplomacyChoice{InitialAmount: 1200, OfferAmount: 12}

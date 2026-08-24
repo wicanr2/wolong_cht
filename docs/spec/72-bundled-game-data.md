@@ -128,8 +128,8 @@ ImportActivity.onCreate:
 |---|---|
 | 單元測試 | ✅ `TestResolveDataDir`／`TestBundledDirNames`（`cmd/wlgame`）：明講的旗標、repo 路徑、exe 旁、全都找不到，四條各一個子測試 |
 | 解開就能跑 | ✅ tar 解到空目錄，`./wlgame` 不帶任何資料旗標，**沒有「載不到字型」那行警告**（接進 `tools/release_smoke.sh`）|
-| AppImage | ✅ `--appimage-extract-and-run` 不帶旗標，中文正常（`20260822` 批次）|
-| Android | ✅ 模擬器乾淨安裝、**一個 byte 都沒推**，`ImportActivity` 自己解開 69 個檔並轉進 `MainActivity`（`20260822` 批次的 APK）|
+| AppImage | ✅ `--appimage-extract-and-run` 不帶旗標，中文正常（最近一次是 `20260824` 批次）|
+| Android | ✅ 模擬器乾淨安裝、**一個 byte 都沒推**，`ImportActivity` 自己解開 69 個檔並轉進 `MainActivity`（最近一次是 `20260824` 批次的 APK）|
 
 ⚠ **這裡刻意不寫 `dist-all/verification/…` 的路徑。** 那個目錄
 **每次重打發行都會被 `promote` 整個換掉**（`tools/release_smoke.sh` 的檔頭

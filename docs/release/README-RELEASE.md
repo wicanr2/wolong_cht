@@ -1,30 +1,39 @@
 # 臥龍傳 remake 可執行封裝
 
-**狀態：四平台完整包、Linux AppImage、推廣片與驗收紀錄已集中於 [`dist-all`](../../dist-all)，目前是一致的 `wolong-remake-20260823` 批次（[`05`](05-full-20260823.md)）；Windows／macOS 原生 GUI 與 Android 實機都尚未驗證。⛔ 本機那一批內含原版資產，不可外流。**
+**狀態：四平台完整包、Linux AppImage、推廣片與驗收紀錄已集中於
+[`dist-all`](../../dist-all)，目前是一致的 `wolong-remake-20260824` 批次
+（`07-full-20260824.md`）；Windows／macOS 原生 GUI 與 Android 實機都尚未驗證。
+⛔ 本機那一批內含原版資產，不可外流。**
 
-- 日期：2026-08-12
+- 日期：2026-08-24
+- 每一批的產物、雜湊與驗收：`docs/release/` 逐批一份，最新是
+  [`07`](07-full-20260824.md)
 
-版本：`wolong-remake-20260812`
+## ⚠ 包裡那份說明的唯一來源是模板
 
-這是只包含 remake 程式與校訂文字的候選封裝。原版 DOS/V／PC-98 執行檔、資料檔、圖庫、音樂與倚天字型不隨包散布；請使用者自行準備合法原版資料，並以命令列參數指定唯讀資料目錄與字型檔。
+使用者實際拿到的 `README-RELEASE.md` 由
+[`packaging/release/README-RELEASE.md`](../../packaging/release/README-RELEASE.md)
+產生——它帶 `@PKG_BOUNDARY@`／`@PKG_LAUNCH@` 兩個佔位符，
+`tools/release_all_fs.py` 依「這一批含不含原版資料」填不同的文字。
+
+**這一份不再複製那些內容。** 先前這裡有一份手抄版，日期停在 `20260812`、
+散布界線還寫著「原版資料不隨包散布」——而 `dist-all` 從 2026-08-22 起
+就是內含遊戲檔案的完整版。⭐ **同一段文字放兩個地方，過期的那一份不會有人發現**。
 
 ## 啟動
 
-在各平台目錄中執行 `wlgame`（Windows 為 `wlgame.exe`）：
+⚠ **完整版不必給任何資料旗標**——`wlgame` 會自己找執行檔旁邊的
+`gamedata/`、`fonts/` 與 `audio/`（`docs/spec/72` §3、`docs/spec/75`）。
+不含資料的可散布版才要 `-orig`／`-font`：
 
 ```text
-wlgame -orig /path/to/songgang-cht -font /path/to/eten-font.ttf
-```
-
-`-orig` 必須包含松崗繁中版的 `SINARIO.DAT`、`MMAP.*`、`*GRF.DAT`、`TALK.DAT` 等檔案；
-工作目錄即使沿用 `dosv` 名稱也無妨。`-font` 指向玩家自備的中文字型。存檔請另指定可寫路徑，例如：
-
-```text
-wlgame -orig /path/to/dosv -font /path/to/eten-font.ttf \
+wlgame -orig /path/to/dosv -font /path/to/eten-font \
   -save-file /path/to/writable/SAVE.DAT
 ```
 
-`wlsim` 是無頭規則模擬器；`wlshot` 是素材／截圖工具；`wlview` 是互動素材與大地圖檢視器。
+**完整的旗標說明以包裡那一份為準**（來源是 `packaging/release/README-RELEASE.md`，
+見上一節）。`wlsim` 是無頭規則模擬器、`wlshot` 是素材／截圖工具、
+`wlview` 是互動素材與大地圖檢視器。
 
 ## 事件 10 與自然時間
 
@@ -36,7 +45,7 @@ producer。
 
 ## 平台內容
 
-- Linux：amd64 主封裝含原生 `wlgame`／`wlview`、`wlsim`、`wlshot`；另有 Linux arm64 邏輯工具伴隨包，含 `wlsim`／`wlshot`。另提供 `wolong-remake-linux-amd64-20260812.AppImage`；arm64 的 Ebiten GUI 需在目標 Linux 原生工具鏈建置。
+- Linux：amd64 主封裝含原生 `wlgame`／`wlview`、`wlsim`、`wlshot`；另有 Linux arm64 邏輯工具伴隨包，含 `wlsim`／`wlshot`。另提供 AppImage（檔名跟著批次走，最新一批見 `07-full-20260824.md`）；arm64 的 Ebiten GUI 需在目標 Linux 原生工具鏈建置。
 - Windows：amd64 封裝含 PE32+ `wlgame.exe`／`wlview.exe`、`wlsim.exe`、`wlshot.exe`。
 - macOS：封裝同時含 Intel (`darwin-amd64`) 與 Apple Silicon (`darwin-arm64`) 目錄，各含 `wlgame`、`wlview`、`wlsim`、`wlshot`。macOS 的 Ebiten 本體要 cgo，由 osxcross 工具鏈交叉建置，`tools/release.sh` 與 `tools/release_all.sh` 都會做；沒有那顆映像時只會少掉 `wlgame`／`wlview`，其餘平台照跑。
 

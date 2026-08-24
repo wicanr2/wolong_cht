@@ -18,7 +18,7 @@ import (
 //
 // CS:7D93h 的 18 bytes 與 sub_17C6E 的 AL-52h 分派已由 IDA／原始
 // DOS/V KI.EXE 證實。AL=0..9 是逐位數字；10..14 依序是乘 100、退位、
-// 清零、還原初值、完成輸入。這裡保留原始 byte，讓畫面格與實際操作
+// 清零、**設成上限**、完成輸入。這裡保留原始 byte，讓畫面格與實際操作
 // 使用同一張可回查的表，而不是把 3×6 格畫成無關的數值欄。
 var amountPanelCodes = [amountPanelRows][amountPanelCols]byte{
 	{0x59, 0x5A, 0x5B, 0x5D, 0x5E, 0x5E},

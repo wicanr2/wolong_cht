@@ -85,7 +85,7 @@ flag.Parse 之後：
 |---|---|
 | 單元測試 | `TestResolveAudioDir`：明講優先、exe 旁、AppImage 版面、都沒有就回空 |
 | 實跑 | ✅ 解開完整包 `./wlgame` 不帶旗標，音訊真的被開起來（容器沒有音效卡，ALSA 的錯訊就是證據）|
-| 無頭驗收沒被弄壞 | ✅ `tools/release_smoke.sh 20260823` 三張截圖都出得來（§2.1 的柵欄）|
+| 無頭驗收沒被弄壞 | ✅ `tools/release_smoke.sh`（最近一次 `20260824`）三張截圖都出得來（§2.1 的柵欄）|
 | 包內容 | `audio/` 有 14 首音樂 ＋ 18 個音效 |
 | 可散布批次 | `WOLONG_BUNDLE_DATA=0` 時包裡**沒有** `audio/` |
 
