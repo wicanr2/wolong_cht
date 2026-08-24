@@ -18,7 +18,7 @@
 
 ## 現在做到哪裡
 
-**核心規則與可玩垂直切片已接通；完整交付已集中在 `dist-all/`（三平台桌面包、Linux AppImage、Android APK、推廣片）。⚠ 目前是**混日期批次**：AppImage 是 `20260824`，其餘包仍是 `20260823`。Windows／macOS 原生 GUI 與 Android 的實機驗收仍待完成。**
+**核心規則與可玩垂直切片已接通；完整交付已集中在 `dist-all/`（三平台桌面包、Linux AppImage、Android APK、推廣片）。目前是一致的 `wolong-remake-20260824` 批次（[`docs/release/07`](docs/release/07-full-20260824.md)）。Windows／macOS 原生 GUI 與 Android 的實機驗收仍待完成。**
 
 ⭐ **靜態反組譯收斂**：739 支函式每一支都有 `docs/re/` 筆記
 （[`docs/re/21`](docs/re/21-function-census.md)）。那代表「每一支都有人寫過」，
@@ -173,7 +173,7 @@ parity 量的是「**我們做出來的東西對不對**」。
 
 ### 候選封裝與推廣片
 
-- 完整交付根目錄：[`dist-all`](dist-all)，包含**四平台完整包**（Linux／Windows／macOS／Android）、Linux AppImage、五支推廣片、雜湊與 GUI smoke 截圖。⚠ 目前是**混日期批次**：AppImage 是 `20260824`（[`docs/release/06`](docs/release/06-appimage-20260824.md)），其餘包仍是 `20260823`（[`docs/release/05`](docs/release/05-full-20260823.md)）。要一致就重跑 `tools/release_all.sh <YYYYMMDD>`。
+- 完整交付根目錄：[`dist-all`](dist-all)，包含**四平台完整包**（Linux／Windows／macOS／Android）、Linux AppImage、五支推廣片、雜湊與 GUI smoke 截圖。目前是一致的 `wolong-remake-20260824` 批次（[`docs/release/07`](docs/release/07-full-20260824.md)）。⚠ **「全平台重建」是兩支腳本**：`tools/release_all.sh` 不會重建 APK（Android 是另一條管線，檔名取的是 APK 自己的 mtime），要一起換得再跑 `WOLONG_BUNDLE_DATA=1 tools/android_build.sh`。
 - ⛔ **本機這一批內含原版資產，不可外流**（`dist-all/DO-NOT-DISTRIBUTE.md`）。四個平台的包裡都有原版資料與倚天字型，解開或裝上去就能玩。要一份可散布的：`WOLONG_BUNDLE_DATA=0 tools/release_all.sh <YYYYMMDD>`，出來的包不含任何原版資產（[`docs/spec/72`](docs/spec/72-bundled-game-data.md)）。
 - Linux AppImage：[`wolong-remake-linux-amd64-20260824.AppImage`](dist-all/packages/wolong-remake-linux-amd64-20260824.AppImage)。已通過 Linux／Xvfb 固定種子 smoke（含結局過場，且**不帶任何資料旗標**就跑得起來）。**公開散布的版本仍要由玩家提供合法 DOS/V 資料與中文字型。**
 - 三平台候選包與 SHA-256：[`dist-all/packages`](dist-all/packages)。Windows／macOS 是交叉建置候選，尚未在目標作業系統完成原生 GUI runtime 驗收。
