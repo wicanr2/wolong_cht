@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**470 列分布在 178 份文件，平均每份 2.6 列。**
+**465 列分布在 178 份文件，平均每份 2.6 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -39,13 +39,13 @@
 
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
-| 規則正確性 | 22 | 19 | 3 | 0 |
+| 規則正確性 | 17 | 14 | 3 | 0 |
 | 資料保存 | 33 | 32 | 1 | 0 |
 | 程式碼理解 | 184 | 176 | 8 | 0 |
 | 驗收 | 54 | 44 | 10 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 171 | 156 | 15 | 0 |
-| **合計** | **470** | 432 | 38 | 0 |
+| **合計** | **465** | 427 | 38 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -55,36 +55,31 @@
 | `docs/spec/` | 133 |
 | `docs/playtest/` | 54 |
 | `docs/formats/` | 33 |
-| `docs/mechanics/` | 22 |
 | `docs/release/` | 21 |
+| `docs/mechanics/` | 17 |
 | `docs/mobile/` | 12 |
 | `docs/reference/` | 6 |
 | `docs/promo/` | 5 |
 
-## 2.1 規則正確性（22 條）
+## 2.1 規則正確性（17 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | `sub_10A65` 的內插演算法 | 只影響畫面 | 靜態 |
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | 最高速那一檔在原版實機上是多少 | 機器相依，要實測才有數字；只影響手感調校 | 實測 |
-| [`mechanics/20-military.md`](../mechanics/20-military.md) | 軍團在行軍途中的**節點編號** | 原版的 `[si+0Eh]` 分三段：0–191 據點、192–255 路上的中間節點、≥256 野外（`../re/08` §5）。remake 的 `army.KindOf` 有這三段的判定、AI 也用到了，**但沒有寫入端**——行軍途中 `Corps.Node` 只在踩到據點座標時更新（`internal… | 靜態 |
+| [`mechanics/20-military.md`](../mechanics/20-military.md) | 軍團在行軍途中的**節點編號**（remake 接線） | **原版的寫入端已解**（覆核 2026-08-25）：`sub_127A2` 沿道路圖逐節點前進，每一步 `mov [si+0Eh], bx` 寫入下一個節點（含 192–255 的中間節點），只有 `< 0x600`（據點）才順帶更新座標（`../re/08` §5 整段引文就在那裡）。剩的是 **remak… | 靜態 |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | GUI 的戰後勝負／傷亡訊息 | 狀態層已結算，畫面上還沒顯示 | 靜態 |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 原版投射物的圖形與動畫 | `BATTLE.SCH` 裡的圖形沒對出來，目前畫的是側別標記 | 靜態 |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 少數戰術腳本與 `BATTLE` 資料欄位 | 十九個指令已全讀，剩的是資料側的殘留欄位 | 靜態 |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 重算路徑的時機 | 原版只在命令生效時算一次；remake 的兵每幀都可能被別人擋住，所以改成**每 30 幀可重算一次**（`replanInterval`，`internal/rules/tactical/soldier.go`）。這是 **remake 差異**，不是原版行為——原版被擋住之後怎麼處理沒有讀 | 靜態 |
 | [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 災害的實際傷害量 | `sub_12FBF` 的事件表（`010Ch` 火災／`020Ch` 暴動／`0Bh` 暴風雨）。⚠ **有內政官時的扣法已解**（`../re/07` §20：先扣防災值，不足再扣上昇值、生產力與城兵），缺的是**事件本身帶多少量** | 靜態 |
-| [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 沒有內政官時據點會不會自然變化 | 防災值、上昇值與城兵的成長都掛在內政官那一支 `sub_14194`（同上 §20）。**沒派內政官的據點是否有另一條月度路徑，沒讀** | 靜態 |
 | [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 那兩個歸零的欄位很可能就是**本月累計的收入與支出 → 假說，待驗 | （散句） | 靜態 |
-| [`mechanics/50-diplomacy.md`](../mechanics/50-diplomacy.md) | `g(對方君主好戰等級)` 的實際修正量 | 反組譯外交結算。⚠ 好戰等級（勢力 `+0x28`）在**出陣判斷**裡的用法已解——`(15 − 好戰等級) × 4` 與資金高位元組比（`../re/45` §3）——但那是別的判定，**不能外推到外交** | 靜態 |
+| [`mechanics/50-diplomacy.md`](../mechanics/50-diplomacy.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
 | [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 評價實際餵進哪些判定 | 反組譯戰鬥結算 | 靜態 |
-| [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0Eh`／`+0Fh`／`+10h` 是不是兵種適性 | 與戰鬥程式對照。⚠ **軍團記錄的 `+0x0E` 是別的東西**（所在據點編號 × 8，`../re/08` §4）——兩張表的同一個位移不是同一個欄位 | 靜態 |
 | [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0` 旗標的 7 種值代表什麼 | 身分已確定在 `+0x17`，`+0` 是別的東西。只知道 bit 4 ＝ 不事二主 | 靜態 |
 | [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0x1E` 為什麼 0–2 恆空 | 掃 127 筆武將的 `+0x1E` 值分佈 | 靜態 |
-| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 協力成功的門檻值——判定用的是交友值的哪一段，還沒在機器碼裡找到。 | （散句） | 靜態 |
-| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 10 | `sub_13496` / 訊息-only 邊界；保留事件取出，不虛構持久欄位 / handler 只把 `AH`／`DX` 組成 `sub_18810` formatter 參數，尚未完成 TALK.DAT 逐句顯示 | 靜態 |
-| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | cx` 在 `≥ 0x100` 時多半是另一個編號空間或帶旗標，未解。 | （散句） | 靜態 |
+| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 10 | `sub_13496` / 訊息-only 邊界；保留事件取出，不虛構持久欄位。**邊界本身已定案**（`../re/15`：不產生事件、不寫狀態，只把 queue record 轉成 TALK 呼叫） / 剩的是 **remake 實作**：把 `AH`／`DX` 的 formatter 參數接成畫面上的逐句顯… | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 四個劇本的結局是否不同 | **觸發條件四劇本共用**，差別只在初始勢力數；結局的十二幕也是一條路播完，沒有依劇本分支的證據（`../re/70` §3）。**但沒有實跑四個劇本對過** | 實測 |
-| [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 君主陣亡時軍師怎麼辦 | 未知 | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 事件 2／3 等外交回報的信賴度增減 | 逐分支對拍。玩家進言／說得那幾條已證實（見下） | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 新遊戲的信賴度初始值 | 原始劇本 `+0x10` 可直接讀（第 1 劇本是 `0xFF`）；`sub_18B12` 的完整時序**待 oracle** | 實測 |
 
