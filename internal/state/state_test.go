@@ -3126,3 +3126,35 @@ func TestScenarioTitles(t *testing.T) {
 	}
 	t.Logf("劇本標題：%v", seen)
 }
+
+// 暴風雨的距離是**切比雪夫**（max(|dx|,|dy|)，sub_1237E 取大不取小；
+// docs/spec/81 §2）。取成 min 會把對角遠處的據點也圈進來且衰減不足。
+func TestStormMarkerUsesChebyshevDistance(t *testing.T) {
+	w := load(t, 0)
+	w.rng = rng.NewFixed(1)
+	strength := w.rng.Next()&0x0F + 0x18 // 與實作同一條亂數流的第一抽
+	w.rng = rng.NewFixed(1)
+
+	// 挑一個據點當中心，另找兩個「一軸近一軸遠」的參照點。
+	c := w.Cities[0]
+	w.stormArea = &economy.StormArea{
+		MinX: c.X - 5, MinY: c.Y - 5, MaxX: c.X + 5, MaxY: c.Y + 5,
+	}
+	// 把據點 1 擺在 (dx,dy) = (12,3)：切比雪夫 12、min 會算成 3。
+	w.Cities[1].X, w.Cities[1].Y = c.X+12, c.Y+3
+	// 據點 2 擺在 d = 22 > 20：不該吃到 marker。
+	w.Cities[2].X, w.Cities[2].Y = c.X+22, c.Y
+
+	w.applyQueuedStormMarker(nil)
+
+	want := byte(strength - 12/2)
+	if got := w.disasterMarkerLevels[1]; got != want {
+		t.Fatalf("對角據點 marker=%d，切比雪夫 12 應為 強度−6=%d", got, want)
+	}
+	if w.disasterMarkers[2] != economy.NoDisaster {
+		t.Fatalf("d=22 的據點不該吃到暴風雨 marker")
+	}
+	if got := w.disasterMarkerLevels[0]; got != byte(strength) {
+		t.Fatalf("中心據點 marker=%d，應為強度 %d", got, strength)
+	}
+}

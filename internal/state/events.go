@@ -463,8 +463,10 @@ func cityIDFromRuntimeParam(param uint16) (int, bool) {
 }
 
 // applyQueuedStormMarker 是 sub_134A6 → sub_1237E 的 runtime marker
-// 轉接。原版以暴風雨中心的曼哈頓距離圈選據點，並把強度減去距離的
-// 一半；這個 +0x15 marker 由 sub_14269 在據點輪轉時消耗。
+// 轉接。原版以暴風雨框中心的**切比雪夫距離**（`max(|dx|,|dy|)`，
+// `sub_1237E` 的 `cmp dx,bx / jnb / mov dx,bx` 取大不取小）圈選據點，
+// 把強度減去距離的一半；這個 +0x15 marker 由 sub_14269 在據點輪轉時消耗
+// （docs/spec/81 §2——先前取成 min，會把對角遠處也圈進來且衰減不足）。
 func (w *World) applyQueuedStormMarker(ev *Event) {
 	if w.stormArea == nil || w.rng == nil {
 		return
@@ -475,7 +477,7 @@ func (w *World) applyQueuedStormMarker(ev *Event) {
 	for i, c := range w.Cities {
 		dx := absInt(centerX - c.X)
 		dy := absInt(centerY - c.Y)
-		if dx > dy {
+		if dx < dy {
 			dx = dy
 		}
 		if dx > 0x14 {
