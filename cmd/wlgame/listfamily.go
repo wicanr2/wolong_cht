@@ -136,7 +136,9 @@ func (g *game) listRowFaction(id int) []string {
 	if f.Capital >= 0 && f.Capital < len(g.world.Cities) {
 		capital = big5(g.world.Cities[f.Capital].Name)
 	}
-	who := "　　　"
+	// 沒有外交官畫「－－－」，不留白（實機 orig-w3-target：
+	// 全部勢力的外交官欄都是三個全形破折號）。
+	who := "－－－"
 	if f.Diplomat >= 0 && f.Diplomat < len(g.world.Generals) {
 		who = big5(g.world.Generals[f.Diplomat].Name)
 	}

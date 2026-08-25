@@ -176,6 +176,21 @@ remake 的缺陷。已經遇過兩種：
 | 逐區差分 | `tools/parity_diff.py` ✅ 正對照已接進 `tools/check.sh` |
 | 紀錄 | `docs/playtest/` 的一份新文件 ＋ 差分圖放 `docs/playtest/parity/` |
 
+### 5.1 remake 側的視窗 fixture 旗標
+
+對拍要讓 remake 停在「原版剛開某個視窗」的同一個狀態，
+每個視窗一支 `wlgame` 旗標（只供截圖，不進正常操作路徑）：
+
+| 旗標 | 停在 | 對應原版 |
+|---|---|---|
+| `-open-list` | 武將一覽剛開、無選取 | 指令列 #4 |
+| `-open-form-pick`（＋`-form-pick-row N`） | 編成的武將一覽 | 指令列 #3 |
+| `-open-finance`（＋`-finance-amount N`） | 財政視窗（＋數值輸入器）| 指令列 #2 |
+| `-advise-menu` | 進言五項選單 | 指令列 #1 |
+| **`-advise-target`** | **進言 → 交戰的目標勢力清單**（選單第 0 列剛按下：清單開著、軍師框問「請選擇交戰之勢力。」）| 指令列 #1 → 第 0 列 |
+
+新的視窗對拍先在這張表登一列再動 `cmd/wlgame`。
+
 ## 6. 驗證
 
 | 方式 | 內容 |

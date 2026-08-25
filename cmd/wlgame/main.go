@@ -534,8 +534,11 @@ func (g *game) drawList(screen *ebiten.Image) {
 }
 
 // drawListScrollbar 照實機量測畫（docs/spec/38 §1.6）：標題列那格純黑、
-// ▲▼ 是 3D 綠鈕（面＝色 13、高光＝色 2、影＝黑）、槽是實心綠加左右黑邊、
-// **沒有滑塊**——原版對捲動位置沒有視覺回饋。
+// ▲▼ 是 3D 綠鈕（面＝色 13、高光＝色 2、影＝黑）、槽純黑、
+// **滑塊是比例式的 3D 綠塊**（白頂／白左、色 1 右／底），
+// 高度＝槽高×可見/總列、位置＝槽高×Top/總列（orig-w3-target 實測
+// 21 列時滑塊 60px／槽 128px）。整頁剛好裝滿時滑塊佔滿全槽，
+// 看起來像「沒有滑塊」——武將一覽第一輪就是這樣誤判的。
 func (g *game) drawListScrollbar(screen *ebiten.Image, l *listwin.List,
 	dim, ink color.RGBA) {
 
@@ -550,17 +553,25 @@ func (g *game) drawListScrollbar(screen *ebiten.Image, l *listwin.List,
 	}
 	// 標題列左邊那格：純黑。
 	fill(image.Rect(listWinX, listWinY, listWinX+listScrollW, listWinY+listRowH), black)
-	// 槽（m13/m14 逐像素）：黑外框（左 1、右 2）、內部 3D 凹槽——
-	// 左緣與頂列白（色 15）、右內緣與底列暗（色 1）、其餘綠。沒有滑塊。
+	// 槽：純黑、左右黑邊之間放**比例式滑塊**（orig-w3-target 逐像素）。
 	white := hi
 	track := listScrollTrackRect()
-	fill(track, face)
-	fill(image.Rect(track.Min.X, track.Min.Y, track.Min.X+1, track.Max.Y), black)
-	fill(image.Rect(track.Max.X-2, track.Min.Y, track.Max.X, track.Max.Y), black)
-	fill(image.Rect(track.Min.X+1, track.Min.Y, track.Min.X+2, track.Max.Y), white)
-	fill(image.Rect(track.Min.X+2, track.Min.Y, track.Max.X-2, track.Min.Y+1), white)
-	fill(image.Rect(track.Max.X-3, track.Min.Y+1, track.Max.X-2, track.Max.Y), shade)
-	fill(image.Rect(track.Min.X+2, track.Max.Y-1, track.Max.X-3, track.Max.Y), shade)
+	fill(track, black)
+	slotH := track.Dy()
+	thumbY, thumbH := track.Min.Y, slotH
+	if l != nil && len(l.Rows) > l.Height && l.Height > 0 {
+		thumbH = slotH * l.Height / len(l.Rows)
+		thumbY = track.Min.Y + slotH*l.Top/len(l.Rows)
+		if thumbY+thumbH > track.Max.Y {
+			thumbY = track.Max.Y - thumbH
+		}
+	}
+	// 滑塊的 3D：白頂列＋白左欄、色 1 右欄＋底列、面綠（色 13）。
+	fill(image.Rect(track.Min.X+1, thumbY, track.Max.X-2, thumbY+thumbH), face)
+	fill(image.Rect(track.Min.X+1, thumbY, track.Min.X+2, thumbY+thumbH), white)
+	fill(image.Rect(track.Min.X+2, thumbY, track.Max.X-2, thumbY+1), white)
+	fill(image.Rect(track.Max.X-3, thumbY+1, track.Max.X-2, thumbY+thumbH), shade)
+	fill(image.Rect(track.Min.X+2, thumbY+thumbH-1, track.Max.X-3, thumbY+thumbH), shade)
 	// ▲▼ 鈕（m10/m11 逐像素）：高光 2px 厚（頂兩列＋左兩欄）、
 	// 右緣黑從第 2 列起、底列只留左角一點高光；箭頭十列
 	// 寬 2,2,4,4,6,6,8,8,10,10、以 x＝Min+8 為中線；
@@ -1513,6 +1524,7 @@ func main() {
 	openAdvise := flag.Bool("open-advise", false, "截圖前先跑到說服畫面（驗收用）")
 	adviseMenu := flag.Bool("advise-menu", false, "單獨用：停在進言的五項選單；配 -open-advise：停在五選一的理由選單（驗收用）")
 	adviseSortie := flag.Bool("advise-sortie", false, "截圖前跑「請求君主出陣」的三句定案畫面（驗收用）")
+	adviseTarget := flag.Bool("advise-target", false, "截圖前停在進言→交戰的目標勢力清單（對拍用，docs/spec/90 §5.1）")
 	openForm := flag.Bool("open-form", false, "截圖前先編一支軍團並開編成畫面（驗收用）")
 	openCorps := flag.Bool("open-corps", false, "截圖前先編兩支軍團並開軍團一覽（驗收用）")
 	openBattle := flag.Bool("open-battle", false, "截圖前先開一場野戰的戰術戰鬥（驗收用）")
@@ -1641,7 +1653,7 @@ func main() {
 		}
 		autoEncounterChoose = *encounterChoose
 		g.lordCorps = *lordCorpsFlag
-		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *openForm, *openCorps, *openMarchList,
+		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *adviseTarget, *openForm, *openCorps, *openMarchList,
 			*openMarchMode, *openBattle, *openSiege, *openBattleChoice, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow,
 			*openTalkIndex, *openOutcome, parseSiegeFixture(*siegeNode, *siegeDefend, *siegeCorps, *battleSteps),
 			*camAt, *battleCam)
@@ -1911,7 +1923,7 @@ func logAliveCorps(g *game) {
 // autoEncounterChoose 由 -encounter-choose 設定（野戰對拍 fixture）。
 var autoEncounterChoose bool
 
-func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, openForm, openCorps, openMarchList, openMarchMode,
+func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, adviseTarget, openForm, openCorps, openMarchList, openMarchMode,
 	openBattle, openSiege, openBattleChoice, openMessage, openFinance bool, financeAmount int, openFormPick bool, formPickRow, openTalkIndex int,
 	openOutcome string, siege siegeFixture, camAt, battleCam string) {
 	w := g.world
@@ -2022,6 +2034,12 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 	}
 	if adviseMenu && !openAdvise {
 		g.openAdvise() // 停在五項選單
+		return
+	}
+	if adviseTarget {
+		// 進言 → 交戰（第 0 列）：目標勢力清單剛開的狀態（docs/spec/90 §5.1）。
+		g.openAdvise()
+		g.pickAdviseCommand(0)
 		return
 	}
 	if adviseSortie {
