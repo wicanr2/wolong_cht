@@ -64,6 +64,7 @@
 | 單元測試 | `TestCityInfoWindowLayout`：視窗矩形、四列的 Y、**四個值的右端都落在 240**、景觀圖不壓到標籤欄、類型字串的六個詞與首都覆寫 |
 | 截圖 | `WOLONG_SHOT_CMD=wlgame tools/shot.sh <out> KEYS=T,Return,Return -direct -scenario 0 -player 0` → 濟陰／中都市／曹操，城兵 1,280、生產力 5,142、上昇值 4、防災值 102，左半是 `KYOGRF` 的城牆宮殿那張（**本地產物，`*.png` 不進版控**）|
 | 對原版 | **靜態**：座標逐項出自機器碼 |
+| 實機對拍 | `parity-menus7` 的 m0（許昌卡，2026-08-25）對 `-open-cityinfo -1`＋SAVE-B、`--rect 0,272,256,128`：**版面逐格一致**（框、宮殿圖、標籤、標題、數字格網 202/209/217/225/233 全同），剩餘差＝擷取日期差八天的數值漂移。數字定案用 **8×16 原版字模**（`drawOriginalNumber`）——倚天 ASCII 的「1」墨寬 6px、原版是 4px |
 
 ## 5. 未解
 

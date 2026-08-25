@@ -1533,6 +1533,7 @@ func main() {
 	adviseTarget := flag.Bool("advise-target", false, "截圖前停在進言→交戰的目標勢力清單（對拍用，docs/spec/90 §5.1）")
 	openCities := flag.Bool("open-cities", false, "截圖前開據點一覽（對拍用，docs/spec/90 §5.1）")
 	openFactions := flag.Bool("open-factions", false, "截圖前開勢力一覽（對拍用，docs/spec/90 §5.1）")
+	openCityInfo := flag.Int("open-cityinfo", -2, "截圖前開第 N 個據點的情報卡（−1＝玩家首都；對拍用，docs/spec/90 §5.1）")
 	openForm := flag.Bool("open-form", false, "截圖前先編一支軍團並開編成畫面（驗收用）")
 	openCorps := flag.Bool("open-corps", false, "截圖前先編兩支軍團並開軍團一覽（驗收用）")
 	openBattle := flag.Bool("open-battle", false, "截圖前先開一場野戰的戰術戰鬥（驗收用）")
@@ -1661,7 +1662,7 @@ func main() {
 		}
 		autoEncounterChoose = *encounterChoose
 		g.lordCorps = *lordCorpsFlag
-		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *adviseTarget, *openCities, *openFactions, *openForm, *openCorps, *openMarchList,
+		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *adviseTarget, *openCities, *openFactions, *openCityInfo, *openForm, *openCorps, *openMarchList,
 			*openMarchMode, *openBattle, *openSiege, *openBattleChoice, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow,
 			*openTalkIndex, *openOutcome, parseSiegeFixture(*siegeNode, *siegeDefend, *siegeCorps, *battleSteps),
 			*camAt, *battleCam)
@@ -1931,7 +1932,7 @@ func logAliveCorps(g *game) {
 // autoEncounterChoose 由 -encounter-choose 設定（野戰對拍 fixture）。
 var autoEncounterChoose bool
 
-func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, adviseTarget, openCities, openFactions, openForm, openCorps, openMarchList, openMarchMode,
+func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, adviseTarget, openCities, openFactions bool, openCityInfo int, openForm, openCorps, openMarchList, openMarchMode,
 	openBattle, openSiege, openBattleChoice, openMessage, openFinance bool, financeAmount int, openFormPick bool, formPickRow, openTalkIndex int,
 	openOutcome string, siege siegeFixture, camAt, battleCam string) {
 	w := g.world
@@ -2056,6 +2057,14 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 	}
 	if openFactions {
 		g.openFactionList()
+		return
+	}
+	if openCityInfo > -2 {
+		n := openCityInfo
+		if n == -1 {
+			n = g.world.Factions[g.world.Player].Capital
+		}
+		g.openCityInfo(n)
 		return
 	}
 	if adviseSortie {

@@ -120,20 +120,22 @@ func (g *game) drawCityInfo(screen *ebiten.Image) {
 	}
 	g.td.Draw(screen, lord, cityLordX, cityLordY, ink)
 
+	// 四個值用 **8×16 原版數字字模**（實機 m0 逐格：倚天 ASCII 的「1」
+	// 墨寬 6px、原版是 4px，spec/23 §4）。
 	// 城兵數與預備兵同一個單位：存的是點，畫面上乘 10。
-	g.td.Draw(screen, strategyHUDNumber(c.Garrison*strategyReserveMenPerPoint,
-		cityGarrisonDigits), cityGarrisonX, cityRowY, labelInk)
-	g.td.Draw(screen, strategyHUDNumber(c.Production, cityProductionDigits),
-		cityProductionX, cityRowY+cityRowStep, labelInk)
+	g.drawOriginalNumber(screen, c.Garrison*strategyReserveMenPerPoint,
+		cityGarrisonX, cityRowY, cityGarrisonDigits, labelInk)
+	g.drawOriginalNumber(screen, c.Production,
+		cityProductionX, cityRowY+cityRowStep, cityProductionDigits, labelInk)
 	growthInk := labelInk
 	if c.Growth < 0 {
 		growthInk = warnInk
 	}
 	// Growth 已經是減過 100 的實際值，這裡不再減一次。
-	g.td.Draw(screen, strategyHUDNumber(c.Growth, cityGrowthDigits),
-		cityGrowthX, cityRowY+2*cityRowStep, growthInk)
-	g.td.Draw(screen, strategyHUDNumber(c.Prevention, cityPreventionDigits),
-		cityPreventionX, cityRowY+3*cityRowStep, labelInk)
+	g.drawOriginalNumber(screen, c.Growth,
+		cityGrowthX, cityRowY+2*cityRowStep, cityGrowthDigits, growthInk)
+	g.drawOriginalNumber(screen, c.Prevention,
+		cityPreventionX, cityRowY+3*cityRowStep, cityPreventionDigits, labelInk)
 
 	// ↓ remake 差異：原版按右鍵關掉，沒有這行字。
 	g.chrome.Window(screen, cityHintX, cityWinY, cityHintW, cityHintH, chrome.Menu)
