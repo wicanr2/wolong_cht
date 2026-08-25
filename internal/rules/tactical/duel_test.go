@@ -15,7 +15,7 @@ func duelBattle(t *testing.T, field int, martial, cmdstat [2]int, seq []int) *Ba
 	return b
 }
 
-// tick 讓狀態機把目前的等待走完並推進一個相位。
+// duelTick 讓狀態機把目前的等待走完並推進一個相位。
 func duelTick(b *Battle) {
 	b.duel.timer = 1
 	b.stepDuel()
@@ -39,7 +39,7 @@ func TestDuelMoraleFormula(t *testing.T) {
 	// 武術 90／統率 0 → 門檻 135，rand(0..7)+8 永遠比不過 → 保留。
 	b := duelBattle(t, 0xC0, [2]int{90, 0}, [2]int{0, 0}, []int{0})
 	if got := b.duelMorale(0); got != 100*100 {
-		t.Errorf("氣勢 %d，應為 100 兵 × 100 體力 = 10000", got)
+		t.Errorf("氣勢 %d，應為 戰力 100 × 體力 100 = 10000", got)
 	}
 	// 武術 0 → 門檻 0 → 一定歸零，只剩亂數尾（rand=3 → 3<<8）。
 	b.rng = &fixedRand{seq: []int{3}}
@@ -60,7 +60,7 @@ func TestDuelNoChallengeWhenBothWeak(t *testing.T) {
 	}
 }
 
-// 拒戰分支：強側 0x1B7 → 弱側 0x1B9 → 強側 0x1CC → 命令歸 0。
+// 拒戰分支：強側 0x1B7 → 弱側 0x1B9 → 強側 0x1CC → 立即清命令。
 func TestDuelRefuse(t *testing.T) {
 	b := duelBattle(t, 0xC0, [2]int{90, 0}, [2]int{0, 0}, []int{0})
 	duelTick(b) // 評估：側 0 保留 10000、側 1 歸零 → 挑戰
@@ -68,12 +68,19 @@ func TestDuelRefuse(t *testing.T) {
 	if len(talks) != 1 || talks[0] != (DuelTalk{Side: 0, Group: 0x1B7}) {
 		t.Fatalf("挑戰喊話 %v，應為側 0 組 0x1B7", talks)
 	}
-	if got := b.Sides[0].Soldiers[0].Cmd; got != Duel {
-		t.Errorf("強側大將 cmd=%v，應為單挑", got)
+	g := &b.Sides[0].Soldiers[0]
+	if g.Cmd != Duel {
+		t.Errorf("強側大將 cmd=%v，應為單挑", g.Cmd)
+	}
+	// 挑戰是**寫目標**讓大將騎過去，不搬人（spec/80 §3 第 1 點）。
+	if g.GoalX != 0x18 || g.GoalY != 0x20 {
+		t.Errorf("強側大將目標 (%d,%d)，應為單挑位 (0x18,0x20)", g.GoalX, g.GoalY)
+	}
+	if x, y := duelSpot(0); g.X == x && g.Y == y {
+		t.Errorf("挑戰當下大將不該已經在單挑位")
 	}
 	duelTick(b) // 弱側 lo=0 < 0x12C0 → 拒戰
-	duelTick(b) // 強側回應
-	duelTick(b) // 收尾
+	duelTick(b) // 強側回應＋立即收尾
 	got := b.TakeDuelTalks()
 	want := []DuelTalk{{1, 0x1B9}, {0, 0x1CC}}
 	if len(got) != 2 || got[0] != want[0] || got[1] != want[1] {
@@ -84,13 +91,13 @@ func TestDuelRefuse(t *testing.T) {
 	}
 }
 
-// 應戰分支：0x1B8 → 第 0 回合互嗆 0x1BA/0x1BB → 對打段 → 決著。
+// 應戰分支：0x1B8 → 第 0 回合互嗆 0x1BA/0x1BB → 會合點 → 決著。
 func TestDuelAcceptAndVerdict(t *testing.T) {
 	b := duelBattle(t, 0xC0, [2]int{90, 90}, [2]int{0, 0}, []int{0})
-	duelTick(b) // 評估：同分不換 → 強側 = 攻方
-	duelTick(b) // 應戰
-	duelTick(b) // 互嗆第一句
-	duelTick(b) // 互嗆第二句 → 對打段
+	duelTick(b) // 評估：同分不換 → 強側 = 攻方，0x1B7
+	duelTick(b) // 應戰 0x1B8
+	duelTick(b) // 互嗆第一句 0x1BA
+	duelTick(b) // 互嗆第二句 0x1BB → 會合 → 對打段
 	got := b.TakeDuelTalks()
 	want := []DuelTalk{{0, 0x1B7}, {1, 0x1B8}, {0, 0x1BA}, {1, 0x1BB}}
 	if len(got) != len(want) {
@@ -109,14 +116,15 @@ func TestDuelAcceptAndVerdict(t *testing.T) {
 		if g.Cmd != Duel {
 			t.Errorf("側 %d 大將未進命令 8", i)
 		}
-		x, y := duelSpot(i)
-		if g.X != x || g.Y != y {
-			t.Errorf("側 %d 大將 (%d,%d)，應戰後應在對峙位 (%d,%d)", i, g.X, g.Y, x, y)
+		// 互嗆完兩大將的目標都是會合點 (0x20,0x20)——騎過去，不瞬移。
+		if g.GoalX != 0x20 || g.GoalY != 0x20 {
+			t.Errorf("側 %d 大將目標 (%d,%d)，應為會合點 (0x20,0x20)", i, g.GoalX, g.GoalY)
 		}
 	}
 	// 守側大將被打到 0x40（< 0x46）→ 決著：敗方 0x1CC、勝方 0x1CD。
 	b.Sides[1].Soldiers[0].HP = 0x40
-	b.stepDuel() // 體力檢查 → 敗方喊話
+	b.stepDuel() // 體力檢查 → 決著相位
+	duelTick(b)  // 敗方喊話
 	duelTick(b)  // 勝方喊話、收尾
 	got = b.TakeDuelTalks()
 	want = []DuelTalk{{1, 0x1CC}, {0, 0x1CD}}
@@ -133,6 +141,26 @@ func TestDuelAcceptAndVerdict(t *testing.T) {
 	}
 }
 
+// 回合 ≥1 的互嗆先講側是**體力高側**；體力差 < 0x14 用「勢均」pair。
+func TestDuelBanterSpeakerAndPair(t *testing.T) {
+	b := duelBattle(t, 0xC0, [2]int{90, 90}, [2]int{0, 0}, []int{0})
+	b.duel.strong = 0
+	b.duel.round = 1
+	b.Sides[0].Soldiers[0].HP = 80
+	b.Sides[1].Soldiers[0].HP = 100
+	if pair := b.duelBanterPair(); pair != 0x1BC || b.duel.first != 1 {
+		t.Errorf("round1 差 20：pair=%#x first=%d，應為 0x1BC／體力高側 1", pair, b.duel.first)
+	}
+	b.Sides[0].Soldiers[0].HP = 95
+	if pair := b.duelBanterPair(); pair != 0x1BE || b.duel.first != 1 {
+		t.Errorf("round1 差 5：pair=%#x first=%d，應為勢均 0x1BE／側 1", pair, b.duel.first)
+	}
+	b.duel.round = 3
+	if pair := b.duelBanterPair(); pair != 0x1C6 {
+		t.Errorf("round3 勢均 pair=%#x，應為 0x1BC+2×4+2=0x1C6", pair)
+	}
+}
+
 // 敗方已在退卻（命令 5）就不喊 0x1CC，只有勝方的 0x1CD。
 func TestDuelVerdictSkipsRetreatingLoser(t *testing.T) {
 	b := duelBattle(t, 0xC0, [2]int{90, 90}, [2]int{0, 0}, []int{0})
@@ -143,25 +171,54 @@ func TestDuelVerdictSkipsRetreatingLoser(t *testing.T) {
 	b.TakeDuelTalks()
 	b.Sides[1].Soldiers[0].HP = 0x40
 	b.Sides[1].Soldiers[0].Cmd = Retreat
-	b.stepDuel()
-	duelTick(b)
+	b.stepDuel() // 體力檢查 → 決著相位
+	duelTick(b)  // 敗方段（退卻中：不喊）
+	duelTick(b)  // 勝方 0x1CD、收尾
 	got := b.TakeDuelTalks()
 	if len(got) != 1 || got[0] != (DuelTalk{Side: 0, Group: 0x1CD}) {
 		t.Fatalf("退卻中敗方仍喊話：%v，應只剩勝方 0x1CD", got)
 	}
 }
 
-// 命令 8 的凍結：updateSoldier 對單挑中的兵是 no-op（原版 nullsub）。
-func TestDuelCommandFreezesSquad(t *testing.T) {
+// 命令 8：分派 no-op（nullsub），但**照常走向目標**——移動在共通路徑。
+func TestDuelCommandMovesTowardGoalOnly(t *testing.T) {
 	b := newTestBattle(flatField())
 	s := &b.Sides[0].Soldiers[0]
 	s.Cmd, s.Next = Duel, Duel
+	// 目標＝原地：不動。
+	s.GoalX, s.GoalY, s.GoalZ = s.X, s.Y, s.Z
 	x, y := s.X, s.Y
 	b.updateSoldier(0, 0)
 	if s.X != x || s.Y != y {
-		t.Errorf("單挑中的兵動了：(%d,%d)→(%d,%d)", x, y, s.X, s.Y)
+		t.Errorf("目標原地卻動了：(%d,%d)→(%d,%d)", x, y, s.X, s.Y)
+	}
+	// 目標在東邊：走一格，命令仍是 8。
+	s.GoalX = s.X + 4
+	s.Path = nil
+	b.updateSoldier(0, 0)
+	if s.X != x+1 {
+		t.Errorf("朝目標走了 %d 格，應為 1", s.X-x)
 	}
 	if s.Cmd != Duel {
 		t.Errorf("命令 8 被 updateSoldier 改掉：%v", s.Cmd)
+	}
+}
+
+// 開場 50 tick ＋ 單挑期間腳本不跑（OpeningActive）。
+func TestOpeningBlocksScripts(t *testing.T) {
+	b := newTestBattle(flatField())
+	if !b.OpeningActive() {
+		t.Fatal("開場第 0 tick 就該是 opening")
+	}
+	for b.Frame <= duelOpeningTicks {
+		b.Step()
+	}
+	if b.OpeningActive() {
+		t.Fatalf("第 %d tick 還在 opening（未武裝單挑）", b.Frame)
+	}
+	b.SetDuelInput(DuelInput{FieldNumber: 0xC0, Martial: [2]int{90, 90}})
+	duelTick(b)
+	if !b.OpeningActive() {
+		t.Fatal("單挑進行中應算 opening（腳本與輸入被擋）")
 	}
 }

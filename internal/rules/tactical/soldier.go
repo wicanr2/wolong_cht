@@ -81,18 +81,6 @@ func (b *Battle) updateSoldier(side, k int) {
 		s.PoseStep ^= 1
 		return
 	}
-	// 單挑開場序（等待、挑戰、拒戰）凍結全場——原版把它當
-	// blocking sequence 跑，兩軍六秒不動（playtest/43 b0–b3）。
-	if b.duelOpeningFreeze() {
-		return
-	}
-	// 命令 8（單挑）：原版隊長表 `funcs_1A7E1[8]` 與隊員表
-	// `funcs_1A827[8]` 都是 nullsub——不鎖敵、不移動、不攻擊，
-	// 位置由單挑狀態機傳送（docs/spec/80 §4）。
-	if s.Cmd == Duel {
-		s.PoseStep ^= 1
-		return
-	}
 	s.HitGeneral = false
 	b.lockOnNearest(side, k)
 	s.applyNewOrder()
@@ -110,6 +98,10 @@ func (b *Battle) updateSoldier(side, k int) {
 		b.doRetreat(side, k)
 	case Holding:
 		// 已就位，原地待命。
+	case Duel:
+		// 命令 8：分派是 nullsub（`funcs_1A7E1[8]`）——目標座標由
+		// 單挑狀態機寫，移動與接觸命中照走下面的共通路徑
+		// （docs/spec/80 §4）。
 	}
 	b.moveToward(side, k)
 	// `sub_1B240` 尾端的 `xor byte ptr [si+2], 1`。特殊投射物在

@@ -520,9 +520,14 @@ func (b *Battle) Step() {
 	b.stepDuel()
 
 	// 腳本先跑：原版的主迴圈是「執行一個腳本指令 → 更新實體」。
-	for i := range b.scripts {
-		if b.scripts[i] != nil {
-			b.scripts[i].Step(b)
+	// ⭐ 開場 50 tick ＋ 整段單挑期間**腳本不跑**——腳本直譯器在
+	// 原版主迴圈裡，而 `sub_1A1C5` 沒返回主迴圈一步都不動；
+	// 兩軍開場靜止靠的就是「還沒有人下過命令」（docs/spec/80 §3）。
+	if !b.OpeningActive() {
+		for i := range b.scripts {
+			if b.scripts[i] != nil {
+				b.scripts[i].Step(b)
+			}
 		}
 	}
 

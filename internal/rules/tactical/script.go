@@ -80,6 +80,18 @@ func NewScript(code []byte, side int) *Script {
 	return &Script{code: code, side: side}
 }
 
+// SkipBytes 把 PC 往前推 n byte。單挑挑戰成立時原版對腳本 PC
+// `add word_1D311, 6`（`sub_1A2E8`）——32 段腳本**全部**以
+// 「message／wait 15／message」三個 2-byte 指令開頭（BATTLE.DAT 實測），
+// 跳過它們就是**抑制腳本自帶的開場喊話**，免得跟挑戰台詞重複
+// （docs/spec/80 §3.2）。
+func (s *Script) SkipBytes(n int) {
+	if s == nil || s.Halted {
+		return
+	}
+	s.pc += n
+}
+
 // Step 跑一幀。與原版一樣：**等待中就什麼都不做**。
 func (s *Script) Step(b *Battle) {
 	if s.Halted {

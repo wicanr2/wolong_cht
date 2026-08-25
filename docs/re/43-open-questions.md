@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**477 列分布在 177 份文件，平均每份 2.7 列。**
+**472 列分布在 177 份文件，平均每份 2.7 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,18 +42,18 @@
 | 規則正確性 | 24 | 20 | 4 | 0 |
 | 資料保存 | 33 | 32 | 1 | 0 |
 | 程式碼理解 | 182 | 174 | 8 | 0 |
-| 驗收 | 57 | 45 | 12 | 0 |
+| 驗收 | 55 | 44 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 175 | 160 | 15 | 0 |
-| **合計** | **477** | 436 | 41 | 0 |
+| 其他 | 172 | 157 | 15 | 0 |
+| **合計** | **472** | 432 | 40 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/re/` | 182 |
-| `docs/spec/` | 137 |
-| `docs/playtest/` | 57 |
+| `docs/spec/` | 134 |
+| `docs/playtest/` | 55 |
 | `docs/formats/` | 33 |
 | `docs/mechanics/` | 24 |
 | `docs/release/` | 21 |
@@ -315,7 +315,7 @@
 | [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | 開場凍結與大將騎出的機器碼形式 | 實機定案（b0–b3），但 `sub_1A1C5` 內部的等待常式怎麼擋住實體更新未逐條讀——見 `spec/80` §3.1 | 靜態 |
 | [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
 
-## 2.4 驗收（57 條）
+## 2.4 驗收（55 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -368,10 +368,8 @@
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | unit 0 的第二趟 | 深度迴圈跑完後 `dl & 0x20` 成立時會對五個鄰格各跑一次 `ax = 0`；**觸發條件（旗標 bit 5）誰設還沒解** / 掃誰對顯示格的 `+0` 寫 `0x20` | 靜態 |
 | [`playtest/41-m7-corrected-text-on-screen.md`](../playtest/41-m7-corrected-text-on-screen.md) | 原版側的同狀態對照 | 這一份只驗 remake 自己「有沒有溢出」。**原版同一則長什麼樣沒有並排比過**——要用 `-open-talk-index` 對應的原版操作序列，還沒做 | 靜態 |
 | [`playtest/41-m7-corrected-text-on-screen.md`](../playtest/41-m7-corrected-text-on-screen.md) | 變數的實際長度分布 | 截圖用的是實際遊戲值（如「袁胤」兩字），而 `TestAllTalkLinesFitTheirBox` 用三全形替身。**軍團名與勢力名的長端沒有逐一量過**（`32`） | 實測 |
-| [`playtest/42-window-parity.md`](../playtest/42-window-parity.md) | 捲軸綠是色 13 還是 14 | 兩色春天同值，要換季截圖才分得出（`spec/38` §1.6） | 實測 |
 | [`playtest/42-window-parity.md`](../playtest/42-window-parity.md) | 進言五項選單的原版截圖 | §5 的輸入模型限制 / 需要能送「瞬時 click」的擷取動作（縮短按住時間），或改用鍵盤路徑（未驗證原版是否支援） | 實測 |
-| [`playtest/42-window-parity.md`](../playtest/42-window-parity.md) | 交戰提案目標清單的對拍 | 原版截圖已有，remake 缺 fixture 旗標 / 加 `-advise-target` 類旗標停在目標選擇 | 實測 |
-| [`playtest/42-window-parity.md`](../playtest/42-window-parity.md) | 勢力一覽／據點一覽／軍團一覽 | 據點與軍團一覽要點選單第二列，被 §5 同一個限制擋住；勢力一覽可由指令列 #7 直接開（下一輪） / 指令列 #7 ⇒ 主機 x ≈ 34 | 靜態 |
+| [`playtest/42-window-parity.md`](../playtest/42-window-parity.md) | 據點情報卡的對拍 | `m0-cities` 已有原版截圖，remake 的據點卡未比 / 新 fixture ＋ `--rect` 卡的矩形 | 實測 |
 | [`playtest/42-window-parity.md`](../playtest/42-window-parity.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
 | [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | 遭遇訊息畫面的對拍 | 「遇上兵馬了」訊息與 remake 的遭遇戰選單版面沒有比 / 原版是 TALK 訊息框，remake 是自製選單——先讀原版遭遇後的選擇 UI 是什麼樣（影片 `parity-field13/enc.mp4` 15 秒附近有素材） | 靜態 |
 | [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | 佔用圖快取欄的讀檔重建 | §3 是強證據不是 confirmed / 讀原版的讀檔常式（`sub_18CAE` 一帶）確認重建走哪個欄位 | 靜態 |
@@ -388,7 +386,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（175 條）
+## 2.6 其他（172 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -556,11 +554,8 @@
 | [`spec/79-new-game-faction-list.md`](../spec/79-new-game-faction-list.md) | 無頭點擊 | §3.1：建置 image 沒有視窗管理員，滑鼠按鍵送不進 Ebiten。加一個 WM 就能把所有點擊路徑納入自動驗收 | 靜態 |
 | [`spec/79-new-game-faction-list.md`](../spec/79-new-game-faction-list.md) | 橫幅在不在 | remake 的啟動殼層一直有畫橫幅（`ICONGRF` 段 0）。`sub_11A6E` 沒有明顯的橫幅呼叫，**原版那 32 px 是什麼沒驗過**——地圖只佔 y 32–400 | 靜態 |
 | [`spec/79-new-game-faction-list.md`](../spec/79-new-game-faction-list.md) | 調色盤組 | `sub_10241(al=0)` 取的是第 0 組；remake 照抄成季 0。**那一組是不是「春」沒有另外驗** | 靜態 |
-| [`spec/80-duel-opening.md`](../spec/80-duel-opening.md) | `word_1D311 += 6` | 疑似喊話框位置位移，未驗；remake 未實作 | 靜態 |
 | [`spec/80-duel-opening.md`](../spec/80-duel-opening.md) | 組 `0x1B6`／`0x1C0`–`0x1CB` 的實際回合台詞 | 索引公式已定，逐組逐變體未抽驗 | 靜態 |
-| [`spec/80-duel-opening.md`](../spec/80-duel-opening.md) | 單挑期間玩家能不能對大將隊下令蓋掉命令 8 | 未讀；remake 暫不允許 | 靜態 |
-| [`spec/80-duel-opening.md`](../spec/80-duel-opening.md) | 應戰時弱側大將怎麼就位 | remake 用傳送（推定）；實機參照只有拒戰路徑（b3），應戰側的就位方式沒截到 | 靜態 |
-| [`spec/80-duel-opening.md`](../spec/80-duel-opening.md) | 對打段兩軍是否照常互打 | 依 `sub_1A298` 的讀法推定照常（remake 照做）；未在實機錄到應戰全程 | 靜態 |
+| [`spec/80-duel-opening.md`](../spec/80-duel-opening.md) | 大將以外的兵在單挑期間撞進會合區會怎樣 | 一般碰撞照走（§4），推定沒有特例；實機錄影裡兩軍離會合區很遠，沒驗到 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 | 靜態 |

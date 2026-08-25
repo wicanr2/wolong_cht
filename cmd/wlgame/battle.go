@@ -174,6 +174,11 @@ func (g *game) updateBattle() {
 			}
 		}
 		talkAdvanced := g.advanceBattleTalkInput()
+		// 開場 50 tick ＋ 整段單挑是**不可打斷的 modal**（原版全在
+		// `sub_1A1C5` 裡，主迴圈的輸入分派還沒開始，docs/spec/80 §3）。
+		if b.OpeningActive() {
+			talkAdvanced = true
+		}
 		// 六個戰術指令。編號與原版一致（docs/re/11 §5.8b）。
 		if !talkAdvanced {
 			for i, k := range []ebiten.Key{
