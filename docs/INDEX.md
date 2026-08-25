@@ -157,6 +157,7 @@
 | [`docs/re/72-world-map-display-list.md`](re/72-world-map-display-list.md) | 72 — 大地圖的顯示表：地形一層 ＋ 最多四層疊圖 | 已解。 | 2026-08-23 |
 | [`docs/re/73-new-game-faction-list.md`](re/73-new-game-faction-list.md) | 73 — 新遊戲怎麼選君主：先一張清單，再一張卡 | 整條流程解出來了。⭐ 君主卡上沒有「換勢力」的熱區—— 換勢力是退回上一層的 | 2026-08-24 |
 | [`docs/re/74-battle-opening-duel.md`](re/74-battle-opening-duel.md) | 74 — 開戰喊話是單挑狀態機的開頭：挑戰、拒戰、對打互嗆、決著 | 全段解出並實作（2026-08-25）——挑戰／拒戰／應戰、回合互嗆、 對打段與決著都在 internal/rule… | 2026-08-25 |
+| [`docs/re/75-duel-talk-audit.md`](re/75-duel-talk-audit.md) | 75 — 單挑台詞的逐組逐變體抽驗：24 組 × 8 變體全表＋實機反查 | 靜態表全讀完、六個組的實機反查全部命中； 組 0x1B6 定案為攻城的城壁喊話（不是單挑組，re/74 舊表已修）。 | 2026-08-25 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-16 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
