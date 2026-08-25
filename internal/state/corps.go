@@ -655,13 +655,13 @@ func (w *World) resolveContact(i int, ev *CorpsEvent, rng combat.Rand) {
 			ev.Captured = c.Node
 			return
 		case city.Owner != c.Faction:
-			// 城裡有守軍就打守軍，沒有就打城兵。
-			for j := range w.Corps {
-				d := w.Corps[j]
-				if d.Alive && d.Faction == city.Owner && d.Node == c.Node {
-					w.fight(i, j, ev, combat.Siege, city.Garrison, rng)
-					return
-				}
+			// 城裡有守軍就打守軍（多支疊同格時照 `sub_14C72` 計分挑
+			// 應戰者，docs/spec/82），沒有就打城兵。
+			if j := w.pickDefender(i, city.Owner, func(d *Corps) bool {
+				return d.Node == c.Node
+			}); j >= 0 {
+				w.fight(i, j, ev, combat.Siege, city.Garrison, rng)
+				return
 			}
 			w.fightGarrison(i, ev, rng)
 			return
@@ -669,17 +669,50 @@ func (w *World) resolveContact(i int, ev *CorpsEvent, rng combat.Rand) {
 		// 自家的據點：不打，繼續往下看有沒有敵軍團同格（不該發生，但不擋）。
 	}
 
-	// 野戰：同一格上有別的勢力的軍團。
+	// 野戰：同一格上有別的勢力的軍團。先找出撞到的是哪個勢力，
+	// 再在**那個勢力**疊同格的軍團裡照 `sub_14C72` 計分挑應戰者
+	// （原版的名單以 `[di+1]` 的勢力圈，docs/spec/82）。
 	for j := range w.Corps {
 		d := w.Corps[j]
 		if j == i || !d.Alive || d.Faction == c.Faction {
 			continue
 		}
 		if d.X == c.X && d.Y == c.Y {
+			if k := w.pickDefender(i, d.Faction, func(d *Corps) bool {
+				return d.X == c.X && d.Y == c.Y
+			}); k >= 0 {
+				j = k
+			}
 			w.fight(i, j, ev, combat.Field, 0, rng)
 			return
 		}
 	}
+}
+
+// pickDefender 是 `sub_14C72` 的挑選：faction 勢力裡通過 at 條件
+// （同格／同據點）的軍團逐支計分，**嚴格最大**者應戰（同分取先者）：
+//
+//	分數 ＝ ((兵數 >> 4) 的低 byte) × (士氣 >> 4) × ((大將評價 >> 4) ＋ 1)
+//
+// 評價是 `sub_155A6` 的衍生值（`general.Rating()`）。沒有候選回 −1
+// （原版 CF=1，攻城走打城兵那條）。attacker 只用來排除自己。
+func (w *World) pickDefender(attacker, faction int, at func(*Corps) bool) int {
+	best, bestScore := -1, -1
+	for j := range w.Corps {
+		d := &w.Corps[j]
+		if j == attacker || !d.Alive || d.Faction != faction || !at(d) {
+			continue
+		}
+		rating := 0
+		if lead := w.Leader(j); lead >= 0 && lead < len(w.Generals) {
+			rating = w.Generals[lead].Rules().Rating()
+		}
+		score := ((d.Men >> 4) & 0xFF) * (d.Morale >> 4) * (rating>>4 + 1)
+		if score > bestScore {
+			best, bestScore = j, score
+		}
+	}
+	return best
 }
 
 func (w *World) fight(att, def int, ev *CorpsEvent, m combat.Mode, garrison int, rng combat.Rand) {

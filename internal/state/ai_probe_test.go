@@ -186,9 +186,19 @@ func TestStrategicAIScenarioOneProducesEnemyWarPath(t *testing.T) {
 	w := load(t, 0)
 	w.Player = 0
 	w.EnableStrategicAI()
-	r := rng.NewFixed(17)
+	// seed 是挑過的：這支是**情境探針**，斷言「六個月內敵方會走完
+	// 宣戰→編成→戰鬥」，對世界演化的蝴蝶效應敏感。應戰軍團改照
+	// sub_14C72 計分挑（docs/spec/82）之後，舊 seed 17 的歷史變成
+	// 玩家第 4 個月被淘汰——那是合法動力學不是 bug；規則改動後這支
+	// 失敗時，先確認新規則的機器碼出處，再換 seed。
+	r := rng.NewFixed(2)
 	months, declarations, formed, battles := 0, 0, 0, 0
 	for months < 6 {
+		// 世界提早分出勝負時 Tick 永遠空轉——沒有這一道，
+		// 迴圈會靜默地跑到測試逾時。
+		if w.Outcome() != InProgress {
+			t.Fatalf("第 %d 個月世界提早結束：outcome=%v", months, w.Outcome())
+		}
 		ev := w.Tick(r)
 		for _, se := range ev.Strategy {
 			if se.Corps < 0 {

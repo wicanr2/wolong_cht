@@ -14,7 +14,11 @@ func newTestSession(t *testing.T) *Session {
 	if _, err := os.Stat(origDir + "/SINARIO.DAT"); err != nil {
 		t.Skip("找不到原版素材，跳過")
 	}
-	s, err := NewSession(Options{OrigDir: origDir, Scenario: 0, Player: 0, Seed: 7})
+	// Seed 是挑過的：TestEventNoticesAppearAndExpire 是情境探針，
+	// 要求兩萬幀內玩家的城至少收到一則事件訊息。暴風雨範圍改成
+	// 原版的切比雪夫 41×41 框（docs/spec/81 §2）之後訊息變稀有，
+	// 規則改動後這支失敗時，先確認新規則的機器碼出處，再換 seed。
+	s, err := NewSession(Options{OrigDir: origDir, Scenario: 0, Player: 0, Seed: 13})
 	if err != nil {
 		t.Fatal(err)
 	}
