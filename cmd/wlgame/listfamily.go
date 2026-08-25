@@ -90,7 +90,8 @@ func (g *game) listColumnsCities() []listwin.Column {
 
 func (g *game) listRowCity(id int) []string {
 	c := g.world.Cities[id]
-	who := "　　　"
+	// 沒有內政官畫「－－－」，不留白（parity-menus8 的 p0）。
+	who := "－－－"
 	if c.Governor >= 0 && c.Governor < len(g.world.Generals) {
 		who = big5(g.world.Generals[c.Governor].Name)
 	}
