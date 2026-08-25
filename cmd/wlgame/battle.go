@@ -225,6 +225,8 @@ func (g *game) updateBattle() {
 		for _, code := range b.TakeSoundEffects() {
 			g.sound.PlayEffect(int(code))
 		}
+		// 這一幀新產生的單挑喊話當幀就掛框，不等下一幀。
+		g.pumpDuelTalks(p)
 		g.tickBattleTalk(n)
 		return
 	}

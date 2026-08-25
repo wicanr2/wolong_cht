@@ -251,6 +251,9 @@ type Battle struct {
 
 	rng Rand
 
+	// duel 是開戰單挑狀態機（docs/spec/80）。
+	duel duelState
+
 	// projectiles 是飛在空中的箭。原版是一張 32 筆的表（docs/re/11 §5.1）。
 	projectiles []projectile
 
@@ -512,6 +515,9 @@ func (b *Battle) Step() {
 	b.Frame++
 	// 原版在同一個地方（0001A12A）遞增計時器並檢查三個 UI 的到期。
 	b.expireStructureBar()
+
+	// 開戰單挑（`sub_1A1C5` 在主迴圈最前面，docs/spec/80）。
+	b.stepDuel()
 
 	// 腳本先跑：原版的主迴圈是「執行一個腳本指令 → 更新實體」。
 	for i := range b.scripts {

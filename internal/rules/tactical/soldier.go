@@ -81,6 +81,18 @@ func (b *Battle) updateSoldier(side, k int) {
 		s.PoseStep ^= 1
 		return
 	}
+	// 單挑開場序（等待、挑戰、拒戰）凍結全場——原版把它當
+	// blocking sequence 跑，兩軍六秒不動（playtest/43 b0–b3）。
+	if b.duelOpeningFreeze() {
+		return
+	}
+	// 命令 8（單挑）：原版隊長表 `funcs_1A7E1[8]` 與隊員表
+	// `funcs_1A827[8]` 都是 nullsub——不鎖敵、不移動、不攻擊，
+	// 位置由單挑狀態機傳送（docs/spec/80 §4）。
+	if s.Cmd == Duel {
+		s.PoseStep ^= 1
+		return
+	}
 	s.HitGeneral = false
 	b.lockOnNearest(side, k)
 	s.applyNewOrder()

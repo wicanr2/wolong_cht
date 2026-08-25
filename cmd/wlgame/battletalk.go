@@ -6,6 +6,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 
+	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
 	"github.com/wicanr2/wolong_cht/internal/state"
 )
@@ -155,62 +156,48 @@ func (g *game) startBattleTalk(p *state.Pending) {
 	}
 	g.bindBattleTalk(p.Battle)
 	s := &g.battleTalkSession
-	if s.initialized {
-		return
+	if !s.initialized {
+		// 開戰喊話由**單挑狀態機**產生（docs/spec/80）：這裡只負責武裝——
+		// 閘是戰場編號 0xC0–0xD0（`sub_19A33` 的 `byte_1D34B == 1`），
+		// 挑戰／拒戰／應戰、回合互嗆與決著全在 `tactical.stepDuel` 裡。
+		in := tactical.DuelInput{
+			FieldNumber: g.battle.FieldNumber(p.Node, p.Mode == combat.Siege),
+		}
+		for side := 0; side < 2; side++ {
+			if c := g.battleCommander(p, side); c >= 0 && c < len(g.world.Generals) {
+				in.Martial[side] = g.world.Generals[c].Martial
+				in.CommandStat[side] = g.world.Generals[c].Command
+			}
+		}
+		p.Battle.SetDuelInput(in)
+		s.initialize(p.Battle, nil)
 	}
-	entries := make([]BattleTalkEntry, 0, battleTalkSides)
+	g.pumpDuelTalks(p)
+}
 
-	// 開戰喊話照 sub_1A2E8 的挑戰段（docs/re/74 §2）：
-	//
-	//	氣勢 ＝ 隊長隊兵數 × 大將體力（sub_1A34F 的核心；亂數修正項未實作）
-	//	強側氣勢 ≥ 0x12C0 → 強側喊組 0x1B7；氣勢相同時攻方當強側
-	//	弱側 < 0x12C0 或 < 強側一半 → 弱側以組 0x1B9 拒戰，否則沉默
-	//
-	// ⚠ 先前無條件出 0x1BA／0x1BB pair 是錯的——那兩組是**單挑回合的
-	// 互嗆**（re/74 §3），不是開場對白。單挑本體（byte_1D34B 閘、
-	// 回合迴圈、決著）未實作（re/74 §5）。
-	strength := func(side int) int {
-		corps := p.Attacker
-		if side == 1 {
-			corps = p.Defender
-		}
-		if corps < 0 || corps >= len(g.world.Corps) || !g.world.Corps[corps].Alive {
-			return 0
-		}
-		c := g.world.Corps[corps]
-		return c.Units[0].Men * c.Morale
-	}
-	say := func(side, base int) {
-		commander := g.battleCommander(p, side)
+// pumpDuelTalks 把狀態機累積的喊話換成 TALK 索引掛上對白框。
+// 變體與肖像照說話大將（`sub_1075B` 的八變體公式）。
+func (g *game) pumpDuelTalks(p *state.Pending) {
+	s := &g.battleTalkSession
+	for _, dt := range p.Battle.TakeDuelTalks() {
+		commander := g.battleCommander(p, dt.Side)
 		if commander < 0 || commander >= len(g.world.Generals) {
-			return
+			continue
 		}
 		general := g.world.Generals[commander]
 		entry := BattleTalkEntry{
 			Speaker:  big5(general.Name),
-			Index:    resolveBattleTalkIndex(base, talkVariant(general.TalkVariant)),
+			Index:    resolveBattleTalkIndex(dt.Group, talkVariant(general.TalkVariant)),
 			Portrait: general.Portrait,
-			Side:     side,
+			Side:     dt.Side,
 			Duration: battleTalkDuration,
 		}
 		// 不能安全代入的 marker 直接丟棄該 entry，不顯示 debug／半句文字。
 		if _, ok := g.battleTalkText(entry); !ok {
-			return
+			continue
 		}
-		entries = append(entries, entry)
+		s.queue.set(entry)
 	}
-	strong, weak := 0, 1
-	if strength(weak) > strength(strong) {
-		strong, weak = weak, strong
-	}
-	const duelThreshold = 0x12C0 // sub_1A2E8 的 4800
-	if hi, lo := strength(strong), strength(weak); hi >= duelThreshold {
-		say(strong, 0x1B7)
-		if lo < duelThreshold || lo < hi/2 {
-			say(weak, 0x1B9)
-		}
-	}
-	s.initialize(p.Battle, entries)
 }
 
 func (g *game) battleTalkText(entry BattleTalkEntry) (string, bool) {

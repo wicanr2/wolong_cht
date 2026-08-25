@@ -156,7 +156,7 @@
 | [`docs/re/71-strategy-hotspot-dispatch.md`](re/71-strategy-hotspot-dispatch.md) | 71 — 戰略層的兩張熱區分派表，以及點縮小地圖會發生什麼 | 左鍵表 off_159D2 的 32 筆全部攤開，索引就是熱區碼。⭐ 熱區 0x16 （點縮小地圖）＝ 把大地圖鏡頭… | 2026-08-22 |
 | [`docs/re/72-world-map-display-list.md`](re/72-world-map-display-list.md) | 72 — 大地圖的顯示表：地形一層 ＋ 最多四層疊圖 | 已解。 | 2026-08-23 |
 | [`docs/re/73-new-game-faction-list.md`](re/73-new-game-faction-list.md) | 73 — 新遊戲怎麼選君主：先一張清單，再一張卡 | 整條流程解出來了。⭐ 君主卡上沒有「換勢力」的熱區—— 換勢力是退回上一層的 | 2026-08-24 |
-| [`docs/re/74-battle-opening-duel.md`](re/74-battle-opening-duel.md) | 74 — 開戰喊話是單挑狀態機的開頭：挑戰、拒戰、對打互嗆、決著 | 挑戰段（sub_1A2E8）與台詞組對應解出並接進 remake； 單挑本體（回合互嗆、大將對移、決著）已讀出結構、… | 2026-08-25 |
+| [`docs/re/74-battle-opening-duel.md`](re/74-battle-opening-duel.md) | 74 — 開戰喊話是單挑狀態機的開頭：挑戰、拒戰、對打互嗆、決著 | 全段解出並實作（2026-08-25）——挑戰／拒戰／應戰、回合互嗆、 對打段與決著都在 internal/rule… | 2026-08-25 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-16 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -236,6 +236,7 @@
 | [`docs/spec/77-rout-talk-messages.md`](spec/77-rout-talk-messages.md) | 77 — 敗走的兩段訊息：TALK #1F 與 #23 ＋ 八變體 | CONFORMED。 | 2026-08-23 |
 | [`docs/spec/78-amount-input-editor.md`](spec/78-amount-input-editor.md) | 78 — 數值輸入器的上限語意，以及把它接進財政視窗 | CONFORMED。 | 2026-08-23 |
 | [`docs/spec/79-new-game-faction-list.md`](spec/79-new-game-faction-list.md) | 79 — 新遊戲的勢力清單 | CONFORMED。 | 2026-08-24 |
+| [`docs/spec/80-duel-opening.md`](spec/80-duel-opening.md) | 80 — 開戰單挑：挑戰、拒戰、應戰、回合互嗆、決著 | CONFORMED（2026-08-25）。狀態機在 internal/rules/tactical/duel.go… | 2026-08-25 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | CONFORMED。管線接起來了，也對原版跑過一輪 （[../playtest/37](../playtest/37… | 2026-08-15 |
 | [`docs/spec/91-tactical-parity.md`](spec/91-tactical-parity.md) | 91 — 戰場的逐區對拍：分區、同狀態怎麼達成 | CONFORMED。 | 2026-08-17 |
 

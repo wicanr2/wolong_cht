@@ -2,7 +2,8 @@
 
 **狀態：（2026-08-25 對白收斂後）九區裡七區 0 差 PASS、
 `field` **0.05%＝95 px＝原版錄影裡的滑鼠游標（不可消）**、
-小地圖 0.20%（部隊點＝時刻）。開場對白照 `sub_1A2E8` 的挑戰段實作後
+小地圖 0.18%（部隊點＝時刻）。開場對白由**單挑狀態機**產生
+（[`../spec/80`](../spec/80-duel-opening.md)），喊話在原版的 tick 50，
 **台詞逐字、版面逐像素一致**（[`../re/74`](../re/74-battle-opening-duel.md)）；
 對白框版面同步定案：框內純黑、無獨立名字列、行距 16、
 `\1` 代入的名字畫色 9。**
@@ -12,8 +13,11 @@
   [`../spec/57`](../spec/57-tactical-projection.md)、[`../spec/56`](../spec/56-battlefield-rotation.md)
 - 原版側：松崗 DOS/V，`workplace/promo-live/parity-field14/b0.png`（開戰第一拍）
 - remake 側：`tools/parity_shot.sh … -save-file SAVE-FIELD.DAT -load-slot 0
-  -encounter-choose -shot-frames 140`（本輪新增 `-encounter-choose`：
-  遭遇出現時自動選戰鬥指揮，照自然流程進戰場、不重擺軍團）
+  -encounter-choose -shot-frames 400`（`-encounter-choose`：遭遇出現時
+  自動選戰鬥指揮，照自然流程進戰場、不重擺軍團）。
+  單挑狀態機接上後喊話在**戰場 tick 50** 出現，400 幀約落在 tick 52；
+  氣勢評估帶亂數，挑戰側不是攻方時整張圖對不上——**重試到 log 出
+  「talk side=0 group=0x1b7」再比**（`docs/spec/80` §6）
 - 改造存檔：`workplace/parity/SAVE-FIELD.DAT`（產生方式 §2）
 
 ## 1. 為什麼野戰難、這一輪怎麼繞
@@ -99,7 +103,8 @@ WOLONG_DOSV_SEED_SAVE=SAVE-FIELD.DAT tools/dosv_capture.sh parity-field14 \
 
 | 項目 | 現況 | 下手點 |
 |---|---|---|
-| ~~野戰開場對白怎麼選句、誰先講~~ | ✅ 解出並實作（[`../re/74`](../re/74-battle-opening-duel.md)）：`sub_1A2E8` 的挑戰段——氣勢（隊長隊兵×大將體力＋亂數）高側 ≥ 0x12C0 喊組 `0x1B7`，弱側只在「< 0x12C0 或 < 一半」時以 `0x1B9` 拒戰，否則沉默。remake 先前無條件出的 `0x1BA/0x1BB` 其實是**單挑回合互嗆**，時機與內容都錯 | 單挑本體（`byte_1D34B` 閘、回合迴圈、決著）仍未實作（`re/74` §5）|
+| ~~野戰開場對白怎麼選句、誰先講~~ | ✅ 解出並實作（[`../re/74`](../re/74-battle-opening-duel.md)）：`sub_1A2E8` 的挑戰段——氣勢（隊長隊兵×大將體力＋亂數）高側 ≥ 0x12C0 喊組 `0x1B7`，弱側只在「< 0x12C0 或 < 一半」時以 `0x1B9` 拒戰，否則沉默 | — |
+| ~~單挑本體（`byte_1D34B` 閘、回合迴圈、決著）~~ | ✅ 已實作（[`../spec/80`](../spec/80-duel-opening.md)）。b0–b3 順帶定案兩件實機行為：**開場序（挑戰到拒戰）兩軍完全凍結**（b0 對 b1／b2 的 field 差 0／291 px）、**強側大將逐格騎向單挑位**（b0 在原位、b3 在半路）。喊話時刻回到原版的 tick 50，b0 對拍回到 field 0.05%＝原版游標 | 應戰側的就位方式與對打段全程仍無實機參照（`spec/80` §7）|
 | 遭遇訊息畫面的對拍 | 「遇上兵馬了」訊息與 remake 的遭遇戰選單版面沒有比 | 原版是 TALK 訊息框，remake 是自製選單——先讀原版遭遇後的選擇 UI 是什麼樣（影片 `parity-field13/enc.mp4` 15 秒附近有素材） |
 | 佔用圖快取欄的讀檔重建 | §3 是強證據不是 confirmed | 讀原版的讀檔常式（`sub_18CAE` 一帶）確認重建走哪個欄位 |
 

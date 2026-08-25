@@ -3,7 +3,7 @@
 **狀態：生成的清單，跑 `tools/py.sh tools/re_open_questions.py` 重出。
 這一份不下結論，只把各文件的「未解」表集中到一處。**
 
-- 日期：2026-08-24
+- 日期：2026-08-25
 - 產生工具：`tools/re_open_questions.py`
 - 來源：`docs/` 底下所有文件的未解小節、表格裡標未解的列，與收尾是「…未解」的散句
 
@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**476 列分布在 176 份文件，平均每份 2.7 列。**
+**477 列分布在 177 份文件，平均每份 2.7 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -41,18 +41,18 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 24 | 20 | 4 | 0 |
 | 資料保存 | 33 | 32 | 1 | 0 |
-| 程式碼理解 | 185 | 176 | 9 | 0 |
+| 程式碼理解 | 182 | 174 | 8 | 0 |
 | 驗收 | 57 | 45 | 12 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 171 | 155 | 16 | 0 |
-| **合計** | **476** | 433 | 43 | 0 |
+| 其他 | 175 | 160 | 15 | 0 |
+| **合計** | **477** | 436 | 41 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/re/` | 185 |
-| `docs/spec/` | 133 |
+| `docs/re/` | 182 |
+| `docs/spec/` | 137 |
 | `docs/playtest/` | 57 |
 | `docs/formats/` | 33 |
 | `docs/mechanics/` | 24 |
@@ -128,7 +128,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `OPEN_S2`–`S5` 的 384,000 B | 是 §2 的三倍，多半是多張或多幀。開場播放器 `D7OPEN.EXE` 還沒反組譯 | 靜態 |
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`） | 靜態 |
 
-## 2.3 程式碼理解（185 條）
+## 2.3 程式碼理解（182 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -311,11 +311,8 @@
 | [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | `sub_18DC8` 的 `si=98C8h` | 那一則字串沒取出來看 | 靜態 |
 | [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | 欄位表的「型別」與「屬性」兩個 word | `0x76`／`0x73` 與 `0x0206`／`0x0204` 只由「名字欄 vs 數字欄」的對應推出語意，沒有讀 `sub_1820E` 裡消費它們的那一段 | 靜態 |
 | [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | `sub_18607` | 清單區清除，未讀 | 靜態 |
-| [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | `byte_1D34B` 誰寫、何時＝1 | 單挑開場的總開關。寫入者未讀——remake 暫以「玩家戰開打」當觸發，**推定不是原版條件** | 靜態 |
-| [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | `loc_1A341`（勢均接受單挑之後）與 `sub_1A298` | 未讀；單挑本體（兩大將對移、迴圈、體力 < 0x46 決著）整段未實作 | 靜態 |
-| [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | `sub_1A34F` 的亂數項精確語意 | dl／dh 進入值與 `sub_19C13` 的輸出未逐位讀完；remake 只實作核心（兵×體力）與 4800／一半兩道門檻 | 靜態 |
 | [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | `word_1D311 += 6` | 疑似喊話框位置位移，未驗 | 靜態 |
-| [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | 攻城戰走不走同一條 | 呼叫鏈在 `sub_19FA0`，兩種戰場推定共用；未在攻城實測分辨 | 實測 |
+| [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | 開場凍結與大將騎出的機器碼形式 | 實機定案（b0–b3），但 `sub_1A1C5` 內部的等待常式怎麼擋住實體更新未逐條讀——見 `spec/80` §3.1 | 靜態 |
 | [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
 
 ## 2.4 驗收（57 條）
@@ -391,7 +388,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（171 條）
+## 2.6 其他（175 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -484,7 +481,6 @@
 | [`spec/36-ground-planes-and-climbing.md`](../spec/36-ground-planes-and-climbing.md) | 擋路時的換位 | 原版被兵擋住還會試 `loc_1B533`（§1.4），remake 的 `tryClimb` 直接失敗。水平移動那條路的換位已經有了（`swapWith`） | 靜態 |
 | [`spec/37-tactical-player-controls.md`](../spec/37-tactical-player-controls.md) | 選了陣形之後原版有沒有立刻重排 | 機器碼只寫偏移，**沒有看到立刻移動的呼叫**；remake 照抄（等命令） | 靜態 |
 | [`spec/37-tactical-player-controls.md`](../spec/37-tactical-player-controls.md) | 陣形線在小地圖上的線寬與端點 | `sub_1C5AE` 沒逐行讀，remake 畫整條 1 px 的線 | 靜態 |
-| [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 捲軸綠是色 13 還是 14 | 兩色春天同值；要換季截圖才分得出（§1.6） | 實測 |
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 俘虜身分 | remake 的 `Posted` 是 bool，存不下 `+0x17` 的 0–5；俘虜狀態目前推不出來 | 靜態 |
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「看」與「選」的內容差異 | 原版兩種取法的**列表內容**不同（`../re/26` §4.2），remake 只統一了欄位 | 靜態 |
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「委任」那一格的顏色 | 實錄影格上看起來是紅字，但影片是壓縮過的、也沒有機器碼證據。remake 先畫成一般色 | 靜態 |
@@ -560,6 +556,11 @@
 | [`spec/79-new-game-faction-list.md`](../spec/79-new-game-faction-list.md) | 無頭點擊 | §3.1：建置 image 沒有視窗管理員，滑鼠按鍵送不進 Ebiten。加一個 WM 就能把所有點擊路徑納入自動驗收 | 靜態 |
 | [`spec/79-new-game-faction-list.md`](../spec/79-new-game-faction-list.md) | 橫幅在不在 | remake 的啟動殼層一直有畫橫幅（`ICONGRF` 段 0）。`sub_11A6E` 沒有明顯的橫幅呼叫，**原版那 32 px 是什麼沒驗過**——地圖只佔 y 32–400 | 靜態 |
 | [`spec/79-new-game-faction-list.md`](../spec/79-new-game-faction-list.md) | 調色盤組 | `sub_10241(al=0)` 取的是第 0 組；remake 照抄成季 0。**那一組是不是「春」沒有另外驗** | 靜態 |
+| [`spec/80-duel-opening.md`](../spec/80-duel-opening.md) | `word_1D311 += 6` | 疑似喊話框位置位移，未驗；remake 未實作 | 靜態 |
+| [`spec/80-duel-opening.md`](../spec/80-duel-opening.md) | 組 `0x1B6`／`0x1C0`–`0x1CB` 的實際回合台詞 | 索引公式已定，逐組逐變體未抽驗 | 靜態 |
+| [`spec/80-duel-opening.md`](../spec/80-duel-opening.md) | 單挑期間玩家能不能對大將隊下令蓋掉命令 8 | 未讀；remake 暫不允許 | 靜態 |
+| [`spec/80-duel-opening.md`](../spec/80-duel-opening.md) | 應戰時弱側大將怎麼就位 | remake 用傳送（推定）；實機參照只有拒戰路徑（b3），應戰側的就位方式沒截到 | 靜態 |
+| [`spec/80-duel-opening.md`](../spec/80-duel-opening.md) | 對打段兩軍是否照常互打 | 依 `sub_1A298` 的讀法推定照常（remake 照做）；未在實機錄到應戰全程 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 | 靜態 |

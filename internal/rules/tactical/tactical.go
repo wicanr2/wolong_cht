@@ -103,6 +103,8 @@ func (c Command) String() string {
 		return "退卻"
 	case Holding:
 		return "就位"
+	case Duel:
+		return "單挑"
 	}
 	return "?"
 }
