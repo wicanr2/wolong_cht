@@ -76,6 +76,7 @@
 | [`docs/playtest/41-m7-corrected-text-on-screen.md`](playtest/41-m7-corrected-text-on-screen.md) | 41 — M7 校訂後的畫面抽樣：18 則實跑截圖，沒有一行超寬 | 通過。 | 2026-08-22 |
 | [`docs/playtest/42-window-parity.md`](playtest/42-window-parity.md) | 42 — 四類視窗的實機對拍：財政收斂到 NEAR，一覽表與編成抓出五項實質差異 | （2026-08-25 第三輪）武將一覽（編成清單）、財政視窗、 數值輸入器、交戰目標勢力清單 | 2026-08-24 |
 | [`docs/playtest/43-field-battle-parity.md`](playtest/43-field-battle-parity.md) | 43 — 野戰的同狀態對拍：九區裡七區逐像素相同，地形 0 差 | （2026-08-25 對白收斂後）九區裡七區 0 差 PASS、 field | 2026-08-24 |
+| [`docs/playtest/44-trust-init-oracle.md`](playtest/44-trust-init-oracle.md) | 44 — 新遊戲的信賴度初始值：實機 0xFF 滿格 | confirmed。 | 2026-08-25 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告的遊戲段落是逐幀錄下來的實跑畫面； 三平台候選包與 Linux AppImag… | 2026-08-21 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |

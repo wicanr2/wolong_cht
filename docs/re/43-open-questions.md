@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**462 列分布在 178 份文件，平均每份 2.6 列。**
+**460 列分布在 179 份文件，平均每份 2.6 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -39,29 +39,29 @@
 
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
-| 規則正確性 | 12 | 9 | 3 | 0 |
+| 規則正確性 | 11 | 9 | 2 | 0 |
 | 資料保存 | 33 | 32 | 1 | 0 |
-| 程式碼理解 | 184 | 176 | 8 | 0 |
-| 驗收 | 54 | 44 | 10 | 0 |
+| 程式碼理解 | 182 | 176 | 6 | 0 |
+| 驗收 | 55 | 45 | 10 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 173 | 158 | 15 | 0 |
-| **合計** | **462** | 424 | 38 | 0 |
+| **合計** | **460** | 425 | 35 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/re/` | 184 |
+| `docs/re/` | 182 |
 | `docs/spec/` | 135 |
-| `docs/playtest/` | 54 |
+| `docs/playtest/` | 55 |
 | `docs/formats/` | 33 |
 | `docs/release/` | 21 |
-| `docs/mechanics/` | 12 |
 | `docs/mobile/` | 12 |
+| `docs/mechanics/` | 11 |
 | `docs/reference/` | 6 |
 | `docs/promo/` | 5 |
 
-## 2.1 規則正確性（12 條）
+## 2.1 規則正確性（11 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -76,7 +76,6 @@
 | [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0` 旗標的 7 種值代表什麼 | 身分已確定在 `+0x17`，`+0` 是別的東西。只知道 bit 4 ＝ 不事二主 | 靜態 |
 | [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0x1E` 為什麼 0–2 恆空 | 掃 127 筆武將的 `+0x1E` 值分佈 | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 四個劇本的結局是否不同 | **觸發條件四劇本共用**，差別只在初始勢力數；結局的十二幕也是一條路播完，沒有依劇本分支的證據（`../re/70` §3）。**但沒有實跑四個劇本對過** | 實測 |
-| [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 新遊戲的信賴度初始值 | 原始劇本 `+0x10` 可直接讀（第 1 劇本是 `0xFF`）；`sub_18B12` 的完整時序**待 oracle** | 實測 |
 
 ## 2.2 資料保存（33 條）
 
@@ -116,7 +115,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `OPEN_S2`–`S5` 的 384,000 B | 是 §2 的三倍，多半是多張或多幀。開場播放器 `D7OPEN.EXE` 還沒反組譯 | 靜態 |
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`） | 靜態 |
 
-## 2.3 程式碼理解（184 條）
+## 2.3 程式碼理解（182 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -142,7 +141,6 @@
 | [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | 段內 `2040h`／`2140h` 的兩張 16 × 16 B 表 | `sub_123FF` 會在 `2040h` 那張找空位配置；`2140h` 那張開局已有 16 筆，`+2`／`+4` 看起來是地圖座標 | 靜態 |
 | [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | 123 個武將裡有 80 人只有一欄非零、32 人兩欄、9 人三欄—— → 強證據，待驗 | （散句） | 靜態 |
 | [`re/08-hourly-update.md`](../re/08-hourly-update.md) | `sub_15456` 用 stride 32 掃軍團表 | 與 64 矛盾，疑似原版 bug | 靜態 |
-| [`re/08-hourly-update.md`](../re/08-hourly-update.md) | 信賴度的初始化時序 | 值存在**區塊 `+0x10`**（`cs:0D00h`／IDA `byte_10D00`）已 confirmed；`sub_18B12` 的新遊戲初始化完整時序與所有事件的增減量仍待 oracle | 實測 |
 | [`re/08-hourly-update.md`](../re/08-hourly-update.md) | `+0x00` bit 6 | 資金低於門檻一半時設起（用途未解） | 靜態 |
 | [`re/08-hourly-update.md`](../re/08-hourly-update.md) | `+0x0C` | 行軍中的暫存（`sub_12708` 寫） / 未解 | 靜態 |
 | [`re/08-hourly-update.md`](../re/08-hourly-update.md) | `+0x04` | byte / `sub_1E81C` 的回傳 `ah` / 未解 | 靜態 |
@@ -295,7 +293,6 @@
 | [`re/72-world-map-display-list.md`](../re/72-world-map-display-list.md) | `sub_12B3C` | 軍團旗標 `0x20` 成立時呼叫，推測是擦除舊位置，未讀 | 靜態 |
 | [`re/72-world-map-display-list.md`](../re/72-world-map-display-list.md) | `sub_1D782`／`sub_1D7E7`／`sub_1D804` | 三支實際搬像素的常式，未讀 | 靜態 |
 | [`re/72-world-map-display-list.md`](../re/72-world-map-display-list.md) | 那 110 張軍團圖的逐張外觀 | 算式定案、抽驗過勢力 0 靜止那一張（紅色軍旗），**22 × 5 沒有逐張看過** | 靜態 |
-| [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | `sub_18B12` 那一層 | 名義上是劇本選擇／初始化，只讀到「CF=1 退回 ＹＥＳ／ＮＯ」。信賴度初值的時序也掛在它身上（`08` §，待 oracle） | 實測 |
 | [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | `sub_18DC8` 的 `si=98C8h` | 那一則字串沒取出來看 | 靜態 |
 | [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | 欄位表的「型別」與「屬性」兩個 word | `0x76`／`0x73` 與 `0x0206`／`0x0204` 只由「名字欄 vs 數字欄」的對應推出語意，沒有讀 `sub_1820E` 裡消費它們的那一段 | 靜態 |
 | [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | `sub_18607` | 清單區清除，未讀 | 靜態 |
@@ -305,7 +302,7 @@
 | [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | 變體 0／2／3／5／6 的臨場抽驗 | 專屬句只在 1／4／7；預設句與它們共用選句機制，公式已 confirmed，抽驗優先度低 | 靜態 |
 | [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
 
-## 2.4 驗收（54 條）
+## 2.4 驗收（55 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -363,6 +360,7 @@
 | [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | 遭遇訊息畫面的對拍 | 「遇上兵馬了」訊息與 remake 的遭遇戰選單版面沒有比 / 原版是 TALK 訊息框，remake 是自製選單——先讀原版遭遇後的選擇 UI 是什麼樣（影片 `parity-field13/enc.mp4` 15 秒附近有素材） | 靜態 |
 | [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | 佔用圖快取欄的讀檔重建 | §3 是強證據不是 confirmed / 讀原版的讀檔常式（`sub_18CAE` 一帶）確認重建走哪個欄位 | 靜態 |
 | [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
+| [`playtest/44-trust-init-oracle.md`](../playtest/44-trust-init-oracle.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
