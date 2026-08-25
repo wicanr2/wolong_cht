@@ -1525,6 +1525,8 @@ func main() {
 	adviseMenu := flag.Bool("advise-menu", false, "單獨用：停在進言的五項選單；配 -open-advise：停在五選一的理由選單（驗收用）")
 	adviseSortie := flag.Bool("advise-sortie", false, "截圖前跑「請求君主出陣」的三句定案畫面（驗收用）")
 	adviseTarget := flag.Bool("advise-target", false, "截圖前停在進言→交戰的目標勢力清單（對拍用，docs/spec/90 §5.1）")
+	openCities := flag.Bool("open-cities", false, "截圖前開據點一覽（對拍用，docs/spec/90 §5.1）")
+	openFactions := flag.Bool("open-factions", false, "截圖前開勢力一覽（對拍用，docs/spec/90 §5.1）")
 	openForm := flag.Bool("open-form", false, "截圖前先編一支軍團並開編成畫面（驗收用）")
 	openCorps := flag.Bool("open-corps", false, "截圖前先編兩支軍團並開軍團一覽（驗收用）")
 	openBattle := flag.Bool("open-battle", false, "截圖前先開一場野戰的戰術戰鬥（驗收用）")
@@ -1653,7 +1655,7 @@ func main() {
 		}
 		autoEncounterChoose = *encounterChoose
 		g.lordCorps = *lordCorpsFlag
-		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *adviseTarget, *openForm, *openCorps, *openMarchList,
+		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *adviseTarget, *openCities, *openFactions, *openForm, *openCorps, *openMarchList,
 			*openMarchMode, *openBattle, *openSiege, *openBattleChoice, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow,
 			*openTalkIndex, *openOutcome, parseSiegeFixture(*siegeNode, *siegeDefend, *siegeCorps, *battleSteps),
 			*camAt, *battleCam)
@@ -1923,7 +1925,7 @@ func logAliveCorps(g *game) {
 // autoEncounterChoose 由 -encounter-choose 設定（野戰對拍 fixture）。
 var autoEncounterChoose bool
 
-func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, adviseTarget, openForm, openCorps, openMarchList, openMarchMode,
+func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, adviseTarget, openCities, openFactions, openForm, openCorps, openMarchList, openMarchMode,
 	openBattle, openSiege, openBattleChoice, openMessage, openFinance bool, financeAmount int, openFormPick bool, formPickRow, openTalkIndex int,
 	openOutcome string, siege siegeFixture, camAt, battleCam string) {
 	w := g.world
@@ -2040,6 +2042,14 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 		// 進言 → 交戰（第 0 列）：目標勢力清單剛開的狀態（docs/spec/90 §5.1）。
 		g.openAdvise()
 		g.pickAdviseCommand(0)
+		return
+	}
+	if openCities {
+		g.openCityList()
+		return
+	}
+	if openFactions {
+		g.openFactionList()
 		return
 	}
 	if adviseSortie {
