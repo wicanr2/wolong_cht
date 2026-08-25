@@ -238,6 +238,8 @@
 | [`docs/spec/78-amount-input-editor.md`](spec/78-amount-input-editor.md) | 78 — 數值輸入器的上限語意，以及把它接進財政視窗 | CONFORMED。 | 2026-08-23 |
 | [`docs/spec/79-new-game-faction-list.md`](spec/79-new-game-faction-list.md) | 79 — 新遊戲的勢力清單 | CONFORMED。 | 2026-08-24 |
 | [`docs/spec/80-duel-opening.md`](spec/80-duel-opening.md) | 80 — 開戰單挑：挑戰、拒戰、應戰、回合互嗆、決著 | CONFORMED（2026-08-25）。狀態機在 internal/rules/tactical/duel.go… | 2026-08-25 |
+| [`docs/spec/81-disaster-quantities.md`](spec/81-disaster-quantities.md) | 81 — 災害的實際數值：機率、marker 量、持續與距離衰減 | CONFORMED（2026-08-25）。整條鏈的數值都有機器碼出處， remake 已實作；本輪修掉一處距離算錯… | 2026-08-25 |
+| [`docs/spec/82-defender-selection.md`](spec/82-defender-selection.md) | 82 — 應戰軍團的挑選：兵數 × 士氣 × 評價 | CONFORMED（2026-08-25）。 | 2026-08-25 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | CONFORMED。管線接起來了，也對原版跑過一輪 （[../playtest/37](../playtest/37… | 2026-08-15 |
 | [`docs/spec/91-tactical-parity.md`](spec/91-tactical-parity.md) | 91 — 戰場的逐區對拍：分區、同狀態怎麼達成 | CONFORMED。 | 2026-08-17 |
 
