@@ -685,15 +685,25 @@ func (g *game) demoCorps(list bool, pickRow int) {
 		// 不再覆蓋成「騎優先塞滿」——對拍要的是開窗那一刻的原樣。
 		return
 	}
-	for _, l := range leaders {
-		if !manned[0] {
-			break // 預備兵湊不出大將那一隊了，不是錯誤
-		}
-		if err := g.world.FormCorps(l, kinds, manned); err != nil {
-			g.setEvent(err.Error())
+	// 已經有軍團（讀檔對拍）就不再湊示範軍團——一覽要照存檔的原樣。
+	hasCorps := false
+	for i := range g.world.Corps {
+		if g.world.Corps[i].Alive && g.world.Corps[i].Faction == g.world.Player {
+			hasCorps = true
 			break
 		}
-		kinds, manned = g.affordable()
+	}
+	if !hasCorps {
+		for _, l := range leaders {
+			if !manned[0] {
+				break // 預備兵湊不出大將那一隊了，不是錯誤
+			}
+			if err := g.world.FormCorps(l, kinds, manned); err != nil {
+				g.setEvent(err.Error())
+				break
+			}
+			kinds, manned = g.affordable()
+		}
 	}
 	g.openCorpsList()
 	if g.list != nil {

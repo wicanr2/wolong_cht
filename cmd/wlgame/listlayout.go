@@ -89,7 +89,9 @@ type listFamily struct {
 var (
 	listFamilyCorps = listFamily{
 		Title: "武將名　總兵數　士氣值 現在位置 目標據點",
-		Sep:   "－－－　 ----　　---　　－－－　 －－－",
+		// 數字欄 [80,112)／[144,168)（parity-menus7 的 m1：值右緣
+		// 150／206、空列破折號左緣 120／184 ＝ body 40 ＋ 欄界）。
+		Sep:   "－－－　　----　　---　 －－－　 －－－",
 		Extra: 2,
 	}
 	listFamilyCities = listFamily{

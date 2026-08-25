@@ -486,7 +486,13 @@ func (g *game) drawList(screen *ebiten.Image) {
 	for i := len(rows); i < listRowsPerPage; i++ {
 		y := listRowY(i)
 		for _, f := range fields {
-			g.td.Draw(screen, listDashes(f), listBodyX()+f.X+listTextInset, y, ink)
+			// 數字欄的破折號**貼欄本體、不加半格縮排**（parity-menus7 的
+			// m1：「----」左緣 120＝欄起點）；文字欄照 §1.5 在欄起點＋8。
+			x := listBodyX() + f.X
+			if !f.Numeric {
+				x += listTextInset
+			}
+			g.td.Draw(screen, listDashes(f), x, y, ink)
 		}
 	}
 	for i, r := range rows {
