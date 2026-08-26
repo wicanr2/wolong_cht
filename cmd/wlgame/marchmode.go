@@ -148,9 +148,17 @@ func (g *game) drawMarchMode(screen *ebiten.Image) {
 		dest = big5(g.world.Cities[m.dest].Name)
 	}
 	head := marchModePromptFallback(dest)
-	if lines, ok := g.talkLines(0x15, map[byte]string{2: dest}); ok && len(lines) > 0 {
+	// ⚠ key 是 **ASCII `'2'`**，不是數值 2——`Part.Marker` 存的是原版
+	// `\` 後面那個字元（`internal/assets/text/talk.go`）。給錯 key 時
+	// `Lines` 是 fail-closed，畫面靜靜退回下面那段中文 fallback，
+	// **而 fallback 與 TALK #21 的中文一字不差**，繁中根本看不出來。
+	if lines, ok := g.talkLines(0x15, map[byte]string{'2': dest}); ok && len(lines) > 0 {
 		head = lines
 	}
+	// ⚠ **TALK 的斷行是照原版版面排的**，那個版面是全形字。英文那一則是
+	// 一整句，照抄會直接畫出視窗外（`docs/spec/87` §8）。所以重折一次：
+	// 繁中原本就放得下，折了也不動；長的語系才會被切成兩行。
+	head = textdraw.WrapLines(head, marchModeRowW)
 	for i, line := range head {
 		if i >= 2 {
 			break

@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**483 列分布在 187 份文件，平均每份 2.6 列。**
+**488 列分布在 189 份文件，平均每份 2.6 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,18 +42,18 @@
 | 規則正確性 | 18 | 15 | 3 | 0 |
 | 資料保存 | 33 | 32 | 1 | 0 |
 | 程式碼理解 | 182 | 176 | 6 | 0 |
-| 驗收 | 58 | 48 | 10 | 0 |
+| 驗收 | 60 | 49 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 186 | 171 | 15 | 0 |
-| **合計** | **483** | 447 | 36 | 0 |
+| 其他 | 189 | 174 | 15 | 0 |
+| **合計** | **488** | 451 | 37 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/re/` | 182 |
-| `docs/spec/` | 148 |
-| `docs/playtest/` | 58 |
+| `docs/spec/` | 151 |
+| `docs/playtest/` | 60 |
 | `docs/formats/` | 33 |
 | `docs/release/` | 21 |
 | `docs/mechanics/` | 18 |
@@ -309,7 +309,7 @@
 | [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | 變體 0／2／3／5／6 的臨場抽驗 | 專屬句只在 1／4／7；預設句與它們共用選句機制，公式已 confirmed，抽驗優先度低 | 靜態 |
 | [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
 
-## 2.4 驗收（58 條）
+## 2.4 驗收（60 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -371,6 +371,8 @@
 | [`playtest/45-ai-longrun-comparison.md`](../playtest/45-ai-longrun-comparison.md) | 原版側只有一次跑、三個資料點 | 存檔輪換的點擊序列要修（m1–m4 沒重存：疑似覆寫確認框的 YES 座標沒點中）；修好後可加拍幾輪拉出分佈 | 靜態 |
 | [`playtest/45-ai-longrun-comparison.md`](../playtest/45-ai-longrun-comparison.md) | remake 孫策的擴張比原版猛（一個月滅劉繇 vs 原版半年拿兩城） | 幅度差在戰鬥節奏層（編成／行軍／攻城的耗時），不是決策層；要縮就得對拍單場攻城的時間線 | 靜態 |
 | [`playtest/46-runtime-language-switch.md`](../playtest/46-runtime-language-switch.md) | Android 實機／模擬器沒實地切過 | 這裡的手機畫面是桌面 Xvfb 跑 `cmd/wlandroid` 拍的（同一份 `internal/ui/phone`）；實機驗收排在下一次 Android 打包 | 靜態 |
+| [`playtest/47-latin-screen-survey.md`](../playtest/47-latin-screen-survey.md) | 戰術畫面的截圖不可重現 | 找出 `-shot-frames` 之下仍隨牆鐘走的那一段（動畫幀？音訊回呼？），改成照 tick 推進 | 實測 |
+| [`playtest/47-latin-screen-survey.md`](../playtest/47-latin-screen-survey.md) | 半形語系的戰場標題沒有地名 | 見 `docs/spec/87` §9 | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -383,7 +385,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（186 條）
+## 2.6 其他（189 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -567,6 +569,9 @@
 | [`spec/86-runtime-language-switch.md`](../spec/86-runtime-language-switch.md) | Android 實機／模擬器還沒實地切過語言 | 面板與 `syncLanguage` 都有單測，但手機版的畫面沒拍過；下一次 Android 打包驗收時補 | 靜態 |
 | [`spec/86-runtime-language-switch.md`](../spec/86-runtime-language-switch.md) | 語言不進存檔 | 原版存檔格式沒有這一欄，塞進去會破壞 round-trip。要記住偏好得另存 remake 自己的設定檔 | 靜態 |
 | [`spec/86-runtime-language-switch.md`](../spec/86-runtime-language-switch.md) | F9 是 remake 自創的鍵 | 原版沒有這個鍵；`docs/spec/13` 的按鍵表要同步記一筆 | 靜態 |
+| [`spec/87-latin-screen-layout.md`](../spec/87-latin-screen-layout.md) | 半形語系的戰場標題沒有地名 | 要顯示就得動側欄幾何（128 px 是原版的），那會影響對拍基準——要做就整格重排 | 靜態 |
+| [`spec/87-latin-screen-layout.md`](../spec/87-latin-screen-layout.md) | 原版美術上的中文（§2） | 只能重畫美術，本專案不做 | 靜態 |
+| [`spec/87-latin-screen-layout.md`](../spec/87-latin-screen-layout.md) | 將旗名字 8 字仍有 10 個撞號 | 地板是 8（同音不同字）；再多兩個是 `XIAHOU-D`／`XIAHOU-Y` 這類，要解得換呈現方式不是換寬度 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 | 靜態 |

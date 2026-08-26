@@ -597,6 +597,9 @@ func (g *game) toggleSound() {
 //
 // 值本身若已經滿 48 px（「１６色」「TYPE 1」）就原樣回傳。
 func sysValueLine(s string) string {
+	// ⚠ **先翻再補空白。** 補完之後那一串（`"  可  "`）不會出現在詞表裡，
+	// 逐句查一定落空——系統選單的值就會停在中文（docs/spec/87 §3）。
+	s = uiLang.Convert(s)
 	pad := (sysValueW - textdraw.StringWidth(s)) / 2 / textdraw.HalfW
 	if pad <= 0 {
 		return s

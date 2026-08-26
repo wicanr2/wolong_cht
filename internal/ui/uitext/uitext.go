@@ -14,6 +14,7 @@ import (
 	"fmt"
 	"os"
 	"regexp"
+	"sort"
 	"strings"
 )
 
@@ -40,7 +41,16 @@ type Table struct {
 	chars    map[rune]rune     // 字級表（zh-Hans）
 	// hasNumeric ＝ 詞表裡有帶 `%d` 的樣板。沒有就不必做樣板查找。
 	hasNumeric bool
+	// phrases 是片語替換，長的排前面（docs/spec/87 §4）。
+	phrases []phrase
 }
+
+// phrase 是一條片語替換。
+//
+// 狀態列與遭遇視窗的句子是**拼出來的**（`名字 + " 對 " + 名字`），
+// 名字先被換成羅馬拼音，接縫留在原地——逐句表永遠不會命中，
+// 因為那一句每次都不同。片語層只補這個接縫。
+type phrase struct{ from, to string }
 
 // digits 用來把「已經填好數字的字串」還原成樣板。
 var digits = regexp.MustCompile(`[0-9]+`)
@@ -104,6 +114,16 @@ func Parse(lang Language, chars []byte, tables ...[]byte) (*Table, error) {
 		if err := json.Unmarshal(raw, &any); err != nil {
 			return nil, fmt.Errorf("uitext: %s 不是有效 JSON：%w", path, err)
 		}
+		if nested, ok := any["phrases"]; ok {
+			var m map[string]string
+			if err := json.Unmarshal(nested, &m); err != nil {
+				return nil, fmt.Errorf("uitext: %s 的 phrases 不是字串表：%w", path, err)
+			}
+			for k, v := range m {
+				t.phrases = append(t.phrases, phrase{k, v})
+			}
+			delete(any, "phrases")
+		}
 		if nested, ok := any["names"]; ok {
 			var m map[string]string
 			if err := json.Unmarshal(nested, &m); err != nil {
@@ -128,6 +148,11 @@ func Parse(lang Language, chars []byte, tables ...[]byte) (*Table, error) {
 			break
 		}
 	}
+	// ⭐ **長的排前面**：`" 對 "` 與 `" 對我方宣戰"` 同時存在時，
+	// 先換短的會把長的那一條切掉一半。
+	sort.SliceStable(t.phrases, func(i, j int) bool {
+		return len(t.phrases[i].from) > len(t.phrases[j].from)
+	})
 	if len(chars) > 0 {
 		var m map[string]string
 		if err := json.Unmarshal(chars, &m); err != nil {
@@ -190,6 +215,9 @@ func (t *Table) Convert(s string) string {
 	if v, ok := t.numeric(s); ok {
 		return v
 	}
+	// ⚠ 片語要在字級表**之前**做：簡體字形換過之後，
+	// 片語鍵（繁體）就對不上了。
+	s = t.applyPhrases(s)
 	if len(t.chars) == 0 {
 		return s
 	}
@@ -203,6 +231,18 @@ func (t *Table) Convert(s string) string {
 		b.WriteRune(ch)
 	}
 	return b.String()
+}
+
+// applyPhrases 逐條替換片語。**只動明列的那幾條**，不做任何自動切詞——
+// 這一層的風險全部來自「換到了不該換的地方」，把清單握在手上是唯一的
+// 控制方式。沒有片語命中時回傳的是同一個字串，一個 byte 都不動。
+func (t *Table) applyPhrases(s string) string {
+	for _, p := range t.phrases {
+		if strings.Contains(s, p.from) {
+			s = strings.ReplaceAll(s, p.from, p.to)
+		}
+	}
+	return s
 }
 
 // numeric 處理「畫的時候已經填好數字」的標籤。

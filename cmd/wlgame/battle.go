@@ -624,6 +624,15 @@ func (g *game) drawBattleSideTitle(screen *ebiten.Image,
 	place := g.battleTitlePlace // 調色盤索引 9
 	lord := g.battleTitleLord   // 調色盤索引 11
 	x0 := r.X + 16              // 512 − 496
+	if uiLang.Lang().Latin() {
+		// ⚠ **三段擠不進 2×16 個半形格**（地名 12、君主名各 11），
+		// 照原版的三個 x 畫會互相蓋掉（`SHOUCHBNttle`）。
+		// 會撞名的那兩段優先：君主名裁掉會讓兩個不同的人長得一樣，
+		// 地名不顯示只是少一個資訊，而戰場就畫在眼前（docs/spec/87 §5）。
+		g.td.Draw(screen, g.battleLordName(p, ally), x0, r.Y, lord)
+		g.td.Draw(screen, "vs "+g.battleLordName(p, foe), x0, r.Y+16, lord)
+		return
+	}
 	g.td.Draw(screen, g.battleFieldName(p), x0, r.Y, place)
 	g.td.Draw(screen, "作戰", x0+48, r.Y, place)
 	g.td.Draw(screen, g.battleLordName(p, ally), x0, r.Y+16, lord)

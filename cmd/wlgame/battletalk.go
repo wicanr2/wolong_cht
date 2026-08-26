@@ -206,7 +206,7 @@ func (g *game) battleTalkText(entry BattleTalkEntry) (string, bool) {
 	}
 	// \1 ＝ 說話武將名、\6 ＝ 排版控制（docs/formats/01 §3）。
 	// 標記鍵在既有呼叫端有 raw byte 與 ASCII 兩種寫法，兩種都給。
-	vars := map[byte]string{6: "", '6': ""}
+	vars := map[byte]string{'6': ""}
 	if entry.Speaker != "" {
 		vars[1], vars['1'] = entry.Speaker, entry.Speaker
 	}

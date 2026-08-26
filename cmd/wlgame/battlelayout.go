@@ -331,20 +331,35 @@ const (
 	battleSideBarH      = 2   // sub_10AAA 的 CH=2
 	battleSideNameX     = 32  // 528 − 496
 	battleSideNameW     = 48  // 三個全形字
+
+	// 半形語系另一組（docs/spec/87 §5.1）：羅馬化的名字裁到 6 個字母時
+	// **36 個名字會與別人撞號**（343 筆裡），挪到 8 個字母之後降到 10 個，
+	// 而完整 12 個字母的地板是 8（同音不同字）。再往左會蓋到旗子的 ▶，
+	// 再往右會蓋到旗子上的「軍」——64 px 是這面旗上的上限。
+	battleSideNameLatinX = 16
+	battleSideNameLatinW = 64
 )
+
+// battleSideTitleW 是標題格的寬（原版 (496,8)–(623,39)）。
+// 半形語系的兩行都不准超過它。
+const battleSideTitleW = 128
 
 func battleSideCellLayoutFor(r battleRect, top bool) battleSideCellLayout {
 	nameDY, menDY, healthDY := 13, 3, 6 // 下格：221／211／214
 	if top {
 		nameDY, menDY, healthDY = 4, 24, 27 // 上格：52／72／75
 	}
+	nameX, nameW := battleSideNameX, battleSideNameW
+	if uiLang.Lang().Latin() {
+		nameX, nameW = battleSideNameLatinX, battleSideNameLatinW
+	}
 	bar := func(dy int) battleRect {
 		return battleRect{X: r.X + battleSideBarX, Y: r.Y + dy,
 			W: battleSideBarMaxLen, H: battleSideBarH}
 	}
 	return battleSideCellLayout{
-		Name: battleRect{X: r.X + battleSideNameX, Y: r.Y + nameDY,
-			W: battleSideNameW, H: textdraw.GlyphH},
+		Name: battleRect{X: r.X + nameX, Y: r.Y + nameDY,
+			W: nameW, H: textdraw.GlyphH},
 		MenBar:    bar(menDY),
 		HealthBar: bar(healthDY),
 	}
