@@ -240,3 +240,49 @@ func listBlank(f listField) string {
 	}
 	return strings.Repeat("　", n)
 }
+
+// listCellRoom 是一個文字欄畫得下多少像素：到下一欄的起點為止
+// （最後一欄到清單本體右緣）。數字欄靠右對齊、起點只會更右，
+// 所以拿下一欄的 X 當界線是保守的。
+func listCellRoom(fields []listField, col int) int {
+	if col < 0 || col >= len(fields) {
+		return 0
+	}
+	limit := listBodyW()
+	if col+1 < len(fields) {
+		limit = fields[col+1].X
+	}
+	// 留一格半形的間隙：緊貼著下一欄的數字（`XU-HUANG10`）
+	// 看起來就是黏成一個詞。
+	return limit - fields[col].X - listTextInset - textdraw.HalfW
+}
+
+// fitCell 把一格文字截到欄寬之內。
+//
+// **為什麼需要**：欄寬是照原版的三個全形字排的（人名欄 6 個半形格），
+// 而羅馬化的人名可以到 12 個字母——不裁的話會畫進隔壁的數值欄，
+// 兩欄疊在一起比截斷難讀得多（docs/spec/84 §6）。
+//
+// 裁法對羅馬化人名做了兩個調整，因為半吊子的截斷讀不出來：
+// 切在連字號上就把連字號也去掉（`XIAHOU-` → `XIAHOU`）；
+// 名字只剩一兩個字母時整段退成姓（`ZHUGE-L` → `ZHUGE`）。
+func fitCell(s string, room int) string {
+	if room <= 0 || textdraw.StringWidth(s) <= room {
+		return s
+	}
+	out := make([]rune, 0, len(s))
+	w := 0
+	for _, ch := range s {
+		cw := textdraw.RuneWidth(ch)
+		if w+cw > room {
+			break
+		}
+		out = append(out, ch)
+		w += cw
+	}
+	cut := strings.TrimSuffix(string(out), "-")
+	if i := strings.IndexByte(s, '-'); i > 0 && len(cut) > i && len(cut)-i-1 <= 2 {
+		return s[:i] // 名只剩一兩個字母，不如只留姓
+	}
+	return cut
+}

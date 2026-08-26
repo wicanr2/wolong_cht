@@ -533,7 +533,8 @@ func (g *game) drawList(screen *ebiten.Image) {
 					listFieldRight(fields, col)-textdraw.StringWidth(cell), y, c)
 				continue
 			}
-			g.td.Draw(screen, cell, listFieldX(fields, col), y, c)
+			g.td.Draw(screen, fitCell(g.td.Text(cell), listCellRoom(fields, col)),
+				listFieldX(fields, col), y, c)
 		}
 	}
 

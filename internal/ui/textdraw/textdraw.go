@@ -288,6 +288,10 @@ func (d *Drawer) SetTranslator(fn func(string) string) {
 	}
 }
 
+// Text 回傳這段字串**畫出來會是什麼**（套用語系詞表之後）。
+// 版面要先量寬度再決定截斷時用它——量原文會量錯（docs/spec/84 §2）。
+func (d *Drawer) Text(s string) string { return d.text(s) }
+
 func (d *Drawer) text(s string) string {
 	if d == nil || d.translate == nil {
 		return s
