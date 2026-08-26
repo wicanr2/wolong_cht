@@ -79,29 +79,82 @@ make_frames() {
         "$tmp/$name.mp4"
 }
 
+# make_compare 把原版實機錄影與 remake 的逐幀素材並排。
+#
+# ⚠ **兩側不是同一局面、同一輸入**，也不是同一個時鐘速度（remake 這一段是
+# 最高速檔錄的）。片上要寫清楚，不然並排本身會被讀成「逐像素一致」的宣稱。
+# 逐像素的判定在 docs/playtest/37 與 40，不在推廣片裡。
+make_compare() {
+    name=$1
+    duration=$2
+    original=$3
+    dir=$4
+    label=$5
+    label_file="$tmp/$name-label.txt"
+    write_text "$label_file" "$label"
+    left_file="$tmp/$name-left.txt"
+    right_file="$tmp/$name-right.txt"
+    # ⚠ 原版擷取是 640×480，上下各 40 px 黑邊；不裁掉的話兩側等比縮放後
+    # 原版那一格會小一圈，看起來像「remake 比較大」而不是「錄影帶黑邊」。
+    write_text "$left_file" "原版　松崗 DOS/V 實機"
+    write_text "$right_file" "remake"
+    ffmpeg -hide_banner -loglevel error -y \
+        -i "$repo_dir/$original" \
+        -framerate 30 -start_number 0 -i "$repo_dir/$dir/f%05d.png" \
+        -filter_complex "\
+[0:v]crop=640:400:0:40,scale=640:400:flags=neighbor,\
+drawtext=fontfile=$font:textfile=$left_file:fontcolor=0xb8c8e8:fontsize=20:box=1:boxcolor=0x061128@0.85:boxborderw=8:x=10:y=372[l];\
+[1:v]scale=640:400:flags=neighbor,\
+drawtext=fontfile=$font:textfile=$right_file:fontcolor=0xb8c8e8:fontsize=20:box=1:boxcolor=0x061128@0.85:boxborderw=8:x=10:y=372[r];\
+[l][r]hstack=inputs=2[stack];\
+[stack]pad=1280:720:0:160:color=0x07142e,\
+drawtext=fontfile=$font:textfile=$label_file:fontcolor=white:fontsize=26:box=1:boxcolor=0x061128@0.82:boxborderw=12:x=(w-text_w)/2:y=612,\
+fade=t=in:st=0:d=0.18,fade=t=out:st=$(awk -v d="$duration" 'BEGIN{printf "%.2f",d-0.18}'):d=0.18[v]" \
+        -map "[v]" -t "$duration" \
+        -an -c:v libx264 -preset medium -crf 19 -pix_fmt yuv420p \
+        "$tmp/$name.mp4"
+}
+
 live=${WOLONG_PROMO_LIVE:-workplace/promo/live}
-for seg in map battle siege; do
+# 原版側：自己跑的松崗 DOS/V 實機擷取（tools/dosv_capture.sh，
+# 紀錄在 docs/promo/dosv-realmachine.md）。**不是 YouTube 錄影。**
+original_clip=${WOLONG_PROMO_ORIGINAL:-workplace/promo-live/promo-dosv-main/o2-strategy.mp4}
+if [ ! -f "$repo_dir/$original_clip" ]; then
+    echo "找不到原版擷取 $original_clip —— 見 docs/promo/dosv-realmachine.md §6" >&2
+    exit 1
+fi
+for seg in map battle siege lang-zh-hant lang-zh-hans lang-ja lang-en; do
     if [ ! -f "$repo_dir/$live/$seg/f00000.png" ]; then
         echo "找不到動態素材 $live/$seg —— 先跑 tools/promo_live_capture.sh" >&2
         exit 1
     fi
 done
 
-make_card title 4 "臥龍傳 Remake" "DOS/V 對齊・繁中・跨平台"
-make_frames natural 11 "$live/map" "大地圖：時鐘在走，兩軍在行軍"
+# 段落長度加起來要**剛好等於配樂長度**（tools/promo_score.py 的 DURATION）。
+# 對不上的症狀是音樂的轉折落在畫面中間，說不出哪裡怪，只覺得鬆散。
+make_card title 4 "臥龍傳 Remake" "DOS/V 對齊・四語系・跨平台"
+make_frames natural 10 "$live/map" "大地圖：時鐘在走，兩軍在行軍"
 make_image choice 2.5 docs/images/wlgame-event3-choice.png "事件 2–5 TALK 與數值選取"
-make_image event3 2 docs/images/event3-44.png "事件 3 停戰金額結果"
 make_image event5 2 docs/images/event5-339.png "事件 5 外交官撥款"
-make_frames battle 13 "$live/battle" "戰場：45 度視角，兩軍實時交戰"
-make_frames siege 9 "$live/siege" "攻城：城牆、城門與守軍"
+make_frames battle 12 "$live/battle" "戰場：45 度視角，兩軍實時交戰"
+make_frames siege 8 "$live/siege" "攻城：城牆、城門與守軍"
 make_image result 2.5 docs/images/wlgame-ai-battle-result.png "戰果與狀態回寫"
+# 語言：同一顆種子、同一個時間點的四種語言。F9 在遊戲中即時切換，
+# 切出來的畫面與 `-lang` 啟動**逐像素相同**（docs/playtest/46），
+# 所以這四段用四次啟動錄，換得可重現。
+make_frames langA 2.2 "$live/lang-zh-hant" "F9 切換語言　繁體中文"
+make_frames langB 2.2 "$live/lang-zh-hans" "F9 切換語言　简体中文"
+make_frames langC 2.2 "$live/lang-ja" "F9 切換語言　日本語（PC-98 原文）"
+make_frames langD 2.4 "$live/lang-en" "F9 切換語言　English"
+make_compare compare 10 "$original_clip" "$live/map" \
+    "並排：不同局面、不同時鐘速度　逐像素判定見 docs/playtest/37・40"
 make_image m7 2.5 docs/images/m7-review-321.png "M7 繁中校訂與硬換行"
 make_image save 2.5 docs/images/wlgame-save-ui.png "四槽存檔與重播"
-make_card end 6.5 "立即開始你的三國" "Linux・Windows・macOS・Android"
+make_card end 7 "立即開始你的三國" "Linux・Windows・macOS・Android"
 
 concat="$tmp/concat.txt"
 : >"$concat"
-for name in title natural choice event3 event5 battle siege result m7 save end; do
+for name in title natural choice event5 battle siege result langA langB langC langD compare m7 save end; do
     printf "file '%s'\n" "$tmp/$name.mp4" >>"$concat"
 done
 
@@ -114,7 +167,7 @@ else
 fi
 ffmpeg -hide_banner -loglevel error -y \
     -f concat -safe 0 -i "$concat" -i "$tmp/score.wav" \
-    -map 0:v:0 -map 1:a:0 -t 60 \
+    -map 0:v:0 -map 1:a:0 -t 72 \
     -c:v libx264 -preset medium -crf 19 -pix_fmt yuv420p \
     -c:a aac -b:a 160k -ar 44100 -movflags +faststart "$out"
 

@@ -3,7 +3,11 @@
 
 不讀取原版 BGM／SOUND.DAT，也不使用外部取樣。五音動機是 D4–C4–F4–E4–A4，
 以簡單的三角波、方波與合成鼓聲表現「地圖巡行 → 戰術脈衝 → 收束」；輸出
-固定 60 秒、44.1 kHz、立體聲 WAV，供 ffmpeg 混入推廣片。
+固定 72 秒、44.1 kHz、立體聲 WAV，供 ffmpeg 混入推廣片。
+
+段落對齊影片的剪點（tools/promo_video.sh）：地圖 → 戰術 → 語言與原版對照
+→ 高潮 → 收束。**改影片段落長度時要一起改這裡**，否則音樂的轉折會落在
+畫面的中間——那種不對齊很難指出是哪裡怪，只會覺得片子鬆散。
 """
 
 import argparse
@@ -13,7 +17,7 @@ import wave
 
 
 RATE = 44100
-DURATION = 60
+DURATION = 72
 MOTIF = (62, 60, 65, 64, 69)
 
 
@@ -86,9 +90,17 @@ def compose():
         add_hat(buf, start + 0.5)
         add_hat(buf, start + 1.5)
 
-    # 40–52 秒：高潮，五音動機與開放五度疊合；勝利不落俗套地保留未完感。
+    # 40–52 秒：語言切換與原版對照。**這一段要讓路給畫面**——
+    # 四種語言與並排比較都是要讀字的，鼓一收，只留長音。
+    for offset in range(6):
+        note = MOTIF[offset % len(MOTIF)]
+        add_tone(buf, 40.0 + offset * 2.0, 1.7, note, 0.13)
+        if offset % 2 == 0:
+            add_tone(buf, 40.0 + offset * 2.0, 1.9, note - 12, 0.08)
+
+    # 52–64 秒：高潮，五音動機與開放五度疊合；勝利不落俗套地保留未完感。
     for beat in range(12):
-        start = 40.0 + beat
+        start = 52.0 + beat
         note = MOTIF[beat % len(MOTIF)]
         add_tone(buf, start, 0.68, note + 12, 0.22)
         add_tone(buf, start, 0.85, note - 12, 0.11)
@@ -96,10 +108,10 @@ def compose():
         if beat % 2 == 1:
             add_hat(buf, start + 0.5, 0.11)
 
-    # 52–60 秒：回到地圖材質，最後停在 A4，不做完整大調終止。
+    # 64–72 秒：回到地圖材質，最後停在 A4，不做完整大調終止。
     for offset, note in enumerate(MOTIF):
-        add_tone(buf, 52.0 + offset * 1.35, 0.9, note, 0.15)
-    add_tone(buf, 58.5, 1.2, MOTIF[-1], 0.12)
+        add_tone(buf, 64.0 + offset * 1.35, 0.9, note, 0.15)
+    add_tone(buf, 70.5, 1.2, MOTIF[-1], 0.12)
 
     peak = max(1.0, max(abs(value) for value in buf))
     return [max(-0.92, min(0.92, value * 0.82 / peak)) for value in buf]

@@ -80,7 +80,7 @@
 | [`docs/playtest/45-ai-longrun-comparison.md`](playtest/45-ai-longrun-comparison.md) | 45 — AI 長程決策對照：原版半年 vs remake 五個 seed | 完成，四大擴張事件全部一致。 | 2026-08-25 |
 | [`docs/playtest/46-runtime-language-switch.md`](playtest/46-runtime-language-switch.md) | 46 — 執行期切換語言：桌面與手機的實跑 | confirmed。 | 2026-08-26 |
 | [`docs/playtest/47-latin-screen-survey.md`](playtest/47-latin-screen-survey.md) | 47 — 英文版逐畫面調整前後 | confirmed。 | 2026-08-26 |
-| [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告的遊戲段落是逐幀錄下來的實跑畫面； 三平台候選包與 Linux AppImag… | 2026-08-21 |
+| [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告 2026-08-26 重剪為 72 秒， 加入語言切換與原版並排兩段；遊戲段… | 2026-08-26 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
 | [`docs/promo/dosv-adlib-and-tactical-review.md`](promo/dosv-adlib-and-tactical-review.md) | 推廣片原版 AdLib 與戰術骨架審查 | 歷史審查紀錄（2026-08-12）。 | 2026-08-12 |

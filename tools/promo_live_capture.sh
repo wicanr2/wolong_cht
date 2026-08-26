@@ -8,8 +8,13 @@
 #
 # ⚠ **戰場要先 `-battle-steps` 推進再錄**。開場那一幀是雙方對白，兩軍還沒接觸，
 # 直接錄會得到一段幾乎不動的畫面（量過：240 張裡只有 4 張不一樣）。
-# ⚠ **戰術鏡頭要指定**。原版初值 36,14 看到的是城牆，部隊在畫面外；
-# `20,15` 才對準交戰的中庭。
+# ⚠ **推太多也不行**：攻城戰推到 200 步時已經打完了（270 張裡只剩 12 張不一樣，
+# 而且那 12 張是循環的動畫，不是戰況）。掃過 0／40／90／120／150／170 之後
+# **120 步是尖峰**（180 張裡 52 張不一樣）。
+# ⚠ **戰術鏡頭要指定，而且會隨規則改動失效**。這兩個參數綁的是「這一局在
+# 這個時間點打到哪裡」，規則層一動就要重掃——症狀是錄出一段空景，
+# 不會有任何錯誤訊息。2026-08-26 重掃的結果：野戰維持原設定，
+# 攻城改成 `-battle-steps 120 -battle-cam 44,8`（城內，騎兵與步兵交錯）。
 # ⚠ **大地圖要用最高速檔**（`-speed 0`）。低速檔下八秒只走幾天，畫面幾乎不變
 #（量過：240 張裡只有 16 張不一樣）；最高速檔才看得到時鐘、季節與行軍在動。
 set -euo pipefail
@@ -22,7 +27,7 @@ LIVE="${WOLONG_PROMO_LIVE:-workplace/promo/live}"
 segs=(
 "map|330|-direct -scenario 0 -player 0 -seed 17 -speed 0 -open-window -2"
 "battle|390|-direct -scenario 0 -player 0 -seed 17 -open-battle -battle-steps 200 -battle-cam 20,15 -tactical-speed 2"
-"siege|270|-direct -scenario 0 -player 0 -seed 17 -open-siege -battle-steps 200 -battle-cam 20,15 -tactical-speed 2"
+"siege|270|-direct -scenario 0 -player 0 -seed 17 -open-siege -battle-steps 120 -battle-cam 44,8 -tactical-speed 2"
 )
 
 for s in "${segs[@]}"; do
