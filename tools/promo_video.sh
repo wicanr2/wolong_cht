@@ -134,11 +134,15 @@ done
 # 對不上的症狀是音樂的轉折落在畫面中間，說不出哪裡怪，只覺得鬆散。
 make_card title 4 "臥龍傳 Remake" "DOS/V 對齊・四語系・跨平台"
 make_frames natural 10 "$live/map" "大地圖：時鐘在走，兩軍在行軍"
-make_image choice 2.5 docs/images/wlgame-event3-choice.png "事件 2–5 TALK 與數值選取"
-make_image event5 2 docs/images/event5-339.png "事件 5 外交官撥款"
+# ⚠ **靜態圖一律用 `promo-*.png`，不要借 playtest 的證據圖。**
+# 那些圖的 SHA-256 記在 `docs/re/13`／`docs/playtest/12` 裡當 fixture 身分，
+# 重拍會把紀錄弄壞；而不重拍，片子裡就會同時出現三個世代的 UI
+#（docs/spec/88 §1.1 踩過：2026-08-10 的圖與現行版本的對話框長得不一樣）。
+make_image choice 2.5 docs/images/promo-talk.png "事件訊息：肖像 ＋ TALK.DAT 原文"
+make_image event5 2 docs/images/promo-finance.png "財政：稅率、徵兵與數值輸入"
 make_frames battle 12 "$live/battle" "戰場：45 度視角，兩軍實時交戰"
 make_frames siege 8 "$live/siege" "攻城：城牆、城門與守軍"
-make_image result 2.5 docs/images/wlgame-ai-battle-result.png "戰果與狀態回寫"
+make_image result 2.5 docs/images/promo-cityinfo.png "據點情報：生產力、上昇率、防災"
 # 語言：同一顆種子、同一個時間點的四種語言。F9 在遊戲中即時切換，
 # 切出來的畫面與 `-lang` 啟動**逐像素相同**（docs/playtest/46），
 # 所以這四段用四次啟動錄，換得可重現。
@@ -148,8 +152,8 @@ make_frames langC 2.2 "$live/lang-ja" "F9 切換語言　日本語（PC-98 原�
 make_frames langD 2.4 "$live/lang-en" "F9 切換語言　English"
 make_compare compare 10 "$original_clip" "$live/map" \
     "並排：不同局面、不同時鐘速度　逐像素判定見 docs/playtest/37・40"
-make_image m7 2.5 docs/images/m7-review-321.png "M7 繁中校訂與硬換行"
-make_image save 2.5 docs/images/wlgame-save-ui.png "四槽存檔與重播"
+make_image m7 2.5 docs/images/promo-list.png "一覽表：武將、據點、勢力、軍團"
+make_image save 2.5 docs/images/promo-advise.png "進言：玩家是軍師，指令要先過君主那一關"
 make_card end 7 "立即開始你的三國" "Linux・Windows・macOS・Android"
 
 concat="$tmp/concat.txt"

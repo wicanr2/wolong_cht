@@ -236,8 +236,15 @@ func (g *game) updateBattle() {
 		return
 	}
 	clearBattleTalkSession(g, b)
-	// 打完了，按 Enter 結算回戰略層。
-	if pressed(ebiten.KeyEnter) || pressed(ebiten.KeySpace) {
+	// 打完了，按 Enter 或**點一下滑鼠**結算回戰略層（docs/spec/89 §3）。
+	//
+	// ⚠ 用 `JustPressed` 不是 `Pressed`：戰鬥是用滑鼠下令的，
+	// 最後一個指令那一下如果還按著，用「持續按著」判定會讓結果畫面
+	// 在出現的同一幀就被關掉——玩家根本看不到它。
+	clicked := inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) ||
+		inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) ||
+		inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonMiddle)
+	if pressed(ebiten.KeyEnter) || pressed(ebiten.KeySpace) || clicked {
 		if ev := g.world.ResolvePending(g.rng); ev != nil {
 			g.setEvent(battleLine(g, *ev))
 		}
@@ -433,11 +440,14 @@ func (g *game) drawBattleResult(screen *ebiten.Image, b *tactical.Battle, p *sta
 		x+chrome.Tile+4, y+chrome.Tile+textdraw.GlyphH+8, white)
 	g.td.Draw(screen, fmt.Sprintf("%s兵力　%d → %d", defName, defBefore, o.Men[1]),
 		x+chrome.Tile+4, y+chrome.Tile+2*(textdraw.GlyphH+8), white)
-	if p.Mode == combat.Siege {
+	// ⭐ **原版戰術結束後沒有損害報告**（使用者裁定 2026-08-26，
+	// docs/spec/89）。這一行是 remake 的驗收資訊，預設關著，
+	// 要看的人在系統選單第 8 列打開。
+	if p.Mode == combat.Siege && g.damageReport {
 		g.td.Draw(screen, fmt.Sprintf("攻城損害　%d", b.CityDamage(p.CityWall)),
 			x+chrome.Tile+4, y+chrome.Tile+3*(textdraw.GlyphH+8), dim)
 	}
-	g.td.Draw(screen, "Enter　回到戰略畫面", x+chrome.Tile+4,
+	g.td.Draw(screen, "Enter 或點一下　回到戰略畫面", x+chrome.Tile+4,
 		y+h-chrome.Tile-textdraw.GlyphH, dim)
 }
 

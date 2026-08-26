@@ -412,10 +412,11 @@ func (g *game) drawNaturalStrategyHUD(screen *ebiten.Image) {
 // 原版那六列的座標一格都沒動——新列只加在下面。
 const (
 	sysWinX, sysWinY = 208, 112
-	// ⚠ **原版是 192（六列）。** remake 多了「主君編成」那一列
-	// （docs/spec/76，使用者裁定），視窗因此加高一個列距。
-	// 代價寫在 docs/playtest/39：系統選單開著時不再與原版逐像素相同。
-	sysWinW, sysWinH = 208, 192+sysRowStep
+	// ⚠ **原版是 192（六列）。** remake 多了「主君編成」（docs/spec/76）
+	// 與「損害報告」（docs/spec/89）兩列，視窗因此加高兩個列距。
+	// 代價寫在 docs/playtest/39：系統選單開著時不再與原版逐像素相同，
+	// 比的是**原版 192 高的那一半**。
+	sysWinW, sysWinH = 208, 192+2*sysRowStep
 
 	sysTitleX, sysTitleY = 228, 124
 	sysRuleX, sysRuleY   = 216, 142
@@ -428,13 +429,15 @@ const (
 	sysValueX, sysValueY       = 352, 152
 	sysValueW, sysValueH       = 48, 16
 	sysRowStep                 = 24
-	// ⚠ 原版六列；第 7 列是 remake 加的「主君編成」（docs/spec/76）。
-	sysRows = 7
+	// ⚠ 原版六列；第 7 列是「主君編成」（docs/spec/76）、
+	// 第 8 列是「損害報告」（docs/spec/89），兩列都是 remake 加的。
+	sysRows = 8
 )
 
 // sysMenuLabels 是六列的標籤，取自顯示清單場景 2 的字串。
 var sysMenuLabels = [sysRows]string{
-	"資料儲存", "畫面模式", "音　　效", "戰略速度", "戰術速度", "遊戲結束", "主君編成"}
+	"資料儲存", "畫面模式", "音　　效", "戰略速度", "戰術速度", "遊戲結束",
+	"主君編成", "損害報告"}
 
 // 系統選單六列的索引。原版的六個 handler 沒讀（docs/re/55 §4），
 // 所以**哪一列做什麼是 remake 自己接的**，照標籤的字面意思。
@@ -452,6 +455,10 @@ const (
 	// 一個 px 都不動，docs/playtest/39 對那六列的比對仍然成立。
 	// 代價是「遊戲結束」不再是視覺上的最後一列——換到的是原版版面不被動到。
 	sysRowLordCorps
+	// ⭐ sysRowDamageReport 是第 8 列，同樣加在最後（docs/spec/89）。
+	// **原版戰術結束後沒有損害報告**，那一行是 remake 的驗收資訊，
+	// 所以預設關著。
+	sysRowDamageReport
 )
 
 // videoModeLabels 是「畫面模式」那一列的兩個選項（原版字串表 `ds:6002h`）。
@@ -516,6 +523,8 @@ func (g *game) dispatchSystemRow(row int, left bool) {
 		// ⚠ 左右鍵都是 toggle：這一列只有兩個值，原版那套
 		// 「左鍵下一檔／右鍵上一檔」在兩個值上沒有意義。
 		g.lordCorps = !g.lordCorps
+	case sysRowDamageReport:
+		g.damageReport = !g.damageReport
 	case sysRowSave:
 		g.beginSaveUI(saveWrite)
 	case sysRowQuit:
@@ -551,6 +560,15 @@ func lordCorpsValue(allowed bool) string {
 		return " 可 "
 	}
 	return "不可"
+}
+
+// damageReportValue 是「損害報告」那一列的值（docs/spec/89）。
+// 與旁邊那幾列一樣是三個半形寬的全形字。
+func damageReportValue(on bool) string {
+	if on {
+		return " 開 "
+	}
+	return " 關 "
 }
 
 // soundValue 是系統選單第 3 列的值。
@@ -621,7 +639,7 @@ func (g *game) drawSystemWindow(dst *ebiten.Image) {
 	values := [sysRows]string{"ＯＫ", videoModeLabels[0], g.soundValue(),
 		speed.Labels[clamp(g.speed, 0, speed.Levels-1)],
 		speed.Labels[clamp(g.tacticalSpeed, 0, speed.Levels-1)],
-		"ＯＫ", lordCorpsValue(g.lordCorps)}
+		"ＯＫ", lordCorpsValue(g.lordCorps), damageReportValue(g.damageReport)}
 	for k := 0; k < sysRows; k++ {
 		dy := k * sysRowStep
 		vector.DrawFilledRect(dst, sysLabelBoxX, float32(sysLabelBoxY+dy),

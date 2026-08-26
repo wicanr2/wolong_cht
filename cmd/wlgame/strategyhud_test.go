@@ -595,10 +595,10 @@ func TestSystemMenuLayout(t *testing.T) {
 		{"視窗 x", sysWinX, 208},
 		{"視窗 y", sysWinY, 112},
 		{"視窗寬", sysWinW, 208},
-		// ⚠ 原版是 192（六列）。remake 多了「主君編成」那一列
-		// （docs/spec/76，使用者裁定），所以是 192 ＋ 一個列距。
+		// ⚠ 原版是 192（六列）。remake 多了「主君編成」（docs/spec/76）
+		// 與「損害報告」（docs/spec/89）兩列，所以是 192 ＋ 兩個列距。
 		// **原版值仍然釘在算式裡**，改列距或列數都會被這一條抓到。
-		{"視窗高", sysWinH, 192 + sysRowStep},
+		{"視窗高", sysWinH, 192 + 2*sysRowStep},
 		{"標題 x", sysTitleX, 228},
 		{"標題 y", sysTitleY, 124},
 		{"水平線 y", sysRuleY, 142},
@@ -610,8 +610,8 @@ func TestSystemMenuLayout(t *testing.T) {
 		{"值格 x", sysValueX, 352},
 		{"值格 y", sysValueY, 152},
 		{"列距", sysRowStep, 24},
-		// ⚠ 原版六列（熱區 0x20–0x25）；第 7 列是 remake 加的。
-		{"列數", sysRows, 7},
+		// ⚠ 原版六列（熱區 0x20–0x25）；第 7、8 列是 remake 加的。
+		{"列數", sysRows, 8},
 		// ⭐ **原版六列一格都沒動**：遊戲結束仍是索引 5，新列加在後面。
 		{"遊戲結束仍在原版的第 6 列", sysRowQuit, 5},
 		{"主君編成是加在最後的第 7 列", sysRowLordCorps, 6},

@@ -252,6 +252,7 @@
 | [`docs/spec/86-runtime-language-switch.md`](spec/86-runtime-language-switch.md) | 86 — 執行期切換語言（含手機版） | CONFORMED（2026-08-26 實作並實跑驗過）。 | 2026-08-26 |
 | [`docs/spec/87-latin-screen-layout.md`](spec/87-latin-screen-layout.md) | 87 — 半形語系的畫面調整（清單以外） | CONFORMED（2026-08-26 實作並實跑驗過）。 | 2026-08-26 |
 | [`docs/spec/88-display-polish-parity.md`](spec/88-display-polish-parity.md) | 88 — 三處顯示與原版對不上 | CONFORMED（2026-08-26 實作並實跑驗過）。 | 2026-08-26 |
+| [`docs/spec/89-siege-damage-report-toggle.md`](spec/89-siege-damage-report-toggle.md) | 89 — 戰後的損害報告改成可關的選項 | CONFORMED（2026-08-26 實作並實跑驗過）。 | 2026-08-26 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | CONFORMED。管線接起來了，也對原版跑過一輪 （[../playtest/37](../playtest/37… | 2026-08-15 |
 | [`docs/spec/91-tactical-parity.md`](spec/91-tactical-parity.md) | 91 — 戰場的逐區對拍：分區、同狀態怎麼達成 | CONFORMED。 | 2026-08-17 |
 

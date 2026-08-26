@@ -201,6 +201,9 @@ type game struct {
 	// ⚠ **預設 true，與原版不同**——使用者裁定的 remake 差異。
 	// 想要原版行為就在系統選單把那一列切成「不可」。
 	lordCorps bool
+	// damageReport 是戰後結果畫面要不要多印一行「攻城損害」。
+	// **原版沒有這個報告**，所以預設 false（docs/spec/89）。
+	damageReport bool
 
 	// roads 與 tactical 是掛在 World 上的執行期來源，不屬於存檔本體。
 	// 讀取另一個槽位後要重新掛回，否則數值雖然恢復，行軍／戰鬥會悄悄退回
@@ -1666,6 +1669,7 @@ func main() {
 	openFormPick := flag.Bool("open-form-pick", false, "截圖前停在編成的武將一覽（對拍用，與原版指令列 #3 剛開的狀態相同）")
 	formPickRow := flag.Int("form-pick-row", 0, "配 -open-form：選候選清單的第 N 列當主將（對拍用）")
 	lordCorpsFlag := flag.Bool("lord-corps", true, "允許把君主編成軍團長（docs/spec/76；對拍原版行為時給 false）")
+	damageReportFlag := flag.Bool("siege-damage", false, "戰後結果多印一行攻城損害（remake 的驗收資訊，原版沒有；docs/spec/89）")
 	openAdvise := flag.Bool("open-advise", false, "截圖前先跑到說服畫面（驗收用）")
 	adviseMenu := flag.Bool("advise-menu", false, "單獨用：停在進言的五項選單；配 -open-advise：停在五選一的理由選單（驗收用）")
 	adviseSortie := flag.Bool("advise-sortie", false, "截圖前跑「請求君主出陣」的三句定案畫面（驗收用）")
@@ -1809,6 +1813,7 @@ func main() {
 		}
 		autoEncounterChoose = *encounterChoose
 		g.lordCorps = *lordCorpsFlag
+		g.damageReport = *damageReportFlag
 		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *adviseTarget, *openCities, *openFactions, *openCityInfo, *openForm, *openCorps, *openMarchList,
 			*openMarchMode, *openBattle, *openSiege, *openBattleChoice, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow,
 			*openTalkIndex, *openOutcome, parseSiegeFixture(*siegeNode, *siegeDefend, *siegeCorps, *battleSteps),

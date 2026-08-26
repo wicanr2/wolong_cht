@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**498 列分布在 192 份文件，平均每份 2.6 列。**
+**500 列分布在 193 份文件，平均每份 2.6 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,15 +44,15 @@
 | 程式碼理解 | 182 | 176 | 6 | 0 |
 | 驗收 | 62 | 51 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 197 | 181 | 16 | 0 |
-| **合計** | **498** | 460 | 38 | 0 |
+| 其他 | 199 | 183 | 16 | 0 |
+| **合計** | **500** | 462 | 38 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/re/` | 182 |
-| `docs/spec/` | 153 |
+| `docs/spec/` | 155 |
 | `docs/playtest/` | 62 |
 | `docs/formats/` | 33 |
 | `docs/release/` | 27 |
@@ -387,7 +387,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（197 條）
+## 2.6 其他（199 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -582,6 +582,8 @@
 | [`spec/87-latin-screen-layout.md`](../spec/87-latin-screen-layout.md) | 將旗名字 8 字仍有 10 個撞號 | 地板是 8（同音不同字）；再多兩個是 `XIAHOU-D`／`XIAHOU-Y` 這類，要解得換呈現方式不是換寬度 | 靜態 |
 | [`spec/88-display-polish-parity.md`](../spec/88-display-polish-parity.md) | 事件列本身是 remake 自創 | 原版怎麼提示月結（如果有）沒查過；目前只是讓它不擋畫面 | 靜態 |
 | [`spec/88-display-polish-parity.md`](../spec/88-display-polish-parity.md) | `playtest/40` 沒有涵蓋開闊地的兵 | 那一份量的兩個局面都在城壁邊。要擋住這一類回歸，得再加一個**開闊地**的對拍 fixture | 靜態 |
+| [`spec/89-siege-damage-report-toggle.md`](../spec/89-siege-damage-report-toggle.md) | 設定不進存檔 | 與語言同一條（`86` §7）：原版存檔沒有這一欄，要記住偏好得另存 remake 自己的設定檔 | 靜態 |
+| [`spec/89-siege-damage-report-toggle.md`](../spec/89-siege-damage-report-toggle.md) | 結果畫面本身原版沒有 | 原版打完直接回戰略畫面。要不要整頁拿掉是另一個裁定，本規格只讓多出來的那一行可關 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 | 靜態 |
