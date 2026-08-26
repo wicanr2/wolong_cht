@@ -63,6 +63,9 @@ type LoadOptions struct {
 	// TalkJSON 是預先產生、完整的呈現文字表。它適合研究與驗收，使用時必須由
 	// 呼叫端明確提供；不能把它當成可隨發行包散布的原版文字來源。
 	TalkJSON string
+	// TalkJSONEncoding 是 TalkJSON 的文字編碼；零值 Big5（母本繁中）。
+	// 簡體／英文語系包用 text.UTF8（docs/spec/84）。
+	TalkJSONEncoding text.Encoding
 	// TalkCorrections 是可散布的最小校訂覆蓋表。它只記錄已定案的差異，會在
 	// 本機讀到玩家自備的 raw TALK.DAT 後套用，避免發行包攜出完整原版文字表。
 	TalkCorrections string
@@ -104,7 +107,7 @@ func LoadWithOptions(dir string, opts LoadOptions) (*Library, error) {
 		return nil, fmt.Errorf("TALK 覆蓋設定衝突：不可同時指定完整 JSON 與校訂覆蓋")
 	}
 	if opts.TalkJSON != "" {
-		talk, err = text.LoadJSON(opts.TalkJSON, text.Big5)
+		talk, err = text.LoadJSON(opts.TalkJSON, opts.TalkJSONEncoding)
 		if err != nil {
 			return nil, fmt.Errorf("載入校訂 TALK 表失敗：%w", err)
 		}

@@ -126,11 +126,21 @@ func isClosingPunctuation(ch rune) bool {
 	}
 }
 
+// GlyphSource 是全形字模來源：倚天（*cjk.Font，Big5）或
+// HZK16（*cjk.HZK16Font，GB2312，docs/spec/84）都滿足。
+type GlyphSource interface {
+	Glyph(ch rune) (*image.Alpha, bool)
+}
+
 // Drawer 把字串畫成 Ebiten 圖片。
 type Drawer struct {
-	font  *cjk.Font
+	font  GlyphSource
 	ascii *cjk.ASCIIFont
 	cache map[cacheKey]*ebiten.Image
+	// runes 是呈現前的字級替換（簡體語系的繁→簡表，docs/spec/84）。
+	// 這是「同一個字選哪個字形」的層：涵蓋 Go 內 literal、人名與
+	// talk fallback；已是簡體的文字過表是恆等。不改排版寬度。
+	runes map[rune]rune
 }
 
 type cacheKey struct {
@@ -140,7 +150,9 @@ type cacheKey struct {
 
 // New 建一個 Drawer。兩個字型都可以是 nil——那樣字會全部畫成方框，
 // 但程式仍然跑得起來（**沒有字型不該讓遊戲開不了**）。
-func New(font *cjk.Font, ascii *cjk.ASCIIFont) *Drawer {
+// ⚠ 呼叫端若手上是具體型別的 nil 指標，**傳 nil 字面值**，
+// 不要把 typed-nil 塞進介面——那會讓 Available() 誤報有字型。
+func New(font GlyphSource, ascii *cjk.ASCIIFont) *Drawer {
 	return &Drawer{font: font, ascii: ascii, cache: map[cacheKey]*ebiten.Image{}}
 }
 
@@ -178,7 +190,17 @@ func (d *Drawer) DrawLines(dst *ebiten.Image, lines []string, x, y int, c color.
 	}
 }
 
+// SetRuneMap 設定字級替換表（nil 表示不替換）。
+func (d *Drawer) SetRuneMap(m map[rune]rune) {
+	if d != nil {
+		d.runes = m
+	}
+}
+
 func (d *Drawer) glyph(ch rune, c color.RGBA) *ebiten.Image {
+	if v, ok := d.runes[ch]; ok {
+		ch = v
+	}
 	k := cacheKey{ch, c}
 	if img, ok := d.cache[k]; ok {
 		return img

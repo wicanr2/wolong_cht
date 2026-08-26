@@ -36,7 +36,7 @@ func LoadJSON(path string, enc Encoding) (*Table, error) {
 			path, len(in.Messages), MessageCount)
 	}
 
-	t := &Table{}
+	t := &Table{enc: enc}
 	for i, lines := range in.Messages {
 		msg, err := messageFromJSONLines(lines, enc)
 		if err != nil {
@@ -98,6 +98,9 @@ func partsFromJSONLine(line string, enc Encoding) ([]Part, error) {
 func encodeText(s string, enc Encoding) ([]byte, error) {
 	if !utf8.ValidString(s) {
 		return nil, fmt.Errorf("文字不是有效 UTF-8")
+	}
+	if enc == UTF8 {
+		return []byte(s), nil
 	}
 	var encoder interface {
 		Bytes([]byte) ([]byte, error)

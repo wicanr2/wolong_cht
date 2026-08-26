@@ -46,6 +46,9 @@ type Part struct {
 // Table 是整份 TALK.DAT。
 type Table struct {
 	Messages [MessageCount]Message
+	// enc 是 Raw 片段的編碼，Lines() 用它解碼。零值 Big5，
+	// 與既有的 Parse 呼叫端相容；LoadJSON 依語系包設定。
+	enc Encoding
 }
 
 // Parse 解一份 TALK.DAT。
@@ -95,6 +98,10 @@ type Encoding int
 const (
 	Big5     Encoding = iota // 松崗 DOS/V 繁中版
 	ShiftJIS                 // PC-98 日文原版
+	// UTF8 是 remake 語系包（簡體／英文）的編碼：Raw 直接存 UTF-8，
+	// 不再受「必須能編回原版編碼」的約束（docs/spec/84）。
+	// 原版檔案的 byte-for-byte round-trip 只適用 Big5／ShiftJIS 表。
+	UTF8
 )
 
 // encoding 是解析時假設的編碼。兩種編碼的雙位元組首碼範圍不同，
@@ -217,7 +224,7 @@ func (t *Table) Lines(index int, vars map[byte]string) ([]string, bool) {
 				continue
 			}
 			if len(part.Raw) > 0 {
-				b.WriteString(Decode(part.Raw, Big5))
+				b.WriteString(Decode(part.Raw, t.enc))
 			}
 		}
 		out = append(out, b.String())

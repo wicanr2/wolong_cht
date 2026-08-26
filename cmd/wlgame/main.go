@@ -60,6 +60,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
+	"github.com/wicanr2/wolong_cht/internal/ui/uitext"
 	"github.com/wicanr2/wolong_cht/internal/ui/sound"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
@@ -1391,6 +1392,29 @@ const (
 // corrections.json 可隨可執行檔安裝。先尊重明確環境設定與目前工作目錄，
 // 再尋找一般 tar/zip 與 AppImage 的同包路徑；若都不存在則回傳預設相對路徑，
 // 由 LoadWithOptions 顯示可診斷的失敗，而不是靜默跳過校訂。
+// bundledTranslationPath 依 bundledTalkCorrectionsPath 的候選順序找
+// translations/ 底下的語系檔；找不到回空字串（呼叫端 fallback 母本）。
+func bundledTranslationPath(rel string) string {
+	if fileExists(rel) {
+		return rel
+	}
+	executable, err := os.Executable()
+	if err != nil {
+		return ""
+	}
+	dir := filepath.Dir(executable)
+	for _, candidate := range []string{
+		filepath.Join(dir, rel),
+		filepath.Join(dir, "..", rel),
+		filepath.Join(dir, "..", "share", "wolong-remake", rel),
+	} {
+		if fileExists(candidate) {
+			return candidate
+		}
+	}
+	return ""
+}
+
 func bundledTalkCorrectionsPath() string {
 	if configured := os.Getenv("WOLONG_TALK_CORRECTIONS"); configured != "" {
 		return configured
@@ -1555,6 +1579,7 @@ func main() {
 	openTalkIndex := flag.Int("open-talk-index", -1, "截圖前直接開指定 TALK.DAT 槽位（驗收用）")
 	openOutcome := flag.String("open-outcome", "", "只供截圖的敗北 modal fixture：trust 或 faction")
 	talkJSON := flag.String("talk-json", "", "完整繁中 TALK JSON（研究用）")
+	langFlag := flag.String("lang", "zh-hant", "語系：zh-hant／zh-hans／en（docs/spec/84）")
 	talkCorrections := flag.String("talk-corrections", bundledTalkCorrectionsPath(), "繁中 TALK 校訂覆蓋")
 	flag.Parse()
 
@@ -1575,7 +1600,36 @@ func main() {
 	}
 	flagVisit = func(fn func(string)) { flag.CommandLine.Visit(func(f *flag.Flag) { fn(f.Name) }) }
 
-	lib, err := library.LoadWithOptions(*dir, library.LoadOptions{TalkJSON: *talkJSON, TalkCorrections: *talkCorrections})
+	lang, err := uitext.ParseLanguage(*langFlag)
+	if err != nil {
+		log.Fatal(err)
+	}
+	talkEnc := text.Big5
+	if lang == uitext.ZhHans && *talkJSON == "" {
+		// 簡體語系包（OpenCC 機轉初稿，docs/spec/84）。缺檔時 fallback
+		// 母本繁中——**缺譯要看得見**，不擋啟動。
+		if p := bundledTranslationPath("translations/talk-zh-hans.json"); p != "" {
+			*talkJSON, talkEnc = p, text.UTF8
+			*talkCorrections = "" // 校訂已含在語系包的母本裡
+		} else {
+			log.Printf("⚠ 找不到 translations/talk-zh-hans.json；talk 以繁中顯示")
+		}
+	}
+	var langTable *uitext.Table
+	if lang != uitext.ZhHant {
+		charsPath := ""
+		if lang == uitext.ZhHans {
+			charsPath = bundledTranslationPath("translations/t2s-chars.json")
+			if charsPath == "" {
+				log.Printf("⚠ 找不到 translations/t2s-chars.json；UI 與人名以繁中顯示")
+			}
+		}
+		if langTable, err = uitext.Load(lang, "", charsPath); err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	lib, err := library.LoadWithOptions(*dir, library.LoadOptions{TalkJSON: *talkJSON, TalkJSONEncoding: talkEnc, TalkCorrections: *talkCorrections})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -1591,12 +1645,21 @@ func main() {
 		log.Fatal(err)
 	}
 
-	var font *cjk.Font
+	var font textdraw.GlyphSource
+	if lang == uitext.ZhHans {
+		if f, err := cjk.LoadHZK16Dir(*fontDir, cjk.Options{}); err != nil {
+			log.Printf("⚠ 載不到 HZK16 簡體字型（%v）；退回倚天（簡體字會缺字）", err)
+		} else {
+			font = f
+		}
+	}
 	var ascii *cjk.ASCIIFont
-	if f, err := cjk.LoadDir(*fontDir, cjk.Options{}); err != nil {
-		log.Printf("⚠ 載不到倚天全形字型（%v）；中文會顯示成方框", err)
-	} else {
-		font = f
+	if font == nil {
+		if f, err := cjk.LoadDir(*fontDir, cjk.Options{}); err != nil {
+			log.Printf("⚠ 載不到倚天全形字型（%v）；中文會顯示成方框", err)
+		} else {
+			font = f
+		}
 	}
 	if a, err := cjk.LoadASCIIDir(*fontDir); err != nil {
 		log.Printf("⚠ 載不到倚天半形字型（%v）", err)
@@ -1617,6 +1680,9 @@ func main() {
 	if *audioDir != "" && !g.sound.Available() {
 		log.Printf("音檔目錄 %s 沒有 ogg，靜音跑。要有音樂請跑 tools/bgm2ogg.sh", *audioDir)
 	}
+	// 簡體的字級轉換掛在字形選擇層（docs/spec/84）：涵蓋 literal、
+	// 人名與 talk fallback；語系包本身已是簡體，過表是恆等。
+	g.td.SetRuneMap(langTable.RuneMap())
 	// 四個常駐視窗**預設全關**，這是原版數值：新遊戲流程的最後一行是
 	// `sub_11A6E` 的 `mov cs:byte_198A6, 0`（docs/re/47 §3.3），
 	// PC-98 實跑進到主畫面看到的也正是滿版地圖。玩家自己點橫幅右側

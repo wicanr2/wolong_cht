@@ -19,6 +19,9 @@ import (
 // （CONTEXT.md「已被推翻的斷言」）。
 // x/text 的 Big5 與 ShiftJIS 實作就是 cp950／cp932 的超集。
 func Decode(b []byte, enc Encoding) string {
+	if enc == UTF8 {
+		return strings.TrimRight(string(b), "\x00　 ")
+	}
 	var dec interface{ Bytes([]byte) ([]byte, error) }
 	switch enc {
 	case Big5:

@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**463 列分布在 181 份文件，平均每份 2.6 列。**
+**466 列分布在 182 份文件，平均每份 2.6 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,15 +44,15 @@
 | 程式碼理解 | 182 | 176 | 6 | 0 |
 | 驗收 | 57 | 47 | 10 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 174 | 159 | 15 | 0 |
-| **合計** | **463** | 428 | 35 | 0 |
+| 其他 | 177 | 162 | 15 | 0 |
+| **合計** | **466** | 431 | 35 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/re/` | 182 |
-| `docs/spec/` | 136 |
+| `docs/spec/` | 139 |
 | `docs/playtest/` | 57 |
 | `docs/formats/` | 33 |
 | `docs/release/` | 21 |
@@ -375,7 +375,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（174 條）
+## 2.6 其他（177 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -547,6 +547,9 @@
 | [`spec/81-disaster-quantities.md`](../spec/81-disaster-quantities.md) | 事件 11 在風暴期間被重排的節奏 | 產生端一次排 32–60 延遲；期間事件 11 重擲強度的觸發頻率沒逐格讀（推定隨佇列輪到） | 靜態 |
 | [`spec/82-defender-selection.md`](../spec/82-defender-selection.md) | 名單上限 127 的邊界 | 原版緩衝區 0x100 bytes ÷ 2；remake 不設上限（軍團總數 127 本來就到不了）——記為等效差異 | 靜態 |
 | [`spec/83-initial-strategy-pass.md`](../spec/83-initial-strategy-pass.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
+| [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | 簡體 talk 是機轉初稿，未逐則校訂 | 第二期：沿用 `corrections.json` 的覆寫格式建 `corrections-zh-hans.json` | 靜態 |
+| [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | 英文 talk／人名未譯 | 第二期：glossary 先行（三國人名有既定英譯慣例，Wade-Giles vs Pinyin 要先裁定） | 靜態 |
+| [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | 英文半形排版未重算 | 行寬 guard 與訊息框 22 格是全形格假設；en 全量翻譯前一併處理 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 | 靜態 |
