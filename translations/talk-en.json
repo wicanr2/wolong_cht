@@ -1,0 +1,3105 @@
+{
+ "encoding": "utf-8",
+ "messages": [
+  [
+   "Forming a corps. Please choose a general."
+  ],
+  [
+   "Please set the formation of each unit."
+  ],
+  [
+   "Choose the corps to receive march orders."
+  ],
+  [
+   "Please click the city to march to."
+  ],
+  [
+   "Right-click to go back."
+  ],
+  [
+   "Choose the faction to go to war with."
+  ],
+  [
+   "Choose the faction to make a truce with."
+  ],
+  [
+   "Choose the faction to attack jointly."
+  ],
+  [
+   "Choose the faction to cooperate with."
+  ],
+  [
+   "Choose the general to appoint."
+  ],
+  [
+   "Choose the general to dismiss."
+  ],
+  [
+   "To which city shall we send a governor?"
+  ],
+  [
+   "To which faction shall we send an envoy?"
+  ],
+  [
+   "Which city's governor shall we dismiss?"
+  ],
+  [
+   "Which faction's envoy shall we dismiss?"
+  ],
+  [
+   "Choose the city to move the capital to."
+  ],
+  [
+   "Set the financial plan from next month on."
+  ],
+  [
+   "Enter the tax rate from next month on."
+  ],
+  [
+   "Enter how many cavalry to conscript from next month on."
+  ],
+  [
+   "Enter how many archers to conscript from next month on."
+  ],
+  [
+   "Enter how many infantry to conscript from next month on."
+  ],
+  [
+   "Moving to {2}. Please give battle orders."
+  ],
+  [
+   "Moves the cursor to the corps' present position."
+  ],
+  [
+   "Moves the cursor to the city you specify."
+  ],
+  [
+   "Checks the abilities of the general you specify."
+  ],
+  [
+   "Moves the cursor to the capital of the faction you specify."
+  ],
+  [
+   "{2} was attacked by {1}'s army and has fallen!!"
+  ],
+  [
+   "{1}'s army has attacked {2}!!"
+  ],
+  [
+   "General {1}'s army has attacked {2}."
+  ],
+  [
+   "General {1}'s army has run into {1}'s army!!"
+  ],
+  [
+   "The capital has fallen! We move the capital to {2} at once."
+  ],
+  [
+   "General {1}'s force is wiped out! Luckily he escaped the enemy."
+  ],
+  [
+   "Regrettably, we let {1} slip away."
+  ],
+  [
+   "General {1}'s force is wiped out! Sadly, he was taken prisoner."
+  ],
+  [
+   "We have captured {1}!!"
+  ],
+  [
+   "General {1} has returned safely."
+  ],
+  [
+   "The {3} faction has been destroyed."
+  ],
+  [
+   "General {1}, held prisoner by the enemy, has returned."
+  ],
+  [
+   "{2} is asking for reinforcements."
+  ],
+  [
+   "{3}, at war with us, has withdrawn its army."
+  ],
+  [
+   "A messenger has come from {3}."
+  ],
+  [
+   "{1} has joined our ranks."
+  ],
+  [
+   "{4}, our lord summons you."
+  ],
+  [
+   "Our truce talks with {3} have succeeded, unconditionally."
+  ],
+  [
+   "Our truce talks with {3} have succeeded for {7} in funds."
+  ],
+  [
+   "Sadly, our truce talks with {3} have broken down."
+  ],
+  [
+   "We hold prisoners, so we will release them at once."
+  ],
+  [
+   "Our joint attack talks with {3} have succeeded, unconditionally."
+  ],
+  [
+   "Our joint attack talks with {3} have succeeded for {7} in funds."
+  ],
+  [
+   "Sadly, our joint attack talks with {3} have broken down."
+  ],
+  [
+   "We hold prisoners, so we will release them at once."
+  ],
+  [
+   "Our lord is here, and he looks to be in a great rage!!"
+  ],
+  [
+   "General {1} has already taken up his post in {2}."
+  ],
+  [
+   "General {1} is already posted to the {3} faction."
+  ],
+  [
+   "There must be some mistake. We have sent no one to {2}."
+  ],
+  [
+   "We have sent no one to the {3} faction..."
+  ],
+  [
+   "General {1}, governor of {2}, has come to report."
+  ],
+  [
+   "General {1}, our envoy to the {3} faction, has come to report."
+  ],
+  [
+   "The enemy lord was not there."
+  ],
+  [
+   "Then we shall send General {1} orders for a truce at once."
+  ],
+  [
+   "Then we shall send General {1} orders to request a joint attack."
+  ],
+  [
+   "{2} is already our capital."
+  ],
+  [
+   "The main general's unit does not have enough troops."
+  ],
+  [
+   "{3} has declared war on us."
+  ],
+  [
+   "Our lord is away on campaign. No proposal can be made."
+  ],
+  [
+   "Our prisoner {1} has escaped!!"
+  ],
+  [
+   "Good news: our prisoner {1} has submitted to our army."
+  ],
+  [
+   "{1} took his own life just before we could capture him."
+  ],
+  [
+   "General {1}, governor of {2}, has returned; the city has fallen."
+  ],
+  [
+   "General {1}, envoy to {3}, has returned; the faction is destroyed."
+  ],
+  [
+   "A storm has struck {2}."
+  ],
+  [
+   "A great fire has broken out in {2}."
+  ],
+  [
+   "A riot has broken out in {2}."
+  ],
+  [
+   "As ordered, we have already sent a truce messenger to {3}."
+  ],
+  [
+   "As ordered, we have already sent a joint attack messenger to {3}."
+  ],
+  [
+   "Good news!! There is no hostile faction left anywhere."
+  ],
+  [
+   "Take command",
+   "Delegate",
+   "Disband"
+  ],
+  [
+   "Propose war",
+   "Propose truce",
+   "Propose joint attack",
+   "Move the capital",
+   "Ask lord to march"
+  ],
+  [
+   "Appoint governor",
+   "Dismiss governor",
+   "Appoint envoy",
+   "Dismiss envoy"
+  ],
+  [
+   "Check position",
+   "March orders"
+  ],
+  [
+   "City",
+   "Corps"
+  ],
+  [
+   "Finish",
+   "Back"
+  ],
+  [
+   "Check capital",
+   "City list"
+  ],
+  [
+   "I did not think my strategist came here to tell jokes."
+  ],
+  [
+   "A poor excuse for a joke... wahahaha!"
+  ],
+  [
+   "Quite an amusing joke, for a strategist. Wahahaha!"
+  ],
+  [
+   "{4}, what is it?"
+  ],
+  [
+   "What is this about, {4}? Speak."
+  ],
+  [
+   "Ah, {4}. What brings you today?"
+  ],
+  [
+   "I ask your leave to invade {3}."
+  ],
+  [
+   "I cannot allow it! Do not make enemies for nothing."
+  ],
+  [
+   "Attack {3}? What good is making an enemy of them now!"
+  ],
+  [
+   "War with Lord {3}? Unthinkable! What are you thinking!"
+  ],
+  [
+   "I was thinking the same. {4}, prepare for war at once!"
+  ],
+  [
+   "My thoughts exactly! {4}, begin the invasion at once!"
+  ],
+  [
+   "Mm, very well. I leave it to you."
+  ],
+  [
+   "You say so; then you have a chance of winning, I trust?"
+  ],
+  [
+   "If there is no chance of victory, I cannot allow it!"
+  ],
+  [
+   "Tell me what you have in mind."
+  ],
+  [
+   "Do not talk nonsense! We are already at war!"
+  ],
+  [
+   "Which country are we at war with now!! Tell me!"
+  ],
+  [
+   "{4}! Do you not even know the state of your own country!"
+  ],
+  [
+   "Relations are poor",
+   "We have advantage",
+   "Enemy invades others",
+   "Enemy is exhausted",
+   "Withdraw proposal"
+  ],
+  [
+   "War with them is certain. Better to strike first..."
+  ],
+  [
+   "They grow stronger by the day. Best to strike early..."
+  ],
+  [
+   "They are invading another country. Strike that opening and surely..."
+  ],
+  [
+   "{3} is worn out from endless war. Now is our chance!"
+  ],
+  [
+   "If it is not your will, then there is nothing to be done."
+  ],
+  [
+   "{4}!! Can you not even keep track of our diplomacy!!"
+  ],
+  [
+   "Fool!! To get the reports wrong, what is the meaning of this!!"
+  ],
+  [
+   "Is it not your duty to keep relations from worsening further!!"
+  ],
+  [
+   "Hmm, perhaps you are right. Good, begin the invasion at once."
+  ],
+  [
+   "Mm, very well. I shall show that {3} what I am made of!"
+  ],
+  [
+   "I understand your thinking. Prepare the invasion at once."
+  ],
+  [
+   "If that is your only reason to make war......."
+  ],
+  [
+   "You are right, to be sure, but that alone will not convince everyone."
+  ],
+  [
+   "If we mend relations now, can war not be avoided?"
+  ],
+  [
+   "Relations do not look bad enough to require war. Denied."
+  ],
+  [
+   "I do not think matters are that bad. I will not allow it."
+  ],
+  [
+   "I do not find it so urgent. Are you not mistaken?"
+  ],
+  [
+   "To act while we hold the advantage... Good, I accept your view."
+  ],
+  [
+   "Good, I understand. Let us raise the army as soon as we can!"
+  ],
+  [
+   "You say we can take them now? Then let us try it!"
+  ],
+  [
+   "Making war just because it favors us will ruin the country one day."
+  ],
+  [
+   "War is not so simple as you think."
+  ],
+  [
+   "Advantage is unknown until swords cross. Do not take war lightly."
+  ],
+  [
+   "{4}! Does {3} look to you like it is attacking another country!"
+  ],
+  [
+   "What nonsense! No report has come of {3} invading another country."
+  ],
+  [
+   "{4}, your judgment is mistaken. Come back another time."
+  ],
+  [
+   "What you say is reasonable. Very well, the attack is approved."
+  ],
+  [
+   "Good. We strike first, before they even notice us!"
+  ],
+  [
+   "Strike while their army is out and our losses should be light."
+  ],
+  [
+   "If their army is on the move, they can strike back at once."
+  ],
+  [
+   "Striking at an opening is a coward's work!! History would mock us!"
+  ],
+  [
+   "What you say is reasonable... and yet..."
+  ],
+  [
+   "I hear the {3} faction's stores are ample! Come back another time!"
+  ],
+  [
+   "What nonsense! Word just came that the {3} faction's coffers are full!!"
+  ],
+  [
+   "The enemy exhausted? Strategist! On what do you base such a proposal!"
+  ],
+  [
+   "Hearing you speak, I begin to see our chance. Prepare for war!"
+  ],
+  [
+   "Hearing you speak, I begin to see our chance. Prepare for war!"
+  ],
+  [
+   "We cannot let this chance pass. Send a messenger to declare war at once!"
+  ],
+  [
+   "In war, quality of troops counts more than numbers, and a general's strength above all. You have not forgotten that?"
+  ],
+  [
+   "In war, quality of troops counts more than numbers, and a general's strength above all. You have not forgotten that?"
+  ],
+  [
+   "No. The {3} faction being what it is, they will soon be back on their feet..."
+  ],
+  [
+   "Move rashly and we may be tripped up... Now is not the time."
+  ],
+  [
+   "Move rashly and we may be tripped up... Now is not the time."
+  ],
+  [
+   "Moving rashly is dangerous... Let us watch a while longer."
+  ],
+  [
+   "Say no more! That alone is not enough to approve an attack!"
+  ],
+  [
+   "I cannot begin a war on that alone! Have you nothing else!"
+  ],
+  [
+   "Enough of that matter. Have you nothing else to say!"
+  ],
+  [
+   "{4}, what is it?"
+  ],
+  [
+   "{4}, do you need something?"
+  ],
+  [
+   "{4}, what is it?"
+  ],
+  [
+   "I believe we should make a truce with the {3} faction."
+  ],
+  [
+   "A truce, of all things! That is out of the question!"
+  ],
+  [
+   "You cannot be serious! There will be no truce. Crush them, and quickly!"
+  ],
+  [
+   "At this late hour, such a thing is impossible!"
+  ],
+  [
+   "So you think so too, {4}. Good, send a messenger for a truce at once!"
+  ],
+  [
+   "So you think so too, {4}. Good, send a messenger for a truce at once!"
+  ],
+  [
+   "Mm, understood. Tell the envoy at once to arrange a truce."
+  ],
+  [
+   "Why must we seek a truce now, of all times?"
+  ],
+  [
+   "A truce! On what do you base such a proposal?"
+  ],
+  [
+   "A truce, is it... And for what reason?"
+  ],
+  [
+   "We were never at war with the {3} faction to begin with! Fool!!"
+  ],
+  [
+   "Fool! When were we ever at war with the {3} faction!"
+  ],
+  [
+   "What are you saying! We are not at war with the {3} faction at all!"
+  ],
+  [
+   "We are outmatched",
+   "We are defending",
+   "Enemy attacks others",
+   "Our nation is spent",
+   "Withdraw proposal"
+  ],
+  [
+   "The {3} faction is stronger than we are. As things stand, a hard fight is certain."
+  ],
+  [
+   "Without a truce with the {3} faction, we will be facing several enemies at once."
+  ],
+  [
+   "The {3} faction is attacking elsewhere. A truce now would be on our terms."
+  ],
+  [
+   "Our nation is exhausted. We must do something, and quickly."
+  ],
+  [
+   "If it is against your wishes, my lord, it cannot be helped."
+  ],
+  [
+   "Fool!! At least keep track of how the war stands!!"
+  ],
+  [
+   "No one can know that until it is over! Enough, withdraw!"
+  ],
+  [
+   "What! It is your faint heart that has the war going badly!"
+  ],
+  [
+   "It galls me, but the strategist is right. Send a messenger for a truce at once."
+  ],
+  [
+   "Ugh! That it should come to this... It galls me, but prepare for a truce."
+  ],
+  [
+   "It galls me, but the strategist is right. Send a messenger for a truce at once."
+  ],
+  [
+   "I understand what you wish to say, but..."
+  ],
+  [
+   "Ugh! That may well be so, but..."
+  ],
+  [
+   "I understand what you wish to say, but..."
+  ],
+  [
+   "Who is it you say has attacked us!! Are you blind!"
+  ],
+  [
+   "Who is it you say has attacked us!! Are you blind!"
+  ],
+  [
+   "What are you saying! No such report has reached my ears!"
+  ],
+  [
+   "So we cannot fight several enemies at once... Very well, send a messenger for a truce!"
+  ],
+  [
+   "So we cannot fight several enemies at once... Very well, send a messenger for a truce!"
+  ],
+  [
+   "We can afford no more enemies. The truce is approved."
+  ],
+  [
+   "Would the {3} faction really agree to a truce so easily..."
+  ],
+  [
+   "Would the {3} faction really agree to a truce so easily..."
+  ],
+  [
+   "Would the {3} faction really agree to a truce so easily..."
+  ],
+  [
+   "At war with another faction? No such report has reached me!"
+  ],
+  [
+   "At war with another faction, you say? No such report has reached me!"
+  ],
+  [
+   "At war with another faction? No such report has reached me!"
+  ],
+  [
+   "A truce now would put the {3} faction in our debt. Very well, the truce is approved."
+  ],
+  [
+   "A truce now would put the {3} faction in our debt. Very well, the truce is approved."
+  ],
+  [
+   "Mm, the {3} faction would not refuse just now. Good, the truce is approved!"
+  ],
+  [
+   "If they are at war with another faction, would it not be better to wait and see?"
+  ],
+  [
+   "If the two of them wear each other down, does that not favor us?"
+  ],
+  [
+   "If they are at war with another faction, would it not be better to wait and see?"
+  ],
+  [
+   "What are you saying! Our funds and our strength are both ample!"
+  ],
+  [
+   "Can you not even manage our own funds! Fool!"
+  ],
+  [
+   "What are you saying! Our funds and our strength are both ample!"
+  ],
+  [
+   "Our war funds are spent... It cannot be helped. Prepare for a truce."
+  ],
+  [
+   "At this rate, even a victory would cost too much... Strategist, prepare for a truce."
+  ],
+  [
+   "Even if we win from here, the losses are too great... Very well, prepare for a truce."
+  ],
+  [
+   "Exhausted or not, a war once begun is not so easily stopped."
+  ],
+  [
+   "Breaking this deadlock is the strategist's duty! Do something about it!"
+  ],
+  [
+   "Exhausted or not, a war once begun is not so easily stopped."
+  ],
+  [
+   "Truce talks risk lowering the troops' morale. We should move with care."
+  ],
+  [
+   "Truce talks risk lowering the troops' morale. We should move with care."
+  ],
+  [
+   "Truce talks risk lowering the troops' morale. We should move with care."
+  ],
+  [
+   "Strategist, that alone does not satisfy me. That is why I ask again!"
+  ],
+  [
+   "Strategist, that alone will not convince me. Speak again if you have more!"
+  ],
+  [
+   "Strategist, on that alone your proposal cannot be taken up!"
+  ],
+  [
+   "{4}, to summon me so suddenly. What is your business?"
+  ],
+  [
+   "{4}, you have a good plan, you say?"
+  ],
+  [
+   "{4}, what is this urgent business?"
+  ],
+  [
+   "Shall we join with Lord {3} and bring down the {3} faction?"
+  ],
+  [
+   "What nonsense! Win the help of the {3} faction! Consider who you are dealing with before you speak."
+  ],
+  [
+   "Some fine plan that is! Join with another faction! We need no such thing!"
+  ],
+  [
+   "{4}! Surely you know how matters stand between us and the {3} faction!"
+  ],
+  [
+   "It is worth trying. Send a messenger at once and secure the agreement."
+  ],
+  [
+   "It is worth trying. Send a messenger at once and secure the agreement."
+  ],
+  [
+   "A fine plan! Lord {4} will surely lend us his strength."
+  ],
+  [
+   "I doubt they would agree so easily..."
+  ],
+  [
+   "And what is good about that plan?"
+  ],
+  [
+   "Hm. And your reason?"
+  ],
+  [
+   "{6}We need not make an enemy of the {3} faction, who stands against us in nothing."
+  ],
+  [
+   "{6}Strategist! Attacking aside, we are not even at war with the {3} faction!"
+  ],
+  [
+   "I cannot agree to making yet another enemy!"
+  ],
+  [
+   "Relations are good",
+   "Ally is powerful",
+   "Target is powerful",
+   "We are defending",
+   "Withdraw proposal"
+  ],
+  [
+   "Given our ties with Lord {3}, they will surely lend us their strength."
+  ],
+  [
+   "Lord {3}'s faction is formidable. Better to have them as a friend than an enemy..."
+  ],
+  [
+   "{6}The {3} faction threatens us. Better to join forces and strike them now."
+  ],
+  [
+   "{6}Our nation is under attack by the {3} faction."
+  ],
+  [
+   "I will not press the matter. I leave it to your will, my lord."
+  ],
+  [
+   "Drawing them in clumsily would endanger our future relations. I cannot approve it."
+  ],
+  [
+   "Drawing them in clumsily would endanger our future relations. I cannot approve it."
+  ],
+  [
+   "Drag another faction in and the fires of war will spread. Neither side would come out whole!"
+  ],
+  [
+   "Very well. Let us borrow Lord {3}'s strength this time..."
+  ],
+  [
+   "So be it. Let us have Lord {3} join the fight as well..."
+  ],
+  [
+   "Mm. Let us ask Lord {3} for his aid this time..."
+  ],
+  [
+   "They would surely lend a hand, but..."
+  ],
+  [
+   "I would rather not drag another faction into this..."
+  ],
+  [
+   "This is our own affair. To drag another faction in..."
+  ],
+  [
+   "Fool! We can fight well enough without joining hands with the likes of them!"
+  ],
+  [
+   "The {3} faction, powerful? Fool! We are the stronger still!"
+  ],
+  [
+   "We can fight well enough without joining hands with the likes of them!"
+  ],
+  [
+   "The strategist is right. Let us ask them for aid, at least once."
+  ],
+  [
+   "With the {3} faction's help the war would go our way. Very well, approved."
+  ],
+  [
+   "So be it... Let us ask them for aid, at least once."
+  ],
+  [
+   "They may turn on us and crush us instead. Think it through carefully."
+  ],
+  [
+   "{6}Once the {3} faction falls, we may be next. Think it through more carefully."
+  ],
+  [
+   "They may strike us in our sleep and destroy us. Think it through carefully."
+  ],
+  [
+   "{6}We need no help to fight the {3} faction!"
+  ],
+  [
+   "{6}We need no help to crush the {3} faction!"
+  ],
+  [
+   "{6}If we must fight the {3} faction, our own strength is enough! We need no help!"
+  ],
+  [
+   "As expected of my strategist. Indeed, there is no need for us to fight alone."
+  ],
+  [
+   "True, on our own the fight would be hard. Very well, let us try it!"
+  ],
+  [
+   "Just as the strategist says. There is no need for us to fight alone."
+  ],
+  [
+   "There is certainly reason in what my strategist says, but..."
+  ],
+  [
+   "With help we might have a chance of victory, but..."
+  ],
+  [
+   "We would indeed like to have help, but..."
+  ],
+  [
+   "Attacked by whom, do you say! Go and confirm it properly!!"
+  ],
+  [
+   "Attacked by whom, do you say! Go and confirm it properly!!"
+  ],
+  [
+   "To misread the state of our own land, and you call yourself a strategist! Withdraw!"
+  ],
+  [
+   "We will owe the {3} faction a debt... but it seems we have no choice."
+  ],
+  [
+   "We will owe the {3} faction a debt... but it seems we have no choice."
+  ],
+  [
+   "So we cannot hold out any longer on our own..."
+  ],
+  [
+   "It may only let them see that our army stands at a disadvantage."
+  ],
+  [
+   "It may only let them see that our army stands at a disadvantage."
+  ],
+  [
+   "It may only let them see that our army stands at a disadvantage."
+  ],
+  [
+   "Even if we gain their help, I have little wish to be in their debt."
+  ],
+  [
+   "Even if we gain their help, I have little wish to be in their debt."
+  ],
+  [
+   "Even if we gain their help, I have little wish to be in their debt."
+  ],
+  [
+   "What are you saying? I heard that from you only just now."
+  ],
+  [
+   "What are you saying? I heard that from you only just now."
+  ],
+  [
+   "What are you saying? That is the same as before!"
+  ],
+  [
+   "Master {4}, I ask for {6}{7} in funds for the governance of {2}."
+  ],
+  [
+   "Forgive me, Master {4}. {2} still needs some {6}{7} more..."
+  ],
+  [
+   "Master {4}, I ask for {6}{7} in funds for the governance of {2}."
+  ],
+  [
+   "Master {4}, I ask for {6}{7} in funds for the governance of {2}."
+  ],
+  [
+   "For the governance of {2}, I would ask for about {6}{7} in funds."
+  ],
+  [
+   "Approve",
+   "Offer a sum",
+   "Refuse"
+  ],
+  [
+   "Coming from you, I have no cause for worry. Very well, the funds are approved."
+  ],
+  [
+   "{6}{6}I am sorry, but make do with {7} for now."
+  ],
+  [
+   "We have many other needs; I cannot approve it..."
+  ],
+  [
+   "{6}{6}That will hardly be enough. Take {7} with you."
+  ],
+  [
+   "I shall return at once and set to work on the governance."
+  ],
+  [
+   "Right, I'll head back to the city and get on with the governance."
+  ],
+  [
+   "Then I shall carry on with the governance of {2}."
+  ],
+  [
+   "I shall return at once and set to work on the governance."
+  ],
+  [
+   "I shall return at once and set to work on the governance."
+  ],
+  [
+   "I cannot ask for more, I suppose. In any case, I shall manage somehow."
+  ],
+  [
+   "It cannot be helped! I will do all I can with that sum!"
+  ],
+  [
+   "But with only that much... you cannot expect a good result."
+  ],
+  [
+   "I cannot ask for more, I suppose. In any case, I shall manage somehow."
+  ],
+  [
+   "Hmm... very well. I shall do everything in my power."
+  ],
+  [
+   "There is no help for it. I shall come again another time."
+  ],
+  [
+   "Then I cannot carry on the governance. Do not blame me for what follows!"
+  ],
+  [
+   "I shall come again, but with no funds to work with, I too am helpless..."
+  ],
+  [
+   "There is no help for it. I shall come again another time."
+  ],
+  [
+   "I shall withdraw for now, but please find the funds somehow."
+  ],
+  [
+   "My thanks. With this our land will surely prosper."
+  ],
+  [
+   "With these funds I can even raise a full garrison!"
+  ],
+  [
+   "Ah, my thanks! The people of {2} will be grateful as well!"
+  ],
+  [
+   "My thanks. With this our land will surely prosper."
+  ],
+  [
+   "I thank you for your trust."
+  ],
+  [
+   "The governance of {2} is complete."
+  ],
+  [
+   "For now, the governance of {2} is done."
+  ],
+  [
+   "The governance of {2} is complete."
+  ],
+  [
+   "All the governance of {2} has been completed."
+  ],
+  [
+   "With the people's help, the governance of {2} is safely complete."
+  ],
+  [
+   "Then keep it in good order until I send further instructions."
+  ],
+  [
+   "As you command."
+  ],
+  [
+   "How I long to return to the capital soon..."
+  ],
+  [
+   "As you command."
+  ],
+  [
+   "Then I shall return to {2}."
+  ],
+  [
+   "As you command."
+  ],
+  [
+   "I ask for {6}{7} in funds for our diplomacy with the {3} faction."
+  ],
+  [
+   "I ask for {6}{7} in funds for our diplomacy with the {3} faction."
+  ],
+  [
+   "{6}The diplomatic funds are spent. Some {6}{7} more will be needed."
+  ],
+  [
+   "Funds for our diplomacy with {3} are running short. About {6}{7} will be needed."
+  ],
+  [
+   "I ask for {6}{7} in funds for our diplomacy with the {3} faction."
+  ],
+  [
+   "Approve",
+   "Offer a sum",
+   "Refuse"
+  ],
+  [
+   "Coming from you, I have no cause for worry. Very well, the funds are approved."
+  ],
+  [
+   "{6}{6}I am sorry, but make do with {7} for now."
+  ],
+  [
+   "We have many other needs; I cannot approve it..."
+  ],
+  [
+   "{6}{6}That will hardly be enough. Take {7} with you."
+  ],
+  [
+   "My thanks. I shall surely win them to our side."
+  ],
+  [
+   "I will bring back a good result without fail! Look for my report!"
+  ],
+  [
+   "My thanks. I shall surely win them to our side."
+  ],
+  [
+   "My thanks. I shall surely win them to our side."
+  ],
+  [
+   "Then I shall return and carry on with the diplomacy."
+  ],
+  [
+   "I cannot ask for more, I suppose. In any case, I shall manage somehow."
+  ],
+  [
+   "It cannot be helped... but I can promise nothing of the outcome."
+  ],
+  [
+   "In all things there is a moment of opportunity. Do not let it pass..."
+  ],
+  [
+   "Understood. I shall do what I can."
+  ],
+  [
+   "I cannot ask for more, I suppose. In any case, I shall manage somehow."
+  ],
+  [
+   "There is no help for it. I shall come again another time."
+  ],
+  [
+   "Hmm, this leaves me with no standing at all before them..."
+  ],
+  [
+   "There is no help for it. I shall come again another time."
+  ],
+  [
+   "Diplomacy bears fruit only when it is kept up. Do not forget that."
+  ],
+  [
+   "Without funds, even I have no move left to make!"
+  ],
+  [
+   "I will win them to our side without fail."
+  ],
+  [
+   "Funds enough! Leave the rest to me!"
+  ],
+  [
+   "With this much I shall surely bring back a good report."
+  ],
+  [
+   "With this much we are sure to make a good impression on them."
+  ],
+  [
+   "Relations between our two lands will surely turn for the better."
+  ],
+  [
+   "Our diplomacy has borne fruit. Lord {3} has come over to our side."
+  ],
+  [
+   "Lord {3} has sworn a pact of cooperation with us!"
+  ],
+  [
+   "I have secured a firm pledge of cooperation from Lord {3}."
+  ],
+  [
+   "Our diplomacy has borne fruit. Lord {3} has come over to our side."
+  ],
+  [
+   "Good news! Lord {3} has accepted our offer of cooperation!"
+  ],
+  [
+   "Take care not to turn them against us, and keep up your work."
+  ],
+  [
+   "From now on they should aid us in many ways."
+  ],
+  [
+   "I'll take it on, though the work is dull enough..."
+  ],
+  [
+   "Then I shall stay in this land and carry on with the diplomacy."
+  ],
+  [
+   "I shall keep at it so that this relationship holds."
+  ],
+  [
+   "I shall continue the diplomacy so that their help is assured."
+  ],
+  [
+   "The {3} faction has asked for a truce... What should we do?"
+  ],
+  [
+   "Strategist! The {3} faction says they want a truce!"
+  ],
+  [
+   "A messenger from {3} came just now, seeking a truce with us..."
+  ],
+  [
+   "Accept unconditionally",
+   "Ask for funds",
+   "Refuse"
+  ],
+  [
+   "Thinking of our future relations, accepting unconditionally may be best..."
+  ],
+  [
+   "{6}{6}Having them provide {7} would be reasonable enough..."
+  ],
+  [
+   "It may be a ruse of the enemy. I would advise refusing..."
+  ],
+  [
+   "Hmm... I shall bear your advice in mind."
+  ],
+  [
+   "Hmm, there is sense in your opinion, but..."
+  ],
+  [
+   "So that is my strategist's opinion... Let me think on it a while longer."
+  ],
+  [
+   "I see. I shall take the strategist's advice."
+  ],
+  [
+   "Very well, I understand. We shall do as you say."
+  ],
+  [
+   "Perhaps you are right. Good, see it done that way."
+  ],
+  [
+   "The {3} faction has asked for our help... What should we do?"
+  ],
+  [
+   "The {3} faction has just asked our land for help. What should we do?"
+  ],
+  [
+   "A messenger from {3} asks for our help. I would hear your opinion."
+  ],
+  [
+   "Accept unconditionally",
+   "Ask for funds",
+   "Refuse"
+  ],
+  [
+   "Thinking of our future relations, accepting unconditionally may be best..."
+  ],
+  [
+   "{6}{6}Having them provide {7} would be reasonable enough..."
+  ],
+  [
+   "{6}The {3} faction gives me concern. I would advise refusing this..."
+  ],
+  [
+   "So that is your opinion... Let me think on it a while."
+  ],
+  [
+   "Hmm... I shall bear your advice in mind."
+  ],
+  [
+   "Hmm, so that is what you think..."
+  ],
+  [
+   "I see. I shall take the strategist's advice."
+  ],
+  [
+   "Very well! We shall do just that."
+  ],
+  [
+   "Hm, your view is the same as mine. Let it be done that way."
+  ],
+  [
+   "Is there something about this city that displeases you?"
+  ],
+  [
+   "To move the capital so suddenly -- you have something in mind?"
+  ],
+  [
+   "{4}, move the capital, you say? For what reason?"
+  ],
+  [
+   "Looking to the days ahead, I think it best we move to {2}."
+  ],
+  [
+   "Spoken like a true strategist. Good -- we move the capital at once."
+  ],
+  [
+   "Hm, spoken like a true strategist. Move the capital with all haste!"
+  ],
+  [
+   "The days ahead, is it... Very well, I accept your proposal."
+  ],
+  [
+   "What, {2}? What is to be gained by moving the capital there!"
+  ],
+  [
+   "{2} is worse than our present capital! You fool!!!"
+  ],
+  [
+   "Is that so? Go and look into it more closely!"
+  ],
+  [
+   "Strategist, does the battle go badly?"
+  ],
+  [
+   "Strategist, you would have me take the field?"
+  ],
+  [
+   "Strategist, does the battle go badly?"
+  ],
+  [
+   "If my lord takes the field, our troops' morale will surely rise."
+  ],
+  [
+   "I have grown soft of late! Good -- I take the field at once."
+  ],
+  [
+   "Good! Someone bring my horse! I will show them my valor!!"
+  ],
+  [
+   "Very well, {4}. I leave things here to you."
+  ],
+  [
+   "Now is the time to secure our footing. There is no need for me to go."
+  ],
+  [
+   "Now is the time to secure our footing. There is no need for me to go."
+  ],
+  [
+   "But... {4}, let us wait and see a while longer."
+  ],
+  [
+   "Strategist! How could you let our funds run to deficit! Do something!!"
+  ],
+  [
+   "Our funds in deficit! The fault is yours! Take action at once!"
+  ],
+  [
+   "Word has come that our funds are in dire straits! How did this happen!"
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   "Your service has been truly splendid. You shall be well rewarded!"
+  ],
+  [
+   "Hm, I am well satisfied! Lend me your strength in the days ahead too."
+  ],
+  [
+   "Your service has fulfilled my great ambition. You have my thanks."
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   "......"
+  ],
+  [
+   "Never again will I suffer such disgrace!!"
+  ],
+  [
+   "The fault lies in my own want of virtue. Forgive me, all of you."
+  ],
+  [
+   "I... I am shamed..."
+  ],
+  [
+   "Uoooooh!! Next time I will turn the tables on them."
+  ],
+  [
+   "I have come crawling back..."
+  ],
+  [
+   "I have lost the troops my lord lent me."
+  ],
+  [
+   "Give me another chance, and next time I will surely..."
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   "If I were given a chance to redeem my name, I would be grateful."
+  ],
+  [
+   "I am shamed... I will never be caught off guard like that again."
+  ],
+  [
+   "I barely managed to escape and return."
+  ],
+  [
+   "Such a disgrace... never a second time..."
+  ],
+  [
+   "The blunder of a lifetime! I cannot face my lord..."
+  ],
+  [
+   "Ngh... What bitter regret."
+  ],
+  [
+   "Cut me down and be done with it!!"
+  ],
+  [
+   "It is far too late for me to bow beneath another..."
+  ],
+  [
+   "The blunder of a lifetime... taken by the likes of you..."
+  ],
+  [
+   "Let me loose, and you will pay for it later!!"
+  ],
+  [
+   "That I should live to bear such shame..."
+  ],
+  [
+   "Ngh... So this is the end..."
+  ],
+  [
+   "That I should live to bear such shame..."
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   "I will form up the corps at once."
+  ],
+  [
+   "As you command! Men! We march!"
+  ],
+  [
+   "War, is it... Understood. I will take the field."
+  ],
+  [
+   "Then I shall make ready to take the field."
+  ],
+  [
+   "I will take the enemy's head without fail."
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   "As you command."
+  ],
+  [
+   "This looks like trouble... but an order is an order."
+  ],
+  [
+   "Your orders are received and understood."
+  ],
+  [
+   "I accept the post of governor."
+  ],
+  [
+   "I will set out at once."
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   "As you command."
+  ],
+  [
+   "Understood. Leave it to me."
+  ],
+  [
+   "Please leave it to me."
+  ],
+  [
+   "Leave it to me. I will bring you good news without fail."
+  ],
+  [
+   "Understood. I will take on this task."
+  ],
+  [
+   "{4}! I relieve you of your post as strategist. Withdraw!!"
+  ],
+  [
+   "{4}, I have no more use for you. Begone!!!"
+  ],
+  [
+   "{4}, you disappoint me... Enough! Withdraw!"
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   "We can keep relations with your faction no longer. We will crush you!"
+  ],
+  [
+   "There is no living alongside you! Prepare yourself."
+  ],
+  [
+   "Regrettably, your faction must fall... Fight well."
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   "We sever relations with the {3} faction. Send the corps to the border!"
+  ],
+  [
+   "We will crush the {3} faction. {4}, invade at once!"
+  ],
+  [
+   "There is no coexisting with the {3} faction... Secure the border now."
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   "I will disband the corps."
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   "As you command."
+  ],
+  [
+   "At last, we can return to the capital!"
+  ],
+  [
+   "As you command. I will return at once."
+  ],
+  [
+   "As you command."
+  ],
+  [
+   "Then I shall return to the capital."
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   "As you command."
+  ],
+  [
+   "What a stiff and joyless duty that was!"
+  ],
+  [
+   "Have I committed some oversight..."
+  ],
+  [
+   "Then I shall return to the capital."
+  ],
+  [
+   "Understood. I return at once."
+  ],
+  [
+   "We move the capital to {2}. See to it at once!!"
+  ],
+  [
+   "{4}! I have decided to move the capital to {2}. Prepare accordingly!"
+  ],
+  [
+   "I shall move the capital to {2}. See that it is done."
+  ],
+  [
+   "The {3} faction has moved its capital to {6}{2}. I so report."
+  ],
+  [
+   "The {3} faction has moved its capital to {6}{2}. That is my report."
+  ],
+  [
+   "A report! The {3} faction has moved its capital to {6}{2}."
+  ],
+  [
+   "The {3} faction has secretly moved its capital to {6}{2}."
+  ],
+  [
+   "The {3} faction has moved its capital to {6}{2}. I so report."
+  ],
+  [
+   "{4}, you have let the moment slip away, fool!!!"
+  ],
+  [
+   "I demanded the sum you named, and they left in a rage! Idiot!"
+  ],
+  [
+   "The sum you offered did nothing but anger them, fool!"
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   "All that we invested has come to nothing!!"
+  ],
+  [
+   "Had you sent more troops, the city might not have fallen..."
+  ],
+  [
+   "All our labor on the domain... a bitter loss indeed!!"
+  ],
+  [
+   "How bitter this is..."
+  ],
+  [
+   "The failure to raise a garrison was mine. Forgive me..."
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   "I barely escaped with my life."
+  ],
+  [
+   "I never thought that faction would fall so quickly..."
+  ],
+  [
+   "I was very nearly captured myself!"
+  ],
+  [
+   "A pity... it has all come to nothing."
+  ],
+  [
+   "They resisted to the very last..."
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   "I will not surrender... I will find a way to escape."
+  ],
+  [
+   "It was only bad luck! I did not lose to the likes of you!"
+  ],
+  [
+   "Ah... what is to become of us..."
+  ],
+  [
+   "It has come to this. Now we can only await Heaven's will..."
+  ],
+  [
+   "........"
+  ],
+  [
+   "Me? Siege warfare is my strength."
+  ],
+  [
+   "Hah! Before my strength, a fortress is no more than paper!"
+  ],
+  [
+   "Well... in a siege I have some confidence, at least."
+  ],
+  [
+   "When it comes to sieges, I have some experience."
+  ],
+  [
+   "Send me, and I will take that city in no time."
+  ],
+  [
+   "A siege turns on stratagem, not strength! Leave it to me."
+  ],
+  [
+   "Siege warfare is something of a specialty of mine."
+  ],
+  [
+   "In a siege I am practiced at both attack and defense."
+  ],
+  [
+   "For a field battle, I shall take the field myself!"
+  ],
+  [
+   "A field battle? Leave it to me!"
+  ],
+  [
+   "Field battle is the basis of war, and I have some experience!"
+  ],
+  [
+   "Leave the field battle to me. I will bring you victory!!"
+  ],
+  [
+   "In the field I could fight ten thousand and still win!!"
+  ],
+  [
+   "Even in the field, stratagem serves. Strength is not the warrior's alone."
+  ],
+  [
+   "Leave the field battle to me. I will bring you victory!!"
+  ],
+  [
+   "If any man in the field is stronger than I, I would face him gladly!"
+  ],
+  [
+   "Naval warfare is my strength!"
+  ],
+  [
+   "Naval warfare is my strength!"
+  ],
+  [
+   "If anything, I am more practiced at sea."
+  ],
+  [
+   "Naval warfare is my specialty. I ask that you leave it to me."
+  ],
+  [
+   "On the water, no man can beat me!"
+  ],
+  [
+   "I am well practiced at fighting aboard ship."
+  ],
+  [
+   "Give me the fleet and I will make it invincible!"
+  ],
+  [
+   "Even on a pitching deck I fight better than on solid ground!"
+  ],
+  [
+   "I have no time for your jokes! Fool!!!"
+  ],
+  [
+   "There are no city walls here at all!!"
+  ],
+  [
+   "{4}!! Where do you see any city walls!"
+  ],
+  [
+   "You there!! Are you out of your mind?"
+  ],
+  [
+   "Master {4}, this is no time for jokes!"
+  ],
+  [
+   "M-Master Strategist, there are no city walls anywhere!"
+  ],
+  [
+   "Master Strategist, I can find no city walls."
+  ],
+  [
+   "Master Strategist, might you have seen it wrong?"
+  ],
+  [
+   "Phew... it seems the victory is ours."
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   "You are no match for me. Come back when you are ready!!"
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   ""
+  ],
+  [
+   "Nngh! Pull back, we retreat!"
+  ],
+  [
+   "Retreat!! {1}, do not think you have won!!"
+  ],
+  [
+   "All forces, retreat!!"
+  ],
+  [
+   "Retreat! Pull back, pull back!"
+  ],
+  [
+   "Curse it! Retreat! {1}, next time I show no mercy!!"
+  ],
+  [
+   "P-Pull back! We retreat!"
+  ],
+  [
+   "For now we retreat!"
+  ],
+  [
+   "Do not throw your lives away! We retreat for now!"
+  ],
+  [
+   "{1}, I will repay this debt. Remember that!!"
+  ],
+  [
+   "Curse you, {1}! It will not go this way again!"
+  ],
+  [
+   "{1}, I retreat for now, but next time it is your turn!"
+  ],
+  [
+   "Ngh... we can fight no more! Men, retreat!"
+  ],
+  [
+   "Curse you, {1}! Next time I take your head! Remember it!"
+  ],
+  [
+   "{1}, I will repay this debt. Remember that!!"
+  ],
+  [
+   "{1}, you will repay this debt with your head!"
+  ],
+  [
+   "Curse it! {1}, keep your head a while longer! Farewell!"
+  ],
+  [
+   "Into formation!!"
+  ],
+  [
+   "Re-form the ranks! Do not move without orders!!!"
+  ],
+  [
+   "Formation!!"
+  ],
+  [
+   "Formation! Into formation!!"
+  ],
+  [
+   "Into formation!! Stop dawdling, you fools!"
+  ],
+  [
+   "Formation! Formation!!"
+  ],
+  [
+   "Take up formation, now!"
+  ],
+  [
+   "Men! Into formation, quickly!"
+  ],
+  [
+   "Advance! Go over to the attack!"
+  ],
+  [
+   "Advance!! Forward, forward!!"
+  ],
+  [
+   "Attack! All of you, advance!!"
+  ],
+  [
+   "Advance!!"
+  ],
+  [
+   "Wahahaha! Forward, forward!"
+  ],
+  [
+   "Men, do not falter! Attack!!"
+  ],
+  [
+   "Right. Attack!"
+  ],
+  [
+   "Men, charge them!"
+  ],
+  [
+   "Now! Charge them!!!"
+  ],
+  [
+   "Charge!! Crush the enemy!"
+  ],
+  [
+   "Charge!!"
+  ],
+  [
+   "Charge them!!"
+  ],
+  [
+   "Wooooaaargh! Kill them all!"
+  ],
+  [
+   "Now! All of you, charge!!"
+  ],
+  [
+   "Charge! Break them, whatever it takes!"
+  ],
+  [
+   "Fear nothing! Charge!!"
+  ],
+  [
+   "Scale the walls!"
+  ],
+  [
+   "Seize the walls! Knock the enemy off them!"
+  ],
+  [
+   "Scale the walls! Strike the enemy down!"
+  ],
+  [
+   "Cross the walls and the enemy is right before us! Take them at any cost!"
+  ],
+  [
+   "The walls! Aim for the walls!"
+  ],
+  [
+   "Take the walls and we have our chance! Go!"
+  ],
+  [
+   "Take the walls!"
+  ],
+  [
+   "The walls! Make for the walls!"
+  ],
+  [
+   "Take formation!!"
+  ],
+  [
+   "Re-form the ranks! Stop moving about recklessly!!!"
+  ],
+  [
+   "Formation!!"
+  ],
+  [
+   "Fight in formation!"
+  ],
+  [
+   "Take formation!! Stop dawdling, you fools!"
+  ],
+  [
+   "Formation! All of you, into formation!"
+  ],
+  [
+   "Don't stray too far! Stay close and fight together!"
+  ],
+  [
+   "Don't scatter! Back into formation!!"
+  ],
+  [
+   "Get up on the walls! Don't let the enemy take them!"
+  ],
+  [
+   "Secure the walls! Drive the enemy back!"
+  ],
+  [
+   "Get up on the walls and repel the enemy!"
+  ],
+  [
+   "Get up on the walls! Crush the enemy!"
+  ],
+  [
+   "Defend the walls! They must not fall to the enemy!!"
+  ],
+  [
+   "Get up on the walls! Crush them!"
+  ],
+  [
+   "Keep the enemy out of the city! Defend the walls!"
+  ],
+  [
+   "Never let the enemy have the walls!"
+  ],
+  [
+   "{6}Hear me! I am {1}! Come, let us settle this!!!"
+  ],
+  [
+   "{6}Lowly brigand! I, {1}, will cut you down myself!!"
+  ],
+  [
+   "{6}Hear me! I am {1}! Come, let us settle this!!!"
+  ],
+  [
+   "{6}My name is {1}! If any man here has valor, come and face me!"
+  ],
+  [
+   "{6}Heard in heaven, echoed on earth! I am {1}!"
+  ],
+  [
+   "{6}My name is {1}. Come, let us settle this!!!"
+  ],
+  [
+   "{6}Hear me! I am {1}! Come, let us settle this!!!"
+  ],
+  [
+   "{6}My name is {1}! See that you remember it!"
+  ],
+  [
+   "So it's {1}. I'll cut you down with a single stroke!!"
+  ],
+  [
+   "You forget your place! I shall teach you better!!"
+  ],
+  [
+   "So it's {1}. I'll cut you down with a single stroke!!"
+  ],
+  [
+   "{6}Interesting! I, {1}, will take you on!"
+  ],
+  [
+   "{6}I, {1}, will make you regret raising a hand against me!"
+  ],
+  [
+   "{6}My name is {1}. I shall be your opponent!!"
+  ],
+  [
+   "So it's {1}. I'll cut you down with a single stroke!!"
+  ],
+  [
+   "{6}A worthy opponent! I, {1}, shall face you!"
+  ],
+  [
+   "I've no time to waste on the likes of you!!"
+  ],
+  [
+   "You fool! You are a hundred years too early to face me!"
+  ],
+  [
+   "There is no need to face a fool with his blood up!"
+  ],
+  [
+   "I've no time to waste on the likes of you!!"
+  ],
+  [
+   "Hmph! What makes a wretch like you a match for me!"
+  ],
+  [
+   "You and I do not fight the same way... I'll decline."
+  ],
+  [
+   "You hot-blooded boar! That way you'll lose a battle you could win!"
+  ],
+  [
+   "The outcome is already plain... Don't throw your life away."
+  ],
+  [
+   "Big words!! Now prepare yourself!"
+  ],
+  [
+   "The rest of you, stay back! I'll finish him myself!"
+  ],
+  [
+   "Big words!! Now prepare yourself!"
+  ],
+  [
+   "Big words!! Now prepare yourself!"
+  ],
+  [
+   "Enough talk! Let's get on with it!"
+  ],
+  [
+   "Then here I come! Haaaaaah!!"
+  ],
+  [
+   "Big words!! Now prepare yourself!"
+  ],
+  [
+   "Then here I come!!"
+  ],
+  [
+   "I'll turn this back on you! Uryaaaah!"
+  ],
+  [
+   "Don't come to me with regrets! Soryaaaah!"
+  ],
+  [
+   "I'll turn this back on you! Uryaaaah!"
+  ],
+  [
+   "I'll turn this back on you! Uryaaaah!"
+  ],
+  [
+   "Ha! Come at me from wherever you like! Now!"
+  ],
+  [
+   "Take me lightly and you'll be sorry for it!"
+  ],
+  [
+   "I'll turn this back on you! Uryaaaah!"
+  ],
+  [
+   "Come on then! Here!"
+  ],
+  [
+   "Is that all the strength you have?"
+  ],
+  [
+   "Is that your strength? You are no match for me!"
+  ],
+  [
+   "Is that all the strength you have?"
+  ],
+  [
+   "Is that all the strength you have?"
+  ],
+  [
+   "Challenging me with skill like that? Laughable!"
+  ],
+  [
+   "Is that all the strength you have?"
+  ],
+  [
+   "Is that all the strength you have?"
+  ],
+  [
+   "Ha ha ha! Your skill has its limits after all!"
+  ],
+  [
+   "It is only beginning! {1}, prepare yourself!!!!"
+  ],
+  [
+   "That was only a warm-up! Now I fight in earnest! Here!"
+  ],
+  [
+   "It is only beginning! {1}, prepare yourself!!!!"
+  ],
+  [
+   "It is only beginning! {1}, prepare yourself!!!!"
+  ],
+  [
+   "I was merely careless! The real fight starts now!! Daaaah!"
+  ],
+  [
+   "It is only beginning! {1}, prepare yourself!!!!"
+  ],
+  [
+   "It is only beginning! {1}, prepare yourself!!!!"
+  ],
+  [
+   "We have only just begun! Fight with your arm, not your mouth! Uryaaah!"
+  ],
+  [
+   "Not bad at all. No more holding back. Prepare yourself."
+  ],
+  [
+   "Fine swordwork! You are no ordinary hand!"
+  ],
+  [
+   "Not bad at all. No more holding back. Prepare yourself."
+  ],
+  [
+   "Not bad at all. No more holding back. Prepare yourself."
+  ],
+  [
+   "Mmh! This one is better than I thought!"
+  ],
+  [
+   "Not bad at all. No more holding back. Prepare yourself."
+  ],
+  [
+   "Not bad at all. No more holding back. Prepare yourself."
+  ],
+  [
+   "Oh? So you can fight a little after all!"
+  ],
+  [
+   "{1}!! This is far from over! Here I come!!"
+  ],
+  [
+   "{1}!! This is far from over! Here I come!!"
+  ],
+  [
+   "{1}!! This is far from over! Here I come!!"
+  ],
+  [
+   "{1}!! This is far from over! Here I come!!"
+  ],
+  [
+   "My next stroke takes your head! Soryaaah!"
+  ],
+  [
+   "{1}!! This is far from over! Here I come!!"
+  ],
+  [
+   "{1}!! This is far from over! Here I come!!"
+  ],
+  [
+   "{6}Do not take {1} lightly! Here I come!!"
+  ],
+  [
+   "Wahahaha! You will never fell me with that!!!"
+  ],
+  [
+   "Where is the fire from before? You are no match like this!"
+  ],
+  [
+   "Wahahaha! You will never fell me with that!!!"
+  ],
+  [
+   "Wahahaha! You will never fell me with that!!!"
+  ],
+  [
+   "Out of breath already? We are only getting started!"
+  ],
+  [
+   "Wahahaha! Such a blow will never fell me!!!"
+  ],
+  [
+   "Wahahaha! You will never fell me with that!!!"
+  ],
+  [
+   "Well? If you mean to surrender, now is the time!"
+  ],
+  [
+   "Nnnngh!! I will not lose to you! Uoryaaah!"
+  ],
+  [
+   "{6}Is that all? It takes more than this to fell {1}!"
+  ],
+  [
+   "Nnnngh!! I will not lose to you! Uoryaaah!"
+  ],
+  [
+   "Nnnngh!! I will not lose to you! Uoryaaah!"
+  ],
+  [
+   "I can still fight! Here I come! Doryaaah!"
+  ],
+  [
+   "Hmph!! I will not lose to you! Soryaaah!"
+  ],
+  [
+   "Nnnngh!! I will not lose to you! Uoryaaah!"
+  ],
+  [
+   "As if I would lose to the likes of you! Taryaaah!"
+  ],
+  [
+   "To block my attack... You are not to be taken lightly!!"
+  ],
+  [
+   "It has been long since I met one with backbone! This gladdens me!"
+  ],
+  [
+   "To block my attack... You are not to be taken lightly!!"
+  ],
+  [
+   "To block my attack... You are not to be taken lightly!!"
+  ],
+  [
+   "Mm! The tide is turning against me!"
+  ],
+  [
+   "To have blocked my attack!!"
+  ],
+  [
+   "To block my attack... You are not to be taken lightly!!"
+  ],
+  [
+   "Time to fight in earnest! Prepare yourself!!"
+  ],
+  [
+   "You are not the only strong one here! Doryaaah!"
+  ],
+  [
+   "On my name, I cannot afford to lose! Here I come!!"
+  ],
+  [
+   "You are not the only one with strength! Hyaaaah!"
+  ],
+  [
+   "You are not the only one with strength! Hyaaaah!"
+  ],
+  [
+   "Enough talk! Come at me! Hyaaaah!"
+  ],
+  [
+   "You are not the only one with strength! Hyaaaah!"
+  ],
+  [
+   "You are not the only one with strength! Hyaaaah!"
+  ],
+  [
+   "The fight has only begun! If you will not come, I will!"
+  ],
+  [
+   "Next time is your last! Prepare yourself!!!"
+  ],
+  [
+   "Fine skill, but not my equal! Prepare yourself!"
+  ],
+  [
+   "Next time is your last! Prepare yourself!!!"
+  ],
+  [
+   "Next time is your last! Prepare yourself!!!"
+  ],
+  [
+   "Hah! You are no match for me!"
+  ],
+  [
+   "Next time is your last! Prepare yourself!!!"
+  ],
+  [
+   "Next time is your last! Prepare yourself!!!"
+  ],
+  [
+   "Your skill cannot bring me down! ... Stand down!"
+  ],
+  [
+   "Mmm!! I cannot let this go on! Hyaaaah!"
+  ],
+  [
+   "Mmm!! Not bad at all! Hyaaaah!"
+  ],
+  [
+   "Mmm!! I cannot let this go on! Hyaaaah!"
+  ],
+  [
+   "Mmm!! I cannot let this go on! Hyaaaah!"
+  ],
+  [
+   "Damn it! I will not lose like this! Hyaaaah!"
+  ],
+  [
+   "Mmm!! I cannot let this go on! Hyaaaah!"
+  ],
+  [
+   "Mmm!! I cannot let this go on! Hyaaaah!"
+  ],
+  [
+   "I cannot lose here! Hyaaaah!"
+  ],
+  [
+   "Playtime is over!! I will end this in one stroke!"
+  ],
+  [
+   "Playtime is over!! I will end this in one stroke!"
+  ],
+  [
+   "Playtime is over!! I will end this in one stroke!"
+  ],
+  [
+   "Playtime is over!! I will end this in one stroke!"
+  ],
+  [
+   "The next blow ends it! Prepare yourself!!"
+  ],
+  [
+   "Playtime is over!! I will end this in one stroke!"
+  ],
+  [
+   "Playtime is over!! I will end this in one stroke!"
+  ],
+  [
+   "I will not let this drag on! I end it in one stroke!"
+  ],
+  [
+   "Just what I wanted! Hyaaaah!!"
+  ],
+  [
+   "Do not think I go down so easily! Hyaaaah!!"
+  ],
+  [
+   "Just what I wanted! Hyaaaah!!"
+  ],
+  [
+   "Just what I wanted! Hyaaaah!!"
+  ],
+  [
+   "It will not be that easy! Hyaaaah!!"
+  ],
+  [
+   "Just what I wanted! Hyaaaah!!"
+  ],
+  [
+   "Just what I wanted! Hyaaaah!!"
+  ],
+  [
+   "Just what I wanted! Hyaaaah!!"
+  ],
+  [
+   "A pity, but you are no match for me! Prepare yourself!!!"
+  ],
+  [
+   "Can you withstand my next attack?"
+  ],
+  [
+   "A pity, but you are no match for me! Prepare yourself!!!"
+  ],
+  [
+   "A pity, but you are no match for me! Prepare yourself!!!"
+  ],
+  [
+   "This next blow will settle it! Prepare yourself!!"
+  ],
+  [
+   "A pity, but you are no match for me! Prepare yourself!!!"
+  ],
+  [
+   "A pity, but you are no match for me! Prepare yourself!!!"
+  ],
+  [
+   "This ends it! Prepare yourself!!!!"
+  ],
+  [
+   "Such strength! But I cannot afford to lose!!"
+  ],
+  [
+   "Strong indeed! I would want such a fierce general in my army!"
+  ],
+  [
+   "Such strength! But I cannot afford to lose!!"
+  ],
+  [
+   "Such strength! But I cannot afford to lose!!"
+  ],
+  [
+   "Damn! So this is the gap in our strength!!"
+  ],
+  [
+   "Such strength! But I cannot afford to lose!!"
+  ],
+  [
+   "Such strength! But I cannot afford to lose!!"
+  ],
+  [
+   "Such strength! But I cannot afford to lose!!"
+  ],
+  [
+   "It has been long since anyone gave me this much trouble."
+  ],
+  [
+   "It has been long since anyone gave me this much trouble."
+  ],
+  [
+   "It has been long since anyone gave me this much trouble."
+  ],
+  [
+   "It has been long since anyone gave me this much trouble."
+  ],
+  [
+   "It has been long since anyone gave me this much trouble."
+  ],
+  [
+   "It has been long since anyone gave me this much trouble."
+  ],
+  [
+   "It has been long since anyone gave me this much trouble."
+  ],
+  [
+   "It has been long since anyone gave me this much trouble."
+  ],
+  [
+   "I will not hold back next time! Hyaaaah!"
+  ],
+  [
+   "I will not hold back next time! Hyaaaah!"
+  ],
+  [
+   "I will not hold back next time! Hyaaaah!"
+  ],
+  [
+   "I will not hold back next time! Hyaaaah!"
+  ],
+  [
+   "I will not hold back next time! Hyaaaah!"
+  ],
+  [
+   "I will not hold back next time! Hyaaaah!"
+  ],
+  [
+   "I will not hold back next time! Hyaaaah!"
+  ],
+  [
+   "I will not hold back next time! Hyaaaah!"
+  ],
+  [
+   "Curse you, shaming me so! Men! At him!!"
+  ],
+  [
+   "Such insolent talk! I will crush you flat!"
+  ],
+  [
+   "Damn it! Then I will scatter you and your whole army!!"
+  ],
+  [
+   "So be it! All of you, attack! Let none return alive!"
+  ],
+  [
+   "Curse you! I will show you! Men, attack!!"
+  ],
+  [
+   "Damn it! Then I will scatter you and your whole army!!"
+  ],
+  [
+   "Damn it! Then I will scatter you and your whole army!!"
+  ],
+  [
+   "Men, attack! We must win, whatever it takes!!"
+  ],
+  [
+   "Did you think you could beat me!! Wahahahaha!"
+  ],
+  [
+   "Hmph! You too were no match for me after all."
+  ],
+  [
+   "Did you think you could beat me!! Wahahahaha!"
+  ],
+  [
+   "Did you think you could beat me!! Wahahahaha!"
+  ],
+  [
+   "Wahahaha! All talk and nothing more!!"
+  ],
+  [
+   "Did you think you could beat me!! Wahahahaha!"
+  ],
+  [
+   "Did you think you could beat me!! Wahahahaha!"
+  ],
+  [
+   "I spare your life! Come again some time!"
+  ],
+  [
+   "{6}I am {1}. From this day this land is my territory."
+  ],
+  [
+   "{1}, yield this city now and I will spare your life!!"
+  ],
+  [
+   "This land is needed for my great ambition! Now, come!!"
+  ],
+  [
+   "{6}I, {1}, will take this land! Be gone at once!"
+  ],
+  [
+   "{1}! Hand over this city at once!!"
+  ],
+  [
+   "{6}I am {1}. By my lord's command I take this land!!"
+  ],
+  [
+   "{1}, open the gates and yield this land, and I will spare your life."
+  ],
+  [
+   "{6}I am {1}. By command this land is ours! Depart at once!"
+  ],
+  [
+   "{6}I, {1}, hold this city myself. Take it if you can!"
+  ],
+  [
+   "Very well! I will beat you back!!"
+  ],
+  [
+   "{6}While I, {1}, stand here, you go no further! Come!!"
+  ],
+  [
+   "{6}I, {1}, am not swayed by such words!"
+  ],
+  [
+   "You think I will yield the city so easily? Take it by force!!"
+  ],
+  [
+   "{6}While I, {1}, stand here, you go no further! Come!!"
+  ],
+  [
+   "{6}The city I, {1}, guard will never fall! Test it yourself!"
+  ],
+  [
+   "{6}You take me, {1}, far too lightly! I will never agree!"
+  ],
+  [
+   "{6}Your luck ends here! I, {1}, will take your head!!"
+  ],
+  [
+   "{6}Your luck ends here! I, {1}, will take your head!!"
+  ],
+  [
+   "{6}Your luck ends here! I, {1}, will take your head!!"
+  ],
+  [
+   "{6}Your luck ends here! I, {1}, will take your head!!"
+  ],
+  [
+   "{6}I, {1}, will sink your ships to the last one."
+  ],
+  [
+   "{6}Your luck ends here! I, {1}, will take your head!!"
+  ],
+  [
+   "{6}Your luck ends here! I, {1}, will take your head!!"
+  ],
+  [
+   "{1}, sink and become weeds on the riverbed!"
+  ],
+  [
+   "What nonsense!! It is you who will sink to the bottom!!"
+  ],
+  [
+   "What nonsense!! It is you who will sink to the bottom!!"
+  ],
+  [
+   "What nonsense!! It is you who will sink to the bottom!!"
+  ],
+  [
+   "What nonsense!! It is you who will sink to the bottom!!"
+  ],
+  [
+   "Very well! I will throw you off your ship instead!"
+  ],
+  [
+   "What nonsense!! It is you who will sink to the bottom!!"
+  ],
+  [
+   "What nonsense!! It is you who will sink to the bottom!!"
+  ],
+  [
+   "What nonsense!! It is you who will sink to the bottom!!"
+  ],
+  [
+   "Withdraw for now! We must re-form our ranks!"
+  ],
+  [
+   "Damn! I will take this city yet! Wait for me to claim your head!"
+  ],
+  [
+   "All of you! Fall back! Do not throw your lives away!"
+  ],
+  [
+   "Ngh... We retreat for now..."
+  ],
+  [
+   "Damn you! I will remember this!"
+  ],
+  [
+   "Taking this city will be no easy task..."
+  ],
+  [
+   "Ngh... We retreat for now..."
+  ],
+  [
+   "Retreat! With these troops it cannot be done..."
+  ],
+  [
+   "We abandon this city. All of you, pull back!"
+  ],
+  [
+   "Mark me! I will take this city back! Remember that!"
+  ],
+  [
+   "Men, pull back! We can always take the city back later!"
+  ],
+  [
+   "We abandon this city. Men, withdraw!"
+  ],
+  [
+   "Curse you! I will repay this debt in full!"
+  ],
+  [
+   "Men, fall back! Leave this city at once!"
+  ],
+  [
+   "Retreat! We cannot hold any longer!"
+  ],
+  [
+   "Stay here longer and we will be wiped out... Pull back for now!"
+  ],
+  [
+   "Hah! {1}, next time we meet I will have your head! Farewell!"
+  ],
+  [
+   "Curse you, {1}! Do not think you will leave my lands alive!"
+  ],
+  [
+   "Hah! {1}, next time we meet I will have your head! Farewell!"
+  ],
+  [
+   "{1}, I leave your head with you for now! Farewell!"
+  ],
+  [
+   "It is over! Men! Retreat!"
+  ],
+  [
+   "Beaten this badly... Men! Retreat!"
+  ],
+  [
+   "Curse it! Retreat! Leave this place at once!"
+  ],
+  [
+   "Retreat! Fall back for now and reform our ranks!"
+  ],
+  [
+   "Men, fall back!! Fighting here is to our disadvantage!!"
+  ],
+  [
+   "Beaten this badly in a naval fight... We will return!!"
+  ],
+  [
+   "We cannot hold out any longer! Men, fall back, fall back!"
+  ],
+  [
+   "Men, fall back!! Fighting here is to our disadvantage!!"
+  ],
+  [
+   "The footing is too poor to fight! Retreat!!"
+  ],
+  [
+   "We cannot fight in a place like this! All units, retreat!!"
+  ],
+  [
+   "Retreat! Get clear of these waters!!"
+  ],
+  [
+   "Retreat! Turn the ships about!"
+  ],
+  [
+   "Good! One more push!! Crush them in a single blow!!"
+  ],
+  [
+   "Now! Let us settle this in one stroke!"
+  ],
+  [
+   "Good! One more push!! Crush them in a single blow!!"
+  ],
+  [
+   "Good! The final blow!! Wipe them out at once!!"
+  ],
+  [
+   "Good! One more push! Men! Charge, charge!"
+  ],
+  [
+   "The enemy is worn down. Men! At them!!"
+  ],
+  [
+   "The enemy is wavering! Do not let this chance slip!"
+  ],
+  [
+   "Few enemy troops remain! Press the attack now!"
+  ],
+  [
+   "{1}! If you are a warrior, come out of the city and fight!!"
+  ],
+  [
+   "Throw down your arms and submit, and all is well! If not..."
+  ],
+  [
+   "{1}! If you are a warrior, come out of the city and fight!!"
+  ],
+  [
+   "{1}! If you are a warrior, come out of the city and fight!!"
+  ],
+  [
+   "{1}! Can you not fight without a city? Coward!!"
+  ],
+  [
+   "{1}! If you are a warrior, come out of the city and fight!!"
+  ],
+  [
+   "{1}! If you are a warrior, come out of the city and fight!!"
+  ],
+  [
+   "{1}! Do not waste your life. Surrender while you can!"
+  ],
+  [
+   "Hmph... coward. So be it. Men, attack!!"
+  ],
+  [
+   "So that is your answer! Then fall where you stand!!"
+  ],
+  [
+   "Hmph... coward. So be it. Men, attack!!"
+  ],
+  [
+   "Hmph... coward. So be it. Men, attack!!"
+  ],
+  [
+   "Hmph... coward. So be it. Men, attack!!"
+  ],
+  [
+   "Hmph... coward. So be it. Men, attack!!"
+  ],
+  [
+   "Hmm, so you will not come out. You are no fool, then!"
+  ],
+  [
+   "So be it, {1}! Then I will simply take your head!"
+  ],
+  [
+   "Very well! I will face you! Come at me!!"
+  ],
+  [
+   "So you are the one who mocks me! I will face you!"
+  ],
+  [
+   "Very well! I will face you! Come at me!!"
+  ],
+  [
+   "Very well! I will face you! Come at me!!"
+  ],
+  [
+   "Cross blades with me and you will learn my true strength."
+  ],
+  [
+   "Very well! I will face you! Come at me!!"
+  ],
+  [
+   "Interesting! I will take you on!"
+  ],
+  [
+   "Very well! I will face you! Come at me!!"
+  ],
+  [
+   "Men!! Break down the gate in one rush!!"
+  ],
+  [
+   "Once the gate is open the city is useless! Break it down!!"
+  ],
+  [
+   "Men!! Break down the gate in one rush!!"
+  ],
+  [
+   "Men!! Break down the gate in one rush!!"
+  ],
+  [
+   "Smash that gate down and be done with it!"
+  ],
+  [
+   "Break the gate and push into the city!!"
+  ],
+  [
+   "The gate! Men!! Strike at that gate!"
+  ],
+  [
+   "The gate is the weak point! Aim for the gate!"
+  ],
+  [
+   "Raise the ladders! Take the walls!"
+  ],
+  [
+   "Take the walls! Strike the enemy down from them!"
+  ],
+  [
+   "Raise the ladders! Take the walls!"
+  ],
+  [
+   "Raise the ladders! Take the walls!"
+  ],
+  [
+   "The walls! Strike at the walls!"
+  ],
+  [
+   "Raise the ladders! Take the walls!"
+  ],
+  [
+   "The walls are the city's key! Take them and we hold the advantage!"
+  ],
+  [
+   "Take the walls and the city lies open! Climb!"
+  ],
+  [
+   "Now! All units, charge!!"
+  ],
+  [
+   "Charge! Do not give up a single step!"
+  ],
+  [
+   "Charge! Whoever takes {1}'s head names his own reward!"
+  ],
+  [
+   "At them! Crush them in a single blow!"
+  ],
+  [
+   "Fear nothing! Charge! Charge!"
+  ],
+  [
+   "All units, charge!! Let not one of them escape!"
+  ],
+  [
+   "Now! All units, charge!!"
+  ],
+  [
+   "Our target is {1}'s head! Men! Charge!!"
+  ],
+  [
+   "{6}{1} alone is more than enough for the likes of you! Here I come!!"
+  ],
+  [
+   "{6}A mob of common soldiers is no match for {1}!"
+  ],
+  [
+   "{6}{1} alone is more than enough for the likes of you! Here I come!!"
+  ],
+  [
+   "{6}{1} alone is more than enough for the likes of you! Here I come!!"
+  ],
+  [
+   "Men, hold back! Leave this one to me!"
+  ],
+  [
+   "{6}{1} alone is more than enough for the likes of you! Here I come!!"
+  ],
+  [
+   "{6}{1} alone is more than enough for the likes of you! Here I come!!"
+  ],
+  [
+   "Any who value their lives, stand back! I will show no mercy!"
+  ],
+  [
+   "Ha ha ha! Big words from a beaten dog!"
+  ],
+  [
+   "You were never my match to begin with! Ha ha ha!"
+  ],
+  [
+   "Wahahaha! Now you know my strength!"
+  ],
+  [
+   "I will not run or hide! Come again whenever you wish to fight!"
+  ],
+  [
+   "I let you go this time! Next time I take your head!"
+  ],
+  [
+   "The outcome was clear from the moment we began! Ha ha ha!"
+  ],
+  [
+   "Ha ha ha! Big words from a beaten dog!"
+  ],
+  [
+   "I will not run or hide! Come again whenever you wish to fight!"
+  ],
+  [
+   "I need no city to bring you down! Here I come!"
+  ],
+  [
+   "Throw open the gates! Cut them down to the last man!"
+  ],
+  [
+   "I need no city to bring you down! Here I come!"
+  ],
+  [
+   "I need no city to bring you down! Here I come!"
+  ],
+  [
+   "Open the gates! Show them our true strength!"
+  ],
+  [
+   "I need no city to bring you down! Here I come!"
+  ],
+  [
+   "I need no city to bring you down! Here I come!"
+  ],
+  [
+   "We settle this at once! Open the gates!"
+  ],
+  [
+   "Men, hold the walls to the death!"
+  ],
+  [
+   "The walls! Defend the walls!"
+  ],
+  [
+   "The walls must not fall! Hold them to the end!"
+  ],
+  [
+   "Lose the walls and we lose the battle! Men, hold to the death!"
+  ],
+  [
+   "Do not let the enemy into the city! Stop them at the walls!"
+  ],
+  [
+   "Stop the enemy at the walls! Up, get up on the walls!"
+  ],
+  [
+   "Secure the walls! Hold them at any cost!"
+  ],
+  [
+   "Men, attack from atop the walls!"
+  ],
+  [
+   "I have waited long for you, {1}! Let us settle this!"
+  ],
+  [
+   "{1}! To meet you in a place like this! We settle this here!"
+  ],
+  [
+   "I have waited long for you, {1}! Let us settle this!"
+  ],
+  [
+   "I have waited long for you, {1}! Let us settle this!"
+  ],
+  [
+   "{1}! This place will be your grave!!"
+  ],
+  [
+   "I have waited long for you, {1}! Let us settle this!"
+  ],
+  [
+   "I have waited long for you, {1}! Let us settle this!"
+  ],
+  [
+   "Beyond this point lie our lands. You shall not set one step in."
+  ],
+  [
+   "I return those words to you! Here I come!"
+  ],
+  [
+   "Hmph! You think you can stop my army! I will trample you flat!"
+  ],
+  [
+   "I return those words to you! Here I come!"
+  ],
+  [
+   "I return those words to you! Here I come!"
+  ],
+  [
+   "I will not hear it! I return those words to you! Here I come!"
+  ],
+  [
+   "I return those words to you! Here I come!"
+  ],
+  [
+   "I return those words to you! Here I come!"
+  ],
+  [
+   "I return those words to you! Here I come!"
+  ]
+ ],
+ "note": "英譯（tools/langpack.py en 合併 workplace/lang/en/out-*.json）"
+}

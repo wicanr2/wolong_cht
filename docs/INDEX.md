@@ -243,7 +243,7 @@
 | [`docs/spec/81-disaster-quantities.md`](spec/81-disaster-quantities.md) | 81 — 災害的實際數值：機率、marker 量、持續與距離衰減 | CONFORMED（2026-08-25）。整條鏈的數值都有機器碼出處， remake 已實作；本輪修掉一處距離算錯… | 2026-08-25 |
 | [`docs/spec/82-defender-selection.md`](spec/82-defender-selection.md) | 82 — 應戰軍團的挑選：兵數 × 士氣 × 評價 | CONFORMED（2026-08-25）。 | 2026-08-25 |
 | [`docs/spec/83-initial-strategy-pass.md`](spec/83-initial-strategy-pass.md) | 83 — 新遊戲的開局政略評估（sub_12BD9 的第二個呼叫點） | READY → CONFORMED（2026-08-26）。 | 2026-08-26 |
-| [`docs/spec/84-multilanguage.md`](spec/84-multilanguage.md) | 84 — 多語系：簡體中文與英文支援 | DRAFT → 第一期 CONFORMED（簡體全鏈＋英文骨架，2026-08-26）。 | 2026-08-26 |
+| [`docs/spec/84-multilanguage.md`](spec/84-multilanguage.md) | 84 — 多語系：簡體中文、日文、英文 | CONFORMED（四個語系端到端可玩，2026-08-26）。 | 2026-08-26 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | CONFORMED。管線接起來了，也對原版跑過一輪 （[../playtest/37](../playtest/37… | 2026-08-15 |
 | [`docs/spec/91-tactical-parity.md`](spec/91-tactical-parity.md) | 91 — 戰場的逐區對拍：分區、同狀態怎麼達成 | CONFORMED。 | 2026-08-17 |
 

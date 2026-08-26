@@ -13,6 +13,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"regexp"
 	"strings"
 )
 
@@ -22,6 +23,7 @@ type Language string
 const (
 	ZhHant Language = "zh-hant" // 母本，不轉換
 	ZhHans Language = "zh-hans"
+	Ja     Language = "ja" // 日文＝PC-98 原版的文字，不是翻譯
 	En     Language = "en"
 )
 
@@ -30,7 +32,12 @@ type Table struct {
 	lang     Language
 	override map[string]string // 逐句覆寫：原文 → 譯文
 	chars    map[rune]rune     // 字級表（zh-Hans）
+	// hasNumeric ＝ 詞表裡有帶 `%d` 的樣板。沒有就不必做樣板查找。
+	hasNumeric bool
 }
+
+// digits 用來把「已經填好數字的字串」還原成樣板。
+var digits = regexp.MustCompile(`[0-9]+`)
 
 // ParseLanguage 驗證語系代號。
 func ParseLanguage(s string) (Language, error) {
@@ -39,26 +46,58 @@ func ParseLanguage(s string) (Language, error) {
 		return ZhHant, nil
 	case ZhHans:
 		return ZhHans, nil
+	case Ja:
+		return Ja, nil
 	case En:
 		return En, nil
 	}
-	return "", fmt.Errorf("uitext: 不支援的語系 %q（可用：zh-hant／zh-hans／en）", s)
+	return "", fmt.Errorf("uitext: 不支援的語系 %q（可用：zh-hant／zh-hans／ja／en）", s)
 }
 
 // Load 載入一個語系。
 //
-// overridePath 是逐句詞表（可空）；charsPath 是字級表（只有 zh-Hans 需要，
-// 可空）。**兩個檔都缺時仍回傳可用的 Table**——缺檔時 Convert 退回原文，
-// 遊戲照跑，缺譯直接以繁中顯示。
-func Load(lang Language, overridePath, charsPath string) (*Table, error) {
-	t := &Table{lang: lang}
-	if overridePath != "" {
-		raw, err := os.ReadFile(overridePath)
-		if err != nil {
-			return nil, fmt.Errorf("uitext: 讀不到詞表 %s：%w", overridePath, err)
+// charsPath 是字級表（只有 zh-Hans 需要，可空）；overridePaths 是逐句詞表
+// （UI 詞、人名地名…，可以多個，後面的蓋前面的）。**檔都缺時仍回傳可用的
+// Table**——缺檔時 Convert 退回原文，遊戲照跑，缺譯直接以繁中顯示。
+//
+// 詞表的 JSON 允許兩種形狀：直接的 `{"原文": "譯文"}`，或包一層
+// `{"note": ..., "names": {...}}`（名表用這種，好放產生方式的說明）。
+func Load(lang Language, charsPath string, overridePaths ...string) (*Table, error) {
+	t := &Table{lang: lang, override: map[string]string{}}
+	for _, path := range overridePaths {
+		if path == "" {
+			continue
 		}
-		if err := json.Unmarshal(raw, &t.override); err != nil {
-			return nil, fmt.Errorf("uitext: %s 不是有效 JSON：%w", overridePath, err)
+		raw, err := os.ReadFile(path)
+		if err != nil {
+			return nil, fmt.Errorf("uitext: 讀不到詞表 %s：%w", path, err)
+		}
+		var any map[string]json.RawMessage
+		if err := json.Unmarshal(raw, &any); err != nil {
+			return nil, fmt.Errorf("uitext: %s 不是有效 JSON：%w", path, err)
+		}
+		if nested, ok := any["names"]; ok {
+			var m map[string]string
+			if err := json.Unmarshal(nested, &m); err != nil {
+				return nil, fmt.Errorf("uitext: %s 的 names 不是字串表：%w", path, err)
+			}
+			for k, v := range m {
+				t.override[k] = v
+			}
+			continue
+		}
+		for k, v := range any {
+			var str string
+			if err := json.Unmarshal(v, &str); err != nil {
+				continue // note 之類的非字串欄位略過
+			}
+			t.override[k] = str
+		}
+	}
+	for k := range t.override {
+		if strings.Contains(k, "%d") {
+			t.hasNumeric = true
+			break
 		}
 	}
 	if charsPath != "" {
@@ -109,6 +148,9 @@ func (t *Table) Convert(s string) string {
 	if v, ok := t.override[s]; ok {
 		return v
 	}
+	if v, ok := t.numeric(s); ok {
+		return v
+	}
 	if len(t.chars) == 0 {
 		return s
 	}
@@ -122,6 +164,39 @@ func (t *Table) Convert(s string) string {
 		b.WriteRune(ch)
 	}
 	return b.String()
+}
+
+// numeric 處理「畫的時候已經填好數字」的標籤。
+//
+// UI 的數值欄位是 `fmt.Sprintf("兵 %d", n)` 先組好才畫的，所以畫到
+// 這一層時看到的是 `兵 300`——**逐句詞表查不到**。把數字抽回 `%d` 去查
+// 樣板，命中再把原來的數字依序填回去。`%d` 的個數對不上就放棄，
+// 寧可顯示原文也不要把數字擺錯位置。
+func (t *Table) numeric(s string) (string, bool) {
+	if !t.hasNumeric {
+		return "", false
+	}
+	nums := digits.FindAllString(s, -1)
+	if len(nums) == 0 {
+		return "", false
+	}
+	v, ok := t.override[digits.ReplaceAllString(s, "%d")]
+	if !ok || strings.Count(v, "%d") != len(nums) {
+		return "", false
+	}
+	var b strings.Builder
+	i := 0
+	for {
+		k := strings.Index(v, "%d")
+		if k < 0 {
+			b.WriteString(v)
+			break
+		}
+		b.WriteString(v[:k])
+		b.WriteString(nums[i])
+		v, i = v[k+2:], i+1
+	}
+	return b.String(), true
 }
 
 // ConvertLines 對多列逐列 Convert。

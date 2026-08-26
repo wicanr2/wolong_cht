@@ -24,3 +24,21 @@ func TestWrapLinesPreservesHardBlankLines(t *testing.T) {
 		t.Fatalf("硬斷行／空列 = %#v", got)
 	}
 }
+
+// 英文要斷在空白：從字中間切開的話讀不出來（docs/spec/84 §2）。
+func TestWrapLineBreaksEnglishAtSpaces(t *testing.T) {
+	got := WrapLine("The strategist reports", 20*HalfW)
+	if len(got) != 2 || got[0] != "The strategist" || got[1] != "reports" {
+		t.Fatalf("英文折行 = %#v，預期斷在空白", got)
+	}
+	// 單字本身比一列長時沒得搬，照舊硬切——不能因此整列不折。
+	long := WrapLine("AAAAAAAAAAAAAAAAAAAAAAAAA", 10*HalfW)
+	if len(long) != 3 {
+		t.Fatalf("超長單字 = %#v，預期照舊硬切成三列", long)
+	}
+	// 中文不受影響：每個字都能斷。
+	zh := WrapLine("甲乙丙丁", 2*GlyphW)
+	if len(zh) != 2 || zh[0] != "甲乙" {
+		t.Fatalf("中文折行被改壞了 = %#v", zh)
+	}
+}

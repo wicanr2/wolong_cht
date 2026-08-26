@@ -20,7 +20,10 @@ import (
 // x/text 的 Big5 與 ShiftJIS 實作就是 cp950／cp932 的超集。
 func Decode(b []byte, enc Encoding) string {
 	if enc == UTF8 {
-		return strings.TrimRight(string(b), "\x00　 ")
+		// ⚠ **UTF-8 語系包只切 NUL，不切空白**。原版是定長欄位，
+		// 尾端的空白是補位所以要切掉；英文的 `struck {2}.` 那個空白
+		// 是真的空白，切掉會變成 `struckXUCHANG.`（docs/spec/84）。
+		return strings.TrimRight(string(b), "\x00")
 	}
 	var dec interface{ Bytes([]byte) ([]byte, error) }
 	switch enc {
