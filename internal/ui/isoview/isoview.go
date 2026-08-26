@@ -568,19 +568,28 @@ const battleSmallUnit = 0x20
 //
 // 原版是邊走邊寫，而**每個（格, 深度）只有一個 producer**（docs/spec/58 §1），
 // 各層又是依 z 遞增寫進來的，所以結果等於「取最大的那個 z」——
-// 不必模擬走訪順序。地形只在 lane 0，lane 1 是人物／旗那一組。
+// 不必模擬走訪順序。地形在 lane 0，人物／旗在 lane 1。
+//
+// ⭐ **高度要含物件**（`+1`），不是只有地形那一份（`+3`）。
+// `sub_1DDB4` 取鄰格高度用的是 `+1`；只算 lane 0 的話，平地上
+// `z1 = 0`，兵的下半（第 1 層）就永遠畫不出來——**畫面上是半截人**
+//（docs/spec/88 §3）。地形記 `2z`、物件記 `2z+1`（`58` §1 的編碼）。
+//
+// `start`（`+2`）維持只看 lane 0 的小 unit：那一格記的是地面，
+// 物件不該把起始深度往上推。
 func makeDisplayInfo(grid *battleDisplayGrid) [battleDisplayGridRows][battleDisplayGridCols]battleDisplaySlotInfo {
 	var info [battleDisplayGridRows][battleDisplayGridCols]battleDisplaySlotInfo
 	for row := range grid {
 		for col := range grid[row] {
 			for z := 0; z < battle.MaxStack; z++ {
-				s := grid[row][col][z][0]
-				if !s.set || s.entry.raw == 0 {
-					continue
+				if s := grid[row][col][z][0]; s.set && s.entry.raw != 0 {
+					info[row][col].height = 2 * z
+					if s.entry.raw < battleSmallUnit {
+						info[row][col].start = 2 * z
+					}
 				}
-				info[row][col].height = 2 * z
-				if s.entry.raw < battleSmallUnit {
-					info[row][col].start = 2 * z
+				if s := grid[row][col][z][1]; s.set && s.entry.raw != 0 {
+					info[row][col].height = 2*z + 1
 				}
 			}
 		}

@@ -167,7 +167,11 @@ func (g *game) drawIventScene(screen *ebiten.Image, page int) {
 // sub_1895D 的五行框。頁面切割在呼叫端完成；這裡不把結構尾空行畫出來。
 func (g *game) drawLegacyTalkBox(screen *ebiten.Image, x, y, w, h int,
 	lines []string, portraitPage int) {
-	g.chrome.Window(screen, x, y, w, h, chrome.Menu)
+	// ⭐ **TALK 框的底是黑的，不是選單的藍底龍紋**（docs/spec/88 §1）。
+	// 實機量過：框內 6,298 px 全是 (0,0,0)。`chrome.Menu` 會鋪龍紋
+	//（`fillInterior` 只在 fill == Menu 時鋪），所以這裡要傳 `Blank`。
+	// ⚠ 系統選單確實是藍底龍紋（playtest/39 逐像素 PASS），別一起改。
+	g.chrome.Window(screen, x, y, w, h, chrome.Blank)
 	bank := 0
 	if g.world != nil {
 		bank = int(g.world.Clock.Season())
@@ -216,7 +220,8 @@ func (g *game) drawLegacyChoiceBox(screen *ebiten.Image, x, y int,
 	lines []string, selected int) {
 
 	bx, by, w, h := legacyChoiceRect(x, y, lines)
-	g.chrome.Window(screen, bx, by, w, h, chrome.Menu)
+	// 選項框與 TALK 框同一族，底一樣是黑的（docs/spec/88 §1）。
+	g.chrome.Window(screen, bx, by, w, h, chrome.Blank)
 	for i, line := range lines {
 		ly := by + chrome.Tile + i*talkLinePitch
 		if i == selected {
@@ -260,7 +265,8 @@ func (g *game) drawLegacyHint(screen *ebiten.Image, s string, y int) {
 		w = screenW - 2*chrome.Tile
 	}
 	x := (screenW - w) / 2 / chrome.Tile * chrome.Tile
-	g.chrome.Window(screen, x, y, w, 4*chrome.Tile, chrome.Menu)
+	// 按鍵提示是 remake 加的，但要跟旁邊那兩個框同一個樣子。
+	g.chrome.Window(screen, x, y, w, 4*chrome.Tile, chrome.Blank)
 	g.td.Draw(screen, s, x+chrome.Tile, y+chrome.Tile,
 		color.RGBA{170, 170, 180, 255})
 }

@@ -109,6 +109,10 @@ const (
 	bannerTextY = 8
 	// 日期的字色是調色盤第 9 色（#F3D392），與橫幅上「年 月 日」同色。
 	bannerDateInk = 9
+
+	// eventLineFrames 是事件列顯示幾幀。**六秒**——手機版的事件通知
+	// 已經在用這個值（`internal/ui/phone`），兩端一致比另外挑一個數字好。
+	eventLineFrames = 6 * 60
 )
 
 type game struct {
@@ -309,7 +313,16 @@ type game struct {
 	adviseAdvisorSaid []string // 下框：軍師，也就是玩家自己
 
 	lastEvent string
-	messages  []messageDialog
+	// lastEventAt 是事件列**內容變成現在這一句**的那一幀，
+	// lastEventShown 是上一次看到的那一句。原版的大地圖沒有這個框
+	//（docs/spec/88 §2），remake 加的提示至少要像個提示。
+	//
+	// ⭐ 用「內容變了就重計時」而不是在每個設定點記時間：`lastEvent`
+	// 有三十幾個設定點，其中幾個是 `+=`。**要靠每個地方都記得的機制
+	// 遲早會漏掉一個**，而漏掉的症狀是那一種事件的框永遠不消失。
+	lastEventAt    int
+	lastEventShown string
+	messages    []messageDialog
 	// scenarioTitles 是四個劇本的標題（區塊 +0x40），啟動時從 SINARIO.DAT 讀。
 	scenarioTitles map[int]string
 
@@ -1213,11 +1226,16 @@ func (g *game) Draw(screen *ebiten.Image) {
 	g.drawNaturalStrategyHUD(screen)
 
 	// 事件列只在有事的時候出現，而且畫成一個視窗而不是貼在畫面底部的黑條。
-	if g.lastEvent != "" {
+	// ⭐ **六秒後自己消失**：與手機版同一個行為（docs/spec/88 §2）。
+	if g.lastEvent != g.lastEventShown {
+		g.lastEventShown, g.lastEventAt = g.lastEvent, g.frame
+	}
+	if g.lastEvent != "" && g.frame-g.lastEventAt < eventLineFrames {
 		w := g.td.Width(g.lastEvent) + 4*chrome.Tile
 		w = (w/chrome.Tile + 1) * chrome.Tile
 		x := (screenW - w) / 2 / chrome.Tile * chrome.Tile
-		g.chrome.Window(screen, x, screenH-40, w, 32, chrome.Menu)
+		// 與 TALK 框同一族：黑底金框（docs/spec/88 §1）。
+		g.chrome.Window(screen, x, screenH-40, w, 32, chrome.Blank)
 		g.td.Draw(screen, g.lastEvent, x+2*chrome.Tile, screenH-32, chrome.Paper)
 	}
 	if !g.td.Available() {

@@ -80,6 +80,7 @@
 | [`docs/playtest/45-ai-longrun-comparison.md`](playtest/45-ai-longrun-comparison.md) | 45 — AI 長程決策對照：原版半年 vs remake 五個 seed | 完成，四大擴張事件全部一致。 | 2026-08-25 |
 | [`docs/playtest/46-runtime-language-switch.md`](playtest/46-runtime-language-switch.md) | 46 — 執行期切換語言：桌面與手機的實跑 | confirmed。 | 2026-08-26 |
 | [`docs/playtest/47-latin-screen-survey.md`](playtest/47-latin-screen-survey.md) | 47 — 英文版逐畫面調整前後 | confirmed。 | 2026-08-26 |
+| [`docs/playtest/48-display-polish.md`](playtest/48-display-polish.md) | 48 — 三處顯示修正的前後對照 | confirmed。 | 2026-08-26 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告 2026-08-26 重剪為 72 秒， 加入語言切換與原版並排兩段；遊戲段… | 2026-08-26 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
@@ -250,6 +251,7 @@
 | [`docs/spec/85-latin-list-layout.md`](spec/85-latin-list-layout.md) | 85 — 半形語系的清單欄界（英文版的姓名欄） | CONFORMED（2026-08-26 實作並實跑驗過）。 | 2026-08-26 |
 | [`docs/spec/86-runtime-language-switch.md`](spec/86-runtime-language-switch.md) | 86 — 執行期切換語言（含手機版） | CONFORMED（2026-08-26 實作並實跑驗過）。 | 2026-08-26 |
 | [`docs/spec/87-latin-screen-layout.md`](spec/87-latin-screen-layout.md) | 87 — 半形語系的畫面調整（清單以外） | CONFORMED（2026-08-26 實作並實跑驗過）。 | 2026-08-26 |
+| [`docs/spec/88-display-polish-parity.md`](spec/88-display-polish-parity.md) | 88 — 三處顯示與原版對不上 | CONFORMED（2026-08-26 實作並實跑驗過）。 | 2026-08-26 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | CONFORMED。管線接起來了，也對原版跑過一輪 （[../playtest/37](../playtest/37… | 2026-08-15 |
 | [`docs/spec/91-tactical-parity.md`](spec/91-tactical-parity.md) | 91 — 戰場的逐區對拍：分區、同狀態怎麼達成 | CONFORMED。 | 2026-08-17 |
 

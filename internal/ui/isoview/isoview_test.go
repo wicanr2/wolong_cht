@@ -321,3 +321,41 @@ func TestCameraFromMiniMapFormula(t *testing.T) {
 		})
 	}
 }
+
+// 平地上的一個兵要畫得完整（docs/spec/88 §3）。
+//
+// ⭐ 判準不是「看起來對」而是**深度範圍涵蓋兵的兩層**：
+// 兵的下半落在第 z+1 層，而 `displayDepthRange` 只畫到 `height/2`。
+// 高度若只算地形（lane 0），平地上就是 0——下半永遠不畫，畫面上是半截人。
+func TestDisplayHeightIncludesObjectsSoSoldiersDrawWhole(t *testing.T) {
+	const col, row = 4, 6
+	terrain := battleDisplayEntry{kind: displayRawUnit, cellCol: col, cellRow: row,
+		layer: 0, lane: 0, raw: 0x10}
+	// 兵的兩半：上半 (row, z=0)、下半 (row-1, z=1)——與 sub_1DA1C 相同。
+	upper := battleDisplayEntry{kind: displayRawUnit, cellCol: col, cellRow: row,
+		layer: 0, lane: 1, raw: 0x201}
+	lower := battleDisplayEntry{kind: displayRawUnit, cellCol: col, cellRow: row - 1,
+		layer: 1, lane: 1, raw: 0x200}
+	terrainAbove := terrain
+	terrainAbove.cellRow = row - 1
+
+	grid := makeDisplayGrid([]battleDisplayEntry{terrain, terrainAbove, upper, lower})
+	info := makeDisplayInfo(&grid)
+
+	// 兵所在那一格：物件在第 0 層 → 2*0+1 = 1。
+	if got := info[row][col].height; got != 1 {
+		t.Errorf("兵那一格的高度 ＝ %d，預期 1（物件記 2z+1）", got)
+	}
+	// 下半那一格：物件在第 1 層 → 2*1+1 = 3，範圍才涵蓋得到第 1 層。
+	if got := info[row-1][col].height; got != 3 {
+		t.Fatalf("下半那一格的高度 ＝ %d，預期 3", got)
+	}
+	z0, z1 := displayDepthRange(&info, row-1, col)
+	if z0 > 1 || z1 < 1 {
+		t.Errorf("深度範圍 %d–%d 沒有涵蓋兵的下半（第 1 層）", z0, z1)
+	}
+	// 起始深度只看地形的小 unit：物件不該把地面往上推。
+	if got := info[row][col].start; got != 0 {
+		t.Errorf("起始深度 ＝ %d，物件不該影響它", got)
+	}
+}

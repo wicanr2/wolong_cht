@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**494 列分布在 190 份文件，平均每份 2.6 列。**
+**498 列分布在 192 份文件，平均每份 2.6 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,18 +42,18 @@
 | 規則正確性 | 18 | 15 | 3 | 0 |
 | 資料保存 | 33 | 32 | 1 | 0 |
 | 程式碼理解 | 182 | 176 | 6 | 0 |
-| 驗收 | 60 | 49 | 11 | 0 |
+| 驗收 | 62 | 51 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 195 | 179 | 16 | 0 |
-| **合計** | **494** | 456 | 38 | 0 |
+| 其他 | 197 | 181 | 16 | 0 |
+| **合計** | **498** | 460 | 38 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/re/` | 182 |
-| `docs/spec/` | 151 |
-| `docs/playtest/` | 60 |
+| `docs/spec/` | 153 |
+| `docs/playtest/` | 62 |
 | `docs/formats/` | 33 |
 | `docs/release/` | 27 |
 | `docs/mechanics/` | 18 |
@@ -309,7 +309,7 @@
 | [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | 變體 0／2／3／5／6 的臨場抽驗 | 專屬句只在 1／4／7；預設句與它們共用選句機制，公式已 confirmed，抽驗優先度低 | 靜態 |
 | [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
 
-## 2.4 驗收（60 條）
+## 2.4 驗收（62 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -373,6 +373,8 @@
 | [`playtest/46-runtime-language-switch.md`](../playtest/46-runtime-language-switch.md) | Android 實機／模擬器沒實地切過 | 這裡的手機畫面是桌面 Xvfb 跑 `cmd/wlandroid` 拍的（同一份 `internal/ui/phone`）；實機驗收排在下一次 Android 打包 | 靜態 |
 | [`playtest/47-latin-screen-survey.md`](../playtest/47-latin-screen-survey.md) | 戰術畫面的截圖不可重現 | 找出 `-shot-frames` 之下仍隨牆鐘走的那一段（動畫幀？音訊回呼？），改成照 tick 推進 | 實測 |
 | [`playtest/47-latin-screen-survey.md`](../playtest/47-latin-screen-survey.md) | 半形語系的戰場標題沒有地名 | 見 `docs/spec/87` §9 | 靜態 |
+| [`playtest/48-display-polish.md`](../playtest/48-display-polish.md) | 對拍沒有開闊地的 fixture | `playtest/40` 量的兩個局面都在城壁邊；要擋住這一類回歸得再加一個開闊地的 fixture | 靜態 |
+| [`playtest/48-display-polish.md`](../playtest/48-display-polish.md) | 事件列本身是 remake 自創 | 原版怎麼提示月結（如果有）沒查過 | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -385,7 +387,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（195 條）
+## 2.6 其他（197 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -578,6 +580,8 @@
 | [`spec/87-latin-screen-layout.md`](../spec/87-latin-screen-layout.md) | 半形語系的戰場標題沒有地名 | 要顯示就得動側欄幾何（128 px 是原版的），那會影響對拍基準——要做就整格重排 | 靜態 |
 | [`spec/87-latin-screen-layout.md`](../spec/87-latin-screen-layout.md) | 原版美術上的中文（§2） | 只能重畫美術，本專案不做 | 靜態 |
 | [`spec/87-latin-screen-layout.md`](../spec/87-latin-screen-layout.md) | 將旗名字 8 字仍有 10 個撞號 | 地板是 8（同音不同字）；再多兩個是 `XIAHOU-D`／`XIAHOU-Y` 這類，要解得換呈現方式不是換寬度 | 靜態 |
+| [`spec/88-display-polish-parity.md`](../spec/88-display-polish-parity.md) | 事件列本身是 remake 自創 | 原版怎麼提示月結（如果有）沒查過；目前只是讓它不擋畫面 | 靜態 |
+| [`spec/88-display-polish-parity.md`](../spec/88-display-polish-parity.md) | `playtest/40` 沒有涵蓋開闊地的兵 | 那一份量的兩個局面都在城壁邊。要擋住這一類回歸，得再加一個**開闊地**的對拍 fixture | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 | 靜態 |
