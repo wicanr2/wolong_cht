@@ -614,15 +614,49 @@ func listFieldsFor(l *listwin.List) []listField {
 	if l == nil {
 		return nil
 	}
+	latin := uiLang.Lang().Latin()
 	switch l.Kind {
 	case listwin.Cities:
+		if latin {
+			return latinFieldsCities
+		}
 		return listFamilyCities.fields()
 	case listwin.Corps:
+		if latin {
+			return latinFieldsCorps
+		}
 		return listFamilyCorps.fields()
 	case listwin.Factions:
+		if latin {
+			return latinFieldsFactions
+		}
 		return listFamilyFactions.fields()
 	default:
+		if latin {
+			return latinFieldsGenerals
+		}
 		return listFamilyGenerals.fields()
+	}
+}
+
+// registerLatinListTitles 把四個家族的標題換成依半形欄界生成的那一條
+// （docs/spec/85 §4）。登記進語系詞表，畫的時候由 Drawer 的翻譯鉤子換掉，
+// 呼叫端仍然只認得原本那條中文標題。
+func registerLatinListTitles() {
+	if !uiLang.Lang().Latin() {
+		return
+	}
+	for _, t := range []struct {
+		family listFamily
+		fields []listField
+		labels []string
+	}{
+		{listFamilyGenerals, latinFieldsGenerals, latinLabelsGenerals},
+		{listFamilyCities, latinFieldsCities, latinLabelsCities},
+		{listFamilyCorps, latinFieldsCorps, latinLabelsCorps},
+		{listFamilyFactions, latinFieldsFactions, latinLabelsFactions},
+	} {
+		uiLang.Add(t.family.Title, latinTitle(t.fields, t.labels))
 	}
 }
 
@@ -1701,6 +1735,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	registerLatinListTitles()
 
 	lib, err := library.LoadWithOptions(*dir, library.LoadOptions{TalkJSON: *talkJSON, TalkJSONEncoding: talkEnc, TalkCorrections: *talkCorrections})
 	if err != nil {

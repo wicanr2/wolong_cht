@@ -113,6 +113,88 @@ var (
 	}
 )
 
+// ── 半形語系的欄界（docs/spec/85）─────────────────────────────────
+//
+// 為什麼要另一套：羅馬化的人名最長 12 個半形格，而原版的姓名欄只有 6 格
+// ——照原欄界畫，`夏侯淵` 與 `夏侯惇` 都會被裁成 `XIAHOU`，**兩個不同的
+// 人在畫面上長得一樣**。四個家族的內容加起來吃不下本體的 368 px，
+// 所以每一家都標明了誰讓步（spec/85 §3 有覆蓋率）。
+//
+// 中文與日文那一套（`fields()`，照原版量出來的）一個像素都不動。
+//
+// ⚠ **數值欄的間距是被標題決定的，不是被數字決定的**：數字只有兩位
+// （16 px），但標題 `Mar`／`Cmd`／`Pol` 各要 24 px ＋ 一格間隔，
+// 所以欄距拉到 32 px。照數字的寬度排會得到 `MarCmdPolFaction`。
+var (
+	latinFieldsGenerals = []listField{
+		{X: 0, W: 96},                  // 武將名：12 字，149/149 放得下
+		{X: 112, W: 16, Numeric: true}, // 武術
+		{X: 144, W: 16, Numeric: true}, // 統率
+		{X: 176, W: 16, Numeric: true}, // 政治
+		{X: 208, W: 72},                // 勢力（君主名）：9 字
+		{X: 296, W: 64},                // 身分
+	}
+	latinLabelsGenerals = []string{"Name", "Mar", "Cmd", "Pol", "Faction", "Rank"}
+
+	latinFieldsCities = []listField{
+		{X: 0, W: 96},                  // 據點名：12 字，194/194
+		{X: 112, W: 40, Numeric: true}, // 生產力
+		{X: 160, W: 32, Numeric: true}, // 上昇率
+		{X: 200, W: 24, Numeric: true}, // 防災
+		{X: 232, W: 32, Numeric: true}, // 城兵
+		{X: 272, W: 88},                // 內政官：10 字，8 個會裁
+	}
+	latinLabelsCities = []string{"City", "Prod.", "Grow", "Fld", "Garr", "Gov."}
+
+	latinFieldsCorps = []listField{
+		{X: 0, W: 80},                  // 武將名：10 字
+		{X: 96, W: 32, Numeric: true},  // 總兵數
+		{X: 136, W: 24, Numeric: true}, // 士氣值
+		{X: 168, W: 64},                // 現在位置：8 字
+		{X: 248, W: 64},                // 目標據點：8 字
+		{X: 328, W: 32, NoDash: true},  // 委任（無標題）
+	}
+	latinLabelsCorps = []string{"Name", "Men", "Mrl", "Position", "Target", ""}
+
+	latinFieldsFactions = []listField{
+		{X: 0, W: 72},                  // 勢力（君主名）：9 字
+		{X: 88, W: 24, Numeric: true},  // 武將數
+		{X: 128, W: 24, Numeric: true}, // 據點數
+		{X: 160, W: 64},                // 首都（據點名）：8 字
+		{X: 240, W: 32},                // 外交
+		{X: 288, W: 64},                // 外交官（武將名）：8 字
+	}
+	latinLabelsFactions = []string{"Faction", "Gen", "Cty", "Capital", "Rel.", "Envoy"}
+)
+
+// latinTitle 依欄界生成標題列。
+//
+// 原版的標題是**一整條字串**（docs/re/26 §4.1），這裡沿用同一條路：
+// 每個標籤落在自己欄位的文字起點（半形格對齊），生成的字串登記進語系
+// 詞表，畫的時候照樣是一條字串。標籤太寬就往右擠開而不是疊字——
+// 標題畫在黑底那一列，與資料列互不相干，推開只影響對齊。
+func latinTitle(fields []listField, labels []string) string {
+	var b strings.Builder
+	cells := 0 // 已經填到第幾個半形格
+	for i, label := range labels {
+		if label == "" || i >= len(fields) {
+			continue
+		}
+		want := (fields[i].X + listTextInset) / textdraw.HalfW
+		for cells < want {
+			b.WriteByte(' ')
+			cells++
+		}
+		if cells > want {
+			b.WriteByte(' ') // 被前一欄推開，至少留一格
+			cells++
+		}
+		b.WriteString(label)
+		cells += len(label)
+	}
+	return b.String()
+}
+
 // listField 是一欄：x 是相對視窗內緣的位移，W 是寬度（像素），
 // Numeric 為真表示那一欄是半形的數字欄（靠右對齊）。
 type listField struct {

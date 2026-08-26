@@ -27,6 +27,12 @@ const (
 	En     Language = "en"
 )
 
+// Latin 回報這個語系是不是以半形拉丁字母為主。
+//
+// 版面差別很大：中日文一個字兩格、名字三個字就寫完；羅馬化的名字
+// 要到 12 格。清單欄界因此另排一套（docs/spec/85）。
+func (l Language) Latin() bool { return l == En }
+
 // Table 是載入好的語系轉換狀態。零值＝母本繁中（Convert 原樣回傳）。
 type Table struct {
 	lang     Language
@@ -127,6 +133,21 @@ func (t *Table) Lang() Language {
 		return ZhHant
 	}
 	return t.lang
+}
+
+// Add 補一筆逐句覆寫。給執行期才生成的字串用（例如依欄界算出來的
+// 清單標題，docs/spec/85 §4）；nil 表安全忽略。
+func (t *Table) Add(from, to string) {
+	if t == nil || from == "" {
+		return
+	}
+	if t.override == nil {
+		t.override = map[string]string{}
+	}
+	t.override[from] = to
+	if strings.Contains(from, "%d") {
+		t.hasNumeric = true
+	}
 }
 
 // RuneMap 回傳字級表（給 textdraw.SetRuneMap 用）；沒有就回 nil。
