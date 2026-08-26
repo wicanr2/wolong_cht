@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**488 列分布在 189 份文件，平均每份 2.6 列。**
+**494 列分布在 190 份文件，平均每份 2.6 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 182 | 176 | 6 | 0 |
 | 驗收 | 60 | 49 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 189 | 174 | 15 | 0 |
-| **合計** | **488** | 451 | 37 | 0 |
+| 其他 | 195 | 179 | 16 | 0 |
+| **合計** | **494** | 456 | 38 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -55,7 +55,7 @@
 | `docs/spec/` | 151 |
 | `docs/playtest/` | 60 |
 | `docs/formats/` | 33 |
-| `docs/release/` | 21 |
+| `docs/release/` | 27 |
 | `docs/mechanics/` | 18 |
 | `docs/mobile/` | 12 |
 | `docs/reference/` | 6 |
@@ -385,7 +385,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（189 條）
+## 2.6 其他（195 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -423,6 +423,12 @@
 | [`release/07-full-20260824.md`](../release/07-full-20260824.md) | 啟動殼層的自動驗收 | 同上的下游（§4.1） | 靜態 |
 | [`release/07-full-20260824.md`](../release/07-full-20260824.md) | Windows／macOS 實機 | 沒有硬體 | 靜態 |
 | [`release/07-full-20260824.md`](../release/07-full-20260824.md) | Android 實機驗收與正式簽章 | 沒有裝置；keystore 保管未決，出的仍是 debug 簽章 | 靜態 |
+| [`release/08-full-20260826.md`](../release/08-full-20260826.md) | 推廣片檔名不帶批次日期 | §4 的根因還在。加日期會動到 `PROMO_FILES` 與 `dist-all/README.md` 的說明，這一批沒動 | 靜態 |
+| [`release/08-full-20260826.md`](../release/08-full-20260826.md) | 沒有音效裝置的真實玩家 | ⛔ 仍會掛（`05` §5）。要收掉得讓 `wlgame` 有一個明確關音訊的旗標——`-audio ""` 現在是「自動找」不是「關」 | 靜態 |
+| [`release/08-full-20260826.md`](../release/08-full-20260826.md) | 啟動殼層的自動驗收 | 給 `-shot` 會走白名單直接進遊戲跳過殼層，不給就會開音訊而容器裡沒有音效裝置（`06` §4.1）。語言那一頁的畫面證據是**原始碼建置**的截圖（`../playtest/46`），不是包裡的執行檔 | 實測 |
+| [`release/08-full-20260826.md`](../release/08-full-20260826.md) | Android 的語言切換沒在模擬器上點過 | 面板與 `syncLanguage` 有單測，畫面是桌面 Xvfb 跑 `cmd/wlandroid` 拍的；smoke 期間不可送觸控（送了指紋就不能比），所以要另開一輪非指紋的驗收 | 靜態 |
+| [`release/08-full-20260826.md`](../release/08-full-20260826.md) | Windows／macOS 實機 | 沒有硬體 | 靜態 |
+| [`release/08-full-20260826.md`](../release/08-full-20260826.md) | Android 實機驗收與正式簽章 | 沒有裝置；keystore 保管未決，出的仍是 debug 簽章 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Windows／macOS 原生 GUI | 交叉建置的產物只驗了檔頭，沒有在目標作業系統跑過。M8 唯一的閘 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 實機驗收 | 只有 Docker 模擬器；觸控手感、真實 GPU、高 DPI 上的點陣字可讀性都驗不到 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 正式簽章 | 出的是 debug 簽章，keystore 怎麼保管還沒決定 | 靜態 |

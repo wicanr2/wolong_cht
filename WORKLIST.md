@@ -418,6 +418,26 @@ docs 那份手抄複本停在 12 天前——**而兩份都存在的時候，過
 ⚠ 順帶一提，這五處**沒有一處**是 `check.sh` 能擋的：它擋的是狀態行自相矛盾、
 連結指不到、幽靈檔案。「內容過期但格式正確」目前只有人工掃得到。
 
+### 2026-08-26（五）四語系批次 `20260826`：打包、推廣片、英文版版面
+
+四語系（繁中／简体／日本語／English）從「啟動時選」變成「遊戲中切」：
+F9 循環、啟動殼層的 `LANGUAGE` 一列、手機系統面板第三頁
+（[`docs/spec/86`](docs/spec/86-runtime-language-switch.md)）。
+語系包 `go:embed` 進執行檔，**AppImage 旁邊沒有 `translations/` 也是英文**。
+
+英文版逐畫面調整（[`docs/spec/87`](docs/spec/87-latin-screen-layout.md)）
+挖出一個藏很久的 bug：**TALK 變數的 key 用了數值 `2` 而不是 ASCII `'2'`**，
+`Lines` fail-closed 退回內建 fallback——而 fallback 與 TALK #21 的中文
+一字不差，**繁中一個字都看不出來**。
+
+推廣片重剪成 72 秒，加入語言切換與原版並排兩段。順帶修掉攻城段的鏡頭：
+那兩個參數綁的是「這一局打到哪裡」，規則層一動就錄出空景而不報錯。
+
+四平台重打成一致的 `20260826` 批次，Android 指紋與桌面逐字相同
+（[`docs/release/08`](docs/release/08-full-20260826.md)）。
+⚠ 打包時**新剪的預告片被 `dist/promo/` 的舊片蓋掉**，而 manifest 與雜湊
+全部正常——推廣片要產到 `dist/promo/`（那是來源），見 `release/08` §4。
+
 ### 2026-08-24（三）全平台重打成一致的 `20260824` 批次
 
 `tools/release_all.sh 20260824` ＋ `WOLONG_BUNDLE_DATA=1 tools/android_build.sh`

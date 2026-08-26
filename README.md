@@ -18,7 +18,7 @@
 
 ## 現在做到哪裡
 
-**核心規則與可玩垂直切片已接通；完整交付已集中在 `dist-all/`（三平台桌面包、Linux AppImage、Android APK、推廣片）。目前是一致的 `wolong-remake-20260824` 批次（[`docs/release/07`](docs/release/07-full-20260824.md)）。Windows／macOS 原生 GUI 與 Android 的實機驗收仍待完成。**
+**核心規則與可玩垂直切片已接通；完整交付已集中在 `dist-all/`（三平台桌面包、Linux AppImage、Android APK、推廣片）。目前是一致的 `wolong-remake-20260826` 批次（[`docs/release/08`](docs/release/08-full-20260826.md)）。Windows／macOS 原生 GUI 與 Android 的實機驗收仍待完成。**
 
 ⭐ **靜態反組譯收斂**：739 支函式每一支都有 `docs/re/` 筆記
 （[`docs/re/21`](docs/re/21-function-census.md)）。那代表「每一支都有人寫過」，
@@ -142,7 +142,7 @@ parity 量的是「**我們做出來的東西對不對**」。
 | 軸 | 分數 | 依據 | 扣分在哪 |
 |---|---:|---|---|
 | 資料格式保存（M1）| **90%** | 全部檔種有 Go 解碼器＋測試，`TALK.DAT`／存檔 byte-for-byte round-trip，過場、音訊、地圖族全解 | `ICONGRF` 段 1 的 UI 語意；`formats` 還有 33 列登記在案的細節 |
-| 文字保存與校訂（M2／M7）| **92%** | 1,022 則全保存、60 筆校訂可重跑、兩版 1,022 則逐句對照讀完、排版 parity 全量 0 超寬；**四個語系端到端可玩**（`-lang zh-hant\|zh-hans\|ja\|en`）：日文直接取 PC-98 原版（含 34 個外字靠兩版對齊反推）、簡體 OpenCC 機轉、英文 1,022 則逐則英譯、343 個人名地名三語對照（[`docs/spec/84`](docs/spec/84-multilanguage.md)）| 缺兩版並排的畫面對照這最後一格；簡體與英文是譯稿未經第二人校訂；半形語系的固定寬欄位尚未重算版面 |
+| 文字保存與校訂（M2／M7）| **92%** | 1,022 則全保存、60 筆校訂可重跑、兩版 1,022 則逐句對照讀完、排版 parity 全量 0 超寬；**四個語系端到端可玩且能在遊戲中切換**（`-lang` 或 F9／啟動殼層／手機系統面板，[`docs/spec/86`](docs/spec/86-runtime-language-switch.md)）：日文直接取 PC-98 原版（含 34 個外字靠兩版對齊反推）、簡體 OpenCC 機轉、英文 1,022 則逐則英譯、343 個人名地名三語對照（[`docs/spec/84`](docs/spec/84-multilanguage.md)）；半形語系的版面另排一套（清單四家 [`85`](docs/spec/85-latin-list-layout.md)、其餘畫面 [`87`](docs/spec/87-latin-screen-layout.md)）| 缺兩版並排的畫面對照這最後一格；簡體與英文是譯稿未經第二人校訂 |
 | 反組譯理解（M3）| **70%** | 739/739 支函式都有筆記、四個分級收斂；單挑這種末端子系統都能讀到逐 tick | 「有筆記」≠「讀懂」——`docs/re/` 自己登記的未解還有約 180 列 |
 | 規則還原（M4／M5）| **83%** | 政略／行軍／戰術／外交／說服／單挑都以機器碼出處實作，規則層 5 年長跑不變量成立；2026-08-25 把上一輪列的七條缺口全數收掉：災害傷害量（[`docs/spec/81`](docs/spec/81-disaster-quantities.md)）、應戰挑選＝評價的去向（[`docs/spec/82`](docs/spec/82-defender-selection.md)）、信賴度增減全帳本與初始值 `0xFF`（實機定案，[`docs/playtest/44`](docs/playtest/44-trust-init-oracle.md)）、行軍中間節點（查證後**缺口不存在**）、事件 10 訊息（端到端已通）；**AI 長程對照完成**：原版半年四大擴張事件與 remake 方向幅度一致、呂布／曹操終值逐城相同；孫策攻劉繇的分歧定案為 `sub_12BD9` 缺新遊戲開局呼叫點，已補（[`docs/spec/83`](docs/spec/83-initial-strategy-pass.md)、[`docs/playtest/45`](docs/playtest/45-ai-longrun-comparison.md)）| 剩：對照只有一次原版跑、孫策擴張節奏比原版快（戰鬥節奏層）、`docs/re/` 登記的未解細項 |
 | 畫面一致（M6）| **90%** | 十個局面逐像素：主畫面／系統選單／三視窗／五張清單／財政全 0 px，攻城 0.17%、野戰 0.05%，殘差全數歸類 | 分數只涵蓋量過的局面——沒量過的畫面仍是「照機器碼做＋目視」 |
@@ -207,11 +207,11 @@ parity 量的是「**我們做出來的東西對不對**」。
 
 ### 候選封裝與推廣片
 
-- 完整交付根目錄：[`dist-all`](dist-all)，包含**四平台完整包**（Linux／Windows／macOS／Android）、Linux AppImage、五支推廣片、雜湊與 GUI smoke 截圖。目前是一致的 `wolong-remake-20260824` 批次（[`docs/release/07`](docs/release/07-full-20260824.md)）。⚠ **「全平台重建」是兩支腳本**：`tools/release_all.sh` 不會重建 APK（Android 是另一條管線，檔名取的是 APK 自己的 mtime），要一起換得再跑 `WOLONG_BUNDLE_DATA=1 tools/android_build.sh`。
+- 完整交付根目錄：[`dist-all`](dist-all)，包含**四平台完整包**（Linux／Windows／macOS／Android）、Linux AppImage、五支推廣片、雜湊與 GUI smoke 截圖。目前是一致的 `wolong-remake-20260826` 批次（[`docs/release/08`](docs/release/08-full-20260826.md)）。⚠ **「全平台重建」是兩支腳本**：`tools/release_all.sh` 不會重建 APK（Android 是另一條管線，檔名取的是 APK 自己的 mtime），要一起換得再跑 `WOLONG_BUNDLE_DATA=1 tools/android_build.sh`。
 - ⛔ **本機這一批內含原版資產，不可外流**（`dist-all/DO-NOT-DISTRIBUTE.md`）。四個平台的包裡都有原版資料與倚天字型，解開或裝上去就能玩。要一份可散布的：`WOLONG_BUNDLE_DATA=0 tools/release_all.sh <YYYYMMDD>`，出來的包不含任何原版資產（[`docs/spec/72`](docs/spec/72-bundled-game-data.md)）。
-- Linux AppImage：[`wolong-remake-linux-amd64-20260824.AppImage`](dist-all/packages/wolong-remake-linux-amd64-20260824.AppImage)。已通過 Linux／Xvfb 固定種子 smoke（含結局過場，且**不帶任何資料旗標**就跑得起來）。**公開散布的版本仍要由玩家提供合法 DOS/V 資料與中文字型。**
+- Linux AppImage：[`wolong-remake-linux-amd64-20260826.AppImage`](dist-all/packages/wolong-remake-linux-amd64-20260826.AppImage)。已通過 Linux／Xvfb 固定種子 smoke（含結局過場，且**不帶任何資料旗標**就跑得起來）。**公開散布的版本仍要由玩家提供合法 DOS/V 資料與中文字型。**
 - 三平台候選包與 SHA-256：[`dist-all/packages`](dist-all/packages)。Windows／macOS 是交叉建置候選，尚未在目標作業系統完成原生 GUI runtime 驗收。
-- 主預告：[`wolong-remake-trailer.mp4`](dist-all/promo/wolong-remake-trailer.mp4)。大地圖、野戰與攻城三段是**逐幀錄下來的實跑畫面**（[`docs/spec/71`](docs/spec/71-promo-live-capture.md)），事件視窗與存檔那幾段是截圖——那些畫面本來就不動。
+- 主預告：[`wolong-remake-trailer.mp4`](dist-all/promo/wolong-remake-trailer.mp4)，72 秒。大地圖、野戰與攻城三段是**逐幀錄下來的實跑畫面**（[`docs/spec/71`](docs/spec/71-promo-live-capture.md)），另有**四語系切換**與**原版並排**兩段；事件視窗與存檔那幾段是截圖——那些畫面本來就不動。
 - 原版實機對照片：[`wolong-remake-dosv-realmachine.mp4`](dist-all/promo/wolong-remake-dosv-realmachine.mp4)，72 秒。**原版側是自己跑的受控 DOSBox-X 實機遊玩**——開新遊戲、劇本與君主選擇、大地圖與時鐘、軍團編成、事件訊息、行軍指示，照 timeline 可以重跑；只有戰術戰場那一格取自使用者提供的錄影並在片上標明（[`docs/promo/dosv-realmachine.md`](docs/promo/dosv-realmachine.md)）。不是同日期／同輸入的逐像素 parity。
 - Android：見下一節。APK 與另外三個平台並列在 [`dist-all/packages`](dist-all/packages)，**仍不宣稱 Android release**（只有 debug 簽章、沒有實機驗收）。48 秒的手機版推廣片：[`wolong-remake-android.mp4`](dist-all/promo/wolong-remake-android.mp4)（畫面全是 remake 自己算的，配樂是原創合成音，[`docs/promo/android.md`](docs/promo/android.md)）。
 

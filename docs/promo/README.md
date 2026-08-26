@@ -89,8 +89,16 @@ docker run --rm --network none --memory 4g --cpus 2 --pids-limit 256 \
   -e PROMO_FONTFILE=/usr/share/fonts/opentype/noto/NotoSerifCJK-Bold.ttc \
   -e PROMO_SCORE=workplace/promo/score/score-72.wav \
   -v "$PWD":/src u5cht/video:latest \
-  sh /src/tools/promo_video.sh /src/dist-all/promo/wolong-remake-trailer.mp4
+  sh /src/tools/promo_video.sh /src/dist/promo/wolong-remake-trailer.mp4
 ```
+
+⚠ **輸出要寫到 `dist/promo/`，不是 `dist-all/promo/`。**
+`release_all_fs.py` 的 `promo_source()` **先找 `dist/promo/`**，找到才輪到
+`dist-all/promo/`——只寫後者的話，下一次打包會用 `dist/promo/` 裡的舊片
+把新片蓋掉，而 manifest、`SHA256SUMS.txt` 與檔名全部正常
+（2026-08-26 踩過，[`../release/08`](../release/08-full-20260826.md) §4）。
+產完之後複製一份到 `dist-all/promo/` 再跑
+`WOLONG_BUNDLE_DATA=1 tools/py.sh tools/release_all_fs.py refresh` 重算雜湊。
 
 ⚠ **容器裡沒有 python3**，所以配樂要先在 `tools/py.sh` 那邊產好再用
 `PROMO_SCORE` 指進來。
