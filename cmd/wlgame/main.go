@@ -59,6 +59,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/savepath"
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
+	"github.com/wicanr2/wolong_cht/internal/ui/langpack"
 	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
 	"github.com/wicanr2/wolong_cht/internal/ui/uitext"
 	"github.com/wicanr2/wolong_cht/internal/ui/sound"
@@ -112,6 +113,15 @@ const (
 
 type game struct {
 	lib    *library.Library
+	// talkBase 是母本繁中的訊息表。切語言要換 lib.Talk，換回來時
+	// 得有原本那一份——重讀一次 TALK.DAT 太慢，也會把校訂弄丟。
+	talkBase *text.Table
+	// talkPinned ＝ 使用者用 -talk-json 指定了訊息表，切語言不要蓋掉它。
+	talkPinned bool
+	fontDir    string
+	// langNotice 是切換語言後短暫顯示的語系名，langNoticeAt 是已經畫了幾幀。
+	langNotice   string
+	langNoticeAt int
 	world  *state.World
 	rng    *rng.Rand
 	td     *textdraw.Drawer
@@ -639,6 +649,43 @@ func listFieldsFor(l *listwin.List) []listField {
 	}
 }
 
+// setLanguage 換語言。**換的是呈現，不是遊戲**——世界狀態、時鐘、
+// 存檔一律不動（docs/spec/86 §4）。
+func (g *game) setLanguage(lang uitext.Language) error {
+	p, err := langpack.Load(lang, g.fontDir)
+	if err != nil {
+		return err
+	}
+	uiLang = p.Text
+	if !g.talkPinned && g.lib != nil {
+		// 母本語系回到原版解出來的那一份（含校訂）。
+		g.lib.Talk = g.talkBase
+		if p.Talk != nil {
+			g.lib.Talk = p.Talk
+		}
+	}
+	if p.Font == nil && lang != uitext.ZhHant {
+		log.Printf("⚠ %s 的全形字型載不到；缺的字會畫成方框", lang)
+	}
+	p.Apply(g.td)
+	// 標題是依欄界生成的，要在新的詞表上重新登記（docs/spec/85 §4）。
+	registerLatinListTitles()
+	g.langNotice = languageName(lang)
+	g.langNoticeAt = 0
+	return nil
+}
+
+// languageName 是切換時畫在畫面上的提示，**用該語言自己的寫法**。
+// 名字取自 `langpack.Choices`——與啟動殼層、手機面板同一份。
+func languageName(lang uitext.Language) string {
+	for _, c := range langpack.Choices {
+		if c.Lang == lang {
+			return c.Name
+		}
+	}
+	return string(lang)
+}
+
 // registerLatinListTitles 把四個家族的標題換成依半形欄界生成的那一條
 // （docs/spec/85 §4）。登記進語系詞表，畫的時候由 Drawer 的翻譯鉤子換掉，
 // 呼叫端仍然只認得原本那條中文標題。
@@ -788,6 +835,14 @@ func (g *game) Update() error {
 		// `docs/spec/73` 的清單裡，因為它不是「面板」而是離開確認。
 		case pressed(ebiten.KeyN), g.cancelled():
 			g.quitting = false
+		}
+		return nil
+	}
+	// F9 循環切語言（remake 差異，docs/spec/86 §4）。原版沒有這個鍵，
+	// 而系統選單是逐像素對過的，不能加第五列。
+	if pressed(ebiten.KeyF9) {
+		if err := g.setLanguage(langpack.Next(uiLang.Lang())); err != nil {
+			log.Printf("切換語言失敗：%v", err)
 		}
 		return nil
 	}
@@ -1434,80 +1489,6 @@ const (
 // corrections.json 可隨可執行檔安裝。先尊重明確環境設定與目前工作目錄，
 // 再尋找一般 tar/zip 與 AppImage 的同包路徑；若都不存在則回傳預設相對路徑，
 // 由 LoadWithOptions 顯示可診斷的失敗，而不是靜默跳過校訂。
-// languageTalkPack 回傳這個語系的訊息包（相對路徑），母本回空字串。
-//
-// **日文不是翻譯**：`talk-ja.json` 是 PC-98 原版 `TALK.DAT` 的內容
-// （tools/langpack.py ja），與繁中母本是同一份訊息的兩種語言。
-func languageTalkPack(lang uitext.Language) string {
-	switch lang {
-	case uitext.ZhHans:
-		return "translations/talk-zh-hans.json"
-	case uitext.Ja:
-		return "translations/talk-ja.json"
-	case uitext.En:
-		return "translations/talk-en.json"
-	}
-	return ""
-}
-
-// loadLanguage 載入語系的字級表、UI 詞表與人名表。缺檔只警告不擋啟動。
-func loadLanguage(lang uitext.Language) (*uitext.Table, error) {
-	if lang == uitext.ZhHant {
-		return nil, nil
-	}
-	chars := ""
-	if lang == uitext.ZhHans {
-		if chars = bundledTranslationPath("translations/t2s-chars.json"); chars == "" {
-			log.Printf("⚠ 找不到 t2s-chars.json；UI 與人名以繁中顯示")
-		}
-	}
-	var tables []string
-	for _, rel := range []string{
-		fmt.Sprintf("translations/ui-%s.json", lang),
-		fmt.Sprintf("translations/names-%s.json", lang),
-	} {
-		if p := bundledTranslationPath(rel); p != "" {
-			tables = append(tables, p)
-		} else if lang != uitext.ZhHans {
-			// zh-hans 的 UI 與人名走字級表，沒有詞表是正常的。
-			log.Printf("⚠ 找不到 %s；該部分以繁中顯示", rel)
-		}
-	}
-	return uitext.Load(lang, chars, tables...)
-}
-
-// loadFontChain 依語系決定字型的取用順序。
-//
-// 鏈式的理由：**語系的字集不等於一份字型的字集**。日文版的人名裡有
-// PC-98 外字（`汜`、`瓚`、`繡`），那些不在 JIS X 0208 但在倚天 Big5 裡有；
-// 簡體同理，罕用字退回倚天總比缺字好（docs/spec/84 §1）。
-func loadFontChain(lang uitext.Language, dir string) textdraw.GlyphSource {
-	var primary textdraw.GlyphSource
-	switch lang {
-	case uitext.ZhHans:
-		if f, err := cjk.LoadKuTen16Dir(dir, cjk.GB2312, cjk.Options{}); err != nil {
-			log.Printf("⚠ 載不到 HZK16 簡體字型（%v）；簡體字會缺字", err)
-		} else {
-			primary = f
-		}
-	case uitext.Ja:
-		if f, err := cjk.LoadKuTen16Dir(dir, cjk.JISX0208, cjk.Options{}); err != nil {
-			log.Printf("⚠ 載不到 JISKAN16 日文字型（%v）；假名會缺字", err)
-		} else {
-			primary = f
-		}
-	}
-	var eten textdraw.GlyphSource
-	if f, err := cjk.LoadDir(dir, cjk.Options{}); err != nil {
-		if primary == nil {
-			log.Printf("⚠ 載不到倚天全形字型（%v）；中文會顯示成方框", err)
-		}
-	} else {
-		eten = f
-	}
-	return textdraw.Chain(primary, eten)
-}
-
 // bundledTranslationPath 依 bundledTalkCorrectionsPath 的候選順序找
 // translations/ 底下的語系檔；找不到回空字串（呼叫端 fallback 母本）。
 func bundledTranslationPath(rel string) string {
@@ -1720,24 +1701,12 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	talkEnc := text.Big5
-	if pack := languageTalkPack(lang); pack != "" && *talkJSON == "" {
-		// 語系包（docs/spec/84）。缺檔時 fallback 母本繁中——
-		// **缺譯要看得見**，不擋啟動。
-		if p := bundledTranslationPath(pack); p != "" {
-			*talkJSON, talkEnc = p, text.UTF8
-			*talkCorrections = "" // 校訂已含在語系包的母本裡
-		} else {
-			log.Printf("⚠ 找不到 %s；訊息以繁中顯示", pack)
-		}
+	// 語系檔優先找執行檔旁邊的（完整包），再落回內嵌那一份（docs/spec/86 §2）。
+	if p := bundledTranslationPath("translations/talk-en.json"); p != "" {
+		langpack.SearchPaths = append([]string{filepath.Dir(p)}, langpack.SearchPaths...)
 	}
-	uiLang, err = loadLanguage(lang)
-	if err != nil {
-		log.Fatal(err)
-	}
-	registerLatinListTitles()
 
-	lib, err := library.LoadWithOptions(*dir, library.LoadOptions{TalkJSON: *talkJSON, TalkJSONEncoding: talkEnc, TalkCorrections: *talkCorrections})
+	lib, err := library.LoadWithOptions(*dir, library.LoadOptions{TalkJSON: *talkJSON, TalkCorrections: *talkCorrections})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -1753,7 +1722,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	font := loadFontChain(lang, *fontDir)
 	var ascii *cjk.ASCIIFont
 	if a, err := cjk.LoadASCIIDir(*fontDir); err != nil {
 		log.Printf("⚠ 載不到倚天半形字型（%v）", err)
@@ -1767,19 +1735,16 @@ func main() {
 	}
 	g := &game{lib: lib, rng: gameRNG, speed: *speed, tacticalSpeed: *tacticalSpeed,
 		lordCorps: true, // docs/spec/76：預設放行（remake 差異）
-		td:       textdraw.New(font, ascii),
+		td:       textdraw.New(nil, ascii),
 		shotPath: *shot, shotAt: *shotFrames, origDir: *dir, sourceFile: path,
 		rec: newRecorder(*framesDir, *framesN),
 		saveFile: *saveFile, saveBase: path, sound: sound.Open(*audioDir)}
 	if *audioDir != "" && !g.sound.Available() {
 		log.Printf("音檔目錄 %s 沒有 ogg，靜音跑。要有音樂請跑 tools/bgm2ogg.sh", *audioDir)
 	}
-	// 語系掛在畫的那一層（docs/spec/84）：簡體的字級轉換走 RuneMap，
-	// UI 詞的逐句翻譯走 Translator。兩者都涵蓋散在各處的 literal，
-	// 不必去追每一個呼叫點；語系包本身已經是目標語言，過表是恆等。
-	g.td.SetRuneMap(uiLang.RuneMap())
-	if uiLang != nil {
-		g.td.SetTranslator(uiLang.Convert)
+	g.talkBase, g.talkPinned, g.fontDir = lib.Talk, *talkJSON != "", *fontDir
+	if err := g.setLanguage(lang); err != nil {
+		log.Fatal(err)
 	}
 	// 四個常駐視窗**預設全關**，這是原版數值：新遊戲流程的最後一行是
 	// `sub_11A6E` 的 `mov cs:byte_198A6, 0`（docs/re/47 §3.3），

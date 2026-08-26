@@ -22,11 +22,15 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/assets/cjk"
 	"github.com/wicanr2/wolong_cht/internal/ui/phone"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
+	"github.com/wicanr2/wolong_cht/internal/ui/uitext"
 )
 
 type game struct {
 	sess *phone.Session
 	td   *textdraw.Drawer
+	// appliedLang 是 td 上目前掛著的語系。零值（""）＝還沒套過，
+	// 所以第一幀一定會套一次，不必另外記一個 bool。
+	appliedLang uitext.Language
 	err  string
 
 	// opt／fontDir 是**還沒開局**時記著的設定。手機上這兩個一開始是空的，
@@ -104,6 +108,9 @@ func (g *game) ensure() {
 	} else {
 		log.Printf("WOLONG_INIT 字型 %q 載不起來：%v", fontDir, err)
 	}
+	// Session 要記住字型目錄：換語言時得重載字型鏈（日文要 JISKAN16、
+	// 简体要 HZK16），而那時候手上只有 Session。
+	opt.FontDir = fontDir
 	log.Printf("WOLONG_INIT root=%q orig=%q", DataRoot(), opt.OrigDir)
 	sess, err := phone.NewSession(opt)
 	if err != nil {
@@ -115,6 +122,20 @@ func (g *game) ensure() {
 	}
 	g.sess = sess
 	// 驗收鉤子：直接把畫面推到要看的狀態。手機上這幾個環境變數都是空的。
+	// ⭐ **母本也要走一次 SetLanguage。** 不走的話 `LangPack()` 是 nil，
+	// 字型就停在 `cjk.LoadDir` 的單一倚天 Big5——語言選單上的「简体中文」
+	// 會缺一個字（`docs/spec/86` §4 的字型鏈墊底）。
+	lang := uitext.ZhHant
+	if v := os.Getenv("WOLONG_LANG"); v != "" {
+		if l, err := uitext.ParseLanguage(v); err != nil {
+			log.Printf("WOLONG_LANG：%v", err)
+		} else {
+			lang = l
+		}
+	}
+	if err := sess.SetLanguage(lang, fontDir); err != nil {
+		log.Printf("語系 %s 載入失敗：%v", lang, err)
+	}
 	if v, err := strconv.Atoi(os.Getenv("WOLONG_ZOOM")); err == nil && v > 0 {
 		sess.SetZoom(v)
 	}
@@ -150,9 +171,29 @@ func (g *game) Update() error {
 		return nil
 	}
 	g.handleInput()
+	g.syncLanguage()
 	g.sess.Tick()
 	g.logFingerprint()
 	return nil
+}
+
+// syncLanguage 把 Session 選的語系掛到 Drawer 上。
+//
+// ⭐ 語系有**兩個出口**：訊息與人名走 Session（它自己換得掉），
+// UI 詞與字型鏈走 Drawer（Session 摸不到）。系統面板點下去只動得了前者，
+// 所以這裡每一幀比對一次，差了就補掛。比對的是字串代號，代價可以忽略。
+func (g *game) syncLanguage() {
+	if g.td == nil {
+		return
+	}
+	cur := g.sess.Language()
+	if cur == g.appliedLang {
+		return
+	}
+	if p := g.sess.LangPack(); p != nil {
+		p.Apply(g.td)
+	}
+	g.appliedLang = cur
 }
 
 // fingerprintFrames 是要印指紋的幀。

@@ -69,7 +69,15 @@ func ParseLanguage(s string) (Language, error) {
 // 詞表的 JSON 允許兩種形狀：直接的 `{"原文": "譯文"}`，或包一層
 // `{"note": ..., "names": {...}}`（名表用這種，好放產生方式的說明）。
 func Load(lang Language, charsPath string, overridePaths ...string) (*Table, error) {
-	t := &Table{lang: lang, override: map[string]string{}}
+	var chars []byte
+	if charsPath != "" {
+		raw, err := os.ReadFile(charsPath)
+		if err != nil {
+			return nil, fmt.Errorf("uitext: 讀不到字級表 %s：%w", charsPath, err)
+		}
+		chars = raw
+	}
+	var tables [][]byte
 	for _, path := range overridePaths {
 		if path == "" {
 			continue
@@ -78,6 +86,20 @@ func Load(lang Language, charsPath string, overridePaths ...string) (*Table, err
 		if err != nil {
 			return nil, fmt.Errorf("uitext: 讀不到詞表 %s：%w", path, err)
 		}
+		tables = append(tables, raw)
+	}
+	return Parse(lang, chars, tables...)
+}
+
+// Parse 與 Load 相同，但吃已經讀進來的位元組——語系包會內嵌進執行檔
+// （docs/spec/86 §2），那條路沒有檔案可以開。
+func Parse(lang Language, chars []byte, tables ...[]byte) (*Table, error) {
+	t := &Table{lang: lang, override: map[string]string{}}
+	for _, raw := range tables {
+		if len(raw) == 0 {
+			continue
+		}
+		const path = "詞表"
 		var any map[string]json.RawMessage
 		if err := json.Unmarshal(raw, &any); err != nil {
 			return nil, fmt.Errorf("uitext: %s 不是有效 JSON：%w", path, err)
@@ -106,14 +128,10 @@ func Load(lang Language, charsPath string, overridePaths ...string) (*Table, err
 			break
 		}
 	}
-	if charsPath != "" {
-		raw, err := os.ReadFile(charsPath)
-		if err != nil {
-			return nil, fmt.Errorf("uitext: 讀不到字級表 %s：%w", charsPath, err)
-		}
+	if len(chars) > 0 {
 		var m map[string]string
-		if err := json.Unmarshal(raw, &m); err != nil {
-			return nil, fmt.Errorf("uitext: %s 不是有效 JSON：%w", charsPath, err)
+		if err := json.Unmarshal(chars, &m); err != nil {
+			return nil, fmt.Errorf("uitext: 字級表不是有效 JSON：%w", err)
 		}
 		t.chars = make(map[rune]rune, len(m))
 		for k, v := range m {

@@ -416,7 +416,7 @@ func (s *Session) drawCityCard(dst *ebiten.Image, td *textdraw.Drawer) {
 		return
 	}
 	c := &s.world.Cities[s.selected]
-	td.Draw(dst, big5(c.Name), x+16, y+14, inkText())
+	td.Draw(dst, s.Localise(c.Name), x+16, y+14, inkText())
 	rows := [][2]string{
 		{"歸屬", s.ownerName(c.Owner)},
 		{"生產力", fmt.Sprintf("%d", c.Production)},
@@ -442,7 +442,7 @@ func (s *Session) ownerName(owner int) string {
 		return "中立"
 	}
 	if n := s.world.LordName(owner); n != "" {
-		return big5(n)
+		return s.Localise(n)
 	}
 	return "中立"
 }
@@ -451,6 +451,8 @@ func (s *Session) ownerName(owner int) string {
 //
 // ⚠ `state` 的 `Name` 欄位刻意保留原始位元組（存檔要 byte-for-byte 寫回），
 // 直接丟給 textdraw 會整串變成方框。桌面版同樣要先過這一層。
+// big5 保留給沒有 Session 的呼叫端；有 Session 的一律走 s.Localise
+// （那才是語系出口，docs/spec/86 §5）。
 func big5(raw string) string { return text.Decode([]byte(raw), text.Big5) }
 
 // MenPerPoint 是「點」換算成人數的倍率。

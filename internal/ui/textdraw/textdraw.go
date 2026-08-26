@@ -269,11 +269,23 @@ func (d *Drawer) DrawLines(dst *ebiten.Image, lines []string, x, y int, c color.
 	}
 }
 
+// SetFont 換掉全形字型（切換語言時，docs/spec/86 §3）。
+// 換字型要清快取——快取的鍵只有字與顏色，沒有字型。
+func (d *Drawer) SetFont(f GlyphSource) {
+	if d == nil {
+		return
+	}
+	d.font = f
+	d.cache = map[cacheKey]*ebiten.Image{}
+}
+
 // SetRuneMap 設定字級替換表（nil 表示不替換）。
 func (d *Drawer) SetRuneMap(m map[rune]rune) {
-	if d != nil {
-		d.runes = m
+	if d == nil {
+		return
 	}
+	d.runes = m
+	d.cache = map[cacheKey]*ebiten.Image{}
 }
 
 // SetTranslator 設定 UI 詞的翻譯函式（nil 表示不翻）。

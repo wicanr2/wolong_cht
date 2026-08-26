@@ -57,7 +57,7 @@ func (s *Session) corpsFormRows() []sheetRow {
 	}
 	rows := make([]sheetRow, 0, army.Positions+2)
 	rows = append(rows, sheetRow{
-		name: big5(s.world.Generals[s.form.leader].Name),
+		name: s.Localise(s.world.Generals[s.form.leader].Name),
 		cols: []string{"換人"},
 	})
 	for i := 0; i < army.Positions; i++ {
@@ -91,7 +91,7 @@ func (s *Session) corpsCandidateRows() []sheetRow {
 	for _, i := range s.corpsCandidates() {
 		g := &s.world.Generals[i]
 		rows = append(rows, sheetRow{
-			name: big5(g.Name),
+			name: s.Localise(g.Name),
 			cols: []string{
 				fmt.Sprintf("武 %d", g.Martial),
 				fmt.Sprintf("統 %d", g.Command),

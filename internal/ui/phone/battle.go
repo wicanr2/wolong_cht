@@ -235,7 +235,7 @@ func (s *Session) drawBattleSides(dst *ebiten.Image, td *textdraw.Drawer,
 		if corps < 0 || corps >= len(s.world.Generals) {
 			return "城兵"
 		}
-		return big5(s.world.Generals[corps].Name)
+		return s.Localise(s.world.Generals[corps].Name)
 	}
 	// 左：攻守雙方。玩家那一側標出來——原版靠側欄換邊表達（docs/spec/56）。
 	rows := [][2]string{

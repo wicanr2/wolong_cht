@@ -27,6 +27,16 @@ func LoadJSON(path string, enc Encoding) (*Table, error) {
 	if err != nil {
 		return nil, fmt.Errorf("talk json: 讀不到 %s：%w", path, err)
 	}
+	return parseJSON(raw, path, enc)
+}
+
+// ParseJSON 與 LoadJSON 相同，但吃已經讀進來的位元組——
+// 語系包會內嵌進執行檔（docs/spec/86 §2），那條路沒有檔案可以開。
+func ParseJSON(raw []byte, enc Encoding) (*Table, error) {
+	return parseJSON(raw, "<embedded>", enc)
+}
+
+func parseJSON(raw []byte, path string, enc Encoding) (*Table, error) {
 	var in jsonTable
 	if err := json.Unmarshal(raw, &in); err != nil {
 		return nil, fmt.Errorf("talk json: %s 不是有效 JSON：%w", path, err)

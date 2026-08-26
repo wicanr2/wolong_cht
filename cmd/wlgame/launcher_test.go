@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/wicanr2/wolong_cht/internal/ui/langpack"
 	"image"
 	"path/filepath"
 	"testing"
@@ -151,5 +152,55 @@ func assertRectInside(t *testing.T, got, container image.Rectangle) {
 	t.Helper()
 	if !got.Min.In(container) || !image.Pt(got.Max.X-1, got.Max.Y-1).In(container) {
 		t.Fatalf("rectangle %v escapes safe rect %v", got, container)
+	}
+}
+
+// 桌面沒有 Android 那種面板，語言就掛在啟動殼層的最後一列
+// （docs/spec/86 §4）。這一支釘住它進得去、選得到、退得回來。
+func TestLauncherLanguagePage(t *testing.T) {
+	l := newLauncher(false, nil)
+	// NEW GAME ／ LANGUAGE：沒有存檔時最後一列是語言。
+	if got := l.rowCount(); got != 2 {
+		t.Fatalf("標題頁列數 ＝ %d，預期 2（NEW GAME／LANGUAGE）", got)
+	}
+	l.apply(launcherMoveDown)
+	if got := l.apply(launcherConfirm); got.kind != launcherNoResult || l.phase != launcherLanguage {
+		t.Fatalf("進不去語言頁：kind=%v phase=%v", got.kind, l.phase)
+	}
+	if got := l.rowCount(); got != len(langpack.Choices) {
+		t.Fatalf("語言頁列數 ＝ %d，語系有 %d 個", got, len(langpack.Choices))
+	}
+	// 進來時游標要停在目前語言上，不是永遠停在第一列。
+	if l.cursor != l.languageCursor() {
+		t.Errorf("游標 ＝ %d，目前語言在第 %d 列", l.cursor, l.languageCursor())
+	}
+	l.cursor = 2
+	got := l.apply(launcherConfirm)
+	if got.kind != launcherSetLanguage || got.lang != 2 {
+		t.Fatalf("選日本語 ＝ kind %v lang %d", got.kind, got.lang)
+	}
+	// 換完停在原地——下一列就是換好的樣子。
+	if l.phase != launcherLanguage {
+		t.Errorf("選完之後離開了語言頁：phase=%v", l.phase)
+	}
+	if l.apply(launcherCancel); l.phase != launcherTitle {
+		t.Errorf("ESC 之後 phase=%v，應該回標題頁", l.phase)
+	}
+}
+
+// 有存檔時語言仍在最後一列——插在中間會讓「LOAD DATA」的位置跑掉。
+func TestLauncherLanguageIsLastRow(t *testing.T) {
+	l := newLauncher(true, []launcherSlot{{Slot: 0, Available: true, Label: "一"}})
+	if got := l.rowCount(); got != 3 {
+		t.Fatalf("有存檔時標題頁列數 ＝ %d，預期 3", got)
+	}
+	l.cursor = 1
+	if got := l.apply(launcherConfirm); got.kind != launcherNoResult || l.phase != launcherLoad {
+		t.Fatalf("第二列不是 LOAD DATA：phase=%v", l.phase)
+	}
+	l.apply(launcherCancel)
+	l.cursor = 2
+	if got := l.apply(launcherConfirm); got.kind != launcherNoResult || l.phase != launcherLanguage {
+		t.Fatalf("第三列不是 LANGUAGE：phase=%v", l.phase)
 	}
 }

@@ -74,7 +74,7 @@ func (s *Session) adviseHint(row int) string {
 		if s.selected < 0 {
 			return "先在地圖上點目的地"
 		}
-		return "遷往 " + big5(s.world.Cities[s.selected].Name)
+		return "遷往 " + s.Localise(s.world.Cities[s.selected].Name)
 	case adviseSortieRow:
 		return "君主親自出陣"
 	default:
@@ -94,7 +94,7 @@ func (s *Session) AdviseChoices() []string {
 	case advisePickAlly, advisePickTarget:
 		rows := make([]string, 0, len(s.world.Factions))
 		for _, i := range s.adviseFactions() {
-			rows = append(rows, big5(s.world.LordName(i)))
+			rows = append(rows, s.Localise(s.world.LordName(i)))
 		}
 		return rows
 	case advisePersuade:
@@ -135,11 +135,11 @@ func (s *Session) reasonLabels(c persuasion.Command) []string {
 func (s *Session) adviseVars() map[byte]string {
 	vars := map[byte]string{'6': ""}
 	if t := s.advise.tgt; t >= 0 && t < len(s.world.Factions) {
-		vars['3'] = big5(s.world.LordName(t))
+		vars['3'] = s.Localise(s.world.LordName(t))
 	}
 	if p := s.world.Player; p >= 0 && p < len(s.world.Factions) {
 		if a := s.world.Factions[p].Advisor; a >= 0 && a < len(s.world.Generals) {
-			vars['4'] = big5(s.world.Generals[a].Name)
+			vars['4'] = s.Localise(s.world.Generals[a].Name)
 		}
 	}
 	return vars

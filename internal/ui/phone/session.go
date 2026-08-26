@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
+	"github.com/wicanr2/wolong_cht/internal/assets/text"
 	"github.com/wicanr2/wolong_cht/internal/battlesetup"
 	"github.com/wicanr2/wolong_cht/internal/assets/world"
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
@@ -12,6 +13,8 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/speed"
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
+	"github.com/wicanr2/wolong_cht/internal/ui/langpack"
+	"github.com/wicanr2/wolong_cht/internal/ui/uitext"
 )
 
 // Session 是手機版的一局。它擁有**真的**規則層——與桌面版共用
@@ -69,7 +72,18 @@ type Session struct {
 	//（`internal/rules/speed`，docs/spec/34）。
 	speed    int
 	throttle speed.Throttle
+
+	// lang 是目前語系；nil ＝ 母本繁中。talkBase 是母本的訊息表，
+	// 換回繁中時要用它（docs/spec/86 §5）。
+	lang     *langpack.Pack
+	talkBase *text.Table
+	// fontDir 是使用者自備的點陣字目錄；換語言要重載字型鏈。
+	fontDir string
 }
+
+// LanguageChoices 是系統面板列出的語言——與桌面啟動殼層同一份
+//（`langpack.Choices`），兩端不會列出不同的語言。
+var LanguageChoices = langpack.Choices
 
 // Options 是開一局要的東西。字型缺席不是錯誤，中文會顯示成方框
 // （與桌面版同一個行為）。
@@ -78,6 +92,9 @@ type Options struct {
 	Scenario int
 	Player   int
 	Seed     int
+	// FontDir 是點陣字目錄。換語言時要重載字型鏈（日文要 JISKAN16、
+	// 簡體要 HZK16），所以 Session 得記住它。
+	FontDir string
 }
 
 // NewSession 載入原版素材與劇本。
@@ -97,6 +114,7 @@ func NewSession(opt Options) (*Session, error) {
 	s := &Session{
 		lib: lib, world: w, rand: rng.NewFixed(opt.Seed), origDir: opt.OrigDir,
 		zoom: 1, selected: -1, speed: DefaultSpeed, form: newCorpsForm(),
+		fontDir: opt.FontDir,
 	}
 	// 顏色與外框都跟著調色盤走，不抄常數（docs/spec/70）。
 	// 第 0 組是原版介面色所在的那一組（docs/spec/54）。
@@ -110,8 +128,51 @@ func NewSession(opt Options) (*Session, error) {
 	// 新遊戲的開局政略評估（sub_11AC3+66 → sub_12BD9；讀檔路徑
 	// save.go 不做，docs/spec/83）。
 	s.world.RunInitialStrategyPass(s.rand)
+	s.talkBase = lib.Talk
 	s.centreOnCapital()
 	return s, nil
+}
+
+// SetLanguage 換語言（docs/spec/86）。**換的是呈現，不是遊戲**——
+// 世界狀態、時鐘、存檔一律不動。
+//
+// 手機端沒有命令列，語言只能在畫面裡換（系統面板的「語言」頁），
+// 所以這一支是 Android 的唯一入口。
+func (s *Session) SetLanguage(lang uitext.Language, fontDir string) error {
+	p, err := langpack.Load(lang, fontDir)
+	if err != nil {
+		return err
+	}
+	s.lang = p
+	if s.lib != nil {
+		s.lib.Talk = s.talkBase
+		if p.Talk != nil {
+			s.lib.Talk = p.Talk
+		}
+	}
+	return nil
+}
+
+// Language 回報目前語系。
+func (s *Session) Language() uitext.Language {
+	if s == nil || s.lang == nil {
+		return uitext.ZhHant
+	}
+	return s.lang.Lang
+}
+
+// LangPack 回傳目前語系包，供呈現層掛到 Drawer 上（字型、字級表、詞表）。
+func (s *Session) LangPack() *langpack.Pack {
+	if s == nil {
+		return nil
+	}
+	return s.lang
+}
+
+// Localise 是人名地名的語系出口——與桌面版的 `big5()` 同一個位置：
+// **原版資料轉成畫面文字的唯一入口**（docs/spec/86 §5）。
+func (s *Session) Localise(raw string) string {
+	return s.lang.Convert(text.Decode([]byte(raw), text.Big5))
 }
 
 // attachBattlefield 掛上戰場來源。

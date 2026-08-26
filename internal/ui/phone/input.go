@@ -182,6 +182,12 @@ func (s *Session) tapSystemRow(row int, lx float64) {
 		} else {
 			s.lastErr = s.LoadSlot(row)
 		}
+	case 2:
+		if row < 0 || row >= len(LanguageChoices) {
+			return
+		}
+		// 換語言只換呈現，世界狀態不動（docs/spec/86 §4）。
+		s.lastErr = s.SetLanguage(LanguageChoices[row].Lang, s.fontDir)
 	}
 }
 

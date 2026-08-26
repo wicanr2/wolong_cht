@@ -5,7 +5,7 @@
 #
 # 手機 UI 的開發迴圈：同一份 `internal/ui/phone`，用桌面的 Xvfb 驗，
 # 不必每次起 Android 模擬器（docs/mobile/android-plan.md §6）。
-# 環境變數 WOLONG_SCENARIO／WOLONG_PLAYER／WOLONG_SEED 會傳進去。
+# 環境變數 WOLONG_SCENARIO／WOLONG_PLAYER／WOLONG_SEED／WOLONG_LANG 會傳進去。
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -34,6 +34,7 @@ docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
     -e WOLONG_FP_FRAMES="${WOLONG_FP_FRAMES:-}" \
     -e WOLONG_SHOT_NOTICE="${WOLONG_SHOT_NOTICE:-}" \
     -e WOLONG_SPEED="${WOLONG_SPEED:-}" \
+    -e WOLONG_LANG="${WOLONG_LANG:-}" \
     -w /src "${WOLONG_GO_IMAGE:-demonwinter-go}" bash -c '
 set -e
 export PATH=/usr/local/go/bin:$PATH

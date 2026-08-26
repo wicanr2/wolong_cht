@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**472 列分布在 183 份文件，平均每份 2.6 列。**
+**483 列分布在 187 份文件，平均每份 2.6 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -39,34 +39,35 @@
 
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
-| 規則正確性 | 11 | 9 | 2 | 0 |
+| 規則正確性 | 18 | 15 | 3 | 0 |
 | 資料保存 | 33 | 32 | 1 | 0 |
 | 程式碼理解 | 182 | 176 | 6 | 0 |
-| 驗收 | 57 | 47 | 10 | 0 |
+| 驗收 | 58 | 48 | 10 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 183 | 168 | 15 | 0 |
-| **合計** | **472** | 437 | 35 | 0 |
+| 其他 | 186 | 171 | 15 | 0 |
+| **合計** | **483** | 447 | 36 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/re/` | 182 |
-| `docs/spec/` | 145 |
-| `docs/playtest/` | 57 |
+| `docs/spec/` | 148 |
+| `docs/playtest/` | 58 |
 | `docs/formats/` | 33 |
 | `docs/release/` | 21 |
+| `docs/mechanics/` | 18 |
 | `docs/mobile/` | 12 |
-| `docs/mechanics/` | 11 |
 | `docs/reference/` | 6 |
 | `docs/promo/` | 5 |
 
-## 2.1 規則正確性（11 條）
+## 2.1 規則正確性（18 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | `sub_10A65` 的內插演算法 | 只影響畫面 | 靜態 |
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | 最高速那一檔在原版實機上是多少 | 機器相依，要實測才有數字；只影響手感調校 | 實測 |
+| [`mechanics/20-military.md`](../mechanics/20-military.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | GUI 的戰後勝負／傷亡訊息 | 狀態層已結算，畫面上還沒顯示 | 靜態 |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 原版投射物的圖形與動畫 | `BATTLE.SCH` 裡的圖形沒對出來，目前畫的是側別標記 | 靜態 |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 少數戰術腳本與 `BATTLE` 資料欄位 | 十九個指令已全讀，剩的是資料側的殘留欄位 | 靜態 |
@@ -75,6 +76,12 @@
 | [`mechanics/50-diplomacy.md`](../mechanics/50-diplomacy.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
 | [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0` 旗標的 7 種值代表什麼 | 身分已確定在 `+0x17`，`+0` 是別的東西。只知道 bit 4 ＝ 不事二主 | 靜態 |
 | [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0x1E` 為什麼 0–2 恆空 | 掃 127 筆武將的 `+0x1E` 值分佈 | 靜態 |
+| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 正文散在各節的開放項目集中在這裡；每一條都寫下手點， | （未解小節內文） | 靜態 |
+| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 委任 AI「統率力低就打得差」的**實作方式**（§3.2）——是決策頻率、判斷正確率，還是可用戰術的多寡 | 找戰術層讀武將統率力欄位的地方；`internal/rules/tactical` 目前不隨統率力變化 | 靜態 |
+| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 說服請求裡 `SI+1Eh` 的完整結構語意、其他理由的索引公式、`cx ≥ 0x100` 分支（§1.3） | 三者都在 `sub_13830` 一帶；先補 `SI+1Eh` 的欄位表再談索引公式 | 靜態 |
+| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 「拉玩家合攻一個對玩家友善的對象」的**意圖**（§1.2 末） | 機制已照抄，意圖無證據。要定案得靠實機長跑統計，不是反組譯 | 靜態 |
+| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 事件 2／3 的完整接受流程與原版訊息、4／5 的逐位金額輸入、6／7 的 `TALK.DAT` 反應、9 的原版完整流程、11／12 的物件動畫 | 事件佇列的 runtime 已在，缺的是各事件的原版畫面流程；逐一對 `sub_14269` 一帶的分派做 oracle | 實測 |
+| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 入佇列的隨機空格分佈 | 目前是 remake 的明示差異；要對齊得先解出原版排程時挑空格的那段 | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 四個劇本的結局是否不同 | **觸發條件四劇本共用**，差別只在初始勢力數；結局的十二幕也是一條路播完，沒有依劇本分支的證據（`../re/70` §3）。**但沒有實跑四個劇本對過** | 實測 |
 
 ## 2.2 資料保存（33 條）
@@ -302,7 +309,7 @@
 | [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | 變體 0／2／3／5／6 的臨場抽驗 | 專屬句只在 1／4／7；預設句與它們共用選句機制，公式已 confirmed，抽驗優先度低 | 靜態 |
 | [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
 
-## 2.4 驗收（57 條）
+## 2.4 驗收（58 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -363,6 +370,7 @@
 | [`playtest/44-trust-init-oracle.md`](../playtest/44-trust-init-oracle.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
 | [`playtest/45-ai-longrun-comparison.md`](../playtest/45-ai-longrun-comparison.md) | 原版側只有一次跑、三個資料點 | 存檔輪換的點擊序列要修（m1–m4 沒重存：疑似覆寫確認框的 YES 座標沒點中）；修好後可加拍幾輪拉出分佈 | 靜態 |
 | [`playtest/45-ai-longrun-comparison.md`](../playtest/45-ai-longrun-comparison.md) | remake 孫策的擴張比原版猛（一個月滅劉繇 vs 原版半年拿兩城） | 幅度差在戰鬥節奏層（編成／行軍／攻城的耗時），不是決策層；要縮就得對拍單場攻城的時間線 | 靜態 |
+| [`playtest/46-runtime-language-switch.md`](../playtest/46-runtime-language-switch.md) | Android 實機／模擬器沒實地切過 | 這裡的手機畫面是桌面 Xvfb 跑 `cmd/wlandroid` 拍的（同一份 `internal/ui/phone`）；實機驗收排在下一次 Android 打包 | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -375,7 +383,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（183 條）
+## 2.6 其他（186 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -556,6 +564,9 @@
 | [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | **16 px 字型在清單裡列距為 0** | 版面是照倚天的 16×15 排的（列高 16 ⇒ 1 px 間隙），JIS／GB 的字是 16×16 ⇒ 貼在一起。**裁掉首列或末列會傷到 89% 的字**（量過：兩份字型的第 0 列與第 15 列各有 82–91% 帶墨），所以不裁。PC-98 原版的文字模式本來就是 16 px 列距貼齊，日文這樣看是對的；… | 靜態 |
 | [`spec/85-latin-list-layout.md`](../spec/85-latin-list-layout.md) | 軍團／勢力兩家仍有 8–9 字的欄 | 要再寬就得動視窗本身的寬度（384 px 是原版幾何），那會影響對拍基準——**要做就整個視窗一起重排，不要只加寬一欄** | 靜態 |
 | [`spec/85-latin-list-layout.md`](../spec/85-latin-list-layout.md) | 其他視窗（HUD、據點情報卡、編成）還沒為半形語系重排 | 那些是固定座標的欄位，逐一量過再改；目前靠「英文不可超過原文寬度」的約束擋住溢出 | 靜態 |
+| [`spec/86-runtime-language-switch.md`](../spec/86-runtime-language-switch.md) | Android 實機／模擬器還沒實地切過語言 | 面板與 `syncLanguage` 都有單測，但手機版的畫面沒拍過；下一次 Android 打包驗收時補 | 靜態 |
+| [`spec/86-runtime-language-switch.md`](../spec/86-runtime-language-switch.md) | 語言不進存檔 | 原版存檔格式沒有這一欄，塞進去會破壞 round-trip。要記住偏好得另存 remake 自己的設定檔 | 靜態 |
+| [`spec/86-runtime-language-switch.md`](../spec/86-runtime-language-switch.md) | F9 是 remake 自創的鍵 | 原版沒有這個鍵；`docs/spec/13` 的按鍵表要同步記一筆 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 | 靜態 |
@@ -574,5 +585,23 @@
 或用別的詞說「這個還不知道」的缺口抽不到**——下列檔案提到未解
 卻一列都沒抽出來，要嘛缺口寫成別的句式，要嘛那些字樣只是在講別的事：
 
-- `docs/mechanics/20-military.md`
-- `docs/mechanics/70-ai.md`
+（沒有）
+
+只印抽得到的部分，會讓解析失敗長得像「那份文件沒有缺口」。
+這一節就是為了讓那個差別看得見。
+
+## 9. DOS／BIOS 平台層（不計入總數）
+
+原版與 DOS／BIOS 之間的介面：`INT` 服務號、顯示卡暫存器、磁碟服務。
+**remake 跑在 Go／Ebiten 上，不跟它們講話**——知道 `INT 61h` 的
+`ah=4` 是什麼，不會改變任何一行 Go。使用者裁定 2026-08-23：不算缺口。
+
+⚠ **分開數不是不數。** 這些仍然是原版的未解之處，只是**不擋 remake**；
+哪天要寫「原版怎麼跟 DOS 講話」的文件，這一節就是清單。
+
+| 出處 | 缺口 | 現況 |
+|---|---|---|
+| [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | `INT 61h` 的四個服務號 `[DOS/BIOS]` | `ah=4`／`7`／`8` 與 `ax=09F2h`／`0C01h`，對應什麼動作要看 `YNSOUND.COM`（[`42`](42-leaf-functions.md) §7）。⚠ **這是原版與音效 TSR 的介面，不擋 remake**——音訊走純 Go 的 OPL3 渲染（[`../spec/29`](../spec/29-audio.md)），不經過 DOS |
+| [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `sub_1F7A4` `[DOS/BIOS]` | 把 32 B 緩衝畫上 VRAM 的實際迴圈，未逐行讀。⚠ remake 要的是**畫什麼**（字模版面，已解），不是**怎麼寫 VRAM** |
+| [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `YNFONT.EXE` 怎麼顯示中文 `[DOS/BIOS]` | 它不走 INT 15h（0 次），密碼輸入畫面的中文是它自己畫的。⚠ 那是一支 DOS TSR，remake 沒有對應物；密碼頁本身也不擋任何事（`CLAUDE.md` §4.0） |
+| [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `INT 61h` 的四個服務號（`ah=4`／`7`／`8`、`ax=09F2h`／`0C01h`）`[DOS/BIOS]` | 對應什麼音效動作要看 `YNSOUND.COM`（[`17`](17-dosv-audio-tsr.md)）。⚠ 原版與音效 TSR 的介面，**不擋 remake** |

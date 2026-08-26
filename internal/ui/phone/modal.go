@@ -48,11 +48,11 @@ func (s *Session) ModalTitle() string {
 			s.corpsName(c.Attacker), s.corpsName(c.Defender))
 	case modalDiplomacy:
 		c := s.world.PendingDiplomacy()
-		return big5(s.world.LordName(c.Source)) + " 提出外交要求"
+		return s.Localise(s.world.LordName(c.Source)) + " 提出外交要求"
 	case modalFunding:
 		c := s.world.PendingFunding()
 		return fmt.Sprintf("%s 請求 %d 資金",
-			big5(s.world.Generals[c.Officer].Name), c.RequestedAmount)
+			s.Localise(s.world.Generals[c.Officer].Name), c.RequestedAmount)
 	}
 	return ""
 }
@@ -104,7 +104,7 @@ func (s *Session) corpsName(corps int) string {
 	if corps < 0 || corps >= len(s.world.Generals) {
 		return "城兵"
 	}
-	return big5(s.world.Generals[corps].Name)
+	return s.Localise(s.world.Generals[corps].Name)
 }
 
 // modalOptionRect 是第 i 個選項的矩形。選項貼著主區下緣排。

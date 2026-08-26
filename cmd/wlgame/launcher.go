@@ -12,6 +12,7 @@ import (
 
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
+	"github.com/wicanr2/wolong_cht/internal/ui/langpack"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
@@ -29,6 +30,9 @@ const (
 	launcherSelectPlayer
 	launcherGameConfirm
 	launcherLoad
+	// launcherLanguage 是 remake 自己的一頁（docs/spec/86 §4）。
+	// **不加在原版的系統選單裡**——那一頁是逐像素對過的（docs/playtest/39）。
+	launcherLanguage
 )
 
 type launcherAction uint8
@@ -47,6 +51,7 @@ const (
 	launcherPreviewScenario
 	launcherStartNewGame
 	launcherStartLoad
+	launcherSetLanguage
 )
 
 type launcherResult struct {
@@ -54,6 +59,8 @@ type launcherResult struct {
 	scenario int
 	player   int
 	slot     int
+	// lang 是 launcherSetLanguage 選中的語言（langpack.Choices 的索引）。
+	lang int
 }
 
 type launcherPlayer struct {
@@ -82,9 +89,9 @@ type launcherSlot struct {
 }
 
 type launcherModel struct {
-	phase           launcherPhase
-	cursor          int
-	hasSave         bool
+	phase  launcherPhase
+	cursor  int
+	hasSave bool
 	scenario        int
 	scenarioName    string
 	players         []launcherPlayer
@@ -112,10 +119,13 @@ func newLauncher(hasSave bool, slots []launcherSlot) *launcherModel {
 func (l *launcherModel) rowCount() int {
 	switch l.phase {
 	case launcherTitle:
+		// NEW GAME ／（LOAD DATA）／ LANGUAGE
 		if l.hasSave {
-			return 2
+			return 3
 		}
-		return 1
+		return 2
+	case launcherLanguage:
+		return len(langpack.Choices)
 	case launcherNewGameConfirm, launcherGameConfirm:
 		return 2
 	case launcherScenario:
@@ -127,6 +137,19 @@ func (l *launcherModel) rowCount() int {
 	default:
 		return 0
 	}
+}
+
+// languageCursor 是目前語言在清單裡的位置——進這一頁時游標停在它上面。
+func (l *launcherModel) languageCursor() int {
+	// ⚠ **語系狀態不在這裡存第二份**：目前語言的唯一真相是 `uiLang`，
+	// launcher 只是把游標停在它上面。
+	cur := uiLang.Lang()
+	for i, c := range langpack.Choices {
+		if c.Lang == cur {
+			return i
+		}
+	}
+	return 0
 }
 
 func (l *launcherModel) clampCursor() {
@@ -202,7 +225,7 @@ func (l *launcherModel) setScenarioPlayers(index int, name string, players []lau
 func (l *launcherModel) back() {
 	l.notice = ""
 	switch l.phase {
-	case launcherNewGameConfirm, launcherLoad:
+	case launcherNewGameConfirm, launcherLoad, launcherLanguage:
 		l.phase = launcherTitle
 		l.cursor = 0
 	case launcherScenario:
@@ -250,7 +273,18 @@ func (l *launcherModel) confirm() launcherResult {
 			l.phase = launcherLoad
 			l.cursor = 0
 			l.notice = ""
+			return launcherResult{}
 		}
+		if l.cursor == l.rowCount()-1 {
+			l.phase = launcherLanguage
+			l.cursor = l.languageCursor()
+			l.notice = ""
+		}
+	case launcherLanguage:
+		if l.cursor < 0 || l.cursor >= len(langpack.Choices) {
+			return launcherResult{}
+		}
+		return launcherResult{kind: launcherSetLanguage, lang: l.cursor}
 	case launcherNewGameConfirm:
 		if l.cursor == 0 {
 			l.phase = launcherScenario
@@ -619,6 +653,14 @@ func (g *game) applyLauncherResult(result launcherResult) error {
 			return nil
 		}
 		g.launcher = nil
+	case launcherSetLanguage:
+		if result.lang < 0 || result.lang >= len(langpack.Choices) {
+			return nil
+		}
+		// 換完停在原地：**下一列就是換好的樣子**，玩家看得到自己選了什麼。
+		if err := g.setLanguage(langpack.Choices[result.lang].Lang); err != nil {
+			g.launcher.notice = fmt.Sprintf("換語言失敗：%v", err)
+		}
 	}
 	return nil
 }
@@ -710,7 +752,21 @@ func (g *game) drawLauncher(screen *ebiten.Image) {
 		if l.hasSave {
 			rows = append(rows, "LOAD DATA")
 		}
+		rows = append(rows, "LANGUAGE")
 		drawRows(rows, 152, l.cursor, 32)
+	case launcherLanguage:
+		g.td.Draw(screen, "LANGUAGE", launcherListX+16, 88, amber)
+		rows := make([]string, len(langpack.Choices))
+		for i, c := range langpack.Choices {
+			// ⚠ 記號要挑**倚天 Big5 有的字**：`▶` 不在裡面，
+			// 畫出來是一個方框，看起來像缺字不像游標。
+			mark := "　"
+			if c.Lang == uiLang.Lang() {
+				mark = "●"
+			}
+			rows[i] = mark + c.Name
+		}
+		drawRows(rows, launcherListY, l.cursor, launcherRowH)
 	case launcherNewGameConfirm:
 		g.td.Draw(screen, "NEW GAME", launcherListX+16, 120, amber)
 		g.td.Draw(screen, "開始新遊戲？", launcherListX+16, 136, dim)

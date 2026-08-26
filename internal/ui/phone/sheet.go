@@ -39,7 +39,7 @@ func (s *Session) Tabs() []string {
 	case CmdCorps:
 		return []string{"現有", "編成"}
 	case CmdSystem:
-		return []string{"速度", "存檔", "關於"}
+		return []string{"速度", "存檔", "語言", "關於"}
 	}
 	return nil
 }
@@ -175,7 +175,7 @@ func (s *Session) generalRows() []sheetRow {
 			continue
 		}
 		rows = append(rows, sheetRow{
-			name: big5(g.Name),
+			name: s.Localise(g.Name),
 			cols: []string{
 				fmt.Sprintf("武 %d", g.Martial),
 				fmt.Sprintf("統 %d", g.Command),
@@ -192,7 +192,7 @@ func (s *Session) generalPost(n int) string {
 	w := s.world
 	for i := range w.Cities {
 		if w.Cities[i].Governor == n {
-			return "內政 " + big5(w.Cities[i].Name)
+			return "內政 " + s.Localise(w.Cities[i].Name)
 		}
 	}
 	if c := &w.Corps[n]; c.Alive {
@@ -219,7 +219,7 @@ func (s *Session) cityRows() []sheetRow {
 			continue
 		}
 		rows = append(rows, sheetRow{
-			name: big5(c.Name),
+			name: s.Localise(c.Name),
 			cols: []string{
 				fmt.Sprintf("生產 %d", c.Production),
 				fmt.Sprintf("防災 %d", c.Prevention),
@@ -240,7 +240,7 @@ func (s *Session) factionRows() []sheetRow {
 			continue
 		}
 		rows = append(rows, sheetRow{
-			name: big5(w.LordName(i)),
+			name: s.Localise(w.LordName(i)),
 			cols: []string{
 				fmt.Sprintf("據點 %d", f.Cities),
 				fmt.Sprintf("武將 %d", f.Generals),
@@ -273,7 +273,7 @@ func (s *Session) corpsRows() []sheetRow {
 			continue
 		}
 		rows = append(rows, sheetRow{
-			name: big5(w.Generals[i].Name),
+			name: s.Localise(w.Generals[i].Name),
 			cols: []string{
 				fmt.Sprintf("兵 %d", c.Men*MenPerPoint),
 				fmt.Sprintf("士氣 %d", c.Morale),
@@ -292,10 +292,10 @@ func (s *Session) corpsWhere(c *state.Corps) string {
 	w := s.world
 	at := "行軍中"
 	if c.Node >= 0 && c.Node < len(w.Cities) && c.X == w.Cities[c.Node].X && c.Y == w.Cities[c.Node].Y {
-		at = big5(w.Cities[c.Node].Name)
+		at = s.Localise(w.Cities[c.Node].Name)
 	}
 	if c.Ordered >= 0 && c.Ordered < len(w.Cities) && c.Ordered != c.Node {
-		return at + " → " + big5(w.Cities[c.Ordered].Name)
+		return at + " → " + s.Localise(w.Cities[c.Ordered].Name)
 	}
 	return at
 }
@@ -321,6 +321,8 @@ func (s *Session) systemRows() []sheetRow {
 		}
 	case 1:
 		return s.saveRows()
+	case 2:
+		return s.languageRows()
 	default:
 		return []sheetRow{
 			{name: "臥龍傳 Remake", cols: []string{"手機版"}},
@@ -330,6 +332,25 @@ func (s *Session) systemRows() []sheetRow {
 	}
 }
 
+
+// languageRows 是可切的語言（docs/spec/86 §4）。
+//
+// **手機沒有命令列**，這一頁是 Android 唯一能換語言的地方。
+// 每一列用該語言自己的寫法寫，目前選中的那一列打勾——
+// 換過去之後畫面全是那個語言，用中文列出來反而認不出自己選了什麼。
+func (s *Session) languageRows() []sheetRow {
+	cur := s.Language()
+	rows := make([]sheetRow, 0, len(LanguageChoices))
+	for _, l := range LanguageChoices {
+		// ⚠ 記號要挑**倚天 Big5 有的字**：`✓` 不在裡面，畫出來是方框。
+		mark := ""
+		if l.Lang == cur {
+			mark = "●"
+		}
+		rows = append(rows, sheetRow{name: l.Name, cols: []string{mark}})
+	}
+	return rows
+}
 
 // saveRows 是四個存檔槽。
 //
