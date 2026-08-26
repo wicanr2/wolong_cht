@@ -31,7 +31,8 @@ need() { [ -e "$1" ] || { echo "找不到必要素材：$1" >&2; exit 1; }; }
 for f in "$live/o1-newgame.mp4" "$live/o2-strategy.mp4" "$live/o3-corps.mp4" \
          "$live/o4-march.mp4" "$live/o5-battle.mp4" "$adlib" "$fill" "$font" \
          "$remake_root/map/f00000.png" "$remake_root/battle/f00000.png" \
-         "$remake_root/siege/f00000.png"; do
+         "$remake_root/siege/f00000.png" "$remake_root/newgame/f00000.png" \
+         "$remake_root/form/f00000.png" "$remake_root/march/f00000.png"; do
     need "$f"
 done
 mkdir -p "$out_dir"
@@ -104,6 +105,10 @@ remake_clip() {
 }
 
 # 並排：左原版實機、右 remake 實機。
+# ⚠ **來源尺寸不一定是 640×480。** 受控擷取（`tools/dosv_capture.sh`）是
+# 640×480 上下各 40 px 黑邊；使用者提供的錄影是 956×720。所以先一律
+# `scale=640:480` 再裁 —— 少了那一步，956 寬的來源會被裁掉右邊一大半，
+# 而畫面看起來只是「構圖怪」不像出錯。
 split_clip() {
     local name=$1 d=$2 src=$3 start=$4 dir=$5 title=$6 lft=$7 rgt=$8 note=$9
     txt "$tmp/$name.t" "$title"; txt "$tmp/$name.l" "$lft"
@@ -114,7 +119,7 @@ split_clip() {
         -ss "$start" -t "$d" -i "$src" \
         -framerate 30 -start_number 0 -i "$remake_root/$dir/f%05d.png" \
         -filter_complex "\
-[1:v]crop=640:400:0:40,fps=30,scale=580:362:flags=neighbor,setsar=1,pad=580:436:0:37:color=0x07142e[L];\
+[1:v]scale=640:480:flags=neighbor,setsar=1,crop=640:400:0:40,fps=30,scale=580:362:flags=neighbor,setsar=1,pad=580:436:0:37:color=0x07142e[L];\
 [2:v]fps=30,tpad=stop_mode=clone:stop_duration=$d,trim=duration=$d,setpts=PTS-STARTPTS,scale=580:362:flags=neighbor,setsar=1,pad=580:436:0:37:color=0x07142e[R];\
 [0:v][L]overlay=50:150[a];[a][R]overlay=650:150[b];\
 [b]drawbox=x=0:y=0:w=1280:h=64:color=0x07142e@0.86:t=fill,\
@@ -128,27 +133,33 @@ $(fade_of "$d")[out]" \
 }
 
 echo "── 產生片段 ──"
-card       s01 4  "臥龍傳 Remake" "松崗 DOS/V 原版實機遊玩 × remake 實機"
-orig_clip  s02 7  "$live/o1-newgame.mp4" 2  "原版實機｜開新遊戲" \
-           "受控 DOSBox-X：劇本與君主選擇，滑鼠實際操作"
+card       s01 4  "臥龍傳 Remake" "松崗 DOS/V 原版實機 × remake：同一個流程並排"
+split_clip s02 7  "$live/o1-newgame.mp4" 2 newgame "開新遊戲" \
+           "松崗 DOS/V 原版實機" "Remake 實機｜啟動殼層" \
+           "原版四層：ＹＥＳ／ＮＯ → 劇本 → 勢力清單 → 君主卡"
 split_clip s03 9  "$live/o2-strategy.mp4" 1 map "大地圖對照" \
            "松崗 DOS/V 原版實機" "Remake 實機｜seed 17" \
            "同類畫面對照，非同一局面；remake 側為最高速檔錄製"
-orig_clip  s04 8  "$live/o3-corps.mp4" 3  "原版實機｜軍團編成" \
-           "指令列 → 編成 → 選武將，全程實機滑鼠"
+split_clip s04 8  "$live/o3-corps.mp4" 3 form "軍團編成" \
+           "松崗 DOS/V 原版實機" "Remake 實機｜六個編成位置" \
+           "主將／前鋒／左翼／右翼／左備／右備，配兵與士氣同一套規則"
 split_clip s05 8  "$live/o5-battle.mp4" 20 map "指令與事件" \
            "原版實機｜事件訊息與時鐘" "Remake 實機｜四個常駐視窗" \
            "兩側都是實際執行畫面，非逐像素判定"
-orig_clip  s06 8  "$live/o4-march.mp4" 2  "原版實機｜行軍指示" \
-           "軍團 → 目的地，畫面隨部隊捲動"
-fill_clip  s07 8  317 "原版｜戰術戰場" \
-           "此段取自使用者提供的松崗 DOS/V 遊玩錄影，非本次實機擷取"
-remake_clip s08 9 battle "Remake 實機｜野戰" "45 度視角沿用原版資產"
-remake_clip s09 6 siege  "Remake 實機｜攻城" "同一套戰術規則層"
+split_clip s06 8  "$live/o4-march.mp4" 2 march "行軍指示" \
+           "松崗 DOS/V 原版實機" "Remake 實機｜TALK #21 ＋ 三選一" \
+           "選完目的地跳同一則訊息：戰鬥指揮／委任／解體"
+# ⚠ **這一段的原版側是使用者提供的錄影，不是本次實機擷取**：
+# 原版的戰場要「編成軍團然後等 AI 來打」，四次專門擷取都沒等到
+#（docs/promo/dosv-realmachine.md §4）。片上要寫明來源。
+split_clip s07 9  "$fill" 317 battle "戰術戰場" \
+           "原版（使用者提供的錄影）" "Remake 實機｜野戰" \
+           "原版側非本次實機擷取；兩側不是同一場戰鬥"
+remake_clip s09 15 siege "Remake 實機｜攻城" "城牆、城門與守軍；同一套戰術規則層"
 card       s10 5  "經典再現" "原版實機 × 可執行 remake｜配樂為 DOSBox-X 實錄的原版 AdLib"
 
 concat=$tmp/concat.txt; : > "$concat"
-for n in s01 s02 s03 s04 s05 s06 s07 s08 s09 s10; do
+for n in s01 s02 s03 s04 s05 s06 s07 s09 s10; do
     printf "file '%s'\n" "$tmp/$n.mp4" >> "$concat"
 done
 
