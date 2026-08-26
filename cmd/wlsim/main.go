@@ -69,6 +69,8 @@ func main() {
 	fmt.Printf("玩家所仕勢力 %d（君主 %s）\n\n", w.Player, big5(w.LordName(w.Player)))
 
 	rng := rng.NewFixed(*seed)
+	// 新遊戲的開局政略評估（sub_11AC3+66 → sub_12BD9，docs/spec/83）。
+	w.RunInitialStrategyPass(rng)
 	tw := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
 	fmt.Fprintln(tw, "年月\t勢力數\t玩家據點\t玩家資金\t玩家預備兵\t平均生產力\t玩家上昇值\tAI上昇值\tAI低於−36\t火災\t暴動\t暴風雨")
 

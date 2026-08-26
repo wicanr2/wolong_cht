@@ -1628,7 +1628,7 @@ func main() {
 	}
 
 	if *directStart || directStartFlagWasPassed() {
-		if err := g.startWorld(loadPath, *scenario, *player, true); err != nil {
+		if err := g.startWorld(loadPath, *scenario, *player, true, loadPath == path); err != nil {
 			log.Fatal(err)
 		}
 		// -load-slot 讓驗收路徑直接從存檔開局，不必走讀檔選單。
@@ -1704,7 +1704,7 @@ func (g *game) buildRoads(w *state.World) *march.Graph {
 
 // startWorld 是唯一的正式 World 建立入口。一般 launcher 在確認新局／
 // 讀檔後才呼叫；direct fixture 也走同一條路，避免兩套初始化語意漂移。
-func (g *game) startWorld(path string, slot int, player int, overridePlayer bool) error {
+func (g *game) startWorld(path string, slot int, player int, overridePlayer, newGame bool) error {
 	w, err := state.LoadScenario(path, slot)
 	if err != nil {
 		return err
@@ -1718,6 +1718,11 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer bool
 		return fmt.Errorf("第 %d 槽沒有合法玩家資料", slot+1)
 	}
 	w.EnableStrategicAI()
+	if newGame {
+		// 原版新遊戲在選定君主後立即跑一次政略評估（sub_11AC3+66 →
+		// sub_12BD9）；讀檔路徑跳過——佇列隨存檔還原（docs/spec/83）。
+		w.RunInitialStrategyPass(g.rng)
+	}
 
 	g.world = w
 	g.roads = g.buildRoads(w)

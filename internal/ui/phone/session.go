@@ -107,6 +107,9 @@ func NewSession(opt Options) (*Session, error) {
 	// ⭐ **一定要開政略 AI**，不然電腦勢力什麼都不做：不出兵、不外交、
 	// 不編軍團，玩家會看到一個安靜到不像遊戲的世界。桌面版在同一個位置開。
 	s.world.EnableStrategicAI()
+	// 新遊戲的開局政略評估（sub_11AC3+66 → sub_12BD9；讀檔路徑
+	// save.go 不做，docs/spec/83）。
+	s.world.RunInitialStrategyPass(s.rand)
 	s.centreOnCapital()
 	return s, nil
 }

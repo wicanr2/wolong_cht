@@ -77,7 +77,7 @@
 | [`docs/playtest/42-window-parity.md`](playtest/42-window-parity.md) | 42 — 四類視窗的實機對拍：財政收斂到 NEAR，一覽表與編成抓出五項實質差異 | （2026-08-25 第三輪）武將一覽（編成清單）、財政視窗、 數值輸入器、交戰目標勢力清單 | 2026-08-24 |
 | [`docs/playtest/43-field-battle-parity.md`](playtest/43-field-battle-parity.md) | 43 — 野戰的同狀態對拍：九區裡七區逐像素相同，地形 0 差 | （2026-08-25 對白收斂後）九區裡七區 0 差 PASS、 field | 2026-08-24 |
 | [`docs/playtest/44-trust-init-oracle.md`](playtest/44-trust-init-oracle.md) | 44 — 新遊戲的信賴度初始值：實機 0xFF 滿格 | confirmed。 | 2026-08-25 |
-| [`docs/playtest/45-ai-longrun-comparison.md`](playtest/45-ai-longrun-comparison.md) | 45 — AI 長程決策對照：原版半年 vs remake 五個 seed | 首輪完成。 | 2026-08-25 |
+| [`docs/playtest/45-ai-longrun-comparison.md`](playtest/45-ai-longrun-comparison.md) | 45 — AI 長程決策對照：原版半年 vs remake 五個 seed | 完成，四大擴張事件全部一致。 | 2026-08-25 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告的遊戲段落是逐幀錄下來的實跑畫面； 三平台候選包與 Linux AppImag… | 2026-08-21 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
@@ -242,6 +242,7 @@
 | [`docs/spec/80-duel-opening.md`](spec/80-duel-opening.md) | 80 — 開戰單挑：挑戰、拒戰、應戰、回合互嗆、決著 | CONFORMED（2026-08-25）。狀態機在 internal/rules/tactical/duel.go… | 2026-08-25 |
 | [`docs/spec/81-disaster-quantities.md`](spec/81-disaster-quantities.md) | 81 — 災害的實際數值：機率、marker 量、持續與距離衰減 | CONFORMED（2026-08-25）。整條鏈的數值都有機器碼出處， remake 已實作；本輪修掉一處距離算錯… | 2026-08-25 |
 | [`docs/spec/82-defender-selection.md`](spec/82-defender-selection.md) | 82 — 應戰軍團的挑選：兵數 × 士氣 × 評價 | CONFORMED（2026-08-25）。 | 2026-08-25 |
+| [`docs/spec/83-initial-strategy-pass.md`](spec/83-initial-strategy-pass.md) | 83 — 新遊戲的開局政略評估（sub_12BD9 的第二個呼叫點） | READY → CONFORMED（2026-08-26）。 | 2026-08-26 |
 | [`docs/spec/90-same-state-parity.md`](spec/90-same-state-parity.md) | 90 — 同狀態畫面對拍 | CONFORMED。管線接起來了，也對原版跑過一輪 （[../playtest/37](../playtest/37… | 2026-08-15 |
 | [`docs/spec/91-tactical-parity.md`](spec/91-tactical-parity.md) | 91 — 戰場的逐區對拍：分區、同狀態怎麼達成 | CONFORMED。 | 2026-08-17 |
 

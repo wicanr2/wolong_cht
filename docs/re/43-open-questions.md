@@ -3,7 +3,7 @@
 **狀態：生成的清單，跑 `tools/py.sh tools/re_open_questions.py` 重出。
 這一份不下結論，只把各文件的「未解」表集中到一處。**
 
-- 日期：2026-08-25
+- 日期：2026-08-26
 - 產生工具：`tools/re_open_questions.py`
 - 來源：`docs/` 底下所有文件的未解小節、表格裡標未解的列，與收尾是「…未解」的散句
 
@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**462 列分布在 180 份文件，平均每份 2.6 列。**
+**463 列分布在 181 份文件，平均每份 2.6 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,15 +44,15 @@
 | 程式碼理解 | 182 | 176 | 6 | 0 |
 | 驗收 | 57 | 47 | 10 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 173 | 158 | 15 | 0 |
-| **合計** | **462** | 427 | 35 | 0 |
+| 其他 | 174 | 159 | 15 | 0 |
+| **合計** | **463** | 428 | 35 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/re/` | 182 |
-| `docs/spec/` | 135 |
+| `docs/spec/` | 136 |
 | `docs/playtest/` | 57 |
 | `docs/formats/` | 33 |
 | `docs/release/` | 21 |
@@ -361,8 +361,8 @@
 | [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | 佔用圖快取欄的讀檔重建 | §3 是強證據不是 confirmed / 讀原版的讀檔常式（`sub_18CAE` 一帶）確認重建走哪個欄位 | 靜態 |
 | [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
 | [`playtest/44-trust-init-oracle.md`](../playtest/44-trust-init-oracle.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
-| [`playtest/45-ai-longrun-comparison.md`](../playtest/45-ai-longrun-comparison.md) | **remake 的孫策不渡江攻劉繇** | 孫策→劉繇要跨長江。已知場合適性的**水戰模式在 remake 找不到可達路徑**（`sub_152D7` 呼叫端只傳 0/1，`../mechanics/60`）；候選成因：AI 選目標時把「隔江」當不可達、或行軍圖上那條連結沒被當成可走。先查原版孫策出兵走的是哪條邊（存檔 `SAVE-m5` 的孫策軍團記錄）… | 靜態 |
 | [`playtest/45-ai-longrun-comparison.md`](../playtest/45-ai-longrun-comparison.md) | 原版側只有一次跑、三個資料點 | 存檔輪換的點擊序列要修（m1–m4 沒重存：疑似覆寫確認框的 YES 座標沒點中）；修好後可加拍幾輪拉出分佈 | 靜態 |
+| [`playtest/45-ai-longrun-comparison.md`](../playtest/45-ai-longrun-comparison.md) | remake 孫策的擴張比原版猛（一個月滅劉繇 vs 原版半年拿兩城） | 幅度差在戰鬥節奏層（編成／行軍／攻城的耗時），不是決策層；要縮就得對拍單場攻城的時間線 | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -375,7 +375,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（173 條）
+## 2.6 其他（174 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -546,6 +546,7 @@
 | [`spec/80-duel-opening.md`](../spec/80-duel-opening.md) | 變體 0／2／3／5／6 的臨場抽驗 | 專屬句只在變體 1／4／7（`../re/75` §1.1），預設句共用同一選句機制；優先度低 | 靜態 |
 | [`spec/81-disaster-quantities.md`](../spec/81-disaster-quantities.md) | 事件 11 在風暴期間被重排的節奏 | 產生端一次排 32–60 延遲；期間事件 11 重擲強度的觸發頻率沒逐格讀（推定隨佇列輪到） | 靜態 |
 | [`spec/82-defender-selection.md`](../spec/82-defender-selection.md) | 名單上限 127 的邊界 | 原版緩衝區 0x100 bytes ÷ 2；remake 不設上限（軍團總數 127 本來就到不了）——記為等效差異 | 靜態 |
+| [`spec/83-initial-strategy-pass.md`](../spec/83-initial-strategy-pass.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 | 靜態 |

@@ -608,13 +608,13 @@ func (g *game) applyLauncherResult(result launcherResult) error {
 			return nil
 		}
 	case launcherStartNewGame:
-		if err := g.startWorld(launcherNewGamePath(g.sourceFile, g.saveFile), result.scenario, result.player, true); err != nil {
+		if err := g.startWorld(launcherNewGamePath(g.sourceFile, g.saveFile), result.scenario, result.player, true, true); err != nil {
 			g.launcher.notice = fmt.Sprintf("開始新遊戲失敗：%v", err)
 			return nil
 		}
 		g.launcher = nil
 	case launcherStartLoad:
-		if err := g.startWorld(g.saveFile, result.slot, -1, false); err != nil {
+		if err := g.startWorld(g.saveFile, result.slot, -1, false, false); err != nil {
 			g.launcher.notice = fmt.Sprintf("讀取存檔失敗：%v", err)
 			return nil
 		}

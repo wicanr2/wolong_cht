@@ -1188,6 +1188,18 @@ func (w *World) AliveFactions() []int {
 // 後呼叫。未啟用時，World 仍可作為純經濟／格式驗證模型使用。
 func (w *World) EnableStrategicAI() { w.strategicAI = true }
 
+// RunInitialStrategyPass 是 sub_12BD9 的**第二個呼叫點**：原版新遊戲在
+// 選定君主之後（`sub_11AC3+66`）立即跑一次完整政略評估，讀檔路徑跳過。
+// 缺這一次，資金貼著財政閘的勢力（孫策：word 82 vs 門檻 80）會在第一次
+// 月結後永遠出不了手（docs/spec/83）。宣戰仍走事件 1 佇列，訊息由每小時
+// dispatch 顯示，所以這裡把報表捨棄。
+func (w *World) RunInitialStrategyPass(rng economy.Rand) {
+	if w == nil || !w.strategicAI || rng == nil {
+		return
+	}
+	w.runStrategicAI(rng)
+}
+
 // SetApproximateEvent10 控制事件 10 的 remake 近似自然 producer。
 // false 適合只驗證原始 queue／consumer 的 fixture；正常遊戲預設為 true。
 func (w *World) SetApproximateEvent10(enabled bool) {
