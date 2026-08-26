@@ -1661,7 +1661,7 @@ func main() {
 	openTalkIndex := flag.Int("open-talk-index", -1, "截圖前直接開指定 TALK.DAT 槽位（驗收用）")
 	openOutcome := flag.String("open-outcome", "", "只供截圖的敗北 modal fixture：trust 或 faction")
 	talkJSON := flag.String("talk-json", "", "完整繁中 TALK JSON（研究用）")
-	langFlag := flag.String("lang", "zh-hant", "語系：zh-hant／zh-hans／en（docs/spec/84）")
+	langFlag := flag.String("lang", "zh-hant", "語系：zh-hant／zh-hans／ja／en（docs/spec/84）")
 	talkCorrections := flag.String("talk-corrections", bundledTalkCorrectionsPath(), "繁中 TALK 校訂覆蓋")
 	flag.Parse()
 
