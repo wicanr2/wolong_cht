@@ -117,13 +117,24 @@ func (b *Battle) updateSoldier(side, k int) {
 // **所以恢復是有移動成本的，不是下令就補。**
 func (b *Battle) doFormation(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
-	x, y := b.formationSpot(side, k)
-	s.GoalX, s.GoalY = x, y
-	s.GoalZ = b.standZ(s, x, y)
-	if s.X == x && s.Y == y {
+	if b.walkToFormation(side, k) {
 		s.Stamina = StaminaFull
 		s.Cmd, s.Next = Holding, Holding
 	}
+}
+
+// walkToFormation 把目標設成陣形位置，回報「是不是已經站在那裡」。
+//
+// ⚠ **它不碰命令。** 「到位轉狀態 7（就位）」是**命令 0 專屬**的
+// （docs/re/11 §5.8 的對照表），而守陣（命令 4）也要走回陣形——
+// 借用整支 `doFormation` 會讓守陣在下令的下一幀就被降級成就位
+// （docs/spec/96）。
+func (b *Battle) walkToFormation(side, k int) bool {
+	s := &b.Sides[side].Soldiers[k]
+	x, y := b.formationSpot(side, k)
+	s.GoalX, s.GoalY = x, y
+	s.GoalZ = b.standZ(s, x, y)
+	return s.X == x && s.Y == y
 }
 
 // doAttack 是命令 1／2。大將不攻擊（說明書「大將以外的兵攻擊」），
@@ -176,7 +187,11 @@ const guardRange = 16
 func (b *Battle) doGuard(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
 	if s.Target < 0 {
-		b.doFormation(side, k)
+		// ⚠ 還沒鎖到敵人 → 待在陣形位置，**但命令維持守陣**。
+		// 開場的兵本來就站在陣形位置上，借用 doFormation 的話
+		// 第一幀就會被判成「到位」而降級成就位——等到鎖上敵人時
+		// 命令已經不是守陣了，永遠不會反應（docs/spec/96）。
+		b.walkToFormation(side, k)
 		return
 	}
 	e := &b.Sides[1-side].Soldiers[s.Target]
@@ -184,11 +199,14 @@ func (b *Battle) doGuard(side, k int) {
 		b.doAttack(side, k)
 		return
 	}
-	// 敵人走遠了 → 回陣形。原版是 `[si+19h] < 16` 時把命令改回 0。
+	// 敵人走遠了 → 回陣形。原版**只有疲勞** `[si+19h] < 16 時才把命令改回 0
+	// （`sub_1ABB2`）；距離只換行為，不換命令。
 	if s.Stamina < StaminaBackToForm {
 		s.Cmd, s.Next = Form, Form
+		b.doFormation(side, k)
+		return
 	}
-	b.doFormation(side, k)
+	b.walkToFormation(side, k)
 }
 
 // doRetreat 是命令 5：往自軍側的邊緣走，走出畫面就離場。

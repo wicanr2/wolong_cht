@@ -438,6 +438,46 @@ func TestReplanWhenStuckEvenWithPath(t *testing.T) {
 	}
 }
 
+// TestGuardKeepsItsCommand 釘住 docs/spec/96：守陣走回陣形位置時
+// **不可以**被降級成「就位」。
+//
+// 「到位轉狀態 7」是命令 0 專屬的（`docs/re/11` §5.8 的對照表）；
+// 守陣只有在**疲勞** < 16 時才改回命令 0（`sub_1ABB2`）。
+// 借用整支 `doFormation` 的話，開場站在陣形位置上的兵第一幀就被判成
+// 「到位」——等到鎖上敵人時命令已經不是守陣，永遠不會反應。
+func TestGuardKeepsItsCommand(t *testing.T) {
+	f := walledField(0)
+	b := NewBattle(f, SyntheticFormations(), &fixedRand{}, 0)
+	b.Deploy(0, 0, Infantry, 1)
+	b.Place()
+	s := &b.Sides[0].Soldiers[0]
+	s.Cmd, s.Next = Guard, Guard
+	s.Stamina = StaminaFull
+	s.Target = -1 // 還沒鎖到敵人
+
+	for i := 0; i < 5; i++ {
+		b.doGuard(0, 0)
+	}
+	if s.Cmd != Guard {
+		t.Errorf("守陣的兵原地待了 5 幀就變成命令 %d，應該還是守陣(%d)",
+			s.Cmd, Guard)
+	}
+
+	// 疲勞掉下去才准降回陣形（原版 sub_1ABB2）。
+	b.Deploy(1, 0, Infantry, 1)
+	b.Place()
+	e := &b.Sides[1].Soldiers[0]
+	e.X, e.Y, e.Z = s.X+guardRange+4, s.Y, s.Z // 遠得不會觸發攻擊
+	s.Target = 0
+	s.Stamina = StaminaBackToForm - 1
+	b.doGuard(0, 0)
+	// 降回命令 0 之後，兵本來就站在陣形位置上，同一幀就走完命令 0 的
+	// 「到位 → 就位」。所以這裡要的是「**不再是守陣**」。
+	if s.Cmd == Guard {
+		t.Errorf("疲勞低於 %d 時應該降回陣形，命令卻還是守陣", StaminaBackToForm)
+	}
+}
+
 // 面向只在**走成功**那一步才更新——被牆擋住的兵保持原本的面向。
 //
 // 原版把 `[si+5]` 寫在四個移動常式裡，而那些常式只有走得動時才被呼叫。
