@@ -174,7 +174,15 @@ func (b *Battle) doScaleWall(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
 	x := b.Field.GateX()
 	s.GoalX, s.GoalY = clamp(x), s.Y
-	s.GoalZ = b.standZ(s, s.GoalX, s.GoalY)
+	// ⭐ 目標 Z 取**高平面**那一格的地面層（原版 `loc_1AB39` 的
+	// `bh |= 10h` ＋ `al = es:[bx] & 7`，docs/re/11 §5.8i）——
+	// 那是**牆頂**，不是腳下的地面。用 standZ 的話，牆腳有地面的那幾格
+	// 會算出 Z ＝ 0，於是「目前 Z ＝ 目標 Z」，純 Z 移動一次都不會試。
+	if lv, ok := b.Field.GroundLevel(s.GoalX, s.GoalY, PlaneHigh); ok {
+		s.GoalZ = lv
+	} else {
+		s.GoalZ = b.standZ(s, s.GoalX, s.GoalY)
+	}
 	if s.X == s.GoalX && s.Z == s.GoalZ {
 		s.Cmd, s.Next = Attack, Attack // 上去了就轉成攻擊
 	}
@@ -327,7 +335,14 @@ func (b *Battle) moveToward(side, k int) {
 	// ★ 純 Z 移動：**只在門那一格**，而且大將與騎馬不做
 	// （`sub_1B0D3` 開頭的 `cmp al, 0F0h`，加上 `sub_1AF69` 的
 	// `cmp [si+4], 12h / jbe`，docs/re/63 §4）。
-	if !moved && s.X == s.StepX && s.Y == s.StepY && s.Z != s.StepZ {
+	//
+	// ⚠ **觸發條件只有「X 與 Y 這一幀都沒走成」**（docs/spec/97）。
+	// `sub_1AF69` 的 `0001AF78`（Y）與 `0001AF82`（Z）是同一條 `jb` 鏈的
+	// 下一站——走失敗會跳過來，已經等於目標也會直接落下來。
+	// 這裡本來還要求 `s.X == s.StepX && s.Y == s.StepY`，於是登城的兵
+	// 站在門格上被前面的城壁擋住時**不會試著往上爬**，改成一直撞牆
+	// 把城壁磨穿——而原版是爬上去的。
+	if !moved && s.Z != s.StepZ {
 		if b.tryClimb(side, k) {
 			moved = true
 		}
@@ -514,8 +529,19 @@ func (b *Battle) tryMove(side, k, x, y, z int) (moved, walled bool) {
 // 門，走到才被擋——這個不對稱是原版行為，照抄。
 func (b *Battle) tryClimb(side, k int) bool {
 	s := &b.Sides[side].Soldiers[k]
-	if !s.CanClimb() || !b.Field.IsGateCell(s.X, s.Y) ||
-		b.Field.GateBlocksHighPlane(s.X, s.Y) {
+	if !s.CanClimb() || !b.Field.IsGateCell(s.X, s.Y) {
+		return false
+	}
+	if b.Field.GateBlocksHighPlane(s.X, s.Y) {
+		// ⭐ **爬不上去的那一下要打門**（docs/spec/98）。原版
+		// `sub_1B186` 回報「上一層有實體」時把實體編號留在 al，
+		// `sub_1B0D3` 的 `and al, al / jnz` 就據此走 `loc_1B533`
+		// 碰撞處理——**未破的門就是這樣被打開的**（耐久只有 80）。
+		// 少了這一下，登城的兵站在門格上永遠卡住，攻方只能改去磨
+		// 城壁（耐久上千），而那會讓門強度條一路亮著——原版不會。
+		if b.breakableAt(s.X, s.Y) {
+			b.hitStructure(side, s.Facing, s.X, s.Y)
+		}
 		return false
 	}
 	other := PlaneHigh

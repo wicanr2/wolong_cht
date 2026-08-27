@@ -478,6 +478,96 @@ func TestGuardKeepsItsCommand(t *testing.T) {
 	}
 }
 
+// TestClimbTriedWhenBlockedBeforeReachingGoal 釘住 docs/spec/97：
+// **X 與 Y 這一幀都沒走成就試 Z**，不必先走到目標格。
+//
+// `sub_1AF69` 的 `0001AF78`（Y）與 `0001AF82`（Z）是同一條 `jb` 鏈的下一站：
+// 走失敗會跳過來，已經等於目標也會直接落下來。remake 本來多要求
+// 「X、Y 都已經等於目標」，於是登城的兵站在門格上被前面的城壁擋住時
+// 不會試著往上爬。
+func TestClimbTriedWhenBlockedBeforeReachingGoal(t *testing.T) {
+	f, _ := tiledField(32)
+	b := NewBattle(f, SyntheticFormations(), &fixedRand{}, 10)
+	// 先把門打破——這一支要驗的是**觸發時機**，不是門破沒破。
+	gy := -1
+	for i := range b.Structures {
+		if b.Structures[i].Kind == KindGate {
+			gy = b.Structures[i].Y
+			break
+		}
+	}
+	if gy < 0 {
+		t.Skip("這張合成場沒有門")
+	}
+	b.breakRow(gy)
+
+	b.Deploy(0, 0, Infantry, 2)
+	s := &b.Sides[0].Soldiers[0]
+	s.Kind = Infantry // 第 0 個兵預設是大將，大將不做 Z 移動
+	s.X, s.Y, s.Z = f.GateX(), gy, 0
+	// 前面站一個**退卻中的同伴**：對調被閘擋下，所以 X 這一步一定走不成
+	// （`sub_1B732`）。原版接著就會落到 Y、再落到 Z。
+	blocker := &b.Sides[0].Soldiers[1]
+	blocker.Kind, blocker.Alive = Infantry, true
+	blocker.X, blocker.Y, blocker.Z = f.GateX()-1, gy, 0
+	blocker.Cmd, blocker.Next = Retreat, Retreat
+	// ⭐ 目標 X **還沒到**（差 5 格），而目標 Z 在上面一層。
+	s.GoalX, s.GoalY = f.GateX()-5, gy
+	lv, ok := f.GroundLevel(s.X, s.Y, PlaneHigh)
+	if !ok {
+		t.Skip("門那一格的高平面沒有地面")
+	}
+	s.GoalZ = lv
+	s.Path, s.PathAt = nil, 0
+
+	b.moveToward(0, 0)
+
+	if !s.OnWall {
+		t.Errorf("X 還沒走到目標就不試 Z——兵停在 (%d,%d,%d)，"+
+			"而門那一格的高平面在 Z=%d", s.X, s.Y, s.Z, lv)
+	}
+}
+
+// TestClimbIntoUnbrokenGateHitsIt 釘住 docs/spec/98：爬不上去的那一下要打門。
+//
+// 原版 `sub_1B186` 回報「上一層有實體」時把實體編號留在 al，
+// `sub_1B0D3` 的 `and al, al / jnz` 據此走 `loc_1B533` 碰撞處理——
+// **未破的門就是這樣被打開的**（耐久只有 80）。少了這一下，
+// 登城的兵站在門格上永遠卡住。
+func TestClimbIntoUnbrokenGateHitsIt(t *testing.T) {
+	f, _ := tiledField(32)
+	b := NewBattle(f, SyntheticFormations(), &fixedRand{}, 10)
+	gate := -1
+	for i := range b.Structures {
+		if b.Structures[i].Kind == KindGate && !b.Structures[i].Broken {
+			gate = i
+			break
+		}
+	}
+	if gate < 0 {
+		t.Skip("這張合成場沒有門")
+	}
+	g := &b.Structures[gate]
+	if !b.Field.GateBlocksHighPlane(g.X, g.Y) {
+		t.Skip("那道門已經是可爬的狀態")
+	}
+	b.Deploy(0, 0, Infantry, 1)
+	s := &b.Sides[0].Soldiers[0]
+	// ⚠ 每一隊的第 0 個兵是大將，而**大將與騎馬不做 Z 移動**
+	// （`sub_1AF69` 的 `cmp [si+4], 12h / jbe`）——要驗登城得用步兵。
+	s.Kind = Infantry
+	s.X, s.Y, s.Z = g.X, g.Y, 0
+	s.Facing = East // 朝城，不走「一撞歸零」那條捷徑
+	before := g.Durability
+
+	if b.tryClimb(AttackerSide, 0) {
+		t.Fatal("未破的門不該爬得上去")
+	}
+	if g.Durability >= before {
+		t.Errorf("爬不上去卻沒有打門：耐久 %d → %d", before, g.Durability)
+	}
+}
+
 // 面向只在**走成功**那一步才更新——被牆擋住的兵保持原本的面向。
 //
 // 原版把 `[si+5]` 寫在四個移動常式裡，而那些常式只有走得動時才被呼叫。

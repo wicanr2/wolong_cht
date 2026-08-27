@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**516 列分布在 197 份文件，平均每份 2.6 列。**
+**518 列分布在 199 份文件，平均每份 2.6 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 182 | 176 | 6 | 0 |
 | 驗收 | 82 | 71 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 195 | 182 | 13 | 0 |
-| **合計** | **516** | 481 | 35 | 0 |
+| 其他 | 197 | 184 | 13 | 0 |
+| **合計** | **518** | 483 | 35 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -54,7 +54,7 @@
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/re/` | 182 |
-| `docs/spec/` | 165 |
+| `docs/spec/` | 167 |
 | `docs/playtest/` | 82 |
 | `docs/formats/` | 33 |
 | `docs/mechanics/` | 18 |
@@ -394,7 +394,7 @@
 | [`playtest/51-siege-deadlock.md`](../playtest/51-siege-deadlock.md) | 三個讀數仍對不上同一幀 | §2。兩軍會打了，但這條 fixture 的守方是**玩家側而玩家沒下令**，所以站著挨打——攻方只折損 1 點。⚠ **不是委任**：委任那條路走 `combat.Resolve` 抽象判定，根本不開戰場，而 e10 是戰場畫面 | 靜態 |
 | [`playtest/51-siege-deadlock.md`](../playtest/51-siege-deadlock.md) | 原版擺兵寫的是哪一個表 | `spec/95` 是靠內部一致性定的，不是照抄。原版 `[si+0Ah]` 的來源沒讀出來 | 靜態 |
 | [`playtest/51-siege-deadlock.md`](../playtest/51-siege-deadlock.md) | 攻方大將體力歸零 | `drainSiegeGeneral` 扣到 0，而戰鬥傷害最低留 1（`../re/11` §5.16）。攻城計時器要不要也留 1，沒讀出來 | 靜態 |
-| [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | **登城到底怎麼上去** | remake 每一次量到的登城人數都是 0。`tryClimb` 要求腳下的圖塊 ≥ `0xF8`（**已破的門**，`../spec/36` §1.4），而登城的目標格是城壁 / `loc_1AB39` 的目標 Z 取自 `word_1D2FC` 的**可站立層**（`../re/11` §5.8i）——先確認… | 靜態 |
+| [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | ⭐ **登城部隊走不到門格** | 門在 y 6／20／41／54，而部隊的 y 帶是 28–35（§6）。命令 3 不改 y，所以在這張圖上永遠碰不到門 / 三個方向：(a) 陣形是不是選錯了——腳本下的是 `form 4`／`5`／`6`，而 y 帶由陣形表決定；(b) `sub_1CAEB` 寫進立即值的是**未翻轉**的索引第二欄（`000… | 靜態 |
 | [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | 索引第二欄到底是什麼 | `../re/11` §4.5 稱它「城門附近的 X」，§5.8i 定案為「命令 3 的目標 X」。但這張圖上它落在城壁本體、離最近的門有 3–7 格 / 掃 186 張攻城圖：第二欄那一欄的圖塊值是什麼、與門的距離分布 | 靜態 |
 | [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | 守方為什麼在 t6 掉那麼快 | 原版守方大將體力兩段內 124 → 37 / 要先讓攻方以原版的方式進城，才比得了 | 靜態 |
 
@@ -409,7 +409,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（195 條）
+## 2.6 其他（197 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -608,6 +608,8 @@
 | [`spec/94-retreat-path-not-cleared-every-frame.md`](../spec/94-retreat-path-not-cleared-every-frame.md) | 攻方大將體力歸零卻還在 | `drainSiegeGeneral` 會扣到 0，而 `docs/re/11` §5.16 說戰鬥傷害最低留 1。攻城計時器要不要也留 1，沒有讀出來 | 靜態 |
 | [`spec/95-spawn-height-uses-ground-plane.md`](../spec/95-spawn-height-uses-ground-plane.md) | 原版擺兵寫進 `[si+0Ah]` 的是哪一個表 | 沒讀出來。remake 這一版是靠內部一致性定的（§2），不是照抄 | 靜態 |
 | [`spec/96-guard-command-not-downgraded.md`](../spec/96-guard-command-not-downgraded.md) | 守陣要不要補疲勞 | 沒有做（說明書 4.2 說**陣形是唯一恢復疲勞的指令**）。原版 `sub_1A99C` 那條路有沒有寫 `[si+19h]`，沒讀 | 靜態 |
+| [`spec/97-climb-when-both-axes-blocked.md`](../spec/97-climb-when-both-axes-blocked.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
+| [`spec/98-climb-into-a-gate-hits-it.md`](../spec/98-climb-into-a-gate-hits-it.md) | `loc_1B533` 的完整分流 | 這裡只用到「撞到結構物」那一條。它同時也是敵我碰撞的入口（`../re/11` §5.16），另外兩條在水平移動那邊已經接了 | 靜態 |
 
 ## 3. 這支工具的盲區
 

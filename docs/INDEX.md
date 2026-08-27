@@ -84,7 +84,7 @@
 | [`docs/playtest/49-parity-retest-20260827.md`](playtest/49-parity-retest-20260827.md) | 49 — 把記錄過的對拍全部重跑一次：兩組重現、一組失效 | 四組全部重現或修好。 | 2026-08-27 |
 | [`docs/playtest/50-corps-on-map.md`](playtest/50-corps-on-map.md) | 50 — 軍團在大地圖上：兩個缺口，逐像素對上 | 許昌那一格（含周邊 56×56）與原版逐像素相同。 | 2026-08-27 |
 | [`docs/playtest/51-siege-deadlock.md`](playtest/51-siege-deadlock.md) | 51 — 攻城戰打不完：同狀態對拍挖出來的死鎖 | 修好了，兩件。 | 2026-08-27 |
-| [`docs/playtest/52-siege-timeseries-parity.md`](playtest/52-siege-timeseries-parity.md) | 52 — 攻城的時間序列對拍：原版七張影格 vs remake 的規則層 | 對得上的與對不上的都定位了。 | 2026-08-27 |
+| [`docs/playtest/52-siege-timeseries-parity.md`](playtest/52-siege-timeseries-parity.md) | 52 — 攻城的時間序列對拍：原版七張影格 vs remake 的規則層 | 攻城計時器對得上；攻方怎麼進城還沒對上。 | 2026-08-27 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告 2026-08-26 重剪為 72 秒， 加入語言切換與原版並排兩段；遊戲段… | 2026-08-26 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
@@ -265,6 +265,8 @@
 | [`docs/spec/94-retreat-path-not-cleared-every-frame.md`](spec/94-retreat-path-not-cleared-every-frame.md) | 94 — 退卻的繞路點不可以每幀清掉 | CONFORMED。 | 2026-08-27 |
 | [`docs/spec/95-spawn-height-uses-ground-plane.md`](spec/95-spawn-height-uses-ground-plane.md) | 95 — 開場擺兵的高度要用地面層表，不是堆疊高度 | CONFORMED。 | 2026-08-27 |
 | [`docs/spec/96-guard-command-not-downgraded.md`](spec/96-guard-command-not-downgraded.md) | 96 — 守陣不可以在回陣的那一步被降級成「就位」 | CONFORMED。 | 2026-08-27 |
+| [`docs/spec/97-climb-when-both-axes-blocked.md`](spec/97-climb-when-both-axes-blocked.md) | 97 — 登城的觸發：X 與 Y 都走不動就試 Z，不必先走到目標格 | CONFORMED。 | 2026-08-27 |
+| [`docs/spec/98-climb-into-a-gate-hits-it.md`](spec/98-climb-into-a-gate-hits-it.md) | 98 — 爬不上去的那一下要打門：未破的門是這樣被打開的 | CONFORMED。 | 2026-08-27 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
