@@ -10,7 +10,8 @@
 - Original files are user-supplied and not distributed.
 - Pristine originals are read-only；所有存檔與修改資料使用 writable overlay。
 - Clean rewrite language/runtime：Go + Ebiten；規則層以 tick 驅動，排版層不依賴 Ebiten。
-- 玩家可見文字走語系資料；繁中為松崗母本，日文只作對照 oracle；英文／簡體本輪不做。
+- 玩家可見文字走語系資料；繁中為松崗母本。**四個語系都已接通**（繁中／簡體／日文／英文，
+  `docs/spec/84`）：日文直接讀 PC-98 原版而不是翻回去，簡體是 OpenCC 機轉，英文是逐則英譯。
 
 ## Inventory
 
@@ -20,7 +21,7 @@
 | maps/events | `MMAP.*`、`BATTLE.*`、`PASS.*`、`MOUSE.*` | RLE／裸資料／松崗容器 | `docs/formats/04`–`07` | 主要格式 READY；MCH 語意及部分容器壓縮未解 |
 | saves | `SINARIO.DAT`、`SAVE.DAT` | 4 × 22,208 B 區塊；改寫策略 | `docs/formats/08` | 結構與 round-trip 已有；部分欄位未知 |
 | graphics/fonts | `*GRF.DAT`、`*.BRG`、`FONTGRF.DAT` | 4bpp planar、BRG 調色盤 | `docs/formats/02`、`03` | 主要圖庫與調色盤已解；ICONGRF 段 1 未解 |
-| audio | `BGM.DAT`、`SOUND.DAT`、`YNSOUND.COM` | PC-98 FM + SSG confirmed；DOS/V 未解 | `CLAUDE.md` §3.9、說明書紀錄 | remake／DOS/V parity 待驗 |
+| audio | `BGM.DAT`、`SOUND.DAT`、`YNSOUND.COM` | PC-98 是 YM2203；**DOS/V 是 OPL3（YMF262）**，靠 `0x104`／`0x105` 兩個 OPL2 沒有的暫存器定案 | `docs/re/23`、`docs/re/57`、`docs/re/58` | 已解並實作：純 Go 的 OPL3 渲染成 ogg，場景對應出自機器碼（`docs/spec/29`）|
 | manuals/walkthrough | `Garyouden_Manual.pdf`、追補頁 | 純掃描影像 | `docs/reference/01` | 有實質機制頁已判讀；少數附錄未讀 |
 
 ## Architecture
@@ -43,28 +44,6 @@ Android 先沿用同一條資料流，只在平台殼增加安全區、視口轉
 | save/load | `SINARIO.DAT`／`SAVE.DAT` 四槽 | `state.SaveInto` + `cmd/wlgame` system modal + `internal/savepath` | round-trip、overlay 差異、pristine hash、Trust `+0x10`／Player `+0x0D,+0x0F` round-trip、事件佇列 raw／節拍／月壓縮／1／2／3／4／5／6／7／8／9／13 handler 測試、`TestQueuedTalkNotices`／`TestQueuedDiplomacyReportTalkNotices`／`TestRawAmountEditorSemantics`、event3 fixture、Xvfb `4→S→Return` | 可玩 overlay、Trust、Player 雙欄、事件佇列原始 256 筆、每十次節拍、月度壓縮與事件 1／2／3／4／5／6／7／8／9（狀態、主要 TALK 句型取用）／13 handler、事件 11／12／13 的 `TalkNotice` 與 modal GUI 已接、玩家外交／撥款三選一與 raw 3×6 數值選取、event3 raw fixture→composite→消像已接；事件 6／7 次要反應／原版數值排版、事件 10、事件 11／12 物件動畫與完整原版 save parity 仍未完 |
 | release | remake builds only | `tools/release.sh` + Docker 等價封裝流程 + deny-list | PE/ELF/Mach-O 檔頭、unpacked smoke、asset scan | Linux amd64、Windows amd64、macOS Intel／Apple Silicon 候選包已產出；Linux 封裝 Xvfb smoke 與 deny-list 通過；Windows／macOS GUI 目標 runtime 實跑仍未完 |
 
-### 2026-08-09 事件指定金額 outcome 勘誤
-
-`sub_13902`（外交）與 `sub_139E8`（撥款）的指定金額邊界已分開接入：外交超過初始要求
-不收尾但依 `sub_13C3D` 扣信賴度 30；撥款 0 無效但超過初始要求仍完成。
-`ResolveDiplomacy` 保存初始 terms，避免確認時重抽平手政治 RNG；
-`TestDiplomacyAndFundingAmountOutcomeBounds` 固定此差異。PC-98 數值視窗與原版訊息排版
-仍列為未完成。
-
-### 2026-08-09 事件 4／5 TALK 結果／收尾接入
-
-IDA `CS:08A4` handler 表已證實 `\4` 是玩家軍師、`\6` 是不可見欄位控制、`\7` 是十進位金額；`cmd/wlgame/funding.go` 依 `sub_139E8` 的 base+offset 接回事件 4／5 的結果與收尾訊息。`TestFundingTalkIndicesMatchRaw139E8Branches` 通過 12 個分支；原版數值視窗像素排版、逐頁動畫與長程正常劇本仍不能標成完成。
-
-### 2026-08-10 進言／說得信賴度切片
-
-`sub_13830`／`sub_13C1E`／`sub_13B5A`／`sub_13BA9` 的結果碼、`+20`／`+10`／`−20`、
-四段信賴度理由門檻已接到 `internal/rules/persuasion` 與 `cmd/wlgame`：
-`Situation.Trust` 在說服開始時取 `World.Trust`，`ReactionTrustDelta` 處理直接反應，
-`Session.Offer` 處理多理由與錯選。固定邊界測試與 Docker 內受影響套件驗收通過。
-這只完成一條規則／GUI 垂直切片，不改變事件 2／3 其他外交增減、事件 6／7 次要 TALK、
-事件 10、物件動畫、目標平台 runtime 與同狀態對拍的未完成狀態；正式包與推廣影片 gate
-仍保持關閉。
-
 ## Worklist
 
 | ID | Deliverable | Evidence needed | Acceptance gate | Status |
@@ -74,7 +53,7 @@ IDA `CS:08A4` handler 表已證實 `\4` 是玩家軍師、`\6` 是不可見欄�
 | M8-A | 目標平台建置 | `tools/release.sh` 等價 Docker 矩陣、PE/ELF/Mach-O 檢查、packaged Linux `-shot` | 交叉編譯目標正確、產物非同一平台假成功、發行目錄可啟動 | Linux／Windows／Darwin 純 Go 產物、Linux 原生本體與封裝 smoke 通過；Windows／macOS GUI runtime 未實機驗證 |
 | M8-B | 正常玩家路徑與畫面 | PC-98 固定狀態 oracle、event3 raw fixture、有效時鐘的原版／AI 存檔 | 無 debug hook、同狀態截圖／狀態對拍 | 編成／行軍／城兵攻城／敵方 AI 遭遇選單／戰術畫面、攻擊命令、結果報告與 GUI 回戰略接縫已完成；事件 3 raw fixture→前置 TALK→三選一→3×6 實際點擊→消像短路徑已完成；DOS/V 96×64 內框、3×6 button glyph、`KI.EXE` 16×16 hardware cursor 已解碼接線；⭐ **同狀態逐區對拍已完成**（主畫面五區逐像素相同、戰場九區裡六區；`docs/playtest/37`／`40`）；仍缺其他事件物件與跨平台實機 |
 | M8-C | 發行隔離 | deny-list、可寫 save overlay | 原始資產零命中、解包 smoke | deny-list／overlay smoke 已通過；完整目標平台矩陣未完成 |
-| M9-A | Android 手機版規劃 | `docs/mobile/android-plan.md`、固定 Android Docker 工具鏈、`arm64-v8a` debug APK | 橫向安全區、觸控 hitbox、TALK／數值二段確認、pause/resume 不重複 tick | 觸控 shell 原型 debug APK 已產出，模擬器安裝／啟動／有限觸控 smoke 已跑；**完整遊戲核心尚未接入 Android** |
+| M9-A | Android 手機版 | `docs/mobile/android-plan.md`、`docs/mobile/android-ux.md`、固定 Android Docker 工具鏈、`arm64-v8a` debug APK | 橫向安全區、觸控 hitbox、TALK／數值二段確認、pause/resume 不重複 tick | **核心已接入**：手機端共用 `internal/rules`／`internal/state`，模擬器與桌面在 frame 1／60／120 的指紋逐字相同；四個入口、戰場、存讀檔、四語系切換與音樂都在。剩下的兩件不是程式：**實機驗收**（沒有裝置）與 **release signing**（keystore 保管未決）|
 | RE-1 | ICONGRF 段 1／龍紋／MCH 等 | IDA／原版畫面或檔案不變量 | `docs/re/` + `docs/mechanics/` 雙寫 | `MMAP.MCH` type 1／2 已完成；⭐ **全函式靜態分析收斂到 T1**（739/739 有 `docs/re/` 筆記）；ICONGRF 段 1 的 UI 語意／龍紋仍待排程 |
 
 ## Intentional differences
@@ -86,87 +65,14 @@ IDA `CS:08A4` handler 表已證實 `\4` 是玩家軍師、`\6` 是不可見欄�
 | text templates | 原版片段與 ASCII 插入碼 | 具名參數語系模板 | 可維護與可校訂 | 原版格式仍保存在研究文件 |
 | font path | 平台字型驅動／原版環境 | `internal/assets/cjk`，玩家指定字庫 | 不散布倚天字型 | 需在發行文件說明 |
 
-## 2026-08-09 事件 2／3 前置外交通知切片
+## 按日期的紀錄在哪裡
 
-`sub_138C7`／`sub_138E6` 的 TALK 基底已接到 pending 外交選單：停戰為 #360，協力為
-#373，兩者以 `{3}` 展開請求方君主。`TestQueuedDiplomacyChoiceTalkNotices` 與
-`TestDiplomacyTalkExpansionUsesOriginalRequestMarkers` 已通過；事件 2／3 後續訊息池、
-PC-98 數值視窗與完整玩家長程路徑仍列為未完成，不提高 M8／M7 狀態。
+本檔只寫**定位**：法務邊界、素材盤點、資料流、垂直切片與刻意的 remake 差異。
+按日期的封口紀錄在 [`WORKLIST.md`](WORKLIST.md)，逆向的證據台帳在
+[`RESEARCH-LOG.md`](RESEARCH-LOG.md)。
 
-### 事件 2／3 主要 TALK
-
-`sub_13902` 的建言 base+4/+5/+6 與 `sub_13C3D` 的主要結果 #43–#45／#47–#49 已接入
-`enqueueDiplomacyTalk`；`TestDiplomacyTalkIndicesMatchRaw13902Branches` 與真實 TALK
-展開測試通過。AH／信賴度次要回覆與 PC-98 數值視窗仍未完成；長時間完整遊戲測試不列為
-本輪阻塞，但發行前仍需短 smoke 與封裝檢查。
-
-### 事件 9 通知條件與空槽
-
-`sub_150D7` 的 #37 只對釋放後歸屬玩家勢力的武將顯示；`enqueueEventMessages` 與
-`TestReleasedGeneralTalkOnlyTargetsPlayerFaction` 已接入。後續 `CX=0x199`／#409 在
-PC-98／DOS/V `TALK.DAT` 只有資料空行，`TestReleasedGeneralRawFollowup409IsEmptyNoOp`
-固定不產生空白 modal；原版空呼叫時序與長程 oracle不冒充已驗。
-
-### 災害 marker 視覺接線
-
-`World.DisasterMarkerAt`／`StormAreaSnapshot` 與 `wlgame.drawDisasterOverlay` 已把事件
-11／12 的 runtime 狀態接到地圖；事件 12 火災／暴動現在使用由 `MMAP.MCH` 解出的原版
-type 1／2 圖塊矩陣，缺檔才回退向量 marker。固定 phase clock、暴風雨範圍輪廓與同狀態
-畫面對拍仍是明示替代／P1 未完成項。`TestDisasterMarkerReadOnlySnapshots`、MCH 資產測試、
-GUI 短測試與 Docker build 通過。
-
-### 事件 10 raw 邊界
-
-已確認 `sub_131AE` dispatch table 的 `0x0A` handler 是 `sub_13496`；IDA `.i64` 直接
-xref 也已覆核 `sub_12FBF`／`sub_12FB1`／`sub_1301C` 的 caller 集合與事件碼，沒有找到
-0x0A producer。其他 `0Ah` 常數沒有 queue 資料流證據。維持事件 10 未知／負證據，不以
-猜測補 state 或 TALK；若繼續只追函式指標／間接 writer。
-
-### 事件 6／7 次要 formatter 邊界
-
-`sub_137D8`／`sub_13138` 的 `AH` 是雙向俘虜配對旗標；`sub_13C3D` 的次要呼叫則在恢復
-`DI` 後不重建第一次 TALK 所用的 stack formatter 參數。直接 caller 的 `CX+0x1D` 可證實
-#72／#76；#73／#77 尚未定位，原始槽位的 marker／選單內容不能可靠映射到目前
-`TalkNotice`。列為
-**strong inference／未完成**，不得用猜測文案解除事件 6／7 或 release gate。
-
-### 2026-08-10 普通箭初始速度 RNG 勘誤
-
-`sub_1ACA4`／`sub_1AD2D` 的兩軸最大距離、目標／射手高度差、`sub_1ECE0 & 3` 與
-`0x14` 乘法已接入 `normalProjectileVelocity`；`internal/rules/rng` 已重現
-`sub_1ECE0`／`sub_1EC82`，新增公式測試並在 Docker 通過。原版投射物圖形／完整動畫、
-同狀態時序與畫面對拍、目標平台 GUI runtime 仍未完成，release gate 不變。
-
-### 2026-08-10 第 3／4／5 項定向接手結果
-
-1. 原版 PC-98 event3 fixture 已真正進入前置通知與三選一；`sub_13B7E`／`sub_193E9`
-   的選單輸入保存鏈、`sub_17C6E` 的數值編輯核心與 3×6／16×16／96×64 幾何證據已
-   回填 `docs/re/13-pc98-numeric-window.md`。
-2. `textdraw.WrapLines` 接到 TALK modal：先展開 marker，再以 ASCII 8 px／CJK 16 px、
-   22 full-width cell 進行單一 hard line 內換行，空列／標點／分頁均有 Docker 測試。
-3. 特殊投射物新增 `PoseStep` → `SpecialFrame`，可取原版 raw `0x214`／`0x215`；事件
-   12 MCH type 1／2 仍使用八相位矩陣，固定 phase fallback 也有回歸測試。
-4. 同一 raw save fixture 的原版／remake 截圖已保存於 `docs/images/`；本輪已補上原版式
-   肖像／IVENTGRF composite、3×6 真實格位點擊、TALK 五行分頁與 pending 結束後消像。
-   自然 DOS/V／remake 整張畫面與 PC-98 視覺 oracle 的逐像素 parity 仍未接，因此不解除三平台包與
-   影片 release gate。完整劇情測試依使用者要求不列入本輪阻塞。
-
-### 2026-08-10 游標／數值選取／TALK 封口補記
-
-- `CS:7D93h` 的 18 bytes 已固定為 3×6 raw 格位表；`amountPanelButtonAtPoint` 以
-  `(88,200)` 起點與 16×16 格直接命中，滑鼠點擊、游標高亮、鍵盤 fallback 都呼叫同一
-  `AmountEdit`。`0x60` 的完成格會先保留目前值，再離開數值器。
-- `messages.go` 已對齊原版五行／16 px TALK 頁面；marker 展開後按 ASCII 8 px／非 ASCII
-  16 px 測量換行，保留 hard line／中間空行，只移除結構性的最後空行。事件 2／3／4／5
-  的場景、肖像、prompt、選項與數值器由同一 Draw 層組合。
-- `PendingDiplomacy`／`PendingFunding` 清除後，下一個 Draw 先重畫地圖，才顯示後續 TALK，
-  因此 IVENTGRF／肖像不殘留；這是功能性消像 parity。DOS/V 硬體游標與數值外框資產
-  已由原始 bytes 解碼接線；自然整張畫面的逐像素 parity 仍是明示替代，不能以短 smoke
-  截圖宣稱完成。
-- 畫面證據：`docs/images/wlgame-event3-choice.png`（SHA-256
-  `CA40B865B44A6EA13ED5B4F2C0B6AB913A0BC895EF48D7A19E1825501E535151`）與
-  `docs/images/wlgame-event3-amount.png`（SHA-256
-  `27A5474EBA79C92C23B24A79938CA4E1D376B9FA52C0956AE3D3359C0404609D`）。
-- 完整長程遊戲測試依使用者指示略過；事件 6／7 未定位次要 formatter、事件 10、MCH
-  timer／投射物逐像素動畫、Windows／macOS GUI runtime 仍是開啟 gate，所以本輪不建立
-  三平台正式包或推廣影片。
+> 本檔曾經在下半部掛著 2026-08-09／08-10 的封口小節，內容與 `RESEARCH-LOG.md`
+> 同期條目重疊，而句子是現在式的——「release gate 仍被…阻擋」「本輪不建立
+> 三平台正式包或推廣影片」在四個平台出貨、兩支推廣片上線之後就變成假斷言。
+> ⭐ **現在式的紀錄會在事情做完的那一刻變成錯的**，所以它只能有一份，
+> 而且要放在按日期讀的地方。

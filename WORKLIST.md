@@ -1714,7 +1714,7 @@ Go 產出的 `libgojni.so` 預設 LOAD 段 `align=0x1000`，那種 `.so` 在 16 
 | DOS/V 數值視窗 | [`docs/re/13-pc98-numeric-window.md`](docs/re/13-pc98-numeric-window.md)（檔名為歷史名稱，本輪內容須以 DOS/V 為準） |
 | MCH 物件格式 | [`docs/re/14-mmap-mch-objects.md`](docs/re/14-mmap-mch-objects.md) |
 | 事件原版 fixture | [`docs/playtest/11-event6-original-fixture.md`](docs/playtest/11-event6-original-fixture.md) |
-| 同狀態截圖規則 | [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)、[`docs/playtest/12-event3-same-state-parity.md`](docs/playtest/12-event3-same-state-parity.md) |
+| 同狀態截圖規則 | [`docs/spec/90-same-state-parity.md`](docs/spec/90-same-state-parity.md)、[`docs/playtest/12-event3-same-state-parity.md`](docs/playtest/12-event3-same-state-parity.md) |
 | M7／事件 2–5／事件 9 抽樣 | [`docs/playtest/14-m7-review.md`](docs/playtest/14-m7-review.md)、[`docs/playtest/15-event2-5-talk-sampling.md`](docs/playtest/15-event2-5-talk-sampling.md)、[`docs/playtest/16-event9-long-route.md`](docs/playtest/16-event9-long-route.md) |
 | 推廣影片與配樂 | [`docs/promo/README.md`](docs/promo/README.md)、[`docs/promo/dosv-live-comparison.md`](docs/promo/dosv-live-comparison.md)、`dist/promo/wolong-remake-trailer.mp4`、`dist/promo/wolong-remake-classic-revival.mp4`、`dist/promo/wolong-remake-dosv-live-comparison.mp4` |
 | IDA DOS/V 證據 | `workplace/ida/dosv/KI.EXE.i64`、`KI.EXE.asm`、`func-sub_*.txt` |

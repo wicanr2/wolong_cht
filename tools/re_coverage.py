@@ -103,8 +103,8 @@ def scan_mentions(repo, exclude=()):
             for fn in filenames:
                 if fn.endswith((".md", ".go", ".py", ".idc", ".sh", ".json", ".txt")):
                     files.append(os.path.join(dirpath, fn))
-    for fn in ("CONTEXT.md", "CLAUDE.md", "AGENTS.md", "MEMORY.md",
-               "WORKLIST.md", "RESEARCH-LOG.md", "VERIFICATION-MATRIX.md",
+    for fn in ("CONTEXT.md", "CLAUDE.md", "AGENTS.md",
+               "WORKLIST.md", "RESEARCH-LOG.md",
                "REMAKE-PLAN.md", "README.md"):
         p = os.path.join(repo, fn)
         if os.path.exists(p):

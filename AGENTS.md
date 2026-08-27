@@ -22,8 +22,8 @@
    的未讀目錄（這支大概在做什麼、值不值得現在讀）。
    要了解某個子系統整體，入口是 [`docs/re/00-index.md`](docs/re/00-index.md)。
 5. 執行 `git status --short`。**既有改動屬於使用者或前一輪工作，不得 reset、覆蓋或丟棄。**
-6. 讀 [`MEMORY.md`](MEMORY.md) 與 [`WORKLIST.md`](WORKLIST.md)，只當快速入口；
-   具體狀態仍以 `CONTEXT.md`、`docs/INDEX.md`、目前程式與可重現測試為準。
+6. 讀 [`WORKLIST.md`](WORKLIST.md) 只當快速入口；具體狀態仍以 `CONTEXT.md`、
+   `docs/INDEX.md`、目前程式與可重現測試為準。
 
 「動手之前查表」是 `[HARD]`，時機是**動手之前**不是下結論之前——
 「還沒解」與「我不記得解過」在動手那一刻長得一模一樣。
@@ -99,8 +99,7 @@
 |---|---|
 | `CONTEXT.md` | **專案狀態的單一真相來源** |
 | `docs/INDEX.md` | 由 `tools/index.py generate` 產生的文件與斷言索引，**不手改** |
-| `MEMORY.md` | 代理快速恢復摘要與不可重犯的陷阱 |
 | `WORKLIST.md` | 交接、剩餘工作、命令閘與容器狀態的唯一入口；不另建 `HANDOFF.md` |
-| `RESEARCH-LOG.md`、`REMAKE-PLAN.md`、`VERIFICATION-MATRIX.md` | 逆向研究、架構／切片計畫、驗證矩陣台帳 |
+| `RESEARCH-LOG.md`、`REMAKE-PLAN.md` | 逆向研究的證據台帳；架構、法務邊界與刻意的 remake 差異 |
 
 深層證據只放 `docs/` 對應文件，上表這幾份不複製證據。
