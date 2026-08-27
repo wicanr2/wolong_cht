@@ -168,9 +168,9 @@ func (m *Map) applyDecor(mark CityMark, base byte, put func(x, y int, tile byte)
 // RenderMarked 與 Render 相同，但先照 marks 換掉據點中心（與大城的四個角）
 // 的圖塊，再把首都的 MCH 圖塊疊上去，最後疊 corps（docs/spec/74）。
 //
-// ⚠ **軍團畫在首都疊圖之後**：同一格可能兩者都有（軍團在自己的首都裡），
-// 而原版的顯示表是後推的層蓋在前面的層上（`sub_1D66A` 依序消費 si+3 起
-// 那幾個槽，docs/re/72 §3）。
+// ⚠ **同一格同時有首都與軍團時只畫軍團**（docs/spec/74 §4.05）——
+// 不是疊上去。原版 `probe-march/e5.png` 的許昌是這樣，而軍團圖塊的
+// 外圈是透明的，疊或不疊在畫面上分得出來。
 //
 // mch 可以是 nil（沒載到 `MMAP.MCH`）——那樣少的是首都與軍團那幾張，
 // 其餘照畫，不要整張失敗。
@@ -196,6 +196,11 @@ func (m *Map) RenderMarked(ts *TileSet, mch *MCH, pal *palette.Palette, bank,
 	corpsAt := make(map[int]byte, len(corps))
 	for _, c := range corps {
 		corpsAt[c.Y*Width+c.X] = c.Tile
+		// ⭐ **軍團站在首都中心格時，首都疊圖不畫**（docs/spec/74 §4.05）。
+		// 原版 e5.png 的許昌逐格窮舉過：512 種組合裡只有「據點中心 ＋
+		// 軍團圖塊、不疊首都」是 0 px；疊上去差 40 px，全落在軍團圖塊
+		// 透明的那一圈——那一圈露的是底下哪一層，兩邊就差在這裡。
+		delete(overlay, c.Y*Width+c.X)
 	}
 
 	img := image.NewRGBA(image.Rect(0, 0, cols*TileSize, rows*TileSize))
@@ -221,9 +226,7 @@ func (m *Map) RenderMarked(ts *TileSet, mch *MCH, pal *palette.Palette, bank,
 			if id, ok := overlay[my*Width+mx]; ok {
 				blitMCH(img, mch, pal, bank, id, rx, ry)
 			}
-			// ⭐ 軍團**畫在首都疊圖之後**：同一格可能兩者都有
-			// （軍團在自己的首都裡），而原版的顯示表是後推的層蓋在
-			// 前面的層上（`sub_1D66A` 依序消費 si+3..si+6）。
+			// 軍團那一層（首都疊圖已經在建 corpsAt 時被拿掉了）。
 			if id, ok := corpsAt[my*Width+mx]; ok {
 				blitMCH(img, mch, pal, bank, id, rx, ry)
 			}

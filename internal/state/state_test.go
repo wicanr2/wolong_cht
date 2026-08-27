@@ -1739,6 +1739,12 @@ func TestFormCorps(t *testing.T) {
 	if c.Node != w.Factions[f].Capital {
 		t.Errorf("位置在據點 %d，應在首都 %d", c.Node, w.Factions[f].Capital)
 	}
+	// ⭐ **靜止是 4 不是 0**（docs/spec/74 §3）。Go 的零值 0 是「朝 X 減」，
+	// 大地圖上會畫成側面行進的圖塊——剛編成的軍團站在城裡不該那樣。
+	// 這條擋的是「原版的哨兵值不等於 Go 的零值」（CLAUDE.md §7 第 11 條）。
+	if c.Heading != HeadingStill {
+		t.Errorf("朝向 %d，剛編成應為靜止 %d", c.Heading, HeadingStill)
+	}
 	if c.Men != 600 { // 六槽 × 100 點 = 6,000 人
 		t.Errorf("兵力 %d 點，應為 600（＝6,000 人）", c.Men)
 	}

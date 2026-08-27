@@ -304,6 +304,11 @@ func (w *World) FormCorps(leader int, kinds [army.Positions]army.TroopType,
 		Morale:  f.MoraleBase,
 		Ordered:    f.Capital,
 		Node:    home,
+		// ⭐ **靜止是 4 不是 0**（docs/spec/74 §3）。Go 的零值 0 是
+		// 「朝 X 減的方向走」，大地圖上會畫成側面行進的圖塊——
+		// 剛編成的軍團站在城裡，該畫靜止那一張。
+		// （CLAUDE.md §7 第 11 條：原版的哨兵值不等於 Go 的零值。）
+		Heading: HeadingStill,
 		X:       w.Cities[home].X,
 		Y:       w.Cities[home].Y,
 		// 目標先設成原地，行軍指令下達前不會動。

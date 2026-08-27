@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**500 列分布在 191 份文件，平均每份 2.6 列。**
+**505 列分布在 192 份文件，平均每份 2.6 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 18 | 15 | 3 | 0 |
 | 資料保存 | 33 | 32 | 1 | 0 |
 | 程式碼理解 | 182 | 176 | 6 | 0 |
-| 驗收 | 73 | 62 | 11 | 0 |
+| 驗收 | 76 | 65 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 188 | 176 | 12 | 0 |
-| **合計** | **500** | 466 | 34 | 0 |
+| 其他 | 190 | 178 | 12 | 0 |
+| **合計** | **505** | 471 | 34 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -54,8 +54,8 @@
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/re/` | 182 |
-| `docs/spec/` | 158 |
-| `docs/playtest/` | 73 |
+| `docs/spec/` | 160 |
+| `docs/playtest/` | 76 |
 | `docs/formats/` | 33 |
 | `docs/mechanics/` | 18 |
 | `docs/release/` | 13 |
@@ -311,7 +311,7 @@
 | [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | 變體 0／2／3／5／6 的臨場抽驗 | 專屬句只在 1／4／7；預設句與它們共用選句機制，公式已 confirmed，抽驗優先度低 | 靜態 |
 | [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
 
-## 2.4 驗收（73 條）
+## 2.4 驗收（76 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -388,6 +388,9 @@
 | [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 攻城對拍的取樣點 | 兩個缺口修好之後 `field` 0.86%，剩下的是局面不等價（§3.3） / 要回到 0 px 得讓原版與 remake 開出**同一場**（同一批武將、同一個 tick）。條件寫進 `../spec/91`，不要再寫死步數 | 靜態 |
 | [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 系統選單無法用 `-shot` 重現 | 驗收路徑強制靜音（§2） / `wlgame` 需要一個「有音效狀態但不輸出」的驗收模式 | 靜態 |
 | [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 原版側沒有重跑 | 這一輪用的是 08-16／17／24 的存檔擷取 / 要重跑得先建 `wolong-dosboxx`（`docker/dosboxx/Dockerfile`） | 靜態 |
+| [`playtest/50-corps-on-map.md`](../playtest/50-corps-on-map.md) | 首都疊圖為什麼不畫 | 行為定案，機制未讀（§4） | 靜態 |
+| [`playtest/50-corps-on-map.md`](../playtest/50-corps-on-map.md) | 別的疊圖組合 | 只驗過「首都 ＋ 軍團」。災害物件 ＋ 軍團、非首都據點 ＋ 軍團都沒有樣本 | 靜態 |
+| [`playtest/50-corps-on-map.md`](../playtest/50-corps-on-map.md) | 「軍團在路上」對原版 | 要新的原版擷取：編成 → 行軍指示 → 等幾天。滑鼠腳本點得到行軍那一列之後才做得起來（`40` §1.2） | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -400,7 +403,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（188 條）
+## 2.6 其他（190 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -541,9 +544,11 @@
 | [`spec/72-bundled-game-data.md`](../spec/72-bundled-game-data.md) | APK 內嵌後的實機驗收 | ⛔ 沒有裝置。模擬器驗到了解包與指紋，驗不到真實儲存空間與 DPI | 靜態 |
 | [`spec/72-bundled-game-data.md`](../spec/72-bundled-game-data.md) | 25 MB 的 APK 在低容量裝置上 | 解包後 app 私有目錄再佔約 4.8 MB，總共約 30 MB。**沒有量過安裝失敗的門檻** | 靜態 |
 | [`spec/73-right-click-cancel.md`](../spec/73-right-click-cancel.md) | 原版右鍵是否也關常駐視窗 | 沒量過。常駐視窗不走模態等待常式，推測不關，但**沒有實機證據** | 靜態 |
-| [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 那 110 張圖在 MCH 裡的實際外觀 | 算式定案，但**沒有逐張看過** 22 勢力 × 5 方向長什麼樣 | 靜態 |
+| [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 那 110 張圖在 MCH 裡的實際外觀 | 算式定案，但**沒有逐張看過** 22 勢力 × 5 方向長什麼樣。已看過的：勢力 0 的靜止與行進（`../playtest/50`） | 靜態 |
 | [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 每格 4 層上限 | 刻意沒做（§4） | 靜態 |
 | [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | `sub_12B3C` | 軍團旗標 `0x20` 成立時呼叫的那一支（推測是擦除舊位置），未讀 | 靜態 |
+| [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 首都疊圖為什麼不畫 | §4.05 的行為由實機逐像素定案，**機制沒讀出來**。可能是同一個疊圖槽被覆寫，也可能是據點那一趟看到軍團就跳過。下手點：`sub_1D4C7` 的呼叫者裡，推首都疊圖的那一支 | 靜態 |
+| [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 別的疊圖組合 | 只驗過「首都 ＋ 軍團」。**災害物件 ＋ 軍團**、**非首都據點 ＋ 軍團**都沒有樣本 | 靜態 |
 | [`spec/75-bundled-audio.md`](../spec/75-bundled-audio.md) | 音檔大小 | ogg 全套 19 MB，桌面包從 11.7 MB 漲到 29 MB | 靜態 |
 | [`spec/75-bundled-audio.md`](../spec/75-bundled-audio.md) | 沒有音效裝置的**真實玩家** | ⛔ 仍然會掛。驗收模式擋住的是截圖路徑，一般啟動沒有擋——Ebiten 沒有可查詢的音訊 API，目前沒有乾淨的偵測法 | 實測 |
 | [`spec/75-bundled-audio.md`](../spec/75-bundled-audio.md) | 音效與場景的對應完整度 | 見 `29`，本規格不重複 | 靜態 |

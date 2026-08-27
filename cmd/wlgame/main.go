@@ -1630,6 +1630,8 @@ func main() {
 	openCityInfo := flag.Int("open-cityinfo", -2, "截圖前開第 N 個據點的情報卡（−1＝玩家首都；對拍用，docs/spec/90 §5.1）")
 	openForm := flag.Bool("open-form", false, "截圖前先編一支軍團並開編成畫面（驗收用）")
 	openCorps := flag.Bool("open-corps", false, "截圖前先編兩支軍團並開軍團一覽（驗收用）")
+	corpsOnMap := flag.Bool("corps-on-map", false, "截圖前編一支軍團，**不開任何視窗**停在大地圖（docs/spec/74 §4.1）")
+	marchTo := flag.Int("march-to", -1, "配 -corps-on-map：對那支軍團下行軍指示到據點 N；`-shot-frames` 推進的 tick 會讓它上路")
 	openBattle := flag.Bool("open-battle", false, "截圖前先開一場野戰的戰術戰鬥（驗收用）")
 	openSiege := flag.Bool("open-siege", false, "截圖前先開一場攻城的戰術戰鬥（驗收用）")
 	openEnding := flag.Int("open-ending", -1, "直接跳到結局的第幾幕（0–11，驗收用）")
@@ -1768,6 +1770,7 @@ func main() {
 		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *adviseTarget, *openCities, *openFactions, *openCityInfo, *openForm, *openCorps, *openMarchList,
 			*openMarchMode, *openBattle, *openSiege, *openBattleChoice, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow,
 			*openTalkIndex, *openOutcome, parseSiegeFixture(*siegeNode, *siegeDefend, *siegeCorps, *battleSteps),
+			corpsMapFixture{enabled: *corpsOnMap, marchTo: *marchTo},
 			*camAt, *battleCam)
 	} else {
 		slots := inspectLauncherSlots(*saveFile)
@@ -1993,6 +1996,15 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer, new
 // corps 兩格是「攻方軍團、守方軍團」的編號，**−1 ＝ 現編**
 // （`demoBattle` 的舊行為）。指定既有軍團時兵種與人數照存檔，
 // 側欄的名字與計量條才有機會與原版一致（docs/spec/90 §2.3）。
+// corpsMapFixture 是「停在大地圖看軍團」的驗收 fixture（docs/spec/74 §4.1）。
+//
+// 既有的 -open-form／-open-corps／-open-march-list 都停在視窗裡，
+// 而視窗蓋住大地圖——用它們截圖看不到軍團疊在哪一格。
+type corpsMapFixture struct {
+	enabled bool
+	marchTo int // −1 ＝ 只編成，不下行軍指示
+}
+
 type siegeFixture struct {
 	node   int
 	defend bool
@@ -2042,7 +2054,7 @@ var autoEncounterChoose bool
 
 func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, adviseTarget, openCities, openFactions bool, openCityInfo int, openForm, openCorps, openMarchList, openMarchMode,
 	openBattle, openSiege, openBattleChoice, openMessage, openFinance bool, financeAmount int, openFormPick bool, formPickRow, openTalkIndex int,
-	openOutcome string, siege siegeFixture, camAt, battleCam string) {
+	openOutcome string, siege siegeFixture, corpsMap corpsMapFixture, camAt, battleCam string) {
 	w := g.world
 	if w == nil {
 		return
@@ -2131,6 +2143,9 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 	}
 	if openForm || openCorps {
 		g.demoCorps(openCorps, formPickRow)
+	}
+	if corpsMap.enabled {
+		g.demoCorpsOnMap(corpsMap.marchTo)
 	}
 	// 財政視窗（對拍用，docs/spec/14 §4）。原版是命令列 #2 直接開視窗，
 	// -finance-amount N 再開第 N 列的數值輸入器（docs/spec/78）。

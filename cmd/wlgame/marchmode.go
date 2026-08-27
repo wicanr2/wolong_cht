@@ -9,6 +9,7 @@ package main
 import (
 	"image"
 	"image/color"
+	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
@@ -202,6 +203,39 @@ func (g *game) demoMarchList() {
 		return
 	}
 	g.pickDestination(leader)
+}
+
+// demoCorpsOnMap 編一支軍團之後**停在大地圖**（docs/spec/74 §4.1）。
+//
+// marchTo ≥ 0 就再下一道行軍指示，讓 `-shot-frames` 推進的 tick
+// 把它帶出城——軍團待在自己城裡時疊在據點中心徽記上，
+// 兩者都是紅色系，肉眼分不出來（原版也一樣）。
+//
+// ⚠ 走 `formCandidates()` 的真實資格判定，不要自己抄一份：
+// 驗收路徑與遊戲跑的是同一條規則，才驗得到規則本身。
+func (g *game) demoCorpsOnMap(marchTo int) {
+	rows := g.formCandidates()
+	if len(rows) == 0 {
+		log.Print("⚠ -corps-on-map：沒有可編成的武將，這一張截圖上不會有軍團")
+		return
+	}
+	kinds, manned := g.affordable()
+	leader := rows[0]
+	if err := g.world.FormCorps(leader, kinds, manned); err != nil {
+		log.Printf("⚠ -corps-on-map：編成失敗（%v）", err)
+		return
+	}
+	if marchTo < 0 {
+		return
+	}
+	if marchTo >= len(g.world.Cities) {
+		log.Printf("⚠ -march-to %d 超出據點範圍（0–%d），只編成不下令",
+			marchTo, len(g.world.Cities)-1)
+		return
+	}
+	if err := g.world.March(leader, marchTo); err != nil {
+		log.Printf("⚠ -march-to %d：下不了行軍指示（%v）", marchTo, err)
+	}
 }
 
 func (g *game) demoMarchMode() {
