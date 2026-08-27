@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**488 列分布在 189 份文件，平均每份 2.6 列。**
+**492 列分布在 190 份文件，平均每份 2.6 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 18 | 15 | 3 | 0 |
 | 資料保存 | 33 | 32 | 1 | 0 |
 | 程式碼理解 | 182 | 176 | 6 | 0 |
-| 驗收 | 62 | 51 | 11 | 0 |
+| 驗收 | 66 | 55 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 187 | 175 | 12 | 0 |
-| **合計** | **488** | 454 | 34 | 0 |
+| **合計** | **492** | 458 | 34 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -55,7 +55,7 @@
 |---|---:|
 | `docs/re/` | 182 |
 | `docs/spec/` | 157 |
-| `docs/playtest/` | 62 |
+| `docs/playtest/` | 66 |
 | `docs/formats/` | 33 |
 | `docs/mechanics/` | 18 |
 | `docs/release/` | 13 |
@@ -311,7 +311,7 @@
 | [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | 變體 0／2／3／5／6 的臨場抽驗 | 專屬句只在 1／4／7；預設句與它們共用選句機制，公式已 confirmed，抽驗優先度低 | 靜態 |
 | [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
 
-## 2.4 驗收（62 條）
+## 2.4 驗收（66 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -377,6 +377,10 @@
 | [`playtest/47-latin-screen-survey.md`](../playtest/47-latin-screen-survey.md) | 半形語系的戰場標題沒有地名 | 見 `docs/spec/87` §9 | 靜態 |
 | [`playtest/48-display-polish.md`](../playtest/48-display-polish.md) | 對拍沒有開闊地的 fixture | `playtest/40` 量的兩個局面都在城壁邊；要擋住這一類回歸得再加一個開闊地的 fixture | 靜態 |
 | [`playtest/48-display-polish.md`](../playtest/48-display-polish.md) | 事件列本身是 remake 自創 | 原版怎麼提示月結（如果有）沒查過 | 靜態 |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | **攻方在 `-siege-corps` fixture 裡不推進** | 600 步都停在出發線；原版同一場是 AI 自己壓上城門 / 先確認 fixture 有沒有下命令：原版那一側是 AI 下「攻擊」，remake 的驗收捷徑可能只擺好陣形就不動了。查 `internal/rules/tactical` 的 AI 命令入口與 `parseSiegeFixture` 有沒有設初始命令 | 靜態 |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 攻城對拍的取樣點 | 第 61 步已經不等價，新的取樣點還沒定 / 上一項解掉之後，改用「攻方抵達城門」當條件重新定一個步數，並把條件寫進 `../spec/91` | 靜態 |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 系統選單無法用 `-shot` 重現 | 驗收路徑強制靜音（§2） / `wlgame` 需要一個「有音效狀態但不輸出」的驗收模式 | 靜態 |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 原版側沒有重跑 | 這一輪用的是 08-16／17／24 的存檔擷取 / 要重跑得先建 `wolong-dosboxx`（`docker/dosboxx/Dockerfile`） | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
