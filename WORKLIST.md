@@ -448,10 +448,20 @@ docs 那份手抄複本停在 12 天前——**而兩份都存在的時候，過
 
 ⚠ 打包前本專案的三顆 docker 映像（`wolong-go-android`、`wolong-android-emulator`、
 `wolong-osxcross-go`）都不在機器上，使用者清掉的。基底映像還在，所以三顆都
-重建得回來（指令在 `release/09` §4）。**但 `wolong-osxcross-go` 的 Dockerfile
-寫著 `FROM wolong-go:20260809`，而那個 tag 也是本機映像**——指向另一顆本機
-映像的 Dockerfile，鏈上任何一環被清掉就重建不了。映像被清是常態，
-重建不了才是問題。
+重建得回來（指令在 `release/09` §4）。**映像被清是常態，重建不了才是問題**——
+而 `wolong-osxcross-go` 的 Dockerfile 當時寫著 `FROM wolong-go:20260809`，
+指向另一顆本機映像，鏈上任何一環被清掉就整條建不起來。
+
+已改成釘死的公開 tag `golang:1.25.12-bookworm`（`release/09` §4.1）。
+原註解宣稱「用通用 Go image 交叉重建 darwin 標準庫會得到重複宣告」，
+**量過不成立**：同一份工作區、同一組旗標，新舊映像各建一次，四支 macOS
+執行檔逐位元組相同，所以出貨的包不必重打。⭐ **一句沒有證據的註解會讓人
+不去質疑它**，壞掉的相依鏈就一直留著。
+
+順帶量到一個舊缺口：**macOS 的執行檔帶著 VCS 戳記，另外三個平台沒有**
+（osxcross 那顆只 COPY GOROOT，沒有 `docker/go` 的 `GOFLAGS=-buildvcs=false`），
+所以 macOS 執行檔的雜湊會跟著工作區乾不乾淨而變。收法只有一行，
+但要連著下一次重打批次一起做。
 
 ### 2026-08-26（五）看片回報的四件事：對話框、小兵、月結框、配樂
 

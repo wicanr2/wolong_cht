@@ -437,7 +437,7 @@
 | [`release/09-full-20260827.md`](../release/09-full-20260827.md) | Android 的語言切換沒在模擬器上點過 | smoke 期間不可送觸控（送了指紋就不能比），要另開一輪非指紋的驗收 | 靜態 |
 | [`release/09-full-20260827.md`](../release/09-full-20260827.md) | Windows／macOS 實機 | 沒有硬體 | 靜態 |
 | [`release/09-full-20260827.md`](../release/09-full-20260827.md) | Android 實機驗收與正式簽章 | 沒有裝置；keystore 保管未決，出的仍是 debug 簽章 | 靜態 |
-| [`release/09-full-20260827.md`](../release/09-full-20260827.md) | `wolong-osxcross-go` 的 Dockerfile 依賴另一顆本機映像 | §4。改成從公開基底直接建，才不會有第二次「鏈斷了」 | 靜態 |
+| [`release/09-full-20260827.md`](../release/09-full-20260827.md) | **macOS 的執行檔帶著 VCS 戳記，另外三個平台沒有** | 量到的：包裡的 `darwin-amd64/wlsim` 記著 `vcs.revision=9b462f7a…`、**`vcs.modified=true`**，Linux 的同一支是 `(devel)` 沒有戳記。成因是 `docker/go` 有 `ENV GOFLAGS=-buildvcs=false` 而… | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Windows／macOS 原生 GUI | 交叉建置的產物只驗了檔頭，沒有在目標作業系統跑過。M8 唯一的閘 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 實機驗收 | 只有 Docker 模擬器；觸控手感、真實 GPU、高 DPI 上的點陣字可讀性都驗不到 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 正式簽章 | 出的是 debug 簽章，keystore 怎麼保管還沒決定 | 靜態 |
