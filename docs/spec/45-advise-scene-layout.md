@@ -179,7 +179,7 @@ dh = 0Bh ⇒ y = 11 × 16 = 176
 | 方式 | 內容 |
 |---|---|
 | 單元測試 | `TestChoiceBoxMatchesOriginalRect`：(80, 176, 160, 96) 與五列，且 `8 + 列數×16 + 8 == 高` |
-| 單元測試 | `TestChoiceClickCoversRequestedRowsOnly`：五列剛好填滿框內緣，最後一列不越界 |
+| 單元測試 | `TestChoiceBoxMatchesOriginalRect`：選單框與進言選單的矩形照 `sub_193E9`／`sub_16224` 的立即值 |
 | 單元測試 | `TestAdviseSceneLinesGoToTheRightBox`：君主的句子進上框、軍師的進下框，各自帶對的肖像 |
 | 截圖 | [`../playtest/34`](../playtest/34-advise-scene-screens.md)：五選一選單與提出理由之後各一張 |
 

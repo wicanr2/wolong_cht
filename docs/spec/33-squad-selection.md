@@ -200,7 +200,7 @@
 | 單元測試 | `TestDOSVOrderIcons`（`internal/assets/gfx`）：六張互不相同、都有內容、尾端不撞到外框圖塊 |
 | 單元測試 | `TestBattleSlotIconGeometry`、`TestBattleSlotOrderIconTreatsHoldingAsForm`（`cmd/wlgame`）|
 | 對原版 | 同一個局面的 `bottom` 區（[`../playtest/40`](../playtest/40-tactical-parity.md) §9）|
-| 單元測試 | `TestSquadSelectionMatchesRawBitfield`、`TestOrderSelectedRejectsScaleWallOffSiege`（`internal/rules/tactical`）；`TestBottomSlotSquadTablesAreInverse`、`TestBattleSideCommandClickUsesRowCode`（`cmd/wlgame`）|
+| 單元測試 | `TestSquadSelectionMatchesRawBitfield`、`TestOrderSelectedRejectsScaleWallOffSiege`（`internal/rules/tactical`）；`TestBottomSlotSquadTablesAreInverse`、`TestBattleSideCommandRowsMatchRawHotspotCodes`（`cmd/wlgame`）|
 | 對原版 | 兩張順序表的值直接取自 `cs:0xD2E4`／`cs:0xD2EA`；畫面證據見 `docs/images/wlgame-tactical-squad-select.png` |
 
 ## 5. 未解

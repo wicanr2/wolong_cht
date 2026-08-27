@@ -29,6 +29,11 @@ PATH_RE = re.compile(r"`([A-Za-z0-9_./-]+(?:/[A-Za-z0-9_./-]+|\.(?:go|py|sh|md|i
 LINK_RE = re.compile(r"\]\((?!https?:|#)([^)#]+)")
 ASSET_RE = re.compile(r"`([A-Z0-9_]{2,12}\.(?:DAT|MAP|MDL|SCH|MCH|BRG|EXE|COM|O|BAT|SYS|CMD|\$\$\$|\d\d))`")
 SYM_RE = re.compile(r"`(sub_[0-9A-Fa-f]{4,6})`")
+# 反引號裡的 Go 測試名。**規格的「驗證」欄大量引用測試名**，
+# 而測試改名或刪掉的時候沒有任何東西會提醒——症狀是規格宣稱
+# 「有測試蓋到」，照著去跑卻找不到那一支。
+GOTEST_RE = re.compile(r"`(Test[A-Z][A-Za-z0-9_]{5,})`")
+GOFUNC_RE = re.compile(r"^func (Test[A-Za-z0-9_]+)\(")
 
 # 這些是刻意的通配或範例，不是實際路徑。
 IGNORE = re.compile(
@@ -165,9 +170,35 @@ def load_symbols():
     return syms if found else None
 
 
+def load_go_tests():
+    """收集所有 `func TestXxx` 的名字。
+
+    ⚠ 只用來判斷「這個名字存在嗎」。前綴相符也算數——文件常寫
+    `TestApproximateEvent10*` 這種家族名，那不是幽靈。
+    """
+    names = set()
+    for root, dirs, files in os.walk(REPO):
+        dirs[:] = [d for d in dirs
+                   if d not in (".git", "workplace", "dist", "dist-all", "node_modules")]
+        for fn in files:
+            if not fn.endswith("_test.go"):
+                continue
+            try:
+                with open(os.path.join(root, fn), encoding="utf-8",
+                          errors="replace") as fh:
+                    for line in fh:
+                        m = GOFUNC_RE.match(line)
+                        if m:
+                            names.add(m.group(1))
+            except OSError:
+                continue
+    return names
+
+
 def main():
     orig = load_orig_names()
     syms = load_symbols()
+    gotests = load_go_tests()
     problems = []
 
     for path in repo_files():
@@ -216,6 +247,16 @@ def main():
                 for m in SYM_RE.finditer(line):
                     if m.group(1) not in syms:
                         problems.append((rel_doc, i, "IDA 符號不在資料庫", m.group(1)))
+
+            if gotests and "-run" not in line:
+                for m in GOTEST_RE.finditer(line):
+                    name = m.group(1)
+                    if name in gotests:
+                        continue
+                    # 家族名（`TestFooBar*` 那種）只要有測試以它為前綴就算數。
+                    if any(t.startswith(name) for t in gotests):
+                        continue
+                    problems.append((rel_doc, i, "Go 測試不存在", name))
 
     if syms is None:
         print("⚠ 找不到 census.tsv，**IDA 符號那一層沒有跑**。"

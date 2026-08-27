@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
+	"github.com/wicanr2/wolong_cht/internal/assets/world"
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
@@ -895,5 +896,27 @@ func TestFormSlotClickCyclesKind(t *testing.T) {
 		if !f.manned[0] {
 			t.Errorf("第 %d 次循環之後變成空槽了", i+1)
 		}
+	}
+}
+
+// TestCorpsMarksSkipDeadCorps 釘住「死掉的軍團不畫」。
+//
+// `docs/spec/74` 的驗證欄一直宣稱有這一支，而它其實不存在——
+// 過濾邏輯（`corpsMarks()` 的 `if !c.Alive`）沒有任何測試蓋到。
+// **規格說「有測試」不等於有測試**，這一類差距只有逐支對名字才看得見。
+func TestCorpsMarksSkipDeadCorps(t *testing.T) {
+	g := &game{world: &state.World{}}
+	g.world.Corps[0] = state.Corps{Alive: true, Faction: 1, X: 10, Y: 20, Heading: 2}
+	g.world.Corps[1] = state.Corps{Alive: false, Faction: 2, X: 30, Y: 40}
+
+	marks := g.corpsMarks()
+	if len(marks) != 1 {
+		t.Fatalf("marks = %d 筆，期望只有活著的那一支", len(marks))
+	}
+	if marks[0].X != 10 || marks[0].Y != 20 {
+		t.Errorf("留下來的是 (%d,%d)，期望 (10,20)", marks[0].X, marks[0].Y)
+	}
+	if want := world.CorpsTile(1, 2); marks[0].Tile != want {
+		t.Errorf("圖塊 = %d，期望 CorpsTile(1,2) = %d", marks[0].Tile, want)
 	}
 }

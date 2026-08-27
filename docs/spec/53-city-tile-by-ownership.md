@@ -106,5 +106,5 @@ remake 在載入時**逐座檢查**那一格是不是 205／208／211，
 |---|---|
 | 單元測試 | `TestCityCentreTileByOwnership`：三種歸屬 × 三種基底，非中心格不動 |
 | 單元測試 | `TestOwnershipOf`：`0x18` ＝ 無所屬 |
-| 單元測試 | `TestCityCentreIsRecordPlusFour`：原版 `MMAP.MAP` 全圖**剛好 192 格**是據點中心 |
+| 單元測試 | `TestCityCentreIsRecordCoordinate`：原版 `MMAP.MAP` 全圖**剛好 192 格**是據點中心，而且每一格就落在據點記錄座標上（`CityCentreDX = 0`）|
 | 對拍 ✅ | [`../playtest/37`](../playtest/37-main-screen-parity.md)：地圖區從 0.53% 降到 **0.00%**，`command`／`minimap`／`faction` 三區也一起 PASS |

@@ -154,7 +154,7 @@ x 都是 498，高 2 px，總長上限 124，未填的部分畫色 0。
 
 | 方式 | 證據 |
 |---|---|
-| 單元測試 | `TestDOSVBattleSidebarLayoutMatchesRaw`、`TestBattleCommandRowToCodeMatchesRawHotspots`（`cmd/wlgame`）|
+| 單元測試 | `TestDOSVBattleSideCellLayoutMatchesRawCoordinates`、`TestDOSVBattleSideBarLengthsMatchRawFormulas`、`TestBattleSideCommandRowsMatchRawHotspotCodes`（`cmd/wlgame`）|
 | 對原版 | [`../playtest/27`](../playtest/27-original-video-frame-parity.md) §7 的影片對拍——幾何 ≤3 px；本規格補的是內容 |
 | 對原版（逐像素）✅ | [`../playtest/40`](../playtest/40-tactical-parity.md)：陣形列、指令面板、`▶▶` 列**三區逐像素 PASS**；標題與兩格將旗剩 2–6%，全是狀態差 |
 

@@ -224,7 +224,7 @@ formatter 缺參數 + 語意未知** 的明確邊界；事件 6／7 次要 TALK 
   #72 的 `\\2` 不能由目前 state 安全推導城市，因此 `cmd/wlgame` 缺少該 marker 時
   整則 fail-closed；不會顯示半句，也不會把 `AH` 猜成城市／勢力／信賴度。
 - `TestQueuedDiplomacySecondaryTalkConditions` 固定事件 6／7 的條件、索引、順序與
-  portrait policy；`TestSecondaryTalkFailsClosedWithoutOriginalCityFormatter`、
+  portrait policy；`TestSecondaryTalkUsesCapturedRawFormatterWord`、
   `TestSecondaryTalk76UsesNoPortraitMode` 固定呈現層邊界。
 
 因此本輪完成的是「事件 6／7 次要 TALK 的 raw 索引、條件、佇列順序與安全呈現接縫」；

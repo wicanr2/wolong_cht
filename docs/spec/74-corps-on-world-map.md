@@ -110,8 +110,8 @@ for each 軍團 c where c.Alive:
 
 | 方式 | 證據 |
 |---|---|
-| 單元測試 | `TestCorpsMarkUsesFactionTimesFivePlusHeading`：釘死圖塊算式與五個朝向 |
-| 單元測試 | `TestCorpsMarkSkipsDeadCorps`：`Alive=false` 不出現 |
+| 單元測試 | `TestCorpsTile`：釘死圖塊算式（勢力 × 5 ＋ 朝向）、越界退回靜止、兩個勢力的區間不重疊 |
+| 單元測試 | `TestCorpsMarksSkipDeadCorps`（`cmd/wlgame`）：`Alive=false` 不出現在 `corpsMarks()` |
 | 實跑 | 編成一支軍團 → 截圖，首都那一格要多出軍團圖塊 |
 | 對原版 | 與 DOSBox 實機同狀態比對——**本輪未做** |
 

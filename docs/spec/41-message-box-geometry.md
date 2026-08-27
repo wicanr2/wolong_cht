@@ -61,7 +61,7 @@
 | 單元測試 | `TestMessageBoxMatchesOriginalGeometry`：11 個常數逐一比對 §1 |
 | 單元測試 | `TestTextDoesNotOverlapPortrait`：文字起點在肖像右緣之後 |
 | 單元測試 | `TestAllTalkLinesFitTheirBox`（既有）：門檻改成 4 列 |
-| 截圖 | `-open-talk` 與原版 `f008` 對位 |
+| 截圖 | `-open-talk-index` 與原版 `f008` 對位 |
 
 ## 5. 事件場景的兩個講話框
 

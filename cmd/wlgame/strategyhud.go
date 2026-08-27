@@ -938,7 +938,11 @@ func (g *game) corpsMarks() []world.CorpsMark {
 	return marks
 }
 
-// checkCityCentres 在載入後驗一次「記錄座標 +4 是據點中心」。
+// checkCityCentres 在載入後驗一次「據點記錄座標就是據點中心格」。
+//
+// ⚠ 位移是 `world.CityCentreDX`，目前是 **0**。這裡曾經寫死「+4」——
+// 那個 4 是 `MMAP.MAP` 開頭四個 byte 長度欄位沒跳過造成的整張左移
+// （`CONTEXT.md` §6），修好之後位移就沒了。
 //
 // 這是 docs/spec/53 §5 的假設，**假設要有現形的機制**：
 // 對不上就在 log 留一行，而不是讓畫面上少幾個徽記。
@@ -955,7 +959,8 @@ func (g *game) checkCityCentres() {
 		}
 	}
 	if bad > 0 {
-		log.Printf("⚠ %d 座據點的 (X+4, Y) 不是據點中心圖塊，徽記會少畫（docs/spec/53 §5）", bad)
+		log.Printf("⚠ %d 座據點的 (X+%d, Y) 不是據點中心圖塊，徽記會少畫（docs/spec/53 §5）",
+			bad, world.CityCentreDX)
 	}
 }
 

@@ -1461,7 +1461,7 @@ SHA-256 `fd7cbfa4cf2d4e0773a33181c4c4ea7944020552f5facc847750f69f670fa72b`。
   條件為 `AH != 0` 且 response 非 2／3。事件 6 回報勢力的 record pointer 在已知
   0x400-byte original stack 內時保存 raw word 0；事件 7 沒有可知 formatter word。
   `TalkNotice.RawFormatterWordValid` 防止 Go 零值誤被當成有效 word 0。
-- 驗證：`TestSecondaryTalkUsesOriginalRawFormatterWord` 以 DOS/V raw TALK table
+- 驗證：`TestSecondaryTalkUsesCapturedRawFormatterWord`（當時叫 `…UsesOriginalRawFormatterWord`）以 DOS/V raw TALK table
   解出 word 0 的 bytes，確認 explicit raw word 會顯示；valid flag 關閉時同一通知
   fail-closed。state fixture 另固定雙向俘虜旗標、索引、順序與 `NoPortrait`。
 
