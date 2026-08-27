@@ -263,7 +263,7 @@
 | [`docs/spec/93-siege-wall-instant-break-facing.md`](spec/93-siege-wall-instant-break-facing.md) | 93 — 攻城「一撞歸零」的面向常數要跟著戰場翻轉 | CONFORMED。 | 2026-08-27 |
 | [`docs/spec/94-retreat-path-not-cleared-every-frame.md`](spec/94-retreat-path-not-cleared-every-frame.md) | 94 — 退卻的繞路點不可以每幀清掉 | CONFORMED。 | 2026-08-27 |
 | [`docs/spec/95-spawn-height-uses-ground-plane.md`](spec/95-spawn-height-uses-ground-plane.md) | 95 — 開場擺兵的高度要用地面層表，不是堆疊高度 | CONFORMED。 | 2026-08-27 |
-| [`docs/spec/96-guard-command-not-downgraded.md`](spec/96-guard-command-not-downgraded.md) | 96 — 守陣不可以在回陣的那一步被降級成「就位」 | DRAFT。doGuard 借 doFormation 走回陣形，而 doFormation 到位時會把命令改成「就… | 2026-08-27 |
+| [`docs/spec/96-guard-command-not-downgraded.md`](spec/96-guard-command-not-downgraded.md) | 96 — 守陣不可以在回陣的那一步被降級成「就位」 | CONFORMED。 | 2026-08-27 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
