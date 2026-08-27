@@ -58,7 +58,7 @@
 | 開局主畫面（5 區）| **0 px**（256,000 px 一個不差）| [`playtest/37`](docs/playtest/37-main-screen-parity.md) |
 | 三個視窗開著（命令列／自勢力／縮小地圖）| **0 px** | [`playtest/38`](docs/playtest/38-window-parity.md) |
 | 系統選單開著（選單本身 ＋ 4 區）| **0 px** | [`playtest/39`](docs/playtest/39-system-window-parity.md) |
-| 攻城戰（9 區）| 6 區 **0 px**；`field` 307 / 176,640 ＝ 0.17%、小地圖 8 px、對方將旗 44 px。⚠ **2026-08-18 的量測，2026-08-27 重跑未重現**（攻方不推進，取樣點不等價）| [`playtest/40`](docs/playtest/40-tactical-parity.md)、[`49`](docs/playtest/49-parity-retest-20260827.md) |
+| 攻城戰（9 區）| 6 區 **0 px**；`field` 307 / 176,640 ＝ 0.17%、小地圖 8 px、對方將旗 44 px。⚠ **2026-08-18 的量測，2026-08-27 重跑未重現**（門強度量表沒畫 ＋ 取樣點被 `spec/59`／`spec/80` 作廢）| [`playtest/40`](docs/playtest/40-tactical-parity.md)、[`49`](docs/playtest/49-parity-retest-20260827.md) |
 | ↳ 其中**原理上消不掉**的 | 299 px：旗的揮舞相位 116（兩邊各自擲骰）、原版錄影裡的滑鼠游標 95、兩邊的門破在不同 tick 88 | 同上 §13 |
 | ↳ **真正未歸類的** | **8 px** | 同上 §14 |
 | 野戰（9 區，含單挑開場對白）| 7 區 **0 px**；`field` **0.05%**＝95 px 全是原版錄影裡的滑鼠游標、小地圖 0.18%＝時刻 | [`playtest/43`](docs/playtest/43-field-battle-parity.md) |
