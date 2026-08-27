@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"fmt"
 	"image"
 	"testing"
@@ -403,6 +404,24 @@ func TestGateBarGeometryMatchesRawConstants(t *testing.T) {
 	}
 	if bar.overlaps(l.Sidebar) || label.overlaps(l.Sidebar) {
 		t.Error("門強度條不得壓到側欄")
+	}
+
+	// ⭐ 那個矩形是一個**視窗**（docs/spec/32 §2.2）：顯示格與熱區都是
+	// (256,0,224×32)，而 sub_10BCD 清掉的 (264,8)-(471,23) 每一邊都內縮
+	// 8 px ＝ 外框圖塊的邊長。少畫那一圈龍紋，那一塊會差兩成半的像素。
+	win := battleRect{X: gateBarHotX, Y: gateBarHotY, W: gateBarHotW, H: gateBarHotH}
+	inner := battleRect{
+		X: win.X + chrome.Tile, Y: win.Y + chrome.Tile,
+		W: win.W - 2*chrome.Tile, H: win.H - 2*chrome.Tile,
+	}
+	if inner.X != gateBarLabelX || inner.Y != gateBarLabelY {
+		t.Errorf("視窗內容區起點 = (%d,%d)，預期 sub_10BCD 的 (264,8)", inner.X, inner.Y)
+	}
+	if r := inner.X + inner.W - 1; r != gateBarClearX1 {
+		t.Errorf("視窗內容區右緣 = %d，預期 sub_10BCD 的 %d", r, gateBarClearX1)
+	}
+	if !l.Field.contains(win) {
+		t.Error("門強度視窗必須落在戰場 viewport 內")
 	}
 }
 

@@ -252,11 +252,11 @@ func (b *Battle) CityDamage(cityWall int) int {
 //   - `[si+05]` ＝ 面向（`sub_1B047` 等四支常式寫 0／1／2／3 的同時
 //     各自 `dec [si+6]`／`dec [si+8]`／`inc [si+6]`／`inc [si+8]`）
 //
-// ⚠ **語意存疑，但行為照抄。** 186 張攻城圖的城壁一律在 X 33–46，
-// 攻方從 X 5 出發，所以「朝城走」是 East；條件要的卻是 West——
-// 而面向只有走成功才更新，**攻方唯一會面向 West 的時機是退卻**。
-// 兩種鏡射組合下這個不對稱是一致的，所以機制是確定的；
-// 它究竟是設計還是原版的 bug，沒有資料可以判斷。**照抄。**
+// ⭐ **「直接歸零」比的面向是戰場擺法的函數，不是固定方向**（docs/spec/93）：
+// 原版寫成兩個分支，玩家攻城時比 0（West）、玩家守城時比 2（East），
+// 而攻城圖的城壁一律在 X 33–46、玩家的陣形原點固定在 X 5——
+// 玩家守城時戰場轉 180 度，攻方改從 X 58 朝西走。兩個分支合起來
+// 指的都是**背對城**，也就是攻方退卻時撞到自己背後的城壁。
 func (b *Battle) hitStructure(side, facing, x, y int) bool {
 	i := b.structureAt(x, y)
 	if i < 0 {
@@ -271,7 +271,7 @@ func (b *Battle) hitStructure(side, facing, x, y int) bool {
 		return false
 	}
 	// 攻方背對城的方向 → 直接歸零。
-	if b.Field.IsSiege() && facing == awayFromCastle {
+	if b.Field.IsSiege() && facing == b.awayFromCastle() {
 		s.Durability = 0
 	}
 	if s.Durability > 0 {
@@ -287,11 +287,21 @@ func (b *Battle) hitStructure(side, facing, x, y int) bool {
 	return true
 }
 
-// awayFromCastle 是攻方「背對城」的面向。
+// awayFromCastle 回傳攻方「背對城」的面向（docs/spec/93）。
 //
-// 攻城圖的城壁一律在 X 33–46（186 張零例外），攻方的陣形原點在 X 5，
-// 所以朝城是 East、背對是 West。
-const awayFromCastle = West
+// 攻城圖的城壁一律在 X 33–46（186 張零例外），玩家的陣形原點固定在 X 5：
+//
+//	玩家攻城 → 戰場不翻，攻方在 X 5、城在 X 33–46 → 朝城 East、背對 West
+//	玩家守城 → 戰場轉 180 度，攻方在 X 58、城在 X 17–30 → 朝城 West、背對 East
+//
+// remake 的 `Sides[0]` 永遠是攻方，而戰場翻不翻綁的是**玩家站哪一側**
+// （`battlesetup.BuildField` 的 rotate ＝ 玩家守城），所以判準是 PlayerSide。
+func (b *Battle) awayFromCastle() int {
+	if b.PlayerSide == DefenderSide {
+		return East
+	}
+	return West
+}
 
 // breachPenalty 是「穿過還沒破的城壁／門」那一格的額外成本。
 //

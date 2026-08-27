@@ -807,10 +807,11 @@ func (g *game) drawBattleGateBar(screen *ebiten.Image, b *tactical.Battle) {
 	if !shown {
 		return
 	}
-	// 原版先把 (264,8)-(471,23) 填色 0 再畫字（sub_10BCD）。
-	vector.DrawFilledRect(screen, gateBarLabelX, gateBarLabelY,
-		gateBarClearX1-gateBarLabelX+1, textdraw.GlyphH,
-		color.RGBA{0, 0, 0, 255}, false)
+	// ⭐ 這一塊是一個**視窗**不是裸露的黑底（docs/spec/32 §2.2）：
+	// 顯示格、熱區都是 (256,0,224×32)，而 sub_10BCD 清掉的
+	// (264,8)-(471,23) 每一邊都內縮 8 px ＝ 外框圖塊的邊長。
+	g.chrome.Window(screen, gateBarHotX, gateBarHotY, gateBarHotW, gateBarHotH,
+		chrome.Blank)
 	g.td.Draw(screen, "門強度", gateBarLabelX, gateBarLabelY, chrome.Paper)
 
 	filled := durability >> gateBarShift

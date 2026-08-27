@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**492 列分布在 190 份文件，平均每份 2.6 列。**
+**500 列分布在 191 份文件，平均每份 2.6 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 18 | 15 | 3 | 0 |
 | 資料保存 | 33 | 32 | 1 | 0 |
 | 程式碼理解 | 182 | 176 | 6 | 0 |
-| 驗收 | 66 | 55 | 11 | 0 |
+| 驗收 | 73 | 62 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 187 | 175 | 12 | 0 |
-| **合計** | **492** | 458 | 34 | 0 |
+| 其他 | 188 | 176 | 12 | 0 |
+| **合計** | **500** | 466 | 34 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -54,8 +54,8 @@
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/re/` | 182 |
-| `docs/spec/` | 157 |
-| `docs/playtest/` | 66 |
+| `docs/spec/` | 158 |
+| `docs/playtest/` | 73 |
 | `docs/formats/` | 33 |
 | `docs/mechanics/` | 18 |
 | `docs/release/` | 13 |
@@ -311,7 +311,7 @@
 | [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | 變體 0／2／3／5／6 的臨場抽驗 | 專屬句只在 1／4／7；預設句與它們共用選句機制，公式已 confirmed，抽驗優先度低 | 靜態 |
 | [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
 
-## 2.4 驗收（66 條）
+## 2.4 驗收（73 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -377,8 +377,15 @@
 | [`playtest/47-latin-screen-survey.md`](../playtest/47-latin-screen-survey.md) | 半形語系的戰場標題沒有地名 | 見 `docs/spec/87` §9 | 靜態 |
 | [`playtest/48-display-polish.md`](../playtest/48-display-polish.md) | 對拍沒有開闊地的 fixture | `playtest/40` 量的兩個局面都在城壁邊；要擋住這一類回歸得再加一個開闊地的 fixture | 靜態 |
 | [`playtest/48-display-polish.md`](../playtest/48-display-polish.md) | 事件列本身是 remake 自創 | 原版怎麼提示月結（如果有）沒查過 | 靜態 |
-| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | **門強度量表在這條 fixture 從沒出現** | 第 61／240／600 步比那一塊都是 45%，也就是一次都沒畫。原版那一刻它亮著 / `Battle.Step` 的 `expireStructureBar()` 與 `../spec/66`：先查它是被什麼事件點亮的（攻門命中？城壁受損？），再確認這條 fixture 有沒有走到那個事件 | 靜態 |
-| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 攻城對拍的取樣點 | 第 61 步作廢（`spec/59` ＋ `spec/80` 把攻方的出發時間往後推了 60 幾步），61–600 之間沒有一點回到 0.17% / 上一項解掉之後，用**局面條件**重新定：攻方接觸城門且量表顯示中。條件要寫進 `../spec/91`，不要再寫死步數 | 靜態 |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 40` §8 的取樣點是**第 61 步**，當時 `field` 0.84%，再修兩處之後 0.17%。 | （未解小節內文） | 靜態 |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 修正前 | 45.55% / 45.18% / 45.83% | 靜態 |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 量表那一塊 | 0.13% / 0.09% / 0.06% | 靜態 |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | `field` | 0.86% / 0.81% / 0.84% | 靜態 |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 61 | X 58..60（出發線） / X 3..5 | 靜態 |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 120 | X 50..57 / X 3..5 | 靜態 |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 300 | X 8..43（已越過城門） / X 3..5 | 靜態 |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 600 | X 5..60（散開） / X 3..5 | 靜態 |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 攻城對拍的取樣點 | 兩個缺口修好之後 `field` 0.86%，剩下的是局面不等價（§3.3） / 要回到 0 px 得讓原版與 remake 開出**同一場**（同一批武將、同一個 tick）。條件寫進 `../spec/91`，不要再寫死步數 | 靜態 |
 | [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 系統選單無法用 `-shot` 重現 | 驗收路徑強制靜音（§2） / `wlgame` 需要一個「有音效狀態但不輸出」的驗收模式 | 靜態 |
 | [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 原版側沒有重跑 | 這一輪用的是 08-16／17／24 的存檔擷取 / 要重跑得先建 `wolong-dosboxx`（`docker/dosboxx/Dockerfile`） | 靜態 |
 
@@ -393,7 +400,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（187 條）
+## 2.6 其他（188 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -584,6 +591,7 @@
 | [`spec/91-tactical-parity.md`](../spec/91-tactical-parity.md) | 野戰的戰場 | 沒對過。野戰的地形是從大地圖即時長出來的，同狀態比攻城更難湊 | 靜態 |
 | [`spec/92-android-music.md`](../spec/92-android-music.md) | 手機沒有實機聽過 | 沒有裝置；模擬器是 `-no-audio` 起的 | 靜態 |
 | [`spec/92-android-music.md`](../spec/92-android-music.md) | 桌面「沒有音效裝置就掛」那一條 | `../release/08` §5 的老問題，手機端要確認 Ebiten 在 Android 上不會踩同一個 | 靜態 |
+| [`spec/93-siege-wall-instant-break-facing.md`](../spec/93-siege-wall-instant-break-facing.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
 
 ## 3. 這支工具的盲區
 

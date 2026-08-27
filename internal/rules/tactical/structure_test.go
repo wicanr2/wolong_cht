@@ -320,6 +320,53 @@ func TestHitStructureSiegeBranches(t *testing.T) {
 	}
 }
 
+// TestInstantBreakFacingFollowsRotation 釘住 docs/spec/93：
+// 「一撞歸零」比的面向是**戰場擺法的函數**，不是固定方向。
+//
+// 原版寫成兩個分支（`cmp cs:byte_10D35, 80h / jnb .flipped`）：
+// 玩家攻城時比 0（West）、玩家守城時比 2（East）。玩家守城時戰場轉 180 度，
+// 攻方改從 X 58 朝西走——把常數寫死成 West 的話，攻方**朝城走**就被判成
+// 背對城，第一次撞牆整段城壁就歸零，門強度量表因此永遠不會亮。
+func TestInstantBreakFacingFollowsRotation(t *testing.T) {
+	newSiege := func(player int) (*Battle, int) {
+		f, _ := tiledField(32)
+		b := NewBattle(f, SyntheticFormations(), &fixedRand{}, 10)
+		b.SetPlayerSide(player)
+		return b, b.Structures[0].Y
+	}
+
+	// 玩家守城（戰場翻過）：攻方朝城走是 West，只該減 1。
+	b, y := newSiege(DefenderSide)
+	before := b.Structures[0].Durability
+	b.hitStructure(AttackerSide, West, 32, y)
+	if got := b.Structures[0].Durability; got != before-1 {
+		t.Errorf("翻過的圖上朝城撞一次耐久 %d，應為 %d", got, before-1)
+	}
+	if _, shown := b.StructureBar(); !shown {
+		t.Error("城壁挨打了，門強度量表應該亮起")
+	}
+
+	// 同一個局面背對城是 East，才歸零。
+	b, y = newSiege(DefenderSide)
+	b.hitStructure(AttackerSide, East, 32, y)
+	if got := b.Structures[0].Durability; got != 0 {
+		t.Errorf("翻過的圖上背對城撞上去耐久 %d，應為 0", got)
+	}
+
+	// 玩家攻城（不翻）維持原本的方向：East 減 1、West 歸零。
+	b, y = newSiege(AttackerSide)
+	before = b.Structures[0].Durability
+	b.hitStructure(AttackerSide, East, 32, y)
+	if got := b.Structures[0].Durability; got != before-1 {
+		t.Errorf("不翻的圖上朝城撞一次耐久 %d，應為 %d", got, before-1)
+	}
+	b, y = newSiege(AttackerSide)
+	b.hitStructure(AttackerSide, West, 32, y)
+	if got := b.Structures[0].Durability; got != 0 {
+		t.Errorf("不翻的圖上背對城撞上去耐久 %d，應為 0", got)
+	}
+}
+
 // 面向只在**走成功**那一步才更新——被牆擋住的兵保持原本的面向。
 //
 // 原版把 `[si+5]` 寫在四個移動常式裡，而那些常式只有走得動時才被呼叫。
