@@ -175,7 +175,8 @@
 | [`docs/release/05-full-20260823.md`](release/05-full-20260823.md) | 05 — 2026-08-23 四平台完整版（修掉玩家回報的三個問題） | 已交付並驗過。⛔ 內含原版資產，不可外流。 | 2026-08-23 |
 | [`docs/release/06-appimage-20260824.md`](release/06-appimage-20260824.md) | 06 — 2026-08-24 只重打 Linux AppImage（同一天兩次） | 已被 07-full-20260824.md 取代 | 2026-08-24 |
 | [`docs/release/07-full-20260824.md`](release/07-full-20260824.md) | 07 — 2026-08-24 四平台完整版（一致批次） | 已交付並驗過。⛔ 內含原版資產，不可外流。 | 2026-08-24 |
-| [`docs/release/08-full-20260826.md`](release/08-full-20260826.md) | 08 — 2026-08-26 四平台完整版（四語系批次） | 已交付並驗過。⛔ 內含原版資產，不可外流。 | 2026-08-26 |
+| [`docs/release/08-full-20260826.md`](release/08-full-20260826.md) | 08 — 2026-08-26 四平台完整版（四語系批次） | 已被 09（20260827 批次）取代。⛔ 內含原版資產，不可外流。 | 2026-08-26 |
+| [`docs/release/09-full-20260827.md`](release/09-full-20260827.md) | 09 — 2026-08-27 四平台完整版（Android 也有音樂） | 已交付並驗過。⛔ 內含原版資產，不可外流。 | 2026-08-27 |
 | [`docs/release/README-RELEASE.md`](release/README-RELEASE.md) | 臥龍傳 remake 可執行封裝 | 四平台完整包、Linux AppImage、推廣片與驗收紀錄已集中於 [dist-all](../../dist-a… | 2026-08-24 |
 | [`docs/spec/00-index.md`](spec/00-index.md) | 00 — 規格索引：已解的規則有沒有被實作、有沒有被驗過 | 索引。規格是 docs/re/（程式碼在哪）與 internal/（我們寫了什麼） 之間的那一層——它回答「這條規則… | 2026-08-14 |
 | [`docs/spec/10-city-tick.md`](spec/10-city-tick.md) | 10 — 據點整備、威脅偵測與求援 | CONFORMED。整條鏈已實作，並在 PC-98 原版的執行期記憶體上取樣驗過 （+0x18／+0x14 各 0/… | 2026-08-14 |

@@ -440,9 +440,17 @@ docs 那份手抄複本停在 12 天前——**而兩份都存在的時候，過
 **exit code 還是 0**。寫成 `CLAUDE.md` §7 第 34 條。重跑之後模擬器
 確認 `getFilesDir()/audio` 解出 **32 個 ogg**，指紋與桌面同幀逐字相同。
 
-⚠ 順帶：本專案的三顆 docker 映像（`wolong-go-android`、
-`wolong-android-emulator`、`wolong-osxcross-go`）在這一天之前從機器上消失，
-不是本輪動的。基底映像還在，所以三顆都重建得回來。
+四平台重打成一致的 `20260827` 批次
+（[`docs/release/09`](docs/release/09-full-20260827.md)）：五個遊戲產物
+**各 32 個 ogg**，指紋與桌面逐字相同，25 列雜湊全數相符。
+批次日期換一天而不是沿用 `20260826`——`release/08` §2 記過同一天重打
+只剩雜湊分得出新舊。
+
+⚠ 本專案的三顆 docker 映像（`wolong-go-android`、`wolong-android-emulator`、
+`wolong-osxcross-go`）在這一天之前從機器上消失，不是本輪動的。基底映像還在，
+所以三顆都重建得回來（指令在 `release/09` §4）。**但 `wolong-osxcross-go`
+的 Dockerfile 寫著 `FROM wolong-go:20260809`，而那個 tag 本身也不見了**——
+指向另一顆本機映像的 Dockerfile，鏈上任何一環消失就重建不了。
 
 ### 2026-08-26（五）看片回報的四件事：對話框、小兵、月結框、配樂
 
