@@ -168,13 +168,13 @@
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
 | [`docs/reference/04-first-survey.md`](reference/04-first-survey.md) | 04 — 首輪偵查紀錄（2026-08-07） | 歷史快照。已解的項目由 docs/formats/、docs/re/ 與 docs/INDEX.md 接手；本檔只保… | 2026-08-07 |
 | [`docs/reference/05-eten-font-provenance.md`](reference/05-eten-font-provenance.md) | 05 — 松崗版的中文字型是倚天字型 | confirmed。END_S14.DAT 與倚天 ascfont.15 byte-for-byte 相同； END… | 2026-08-13 |
-| [`docs/release/01-cross-build-gate.md`](release/01-cross-build-gate.md) | 01 — 發行閘重跑：五平台交叉建置 ＋ deny-list（2026-08-17） | 發行閘通過。五個平台建得出來、deny-list 掃過沒有原版資產。 ⭐ macOS 的 Ebiten 本體可以交叉… | 2026-08-17 |
-| [`docs/release/02-three-platform-20260820.md`](release/02-three-platform-20260820.md) | 02 — 2026-08-20 三平台重新交付 | 已交付並驗過。 | 2026-08-20 |
+| [`docs/release/01-cross-build-gate.md`](release/01-cross-build-gate.md) | 01 — 發行閘重跑：五平台交叉建置 ＋ deny-list（2026-08-17） | 歷史紀錄——2026-08-17 那一輪的發行閘結果。⭐ macOS 的 Ebiten 本體 可以交叉建，tools… | 2026-08-17 |
+| [`docs/release/02-three-platform-20260820.md`](release/02-three-platform-20260820.md) | 02 — 2026-08-20 三平台重新交付 | 已被 03（20260821 批次）取代。 | 2026-08-20 |
 | [`docs/release/03-three-platform-20260821.md`](release/03-three-platform-20260821.md) | 03 — 2026-08-21 三平台重新交付（含 Android 版） | 已交付並驗過，已被 wolong-remake-20260822 那一批取代。 | 2026-08-21 |
 | [`docs/release/04-three-platform-20260822.md`](release/04-three-platform-20260822.md) | 04 — 2026-08-22 四平台完整版（內含遊戲檔案） | 已交付並驗過，已被 wolong-remake-20260823 那一批取代。 | 2026-08-22 |
-| [`docs/release/05-full-20260823.md`](release/05-full-20260823.md) | 05 — 2026-08-23 四平台完整版（修掉玩家回報的三個問題） | 已交付並驗過。⛔ 內含原版資產，不可外流。 | 2026-08-23 |
+| [`docs/release/05-full-20260823.md`](release/05-full-20260823.md) | 05 — 2026-08-23 四平台完整版（修掉玩家回報的三個問題） | 已被 07（20260824 批次）取代。⛔ 內含原版資產，不可外流。 | 2026-08-23 |
 | [`docs/release/06-appimage-20260824.md`](release/06-appimage-20260824.md) | 06 — 2026-08-24 只重打 Linux AppImage（同一天兩次） | 已被 07-full-20260824.md 取代 | 2026-08-24 |
-| [`docs/release/07-full-20260824.md`](release/07-full-20260824.md) | 07 — 2026-08-24 四平台完整版（一致批次） | 已交付並驗過。⛔ 內含原版資產，不可外流。 | 2026-08-24 |
+| [`docs/release/07-full-20260824.md`](release/07-full-20260824.md) | 07 — 2026-08-24 四平台完整版（一致批次） | 已被 08（20260826 批次）取代。⛔ 內含原版資產，不可外流。 | 2026-08-24 |
 | [`docs/release/08-full-20260826.md`](release/08-full-20260826.md) | 08 — 2026-08-26 四平台完整版（四語系批次） | 已被 09（20260827 批次）取代。⛔ 內含原版資產，不可外流。 | 2026-08-26 |
 | [`docs/release/09-full-20260827.md`](release/09-full-20260827.md) | 09 — 2026-08-27 四平台完整版（Android 也有音樂） | 已交付並驗過。⛔ 內含原版資產，不可外流。 | 2026-08-27 |
 | [`docs/release/README-RELEASE.md`](release/README-RELEASE.md) | 臥龍傳 remake 可執行封裝 | 四平台完整包、Linux AppImage、推廣片與驗收紀錄已集中於 [dist-all](../../dist-a… | 2026-08-24 |

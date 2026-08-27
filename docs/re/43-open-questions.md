@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**508 列分布在 195 份文件，平均每份 2.6 列。**
+**488 列分布在 189 份文件，平均每份 2.6 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,10 +44,12 @@
 | 程式碼理解 | 182 | 176 | 6 | 0 |
 | 驗收 | 62 | 51 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 207 | 191 | 16 | 0 |
-| **合計** | **508** | 470 | 38 | 0 |
+| 其他 | 187 | 175 | 12 | 0 |
+| **合計** | **488** | 454 | 34 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
+
+⭐ **狀態行自稱「已被…取代」的 8 份文件不計。**它們的「未解」是**當時**的未解，而每一批發行紀錄都會再列一次「Windows／macOS 實機」「沒有音效裝置」——一度讓 `docs/release/` 的 33 列其實只有 12 個獨立缺口。**還開著的缺口一定也在最新那一份**，所以跳過舊的不會漏。
 
 | 來源目錄 | 列數 |
 |---|---:|
@@ -55,8 +57,8 @@
 | `docs/spec/` | 157 |
 | `docs/playtest/` | 62 |
 | `docs/formats/` | 33 |
-| `docs/release/` | 33 |
 | `docs/mechanics/` | 18 |
+| `docs/release/` | 13 |
 | `docs/mobile/` | 12 |
 | `docs/reference/` | 6 |
 | `docs/promo/` | 5 |
@@ -387,7 +389,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（207 條）
+## 2.6 其他（187 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -411,26 +413,6 @@
 | [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | 目標 OS 實跑 | **做不到**：這台是 Linux，沒有 Mac／Windows。檔頭驗過（PE32+／Mach-O），但視窗、輸入、音訊、字型載入都沒有在目標系統上跑過 | 實測 |
 | [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | linux/arm64 的本體 | 要在 arm64 的 Linux 上建（Ebiten 的 cgo 沒有交叉工具鏈） | 靜態 |
 | [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | Windows 的 smoke | 同第一項 | 靜態 |
-| [`release/02-three-platform-20260820.md`](../release/02-three-platform-20260820.md) | `verification/` 的截圖不在管線裡 | `promote` 每次都會清掉，要另外跑 `tools/release_smoke.sh` 再 `release_all_fs.py refresh` | 實測 |
-| [`release/04-three-platform-20260822.md`](../release/04-three-platform-20260822.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
-| [`release/05-full-20260823.md`](../release/05-full-20260823.md) | 沒有音效裝置的**真實玩家** | ⛔ 一般啟動仍會掛。驗收模式擋住的是截圖路徑；Ebiten 沒有可查詢的音訊 API，目前沒有乾淨的偵測法 | 實測 |
-| [`release/05-full-20260823.md`](../release/05-full-20260823.md) | 軍團疊圖與原版同狀態對拍 | 算式與圖庫定案、抽驗過一張，**沒有逐張比對** 22 × 5 | 靜態 |
-| [`release/05-full-20260823.md`](../release/05-full-20260823.md) | Windows／macOS 原生 GUI 實機驗收 | 沒有硬體 | 靜態 |
-| [`release/05-full-20260823.md`](../release/05-full-20260823.md) | Android 實機驗收與正式簽章 | 沒有裝置；keystore 保管未決 | 靜態 |
-| [`release/06-appimage-20260824.md`](../release/06-appimage-20260824.md) | 沒有音效裝置的真實玩家 | ⛔ 仍會掛，與 `05` §5 同一條，**這一輪沒有動**。容器裡實測 `EXIT=1`，`20260823` 的 AppImage 一樣——不是這次改出來的。§4.1 那個「拍不到啟動殼層」也是它的下游 | 實測 |
-| [`release/06-appimage-20260824.md`](../release/06-appimage-20260824.md) | 啟動殼層的自動驗收 | 只能靠 §4.1 那個拆包繞法。要正規化就得讓 `wlgame` 有一個明確關音訊的旗標（現在 `-audio ""` 是「自動找」不是「關」） | 靜態 |
-| [`release/06-appimage-20260824.md`](../release/06-appimage-20260824.md) | 混日期的批次 | 要一致就得重跑 `tools/release_all.sh`；那需要推廣片與 APK 都在位 | 靜態 |
-| [`release/06-appimage-20260824.md`](../release/06-appimage-20260824.md) | Windows／macOS 實機 | 沒有硬體 | 靜態 |
-| [`release/07-full-20260824.md`](../release/07-full-20260824.md) | 沒有音效裝置的真實玩家 | ⛔ 仍會掛，與 `05` §5 同一條。要收掉得讓 `wlgame` 有一個明確關音訊的旗標——`-audio ""` 現在是「自動找」不是「關」 | 靜態 |
-| [`release/07-full-20260824.md`](../release/07-full-20260824.md) | 啟動殼層的自動驗收 | 同上的下游（§4.1） | 靜態 |
-| [`release/07-full-20260824.md`](../release/07-full-20260824.md) | Windows／macOS 實機 | 沒有硬體 | 靜態 |
-| [`release/07-full-20260824.md`](../release/07-full-20260824.md) | Android 實機驗收與正式簽章 | 沒有裝置；keystore 保管未決，出的仍是 debug 簽章 | 靜態 |
-| [`release/08-full-20260826.md`](../release/08-full-20260826.md) | 推廣片檔名不帶批次日期 | §4 的根因還在。加日期會動到 `PROMO_FILES` 與 `dist-all/README.md` 的說明，這一批沒動 | 靜態 |
-| [`release/08-full-20260826.md`](../release/08-full-20260826.md) | 沒有音效裝置的真實玩家 | ⛔ 仍會掛（`05` §5）。要收掉得讓 `wlgame` 有一個明確關音訊的旗標——`-audio ""` 現在是「自動找」不是「關」 | 靜態 |
-| [`release/08-full-20260826.md`](../release/08-full-20260826.md) | 啟動殼層的自動驗收 | 給 `-shot` 會走白名單直接進遊戲跳過殼層，不給就會開音訊而容器裡沒有音效裝置（`06` §4.1）。語言那一頁的畫面證據是**原始碼建置**的截圖（`../playtest/46`），不是包裡的執行檔 | 實測 |
-| [`release/08-full-20260826.md`](../release/08-full-20260826.md) | Android 的語言切換沒在模擬器上點過 | 面板與 `syncLanguage` 有單測，畫面是桌面 Xvfb 跑 `cmd/wlandroid` 拍的；smoke 期間不可送觸控（送了指紋就不能比），所以要另開一輪非指紋的驗收 | 靜態 |
-| [`release/08-full-20260826.md`](../release/08-full-20260826.md) | Windows／macOS 實機 | 沒有硬體 | 靜態 |
-| [`release/08-full-20260826.md`](../release/08-full-20260826.md) | Android 實機驗收與正式簽章 | 沒有裝置；keystore 保管未決，出的仍是 debug 簽章 | 靜態 |
 | [`release/09-full-20260827.md`](../release/09-full-20260827.md) | 手機沒有實機聽過聲音 | 沒有裝置；模擬器是 `-no-audio` 起的 | 靜態 |
 | [`release/09-full-20260827.md`](../release/09-full-20260827.md) | 推廣片檔名不帶批次日期 | `08` §4 的根因還在 | 靜態 |
 | [`release/09-full-20260827.md`](../release/09-full-20260827.md) | 沒有音效裝置的真實玩家 | ⛔ 仍會掛（`05` §5）。要收掉得讓 `wlgame` 有一個明確關音訊的旗標——`-audio ""` 現在是「自動找」不是「關」 | 靜態 |

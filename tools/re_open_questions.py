@@ -123,6 +123,23 @@ TOP_LEVEL_DIRS = {
 }
 
 
+def is_superseded(path):
+    """狀態行自己說「已被…取代」的文件。
+
+    ⚠ 判準刻意窄：只認**狀態行**（前 8 行）裡同時出現「已被」與「取代」。
+    正文提到別的東西被取代不算——那是敘述，不是這一份的狀態。
+    """
+    try:
+        with open(path, encoding="utf-8", errors="replace") as fh:
+            head = "".join(fh.readline() for _ in range(8))
+    except OSError:
+        return False
+    for line in head.splitlines():
+        if "狀態" in line and "已被" in line and "取代" in line:
+            return True
+    return False
+
+
 def domain_of(rel):
     for prefix, name in DOMAIN:
         if rel.startswith(prefix):
@@ -272,10 +289,18 @@ def main():
                     files.append(os.path.join(dirpath, fn))
     files.sort()
 
-    rows, silent = [], []
+    rows, silent, superseded = [], [], []
     for path in files:
         rel = os.path.relpath(path, repo).replace(os.sep, "/")
         if rel in SKIP:
+            continue
+        # ⭐ **已被取代的文件，它的「未解」是當時的未解。**
+        # 每一批發行紀錄都會再列一次「Windows／macOS 實機」「沒有音效裝置」，
+        # 於是 `docs/release/` 的 33 列其實只有 12 個獨立缺口——同一個缺口
+        # 被數了六次（四種寫法 ＋ 兩個變體）。**還開著的缺口一定也在最新那一份**，
+        # 所以這裡只跳過舊的，不會漏。
+        if is_superseded(path):
+            superseded.append(rel)
             continue
         items, saw = collect(path, rel)
         if not items:
@@ -366,6 +391,12 @@ def main():
     w("⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，"
       f"同一個缺口在那份文件自己的未解表裡還有一列——這類共 **{len(idx)}** 列"
       "（另有少數只是提到「未解」兩個字的圖例列）。\n\n")
+    if superseded:
+        w(f"⭐ **狀態行自稱「已被…取代」的 {len(superseded)} 份文件不計。**"
+          "它們的「未解」是**當時**的未解，而每一批發行紀錄都會再列一次"
+          "「Windows／macOS 實機」「沒有音效裝置」——一度讓 `docs/release/` 的 "
+          "33 列其實只有 12 個獨立缺口。**還開著的缺口一定也在最新那一份**，"
+          "所以跳過舊的不會漏。\n\n")
     w("| 來源目錄 | 列數 |\n|---|---:|\n")
     for d in sorted(by_dir, key=lambda k: -by_dir[k]):
         w(f"| `docs/{d}/` | {by_dir[d]} |\n")
