@@ -458,7 +458,12 @@ func (b *Battle) Place() {
 			}
 			x, y := b.formationSpot(i, k)
 			s.X, s.Y = x, y
-			s.Z = b.Field.StandLevel(x, y)
+			// ⭐ **高度要用地面層表，不是堆疊高度**（docs/spec/95）。
+			// `tryMove` 走一格時把 Z 同步成地面層，所以拿堆疊高度擺兵
+			// 會讓「沒動過的兵」停在移動層之上——攻方走到守方腳下
+			// 卻差一層，`doAttack` 的碰撞與 `anyoneAt` 都比 Z，
+			// 於是永遠打不到對方（守方一兵未損）。
+			s.Z = b.standZ(s, x, y)
 			s.syncTerrain(b.Field, x, y, s.Z)
 			s.GoalX, s.GoalY, s.GoalZ = x, y, s.Z
 			s.StepX, s.StepY, s.StepZ = x, y, s.Z

@@ -61,8 +61,9 @@ func battleFixture(t *testing.T, siege bool, node, attacker, defender int) *tact
 // 「手上有路就不重算」，整排就卡在半路，兵一個都退不出去，
 // `Done` 永遠是 false。**規則層的單元測試全綠，因為沒有人跑完整場。**
 //
-// 這條 fixture（據點 82、軍團 81 攻 39 守、玩家守方）修好之後在
-// 第 1,416 幀結束，守方勝。上限取 6,000 是留餘裕，不是期望值。
+// 這條 fixture（據點 82、軍團 81 攻 39 守、玩家守方）現在在第 1,192 幀
+// 結束。上限取 6,000 是留餘裕，不是期望值——**這一支只斷言「會結束」**，
+// 誰贏、第幾幀都不是它管的（那兩個會隨規則層變）。
 func TestSiegeFixtureTerminates(t *testing.T) {
 	b := battleFixture(t, true, 82, 81, 39)
 
@@ -75,6 +76,44 @@ func TestSiegeFixtureTerminates(t *testing.T) {
 			"攻城戰卡住了", b.Frame, b.Sides[0].Remaining(), b.Sides[1].Remaining())
 	}
 	t.Logf("第 %d 幀結束，勝方 側%d", b.Frame, b.Winner)
+}
+
+// TestSpawnHeightMatchesGroundPlane 釘住 docs/spec/95：
+// 開場擺兵的 Z 要落在**移動用的那一層**。
+//
+// `Place()` 本來用 `StandLevel`（圖塊堆疊高度），而 `tryMove` 走一格時
+// 把 Z 同步成 `GroundLevel`（地面層表）。兩個表不一樣，於是
+// **沒動過的兵停在移動層之上**：攻方走到守方腳下卻差一層，
+// `doAttack` 的碰撞與 `anyoneAt` 都比 Z，永遠打不到對方。
+// 量到的後果是守方從頭到尾一兵未損（docs/playtest/51 §3）。
+//
+// 這條 fixture 修正前 96 個兵**每一個**的兩個值都不一樣。
+func TestSpawnHeightMatchesGroundPlane(t *testing.T) {
+	b := battleFixture(t, true, 82, 81, 39)
+
+	bad := 0
+	for side := range b.Sides {
+		for k := range b.Sides[side].Soldiers {
+			s := &b.Sides[side].Soldiers[k]
+			if !s.Alive {
+				continue
+			}
+			lv, ok := b.Field.GroundLevel(s.X, s.Y, s.Plane())
+			if !ok {
+				continue // 那一格在這個平面沒有地面，退回堆疊高度是對的
+			}
+			if s.Z != lv {
+				if bad < 3 {
+					t.Errorf("側%d 兵%d (%d,%d) 站在 Z=%d，而地面層是 %d",
+						side, k, s.X, s.Y, s.Z, lv)
+				}
+				bad++
+			}
+		}
+	}
+	if bad > 0 {
+		t.Errorf("共 %d 個兵的開場高度不在移動層上", bad)
+	}
 }
 
 // TestFieldBattleTerminates 是野戰那一半：照自然流程撞出一場遭遇，
