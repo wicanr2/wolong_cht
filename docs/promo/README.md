@@ -7,8 +7,12 @@
 
 可交付推廣片已集中在 [`dist-all/promo`](../../dist-all/promo)。主預告輸出為
 `dist-all/promo/wolong-remake-trailer.mp4`，長度 72 秒、1280×720、H.264／AAC。
-內容只使用 remake 自己的畫面與本專案原創合成聲；沒有把原版影片、`BGM.DAT`、
-`SOUND.DAT` 或原版執行檔放進發行素材。
+
+⚠ **主預告有兩處原版衍生物，都是刻意的、也都標明了**：50–60 秒的並排段
+左半是原版實機（`tools/dosv_capture.sh` 的受控擷取），配樂自 2026-08-26 起
+是原版的曲子（由本專案的 OPL3 從使用者自備的 `BGM.DAT` 算出來，不是取樣
+原版錄音）。細節見下面的「音訊與權利標記」。**原版的 `BGM.DAT`／`SOUND.DAT`
+／執行檔本身沒有進發行素材**，其餘段落都是 remake 自己畫的畫面。
 
 ## 主預告的分鏡（2026-08-26 重剪）
 
@@ -114,9 +118,9 @@ docker run --rm --network none --memory 4g --cpus 2 --pids-limit 256 \
 ⚠ **容器裡沒有 python3**，所以配樂要先在 `tools/py.sh` 那邊產好再用
 `PROMO_SCORE` 指進來。
 
-腳本會先由 `tools/promo_score.py` 產生 60 秒 WAV，再把最新 DOS/V 自然策略骨架、
-事件畫面、
-事件 2–5 TALK、戰術戰鬥／投射物／戰果、事件 9、M7、存檔與結尾卡串成影片。
+`PROMO_SCORE` 沒給的時候腳本才會退回 `tools/promo_score.py` 的原創合成配樂；
+**現行主預告用的是原版曲子的 72 秒版**（下一節）。段落長度加起來要剛好等於
+配樂長度，否則 ffmpeg 會在最後一段截斷或留白。
 
 ## 音訊與權利標記
 

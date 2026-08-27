@@ -151,7 +151,9 @@ Android 上的第一個驗收是 A 的指紋。**A 通過之前不宣稱手機�
 
 ## 6. 驗收：模擬器能驗什麼、驗不到什麼
 
-沿用 `wolong-android-emulator:20260811`（Android 35 `google_apis;x86_64`、KVM）。
+沿用 `wolong-android-emulator:20260820`（`android-34;google_apis;x86_64`、KVM）。
+
+⚠ **system image 是 API 34，`targetSdk` 是 35。** 這台只有 x86_64，arm64 的 image 要靠模擬指令集、慢到不適合當驗收迴圈；而 API 34 的行為不等於 targetSdk 35 的實機行為。這個差異只有實機驗收擋得住，模擬器擋不到。
 
 | 驗得到 | 驗不到 |
 |---|---|

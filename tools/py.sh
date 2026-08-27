@@ -21,5 +21,6 @@ exec docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
     -v "$REPO_ROOT:/src" \
     -u "$(id -u):$(id -g)" \
     -e HOME=/tmp \
+    $(env | sed -n 's/^\(WOLONG_[A-Z0-9_]*\)=.*/-e \1/p') \
     -w /src \
     "$IMAGE" python3 "$@"

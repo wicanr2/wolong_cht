@@ -11,6 +11,7 @@ import datetime
 import hashlib
 import json
 import os
+import re
 import shutil
 import sys
 import tarfile
@@ -22,10 +23,32 @@ DIST = Path(
     os.environ.get("WOLONG_DIST_ROOT", str(REPO / "dist-all"))
 ).resolve()
 WORK = DIST / ".work"
-# 版本字串。由 `WOLONG_RELEASE_VERSION` 決定，預設是 20260812 那一次的三平台交付。
-# **所有產物的檔名都從這裡長出來**——先前是逐處硬寫 `20260812`，
+# 版本字串。**所有產物的檔名都從這裡長出來**——先前是逐處硬寫日期，
 # 於是「換一次版本」等於改十幾個字串，而漏改一處會產出名字對不上內容的檔案。
-RELEASE_VERSION = os.environ.get("WOLONG_RELEASE_VERSION", "wolong-remake-20260812")
+def _release_version() -> str:
+    """版本字串：環境變數優先，否則從 `packages/` 現有的產物反推。
+
+    ⚠ **不要用寫死的日期當預設。** 先前這裡的預設是 `wolong-remake-20260812`，
+    而 `tools/py.sh` 不轉送 `WOLONG_*`——所以文件寫的
+    `tools/py.sh tools/release_all_fs.py refresh` 這一步，會把
+    `finalise` 剛寫對的版本**改回 20260812**，於是
+    `dist-all/README.md` 在 `20260827` 的批次裡宣稱自己是 20260812。
+    整條流程 exit 0，只有打開那個檔的人看得到。
+    """
+    env = os.environ.get("WOLONG_RELEASE_VERSION")
+    if env:
+        return env
+    found = sorted(DIST.glob("packages/wolong-remake-linux-amd64-*.tar.gz"))
+    if found:
+        stamp = found[-1].name.rsplit("-", 1)[-1].split(".")[0]
+        return f"wolong-remake-{stamp}"
+    raise SystemExit(
+        "無法決定版本：請設 WOLONG_RELEASE_VERSION，"
+        f"或先讓 {DIST}/packages/ 裡有 wolong-remake-linux-amd64-*.tar.gz"
+    )
+
+
+RELEASE_VERSION = _release_version()
 # RELEASE_STAMP 是版本字串尾端的日期，檔名用它。
 RELEASE_STAMP = RELEASE_VERSION.rsplit("-", 1)[-1]
 # ⭐ **內含遊戲檔案的完整版**（docs/spec/72）。預設開啟——使用者裁定
@@ -90,6 +113,7 @@ def template_vars() -> dict[str, str]:
     if BUNDLE_DATA:
         return {
             "@RELEASE_VERSION@": RELEASE_VERSION,
+            "@RELEASE_STAMP@": RELEASE_STAMP,
             "@ROOT_BOUNDARY@": (
                 "⛔ **這一批內含原版資產，不可外流**（見 `DO-NOT-DISTRIBUTE.md`）。"
                 "四個平台的完整包裡都有松崗 DOS/V 的 69 個原版檔與倚天點陣字，"
@@ -99,6 +123,13 @@ def template_vars() -> dict[str, str]:
             "@PKG_BOUNDARY@": (
                 "⛔ **此封裝內含原版資產，不可外流。** `gamedata/` 是松崗 DOS/V 的"
                 "原版資料，`fonts/` 是倚天點陣字；兩者都不得散布。"
+            ),
+            "@VERIFY_BOUNDARY@": (
+                "⛔ **這一批是完整版，`packages/` 裡本來就有原版資產**："
+                "`gamedata/` 是松崗 DOS/V 的 69 個原版檔、`fonts/` 是倚天點陣字、"
+                "`audio/` 是由使用者自備 `BGM.DAT`／`SOUND.DAT` 算出來的 ogg。"
+                "deny-list 掃的是**版控裡的檔案**，不是這些包——"
+                "它擋的是「原版資產被 commit 進 repo」，不是「包裡有沒有」。"
             ),
             "@PKG_LAUNCH@": (
                 "解開之後直接跑，**不必帶任何旗標**——`gamedata/` 與 `fonts/`"
@@ -110,6 +141,7 @@ def template_vars() -> dict[str, str]:
         }
     return {
         "@RELEASE_VERSION@": RELEASE_VERSION,
+        "@RELEASE_STAMP@": RELEASE_STAMP,
         "@ROOT_BOUNDARY@": (
             "桌面包與 APK 都不含任何原版執行檔、資料、美術、音樂、字型或完整原版"
             "文字表；玩家必須自行提供合法松崗 DOS/V 資料與字型。"
@@ -118,6 +150,10 @@ def template_vars() -> dict[str, str]:
             "此封裝只包含 remake 程式與公開的 `translations/corrections.json`。"
             "**不包含**松崗 DOS/V 的執行檔、資料檔、圖像、音樂、完整 TALK 文字表"
             "或倚天字型；請自行準備合法的松崗繁中版資料與中文字型。"
+        ),
+        "@VERIFY_BOUNDARY@": (
+            "`packages/` 已經過封裝內容檢查與 deny-list 掃描；原版執行檔、資料檔、"
+            "美術、音樂、字型與 `talk-dosv-corrected.json` 都不應存在。"
         ),
         "@PKG_LAUNCH@": (
             "```text\n./wlgame -orig /path/to/songgang-cht -font /path/to/eten-fonts\n```\n\n"
@@ -136,6 +172,12 @@ def write_template(template: str, dest: Path) -> None:
     text = source.read_text(encoding="utf-8")
     for key, value in template_vars().items():
         text = text.replace(key, value)
+    # ⚠ **沒有被替換掉的變數要當錯誤**。模板用了一個 template_vars() 沒定義的
+    # 名字時，字面上的 `@FOO@` 會直接出現在交付檔裡，而流程一路 exit 0——
+    # 這種失敗只有人打開那個檔才看得到，而那通常是在使用者手上。
+    leftover = re.findall(r"@[A-Z_]{3,}@", text)
+    if leftover:
+        raise SystemExit(f"{template} 有沒被替換的變數：{sorted(set(leftover))}")
     dest.write_text(text, encoding="utf-8")
 
 
