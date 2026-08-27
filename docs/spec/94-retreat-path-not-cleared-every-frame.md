@@ -97,7 +97,7 @@ doRetreat：
 | 方式 | 證據 |
 |---|---|
 | 單元測試（機制）| `TestRetreatKeepsItsDetour`、`TestReplanWhenStuckEvenWithPath`（`internal/rules/tactical`）。兩支都做過正對照：**改回舊碼會紅** |
-| 單元測試（整場）| `TestSiegeFixtureTerminates`（`internal/state`）：那條 fixture 要在 6,000 幀內 `Done`。⭐ **這是唯一抓得到這個死鎖的形狀**——機制層的測試全綠，因為沒有人跑完整場 |
+| 單元測試（整場）| `TestSiegeFixtureTerminates`、`TestFieldBattleTerminates`（`internal/state`）：兩種戰場都要在上限內 `Done`。⚠ **既有的 `TestNormalScenarioTacticalBattleTerminates` 抓不到**——它跑的是**玩家攻城**（戰場不翻、玩家那一側是攻方），那一場在任何人退卻之前就分出勝負了。死鎖只在**玩家守城**那一邊 |
 | 實跑 | [`../playtest/51`](../playtest/51-siege-deadlock.md) |
 
 ## 6. 未解
