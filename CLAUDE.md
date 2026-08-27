@@ -555,13 +555,24 @@ grep `.asm` 只能從呼叫端的參數順序反推——那是間接證據，�
 
 ### `[HARD]` 提交前跑 `tools/check.sh`
 
-一支跑完 `go vet`、`go test`、`tools/index.py generate`。第三項會擋下：
+一支跑完 `go vet`、`go test` 與五組文件／資產檢查。
 
-- 文件缺狀態行或日期
-- **狀態行說「未解／受阻」但內文已經有一堆 confirmed** ——
-  這是本專案最常犯的錯，`docs/formats/07`、`docs/playtest/04`、
-  `CONTEXT.md` 的「進行中／受阻」表都中過
-- 連結壞掉、`CONTEXT.md` 提到不存在的文件
+⭐ **文件的錯有三類，三支工具各擋一類**，分開記就會漏掉一類：
+
+| 工具 | 擋什麼 |
+|---|---|
+| `index.py` | **狀態行與內文矛盾**——說「未解／受阻」而內文已經一堆 confirmed。本專案最常犯的錯，`docs/formats/07`、`docs/playtest/04`、`CONTEXT.md` 的「進行中／受阻」表都中過。另擋缺狀態行／缺日期／連結壞掉 |
+| `phantom_scan.py` | **指向不存在的東西**——檔案、目錄、Go 識別字、IDA 符號、**Go 測試名** |
+| `stale_scan.py` | **指到的東西存在，但值不對**——檔案雜湊、docker 映像標籤、命令列旗標、RE 覆蓋率 |
+
+第三類最貴也最晚才有檢查：**格式完全正確、連結都通、只有數字是舊的**。
+2026-08-27 的稽核靠人工抓到六處，其中三處已經印在交付給使用者的檔案裡
+（[`docs/release/09`](docs/release/09-full-20260827.md) §4）。
+
+⚠ **自我測試要跟著跑。** 每一支的綠燈都可能是「沒問題」，也可能是
+「這一層根本沒在比」——兩者輸出長得一樣。`stale_scan`、`parity_diff`、
+`denylist` 都有 `--selftest`，`check.sh` 會先跑它再跑本體。
+同理，`stale_scan` **跳過了哪幾層一定會印出來**（缺原版素材、缺 census）。
 
 ### `[HARD]` **動手之前**查這五張表（不是下結論之前）
 
@@ -628,6 +639,7 @@ docker/           自建映像（dosboxx＝PC-98 oracle、dosboxx-bridge＝帶�
 tools/            docker 包裝（go.sh、py.sh、ida.sh、dosbox.sh、dosboxx.sh、shot.sh、
                   dosboxx_bridge.sh ＋ dosboxx_probe.py＝動態取樣）、
                   check.sh（提交前的單一入口）、denylist.py ＋ release.sh（發行閘）、
+                  phantom_scan.py（指向不存在的東西）＋ stale_scan.py（值已經不對）、
                   index.py（文件索引）、re_coverage.py（RE 覆蓋地圖）、
                   re_open_questions.py（缺口總表）、
                   fdi_extract.py、talkdat.py、ida_*.idc
