@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**509 列分布在 195 份文件，平均每份 2.6 列。**
+**508 列分布在 195 份文件，平均每份 2.6 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 182 | 176 | 6 | 0 |
 | 驗收 | 62 | 51 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 208 | 192 | 16 | 0 |
-| **合計** | **509** | 471 | 38 | 0 |
+| 其他 | 207 | 191 | 16 | 0 |
+| **合計** | **508** | 470 | 38 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -54,8 +54,8 @@
 | `docs/re/` | 182 |
 | `docs/spec/` | 157 |
 | `docs/playtest/` | 62 |
-| `docs/release/` | 34 |
 | `docs/formats/` | 33 |
+| `docs/release/` | 33 |
 | `docs/mechanics/` | 18 |
 | `docs/mobile/` | 12 |
 | `docs/reference/` | 6 |
@@ -387,7 +387,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（208 條）
+## 2.6 其他（207 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -437,7 +437,6 @@
 | [`release/09-full-20260827.md`](../release/09-full-20260827.md) | Android 的語言切換沒在模擬器上點過 | smoke 期間不可送觸控（送了指紋就不能比），要另開一輪非指紋的驗收 | 靜態 |
 | [`release/09-full-20260827.md`](../release/09-full-20260827.md) | Windows／macOS 實機 | 沒有硬體 | 靜態 |
 | [`release/09-full-20260827.md`](../release/09-full-20260827.md) | Android 實機驗收與正式簽章 | 沒有裝置；keystore 保管未決，出的仍是 debug 簽章 | 靜態 |
-| [`release/09-full-20260827.md`](../release/09-full-20260827.md) | **macOS 的執行檔帶著 VCS 戳記，另外三個平台沒有** | 量到的：包裡的 `darwin-amd64/wlsim` 記著 `vcs.revision=9b462f7a…`、**`vcs.modified=true`**，Linux 的同一支是 `(devel)` 沒有戳記。成因是 `docker/go` 有 `ENV GOFLAGS=-buildvcs=false` 而… | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Windows／macOS 原生 GUI | 交叉建置的產物只驗了檔頭，沒有在目標作業系統跑過。M8 唯一的閘 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 實機驗收 | 只有 Docker 模擬器；觸控手感、真實 GPU、高 DPI 上的點陣字可讀性都驗不到 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 正式簽章 | 出的是 debug 簽章，keystore 怎麼保管還沒決定 | 靜態 |

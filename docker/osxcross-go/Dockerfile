@@ -22,5 +22,10 @@ RUN rm -rf /usr/local/go
 
 COPY --from=go125 /usr/local/go /usr/local/go
 
+# ⭐ **`-buildvcs=false` 要與另外三個平台一致。** `docker/go` 有這一行，
+# 而這一顆只 COPY GOROOT、不繼承它的環境變數——少了就只有 macOS 的執行檔
+# 帶著 `vcs.revision` 與 `vcs.modified`，**雜湊跟著工作區乾不乾淨而變**，
+# 同一個 commit 也重現不出來（`docs/release/09` §5）。
 ENV PATH="/usr/local/go/bin:${PATH}" \
-    GOTOOLCHAIN=local
+    GOTOOLCHAIN=local \
+    GOFLAGS=-buildvcs=false
