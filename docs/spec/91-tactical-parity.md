@@ -55,7 +55,7 @@
 |---|---|
 | 原版要**玩到**開戰 | 全程滑鼠腳本：編成 → 選武將 → 確定 → 軍團 → 行軍指示 → 選軍團 → 選目的地。**`sub_1716D`（選軍團）是清單視窗不是地圖點選**（[`../re/22`](../re/22-strategy-command-tree.md) §3.3），所以整條路徑都在 ×1.2 的選單座標系裡，只有指令列那兩下要用地圖模式的 ÷9.6 |
 | 開戰之後畫面**每幀都在動** | 戰術速度調到最慢；原版側的截圖時機以「剛進戰場」為準——那一刻雙方還在初始佈陣 |
-| 兩邊的**部隊組成**要一樣 | `-siege-corps` 直接拿存檔裡現成的兩支軍團開戰，兵種、人數、主將都照存檔（[`90`](90-same-state-parity.md) §2.3）。攻守由參數指定，不看 `-siege-defend` |
+| 兩邊的**部隊組成**要一樣 | `-siege-corps` 直接拿存檔裡現成的兩支軍團開戰，兵種、人數、主將都照存檔（[`90`](90-same-state-parity.md) §2.3）。攻守由參數指定，不看 `-siege-defend`。⚠ **不帶它就是現編**——`-open-siege` 會從當下的世界狀態編一支新的，人名、兵力、士氣全都不是原版那一場（[`../playtest/51`](../playtest/51-siege-deadlock.md) §1：側欄四區從 2–5% 掉到 0）|
 
 **先求靜態層**：`sb-formation`／`sb-command`／`sb-arrow`／`bottom` 四區
 不吃戰況，是最先能驗收的一組。
@@ -65,7 +65,7 @@
 | 項目 | 位置 |
 |---|---|
 | 分區 | `tools/parity_diff.py --regions tactical`（預設 `strategy` ＝ `90` §3 那五區）|
-| remake 側截圖 | `tools/parity_shot.sh out.png -direct -open-siege -siege-node N -shot-frames 1`；要對部隊組成再加 `-siege-corps` |
+| remake 側截圖 | ⭐ **同狀態一定要帶存檔與軍團編號**，否則開出來的是別人的軍團：<br>`tools/parity_shot.sh out.png -direct -scenario 0 -player 0 -seed 7 -save-file <存檔> -load-slot 0 -open-siege -siege-node N -siege-corps 攻,守 -shot-frames F`<br>編號用 `-list-corps` 看（配同一個 `-save-file`）|
 | 原版側截圖 | `tools/dosv_capture.sh <目錄> "<timeline>"` → `tools/parity_crop.py` |
 
 ## 5. 驗證
@@ -73,7 +73,7 @@
 | 方式 | 內容 |
 |---|---|
 | 自我檢查 | `--selftest` 同時跑兩組分區：同圖每區 0、平移 1 px 每區非 0（在 `tools/check.sh` 裡）|
-| 對原版 ⚠ | [`../playtest/40`](../playtest/40-tactical-parity.md)（2026-08-18）：九區裡**六區逐像素相同**，`field` 0.17%、小地圖 8 px、對方將旗 44 px。**2026-08-27 重跑是 0.86%**，差在局面不等價（[`../playtest/49`](../playtest/49-parity-retest-20260827.md) §3.3）|
+| 對原版 ⚠ | [`../playtest/40`](../playtest/40-tactical-parity.md)（2026-08-18）：九區裡**六區逐像素相同**。**2026-08-27 用同一批軍團重跑**：`sb-title`／`sb-self`／三個純美術區 0 px、`bottom` 2 px、`sb-enemy` 14 px、`field` 0.84%、`sb-minimap` 1.64%（[`../playtest/51`](../playtest/51-siege-deadlock.md) §1）|
 
 ## 6. 取樣點要用局面條件，不要寫死步數
 
@@ -99,6 +99,16 @@
 
 ⚠ **窗口會隨規則層再變。** 寫進驗收腳本的應該是條件，不是那三個數字；
 在有「跑到條件成立就截圖」的旗標之前，改動規則層之後要重新量。
+
+### 6.1 ⭐ 每一個計量條都是一個獨立讀數
+
+原版那一張畫面上有三條可以反推內部值的量表：門強度（城壁耐久）、
+對方體力、對方兵力。三個一起用，就不只是「對到第幾幀」，
+而是**能不能對到同一幀**——[`../playtest/51`](../playtest/51-siege-deadlock.md) §2
+量出來三個讀數指向三個不同的幀，那是模型不對，不是取樣點沒準。
+
+**兜不攏比對不準有價值得多。** 對不準只說要換個幀，兜不攏直接指出
+哪一條規則錯了。
 
 ## 7. 未解
 

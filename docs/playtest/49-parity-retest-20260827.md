@@ -112,7 +112,12 @@ remake 是裸露的黑底。
 
 側欄那幾區（`sb-title` 2.16%、`sb-enemy` 3.22%、`sb-self` 4.52%）差的
 全是人名：原版擷取的是 196年5月20日**張遼軍攻許昌**，
-remake 的 fixture 開出來的是袁術軍。版面、外框、小地圖的框線逐像素相同。
+而 `-open-siege` 從開局劇本現編，開出來的是袁術軍。
+
+⭐ **後續**：把 fixture 換成存檔裡現成的那兩支軍團（`-siege-corps 81,39`）
+之後，`sb-title` 與 `sb-self` 掉到 **0 px**、`bottom` 剩 2 px、`sb-enemy` 剩 14 px
+（[`51`](51-siege-deadlock.md) §1）。**那四區本來就是對的。**
+同一輪順著這條線挖出攻城戰的死鎖（[`51`](51-siege-deadlock.md)）。
 
 | frame | 側 0（攻方）| 側 1（守方）|
 |---:|---|---|

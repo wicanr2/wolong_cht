@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**505 列分布在 192 份文件，平均每份 2.6 列。**
+**510 列分布在 194 份文件，平均每份 2.6 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 18 | 15 | 3 | 0 |
 | 資料保存 | 33 | 32 | 1 | 0 |
 | 程式碼理解 | 182 | 176 | 6 | 0 |
-| 驗收 | 76 | 65 | 11 | 0 |
+| 驗收 | 79 | 68 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 190 | 178 | 12 | 0 |
-| **合計** | **505** | 471 | 34 | 0 |
+| 其他 | 192 | 180 | 12 | 0 |
+| **合計** | **510** | 476 | 34 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -54,8 +54,8 @@
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/re/` | 182 |
-| `docs/spec/` | 160 |
-| `docs/playtest/` | 76 |
+| `docs/spec/` | 162 |
+| `docs/playtest/` | 79 |
 | `docs/formats/` | 33 |
 | `docs/mechanics/` | 18 |
 | `docs/release/` | 13 |
@@ -311,7 +311,7 @@
 | [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | 變體 0／2／3／5／6 的臨場抽驗 | 專屬句只在 1／4／7；預設句與它們共用選句機制，公式已 confirmed，抽驗優先度低 | 靜態 |
 | [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
 
-## 2.4 驗收（76 條）
+## 2.4 驗收（79 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -391,6 +391,9 @@
 | [`playtest/50-corps-on-map.md`](../playtest/50-corps-on-map.md) | 首都疊圖為什麼不畫 | 行為定案，機制未讀（§4） | 靜態 |
 | [`playtest/50-corps-on-map.md`](../playtest/50-corps-on-map.md) | 別的疊圖組合 | 只驗過「首都 ＋ 軍團」。災害物件 ＋ 軍團、非首都據點 ＋ 軍團都沒有樣本 | 靜態 |
 | [`playtest/50-corps-on-map.md`](../playtest/50-corps-on-map.md) | 「軍團在路上」對原版 | 要新的原版擷取：編成 → 行軍指示 → 等幾天。滑鼠腳本點得到行軍那一列之後才做得起來（`40` §1.2） | 靜態 |
+| [`playtest/51-siege-deadlock.md`](../playtest/51-siege-deadlock.md) | 守方一兵未損 | §3。要先讀原版腳本何時下命令 3（城壁） | 靜態 |
+| [`playtest/51-siege-deadlock.md`](../playtest/51-siege-deadlock.md) | 三個讀數對不上同一幀 | §2。跟上一項是同一件事：攻方要真的打到守方，兵力才會掉 | 靜態 |
+| [`playtest/51-siege-deadlock.md`](../playtest/51-siege-deadlock.md) | 攻方大將體力歸零 | `drainSiegeGeneral` 扣到 0，而戰鬥傷害最低留 1（`../re/11` §5.16）。攻城計時器要不要也留 1，沒讀出來 | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -403,7 +406,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（190 條）
+## 2.6 其他（192 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -597,6 +600,8 @@
 | [`spec/92-android-music.md`](../spec/92-android-music.md) | 手機沒有實機聽過 | 沒有裝置；模擬器是 `-no-audio` 起的 | 靜態 |
 | [`spec/92-android-music.md`](../spec/92-android-music.md) | 桌面「沒有音效裝置就掛」那一條 | `../release/08` §5 的老問題，手機端要確認 Ebiten 在 Android 上不會踩同一個 | 靜態 |
 | [`spec/93-siege-wall-instant-break-facing.md`](../spec/93-siege-wall-instant-break-facing.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
+| [`spec/94-retreat-path-not-cleared-every-frame.md`](../spec/94-retreat-path-not-cleared-every-frame.md) | 守方一兵未損 | 這條 fixture 從頭到尾守方 48 人全活、兵 600 不變（`../playtest/51` §3）。守方站在 Z=1，攻方在 Z=0，而 `doAttack` 的碰撞要求 `s.Z == e.Z`——攻方走到腳下卻上不去。原版靠命令 3（城壁）登城，這條 fixture 的腳本沒有下過那道命令 | 靜態 |
+| [`spec/94-retreat-path-not-cleared-every-frame.md`](../spec/94-retreat-path-not-cleared-every-frame.md) | 攻方大將體力歸零卻還在 | `drainSiegeGeneral` 會扣到 0，而 `docs/re/11` §5.16 說戰鬥傷害最低留 1。攻城計時器要不要也留 1，沒有讀出來 | 靜態 |
 
 ## 3. 這支工具的盲區
 

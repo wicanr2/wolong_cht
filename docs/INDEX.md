@@ -83,6 +83,7 @@
 | [`docs/playtest/48-display-polish.md`](playtest/48-display-polish.md) | 48 — 三處顯示修正的前後對照 | confirmed。 | 2026-08-26 |
 | [`docs/playtest/49-parity-retest-20260827.md`](playtest/49-parity-retest-20260827.md) | 49 — 把記錄過的對拍全部重跑一次：兩組重現、一組失效 | 四組全部重現或修好。 | 2026-08-27 |
 | [`docs/playtest/50-corps-on-map.md`](playtest/50-corps-on-map.md) | 50 — 軍團在大地圖上：兩個缺口，逐像素對上 | 許昌那一格（含周邊 56×56）與原版逐像素相同。 | 2026-08-27 |
+| [`docs/playtest/51-siege-deadlock.md`](playtest/51-siege-deadlock.md) | 51 — 攻城戰打不完：同狀態對拍挖出來的死鎖 | 修好了。 | 2026-08-27 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告 2026-08-26 重剪為 72 秒， 加入語言切換與原版並排兩段；遊戲段… | 2026-08-26 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
@@ -260,6 +261,7 @@
 | [`docs/spec/91-tactical-parity.md`](spec/91-tactical-parity.md) | 91 — 戰場的逐區對拍：分區、同狀態怎麼達成 | CONFORMED。 | 2026-08-17 |
 | [`docs/spec/92-android-music.md`](spec/92-android-music.md) | 92 — Android 也要有原版的音樂 | CONFORMED（2026-08-27 實作並實跑驗過）。 | 2026-08-27 |
 | [`docs/spec/93-siege-wall-instant-break-facing.md`](spec/93-siege-wall-instant-break-facing.md) | 93 — 攻城「一撞歸零」的面向常數要跟著戰場翻轉 | CONFORMED。 | 2026-08-27 |
+| [`docs/spec/94-retreat-path-not-cleared-every-frame.md`](spec/94-retreat-path-not-cleared-every-frame.md) | 94 — 退卻的繞路點不可以每幀清掉 | CONFORMED。 | 2026-08-27 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 

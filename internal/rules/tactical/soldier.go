@@ -198,15 +198,26 @@ func (b *Battle) doGuard(side, k int) {
 // X=1／62、Y 夾在 0x10..0x2F，Z 固定為 0。
 func (b *Battle) doRetreat(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
-	// 退卻是新的、固定朝向側邊的出口；若兵在受傷前已經有攻擊繞路點，
-	// 那個點可能把它留在城門／敵陣附近。`applyNewOrder` 通常會清掉路徑，
-	// 但已經處於退卻命令的兵也可能從受擊或隊長連鎖進入這裡，必須在出口
-	// 再清一次，否則正常攻城會有兵永遠走不到畫面邊緣。
-	s.Path = nil
-	s.PathAt = 0
 	edge := MinCoord
 	if b.Sides[side].Mirror {
 		edge = MaxCoord
+	}
+	// 退卻是新的、固定朝向側邊的出口；若兵在受傷前已經有攻擊繞路點，
+	// 那個點可能把它留在城門／敵陣附近。`applyNewOrder` 通常會清掉路徑，
+	// 但已經處於退卻命令的兵也可能從受擊或隊長連鎖進入這裡，所以在出口
+	// 再判一次。
+	//
+	// ⚠ **只清「不是通往出口的那條路」**（docs/spec/94）。這裡本來是
+	// 每一幀無條件清掉，而一幀之內的順序是 doRetreat → moveToward（用路）
+	// → 走不動 → replan（算路）——清除在最前面，於是算好的繞路點
+	// **下一幀開頭就被丟掉**，兵永遠只朝終點直線推。配上「退卻中的同伴
+	// 不能對調」（sub_1B732 的閘），一整排就鎖死，攻城戰永遠不會結束。
+	//
+	// 判準不能用「目標相等」：退卻目標的 Y 是 clamp(s.Y)，會跟著兵走，
+	// 繞路一走 Y 就又被清掉了。
+	if p, ok := s.Path.Last(); !ok || p.X != edge {
+		s.Path = nil
+		s.PathAt = 0
 	}
 	retreatY := s.Y
 	if retreatY < 0x10 {
@@ -376,7 +387,14 @@ const replanInterval = 30
 // replan 幫一個兵算一條繞開障礙的路。
 func (b *Battle) replan(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
-	if s.Path.Len() > 0 || b.Frame-s.PathAt < replanInterval {
+	// ⚠ **手上有路不是不重算的理由。** `replan` 只有在「這一幀走不動或
+	// 撞到地形」時才被呼叫（moveToward 的出口），所以有路又走不動，
+	// 代表那條路現在不通——原版也是在三軸都走不動時重算
+	// （`sub_1AED2`，docs/re/11 §5.8k）。
+	// 這裡本來會因為 `Path.Len() > 0` 直接返回，於是被同伴擋住的兵
+	// 抱著一條穿過同伴的直線路永遠不重算（docs/spec/94 §2.1）。
+	// 節流仍然留著：波前擴散很貴，30 幀一次。
+	if b.Frame-s.PathAt < replanInterval {
 		return
 	}
 	s.PathAt = b.Frame

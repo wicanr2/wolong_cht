@@ -254,6 +254,17 @@ func (w *Waypoints) Current() (Point, bool) {
 	return w.pts[w.i], true
 }
 
+// Last 回傳這條路的終點。沒有路（或已經走完）時回 false。
+//
+// 用途是分辨「這條路是為了哪個目標算的」——`doRetreat` 靠它判斷
+// 手上這條是不是退卻用的繞路（docs/spec/94 §3）。
+func (w *Waypoints) Last() (Point, bool) {
+	if w == nil || len(w.pts) == 0 {
+		return Point{}, false
+	}
+	return w.pts[len(w.pts)-1], true
+}
+
 // Advance 抵達目前中繼點後才消費它。
 func (w *Waypoints) Advance() {
 	if w == nil || w.i >= len(w.pts) {

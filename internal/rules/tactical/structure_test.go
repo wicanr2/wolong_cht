@@ -367,6 +367,77 @@ func TestInstantBreakFacingFollowsRotation(t *testing.T) {
 	}
 }
 
+// docs/spec/94 的兩道機制，各一支測試。
+//
+// 背景：**退卻中的同伴不能對調**（`sub_1B732` 的閘），所以一排退卻的兵
+// 要靠繞路點才過得去。下面兩件事任何一件不成立，整排就會鎖死——
+// 實測過的後果是攻城戰**永遠不會結束**：攻方大將的體力被攻城計時器
+// 耗到門檻以下、全軍退卻，然後卡住，而唯一的結束條件是「補不出兵」。
+
+// 一、`doRetreat` 只清「不是通往出口」的路。
+//
+// 它本來每一幀無條件清掉，而一幀之內是 doRetreat → moveToward（用路）
+// → 走不動 → replan（算路）——清除在最前面，算好的繞路點下一幀開頭
+// 就被丟掉。
+func TestRetreatKeepsItsDetour(t *testing.T) {
+	f := walledField(0)
+	b := NewBattle(f, SyntheticFormations(), &fixedRand{}, 0)
+	b.Deploy(0, 0, Infantry, 1)
+	s := &b.Sides[0].Soldiers[0]
+	s.X, s.Y, s.Z = 30, 30, 0
+	s.Cmd, s.Next = Retreat, Retreat
+	edge := MinCoord
+	if b.Sides[0].Mirror {
+		edge = MaxCoord
+	}
+
+	// 通往出口的繞路：留著。
+	s.Path = &Waypoints{pts: []Point{{X: 30, Y: 29}, {X: edge, Y: 29}}}
+	s.PathAt = 7
+	b.doRetreat(0, 0)
+	if s.Path.Len() == 0 {
+		t.Error("通往出口的繞路被清掉了——算好的路永遠用不到")
+	}
+	if s.PathAt != 7 {
+		t.Errorf("PathAt 被歸零成 %d，replanInterval 的節流會失效", s.PathAt)
+	}
+
+	// 攻擊時算的舊路（終點不是出口）：要清掉，否則兵會留在敵陣附近。
+	s.Path = &Waypoints{pts: []Point{{X: 30, Y: 29}, {X: 40, Y: 29}}}
+	s.PathAt = 7
+	b.doRetreat(0, 0)
+	if s.Path.Len() != 0 {
+		t.Error("舊的攻擊繞路沒有被清掉")
+	}
+}
+
+// 二、走不動就要重算，**手上有路不是不重算的理由**。
+//
+// `replan` 只在「這一幀走不動或撞到地形」時才被呼叫，所以有路又走不動
+// 代表那條路現在不通（原版 `sub_1AED2` 也是三軸走不動時重算）。
+func TestReplanWhenStuckEvenWithPath(t *testing.T) {
+	f := walledField(0)
+	b := NewBattle(f, SyntheticFormations(), &fixedRand{}, 0)
+	b.Deploy(0, 0, Infantry, 1)
+	s := &b.Sides[0].Soldiers[0]
+	s.X, s.Y, s.Z = 30, 30, 0
+	s.GoalX, s.GoalY, s.GoalZ = 40, 30, 0
+	// 一條哪裡都到不了的舊路，而且節流已經過期。
+	s.Path = &Waypoints{pts: []Point{{X: 5, Y: 5}}}
+	b.Frame = 1000
+	s.PathAt = 0
+
+	b.replan(0, 0)
+
+	p, ok := s.Path.Current()
+	if !ok {
+		t.Fatal("重算之後沒有路")
+	}
+	if p.X == 5 && p.Y == 5 {
+		t.Error("手上有路就直接返回了——被同伴擋住的兵會抱著一條走不通的路不放")
+	}
+}
+
 // 面向只在**走成功**那一步才更新——被牆擋住的兵保持原本的面向。
 //
 // 原版把 `[si+5]` 寫在四個移動常式裡，而那些常式只有走得動時才被呼叫。
