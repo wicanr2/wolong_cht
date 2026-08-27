@@ -394,7 +394,7 @@
 | [`playtest/51-siege-deadlock.md`](../playtest/51-siege-deadlock.md) | 三個讀數仍對不上同一幀 | §2。兩軍會打了，但這條 fixture 的守方是**玩家側而玩家沒下令**，所以站著挨打——攻方只折損 1 點。⚠ **不是委任**：委任那條路走 `combat.Resolve` 抽象判定，根本不開戰場，而 e10 是戰場畫面 | 靜態 |
 | [`playtest/51-siege-deadlock.md`](../playtest/51-siege-deadlock.md) | 原版擺兵寫的是哪一個表 | `spec/95` 是靠內部一致性定的，不是照抄。原版 `[si+0Ah]` 的來源沒讀出來 | 靜態 |
 | [`playtest/51-siege-deadlock.md`](../playtest/51-siege-deadlock.md) | 攻方大將體力歸零 | `drainSiegeGeneral` 扣到 0，而戰鬥傷害最低留 1（`../re/11` §5.16）。攻城計時器要不要也留 1，沒讀出來 | 靜態 |
-| [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | ⭐ **破牆速度差約兩倍** | 原版約 600 幀、remake 約 1,100 幀（§5）。remake 只有 y 29–31 那幾個兵搆得到破口——其餘登城兵的目標格 (27, 自己的 Y) 在 y 32 以上**沒有地面**，尋路到不了，於是停在半路 / 量「同時貼著破口的兵數」隨時間的曲線，再對 `loc_1BD46` 的波前擴散：原版… | 靜態 |
+| [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | ⭐ **破牆速度** | remake 量得很乾淨（§5）：三個兵貼著打、每幀約 2 點、第 ~1,100 幀破。**原版那一側量不出來**——體力同時被攻城計時器與挨打扣，單張畫面分不開 / ⛔ **要新的原版擷取**：從存檔載入之後在開戰的**前兩百幀密集取樣**（現有的 `wait:6` 一格就跨掉五十幾幀）。這是這一項唯一的路，靜… | 靜態 |
 | [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | ⛔ 試過但**不是**成因：不翻轉 `gateX` | `sub_1CAEB`（`0001CB0F`）寫進立即值的是**未翻轉**的索引第二欄，而 remake 對它套了 `RotateGateX`。實驗把翻轉拿掉（`GateX` 從 27 變回 36）跑同一條 fixture：**城壁照樣被磨穿**（1,660 → 0），門一點傷都沒有，結束時間只從 f1116 變… | 靜態 |
 | [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | 索引第二欄到底是什麼 | `../re/11` §4.5 稱它「城門附近的 X」，§5.8i 定案為「命令 3 的目標 X」。但這張圖上它落在城壁本體、離最近的門有 3–7 格 / 掃 186 張攻城圖：第二欄那一欄的圖塊值是什麼、與門的距離分布 | 靜態 |
 | [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | 守方為什麼在 t6 掉那麼快 | 原版守方大將體力兩段內 124 → 37 / 要先讓攻方以原版的方式進城，才比得了 | 靜態 |

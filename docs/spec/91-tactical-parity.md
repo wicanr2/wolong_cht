@@ -74,6 +74,7 @@
 |---|---|
 | 自我檢查 | `--selftest` 同時跑兩組分區：同圖每區 0、平移 1 px 每區非 0（在 `tools/check.sh` 裡）|
 | 對原版 ⚠ | [`../playtest/40`](../playtest/40-tactical-parity.md)（2026-08-18）：九區裡**六區逐像素相同**。**2026-08-27 用同一批軍團重跑**：`sb-title`／`sb-self`／三個純美術區 0 px、`bottom` 2 px、`sb-enemy` 14 px、`field` 0.84%、`sb-minimap` 1.64%（[`../playtest/51`](../playtest/51-siege-deadlock.md) §1）|
+| 規則層 ⭐ | [`../playtest/52`](../playtest/52-siege-timeseries-parity.md)：拿**存檔與影格出自同一次擷取**的那一組（`SAVE-L.DAT` ＋ `t1`–`t16`）比時間序列。**攻城計時器的速率**與**進城的機制**都對上了；唯一的殘差是破牆花多久，而那一側**現有素材量不出來**（§7）|
 
 ## 6. 取樣點要用局面條件，不要寫死步數
 
