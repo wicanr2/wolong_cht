@@ -3,8 +3,9 @@
 **狀態：CONFORMED。** remake 的 `tryClimb` 碰到未破的門就直接回 false，
 於是登城的兵站在門格上**永遠卡住**——門一點傷都沒有（耐久 80 全程不變）。
 補上「爬不上去就打它」之後，站上門格的兵會把門打開。
-⚠ 據點 82 那條 fixture 的行為沒有因此改變：那一隊走不到門格
-（[`../playtest/52`](../playtest/52-siege-timeseries-parity.md) §6）。
+⚠ 據點 82 那條 fixture 的行為沒有因此改變：那張圖的進城口是 y 29–31 的
+走廊不是門，登城兵走不到門格
+（[`../playtest/52`](../playtest/52-siege-timeseries-parity.md) §5）。
 
 - 日期：2026-08-27
 - 出處：`sub_1B0D3`（`0001B0D3`–`0001B115`）＋ `sub_1B186`
