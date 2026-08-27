@@ -50,6 +50,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/assets/text"
 	"github.com/wicanr2/wolong_cht/internal/assets/world"
 	"github.com/wicanr2/wolong_cht/internal/rules/battlefield"
+	"github.com/wicanr2/wolong_cht/internal/rules/bgm"
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
@@ -729,81 +730,31 @@ func pressed(k ebiten.Key) bool { return inpututil.IsKeyJustPressed(k) }
 // 由 `sub_19321` 以「月 − 1」查（docs/re/58 §2）。
 // **這不是照聽感排的**——同一個月份索引還有第二張表決定季節調色盤，
 // 兩張表逐月吻合，那是「曲 2–5 是四季」的交叉驗證。
-var seasonMusic = [12]int{5, 5, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5}
-
-// musicTrack 回傳目前該放哪一首。對應全部出自 `KI.EXE` 的呼叫端
-// （docs/re/58），不是聽出來的。
+// musicTrack 把目前的狀態交給 `internal/rules/bgm`。
 //
-// ⚠ 三件原版行為，remake 照做：
-//   - **戰術進場先停**，設定跑完才依戰場類別挑曲（`sub_19946`）
-//   - 換季那個月是**第 2 天**換曲，調色盤卻要漸變 16 天——兩者不同步
-//     是原版行為（docs/re/58 §2）。remake 目前只做換曲那一半
-//   - 事件與對話放曲 6，結束後回到當季那一首。原版是四支常式各自
-//     呼叫曲 6、收尾再呼叫 `sub_19321` 放回當季（docs/re/58 §3）；
-//     remake 這一側只要條件不成立就自然落回季節那一支，形狀一樣
+// ⭐ **規則不在這裡**：手機端要一樣的行為，抄第二份會長出差異
+//（CLAUDE.md §7 第 6 條）。這一支只負責把 `game` 的狀態翻成 `bgm.Scene`。
 func (g *game) musicTrack() string {
-	switch {
-	case g.launcher != nil:
-		// `sub_11A6E` 開機流程的第一件事就是曲 0（docs/re/58 §3）。
-		return "bgm-0"
-	case g.endingActive():
-		// ⭐ **結局這一格要排在很前面。** 排在 `Outcome` 之後的話，
-		// 整段結局會放成 `overbgm-0`（遊戲結束曲，那是 `D7OVER.EXE` 的）
-		// ——結局播的時候勝負早就定了。排在 `world == nil` 之後也不行：
-		// `-open-ending` 那條驗收 fixture 根本沒有世界。
-		//
-		// ⚠ **起訖仍未解**：原版由 `sub_10500` 的呼叫點起、`loc_1007A` 收尾，
-		// 兩處都沒讀（docs/spec/67 §7）。這裡是「整段結局都放」，
-		// 不是照原版的時點——那一半仍是缺口。
-		return "endbgm-0"
-	case g.world == nil:
-		return ""
-	case g.world.Outcome() != state.InProgress:
-		// `OVERBGM.DAT` 是 `D7OVER.EXE`（遊戲結束）的（docs/re/58 §6）。
-		return "overbgm-0"
-	case g.battleActive():
-		return g.battleMusic()
-	case g.messageActive() || g.adviseActive():
-		// 曲 6 ＝ 事件與對話。⚠ 原版的四個呼叫端是外交對話、事件 2/3、
-		// 事件 4/5 與系統服務分派（docs/re/58 §3），**remake 這一側
-		// 不是一對一**：這裡用「事件訊息開著」與「進言對話開著」兩個狀態。
-		return "bgm-6"
-	default:
-		m := g.world.Clock.Month
-		if m < 1 || m > 12 {
-			return ""
+	scene := bgm.Scene{
+		Launcher: g.launcher != nil,
+		Ending:   g.endingActive(),
+	}
+	if g.world == nil {
+		return bgm.Track(scene)
+	}
+	scene.GameOver = g.world.Outcome() != state.InProgress
+	scene.Message = g.messageActive() || g.adviseActive()
+	scene.Month = g.world.Clock.Month
+	if g.battleActive() {
+		b := bgm.Battle{Field: battlefield.FieldBase}
+		if p := g.world.PendingBattle(); p != nil {
+			b.Field = g.battle.FieldNumber(p.Node, p.Mode == combat.Siege)
+			b.PlayerAttacks = p.Attacker >= 0 && p.Attacker < len(g.world.Corps) &&
+				g.world.Corps[p.Attacker].Faction == g.world.Player
 		}
-		return fmt.Sprintf("bgm-%d", seasonMusic[m-1])
+		scene.Battle = &b
 	}
-}
-
-// battleMusic 依戰場編號與玩家的攻守挑曲（docs/re/58 §4）。
-//
-// 原版是 `sub_19946` 算的：`byte_1D34B`（戰場編號分三類）＋ 7，
-// 而攻城戰那一格再看 `byte_10D35` 的 bit 6。設那個位元的是 `sub_14ED7`
-// ——它拿 `byte_10CFF`（玩家勢力）比對據點與軍團的持有者，
-// **玩家守城才走 `or 0C0h`**（同時設 bit 7 攻守對調、bit 6 戰場翻轉）。
-//
-// ⭐ 門檻用的是**戰場編號**不是「攻城／野戰」這個布林值：
-// 編號 ≥ 0xD1 是中心格為山地／林地／水域的特殊戰場
-// （`internal/rules/battlefield` 的 TerrainBase 那一組），原版給它另一首。
-func (g *game) battleMusic() string {
-	p := g.world.PendingBattle()
-	if p == nil {
-		return "bgm-9"
-	}
-	field := g.battle.FieldNumber(p.Node, p.Mode == combat.Siege)
-	switch {
-	case field >= 0xD1:
-		return "bgm-10" // 山地／林地／水域的戰場
-	case field >= battlefield.FieldBase:
-		return "bgm-9" // 平原野戰
-	case p.Attacker >= 0 && p.Attacker < len(g.world.Corps) &&
-		g.world.Corps[p.Attacker].Faction == g.world.Player:
-		return "bgm-7" // 攻城戰，玩家是攻方
-	default:
-		return "bgm-8" // 攻城戰，玩家是守方
-	}
+	return bgm.Track(scene)
 }
 
 func (g *game) updateMusic() {

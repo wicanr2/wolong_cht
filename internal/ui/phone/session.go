@@ -14,6 +14,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/ui/langpack"
+	"github.com/wicanr2/wolong_cht/internal/ui/sound"
 	"github.com/wicanr2/wolong_cht/internal/ui/uitext"
 )
 
@@ -79,6 +80,9 @@ type Session struct {
 	talkBase *text.Table
 	// fontDir 是使用者自備的點陣字目錄；換語言要重載字型鏈。
 	fontDir string
+	// music 是呈現層交進來的音庫（docs/spec/92）。**Session 不播它**，
+	// 只握著它回答「有沒有音檔」與「開著沒有」。
+	music *sound.Bank
 }
 
 // LanguageChoices 是系統面板列出的語言——與桌面啟動殼層同一份

@@ -71,6 +71,11 @@ public final class ImportActivity extends Activity {
     protected void onCreate(Bundle state) {
         super.onCreate(state);
         if (hasData()) {
+            // ⚠ **升級的裝置上要補解新加的子目錄。** 舊版沒有 audio/，
+            // 而 hasData() 只看 orig/SINARIO.DAT——不補的話，
+            // 換了新 APK 也永遠沒有音樂，而且完全看不出哪裡不對
+            //（docs/spec/92 §2.1）。
+            unpackMissingBundled();
             startGame();
             return;
         }
@@ -150,7 +155,9 @@ public final class ImportActivity extends Activity {
             if (top == null || top.length == 0) {
                 return false;
             }
-            for (String sub : new String[] {"orig", "eten"}) {
+            // ⚠ **這個陣列就是唯一的清單。** assets 裡有的子目錄如果沒列進來，
+            // 檔案進得去、解不出來，而畫面上什麼都看不出來（docs/spec/92 §2.1）。
+            for (String sub : new String[] {"orig", "eten", "audio"}) {
                 String[] names = am.list(BUNDLE_ROOT + "/" + sub);
                 if (names == null || names.length == 0) {
                     continue;
@@ -173,6 +180,40 @@ public final class ImportActivity extends Activity {
             return hasData();
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    /**
+     * 只補解「assets 有、私有目錄還沒有」的子目錄。
+     *
+     * <p>給**升級**用：資料已經在了（{@link #hasData()} 為真），
+     * 但新版多內嵌了一個子目錄。已經存在的一律不動——
+     * 重解一次要花好幾秒，而且會把使用者自己匯入的資料換掉。
+     */
+    private void unpackMissingBundled() {
+        AssetManager am = getAssets();
+        try {
+            for (String sub : new String[] {"audio"}) {
+                if (new File(getFilesDir(), sub).isDirectory()) {
+                    continue;
+                }
+                String[] names = am.list(BUNDLE_ROOT + "/" + sub);
+                if (names == null || names.length == 0) {
+                    continue;
+                }
+                File part = new File(getFilesDir(), sub + PART_SUFFIX);
+                deleteTree(part);
+                if (!part.mkdirs()) {
+                    continue;
+                }
+                for (String name : names) {
+                    copyAsset(am, BUNDLE_ROOT + "/" + sub + "/" + name,
+                        new File(part, name));
+                }
+                part.renameTo(new File(getFilesDir(), sub));
+            }
+        } catch (Exception e) {
+            // 補解失敗只是沒有音樂，不該擋住開遊戲。
         }
     }
 

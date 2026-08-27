@@ -21,6 +21,7 @@ import (
 
 	"github.com/wicanr2/wolong_cht/internal/assets/cjk"
 	"github.com/wicanr2/wolong_cht/internal/ui/phone"
+	"github.com/wicanr2/wolong_cht/internal/ui/sound"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 	"github.com/wicanr2/wolong_cht/internal/ui/uitext"
 )
@@ -31,6 +32,9 @@ type game struct {
 	// appliedLang 是 td 上目前掛著的語系。零值（""）＝還沒套過，
 	// 所以第一幀一定會套一次，不必另外記一個 bool。
 	appliedLang uitext.Language
+	// sound 是音樂與音效。載不到音檔時仍是可用的 Bank（只是沒有聲音），
+	// 所以呼叫端不必判 nil（docs/spec/92）。
+	sound *sound.Bank
 	err  string
 
 	// opt／fontDir 是**還沒開局**時記著的設定。手機上這兩個一開始是空的，
@@ -111,6 +115,18 @@ func (g *game) ensure() {
 	// Session 要記住字型目錄：換語言時得重載字型鏈（日文要 JISKAN16、
 	// 简体要 HZK16），而那時候手上只有 Session。
 	opt.FontDir = fontDir
+	// ⭐ 音檔與原版資料同一個根目錄：`ImportActivity` 把 assets 的
+	// `gamedata/audio` 解到 `getFilesDir()/audio`（docs/spec/92 §2.1）。
+	audioDir := ""
+	if root := DataRoot(); root != "" {
+		audioDir = filepath.Join(root, "audio")
+	} else if opt.OrigDir != "" {
+		// 桌面殼層跑手機版時（`cmd/wlandroid`）沒有 DataRoot，
+		// 用原版資料目錄旁邊那一個。
+		audioDir = filepath.Join(filepath.Dir(opt.OrigDir), "audio")
+	}
+	g.sound = sound.Open(audioDir)
+	log.Printf("WOLONG_INIT 音檔 %q：%d 首", audioDir, len(g.sound.Music()))
 	log.Printf("WOLONG_INIT root=%q orig=%q", DataRoot(), opt.OrigDir)
 	sess, err := phone.NewSession(opt)
 	if err != nil {
@@ -121,6 +137,8 @@ func (g *game) ensure() {
 		return
 	}
 	g.sess = sess
+	// 系統面板要畫「音效」那一列，得認得音庫（docs/spec/92 §2.3）。
+	sess.AttachSound(g.sound)
 	// 驗收鉤子：直接把畫面推到要看的狀態。手機上這幾個環境變數都是空的。
 	// ⭐ **母本也要走一次 SetLanguage。** 不走的話 `LangPack()` 是 nil，
 	// 字型就停在 `cjk.LoadDir` 的單一倚天 Big5——語言選單上的「简体中文」
@@ -173,8 +191,22 @@ func (g *game) Update() error {
 	g.handleInput()
 	g.syncLanguage()
 	g.sess.Tick()
+	g.updateMusic()
 	g.logFingerprint()
 	return nil
+}
+
+// updateMusic 依場景換曲（docs/spec/92）。
+//
+// ⚠ **規則層的效果碼還沒接**：桌面那一側是 `b.TakeSoundEffects()`，
+// 手機的戰術迴圈在 `internal/ui/phone`，那一條另外算。這裡只做音樂。
+func (g *game) updateMusic() {
+	if g.sound == nil || g.sess == nil {
+		return
+	}
+	if name := g.sess.MusicTrack(); name != "" {
+		g.sound.PlayMusic(name)
+	}
 }
 
 // syncLanguage 把 Session 選的語系掛到 Drawer 上。

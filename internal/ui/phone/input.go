@@ -172,6 +172,8 @@ func (s *Session) tapSystemRow(row int, lx float64) {
 			s.SetSpeed(s.speed + 1) // 檔位越大越慢
 		case 2:
 			s.SetSpeed(s.speed - 1)
+		case 3:
+			s.ToggleSound()
 		}
 	case 1:
 		if row < 0 || row >= SaveSlots {

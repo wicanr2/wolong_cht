@@ -1,4 +1,4 @@
-package main
+package bgm
 
 import (
 	"encoding/binary"
@@ -15,7 +15,7 @@ const seasonTableSegOffset = 0x9309
 
 func originalSeasonTables(t *testing.T) (music, palette []byte) {
 	t.Helper()
-	raw, err := os.ReadFile("../../workplace/orig/dosv/KI.EXE")
+	raw, err := os.ReadFile("../../../workplace/orig/dosv/KI.EXE")
 	if err != nil {
 		t.Skip("找不到原版 KI.EXE，跳過")
 	}
@@ -91,5 +91,37 @@ func TestBattleMusicThresholdsMatchBattlefieldConstants(t *testing.T) {
 	if battlefield.NumCityFields > battlefield.FieldBase {
 		t.Errorf("據點戰場有 %d 張，會撞進野戰的編號區間",
 			battlefield.NumCityFields)
+	}
+}
+
+// 逐條對 docs/re/58 的表。**規則搬家之後這一支是它的護欄**——
+// 桌面與手機共用同一份，改壞了兩邊一起壞。
+func TestTrackCoversEveryScene(t *testing.T) {
+	for _, tc := range []struct {
+		name  string
+		scene Scene
+		want  string
+	}{
+		{"啟動殼層", Scene{Launcher: true}, "bgm-0"},
+		{"結局蓋過勝負", Scene{Ending: true, GameOver: true, Month: 4}, "endbgm-0"},
+		{"還沒開局", Scene{}, ""},
+		{"勝負已定", Scene{GameOver: true, Month: 4}, "overbgm-0"},
+		{"事件與對話", Scene{Message: true, Month: 4}, "bgm-6"},
+		{"春", Scene{Month: 3}, "bgm-2"},
+		{"夏", Scene{Month: 6}, "bgm-3"},
+		{"秋", Scene{Month: 9}, "bgm-4"},
+		{"冬（跨年）", Scene{Month: 12}, "bgm-5"},
+		{"冬（一月）", Scene{Month: 1}, "bgm-5"},
+		{"月份越界", Scene{Month: 13}, ""},
+		{"平原野戰", Scene{Month: 4, Battle: &Battle{Field: 0xC5}}, "bgm-9"},
+		{"山林水戰", Scene{Month: 4, Battle: &Battle{Field: 0xD2}}, "bgm-10"},
+		{"攻城・玩家攻", Scene{Month: 4, Battle: &Battle{Field: 0x52, PlayerAttacks: true}}, "bgm-7"},
+		{"攻城・玩家守", Scene{Month: 4, Battle: &Battle{Field: 0x52}}, "bgm-8"},
+		// ⭐ 戰術畫面比事件訊息優先：原版進戰術先停曲再依戰場挑。
+		{"戰術蓋過訊息", Scene{Month: 4, Message: true, Battle: &Battle{Field: 0xC5}}, "bgm-9"},
+	} {
+		if got := Track(tc.scene); got != tc.want {
+			t.Errorf("%s：Track ＝ %q，預期 %q", tc.name, got, tc.want)
+		}
 	}
 }

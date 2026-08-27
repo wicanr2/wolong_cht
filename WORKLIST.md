@@ -418,6 +418,32 @@ docs 那份手抄複本停在 12 天前——**而兩份都存在的時候，過
 ⚠ 順帶一提，這五處**沒有一處**是 `check.sh` 能擋的：它擋的是狀態行自相矛盾、
 連結指不到、幽靈檔案。「內容過期但格式正確」目前只有人工掃得到。
 
+### 2026-08-27（六）Android 的完整版也有原版的音樂
+
+桌面四個包本來就各帶 32 個 ogg，只有 APK 是 0
+（[`docs/spec/92`](docs/spec/92-android-music.md)）。補的不只是檔案——
+**手機端當時完全沒有接音訊**，`internal/ui/phone` 與 `mobile/wolong`
+一行 `sound` 都沒有，光放檔案等於在包裡塞 19 MB 死重量。
+
+- 選曲規則從 `cmd/wlgame` 的 `game` 方法抽成 `internal/rules/bgm`，
+  只吃純值（`Scene{Launcher,Ending,GameOver,Message,Battle,Month}`）。
+  拿 `KI.EXE` 當 oracle 的三支測試跟著搬過去，桌面與手機共用同一份
+  （`CLAUDE.md` §7 第 6 條：程式碼重複會產生行為差異）。
+- `ImportActivity` 的子目錄陣列**就是唯一的清單**，另加一條
+  `unpackMissingBundled()` 走升級路徑——`hasData()` 只看
+  `orig/SINARIO.DAT`，舊裝置換了新 APK 也不會自己長出 `audio/`。
+- 手機系統面板第一頁多一列「音效」，分得出「未接入」與「關」。
+
+⚠ **驗收腳本邊跑邊改，新加的檢查一次都沒跑到。** 第一輪 smoke 在
+`android_smoke.sh` 執行期間插了幾行，bash 記的是位元組位移，於是
+「第 227 行：指令找不到」而該行語法正確、`bash -n` 也驗不出來，
+**exit code 還是 0**。寫成 `CLAUDE.md` §7 第 34 條。重跑之後模擬器
+確認 `getFilesDir()/audio` 解出 **32 個 ogg**，指紋與桌面同幀逐字相同。
+
+⚠ 順帶：本專案的三顆 docker 映像（`wolong-go-android`、
+`wolong-android-emulator`、`wolong-osxcross-go`）在這一天之前從機器上消失，
+不是本輪動的。基底映像還在，所以三顆都重建得回來。
+
 ### 2026-08-26（五）看片回報的四件事：對話框、小兵、月結框、配樂
 
 使用者看推廣片回報，逐項比過實機錄影之後全部成立

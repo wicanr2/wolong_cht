@@ -185,6 +185,11 @@ if [ "$BUNDLED" = 1 ]; then
     [ "$n" -ge 60 ] || { echo "⚠ 只解出 $n 個檔，內嵌沒生效" >&2; exit 1; }
     adb shell "run-as $PKG ls $FILES/orig" | tr -d "\r" | grep -q SINARIO.DAT || {
         echo "⚠ 解出來的資料裡沒有 SINARIO.DAT" >&2; exit 1; }
+    # ⭐ 音檔（docs/spec/92）。**模擬器是 `-no-audio` 起的，聽不到聲音
+    # 不代表沒播**——判準是檔案解出來了，不是有沒有聲音。
+    a=$(adb shell "run-as $PKG ls $FILES/audio 2>/dev/null" | tr -d "\r" | grep -c "\.ogg" || true)
+    echo "APK 自己解出來的 ogg 數：$a"
+    [ "$a" -ge 30 ] || echo "⚠ 只解出 $a 個 ogg，音樂不會有聲音" >&2
     # ⚠ `.part` 留下來代表改名那一步沒完成，資料可能是半套的。
     adb shell "run-as $PKG ls $FILES" | tr -d "\r" | grep -q ".part" && {
         echo "⚠ 留下了 .part，解包沒有跑完" >&2; exit 1; } || true

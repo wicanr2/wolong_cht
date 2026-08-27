@@ -318,6 +318,7 @@ func (s *Session) systemRows() []sheetRow {
 			{name: "戰略速度", cols: []string{fmt.Sprintf("%d", s.speed)}},
 			{name: "慢", cols: []string{"⟨ 點這一列變慢"}},
 			{name: "快", cols: []string{"⟩ 點這一列變快"}},
+			{name: "音效", cols: []string{s.soundValue()}},
 		}
 	case 1:
 		return s.saveRows()
@@ -332,6 +333,22 @@ func (s *Session) systemRows() []sheetRow {
 	}
 }
 
+
+// soundValue 是「音效」那一列的值（docs/spec/92 §2.3）。
+//
+// ⚠ **「未接入」與「關」是兩件事**：關是玩家的選擇，未接入是這一台
+// 根本沒有音檔（沒跑過 `tools/bgm2ogg.sh`，或 APK 不是完整版）。
+// 混成同一個字會讓缺口從畫面上消失。
+func (s *Session) soundValue() string {
+	switch {
+	case s.music == nil || !s.music.Available():
+		return "未接入"
+	case s.music.Enabled():
+		return "開"
+	default:
+		return "關"
+	}
+}
 
 // languageRows 是可切的語言（docs/spec/86 §4）。
 //

@@ -30,6 +30,7 @@ BUNDLE="${WOLONG_BUNDLE_DATA:-0}"
 ASSETS="$REPO_ROOT/android/app/src/main/assets"
 ORIG_DIR="${WOLONG_ORIG_DIR:-$REPO_ROOT/workplace/orig/dosv}"
 FONT_DIR="${WOLONG_FONT_DIR:-$REPO_ROOT/workplace/eten}"
+AUDIO_DIR="${WOLONG_AUDIO_DIR:-$REPO_ROOT/workplace/audio}"
 
 # ⭐ **每一次都先清乾淨。** 沒有這一步，上一次 `WOLONG_BUNDLE_DATA=1`
 # 留下的資料會被下一次的一般建置默默包進去——而那個 APK 看起來
@@ -45,6 +46,17 @@ if [ "$BUNDLE" = 1 ]; then
         cp "$FONT_DIR"/* "$ASSETS/gamedata/eten/"
     else
         echo "[android_build] ⚠ 沒有 $FONT_DIR，APK 裡不會有字型，中文會是方框" >&2
+    fi
+    # ⭐ 音樂與音效（docs/spec/92）。**只收 ogg**——`workplace/audio` 裡
+    # ogg 旁邊躺著合成中間產物 wav，整包 239 MB 而 ogg 只有 19 MB。
+    # ⚠ 這裡放進 assets 還不夠：`ImportActivity.unpackBundled()` 的子目錄
+    # 陣列**就是唯一的清單**，漏了 `audio` 就是進得去、解不出來，
+    # 而畫面上什麼都看不出來。
+    if [ -d "$AUDIO_DIR" ] && ls "$AUDIO_DIR"/*.ogg >/dev/null 2>&1; then
+        mkdir -p "$ASSETS/gamedata/audio"
+        cp "$AUDIO_DIR"/*.ogg "$ASSETS/gamedata/audio/"
+    else
+        echo "[android_build] ⚠ 沒有 $AUDIO_DIR 的 ogg，APK 裡不會有音樂（先跑 tools/bgm2ogg.sh）" >&2
     fi
     echo "── 內嵌原版資料：$(find "$ASSETS/gamedata" -type f | wc -l) 個檔 ──"
 fi
