@@ -112,6 +112,29 @@ Go 這邊沒有 vorbis 編碼器，所以 WAV → ogg 走 docker ffmpeg。
 | 音效 | `SOUND.DAT` 的 19 筆離線渲染成短 ogg（`sfx-NN.ogg`），接續鏈在渲染時攤平 |
 | 效果碼怎麼來 | 規則層排隊（`tactical.Battle.TakeSoundEffects`），呈現層播。**碼就是 `SOUND.DAT` 的記錄編號**，不必另外對照表。已接的三個是原版證實的投射物發射／特殊發射／命中（[`docs/re/17`](../re/17-dosv-audio-tsr.md) §3）|
 
+### 5.1 ⭐ 驗收路徑要「不出聲」，不是「沒有音效」
+
+`-shot` 與 `-frames-dir` 跑在沒有音效卡的容器裡，而沒有音效裝置時
+Ebiten 的 `RunGame` 會帶著 ALSA 的錯誤結束。原本的作法是**把音檔目錄清空**，
+於是 `Bank.Available()` 是 false，系統選單那一格印「未接入」——
+而原版那一格是 `TYPE 1`，那一列因此差 272 px
+（[`../playtest/49`](../playtest/49-parity-retest-20260827.md) §2）。
+
+⚠ **驗收捷徑改到了被驗收的畫面。** 「截圖不需要聲音」對截圖是對的，
+對**照這張圖判斷音效那一格畫得對不對**是錯的。
+
+碰到裝置的只有兩支（`PlayMusic`、`PlayEffect` 各自建 player），
+`Open` 只掃目錄。所以正確的作法是**保留狀態、關掉輸出**：
+
+| | 音檔目錄 | `Available()` | 碰音效裝置 | 那一格顯示 |
+|---|---|---|---|---|
+| 一般執行 | 有 | true | 會 | `TYPE 1`／`ＯＦＦ` |
+| **驗收（靜音模式）** | 有 | **true** | **不會** | `TYPE 1` |
+| 沒跑過 `bgm2ogg.sh` | 沒有 | false | 不會 | 未接入 |
+
+實作是 `Bank.SetSilent(true)`：`PlayMusic`／`PlayEffect` 直接返回，
+其餘一律照舊。`-shot`／`-frames-dir` 改成開這個旗標，不再清空目錄。
+
 ## 6. `[HARD]` 權利邊界
 
 PCM、WAV 與 ogg 都是**原版衍生物**：`workplace/` 已 gitignore，
@@ -126,6 +149,7 @@ PCM、WAV 與 ogg 都是**原版衍生物**：`workplace/` 已 gitignore，
 | 不是靜音 | **分段** RMS（只渲染到片頭的話後段是 0，總 RMS 看不出來）|
 | 下游吃得下 | 拿 **Ebiten 自己的解碼器**跑一次，不要用別的播放器代替 |
 | 對照組 | [`docs/playtest/25`](../playtest/25-audio-capture-feasibility.md) 錄到的開場曲。**只能當耳朵的參考**——那是 DOSBox 的模擬，不是硬體 |
+| 靜音模式 | `TestSilentSkipsPlayback`（`internal/ui/sound`）：開了之後 `Available()`／`Enabled()` 不變，而播放呼叫不建 player |
 
 ## 8. 未解
 

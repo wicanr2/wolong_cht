@@ -386,7 +386,7 @@
 | [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 300 | X 8..43（已越過城門） / X 3..5 | 靜態 |
 | [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 600 | X 5..60（散開） / X 3..5 | 靜態 |
 | [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 攻城對拍的取樣點 | 兩個缺口修好之後 `field` 0.86%，剩下的是局面不等價（§3.3） / 要回到 0 px 得讓原版與 remake 開出**同一場**（同一批武將、同一個 tick）。條件寫進 `../spec/91`，不要再寫死步數 | 靜態 |
-| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 系統選單無法用 `-shot` 重現 | 驗收路徑強制靜音（§2） / `wlgame` 需要一個「有音效狀態但不輸出」的驗收模式 | 靜態 |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 系統選單的兩列 remake 差異 | `map` 7.87%——主君編成與損害報告把視窗撐高 48 px（§2） / 這是**已標記的 remake 差異**，不是缺口。要對到 0 px 得有一個「照原版六列」的驗收模式 | 靜態 |
 | [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 原版側沒有重跑 | 這一輪用的是 08-16／17／24 的存檔擷取 / 要重跑得先建 `wolong-dosboxx`（`docker/dosboxx/Dockerfile`） | 靜態 |
 | [`playtest/50-corps-on-map.md`](../playtest/50-corps-on-map.md) | 首都疊圖為什麼不畫 | 行為定案，機制未讀（§4） | 靜態 |
 | [`playtest/50-corps-on-map.md`](../playtest/50-corps-on-map.md) | 別的疊圖組合 | 只驗過「首都 ＋ 軍團」。災害物件 ＋ 軍團、非首都據點 ＋ 軍團都沒有樣本 | 靜態 |

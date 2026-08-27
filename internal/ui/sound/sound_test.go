@@ -1,6 +1,10 @@
 package sound
 
-import "testing"
+import (
+	"os"
+	"path/filepath"
+	"testing"
+)
 
 // 目錄不存在時 Bank 仍然可用，而且每個方法都是 no-op。
 //
@@ -37,5 +41,43 @@ func TestNilBankIsSafe(t *testing.T) {
 	b.SetEnabled(true)
 	if b.Available() || b.Enabled() || b.Err() != nil {
 		t.Error("nil Bank 的查詢應該全部回零值")
+	}
+}
+
+// TestSilentSkipsPlayback 釘住 docs/spec/29 §5.1：驗收模式**不出聲，
+// 但狀態照舊**。
+//
+// ⚠ 這一支擋的不是「有沒有聲音」，是**驗收捷徑會不會改到被驗收的畫面**。
+// 先前的作法是把音檔目錄清空，於是 Available() 變成 false、
+// 系統選單那一格從「TYPE 1」變成「未接入」，對拍差 272 px——
+// 而那 272 px 不是回歸，是驗收路徑自己造成的。
+func TestSilentSkipsPlayback(t *testing.T) {
+	dir := t.TempDir()
+	if err := os.WriteFile(filepath.Join(dir, "track-01.ogg"), []byte("not really ogg"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(dir, "sfx-03.ogg"), []byte("not really ogg"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	b := Open(dir)
+	if !b.Available() {
+		t.Fatal("掃到了兩個 ogg，Available 應為真")
+	}
+	b.SetSilent(true)
+	if !b.Silent() {
+		t.Error("SetSilent(true) 之後 Silent() 應為真")
+	}
+	// ⭐ 靜音模式**不改**這兩個——系統選單那一格看的就是它們。
+	if !b.Available() {
+		t.Error("靜音模式把 Available 弄成 false 了，那一格會印成「未接入」")
+	}
+	if !b.Enabled() {
+		t.Error("靜音模式不該改 Enabled")
+	}
+	// 檔案是壞的 ogg：真的走到解碼就會設 initErr，靜音模式應該連碰都不碰。
+	b.PlayMusic("track-01")
+	b.PlayEffect(3)
+	if err := b.Err(); err != nil {
+		t.Errorf("靜音模式仍然走到了播放層：%v", err)
 	}
 }

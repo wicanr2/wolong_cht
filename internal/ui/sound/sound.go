@@ -35,6 +35,12 @@ type Bank struct {
 	// initErr 記下第一次建 player 的失敗。**不重試**——headless 或
 	// 沒有音效裝置的環境每一幀重試一次會把主迴圈拖垮。
 	initErr error
+	// silent 是**驗收模式**：狀態全部照舊，只是不碰音效裝置
+	// （docs/spec/29 §5.1）。截圖與逐幀錄製跑在沒有音效卡的容器裡，
+	// 而把音檔目錄清空會讓 Available() 變成 false，
+	// 系統選單那一格就從「TYPE 1」變成「未接入」——
+	// **驗收捷徑不可以改到被驗收的畫面**。
+	silent bool
 }
 
 // Open 掃描音檔目錄。目錄不存在也回傳一個可用的 Bank（沒有音檔而已）。
@@ -60,6 +66,24 @@ func Open(dir string) *Bank {
 	sort.Strings(b.music)
 	return b
 }
+
+// SetSilent 開關驗收模式：不出聲，但 Available／Enabled 與選單顯示照舊。
+func (b *Bank) SetSilent(on bool) {
+	if b == nil {
+		return
+	}
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	b.silent = on
+	if on && b.player != nil {
+		b.player.Pause()
+		_ = b.player.Close()
+		b.player, b.current = nil, ""
+	}
+}
+
+// Silent 回報現在是不是驗收模式。
+func (b *Bank) Silent() bool { return b != nil && b.silent }
 
 // Available 回報有沒有音檔。系統選單靠它顯示「未接入」。
 func (b *Bank) Available() bool { return b != nil && (len(b.music) > 0 || len(b.effects) > 0) }
@@ -98,7 +122,7 @@ func (b *Bank) context() *audio.Context {
 
 // PlayMusic 換一首背景音樂並無限循環。同一首重複呼叫不會重頭播。
 func (b *Bank) PlayMusic(name string) {
-	if b == nil || !b.enabled || b.initErr != nil {
+	if b == nil || !b.enabled || b.initErr != nil || b.Silent() {
 		return
 	}
 	b.mu.Lock()
@@ -147,7 +171,7 @@ func (b *Bank) StopMusic() {
 // PlayEffect 放一個音效。音效很短，每次建一個 player 播完就丟——
 // 原版同時也只有三個 2-operator 通道可用，重疊本來就有限。
 func (b *Bank) PlayEffect(id int) {
-	if b == nil || !b.enabled || b.initErr != nil {
+	if b == nil || !b.enabled || b.initErr != nil || b.Silent() {
 		return
 	}
 	name, ok := b.effects[id]

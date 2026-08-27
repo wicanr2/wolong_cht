@@ -1659,17 +1659,18 @@ func main() {
 	*dir = resolveDataDir(*dir, defaultOrigDir, bundledOrigDir)
 	*fontDir = resolveDataDir(*fontDir, defaultFontDir, bundledFontDir)
 	*audioDir = resolveAudioDir(*audioDir)
-	// ⭐ **驗收模式一律靜音。** 這是 `-audio` 預設留白原本擋住的東西：
+	// ⭐ **驗收模式不出聲，但保留音效狀態**（docs/spec/29 §5.1）。
 	// 沒有音效裝置時 Ebiten 的 `RunGame` 會直接帶著 ALSA 的錯誤結束，
 	// 而截圖與逐幀錄製都跑在沒有音效卡的容器裡。
 	//
-	// ⚠ 完整包會自己找到旁邊的 `audio/`，那道防護就失效了——所以改成
-	// 依**用途**關掉：要截圖或錄影就不需要聲音，關掉沒有代價。
-	// 判準不是「有沒有顯示器」（Xvfb 有 DISPLAY 卻沒有音效卡），
-	// 也不是猜 `/dev/snd`（那是平台細節）。
-	if *shot != "" || *framesDir != "" {
-		*audioDir = ""
-	}
+	// ⚠ **不要清空音檔目錄。** 那樣 `Bank.Available()` 會變成 false，
+	// 系統選單那一格就從「TYPE 1」變成「未接入」——驗收捷徑改到了
+	// 被驗收的畫面（playtest/49 §2 的 272 px）。碰音效裝置的只有
+	// `PlayMusic`／`PlayEffect`，關掉它們就夠了。
+	//
+	// 判準是**用途**不是環境：不是「有沒有顯示器」（Xvfb 有 DISPLAY
+	// 卻沒有音效卡），也不是猜 `/dev/snd`（那是平台細節）。
+	silentAudio := *shot != "" || *framesDir != ""
 	flagVisit = func(fn func(string)) { flag.CommandLine.Visit(func(f *flag.Flag) { fn(f.Name) }) }
 
 	lang, err := uitext.ParseLanguage(*langFlag)
@@ -1714,6 +1715,7 @@ func main() {
 		shotPath: *shot, shotAt: *shotFrames, origDir: *dir, sourceFile: path,
 		rec: newRecorder(*framesDir, *framesN),
 		saveFile: *saveFile, saveBase: path, sound: sound.Open(*audioDir)}
+	g.sound.SetSilent(silentAudio)
 	if *audioDir != "" && !g.sound.Available() {
 		log.Printf("音檔目錄 %s 沒有 ogg，靜音跑。要有音樂請跑 tools/bgm2ogg.sh", *audioDir)
 	}

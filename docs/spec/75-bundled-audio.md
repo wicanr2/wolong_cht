@@ -60,16 +60,26 @@ resolveAudioDir(值):
 ⭐ **拆柵欄之前要先重建它擋住了什麼。** 這一次是照著「預設值看起來很蠢」
 就動手，而那個預設值正是唯一擋住無頭環境的東西。
 
-**第三件事**因此加進來：**驗收模式一律靜音**。
+**第三件事**因此加進來：**驗收模式不出聲**。
 
 ```
 flag.Parse 之後：
-    if -shot != "" 或 -frames-dir != "" → audioDir = ""
+    silentAudio = (-shot != "" 或 -frames-dir != "")
+建好 game 之後：
+    g.sound.SetSilent(silentAudio)
 ```
 
-判準是**用途**不是環境：要截圖或錄影就不需要聲音，關掉沒有代價。
+判準是**用途**不是環境：要截圖或錄影就不需要聲音。
 不用「有沒有顯示器」（Xvfb 有 DISPLAY 卻沒有音效卡），
 也不猜 `/dev/snd`（那是平台細節）。
+
+⚠ **關掉的要是輸出不是狀態。** 清空 `audioDir` 也能擋住無頭環境，
+但那會讓 `Bank.Available()` 變成 false，系統選單「音　效」那一格
+從原版的 `TYPE 1` 變成 remake 才有的「未接入」——**驗收捷徑改到了
+被驗收的畫面**，那一列因此差 272 px
+（[`../playtest/49`](../playtest/49-parity-retest-20260827.md) §2）。
+碰音效裝置的只有 `PlayMusic`／`PlayEffect`，關掉那兩支就夠了
+（[`29`](29-audio.md) §5.1）。
 
 ## 3. remake 實作
 

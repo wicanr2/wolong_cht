@@ -81,7 +81,7 @@
 | [`docs/playtest/46-runtime-language-switch.md`](playtest/46-runtime-language-switch.md) | 46 — 執行期切換語言：桌面與手機的實跑 | confirmed。 | 2026-08-26 |
 | [`docs/playtest/47-latin-screen-survey.md`](playtest/47-latin-screen-survey.md) | 47 — 英文版逐畫面調整前後 | confirmed。 | 2026-08-26 |
 | [`docs/playtest/48-display-polish.md`](playtest/48-display-polish.md) | 48 — 三處顯示修正的前後對照 | confirmed。 | 2026-08-26 |
-| [`docs/playtest/49-parity-retest-20260827.md`](playtest/49-parity-retest-20260827.md) | 49 — 把記錄過的對拍全部重跑一次：兩組重現、一組失效 | 主畫面與野戰逐像素重現；攻城挖出兩個真的缺口，修好之後 field 從 4.32% 降到 0.86%；系統選單的取樣… | 2026-08-27 |
+| [`docs/playtest/49-parity-retest-20260827.md`](playtest/49-parity-retest-20260827.md) | 49 — 把記錄過的對拍全部重跑一次：兩組重現、一組失效 | 四組全部重現或修好。 | 2026-08-27 |
 | [`docs/playtest/50-corps-on-map.md`](playtest/50-corps-on-map.md) | 50 — 軍團在大地圖上：兩個缺口，逐像素對上 | 許昌那一格（含周邊 56×56）與原版逐像素相同。 | 2026-08-27 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告 2026-08-26 重剪為 72 秒， 加入語言切換與原版並排兩段；遊戲段… | 2026-08-26 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
