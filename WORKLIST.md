@@ -446,11 +446,12 @@ docs 那份手抄複本停在 12 天前——**而兩份都存在的時候，過
 批次日期換一天而不是沿用 `20260826`——`release/08` §2 記過同一天重打
 只剩雜湊分得出新舊。
 
-⚠ 本專案的三顆 docker 映像（`wolong-go-android`、`wolong-android-emulator`、
-`wolong-osxcross-go`）在這一天之前從機器上消失，不是本輪動的。基底映像還在，
-所以三顆都重建得回來（指令在 `release/09` §4）。**但 `wolong-osxcross-go`
-的 Dockerfile 寫著 `FROM wolong-go:20260809`，而那個 tag 本身也不見了**——
-指向另一顆本機映像的 Dockerfile，鏈上任何一環消失就重建不了。
+⚠ 打包前本專案的三顆 docker 映像（`wolong-go-android`、`wolong-android-emulator`、
+`wolong-osxcross-go`）都不在機器上，使用者清掉的。基底映像還在，所以三顆都
+重建得回來（指令在 `release/09` §4）。**但 `wolong-osxcross-go` 的 Dockerfile
+寫著 `FROM wolong-go:20260809`，而那個 tag 也是本機映像**——指向另一顆本機
+映像的 Dockerfile，鏈上任何一環被清掉就重建不了。映像被清是常態，
+重建不了才是問題。
 
 ### 2026-08-26（五）看片回報的四件事：對話框、小兵、月結框、配樂
 
