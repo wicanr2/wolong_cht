@@ -97,7 +97,7 @@ WOLONG_DOSV_SEED_SAVE=SAVE-FIELD.DAT tools/dosv_capture.sh parity-field14 \
 | `sb-command` | **0.00%** | **PASS** | — |
 | `sb-arrow` | **0.00%** | **PASS** | — |
 
-與攻城對拍（`40`）比：攻城剩 0.17% 的 field，野戰的 field 差異
+與攻城對拍（`40`，2026-08-18）比：攻城當時剩 0.17% 的 field，野戰的 field 差異
 全數歸類為狀態，兩種戰場的**版面與地形層都收斂了**。
 
 ## 5.1 應戰全程的實機錄影（2026-08-25，`parity-duel1`）

@@ -100,7 +100,7 @@ raw 0x21C ＝ 540 ＝ 192 + 174 × 2  → 圖號 174 ＝ 84 + 90（側 1）
 | 單元測試 ✅ | `TestDeathSpriteNumbers`：八組（側 × 兵種 × 計時）的圖號，外加把兩個 raw 常數 `0x168`／`0x21C` 對回來 |
 | 單元測試 ✅ | `TestDeathAnimationLastsFourFrames`：打死一個兵 → 一筆倒地、四幀後消失，而且那四幀不進 `Remaining()` |
 | 迴歸 ✅ | `TestTacticalBattleAlwaysResolves` 仍在 5,000 tick 內分出勝負 |
-| 對拍迴歸 ✅ | 第 61 步九區的數字不變（`field` 307 px／0.17%）|
+| 對拍迴歸 ✅ | 第 61 步九區的數字不變（`field` 307 px／0.17%）。⚠ 那個取樣點 2026-08-27 起不再等價（`../playtest/49`），這一列是當時的迴歸證據 |
 
 ## 5. 未解
 
