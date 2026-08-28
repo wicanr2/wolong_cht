@@ -85,7 +85,7 @@
 | [`docs/playtest/50-corps-on-map.md`](playtest/50-corps-on-map.md) | 50 — 軍團在大地圖上：兩個缺口，逐像素對上 | 許昌那一格（含周邊 56×56）與原版逐像素相同。 | 2026-08-27 |
 | [`docs/playtest/51-siege-deadlock.md`](playtest/51-siege-deadlock.md) | 51 — 攻城戰打不完：同狀態對拍挖出來的死鎖 | 修好了，兩件。 | 2026-08-27 |
 | [`docs/playtest/52-siege-timeseries-parity.md`](playtest/52-siege-timeseries-parity.md) | 52 — 攻城的時間序列對拍：原版七張影格 vs remake 的規則層 | 進城的機制對得上，差的是速度。 | 2026-08-27 |
-| [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告 2026-08-26 重剪為 72 秒， 加入語言切換與原版並排兩段；遊戲段… | 2026-08-26 |
+| [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告是 72 秒， 含語言切換與原版並排兩段；遊戲段落是逐幀錄下來的實跑畫面。 2… | 2026-08-28 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
 | [`docs/promo/dosv-adlib-and-tactical-review.md`](promo/dosv-adlib-and-tactical-review.md) | 推廣片原版 AdLib 與戰術骨架審查 | 歷史審查紀錄（2026-08-12）。 | 2026-08-12 |
@@ -134,7 +134,7 @@
 | [`docs/re/39-remaining-unread.md`](re/39-remaining-unread.md) | 39 — 剩餘未讀函式的逐支歸屬 | 清單。 | 2026-08-14 |
 | [`docs/re/40-garrison-relief-request.md`](re/40-garrison-relief-request.md) | 40 — 據點求援與援軍派遣 | 整條鏈 confirmed（每一支都逐行讀過）。 sub_140C9 的距離算式裡有一處 | 2026-08-14 |
 | [`docs/re/42-leaf-functions.md`](re/42-leaf-functions.md) | 42 — 戰術以外的 47 支葉節點 | 47 支全部逐行讀過。四件事因此定案：INT 61h 是音源 TSR 的介面、 byte_198A6 的位元圖完整、… | 2026-08-14 |
-| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的） | 生成的清單，跑 tools/py.sh tools/re_open_questions.py 重出。 這一份不下結論… | 2026-08-27 |
+| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的） | 生成的清單，跑 tools/py.sh tools/re_open_questions.py 重出。 這一份不下結論… | 2026-08-28 |
 | [`docs/re/44-threat-and-reinforcement-ai.md`](re/44-threat-and-reinforcement-ai.md) | 44 — 威脅偵測與 AI 出兵：據點每 tick 掃一次 | 整條鏈逐行讀完。三件事定案：據點 +0x18 是佔用圖讀回來的軍團數、 +0x00 低 4 位是「哪幾個鄰居是敵方」… | 2026-08-14 |
 | [`docs/re/45-corps-command-mode.md`](re/45-corps-command-mode.md) | 45 — 軍團的三種指令模式：戰鬥指揮／委任／解體 | 軍團 +0x00 位元 2 定案 ＝ | 2026-08-14 |
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |
@@ -180,7 +180,8 @@
 | [`docs/release/06-appimage-20260824.md`](release/06-appimage-20260824.md) | 06 — 2026-08-24 只重打 Linux AppImage（同一天兩次） | 已被 07-full-20260824.md 取代 | 2026-08-24 |
 | [`docs/release/07-full-20260824.md`](release/07-full-20260824.md) | 07 — 2026-08-24 四平台完整版（一致批次） | 已被 08（20260826 批次）取代。⛔ 內含原版資產，不可外流。 | 2026-08-24 |
 | [`docs/release/08-full-20260826.md`](release/08-full-20260826.md) | 08 — 2026-08-26 四平台完整版（四語系批次） | 已被 09（20260827 批次）取代。⛔ 內含原版資產，不可外流。 | 2026-08-26 |
-| [`docs/release/09-full-20260827.md`](release/09-full-20260827.md) | 09 — 2026-08-27 四平台完整版（Android 也有音樂） | 已交付並驗過。⛔ 內含原版資產，不可外流。 | 2026-08-27 |
+| [`docs/release/09-full-20260827.md`](release/09-full-20260827.md) | 09 — 2026-08-27 四平台完整版（Android 也有音樂） | 已被 10（20260828 批次）取代。⛔ 內含原版資產，不可外流。 | 2026-08-27 |
+| [`docs/release/10-full-20260828.md`](release/10-full-20260828.md) | 10 — 2026-08-28 四平台完整版（戰術規則層修正後重打） | 已交付並驗過。⛔ 內含原版資產，不可外流。 | 2026-08-28 |
 | [`docs/release/README-RELEASE.md`](release/README-RELEASE.md) | 臥龍傳 remake 可執行封裝 | 四平台完整包、Linux AppImage、推廣片與驗收紀錄已集中於 [dist-all](../../dist-a… | 2026-08-24 |
 | [`docs/spec/00-index.md`](spec/00-index.md) | 00 — 規格索引：已解的規則有沒有被實作、有沒有被驗過 | 索引。規格是 docs/re/（程式碼在哪）與 internal/（我們寫了什麼） 之間的那一層——它回答「這條規則… | 2026-08-14 |
 | [`docs/spec/10-city-tick.md`](spec/10-city-tick.md) | 10 — 據點整備、威脅偵測與求援 | CONFORMED。整條鏈已實作，並在 PC-98 原版的執行期記憶體上取樣驗過 （+0x18／+0x14 各 0/… | 2026-08-14 |

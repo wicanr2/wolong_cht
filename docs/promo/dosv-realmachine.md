@@ -6,7 +6,7 @@
 - 日期：2026-08-23
 - 成品：`dist-all/promo/wolong-remake-dosv-realmachine.mp4`
 - 長度／格式：72.000 秒、1280×720、30 fps、H.264 ＋ AAC（44.1 kHz 立體聲）
-- 成品 SHA-256：`0d2d3382906b032fd7bd6d06e9ce503c282ed77bad6b39aa1d2da0cfc6a01391`
+- 成品 SHA-256：`179ecf7d3cab413bda06d740345fdc183abceb205bbcd65869952264009ee02f`（2026-08-28 重錄重剪）
 - 合成腳本：[`../../tools/promo_dosv_realmachine.sh`](../../tools/promo_dosv_realmachine.sh)
 - 取代：[`dosv-live-comparison.md`](dosv-live-comparison.md)（2026-08-12，原版畫面九成來自 YouTube 錄影）
 

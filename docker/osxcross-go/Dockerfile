@@ -5,8 +5,13 @@
 # 不掛載主機 Go，也不動 osxcross SDK。
 #
 # 建置：
-#   docker build -t wolong-osxcross-go:20260827 \
+#   docker build -t wolong-osxcross-go:20260828 \
 #     -f docker/osxcross-go/Dockerfile docker/osxcross-go
+#
+# 從這一份建過的標籤（發行紀錄會引用當批的那一顆，所以這裡留著）：
+#   wolong-osxcross-go:20260811-event10-r4
+#   wolong-osxcross-go:20260827
+#   wolong-osxcross-go:20260828
 #
 # ⭐ **兩層 FROM 都要是公開映像。** 這一份曾經寫 `FROM wolong-go:20260809`
 # ——指向另一顆只存在於本機的映像，那顆被清掉之後這一份就建不起來，

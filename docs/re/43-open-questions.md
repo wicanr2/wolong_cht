@@ -3,7 +3,7 @@
 **狀態：生成的清單，跑 `tools/py.sh tools/re_open_questions.py` 重出。
 這一份不下結論，只把各文件的「未解」表集中到一處。**
 
-- 日期：2026-08-27
+- 日期：2026-08-28
 - 產生工具：`tools/re_open_questions.py`
 - 來源：`docs/` 底下所有文件的未解小節、表格裡標未解的列，與收尾是「…未解」的散句
 
@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**519 列分布在 199 份文件，平均每份 2.6 列。**
+**517 列分布在 199 份文件，平均每份 2.6 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,12 +44,12 @@
 | 程式碼理解 | 182 | 176 | 6 | 0 |
 | 驗收 | 83 | 72 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 197 | 184 | 13 | 0 |
-| **合計** | **519** | 484 | 35 | 0 |
+| 其他 | 195 | 182 | 13 | 0 |
+| **合計** | **517** | 482 | 35 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
-⭐ **狀態行自稱「已被…取代」的 8 份文件不計。**它們的「未解」是**當時**的未解，而每一批發行紀錄都會再列一次「Windows／macOS 實機」「沒有音效裝置」——一度讓 `docs/release/` 的 33 列其實只有 12 個獨立缺口。**還開著的缺口一定也在最新那一份**，所以跳過舊的不會漏。
+⭐ **狀態行自稱「已被…取代」的 9 份文件不計。**它們的「未解」是**當時**的未解，而每一批發行紀錄都會再列一次「Windows／macOS 實機」「沒有音效裝置」——一度讓 `docs/release/` 的 33 列其實只有 12 個獨立缺口。**還開著的缺口一定也在最新那一份**，所以跳過舊的不會漏。
 
 | 來源目錄 | 列數 |
 |---|---:|
@@ -58,8 +58,8 @@
 | `docs/playtest/` | 83 |
 | `docs/formats/` | 33 |
 | `docs/mechanics/` | 18 |
-| `docs/release/` | 13 |
 | `docs/mobile/` | 12 |
+| `docs/release/` | 11 |
 | `docs/reference/` | 6 |
 | `docs/promo/` | 5 |
 
@@ -410,7 +410,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（197 條）
+## 2.6 其他（195 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -434,12 +434,10 @@
 | [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | 目標 OS 實跑 | **做不到**：這台是 Linux，沒有 Mac／Windows。檔頭驗過（PE32+／Mach-O），但視窗、輸入、音訊、字型載入都沒有在目標系統上跑過 | 實測 |
 | [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | linux/arm64 的本體 | 要在 arm64 的 Linux 上建（Ebiten 的 cgo 沒有交叉工具鏈） | 靜態 |
 | [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | Windows 的 smoke | 同第一項 | 靜態 |
-| [`release/09-full-20260827.md`](../release/09-full-20260827.md) | 手機沒有實機聽過聲音 | 沒有裝置；模擬器是 `-no-audio` 起的 | 靜態 |
-| [`release/09-full-20260827.md`](../release/09-full-20260827.md) | 推廣片檔名不帶批次日期 | `08` §4 的根因還在 | 靜態 |
-| [`release/09-full-20260827.md`](../release/09-full-20260827.md) | 沒有音效裝置的真實玩家 | ⛔ 仍會掛（`05` §5）。要收掉得讓 `wlgame` 有一個明確關音訊的旗標——`-audio ""` 現在是「自動找」不是「關」 | 靜態 |
-| [`release/09-full-20260827.md`](../release/09-full-20260827.md) | Android 的語言切換沒在模擬器上點過 | smoke 期間不可送觸控（送了指紋就不能比），要另開一輪非指紋的驗收 | 靜態 |
-| [`release/09-full-20260827.md`](../release/09-full-20260827.md) | Windows／macOS 實機 | 沒有硬體 | 靜態 |
-| [`release/09-full-20260827.md`](../release/09-full-20260827.md) | Android 實機驗收與正式簽章 | 沒有裝置；keystore 保管未決，出的仍是 debug 簽章 | 靜態 |
+| [`release/10-full-20260828.md`](../release/10-full-20260828.md) | Windows／macOS 原生 GUI 實機驗收 | ⛔ 沒有那兩個平台的機器。交叉建置的產物只驗了檔頭 | 靜態 |
+| [`release/10-full-20260828.md`](../release/10-full-20260828.md) | Android 實機驗收 ＋ release signing | ⛔ 沒有裝置；目前是 debug 簽章 | 靜態 |
+| [`release/10-full-20260828.md`](../release/10-full-20260828.md) | Android 模擬器 smoke | 這一批跳過（§3）。要跑得先重建 13.7 GB 的模擬器映像 | 靜態 |
+| [`release/10-full-20260828.md`](../release/10-full-20260828.md) | 沒有音效裝置時遊戲會掛 | 完整版會自己找到音檔並開音訊，而 Ebiten 沒有可查詢的音訊 API（`../spec/75` §5） | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Windows／macOS 原生 GUI | 交叉建置的產物只驗了檔頭，沒有在目標作業系統跑過。M8 唯一的閘 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 實機驗收 | 只有 Docker 模擬器；觸控手感、真實 GPU、高 DPI 上的點陣字可讀性都驗不到 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 正式簽章 | 出的是 debug 簽章，keystore 怎麼保管還沒決定 | 靜態 |
@@ -601,7 +599,7 @@
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |
 | [`spec/91-tactical-parity.md`](../spec/91-tactical-parity.md) | 動畫幀序 | 原版的兵有 `PoseStep`，截圖時機差一幀就整批不同。這是 `field` 剩下那 299 px 的來源之一（`../playtest/40` §13） | 實測 |
-| [`spec/91-tactical-parity.md`](../spec/91-tactical-parity.md) | 野戰的戰場 | 沒對過。野戰的地形是從大地圖即時長出來的，同狀態比攻城更難湊 | 靜態 |
+| [`spec/91-tactical-parity.md`](../spec/91-tactical-parity.md) | 野戰打起來之後的戰場 | **開戰第一拍已經對過**（九區裡七區 0 px、`field` 0.05%，`../playtest/43`）。沒對過的是**開戰之後**的畫面——野戰的地形是從大地圖即時長出來的，兩邊要走到同一個 tick 比攻城更難湊 | 靜態 |
 | [`spec/92-android-music.md`](../spec/92-android-music.md) | 手機沒有實機聽過 | 沒有裝置；模擬器是 `-no-audio` 起的 | 靜態 |
 | [`spec/92-android-music.md`](../spec/92-android-music.md) | 桌面「沒有音效裝置就掛」那一條 | `../release/08` §5 的老問題，手機端要確認 Ebiten 在 Android 上不會踩同一個 | 靜態 |
 | [`spec/93-siege-wall-instant-break-facing.md`](../spec/93-siege-wall-instant-break-facing.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |

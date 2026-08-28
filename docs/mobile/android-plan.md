@@ -5,7 +5,7 @@
 
 - 日期：2026-08-20
 - UX 規格：[`android-ux.md`](android-ux.md)
-- 建置：`tools/android_build.sh`（`docker/android/Dockerfile` → `wolong-go-android:20260820`）
+- 建置：`tools/android_build.sh`（`docker/android/Dockerfile` → `wolong-go-android:20260828`）
 - 驗收：`tools/android_smoke.sh`（`tools/android-emulator.Dockerfile` → `wolong-android-emulator:20260820`）
 - 專案檔：`android/`、`mobile/wolong/`、`internal/ui/phone/`
 

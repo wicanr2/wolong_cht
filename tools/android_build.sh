@@ -23,7 +23,7 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-IMAGE="${WOLONG_ANDROID_IMAGE:-wolong-go-android:20260820}"
+IMAGE="${WOLONG_ANDROID_IMAGE:-wolong-go-android:20260828}"
 ABIS="${WOLONG_ABIS:-android/arm64,android/amd64}"
 NET="${WOLONG_NET:-host}"
 BUNDLE="${WOLONG_BUNDLE_DATA:-0}"
