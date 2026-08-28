@@ -32,8 +32,8 @@ func TestInitialStrategyPassQueuesOpeningDeclarations(t *testing.T) {
 
 	// dispatch 之後交戰成立。跑到宣戰生效或超時。
 	for i := 0; i < 50000 && !w.Friendship[sunCe][liuYao].AtWar(); i++ {
-		if w.PendingEncounter() != nil {
-			w.ChooseBattleDelegate(r)
+		if w.PendingBattle() != nil {
+			w.ResolvePending(r)
 			continue
 		}
 		if w.PendingDiplomacy() != nil {

@@ -430,7 +430,6 @@ func directStartFlagWasPassed() bool {
 		"open-corps":         name,
 		"open-battle":        name,
 		"open-siege":         name,
-		"open-battle-choice": name,
 		"open-message":       name,
 		"open-talk-index":    name,
 		"open-outcome":       name,
@@ -548,6 +547,17 @@ func (g *game) updateLauncher() error {
 	if g.launcher == nil {
 		return nil
 	}
+	if g.naming != nil {
+		// 命名視窗開著時輸入全部歸它（原版 `sub_18FC9` 自己的等待迴圈）。
+		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+			g.naming.click(ebiten.CursorPosition())
+		}
+		if pressed(ebiten.KeyEscape) || g.cancelled() {
+			g.naming.cancel = true
+		}
+		g.settleNaming()
+		return nil
+	}
 	x, y := ebiten.CursorPosition()
 	if !g.launcher.pointerSeen {
 		g.launcher.pointerSeen = true
@@ -620,9 +630,10 @@ func (g *game) applyLordCardHotspot(h lordCardHotspot) error {
 	case lordCardConfirm:
 		return g.applyLauncherResult(g.launcher.apply(launcherConfirm))
 	case lordCardCustom:
-		// 「自定」＝ 軍師命名。⛔ 卡在存檔（docs/spec/27 §5）：
-		// `SAVE.DAT` 沒有自訂名字的欄位，做出來會在存檔後消失。
-		g.launcher.notice = "「自定」尚未實作"
+		// 「自定」＝ 軍師命名（docs/spec/104）。
+		if err := g.openNaming(); err != nil {
+			g.launcher.notice = fmt.Sprintf("開不了命名視窗：%v", err)
+		}
 		return nil
 	default:
 		// 原版：其他位置的點擊回到等待迴圈，什麼都不做。
@@ -641,10 +652,16 @@ func (g *game) applyLauncherResult(result launcherResult) error {
 		if !g.launcher.setScenarioPlayers(result.scenario, g.launcherScenarioName(result.scenario), launcherPlayers(w)) {
 			return nil
 		}
+		g.launcherPreviewWorld = w
+		g.customAdvisor = nil
 	case launcherStartNewGame:
 		if err := g.startWorld(launcherNewGamePath(g.sourceFile, g.saveFile), result.scenario, result.player, true, true); err != nil {
 			g.launcher.notice = fmt.Sprintf("開始新遊戲失敗：%v", err)
 			return nil
+		}
+		if c := g.customAdvisor; c != nil && g.world != nil {
+			// 原版「確定」那一步：勢力 +0x02 寫 0x7F，名字與肖像進區塊欄位。
+			g.world.SetCustomAdvisor(c.portrait, c.name)
 		}
 		g.launcher = nil
 	case launcherStartLoad:
@@ -720,6 +737,10 @@ func (g *game) drawLauncher(screen *ebiten.Image) {
 	}
 	if l.phase == launcherSelectPlayer && l.cursor >= 0 && l.cursor < len(l.players) {
 		g.drawLordCard(screen, l.players[l.cursor], launcherSeason)
+		if g.naming != nil {
+			g.drawNaming(screen, launcherSeason)
+			return
+		}
 		g.drawLauncherCaption(screen, g.launcherScenarioName(l.scenario),
 			lordCardX, lordCardY-textdraw.GlyphH-8, amber)
 		g.drawLauncherCaption(screen, fmt.Sprintf("↑↓ 換君主（%d／%d）　Enter 決定　ESC 回清單",

@@ -28,6 +28,9 @@ func (w *World) TalkNoticeVars(n TalkNotice, decode func(string) string) (map[by
 		if advisor >= 0 && advisor < len(w.Generals) && w.Generals[advisor].Alive {
 			// marker \4（00010939）取玩家勢力的軍師姓名。
 			vars['4'] = decode(w.Generals[advisor].Name)
+		} else if name, _ := w.AdvisorNameRaw(); name != "" {
+			// 自訂軍師（+0x02 ＝ 0x7F）：名字在區塊 +0x52A2（docs/formats/10 §4）。
+			vars['4'] = decode(name)
 		}
 	}
 	if n.RawFormatterWordValid {

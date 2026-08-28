@@ -721,20 +721,13 @@ func (w *World) pickDefender(attacker, faction int, at func(*Corps) bool) int {
 }
 
 func (w *World) fight(att, def int, ev *CorpsEvent, m combat.Mode, garrison int, rng combat.Rand) {
-	// ⭐ 玩家的勢力捲進去先問戰鬥指揮／委任，其餘自動判定（原版 `sub_14E5C`）。
+	// ⭐ 玩家的勢力捲進去而且那一方**沒有委任**，就直接開戰術畫面
+	// （原版 `sub_14E5C`／`sub_14ED7`：`sub_14EB9` → `sub_11B5A`，**中間沒有選單**，
+	// 實機 docs/playtest/55）。「戰鬥指揮／委任」是行軍指示時就決定的
+	// （docs/spec/39），遭遇當下只看委任位元。其餘自動判定。
 	ev.Mode = m
-	if w.wantsTactical(att, def) {
-		// 先確認這場的地形來源確實能建出來；沒有對應戰場時照原版的
-		// 委任退路，不讓玩家卡在一個永遠選不了的空選單。
-		node := w.Corps[att].Node
-		// 這裡只是探路（能不能建得出來），翻不翻轉不影響，一律傳 false。
-		if w.tactical.Field(node, m == combat.Siege, false) != nil {
-			w.encounter = &EncounterChoice{
-				Attacker: att, Defender: def, Node: node,
-				Mode: m, Garrison: garrison,
-			}
-			return
-		}
+	if w.wantsTactical(att, def) && w.beginTactical(att, def, m, garrison) {
+		return
 	}
 	w.resolveCorpsBattle(ev, att, def, m, garrison, rng)
 }

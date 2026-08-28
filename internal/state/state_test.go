@@ -2065,19 +2065,8 @@ func TestPlayerBattleGoesTactical(t *testing.T) {
 	}
 
 	r := rng.NewFixed(5)
-	for i := 0; i < 200000 && w.PendingBattle() == nil && w.PendingEncounter() == nil; i++ {
+	for i := 0; i < 200000 && w.PendingBattle() == nil; i++ {
 		w.Tick(r)
-	}
-	choice := w.PendingEncounter()
-	if choice == nil {
-		t.Fatal("玩家的軍團一路走到底都沒有出現戰鬥選擇")
-	}
-	if choice.Attacker != la || choice.Defender != lb {
-		t.Fatalf("遭遇選擇是 %d vs %d，應為 %d vs %d",
-			choice.Attacker, choice.Defender, la, lb)
-	}
-	if err := w.ChooseBattleCommand(); err != nil {
-		t.Fatal(err)
 	}
 	p := w.PendingBattle()
 	if p == nil {
@@ -2144,21 +2133,26 @@ func TestPlayerBattleCanBeDelegated(t *testing.T) {
 	}
 
 	r := rng.NewFixed(5)
+	// 玩家那一方沒委任：直接開戰術畫面，沒有選單（docs/spec/105）。
 	queued := &CorpsEvent{}
 	w.fight(la, lb, queued, combat.Field, 0, r)
-	if w.PendingEncounter() == nil {
-		t.Fatal("玩家遭遇沒有進入選擇狀態")
+	if w.PendingBattle() == nil {
+		t.Fatal("玩家遭遇沒有直接進戰場")
 	}
 	before := w.Clock
 	w.Tick(r)
 	if w.Clock != before {
-		t.Fatal("遭遇選單掛著時世界仍然前進")
+		t.Fatal("戰場掛著時戰略時鐘仍然前進")
 	}
-	ev := w.ChooseBattleDelegate(r)
-	if ev == nil || ev.Battle == nil {
+	w.pending = nil
+	// 委任中：自動判定，回傳戰果，不開戰場。
+	w.Corps[la].Delegated = true
+	ev := &CorpsEvent{}
+	w.fight(la, lb, ev, combat.Field, 0, r)
+	if ev.Battle == nil {
 		t.Fatal("委任沒有回傳自動判定結果")
 	}
-	if w.PendingEncounter() != nil || w.PendingBattle() != nil {
+	if w.PendingBattle() != nil {
 		t.Fatal("委任完成後仍掛著戰鬥狀態")
 	}
 }
@@ -2395,25 +2389,14 @@ func TestNormalScenarioTacticalBattleTerminates(t *testing.T) {
 	})
 
 	r := rng.NewFixed(17)
-	for i := 0; i < 200000 && w.PendingEncounter() == nil && w.PendingBattle() == nil; i++ {
+	for i := 0; i < 200000 && w.PendingBattle() == nil; i++ {
 		w.Tick(r)
-	}
-	choice := w.PendingEncounter()
-	if choice == nil {
-		t.Fatal("正常劇本沒有走到敵方 AI 遭遇選單")
-	}
-	if choice.Mode != combat.Siege || choice.Defender < 0 {
-		t.Fatalf("正常敵方遭遇 = attacker=%d defender=%d mode=%v，應為軍團攻城",
-			choice.Attacker, choice.Defender, choice.Mode)
-	}
-	if err := w.ChooseBattleCommand(); err != nil {
-		t.Fatal(err)
 	}
 	p := w.PendingBattle()
 	if p == nil {
 		t.Fatal("正常敵方遭遇沒有建立戰術戰鬥")
 	}
-	beforeMen := [2]int{w.Corps[choice.Attacker].Men, w.Corps[choice.Defender].Men}
+	beforeMen := [2]int{w.Corps[p.Attacker].Men, w.Corps[p.Defender].Men}
 	if !p.Battle.Run(200000) {
 		for side := range p.Battle.Sides {
 			alive := 0
@@ -2467,7 +2450,7 @@ func TestNormalScenarioTacticalBattleTerminates(t *testing.T) {
 	if ev.BattleBefore != beforeMen {
 		t.Fatalf("戰後事件沒有保留戰前兵力：got=%v want=%v", ev.BattleBefore, beforeMen)
 	}
-	afterMen := [2]int{w.Corps[choice.Attacker].Men, w.Corps[choice.Defender].Men}
+	afterMen := [2]int{w.Corps[p.Attacker].Men, w.Corps[p.Defender].Men}
 	if ev.BattleAfter != afterMen {
 		t.Fatalf("戰後事件兵力與戰略狀態脫鉤：got=%v state=%v", ev.BattleAfter, afterMen)
 	}
@@ -2476,7 +2459,7 @@ func TestNormalScenarioTacticalBattleTerminates(t *testing.T) {
 	}
 	t.Logf("正常真實攻城第 %d 幀結束，守方勝 %v；攻方 %d 點、守方 %d 點",
 		p.Battle.Frame, ev.Battle.DefenderWins,
-		w.Corps[choice.Attacker].Men, w.Corps[choice.Defender].Men)
+		w.Corps[p.Attacker].Men, w.Corps[p.Defender].Men)
 }
 
 // TestCapitalPickMatchesScenarioData 拿四個劇本的初始資料當黃金對照：

@@ -13,8 +13,8 @@
   [`../spec/57`](../spec/57-tactical-projection.md)、[`../spec/56`](../spec/56-battlefield-rotation.md)
 - 原版側：松崗 DOS/V，`workplace/promo-live/parity-field14/b0.png`（開戰第一拍）
 - remake 側：`tools/parity_shot.sh … -save-file SAVE-FIELD.DAT -load-slot 0
-  -encounter-choose -shot-frames 400`（`-encounter-choose`：遭遇出現時
-  自動選戰鬥指揮，照自然流程進戰場、不重擺軍團）。
+  -shot-frames 400`（2026-08-29 起遭遇直接進戰場，`docs/spec/105`；當時多帶的
+  encounter-choose 旗標已拿掉）。
   單挑狀態機接上後喊話在**戰場 tick 50** 出現，400 幀約落在 tick 52；
   氣勢評估帶亂數（本存檔兩軍士氣同 200、氣勢平手靠亂數尾），
   挑戰側不是呂布（攻方）時整張圖對不上——同一 seed 下 rng 流固定，

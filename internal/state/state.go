@@ -61,6 +61,11 @@ const (
 	// 變體，不能只保存低 byte。這裡先保存原始 256 × 4 B，處理時序與
 	// handler 效果仍由事件佇列的反組譯切片逐項接入。
 	eventQueueOffset    = 0x52C0
+	// 自定軍師（docs/formats/10 §4）：ds:5221h 的肖像編號與 ds:5222h 的六個
+	// Big5 字都在 ds:0D52h 段裡，段從區塊 +0x80 起原封不動存，所以就在這裡。
+	advisorPortraitOffset = factionBase + 0x5221 // 0x52A1
+	advisorNameOffset     = factionBase + 0x5222 // 0x52A2，12 B
+	advisorNameLen        = 12
 	eventQueueEntrySize = 4
 	eventQueueEntries   = 0x100
 	eventQueueDispatch  = 0x40 // sub_131AE 只處理前 64 筆（0x100 byte）
@@ -327,9 +332,7 @@ type World struct {
 	cityBias [numFactions]int
 	// pending 是一場等著被跑完的戰術戰鬥。它還在的時候世界不前進。
 	pending *Pending
-	// encounter 是一場玩家尚未選擇「戰鬥指揮／委任」的遭遇。
 	// 它和 pending 一樣會凍結戰略時間，但還沒有建立戰術戰場。
-	encounter *EncounterChoice
 	// diplomacy 是事件 2／3 的玩家互動；它是 runtime 狀態，不進存檔。
 	diplomacy *DiplomacyChoice
 	// funding 是事件 4／5 的玩家撥款互動；它是 runtime 狀態，不進存檔。
@@ -393,6 +396,11 @@ type World struct {
 	// 說服流程的 `byte_10D00`（IDA `seg000:10D00`）在這段的 +0x10，
 	// 因此它是可持久化的 u8。勢力記錄 +0x1D 是士氣基準，不是信賴度。
 	Trust int
+	// AdvisorPortrait 是「自定」軍師的肖像編號（區塊 +0x52A1，0xFF ＝ 沒自定）；
+	// AdvisorName 是六個 Big5 字（前三個軍師名、後三個別號，區塊 +0x52A2），
+	// 原樣保存，顯示時再解碼（docs/formats/10 §4）。
+	AdvisorPortrait int
+	AdvisorName     [advisorNameLen]byte
 
 	// LivingFactions 是還沒滅亡的勢力數（區塊 +0x3A）。
 	// **只在 eliminateFaction 裡減**——原版也只有一個 `dec`
@@ -487,6 +495,7 @@ func loadBlock(b []byte) *World {
 		Player:      player,
 		Title:       blockTitle(b),
 		Trust:       int(b[trustOffset]),
+		AdvisorPortrait: int(b[advisorPortraitOffset]),
 		raw:         append([]byte(nil), b...),
 		eventDelay:  7,
 		eventCursor: 0,
@@ -494,6 +503,7 @@ func loadBlock(b []byte) *World {
 		// 近似 producer，仍可由 SetApproximateEvent10(false) 關閉。
 		approximateEvent10: true,
 	}
+	copy(w.AdvisorName[:], b[advisorNameOffset:advisorNameOffset+advisorNameLen])
 	for i := range w.events {
 		off := eventQueueOffset + i*eventQueueEntrySize
 		w.events[i] = QueuedEvent{
@@ -877,7 +887,7 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 	// 有戰術戰鬥、玩家尚未選擇的遭遇、外交提案或撥款請求，世界都停在那裡。
 	// 原版進戰術畫面前也會先問「戰鬥指揮／委任」，這個選單同樣不能讓
 	// 下一個軍團或時鐘在背景偷偷前進。
-	if w.pending != nil || w.encounter != nil || w.diplomacy != nil || w.funding != nil {
+	if w.pending != nil || w.diplomacy != nil || w.funding != nil {
 		return Event{HourFaction: -1}
 	}
 	w.rng = rng
@@ -1280,6 +1290,8 @@ func (w *World) Bytes() []byte {
 		b[playerOffset] = byte(w.Player)
 	}
 	b[trustOffset] = byte(clampU8(w.Trust))
+	b[advisorPortraitOffset] = byte(w.AdvisorPortrait)
+	copy(b[advisorNameOffset:advisorNameOffset+advisorNameLen], w.AdvisorName[:])
 	for i, e := range w.events {
 		off := eventQueueOffset + i*eventQueueEntrySize
 		putU16(b, off, int(e.Code))

@@ -77,9 +77,11 @@ cmp  al, [di+1] / jz .playerDefends
 mov  al, 1 / call sub_15130   ; ★ 都不是玩家 → 自動判定
 ```
 
-⭐ **只有玩家的勢力捲進去，才會出現「戰鬥指揮／委任」選單。**
-選「戰鬥指揮」才開戰術畫面；選「委任」則走同一套自動判定。玩家未捲入時
-直接自動判定。
+⭐ **只有玩家的勢力捲進去，才會進戰術畫面；而且是直接進，沒有選單。**
+「戰鬥指揮／委任」是行軍指示時（[`45`](45-corps-command-mode.md) §1）寫進軍團
+`+0x00` 位元 2 的決定，遭遇當下只讀那個位元：沒委任 → `sub_14EB9` → `sub_11B5A`
+開戰術畫面；委任 → 自動判定。玩家未捲入時直接自動判定。
+實機證據 [`../playtest/55`](../playtest/55-encounter-menu-parity.md)。
 另外還有兩個例外會退回自動判定：
 
 - **玩家那一方的軍團委任中**——兩條路各檢查各自那一方：
@@ -93,10 +95,8 @@ mov  al, 1 / call sub_15130   ; ★ 都不是玩家 → 自動判定
 `byte_10D34`／`byte_10D35`（`docs/re/05`），交戰雙方寫進
 `word_10D2E`（我方）與 `word_10D30`（對方）。
 
-remake 對應為 `internal/state.EncounterChoice`：選單掛起時 `World.Tick`
-不推進時鐘；`ChooseBattleCommand` 建立 `Pending` 戰術戰鬥，
-`ChooseBattleDelegate` 直接呼叫自動判定並回傳同型的 `CorpsEvent`。
-這是執行期狀態，不是存檔欄位。
+remake 對應為 `state.fight`：`wantsTactical` 成立就 `beginTactical`，
+沒有中間狀態（[`../spec/105`](../spec/105-encounter-goes-straight-to-battle.md)）。
 
 ### 戰鬥前的訊息
 

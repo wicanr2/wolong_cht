@@ -143,6 +143,10 @@
 | 手機版「關於」頁顯示授權條款（**remake 差異，發行設施**）| [`99-about-page-license.md`](99-about-page-license.md) | 已實作並有單測；APK 帶不了 `LICENSE` 檔，摘要顯示在遊戲內 |
 | 手機版的字放大 2 倍（**remake 差異**）| [`100-phone-text-scale.md`](100-phone-text-scale.md) | 已實作、單測與截圖驗過；版面常數從字高長出來，桌面版倍率不變 |
 | 手機版放大的字用 Scale2x 去鋸齒（**remake 差異**）| [`101-phone-glyph-scale2x.md`](101-phone-glyph-scale2x.md) | 已實作、單測與放大對照過；只在倍率 2 套，桌面版不經過 |
+| 戰場的 `▶▶` 是快轉 | [`102-battle-fast-forward.md`](102-battle-fast-forward.md) | 已實作、單測、實機對照過行為；底紋未對上（§5）|
+| 手機版外交提案的「提示金額」鍵盤（**remake 差異**）| [`103-phone-diplomacy-amount-keypad.md`](103-phone-diplomacy-amount-keypad.md) | 已實作並有單測；輸入動作與上限沿用 `78` |
+| 「自定」軍師命名視窗 | [`104-advisor-naming-window.md`](104-advisor-naming-window.md) | 已實作、單測與截圖；肖像位置是假說（§5）|
+| 遭遇直接進戰場，沒有「戰鬥指揮／委任」選單 | [`105-encounter-goes-straight-to-battle.md`](105-encounter-goes-straight-to-battle.md) | 已實作並有單測；機器碼 ＋ 實機兩條證據。⚠ 遭遇訊息本身 remake 還沒有（§5）|
 
 ## 怎麼加一份
 

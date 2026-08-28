@@ -33,93 +33,6 @@ import (
 // battleActive 回報現在是不是在戰場畫面。
 func (g *game) battleActive() bool { return g.world.PendingBattle() != nil }
 
-// updateBattleChoice 是行軍遭遇後的「戰鬥指揮／委任」選單。
-// 這個選單不是除錯捷徑：它只消費正常行軍觸發的 EncounterChoice，
-// 在玩家決定前不會讓戰略時鐘繼續走。
-func (g *game) updateBattleChoice() {
-	x, y := ebiten.CursorPosition()
-	if row, ok := battleChoiceRowAt(x, y); ok {
-		// Hover 只改變反白列；只有 JustPressed 才能確認。
-		g.battleChoiceRow = row
-	}
-	if pressed(ebiten.KeyArrowUp) || pressed(ebiten.KeyArrowDown) {
-		g.battleChoiceRow = 1 - g.battleChoiceRow
-	}
-	if pressed(ebiten.Key1) {
-		g.battleChoiceRow = 0
-	}
-	if pressed(ebiten.Key2) {
-		g.battleChoiceRow = 1
-	}
-	keyboardConfirm := pressed(ebiten.KeyEnter) || pressed(ebiten.KeySpace) ||
-		pressed(ebiten.Key1) || pressed(ebiten.Key2)
-	mouseConfirm := inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft)
-	if !keyboardConfirm && !mouseConfirm {
-		return
-	}
-	if mouseConfirm {
-		// 畫面外、框線與列距空白都不能觸發既有確認路徑。
-		if _, ok := battleChoiceRowAt(x, y); !ok {
-			return
-		}
-	}
-
-	if g.battleChoiceRow == 0 {
-		if err := g.world.ChooseBattleCommand(); err != nil {
-			g.setEvent(err.Error())
-			return
-		}
-		g.view = nil
-		g.setEvent("戰鬥指揮")
-		return
-	}
-	ev := g.world.ChooseBattleDelegate(g.rng)
-	if ev == nil {
-		g.setEvent("沒有待處理的遭遇")
-		return
-	}
-	g.setEvent("委任：" + battleLine(g, *ev))
-}
-
-// drawBattleChoice 畫出原版行軍抵達後的兩路選擇。
-func (g *game) drawBattleChoice(screen *ebiten.Image, c *state.EncounterChoice) {
-	l := battleChoiceLayoutFor()
-	g.chrome.Window(screen, l.Window.X, l.Window.Y, l.Window.W, l.Window.H, chrome.Menu)
-	amber := color.RGBA{240, 200, 120, 255}
-	white := chrome.Paper
-	dim := color.RGBA{170, 170, 180, 255}
-	selected := color.RGBA{140, 230, 140, 255}
-	x, y, h := l.Window.X, l.Window.Y, l.Window.H
-
-	att := big5(g.world.Generals[c.Attacker].Name)
-	def := "城兵"
-	if c.Defender >= 0 {
-		def = big5(g.world.Generals[c.Defender].Name)
-	}
-	g.td.Draw(screen, "遭遇戰", x+chrome.Tile+4, y+chrome.Tile+2, amber)
-	g.td.Draw(screen, att+" 對 "+def, x+chrome.Tile+4,
-		y+chrome.Tile+textdraw.GlyphH+6, white)
-	mode := "野戰"
-	if c.Mode == combat.Siege {
-		mode = "攻城"
-	}
-	g.td.Draw(screen, mode+"　請選擇處理方式", x+chrome.Tile+4,
-		y+chrome.Tile+2*(textdraw.GlyphH+4), dim)
-
-	rows := []string{"戰鬥指揮", "委任"}
-	for i, row := range rows {
-		col := white
-		mark := "　"
-		if i == g.battleChoiceRow {
-			col, mark = selected, "●"
-		}
-		g.td.Draw(screen, fmt.Sprintf("%s%d　%s", mark, i+1, row),
-			l.Rows[i].X, l.Rows[i].Y, col)
-	}
-	g.td.Draw(screen, "↑↓ 選擇　1-2 直選　Enter 確定",
-		x+chrome.Tile+4, y+h-chrome.Tile-textdraw.GlyphH, dim)
-}
-
 // speedToastFrames 是調速度之後那行提示顯示幾幀（約 1.5 秒 @60fps）。
 //
 // **常駐顯示會破壞版面 parity**（原版戰場沒有速度指示），所以只在剛調過
@@ -147,6 +60,8 @@ func (g *game) drawSpeedToast(dst *ebiten.Image, l dosvBattleLayout) {
 func (g *game) updateBattle() {
 	p := g.world.PendingBattle()
 	b := p.Battle
+	// 遭遇直接進戰場（docs/spec/105），開戰喊話在第一幀就要武裝好。
+	g.startBattleTalk(p)
 	l := dosvBattleLayoutFor(screenW, screenH)
 	if g.view == nil {
 		g.view = g.newBattleView(g.battle.FieldNumber(p.Node, p.Mode == combat.Siege))
@@ -192,6 +107,11 @@ func (g *game) updateBattle() {
 			if x, y := ebiten.CursorPosition(); inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 				if g.view != nil && l.SideMiniMap.containsPoint(x, y) {
 					g.view.SetCameraFromMiniMap(x, y)
+					return
+				}
+				// `▶▶` 列（熱區 0x0F）：切換快轉（docs/spec/102）。
+				if l.SideFooter.containsPoint(x, y) {
+					g.toggleBattleFastForward()
 					return
 				}
 				// 底列六格是**選部隊**，不是命令（docs/spec/33）。
@@ -308,7 +228,14 @@ func (g *game) drawBattle(screen *ebiten.Image) {
 	me := b.Sides[g.battleSide()].Soldiers[0]
 
 	if g.view != nil {
-		g.drawBattleIso(screen, b, &me)
+		if g.battleFastForward {
+			// `▶▶`（快轉）：原版把 loc_1A065 的 jz 改成 jmp short，跳過戰場
+			// 重算與重畫，戰場區只剩視窗底的龍紋；側欄與小地圖照常更新
+			// （docs/spec/102，實機 playtest/53）。
+			g.chrome.FillMenu(screen, l.Field.X, l.Field.Y, l.Field.W, l.Field.H)
+		} else {
+			g.drawBattleIso(screen, b, &me)
+		}
 		g.drawBattleChrome(screen, b, p, l)
 		g.drawSpeedToast(screen, l)
 		g.drawBattleResult(screen, b, p)
@@ -826,18 +753,43 @@ func (g *game) drawBattleGateBar(screen *ebiten.Image, b *tactical.Battle) {
 		filled, g.battleGateBarColor)
 }
 
-// drawBattleSideFooter 只畫 segment1+0x3500 那一條。
-// 原版按下去會切 loc_1A065 的自我修改碼，語意未解，所以不接行為
-// （docs/spec/31 §5）。
+// drawBattleSideFooter 畫 segment1+0x3500 那一條（`▶▶`），按過之後再照原版
+// handler 在 (497,377)-(622,390) 描一圈：開著是色 12、關掉是色 10
+// （`0x1C24E`／`0x1C277` 的 `sub_1F020`，docs/spec/102 §2）。
+// 沒按過就不描——原版也是按了才畫，逐像素對拍的起始狀態不受影響。
 func (g *game) drawBattleSideFooter(screen *ebiten.Image, r battleRect) {
 	if img := g.battleSideFooter; img != nil {
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Translate(float64(r.X), float64(r.Y))
 		screen.DrawImage(img, op)
-		return
+	} else {
+		vector.DrawFilledRect(screen, float32(r.X), float32(r.Y),
+			float32(r.W), float32(r.H), chrome.Menu, false)
 	}
-	vector.DrawFilledRect(screen, float32(r.X), float32(r.Y),
-		float32(r.W), float32(r.H), chrome.Menu, false)
+	if g.battleFFTouched {
+		col := g.paletteInk(battleFFOffInk, chrome.Paper)
+		if g.battleFastForward {
+			col = g.paletteInk(battleFFOnInk, chrome.Paper)
+		}
+		vector.StrokeRect(screen, float32(r.X+1)+0.5, float32(r.Y+1)+0.5,
+			float32(battleFFBoxW-1), float32(battleFFBoxH-1), 1, col, false)
+	}
+}
+
+// `▶▶` 的按下框：(497,377)-(622,390) ＝ 126×14，色 12 開／色 10 關。
+const (
+	battleFFBoxW, battleFFBoxH = 126, 14
+	battleFFOnInk              = 0x0C
+	battleFFOffInk             = 0x0A
+)
+
+// toggleBattleFastForward 是 handler `0x1C234`／`0x1C260`：開 → 關 → 開。
+// 原版開的時候把視點重設到 (128,128)——那一格在 64×64 的戰場外，
+// 等於什麼都不畫；關的時候設 dirty flag 從鏡頭重算，鏡頭本身沒動，
+// 所以 remake 只需要記住開關。
+func (g *game) toggleBattleFastForward() {
+	g.battleFastForward = !g.battleFastForward
+	g.battleFFTouched = true
 }
 
 // battleFieldName 對應 sub_1C955：攻城戰用據點名，野戰依戰場類別
@@ -1143,10 +1095,10 @@ func worldMapOf(l *library.Library) *world.Map {
 // demoBattle 是驗收捷徑。siegeNode ≥ 0 時指定攻城的戰場（＝據點編號），
 // **為的是能在 remake 上開出與原版影格同一張戰場**——不同戰場的地形與
 // 圖塊組都不同，拿兩張不同的戰場比顏色不算數。
-func (g *game) demoBattle(siege, choose bool, f siegeFixture) {
+func (g *game) demoBattle(siege bool, f siegeFixture) {
 	siegeNode, defend := f.node, f.defend
 	if att, def := f.corps[0], f.corps[1]; att >= 0 && def >= 0 {
-		g.demoBattleWithCorps(siege, choose, siegeNode, att, def, f.steps)
+		g.demoBattleWithCorps(siege, siegeNode, att, def, f.steps)
 		return
 	}
 	p := g.world.Player
@@ -1185,7 +1137,7 @@ func (g *game) demoBattle(siege, choose bool, f siegeFixture) {
 		// 也就是**側欄換邊 ＋ 戰場轉 180 度**（docs/spec/56 §1）。
 		me, foe = foe, me
 	}
-	g.stageEncounter(siege, choose, siegeNode, f.steps, me, foe)
+	g.stageEncounter(siege, siegeNode, f.steps, me, foe)
 }
 
 // demoBattleWithCorps 拿**存檔裡現成的**兩支軍團開一場，不現編
@@ -1194,7 +1146,7 @@ func (g *game) demoBattle(siege, choose bool, f siegeFixture) {
 //
 // 攻守由參數直接指定，**不再看 `-siege-defend`**——玩家站哪一邊
 // 由那兩支軍團的勢力決定，戰場要不要轉 180 度也跟著（docs/spec/56 §1）。
-func (g *game) demoBattleWithCorps(siege, choose bool, siegeNode, att, def, steps int) {
+func (g *game) demoBattleWithCorps(siege bool, siegeNode, att, def, steps int) {
 	if att >= len(g.world.Corps) || def >= len(g.world.Corps) || att == def {
 		g.setEvent("-siege-corps 的編號超出範圍")
 		return
@@ -1204,26 +1156,18 @@ func (g *game) demoBattleWithCorps(siege, choose bool, siegeNode, att, def, step
 		g.setEvent("-siege-corps 指到的軍團不存在（用 -list-corps 看有哪些）")
 		return
 	}
-	g.stageEncounter(siege, choose, siegeNode, steps, me, foe)
+	g.stageEncounter(siege, siegeNode, steps, me, foe)
 }
 
 // stageEncounter 把攻方與守方擺到會遭遇的位置，跑到開打，
 // 再推進 steps 個戰術 tick。兩條 fixture 路徑共用這一支——
 // **擺位與遭遇的規則只留一份實作**（`CLAUDE.md` §7 第 6 條）。
-func (g *game) stageEncounter(siege, choose bool, siegeNode, steps int, me, foe *state.Corps) {
+func (g *game) stageEncounter(siege bool, siegeNode, steps int, me, foe *state.Corps) {
 	// 擺位與遭遇的規則在 `internal/battlesetup`，手機版的驗收路徑用同一支。
 	att, def := corpsIndex(g.world, me), corpsIndex(g.world, foe)
 	battlesetup.StageEncounter(g.world, g.rng, battlesetup.StageOptions{
 		Siege: siege, Node: siegeNode, Attacker: att, Defender: def,
 	})
-	// demoBattle 是驗收捷徑，但仍經過與正常行軍相同的遭遇決策狀態；
-	// 這個旗標的語意是「最後開戰場」，所以在這裡選擇戰鬥指揮。
-	if choose && g.world.PendingEncounter() != nil {
-		if err := g.world.ChooseBattleCommand(); err != nil {
-			g.setEvent(err.Error())
-			return
-		}
-	}
 
 	if g.battleActive() {
 		// 只跑到部隊展開。900 tick 會使野戰 fixture 在第一幀 GUI

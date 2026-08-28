@@ -20,6 +20,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 
 	"github.com/wicanr2/wolong_cht/internal/assets/cjk"
+	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/phone"
 	"github.com/wicanr2/wolong_cht/internal/ui/sound"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
@@ -174,6 +175,14 @@ func (g *game) ensure() {
 	}
 	if v, err := strconv.Atoi(os.Getenv("WOLONG_ADVISE")); err == nil && v >= 0 {
 		sess.PickAdvise(v)
+	}
+	if os.Getenv("WOLONG_DIPLOMACY") != "" {
+		// 驗收用：掛一份停戰提案並停在「提示金額」的數字鍵盤（docs/spec/103）。
+		sess.World().BeginDiplomacyChoice(state.DiplomacyChoice{
+			Kind: state.DiplomacyCeasefire, Source: 1, Target: sess.World().Player,
+			InitialAmount: 1200, OfferAmount: 1200,
+		})
+		sess.PickModal(int(state.DiplomacyOfferFunds))
 	}
 	if v, err := strconv.Atoi(os.Getenv("WOLONG_SIEGE")); err == nil && v >= 0 {
 		if err := sess.OpenDemoBattle(v); err != nil {

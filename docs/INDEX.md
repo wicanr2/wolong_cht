@@ -20,6 +20,7 @@
 | [`docs/formats/07-battle.md`](formats/07-battle.md) | 07 — BATTLE. 戰場資料 | 分段結構、圖塊定義、子圖塊與人物圖形的像素格式都 confirmed。 剩三項未解（§10）。 | 2026-08-07 |
 | [`docs/formats/08-sinario-save.md`](formats/08-sinario-save.md) | 08 — SINARIO.DAT / SAVE.DAT：劇本與存檔 | 整體結構 confirmed，武將能力值 confirmed，其餘欄位進行中。 | 2026-08-07 |
 | [`docs/formats/09-cutscene-images.md`](formats/09-cutscene-images.md) | 09 — OPEN_S.DAT／END_S.DAT：過場畫面 | READY。 | 2026-08-18 |
+| [`docs/formats/10-end-s15-namechars.md`](formats/10-end-s15-namechars.md) | 10 — END_S15.DAT：軍師命名的選字表（松崗版特有） | READY（格式 confirmed，Go 解碼器有測試）。 | 2026-08-29 |
 | [`docs/mechanics/00-index.md`](mechanics/00-index.md) | 00 — 遊戲機制索引 | 索引與推論等級定義，長期有效。 | 2026-08-08 |
 | [`docs/mechanics/10-strategy.md`](mechanics/10-strategy.md) | 10 — 大地圖政略 | 指令清單完整；戰略數值與 AI 決策大多已由機器碼解出並實作。 剩六個位置的效果一項（§7）。 | 2026-08-13 |
 | [`docs/mechanics/15-realtime.md`](mechanics/15-realtime.md) | 15 — 即時制的時間模型 | ✅ READY。整條時間鏈已在機器碼裡讀出來。 | 2026-08-08 |
@@ -85,6 +86,9 @@
 | [`docs/playtest/50-corps-on-map.md`](playtest/50-corps-on-map.md) | 50 — 軍團在大地圖上：兩個缺口，逐像素對上 | 許昌那一格（含周邊 56×56）與原版逐像素相同。 | 2026-08-27 |
 | [`docs/playtest/51-siege-deadlock.md`](playtest/51-siege-deadlock.md) | 51 — 攻城戰打不完：同狀態對拍挖出來的死鎖 | 修好了，兩件。 | 2026-08-27 |
 | [`docs/playtest/52-siege-timeseries-parity.md`](playtest/52-siege-timeseries-parity.md) | 52 — 攻城的時間序列對拍：原版七張影格 vs remake 的規則層 | 進城的機制對得上，差的是速度。 | 2026-08-27 |
+| [`docs/playtest/53-battle-fast-forward.md`](playtest/53-battle-fast-forward.md) | 53 — 實機：戰場的 ▶▶ 按下去會怎樣 | PASS（行為 confirmed）。按一下戰場整片變成均勻底紋、側欄與小地圖照動；再按一下戰場回來。 | 2026-08-29 |
+| [`docs/playtest/54-menu-second-row-tap.md`](playtest/54-menu-second-row-tap.md) | 54 — 原版擷取：彈出選單的第二列終於點得到 | PASS。單獨一下 5–60 ms 的瞬按（tap:x,y,ms）能把「軍團」選單打開而不選走第一列；先前點不到的是… | 2026-08-29 |
+| [`docs/playtest/55-encounter-menu-parity.md`](playtest/55-encounter-menu-parity.md) | 55 — 實機：遭遇時原版沒有「戰鬥指揮／委任」選單 | 定案。訊息框按掉之後直接是戰場，中間沒有選單；playtest/31 §6 那一項不是「還沒對拍」，是原版沒有那個畫面。 | 2026-08-29 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告是 72 秒， 含語言切換與原版並排兩段；遊戲段落是逐幀錄下來的實跑畫面。 2… | 2026-08-28 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
@@ -187,6 +191,10 @@
 | [`docs/spec/10-city-tick.md`](spec/10-city-tick.md) | 10 — 據點整備、威脅偵測與求援 | CONFORMED。整條鏈已實作，並在 PC-98 原版的執行期記憶體上取樣驗過 （+0x18／+0x14 各 0/… | 2026-08-14 |
 | [`docs/spec/100-phone-text-scale.md`](spec/100-phone-text-scale.md) | 100 — 手機版的字放大 2 倍 | CONFORMED（2026-08-28 實作、單測、桌面 Xvfb 截圖驗過）。 | 2026-08-28 |
 | [`docs/spec/101-phone-glyph-scale2x.md`](spec/101-phone-glyph-scale2x.md) | 101 — 手機版放大的字用 Scale2x 去鋸齒 | CONFORMED（2026-08-28 實作、單測、截圖放大對照過）。 | 2026-08-28 |
+| [`docs/spec/102-battle-fast-forward.md`](spec/102-battle-fast-forward.md) | 102 — 戰場的 ▶▶：快轉＝跳過戰場重畫 | CONFORMED（2026-08-29 實作、單測、實機對照過行為；底紋見 §5）。 | 2026-08-29 |
+| [`docs/spec/103-phone-diplomacy-amount-keypad.md`](spec/103-phone-diplomacy-amount-keypad.md) | 103 — 手機版外交提案的「提示金額」：數字鍵盤 | CONFORMED（2026-08-29 實作並有單測）。 | 2026-08-29 |
+| [`docs/spec/104-advisor-naming-window.md`](spec/104-advisor-naming-window.md) | 104 — 「自定」：軍師命名視窗 | CONFORMED（2026-08-29 實作、單測與截圖；三個假說項見 §5）。 | 2026-08-29 |
+| [`docs/spec/105-encounter-goes-straight-to-battle.md`](spec/105-encounter-goes-straight-to-battle.md) | 105 — 遭遇時沒有「戰鬥指揮／委任」選單：直接進戰場 | CONFORMED（2026-08-29 機器碼 ＋ 實機兩條證據，已實作與單測）。 | 2026-08-29 |
 | [`docs/spec/11-ai-sortie.md`](spec/11-ai-sortie.md) | 11 — 進言「請求君主出陣」 | CONFORMED。 | 2026-08-14 |
 | [`docs/spec/12-strategy-chrome.md`](spec/12-strategy-chrome.md) | 12 — 主畫面的視窗外框、指令列與右欄 | CONFORMED。主畫面的四個常駐視窗矩形、指令列版面與縮小地圖／勢力篩選鈕的 位置全部由機器碼定死（[docs/… | 2026-08-15 |
 | [`docs/spec/13-main-window-toggles.md`](spec/13-main-window-toggles.md) | 13 — 主畫面四個視窗的開關 | CONFORMED。已實作並留下四窗全開／全關的截圖； 舊的 g.open[] 那一套已整個拿掉，主畫面視窗只剩一份… | 2026-08-15 |
@@ -198,7 +206,7 @@
 | [`docs/spec/24-corps-info-window.md`](spec/24-corps-info-window.md) | 24 — 軍團情報視窗 | CONFORMED。版面已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/25-slot-select-window.md`](spec/25-slot-select-window.md) | 25 — 四槽選擇視窗（新遊戲／讀取／儲存） | CONFORMED。讀取／儲存已照原版版面實作； 新遊戲仍走 remake 自己的啟動殼層（§5）。 | 2026-08-15 |
 | [`docs/spec/26-yes-no-dialog.md`](spec/26-yes-no-dialog.md) | 26 — ＹＥＳ／ＮＯ 對話框 | CONFORMED。版面與命中算式已照原版實作並有契約測試。 | 2026-08-15 |
-| [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 輸入照原版收斂成兩個熱區（§2.1）。「自定」（軍師命名）還沒接… | 2026-08-15 |
+| [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 輸入照原版收斂成兩個熱區（§2.1）。「自定」開命名視窗（[10… | 2026-08-15 |
 | [`docs/spec/28-scenario-json.md`](spec/28-scenario-json.md) | 28 — 劇本的 JSON 匯出與匯入 | CONFORMED。四個區塊 round-trip 全過。 | 2026-08-15 |
 | [`docs/spec/29-audio.md`](spec/29-audio.md) | 29 — 音樂與音效 | CONFORMED。音樂與音效都會出聲、與原版錄音比對過， ⭐ | 2026-08-15 |
 | [`docs/spec/30-victory.md`](spec/30-victory.md) | 30 — 結局：存活勢力數歸一 | CONFORMED。⭐ 觸發條件在機器碼裡是 | 2026-08-16 |
@@ -274,7 +282,7 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 144 條。**要查「這件事解了沒」先看這裡**，
+共 145 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（78 條）
@@ -405,6 +413,12 @@
 | 3.4 其他戰術判定（說明書） ▸ 陣形有利不利 | `docs/mechanics/70-ai.md` |
 | 5.8 ⭐ 十一個命令處理常式，隊長與隊員各一套 ▸ 命令 | `docs/re/11-tactical-battle.md` |
 | 6.1 圖庫段 ＝ ICONGRF 段 3 ＋ 0x9A0 ▸ 場景 0 的 0x1200–0x1440（4 張 24×16） | `docs/re/48-window-display-list.md` |
+
+### 假說（1 條）
+
+| 鍵 | 出處 |
+|---|---|
+| 索引 ▸ 「自定」軍師命名視窗 | `docs/spec/00-index.md` |
 
 ### 未解（30 條）
 

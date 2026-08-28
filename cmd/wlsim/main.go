@@ -90,13 +90,8 @@ func main() {
 				ticks, w.Clock.Year, w.Clock.Month, w.Clock.Day, o)
 			break
 		}
-		// 世界也會停在「等玩家決定」上，而這支程式沒有玩家。
-		// **無頭模擬一律委任**（原版遭遇選單的第二項），其餘等待
-		// 沒有自動解法，報一行就停——空轉比停下來難查得多。
-		if w.PendingEncounter() != nil {
-			w.ChooseBattleDelegate(rng)
-			continue
-		}
+		// 世界也會停在「等玩家決定」上，而這支程式沒有玩家：
+		// 沒有自動解法的等待報一行就停——空轉比停下來難查得多。
 		// 外交提案與撥款請求一律拒絕。**這是這支程式的政策，不是原版規則**
 		// ——長期經濟量測要的是「玩家不介入時世界怎麼走」，
 		// 拒絕是唯一不花錢、不改變勢力關係的答案。
@@ -265,8 +260,6 @@ func blockedBy(w *state.World) string {
 	switch {
 	case w.PendingBattle() != nil:
 		return "戰術戰鬥"
-	case w.PendingEncounter() != nil:
-		return "遭遇選單"
 	case w.PendingDiplomacy() != nil:
 		return "外交提案"
 	case w.PendingFunding() != nil:

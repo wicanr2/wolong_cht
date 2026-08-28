@@ -277,40 +277,6 @@ func battleSideCommandIndexAt(r battleRect, x, y int) (int, bool) {
 	return battleCommandIndexAt(battleSideCommandCells(r), x, y)
 }
 
-// battleChoiceLayout 集中遭遇選單視窗與兩列的可見文字區。列區只涵蓋
-// glyph 高度，列距中的空白與視窗外框不命中。
-type battleChoiceLayout struct {
-	Window battleRect
-	Rows   [2]battleRect
-}
-
-func battleChoiceLayoutFor() battleChoiceLayout {
-	const (
-		x, y, w, h = 104, 112, 432, 160
-		rowX       = x + 8 + 4
-		rowY       = y + 3*15 + 24
-		rowW       = w - 2*(8+4)
-		rowH       = 15
-		rowPitch   = 15 + 4
-	)
-	return battleChoiceLayout{
-		Window: battleRect{X: x, Y: y, W: w, H: h},
-		Rows: [2]battleRect{
-			{X: rowX, Y: rowY, W: rowW, H: rowH},
-			{X: rowX, Y: rowY + rowPitch, W: rowW, H: rowH},
-		},
-	}
-}
-
-func battleChoiceRowAt(x, y int) (int, bool) {
-	rows := battleChoiceLayoutFor().Rows
-	for i, row := range rows {
-		if row.containsPoint(x, y) {
-			return i, true
-		}
-	}
-	return 0, false
-}
 
 // battleSideCellLayout 是一格將旗裡三件東西的位置。
 //

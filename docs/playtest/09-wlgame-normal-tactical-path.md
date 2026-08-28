@@ -6,7 +6,7 @@
 - 執行環境：Docker／Xvfb，專案既有 `docker/go/Dockerfile` 建成的 `wolong-go:20260809`
 - 原始輸入：`workplace/orig/dosv/SINARIO.DAT`、`workplace/eten/`，唯讀掛載
 - 亂數：`-seed 17`，只固定驗收亂數來源
-- 啟動：`cmd/wlgame`，未使用 `-open-battle`、`-open-battle-choice`、`-open-form` 或其他 `-open-*` 旗標
+- 啟動：`cmd/wlgame`，未使用 `-open-battle`、open-battle-choice（當時的旗標，已拿掉）、`-open-form` 或其他 `-open-*` 旗標
 - 截圖：使用 `wlgame -shot` 內建 PNG 輸出；新檔案由 UID/GID `1000:1000` 產生
 
 ## 1. 正常輸入序列

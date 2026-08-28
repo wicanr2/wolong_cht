@@ -352,11 +352,6 @@ func (s *Session) OpenDemoBattle(node int) error {
 	}) {
 		return fmt.Errorf("擺不出戰鬥（攻 %d 守 %d）", att, def)
 	}
-	if s.world.PendingEncounter() != nil {
-		if err := s.world.ChooseBattleCommand(); err != nil {
-			return err
-		}
-	}
 	s.battle = battleState{view: s.newBattleView(), tacSpeed: DefaultSpeed}
 	return nil
 }

@@ -72,7 +72,6 @@ func (w *World) Fingerprint() [32]byte {
 
 	// 待決狀態只記「有沒有」，內容是 UI 層的暫態（docs/spec/69 §3）。
 	flag(w.pending != nil)
-	flag(w.encounter != nil)
 	flag(w.diplomacy != nil)
 	flag(w.funding != nil)
 

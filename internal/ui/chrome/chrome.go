@@ -143,6 +143,12 @@ func (s *Set) fillInterior(dst *ebiten.Image, x, y, w, h int, fill color.RGBA) {
 	}
 }
 
+// FillMenu 只鋪深藍龍紋、不畫框——戰場的 `▶▶`（快轉）把整個戰場區換成
+// 這一片（docs/spec/102）。
+func (s *Set) FillMenu(dst *ebiten.Image, x, y, w, h int) {
+	s.fillInterior(dst, x, y, w, h, Menu)
+}
+
 // Available 回報有沒有真的拿到原版圖塊。
 func (s *Set) Available() bool { return s != nil && s.edge != nil }
 

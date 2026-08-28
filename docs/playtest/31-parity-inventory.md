@@ -12,7 +12,7 @@
   [`27`](27-original-video-frame-parity.md) §5）＋ `KI.EXE` 的字串表
 - remake 側：`tools/shot.sh` ＋ `wlgame -direct -scenario 0 -player 0`
   加 `-open-window -2`／`-open-form`／`-open-list`／`-open-corps`／
-  `-open-battle-choice`／`-open-battle`／`-open-siege`
+  `-open-battle`／`-open-siege`（當時還有 open-battle-choice，2026-08-29 隨遭遇選單一起拿掉）
 - ⚠ **影片是再編碼過的**，只能比顏色分類、文字與版面，不能比 RGB
 
 ## 1. 逐畫面
@@ -26,7 +26,7 @@
 | 一覽表：捲軸 | ✅ **已補**：▲／槽／▼ 三段照原版熱區（[`../re/26`](../re/26-list-window-engine.md) §10），清單本體跟著右移 16 px，自創的頁尾條拿掉 | ✅ | — |
 | **編成畫面** | ✅ **已改**：武將肖像 (152,120)、六個槽與確定鈕的滑鼠熱區、「選武將 → 編成 → 回到選武將」的迴圈（一覽表留在背景）都照原版（[`../spec/22`](../spec/22-corps-formation-window.md)）| ✅ | — |
 | 編成畫面：鍵盤提示 | ✅ **已拿掉**。鍵盤留著當便利操作，但畫面上不再有提示塊 | ✅ | — |
-| **戰鬥指揮／委任選單** | 選項字串是原版的 TALK #76，行軍指示的三選一也接上了（[`../spec/39`](../spec/39-march-order-menu.md)）。版面算式與位置都解了——**選單開在上一次點擊的位置，並夾住不出畫面**（[`../spec/39`](../spec/39-march-order-menu.md) §3.5）。remake 畫在固定位置 | 部分 | 要跟游標就得把那兩個全域接進來 |
+| ~~戰鬥指揮／委任選單~~ | 原版遭遇時沒有這張（[`55`](55-encounter-menu-parity.md)）；行軍指示的三選一才是 TALK #76 |
 | **戰場（野戰／攻城）** | 側欄七格、門強度條、底列都照原版（[`../spec/31`](../spec/31-tactical-sidebar.md)–[`33`](../spec/33-squad-selection.md)）| ✅ | — |
 | 戰場：同一場的逐格對拍 | ✅ **做了**：`-siege-corps` 拿存檔裡現成的兩支軍團開戰，九區裡**六區逐像素相同**、`field` 0.17%（[`40`](40-tactical-parity.md)，2026-08-18；⚠ 重跑未重現，[`49`](49-parity-retest-20260827.md)）| ✅ | — |
 | **音樂／音效** | 會出聲、場景對應已解 | ✅ | 音色的諧波結構沒量化比對（[`26`](26-bgm-render-vs-recording.md)）|
@@ -72,6 +72,6 @@ remake 照它重做的結果在 [`../spec/38`](../spec/38-list-windows.md)。
 
 | 項目 | 現況 |
 |---|---|
-| 戰鬥指揮／委任選單 | 影片裡沒有對照影格，也還沒做同狀態對拍 |
+| ~~戰鬥指揮／委任選單~~ | **原版沒有這個畫面**：遭遇訊息按掉就是戰場（[`55`](55-encounter-menu-parity.md)），remake 那張視窗已拿掉（`docs/spec/105`）|
 | 勢力一覽的欄位 | 沒有逐欄比對 |
 | 「委任」那一格的顏色 | 實錄影格上看起來是紅字，但影片是壓縮過的、也沒有機器碼證據。remake 先畫成一般色（[`../spec/38`](../spec/38-list-windows.md)）|

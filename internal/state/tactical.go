@@ -55,66 +55,11 @@ type Pending struct {
 	CityWall int
 }
 
-// EncounterChoice 是一場等著玩家決定處理方式的遭遇。
-//
-// 這是原版行軍抵達敵軍／敵城時的中間狀態：
-//
-//   - 戰鬥指揮：進入戰術畫面，由玩家下令
-//   - 委任：不開戰術畫面，直接用自動判定解決
-//
-// 它只存在於執行期，不是劇本／存檔欄位。
-type EncounterChoice struct {
-	Attacker int
-	Defender int // -1 表示城兵；目前只有軍團對軍團會進這個選單
-	Node     int
-	Mode     combat.Mode
-	Garrison int
-}
-
 // SetTactical 裝上戰場來源。傳 nil 就回到全自動判定。
 func (w *World) SetTactical(t *TacticalSetup) { w.tactical = t }
 
 // PendingBattle 回傳等著玩家打的那一場，沒有就回 nil。
 func (w *World) PendingBattle() *Pending { return w.pending }
-
-// PendingEncounter 回傳等著玩家選擇的遭遇，沒有就回 nil。
-// 回傳副本，避免畫面層直接改動規則狀態。
-func (w *World) PendingEncounter() *EncounterChoice {
-	if w.encounter == nil {
-		return nil
-	}
-	c := *w.encounter
-	return &c
-}
-
-var errNoEncounter = errors.New("state: 沒有待處理的遭遇")
-
-// ChooseBattleCommand 把待處理的遭遇轉成戰術戰鬥。
-func (w *World) ChooseBattleCommand() error {
-	if w.encounter == nil {
-		return errNoEncounter
-	}
-	c := *w.encounter
-	if !w.beginTactical(c.Attacker, c.Defender, c.Mode, c.Garrison) {
-		return errNoTactical
-	}
-	w.encounter = nil
-	return nil
-}
-
-// ChooseBattleDelegate 委任待處理的遭遇，回傳與正常自動戰鬥相同的事件。
-func (w *World) ChooseBattleDelegate(rng combat.Rand) *CorpsEvent {
-	if w.encounter == nil {
-		return nil
-	}
-	c := *w.encounter
-	w.encounter = nil
-	w.rng = rng
-	ev := &CorpsEvent{Corps: c.Attacker, Enemy: c.Defender, Mode: c.Mode,
-		Captured: -1, Relocated: -1, GovernorReturned: noGovernor}
-	w.resolveCorpsBattle(ev, c.Attacker, c.Defender, c.Mode, c.Garrison, rng)
-	return ev
-}
 
 // wantsTactical 回報這一場該不該開戰術畫面。
 func (w *World) wantsTactical(att, def int) bool {

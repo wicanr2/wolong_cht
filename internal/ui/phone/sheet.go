@@ -77,6 +77,10 @@ func (s *Session) SetSheetTab(i int) {
 // Back 是 Android 返回鍵的行為：關面板 → 收小卡 → 交給呼叫端決定離開。
 // 回傳 true 表示這一次按鍵已經被吃掉。
 func (s *Session) Back() bool {
+	if s.amountPad {
+		s.amountPad = false // 先關數字鍵盤，回三選一（docs/spec/103）
+		return true
+	}
 	switch {
 	case s.sheet.open:
 		s.sheet = sheet{}

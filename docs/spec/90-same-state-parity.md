@@ -115,7 +115,7 @@ remake 這一側因此需要「拿既有的兩支軍團開戰」而不是現編�
 不搬就是幽靈」的坑見 [`../playtest/43`](../playtest/43-field-battle-parity.md) §2–§3。
 
 原版側用 `WOLONG_DOSV_SEED_SAVE` 預置存檔；remake 側
-`-save-file … -load-slot 0 -encounter-choose`（遭遇出現時自動選戰鬥指揮，
+`-save-file … -load-slot 0`（遭遇直接進戰場，[`105`](105-encounter-goes-straight-to-battle.md)；先前的 encounter-choose 旗標已拿掉——當時它是「自動選戰鬥指揮，
 照自然流程進戰場、不重擺軍團——`-siege-corps` 那條會重擺，戰場格會跑掉）。
 ⚠ 像素比對一律用 `shot:` 的 PNG，`grab-start:` 的 mp4 是失真編碼，
 逐區 diff 會全部 99%。

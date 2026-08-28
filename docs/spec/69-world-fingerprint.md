@@ -34,7 +34,7 @@
 | 災害 marker 與等級 | `disasterMarkers`／`disasterMarkerLevels`（192 格）|
 | 災害物件 32 槽 | 每槽的種類、位置與計時 |
 | 亂數狀態 | `rng.Rand` 的 `c`／`s` 兩個 byte（表在播種後就不再變）|
-| 待決狀態的**種類** | `pending`／`encounter`／`diplomacy`／`funding` 是不是 nil |
+| 待決狀態的**種類** | `pending`／`diplomacy`／`funding` 是不是 nil（`encounter` 隨遭遇選單一起拿掉，[`105`](105-encounter-goes-straight-to-battle.md)）|
 
 ## 3. ⚠ 不涵蓋什麼
 

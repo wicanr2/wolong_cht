@@ -10,7 +10,7 @@
 - 原始輸入：`workplace/orig/dosv/SINARIO.DAT`、`workplace/orig/dosv/SAVE.DAT`、
   `workplace/eten/`，唯讀掛載
 - 啟動：`cmd/wlgame`，正常 AI 回放使用 `-seed 17` 固定亂數；沒有使用
-  `-open-battle`、`-open-battle-choice`、`-open-form` 或 `-open-corps`
+  `-open-battle`、open-battle-choice（當時的旗標，2026-08-29 拿掉）、`-open-form` 或 `-open-corps`
 - 初始狀態：劇本 1、玩家勢力 0（曹操）、196 年 4 月 1 日、`speed=0`
 
 ## 1. 正常操作序列
@@ -65,7 +65,7 @@ Down × 22；Enter × 2      # 距離排序第 22 列：濮陽（據點 56）
 `-seed 17` 只替驗收固定亂數來源，沒有跳過月結、宣戰、編成、行軍或遭遇判定。
 真實劇本下，敵方勢力 13（呂布）在月結評估後編成軍團，沿現有 MMAP 道路向
 濮陽行軍；當它與曹操軍團在濮陽發生攻城接觸時，`World` 正常建立
-`EncounterChoice`，`wlgame` 顯示「戰鬥指揮／委任」。畫面截圖時日期為
+當時的 EncounterChoice，`wlgame` 顯示「戰鬥指揮／委任」（★ 歷史快照：那張視窗是 remake 多加的，2026-08-29 拿掉，`docs/spec/105`）。畫面截圖時日期為
 196 年 6 月 28 日，沒有使用任何 `-open-*` 驗收旗標，也沒有傳送或直接改寫軍團座標。
 
 ### 存檔回放的採信界線

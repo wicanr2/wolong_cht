@@ -28,6 +28,8 @@ type Session struct {
 
 	// origDir 是原版素材的目錄。存讀檔要用它推出來源與 overlay 的位置。
 	origDir string
+	// amountPad 是外交提案的數字鍵盤開著（docs/spec/103）。
+	amountPad bool
 
 	// ch 是原版的視窗外框（`ICONGRF.DAT` 的三塊 8×8 圖塊 ＋ 龍紋）。
 	// **與桌面版同一份**（docs/spec/70）。缺素材時仍可用，畫成純色框。

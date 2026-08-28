@@ -230,18 +230,23 @@ clickat() {
     sleep 0.45
 }
 
-# tapat 是「瞬按」：按住只 0.03 秒。彈出選單開起來之後的下一次 INT 33
+# tapat 是「瞬按」：預設按住 0.03 秒。⭐ 2026-08-29：單獨一下 tap（5–60 ms 都行）
+# 就能打開彈出選單而不選走第一列；先前失敗是 `click;press` 在同一點按了兩下
+#（docs/playtest/54）。要點選單的第二列以後一律 `tap:x,y,5`，後面不要接 press。彈出選單開起來之後的下一次 INT 33
 # AX=5 poll 若還看到按著（clickat 按住 0.12 秒），會用當時游標位置立刻
 # 選列——框外游標被夾到列 0，第二列以後永遠點不到（docs/playtest/40
 # §1.2、42 §5）。瞬按讓選單開起來時按鍵已放開，之後才能移進框內選列。
+# 第三個參數是按住幾毫秒（預設 30）：`tap:x,y,10` 可以掃不同長度，
+# 找「選單開起來之前就放開、但按下有被看到」的那個窗口。
 tapat() {
     local px=$1
     local py=$2
+    local ms=${3:-30}
     window_geometry
     DISPLAY=:99 xdotool mousemove "$((X + px))" "$((Y + py))"
     sleep 0.15
     DISPLAY=:99 xdotool mousedown 1
-    sleep 0.03
+    sleep "$(awk -v ms="$ms" 'BEGIN { printf "%.3f", ms / 1000 }')"
     DISPLAY=:99 xdotool mouseup 1
     sleep 0.45
 }
@@ -438,7 +443,8 @@ for step in "${steps[@]}"; do
             ;;
         tap)
             trace "step begin=$step"
-            tapat "${arg%%,*}" "${arg##*,}"
+            IFS=, read -r tx ty tms <<<"$arg"
+            tapat "$tx" "$ty" "${tms:-30}"
             trace "step end=$step"
             ;;
         press)

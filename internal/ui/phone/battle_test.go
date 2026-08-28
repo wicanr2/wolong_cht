@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/wicanr2/wolong_cht/internal/assets/battle"
-	"github.com/wicanr2/wolong_cht/internal/battlesetup"
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
 	"github.com/wicanr2/wolong_cht/internal/ui/isoview"
@@ -92,50 +91,6 @@ func TestBattleTakesOverTheScreen(t *testing.T) {
 	if s.Battle() != nil && s.Battle().Frame == before {
 		t.Fatal("戰場的時鐘沒有走——戰術層沒有暫停")
 	}
-}
-
-// ⚠ **不接遭遇決策的話世界會停住**：`World.tick` 開頭就檢查它。
-// 這一條驗的是「選了之後時間會再走」。
-func TestEncounterChoiceUnblocksTheWorld(t *testing.T) {
-	s := newTestSession(t)
-	// 用驗收捷徑擺一場，但**不自動選**——停在遭遇決策上。
-	if !stageEncounterForTest(s) {
-		t.Skip("擺不出遭遇")
-	}
-	if s.ModalKind() != modalEncounter {
-		t.Fatalf("停在 %v，預期遭遇決策", s.ModalKind())
-	}
-	before := s.World().Clock
-	for i := 0; i < 300; i++ {
-		s.Tick()
-	}
-	if s.World().Clock != before {
-		t.Fatal("遭遇決策擋著世界，時鐘卻走了")
-	}
-	if opts := s.ModalOptions(); len(opts) != 2 {
-		t.Fatalf("遭遇有 %d 個選項，預期戰鬥指揮與委任", len(opts))
-	}
-	s.PickModal(1) // 委任：不開戰術畫面，直接判定
-	if s.ModalKind() != modalNone {
-		t.Fatal("選完了還擋著")
-	}
-	for i := 0; i < 300; i++ {
-		s.Tick()
-	}
-	if s.World().Clock == before {
-		t.Fatal("選完之後時鐘還是沒走")
-	}
-}
-
-// stageEncounterForTest 擺一場遭遇但不選處理方式。
-func stageEncounterForTest(s *Session) bool {
-	att, def, err := s.formDemoCorps()
-	if err != nil {
-		return false
-	}
-	return battlesetup.StageEncounter(s.world, s.rand, battlesetup.StageOptions{
-		Siege: true, Node: 82, Attacker: att, Defender: def,
-	}) && s.world.PendingEncounter() != nil
 }
 
 // 長跑：連續推進二十萬幀（約六年遊戲時間），每次有東西擋著就選一個，看時鐘是不是一直在走。

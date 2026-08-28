@@ -288,24 +288,6 @@ func TestBattleCommandHitTestsRespectGlyphEdgesAndGaps(t *testing.T) {
 	}
 }
 
-func TestBattleChoiceRowsHoverOnlyInsideGlyphBands(t *testing.T) {
-	l := battleChoiceLayoutFor()
-	for i, row := range l.Rows {
-		if got, ok := battleChoiceRowAt(row.X+row.W/2, row.Y+row.H/2); !ok || got != i {
-			t.Fatalf("遭遇第 %d 列中心命中 = %d, %v", i+1, got, ok)
-		}
-	}
-	if _, ok := battleChoiceRowAt(l.Rows[0].X, l.Rows[0].bottom()); ok {
-		t.Fatal("遭遇列距空白不應命中")
-	}
-	if _, ok := battleChoiceRowAt(l.Window.X+1, l.Window.Y+1); ok {
-		t.Fatal("遭遇視窗框線不應命中")
-	}
-	if _, ok := battleChoiceRowAt(-1, -1); ok {
-		t.Fatal("畫面外不應命中遭遇列")
-	}
-}
-
 // 鍵盤 1–6 直接下命令是 **remake 加的**（原版這一層只有滑鼠）；
 // 底列六格在原版是**選部隊**，兩者不再是同一個索引（docs/spec/33）。
 func TestBattleKeyboardIssuesCommandsAndBottomRowPicksSquads(t *testing.T) {

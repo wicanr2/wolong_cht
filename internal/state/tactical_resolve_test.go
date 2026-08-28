@@ -43,10 +43,9 @@ func TestTacticalBattleAlwaysResolves(t *testing.T) {
 	w.March(la, w.Factions[b].Capital)
 	w.March(lb, w.Factions[a].Capital)
 	r := rng.NewFixed(5)
-	for i := 0; i < 200000 && w.PendingBattle() == nil && w.PendingEncounter() == nil; i++ {
+	for i := 0; i < 200000 && w.PendingBattle() == nil; i++ {
 		w.Tick(r)
 	}
-	w.ChooseBattleCommand()
 	p := w.PendingBattle()
 	if p == nil {
 		t.Fatal("沒開戰術")

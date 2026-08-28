@@ -62,6 +62,13 @@ func (w *World) PendingDiplomacy() *DiplomacyChoice {
 	return &c
 }
 
+// BeginDiplomacyChoice 直接把一份外交提案掛成「擋住世界的決定」。
+// 保留給測試與跨平台輔助控制（手機版的金額輸入器要在沒有事件的局面上驗），
+// 遊戲流程一律走 beginDiplomacy。
+func (w *World) BeginDiplomacyChoice(c DiplomacyChoice) {
+	w.diplomacy = &c
+}
+
 // SetDiplomacyOfferAmount 保留給測試與跨平台輔助控制的直接設定入口；
 // 原版逐位編輯語意由 EditDiplomacyOfferAmount 提供。
 func (w *World) SetDiplomacyOfferAmount(amount int) bool {

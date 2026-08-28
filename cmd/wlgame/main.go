@@ -223,7 +223,16 @@ type game struct {
 	saveFile   string
 	saveBase   string
 	saveUI     saveUIState
+	// battleFastForward 是戰場 `▶▶`（快轉）開著；battleFFTouched 記錄按過
+	// ——原版按過才描那一圈框（docs/spec/102）。
+	battleFastForward, battleFFTouched bool
 	launcher   *launcherModel
+	// naming 是「自定」軍師命名視窗開著（docs/spec/104）；
+	// launcherPreviewWorld 是選君主那一頁預覽的劇本世界（命名要看武將的肖像）；
+	// customAdvisor 是命名完成、等開局套進世界的結果。
+	naming               *namingModel
+	launcherPreviewWorld *state.World
+	customAdvisor        *customAdvisor
 
 	camX, camY int
 
@@ -333,8 +342,6 @@ type game struct {
 	quitting bool
 	quitYes  bool // ＹＥＳ／ＮＯ 對話框的選取（remake 的鍵盤操作）
 
-	// battleChoiceRow 是遭遇決策視窗目前反白的選項。
-	battleChoiceRow int
 	// battleTalkSession 是 presentation-only 的戰術開場 TALK queue；不進 state／存檔。
 	battleTalkSession battleTalkSession
 
@@ -836,19 +843,6 @@ func (g *game) Update() error {
 		g.updateBattle()
 		return nil
 	}
-	// 玩家捲入遭遇但尚未決定戰鬥方式時，戰略時間也不能前進。
-	if g.world.PendingEncounter() != nil {
-		// -encounter-choose：對拍 fixture，照原版自然流程進戰場
-		// （不重擺軍團位置，攻守與戰場格照遭遇當下）。
-		if autoEncounterChoose {
-			if err := g.world.ChooseBattleCommand(); err == nil {
-				g.startBattleTalk(g.world.PendingBattle())
-				return nil
-			}
-		}
-		g.updateBattleChoice()
-		return nil
-	}
 	// 事件前置報告可能與外交／撥款 pending 同一個 tick 產生；原版先
 	// 顯示 TALK，再讓玩家進入選擇，因此通知 modal 優先於這兩個選單。
 	if g.messageActive() {
@@ -1207,9 +1201,6 @@ func (g *game) Draw(screen *ebiten.Image) {
 	g.drawCorpsInfo(screen)
 	g.drawAdvise(screen)
 	g.drawSaveUI(screen)
-	if choice := g.world.PendingEncounter(); choice != nil {
-		g.drawBattleChoice(screen, choice)
-	}
 	if choice := g.world.PendingDiplomacy(); choice != nil {
 		g.drawDiplomacy(screen, choice)
 	}
@@ -1398,6 +1389,11 @@ func (g *game) saveShot(screen *ebiten.Image) bool {
 	if err := png.Encode(f, img); err != nil {
 		log.Printf("⚠ 截圖編碼失敗：%v", err)
 		return false
+	}
+	if g.world == nil {
+		// 啟動殼層的截圖（`-open-naming`）：還沒有世界，沒有日期可印。
+		log.Printf("截圖 → %s（第 %d 幀，啟動殼層）", g.shotPath, g.frame)
+		return true
 	}
 	log.Printf("截圖 → %s（第 %d 幀，%d年%d月%d日）",
 		g.shotPath, g.frame, g.world.Clock.Year, g.world.Clock.Month, g.world.Clock.Day)
@@ -1635,9 +1631,10 @@ func main() {
 	openBattle := flag.Bool("open-battle", false, "截圖前先開一場野戰的戰術戰鬥（驗收用）")
 	openSiege := flag.Bool("open-siege", false, "截圖前先開一場攻城的戰術戰鬥（驗收用）")
 	openEnding := flag.Int("open-ending", -1, "直接跳到結局的第幾幕（0–11，驗收用）")
-	openBattleChoice := flag.Bool("open-battle-choice", false, "截圖前停在戰鬥指揮／委任選單（驗收用）")
 	openMarchMode := flag.Bool("open-march-mode", false, "截圖前停在行軍指示的三選一（驗收用）")
 	openMarchList := flag.Bool("open-march-list", false, "截圖前編一支軍團並停在行軍目的地一覽（驗收用）")
+	openNaming := flag.Bool("open-naming", false, "停在啟動殼層選君主那一頁並打開「自定」命名視窗（驗收用，docs/spec/104）")
+	battleFF := flag.Bool("battle-ff", false, "配 -open-battle／-open-siege：截圖前先按下 `▶▶` 快轉（驗收用，docs/spec/102）")
 	siegeNode := flag.Int("siege-node", -1, "指定攻城的戰場＝據點編號（驗收用，配 -open-siege）")
 	siegeDefend := flag.Bool("siege-defend", false, "攻城時玩家當守方（原版會把戰場轉 180 度，docs/spec/56）")
 	siegeCorps := flag.String("siege-corps", "", "拿**存檔裡現成的**兩支軍團開攻城戰：`攻,守`（編號用 -list-corps 看，docs/spec/90 §2.3）")
@@ -1645,7 +1642,6 @@ func main() {
 	listCorps := flag.Bool("list-corps", false, "把載入後還活著的軍團印出來（編號、勢力、主將、兵力）")
 	battleCam := flag.String("battle-cam", "", "覆寫戰術鏡頭的世界格 `X,Y`（驗收用；原版初值是 36,14）")
 	openFinance := flag.Bool("open-finance", false, "截圖前先開財政視窗（對拍用，docs/spec/14 §4）")
-	encounterChoose := flag.Bool("encounter-choose", false, "遭遇出現時自動選戰鬥指揮（野戰對拍用，docs/spec/90）")
 	financeAmount := flag.Int("finance-amount", -1, "配 -open-finance：再開第 N 列（0–3）的數值輸入器（docs/spec/78）")
 	openMessage := flag.Bool("open-message", false, "截圖前先開玩家首都的暴風雨 TALK #70 通知（驗收用）")
 	openTalkIndex := flag.Int("open-talk-index", -1, "截圖前直接開指定 TALK.DAT 槽位（驗收用）")
@@ -1733,7 +1729,8 @@ func main() {
 		log.Printf("⚠ 取不到 ICONGRF 段 3 的視窗外框，改畫純色框")
 	}
 
-	if *directStart || directStartFlagWasPassed() {
+	// `-open-naming` 要的是啟動殼層本身，即使帶了 `-shot` 也不走直啟。
+	if (*directStart || directStartFlagWasPassed()) && !*openNaming {
 		if err := g.startWorld(loadPath, *scenario, *player, true, loadPath == path); err != nil {
 			log.Fatal(err)
 		}
@@ -1766,14 +1763,16 @@ func main() {
 		if *openEnding >= 0 {
 			openEndingFixture(g, *openEnding)
 		}
-		autoEncounterChoose = *encounterChoose
 		g.lordCorps = *lordCorpsFlag
 		g.damageReport = *damageReportFlag
 		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *adviseTarget, *openCities, *openFactions, *openCityInfo, *openForm, *openCorps, *openMarchList,
-			*openMarchMode, *openBattle, *openSiege, *openBattleChoice, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow,
+			*openMarchMode, *openBattle, *openSiege, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow,
 			*openTalkIndex, *openOutcome, parseSiegeFixture(*siegeNode, *siegeDefend, *siegeCorps, *battleSteps),
 			corpsMapFixture{enabled: *corpsOnMap, marchTo: *marchTo},
 			*camAt, *battleCam)
+		if *battleFF {
+			g.toggleBattleFastForward()
+		}
 	} else {
 		slots := inspectLauncherSlots(*saveFile)
 		// 劇本標題從檔案讀，不硬編（docs/spec/25 §1.2）。
@@ -1784,6 +1783,18 @@ func main() {
 			}
 		}
 		g.launcher = newLauncher(hasAvailableLauncherSlot(slots), slots)
+		if *openNaming {
+			// 驗收用：跳到劇本 0 的選君主頁並打開命名視窗。
+			// setScenarioPlayers 只在「選劇本」那一頁收資料，先把狀態機擺過去。
+			g.launcher.phase = launcherScenario
+			if err := g.applyLauncherResult(launcherResult{kind: launcherPreviewScenario, scenario: 0}); err != nil {
+				log.Printf("-open-naming：%v", err)
+			}
+			g.launcher.phase = launcherSelectPlayer
+			if err := g.openNaming(); err != nil {
+				log.Printf("-open-naming：%v", err)
+			}
+		}
 	}
 
 	ebiten.SetWindowSize(screenW*2, screenH*2)
@@ -2051,11 +2062,9 @@ func logAliveCorps(g *game) {
 	log.Printf("還活著的軍團共 %d 支", n)
 }
 
-// autoEncounterChoose 由 -encounter-choose 設定（野戰對拍 fixture）。
-var autoEncounterChoose bool
 
 func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, adviseTarget, openCities, openFactions bool, openCityInfo int, openForm, openCorps, openMarchList, openMarchMode,
-	openBattle, openSiege, openBattleChoice, openMessage, openFinance bool, financeAmount int, openFormPick bool, formPickRow, openTalkIndex int,
+	openBattle, openSiege, openMessage, openFinance bool, financeAmount int, openFormPick bool, formPickRow, openTalkIndex int,
 	openOutcome string, siege siegeFixture, corpsMap corpsMapFixture, camAt, battleCam string) {
 	w := g.world
 	if w == nil {
@@ -2128,8 +2137,8 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 		// 編成的武將一覽（原版指令列 #3 剛開的狀態：候選已濾、無選取）。
 		g.beginForm()
 	}
-	if openBattle || openSiege || openBattleChoice {
-		g.demoBattle(openSiege, !openBattleChoice, siege)
+	if openBattle || openSiege {
+		g.demoBattle(openSiege, siege)
 	}
 	if battleCam != "" {
 		var bx, by int

@@ -40,11 +40,6 @@ func battleFixture(t *testing.T, siege bool, node, attacker, defender int) *tact
 	battlesetup.StageEncounter(w, siegeRand{}, battlesetup.StageOptions{
 		Siege: siege, Node: node, Attacker: attacker, Defender: defender,
 	})
-	if w.PendingEncounter() != nil {
-		if err := w.ChooseBattleCommand(); err != nil {
-			t.Fatalf("ChooseBattleCommand: %v", err)
-		}
-	}
 	pb := w.PendingBattle()
 	if pb == nil || pb.Battle == nil {
 		t.Skipf("這組參數（攻城=%v 節點=%d 攻=%d 守=%d）沒有開出戰鬥",
@@ -144,14 +139,11 @@ func TestFieldBattleTerminates(t *testing.T) {
 	w.SetTactical(setup)
 
 	rng := siegeRand{}
-	for i := 0; i < 4000 && w.PendingEncounter() == nil; i++ {
+	for i := 0; i < 4000 && w.PendingBattle() == nil; i++ {
 		w.Tick(rng)
 	}
-	if w.PendingEncounter() == nil {
+	if w.PendingBattle() == nil {
 		t.Fatal("推了 4,000 tick 都沒有撞出遭遇——存檔的行軍狀態可能不對")
-	}
-	if err := w.ChooseBattleCommand(); err != nil {
-		t.Fatalf("ChooseBattleCommand: %v", err)
 	}
 	pb := w.PendingBattle()
 	if pb == nil || pb.Battle == nil {

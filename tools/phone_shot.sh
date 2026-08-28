@@ -35,6 +35,7 @@ docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
     -e WOLONG_SHOT_NOTICE="${WOLONG_SHOT_NOTICE:-}" \
     -e WOLONG_SPEED="${WOLONG_SPEED:-}" \
     -e WOLONG_LANG="${WOLONG_LANG:-}" \
+    -e WOLONG_DIPLOMACY="${WOLONG_DIPLOMACY:-}" \
     -w /src "${WOLONG_GO_IMAGE:-demonwinter-go}" bash -c '
 set -e
 export PATH=/usr/local/go/bin:$PATH

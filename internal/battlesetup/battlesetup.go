@@ -286,8 +286,8 @@ func StageEncounter(w *state.World, rng combat.Rand, opt StageOptions) bool {
 		foe.TargetNode = me.Node
 		foe.Timer = 1
 	}
-	for i := 0; i < 64 && w.PendingBattle() == nil && w.PendingEncounter() == nil; i++ {
+	for i := 0; i < 64 && w.PendingBattle() == nil; i++ {
 		w.Tick(rng)
 	}
-	return w.PendingBattle() != nil || w.PendingEncounter() != nil
+	return w.PendingBattle() != nil
 }
