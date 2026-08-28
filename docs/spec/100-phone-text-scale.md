@@ -18,8 +18,8 @@
 
 | 項目 | 值 | 理由 |
 |---|---|---|
-| 倍率 | **2**（`phone.TextScale`）| 只用整數倍——點陣字非整數縮放會糊（`android-ux.md` §3 捏合縮放同一條規則）。3 倍是 48 px，一列只剩 7 列清單，太少 |
-| 放大在哪做 | `textdraw.Drawer.SetScale`，畫的那一刻 `GeoM.Scale` | 字模快取仍是原尺寸；**桌面版不呼叫**，逐像素對拍不受影響 |
+| 倍率 | **2**（`phone.TextScale`）| 只用整數倍——點陣字非整數縮放會糊（`android-ux.md` §3 捏合縮放同一條規則）。3 倍是 48 px，一列只剩 7 列清單，太少。鋸齒用 Scale2x 處理（[`101`](101-phone-glyph-scale2x.md)）|
+| 放大在哪做 | `textdraw.Drawer.SetScale`；倍率 2 在 `render` 時用 Scale2x 放大字模（[`101`](101-phone-glyph-scale2x.md)），其餘倍率畫的那一刻 `GeoM.Scale` | **桌面版不呼叫**，逐像素對拍不受影響 |
 | 設在哪 | `phone.Session.Draw` 每幀 `td.SetScale(TextScale)` | Drawer 由 `mobile/wolong` 與 `cmd/wlandroid` 各建一份，設在建構處就會有一邊忘記 |
 
 ## 3. 版面跟著字高長

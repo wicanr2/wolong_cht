@@ -226,8 +226,9 @@ type Drawer struct {
 }
 
 type cacheKey struct {
-	ch rune
-	c  color.RGBA
+	ch    rune
+	c     color.RGBA
+	scale int
 }
 
 // New 建一個 Drawer。兩個字型都可以是 nil——那樣字會全部畫成方框，
@@ -283,7 +284,11 @@ func (d *Drawer) Draw(dst *ebiten.Image, s string, x, y int, c color.RGBA) int {
 		k := d.Scale()
 		if img != nil {
 			op := &ebiten.DrawImageOptions{}
-			op.GeoM.Scale(float64(k), float64(k))
+			// 倍率 2 的字模已經在 render 時用 Scale2x 放大過（快取鍵含倍率），
+			// 這裡只補 GeoM 還沒放到的部分。
+			if g := float64(k*GlyphH) / float64(img.Bounds().Dy()); g != 1 {
+				op.GeoM.Scale(g, g)
+			}
 			op.GeoM.Translate(float64(x), float64(y))
 			dst.DrawImage(img, op)
 		}
@@ -346,7 +351,7 @@ func (d *Drawer) glyph(ch rune, c color.RGBA) *ebiten.Image {
 	if v, ok := d.runes[ch]; ok {
 		ch = v
 	}
-	k := cacheKey{ch, c}
+	k := cacheKey{ch, c, d.Scale()}
 	if img, ok := d.cache[k]; ok {
 		return img
 	}
@@ -361,17 +366,67 @@ func (d *Drawer) render(ch rune, c color.RGBA) *ebiten.Image {
 	}
 	if d.font != nil {
 		if a, ok := d.font.Glyph(ch); ok {
-			return tint(a, c)
+			return tint(d.upscale(a), c)
 		}
 	}
 	if ch < 0x80 && d.ascii != nil {
 		if a, ok := d.ascii.Glyph(ch); ok {
-			return tint(a, c)
+			return tint(d.upscale(a), c)
 		}
 	}
 	// 取不到字模：畫一個空心方框。**不要什麼都不畫**——
 	// 缺字要看得出來，否則會被誤判成排版問題查很久。
 	return missingBox(ch, c)
+}
+
+// upscale 在倍率 2 時把字模用 Scale2x（EPX）放大，其餘倍率維持原尺寸
+// 交給 Draw 的 GeoM 最近鄰放大（docs/spec/101）。
+//
+// Scale2x 是點陣圖專用的放大法：每個點分成四格，某一角的兩個鄰居同色
+// 且對面兩個鄰居不同時，那一角取鄰居的色——斜線的階梯被補成 45 度，
+// 直線、筆畫粗細與空隙都不動，所以不會像雙線性那樣整個糊掉。
+func (d *Drawer) upscale(a *image.Alpha) *image.Alpha {
+	if d.Scale() != 2 {
+		return a
+	}
+	return Scale2x(a)
+}
+
+// Scale2x 對 alpha 遮罩做 EPX 放大（2 倍）。輸出的原點是 (0,0)。
+func Scale2x(a *image.Alpha) *image.Alpha {
+	b := a.Bounds()
+	w, h := b.Dx(), b.Dy()
+	out := image.NewAlpha(image.Rect(0, 0, w*2, h*2))
+	at := func(x, y int) uint8 {
+		if x < 0 || y < 0 || x >= w || y >= h {
+			return 0
+		}
+		return a.AlphaAt(b.Min.X+x, b.Min.Y+y).A
+	}
+	for y := 0; y < h; y++ {
+		for x := 0; x < w; x++ {
+			p := at(x, y)
+			up, dn, lf, rt := at(x, y-1), at(x, y+1), at(x-1, y), at(x+1, y)
+			e0, e1, e2, e3 := p, p, p, p
+			if lf == up && lf != dn && up != rt {
+				e0 = up
+			}
+			if up == rt && up != lf && rt != dn {
+				e1 = rt
+			}
+			if dn == lf && dn != rt && lf != up {
+				e2 = lf
+			}
+			if rt == dn && rt != up && dn != lf {
+				e3 = dn
+			}
+			out.SetAlpha(x*2, y*2, color.Alpha{e0})
+			out.SetAlpha(x*2+1, y*2, color.Alpha{e1})
+			out.SetAlpha(x*2, y*2+1, color.Alpha{e2})
+			out.SetAlpha(x*2+1, y*2+1, color.Alpha{e3})
+		}
+	}
+	return out
 }
 
 func tint(a *image.Alpha, c color.RGBA) *ebiten.Image {

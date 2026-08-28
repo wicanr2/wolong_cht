@@ -150,7 +150,8 @@ Android 返回鍵：`關掉 sheet → 收掉小卡 → 離開確認`，**不直�
 
 - 訊息框沿用 `TALK.DAT` 與現有的排版層（`internal/ui/textdraw`），
   1,022 則的行寬 guard 已經量過（[`../playtest/32`](../playtest/32-talk-layout-fit.md)）。
-- 原版字型是 **16×15 點陣**；手機上只用**整數倍放大**，不做平滑。
+- 原版字型是 **16×15 點陣**；手機上只用**整數倍放大**，不做雙線性平滑，
+  鋸齒用 Scale2x 補斜角（[`../spec/101`](../spec/101-phone-glyph-scale2x.md)）。
   **倍率定為 2**（使用者裁定 2026-08-28，[`../spec/100`](../spec/100-phone-text-scale.md)）：
   清單一頁 8 列、戰場六格改成「位置 兵數」一行。
 
