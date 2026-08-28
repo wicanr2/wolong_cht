@@ -31,7 +31,7 @@
 | 65–72 | 結尾卡 | 合成 |
 
 輸出（2026-08-28 重錄重剪）：72.000 秒、1280×720、h264／aac 44.1 kHz 立體聲，
-SHA-256 `131b2b0ee0b72ec9208b99148b44baa28807b6906da0c48456472a7e66f3ce43`。
+SHA-256 `58fe759a7f5bfba93972d380b7227570da292838bf3173ea455636586a3c2876`。
 
 ⚠ **「不重複張數」會隨機器負載變**：同一條命令在閒置的機器上與在
 14 核 load 90 的機器上量到的數字差三成（大地圖 71 → 51、野戰 119 → 84）。
@@ -173,7 +173,7 @@ PROMO_FONTFILE=/fonts/NotoSansTC-Regular.otf \
 
 現行的是
 [`wolong-remake-dosv-realmachine.mp4`](../../dist-all/promo/wolong-remake-dosv-realmachine.mp4)，
-72 秒，SHA-256 `1128867fe16cebaa2b1ae4e87371673b240f0643395bb6bc4ecbed4a5fcacb6d`。
+72 秒，SHA-256 `28b864dfbb8b97487d02969847511b7f70b7a88e28455a4bde7bf45348200b63`。
 **原版側是自己跑的受控 DOSBox-X 實機遊玩**：開新遊戲、劇本與君主選擇、
 大地圖與時鐘、軍團編成、事件訊息、行軍指示，全部照 timeline 可以重跑。
 只有戰術戰場那一格取自使用者提供的錄影，並在片上標明。
