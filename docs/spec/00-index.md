@@ -123,6 +123,7 @@
 | 新遊戲的勢力清單 | [`79-new-game-faction-list.md`](79-new-game-faction-list.md) | 已實作並有單測；視窗 (136,104)、五欄、一頁 10 列。⚠ 點擊路徑無頭驗不到（§3.1）|
 | 同狀態畫面對拍（方法）| [`90-same-state-parity.md`](90-same-state-parity.md) | 主畫面五區逐像素相同；§4.1 記下「參考影格本身會有東西」 |
 | 戰場的逐區對拍（分區）| [`91-tactical-parity.md`](91-tactical-parity.md) | 九區裡六區逐像素相同（2026-08-18）；⚠ 取樣點已不等價，見 `playtest/49` |
+| 手機版「關於」頁顯示授權條款（**remake 差異，發行設施**）| [`99-about-page-license.md`](99-about-page-license.md) | 已實作並有單測；APK 帶不了 `LICENSE` 檔，摘要顯示在遊戲內 |
 
 ## 怎麼加一份
 

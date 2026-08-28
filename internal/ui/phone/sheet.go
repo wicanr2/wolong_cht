@@ -325,11 +325,30 @@ func (s *Session) systemRows() []sheetRow {
 	case 2:
 		return s.languageRows()
 	default:
-		return []sheetRow{
-			{name: "臥龍傳 Remake", cols: []string{"手機版"}},
-			{name: "原版", cols: []string{"NEO･GETEN 1994 / 松崗 1995"}},
-			{name: "資料來源", cols: []string{"使用者自備，不隨程式散布"}, dim: true},
-		}
+		return aboutRows()
+	}
+}
+
+// BuildVersion 是「關於」頁顯示的版本字串。APK 由 `tools/android_build.sh`
+// 以 `-X` 注入發行版本；沒注入就是 dev。
+var BuildVersion = "dev"
+
+// aboutRows 是「關於」分頁（docs/spec/99）。
+//
+// ⭐ **這一頁是 APK 唯一看得到授權條款的地方**：桌面包帶 `LICENSE` 檔，
+// APK 的 assets 沒人看得到，所以摘要要顯示在遊戲內（rulebook/85）。
+// ⚠ 不叫 open source——非商業限制不符合 OSI 定義。
+func aboutRows() []sheetRow {
+	return []sheetRow{
+		{name: "臥龍傳 Remake", cols: []string{BuildVersion}},
+		{name: "原版", cols: []string{"NEO･GETEN 1994 / 松崗 1995"}},
+		{name: "資料來源", cols: []string{"使用者自備，不隨程式散布"}, dim: true},
+		{name: "授權", cols: []string{"專有授權：非商業免費"}},
+		{name: "可以", cols: []string{"使用、修改、再散布（非商業）"}},
+		{name: "商業使用", cols: []string{"需書面授權，歡迎來談"}},
+		{name: "聯絡", cols: []string{"wicanr2@gmail.com"}},
+		{name: "不涵蓋", cols: []string{"原版執行檔、資料、美術、音樂、字型"}, dim: true},
+		{name: "條款全文", cols: []string{"github.com/wicanr2/wolong_cht LICENSE"}},
 	}
 }
 

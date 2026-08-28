@@ -321,3 +321,25 @@ func TestPhoneUsesOriginalPalette(t *testing.T) {
 		}
 	}
 }
+
+// 「關於」頁要看得到授權摘要（docs/spec/99）：APK 帶不了 LICENSE 檔，
+// 這一頁是拿到 APK 的人唯一看得到條款的地方。
+func TestAboutTabShowsLicenseTerms(t *testing.T) {
+	s := newTestSession(t)
+	s.OpenSheet(CmdSystem)
+	s.SetSheetTab(3)
+	var all []string
+	for _, r := range s.sheetRows() {
+		all = append(all, r.name)
+		all = append(all, r.cols...)
+	}
+	text := strings.Join(all, "\n")
+	for _, want := range []string{"非商業", "wicanr2@gmail.com", "不涵蓋", "LICENSE", BuildVersion} {
+		if !strings.Contains(text, want) {
+			t.Fatalf("關於頁缺「%s」：\n%s", want, text)
+		}
+	}
+	if strings.Contains(strings.ToLower(text), "open source") {
+		t.Fatal("非商業授權不可以自稱 open source")
+	}
+}

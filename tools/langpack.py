@@ -4,6 +4,7 @@
     tools/langpack.sh                 # zh-hans（需要 OpenCC，走帶網路的容器）
     tools/py.sh tools/langpack.py ja  # 日文：直接取 PC-98 原版，不是翻譯
     tools/py.sh tools/langpack.py en  # 合併 workplace/lang/en/out-*.json
+    tools/py.sh tools/langpack.py apply  # 只重套 corrections-{zh-hans,en}.json
     tools/py.sh tools/langpack.py selftest
 
 產出都進版控（是資料不是快取），重跑可重生：
@@ -38,6 +39,10 @@ EN_PARTS = ROOT / "workplace" / "lang" / "en"
 
 MARKER = re.compile(r"\{[1-7]\}")
 COUNT = 1022
+# 校訂覆寫（docs/spec/84 §6）：機轉／初譯之後由人逐則核對出來的修正。
+# 母本用 corrections.json（走 talkdat.py correct）；這兩份是簡體與英文的。
+OVERRIDES = {"zh-hans": ROOT / "translations" / "corrections-zh-hans.json",
+             "en": ROOT / "translations" / "corrections-en.json"}
 # 訊息框一列 10 個全形字 ＝ 20 個半形字元、一頁 4 列（cmd/wlgame/messages.go）。
 LINE_CELLS = 20
 PAGE_ROWS = 4
@@ -82,7 +87,9 @@ def build_zh_hans():
                 sys.exit(f"#{i} 轉換後變數標記改變：{line!r} → {c!r}")
             conv.append(c)
         out_msgs.append(conv)
+    n = apply_overrides(out_msgs, "zh-hans", master["messages"])
     write_pack(OUT_TALK, out_msgs)
+    print(f"套用 {n} 筆簡體校訂")
 
     # 字級表：涵蓋整個 Big5 常用字區＋次常用區＋母本語料，取「單字轉出
     # 單字且不同」的對。人名與 UI 詞會用到 talk 語料以外的字，不能只掃語料。
@@ -161,9 +168,61 @@ def build_en():
         for i, want, got in bad[:10]:
             print(f"⚠ #{i} 標記不符：母本 {want} vs 譯文 {got}", file=sys.stderr)
         sys.exit(f"{len(bad)} 則的變數標記與母本不符")
+    n = apply_overrides(messages, "en", master)
+    print(f"套用 {n} 筆英譯校訂")
     write_pack(OUT_EN, messages,
                note="英譯（tools/langpack.py en 合併 workplace/lang/en/out-*.json）")
     print(f"talk-en.json：{COUNT} 則、{pages_report(messages)}")
+
+
+# ── 校訂覆寫 ────────────────────────────────────────────────────────
+def apply_overrides(messages, label, master=None):
+    """把 corrections-<label>.json 套到 messages 上（就地改，回傳套用筆數）。
+
+    每筆 `{"id", "from", "fix", "note"}`：`from` 是套用前的整句（各行接起來），
+    對不上就停——代表機轉結果變了，這筆校訂要重看，不能默默套上去。
+    已經是 `fix` 的那一則視為套過，跳過（重跑 `apply` 要冪等）。
+    """
+    path = OVERRIDES[label]
+    if not path.exists():
+        return 0
+    master = master or load_master()["messages"]
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    seen, n = set(), 0
+    for c in doc["corrections"]:
+        i = c["id"]
+        if i in seen:
+            sys.exit(f"{path.name}：#{i} 重複")
+        seen.add(i)
+        if not 0 <= i < COUNT:
+            sys.exit(f"{path.name}：#{i} 超出範圍")
+        fix = c["fix"] if isinstance(c["fix"], list) else [c["fix"]]
+        cur = "".join(messages[i])
+        if cur == "".join(fix):
+            continue
+        if cur != c["from"]:
+            sys.exit(f"{path.name}：#{i} 的 from 與現況不符——\n"
+                     f"  現況 {cur!r}\n  from {c['from']!r}\n"
+                     "  機轉結果變了，這筆校訂要重看")
+        if marker_set(fix) != marker_set(master[i]):
+            sys.exit(f"{path.name}：#{i} 的 fix 改變了變數標記 "
+                     f"{marker_set(master[i])} → {marker_set(fix)}")
+        # 保留原本的尾端空行（原版每則以空行收尾，remake 的分頁靠它）。
+        tail = messages[i][len(messages[i]) - 1:] if messages[i] and messages[i][-1] == "" else []
+        messages[i] = list(fix) + tail
+        n += 1
+    return n
+
+
+def apply_cmd():
+    """對既有的 talk-zh-hans.json／talk-en.json 重套校訂（不必重跑 OpenCC）。"""
+    for label, path in (("zh-hans", OUT_TALK), ("en", OUT_EN)):
+        pack = json.loads(path.read_text(encoding="utf-8"))
+        n = apply_overrides(pack["messages"], label)
+        path.write_text(json.dumps(pack, ensure_ascii=False, indent=1) + "\n",
+                        encoding="utf-8")
+        print(f"{path.name}：套用 {n} 筆校訂")
+    return 0
 
 
 def wrapped_rows(text):
@@ -232,6 +291,19 @@ def selftest():
             if ch in joined:
                 print(f"⚠ zh-hans 疑似殘留繁體字：{ch}", file=sys.stderr)
                 bad += 1
+    # 校訂覆寫必須已經套在語系包上：漏套的症狀是「檔在，畫面上還是舊字」。
+    for label, path in (("zh-hans", OUT_TALK), ("en", OUT_EN)):
+        if not OVERRIDES[label].exists() or not path.exists():
+            continue
+        msgs = json.loads(path.read_text(encoding="utf-8"))["messages"]
+        doc = json.loads(OVERRIDES[label].read_text(encoding="utf-8"))
+        miss = [c["id"] for c in doc["corrections"]
+                if "".join(msgs[c["id"]]) != "".join(
+                    c["fix"] if isinstance(c["fix"], list) else [c["fix"]])]
+        if miss:
+            print(f"⚠ {label} 有 {len(miss)} 筆校訂沒套上：{miss[:5]}", file=sys.stderr)
+            bad += 1
+        print(f"{label}: {len(doc['corrections'])} 筆校訂都在語系包上")
     if OUT_CHARS.exists():
         chars = json.loads(OUT_CHARS.read_text(encoding="utf-8"))
         for k, v in chars.items():
@@ -243,7 +315,7 @@ def selftest():
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["zh-hans", "ja", "en", "selftest"])
+    ap.add_argument("cmd", choices=["zh-hans", "ja", "en", "apply", "selftest"])
     args = ap.parse_args()
-    sys.exit({"zh-hans": build_zh_hans, "ja": build_ja,
-              "en": build_en, "selftest": selftest}[args.cmd]())
+    sys.exit({"zh-hans": build_zh_hans, "ja": build_ja, "en": build_en,
+              "apply": apply_cmd, "selftest": selftest}[args.cmd]())

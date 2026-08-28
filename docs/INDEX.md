@@ -268,6 +268,7 @@
 | [`docs/spec/96-guard-command-not-downgraded.md`](spec/96-guard-command-not-downgraded.md) | 96 — 守陣不可以在回陣的那一步被降級成「就位」 | CONFORMED。 | 2026-08-27 |
 | [`docs/spec/97-climb-when-both-axes-blocked.md`](spec/97-climb-when-both-axes-blocked.md) | 97 — 登城的觸發：X 與 Y 都走不動就試 Z，不必先走到目標格 | CONFORMED。 | 2026-08-27 |
 | [`docs/spec/98-climb-into-a-gate-hits-it.md`](spec/98-climb-into-a-gate-hits-it.md) | 98 — 爬不上去的那一下要打門：未破的門是這樣被打開的 | CONFORMED。 | 2026-08-27 |
+| [`docs/spec/99-about-page-license.md`](spec/99-about-page-license.md) | 99 — 手機版「關於」頁要顯示授權條款 | CONFORMED（2026-08-28 實作並有單測）。 | 2026-08-28 |
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 

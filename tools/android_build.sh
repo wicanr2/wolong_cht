@@ -79,7 +79,7 @@ docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
     -e HOME=/tmp -e GOCACHE=/gocache -e GOMODCACHE=/gomod \
     -e GRADLE_USER_HOME=/gradle \
     -e LANG=C.UTF-8 -e LC_ALL=C.UTF-8 \
-    -e ABIS="$ABIS" \
+    -e ABIS="$ABIS" -e WOLONG_RELEASE_VERSION="${WOLONG_RELEASE_VERSION:-dev}" \
     -w /src "$IMAGE" bash -c '
 set -euo pipefail
 export PATH=/usr/local/go/bin:$PATH
@@ -101,7 +101,7 @@ mkdir -p android/app/libs
 # 而 4 KB 的機器上完全正常，所以測不出來。
 # `zipalign -P 16` 驗的是 zip 那一層，**驗不到 ELF 這一層**。
 /tmp/bin/ebitenmobile bind \
-    -ldflags "-extldflags=-Wl,-z,max-page-size=16384" \
+    -ldflags "-extldflags=-Wl,-z,max-page-size=16384 -X github.com/wicanr2/wolong_cht/internal/ui/phone.BuildVersion=${WOLONG_RELEASE_VERSION:-dev}" \
     -target "$ABIS" \
     -androidapi 29 \
     -javapkg com.wicanr2.wolong.mobile \

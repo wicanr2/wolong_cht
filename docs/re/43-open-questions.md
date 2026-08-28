@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**518 列分布在 199 份文件，平均每份 2.6 列。**
+**518 列分布在 200 份文件，平均每份 2.6 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -576,11 +576,10 @@
 | [`spec/81-disaster-quantities.md`](../spec/81-disaster-quantities.md) | 事件 11 在風暴期間被重排的節奏 | 產生端一次排 32–60 延遲；期間事件 11 重擲強度的觸發頻率沒逐格讀（推定隨佇列輪到） | 靜態 |
 | [`spec/82-defender-selection.md`](../spec/82-defender-selection.md) | 名單上限 127 的邊界 | 原版緩衝區 0x100 bytes ÷ 2；remake 不設上限（軍團總數 127 本來就到不了）——記為等效差異 | 靜態 |
 | [`spec/83-initial-strategy-pass.md`](../spec/83-initial-strategy-pass.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
-| [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | 簡體 talk 是機轉初稿，未逐則校訂 | 沿用 `corrections.json` 的覆寫格式建 `corrections-zh-hans.json` | 靜態 |
-| [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | 英譯未經第二人校訂 | 譯者回報的疑問（方向性語意、選單用詞）收在 `workplace/lang/en/`；要逐則覆核得再跑一輪 | 靜態 |
 | [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | UI 詞表只涵蓋靜態 literal 與 `%d` 樣板 | `%s` 樣板（內容是任意文字）反查不回去，這一類仍顯示繁中 | 靜態 |
 | [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | 版面沒有為非全形語系重算 | 訊息框 10 全形字／列是原版幾何；英文靠折行與翻頁吃下去，固定寬的欄位只做了「不可超過原文寬度」的約束 | 靜態 |
 | [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | 手機版（`internal/ui/phone`）還沒接語系 | 桌面版的三個出口在手機版各有一份，接法相同 | 靜態 |
+| [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | UI 詞表與名表的第二人覆核 | **做了**（2026-08-28，374 條 UI 詞、343 個名）：改 4 條 UI 詞（`敵正侵攻他國` 縮成 `Enemy invades others` 對齊 TALK #102、`原版格式`→`Original format`、`提出外交要求` 補 diplomatic、`成立`→`agreed` … | 靜態 |
 | [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | 兩個專有名詞的英文寫法未經查證 | `松崗` 目前寫 `Sung Kang`、遊戲名寫 `Wolong`。原版包裝上有沒有官方英文名沒查過——**拿到一手資料再定案**，不要照現在這個沿用 | 靜態 |
 | [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | **16 px 字型在清單裡列距為 0** | 版面是照倚天的 16×15 排的（列高 16 ⇒ 1 px 間隙），JIS／GB 的字是 16×16 ⇒ 貼在一起。**裁掉首列或末列會傷到 89% 的字**（量過：兩份字型的第 0 列與第 15 列各有 82–91% 帶墨），所以不裁。PC-98 原版的文字模式本來就是 16 px 列距貼齊，日文這樣看是對的；… | 靜態 |
 | [`spec/85-latin-list-layout.md`](../spec/85-latin-list-layout.md) | 軍團／勢力兩家仍有 8–9 字的欄 | 要再寬就得動視窗本身的寬度（384 px 是原版幾何），那會影響對拍基準——**要做就整個視窗一起重排，不要只加寬一欄** | 靜態 |
@@ -610,6 +609,7 @@
 | [`spec/96-guard-command-not-downgraded.md`](../spec/96-guard-command-not-downgraded.md) | 守陣要不要補疲勞 | 沒有做（說明書 4.2 說**陣形是唯一恢復疲勞的指令**）。原版 `sub_1A99C` 那條路有沒有寫 `[si+19h]`，沒讀 | 靜態 |
 | [`spec/97-climb-when-both-axes-blocked.md`](../spec/97-climb-when-both-axes-blocked.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
 | [`spec/98-climb-into-a-gate-hits-it.md`](../spec/98-climb-into-a-gate-hits-it.md) | `loc_1B533` 的完整分流 | 這裡只用到「撞到結構物」那一條。它同時也是敵我碰撞的入口（`../re/11` §5.16），另外兩條在水平移動那邊已經接了 | 靜態 |
+| [`spec/99-about-page-license.md`](../spec/99-about-page-license.md) | 條款全文沒有在手機上顯示 | 只顯示摘要與全文出處。全文 104 行，要另做可捲動的文字頁；摘要已滿足「收到的人知道自己被授權了什麼」 | 靜態 |
 
 ## 3. 這支工具的盲區
 
