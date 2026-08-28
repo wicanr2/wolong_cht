@@ -50,6 +50,9 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 | [`07`](07-monthly-settlement.md) | 月結的九支子程式；也是 AI 事件的總表 |
 | [`16`](16-idle-clock-event10.md) | 沒有輸入時時鐘怎麼繼續走 |
 | [`10`](10-rng.md) | 亂數在哪裡介入 |
+| [`64`](64-corps-arrival-state-machine.md) | 軍團抵達時的狀態機：`+0x23` 的分派表與解體 |
+| [`65`](65-ai-march-decision-chain.md) | **電腦勢力的行軍決策鏈**：Stage 0–3 與整條軍團生命週期 |
+| [`59`](59-game-over-exit-codes.md) | 結局與敗北是靠 `KI.EXE` 的離開碼交出去的 |
 
 ## 3. 戰略層：玩家怎麼下指令
 
@@ -63,6 +66,19 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 | [`26`](26-list-window-engine.md) | 一覽表視窗引擎與 23 個 callback |
 | [`27`](27-list-row-fields.md) | 一覽表怎麼畫每一列；外交關係等級 |
 | [`13`](13-pc98-numeric-window.md) | 數字輸入視窗的量測與 CJK 版面決策 |
+| [`46`](46-strategy-chrome-cell-layer.md) | 主畫面的指令列沒有按鈕圖，外框取自 `ICONGRF` |
+| [`47`](47-main-screen-window-registry.md) | 主畫面四個常駐視窗的開關、位元集與分派 |
+| [`48`](48-window-display-list.md) | **視窗內容是一份顯示清單，不是一張圖**：記錄格式與十個場景 |
+| [`49`](49-corps-formation-window.md) | 軍團編成視窗的版面與動態層 |
+| [`50`](50-city-info-window.md) | 據點情報視窗；據點 `+0x16` 高 4 位的用途 |
+| [`51`](51-corps-info-window.md) | 軍團情報視窗（顯示清單場景 4） |
+| [`52`](52-slot-select-window.md) | 四槽選擇視窗：新遊戲、讀取、儲存共用 |
+| [`53`](53-lord-select-window.md) | 君主選擇視窗（顯示清單場景 8） |
+| [`54`](54-advisor-naming-window.md) | 軍師命名視窗（松崗版特有） |
+| [`55`](55-system-menu-window.md) | 系統選單視窗；`op 08` 屬性的編碼 |
+| [`71`](71-strategy-hotspot-dispatch.md) | 戰略層的兩張熱區分派表；點縮小地圖會發生什麼 |
+| [`72`](72-world-map-display-list.md) | 大地圖的顯示表：地形一層 ＋ 最多四層疊圖 |
+| [`73`](73-new-game-faction-list.md) | 新遊戲怎麼選君主：先一張清單，再一張卡 |
 
 **指令列共八項**：進言／人事／財政／編成／軍團／據點／武將／勢力
 （字串在 `cs:6181h`，見 [`31`](31-faction-picker-screen.md) §1）。
@@ -76,6 +92,8 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 | [`09`](09-combat.md) | 觸發、自動判定、傷亡、武將的下場 |
 | [`19`](19-outcome.md) | 敗北 outcome 的接線 |
 | [`20`](20-ida-re-coverage-audit.md) | 戰術管線被移植進 remake 的程度（**量的是移植度不是覆蓋度**）|
+| [`74`](74-battle-opening-duel.md) | 開戰喊話是單挑狀態機的開頭：挑戰、拒戰、對嗆、決著 |
+| [`75`](75-duel-talk-audit.md) | 單挑台詞的逐組逐變體抽驗：24 組 × 8 變體 |
 
 ## 5. 呈現層：圖、字、聲
 
@@ -93,6 +111,12 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 | [`62`](62-strategy-minimap.md) | **主畫面縮小地圖**：192 個據點標記的四種顏色與 4×4 圖形、視野框、圖例兩格、點第二格開的勢力選擇視窗 |
 | [`61`](61-timer-tick-source.md) | **計時中斷是誰發的**：音效驅動把 PIT 設成 4660.9 Hz、分頻 16 回呼遊戲，兩層速度設定的實際幀率與日長 |
 | [`23`](23-bgm-resource-format.md) | `*BGM.DAT` 的音樂資源格式 |
+| [`56`](56-bgm-track-events.md) | `*BGM.DAT` 的聲軌事件編碼 |
+| [`57`](57-opl3-register-map.md) | DOS/V 的音源是 OPL3：六個聲軌各佔一組 4-operator |
+| [`58`](58-bgm-scene-mapping.md) | 哪一首配哪個場景：`BGM.DAT` 的 11 首全部對出 |
+| [`66`](66-message-box-geometry.md) | 訊息框的版面：一個框、一張肖像、四列字 |
+| [`67`](67-city-emblem-on-strategy-map.md) | 大地圖上的據點徽記：位置就在記錄座標 |
+| [`70`](70-d7end-ending-player.md) | `D7END.EXE`：結局播放器與結局全文 |
 
 ## 6. 外交與訊息
 

@@ -527,6 +527,28 @@ def check(docs):
     # 完全一致，那等於強制人工複製一份清單——而那正是會爛掉的東西
     # （這個工具存在的理由）。完整清單由 docs/INDEX.md 生成，
     # CONTEXT.md 只需要指過去。
+    # ③ 目錄自己有 `00-index.md`（人手維護的入口頁）時，該目錄每一份
+    #    `NN-*.md` 都要在裡面被提到。上面那段「不檢查列全」講的是
+    #    CONTEXT.md——它只該指向生成的 INDEX.md；而 `docs/re/00-index.md`
+    #    這種入口頁是 CLAUDE.md 叫人「想了解某個子系統先看這裡」的地方，
+    #    漏列的文件等於不存在。2026-08-28 抓到 spec 漏 17 份、re 漏 24 份，
+    #    三支檢查沒有一支擋得住。
+    by_dir = {}
+    for d in docs:
+        by_dir.setdefault(os.path.dirname(d.path), []).append(d)
+    for folder, members in sorted(by_dir.items()):
+        idx = os.path.join(folder, "00-index.md")
+        if not os.path.exists(idx):
+            continue
+        body = open(idx, encoding="utf-8").read()
+        for d in members:
+            name = os.path.basename(d.path)
+            if name == "00-index.md" or name == "TEMPLATE.md":
+                continue
+            if name not in body:
+                problems.append(
+                    f"{rel(idx)}：沒有列 {name}（入口頁漏列等於那份不存在）")
+
     ctx = open(CONTEXT, encoding="utf-8").read()
     # INDEX.md 不在 docs 清單裡（它是產物），但 CONTEXT 本來就該指它。
     actual = {rel(d.path) for d in docs} | {rel(OUT)}
