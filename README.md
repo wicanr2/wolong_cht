@@ -18,7 +18,7 @@
 
 ## 現在做到哪裡
 
-**核心規則與可玩垂直切片已接通；完整交付已集中在 `dist-all/`（三平台桌面包、Linux AppImage、Android APK、推廣片）。目前是一致的 `wolong-remake-20260827` 批次（[`docs/release/09`](docs/release/09-full-20260827.md)），**四個遊戲包連 APK 都各帶 32 個 ogg**。Windows／macOS 原生 GUI 與 Android 的實機驗收仍待完成。**
+**核心規則與可玩垂直切片已接通；完整交付集中在 `dist-all/`（三平台桌面包、Linux AppImage、Android APK、推廣片）。目前是一致的 `wolong-remake-20260828` 批次（[`docs/release/10`](docs/release/10-full-20260828.md)），**四個遊戲包連 APK 都各帶 32 個 ogg**。Windows／macOS 原生 GUI 與 Android 的實機驗收仍待完成。**
 
 ⭐ **靜態反組譯收斂**：739 支函式每一支都有 `docs/re/` 筆記
 （[`docs/re/21`](docs/re/21-function-census.md)）。那代表「每一支都有人寫過」，
@@ -26,13 +26,16 @@
 [`docs/re/43`](docs/re/43-open-questions.md) 為準。
 
 ⭐ **同狀態逐區對拍**：拿原版存檔開同一個局面逐區比像素。主畫面五區逐像素相同；
-攻城戰九區裡六區逐像素相同（2026-08-18；⚠ 該組 2026-08-27 重跑未重現，見 `docs/playtest/49`）（其中 299 px 原理上消不掉，
-未歸類只剩 8 px，[`docs/playtest/40`](docs/playtest/40-tactical-parity.md)）；
 **野戰九區裡七區逐像素相同、戰場區 0.05%＝原版錄影裡的滑鼠游標**
 （含**單挑開場**的台詞與版面，[`docs/playtest/43`](docs/playtest/43-field-battle-parity.md)）；
 **五張清單視窗（武將／編成候選／軍團／勢力／交戰目標）、財政、數值輸入器
 全部 0 px**，據點情報卡與據點清單版面逐格一致
 （[`docs/playtest/42`](docs/playtest/42-window-parity.md)）。
+攻城那一組的側欄四區也是 0 px，戰場區 0.86%——那 0.86% 是兩邊開的**不是同一場**，
+不是畫錯（[`docs/playtest/51`](docs/playtest/51-siege-deadlock.md)）。
+⭐ **對拍會過期，所以要重跑**：2026-08-27 把記錄過的四組全部重量一次，
+攻城那一組挖出兩個真的缺口（城壁一撞就垮、門強度量表少畫外框），
+修好之後戰場區從 4.32% 回到 0.86%（[`docs/playtest/49`](docs/playtest/49-parity-retest-20260827.md)）。
 
 ⭐ **單挑子系統全還原**（[`docs/spec/80`](docs/spec/80-duel-opening.md)）：
 挑戰／拒戰／應戰、回合互嗆、對打段、決著，含應戰全程的實機錄影參照；
@@ -43,24 +46,29 @@
 
 | 已完成 | 進行中 | 尚未完成 |
 |---|---|---|
-| 素材格式、存檔改寫、時間模型、經濟、災害、中文顯示、外交、軍團結構、一覽表、進言與說得、行軍與戰術戰鬥垂直切片、四槽存檔 overlay、敵方 AI 正常遭遇接點、事件 2–10 的既定 fixture／時鐘驗收、**勝負條件**（存活勢力數減到 1）、**音樂與音效**（OPL3 合成 → ogg，含場景對應）、**原版／remake 同狀態逐區對拍**（主畫面五區逐像素相同；攻城九區裡六區 0 px、野戰九區裡七區 0 px；五張清單視窗／財政／數值器 0 px）、**單挑子系統**（含台詞逐組抽驗）、**結局過場**（十二幕 ＋ 逐字結尾文字，**節拍照原版 3 分 21 秒**）、**倒地動畫**、縮小地圖點擊捲鏡頭與勢力一覽視窗、戰場的右鍵熱區層、**新遊戲的四層流程**（劇本 → 勢力清單 → 君主卡，[`docs/spec/79`](docs/spec/79-new-game-faction-list.md)）、**財政的數值輸入器**、Linux AppImage、三平台候選封裝 ＋ Android APK、推廣片 | Windows／macOS 原生 GUI short smoke、**Android 實機驗收**（模擬器已驗指紋與畫面，見 [`docs/mobile/android-plan.md`](docs/mobile/android-plan.md)）、完整戰術／長程遊戲抽樣 | `ICONGRF` 段 1 的 UI 語意、原版事件 10 的自然 producer 等未解研究項 |
+| 素材格式、存檔改寫、時間模型、經濟、災害、中文顯示、外交、軍團結構、一覽表、進言與說得、行軍與戰術戰鬥垂直切片、四槽存檔 overlay、敵方 AI 正常遭遇接點、事件 2–10 的既定 fixture／時鐘驗收、**勝負條件**（存活勢力數減到 1）、**音樂與音效**（OPL3 合成 → ogg，含場景對應）、**原版／remake 同狀態逐區對拍**（主畫面五區逐像素相同；野戰九區裡七區 0 px、攻城側欄四區 0 px；五張清單視窗／財政／數值器 0 px）、**單挑子系統**（含台詞逐組抽驗）、**結局過場**（十二幕 ＋ 逐字結尾文字，**節拍照原版 3 分 21 秒**）、**倒地動畫**、縮小地圖點擊捲鏡頭與勢力一覽視窗、戰場的右鍵熱區層、**新遊戲的四層流程**（劇本 → 勢力清單 → 君主卡，[`docs/spec/79`](docs/spec/79-new-game-faction-list.md)）、**財政的數值輸入器**、Linux AppImage、三平台候選封裝 ＋ Android APK、推廣片 | Windows／macOS 原生 GUI short smoke、**Android 實機驗收**（模擬器已驗指紋與畫面，見 [`docs/mobile/android-plan.md`](docs/mobile/android-plan.md)）、完整戰術／長程遊戲抽樣 | `ICONGRF` 段 1 的 UI 語意、原版事件 10 的自然 producer 等未解研究項 |
 
-### 與原版差多少（2026-08-25）
+### 與原版差多少（2026-08-28）
 
 先講量法的邊界，數字才有意義：**逐像素對拍做過十個局面**——開局主畫面、
-三個視窗開著、系統選單開著、一場攻城戰的第 61 步、野戰開場（單挑挑戰幀）、
+三個視窗開著、系統選單開著、一場攻城戰、野戰開場（單挑挑戰幀）、
 五張清單視窗、財政（含數值輸入器）、編成視窗、據點情報卡與據點清單。
 其餘畫面是「版面照機器碼重做並目視驗收」，沒有逐像素數字。
 **「照著機器碼做」與「量過等於原版」不是同一件事。**
+
+⚠ **攻城那一組的取樣點要用局面條件描述，不能寫死步數。** 「第 61 步」在
+2026-08-18 是「攻方正在攻門」那一刻，規則層改過之後同一個步數落在
+「攻方剛要出發」——**數字會安靜地爛掉，而且沒有任何測試會紅**
+（[`docs/spec/91`](docs/spec/91-tactical-parity.md) §6）。
 
 | 層 | 量到的差距 | 出處 |
 |---|---|---|
 | 開局主畫面（5 區）| **0 px**（256,000 px 一個不差）| [`playtest/37`](docs/playtest/37-main-screen-parity.md) |
 | 三個視窗開著（命令列／自勢力／縮小地圖）| **0 px** | [`playtest/38`](docs/playtest/38-window-parity.md) |
 | 系統選單開著（選單本身 ＋ 4 區）| **0 px** | [`playtest/39`](docs/playtest/39-system-window-parity.md) |
-| 攻城戰（9 區）| 6 區 **0 px**；`field` 307 / 176,640 ＝ 0.17%、小地圖 8 px、對方將旗 44 px。⚠ **2026-08-18 的量測，2026-08-27 重跑未重現**（門強度量表沒畫 ＋ 取樣點被 `spec/59`／`spec/80` 作廢）| [`playtest/40`](docs/playtest/40-tactical-parity.md)、[`49`](docs/playtest/49-parity-retest-20260827.md) |
-| ↳ 其中**原理上消不掉**的 | 299 px：旗的揮舞相位 116（兩邊各自擲骰）、原版錄影裡的滑鼠游標 95、兩邊的門破在不同 tick 88 | 同上 §13 |
-| ↳ **真正未歸類的** | **8 px** | 同上 §14 |
+| 攻城戰（9 區）| 側欄四區 **0 px**（標題／自軍將旗／兩塊純美術）、底列 2 px、對方將旗 14 px；`field` **0.86%**、小地圖 1.64%。那 0.86% 的成因是兩邊開的**不是同一場**，不是畫錯 | [`playtest/51`](docs/playtest/51-siege-deadlock.md) §1 |
+| ↳ 這一組怎麼從 0.17% 變成 4.32% 再回到 0.86% | 2026-08-18 量到 0.17%；2026-08-27 重跑 4.32%，拆開之後是**兩個真的缺口**（城壁一撞就垮、門強度量表少畫外框）加上取樣點被 `spec/59`／`spec/80` 作廢 | [`playtest/49`](docs/playtest/49-parity-retest-20260827.md) §3 |
+| ↳ 規則層的時間序列對拍 | **攻城計時器的速率**與**進城的機制**都對上；殘差是破牆花多久，而原版那一側的體力同時被計時器與挨打扣，單張畫面回推不出幀 | [`playtest/52`](docs/playtest/52-siege-timeseries-parity.md) |
 | 野戰（9 區，含單挑開場對白）| 7 區 **0 px**；`field` **0.05%**＝95 px 全是原版錄影裡的滑鼠游標、小地圖 0.18%＝時刻 | [`playtest/43`](docs/playtest/43-field-battle-parity.md) |
 | 清單視窗五張（武將／編成候選／軍團／勢力／交戰目標）| **各 0 px** | [`playtest/42`](docs/playtest/42-window-parity.md) §4 |
 | 財政／數值輸入器 | **0 px**；編成視窗 0.20%＝原版錄影的游標 | 同上 §4.1 |
@@ -68,73 +76,47 @@
 | 文字 | 1,022 則全保存、byte-for-byte round-trip；**單行超寬 0 行**；60 筆校訂可重跑 | [`playtest/32`](docs/playtest/32-talk-layout-fit.md) |
 | 結局文字 | 200 字 10 行，從 `D7END.EXE` 取出（不在 `TALK.DAT` 裡）| [`re/70`](docs/re/70-d7end-ending-player.md) |
 | 音訊 | 會出聲、場景對應已解、與原版錄音比對過；**音色的諧波結構沒量化比對** | [`spec/29`](docs/spec/29-audio.md) |
-| 規則規格 | **67 份**（不含索引與 `TEMPLATE.md`）：**66 CONFORMED**／1 READY（`34-speed-steps`）／0 DRAFT | [`spec/00`](docs/spec/00-index.md) |
-| 反組譯 | 739/739 支有筆記；`docs/re/` 自己標成未解的有 **179 列**（2026-08-21 逐列核完時是 175；之後 [`re/71`](docs/re/71-strategy-hotspot-dispatch.md)／[`re/72`](docs/re/72-world-map-display-list.md)／[`re/73`](docs/re/73-new-game-faction-list.md) 各自登記了新缺口，同時 `re/36`／`re/53` 的舊缺口被解掉）| [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
-| 全專案的未解 | **456 列**（另有 4 列是 DOS／BIOS 平台層，不計入）。⚠ **這個數字比較接近「文件有多少份」**——456 列分布在 172 份文件、平均每份 2.7 列，而每寫一份新文件就帶進約三列自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
+| 規則規格 | **84 份**（不含索引與 `TEMPLATE.md`）：**82 CONFORMED**／2 READY（`34-speed-steps`、`83-initial-strategy-pass`）／0 DRAFT | [`spec/00`](docs/spec/00-index.md) |
+| 反組譯 | 739/739 支有筆記；`docs/re/` 自己標成未解的有 **182 列**（2026-08-21 逐列核完時是 175，之後每寫一份新的反組譯筆記就帶進自己的未解表）| [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
+| 全專案的未解 | **519 列**（另有 4 列是 DOS／BIOS 平台層，不計入）。⚠ **這個數字比較接近「文件有多少份」**——519 列分布在 199 份文件、平均每份 2.6 列，而每寫一份新文件就帶進約三列自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
 
-#### 那 456 列對 remake 代表什麼
+#### 那 519 列對 remake 代表什麼
 
 **它不衡量「離做完還有多遠」。** 最直接的證據是這兩個數字同時成立：
-未解 456 列，而開局主畫面 **256,000 個像素與原版一個不差**。
+未解 519 列，而開局主畫面 **256,000 個像素與原版一個不差**。
 兩者量的是不同的軸——未解列數量的是「**原版還有多少我們解釋不了**」，
 parity 量的是「**我們做出來的東西對不對**」。
 
-分類是**照來源目錄機械算的**，不是逐條判斷過的優先序，所以要這樣讀：
+⭐ **這個數字比較接近「文件有多少份」。** 分類是照來源目錄機械算的，
+不是逐條判斷過的優先序；每寫一份新文件就帶進約三列自己的未解，
+所以「解出新東西 → 寫一份文件 → 總數上升」是常態，不是退步。
+反過來也一樣：**變小不自動等於進度**——2026-08-21 的稽核把它從 570 降到 431，
+那 −139 沒有一列是靠解出新東西減掉的。
+逐類的列數、讀法與那次稽核的組成在
+[`re/43`](docs/re/43-open-questions.md) §0–§1 與 [`WORKLIST.md`](WORKLIST.md)。
 
-| 類別 | 列數 | 對 remake 的實際影響 |
-|---|---:|---|
-| 程式碼理解（`docs/re/`）| 179 | **不擋任何東西能不能玩。** 這是「某支函式／某個變數還沒讀透」的存量——它的價值是**未來的修正從這裡出來**，不是現在有東西壞掉。2026-08-21 逐列核過一次，清掉 45 列已解的登記 |
-| 其他（`spec` 131 ＋ `release` 17 ＋ `mobile` 12 ＋ `promo` 5）| 165 | `spec` 那 131 列多半是**已實作項目自己的剩餘細節**。`release`／`mobile` 的 29 列裡**真正擋發行的只有四件事**（見下），其餘是設計取捨與流程小事 |
-| 驗收（`docs/playtest/`）| 49 | **不是「做錯了」，是「還沒量」。** 這一類最誠實也最容易被高估——它標的是「我們相信它對，但沒有數字」 |
-| 規則正確性（`docs/mechanics/`）| 24 | **唯一會讓遊戲行為與原版不同的一類。** 目前跑得起來且不變量成立（規則層 5 年 60 個月長跑，[`playtest/33`](docs/playtest/33-ai-march-long-run.md)），但這裡每解一條就可能改動平衡 |
-| 資料保存（`docs/formats/`）| 33 | 影響的是**文化資產保存的完整度**，不是玩得動玩不動。例如 `ICONGRF` 段 1 `0x0000` 那一塊畫的是什麼 |
-| 外部資料（`docs/reference/`）| 6 | 松崗中文版說明書等尚未取得的素材。**拿不到就是拿不到**，不是工作量 |
+**要看進度看別的**：規格的 CONFORMED 份數（82/84）、
+逐像素對拍的數字（主畫面 0 px）、[`re/21`](docs/re/21-function-census.md) 的覆蓋地圖。
+這一份回答「還有什麼沒解」，**不回答「還剩多少」**。
 
 **真正擋著發行的只有四件事**，而且**同一件事會被數很多列**——
 `re/43` 是把各文件的未解表集中起來，一個事實寫在四份文件裡就佔四列：
 
-| 擋什麼 | 佔幾列 | 為什麼卡住 |
-|---|---:|---|
-| Windows／macOS 原生 GUI 實機驗收 | **5** | ⛔ 沒有那兩個平台的機器。交叉建置的產物只驗了檔頭；完整版「解開就能跑」在那兩個 OS 上也沒實跑過 |
-| Android 實機驗收 ＋ release signing | 4 | ⛔ 沒有裝置；keystore 怎麼保管還沒決定，目前出的是 debug 簽章 |
-| 16 KB page size 的實測 | 2 | `.so` 的 LOAD 段已是 `0x4000`，但沒有那種裝置或 AVD 實際載過 |
-| **沒有音效裝置時遊戲會掛** | 3 | 完整版會自己找到音檔並開音訊，而 Ebiten 沒有可查詢的音訊 API——一般啟動遇到沒有音效卡的機器就結束（[`docs/spec/75`](docs/spec/75-bundled-audio.md) §5）。**它還有一個下游**：無頭驗收拍不到啟動殼層（[`docs/release/06`](docs/release/06-appimage-20260824.md) §4.1）|
+| 擋什麼 | 為什麼卡住 |
+|---|---|
+| Windows／macOS 原生 GUI 實機驗收 | ⛔ 沒有那兩個平台的機器。交叉建置的產物只驗了檔頭；完整版「解開就能跑」在那兩個 OS 上也沒實跑過 |
+| Android 實機驗收 ＋ release signing | ⛔ 沒有裝置；keystore 怎麼保管還沒決定，目前出的是 debug 簽章 |
+| 16 KB page size 的實測 | `.so` 的 LOAD 段已是 `0x4000`，但沒有那種裝置或 AVD 實際載過 |
+| **沒有音效裝置時遊戲會掛** | 完整版會自己找到音檔並開音訊，而 Ebiten 沒有可查詢的音訊 API——一般啟動遇到沒有音效卡的機器就結束（[`docs/spec/75`](docs/spec/75-bundled-audio.md) §5）。**它還有一個下游**：無頭驗收拍不到啟動殼層（[`docs/release/06`](docs/release/06-appimage-20260824.md) §4.1）|
 
-**四件事 ＝ 14 列。** 剩下的 15 列是設計取捨（手機小卡放哪些欄位、
-戰場要不要能縮放）與流程小事（`verification/` 截圖不進管線），不擋發行。
-
-⚠ 第四項是 2026-08-23 **新加的**：完整版開始內含音檔之後，
-遊戲會自己把音訊開起來，於是「沒有音效卡就掛」從一個碰不到的角落
-變成真的擋人。
-
-### ⚠ 這個數字在量什麼（別把它當進度條）
-
-**456 列分布在 172 份文件，平均每份 2.7 列。** 而 `check.sh --strict`
-**要求**每份文件要嘛有未解小節、要嘛明講自己沒有缺口。
-
-⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
-2026-08-21 稽核收在 431，之後一路到 456——量過那 +25 的來源：
-**幾乎全部是新寫的文件帶進自己的未解表**（`re/71`／`re/72`／`re/73`、
-`spec/72`–`79`、`release/05`／`06`…，每份約三列）。
-「解出新東西 → 寫一份文件 → 總數上升」是這個指標的常態，不是退步。
-⭐ 反例就在同一批裡：`spec/36`、`spec/43`、`spec/14`、`re/53` 各解掉一條
-掛了很久的缺口，總數還是往上——**解掉的那幾列被新文件的自我登記蓋過去了**。
-
-⚠ **反過來也一樣：變小不自動等於進度。** 2026-08-21 的稽核把它從 570
-降到 431，而那 −139 **沒有一列是靠解出新東西減掉的**。組成是三件事：
-**刪掉已經解了卻還掛著的登記**、**修掉抽取工具的精確度問題**、
-以及**把「刻意的 remake 差異」與「已定案的決定」從缺口表分出去**
-（逐輪紀錄在 [`WORKLIST.md`](WORKLIST.md)）。
-
-**要看進度看別的**：規格的 CONFORMED 份數（66/67）、
-逐像素對拍的數字（主畫面 0 px）、`re/21` 的覆蓋地圖。
-這一份回答「還有什麼沒解」，**不回答「還剩多少」**。
+其餘的十幾列是設計取捨（手機小卡放哪些欄位、戰場要不要能縮放）與
+流程小事（`verification/` 截圖不進管線），不擋發行。
 
 ⭐ **另有 4 列是 DOS／BIOS 平台層，不計入總數**（`INT 61h` 的音效 TSR
 服務號、VRAM 寫入迴圈、`YNFONT.EXE` 怎麼畫字）。remake 跑在 Go／Ebiten 上，
 **不跟 DOS TSR 講話**——知道 `ah=4` 是什麼不會改變任何一行 Go。
 
-### 自評分數（2026-08-25）
+### 自評分數（2026-08-28）
 
 每一軸的分數都綁著上面的量測，扣分理由寫明；
 **沒量過的部分不計入加分**。
@@ -143,9 +125,9 @@ parity 量的是「**我們做出來的東西對不對**」。
 |---|---:|---|---|
 | 資料格式保存（M1）| **90%** | 全部檔種有 Go 解碼器＋測試，`TALK.DAT`／存檔 byte-for-byte round-trip，過場、音訊、地圖族全解 | `ICONGRF` 段 1 的 UI 語意；`formats` 還有 33 列登記在案的細節 |
 | 文字保存與校訂（M2／M7）| **92%** | 1,022 則全保存、60 筆校訂可重跑、兩版 1,022 則逐句對照讀完、排版 parity 全量 0 超寬；**四個語系端到端可玩且能在遊戲中切換**（`-lang` 或 F9／啟動殼層／手機系統面板，[`docs/spec/86`](docs/spec/86-runtime-language-switch.md)）：日文直接取 PC-98 原版（含 34 個外字靠兩版對齊反推）、簡體 OpenCC 機轉、英文 1,022 則逐則英譯、343 個人名地名三語對照（[`docs/spec/84`](docs/spec/84-multilanguage.md)）；半形語系的版面另排一套（清單四家 [`85`](docs/spec/85-latin-list-layout.md)、其餘畫面 [`87`](docs/spec/87-latin-screen-layout.md)）| 缺兩版並排的畫面對照這最後一格；簡體與英文是譯稿未經第二人校訂 |
-| 反組譯理解（M3）| **70%** | 739/739 支函式都有筆記、四個分級收斂；單挑這種末端子系統都能讀到逐 tick | 「有筆記」≠「讀懂」——`docs/re/` 自己登記的未解還有約 180 列 |
+| 反組譯理解（M3）| **70%** | 739/739 支函式都有筆記、四個分級收斂；單挑這種末端子系統都能讀到逐 tick | 「有筆記」≠「讀懂」——`docs/re/` 自己登記的未解還有 182 列 |
 | 規則還原（M4／M5）| **83%** | 政略／行軍／戰術／外交／說服／單挑都以機器碼出處實作，規則層 5 年長跑不變量成立；2026-08-25 把上一輪列的七條缺口全數收掉：災害傷害量（[`docs/spec/81`](docs/spec/81-disaster-quantities.md)）、應戰挑選＝評價的去向（[`docs/spec/82`](docs/spec/82-defender-selection.md)）、信賴度增減全帳本與初始值 `0xFF`（實機定案，[`docs/playtest/44`](docs/playtest/44-trust-init-oracle.md)）、行軍中間節點（查證後**缺口不存在**）、事件 10 訊息（端到端已通）；**AI 長程對照完成**：原版半年四大擴張事件與 remake 方向幅度一致、呂布／曹操終值逐城相同；孫策攻劉繇的分歧定案為 `sub_12BD9` 缺新遊戲開局呼叫點，已補（[`docs/spec/83`](docs/spec/83-initial-strategy-pass.md)、[`docs/playtest/45`](docs/playtest/45-ai-longrun-comparison.md)）| 剩：對照只有一次原版跑、孫策擴張節奏比原版快（戰鬥節奏層）、`docs/re/` 登記的未解細項 |
-| 畫面一致（M6）| **90%** | 十個局面逐像素：主畫面／系統選單／三視窗／五張清單／財政全 0 px，野戰 0.05%（2026-08-27 重驗仍成立）；攻城那一組的 0.17% 是 2026-08-18 的量測，重跑未重現 | 分數只涵蓋量過的局面——沒量過的畫面仍是「照機器碼做＋目視」 |
+| 畫面一致（M6）| **90%** | 十個局面逐像素：主畫面／系統選單／三視窗／五張清單／財政全 0 px，野戰 0.05%（2026-08-27 重驗仍成立）；攻城側欄四區 0 px、戰場區 0.86%，而那 0.86% 是兩邊開的不是同一場 | 分數只涵蓋量過的局面——沒量過的畫面仍是「照機器碼做＋目視」 |
 | 音訊 | **72%** | 格式與場景對應全從機器碼讀出、OPL3 合成與原版錄音人耳比對過；選曲規則抽成一份給桌面與手機共用，**Android 的完整版也內嵌 32 個 ogg**（[`docs/spec/92`](docs/spec/92-android-music.md)）| 諧波結構沒有量化比對；無音效裝置會掛的問題還在；手機端沒有實機聽過 |
 | 發行與平台（M8／M9）| **50%** | 四平台包出得來且批次一致、Linux 有 GUI smoke、Android 模擬器指紋與桌面相同、發行閘擋原版資產 | Windows／macOS／Android 都沒有實機驗收；Android 只有 debug 簽章 |
 | **整體** | **81%** | 量過的地方幾乎都對到 0 px、規則層可玩且穩定、保存目標（格式＋文字）接近完備、AI 長程行為首輪對照通過 | 拉低整體的是平台實機驗收（外部條件：缺機器）、孫策渡江等長程分歧與未解細項 |
@@ -155,40 +137,12 @@ parity 量的是「**我們做出來的東西對不對**」。
 後者不是工作量，是缺裝置。
 它們仍然列在 [`re/43`](docs/re/43-open-questions.md) §9，只是分開數。
 
-⭐ **同一次修正同時讓數字變小與變大**：抽取器原本用整列比對「已解」跳過列，
-於是「`ENDPAL` 那邊已解，開場這邊還沒做」這種**真缺口**被整列吃掉，
-`formats/02` 與 `mechanics/50` 因此看起來像沒有缺口——改成只認開頭之後
-**多浮現 17 列**。**「查詢回空」不等於「沒有」**：過濾器自己有洞也長這樣。
-
-#### 九個目錄逐列核過之後，過期登記長什麼樣
-
-清掉的多半是「解掉了，但答案寫在別份文件」：`sub_14C4C` 的地形對映在
-[`mechanics/30`](docs/mechanics/30-combat.md) §2、`+0x23` 的狀態機在
-[`re/64`](docs/re/64-corps-arrival-state-machine.md)、
-`sub_1B15D`／`sub_1B186` 在 [`re/36`](docs/re/36-tactical-module-map.md) §6.3。
-另外四種形狀值得記下來：
-
-| 形狀 | 例子 |
-|---|---|
-| **同一份文件自我矛盾** | `re/25` 的未解表說「解任的實際動作未讀」，而它自己的 §3.1 就有全文；`mechanics/60` 的狀態行說「政治的影響未解」，而同一份 §6 末尾就寫著算式 |
-| **描述本身是錯的** | `sub_1487B` 被記成「編成後挑第一個目標」，實際是「找回家路上的下一個己方據點」；`loc_1B533` 被記成「攀爬」，實際是碰撞處理 |
-| **把正確的實作標成 remake 差異** | 「遷都原版是地圖選點」——`sub_17400` 其實是據點一覽的呼叫端，remake 的做法與原版相同。**這比漏標更難發現** |
-| **決定與差異混進缺口表** | 「門強度三個字對城壁也照用」是決定；「進入方式走一覽表」是 §3 已標過的差異 |
-
-⭐ **成因是結構性的**：未解表沒有負責人，而解掉它的人通常把答案寫在
-別份文件（規格、機制，甚至只寫在程式註解裡），沒有任何機制會回頭清這裡。
-`tools/index.py` 的檢查 ⑩ 只擋得住「那一列自己承認解了」那一種，而
-**狀態行寫 READY 的文件可以帶著任意過期的未解小節**——檢查 ② 開頭就
-`continue` 掉了。
-⭐ 這與 [`re/21`](docs/re/21-function-census.md) §3.1 記過的是同一個陷阱：
-**指標會把自己的維護動作算成進度**，而偏差永遠朝「看起來更好」的方向。
-
 #### 還沒對過的
 
 | 項目 | 現況 |
 |---|---|
 | 一覽表、編成、進言、財政等視窗 | 版面照機器碼重做並目視驗收過，**沒有逐像素數字** |
-| 野戰（非攻城）的戰場 | 沒對過。野戰的地形是從大地圖即時長出來的，同狀態更難湊 |
+| 野戰打起來之後的戰場 | **開戰第一拍已經對過**（九區裡七區 0 px、`field` 0.05%，[`playtest/43`](docs/playtest/43-field-battle-parity.md)）。沒對過的是**開戰之後**——野戰的地形是從大地圖即時長出來的，兩邊要走到同一個 tick 比攻城更難湊 |
 | 跑完一整局 | 沒對過。目前最長的是規則層長跑，不是畫面 |
 | 日文原版逐句對照 | 1,022 則**兩批逐句讀完**、60 筆校訂已定案、校訂後的畫面抽樣也做了（[`playtest/41`](docs/playtest/41-m7-corrected-text-on-screen.md)）。**沒做的是兩版並排的畫面對照** |
 
@@ -207,9 +161,9 @@ parity 量的是「**我們做出來的東西對不對**」。
 
 ### 候選封裝與推廣片
 
-- 完整交付根目錄：[`dist-all`](dist-all)，包含**四平台完整包**（Linux／Windows／macOS／Android）、Linux AppImage、五支推廣片、雜湊與 GUI smoke 截圖。目前是一致的 `wolong-remake-20260827` 批次（[`docs/release/09`](docs/release/09-full-20260827.md)）。⚠ **「全平台重建」是兩支腳本**：`tools/release_all.sh` 不會重建 APK（Android 是另一條管線，檔名取的是 APK 自己的 mtime），要一起換得再跑 `WOLONG_BUNDLE_DATA=1 tools/android_build.sh`。
+- 完整交付根目錄：[`dist-all`](dist-all)，包含**四平台完整包**（Linux／Windows／macOS／Android）、Linux AppImage、五支推廣片、雜湊與 GUI smoke 截圖。目前是一致的 `wolong-remake-20260828` 批次（[`docs/release/10`](docs/release/10-full-20260828.md)）。⚠ **「全平台重建」是兩支腳本**：`tools/release_all.sh` 不會重建 APK（Android 是另一條管線，檔名取的是 APK 自己的 mtime），要一起換得再跑 `WOLONG_BUNDLE_DATA=1 tools/android_build.sh`。
 - ⛔ **本機這一批內含原版資產，不可外流**（`dist-all/DO-NOT-DISTRIBUTE.md`）。四個平台的包裡都有原版資料與倚天字型，解開或裝上去就能玩。要一份可散布的：`WOLONG_BUNDLE_DATA=0 tools/release_all.sh <YYYYMMDD>`，出來的包不含任何原版資產（[`docs/spec/72`](docs/spec/72-bundled-game-data.md)）。
-- Linux AppImage：[`wolong-remake-linux-amd64-20260827.AppImage`](dist-all/packages/wolong-remake-linux-amd64-20260827.AppImage)。已通過 Linux／Xvfb 固定種子 smoke（含結局過場，且**不帶任何資料旗標**就跑得起來）。**公開散布的版本仍要由玩家提供合法 DOS/V 資料與中文字型。**
+- Linux AppImage：[`wolong-remake-linux-amd64-20260828.AppImage`](dist-all/packages/wolong-remake-linux-amd64-20260828.AppImage)。已通過 Linux／Xvfb 固定種子 smoke（含結局過場，且**不帶任何資料旗標**就跑得起來）。**公開散布的版本仍要由玩家提供合法 DOS/V 資料與中文字型。**
 - 三平台候選包與 SHA-256：[`dist-all/packages`](dist-all/packages)。Windows／macOS 是交叉建置候選，尚未在目標作業系統完成原生 GUI runtime 驗收。
 - 主預告：[`wolong-remake-trailer.mp4`](dist-all/promo/wolong-remake-trailer.mp4)，72 秒。大地圖、野戰與攻城三段是**逐幀錄下來的實跑畫面**（[`docs/spec/71`](docs/spec/71-promo-live-capture.md)），另有**四語系切換**與**原版並排**兩段；事件視窗與存檔那幾段是截圖——那些畫面本來就不動。
 - 原版實機對照片：[`wolong-remake-dosv-realmachine.mp4`](dist-all/promo/wolong-remake-dosv-realmachine.mp4)，72 秒。**原版側是自己跑的受控 DOSBox-X 實機遊玩**——開新遊戲、劇本與君主選擇、大地圖與時鐘、軍團編成、事件訊息、行軍指示，照 timeline 可以重跑；只有戰術戰場那一格取自使用者提供的錄影並在片上標明（[`docs/promo/dosv-realmachine.md`](docs/promo/dosv-realmachine.md)）。不是同日期／同輸入的逐像素 parity。
@@ -566,38 +520,75 @@ Ebiten 內建的除錯字型會把中文靜靜吃掉，那種畫面看起來像�
 
 ### 已有的程式
 
+**解碼與載入層（一律不 import Ebiten）**
+
 ```
-internal/assets/palette   .BRG 解碼（純函式，不認識 Ebiten）
+internal/assets/palette   .BRG 解碼（純函式）
 internal/assets/gfx       *GRF.DAT 4bpp planar 解碼
 internal/assets/text      TALK.DAT 解析與寫回
 internal/assets/rle       原版的 RLE 解壓（MMAP.MAP 用）
 internal/assets/world     大地圖：384×256 格 + 256 塊地形圖塊
-internal/assets/library   把素材目錄載成可檢視的項目（不 import Ebiten）
+internal/assets/battle    BATTLE.MAP／MDL／SCH／DAT：214 張戰場、圖塊堆疊、AI 腳本
+internal/assets/cutscene  過場 OPEN_S*／END_S*（640×400 EGA 四平面，上下兩半各 200 列）
+internal/assets/library   把素材目錄載成可檢視的項目
 internal/assets/cjk       倚天 16×15 點陣字（全形 + 半形）
-internal/ui/textdraw      把點陣字畫到 Ebiten，缺字畫成方框而不是吃掉
-internal/ui/listwin       一覽表的狀態機：兩段式選取、排序、跨開關記住排序
+internal/scenario         劇本的載入與寫回（沿用 state 的改寫策略）
+internal/savefile         存檔檔案層：帶著載入當時的 22,208 B 原始區塊
+internal/savepath         存檔 overlay 的檔案系統邊界（刻意不依賴 Ebiten，路徑安全可無頭測）
+internal/audio            純 Go 的 OPL3（YMF262）＋ *BGM.DAT／SOUND.DAT 的重放
+```
 
+**規則層（不認識畫面，以 tick 驅動）**
+
+```
 internal/rules/clock      五層遊戲時鐘（子刻→時→日→月→年，一天 216 tick）
+internal/rules/speed      速度檔位 0–4，桌面與手機共用一份
 internal/rules/economy    月結：收入、募兵、赤字懲罰、生產力複利、三種災害
+internal/rules/governor   內政官：政治值怎麼補回據點的整備
 internal/rules/general    武將評價（＝適性和 ＋ 2×武術 ＋ 2×統率）
 internal/rules/army       軍團編成、行軍節拍、單位佔用圖
+internal/rules/march      沿原版道路的行軍路由（點遠處據點是操作差異，走的還是同一條路）
 internal/rules/combat     戰略層的戰鬥自動判定：戰力、傷亡、壞滅、敗將的下場
-internal/rules/diplomacy  交友度矩陣與外交官
-internal/rules/persuasion 進言與說得（玩家扮軍師，指令要先說服君主）
-internal/rules/rng        原版的亂數產生器（置換表 ＋ 兩個 byte）
 internal/rules/tactical   戰術戰鬥：立體格戰場、六個指令、陣形、疲勞、飛道具
 internal/rules/battlefield 野戰的戰場從大地圖即時算（地形配對 ＋ 旋轉）
-internal/audio            純 Go 的 OPL3（YMF262）＋ *BGM.DAT／SOUND.DAT 的重放
-internal/ui/sound         Ebiten 的 ogg 播放層（沒有音檔就靜音跑）
-internal/assets/battle    BATTLE.MAP／MDL／DAT：214 張戰場、圖塊堆疊、AI 腳本
+internal/rules/diplomacy  交友度矩陣與外交官
+internal/rules/persuasion 進言與說得（玩家扮軍師，指令要先說服君主）
+internal/rules/capital    遷都
+internal/rules/strategyai 電腦勢力的政略：鄰接排序、國力評分、sub_12EFB 的三道侵攻閘
+internal/rules/threat     據點的威脅掃描（原版每 tick 只掃一個據點，192 tick 一輪）
+internal/rules/bgm        選曲規則（出自 KI.EXE 的呼叫端，桌面與手機共用）
+internal/rules/rng        原版的亂數產生器（置換表 ＋ 兩個 byte）
+internal/battlesetup      從世界狀態擺出一場戰術戰鬥（野戰翻轉、攻城守方、腳本段編號）
 internal/state            劇本／存檔的載入與**寫回**（改寫而非重建）＋ 世界迴圈
                           （時鐘、月結、每小時的勢力更新、軍團編成與行軍、遭遇戰）
+```
 
+**呈現層**
+
+```
+internal/ui/textdraw      把點陣字畫到 Ebiten，缺字畫成方框而不是吃掉（排版不依賴 Ebiten）
+internal/ui/uitext        字串到字串的轉換（人名地名的 raw Big5 在這裡處理），不認識畫面
+internal/ui/langpack      四個語系包，內嵌進執行檔；同名檔存在時檔案系統優先
+internal/ui/listwin       一覽表的狀態機：兩段式選取、排序、跨開關記住排序
+internal/ui/talkmenu      把一則 TALK 訊息的數行拆成選單（進言五項是 #77）
+internal/ui/chrome        原版的視窗外框與底色；沒有素材時退回純色框而不是整個畫不出來
+internal/ui/isoview       等角投影畫布（不認識版面）
+internal/ui/sound         Ebiten 的 ogg 播放層（沒有音檔就靜音跑）
+internal/ui/phone         手機版的畫面與操作，縮放交給 Ebiten 的 Layout 契約
+```
+
+**執行檔**
+
+```
+cmd/wlgame                遊戲本體（戰略 ＋ 戰術）
+cmd/wlandroid             手機 UI 的桌面開發殼（同一份 internal/ui/phone）
+cmd/wlsim                 無頭世界模擬器，用長期行為驗證公式
 cmd/wlshot                解素材成 PNG，無頭環境可跑
 cmd/wlview                Ebiten 互動檢視器（素材模式 / 大地圖模式，Tab 切換）
-cmd/wlsim                 無頭世界模擬器，用長期行為驗證公式
-cmd/wlgame                戰略主畫面原型
+cmd/wlscen                劇本檔工具（含 round-trip 驗證）
 cmd/wlaudio               把原版音樂與音效渲染成 WAV（再由 tools/bgm2ogg.sh 轉 ogg）
+```
+
 ```
 
 規則層的每一條公式都是從 `KI.EXE` 的機器碼讀出來的，不是猜的
@@ -753,6 +744,22 @@ tools/phone_shot.sh out.png 60  # 手機 UI 的桌面截圖（一輪約 30 秒�
 - 外交提案的「指定金額」要數值輸入器，還沒做；SAF 選完資料夾之後的複製
   流程沒有自動驗（要驅動系統的檔案選擇器）。
 
+## 文件導航
+
+| 想知道 | 看哪一份 |
+|---|---|
+| **現況**（唯一真相來源）| [`CONTEXT.md`](CONTEXT.md)——現況一覽、術語表、**已被推翻的斷言**、worklist |
+| 某個欄位／常數解了沒 | [`docs/INDEX.md`](docs/INDEX.md) 的斷言總表（斷言 → 推論等級 → 出處）|
+| 還有什麼沒解 | [`docs/re/43`](docs/re/43-open-questions.md) 的缺口總表 |
+| 原版的資料長什麼樣 | [`docs/formats/`](docs/formats/) |
+| 原版的程式碼在哪 | [`docs/re/00-index.md`](docs/re/00-index.md)；函式覆蓋地圖在 [`docs/re/21`](docs/re/21-function-census.md) |
+| 這個遊戲怎麼運作 | [`docs/mechanics/00-index.md`](docs/mechanics/00-index.md) |
+| 我們打算怎麼實作 | [`docs/spec/00-index.md`](docs/spec/00-index.md)（`DRAFT`／`READY`／`CONFORMED` 三態）|
+| 驗過什麼、量到多少 | [`docs/playtest/`](docs/playtest/) |
+| 這一批發行包裡有什麼 | [`docs/release/10`](docs/release/10-full-20260828.md) |
+| 每一輪做了什麼 | [`WORKLIST.md`](WORKLIST.md)——逐輪紀錄與勘誤都在這裡，不散回上面那幾份 |
+| 動手前要遵守什麼 | [`CLAUDE.md`](CLAUDE.md) |
+
 ## 這個專案的兩條硬性原則
 
 1. **完整性 > 投報。** 不得以「成本高、效益低」為由跳過任何素材、任何格式。
@@ -772,3 +779,21 @@ PC-98 日文原版與松崗繁中版是同一份程式的兩次編譯，
 - **哪些美術被重繪過**：diff 直接告訴你。
   順帶找到主畫面標題橫幅上寫的是日文「臥竜伝」——
   [松崗版根本沒重繪](docs/reference/03-baked-japanese.md)。
+
+## 致謝與聲明
+
+《臥龍傳－三國制霸之計》（臥竜伝 三国制覇の計）由 NEO･GETEN（ホクショー）
+開發並於 1994 年發行，繁體中文版由松崗於 1995 年發行。**本專案與上述任何一方
+都沒有隸屬、贊助或授權關係**；相關名稱與商標屬於各自的權利人。
+
+本專案的定位是文化資產保存：公開的產出只有引擎程式碼、規格與校訂紀錄。
+**原版執行檔、資料檔、美術、音樂與倚天點陣字一律不進版控、不進發行包**，
+要玩得自備合法的原版副本（`WOLONG_BUNDLE_DATA=0` 出的包不含任何原版資產）。
+發行前由 `tools/denylist.py` 掃過一次，`tools/check.sh` 會跑它。
+
+日文原版與松崗繁中版的對照素材、DOS/V 自然遊玩錄影由使用者提供；
+社群整理的資料只當「往哪裡找」的提示，不當結論（[`CLAUDE.md`](CLAUDE.md) §2）。
+
+⚠ **程式碼還沒選授權條款。** 在決定之前，這個儲存庫只作保存與研究用途，
+不視為任何形式的授權。
+
