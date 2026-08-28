@@ -3,7 +3,7 @@
 **狀態：政略↔戰術的接縫已解；戰場記錄的部分欄位未解。**
 
 - 日期：2026-08-07
-- 輸入：`workplace/ida/dosv/KI.EXE.i64`　SHA-256 `fffeba98…3868`
+- 輸入：`workplace/orig/dosv/KI.EXE`　SHA-256 `fffeba98…3868`（`.i64` 由它產生，當時未另記資料庫雜湊）
 - 推論等級：**兩條路徑的存在與參數 confirmed**；地形對映表的內容也已解出，
   見 [`../mechanics/30-combat.md`](../mechanics/30-combat.md) §2
 

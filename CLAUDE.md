@@ -356,7 +356,8 @@ grep `.asm` 只能從呼叫端的參數順序反推——那是間接證據，�
   所以日文語系包是把 `workplace/orig/pc98/` 的 `TALK.DAT`／`SINARIO.DAT`
   讀出來，不是把中文翻回去。**人名裡的 34 個 PC-98 外字**靠兩版逐字對齊
   反推（`docs/formats/08` §2.9）。
-- **簡體**由母本經 OpenCC 詞級轉換產生（機轉初稿），**英文**是逐則英譯；
+- **簡體**由母本經 OpenCC 詞級轉換產生，再套 `translations/corrections-zh-hans.json`
+  的逐則校訂；**英文**是逐則英譯，已對照日文原版覆核；
   兩者都是譯稿不是原版事實。人名地名用漢語拼音大寫
   （`CAO-CAO`／`CHANG'AN`，使用者裁定 2026-08-26）。
 - **語系檔在 `translations/`，由 `tools/langpack.py`／`tools/namepack.py` 產生**，

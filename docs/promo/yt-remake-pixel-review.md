@@ -13,7 +13,7 @@
 
 ## 產物
 
-- [60 秒 remake 推廣片](../../dist-all/promo/wolong-remake-trailer.mp4)：1280×720，H.264／AAC。
+- [remake 推廣片](../../dist-all/promo/wolong-remake-trailer.mp4)：1280×720，H.264／AAC（本文寫作時是 60 秒版；現行主預告是 72 秒，見 [`README.md`](README.md)）。
 - [YouTube／remake 對照片](../../dist-all/promo/wolong-remake-yt-comparison.mp4)：24 秒、
   1280×400、H.264；六組原版代表幀與 remake 驗收畫面並排，無原版音訊。
 - [自然畫面並排圖](yt-remake-natural-side-by-side.png)。
@@ -67,7 +67,7 @@ remake，也不繞過 DOS/V 密碼保護取得原版畫面。
 
 | 產物 | SHA-256 |
 |---|---|
-| `dist-all/promo/wolong-remake-trailer.mp4` | `72ffc20f0ab22dc5a43771d115b944d57c45477973640e83304fddb1545292fd` |
+| `dist-all/promo/wolong-remake-trailer.mp4` | `72ffc20f0ab22dc5a43771d115b944d57c45477973640e83304fddb1545292fd`（2026-08-11 當時的版本；現行雜湊見 `dist-all/SHA256SUMS.txt`）|
 | `dist-all/promo/wolong-remake-yt-comparison.mp4` | `3efe64fc7ff903ed15850a1c44c09d8ec82ff2d3a1a38681ae376e46ac84aa9a` |
 | `wlgame-dosv-natural-remake-skeleton.png` | `45a68852335420dd7b22b4e240192dcd7a38fbbc62f72c8c59ec95acdc137b24` |
 | `yt-remake-natural-difference.png` | `a16d3878766d4428dc9bf09f2de1ee83802486df3a3ca532e60af8e6f5cb6872` |

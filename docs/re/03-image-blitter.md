@@ -3,7 +3,7 @@
 **狀態：READY。圖庫載入器與四平面繪製常式都讀完。**
 
 - 日期：2026-08-07
-- 輸入：`workplace/ida/dosv/KI.EXE.i64`　SHA-256 `fffeba98…3868`
+- 輸入：`workplace/orig/dosv/KI.EXE`　SHA-256 `fffeba98…3868`（`.i64` 由它產生，當時未另記資料庫雜湊）
 - 推論等級：**每筆大小、定位算式、寬高、平面順序全部 confirmed**
 
 ## 0. 先講一個工具上的坑

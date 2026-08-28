@@ -44,7 +44,7 @@ JIS X 0208 裡（多數只在 JIS X 0212，`傕`／`廮` 兩者皆無），原�
 
 | 元件 | zh-Hant（母本） | zh-Hans | ja | en |
 |---|---|---|---|---|
-| talk 表（1,022 則）| `talk-dosv-corrected.json`（cp950）| `talk-zh-hans.json`（OpenCC t2s 機轉初稿）| **`talk-ja.json`（PC-98 原版）** | `talk-en.json`（逐則英譯）|
+| talk 表（1,022 則）| `talk-dosv-corrected.json`（cp950）| `talk-zh-hans.json`（OpenCC t2s ＋ `corrections-zh-hans.json` 校訂）| **`talk-ja.json`（PC-98 原版）** | `talk-en.json`（逐則英譯）|
 | 人名地名（343）| 原版 Big5 | 字級 t2s 表 | **`names-ja.json`（PC-98 原版＋外字反推）** | `names-en.json`（漢語拼音）|
 | UI 詞（377）| 原文即母本 | 字級 t2s 表 | `ui-ja.json`（**取自 PC-98 `KI.EXE` 的原版用詞**）| `ui-en.json` |
 | 全形字型 | 倚天 `STDFONT`＋`SPCFONT` | `HZK16` → 倚天 | `JISKAN16` → 倚天 | 半形 `ASCFONT` ＋ 倚天 |

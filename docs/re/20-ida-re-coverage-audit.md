@@ -50,7 +50,7 @@
 
 ### 2.4 文件 provenance 有舊錯
 
-`docs/re/02-palette-routine.md`、`03-image-blitter.md`、`04-mmap-entry-points.md`、`05-battle-selection.md` 與 `CLAUDE.md` 的早期表格，把 `KI.EXE` 的 `fffeba…3868` 寫成 `.i64` 雜湊；目前 `.i64` 實際是 `7b7c…34c26`。`CONTEXT.md` 的較新段落已分開記錄，但舊文件尚未全面勘誤。
+`docs/re/02-palette-routine.md`、`03-image-blitter.md`、`04-mmap-entry-points.md`、`05-battle-selection.md` 與 `CLAUDE.md` 的早期表格，曾把 `KI.EXE` 的 `fffeba…3868` 寫成 `.i64` 雜湊；四份都已改成標明那是 `KI.EXE` 的雜湊（`.i64` 每次被 `idat` 開啟都會改寫，雜湊會漂，見 `CLAUDE.md` §4.1）。
 
 這不推翻那些格式結論，卻表示「文件寫了 IDA 證據」仍需回查輸入身分，不能批次視為相同資料庫已證實。
 

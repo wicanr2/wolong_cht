@@ -427,7 +427,7 @@ workplace/ida/pc98/KI.EXE.i64   PC-98 日文版 65,823 B  725 函式
 - `TALK.DAT` 前 2,048 B 的結構。
 - ~~`.MAP`／`.MDL`／`.SCH`／`.MCH` 四種格式的語意~~ **✅ 大致解完**：
   `.MAP` 是 RLE 的圖塊編號表、`.MDL` 是圖塊集、`.SCH` 是人物圖形。
-  **`.MCH` 仍未解**。
+  `.MCH` 三個檔也全解：`MMAP.MCH`（`docs/re/14`）、`MOUSE.MCH`（`docs/formats/04`），`BATTLE.MCH` 不存在。
 - ~~`*GRF.DAT` 的圖像編碼~~ **✅ 全解**（4bpp planar，Go 解碼層與原版逐像素相同）。
 - DOS/V 側的音源（PC-98 側已定案為 OPN，見 §3.9）。
 - ~~那三個字型檔要不要玩家自備~~ **✅ 不必**：字型內建，走 `INT 15h AH=50h`

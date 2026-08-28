@@ -4,7 +4,7 @@
 
 - 日期：2026-08-07
 - 輸入：
-  - `workplace/ida/dosv/KI.EXE.i64`　SHA-256 `fffeba98…3868`
+  - `workplace/orig/dosv/KI.EXE`　SHA-256 `fffeba98…3868`（`.i64` 由它產生，當時未另記資料庫雜湊）
   - `workplace/ida/pc98/KI.EXE.i64`　SHA-256 `061917f9…81e8`
 - 推論等級：**通道順序、值域、分組大小、亮度公式全部 confirmed**
   （兩版獨立的機器碼互相印證）

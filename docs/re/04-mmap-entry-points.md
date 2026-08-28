@@ -5,7 +5,7 @@
 這份只留反組譯的位址與過程。
 
 - 日期：2026-08-07
-- 輸入：`workplace/ida/dosv/KI.EXE.i64`　SHA-256 `fffeba98…3868`
+- 輸入：`workplace/orig/dosv/KI.EXE`　SHA-256 `fffeba98…3868`（`.i64` 由它產生，當時未另記資料庫雜湊）
 - 推論等級：**位址與載入關係 confirmed**；資料語意見 `docs/formats/05`
 
 ## 1. 三個檔的載入處

@@ -39,7 +39,7 @@
 - `ICONGRF.DAT` 段 1 與段 3（`docs/formats/03` §5.3 還沒解）裡有沒有文字。
 - `KAOGRF` 150 張、`KYOGRF` 15 張、`IVENTGRF` 3 張逐張確認有無文字
   （目前是整批看過總覽，沒有逐張放大）。
-- `MMAP.*`／`BATTLE.*`／`PASS.*` 這些還沒解的地圖族。
+- `MMAP.*`／`BATTLE.*`（格式已解，`docs/formats/05`–`07`，只是沒逐張檢查是否含日文）、`PASS.*`（語意仍未知）。
 - `LOGO.EXE`／`ROGO*.DAT` 的開機畫面。
 
 ## 4. remake 怎麼處理
