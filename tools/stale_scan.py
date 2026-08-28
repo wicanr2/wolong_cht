@@ -11,8 +11,10 @@
   而 `tools/android_smoke.sh` 用的是 `:20260820`。
 - `docs/spec/41` 的驗證欄寫 `-open-talk`，實際旗標是 `-open-talk-index`。
 - `docs/re/21` 宣稱覆蓋率 T1 100%，重跑是 738 ＋ 1 支 T2。
+- `README.md` 把未解列數寫成 456 列／172 份，而 `docs/re/43`（`check.sh`
+  每次重生）當時已經是 518 列／199 份。**抄過去的摘要不會自己更新。**
 
-四層檢查，**每一層都只在能拿到真值時才跑**（缺原版素材、缺 census 就跳過
+五層檢查，**每一層都只在能拿到真值時才跑**（缺原版素材、缺 census 就跳過
 並明講跳過了）——沉默地少跑一層，比不跑更糟。
 
 用法：
@@ -216,6 +218,36 @@ def check_coverage(problems, skipped):
             f"文件寫 T1 = {claimed.group(1)}，重算是 {t1}（T4 = {t4}）"))
 
 
+# ── 第五層：未解列數 ─────────────────────────────────────────
+# `docs/re/43` 是生成的（`check.sh` 每次重出），而別的文件會把它的總數抄過去
+# 當摘要。抄過去那一份不會自己更新——README 的「456 列」就這樣掛了一個星期。
+OPEN_Q_TOTAL = re.compile(r"(\d+)\s*列分布在\s*(\d+)\s*份文件")
+
+
+def check_open_questions(problems, skipped):
+    """別的文件抄過去的未解列數 vs `docs/re/43` 現在的數字。"""
+    src = os.path.join(REPO, "docs", "re", "43-open-questions.md")
+    if not os.path.isfile(src):
+        skipped["未解列數（沒有 docs/re/43）"] += 1
+        return
+    truth = OPEN_Q_TOTAL.search(read(src))
+    if not truth:
+        skipped["未解列數（43 讀不出總數）"] += 1
+        return
+    for doc in doc_paths():
+        rel = os.path.relpath(doc, REPO)
+        # ⚠ 逐輪紀錄裡的數字是**當時**的數字，不是斷言（同 check_image_tags）。
+        if rel in ("RESEARCH-LOG.md", "WORKLIST.md") or rel.endswith("43-open-questions.md"):
+            continue
+        for i, line in enumerate(read(doc).splitlines(), 1):
+            m = OPEN_Q_TOTAL.search(line)
+            if m and m.groups() != truth.groups():
+                problems.append((
+                    rel, i, "未解列數過期",
+                    f"寫 {m.group(1)} 列／{m.group(2)} 份，"
+                    f"`docs/re/43` 現在是 {truth.group(1)} 列／{truth.group(2)} 份"))
+
+
 def selftest():
     """正對照：**先證明每一層抓得到，再相信它說沒事。**
 
@@ -286,6 +318,16 @@ def selftest():
     want("旗標：讀得到 cmd/ 的旗標定義", len(defined) > 20)
     want("旗標：擋下不存在的", "open-talk" not in defined and "open-talk-index" in defined)
 
+    truth = OPEN_Q_TOTAL.search(read(os.path.join(REPO, "docs", "re", "43-open-questions.md")))
+    want("未解列數：讀得到 docs/re/43 的總數", truth)
+    if truth:
+        n, d = truth.groups()
+        want("未解列數：擋下對不上的",
+             OPEN_Q_TOTAL.search(f"共 {int(n) + 1} 列分布在 {d} 份文件").groups() != truth.groups())
+        want("未解列數：對的不誤報",
+             OPEN_Q_TOTAL.search(f"共 {n} 列分布在 {d} 份文件").groups() != truth.groups(),
+             expect=False)
+
     print("正對照" + ("通過" if ok else "失敗"))
     return 0 if ok else 1
 
@@ -298,6 +340,7 @@ def main():
     skipped = {}
     for name in ("雜湊（檔案不在工作區）", "旗標（沒有 cmd/）",
                  "覆蓋率（沒有 census.tsv）", "覆蓋率（重算失敗）",
+                 "未解列數（沒有 docs/re/43）", "未解列數（43 讀不出總數）",
                  "覆蓋率（讀不出重算結果）"):
         skipped[name] = 0
 
@@ -305,6 +348,7 @@ def main():
     check_image_tags(problems, skipped)
     check_flags(problems, skipped)
     check_coverage(problems, skipped)
+    check_open_questions(problems, skipped)
 
     # ⭐ **跳過了什麼一定要印出來。** 「沒有找到問題」與「那一層根本沒跑」
     # 在輸出上長得一樣，而後者才是危險的（CLAUDE.md §7 第 21 條）。

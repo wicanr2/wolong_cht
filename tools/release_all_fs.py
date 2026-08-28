@@ -282,6 +282,10 @@ def package_stage(
         shutil.rmtree(stage)
     stage.mkdir(parents=True)
     write_template("README-RELEASE.md", stage / "README-RELEASE.md")
+    # ⚠ **授權條款要跟著包走。** `LICENSE` 第 3 條 (a) 要求散布時保留全文，
+    # 而拿到 tar.gz 的人看不到儲存庫——包裡沒有這一份，收到的人就不知道
+    # 自己被授權了什麼。
+    copy_file(REPO / "LICENSE", stage / "LICENSE")
     for src, relative, executable in files:
         copy_file(WORK / "raw" / src, stage / relative, executable)
     for src, relative in directories or []:
@@ -496,6 +500,7 @@ def stage() -> None:
     sync_android()
 
     write_template("ROOT-README.md", DIST / "README.md")
+    copy_file(REPO / "LICENSE", DIST / "LICENSE")
 
 
 def appdir() -> None:
@@ -518,6 +523,7 @@ def appdir() -> None:
     for src, name in bundled_trees():
         copy_bundled_tree(src, root / "usr" / "share" / "wolong-remake" / name)
     write_template("README-RELEASE.md", root / "usr" / "share" / "doc" / "wolong-remake" / "README-RELEASE.md")
+    copy_file(REPO / "LICENSE", root / "usr" / "share" / "doc" / "wolong-remake" / "LICENSE")
 
 
 def record_verification() -> None:
@@ -621,6 +627,7 @@ def refresh() -> None:
         shutil.rmtree(WORK)
     write_template("ROOT-README.md", DIST / "README.md")
     write_template("PROMO-README.md", DIST / "promo" / "README.md")
+    copy_file(REPO / "LICENSE", DIST / "LICENSE")
     # ⭐ APK 要重新同步再回填 manifest：Android 是另一條管線，
     # 重建之後 `refresh` 是唯一會跑到的一步。
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
