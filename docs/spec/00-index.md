@@ -61,10 +61,10 @@
 | 主畫面的視窗外框與指令列 | [`12-strategy-chrome.md`](12-strategy-chrome.md) | 版面與各視窗內部排版都照機器碼；主畫面五區逐像素對過 |
 | 主畫面四個視窗的開關 | [`13-main-window-toggles.md`](13-main-window-toggles.md) | 已實作；主畫面逐像素對過。原版執行期的**開關行為**仍未驗 |
 | 編成時預備兵怎麼分配（`sub_14698`）| [`21-corps-formation-reserves.md`](21-corps-formation-reserves.md) | 已實作並有逐項單測 |
-| 財政視窗 | [`14-finance-window.md`](14-finance-window.md) | 版面已照原版重寫；數值輸入器未接 |
+| 財政視窗 | [`14-finance-window.md`](14-finance-window.md) | 版面已照原版重寫；數值輸入器已接（[`78`](78-amount-input-editor.md)） |
 | 軍團編成視窗 | [`22-corps-formation-window.md`](22-corps-formation-window.md) | 版面、武將頭像與六個槽的滑鼠熱區都照原版 |
 | 據點情報視窗 | [`23-city-info-window.md`](23-city-info-window.md) | 版面已照原版實作 |
-| 軍團情報視窗 | [`24-corps-info-window.md`](24-corps-info-window.md) | 版面已照原版實作；指令流程未接 |
+| 軍團情報視窗 | [`24-corps-info-window.md`](24-corps-info-window.md) | 版面已照原版實作；指令流程走 [`39`](39-march-order-menu.md) 的選單，入口與原版不同（§5） |
 | 四槽選擇視窗 | [`25-slot-select-window.md`](25-slot-select-window.md) | 讀取／儲存已照原版；新遊戲未共用 |
 | ＹＥＳ／ＮＯ 對話框 | [`26-yes-no-dialog.md`](26-yes-no-dialog.md) | 版面與命中算式已照原版 |
 | 君主選擇視窗 | [`27-lord-select-window.md`](27-lord-select-window.md) | 版面已照原版；「自定」未接 |
@@ -121,6 +121,23 @@
 | 敗走的兩段訊息 | [`77-rout-talk-messages.md`](77-rout-talk-messages.md) | 已實作並有單測；#1F 與 #23 ＋ 組 `0x198`。⚠ 敗走走不到 #20 |
 | 數值輸入器的上限語意 ＋ 財政 | [`78-amount-input-editor.md`](78-amount-input-editor.md) | 已實作並有單測；`sub_17C6E` 的 `ax` 是**上限**不是初值，錨點由呼叫端給 |
 | 新遊戲的勢力清單 | [`79-new-game-faction-list.md`](79-new-game-faction-list.md) | 已實作並有單測；視窗 (136,104)、五欄、一頁 10 列。⚠ 點擊路徑無頭驗不到（§3.1）|
+| 開戰單挑：挑戰、拒戰、應戰、回合互嗆、決著 | [`80-duel-opening.md`](80-duel-opening.md) | 已實作並有單測；狀態機照機器碼 |
+| 災害的實際數值：機率、marker 量、持續與距離衰減 | [`81-disaster-quantities.md`](81-disaster-quantities.md) | 已實作並有單測；機率、marker 量、距離衰減都有出處 |
+| 應戰軍團的挑選：兵數 × 士氣 × 評價 | [`82-defender-selection.md`](82-defender-selection.md) | 已實作並有單測；兵數 × 士氣 × 評價 |
+| 新遊戲的開局政略評估（sub_12BD9 的第二個呼叫點） | [`83-initial-strategy-pass.md`](83-initial-strategy-pass.md) | 已實作並有單測；`sub_12BD9` 的開局呼叫點，孫策攻劉繇的分歧因此收掉 |
+| 多語系：簡體中文、日文、英文 | [`84-multilanguage.md`](84-multilanguage.md) | 四個語系端到端可玩；簡體與英文已第二人覆核（§6） |
+| 半形語系的清單欄界（英文版的姓名欄） | [`85-latin-list-layout.md`](85-latin-list-layout.md) | 已實作並實跑驗過；半形語系的清單欄界另排 |
+| 執行期切換語言（含手機版） | [`86-runtime-language-switch.md`](86-runtime-language-switch.md) | 已實作並實跑驗過；F9／殼層／手機面板三個入口 |
+| 半形語系的畫面調整（清單以外） | [`87-latin-screen-layout.md`](87-latin-screen-layout.md) | 已實作並實跑驗過；原版美術上的中文不翻（§2） |
+| 三處顯示與原版對不上 | [`88-display-polish-parity.md`](88-display-polish-parity.md) | 已實作並實跑驗過 |
+| 戰後的損害報告改成可關的選項 | [`89-siege-damage-report-toggle.md`](89-siege-damage-report-toggle.md) | 已實作並實跑驗過；remake 差異，預設照原版 |
+| Android 也要有原版的音樂 | [`92-android-music.md`](92-android-music.md) | 已實作並實跑驗過；APK 的音檔走 `ImportActivity` |
+| 攻城「一撞歸零」的面向常數要跟著戰場翻轉 | [`93-siege-wall-instant-break-facing.md`](93-siege-wall-instant-break-facing.md) | 已實作並有單測；面向跟著戰場翻轉 |
+| 退卻的繞路點不可以每幀清掉 | [`94-retreat-path-not-cleared-every-frame.md`](94-retreat-path-not-cleared-every-frame.md) | 已實作並有單測 |
+| 開場擺兵的高度要用地面層表，不是堆疊高度 | [`95-spawn-height-uses-ground-plane.md`](95-spawn-height-uses-ground-plane.md) | 已實作並有單測 |
+| 守陣不可以在回陣的那一步被降級成「就位」 | [`96-guard-command-not-downgraded.md`](96-guard-command-not-downgraded.md) | 已實作並有單測 |
+| 登城的觸發：X 與 Y 都走不動就試 Z，不必先走到目標格 | [`97-climb-when-both-axes-blocked.md`](97-climb-when-both-axes-blocked.md) | 已實作並有單測 |
+| 爬不上去的那一下要打門：未破的門是這樣被打開的 | [`98-climb-into-a-gate-hits-it.md`](98-climb-into-a-gate-hits-it.md) | 已實作並有單測 |
 | 同狀態畫面對拍（方法）| [`90-same-state-parity.md`](90-same-state-parity.md) | 主畫面五區逐像素相同；§4.1 記下「參考影格本身會有東西」 |
 | 戰場的逐區對拍（分區）| [`91-tactical-parity.md`](91-tactical-parity.md) | 九區裡六區逐像素相同（2026-08-18）；⚠ 取樣點已不等價，見 `playtest/49` |
 | 手機版「關於」頁顯示授權條款（**remake 差異，發行設施**）| [`99-about-page-license.md`](99-about-page-license.md) | 已實作並有單測；APK 帶不了 `LICENSE` 檔，摘要顯示在遊戲內 |

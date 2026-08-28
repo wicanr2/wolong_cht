@@ -179,10 +179,8 @@ IDA Pro 9.4 線性位址為準。先前只記錄 blit 尺寸、沒有接上資�
   fallback 只在資產缺失時啟用。
 
 這項接線把「外框位置／尺寸／3×6 靜態 glyph／硬體游標來源」提升到 DOS/V 資源 parity。
-**數值輸入視窗本身還沒做整張截圖的逐像素對拍**——缺的是那張截圖，
-不是取得截圖的手段：松崗 DOS/V 的密碼頁四格留白直接確認就會過
-（`CLAUDE.md` §4.0、[`../playtest/18`](../playtest/18-dosv-password-verification.md)），
-主畫面已經這樣拍完並逐區對拍（[`../playtest/37`](../playtest/37-main-screen-parity.md)）。
+**數值輸入視窗的逐像素對拍已做：0 px**（[`../playtest/42`](../playtest/42-window-parity.md)），
+取樣方式與主畫面相同（[`../playtest/37`](../playtest/37-main-screen-parity.md)）。
 
 ## 9. 2026-08-10 DOS/V 硬體游標與按鍵 glyph 解碼
 
