@@ -133,11 +133,11 @@ func (s *Session) drawModal(dst *ebiten.Image, td *textdraw.Drawer) {
 		return
 	}
 	title := s.ModalTitle()
-	td.Draw(dst, title, mx+(mw-td.Width(title))/2, my+mh/2-40, inkText())
+	td.Draw(dst, title, mx+(mw-td.Width(title))/2, my+mh/2-FontH-8, inkText())
 	opts := s.ModalOptions()
 	for i, o := range opts {
 		x, y, w, h := modalOptionRect(i, len(opts))
 		s.window(dst, x, y, w, h, inkBar())
-		td.Draw(dst, o, x+(w-td.Width(o))/2, y+(h-16)/2, inkText())
+		td.Draw(dst, o, x+(w-td.Width(o))/2, y+(h-FontH)/2, inkText())
 	}
 }

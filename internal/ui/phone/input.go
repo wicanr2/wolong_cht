@@ -22,7 +22,7 @@ func (s *Session) Tap(lx, ly float64) bool {
 	// 事件訊息貼在地圖上緣，點它是「知道了」。
 	if lines := s.Notice(); len(lines) > 0 {
 		_, my, _, _ := MapRect()
-		if ly < float64(my+len(lines)*26+16) {
+		if ly < float64(my+len(lines)*(LineH+2)+16) {
 			s.dismissNotice()
 			return true
 		}

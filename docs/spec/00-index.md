@@ -124,6 +124,7 @@
 | 同狀態畫面對拍（方法）| [`90-same-state-parity.md`](90-same-state-parity.md) | 主畫面五區逐像素相同；§4.1 記下「參考影格本身會有東西」 |
 | 戰場的逐區對拍（分區）| [`91-tactical-parity.md`](91-tactical-parity.md) | 九區裡六區逐像素相同（2026-08-18）；⚠ 取樣點已不等價，見 `playtest/49` |
 | 手機版「關於」頁顯示授權條款（**remake 差異，發行設施**）| [`99-about-page-license.md`](99-about-page-license.md) | 已實作並有單測；APK 帶不了 `LICENSE` 檔，摘要顯示在遊戲內 |
+| 手機版的字放大 2 倍（**remake 差異**）| [`100-phone-text-scale.md`](100-phone-text-scale.md) | 已實作、單測與截圖驗過；版面常數從字高長出來，桌面版倍率不變 |
 
 ## 怎麼加一份
 

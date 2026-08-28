@@ -22,10 +22,10 @@ type sheet struct {
 // 列表的版面。
 const (
 	sheetPadX   = 20
-	tabH        = 44
-	rowH        = 30
+	tabH        = FontH + 20
+	rowH        = LineH + 8
 	rowTextDX   = 12
-	sheetHeadDY = 10
+	sheetHeadDY = (rowH - FontH) / 2
 )
 
 // Tabs 是目前 sheet 的分頁標題，沒有分頁時回 nil。
@@ -339,12 +339,13 @@ var BuildVersion = "dev"
 // APK 的 assets 沒人看得到，所以摘要要顯示在遊戲內（rulebook/85）。
 // ⚠ 不叫 open source——非商業限制不符合 OSI 定義。
 func aboutRows() []sheetRow {
+	// ⚠ 系統面板一頁只放得下 8 列（字放大 2 倍之後，docs/spec/100），
+	// 第 9 列會掉出去看不到；`･` 不在倚天字型裡，寫 `-`。
 	return []sheetRow{
 		{name: "臥龍傳 Remake", cols: []string{BuildVersion}},
-		{name: "原版", cols: []string{"NEO･GETEN 1994 / 松崗 1995"}},
+		{name: "原版", cols: []string{"NEO-GETEN 1994 / 松崗 1995"}},
 		{name: "資料來源", cols: []string{"使用者自備，不隨程式散布"}, dim: true},
-		{name: "授權", cols: []string{"專有授權：非商業免費"}},
-		{name: "可以", cols: []string{"使用、修改、再散布（非商業）"}},
+		{name: "授權", cols: []string{"專有授權：非商業免費使用、修改、再散布"}},
 		{name: "商業使用", cols: []string{"需書面授權，歡迎來談"}},
 		{name: "聯絡", cols: []string{"wicanr2@gmail.com"}},
 		{name: "不涵蓋", cols: []string{"原版執行檔、資料、美術、音樂、字型"}, dim: true},

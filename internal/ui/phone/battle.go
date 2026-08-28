@@ -119,7 +119,9 @@ func (s *Session) newBattleView() *isoview.View {
 // 而「看得到多少戰場」是會影響決策的。
 const (
 	// BattleRowH 是六格與六命令那兩列的高度。
-	BattleRowH = 56
+	// 字放大 2 倍之後兩行字塞不下（戰場區要留給原版的 480×368 視野），
+	// 六格改成「位置 兵數」一行（docs/spec/100 §3）。
+	BattleRowH = FontH + 24
 )
 
 // BattleFieldRect 是戰場畫面的可視區。
@@ -245,7 +247,7 @@ func (s *Session) drawBattleSides(dst *ebiten.Image, td *textdraw.Drawer,
 		{"", fmt.Sprintf("%d", b.Sides[tactical.DefenderSide].Alive()*tactical.MenPerSoldier)},
 	}
 	for i, r := range rows {
-		y := fy + 24 + i*30
+		y := fy + 16 + i*(LineH+2)
 		// 玩家那一側用色 15（白），對方用次要色——**不要用反白條的色 5**：
 		// 那是清單選取用的綠，拿來標「哪一側是我」會讀成「選中了它」。
 		ink := inkDim()
@@ -255,7 +257,7 @@ func (s *Session) drawBattleSides(dst *ebiten.Image, td *textdraw.Drawer,
 		if r[0] != "" {
 			td.Draw(dst, r[0], fx+16, y, inkDim())
 		}
-		td.Draw(dst, r[1], fx+48, y, ink)
+		td.Draw(dst, r[1], fx+16+td.Width("攻")+8, y, ink)
 	}
 	// 右：戰場縮圖。原版點它可以移動鏡頭；手機版目前只顯示。
 	if mm := s.battle.view.Minimap(); mm != nil {
@@ -280,10 +282,8 @@ func (s *Session) drawSquadStrip(dst *ebiten.Image, td *textdraw.Drawer, b *tact
 		if td == nil || !td.Available() {
 			continue
 		}
-		label := unitLabel(squadSlot(i))
-		td.Draw(dst, label, x+(w-td.Width(label))/2, y+6, ink)
-		men := fmt.Sprintf("%d", squadMen(b, side, squadSlot(i)))
-		td.Draw(dst, men, x+(w-td.Width(men))/2, y+h-24, ink)
+		label := unitLabel(squadSlot(i)) + " " + fmt.Sprintf("%d", squadMen(b, side, squadSlot(i)))
+		td.Draw(dst, label, x+(w-td.Width(label))/2, y+(h-FontH)/2, ink)
 	}
 }
 
@@ -296,7 +296,7 @@ func (s *Session) drawBattleCommands(dst *ebiten.Image, td *textdraw.Drawer) {
 			continue
 		}
 		label := c.String()
-		td.Draw(dst, label, x+(w-td.Width(label))/2, y+(h-16)/2, inkText())
+		td.Draw(dst, label, x+(w-td.Width(label))/2, y+(h-FontH)/2, inkText())
 	}
 }
 

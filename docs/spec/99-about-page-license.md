@@ -17,15 +17,14 @@ AppImage 都帶了 `LICENSE`，**APK 帶不了**——gradle 的 assets 塞得�
 
 ## 2. 內容
 
-「關於」分頁改成下列各列（每列一句，不捲頁也放得下）：
+「關於」分頁改成下列八列（一頁剛好放得下，[`100`](100-phone-text-scale.md) 之後一頁是 8 列）：
 
 | 列 | 內容 |
 |---|---|
 | 臥龍傳 Remake | 版本字串（`phone.BuildVersion`，APK 由 `tools/android_build.sh` 以 `-X` 注入；未注入時是 `dev`）|
-| 原版 | `NEO･GETEN 1994 / 松崗 1995` |
+| 原版 | `NEO-GETEN 1994 / 松崗 1995`（`･` 不在倚天字型裡，寫 `-`）|
 | 資料來源 | 使用者自備，不隨程式散布（暗色）|
-| 授權 | 專有授權：非商業免費 |
-| 可以 | 使用、修改、再散布（非商業）|
+| 授權 | 專有授權：非商業免費使用、修改、再散布 |
 | 商業使用 | 需書面授權，歡迎來談 |
 | 聯絡 | `wicanr2@gmail.com` |
 | 不涵蓋 | 原版執行檔、資料、美術、音樂、字型（暗色）|
@@ -47,7 +46,7 @@ AppImage 都帶了 `LICENSE`，**APK 帶不了**——gradle 的 assets 塞得�
 
 | 方式 | 證據 |
 |---|---|
-| 單元測試 | `TestAboutTabShowsLicenseTerms`（`internal/ui/phone`）：第 3 頁含「非商業」「wicanr2@gmail.com」「不涵蓋」，且不含 `open source` |
+| 單元測試 | `TestAboutTabShowsLicenseTerms`（`internal/ui/phone`）：第 3 頁含「非商業」「wicanr2@gmail.com」「不涵蓋」，且不含 `open source`；列數不超過一頁 |
 | 對原版 | 不適用（remake 專屬畫面）|
 
 ## 5. 未解

@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**517 列分布在 200 份文件，平均每份 2.6 列。**
+**518 列分布在 201 份文件，平均每份 2.6 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 182 | 176 | 6 | 0 |
 | 驗收 | 83 | 72 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 195 | 182 | 13 | 0 |
-| **合計** | **517** | 482 | 35 | 0 |
+| 其他 | 196 | 183 | 13 | 0 |
+| **合計** | **518** | 483 | 35 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -54,7 +54,7 @@
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/re/` | 182 |
-| `docs/spec/` | 167 |
+| `docs/spec/` | 168 |
 | `docs/playtest/` | 83 |
 | `docs/formats/` | 33 |
 | `docs/mechanics/` | 18 |
@@ -410,16 +410,16 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（195 條）
+## 2.6 其他（196 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
 | [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | 實機驗收 | ⛔ 沒有裝置。里程碑 H 保持未完成 | 靜態 |
 | [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | SAF 匯入的複製流程 | 入口做完了，但「選資料夾 → 複製 69 檔」沒有自動驗過：要驅動系統的檔案選擇器。smoke 走的是 `adb` ＋ `run-as`，那是驗收路徑不是玩家路徑 | 靜態 |
-| [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | 高 DPI 下的點陣字 | 原版字型是 16×15 點陣，手機上要整數放大幾倍才讀得清楚沒量過 | 靜態 |
+| [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | 高 DPI 下的點陣字 | 定為 2 倍（`../spec/100`）；實機上要不要另一檔未驗 | 靜態 |
 | [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | release signing | keystore 怎麼保管還沒決定；目前出的是 debug 簽章 | 靜態 |
 | [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | 16 KB 對齊只驗到建置那一層 | `readelf` 確認 LOAD 段是 `0x4000`，但**沒有 16 KB page size 的裝置或 AVD 實際載過**。這一條與「實機驗收」是同一個缺口 | 靜態 |
-| [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 點陣字在高 DPI 上要放大幾倍 | 沒量過（§6） | 靜態 |
+| [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 點陣字在高 DPI 上要放大幾倍 | 定為 2（§6）；平板或小手機要不要另一檔，得有實機回饋 | 靜態 |
 | [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 小卡要放哪些欄位 | 目前放名稱／歸屬／生產力／防災／城兵五項。原版一覽表的欄位全表在 `docs/spec/38`，還沒逐項比對過取捨 | 靜態 |
 | [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 縮放的下限 | 整張大地圖 384×256 格全塞進手機會小到看不見，最小縮放級距還沒定 | 靜態 |
 | [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 戰場的縮放 | 目前固定 1×（原版的 480×368 剛好塞進主區）。放大之後看得到的格子會變少，**那會改變決策**，所以沒有做 | 靜態 |
@@ -445,6 +445,7 @@
 | [`spec/00-index.md`](../spec/00-index.md) | 事件場景上誰在說話 | `42-event-scene-speakers.md` / 兩個框已實作；結果階段的上框未解 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 據點換手之後 `+0x00` 低 4 位會不會跟著變 | `sub_1890A` 靜態讀過，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 玩家據點求援的喇叭聲（`sub_10CDE`） | 呈現層未接 | 靜態 |
+| [`spec/100-phone-text-scale.md`](../spec/100-phone-text-scale.md) | 倍率不能在遊戲內調 | 固定 2。平板或小手機可能要 1 或 3，得先有實機回饋 | 靜態 |
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | `資金高位 >= 0x80` 那一支 | `cmp bh, 80h / jnb` 會直接算「答應」，等於資金超過約 840 萬時門檻失效。**看起來像有號數的邊界處理**，未逐位對過 | 靜態 |
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | 君主出陣之後的行為 | 那支軍團跟一般軍團有沒有差別，未讀 | 靜態 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝命令、`0x0Bh`／`0x10h`／`0x15h`／`0x1Fh` 各自出現在哪個視窗已知，完整值域未列 | 靜態 |

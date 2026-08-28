@@ -342,4 +342,9 @@ func TestAboutTabShowsLicenseTerms(t *testing.T) {
 	if strings.Contains(strings.ToLower(text), "open source") {
 		t.Fatal("非商業授權不可以自稱 open source")
 	}
+	// 關於頁不捲動：列數要塞得進一頁，否則條款全文那一列會掉出去。
+	_, _, _, mh := MapRect()
+	if n, fit := len(s.sheetRows()), (mh-tabH)/rowH; n > fit {
+		t.Fatalf("關於頁 %d 列，一頁只放得下 %d 列", n, fit)
+	}
 }

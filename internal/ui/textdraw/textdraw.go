@@ -220,6 +220,9 @@ type Drawer struct {
 	runes map[rune]rune
 	// translate 是 UI 詞的語系轉換（uitext.Table.Convert）。
 	translate func(string) string
+	// scale 是整數倍放大（手機版用 2，docs/spec/100）。0 與 1 都是原尺寸。
+	// 放大在畫的那一刻做（GeoM），字模快取仍是原尺寸，不做平滑。
+	scale int
 }
 
 type cacheKey struct {
@@ -238,9 +241,35 @@ func New(font GlyphSource, ascii *cjk.ASCIIFont) *Drawer {
 // Available 回報有沒有載到全形字型。
 func (d *Drawer) Available() bool { return d != nil && d.font != nil }
 
-// Width 回傳一段字串畫出來會佔多寬（像素）。
+// SetScale 設整數倍放大；小於 1 視為 1。桌面版不呼叫，維持逐像素對拍。
+func (d *Drawer) SetScale(n int) {
+	if d == nil {
+		return
+	}
+	if n < 1 {
+		n = 1
+	}
+	d.scale = n
+}
+
+// Scale 回報目前的放大倍率（至少 1）。
+func (d *Drawer) Scale() int {
+	if d == nil || d.scale < 1 {
+		return 1
+	}
+	return d.scale
+}
+
+// LineH 是一列的高度（字高 ＋ 列距）乘上倍率——版面常數要從這裡長出來，
+// 不要各自寫死 16。
+func (d *Drawer) LineH() int { return (GlyphH + LineGap) * d.Scale() }
+
+// FontH 是字高乘上倍率。
+func (d *Drawer) FontH() int { return GlyphH * d.Scale() }
+
+// Width 回傳一段字串畫出來會佔多寬（像素，含倍率）。
 func (d *Drawer) Width(s string) int {
-	return StringWidth(s)
+	return StringWidth(s) * d.Scale()
 }
 
 // Draw 從 (x, y) 開始畫一段字串，回傳結束時的 x。
@@ -251,12 +280,14 @@ func (d *Drawer) Draw(dst *ebiten.Image, s string, x, y int, c color.RGBA) int {
 			continue // 換行由呼叫端處理，這裡只畫一列
 		}
 		img := d.glyph(ch, c)
+		k := d.Scale()
 		if img != nil {
 			op := &ebiten.DrawImageOptions{}
+			op.GeoM.Scale(float64(k), float64(k))
 			op.GeoM.Translate(float64(x), float64(y))
 			dst.DrawImage(img, op)
 		}
-		x += RuneWidth(ch)
+		x += RuneWidth(ch) * k
 	}
 	return x
 }
@@ -265,7 +296,7 @@ func (d *Drawer) Draw(dst *ebiten.Image, s string, x, y int, c color.RGBA) int {
 func (d *Drawer) DrawLines(dst *ebiten.Image, lines []string, x, y int, c color.RGBA) {
 	for _, ln := range lines {
 		d.Draw(dst, ln, x, y, c)
-		y += GlyphH + LineGap
+		y += d.LineH()
 	}
 }
 

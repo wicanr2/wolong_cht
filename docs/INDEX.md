@@ -185,6 +185,7 @@
 | [`docs/release/README-RELEASE.md`](release/README-RELEASE.md) | 臥龍傳 remake 可執行封裝 | 四平台完整包、Linux AppImage、推廣片與驗收紀錄已集中於 [dist-all](../../dist-a… | 2026-08-24 |
 | [`docs/spec/00-index.md`](spec/00-index.md) | 00 — 規格索引：已解的規則有沒有被實作、有沒有被驗過 | 索引。規格是 docs/re/（程式碼在哪）與 internal/（我們寫了什麼） 之間的那一層——它回答「這條規則… | 2026-08-14 |
 | [`docs/spec/10-city-tick.md`](spec/10-city-tick.md) | 10 — 據點整備、威脅偵測與求援 | CONFORMED。整條鏈已實作，並在 PC-98 原版的執行期記憶體上取樣驗過 （+0x18／+0x14 各 0/… | 2026-08-14 |
+| [`docs/spec/100-phone-text-scale.md`](spec/100-phone-text-scale.md) | 100 — 手機版的字放大 2 倍 | CONFORMED（2026-08-28 實作、單測、桌面 Xvfb 截圖驗過）。 | 2026-08-28 |
 | [`docs/spec/11-ai-sortie.md`](spec/11-ai-sortie.md) | 11 — 進言「請求君主出陣」 | CONFORMED。 | 2026-08-14 |
 | [`docs/spec/12-strategy-chrome.md`](spec/12-strategy-chrome.md) | 12 — 主畫面的視窗外框、指令列與右欄 | CONFORMED。主畫面的四個常駐視窗矩形、指令列版面與縮小地圖／勢力篩選鈕的 位置全部由機器碼定死（[docs/… | 2026-08-15 |
 | [`docs/spec/13-main-window-toggles.md`](spec/13-main-window-toggles.md) | 13 — 主畫面四個視窗的開關 | CONFORMED。已實作並留下四窗全開／全關的截圖； 舊的 g.open[] 那一套已整個拿掉，主畫面視窗只剩一份… | 2026-08-15 |

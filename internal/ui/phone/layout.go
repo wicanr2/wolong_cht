@@ -18,15 +18,26 @@ const (
 	LogicalW = 960
 	LogicalH = 540
 
+	// TextScale 是點陣字的整數倍放大（docs/spec/100）。原版 16×15 在
+	// 960×540 的畫布上等比縮到 6 吋手機只有 2 mm 多，讀不了；2 倍是
+	// 佔畫布高 6%，與 Android 內文預設字級相當。**只用整數倍，不做平滑。**
+	TextScale = 2
+	// FontH／LineH 是放大後的字高與列高，所有版面常數從這兩個長出來。
+	FontH = 15 * TextScale
+	LineH = (15 + 2) * TextScale
+
 	// StatusH／CommandH 是上下兩條的高度。48 dp 的觸控下限換算到
 	// 這個邏輯畫布大約是 56／64——**兩條都要比下限寬鬆**，
 	// 因為手指按的是按鈕中心不是邊緣。
-	StatusH  = 56
-	CommandH = 64
+	StatusH  = FontH + 24
+	CommandH = FontH + 36
 
-	// CardW／CardH 是點到據點或軍團時浮出的小卡。
-	CardW = 300
-	CardH = 176
+	// CardW／CardH 是點到據點或軍團時浮出的小卡：標題一列 ＋ 四列欄位。
+	CardW = 360
+	CardH = CardPadY*2 + LineH*5 + 8
+	// CardPadY 是小卡上下留白，CardRowH 是欄位列距。
+	CardPadY = 12
+	CardRowH = LineH + 2
 	// CardMargin 是小卡離畫面邊緣的距離。
 	CardMargin = 16
 )

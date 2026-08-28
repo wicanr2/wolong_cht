@@ -99,6 +99,10 @@ func (s *Session) window(dst *ebiten.Image, x, y, w, h int, fill color.RGBA) {
 // Draw 把一局畫進 960×540 的邏輯畫布。
 func (s *Session) Draw(dst *ebiten.Image, td *textdraw.Drawer) {
 	dst.Fill(inkVoid())
+	// 手機版的字一律放大 TextScale 倍（docs/spec/100）。設在這裡而不是
+	// 建 Drawer 的地方：Drawer 由 mobile/wolong 與 cmd/wlandroid 各建一份，
+	// 兩邊都要記得設就會有一邊忘記。
+	td.SetScale(TextScale)
 	// ⭐ 戰場開著時**整個主區換成戰場**，大地圖不畫——
 	// 原版進戰術畫面時戰略畫面也整個換掉。
 	if s.BattleActive() {
@@ -181,7 +185,7 @@ func (s *Session) drawTabs(dst *ebiten.Image, td *textdraw.Drawer, bg, fg color.
 		// 看起來像地圖的一部分。
 		fillRect(dst, mx+chrome.Tile, my+chrome.Tile, mw-chrome.Tile*2, tabH-chrome.Tile, inkBar())
 		if td != nil && td.Available() && s.sheet.cmd >= 0 {
-			td.Draw(dst, s.sheet.cmd.Label(), mx+sheetPadX, my+sheetHeadDY+2, inkText())
+			td.Draw(dst, s.sheet.cmd.Label(), mx+sheetPadX, my+(tabH-FontH)/2, inkText())
 		}
 		return
 	}
@@ -200,7 +204,7 @@ func (s *Session) drawTabs(dst *ebiten.Image, td *textdraw.Drawer, bg, fg color.
 		if td == nil || !td.Available() {
 			continue
 		}
-		td.Draw(dst, t, x+(cell-td.Width(t))/2, my+sheetHeadDY+2, ink)
+		td.Draw(dst, t, x+(cell-td.Width(t))/2, my+(tabH-FontH)/2, ink)
 	}
 }
 
@@ -222,7 +226,7 @@ func (s *Session) drawAdvise(dst *ebiten.Image, td *textdraw.Drawer) {
 	if td == nil || !td.Available() {
 		return
 	}
-	td.Draw(dst, s.adviseTitle(), mx+sheetPadX, my+sheetHeadDY+2, fg)
+	td.Draw(dst, s.adviseTitle(), mx+sheetPadX, my+(tabH-FontH)/2, fg)
 
 	if picking {
 		// 對象可能有二十幾個，底部的選項條放不下——用可捲的清單。
@@ -256,7 +260,7 @@ func (s *Session) drawAdvise(dst *ebiten.Image, td *textdraw.Drawer) {
 	for i, c := range choices {
 		y := bottom + i*rowH
 		fillRect(dst, mx+chrome.Tile, y, mw-chrome.Tile*2, rowH-2, inkBar())
-		td.Draw(dst, c, mx+sheetPadX, y+4, inkText())
+		td.Draw(dst, c, mx+sheetPadX, y+sheetHeadDY, inkText())
 	}
 	if len(choices) == 0 {
 		td.Draw(dst, "點畫面繼續", mx+mw-sheetPadX-td.Width("點畫面繼續"),
@@ -366,17 +370,26 @@ func (s *Session) drawStatusBar(dst *ebiten.Image, td *textdraw.Drawer) {
 		return
 	}
 	c := s.world.Clock
-	td.Draw(dst, fmt.Sprintf("%d年%d月%d日", c.Year, c.Month, c.Day), 16, 18, inkText())
+	ty := (StatusH - FontH) / 2
+	td.Draw(dst, fmt.Sprintf("%d年%d月%d日", c.Year, c.Month, c.Day), 16, ty, inkText())
 
 	p := s.world.Player
 	if p < 0 || p >= len(s.world.Factions) {
 		return
 	}
 	f := &s.world.Factions[p]
-	td.Draw(dst, "資金", LogicalW-330, 18, inkDim())
-	td.Draw(dst, fmt.Sprintf("%d", f.Funds), LogicalW-268, 18, inkText())
-	td.Draw(dst, "預備兵", LogicalW-150, 18, inkDim())
-	td.Draw(dst, fmt.Sprintf("%d", totalReserves(f)*MenPerPoint), LogicalW-62, 18, inkText())
+	// 右側兩組「標籤 ＋ 數字」從右往左排，寬度跟著倍率走。
+	x := LogicalW - 16
+	men := fmt.Sprintf("%d", totalReserves(f)*MenPerPoint)
+	x -= td.Width(men)
+	td.Draw(dst, men, x, ty, inkText())
+	x -= td.Width("預備兵") + 8
+	td.Draw(dst, "預備兵", x, ty, inkDim())
+	funds := fmt.Sprintf("%d", f.Funds)
+	x -= td.Width(funds) + 24
+	td.Draw(dst, funds, x, ty, inkText())
+	x -= td.Width("資金") + 8
+	td.Draw(dst, "資金", x, ty, inkDim())
 }
 
 func totalReserves(f *state.Faction) int {
@@ -403,7 +416,7 @@ func (s *Session) drawCommandBar(dst *ebiten.Image, td *textdraw.Drawer) {
 			continue
 		}
 		label := Command(i).Label()
-		td.Draw(dst, label, x+(w-td.Width(label))/2, y+(h-16)/2, ink)
+		td.Draw(dst, label, x+(w-td.Width(label))/2, y+(h-FontH)/2, ink)
 	}
 }
 
@@ -416,7 +429,7 @@ func (s *Session) drawCityCard(dst *ebiten.Image, td *textdraw.Drawer) {
 		return
 	}
 	c := &s.world.Cities[s.selected]
-	td.Draw(dst, s.Localise(c.Name), x+16, y+14, inkText())
+	td.Draw(dst, s.Localise(c.Name), x+16, y+CardPadY, inkText())
 	rows := [][2]string{
 		{"歸屬", s.ownerName(c.Owner)},
 		{"生產力", fmt.Sprintf("%d", c.Production)},
@@ -424,7 +437,7 @@ func (s *Session) drawCityCard(dst *ebiten.Image, td *textdraw.Drawer) {
 		{"城兵", fmt.Sprintf("%d", c.Garrison*MenPerPoint)},
 	}
 	for i, r := range rows {
-		ry := y + 46 + i*28
+		ry := y + CardPadY + LineH + 8 + i*CardRowH
 		td.Draw(dst, r[0], x+16, ry, inkDim())
 		td.Draw(dst, r[1], x+CardW-16-td.Width(r[1]), ry, inkText())
 	}
