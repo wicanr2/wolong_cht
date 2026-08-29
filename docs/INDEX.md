@@ -89,7 +89,7 @@
 | [`docs/playtest/53-battle-fast-forward.md`](playtest/53-battle-fast-forward.md) | 53 — 實機：戰場的 ▶▶ 按下去會怎樣 | PASS（行為 confirmed）。按一下戰場整片變成均勻底紋、側欄與小地圖照動；再按一下戰場回來。 | 2026-08-29 |
 | [`docs/playtest/54-menu-second-row-tap.md`](playtest/54-menu-second-row-tap.md) | 54 — 原版擷取：彈出選單的第二列終於點得到 | PASS。單獨一下 5–60 ms 的瞬按（tap:x,y,ms）能把「軍團」選單打開而不選走第一列；先前點不到的是… | 2026-08-29 |
 | [`docs/playtest/55-encounter-menu-parity.md`](playtest/55-encounter-menu-parity.md) | 55 — 實機：遭遇時原版沒有「戰鬥指揮／委任」選單 | 定案。訊息框按掉之後直接是戰場，中間沒有選單；playtest/31 §6 那一項不是「還沒對拍」，是原版沒有那個畫面。 | 2026-08-29 |
-| [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告是 72 秒， 含語言切換與原版並排兩段；遊戲段落是逐幀錄下來的實跑畫面。 2… | 2026-08-28 |
+| [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告是 72 秒， 含語言切換與原版並排兩段；遊戲段落是逐幀錄下來的實跑畫面。 2… | 2026-08-29 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
 | [`docs/promo/dosv-adlib-and-tactical-review.md`](promo/dosv-adlib-and-tactical-review.md) | 推廣片原版 AdLib 與戰術骨架審查 | 歷史審查紀錄（2026-08-12）。 | 2026-08-12 |

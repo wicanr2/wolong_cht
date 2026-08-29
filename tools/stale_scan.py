@@ -44,11 +44,20 @@ DOC_FILES = ("README.md", "CLAUDE.md", "CONTEXT.md", "WORKLIST.md",
 # 只認「檔名 …(80 字內，且中間出現 SHA 或「雜湊」)… 64 個 hex」這種相鄰寫法。
 # 放寬到「同一行任何檔名配任何雜湊」會產生大量假陽性——一行裡常有兩三個
 # 檔名與兩三個雜湊，配對本身就是猜的。
-HASH_CLAIM = re.compile(
-    r"(?P<file>[A-Za-z0-9_\-./]+\.(?:png|mp4|ogg|wav|json|md|go|py|sh))"
-    r"(?P<mid>.{0,80}?)`?(?P<hash>[0-9a-fA-F]{64})`?",
-    re.S,
+HASH_CLAIM = re.compile(r"`?\b(?P<hash>[0-9a-fA-F]{64})\b`?")
+
+# 檔名候選：**只認白名單副檔名**。放寬到「任何 `x.y`」會把 `H.264`、
+# 版本號、`44.1 kHz` 一起收進來，而它們永遠解不出檔案 → 整批變成「跳過」，
+# 這一層就再次靜默失效。
+HASH_FILE = re.compile(
+    r"[A-Za-z0-9_\-./]+\.(?:png|jpg|gif|mp4|ogg|wav|json|md|go|py|sh|txt|csv|tsv"
+    r"|exe|dat|i64|asm|bin|apk|zip|tar|gz|AppImage)\b",
+    re.I,
 )
+# 視窗以**段落**為界（空行／標題），上限 400 字。
+# 80 字太小：條列式的「- 影片：…mp4」與「- SHA-256：`…`」中間常隔一整行規格，
+# 於是那三支推廣片的雜湊一條都比不到（2026-08-29 突變測試發現）。
+HASH_WINDOW = 400
 
 # ── 第二層：docker 映像標籤 ─────────────────────────────────────
 IMAGE_TAG = re.compile(r"\b([a-z0-9][a-z0-9._/-]*?):(20[0-9]{6}[a-z0-9.-]*)\b")
@@ -96,6 +105,55 @@ def resolve(rel, doc):
     return None
 
 
+def hash_claims(text, doc, skipped):
+    """吐出這份文件裡「某個檔案的雜湊是 X」的宣稱：(行號, 檔案路徑, 宣稱值)。
+
+    ⭐ **自我測試與本體共用這一支。** 先前的自我測試自己重寫了一份逐行的
+    比對，於是它一直在驗一個「本體早就不是這樣做」的邏輯——正對照過關，
+    真正的版面（條列式，檔名與雜湊分屬不同行）卻一條都沒比到。
+    """
+    for m in HASH_CLAIM.finditer(text):
+        start = m.start("hash")
+        window = text[max(0, start - HASH_WINDOW):start]
+        # ⭐ **視窗跨行，但不跨空行與標題。** 條列式的寫法本來就把檔名與
+        # 雜湊拆成兩行（「- 影片：…mp4」／「- SHA-256：`…`」），逐行配對
+        # 對這種版面**結構上看不到**——而那正是推廣片與發行產物的標準寫法，
+        # 於是這一層長年綠燈卻一次都沒比過那幾支影片（2026-08-29 用突變
+        # 測試發現：把主預告的雜湊改錯一個字元，掃描照樣通過）。
+        # 空行與標題是段落邊界，跨過去就會把上一段的檔名黏到這一段的雜湊上。
+        for stop in ("\n\n", "\n#"):
+            if stop in window:
+                window = window[window.rindex(stop) + len(stop):]
+        if "SHA" not in window.upper() and "雜湊" not in window:
+            continue
+        # 明講是「當時」的值＝刻意保留的歷史紀錄，不是現況宣稱。
+        # ⚠ 只看雜湊自己那一行與前一行——用整個段落找「當時」會讓
+        # 段落裡任何一句話都能豁免整段的雜湊。
+        nl = text.find("\n", start)
+        near = "\n".join(window.splitlines()[-2:]) + text[start:nl if nl >= 0 else len(text)]
+        if "當時" in near:
+            skipped["雜湊（標明是當時的值）"] += 1
+            continue
+        cands = [x.group(0) for x in HASH_FILE.finditer(window)]
+        if not cands:
+            continue
+        # ⭐ **取最近的那一個。** 同一個視窗裡常有兩個檔名
+        #（「見 `docs/re/47`…原始 `KI.EXE` SHA-256 `…`」），
+        # 配到遠的那個就是憑空捏一條假陽性。
+        rel = cands[-1].rstrip(".，。、)）」]")
+        target = resolve(rel, doc)
+        if target is None:
+            skipped["雜湊（檔案不在工作區）"] += 1
+            continue
+        # `workplace/` 底下是素材與 IDA 資料庫。**`.i64` 的雜湊本來就會漂**
+        #（`idat` 一開啟就改寫它，CLAUDE.md §4.1），筆記記的是「這個結論
+        # 是在哪一份資料庫上驗的」——那是出處紀錄，不是現況宣稱。
+        if os.path.relpath(target, REPO).startswith("workplace" + os.sep):
+            skipped["雜湊（workplace 素材／IDA 資料庫）"] += 1
+            continue
+        yield text.count("\n", 0, start) + 1, target, m.group("hash").lower()
+
+
 def check_hashes(problems, skipped):
     """文件宣稱的檔案雜湊 vs 實際。"""
     for doc in doc_paths():
@@ -103,22 +161,14 @@ def check_hashes(problems, skipped):
         # 按日期的台帳記的是「當時量到的值」，不是現況。
         if rel_doc in ("RESEARCH-LOG.md", "WORKLIST.md"):
             continue
-        for i, line in enumerate(read(doc).splitlines(), 1):
-            for m in HASH_CLAIM.finditer(line):
-                mid = m.group("mid")
-                if "SHA" not in mid.upper() and "雜湊" not in mid:
-                    continue
-                target = resolve(m.group("file"), doc)
-                if target is None:
-                    skipped["雜湊（檔案不在工作區）"] += 1
-                    continue
-                with open(target, "rb") as fh:
-                    actual = hashlib.sha256(fh.read()).hexdigest()
-                if actual != m.group("hash").lower():
-                    problems.append((
-                        rel_doc, i, "雜湊過期",
-                        f"{os.path.relpath(target, REPO)}："
-                        f"文件說 {m.group('hash')[:16]}…，實際 {actual[:16]}…"))
+        for i, target, claimed in hash_claims(read(doc), doc, skipped):
+            with open(target, "rb") as fh:
+                actual = hashlib.sha256(fh.read()).hexdigest()
+            if actual != claimed:
+                problems.append((
+                    rel_doc, i, "雜湊過期",
+                    f"{os.path.relpath(target, REPO)}："
+                    f"文件說 {claimed[:16]}…，實際 {actual[:16]}…"))
 
 
 def script_image_tags():
@@ -272,27 +322,39 @@ def selftest():
         real = hashlib.sha256(b"probe").hexdigest()
         doc = os.path.join(tmp, "doc.md")
 
-        def scan(body, fn):
+        def scan(body, fn=None):
             with open(doc, "w", encoding="utf-8") as fh:
                 fh.write(body)
-            found = []
-            for i, line in enumerate(body.splitlines(), 1):
-                for m in HASH_CLAIM.finditer(line):
-                    if "SHA" not in m.group("mid").upper() and "雜湊" not in m.group("mid"):
-                        continue
-                    t = resolve(m.group("file"), doc)
-                    if t is None:
-                        continue
-                    with open(t, "rb") as fh:
-                        if hashlib.sha256(fh.read()).hexdigest() != m.group("hash").lower():
-                            found.append((i, "雜湊"))
-            return found
+            sink = {"雜湊（檔案不在工作區）": 0, "雜湊（標明是當時的值）": 0,
+                    "雜湊（workplace 素材／IDA 資料庫）": 0}
+            out = []
+            for i, target, claimed in hash_claims(body, doc, sink):
+                with open(target, "rb") as fh:
+                    if hashlib.sha256(fh.read()).hexdigest() != claimed:
+                        out.append((i, "雜湊"))
+            return out
 
         bad = "0" * 64
         want("雜湊：擋下錯的",
-             scan(f"- `probe.png` SHA-256 `{bad}`", None))
+             scan(f"- `probe.png` SHA-256 `{bad}`"))
         want("雜湊：對的不誤報",
-             scan(f"- `probe.png` SHA-256 `{real}`", None), expect=False)
+             scan(f"- `probe.png` SHA-256 `{real}`"), expect=False)
+        # ⭐ **條列式（檔名與雜湊分屬不同行）是推廣片與發行產物的標準寫法。**
+        # 這個正對照擋的是「逐行配對」那種寫法回鍋——它會讓整批產物的雜湊
+        # 靜默地不被比對，而輸出跟「沒問題」一模一樣。
+        bullets = ("- 影片：[`probe.png`](probe.png)\n"
+                   "- 規格：48.468 秒、1280×720、30 fps、H.264／AAC\n"
+                   "- SHA-256：`{}`")
+        want("雜湊：條列跨行也要比（擋下錯的）", scan(bullets.format(bad)))
+        want("雜湊：條列跨行對的不誤報", scan(bullets.format(real)), expect=False)
+        # 空行是段落邊界：上一段的檔名不該黏到這一段沒有檔名的雜湊上。
+        want("雜湊：不跨段落配對",
+             scan(f"- 工具：[`probe.png`](probe.png)\n\n產物 SHA-256：`{bad}`"),
+             expect=False)
+        # 標明「當時」的歷史值不算現況宣稱。
+        want("雜湊：標明當時的值放行",
+             scan(f"- `probe.png` SHA-256 `{bad}`（2026-08-11 當時的版本）"),
+             expect=False)
 
     used = script_image_tags()
     want("映像標籤：腳本裡真的找得到標籤", used)
@@ -338,7 +400,8 @@ def main():
         return selftest()
     problems = []
     skipped = {}
-    for name in ("雜湊（檔案不在工作區）", "旗標（沒有 cmd/）",
+    for name in ("雜湊（檔案不在工作區）", "雜湊（標明是當時的值）", "雜湊（workplace 素材／IDA 資料庫）",
+                 "旗標（沒有 cmd/）",
                  "覆蓋率（沒有 census.tsv）", "覆蓋率（重算失敗）",
                  "未解列數（沒有 docs/re/43）", "未解列數（43 讀不出總數）",
                  "覆蓋率（讀不出重算結果）"):

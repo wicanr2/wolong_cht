@@ -8,8 +8,8 @@
 這也解掉 [`43`](43-open-questions.md) 掛的「`sub_193D7(al)` 的 2/3/4/5 是什麼索引」。
 
 - 日期：2026-08-15
-- 輸入：`workplace/ida/dosv/KI.EXE.i64`　SHA-256
-  `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`
+- 輸入：`workplace/ida/dosv/KI.EXE.i64`（由 `KI.EXE` SHA-256
+  `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868` 產生）
 - 工具：**IDAPython** `tools/ida_callsite_args.py`、`tools/ida_dump.py`；
   `tools/ida_xref.idc`、`tools/ida_dump_bytes.idc`
 - 位址空間：IDA linear（段基址 `0x10000`）

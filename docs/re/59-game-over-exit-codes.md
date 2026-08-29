@@ -8,8 +8,8 @@
 ——那一份先前整份都是「說明書」等級。
 
 - 日期：2026-08-16
-- 輸入：`workplace/ida/dosv/KI.EXE.i64`　SHA-256
-  `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`；
+- 輸入：`workplace/ida/dosv/KI.EXE.i64`（由 `KI.EXE` SHA-256
+  `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868` 產生）；
   `YNVSHELL.COM`（979 B）、`SINARIO.DAT`（88,832 B）
 - 工具：`tools/ida_dump.py`、`tools/ida_callsite_args.py`、`tools/ida_xref.idc`、
   `tools/ida_disp_users.py`

@@ -4,8 +4,8 @@
 
 - 日期：2026-08-20
 - 影片：[`dist-all/promo/wolong-remake-android.mp4`](../../dist-all/promo/wolong-remake-android.mp4)
-- 規格：48.5 秒、1280×720、H.264／AAC、44.1 kHz 立體聲，4.2M
-- SHA-256：`fe7f4d3b1d52acdee2a683f79dd2e97fbe63fa18fdb015c02e20c5d276241e2f`（2026-08-28 字放大 2 倍 ＋ Scale2x 後重錄重剪）
+- 規格：48.468 秒、1280×720、30 fps、H.264／AAC、44.1 kHz 立體聲，6.3M
+- SHA-256：`4e48d4645c5fe7965898e8eac30409db5ff635157f6dca3a111d954900085550`（2026-08-29 重錄重剪：金額鍵盤與訊息框肖像都動過）
 - 重現：[`tools/phone_capture.sh`](../../tools/phone_capture.sh) → [`tools/promo_android.sh`](../../tools/promo_android.sh)
 
 ## 怎麼錄的

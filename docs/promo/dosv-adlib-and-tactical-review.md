@@ -16,7 +16,7 @@
   `e516632af2c4e7676bcfcdf33042ae1ccbe2df3cc74c1ec2083671851a50af2e`。
 - 成片使用來源 `300–375 s` 的原版遊戲音軌；只做音量、限制器、淡入與淡出，
   沒有重作旋律、替換音色或呼叫 `tools/promo_score.py`。
-- 中間 WAV SHA-256：
+- 中間 WAV（當時的產出，沒有留在工作區）SHA-256：
   `ebfe035fc49a5b98bf5419e8f63298d0efcbcc92df6caf921103a40ff3abdbde`；
   44.1 kHz、雙聲道、75 秒，平均音量 `-21.7 dB`、峰值 `-4.2 dB`。
 - 這是使用者錄影中的原版遊戲音訊，不宣稱是本輪 DOSBox-X 直接錄製。
