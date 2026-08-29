@@ -446,7 +446,7 @@
 | [`spec/102-battle-fast-forward.md`](../spec/102-battle-fast-forward.md) | 快轉時戰場區的底紋 | 原版是**藍底綠線的菱形格**（`playtest/53` 的裁切），不是龍紋。已收斂到「讀哪裡」：`sub_1DC9D` 的 `es` ＝ `word_1E15E`，**唯一的寫入端**是 `sub_1D958`（`sub_19946` 用 `cx = word_1D2F6` 傳進去），而 `word_1D2F… | 靜態 |
 | [`spec/103-phone-diplomacy-amount-keypad.md`](../spec/103-phone-diplomacy-amount-keypad.md) | 撥款請求的「指定金額」 | 原版 `sub_17C6E` 的另一個呼叫端；手機版仍只給「照要求撥款／拒絕」，同一套鍵盤可以接，先不做 | 靜態 |
 | [`spec/104-advisor-naming-window.md`](../spec/104-advisor-naming-window.md) | 六格與本頁字的顏色 | 六格 15、游標底線 15／1、字 9：`sub_19223`／`sub_1928A` 的屬性值直讀，但沒逐像素對過 | 靜態 |
-| [`spec/105-encounter-goes-straight-to-battle.md`](../spec/105-encounter-goes-straight-to-battle.md) | 遭遇當天的日期差一天 | 同一份存檔：原版在解凍約 4 秒後於 **196年4月17日** 跳訊息；remake 從載入（第 1 幀）到第 240 幀都停在 **4月16日**，遭遇也發生在 4月16日。存檔本身是 4月16日，所以差的是「原版那 4 秒推進了一天、remake 沒有」——載入後戰略時鐘的推進速率要另外量（`docs/sp… | 靜態 |
+| [`spec/105-encounter-goes-straight-to-battle.md`](../spec/105-encounter-goes-straight-to-battle.md) | 遭遇當天的日期差一天 | **量到剩 2 個子刻**（§6）。原本記的「時鐘推進速率」不是成因——**接觸在第幾個子刻與速度檔無關**，節流只改牆鐘秒數不改 tick 數。缺的是原版接觸 tick 的一手數字 | 靜態 |
 | [`spec/106-message-box-reporter-portrait.md`](../spec/106-message-box-reporter-portrait.md) | `0x94`／`0x95` 兩頁保留肖像的用途 | `0x94` 是一張紅臉武將、`0x95` 是空白。沒找到傳這兩個值的呼叫點 | 靜態 |
 | [`spec/106-message-box-reporter-portrait.md`](../spec/106-message-box-reporter-portrait.md) | #217 的兩個 `{3}` | 機制已通（`SeqFactions`），但**發那一則的呼叫端還沒讀**，所以第二個勢力是誰未定 | 靜態 |
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | `資金高位 >= 0x80` 那一支 | `cmp bh, 80h / jnb` 會直接算「答應」，等於資金超過約 840 萬時門檻失效。**看起來像有號數的邊界處理**，未逐位對過 | 靜態 |
