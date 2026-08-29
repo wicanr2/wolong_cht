@@ -824,7 +824,21 @@ func (w *World) fightGarrison(att int, ev *CorpsEvent, rng combat.Rand) {
 	attDead := r.AttackerDestroyed || w.retreatOrPerish(att, !r.DefenderWins)
 	w.afterBattle(ev, att, attDead, -1, rng)
 	if !r.DefenderWins && !attDead {
+		// ⭐ **敵軍攻下玩家的空城** → 原版跳 #26（`sub_14ED7` 的 `loc_14EF1`：
+		// 玩家是守方而 `bx == 4200h`（城裡沒有駐守軍團）→ `sub_15130`
+		// 自動判定，`al == 0`（攻方贏）才 `sub_14F71`）。
+		// **玩家自己攻空城那條路是靜的**——`loc_14F2B` 的
+		// `cmp bx, 4200h` 直接 `jz loc_14EE7`，判定完就回，沒有訊息。
+		// 變數順序照 `sub_14F71` 推堆疊的次序：先據點（`di`）後主將
+		// （`ax = [si+2]`），對應 #26「{2}受到{1}兵馬的攻擊」。
+		fellForPlayer := city.Owner == w.Player
 		w.capture(att, ev, rng)
+		if fellForPlayer && ev.Captured == node {
+			ev.TalkNotices = append(ev.TalkNotices, TalkNotice{
+				Index: talkSiegeCityFallen, City: node, Faction: -1,
+				General: w.Leader(att), Amount: -1,
+			})
+		}
 	}
 }
 
