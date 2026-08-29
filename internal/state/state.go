@@ -851,6 +851,16 @@ type TalkNotice struct {
 	RawFormatterWordValid bool
 	Secondary             bool // sub_13C3D 的第二次 TALK 呼叫
 	NoPortrait            bool // 原版直接 sub_18810 的文字／選單沒有肖像 blit
+	// SeqGenerals／SeqFactions 是同一則訊息裡 `\1`／`\3` 的**完整序列**
+	// （第 0 個就是第一次出現）。原版的 formatter 是共用的堆疊游標，
+	// 每個標記消耗下一個參數（`text.Table.LinesSeq`）；
+	// nil 時每一次出現都用 General／Faction 那一個值。
+	SeqGenerals []int
+	SeqFactions []int
+	// SpeakerPortrait 表示這一則用**說話者**的肖像，不是固定的通報者
+	// （原版 `sub_18810` 的 `al`：60 個呼叫點裡 40 個傳 0x93、
+	// 20 個傳武將記錄 +0x01，docs/spec/106）。
+	SpeakerPortrait bool
 }
 
 // StrategyEvent 是政略 AI 的可觀測動作。
@@ -902,6 +912,11 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 
 	// ② 軍團在時鐘進位前更新，使用尚未 Advance 的小時。
 	ev.Corps = w.tickCorps(w.Clock.Hour, rng)
+	// 軍團自己掛的訊息（進戰術畫面前那一則）併進事件的訊息佇列，
+	// 呈現層只認 Event.TalkNotices 一個出口（docs/spec/105）。
+	for i := range ev.Corps {
+		ev.TalkNotices = append(ev.TalkNotices, ev.Corps[i].TalkNotices...)
+	}
 
 	// ③ 完整 map-loop 才更新一次 MCH 物件；額外的 speed tick 跳過這裡。
 	if includeMapObjects {

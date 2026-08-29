@@ -99,3 +99,26 @@ func TestTrailingBlankLinesArePreserved(t *testing.T) {
 		t.Errorf("空訊息 %d 則（單 NUL %d 則），預期各 78 則", blank, single)
 	}
 }
+
+// 同一個標記出現多次時要依序取值（docs/spec/106）：原版的 formatter 是共用的
+// 堆疊游標，「{1}大人的兵馬，遇上{1}的兵馬了」兩個 `{1}` 是兩個不同的武將。
+func TestLinesSeqGivesEachRepeatedMarkerItsOwnValue(t *testing.T) {
+	tb := &Table{enc: UTF8}
+	tb.Messages[7] = Message{Lines: []Line{{Parts: []Part{
+		{Marker: '1'}, {Raw: []byte("大人遇上")}, {Marker: '1'}, {Raw: []byte("了")},
+	}}}}
+	vars := map[byte]string{'1': "甲"}
+	got, ok := tb.LinesSeq(7, vars, map[byte][]string{'1': {"甲", "乙"}})
+	if !ok || len(got) != 1 || got[0] != "甲大人遇上乙了" {
+		t.Fatalf("LinesSeq = %q, %v", got, ok)
+	}
+	// seq 用完就退回 vars；沒給 seq 時與 Lines 相同。
+	plain, ok := tb.Lines(7, vars)
+	if !ok || plain[0] != "甲大人遇上甲了" {
+		t.Fatalf("Lines = %q, %v", plain, ok)
+	}
+	short, ok := tb.LinesSeq(7, vars, map[byte][]string{'1': {"丙"}})
+	if !ok || short[0] != "丙大人遇上甲了" {
+		t.Fatalf("seq 用完沒有退回 vars：%q", short)
+	}
+}

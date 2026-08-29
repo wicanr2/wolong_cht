@@ -138,7 +138,7 @@
 | [`docs/re/39-remaining-unread.md`](re/39-remaining-unread.md) | 39 — 剩餘未讀函式的逐支歸屬 | 清單。 | 2026-08-14 |
 | [`docs/re/40-garrison-relief-request.md`](re/40-garrison-relief-request.md) | 40 — 據點求援與援軍派遣 | 整條鏈 confirmed（每一支都逐行讀過）。 sub_140C9 的距離算式裡有一處 | 2026-08-14 |
 | [`docs/re/42-leaf-functions.md`](re/42-leaf-functions.md) | 42 — 戰術以外的 47 支葉節點 | 47 支全部逐行讀過。四件事因此定案：INT 61h 是音源 TSR 的介面、 byte_198A6 的位元圖完整、… | 2026-08-14 |
-| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的） | 生成的清單，跑 tools/py.sh tools/re_open_questions.py 重出。 這一份不下結論… | 2026-08-28 |
+| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的） | 生成的清單，跑 tools/py.sh tools/re_open_questions.py 重出。 這一份不下結論… | 2026-08-29 |
 | [`docs/re/44-threat-and-reinforcement-ai.md`](re/44-threat-and-reinforcement-ai.md) | 44 — 威脅偵測與 AI 出兵：據點每 tick 掃一次 | 整條鏈逐行讀完。三件事定案：據點 +0x18 是佔用圖讀回來的軍團數、 +0x00 低 4 位是「哪幾個鄰居是敵方」… | 2026-08-14 |
 | [`docs/re/45-corps-command-mode.md`](re/45-corps-command-mode.md) | 45 — 軍團的三種指令模式：戰鬥指揮／委任／解體 | 軍團 +0x00 位元 2 定案 ＝ | 2026-08-14 |
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |
@@ -193,8 +193,9 @@
 | [`docs/spec/101-phone-glyph-scale2x.md`](spec/101-phone-glyph-scale2x.md) | 101 — 手機版放大的字用 Scale2x 去鋸齒 | CONFORMED（2026-08-28 實作、單測、截圖放大對照過）。 | 2026-08-28 |
 | [`docs/spec/102-battle-fast-forward.md`](spec/102-battle-fast-forward.md) | 102 — 戰場的 ▶▶：快轉＝跳過戰場重畫 | CONFORMED（2026-08-29 實作、單測、實機對照過行為；底紋見 §5）。 | 2026-08-29 |
 | [`docs/spec/103-phone-diplomacy-amount-keypad.md`](spec/103-phone-diplomacy-amount-keypad.md) | 103 — 手機版外交提案的「提示金額」：數字鍵盤 | CONFORMED（2026-08-29 實作並有單測）。 | 2026-08-29 |
-| [`docs/spec/104-advisor-naming-window.md`](spec/104-advisor-naming-window.md) | 104 — 「自定」：軍師命名視窗 | CONFORMED（2026-08-29 實作、單測與截圖；三個假說項見 §5）。 | 2026-08-29 |
+| [`docs/spec/104-advisor-naming-window.md`](spec/104-advisor-naming-window.md) | 104 — 「自定」：軍師命名視窗 | CONFORMED（2026-08-29 實作、單測與截圖）。 | 2026-08-29 |
 | [`docs/spec/105-encounter-goes-straight-to-battle.md`](spec/105-encounter-goes-straight-to-battle.md) | 105 — 遭遇時沒有「戰鬥指揮／委任」選單：直接進戰場 | CONFORMED（2026-08-29 機器碼 ＋ 實機兩條證據，已實作與單測）。 | 2026-08-29 |
+| [`docs/spec/106-message-box-reporter-portrait.md`](spec/106-message-box-reporter-portrait.md) | 106 — 訊息框那張臉是固定的通報者，不是說話者 | CONFORMED（2026-08-29 機器碼全量稽核 ＋ 實機對照，已實作與單測）。 | 2026-08-29 |
 | [`docs/spec/11-ai-sortie.md`](spec/11-ai-sortie.md) | 11 — 進言「請求君主出陣」 | CONFORMED。 | 2026-08-14 |
 | [`docs/spec/12-strategy-chrome.md`](spec/12-strategy-chrome.md) | 12 — 主畫面的視窗外框、指令列與右欄 | CONFORMED。主畫面的四個常駐視窗矩形、指令列版面與縮小地圖／勢力篩選鈕的 位置全部由機器碼定死（[docs/… | 2026-08-15 |
 | [`docs/spec/13-main-window-toggles.md`](spec/13-main-window-toggles.md) | 13 — 主畫面四個視窗的開關 | CONFORMED。已實作並留下四窗全開／全關的截圖； 舊的 g.open[] 那一套已整個拿掉，主畫面視窗只剩一份… | 2026-08-15 |

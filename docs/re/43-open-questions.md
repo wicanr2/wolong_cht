@@ -3,7 +3,7 @@
 **狀態：生成的清單，跑 `tools/py.sh tools/re_open_questions.py` 重出。
 這一份不下結論，只把各文件的「未解」表集中到一處。**
 
-- 日期：2026-08-28
+- 日期：2026-08-29
 - 產生工具：`tools/re_open_questions.py`
 - 來源：`docs/` 底下所有文件的未解小節、表格裡標未解的列，與收尾是「…未解」的散句
 
@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**516 列分布在 207 份文件，平均每份 2.5 列。**
+**517 列分布在 208 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 179 | 173 | 6 | 0 |
 | 驗收 | 81 | 70 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 197 | 184 | 13 | 0 |
-| **合計** | **516** | 481 | 35 | 0 |
+| 其他 | 198 | 185 | 13 | 0 |
+| **合計** | **517** | 482 | 35 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -54,7 +54,7 @@
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/re/` | 179 |
-| `docs/spec/` | 170 |
+| `docs/spec/` | 171 |
 | `docs/playtest/` | 81 |
 | `docs/formats/` | 35 |
 | `docs/mechanics/` | 18 |
@@ -407,7 +407,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（197 條）
+## 2.6 其他（198 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -443,12 +443,13 @@
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 玩家據點求援的喇叭聲（`sub_10CDE`） | 呈現層未接 | 靜態 |
 | [`spec/100-phone-text-scale.md`](../spec/100-phone-text-scale.md) | 倍率不能在遊戲內調 | 固定 2。平板或小手機可能要 1 或 3，得先有實機回饋 | 靜態 |
 | [`spec/101-phone-glyph-scale2x.md`](../spec/101-phone-glyph-scale2x.md) | 高 DPI 上 Ebiten 把 960×540 再縮到螢幕（非整數倍）的殘餘鋸齒 | 那一層是 Ebiten 的螢幕縮放（預設線性濾波），本規格只處理字模那一層。要不要改成整數倍畫布得有實機回饋 | 靜態 |
-| [`spec/102-battle-fast-forward.md`](../spec/102-battle-fast-forward.md) | 快轉時戰場區的底紋 | 原版是**藍底綠線的菱形格**（`playtest/53` 的裁切），不是龍紋——那是 `sub_1DC9D` 從 `es:0x2080` 讀到的「戰場之後的記憶體」畫成圖塊的樣子。要對上得知道那一段是什麼（候選：均勻填值的表）；可用 `tools/dosboxx_bridge.sh` 在戰場中讀 `word_1… | 靜態 |
+| [`spec/102-battle-fast-forward.md`](../spec/102-battle-fast-forward.md) | 快轉時戰場區的底紋 | 原版是**藍底綠線的菱形格**（`playtest/53` 的裁切），不是龍紋。已收斂到「讀哪裡」：`sub_1DC9D` 的 `es` ＝ `word_1E15E`，**唯一的寫入端**是 `sub_1D958`（`sub_19946` 用 `cx = word_1D2F6` 傳進去），而 `word_1D2F… | 靜態 |
 | [`spec/103-phone-diplomacy-amount-keypad.md`](../spec/103-phone-diplomacy-amount-keypad.md) | 撥款請求的「指定金額」 | 原版 `sub_17C6E` 的另一個呼叫端；手機版仍只給「照要求撥款／拒絕」，同一套鍵盤可以接，先不做 | 靜態 |
-| [`spec/104-advisor-naming-window.md`](../spec/104-advisor-naming-window.md) | 肖像的位置 | `sub_1915B` 經 `sub_107D2` 走肖像四格快取畫，目的座標沒讀；remake 放輸入區左邊 (208,144)，**假說** | 靜態 |
-| [`spec/104-advisor-naming-window.md`](../spec/104-advisor-naming-window.md) | 「重來」「繼續」的方向 | `sub_1905E` 退格、`sub_1906E` 跳格是由兩支的 `dec si`／`inc si` 反推，**強證據**；哪一顆對到哪一支要對 `funcs_19037` | 靜態 |
 | [`spec/104-advisor-naming-window.md`](../spec/104-advisor-naming-window.md) | 六格與本頁字的顏色 | 六格 15、游標底線 15／1、字 9：`sub_19223`／`sub_1928A` 的屬性值直讀，但沒逐像素對過 | 靜態 |
-| [`spec/105-encounter-goes-straight-to-battle.md`](../spec/105-encounter-goes-straight-to-battle.md) | 遭遇訊息本身 | 原版先跳「{1}大人的兵馬，遇上{1}的兵馬了！！」（TALK #29 那一組）要按鍵才進戰場；remake 直接進戰場，**沒有這一則**。要補得接 `messages` 佇列並在清空後才開戰場 | 靜態 |
+| [`spec/105-encounter-goes-straight-to-battle.md`](../spec/105-encounter-goes-straight-to-battle.md) | 攻城打空城之後的 #26 | `sub_14ED7` 的 `cmp bx, 4200h` 那條路先自動判定，攻方贏（`al == 0`）才呼叫 `sub_14F71` 跳 #26「{2}受到{1}兵馬的攻擊，被攻陷了！！」。remake 的空城攻城走 `resolveCorpsBattle`，**那一則還沒接** | 靜態 |
+| [`spec/105-encounter-goes-straight-to-battle.md`](../spec/105-encounter-goes-straight-to-battle.md) | 遭遇當天的日期差一天 | 同一份存檔：原版在解凍約 4 秒後於 **196年4月17日** 跳訊息；remake 從載入（第 1 幀）到第 240 幀都停在 **4月16日**，遭遇也發生在 4月16日。存檔本身是 4月16日，所以差的是「原版那 4 秒推進了一天、remake 沒有」——載入後戰略時鐘的推進速率要另外量（`docs/sp… | 靜態 |
+| [`spec/106-message-box-reporter-portrait.md`](../spec/106-message-box-reporter-portrait.md) | `0x94`／`0x95` 兩頁保留肖像的用途 | `0x94` 是一張紅臉武將、`0x95` 是空白。沒找到傳這兩個值的呼叫點 | 靜態 |
+| [`spec/106-message-box-reporter-portrait.md`](../spec/106-message-box-reporter-portrait.md) | #217 的兩個 `{3}` | 機制已通（`SeqFactions`），但**發那一則的呼叫端還沒讀**，所以第二個勢力是誰未定 | 靜態 |
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | `資金高位 >= 0x80` 那一支 | `cmp bh, 80h / jnb` 會直接算「答應」，等於資金超過約 840 萬時門檻失效。**看起來像有號數的邊界處理**，未逐位對過 | 靜態 |
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | 君主出陣之後的行為 | 那支軍團跟一般軍團有沒有差別，未讀 | 靜態 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝命令、`0x0Bh`／`0x10h`／`0x15h`／`0x1Fh` 各自出現在哪個視窗已知，完整值域未列 | 靜態 |

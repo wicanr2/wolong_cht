@@ -208,10 +208,24 @@ func (t *Table) Bytes() []byte {
 //
 // 桌面版與手機版共用這一份；兩邊各寫一份會長出不同的變數展開行為。
 func (t *Table) Lines(index int, vars map[byte]string) ([]string, bool) {
+	return t.LinesSeq(index, vars, nil)
+}
+
+// LinesSeq 與 Lines 相同，但**同一個標記出現多次時依序取 seq 的下一個值**。
+//
+// ⭐ 原版的 formatter 是一個共用的堆疊游標（`sub_14EB9` 的 `mov di, sp`），
+// 每個標記消耗下一個參數，所以「{1}大人的兵馬，遇上{1}的兵馬了」兩個 `{1}`
+// 是**兩個不同的武將**。`vars` 那張 map 一個標記只放得下一個值，
+// 全庫 9 則有重複標記，其中 #29（兩個 `{1}`）與 #217（兩個 `{3}`）
+// 真的要不同值，其餘 7 則重複的是 `{6}`（排版控制，空字串）。
+//
+// seq[m] 用完或沒給時退回 vars[m]。
+func (t *Table) LinesSeq(index int, vars map[byte]string, seq map[byte][]string) ([]string, bool) {
 	if t == nil || index < 0 || index >= len(t.Messages) {
 		return nil, false
 	}
 	out := make([]string, 0, len(t.Messages[index].Lines))
+	used := make(map[byte]int, len(seq))
 	for _, line := range t.Messages[index].Lines {
 		var b strings.Builder
 		for _, part := range line.Parts {
@@ -220,6 +234,10 @@ func (t *Table) Lines(index int, vars map[byte]string) ([]string, bool) {
 				if !ok {
 					return nil, false
 				}
+				if s := seq[part.Marker]; used[part.Marker] < len(s) {
+					value = s[used[part.Marker]]
+				}
+				used[part.Marker]++
 				b.WriteString(value)
 				continue
 			}

@@ -214,3 +214,23 @@ func TestGovernorRegretTalkIndex(t *testing.T) {
 		t.Error("組編號被直接當成索引了")
 	}
 }
+
+// 訊息框那張臉：原版 `sub_18810` 的 40／60 個呼叫點傳固定的 0x93（通報者），
+// 只有變體組與 #58 傳說話者的肖像（docs/spec/106）。
+func TestNoticePortraitUsesTheReporterFaceExceptForSpeakers(t *testing.T) {
+	g := &game{world: &state.World{}}
+	g.world.Generals[2].Portrait = 0x11
+
+	plain := state.TalkNotice{Index: 0x1D, City: -1, Faction: -1, General: 2, Amount: -1}
+	if got := g.noticePortraitPage(plain); got != reporterPortraitPage {
+		t.Fatalf("一般通報用 %#x，預期通報者 %#x", got, reporterPortraitPage)
+	}
+	variant := state.TalkNotice{Index: 0x197, City: -1, Faction: -1, General: 2, Amount: -1}
+	if got := g.noticePortraitPage(variant); got != 0x11 {
+		t.Fatalf("變體組要用說話者的肖像，得到 %#x", got)
+	}
+	lordGone := state.TalkNotice{Index: talkEnemyLordGone, City: -1, Faction: -1, General: 2, Amount: -1}
+	if got := g.noticePortraitPage(lordGone); got != 0x11 {
+		t.Fatalf("#58 要用說話者的肖像，得到 %#x", got)
+	}
+}

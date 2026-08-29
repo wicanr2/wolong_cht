@@ -423,6 +423,10 @@ type CorpsEvent struct {
 	// Captured 不是 −1 表示這個 tick 佔下了某個據點。
 	Captured int
 
+	// TalkNotices 是這一支軍團在這個 tick 要跳的訊息框（目前只有進戰術畫面
+	// 前那一則，`docs/spec/105`）。`World.tick` 會把它併進 `Event.TalkNotices`。
+	TalkNotices []TalkNotice
+
 	// Disbanded 表示這支軍團在這個 tick 解體了（`docs/spec/39`）——
 	// 兵**回**預備兵池。
 	Disbanded bool
@@ -727,9 +731,52 @@ func (w *World) fight(att, def int, ev *CorpsEvent, m combat.Mode, garrison int,
 	// （docs/spec/39），遭遇當下只看委任位元。其餘自動判定。
 	ev.Mode = m
 	if w.wantsTactical(att, def) && w.beginTactical(att, def, m, garrison) {
+		// 原版進戰術畫面前先跳一則訊息（`sub_14EB9`／`sub_14F58`，docs/spec/105）。
+		ev.TalkNotices = append(ev.TalkNotices, w.encounterNotice(att, def, m))
 		return
 	}
 	w.resolveCorpsBattle(ev, att, def, m, garrison, rng)
+}
+
+// 進戰術畫面前那一則訊息的 TALK 索引（原版 `sub_14E5C`／`sub_14ED7` 的 `cx`）。
+const (
+	// talkSiegeCityFallen ＝ #26「{2}受到{1}兵馬的攻擊，被攻陷了！！」
+	// （空城自動判定後，`sub_14ED7` 的 `cx = 1Ah`）。
+	talkSiegeCityFallen = 0x1A
+	// talkSiegeIncoming ＝ #27「{1}的兵馬，向{2}進攻過來了！！」（玩家守城）。
+	talkSiegeIncoming = 0x1B
+	// talkSiegeOutgoing ＝ #28「{1}大人的兵馬，向{2}進攻了！！」（玩家攻城）。
+	talkSiegeOutgoing = 0x1C
+	// talkFieldEncounter ＝ #29「{1}大人的兵馬，遇上{1}的兵馬了！！」（野戰）。
+	// ⭐ **兩個 `{1}`**：前者攻方主將、後者守方主將（`sub_14EB9` 依序推兩個參數）。
+	talkFieldEncounter = 0x1D
+)
+
+// encounterNotice 是進戰術畫面前的那一則訊息（docs/spec/105 §1）。
+//
+// 攻城兩則的 `{1}` 都是**攻方**主將、`{2}` 都是據點，差別只在玩家站哪一邊；
+// 野戰那一則的兩個 `{1}` 是攻守兩個主將。
+func (w *World) encounterNotice(att, def int, m combat.Mode) TalkNotice {
+	n := TalkNotice{City: -1, Faction: -1, General: w.Leader(att), Amount: -1}
+	if m == combat.Siege {
+		n.Index = talkSiegeIncoming
+		if w.Corps[att].Faction == w.Player {
+			n.Index = talkSiegeOutgoing
+		}
+		n.City = w.Corps[att].Node
+		return n
+	}
+	// ⚠ **第一個 `{1}` 是玩家那一方的主將**，不是攻方：原版玩家守方那條路
+	// 在呼叫 `sub_14EB9` 之前先 `xchg si, di`（`0x14E9F`），所以兩個參數
+	// 的順序跟著玩家走。攻城那兩則沒有這一步，`{1}` 一律是攻方。
+	first, second := att, def
+	if def >= 0 && def < len(w.Corps) && w.Corps[def].Faction == w.Player {
+		first, second = def, att
+	}
+	n.Index = talkFieldEncounter
+	n.General = w.Leader(first)
+	n.SeqGenerals = []int{w.Leader(first), w.Leader(second)}
+	return n
 }
 
 // resolveCorpsBattle 執行一場已決定委任的軍團對軍團戰鬥。

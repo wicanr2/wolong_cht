@@ -86,7 +86,7 @@ func TestApproximateEvent10ReentersIdleClockConsumer(t *testing.T) {
 	w.eventCursor, w.eventDelay = 0, 1
 	w.Clock.Subtick = clock.SubticksPerHour - 1
 	ev := w.Tick(&sequenceRand{values: []int{0xFF}})
-	if !ev.Clock.Hour || len(ev.TalkNotices) != 1 || ev.TalkNotices[0] != (TalkNotice{
+	if !ev.Clock.Hour || len(ev.TalkNotices) != 1 || !sameNotice(ev.TalkNotices[0], TalkNotice{
 		Index: approximateEvent10JoinTalk, City: -1, Faction: -1, General: id, Amount: -1,
 	}) {
 		t.Fatalf("近似事件 10 未沿 idle clock consumer 顯示：clock=%+v notices=%#v",

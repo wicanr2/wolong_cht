@@ -536,7 +536,7 @@ func TestIdleClockDispatchesQueuedEvent10OnHourlyCadence(t *testing.T) {
 	if hourly != 7 {
 		t.Fatalf("idle fixture 只跑到 %d 個每時邊界，want 7；clock=%+v", hourly, w.Clock)
 	}
-	if len(notices) != 1 || notices[0] != (TalkNotice{
+	if len(notices) != 1 || !sameNotice(notices[0], TalkNotice{
 		Index: 0x42, City: -1, Faction: -1, General: 3, Amount: -1,
 	}) {
 		t.Fatalf("第 7 個每時邊界的事件 10 = %#v，want 一筆 raw TALK notice", notices)
@@ -981,7 +981,7 @@ func TestQueuedTalkNotices(t *testing.T) {
 	w.eventCursor, w.eventDelay = 0, 1
 	fire := &Event{}
 	w.dispatchQueuedEvent(fire)
-	if len(fire.TalkNotices) != 1 || fire.TalkNotices[0] != (TalkNotice{
+	if len(fire.TalkNotices) != 1 || !sameNotice(fire.TalkNotices[0], TalkNotice{
 		Index: 0x47, City: city, Faction: -1, General: -1, Amount: -1,
 	}) {
 		t.Fatalf("事件 12 火災通知錯誤：%#v", fire.TalkNotices)
@@ -1014,7 +1014,7 @@ func TestQueuedTalkNotices(t *testing.T) {
 	w.eventCursor, w.eventDelay = 0, 1
 	deficit := &Event{}
 	w.dispatchQueuedEvent(deficit)
-	if len(deficit.TalkNotices) != 1 || deficit.TalkNotices[0] != (TalkNotice{
+	if len(deficit.TalkNotices) != 1 || !sameNotice(deficit.TalkNotices[0], TalkNotice{
 		Index: 0x33, City: -1, Faction: -1, General: -1, Amount: -1,
 	}) {
 		t.Fatalf("事件 13 赤字通知錯誤：%#v", deficit.TalkNotices)
@@ -1029,7 +1029,7 @@ func TestQueuedEvent10TalkNotice(t *testing.T) {
 	w.eventCursor, w.eventDelay = 0, 1
 	ev := &Event{}
 	w.dispatchQueuedEvent(ev)
-	if len(ev.TalkNotices) != 1 || ev.TalkNotices[0] != (TalkNotice{
+	if len(ev.TalkNotices) != 1 || !sameNotice(ev.TalkNotices[0], TalkNotice{
 		Index: 0x42, City: -1, Faction: -1, General: 3, Amount: -1,
 	}) {
 		t.Fatalf("事件 10 formatter 邊界錯誤：%#v", ev.TalkNotices)
@@ -1291,7 +1291,7 @@ func TestQueuedDiplomacySecondaryTalkConditions(t *testing.T) {
 	if len(ev.TalkNotices) != 3 {
 		t.Fatalf("事件 7 有俘虜關係時應有第二次 TALK：%#v", ev.TalkNotices)
 	}
-	if got := ev.TalkNotices[2]; got != (TalkNotice{
+	if got := ev.TalkNotices[2]; !sameNotice(got, TalkNotice{
 		Index: 0x4C, City: -1, Faction: -1, General: -1, Amount: -1,
 		RawFormatterWord: -1,
 		Secondary:        true, NoPortrait: true,
@@ -1449,7 +1449,7 @@ func TestQueuedFundingInitialTalkNotices(t *testing.T) {
 	w.eventCursor, w.eventDelay = 0, 1
 	governor := &Event{}
 	w.dispatchQueuedEvent(governor)
-	if len(governor.TalkNotices) != 1 || governor.TalkNotices[0] != (TalkNotice{
+	if len(governor.TalkNotices) != 1 || !sameNotice(governor.TalkNotices[0], TalkNotice{
 		Index: 0x38, City: city, Faction: -1, General: officer, Amount: -1,
 	}) {
 		t.Fatalf("事件 4 前置 TALK 錯誤：%#v", governor.TalkNotices)
@@ -1464,7 +1464,7 @@ func TestQueuedFundingInitialTalkNotices(t *testing.T) {
 	w.eventCursor, w.eventDelay = 0, 1
 	diplomat := &Event{}
 	w.dispatchQueuedEvent(diplomat)
-	if len(diplomat.TalkNotices) != 1 || diplomat.TalkNotices[0] != (TalkNotice{
+	if len(diplomat.TalkNotices) != 1 || !sameNotice(diplomat.TalkNotices[0], TalkNotice{
 		Index: 0x39, City: -1, Faction: other, General: officer, Amount: -1,
 	}) {
 		t.Fatalf("事件 5 前置 TALK 錯誤：%#v", diplomat.TalkNotices)
@@ -3147,3 +3147,8 @@ func TestStormMarkerUsesChebyshevDistance(t *testing.T) {
 		t.Fatalf("中心據點 marker=%d，應為強度 %d", got, strength)
 	}
 }
+
+// sameNotice 比兩則 TalkNotice。TalkNotice 有切片欄位（SeqGenerals／
+// SeqFactions，docs/spec/106）之後就不能用 `!=` 比了——**加一個切片欄位會讓
+// 所有 `!=` 比較編不過**，這一支把那件事收在一處。
+func sameNotice(a, b TalkNotice) bool { return reflect.DeepEqual(a, b) }

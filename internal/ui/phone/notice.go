@@ -39,7 +39,7 @@ func (s *Session) pushNotices(ev state.Event) {
 		if !ok {
 			continue // fail-closed：寧可不顯示，也不顯示半句
 		}
-		lines, ok := s.lib.Talk.Lines(n.Index, vars)
+		lines, ok := s.lib.Talk.LinesSeq(n.Index, vars, s.world.TalkNoticeSeq(n, big5))
 		if !ok || len(lines) == 0 {
 			continue
 		}

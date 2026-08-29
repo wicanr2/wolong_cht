@@ -66,13 +66,32 @@ func (g *game) messageActive() bool {
 	return len(g.messages) > 0
 }
 
+// updateMessageOnly 只推進訊息框：翻頁或收掉這一則。
+// 戰場開著時也走這一支——原版遭遇的訊息在開戰術畫面之前（docs/spec/105）。
+func (g *game) updateMessageOnly() {
+	if !pressed(ebiten.KeyEnter) && !pressed(ebiten.KeySpace) {
+		return
+	}
+	if _, pages, ok := messagePage(g.messages[0].lines, g.messages[0].page); ok &&
+		g.messages[0].page+1 < pages {
+		g.messages[0].page++
+		return
+	}
+	g.messages = g.messages[1:]
+}
+
 // talkLines 取出 TALK.DAT 的原始行並代入目前已證實可用的 marker。
 // 缺少 marker 時整則訊息 fail-closed，不顯示半句或把錯誤索引當成文字。
 func (g *game) talkLines(index int, vars map[byte]string) ([]string, bool) {
+	return g.talkLinesSeq(index, vars, nil)
+}
+
+// talkLinesSeq 多帶重複標記的依序取值（docs/spec/106）。
+func (g *game) talkLinesSeq(index int, vars map[byte]string, seq map[byte][]string) ([]string, bool) {
 	if g == nil || g.lib == nil {
 		return nil, false
 	}
-	return g.lib.Talk.Lines(index, vars)
+	return g.lib.Talk.LinesSeq(index, vars, seq)
 }
 
 // textDecodeBig5 讓訊息檔的解碼集中在既有 Big5 呈現路徑；獨立成小函式
@@ -115,7 +134,11 @@ func (g *game) enqueueTalk(index int, vars map[byte]string) {
 }
 
 func (g *game) enqueueTalkWithPortrait(index int, vars map[byte]string, portraitPage int) {
-	lines, ok := g.talkLines(index, vars)
+	g.enqueueTalkWithPortraitSeq(index, vars, nil, portraitPage)
+}
+
+func (g *game) enqueueTalkWithPortraitSeq(index int, vars map[byte]string, seq map[byte][]string, portraitPage int) {
+	lines, ok := g.talkLinesSeq(index, vars, seq)
 	if !ok || len(lines) == 0 {
 		return
 	}
@@ -178,20 +201,37 @@ func isCompositeDiplomacyNotice(notice state.TalkNotice) bool {
 // 沒有 speaker 指標時退回玩家君主。事件 3 的玩家君主路徑已由原版
 // sub_13902 → sub_187FF／sub_13C99 與 fixture 截圖證實；其他 generic notice
 // 的退回順序是呈現層的強推論，不把它升格成原版 speaker 語意。
+// reporterPortraitPage 是原版通報訊息固定用的那一張肖像：KAOGRF 第 0x93 頁
+// ＝戴帽的老者。0x93–0x95 三頁不在命名視窗可選的 0x00–0x92 裡（docs/spec/106）。
+const reporterPortraitPage = 0x93
+
+// talkEnemyLordGone ＝ #58「敵方的君主已不在了。」——少數低索引卻用說話者
+// 肖像的一則（`sub_13327`／`sub_13388`）。
+const talkEnemyLordGone = 0x3A
+
+// noticePortraitPage 挑訊息框左邊那張臉。
+//
+// ⭐ 原版 `sub_18810` 的 `al`：60 個呼叫點裡 **40 個傳固定的 0x93**（通報者），
+// 20 個傳說話者的肖像（武將記錄 `+0x01`），後者是 ≥`0x196` 的變體組與 #58
+// （docs/spec/106）。先前這裡一律用說話者的肖像——**每一則通報都畫錯人**。
 func (g *game) noticePortraitPage(notice state.TalkNotice) int {
 	if g == nil || g.world == nil {
 		return -1
 	}
-	if notice.General >= 0 && notice.General < len(g.world.Generals) {
-		return g.world.Generals[notice.General].Portrait
-	}
-	if notice.Faction >= 0 && notice.Faction < len(g.world.Factions) {
-		lord := g.world.Factions[notice.Faction].Lord
-		if lord >= 0 && lord < len(g.world.Generals) {
-			return g.world.Generals[lord].Portrait
+	speaker := notice.SpeakerPortrait ||
+		notice.Index >= talkVariantGroupBase || notice.Index == talkEnemyLordGone
+	if speaker {
+		if notice.General >= 0 && notice.General < len(g.world.Generals) {
+			return g.world.Generals[notice.General].Portrait
+		}
+		if notice.Faction >= 0 && notice.Faction < len(g.world.Factions) {
+			lord := g.world.Factions[notice.Faction].Lord
+			if lord >= 0 && lord < len(g.world.Generals) {
+				return g.world.Generals[lord].Portrait
+			}
 		}
 	}
-	return g.playerLordPortrait()
+	return reporterPortraitPage
 }
 
 // noticeTalkIndex 把**組編號**展開成實際索引。
@@ -224,7 +264,8 @@ func (g *game) enqueueTalkNotice(notice state.TalkNotice) {
 	if notice.NoPortrait {
 		portrait = -1
 	}
-	g.enqueueTalkWithPortrait(g.noticeTalkIndex(notice), vars, portrait)
+	g.enqueueTalkWithPortraitSeq(g.noticeTalkIndex(notice), vars,
+		g.world.TalkNoticeSeq(notice, big5), portrait)
 }
 
 func (g *game) drawMessage(screen *ebiten.Image) {

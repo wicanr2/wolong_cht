@@ -838,6 +838,13 @@ func (g *game) Update() error {
 	if g.world != nil && g.world.Outcome() != state.InProgress {
 		return g.updateOutcome()
 	}
+	// ⭐ **訊息先於戰場**：原版遭遇時 `sub_14EB9`（訊息框）在 `sub_11B5A`
+	// （開戰術畫面）之前，玩家按掉才看到戰場（docs/spec/105）。
+	// 戰略層在戰鬥中不跑，所以這裡不會有別的訊息插隊。
+	if g.messageActive() && g.battleActive() {
+		g.updateMessageOnly()
+		return nil
+	}
 	// 戰場畫面獨佔一切——戰鬥中不能停時間，也不能開別的視窗。
 	if g.battleActive() {
 		g.updateBattle()
@@ -846,14 +853,7 @@ func (g *game) Update() error {
 	// 事件前置報告可能與外交／撥款 pending 同一個 tick 產生；原版先
 	// 顯示 TALK，再讓玩家進入選擇，因此通知 modal 優先於這兩個選單。
 	if g.messageActive() {
-		if pressed(ebiten.KeyEnter) || pressed(ebiten.KeySpace) {
-			if _, pages, ok := messagePage(g.messages[0].lines, g.messages[0].page); ok &&
-				g.messages[0].page+1 < pages {
-				g.messages[0].page++
-			} else {
-				g.messages = g.messages[1:]
-			}
-		}
+		g.updateMessageOnly()
 		return nil
 	}
 	// 事件 2／3 外交三選一也會凍結戰略時間。
@@ -1132,7 +1132,10 @@ func (g *game) Draw(screen *ebiten.Image) {
 	if g.world == nil {
 		return
 	}
-	if g.world.Outcome() == state.InProgress && g.battleActive() {
+	// ⭐ **訊息還在時不畫戰場**：原版遭遇的訊息框跳在大地圖上，
+	// 按掉才換成戰術畫面（`sub_14EB9` → `sub_11B5A`，docs/spec/105）。
+	// remake 兩件事在同一個 tick 發生，所以由這一格決定先看到哪一個。
+	if g.world.Outcome() == state.InProgress && g.battleActive() && !g.messageActive() {
 		g.drawBattle(screen)
 		g.maybeSaveShot(screen)
 		return

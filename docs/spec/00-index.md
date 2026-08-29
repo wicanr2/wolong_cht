@@ -147,6 +147,7 @@
 | 手機版外交提案的「提示金額」鍵盤（**remake 差異**）| [`103-phone-diplomacy-amount-keypad.md`](103-phone-diplomacy-amount-keypad.md) | 已實作並有單測；輸入動作與上限沿用 `78` |
 | 「自定」軍師命名視窗 | [`104-advisor-naming-window.md`](104-advisor-naming-window.md) | 已實作、單測與截圖；肖像位置是假說（§5）|
 | 遭遇直接進戰場，沒有「戰鬥指揮／委任」選單 | [`105-encounter-goes-straight-to-battle.md`](105-encounter-goes-straight-to-battle.md) | 已實作並有單測；機器碼 ＋ 實機兩條證據。⚠ 遭遇訊息本身 remake 還沒有（§5）|
+| 訊息框的臉是固定的通報者 | [`106-message-box-reporter-portrait.md`](106-message-box-reporter-portrait.md) | 已實作並有單測；順帶解掉「同一個標記出現兩次是兩個值」|
 
 ## 怎麼加一份
 

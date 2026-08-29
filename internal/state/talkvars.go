@@ -60,3 +60,38 @@ func (w *World) TalkNoticeVars(n TalkNotice, decode func(string) string) (map[by
 	}
 	return vars, true
 }
+
+// TalkNoticeSeq 是重複標記的依序取值（`text.Table.LinesSeq`，docs/spec/106）。
+// 沒有重複標記的訊息回 nil，呼叫端照舊只用 TalkNoticeVars 那張 map。
+func (w *World) TalkNoticeSeq(n TalkNotice, decode func(string) string) map[byte][]string {
+	if decode == nil {
+		decode = func(s string) string { return s }
+	}
+	var out map[byte][]string
+	put := func(marker byte, ids []int, name func(int) string) {
+		if len(ids) == 0 {
+			return
+		}
+		vals := make([]string, 0, len(ids))
+		for _, id := range ids {
+			vals = append(vals, name(id))
+		}
+		if out == nil {
+			out = make(map[byte][]string, 2)
+		}
+		out[marker] = vals
+	}
+	put('1', n.SeqGenerals, func(id int) string {
+		if id < 0 || id >= len(w.Generals) {
+			return ""
+		}
+		return decode(w.Generals[id].Name)
+	})
+	put('3', n.SeqFactions, func(id int) string {
+		if id < 0 || id >= len(w.Factions) {
+			return ""
+		}
+		return decode(w.LordName(id))
+	})
+	return out
+}
