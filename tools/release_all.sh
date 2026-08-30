@@ -18,6 +18,22 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 STAMP="${1:-$(date +%Y%m%d)}"
 RELEASE_VERSION="wolong-remake-${STAMP}"
 STAGING_ROOT="${WOLONG_RELEASE_STAGING:-$REPO_ROOT/dist-all.staging}"
+# 正式目錄從 staging 的名字推出來：`<名字>.staging` → `<名字>`。
+# 換一個 staging 名字就換一個批次目錄，兩個批次互不覆蓋：
+#
+#   tools/release_all.sh 20260830                       # → dist-all（完整版）
+#   WOLONG_BUNDLE_DATA=0 WOLONG_RELEASE_STAGING=$PWD/dist-public.staging \
+#     tools/release_all.sh 20260830                     # → dist-public（可散布）
+#
+# ⚠ **這兩道檢查放在開跑前，不是 promote 那一步。** 名字寫錯的話，
+# 錯誤要在幾秒內出現，而不是在跨平台建置跑完一小時之後。
+case "$STAGING_ROOT" in
+    *.staging) ;;
+    *) echo "WOLONG_RELEASE_STAGING 要以 .staging 結尾：$STAGING_ROOT" >&2; exit 1 ;;
+esac
+[ "$(dirname "$STAGING_ROOT")" = "$REPO_ROOT" ] || {
+    echo "staging 必須直接放在儲存庫底下：$STAGING_ROOT" >&2; exit 1; }
+LIVE_ROOT="${STAGING_ROOT%.staging}"
 GO_IMAGE="${WOLONG_GO_IMAGE:-demonwinter-go:latest}"
 MAC_IMAGE="${WOLONG_MAC_IMAGE:-wolong-osxcross-go:20260828}"
 APPIMAGE_IMAGE="${WOLONG_APPIMAGE_IMAGE:-u5cht/appimage:latest}"
@@ -27,7 +43,7 @@ BUNDLE_DATA="${WOLONG_BUNDLE_DATA:-1}"
 if [ "$BUNDLE_DATA" = 0 ]; then
     echo "── 可散布批次：不含原版資產 ──"
 else
-    echo "⛔ 完整版批次：內含原版資料與倚天字型，dist-all 不可外流 ──"
+    echo "⛔ 完整版批次：內含原版資料與倚天字型，$(basename "$LIVE_ROOT") 不可外流 ──"
     [ -f "$REPO_ROOT/workplace/orig/dosv/SINARIO.DAT" ] || {
         echo "找不到 workplace/orig/dosv/SINARIO.DAT" >&2; exit 1; }
 fi
@@ -104,24 +120,11 @@ run_repo_write python3 tools/release_all_fs.py appdir
 run_appimage bash -lc "ARCH=x86_64 /opt/appimagetool.d/usr/bin/appimagetool --no-appstream /out/.work/appdir /out/packages/wolong-remake-linux-amd64-${STAMP}.AppImage"
 run_repo_write python3 tools/release_all_fs.py finalise
 
-# 只有 staging 完成編譯、封裝、雜湊與 deny-list 後才交換到 dist-all。
-#
-# ⭐ `WOLONG_PROMOTE=0` 就停在 staging，不動 `dist-all`。
-# 用途是**同時要兩個批次**：磁碟上的完整版留著，另外建一份可散布的拿去上傳。
-# 沒有這個開關的話，建可散布批次會把完整版換掉——而那一批要重跑一次
-# 跨平台建置才回得來。
-#
-#   WOLONG_BUNDLE_DATA=0 WOLONG_PROMOTE=0 \
-#     WOLONG_RELEASE_STAGING=$PWD/dist-public tools/release_all.sh 20260830
-#
-if [ "${WOLONG_PROMOTE:-1}" = 0 ]; then
-    echo "跳過 promote：批次留在 $STAGING_ROOT"
-else
-    run_repo_write python3 tools/release_all_fs.py promote
-fi
+# 只有 staging 完成編譯、封裝、雜湊與 deny-list 後才交換到正式目錄。
+run_repo_write python3 tools/release_all_fs.py promote
 
 if [ "$BUNDLE_DATA" = 0 ]; then
-    echo "完成：$REPO_ROOT/dist-all（可散布）"
+    echo "完成：$LIVE_ROOT（可散布）"
 else
-    echo "完成：$REPO_ROOT/dist-all ⛔ 內含原版資產，不可外流"
+    echo "完成：$LIVE_ROOT ⛔ 內含原版資產，不可外流"
 fi

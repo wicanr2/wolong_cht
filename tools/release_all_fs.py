@@ -14,6 +14,7 @@ import os
 import re
 import shutil
 import sys
+import tempfile
 import tarfile
 from pathlib import Path
 
@@ -596,14 +597,35 @@ def finalise() -> None:
 
 
 def promote() -> None:
-    """在 staging 完整驗證後，以可回復的目錄交換更新 dist-all。"""
-    staging = (REPO / "dist-all.staging").resolve()
-    live = (REPO / "dist-all").resolve()
-    backup = (REPO / ".dist-all.previous").resolve()
-    if DIST != staging:
-        raise SystemExit("promote 必須以 WOLONG_DIST_ROOT=dist-all.staging 執行")
+    """在 staging 完整驗證後，以可回復的目錄交換更新正式批次目錄。
+
+    ⭐ **目標從 staging 的名字長出來**：`<名字>.staging` → `<名字>`。
+    所以 `dist-all.staging` 換的是 `dist-all`，`dist-public.staging` 換的是
+    `dist-public`——**同一支流程可以同時維護兩個批次**（內含原版資產的完整版
+    與 `WOLONG_BUNDLE_DATA=0` 的可散布版），而不必為了建其中一個把另一個換掉。
+
+    先前這裡把 `dist-all.staging` 與 `dist-all` 寫死，換批次就得跳過 promote，
+    於是可散布批次是**停在一個叫 staging 的目錄裡當成品**——名字說它沒完成，
+    而且跳過交換也就跳過了原子替換與可回復備份。
+
+    護欄（寫死目標時免費拿到，一般化之後要自己補）：
+    staging 與正式目錄都必須直接位於本儲存庫底下，名字必須以 `.staging` 結尾，
+    而且 staging 要有 `release-manifest.json`。任何一條不成立就停，
+    **不做任何刪除**——這一支會 `rmtree` 備份，路徑錯掉的代價是刪掉別的東西。
+    """
+    staging = DIST
+    if staging.parent != REPO.resolve():
+        raise SystemExit(f"staging 必須直接放在儲存庫底下：{staging}")
+    if not staging.name.endswith(".staging"):
+        raise SystemExit(
+            f"staging 目錄名要以 .staging 結尾（正式目錄由它推出來）：{staging.name}"
+        )
+    live = staging.with_name(staging.name[: -len(".staging")])
+    if live == REPO.resolve() or not live.name:
+        raise SystemExit(f"推不出合法的正式目錄：{staging}")
+    backup = REPO.resolve() / f".{live.name}.previous"
     if not (staging / "release-manifest.json").is_file():
-        raise SystemExit("staging 缺少 release-manifest.json，拒絕替換舊 dist-all")
+        raise SystemExit(f"staging 缺少 release-manifest.json，拒絕替換 {live.name}")
     if backup.exists():
         raise SystemExit(f"已有未清理的交換備份：{backup}")
     if live.exists():
@@ -650,9 +672,87 @@ def refresh() -> None:
     write_hashes(DIST, prefix="dist-all/")
 
 
+def selftest() -> int:
+    """promote 的正對照：正常換得成、四道護欄各擋一種寫錯。
+
+    ⭐ **這一支動的是真正的 `promote()`**，不是重寫一份等價邏輯。
+    自我測試自己重寫比對邏輯的話，它驗的會是一個本體早就不是這樣做的東西
+    （`CLAUDE.md` §10）。
+    """
+    global REPO, DIST
+    saved_repo, saved_dist = REPO, DIST
+    ok = True
+
+    def want(label: str, good: bool) -> None:
+        nonlocal ok
+        ok = ok and good
+        print(f"  {'✓' if good else '✗'} {label}")
+
+    def refused(staging: Path) -> bool:
+        global DIST
+        DIST = staging
+        try:
+            promote()
+        except SystemExit:
+            return True
+        return False
+
+    try:
+        with tempfile.TemporaryDirectory() as tmp:
+            REPO = Path(tmp).resolve()
+
+            def mkstaging(name: str, manifest: bool = True) -> Path:
+                d = REPO / name
+                (d / "packages").mkdir(parents=True, exist_ok=True)
+                if manifest:
+                    (d / "release-manifest.json").write_text("{}", encoding="utf-8")
+                return d
+
+            # 正常路徑：dist-x.staging → dist-x，而且舊的 dist-x 被換掉。
+            live = REPO / "dist-x"
+            live.mkdir()
+            (live / "舊的.txt").write_text("old", encoding="utf-8")
+            staging = mkstaging("dist-x.staging")
+            (staging / "新的.txt").write_text("new", encoding="utf-8")
+            DIST = staging
+            promote()
+            want("promote：staging 換成同名的正式目錄",
+                 live.is_dir() and not staging.exists()
+                 and (live / "新的.txt").is_file() and not (live / "舊的.txt").exists())
+            want("promote：換完不留備份",
+                 not (REPO / ".dist-x.previous").exists())
+
+            # ⭐ 目標是推出來的，不是寫死 dist-all——換個名字要換到對應的目錄。
+            other = mkstaging("dist-public.staging")
+            DIST = other
+            promote()
+            want("promote：dist-public.staging 換的是 dist-public，不是 dist-all",
+                 (REPO / "dist-public").is_dir() and not (REPO / "dist-all").exists())
+
+            want("擋下：名字沒有 .staging 結尾", refused(mkstaging("dist-y")))
+            want("擋下：staging 不在儲存庫正下方",
+                 refused(mkstaging("巢/dist-z.staging".replace("巢/", "nest/"))))
+            want("擋下：staging 缺 release-manifest.json",
+                 refused(mkstaging("dist-w.staging", manifest=False)))
+
+            leftover = mkstaging("dist-v.staging")
+            (REPO / ".dist-v.previous").mkdir()
+            want("擋下：還有沒清掉的交換備份", refused(leftover))
+    finally:
+        REPO, DIST = saved_repo, saved_dist
+
+    print("正對照" + ("通過" if ok else "失敗"))
+    return 0 if ok else 1
+
+
 def main() -> int:
     if len(sys.argv) != 2:
-        raise SystemExit("用法：release_all_fs.py prepare|stage|appdir|finalise|refresh")
+        raise SystemExit(
+            "用法：release_all_fs.py prepare|stage|appdir|finalise|promote|refresh|--selftest"
+        )
+    if sys.argv[1] == "--selftest":
+        print("發行目錄交換自我測試（正對照）")
+        return selftest()
     commands = {
         "rebuild": rebuild,
         "prepare": prepare,
@@ -665,7 +765,9 @@ def main() -> int:
     try:
         commands[sys.argv[1]]()
     except KeyError:
-        raise SystemExit("用法：release_all_fs.py prepare|stage|appdir|finalise|refresh") from None
+        raise SystemExit(
+            "用法：release_all_fs.py prepare|stage|appdir|finalise|promote|refresh|--selftest"
+        ) from None
     return 0
 
 
