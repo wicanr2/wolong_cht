@@ -1740,7 +1740,7 @@ Go 產出的 `libgojni.so` 預設 LOAD 段 `align=0x1000`，那種 `.so` 在 16 
   AppDir 根目錄含 `.desktop`／`AppRun`，deny-list 通過，Docker／Xvfb `APPIMAGE_EXTRACT_AND_RUN=1`
   啟動與 640×400 固定 seed 截圖 smoke 通過；不含原版資料與字型。
 - [x] 新增「經典再現」原版／remake 比較片：
-  [`wolong-remake-classic-revival.mp4`](dist-all/promo/wolong-remake-classic-revival.mp4)，60 秒、
+  [`wolong-remake-classic-revival.mp4`](dist/promo/wolong-remake-classic-revival.mp4)，60 秒、
   1280×720、H.264/AAC。原版側使用使用者 YouTube 的代表幀，remake 側使用固定 `seed=17`
   實機代表幀；影片與 [`docs/promo/classic-revival.md`](docs/promo/classic-revival.md) 明示
   `core=normal`、`cputype=486`、`cycles=20000` 的 DOSBox 重播原則，以及不宣稱同狀態逐像素 parity。

@@ -5,10 +5,15 @@
 2026-08-29 因為訊息框肖像、戰場快轉鈕與手機金額鍵盤都動過，
 主預告、原版實機對照片與手機片三支全部重錄重剪。**
 
-- 日期：2026-08-29（三支重錄重剪）／2026-08-26（主預告改成 72 秒的分鏡）／2026-08-21（其餘）
+⭐ **發行目錄裡只有一支合成片**（2026-08-30 起）：主預告、原版實機對照與
+手機片接成 `wolong-remake-promo.mp4`，176.469 秒，全片鋪原版曲子。
+分鏡、剪點與曲目見 [`combined.md`](combined.md)；這一份仍是**三支素材片**
+各自怎麼錄、怎麼剪的紀錄。
+
+- 日期：2026-08-30（合成成一支）／2026-08-29（三支重錄重剪）／2026-08-26（主預告改成 72 秒的分鏡）／2026-08-21（其餘）
 
 可交付推廣片已集中在 [`dist-all/promo`](../../dist-all/promo)。主預告輸出為
-`dist-all/promo/wolong-remake-trailer.mp4`，長度 72 秒、1280×720、H.264／AAC。
+`dist/promo/wolong-remake-trailer.mp4`，長度 72 秒、1280×720、H.264／AAC。
 
 ⚠ **主預告有兩處原版衍生物，都是刻意的、也都標明了**：50–60 秒的並排段
 左半是原版實機（`tools/dosv_capture.sh` 的受控擷取），配樂自 2026-08-26 起
@@ -31,7 +36,7 @@
 | 60–65 | 一覽表／進言 | 截圖（`promo-*.png`，**每次重剪都重拍**）|
 | 65–72 | 結尾卡 | 合成 |
 
-輸出（2026-08-29 重錄重剪）：`dist-all/promo/wolong-remake-trailer.mp4`，
+輸出（2026-08-29 重錄重剪）：`dist/promo/wolong-remake-trailer.mp4`，
 72.000 秒、1280×720、h264／aac 44.1 kHz 立體聲，
 SHA-256 `aaca50b933a5c33970bfae74a66d85cd28a4545ccab7f703c77afde7c9b2521b`。
 
@@ -110,7 +115,7 @@ F9 在遊戲中即時切換，切出來的畫面與 `-lang` 啟動**逐像素相
 ## YouTube 原版／remake 畫面比較
 
 依使用者要求，已把 YouTube 原版代表幀與推廣片所使用的 remake 畫面製成研究用
-[對照片](../../dist-all/promo/wolong-remake-yt-comparison.mp4)，並保留[自然畫面並排圖](yt-remake-natural-side-by-side.png)
+[對照片](../../dist/promo/wolong-remake-yt-comparison.mp4)，並保留[自然畫面並排圖](yt-remake-natural-side-by-side.png)
 與[像素差異圖](yt-remake-natural-difference.png)。量測與解讀見
 [yt-remake-pixel-review.md](yt-remake-pixel-review.md)。
 
@@ -172,7 +177,7 @@ docker run --rm --network none --memory 4g --cpus 2 --pids-limit 256 \
 
 依使用者提供的 YouTube 遊玩影片與 `retro` deterministic DOSBox 技巧，新增
 [`classic-revival.md`](classic-revival.md) 與
-[`dist-all/promo/wolong-remake-classic-revival.mp4`](../../dist-all/promo/wolong-remake-classic-revival.mp4)。
+[`dist/promo/wolong-remake-classic-revival.mp4`](../../dist/promo/wolong-remake-classic-revival.mp4)。
 影片的原版側使用代表幀，remake 側使用固定 `seed=17` 的驗收畫面；片中清楚標示
 `core=normal`、`cputype=486`、`cycles=20000` 的重播基準與「非同狀態逐像素 parity」界線。
 重現命令：
@@ -185,7 +190,7 @@ PROMO_FONTFILE=/fonts/NotoSansTC-Regular.otf \
 ## DOS/V／remake 實機對照片
 
 現行的是
-[`wolong-remake-dosv-realmachine.mp4`](../../dist-all/promo/wolong-remake-dosv-realmachine.mp4)，
+[`wolong-remake-dosv-realmachine.mp4`](../../dist/promo/wolong-remake-dosv-realmachine.mp4)，
 72 秒，SHA-256 `522313d127846d57a14ed732960fcc81635cac68c47c40f170da08091346de02`。
 **原版側是自己跑的受控 DOSBox-X 實機遊玩**：開新遊戲、劇本與君主選擇、
 大地圖與時鐘、軍團編成、事件訊息、行軍指示，全部照 timeline 可以重跑。

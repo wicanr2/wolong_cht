@@ -68,15 +68,12 @@ AUDIO_SRC = REPO / "workplace" / "audio"
 BUNDLED_ORIG = "gamedata"
 BUNDLED_FONT = "fonts"
 BUNDLED_AUDIO = "audio"
-PROMO_FILES = (
-    "wolong-remake-trailer.mp4",
-    "wolong-remake-classic-revival.mp4",
-    "wolong-remake-yt-comparison.mp4",
-    # ⭐ 2026-08-23 換成自己跑的原版實機對照（docs/promo/dosv-realmachine.md）。
-    # 先前那支 `dosv-live-comparison` 的原版畫面九成來自 YouTube 錄影。
-    "wolong-remake-dosv-realmachine.mp4",
-    "wolong-remake-android.mp4",
-)
+# ⭐ **發行只帶一支合成片**（使用者裁定 2026-08-30）。
+# 主預告、原版實機對照與手機片接成 `wolong-remake-promo.mp4`，
+# 配樂全片統一鋪原版曲子（`tools/promo_combined.sh`，docs/promo/combined.md）。
+# 那三支與兩支研究用對照片仍留在 `dist/promo/` 當素材，製作紀錄與重錄命令
+# 也都還在——**只是不進發行目錄**。
+PROMO_FILES = ("wolong-remake-promo.mp4",)
 
 
 def checked(path: Path) -> Path:
@@ -325,6 +322,12 @@ def rebuild() -> None:
         "SHA256SUMS.txt",
         "release-manifest.json",
         "DO-NOT-DISTRIBUTE.md",
+        # ⚠ `finalise()` 會把 `LICENSE` 寫進發行根目錄，所以它也要在這裡列名。
+        # 漏列的症狀是**下一次完整重建在第一步就停**（「含未列入發行輸出的
+        # 項目，拒絕清理：LICENSE」）——而那一步之前什麼都還沒做，
+        # 看起來像流程壞掉而不是清單少一行。授權定案那一輪只跑過 `refresh`，
+        # 沒有跑過 `rebuild`，所以這個洞到 2026-08-30 要重打包時才浮出來。
+        "LICENSE",
     }
     if DIST.exists():
         unknown = [

@@ -3,7 +3,7 @@
 **狀態：已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。**
 
 - 日期：2026-08-20
-- 影片：[`dist-all/promo/wolong-remake-android.mp4`](../../dist-all/promo/wolong-remake-android.mp4)
+- 影片：[`dist/promo/wolong-remake-android.mp4`](../../dist/promo/wolong-remake-android.mp4)
 - 規格：48.468 秒、1280×720、30 fps、H.264／AAC、44.1 kHz 立體聲，6.3M
 - SHA-256：`4e48d4645c5fe7965898e8eac30409db5ff635157f6dca3a111d954900085550`（2026-08-29 重錄重剪：金額鍵盤與訊息框肖像都動過）
 - 重現：[`tools/phone_capture.sh`](../../tools/phone_capture.sh) → [`tools/promo_android.sh`](../../tools/promo_android.sh)

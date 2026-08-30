@@ -78,12 +78,12 @@
 | 音訊 | 會出聲、場景對應已解、與原版錄音比對過；**音色的諧波結構沒量化比對** | [`spec/29`](docs/spec/29-audio.md) |
 | 規則規格 | **84 份**（不含索引與 `TEMPLATE.md`）：**82 CONFORMED**／2 READY（`34-speed-steps`、`83-initial-strategy-pass`）／0 DRAFT | [`spec/00`](docs/spec/00-index.md) |
 | 反組譯 | 739/739 支有筆記；`docs/re/` 自己標成未解的有 **186 列**（2026-08-21 逐列核完時是 175，之後每寫一份新的反組譯筆記就帶進自己的未解表）| [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
-| 全專案的未解 | **516 列**（另有 4 列是 DOS／BIOS 平台層，不計入）。⚠ **這個數字比較接近「文件有多少份」**——516 列分布在 208 份文件、平均每份 2.5 列，而每寫一份新文件就帶進約三列自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
+| 全專案的未解 | **520 列**（另有 4 列是 DOS／BIOS 平台層，不計入）。⚠ **這個數字比較接近「文件有多少份」**——520 列分布在 210 份文件、平均每份 2.5 列，而每寫一份新文件就帶進約三列自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
 
-#### 那 516 列對 remake 代表什麼
+#### 那 520 列對 remake 代表什麼
 
 **它不衡量「離做完還有多遠」。** 最直接的證據是這兩個數字同時成立：
-未解 516 列，而開局主畫面 **256,000 個像素與原版一個不差**。
+未解 520 列，而開局主畫面 **256,000 個像素與原版一個不差**。
 兩者量的是不同的軸——未解列數量的是「**原版還有多少我們解釋不了**」，
 parity 量的是「**我們做出來的東西對不對**」。
 
@@ -161,13 +161,13 @@ parity 量的是「**我們做出來的東西對不對**」。
 
 ### 候選封裝與推廣片
 
-- 完整交付根目錄：[`dist-all`](dist-all)，包含**四平台完整包**（Linux／Windows／macOS／Android）、Linux AppImage、五支推廣片、雜湊與 GUI smoke 截圖。目前是一致的 `wolong-remake-20260828` 批次（[`docs/release/10`](docs/release/10-full-20260828.md)）。⚠ **「全平台重建」是兩支腳本**：`tools/release_all.sh` 不會重建 APK（Android 是另一條管線，檔名取的是 APK 自己的 mtime），要一起換得再跑 `WOLONG_BUNDLE_DATA=1 tools/android_build.sh`。
+- 完整交付根目錄：[`dist-all`](dist-all)，包含**四平台完整包**（Linux／Windows／macOS／Android）、Linux AppImage、**一支合成推廣片**、雜湊與 GUI smoke 截圖。目前是一致的 `wolong-remake-20260830` 批次（[`docs/release/11`](docs/release/11-full-20260830.md)）。⚠ **「全平台重建」是兩支腳本**：`tools/release_all.sh` 不會重建 APK（Android 是另一條管線，檔名取的是 APK 自己的 mtime），要一起換得再跑 `WOLONG_BUNDLE_DATA=1 tools/android_build.sh`。
 - ⛔ **本機這一批內含原版資產，不可外流**（`dist-all/DO-NOT-DISTRIBUTE.md`）。四個平台的包裡都有原版資料與倚天字型，解開或裝上去就能玩。要一份可散布的：`WOLONG_BUNDLE_DATA=0 tools/release_all.sh <YYYYMMDD>`，出來的包不含任何原版資產（[`docs/spec/72`](docs/spec/72-bundled-game-data.md)）。
-- Linux AppImage：[`wolong-remake-linux-amd64-20260828.AppImage`](dist-all/packages/wolong-remake-linux-amd64-20260828.AppImage)。已通過 Linux／Xvfb 固定種子 smoke（含結局過場，且**不帶任何資料旗標**就跑得起來）。**公開散布的版本仍要由玩家提供合法 DOS/V 資料與中文字型。**
+- Linux AppImage：[`wolong-remake-linux-amd64-20260830.AppImage`](dist-all/packages/wolong-remake-linux-amd64-20260830.AppImage)。已通過 Linux／Xvfb 固定種子 smoke（含結局過場，且**不帶任何資料旗標**就跑得起來）。**公開散布的版本仍要由玩家提供合法 DOS/V 資料與中文字型。**
 - 三平台候選包與 SHA-256：[`dist-all/packages`](dist-all/packages)。Windows／macOS 是交叉建置候選，尚未在目標作業系統完成原生 GUI runtime 驗收。
-- 主預告：[`wolong-remake-trailer.mp4`](dist-all/promo/wolong-remake-trailer.mp4)，72 秒。大地圖、野戰與攻城三段是**逐幀錄下來的實跑畫面**（[`docs/spec/71`](docs/spec/71-promo-live-capture.md)），另有**四語系切換**與**原版並排**兩段；事件視窗與存檔那幾段是截圖——那些畫面本來就不動。
-- 原版實機對照片：[`wolong-remake-dosv-realmachine.mp4`](dist-all/promo/wolong-remake-dosv-realmachine.mp4)，72 秒。**原版側是自己跑的受控 DOSBox-X 實機遊玩**——開新遊戲、劇本與君主選擇、大地圖與時鐘、軍團編成、事件訊息、行軍指示，照 timeline 可以重跑；只有戰術戰場那一格取自使用者提供的錄影並在片上標明（[`docs/promo/dosv-realmachine.md`](docs/promo/dosv-realmachine.md)）。不是同日期／同輸入的逐像素 parity。
-- Android：見下一節。APK 與另外三個平台並列在 [`dist-all/packages`](dist-all/packages)，**仍不宣稱 Android release**（只有 debug 簽章、沒有實機驗收）。48 秒的手機版推廣片：[`wolong-remake-android.mp4`](dist-all/promo/wolong-remake-android.mp4)（畫面全是 remake 自己算的，配樂是原創合成音，[`docs/promo/android.md`](docs/promo/android.md)）。
+- 推廣片：[`wolong-remake-promo.mp4`](dist-all/promo/wolong-remake-promo.mp4)，176 秒，**發行目錄裡唯一的一支**。三段接成一支：主預告（大地圖、野戰、攻城是逐幀錄的實跑畫面，另有四語系切換與原版並排）、原版實機對照（原版側是自己跑的受控 DOSBox-X 實機遊玩）、手機版。**全片鋪原版曲子**——remake 自己的 OPL3 從玩家自備的 `BGM.DAT` 算出來的，不是取樣原版錄音；那條音軌只用在推廣片，不進任何遊戲包（[`docs/promo/combined.md`](docs/promo/combined.md)）。
+- 三支素材片與兩支研究用對照片留在 `dist/promo/`，製作紀錄與重錄命令都還在（[`docs/promo/README.md`](docs/promo/README.md)），**只是不進發行**。原版並排段與 DOS/V 對照段都不是同日期／同輸入的逐像素 parity，片上已標明。
+- Android：見下一節。APK 與另外三個平台並列在 [`dist-all/packages`](dist-all/packages)，**仍不宣稱 Android release**（只有 debug 簽章、沒有實機驗收）。完整版 APK 內含 32 個原版 ogg，遊戲內走的是與桌面同一份 `internal/ui/sound`（[`docs/promo/android.md`](docs/promo/android.md)）。
 
 `wlgame` 的持久化要明確指定可寫路徑，例如：
 

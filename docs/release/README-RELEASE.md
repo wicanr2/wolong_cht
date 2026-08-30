@@ -1,13 +1,13 @@
 # 臥龍傳 remake 可執行封裝
 
 **狀態：四平台完整包、Linux AppImage、推廣片與驗收紀錄已集中於
-[`dist-all`](../../dist-all)，目前是一致的 `wolong-remake-20260828` 批次
-（`10-full-20260828.md`；⚠ 批次號會漂，以 `docs/release/` 最新一份為準）；Windows／macOS 原生 GUI 與 Android 實機都尚未驗證。
+[`dist-all`](../../dist-all)，目前是一致的 `wolong-remake-20260830` 批次
+（`11-full-20260830.md`；⚠ 批次號會漂，以 `docs/release/` 最新一份為準）；Windows／macOS 原生 GUI 與 Android 實機都尚未驗證。
 ⛔ 本機那一批內含原版資產，不可外流。**
 
 - 日期：2026-08-24
 - 每一批的產物、雜湊與驗收：`docs/release/` 逐批一份，最新是
-  [`10`](10-full-20260828.md)
+  [`11`](11-full-20260830.md)
 
 ## ⚠ 包裡那份說明的唯一來源是模板
 
@@ -45,7 +45,7 @@ producer。
 
 ## 平台內容
 
-- Linux：amd64 主封裝含原生 `wlgame`／`wlview`、`wlsim`、`wlshot`；另有 Linux arm64 邏輯工具伴隨包，含 `wlsim`／`wlshot`。另提供 AppImage（檔名跟著批次走，最新一批見 `10-full-20260828.md`）；arm64 的 Ebiten GUI 需在目標 Linux 原生工具鏈建置。
+- Linux：amd64 主封裝含原生 `wlgame`／`wlview`、`wlsim`、`wlshot`；另有 Linux arm64 邏輯工具伴隨包，含 `wlsim`／`wlshot`。另提供 AppImage（檔名跟著批次走，最新一批見 `11-full-20260830.md`）；arm64 的 Ebiten GUI 需在目標 Linux 原生工具鏈建置。
 - Windows：amd64 封裝含 PE32+ `wlgame.exe`／`wlview.exe`、`wlsim.exe`、`wlshot.exe`。
 - macOS：封裝同時含 Intel (`darwin-amd64`) 與 Apple Silicon (`darwin-arm64`) 目錄，各含 `wlgame`、`wlview`、`wlsim`、`wlshot`。macOS 的 Ebiten 本體要 cgo，由 osxcross 工具鏈交叉建置，`tools/release.sh` 與 `tools/release_all.sh` 都會做；沒有那顆映像時只會少掉 `wlgame`／`wlview`，其餘平台照跑。
 

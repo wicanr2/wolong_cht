@@ -5,7 +5,7 @@
 >
 > 硬規則、目標、工作紀律在 [`CLAUDE.md`](./CLAUDE.md)。這份只管**狀態**。
 >
-> 最後更新：2026-08-28
+> 最後更新：2026-08-30
 
 ## 0. 兩件每次接手都要先知道的事
 
@@ -644,8 +644,8 @@ INT 33 的範圍變成整個世界（一個主機像素 ≈ 9.6 個遊戲像素�
 
 | # | 工作 | 為什麼現在做 | 下手點 |
 |---:|---|---|---|
-| **1** | **Windows／macOS 原生 GUI 實機驗收** | M8 唯一的閘。⭐ **四平台已對齊成一致的 `20260828` 完整版批次**（[`release/10`](docs/release/10-full-20260828.md)，四個包都內含遊戲檔案與音樂，**APK 也在內**，⛔ 不可外流），Linux 有 GUI smoke，另兩個平台只驗了檔頭。⚠ **重建全平台要兩支腳本**：`release_all.sh` 不碰 APK | 需要實機或 VM，不是 Docker 能代的 |
-| **2** | **Android：實機驗收與 release signing** | M9。⭐ **里程碑 A–G 都過了**：模擬器與桌面在 frame 1／60／120 的指紋完全相同；主畫面、進言、一覽、軍團編成、戰場、存讀檔、事件訊息、擋住世界的三個決定與 SAF 匯入都可用（[`docs/mobile/android-ux.md`](docs/mobile/android-ux.md)）| 剩下的兩件都不是程式：**實機驗收** ⛔ 沒有裝置（模擬器驗不到觸控手感、真實 GPU、高 DPI 上的點陣字可讀性）、**release signing** 要先決定金鑰怎麼保管。另有三個小缺口：外交提案的「指定金額」要數值輸入器、SAF 選資料夾之後的複製流程沒有自動驗、**`.so` 的 16 KB 對齊只驗到 `readelf` 那一層**（沒有 16 KB page size 的裝置或 AVD 實際載過，[`release/03`](docs/release/03-three-platform-20260821.md) §4；之後每一批的 APK 都照同一套建與驗，最近一次是 `20260828`）|
+| **1** | **Windows／macOS 原生 GUI 實機驗收** | M8 唯一的閘。⭐ **四平台已對齊成一致的 `20260830` 完整版批次**（[`release/11`](docs/release/11-full-20260830.md)，四個包都內含遊戲檔案與音樂，**APK 也在內**，⛔ 不可外流；發行目錄的推廣片收斂成一支合成片，[`promo/combined`](docs/promo/combined.md)），Linux 有 GUI smoke，另兩個平台只驗了檔頭。⚠ **重建全平台要兩支腳本**：`release_all.sh` 不碰 APK | 需要實機或 VM，不是 Docker 能代的 |
+| **2** | **Android：實機驗收與 release signing** | M9。⭐ **里程碑 A–G 都過了**：模擬器與桌面在 frame 1／60／120 的指紋完全相同；主畫面、進言、一覽、軍團編成、戰場、存讀檔、事件訊息、擋住世界的三個決定與 SAF 匯入都可用（[`docs/mobile/android-ux.md`](docs/mobile/android-ux.md)）| 剩下的兩件都不是程式：**實機驗收** ⛔ 沒有裝置（模擬器驗不到觸控手感、真實 GPU、高 DPI 上的點陣字可讀性）、**release signing** 要先決定金鑰怎麼保管。另有三個小缺口：外交提案的「指定金額」要數值輸入器、SAF 選資料夾之後的複製流程沒有自動驗、**`.so` 的 16 KB 對齊只驗到 `readelf` 那一層**（沒有 16 KB page size 的裝置或 AVD 實際載過，[`release/03`](docs/release/03-three-platform-20260821.md) §4；之後每一批的 APK 都照同一套建與驗，最近一次是 `20260830`）|
 
 > ⚠ **`sb-enemy` 那 44 px 不在這張表上**：兩條計量條都頂在上限，
 > 原版那一格已經打了 20 秒——要對就得讓兩邊的**時刻**對齊，不是改算式。

@@ -4,7 +4,7 @@
 只有戰術戰場那一格仍取自使用者提供的錄影。**
 
 - 日期：2026-08-23
-- 成品：`dist-all/promo/wolong-remake-dosv-realmachine.mp4`
+- 成品：`dist/promo/wolong-remake-dosv-realmachine.mp4`
 - 長度／格式：72.000 秒、1280×720、30 fps、H.264 ＋ AAC（44.1 kHz 立體聲）
 - 成品 SHA-256：`522313d127846d57a14ed732960fcc81635cac68c47c40f170da08091346de02`（2026-08-29 重錄重剪；原版側的 DOSBox-X 擷取沒動，重錄的是 remake 側）
 - 合成腳本：[`../../tools/promo_dosv_realmachine.sh`](../../tools/promo_dosv_realmachine.sh)

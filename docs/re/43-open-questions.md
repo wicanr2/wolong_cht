@@ -3,7 +3,7 @@
 **狀態：生成的清單，跑 `tools/py.sh tools/re_open_questions.py` 重出。
 這一份不下結論，只把各文件的「未解」表集中到一處。**
 
-- 日期：2026-08-29
+- 日期：2026-08-30
 - 產生工具：`tools/re_open_questions.py`
 - 來源：`docs/` 底下所有文件的未解小節、表格裡標未解的列，與收尾是「…未解」的散句
 
@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**516 列分布在 208 份文件，平均每份 2.5 列。**
+**520 列分布在 210 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 179 | 173 | 6 | 0 |
 | 驗收 | 81 | 70 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 197 | 184 | 13 | 0 |
-| **合計** | **516** | 481 | 35 | 0 |
+| 其他 | 201 | 187 | 14 | 0 |
+| **合計** | **520** | 484 | 36 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -58,10 +58,10 @@
 | `docs/playtest/` | 81 |
 | `docs/formats/` | 35 |
 | `docs/mechanics/` | 18 |
+| `docs/release/` | 14 |
 | `docs/mobile/` | 11 |
-| `docs/release/` | 11 |
+| `docs/promo/` | 6 |
 | `docs/reference/` | 6 |
-| `docs/promo/` | 5 |
 
 ## 2.1 規則正確性（18 條）
 
@@ -407,7 +407,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（197 條）
+## 2.6 其他（201 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -424,6 +424,7 @@
 | [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 事件訊息的停留時間 | 六秒是估的。原版沒有這個機制（它要按鍵才消），所以沒有可抄的數字 | 靜態 |
 | [`promo/android.md`](../promo/android.md) | 實機錄影 | ⛔ 沒有裝置。片中畫面出自桌面的同一份 `internal/ui/phone`，與 APK 是同一份程式碼，但**不是實機錄影** | 靜態 |
 | [`promo/android.md`](../promo/android.md) | 模擬器錄影 | 模擬器在這台機器上只有個位數 fps，錄出來會頓 | 靜態 |
+| [`promo/combined.md`](../promo/combined.md) | 三段的響度沒有逐段量 | 配樂那一軌過了 `loudnorm=I=-18`，但三段畫面本身沒有音效，所以整片只有一條音軌——目前沒有段間響度落差的來源。**換成保留各段原音的版本時要重量** | 靜態 |
 | [`promo/dosv-realmachine.md`](../promo/dosv-realmachine.md) | 原版戰術戰場的實機擷取 | 四次未觸發（§4）。要嘛接受原版 RNG 的變異多跑幾次，要嘛從存檔直接進戰場——後者要先解「怎麼從存檔載入到開戰的那一刻」 | 靜態 |
 | [`promo/dosv-realmachine.md`](../promo/dosv-realmachine.md) | 原版 AdLib 的同場錄音 | `ctrl+F6` 的 WAV 擷取這次沒生效，配樂沿用 2026-08-12 那次的實錄 | 靜態 |
 | [`promo/dosv-realmachine.md`](../promo/dosv-realmachine.md) | 兩側時鐘速度可比 | remake 用最高速檔才看得到動靜；要真的可比，得先量原版預設檔的每日實時秒數 | 靜態 |
@@ -434,6 +435,9 @@
 | [`release/10-full-20260828.md`](../release/10-full-20260828.md) | Android 實機驗收 ＋ release signing | ⛔ 沒有裝置；目前是 debug 簽章 | 靜態 |
 | [`release/10-full-20260828.md`](../release/10-full-20260828.md) | Android 模擬器 smoke | 這一批跳過（§3）。要跑得先重建 13.7 GB 的模擬器映像 | 靜態 |
 | [`release/10-full-20260828.md`](../release/10-full-20260828.md) | 沒有音效裝置時遊戲會掛 | 完整版會自己找到音檔並開音訊，而 Ebiten 沒有可查詢的音訊 API（`../spec/75` §5） | 靜態 |
+| [`release/11-full-20260830.md`](../release/11-full-20260830.md) | Windows／macOS 原生 GUI 實機驗收 | 沒有 Mac／Windows 主機。交叉建置的檔頭與 ABI 已驗，但不以檔頭取代實測 | 實測 |
+| [`release/11-full-20260830.md`](../release/11-full-20260830.md) | Android 實機／模擬器 smoke | 沒有裝置；模擬器映像不在機器上，重建要重下 13.7 GB | 靜態 |
+| [`release/11-full-20260830.md`](../release/11-full-20260830.md) | 合成片的段間響度 | 目前整片只有一條配樂軌，沒有段間落差的來源；換成保留各段原音的版本時要重量（`../promo/combined.md` §6） | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Windows／macOS 原生 GUI | 交叉建置的產物只驗了檔頭，沒有在目標作業系統跑過。M8 唯一的閘 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 實機驗收 | 只有 Docker 模擬器；觸控手感、真實 GPU、高 DPI 上的點陣字可讀性都驗不到 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 正式簽章 | 出的是 debug 簽章，keystore 怎麼保管還沒決定 | 靜態 |

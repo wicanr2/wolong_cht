@@ -136,7 +136,7 @@ Windows／macOS 原生測試機，則補跑 GUI 啟動、視窗尺寸、鍵鼠�
   `APPIMAGE_EXTRACT_AND_RUN=1` Docker／Xvfb 啟動 smoke 通過。AppImage 仍需玩家自備合法
   DOS/V 資料與中文字型，不包含任何原版資產。
 - 「經典再現」影片為
-  [`wolong-remake-classic-revival.mp4`](../../dist-all/promo/wolong-remake-classic-revival.mp4)，
+  [`wolong-remake-classic-revival.mp4`](../../dist/promo/wolong-remake-classic-revival.mp4)，
   以使用者 YouTube 代表幀對照 remake 固定 `seed=17` 代表幀；影片標示原版／remake 與
   「非同狀態逐像素 parity」界線。重播參數沿用 `core=normal`、`cputype=486`、
   `cycles=20000`，`machine=pc98` 只適用 PC-98 oracle，不改寫 DOS/V 結論。
