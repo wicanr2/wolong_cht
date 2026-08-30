@@ -105,7 +105,20 @@ run_appimage bash -lc "ARCH=x86_64 /opt/appimagetool.d/usr/bin/appimagetool --no
 run_repo_write python3 tools/release_all_fs.py finalise
 
 # 只有 staging 完成編譯、封裝、雜湊與 deny-list 後才交換到 dist-all。
-run_repo_write python3 tools/release_all_fs.py promote
+#
+# ⭐ `WOLONG_PROMOTE=0` 就停在 staging，不動 `dist-all`。
+# 用途是**同時要兩個批次**：磁碟上的完整版留著，另外建一份可散布的拿去上傳。
+# 沒有這個開關的話，建可散布批次會把完整版換掉——而那一批要重跑一次
+# 跨平台建置才回得來。
+#
+#   WOLONG_BUNDLE_DATA=0 WOLONG_PROMOTE=0 \
+#     WOLONG_RELEASE_STAGING=$PWD/dist-public tools/release_all.sh 20260830
+#
+if [ "${WOLONG_PROMOTE:-1}" = 0 ]; then
+    echo "跳過 promote：批次留在 $STAGING_ROOT"
+else
+    run_repo_write python3 tools/release_all_fs.py promote
+fi
 
 if [ "$BUNDLE_DATA" = 0 ]; then
     echo "完成：$REPO_ROOT/dist-all（可散布）"

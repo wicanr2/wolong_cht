@@ -52,6 +52,8 @@ __pycache__/
 workplace/shots/
 dist/
 dist-all/
+# 可散布批次（WOLONG_BUNDLE_DATA=0）：不含原版資產，但仍是建置產物。
+dist-public/
 
 # 內嵌進 APK 的原版資料（docs/spec/72 §4）。由 tools/android_build.sh 在
 # WOLONG_BUNDLE_DATA=1 時複製進去，建完就清掉。⚠ 這是原版資產，
