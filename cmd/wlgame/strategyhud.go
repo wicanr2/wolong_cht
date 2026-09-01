@@ -177,7 +177,9 @@ var naturalCommandActions = [...]func(*game){
 	(*game).openPersonnel,
 	(*game).beginFinance,
 	(*game).beginForm,
-	(*game).openCorpsList,
+	// ⚠ 「軍團」在原版是**兩列選單**（位置確認／行軍指示），不是直接開一覽
+	// （docs/spec/110）。鍵盤 `M` 仍直接跳行軍指示，那是 remake 的捷徑。
+	(*game).openCorpsCommandMenu,
 	(*game).openCityList,
 	(*game).openGeneralList,
 	(*game).openFactionList,
@@ -313,12 +315,26 @@ const (
 	strategyInkGauge  = 0x0A
 )
 
+// uiPaletteBank 是 UI 顏色要查的調色盤組。
+//
+// ⚠ **啟動殼層沒有 World**，那一頁預覽用的世界擺在 `launcherPreviewWorld`。
+// 先前直接讀 `g.world.Clock.Season()`，於是殼層畫的每一個顏色都退回
+// fallback——君主卡的兩顆鈕整片變灰（docs/spec/107）。
+// 原版在殼層固定切第 0 組（`sub_11A6E` 的 `mov al, 0`，docs/spec/79 §1.1.1），
+// 所以沒有世界時回 `launcherSeason`。
+func (g *game) uiPaletteBank() int {
+	if g == nil || g.world == nil {
+		return launcherSeason
+	}
+	return int(g.world.Clock.Season())
+}
+
 // paletteInk 取原版調色盤的指定色；取不到就用 fallback，不讓畫面消失。
 func (g *game) paletteInk(index int, fallback color.RGBA) color.RGBA {
-	if g.lib == nil || g.world == nil {
+	if g == nil || g.lib == nil {
 		return fallback
 	}
-	c, err := g.lib.PaletteColor(int(g.world.Clock.Season()), index)
+	c, err := g.lib.PaletteColor(g.uiPaletteBank(), index)
 	if err != nil {
 		return fallback
 	}

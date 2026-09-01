@@ -60,7 +60,20 @@ const (
 // 它是非常駐視窗（15-realtime.md §2）。
 func (g *game) adviseActive() bool { return g.advise != adviseNone }
 
+// adviseLordAwayEvent 是君主帶兵在外時，進言開不起來的那一行。
+//
+// **原版沒有這句**：原版的編成候選排除君主，君主帶兵只能靠進言的第五項，
+// 所以「君主不在朝堂上而玩家要進言」這個狀態走不到（docs/spec/111）。
+const adviseLordAwayEvent = "主公正在領軍，無法進言"
+
 func (g *game) openAdvise() {
+	// 進言是軍師對君主說話（docs/spec/45 §1：上框君主、下框軍師）。
+	// 君主帶著軍團離開之後對話的另一方不在，五項沒有一項成立——
+	// 與「請求君主出陣」用同一個判準，只是套用的層級往上提一格。
+	if g.world != nil && g.world.LordLeadsCorps() {
+		g.lastEvent = adviseLordAwayEvent
+		return
+	}
 	g.advise = advisePickCommand
 	g.adviseCmdRow = 0
 	g.sessCur = 0
@@ -390,6 +403,11 @@ func (g *game) beginPersuasion() {
 	}
 	switch reaction := persuasion.FirstReaction(g.adviseCmd, s, queued); reaction {
 	case persuasion.AskReason:
+		// ③ 君主的回答也在上框——**四個反應碼共用同一個算式**，
+		// AskReason 只是多了「接著開說服迴圈」。先前這一支沒演第三句，
+		// 選單直接跳出來而上框停在開場那句（docs/spec/108）。
+		g.adviseSay(adviseLord,
+			persuasion.TalkReplyIndex(base, reaction, g.playerTalkVariant()))
 		g.sess = persuasion.Begin(g.adviseCmd, s)
 	default:
 		g.sess = nil

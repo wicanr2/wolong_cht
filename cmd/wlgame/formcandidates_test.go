@@ -3,6 +3,7 @@ package main
 import (
 	"testing"
 
+	"github.com/wicanr2/wolong_cht/internal/assets/library"
 	"github.com/wicanr2/wolong_cht/internal/state"
 )
 
@@ -94,5 +95,51 @@ func TestFormCandidatesKeepsExistingFilters(t *testing.T) {
 	rows := g.formCandidates()
 	if len(rows) != 1 || rows[0] != 5 {
 		t.Errorf("候選 = %v，只應該有武將 5", rows)
+	}
+}
+
+// 編成成功之後主將那一句：組編號 `0x19B` 由**原始的說話類型**展開
+// （docs/spec/109 §2）。
+func TestFormationLeaderTalkIndex(t *testing.T) {
+	if formLeaderTalkGroup != 0x19B {
+		t.Fatalf("組編號 ＝ %#x，原版是 0x19B（sub_16C5E 的確定分支）", formLeaderTalkGroup)
+	}
+	for _, tc := range []struct{ variant, want int }{
+		{0, 446}, {3, 449}, {7, 453},
+	} {
+		if got := resolveBattleTalkIndex(formLeaderTalkGroup, tc.variant); got != tc.want {
+			t.Errorf("說話類型 %d → #%d，want #%d", tc.variant, got, tc.want)
+		}
+	}
+}
+
+// ⭐ 主公型（說話類型 0–2）那三格在 `TALK.DAT` 裡是空的——原版的編成候選
+// 排除君主，所以那條路走不到。remake 允許君主編成，於是會取到空字串，
+// **不可以因此跳一張空框**（docs/spec/109 §2）。
+func TestFormationLeaderTalkSkipsEmpty(t *testing.T) {
+	lib, err := library.Load("../../workplace/orig/dosv")
+	if err != nil {
+		t.Skipf("沒有原版素材：%v", err)
+	}
+	w, err := state.LoadScenario("../../workplace/orig/dosv/SINARIO.DAT", 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	g := &game{lib: lib, world: w}
+
+	for v := 0; v <= 2; v++ {
+		idx := resolveBattleTalkIndex(formLeaderTalkGroup, v)
+		before := len(g.messages)
+		g.enqueueTalkWithPortrait(idx, nil, 0)
+		if len(g.messages) != before {
+			t.Errorf("說話類型 %d（#%d）是空的，卻開了框", v, idx)
+		}
+	}
+	// 臣下型要開得起來，否則上面那一條會被「什麼都不開」蒙混過去。
+	idx := resolveBattleTalkIndex(formLeaderTalkGroup, 7)
+	before := len(g.messages)
+	g.enqueueTalkWithPortrait(idx, nil, 0)
+	if len(g.messages) == before {
+		t.Errorf("說話類型 7（#%d）有內容，卻沒開框", idx)
 	}
 }

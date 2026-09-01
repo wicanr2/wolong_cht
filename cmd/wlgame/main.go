@@ -206,6 +206,9 @@ type game struct {
 	// **原版沒有這個報告**，所以預設 false（docs/spec/89）。
 	damageReport bool
 
+	// corpsMenu 是指令列「軍團」那兩項的彈出選單（docs/spec/110）。
+	corpsMenu corpsMenuState
+
 	// roads 與 tactical 是掛在 World 上的執行期來源，不屬於存檔本體。
 	// 讀取另一個槽位後要重新掛回，否則數值雖然恢復，行軍／戰鬥會悄悄退回
 	// 沒有道路圖與戰術資料的降級路徑。
@@ -584,6 +587,25 @@ func (g *game) drawList(screen *ebiten.Image) {
 func (g *game) drawListScrollbar(screen *ebiten.Image, l *listwin.List,
 	dim, ink color.RGBA) {
 
+	top, total, page := 0, 0, 0
+	if l != nil {
+		top, total, page = l.Top, len(l.Rows), l.Height
+	}
+	g.drawScrollbarAt(screen,
+		image.Rect(listWinX, listWinY, listWinX+listScrollW, listWinY+listRowH),
+		listScrollUpRect(), listScrollTrackRect(), listScrollDownRect(),
+		top, total, page)
+}
+
+// drawScrollbarAt 是捲軸的**唯一**一份畫法（docs/spec/38 §1.6）。
+//
+// ⭐ 矩形由呼叫端給：戰略層那七張一覽表與新遊戲的勢力清單尺寸相同、
+// 左上角不同（docs/spec/79 §1.1），共用同一支才不會兩邊各漂各的。
+//
+// `head` 是標題列左邊那一格（純黑），`up`／`track`／`down` 是三個熱區。
+func (g *game) drawScrollbarAt(screen *ebiten.Image,
+	head, up, track, down image.Rectangle, top, total, page int) {
+
 	face := g.paletteInk(13, color.RGBA{130, 162, 97, 255})
 	hi := g.paletteInk(strategyInkNormal, chrome.Paper) // 高光是白（色 15），量測 m15
 	grey := g.paletteInk(2, color.RGBA{162, 178, 178, 255})
@@ -594,16 +616,15 @@ func (g *game) drawListScrollbar(screen *ebiten.Image, l *listwin.List,
 			float32(r.Dx()), float32(r.Dy()), c, false)
 	}
 	// 標題列左邊那格：純黑。
-	fill(image.Rect(listWinX, listWinY, listWinX+listScrollW, listWinY+listRowH), black)
+	fill(head, black)
 	// 槽：純黑、左右黑邊之間放**比例式滑塊**（orig-w3-target 逐像素）。
 	white := hi
-	track := listScrollTrackRect()
 	fill(track, black)
 	slotH := track.Dy()
 	thumbY, thumbH := track.Min.Y, slotH
-	if l != nil && len(l.Rows) > l.Height && l.Height > 0 {
-		thumbH = slotH * l.Height / len(l.Rows)
-		thumbY = track.Min.Y + slotH*l.Top/len(l.Rows)
+	if total > page && page > 0 {
+		thumbH = slotH * page / total
+		thumbY = track.Min.Y + slotH*top/total
 		if thumbY+thumbH > track.Max.Y {
 			thumbY = track.Max.Y - thumbH
 		}
@@ -639,8 +660,8 @@ func (g *game) drawListScrollbar(screen *ebiten.Image, l *listwin.List,
 			fill(image.Rect(r.Min.X+8-w/2, y, r.Min.X+8-w/2+w, y+1), black)
 		}
 	}
-	button(listScrollUpRect(), true)
-	button(listScrollDownRect(), false)
+	button(up, true)
+	button(down, false)
 }
 
 // listFieldsFor 取這張一覽表的欄位定義；沒設過就用武將那一組。
@@ -874,6 +895,10 @@ func (g *game) Update() error {
 	// 進言流程是模態的，優先吃輸入。
 	if g.adviseActive() {
 		g.updateAdvise()
+		return nil
+	}
+	// 「軍團」那張兩列選單也是模態的（docs/spec/110）。
+	if g.updateCorpsMenu() {
 		return nil
 	}
 	// 存檔／讀取是模態視窗，不能讓背景的命令鍵穿透。
@@ -1203,6 +1228,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 	g.drawCityInfo(screen)
 	g.drawCorpsInfo(screen)
 	g.drawAdvise(screen)
+	g.drawCorpsMenu(screen)
 	g.drawSaveUI(screen)
 	if choice := g.world.PendingDiplomacy(); choice != nil {
 		g.drawDiplomacy(screen, choice)

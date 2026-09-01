@@ -196,14 +196,30 @@ func (g *game) commitForm() {
 		g.enqueueTalk(formNoLeaderTroopsTalk, nil)
 		return
 	}
-	g.lastEvent = big5(g.world.Generals[f.leader].Name) + " 編成完畢"
+	leader := g.world.Generals[f.leader]
+	g.lastEvent = big5(leader.Name) + " 編成完畢"
 	f.active = false
 	g.refreshFormCandidates()
+	// 原版緊接著跳一張主將肖像框（`sub_18810(cx=19Bh, ah=+0x1E, al=+0x01)`，
+	// docs/spec/109）。組編號由**原始的說話類型**展開，肖像是主將自己的。
+	//
+	// ⚠ 主公型（說話類型 0–2）那三格是空的——原版的編成候選排除君主，
+	// 所以那條路走不到。remake 允許君主編成（docs/spec/76），於是會取到
+	// 空字串；`enqueueTalkWithPortrait` 對整則皆空的訊息本來就不開框，
+	// 不必另外擋。
+	g.enqueueTalkWithPortrait(
+		resolveBattleTalkIndex(formLeaderTalkGroup, leader.TalkVariant),
+		nil, leader.Portrait)
 }
 
 // formNoLeaderTroopsTalk 是 TALK #62「大將的部隊的兵員不足啊。」，
 // 原版在確定鈕上主將槽為空時走 `sub_18810(cx=3Eh)`（docs/re/30 §3.1）。
 const formNoLeaderTroopsTalk = 0x3E
+
+// formLeaderTalkGroup 是編成成功之後主將那一句的**組編號**（不是索引）。
+// 原版 `sub_16C5E` 的確定分支走 `sub_18810(cx=19Bh)`；展開成 446–453
+// （docs/spec/109 §2）。
+const formLeaderTalkGroup = 0x19B
 
 // 編成視窗的版面**全部出自原版**（docs/spec/22）：視窗矩形來自
 // `sub_1895D(cx=0C0Fh)`，靜態層是顯示清單場景 5，數值座標由
@@ -731,3 +747,113 @@ func (g *game) affordable() (kinds [army.Positions]army.TroopType, manned [army.
 // setEvent 把訊息放到事件列。錯誤訊息帶著 Go 的套件前綴（`state: …`），
 // 那是給 log 看的，不是給玩家看的。
 func (g *game) setEvent(msg string) { g.lastEvent = strings.TrimPrefix(msg, "state: ") }
+
+// ---- 指令列「軍團」的兩項彈出選單（docs/spec/110）----
+
+// corpsMenuLabels 是原版選單 TALK #79 的兩項（`sub_1628F`，docs/re/22 §3.3）。
+var corpsMenuLabels = [...]string{"位置確認", "行軍指示"}
+
+// corpsMenuState 是那張兩列選單的狀態。**只有兩個欄位**——
+// 它不持有清單，選完之後就交給既有的兩條流程。
+type corpsMenuState struct {
+	active bool
+	row    int
+}
+
+// corpsMenuActive 回報選單開著沒有。
+func (g *game) corpsMenuActive() bool { return g != nil && g.corpsMenu.active }
+
+// openCorpsCommandMenu 是指令列第 5 格（「軍團」）。
+//
+// ⚠ 原版點下去**不是**直接開一覽，而是先跳這張兩列選單
+// （`sub_193E9(ax=2, cx=4Fh, dx=40Ch)`）。
+func (g *game) openCorpsCommandMenu() {
+	g.corpsMenu.active, g.corpsMenu.row = true, 0
+}
+
+// closeCorpsCommandMenu 收掉選單。
+func (g *game) closeCorpsCommandMenu() { g.corpsMenu.active = false }
+
+// dispatchCorpsMenu 是選單兩列各自接到哪。
+func (g *game) dispatchCorpsMenu(row int) {
+	g.closeCorpsCommandMenu()
+	switch row {
+	case 0:
+		g.beginLocateCorps()
+	case 1:
+		g.beginMarch()
+	}
+}
+
+// updateCorpsMenu 處理選單的輸入。回傳 true 表示它吃掉了這一幀。
+func (g *game) updateCorpsMenu() bool {
+	if !g.corpsMenuActive() {
+		return false
+	}
+	labels := corpsMenuLabels[:]
+	if row, ok := g.talkChoiceClick(corpsMenuX, corpsMenuY, labels); ok {
+		g.dispatchCorpsMenu(row)
+		return true
+	}
+	switch {
+	case pressed(ebiten.KeyArrowUp):
+		g.corpsMenu.row = (g.corpsMenu.row + len(labels) - 1) % len(labels)
+	case pressed(ebiten.KeyArrowDown):
+		g.corpsMenu.row = (g.corpsMenu.row + 1) % len(labels)
+	case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
+		g.dispatchCorpsMenu(g.corpsMenu.row)
+	case g.cancelled():
+		g.closeCorpsCommandMenu()
+	}
+	// 數字鍵是 remake 加的捷徑；原版只有游標選取。
+	for i := range labels {
+		if pressed(ebiten.Key1 + ebiten.Key(i)) {
+			g.dispatchCorpsMenu(i)
+			break
+		}
+	}
+	return true
+}
+
+// drawCorpsMenu 畫那張選單。
+func (g *game) drawCorpsMenu(screen *ebiten.Image) {
+	if !g.corpsMenuActive() {
+		return
+	}
+	g.drawLegacyChoiceBox(screen, corpsMenuX, corpsMenuY,
+		corpsMenuLabels[:], g.corpsMenu.row)
+}
+
+// beginLocateCorps 是選單第 0 項「位置確認」：選一支軍團，鏡頭移過去。
+//
+// 原版 `sub_1716D` 選完之後跑
+// `sub_12151(ax=14h, cx=0Ch, dx=軍團+0x10, bx=軍團+0x12)`——
+// 鏡頭 ＝ (X − 20, Y − 12)，與開局鏡頭是首都 −(20,12) 同一組立即值
+// （docs/spec/52）。軍團情報視窗照原版也在這條路上開
+// （`sub_1628F` 是 `docs/re/51` 的兩個呼叫者之一）。
+func (g *game) beginLocateCorps() {
+	rows := g.playerCorps()
+	if len(rows) == 0 {
+		g.lastEvent = "還沒有軍團"
+		return
+	}
+	g.openCorpsListWith(rows, "↑↓ 移動　Enter 選取／決定　1-5 排序　ESC 取消",
+		func(corps int) bool {
+			g.focusCorps(corps)
+			g.openCorpsInfo(corps) // 原版的軍團情報視窗（docs/spec/24）
+			return true
+		})
+}
+
+// focusCorps 把鏡頭移到某支軍團身上。
+//
+// **與讀清單分開**是為了讓算式可以單獨驗——`inpututil` 那一層在無頭測試裡
+// 永遠不會觸發，混在一起就只能驗「有沒有寫這一行」。
+func (g *game) focusCorps(corps int) {
+	if g == nil || g.world == nil || corps < 0 || corps >= len(g.world.Corps) {
+		return
+	}
+	c := g.world.Corps[corps]
+	g.camX, g.camY = c.X-centreCol, c.Y-centreRow
+	g.clampCam()
+}

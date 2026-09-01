@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**525 列分布在 211 份文件，平均每份 2.5 列。**
+**531 列分布在 214 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 179 | 173 | 6 | 0 |
 | 驗收 | 86 | 75 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 201 | 187 | 14 | 0 |
-| **合計** | **525** | 489 | 36 | 0 |
+| 其他 | 207 | 193 | 14 | 0 |
+| **合計** | **531** | 495 | 36 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -54,7 +54,7 @@
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/re/` | 179 |
-| `docs/spec/` | 170 |
+| `docs/spec/` | 176 |
 | `docs/playtest/` | 86 |
 | `docs/formats/` | 35 |
 | `docs/mechanics/` | 18 |
@@ -395,10 +395,10 @@
 | [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | ⛔ 試過但**不是**成因：不翻轉 `gateX` | `sub_1CAEB`（`0001CB0F`）寫進立即值的是**未翻轉**的索引第二欄，而 remake 對它套了 `RotateGateX`。實驗把翻轉拿掉（`GateX` 從 27 變回 36）跑同一條 fixture：**城壁照樣被磨穿**（1,660 → 0），門一點傷都沒有，結束時間只從 f1116 變… | 靜態 |
 | [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | 索引第二欄到底是什麼 | `../re/11` §4.5 稱它「城門附近的 X」，§5.8i 定案為「命令 3 的目標 X」。但這張圖上它落在城壁本體、離最近的門有 3–7 格 / 掃 186 張攻城圖：第二欄那一欄的圖塊值是什麼、與門的距離分布 | 靜態 |
 | [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | 守方為什麼在 t6 掉那麼快 | 原版守方大將體力兩段內 124 → 37 / 要先讓攻方以原版的方式進城，才比得了 | 靜態 |
-| [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | 找到七項差異，其中兩項共用同一個根因（啟動殼層拿不到調色盤），一項待驗。 | （散句） | 靜態 |
 | [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | 原版的行軍目的地一覽與三選一 | **「軍團」彈出選單的第二列「行軍指示」點不到。** 四輪都停在第一列「位置確認」：`tap:25,10,5`、`tap:25,9,5`、`click:25,10;press` 三種送法都一樣。這與 `docs/playtest/42` §5 記的是同一類限制——`playtest/54` 證明的是「**能把選單… | 靜態 |
 | [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | 原版的攻城結算 | 卡在上一列。remake 側在 196/4/8「張遼 對 城兵　攻方勝　兵力 1000→960／910→60　據點損害 54　攻下 譙」 | 靜態 |
-| [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | §4.5 的外交欄降幅 | 原版側缺逐日量測 | 靜態 |
+| [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | 捲軸滑塊的 1 px | 只有一個取樣點（`../spec/107` §7） | 靜態 |
+| [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | 「軍團」彈出選單的逐像素對拍 | 位置與兩列文字對得上，**框本身沒有比過**——原版那張參考圖是另一個局面（4/20、讀了存檔、游標停在第一列） | 靜態 |
 | [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | 攻城**戰場**（不是結算） | 兩邊都一樣：空城攻城是自動判定，不進戰術畫面（`internal/state/corps.go` 的 `fightGarrison`；原版 `sub_14ED7` 的 `cmp bx, 4200h`）。要看到戰場得等守方有軍團駐守，而那一刻兩邊不會同時發生 | 靜態 |
 
 ## 2.5 外部資料（6 條）
@@ -412,7 +412,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（201 條）
+## 2.6 其他（207 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -458,8 +458,14 @@
 | [`spec/105-encounter-goes-straight-to-battle.md`](../spec/105-encounter-goes-straight-to-battle.md) | 遭遇當天的日期差一天 | **量到剩 2 個子刻**（§6）。原本記的「時鐘推進速率」不是成因——**接觸在第幾個子刻與速度檔無關**，節流只改牆鐘秒數不改 tick 數。缺的是原版接觸 tick 的一手數字 | 靜態 |
 | [`spec/106-message-box-reporter-portrait.md`](../spec/106-message-box-reporter-portrait.md) | `0x94`／`0x95` 兩頁保留肖像的用途 | `0x94` 是一張紅臉武將、`0x95` 是空白。沒找到傳這兩個值的呼叫點 | 靜態 |
 | [`spec/106-message-box-reporter-portrait.md`](../spec/106-message-box-reporter-portrait.md) | #217 的兩個 `{3}` | 機制已通（`SeqFactions`），但**發那一則的呼叫端還沒讀**，所以第二個勢力是誰未定 | 靜態 |
+| [`spec/107-launcher-ui-colours.md`](../spec/107-launcher-ui-colours.md) | 殼層其餘幾頁（ＹＥＳ／ＮＯ、劇本、四槽讀檔）的配色 | 這一輪只對過勢力清單與君主卡。其餘幾頁同樣走 `paletteInk`，修完應該一起好，但**沒有逐像素比過** | 靜態 |
+| [`spec/107-launcher-ui-colours.md`](../spec/107-launcher-ui-colours.md) | 捲軸滑塊的位置差 1 px | 量到：22 筆、`top` ＝ 4 時，原版的綠面在 y 161–216，remake 在 160–215（高度都是 56）。`⌊128×4/22⌋ ＝ 23` 給 159，原版對應的是 24。**只有這一個取樣點**，分不出是無條件進位、四捨五入還是槽的起點差 1；`38` §1.6 的實機量測只釘住高度沒釘位… | 靜態 |
+| [`spec/107-launcher-ui-colours.md`](../spec/107-launcher-ui-colours.md) | 反白條 | remake 的鍵盤游標，原版沒有。要不要照戰略層一覽表那樣「碰過才畫」（`g.listTouched`）沒有定案 | 靜態 |
+| [`spec/108-advise-ask-reason-line.md`](../spec/108-advise-ask-reason-line.md) | cmd/wlgame/advise.go` 的 `beginPersuasion`： | （未解小節內文） | 靜態 |
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | `資金高位 >= 0x80` 那一支 | `cmp bh, 80h / jnb` 會直接算「答應」，等於資金超過約 840 萬時門檻失效。**看起來像有號數的邊界處理**，未逐位對過 | 靜態 |
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | 君主出陣之後的行為 | 那支軍團跟一般軍團有沒有差別，未讀 | 靜態 |
+| [`spec/110-corps-command-menu.md`](../spec/110-corps-command-menu.md) | 選單本身的逐像素對拍 | 原版選單拍到了（`parity-tap5/menu.png`），**但沒有做逐像素比對**——remake 的彈出選單走 `drawLegacyChoiceBox`，位置與底色未量 | 靜態 |
+| [`spec/110-corps-command-menu.md`](../spec/110-corps-command-menu.md) | 「據點」指令同樣是兩項選單 | `../re/22` §3.4：TALK #82「首都確認／據點一覽」。**這一輪沒動**，remake 的「據點」目前直接開一覽 ＋ 情報卡 | 靜態 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝命令、`0x0Bh`／`0x10h`／`0x15h`／`0x1Fh` 各自出現在哪個視窗已知，完整值域未列 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 |

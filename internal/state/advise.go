@@ -61,13 +61,35 @@ func (w *World) sortie() persuasion.Sortie {
 	}
 }
 
+// LordLeadsCorps 回報玩家的君主現在是不是帶著軍團在外面。
+//
+// ⭐ **這是「君主在不在朝堂上」的唯一判準。** 原版只有出陣那一條路會問它
+// （`sub_16EC9`「君主已經帶著軍團就不能再出一次」）；remake 允許把君主
+// 編成軍團長（docs/spec/76），於是同一個狀態也擋住整個進言
+// （docs/spec/111）。兩個呼叫端共用這一支，避免各寫一份而行為分岔。
+//
+// 君主編號同時是軍團編號——原版 `sub_1291A` 直接把軍團記錄位址換算成
+// 武將記錄位址，兩張表是同一組索引（docs/formats/08 §2）。
+func (w *World) LordLeadsCorps() bool {
+	if w == nil || w.Player < 0 || w.Player >= numFactions {
+		return false
+	}
+	lord := w.Factions[w.Player].Lord
+	if lord < 0 || lord >= numCorps {
+		return false
+	}
+	return w.Corps[lord].Alive
+}
+
 // AdviseSortieAccepted 回報君主會不會親自出陣（原版 `sub_1699E` 的兩道閘）。
 func (w *World) AdviseSortieAccepted() bool {
 	if w == nil || w.Player < 0 || w.Player >= numFactions {
 		return false
 	}
-	if lord := w.Factions[w.Player].Lord; lord < 0 || lord >= numCorps ||
-		w.Corps[lord].Alive {
+	if lord := w.Factions[w.Player].Lord; lord < 0 || lord >= numCorps {
+		return false
+	}
+	if w.LordLeadsCorps() {
 		return false // 君主已經帶著軍團了（原版由 `sub_16EC9` 擋）
 	}
 	return persuasion.AcceptSortie(w.sortie())

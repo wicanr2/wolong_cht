@@ -148,6 +148,11 @@
 | 「自定」軍師命名視窗 | [`104-advisor-naming-window.md`](104-advisor-naming-window.md) | 已實作、單測與截圖；肖像位置是假說（§5）|
 | 遭遇直接進戰場，沒有「戰鬥指揮／委任」選單 | [`105-encounter-goes-straight-to-battle.md`](105-encounter-goes-straight-to-battle.md) | 已實作並有單測；機器碼 ＋ 實機兩條證據。⚠ 遭遇訊息本身 remake 還沒有（§5）|
 | 訊息框的臉是固定的通報者 | [`106-message-box-reporter-portrait.md`](106-message-box-reporter-portrait.md) | 已實作並有單測；順帶解掉「同一個標記出現兩次是兩個值」|
+| 啟動殼層的 UI 顏色也要查調色盤 | [`107-launcher-ui-colours.md`](107-launcher-ui-colours.md) | 已實作、單測（含正對照）；君主卡 0 px、勢力清單本體 0 px。捲軸滑塊差 1 px 未解（§7）|
+| 進言問理由之前君主要先講那一句 | [`108-advise-ask-reason-line.md`](108-advise-ask-reason-line.md) | 已實作並有單測；實機對照過（`../playtest/56` §4.3）|
+| 編成成功之後主將要講一句 | [`109-formation-leader-line.md`](109-formation-leader-line.md) | 已實作並有單測；主公型那三格是空的，取到空字串不開框 |
+| 指令列的「軍團」是兩項彈出選單 | [`110-corps-command-menu.md`](110-corps-command-menu.md) | 已實作並有單測；選單框本身還沒逐像素比（§5）|
+| 君主帶著軍團時進言關掉（**remake 差異**）| [`111-lord-with-corps-blocks-advise.md`](111-lord-with-corps-blocks-advise.md) | 使用者裁定 2026-09-01；判準與「請求君主出陣」共用一支 |
 
 ## 怎麼加一份
 

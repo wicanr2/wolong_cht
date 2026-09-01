@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
+	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/rules/persuasion"
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
@@ -410,5 +411,89 @@ func TestAdviseCommandLabelsComeFromTalk(t *testing.T) {
 		if textdraw.StringWidth(l) > 112-2*8 {
 			t.Errorf("%q 寬 %d，超出框內 %d px", l, textdraw.StringWidth(l), 112-16)
 		}
+	}
+}
+
+// AskReason 也要演君主的回答，而且是**四個反應碼共用的那個算式**
+// （docs/spec/108）。先前只有 default 那一支叫得到 TalkReplyIndex，
+// 於是最常走的那條路少演一句。
+func TestAskReasonPlaysLordReplyBeforeMenu(t *testing.T) {
+	lib, err := library.Load("../../workplace/orig/dosv")
+	if err != nil {
+		t.Skipf("沒有原版素材：%v", err)
+	}
+	w, err := state.LoadScenario("../../workplace/orig/dosv/SINARIO.DAT", 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// 劇本一的呂布（勢力 13）對曹操（勢力 0）：四個理由都不成立，
+	// 而第一反應是 AskReason —— 正是實機拍到的那個局面
+	// （docs/playtest/56 §4.3）。
+	w.Player = 13
+	g := &game{lib: lib, world: w}
+	g.adviseCmd, g.target = persuasion.Hostility, 0
+
+	s := g.situation(g.target)
+	if got := persuasion.FirstReaction(persuasion.Hostility, s, false); got != persuasion.AskReason {
+		t.Fatalf("第一反應 ＝ %v，這個測試要的是 AskReason", got)
+	}
+
+	g.beginPersuasion()
+	if g.sess == nil {
+		t.Fatal("AskReason 應該開說服迴圈")
+	}
+
+	// 佇列裡君主那一側要有兩句：開場 ＋ 回答。演完之後上框停在回答。
+	for g.adviseTalking() {
+		g.adviseAdvance()
+	}
+	base := persuasion.TalkBase(persuasion.Hostility)
+	want := persuasion.TalkReplyIndex(base, persuasion.AskReason, g.playerTalkVariant())
+	lines, ok := g.talkLines(want, nil)
+	if !ok || len(lines) == 0 {
+		t.Fatalf("取不到 TALK #%d", want)
+	}
+	got := strings.Join(g.adviseLordSaid, "")
+	if wantText := strings.Join(lines, ""); got != wantText {
+		t.Errorf("上框 ＝ %q，want %q（TALK #%d）", got, wantText, want)
+	}
+}
+
+// 君主帶著軍團的時候，進言整個開不起來（docs/spec/111）。
+// **兩個方向都要驗**——只驗擋下來那一邊的話，把 openAdvise 寫死成
+// 「永遠不開」也會通過。
+func TestLordLeadsCorpsBlocksAdvise(t *testing.T) {
+	w, err := state.LoadScenario("../../workplace/orig/dosv/SINARIO.DAT", 0)
+	if err != nil {
+		t.Skipf("沒有原版素材：%v", err)
+	}
+	w.Player = 0
+	g := &game{world: w}
+
+	g.openAdvise()
+	if !g.adviseActive() {
+		t.Fatal("君主在朝堂上卻開不了進言")
+	}
+	g.closeAdvise()
+
+	// 手動把君主編成軍團長（remake 差異，docs/spec/76）。
+	f := &w.Factions[w.Player]
+	f.Reserves = [3]int{600, 600, 600}
+	manned := [army.Positions]bool{}
+	manned[0] = true
+	if err := w.FormCorps(f.Lord, [army.Positions]army.TroopType{}, manned); err != nil {
+		t.Fatalf("君主編成失敗：%v", err)
+	}
+	if !w.LordLeadsCorps() {
+		t.Fatal("君主帶兵了，判準卻沒認出來")
+	}
+
+	g.lastEvent = ""
+	g.openAdvise()
+	if g.adviseActive() {
+		t.Error("君主在領軍，進言還開得起來")
+	}
+	if g.lastEvent != adviseLordAwayEvent {
+		t.Errorf("事件列 ＝ %q，want %q", g.lastEvent, adviseLordAwayEvent)
 	}
 }

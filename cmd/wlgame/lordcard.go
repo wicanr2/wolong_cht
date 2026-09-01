@@ -123,8 +123,10 @@ func (g *game) drawLordCard(screen *ebiten.Image, p launcherPlayer, season int) 
 		g.td.Draw(screen, p.Advisor, lordAdvNameX, lordAdvNameY, ink)
 	}
 	g.td.Draw(screen, p.Capital, lordCapitalNameX, lordCapitalY, ink)
-	g.td.Draw(screen, strategyHUDNumber(p.Generals, lordCountDigits),
-		lordCountX, lordGeneralsY, ink)
-	g.td.Draw(screen, strategyHUDNumber(p.Cities, lordCountDigits),
-		lordCountX, lordCitiesY, ink)
+	// 數字用**原版的 8×16 字模**（docs/spec/38 §1.5），不是文字字型的
+	// ASCII 數字——兩者的「4」與「7」形狀不一樣（docs/spec/107 §2.1）。
+	g.drawOriginalNumber(screen, p.Generals, lordCountX, lordGeneralsY,
+		lordCountDigits, ink)
+	g.drawOriginalNumber(screen, p.Cities, lordCountX, lordCitiesY,
+		lordCountDigits, ink)
 }

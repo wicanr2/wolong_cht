@@ -89,7 +89,7 @@
 | [`docs/playtest/53-battle-fast-forward.md`](playtest/53-battle-fast-forward.md) | 53 — 實機：戰場的 ▶▶ 按下去會怎樣 | PASS（行為 confirmed）。按一下戰場整片變成均勻底紋、側欄與小地圖照動；再按一下戰場回來。 | 2026-08-29 |
 | [`docs/playtest/54-menu-second-row-tap.md`](playtest/54-menu-second-row-tap.md) | 54 — 原版擷取：彈出選單的第二列終於點得到 | PASS。單獨一下 5–60 ms 的瞬按（tap:x,y,ms）能把「軍團」選單打開而不選走第一列；先前點不到的是… | 2026-08-29 |
 | [`docs/playtest/55-encounter-menu-parity.md`](playtest/55-encounter-menu-parity.md) | 55 — 實機：遭遇時原版沒有「戰鬥指揮／委任」選單 | 定案。訊息框按掉之後直接是戰場，中間沒有選單；playtest/31 §6 那一項不是「還沒對拍」，是原版沒有那個畫面。 | 2026-08-29 |
-| [`docs/playtest/56-lubu-flow-parity.md`](playtest/56-lubu-flow-parity.md) | 56 — 實機對拍：AppImage 走「選呂布 → 對曹操宣戰 → 編成攻城」 | 完成。十五個關卡逐關對照過，兩邊走的是同一條路； 指令列逐像素 0 px、編成面板的差異只有原版錄影裡的游標。 找到… | 2026-09-01 |
+| [`docs/playtest/56-lubu-flow-parity.md`](playtest/56-lubu-flow-parity.md) | 56 — 實機對拍：AppImage 走「選呂布 → 對曹操宣戰 → 編成攻城」 | 完成，六項差異已修並重測。 | 2026-09-01 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告是 72 秒， 含語言切換與原版並排兩段；遊戲段落是逐幀錄下來的實跑畫面。 2… | 2026-08-30 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
@@ -199,7 +199,12 @@
 | [`docs/spec/104-advisor-naming-window.md`](spec/104-advisor-naming-window.md) | 104 — 「自定」：軍師命名視窗 | CONFORMED（2026-08-29 實作、單測與截圖）。 | 2026-08-29 |
 | [`docs/spec/105-encounter-goes-straight-to-battle.md`](spec/105-encounter-goes-straight-to-battle.md) | 105 — 遭遇時沒有「戰鬥指揮／委任」選單：直接進戰場 | CONFORMED（2026-08-29 機器碼 ＋ 實機兩條證據，已實作與單測）。 | 2026-08-29 |
 | [`docs/spec/106-message-box-reporter-portrait.md`](spec/106-message-box-reporter-portrait.md) | 106 — 訊息框那張臉是固定的通報者，不是說話者 | CONFORMED（2026-08-29 機器碼全量稽核 ＋ 實機對照，已實作與單測）。 | 2026-08-29 |
+| [`docs/spec/107-launcher-ui-colours.md`](spec/107-launcher-ui-colours.md) | 107 — 啟動殼層的 UI 顏色也要查調色盤 | CONFORMED。啟動殼層沒有 World，paletteInk 因此整片退回硬寫的 近似色。改成用「殼層固定第 … | 2026-09-01 |
+| [`docs/spec/108-advise-ask-reason-line.md`](spec/108-advise-ask-reason-line.md) | 108 — 進言問理由之前，君主要先講那一句 | CONFORMED。AskReason 這一支漏掉了君主的回答， 選單直接跳出來、上框還停在開場那句。 | 2026-09-01 |
+| [`docs/spec/109-formation-leader-line.md`](spec/109-formation-leader-line.md) | 109 — 編成成功之後，主將要講一句 | CONFORMED。原版按下「確定」會跳一張主將肖像框； remake 先前只有畫面底部事件列的一行字。 | 2026-09-01 |
 | [`docs/spec/11-ai-sortie.md`](spec/11-ai-sortie.md) | 11 — 進言「請求君主出陣」 | CONFORMED。 | 2026-08-14 |
+| [`docs/spec/110-corps-command-menu.md`](spec/110-corps-command-menu.md) | 110 — 指令列的「軍團」是兩項彈出選單 | CONFORMED。原版點「軍團」跳的是 | 2026-09-01 |
+| [`docs/spec/111-lord-with-corps-blocks-advise.md`](spec/111-lord-with-corps-blocks-advise.md) | 111 — 君主帶著軍團的時候，進言整個關掉 | CONFORMED。這是 remake 允許君主編成（[76](76-lord-not-in-formation.m… | 2026-09-01 |
 | [`docs/spec/12-strategy-chrome.md`](spec/12-strategy-chrome.md) | 12 — 主畫面的視窗外框、指令列與右欄 | CONFORMED。主畫面的四個常駐視窗矩形、指令列版面與縮小地圖／勢力篩選鈕的 位置全部由機器碼定死（[docs/… | 2026-08-15 |
 | [`docs/spec/13-main-window-toggles.md`](spec/13-main-window-toggles.md) | 13 — 主畫面四個視窗的開關 | CONFORMED。已實作並留下四窗全開／全關的截圖； 舊的 g.open[] 那一套已整個拿掉，主畫面視窗只剩一份… | 2026-08-15 |
 | [`docs/spec/14-finance-window.md`](spec/14-finance-window.md) | 14 — 財政視窗 | CONFORMED。版面已照原版重寫並有契約測試； 數值輸入器已接上（[78](78-amount-input-ed… | 2026-08-15 |

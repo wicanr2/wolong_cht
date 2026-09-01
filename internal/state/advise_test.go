@@ -3,6 +3,7 @@ package state
 import (
 	"testing"
 
+	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 )
 
@@ -197,5 +198,60 @@ func TestReserveUpkeepGoesToExpense(t *testing.T) {
 	}
 	if w.Factions[f].Funds != before {
 		t.Errorf("預備兵維持費不該當場扣資金：%d → %d", before, w.Factions[f].Funds)
+	}
+}
+
+// LordLeadsCorps 是「君主在不在朝堂上」的唯一判準：出陣那道閘與進言
+// 的開窗閘共用它（docs/spec/111）。
+func TestLordLeadsCorpsSharedWithSortie(t *testing.T) {
+	w := load(t, 0)
+	w.Player = w.AliveFactions()[0]
+	f := &w.Factions[w.Player]
+	lord := f.Lord
+	if lord < 0 || lord >= numCorps {
+		t.Skip("這個勢力沒有君主")
+	}
+	if w.LordLeadsCorps() {
+		t.Fatal("開局君主就被當成帶著軍團")
+	}
+
+	f.Aggression, f.Funds = 15, 0
+	f.Reserves = [3]int{300, 300, 300}
+	if !w.AdviseSortie() {
+		t.Fatal("兩道閘都過了卻沒出陣")
+	}
+
+	if !w.LordLeadsCorps() {
+		t.Fatal("君主已經帶著軍團，LordLeadsCorps 卻回 false")
+	}
+	// 同一個狀態必須同時擋住出陣——兩邊讀的是同一支。
+	if w.AdviseSortieAccepted() {
+		t.Error("君主已經在陣上還能再請一次出陣")
+	}
+}
+
+// 手動把君主編成軍團長（remake 差異，docs/spec/76）之後，
+// 判準要跟出陣那條一樣認得出來（docs/spec/111）。
+func TestLordLeadsCorpsAfterManualFormation(t *testing.T) {
+	w := load(t, 0)
+	w.Player = w.AliveFactions()[0]
+	f := &w.Factions[w.Player]
+	lord := f.Lord
+	if lord < 0 || lord >= numCorps {
+		t.Skip("這個勢力沒有君主")
+	}
+	f.Reserves = [3]int{600, 600, 600}
+
+	kinds := [army.Positions]army.TroopType{}
+	manned := [army.Positions]bool{}
+	manned[0] = true
+	if err := w.FormCorps(lord, kinds, manned); err != nil {
+		t.Fatalf("君主編成失敗：%v", err)
+	}
+	if !w.LordLeadsCorps() {
+		t.Fatal("君主自己帶了一支軍團，判準卻沒認出來")
+	}
+	if w.AdviseSortieAccepted() {
+		t.Error("君主已經帶兵還能請他出陣")
 	}
 }

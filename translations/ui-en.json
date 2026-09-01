@@ -202,6 +202,7 @@
  "沒有派駐中的內政官": "No governor is posted",
  "沒有派駐中的外交官": "No envoy is posted",
  "沒有軍團可以行軍": "No corps can march",
+ "主公正在領軍，無法進言": "The lord is in the field; no counsel possible",
  "派 %s 出使 %s 軍": "Send %s as envoy to %s",
  "海上": "Sea",
  "消": "C",

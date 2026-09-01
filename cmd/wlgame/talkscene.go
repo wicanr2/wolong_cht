@@ -72,6 +72,12 @@ const (
 	// 粗格 (0, 4)）。
 	adviseMenuX = 0
 	adviseMenuY = 64
+
+	// corpsMenuX／Y 是「軍團」那兩項的選單（`sub_1628F` 的 `dx = 40Ch`，
+	// 粗格 (12, 4)，docs/spec/110）。`dx` 的高 byte 是列、低 byte 是欄，
+	// 與進言那一組同一種編碼。
+	corpsMenuX = 192
+	corpsMenuY = 64
 )
 
 // playerLordPortrait 是 composite TALK 的 fallback speaker。事件 3 fixture
