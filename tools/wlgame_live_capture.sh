@@ -20,7 +20,12 @@ seed=${WOLONG_WLGAME_SEED:-17}
 speed=${WOLONG_WLGAME_SPEED:-0}
 mode=${WOLONG_WLGAME_MODE:-normal}
 startup_wait=${WOLONG_WLGAME_STARTUP_WAIT:-2}
-game_binary=${WOLONG_WLGAME_BINARY:-}
+game_binary=${WOLONG_WLGAME_BINARY:-${WOLONG_WLGAME_PREBUILT:-}}
+extra_args=${WOLONG_WLGAME_EXTRA_ARGS:-}
+# ⚠ `-scenario`／`-player` 本身就是「直啟白名單」的旗標（launcher.go 的
+# directStartFlagWasPassed），帶著它們會**跳過啟動殼層**。要拍新遊戲那四層
+# （ＹＥＳ／ＮＯ → 劇本 → 勢力清單 → 君主卡）就把這個變數設成空字串。
+scenario_args=${WOLONG_WLGAME_SCENARIO_ARGS--scenario 0 -player 0}
 
 for dir in "$src_dir" "$orig_dir" "$font_dir"; do
     if [ ! -d "$dir" ]; then
@@ -80,6 +85,18 @@ if [ -n "$game_binary" ]; then
         exit 1
     fi
     trace "use prebuilt wlgame=$game_binary"
+    # AppImage 在容器裡沒有 FUSE，要先自解。`--appimage-extract-and-run` 會
+    # 每次解一份到 /tmp；先解一次再直接跑解出來的 AppRun，省掉重複解壓。
+    # AppImage 的魔數是 ELF 標頭第 8–10 byte 的 `41 49 02`（"AI\x02"），
+    # 不是檔案裡有 "AppImage" 這個字——那個字要到 squashfs 裡才有。
+    if [ "$(dd if="$game_binary" bs=1 skip=8 count=3 2>/dev/null | od -An -tx1 | tr -d ' \n')" = "414902" ]; then
+        cp "$game_binary" /tmp/app.AppImage
+        chmod +x /tmp/app.AppImage
+        (cd /tmp && ./app.AppImage --appimage-extract >/tmp/appimage-extract.log 2>&1)
+        game_binary=/tmp/squashfs-root/AppRun
+        [ -x "$game_binary" ] || { echo 'AppImage 解不開' >&2; cat /tmp/appimage-extract.log >&2; exit 1; }
+        trace "extracted AppImage -> $game_binary"
+    fi
 else
     trace "build wlgame"
     (cd "$src_dir" && go build -o /tmp/wlgame-live ./cmd/wlgame)
@@ -108,9 +125,13 @@ if ! display_ready; then
 fi
 
 trace "start wlgame seed=$seed speed=$speed"
+# ⚠ 額外參數放在預設之後：Go 的 flag 套件同名旗標**後面的贏**，
+# 所以 WOLONG_WLGAME_EXTRA_ARGS 可以覆寫 -scenario／-player／-speed。
+# 不加引號是刻意的——要讓它按空白拆成多個參數。
 LIBGL_ALWAYS_SOFTWARE=1 DISPLAY=:99 "$game_binary" \
-    -orig "$orig_dir" -font "$font_dir" -scenario 0 -player 0 \
-    -seed "$seed" -speed "$speed" "${mode_args[@]}" >/tmp/wlgame-live.log 2>&1 &
+    -orig "$orig_dir" -font "$font_dir" $scenario_args \
+    -seed "$seed" -speed "$speed" "${mode_args[@]}" \
+    $extra_args >/tmp/wlgame-live.log 2>&1 &
 APP=$!
 WID=""
 for _ in $(seq 1 100); do
@@ -196,6 +217,18 @@ for step in "${steps[@]}"; do
             trace "step begin=$step"
             DISPLAY=:99 xdotool key --window "$WID" --clearmodifiers "$arg"
             sleep 0.3
+            trace "step end=$step"
+            ;;
+        # keyrep:鍵,次數 —— 清單要往下捲十幾列時，寫成十幾個 key: 會讓
+        # 時間軸長到看不出結構。
+        keyrep)
+            trace "step begin=$step"
+            rk=${arg%%,*}; rn=${arg##*,}
+            for ((ri = 0; ri < rn; ri++)); do
+                DISPLAY=:99 xdotool key --window "$WID" --clearmodifiers "$rk"
+                sleep 0.12
+            done
+            sleep 0.2
             trace "step end=$step"
             ;;
         # click／rclick：x,y 是**邏輯 640×400 座標**，會依視窗實際大小換算。

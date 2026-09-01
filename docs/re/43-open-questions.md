@@ -3,7 +3,7 @@
 **狀態：生成的清單，跑 `tools/py.sh tools/re_open_questions.py` 重出。
 這一份不下結論，只把各文件的「未解」表集中到一處。**
 
-- 日期：2026-08-30
+- 日期：2026-09-01
 - 產生工具：`tools/re_open_questions.py`
 - 來源：`docs/` 底下所有文件的未解小節、表格裡標未解的列，與收尾是「…未解」的散句
 
@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**520 列分布在 210 份文件，平均每份 2.5 列。**
+**525 列分布在 211 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 18 | 15 | 3 | 0 |
 | 資料保存 | 35 | 34 | 1 | 0 |
 | 程式碼理解 | 179 | 173 | 6 | 0 |
-| 驗收 | 81 | 70 | 11 | 0 |
+| 驗收 | 86 | 75 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 201 | 187 | 14 | 0 |
-| **合計** | **520** | 484 | 36 | 0 |
+| **合計** | **525** | 489 | 36 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -55,7 +55,7 @@
 |---|---:|
 | `docs/re/` | 179 |
 | `docs/spec/` | 170 |
-| `docs/playtest/` | 81 |
+| `docs/playtest/` | 86 |
 | `docs/formats/` | 35 |
 | `docs/mechanics/` | 18 |
 | `docs/release/` | 14 |
@@ -310,7 +310,7 @@
 | [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | 變體 0／2／3／5／6 的臨場抽驗 | 專屬句只在 1／4／7；預設句與它們共用選句機制，公式已 confirmed，抽驗優先度低 | 靜態 |
 | [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
 
-## 2.4 驗收（81 條）
+## 2.4 驗收（86 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -395,6 +395,11 @@
 | [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | ⛔ 試過但**不是**成因：不翻轉 `gateX` | `sub_1CAEB`（`0001CB0F`）寫進立即值的是**未翻轉**的索引第二欄，而 remake 對它套了 `RotateGateX`。實驗把翻轉拿掉（`GateX` 從 27 變回 36）跑同一條 fixture：**城壁照樣被磨穿**（1,660 → 0），門一點傷都沒有，結束時間只從 f1116 變… | 靜態 |
 | [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | 索引第二欄到底是什麼 | `../re/11` §4.5 稱它「城門附近的 X」，§5.8i 定案為「命令 3 的目標 X」。但這張圖上它落在城壁本體、離最近的門有 3–7 格 / 掃 186 張攻城圖：第二欄那一欄的圖塊值是什麼、與門的距離分布 | 靜態 |
 | [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | 守方為什麼在 t6 掉那麼快 | 原版守方大將體力兩段內 124 → 37 / 要先讓攻方以原版的方式進城，才比得了 | 靜態 |
+| [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | 找到七項差異，其中兩項共用同一個根因（啟動殼層拿不到調色盤），一項待驗。 | （散句） | 靜態 |
+| [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | 原版的行軍目的地一覽與三選一 | **「軍團」彈出選單的第二列「行軍指示」點不到。** 四輪都停在第一列「位置確認」：`tap:25,10,5`、`tap:25,9,5`、`click:25,10;press` 三種送法都一樣。這與 `docs/playtest/42` §5 記的是同一類限制——`playtest/54` 證明的是「**能把選單… | 靜態 |
+| [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | 原版的攻城結算 | 卡在上一列。remake 側在 196/4/8「張遼 對 城兵　攻方勝　兵力 1000→960／910→60　據點損害 54　攻下 譙」 | 靜態 |
+| [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | §4.5 的外交欄降幅 | 原版側缺逐日量測 | 靜態 |
+| [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | 攻城**戰場**（不是結算） | 兩邊都一樣：空城攻城是自動判定，不進戰術畫面（`internal/state/corps.go` 的 `fightGarrison`；原版 `sub_14ED7` 的 `cmp bx, 4200h`）。要看到戰場得等守方有軍團駐守，而那一刻兩邊不會同時發生 | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
