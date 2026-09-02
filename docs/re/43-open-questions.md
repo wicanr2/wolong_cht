@@ -75,7 +75,7 @@
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 重算路徑的時機 | 原版只在命令生效時算一次；remake 的兵每幀都可能被別人擋住，所以改成**每 30 幀可重算一次**（`replanInterval`，`internal/rules/tactical/soldier.go`）。這是 **remake 差異**，不是原版行為——原版被擋住之後怎麼處理沒有讀 | 靜態 |
 | [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0` 旗標的 bit 0 | 只出現一次（劇本三的張衛），全庫沒有讀取端（`../re/77` §5）。要嘛是劇本作者的筆誤，要嘛是 PC-98 版才用的位元——後者要等 PC-98 的 `KI.EXE` 進 IDA 才驗得了 | 靜態 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 正文散在各節的開放項目集中在這裡；每一條都寫下手點， | （未解小節內文） | 靜態 |
-| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 說服請求裡 `SI+1Eh` 的完整結構語意、其他理由的索引公式、`cx ≥ 0x100` 分支（§1.3） | 三者都在 `sub_13830` 一帶；先補 `SI+1Eh` 的欄位表再談索引公式 | 靜態 |
+| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 說話類型 6／7 取到哪一則、其他理由的索引公式、`cx ≥ 0x100` 分支（§1.3） | `SI+1Eh` 本身已定案是說話類型（§1.6）。剩下的是：`sub_13C99` 只減一次 3，所以 6／7 摺成 3／4 而超出三變體組，而那是多數武將。三者都在 `sub_13830` 一帶 | 靜態 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 「拉玩家合攻一個對玩家友善的對象」的**意圖**（§1.2 末） | 機制已照抄，意圖無證據。要定案得靠實機長跑統計，不是反組譯 | 靜態 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 事件 2／3 的完整接受流程與原版訊息、4／5 的逐位金額輸入、6／7 的 `TALK.DAT` 反應、9 的原版完整流程、11／12 的物件動畫 | 事件佇列的 runtime 已在，缺的是各事件的原版畫面流程；逐一對 `sub_14269` 一帶的分派做 oracle | 實測 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 入佇列的隨機空格分佈 | 目前是 remake 的明示差異；要對齊得先解出原版排程時挑空格的那段 | 靜態 |
