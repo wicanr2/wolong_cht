@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**532 列分布在 215 份文件，平均每份 2.5 列。**
+**536 列分布在 216 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 179 | 173 | 6 | 0 |
 | 驗收 | 87 | 76 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 207 | 193 | 14 | 0 |
-| **合計** | **532** | 496 | 36 | 0 |
+| 其他 | 211 | 197 | 14 | 0 |
+| **合計** | **536** | 500 | 36 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -58,7 +58,7 @@
 | `docs/playtest/` | 87 |
 | `docs/formats/` | 35 |
 | `docs/mechanics/` | 18 |
-| `docs/release/` | 14 |
+| `docs/release/` | 18 |
 | `docs/mobile/` | 11 |
 | `docs/promo/` | 6 |
 | `docs/reference/` | 6 |
@@ -413,7 +413,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（207 條）
+## 2.6 其他（211 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -444,6 +444,10 @@
 | [`release/11-full-20260830.md`](../release/11-full-20260830.md) | Windows／macOS 原生 GUI 實機驗收 | 沒有 Mac／Windows 主機。交叉建置的檔頭與 ABI 已驗，但不以檔頭取代實測 | 實測 |
 | [`release/11-full-20260830.md`](../release/11-full-20260830.md) | Android 實機／模擬器 smoke | 沒有裝置；模擬器映像不在機器上，重建要重下 13.7 GB | 靜態 |
 | [`release/11-full-20260830.md`](../release/11-full-20260830.md) | 合成片的段間響度 | 目前整片只有一條配樂軌，沒有段間落差的來源；換成保留各段原音的版本時要重量（`../promo/combined.md` §6） | 靜態 |
+| [`release/12-full-20260902.md`](../release/12-full-20260902.md) | Windows／macOS 原生 GUI | 沒有實機或 VM，只驗了檔頭 | 靜態 |
+| [`release/12-full-20260902.md`](../release/12-full-20260902.md) | Android 實機與 release signing | 沒有裝置；金鑰保管方式未定 | 靜態 |
+| [`release/12-full-20260902.md`](../release/12-full-20260902.md) | Android 模擬器 smoke | `wolong-android-emulator` 映像不在這台機器上 | 靜態 |
+| [`release/12-full-20260902.md`](../release/12-full-20260902.md) | 可散布批次 | 仍停在 `20260830`，這一輪的六項修正還沒進公開發行 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Windows／macOS 原生 GUI | 交叉建置的產物只驗了檔頭，沒有在目標作業系統跑過。M8 唯一的閘 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 實機驗收 | 只有 Docker 模擬器；觸控手感、真實 GPU、高 DPI 上的點陣字可讀性都驗不到 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 正式簽章 | 出的是 debug 簽章，keystore 怎麼保管還沒決定 | 靜態 |

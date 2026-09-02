@@ -7,11 +7,13 @@
 
 - 日期：2026-09-02
 - remake 側：`dist-all/packages/wolong-remake-linux-amd64-20260902.AppImage`
-  （完整版，內含遊戲檔案），SHA-256
-  `db3909bfaa82f495b5ff97f3e598560f1810e8a9fbf5bd3b012d11de0c8526ed`
+  （完整版，內含遊戲檔案）
 
-- 包裡的執行檔 `usr/bin/wlgame`，SHA-256
-  `cb9b2a6937406d906e882f91ada04ab3232158196a7a87b2bf566129a3871698`
+- 判斷「驗的是哪一顆」要看**包裡的執行檔** `usr/bin/wlgame`，SHA-256
+  `cb9b2a6937406d906e882f91ada04ab3232158196a7a87b2bf566129a3871698`。
+  AppImage 的外層雜湊每次重打都會變（squashfs 帶時間戳），
+  執行檔不會——同一天先後兩次打包的外層雜湊不同、裡面這支相同
+  （[`../release/12`](../release/12-full-20260902.md) §4）
 - 原版側：松崗 DOS/V，`workplace/orig/dosv/` 唯讀掛載，DOSBox-X
   `core=normal`／`cycles=fixed 20000`
 - 打包：`tools/release_appimage.sh 20260902`（只重打 Linux amd64，其餘產物不動）
