@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**491 列分布在 197 份文件，平均每份 2.5 列。**
+**495 列分布在 199 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -39,13 +39,13 @@
 
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
-| 規則正確性 | 15 | 12 | 3 | 0 |
+| 規則正確性 | 14 | 11 | 3 | 0 |
 | 資料保存 | 23 | 23 | 0 | 0 |
-| 程式碼理解 | 160 | 154 | 6 | 0 |
+| 程式碼理解 | 163 | 157 | 6 | 0 |
 | 驗收 | 84 | 73 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 203 | 190 | 13 | 0 |
-| **合計** | **491** | 457 | 34 | 0 |
+| 其他 | 205 | 192 | 13 | 0 |
+| **合計** | **495** | 461 | 34 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,17 +53,17 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 168 |
-| `docs/re/` | 160 |
+| `docs/spec/` | 170 |
+| `docs/re/` | 163 |
 | `docs/playtest/` | 84 |
 | `docs/formats/` | 23 |
 | `docs/release/` | 18 |
-| `docs/mechanics/` | 15 |
+| `docs/mechanics/` | 14 |
 | `docs/mobile/` | 11 |
 | `docs/promo/` | 6 |
 | `docs/reference/` | 6 |
 
-## 2.1 規則正確性（15 條）
+## 2.1 規則正確性（14 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -76,7 +76,6 @@
 | [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 那兩個歸零的欄位很可能就是**本月累計的收入與支出 → 假說，待驗 | （散句） | 靜態 |
 | [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0` 旗標的 bit 0 | 只出現一次（劇本三的張衛），全庫沒有讀取端（`../re/77` §5）。要嘛是劇本作者的筆誤，要嘛是 PC-98 版才用的位元——後者要等 PC-98 的 `KI.EXE` 進 IDA 才驗得了 | 靜態 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 正文散在各節的開放項目集中在這裡；每一條都寫下手點， | （未解小節內文） | 靜態 |
-| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 委任 AI「統率力低就打得差」的**實作方式**（§3.2）——是決策頻率、判斷正確率，還是可用戰術的多寡 | 找戰術層讀武將統率力欄位的地方；`internal/rules/tactical` 目前不隨統率力變化 | 靜態 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 說服請求裡 `SI+1Eh` 的完整結構語意、其他理由的索引公式、`cx ≥ 0x100` 分支（§1.3） | 三者都在 `sub_13830` 一帶；先補 `SI+1Eh` 的欄位表再談索引公式 | 靜態 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 「拉玩家合攻一個對玩家友善的對象」的**意圖**（§1.2 末） | 機制已照抄，意圖無證據。要定案得靠實機長跑統計，不是反組譯 | 靜態 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 事件 2／3 的完整接受流程與原版訊息、4／5 的逐位金額輸入、6／7 的 `TALK.DAT` 反應、9 的原版完整流程、11／12 的物件動畫 | 事件佇列的 runtime 已在，缺的是各事件的原版畫面流程；逐一對 `sub_14269` 一帶的分派做 oracle | 實測 |
@@ -111,7 +110,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 |
 
-## 2.3 程式碼理解（160 條）
+## 2.3 程式碼理解（163 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -275,6 +274,9 @@
 | [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | `+0x1B` 的語意 | 只有 0（368）與 `0xFF`（13）。沒有讀取端 | 靜態 |
 | [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | 旗標 bit 0 | 只出現一次（劇本三的張衛），沒有讀取端 | 靜態 |
 | [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | `+0x19` 誰寫非 `0xFF` 值 | **只有劇本作者**：`KI.EXE` 裡只找得到清成 `0xFF` 的寫入端（`sub_15899`）。所以它是純劇本資料，執行期只會消耗不會補充 | 靜態 |
+| [`re/78-soldier-power-from-command.md`](../re/78-soldier-power-from-command.md) | 三個戰場類別各是什麼 | `byte_1D34B` 的 0／1／2 由圖塊門檻 `0xC0`／`0xD1` 分，而 `+0x0E`／`+0x0F`／`+0x10` 是攻城／野戰／水戰（`../formats/08` §3）。**對應關係沒有直接證據**——不要照欄位順序假設 0 ＝ 攻城 | 靜態 |
+| [`re/78-soldier-power-from-command.md`](../re/78-soldier-power-from-command.md) | `sub_1B618` 與 `sub_1B6BC` 的分工 | 兩支都是近戰命中，remake 目前只接前者（`internal/rules/tactical/damage.go`）。哪一支管哪一種接觸沒讀 | 靜態 |
+| [`re/78-soldier-power-from-command.md`](../re/78-soldier-power-from-command.md) | 側摘要 `word_1D30A` 的完整版面 | `+2`（軍團編號）、`+6`（士氣）、`+0x0A` 起六個兵種確定，其餘沒讀 | 靜態 |
 
 ## 2.4 驗收（84 條）
 
@@ -376,7 +378,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（203 條）
+## 2.6 其他（205 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -438,6 +440,8 @@
 | [`spec/114-general-affinity.md`](../spec/114-general-affinity.md) | 隨機投靠那一條 | `sub_15899` 的 `+0x19 == 0xFF` 分支還沒接（§3 的第二個 ⚠）。要先把勢力的武將數與據點數接進規則層 | 靜態 |
 | [`spec/114-general-affinity.md`](../spec/114-general-affinity.md) | 出仕的畫面通知 | 原版對象是玩家勢力時跳訊息 `0x29`；這一版只改狀態，不排事件 | 靜態 |
 | [`spec/114-general-affinity.md`](../spec/114-general-affinity.md) | 旗標 bit 5 之外的退場條件 | `sub_15899` 只在「心向的勢力已滅」時看 bit 5；bit 5 沒設的武將會留在原地等下一輪，這一點沒有實機驗證 | 靜態 |
+| [`spec/115-soldier-power.md`](../spec/115-soldier-power.md) | 戰場類別對哪個適性欄 | `../re/78` §6。切之前要先定案，否則適性那一項會取錯欄 | 靜態 |
+| [`spec/115-soldier-power.md`](../spec/115-soldier-power.md) | `sub_1B618` 與 `sub_1B6BC` 的分工 | remake 只接前者。命中率公式兩支不同，要先確認玩家看到的是哪一支 | 靜態 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝命令、`0x0Bh`／`0x10h`／`0x15h`／`0x1Fh` 各自出現在哪個視窗已知，完整值域未列 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 |
@@ -511,7 +515,7 @@
 | [`spec/60-battle-talk-duration.md`](../spec/60-battle-talk-duration.md) | 開戰 pair 的側別對應 | `0x1BA` → 上格、`0x1BB` → 下格是**強推論**（照影格位置接的）；`sub_1A3C3` 怎麼決定側別沒讀（§3.5） | 靜態 |
 | [`spec/60-battle-talk-duration.md`](../spec/60-battle-talk-duration.md) | `byte_1D349` 的三個值 | `sub_1A69F` 拿它當「這句要不要顯示」的閘（`al & 6` 那一段還沒逐位讀）。0／1／2 三種值由 `sub_1A6FA` 切換 | 靜態 |
 | [`spec/60-battle-talk-duration.md`](../spec/60-battle-talk-duration.md) | 玩家按鍵能不能提早關掉 | remake 可以按鍵推進；原版是否有這條路沒讀 | 靜態 |
-| [`spec/61-soldier-initial-hp-from-morale.md`](../spec/61-soldier-initial-hp-from-morale.md) | `+0x18`（戰力）的算式 | `sub_19B6D` 由士氣、`ch` 與 `cs:[bx-63F1h]` 的每兵種係數算出來，還沒逐項拆；remake 目前直接用士氣 | 靜態 |
+| [`spec/61-soldier-initial-hp-from-morale.md`](../spec/61-soldier-initial-hp-from-morale.md) | 大將的開場體力 | 不是軍團士氣——`sub_19B40` 把第 0 號兵蓋成 `max(70, (武力 × 4 + 50) × 士氣 ÷ 100)`（`../re/78` §4）。remake 兩側都用士氣 | 靜態 |
 | [`spec/61-soldier-initial-hp-from-morale.md`](../spec/61-soldier-initial-hp-from-morale.md) | 大將的體力怎麼掉 | 原版那一格在 20 秒內從 200 掉到 140；remake 第 61 步還是滿的。兩邊的時刻本來就不同，**掉法還沒對過** | 靜態 |
 | [`spec/63-hit-stun.md`](../spec/63-hit-stun.md) | `+0x13` ← 8 | `sub_1B618` 寫、`sub_1B6BC` 不寫。那個欄位誰讀還沒查 | 靜態 |
 | [`spec/63-hit-stun.md`](../spec/63-hit-stun.md) | 倒地動畫（§1.2） | 4 幀之後 `sub_1B4B8` 收掉，remake 直接把 `Alive` 設成 false | 靜態 |
