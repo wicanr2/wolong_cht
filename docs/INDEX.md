@@ -174,6 +174,7 @@
 | [`docs/re/73-new-game-faction-list.md`](re/73-new-game-faction-list.md) | 73 — 新遊戲怎麼選君主：先一張清單，再一張卡 | 整條流程解出來了。⭐ 君主卡上沒有「換勢力」的熱區—— 換勢力是退回上一層的 | 2026-08-24 |
 | [`docs/re/74-battle-opening-duel.md`](re/74-battle-opening-duel.md) | 74 — 開戰喊話是單挑狀態機的開頭：挑戰、拒戰、對打互嗆、決著 | 全段解出並實作（2026-08-25）——挑戰／拒戰／應戰、回合互嗆、 對打段與決著都在 internal/rule… | 2026-08-25 |
 | [`docs/re/75-duel-talk-audit.md`](re/75-duel-talk-audit.md) | 75 — 單挑台詞的逐組逐變體抽驗：24 組 × 8 變體全表＋實機反查 | 靜態表全讀完、六個組的實機反查全部命中； 組 0x1B6 定案為攻城的城壁喊話（不是單挑組，re/74 舊表已修）。 | 2026-08-25 |
+| [`docs/re/76-d7open-opening-player.md`](re/76-d7open-opening-player.md) | 76 — D7OPEN.EXE：開場播放器、開場旁白全文，與資料檔的 4 byte 長度頭 | 六幕的順序、每一幕的版面與色盤、旁白全文都解出來了。 最重要的一條是通用的——MMAP.MAP 那一族的 RLE 檔… | 2026-09-02 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-16 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -208,6 +209,7 @@
 | [`docs/spec/110-corps-command-menu.md`](spec/110-corps-command-menu.md) | 110 — 指令列的「軍團」是兩項彈出選單 | CONFORMED。原版點「軍團」跳的是 | 2026-09-01 |
 | [`docs/spec/111-lord-with-corps-blocks-advise.md`](spec/111-lord-with-corps-blocks-advise.md) | 111 — 君主帶著軍團的時候，進言整個關掉 | CONFORMED。這是 remake 允許君主編成（[76](76-lord-not-in-formation.m… | 2026-09-01 |
 | [`docs/spec/112-cursor-idle-resume-delay.md`](spec/112-cursor-idle-resume-delay.md) | 112 — 游標停下之後的恢復延遲 | CONFORMED。 | 2026-09-02 |
+| [`docs/spec/113-rle-length-header.md`](spec/113-rle-length-header.md) | 113 — RLE 資料檔的 4 byte 長度頭 | CONFORMED。 | 2026-09-02 |
 | [`docs/spec/12-strategy-chrome.md`](spec/12-strategy-chrome.md) | 12 — 主畫面的視窗外框、指令列與右欄 | CONFORMED。主畫面的四個常駐視窗矩形、指令列版面與縮小地圖／勢力篩選鈕的 位置全部由機器碼定死（[docs/… | 2026-08-15 |
 | [`docs/spec/13-main-window-toggles.md`](spec/13-main-window-toggles.md) | 13 — 主畫面四個視窗的開關 | CONFORMED。已實作並留下四窗全開／全關的截圖； 舊的 g.open[] 那一套已整個拿掉，主畫面視窗只剩一份… | 2026-08-15 |
 | [`docs/spec/14-finance-window.md`](spec/14-finance-window.md) | 14 — 財政視窗 | CONFORMED。版面已照原版重寫並有契約測試； 數值輸入器已接上（[78](78-amount-input-ed… | 2026-08-15 |

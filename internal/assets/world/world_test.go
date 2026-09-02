@@ -56,9 +56,10 @@ func TestMapSize(t *testing.T) {
 		if len(m.Tiles) != Width*Height {
 			t.Errorf("%s: 解出 %d 格，預期 %d", ver, len(m.Tiles), Width*Height)
 		}
-		// 尾巴幾個 byte 是原版解壓器「解到檔尾」的副產品，不該多到離譜。
-		if len(m.Extra) > 64 {
-			t.Errorf("%s: 尾巴 %d B 太多，RLE 可能解錯", ver, len(m.Extra))
+		// 檔頭宣告的長度就是 384×256，所以尾巴應該一個 byte 都沒有
+		// （docs/spec/113）。多出來就代表相位跑掉了。
+		if len(m.Extra) != 0 {
+			t.Errorf("%s: 尾巴 %d B，預期 0——RLE 相位多半掉了", ver, len(m.Extra))
 		}
 	}
 }

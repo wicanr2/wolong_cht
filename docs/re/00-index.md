@@ -117,6 +117,7 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 | [`66`](66-message-box-geometry.md) | 訊息框的版面：一個框、一張肖像、四列字 |
 | [`67`](67-city-emblem-on-strategy-map.md) | 大地圖上的據點徽記：位置就在記錄座標 |
 | [`70`](70-d7end-ending-player.md) | `D7END.EXE`：結局播放器與結局全文 |
+| [`76`](76-d7open-opening-player.md) | ⭐ `D7OPEN.EXE`：開場六幕、開場旁白全文，與**資料檔的 4 byte 長度頭**（載入器 `LSEEK` 跳過它才解壓）|
 
 ## 6. 外交與訊息
 

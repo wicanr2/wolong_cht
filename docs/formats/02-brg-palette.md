@@ -80,13 +80,19 @@ tools/py.sh tools/brg.py swatch workplace/orig/dosv/GAMEPAL.BRG out.png 24
 
 ![GAMEPAL 八組色票](../images/palette-gamepal.png)
 
-上四列是四季（肉眼幾乎看不出差別，因為只差一個顏色），下四列是未解的那四組。
+上四列是四季（肉眼幾乎看不出差別，因為只差一個顏色），下四列是「液晶」模式那一組（§6）。
 
-## 6. 還沒解的
+## 6. 組與場景的對應
 
-| 缺口 | 現況 |
-|---|---|
-| `OPENPAL` 的 6 組各對應哪一幕 | `ENDPAL` 那邊已解（一幕配一組，[`09-cutscene-images.md`](09-cutscene-images.md)、[`../spec/67`](../spec/67-ending-playback.md) 已實作）。開場這邊要先反組譯 `D7OPEN.EXE`，還沒做 |
+<!-- 缺口：無 -->
+
+> 這一節列的是「已經解到什麼程度」，沒有開著的缺口。
+
+`OPENPAL` 的 6 組與 `ENDPAL` 的 12 組都是**一幕配一組**：
+`D7OPEN.EXE` 的 `sub_10615(al = 組, ah = 淡入階)` 取 `si = al × 48`，
+而六幕各自在載完自己的圖之後用同號的組淡入
+（[`../re/76`](../re/76-d7open-opening-player.md) §3）；
+`D7END.EXE` 的 `sub_1035F` 同理（[`09-cutscene-images.md`](09-cutscene-images.md) §3）。
 
 已解的：載入是 `sub_109AF`、換組後由 `sub_19336` 重送硬體，
 **選組的邏輯在載入端不在送硬體端**；`al` 直接當 bank 編號，

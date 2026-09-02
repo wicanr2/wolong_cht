@@ -2,7 +2,7 @@
 //
 // 格式見 `docs/formats/09-cutscene-images.md`。摘要：
 //
-//	外層   與 `MMAP.MAP` 同一種 RLE（`internal/assets/rle`）
+//	外層   4 byte 長度頭 ＋ 與 `MMAP.MAP` 同一種 RLE（`internal/assets/rle`）
 //	內層   640 × 400、16 色、EGA 四平面
 //	版面   上下**兩半各 200 列**；一半之內是**平面優先**（4 × 16,000 B）
 //	色盤   `ENDPAL.BRG`／`OPENPAL.BRG` 的第 n 組 ＝ 第 n 幕
@@ -37,17 +37,25 @@ const (
 
 // Decode 把 `.DAT` 解壓成畫面 buffer。
 //
-// ⚠ **長度可能略短於 `Size`**：原版的緩衝區是先配好的，檔案只編到最後一個
-// 非零的 byte（實測 `END_S3` 解出 127,749 B，差 251 B）。缺的那一段當成 0，
-// 因為原版那一塊在整張貼圖前已經被前一幕蓋成黑色。
-func Decode(src []byte) []byte {
-	out := rle.Decode(src)
+// ⭐ 走 `rle.DecodeFile`：檔案前 4 byte 是解壓長度，原版的載入器
+// `LSEEK` 跳過它才開始解（docs/spec/113）。**解出來一定等於宣告值**——
+// 從 offset 0 解會掉相位，畫面整體位移。
+//
+// 回傳長度是檔頭宣告的值，不一定等於 `Size`：`END_S1` 宣告 91,200 B
+// （那一幕的版面本來就不是整張 640 × 400，見 `FirstScenePixels`），
+// 而開場的 `OPEN_S2`–`S4` 是 384,000 B ＝ 12 幀 320 × 200。
+// **比 `Size` 短才補 0，長的一律原樣回傳**——截掉就只剩第一幀。
+func Decode(src []byte) ([]byte, error) {
+	out, err := rle.DecodeFile(src)
+	if err != nil {
+		return nil, err
+	}
 	if len(out) >= Size {
-		return out[:Size]
+		return out, nil
 	}
 	buf := make([]byte, Size)
 	copy(buf, out)
-	return buf
+	return buf, nil
 }
 
 // Pixels 回傳每個像素的色號（0–15），逐列排列。
@@ -96,11 +104,11 @@ const (
 	// FirstPlane01Off 是平面 0／1 交錯那一塊（每列 40 B ＋ 40 B）。
 	FirstPlane01Off = 0x3E80 // 16,000
 	// FirstPlane2Off／FirstPlane2Rows 是平面 2 那一塊，從第 120 列起。
-	FirstPlane2Off  = 0xBB8 * 16 // 47,744
+	FirstPlane2Off  = 0xBB8 * 16 // 48,000
 	FirstPlane2Row  = 120
 	FirstPlane2Rows = 280
 	// FirstPlane3Off 是平面 3 那一塊，整張 640 × 400。
-	FirstPlane3Off = 0xE74 * 16 // 59,072
+	FirstPlane3Off = 0xE74 * 16 // 59,200
 )
 
 // FirstScenePixels 是第一幕的色號圖。

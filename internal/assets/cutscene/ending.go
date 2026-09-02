@@ -68,7 +68,10 @@ func LoadEnding(dir string) (*Ending, error) {
 		if err != nil {
 			return nil, fmt.Errorf("%s 的色盤第 %d 組：%w", name, n, err)
 		}
-		buf := Decode(raw)
+		buf, err := Decode(raw)
+		if err != nil {
+			return nil, fmt.Errorf("%s：%w", name, err)
+		}
 		paint := func(px []byte) *image.RGBA {
 			img := image.NewRGBA(image.Rect(0, 0, Width, Height))
 			for i, v := range px {

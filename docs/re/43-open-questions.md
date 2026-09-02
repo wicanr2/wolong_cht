@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**482 列分布在 194 份文件，平均每份 2.5 列。**
+**486 列分布在 195 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -40,12 +40,12 @@
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
 | 規則正確性 | 15 | 12 | 3 | 0 |
-| 資料保存 | 26 | 25 | 1 | 0 |
-| 程式碼理解 | 152 | 146 | 6 | 0 |
+| 資料保存 | 25 | 25 | 0 | 0 |
+| 程式碼理解 | 156 | 150 | 6 | 0 |
 | 驗收 | 84 | 73 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 199 | 186 | 13 | 0 |
-| **合計** | **482** | 447 | 35 | 0 |
+| 其他 | 200 | 187 | 13 | 0 |
+| **合計** | **486** | 452 | 34 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,10 +53,10 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 164 |
-| `docs/re/` | 152 |
+| `docs/spec/` | 165 |
+| `docs/re/` | 156 |
 | `docs/playtest/` | 84 |
-| `docs/formats/` | 26 |
+| `docs/formats/` | 25 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 15 |
 | `docs/mobile/` | 11 |
@@ -83,14 +83,13 @@
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 入佇列的隨機空格分佈 | 目前是 remake 的明示差異；要對齊得先解出原版排程時挑空格的那段 | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 四個劇本的結局是否不同 | **觸發條件四劇本共用**，差別只在初始勢力數；結局的十二幕也是一條路播完，沒有依劇本分支的證據（`../re/70` §3）。**但沒有實跑四個劇本對過** | 實測 |
 
-## 2.2 資料保存（26 條）
+## 2.2 資料保存（25 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
 | [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | `\1`／`\2`／`\3`／`\4` 的**文字語意** | 機制已解（§3：`sub_1075B` 換算索引、`sub_1084A` 逐字讀、`CS:[SI+08A4h]` 七項跳躍表分派），`\6`（排版控制，消耗一個 16 位元參數後 `DX` 左移 `0x30`）與 `\7`（走 `sub_1062F` 的數值繪製）兩支 handler 也定案了。**這四支的 ha… | 靜態 |
 | [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 只有格 0 有字的三組（`0x1A1`／`0x1AD`／`0x1AE`） | 呼叫端傳不傳 `ah`、為什麼不需要八格變體，未讀。`0x1AD`／`0x1AE` 像單挑台詞，但不在 `../re/75` 盤過的 `0x1B6`–`0x1CD` 範圍內 | 靜態 |
 | [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 訊息索引與遊戲事件的對應 | 逐則的顯示時機沒有全表。**已對出來的散在各規格**（進言 `../spec/44`、遷都 `../spec/64`、結局 `../spec/30`），未讀的部分見 `../re/24` | 靜態 |
-| [`formats/02-brg-palette.md`](../formats/02-brg-palette.md) | `OPENPAL` 的 6 組各對應哪一幕 | `ENDPAL` 那邊已解（一幕配一組，`09-cutscene-images.md`、`../spec/67` 已實作）。開場這邊要先反組譯 `D7OPEN.EXE`，還沒做 | 靜態 |
 | [`formats/03-grf-images.md`](../formats/03-grf-images.md) | `0x0480` | 24×16 × 3 / 兵種圖示的**橘色版**：馬／弓／步 / 尚未找到取用端 | 靜態 |
 | [`formats/04-map-sch-container.md`](../formats/04-map-sch-container.md) | 狀態：容器格式的索引層 READY，壓縮演算法未解。 | （散句） | 靜態 |
 | [`formats/05-mmap-worldmap.md`](../formats/05-mmap-worldmap.md) | `MMAP.MCH` 的 object **type 3** | 圖塊、`0xA000` metadata 與事件 12 的火災／暴動（type 1／2）查表已解（`../re/14`）。type 3 的事件語意、object timer 與逐 frame 的原版時序仍未知——remake 的 timer 是呈現層 substitute | 靜態 |
@@ -109,12 +108,12 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+25`（`0x19`） | 1 / **359／508 是 `0xFF`**，其餘落在 0–20（13 種）。⚠ 不等於 `+28` 的勢力編號（508 筆裡只有 148 筆相同），所以不是勢力欄的第二份 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`（`0x1B`） | 1 / 只有兩種值：0（481 筆）與 `0xFF`（27 筆）。劇本一的 `0xFF` 是笮融、張英、周倉、嚴輿、周昕、李別、刑道榮、劉賢、武安國九人 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
-| [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `END_S12` 的右半 | 用 §2 的版面畫出來左邊是完整封面、右邊是雜訊——那一幕可能還有第二塊 | 實測 |
-| [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `OPEN_S2`–`S5` 的 384,000 B | 是 §2 的三倍，多半是多張或多幀。開場播放器 `D7OPEN.EXE` 還沒反組譯 | 靜態 |
-| [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`） | 靜態 |
+| [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `OPEN_S1` 的捲動節拍 | 版面三塊已解（`../re/76` §6），但每步捲幾列、26 格的動畫多久換一格，要先定 `int 61h` 的計時單位 | 靜態 |
+| [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `OPEN_S5` 的來源列距 | `sub_103EF` 每兩列消耗 720 B，推不出單純的「一列 240 B」；沒有畫面驗證（同 §10） | 靜態 |
+| [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 |
 
-## 2.3 程式碼理解（152 條）
+## 2.3 程式碼理解（156 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -270,6 +269,10 @@
 | [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | `word_1D311 += 6` | 疑似喊話框位置位移，未驗 | 靜態 |
 | [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | 開場凍結與大將騎出的機器碼形式 | 實機定案（b0–b3），但 `sub_1A1C5` 內部的等待常式怎麼擋住實體更新未逐條讀——見 `spec/80` §3.1 | 靜態 |
 | [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | 變體 0／2／3／5／6 的臨場抽驗 | 專屬句只在 1／4／7；預設句與它們共用選句機制，公式已 confirmed，抽驗優先度低 | 靜態 |
+| [`re/76-d7open-opening-player.md`](../re/76-d7open-opening-player.md) | 第 5 幕來源的列距 | `sub_103EF` 每兩列消耗 720 B（240 × 2 ＋ `add si, 0F0h`），推不出單純的「一列 240 B」；要嘛來源有 stride，要嘛捲動是重疊取樣。沒有畫面驗證 | 靜態 |
+| [`re/76-d7open-opening-player.md`](../re/76-d7open-opening-player.md) | `sub_10A70` | 第 5 幕與開場初始化各叫一次，內容未讀 | 靜態 |
+| [`re/76-d7open-opening-player.md`](../re/76-d7open-opening-player.md) | 旁白的推進速度 | 逐字之間沒有顯式延遲，靠 `sub_10056` 主迴圈的 `sub_10777` 節拍；換算成秒要先定 `int 61h` 的計時單位 | 靜態 |
+| [`re/76-d7open-opening-player.md`](../re/76-d7open-opening-player.md) | PC-98 版的差異 | 4,836 B，尚未進 IDA。旁白應為 Shift-JIS，位址不同 | 靜態 |
 
 ## 2.4 驗收（84 條）
 
@@ -371,7 +374,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（199 條）
+## 2.6 其他（200 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -429,6 +432,7 @@
 | [`spec/110-corps-command-menu.md`](../spec/110-corps-command-menu.md) | 「據點」指令同樣是兩項選單 | `../re/22` §3.4：TALK #82「首都確認／據點一覽」。**這一輪沒動**，remake 的「據點」目前直接開一覽 ＋ 情報卡 | 靜態 |
 | [`spec/112-cursor-idle-resume-delay.md`](../spec/112-cursor-idle-resume-delay.md) | `sub_20000(ax=2)` 為什麼在恢復時被呼叫 | 那是滑鼠層跳表的第 2 號（`sub_2009A`，回傳快取座標並清旗標），在這個時點叫它的理由沒讀 | 靜態 |
 | [`spec/112-cursor-idle-resume-delay.md`](../spec/112-cursor-idle-resume-delay.md) | 訊息框那一路的 `8` 與游標的 `0Ch` 為什麼不同 | 兩個立即值都是 confirmed，但差別的用意沒有證據；remake 兩邊都用同一個延遲 | 靜態 |
+| [`spec/113-rle-length-header.md`](../spec/113-rle-length-header.md) | `BATTLE.MAP`／`MMAP.MCH`／`BATTLE.MDL` 走哪一支載入器 | 沒查（`../formats/06` §6）。它們的前 4 byte 不是長度，所以**至少不是這一族** | 靜態 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝命令、`0x0Bh`／`0x10h`／`0x15h`／`0x1Fh` 各自出現在哪個視窗已知，完整值域未列 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 |

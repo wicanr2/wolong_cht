@@ -154,6 +154,7 @@
 | 指令列的「軍團」是兩項彈出選單 | [`110-corps-command-menu.md`](110-corps-command-menu.md) | 已實作並有單測；選單框本身還沒逐像素比（§5）|
 | 君主帶著軍團時進言關掉（**remake 差異**）| [`111-lord-with-corps-blocks-advise.md`](111-lord-with-corps-blocks-advise.md) | 使用者裁定 2026-09-01；判準與「請求君主出陣」共用一支 |
 | **游標停下之後的恢復延遲**（即時制的反應時間）| [`112-cursor-idle-resume-delay.md`](112-cursor-idle-resume-delay.md) | 已實作並有單測；游標移動中世界完全停住，停下後等 160 個回呼（0.549 秒）|
+| **RLE 資料檔的 4 byte 長度頭** | [`113-rle-length-header.md`](113-rle-length-header.md) | 原版三個執行檔都 `LSEEK` 跳過它才解壓；`rle.DecodeFile` 已接，19 個過場檔逐檔解到宣告長度 |
 
 ## 怎麼加一份
 
