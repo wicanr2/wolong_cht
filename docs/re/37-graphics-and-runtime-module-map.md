@@ -111,6 +111,6 @@ sub_20000 → nullsub_4(1) / sub_2002E(65) / sub_20070(42) / sub_2009A(35)
 | `sub_1E81C` | 325 | **全庫最大**，圖庫解碼主體，只有一個呼叫者 |
 | `sub_1F020` | 288 | 大圖塊繪製，戰術側專用 |
 | `sub_1F1A3` | 203 | T4 榜首，三個來源不同的呼叫者 |
-| `sub_1F7A4` | 212 | 字型 blitter，[`29`](29-font-service-int15.md) §9 已列為未解 |
+| `sub_1F7A4` `[DOS/BIOS]` | 212 | 字型 blitter，逐行未解。**同一支函式在 [`29`](29-font-service-int15.md) §9 也列著，那裡是正本**；未解的是「怎麼寫 VRAM」，而 remake 不碰 VGA 平面，所以不擋 remake |
 | `sub_1EBDC`／`sub_1EC2E` | 82／62 | 埠沒被 IDA 標註，是不是音源要驗 |
 | `sub_10414` 叢 | 161＋ | `sub_103E6` 的 `call cs:word_1036D` 是 [`21`](21-function-census.md) §7 未攤開的間接分派 |

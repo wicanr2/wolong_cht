@@ -156,6 +156,6 @@ loop:
 
 | 項目 | 現況 |
 |---|---|
-| `sub_1F7A4` | 把 32 B 字模緩衝畫上 VRAM 的實際迴圈，未逐行讀 |
+| `sub_1F7A4` `[DOS/BIOS]` | 把 32 B 字模緩衝畫上 VRAM 的實際迴圈，未逐行讀。⚠ remake 要的是**畫什麼**（字模版面，已解），不是**怎麼寫 VRAM**——Ebiten 不碰 VGA 平面（同 [`29`](29-font-service-int15.md) §9）|
 | 屬性的其餘位元 | bit 2 是陰影已證實；`0x9001`／`0x9000` 的 bit 0 差在哪未讀 |
 | `word_10D4C` 那一組 | 來源已解——`sub_100DF` 開機把 `ICONGRF` 段 3 切五塊，`word_10D54` 是 `+0x0840` 的 11 格 × 16 列數字字模（[`../spec/52`](../spec/52-main-screen-camera-and-banner-date.md) §4）；緊接在後的 `+0x08F0` 另有一組 11 格，用途未解 |

@@ -293,10 +293,10 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 143 條。**要查「這件事解了沒」先看這裡**，
+共 131 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
-### confirmed（79 條）
+### confirmed（77 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -351,8 +351,6 @@
 | 3. 武將記錄（32 byte） ▸ +8 | `docs/formats/08-sinario-save.md` |
 | 3. 軍團記錄的欄位（部分） ▸ +0x1A | `docs/re/05-battle-selection.md` |
 | 3. 軍團記錄的欄位（部分） ▸ +0x1C | `docs/re/05-battle-selection.md` |
-| 4. 據點記錄（32 byte） ▸ +19 | `docs/formats/08-sinario-save.md` |
-| 4. 據點記錄（32 byte） ▸ +2 | `docs/formats/08-sinario-save.md` |
 | 5.8l 兵士記錄（32 B）目前解出來的欄位 ▸ +0x1E | `docs/re/11-tactical-battle.md` |
 | 已接入的原版資料流 ▸ sub_12C52／sub_12CDF | `docs/mechanics/70-ai.md` |
 | 已接入的原版資料流 ▸ sub_12DB8 | `docs/mechanics/70-ai.md` |
@@ -380,7 +378,7 @@
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x1E | `docs/re/08-hourly-update.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x20 | `docs/re/08-hourly-update.md` |
 
-### 強證據（26 條）
+### 強證據（22 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -395,10 +393,6 @@
 | 2. 地形類型對映表（confirmed） ▸ 8 | `docs/mechanics/30-combat.md` |
 | 2. 地形類型對映表（confirmed） ▸ 9 | `docs/mechanics/30-combat.md` |
 | 3. 軍團記錄的欄位（部分） ▸ +0x01 | `docs/re/05-battle-selection.md` |
-| 4. 據點記錄（32 byte） ▸ +1 | `docs/formats/08-sinario-save.md` |
-| 4. 據點記錄（32 byte） ▸ +10 | `docs/formats/08-sinario-save.md` |
-| 4. 據點記錄（32 byte） ▸ +26 | `docs/formats/08-sinario-save.md` |
-| 4. 據點記錄（32 byte） ▸ +8 | `docs/formats/08-sinario-save.md` |
 | 據點記錄再解出四個欄位 ▸ +11h | `docs/re/07-monthly-settlement.md` |
 | 據點記錄再解出四個欄位 ▸ +12h | `docs/re/07-monthly-settlement.md` |
 | 據點記錄再解出四個欄位 ▸ +13h | `docs/re/07-monthly-settlement.md` |
@@ -432,7 +426,7 @@
 |---|---|
 | 索引 ▸ 「自定」軍師命名視窗 | `docs/spec/00-index.md` |
 
-### 未解（27 條）
+### 未解（21 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -444,19 +438,13 @@
 | 2. 記憶體佈局：sub_1CC31 ▸ ds:0D42 | `docs/re/11-tactical-battle.md` |
 | 3. 曲塊內部 ▸ +0x00 | `docs/re/23-bgm-resource-format.md` |
 | 3. 曲塊內部 ▸ +0x06–+0x0F | `docs/re/23-bgm-resource-format.md` |
-| 3. 武將記錄（32 byte） ▸ +0 | `docs/formats/08-sinario-save.md` |
-| 3. 武將記錄（32 byte） ▸ +16（0x10） | `docs/formats/08-sinario-save.md` |
 | 3. 武將記錄（32 byte） ▸ +20（0x14） | `docs/formats/08-sinario-save.md` |
-| 3. 武將記錄（32 byte） ▸ +25,+27 | `docs/formats/08-sinario-save.md` |
+| 3. 武將記錄（32 byte） ▸ +21（0x15） | `docs/formats/08-sinario-save.md` |
+| 3. 武將記錄（32 byte） ▸ +25（0x19） | `docs/formats/08-sinario-save.md` |
+| 3. 武將記錄（32 byte） ▸ +27（0x1B） | `docs/formats/08-sinario-save.md` |
 | 3. 軍團記錄的欄位（部分） ▸ +0x08 | `docs/re/05-battle-selection.md` |
 | 3.2 ⭐ 大地圖是 640×368，四個視窗蓋在它上面 ▸ 0x80 | `docs/re/47-main-screen-window-registry.md` |
 | 4. 只在單邊存在的檔（confirmed） ▸ PASS.MAP／PASS.SCH | `docs/re/01-first-recon.md` |
-| 4. 據點記錄（32 byte） ▸ +0 | `docs/formats/08-sinario-save.md` |
-| 4. 據點記錄（32 byte） ▸ +12 | `docs/formats/08-sinario-save.md` |
-| 4. 據點記錄（32 byte） ▸ +14 | `docs/formats/08-sinario-save.md` |
-| 4. 據點記錄（32 byte） ▸ +18 | `docs/formats/08-sinario-save.md` |
-| 4. 據點記錄（32 byte） ▸ +22 | `docs/formats/08-sinario-save.md` |
-| 4. 據點記錄（32 byte） ▸ +27–+31 | `docs/formats/08-sinario-save.md` |
 | 4. 數字字模在 ICONGRF 段 3 裡 ▸ +0x0000 | `docs/spec/52-main-screen-camera-and-banner-date.md` |
 | 4. 數字字模在 ICONGRF 段 3 裡 ▸ +0x08F0 | `docs/spec/52-main-screen-camera-and-banner-date.md` |
 | 檔案 ▸ 40-economy.md | `docs/mechanics/00-index.md` |

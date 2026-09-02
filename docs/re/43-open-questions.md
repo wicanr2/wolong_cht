@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**515 列分布在 203 份文件，平均每份 2.5 列。**
+**504 列分布在 202 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -31,7 +31,7 @@
 `docs/playtest/` 的逐像素數字、`docs/re/21` 的覆蓋地圖。
 這一份回答的是「還有什麼沒解」，**不是「還剩多少」**。
 
-> ⭐ 另有 **4 列標成 `[DOS/BIOS]`**，**不計入下面的總數**——那是原版與 DOS／BIOS 之間的介面
+> ⭐ 另有 **6 列標成 `[DOS/BIOS]`**，**不計入下面的總數**——那是原版與 DOS／BIOS 之間的介面
 > （`INT` 服務號、顯示卡暫存器、磁碟服務），而 remake 跑在 Go／Ebiten 上不跟它們講話。
 > 清單在 §9。
 
@@ -40,12 +40,12 @@
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
 | 規則正確性 | 15 | 12 | 3 | 0 |
-| 資料保存 | 32 | 31 | 1 | 0 |
-| 程式碼理解 | 174 | 168 | 6 | 0 |
+| 資料保存 | 26 | 25 | 1 | 0 |
+| 程式碼理解 | 169 | 163 | 6 | 0 |
 | 驗收 | 84 | 73 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 204 | 190 | 14 | 0 |
-| **合計** | **515** | 479 | 36 | 0 |
+| **合計** | **504** | 468 | 36 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,10 +53,10 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/re/` | 174 |
+| `docs/re/` | 169 |
 | `docs/spec/` | 169 |
 | `docs/playtest/` | 84 |
-| `docs/formats/` | 32 |
+| `docs/formats/` | 26 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 15 |
 | `docs/mobile/` | 11 |
@@ -83,7 +83,7 @@
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 入佇列的隨機空格分佈 | 目前是 remake 的明示差異；要對齊得先解出原版排程時挑空格的那段 | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 四個劇本的結局是否不同 | **觸發條件四劇本共用**，差別只在初始勢力數；結局的十二幕也是一條路播完，沒有依劇本分支的證據（`../re/70` §3）。**但沒有實跑四個劇本對過** | 實測 |
 
-## 2.2 資料保存（32 條）
+## 2.2 資料保存（26 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -103,24 +103,18 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x0080` | 2,112 / **勢力表：22 筆 × 64 B**（`docs/re/06` §5）＋ 其後未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x1EC0` | 7,168 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x3AC0`…`+0x42C0` | — / 未解 | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0` | 1 / 旗標（7 種值）。**bit 4 ＝ 不事二主**：舊主已滅時被俘會自刎（`sub_129C3` → 訊息 0x43） / 其餘位元未解 | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+16`（`0x10`） | 1 / 同格式，戰略層沒有呼叫點取得到（要模式 2）。**計入評價** / 未解 | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+20`（`0x14`） | 1 / 值域 0–7 / 未解 | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+25`,`+27` | 2 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0` | 1 / 值域 0–15，14 種。**據點類型？** / 未解 | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+12` | 2 / uint16，北京 21000、代 4000、涿郡 4300 / 未解（人口／資金？） | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+14` | 2 / uint16，北京 20714、代 3000、涿郡 3142 / 未解 | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+18` | 1 / 未解 / 未解 | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+22` | 1 / 值域 0–226，22 種 / 未解 | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
+| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0` | 1 / 旗標。四劇本 508 筆只出現 **8 種值**（0／0x80／0x81／0x90／0xA0／0xC0／0xD0／0xE0），用到的位元只有 **bit 7 ＝ 在場**（381 筆）、**bit 4 ＝ 不事二主**（79 筆，舊主已滅時被俘會自刎，`sub_129C3` → 訊息 0x43）、bit … | 靜態 |
+| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+20`（`0x14`） | 1 / 值域 **0–7**、8 種，四劇本 508 筆都有值（0 佔 158、2 佔 98）。**與 `+0x1E` 的說話類型同值域但不同值** / 未解（要找 `[bx+14h]` 的讀取端） | 靜態 |
+| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+21`（`0x15`） | 1 / 四劇本 508 筆**全 0**，沒有已知的讀取端 / 未解 | 靜態 |
+| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+25`（`0x19`） | 1 / **359／508 是 `0xFF`**，其餘落在 0–20（13 種）。⚠ 不等於 `+28` 的勢力編號（508 筆裡只有 148 筆相同），所以不是勢力欄的第二份 / 未解 | 靜態 |
+| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`（`0x1B`） | 1 / 只有兩種值：0（481 筆）與 `0xFF`（27 筆）。劇本一的 `0xFF` 是笮融、張英、周倉、嚴輿、周昕、李別、刑道榮、劉賢、武安國九人 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `END_S12` 的右半 | 用 §2 的版面畫出來左邊是完整封面、右邊是雜訊——那一幕可能還有第二塊 | 實測 |
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `OPEN_S2`–`S5` 的 384,000 B | 是 §2 的三倍，多半是多張或多幀。開場播放器 `D7OPEN.EXE` 還沒反組譯 | 靜態 |
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`） | 靜態 |
-| [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 「重來」「繼續」兩顆按鈕與聲母列各跳到哪一頁 | `funcs_19037` 的九個 handler 沒逐支讀；聲母列的十個跳點推測是各聲母在表裡的起點 | 靜態 |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 |
 
-## 2.3 程式碼理解（174 條）
+## 2.3 程式碼理解（169 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -183,7 +177,6 @@
 | [`re/26-list-window-engine.md`](../re/26-list-window-engine.md) | `word_183D3` | `si` 也存進這裡，讀取端還沒找 | 靜態 |
 | [`re/26-list-window-engine.md`](../re/26-list-window-engine.md) | `sub_11D46` | 17 個呼叫點，人事四支離開前都呼叫，未讀 | 靜態 |
 | [`re/27-list-row-fields.md`](../re/27-list-row-fields.md) | 開局選勢力的逐列 `sub_17BC0` | 未逐欄對照（欄位與勢力一覽重疊，但少了外交兩欄） | 靜態 |
-| [`re/28-text-number-rendering.md`](../re/28-text-number-rendering.md) | `sub_1F7A4` | 把 32 B 字模緩衝畫上 VRAM 的實際迴圈，未逐行讀 | 靜態 |
 | [`re/28-text-number-rendering.md`](../re/28-text-number-rendering.md) | 屬性的其餘位元 | bit 2 是陰影已證實；`0x9001`／`0x9000` 的 bit 0 差在哪未讀 | 靜態 |
 | [`re/28-text-number-rendering.md`](../re/28-text-number-rendering.md) | `word_10D4C` 那一組 | 來源已解——`sub_100DF` 開機把 `ICONGRF` 段 3 切五塊，`word_10D54` 是 `+0x0840` 的 11 格 × 16 列數字字模（`../spec/52` §4）；緊接在後的 `+0x08F0` 另有一組 11 格，用途未解 | 靜態 |
 | [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `END_S10/S11` 與 `STR.EXE` 檔名不同步 | §6，要實跑裁決 | 實測 |
@@ -202,7 +195,6 @@
 | [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | `sub_12977` 的 `mov byte [si], 8` | 該函式同時碰武將表與軍團表，`si` 指哪一張未確認 | 靜態 |
 | [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | `sub_12880` 的 `or [si], 20h` | 表歸屬指向據點表，語意要另外讀（`sub_144A9`／`sub_144D6` 已解：Stage 10／11 把目標校正成首都並設位元 1，見 `64` §2） | 靜態 |
 | [`re/35-strategy-ui-module-map.md`](../re/35-strategy-ui-module-map.md) | `sub_18FC9` 叢 | — / 存檔畫面的槽位與按鈕對應未驗（§2.8） | 靜態 |
-| [`re/37-graphics-and-runtime-module-map.md`](../re/37-graphics-and-runtime-module-map.md) | `sub_1F7A4` | 212 / 字型 blitter，`29` §9 已列為未解 | 靜態 |
 | [`re/40-garrison-relief-request.md`](../re/40-garrison-relief-request.md) | `+0x20` 與 `+0x14` 的關係 | §5 的張力，要實測 | 實測 |
 | [`re/40-garrison-relief-request.md`](../re/40-garrison-relief-request.md) | 據點 `+0x00` 的 bit 4／5 | bit 6／7 已解（§2），中間兩位未見 | 靜態 |
 | [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `cs:byte_198A6` 位元 3 | 對應 `sub_15FAA`，設定與清除端都沒找到 | 靜態 |
@@ -228,10 +220,7 @@
 | [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | `ds:987Ch` | 四筆槽頭的暫存段，由誰配置未讀 | 靜態 |
 | [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | 檔名 | `sub_18C20` 沒設 `dx`，靠 `sub_18B7C` 的 `push dx`／`pop dx` 從更上層傳進來 | 靜態 |
 | [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | `sub_18C9F` | 關閉時擦除的那一支，未讀 | 靜態 |
-| [`re/54-advisor-naming-window.md`](../re/54-advisor-naming-window.md) | 選字表 | 十個聲母各自對應哪些候選字、資料在哪、怎麼翻頁——全部未讀。`sub_18FC9`（呼叫端）是入口 | 靜態 |
 | [`re/54-advisor-naming-window.md`](../re/54-advisor-naming-window.md) | 屬性低 byte | `01` 與 `03` 的差別未讀（§3） | 靜態 |
-| [`re/54-advisor-naming-window.md`](../re/54-advisor-naming-window.md) | 「別　號」 | 軍師除了名字還有別號，寫進哪裡未讀 | 靜態 |
-| [`re/54-advisor-naming-window.md`](../re/54-advisor-naming-window.md) | 「重來」「繼續」 | 三顆按鈕的 handler 未讀 | 靜態 |
 | [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | 「資料儲存」與「遊戲結束」的 handler | `0x6084`／`0x60B4` 沒讀 | 靜態 |
 | [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | `sub_15FAA` 的 `cmp bx, 0Ah` | 熱區碼 `0x2A` 不在這個視窗的 `0x20`–`0x25` 裡，哪來的沒查 | 靜態 |
 | [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | `sub_106F5` 的屬性解碼 | §3 的低 byte 讀法是強推論，沒逐行驗 | 靜態 |
@@ -636,6 +625,8 @@
 | 出處 | 缺口 | 現況 |
 |---|---|---|
 | [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | `INT 61h` 的四個服務號 `[DOS/BIOS]` | `ah=4`／`7`／`8` 與 `ax=09F2h`／`0C01h`，對應什麼動作要看 `YNSOUND.COM`（[`42`](42-leaf-functions.md) §7）。⚠ **這是原版與音效 TSR 的介面，不擋 remake**——音訊走純 Go 的 OPL3 渲染（[`../spec/29`](../spec/29-audio.md)），不經過 DOS |
+| [`re/28-text-number-rendering.md`](../re/28-text-number-rendering.md) | `sub_1F7A4` `[DOS/BIOS]` | 把 32 B 字模緩衝畫上 VRAM 的實際迴圈，未逐行讀。⚠ remake 要的是**畫什麼**（字模版面，已解），不是**怎麼寫 VRAM**——Ebiten 不碰 VGA 平面（同 [`29`](29-font-service-int15.md) §9） |
 | [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `sub_1F7A4` `[DOS/BIOS]` | 把 32 B 緩衝畫上 VRAM 的實際迴圈，未逐行讀。⚠ remake 要的是**畫什麼**（字模版面，已解），不是**怎麼寫 VRAM** |
 | [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `YNFONT.EXE` 怎麼顯示中文 `[DOS/BIOS]` | 它不走 INT 15h（0 次），密碼輸入畫面的中文是它自己畫的。⚠ 那是一支 DOS TSR，remake 沒有對應物；密碼頁本身也不擋任何事（`CLAUDE.md` §4.0） |
+| [`re/37-graphics-and-runtime-module-map.md`](../re/37-graphics-and-runtime-module-map.md) | `sub_1F7A4` `[DOS/BIOS]` | 212 / 字型 blitter，逐行未解。**同一支函式在 [`29`](29-font-service-int15.md) §9 也列著，那裡是正本**；未解的是「怎麼寫 VRAM」，而 remake 不碰 VGA 平面，所以不擋 remake |
 | [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `INT 61h` 的四個服務號（`ah=4`／`7`／`8`、`ax=09F2h`／`0C01h`）`[DOS/BIOS]` | 對應什麼音效動作要看 `YNSOUND.COM`（[`17`](17-dosv-audio-tsr.md)）。⚠ 原版與音效 TSR 的介面，**不擋 remake** |
