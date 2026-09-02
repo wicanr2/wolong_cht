@@ -90,6 +90,7 @@
 | [`docs/playtest/54-menu-second-row-tap.md`](playtest/54-menu-second-row-tap.md) | 54 — 原版擷取：彈出選單的第二列終於點得到 | PASS。單獨一下 5–60 ms 的瞬按（tap:x,y,ms）能把「軍團」選單打開而不選走第一列；先前點不到的是… | 2026-08-29 |
 | [`docs/playtest/55-encounter-menu-parity.md`](playtest/55-encounter-menu-parity.md) | 55 — 實機：遭遇時原版沒有「戰鬥指揮／委任」選單 | 定案。訊息框按掉之後直接是戰場，中間沒有選單；playtest/31 §6 那一項不是「還沒對拍」，是原版沒有那個畫面。 | 2026-08-29 |
 | [`docs/playtest/56-lubu-flow-parity.md`](playtest/56-lubu-flow-parity.md) | 56 — 實機對拍：AppImage 走「選呂布 → 對曹操宣戰 → 編成攻城」 | 完成，六項差異已修並重測。 | 2026-09-01 |
+| [`docs/playtest/57-appimage-20260902-reverify.md`](playtest/57-appimage-20260902-reverify.md) | 57 — 重打包後的 AppImage 複驗（呂布這條流程） | 完成。 | 2026-09-02 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告是 72 秒， 含語言切換與原版並排兩段；遊戲段落是逐幀錄下來的實跑畫面。 2… | 2026-08-30 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
@@ -140,7 +141,7 @@
 | [`docs/re/39-remaining-unread.md`](re/39-remaining-unread.md) | 39 — 剩餘未讀函式的逐支歸屬 | 清單。 | 2026-08-14 |
 | [`docs/re/40-garrison-relief-request.md`](re/40-garrison-relief-request.md) | 40 — 據點求援與援軍派遣 | 整條鏈 confirmed（每一支都逐行讀過）。 sub_140C9 的距離算式裡有一處 | 2026-08-14 |
 | [`docs/re/42-leaf-functions.md`](re/42-leaf-functions.md) | 42 — 戰術以外的 47 支葉節點 | 47 支全部逐行讀過。四件事因此定案：INT 61h 是音源 TSR 的介面、 byte_198A6 的位元圖完整、… | 2026-08-14 |
-| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的） | 生成的清單，跑 tools/py.sh tools/re_open_questions.py 重出。 這一份不下結論… | 2026-09-01 |
+| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的） | 生成的清單，跑 tools/py.sh tools/re_open_questions.py 重出。 這一份不下結論… | 2026-09-02 |
 | [`docs/re/44-threat-and-reinforcement-ai.md`](re/44-threat-and-reinforcement-ai.md) | 44 — 威脅偵測與 AI 出兵：據點每 tick 掃一次 | 整條鏈逐行讀完。三件事定案：據點 +0x18 是佔用圖讀回來的軍團數、 +0x00 低 4 位是「哪幾個鄰居是敵方」… | 2026-08-14 |
 | [`docs/re/45-corps-command-mode.md`](re/45-corps-command-mode.md) | 45 — 軍團的三種指令模式：戰鬥指揮／委任／解體 | 軍團 +0x00 位元 2 定案 ＝ | 2026-08-14 |
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |
