@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**480 列分布在 193 份文件，平均每份 2.5 列。**
+**479 列分布在 193 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -41,11 +41,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 15 | 12 | 3 | 0 |
 | 資料保存 | 26 | 25 | 1 | 0 |
-| 程式碼理解 | 153 | 147 | 6 | 0 |
+| 程式碼理解 | 152 | 146 | 6 | 0 |
 | 驗收 | 84 | 73 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 196 | 183 | 13 | 0 |
-| **合計** | **480** | 445 | 35 | 0 |
+| **合計** | **479** | 444 | 35 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -54,7 +54,7 @@
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/spec/` | 161 |
-| `docs/re/` | 153 |
+| `docs/re/` | 152 |
 | `docs/playtest/` | 84 |
 | `docs/formats/` | 26 |
 | `docs/release/` | 18 |
@@ -114,7 +114,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`） | 靜態 |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 |
 
-## 2.3 程式碼理解（153 條）
+## 2.3 程式碼理解（152 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -233,7 +233,6 @@
 | [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | 段 1 `0x0000`／`0x0800`／`0x1000`／`0x1800`／`0x3500` 的圖形內容 | 貼點與尺寸 confirmed，**圖上畫了什麼**要另外解碼（`../formats/03` §5.3 的 UI 語意缺口） | 靜態 |
 | [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | 熱區 `0x01`／`0x1F` | 兩張表裡都有 handler，但沒找到註冊它們的 `sub_1E3D7` 呼叫點 | 靜態 |
 | [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | 側欄美術的調色盤 | 本份記的都是**調色盤索引**，不是 RGB。要比顏色得用 `GAMEPAL.BRG` 的當季 bank | 靜態 |
-| [`re/61-timer-tick-source.md`](../re/61-timer-tick-source.md) | `ds:98A5h` 那個延時器實際在等什麼 | §5。呼叫端 `sub_11BE0` 沒讀 | 靜態 |
 | [`re/61-timer-tick-source.md`](../re/61-timer-tick-source.md) | 音樂 tempo 分頻器 `cs:0B68h` 的算式 | `0x859` 那 20 條指令：`al = ((0FFh − ah) × 13) >> 3`，`ah` 從哪來沒讀 | 靜態 |
 | [`re/61-timer-tick-source.md`](../re/61-timer-tick-source.md) | `cs:099Eh` 的 bit 1 | 「音樂啟用」是從用法推的，寫入端沒讀 | 靜態 |
 | [`re/61-timer-tick-source.md`](../re/61-timer-tick-source.md) | 無音效驅動時的行為 | §3 推論「會卡死」，**沒有實測**——DOSBox 拿掉 `YNSOUND.COM` 跑一次就能驗 | 實測 |
@@ -523,7 +522,7 @@
 | [`spec/73-right-click-cancel.md`](../spec/73-right-click-cancel.md) | 原版右鍵是否也關常駐視窗 | 沒量過。常駐視窗不走模態等待常式，推測不關，但**沒有實機證據** | 靜態 |
 | [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 那 110 張圖在 MCH 裡的實際外觀 | 算式定案，但**沒有逐張看過** 22 勢力 × 5 方向長什麼樣。已看過的：勢力 0 的靜止與行進（`../playtest/50`） | 靜態 |
 | [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 每格 4 層上限 | 刻意沒做（§4） | 靜態 |
-| [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 首都疊圖為什麼不畫 | §4.05 的行為由實機逐像素定案，**機制沒讀出來**。可能是同一個疊圖槽被覆寫，也可能是據點那一趟看到軍團就跳過。下手點：`sub_1D4C7` 的呼叫者裡，推首都疊圖的那一支 | 靜態 |
+| [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 首都疊圖為什麼不畫 | **機制讀出來了**（2026-09-02）：`sub_1D4C7` 是「往一格推一個疊圖」，**一格最多 4 個**——`bl = [si+1]`（目前疊圖數）`cmp bl, 4 / jnb` 就整個跳過，而且 `[si]` 的 **bit 4 設起來的格子完全不接受疊圖**。顯示清單一格 8 B：`+0` … | 靜態 |
 | [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 別的疊圖組合 | 只驗過「首都 ＋ 軍團」。**災害物件 ＋ 軍團**、**非首都據點 ＋ 軍團**都沒有樣本 | 靜態 |
 | [`spec/75-bundled-audio.md`](../spec/75-bundled-audio.md) | 音檔大小 | ogg 全套 19 MB，桌面包從 11.7 MB 漲到 29 MB | 靜態 |
 | [`spec/75-bundled-audio.md`](../spec/75-bundled-audio.md) | 沒有音效裝置的**真實玩家** | ⛔ 仍然會掛。驗收模式擋住的是截圖路徑，一般啟動沒有擋——Ebiten 沒有可查詢的音訊 API，目前沒有乾淨的偵測法 | 實測 |
