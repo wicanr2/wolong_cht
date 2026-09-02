@@ -147,6 +147,6 @@ sub_12216:
 | 項目 | 現況 |
 |---|---|
 | `INT 61h` 的四個服務號（`ah=4`／`7`／`8`、`ax=09F2h`／`0C01h`）`[DOS/BIOS]` | 對應什麼音效動作要看 `YNSOUND.COM`（[`17`](17-dosv-audio-tsr.md)）。⚠ 原版與音效 TSR 的介面，**不擋 remake** |
-| `cs:byte_198A6` 位元 3 | 對應 `sub_15FAA`，設定與清除端都沒找到 |
+| `cs:byte_198A6` 位元 3 | **全庫沒有任何一處寫它**（2026-09-02 三種寫法全掃：`byte_198A6`、`cs:byte_198A6`、`ds:98A6h`，整個 `KI.EXE.asm` 只有 19 行提到這個位址）。位元 0 在 `or ds:98A6h, 1`／`and ds:98A6h, 0FEh` 成對、位元 1 在 `or/and ds:98A6h, 2/0FDh` 成對、位元 2 在 `or/and byte_198A6, 4/0FBh` 成對，**只有位元 3 兩端皆無**；整個 byte 由 `sub_11A6E` 歸零。⇒ 它要嘛只透過 `sub_119CA` 那個逐位輪詢的迴圈被讀（[`31`](31-faction-picker-screen.md) §1），要嘛根本不會被設起來 |
 | `sub_1E9A7` 的 8 bytes 參數表 | 表本身沒讀 |
 | `byte_1020E`／`byte_10CF9` | 音源相關的兩個旗標 |
