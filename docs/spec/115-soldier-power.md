@@ -1,7 +1,9 @@
 # 115 — 兵的戰力來自統率力，不是士氣
 
-**狀態：READY。** 算式與出處都定案（[`../re/78`](../re/78-soldier-power-from-command.md)），
-**但接上去會整個換掉戰術層的數值尺度**，所以動手前先看 §5 的影響評估。
+**狀態：READY，卡在規格 116（退卻走不出城）。**
+算式已經實作並有單測（`soldierPower`／`leaderPower`／`leaderHP`），
+**接線刻意留著沒接**：接上之後兵活得久、同時退卻的人數跳一個量級，
+會穩定撞上退卻走不出城的死鎖（§5）。
 
 - 日期：2026-09-02
 - 出處：`KI.EXE`（SHA-256 `fffeba98…d43868`）的 `sub_19AF4`（布陣）、
@@ -24,12 +26,17 @@
 適性 = 主將的 +0x0E／+0x0F／+0x10，由戰場類別選（re/78 §2）
 ```
 
-近戰（`sub_1B6BC`）：
+近戰有兩支，**remake 接的是 `sub_1B618`**（`internal/rules/tactical/damage.go`）：
 
 ```
-命中率 = 9.77% + (1 − 9.77%) × min(24, max(0, 攻方戰力 − 守方戰力)) ÷ 128
-傷害   = max(1, 攻方戰力 ÷ 8)
+sub_1B618：命中值 = rand(0..127) + 攻方戰力      ；≥ 0x46(70) 才命中
+           傷害   = 攻方戰力（有利 +0x40、突擊 +0xC8，都飽和到 255）
+sub_1B6BC：命中率 = 9.77% + (1 − 9.77%) × min(24, 攻 − 守) ÷ 128
+           傷害   = max(1, 攻方戰力 ÷ 8)
 ```
+
+⭐ **兩支的尺度差很多**，所以「戰力接錯」在 `sub_1B618` 那一支特別明顯：
+戰力填成士氣（100–200）時命中值恆 ≥ 70、傷害 100–200 ⇒ **一擊必殺**。
 
 ⚠ **`sub_19B6D` 裡的騎兵戰場修正是死碼**（`cmp al, 1` 而 `al` 已經是
 兵種 × 18，[`../re/78`](../re/78-soldier-power-from-command.md) §3.1）。
@@ -37,51 +44,60 @@
 
 ## 2. remake 現在怎麼做
 
-`internal/state/tactical.go` 的 `deploy` 把整側的戰力設成軍團士氣：
+`internal/rules/tactical` 已經有逐槽的欄位（`Side.SquadPower [6]int`、
+`Side.LeaderPower`、`Side.LeaderHP`），`Deploy` 也會用它們；
+`Side.Power` 退成「沒填時的預設」。
 
-```go
-b.Sides[side].Power = c.Morale   // ← 要換掉的就是這一行
-b.Sides[side].Morale = c.Morale  // 這一行是對的（spec/61）
-```
-
-`Side.Power` 是**每側一個純量**，而原版是**每個編成位置一個值**
-（兵種係數逐槽不同），大將那一格再另算。
+**缺的只有 `internal/state/tactical.go` 那一段接線**——目前三個欄位寫 0，
+於是 `Deploy` 退回 `Power`（＝軍團士氣）。理由見 §5。
 
 ## 3. remake 要怎麼改
 
 | 項目 | 位置 |
 |---|---|
-| 每槽戰力 | `internal/rules/tactical`：`Side.Power` 換成 `Side.SquadPower [6]int`，`Deploy` 用 `SquadPower[squad]` |
-| 大將 | `Place`／`Deploy` 之後把第 0 號兵的 `Power` 與 `HP` 蓋成 §1 的大將算式 |
-| 主將能力進戰場 | `internal/state/tactical.go`：軍團編號 ＝ 主將的武將編號，直接取 `w.Generals[corps]` 的 `Command`／`Martial`／`Aptitude[類別]` |
-| 戰場類別 | 先用 `combat.Siege` 對應的既有分類；`byte_1D34B` 的三個值對哪三個適性欄沒定案（[`../re/78`](../re/78-soldier-power-from-command.md) §6），所以這一格**要標成 remake 差異** |
+| 三條算式 | ✅ `internal/state/soldierpower.go`（`soldierPower`／`leaderPower`／`leaderHP`），單測見 §4 |
+| 戰場類別選適性欄 | ✅ 同檔的 `aptitudeIndex`：攻城恆取攻城適性，野戰看圖塊 `0xC0`／`0xD1` 兩道門檻（[`../re/78`](../re/78-soldier-power-from-command.md) §2.1）|
+| 每槽戰力與大將 | ✅ `internal/rules/tactical`：`Side.SquadPower`／`LeaderPower`／`LeaderHP`，`Deploy` 用它們 |
+| 主將能力進戰場 | ✅ `w.squadPowers`（軍團編號 ＝ 主將的武將編號）|
+| **接線** | ⛔ `internal/state/tactical.go` 的 `deploy` 還沒接，卡在 [`116`](116-retreat-cannot-leave-the-city.md) |
 
 ## 4. 驗證
 
 | 方式 | 內容 |
 |---|---|
-| 單元測試 | 兵種係數逐槽、統率 0 與 15 的兩端、大將那一格的體力與戰力 |
-| 對原版 | **戰術九區逐區對拍要重跑**（[`../playtest/40`](../playtest/40-tactical-parity.md)）——數值尺度變了，側欄的體力條與陣亡速度都會動 |
+| 單元測試 ✅ | `TestSoldierPowerPerTroopType`（三個兵種係數 30／4／12）、`TestSoldierPowerRisesWithCommand`（統率單調，擋「又接回士氣」）、`TestLeaderPowerAndHP`、`TestLeaderHPIsNotMorale`、`TestAptitudeIndexByBattleClass` |
+| 對原版 | ⛔ **戰術九區逐區對拍要重跑**（[`../playtest/40`](../playtest/40-tactical-parity.md)）——接線接上之後才做 |
 
-## 5. ⚠ 影響評估：這不是等價改寫
+## 5. ⚠ 為什麼還沒切：撞上 [`116`](116-retreat-cannot-leave-the-city.md)
+
+實測接上去之後 `TestNormalScenarioTacticalBattleTerminates`
+（濮陽攻城，固定種子 17）**穩定死鎖**：10 萬幀之內兩側剩餘兵數
+一個都沒變。成因是城裡與城牆上的兵退卻時尋路找不到出城的路，
+**那是既有缺陷**——先前被「一擊必殺」蓋住（[`116`](116-retreat-cannot-leave-the-city.md) §5）。
+
+接線收在 `internal/state/tactical.go` 的 `deploy`：三個欄位目前寫 0，
+`Deploy` 於是退回 `Power`（＝士氣）。修好 116 之後把那三行換成
+`w.squadPowers(corps, siege, tile)` 的三個回傳值即可。
+
+## 5.1 影響評估：這不是等價改寫
 
 | | 現在 | 接上之後 |
 |---|---:|---:|
 | 一般兵的戰力 | ＝ 軍團士氣，**100–200** | 統率 10、適性 5、騎兵 → `(15 × 3 + 30) ÷ 4` ＝ **18** |
-| 每次傷害 | 戰力 ÷ 8 ＝ **12–25** | **2** |
-| 命中率的差值上限 | 兩側士氣差，常常 > 24 → 飽和 | 兩側戰力差多半 **0–10** |
+| `sub_1B618` 的命中值 | `rand(0..127) + 200` ⇒ **恆命中** | `rand(0..127) + 18` ⇒ 約 **59%** |
+| `sub_1B618` 的每次傷害 | **100–200** ⇒ 一擊必殺 | **18** ⇒ 約 11 下才倒 |
 
 ⭐ **戰鬥會慢一個數量級**，而且勝負從「士氣誰高」變成「統率誰高」。
 這是**朝原版靠**的改動，不是平衡調整——但它會讓現有的戰術對拍數字
 （[`../playtest/40`](../playtest/40-tactical-parity.md)）全部需要重驗，
 也會改變推廣片裡兩場戰鬥的長度（[`71`](71-promo-live-capture.md)）。
 
-**所以這一份停在 READY**：算式沒有疑義，但「什麼時候切」是取捨，
-要連同重跑對拍一起做，不要夾在別的改動裡。
+**所以這一份停在 READY**：算式沒有疑義，缺的是 [`116`](116-retreat-cannot-leave-the-city.md)，
+以及切下去之後連同重跑對拍。
 
 ## 6. 未解
 
 | 項目 | 現況 |
 |---|---|
-| 戰場類別對哪個適性欄 | [`../re/78`](../re/78-soldier-power-from-command.md) §6。切之前要先定案，否則適性那一項會取錯欄 |
+| 野戰／水戰的分界 | 攻城那一格 confirmed（據點編號恆 < `0xC0`），野戰與水戰的圖塊門檻是強證據（[`../re/78`](../re/78-soldier-power-from-command.md) §2.1）|
 | `sub_1B618` 與 `sub_1B6BC` 的分工 | remake 只接前者。命中率公式兩支不同，要先確認玩家看到的是哪一支 |

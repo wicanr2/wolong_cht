@@ -41,11 +41,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 13 | 10 | 3 | 0 |
 | 資料保存 | 23 | 23 | 0 | 0 |
-| 程式碼理解 | 163 | 157 | 6 | 0 |
+| 程式碼理解 | 163 | 156 | 7 | 0 |
 | 驗收 | 84 | 73 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 205 | 192 | 13 | 0 |
-| **合計** | **494** | 460 | 34 | 0 |
+| **合計** | **494** | 459 | 35 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -273,7 +273,7 @@
 | [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | `+0x1B` 的語意 | 只有 0（368）與 `0xFF`（13）。沒有讀取端 | 靜態 |
 | [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | 旗標 bit 0 | 只出現一次（劇本三的張衛），沒有讀取端 | 靜態 |
 | [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | `+0x19` 誰寫非 `0xFF` 值 | **只有劇本作者**：`KI.EXE` 裡只找得到清成 `0xFF` 的寫入端（`sub_15899`）。所以它是純劇本資料，執行期只會消耗不會補充 | 靜態 |
-| [`re/78-soldier-power-from-command.md`](../re/78-soldier-power-from-command.md) | 三個戰場類別各是什麼 | `byte_1D34B` 的 0／1／2 由圖塊門檻 `0xC0`／`0xD1` 分，而 `+0x0E`／`+0x0F`／`+0x10` 是攻城／野戰／水戰（`../formats/08` §3）。**對應關係沒有直接證據**——不要照欄位順序假設 0 ＝ 攻城 | 靜態 |
+| [`re/78-soldier-power-from-command.md`](../re/78-soldier-power-from-command.md) | 野戰／水戰的分界 | §2.1 靠圖塊分布定的，是強證據不是 confirmed。要定案得找到把圖塊標成「水」的那張表，或在原版實跑一場水邊的野戰 | 實測 |
 | [`re/78-soldier-power-from-command.md`](../re/78-soldier-power-from-command.md) | `sub_1B618` 與 `sub_1B6BC` 的分工 | 兩支都是近戰命中，remake 目前只接前者（`internal/rules/tactical/damage.go`）。哪一支管哪一種接觸沒讀 | 靜態 |
 | [`re/78-soldier-power-from-command.md`](../re/78-soldier-power-from-command.md) | 側摘要 `word_1D30A` 的完整版面 | `+2`（軍團編號）、`+6`（士氣）、`+0x0A` 起六個兵種確定，其餘沒讀 | 靜態 |
 
@@ -439,7 +439,7 @@
 | [`spec/114-general-affinity.md`](../spec/114-general-affinity.md) | 隨機投靠那一條 | `sub_15899` 的 `+0x19 == 0xFF` 分支還沒接（§3 的第二個 ⚠）。要先把勢力的武將數與據點數接進規則層 | 靜態 |
 | [`spec/114-general-affinity.md`](../spec/114-general-affinity.md) | 出仕的畫面通知 | 原版對象是玩家勢力時跳訊息 `0x29`；這一版只改狀態，不排事件 | 靜態 |
 | [`spec/114-general-affinity.md`](../spec/114-general-affinity.md) | 旗標 bit 5 之外的退場條件 | `sub_15899` 只在「心向的勢力已滅」時看 bit 5；bit 5 沒設的武將會留在原地等下一輪，這一點沒有實機驗證 | 靜態 |
-| [`spec/115-soldier-power.md`](../spec/115-soldier-power.md) | 戰場類別對哪個適性欄 | `../re/78` §6。切之前要先定案，否則適性那一項會取錯欄 | 靜態 |
+| [`spec/115-soldier-power.md`](../spec/115-soldier-power.md) | 野戰／水戰的分界 | 攻城那一格 confirmed（據點編號恆 < `0xC0`），野戰與水戰的圖塊門檻是強證據（`../re/78` §2.1） | 靜態 |
 | [`spec/115-soldier-power.md`](../spec/115-soldier-power.md) | `sub_1B618` 與 `sub_1B6BC` 的分工 | remake 只接前者。命中率公式兩支不同，要先確認玩家看到的是哪一支 | 靜態 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝命令、`0x0Bh`／`0x10h`／`0x15h`／`0x1Fh` 各自出現在哪個視窗已知，完整值域未列 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |

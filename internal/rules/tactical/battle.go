@@ -11,8 +11,24 @@ type Side struct {
 	// （`sub_1A754` 的 1 + 7 迴圈）。
 	Soldiers [SoldiersOnFoot]Soldier
 
-	// Power 是這一側的戰力（原版由士氣算進每個兵的 `+0x18`，§3.9）。
+	// Power 是這一側的**預設**戰力，只在呼叫端沒填 SquadPower 時用
+	// （測試、無頭模擬）。原版的 `+0x18` 是逐槽算的，見 SquadPower。
 	Power int
+
+	// SquadPower 是六個編成位置各自的戰力（原版兵記錄 `+0x18`）。
+	//
+	// `sub_19B6D`：`((統率 + 適性) × 3 + 兵種係數) ÷ 4`，兵種係數
+	// 30／4／12（docs/re/78 §3、docs/spec/115）。**與士氣無關。**
+	// 0 表示呼叫端沒填，退回 Power。
+	SquadPower [Squads]int
+
+	// LeaderPower／LeaderHP 是大將那一格（第 0 隊第 0 個兵）的戰力與體力。
+	// 原版 `sub_19AF4` 先用 sub_19B6D 填滿 48 個兵，再用 `sub_19B40`
+	// 把第 0 號蓋掉：戰力 `(武力 × 2 + 適性) × 2`、
+	// 體力 `max(70, (武力 × 4 + 50) × 士氣 ÷ 100)`（docs/re/78 §4）。
+	// 0 表示呼叫端沒填，兩者都退回一般兵的值。
+	LeaderPower int
+	LeaderHP    int
 
 	// Kinds[k] 是第 k 隊的兵種。
 	//
@@ -438,14 +454,35 @@ func (b *Battle) Deploy(side int, squad int, kind Kind, men int) {
 	s.Reserve[squad] = men - on
 	for i := 0; i < on; i++ {
 		k := kind
+		hp, power := s.startHP(), s.squadPower(squad)
 		if i == 0 && squad == 0 {
 			k = General // 第 0 隊的隊長是大將
+			// 原版 sub_19AF4 用 sub_19B40 把這一格整個蓋掉。
+			if s.LeaderPower > 0 {
+				power = s.LeaderPower
+			}
+			if s.LeaderHP > 0 {
+				hp = s.LeaderHP
+			}
 		}
 		s.Soldiers[squad*PerSquad+i] = Soldier{
-			Alive: true, Kind: k, HP: s.startHP(), Stamina: StaminaFull,
-			Power: s.Power, Target: -1, Cmd: Form, Next: Form,
+			Alive: true, Kind: k, HP: hp, Stamina: StaminaFull,
+			Power: power, Target: -1, Cmd: Form, Next: Form,
 		}
 	}
+}
+
+// squadPower 是這一隊每個兵的戰力（原版 `+0x18`）。
+//
+// 呼叫端沒填 SquadPower 時退回 Power——測試與無頭模擬走這一條。
+func (s *Side) squadPower(squad int) int {
+	if squad >= 0 && squad < Squads && s.SquadPower[squad] > 0 {
+		return s.SquadPower[squad]
+	}
+	if s.Power == 0 {
+		return DefaultPower
+	}
+	return s.Power
 }
 
 // Place 把所有兵放到陣形的起始位置。
@@ -616,7 +653,7 @@ func (b *Battle) reinforce() {
 				}
 				x, y := b.formationSpot(i, j)
 				s.Soldiers[j] = Soldier{
-					Alive: true, Kind: s.Kinds[k], Power: s.Power,
+					Alive: true, Kind: s.Kinds[k], Power: s.squadPower(k),
 					HP: s.startHP(), Stamina: StaminaFull, Target: -1,
 					Cmd: Form, Next: s.Standing,
 					X: x, Y: y, Z: b.Field.StandLevel(x, y),

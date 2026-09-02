@@ -35,7 +35,24 @@ type TacticalSetup struct {
 	// 沒設或回 nil 那一側就不由腳本驅動。
 	Script func(node int, siege bool, tactic int) []byte
 
+	// Tile 回傳大地圖 (x, y) 那一格的圖塊值。野戰要靠它決定戰場類別，
+	// 而戰場類別決定主將的哪一個適性欄餵進兵的戰力（docs/re/78 §2.1、
+	// docs/spec/115）。**沒設就一律當野戰**——那是 remake 差異，
+	// 因為原版讀的是同一張大地圖。
+	Tile func(x, y int) int
+
 	Forms *tactical.Formations
+}
+
+// battleTile 是這一場野戰發生的那一格圖塊值。取不到就回 fieldTileLow，
+// 也就是「當成一般野戰」。
+func (w *World) battleTile(corps int) int {
+	if w == nil || w.tactical == nil || w.tactical.Tile == nil ||
+		corps < 0 || corps >= len(w.Corps) {
+		return fieldTileLow
+	}
+	c := &w.Corps[corps]
+	return w.tactical.Tile(c.X, c.Y)
 }
 
 // Pending 是一場等著被跑完的戰術戰鬥。
@@ -112,9 +129,20 @@ func (w *World) beginTactical(att, def int, m combat.Mode, garrison int) bool {
 
 	deploy := func(side, corps int) {
 		c := w.Corps[corps]
-		// 戰力由士氣來（原版 `sub_19B6D` 把軍團士氣寫進每個兵的 +0x18）。
+		// ⚠ **原版的戰力不是士氣**：一般隊 `((統率 + 適性) × 3 + 兵種係數) ÷ 4`、
+		// 大將 `(武力 × 2 + 適性) × 2`（`sub_19B6D`／`sub_19B40`，
+		// docs/re/78）。算式已經實作在 `soldierPower`／`leaderPower`／
+		// `leaderHP` 並有單測，**但還沒接上來**：接上之後兵活得久、
+		// 同時退卻的人變多，會撞上退卻繞路的死鎖（docs/spec/116）。
+		// 那個死鎖是既有缺陷，先前被「一擊必殺」蓋住。
+		// 修好 116 之後把下面三行換成 `w.squadPowers(corps, siege, tile)`
+		// 的三個回傳值即可（docs/spec/115 §5）。
+		b.Sides[side].SquadPower = [army.Positions]int{}
+		b.Sides[side].LeaderPower = 0
+		b.Sides[side].LeaderHP = 0
 		b.Sides[side].Power = c.Morale
-		// 士氣同時是每個兵的開場體力（docs/spec/61）。
+		// 士氣是**一般兵**的開場體力；大將那一格由 LeaderHP 蓋掉
+		// （docs/spec/61 §2 的例外）。
 		b.Sides[side].Morale = c.Morale
 		for k, u := range c.Units {
 			if u.Men == 0 {
