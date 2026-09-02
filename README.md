@@ -36,6 +36,10 @@
 ⭐ **對拍會過期，所以要重跑**：2026-08-27 把記錄過的四組全部重量一次，
 攻城那一組挖出兩個真的缺口（城壁一撞就垮、門強度量表少畫外框），
 修好之後戰場區從 4.32% 回到 0.86%（[`docs/playtest/49`](docs/playtest/49-parity-retest-20260827.md)）。
+2026-09-02 兵的戰力接回統率力之後再重跑一次，**沒有回歸**——野戰七區依舊 0 px、
+戰場區 95 px，攻城前兩個取樣點同值；這一輪挖到的兩個缺陷都在**驗收路徑**
+（`-shot-frames` 推不動戰場、驗收捷徑推完才武裝開場喊話），
+不在規則層（[`docs/playtest/58`](docs/playtest/58-parity-retest-20260902.md)）。
 
 ⭐ **單挑子系統全還原**（[`docs/spec/80`](docs/spec/80-duel-opening.md)）：
 挑戰／拒戰／應戰、回合互嗆、對打段、決著，含應戰全程的實機錄影參照；
@@ -76,14 +80,14 @@
 | 文字 | 1,022 則全保存、byte-for-byte round-trip；**單行超寬 0 行**；60 筆校訂可重跑 | [`playtest/32`](docs/playtest/32-talk-layout-fit.md) |
 | 結局文字 | 200 字 10 行，從 `D7END.EXE` 取出（不在 `TALK.DAT` 裡）| [`re/70`](docs/re/70-d7end-ending-player.md) |
 | 音訊 | 會出聲、場景對應已解、與原版錄音比對過；**音色的諧波結構沒量化比對** | [`spec/29`](docs/spec/29-audio.md) |
-| 規則規格 | **84 份**（不含索引與 `TEMPLATE.md`）：**82 CONFORMED**／2 READY（`34-speed-steps`、`83-initial-strategy-pass`）／0 DRAFT | [`spec/00`](docs/spec/00-index.md) |
+| 規則規格 | **103 份**（不含索引與 `TEMPLATE.md`）：**102 CONFORMED**／1 READY（`83-initial-strategy-pass`）／0 DRAFT | [`spec/00`](docs/spec/00-index.md) |
 | 反組譯 | 739/739 支有筆記；`docs/re/` 自己標成未解的有 **156 列**（每寫一份新的反組譯筆記就帶進自己的未解表）| [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
-| 全專案的未解 | **496 列**（另有 6 列是 DOS／BIOS 平台層與編譯器 runtime，不計入）。⚠ **這個數字比較接近「文件有多少份」**——496 列分布在 199 份文件、平均每份 2.5 列，而每寫一份新文件就帶進約三列自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
+| 全專案的未解 | **502 列**（另有 6 列是 DOS／BIOS 平台層與編譯器 runtime，不計入）。⚠ **這個數字比較接近「文件有多少份」**——502 列分布在 201 份文件、平均每份 2.5 列，而每寫一份新文件就帶進約三列自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
 
-#### 那 496 列對 remake 代表什麼
+#### 那 502 列對 remake 代表什麼
 
 **它不衡量「離做完還有多遠」。** 最直接的證據是這兩個數字同時成立：
-未解 496 列，而開局主畫面 **256,000 個像素與原版一個不差**。
+未解 502 列，而開局主畫面 **256,000 個像素與原版一個不差**。
 兩者量的是不同的軸——未解列數量的是「**原版還有多少我們解釋不了**」，
 parity 量的是「**我們做出來的東西對不對**」。
 

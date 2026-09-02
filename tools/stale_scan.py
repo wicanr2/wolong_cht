@@ -13,8 +13,10 @@
 - `docs/re/21` 宣稱覆蓋率 T1 100%，重跑是 738 ＋ 1 支 T2。
 - `README.md` 把未解列數寫成 456 列／172 份，而 `docs/re/43`（`check.sh`
   每次重生）當時已經是 518 列／199 份。**抄過去的摘要不會自己更新。**
+- `README.md` 把規格寫成 84 份／82 CONFORMED／2 READY，而 `docs/spec/`
+  已經是 103 份／102／1，被點名的 `34-speed-steps` 也早就 CONFORMED 了。
 
-五層檢查，**每一層都只在能拿到真值時才跑**（缺原版素材、缺 census 就跳過
+六層檢查，**每一層都只在能拿到真值時才跑**（缺原版素材、缺 census 就跳過
 並明講跳過了）——沉默地少跑一層，比不跑更糟。
 
 用法：
@@ -298,6 +300,54 @@ def check_open_questions(problems, skipped):
                     f"`docs/re/43` 現在是 {truth.group(1)} 列／{truth.group(2)} 份"))
 
 
+# ── 第六層：規格份數與狀態分布 ───────────────────────────────
+# `docs/spec/` 每加一份，抄過去的摘要就舊一天，而它的格式完全正確、
+# 連結也通——只有數字是舊的（本檔開頭那一段講的第三類）。
+# 這一層照 `docs/spec/*.md` 自己重數，不信任何抄本。
+SPEC_SUMMARY = re.compile(
+    r"(\d+)\s*份\**（不含索引[^）]*）：\**(\d+)\s*CONFORMED\**／\**(\d+)\s*READY")
+SPEC_STATUS = re.compile(r"狀態：([A-Za-z]+)")
+
+
+def spec_truth():
+    """回傳 (份數, CONFORMED, READY)；沒有 `docs/spec/` 就 None。"""
+    d = os.path.join(REPO, "docs", "spec")
+    if not os.path.isdir(d):
+        return None
+    total = conformed = ready = 0
+    for fn in sorted(os.listdir(d)):
+        if not fn.endswith(".md") or fn.startswith("00-index") or fn == "TEMPLATE.md":
+            continue
+        total += 1
+        m = SPEC_STATUS.search(read(os.path.join(d, fn)))
+        st = m.group(1) if m else ""
+        if st == "CONFORMED":
+            conformed += 1
+        elif st == "READY":
+            ready += 1
+    return total, conformed, ready
+
+
+def check_spec_counts(problems, skipped):
+    """別的文件抄過去的規格份數 vs `docs/spec/` 現在的檔案。"""
+    truth = spec_truth()
+    if truth is None:
+        skipped["規格份數（沒有 docs/spec）"] += 1
+        return
+    for doc in doc_paths():
+        rel = os.path.relpath(doc, REPO)
+        # ⚠ 逐輪紀錄裡的數字是**當時**的數字，不是斷言（同 check_open_questions）。
+        if rel in ("RESEARCH-LOG.md", "WORKLIST.md"):
+            continue
+        for i, line in enumerate(read(doc).splitlines(), 1):
+            m = SPEC_SUMMARY.search(line)
+            if m and tuple(int(x) for x in m.groups()) != truth:
+                problems.append((
+                    rel, i, "規格份數過期",
+                    f"寫 {m.group(1)} 份／{m.group(2)} CONFORMED／{m.group(3)} READY，"
+                    f"`docs/spec/` 現在是 {truth[0]} 份／{truth[1]}／{truth[2]}"))
+
+
 def selftest():
     """正對照：**先證明每一層抓得到，再相信它說沒事。**
 
@@ -390,6 +440,20 @@ def selftest():
              OPEN_Q_TOTAL.search(f"共 {n} 列分布在 {d} 份文件").groups() != truth.groups(),
              expect=False)
 
+    truth = spec_truth()
+    want("規格份數：數得到 docs/spec 的份數", truth and truth[0] > 20)
+    if truth:
+        n, c, r = truth
+        want("規格份數：擋下對不上的",
+             tuple(int(x) for x in SPEC_SUMMARY.search(
+                 f"**{n + 1} 份**（不含索引與 X）：**{c} CONFORMED**／{r} READY"
+             ).groups()) != truth)
+        want("規格份數：對的不誤報",
+             tuple(int(x) for x in SPEC_SUMMARY.search(
+                 f"**{n} 份**（不含索引與 X）：**{c} CONFORMED**／{r} READY"
+             ).groups()) != truth,
+             expect=False)
+
     print("正對照" + ("通過" if ok else "失敗"))
     return 0 if ok else 1
 
@@ -404,7 +468,7 @@ def main():
                  "旗標（沒有 cmd/）",
                  "覆蓋率（沒有 census.tsv）", "覆蓋率（重算失敗）",
                  "未解列數（沒有 docs/re/43）", "未解列數（43 讀不出總數）",
-                 "覆蓋率（讀不出重算結果）"):
+                 "覆蓋率（讀不出重算結果）", "規格份數（沒有 docs/spec）"):
         skipped[name] = 0
 
     check_hashes(problems, skipped)
@@ -412,6 +476,7 @@ def main():
     check_flags(problems, skipped)
     check_coverage(problems, skipped)
     check_open_questions(problems, skipped)
+    check_spec_counts(problems, skipped)
 
     # ⭐ **跳過了什麼一定要印出來。** 「沒有找到問題」與「那一層根本沒跑」
     # 在輸出上長得一樣，而後者才是危險的（CLAUDE.md §7 第 21 條）。
