@@ -19,6 +19,10 @@ func event10PrisonerFixture(t *testing.T) (*World, int) {
 		g.Captor = 1
 		g.Posted = true
 		g.Timer = 0
+		// 歸降那一支要 `+0x1C == +0x19`（docs/re/77 §2.2）：
+		// 關押他的勢力剛好是他心向的那一個。fixture 讓條件成立，
+		// 條件不成立的情形由 TestCaptiveSurrenderNeedsAffinity 蓋。
+		g.Affinity = w.Player
 		w.Generals[id] = g
 		return w, id
 	}
@@ -91,5 +95,27 @@ func TestApproximateEvent10ReentersIdleClockConsumer(t *testing.T) {
 	}) {
 		t.Fatalf("近似事件 10 未沿 idle clock consumer 顯示：clock=%+v notices=%#v",
 			ev.Clock, ev.TalkNotices)
+	}
+}
+
+// 關押他的勢力不是他心向的那一個時，歸降那一段不成立——
+// 原版 sub_15940 先比 `[si+1Ch] == [si+19h]` 才走歸降（docs/re/77 §2.2）。
+func TestCaptiveSurrenderNeedsAffinity(t *testing.T) {
+	w, id := event10PrisonerFixture(t)
+	w.events = [eventQueueEntries]QueuedEvent{}
+	g := w.Generals[id]
+	g.Affinity = 5 // 不是玩家勢力
+	w.Generals[id] = g
+
+	if w.produceApproximateEvent10(&sequenceRand{values: []int{0x20}}) {
+		t.Fatal("心向的勢力對不上，不該產生歸降事件")
+	}
+	if got := w.Generals[id]; got.Captor != 1 || !got.Posted {
+		t.Fatalf("狀態不該被改：%+v", got)
+	}
+
+	// 逃走那一支不看這個欄位，照樣成立。
+	if !w.produceApproximateEvent10(&sequenceRand{values: []int{0x01}}) {
+		t.Fatal("逃走那一支不該受心向的勢力影響")
 	}
 }

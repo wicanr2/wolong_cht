@@ -48,7 +48,13 @@ func (w *World) produceApproximateEvent10(rng economy.Rand) bool {
 			next.Posted = false
 			talk = approximateEvent10EscapeTalk
 		case roll < 0x40:
-			// 近似「歸降我軍」：保留目前玩家勢力，只清掉
+			// ⭐ 歸降**不是無條件的**：原版 sub_15940 先比
+			// `[si+1Ch] == [si+19h]`——關押他的勢力必須就是他心向的
+			// 那一個，抓錯人的勢力再怎麼擲都招不到（docs/re/77 §2.2）。
+			if g.Faction != g.Affinity {
+				continue
+			}
+			// 條件成立才「歸降我軍」：保留目前玩家勢力，只清掉
 			// 俘虜來源，讓下一輪可正常編成／派駐。
 			next.Captor = noFaction
 			next.Posted = false

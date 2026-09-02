@@ -255,6 +255,26 @@ type General struct {
 
 	Faction int // 所屬勢力，0xFF ＝ 在野
 
+	// Affinity 是**心向的勢力**（記錄 +0x19，0xFF ＝ 沒有）。
+	//
+	// 在野時每月 25% 機率兌現：那個勢力還在就出仕過去，已經滅了
+	// 而且旗標 bit 5 設著就退場（`sub_15899`）。當俘虜時，關押他的
+	// 勢力剛好是這一個才會歸降（`sub_15940`）。
+	// 開局在場的 81 名在野武將**全部有值**，零例外。
+	// docs/re/77 §2、docs/spec/114。
+	Affinity int
+
+	// VanishIfAffinityGone 是記錄 +0x00 的 bit 5：心向的勢力已滅時，
+	// 兌現那一刻武將整筆歸零、退出舞台（`sub_15899`）。
+	// 68 人設著，而且全部 Affinity 有值——它是 Affinity 的修飾詞，
+	// 不是獨立狀態。docs/re/77 §4。
+	VanishIfAffinityGone bool
+
+	// Sovereign 是記錄 +0x00 的 bit 6：**主公型**。43 人全是現任君主，
+	// 說話類型（+0x1E）落在 0–2。被俘而舊主勢力已滅時，`sub_129C3`
+	// 清掉它並把說話類型 +3，把主公型搬成臣下型。docs/re/77 §3。
+	Sovereign bool
+
 	// Captor 是**舊主的勢力編號**（記錄 +0x1D），0xFF ＝ 非捕虜。
 	//
 	// ⚠ 這一欄先前叫 Posting，記成「派駐狀態」。四個劇本開局全是 0xFF，
@@ -615,6 +635,10 @@ func loadBlock(b []byte) *World {
 			Budget:       int(r[0x1A]),
 			Faction:      int(r[0x1C]),
 			Captor:       int(r[0x1D]),
+
+			Affinity:             int(r[0x19]),
+			VanishIfAffinityGone: r[0x00]&0x20 != 0,
+			Sovereign:            r[0x00]&0x40 != 0,
 		}
 	}
 	w.loadCorps(b)
@@ -993,6 +1017,10 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 	// 原版 sub_12BD9 緊接月結經濟處理後壓縮事件佇列，並重設
 	// `word_10D20`／`byte_131AD`。已證實的 queue 邊界先照原版保存，避免
 	// 積壓事件跨月時留下錯誤資料；事件 handler 由每小時流程逐筆取出。
+	// 原版 sub_15358 在壓縮事件佇列（sub_12BD9）之前先跑 sub_1585F，
+	// 逐一處理在野武將與俘虜。remake 這裡只接在野那一條（docs/spec/114）；
+	// 俘虜仍走月結尾端的近似 producer，兩者的武將集合互斥。
+	w.recruitFreelanceGenerals(rng)
 	w.compactEventQueue()
 	// 原版 sub_15358 在月結壓縮後先跑 sub_15715／sub_1578F，將玩家
 	// 內政官／外交官的撥款請求放進事件佇列，再進入其他政略評估。
@@ -1411,6 +1439,13 @@ func (w *World) Bytes() []byte {
 		r[0x1A] = byte(g.Budget)
 		r[0x1C] = byte(g.Faction)
 		r[0x1D] = byte(g.Captor)
+		r[0x19] = byte(g.Affinity)
+		// 旗標那個 byte 有四個位元解出來了（bit 7／6／5／4，docs/re/77）。
+		// 逐位元蓋寫、其餘原樣保留——bit 0 還沒解（改寫不是重建）。
+		setFlag(&r[0x00], 0x80, g.Alive)
+		setFlag(&r[0x00], 0x40, g.Sovereign)
+		setFlag(&r[0x00], 0x20, g.VanishIfAffinityGone)
+		setFlag(&r[0x00], 0x10, g.LoyalToDeath)
 	}
 	w.saveCorps(b)
 	return b
@@ -1534,5 +1569,15 @@ func (w *World) applyCityDisasterEffect(cityID int) {
 		c.Garrison = 0
 	} else {
 		c.Garrison -= garrisonLoss
+	}
+}
+
+// setFlag 逐位元蓋寫，不動同一個 byte 的其他位元。
+// 存檔寫回的策略是「改寫不是重建」（CLAUDE.md §9）：未解的位元一個都不能碰。
+func setFlag(b *byte, mask byte, on bool) {
+	if on {
+		*b |= mask
+	} else {
+		*b &^= mask
 	}
 }

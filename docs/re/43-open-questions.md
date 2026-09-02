@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**488 列分布在 196 份文件，平均每份 2.5 列。**
+**491 列分布在 197 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 160 | 154 | 6 | 0 |
 | 驗收 | 84 | 73 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 200 | 187 | 13 | 0 |
-| **合計** | **488** | 454 | 34 | 0 |
+| 其他 | 203 | 190 | 13 | 0 |
+| **合計** | **491** | 457 | 34 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,7 +53,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 165 |
+| `docs/spec/` | 168 |
 | `docs/re/` | 160 |
 | `docs/playtest/` | 84 |
 | `docs/formats/` | 23 |
@@ -376,7 +376,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（200 條）
+## 2.6 其他（203 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -435,6 +435,9 @@
 | [`spec/112-cursor-idle-resume-delay.md`](../spec/112-cursor-idle-resume-delay.md) | `sub_20000(ax=2)` 為什麼在恢復時被呼叫 | 那是滑鼠層跳表的第 2 號（`sub_2009A`，回傳快取座標並清旗標），在這個時點叫它的理由沒讀 | 靜態 |
 | [`spec/112-cursor-idle-resume-delay.md`](../spec/112-cursor-idle-resume-delay.md) | 訊息框那一路的 `8` 與游標的 `0Ch` 為什麼不同 | 兩個立即值都是 confirmed，但差別的用意沒有證據；remake 兩邊都用同一個延遲 | 靜態 |
 | [`spec/113-rle-length-header.md`](../spec/113-rle-length-header.md) | `BATTLE.MAP`／`MMAP.MCH`／`BATTLE.MDL` 走哪一支載入器 | 沒查（`../formats/06` §6）。它們的前 4 byte 不是長度，所以**至少不是這一族** | 靜態 |
+| [`spec/114-general-affinity.md`](../spec/114-general-affinity.md) | 隨機投靠那一條 | `sub_15899` 的 `+0x19 == 0xFF` 分支還沒接（§3 的第二個 ⚠）。要先把勢力的武將數與據點數接進規則層 | 靜態 |
+| [`spec/114-general-affinity.md`](../spec/114-general-affinity.md) | 出仕的畫面通知 | 原版對象是玩家勢力時跳訊息 `0x29`；這一版只改狀態，不排事件 | 靜態 |
+| [`spec/114-general-affinity.md`](../spec/114-general-affinity.md) | 旗標 bit 5 之外的退場條件 | `sub_15899` 只在「心向的勢力已滅」時看 bit 5；bit 5 沒設的武將會留在原地等下一輪，這一點沒有實機驗證 | 靜態 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝命令、`0x0Bh`／`0x10h`／`0x15h`／`0x1Fh` 各自出現在哪個視窗已知，完整值域未列 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 |
