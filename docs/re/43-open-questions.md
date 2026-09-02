@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**492 列分布在 196 份文件，平均每份 2.5 列。**
+**489 列分布在 195 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -41,11 +41,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 15 | 12 | 3 | 0 |
 | 資料保存 | 26 | 25 | 1 | 0 |
-| 程式碼理解 | 159 | 153 | 6 | 0 |
+| 程式碼理解 | 158 | 152 | 6 | 0 |
 | 驗收 | 84 | 73 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 202 | 189 | 13 | 0 |
-| **合計** | **492** | 457 | 35 | 0 |
+| 其他 | 200 | 187 | 13 | 0 |
+| **合計** | **489** | 454 | 35 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,8 +53,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 167 |
-| `docs/re/` | 159 |
+| `docs/spec/` | 165 |
+| `docs/re/` | 158 |
 | `docs/playtest/` | 84 |
 | `docs/formats/` | 26 |
 | `docs/release/` | 18 |
@@ -114,7 +114,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`） | 靜態 |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 |
 
-## 2.3 程式碼理解（159 條）
+## 2.3 程式碼理解（158 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -193,7 +193,7 @@
 | [`re/40-garrison-relief-request.md`](../re/40-garrison-relief-request.md) | `+0x20` 與 `+0x14` 的關係 | §5 的張力，要實測 | 實測 |
 | [`re/40-garrison-relief-request.md`](../re/40-garrison-relief-request.md) | 據點 `+0x00` 的 bit 4／5 | bit 6／7 已解（§2），中間兩位未見 | 靜態 |
 | [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `cs:byte_198A6` 位元 3 | **全庫沒有任何一處寫它**（2026-09-02 三種寫法全掃：`byte_198A6`、`cs:byte_198A6`、`ds:98A6h`，整個 `KI.EXE.asm` 只有 19 行提到這個位址）。位元 0 在 `or ds:98A6h, 1`／`and ds:98A6h, 0FEh` 成對、位元 1 … | 靜態 |
-| [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `sub_1E9A7` 的 8 bytes 參數表 | 表本身沒讀 | 靜態 |
+| [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `sub_1E9A7` 的 8 bytes 參數表 | 寫入端已解（2026-09-02）：整支是 `bx = bl × 8 + 0EAF1h` 之後 `cs:[bx] = ax`／`cs:[bx+2] = dx`／`cs:[bx+4] = cx`——**一筆 8 B 但只寫前 6 B**，後兩個 byte 沒有任何寫入端。**表的內容（各筆代表什麼）仍未讀** | 靜態 |
 | [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `byte_1020E`／`byte_10CF9` | 音源相關的兩個旗標 | 靜態 |
 | [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | 據點 `+0x00` 的 bit 4／5 | bit 6／7 是威脅旗標、低 4 位是敵方鄰居，中間兩位仍未見寫入端 | 靜態 |
 | [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | `+0x20` 與 `+0x14` 的張力 | `sub_14575` 與 `sub_14155` 都只寫 `+0x20`，`40` §5 的張力還在 | 靜態 |
@@ -204,7 +204,7 @@
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 系統視窗開著時時間停止 | 說明書明講，機器碼的實作位置未找（`sub_15FAA` 的等待迴圈是候選） | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 右鍵表 `funcs_159C0` 的真實表長 | 已 dump（`71` §2.1）：它與左鍵表 `off_159D2` **只差 9 個 word 且內容重疊**，前九筆沒有一筆是函式起點。是「表只有 9 筆」還是「兩張刻意重疊」，靜態分不出來 | 靜態 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `08` 的模式 byte | `03` 只畫字、`01` 連背景一起填，是**強推論**——兩個用例（系統選單的「 ＯＫ 」、注音聲母列）都只有這個讀法說得通，但 `sub_106F5` 沒逐行讀（`55` §3） | 靜態 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `sub_1E9A7(bl=0, ax=1800h, cx=2020h)` | `sub_1030F` 登記的第二件事，未讀 | 靜態 |
+| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `sub_1E9A7(bl=0, ax=1800h, cx=2020h)` | 這一支已解：把 `ax`／`dx`／`cx` 寫進 `cs:0EAF1h + bl×8` 的前三個 word（`42` §6）。所以這一行是**登記第 0 筆**；**那張表被誰讀、各筆代表什麼仍未讀** | 靜態 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `op 01` 的用法 | 它是直線（§2.2），但 handler 不展開座標而十個場景又沒用到它——**預期的呼叫方式無法驗證** | 靜態 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `op 02` 與 `op 03` 的差別 | 兩支都畫矩形（`sub_1F020` 對 `cs:F1A3`），前者另有五個戰術區呼叫者。哪一支是實心、哪一支帶遮罩，沒有資料可分辨 | 靜態 |
 | [`re/49-corps-formation-window.md`](../re/49-corps-formation-window.md) | `sub_1F9B0` 的 `ax = 1003h` | 貼圖的樣式參數；`sub_10C14` 用 `0801h`（`46` §3）。位元編碼未逐位對過 | 靜態 |
@@ -231,7 +231,7 @@
 | [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | 音色聽感 | 這一份只解「哪一首」。**渲染出來像不像原版是另一回事**（`../playtest/26` §5） | 靜態 |
 | [`re/59-game-over-exit-codes.md`](../re/59-game-over-exit-codes.md) | `sub_14DF0` 的 CF | 「找不到替代據點」與「據點數 0」是不是同一件事，還沒逐行讀 | 靜態 |
 | [`re/59-game-over-exit-codes.md`](../re/59-game-over-exit-codes.md) | 無主城 `0x18` | 值 24 落在 22 個勢力之外，但劇本裡有沒有無主城沒查過 | 靜態 |
-| [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | 城兵臨時軍團的主將名 | §4.1：`0x4200` 照索引算式會指到武將表全零的那一筆。`sub_14F58`（`cx=0x1B`／`0x1C`）還沒讀 | 靜態 |
+| [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | 城兵臨時軍團的主將名 | `sub_14F58` 已讀（2026-09-02）：`push [si+2] ＋ 0FF00h` 當 formatter 參數（`di = sp`）→ `sub_10CDE` 嗶一聲 → `al = 93h`（**預設肖像，不是訊息索引**）→ `sub_18810`，訊息索引在呼叫端的 `cx`（`0x1B`… | 靜態 |
 | [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | 段 1 `0x0000`／`0x0800`／`0x1000`／`0x1800`／`0x3500` 的圖形內容 | 貼點與尺寸 confirmed，**圖上畫了什麼**要另外解碼（`../formats/03` §5.3 的 UI 語意缺口） | 靜態 |
 | [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | 熱區 `0x01`／`0x1F` | 兩張表裡都有 handler，但沒找到註冊它們的 `sub_1E3D7` 呼叫點 | 靜態 |
 | [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | `0x1C21A`（退却）的 `sub_1A8F6` | 只知道它回 CF 與 `ah`，內容未讀 | 靜態 |
@@ -266,7 +266,6 @@
 | [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | BGM 的**起訖時點** | `ENDBGM.DAT` 走 INT 61h、與 `KI.EXE` 同一條音源路徑（已解）。⚠ 2026-08-23 起 remake **整段結局都放 `endbgm-0`**（`musicTrack()`）——先前放的是 `overbgm-0`，那是 `D7OVER.EXE` 的遊戲結束曲。**剩下的缺口只有… | 靜態 |
 | [`re/71-strategy-hotspot-dispatch.md`](../re/71-strategy-hotspot-dispatch.md) | 右鍵表的真實表長 | §2.1。兩種讀法都說得通，靜態影像分不出來，要動態取樣哪些碼會配右鍵 | 靜態 |
 | [`re/71-strategy-hotspot-dispatch.md`](../re/71-strategy-hotspot-dispatch.md) | `funcs_159C0[0x00]`–`[0x08]` 那九筆 | 都不是函式起點。是別的資料還是真的 handler，沒查 | 靜態 |
-| [`re/71-strategy-hotspot-dispatch.md`](../re/71-strategy-hotspot-dispatch.md) | `sub_188B0` | 畫勢力名的那一支，沒讀（`sub_15C14` 在勢力存在時呼叫它） | 靜態 |
 | [`re/71-strategy-hotspot-dispatch.md`](../re/71-strategy-hotspot-dispatch.md) | `22` 的「`off_159D2` 的其餘槽位」、 | （未解小節內文） | 靜態 |
 | [`re/72-world-map-display-list.md`](../re/72-world-map-display-list.md) | `sub_12B3C` | 軍團旗標 `0x20` 成立時呼叫，推測是擦除舊位置，未讀 | 靜態 |
 | [`re/72-world-map-display-list.md`](../re/72-world-map-display-list.md) | `sub_1D782`／`sub_1D7E7`／`sub_1D804` | 三支實際搬像素的常式，未讀 | 靜態 |
@@ -378,7 +377,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（202 條）
+## 2.6 其他（200 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -470,7 +469,6 @@
 | [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 最高速在原版實機是多少 | 機器相依。DOSBox 固定 cycles 量得到「那台的上限」，量不到「原版的答案」 | 實測 |
 | [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 戰場幀是否等於 remake 的一次 `Step()` | 原版一幀做完整條戰場迴圈；remake 的 `Step()` 是規則層一步。**兩者對齊過但沒逐項比** | 靜態 |
 | [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 音效驅動不在時的行為 | `../re/61` §6 | 靜態 |
-| [`spec/35-strategy-minimap.md`](../spec/35-strategy-minimap.md) | `sub_188B0`（畫勢力名） | `sub_15C14` 在勢力存在時呼叫它，沒讀。remake 走 `g.diplomacyFactionName(n)`（與外交視窗同一支，慣例是「勢力 ＝ 君主名」）——⚠ 先前這一列寫成 `Faction.Name`，**那個欄位不存在** | 靜態 |
 | [`spec/36-ground-planes-and-climbing.md`](../spec/36-ground-planes-and-climbing.md) | 命令 6 為什麼擋高平面橫移 | 命令碼 6 是什麼沒對過 | 靜態 |
 | [`spec/36-ground-planes-and-climbing.md`](../spec/36-ground-planes-and-climbing.md) | 擋路時的換位 | 原版被兵擋住還會試 `loc_1B533`（§1.4），remake 的 `tryClimb` 直接失敗。水平移動那條路的換位已經有了（`swapWith`） | 靜態 |
 | [`spec/37-tactical-player-controls.md`](../spec/37-tactical-player-controls.md) | 選了陣形之後原版有沒有立刻重排 | 機器碼只寫偏移，**沒有看到立刻移動的呼叫**；remake 照抄（等命令） | 靜態 |
@@ -540,7 +538,6 @@
 | [`spec/76-lord-not-in-formation.md`](../spec/76-lord-not-in-formation.md) | `sub_1820E` 的候選過濾條件 | 未讀。定案要靠它——現在是強證據 | 靜態 |
 | [`spec/76-lord-not-in-formation.md`](../spec/76-lord-not-in-formation.md) | 君主被編成之後原版會怎樣 | 沒試過。若原版其實允許、只是清單排序讓人以為不行，§2 要推翻（但開關本身照樣成立） | 靜態 |
 | [`spec/76-lord-not-in-formation.md`](../spec/76-lord-not-in-formation.md) | 開關要不要進存檔 | **不進**。與旁邊的速度設定一樣是 session 設定，讀檔不會帶回來 | 靜態 |
-| [`spec/77-rout-talk-messages.md`](../spec/77-rout-talk-messages.md) | `sub_10CDE` 做什麼 | `#23` 前面那一個呼叫。變數推得出是主將名，但那支本身沒讀 | 靜態 |
 | [`spec/77-rout-talk-messages.md`](../spec/77-rout-talk-messages.md) | 戰鬥脫身的 `#1F`／`#20` | 同一支 `sub_12977` 也服務戰鬥脫身；remake 那條路現在畫的是自己的句子，沒接原文 | 靜態 |
 | [`spec/78-amount-input-editor.md`](../spec/78-amount-input-editor.md) | `sub_17D5F` 讀 `CS:7D93` 之外還做什麼 | 每格的 raw byte 表已解，但那一支怎麼把 glyph 貼上去沒逐行讀 | 靜態 |
 | [`spec/78-amount-input-editor.md`](../spec/78-amount-input-editor.md) | 稅率上限 100 的意義 | 是「100%」還是別的刻度沒有第二個證據；remake 照抄 100 | 靜態 |
