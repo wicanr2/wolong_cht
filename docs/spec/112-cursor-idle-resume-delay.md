@@ -72,11 +72,28 @@ loc_11FD0:
 ⚠ **不要用「幀數」寫死。** 用 `speed` 的單位換算，速度層與這一層才會在
 同一個時間基準上；直接寫 33 幀會在改幀率時默默漂掉。
 
+### 3.1 ⭐ 哪些輸入會「重新等滿」，哪些只擋一 frame
+
+**原版寫恢復倒數的只有一支：游標座標與上一次不同。** 按鍵不寫、
+點滑鼠鍵也不寫。所以 remake 的輸入要分兩類，不能一律重新計時：
+
+| remake 的輸入 | 原版對應 | 效果 |
+|---|---|---|
+| 滑鼠游標移動 | `sub_11F7F` 的 `loc_11FD0` | **重新等滿** |
+| 方向鍵捲鏡頭 | 把游標推到畫面邊緣捲地圖走**同一支**（`add ds:9882h, cx` 之後落到 `loc_11FD0`）| **重新等滿** |
+| 訊息框收掉 | `sub_18810` 的 `mov cs:byte_198A5, 8` | **重新等滿** |
+| 滑鼠鍵按著 | 原版按鍵不寫 `ds:98A5h` | 只擋這一 frame |
+| ESC／1–4／＋− | **remake 自己加的鍵盤捷徑**（[`../re/47`](../re/47-main-screen-window-registry.md) §3），原版沒有 | 只擋這一 frame |
+
+⚠ **這一格分錯會很難查。** 把命令輸入也算成「重新等滿」，效果是
+**每按一次快捷鍵世界就凍半秒**——原版沒有這回事，而且症狀是
+「遊戲時間好像走得比預期慢」，不會有人聯想到是鍵盤。
+
 ## 4. 驗證
 
 | 方式 | 證據 |
 |---|---|
-| 單元測試 | `TestIdleClockGateHoldsWhileCursorMoves`、`TestIdleClockGateResumesAfterDelay`、`TestIdleClockGateInputRestartsDelay`、`TestIdleClockGatePauseRestartsDelay`（`cmd/wlgame`）|
+| 單元測試 | `TestIdleClockGateHoldsWhileCursorMoves`、`TestIdleClockGateResumesAfterDelay`、`TestIdleClockGateScrollRestartsButCommandDoesNot`、`TestIdleClockGatePauseRestartsDelay`（`cmd/wlgame`）|
 | 數字 | 門檻 `160 × 600 ＝ 96,000` 單位，每幀 `2,913` ⇒ **33 幀**（60 fps 下 0.550 秒，與原版 0.5493 秒差 0.1%）|
 
 ## 5. 未解

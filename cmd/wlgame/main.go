@@ -1049,24 +1049,30 @@ func (g *game) Update() error {
 		}
 	}
 
+	// ⭐ **捲鏡頭要與其他輸入分開**（docs/spec/112 §3.1）。原版寫恢復倒數的
+	// 只有「游標座標變了」那一支，而**把游標推到畫面邊緣捲地圖也走同一支**
+	// （`sub_11F7F` 的 `add ds:9882h, cx`）——方向鍵是它的 remake 對應，
+	// 所以捲鏡頭要重新等滿。滑鼠鍵與 remake 自己加的鍵盤捷徑則沒有對應的
+	// 寫入端，只擋這一 frame。
+	scrolling := false
 	step := 1
 	if ebiten.IsKeyPressed(ebiten.KeyShift) {
 		step = 8
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyArrowRight) {
-		inputActive = true
+		scrolling = true
 		g.camX += step
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyArrowLeft) {
-		inputActive = true
+		scrolling = true
 		g.camX -= step
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyArrowDown) {
-		inputActive = true
+		scrolling = true
 		g.camY += step
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyArrowUp) {
-		inputActive = true
+		scrolling = true
 		g.camY -= step
 	}
 	g.clampCam()
@@ -1078,7 +1084,7 @@ func (g *game) Update() error {
 	// 才會設 byte_198A3 的 bit 7。任何游標移動或命令都會停住這次
 	// 據點／軍團／物件／時鐘更新，下一個靜止 frame 才可恢復。
 	cursorX, cursorY := ebiten.CursorPosition()
-	if !g.idleGate.Allows(cursorX, cursorY, inputActive) {
+	if !g.idleGate.Allows(cursorX, cursorY, scrolling, inputActive) {
 		return nil
 	}
 	// 系統視窗開著時時間停止（說明書 3.1，docs/spec/13 §2.4）。

@@ -13,7 +13,7 @@ var resumeFrames = (idleResumeUnits + speed.UnitsPerFrame - 1) / speed.UnitsPerF
 func still(g *idleClockGate, n int) bool {
 	ok := false
 	for i := 0; i < n; i++ {
-		ok = g.Allows(12, 34, false)
+		ok = g.Allows(12, 34, false, false)
 	}
 	return ok
 }
@@ -36,8 +36,8 @@ func TestIdleClockGateRequiresStablePointerAndNoCommand(t *testing.T) {
 
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
-			if got := gate.Allows(tc.x, tc.y, tc.inputActive); got != tc.want {
-				t.Fatalf("Allows(%d, %d, %t) = %t, want %t", tc.x, tc.y, tc.inputActive, got, tc.want)
+			if got := gate.Allows(tc.x, tc.y, false, tc.inputActive); got != tc.want {
+				t.Fatalf("Allows(%d, %d, false, %t) = %t, want %t", tc.x, tc.y, tc.inputActive, got, tc.want)
 			}
 		})
 	}
@@ -49,7 +49,7 @@ func TestIdleClockGateRequiresStablePointerAndNoCommand(t *testing.T) {
 func TestIdleClockGateHoldsWhileCursorMoves(t *testing.T) {
 	var gate idleClockGate
 	for i := 0; i < 500; i++ {
-		if gate.Allows(i%40, i%30, false) {
+		if gate.Allows(i%40, i%30, false, false) {
 			t.Fatalf("第 %d 幀游標還在動就放行了", i)
 		}
 	}
@@ -61,7 +61,7 @@ func TestIdleClockGateResumesAfterDelay(t *testing.T) {
 		t.Fatalf("門檻換算 ＝ %d 幀，docs/spec/112 §4 記的是 33 幀", resumeFrames)
 	}
 	var gate idleClockGate
-	gate.Allows(12, 34, false) // 第一次一定 false（座標還沒穩定）
+	gate.Allows(12, 34, false, false) // 第一次一定 false（座標還沒穩定）
 	if still(&gate, resumeFrames-1) {
 		t.Errorf("第 %d 個靜止幀就放行，太早", resumeFrames-1)
 	}
@@ -74,26 +74,41 @@ func TestIdleClockGateResumesAfterDelay(t *testing.T) {
 	}
 }
 
-// 有命令輸入的那一幀不前進，而且把等待重新開始。
-func TestIdleClockGateInputRestartsDelay(t *testing.T) {
+// ⭐ 兩種輸入的效果不同（docs/spec/112 §3.1）。
+//
+// 捲鏡頭 ＝ 游標移動類，重新等滿；滑鼠鍵與 remake 自己加的鍵盤捷徑
+// 原版沒有對應的寫入端，只擋那一 frame。
+func TestIdleClockGateScrollRestartsButCommandDoesNot(t *testing.T) {
 	var gate idleClockGate
-	gate.Allows(12, 34, false)
-	still(&gate, resumeFrames)
-	if gate.Allows(12, 34, true) {
-		t.Fatal("有輸入的那一幀不該放行")
+	gate.Allows(12, 34, false, false)
+	if !still(&gate, resumeFrames) {
+		t.Fatal("等滿了卻沒放行，測試前提就不成立")
 	}
-	if still(&gate, resumeFrames-1) {
-		t.Error("輸入之後沒有重新等滿")
+
+	// 命令：擋這一 frame，下一個安靜的 frame 就恢復。
+	if gate.Allows(12, 34, false, true) {
+		t.Fatal("有命令輸入的那一幀不該放行")
 	}
 	if !still(&gate, 1) {
-		t.Error("輸入之後等滿了卻沒恢復")
+		t.Error("命令只該擋一 frame，不該重新計時")
+	}
+
+	// 捲鏡頭：重新等滿。
+	if gate.Allows(12, 34, true, false) {
+		t.Fatal("捲鏡頭的那一幀不該放行")
+	}
+	if still(&gate, resumeFrames-1) {
+		t.Error("捲鏡頭之後沒有重新等滿")
+	}
+	if !still(&gate, 1) {
+		t.Error("捲鏡頭之後等滿了卻沒恢復")
 	}
 }
 
 // 訊息框收掉之後也要重新等——原版 `sub_18810` 在擦掉框之後設 `8`。
 func TestIdleClockGatePauseRestartsDelay(t *testing.T) {
 	var gate idleClockGate
-	gate.Allows(12, 34, false)
+	gate.Allows(12, 34, false, false)
 	if !still(&gate, resumeFrames) {
 		t.Fatal("等夠了卻沒放行，測試前提就不成立")
 	}

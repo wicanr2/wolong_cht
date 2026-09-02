@@ -33,19 +33,28 @@ const idleResumeUnits = idleResumeCallbacks * speed.Scale
 
 // Allows 記錄這一 frame 的游標位置，並回報自然世界迴圈能否執行。
 // 第一次呼叫一定回傳 false，避免未初始化座標被誤判成 idle。
-func (g *idleClockGate) Allows(x, y int, inputActive bool) bool {
+//
+// 兩種輸入的效果不同，而且**這個差別有出處**：
+//
+//   - scrolling ＝ 游標移動類（方向鍵捲鏡頭）。原版把游標推到畫面邊緣捲地圖
+//     走的是 `sub_11F7F` 的同一支（`add ds:9882h, cx` 之後落到 `loc_11FD0`），
+//     所以**重新等滿**。
+//   - command ＝ 滑鼠鍵與 remake 自己加的鍵盤捷徑（ESC／1–4／＋−）。
+//     原版按鍵不寫 `ds:98A5h`，鍵盤捷徑更是 remake 才有的
+//     （`docs/re/47` §3）——所以**只擋這一 frame，不重新計時**。
+func (g *idleClockGate) Allows(x, y int, scrolling, command bool) bool {
 	moved := !g.seen || g.x != x || g.y != y
 	g.seen = true
 	g.x = x
 	g.y = y
-	if moved || inputActive {
+	if moved || scrolling {
 		g.acc = 0
 		return false
 	}
 	if g.acc < idleResumeUnits {
 		g.acc += speed.UnitsPerFrame
 	}
-	return g.acc >= idleResumeUnits
+	return g.acc >= idleResumeUnits && !command
 }
 
 // Pause 重新開始等待，效果與游標移動一次相同。
