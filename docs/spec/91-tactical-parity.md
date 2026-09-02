@@ -65,7 +65,7 @@
 | 項目 | 位置 |
 |---|---|
 | 分區 | `tools/parity_diff.py --regions tactical`（預設 `strategy` ＝ `90` §3 那五區）|
-| remake 側截圖 | ⭐ **同狀態一定要帶存檔與軍團編號**，否則開出來的是別人的軍團：<br>`tools/parity_shot.sh out.png -direct -scenario 0 -player 0 -seed 7 -save-file <存檔> -load-slot 0 -open-siege -siege-node N -siege-corps 攻,守 -shot-frames F`<br>編號用 `-list-corps` 看（配同一個 `-save-file`）|
+| remake 側截圖 | ⭐ **同狀態一定要帶存檔與軍團編號**，否則開出來的是別人的軍團：<br>`tools/parity_shot.sh out.png -direct -scenario 0 -player 0 -seed 7 -save-file <存檔> -load-slot 0 -open-siege -siege-node N -siege-corps 攻,守 -battle-steps S -shot-frames 1`<br>編號用 `-list-corps` 看（配同一個 `-save-file`）。<br>⚠ **推戰場的是 `-battle-steps`，不是 `-shot-frames`**——見 §6 |
 | 原版側截圖 | `tools/dosv_capture.sh <目錄> "<timeline>"` → `tools/parity_crop.py` |
 
 ## 5. 驗證
@@ -95,13 +95,32 @@
 這條 fixture（據點 82、玩家守方、seed 7）第一次同時滿足是**第 148 幀**。
 條本身只活 `0x14` ＝ 20 幀，但攻方站定之後幾乎每幀都在打，
 每一次更小的耐久都會把到期時刻往後推——所以窗口**不是 20 幀**，
-量到第 300 幀還亮著。`-shot-frames 160`／`240`／`300` 三個點的
-`field` 分別是 0.86%／0.81%／0.84%。
+量到第 300 幀還亮著。`-battle-steps 160`／`240`／`300` 三個點的
+`field` 分別是 0.86%／0.81%／0.84%（2026-08-27），
+接上兵的戰力（[`115`](115-soldier-power.md)）之後重量是
+**0.85%／0.84%／2.00%**（[`../playtest/58`](../playtest/58-parity-retest-20260902.md)）。
 
 ⚠ **窗口會隨規則層再變。** 寫進驗收腳本的應該是條件，不是那三個數字；
 在有「跑到條件成立就截圖」的旗標之前，改動規則層之後要重新量。
 
-### 6.1 ⭐ 每一個計量條都是一個獨立讀數
+### 6.1 ⛔ 推戰場的旋鈕是 `-battle-steps`，不是 `-shot-frames`
+
+兩個都是「跑幾下再截圖」，但推的不是同一個時鐘：
+
+| 旗標 | 推什麼 | 換算 |
+|---|---|---|
+| `-battle-steps S` | **直接**呼叫 `Battle.Step()` S 次 | 1:1 |
+| `-shot-frames F` | 畫面更新 F 次，戰場靠節流器跟著走 | 戰術速度 2 → 每 **6.59** 個畫面才一步（`speed.Steps`：`2913 / (2 × 16 × 600)`）|
+
+所以 `-shot-frames 300` 只推到戰場的第 45 幀——**門強度條要到第 148 幀
+才第一次亮**，於是那一塊整片是黑的，`field` 卡在 4.3% 不動。
+攻城這一組一律 `-battle-steps S -shot-frames 1`。
+
+⚠ **這個坑會偽裝成回歸**：數字變差、三個取樣點又幾乎一樣，
+看起來就像「規則層改壞了」。判準是 §6 那三個局面條件——
+先問「條亮了沒」，再問「差多少」。
+
+### 6.2 ⭐ 每一個計量條都是一個獨立讀數
 
 原版那一張畫面上有三條可以反推內部值的量表：門強度（城壁耐久）、
 對方體力、對方兵力。三個一起用，就不只是「對到第幾幀」，

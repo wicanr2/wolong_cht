@@ -158,6 +158,7 @@
 | **兵的戰力來自統率力**（不是士氣）| [`115-soldier-power.md`](115-soldier-power.md) | 已實作並有單測；同一場攻城的勝負跟著翻面。戰術九區對拍待重跑 |
 | 驗收戰場少了子圖塊表，打破的門反而封城 | [`116-retreat-cannot-leave-the-city.md`](116-retreat-cannot-leave-the-city.md) | 已修：fixture 改用 `NewFieldFromTileLayers`。**正式路徑本來就沒問題** |
 | **RLE 資料檔的 4 byte 長度頭** | [`113-rle-length-header.md`](113-rle-length-header.md) | 原版三個執行檔都 `LSEEK` 跳過它才解壓；`rle.DecodeFile` 已接，19 個過場檔逐檔解到宣告長度 |
+| 驗收捷徑要先武裝開場喊話再推戰場 | [`117-fixture-arms-duel-before-stepping.md`](117-fixture-arms-duel-before-stepping.md) | 已修並有突變測試；野戰對拍的 `field` 從 11.24% 回到 95 px |
 
 ## 怎麼加一份
 

@@ -15,6 +15,10 @@
 - remake 側：`tools/parity_shot.sh … -save-file SAVE-FIELD.DAT -load-slot 0
   -shot-frames 400`（2026-08-29 起遭遇直接進戰場，`docs/spec/105`；當時多帶的
   encounter-choose 旗標已拿掉）。
+  ⚠ **這條指令現在跑不到戰場**：截圖模式沒有人按掉遭遇訊息，第 400 到
+  1,100 幀是同一張 PNG。現行指令改走
+  `-open-battle -siege-corps 39,35 -battle-steps 52`，重量的數字在
+  [`58`](58-parity-retest-20260902.md) §1.1。
   單挑狀態機接上後喊話在**戰場 tick 50** 出現，400 幀約落在 tick 52；
   氣勢評估帶亂數（本存檔兩軍士氣同 200、氣勢平手靠亂數尾），
   挑戰側不是呂布（攻方）時整張圖對不上——同一 seed 下 rng 流固定，

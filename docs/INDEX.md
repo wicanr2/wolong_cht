@@ -91,6 +91,7 @@
 | [`docs/playtest/55-encounter-menu-parity.md`](playtest/55-encounter-menu-parity.md) | 55 — 實機：遭遇時原版沒有「戰鬥指揮／委任」選單 | 定案。訊息框按掉之後直接是戰場，中間沒有選單；playtest/31 §6 那一項不是「還沒對拍」，是原版沒有那個畫面。 | 2026-08-29 |
 | [`docs/playtest/56-lubu-flow-parity.md`](playtest/56-lubu-flow-parity.md) | 56 — 實機對拍：AppImage 走「選呂布 → 對曹操宣戰 → 編成攻城」 | 完成，六項差異已修並重測。 | 2026-09-01 |
 | [`docs/playtest/57-appimage-20260902-reverify.md`](playtest/57-appimage-20260902-reverify.md) | 57 — 重打包後的 AppImage 複驗（呂布這條流程） | 完成。 | 2026-09-02 |
+| [`docs/playtest/58-parity-retest-20260902.md`](playtest/58-parity-retest-20260902.md) | 58 — 接上兵的戰力之後重跑戰術對拍：野戰回到 0.05%，攻城沒有退步 | 兩組都重量完，沒有回歸。 | 2026-09-02 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告是 72 秒， 含語言切換與原版並排兩段；遊戲段落是逐幀錄下來的實跑畫面。 2… | 2026-08-30 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
@@ -215,6 +216,7 @@
 | [`docs/spec/114-general-affinity.md`](spec/114-general-affinity.md) | 114 — 武將的心向勢力（+0x19）：在野出仕與俘虜歸降 | CONFORMED。 | 2026-09-02 |
 | [`docs/spec/115-soldier-power.md`](spec/115-soldier-power.md) | 115 — 兵的戰力來自統率力，不是士氣 | CONFORMED。 | 2026-09-02 |
 | [`docs/spec/116-retreat-cannot-leave-the-city.md`](spec/116-retreat-cannot-leave-the-city.md) | 116 — 驗收用的戰場少了子圖塊表，打破的門反而把城封死 | CONFORMED。 | 2026-09-02 |
+| [`docs/spec/117-fixture-arms-duel-before-stepping.md`](spec/117-fixture-arms-duel-before-stepping.md) | 117 — 驗收捷徑要先武裝開場喊話再推戰場 | CONFORMED。 | 2026-09-02 |
 | [`docs/spec/12-strategy-chrome.md`](spec/12-strategy-chrome.md) | 12 — 主畫面的視窗外框、指令列與右欄 | CONFORMED。主畫面的四個常駐視窗矩形、指令列版面與縮小地圖／勢力篩選鈕的 位置全部由機器碼定死（[docs/… | 2026-08-15 |
 | [`docs/spec/13-main-window-toggles.md`](spec/13-main-window-toggles.md) | 13 — 主畫面四個視窗的開關 | CONFORMED。已實作並留下四窗全開／全關的截圖； 舊的 g.open[] 那一套已整個拿掉，主畫面視窗只剩一份… | 2026-08-15 |
 | [`docs/spec/14-finance-window.md`](spec/14-finance-window.md) | 14 — 財政視窗 | CONFORMED。版面已照原版重寫並有契約測試； 數值輸入器已接上（[78](78-amount-input-ed… | 2026-08-15 |

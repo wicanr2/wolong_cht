@@ -1,6 +1,7 @@
 # 115 — 兵的戰力來自統率力，不是士氣
 
-**狀態：CONFORMED。** 算式、戰場類別選欄與接線都上了，單測五支。
+**狀態：CONFORMED。** 算式、戰場類別選欄與接線都上了，單測五支，
+戰術九區對拍也重跑過（野戰七區 0 px，`../playtest/58`）。
 接上之後那支攻城迴歸從「20 萬幀不結束」變成**第 967 幀結束**——
 擋路的不是這條規則，是驗收 fixture 少帶子圖塊表（規格 116）。
 
@@ -66,7 +67,7 @@ sub_1B6BC：命中率 = 9.77% + (1 − 9.77%) × min(24, 攻 − 守) ÷ 128
 |---|---|
 | 單元測試 ✅ | `TestSoldierPowerPerTroopType`（三個兵種係數 30／4／12）、`TestSoldierPowerRisesWithCommand`（統率單調，擋「又接回士氣」）、`TestLeaderPowerAndHP`、`TestLeaderHPIsNotMorale`、`TestAptitudeIndexByBattleClass` |
 | 迴歸 ✅ | `TestNormalScenarioTacticalBattleTerminates`：第 967 幀結束（0.49 秒）|
-| 對原版 | **戰術九區逐區對拍要重跑**（[`../playtest/40`](../playtest/40-tactical-parity.md)）——數值尺度變了 |
+| 對原版 ✅ | 戰術九區逐區對拍已重跑（[`../playtest/58`](../playtest/58-parity-retest-20260902.md)）：**野戰七區 0 px、`field` 95 px**，攻城前兩個取樣點與 08-27 同值。沒有回歸 |
 
 ## 5. ⭐ 它照出一個 fixture 缺陷
 
