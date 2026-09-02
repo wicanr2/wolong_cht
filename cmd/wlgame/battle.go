@@ -1170,17 +1170,25 @@ func (g *game) stageEncounter(siege bool, siegeNode, steps int, me, foe *state.C
 	})
 
 	if g.battleActive() {
+		p := g.world.PendingBattle()
+		// ⛔ **先武裝再推。** `startBattleTalk` 裡才 `SetDuelInput`，
+		// 而單挑的開場只有 50 tick——推完才武裝的話挑戰喊話一次都不會
+		// 產生，對拍看到的是一張沒有對白框的戰場（docs/spec/117）。
+		g.startBattleTalk(p)
 		// 只跑到部隊展開。900 tick 會使野戰 fixture 在第一幀 GUI
 		// 前就結束，造成「攻城有戰場、兩軍遭遇只有戰果」的假差異。
 		// steps ＝ 0 是**原版開場對白那一幀**：一個兵都還沒動。
+		//
+		// ⭐ 逐拍推，節拍與正常迴圈相同：`updateBattle` 是推 n 格戰場
+		// **同時** `pumpDuelTalks` ＋ `tickBattleTalk(n)`。一次推完再補
+		// 時鐘在總量上湊得出來，但「第 50 tick 產生、第 52 tick 還掛著」
+		// 這種中途狀態湊不出來——而對拍要比的正是中途狀態
+		// （對白 60 tick 到期，docs/spec/60）。
 		for i := 0; i < steps; i++ {
-			g.world.PendingBattle().Battle.Step()
+			p.Battle.Step()
+			g.pumpDuelTalks(p)
+			g.tickBattleTalk(1)
 		}
-		// ⭐ 對白框的時鐘要跟著推：正常迴圈是 `updateBattle` 推 n 格戰場
-		// **同時** `tickBattleTalk(n)`，驗收路徑漏掉的話框永遠不消失
-		// （原版 60 tick 到期，docs/spec/60）。
-		g.startBattleTalk(g.world.PendingBattle())
-		g.tickBattleTalk(steps)
 		g.tacticalSpeed = 1
 	}
 }
