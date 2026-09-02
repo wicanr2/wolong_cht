@@ -207,6 +207,7 @@
 | [`docs/spec/11-ai-sortie.md`](spec/11-ai-sortie.md) | 11 — 進言「請求君主出陣」 | CONFORMED。 | 2026-08-14 |
 | [`docs/spec/110-corps-command-menu.md`](spec/110-corps-command-menu.md) | 110 — 指令列的「軍團」是兩項彈出選單 | CONFORMED。原版點「軍團」跳的是 | 2026-09-01 |
 | [`docs/spec/111-lord-with-corps-blocks-advise.md`](spec/111-lord-with-corps-blocks-advise.md) | 111 — 君主帶著軍團的時候，進言整個關掉 | CONFORMED。這是 remake 允許君主編成（[76](76-lord-not-in-formation.m… | 2026-09-01 |
+| [`docs/spec/112-cursor-idle-resume-delay.md`](spec/112-cursor-idle-resume-delay.md) | 112 — 游標停下之後的恢復延遲 | CONFORMED。 | 2026-09-02 |
 | [`docs/spec/12-strategy-chrome.md`](spec/12-strategy-chrome.md) | 12 — 主畫面的視窗外框、指令列與右欄 | CONFORMED。主畫面的四個常駐視窗矩形、指令列版面與縮小地圖／勢力篩選鈕的 位置全部由機器碼定死（[docs/… | 2026-08-15 |
 | [`docs/spec/13-main-window-toggles.md`](spec/13-main-window-toggles.md) | 13 — 主畫面四個視窗的開關 | CONFORMED。已實作並留下四窗全開／全關的截圖； 舊的 g.open[] 那一套已整個拿掉，主畫面視窗只剩一份… | 2026-08-15 |
 | [`docs/spec/14-finance-window.md`](spec/14-finance-window.md) | 14 — 財政視窗 | CONFORMED。版面已照原版重寫並有契約測試； 數值輸入器已接上（[78](78-amount-input-ed… | 2026-08-15 |

@@ -153,6 +153,7 @@
 | 編成成功之後主將要講一句 | [`109-formation-leader-line.md`](109-formation-leader-line.md) | 已實作並有單測；主公型那三格是空的，取到空字串不開框 |
 | 指令列的「軍團」是兩項彈出選單 | [`110-corps-command-menu.md`](110-corps-command-menu.md) | 已實作並有單測；選單框本身還沒逐像素比（§5）|
 | 君主帶著軍團時進言關掉（**remake 差異**）| [`111-lord-with-corps-blocks-advise.md`](111-lord-with-corps-blocks-advise.md) | 使用者裁定 2026-09-01；判準與「請求君主出陣」共用一支 |
+| **游標停下之後的恢復延遲**（即時制的反應時間）| [`112-cursor-idle-resume-delay.md`](112-cursor-idle-resume-delay.md) | 已實作並有單測；游標移動中世界完全停住，停下後等 160 個回呼（0.549 秒）|
 
 ## 怎麼加一份
 

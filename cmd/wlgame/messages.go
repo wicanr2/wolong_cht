@@ -78,6 +78,10 @@ func (g *game) updateMessageOnly() {
 		return
 	}
 	g.messages = g.messages[1:]
+	// 訊息框收掉之後世界再停一次，玩家看完訊息、手還沒回到滑鼠時
+	// 時間不會先跑掉（原版 `sub_18810` 的 `mov cs:byte_198A5, 8`，
+	// docs/spec/112 §1）。
+	g.idleGate.Pause()
 }
 
 // talkLines 取出 TALK.DAT 的原始行並代入目前已證實可用的 marker。
