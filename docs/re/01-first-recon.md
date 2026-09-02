@@ -124,7 +124,7 @@ PC-98 只到 `END_S12.DAT`，松崗版多了 `END_S13`／`S14`／`S15`。
 |---|---|---|
 | `FGDOS.SYS`／`STARTUP.SYS`／`CCP.EXE`／`STARTUP.CMD` | pc98 | 自製 DOS，防拷候選 |
 | `FONTGRF.DAT`（1,216 B）／`YNFONT.COM`（843 B） | pc98 | 字型。對照 dosv 的 `YNFONT.EXE`（60,888 B）→ **PC-98 靠字型 ROM** |
-| `YNMOUSE.COM` | pc98 | 滑鼠驅動。dosv 版把它併進 `KI.EXE`？未驗 |
+| ~~`YNMOUSE.COM`~~ `[DOS/BIOS]` | pc98 | 滑鼠驅動。**DOS/V 版確實併進 `KI.EXE`**（confirmed，2026-09-02）：`KI.EXE` 的 **segment `0x2000` 整段是滑鼠層**——`sub_20000` 是 far 分派器（`si = ax × 2`，跳表 `funcs_20006`），底下 16 支全部走 `INT 33h`：`sub_2002E`（`ax=0` reset ＋ `ax=7`／`8` 把游標範圍設成 **0–27Fh × 0–18Fh ＝ 640×400**）、`sub_20070`（`ax=3` 讀座標與按鍵，快取進 `cs:word_200FC`／`200FE`）、`sub_2009A`（回傳快取）。⚠ **這一段不是 remake 的缺口**：那是原版與滑鼠驅動的介面，remake 的輸入走 Ebiten |
 | `ROGO.EXE`／`ROGO0.DAT`／`ROGO1.DAT` | pc98 | 開機 logo（「ロゴ」羅馬字）。dosv 換成 `LOGO.EXE` |
 | `HDINST.EXE` | pc98 | 硬碟安裝 |
 | `PASS.MAP`／`PASS.SCH` | dosv | **PC-98 沒有**。關隘資料，移植時新增或改名。未解 |
