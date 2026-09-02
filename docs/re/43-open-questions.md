@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**502 列分布在 201 份文件，平均每份 2.5 列。**
+**498 列分布在 199 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -41,11 +41,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 15 | 12 | 3 | 0 |
 | 資料保存 | 26 | 25 | 1 | 0 |
-| 程式碼理解 | 168 | 162 | 6 | 0 |
+| 程式碼理解 | 165 | 159 | 6 | 0 |
 | 驗收 | 84 | 73 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 203 | 190 | 13 | 0 |
-| **合計** | **502** | 467 | 35 | 0 |
+| 其他 | 202 | 189 | 13 | 0 |
+| **合計** | **498** | 463 | 35 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,8 +53,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/re/` | 168 |
-| `docs/spec/` | 168 |
+| `docs/spec/` | 167 |
+| `docs/re/` | 165 |
 | `docs/playtest/` | 84 |
 | `docs/formats/` | 26 |
 | `docs/release/` | 18 |
@@ -114,7 +114,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`） | 靜態 |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 |
 
-## 2.3 程式碼理解（168 條）
+## 2.3 程式碼理解（165 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -152,7 +152,6 @@
 | [`re/09-combat.md`](../re/09-combat.md) | `[si+3]` 的 0／1／≥2 是誰設的 | 決定哪一支軍團會進戰鬥畫面 | 靜態 |
 | [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `ds:0D2F8` | 4,096 / 未解（第二份戰場？） | 靜態 |
 | [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `ds:0D306` | 30,720 / 未解 | 靜態 |
-| [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `ds:0D42` | 4,000 / 未解（與大地圖的連結表同大小） | 靜態 |
 | [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | 兵士記錄剩下的欄位 | `ds:0D30E`，32 B／筆 / 目前具名的有 `+0x00`／`+0x01`／`+0x02`／`+0x03` 體力／`+0x04` 大將／`+0x05` 面向／`+0x14` 陣形座標／`+0x16`・`+0x17` 繞路游標／`+0x19` 疲勞／`+0x1A`・`+0x1B` 命令／`+0x1E` Z… | 靜態 |
 | [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `ds:0D306` 那 30,720 B | 未解 / 大小是 `0x7800`，與任何已知的表都對不起來 | 靜態 |
 | [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `loc_1A065` 的自我修改碼 | `▶▶` 列切換的機制 confirmed（`byte_1A06A` 在 `0xEB`／`0x74` 間切），**擋掉的是什麼**沒逐行讀（`60` §） | 靜態 |
@@ -214,9 +213,7 @@
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `op 01` 的用法 | 它是直線（§2.2），但 handler 不展開座標而十個場景又沒用到它——**預期的呼叫方式無法驗證** | 靜態 |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `op 02` 與 `op 03` 的差別 | 兩支都畫矩形（`sub_1F020` 對 `cs:F1A3`），前者另有五個戰術區呼叫者。哪一支是實心、哪一支帶遮罩，沒有資料可分辨 | 靜態 |
 | [`re/49-corps-formation-window.md`](../re/49-corps-formation-window.md) | `sub_1F9B0` 的 `ax = 1003h` | 貼圖的樣式參數；`sub_10C14` 用 `0801h`（`46` §3）。位元編碼未逐位對過 | 靜態 |
-| [`re/50-city-info-window.md`](../re/50-city-info-window.md) | `cs:word_1987C` | 據點圖的暫存段，由誰配置未讀 | 靜態 |
 | [`re/51-corps-info-window.md`](../re/51-corps-info-window.md) | `or byte ptr [si], 2` | 位元 1 ＝「有指令」（`34`），這裡是它的其中一個寫入端 | 靜態 |
-| [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | `ds:987Ch` | 四筆槽頭的暫存段，由誰配置未讀 | 靜態 |
 | [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | 檔名 | `sub_18C20` 沒設 `dx`，靠 `sub_18B7C` 的 `push dx`／`pop dx` 從更上層傳進來 | 靜態 |
 | [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | `sub_18C9F` | 關閉時擦除的那一支，未讀 | 靜態 |
 | [`re/54-advisor-naming-window.md`](../re/54-advisor-naming-window.md) | 屬性低 byte | `01` 與 `03` 的差別未讀（§3） | 靜態 |
@@ -387,7 +384,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（203 條）
+## 2.6 其他（202 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -456,7 +453,6 @@
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 池的上限 | `sub_155EC` 的 `0xFFDC` 只在退兵路徑上驗過；月結加兵是不是同一支未查。**remake 兩條路徑現在都夾**（`economy.ClampReserve`），但那是照著同一個常數做的，不是證明原版共用同一支 | 靜態 |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 頭像的邊框 | `sub_107D2` 只 blit 64×64 的圖塊，**框在哪裡畫的沒找到**——場景 5 的 op 清單裡沒有頭像那一格的框 | 靜態 |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 兵種標籤 | 畫面用場景 5 的「主將」，規則層的 `army.Position` 第一個是「大將」（原版 TALK #62 也這樣說）。兩處用語不同是原版就有的，不要統一 | 靜態 |
-| [`spec/23-city-info-window.md`](../spec/23-city-info-window.md) | `cs:word_1987C` 由誰配置 | 原版每次開視窗都重讀一次檔（`../re/50` §4）；remake 的 `library` 是整檔載入，不需要這一層 | 靜態 |
 | [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 指令流程的**入口**與 remake 不同 | `sub_17FDB` 已解（`../re/45` §1：選據點 → 選「戰鬥指揮／委任／解體」→ 寫 `+0x00` 位元 2、`+0x0B`、`+0x20`）。⚠ 先前這一列寫「remake 沒有那三個選項」——**那是錯的**：`cmd/wlgame/marchmode.go` 三個選項都在（`docs/s… | 靜態 |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 空槽標記 | 原版用名稱欄第一個字 `0xD0A1`；remake 用「載得起來且玩家勢力有效」判定，兩者不等價 | 靜態 |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 新遊戲共用 | remake 的啟動殼層是自己的畫面，還沒有換成這個四槽視窗 | 靜態 |

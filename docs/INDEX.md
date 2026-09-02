@@ -293,7 +293,7 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 131 條。**要查「這件事解了沒」先看這裡**，
+共 130 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（77 條）
@@ -426,7 +426,7 @@
 |---|---|
 | 索引 ▸ 「自定」軍師命名視窗 | `docs/spec/00-index.md` |
 
-### 未解（21 條）
+### 未解（20 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -435,7 +435,6 @@
 | 1. 檔案 ＝ 4 個劇本區塊 × 22,208 B ▸ +0x3AC0…+0x42C0 | `docs/formats/08-sinario-save.md` |
 | 2. 記憶體佈局：sub_1CC31 ▸ ds:0D2F8 | `docs/re/11-tactical-battle.md` |
 | 2. 記憶體佈局：sub_1CC31 ▸ ds:0D306 | `docs/re/11-tactical-battle.md` |
-| 2. 記憶體佈局：sub_1CC31 ▸ ds:0D42 | `docs/re/11-tactical-battle.md` |
 | 3. 曲塊內部 ▸ +0x00 | `docs/re/23-bgm-resource-format.md` |
 | 3. 曲塊內部 ▸ +0x06–+0x0F | `docs/re/23-bgm-resource-format.md` |
 | 3. 武將記錄（32 byte） ▸ +20（0x14） | `docs/formats/08-sinario-save.md` |
