@@ -60,6 +60,7 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 |---|---|
 | [`22`](22-strategy-command-tree.md) | **指令列與熱區分派**——整個戰略層的入口 |
 | [`25`](25-message-variants-and-personnel.md) | 訊息索引 ≥ `0x196` 的 ×8 變體；人事四個指令 |
+| [`77`](77-general-affinity-and-flags.md) | ⭐ 武將記錄 `+0x19` ＝ 心向的勢力（在野出仕與俘虜歸降共用）；旗標 bit 5／bit 6 |
 | [`30`](30-corps-formation-ui.md) | 軍團編成：兵員池、兵種循環、移動間隔公式 |
 | [`31`](31-faction-picker-screen.md) | 勢力一覽（同時是領地圖）；主畫面的重繪分派表 |
 | [`32`](32-strategy-detail-panels.md) | 據點詳情欄與軍團詳情欄的欄位對照 |

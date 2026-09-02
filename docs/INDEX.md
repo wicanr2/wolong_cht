@@ -175,6 +175,7 @@
 | [`docs/re/74-battle-opening-duel.md`](re/74-battle-opening-duel.md) | 74 — 開戰喊話是單挑狀態機的開頭：挑戰、拒戰、對打互嗆、決著 | 全段解出並實作（2026-08-25）——挑戰／拒戰／應戰、回合互嗆、 對打段與決著都在 internal/rule… | 2026-08-25 |
 | [`docs/re/75-duel-talk-audit.md`](re/75-duel-talk-audit.md) | 75 — 單挑台詞的逐組逐變體抽驗：24 組 × 8 變體全表＋實機反查 | 靜態表全讀完、六個組的實機反查全部命中； 組 0x1B6 定案為攻城的城壁喊話（不是單挑組，re/74 舊表已修）。 | 2026-08-25 |
 | [`docs/re/76-d7open-opening-player.md`](re/76-d7open-opening-player.md) | 76 — D7OPEN.EXE：開場播放器、開場旁白全文，與資料檔的 4 byte 長度頭 | 六幕的順序、每一幕的版面與色盤、旁白全文都解出來了。 最重要的一條是通用的——MMAP.MAP 那一族的 RLE 檔… | 2026-09-02 |
+| [`docs/re/77-general-affinity-and-flags.md`](re/77-general-affinity-and-flags.md) | 77 — 武將記錄 +0x19：在野出仕與俘虜歸降共用的「心向勢力」，以及旗標的 bit 5／bit 6 | +0x19、旗標 bit 5 與 bit 6 都定案；+0x14／+0x15／+0x1B 全庫掃過沒有讀取端（§5）。 | 2026-09-02 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-16 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -296,7 +297,7 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 130 條。**要查「這件事解了沒」先看這裡**，
+共 126 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（77 條）
@@ -429,7 +430,7 @@
 |---|---|
 | 索引 ▸ 「自定」軍師命名視窗 | `docs/spec/00-index.md` |
 
-### 未解（20 條）
+### 未解（16 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -440,10 +441,6 @@
 | 2. 記憶體佈局：sub_1CC31 ▸ ds:0D306 | `docs/re/11-tactical-battle.md` |
 | 3. 曲塊內部 ▸ +0x00 | `docs/re/23-bgm-resource-format.md` |
 | 3. 曲塊內部 ▸ +0x06–+0x0F | `docs/re/23-bgm-resource-format.md` |
-| 3. 武將記錄（32 byte） ▸ +20（0x14） | `docs/formats/08-sinario-save.md` |
-| 3. 武將記錄（32 byte） ▸ +21（0x15） | `docs/formats/08-sinario-save.md` |
-| 3. 武將記錄（32 byte） ▸ +25（0x19） | `docs/formats/08-sinario-save.md` |
-| 3. 武將記錄（32 byte） ▸ +27（0x1B） | `docs/formats/08-sinario-save.md` |
 | 3. 軍團記錄的欄位（部分） ▸ +0x08 | `docs/re/05-battle-selection.md` |
 | 3.2 ⭐ 大地圖是 640×368，四個視窗蓋在它上面 ▸ 0x80 | `docs/re/47-main-screen-window-registry.md` |
 | 4. 只在單邊存在的檔（confirmed） ▸ PASS.MAP／PASS.SCH | `docs/re/01-first-recon.md` |

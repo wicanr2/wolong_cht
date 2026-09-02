@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**486 列分布在 195 份文件，平均每份 2.5 列。**
+**488 列分布在 196 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -40,12 +40,12 @@
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
 | 規則正確性 | 15 | 12 | 3 | 0 |
-| 資料保存 | 25 | 25 | 0 | 0 |
-| 程式碼理解 | 156 | 150 | 6 | 0 |
+| 資料保存 | 23 | 23 | 0 | 0 |
+| 程式碼理解 | 160 | 154 | 6 | 0 |
 | 驗收 | 84 | 73 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 200 | 187 | 13 | 0 |
-| **合計** | **486** | 452 | 34 | 0 |
+| **合計** | **488** | 454 | 34 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -54,9 +54,9 @@
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/spec/` | 165 |
-| `docs/re/` | 156 |
+| `docs/re/` | 160 |
 | `docs/playtest/` | 84 |
-| `docs/formats/` | 25 |
+| `docs/formats/` | 23 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 15 |
 | `docs/mobile/` | 11 |
@@ -74,7 +74,7 @@
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 少數戰術腳本與 `BATTLE` 資料欄位 | 十九個指令已全讀，剩的是資料側的殘留欄位 | 靜態 |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 重算路徑的時機 | 原版只在命令生效時算一次；remake 的兵每幀都可能被別人擋住，所以改成**每 30 幀可重算一次**（`replanInterval`，`internal/rules/tactical/soldier.go`）。這是 **remake 差異**，不是原版行為——原版被擋住之後怎麼處理沒有讀 | 靜態 |
 | [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 那兩個歸零的欄位很可能就是**本月累計的收入與支出 → 假說，待驗 | （散句） | 靜態 |
-| [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0` 旗標的 7 種值代表什麼 | 身分已確定在 `+0x17`，`+0` 是別的東西。只知道 bit 4 ＝ 不事二主 | 靜態 |
+| [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0` 旗標的 bit 0 | 只出現一次（劇本三的張衛），全庫沒有讀取端（`../re/77` §5）。要嘛是劇本作者的筆誤，要嘛是 PC-98 版才用的位元——後者要等 PC-98 的 `KI.EXE` 進 IDA 才驗得了 | 靜態 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 正文散在各節的開放項目集中在這裡；每一條都寫下手點， | （未解小節內文） | 靜態 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 委任 AI「統率力低就打得差」的**實作方式**（§3.2）——是決策頻率、判斷正確率，還是可用戰術的多寡 | 找戰術層讀武將統率力欄位的地方；`internal/rules/tactical` 目前不隨統率力變化 | 靜態 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 說服請求裡 `SI+1Eh` 的完整結構語意、其他理由的索引公式、`cx ≥ 0x100` 分支（§1.3） | 三者都在 `sub_13830` 一帶；先補 `SI+1Eh` 的欄位表再談索引公式 | 靜態 |
@@ -83,7 +83,7 @@
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 入佇列的隨機空格分佈 | 目前是 remake 的明示差異；要對齊得先解出原版排程時挑空格的那段 | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 四個劇本的結局是否不同 | **觸發條件四劇本共用**，差別只在初始勢力數；結局的十二幕也是一條路播完，沒有依劇本分支的證據（`../re/70` §3）。**但沒有實跑四個劇本對過** | 實測 |
 
-## 2.2 資料保存（25 條）
+## 2.2 資料保存（23 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -102,18 +102,16 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x0080` | 2,112 / **勢力表：22 筆 × 64 B**（`docs/re/06` §5）＋ 其後未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x1EC0` | 7,168 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x3AC0`…`+0x42C0` | — / 未解 | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0` | 1 / 旗標。四劇本 508 筆只出現 **8 種值**（0／0x80／0x81／0x90／0xA0／0xC0／0xD0／0xE0），用到的位元只有 **bit 7 ＝ 在場**（381 筆）、**bit 4 ＝ 不事二主**（79 筆，舊主已滅時被俘會自刎，`sub_129C3` → 訊息 0x43）、bit … | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+20`（`0x14`） | 1 / 值域 **0–7**、8 種，四劇本 508 筆都有值（0 佔 158、2 佔 98）。**與 `+0x1E` 的說話類型同值域但不同值** / 未解（要找 `[bx+14h]` 的讀取端） | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+21`（`0x15`） | 1 / 四劇本 508 筆**全 0**，沒有已知的讀取端 / 未解 | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+25`（`0x19`） | 1 / **359／508 是 `0xFF`**，其餘落在 0–20（13 種）。⚠ 不等於 `+28` 的勢力編號（508 筆裡只有 148 筆相同），所以不是勢力欄的第二份 / 未解 | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`（`0x1B`） | 1 / 只有兩種值：0（481 筆）與 `0xFF`（27 筆）。劇本一的 `0xFF` 是笮融、張英、周倉、嚴輿、周昕、李別、刑道榮、劉賢、武安國九人 / 未解 | 靜態 |
+| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0` | 1 / 旗標。四劇本 508 筆只出現 **8 種值**（0／0x80／0x81／0x90／0xA0／0xC0／0xD0／0xE0）。**bit 7 ＝ 在場**（381 筆）；**bit 6 ＝ 主公型**（43 筆，全是現任君主，被俘而舊主勢力已滅時清掉並把 `+30` 說話類型 `+3`，`sub_129C… | 靜態 |
+| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+20`（`0x14`） | 1 / 值域 **0–7**、8 種，四劇本 508 筆都有值（0 佔 158、2 佔 98）。**與 `+0x1E` 的說話類型同值域但不同值**，交叉表也沒有結構 / 語意未解。**讀取端全庫掃過是零**（`../re/77` §5） | 靜態 |
+| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`（`0x1B`） | 1 / 只有兩種值：0（481 筆）與 `0xFF`（27 筆）。劇本一的 `0xFF` 是笮融、張英、周倉、嚴輿、周昕、李別、刑道榮、劉賢、武安國九人 / 語意未解。**讀取端全庫掃過是零**（`../re/77` §5） | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `OPEN_S1` 的捲動節拍 | 版面三塊已解（`../re/76` §6），但每步捲幾列、26 格的動畫多久換一格，要先定 `int 61h` 的計時單位 | 靜態 |
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `OPEN_S5` 的來源列距 | `sub_103EF` 每兩列消耗 720 B，推不出單純的「一列 240 B」；沒有畫面驗證（同 §10） | 靜態 |
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 |
 
-## 2.3 程式碼理解（156 條）
+## 2.3 程式碼理解（160 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -273,6 +271,10 @@
 | [`re/76-d7open-opening-player.md`](../re/76-d7open-opening-player.md) | `sub_10A70` | 第 5 幕與開場初始化各叫一次，內容未讀 | 靜態 |
 | [`re/76-d7open-opening-player.md`](../re/76-d7open-opening-player.md) | 旁白的推進速度 | 逐字之間沒有顯式延遲，靠 `sub_10056` 主迴圈的 `sub_10777` 節拍；換算成秒要先定 `int 61h` 的計時單位 | 靜態 |
 | [`re/76-d7open-opening-player.md`](../re/76-d7open-opening-player.md) | PC-98 版的差異 | 4,836 B，尚未進 IDA。旁白應為 Shift-JIS，位址不同 | 靜態 |
+| [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | `+0x14` 的語意 | 值域 0–7（在場 381 筆：0 佔 126、2 佔 68），與 `+0x1E` 說話類型交叉表沒有結構。沒有讀取端（§5） | 靜態 |
+| [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | `+0x1B` 的語意 | 只有 0（368）與 `0xFF`（13）。沒有讀取端 | 靜態 |
+| [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | 旗標 bit 0 | 只出現一次（劇本三的張衛），沒有讀取端 | 靜態 |
+| [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | `+0x19` 誰寫非 `0xFF` 值 | **只有劇本作者**：`KI.EXE` 裡只找得到清成 `0xFF` 的寫入端（`sub_15899`）。所以它是純劇本資料，執行期只會消耗不會補充 | 靜態 |
 
 ## 2.4 驗收（84 條）
 
