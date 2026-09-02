@@ -19,7 +19,12 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 IMAGE=ida-pro-9.4-ver2
-IMAGE_PY=ida-pro-9.4-idapython:py312-v1
+# IDAPython 專用 image。**可用環境變數覆寫**——這一行寫死過一次
+# `py312-v1`，而那顆在後來重建環境時沒有留下，於是每一次 IDAPython
+# 掃描都停在「找不到 image」。⚠ 停下來是對的（基底 image 跑 IDAPython
+# 是零輸出的靜默失敗），**但失敗訊息長得像環境壞了，不像一行過期的常數**。
+# 預設改成 `~/.claude/knowledge-base/retro/ida-pro-9.4.md` 建議的 headless 版本。
+IMAGE_PY=${WOLONG_IDA_PY_IMAGE:-ida-pro-9.4-idapython:locked-v1}
 MODE="$1"; VER="$2"; shift 2
 WORK="$ROOT/workplace/ida/$VER"
 mkdir -p "$WORK"

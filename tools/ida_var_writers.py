@@ -30,11 +30,28 @@ OUT_JSON = "/work/var-writers.json"
 OUT_TXT = "/work/var-writers.txt"
 
 # 要追的全域。戰術鏡頭與它的 dirty flag（docs/re/60 §9、docs/spec/57）
-NAMES = [
+# 要查哪幾個名字寫在 `/work/var_list.txt`（一行一個，`#` 之後是註解），
+# **不必為了換一組變數改這支工具**——與 `tools/ida_dump.py` 同一個作法。
+# 檔案不在就退回下面這組預設，這樣舊的用法不會壞。
+LIST = "/work/var_list.txt"
+DEFAULT_NAMES = [
     "word_1D2F6",   # 戰場圖塊段（快轉時 di=0x2080 讀到它後面）
     "word_1D306",
     "word_1D302",
 ]
+
+
+def wanted():
+    try:
+        with open(LIST, encoding="utf-8") as fh:
+            names = [ln.split("#")[0].strip() for ln in fh]
+    except OSError:
+        return DEFAULT_NAMES
+    names = [n for n in names if n]
+    return names or DEFAULT_NAMES
+
+
+NAMES = wanted()
 
 CONTEXT_BEFORE = 6
 CONTEXT_AFTER = 3
