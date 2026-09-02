@@ -213,8 +213,8 @@
 | [`docs/spec/112-cursor-idle-resume-delay.md`](spec/112-cursor-idle-resume-delay.md) | 112 — 游標停下之後的恢復延遲 | CONFORMED。 | 2026-09-02 |
 | [`docs/spec/113-rle-length-header.md`](spec/113-rle-length-header.md) | 113 — RLE 資料檔的 4 byte 長度頭 | CONFORMED。 | 2026-09-02 |
 | [`docs/spec/114-general-affinity.md`](spec/114-general-affinity.md) | 114 — 武將的心向勢力（+0x19）：在野出仕與俘虜歸降 | CONFORMED。 | 2026-09-02 |
-| [`docs/spec/115-soldier-power.md`](spec/115-soldier-power.md) | 115 — 兵的戰力來自統率力，不是士氣 | READY，卡在規格 116（退卻走不出城）。 | 2026-09-02 |
-| [`docs/spec/116-retreat-cannot-leave-the-city.md`](spec/116-retreat-cannot-leave-the-city.md) | 116 — 城裡與城牆上的兵退卻時走不出去 | DRAFT。 | 2026-09-02 |
+| [`docs/spec/115-soldier-power.md`](spec/115-soldier-power.md) | 115 — 兵的戰力來自統率力，不是士氣 | CONFORMED。 | 2026-09-02 |
+| [`docs/spec/116-retreat-cannot-leave-the-city.md`](spec/116-retreat-cannot-leave-the-city.md) | 116 — 驗收用的戰場少了子圖塊表，打破的門反而把城封死 | CONFORMED。 | 2026-09-02 |
 | [`docs/spec/12-strategy-chrome.md`](spec/12-strategy-chrome.md) | 12 — 主畫面的視窗外框、指令列與右欄 | CONFORMED。主畫面的四個常駐視窗矩形、指令列版面與縮小地圖／勢力篩選鈕的 位置全部由機器碼定死（[docs/… | 2026-08-15 |
 | [`docs/spec/13-main-window-toggles.md`](spec/13-main-window-toggles.md) | 13 — 主畫面四個視窗的開關 | CONFORMED。已實作並留下四窗全開／全關的截圖； 舊的 g.open[] 那一套已整個拿掉，主畫面視窗只剩一份… | 2026-08-15 |
 | [`docs/spec/14-finance-window.md`](spec/14-finance-window.md) | 14 — 財政視窗 | CONFORMED。版面已照原版重寫並有契約測試； 數值輸入器已接上（[78](78-amount-input-ed… | 2026-08-15 |

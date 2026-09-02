@@ -1,9 +1,8 @@
 # 115 — 兵的戰力來自統率力，不是士氣
 
-**狀態：READY，卡在規格 116（退卻走不出城）。**
-算式已經實作並有單測（`soldierPower`／`leaderPower`／`leaderHP`），
-**接線刻意留著沒接**：接上之後兵活得久、同時退卻的人數跳一個量級，
-會穩定撞上退卻走不出城的死鎖（§5）。
+**狀態：CONFORMED。** 算式、戰場類別選欄與接線都上了，單測五支。
+接上之後那支攻城迴歸從「20 萬幀不結束」變成**第 967 幀結束**——
+擋路的不是這條規則，是驗收 fixture 少帶子圖塊表（規格 116）。
 
 - 日期：2026-09-02
 - 出處：`KI.EXE`（SHA-256 `fffeba98…d43868`）的 `sub_19AF4`（布陣）、
@@ -59,25 +58,25 @@ sub_1B6BC：命中率 = 9.77% + (1 − 9.77%) × min(24, 攻 − 守) ÷ 128
 | 戰場類別選適性欄 | ✅ 同檔的 `aptitudeIndex`：攻城恆取攻城適性，野戰看圖塊 `0xC0`／`0xD1` 兩道門檻（[`../re/78`](../re/78-soldier-power-from-command.md) §2.1）|
 | 每槽戰力與大將 | ✅ `internal/rules/tactical`：`Side.SquadPower`／`LeaderPower`／`LeaderHP`，`Deploy` 用它們 |
 | 主將能力進戰場 | ✅ `w.squadPowers`（軍團編號 ＝ 主將的武將編號）|
-| **接線** | ⛔ `internal/state/tactical.go` 的 `deploy` 還沒接，卡在 [`116`](116-retreat-cannot-leave-the-city.md) |
+| 接線 | ✅ `internal/state/tactical.go` 的 `deploy` |
 
 ## 4. 驗證
 
 | 方式 | 內容 |
 |---|---|
 | 單元測試 ✅ | `TestSoldierPowerPerTroopType`（三個兵種係數 30／4／12）、`TestSoldierPowerRisesWithCommand`（統率單調，擋「又接回士氣」）、`TestLeaderPowerAndHP`、`TestLeaderHPIsNotMorale`、`TestAptitudeIndexByBattleClass` |
-| 對原版 | ⛔ **戰術九區逐區對拍要重跑**（[`../playtest/40`](../playtest/40-tactical-parity.md)）——接線接上之後才做 |
+| 迴歸 ✅ | `TestNormalScenarioTacticalBattleTerminates`：第 967 幀結束（0.49 秒）|
+| 對原版 | **戰術九區逐區對拍要重跑**（[`../playtest/40`](../playtest/40-tactical-parity.md)）——數值尺度變了 |
 
-## 5. ⚠ 為什麼還沒切：撞上 [`116`](116-retreat-cannot-leave-the-city.md)
+## 5. ⭐ 它照出一個 fixture 缺陷
 
-實測接上去之後 `TestNormalScenarioTacticalBattleTerminates`
-（濮陽攻城，固定種子 17）**穩定死鎖**：10 萬幀之內兩側剩餘兵數
-一個都沒變。成因是城裡與城牆上的兵退卻時尋路找不到出城的路，
-**那是既有缺陷**——先前被「一擊必殺」蓋住（[`116`](116-retreat-cannot-leave-the-city.md) §5）。
+接上去的第一次跑，`TestNormalScenarioTacticalBattleTerminates` 死鎖：
+10 萬幀之內兩側剩餘兵數一個都沒變。追下去成因**不在這條規則**——
+驗收 fixture 用 `NewFieldFromTiles` 建戰場，那條退路把打破的門
+算成 5 層高的方塊，城反而封死（[`116`](116-retreat-cannot-leave-the-city.md)）。
 
-接線收在 `internal/state/tactical.go` 的 `deploy`：三個欄位目前寫 0，
-`Deploy` 於是退回 `Power`（＝士氣）。修好 116 之後把那三行換成
-`w.squadPowers(corps, siege, tile)` 的三個回傳值即可。
+⭐ **一擊必殺把那個缺陷藏了半年**：兵還沒退卻就死了，退卻的尋路一次都沒被走到。
+把戰力接對之後兵活得久、退卻的人數跳一個量級，缺陷才浮出來。
 
 ## 5.1 影響評估：這不是等價改寫
 
@@ -92,8 +91,8 @@ sub_1B6BC：命中率 = 9.77% + (1 − 9.77%) × min(24, 攻 − 守) ÷ 128
 （[`../playtest/40`](../playtest/40-tactical-parity.md)）全部需要重驗，
 也會改變推廣片裡兩場戰鬥的長度（[`71`](71-promo-live-capture.md)）。
 
-**所以這一份停在 READY**：算式沒有疑義，缺的是 [`116`](116-retreat-cannot-leave-the-city.md)，
-以及切下去之後連同重跑對拍。
+同一場攻城的結果也跟著翻面：接對之前是**攻方勝、剩 566 點**（第 1,034 幀），
+接對之後是**守方勝**（第 967 幀）。
 
 ## 6. 未解
 

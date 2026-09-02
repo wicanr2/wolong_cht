@@ -2378,7 +2378,12 @@ func TestNormalScenarioTacticalBattleTerminates(t *testing.T) {
 			if rotate {
 				tiles, gate = battle.Rotate180(tiles), battle.RotateGateX(gate)
 			}
-			return tactical.NewFieldFromTiles(tiles, battleLib.Heights(node), gate)
+			// ⭐ **要帶七層子圖塊表**，與正式路徑（`internal/battlesetup`）一致。
+			// 少了它 `Field` 走的是「合成戰場」那條退路：地面層直接取堆疊
+			// 高度，於是**打破的門變成 5 層高的方塊**（`heights[0xFD]`），
+			// 城反而被封死——退卻的兵走不出去，攻城戰永遠打不完。
+			return tactical.NewFieldFromTileLayers(tiles, battleLib.Heights(node),
+				battleLib.TileLayers(node), gate)
 		},
 		Script: func(node int, siege bool, tactic int) []byte {
 			if !siege {

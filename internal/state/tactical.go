@@ -137,9 +137,10 @@ func (w *World) beginTactical(att, def int, m combat.Mode, garrison int) bool {
 		// 那個死鎖是既有缺陷，先前被「一擊必殺」蓋住。
 		// 修好 116 之後把下面三行換成 `w.squadPowers(corps, siege, tile)`
 		// 的三個回傳值即可（docs/spec/115 §5）。
-		b.Sides[side].SquadPower = [army.Positions]int{}
-		b.Sides[side].LeaderPower = 0
-		b.Sides[side].LeaderHP = 0
+		squads, lp, lhp := w.squadPowers(corps, m == combat.Siege, w.battleTile(att))
+		b.Sides[side].SquadPower = squads
+		b.Sides[side].LeaderPower = lp
+		b.Sides[side].LeaderHP = lhp
 		b.Sides[side].Power = c.Morale
 		// 士氣是**一般兵**的開場體力；大將那一格由 LeaderHP 蓋掉
 		// （docs/spec/61 §2 的例外）。

@@ -155,8 +155,8 @@
 | 君主帶著軍團時進言關掉（**remake 差異**）| [`111-lord-with-corps-blocks-advise.md`](111-lord-with-corps-blocks-advise.md) | 使用者裁定 2026-09-01；判準與「請求君主出陣」共用一支 |
 | **游標停下之後的恢復延遲**（即時制的反應時間）| [`112-cursor-idle-resume-delay.md`](112-cursor-idle-resume-delay.md) | 已實作並有單測；游標移動中世界完全停住，停下後等 160 個回呼（0.549 秒）|
 | **武將的心向勢力**（`+0x19`）：在野出仕與俘虜歸降 | [`114-general-affinity.md`](114-general-affinity.md) | 已實作並有單測；在野武將每月 25% 兌現，俘虜要關押方就是心向的勢力才歸降。隨機投靠那一條還沒接 |
-| **兵的戰力來自統率力**（不是士氣）| [`115-soldier-power.md`](115-soldier-power.md) | **READY，還沒切**——算式已實作並有單測，接線卡在 [`116`](116-retreat-cannot-leave-the-city.md) |
-| 城裡與城牆上的兵退卻走不出去 | [`116-retreat-cannot-leave-the-city.md`](116-retreat-cannot-leave-the-city.md) | **DRAFT**——死鎖可決定性重現，判準是「空場上也找不到路」；成因收斂到尋路，還沒定位 |
+| **兵的戰力來自統率力**（不是士氣）| [`115-soldier-power.md`](115-soldier-power.md) | 已實作並有單測；同一場攻城的勝負跟著翻面。戰術九區對拍待重跑 |
+| 驗收戰場少了子圖塊表，打破的門反而封城 | [`116-retreat-cannot-leave-the-city.md`](116-retreat-cannot-leave-the-city.md) | 已修：fixture 改用 `NewFieldFromTileLayers`。**正式路徑本來就沒問題** |
 | **RLE 資料檔的 4 byte 長度頭** | [`113-rle-length-header.md`](113-rle-length-header.md) | 原版三個執行檔都 `LSEEK` 跳過它才解壓；`rle.DecodeFile` 已接，19 個過場檔逐檔解到宣告長度 |
 
 ## 怎麼加一份
