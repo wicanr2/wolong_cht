@@ -293,10 +293,10 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 145 條。**要查「這件事解了沒」先看這裡**，
+共 143 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
-### confirmed（78 條）
+### confirmed（79 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -351,6 +351,7 @@
 | 3. 武將記錄（32 byte） ▸ +8 | `docs/formats/08-sinario-save.md` |
 | 3. 軍團記錄的欄位（部分） ▸ +0x1A | `docs/re/05-battle-selection.md` |
 | 3. 軍團記錄的欄位（部分） ▸ +0x1C | `docs/re/05-battle-selection.md` |
+| 4. 據點記錄（32 byte） ▸ +19 | `docs/formats/08-sinario-save.md` |
 | 4. 據點記錄（32 byte） ▸ +2 | `docs/formats/08-sinario-save.md` |
 | 5.8l 兵士記錄（32 B）目前解出來的欄位 ▸ +0x1E | `docs/re/11-tactical-battle.md` |
 | 已接入的原版資料流 ▸ sub_12C52／sub_12CDF | `docs/mechanics/70-ai.md` |
@@ -431,7 +432,7 @@
 |---|---|
 | 索引 ▸ 「自定」軍師命名視窗 | `docs/spec/00-index.md` |
 
-### 未解（30 條）
+### 未解（27 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -453,15 +454,12 @@
 | 4. 據點記錄（32 byte） ▸ +0 | `docs/formats/08-sinario-save.md` |
 | 4. 據點記錄（32 byte） ▸ +12 | `docs/formats/08-sinario-save.md` |
 | 4. 據點記錄（32 byte） ▸ +14 | `docs/formats/08-sinario-save.md` |
-| 4. 據點記錄（32 byte） ▸ +16 | `docs/formats/08-sinario-save.md` |
-| 4. 據點記錄（32 byte） ▸ +17 | `docs/formats/08-sinario-save.md` |
 | 4. 據點記錄（32 byte） ▸ +18 | `docs/formats/08-sinario-save.md` |
 | 4. 據點記錄（32 byte） ▸ +22 | `docs/formats/08-sinario-save.md` |
 | 4. 據點記錄（32 byte） ▸ +27–+31 | `docs/formats/08-sinario-save.md` |
 | 4. 數字字模在 ICONGRF 段 3 裡 ▸ +0x0000 | `docs/spec/52-main-screen-camera-and-banner-date.md` |
 | 4. 數字字模在 ICONGRF 段 3 裡 ▸ +0x08F0 | `docs/spec/52-main-screen-camera-and-banner-date.md` |
 | 檔案 ▸ 40-economy.md | `docs/mechanics/00-index.md` |
-| 索引 ▸ 事件場景上誰在說話 | `docs/spec/00-index.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x0C | `docs/re/08-hourly-update.md` |
 | 連結記錄（16 byte） ▸ +0x04 | `docs/re/08-hourly-update.md` |
 | 連結記錄（16 byte） ▸ +0x08 | `docs/re/08-hourly-update.md` |

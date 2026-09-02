@@ -46,6 +46,15 @@ SELF = "docs/re/43-open-questions.md"
 # TEMPLATE.md 是骨架不是文件：它的「未解」小節是空表頭，
 # 抽不到東西是正確行為，不是盲區。
 SKIP = (SELF, "docs/INDEX.md", "docs/spec/TEMPLATE.md")
+# ⭐ **目錄索引不是缺口的家。** `<目錄>/00-index.md` 的「現況」欄是**別份文件的摘要**，
+# 缺口的正本在那一份自己的未解表裡；把索引也收進來，同一個缺口會被數兩次。
+# 反過來，索引也不該被當成盲區——它沒有自己的缺口是正確狀態，
+# 逼它寫一個「未解」小節只會產生假資料。
+#
+# ⚠ 代價說清楚：**索引的摘要過期時，這一份不會再提醒**（2026-09-02 就有一例，
+# `spec/00-index` 對 `42` 的摘要停在「結果階段的上框未解」，而 `spec/42` §2 早就解了）。
+# 那是 `tools/stale_scan.py` 與 `tools/index.py` 的守備範圍，不是缺口總表的。
+INDEX_NAME = "00-index.md"
 
 HEADING = re.compile(r"^(#{2,4})\s+(.*)$")
 OPEN_CELL = re.compile(r"未解|未定|假說|未驗|未定位|尚未")
@@ -85,6 +94,18 @@ SEP = re.compile(r"^\|[\s:|-]+\|$")
 # 文件明講自己沒有缺口。有這一行就不算盲區——
 # 「解析不到」與「真的沒有」必須分得開，否則盲區清單永遠清不完。
 NO_GAPS = re.compile(r"<!--\s*缺口：無\s*-->")
+# ⭐ **未解小節裡的三種東西不是缺口，而且用結構就分得出來。**
+# 少了這三條，536 列裡有 14 列是工具自己造出來的——最刺眼的是
+# `<!-- 缺口：無 -->`：那是文件**明講自己沒有缺口**的標記，
+# 卻被當成一條缺口收進總表，**判斷完全相反**。
+#
+#   1. HTML 註解（`<!-- 缺口：無 -->`／`<!-- 缺口：見上表 -->`）——標記不是內容。
+#   2. 小節內文只寫「（無。）」——那是「這裡沒有」的另一種寫法。
+#   3. 收尾是「：」的引言句——它引出的條列會各自被收，引言本身不是缺口。
+#
+# ⚠ 三條都只看**結構**（註解語法、整行等於「無」、收尾標點），不猜語意。
+# 想擋「這一列其實是答案」得靠 `SOLVED_LEAD` 那一組，不要往這裡加關鍵字。
+EMPTY_BODY = re.compile(r"^[（(]?\s*(無|沒有|N/?A|—|-{1,3})\s*[。.，,]?\s*[）)]?$")
 # ⭐ **DOS／BIOS 平台層不算 remake 的缺口**（使用者裁定 2026-08-23）。
 # 那些是原版與 DOS 之間的介面——`INT 61h` 的音效 TSR 服務號、
 # BIOS 的顯示卡暫存器、磁碟服務。remake 跑在 Go／Ebiten 上，
@@ -222,12 +243,19 @@ def collect(path, rel):
             # `![說明](../images/x.png)` 去掉連結之後剩「!說明」，
             # 看起來像一句話。圖片行不會是缺口。
             if len(body) >= 8 and not solved_para \
-                    and not body.startswith((">", "#", "```", "![")) \
+                    and not body.startswith((">", "#", "```", "![", "<!--")) \
+                    and not EMPTY_BODY.match(body) and not body.endswith((":", "：")) \
                     and not SOLVED.search(body) and not META.search(body) \
                     and (bullet or section not in lead_done):
+                lead = SENT.search(body).group(0).strip()
+                # 「（無。原先掛在這裡的兩條都收掉了：…」——第一句就說沒有，
+                # 後面是為什麼沒有。**整節都不是缺口**，不能只跳過這一行，
+                # 否則下一行的殘句會遞補成該小節的代表。
+                if EMPTY_BODY.match(lead):
+                    muted = True
+                    continue
                 lead_done.add(section)
-                items.append((SENT.search(body).group(0).strip()[:120],
-                              "（未解小節內文）", section))
+                items.append((lead[:120], "（未解小節內文）", section))
                 prev = body
                 continue
         if LEAD_IN.search(line.rstrip()) and not SOLVED.search(line):
@@ -292,7 +320,7 @@ def main():
     rows, silent, superseded = [], [], []
     for path in files:
         rel = os.path.relpath(path, repo).replace(os.sep, "/")
-        if rel in SKIP:
+        if rel in SKIP or os.path.basename(rel) == INDEX_NAME:
             continue
         # ⭐ **已被取代的文件，它的「未解」是當時的未解。**
         # 每一批發行紀錄都會再列一次「Windows／macOS 實機」「沒有音效裝置」，

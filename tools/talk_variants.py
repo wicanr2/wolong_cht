@@ -43,6 +43,9 @@ MSG_COUNT = 1022
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DOSV = os.path.join(ROOT, 'translations', 'talk-dosv-corrected.json')
+# 空格分析看的是**原文**：校訂只改字句，不會讓一則從有變空，
+# 但拿校訂後的檔去數空格，等於讓工具的答案跟著校訂進度漂。
+RAW_DOSV = os.path.join(ROOT, 'translations', 'extract', 'talk-dosv.json')
 PC98 = os.path.join(ROOT, 'translations', 'extract', 'talk-pc98.json')
 # 已經人工審過而決定不改的組（連理由一起記）。**看過的結論要留下來**，
 # 否則同一批誤報每一輪都要重讀一次。
@@ -155,11 +158,48 @@ def show(cx, idx, cht, jpn, flags):
     print()
 
 
+def empty_report():
+    """把「哪幾格是空的」按樣式分組印出來。
+
+    ⭐ **空格不是資料缺損，是說話型的補集。** 八格一組由武將記錄 `+0x1E`
+    選一格（0–2 主公型／3–7 臣下型，`docs/mechanics/60` §3），所以只對
+    臣下說得通的情境（打了敗仗回來道歉）就把 0–2 留白，只有君主會說的
+    （罵軍師財政赤字）就把 3–7 留白。
+
+    ⚠ 兩版要一起看。**只看一版分不出「這一版漏譯」與「這一格本來就沒有」**——
+    松崗版是譯本，漏譯的症狀同樣是空字串。
+    """
+    cht, jpn = load(RAW_DOSV), load(PC98)
+    pats = {}
+    for cx, idx in groups():
+        empty_c = tuple(k for k, i in enumerate(idx) if not joined(cht[i]))
+        empty_j = tuple(k for k, i in enumerate(idx) if not joined(jpn[i]))
+        if empty_c != empty_j:
+            print('⚠ 兩版空格不同 組 %s：中 %s／日 %s' % (hex(cx), list(empty_c), list(empty_j)))
+        if empty_c:
+            pats.setdefault(empty_c, []).append((cx, idx))
+    total = sum(len(g) * len(k) for k, g in pats.items())
+    print('空訊息 %d 則，落在 %d 組，%d 種樣式\n'
+          % (total, sum(len(g) for g in pats.values()), len(pats)))
+    for empty, gs in sorted(pats.items(), key=lambda kv: -len(kv[1])):
+        filled = [k for k in range(VARIANT_SPAN) if k not in empty]
+        print('── 空格 %s（有字的是 %s）：%d 組 %s'
+              % (list(empty), filled, len(gs), [hex(cx) for cx, _ in gs]))
+        cx, idx = gs[0]
+        print('   例 %s 格%d：%s' % (hex(cx), filled[0], joined(cht[idx[filled[0]]])[:40]))
+    return 0
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--all', action='store_true', help='連沒有可疑處的組也印')
     ap.add_argument('--group', help='只看某一組（十六進位的 cx）')
+    ap.add_argument('--empty', action='store_true',
+                    help='只報空格分佈（哪幾組的哪幾格沒有字，兩版一起比）')
     args = ap.parse_args()
+
+    if args.empty:
+        return empty_report()
 
     cht, jpn = load(DOSV), load(PC98)
     if len(cht) != len(jpn):

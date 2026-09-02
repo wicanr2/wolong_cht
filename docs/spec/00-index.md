@@ -82,7 +82,7 @@
 | 行軍指示的三選一 | [`39-march-order-menu.md`](39-march-order-menu.md) | 已接進畫面並有單測 |
 | AI 軍團的決策鏈 | [`40-ai-march-decision.md`](40-ai-march-decision.md) | 已實作；「逐站前進」未移植 |
 | 訊息框的版面 | [`41-message-box-geometry.md`](41-message-box-geometry.md) | 機器碼與影格兩條證據都對上，已實作 |
-| 事件場景上誰在說話 | [`42-event-scene-speakers.md`](42-event-scene-speakers.md) | 兩個框已實作；結果階段的上框未解 |
+| 事件場景上誰在說話 | [`42-event-scene-speakers.md`](42-event-scene-speakers.md) | 兩個框已實作；結果句走的是一般通知框（`sub_13C3D` → `sub_18810`），不是上下框，肖像取派駐外交官（§2） |
 | 回不了家就敗走 | [`43-rout-on-blocked-return.md`](43-rout-on-blocked-return.md) | 已實作並有單測 |
 | 進言的原文 | [`44-advise-original-text.md`](44-advise-original-text.md) | 三個指令 × 64 則全部改查 `TALK.DAT` |
 | 進言的畫面 | [`45-advise-scene-layout.md`](45-advise-scene-layout.md) | 插圖 ＋ 兩個框 ＋ 五列選單已實作並留下截圖 |

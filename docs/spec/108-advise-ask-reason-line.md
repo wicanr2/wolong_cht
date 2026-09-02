@@ -31,7 +31,7 @@
 
 **第三句演完才出五項理由選單。**
 
-## 2. 缺口
+## 2. 量到的落差
 
 `cmd/wlgame/advise.go` 的 `beginPersuasion`：
 

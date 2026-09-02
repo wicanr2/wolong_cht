@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**536 列分布在 216 份文件，平均每份 2.5 列。**
+**515 列分布在 203 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -39,45 +39,42 @@
 
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
-| 規則正確性 | 18 | 15 | 3 | 0 |
-| 資料保存 | 35 | 34 | 1 | 0 |
-| 程式碼理解 | 179 | 173 | 6 | 0 |
-| 驗收 | 87 | 76 | 11 | 0 |
+| 規則正確性 | 15 | 12 | 3 | 0 |
+| 資料保存 | 32 | 31 | 1 | 0 |
+| 程式碼理解 | 174 | 168 | 6 | 0 |
+| 驗收 | 84 | 73 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 211 | 197 | 14 | 0 |
-| **合計** | **536** | 500 | 36 | 0 |
+| 其他 | 204 | 190 | 14 | 0 |
+| **合計** | **515** | 479 | 36 | 0 |
 
-⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **2** 列（另有少數只是提到「未解」兩個字的圖例列）。
+⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
 ⭐ **狀態行自稱「已被…取代」的 9 份文件不計。**它們的「未解」是**當時**的未解，而每一批發行紀錄都會再列一次「Windows／macOS 實機」「沒有音效裝置」——一度讓 `docs/release/` 的 33 列其實只有 12 個獨立缺口。**還開著的缺口一定也在最新那一份**，所以跳過舊的不會漏。
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/re/` | 179 |
-| `docs/spec/` | 176 |
-| `docs/playtest/` | 87 |
-| `docs/formats/` | 35 |
-| `docs/mechanics/` | 18 |
+| `docs/re/` | 174 |
+| `docs/spec/` | 169 |
+| `docs/playtest/` | 84 |
+| `docs/formats/` | 32 |
 | `docs/release/` | 18 |
+| `docs/mechanics/` | 15 |
 | `docs/mobile/` | 11 |
 | `docs/promo/` | 6 |
 | `docs/reference/` | 6 |
 
-## 2.1 規則正確性（18 條）
+## 2.1 規則正確性（15 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | `sub_10A65` 的內插演算法 | 只影響畫面 | 靜態 |
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | 最高速那一檔在原版實機上是多少 | 機器相依，要實測才有數字；只影響手感調校 | 實測 |
-| [`mechanics/20-military.md`](../mechanics/20-military.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | GUI 的戰後勝負／傷亡訊息 | 狀態層已結算，畫面上還沒顯示 | 靜態 |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 原版投射物的圖形與動畫 | `BATTLE.SCH` 裡的圖形沒對出來，目前畫的是側別標記 | 靜態 |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 少數戰術腳本與 `BATTLE` 資料欄位 | 十九個指令已全讀，剩的是資料側的殘留欄位 | 靜態 |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 重算路徑的時機 | 原版只在命令生效時算一次；remake 的兵每幀都可能被別人擋住，所以改成**每 30 幀可重算一次**（`replanInterval`，`internal/rules/tactical/soldier.go`）。這是 **remake 差異**，不是原版行為——原版被擋住之後怎麼處理沒有讀 | 靜態 |
 | [`mechanics/40-economy.md`](../mechanics/40-economy.md) | 那兩個歸零的欄位很可能就是**本月累計的收入與支出 → 假說，待驗 | （散句） | 靜態 |
-| [`mechanics/50-diplomacy.md`](../mechanics/50-diplomacy.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
 | [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0` 旗標的 7 種值代表什麼 | 身分已確定在 `+0x17`，`+0` 是別的東西。只知道 bit 4 ＝ 不事二主 | 靜態 |
-| [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0x1E` 為什麼 0–2 恆空 | 掃 127 筆武將的 `+0x1E` 值分佈 | 靜態 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 正文散在各節的開放項目集中在這裡；每一條都寫下手點， | （未解小節內文） | 靜態 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 委任 AI「統率力低就打得差」的**實作方式**（§3.2）——是決策頻率、判斷正確率，還是可用戰術的多寡 | 找戰術層讀武將統率力欄位的地方；`internal/rules/tactical` 目前不隨統率力變化 | 靜態 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 說服請求裡 `SI+1Eh` 的完整結構語意、其他理由的索引公式、`cx ≥ 0x100` 分支（§1.3） | 三者都在 `sub_13830` 一帶；先補 `SI+1Eh` 的欄位表再談索引公式 | 靜態 |
@@ -86,13 +83,12 @@
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 入佇列的隨機空格分佈 | 目前是 remake 的明示差異；要對齊得先解出原版排程時挑空格的那段 | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 四個劇本的結局是否不同 | **觸發條件四劇本共用**，差別只在初始勢力數；結局的十二幕也是一條路播完，沒有依劇本分支的證據（`../re/70` §3）。**但沒有實跑四個劇本對過** | 實測 |
 
-## 2.2 資料保存（35 條）
+## 2.2 資料保存（32 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
 | [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | `\1`／`\2`／`\3`／`\4` 的**文字語意** | 機制已解（§3：`sub_1075B` 換算索引、`sub_1084A` 逐字讀、`CS:[SI+08A4h]` 七項跳躍表分派），`\6`（排版控制，消耗一個 16 位元參數後 `DX` 左移 `0x30`）與 `\7`（走 `sub_1062F` 的數值繪製）兩支 handler 也定案了。**這四支的 ha… | 靜態 |
-| [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 偏移表 `[1023] = 0` | 是保留還是有意義，未讀 | 靜態 |
-| [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 78 則空訊息的索引位置有沒有規律 | 未查 | 靜態 |
+| [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 只有格 0 有字的三組（`0x1A1`／`0x1AD`／`0x1AE`） | 呼叫端傳不傳 `ah`、為什麼不需要八格變體，未讀。`0x1AD`／`0x1AE` 像單挑台詞，但不在 `../re/75` 盤過的 `0x1B6`–`0x1CD` 範圍內 | 靜態 |
 | [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 訊息索引與遊戲事件的對應 | 逐則的顯示時機沒有全表。**已對出來的散在各規格**（進言 `../spec/44`、遷都 `../spec/64`、結局 `../spec/30`），未讀的部分見 `../re/24` | 靜態 |
 | [`formats/02-brg-palette.md`](../formats/02-brg-palette.md) | `OPENPAL` 的 6 組各對應哪一幕 | `ENDPAL` 那邊已解（一幕配一組，`09-cutscene-images.md`、`../spec/67` 已實作）。開場這邊要先反組譯 `D7OPEN.EXE`，還沒做 | 靜態 |
 | [`formats/03-grf-images.md`](../formats/03-grf-images.md) | `0x0480` | 24×16 × 3 / 兵種圖示的**橘色版**：馬／弓／步 / 尚未找到取用端 | 靜態 |
@@ -114,9 +110,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0` | 1 / 值域 0–15，14 種。**據點類型？** / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+12` | 2 / uint16，北京 21000、代 4000、涿郡 4300 / 未解（人口／資金？） | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+14` | 2 / uint16，北京 20714、代 3000、涿郡 3142 / 未解 | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+16` | 1 / 值域 10–179 / 未解 | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+17` | 1 / **全部 192 筆都是 100** / 未解（防災值初值？） | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+18` | 2 / uint16 / 未解 | 靜態 |
+| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+18` | 1 / 未解 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+22` | 1 / 值域 0–226，22 種 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`–`+31` | 5 / 含 `0xFF` 哨兵 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
@@ -126,11 +120,10 @@
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 「重來」「繼續」兩顆按鈕與聲母列各跳到哪一頁 | `funcs_19037` 的九個 handler 沒逐支讀；聲母列的十個跳點推測是各聲母在表裡的起點 | 靜態 |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 |
 
-## 2.3 程式碼理解（179 條）
+## 2.3 程式碼理解（174 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
-| [`re/00-index.md`](../re/00-index.md) | `43` | **缺口總表**：各文件「未解」表的集中版（生成的，`check.sh` 每次重出） | 靜態 |
 | [`re/01-first-recon.md`](../re/01-first-recon.md) | 是加了新過場、還是把原本的長段拆開，未解。 | （散句） | 靜態 |
 | [`re/01-first-recon.md`](../re/01-first-recon.md) | `YNMOUSE.COM` | pc98 / 滑鼠驅動。dosv 版把它併進 `KI.EXE`？未驗 | 靜態 |
 | [`re/01-first-recon.md`](../re/01-first-recon.md) | `PASS.MAP`／`PASS.SCH` | dosv / **PC-98 沒有**。關隘資料，移植時新增或改名。未解 | 靜態 |
@@ -181,7 +174,6 @@
 | [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | 逐幀執行順序 | 顯示串列與相機已重建，但整幀的呼叫順序沒有逐幀對過 | 靜態 |
 | [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | `loc_1A065` 的 runtime bytes | 自我修改碼，靜態影像看不到每輪的實際內容（§2.2） | 靜態 |
 | [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | 四層差分（terrain／display list／composited／HUD） | 沒有 machine-readable diff，目前只有 layout-only 比較 | 靜態 |
-| [`re/22-strategy-command-tree.md`](../re/22-strategy-command-tree.md) | （無。 | （未解小節內文） | 靜態 |
 | [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x00` | 2 B / 未解 | 靜態 |
 | [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x06`–`+0x0F` | 10 B / 未解 | 靜態 |
 | [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x04` 那張表 | 大小與音效記錄相同（3 × 16 B），但驅動沒讀它。見 `57` §8 | 靜態 |
@@ -236,7 +228,6 @@
 | [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | `ds:987Ch` | 四筆槽頭的暫存段，由誰配置未讀 | 靜態 |
 | [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | 檔名 | `sub_18C20` 沒設 `dx`，靠 `sub_18B7C` 的 `push dx`／`pop dx` 從更上層傳進來 | 靜態 |
 | [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | `sub_18C9F` | 關閉時擦除的那一支，未讀 | 靜態 |
-| [`re/53-lord-select-window.md`](../re/53-lord-select-window.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
 | [`re/54-advisor-naming-window.md`](../re/54-advisor-naming-window.md) | 選字表 | 十個聲母各自對應哪些候選字、資料在哪、怎麼翻頁——全部未讀。`sub_18FC9`（呼叫端）是入口 | 靜態 |
 | [`re/54-advisor-naming-window.md`](../re/54-advisor-naming-window.md) | 屬性低 byte | `01` 與 `03` 的差別未讀（§3） | 靜態 |
 | [`re/54-advisor-naming-window.md`](../re/54-advisor-naming-window.md) | 「別　號」 | 軍師除了名字還有別號，寫進哪裡未讀 | 靜態 |
@@ -306,11 +297,9 @@
 | [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | `sub_18607` | 清單區清除，未讀 | 靜態 |
 | [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | `word_1D311 += 6` | 疑似喊話框位置位移，未驗 | 靜態 |
 | [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | 開場凍結與大將騎出的機器碼形式 | 實機定案（b0–b3），但 `sub_1A1C5` 內部的等待常式怎麼擋住實體更新未逐條讀——見 `spec/80` §3.1 | 靜態 |
-| [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
 | [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | 變體 0／2／3／5／6 的臨場抽驗 | 專屬句只在 1／4／7；預設句與它們共用選句機制，公式已 confirmed，抽驗優先度低 | 靜態 |
-| [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
 
-## 2.4 驗收（87 條）
+## 2.4 驗收（84 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -362,11 +351,8 @@
 | [`playtest/41-m7-corrected-text-on-screen.md`](../playtest/41-m7-corrected-text-on-screen.md) | 原版側的同狀態對照 | 這一份只驗 remake 自己「有沒有溢出」。**原版同一則長什麼樣沒有並排比過**——要用 `-open-talk-index` 對應的原版操作序列，還沒做 | 靜態 |
 | [`playtest/41-m7-corrected-text-on-screen.md`](../playtest/41-m7-corrected-text-on-screen.md) | 變數的實際長度分布 | 截圖用的是實際遊戲值（如「袁胤」兩字），而 `TestAllTalkLinesFitTheirBox` 用三全形替身。**軍團名與勢力名的長端沒有逐一量過**（`32`） | 實測 |
 | [`playtest/42-window-parity.md`](../playtest/42-window-parity.md) | 進言五項選單的原版截圖 | §5 的輸入模型限制 / 需要能送「瞬時 click」的擷取動作（縮短按住時間），或改用鍵盤路徑（未驗證原版是否支援） | 實測 |
-| [`playtest/42-window-parity.md`](../playtest/42-window-parity.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
 | [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | 遭遇訊息畫面的對拍 | 「遇上兵馬了」訊息與 remake 的遭遇戰選單版面沒有比 / 原版是 TALK 訊息框，remake 是自製選單——先讀原版遭遇後的選擇 UI 是什麼樣（影片 `parity-field13/enc.mp4` 15 秒附近有素材） | 靜態 |
 | [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | 佔用圖快取欄的讀檔重建 | §3 是強證據不是 confirmed / 讀原版的讀檔常式（`sub_18CAE` 一帶）確認重建走哪個欄位 | 靜態 |
-| [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | <!-- 缺口：見上表 --> | （未解小節內文） | 靜態 |
-| [`playtest/44-trust-init-oracle.md`](../playtest/44-trust-init-oracle.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
 | [`playtest/45-ai-longrun-comparison.md`](../playtest/45-ai-longrun-comparison.md) | 原版側只有一次跑、三個資料點 | 存檔輪換的點擊序列要修（m1–m4 沒重存：疑似覆寫確認框的 YES 座標沒點中）；修好後可加拍幾輪拉出分佈 | 靜態 |
 | [`playtest/45-ai-longrun-comparison.md`](../playtest/45-ai-longrun-comparison.md) | remake 孫策的擴張比原版猛（一個月滅劉繇 vs 原版半年拿兩城） | 幅度差在戰鬥節奏層（編成／行軍／攻城的耗時），不是決策層；要縮就得對拍單場攻城的時間線 | 靜態 |
 | [`playtest/46-runtime-language-switch.md`](../playtest/46-runtime-language-switch.md) | Android 實機／模擬器沒實地切過 | 這裡的手機畫面是桌面 Xvfb 跑 `cmd/wlandroid` 拍的（同一份 `internal/ui/phone`）；實機驗收排在下一次 Android 打包 | 靜態 |
@@ -413,7 +399,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（211 條）
+## 2.6 其他（204 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -452,7 +438,6 @@
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 實機驗收 | 只有 Docker 模擬器；觸控手感、真實 GPU、高 DPI 上的點陣字可讀性都驗不到 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 正式簽章 | 出的是 debug 簽章，keystore 怎麼保管還沒決定 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | 16 KB page size 裝置 | `.so` 的 LOAD 段已是 `0x4000`，但沒有那種裝置或 AVD 實際載過 | 靜態 |
-| [`spec/00-index.md`](../spec/00-index.md) | 事件場景上誰在說話 | `42-event-scene-speakers.md` / 兩個框已實作；結果階段的上框未解 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 據點換手之後 `+0x00` 低 4 位會不會跟著變 | `sub_1890A` 靜態讀過，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 玩家據點求援的喇叭聲（`sub_10CDE`） | 呈現層未接 | 靜態 |
 | [`spec/100-phone-text-scale.md`](../spec/100-phone-text-scale.md) | 倍率不能在遊戲內調 | 固定 2。平板或小手機可能要 1 或 3，得先有實機回饋 | 靜態 |
@@ -466,7 +451,6 @@
 | [`spec/107-launcher-ui-colours.md`](../spec/107-launcher-ui-colours.md) | 殼層其餘幾頁（ＹＥＳ／ＮＯ、劇本、四槽讀檔）的配色 | 這一輪只對過勢力清單與君主卡。其餘幾頁同樣走 `paletteInk`，修完應該一起好，但**沒有逐像素比過** | 靜態 |
 | [`spec/107-launcher-ui-colours.md`](../spec/107-launcher-ui-colours.md) | 捲軸滑塊的位置差 1 px | 量到：22 筆、`top` ＝ 4 時，原版的綠面在 y 161–216，remake 在 160–215（高度都是 56）。`⌊128×4/22⌋ ＝ 23` 給 159，原版對應的是 24。**只有這一個取樣點**，分不出是無條件進位、四捨五入還是槽的起點差 1；`38` §1.6 的實機量測只釘住高度沒釘位… | 靜態 |
 | [`spec/107-launcher-ui-colours.md`](../spec/107-launcher-ui-colours.md) | 反白條 | remake 的鍵盤游標，原版沒有。要不要照戰略層一覽表那樣「碰過才畫」（`g.listTouched`）沒有定案 | 靜態 |
-| [`spec/108-advise-ask-reason-line.md`](../spec/108-advise-ask-reason-line.md) | cmd/wlgame/advise.go` 的 `beginPersuasion`： | （未解小節內文） | 靜態 |
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | `資金高位 >= 0x80` 那一支 | `cmp bh, 80h / jnb` 會直接算「答應」，等於資金超過約 840 萬時門檻失效。**看起來像有號數的邊界處理**，未逐位對過 | 靜態 |
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | 君主出陣之後的行為 | 那支軍團跟一般軍團有沒有差別，未讀 | 靜態 |
 | [`spec/110-corps-command-menu.md`](../spec/110-corps-command-menu.md) | 選單本身的逐像素對拍 | 原版選單拍到了（`parity-tap5/menu.png`），**但沒有做逐像素比對**——remake 的彈出選單走 `drawLegacyChoiceBox`，位置與底色未量 | 靜態 |
@@ -478,7 +462,6 @@
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 「畫面模式」 | 兩個選項是「１６色」與「 液晶 」，切的是 `GAMEPAL.BRG` 的 bank 0–3 ↔ 4–7（`docs/re/02` §6.2）。**remake 只做第 0 組**，這一格固定顯示「１６色」——液晶那組是給 8 階調液晶的高飽和純色，現代螢幕沒有對照物 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 「音效」 | 值由 `g.soundValue()` 填。原版五個選項是 ＯＦＦ／TYPE 1–4（音源型別），remake 只有開／關 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 戰場內調速度 | 戰場獨佔輸入，所以 `updateBattle` 自己接一次 ＋／−（調戰術速度），調完浮一行 1.5 秒的提示。**原版戰場沒有速度指示**，常駐顯示會破壞版面 parity | 靜態 |
-| [`spec/14-finance-window.md`](../spec/14-finance-window.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |
@@ -518,7 +501,6 @@
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「看」與「選」的內容差異 | 原版兩種取法的**列表內容**不同（`../re/26` §4.2），remake 只統一了欄位 | 靜態 |
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「委任」那一格的顏色 | 實錄影格上看起來是紅字，但影片是壓縮過的、也沒有機器碼證據。remake 先畫成一般色 | 靜態 |
 | [`spec/39-march-order-menu.md`](../spec/39-march-order-menu.md) | `word_19896`／`word_19898` 的寫入端 | 語意是強證據（見 §3.5），但**直接 xref 掃不到寫入端**，所以「就是滑鼠座標」還沒 confirmed / 找取址的那幾筆，或用 DOSBox-X bridge 下寫入中斷點 | 實測 |
-| [`spec/40-ai-march-decision.md`](../spec/40-ai-march-decision.md) | （無。 | （未解小節內文） | 靜態 |
 | [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 君主那一側的回話 | 原版事件場景會同時出現兩個框（`docs/re/66` §5.1 的影格就是），remake 只畫一個 | 靜態 |
 | [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 框的底紋 | 龍紋的點陣找到了（`../formats/03` §5.5），但 96 列的排法還沒解，remake 仍用純色 | 靜態 |
 | [`spec/42-event-scene-speakers.md`](../spec/42-event-scene-speakers.md) | 撥款事件（4／5） | 同上，還沒對過哪一則進下框 | 靜態 |
@@ -594,7 +576,6 @@
 | [`spec/80-duel-opening.md`](../spec/80-duel-opening.md) | 變體 0／2／3／5／6 的臨場抽驗 | 專屬句只在變體 1／4／7（`../re/75` §1.1），預設句共用同一選句機制；優先度低 | 靜態 |
 | [`spec/81-disaster-quantities.md`](../spec/81-disaster-quantities.md) | 事件 11 在風暴期間被重排的節奏 | 產生端一次排 32–60 延遲；期間事件 11 重擲強度的觸發頻率沒逐格讀（推定隨佇列輪到） | 靜態 |
 | [`spec/82-defender-selection.md`](../spec/82-defender-selection.md) | 名單上限 127 的邊界 | 原版緩衝區 0x100 bytes ÷ 2；remake 不設上限（軍團總數 127 本來就到不了）——記為等效差異 | 靜態 |
-| [`spec/83-initial-strategy-pass.md`](../spec/83-initial-strategy-pass.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
 | [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | UI 詞表只涵蓋靜態 literal 與 `%d` 樣板 | `%s` 樣板（內容是任意文字）反查不回去，這一類仍顯示繁中 | 靜態 |
 | [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | 版面沒有為非全形語系重算 | 訊息框 10 全形字／列是原版幾何；英文靠折行與翻頁吃下去，固定寬的欄位只做了「不可超過原文寬度」的約束 | 靜態 |
 | [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | UI 詞表與名表的第二人覆核 | **做了**（2026-08-28，374 條 UI 詞、343 個名）：改 4 條 UI 詞（`敵正侵攻他國` 縮成 `Enemy invades others` 對齊 TALK #102、`原版格式`→`Original format`、`提出外交要求` 補 diplomatic、`成立`→`agreed` … | 靜態 |
@@ -620,12 +601,10 @@
 | [`spec/91-tactical-parity.md`](../spec/91-tactical-parity.md) | 野戰打起來之後的戰場 | **開戰第一拍已經對過**（九區裡七區 0 px、`field` 0.05%，`../playtest/43`）。沒對過的是**開戰之後**的畫面——野戰的地形是從大地圖即時長出來的，兩邊要走到同一個 tick 比攻城更難湊 | 靜態 |
 | [`spec/92-android-music.md`](../spec/92-android-music.md) | 手機沒有實機聽過 | 沒有裝置；模擬器是 `-no-audio` 起的 | 靜態 |
 | [`spec/92-android-music.md`](../spec/92-android-music.md) | 桌面「沒有音效裝置就掛」那一條 | `../release/08` §5 的老問題，手機端要確認 Ebiten 在 Android 上不會踩同一個 | 靜態 |
-| [`spec/93-siege-wall-instant-break-facing.md`](../spec/93-siege-wall-instant-break-facing.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
 | [`spec/94-retreat-path-not-cleared-every-frame.md`](../spec/94-retreat-path-not-cleared-every-frame.md) | 守方一兵未損 | 這條 fixture 從頭到尾守方 48 人全活、兵 600 不變（`../playtest/51` §3）。守方站在 Z=1，攻方在 Z=0，而 `doAttack` 的碰撞要求 `s.Z == e.Z`——攻方走到腳下卻上不去。原版靠命令 3（城壁）登城，這條 fixture 的腳本沒有下過那道命令 | 靜態 |
 | [`spec/94-retreat-path-not-cleared-every-frame.md`](../spec/94-retreat-path-not-cleared-every-frame.md) | 攻方大將體力歸零卻還在 | `drainSiegeGeneral` 會扣到 0，而 `docs/re/11` §5.16 說戰鬥傷害最低留 1。攻城計時器要不要也留 1，沒有讀出來 | 靜態 |
 | [`spec/95-spawn-height-uses-ground-plane.md`](../spec/95-spawn-height-uses-ground-plane.md) | 原版擺兵寫進 `[si+0Ah]` 的是哪一個表 | 沒讀出來。remake 這一版是靠內部一致性定的（§2），不是照抄 | 靜態 |
 | [`spec/96-guard-command-not-downgraded.md`](../spec/96-guard-command-not-downgraded.md) | 守陣要不要補疲勞 | 沒有做（說明書 4.2 說**陣形是唯一恢復疲勞的指令**）。原版 `sub_1A99C` 那條路有沒有寫 `[si+19h]`，沒讀 | 靜態 |
-| [`spec/97-climb-when-both-axes-blocked.md`](../spec/97-climb-when-both-axes-blocked.md) | <!-- 缺口：無 --> | （未解小節內文） | 靜態 |
 | [`spec/98-climb-into-a-gate-hits-it.md`](../spec/98-climb-into-a-gate-hits-it.md) | `loc_1B533` 的完整分流 | 這裡只用到「撞到結構物」那一條。它同時也是敵我碰撞的入口（`../re/11` §5.16），另外兩條在水平移動那邊已經接了 | 靜態 |
 | [`spec/99-about-page-license.md`](../spec/99-about-page-license.md) | 條款全文沒有在手機上顯示 | 只顯示摘要與全文出處。全文 104 行，要另做可捲動的文字頁；摘要已滿足「收到的人知道自己被授權了什麼」 | 靜態 |
 
