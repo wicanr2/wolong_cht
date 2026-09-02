@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**481 列分布在 194 份文件，平均每份 2.5 列。**
+**482 列分布在 194 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 152 | 146 | 6 | 0 |
 | 驗收 | 84 | 73 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 198 | 185 | 13 | 0 |
-| **合計** | **481** | 446 | 35 | 0 |
+| 其他 | 199 | 186 | 13 | 0 |
+| **合計** | **482** | 447 | 35 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,7 +53,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 163 |
+| `docs/spec/` | 164 |
 | `docs/re/` | 152 |
 | `docs/playtest/` | 84 |
 | `docs/formats/` | 26 |
@@ -371,7 +371,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（198 條）
+## 2.6 其他（199 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -432,6 +432,7 @@
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝命令、`0x0Bh`／`0x10h`／`0x15h`／`0x1Fh` 各自出現在哪個視窗已知，完整值域未列 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 |
+| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | **remake 沒有邊緣捲動** | **原版捲大地圖就是把滑鼠移到畫面邊緣**（使用者實機證言，2026-09-02；機器碼是 `sub_11F7F` 的 `sub cx, ds:9882h` → 越界就 `add ds:9882h, cx`，`../re/47` §5.1）。remake 目前只有方向鍵，**那同樣是原版沒有的輸入**。要收掉這一… | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 六列的語意 | handler 讀到四支（`docs/re/55` §5）：畫面模式換調色盤組、音效走驅動、戰略速度只存值、戰術速度存值 ×16。**「資料儲存」與「遊戲結束」那兩支沒讀**，remake 照標籤字面接（開四槽視窗／走 ＹＥＳ／ＮＯ 確認） | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 「畫面模式」 | 兩個選項是「１６色」與「 液晶 」，切的是 `GAMEPAL.BRG` 的 bank 0–3 ↔ 4–7（`docs/re/02` §6.2）。**remake 只做第 0 組**，這一格固定顯示「１６色」——液晶那組是給 8 階調液晶的高飽和純色，現代螢幕沒有對照物 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 「音效」 | 值由 `g.soundValue()` 填。原版五個選項是 ＯＦＦ／TYPE 1–4（音源型別），remake 只有開／關 | 靜態 |

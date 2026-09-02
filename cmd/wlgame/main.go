@@ -1023,24 +1023,11 @@ func (g *game) Update() error {
 	inputActive := ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) ||
 		ebiten.IsMouseButtonPressed(ebiten.MouseButtonMiddle) ||
 		ebiten.IsMouseButtonPressed(ebiten.MouseButtonRight)
-	if pressed(ebiten.KeyEscape) {
-		inputActive = true
-		// 由上而下關掉最上面那個開著的視窗。
-		for i := hudSwitchN - 1; i >= 0; i-- {
-			if w := hudSwitchWindow(i); w != 0 && g.hudOpen(w) {
-				g.hudSet(w, false)
-				break
-			}
-		}
-	}
-	// remake 差異：原版只有滑鼠點橫幅那五格，鍵盤 1–4 是自己加的。
-	for i, k := range []ebiten.Key{ebiten.Key1, ebiten.Key2, ebiten.Key3, ebiten.Key4} {
-		if pressed(k) {
-			inputActive = true
-			w := hudSwitchWindow(i)
-			g.hudSet(w, !g.hudOpen(w))
-		}
-	}
+	// ⭐ **主畫面的四個視窗只用滑鼠開關**（使用者裁定 2026-09-02）：
+	// 左鍵點橫幅那五格開、右鍵關（上面 §橫幅五格那一段，docs/spec/13 §2.3）。
+	// 臥龍傳本來就是滑鼠遊戲，先前這裡的 ESC 與鍵盤 1–4 是 remake 自己加的，
+	// 原版沒有對應的操作，已移除。手機版走觸控（`internal/ui/phone`），
+	// 不經過這一段。
 	// ＋／− 調速度：戰術畫面調戰術速度，其餘調戰略速度。
 	for i, k := range []ebiten.Key{ebiten.KeyMinus, ebiten.KeyEqual} {
 		if pressed(k) {
