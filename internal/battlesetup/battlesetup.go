@@ -28,6 +28,14 @@ type Provider struct {
 	// rotate 是**最後一次建場**用的翻轉旗標。繪圖端要用同一個值，
 	// 否則旗與地形會對不上（docs/playtest/40 §11）。
 	rotate bool
+
+	// 這一場的戰場編號。⭐ **原版在遭遇時算一次就存進 `byte_10D34`**，
+	// 之後畫面、腳本、適性都讀同一個值——而類型 8 那一支帶亂數
+	// （`sub_14C1A`），每次重算會挑到不同的戰場（docs/spec/121）。
+	fieldNode  int
+	fieldSiege bool
+	fieldNum   int
+	fieldOK    bool
 }
 
 // Options 是 Load 要的東西。
@@ -144,11 +152,19 @@ func (p *Provider) BuildField(node int, siege, rotate bool) *tactical.Field {
 }
 
 // FieldNumber 回傳這一場用第幾張戰場：攻城就是據點編號，野戰現算。
+//
+// ⭐ **同一場只算一次**：類型 8 的四選一帶亂數，重算會換一張戰場，
+// 而畫面、腳本與適性都要讀到同一個值（docs/spec/121）。
 func (p *Provider) FieldNumber(node int, siege bool) int {
 	if siege {
 		return node
 	}
-	return p.fieldForNode(node)
+	if p.fieldOK && p.fieldNode == node && p.fieldSiege == siege {
+		return p.fieldNum
+	}
+	p.fieldNode, p.fieldSiege = node, siege
+	p.fieldNum, p.fieldOK = p.fieldForNode(node), true
+	return p.fieldNum
 }
 
 // fieldForNode 依大地圖的地形算出野戰要用哪一張戰場。
@@ -161,8 +177,20 @@ func (p *Provider) fieldForNode(node int) int {
 	if !ok {
 		return battlefield.FieldBase + 6
 	}
-	f, _ := battlefield.Select(p.playerHeading(), n)
+	f, _ := battlefield.SelectWith(p.playerHeading(), n, p.waterRoll(n))
 	return f
+}
+
+// waterRoll 抽類型 8 的四選一（`sub_14C1A` 的 `sub_1ECE0`）。
+// **只有類型 8 抽**——多抽會讓亂數流錯位。
+func (p *Provider) waterRoll(n battlefield.Neighbours) int {
+	if !battlefield.NeedsWaterRoll(n) || p.world == nil {
+		return 0
+	}
+	if r := p.world.TacticalRand(); r != nil {
+		return r.Next()
+	}
+	return 0
 }
 
 // FieldRotates 回報這一張野戰要不要翻轉。

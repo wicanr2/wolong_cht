@@ -120,3 +120,35 @@ func TestTerrainFieldsAreContiguous(t *testing.T) {
 		t.Errorf("類型 9 → %d，應為 213", f)
 	}
 }
+
+// ⛔ **每一種地形類型算出來的戰場編號都要落在 0–213。**
+//
+// 這一支原本不存在，於是類型 8／9 走 `TerrainBase + 類型` ＝ 214／215
+// 一路活到 2026-09-03：呼叫端看到超出範圍就退回合成戰場，
+// **碼頭與棧道的野戰整整用錯了一張地圖，而且沒有任何測試會紅**
+// （docs/spec/121）。
+func TestSelectAlwaysInRange(t *testing.T) {
+	for kind := 0; kind <= 9; kind++ {
+		for dir := 0; dir < 5; dir++ {
+			for roll := 0; roll < 4; roll++ {
+				n := Neighbours{Centre: kind, Down: kind,
+					DownLeft: kind, DownRight: kind, TwoDown: kind}
+				f, _ := SelectWith(dir, n, roll)
+				if f < 0 || f >= NumFields {
+					t.Fatalf("類型 %d／方向 %d／亂數 %d → 戰場 %d，"+
+						"超出 0–%d", kind, dir, roll, f, NumFields-1)
+				}
+			}
+		}
+	}
+}
+
+// 只有類型 8 要抽亂數；多抽一次會讓整條亂數流錯位。
+func TestNeedsWaterRollOnlyForKind8(t *testing.T) {
+	for kind := 0; kind <= 9; kind++ {
+		want := kind == 8
+		if got := NeedsWaterRoll(Neighbours{Down: kind}); got != want {
+			t.Errorf("類型 %d：NeedsWaterRoll = %v，want %v", kind, got, want)
+		}
+	}
+}

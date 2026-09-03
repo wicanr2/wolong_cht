@@ -83,14 +83,29 @@ type Neighbours struct {
 // dir 是軍團的行進方向（軍團記錄 `+0x08`，0–3；4 表示靜止）。
 // 回傳戰場編號與**要不要轉 180 度**。
 func Select(dir int, n Neighbours) (field int, rotate bool) {
+	return SelectWith(dir, n, 0)
+}
+
+// NeedsWaterRoll 回報這一格要不要抽亂數。
+//
+// ⭐ 只有**類型 8**（碼頭，圖塊 `0xCA`）要——`sub_14C1A` 在那一支才呼叫
+// `sub_1ECE0`。類型 9 是固定值。**不要無條件抽**：多抽一次會讓整條
+// 亂數流錯位，而戰術與戰略共用同一條。
+func NeedsWaterRoll(n Neighbours) bool { return n.Down == 8 }
+
+// SelectWith 是帶亂數的版本。roll 只有 `NeedsWaterRoll` 為真時會用到。
+//
+// ⛔ **類型 8／9 不可以用 `TerrainBase + 類型`**：那會算出 214／215，
+// 而戰場只有 0–213（`NumFields`），呼叫端會退回合成戰場。
+// 原版走的是 `sub_14C1A`（docs/spec/121）。
+func SelectWith(dir int, n Neighbours, roll int) (field int, rotate bool) {
 	// 正下方那一格決定走哪一條路（`sub_14B63` 的三分）。
 	switch b := n.Down; {
 	case b == 0:
 		return plainField(dir, n)
 	case b >= 8:
 		// 類型 8／9 走 `sub_14C1A`：8 從 209–212 隨機挑、9 固定 213。
-		// 隨機那一支要亂數，交給 SelectWater。
-		return TerrainBase + b, false
+		return SelectWater(b, roll), false
 	default:
 		// 類型 1–7 → 戰場 0xCF–0xD5。
 		return TerrainBase + b, false

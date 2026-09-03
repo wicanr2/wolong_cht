@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**513 列分布在 207 份文件，平均每份 2.5 列。**
+**515 列分布在 208 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 165 | 159 | 6 | 0 |
 | 驗收 | 89 | 78 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 218 | 204 | 14 | 0 |
-| **合計** | **513** | 478 | 35 | 0 |
+| 其他 | 220 | 205 | 15 | 0 |
+| **合計** | **515** | 479 | 36 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,7 +53,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 183 |
+| `docs/spec/` | 185 |
 | `docs/re/` | 165 |
 | `docs/playtest/` | 89 |
 | `docs/formats/` | 22 |
@@ -383,7 +383,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（218 條）
+## 2.6 其他（220 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -461,6 +461,8 @@
 | [`spec/120-pathfind-request-queue.md`](../spec/120-pathfind-request-queue.md) | `sub_1ACA4` | 排隊之後緊接著呼叫，內容沒讀（`../re/80` §5） | 靜態 |
 | [`spec/120-pathfind-request-queue.md`](../spec/120-pathfind-request-queue.md) | 碰撞尾段那一處的前提 | 哪幾條分支會走到 `loc_1B612` 沒有逐條追 | 靜態 |
 | [`spec/120-pathfind-request-queue.md`](../spec/120-pathfind-request-queue.md) | 佇列順序對戰局的影響 | FIFO 與無序在同一場攻城裡差多少，沒有量化 | 靜態 |
+| [`spec/121-water-battlefield-selection.md`](../spec/121-water-battlefield-selection.md) | 類型 9 的另一條分支 | `loc_14C2C` 還會看鄰格是不是 `0xCA` 並設 `ch = 0x40`（翻轉旗標），remake 固定回 213、不翻轉。那一段沒逐行讀 | 靜態 |
+| [`spec/121-water-battlefield-selection.md`](../spec/121-water-battlefield-selection.md) | 實跑一場碼頭野戰 | 沒有。要讓兩支軍團在圖塊 `0xCA` 上遭遇 | 實測 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | **remake 沒有邊緣捲動** | **機制早就解了**（`../re/47` §6）：`sub_120D6` 進大地圖時把 INT 33 的範圍換成**整個世界**（水平 0–`17FFh` ＝ 384 格 × 16、垂直 0–`101Fh`），`sub_11F7F` 再把原始座標減掉鏡頭原點、夾在 0–639／0–399，**夾掉的量同時加回鏡… | 靜態 |

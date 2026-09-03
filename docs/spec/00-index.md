@@ -162,6 +162,7 @@
 | 截圖的時機用局面條件（`-shot-when`／`-auto-messages`）| [`118-shot-when-condition.md`](118-shot-when-condition.md) | 驗收設施，預設關閉。自然流程與捷徑截出的畫面**九區逐像素相同**；條件不成立時不寫檔、回非零 |
 | **`\1`／`\4` 代入的是呼び名，不是姓名** | [`119-talk-marker-fields.md`](119-talk-marker-fields.md) | 已實作、單測與突變測試。四個劇本裡受影響的只有四人，而三個是名人（諸葛亮→孔明、司馬懿→仲達、龐統→鳳雛）|
 | **尋路是反應式的**：全域佇列每幀兩個兵 | [`120-pathfind-request-queue.md`](120-pathfind-request-queue.md) | 已實作並有單測。取代 `replanInterval` 那個明示的 remake 差異；三場迴歸戰仍打得完 |
+| 碼頭與棧道的野戰用錯戰場（`SelectWater` 沒接）| [`121-water-battlefield-selection.md`](121-water-battlefield-selection.md) | 已修並補值域斷言。214／215 超出 0–213，呼叫端一直退回合成戰場 |
 
 ## 怎麼加一份
 

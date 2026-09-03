@@ -284,6 +284,16 @@ type General struct {
 	Captor int
 }
 
+// TacticalRand 是開戰時記下來的亂數源。戰場選擇（類型 8 的四選一，
+// docs/spec/121）與戰術層共用同一條流——原版也是同一支 `sub_1ECE0`。
+// 還沒 tick 過就是 nil，呼叫端要自己退路。
+func (w *World) TacticalRand() combat.Rand {
+	if w == nil {
+		return nil
+	}
+	return w.rng
+}
+
 // TalkName 回傳訊息裡 `\1`／`\4` 要代入的字串。
 //
 // ⭐ **原版代的是呼び名（記錄 `+0x08`），不是姓名（`+0x02`）**——
