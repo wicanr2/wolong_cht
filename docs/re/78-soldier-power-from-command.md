@@ -166,6 +166,11 @@ loc_19BB2:
 
 ## 5. ⭐ 近戰怎麼用戰力：`sub_1B6BC`
 
+**分工在 `loc_1B5A1`**（[`11`](11-tactical-battle.md) §5.16–§5.17）：
+擋路的對方**不是大將就走 `sub_1B618`**（一般近戰），**是大將就走這一支**。
+remake 兩支都接了——`internal/rules/tactical/damage.go` 的 `attackCollision`
+照同一個判準分流（`meleeHit`／`hitGeneral`）。
+
 `si` ＝ 攻方，`di` ＝ 守方：
 
 ```asm
@@ -193,5 +198,4 @@ loc_19BB2:
 | 項目 | 現況 |
 |---|---|
 | 野戰／水戰的分界 | §2.1 靠圖塊分布定的，是強證據不是 confirmed。要定案得找到把圖塊標成「水」的那張表，或在原版實跑一場水邊的野戰 |
-| `sub_1B618` 與 `sub_1B6BC` 的分工 | 兩支都是近戰命中，remake 目前只接前者（`internal/rules/tactical/damage.go`）。哪一支管哪一種接觸沒讀 |
 | 側摘要 `word_1D30A` 的完整版面 | `+2`（軍團編號）、`+6`（士氣）、`+0x0A` 起六個兵種確定，其餘沒讀 |

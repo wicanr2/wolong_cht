@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**506 列分布在 203 份文件，平均每份 2.5 列。**
+**501 列分布在 203 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -41,11 +41,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 13 | 10 | 3 | 0 |
 | 資料保存 | 23 | 23 | 0 | 0 |
-| 程式碼理解 | 163 | 156 | 7 | 0 |
+| 程式碼理解 | 159 | 152 | 7 | 0 |
 | 驗收 | 89 | 78 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 212 | 199 | 13 | 0 |
-| **合計** | **506** | 471 | 35 | 0 |
+| 其他 | 211 | 198 | 13 | 0 |
+| **合計** | **501** | 466 | 35 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,8 +53,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 177 |
-| `docs/re/` | 163 |
+| `docs/spec/` | 176 |
+| `docs/re/` | 159 |
 | `docs/playtest/` | 89 |
 | `docs/formats/` | 23 |
 | `docs/release/` | 18 |
@@ -109,7 +109,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 |
 
-## 2.3 程式碼理解（163 條）
+## 2.3 程式碼理解（159 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -127,11 +127,9 @@
 | [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | `sub_15940` 的兩個分支 | 已派駐武將的每月行動，會發訊息 `0x41`／`0x42`。分支 2 有一行 `mov byte ptr [si+1Ch], 18h`（把所屬勢力寫成 24）**與「+1Ch 是勢力編號、只有 0–21」矛盾**，還沒解釋 | 靜態 |
 | [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | `sub_14269`／`sub_13EFD` | 事件 11／12 寫入的據點 `+0x15` marker 在據點輪轉時先扣防災值；不足時再扣上昇值、生產力與城兵，已接入 `World.applyCityDisasterEffect`；物件動畫仍未完 | 靜態 |
 | [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | 武將 `+1Ah` | 官員「要錢中」的旗標／金額，`sub_12FBF` 的事件會寫它 | 靜態 |
-| [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | 武將 `+0Eh`／`+0Fh`／`+10h` 是不是兵種適性 | 需要與戰鬥程式對照 | 靜態 |
 | [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | `sub_157FE` 觸發的事件內容 | `sub_12FBF(ax=0Dh, dx=196h)` | 靜態 |
 | [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | 軍團記錄剩下的欄位 | 段內 `2240h`，**64 B／筆、127 筆**（不是 32 B）。已具名的見 `08` §4 與 `34` | 靜態 |
 | [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | 段內 `2040h`／`2140h` 的兩張 16 × 16 B 表 | `sub_123FF` 會在 `2040h` 那張找空位配置；`2140h` 那張開局已有 16 筆，`+2`／`+4` 看起來是地圖座標 | 靜態 |
-| [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | 123 個武將裡有 80 人只有一欄非零、32 人兩欄、9 人三欄—— → 強證據，待驗 | （散句） | 靜態 |
 | [`re/08-hourly-update.md`](../re/08-hourly-update.md) | `sub_15456` 用 stride 32 掃軍團表 | 與 64 矛盾，疑似原版 bug | 靜態 |
 | [`re/08-hourly-update.md`](../re/08-hourly-update.md) | `+0x0C` | 行軍中的暫存（`sub_12708` 寫） / 未解 | 靜態 |
 | [`re/08-hourly-update.md`](../re/08-hourly-update.md) | `+0x04` | byte / `sub_1E81C` 的回傳 `ah` / 未解 | 靜態 |
@@ -139,7 +137,7 @@
 | [`re/09-combat.md`](../re/09-combat.md) | **戰術完整結算** | `TestNormalScenarioTacticalBattleTerminates` 已證實真實正常攻城的狀態層勝負／傷亡回寫，`wlgame-ai-postbattle.png` 證明正常 GUI 回戰略；GUI 戰後訊息、完整狀態對拍與少數分支仍未完 | 靜態 |
 | [`re/09-combat.md`](../re/09-combat.md) | `sub_1AD7F` 攻擊分支 | `shootSpecial` 已接入 `CH=0x20` 的相鄰格／垂直效果；`+0x1E` 的初始化／上移／下移／交換來源與 `sub_1AC55` 的 raw 比較已確認並接成 `PlaneHigh`，普通箭原版 SCH 單幀圖形已接回，完整投射物動畫／同狀態對拍仍待確認 | 靜態 |
 | [`re/09-combat.md`](../re/09-combat.md) | 原版／remake 同狀態對拍 | 需有效時序原版存檔或可重建的同狀態 oracle | 實測 |
-| [`re/09-combat.md`](../re/09-combat.md) | 地形係數表的列 2、武將適性 `+0x10` | 兩者都要 `al = 2` 才取得到，戰略層沒有呼叫點 | 靜態 |
+| [`re/09-combat.md`](../re/09-combat.md) | 地形係數表的列 2 | 要 `al = 2` 才取得到，**戰略層**沒有呼叫點。⚠ 適性 `+0x10` 已經不是缺口——戰術層的 `sub_19C13` 取得到（`78` §2.1） | 靜態 |
 | [`re/09-combat.md`](../re/09-combat.md) | 武將旗標 `+0x00` 的 bit 4（自刎） | 值域已知有 7 種，只解出這一個位元 | 靜態 |
 | [`re/09-combat.md`](../re/09-combat.md) | 據點 `+0x10`／`+0x11` 被攻城扣減 | 欄位語意已知（上昇值／防災值），但「被打過的城成長變慢」還沒在數值上驗過 | 靜態 |
 | [`re/09-combat.md`](../re/09-combat.md) | `[si+3]` 的 0／1／≥2 是誰設的 | 決定哪一支軍團會進戰鬥畫面 | 靜態 |
@@ -170,7 +168,6 @@
 | [`re/28-text-number-rendering.md`](../re/28-text-number-rendering.md) | `word_10D4C` 那一組 | 來源已解——`sub_100DF` 開機把 `ICONGRF` 段 3 切五塊，`word_10D54` 是 `+0x0840` 的 11 格 × 16 列數字字模（`../spec/52` §4）；緊接在後的 `+0x08F0` 另有一組 11 格，用途未解 | 靜態 |
 | [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `END_S10/S11` 與 `STR.EXE` 檔名不同步 | §6，要實跑裁決 | 實測 |
 | [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `END_S13.DAT` 前 408 格的來源 | 不是 `stdfont.15` 的任何一段，也不是 `usrfont.15m`（256 B） | 靜態 |
-| [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `END_S15.DAT`（5,242 B） | `KI.EXE` 的字串表引用它，但**不是字型**（大小不是 30／15 的倍數），也不是過場圖（沒有 `00 F4 01` 檔頭），Big5 解碼是亂碼 → 疑似壓縮 | 靜態 |
 | [`re/30-corps-formation-ui.md`](../re/30-corps-formation-ui.md) | 軍團 `+0x00` 的位元 3／4／5 | 位元 1（有指令）、2（委任，`45`）已解；其餘仍未見成對的寫入端（`34` §4） | 靜態 |
 | [`re/31-faction-picker-screen.md`](../re/31-faction-picker-screen.md) | 分派表已印出，但 `sub_15AD1 → sub_15AFC` 的進入路徑仍未定位。 | （散句） | 靜態 |
 | [`re/31-faction-picker-screen.md`](../re/31-faction-picker-screen.md) | `cs:6056` 表的長度 | 前六筆是一組小 handler，後五筆疑似越過表尾（§1.2） | 靜態 |
@@ -274,7 +271,6 @@
 | [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | 旗標 bit 0 | 只出現一次（劇本三的張衛），沒有讀取端 | 靜態 |
 | [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | `+0x19` 誰寫非 `0xFF` 值 | **只有劇本作者**：`KI.EXE` 裡只找得到清成 `0xFF` 的寫入端（`sub_15899`）。所以它是純劇本資料，執行期只會消耗不會補充 | 靜態 |
 | [`re/78-soldier-power-from-command.md`](../re/78-soldier-power-from-command.md) | 野戰／水戰的分界 | §2.1 靠圖塊分布定的，是強證據不是 confirmed。要定案得找到把圖塊標成「水」的那張表，或在原版實跑一場水邊的野戰 | 實測 |
-| [`re/78-soldier-power-from-command.md`](../re/78-soldier-power-from-command.md) | `sub_1B618` 與 `sub_1B6BC` 的分工 | 兩支都是近戰命中，remake 目前只接前者（`internal/rules/tactical/damage.go`）。哪一支管哪一種接觸沒讀 | 靜態 |
 | [`re/78-soldier-power-from-command.md`](../re/78-soldier-power-from-command.md) | 側摘要 `word_1D30A` 的完整版面 | `+2`（軍團編號）、`+6`（士氣）、`+0x0A` 起六個兵種確定，其餘沒讀 | 靜態 |
 
 ## 2.4 驗收（89 條）
@@ -382,7 +378,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（212 條）
+## 2.6 其他（211 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -445,7 +441,6 @@
 | [`spec/114-general-affinity.md`](../spec/114-general-affinity.md) | 出仕的畫面通知 | 原版對象是玩家勢力時跳訊息 `0x29`；這一版只改狀態，不排事件 | 靜態 |
 | [`spec/114-general-affinity.md`](../spec/114-general-affinity.md) | 旗標 bit 5 之外的退場條件 | `sub_15899` 只在「心向的勢力已滅」時看 bit 5；bit 5 沒設的武將會留在原地等下一輪，這一點沒有實機驗證 | 靜態 |
 | [`spec/115-soldier-power.md`](../spec/115-soldier-power.md) | 野戰／水戰的分界 | 攻城那一格 confirmed（據點編號恆 < `0xC0`），野戰與水戰的圖塊門檻是強證據（`../re/78` §2.1） | 靜態 |
-| [`spec/115-soldier-power.md`](../spec/115-soldier-power.md) | `sub_1B618` 與 `sub_1B6BC` 的分工 | remake 只接前者。命中率公式兩支不同，要先確認玩家看到的是哪一支 | 靜態 |
 | [`spec/116-retreat-cannot-leave-the-city.md`](../spec/116-retreat-cannot-leave-the-city.md) | 還有誰在用 `NewFieldFromTiles` 配真戰場資料 | `internal/rules/tactical/tactical_test.go` 有一處。它驗的是圖塊解碼不是連通性，但同一個陷阱在那裡也成立 | 靜態 |
 | [`spec/116-retreat-cannot-leave-the-city.md`](../spec/116-retreat-cannot-leave-the-city.md) | 退路要不要留 | 合成戰場（`NewField`）確實只有堆疊高度。**能不能在圖塊 ≥ `0xF0` 時不用堆疊高度**，是另一個問題 | 靜態 |
 | [`spec/117-fixture-arms-duel-before-stepping.md`](../spec/117-fixture-arms-duel-before-stepping.md) | 野戰 `field` 的殘差 | 修好之後還剩多少，量在 `../playtest/58` | 靜態 |
