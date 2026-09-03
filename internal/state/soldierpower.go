@@ -15,34 +15,36 @@ import (
 // 這裡直接用 Go 的值當索引。
 var kindBonus = [economy.NumTroopTypes]int{30, 4, 12}
 
-// 戰場類別。`sub_19A33` 把 `byte_10D34` 分三段寫進 `byte_1D34B`，
-// 而那三段正好對上武將記錄的三個適性欄（docs/re/78 §2.1）：
+// 戰場類別。`sub_19A33` 把 `byte_10D34`（**戰場編號**）分三段寫進
+// `byte_1D34B`，而那三段正好對上武將記錄的三個適性欄：
 //
-//	類別 0（攻城，byte_10D34 是據點編號 0–191）→ +0x0E 攻城適性
-//	類別 1（野戰，圖塊 0xC0–0xD0）             → +0x0F 野戰適性
-//	類別 2（水邊，圖塊 ≥ 0xD1）                 → +0x10 水戰適性
+//	類別 0（攻城；戰場編號 ＝ 據點編號 0–191）→ +0x0E 攻城適性
+//	類別 1（陸上；0xC0–0xD0）                 → +0x0F 陸戰適性
+//	類別 2（海上；≥ 0xD1）                    → +0x10 海戰適性
+//
+// ⭐ 「陸上」「海上」是**原版自己的字**：`sub_1C955` 用 `byte_1D34B`
+// 選側欄標題的第一段，字串在 `CS:0xD45E`／`0xD464`（docs/re/60 §11）。
+//
+// ⛔ **戰場編號不是大地圖的圖塊值。** 野戰的編號由 `sub_14B63` 從五格
+// 地形算出來（docs/re/05、docs/re/58 §4）——橋（圖塊 `0xCA`）的編號是
+// `0xD1`–`0xD4` ＝ 海上，而圖塊 `0xCA` 自己 < `0xD1`。
 const (
 	siegeAptitude = 0
 	fieldAptitude = 1
 	waterAptitude = 2
 
-	// fieldTileLow／fieldTileHigh 是野戰那一路的兩道圖塊門檻。
-	fieldTileLow  = 0xC0
-	fieldTileHigh = 0xD1
+	// fieldNumberLow／fieldNumberHigh 是 `sub_19A33` 的兩道門檻。
+	fieldNumberLow  = 0xC0
+	fieldNumberHigh = 0xD1
 )
 
 // aptitudeIndex 是這一場戰鬥要讀主將的哪一個適性欄。
-//
-// 攻城那一路原版寫進 `byte_10D34` 的是**據點編號**（0–191），恆小於 `0xC0`，
-// 所以攻城一定落在類別 0。野戰寫的是那一格的大地圖圖塊值。
-func aptitudeIndex(siege bool, tile int) int {
-	if siege {
-		return siegeAptitude
-	}
+// 參數是**戰場編號**（`byte_10D34`），不是圖塊。
+func aptitudeIndex(field int) int {
 	switch {
-	case tile < fieldTileLow:
+	case field < fieldNumberLow:
 		return siegeAptitude
-	case tile < fieldTileHigh:
+	case field < fieldNumberHigh:
 		return fieldAptitude
 	default:
 		return waterAptitude
@@ -94,7 +96,7 @@ const leaderHPFloor = 0x46
 //
 // 軍團編號就是主將的武將編號（`sub_1291A`／`sub_16F26` 都直接換算），
 // 所以 `w.Generals[corps]` 就是這一支軍團的主將。
-func (w *World) squadPowers(corps int, siege bool, tile int) (
+func (w *World) squadPowers(corps, category int) (
 	squads [army.Positions]int, lp, lhp int) {
 	if w == nil || corps < 0 || corps >= len(w.Corps) || corps >= len(w.Generals) {
 		return
@@ -102,7 +104,7 @@ func (w *World) squadPowers(corps int, siege bool, tile int) (
 	c := &w.Corps[corps]
 	g := &w.Generals[corps]
 	apt := 0
-	if i := aptitudeIndex(siege, tile); i >= 0 && i < len(g.Aptitude) {
+	if i := category; i >= 0 && i < len(g.Aptitude) {
 		apt = g.Aptitude[i]
 	}
 	for k, u := range c.Units {

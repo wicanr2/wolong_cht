@@ -23,7 +23,8 @@
         體力 = max(70, (武力 × 4 + 50) × 軍團士氣 ÷ 100)
 
 兵種係數（seg000:9C0F，bytes 1E 04 0C 00）：1 → 30、2 → 4、3 → 12
-適性 = 主將的 +0x0E／+0x0F／+0x10，由戰場類別選（re/78 §2）
+適性 = 主將的 +0x0E／+0x0F／+0x10，由**戰場類別**選（re/78 §2.1）
+       類別 0 攻城／1 陸上／2 海上——原版自己的標題字串就是這三個
 ```
 
 近戰有兩支，**分工在 `loc_1B5A1`**（[`../re/11`](../re/11-tactical-battle.md) §5.16–§5.17）：
@@ -57,16 +58,36 @@ sub_1B6BC：命中率 = 9.77% + (1 − 9.77%) × min(24, 攻 − 守) ÷ 128
 | 項目 | 位置 |
 |---|---|
 | 三條算式 | ✅ `internal/state/soldierpower.go`（`soldierPower`／`leaderPower`／`leaderHP`），單測見 §4 |
-| 戰場類別選適性欄 | ✅ 同檔的 `aptitudeIndex`：攻城恆取攻城適性，野戰看圖塊 `0xC0`／`0xD1` 兩道門檻（[`../re/78`](../re/78-soldier-power-from-command.md) §2.1）|
+| 戰場類別選適性欄 | ✅ `aptitudeIndex(戰場編號)` ＋ `TacticalSetup.Category`（＝ `battle.Category(FieldNumber)`）。⛔ **不是大地圖圖塊**——見 §3.1 |
 | 每槽戰力與大將 | ✅ `internal/rules/tactical`：`Side.SquadPower`／`LeaderPower`／`LeaderHP`，`Deploy` 用它們 |
 | 主將能力進戰場 | ✅ `w.squadPowers`（軍團編號 ＝ 主將的武將編號）|
 | 接線 | ✅ `internal/state/tactical.go` 的 `deploy` |
+
+### 3.1 ⛔ 第一版接錯了：拿大地圖圖塊去比門檻
+
+`aptitudeIndex` 原本吃的是 `TacticalSetup.Tile(x, y)` ＝ 軍團所在格的
+**大地圖圖塊值**，拿它去比 `0xC0`／`0xD1`。原版比的是 `byte_10D34`
+＝ **戰場編號**，而野戰的編號是 `sub_14B63` 從五格地形算出來的
+（[`../re/78`](../re/78-soldier-power-from-command.md) §2.1）。兩邊都錯：
+
+| | 圖塊 | 戰場編號 | 適性欄 |
+|---|---|---|---|
+| 橋 | `0xCA` ⇒ 看起來像陸上 | `0xD1`–`0xD4` | **海戰**（接錯時取到陸戰）|
+| 一般水路 | `0xD8` ⇒ 看起來像海上 | 平原配對表 `0xC0+n` | **陸戰**（接錯時取到海戰）|
+
+⚠ **而且 `Tile` 從來沒有人設**——`grep -rn "Tile:"` 在 `internal/battlesetup`
+一筆都沒有，所以 `battleTile` 永遠回退成 `0xC0`：**野戰恆取陸戰適性，
+海戰那一欄一輩子用不到**。這一版加了 `TestSquadPowersUsesBattleCategory`
+把接線本身釘住——先前沒有任何測試會因為「沒有人設」而變紅。
+
+⭐ **現成的答案就在隔壁**：`battle.Category(p.FieldNumber(node, siege))`
+早就用在腳本段的選擇上（`internal/battlesetup`），照抄一行就好。
 
 ## 4. 驗證
 
 | 方式 | 內容 |
 |---|---|
-| 單元測試 ✅ | `TestSoldierPowerPerTroopType`（三個兵種係數 30／4／12）、`TestSoldierPowerRisesWithCommand`（統率單調，擋「又接回士氣」）、`TestLeaderPowerAndHP`、`TestLeaderHPIsNotMorale`、`TestAptitudeIndexByBattleClass` |
+| 單元測試 ✅ | `TestSoldierPowerPerTroopType`（三個兵種係數 30／4／12）、`TestSoldierPowerRisesWithCommand`（統率單調，擋「又接回士氣」）、`TestLeaderPowerAndHP`、`TestLeaderHPIsNotMorale`、`TestAptitudeIndexByBattleClass`（含「`0xCA` 當戰場編號是陸上」那一格）、**`TestSquadPowersUsesBattleCategory`**（三個適性欄給三個不同的值，看接線取到哪一個）|
 | 迴歸 ✅ | `TestNormalScenarioTacticalBattleTerminates`：第 967 幀結束（0.49 秒）|
 | 對原版 ✅ | 戰術九區逐區對拍已重跑（[`../playtest/58`](../playtest/58-parity-retest-20260902.md)）：**野戰七區 0 px、`field` 95 px**，攻城前兩個取樣點與 08-27 同值。沒有回歸 |
 
@@ -100,4 +121,5 @@ sub_1B6BC：命中率 = 9.77% + (1 − 9.77%) × min(24, 攻 − 守) ÷ 128
 
 | 項目 | 現況 |
 |---|---|
-| 野戰／水戰的分界 | 攻城那一格 confirmed（據點編號恆 < `0xC0`），野戰與水戰的圖塊門檻是強證據（[`../re/78`](../re/78-soldier-power-from-command.md) §2.1）|
+| 海戰適性實際被取到過沒有 | 算式與接線都對了，但**沒有跑過一場橋上的野戰**。要驗得讓兩支軍團在圖塊 `0xCA` 那一格遭遇 |
+| 地形類型 3–7 各是什麼地形 | `cs:982Fh` 的範圍已攤開（[`../re/05`](../re/05-battle-selection.md)），但「類型 3 ＝ 山地／丘陵」那一欄的標籤是從圖塊外觀推的，沒有機器碼出處 |

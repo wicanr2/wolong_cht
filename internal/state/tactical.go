@@ -35,24 +35,32 @@ type TacticalSetup struct {
 	// 沒設或回 nil 那一側就不由腳本驅動。
 	Script func(node int, siege bool, tactic int) []byte
 
-	// Tile 回傳大地圖 (x, y) 那一格的圖塊值。野戰要靠它決定戰場類別，
-	// 而戰場類別決定主將的哪一個適性欄餵進兵的戰力（docs/re/78 §2.1、
-	// docs/spec/115）。**沒設就一律當野戰**——那是 remake 差異，
-	// 因為原版讀的是同一張大地圖。
-	Tile func(x, y int) int
+	// Category 回傳這一場的**戰場類別**（0 攻城／1 陸上／2 海上）。
+	//
+	// ⛔ **不是大地圖的圖塊值。** 原版比的是 `byte_10D34` ＝ **戰場編號**
+	// （`sub_19A33` 的 `cmp al, 0C0h`／`cmp al, 0D1h`），而野戰的戰場編號
+	// 是 `sub_14B63` 從五格地形算出來的，不是那一格的圖塊
+	// （docs/re/05、docs/re/58 §4）。拿圖塊去比會兩邊都錯：
+	// 橋（圖塊 `0xCA`）的戰場編號是 `0xD1`–`0xD4` ＝ **海上**，
+	// 而圖塊 `0xCA` 自己 < `0xD1`。
+	//
+	// 戰場類別決定主將的哪一個適性欄餵進兵的戰力（docs/spec/115）。
+	// **沒設就照 siege 退成 0／1**——那是 remake 差異，海上取不到。
+	Category func(node int, siege bool) int
 
 	Forms *tactical.Formations
 }
 
-// battleTile 是這一場野戰發生的那一格圖塊值。取不到就回 fieldTileLow，
-// 也就是「當成一般野戰」。
-func (w *World) battleTile(corps int) int {
-	if w == nil || w.tactical == nil || w.tactical.Tile == nil ||
-		corps < 0 || corps >= len(w.Corps) {
-		return fieldTileLow
+// battleCategory 是這一場的戰場類別（0 攻城／1 陸上／2 海上）。
+// 沒有 `Category` 就照 siege 退成 0／1——**海上那一格取不到**。
+func (w *World) battleCategory(node int, siege bool) int {
+	if w == nil || w.tactical == nil || w.tactical.Category == nil {
+		if siege {
+			return siegeAptitude
+		}
+		return fieldAptitude
 	}
-	c := &w.Corps[corps]
-	return w.tactical.Tile(c.X, c.Y)
+	return w.tactical.Category(node, siege)
 }
 
 // Pending 是一場等著被跑完的戰術戰鬥。
@@ -131,13 +139,10 @@ func (w *World) beginTactical(att, def int, m combat.Mode, garrison int) bool {
 		c := w.Corps[corps]
 		// ⚠ **原版的戰力不是士氣**：一般隊 `((統率 + 適性) × 3 + 兵種係數) ÷ 4`、
 		// 大將 `(武力 × 2 + 適性) × 2`（`sub_19B6D`／`sub_19B40`，
-		// docs/re/78）。算式已經實作在 `soldierPower`／`leaderPower`／
-		// `leaderHP` 並有單測，**但還沒接上來**：接上之後兵活得久、
-		// 同時退卻的人變多，會撞上退卻繞路的死鎖（docs/spec/116）。
-		// 那個死鎖是既有缺陷，先前被「一擊必殺」蓋住。
-		// 修好 116 之後把下面三行換成 `w.squadPowers(corps, siege, tile)`
-		// 的三個回傳值即可（docs/spec/115 §5）。
-		squads, lp, lhp := w.squadPowers(corps, m == combat.Siege, w.battleTile(att))
+		// docs/re/78、docs/spec/115）。適性欄由**戰場類別**選，
+		// 而戰場類別來自戰場編號不是地圖圖塊（見 `TacticalSetup.Category`）。
+		squads, lp, lhp := w.squadPowers(corps,
+			w.battleCategory(node, m == combat.Siege))
 		b.Sides[side].SquadPower = squads
 		b.Sides[side].LeaderPower = lp
 		b.Sides[side].LeaderHP = lhp

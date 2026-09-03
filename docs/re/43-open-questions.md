@@ -41,11 +41,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 13 | 10 | 3 | 0 |
 | 資料保存 | 22 | 22 | 0 | 0 |
-| 程式碼理解 | 166 | 159 | 7 | 0 |
+| 程式碼理解 | 165 | 159 | 6 | 0 |
 | 驗收 | 89 | 78 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 217 | 203 | 14 | 0 |
-| **合計** | **513** | 477 | 36 | 0 |
+| 其他 | 218 | 204 | 14 | 0 |
+| **合計** | **513** | 478 | 35 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,8 +53,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 182 |
-| `docs/re/` | 166 |
+| `docs/spec/` | 183 |
+| `docs/re/` | 165 |
 | `docs/playtest/` | 89 |
 | `docs/formats/` | 22 |
 | `docs/release/` | 18 |
@@ -108,7 +108,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 |
 
-## 2.3 程式碼理解（166 條）
+## 2.3 程式碼理解（165 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -269,7 +269,6 @@
 | [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | `+0x1B` 的語意 | 只有 0（368）與 `0xFF`（13）。沒有讀取端 | 靜態 |
 | [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | 旗標 bit 0 | 只出現一次（劇本三的張衛），沒有讀取端 | 靜態 |
 | [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | `+0x19` 誰寫非 `0xFF` 值 | **只有劇本作者**：`KI.EXE` 裡只找得到清成 `0xFF` 的寫入端（`sub_15899`）。所以它是純劇本資料，執行期只會消耗不會補充 | 靜態 |
-| [`re/78-soldier-power-from-command.md`](../re/78-soldier-power-from-command.md) | 野戰／水戰的分界 | §2.1 靠圖塊分布定的，是強證據不是 confirmed。要定案得找到把圖塊標成「水」的那張表，或在原版實跑一場水邊的野戰 | 實測 |
 | [`re/78-soldier-power-from-command.md`](../re/78-soldier-power-from-command.md) | 側摘要 `word_1D30A` 的完整版面 | `+2`（軍團編號）、`+6`（士氣）、`+0x0A` 起六個兵種確定，其餘沒讀 | 靜態 |
 | [`re/79-talk-marker-handlers.md`](../re/79-talk-marker-handlers.md) | `ah ≠ 0xFF` 的直接位址形式誰在用 | 五支都留了這條路（參數直接當段內位址）。呼叫端有沒有真的用它，要逐個 `sub_18810` 呼叫點看 `push` 進去的值 | 靜態 |
 | [`re/79-talk-marker-handlers.md`](../re/79-talk-marker-handlers.md) | `loc_10701` 的 `al = 3` | 五支都傳 3。屬性的位元編碼見 `28`，`al` 那一格沒逐位讀 | 靜態 |
@@ -384,7 +383,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（217 條）
+## 2.6 其他（218 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -446,7 +445,8 @@
 | [`spec/114-general-affinity.md`](../spec/114-general-affinity.md) | 隨機投靠那一條 | `sub_15899` 的 `+0x19 == 0xFF` 分支還沒接（§3 的第二個 ⚠）。要先把勢力的武將數與據點數接進規則層 | 靜態 |
 | [`spec/114-general-affinity.md`](../spec/114-general-affinity.md) | 出仕的畫面通知 | 原版對象是玩家勢力時跳訊息 `0x29`；這一版只改狀態，不排事件 | 靜態 |
 | [`spec/114-general-affinity.md`](../spec/114-general-affinity.md) | 旗標 bit 5 之外的退場條件 | `sub_15899` 只在「心向的勢力已滅」時看 bit 5；bit 5 沒設的武將會留在原地等下一輪，這一點沒有實機驗證 | 靜態 |
-| [`spec/115-soldier-power.md`](../spec/115-soldier-power.md) | 野戰／水戰的分界 | 攻城那一格 confirmed（據點編號恆 < `0xC0`），野戰與水戰的圖塊門檻是強證據（`../re/78` §2.1） | 靜態 |
+| [`spec/115-soldier-power.md`](../spec/115-soldier-power.md) | 海戰適性實際被取到過沒有 | 算式與接線都對了，但**沒有跑過一場橋上的野戰**。要驗得讓兩支軍團在圖塊 `0xCA` 那一格遭遇 | 靜態 |
+| [`spec/115-soldier-power.md`](../spec/115-soldier-power.md) | 地形類型 3–7 各是什麼地形 | `cs:982Fh` 的範圍已攤開（`../re/05`），但「類型 3 ＝ 山地／丘陵」那一欄的標籤是從圖塊外觀推的，沒有機器碼出處 | 靜態 |
 | [`spec/116-retreat-cannot-leave-the-city.md`](../spec/116-retreat-cannot-leave-the-city.md) | 還有誰在用 `NewFieldFromTiles` 配真戰場資料 | `internal/rules/tactical/tactical_test.go` 有一處。它驗的是圖塊解碼不是連通性，但同一個陷阱在那裡也成立 | 靜態 |
 | [`spec/116-retreat-cannot-leave-the-city.md`](../spec/116-retreat-cannot-leave-the-city.md) | 退路要不要留 | 合成戰場（`NewField`）確實只有堆疊高度。**能不能在圖塊 ≥ `0xF0` 時不用堆疊高度**，是另一個問題 | 靜態 |
 | [`spec/117-fixture-arms-duel-before-stepping.md`](../spec/117-fixture-arms-duel-before-stepping.md) | 野戰 `field` 的殘差 | 修好之後還剩多少，量在 `../playtest/58` | 靜態 |

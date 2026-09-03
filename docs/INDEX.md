@@ -178,7 +178,7 @@
 | [`docs/re/75-duel-talk-audit.md`](re/75-duel-talk-audit.md) | 75 — 單挑台詞的逐組逐變體抽驗：24 組 × 8 變體全表＋實機反查 | 靜態表全讀完、六個組的實機反查全部命中； 組 0x1B6 定案為攻城的城壁喊話（不是單挑組，re/74 舊表已修）。 | 2026-08-25 |
 | [`docs/re/76-d7open-opening-player.md`](re/76-d7open-opening-player.md) | 76 — D7OPEN.EXE：開場播放器、開場旁白全文，與資料檔的 4 byte 長度頭 | 六幕的順序、每一幕的版面與色盤、旁白全文都解出來了。 最重要的一條是通用的——MMAP.MAP 那一族的 RLE 檔… | 2026-09-02 |
 | [`docs/re/77-general-affinity-and-flags.md`](re/77-general-affinity-and-flags.md) | 77 — 武將記錄 +0x19：在野出仕與俘虜歸降共用的「心向勢力」，以及旗標的 bit 5／bit 6 | +0x19、旗標 bit 5 與 bit 6 都定案；+0x14／+0x15／+0x1B 全庫掃過沒有讀取端（§5）。 | 2026-09-02 |
-| [`docs/re/78-soldier-power-from-command.md`](re/78-soldier-power-from-command.md) | 78 — 兵記錄 +0x18（戰力）是從統率力算出來的，不是士氣 | 布陣時的兩條算式、每兵種係數、近戰的用法與戰場類別的對應都解出來了。 野戰／水戰的分界是強證據不是 confirme… | 2026-09-02 |
+| [`docs/re/78-soldier-power-from-command.md`](re/78-soldier-power-from-command.md) | 78 — 兵記錄 +0x18（戰力）是從統率力算出來的，不是士氣 | 布陣時的兩條算式、每兵種係數、近戰的分工與戰場類別的對應 全部 confirmed。 | 2026-09-02 |
 | [`docs/re/79-talk-marker-handlers.md`](re/79-talk-marker-handlers.md) | 79 — TALK.DAT 七個 \N 標記的 handler 逐支讀完 | 七支全部 confirmed（原始 bytes 交叉解碼）。 | 2026-09-03 |
 | [`docs/re/80-pathfind-request-queue.md`](re/80-pathfind-request-queue.md) | 80 — 原版的尋路是反應式的：一條全域佇列，每幀只算兩個兵 | confirmed。 | 2026-09-03 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |

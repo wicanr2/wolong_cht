@@ -70,6 +70,11 @@ func Load(opt Options) (*Provider, *state.TacticalSetup, error) {
 	setup := &state.TacticalSetup{
 		Forms: forms,
 		Field: p.BuildField,
+		// 戰場類別 ＝ `battle.Category(戰場編號)`，與腳本段選擇同一個來源。
+		// ⛔ 不可以拿大地圖圖塊代替（`state.TacticalSetup.Category` 的說明）。
+		Category: func(node int, siege bool) int {
+			return battle.Category(p.FieldNumber(node, siege))
+		},
 		Script: func(node int, siege bool, tactic int) []byte {
 			if p.lib == nil {
 				return nil
