@@ -261,21 +261,42 @@ func (b *Battle) doRetreat(side, k int) {
 }
 
 // squadLeaderGone 重現 `sub_1A83F`：某隊第一格的隊長不在場時，該隊
-// 剩下的七人全部改排退卻。隊長已經不在，畫面外的預備兵也不能再補成
-// 一個沒有隊長的隊伍；清掉該隊待機數才能讓 §5.9 的「補不出兵」成立。
+// 剩下的七人全部改排退卻。
+//
+// ⚠ **不清那一隊的待機數。** 原版沒有這一步——碰結算緩衝區的 11 支函式
+// 逐一看完，待機數只有 `dec`（開場取用、補兵），沒有任何地方寫 0
+// （docs/re/83 §1、docs/spec/128）。那些兵在原版會補進場、下一幀又被
+// 改成退卻、走出畫面，最後**被算成生還**（`sub_1B4B8` 的 `ah = 0`）。
+// 先前清成 0 的版本讓它們從帳上直接消失，方向是少算兵力。
 func (b *Battle) squadLeaderGone(side, k int) {
 	if k < 0 || k >= SoldiersOnFoot || k%PerSquad != 0 {
 		return
 	}
 	squad := k / PerSquad
 	s := &b.Sides[side]
-	s.Reserve[squad] = 0
 	for j := squad * PerSquad; j < (squad+1)*PerSquad; j++ {
 		if j == k || !s.Soldiers[j].Alive {
 			continue
 		}
 		if s.Soldiers[j].Cmd != Retreat {
 			s.Soldiers[j].Next = Retreat
+		}
+	}
+}
+
+// applySquadLeaderGone 是 `sub_1A754`／`sub_1A785` 的逐隊檢查：**每一幀**
+// 看每一隊隊長的在場位元，不在就對那一隊施加 `sub_1A83F`。
+//
+// ⭐ 原版是**每幀重新施加**，不是死亡當下的一次性事件——所以隊長倒下之後
+// 補進場的兵，下一幀也會被改成退卻（docs/re/83 §4）。
+func (b *Battle) applySquadLeaderGone() {
+	for side := range b.Sides {
+		for squad := 0; squad < Squads; squad++ {
+			k := squad * PerSquad
+			if b.Sides[side].Soldiers[k].Alive {
+				continue
+			}
+			b.squadLeaderGone(side, k)
 		}
 	}
 }

@@ -598,6 +598,9 @@ func (b *Battle) Step() {
 
 	b.drainSiegeGeneral()
 	b.checkGeneralRetreat()
+	// ⭐ 隊長不在場是**每幀重新施加**的，與原版 `sub_1A6FA` 尾端呼叫
+	// `sub_1A754`／`sub_1A785` 的位置相同（docs/spec/128）。
+	b.applySquadLeaderGone()
 	b.checkVictory()
 }
 

@@ -85,14 +85,14 @@
 | 文字 | 1,022 則全保存、byte-for-byte round-trip；**單行超寬 0 行**；60 筆校訂可重跑 | [`playtest/32`](docs/playtest/32-talk-layout-fit.md) |
 | 結局文字 | 200 字 10 行，從 `D7END.EXE` 取出（不在 `TALK.DAT` 裡）| [`re/70`](docs/re/70-d7end-ending-player.md) |
 | 音訊 | 會出聲、場景對應已解、與原版錄音比對過；**音色的諧波結構沒量化比對** | [`spec/29`](docs/spec/29-audio.md) |
-| 規則規格 | **113 份**（不含索引與 `TEMPLATE.md`）：**112 CONFORMED**／1 READY（`83-initial-strategy-pass`）／0 DRAFT | [`spec/00`](docs/spec/00-index.md) |
-| 反組譯 | 739/739 支有筆記；`docs/re/` 自己標成未解的有 **170 列**（每寫一份新的反組譯筆記就帶進自己的未解表）| [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
-| 全專案的未解 | **531 列**（另有 6 列是 DOS／BIOS 平台層與編譯器 runtime，不計入）。⚠ **這個數字比較接近「文件有多少份」**——531 列分布在 218 份文件、平均每份 2.4 列，而每寫一份新文件就帶進約三列自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
+| 規則規格 | **114 份**（不含索引與 `TEMPLATE.md`）：**113 CONFORMED**／1 READY（`83-initial-strategy-pass`）／0 DRAFT | [`spec/00`](docs/spec/00-index.md) |
+| 反組譯 | 739/739 支有筆記；`docs/re/` 自己標成未解的有 **173 列**（每寫一份新的反組譯筆記就帶進自己的未解表）| [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
+| 全專案的未解 | **533 列**（另有 6 列是 DOS／BIOS 平台層與編譯器 runtime，不計入）。⚠ **這個數字比較接近「文件有多少份」**——533 列分布在 219 份文件、平均每份 2.4 列，而每寫一份新文件就帶進約三列自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
 
-#### 那 531 列對 remake 代表什麼
+#### 那 533 列對 remake 代表什麼
 
 **它不衡量「離做完還有多遠」。** 最直接的證據是這兩個數字同時成立：
-未解 531 列，而開局主畫面 **256,000 個像素與原版一個不差**。
+未解 533 列，而開局主畫面 **256,000 個像素與原版一個不差**。
 兩者量的是不同的軸——未解列數量的是「**原版還有多少我們解釋不了**」，
 parity 量的是「**我們做出來的東西對不對**」。
 

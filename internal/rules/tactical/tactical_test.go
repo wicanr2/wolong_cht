@@ -163,9 +163,13 @@ func TestMeleeUsesOriginalPowerAndAdvantage(t *testing.T) {
 	}
 }
 
-// 隊長離場後，原版的七名隊員退卻，該隊不能再用沒有隊長的待機兵補場。
-func TestLeaderLossRetreatsSquadAndDropsReserve(t *testing.T) {
+// 隊長離場後那一隊的七名隊員退卻（`sub_1A83F`）。
+//
+// ⚠ **待機數不動**：原版沒有清它的地方（docs/re/83 §1、docs/spec/128），
+// 那些兵會補進場、下一幀又被改成退卻、走出畫面，最後算成生還。
+func TestLeaderLossRetreatsSquad(t *testing.T) {
 	b := newTestBattle(flatField())
+	before := b.Sides[0].Reserve[1]
 	leader := &b.Sides[0].Soldiers[PerSquad]
 	leader.HP = 1
 	if !b.applyHit(leader, 1) {
@@ -174,13 +178,31 @@ func TestLeaderLossRetreatsSquadAndDropsReserve(t *testing.T) {
 	if leader.Alive {
 		t.Fatal("非大將隊長被擊倒後仍在場")
 	}
-	if b.Sides[0].Reserve[1] != 0 {
-		t.Errorf("隊長離場後仍有 %d 個待機兵，應為 0", b.Sides[0].Reserve[1])
-	}
 	for k := PerSquad + 1; k < 2*PerSquad; k++ {
 		if b.Sides[0].Soldiers[k].Next != Retreat {
 			t.Errorf("第 %d 個隊員命令是 %v，應為退卻", k, b.Sides[0].Soldiers[k].Next)
 		}
+	}
+	if got := b.Sides[0].Reserve[1]; got != before {
+		t.Errorf("待機數 %d，want %d（原版不清它）", got, before)
+	}
+}
+
+// 隊長不在場是**每幀重新施加**的（`sub_1A754` 逐隊看隊長的 bit 7），
+// 所以之後補進場的兵也會被改成退卻（docs/re/83 §4）。
+func TestSquadLeaderGoneReappliesEveryFrame(t *testing.T) {
+	b := newTestBattle(flatField())
+	leader := &b.Sides[0].Soldiers[PerSquad]
+	leader.HP = 1
+	if !b.applyHit(leader, 1) {
+		t.Fatal("隊長應該被命中")
+	}
+	// 手動放一個新兵進那一隊（模擬補兵），命令不是退卻。
+	fresh := &b.Sides[0].Soldiers[PerSquad+1]
+	*fresh = Soldier{Alive: true, HP: 100, Cmd: Form, Next: Form, Target: -1}
+	b.applySquadLeaderGone()
+	if fresh.Next != Retreat {
+		t.Errorf("補進來的兵命令是 %v，應為退卻", fresh.Next)
 	}
 }
 
@@ -1229,5 +1251,34 @@ func TestRetreatedSoldiersCountAsSurvivors(t *testing.T) {
 	d.Alive = false
 	if got := b.Sides[0].Survivors(); got != base-1 {
 		t.Fatalf("戰死的不該算生還：Survivors = %d，預期 %d", got, base-1)
+	}
+}
+
+// 隊長倒下不清那一隊的待機兵（docs/spec/128）。這一條與
+// TestLeaderLossRetreatsSquad 分開，是為了在「每幀施加」那一支
+// 之外單獨釘住帳目那一半。
+func TestSquadLeaderGoneKeepsReserve(t *testing.T) {
+	b := newTestBattle(flatField())
+	b.Sides[0].Reserve[1] = 17
+	b.Sides[0].Soldiers[PerSquad].Alive = false
+	b.applySquadLeaderGone()
+	if got := b.Sides[0].Reserve[1]; got != 17 {
+		t.Errorf("待機數 = %d，want 17（原版沒有清它的地方）", got)
+	}
+}
+
+// ⭐ 接線本身：`Step()` 每一幀都要施加一次。
+//
+// ⚠ 這一支存在的理由是**前兩支測不到接線**——它們直接呼叫
+// applySquadLeaderGone，所以把 Step() 裡那一行拔掉照樣綠
+// （2026-09-03 的突變測試發現）。
+func TestStepReappliesSquadLeaderGone(t *testing.T) {
+	b := newTestBattle(flatField())
+	b.Sides[0].Soldiers[PerSquad].Alive = false
+	member := &b.Sides[0].Soldiers[PerSquad+1]
+	member.Alive, member.Cmd, member.Next = true, Form, Form
+	b.Step()
+	if member.Next != Retreat {
+		t.Errorf("跑完一幀之後隊員的命令是 %v，應為退卻", member.Next)
 	}
 }

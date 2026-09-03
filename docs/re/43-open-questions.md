@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**531 列分布在 218 份文件，平均每份 2.4 列。**
+**533 列分布在 219 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -41,11 +41,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 13 | 10 | 3 | 0 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 170 | 163 | 6 | 1 |
+| 程式碼理解 | 173 | 166 | 6 | 1 |
 | 驗收 | 92 | 80 | 12 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 230 | 213 | 16 | 1 |
-| **合計** | **531** | 490 | 39 | 2 |
+| 其他 | 229 | 212 | 16 | 1 |
+| **合計** | **533** | 492 | 39 | 2 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,8 +53,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 195 |
-| `docs/re/` | 170 |
+| `docs/spec/` | 194 |
+| `docs/re/` | 173 |
 | `docs/playtest/` | 92 |
 | `docs/formats/` | 20 |
 | `docs/release/` | 18 |
@@ -106,7 +106,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 |
 
-## 2.3 程式碼理解（170 條）
+## 2.3 程式碼理解（173 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -280,6 +280,9 @@
 | [`re/81-sound-type-attenuation.md`](../re/81-sound-type-attenuation.md) | `AH=09h`（`ax=09F2h`） | `cs:[099Eh]` bit 1 沒設就直接回；設了就對 `ds:[0A4Ch]` 個聲部逐一呼叫 `0x049E`，參數 `al=91h`／`ah=0F2h`。`0x049E` 沒讀 | 靜態 |
 | [`re/82-display-slot-dead-flags.md`](../re/82-display-slot-dead-flags.md) | 這兩支常式原本要做什麼 | `ax = 0` 送進 `sub_1E085`／`sub_1E0E1` ＝ 拿**子圖塊 0** 對自己與四個鄰格各貼一次。子圖塊 0 在深度迴圈裡是「空」（`and ax,ax / jz` 跳過），只有這條死路徑會真的去畫它。兩版都沒有呼叫端，所以**沒有實機可以觀察**，只能說它是開發期留下的東西 | 兩版對照 |
 | [`re/82-display-slot-dead-flags.md`](../re/82-display-slot-dead-flags.md) | 大地圖那一族的 bit 5 | 是**另一個**旗標（顯示清單一格 8 B），`sub_1D4C7` 換圖時 `or byte ptr [si], 20h` 打髒，見 `../spec/74`。與本份無關，並列在這裡是為了擋掉下一次的混淆 | 靜態 |
+| [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | 補兵會不會補到隊長那一格 | `sub_1B413` 只在**待機數為 0** 那條路才判 `test si, 0FFh`（隊長格）；待機非 0 的路徑沒有排除它。remake 的 `reinforce` 是**一律不補隊長格**。要對得先在原版上量「隊長死後那一格會不會出現新的兵」 | 靜態 |
+| [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `+8+4k` 與 `+10+4k` 的語意 | 從軍團記錄 `+0x28+4k` 起搬進來的兩個 byte，`sub_19F58` 只讀 `+1`／`+3`，這兩格戰鬥中沒有讀取端被找到 | 靜態 |
+| [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `word_1D31A` 的語意 | `sub_1AEA9` 數「在場且 `+0x19` 非零」的兵，`sub_1ADC8` 尾段拿它算優勢（`byte_1D31E`）。`+0x19` 是一個倒數計時器（`sub_1AB7C` 寫 `28h`、`sub_1ADC8` 每幀 `dec`），**它代表什麼還沒解** | 靜態 |
 
 ## 2.4 驗收（92 條）
 
@@ -389,7 +392,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（230 條）
+## 2.6 其他（229 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -481,6 +484,8 @@
 | [`spec/126-command-popup-menus.md`](../spec/126-command-popup-menus.md) | 進言那一張還沒併進來 | `openAdvise` 有自己的一套（五項 ＋ 說服流程）。**併之前要先確認它的取消語意一樣**，這一輪沒動 | 靜態 |
 | [`spec/127-captured-sovereign-becomes-retainer.md`](../spec/127-captured-sovereign-becomes-retainer.md) | 被俘兩次會不會加兩次 | **不會，而且不需要另外防護**——`and [bx], 0BFh` 已經把 bit 6 清掉了，第二次 `test [bx], 40h` 不成立。所以 `+3` 至多發生一次，值域停在 3–5，不會溢出 `+0x1E` 的 0–7。remake 照抄同一個結構（先測 bit 再清）就自然有同樣的性質 | 靜態 |
 | [`spec/127-captured-sovereign-becomes-retainer.md`](../spec/127-captured-sovereign-becomes-retainer.md) | 劇本作者能不能給非君主 bit 6 | 四個劇本的 43 筆全是現任君主（`../re/77` §3），但那是**資料上的巧合還是規則**沒有讀出來。若有一筆說話類型 3–7 又帶 bit 6，`+3` 會把它推到 6–10 | 靜態 |
+| [`spec/128-squad-leader-gone-keeps-reserve.md`](../spec/128-squad-leader-gone-keeps-reserve.md) | 戰後兵力的逐槽對拍 | 原版打完之後每槽兵數是三項相加（`../re/83` §3），remake 的戰後回填**沒有逐槽比過原版** | 靜態 |
+| [`spec/128-squad-leader-gone-keeps-reserve.md`](../spec/128-squad-leader-gone-keeps-reserve.md) | 士氣按比例縮 | `sub_19F58` 最後三行：新士氣 ＝ 舊士氣 × 新總兵力 ÷ 舊總兵力。remake 的戰後士氣處理**還沒對照這一條** | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | **remake 沒有邊緣捲動** | **機制早就解了**（`../re/47` §6）：`sub_120D6` 進大地圖時把 INT 33 的範圍換成**整個世界**（水平 0–`17FFh` ＝ 384 格 × 16、垂直 0–`101Fh`），`sub_11F7F` 再把原始座標減掉鏡頭原點、夾在 0–639／0–399，**夾掉的量同時加回鏡… | 靜態 |
@@ -551,12 +556,9 @@
 | [`spec/60-battle-talk-duration.md`](../spec/60-battle-talk-duration.md) | 開戰 pair 的側別對應 | `0x1BA` → 上格、`0x1BB` → 下格是**強推論**（照影格位置接的）；`sub_1A3C3` 怎麼決定側別沒讀（§3.5） | 靜態 |
 | [`spec/60-battle-talk-duration.md`](../spec/60-battle-talk-duration.md) | `byte_1D349` 的三個值 | `sub_1A69F` 拿它當「這句要不要顯示」的閘（`al & 6` 那一段還沒逐位讀）。0／1／2 三種值由 `sub_1A6FA` 切換 | 靜態 |
 | [`spec/60-battle-talk-duration.md`](../spec/60-battle-talk-duration.md) | 玩家按鍵能不能提早關掉 | remake 可以按鍵推進；原版是否有這條路沒讀 | 靜態 |
-| [`spec/61-soldier-initial-hp-from-morale.md`](../spec/61-soldier-initial-hp-from-morale.md) | 大將的開場體力 | 不是軍團士氣——`sub_19B40` 把第 0 號兵蓋成 `max(70, (武力 × 4 + 50) × 士氣 ÷ 100)`（`../re/78` §4）。remake 兩側都用士氣 | 靜態 |
-| [`spec/61-soldier-initial-hp-from-morale.md`](../spec/61-soldier-initial-hp-from-morale.md) | 大將的體力怎麼掉 | 原版那一格在 20 秒內從 200 掉到 140；remake 第 61 步還是滿的。兩邊的時刻本來就不同，**掉法還沒對過** | 靜態 |
+| [`spec/61-soldier-initial-hp-from-morale.md`](../spec/61-soldier-initial-hp-from-morale.md) | 挨打那一半的逐次對拍 | 只對過量級（§6.1），沒有逐次比。要對得先讓兩邊的時刻對齊——同 `../playtest/40` §13 那一類 | 靜態 |
 | [`spec/63-hit-stun.md`](../spec/63-hit-stun.md) | `+0x13` ← 8 | `sub_1B618` 寫、`sub_1B6BC` 不寫。那個欄位誰讀還沒查 | 靜態 |
 | [`spec/63-hit-stun.md`](../spec/63-hit-stun.md) | 倒地動畫（§1.2） | 4 幀之後 `sub_1B4B8` 收掉，remake 直接把 `Alive` 設成 false | 靜態 |
-| [`spec/65-retreated-soldiers-survive.md`](../spec/65-retreated-soldiers-survive.md) | `sub_19F2C` 打完那一次數的是什麼 | `../re/11` §3.9 記成「打完時數」；是不是把還站在場上的補進存活數，還沒逐行讀 | 靜態 |
-| [`spec/65-retreated-soldiers-survive.md`](../spec/65-retreated-soldiers-survive.md) | 隊長離場時清掉待機數 | remake 的 `squadLeaderGone` 這樣做（`docs/re/11` §5.9），原版是否也把那些待機兵算掉還沒對 | 靜態 |
 | [`spec/66-broken-walls-repaint.md`](../spec/66-broken-walls-repaint.md) | 縮小地圖要不要跟著換 | 側欄的縮圖也是從同一個緩衝區來的，但重畫時機還沒讀。這一版只換戰場本身 | 靜態 |
 | [`spec/66-broken-walls-repaint.md`](../spec/66-broken-walls-repaint.md) | 對拍那 88 px | 兩邊的時刻不同（§1.2），要對就得讓門在同一個 tick 破 | 靜態 |
 | [`spec/67-ending-playback.md`](../spec/67-ending-playback.md) | 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`）；remake 先用疊黑 | 靜態 |

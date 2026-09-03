@@ -274,7 +274,7 @@ IDA 線性位址，沒有與 EXE 檔案偏移混列。
 |---|---|---|
 | 正常玩家路徑的真實攻城可以在狀態層完成並回寫戰略層 | `internal/state/state_test.go` 的 `TestNormalScenarioTacticalBattleTerminates`；真實 `SINARIO.DAT`、固定種子 17、濮陽戰場 56、真實 `BATTLE.MAP`／`BATTLE.MDL`／`BATTLE.DAT`／腳本／編成；第 549 幀守方勝，攻方 0、守方 100，`ResolvePending` 後 pending 清除 | 已證實（remake 狀態層；不是原版 parity） |
 | 退卻出口不是當前邊緣格的站立高度 | `sub_1AAED`：0x000 側寫 X=1、0x600 側寫 X=0x3E；Y 夾在 0x10..0x2F；目標 Z 寫 0；`TestRetreatUsesOriginalExitTarget` | 已證實／已接入 |
-| 隊長消失時七名隊員改排退卻 | `sub_1A83F`：`mov cx,7`，逐筆把 Next command 寫成 5；`TestLeaderLossRetreatsSquadAndDropsReserve` | 已證實；清除 remake 待機槽是避免無隊長補兵死鎖的強推論 |
+| 隊長消失時七名隊員改排退卻 | `sub_1A83F`：`mov cx,7`，逐筆把 Next command 寫成 5；`TestLeaderLossRetreatsSquad` | 前半已證實。⚠ **後半在 2026-09-03 被推翻**：「清除 remake 待機槽」那個強推論不成立——原版沒有清待機的地方，而且「隊長不在」是每幀重新施加的（`docs/spec/128`、`docs/re/83`）|
 | 非爬牆兵可在水平跨格時同步一層高度 | `sub_1B1B1` 的水平移動分支會將 `[si+0A]` 調整 ±1；`sub_1AF69` 的兵種門檻只包住純 Z 軸嘗試；`TestHorizontalStepAdjustsOneLevelForNonClimber` | 已證實／已接入 |
 | 大將／騎馬仍不能做純 Z 軸爬牆 | `sub_1AF69`：`cmp byte ptr [si+4],12h / jbe` 跳過 Z 移動；`TestCavalryCannotClimb` 保留四層城牆負例 | 已證實／已接入 |
 
