@@ -232,6 +232,8 @@ tools/ida.sh raw    dosv idat -A "-S/work/tools/ida_func.idc sub_12E89" KI.EXE.i
 | **`ida_var_writers.py`** | **IDAPython**：一組全域變數的交叉參考，用 `XrefType()` 分讀／寫／取址，每筆寫入附前後幾條指令。回答「這個值是誰改的」——一次就分得出「執行期被改過」與「兩邊的座標框不一樣」 |
 | **`ida_range.py`** | **IDAPython**：逐條反組譯一段位址區間（跳表選中的 handler 不是函式，`ida_dump.py` dump 不到）|
 | **`ida_disp_users.py`** | **IDAPython**：全庫掃「運算元位移等於指定值」的指令。段內欄位（`[si+858h]`）**沒有交叉參考**，grep 反組譯會漏掉換了基址暫存器的寫法，而漏掉的通常正是寫入端 |
+| **`ida_bitflag_users.py`** | **IDAPython**：全庫掃「對記憶體做位元運算而立即值含指定位元」的指令。問的是「**誰設這個旗標**」，不是「誰碰這個欄位」。⭐ 逐 **segment** 不逐函式 |
+| **`ida_callers.py`** | **IDAPython**：查「誰呼叫這個位址」，四層——IDA xref／全 segment 的 `call`／`jmp`／指令立即值／資料段裡的 word（跳表）。⚠ 16-bit near call 的 `op.addr` 是**段內 offset 不是 linear address** |
 
 四支 Python 把上面的輸出變成可查的表：
 
@@ -251,7 +253,7 @@ tools/ida.sh raw    dosv idat -A "-S/work/tools/ida_func.idc sub_12E89" KI.EXE.i
 `.asm` 是攤平的文字，**沒有交叉參考圖**。想知道「某個全域變數是什麼」，
 grep `.asm` 只能從呼叫端的參數順序反推——那是間接證據，會推錯。
 
-四條硬知識：
+六條硬知識：
 
 1. **優先寫 IDAPython，不要寫 IDC。** `tools/ida.sh script` 看到 `.py` 就自動換到
    `ida-pro-9.4-idapython:py312-v1`。**基底 image 跑 IDAPython 是零輸出的靜默失敗**，
@@ -269,6 +271,15 @@ grep `.asm` 只能從呼叫端的參數順序反推——那是間接證據，�
 4. **xref 只涵蓋直接參考。** `ptr = &x` → `es:[di] = v` 這種間接寫入抓不到，
    症狀是「讀 74 處、寫 1 處」——看到寫入數異常少，先看「取位址」那幾筆。
    同理，**「零呼叫者」不等於死碼**，可能是被跳表選中或取址後間接呼叫。
+5. **⭐ 逐函式掃描看不到「沒有呼叫端」的常式。** IDA 是靠 xref 建函式的，
+   所以真正的死碼**不會出現在 `idautils.Functions()` 裡**——而那正是
+   「誰設這個旗標」這類問題最可能的答案所在（`docs/re/82`：顯示格 bit 5 的
+   唯一設定端就在這種區段裡，逐函式版本掃出「沒有人設」的**假零**）。
+   要問「有沒有人做某件事」就逐 **segment** 掃，所屬函式印成「（無函式）」
+   那一欄本身就是線索。
+6. **要下「沒有呼叫端」的結論，每一層都要有正對照。** `ida_callers.py` 的
+   四層裡，第二層第一版拿 `op.addr`（段內 offset）去比 linear address，
+   對**已知有三個呼叫者**的 `sub_1DD22` 也回 0——形狀與真的死碼一模一樣。
 
 #### 判斷暫存器語意要看被呼叫的那一支
 

@@ -183,6 +183,7 @@
 | [`docs/re/79-talk-marker-handlers.md`](re/79-talk-marker-handlers.md) | 79 — TALK.DAT 七個 \N 標記的 handler 逐支讀完 | 七支全部 confirmed（原始 bytes 交叉解碼）。 | 2026-09-03 |
 | [`docs/re/80-pathfind-request-queue.md`](re/80-pathfind-request-queue.md) | 80 — 原版的尋路是反應式的：一條全域佇列，每幀只算兩個兵 | confirmed。 | 2026-09-03 |
 | [`docs/re/81-sound-type-attenuation.md`](re/81-sound-type-attenuation.md) | 81 — 系統選單的「TYPE 1–4」是四段衰減，不是四種音源 | confirmed（原始 bytes 交叉解碼）。 | 2026-09-03 |
+| [`docs/re/82-display-slot-dead-flags.md`](re/82-display-slot-dead-flags.md) | 82 — 戰場顯示格的旗標 bit 5／bit 6：兩版都是死碼 | confirmed（靜態，兩版各自驗證）。 | 2026-09-03 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-16 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |

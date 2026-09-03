@@ -5,7 +5,7 @@
 >
 > 硬規則、目標、工作紀律在 [`CLAUDE.md`](./CLAUDE.md)。這份只管**狀態**。
 >
-> 最後更新：2026-09-02
+> 最後更新：2026-09-03
 
 ## 0. 兩件每次接手都要先知道的事
 
@@ -22,9 +22,12 @@
 裡沒有低碼 `0x0A` producer（[`docs/re/15`](docs/re/15-event10-producer.md)）。
 `World.QueueEvent10` 是受控的 raw fixture 注入口，**不得寫成原版自然 producer**。
 
-DOS/V `KI.EXE` SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`、
-IDA `.i64` SHA-256 `7b7c1aa67c47f99062cfdd4439b3423302808c874f929c3ea6f75ec564034c26`；
-位址一律記 DOS/V 線性位址。
+DOS/V `KI.EXE` SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`（**這個不會變**）。
+IDA `.i64` 現在是 `65736f11b0b28a5b3a6db9e1a3d205cc24f0eaebc82b508ee0d7d283f6240572`（739 支函式）；
+PC-98 那一份是 `6b89ddc239310153d594f3f617e129497dba905f1e66544c44edde2618b67324`（731 支）。
+⚠ **`.i64` 的雜湊會漂**——重新分析就變一份新的（`docs/re/37`／`48`／`52` 那批記的是
+`7b7c1aa6…`，那是它們當時驗的那一份，**不要回頭改**）。要標身分請同時寫
+輸入檔雜湊與函式數。位址一律記 DOS/V 線性位址。
 
 ---
 
@@ -607,6 +610,21 @@ grep `.go`，實際踩到六筆）。
 | 5 | 「軍團」選單沒有逐像素比過 | 比一次抓到三個缺陷：框窄 32 px、反白配色與位置、**指令列根本沒畫反白**。修完四區 ＋ 選單框 ＋ 反白格**各 0 px** | [`spec/124`](docs/spec/124-menu-highlight-xor.md)、[`125`](docs/spec/125-menu-box-width-from-padding.md)、[`playtest/60`](docs/playtest/60-corps-menu-parity.md) |
 | 6 | 指令列四格是彈出選單，remake 只做了兩張 | 四個 handler 的參數都是立即值，**欄 ＝ 指令索引 × 3**。「據點」與「人事」接上，四張收成一份 `popupMenu` | [`spec/126`](docs/spec/126-command-popup-menus.md) |
 
+**2026-09-03（第二輪）：`spec/58` 的兩個未解項一次收掉，收法是「證明它不存在」。**
+顯示格旗標 bit 5／bit 6 在**松崗 DOS/V 與 PC-98 兩版都是死碼**——
+唯一的設定端與清除端沒有任何呼叫端，所以 `sub_1DE95` 收尾那條
+「unit 0 的第二趟」永遠不會執行（[`re/82`](docs/re/82-display-slot-dead-flags.md)）。
+順帶解掉 bit 3（`sub_1D9D1` 把被浮動視窗蓋住的格子標成不重畫）與
+「`cmp dl, 40h` 實際上只由 bit 7 決定」。
+
+⭐ **這一輪最有用的一條**：**逐函式掃描結構上看不到死碼**。
+IDA 是靠 xref 建函式的，所以「沒有呼叫端的常式」不會出現在
+`idautils.Functions()` 裡——而那正是「誰設這個旗標」最可能的答案所在。
+第一版掃出「沒有人設 bit 5」，結論碰巧是對的，理由卻是錯的
+（`CLAUDE.md` §7 第 18 條的形狀）。**還有一次假零是靠正對照抓到的**：
+`ida_callers.py` 拿 16-bit near call 的 `op.addr`（段內 offset）去比
+linear address，對已知有三個呼叫者的 `sub_1DD22` 也回 0。
+
 ⭐ **這一輪最有用的三條**：
 
 1. **反白不是換底色，是色號 XOR 12**（`sub_10B46` 寫 `0Ch` 給 VGA 繪圖控制器）。
@@ -696,7 +714,7 @@ INT 33 的範圍變成整個世界（一個主機像素 ≈ 9.6 個遊戲像素�
 
 | 順位 | 要做什麼 | 為什麼是它 | 從哪裡下手 |
 |---:|---|---|---|
-| **A** | `spec/58` 的「unit 0 的第二趟」：深度迴圈跑完後 `dl & 0x20` 成立時對五個鄰格各跑一次 `ax = 0`，**觸發條件（顯示格 `+0` 的 bit 5）誰設還沒解** | 純靜態掃描，工具現成；它是 `field` 區唯一還沒解釋的**機制**（像素已經全部歸類，但這條路 remake 沒做） | `tools/ida_disp_users.py` 掃「運算元位移 ＝ 0」且寫 `0x20` 的指令；段內欄位沒有 xref，grep `.asm` 會漏 |
+| ~~**A**~~ | ✅ **2026-09-03 收掉**：bit 5 與 bit 6 **兩版都是死碼**——唯一的設定端（DOS/V `0x1D98B`）與清除端（`0x1D9AF`）沒有任何呼叫端，所以「unit 0 的第二趟」永遠不會執行，**remake 沒做不是缺口**（[`re/82`](docs/re/82-display-slot-dead-flags.md)、[`spec/58`](docs/spec/58-display-slot-depth-range.md) §7）| 順帶解掉 bit 3（`sub_1D9D1` 的視窗遮罩）與「`cmp dl,40h` 實際上只由 bit 7 決定」| 兩支新工具：`tools/ida_bitflag_users.py`、`tools/ida_callers.py` |
 | **B** | 據點／人事兩張彈出選單的原版截圖與對拍 | 三張走同一份繪製程式碼，但**位置與字數是各自的立即值**，沒比過就不能說它們對（`spec/126` §4） | 原版側 `tap:30,5,5`（據點）／`tap:10,5,5`（人事），照 [`playtest/54`](docs/playtest/54-menu-second-row-tap.md)；remake 側 `-open-command-menu city\|personnel` |
 | **C** | 繼續掃 `docs/re/43` 裡「已解但沒接回來」那一類 | 這一輪六件裡有四件是這個形狀，命中率高 | `grep -n "remake" docs/re/43-open-questions.md \| grep -E "沒接\|未接\|沒實作\|沒做"` |
 
@@ -1043,6 +1061,8 @@ UI 還沒有。
 | `tools/slot_cells.py` | `tools/py.sh tools/slot_cells.py <戰場編號> <欄> <列> [camX camY]`。把顯示格反解成戰場格（同一個顯示格在不同深度對到**不同的格子**，所以輸出是七列的表）。配 `subtile_match.py` 用 |
 | `tools/parity_frame.py` | `tools/py.sh tools/parity_frame.py <ppm> --crop x0,y0,x1,y1 [--out ...]`。把原版實錄影格對齊成 640×400 並量版面地標。**只吃 P6 的 PPM**（標準函式庫沒有 PNG 解碼器，先用 docker ffmpeg 轉）。最近鄰重取樣——內插會抹掉 1 px 的框線，而框線正是要量的 |
 | `tools/ida_callsite_args.py` | 列出呼叫某支常式的每個呼叫點**餵進暫存器的立即值**。目標寫在 `census/call_targets.txt`。⭐ 「哪一首配哪個場景」「哪個顯示清單場景是哪個視窗」都是靠它解的——**呼叫端的立即值是一手證據，字串長相是二手推論** |
+| `tools/ida_bitflag_users.py` | 全庫掃「對記憶體做位元運算而立即值含指定位元」的指令，要掃哪幾個位元寫在 `census/bitflag_list.txt`。問的是「**誰設這個旗標**」。⭐ **逐 segment 不逐函式**——IDA 靠 xref 建函式，真正的死碼不會出現在 `Functions()` 裡，逐函式版本會給出**假零**（`docs/re/82`）|
+| `tools/ida_callers.py` | 查「誰呼叫這個位址」，目標寫在 `census/callers_list.txt`。四層：IDA xref／全 segment 的 `call`／`jmp`／指令立即值／資料段裡的 word（跳表）。⚠ **16-bit near call 的 `op.addr` 是段內 offset 不是 linear address**，第一版拿它直接比對，對已知有三個呼叫者的函式也回 0——**每一層都要有正對照** |
 | `tools/ida_decode.py` | 強制把指定區間當程式碼解碼（`del_items` ＋ `create_insn`）。TSR 這種 IDA 只認出幾支函式的檔案要用它——**整片 `db` 看起來就像「那裡沒有程式碼」** |
 | `tools/dosbox.sh` | `tools/dosbox.sh dosv "wait:2;type:START;key:Return;wait:10;shot:x"`。DOS/V oracle（密碼頁按「確定」就過，`docs/playtest/18`）|
 | `tools/dosboxx.sh` | `tools/dosboxx.sh "until:<md5>,260;xkey:ctrl+F10;clickat:300,172;shot:x"`。**PC-98 oracle，無防拷**。timeline：`wait`／`until:md5,上限`／`settle`／`key`／`type`／`xkey`／`xtype`／`move`／`click`／`goto`／`clickat`／`probe`／`shot`。**要點滑鼠一定要先 `xkey:ctrl+F10`**，而且用 `clickat`（閉迴路）不要用 `click`（開迴路會被 8 bit 位移截斷）。滑鼠三個旋鈕：`WOLONG_SDL_AUTOLOCK`／`WOLONG_MOUSE_EMU`／`WOLONG_LOG_MOUSE`。原理見 `docs/playtest/06` |

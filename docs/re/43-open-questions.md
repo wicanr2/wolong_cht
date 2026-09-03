@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**526 列分布在 215 份文件，平均每份 2.4 列。**
+**527 列分布在 216 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -41,11 +41,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 13 | 10 | 3 | 0 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 168 | 162 | 6 | 0 |
+| 程式碼理解 | 170 | 163 | 6 | 1 |
 | 驗收 | 89 | 77 | 12 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 230 | 214 | 16 | 0 |
-| **合計** | **526** | 487 | 39 | 0 |
+| 其他 | 229 | 212 | 16 | 1 |
+| **合計** | **527** | 486 | 39 | 2 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,8 +53,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 195 |
-| `docs/re/` | 168 |
+| `docs/spec/` | 194 |
+| `docs/re/` | 170 |
 | `docs/playtest/` | 89 |
 | `docs/formats/` | 20 |
 | `docs/release/` | 18 |
@@ -106,7 +106,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 |
 
-## 2.3 程式碼理解（168 條）
+## 2.3 程式碼理解（170 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -278,6 +278,8 @@
 | [`re/81-sound-type-attenuation.md`](../re/81-sound-type-attenuation.md) | `0x060F` 的音色來源 | `es:[si]` 從 `ds:[0992h]` 指的段讀，`si` 由 `[bx+0A5Ch] << 5 + ds:[099Ah]` 算出。**這一段的資料結構沒逐行讀**，所以「換音色之後型別要不要重送」還不確定 | 靜態 |
 | [`re/81-sound-type-attenuation.md`](../re/81-sound-type-attenuation.md) | `AH=0Bh` 只重算三個聲部 | 迴圈是 `ah = 0、1、2`，而靜音路徑跑的是六個（`ah = 5..0`）。剩下三個什麼時候拿到新的衰減沒查 | 靜態 |
 | [`re/81-sound-type-attenuation.md`](../re/81-sound-type-attenuation.md) | `AH=09h`（`ax=09F2h`） | `cs:[099Eh]` bit 1 沒設就直接回；設了就對 `ds:[0A4Ch]` 個聲部逐一呼叫 `0x049E`，參數 `al=91h`／`ah=0F2h`。`0x049E` 沒讀 | 靜態 |
+| [`re/82-display-slot-dead-flags.md`](../re/82-display-slot-dead-flags.md) | 這兩支常式原本要做什麼 | `ax = 0` 送進 `sub_1E085`／`sub_1E0E1` ＝ 拿**子圖塊 0** 對自己與四個鄰格各貼一次。子圖塊 0 在深度迴圈裡是「空」（`and ax,ax / jz` 跳過），只有這條死路徑會真的去畫它。兩版都沒有呼叫端，所以**沒有實機可以觀察**，只能說它是開發期留下的東西 | 兩版對照 |
+| [`re/82-display-slot-dead-flags.md`](../re/82-display-slot-dead-flags.md) | 大地圖那一族的 bit 5 | 是**另一個**旗標（顯示清單一格 8 B），`sub_1D4C7` 換圖時 `or byte ptr [si], 20h` 打髒，見 `../spec/74`。與本份無關，並列在這裡是為了擋掉下一次的混淆 | 靜態 |
 
 ## 2.4 驗收（89 條）
 
@@ -384,7 +386,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（230 條）
+## 2.6 其他（229 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -538,8 +540,7 @@
 | [`spec/56-battlefield-rotation.md`](../spec/56-battlefield-rotation.md) | 表頭與尾段那各 64 byte | 轉的時候原版**不動它們**（迴圈只掃 `0x40`–`0xFBF`）。內容仍未解 | 靜態 |
 | [`spec/56-battlefield-rotation.md`](../spec/56-battlefield-rotation.md) | 鏡頭差一個等角格 | 翻轉之後戰場區還差 (−16, −8)（`../playtest/40` §4.1）。小地圖沒有位移，所以不是翻轉中心的問題 | 靜態 |
 | [`spec/57-tactical-projection.md`](../spec/57-tactical-projection.md) | 物件與地形差一列會不會看得出來 | 奇數鏡頭時 anchor 那一半的物件比自己腳下的地形低一格。**原版就是這樣算的**，但沒有找到能單獨驗證這一點的畫面 | 靜態 |
-| [`spec/58-display-slot-depth-range.md`](../spec/58-display-slot-depth-range.md) | 旗標 bit 5（`0x20`）／bit 6（`0x40`）誰設 | `sub_1DD22` 只設 bit 7。bit 6 是快路徑那道 `dl & 0x50` 的一半，bit 5 決定要不要跑「unit 0 的第二趟」 | 靜態 |
-| [`spec/58-display-slot-depth-range.md`](../spec/58-display-slot-depth-range.md) | unit 0 的第二趟 | 深度迴圈跑完後，`dl & 0x20` 成立時對五個鄰格各跑一次 `ax = 0`。**remake 沒做**，而觸發條件還沒解 | 靜態 |
+| [`spec/58-display-slot-depth-range.md`](../spec/58-display-slot-depth-range.md) | 那兩支死碼原本要做什麼 | `ax = 0` ＝ 拿子圖塊 0 對自己與四鄰各貼一次。兩版都沒有呼叫端 ⇒ **沒有實機可以觀察**（`../re/82` §5） | 兩版對照 |
 | [`spec/59-battle-opening-orders.md`](../spec/59-battle-opening-orders.md) | 玩家側的開場常令 | 畫面上看起來是「站在陣形上」，但原版是哪一個命令碼（`Form`／`Holding`／`Guard`）沒有直接證據。⚠ **三個在開場那一幀畫出來一模一樣**——守陣沒有敵人靠近時也是站在陣形位置上，所以截圖分不出來 | 實測 |
 | [`spec/59-battle-opening-orders.md`](../spec/59-battle-opening-orders.md) | ⤷ 試過的一條線索 | 原版 `probe-march/e10.png` 那一刻**攻方已折損 115 點兵力**（兵力條反推，`../playtest/51` §2），而 remake 的守方站著不還手。把玩家側的開場常令改成守陣試跑（2026-08-27）：攻方只折損 **30 點**，離 115 還差得遠，而且守方仍然全滅。**所… | 靜態 |
 | [`spec/59-battle-opening-orders.md`](../spec/59-battle-opening-orders.md) | 腳本節奏與原版的 tick 對應 | 第 40 步對上那一張截圖，但「原版的 40 個 tick 是多久」還沒對過（`34`） | 實測 |
