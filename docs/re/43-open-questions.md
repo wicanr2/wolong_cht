@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**512 列分布在 208 份文件，平均每份 2.5 列。**
+**511 列分布在 208 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 13 | 10 | 3 | 0 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 165 | 159 | 6 | 0 |
-| 驗收 | 88 | 77 | 11 | 0 |
+| 驗收 | 87 | 76 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 220 | 205 | 15 | 0 |
-| **合計** | **512** | 475 | 37 | 0 |
+| **合計** | **511** | 474 | 37 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -55,7 +55,7 @@
 |---|---:|
 | `docs/spec/` | 185 |
 | `docs/re/` | 165 |
-| `docs/playtest/` | 88 |
+| `docs/playtest/` | 87 |
 | `docs/formats/` | 20 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 13 |
@@ -276,7 +276,7 @@
 | [`re/80-pathfind-request-queue.md`](../re/80-pathfind-request-queue.md) | 佇列滿了會怎樣 | bit 4 去重讓在飛請求 ≤ 96 < 128，**結構上塞不滿**；沒有溢位檢查也就沒有可觀察的行為 | 靜態 |
 | [`re/80-pathfind-request-queue.md`](../re/80-pathfind-request-queue.md) | `[si+0x10]` 的完整語意 | 這裡確認它是「這一步的目標座標」（出隊時先設成目前座標，再由 `sub_1B00D` 覆寫成第一個繞路點）；誰還會寫它沒有窮舉 | 靜態 |
 
-## 2.4 驗收（88 條）
+## 2.4 驗收（87 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -287,8 +287,7 @@
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 據點換手之後遮罩會不會跟著變 | `sub_1890A` 的行為，靜態讀得出來，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 松崗 DOS/V 側 | 這套 bridge 還沒在 DOS/V 上跑過。**密碼頁不構成阻礙**（四格留白按「確定」即可通過，`18`）——是還沒做 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 上游授權 | `DOSBox-X-MCP-Debugger` 的原創碼**尚未選定授權條款**（README 明講是刻意留白）。本專案只在本機使用，未再散布 | 實測 |
-| [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 各視窗內部的像素 | 只對過邊線位置，沒有對過內容 | 靜態 |
-| [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 四個視窗**同時**開著的對拍 | 三個視窗開著已做完、三區逐像素 PASS（`38`），系統選單開著也做了（`39`）；**四個一起開的那一張還沒拍** | 靜態 |
+| [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 各視窗內部的像素 | 只對過邊線位置，沒有對過內容。⭐ **四個視窗同時開著的對拍已經有了**：`39` 的 `-open-window -3` 就是四窗全開，命令列／縮小地圖／自勢力情報三區與系統選單原版那六列都是 0 px（2026-09-03 重量） | 靜態 |
 | [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 系統視窗的四個項目 | 存檔／畫面模式／音源／戰略速度，不在這一輪範圍 | 靜態 |
 | [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | **逐曲觸發** | 只錄到開場動畫（`D7OPEN.EXE` 自己會播）。⚠ 這一項**不再擋住任何事**——音檔改由 `tools/bgm2ogg.sh` 離線渲染，不需要在模擬器裡逐首觸發。要當對照組才需要它 | 靜態 |
 | [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | **音效** | 戰術的三個 effect code 已知（`re/17` §3），但沒錄過 | 靜態 |

@@ -2157,7 +2157,7 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 		w.DebugLatchOutcomeForShot(state.DefeatFactionEliminated)
 	}
 	// -open-window N 開第 N 個視窗（0–3），驗收用。
-	// −2 ＝ 四窗全開。原版實錄的主畫面就是這個狀態
+	// −2 ＝ 三個常駐視窗（不含系統選單）。原版實錄的主畫面就是這個狀態
 	// （docs/playtest/27），沒有它就沒辦法對拍。
 	if openWin == -2 {
 		g.hudSet(hudCommand|hudFaction|hudMinimap, true)
