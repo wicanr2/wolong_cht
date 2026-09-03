@@ -212,7 +212,7 @@ type City struct {
 type General struct {
 	Alive bool
 	Name  string
-	Alias string // 呼び名。多數與 Name 相同
+	Alias string // 呼び名（記錄 +0x08）。多數與 Name 相同，見 TalkName
 
 	// Portrait 是 KAOGRF 的頁碼（記錄 +0x01）。
 	//
@@ -282,6 +282,24 @@ type General struct {
 	// （`sub_129C3`）、釋放時清掉並通知舊主（`sub_150D7`）、
 	// 月結時判歸降（`sub_1585F`）。見 docs/re/09 §6。
 	Captor int
+}
+
+// TalkName 回傳訊息裡 `\1`／`\4` 要代入的字串。
+//
+// ⭐ **原版代的是呼び名（記錄 `+0x08`），不是姓名（`+0x02`）**——
+// `\1` 的 handler `000108B2` 是 `add si, 8`，`\4` 的 `00010939` 是
+// `add ax, 4248h`（＝ `0x4240 + 8`），兩支都指到 `+0x08`
+// （docs/re/79、docs/spec/119）。松崗版四個劇本裡兩欄不同的只有四人，
+// 而三個是名人：司馬懿→仲達、諸葛亮→孔明、龐統→鳳雛。
+//
+// ⚠ **退回 `Name` 是 remake 差異。** 原版沒有這條路：`+0x08` 是空的
+// 就畫空白（劇本一的李暹就是這樣）。這裡保留退路只為了應付
+// `Alias` 沒填的改造存檔；四個劇本的原版資料一格都不缺。
+func (g General) TalkName() string {
+	if g.Alias != "" {
+		return g.Alias
+	}
+	return g.Name
 }
 
 // Rules 回傳這名武將在規則層的視圖。

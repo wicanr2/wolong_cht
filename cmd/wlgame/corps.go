@@ -604,7 +604,7 @@ func (g *game) reportGovernorReturn(e state.CorpsEvent) {
 	if e.Captured >= 0 && e.Captured < len(g.world.Cities) {
 		city = big5(g.world.Cities[e.Captured].Name)
 	}
-	vars := map[byte]string{'1': big5(gen.Name), '2': city, '6': ""}
+	vars := map[byte]string{'1': big5(gen.TalkName()), '2': city, '6': ""}
 	g.enqueueTalk(governorReturnTalk, vars)
 	g.enqueueTalkWithPortrait(
 		resolveBattleTalkIndex(governorRegretTalkBase, gen.TalkVariant),
@@ -635,7 +635,7 @@ func (g *game) reportRout(e state.CorpsEvent) {
 		return
 	}
 	gen := &g.world.Generals[lead]
-	vars := map[byte]string{'1': big5(gen.Name), '6': ""}
+	vars := map[byte]string{'1': big5(gen.TalkName()), '6': ""}
 	if e.Routed {
 		g.enqueueTalk(routTalk, vars)
 		return

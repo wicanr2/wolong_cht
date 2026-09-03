@@ -186,7 +186,7 @@ func (g *game) pumpDuelTalks(p *state.Pending) {
 		}
 		general := g.world.Generals[commander]
 		entry := BattleTalkEntry{
-			Speaker:  big5(general.Name),
+			Speaker:  big5(general.TalkName()), // \1 ＝ 呼び名，docs/spec/119
 			Index:    resolveBattleTalkIndex(dt.Group, talkVariant(general.TalkVariant)),
 			Portrait: general.Portrait,
 			Side:     dt.Side,

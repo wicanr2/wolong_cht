@@ -344,10 +344,11 @@ func (g *game) sayCapitalMoved(node int) {
 	if node >= 0 && node < len(g.world.Cities) {
 		city = big5(g.world.Cities[node].Name)
 	}
-	// #519 的 {4} 是軍師的名字（原版 marker \\4，00010939）。
+	// #519 的 {4} 是軍師的**呼び名**（原版 marker \\4，`00010939` 取
+	// 武將記錄 +0x08，docs/spec/119）。
 	advisorName := ""
 	if a := g.world.Factions[g.world.Player].Advisor; a >= 0 && a < len(g.world.Generals) {
-		advisorName = big5(g.world.Generals[a].Name)
+		advisorName = big5(g.world.Generals[a].TalkName())
 	}
 	gen := g.world.Generals[lord]
 	g.enqueueTalkWithPortrait(
