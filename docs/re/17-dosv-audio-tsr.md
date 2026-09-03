@@ -50,6 +50,13 @@ iret
 | `0x06` | `0x01E2` | 保存 `DS:SI` 資源指標，並寫入 mode byte `CS:0x0A4C=6` | 已證實 |
 | `0x07` | `0x01F6` | 從保存來源讀 offset words，初始化多張內部表 | 已證實為資源 layout parser；結構見 [`23`](23-bgm-resource-format.md) |
 | `0x0A` | `0x02D7` | 回傳 `CS:0x099E` 的 flags 至 AL | 已證實 |
+| `0x04` | `0x01AC` | **卸載**：還原 INT 1Ch 向量、清狀態、六聲部靜音（[`81`](81-sound-type-attenuation.md) §3）| 已證實 |
+| `0x08` | `0x0269` | **停止並清空**：清兩塊狀態、六聲部靜音、清旗標 bit 1（[`81`](81-sound-type-attenuation.md) §3）| 已證實 |
+| `0x0B` | `0x02DE` | **主衰減**：`AL` 存進 `CS:0x0996`，加進載波的 Total Level（[`81`](81-sound-type-attenuation.md) §2）| 已證實 |
+| `0x0C` | `0x02FB` | 設回呼的 far pointer；`AL=1` 走內建的 `CS:0x097A` | 已證實 |
+
+⭐ **表是 13 筆，AH ＝ 0–12。** 第 14 筆起的 word 是程式碼 bytes
+（`33 C0` ＝ `xor ax,ax`），不是表項——照著往下讀會得到看似合理的位址。
 
 其他 table entries 存在，但本輪未把沒有資料流／呼叫端證據的 entry 命名為音樂、停止或音量。
 
@@ -113,4 +120,4 @@ TSR 路徑分離。故「戰術效果」與「介面／TALK click」不能共用
 |---|---|
 | `0x330` 的用途 | MPU-401 的標準埠，沒找到讀它的地方 |
 | 效果碼 ↔ 聽起來像什麼 | `SOUND.DAT` 的記錄結構已解（[`57`](57-opl3-register-map.md) §6），但哪一號對應哪個動作只有 §3 的三個 |
-| `INT 61h` 的四個服務號 `[DOS/BIOS]` | `ah=4`／`7`／`8` 與 `ax=09F2h`／`0C01h`，對應什麼動作要看 `YNSOUND.COM`（[`42`](42-leaf-functions.md) §7）。⚠ **這是原版與音效 TSR 的介面，不擋 remake**——音訊走純 Go 的 OPL3 渲染（[`../spec/29`](../spec/29-audio.md)），不經過 DOS |
+| `INT 61h` 的 `ax=09F2h` `[DOS/BIOS]` | `AH=09h` 對 `ds:[0A4Ch]` 個聲部逐一呼叫 `0x049E`（`al=91h`／`ah=0F2h`），那一支沒讀（[`81`](81-sound-type-attenuation.md) §5）。`ah=4`／`7`／`8`／`0Bh`／`0Ch`（含 `ax=0C01h`）都已定案，見 §2。⚠ **這是原版與音效 TSR 的介面，不擋 remake**——音訊走純 Go 的 OPL3 渲染（[`../spec/29`](../spec/29-audio.md)），不經過 DOS |

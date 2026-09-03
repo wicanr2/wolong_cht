@@ -1,6 +1,7 @@
 package sound
 
 import (
+	"math"
 	"os"
 	"path/filepath"
 	"testing"
@@ -79,5 +80,39 @@ func TestSilentSkipsPlayback(t *testing.T) {
 	b.PlayEffect(3)
 	if err := b.Err(); err != nil {
 		t.Errorf("靜音模式仍然走到了播放層：%v", err)
+	}
+}
+
+// 四段增益要對得上原版的 OPL Total Level 步進（docs/spec/122 §2）。
+func TestLevelGainMatchesOPLSteps(t *testing.T) {
+	// 一段 ＝ 4 個 TL 單位 × 0.75 dB ＝ 3 dB。
+	want := []float64{1, 0.70794578, 0.50118723, 0.35481339}
+	for n, w := range want {
+		got := LevelGain(n)
+		if math.Abs(got-w) > 1e-6 {
+			t.Errorf("LevelGain(%d) ＝ %g，應為 %g", n, got, w)
+		}
+	}
+	for n := 1; n < len(want); n++ {
+		if LevelGain(n) >= LevelGain(n-1) {
+			t.Errorf("TYPE %d 應該比 TYPE %d 小聲", n+1, n)
+		}
+	}
+}
+
+func TestSetLevelClamps(t *testing.T) {
+	var nilBank *Bank
+	nilBank.SetLevel(2) // 不能炸
+	if nilBank.Level() != 0 {
+		t.Error("nil Bank 的 Level 應為 0")
+	}
+	b := Open(t.TempDir())
+	for _, c := range []struct{ in, want int }{
+		{-3, 0}, {0, 0}, {3, 3}, {9, 3},
+	} {
+		b.SetLevel(c.in)
+		if got := b.Level(); got != c.want {
+			t.Errorf("SetLevel(%d) → Level() ＝ %d，應為 %d", c.in, got, c.want)
+		}
 	}
 }

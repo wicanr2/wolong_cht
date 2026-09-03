@@ -163,6 +163,7 @@
 | **`\1`／`\4` 代入的是呼び名，不是姓名** | [`119-talk-marker-fields.md`](119-talk-marker-fields.md) | 已實作、單測與突變測試。四個劇本裡受影響的只有四人，而三個是名人（諸葛亮→孔明、司馬懿→仲達、龐統→鳳雛）|
 | **尋路是反應式的**：全域佇列每幀兩個兵 | [`120-pathfind-request-queue.md`](120-pathfind-request-queue.md) | 已實作並有單測。取代 `replanInterval` 那個明示的 remake 差異；三場迴歸戰仍打得完 |
 | 碼頭與棧道的野戰用錯戰場（`SelectWater` 沒接）| [`121-water-battlefield-selection.md`](121-water-battlefield-selection.md) | 已修並補值域斷言。214／215 超出 0–213，呼叫端一直退回合成戰場 |
+| 音效的 TYPE 1–4 是四段主衰減 | [`122-sound-type-levels.md`](122-sound-type-levels.md) | 已接。原版每段加 4 個 OPL TL 單位（約 3 dB）；remake 播 OGG，接成播放增益 |
 
 ## 怎麼加一份
 

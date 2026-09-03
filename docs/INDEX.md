@@ -181,6 +181,7 @@
 | [`docs/re/78-soldier-power-from-command.md`](re/78-soldier-power-from-command.md) | 78 — 兵記錄 +0x18（戰力）是從統率力算出來的，不是士氣 | 布陣時的兩條算式、每兵種係數、近戰的分工與戰場類別的對應 全部 confirmed。 | 2026-09-02 |
 | [`docs/re/79-talk-marker-handlers.md`](re/79-talk-marker-handlers.md) | 79 — TALK.DAT 七個 \N 標記的 handler 逐支讀完 | 七支全部 confirmed（原始 bytes 交叉解碼）。 | 2026-09-03 |
 | [`docs/re/80-pathfind-request-queue.md`](re/80-pathfind-request-queue.md) | 80 — 原版的尋路是反應式的：一條全域佇列，每幀只算兩個兵 | confirmed。 | 2026-09-03 |
+| [`docs/re/81-sound-type-attenuation.md`](re/81-sound-type-attenuation.md) | 81 — 系統選單的「TYPE 1–4」是四段衰減，不是四種音源 | confirmed（原始 bytes 交叉解碼）。 | 2026-09-03 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-16 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -225,6 +226,7 @@
 | [`docs/spec/12-strategy-chrome.md`](spec/12-strategy-chrome.md) | 12 — 主畫面的視窗外框、指令列與右欄 | CONFORMED。主畫面的四個常駐視窗矩形、指令列版面與縮小地圖／勢力篩選鈕的 位置全部由機器碼定死（[docs/… | 2026-08-15 |
 | [`docs/spec/120-pathfind-request-queue.md`](spec/120-pathfind-request-queue.md) | 120 — 尋路改成全域佇列：每幀兩個兵，FIFO | CONFORMED。 | 2026-09-03 |
 | [`docs/spec/121-water-battlefield-selection.md`](spec/121-water-battlefield-selection.md) | 121 — 碼頭與棧道的野戰用錯了戰場：SelectWater 從來沒有被接上 | CONFORMED。 | 2026-09-03 |
+| [`docs/spec/122-sound-type-levels.md`](spec/122-sound-type-levels.md) | 122 — 音效的 TYPE 1–4：四段主衰減 | CONFORMED。 | 2026-09-03 |
 | [`docs/spec/13-main-window-toggles.md`](spec/13-main-window-toggles.md) | 13 — 主畫面四個視窗的開關 | CONFORMED。已實作並留下四窗全開／全關的截圖； 舊的 g.open[] 那一套已整個拿掉，主畫面視窗只剩一份… | 2026-08-15 |
 | [`docs/spec/14-finance-window.md`](spec/14-finance-window.md) | 14 — 財政視窗 | CONFORMED。版面已照原版重寫並有契約測試； 數值輸入器已接上（[78](78-amount-input-ed… | 2026-08-15 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |

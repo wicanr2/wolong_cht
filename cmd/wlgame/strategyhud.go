@@ -534,7 +534,7 @@ func (g *game) dispatchSystemRow(row int, left bool) {
 	case sysRowTacticalSpeed:
 		g.cycleSpeed(true, left)
 	case sysRowSound:
-		g.toggleSound()
+		g.cycleSound(left)
 	case sysRowLordCorps:
 		// ⚠ 左右鍵都是 toggle：這一列只有兩個值，原版那套
 		// 「左鍵下一檔／右鍵上一檔」在兩個值上沒有意義。
@@ -595,8 +595,9 @@ func damageReportValue(on bool) string {
 // soundValue 是系統選單「音　效」那一格的值。
 //
 // ⭐ **字串用原版的**：`ds:6010h` 的五個選項是 ＯＦＦ／TYPE 1／2／3／4
-// （docs/re/55 §4）。remake 只有開與關，所以對到 TYPE 1 與 ＯＦＦ——
-// TYPE 1 就是 DOS/V 的 OPL3 那一組（docs/re/57）。
+// （docs/re/55 §4）。四個 TYPE 是**四段音量**，不是四種音源——
+// 原版每段加 4 個 OPL Total Level 單位（docs/re/81），
+// remake 接成播放增益（docs/spec/122）。
 //
 // ⚠ 「未接入」是 **remake 才有的狀態**（跑在沒有音訊裝置的機器上，
 // 或沒給 `-audio`）。原版永遠有 YNSOUND，所以它沒有這個選項。
@@ -605,17 +606,49 @@ func (g *game) soundValue() string {
 	case !g.sound.Available():
 		return "未接入"
 	case g.sound.Enabled():
-		return "TYPE 1"
+		return fmt.Sprintf("TYPE %d", g.sound.Level()+1)
 	default:
 		return "ＯＦＦ"
 	}
 }
 
-func (g *game) toggleSound() {
+// soundOption 是那一列的設定值，對應原版的 `ds:0CF9h`：
+// 0 ＝ ＯＦＦ、1–4 ＝ TYPE 1–4。
+func (g *game) soundOption() int {
+	if !g.sound.Enabled() {
+		return 0
+	}
+	return g.sound.Level() + 1
+}
+
+// setSoundOption 把 0–4 寫回播放層。
+func (g *game) setSoundOption(v int) {
+	if v <= 0 {
+		g.sound.SetEnabled(false)
+		return
+	}
+	g.sound.SetLevel(v - 1)
+	g.sound.SetEnabled(true)
+}
+
+
+// cycleSound 換下一個選項。**原版是環狀遞增**（`sub_16062`：加一、
+// 到頂繞回 0，docs/re/55 §4），所以左鍵走 ＯＦＦ → TYPE 1 → … → TYPE 4 → ＯＦＦ。
+//
+// ⚠ 右鍵反向是 **remake 的方便**，與兩個速度列同一套；原版的選單只認
+// 「點一下」，沒有左右鍵之分。
+func (g *game) cycleSound(left bool) {
 	if !g.sound.Available() {
 		return
 	}
-	g.sound.SetEnabled(!g.sound.Enabled())
+	const n = 5 // ＯＦＦ ＋ TYPE 1–4
+	v := g.soundOption()
+	if left {
+		v = (v + 1) % n
+	} else {
+		v = (v + n - 1) % n
+	}
+	g.setSoundOption(v)
 }
 
 // drawSystemWindow 畫系統選單（docs/spec/13 §2.6）。

@@ -117,6 +117,7 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 | [`56`](56-bgm-track-events.md) | `*BGM.DAT` 的聲軌事件編碼 |
 | [`57`](57-opl3-register-map.md) | DOS/V 的音源是 OPL3：六個聲軌各佔一組 4-operator |
 | [`58`](58-bgm-scene-mapping.md) | 哪一首配哪個場景：`BGM.DAT` 的 11 首全部對出 |
+| [`81`](81-sound-type-attenuation.md) | ⭐ 系統選單的 TYPE 1–4 是**四段衰減**不是四種音源：`AH=0Bh` 的參數加進載波的 Total Level |
 | [`66`](66-message-box-geometry.md) | 訊息框的版面：一個框、一張肖像、四列字 |
 | [`79`](79-talk-marker-handlers.md) | ⭐ `TALK.DAT` 七個 `\N` 標記的 handler：哪一張表、哪一個欄位、什麼顏色。**`\1` 取的是呼び名不是姓名** |
 | [`67`](67-city-emblem-on-strategy-map.md) | 大地圖上的據點徽記：位置就在記錄座標 |

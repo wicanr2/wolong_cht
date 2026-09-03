@@ -8,6 +8,7 @@ package sound
 import (
 	"bytes"
 	"fmt"
+	"math"
 	"os"
 	"path/filepath"
 	"sort"
@@ -35,6 +36,10 @@ type Bank struct {
 	// initErr 記下第一次建 player 的失敗。**不重試**——headless 或
 	// 沒有音效裝置的環境每一幀重試一次會把主迴圈拖垮。
 	initErr error
+	// level 是系統選單「音　效」的 TYPE 1–4，存成 0–3
+	// （`docs/spec/122`）。原版是加進 OPL 載波的 Total Level，
+	// remake 播的是事先算好的 OGG，所以接成播放增益。
+	level int
 	// silent 是**驗收模式**：狀態全部照舊，只是不碰音效裝置
 	// （docs/spec/29 §5.1）。截圖與逐幀錄製跑在沒有音效卡的容器裡，
 	// 而把音檔目錄清空會讓 Available() 變成 false，
@@ -105,6 +110,43 @@ func (b *Bank) SetEnabled(on bool) {
 	}
 }
 
+// levelCount 是 TYPE 的段數（TYPE 1–4）。
+const levelCount = 4
+
+// LevelGain 是第 n 段（TYPE n+1）的播放增益。
+//
+// 原版每段加 4 個 OPL Total Level 單位，而 TL 是 0.75 dB/step，
+// 所以一段是 3 dB（`docs/re/81` §2）。
+func LevelGain(n int) float64 {
+	return math.Pow(10, -float64(n)*4*0.75/20)
+}
+
+// Level／SetLevel 是系統選單那一列的 TYPE（0 ＝ TYPE 1）。
+func (b *Bank) Level() int {
+	if b == nil {
+		return 0
+	}
+	return b.level
+}
+
+func (b *Bank) SetLevel(n int) {
+	if b == nil {
+		return
+	}
+	if n < 0 {
+		n = 0
+	}
+	if n >= levelCount {
+		n = levelCount - 1
+	}
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	b.level = n
+	if b.player != nil {
+		b.player.SetVolume(LevelGain(n))
+	}
+}
+
 // Music 回傳可用的曲名，給系統選單或除錯用。
 func (b *Bank) Music() []string {
 	if b == nil {
@@ -151,6 +193,7 @@ func (b *Bank) PlayMusic(name string) {
 		_ = b.player.Close()
 	}
 	b.player, b.current = player, name
+	player.SetVolume(LevelGain(b.level))
 	player.Play()
 }
 
@@ -191,6 +234,7 @@ func (b *Bank) PlayEffect(id int) {
 		b.initErr = err
 		return
 	}
+	player.SetVolume(LevelGain(b.level))
 	player.Play()
 }
 
