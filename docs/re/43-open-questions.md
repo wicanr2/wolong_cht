@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**513 列分布在 208 份文件，平均每份 2.5 列。**
+**512 列分布在 208 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 13 | 10 | 3 | 0 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 165 | 159 | 6 | 0 |
-| 驗收 | 89 | 78 | 11 | 0 |
+| 驗收 | 88 | 77 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 220 | 205 | 15 | 0 |
-| **合計** | **513** | 476 | 37 | 0 |
+| **合計** | **512** | 475 | 37 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -55,7 +55,7 @@
 |---|---:|
 | `docs/spec/` | 185 |
 | `docs/re/` | 165 |
-| `docs/playtest/` | 89 |
+| `docs/playtest/` | 88 |
 | `docs/formats/` | 20 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 13 |
@@ -276,7 +276,7 @@
 | [`re/80-pathfind-request-queue.md`](../re/80-pathfind-request-queue.md) | 佇列滿了會怎樣 | bit 4 去重讓在飛請求 ≤ 96 < 128，**結構上塞不滿**；沒有溢位檢查也就沒有可觀察的行為 | 靜態 |
 | [`re/80-pathfind-request-queue.md`](../re/80-pathfind-request-queue.md) | `[si+0x10]` 的完整語意 | 這裡確認它是「這一步的目標座標」（出隊時先設成目前座標，再由 `sub_1B00D` 覆寫成第一個繞路點）；誰還會寫它沒有窮舉 | 靜態 |
 
-## 2.4 驗收（89 條）
+## 2.4 驗收（88 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -321,7 +321,6 @@
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 音效的 TYPE 2/3/4 | 原版有四種音源型別，remake 只有開／關 / 看 `sub_102D0` 那四型的差別 | 靜態 |
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 日期對不上 | 原版跑到 4月9日才截到 / 要嘛用存檔定位，要嘛加一個「跑到指定日期」的驗收旗標 | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-enemy` 的 44 px | 兩條都頂在上限，原版那一格已經打了 20 秒（§10） / 要對就得讓兩邊的**時刻**對齊，不是改算式 | 靜態 |
-| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | 右下那一小塊地形色（8 px，(361..364, 192..194)） | `field` 區剩下唯一沒歸類的一群 / 拿 §13.1 那一招再跑一次：把 192 個子圖塊逐張套進那個顯示格比一次。**假說**是同一類（另一個實體破損的時刻不同），但還沒驗 | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-enemy`／`sb-self` 1.5% | 兩格將旗的內容 / — | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sub_1DFBB` 的快路徑 | remake 一律走合成。兩條路在全畫面重繪下應該畫出同樣的像素（`../spec/58` §4），但沒有逐格驗過 / — | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | unit 0 的第二趟 | 深度迴圈跑完後 `dl & 0x20` 成立時會對五個鄰格各跑一次 `ax = 0`；**觸發條件（旗標 bit 5）誰設還沒解** / 掃誰對顯示格的 `+0` 寫 `0x20` | 靜態 |
