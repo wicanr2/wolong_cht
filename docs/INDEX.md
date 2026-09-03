@@ -94,6 +94,7 @@
 | [`docs/playtest/58-parity-retest-20260902.md`](playtest/58-parity-retest-20260902.md) | 58 — 接上兵的戰力之後重跑戰術對拍：野戰回到 0.05%，攻城沒有退步 | 兩組都重量完，沒有回歸。 | 2026-09-02 |
 | [`docs/playtest/59-shot-when-natural-flow.md`](playtest/59-shot-when-natural-flow.md) | 59 — 兩個驗收旗標的驗收：自然流程與捷徑截出同一張畫面 | 四項全部通過。 | 2026-09-03 |
 | [`docs/playtest/60-corps-menu-parity.md`](playtest/60-corps-menu-parity.md) | 60 — 「軍團」彈出選單的對拍：四區全部 0 px | 通過。 | 2026-09-03 |
+| [`docs/playtest/61-city-personnel-menu-parity.md`](playtest/61-city-personnel-menu-parity.md) | 61 — 「據點」與「人事」兩張彈出選單的對拍：四區全部 0 px | 通過。 | 2026-09-03 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告是 72 秒， 含語言切換與原版並排兩段；遊戲段落是逐幀錄下來的實跑畫面。 2… | 2026-08-30 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
@@ -233,6 +234,7 @@
 | [`docs/spec/124-menu-highlight-xor.md`](spec/124-menu-highlight-xor.md) | 124 — 反白是「色號 XOR 12」，不是換一個底色 | CONFORMED。 | 2026-09-03 |
 | [`docs/spec/125-menu-box-width-from-padding.md`](spec/125-menu-box-width-from-padding.md) | 125 — 選單框的寬度要用沒有切掉補位空白的那一行 | CONFORMED。 | 2026-09-03 |
 | [`docs/spec/126-command-popup-menus.md`](spec/126-command-popup-menus.md) | 126 — 指令列的四個彈出選單走同一支常式 | CONFORMED。 | 2026-09-03 |
+| [`docs/spec/127-captured-sovereign-becomes-retainer.md`](spec/127-captured-sovereign-becomes-retainer.md) | 127 — 被俘的主公型武將當場變成臣下型 | CONFORMED。 | 2026-09-03 |
 | [`docs/spec/13-main-window-toggles.md`](spec/13-main-window-toggles.md) | 13 — 主畫面四個視窗的開關 | CONFORMED。已實作並留下四窗全開／全關的截圖； 舊的 g.open[] 那一套已整個拿掉，主畫面視窗只剩一份… | 2026-08-15 |
 | [`docs/spec/14-finance-window.md`](spec/14-finance-window.md) | 14 — 財政視窗 | CONFORMED。版面已照原版重寫並有契約測試； 數值輸入器已接上（[78](78-amount-input-ed… | 2026-08-15 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |

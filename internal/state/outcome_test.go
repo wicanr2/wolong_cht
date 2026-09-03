@@ -199,3 +199,84 @@ func TestVictoryLordTalkIndex(t *testing.T) {
 		t.Fatal("沒有君主卻給了訊息")
 	}
 }
+
+// 被俘的主公型武將當場變成臣下型：清 bit 6、說話類型 +3（docs/spec/127、
+// `sub_129C3` 的 loc_12A12）。⚠ 這一段**不以「舊主已滅」為條件**。
+func TestCapturedSovereignBecomesRetainer(t *testing.T) {
+	w := load(t, 0)
+	alive := w.AliveFactions()
+	loser, winner := alive[1], alive[2]
+
+	// 找一位敗方的主公型武將（開局的君主本人）。
+	var sub, plain = -1, -1
+	for i := range w.Generals {
+		g := &w.Generals[i]
+		if !g.Alive || g.Faction != loser || g.Captor != noFaction {
+			continue
+		}
+		if g.Sovereign && sub < 0 {
+			sub = i
+		}
+		if !g.Sovereign && plain < 0 {
+			plain = i
+		}
+	}
+	if sub < 0 || plain < 0 {
+		t.Skipf("勢力 %d 沒有同時湊出主公型與非主公型（%d／%d）", loser, sub, plain)
+	}
+	wantSub := w.Generals[sub].TalkVariant + 3
+	wantPlain := w.Generals[plain].TalkVariant
+
+	w.eliminateFaction(loser, winner)
+
+	if g := w.Generals[sub]; g.Sovereign {
+		t.Error("被俘的主公型武將還留著 bit 6")
+	} else if g.TalkVariant != wantSub {
+		t.Errorf("被俘君主的說話類型 = %d，want %d", g.TalkVariant, wantSub)
+	}
+	if g := w.Generals[plain]; g.TalkVariant != wantPlain {
+		t.Errorf("非主公型的說話類型被動了：%d，want %d", g.TalkVariant, wantPlain)
+	}
+}
+
+// 先測 bit 再清，所以被俘兩次只加一次；釋放也不還原（`sub_150D7` 沒有加回去）。
+func TestDemoteCapturedSovereignIsOneWay(t *testing.T) {
+	g := General{Alive: true, Sovereign: true, TalkVariant: 1}
+	demoteCapturedSovereign(&g)
+	demoteCapturedSovereign(&g)
+	if g.Sovereign {
+		t.Error("bit 6 沒清掉")
+	}
+	if g.TalkVariant != 4 {
+		t.Errorf("說話類型 = %d，want 4（只加一次）", g.TalkVariant)
+	}
+}
+
+// 釋放不還原：原版 `sub_150D7` 沒有把說話類型減回去，也沒有把 bit 6 加回來
+// （docs/spec/127 §2）。這一條釘的是「以後有人順手補一個還原就會紅」。
+func TestReleasedCaptiveKeepsRetainerVariant(t *testing.T) {
+	w := load(t, 0)
+	alive := w.AliveFactions()
+	loser, winner := alive[1], alive[2]
+
+	sub := -1
+	for i := range w.Generals {
+		if g := &w.Generals[i]; g.Alive && g.Faction == loser && g.Sovereign {
+			sub = i
+			break
+		}
+	}
+	if sub < 0 {
+		t.Skipf("勢力 %d 沒有主公型武將", loser)
+	}
+	w.eliminateFaction(loser, winner)
+	afterCapture := w.Generals[sub].TalkVariant
+
+	w.releaseGeneral(sub)
+	if g := w.Generals[sub]; g.TalkVariant != afterCapture {
+		t.Errorf("釋放之後說話類型 = %d，want %d（不還原）", g.TalkVariant, afterCapture)
+	}
+	if w.Generals[sub].Sovereign {
+		t.Error("釋放之後 bit 6 又回來了")
+	}
+}

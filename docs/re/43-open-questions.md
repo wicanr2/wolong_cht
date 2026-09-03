@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**527 列分布在 216 份文件，平均每份 2.4 列。**
+**531 列分布在 218 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 13 | 10 | 3 | 0 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 170 | 163 | 6 | 1 |
-| 驗收 | 89 | 77 | 12 | 0 |
+| 驗收 | 92 | 80 | 12 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 229 | 212 | 16 | 1 |
-| **合計** | **527** | 486 | 39 | 2 |
+| 其他 | 230 | 213 | 16 | 1 |
+| **合計** | **531** | 490 | 39 | 2 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,9 +53,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 194 |
+| `docs/spec/` | 195 |
 | `docs/re/` | 170 |
-| `docs/playtest/` | 89 |
+| `docs/playtest/` | 92 |
 | `docs/formats/` | 20 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 13 |
@@ -97,7 +97,7 @@
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x0080` | 2,112 / **勢力表：22 筆 × 64 B**（`docs/re/06` §5）＋ 其後未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x1EC0` | 7,168 / 未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x3AC0`…`+0x42C0` | — / 未解 | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0` | 1 / 旗標。四劇本 508 筆只出現 **8 種值**（0／0x80／0x81／0x90／0xA0／0xC0／0xD0／0xE0）。**bit 7 ＝ 在場**（381 筆）；**bit 6 ＝ 主公型**（43 筆，全是現任君主，被俘而舊主勢力已滅時清掉並把 `+30` 說話類型 `+3`，`sub_129C… | 靜態 |
+| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0` | 1 / 旗標。四劇本 508 筆只出現 **8 種值**（0／0x80／0x81／0x90／0xA0／0xC0／0xD0／0xE0）。**bit 7 ＝ 在場**（381 筆）；**bit 6 ＝ 主公型**（43 筆，全是現任君主，**被俘時**清掉並把 `+30` 說話類型 `+3`，`sub_129C3`；… | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+20`（`0x14`） | 1 / 值域 **0–7**、8 種，四劇本 508 筆都有值（0 佔 158、2 佔 98）。**與 `+0x1E` 的說話類型同值域但不同值**，交叉表也沒有結構 / 語意未解。**讀取端全庫掃過是零**（`../re/77` §5） | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`（`0x1B`） | 1 / 只有兩種值：0（481 筆）與 `0xFF`（27 筆）。劇本一的 `0xFF` 是笮融、張英、周倉、嚴輿、周昕、李別、刑道榮、劉賢、武安國九人 / 語意未解。**讀取端全庫掃過是零**（`../re/77` §5） | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
@@ -281,7 +281,7 @@
 | [`re/82-display-slot-dead-flags.md`](../re/82-display-slot-dead-flags.md) | 這兩支常式原本要做什麼 | `ax = 0` 送進 `sub_1E085`／`sub_1E0E1` ＝ 拿**子圖塊 0** 對自己與四個鄰格各貼一次。子圖塊 0 在深度迴圈裡是「空」（`and ax,ax / jz` 跳過），只有這條死路徑會真的去畫它。兩版都沒有呼叫端，所以**沒有實機可以觀察**，只能說它是開發期留下的東西 | 兩版對照 |
 | [`re/82-display-slot-dead-flags.md`](../re/82-display-slot-dead-flags.md) | 大地圖那一族的 bit 5 | 是**另一個**旗標（顯示清單一格 8 B），`sub_1D4C7` 換圖時 `or byte ptr [si], 20h` 打髒，見 `../spec/74`。與本份無關，並列在這裡是為了擋掉下一次的混淆 | 靜態 |
 
-## 2.4 驗收（89 條）
+## 2.4 驗收（92 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -374,6 +374,9 @@
 | [`playtest/60-corps-menu-parity.md`](../playtest/60-corps-menu-parity.md) | 日期對不上 | 原版跑到 4月20日才截到 / 同 `39` §4：要嘛用存檔定位，要嘛加一個「跑到指定日期」的驗收旗標 | 靜態 |
 | [`playtest/60-corps-menu-parity.md`](../playtest/60-corps-menu-parity.md) | 選完之後的兩條流程 | 位置確認的軍團一覽、行軍指示的目的地一覽，**都沒有對拍** / 原版側再拍一次：`tap:25,5,5` 之後再 `tap` 第一列／第二列 | 靜態 |
 | [`playtest/60-corps-menu-parity.md`](../playtest/60-corps-menu-parity.md) | 「據點」與「人事」那兩張的對拍 | **沒有原版截圖**。三張走同一份繪製程式碼（`../spec/126`），但位置與字數是各自的立即值，沒比過就不能說它們對 / `tap:30,5,5`／`tap:10,5,5` 照 `54` 的方式拍 | 實測 |
+| [`playtest/61-city-personnel-menu-parity.md`](../playtest/61-city-personnel-menu-parity.md) | 日期對不上 | 原版跑到 4月20日才截到，`banner` 因此永遠 116 px / 同 `39` §4：用存檔定位，或加一個「跑到指定日期」的驗收旗標 | 靜態 |
+| [`playtest/61-city-personnel-menu-parity.md`](../playtest/61-city-personnel-menu-parity.md) | 選完之後的流程 | 據點的「首都確認」／「據點一覽」、人事的四項，**選下去之後的畫面都沒有對拍** / 原版側在 `tap` 之後再 `tap` 一次那一列 | 靜態 |
+| [`playtest/61-city-personnel-menu-parity.md`](../playtest/61-city-personnel-menu-parity.md) | 進言那一張 | 五項選單**確定拍不到**（`42` §5：30 ms 瞬按與右鍵回退兩條路都試過），而且 remake 還沒併進 `popupMenu` / — | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -386,7 +389,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（229 條）
+## 2.6 其他（230 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -467,7 +470,6 @@
 | [`spec/121-water-battlefield-selection.md`](../spec/121-water-battlefield-selection.md) | 實跑一場碼頭野戰 | 沒有。要讓兩支軍團在圖塊 `0xCA` 上遭遇 | 實測 |
 | [`spec/122-sound-type-levels.md`](../spec/122-sound-type-levels.md) | 四段的實際音量差 | 沒有錄下原版四個 TYPE 的波形量過。算式來自機器碼，聽感沒驗 | 靜態 |
 | [`spec/122-sound-type-levels.md`](../spec/122-sound-type-levels.md) | `AH=0Bh` 只重算三個聲部 | 原版那個迴圈是 `ah = 0、1、2`（`../re/81` §5）。remake 的主增益對所有聲部一致，這一點**沒有照抄** | 靜態 |
-| [`spec/123-captive-talk-messages.md`](../spec/123-captive-talk-messages.md) | `sub_129C3` 的 `test [bx], 40h` 分支 | 被擒時若旗標 bit 6 成立就清掉它並把 `+0x1E` 加 3（變體換一組）。**那個 bit 是什麼沒查**，remake 沒做 | 靜態 |
 | [`spec/123-captive-talk-messages.md`](../spec/123-captive-talk-messages.md) | 城兵那一側 | `sub_14FCE` 也呼叫 `sub_129C3`（守城武將被擒）。remake 的城兵路徑有沒有走到同一則沒驗 | 靜態 |
 | [`spec/124-menu-highlight-xor.md`](../spec/124-menu-highlight-xor.md) | 其餘七格的反白 | `activeCommandCell()` 目前只認得「軍團」那張彈出選單。其他六格（進言／人事／財政／編成／據點／武將／勢力）的流程沒有統一的「這一段還在跑」訊號，**硬接會在錯的時刻亮著**。要一格一格補謂詞，而且每一格都該有自己的對拍 | 靜態 |
 | [`spec/124-menu-highlight-xor.md`](../spec/124-menu-highlight-xor.md) | 清單視窗的反白條 | `chrome.Select` 色 5 是**沒有實機證據的猜測**（§3）。要一張選著某一列的原版清單才驗得了 | 靜態 |
@@ -477,6 +479,8 @@
 | [`spec/126-command-popup-menus.md`](../spec/126-command-popup-menus.md) | 據點／人事兩張的逐像素對拍 | 沒拍。三張共用同一份繪製程式碼，但**位置與字數是各自的立即值**，沒比過就不能說它們對 | 靜態 |
 | [`spec/126-command-popup-menus.md`](../spec/126-command-popup-menus.md) | 「據點一覽」列的是誰的城 | remake 只列玩家的（`playerCities`）。原版 `sub_17400` 列的範圍沒查——「首都確認」那條路暗示這個指令是給自己人用的，但那是推論 | 靜態 |
 | [`spec/126-command-popup-menus.md`](../spec/126-command-popup-menus.md) | 進言那一張還沒併進來 | `openAdvise` 有自己的一套（五項 ＋ 說服流程）。**併之前要先確認它的取消語意一樣**，這一輪沒動 | 靜態 |
+| [`spec/127-captured-sovereign-becomes-retainer.md`](../spec/127-captured-sovereign-becomes-retainer.md) | 被俘兩次會不會加兩次 | **不會，而且不需要另外防護**——`and [bx], 0BFh` 已經把 bit 6 清掉了，第二次 `test [bx], 40h` 不成立。所以 `+3` 至多發生一次，值域停在 3–5，不會溢出 `+0x1E` 的 0–7。remake 照抄同一個結構（先測 bit 再清）就自然有同樣的性質 | 靜態 |
+| [`spec/127-captured-sovereign-becomes-retainer.md`](../spec/127-captured-sovereign-becomes-retainer.md) | 劇本作者能不能給非君主 bit 6 | 四個劇本的 43 筆全是現任君主（`../re/77` §3），但那是**資料上的巧合還是規則**沒有讀出來。若有一筆說話類型 3–7 又帶 bit 6，`+3` 會把它推到 6–10 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | **remake 沒有邊緣捲動** | **機制早就解了**（`../re/47` §6）：`sub_120D6` 進大地圖時把 INT 33 的範圍換成**整個世界**（水平 0–`17FFh` ＝ 384 格 × 16、垂直 0–`101Fh`），`sub_11F7F` 再把原始座標減掉鏡頭原點、夾在 0–639／0–399，**夾掉的量同時加回鏡… | 靜態 |

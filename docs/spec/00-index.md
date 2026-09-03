@@ -168,6 +168,7 @@
 | 反白是色號 XOR 12（選單列 ＋ 指令列格）| [`124-menu-highlight-xor.md`](124-menu-highlight-xor.md) | 已修。黑底白字 ⇒ 黃底藍字；指令列先前根本沒畫反白 |
 | 選單框寬要用沒切補位空白的那一行 | [`125-menu-box-width-from-padding.md`](125-menu-box-width-from-padding.md) | 已修。標籤改讀 `TALK #79`，解碼走 `DecodeKeepPad` |
 | 指令列的四個彈出選單走同一支常式 | [`126-command-popup-menus.md`](126-command-popup-menus.md) | 已接三張（人事／軍團／據點）。人事從一覽表換成選單，據點多了「首都確認」 |
+| 被俘的主公型武將當場變成臣下型 | [`127-captured-sovereign-becomes-retainer.md`](127-captured-sovereign-becomes-retainer.md) | 已接。清旗標 bit 6 ＋ 說話類型 `+3`；⚠ 順帶訂正「以舊主已滅為條件」那個說法 |
 
 ## 怎麼加一份
 

@@ -102,14 +102,20 @@ jnz     retn
 
 ## 3. 旗標 `+0x00` 的 bit 6 ＝ 主公型
 
-`sub_129C3`（被俘處理）在舊主勢力已經不在時：
+`sub_129C3`（被俘處理）在寫完舊主之後，**不分舊主在不在**：
 
 ```asm
+loc_12A12:
 test    byte ptr [bx], 40h
 jz      +
 and     byte ptr [bx], 0BFh     ; 清掉 bit 6
 add     byte ptr [bx+1Eh], 3    ; ⭐ 說話類型 +3
 ```
+
+`loc_12A12` 有兩條入邊：舊主還在時 `jnb` 直接跳過來，舊主已滅但沒有
+bit 4（不事二主）也落到這裡。只有走自刎那一條會跳過，而自刎的下一步
+是整筆歸零。條件因此只有一個：**被俘且沒自刎**
+（[`../spec/127`](../spec/127-captured-sovereign-becomes-retainer.md) §1）。
 
 說話類型 **0–2 是主公型、3–7 是臣下型**（[`25`](25-message-variants-and-personnel.md) §4.2），
 所以 `+3` 正好把 0／1／2 搬到 3／4／5。分布也對得上：

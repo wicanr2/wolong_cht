@@ -125,6 +125,7 @@ func (w *World) disperseFaction(i, winner int) {
 		}
 		if winner >= 0 && winner < numFactions {
 			g.Captor, g.Faction = i, winner
+			demoteCapturedSovereign(g)
 		} else {
 			g.Faction = noFaction
 		}
@@ -172,4 +173,22 @@ func (w *World) VictoryLordTalkIndex() (index, general int, ok bool) {
 		return 0, 0, false
 	}
 	return VictoryLordTalkBase, lord, true
+}
+
+// demoteCapturedSovereign 是 `sub_129C3` 的 `loc_12A12`：被俘的人只要
+// 旗標 bit 6（主公型）成立，就清掉它並把說話類型加 3——0／1／2 正好
+// 搬到 3／4／5，也就是**主公型換成臣下型**（docs/spec/127）。
+//
+// ⚠ 這一段**不以「舊主已滅」為條件**。舊主還在時 `jnb loc_12A12` 直接
+// 跳過來，舊主已滅但沒有 bit 4（不事二主）也落到這裡；只有走自刎那一條
+// 才跳過，而那條的下一步是整筆歸零。
+//
+// 先測 bit 再清，所以被俘兩次不會加兩次——第二次 bit 6 已經是 0 了。
+// 釋放（`sub_150D7`）**不會把它加回去**，這是不可逆的搬移。
+func demoteCapturedSovereign(g *General) {
+	if g == nil || !g.Sovereign {
+		return
+	}
+	g.Sovereign = false
+	g.TalkVariant += 3
 }
