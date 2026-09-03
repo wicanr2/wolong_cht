@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**535 列分布在 220 份文件，平均每份 2.4 列。**
+**537 列分布在 221 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 13 | 10 | 3 | 0 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 173 | 166 | 6 | 1 |
-| 驗收 | 92 | 80 | 12 | 0 |
+| 驗收 | 94 | 82 | 12 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 231 | 214 | 16 | 1 |
-| **合計** | **535** | 494 | 39 | 2 |
+| **合計** | **537** | 496 | 39 | 2 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -55,7 +55,7 @@
 |---|---:|
 | `docs/spec/` | 196 |
 | `docs/re/` | 173 |
-| `docs/playtest/` | 92 |
+| `docs/playtest/` | 94 |
 | `docs/formats/` | 20 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 13 |
@@ -284,7 +284,7 @@
 | [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `+8+4k` 與 `+10+4k` 的語意 | 從軍團記錄 `+0x28+4k` 起搬進來的兩個 byte，`sub_19F58` 只讀 `+1`／`+3`，這兩格戰鬥中沒有讀取端被找到 | 靜態 |
 | [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `word_1D31A` 的語意 | `sub_1AEA9` 數「在場且 `+0x19` 非零」的兵，`sub_1ADC8` 尾段拿它算優勢（`byte_1D31E`）。`+0x19` 是一個倒數計時器（`sub_1AB7C` 寫 `28h`、`sub_1ADC8` 每幀 `dec`），**它代表什麼還沒解** | 靜態 |
 
-## 2.4 驗收（92 條）
+## 2.4 驗收（94 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -380,6 +380,8 @@
 | [`playtest/61-city-personnel-menu-parity.md`](../playtest/61-city-personnel-menu-parity.md) | 日期對不上 | 原版跑到 4月20日才截到，`banner` 因此永遠 116 px / 同 `39` §4：用存檔定位，或加一個「跑到指定日期」的驗收旗標 | 靜態 |
 | [`playtest/61-city-personnel-menu-parity.md`](../playtest/61-city-personnel-menu-parity.md) | 選完之後的流程 | 據點的「首都確認」／「據點一覽」、人事的四項，**選下去之後的畫面都沒有對拍** / 原版側在 `tap` 之後再 `tap` 一次那一列 | 靜態 |
 | [`playtest/61-city-personnel-menu-parity.md`](../playtest/61-city-personnel-menu-parity.md) | 進言那一張 | 五項選單**確定拍不到**（`42` §5：30 ms 瞬按與右鍵回退兩條路都試過），而且 remake 還沒併進 `popupMenu` / — | 靜態 |
+| [`playtest/62-parity-retest-20260903.md`](../playtest/62-parity-retest-20260903.md) | 攻城 `field` 的 0.84% 地板 | 局面不等價（`58` §1.2、`51` §2），與這一輪無關 | 靜態 |
+| [`playtest/62-parity-retest-20260903.md`](../playtest/62-parity-retest-20260903.md) | 野戰 `sb-minimap` 32 → 40 px | 推定是同一個成因（`db7859f` 改變了兵走到同一格的時刻），但**沒有單獨二分過**——攻城那一組二分不自動涵蓋野戰 | 靜態 |
 
 ## 2.5 外部資料（6 條）
 

@@ -95,7 +95,7 @@
 | [`docs/playtest/59-shot-when-natural-flow.md`](playtest/59-shot-when-natural-flow.md) | 59 — 兩個驗收旗標的驗收：自然流程與捷徑截出同一張畫面 | 四項全部通過。 | 2026-09-03 |
 | [`docs/playtest/60-corps-menu-parity.md`](playtest/60-corps-menu-parity.md) | 60 — 「軍團」彈出選單的對拍：四區全部 0 px | 通過。 | 2026-09-03 |
 | [`docs/playtest/61-city-personnel-menu-parity.md`](playtest/61-city-personnel-menu-parity.md) | 61 — 「據點」與「人事」兩張彈出選單的對拍：四區全部 0 px | 通過。 | 2026-09-03 |
-| [`docs/playtest/62-parity-retest-20260903.md`](playtest/62-parity-retest-20260903.md) | 62 — 2026-09-03 重跑：待機兵那條改動沒有動到任何取樣點，而 58 的數字已經漂了 | 通過（沒有回歸），但帶一個過期斷言。 | 2026-09-03 |
+| [`docs/playtest/62-parity-retest-20260903.md`](playtest/62-parity-retest-20260903.md) | 62 — 2026-09-03 重跑：待機兵那條改動沒有動到任何取樣點，而 58 的數字已經漂了 | 通過，沒有回歸。 | 2026-09-03 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告是 72 秒， 含語言切換與原版並排兩段；遊戲段落是逐幀錄下來的實跑畫面。 2… | 2026-08-30 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
