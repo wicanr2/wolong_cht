@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**515 列分布在 208 份文件，平均每份 2.5 列。**
+**513 列分布在 208 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -40,12 +40,12 @@
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
 | 規則正確性 | 13 | 10 | 3 | 0 |
-| 資料保存 | 22 | 22 | 0 | 0 |
+| 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 165 | 159 | 6 | 0 |
 | 驗收 | 89 | 78 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 220 | 205 | 15 | 0 |
-| **合計** | **515** | 479 | 36 | 0 |
+| **合計** | **513** | 476 | 37 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -56,7 +56,7 @@
 | `docs/spec/` | 185 |
 | `docs/re/` | 165 |
 | `docs/playtest/` | 89 |
-| `docs/formats/` | 22 |
+| `docs/formats/` | 20 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 13 |
 | `docs/mobile/` | 11 |
@@ -81,7 +81,7 @@
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 入佇列的隨機空格分佈 | 目前是 remake 的明示差異；要對齊得先解出原版排程時挑空格的那段 | 靜態 |
 | [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 四個劇本的結局是否不同 | **觸發條件四劇本共用**，差別只在初始勢力數；結局的十二幕也是一條路播完，沒有依劇本分支的證據（`../re/70` §3）。**但沒有實跑四個劇本對過** | 實測 |
 
-## 2.2 資料保存（22 條）
+## 2.2 資料保存（20 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -91,10 +91,8 @@
 | [`formats/04-map-sch-container.md`](../formats/04-map-sch-container.md) | 狀態：容器格式的索引層 READY，壓縮演算法未解。 | （散句） | 靜態 |
 | [`formats/05-mmap-worldmap.md`](../formats/05-mmap-worldmap.md) | `MMAP.MCH` 的 object **type 3** | 圖塊、`0xA000` metadata 與事件 12 的火災／暴動（type 1／2）查表已解（`../re/14`）。type 3 的事件語意、object timer 與逐 frame 的原版時序仍未知——remake 的 timer 是呈現層 substitute | 靜態 |
 | [`formats/05-mmap-worldmap.md`](../formats/05-mmap-worldmap.md) | 比對的正是方向碼那個欄位）。 強證據，未定案。 | （散句） | 靜態 |
-| [`formats/07-battle.md`](../formats/07-battle.md) | 每個戰場 4,096 B 的表頭與尾段各 64 byte | 內容未解（§2.1） | 靜態 |
-| [`formats/07-battle.md`](../formats/07-battle.md) | 表頭 16 筆但資料只有 3 組 | 多出來的 13 筆是什麼未解（§3） | 靜態 |
-| [`formats/07-battle.md`](../formats/07-battle.md) | 所以地形是 **64 寬 × 62 列**，而整塊 4,096 B 是 **64 × 64**—— 兩者內容未解。 | （散句） | 靜態 |
-| [`formats/07-battle.md`](../formats/07-battle.md) | ——表頭筆數多於資料組數，原因未解。 | （散句） | 靜態 |
+| [`formats/07-battle.md`](../formats/07-battle.md) | 表頭與尾段執行期會不會被寫 | 靜態全 0 是 confirmed（§2.1）。**沒有窮舉「有沒有人在執行期寫進那 128 B」**——地形緩衝區與佔用圖是兩塊，但沒有逐個寫入端查過 | 靜態 |
+| [`formats/07-battle.md`](../formats/07-battle.md) | `GateX` ＝ 0 的六個據點戰場 | 已定位是關隘／古戰場（§2.5）。**沒有實跑過一場**——打官渡或赤壁時 `IsSiege` 為假，城壁與門一段都建不出來，那條路沒有驗收紀錄 | 實測 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x0008` | 51 / 未解的全域狀態（一起載入 `cs:0CF0h`） | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x0080` | 2,112 / **勢力表：22 筆 × 64 B**（`docs/re/06` §5）＋ 其後未解 | 靜態 |
 | [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x1EC0` | 7,168 / 未解 | 靜態 |

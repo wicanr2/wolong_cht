@@ -17,7 +17,7 @@
 | [`docs/formats/04-map-sch-container.md`](formats/04-map-sch-container.md) | 04 — .MAP／.SCH／.MCH：兩種完全不同的東西 | 容器格式的索引層 READY，壓縮演算法未解。 | 2026-08-07 |
 | [`docs/formats/05-mmap-worldmap.md`](formats/05-mmap-worldmap.md) | 05 — MMAP. 大地圖 | MMAP.MDL、地圖尺寸、自動連接與 MMAP.MCH 物件圖形入口 confirmed；MMAP.MAP 的 R… | 2026-08-07 |
 | [`docs/formats/06-mmap-rle.md`](formats/06-mmap-rle.md) | 06 — MMAP.MAP 的 RLE 壓縮 | READY。 | 2026-08-07 |
-| [`docs/formats/07-battle.md`](formats/07-battle.md) | 07 — BATTLE. 戰場資料 | 分段結構、圖塊定義、子圖塊與人物圖形的像素格式都 confirmed。 剩三項未解（§10）。 | 2026-08-07 |
+| [`docs/formats/07-battle.md`](formats/07-battle.md) | 07 — BATTLE. 戰場資料 | 分段結構、圖塊定義、子圖塊與人物圖形的像素格式都 confirmed。 | 2026-08-07 |
 | [`docs/formats/08-sinario-save.md`](formats/08-sinario-save.md) | 08 — SINARIO.DAT / SAVE.DAT：劇本與存檔 | 整體結構 confirmed，武將能力值 confirmed，其餘欄位進行中。 | 2026-08-07 |
 | [`docs/formats/09-cutscene-images.md`](formats/09-cutscene-images.md) | 09 — OPEN_S.DAT／END_S.DAT：過場畫面 | READY。 | 2026-08-18 |
 | [`docs/formats/10-end-s15-namechars.md`](formats/10-end-s15-namechars.md) | 10 — END_S15.DAT：軍師命名的選字表（松崗版特有） | READY（格式 confirmed，Go 解碼器有測試）。 | 2026-08-29 |
