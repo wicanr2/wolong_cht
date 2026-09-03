@@ -419,6 +419,12 @@ type CorpsEvent struct {
 	Destroyed []int
 	// Fate 是壞滅方主將的下場，只在 Destroyed 非空時有意義。
 	Fate map[int]combat.Fate
+	// FateSides 是那一刻的勝方與敗方勢力，key 同 Fate。
+	//
+	// ⭐ **不能事後從武將記錄反推**：被擒之後 `Generals[i].Faction`
+	// 已經換成勝方，而訊息要比的是**舊主**（原版靠武將 `+0x1D` 保存，
+	// `docs/spec/123`）。
+	FateSides map[int]FateSide
 
 	// Captured 不是 −1 表示這個 tick 佔下了某個據點。
 	Captured int
@@ -924,7 +930,14 @@ func (w *World) corpsPerishes(ev *CorpsEvent, i, winner int, rng combat.Rand) {
 		ev.Fate = map[int]combat.Fate{}
 	}
 	ev.Fate[i] = fate
+	if ev.FateSides == nil {
+		ev.FateSides = map[int]FateSide{}
+	}
+	ev.FateSides[i] = FateSide{Winner: winner, Loser: loser}
 }
+
+// FateSide 是一次下場判定的兩個勢力（`docs/spec/123`）。
+type FateSide struct{ Winner, Loser int }
 
 // noGovernor 是「這個據點沒有派駐內政官」。原版的哨兵是 0xFF，
 // 而 remake 的事件層用 −1——**兩個都不是 0**，因為 0 是合法的武將編號

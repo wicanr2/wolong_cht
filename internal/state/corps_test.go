@@ -26,3 +26,33 @@ func TestDefenderPickedByScore(t *testing.T) {
 		t.Fatalf("同分挑到 %d，應取先者 0", got)
 	}
 }
+
+// 下場判定要把當下的兩個勢力記進事件（docs/spec/123 §3）。
+//
+// ⭐ **被擒之後 `Generals[i].Faction` 已經是勝方**，事後反推拿不到舊主——
+// 這條測試擋的就是「事件不記、UI 自己去猜」那條路。
+func TestCorpsPerishesRecordsFateSides(t *testing.T) {
+	w := &World{}
+	w.Factions[0].Alive = true
+	w.Factions[0].Capital = 5
+	w.Factions[0].Corps = 1
+	w.Factions[1].Alive = true
+	w.Corps[7].Alive = true
+	w.Corps[7].Faction = 0
+	w.Generals[7].Alive = true
+	w.Generals[7].Faction = 0
+
+	ev := &CorpsEvent{Corps: 7}
+	w.corpsPerishes(ev, 7, 1, &testRand{})
+
+	side, ok := ev.FateSides[7]
+	if !ok {
+		t.Fatal("沒有記下勝敗兩方")
+	}
+	if side.Winner != 1 || side.Loser != 0 {
+		t.Errorf("勝方 %d／敗方 %d，want 1／0", side.Winner, side.Loser)
+	}
+	if _, ok := ev.Fate[7]; !ok {
+		t.Error("Fate 沒記")
+	}
+}

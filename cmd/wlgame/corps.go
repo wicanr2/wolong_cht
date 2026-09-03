@@ -514,6 +514,7 @@ func (g *game) reportCorps(ev state.Event) {
 	for _, e := range ev.Corps {
 		g.reportGovernorReturn(e)
 		g.reportRout(e)
+		g.reportCaptives(e)
 		if e.Battle == nil {
 			continue
 		}
@@ -655,6 +656,66 @@ const (
 	// 展開後落在 422–429。⚠ 內政官那一組是 `0x1A6`（534–541），
 	// 兩組長得一樣但句子不同。
 	routRegretTalkBase = 0x198
+)
+
+// reportCaptives 是武將下場的五則訊息（docs/spec/123）。
+//
+// ⭐ **敗方與勝方看到的是不同的一則**，兩邊都不是就不出訊息——
+// 二十二個勢力天天在打，全部跳框畫面會停不下來。
+//
+// ⚠ **被擒那一則比的是舊主，不是現主**：`Generals[i].Faction` 這時候
+// 已經換成勝方了，所以勢力要從事件帶出來（`state.FateSide`）。
+func (g *game) reportCaptives(e state.CorpsEvent) {
+	for _, d := range e.Destroyed {
+		side, ok := e.FateSides[d]
+		if !ok || d < 0 || d >= len(g.world.Generals) {
+			continue
+		}
+		gen := &g.world.Generals[d]
+		vars := map[byte]string{'1': big5(gen.TalkName()), '6': ""}
+		me := g.world.Player
+		switch e.Fate[d] {
+		case combat.Escaped:
+			switch me {
+			case side.Loser:
+				g.enqueueTalk(escapeTalk, vars)
+			case side.Winner:
+				g.enqueueTalk(escapeMissedTalk, vars)
+			}
+		case combat.Captured:
+			switch me {
+			case side.Loser:
+				g.enqueueTalk(capturedTalk, vars)
+			case side.Winner:
+				g.enqueueTalk(captureTakenTalk, vars)
+				// 第二則只有勝方看得到（原版 `and dx,dx / jz`）。
+				g.enqueueTalkWithPortrait(
+					resolveBattleTalkIndex(captiveRegretTalkBase, gen.TalkVariant),
+					vars, gen.Portrait)
+			}
+		case combat.Suicide:
+			// 自刎沒有敗方那一則——舊主已滅是自刎的前提。
+			if me == side.Winner {
+				g.enqueueTalk(suicideTalk, vars)
+			}
+		}
+	}
+}
+
+const (
+	// escapeTalk 是敗方看到的「{1}大人的部隊遭殲滅！幸好以逃過敵軍之手。」
+	escapeTalk = 0x1F
+	// escapeMissedTalk 是勝方看到的「很遺憾，沒能將{1}捉拿到手。」
+	escapeMissedTalk = 0x20
+	// capturedTalk 是敗方看到的「…很遺憾，似乎遭敵軍所擒了。」
+	capturedTalk = 0x21
+	// captureTakenTalk 是勝方看到的「抓到{1}了！！」
+	captureTakenTalk = 0x22
+	// suicideTalk 是勝方看到的「{1}在即將被我軍擒拿之前，自刎而死了。」
+	suicideTalk = 0x43
+	// captiveRegretTalkBase 是被擒武將自己那一句的**組編號**，展開後
+	// 落在 438–445。⚠ 敗走那一組是 `0x198`（422–429），差 2 組 ＝ 16 則。
+	captiveRegretTalkBase = 0x19A
 )
 
 const (

@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**514 列分布在 210 份文件，平均每份 2.4 列。**
+**516 列分布在 211 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 168 | 162 | 6 | 0 |
 | 驗收 | 86 | 75 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 221 | 206 | 15 | 0 |
-| **合計** | **514** | 477 | 37 | 0 |
+| 其他 | 223 | 207 | 16 | 0 |
+| **合計** | **516** | 478 | 38 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,7 +53,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 186 |
+| `docs/spec/` | 188 |
 | `docs/re/` | 168 |
 | `docs/playtest/` | 86 |
 | `docs/formats/` | 20 |
@@ -381,7 +381,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（221 條）
+## 2.6 其他（223 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -463,6 +463,8 @@
 | [`spec/121-water-battlefield-selection.md`](../spec/121-water-battlefield-selection.md) | 實跑一場碼頭野戰 | 沒有。要讓兩支軍團在圖塊 `0xCA` 上遭遇 | 實測 |
 | [`spec/122-sound-type-levels.md`](../spec/122-sound-type-levels.md) | 四段的實際音量差 | 沒有錄下原版四個 TYPE 的波形量過。算式來自機器碼，聽感沒驗 | 靜態 |
 | [`spec/122-sound-type-levels.md`](../spec/122-sound-type-levels.md) | `AH=0Bh` 只重算三個聲部 | 原版那個迴圈是 `ah = 0、1、2`（`../re/81` §5）。remake 的主增益對所有聲部一致，這一點**沒有照抄** | 靜態 |
+| [`spec/123-captive-talk-messages.md`](../spec/123-captive-talk-messages.md) | `sub_129C3` 的 `test [bx], 40h` 分支 | 被擒時若旗標 bit 6 成立就清掉它並把 `+0x1E` 加 3（變體換一組）。**那個 bit 是什麼沒查**，remake 沒做 | 靜態 |
+| [`spec/123-captive-talk-messages.md`](../spec/123-captive-talk-messages.md) | 城兵那一側 | `sub_14FCE` 也呼叫 `sub_129C3`（守城武將被擒）。remake 的城兵路徑有沒有走到同一則沒驗 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | **remake 沒有邊緣捲動** | **機制早就解了**（`../re/47` §6）：`sub_120D6` 進大地圖時把 INT 33 的範圍換成**整個世界**（水平 0–`17FFh` ＝ 384 格 × 16、垂直 0–`101Fh`），`sub_11F7F` 再把原始座標減掉鏡頭原點、夾在 0–639／0–399，**夾掉的量同時加回鏡… | 靜態 |
@@ -564,7 +566,7 @@
 | [`spec/75-bundled-audio.md`](../spec/75-bundled-audio.md) | 音效與場景的對應完整度 | 見 `29`，本規格不重複 | 靜態 |
 | [`spec/76-lord-not-in-formation.md`](../spec/76-lord-not-in-formation.md) | 君主被編成之後原版會怎樣 | 沒試過。若原版其實允許、只是清單排序讓人以為不行，§2 要推翻（但開關本身照樣成立） | 靜態 |
 | [`spec/76-lord-not-in-formation.md`](../spec/76-lord-not-in-formation.md) | 開關要不要進存檔 | **不進**。與旁邊的速度設定一樣是 session 設定，讀檔不會帶回來 | 靜態 |
-| [`spec/77-rout-talk-messages.md`](../spec/77-rout-talk-messages.md) | 戰鬥脫身的 `#1F`／`#20` | 同一支 `sub_12977` 也服務戰鬥脫身；remake 那條路現在畫的是自己的句子，沒接原文 | 靜態 |
+| [`spec/77-rout-talk-messages.md`](../spec/77-rout-talk-messages.md) | 對原版的實跑驗證 | §4 仍是**未做**：要讓原版跑出一支回不了家的軍團，得先有對應的存檔 | 實測 |
 | [`spec/78-amount-input-editor.md`](../spec/78-amount-input-editor.md) | `sub_17D5F` 讀 `CS:7D93` 之外還做什麼 | 每格的 raw byte 表已解，但那一支怎麼把 glyph 貼上去沒逐行讀 | 靜態 |
 | [`spec/78-amount-input-editor.md`](../spec/78-amount-input-editor.md) | 稅率上限 100 的意義 | 是「100%」還是別的刻度沒有第二個證據；remake 照抄 100 | 靜態 |
 | [`spec/79-new-game-faction-list.md`](../spec/79-new-game-faction-list.md) | 欄位表的「屬性」與「型別」兩個 word | `0x0206`／`0x0204` 與 `0x76`／`0x73` 只由「名字欄 vs 數字欄」推語意，消費它們的那一段沒讀（`../re/73` §6） | 靜態 |
