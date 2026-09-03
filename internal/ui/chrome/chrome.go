@@ -41,6 +41,14 @@ const (
 	SelectIndex = 5  // 反白條
 	InkIndex    = 0  // 米色底上的字（也是命令列的底）
 	PaperIndex  = 15 // 深藍底上的字
+
+	// HighlightXOR 是原版反白用的**互斥或遮罩**（`sub_10B46` 寫進
+	// VGA 繪圖控制器的 `0Ch`，docs/spec/124）。反白不是「換一個底色」，
+	// 是把那一塊的色號 XOR 12：黑底 0 → 12（黃）、白字 15 → 3（藍）。
+	HighlightXOR = 12
+	// 黑底白字那一族反白之後的兩個顏色，由上面的 XOR 直接算出來。
+	HighlightIndex    = InkIndex ^ HighlightXOR   // 12 黃
+	HighlightInkIndex = PaperIndex ^ HighlightXOR // 3 藍
 )
 
 // 內部底色。原版的選單視窗是深藍底 ＋ 龍紋，清單視窗是米色底。
@@ -51,8 +59,17 @@ var (
 	Menu = color.RGBA{0, 32, 97, 255}
 	// Sheet 是清單視窗的底色。
 	Sheet = color.RGBA{243, 211, 146, 255}
-	// Select 是反白條的顏色。
+	// Select 是清單視窗反白條的顏色。
+	//
+	// ⚠ **這一個還沒有實機證據**——原版剛開窗沒有反白列
+	// （docs/playtest/42 §4），對拍過的那幾張都選不到列。
+	// 選單框那一族走 Highlight／HighlightInk（docs/spec/124），
+	// 那兩個是量到的。
 	Select = color.RGBA{81, 146, 65, 255}
+	// Highlight 是選單反白條的底色（色 12），HighlightInk 是上面的字色
+	// （色 3）。兩個都是 `InkIndex`／`PaperIndex` XOR 12 的結果。
+	Highlight    = color.RGBA{243, 227, 0, 255}
+	HighlightInk = color.RGBA{48, 65, 211, 255}
 	// Ink 是米色底上的字色，**也是命令列的底色**（docs/spec/54 §2）。
 	Ink = color.RGBA{0, 0, 0, 255}
 	// Blank 是「純色平塗」的底。值與 Ink 相同（都是色 0），
@@ -94,7 +111,8 @@ func Load(lib *library.Library, bank int) *Set {
 		dst *color.RGBA
 		idx int
 	}{{&Menu, MenuIndex}, {&Sheet, SheetIndex}, {&Select, SelectIndex},
-		{&Ink, InkIndex}, {&Blank, InkIndex}, {&Paper, PaperIndex}} {
+		{&Ink, InkIndex}, {&Blank, InkIndex}, {&Paper, PaperIndex},
+		{&Highlight, HighlightIndex}, {&HighlightInk, HighlightInkIndex}} {
 		if col, err := lib.PaletteColor(bank, c.idx); err == nil {
 			*c.dst = col
 		}

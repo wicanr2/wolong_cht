@@ -47,3 +47,19 @@ func TestChromeColoursComeFromPalette(t *testing.T) {
 		}
 	}
 }
+
+// 反白不是「換一個底色」，是把色號 XOR 12（`sub_10B46`，docs/spec/124）。
+// 黑底白字那一族因此變成黃底藍字。
+func TestHighlightIsXorOfInkAndPaper(t *testing.T) {
+	if got, want := InkIndex^HighlightXOR, HighlightIndex; got != want {
+		t.Errorf("底 %d XOR %d ＝ %d，want %d", InkIndex, HighlightXOR, got, want)
+	}
+	if got, want := PaperIndex^HighlightXOR, HighlightInkIndex; got != want {
+		t.Errorf("字 %d XOR %d ＝ %d，want %d", PaperIndex, HighlightXOR, got, want)
+	}
+	// 實機量到的兩個顏色（parity-tap5/menu.png，docs/playtest/60）。
+	if HighlightIndex != 12 || HighlightInkIndex != 3 {
+		t.Errorf("反白色號 ＝ (%d, %d)，實機量到 (12, 3)",
+			HighlightIndex, HighlightInkIndex)
+	}
+}

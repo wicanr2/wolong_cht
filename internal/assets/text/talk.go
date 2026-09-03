@@ -221,6 +221,20 @@ func (t *Table) Lines(index int, vars map[byte]string) ([]string, bool) {
 //
 // seq[m] 用完或沒給時退回 vars[m]。
 func (t *Table) LinesSeq(index int, vars map[byte]string, seq map[byte][]string) ([]string, bool) {
+	return t.lines(index, vars, seq, false)
+}
+
+// MenuLines 與 Lines 相同，但**保留行尾的全形空白**。
+//
+// 選單的框寬由字數決定，而原版把每一列補到等寬（`docs/spec/45` §2.2）。
+// 走 Lines 會少算最後那一格：「　位置確認　」變成 5 個字，
+// 框就窄 16 px（`docs/spec/124`）。
+func (t *Table) MenuLines(index int, vars map[byte]string) ([]string, bool) {
+	return t.lines(index, vars, nil, true)
+}
+
+func (t *Table) lines(index int, vars map[byte]string, seq map[byte][]string,
+	keepPad bool) ([]string, bool) {
 	if t == nil || index < 0 || index >= len(t.Messages) {
 		return nil, false
 	}
@@ -242,7 +256,11 @@ func (t *Table) LinesSeq(index int, vars map[byte]string, seq map[byte][]string)
 				continue
 			}
 			if len(part.Raw) > 0 {
-				b.WriteString(Decode(part.Raw, t.enc))
+				if keepPad {
+					b.WriteString(DecodeKeepPad(part.Raw, t.enc))
+				} else {
+					b.WriteString(Decode(part.Raw, t.enc))
+				}
 			}
 		}
 		out = append(out, b.String())

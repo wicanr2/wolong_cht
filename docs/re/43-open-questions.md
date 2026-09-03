@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**516 列分布在 211 份文件，平均每份 2.4 列。**
+**523 列分布在 214 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 13 | 10 | 3 | 0 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 168 | 162 | 6 | 0 |
-| 驗收 | 86 | 75 | 11 | 0 |
+| 驗收 | 89 | 78 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 223 | 207 | 16 | 0 |
-| **合計** | **516** | 478 | 38 | 0 |
+| 其他 | 227 | 211 | 16 | 0 |
+| **合計** | **523** | 485 | 38 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,9 +53,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 188 |
+| `docs/spec/` | 192 |
 | `docs/re/` | 168 |
-| `docs/playtest/` | 86 |
+| `docs/playtest/` | 89 |
 | `docs/formats/` | 20 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 13 |
@@ -279,7 +279,7 @@
 | [`re/81-sound-type-attenuation.md`](../re/81-sound-type-attenuation.md) | `AH=0Bh` 只重算三個聲部 | 迴圈是 `ah = 0、1、2`，而靜音路徑跑的是六個（`ah = 5..0`）。剩下三個什麼時候拿到新的衰減沒查 | 靜態 |
 | [`re/81-sound-type-attenuation.md`](../re/81-sound-type-attenuation.md) | `AH=09h`（`ax=09F2h`） | `cs:[099Eh]` bit 1 沒設就直接回；設了就對 `ds:[0A4Ch]` 個聲部逐一呼叫 `0x049E`，參數 `al=91h`／`ah=0F2h`。`0x049E` 沒讀 | 靜態 |
 
-## 2.4 驗收（86 條）
+## 2.4 驗收（89 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -369,6 +369,9 @@
 | [`playtest/59-shot-when-natural-flow.md`](../playtest/59-shot-when-natural-flow.md) | 一次只判一個條件 | `../spec/91` §6 的攻城取樣點是三個條件同時成立，現在只判得了「條顯示中」 / 條件字串改成可以用 `+` 串接，或直接支援 `gate-bar+talk-clear` | 靜態 |
 | [`playtest/59-shot-when-natural-flow.md`](../playtest/59-shot-when-natural-flow.md) | 對白框到期沒有條件可判 | 規則層沒有把 `word_1D322`／`word_1D324` 的到期時刻露出來 / `internal/rules/tactical` 加一支唯讀的查詢 | 靜態 |
 | [`playtest/59-shot-when-natural-flow.md`](../playtest/59-shot-when-natural-flow.md) | 攻城取樣點的 0.84% 地板 | 局面不等價，與這兩個旗標無關（`58` §4） / 要「存檔與影格出自同一次擷取」的攻城素材 | 靜態 |
+| [`playtest/60-corps-menu-parity.md`](../playtest/60-corps-menu-parity.md) | 日期對不上 | 原版跑到 4月20日才截到 / 同 `39` §4：要嘛用存檔定位，要嘛加一個「跑到指定日期」的驗收旗標 | 靜態 |
+| [`playtest/60-corps-menu-parity.md`](../playtest/60-corps-menu-parity.md) | 選完之後的兩條流程 | 位置確認的軍團一覽、行軍指示的目的地一覽，**都沒有對拍** / 原版側再拍一次：`tap:25,5,5` 之後再 `tap` 第一列／第二列 | 靜態 |
+| [`playtest/60-corps-menu-parity.md`](../playtest/60-corps-menu-parity.md) | 「據點」那兩項選單 | `TALK #82`，remake 還沒做（`../spec/110` §5） / 做完照這一份的流程再拍一次 | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -381,7 +384,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（223 條）
+## 2.6 其他（227 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -435,7 +438,6 @@
 | [`spec/107-launcher-ui-colours.md`](../spec/107-launcher-ui-colours.md) | 反白條 | remake 的鍵盤游標，原版沒有。要不要照戰略層一覽表那樣「碰過才畫」（`g.listTouched`）沒有定案 | 靜態 |
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | `資金高位 >= 0x80` 那一支 | `cmp bh, 80h / jnb` 會直接算「答應」，等於資金超過約 840 萬時門檻失效。**看起來像有號數的邊界處理**，未逐位對過 | 靜態 |
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | 君主出陣之後的行為 | 那支軍團跟一般軍團有沒有差別，未讀 | 靜態 |
-| [`spec/110-corps-command-menu.md`](../spec/110-corps-command-menu.md) | 選單本身的逐像素對拍 | 原版選單拍到了（`parity-tap5/menu.png`），**但沒有做逐像素比對**——remake 的彈出選單走 `drawLegacyChoiceBox`，位置與底色未量 | 靜態 |
 | [`spec/110-corps-command-menu.md`](../spec/110-corps-command-menu.md) | 「據點」指令同樣是兩項選單 | `../re/22` §3.4：TALK #82「首都確認／據點一覽」。**這一輪沒動**，remake 的「據點」目前直接開一覽 ＋ 情報卡 | 靜態 |
 | [`spec/112-cursor-idle-resume-delay.md`](../spec/112-cursor-idle-resume-delay.md) | `sub_20000(ax=2)` 為什麼在恢復時被呼叫 | 那是滑鼠層跳表的第 2 號（`sub_2009A`，回傳快取座標並清旗標），在這個時點叫它的理由沒讀 | 靜態 |
 | [`spec/112-cursor-idle-resume-delay.md`](../spec/112-cursor-idle-resume-delay.md) | 訊息框那一路的 `8` 與游標的 `0Ch` 為什麼不同 | 兩個立即值都是 confirmed，但差別的用意沒有證據；remake 兩邊都用同一個延遲 | 靜態 |
@@ -465,6 +467,11 @@
 | [`spec/122-sound-type-levels.md`](../spec/122-sound-type-levels.md) | `AH=0Bh` 只重算三個聲部 | 原版那個迴圈是 `ah = 0、1、2`（`../re/81` §5）。remake 的主增益對所有聲部一致，這一點**沒有照抄** | 靜態 |
 | [`spec/123-captive-talk-messages.md`](../spec/123-captive-talk-messages.md) | `sub_129C3` 的 `test [bx], 40h` 分支 | 被擒時若旗標 bit 6 成立就清掉它並把 `+0x1E` 加 3（變體換一組）。**那個 bit 是什麼沒查**，remake 沒做 | 靜態 |
 | [`spec/123-captive-talk-messages.md`](../spec/123-captive-talk-messages.md) | 城兵那一側 | `sub_14FCE` 也呼叫 `sub_129C3`（守城武將被擒）。remake 的城兵路徑有沒有走到同一則沒驗 | 靜態 |
+| [`spec/124-menu-highlight-xor.md`](../spec/124-menu-highlight-xor.md) | 其餘七格的反白 | `activeCommandCell()` 目前只認得「軍團」那張彈出選單。其他六格（進言／人事／財政／編成／據點／武將／勢力）的流程沒有統一的「這一段還在跑」訊號，**硬接會在錯的時刻亮著**。要一格一格補謂詞，而且每一格都該有自己的對拍 | 靜態 |
+| [`spec/124-menu-highlight-xor.md`](../spec/124-menu-highlight-xor.md) | 清單視窗的反白條 | `chrome.Select` 色 5 是**沒有實機證據的猜測**（§3）。要一張選著某一列的原版清單才驗得了 | 靜態 |
+| [`spec/124-menu-highlight-xor.md`](../spec/124-menu-highlight-xor.md) | `sub_10B46` 的暫存器序列 | 只確認了它寫 `0Ch` 給繪圖控制器、而結果逐點等於 XOR 12。**中間那幾個 port 寫入沒有逐行讀** | 靜態 |
+| [`spec/125-menu-box-width-from-padding.md`](../spec/125-menu-box-width-from-padding.md) | 「據點」那兩項 | `TALK #82`（「　首都確認　」／「　據點一覽　」）同樣是兩項選單，remake 的「據點」目前直接開一覽（`110` §5）。做了之後框寬會自動對——但那是另一件事 | 靜態 |
+| [`spec/125-menu-box-width-from-padding.md`](../spec/125-menu-box-width-from-padding.md) | 原版只看第一列 | remake 取**所有列的最大值**。四則既有選單兩種算法同值，`#79`／`#82` 也同值；**沒有找到會分歧的例子，但也沒有窮舉過** | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | **remake 沒有邊緣捲動** | **機制早就解了**（`../re/47` §6）：`sub_120D6` 進大地圖時把 INT 33 的範圍換成**整個世界**（水平 0–`17FFh` ＝ 384 格 × 16、垂直 0–`101Fh`），`sub_11F7F` 再把原始座標減掉鏡頭原點、夾在 0–639／0–399，**夾掉的量同時加回鏡… | 靜態 |

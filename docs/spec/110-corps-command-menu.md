@@ -69,5 +69,5 @@ call sub_12151
 
 | 項目 | 現況 |
 |---|---|
-| 選單本身的逐像素對拍 | 原版選單拍到了（`parity-tap5/menu.png`），**但沒有做逐像素比對**——remake 的彈出選單走 `drawLegacyChoiceBox`，位置與底色未量 |
+| ~~選單本身的逐像素對拍~~ | **已比**（[`../playtest/60`](../playtest/60-corps-menu-parity.md)）：選單框與反白的指令列格**各 0 px**。比一次抓到三個缺陷——框窄 32 px（[`125`](125-menu-box-width-from-padding.md)）、反白配色與位置（[`124`](124-menu-highlight-xor.md)）、指令列根本沒畫反白 |
 | 「據點」指令同樣是兩項選單 | `../re/22` §3.4：TALK #82「首都確認／據點一覽」。**這一輪沒動**，remake 的「據點」目前直接開一覽 ＋ 情報卡 |

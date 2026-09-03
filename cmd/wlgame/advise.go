@@ -46,7 +46,7 @@ func (g *game) adviseCommandLabels() []string {
 	if g == nil || g.lib == nil {
 		return append([]string(nil), adviseFallbackNames...)
 	}
-	return talkmenu.Labels(g.lib.Talk, adviseMenuTalk, nil, adviseFallbackNames)
+	return talkmenu.MenuLabels(g.lib.Talk, adviseMenuTalk, nil, adviseFallbackNames)
 }
 
 // adviseVerdictBase 是那兩項的 TALK 起點——`sub_16909`／`sub_1699E`
@@ -466,7 +466,7 @@ func (g *game) adviseReasonLabels(c persuasion.Command) []string {
 	if g == nil || g.lib == nil {
 		return fallback
 	}
-	return talkmenu.Labels(g.lib.Talk, persuasion.TalkReasonBase(c),
+	return talkmenu.MenuLabels(g.lib.Talk, persuasion.TalkReasonBase(c),
 		g.adviseTalkVars(), fallback)
 }
 

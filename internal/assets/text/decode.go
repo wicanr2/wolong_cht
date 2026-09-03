@@ -25,6 +25,17 @@ func Decode(b []byte, enc Encoding) string {
 		// 是真的空白，切掉會變成 `struckXUCHANG.`（docs/spec/84）。
 		return strings.TrimRight(string(b), "\x00")
 	}
+	out, ok := decodeRaw(b, enc)
+	if !ok {
+		// 解不開就退回原始 hex，**不要靜靜吃掉**——
+		// 少了字的畫面看起來像排版 bug，會被查很久。
+		return "?" + strings.ToUpper(hex(b))
+	}
+	return strings.TrimRight(out, "\x00　 ")
+}
+
+// decodeRaw 只做編碼轉換，不砍任何東西。
+func decodeRaw(b []byte, enc Encoding) (string, bool) {
 	var dec interface{ Bytes([]byte) ([]byte, error) }
 	switch enc {
 	case Big5:
@@ -34,11 +45,26 @@ func Decode(b []byte, enc Encoding) string {
 	}
 	out, err := dec.Bytes(b)
 	if err != nil {
-		// 解不開就退回原始 hex，**不要靜靜吃掉**——
-		// 少了字的畫面看起來像排版 bug，會被查很久。
+		return "", false
+	}
+	return string(out), true
+}
+
+// DecodeKeepPad 與 Decode 相同，但**保留行尾的全形空白**。
+//
+// 選單的框寬由「那一行有幾個全形字」決定（`docs/spec/45` §2.2），
+// 而原版把每一列補到等寬——**那些空白是版面，不是補位噪音**。
+// Decode 的 TrimRight 對定長欄位（武將名）是對的，對選單是錯的：
+// 「　位置確認　」被砍成 5 個字，框就少了 16 px（`docs/spec/124`）。
+func DecodeKeepPad(b []byte, enc Encoding) string {
+	if enc == UTF8 {
+		return strings.TrimRight(string(b), "\x00")
+	}
+	out, ok := decodeRaw(b, enc)
+	if !ok {
 		return "?" + strings.ToUpper(hex(b))
 	}
-	return strings.TrimRight(string(out), "\x00　 ")
+	return strings.TrimRight(out, "\x00")
 }
 
 func hex(b []byte) string {

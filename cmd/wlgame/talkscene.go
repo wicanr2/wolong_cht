@@ -230,16 +230,19 @@ func (g *game) drawLegacyChoiceBox(screen *ebiten.Image, x, y int,
 	g.chrome.Window(screen, bx, by, w, h, chrome.Blank)
 	for i, line := range lines {
 		ly := by + chrome.Tile + i*talkLinePitch
+		ink := chrome.Paper
 		if i == selected {
+			// 原版的反白是把整列的色號 **XOR 12**（`sub_10B46`，
+			// docs/spec/124）：黑底變黃、白字變藍。框內底色恆為黑、
+			// 字恆為白，所以「填黃 ＋ 字畫藍」與 XOR 逐點等價。
+			//
+			// ⚠ 沒有外框線，而且**與那一列的文字對齊**（y 不要 −1）。
 			vector.DrawFilledRect(screen, float32(bx+chrome.Tile),
-				float32(ly-1), float32(w-2*chrome.Tile),
-				float32(talkLinePitch), chrome.Select, false)
-			vector.StrokeRect(screen, float32(bx+chrome.Tile),
-				float32(ly-1), float32(w-2*chrome.Tile),
-				float32(talkLinePitch), 1,
-				color.RGBA{255, 223, 154, 255}, false)
+				float32(ly), float32(w-2*chrome.Tile),
+				float32(talkLinePitch), chrome.Highlight, false)
+			ink = chrome.HighlightInk
 		}
-		g.td.Draw(screen, line, bx+chrome.Tile, ly, chrome.Paper)
+		g.td.Draw(screen, line, bx+chrome.Tile, ly, ink)
 	}
 }
 

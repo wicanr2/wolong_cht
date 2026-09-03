@@ -162,7 +162,8 @@ dh = 0Bh ⇒ y = 11 × 16 = 176
 | 說話者 | 靠框的位置與肖像，句子裡沒有標記。上框 `playerLordPortrait()`、下框 `playerAdvisorPortrait()` |
 | 選單框 | `legacyChoiceRect(x, y, lines)` 照 §2.2 算；`drawLegacyChoiceBox` 與 `talkChoiceClick` 共用它，命中範圍與畫出來的一致 |
 | 進言五項的位置 | `adviseMenuX/Y = (0, 64)`（`sub_16224` 的 `dx = 400h`）|
-| 寬的算法 | **取所有列的最大值**，不是只看第一列——`text.Decode` 會 `TrimRight` 掉行尾的全形空白（那對武將名是對的），拿不回 padding。四則實際的選單兩種算法同值 |
+| 寬的算法 | **取所有列的最大值**，不是只看第一列。四則實際的選單兩種算法同值 |
+| 補位空白 | 走 `talkmenu.MenuLabels` ⇒ `text.DecodeKeepPad`，**行尾的全形空白留著**。先前靠 `Decode` 的 `TrimRight` 砍掉、再用「取最大值」繞過去——`TALK #79` 兩列都補位，繞不過去（[`125`](125-menu-box-width-from-padding.md)）|
 
 選單框的尺寸不只影響進言：外交（`drawDiplomacy`）與撥款（`drawFunding`）
 畫的是同一個框，三處一起對齊。

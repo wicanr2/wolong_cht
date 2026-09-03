@@ -189,8 +189,12 @@ var naturalCommandActions = [...]func(*game){
 // 不讀 game、不讀輸入狀態；外框、地圖與右側 HUD 都不在矩形內。
 //
 // 分格照原版 `sub_161CA` 的 `索引 ＝ (x − 24) ÷ 48`：**格與格之間沒有間隙**，
-// 24–408 這一段每一個像素都屬於某一格。原版另外用 40 px 寬畫高亮，
-// 那是視覺不是命中範圍——照高亮寬度做命中會在每一格右緣留 8 px 死區。
+// 24–408 這一段每一個像素都屬於某一格。
+//
+// ⭐ **反白用的就是這個矩形**：`sub_161CA` 傳 `dx = 索引×48+24`、
+// `bx = 28h`、`si = 30h`、`di = 10h` 給 `sub_10B46` ⇒ (x, 40, 48, 16)
+// ——`bx` 是 **Y** 不是寬。實機量到的黃色塊正好是 (216, 40, 48, 16)
+// （docs/spec/124）。
 func strategyCommandCellRect(index int) image.Rectangle {
 	if index < 0 || index >= len(naturalCommandLabels) {
 		return image.Rectangle{}
@@ -198,6 +202,20 @@ func strategyCommandCellRect(index int) image.Rectangle {
 	x := strategyCommandHitX + index*strategyCommandCellW
 	return image.Rect(x, strategyCommandHitY, x+strategyCommandCellW,
 		strategyCommandHitY+strategyCommandHitH)
+}
+
+// activeCommandCell 是目前反白的指令列格子（−1 ＝ 沒有）。
+//
+// 原版在呼叫那一格的動作**之前**反白、動作回來之後再 XOR 一次還原
+// （`sub_161CA`），所以整段流程期間那一格都亮著。
+//
+// ⚠ **目前只認得「軍團」那張彈出選單。** 其餘七格的流程沒有統一的
+// 「這一段還在跑」訊號，硬接會在錯的時刻亮著——缺口記在 docs/spec/124 §5。
+func (g *game) activeCommandCell() int {
+	if g.corpsMenuActive() {
+		return int(naturalCommandCorps)
+	}
+	return -1
 }
 
 func hitTestNaturalCommand(x, y int) (naturalCommandID, bool) {
@@ -408,9 +426,20 @@ func (g *game) drawNaturalStrategyHUD(screen *ebiten.Image) {
 	}
 	// 外框與其他視窗相同，**但內部是純黑、沒有龍紋**（docs/spec/54 §2）。
 	g.chrome.Window(screen, 0, strategyCommandY, strategyCommandW, strategyCommandH, chrome.Blank)
+	active := g.activeCommandCell()
 	for i, label := range naturalCommandLabels {
 		x := strategyCommandX + strategyCommandLead + i*strategyCommandCellW
-		g.td.Draw(screen, strategyHUDSingleLine(label, strategyCommandTextW), x, strategyCommandY+8, chrome.Paper)
+		ink := chrome.Paper
+		if i == active {
+			// 原版在呼叫那一格的動作前後各 XOR 一次（`sub_161CA`）：
+			// 黑底 0 → 12（黃）、白字 15 → 3（藍）。命令列的底恆為黑、
+			// 字恆為白，所以填黃 ＋ 字畫藍與 XOR 逐點等價（docs/spec/124）。
+			r := strategyCommandCellRect(i)
+			vector.DrawFilledRect(screen, float32(r.Min.X), float32(r.Min.Y),
+				float32(r.Dx()), float32(r.Dy()), chrome.Highlight, false)
+			ink = chrome.HighlightInk
+		}
+		g.td.Draw(screen, strategyHUDSingleLine(label, strategyCommandTextW), x, strategyCommandY+8, ink)
 	}
 	g.drawHUDSidebar(screen)
 	if g.hudOpen(hudSystem) {

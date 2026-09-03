@@ -165,6 +165,8 @@
 | 碼頭與棧道的野戰用錯戰場（`SelectWater` 沒接）| [`121-water-battlefield-selection.md`](121-water-battlefield-selection.md) | 已修並補值域斷言。214／215 超出 0–213，呼叫端一直退回合成戰場 |
 | 音效的 TYPE 1–4 是四段主衰減 | [`122-sound-type-levels.md`](122-sound-type-levels.md) | 已接。原版每段加 4 個 OPL TL 單位（約 3 dB）；remake 播 OGG，接成播放增益 |
 | 武將下場的五則訊息（脫身／被擒／自刎）| [`123-captive-talk-messages.md`](123-captive-talk-messages.md) | 已接。敗方與勝方看到不同的一則，兩邊都不是就不出；被擒那一則比的是**舊主** |
+| 反白是色號 XOR 12（選單列 ＋ 指令列格）| [`124-menu-highlight-xor.md`](124-menu-highlight-xor.md) | 已修。黑底白字 ⇒ 黃底藍字；指令列先前根本沒畫反白 |
+| 選單框寬要用沒切補位空白的那一行 | [`125-menu-box-width-from-padding.md`](125-menu-box-width-from-padding.md) | 已修。標籤改讀 `TALK #79`，解碼走 `DecodeKeepPad` |
 
 ## 怎麼加一份
 

@@ -3,6 +3,8 @@ package main
 import (
 	"testing"
 
+	"github.com/wicanr2/wolong_cht/internal/assets/library"
+
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/state"
 )
@@ -10,12 +12,19 @@ import (
 // 指令列「軍團」是兩列選單，不是直接開一覽（docs/spec/110）。
 // 兩個錨點來自 `sub_1628F` 的 `dx = 40Ch` ＝ 粗格 (12, 4)。
 func TestCorpsCommandMenuRows(t *testing.T) {
-	if len(corpsMenuLabels) != 2 {
-		t.Fatalf("選單 %d 列，原版是 2 列（TALK #79）", len(corpsMenuLabels))
+	lib, err := library.Load("../../workplace/orig/dosv")
+	if err != nil {
+		t.Skipf("沒有原版素材：%v", err)
 	}
-	for i, want := range [...]string{"位置確認", "行軍指示"} {
-		if corpsMenuLabels[i] != want {
-			t.Errorf("第 %d 列 ＝ %q，want %q", i, corpsMenuLabels[i], want)
+	labels := (&game{lib: lib}).corpsMenuLabels()
+	if len(labels) != 2 {
+		t.Fatalf("選單 %d 列，原版是 2 列（TALK #79）", len(labels))
+	}
+	// ⭐ 兩邊各一個**全形空白**——原版 `TALK #79` 存的就是這樣，
+	// 而框寬由字數決定（docs/spec/124）。
+	for i, want := range [...]string{"　位置確認　", "　行軍指示　"} {
+		if labels[i] != want {
+			t.Errorf("第 %d 列 ＝ %q，want %q", i, labels[i], want)
 		}
 	}
 	if corpsMenuX != 192 || corpsMenuY != 64 {
@@ -26,18 +35,20 @@ func TestCorpsCommandMenuRows(t *testing.T) {
 	// ⭐ 用**實機量到的**列位置釘死幾何：原版那張選單的第一列
 	// （位置確認）佔遊戲座標 y 72–87（`parity-tap5/menu.png`，
 	// 螢幕 y 112–127 減掉 40 px 黑邊，docs/spec/110）。
-	bx, by, w, h := legacyChoiceRect(corpsMenuX, corpsMenuY, corpsMenuLabels[:])
+	bx, by, w, h := legacyChoiceRect(corpsMenuX, corpsMenuY, labels)
 	if bx != 192 || by != 64 {
 		t.Errorf("選單框左上角 ＝ (%d, %d)，want (192, 64)", bx, by)
 	}
 	if firstRow := by + talkLinePitch/2; firstRow != 72 {
 		t.Errorf("第一列 y ＝ %d，實機量到 72", firstRow)
 	}
-	if h != (len(corpsMenuLabels)+1)*talkLinePitch {
-		t.Errorf("框高 ＝ %d，兩列應該是 %d", h, (len(corpsMenuLabels)+1)*talkLinePitch)
+	if h != (len(labels)+1)*talkLinePitch {
+		t.Errorf("框高 ＝ %d，兩列應該是 %d", h, (len(labels)+1)*talkLinePitch)
 	}
-	if w <= 0 {
-		t.Errorf("框寬 ＝ %d", w)
+	// ⭐ 框寬也是實機量到的：`parity-tap5/menu.png` 的框佔 x 192–303。
+	// 6 個全形字 ＋ 1 ＝ 7 格 ＝ 112 px（docs/spec/124）。
+	if w != 112 {
+		t.Errorf("框寬 ＝ %d，實機量到 112", w)
 	}
 }
 
@@ -107,5 +118,34 @@ func TestLocateCorpsIgnoresOutOfRange(t *testing.T) {
 		if g.camX != 7 || g.camY != 9 {
 			t.Fatalf("軍團編號 %d 動到了鏡頭：(%d, %d)", n, g.camX, g.camY)
 		}
+	}
+}
+
+// 指令列的反白矩形 ＝ 命中矩形（`sub_161CA` 傳給 `sub_10B46` 的
+// `dx = 索引×48+24`、`bx = 28h`、`si = 30h`、`di = 10h`）。
+//
+// ⚠ `bx = 28h` 是 **Y** 不是寬——先前記成「原版用 40 px 寬畫高亮」。
+// 實機量到的黃色塊是 (216, 40, 48, 16)，正好是第 4 格（docs/spec/124）。
+func TestCommandHighlightRectMatchesHitRect(t *testing.T) {
+	r := strategyCommandCellRect(int(naturalCommandCorps))
+	if r.Min.X != 216 || r.Min.Y != 40 || r.Dx() != 48 || r.Dy() != 16 {
+		t.Errorf("軍團格 ＝ (%d,%d,%d,%d)，實機量到 (216,40,48,16)",
+			r.Min.X, r.Min.Y, r.Dx(), r.Dy())
+	}
+}
+
+// 選單開著的時候那一格才亮；沒開就不亮（−1）。
+func TestActiveCommandCellFollowsCorpsMenu(t *testing.T) {
+	g := &game{}
+	if got := g.activeCommandCell(); got != -1 {
+		t.Errorf("沒開選單就亮了第 %d 格", got)
+	}
+	g.openCorpsCommandMenu()
+	if got, want := g.activeCommandCell(), int(naturalCommandCorps); got != want {
+		t.Errorf("選單開著時亮第 %d 格，want %d", got, want)
+	}
+	g.closeCorpsCommandMenu()
+	if got := g.activeCommandCell(); got != -1 {
+		t.Errorf("關掉之後還亮著第 %d 格", got)
 	}
 }

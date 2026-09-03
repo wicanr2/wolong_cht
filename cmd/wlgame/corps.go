@@ -23,6 +23,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
+	"github.com/wicanr2/wolong_cht/internal/ui/talkmenu"
 )
 
 // formState 是編成畫面的狀態：選好武將之後，逐槽指定兵種。
@@ -811,8 +812,23 @@ func (g *game) setEvent(msg string) { g.lastEvent = strings.TrimPrefix(msg, "sta
 
 // ---- 指令列「軍團」的兩項彈出選單（docs/spec/110）----
 
-// corpsMenuLabels 是原版選單 TALK #79 的兩項（`sub_1628F`，docs/re/22 §3.3）。
-var corpsMenuLabels = [...]string{"位置確認", "行軍指示"}
+// corpsMenuTalk 是那張選單的訊息（`sub_1628F` 傳給 `sub_193E9` 的 `cx = 4Fh`）。
+const corpsMenuTalk = 0x4F
+
+// corpsMenuFallback 只在讀不到 `TALK.DAT` 時用。**正常路徑走 #79**。
+//
+// ⭐ 兩邊各補一個**全形空白**——原版存的就是「　位置確認　」，
+// 而框寬由字數決定（docs/spec/45 §2.2）。少了它框會窄 16 px
+// （docs/spec/124）。
+var corpsMenuFallback = []string{"　位置確認　", "　行軍指示　"}
+
+// corpsMenuLabels 是選單的兩列，直接取自 `TALK.DAT`。
+func (g *game) corpsMenuLabels() []string {
+	if g == nil || g.lib == nil {
+		return append([]string(nil), corpsMenuFallback...)
+	}
+	return talkmenu.MenuLabels(g.lib.Talk, corpsMenuTalk, nil, corpsMenuFallback)
+}
 
 // corpsMenuState 是那張兩列選單的狀態。**只有兩個欄位**——
 // 它不持有清單，選完之後就交給既有的兩條流程。
@@ -851,7 +867,7 @@ func (g *game) updateCorpsMenu() bool {
 	if !g.corpsMenuActive() {
 		return false
 	}
-	labels := corpsMenuLabels[:]
+	labels := g.corpsMenuLabels()
 	if row, ok := g.talkChoiceClick(corpsMenuX, corpsMenuY, labels); ok {
 		g.dispatchCorpsMenu(row)
 		return true
@@ -882,7 +898,7 @@ func (g *game) drawCorpsMenu(screen *ebiten.Image) {
 		return
 	}
 	g.drawLegacyChoiceBox(screen, corpsMenuX, corpsMenuY,
-		corpsMenuLabels[:], g.corpsMenu.row)
+		g.corpsMenuLabels(), g.corpsMenu.row)
 }
 
 // beginLocateCorps 是選單第 0 項「位置確認」：選一支軍團，鏡頭移過去。

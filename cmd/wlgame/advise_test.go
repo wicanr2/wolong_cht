@@ -188,12 +188,14 @@ func TestAdviseReasonLabelsComeFromTalkMenu(t *testing.T) {
 			t.Fatalf("%v 的選單 %d 列，要 %d 列",
 				c, len(labels), len(persuasion.Options(c)))
 		}
-		if labels[4] != "撤回進言" {
-			t.Errorf("%v 的第 5 列是 %q，要「撤回進言」", c, labels[4])
+		// ⭐ **行尾的全形空白照原樣留著**——原版把每一列補到 6 個
+		// 全形字，框寬就是靠它算的（docs/spec/124）。
+		if labels[4] != "撤回進言　　" {
+			t.Errorf("%v 的第 5 列是 %q，要「撤回進言　　」", c, labels[4])
 		}
-		for _, l := range labels[:4] {
-			if strings.HasSuffix(l, "　") || l == "" {
-				t.Errorf("%v 的選單列沒有去掉尾端全形空白：%q", c, l)
+		for _, l := range labels {
+			if n := len([]rune(l)); n != 6 {
+				t.Errorf("%v 的選單列 %q 是 %d 個全形字，原版每一列都是 6", c, l, n)
 			}
 		}
 		key := strings.Join(labels[:4], "/")
@@ -394,8 +396,9 @@ func TestAdviseCommandLabelsComeFromTalk(t *testing.T) {
 	for _, want := range []struct {
 		row  int
 		text string
-		// 行首的全形空白**照原樣保留**（行尾的被 text.Decode 砍掉了）。
-	}{{2, "\u3000請求協助"}, {3, "\u3000遷\u3000\u3000都"}, {4, "請求君主出陣"}} {
+		// 行首與行尾的全形空白**照原樣保留**：框寬由字數決定，
+		// 原版把每一列補到 6 個全形字（docs/spec/124）。
+	}{{2, "\u3000請求協助\u3000"}, {3, "\u3000遷\u3000\u3000都\u3000"}, {4, "請求君主出陣"}} {
 		if labels[want.row] != want.text {
 			t.Errorf("第 %d 列 = %q，要 %q", want.row+1, labels[want.row], want.text)
 		}
