@@ -393,18 +393,13 @@ func TestRetreatKeepsItsDetour(t *testing.T) {
 
 	// 通往出口的繞路：留著。
 	s.Path = &Waypoints{pts: []Point{{X: 30, Y: 29}, {X: edge, Y: 29}}}
-	s.PathAt = 7
 	b.doRetreat(0, 0)
 	if s.Path.Len() == 0 {
 		t.Error("通往出口的繞路被清掉了——算好的路永遠用不到")
 	}
-	if s.PathAt != 7 {
-		t.Errorf("PathAt 被歸零成 %d，replanInterval 的節流會失效", s.PathAt)
-	}
 
 	// 攻擊時算的舊路（終點不是出口）：要清掉，否則兵會留在敵陣附近。
 	s.Path = &Waypoints{pts: []Point{{X: 30, Y: 29}, {X: 40, Y: 29}}}
-	s.PathAt = 7
 	b.doRetreat(0, 0)
 	if s.Path.Len() != 0 {
 		t.Error("舊的攻擊繞路沒有被清掉")
@@ -413,8 +408,8 @@ func TestRetreatKeepsItsDetour(t *testing.T) {
 
 // 二、走不動就要重算，**手上有路不是不重算的理由**。
 //
-// `replan` 只在「這一幀走不動或撞到地形」時才被呼叫，所以有路又走不動
-// 代表那條路現在不通（原版 `sub_1AED2` 也是三軸走不動時重算）。
+// 進到尋路佇列的前提就是「這一幀走不動或撞到地形」，所以有路又走不動
+// 代表那條路現在不通（原版四個入隊點，docs/re/80 §3）。
 func TestReplanWhenStuckEvenWithPath(t *testing.T) {
 	f := walledField(0)
 	b := NewBattle(f, SyntheticFormations(), &fixedRand{}, 0)
@@ -422,12 +417,11 @@ func TestReplanWhenStuckEvenWithPath(t *testing.T) {
 	s := &b.Sides[0].Soldiers[0]
 	s.X, s.Y, s.Z = 30, 30, 0
 	s.GoalX, s.GoalY, s.GoalZ = 40, 30, 0
-	// 一條哪裡都到不了的舊路，而且節流已經過期。
+	// 一條哪裡都到不了的舊路。
 	s.Path = &Waypoints{pts: []Point{{X: 5, Y: 5}}}
 	b.Frame = 1000
-	s.PathAt = 0
 
-	b.replan(0, 0)
+	b.computePath(0, 0)
 
 	p, ok := s.Path.Current()
 	if !ok {
@@ -518,7 +512,7 @@ func TestClimbTriedWhenBlockedBeforeReachingGoal(t *testing.T) {
 		t.Skip("門那一格的高平面沒有地面")
 	}
 	s.GoalZ = lv
-	s.Path, s.PathAt = nil, 0
+	s.Path = nil
 
 	b.moveToward(0, 0)
 

@@ -1702,8 +1702,9 @@ xor ax, ax / mov di, ax / mov cx, 1000h / rep stosw
 
 ⇒ **尋路會繞開有兵的格子**，繞路的代價相當於 8 格。
 
-> ⚠ 本專案多加了一個原版沒有的重算節流（`replanInterval`），
-> 因為這裡的兵每幀都可能被別人擋住。
+> ⭐ **原版有節流，只是形狀不同**：一條 128 格的環狀佇列、每幀消化兩筆
+> （`sub_1AED2`），入隊靠兵記錄 `+0x00` bit 4 去重。remake 已改成同一個機制
+> （[`80`](80-pathfind-request-queue.md)、[`../spec/120`](../spec/120-pathfind-request-queue.md)）。
 
 ### 5.16 ⭐ 撞到人：敵人就打、自己人就**對調位置**
 

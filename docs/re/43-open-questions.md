@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**506 列分布在 205 份文件，平均每份 2.5 列。**
+**513 列分布在 207 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -41,11 +41,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 13 | 10 | 3 | 0 |
 | 資料保存 | 22 | 22 | 0 | 0 |
-| 程式碼理解 | 162 | 155 | 7 | 0 |
+| 程式碼理解 | 166 | 159 | 7 | 0 |
 | 驗收 | 89 | 78 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 214 | 200 | 14 | 0 |
-| **合計** | **506** | 470 | 36 | 0 |
+| 其他 | 217 | 203 | 14 | 0 |
+| **合計** | **513** | 477 | 36 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,8 +53,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 179 |
-| `docs/re/` | 162 |
+| `docs/spec/` | 182 |
+| `docs/re/` | 166 |
 | `docs/playtest/` | 89 |
 | `docs/formats/` | 22 |
 | `docs/release/` | 18 |
@@ -108,7 +108,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 |
 
-## 2.3 程式碼理解（162 條）
+## 2.3 程式碼理解（166 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -274,6 +274,10 @@
 | [`re/79-talk-marker-handlers.md`](../re/79-talk-marker-handlers.md) | `ah ≠ 0xFF` 的直接位址形式誰在用 | 五支都留了這條路（參數直接當段內位址）。呼叫端有沒有真的用它，要逐個 `sub_18810` 呼叫點看 `push` 進去的值 | 靜態 |
 | [`re/79-talk-marker-handlers.md`](../re/79-talk-marker-handlers.md) | `loc_10701` 的 `al = 3` | 五支都傳 3。屬性的位元編碼見 `28`，`al` 那一格沒逐位讀 | 靜態 |
 | [`re/79-talk-marker-handlers.md`](../re/79-talk-marker-handlers.md) | `\7` 的數值格式 | 進到 `sub_1062F` 之後的位數／補零規則沒逐行讀 | 靜態 |
+| [`re/80-pathfind-request-queue.md`](../re/80-pathfind-request-queue.md) | `sub_1ACA4` | `loc_1AFD0` 排隊之後緊接著呼叫它，內容沒逐行讀。它也出現在 `sub_1ABFF:loc_1AC3A` | 靜態 |
+| [`re/80-pathfind-request-queue.md`](../re/80-pathfind-request-queue.md) | `loc_1B612` 那一處的前提 | 只確認它在碰撞處理的尾段，哪幾條分支會走到沒有逐條追 | 靜態 |
+| [`re/80-pathfind-request-queue.md`](../re/80-pathfind-request-queue.md) | 佇列滿了會怎樣 | bit 4 去重讓在飛請求 ≤ 96 < 128，**結構上塞不滿**；沒有溢位檢查也就沒有可觀察的行為 | 靜態 |
+| [`re/80-pathfind-request-queue.md`](../re/80-pathfind-request-queue.md) | `[si+0x10]` 的完整語意 | 這裡確認它是「這一步的目標座標」（出隊時先設成目前座標，再由 `sub_1B00D` 覆寫成第一個繞路點）；誰還會寫它沒有窮舉 | 靜態 |
 
 ## 2.4 驗收（89 條）
 
@@ -380,7 +384,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（214 條）
+## 2.6 其他（217 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -454,6 +458,9 @@
 | [`spec/119-talk-marker-fields.md`](../spec/119-talk-marker-fields.md) | `\5` 沒有接 | `TALK.DAT` 裡零次使用（`../formats/01` §3），接了也沒有東西會走到 | 靜態 |
 | [`spec/119-talk-marker-fields.md`](../spec/119-talk-marker-fields.md) | 同狀態截圖 | 要一張原版畫面上出現「孔明」的訊息才驗得到字本身 | 實測 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝命令、`0x0Bh`／`0x10h`／`0x15h`／`0x1Fh` 各自出現在哪個視窗已知，完整值域未列 | 靜態 |
+| [`spec/120-pathfind-request-queue.md`](../spec/120-pathfind-request-queue.md) | `sub_1ACA4` | 排隊之後緊接著呼叫，內容沒讀（`../re/80` §5） | 靜態 |
+| [`spec/120-pathfind-request-queue.md`](../spec/120-pathfind-request-queue.md) | 碰撞尾段那一處的前提 | 哪幾條分支會走到 `loc_1B612` 沒有逐條追 | 靜態 |
+| [`spec/120-pathfind-request-queue.md`](../spec/120-pathfind-request-queue.md) | 佇列順序對戰局的影響 | FIFO 與無序在同一場攻城裡差多少，沒有量化 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | **remake 沒有邊緣捲動** | **機制早就解了**（`../re/47` §6）：`sub_120D6` 進大地圖時把 INT 33 的範圍換成**整個世界**（水平 0–`17FFh` ＝ 384 格 × 16、垂直 0–`101Fh`），`sub_11F7F` 再把原始座標減掉鏡頭原點、夾在 0–639／0–399，**夾掉的量同時加回鏡… | 靜態 |

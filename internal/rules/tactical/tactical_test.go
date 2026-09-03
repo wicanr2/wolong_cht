@@ -644,9 +644,8 @@ func TestRetreatDropsOldPath(t *testing.T) {
 	s := &b.Sides[0].Soldiers[1]
 	s.Cmd, s.Next = Retreat, Retreat
 	s.Path = &Waypoints{pts: []Point{{X: 20, Y: 20}}}
-	s.PathAt = 123
 	b.doRetreat(0, 1)
-	if s.Path != nil || s.PathAt != 0 {
+	if s.Path != nil {
 		t.Fatal("退卻仍保留舊繞路點")
 	}
 }

@@ -50,7 +50,6 @@ func (s *Soldier) applyNewOrder() bool {
 	// 原版換令時把繞路點游標歸零；舊命令的路徑不能帶進退卻或
 	// 下一個攻擊目標，否則兵會永遠沿著上一個目標的路走。
 	s.Path = nil
-	s.PathAt = 0
 	return true
 }
 
@@ -243,7 +242,6 @@ func (b *Battle) doRetreat(side, k int) {
 	// 繞路一走 Y 就又被清掉了。
 	if p, ok := s.Path.Last(); !ok || p.X != edge {
 		s.Path = nil
-		s.PathAt = 0
 	}
 	retreatY := s.Y
 	if retreatY < 0x10 {
@@ -355,7 +353,7 @@ func (b *Battle) moveToward(side, k int) {
 	// 換位就一直算「有移動」，永遠不重算路——整團會在城牆前churn 到
 	// 攻城計時器把大將耗光。
 	if !moved || walled {
-		b.replan(side, k)
+		b.requestPath(side, k)
 	}
 	if moved && s.Stamina > 0 {
 		s.Stamina-- // 移動每幀 −1（`sub_1ADC8`）
@@ -410,27 +408,18 @@ func (b *Battle) standZ(s *Soldier, x, y int) int {
 	return b.Field.StandLevel(x, y)
 }
 
-// replanInterval 是重算繞路的最短間隔（幀）。
+// computePath 幫一個兵算一條繞開障礙的路（原版 `sub_1AED2` 的出隊段）。
 //
-// ⚠ 原版沒有這個節流——它是在「命令生效」那一刻算一次（`sub_1AED2`）。
-// 這裡加上是因為本專案的兵每幀都可能被別人擋住，不節流的話 48 × 2 個兵
-// 每幀各跑一次波前擴散，無頭模擬會慢到跑不完。**這是 remake 的取捨。**
-const replanInterval = 30
-
-// replan 幫一個兵算一條繞開障礙的路。
-func (b *Battle) replan(side, k int) {
+// ⚠ **手上有路不是不重算的理由。** 進到佇列的前提是「這一幀走不動或
+// 撞到地形」，所以有路又走不動代表那條路現在不通——原版也是這樣
+// （`docs/re/80` §3 的四個入隊點）。這裡本來會因為 `Path.Len() > 0`
+// 直接返回，於是被同伴擋住的兵抱著一條穿過同伴的直線路永遠不重算
+// （`docs/spec/94` §2.1）。
+//
+// ⭐ **節流不在這裡**：原版的預算是全域的「每幀兩筆」，
+// 由 `pathQueue` 管（`docs/spec/120`）。
+func (b *Battle) computePath(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
-	// ⚠ **手上有路不是不重算的理由。** `replan` 只有在「這一幀走不動或
-	// 撞到地形」時才被呼叫（moveToward 的出口），所以有路又走不動，
-	// 代表那條路現在不通——原版也是在三軸都走不動時重算
-	// （`sub_1AED2`，docs/re/11 §5.8k）。
-	// 這裡本來會因為 `Path.Len() > 0` 直接返回，於是被同伴擋住的兵
-	// 抱著一條穿過同伴的直線路永遠不重算（docs/spec/94 §2.1）。
-	// 節流仍然留著：波前擴散很貴，30 幀一次。
-	if b.Frame-s.PathAt < replanInterval {
-		return
-	}
-	s.PathAt = b.Frame
 	from, to := Point{X: s.X, Y: s.Y}, Point{X: s.GoalX, Y: s.GoalY}
 	occupied := b.occupancyCost()
 	pts := b.Field.FindPath(from, to, s.CanClimb(), occupied)

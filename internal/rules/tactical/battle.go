@@ -262,6 +262,10 @@ type Battle struct {
 	// 不進存檔。
 	bar structureBar
 
+	// paths 是尋路請求佇列（docs/spec/120）。原版是 `CS:0xD352` 起的
+	// 128 格環狀陣列，兩個游標在 `word_1D34E`／`word_1D350`。
+	paths pathQueue
+
 	// Structures 是城壁與門，最多 16 段（docs/re/11 §5.9）。
 	Structures []Structure
 
@@ -560,6 +564,11 @@ func (b *Battle) Step() {
 
 	// 開戰單挑（`sub_1A1C5` 在主迴圈最前面，docs/spec/80）。
 	b.stepDuel()
+
+	// ⭐ **尋路佇列在逐兵迴圈之前消化**，每幀最多兩筆——與原版
+	// `sub_1ADC8` 的順序相同（`docs/spec/120`）。所以這一幀排進去的
+	// 請求最快也要下一幀才算得到。
+	b.drainPathQueue()
 
 	// 腳本先跑：原版的主迴圈是「執行一個腳本指令 → 更新實體」。
 	// ⭐ 開場 50 tick ＋ 整段單挑期間**腳本不跑**——腳本直譯器在

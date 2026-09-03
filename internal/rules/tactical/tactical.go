@@ -191,9 +191,10 @@ type Soldier struct {
 	StepX, StepY, StepZ int
 
 	// Path 是還沒走完的繞路點（原版 `0x1800 + 兵編號 × 128`，§5.15）。
-	// PathAt 是上次重算的幀，用來節流。
-	Path   *Waypoints
-	PathAt int
+	// PathQueued 對應兵記錄 `+0x00` bit 4：**這個兵已經排在尋路佇列裡**。
+	// 原版靠它一條指令就擋掉重複排隊（`sub_1C653`，docs/re/80 §2.1）。
+	Path       *Waypoints
+	PathQueued bool
 
 	// Power 是由士氣算出來的戰力（原版 `+0x18`，`sub_19B6D` 寫）。
 	// 打大將時的命中率與傷害都看它。
