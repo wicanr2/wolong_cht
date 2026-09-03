@@ -170,6 +170,7 @@
 | 指令列的四個彈出選單走同一支常式 | [`126-command-popup-menus.md`](126-command-popup-menus.md) | 已接三張（人事／軍團／據點）。人事從一覽表換成選單，據點多了「首都確認」 |
 | 被俘的主公型武將當場變成臣下型 | [`127-captured-sovereign-becomes-retainer.md`](127-captured-sovereign-becomes-retainer.md) | 已接。清旗標 bit 6 ＋ 說話類型 `+3`；⚠ 順帶訂正「以舊主已滅為條件」那個說法 |
 | 隊長倒下不會清掉那一隊的待機兵 | [`128-squad-leader-gone-keeps-reserve.md`](128-squad-leader-gone-keeps-reserve.md) | 已改。原版沒有清待機的地方，而且「隊長不在」是**每幀重新施加**的 |
+| 戰術戰鬥打完，兩側的士氣都要按兵力比縮 | [`129-post-battle-morale-scaling.md`](129-post-battle-morale-scaling.md) | 已改。remake 兩行的**分母都寫成新值**，等於沒有縮 |
 
 ## 怎麼加一份
 

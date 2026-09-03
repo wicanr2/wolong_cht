@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**533 列分布在 219 份文件，平均每份 2.4 列。**
+**535 列分布在 220 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 173 | 166 | 6 | 1 |
 | 驗收 | 92 | 80 | 12 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 229 | 212 | 16 | 1 |
-| **合計** | **533** | 492 | 39 | 2 |
+| 其他 | 231 | 214 | 16 | 1 |
+| **合計** | **535** | 494 | 39 | 2 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,7 +53,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 194 |
+| `docs/spec/` | 196 |
 | `docs/re/` | 173 |
 | `docs/playtest/` | 92 |
 | `docs/formats/` | 20 |
@@ -392,7 +392,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（229 條）
+## 2.6 其他（231 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -486,6 +486,8 @@
 | [`spec/127-captured-sovereign-becomes-retainer.md`](../spec/127-captured-sovereign-becomes-retainer.md) | 劇本作者能不能給非君主 bit 6 | 四個劇本的 43 筆全是現任君主（`../re/77` §3），但那是**資料上的巧合還是規則**沒有讀出來。若有一筆說話類型 3–7 又帶 bit 6，`+3` 會把它推到 6–10 | 靜態 |
 | [`spec/128-squad-leader-gone-keeps-reserve.md`](../spec/128-squad-leader-gone-keeps-reserve.md) | 戰後兵力的逐槽對拍 | 原版打完之後每槽兵數是三項相加（`../re/83` §3），remake 的戰後回填**沒有逐槽比過原版** | 靜態 |
 | [`spec/128-squad-leader-gone-keeps-reserve.md`](../spec/128-squad-leader-gone-keeps-reserve.md) | 士氣按比例縮 | `sub_19F58` 最後三行：新士氣 ＝ 舊士氣 × 新總兵力 ÷ 舊總兵力。remake 的戰後士氣處理**還沒對照這一條** | 靜態 |
+| [`spec/129-post-battle-morale-scaling.md`](../spec/129-post-battle-morale-scaling.md) | 為什麼敗方是 99 不是 100 | 自動判定用 `64h`、戰術用 `63h`。**兩個立即值都讀出來了**，但差 1 的理由沒有解釋——可能只是 `xchg` 那個寫法順手（先寫 99 再比 99） | 靜態 |
+| [`spec/129-post-battle-morale-scaling.md`](../spec/129-post-battle-morale-scaling.md) | 戰後士氣的實機對照 | 沒有。要打完一場戰術戰鬥再看軍團一覽的士氣欄 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | **remake 沒有邊緣捲動** | **機制早就解了**（`../re/47` §6）：`sub_120D6` 進大地圖時把 INT 33 的範圍換成**整個世界**（水平 0–`17FFh` ＝ 384 格 × 16、垂直 0–`101Fh`），`sub_11F7F` 再把原始座標減掉鏡頭原點、夾在 0–639／0–399，**夾掉的量同時加回鏡… | 靜態 |

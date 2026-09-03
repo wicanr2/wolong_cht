@@ -225,6 +225,35 @@ func (w *World) StageBattle(att, def int, m combat.Mode, rng combat.Rand) error 
 
 var errNoTactical = errors.New("state: 沒有裝戰場來源")
 
+// tacticalLoserMorale 是戰術戰鬥敗方的士氣基準（`sub_19EBD` 的 `mov al, 63h`）。
+// ⚠ **自動判定那條線是 100**（`sub_1474A` 的 `mov al, 64h`，docs/re/09 §4）——
+// 同名規則在兩條路上差 1，引用時要標明是哪一條。
+const tacticalLoserMorale = 0x63
+
+// postBattleMorale 是**戰術戰鬥**打完之後的士氣（docs/spec/129）。原版兩段：
+//
+//	sub_19EBD  只對**敗方**：戰前 ≥ 100 ⇒ base 99；否則 0
+//	sub_19F58  對**兩側**：士氣 ＝ base × 新兵力 ÷ 舊兵力
+//
+// ⚠ 與自動判定那條線（`sub_1474A`，docs/re/09 §4）不一樣：那邊對**勝方**
+// 也有「戰前 < 100 就歸零」，戰術這一條沒有；敗方的 base 也差 1。
+// 兩條路的同名規則不同，所以這一支只給戰術層用，`internal/rules/combat`
+// 的 `scaleMorale` 是自動判定那一份，兩者刻意分開。
+func postBattleMorale(morale, before, after int, won bool) int {
+	base := morale
+	if !won {
+		if morale < army.RoutMoraleGate {
+			base = 0
+		} else {
+			base = tacticalLoserMorale
+		}
+	}
+	if before <= 0 || after <= 0 {
+		return 0
+	}
+	return base * after / before
+}
+
 func kindOf(t army.TroopType) tactical.Kind {
 	switch t {
 	case army.Cavalry:
@@ -262,11 +291,12 @@ func (w *World) ResolvePending(rng combat.Rand) *CorpsEvent {
 	apply := func(corps, side int) {
 		c := &w.Corps[corps]
 		men := o.Men[side] / tactical.MenPerSoldier
+		before := c.Men
 		scale := func(v int) int {
-			if c.Men == 0 {
+			if before == 0 {
 				return 0
 			}
-			return v * men / c.Men
+			return v * men / before
 		}
 		total := 0
 		for k := range c.Units {
@@ -274,17 +304,8 @@ func (w *World) ResolvePending(rng combat.Rand) *CorpsEvent {
 			total += c.Units[k].Men
 		}
 		c.Men = total
-		// 士氣照自動判定的規則走：敗方重設成 100 × 兵力比。
-		if (side == 0) == o.AttackerWins {
-			c.Morale = c.Morale * men / maxInt(men, 1)
-		} else if c.Morale < army.RoutMoraleGate {
-			c.Morale = 0
-		} else {
-			c.Morale = 100 * total / maxInt(total+1, 1)
-		}
-		if total == 0 {
-			c.Morale = 0
-		}
+		c.Morale = postBattleMorale(c.Morale, before, total,
+			(side == 0) == o.AttackerWins)
 	}
 	apply(p.Attacker, 0)
 	apply(p.Defender, 1)
