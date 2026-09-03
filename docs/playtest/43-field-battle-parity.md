@@ -16,9 +16,11 @@
   -shot-frames 400`（2026-08-29 起遭遇直接進戰場，`docs/spec/105`；當時多帶的
   encounter-choose 旗標已拿掉）。
   ⚠ **這條指令現在跑不到戰場**：截圖模式沒有人按掉遭遇訊息，第 400 到
-  1,100 幀是同一張 PNG。現行指令改走
-  `-open-battle -siege-corps 39,35 -battle-steps 52`，重量的數字在
-  [`58`](58-parity-retest-20260902.md) §1.1。
+  1,100 幀是同一張 PNG。現行指令有兩條，截出來的畫面**逐像素相同**
+  （[`59`](59-shot-when-natural-flow.md) §1）：捷徑
+  `-open-battle -siege-corps 39,35 -battle-steps 52`，自然流程
+  `-auto-messages -shot-when battle-frame:52`（`docs/spec/118`）。
+  重量的數字在 [`58`](58-parity-retest-20260902.md) §1.1。
   單挑狀態機接上後喊話在**戰場 tick 50** 出現，400 幀約落在 tick 52；
   氣勢評估帶亂數（本存檔兩軍士氣同 200、氣勢平手靠亂數尾），
   挑戰側不是呂布（攻方）時整張圖對不上——同一 seed 下 rng 流固定，
@@ -126,7 +128,7 @@ WOLONG_DOSV_SEED_SAVE=SAVE-FIELD.DAT tools/dosv_capture.sh parity-field14 \
 |---|---|---|
 | ~~野戰開場對白怎麼選句、誰先講~~ | ✅ 解出並實作（[`../re/74`](../re/74-battle-opening-duel.md)）：`sub_1A2E8` 的挑戰段——氣勢（隊長隊兵×大將體力＋亂數）高側 ≥ 0x12C0 喊組 `0x1B7`，弱側只在「< 0x12C0 或 < 一半」時以 `0x1B9` 拒戰，否則沉默 | — |
 | ~~單挑本體（`byte_1D34B` 閘、回合迴圈、決著）~~ | ✅ 已實作（[`../spec/80`](../spec/80-duel-opening.md)）。b0–b3 順帶定案兩件實機行為：**開場序（挑戰到拒戰）兩軍完全凍結**（b0 對 b1／b2 的 field 差 0／291 px）、**強側大將逐格騎向單挑位**（b0 在原位、b3 在半路）。喊話時刻回到原版的 tick 50，b0 對拍回到 field 0.05%＝原版游標 | 應戰側的就位方式與對打段全程仍無實機參照（`spec/80` §7）|
-| 遭遇訊息畫面的對拍 | 「遇上兵馬了」訊息與 remake 的遭遇戰選單版面沒有比 | 原版是 TALK 訊息框，remake 是自製選單——先讀原版遭遇後的選擇 UI 是什麼樣（影片 `parity-field13/enc.mp4` 15 秒附近有素材） |
+| ~~遭遇訊息畫面的對拍~~ | ✅ **遭遇沒有選單**（[`../spec/105`](../spec/105-encounter-goes-straight-to-battle.md)，2026-08-29 機器碼 ＋ 實機兩條證據），remake 自製的那一層已經刪掉；訊息框本身與 [`55`](55-encounter-menu-parity.md) 的 `e4.png` 文字一字不差、肖像同一張、框的位置相同 | — |
 | 佔用圖快取欄的讀檔重建 | §3 是強證據不是 confirmed | 讀原版的讀檔常式（`sub_18CAE` 一帶）確認重建走哪個欄位 |
 
 <!-- 缺口：見上表 -->

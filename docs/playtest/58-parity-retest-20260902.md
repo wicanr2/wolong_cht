@@ -124,6 +124,6 @@ seed 0   field 11.24%     …（中間十四個同值）…     seed 15  field 1
 | 項目 | 現況 | 下手點 |
 |---|---|---|
 | 攻城 `field` 的 0.84% 地板 | 局面不等價：原版擷取是 5月20日的張遼軍攻許昌，存檔是 5月10日（[`51`](51-siege-deadlock.md) §2）| 要對到 0 px 得有「存檔與影格出自同一次擷取」的攻城素材，同 [`52`](52-siege-timeseries-parity.md) 那一組 |
-| 第 300 拍的 2.00% | 兵的密度不同（§1.2）| 取樣點要用局面條件挑，不是寫死步數（[`../spec/91`](../spec/91-tactical-parity.md) §6）|
-| 野戰走自然流程 | 遭遇訊息擋住截圖（§3）| 要一個「訊息自動按掉」的驗收旗標；現在靠 `-open-battle -siege-corps` 繞過 |
+| 第 300 拍的 2.00% | 兵的密度不同（§1.2）| 取樣點要用局面條件挑，不是寫死步數——`-shot-when` 已經做出來了（[`../spec/118`](../spec/118-shot-when-condition.md)），要挑的是**哪一個**條件 |
+| ~~野戰走自然流程~~ | ✅ **已修**：`-auto-messages` ＋ `-shot-when battle-frame:52`，而且與捷徑那一張**九區逐像素相同**（[`../spec/118`](../spec/118-shot-when-condition.md)、[`59`](59-shot-when-natural-flow.md) §1）| — |
 | 原版側沒有重跑 | 用的是 08-16／17／24 的擷取 | 要重跑得先建 `wolong-dosboxx`（`docker/dosboxx/Dockerfile`）|

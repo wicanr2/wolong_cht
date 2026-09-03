@@ -18,17 +18,28 @@ const (
 	fieldParityFoe  = 35
 )
 
-// stageEncounterFixture 建一個只夠跑 `stageEncounter` 的 game。
-func stageEncounterFixture(t *testing.T, seed int) *game {
+// 攻城對拍那條 fixture：`parity-battle4/SAVE-E.DAT` 的
+// 軍團 81（張遼，攻）對軍團 39（夏侯惇，守），據點 82
+// （docs/playtest/51 §1）。門強度條只在攻城戰顯示，所以它是
+// `-shot-when gate-bar` 唯一驗得到的局面（docs/spec/32 §2）。
+const (
+	siegeParitySave     = "../../workplace/promo-live/parity-battle4/SAVE-E.DAT"
+	siegeParityNode     = 82
+	siegeParityAttacker = 81
+	siegeParityDefender = 39
+)
+
+// battleGameFixture 建一個只夠跑 `stageEncounter` 的 game。
+func battleGameFixture(t *testing.T, save string, seed int, corps ...int) *game {
 	t.Helper()
 	const dir = "../../workplace/orig/dosv"
 	lib, err := library.Load(dir)
 	if err != nil {
 		t.Skipf("找不到原版素材：%v", err)
 	}
-	w, err := state.LoadScenario(fieldParitySave, 0)
+	w, err := state.LoadScenario(save, 0)
 	if err != nil {
-		t.Skipf("讀不到 %s：%v", fieldParitySave, err)
+		t.Skipf("讀不到 %s：%v", save, err)
 	}
 	w.Player = 0
 	p, setup, err := battlesetup.Load(battlesetup.Options{
@@ -38,11 +49,30 @@ func stageEncounterFixture(t *testing.T, seed int) *game {
 		t.Fatalf("battlesetup.Load: %v", err)
 	}
 	w.SetTactical(setup)
-	if fieldParityMine >= len(w.Corps) || fieldParityFoe >= len(w.Corps) ||
-		!w.Corps[fieldParityMine].Alive || !w.Corps[fieldParityFoe].Alive {
-		t.Skipf("%s 裡沒有軍團 %d／%d", fieldParitySave, fieldParityMine, fieldParityFoe)
+	for _, c := range corps {
+		if c >= len(w.Corps) || !w.Corps[c].Alive {
+			t.Skipf("%s 裡沒有軍團 %d", save, c)
+		}
 	}
 	return &game{lib: lib, world: w, battle: p, rng: rng.NewFixed(seed)}
+}
+
+// stageEncounterFixture 是野戰那一條（夏侯惇對呂布）。
+func stageEncounterFixture(t *testing.T, seed int) *game {
+	t.Helper()
+	return battleGameFixture(t, fieldParitySave, seed, fieldParityMine, fieldParityFoe)
+}
+
+// siegeShotFixture 開一場攻城並停在第 0 拍，給 `-shot-when` 的條件用。
+func siegeShotFixture(t *testing.T) *game {
+	t.Helper()
+	g := battleGameFixture(t, siegeParitySave, 7, siegeParityAttacker, siegeParityDefender)
+	g.stageEncounter(true, siegeParityNode, 0,
+		&g.world.Corps[siegeParityAttacker], &g.world.Corps[siegeParityDefender])
+	if g.world.PendingBattle() == nil {
+		t.Skip("攻城 fixture 沒有開出戰鬥")
+	}
+	return g
 }
 
 // TestStageEncounterArmsDuelBeforeStepping 釘住 docs/spec/117：

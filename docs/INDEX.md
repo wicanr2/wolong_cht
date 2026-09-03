@@ -92,6 +92,7 @@
 | [`docs/playtest/56-lubu-flow-parity.md`](playtest/56-lubu-flow-parity.md) | 56 — 實機對拍：AppImage 走「選呂布 → 對曹操宣戰 → 編成攻城」 | 完成，六項差異已修並重測。 | 2026-09-01 |
 | [`docs/playtest/57-appimage-20260902-reverify.md`](playtest/57-appimage-20260902-reverify.md) | 57 — 重打包後的 AppImage 複驗（呂布這條流程） | 完成。 | 2026-09-02 |
 | [`docs/playtest/58-parity-retest-20260902.md`](playtest/58-parity-retest-20260902.md) | 58 — 接上兵的戰力之後重跑戰術對拍：野戰回到 0.05%，攻城沒有退步 | 兩組都重量完，沒有回歸。 | 2026-09-02 |
+| [`docs/playtest/59-shot-when-natural-flow.md`](playtest/59-shot-when-natural-flow.md) | 59 — 兩個驗收旗標的驗收：自然流程與捷徑截出同一張畫面 | 四項全部通過。 | 2026-09-03 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告是 72 秒， 含語言切換與原版並排兩段；遊戲段落是逐幀錄下來的實跑畫面。 2… | 2026-08-30 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
@@ -142,7 +143,7 @@
 | [`docs/re/39-remaining-unread.md`](re/39-remaining-unread.md) | 39 — 剩餘未讀函式的逐支歸屬 | 清單。 | 2026-08-14 |
 | [`docs/re/40-garrison-relief-request.md`](re/40-garrison-relief-request.md) | 40 — 據點求援與援軍派遣 | 整條鏈 confirmed（每一支都逐行讀過）。 sub_140C9 的距離算式裡有一處 | 2026-08-14 |
 | [`docs/re/42-leaf-functions.md`](re/42-leaf-functions.md) | 42 — 戰術以外的 47 支葉節點 | 47 支全部逐行讀過。四件事因此定案：INT 61h 是音源 TSR 的介面、 byte_198A6 的位元圖完整、… | 2026-08-14 |
-| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的） | 生成的清單，跑 tools/py.sh tools/re_open_questions.py 重出。 這一份不下結論… | 2026-09-02 |
+| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的） | 生成的清單，跑 tools/py.sh tools/re_open_questions.py 重出。 這一份不下結論… | 2026-09-03 |
 | [`docs/re/44-threat-and-reinforcement-ai.md`](re/44-threat-and-reinforcement-ai.md) | 44 — 威脅偵測與 AI 出兵：據點每 tick 掃一次 | 整條鏈逐行讀完。三件事定案：據點 +0x18 是佔用圖讀回來的軍團數、 +0x00 低 4 位是「哪幾個鄰居是敵方」… | 2026-08-14 |
 | [`docs/re/45-corps-command-mode.md`](re/45-corps-command-mode.md) | 45 — 軍團的三種指令模式：戰鬥指揮／委任／解體 | 軍團 +0x00 位元 2 定案 ＝ | 2026-08-14 |
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |
@@ -217,6 +218,7 @@
 | [`docs/spec/115-soldier-power.md`](spec/115-soldier-power.md) | 115 — 兵的戰力來自統率力，不是士氣 | CONFORMED。 | 2026-09-02 |
 | [`docs/spec/116-retreat-cannot-leave-the-city.md`](spec/116-retreat-cannot-leave-the-city.md) | 116 — 驗收用的戰場少了子圖塊表，打破的門反而把城封死 | CONFORMED。 | 2026-09-02 |
 | [`docs/spec/117-fixture-arms-duel-before-stepping.md`](spec/117-fixture-arms-duel-before-stepping.md) | 117 — 驗收捷徑要先武裝開場喊話再推戰場 | CONFORMED。 | 2026-09-02 |
+| [`docs/spec/118-shot-when-condition.md`](spec/118-shot-when-condition.md) | 118 — 截圖的時機用局面條件：-shot-when 與 -auto-messages | CONFORMED。 | 2026-09-03 |
 | [`docs/spec/12-strategy-chrome.md`](spec/12-strategy-chrome.md) | 12 — 主畫面的視窗外框、指令列與右欄 | CONFORMED。主畫面的四個常駐視窗矩形、指令列版面與縮小地圖／勢力篩選鈕的 位置全部由機器碼定死（[docs/… | 2026-08-15 |
 | [`docs/spec/13-main-window-toggles.md`](spec/13-main-window-toggles.md) | 13 — 主畫面四個視窗的開關 | CONFORMED。已實作並留下四窗全開／全關的截圖； 舊的 g.open[] 那一套已整個拿掉，主畫面視窗只剩一份… | 2026-08-15 |
 | [`docs/spec/14-finance-window.md`](spec/14-finance-window.md) | 14 — 財政視窗 | CONFORMED。版面已照原版重寫並有契約測試； 數值輸入器已接上（[78](78-amount-input-ed… | 2026-08-15 |

@@ -69,7 +69,10 @@ func (g *game) messageActive() bool {
 // updateMessageOnly 只推進訊息框：翻頁或收掉這一則。
 // 戰場開著時也走這一支——原版遭遇的訊息在開戰術畫面之前（docs/spec/105）。
 func (g *game) updateMessageOnly() {
-	if !pressed(ebiten.KeyEnter) && !pressed(ebiten.KeySpace) {
+	// `-auto-messages`（docs/spec/118）：截圖模式沒有人按 Enter，
+	// 自然流程就停在遭遇訊息上走不到戰場。**只在帶了旗標時成立**——
+	// 一般遊玩這一支的行為一個字都沒變。
+	if !g.autoMessages && !pressed(ebiten.KeyEnter) && !pressed(ebiten.KeySpace) {
 		return
 	}
 	if _, pages, ok := messagePage(g.messages[0].lines, g.messages[0].page); ok &&

@@ -382,6 +382,13 @@ type game struct {
 	frame    int
 	shotDone bool
 
+	// `-shot-when`／`-shot-deadline`／`-auto-messages`（docs/spec/118）：
+	// 取樣點改用**局面條件**而不是幀數，訊息框自動按掉讓自然流程走得下去。
+	// 三個都是驗收設施，預設關閉——不帶就是原本的行為。
+	shotWhen     *shotCondition
+	shotDeadline int
+	autoMessages bool
+
 	// 逐幀錄製（docs/spec/71）。nil ＝ 沒開。
 	rec     *recorder
 	recDone bool
@@ -797,6 +804,13 @@ func (g *game) Update() error {
 	// 會在高更新速率下跳過那一幀，讓 packaged smoke 沒有 PNG 卻仍 exit 0。
 	if g.shotPath != "" && g.shotDone {
 		return ebiten.Termination
+	}
+	// ⛔ **條件沒成立就不截圖，而且要失敗。** 沉默地截一張別的局面，
+	// 比失敗更糟——那張圖會被拿去比、得到一個看起來像回歸的數字，
+	// 而沒有人知道它拍的不是同一件事（docs/spec/118 §2.2）。
+	if g.shotPath != "" && g.shotWhen != nil && g.frame > g.shotDeadline {
+		return fmt.Errorf("⚠ -shot-when %s 到第 %d 幀都沒有成立，沒有截圖"+
+			"（-shot-deadline %d）", g.shotWhen.name, g.frame, g.shotDeadline)
 	}
 	// 錄滿了才結束，而且與截圖模式同一個理由放在 Update：
 	// Draw 取到像素之後要等下一次 Update 才收工，否則最後一張可能還沒寫完。
@@ -1390,6 +1404,10 @@ func (g *game) maybeSaveShot(screen *ebiten.Image) {
 	if g.shotPath == "" || g.shotDone || g.frame < g.shotAt {
 		return
 	}
+	// `-shot-frames` 在有 `-shot-when` 時退成下限：先跑滿，再等條件成立。
+	if !g.shotReady() {
+		return
+	}
 	g.shotDone = g.saveShot(screen)
 }
 
@@ -1629,7 +1647,10 @@ func main() {
 	shot := flag.String("shot", "", "跑 N 幀之後截圖到這個路徑就結束（驗收用）")
 	framesDir := flag.String("frames-dir", "", "把每一張畫出來的圖寫成 fNNNNN.png（推廣片素材，docs/spec/71）")
 	framesN := flag.Int("frames", 300, "配 -frames-dir：錄幾張就結束")
-	shotFrames := flag.Int("shot-frames", 120, "截圖前先跑幾幀")
+	shotFrames := flag.Int("shot-frames", 120, "截圖前先跑幾幀（配 -shot-when 時退成下限）")
+	shotWhen := flag.String("shot-when", "", "截圖時機改用局面條件（docs/spec/118）：`battle`／`battle-frame:N`／`gate-bar`；留白＝照 -shot-frames")
+	shotDeadline := flag.Int("shot-deadline", 20000, "配 -shot-when：等到第 N 幀還不成立就放棄並回非零")
+	autoMessages := flag.Bool("auto-messages", false, "截圖模式自動按掉訊息框（驗收用，docs/spec/118）")
 	saveFile := flag.String("save-file", "", "可寫的四槽存檔 overlay 路徑；一般啟動可選讀檔")
 	loadSlot := flag.Int("load-slot", -1, "直接啟動時先從 -save-file 的第 N 槽（0–3）載入（驗收用；原版存檔也讀得動）")
 	openWin := flag.Int("open-window", -1, "截圖前先打開第幾個視窗（0–3；−2 ＝ 三個常駐視窗；−3 ＝ 再加系統選單。對拍用）")
@@ -1675,6 +1696,12 @@ func main() {
 
 	// 解開的完整包裡，預設的 repo 相對路徑不成立（docs/spec/72 §3）。
 	*dir = resolveDataDir(*dir, defaultOrigDir, bundledOrigDir)
+	// ⛔ `-shot-when` 打錯字要在**啟動時**失敗，不是跑到一半才發現，
+	// 更不是靜靜退回「照幀數截圖」（docs/spec/118 §2.2）。
+	shotCond, err := parseShotWhen(*shotWhen)
+	if err != nil {
+		log.Fatal(err)
+	}
 	*fontDir = resolveDataDir(*fontDir, defaultFontDir, bundledFontDir)
 	*audioDir = resolveAudioDir(*audioDir)
 	// ⭐ **驗收模式不出聲，但保留音效狀態**（docs/spec/29 §5.1）。
@@ -1731,6 +1758,7 @@ func main() {
 		lordCorps: true, // docs/spec/76：預設放行（remake 差異）
 		td:       textdraw.New(nil, ascii),
 		shotPath: *shot, shotAt: *shotFrames, origDir: *dir, sourceFile: path,
+		shotWhen: shotCond, shotDeadline: *shotDeadline, autoMessages: *autoMessages,
 		rec: newRecorder(*framesDir, *framesN),
 		saveFile: *saveFile, saveBase: path, sound: sound.Open(*audioDir)}
 	g.sound.SetSilent(silentAudio)

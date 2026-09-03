@@ -3,7 +3,7 @@
 **狀態：生成的清單，跑 `tools/py.sh tools/re_open_questions.py` 重出。
 這一份不下結論，只把各文件的「未解」表集中到一處。**
 
-- 日期：2026-09-02
+- 日期：2026-09-03
 - 產生工具：`tools/re_open_questions.py`
 - 來源：`docs/` 底下所有文件的未解小節、表格裡標未解的列，與收尾是「…未解」的散句
 
@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**502 列分布在 201 份文件，平均每份 2.5 列。**
+**506 列分布在 203 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 13 | 10 | 3 | 0 |
 | 資料保存 | 23 | 23 | 0 | 0 |
 | 程式碼理解 | 163 | 156 | 7 | 0 |
-| 驗收 | 88 | 76 | 12 | 0 |
+| 驗收 | 89 | 78 | 11 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 209 | 196 | 13 | 0 |
-| **合計** | **502** | 466 | 36 | 0 |
+| 其他 | 212 | 199 | 13 | 0 |
+| **合計** | **506** | 471 | 35 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,9 +53,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 174 |
+| `docs/spec/` | 177 |
 | `docs/re/` | 163 |
-| `docs/playtest/` | 88 |
+| `docs/playtest/` | 89 |
 | `docs/formats/` | 23 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 13 |
@@ -277,7 +277,7 @@
 | [`re/78-soldier-power-from-command.md`](../re/78-soldier-power-from-command.md) | `sub_1B618` 與 `sub_1B6BC` 的分工 | 兩支都是近戰命中，remake 目前只接前者（`internal/rules/tactical/damage.go`）。哪一支管哪一種接觸沒讀 | 靜態 |
 | [`re/78-soldier-power-from-command.md`](../re/78-soldier-power-from-command.md) | 側摘要 `word_1D30A` 的完整版面 | `+2`（軍團編號）、`+6`（士氣）、`+0x0A` 起六個兵種確定，其餘沒讀 | 靜態 |
 
-## 2.4 驗收（88 條）
+## 2.4 驗收（89 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -329,7 +329,6 @@
 | [`playtest/41-m7-corrected-text-on-screen.md`](../playtest/41-m7-corrected-text-on-screen.md) | 原版側的同狀態對照 | 這一份只驗 remake 自己「有沒有溢出」。**原版同一則長什麼樣沒有並排比過**——要用 `-open-talk-index` 對應的原版操作序列，還沒做 | 靜態 |
 | [`playtest/41-m7-corrected-text-on-screen.md`](../playtest/41-m7-corrected-text-on-screen.md) | 變數的實際長度分布 | 截圖用的是實際遊戲值（如「袁胤」兩字），而 `TestAllTalkLinesFitTheirBox` 用三全形替身。**軍團名與勢力名的長端沒有逐一量過**（`32`） | 實測 |
 | [`playtest/42-window-parity.md`](../playtest/42-window-parity.md) | 進言五項選單的原版截圖 | §5 的輸入模型限制 / 需要能送「瞬時 click」的擷取動作（縮短按住時間），或改用鍵盤路徑（未驗證原版是否支援） | 實測 |
-| [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | 遭遇訊息畫面的對拍 | 「遇上兵馬了」訊息與 remake 的遭遇戰選單版面沒有比 / 原版是 TALK 訊息框，remake 是自製選單——先讀原版遭遇後的選擇 UI 是什麼樣（影片 `parity-field13/enc.mp4` 15 秒附近有素材） | 靜態 |
 | [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | 佔用圖快取欄的讀檔重建 | §3 是強證據不是 confirmed / 讀原版的讀檔常式（`sub_18CAE` 一帶）確認重建走哪個欄位 | 靜態 |
 | [`playtest/45-ai-longrun-comparison.md`](../playtest/45-ai-longrun-comparison.md) | 原版側只有一次跑、三個資料點 | 存檔輪換的點擊序列要修（m1–m4 沒重存：疑似覆寫確認框的 YES 座標沒點中）；修好後可加拍幾輪拉出分佈 | 靜態 |
 | [`playtest/45-ai-longrun-comparison.md`](../playtest/45-ai-longrun-comparison.md) | remake 孫策的擴張比原版猛（一個月滅劉繇 vs 原版半年拿兩城） | 幅度差在戰鬥節奏層（編成／行軍／攻城的耗時），不是決策層；要縮就得對拍單場攻城的時間線 | 靜態 |
@@ -366,9 +365,11 @@
 | [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | 攻城**戰場**（不是結算） | 兩邊都一樣：空城攻城是自動判定，不進戰術畫面（`internal/state/corps.go` 的 `fightGarrison`；原版 `sub_14ED7` 的 `cmp bx, 4200h`）。要看到戰場得等守方有軍團駐守，而那一刻兩邊不會同時發生 | 靜態 |
 | [`playtest/57-appimage-20260902-reverify.md`](../playtest/57-appimage-20260902-reverify.md) | 沿用 `56` §6，沒有新增：軍團選單的同狀態原版參考、原版的行軍目的地一覽、 | （未解小節內文） | 靜態 |
 | [`playtest/58-parity-retest-20260902.md`](../playtest/58-parity-retest-20260902.md) | 攻城 `field` 的 0.84% 地板 | 局面不等價：原版擷取是 5月20日的張遼軍攻許昌，存檔是 5月10日（`51` §2） / 要對到 0 px 得有「存檔與影格出自同一次擷取」的攻城素材，同 `52` 那一組 | 靜態 |
-| [`playtest/58-parity-retest-20260902.md`](../playtest/58-parity-retest-20260902.md) | 第 300 拍的 2.00% | 兵的密度不同（§1.2） / 取樣點要用局面條件挑，不是寫死步數（`../spec/91` §6） | 靜態 |
-| [`playtest/58-parity-retest-20260902.md`](../playtest/58-parity-retest-20260902.md) | 野戰走自然流程 | 遭遇訊息擋住截圖（§3） / 要一個「訊息自動按掉」的驗收旗標；現在靠 `-open-battle -siege-corps` 繞過 | 實測 |
+| [`playtest/58-parity-retest-20260902.md`](../playtest/58-parity-retest-20260902.md) | 第 300 拍的 2.00% | 兵的密度不同（§1.2） / 取樣點要用局面條件挑，不是寫死步數——`-shot-when` 已經做出來了（`../spec/118`），要挑的是**哪一個**條件 | 靜態 |
 | [`playtest/58-parity-retest-20260902.md`](../playtest/58-parity-retest-20260902.md) | 原版側沒有重跑 | 用的是 08-16／17／24 的擷取 / 要重跑得先建 `wolong-dosboxx`（`docker/dosboxx/Dockerfile`） | 靜態 |
+| [`playtest/59-shot-when-natural-flow.md`](../playtest/59-shot-when-natural-flow.md) | 一次只判一個條件 | `../spec/91` §6 的攻城取樣點是三個條件同時成立，現在只判得了「條顯示中」 / 條件字串改成可以用 `+` 串接，或直接支援 `gate-bar+talk-clear` | 靜態 |
+| [`playtest/59-shot-when-natural-flow.md`](../playtest/59-shot-when-natural-flow.md) | 對白框到期沒有條件可判 | 規則層沒有把 `word_1D322`／`word_1D324` 的到期時刻露出來 / `internal/rules/tactical` 加一支唯讀的查詢 | 靜態 |
+| [`playtest/59-shot-when-natural-flow.md`](../playtest/59-shot-when-natural-flow.md) | 攻城取樣點的 0.84% 地板 | 局面不等價，與這兩個旗標無關（`58` §4） / 要「存檔與影格出自同一次擷取」的攻城素材 | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -381,7 +382,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（209 條）
+## 2.6 其他（212 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -449,6 +450,9 @@
 | [`spec/116-retreat-cannot-leave-the-city.md`](../spec/116-retreat-cannot-leave-the-city.md) | 退路要不要留 | 合成戰場（`NewField`）確實只有堆疊高度。**能不能在圖塊 ≥ `0xF0` 時不用堆疊高度**，是另一個問題 | 靜態 |
 | [`spec/117-fixture-arms-duel-before-stepping.md`](../spec/117-fixture-arms-duel-before-stepping.md) | 野戰 `field` 的殘差 | 修好之後還剩多少，量在 `../playtest/58` | 靜態 |
 | [`spec/117-fixture-arms-duel-before-stepping.md`](../spec/117-fixture-arms-duel-before-stepping.md) | 自然流程那條路 | 遭遇訊息會擋住 `-shot-frames`（`105` §4 已寫明是預期行為）。要用自然流程做野戰對拍，得有一個「訊息自動按掉」的驗收旗標 | 靜態 |
+| [`spec/118-shot-when-condition.md`](../spec/118-shot-when-condition.md) | docs/playtest/40` 的攻城取樣點是「第 61 步」。 | （未解小節內文） | 靜態 |
+| [`spec/118-shot-when-condition.md`](../spec/118-shot-when-condition.md) | 條件的組合 | 一次只吃一個條件。`91` §6 的攻城取樣點其實是三個條件同時成立（城壁挨過打、條顯示中、對白框已收），現在只判得了第二個 | 靜態 |
+| [`spec/118-shot-when-condition.md`](../spec/118-shot-when-condition.md) | 對白框的收掉時刻 | 沒有條件可以判「兩側的對白框都到期」，那要規則層先把 `word_1D322`／`word_1D324` 的到期時刻露出來 | 靜態 |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝命令、`0x0Bh`／`0x10h`／`0x15h`／`0x1Fh` 各自出現在哪個視窗已知，完整值域未列 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 |
