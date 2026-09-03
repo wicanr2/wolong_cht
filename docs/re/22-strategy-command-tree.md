@@ -79,7 +79,7 @@ mov ax, cx / sub ax, 18h / jb  locret   ; x < 24 → 不在列上
 cmp ax, 180h            / jnb locret    ; x ≥ 408 → 不在列上
 mov cl, 30h / div cl / xor ah, ah       ; 索引 = (x − 24) ÷ 48
 ...
-mov bx, 28h / mov si, 30h / mov di, 10h ; 寬 40、間距 48、高 16
+mov bx, 28h / mov si, 30h / mov di, 10h ; 反白 (x, 40, 48, 16)：bx 是 Y
 shl ax, 1 / mov bx, ax
 call cs:funcs_161FE[bx]
 ```
@@ -88,7 +88,13 @@ call cs:funcs_161FE[bx]
 表 `funcs_161FE`（`00016214`）的第 9 筆起落在別的函式中段，
 與邊界檢查一致：**表就是 8 筆**，不必猜長度。
 
-幾何：八個按鈕，第 n 個的 x = `24 + 48n`，寬 40、高 16，涵蓋 x 24–408。
+幾何：八個按鈕，第 n 個的 x = `24 + 48n`，**寬 48、高 16**，涵蓋 x 24–408。
+
+⚠ **`bx = 28h` 是 Y ＝ 40，不是「寬 40」。** 三個參數是傳給
+`sub_10B46` 的反白矩形：`dx = x`、`bx = Y`、`si = 寬`、`di = 高`
+⇒ (24+48n, 40, 48, 16)，實機量到的黃色塊一模一樣
+（[`../spec/124`](../spec/124-menu-highlight-xor.md)）。
+**反白矩形就是命中矩形**，兩者不是兩回事。
 
 | # | 指令 | handler | 提示／選單 | 內容 |
 |---:|---|---|---|---|

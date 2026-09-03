@@ -231,6 +231,7 @@
 | [`docs/spec/123-captive-talk-messages.md`](spec/123-captive-talk-messages.md) | 123 — 武將下場的五則訊息：脫身、被擒、自刎 | CONFORMED。 | 2026-09-03 |
 | [`docs/spec/124-menu-highlight-xor.md`](spec/124-menu-highlight-xor.md) | 124 — 反白是「色號 XOR 12」，不是換一個底色 | CONFORMED。 | 2026-09-03 |
 | [`docs/spec/125-menu-box-width-from-padding.md`](spec/125-menu-box-width-from-padding.md) | 125 — 選單框的寬度要用沒有切掉補位空白的那一行 | CONFORMED。 | 2026-09-03 |
+| [`docs/spec/126-command-popup-menus.md`](spec/126-command-popup-menus.md) | 126 — 指令列的四個彈出選單走同一支常式 | CONFORMED。 | 2026-09-03 |
 | [`docs/spec/13-main-window-toggles.md`](spec/13-main-window-toggles.md) | 13 — 主畫面四個視窗的開關 | CONFORMED。已實作並留下四窗全開／全關的截圖； 舊的 g.open[] 那一套已整個拿掉，主畫面視窗只剩一份… | 2026-08-15 |
 | [`docs/spec/14-finance-window.md`](spec/14-finance-window.md) | 14 — 財政視窗 | CONFORMED。版面已照原版重寫並有契約測試； 數值輸入器已接上（[78](78-amount-input-ed… | 2026-08-15 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |

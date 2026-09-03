@@ -12,7 +12,7 @@
   （[`54`](54-menu-second-row-tap.md) 那一輪拍的，`tap:25,5,5`），
   先用 `tools/parity_crop.py` 切成 640×400
 - remake 側：`tools/parity_shot.sh out.png -direct -scenario 0 -player 0
-  -seed 7 -open-corps-menu -cam 0,0 -shot-frames 1`（`-open-corps-menu` 本輪新增）
+  -seed 7 -open-command-menu corps -cam 0,0 -shot-frames 1`（`-open-command-menu` 本輪新增，另接受 `city`／`personnel`）
 
 ## 1. 結果
 
@@ -57,4 +57,4 @@
 |---|---|---|
 | 日期對不上 | 原版跑到 4月20日才截到 | 同 [`39`](39-system-window-parity.md) §4：要嘛用存檔定位，要嘛加一個「跑到指定日期」的驗收旗標 |
 | 選完之後的兩條流程 | 位置確認的軍團一覽、行軍指示的目的地一覽，**都沒有對拍** | 原版側再拍一次：`tap:25,5,5` 之後再 `tap` 第一列／第二列 |
-| 「據點」那兩項選單 | `TALK #82`，remake 還沒做（[`../spec/110`](../spec/110-corps-command-menu.md) §5）| 做完照這一份的流程再拍一次 |
+| 「據點」與「人事」那兩張的對拍 | **沒有原版截圖**。三張走同一份繪製程式碼（[`../spec/126`](../spec/126-command-popup-menus.md)），但位置與字數是各自的立即值，沒比過就不能說它們對 | `tap:30,5,5`／`tap:10,5,5` 照 [`54`](54-menu-second-row-tap.md) 的方式拍 |

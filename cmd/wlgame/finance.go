@@ -355,12 +355,51 @@ func (g *game) openCityList() {
 		func(city int) bool {
 			// 說明書：「選了游標移過去」。這裡把鏡頭移到該據點，
 			// 並開原版的據點情報視窗（docs/spec/23）。
-			c := g.world.Cities[city]
-			g.camX, g.camY = c.X-centreCol, c.Y-centreRow
-			g.clampCam()
-			g.openCityInfo(city)
+			// **與「首都確認」共用這一支**（docs/spec/126 §1.1）。
+			g.focusCity(city)
 			return true
 		})
+}
+
+// openCityCommandMenu 是指令列第 6 格（「據點」）。
+//
+// ⚠ 原版點下去**不是**直接開一覽，而是先跳兩列選單
+// （`sub_193E9(ax=2, cx=52h, dx=40Fh)`，docs/spec/126）。
+func (g *game) openCityCommandMenu() { g.openPopupMenu(cityPopupMenu) }
+
+// dispatchCityMenu 是「據點」那兩列各自接到哪。
+func (g *game) dispatchCityMenu(row int) {
+	switch row {
+	case 0:
+		g.beginLocateCapital()
+	case 1:
+		g.openCityList()
+	}
+}
+
+// beginLocateCapital 是「首都確認」：鏡頭移到自己的首都並開情報視窗。
+//
+// ⭐ 原版與「據點一覽」**共用尾段**（`loc_1633C`）——差別只在
+// 城是自己挑的還是從勢力記錄 `+3` 直接取的（docs/spec/126 §1.1）。
+func (g *game) beginLocateCapital() {
+	p := g.world.Player
+	if p < 0 || p >= len(g.world.Factions) {
+		return
+	}
+	capital := g.world.Factions[p].Capital
+	if capital < 0 || capital >= len(g.world.Cities) {
+		g.lastEvent = "沒有首都"
+		return
+	}
+	g.focusCity(capital)
+}
+
+// focusCity 是那條共用尾段：鏡頭 ＝ 據點 −(20,12)，再開情報視窗。
+func (g *game) focusCity(city int) {
+	c := g.world.Cities[city]
+	g.camX, g.camY = c.X-centreCol, c.Y-centreRow
+	g.clampCam()
+	g.openCityInfo(city)
 }
 
 // openFactionList 是命令視窗的「勢力」：他勢力一覽。

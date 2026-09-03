@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**523 列分布在 214 份文件，平均每份 2.4 列。**
+**526 列分布在 215 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 13 | 10 | 3 | 0 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 168 | 162 | 6 | 0 |
-| 驗收 | 89 | 78 | 11 | 0 |
+| 驗收 | 89 | 77 | 12 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 227 | 211 | 16 | 0 |
-| **合計** | **523** | 485 | 38 | 0 |
+| 其他 | 230 | 214 | 16 | 0 |
+| **合計** | **526** | 487 | 39 | 0 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,7 +53,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 192 |
+| `docs/spec/` | 195 |
 | `docs/re/` | 168 |
 | `docs/playtest/` | 89 |
 | `docs/formats/` | 20 |
@@ -371,7 +371,7 @@
 | [`playtest/59-shot-when-natural-flow.md`](../playtest/59-shot-when-natural-flow.md) | 攻城取樣點的 0.84% 地板 | 局面不等價，與這兩個旗標無關（`58` §4） / 要「存檔與影格出自同一次擷取」的攻城素材 | 靜態 |
 | [`playtest/60-corps-menu-parity.md`](../playtest/60-corps-menu-parity.md) | 日期對不上 | 原版跑到 4月20日才截到 / 同 `39` §4：要嘛用存檔定位，要嘛加一個「跑到指定日期」的驗收旗標 | 靜態 |
 | [`playtest/60-corps-menu-parity.md`](../playtest/60-corps-menu-parity.md) | 選完之後的兩條流程 | 位置確認的軍團一覽、行軍指示的目的地一覽，**都沒有對拍** / 原版側再拍一次：`tap:25,5,5` 之後再 `tap` 第一列／第二列 | 靜態 |
-| [`playtest/60-corps-menu-parity.md`](../playtest/60-corps-menu-parity.md) | 「據點」那兩項選單 | `TALK #82`，remake 還沒做（`../spec/110` §5） / 做完照這一份的流程再拍一次 | 靜態 |
+| [`playtest/60-corps-menu-parity.md`](../playtest/60-corps-menu-parity.md) | 「據點」與「人事」那兩張的對拍 | **沒有原版截圖**。三張走同一份繪製程式碼（`../spec/126`），但位置與字數是各自的立即值，沒比過就不能說它們對 / `tap:30,5,5`／`tap:10,5,5` 照 `54` 的方式拍 | 實測 |
 
 ## 2.5 外部資料（6 條）
 
@@ -384,7 +384,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（227 條）
+## 2.6 其他（230 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -438,7 +438,7 @@
 | [`spec/107-launcher-ui-colours.md`](../spec/107-launcher-ui-colours.md) | 反白條 | remake 的鍵盤游標，原版沒有。要不要照戰略層一覽表那樣「碰過才畫」（`g.listTouched`）沒有定案 | 靜態 |
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | `資金高位 >= 0x80` 那一支 | `cmp bh, 80h / jnb` 會直接算「答應」，等於資金超過約 840 萬時門檻失效。**看起來像有號數的邊界處理**，未逐位對過 | 靜態 |
 | [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | 君主出陣之後的行為 | 那支軍團跟一般軍團有沒有差別，未讀 | 靜態 |
-| [`spec/110-corps-command-menu.md`](../spec/110-corps-command-menu.md) | 「據點」指令同樣是兩項選單 | `../re/22` §3.4：TALK #82「首都確認／據點一覽」。**這一輪沒動**，remake 的「據點」目前直接開一覽 ＋ 情報卡 | 靜態 |
+| [`spec/110-corps-command-menu.md`](../spec/110-corps-command-menu.md) | 選完之後的兩條流程 | 位置確認的軍團一覽、行軍指示的目的地一覽，**都沒有對拍**（`../playtest/60` §4） | 靜態 |
 | [`spec/112-cursor-idle-resume-delay.md`](../spec/112-cursor-idle-resume-delay.md) | `sub_20000(ax=2)` 為什麼在恢復時被呼叫 | 那是滑鼠層跳表的第 2 號（`sub_2009A`，回傳快取座標並清旗標），在這個時點叫它的理由沒讀 | 靜態 |
 | [`spec/112-cursor-idle-resume-delay.md`](../spec/112-cursor-idle-resume-delay.md) | 訊息框那一路的 `8` 與游標的 `0Ch` 為什麼不同 | 兩個立即值都是 confirmed，但差別的用意沒有證據；remake 兩邊都用同一個延遲 | 靜態 |
 | [`spec/113-rle-length-header.md`](../spec/113-rle-length-header.md) | `BATTLE.MAP`／`MMAP.MCH`／`BATTLE.MDL` 走哪一支載入器 | 沒查（`../formats/06` §6）。它們的前 4 byte 不是長度，所以**至少不是這一族** | 靜態 |
@@ -472,6 +472,9 @@
 | [`spec/124-menu-highlight-xor.md`](../spec/124-menu-highlight-xor.md) | `sub_10B46` 的暫存器序列 | 只確認了它寫 `0Ch` 給繪圖控制器、而結果逐點等於 XOR 12。**中間那幾個 port 寫入沒有逐行讀** | 靜態 |
 | [`spec/125-menu-box-width-from-padding.md`](../spec/125-menu-box-width-from-padding.md) | 「據點」那兩項 | `TALK #82`（「　首都確認　」／「　據點一覽　」）同樣是兩項選單，remake 的「據點」目前直接開一覽（`110` §5）。做了之後框寬會自動對——但那是另一件事 | 靜態 |
 | [`spec/125-menu-box-width-from-padding.md`](../spec/125-menu-box-width-from-padding.md) | 原版只看第一列 | remake 取**所有列的最大值**。四則既有選單兩種算法同值，`#79`／`#82` 也同值；**沒有找到會分歧的例子，但也沒有窮舉過** | 靜態 |
+| [`spec/126-command-popup-menus.md`](../spec/126-command-popup-menus.md) | 據點／人事兩張的逐像素對拍 | 沒拍。三張共用同一份繪製程式碼，但**位置與字數是各自的立即值**，沒比過就不能說它們對 | 靜態 |
+| [`spec/126-command-popup-menus.md`](../spec/126-command-popup-menus.md) | 「據點一覽」列的是誰的城 | remake 只列玩家的（`playerCities`）。原版 `sub_17400` 列的範圍沒查——「首都確認」那條路暗示這個指令是給自己人用的，但那是推論 | 靜態 |
+| [`spec/126-command-popup-menus.md`](../spec/126-command-popup-menus.md) | 進言那一張還沒併進來 | `openAdvise` 有自己的一套（五項 ＋ 說服流程）。**併之前要先確認它的取消語意一樣**，這一輪沒動 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | **remake 沒有邊緣捲動** | **機制早就解了**（`../re/47` §6）：`sub_120D6` 進大地圖時把 INT 33 的範圍換成**整個世界**（水平 0–`17FFh` ＝ 384 格 × 16、垂直 0–`101Fh`），`sub_11F7F` 再把原始座標減掉鏡頭原點、夾在 0–639／0–399，**夾掉的量同時加回鏡… | 靜態 |

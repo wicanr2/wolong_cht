@@ -206,8 +206,8 @@ type game struct {
 	// **原版沒有這個報告**，所以預設 false（docs/spec/89）。
 	damageReport bool
 
-	// corpsMenu 是指令列「軍團」那兩項的彈出選單（docs/spec/110）。
-	corpsMenu corpsMenuState
+	// cmdMenu 是指令列的彈出選單（軍團／據點／人事，docs/spec/126）。
+	cmdMenu popupMenuState
 
 	// roads 與 tactical 是掛在 World 上的執行期來源，不屬於存檔本體。
 	// 讀取另一個槽位後要重新掛回，否則數值雖然恢復，行軍／戰鬥會悄悄退回
@@ -912,7 +912,7 @@ func (g *game) Update() error {
 		return nil
 	}
 	// 「軍團」那張兩列選單也是模態的（docs/spec/110）。
-	if g.updateCorpsMenu() {
+	if g.updatePopupMenu() {
 		return nil
 	}
 	// 存檔／讀取是模態視窗，不能讓背景的命令鍵穿透。
@@ -1235,7 +1235,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 	g.drawCityInfo(screen)
 	g.drawCorpsInfo(screen)
 	g.drawAdvise(screen)
-	g.drawCorpsMenu(screen)
+	g.drawPopupMenu(screen)
 	g.drawSaveUI(screen)
 	if choice := g.world.PendingDiplomacy(); choice != nil {
 		g.drawDiplomacy(screen, choice)
@@ -1676,7 +1676,7 @@ func main() {
 	openEnding := flag.Int("open-ending", -1, "直接跳到結局的第幾幕（0–11，驗收用）")
 	openMarchMode := flag.Bool("open-march-mode", false, "截圖前停在行軍指示的三選一（驗收用）")
 	openMarchList := flag.Bool("open-march-list", false, "截圖前編一支軍團並停在行軍目的地一覽（驗收用）")
-	openCorpsMenu := flag.Bool("open-corps-menu", false, "截圖前停在指令列「軍團」的兩項彈出選單（對拍用，docs/spec/110）")
+	openCmdMenu := flag.String("open-command-menu", "", "截圖前停在指令列的彈出選單：`corps`／`city`／`personnel`（對拍用，docs/spec/126）")
 	openNaming := flag.Bool("open-naming", false, "停在啟動殼層選君主那一頁並打開「自定」命名視窗（驗收用，docs/spec/104）")
 	battleFF := flag.Bool("battle-ff", false, "配 -open-battle／-open-siege：截圖前先按下 `▶▶` 快轉（驗收用，docs/spec/102）")
 	siegeNode := flag.Int("siege-node", -1, "指定攻城的戰場＝據點編號（驗收用，配 -open-siege）")
@@ -1817,7 +1817,7 @@ func main() {
 		g.lordCorps = *lordCorpsFlag
 		g.damageReport = *damageReportFlag
 		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *adviseTarget, *openCities, *openFactions, *openCityInfo, *openForm, *openCorps, *openMarchList,
-			*openMarchMode, *openCorpsMenu, *openBattle, *openSiege, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow,
+			*openMarchMode, *openCmdMenu, *openBattle, *openSiege, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow,
 			*openTalkIndex, *openOutcome, parseSiegeFixture(*siegeNode, *siegeDefend, *siegeCorps, *battleSteps),
 			corpsMapFixture{enabled: *corpsOnMap, marchTo: *marchTo},
 			*camAt, *battleCam)
@@ -2114,8 +2114,8 @@ func logAliveCorps(g *game) {
 }
 
 
-func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, adviseTarget, openCities, openFactions bool, openCityInfo int, openForm, openCorps, openMarchList, openMarchMode,
-	openCorpsMenu, openBattle, openSiege, openMessage, openFinance bool, financeAmount int, openFormPick bool, formPickRow, openTalkIndex int,
+func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, adviseTarget, openCities, openFactions bool, openCityInfo int, openForm, openCorps, openMarchList, openMarchMode bool,
+	openCmdMenu string, openBattle, openSiege, openMessage, openFinance bool, financeAmount int, openFormPick bool, formPickRow, openTalkIndex int,
 	openOutcome string, siege siegeFixture, corpsMap corpsMapFixture, camAt, battleCam string) {
 	w := g.world
 	if w == nil {
@@ -2226,11 +2226,13 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 	if openMarchList {
 		g.demoMarchList()
 	}
-	// 「軍團」的兩項選單（docs/spec/110）。原版是點指令列第 5 格跳出來的，
+	// 指令列的彈出選單（docs/spec/126）。原版是點那一格跳出來的，
 	// **命令視窗開著、那一格反白**——對拍要連這兩件事一起擺好。
-	if openCorpsMenu {
+	if m, ok := popupMenusByName[openCmdMenu]; ok {
 		g.hudSet(hudCommand, true)
-		g.openCorpsCommandMenu()
+		g.openPopupMenu(m)
+	} else if openCmdMenu != "" {
+		log.Fatalf("⚠ -open-command-menu 只認得 corps／city／personnel，收到 %q", openCmdMenu)
 	}
 	if adviseMenu && !openAdvise {
 		g.openAdvise() // 停在五項選單

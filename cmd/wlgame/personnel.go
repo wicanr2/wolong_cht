@@ -14,7 +14,6 @@ package main
 import (
 	"fmt"
 
-	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
 )
 
 // NoOfficial 是「沒有派駐」的哨兵值（原版的 0xFF）。
@@ -24,37 +23,23 @@ const NoOfficial = 0xFF
 //
 // 用一覽表當選單而不是另做一個視窗——說明書 3.8 的兩段式選取
 // 對所有清單都成立，重用同一個狀態機比較不會走樣。
-func (g *game) openPersonnel() {
-	const (
-		assignGov = iota
-		removeGov
-		assignDip
-		removeDip
-	)
-	names := []string{"內政官任命", "內政官解任", "外交官任命", "外交官解任"}
-	rows := []int{assignGov, removeGov, assignDip, removeDip}
+// openPersonnel 是指令列第 2 格（「人事」）。
+//
+// ⚠ 原版是**四列彈出選單**（`sub_193E9(ax=4, cx=4Eh, dx=403h)`，
+// docs/spec/126），不是一覽表。四個項目與順序照 `funcs_16279`。
+func (g *game) openPersonnel() { g.openPopupMenu(personnelPopupMenu) }
 
-	// 人事是**選單**不是一覽表（原版 3.2 的子選單），所以不套家族欄位。
-	g.list = listwin.New(listwin.Generals, []listwin.Column{
-		{Title: "人　事", Less: func(a, b int) bool { return a < b }},
-	}, rows, listRowsPerPage, &g.sortMem)
-	g.listTouched = false
-	g.listTitle = "人　事"
-	g.listCellInk = nil
-	g.listRow = func(i int) []string { return []string{names[i]} }
-	g.listHint = "↑↓ 移動　Enter 選取／決定　ESC 取消"
-	g.listPick = func(i int) bool {
-		switch i {
-		case assignGov:
-			g.pickCityForGovernor()
-		case removeGov:
-			g.removeGovernor()
-		case assignDip:
-			g.pickFactionForDiplomat()
-		case removeDip:
-			g.removeDiplomat()
-		}
-		return false // 下一層自己換掉 g.list
+// dispatchPersonnelMenu 是那四列各自接到哪。
+func (g *game) dispatchPersonnelMenu(row int) {
+	switch row {
+	case 0:
+		g.pickCityForGovernor()
+	case 1:
+		g.removeGovernor()
+	case 2:
+		g.pickFactionForDiplomat()
+	case 3:
+		g.removeDiplomat()
 	}
 }
 

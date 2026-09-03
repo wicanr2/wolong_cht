@@ -23,7 +23,6 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
-	"github.com/wicanr2/wolong_cht/internal/ui/talkmenu"
 )
 
 // formState 是編成畫面的狀態：選好武將之後，逐槽指定兵種。
@@ -812,48 +811,8 @@ func (g *game) setEvent(msg string) { g.lastEvent = strings.TrimPrefix(msg, "sta
 
 // ---- 指令列「軍團」的兩項彈出選單（docs/spec/110）----
 
-// corpsMenuTalk 是那張選單的訊息（`sub_1628F` 傳給 `sub_193E9` 的 `cx = 4Fh`）。
-const corpsMenuTalk = 0x4F
-
-// corpsMenuFallback 只在讀不到 `TALK.DAT` 時用。**正常路徑走 #79**。
-//
-// ⭐ 兩邊各補一個**全形空白**——原版存的就是「　位置確認　」，
-// 而框寬由字數決定（docs/spec/45 §2.2）。少了它框會窄 16 px
-// （docs/spec/124）。
-var corpsMenuFallback = []string{"　位置確認　", "　行軍指示　"}
-
-// corpsMenuLabels 是選單的兩列，直接取自 `TALK.DAT`。
-func (g *game) corpsMenuLabels() []string {
-	if g == nil || g.lib == nil {
-		return append([]string(nil), corpsMenuFallback...)
-	}
-	return talkmenu.MenuLabels(g.lib.Talk, corpsMenuTalk, nil, corpsMenuFallback)
-}
-
-// corpsMenuState 是那張兩列選單的狀態。**只有兩個欄位**——
-// 它不持有清單，選完之後就交給既有的兩條流程。
-type corpsMenuState struct {
-	active bool
-	row    int
-}
-
-// corpsMenuActive 回報選單開著沒有。
-func (g *game) corpsMenuActive() bool { return g != nil && g.corpsMenu.active }
-
-// openCorpsCommandMenu 是指令列第 5 格（「軍團」）。
-//
-// ⚠ 原版點下去**不是**直接開一覽，而是先跳這張兩列選單
-// （`sub_193E9(ax=2, cx=4Fh, dx=40Ch)`）。
-func (g *game) openCorpsCommandMenu() {
-	g.corpsMenu.active, g.corpsMenu.row = true, 0
-}
-
-// closeCorpsCommandMenu 收掉選單。
-func (g *game) closeCorpsCommandMenu() { g.corpsMenu.active = false }
-
-// dispatchCorpsMenu 是選單兩列各自接到哪。
+// dispatchCorpsMenu 是「軍團」那兩列各自接到哪（docs/spec/126）。
 func (g *game) dispatchCorpsMenu(row int) {
-	g.closeCorpsCommandMenu()
 	switch row {
 	case 0:
 		g.beginLocateCorps()
@@ -862,44 +821,11 @@ func (g *game) dispatchCorpsMenu(row int) {
 	}
 }
 
-// updateCorpsMenu 處理選單的輸入。回傳 true 表示它吃掉了這一幀。
-func (g *game) updateCorpsMenu() bool {
-	if !g.corpsMenuActive() {
-		return false
-	}
-	labels := g.corpsMenuLabels()
-	if row, ok := g.talkChoiceClick(corpsMenuX, corpsMenuY, labels); ok {
-		g.dispatchCorpsMenu(row)
-		return true
-	}
-	switch {
-	case pressed(ebiten.KeyArrowUp):
-		g.corpsMenu.row = (g.corpsMenu.row + len(labels) - 1) % len(labels)
-	case pressed(ebiten.KeyArrowDown):
-		g.corpsMenu.row = (g.corpsMenu.row + 1) % len(labels)
-	case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
-		g.dispatchCorpsMenu(g.corpsMenu.row)
-	case g.cancelled():
-		g.closeCorpsCommandMenu()
-	}
-	// 數字鍵是 remake 加的捷徑；原版只有游標選取。
-	for i := range labels {
-		if pressed(ebiten.Key1 + ebiten.Key(i)) {
-			g.dispatchCorpsMenu(i)
-			break
-		}
-	}
-	return true
-}
-
-// drawCorpsMenu 畫那張選單。
-func (g *game) drawCorpsMenu(screen *ebiten.Image) {
-	if !g.corpsMenuActive() {
-		return
-	}
-	g.drawLegacyChoiceBox(screen, corpsMenuX, corpsMenuY,
-		g.corpsMenuLabels(), g.corpsMenu.row)
-}
+// openCorpsCommandMenu 是指令列第 5 格（「軍團」）。
+//
+// ⚠ 原版點下去**不是**直接開一覽，而是先跳這張兩列選單
+// （`sub_193E9(ax=2, cx=4Fh, dx=40Ch)`，docs/spec/110）。
+func (g *game) openCorpsCommandMenu() { g.openPopupMenu(corpsPopupMenu) }
 
 // beginLocateCorps 是選單第 0 項「位置確認」：選一支軍團，鏡頭移過去。
 //

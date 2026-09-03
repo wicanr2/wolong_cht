@@ -167,6 +167,7 @@
 | 武將下場的五則訊息（脫身／被擒／自刎）| [`123-captive-talk-messages.md`](123-captive-talk-messages.md) | 已接。敗方與勝方看到不同的一則，兩邊都不是就不出；被擒那一則比的是**舊主** |
 | 反白是色號 XOR 12（選單列 ＋ 指令列格）| [`124-menu-highlight-xor.md`](124-menu-highlight-xor.md) | 已修。黑底白字 ⇒ 黃底藍字；指令列先前根本沒畫反白 |
 | 選單框寬要用沒切補位空白的那一行 | [`125-menu-box-width-from-padding.md`](125-menu-box-width-from-padding.md) | 已修。標籤改讀 `TALK #79`，解碼走 `DecodeKeepPad` |
+| 指令列的四個彈出選單走同一支常式 | [`126-command-popup-menus.md`](126-command-popup-menus.md) | 已接三張（人事／軍團／據點）。人事從一覽表換成選單，據點多了「首都確認」 |
 
 ## 怎麼加一份
 

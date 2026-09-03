@@ -177,10 +177,10 @@ var naturalCommandActions = [...]func(*game){
 	(*game).openPersonnel,
 	(*game).beginFinance,
 	(*game).beginForm,
-	// ⚠ 「軍團」在原版是**兩列選單**（位置確認／行軍指示），不是直接開一覽
-	// （docs/spec/110）。鍵盤 `M` 仍直接跳行軍指示，那是 remake 的捷徑。
+	// ⚠ 「軍團」與「據點」在原版都是**兩列彈出選單**，不是直接開一覽
+	// （docs/spec/126）。鍵盤 `M` 仍直接跳行軍指示，那是 remake 的捷徑。
 	(*game).openCorpsCommandMenu,
-	(*game).openCityList,
+	(*game).openCityCommandMenu,
 	(*game).openGeneralList,
 	(*game).openFactionList,
 }
@@ -209,11 +209,12 @@ func strategyCommandCellRect(index int) image.Rectangle {
 // 原版在呼叫那一格的動作**之前**反白、動作回來之後再 XOR 一次還原
 // （`sub_161CA`），所以整段流程期間那一格都亮著。
 //
-// ⚠ **目前只認得「軍團」那張彈出選單。** 其餘七格的流程沒有統一的
-// 「這一段還在跑」訊號，硬接會在錯的時刻亮著——缺口記在 docs/spec/124 §5。
+// ⚠ **目前只認得三張彈出選單**（軍團／據點／人事，docs/spec/126）。
+// 其餘五格的流程沒有統一的「這一段還在跑」訊號，硬接會在錯的時刻亮著
+// ——缺口記在 docs/spec/124 §5。
 func (g *game) activeCommandCell() int {
-	if g.corpsMenuActive() {
-		return int(naturalCommandCorps)
+	if g.popupMenuActive() {
+		return int(g.cmdMenu.menu.cell)
 	}
 	return -1
 }

@@ -16,7 +16,7 @@ func TestCorpsCommandMenuRows(t *testing.T) {
 	if err != nil {
 		t.Skipf("沒有原版素材：%v", err)
 	}
-	labels := (&game{lib: lib}).corpsMenuLabels()
+	labels := (&game{lib: lib}).popupMenuLabels(corpsPopupMenu)
 	if len(labels) != 2 {
 		t.Fatalf("選單 %d 列，原版是 2 列（TALK #79）", len(labels))
 	}
@@ -27,15 +27,15 @@ func TestCorpsCommandMenuRows(t *testing.T) {
 			t.Errorf("第 %d 列 ＝ %q，want %q", i, labels[i], want)
 		}
 	}
-	if corpsMenuX != 192 || corpsMenuY != 64 {
+	if corpsPopupMenu.x != 192 || corpsPopupMenu.y != 64 {
 		t.Errorf("選單錨點 ＝ (%d, %d)，want (192, 64)＝粗格 (12, 4)",
-			corpsMenuX, corpsMenuY)
+			corpsPopupMenu.x, corpsPopupMenu.y)
 	}
 
 	// ⭐ 用**實機量到的**列位置釘死幾何：原版那張選單的第一列
 	// （位置確認）佔遊戲座標 y 72–87（`parity-tap5/menu.png`，
 	// 螢幕 y 112–127 減掉 40 px 黑邊，docs/spec/110）。
-	bx, by, w, h := legacyChoiceRect(corpsMenuX, corpsMenuY, labels)
+	bx, by, w, h := legacyChoiceRect(corpsPopupMenu.x, corpsPopupMenu.y, labels)
 	if bx != 192 || by != 64 {
 		t.Errorf("選單框左上角 ＝ (%d, %d)，want (192, 64)", bx, by)
 	}
@@ -55,15 +55,15 @@ func TestCorpsCommandMenuRows(t *testing.T) {
 // 選單開著的時候要吃掉輸入，選完就收掉。
 func TestCorpsCommandMenuLifecycle(t *testing.T) {
 	g := &game{}
-	if g.corpsMenuActive() {
+	if g.popupMenuActive() {
 		t.Fatal("還沒開就是 active")
 	}
 	g.openCorpsCommandMenu()
-	if !g.corpsMenuActive() || g.corpsMenu.row != 0 {
-		t.Fatalf("開起來之後 active=%v row=%d", g.corpsMenuActive(), g.corpsMenu.row)
+	if !g.popupMenuActive() || g.cmdMenu.row != 0 {
+		t.Fatalf("開起來之後 active=%v row=%d", g.popupMenuActive(), g.cmdMenu.row)
 	}
-	g.closeCorpsCommandMenu()
-	if g.corpsMenuActive() {
+	g.closePopupMenu()
+	if g.popupMenuActive() {
 		t.Error("關掉之後還是 active")
 	}
 }
@@ -144,7 +144,7 @@ func TestActiveCommandCellFollowsCorpsMenu(t *testing.T) {
 	if got, want := g.activeCommandCell(), int(naturalCommandCorps); got != want {
 		t.Errorf("選單開著時亮第 %d 格，want %d", got, want)
 	}
-	g.closeCorpsCommandMenu()
+	g.closePopupMenu()
 	if got := g.activeCommandCell(); got != -1 {
 		t.Errorf("關掉之後還亮著第 %d 格", got)
 	}
