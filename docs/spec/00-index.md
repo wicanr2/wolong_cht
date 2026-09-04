@@ -171,6 +171,7 @@
 | 被俘的主公型武將當場變成臣下型 | [`127-captured-sovereign-becomes-retainer.md`](127-captured-sovereign-becomes-retainer.md) | 已接。清旗標 bit 6 ＋ 說話類型 `+3`；⚠ 順帶訂正「以舊主已滅為條件」那個說法 |
 | 隊長倒下不會清掉那一隊的待機兵 | [`128-squad-leader-gone-keeps-reserve.md`](128-squad-leader-gone-keeps-reserve.md) | 已改。原版沒有清待機的地方，而且「隊長不在」是**每幀重新施加**的 |
 | 戰術戰鬥打完，兩側的士氣都要按兵力比縮 | [`129-post-battle-morale-scaling.md`](129-post-battle-morale-scaling.md) | 已改。remake 兩行的**分母都寫成新值**，等於沒有縮 |
+| 沒有心向的在野武將：隨機投靠，偏向武將最少的勢力 | [`130-freelance-random-join.md`](130-freelance-random-join.md) | 已接。⭐ **不經過 25% 那道閘**；骰面 ≥ 48 是玩家專屬的救濟 |
 
 ## 怎麼加一份
 

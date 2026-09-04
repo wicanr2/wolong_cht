@@ -241,6 +241,7 @@
 | [`docs/spec/128-squad-leader-gone-keeps-reserve.md`](spec/128-squad-leader-gone-keeps-reserve.md) | 128 — 隊長倒下不會清掉那一隊的待機兵 | CONFORMED。 | 2026-09-03 |
 | [`docs/spec/129-post-battle-morale-scaling.md`](spec/129-post-battle-morale-scaling.md) | 129 — 戰術戰鬥打完，兩側的士氣都要按兵力比縮 | CONFORMED。 | 2026-09-03 |
 | [`docs/spec/13-main-window-toggles.md`](spec/13-main-window-toggles.md) | 13 — 主畫面四個視窗的開關 | CONFORMED。已實作並留下四窗全開／全關的截圖； 舊的 g.open[] 那一套已整個拿掉，主畫面視窗只剩一份… | 2026-08-15 |
+| [`docs/spec/130-freelance-random-join.md`](spec/130-freelance-random-join.md) | 130 — 沒有心向的在野武將：隨機投靠，偏向武將最少的勢力 | CONFORMED。 | 2026-09-04 |
 | [`docs/spec/14-finance-window.md`](spec/14-finance-window.md) | 14 — 財政視窗 | CONFORMED。版面已照原版重寫並有契約測試； 數值輸入器已接上（[78](78-amount-input-ed… | 2026-08-15 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |

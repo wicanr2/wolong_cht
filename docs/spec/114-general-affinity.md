@@ -2,7 +2,7 @@
 
 **狀態：CONFORMED。** `state.General` 有 `Affinity`／`Sovereign`／
 `VanishIfAffinityGone` 三個欄位，在野出仕接進月結，俘虜歸降加上心向的勢力這一閘。
-隨機投靠那一條還沒接（§5）。
+隨機投靠那一條 2026-09-04 接上了（[`130`](130-freelance-random-join.md)）。
 
 - 日期：2026-09-02
 - 出處：`KI.EXE`（SHA-256 `fffeba98…d43868`）的 `sub_1585F`（月結逐武將）、
@@ -96,6 +96,6 @@ remake 也一樣——`recruitFreelanceGenerals` 只看 `Faction == noFaction`�
 
 | 項目 | 現況 |
 |---|---|
-| 隨機投靠那一條 | `sub_15899` 的 `+0x19 == 0xFF` 分支還沒接（§3 的第二個 ⚠）。⭐ **擋它的前提 2026-09-04 查證後不成立**——`state.Faction` 的 `Generals`（武將數）與 `Cities`（據點數）兩個欄位早就在，而且有維護（前者由武將表決定、後者月結重算）。**可以接了** |
+| ~~隨機投靠那一條~~ | ✅ **2026-09-04 接上了**（[`130`](130-freelance-random-join.md)）。擋它的前提查證後本來就不成立——`state.Faction` 的 `Generals`／`Cities` 早就在且有維護 |
 | 出仕的畫面通知 | 原版對象是玩家勢力時跳訊息 `0x29`；這一版只改狀態，不排事件 |
 | 旗標 bit 5 之外的退場條件 | `sub_15899` 只在「心向的勢力已滅」時看 bit 5；bit 5 沒設的武將會留在原地等下一輪，這一點沒有實機驗證 |
