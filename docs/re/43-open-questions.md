@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**544 列分布在 222 份文件，平均每份 2.5 列。**
+**540 列分布在 222 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -39,13 +39,13 @@
 
 | 擋住什麼 | 缺口數 | 靜態可解 | 要實測 | 兩版對照 |
 |---|---:|---:|---:|---:|
-| 規則正確性 | 13 | 10 | 3 | 0 |
+| 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 173 | 166 | 6 | 1 |
-| 驗收 | 101 | 86 | 15 | 0 |
+| 程式碼理解 | 172 | 165 | 6 | 1 |
+| 驗收 | 100 | 85 | 15 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 231 | 214 | 16 | 1 |
-| **合計** | **544** | 500 | 42 | 2 |
+| **合計** | **540** | 495 | 42 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -54,27 +54,25 @@
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/spec/` | 196 |
-| `docs/re/` | 173 |
-| `docs/playtest/` | 101 |
+| `docs/re/` | 172 |
+| `docs/playtest/` | 100 |
 | `docs/formats/` | 20 |
 | `docs/release/` | 18 |
-| `docs/mechanics/` | 13 |
+| `docs/mechanics/` | 11 |
 | `docs/mobile/` | 11 |
 | `docs/promo/` | 6 |
 | `docs/reference/` | 6 |
 
-## 2.1 規則正確性（13 條）
+## 2.1 規則正確性（11 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | `sub_10A65` 的內插演算法 | 只影響畫面 | 靜態 |
 | [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | 最高速那一檔在原版實機上是多少 | 機器相依，要實測才有數字；只影響手感調校 | 實測 |
-| [`mechanics/30-combat.md`](../mechanics/30-combat.md) | GUI 的戰後勝負／傷亡訊息 | 狀態層已結算，畫面上還沒顯示 | 靜態 |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 原版投射物的圖形與動畫 | `BATTLE.SCH` 裡的圖形沒對出來，目前畫的是側別標記 | 靜態 |
 | [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 少數戰術腳本與 `BATTLE` 資料欄位 | 十九個指令已全讀，剩的是資料側的殘留欄位 | 靜態 |
-| [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 重算路徑的時機 | 原版只在命令生效時算一次；remake 的兵每幀都可能被別人擋住，所以改成**每 30 幀可重算一次**（`replanInterval`，`internal/rules/tactical/soldier.go`）。這是 **remake 差異**，不是原版行為——原版被擋住之後怎麼處理沒有讀 | 靜態 |
-| [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0` 旗標的 bit 0 | 只出現一次（劇本三的張衛），全庫沒有讀取端（`../re/77` §5）。要嘛是劇本作者的筆誤，要嘛是 PC-98 版才用的位元——後者要等 PC-98 的 `KI.EXE` 進 IDA 才驗得了 | 靜態 |
-| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 正文散在各節的開放項目集中在這裡；每一條都寫下手點， | （未解小節內文） | 靜態 |
+| [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 原版被擋住之後怎麼處理 | remake 每 30 幀可重算一次（`replanInterval`）是**已標記的 remake 差異**，不是缺口；缺口只有「原版被擋住之後怎麼處理」這一條沒讀 | 靜態 |
+| [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0` 旗標的 bit 0 | 只出現一次（劇本三的張衛），**兩版都沒有讀取端**。⭐ 「PC-98 版才用的位元」這條假說 **2026-09-04 排除了**：PC-98 的 `KI.EXE` 早就進 IDA，掃遮罩 `01` 的結果與 DOS/V **同構**（各三處 `test byte ptr [si], 1`，位址帶相同），而三處… | 兩版對照 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 說話類型 6／7 取到哪一則、其他理由的索引公式、`cx ≥ 0x100` 分支（§1.3） | `SI+1Eh` 本身已定案是說話類型（§1.6）。剩下的是：`sub_13C99` 只減一次 3，所以 6／7 摺成 3／4 而超出三變體組，而那是多數武將。三者都在 `sub_13830` 一帶 | 靜態 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 「拉玩家合攻一個對玩家友善的對象」的**意圖**（§1.2 末） | 機制已照抄，意圖無證據。要定案得靠實機長跑統計，不是反組譯 | 靜態 |
 | [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 事件 2／3 的完整接受流程與原版訊息、4／5 的逐位金額輸入、6／7 的 `TALK.DAT` 反應、9 的原版完整流程、11／12 的物件動畫 | 事件佇列的 runtime 已在，缺的是各事件的原版畫面流程；逐一對 `sub_14269` 一帶的分派做 oracle | 實測 |
@@ -106,7 +104,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 |
 
-## 2.3 程式碼理解（173 條）
+## 2.3 程式碼理解（172 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -227,7 +225,6 @@
 | [`re/61-timer-tick-source.md`](../re/61-timer-tick-source.md) | 無音效驅動時的行為 | §3 推論「會卡死」，**沒有實測**——DOSBox 拿掉 `YNSOUND.COM` 跑一次就能驗 | 實測 |
 | [`re/62-strategy-minimap.md`](../re/62-strategy-minimap.md) | `byte_198A7` 的初值 | 靜態影像裡是 `0`。**開新遊戲時有沒有被寫過沒查** | 靜態 |
 | [`re/62-strategy-minimap.md`](../re/62-strategy-minimap.md) | 圖例底圖在哪個資源 | `sub_1FA37` 的 `ds` 來自 `word_10D50`；`47` 記成段 3 `0x09A0`，兩者沒對過 | 靜態 |
-| [`re/62-strategy-minimap.md`](../re/62-strategy-minimap.md) | ⭐ **熱區 `0x16` ＝ 點地圖捲鏡頭**：`sub_15AB6` 把螢幕座標減掉地圖區原點、 | （未解小節內文） | 靜態 |
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 段變數的配置迴圈 | `word_1D2F6`–`word_1D30E` 沒有直接寫入的 xref，§1 的相鄰關係是推論 | 靜態 |
 | [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 命令 6 為什麼擋高平面橫移 | `[si+1Ah] == 6`，命令碼 6 是什麼沒對過 | 靜態 |
 | [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | `loc_1491B` 的完整成本模型 | 只解出「穿過非己方據點 ＋0xA6 並設高位元」（§8.1）。廣度優先搜尋本身的佇列結構與其他成本項沒逐條讀 | 靜態 |
@@ -284,7 +281,7 @@
 | [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `+8+4k` 與 `+10+4k` 的語意 | 從軍團記錄 `+0x28+4k` 起搬進來的兩個 byte，`sub_19F58` 只讀 `+1`／`+3`，這兩格戰鬥中沒有讀取端被找到 | 靜態 |
 | [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `word_1D31A` 的語意 | `sub_1AEA9` 數「在場且 `+0x19` 非零」的兵，`sub_1ADC8` 尾段拿它算優勢（`byte_1D31E`）。`+0x19` 是一個倒數計時器（`sub_1AB7C` 寫 `28h`、`sub_1ADC8` 每幀 `dec`），**它代表什麼還沒解** | 靜態 |
 
-## 2.4 驗收（101 條）
+## 2.4 驗收（100 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -341,7 +338,6 @@
 | [`playtest/47-latin-screen-survey.md`](../playtest/47-latin-screen-survey.md) | 半形語系的戰場標題沒有地名 | 見 `docs/spec/87` §9 | 靜態 |
 | [`playtest/48-display-polish.md`](../playtest/48-display-polish.md) | 對拍沒有開闊地的 fixture | `playtest/40` 量的兩個局面都在城壁邊；要擋住這一類回歸得再加一個開闊地的 fixture | 靜態 |
 | [`playtest/48-display-polish.md`](../playtest/48-display-polish.md) | 事件列本身是 remake 自創 | 原版怎麼提示月結（如果有）沒查過 | 靜態 |
-| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 40` §8 的取樣點是**第 61 步**，當時 `field` 0.84%，再修兩處之後 0.17%。 | （未解小節內文） | 靜態 |
 | [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 修正前 | 45.55% / 45.18% / 45.83% | 靜態 |
 | [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 量表那一塊 | 0.13% / 0.09% / 0.06% | 靜態 |
 | [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | `field` | 0.86% / 0.81% / 0.84% | 靜態 |

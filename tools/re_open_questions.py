@@ -70,6 +70,9 @@ DEDICATED2 = re.compile(r"^(尚待|還沒解|待解|待補|還缺|剩下的缺�
 # 未解小節裡的子標題：這兩組決定要不要繼續抓。
 # 「已證實／強推論」底下擺的是結論不是缺口，抓進來會得到一堆假缺口。
 SUB_STOP = re.compile(r"已證實|已解|已定案|強推論|已完成")
+
+# 散文列的「現況」欄標記。抽成常數是為了讓後面的過濾看得到它。
+PROSE_MARK = "（未解小節內文）"
 SUB_GO = re.compile(r"未知|未解|未定|缺口|待")
 # 表頭就寫「缺口」的表，整張都是缺口清單
 GAP_HEADER = re.compile(r"缺口|未解|待辦|下手點")
@@ -196,6 +199,7 @@ def collect(path, rel):
     lead_done = set()     # 已經收過首句的小節
     in_fence = False      # 在 ``` 區塊裡
     solved_para = False   # 正處在一段「已解…」的敘述裡
+    prose_bullets = set()  # 以 bullet 形式抽出來的散文列（索引），不受下面的過濾
     for i, line in enumerate(lines):
         # ⭐ **反組譯區塊裡的註解不是缺口。** 那些行長這樣：
         #     call sub_1E3C0                    ; ← 未解
@@ -256,7 +260,13 @@ def collect(path, rel):
                     muted = True
                     continue
                 lead_done.add(section)
-                items.append((lead[:120], "（未解小節內文）", section))
+                if bullet:
+                    # ⚠ **條列不是散文。** `re/03` §5「還沒解的」整節是三條
+                    # bullet，每一條都是真缺口——2026-09-04 第一版過濾把
+                    # 「同小節有表格就丟散文」套到它身上，**吃掉了一個真缺口**。
+                    # 這正是 CONTEXT §6.4 記的「過濾器自己有洞」。
+                    prose_bullets.add(len(items))
+                items.append((lead[:120], PROSE_MARK, section))
                 prev = body
                 continue
         if LEAD_IN.search(line.rstrip()) and not SOLVED.search(line):
@@ -304,6 +314,12 @@ def collect(path, rel):
         elif OPEN_CELL.search(c[-1]) and not SOLVED.search(c[-1]):
             # 欄位表：最後一欄標未解的列
             items.append((c[0], " / ".join(c[1:]), section))
+    # 同一小節既有表格列又有**自由散文**列 ⇒ 丟掉那一列（見 docstring）。
+    # ⚠ 條列（bullet）不在此列——它是缺口的正式寫法之一。
+    tabled = {sec for _, cur, sec in items if cur != PROSE_MARK}
+    items = [it for i, it in enumerate(items)
+             if it[1] != PROSE_MARK or i in prose_bullets
+             or it[2] not in tabled]
     return items, bool(SAW.search(text)) and not NO_GAPS.search(text)
 
 

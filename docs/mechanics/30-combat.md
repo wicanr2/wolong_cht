@@ -691,8 +691,8 @@ cmp byte ptr [si+4], 12h / jbe .skipZ    ; ★ 大將與騎馬（≤18）跳過 
 
 | 缺口 | 下手點 |
 |---|---|
-| GUI 的戰後勝負／傷亡訊息 | 狀態層已結算，畫面上還沒顯示 |
+| ~~GUI 的戰後勝負／傷亡訊息~~ | ✅ **做了**（2026-09-04 查證）：`cmd/wlgame/corps.go` 的 `reportCorps` 把「攻方勝／守方勝　兵力 X→Y／X→Y　據點損害 N」寫進狀態列，並接在 `main.go` 的事件迴圈上。武將下場的五則訊息另見 [`../spec/123`](../spec/123-captive-talk-messages.md) |
 | 原版投射物的圖形與動畫 | `BATTLE.SCH` 裡的圖形沒對出來，目前畫的是側別標記 |
 | 少數戰術腳本與 `BATTLE` 資料欄位 | 十九個指令已全讀，剩的是資料側的殘留欄位 |
 | ~~原版／remake 同狀態的畫面對拍~~ | **已做**：攻城九區裡六區 0 px（`../playtest/40`）、野戰九區裡七區 0 px、field 0.05%（`../playtest/43`）|
-| 重算路徑的時機 | 原版只在命令生效時算一次；remake 的兵每幀都可能被別人擋住，所以改成**每 30 幀可重算一次**（`replanInterval`，`internal/rules/tactical/soldier.go`）。這是 **remake 差異**，不是原版行為——原版被擋住之後怎麼處理沒有讀 |
+| 原版被擋住之後怎麼處理 | remake 每 30 幀可重算一次（`replanInterval`）是**已標記的 remake 差異**，不是缺口；缺口只有「原版被擋住之後怎麼處理」這一條沒讀 |
