@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**540 列分布在 223 份文件，平均每份 2.4 列。**
+**542 列分布在 224 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 172 | 165 | 6 | 1 |
-| 驗收 | 100 | 85 | 15 | 0 |
+| 驗收 | 103 | 88 | 15 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 231 | 214 | 16 | 1 |
-| **合計** | **540** | 495 | 42 | 3 |
+| 其他 | 230 | 213 | 16 | 1 |
+| **合計** | **542** | 497 | 42 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,9 +53,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 196 |
+| `docs/spec/` | 195 |
 | `docs/re/` | 172 |
-| `docs/playtest/` | 100 |
+| `docs/playtest/` | 103 |
 | `docs/formats/` | 20 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 11 |
@@ -281,7 +281,7 @@
 | [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `+8+4k` 與 `+10+4k` 的語意 | 從軍團記錄 `+0x28+4k` 起搬進來的兩個 byte，`sub_19F58` 只讀 `+1`／`+3`，這兩格戰鬥中沒有讀取端被找到 | 靜態 |
 | [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `word_1D31A` 的語意 | `sub_1AEA9` 數「在場且 `+0x19` 非零」的兵，`sub_1ADC8` 尾段拿它算優勢（`byte_1D31E`）。`+0x19` 是一個倒數計時器（`sub_1AB7C` 寫 `28h`、`sub_1ADC8` 每幀 `dec`），**它代表什麼還沒解** | 靜態 |
 
-## 2.4 驗收（100 條）
+## 2.4 驗收（103 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -385,6 +385,9 @@
 | [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 第 11 章的戰術攻略規則 | 追擊／回り込み／誘餌／疲勞度沒有實跑證據 / 這幾條是**玩家操作技巧**，要設計特定局面才觀察得到 | 實測 |
 | [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 第 1 章結局播放 | 有 remake 截圖，沒有與原版並排 / 原版要打到結局，或用存檔跳到最後一場 | 實測 |
 | [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 軍師命名視窗的逐像素 | 有截圖沒有比 / 原版側 `tap` 到那一頁，照 `54` | 實測 |
+| [`playtest/64-appimage-20260904-reverify.md`](../playtest/64-appimage-20260904-reverify.md) | 進言上框 `0,80,256,80` | **沒驗到**。這條時間軸的 `key:p` 開的是進言五項選單，不是說服理由那一頁 / 要走到「說服 → 選理由」，序列見 `56` §2.2 的後半 | 靜態 |
+| [`playtest/64-appimage-20260904-reverify.md`](../playtest/64-appimage-20260904-reverify.md) | 編成面板 `144,112,240,192` | **沒驗到**，同上——編成是另一條流程 / 同上 | 靜態 |
+| [`playtest/64-appimage-20260904-reverify.md`](../playtest/64-appimage-20260904-reverify.md) | 軍團選單 | `57` §3 記著原版那張是另一個局面（4/20、讀了存檔），本輪沒重試 / 用 `60` 的原版素材，那一張是同狀態的 | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -397,7 +400,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（231 條）
+## 2.6 其他（230 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -498,7 +501,6 @@
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 「畫面模式」 | 兩個選項是「１６色」與「 液晶 」，切的是 `GAMEPAL.BRG` 的 bank 0–3 ↔ 4–7（`docs/re/02` §6.2）。**remake 只做第 0 組**，這一格固定顯示「１６色」——液晶那組是給 8 階調液晶的高飽和純色，現代螢幕沒有對照物 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 戰場內調速度 | 戰場獨佔輸入，所以 `updateBattle` 自己接一次 ＋／−（調戰術速度），調完浮一行 1.5 秒的提示。**原版戰場沒有速度指示**，常駐顯示會破壞版面 parity | 靜態 |
 | [`spec/130-freelance-random-join.md`](../spec/130-freelance-random-join.md) | 平手時取編號小的 | 從 `jb`（嚴格小於）推出來的，**沒有實機驗過** | 靜態 |
-| [`spec/130-freelance-random-join.md`](../spec/130-freelance-random-join.md) | 訊息 `0x29` 的畫面對拍 | 文字已解（#41「{1}加入麾下了。」），但**原版跳這一則時的畫面沒有對拍過** | 靜態 |
 | [`spec/130-freelance-random-join.md`](../spec/130-freelance-random-join.md) | 這一條的實際發生頻率 | 開局 81 名在野武將**全部有心向**，所以隨機投靠要等他們兌現完才輪得到（`../mechanics/70` §3.9）。**長跑幾個月才會第一次觸發沒有量過** | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
