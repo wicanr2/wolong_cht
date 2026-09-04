@@ -97,5 +97,5 @@ remake 也一樣——`recruitFreelanceGenerals` 只看 `Faction == noFaction`�
 | 項目 | 現況 |
 |---|---|
 | ~~隨機投靠那一條~~ | ✅ **2026-09-04 接上了**（[`130`](130-freelance-random-join.md)）。擋它的前提查證後本來就不成立——`state.Faction` 的 `Generals`／`Cities` 早就在且有維護 |
-| 出仕的畫面通知 | 原版對象是玩家勢力時跳訊息 `0x29`；這一版只改狀態，不排事件 |
+| ~~出仕的畫面通知~~ | ✅ **2026-09-04 接上了**：投靠玩家時排 `TalkNotice{Index: 0x29}`（TALK #41「{1}加入麾下了。」）。兩條路共用 `joinFaction`，通知條件與原版的 `loc_1591A` 相同（[`130`](130-freelance-random-join.md) §3）|
 | 旗標 bit 5 之外的退場條件 | `sub_15899` 只在「心向的勢力已滅」時看 bit 5；bit 5 沒設的武將會留在原地等下一輪，這一點沒有實機驗證 |

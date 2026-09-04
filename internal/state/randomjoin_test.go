@@ -104,3 +104,78 @@ func TestRandomJoinSkipsTwentyFivePercentGate(t *testing.T) {
 		t.Errorf("有心向的在 0xFF 這一輪出仕了 %v，25%% 閘沒作用", got)
 	}
 }
+
+// ⭐ 接線：投靠玩家時要排一則 TALK #41「{1}加入麾下了。」
+// （`sub_15899` 的 `loc_1591A`，兩條路共用），投靠別人時**不排**。
+func TestFreelanceJoinNotifiesOnlyPlayer(t *testing.T) {
+	mk := func(affinity, player int) *World {
+		w := &World{Player: player}
+		for i := 0; i < numFactions; i++ {
+			w.Factions[i].Alive = true
+			w.Factions[i].Generals = 10
+		}
+		w.Generals[3] = General{Alive: true, Faction: noFaction, Affinity: affinity}
+		return w
+	}
+	notices := func(w *World) []TalkNotice {
+		var ev Event
+		for _, id := range w.recruitFreelanceGenerals(fixedRand{0}) {
+			if w.Generals[id].Faction == w.Player {
+				ev.TalkNotices = append(ev.TalkNotices,
+					TalkNotice{Index: freelanceJoinTalk, General: id})
+			}
+		}
+		return ev.TalkNotices
+	}
+	// 心向 ＝ 玩家 ⇒ 一則 #41，帶那位武將。
+	got := notices(mk(4, 4))
+	if len(got) != 1 || got[0].Index != freelanceJoinTalk || got[0].General != 3 {
+		t.Errorf("投靠玩家 → %+v，want 一則 #%d／武將 3", got, freelanceJoinTalk)
+	}
+	// 心向 ＝ 別人 ⇒ 不通知。
+	if got := notices(mk(4, 9)); len(got) != 0 {
+		t.Errorf("投靠別人卻通知了：%+v", got)
+	}
+}
+
+// ⭐⭐ **真正的接線測試**：跑 `Tick` 到月結，看那一則 #41 有沒有掛在
+// 那個 tick 的 `Event` 上。
+//
+// ⚠ 這一支存在的理由是**上面那支測不到接線**——它自己組 `TalkNotice`，
+// 沒有走 `Tick`。把 `state.go` 月結段那幾行拔掉，**全套照樣綠**
+// （2026-09-04 的突變測試發現，同一個 session 第三次踩到）。
+func TestTickNotifiesFreelanceJoin(t *testing.T) {
+	w := load(t, 0)
+	w.Player = w.AliveFactions()[0]
+
+	// 挑一個在野武將，心向設成玩家、倒數歸零。
+	target := -1
+	for i := range w.Generals {
+		g := &w.Generals[i]
+		if g.Alive && g.Faction == noFaction && g.Captor == noFaction {
+			g.Affinity, g.Timer = w.Player, 0
+			target = i
+			break
+		}
+	}
+	if target < 0 {
+		t.Skip("這個劇本沒有在野武將")
+	}
+
+	// fixedRand{0}：25% 那道閘一定過（0 < affinityRollLimit）。
+	r := fixedRand{0}
+	for i := 0; i < 100000; i++ {
+		ev := w.Tick(r)
+		if !ev.Settled {
+			continue
+		}
+		for _, n := range ev.TalkNotices {
+			if n.Index == freelanceJoinTalk && n.General == target {
+				return // 通過
+			}
+		}
+		t.Fatalf("月結跑了，但沒有 #%d 的出仕通知（武將 %d 現在屬於勢力 %d）",
+			freelanceJoinTalk, target, w.Generals[target].Faction)
+	}
+	t.Fatal("跑了十萬個 tick 都沒到月結")
+}

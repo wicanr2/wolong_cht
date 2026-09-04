@@ -1048,7 +1048,16 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 	// 原版 sub_15358 在壓縮事件佇列（sub_12BD9）之前先跑 sub_1585F，
 	// 逐一處理在野武將與俘虜。remake 這裡只接在野那一條（docs/spec/114）；
 	// 俘虜仍走月結尾端的近似 producer，兩者的武將集合互斥。
-	w.recruitFreelanceGenerals(rng)
+	// ⭐ **投靠玩家才通知**（`loc_1591A` 的 `cmp bx, cs:word_10CFD`）——
+	// 心向與隨機投靠共用這個尾段，所以兩條路的通知條件相同
+	// （docs/spec/130 §3、docs/spec/114 §5）。原版帶的是武將記錄，
+	// 訊息 `{1}` 取呼び名（docs/re/79）；肖像是預設的 `0x93` 不是說話者。
+	for _, id := range w.recruitFreelanceGenerals(rng) {
+		if w.Generals[id].Faction == w.Player {
+			ev.TalkNotices = append(ev.TalkNotices,
+				TalkNotice{Index: freelanceJoinTalk, General: id})
+		}
+	}
 	w.compactEventQueue()
 	// 原版 sub_15358 在月結壓縮後先跑 sub_15715／sub_1578F，將玩家
 	// 內政官／外交官的撥款請求放進事件佇列，再進入其他政略評估。

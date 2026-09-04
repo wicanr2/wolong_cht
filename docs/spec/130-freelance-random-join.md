@@ -99,7 +99,8 @@ loc_158C2:                        ; 心向 ＝ 0xFF 才走到這裡
 | 骰與分流 | 同檔 `randomJoin()`，三段照 §2.3 |
 | 玩家救濟 | 同檔，門檻 `Cities/4 + 1 > Generals` |
 | 入帳 | 沿用 `raiseGeneralCount`（`sub_12AD2`）|
-| 訊息 | ⚠ **沒做**——心向那一條（`recruitFreelanceGenerals` 的主路徑）同樣只改狀態不排事件（[`114`](114-general-affinity.md) §5）。兩條路一致，要補就一起補 |
+| 入帳與通知 | ⭐ **兩條路共用 `joinFaction`**（同原版的 `loc_1591A`），所以「勢力武將數 +1」與「投靠玩家才通知」只有一份實作 |
+| 訊息 | ✅ **接上了**（2026-09-04）：`World.Tick` 的月結段把投靠玩家的武將排成 `TalkNotice{Index: 0x29}`。TALK #41 ＝「{1}加入麾下了。」，`{1}` 取呼び名（[`../re/79`](../re/79-talk-marker-handlers.md)）；肖像是預設的 `0x93` 不是說話者 |
 
 ⚠ **繞回的迴圈要有上限。** 原版 `.count` 在「一個存在的勢力都沒有」時
 會無限繞（實務上不會發生——玩家自己一定在），remake 加一個
@@ -113,13 +114,20 @@ loc_158C2:                        ; 心向 ＝ 0xFF 才走到這裡
 | 單元測試 ✅ | `TestRandomJoinCountsFromFewest`：骰面 `n` 從最少那一個往後數第 `n` 個存在的勢力，會繞回 |
 | 單元測試 ✅ | `TestRandomJoinPlayerReliefThreshold`：`al ≥ 48` 時，據點數 ÷ 4 ＋ 1 > 武將數才送人，否則不動 |
 | 單元測試 ✅ | `TestRandomJoinSkipsTwentyFivePercentGate`：沒有心向的武將**每月都跑**，不受 25% 閘限制 |
-| 突變測試 ✅ | 起點改成勢力 0（不找最少）⇒ 前兩支當場紅 |
+| 單元測試 ✅ | `TestFreelanceJoinNotifiesOnlyPlayer`：投靠玩家排一則 #41，投靠別人不排 |
+| 單元測試 ✅ | **`TestTickNotifiesFreelanceJoin`：真正的接線**——跑 `Tick` 到月結，看那一則掛在 `Event` 上 |
+| 突變測試 ✅ | 起點改成勢力 0（不找最少）⇒ 前兩支當場紅；把月結段的通知拔掉 ⇒ **只有走 `Tick` 那一支紅** |
+
+⚠ **前一支測不到接線。** `TestFreelanceJoinNotifiesOnlyPlayer` 自己組
+`TalkNotice`，所以把 `state.go` 月結段那幾行拔掉**全套照樣綠**——
+這是同一個 session 第三次踩到（另兩次見 [`128`](128-squad-leader-gone-keeps-reserve.md)、
+[`129`](129-post-battle-morale-scaling.md)）。判準已經固定下來：
+**測完之後把接線那一行拔掉，沒有測試紅就是還沒測到。**
 
 ## 5. 未解
 
 | 項目 | 現況 |
 |---|---|
 | 平手時取編號小的 | 從 `jb`（嚴格小於）推出來的，**沒有實機驗過** |
-| 訊息 `0x29` 的完整文字與觸發畫面 | 只知道索引；原版跳訊息時玩家看到什麼沒有對拍 |
-| 訊息 `0x29` | 兩條路都沒排事件，見 §3 |
+| 訊息 `0x29` 的畫面對拍 | 文字已解（#41「{1}加入麾下了。」），但**原版跳這一則時的畫面沒有對拍過** |
 | 這一條的實際發生頻率 | 開局 81 名在野武將**全部有心向**，所以隨機投靠要等他們兌現完才輪得到（[`../mechanics/70`](../mechanics/70-ai.md) §3.9）。**長跑幾個月才會第一次觸發沒有量過** |

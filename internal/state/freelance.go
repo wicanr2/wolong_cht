@@ -9,6 +9,11 @@ import "github.com/wicanr2/wolong_cht/internal/rules/economy"
 // 也就是每月 0x40/0x100 ＝ **25%** 才會動。
 const affinityRollLimit = 0x40
 
+// freelanceJoinTalk 是出仕通知的 TALK 索引（`sub_15899` 的 `mov cx, 29h`）：
+// #41「{1}加入麾下了。」⭐ **只有投靠玩家時才發**——原版的
+// `cmp bx, cs:word_10CFD / jnz` 擋在前面，而那一段是心向與隨機投靠共用的。
+const freelanceJoinTalk = 0x29
+
 // recruitFreelanceGenerals 跑 `sub_15899` 的兩條路。
 //
 // ⭐ **有心向的每月 25% 才動，沒有心向的每月都跑**——原版的
@@ -57,11 +62,10 @@ func (w *World) recruitFreelanceGenerals(rng economy.Rand) []int {
 		// `mov byte ptr [si+19h], 0FFh` —— 不論後面走哪一條都先清掉。
 		g.Affinity = noFaction
 		if want >= 0 && want < numFactions && w.Factions[want].Alive {
-			g.Faction = want
-			// 原版 `loc_1591A` 的最後一步是 `sub_12AD2(al=勢力, ah=0FFh)`
-			// ——勢力記錄 +0x18 的武將數要跟著加。漏掉的話那個數字會與
-			// 實際人數脫節，而它是政略 AI 的輸入之一（aimarch.go 的註解）。
-			w.raiseGeneralCount(want)
+			// ⭐ 與隨機投靠共用 `loc_1591A`：寫勢力 ＋ `sub_12AD2` 入帳。
+			// 勢力記錄 +0x18 的武將數要跟著加，漏掉的話那個數字會與實際
+			// 人數脫節，而它是政略 AI 的輸入之一（aimarch.go 的註解）。
+			w.joinFaction(id, want)
 			joined = append(joined, id)
 			continue
 		}
@@ -148,9 +152,9 @@ func (w *World) randomJoin(id int, rng economy.Rand) int {
 
 // joinFaction 是 `loc_1591A`：寫勢力、入帳。
 //
-// ⚠ **原版對象是玩家時還會跳訊息 `0x29`，這裡沒做**——心向那一條
-// （`recruitFreelanceGenerals` 的主路徑）同樣只改狀態不排事件
-// （docs/spec/114 §5）。兩條路一致，要補就一起補。
+// ⭐ **兩條路共用它**（心向兌現與隨機投靠），與原版相同——所以入帳與
+// 「投靠玩家才通知」這兩件事只有一份實作。通知本身排在呼叫端
+// （`World.Tick` 的月結段），因為 TalkNotice 要掛在那個 tick 的 Event 上。
 func (w *World) joinFaction(id, to int) int {
 	w.Generals[id].Faction = to
 	w.raiseGeneralCount(to)
