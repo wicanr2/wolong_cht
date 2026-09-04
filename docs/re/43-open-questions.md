@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**542 列分布在 222 份文件，平均每份 2.4 列。**
+**543 列分布在 222 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 13 | 10 | 3 | 0 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 173 | 166 | 6 | 1 |
-| 驗收 | 99 | 84 | 15 | 0 |
+| 驗收 | 100 | 85 | 15 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 231 | 214 | 16 | 1 |
-| **合計** | **542** | 498 | 42 | 2 |
+| **合計** | **543** | 499 | 42 | 2 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -55,7 +55,7 @@
 |---|---:|
 | `docs/spec/` | 196 |
 | `docs/re/` | 173 |
-| `docs/playtest/` | 99 |
+| `docs/playtest/` | 100 |
 | `docs/formats/` | 20 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 13 |
@@ -284,7 +284,7 @@
 | [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `+8+4k` 與 `+10+4k` 的語意 | 從軍團記錄 `+0x28+4k` 起搬進來的兩個 byte，`sub_19F58` 只讀 `+1`／`+3`，這兩格戰鬥中沒有讀取端被找到 | 靜態 |
 | [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `word_1D31A` 的語意 | `sub_1AEA9` 數「在場且 `+0x19` 非零」的兵，`sub_1ADC8` 尾段拿它算優勢（`byte_1D31E`）。`+0x19` 是一個倒數計時器（`sub_1AB7C` 寫 `28h`、`sub_1ADC8` 每幀 `dec`），**它代表什麼還沒解** | 靜態 |
 
-## 2.4 驗收（99 條）
+## 2.4 驗收（100 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -382,7 +382,8 @@
 | [`playtest/61-city-personnel-menu-parity.md`](../playtest/61-city-personnel-menu-parity.md) | 進言那一張 | 五項選單**確定拍不到**（`42` §5：30 ms 瞬按與右鍵回退兩條路都試過），而且 remake 還沒併進 `popupMenu` / — | 靜態 |
 | [`playtest/62-parity-retest-20260903.md`](../playtest/62-parity-retest-20260903.md) | 攻城 `field` 的 0.84% 地板 | 局面不等價（`58` §1.2、`51` §2），與這一輪無關 | 靜態 |
 | [`playtest/62-parity-retest-20260903.md`](../playtest/62-parity-retest-20260903.md) | 野戰 `sb-minimap` 32 → 40 px | 推定是同一個成因（`db7859f` 改變了兵走到同一格的時刻），但**沒有單獨二分過**——攻城那一組二分不自動涵蓋野戰 | 靜態 |
-| [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 第 9 章三種災害 | 一次都沒在原版上觀察過 / 災害是機率觸發的，要嘛長跑等它、要嘛找一個災害剛發生的存檔。`spec/81` 的數值可以當預期值 | 靜態 |
+| [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 第 1、7、8、10、11 章要不要比照第 9 章升級 | **要先逐項查程式碼**（擲骰／接線／傷害量／測試四樣），不能從文件的狀態行推。第 9 章查完的結論與查之前的印象**不一樣** / 照 §2.1 的四欄逐章查 | 靜態 |
+| [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 三種災害的實機觀察 | 仍然沒有，但**依裁定不擋 CONFORMED**。要做的話：災害是機率觸發的，長跑等它或找一個災害剛發生的存檔，`spec/81` 的數值可以當預期值 | 靜態 |
 | [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 第 7 章外交的行為對照 | 停戰／協力的成立與否沒有跟原版比過 / 同狀態存檔 ＋ 兩邊各下同一個提案，比結果 | 靜態 |
 | [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 第 11 章的戰術攻略規則 | 追擊／回り込み／誘餌／疲勞度沒有實跑證據 / 這幾條是**玩家操作技巧**，要設計特定局面才觀察得到 | 實測 |
 | [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 第 1 章結局播放 | 有 remake 截圖，沒有與原版並排 / 原版要打到結局，或用存檔跳到最後一場 | 實測 |
