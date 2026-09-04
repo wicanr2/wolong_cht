@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**540 列分布在 222 份文件，平均每份 2.4 列。**
+**539 列分布在 222 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 172 | 165 | 6 | 1 |
 | 驗收 | 100 | 85 | 15 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 231 | 214 | 16 | 1 |
-| **合計** | **540** | 495 | 42 | 3 |
+| 其他 | 230 | 213 | 16 | 1 |
+| **合計** | **539** | 494 | 42 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,7 +53,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 196 |
+| `docs/spec/` | 195 |
 | `docs/re/` | 172 |
 | `docs/playtest/` | 100 |
 | `docs/formats/` | 20 |
@@ -397,7 +397,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（231 條）
+## 2.6 其他（230 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -455,7 +455,7 @@
 | [`spec/112-cursor-idle-resume-delay.md`](../spec/112-cursor-idle-resume-delay.md) | `sub_20000(ax=2)` 為什麼在恢復時被呼叫 | 那是滑鼠層跳表的第 2 號（`sub_2009A`，回傳快取座標並清旗標），在這個時點叫它的理由沒讀 | 靜態 |
 | [`spec/112-cursor-idle-resume-delay.md`](../spec/112-cursor-idle-resume-delay.md) | 訊息框那一路的 `8` 與游標的 `0Ch` 為什麼不同 | 兩個立即值都是 confirmed，但差別的用意沒有證據；remake 兩邊都用同一個延遲 | 靜態 |
 | [`spec/113-rle-length-header.md`](../spec/113-rle-length-header.md) | `BATTLE.MAP`／`MMAP.MCH`／`BATTLE.MDL` 走哪一支載入器 | 沒查（`../formats/06` §6）。它們的前 4 byte 不是長度，所以**至少不是這一族** | 靜態 |
-| [`spec/114-general-affinity.md`](../spec/114-general-affinity.md) | 隨機投靠那一條 | `sub_15899` 的 `+0x19 == 0xFF` 分支還沒接（§3 的第二個 ⚠）。要先把勢力的武將數與據點數接進規則層 | 靜態 |
+| [`spec/114-general-affinity.md`](../spec/114-general-affinity.md) | 隨機投靠那一條 | `sub_15899` 的 `+0x19 == 0xFF` 分支還沒接（§3 的第二個 ⚠）。⭐ **擋它的前提 2026-09-04 查證後不成立**——`state.Faction` 的 `Generals`（武將數）與 `Cities`（據點數）兩個欄位早就在，而且有維護（前者由武將表決定、後者月結重算）。… | 靜態 |
 | [`spec/114-general-affinity.md`](../spec/114-general-affinity.md) | 出仕的畫面通知 | 原版對象是玩家勢力時跳訊息 `0x29`；這一版只改狀態，不排事件 | 靜態 |
 | [`spec/114-general-affinity.md`](../spec/114-general-affinity.md) | 旗標 bit 5 之外的退場條件 | `sub_15899` 只在「心向的勢力已滅」時看 bit 5；bit 5 沒設的武將會留在原地等下一輪，這一點沒有實機驗證 | 靜態 |
 | [`spec/115-soldier-power.md`](../spec/115-soldier-power.md) | 海戰適性實際被取到過沒有 | 算式與接線都對了，但**沒有跑過一場橋上的野戰**。要驗得讓兩支軍團在圖塊 `0xCA` 那一格遭遇 | 靜態 |
@@ -479,7 +479,7 @@
 | [`spec/122-sound-type-levels.md`](../spec/122-sound-type-levels.md) | 四段的實際音量差 | 沒有錄下原版四個 TYPE 的波形量過。算式來自機器碼，聽感沒驗 | 靜態 |
 | [`spec/122-sound-type-levels.md`](../spec/122-sound-type-levels.md) | `AH=0Bh` 只重算三個聲部 | 原版那個迴圈是 `ah = 0、1、2`（`../re/81` §5）。remake 的主增益對所有聲部一致，這一點**沒有照抄** | 靜態 |
 | [`spec/123-captive-talk-messages.md`](../spec/123-captive-talk-messages.md) | 城兵那一側 | `sub_14FCE` 也呼叫 `sub_129C3`（守城武將被擒）。remake 的城兵路徑有沒有走到同一則沒驗 | 靜態 |
-| [`spec/124-menu-highlight-xor.md`](../spec/124-menu-highlight-xor.md) | 其餘七格的反白 | `activeCommandCell()` 目前只認得「軍團」那張彈出選單。其他六格（進言／人事／財政／編成／據點／武將／勢力）的流程沒有統一的「這一段還在跑」訊號，**硬接會在錯的時刻亮著**。要一格一格補謂詞，而且每一格都該有自己的對拍 | 靜態 |
+| [`spec/124-menu-highlight-xor.md`](../spec/124-menu-highlight-xor.md) | 其餘幾格的反白 | ⭐ **三張已接**（軍團／據點／人事，`126` 的 `popupMenu.cell`，三張的反白格都對過 0 px：`../playtest/60`／`61`）。剩下的四格（進言／財政／編成／武將／勢力）流程沒有統一的「這一段還在跑」訊號，**硬接會在錯的時刻亮著**。要一格一格補謂詞，而且每一格都該有自己的對拍 | 靜態 |
 | [`spec/124-menu-highlight-xor.md`](../spec/124-menu-highlight-xor.md) | 清單視窗的反白條 | `chrome.Select` 色 5 是**沒有實機證據的猜測**（§3）。要一張選著某一列的原版清單才驗得了 | 靜態 |
 | [`spec/124-menu-highlight-xor.md`](../spec/124-menu-highlight-xor.md) | `sub_10B46` 的暫存器序列 | 只確認了它寫 `0Ch` 給繪圖控制器、而結果逐點等於 XOR 12。**中間那幾個 port 寫入沒有逐行讀** | 靜態 |
 | [`spec/125-menu-box-width-from-padding.md`](../spec/125-menu-box-width-from-padding.md) | 「據點」那兩項 | `TALK #82`（「　首都確認　」／「　據點一覽　」）同樣是兩項選單，remake 的「據點」目前直接開一覽（`110` §5）。做了之後框寬會自動對——但那是另一件事 | 靜態 |
@@ -621,7 +621,6 @@
 | [`spec/89-siege-damage-report-toggle.md`](../spec/89-siege-damage-report-toggle.md) | 結果畫面本身原版沒有 | 原版打完直接回戰略畫面。要不要整頁拿掉是另一個裁定，本規格只讓多出來的那一行可關 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |
-| [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 主畫面的四窗狀態 | 開局四個視窗全關（`sub_11A6E` 結尾 `mov cs:byte_198A6, 0`）。要開得先移游標再按同一點（`docs/re/47` §3.1），單純 `click` 會被當成移動吃掉 | 靜態 |
 | [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |
 | [`spec/91-tactical-parity.md`](../spec/91-tactical-parity.md) | 動畫幀序 | 原版的兵有 `PoseStep`，截圖時機差一幀就整批不同。這是 `field` 剩下那 299 px 的來源之一（`../playtest/40` §13） | 實測 |
 | [`spec/91-tactical-parity.md`](../spec/91-tactical-parity.md) | 野戰打起來之後的戰場 | **開戰第一拍已經對過**（九區裡七區 0 px、`field` 0.05%，`../playtest/43`）。沒對過的是**開戰之後**的畫面——野戰的地形是從大地圖即時長出來的，兩邊要走到同一個 tick 比攻城更難湊 | 靜態 |
