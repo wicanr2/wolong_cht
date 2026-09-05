@@ -20,7 +20,7 @@ exec docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
     --network none --memory 768m --cpus 1 --pids-limit 96 \
     -v "$REPO_ROOT:/src" \
     -u "$(id -u):$(id -g)" \
-    -e HOME=/tmp \
+    -e HOME=/tmp -e TZ="${TZ:-$(cat /etc/timezone 2>/dev/null || echo UTC)}" \
     $(env | sed -n 's/^\(WOLONG_[A-Z0-9_]*\)=.*/-e \1/p') \
     -w /src \
     "$IMAGE" python3 "$@"

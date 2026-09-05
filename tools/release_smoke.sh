@@ -26,6 +26,7 @@ docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
     --network none --memory 2g --cpus 2 --pids-limit 256 \
     -v "$REPO_ROOT/dist-all/packages:/pkg:ro" -v "$ORIG:/orig:ro" -v "$OUT:/out" \
     -u "$(id -u):$(id -g)" -e HOME=/tmp -e LIBGL_ALWAYS_SOFTWARE=1 \
+    -e TZ="${TZ:-$(cat /etc/timezone 2>/dev/null || echo UTC)}" \
     -w /tmp "${WOLONG_GO_IMAGE:-demonwinter-go}" bash -lc "
 set -e
 Xvfb :99 -screen 0 1600x900x24 >/tmp/xvfb.log 2>&1 &

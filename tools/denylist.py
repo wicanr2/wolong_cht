@@ -224,6 +224,21 @@ def selftest(repo):
         shutil.rmtree(tmp, ignore_errors=True)
 
 
+# 封裝檔的副檔名。deny-list 不解壓縮——解壓縮會讓一支發行閘變成
+# 一個要處理任意輸入的工具，而**它該做的是叫呼叫端掃對地方**。
+SEALED_SUFFIXES = (".tar.gz", ".tgz", ".zip", ".apk", ".AppImage", ".dmg")
+
+
+def archives_in(target):
+    """回傳目錄下（含子目錄）所有封裝檔的相對路徑。"""
+    out = []
+    for root, _dirs, files in os.walk(target):
+        for f in files:
+            if f.endswith(SEALED_SUFFIXES):
+                out.append(os.path.relpath(os.path.join(root, f), target))
+    return out
+
+
 def main():
     repo = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     if len(sys.argv) > 1 and sys.argv[1] == "--selftest":
@@ -240,6 +255,18 @@ def main():
               "改名過的原版素材這次抓不到。")
     else:
         print(f"內容雜湊比對了 {ntable} 個原版檔")
+
+    # ⚠⚠ **這一層看不進封裝檔。** 對著一個只有 tar.gz／AppImage／APK 的
+    # 目錄掃，會掃到十來個檔然後印「通過」——而那些包裡塞滿原版資產。
+    # 「沒跑進去」與「跑了沒中」在輸出上一模一樣，正是這支要擋的失敗模式。
+    #
+    # ⇒ 發行閘要掃**封裝之前的樹**（`dist/`、`dist-all.staging/`），
+    #   不是掃封裝之後的產物目錄。
+    sealed = sorted(archives_in(target)) if target else []
+    if sealed:
+        print(f"⚠ 這個目錄裡有 {len(sealed)} 個封裝檔，**沒有掃進去**："
+              + "、".join(sealed[:4]) + ("…" if len(sealed) > 4 else ""))
+        print("  發行閘要掃封裝**之前**的樹，掃產物目錄等於沒掃。")
 
     if not bad:
         print("通過：沒有原版資產")

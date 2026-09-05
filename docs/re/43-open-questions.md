@@ -3,7 +3,7 @@
 **狀態：生成的清單，跑 `tools/py.sh tools/re_open_questions.py` 重出。
 這一份不下結論，只把各文件的「未解」表集中到一處。**
 
-- 日期：2026-09-05
+- 日期：2026-09-06
 - 產生工具：`tools/re_open_questions.py`
 - 來源：`docs/` 底下所有文件的未解小節、表格裡標未解的列，與收尾是「…未解」的散句
 
@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**609 列分布在 251 份文件，平均每份 2.4 列。**
+**613 列分布在 252 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 181 | 174 | 6 | 1 |
 | 驗收 | 139 | 121 | 18 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 252 | 233 | 18 | 1 |
-| **合計** | **609** | 559 | 47 | 3 |
+| 其他 | 256 | 236 | 19 | 1 |
+| **合計** | **613** | 562 | 48 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -56,8 +56,8 @@
 | `docs/spec/` | 217 |
 | `docs/re/` | 181 |
 | `docs/playtest/` | 139 |
+| `docs/release/` | 22 |
 | `docs/formats/` | 20 |
-| `docs/release/` | 18 |
 | `docs/mechanics/` | 11 |
 | `docs/mobile/` | 11 |
 | `docs/promo/` | 6 |
@@ -445,7 +445,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（252 條）
+## 2.6 其他（256 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -480,6 +480,10 @@
 | [`release/12-full-20260902.md`](../release/12-full-20260902.md) | Android 實機與 release signing | 沒有裝置；金鑰保管方式未定 | 靜態 |
 | [`release/12-full-20260902.md`](../release/12-full-20260902.md) | Android 模擬器 smoke | `wolong-android-emulator` 映像不在這台機器上 | 靜態 |
 | [`release/12-full-20260902.md`](../release/12-full-20260902.md) | 可散布批次 | 仍停在 `20260830`，這一輪的六項修正還沒進公開發行 | 靜態 |
+| [`release/13-full-20260906.md`](../release/13-full-20260906.md) | Windows／macOS 原生 GUI | ❌ 沒有機器，仍未驗 | 靜態 |
+| [`release/13-full-20260906.md`](../release/13-full-20260906.md) | Android 實機 | ❌ 只有 debug 簽章，仍未驗 | 靜態 |
+| [`release/13-full-20260906.md`](../release/13-full-20260906.md) | Windows／macOS／Android 實機 | 外部條件：缺機器 | 靜態 |
+| [`release/13-full-20260906.md`](../release/13-full-20260906.md) | 可散布批次（`WOLONG_BUNDLE_DATA=0`） | 這一輪沒建；新接上的 deny-list 閘還沒在那條路徑上實跑過 | 實測 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Windows／macOS 原生 GUI | 交叉建置的產物只驗了檔頭，沒有在目標作業系統跑過。M8 唯一的閘 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 實機驗收 | 只有 Docker 模擬器；觸控手感、真實 GPU、高 DPI 上的點陣字可讀性都驗不到 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 正式簽章 | 出的是 debug 簽章，keystore 怎麼保管還沒決定 | 靜態 |

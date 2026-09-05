@@ -48,9 +48,17 @@ else
         echo "找不到 workplace/orig/dosv/SINARIO.DAT" >&2; exit 1; }
 fi
 
+# ⚠ **容器要跟主機同一個時區。** 容器預設 UTC，而 `release_all_fs.py`
+# 的 APK 檔名取自 mtime——台北時間清晨建的 APK 會被戳成**前一天**，
+# 於是同一批裡五個檔是 `20260906`、APK 是 `20260905`
+# （2026-09-06 實際發生過）。批次號不一致最貴的地方是：
+# **檔案內容是對的**，只有名字在說謊，逐檔比雜湊也發現不了。
+HOST_TZ="${TZ:-$(cat /etc/timezone 2>/dev/null || echo UTC)}"
+
 run_repo_write() {
     docker run --rm --network none --memory 1g --cpus 1 --pids-limit 128 \
-        -u "$UID_GID" -e WOLONG_DIST_ROOT=/src/$(basename "$STAGING_ROOT") \
+        -u "$UID_GID" -e TZ="$HOST_TZ" \
+        -e WOLONG_DIST_ROOT=/src/$(basename "$STAGING_ROOT") \
         -e WOLONG_RELEASE_VERSION="$RELEASE_VERSION" \
         -e WOLONG_BUNDLE_DATA="$BUNDLE_DATA" \
         -v "$REPO_ROOT:/src" -w /src "$GO_IMAGE" "$@"
@@ -118,9 +126,24 @@ run_macos bash -lc '
 run_repo_write python3 tools/release_all_fs.py stage
 run_repo_write python3 tools/release_all_fs.py appdir
 run_appimage bash -lc "ARCH=x86_64 /opt/appimagetool.d/usr/bin/appimagetool --no-appstream /out/.work/appdir /out/packages/wolong-remake-linux-amd64-${STAMP}.AppImage"
+# ⭐ **發行閘要掃封裝之前的樹。** deny-list 看不進 tar.gz／AppImage／APK
+# （2026-09-06 實測：對著 `dist-all` 掃會印「掃了 19 個檔、通過」，
+# 而那六個包裡塞滿原版資產）——所以它必須跑在 `finalise` 打包**之前**，
+# 掃 staging 底下那些還攤開著的平台目錄。
+#
+# ⚠ 完整版批次**本來就內含原版資產**，這道閘會（正確地）擋下來，
+# 所以只對可散布批次跑。**要在 log 裡明講跳過了**，
+# 否則「沒跑」與「跑了沒中」在輸出上長得一樣。
+if [ "$BUNDLE_DATA" = 0 ]; then
+    echo "── 發行閘：deny-list 掃 $(basename "$STAGING_ROOT") ──"
+    run_repo_write python3 tools/denylist.py "$(basename "$STAGING_ROOT")"
+else
+    echo "── 發行閘：完整版批次刻意跳過 deny-list（包裡本來就有原版資產）──"
+fi
+
 run_repo_write python3 tools/release_all_fs.py finalise
 
-# 只有 staging 完成編譯、封裝、雜湊與 deny-list 後才交換到正式目錄。
+# staging 完成編譯、封裝、雜湊（可散布批次另加 deny-list）之後才交換到正式目錄。
 run_repo_write python3 tools/release_all_fs.py promote
 
 if [ "$BUNDLE_DATA" = 0 ]; then
