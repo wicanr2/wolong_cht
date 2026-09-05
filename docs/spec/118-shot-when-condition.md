@@ -50,6 +50,7 @@
 |---|---|
 | `battle` | 戰術戰鬥開著 |
 | `battle-frame:N` | 戰術戰鬥開著，而且 `Battle.Frame ≥ N` |
+| **`battle-settled`** | ⭐ **開場布陣走完的那一刻**：這一拍**沒有任何一個兵移動**（而且已經過了第 10 拍）。原版把兵擺在戰場邊界再讓他們走進陣形（[`133`](133-opening-deployment.md)），走完之後有一小段誰都不動的空窗，接著腳本才下第一道命令——**那是戰術對拍唯一「兩邊都靜止」的取樣窗**（[`../playtest/74`](../playtest/74-settled-tick-parity.md)）|
 | `gate-bar` | 戰術戰鬥開著，而且 `Battle.StructureBar()` 的第二個回傳值為真（門強度條顯示中）|
 
 `gate-bar` 就是 [`91`](91-tactical-parity.md) §6 那張表的第二列，
@@ -75,8 +76,19 @@
 
 | 方式 | 內容 |
 |---|---|
-| 單元測試 | `cmd/wlgame/shotwhen_test.go`：三個條件各自的成立／不成立、`battle-frame:` 的邊界、**不認得的值要回錯誤**（少了這一條，打錯字會靜靜退回「照幀數截圖」）|
+| 單元測試 | `cmd/wlgame/shotwhen_test.go`：各條件的成立／不成立、`battle-frame:` 的邊界、**不認得的值要回錯誤**（少了這一條，打錯字會靜靜退回「照幀數截圖」）、`TestBattleSettledWaitsForEveryoneToStop` |
+| 對原版 | `battle-settled` 取到的畫面與寫死 `-battle-steps 70` **同一個狀態**（`sb-minimap` 都是 8 px，[`../playtest/74`](../playtest/74-settled-tick-parity.md)）|
 | 對原版 | [`../playtest/59`](../playtest/59-shot-when-natural-flow.md)：野戰走**自然流程**（`-auto-messages -shot-when battle-frame:52`）與 `-open-battle` 那條捷徑截出同一張畫面；攻城用 `-shot-when gate-bar` 取樣 |
+
+## 4.5 ⚠ `battle-settled` 的兩個坑，都是「成立在錯的地方」
+
+| 坑 | 症狀 | 修法 |
+|---|---|---|
+| 拿**座標範圍**當判準 | 範圍在大部分人到位之後就不再變，而**最後幾個還在走** | 判準改成「這一拍動了幾個 ＝ 0」|
+| 跨**呼叫次數**比而不是跨**戰術拍**比 | 條件每個畫面幀都被問一次，而戰鬥不是每一幀走一拍——連問兩次看到同一組座標是常態，於是**第 2 拍就成立** | 記住上一次的 `Battle.Frame`，同一拍直接回 false |
+
+⭐ 第二個坑**回了一張圖、退出碼 0**，只是那張圖是第 2 幀的——
+與這一份規格要消滅的失敗模式（打錯字靜靜退回照幀數截圖）是同一個形狀。
 
 ## 5. 未解
 

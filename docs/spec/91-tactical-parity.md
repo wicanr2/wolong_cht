@@ -105,8 +105,13 @@
 | 原版 | `tools/dosgolem.sh` 的 `units` 動作：`cs:word_1D30E` 段，側 0 在 `0x000`、側 1 在 `0x600`，六隊 × 8 個 × 32 B，座標在 `+0x06`／`+0x08`（[`../re/11`](../re/11-tactical-battle.md) §3.6）|
 | remake | `wlgame -list-units`（本節新增）|
 
-判準：**逐兵座標相同**。開場那一刻兩邊都還沒動，所以這是最乾淨的比較點
-（[`../playtest/70`](../playtest/70-dosgolem-tactical-commands.md) §3：前 45 個節拍兩軍幾乎不動）。
+判準：**逐兵座標相同**——但開場那一刻不成立，因為原版的擺位 Y 是亂數
+（[`133`](133-opening-deployment.md)）。
+
+⭐ **乾淨的取樣點是「全軍站定」**：開場布陣走完、腳本還沒下第一道命令的那一段。
+兩邊都在**第 70 拍**站定、**第 75/76 拍**重新開動，而在那一刻小地圖只差
+**8 px**（[`../playtest/74`](../playtest/74-settled-tick-parity.md)）。
+寫成條件就是 `-shot-when battle-settled`（[`118`](118-shot-when-condition.md)）。
 
 
 ## 6. 取樣點要用局面條件，不要寫死步數

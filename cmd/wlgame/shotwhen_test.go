@@ -95,3 +95,42 @@ func TestShotConditionsOnALiveBattle(t *testing.T) {
 		t.Error("推過 1 幀之後 `battle-frame:1` 應該成立")
 	}
 }
+
+// TestBattleSettledWaitsForEveryoneToStop 釘住 `battle-settled`。
+//
+// ⚠ **開場的頭幾拍大家都還沒起步，也是「沒有人動」**——所以條件多一道
+// `Frame > 10`。少了它會在第 2 拍就成立，而那時兵還在邊界上。
+func TestBattleSettledWaitsForEveryoneToStop(t *testing.T) {
+	c, err := parseShotWhen("battle-settled")
+	if err != nil {
+		t.Fatal(err)
+	}
+	g := siegeShotFixture(t)
+	b := g.shotBattle()
+	if b == nil {
+		t.Skip("這個 fixture 沒有戰鬥")
+	}
+	// 前十拍即使沒有人動也不能成立。
+	for i := 0; i < 10; i++ {
+		if c.check(g) {
+			t.Fatalf("第 %d 拍就成立了——開場還沒起步", b.Frame)
+		}
+		b.Step()
+	}
+	// 跑到成立為止，並記下是第幾拍。
+	settled := -1
+	for i := 0; i < 4000 && settled < 0; i++ {
+		if c.check(g) {
+			settled = b.Frame
+			break
+		}
+		b.Step()
+	}
+	if settled < 0 {
+		t.Fatal("4000 拍內沒有任何一拍是「全軍都沒動」")
+	}
+	t.Logf("第 %d 拍全軍站定", settled)
+	if settled < 20 {
+		t.Errorf("第 %d 拍就站定，太早——開場布陣要走一段路", settled)
+	}
+}

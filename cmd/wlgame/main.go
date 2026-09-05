@@ -1649,7 +1649,7 @@ func main() {
 	framesDir := flag.String("frames-dir", "", "把每一張畫出來的圖寫成 fNNNNN.png（推廣片素材，docs/spec/71）")
 	framesN := flag.Int("frames", 300, "配 -frames-dir：錄幾張就結束")
 	shotFrames := flag.Int("shot-frames", 120, "截圖前先跑幾幀（配 -shot-when 時退成下限）")
-	shotWhen := flag.String("shot-when", "", "截圖時機改用局面條件（docs/spec/118）：`battle`／`battle-frame:N`／`gate-bar`；留白＝照 -shot-frames")
+	shotWhen := flag.String("shot-when", "", "截圖時機改用局面條件（docs/spec/118）：`battle`／`battle-frame:N`／`battle-settled`／`gate-bar`；留白＝照 -shot-frames")
 	shotDeadline := flag.Int("shot-deadline", 20000, "配 -shot-when：等到第 N 幀還不成立就放棄並回非零")
 	autoMessages := flag.Bool("auto-messages", false, "截圖模式自動按掉訊息框（驗收用，docs/spec/118）")
 	saveFile := flag.String("save-file", "", "可寫的四槽存檔 overlay 路徑；一般啟動可選讀檔")
