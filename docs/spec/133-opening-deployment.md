@@ -1,9 +1,8 @@
 # 133 — 開場擺位：邊界那一欄 ＋ 亂數 Y
 
-**狀態：READY，但接線被擋住。** 算式與值域都有機器碼出處，
-另有執行期逐兵量測當正對照；`Battle.Spawn` 已實作並有三支測試，
-**但接進遊戲路徑會讓攻城戰打不完**（§3.5）——那是 remake 移動層的限制，
-要另外解。
+**狀態：CONFORMED。** 算式與值域都有機器碼出處，另有執行期逐兵量測當正對照；
+`Battle.Spawn` 已實作、接上遊戲路徑，四支測試。
+量到的形狀與原版一致：**X 全在邊界那一欄、Y 落在 16–47、44 個兵重疊**。
 
 - 日期：2026-09-05
 - 出處：[`../re/87`](../re/87-opening-deployment.md)（`sub_19C45`）、
@@ -32,24 +31,29 @@ Y ＝ rnd() & 0x1F + 0x10             ← 16–47 均勻分佈
 |---|---|
 | 新增 `Battle.Spawn(rng)` | 照 §1 擺位：`X` 依側寫死、`Y = rng&0x1F + 0x10`、不查佔用 |
 | `Place()` **保留** | 它是「直接放到陣形位置」，測試與無頭模擬繼續用——**兩支不要合併**，它們回答不同的問題 |
-| 呼叫端 | `internal/state/tactical.go` 的 `beginTactical` 由 `Place()` 改成 `Spawn()` ⚠ **這一步還沒做**，見 §3.5 |
+| 呼叫端 | `internal/state/tactical.go` 的 `beginTactical` 由 `Place()` 改成 `Spawn()` |
+| **擺哪一邊** | ⚠ **看陣形線，不看側的編號**，見 §3.5 |
 | 走進去 | 沿用既有的「命令＝陣形 → 走到 `formationSpot`」那一段，不必新增 |
 
-## 3.5 ⚠ 接上去會打不完（2026-09-05 實測）
+## 3.5 ⚠ 擺哪一邊要看陣形線，不看側的編號
 
-把 `beginTactical` 的 `Place()` 換成 `Spawn()` 之後，
-`TestSiegeFixtureTerminates` 從「第 1,192 幀結束」變成
-**跑滿 60,000 幀還沒結束**（側 0 剩 588 兵、側 1 剩 500 兵）。
-⭐ **不是變慢，是卡死**：上限從 6,000 拉到 60,000，剩餘兵數一個都沒變。
+原版的**側 0 恆為玩家**，而且玩家守城時整個戰場轉 180 度
+（[`../re/11`](../re/11-tactical-battle.md) §3.6、[`56`](56-battlefield-rotation.md)），
+所以「側 0 → `X=1`」在原版的座標框裡永遠成立。
+**remake 的 `Sides[0]` 恆為攻方**，照側號擺會把兩邊各丟到**對面那一端**。
 
-最可能的成因是**同一格疊了好幾個兵**——原版不查佔用，而 remake 的
-`tryMove`／`anyoneAt` 是以「一格一個兵」為前提寫的，
-三個兵疊在 `(1,25)` 時彼此都讓不開。
-這與 [`94`](94-retreat-path-not-cleared-every-frame.md) 是同一類的
-「整排卡在半路」，但成因不同。
+⇒ 判準是**那一側的陣形線在哪一端**（`Sides[i].Line`）。
 
-⇒ **先把移動層對「同格多兵」的行為解出來再接**。
-在那之前 `beginTactical` 維持 `Place()`，`Spawn` 只有測試在用。
+### ⚠ 這個錯誤的症狀是「攻城戰打不完」
+
+第一版照側號擺，`TestSiegeFixtureTerminates` 從「第 1,192 幀結束」變成
+**跑滿 60,000 幀還沒結束**，而且**剩餘兵數一個都沒變**（588／500）。
+
+⭐ **當時的第一個假說是錯的**：以為是「同一格疊了好幾個兵、`tryMove`
+彼此讓不開」。實際上把每個兵的狀態印出來就看到——他們的目標在
+**59 格外**，走到一半**體力歸零**（`力0`）就停住了。
+**「卡死」的第一個假說最貴**：它指向移動層，而真正的錯在一行擺位。
+判法很便宜：印五個兵的 `座標 → 目標 令 體 力`，一眼就看出目標在對面。
 
 ## 3.6 ⚠ 驗收判準要改
 
@@ -70,8 +74,10 @@ Y ＝ rnd() & 0x1F + 0x10             ← 16–47 均勻分佈
 
 | 方式 | 證據 |
 |---|---|
-| 單元測試 | `TestSpawnPutsEveryoneOnTheEdgeColumn`、`TestSpawnYStaysInRange`、`TestSpawnAllowsStacking` |
-| 對原版 | `tools/dosgolem.sh` 的 `units` 動作 vs `wlgame -list-units`（[`91`](91-tactical-parity.md) §5.5）|
+| 單元測試 | `TestSpawnPutsEveryoneOnTheEdgeColumn`、`TestSpawnYStaysInRange`、`TestSpawnAllowsStacking`、**`TestSpawnFollowsTheFormationLine`**（釘住 §3.5 那個錯誤）|
+| 對原版 | `tools/dosgolem.sh` 的 `units` 動作 vs `wlgame -list-units`（[`91`](91-tactical-parity.md) §5.5）。量到：**X 全在邊界欄（1／62）、Y 16–47、44 個兵重疊**——三項都與原版同形（[`../playtest/73`](../playtest/73-opening-deployment-parity.md) §4）|
+| 收斂 | `TestSiegeFixtureTerminates` 第 **1,324** 幀結束（改之前是 1,192）|
+| ⚠ 既有對拍的漂移 | 野戰七區仍 0 px、`field` 95 px 不變，`sb-minimap` 37 → **64 px**；攻城那一組 `field` 0.85% → **1.19%**（最佳取樣點由 160 拍移到 200 拍）。**那一組本來就不是同一場**（[`../playtest/51`](../playtest/51-siege-deadlock.md)），而開場現在有一段隨機的走位期，取樣點跟著移 |
 
 ## 5. 未解
 

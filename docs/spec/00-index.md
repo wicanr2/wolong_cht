@@ -174,7 +174,7 @@
 | 沒有心向的在野武將：隨機投靠，偏向武將最少的勢力 | [`130-freelance-random-join.md`](130-freelance-random-join.md) | 已接。⭐ **不經過 25% 那道閘**；骰面 ≥ 48 是玩家專屬的救濟 |
 | 原版 oracle 換成 dosgolem，不再需要 DOSBox | [`131-dosgolem-oracle.md`](131-dosgolem-oracle.md) | 已接 `tools/dosgolem.sh`。五格 × 五區全 0 px，整條鏈 0.99 秒；⭐ 即時制的取樣點可以寫成**遊戲日期** |
 | **行軍走到和平勢力的邊界要掉頭** | [`132-march-turnback-at-peace.md`](132-march-turnback-at-peace.md) | CONFORMED。⭐ **和平就出不了兵**：`sub_142AB` 在野外每一步都問前方據點是誰的，是和平勢力就折返。已實作，三組突變測試 |
-| **開場擺位：邊界那一欄 ＋ 亂數 Y** | [`133-opening-deployment.md`](133-opening-deployment.md) | READY。⭐ 原版把每個兵放在戰場邊界（側 0 `X=1`、側 1 `X=62`），`Y ＝ 亂數 & 0x1F + 0x10`，**不查佔用**；之後才走進陣形。remake 直接放到陣形位置，逐兵 0/48 相同 |
+| **開場擺位：邊界那一欄 ＋ 亂數 Y** | [`133-opening-deployment.md`](133-opening-deployment.md) | CONFORMED。⭐ 原版把每個兵放在戰場邊界（側 0 `X=1`、側 1 `X=62`），`Y ＝ 亂數 & 0x1F + 0x10`，**不查佔用**；之後才走進陣形。remake 已接上，量到 X 全在邊界欄、Y 16–47、44 個兵重疊 |
 
 ## 怎麼加一份
 

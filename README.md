@@ -76,7 +76,7 @@
 | 三個視窗開著（命令列／自勢力／縮小地圖）| **0 px** | [`playtest/38`](docs/playtest/38-window-parity.md) |
 | 系統選單開著（選單本身 ＋ 4 區）| **0 px** | [`playtest/39`](docs/playtest/39-system-window-parity.md) |
 | ⭐ **攻城戰，兩邊開同一場**（9 區）| **七區 0 px**、`field` **0.10%**、小地圖 2.50%。2026-09-05 第一次做得到「同一場」——dosgolem 直接叫原版的 `sub_14ADE` 開一場指定的仗。⚠ **`field` 的 0.10% 沒有涵蓋部隊**（鏡頭對著城牆，開場一個兵都不在畫面上）| [`playtest/72`](docs/playtest/72-same-battle-parity.md) |
-| ⚠ **逐兵對拍**（開場布陣）| **0/48 相同**。原版開場把兵擺在戰場最外側那一欄（`X=1`／`62`）、`Y` 分散且會重複，再讓他們走進去；remake 直接放到陣形位置。**這是畫面看不出來的**——要讀狀態 | [`playtest/73`](docs/playtest/73-opening-deployment-parity.md) |
+| ⚠ **逐兵對拍**（開場布陣）| 一開始 **0/48 相同**——原版把兵擺在戰場最外側那一欄（`X=1`／`62`）、`Y` 是亂數且會重複，再讓他們走進去；remake 直接放到陣形位置。**這是畫面看不出來的**，要讀狀態。**同一天解出原版的擺位常式並接上**（[`re/87`](docs/re/87-opening-deployment.md)、[`spec/133`](docs/spec/133-opening-deployment.md)），三項形狀都對上；逐兵座標仍對不到，因為 `Y` 是亂數 | [`playtest/73`](docs/playtest/73-opening-deployment-parity.md) |
 | ↳ 先前那一組（**不是同一場**）| 側欄四區 0 px、底列 2 px、對方將旗 14 px；`field` 0.86%、小地圖 1.64%。那 0.86% 的成因就是「不是同一場」 | [`playtest/51`](docs/playtest/51-siege-deadlock.md) §1 |
 | ↳ 這一組怎麼從 0.17% 變成 4.32% 再回到 0.86% | 2026-08-18 量到 0.17%；2026-08-27 重跑 4.32%，拆開之後是**兩個真的缺口**（城壁一撞就垮、門強度量表少畫外框）加上取樣點被 `spec/59`／`spec/80` 作廢 | [`playtest/49`](docs/playtest/49-parity-retest-20260827.md) §3 |
 | ↳ 規則層的時間序列對拍 | **攻城計時器的速率**與**進城的機制**都對上；殘差是破牆花多久，而原版那一側的體力同時被計時器與挨打扣，單張畫面回推不出幀 | [`playtest/52`](docs/playtest/52-siege-timeseries-parity.md) |
@@ -89,7 +89,7 @@
 | ⭐ **原版側自己**（dosgolem vs DOSBox-X）| 戰術畫面四個不隨戰況變的區 **0 px**、`field` 的地形一點都不差（兩張是**不同的兩場仗**，所以「哪些區該相同」事先算得出來）| [`playtest/68`](docs/playtest/68-dosgolem-tactical-screen.md) |
 | ⭐ **狀態層**（原版記憶體 vs remake 解出來的存檔）| 八支軍團的勢力／主將／兵力／士氣／據點／目標／六個部隊槽**全部相同**——畫面相同只證明畫得一樣，這一份證明**讀得一樣** | [`playtest/71`](docs/playtest/71-corps-table-parity.md) |
 | 音訊 | 會出聲、場景對應已解、與原版錄音比對過；**音色的諧波結構沒量化比對** | [`spec/29`](docs/spec/29-audio.md) |
-| 規則規格 | **119 份**（不含索引與 `TEMPLATE.md`）：**117 CONFORMED**／**2 READY**（`83-initial-strategy-pass`、`133-opening-deployment`）／0 DRAFT | [`spec/00`](docs/spec/00-index.md) |
+| 規則規格 | **119 份**（不含索引與 `TEMPLATE.md`）：**118 CONFORMED**／1 READY（`83-initial-strategy-pass`）／0 DRAFT | [`spec/00`](docs/spec/00-index.md) |
 | 反組譯 | 739/739 支有筆記；`docs/re/` 自己標成未解的有 **172 列**（每寫一份新的反組譯筆記就帶進自己的未解表）| [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
 | 全專案的未解 | **589 列**（另有 6 列是 DOS／BIOS 平台層與編譯器 runtime，不計入）。⚠ **這個數字比較接近「文件有多少份」**——589 列分布在 242 份文件、平均每份 2.4 列，而每寫一份新文件就帶進約三列自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
 

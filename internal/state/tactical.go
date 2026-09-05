@@ -161,7 +161,7 @@ func (w *World) beginTactical(att, def int, m combat.Mode, garrison int) bool {
 	}
 	deploy(0, att)
 	deploy(1, def)
-	b.Place()
+	b.Spawn(w.rng)
 
 	// AI 那一側交給 `BATTLE.DAT` 的腳本（段編號 ＝ 武將 +0x16 × 4 ＋
 	// 戰場類別，docs/re/11 §3.2）。**玩家那一側不裝**，由畫面層下命令。

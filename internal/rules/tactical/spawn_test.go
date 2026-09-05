@@ -98,3 +98,29 @@ func TestSpawnAllowsStacking(t *testing.T) {
 type seqRand int
 
 func (r *seqRand) Next() int { *r += 7; return int(*r) }
+
+// TestSpawnFollowsTheFormationLine 釘住「擺哪一邊看陣形線，不看側號」。
+//
+// ⚠ 這是踩過的坑：remake 的 `Sides[0]` 恆為**攻方**，而原版的側 0 恆為
+// **玩家**（玩家守城時整個戰場轉 180 度）。照側號擺會把兩邊各丟到對面
+// 那一端——走 59 格、體力耗光，整場停住（`docs/spec/133` §3.5）。
+func TestSpawnFollowsTheFormationLine(t *testing.T) {
+	b := spawnBattle(t)
+	// 把兩側的陣形線對調：側 0 在遠端、側 1 在近端。
+	b.Sides[0].Line, b.Sides[1].Line = LineFor(1, 0), LineFor(0, 0)
+	var r seqRand
+	b.Spawn(&r)
+	want := [2]int{spawnXSide1, spawnXSide0} // 跟著陣形線一起對調
+	for side := range b.Sides {
+		for k := range b.Sides[side].Soldiers {
+			s := &b.Sides[side].Soldiers[k]
+			if !s.Alive {
+				continue
+			}
+			if s.X != want[side] {
+				t.Fatalf("陣形線在 %d 的那一側擺在 X=%d，應為 %d",
+					b.Sides[side].Line, s.X, want[side])
+			}
+		}
+	}
+}

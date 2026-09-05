@@ -544,8 +544,15 @@ func (b *Battle) Spawn(rng Rand) {
 		rng = &seq
 	}
 	for i := range b.Sides {
+		// ⚠ **擺在哪一邊要看陣形線，不能看側的編號。**
+		// 原版的側 0 恆為玩家，而且玩家守城時整個戰場轉 180 度，
+		// 所以「側 0 → X=1」在原版的座標框裡永遠成立
+		// （`docs/re/11` §3.6、`docs/spec/56`）。remake 的 `Sides[0]`
+		// 恆為**攻方**，照側號擺會把兩邊各丟到對面那一端——
+		// 實測那樣走 59 格，體力耗光之後整場停住
+		// （`docs/spec/133` §3.5）。
 		x := spawnXSide0
-		if i == 1 {
+		if b.Sides[i].Line > Width/2 {
 			x = spawnXSide1
 		}
 		for k := range b.Sides[i].Soldiers {
