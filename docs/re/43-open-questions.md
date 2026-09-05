@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**570 列分布在 234 份文件，平均每份 2.4 列。**
+**576 列分布在 237 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -41,11 +41,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 177 | 170 | 6 | 1 |
-| 驗收 | 119 | 102 | 17 | 0 |
+| 程式碼理解 | 178 | 171 | 6 | 1 |
+| 驗收 | 122 | 105 | 17 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 237 | 218 | 18 | 1 |
-| **合計** | **570** | 521 | 46 | 3 |
+| 其他 | 239 | 220 | 18 | 1 |
+| **合計** | **576** | 527 | 46 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,9 +53,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 202 |
-| `docs/re/` | 177 |
-| `docs/playtest/` | 119 |
+| `docs/spec/` | 204 |
+| `docs/re/` | 178 |
+| `docs/playtest/` | 122 |
 | `docs/formats/` | 20 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 11 |
@@ -104,7 +104,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 |
 
-## 2.3 程式碼理解（177 條）
+## 2.3 程式碼理解（178 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -182,6 +182,7 @@
 | [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `byte_1020E`／`byte_10CF9` | 音源相關的兩個旗標 | 靜態 |
 | [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | 據點 `+0x00` 的 bit 4／5 | bit 6／7 是威脅旗標、低 4 位是敵方鄰居，中間兩位仍未見寫入端 | 靜態 |
 | [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | `+0x20` 與 `+0x14` 的張力 | `sub_14575` 與 `sub_14155` 都只寫 `+0x20`，`40` §5 的張力還在 | 靜態 |
+| [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `sub_193E9` 內部（`loc_19409`） | 只知道入口參數與框的外框幾何（§6），列高、配色、反白的畫法沒逐行讀 | 靜態 |
 | [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | 樣式碼 | 只確定 `0` ＝ 擦除、`0x0B` ＝ 指令列、`0x0C`／`0x0F` 出現在別處；完整值域未列 | 靜態 |
 | [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | `ax = 0F01h`／`0801h` | 顏色／樣式的位元編碼未逐位對過 | 靜態 |
 | [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | `0x80` | 繪製時 `and …, 7Fh` 清掉 / 未解 | 靜態 |
@@ -286,7 +287,7 @@
 | [`re/86-march-turnback-at-peace.md`](../re/86-march-turnback-at-peace.md) | 掉頭之後為什麼停住 | 回到 87 之後 `+0x14` 等於 `+0x0E` ⇒ 到站 ⇒ `sub_14325` 分派，Stage 0 而 87 不是首都 ⇒ 什麼都不做。合理但沒有逐條驗過分派表的其他 Stage | 靜態 |
 | [`re/86-march-turnback-at-peace.md`](../re/86-march-turnback-at-peace.md) | 玩家軍團站在據點上時完全不判 | `sub_12662` 的 `jz → 12697` 跳過 `sub_14300`。這代表玩家的軍團**不會**自動留守受威脅的據點，但沒有實機驗過 | 靜態 |
 
-## 2.4 驗收（119 條）
+## 2.4 驗收（122 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -409,6 +410,9 @@
 | [`playtest/69-dosgolem-tactical-controls.md`](../playtest/69-dosgolem-tactical-controls.md) | 指令有沒有真的下下去 | 只看到反白與命令碼那一格變色，**沒有看到部隊照著動**——分支只跑了 80 萬道指令 / 同一個快照分兩支跑兩千萬道指令，一支下「突擊」一支不下，比 `field` | 靜態 |
 | [`playtest/69-dosgolem-tactical-controls.md`](../playtest/69-dosgolem-tactical-controls.md) | 開場台詞會擋輸入多久 | 進場約一千萬道指令後跳呂布的台詞（`a3`），期間的點擊去向沒查 / 攔 `sub_14F58`（開戰訊息）看它什麼時候回 | 靜態 |
 | [`playtest/69-dosgolem-tactical-controls.md`](../playtest/69-dosgolem-tactical-controls.md) | 玩家的軍團行軍不會到 | 下令攻宛之後 24 個遊戲日內 `0x14F2B`（玩家攻）**一次都沒觸發**，遭遇全部是雙方都不是玩家、或玩家守空城 / 讀軍團記錄本身：段在 `cs:word_10D52`，軍團表段內偏移 `0x2240` | 靜態 |
+| [`playtest/70-dosgolem-tactical-commands.md`](../playtest/70-dosgolem-tactical-commands.md) | remake 的三選一版面 | 量出來了，**還沒改**（`spec/39` §4） / 改用既有的 `popupMenu` 引擎，位置由游標算 | 靜態 |
+| [`playtest/70-dosgolem-tactical-commands.md`](../playtest/70-dosgolem-tactical-commands.md) | 兩邊開同一場仗 | 仍然沒有。dosgolem 這一場是 AI 觸發的，remake 側湊不出同一組軍團 / 把這一場的兩支軍團寫成測試存檔，兩邊都用 `-siege-corps` | 靜態 |
+| [`playtest/70-dosgolem-tactical-commands.md`](../playtest/70-dosgolem-tactical-commands.md) | 對白框到期之後 | 只確認節拍 80 時兩個框都還活著（到期 127／110），沒有跑到它們消失 / 再跑 20 個節拍取樣一次 | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -421,7 +425,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（237 條）
+## 2.6 其他（239 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -566,6 +570,8 @@
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 俘虜身分 | remake 的 `Posted` 是 bool，存不下 `+0x17` 的 0–5；俘虜狀態目前推不出來 | 靜態 |
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「看」與「選」的內容差異 | 原版兩種取法的**列表內容**不同（`../re/26` §4.2），remake 只統一了欄位 | 靜態 |
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「委任」那一格的顏色 | 實錄影格上看起來是紅字，但影片是壓縮過的、也沒有機器碼證據。remake 先畫成一般色 | 靜態 |
+| [`spec/39-march-order-menu.md`](../spec/39-march-order-menu.md) | remake 的選單位置與訊息窗 | §3.6 量出了原版的版面（游標格、112 × (n+1)×16、訊息走 TALK 訊息窗），**remake 還是固定位置＋併框** / 改用既有的 `popupMenu` 引擎（`docs/spec/126`），位置由游標算；訊息改走一般訊息窗 | 靜態 |
+| [`spec/39-march-order-menu.md`](../spec/39-march-order-menu.md) | `sub_193E9` 內部的列高與配色 | 只解出外框幾何，內部（`loc_19409`）沒逐行讀 / 反白的畫法已有 `docs/spec/124`，列高可由框高 ÷(n+1) 推但沒驗 | 靜態 |
 | [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 君主那一側的回話 | 原版事件場景會同時出現兩個框（`docs/re/66` §5.1 的影格就是），remake 只畫一個 | 靜態 |
 | [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 框的底紋 | 龍紋的點陣找到了（`../formats/03` §5.5），但 96 列的排法還沒解，remake 仍用純色 | 靜態 |
 | [`spec/42-event-scene-speakers.md`](../spec/42-event-scene-speakers.md) | 撥款事件（4／5） | 同上，還沒對過哪一則進下框 | 靜態 |
