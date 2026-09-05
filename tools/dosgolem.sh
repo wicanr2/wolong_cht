@@ -9,6 +9,11 @@
 #   steps:N       再跑 N 道指令
 #   click:X,Y     點左鍵
 #   move:X,Y      只移動游標
+#   sclick:X,Y    **進到遊戲之後**用這一支：畫面座標點擊（先把捲動原點歸零）
+#   stap:X,Y      同上，瞬按
+#   origin        印出捲動原點與遊戲算出來的畫面座標
+#   hotspots      印出目前畫面的熱區圖（編號 → 像素矩形）
+#   at:X,Y        印出某個像素座標上的熱區編號
 #   until:Y/M/D   跑到遊戲日期到某一天  ← 即時制的取樣點寫成日期
 #   clock         印出目前的遊戲日期
 #   shot:NAME     存一張 640×400 的 PNG（已經裁好，不必再跑 parity_crop.py）
@@ -17,7 +22,18 @@
 # 換算是 `遊戲 y ＝ 視窗 y × 399 ÷ 479`（分母 479 不是 480，
 # 見 dosgolem 的 `apps/wolong/wolong.go`）。
 #
-# 規格：docs/spec/131-dosgolem-oracle.md
+# ⚠⚠ **進到遊戲之後畫面座標不等於滑鼠座標**：大地圖有一層捲動原點
+# （`畫面 ＝ 滑鼠 − 原點`，推到負的就捲地圖），所以那時要用 `sclick`／`stap`。
+# 選單畫面不走那一層，用 `click` 就好。細節見 docs/playtest/66。
+#
+# ⚠ **`wait` 在遊戲中不適用**：即時制的畫面永遠不會靜止，`wait` 會一路跑到
+# 預算上限（實測跑掉兩個遊戲日）。遊戲中用 `steps:` 或 `until:`。
+#
+# 用別的存檔開局：另外準備一個目錄（原版檔案 ＋ 那份 SAVE.DAT），
+# 再用 WOLONG_DOSGOLEM_GAMEDIR=<相對 workplace/ 的路徑> 指過去。
+# **原版素材唯讀，不要就地覆蓋**（CLAUDE.md §9）。
+#
+# 規格：docs/spec/131-dosgolem-oracle.md，實跑紀錄：docs/playtest/65、66
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -29,6 +45,11 @@ if [[ ! -d "$GOLEM" ]]; then
     exit 1
 fi
 
+# 遊戲目錄可換：要載入某一份 SAVE.DAT 時，另外準備一個目錄
+# （原版檔案 ＋ 那份存檔）再指過去。**原版素材唯讀，不要就地覆蓋**
+# （CLAUDE.md §9）。路徑相對於 workplace/。
+GAMEDIR="${WOLONG_DOSGOLEM_GAMEDIR:-orig/dosv}"
+
 OUT="${1:?用法: tools/dosgolem.sh <輸出目錄> <時間軸> [dosbox]}"
 TIMELINE="${2:?用法: tools/dosgolem.sh <輸出目錄> <時間軸> [dosbox]}"
 YMODE="${3:-game}"
@@ -36,7 +57,7 @@ YMODE="${3:-game}"
 mkdir -p "$OUT"
 OUT_ABS="$(cd "$OUT" && pwd)"
 
-ARGS=(-exe /orig/orig/dosv/KI.EXE -root /orig/orig/dosv -dir /out -script "$TIMELINE")
+ARGS=(-exe "/orig/$GAMEDIR/KI.EXE" -root "/orig/$GAMEDIR" -dir /out -script "$TIMELINE")
 [[ "$YMODE" == "dosbox" ]] && ARGS+=(-dosbox-y)
 [[ -n "${WOLONG_DOSGOLEM_WATCH:-}" ]] && ARGS+=(-watch "$WOLONG_DOSGOLEM_WATCH")
 

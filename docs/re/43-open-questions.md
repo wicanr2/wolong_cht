@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**552 列分布在 226 份文件，平均每份 2.4 列。**
+**556 列分布在 227 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 172 | 165 | 6 | 1 |
-| 驗收 | 108 | 92 | 16 | 0 |
+| 驗收 | 111 | 94 | 17 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 235 | 216 | 18 | 1 |
-| **合計** | **552** | 504 | 45 | 3 |
+| 其他 | 236 | 217 | 18 | 1 |
+| **合計** | **556** | 507 | 46 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,9 +53,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 200 |
+| `docs/spec/` | 201 |
 | `docs/re/` | 172 |
-| `docs/playtest/` | 108 |
+| `docs/playtest/` | 111 |
 | `docs/formats/` | 20 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 11 |
@@ -281,7 +281,7 @@
 | [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `+8+4k` 與 `+10+4k` 的語意 | 從軍團記錄 `+0x28+4k` 起搬進來的兩個 byte，`sub_19F58` 只讀 `+1`／`+3`，這兩格戰鬥中沒有讀取端被找到 | 靜態 |
 | [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `word_1D31A` 的語意 | `sub_1AEA9` 數「在場且 `+0x19` 非零」的兵，`sub_1ADC8` 尾段拿它算優勢（`byte_1D31E`）。`+0x19` 是一個倒數計時器（`sub_1AB7C` 寫 `28h`、`sub_1ADC8` 每幀 `dec`），**它代表什麼還沒解** | 靜態 |
 
-## 2.4 驗收（108 條）
+## 2.4 驗收（111 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -393,6 +393,9 @@
 | [`playtest/65-dosgolem-oracle.md`](../playtest/65-dosgolem-oracle.md) | 半形字模 | dosgolem 側每次跑分都是 **0 次呼叫**——數字走遊戲自己的 8×16 點陣字 / 找一個會用到半形的畫面，或確認那條路是死路 | 靜態 |
 | [`playtest/65-dosgolem-oracle.md`](../playtest/65-dosgolem-oracle.md) | `STR.EXE` 的檔名懸案 | `../re/29` §6 仍未裁決 / dosgolem 的字型檔名是參數，把它改成 `END_S10/S11` 跑一次就知道 | 靜態 |
 | [`playtest/65-dosgolem-oracle.md`](../playtest/65-dosgolem-oracle.md) | PC-98 版 | dosgolem 沒有 PC-98 的機器層 / 那一版仍走 DOSBox-X | 實測 |
+| [`playtest/66-dosgolem-load-save.md`](../playtest/66-dosgolem-load-save.md) | 那 435 點的時間差是多少 | 只知道比 60 萬道指令小一個量級 / 做一個「跑到某個 tick／某個子刻」的取樣點，兩邊對齊到同一刻 | 靜態 |
+| [`playtest/66-dosgolem-load-save.md`](../playtest/66-dosgolem-load-save.md) | 走到戰術畫面 | 輸入模型解了，路還沒走 / 用熱區圖把「軍團 → 出兵」那條路列出來，再一步一步走 | 靜態 |
+| [`playtest/66-dosgolem-load-save.md`](../playtest/66-dosgolem-load-save.md) | `wait` 在遊戲中不適用 | 即時制的畫面永遠不會靜止，`wait` 會一路跑到預算上限（實測跑掉兩個遊戲日） / 遊戲中一律用 `steps:` 或 `until:` | 實測 |
 
 ## 2.5 外部資料（6 條）
 
@@ -405,7 +408,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（235 條）
+## 2.6 其他（236 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -508,7 +511,8 @@
 | [`spec/130-freelance-random-join.md`](../spec/130-freelance-random-join.md) | 平手時取編號小的 | 從 `jb`（嚴格小於）推出來的，**沒有實機驗過** | 靜態 |
 | [`spec/130-freelance-random-join.md`](../spec/130-freelance-random-join.md) | 這一條的實際發生頻率 | 開局 81 名在野武將**全部有心向**，所以隨機投靠要等他們兌現完才輪得到（`../mechanics/70` §3.9）。**長跑幾個月才會第一次觸發沒有量過** | 靜態 |
 | [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | PC-98 版 | dosgolem 沒有 PC-98 的機器層（不同的顯示與字型架構）。那一版仍走 DOSBox-X | 實測 |
-| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | 載入既有存檔的路徑 | 還沒試。`SAVE.DAT` 是原版資產，dosgolem 讀得到，但「載入 → 走到同一個局面」的腳本還沒寫 | 靜態 |
+| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | ⚠ 遊戲中的座標 | 大地圖有一層**捲動原點**（`畫面 ＝ 滑鼠 − 原點`），所以遊戲中要用 `sclick`／`stap`，選單畫面才用 `click`（`../playtest/66` §2） | 靜態 |
+| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | ⚠ `wait` 在遊戲中不適用 | 即時制的畫面永遠不會靜止，`wait` 會跑到預算上限。遊戲中用 `steps:` 或 `until:` | 靜態 |
 | [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | 戰術畫面 | 還沒試。戰場走的是同一套繪製層，預期沒有新的機器層缺口，但**沒驗過就是沒驗過** | 靜態 |
 | [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | 視窗 x → 遊戲 x 的換算 | 視窗 416 對到遊戲 415，而同一批的 300／360／450 都是 1:1。成因未查，只影響游標位置（`../playtest/65` §3.1） | 實測 |
 | [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | 音源 | `int 61h` 只記錄不模擬（時鐘回呼除外）。音訊 parity 仍走 `29` 的錄音比對 | 靜態 |

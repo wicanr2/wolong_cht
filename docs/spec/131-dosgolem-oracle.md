@@ -32,6 +32,7 @@ DOSBox ＋ Xvfb ＋ xdotool。
 | 座標 | 視窗座標，`int 33h` 把整個視窗等比對映到 640×400 | **遊戲座標**（0–639 × 0–399），送什麼就是什麼 |
 | 原版的內部狀態 | 只能從像素反推 | **直接讀記憶體**（`peek:0CF0:8`）|
 | 原版的控制流 | 問不到 | **攔任一支常式**（`WOLONG_DOSGOLEM_WATCH=11D8E`），印暫存器與呼叫端 |
+| 哪裡可以點 | 只能一格一格試 | **讀熱區圖**（`hotspots`）——`sub_1E453` 查的那張 80×50 格圖 |
 | 右鍵／瞬按 | `rclick`／`tap` | 都有（瞬按是獨立動作——彈出選單長按會當場選走第一列）|
 | 一條五格的時間軸 | 146 秒的 `wait` 加總 | **0.99 秒** |
 | 決定性 | 靠 `cycles=fixed 20000` ＋ 固定 sleep，仍會漂 | 以指令數計時，同輸入同輸出 |
@@ -73,7 +74,9 @@ tools/go.sh test ./internal/... -run 'TestWriteMode3AppliesALU|TestFullIndex|Tes
 | 項目 | 現況 |
 |---|---|
 | PC-98 版 | dosgolem 沒有 PC-98 的機器層（不同的顯示與字型架構）。那一版仍走 DOSBox-X |
-| 載入既有存檔的路徑 | 還沒試。`SAVE.DAT` 是原版資產，dosgolem 讀得到，但「載入 → 走到同一個局面」的腳本還沒寫 |
+| ~~載入既有存檔的路徑~~ | **已通**：`WOLONG_DOSGOLEM_GAMEDIR` 指到帶那份 `SAVE.DAT` 的目錄，走 NEW GAME → NO → LOAD DATA。對同一份存檔的原版擷取三區 0 px（[`../playtest/66`](../playtest/66-dosgolem-load-save.md)）|
+| ⚠ 遊戲中的座標 | 大地圖有一層**捲動原點**（`畫面 ＝ 滑鼠 − 原點`），所以遊戲中要用 `sclick`／`stap`，選單畫面才用 `click`（[`../playtest/66`](../playtest/66-dosgolem-load-save.md) §2）|
+| ⚠ `wait` 在遊戲中不適用 | 即時制的畫面永遠不會靜止，`wait` 會跑到預算上限。遊戲中用 `steps:` 或 `until:` |
 | 戰術畫面 | 還沒試。戰場走的是同一套繪製層，預期沒有新的機器層缺口，但**沒驗過就是沒驗過** |
 | 視窗 x → 遊戲 x 的換算 | 視窗 416 對到遊戲 415，而同一批的 300／360／450 都是 1:1。成因未查，只影響游標位置（[`../playtest/65`](../playtest/65-dosgolem-oracle.md) §3.1）|
 | 音源 | `int 61h` 只記錄不模擬（時鐘回呼除外）。音訊 parity 仍走 [`29`](29-audio.md) 的錄音比對 |
