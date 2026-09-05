@@ -548,6 +548,12 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 func (w *World) step(i int) bool {
 	c := &w.Corps[i]
 
+	// ⓪ 邊界掉頭：前方那一端的據點屬於**和平**的別勢力就折返
+	//    （`docs/spec/132`）。原版每一步都問一次，而且只在野外問。
+	if w.turnBackAtBorder(i) {
+		return true
+	}
+
 	// ① 有格子路徑就逐格走 —— **這條路徑每一格都踩在道路圖塊上**
 	//    （`internal/assets/world` 有逐格檢查的測試）。
 	if cells := w.routes[i]; len(cells) > 0 {
@@ -585,6 +591,93 @@ func (w *World) step(i int) bool {
 		c.Heading = HeadingStill
 	}
 	return true
+}
+
+// turnBackAtBorder 是原版的邊界掉頭（`sub_142AB`，`docs/spec/132`）。
+//
+// **要打誰，得先跟誰交戰。** 軍團走在野外路徑上時，每一步都問一次
+// 「下一個要踏進的據點是誰的」：自己的、中立的、正在交戰的都放行，
+// **和平的別勢力就把目標改成路的另一端**，也就是掉頭走回剛離開的據點。
+//
+// ⚠ **原版不在下令時檢查。** 指令下得成、訊息也跳「向{2}移動下」，
+// 折返發生在路上，畫面上沒有任何錯誤提示——玩家只看到軍團走出去又走回來。
+// 改成下令時拒絕會多出原版沒有的訊息，也會遮掉這條玩法規則。
+//
+// 回傳有沒有掉頭（掉頭那一 tick 不再往前走，與原版一致：
+// `sub_142AB` 只改目標，移動由下一次重算負責）。
+func (w *World) turnBackAtBorder(i int) bool {
+	c := &w.Corps[i]
+	if c.Node < 0 || c.Node >= len(w.Cities) {
+		return false
+	}
+	// 站在據點上不問——原版 `sub_12662` 的 `cmp bx, 800h` 那一條。
+	if c.X == w.Cities[c.Node].X && c.Y == w.Cities[c.Node].Y {
+		return false
+	}
+	next := w.nextCityOnRoute(i)
+	if next < 0 || next == c.Node {
+		return false
+	}
+	if !w.borderIsClosed(c.Faction, next) {
+		return false
+	}
+	// 掉頭：目標換成路的另一端 ＝ 剛離開的據點，路線用反向那一段。
+	back := c.Node
+	c.TargetNode, c.Ordered = back, back
+	c.TargetX, c.TargetY = w.Cities[back].X, w.Cities[back].Y
+	w.routes[i] = w.reverseLeg(next, back, c.X, c.Y)
+	c.Heading = headingTo(c.X, c.Y, c.TargetX, c.TargetY)
+	return true
+}
+
+// borderIsClosed 回「軍團屬於 faction 時，能不能踏進 node 這個據點」。
+//
+// 三個放行條件照抄 `sub_142AB`：同勢力、中立（`army.NeutralFaction`）、
+// 或**交戰中**（交友度的最高位元 0）。
+func (w *World) borderIsClosed(faction, node int) bool {
+	owner := w.Cities[node].Owner
+	if owner == faction || owner == combat.NeutralFaction {
+		return false
+	}
+	if faction < 0 || faction >= len(w.Friendship) ||
+		owner < 0 || owner >= len(w.Friendship[faction]) {
+		// 既不是自己的、也不是中立、又不是合法勢力編號 ⇒ 資料壞了。
+		// **當成擋住**：軍團停下來看得見，走進一個不存在的勢力看不見。
+		return true
+	}
+	// ⚠ 判準是**含和平位元的原始值**，不是低 7 位的交友度。
+	return !w.Friendship[faction][owner].AtWar()
+}
+
+// nextCityOnRoute 回「照現在的路線，下一個會踏進的據點」，沒有回 −1。
+//
+// 原版是一段一段走，所以「前方端點」就是這一段路的終點；remake 的路線
+// 是多段串起來的，等價的問法是「序列裡第一個踩到據點座標的格子」。
+func (w *World) nextCityOnRoute(i int) int {
+	for _, cell := range w.routes[i] {
+		if n := w.cityAt(cell[0], cell[1]); n >= 0 {
+			return n
+		}
+	}
+	return w.Corps[i].TargetNode
+}
+
+// reverseLeg 回「從目前這一格走回 back」的格子序列。
+//
+// 反向那一段路的格子序列與正向是同一批，所以取 `CellRoute(from, back)`
+// 再從目前這一格切開就好。切不到（缺道路圖、或這一段沒有格子序列）
+// 就回 nil，讓 `step` 退回直線逼近。
+func (w *World) reverseLeg(from, back, x, y int) [][2]int {
+	if w.roads == nil {
+		return nil
+	}
+	rev := w.roads.CellRoute(from, back)
+	for k, cell := range rev {
+		if cell[0] == x && cell[1] == y {
+			return append([][2]int(nil), rev[k+1:]...)
+		}
+	}
+	return nil
 }
 
 // cityAt 回傳座標上的據點編號，沒有回 −1。

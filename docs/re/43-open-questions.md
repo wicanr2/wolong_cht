@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**564 列分布在 231 份文件，平均每份 2.4 列。**
+**570 列分布在 234 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -41,11 +41,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 175 | 168 | 6 | 1 |
-| 驗收 | 116 | 99 | 17 | 0 |
+| 程式碼理解 | 177 | 170 | 6 | 1 |
+| 驗收 | 119 | 102 | 17 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 236 | 217 | 18 | 1 |
-| **合計** | **564** | 515 | 46 | 3 |
+| 其他 | 237 | 218 | 18 | 1 |
+| **合計** | **570** | 521 | 46 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,9 +53,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 201 |
-| `docs/re/` | 175 |
-| `docs/playtest/` | 116 |
+| `docs/spec/` | 202 |
+| `docs/re/` | 177 |
+| `docs/playtest/` | 119 |
 | `docs/formats/` | 20 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 11 |
@@ -104,7 +104,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 |
 
-## 2.3 程式碼理解（175 條）
+## 2.3 程式碼理解（177 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -283,8 +283,10 @@
 | [`re/84-popup-row-band-and-world-cursor.md`](../re/84-popup-row-band-and-world-cursor.md) | IDA `0x1074D`／`0x1079B` | 選擇上／下移一格的實作沒有逐行讀（只從呼叫脈絡定名） | 靜態 |
 | [`re/85-march-target-hit-test.md`](../re/85-march-target-hit-test.md) | 圖塊 `0CBh`–`0D3h` 這 9 種各對應什麼外觀 | 只知道區間，沒有逐一對上據點類型（`+0x16` 低 4 位只有 5 種） | 靜態 |
 | [`re/85-march-target-hit-test.md`](../re/85-march-target-hit-test.md) | 行軍途中被擋住怎麼處理 | 下令攻宛之後跑了 108 個遊戲日都沒有開戰，軍團沒有到達；`+0x00` 位元 5（被擋住）的實際觸發條件沒查 | 靜態 |
+| [`re/86-march-turnback-at-peace.md`](../re/86-march-turnback-at-peace.md) | 掉頭之後為什麼停住 | 回到 87 之後 `+0x14` 等於 `+0x0E` ⇒ 到站 ⇒ `sub_14325` 分派，Stage 0 而 87 不是首都 ⇒ 什麼都不做。合理但沒有逐條驗過分派表的其他 Stage | 靜態 |
+| [`re/86-march-turnback-at-peace.md`](../re/86-march-turnback-at-peace.md) | 玩家軍團站在據點上時完全不判 | `sub_12662` 的 `jz → 12697` 跳過 `sub_14300`。這代表玩家的軍團**不會**自動留守受威脅的據點，但沒有實機驗過 | 靜態 |
 
-## 2.4 驗收（116 條）
+## 2.4 驗收（119 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -404,6 +406,9 @@
 | [`playtest/68-dosgolem-tactical-screen.md`](../playtest/68-dosgolem-tactical-screen.md) | 兩邊開同一場仗 | 這一次比的是**不同的兩場**。要 0 px 得讓 dosgolem 與 remake 站在同一個局面上（`-siege-corps`，`../spec/91` §3） / dosgolem 側加「從存檔直接開戰場」的入口，或把這一場的軍團寫進測試存檔 | 靜態 |
 | [`playtest/68-dosgolem-tactical-screen.md`](../playtest/68-dosgolem-tactical-screen.md) | 行軍途中被擋住 | 下令攻宛之後 108 個遊戲日沒有開戰，軍團沒到 / 攔 `sub_12662`（軍團到站）看它每一步走到哪 | 靜態 |
 | [`playtest/68-dosgolem-tactical-screen.md`](../playtest/68-dosgolem-tactical-screen.md) | 戰術畫面的操作 | 只拍到進場，還沒送過任何戰術指令 / 側欄六列指令的熱區還沒問過 | 靜態 |
+| [`playtest/69-dosgolem-tactical-controls.md`](../playtest/69-dosgolem-tactical-controls.md) | 指令有沒有真的下下去 | 只看到反白與命令碼那一格變色，**沒有看到部隊照著動**——分支只跑了 80 萬道指令 / 同一個快照分兩支跑兩千萬道指令，一支下「突擊」一支不下，比 `field` | 靜態 |
+| [`playtest/69-dosgolem-tactical-controls.md`](../playtest/69-dosgolem-tactical-controls.md) | 開場台詞會擋輸入多久 | 進場約一千萬道指令後跳呂布的台詞（`a3`），期間的點擊去向沒查 / 攔 `sub_14F58`（開戰訊息）看它什麼時候回 | 靜態 |
+| [`playtest/69-dosgolem-tactical-controls.md`](../playtest/69-dosgolem-tactical-controls.md) | 玩家的軍團行軍不會到 | 下令攻宛之後 24 個遊戲日內 `0x14F2B`（玩家攻）**一次都沒觸發**，遭遇全部是雙方都不是玩家、或玩家守空城 / 讀軍團記錄本身：段在 `cs:word_10D52`，軍團表段內偏移 `0x2240` | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -416,7 +421,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（236 條）
+## 2.6 其他（237 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -524,6 +529,7 @@
 | [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | ⚠ 大地圖上選一格 | 用 `tile:TX,TY`，不要自己算像素——格座標是 `⌊原點÷16⌋＋⌊畫面÷16⌋` 兩次捨去的和，而且**游標不能停在熱區上**（`../re/85`） | 靜態 |
 | [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | 視窗 x → 遊戲 x 的換算 | 視窗 416 對到遊戲 415，而同一批的 300／360／450 都是 1:1。成因未查，只影響游標位置（`../playtest/65` §3.1） | 實測 |
 | [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | 音源 | `int 61h` 只記錄不模擬（時鐘回呼除外）。音訊 parity 仍走 `29` 的錄音比對 | 靜態 |
+| [`spec/132-march-turnback-at-peace.md`](../spec/132-march-turnback-at-peace.md) | 折返之後會不會再出發 | 原版回到據點就停住（玩家的軍團在據點上完全不判）。**AI 的軍團**走 `sub_14300`，行為可能不同，沒有觀測過 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |

@@ -40,6 +40,9 @@ func TestTacticalBattleAlwaysResolves(t *testing.T) {
 	la, lb := w.Factions[a].Lord, w.Factions[b].Lord
 	w.FormCorps(la, kinds, manned)
 	w.FormCorps(lb, kinds, manned)
+	// ⚠ 先交戰，否則軍團在邊界掉頭（`docs/spec/132`）。
+	w.Friendship[a][b] = w.Friendship[a][b].WithWar(true)
+	w.Friendship[b][a] = w.Friendship[b][a].WithWar(true)
 	w.March(la, w.Factions[b].Capital)
 	w.March(lb, w.Factions[a].Capital)
 	r := rng.NewFixed(5)

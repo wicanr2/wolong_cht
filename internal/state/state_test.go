@@ -1960,6 +1960,11 @@ func TestCorpsMeetAndFight(t *testing.T) {
 	if err := w.FormCorps(lb, kinds, manned); err != nil {
 		t.Fatal(err)
 	}
+	// ⚠ **要先交戰**：原版的軍團走到和平勢力的邊界會掉頭（`docs/spec/132`），
+	// 所以「互相攻打」這條鏈的前提是兩邊已經開戰。
+	w.Friendship[a][b] = w.Friendship[a][b].WithWar(true)
+	w.Friendship[b][a] = w.Friendship[b][a].WithWar(true)
+
 	// 互相往對方的首都走。
 	if err := w.March(la, w.Factions[b].Capital); err != nil {
 		t.Fatal(err)
@@ -2057,6 +2062,9 @@ func TestPlayerBattleGoesTactical(t *testing.T) {
 	if err := w.FormCorps(lb, kinds, manned); err != nil {
 		t.Fatal(err)
 	}
+	// ⚠ 先交戰，否則軍團在邊界掉頭（`docs/spec/132`）。
+	w.Friendship[a][b] = w.Friendship[a][b].WithWar(true)
+	w.Friendship[b][a] = w.Friendship[b][a].WithWar(true)
 	if err := w.March(la, w.Factions[b].Capital); err != nil {
 		t.Fatal(err)
 	}
@@ -2274,6 +2282,11 @@ func TestNormalScenarioMarchIntoGarrison(t *testing.T) {
 	if target < 0 {
 		t.Fatal("找不到汝南")
 	}
+	// ⚠ 先交戰，否則軍團在邊界掉頭（`docs/spec/132`）——
+	// 實測原版停在中繼的舞陽，remake 現在也是。
+	owner := w.Cities[target].Owner
+	w.Friendship[w.Player][owner] = w.Friendship[w.Player][owner].WithWar(true)
+	w.Friendship[owner][w.Player] = w.Friendship[owner][w.Player].WithWar(true)
 	if err := w.March(leader, target); err != nil {
 		t.Fatal(err)
 	}
@@ -2588,6 +2601,12 @@ func TestMarchFollowsRoads(t *testing.T) {
 	}
 	c := &w.Corps[lord]
 	c.Node, c.X, c.Y = from, w.Cities[from].X, w.Cities[from].Y
+
+	// ⚠ 這一條驗的是**沿道路走**，不是外交。跨越別人的地盤要先交戰，
+	// 否則軍團會在邊界掉頭（`docs/spec/132`）——那是另一條測試的事。
+	for k := range w.Friendship[f] {
+		w.Friendship[f][k] = w.Friendship[f][k].WithWar(true)
+	}
 
 	if err := w.March(lord, to); err != nil {
 		t.Fatal(err)

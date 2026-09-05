@@ -202,6 +202,7 @@
 | 對原版 | 同一個局面的 `bottom` 區（[`../playtest/40`](../playtest/40-tactical-parity.md) §9）|
 | 單元測試 | `TestSquadSelectionMatchesRawBitfield`、`TestOrderSelectedRejectsScaleWallOffSiege`（`internal/rules/tactical`）；`TestBottomSlotSquadTablesAreInverse`、`TestBattleSideCommandRowsMatchRawHotspotCodes`（`cmd/wlgame`）|
 | 對原版 | 兩張順序表的值直接取自 `cs:0xD2E4`／`cs:0xD2EA`；畫面證據見 `docs/images/wlgame-tactical-squad-select.png` |
+| **執行期** | ⭐ 把跑著的原版的熱區圖印出來，六格的熱區碼反推出的 `cs:0xD2E4` ＝ `2 4 0 1 5 3`，**與靜態 dump 完全相同**（[`../playtest/69`](../playtest/69-dosgolem-tactical-controls.md) §2.1）。兩條互相獨立的路徑 |
 
 ## 5. 未解
 

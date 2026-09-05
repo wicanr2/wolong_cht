@@ -226,7 +226,7 @@ mov  byte ptr [si+23h], 1
 | `+0x1A` | 佔用圖的 X | confirmed |
 | `+0x1C` | 佔用圖的段位址 | confirmed |
 | `+0x1E` | **移動間隔**（計時器歸零時從這裡重載）→ **就是「速度」** | **confirmed**（`sub_125A3`） |
-| `+0x20` | **目標據點（無縮放）**，恆等於 `+0x14 ÷ 8`（`sub_142AB` 一次寫兩個）。編成時寫首都是因為編成只能在首都 | **confirmed**（見 `docs/re/27` §7.2）|
+| `+0x20` | **目標據點（無縮放）**，恆等於 `+0x14 ÷ 8`（`sub_142AB` 一次寫兩個——那是**行進中掉頭**時，不是玩家下令時，見 [`86`](86-march-turnback-at-peace.md)）。編成時寫首都是因為編成只能在首都 | **confirmed**（見 `docs/re/27` §7.2）|
 | `+0x23` | **行軍狀態機的 Stage**（0–3 一般行軍、8 等士氣、9 補兵、10 回首都、11 解體）。建立時寫 1 ＝ 站在據點上決定下一步 | **confirmed**（[`64`](64-corps-arrival-state-machine.md) §1／§2、[`65`](65-ai-march-decision-chain.md) §3）|
 
 **現在位置與目標位置是兩組獨立的三元組**（據點編號 ＋ XY），
@@ -403,7 +403,7 @@ cmp si, 1FC0h / jb .2 / xor si, si     ; 8128 = 127 × 64
 | ~~信賴度的初始化時序~~ | **已解**：新遊戲初值 `0xFF`（實機滿條，[`../playtest/44`](../playtest/44-trust-init-oracle.md)）；`sub_18B12` 時序＝`sub_18CAE` 先載區塊 `+0x10`，再以未選勢力的 `word_10CFD=0xFFFF` 迴繞讀勢力 0 `+0x2A`（同為 0xFF）；增減量全帳本在 [`../mechanics/80`](../mechanics/80-victory.md) §1 |
 
 已解的三條：連結記錄的佈局在 §7.3（`+04` 路徑點數、`+08` 終點節點 × 8）；
-`sub_142AB`（玩家下行軍令，寫 `+0x14`／`+0x20`）與 `sub_14300`／`sub_14325`
+`sub_142AB`（**行進中掉頭**，寫 `+0x14`／`+0x20`，見 [`86`](86-march-turnback-at-peace.md)）與 `sub_14300`／`sub_14325`
 的行軍狀態機在 [`64`](64-corps-arrival-state-machine.md) 與
 [`65`](65-ai-march-decision-chain.md)；軍團 `+0x0A` **不是行進方向**，
 是**沿路徑表的步進量**，朝向在 `+0x08`（[`64`](64-corps-arrival-state-machine.md) §）。

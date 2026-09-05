@@ -83,6 +83,15 @@ func TestInvariantsUnderWar(t *testing.T) {
 	if len(formed) < 2 {
 		t.Fatal("一支軍團都編不出來")
 	}
+	// ⚠ **全面開戰**：原版的軍團走到和平勢力的邊界會掉頭（`docs/spec/132`），
+	// 所以這條「反覆派去打」的壓力測試要先把交友度的和平位元全部清掉。
+	for i := range w.Friendship {
+		for k := range w.Friendship[i] {
+			if i != k {
+				w.Friendship[i][k] = w.Friendship[i][k].WithWar(true)
+			}
+		}
+	}
 	if v := w.CheckInvariants(); len(v) > 0 {
 		t.Fatalf("編成之後就不自洽：%v", v[0])
 	}

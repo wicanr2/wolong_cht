@@ -45,7 +45,7 @@ if mem == 0 and s.type == ida_ua.o_imm and insn.get_canon_mnem() in WRITE:
 |---:|---|---|---|
 | 6＋7 | `sub_16F26` 寫 `0xC0` ✅ | `sub_14651` 寫 `0`（候選）| **存在**。建立軍團時整個欄位寫 `0xC0` |
 | 0 | `sub_12459`／`sub_126FF`（候選）| `sub_12533`（候選）| 未定 |
-| **1** | `sub_142AB` ✅（下行軍令）、`sub_14502` ✅（遷都同步）、`sub_17F90` ✅（玩家點自己的軍團）、`sub_1474A`、`sub_1440F` ✅（AI 挑到新目標）、`sub_144A9`／`sub_144D6` ✅（Stage 10／11 校正成首都）、`sub_14DA4` | **`sub_12662` ✅**（`0x126A5`）| **下一步要重算**（§2.1）|
+| **1** | `sub_142AB` ✅（**行進中掉頭**，[`86`](86-march-turnback-at-peace.md)）、`sub_14502` ✅（遷都同步）、`sub_17F90` ✅（玩家點自己的軍團）、`sub_1474A`、`sub_1440F` ✅（AI 挑到新目標）、`sub_144A9`／`sub_144D6` ✅（Stage 10／11 校正成首都）、`sub_14DA4` | **`sub_12662` ✅**（`0x126A5`）| **下一步要重算**（§2.1）|
 | **2** | `sub_16E8F` ✅（AI 編成）、`sub_17FDB` ✅ | `sub_1699E` ✅（§2.4）、`sub_17FDB` ✅ | **委任**（交給電腦指揮，§2.2）。`sub_17FDB`（下行軍指令）先 `and 0FBh` 再 `or 4`，是「重設」不是「累加」 |
 | 4 | **`sub_12B3C`（confirmed）**| `sub_12BA8`（候選）| **設定端定案**（2026-09-02）：`sub_12B3C` 開頭就是 `or byte ptr [si], 10h`，而同一支後面用 `[si+10h]`／`[si+12h]` 當地圖座標——**`si` 確定是軍團記錄**（[`72`](72-world-map-display-list.md) §6）。清除端仍未定 |
 | 5 | `sub_12831` ✅ | `sub_125A3` ✅ | 未定。`sub_125A3` 是**每 tick 只更新 16 支軍團**的那一支，所以位元 5 的生命週期是「一個 tick 內」|
@@ -57,7 +57,7 @@ if mem == 0 and s.type == ida_ua.o_imm and insn.get_canon_mnem() in WRITE:
 
 設定端的共通點是**目標變了**：
 
-- `sub_142AB`：玩家下行軍令時寫 `+0x14`／`+0x20`（[`27`](27-list-row-fields.md) §7）
+- `sub_142AB`：**行進中掉頭**時改寫 `+0x14`／`+0x20`——前方那一端的據點屬於和平勢力就折返（[`86`](86-march-turnback-at-peace.md)）
 - `sub_14502`：遷都後把掛舊首都的軍團改掛新首都（[`../formats/08`](../formats/08-sinario-save.md)）
 - `sub_17F90`：玩家在軍團面板點自己的軍團之後（[`32`](32-strategy-detail-panels.md) §1.1）
 - `sub_1440F`：AI 從勢力層的待辦領到新目標（[`65`](65-ai-march-decision-chain.md) §4）
