@@ -557,7 +557,7 @@
 | [`spec/136-battle-talk-parameters.md`](../spec/136-battle-talk-parameters.md) | 參數超過兩個的訊息 | 戰場對白只推兩個。若有第三個標記，原版讀堆疊殘值，remake 丟棄整則 | 靜態 |
 | [`spec/137-builtin-symbol-font.md`](../spec/137-builtin-symbol-font.md) | （那 408 格**來自哪裡**仍未解。 | （散句） | 靜態 |
 | [`spec/137-builtin-symbol-font.md`](../spec/137-builtin-symbol-font.md) | 那 408 格的來源 | 不是 `stdfont.15` 的任何一段，也不是 `usrfont.15m`（`../re/29` §7） | 靜態 |
-| [`spec/137-builtin-symbol-font.md`](../spec/137-builtin-symbol-font.md) | 半形字 | 仍走 `ASCFONT.15`；`END_S14.DAT` 與它 byte-for-byte 相同，接過來就少一個依賴 | 靜態 |
+| [`spec/137-builtin-symbol-font.md`](../spec/137-builtin-symbol-font.md) | 其他語系 | 簡體／日文仍需自備 `HZK16`／`JISKAN16`——那兩套字集不在原版資料裡 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |

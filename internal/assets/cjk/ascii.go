@@ -47,6 +47,16 @@ func LoadASCIIDir(dir string) (*ASCIIFont, error) {
 	return nil, fmt.Errorf("%s 裡找不到 ASCFONT.15", dir)
 }
 
+// LoadASCIIBuiltin 從原版的 `END_S14.DAT` 讀半形字。
+//
+// ⭐ 那個檔與倚天 `ASCFONT.15` **byte-for-byte 相同**
+// （SHA-256 `1d0cf09d…0d6918`，`docs/re/29` §5），所以同一支讀得動；
+// 分成兩個名字只是為了讓呼叫端看得出字型是從**原版資料**來的，
+// 使用者不必自備（`docs/spec/137` §3）。
+func LoadASCIIBuiltin(path string) (*ASCIIFont, error) {
+	return LoadASCII(path)
+}
+
 // Glyph 取一個半形字的字模。
 func (f *ASCIIFont) Glyph(ch rune) (*image.Alpha, bool) {
 	if f == nil || ch < 0 || ch >= asciiCount {

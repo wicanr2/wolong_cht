@@ -56,21 +56,23 @@ END_S13[12240 :      ] = stdfont.15 的全文，尾端截 68 B
 
 | 項目 | 位置 |
 |---|---|
-| 載入 | `internal/assets/cjk/eten.go` 的 `LoadBuiltin` |
-| 接線 | `internal/ui/langpack` 的 `SetBuiltinFont`，`cmd/wlgame/main.go` 從原版資料目錄載 |
+| 載入（全形）| `internal/assets/cjk/eten.go` 的 `LoadBuiltin` |
+| 載入（半形）| `internal/assets/cjk/ascii.go` 的 `LoadASCIIBuiltin`：`END_S14.DAT` 與倚天 `ASCFONT.15` **SHA-256 完全相同**（`1d0cf09d…0d6918`），同一支 `LoadASCII` 讀得動 |
+| 接線 | `internal/ui/langpack` 的 `SetBuiltinFont`，`cmd/wlgame/main.go` 從原版資料目錄載兩者 |
 | 順位 | 內建字型當**主要**，倚天與 GB／JIS 仍掛在後面墊底（缺字才用） |
-| 差異 | 無。載不到 `END_S13.DAT` 時退回原本的倚天鏈 |
+| 差異 | 無。載不到就退回原本的倚天鏈 |
 
-⭐ **順帶少一個外部依賴**：繁中的全形字現在可以完全從原版資料取，
-使用者不必再自備倚天字型（半形仍走 `ASCFONT.15`／`END_S14`）。
-發行時**不會**因此散布倚天字型——`END_S13.DAT` 是玩家自己的原版檔案。
+⭐ **順帶拿掉一個外部依賴**：繁中的全形與半形字現在**完全從原版資料取**，
+使用者不必再自備倚天字型。發行時**不會**因此散布倚天字型——
+`END_S13/S14.DAT` 是玩家自己的原版檔案，而本專案一個 byte 都不打包。
 
 ## 4. 驗證
 
 | 方式 | 證據 |
 |---|---|
-| 單元測試 | `internal/assets/cjk/eten_test.go` 的 `TestLoadBuiltinSplitsSymbolsAndHanzi`（切點 12240、第 0 格是「一」、符號格數 408）|
+| 單元測試 | `internal/assets/cjk/eten_test.go` 的 `TestLoadBuiltinSplitsSymbolsAndHanzi`（切點 12240、第 0 格是「一」、符號格數 408）、`ascii_test.go` 的 `TestBuiltinASCIIMatchesEten`（兩份 byte-for-byte 相同）|
 | 突變測試 | 把切點改成別的值，`looksLikeYi()` 要擋下來 |
+| 不帶倚天實跑 | `-font` 指到一個不存在的目錄，攻城第 70 拍那張圖要與帶字型時**逐像素相同**（[`../playtest/76`](../playtest/76-battle-talk-parity.md) §3）|
 | 對原版 | 攻城戰第 70 拍 `field` **0.10% → 0.08%**：那 30 px 歸零，剩下的 139 px 是滑鼠游標（95）＋ 旗相位（44），兩項都是已歸類的不可消項（[`../playtest/76`](../playtest/76-battle-talk-parity.md)）|
 
 ## 5. 未解
@@ -78,4 +80,4 @@ END_S13[12240 :      ] = stdfont.15 的全文，尾端截 68 B
 | 項目 | 現況 |
 |---|---|
 | 那 408 格的來源 | 不是 `stdfont.15` 的任何一段，也不是 `usrfont.15m`（[`../re/29`](../re/29-font-service-int15.md) §7）|
-| 半形字 | 仍走 `ASCFONT.15`；`END_S14.DAT` 與它 byte-for-byte 相同，接過來就少一個依賴 |
+| 其他語系 | 簡體／日文仍需自備 `HZK16`／`JISKAN16`——那兩套字集不在原版資料裡 |

@@ -1746,9 +1746,14 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// ⭐ **半形字也優先從原版資料取**（`END_S14.DAT` 與倚天
+	// `ASCFONT.15` byte-for-byte 相同，docs/spec/137 §3）。
+	// 兩條都不成立才警告——繁中不再需要使用者自備字型。
 	var ascii *cjk.ASCIIFont
-	if a, err := cjk.LoadASCIIDir(*fontDir); err != nil {
-		log.Printf("⚠ 載不到倚天半形字型（%v）", err)
+	if a, err := cjk.LoadASCIIBuiltin(filepath.Join(*dir, "END_S14.DAT")); err == nil {
+		ascii = a
+	} else if a, err := cjk.LoadASCIIDir(*fontDir); err != nil {
+		log.Printf("⚠ 載不到半形字型（原版 END_S14.DAT 與自備的倚天都沒有）")
 	} else {
 		ascii = a
 	}
