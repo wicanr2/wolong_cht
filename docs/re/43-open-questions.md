@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**561 列分布在 229 份文件，平均每份 2.4 列。**
+**564 列分布在 231 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -41,11 +41,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 174 | 167 | 6 | 1 |
-| 驗收 | 114 | 97 | 17 | 0 |
+| 程式碼理解 | 175 | 168 | 6 | 1 |
+| 驗收 | 116 | 99 | 17 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 236 | 217 | 18 | 1 |
-| **合計** | **561** | 512 | 46 | 3 |
+| **合計** | **564** | 515 | 46 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -54,8 +54,8 @@
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/spec/` | 201 |
-| `docs/re/` | 174 |
-| `docs/playtest/` | 114 |
+| `docs/re/` | 175 |
+| `docs/playtest/` | 116 |
 | `docs/formats/` | 20 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 11 |
@@ -104,7 +104,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 |
 
-## 2.3 程式碼理解（174 條）
+## 2.3 程式碼理解（175 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -280,10 +280,11 @@
 | [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | 補兵會不會補到隊長那一格 | `sub_1B413` 只在**待機數為 0** 那條路才判 `test si, 0FFh`（隊長格）；待機非 0 的路徑沒有排除它。remake 的 `reinforce` 是**一律不補隊長格**。要對得先在原版上量「隊長死後那一格會不會出現新的兵」 | 靜態 |
 | [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `+8+4k` 與 `+10+4k` 的語意 | 從軍團記錄 `+0x28+4k` 起搬進來的兩個 byte，`sub_19F58` 只讀 `+1`／`+3`，這兩格戰鬥中沒有讀取端被找到 | 靜態 |
 | [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `word_1D31A` 的語意 | `sub_1AEA9` 數「在場且 `+0x19` 非零」的兵，`sub_1ADC8` 尾段拿它算優勢（`byte_1D31E`）。`+0x19` 是一個倒數計時器（`sub_1AB7C` 寫 `28h`、`sub_1ADC8` 每幀 `dec`），**它代表什麼還沒解** | 靜態 |
-| [`re/84-popup-row-band-and-world-cursor.md`](../re/84-popup-row-band-and-world-cursor.md) | 行軍目標怎麼判定 | 在「請指示行軍目標之據點」狀態把游標放到城上按下去，畫面沒有反應。可能是目標判定有額外條件（距離／敵我／已有目標），也可能是城的判定點不在圖示中心 | 靜態 |
 | [`re/84-popup-row-band-and-world-cursor.md`](../re/84-popup-row-band-and-world-cursor.md) | IDA `0x1074D`／`0x1079B` | 選擇上／下移一格的實作沒有逐行讀（只從呼叫脈絡定名） | 靜態 |
+| [`re/85-march-target-hit-test.md`](../re/85-march-target-hit-test.md) | 圖塊 `0CBh`–`0D3h` 這 9 種各對應什麼外觀 | 只知道區間，沒有逐一對上據點類型（`+0x16` 低 4 位只有 5 種） | 靜態 |
+| [`re/85-march-target-hit-test.md`](../re/85-march-target-hit-test.md) | 行軍途中被擋住怎麼處理 | 下令攻宛之後跑了 108 個遊戲日都沒有開戰，軍團沒有到達；`+0x00` 位元 5（被擋住）的實際觸發條件沒查 | 靜態 |
 
-## 2.4 驗收（114 條）
+## 2.4 驗收（116 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -398,9 +399,11 @@
 | [`playtest/66-dosgolem-load-save.md`](../playtest/66-dosgolem-load-save.md) | 那 435 點的時間差是多少 | 只知道比 60 萬道指令小一個量級 / 做一個「跑到某個 tick／某個子刻」的取樣點，兩邊對齊到同一刻 | 靜態 |
 | [`playtest/66-dosgolem-load-save.md`](../playtest/66-dosgolem-load-save.md) | 走到戰術畫面 | 輸入模型解了，路還沒走 / 用熱區圖把「軍團 → 出兵」那條路列出來，再一步一步走 | 靜態 |
 | [`playtest/66-dosgolem-load-save.md`](../playtest/66-dosgolem-load-save.md) | `wait` 在遊戲中不適用 | 即時制的畫面永遠不會靜止，`wait` 會一路跑到預算上限（實測跑掉兩個遊戲日） / 遊戲中一律用 `steps:` 或 `until:` | 實測 |
-| [`playtest/67-dosgolem-popup-menus.md`](../playtest/67-dosgolem-popup-menus.md) | 走到戰術畫面 | §5 走到第 9 步（已經在「請指示行軍目標之據點」）。**還缺**：把游標放到城上按下去沒有反應——可能是目標判定有額外條件，也可能是城的判定點不在圖示中心 / 攔行軍目標的判定常式，看它拿到什麼、為什麼拒絕 | 靜態 |
-| [`playtest/67-dosgolem-popup-menus.md`](../playtest/67-dosgolem-popup-menus.md) | 「位置確認」與「行軍指示」之後的畫面 | 尚未對拍（`60` 的未解表也列著） / 同上 | 靜態 |
+| [`playtest/67-dosgolem-popup-menus.md`](../playtest/67-dosgolem-popup-menus.md) | 「位置確認」與「行軍指示」之後的畫面 | 原版側**走得到了**（§5 第 10–12 步），但還沒與 remake 逐區比 / 兩邊各拍一張目的地選擇與兩項選單 | 靜態 |
 | [`playtest/67-dosgolem-popup-menus.md`](../playtest/67-dosgolem-popup-menus.md) | 編成視窗本身 | 已經開得出來，**還沒對拍**——手上沒有這一張的原版擷取（`workplace/promo-live/form-01` 是 remake 側的） / 用 `tools/dosgolem.sh` 拍一張當原版側 | 靜態 |
+| [`playtest/68-dosgolem-tactical-screen.md`](../playtest/68-dosgolem-tactical-screen.md) | 兩邊開同一場仗 | 這一次比的是**不同的兩場**。要 0 px 得讓 dosgolem 與 remake 站在同一個局面上（`-siege-corps`，`../spec/91` §3） / dosgolem 側加「從存檔直接開戰場」的入口，或把這一場的軍團寫進測試存檔 | 靜態 |
+| [`playtest/68-dosgolem-tactical-screen.md`](../playtest/68-dosgolem-tactical-screen.md) | 行軍途中被擋住 | 下令攻宛之後 108 個遊戲日沒有開戰，軍團沒到 / 攔 `sub_12662`（軍團到站）看它每一步走到哪 | 靜態 |
+| [`playtest/68-dosgolem-tactical-screen.md`](../playtest/68-dosgolem-tactical-screen.md) | 戰術畫面的操作 | 只拍到進場，還沒送過任何戰術指令 / 側欄六列指令的熱區還沒問過 | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -517,8 +520,8 @@
 | [`spec/130-freelance-random-join.md`](../spec/130-freelance-random-join.md) | 這一條的實際發生頻率 | 開局 81 名在野武將**全部有心向**，所以隨機投靠要等他們兌現完才輪得到（`../mechanics/70` §3.9）。**長跑幾個月才會第一次觸發沒有量過** | 靜態 |
 | [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | PC-98 版 | dosgolem 沒有 PC-98 的機器層（不同的顯示與字型架構）。那一版仍走 DOSBox-X | 實測 |
 | [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | ⚠ 遊戲中的座標 | 大地圖有一層**捲動原點**（`畫面 ＝ 滑鼠 − 原點`），所以遊戲中要用 `sclick`／`stap`，選單畫面才用 `click`（`../playtest/66` §2） | 靜態 |
-| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | ⚠ `wait` 在遊戲中不適用 | 即時制的畫面永遠不會靜止，`wait` 會跑到預算上限。遊戲中用 `steps:` 或 `until:` | 靜態 |
-| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | 戰術畫面 | 還沒試。戰場走的是同一套繪製層，預期沒有新的機器層缺口，但**沒驗過就是沒驗過** | 靜態 |
+| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | ⚠ `wait` 在遊戲中不適用 | 即時制的畫面永遠不會靜止，`wait` 會跑到預算上限。遊戲中用 `steps:`、`until:` 或 `runto:` | 靜態 |
+| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | ⚠ 大地圖上選一格 | 用 `tile:TX,TY`，不要自己算像素——格座標是 `⌊原點÷16⌋＋⌊畫面÷16⌋` 兩次捨去的和，而且**游標不能停在熱區上**（`../re/85`） | 靜態 |
 | [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | 視窗 x → 遊戲 x 的換算 | 視窗 416 對到遊戲 415，而同一批的 300／360／450 都是 1:1。成因未查，只影響游標位置（`../playtest/65` §3.1） | 實測 |
 | [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | 音源 | `int 61h` 只記錄不模擬（時鐘回呼除外）。音訊 parity 仍走 `29` 的錄音比對 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |

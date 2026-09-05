@@ -14,6 +14,10 @@
 #   origin        印出捲動原點與遊戲算出來的畫面座標
 #   hotspots      印出目前畫面的熱區圖（編號 → 像素矩形）
 #   at:X,Y        印出某個像素座標上的熱區編號
+#   tile:TX,TY    把游標移到大地圖的第 (TX,TY) 格 ← **選據點要用這個**
+#   celltile      印出游標現在在第幾格
+#   runto:LIN[,N] 跑到 CS:IP 走到 IDA 線性位址（等一場仗開打就用它）
+#   ipeek:LIN:N   印出 IDA 線性位址起 N 個 byte（`cs:word_XXXX` 用這個）
 #   until:Y/M/D   跑到遊戲日期到某一天  ← 即時制的取樣點寫成日期
 #   clock         印出目前的遊戲日期
 #   shot:NAME     存一張 640×400 的 PNG（已經裁好，不必再跑 parity_crop.py）
@@ -60,6 +64,7 @@ OUT_ABS="$(cd "$OUT" && pwd)"
 ARGS=(-exe "/orig/$GAMEDIR/KI.EXE" -root "/orig/$GAMEDIR" -dir /out -script "$TIMELINE")
 [[ "$YMODE" == "dosbox" ]] && ARGS+=(-dosbox-y)
 [[ -n "${WOLONG_DOSGOLEM_WATCH:-}" ]] && ARGS+=(-watch "$WOLONG_DOSGOLEM_WATCH")
+[[ -n "${WOLONG_DOSGOLEM_BUDGET:-}" ]] && ARGS+=(-budget "$WOLONG_DOSGOLEM_BUDGET")
 
 # 原版素材唯讀掛載；輸出目錄可寫。**本專案與 dosgolem 都不含原版檔案。**
 DOSGOLEM_ORIG="$REPO_ROOT/workplace" \

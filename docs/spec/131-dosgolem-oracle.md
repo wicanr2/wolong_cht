@@ -28,11 +28,12 @@ DOSBox ＋ Xvfb ＋ xdotool。
 | | DOSBox-X（`tools/dosv_live_capture.sh`）| dosgolem（`tools/dosgolem.sh`）|
 |---|---|---|
 | 畫面 | X11 視窗 640×480，遊戲在 y 偏移 40，要跑 `parity_crop.py` | 直接輸出裁好的 640×400 |
-| 取樣點 | `wait:3` 之類的**秒數**，即時制之下每次停在不同的遊戲日期 | `wait`（畫面停住）或 **`until:196/4/9`（遊戲日期）** |
+| 取樣點 | `wait:3` 之類的**秒數**，即時制之下每次停在不同的遊戲日期 | `wait`（畫面停住）、**`until:196/4/9`（遊戲日期）**，或 **`runto:11B5A`（跑到程式走進某支常式）**——「等一場仗開打」寫得出來 |
 | 座標 | 視窗座標，`int 33h` 把整個視窗等比對映到 640×400 | **遊戲座標**（0–639 × 0–399），送什麼就是什麼 |
 | 原版的內部狀態 | 只能從像素反推 | **直接讀記憶體**（`peek:0CF0:8`）|
 | 原版的控制流 | 問不到 | **攔任一支常式**（`WOLONG_DOSGOLEM_WATCH=11D8E`），印暫存器與呼叫端 |
 | 哪裡可以點 | 只能一格一格試 | **讀熱區圖**（`hotspots`）——`sub_1E453` 查的那張 80×50 格圖 |
+| 大地圖上選一格 | 只能猜像素 | **`tile:TX,TY`**：閉迴路對到遊戲自己算的格座標，順便避開熱區（[`../re/85`](../re/85-march-target-hit-test.md)）|
 | 日期對不上 | 只能靠 `wait:N` 秒逼近，殘留在 `banner` | `until:196/4/20` 對齊到某一天，**110 px → 0 px**（[`../playtest/67`](../playtest/67-dosgolem-popup-menus.md) §3）|
 | 右鍵／瞬按 | `rclick`／`tap` | 都有（瞬按是獨立動作——彈出選單長按會當場選走第一列）|
 | 一條五格的時間軸 | 146 秒的 `wait` 加總 | **0.99 秒** |
@@ -62,12 +63,12 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 
 | 方式 | 證據 |
 |---|---|
-| 對原版 | [`../playtest/65`](../playtest/65-dosgolem-oracle.md)：六格 × 五區 ＝ 30 個比較全部 0 px；[`../playtest/67`](../playtest/67-dosgolem-popup-menus.md)：三張彈出選單 × 五區 ＝ 15 個全部 0 px；[`../playtest/66`](../playtest/66-dosgolem-load-save.md)：載入原版存檔走到系統選單，三區 0 px（其餘為時序漂移）|
+| 對原版 | [`../playtest/65`](../playtest/65-dosgolem-oracle.md)：六格 × 五區 ＝ 30 個比較全部 0 px；[`../playtest/67`](../playtest/67-dosgolem-popup-menus.md)：三張彈出選單 × 五區 ＝ 15 個全部 0 px；[`../playtest/66`](../playtest/66-dosgolem-load-save.md)：載入原版存檔走到系統選單，三區 0 px（其餘為時序漂移）；[`../playtest/68`](../playtest/68-dosgolem-tactical-screen.md)：**戰術畫面**四個不隨戰況變的區 0 px |
 | 單元測試 | dosgolem 側（下面那一行），每一支都做過突變測試 |
 
 ```sh
 # 在 dosgolem 的工作副本裡
-tools/go.sh test ./internal/... -run 'TestWriteMode3AppliesALU|TestFullIndex|TestSoundTimerCallbackActuallyFires'
+tools/go.sh test ./internal/... ./oracle/ -run 'TestWriteMode3AppliesALU|TestFullIndex|TestSoundTimerCallbackActuallyFires|TestAtComparesLinearAddress'
 ```
 
 ## 5. 未解
@@ -77,7 +78,8 @@ tools/go.sh test ./internal/... -run 'TestWriteMode3AppliesALU|TestFullIndex|Tes
 | PC-98 版 | dosgolem 沒有 PC-98 的機器層（不同的顯示與字型架構）。那一版仍走 DOSBox-X |
 | ~~載入既有存檔的路徑~~ | **已通**：`WOLONG_DOSGOLEM_GAMEDIR` 指到帶那份 `SAVE.DAT` 的目錄，走 NEW GAME → NO → LOAD DATA。對同一份存檔的原版擷取三區 0 px（[`../playtest/66`](../playtest/66-dosgolem-load-save.md)）|
 | ⚠ 遊戲中的座標 | 大地圖有一層**捲動原點**（`畫面 ＝ 滑鼠 − 原點`），所以遊戲中要用 `sclick`／`stap`，選單畫面才用 `click`（[`../playtest/66`](../playtest/66-dosgolem-load-save.md) §2）|
-| ⚠ `wait` 在遊戲中不適用 | 即時制的畫面永遠不會靜止，`wait` 會跑到預算上限。遊戲中用 `steps:` 或 `until:` |
-| 戰術畫面 | 還沒試。戰場走的是同一套繪製層，預期沒有新的機器層缺口，但**沒驗過就是沒驗過** |
+| ⚠ `wait` 在遊戲中不適用 | 即時制的畫面永遠不會靜止，`wait` 會跑到預算上限。遊戲中用 `steps:`、`until:` 或 `runto:` |
+| ⚠ 大地圖上選一格 | 用 `tile:TX,TY`，不要自己算像素——格座標是 `⌊原點÷16⌋＋⌊畫面÷16⌋` 兩次捨去的和，而且**游標不能停在熱區上**（[`../re/85`](../re/85-march-target-hit-test.md)）|
+| ~~戰術畫面~~ | **已通**（[`../playtest/68`](../playtest/68-dosgolem-tactical-screen.md)）：跑到許昌攻防戰的戰術畫面，與 DOSBox-X 的擷取逐區比，四個不隨戰況變的區全部 0 px，`field` 的地形一點都不差 |
 | 視窗 x → 遊戲 x 的換算 | 視窗 416 對到遊戲 415，而同一批的 300／360／450 都是 1:1。成因未查，只影響游標位置（[`../playtest/65`](../playtest/65-dosgolem-oracle.md) §3.1）|
 | 音源 | `int 61h` 只記錄不模擬（時鐘回呼除外）。音訊 parity 仍走 [`29`](29-audio.md) 的錄音比對 |

@@ -101,6 +101,7 @@
 | [`docs/playtest/65-dosgolem-oracle.md`](playtest/65-dosgolem-oracle.md) | 65 — 原版 oracle 換成 dosgolem：五格 × 五區全部 0 px | 通過。 | 2026-09-05 |
 | [`docs/playtest/66-dosgolem-load-save.md`](playtest/66-dosgolem-load-save.md) | 66 — dosgolem 載入原版存檔跑到系統選單，三區 0 px | 通過。 | 2026-09-05 |
 | [`docs/playtest/67-dosgolem-popup-menus.md`](playtest/67-dosgolem-popup-menus.md) | 67 — dosgolem 對三張彈出選單：十五個比較全部 0 px | 通過。 | 2026-09-05 |
+| [`docs/playtest/68-dosgolem-tactical-screen.md`](playtest/68-dosgolem-tactical-screen.md) | 68 — dosgolem 開出戰術畫面：不隨戰況變的九分之四逐像素相同 | 通過。 | 2026-09-05 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告是 72 秒， 含語言切換與原版並排兩段；遊戲段落是逐幀錄下來的實跑畫面。 2… | 2026-08-30 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
@@ -193,6 +194,7 @@
 | [`docs/re/82-display-slot-dead-flags.md`](re/82-display-slot-dead-flags.md) | 82 — 戰場顯示格的旗標 bit 5／bit 6：兩版都是死碼 | confirmed（靜態，兩版各自驗證）。 | 2026-09-03 |
 | [`docs/re/83-post-battle-troop-accounting.md`](re/83-post-battle-troop-accounting.md) | 83 — 打完之後兵力怎麼結算：三項相加，而待機數從來不會被清成 0 | confirmed（靜態）。 | 2026-09-03 |
 | [`docs/re/84-popup-row-band-and-world-cursor.md`](re/84-popup-row-band-and-world-cursor.md) | 84 — 彈出選單怎麼選列，以及滑鼠座標其實是世界座標 | 兩件都 confirmed（機器碼 ＋ 實跑）。 | 2026-09-05 |
+| [`docs/re/85-march-target-hit-test.md`](re/85-march-target-hit-test.md) | 85 — 行軍目標怎麼判定：一座城只有登記的那一格按得到 | confirmed（機器碼 ＋ 實跑）。 | 2026-09-05 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-16 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
