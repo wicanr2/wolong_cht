@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**592 列分布在 243 份文件，平均每份 2.4 列。**
+**593 列分布在 244 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 181 | 174 | 6 | 1 |
-| 驗收 | 131 | 114 | 17 | 0 |
+| 驗收 | 132 | 115 | 17 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 243 | 224 | 18 | 1 |
-| **合計** | **592** | 543 | 46 | 3 |
+| **合計** | **593** | 544 | 46 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -55,7 +55,7 @@
 |---|---:|
 | `docs/spec/` | 208 |
 | `docs/re/` | 181 |
-| `docs/playtest/` | 131 |
+| `docs/playtest/` | 132 |
 | `docs/formats/` | 20 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 11 |
@@ -290,7 +290,7 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
 
-## 2.4 驗收（131 條）
+## 2.4 驗收（132 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -423,8 +423,9 @@
 | [`playtest/73-opening-deployment-parity.md`](../playtest/73-opening-deployment-parity.md) | remake 要不要跟 | `Battle.Spawn` 已實作 ＋ 三支測試，**但接進遊戲路徑會讓攻城戰打不完**（`../spec/133` §3.5：60,000 幀剩餘兵數一個都沒變）。最可能是移動層不容許同格多兵 / 先解原版的移動與碰撞怎麼容許重疊 | 靜態 |
 | [`playtest/73-opening-deployment-parity.md`](../playtest/73-opening-deployment-parity.md) | 開場命令 | `sub_19B6D` 寫 `word ptr es:[di+1Ah], 1`（`+0x1A` ＝ 1 ＝ 攻擊），而執行期讀到的是 `00` / 兩者必有一個要修：可能是後面又被蓋掉，也可能 `+0x1A` 的偏移讀錯 | 靜態 |
 | [`playtest/74-settled-tick-parity.md`](../playtest/74-settled-tick-parity.md) | `field` 的對白框 | 捷徑路徑推完才武裝開場喊話（`spec/117`），自然流程要配 `-auto-messages`，但兩者的取樣點還沒調成一致 / 讓 `-open-siege` 也在推之前武裝，或用 `-shot-when battle-settled` 走自然流程 | 靜態 |
-| [`playtest/74-settled-tick-parity.md`](../playtest/74-settled-tick-parity.md) | 小地圖那 8 px | 沒查是哪幾個兵 / 逐兵比座標（`units` vs `-list-units`），8 px ＝ 兩個兵差一格 | 靜態 |
 | [`playtest/74-settled-tick-parity.md`](../playtest/74-settled-tick-parity.md) | 走位期的長度是怎麼決定的 | 兩邊剛好一致，但沒有從機器碼推出「幾拍走一格」 / 讀原版的移動節流 | 靜態 |
+| [`playtest/75-pathfind-detour.md`](../playtest/75-pathfind-detour.md) | `field` 的對白框 | 捷徑路徑推完才武裝開場喊話（`../spec/117`） / 讓 `-open-siege` 在推之前武裝 | 靜態 |
+| [`playtest/75-pathfind-detour.md`](../playtest/75-pathfind-detour.md) | 走位期「幾拍走一格」 | 還沒從機器碼推出來 / `sub_1ADC8` 的節流 | 靜態 |
 
 ## 2.5 外部資料（6 條）
 

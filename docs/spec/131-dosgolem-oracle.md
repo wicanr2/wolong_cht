@@ -35,6 +35,7 @@ DOSBox ＋ Xvfb ＋ xdotool。
 | 哪裡可以點 | 只能一格一格試 | **讀熱區圖**（`hotspots`）——`sub_1E453` 查的那張 80×50 格圖 |
 | **開一場指定的仗** | 只能等 AI 打過來（4.57 億道指令，而且打哪一場不由人）| ⭐ **`siege:攻方,據點`**：直接叫原版的 `sub_14ADE`，守方由它自己挑。4,380 萬道指令，要打哪一場自己挑（[`../playtest/72`](../playtest/72-same-battle-parity.md)）|
 | 大地圖上選一格 | 只能猜像素 | **`tile:TX,TY`**：閉迴路對到遊戲自己算的格座標，順便避開熱區（[`../re/85`](../re/85-march-target-hit-test.md)）|
+| **戰術時間軸** | 只能換算指令數（一拍不是固定指令數，估計會安靜地漂）| ⭐ **`ticks:N`**：讀 `cs:word_1D318`，以**戰術節拍**為單位推進；配 `units:側/隊` 就是一張逐拍的座標表（[`../playtest/75`](../playtest/75-pathfind-detour.md)）|
 | 日期對不上 | 只能靠 `wait:N` 秒逼近，殘留在 `banner` | `until:196/4/20` 對齊到某一天，**110 px → 0 px**（[`../playtest/67`](../playtest/67-dosgolem-popup-menus.md) §3）|
 | 右鍵／瞬按 | `rclick`／`tap` | 都有（瞬按是獨立動作——彈出選單長按會當場選走第一列）|
 | 一條五格的時間軸 | 146 秒的 `wait` 加總 | **0.99 秒** |

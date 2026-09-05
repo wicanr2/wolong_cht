@@ -93,65 +93,86 @@ func (f *Field) FindPathForcing(from, to Point, climb bool, penalty Penalty,
 		nodes[i] = pathNode{cost: unreached, from: -1}
 	}
 
-	// ① 擴散。原版是環狀佇列 ＋ 逐層推進；這裡用同樣的「先進先出、
-	// 成本較低才覆蓋」語意，結果一致。
+	// ① 擴散。⭐ **這是波數佇列（dial queue）版的 Dijkstra，不是 BFS**
+	// （`docs/spec/134`）：佇列之外另外帶一個**波數**，彈出來的格子
+	// 成本還沒被波數追過就**推回佇列**，這一波不展開；一波消化完
+	// 波數才 +1。有兵的格子成本 +8，等於在佇列裡多躺八波。
+	//
+	// ⚠ **少了「推回」那一步，`penalty` 就完全不起作用**——純先進先出
+	// 之下直線一定比繞路先碰到終點，於是被大將擋住（大將不能對調，
+	// §5.16）的兵會永久卡死在原地。
 	startPlane := f.planeAt(from.X, from.Y, PlaneLow)
 	start := idx(from.X, from.Y, startPlane)
 	nodes[start].cost = 1
-	queue := []int{start}
+
+	// 原版的環狀佇列：`si` 寫、`di` 讀、`cx` 記本波的結尾。
+	// 起點不進佇列——`loc_1BDD3` 設好成本就直接跳進展開那一段。
+	queue := []int{}
+	read, waveEnd := 0, 0
+	wave := 2 // 原版的 `mov dx, 2`
+	cur := start
 	goal := -1
-	for len(queue) > 0 && goal < 0 {
-		cur := queue[0]
-		queue = queue[1:]
-		plane := cur / cells
-		cx, cy := cur%cells%Width, cur%cells/Width
-		push := func(nx, ny, np, extra int) bool {
-			n := idx(nx, ny, np)
-			v := nodes[cur].cost + extra + penalty(nx, ny)
-			if v >= nodes[n].cost {
-				return false
-			}
-			nodes[n] = pathNode{cost: v, from: cur}
-			if nx == to.X && ny == to.Y {
-				goal = n
-				return true
-			}
-			queue = append(queue, n)
-			return false
+
+	for {
+		// `cmp bx, cs:word_1BD44 / jz loc_1BE4A`：彈到終點就收工。
+		if cur%cells%Width == to.X && cur%cells/Width == to.Y {
+			goal = cur
+			break
 		}
-		for _, d := range navSteps {
-			nx, ny := cx+d.dx, cy+d.dy
-			if !inBounds(nx, ny) {
-				continue
+		// `cmp dx, [bx] / ja`：波數還沒追過這一格 → 推回佇列。
+		if wave <= nodes[cur].cost {
+			queue = append(queue, cur)
+		} else {
+			plane := cur / cells
+			cx, cy := cur%cells%Width, cur%cells/Width
+			push := func(nx, ny, np, extra int) {
+				n := idx(nx, ny, np)
+				// `cmp dx, [bx-2] / jnb ret`
+				if wave >= nodes[n].cost {
+					return
+				}
+				// `add ax, dx`：新成本 ＝ **波數** ＋ 那一格的成本。
+				// 平面切換的高度差走 extra（原版是另一支的加法）。
+				nodes[n] = pathNode{cost: wave + extra + penalty(nx, ny), from: cur}
+				queue = append(queue, n)
 			}
-			// 導航位元就是原版的通行圖（`0001BE10` 的四個 test）。
-			// force 是 remake 的補丁：可破壞的城壁當成走得過去。
-			if !f.Linked(cx, cy, plane, d.dx, d.dy) &&
-				!(plane == PlaneLow && f.breachLinked(cx, cy, nx, ny, force)) {
-				continue
+			for _, d := range navSteps {
+				nx, ny := cx+d.dx, cy+d.dy
+				if !inBounds(nx, ny) {
+					continue
+				}
+				// 導航位元就是原版的通行圖（`0001BE10` 的四個 test）。
+				// force 是 remake 的補丁：可破壞的城壁當成走得過去。
+				if !f.Linked(cx, cy, plane, d.dx, d.dy) &&
+					!(plane == PlaneLow && f.breachLinked(cx, cy, nx, ny, force)) {
+					continue
+				}
+				push(nx, ny, plane, 0)
 			}
-			if push(nx, ny, plane, 1) {
+			// 換平面：只有門格可以，而且只有爬得上去的兵種
+			// （`sub_1AF69` 的 `cmp [si+4], 12h`，docs/re/63 §4）。
+			if climb && f.IsGateCell(cx, cy) {
+				other := PlaneHigh
+				if plane == PlaneHigh {
+					other = PlaneLow
+				}
+				zHere, okHere := f.GroundLevel(cx, cy, plane)
+				zThere, okThere := f.GroundLevel(cx, cy, other)
+				if okHere && okThere {
+					push(cx, cy, other, abs(zThere-zHere))
+				}
+			}
+		}
+		// `loc_1BE38`：本波消化完就推波數，佇列空了才算走不到。
+		if read == waveEnd {
+			wave++
+			waveEnd = len(queue)
+			if read == waveEnd {
 				break
 			}
 		}
-		if goal >= 0 {
-			break
-		}
-		// 換平面：只有門格可以，而且只有爬得上去的兵種
-		// （`sub_1AF69` 的 `cmp [si+4], 12h`，docs/re/63 §4）。
-		if !climb || !f.IsGateCell(cx, cy) {
-			continue
-		}
-		other := PlaneHigh
-		if plane == PlaneHigh {
-			other = PlaneLow
-		}
-		zHere, okHere := f.GroundLevel(cx, cy, plane)
-		zThere, okThere := f.GroundLevel(cx, cy, other)
-		if !okHere || !okThere {
-			continue
-		}
-		push(cx, cy, other, abs(zThere-zHere))
+		cur = queue[read]
+		read++
 	}
 	if goal < 0 {
 		return nil
@@ -159,7 +180,7 @@ func (f *Field) FindPathForcing(from, to Point, climb bool, penalty Penalty,
 
 	// ② 回溯。從終點往回走，**只有轉彎才記一個點**。
 	var back []Point
-	cur := goal
+	cur = goal
 	lastDX, lastDY := 0, 0
 	for cur != start {
 		prev := nodes[cur].from

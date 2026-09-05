@@ -196,3 +196,63 @@ func TestFieldBoundsMatchRowCount(t *testing.T) {
 		t.Error("沿著最後一列找不到路")
 	}
 }
+
+// ⭐ 有兵擋在直線上就繞過去（`docs/spec/134`）。
+//
+// 判準是「**路徑不經過那一格**」，不是「點數變多」——繞路的轉彎點
+// 可能只有兩個，而點數相同時舊的錯誤實作照樣通過。
+func TestFindPathGoesAroundAnOccupiedCell(t *testing.T) {
+	f := flatField()
+	from, to := Point{X: 30, Y: 30}, Point{X: 30, Y: 33}
+	block := Point{X: 30, Y: 31}
+	got := f.FindPath(from, to, false, func(x, y int) int {
+		if x == block.X && y == block.Y {
+			return 8 // `sub_1B240` 對有兵的格子寫 8
+		}
+		return 0
+	})
+	if len(got) == 0 {
+		t.Fatal("繞得過去卻回了空路徑")
+	}
+	for _, p := range walk(from, got) {
+		if p == block {
+			t.Fatalf("路徑 %v 穿過有兵的 %v——繞路成本沒有生效", got, block)
+		}
+	}
+	if got[len(got)-1] != to {
+		t.Errorf("最後一個點是 %v，應為終點 %v", got[len(got)-1], to)
+	}
+}
+
+// 反向對照：沒有東西擋路時**不准**平白繞路，否則上面那條測試
+// 用「一律繞路」的實作也會通過。
+func TestFindPathStaysStraightWhenNothingBlocks(t *testing.T) {
+	f := flatField()
+	from, to := Point{X: 30, Y: 30}, Point{X: 30, Y: 33}
+	got := f.FindPath(from, to, false, func(int, int) int { return 0 })
+	if len(got) != 1 || got[0] != to {
+		t.Fatalf("沒有人擋路卻走出 %v，應該只有終點一個點", got)
+	}
+}
+
+// walk 把轉彎點清單攤成逐格的路線。
+func walk(from Point, pts []Point) []Point {
+	out := []Point{from}
+	cur := from
+	for _, p := range pts {
+		for cur != p {
+			switch {
+			case cur.X < p.X:
+				cur.X++
+			case cur.X > p.X:
+				cur.X--
+			case cur.Y < p.Y:
+				cur.Y++
+			case cur.Y > p.Y:
+				cur.Y--
+			}
+			out = append(out, cur)
+		}
+	}
+	return out
+}

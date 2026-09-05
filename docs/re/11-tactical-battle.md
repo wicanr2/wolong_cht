@@ -1675,6 +1675,26 @@ mov [si], bx / add si, 2 / and si, 47FFh   ; 推進環狀佇列
 ⭐ **所以這不是單純的 BFS，是 uniform-cost 搜尋**——地形會拖慢腳步。
 成本表在 `es:[bx+2000h]`，也就是 `ds:0D2FE` 那 8 KB（本來標「未解」）。
 
+⭐⭐ **排序靠的是「波數」，不是佇列順序**（`loc_1BE00`）：
+
+```asm
+loc_1BDF1:  mov bx, [di] / inc di / inc di / and di, 47FFh   ; 彈出
+            cmp bx, cs:word_1BD44 / jz loc_1BE4A             ; 彈到終點就收工
+loc_1BE00:  cmp dx, [bx]
+            ja  short loc_1BE0E                              ; 波數 > 成本 → 展開
+            mov [si], bx / inc si / inc si / and si, 47FFh   ; ★ 否則**推回佇列**
+            jmp short loc_1BE38
+loc_1BE38:  cmp di, cx / jnz loc_1BDF1                       ; 本波還沒消化完
+            inc dx / mov cx, si                              ; ★ 波數 +1，重設本波結尾
+            cmp si, di / jnz loc_1BDF1                       ; 佇列空了才算走不到
+```
+
+也就是 **dial queue（桶佇列）版的 Dijkstra**：一格的成本是
+`波數 + 那一格的成本`，而它要等 `波數 > 自己的成本` 才輪得到展開——
+踩過一個有兵的格子等於在佇列裡多躺八波。**繞路真的比較快，
+而「彈到終點就收工」在這個排序之下才是對的**
+（[`../spec/134`](../spec/134-pathfind-wave-order.md)）。
+
 `test al, 8` 後面緊接著 `byte_1BE33`——**那個自我修改的 byte 就是
 「爬不爬得上去」的開關**（`cmp byte ptr [si+4], 12h / jbe` 決定寫哪個）。
 

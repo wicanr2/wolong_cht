@@ -18,6 +18,10 @@
 #   celltile      印出游標現在在第幾格
 #   runto:LIN[,N] 跑到 CS:IP 走到 IDA 線性位址（等一場仗開打就用它）
 #   ipeek:LIN:N   印出 IDA 線性位址起 N 個 byte（`cs:word_XXXX` 用這個）
+#   siege:攻,據點 直接叫原版開一場指定的攻城戰（不必等 AI 打過來）
+#   ticks:N       **以戰術節拍為單位**推進 N 拍 ← 走位期取樣要用這個，不要用 steps:
+#   units[:all|sum|側/隊]  印場上的兵；`側/隊` 只印那一隊，`sum` 每側一行摘要
+#   corps         印原版的軍團表
 #   until:Y/M/D   跑到遊戲日期到某一天  ← 即時制的取樣點寫成日期
 #   clock         印出目前的遊戲日期
 #   shot:NAME     存一張 640×400 的 PNG（已經裁好，不必再跑 parity_crop.py）

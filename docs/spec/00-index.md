@@ -175,6 +175,7 @@
 | 原版 oracle 換成 dosgolem，不再需要 DOSBox | [`131-dosgolem-oracle.md`](131-dosgolem-oracle.md) | 已接 `tools/dosgolem.sh`。五格 × 五區全 0 px，整條鏈 0.99 秒；⭐ 即時制的取樣點可以寫成**遊戲日期** |
 | **行軍走到和平勢力的邊界要掉頭** | [`132-march-turnback-at-peace.md`](132-march-turnback-at-peace.md) | CONFORMED。⭐ **和平就出不了兵**：`sub_142AB` 在野外每一步都問前方據點是誰的，是和平勢力就折返。已實作，三組突變測試 |
 | **開場擺位：邊界那一欄 ＋ 亂數 Y** | [`133-opening-deployment.md`](133-opening-deployment.md) | CONFORMED。⭐ 原版把每個兵放在戰場邊界（側 0 `X=1`、側 1 `X=62`），`Y ＝ 亂數 & 0x1F + 0x10`，**不查佔用**；之後才走進陣形。remake 已接上，量到 X 全在邊界欄、Y 16–47、44 個兵重疊 |
+| **尋路是波數佇列，不是先進先出** | [`134-pathfind-wave-order.md`](134-pathfind-wave-order.md) | CONFORMED。⭐ 成本 ≥ 目前波數的格子要**推回佇列**，有兵的格子等於多躺八波；純 FIFO 之下「繞路成本 8」從來沒有生效過。修好之後同一場第 70 拍**96 個兵逐槽全等**，小地圖 8 px → 0 px |
 
 ## 怎麼加一份
 

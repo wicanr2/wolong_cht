@@ -108,6 +108,7 @@
 | [`docs/playtest/72-same-battle-parity.md`](playtest/72-same-battle-parity.md) | 72 — 兩邊第一次開同一場仗：九區裡七區 0 px | 通過。 | 2026-09-05 |
 | [`docs/playtest/73-opening-deployment-parity.md`](playtest/73-opening-deployment-parity.md) | 73 — 逐兵對拍：開場布陣 0/48 相同，而畫面看不出來 | 抓到缺陷。 | 2026-09-05 |
 | [`docs/playtest/74-settled-tick-parity.md`](playtest/74-settled-tick-parity.md) | 74 — 取樣點定在「全軍站定」：兩邊都是第 70 拍，小地圖 8 px | 通過。 | 2026-09-05 |
+| [`docs/playtest/75-pathfind-detour.md`](playtest/75-pathfind-detour.md) | 75 — 原版尋路會繞出隊列：小地圖那 8 px 是一個越不過大將的兵 | 通過。 | 2026-09-05 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告是 72 秒， 含語言切換與原版並排兩段；遊戲段落是逐幀錄下來的實跑畫面。 2… | 2026-08-30 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
@@ -260,6 +261,7 @@
 | [`docs/spec/131-dosgolem-oracle.md`](spec/131-dosgolem-oracle.md) | 131 — 原版 oracle 換成 dosgolem：不再需要 DOSBox | CONFORMED。 | 2026-09-05 |
 | [`docs/spec/132-march-turnback-at-peace.md`](spec/132-march-turnback-at-peace.md) | 132 — 行軍走到和平勢力的邊界要掉頭 | CONFORMED。 | 2026-09-05 |
 | [`docs/spec/133-opening-deployment.md`](spec/133-opening-deployment.md) | 133 — 開場擺位：邊界那一欄 ＋ 亂數 Y | CONFORMED。 | 2026-09-05 |
+| [`docs/spec/134-pathfind-wave-order.md`](spec/134-pathfind-wave-order.md) | 134 — 尋路是波數佇列，不是先進先出：成本高的格子要等波數追上才展開 | CONFORMED。 | 2026-09-05 |
 | [`docs/spec/14-finance-window.md`](spec/14-finance-window.md) | 14 — 財政視窗 | CONFORMED。版面已照原版重寫並有契約測試； 數值輸入器已接上（[78](78-amount-input-ed… | 2026-08-15 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
