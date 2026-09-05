@@ -89,6 +89,32 @@ func parseShotWhen(s string) (*shotCondition, error) {
 			// 所以要等真的走過一段才算數。
 			return settled && b.Frame > 10
 		}}, nil
+	case strings.HasPrefix(s, "clock:"):
+		// `clock:年/月/日[/時]`——**狀態層對拍的取樣點**（docs/spec/138）。
+		// 兩邊比表要在同一個遊戲時刻，否則內政每小時都在動幾個據點，
+		// 差異看起來像規則分歧，其實只是取樣點差了幾拍。
+		f := strings.Split(strings.TrimPrefix(s, "clock:"), "/")
+		if len(f) != 3 && len(f) != 4 {
+			return nil, fmt.Errorf("-shot-when %q：`clock:` 後面要 `年/月/日` 或 `年/月/日/時`", s)
+		}
+		want := make([]int, len(f))
+		for i, part := range f {
+			n, err := strconv.Atoi(strings.TrimSpace(part))
+			if err != nil {
+				return nil, fmt.Errorf("-shot-when %q：`%s` 不是整數", s, part)
+			}
+			want[i] = n
+		}
+		return &shotCondition{name: s, check: func(g *game) bool {
+			if g.world == nil {
+				return false
+			}
+			c := g.world.Clock
+			if c.Year != want[0] || c.Month != want[1] || c.Day != want[2] {
+				return false
+			}
+			return len(want) == 3 || c.Hour == want[3]
+		}}, nil
 	case strings.HasPrefix(s, "battle-frame:"):
 		n, err := strconv.Atoi(strings.TrimPrefix(s, "battle-frame:"))
 		if err != nil || n < 0 {

@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**600 列分布在 248 份文件，平均每份 2.4 列。**
+**603 列分布在 249 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 181 | 174 | 6 | 1 |
-| 驗收 | 133 | 116 | 17 | 0 |
+| 驗收 | 136 | 119 | 17 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 249 | 230 | 18 | 1 |
-| **合計** | **600** | 551 | 46 | 3 |
+| **合計** | **603** | 554 | 46 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -55,7 +55,7 @@
 |---|---:|
 | `docs/spec/` | 214 |
 | `docs/re/` | 181 |
-| `docs/playtest/` | 133 |
+| `docs/playtest/` | 136 |
 | `docs/formats/` | 20 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 11 |
@@ -290,7 +290,7 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
 
-## 2.4 驗收（133 條）
+## 2.4 驗收（136 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -427,6 +427,9 @@
 | [`playtest/75-pathfind-detour.md`](../playtest/75-pathfind-detour.md) | 走位期「幾拍走一格」 | 還沒從機器碼推出來 / `sub_1ADC8` 的節流 | 靜態 |
 | [`playtest/76-battle-talk-parity.md`](../playtest/76-battle-talk-parity.md) | 那 408 格符號字模的來源 | 不是倚天的任何一份（`../re/29` §7） | 靜態 |
 | [`playtest/76-battle-talk-parity.md`](../playtest/76-battle-talk-parity.md) | 退卻的 120 拍倒數 | `byte_1D34A`，remake 的退卻沒有這一段（`../spec/135` §5） | 靜態 |
+| [`playtest/77-state-table-parity.md`](../playtest/77-state-table-parity.md) | 武將旗標 bit 0 | 四個劇本裡只有劇本三的張衛設著，語意未解，remake 載入時丟掉。劇本 1 沒有人設，所以這一輪比不出來 | 靜態 |
+| [`playtest/77-state-table-parity.md`](../playtest/77-state-table-parity.md) | 武將 `+0x17` 職務 | 原版是五個值（0 無／1 出陣／2 內政官／3 外交官／4 捕虜），remake 壓成 `Posted bool`，職務改記在據點的 `Governor` 與勢力的 `Diplomat`。這一輪從那兩張表反查回來比，開局全部對上——但**壓縮本身還在**（`../spec/138` §4） | 靜態 |
+| [`playtest/77-state-table-parity.md`](../playtest/77-state-table-parity.md) | 其他三個劇本 | 只比過劇本 1 | 靜態 |
 
 ## 2.5 外部資料（6 條）
 

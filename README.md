@@ -88,16 +88,16 @@
 | 文字 | 1,022 則全保存、byte-for-byte round-trip；**單行超寬 0 行**；60 筆校訂可重跑 | [`playtest/32`](docs/playtest/32-talk-layout-fit.md) |
 | 結局文字 | 200 字 10 行，從 `D7END.EXE` 取出（不在 `TALK.DAT` 裡）| [`re/70`](docs/re/70-d7end-ending-player.md) |
 | ⭐ **原版側自己**（dosgolem vs DOSBox-X）| 戰術畫面四個不隨戰況變的區 **0 px**、`field` 的地形一點都不差（兩張是**不同的兩場仗**，所以「哪些區該相同」事先算得出來）| [`playtest/68`](docs/playtest/68-dosgolem-tactical-screen.md) |
-| ⭐ **狀態層**（原版記憶體 vs remake 解出來的存檔）| 八支軍團的勢力／主將／兵力／士氣／據點／目標／六個部隊槽**全部相同**——畫面相同只證明畫得一樣，這一份證明**讀得一樣** | [`playtest/71`](docs/playtest/71-corps-table-parity.md) |
+| ⭐ **狀態層**（原版記憶體 vs remake 解出來的存檔）| 四張表全部逐欄比過：軍團表八支的每一欄，以及**勢力 22 × 13 ＋ 據點 192 × 17 ＋ 武將 122 × 16 ＝ 5,502 個欄位一個都不差**——含兩個 remake 自己算出來的衍生值（武將評價、旗標 byte）。畫面相同只證明畫得一樣，這一份證明**讀得一樣** | [`playtest/71`](docs/playtest/71-corps-table-parity.md)、[`playtest/77`](docs/playtest/77-state-table-parity.md) |
 | 音訊 | 會出聲、場景對應已解、與原版錄音比對過；**音色的諧波結構沒量化比對** | [`spec/29`](docs/spec/29-audio.md) |
-| 規則規格 | **123 份**（不含索引與 `TEMPLATE.md`）：**122 CONFORMED**／1 READY（`83-initial-strategy-pass`）／0 DRAFT | [`spec/00`](docs/spec/00-index.md) |
+| 規則規格 | **124 份**（不含索引與 `TEMPLATE.md`）：**123 CONFORMED**／1 READY（`83-initial-strategy-pass`）／0 DRAFT | [`spec/00`](docs/spec/00-index.md) |
 | 反組譯 | 739/739 支有筆記；`docs/re/` 自己標成未解的有 **172 列**（每寫一份新的反組譯筆記就帶進自己的未解表）| [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
-| 全專案的未解 | **600 列**（另有 6 列是 DOS／BIOS 平台層與編譯器 runtime，不計入）。⚠ **這個數字比較接近「文件有多少份」**——600 列分布在 248 份文件、平均每份 2.4 列，而每寫一份新文件就帶進約三列自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
+| 全專案的未解 | **603 列**（另有 6 列是 DOS／BIOS 平台層與編譯器 runtime，不計入）。⚠ **這個數字比較接近「文件有多少份」**——603 列分布在 249 份文件、平均每份 2.4 列，而每寫一份新文件就帶進約三列自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
 
-#### 那 600 列對 remake 代表什麼
+#### 那 603 列對 remake 代表什麼
 
 **它不衡量「離做完還有多遠」。** 最直接的證據是這兩個數字同時成立：
-未解 600 列，而開局主畫面 **256,000 個像素與原版一個不差**。
+未解 603 列，而開局主畫面 **256,000 個像素與原版一個不差**。
 兩者量的是不同的軸——未解列數量的是「**原版還有多少我們解釋不了**」，
 parity 量的是「**我們做出來的東西對不對**」。
 
@@ -152,11 +152,14 @@ parity 量的是「**我們做出來的東西對不對**」。
 | 資料格式保存（M1）| **90%** | 全部檔種有 Go 解碼器＋測試，`TALK.DAT`／存檔 byte-for-byte round-trip，過場、音訊、地圖族全解 | `ICONGRF` 段 1 的 UI 語意；`formats` 還有 33 列登記在案的細節 |
 | 文字保存與校訂（M2／M7）| **92%** | 1,022 則全保存、60 筆校訂可重跑、兩版 1,022 則逐句對照讀完、排版 parity 全量 0 超寬；**四個語系端到端可玩且能在遊戲中切換**（`-lang` 或 F9／啟動殼層／手機系統面板，[`docs/spec/86`](docs/spec/86-runtime-language-switch.md)）：日文直接取 PC-98 原版（含 34 個外字靠兩版對齊反推）、簡體 OpenCC 機轉＋逐則校訂、英文 1,022 則逐則英譯、343 個人名地名三語對照（[`docs/spec/84`](docs/spec/84-multilanguage.md)）；半形語系的版面另排一套（清單四家 [`85`](docs/spec/85-latin-list-layout.md)、其餘畫面 [`87`](docs/spec/87-latin-screen-layout.md)）| 缺兩版並排的畫面對照這最後一格；簡體與英文已第二人覆核（簡體 23 則校訂、英文無誤，[`docs/spec/84`](docs/spec/84-multilanguage.md) §6），但沒有母語者看過 |
 | 反組譯理解（M3）| **72%** | 739/739 支函式都有筆記、四個分級收斂；單挑這種末端子系統都能讀到逐 tick。⭐ **現在可以攔任一支常式看參數與呼叫端**（`WOLONG_DOSGOLEM_WATCH`），「這支在做什麼」不必再只從呼叫端反推 | 「有筆記」≠「讀懂」——`docs/re/` 自己登記的未解還有 178 列。⚠ 而 `sub_142AB` 證明了**標籤也會錯**：它被記成「玩家下行軍令」記了很久，dump 的第二行一直印著「呼叫者：`sub_12662`」（只有一支）卻沒有人讀 |
-| 規則還原（M4／M5）| **80%** | 政略／行軍／戰術／外交／說服／單挑都以機器碼出處實作，規則層 5 年長跑不變量成立；2026-08-25 把上一輪列的七條缺口全數收掉：災害傷害量（[`docs/spec/81`](docs/spec/81-disaster-quantities.md)）、應戰挑選＝評價的去向（[`docs/spec/82`](docs/spec/82-defender-selection.md)）、信賴度增減全帳本與初始值 `0xFF`（實機定案，[`docs/playtest/44`](docs/playtest/44-trust-init-oracle.md)）、行軍中間節點（查證後**缺口不存在**）、事件 10 訊息（端到端已通）；**AI 長程對照完成**：原版半年四大擴張事件與 remake 方向幅度一致、呂布／曹操終值逐城相同；孫策攻劉繇的分歧定案為 `sub_12BD9` 缺新遊戲開局呼叫點，已補（[`docs/spec/83`](docs/spec/83-initial-strategy-pass.md)、[`docs/playtest/45`](docs/playtest/45-ai-longrun-comparison.md)）| ⚠ **降 5 分**：2026-09-05 第一次做**行為層**對拍（逐日讀原版記憶體裡的軍團表）就抓到一個規則分歧——**和平就出不了兵**（軍團走到和平勢力的邊界會掉頭，[`docs/spec/132`](docs/spec/132-march-turnback-at-peace.md)）。已補上並做過三組突變測試，但它暴露的是**行為層幾乎沒有對過**：既有六支「派軍團去打」的測試全部跑在開局的和平狀態上，六支一起錯了很久。同一條路子在戰術層又抓到第二條：**尋路的繞路成本從來沒有生效過**（`FindPath` 用純先進先出，直線一定先碰到終點，於是被大將擋住的兵永久卡死；[`docs/spec/134`](docs/spec/134-pathfind-wave-order.md)）——已改成原版的波數佇列，兩條突變測試釘住。⭐ **加 2 分的理由是「量過了」**：同一場第 70 拍 96 個兵逐槽全等。其餘：對照只有一次原版跑、孫策擴張節奏比原版快、`docs/re/` 登記的未解細項 |
+| 規則還原（M4／M5）| **82%** | 政略／行軍／戰術／外交／說服／單挑都以機器碼出處實作，規則層 5 年長跑不變量成立；2026-08-25 把上一輪列的七條缺口全數收掉：災害傷害量（[`docs/spec/81`](docs/spec/81-disaster-quantities.md)）、應戰挑選＝評價的去向（[`docs/spec/82`](docs/spec/82-defender-selection.md)）、信賴度增減全帳本與初始值 `0xFF`（實機定案，[`docs/playtest/44`](docs/playtest/44-trust-init-oracle.md)）、行軍中間節點（查證後**缺口不存在**）、事件 10 訊息（端到端已通）；**AI 長程對照完成**：原版半年四大擴張事件與 remake 方向幅度一致、呂布／曹操終值逐城相同；孫策攻劉繇的分歧定案為 `sub_12BD9` 缺新遊戲開局呼叫點，已補（[`docs/spec/83`](docs/spec/83-initial-strategy-pass.md)、[`docs/playtest/45`](docs/playtest/45-ai-longrun-comparison.md)）| ⚠ **降 5 分**：2026-09-05 第一次做**行為層**對拍（逐日讀原版記憶體裡的軍團表）就抓到一個規則分歧——**和平就出不了兵**（軍團走到和平勢力的邊界會掉頭，[`docs/spec/132`](docs/spec/132-march-turnback-at-peace.md)）。已補上並做過三組突變測試，但它暴露的是**行為層幾乎沒有對過**：既有六支「派軍團去打」的測試全部跑在開局的和平狀態上，六支一起錯了很久。同一條路子在戰術層又抓到第二條：**尋路的繞路成本從來沒有生效過**（`FindPath` 用純先進先出，直線一定先碰到終點，於是被大將擋住的兵永久卡死；[`docs/spec/134`](docs/spec/134-pathfind-wave-order.md)）——已改成原版的波數佇列，兩條突變測試釘住。⭐ **加分的理由永遠是「量過了」**：同一場第 70 拍 96 個兵逐槽全等；
+再加 2 分是因為**狀態層四張表全部逐欄比過**——勢力 22×13 ＋ 據點 192×17 ＋
+武將 122×16 ＝ **5,502 個欄位一個都不差**，含兩個 remake 自己算出來的
+衍生值（[`playtest/77`](docs/playtest/77-state-table-parity.md)）。其餘：對照只有一次原版跑、孫策擴張節奏比原版快、`docs/re/` 登記的未解細項 |
 | 畫面一致（M6）| **95%** | 十個局面逐像素：主畫面／系統選單／三視窗／五張清單／財政全 0 px，野戰 0.05%；攻城側欄四區 0 px、戰場區 0.86%（＝兩邊開的不是同一場）。⭐ **2026-09-05 兩邊第一次開同一場仗**：九區裡**七區 0 px**、`field` 0.10%——先前戰場那一組 0.86% 的成因「兩邊開的不是同一場」拿掉了（[`playtest/72`](docs/playtest/72-same-battle-parity.md)）。原版側的取樣也不再需要 DOSBox，取樣點可以寫成**遊戲日期或事件** | ⚠ 逐兵對拍一開始是 **0/48 相同**，同一天解出原版的擺位常式並接上（[`re/87`](docs/re/87-opening-deployment.md)、[`spec/133`](docs/spec/133-opening-deployment.md)）之後，**兩邊的走位期逐拍對齊**（同在第 70 拍站定、第 75/76 拍重新開動），那一刻小地圖只差 **8 px**（[`playtest/74`](docs/playtest/74-settled-tick-parity.md)）；再逐兵追那 8 px，抓到**尋路的繞路成本從來沒有生效過**（[`spec/134`](docs/spec/134-pathfind-wave-order.md)），修好之後 **96 個兵逐槽全等、小地圖 0 px**（[`playtest/75`](docs/playtest/75-pathfind-detour.md)）。再追 `field` 那 22%，抓到**攻城戰的開場勸降走腳本指令 16 而 remake 的 `opMessage` 是空的**（[`spec/135`](docs/spec/135-script-message-command.md)）、掛框的**側別／變體／`\1` 三個參數都取錯**（[`spec/136`](docs/spec/136-battle-talk-parameters.md)）、以及**全形標點的字模用錯來源**（[`spec/137`](docs/spec/137-builtin-symbol-font.md)）——修完 `field` 22.30% → **0.08%**，剩下的 139 px 全是已歸類的不可消項（[`playtest/76`](docs/playtest/76-battle-talk-parity.md)）。剩下的：攻城那一組舊 fixture 從 0.85% 漂到 1.19%（**本來就不是同一場**）|
 | 音訊 | **72%** | 格式與場景對應全從機器碼讀出、OPL3 合成與原版錄音人耳比對過；選曲規則抽成一份給桌面與手機共用，**Android 的完整版也內嵌 32 個 ogg**（[`docs/spec/92`](docs/spec/92-android-music.md)）| 諧波結構沒有量化比對；無音效裝置會掛的問題還在；手機端沒有實機聽過 |
 | 發行與平台（M8／M9）| **50%** | 四平台包出得來且批次一致、Linux 有 GUI smoke、Android 模擬器指紋與桌面相同、發行閘擋原版資產 | Windows／macOS／Android 都沒有實機驗收；Android 只有 debug 簽章 |
-| **整體** | **81%** | 量過的地方幾乎都對到 0 px、規則層可玩且穩定、保存目標（格式＋文字）接近完備。⭐ **原版現在是一個可以問問題的物件**：記憶體讀得到、控制流攔得到、狀態存得起來分岔——這是這一輪最大的結構性改變 | 拉低整體的是平台實機驗收（外部條件：缺機器），以及**行為層對拍才剛開始**——兩輪各抓到一個規則分歧（和平掉頭、尋路排序）|
+| **整體** | **82%** | 量過的地方幾乎都對到 0 px、規則層可玩且穩定、保存目標（格式＋文字）接近完備。⭐ **原版現在是一個可以問問題的物件**：記憶體讀得到、控制流攔得到、狀態存得起來分岔——這是這一輪最大的結構性改變 | 拉低整體的是平台實機驗收（外部條件：缺機器），以及**行為層對拍才剛開始**——兩輪各抓到一個規則分歧（和平掉頭、尋路排序）|
 
 讀法同上一節：**分數對應「量過的部分對不對」**，不是進度條。
 72% 那兩軸的天花板是「未解列數收斂」，50% 那一軸的天花板是實機——

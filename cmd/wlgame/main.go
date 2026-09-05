@@ -390,6 +390,11 @@ type game struct {
 	shotDeadline int
 	autoMessages bool
 
+	// 狀態層對拍的三張表（docs/spec/138）。有 `-shot-when` 時
+	// 跟著取樣點印，沒有就載入後立刻印。
+	listFactions, listCities, listGenerals bool
+	tablesDumped                           bool
+
 	// 逐幀錄製（docs/spec/71）。nil ＝ 沒開。
 	rec     *recorder
 	recDone bool
@@ -1409,6 +1414,9 @@ func (g *game) maybeSaveShot(screen *ebiten.Image) {
 	if !g.shotReady() {
 		return
 	}
+	// ⭐ **狀態表跟著截圖那一刻印**，不是啟動那一刻（docs/spec/138 §4.1）：
+	// 兩邊要在同一個遊戲時刻比表，而內政每小時都在動幾個據點。
+	g.dumpStateTables()
 	g.shotDone = g.saveShot(screen)
 }
 
@@ -1686,6 +1694,9 @@ func main() {
 	battleSteps := flag.Int("battle-steps", 120, "截圖前推進幾個戰術 tick；0 ＝ 原版開場對白那一幀")
 	listCorps := flag.Bool("list-corps", false, "把載入後還活著的軍團印出來（編號、勢力、主將、兵力）")
 	listUnits := flag.Bool("list-units", false, "把戰場上每個兵的座標印出來（逐兵對拍用，docs/spec/91 §5.5）")
+	listFactions := flag.Bool("list-factions", false, "把勢力表印出來（狀態層對拍用，docs/spec/138）")
+	listCities := flag.Bool("list-cities", false, "把據點表印出來（狀態層對拍用，docs/spec/138）")
+	listGenerals := flag.Bool("list-generals", false, "把武將表印出來（狀態層對拍用，docs/spec/138）")
 	battleCam := flag.String("battle-cam", "", "覆寫戰術鏡頭的世界格 `X,Y`（驗收用；原版初值是 36,14）")
 	openFinance := flag.Bool("open-finance", false, "截圖前先開財政視窗（對拍用，docs/spec/14 §4）")
 	financeAmount := flag.Int("finance-amount", -1, "配 -open-finance：再開第 N 列（0–3）的數值輸入器（docs/spec/78）")
@@ -1822,6 +1833,11 @@ func main() {
 			// **對拍時它會蓋掉畫面下緣**（`map` 與 `faction` 兩區各差一成以上），
 			// 而原版載入完什麼都不留。驗收路徑清掉它。
 			g.lastEvent = ""
+		}
+		g.listFactions, g.listCities, g.listGenerals = *listFactions, *listCities, *listGenerals
+		if *shotWhen == "" {
+			// 沒有取樣條件就照舊在載入後立刻印。
+			g.dumpStateTables()
 		}
 		if *listCorps {
 			logAliveCorps(g)
