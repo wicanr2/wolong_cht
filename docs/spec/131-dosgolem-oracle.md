@@ -1,7 +1,8 @@
 # 131 — 原版 oracle 換成 dosgolem：不再需要 DOSBox
 
-**狀態：CONFORMED。** 開機到主畫面五格，對原版 DOSBox-X 擷取
+**狀態：CONFORMED。** 開機到三視窗全開共六格，對原版 DOSBox-X 擷取
 **五區全部 0 px**（[`../playtest/65`](../playtest/65-dosgolem-oracle.md)）。
+⭐ 除了畫面，**原版的變數與控制流也問得到**（`peek`／`watch`）。
 
 - 日期：2026-09-05
 - 出處：[dosgolem](https://github.com/wicanr2/dosgolem) 的
@@ -29,7 +30,9 @@ DOSBox ＋ Xvfb ＋ xdotool。
 | 畫面 | X11 視窗 640×480，遊戲在 y 偏移 40，要跑 `parity_crop.py` | 直接輸出裁好的 640×400 |
 | 取樣點 | `wait:3` 之類的**秒數**，即時制之下每次停在不同的遊戲日期 | `wait`（畫面停住）或 **`until:196/4/9`（遊戲日期）** |
 | 座標 | 視窗座標，`int 33h` 把整個視窗等比對映到 640×400 | **遊戲座標**（0–639 × 0–399），送什麼就是什麼 |
-| 原版的內部狀態 | 只能從像素反推 | **直接讀記憶體**（`ds:0CF0` 是日、`ds:0CF6` 是年…）|
+| 原版的內部狀態 | 只能從像素反推 | **直接讀記憶體**（`peek:0CF0:8`）|
+| 原版的控制流 | 問不到 | **攔任一支常式**（`WOLONG_DOSGOLEM_WATCH=11D8E`），印暫存器與呼叫端 |
+| 右鍵／瞬按 | `rclick`／`tap` | 都有（瞬按是獨立動作——彈出選單長按會當場選走第一列）|
 | 一條五格的時間軸 | 146 秒的 `wait` 加總 | **0.99 秒** |
 | 決定性 | 靠 `cycles=fixed 20000` ＋ 固定 sleep，仍會漂 | 以指令數計時，同輸入同輸出 |
 
@@ -72,4 +75,5 @@ tools/go.sh test ./internal/... -run 'TestWriteMode3AppliesALU|TestFullIndex|Tes
 | PC-98 版 | dosgolem 沒有 PC-98 的機器層（不同的顯示與字型架構）。那一版仍走 DOSBox-X |
 | 載入既有存檔的路徑 | 還沒試。`SAVE.DAT` 是原版資產，dosgolem 讀得到，但「載入 → 走到同一個局面」的腳本還沒寫 |
 | 戰術畫面 | 還沒試。戰場走的是同一套繪製層，預期沒有新的機器層缺口，但**沒驗過就是沒驗過** |
+| 視窗 x → 遊戲 x 的換算 | 視窗 416 對到遊戲 415，而同一批的 300／360／450 都是 1:1。成因未查，只影響游標位置（[`../playtest/65`](../playtest/65-dosgolem-oracle.md) §3.1）|
 | 音源 | `int 61h` 只記錄不模擬（時鐘回呼除外）。音訊 parity 仍走 [`29`](29-audio.md) 的錄音比對 |
