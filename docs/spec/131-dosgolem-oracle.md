@@ -33,6 +33,7 @@ DOSBox ＋ Xvfb ＋ xdotool。
 | 原版的內部狀態 | 只能從像素反推 | **直接讀記憶體**（`peek:0CF0:8`）|
 | 原版的控制流 | 問不到 | **攔任一支常式**（`WOLONG_DOSGOLEM_WATCH=11D8E`），印暫存器與呼叫端 |
 | 哪裡可以點 | 只能一格一格試 | **讀熱區圖**（`hotspots`）——`sub_1E453` 查的那張 80×50 格圖 |
+| 日期對不上 | 只能靠 `wait:N` 秒逼近，殘留在 `banner` | `until:196/4/20` 對齊到某一天，**110 px → 0 px**（[`../playtest/67`](../playtest/67-dosgolem-popup-menus.md) §3）|
 | 右鍵／瞬按 | `rclick`／`tap` | 都有（瞬按是獨立動作——彈出選單長按會當場選走第一列）|
 | 一條五格的時間軸 | 146 秒的 `wait` 加總 | **0.99 秒** |
 | 決定性 | 靠 `cycles=fixed 20000` ＋ 固定 sleep，仍會漂 | 以指令數計時，同輸入同輸出 |
@@ -61,7 +62,7 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 
 | 方式 | 證據 |
 |---|---|
-| 對原版 | [`../playtest/65`](../playtest/65-dosgolem-oracle.md)：五格 × 五區 ＝ 25 個比較全部 0 px |
+| 對原版 | [`../playtest/65`](../playtest/65-dosgolem-oracle.md)：六格 × 五區 ＝ 30 個比較全部 0 px；[`../playtest/67`](../playtest/67-dosgolem-popup-menus.md)：三張彈出選單 × 五區 ＝ 15 個全部 0 px；[`../playtest/66`](../playtest/66-dosgolem-load-save.md)：載入原版存檔走到系統選單，三區 0 px（其餘為時序漂移）|
 | 單元測試 | dosgolem 側（下面那一行），每一支都做過突變測試 |
 
 ```sh
