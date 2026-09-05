@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**603 列分布在 249 份文件，平均每份 2.4 列。**
+**609 列分布在 251 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 181 | 174 | 6 | 1 |
-| 驗收 | 136 | 119 | 17 | 0 |
+| 驗收 | 139 | 122 | 17 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 249 | 230 | 18 | 1 |
-| **合計** | **603** | 554 | 46 | 3 |
+| 其他 | 252 | 233 | 18 | 1 |
+| **合計** | **609** | 560 | 46 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,9 +53,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 214 |
+| `docs/spec/` | 217 |
 | `docs/re/` | 181 |
-| `docs/playtest/` | 136 |
+| `docs/playtest/` | 139 |
 | `docs/formats/` | 20 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 11 |
@@ -290,7 +290,7 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
 
-## 2.4 驗收（136 條）
+## 2.4 驗收（139 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -430,6 +430,9 @@
 | [`playtest/77-state-table-parity.md`](../playtest/77-state-table-parity.md) | 武將旗標 bit 0 | 四個劇本裡只有劇本三的張衛設著，語意未解，remake 載入時丟掉。劇本 1 沒有人設，所以這一輪比不出來 | 靜態 |
 | [`playtest/77-state-table-parity.md`](../playtest/77-state-table-parity.md) | 武將 `+0x17` 職務 | 原版是五個值（0 無／1 出陣／2 內政官／3 外交官／4 捕虜），remake 壓成 `Posted bool`，職務改記在據點的 `Governor` 與勢力的 `Diplomat`。這一輪從那兩張表反查回來比，開局全部對上——但**壓縮本身還在**（`../spec/138` §4） | 靜態 |
 | [`playtest/77-state-table-parity.md`](../playtest/77-state-table-parity.md) | 其他三個劇本 | 只比過劇本 1 | 靜態 |
+| [`playtest/78-ai-decision-trace.md`](../playtest/78-ai-decision-trace.md) | 逐筆對齊 | 要兩邊同源的亂數；`sub_1ECE0` 的式子還沒讀 | 靜態 |
+| [`playtest/78-ai-decision-trace.md`](../playtest/78-ai-decision-trace.md) | 更長的窗口 | **不是卡住，是慢**：宣戰之後畫面上的東西變多，一個遊戲日從 5.3M 漲到約 10M 道指令，跑到八月要十一億道。9 億那一輪失敗是預算不夠 | 靜態 |
+| [`playtest/78-ai-decision-trace.md`](../playtest/78-ai-decision-trace.md) | 事件 `0B`／`04`／`05`／`0D` | 內政官／外交官要求經費那幾支，開局全 `0xFF` 沒有官員，窗口內不會觸發 | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -442,7 +445,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（249 條）
+## 2.6 其他（252 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -561,6 +564,9 @@
 | [`spec/137-builtin-symbol-font.md`](../spec/137-builtin-symbol-font.md) | （那 408 格**來自哪裡**仍未解。 | （散句） | 靜態 |
 | [`spec/137-builtin-symbol-font.md`](../spec/137-builtin-symbol-font.md) | 那 408 格的來源 | 不是 `stdfont.15` 的任何一段，也不是 `usrfont.15m`（`../re/29` §7） | 靜態 |
 | [`spec/137-builtin-symbol-font.md`](../spec/137-builtin-symbol-font.md) | 其他語系 | 簡體／日文仍需自備 `HZK16`／`JISKAN16`——那兩套字集不在原版資料裡 | 靜態 |
+| [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | 逐筆對齊 | 需要兩邊同源的亂數，`sub_1ECE0` 的式子還沒讀（`133` §5） | 靜態 |
+| [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | 更長的窗口 | 原版跑過六月之後 AI 開打，戰術畫面會停住策略時鐘 | 靜態 |
+| [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | `⛔ until:` 的中途判定 | 已修（`../playtest/78` §4）：只在主迴圈閒置點取樣 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |

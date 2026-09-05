@@ -180,6 +180,7 @@
 | **對白框的參數是一條共用串流** | [`136-battle-talk-parameters.md`](136-battle-talk-parameters.md) | CONFORMED。`sub_1C315` 推 `[對手, 說話者]` 兩個參數，而 **`\6` 也吃一個**——有 `\6` 的變體 `\1` ＝ 說話者，沒有的 `\1` ＝ 對手。變體用武將 `+0x1E` 的**原始值 0–7**，不是進言那條路的 0–2 |
 | **全形標點用原版內建的 408 格** | [`137-builtin-symbol-font.md`](137-builtin-symbol-font.md) | CONFORMED。`END_S13.DAT` 開頭的 408 格才是遊戲用的全形符號字型，與倚天 `SPCFONT.15` **不同**（逗號差 (+3,−2)）。順帶讓繁中不必自備倚天字型 |
 | **狀態層對拍：另外三張表** | [`138-state-table-parity.md`](138-state-table-parity.md) | CONFORMED。**5,502 個欄位逐欄比對通過**。勢力／據點／武將表逐欄比，作法照搬軍團表那一輪。名字兩邊都印 hex（dosgolem 零相依），補白是全形空格 `A1 40` |
+| **AI 決策軌跡對拍** | [`139-ai-decision-trace.md`](139-ai-decision-trace.md) | CONFORMED。第一輪比過：事件種類、參數形狀與每月量級一致。攔 `sub_12FBF`（所有事件的共用出口）取軌跡，比**種類／發起方／節奏**不比數值——亂數只影響時機與對象，種類與產生條件是規則決定的 |
 
 ## 怎麼加一份
 

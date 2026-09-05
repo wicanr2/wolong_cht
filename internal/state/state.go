@@ -328,6 +328,10 @@ type World struct {
 	IncomeSnap  int `json:"-"`
 	ExpenseSnap int `json:"-"`
 
+	// OnEvent 是事件推送的軌跡回呼（docs/spec/139）。nil ＝ 不記。
+	// **只給對拍與研究用**，規則層不讀它，也不序列化。
+	OnEvent func(EventTrace) `json:"-"`
+
 	// cityCursor 是據點整備的輪轉游標（原版 `word_10D1E`）。
 	// 每 tick 前進一格，192 個據點輪一圈 ≈ 一天。
 	cityCursor int
@@ -478,6 +482,7 @@ type QueuedEvent struct {
 	Code  uint16
 	Param uint16
 }
+
 
 func u16(b []byte, off int) int { return int(binary.LittleEndian.Uint16(b[off:])) }
 

@@ -36,7 +36,8 @@ DOSBox ＋ Xvfb ＋ xdotool。
 | **開一場指定的仗** | 只能等 AI 打過來（4.57 億道指令，而且打哪一場不由人）| ⭐ **`siege:攻方,據點`**：直接叫原版的 `sub_14ADE`，守方由它自己挑。4,380 萬道指令，要打哪一場自己挑（[`../playtest/72`](../playtest/72-same-battle-parity.md)）|
 | 大地圖上選一格 | 只能猜像素 | **`tile:TX,TY`**：閉迴路對到遊戲自己算的格座標，順便避開熱區（[`../re/85`](../re/85-march-target-hit-test.md)）|
 | **戰術時間軸** | 只能換算指令數（一拍不是固定指令數，估計會安靜地漂）| ⭐ **`ticks:N`**：讀 `cs:word_1D318`，以**戰術節拍**為單位推進；配 `units:側/隊` 就是一張逐拍的座標表（[`../playtest/75`](../playtest/75-pathfind-detour.md)）|
-| 日期對不上 | 只能靠 `wait:N` 秒逼近，殘留在 `banner` | `until:196/4/20` 對齊到某一天，**110 px → 0 px**（[`../playtest/67`](../playtest/67-dosgolem-popup-menus.md) §3）|
+| 日期對不上 | 只能靠 `wait:N` 秒逼近，殘留在 `banner` | `until:196/4/20` 對齊到某一天，**110 px → 0 px**（[`../playtest/67`](../playtest/67-dosgolem-popup-menus.md) §3）。⚠ **日期判定只在主迴圈的閒置點做**——進位鏈是逐個欄位寫的，逐指令檢查會看到「月已進位、日還沒歸位」這種合法但錯誤的組合（[`../playtest/78`](../playtest/78-ai-decision-trace.md) §4）|
+| **AI 的決策** | 只能從畫面與長期結果反推 | ⭐ **`eventwatch`**：攔 `sub_12FBF`（所有事件的共用出口），每次推送印一行——誰在哪一天決定了什麼（[`../spec/139`](../spec/139-ai-decision-trace.md)）|
 | 右鍵／瞬按 | `rclick`／`tap` | 都有（瞬按是獨立動作——彈出選單長按會當場選走第一列）|
 | 一條五格的時間軸 | 146 秒的 `wait` 加總 | **0.99 秒** |
 | 決定性 | 靠 `cycles=fixed 20000` ＋ 固定 sleep，仍會漂 | 以指令數計時，同輸入同輸出 |

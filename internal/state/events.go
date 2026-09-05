@@ -11,6 +11,31 @@ import (
 // SAVE.DAT 的 cityBase（檔案偏移 0x08C0）不同，不能混用。
 const runtimeCityBase = 0x0840
 
+// traceEvent 把每一次事件推送送給軌跡回呼（`docs/spec/139`）。
+//
+// ⭐ **掛在推送這一層，不是各個 producer。** 原版的 `sub_12FBF` 也是
+// 所有 producer 的共用出口——攔一個點就拿得到完整的決策軌跡，
+// 而且新增 producer 不必記得同步加一行 log。
+func (w *World) traceEvent(source int, code byte, param uint16, slotHint byte) {
+	if w.OnEvent != nil {
+		w.OnEvent(EventTrace{
+			Year: w.Clock.Year, Month: w.Clock.Month,
+			Day: w.Clock.Day, Hour: w.Clock.Hour,
+			Source: source, Code: code, Param: param, Slot: slotHint,
+		})
+	}
+}
+
+// EventTrace 是一次事件推送，欄位對齊原版 `sub_12FBF` 的參數
+// （`docs/spec/139` §2）。
+type EventTrace struct {
+	Year, Month, Day, Hour int
+	Source                 int    // 發起方勢力編號（原版的 ah）
+	Code                   byte   // 事件碼（al）
+	Param                  uint16 // 對象與第二參數（dl／dh）
+	Slot                   byte   // 槽位提示（bl），0xFF ＝ 亂數起點
+}
+
 // queueEvent 是 sub_12FB1 → sub_12FBF 的可重播轉接。
 //
 // 原版的 sub_12FB1 把目前勢力的編號放在事件字高 byte，低 byte 才是
@@ -21,6 +46,7 @@ func (w *World) queueEvent(rng economy.Rand, source int, code byte, param uint16
 	if source < 0 || source > 0xFF || code == 0 {
 		return false
 	}
+	w.traceEvent(source, code, param, slotHint)
 	start := int(w.eventCursor)
 	if slotHint == 0xFF {
 		start += rng.Next() & 0x7C
@@ -47,6 +73,7 @@ func (w *World) queueFullEvent(source int, code byte, param uint16, slotHint byt
 	if source < 0 || source > 0xFF || code == 0 {
 		return false
 	}
+	w.traceEvent(source, code, param, slotHint)
 	start := int(w.eventCursor) + int(slotHint)*eventQueueEntrySize
 	for off := start; off < eventQueueEntries*eventQueueEntrySize; off += eventQueueEntrySize {
 		i := off / eventQueueEntrySize

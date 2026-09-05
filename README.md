@@ -89,15 +89,16 @@
 | 結局文字 | 200 字 10 行，從 `D7END.EXE` 取出（不在 `TALK.DAT` 裡）| [`re/70`](docs/re/70-d7end-ending-player.md) |
 | ⭐ **原版側自己**（dosgolem vs DOSBox-X）| 戰術畫面四個不隨戰況變的區 **0 px**、`field` 的地形一點都不差（兩張是**不同的兩場仗**，所以「哪些區該相同」事先算得出來）| [`playtest/68`](docs/playtest/68-dosgolem-tactical-screen.md) |
 | ⭐ **狀態層**（原版記憶體 vs remake 解出來的存檔）| 四張表全部逐欄比過：軍團表八支的每一欄，以及**勢力 22 × 13 ＋ 據點 192 × 17 ＋ 武將 122 × 16 ＝ 5,502 個欄位一個都不差**——含兩個 remake 自己算出來的衍生值（武將評價、旗標 byte）。畫面相同只證明畫得一樣，這一份證明**讀得一樣** | [`playtest/71`](docs/playtest/71-corps-table-parity.md)、[`playtest/77`](docs/playtest/77-state-table-parity.md) |
+| ⭐ **AI 決策軌跡**（原版執行期 vs remake 規則層）| 攔原版所有事件的共用出口（`sub_12FBF`），拿到「誰在哪一天決定了什麼」：**事件種類、參數形狀與每月量級一致**，都在月結觸發。原版 196 年 5 月 1 日**曹操對呂布宣戰**，劇本一的主線 | [`playtest/78`](docs/playtest/78-ai-decision-trace.md) |
 | 音訊 | 會出聲、場景對應已解、與原版錄音比對過；**音色的諧波結構沒量化比對** | [`spec/29`](docs/spec/29-audio.md) |
-| 規則規格 | **124 份**（不含索引與 `TEMPLATE.md`）：**123 CONFORMED**／1 READY（`83-initial-strategy-pass`）／0 DRAFT | [`spec/00`](docs/spec/00-index.md) |
+| 規則規格 | **125 份**（不含索引與 `TEMPLATE.md`）：**124 CONFORMED**／1 READY（`83-initial-strategy-pass`）／0 DRAFT | [`spec/00`](docs/spec/00-index.md) |
 | 反組譯 | 739/739 支有筆記；`docs/re/` 自己標成未解的有 **172 列**（每寫一份新的反組譯筆記就帶進自己的未解表）| [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
-| 全專案的未解 | **603 列**（另有 6 列是 DOS／BIOS 平台層與編譯器 runtime，不計入）。⚠ **這個數字比較接近「文件有多少份」**——603 列分布在 249 份文件、平均每份 2.4 列，而每寫一份新文件就帶進約三列自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
+| 全專案的未解 | **609 列**（另有 6 列是 DOS／BIOS 平台層與編譯器 runtime，不計入）。⚠ **這個數字比較接近「文件有多少份」**——609 列分布在 251 份文件、平均每份 2.4 列，而每寫一份新文件就帶進約三列自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
 
-#### 那 603 列對 remake 代表什麼
+#### 那 609 列對 remake 代表什麼
 
 **它不衡量「離做完還有多遠」。** 最直接的證據是這兩個數字同時成立：
-未解 603 列，而開局主畫面 **256,000 個像素與原版一個不差**。
+未解 609 列，而開局主畫面 **256,000 個像素與原版一個不差**。
 兩者量的是不同的軸——未解列數量的是「**原版還有多少我們解釋不了**」，
 parity 量的是「**我們做出來的東西對不對**」。
 

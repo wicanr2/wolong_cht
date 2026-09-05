@@ -45,6 +45,8 @@ func main() {
 	every := flag.Int("every", 12, "每幾個月印一列")
 	mmap := flag.String("map", "workplace/orig/dosv/MMAP.MAP",
 		"大地圖（推導道路圖用；空字串或讀不到就退回直線行軍）")
+	logEvents := flag.Bool("log-events", false,
+		"把每一次事件推送印出來（AI 決策軌跡對拍用，docs/spec/139）")
 	flag.Parse()
 
 	w, err := state.LoadScenario(*path, *scenario)
@@ -67,6 +69,17 @@ func main() {
 		*scenario+1, w.Clock.Year, w.Clock.Month, w.Clock.Day,
 		len(w.AliveFactions()), w.TaxRate, *seed)
 	fmt.Printf("玩家所仕勢力 %d（君主 %s）\n\n", w.Player, big5(w.LordName(w.Player)))
+
+	if *logEvents {
+		// ⭐ 掛在推送那一層，欄位對齊原版 `sub_12FBF` 的參數
+		// （docs/spec/139 §2）。要在開局政略評估**之前**掛，
+		// 否則第一批決策看不到。
+		w.OnEvent = func(e state.EventTrace) {
+			fmt.Printf("  ▶ %d年%d月%d日 %d時 事件%02X 發起%3d 對象%3d 第二%3d 槽%3d\n",
+				e.Year, e.Month, e.Day, e.Hour, e.Code, e.Source,
+				e.Param&0xFF, e.Param>>8, e.Slot)
+		}
+	}
 
 	rng := rng.NewFixed(*seed)
 	// 新遊戲的開局政略評估（sub_11AC3+66 → sub_12BD9，docs/spec/83）。
