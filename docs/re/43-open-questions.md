@@ -3,7 +3,7 @@
 **狀態：生成的清單，跑 `tools/py.sh tools/re_open_questions.py` 重出。
 這一份不下結論，只把各文件的「未解」表集中到一處。**
 
-- 日期：2026-09-04
+- 日期：2026-09-05
 - 產生工具：`tools/re_open_questions.py`
 - 來源：`docs/` 底下所有文件的未解小節、表格裡標未解的列，與收尾是「…未解」的散句
 
@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**540 列分布在 224 份文件，平均每份 2.4 列。**
+**549 列分布在 226 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 172 | 165 | 6 | 1 |
-| 驗收 | 101 | 86 | 15 | 0 |
+| 驗收 | 106 | 90 | 16 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 230 | 213 | 16 | 1 |
-| **合計** | **540** | 495 | 42 | 3 |
+| 其他 | 234 | 216 | 17 | 1 |
+| **合計** | **549** | 502 | 44 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,9 +53,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 195 |
+| `docs/spec/` | 199 |
 | `docs/re/` | 172 |
-| `docs/playtest/` | 101 |
+| `docs/playtest/` | 106 |
 | `docs/formats/` | 20 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 11 |
@@ -281,7 +281,7 @@
 | [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `+8+4k` 與 `+10+4k` 的語意 | 從軍團記錄 `+0x28+4k` 起搬進來的兩個 byte，`sub_19F58` 只讀 `+1`／`+3`，這兩格戰鬥中沒有讀取端被找到 | 靜態 |
 | [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `word_1D31A` 的語意 | `sub_1AEA9` 數「在場且 `+0x19` 非零」的兵，`sub_1ADC8` 尾段拿它算優勢（`byte_1D31E`）。`+0x19` 是一個倒數計時器（`sub_1AB7C` 寫 `28h`、`sub_1ADC8` 每幀 `dec`），**它代表什麼還沒解** | 靜態 |
 
-## 2.4 驗收（101 條）
+## 2.4 驗收（106 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -386,6 +386,11 @@
 | [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 第 1 章結局播放 | 有 remake 截圖，沒有與原版並排 / 原版要打到結局，或用存檔跳到最後一場 | 實測 |
 | [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 軍師命名視窗的逐像素 | 有截圖沒有比 / 原版側 `tap` 到那一頁，照 `54` | 實測 |
 | [`playtest/64-appimage-20260904-reverify.md`](../playtest/64-appimage-20260904-reverify.md) | 軍團選單 `184,56,120,56` | 沒驗。`57` §3 記著原版那張是**另一個局面**（4/20、讀了存檔、游標停在第一列），所以它記的 4,298 px 本來就不是有效比對 / 用 `60` 的原版素材（同狀態），但那一張是曹操局面，要另外配一條 AppImage 的操作序列 | 靜態 |
+| [`playtest/65-dosgolem-oracle.md`](../playtest/65-dosgolem-oracle.md) | 載入既有存檔 | 沒試 / 把 `-save` 之類的旗標接進 `apps/wolong`，或直接讓遊戲走「載入」選單 | 靜態 |
+| [`playtest/65-dosgolem-oracle.md`](../playtest/65-dosgolem-oracle.md) | 戰術畫面 | 沒試 / 戰場走同一套繪製層，預期沒有新的機器層缺口——**但沒驗過就是沒驗過** | 靜態 |
+| [`playtest/65-dosgolem-oracle.md`](../playtest/65-dosgolem-oracle.md) | 事件對話會擋住時鐘 | 已觀察到：跑到 196年4月3日 2時會出現「就將呂布擊潰吧」的對話框，時鐘停住等點擊 / 那是原版行為不是缺口；腳本要把它點掉 | 靜態 |
+| [`playtest/65-dosgolem-oracle.md`](../playtest/65-dosgolem-oracle.md) | `STR.EXE` 的檔名懸案 | `../re/29` §6 仍未裁決 / dosgolem 的字型檔名是參數，把它改成 `END_S10/S11` 跑一次就知道 | 靜態 |
+| [`playtest/65-dosgolem-oracle.md`](../playtest/65-dosgolem-oracle.md) | PC-98 版 | dosgolem 沒有 PC-98 的機器層 / 那一版仍走 DOSBox-X | 實測 |
 
 ## 2.5 外部資料（6 條）
 
@@ -398,7 +403,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（230 條）
+## 2.6 其他（234 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -500,6 +505,10 @@
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 戰場內調速度 | 戰場獨佔輸入，所以 `updateBattle` 自己接一次 ＋／−（調戰術速度），調完浮一行 1.5 秒的提示。**原版戰場沒有速度指示**，常駐顯示會破壞版面 parity | 靜態 |
 | [`spec/130-freelance-random-join.md`](../spec/130-freelance-random-join.md) | 平手時取編號小的 | 從 `jb`（嚴格小於）推出來的，**沒有實機驗過** | 靜態 |
 | [`spec/130-freelance-random-join.md`](../spec/130-freelance-random-join.md) | 這一條的實際發生頻率 | 開局 81 名在野武將**全部有心向**，所以隨機投靠要等他們兌現完才輪得到（`../mechanics/70` §3.9）。**長跑幾個月才會第一次觸發沒有量過** | 靜態 |
+| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | PC-98 版 | dosgolem 沒有 PC-98 的機器層（不同的顯示與字型架構）。那一版仍走 DOSBox-X | 實測 |
+| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | 載入既有存檔的路徑 | 還沒試。`SAVE.DAT` 是原版資產，dosgolem 讀得到，但「載入 → 走到同一個局面」的腳本還沒寫 | 靜態 |
+| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | 戰術畫面 | 還沒試。戰場走的是同一套繪製層，預期沒有新的機器層缺口，但**沒驗過就是沒驗過** | 靜態 |
+| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | 音源 | `int 61h` 只記錄不模擬（時鐘回呼除外）。音訊 parity 仍走 `29` 的錄音比對 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |
