@@ -274,6 +274,15 @@ type Battle struct {
 	// duel 是開戰單挑狀態機（docs/spec/80）。
 	duel duelState
 
+	// talks 是這一輪累積的對白（單挑喊話與腳本指令 16 共用一條出口）。
+	// 原版兩者都走 `sub_1C315`，掛在 `word_1D322`／`word_1D324`。
+	talks []DuelTalk
+
+	// endPhase 是原版的 `byte_1D349`：0 ＝ 戰鬥進行中、
+	// 1 ＝ 側 0 全軍退卻中、2 ＝ 側 1 全軍退卻中（`sub_1A8F6`）。
+	// 腳本指令 16 拿它當「現在該不該講這一句」的閘（docs/spec/135）。
+	endPhase int
+
 	// projectiles 是飛在空中的箭。原版是一張 32 筆的表（docs/re/11 §5.1）。
 	projectiles []projectile
 
@@ -610,6 +619,11 @@ func (b *Battle) Order(side, squad int, c Command) {
 	} else if c != Retreat {
 		// 退卻是被動觸發的（受傷、大將不支），不該變成常令。
 		b.Sides[side].Standing = c
+	} else if b.endPhase == 0 {
+		// ⭐ 全軍退卻走 `sub_1A8F6`，那一支開頭就 `cmp byte_1D349, 0 /
+		// jz` ——**已經有一側在退卻就不再記第二次**，然後把階段寫成
+		// 「退卻的那一側 ＋ 1」（docs/spec/135 §1）。
+		b.endPhase = side + 1
 	}
 	for i := lo; i < hi; i++ {
 		if b.Sides[side].Soldiers[i].Alive {

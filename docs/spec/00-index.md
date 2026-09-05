@@ -176,6 +176,9 @@
 | **行軍走到和平勢力的邊界要掉頭** | [`132-march-turnback-at-peace.md`](132-march-turnback-at-peace.md) | CONFORMED。⭐ **和平就出不了兵**：`sub_142AB` 在野外每一步都問前方據點是誰的，是和平勢力就折返。已實作，三組突變測試 |
 | **開場擺位：邊界那一欄 ＋ 亂數 Y** | [`133-opening-deployment.md`](133-opening-deployment.md) | CONFORMED。⭐ 原版把每個兵放在戰場邊界（側 0 `X=1`、側 1 `X=62`），`Y ＝ 亂數 & 0x1F + 0x10`，**不查佔用**；之後才走進陣形。remake 已接上，量到 X 全在邊界欄、Y 16–47、44 個兵重疊 |
 | **尋路是波數佇列，不是先進先出** | [`134-pathfind-wave-order.md`](134-pathfind-wave-order.md) | CONFORMED。⭐ 成本 ≥ 目前波數的格子要**推回佇列**，有兵的格子等於多躺八波；純 FIFO 之下「繞路成本 8」從來沒有生效過。修好之後同一場第 70 拍**96 個兵逐槽全等**，小地圖 8 px → 0 px |
+| **腳本指令 16 是「掛一個對白框」** | [`135-script-message-command.md`](135-script-message-command.md) | CONFORMED。攻城戰開場的勸降對白：TALK 組 ＝ `0x1CE + 運算元`、側別 ＝ 參數 bit 0，另有一道「現在是哪個收尾階段」的閘。remake 的 `opMessage` 是空的 stub，於是那兩個框一個都沒畫 |
+| **對白框的參數是一條共用串流** | [`136-battle-talk-parameters.md`](136-battle-talk-parameters.md) | CONFORMED。`sub_1C315` 推 `[對手, 說話者]` 兩個參數，而 **`\6` 也吃一個**——有 `\6` 的變體 `\1` ＝ 說話者，沒有的 `\1` ＝ 對手。變體用武將 `+0x1E` 的**原始值 0–7**，不是進言那條路的 0–2 |
+| **全形標點用原版內建的 408 格** | [`137-builtin-symbol-font.md`](137-builtin-symbol-font.md) | CONFORMED。`END_S13.DAT` 開頭的 408 格才是遊戲用的全形符號字型，與倚天 `SPCFONT.15` **不同**（逗號差 (+3,−2)）。順帶讓繁中不必自備倚天字型 |
 
 ## 怎麼加一份
 

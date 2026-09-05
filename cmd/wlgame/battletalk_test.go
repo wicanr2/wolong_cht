@@ -64,7 +64,7 @@ func TestBattleTalkUnknownMarkerFailsClosed(t *testing.T) {
 	var table text.Table
 	table.Messages[694] = text.Message{Lines: []text.Line{{Parts: []text.Part{{Marker: '1'}}}}}
 	g := &game{lib: &library.Library{Talk: &table}}
-	if got, ok := g.battleTalkText(BattleTalkEntry{Index: 694}); ok || got != "" {
+	if got, _, ok := g.battleTalkText(BattleTalkEntry{Index: 694}); ok || got != "" {
 		t.Fatalf("未知 marker 不得顯示：%q, ok=%v", got, ok)
 	}
 }

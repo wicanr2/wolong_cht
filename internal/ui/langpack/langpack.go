@@ -120,6 +120,13 @@ func Load(lang uitext.Language, fontDir string) (*Pack, error) {
 	return p, nil
 }
 
+// builtin 是原版資料裡的內建字型（`END_S13.DAT`，docs/spec/137）。
+// 設了就當**主要**字型——那是遊戲自己用的那一份，全形標點與倚天不同。
+var builtin textdraw.GlyphSource
+
+// SetBuiltinFont 掛上原版內建的字型。傳 nil 表示沒有，退回倚天鏈。
+func SetBuiltinFont(f textdraw.GlyphSource) { builtin = f }
+
 // fontChain 依語系決定字型的取用順序。
 //
 // **語系的字集不等於一份字型的字集**：日文人名裡的 PC-98 外字不在
@@ -157,7 +164,15 @@ func fontChain(lang uitext.Language, dir string) textdraw.GlyphSource {
 			rest = append(rest, f)
 		}
 	}
-	sources := append([]textdraw.GlyphSource{primary, eten}, rest...)
+	// ⭐ **內建字型排在倚天前面**：全形標點那 408 格兩份不一樣
+	// （docs/spec/137），要逐像素對上原版就得用原版自己那一份。
+	// 只對繁中母本成立——其他語系的主要字集另有來源。
+	sources := make([]textdraw.GlyphSource, 0, 4+len(rest))
+	if lang == uitext.ZhHant && builtin != nil {
+		sources = append(sources, builtin)
+	}
+	sources = append(sources, primary, eten)
+	sources = append(sources, rest...)
 	return textdraw.Chain(sources...)
 }
 

@@ -122,3 +122,46 @@ func TestLinesSeqGivesEachRepeatedMarkerItsOwnValue(t *testing.T) {
 		t.Fatalf("seq 用完沒有退回 vars：%q", short)
 	}
 }
+
+// ⭐ 共用游標：`{6}` 也吃一個參數，所以兩種版面的 `{1}` 拿到不同的人
+// （`docs/spec/136`）。
+func TestLinesStreamSharesOneCursorAcrossMarkers(t *testing.T) {
+	tb := &Table{enc: UTF8}
+	// #7：{1}啊　　#8：{6}我是{1}
+	tb.Messages[7] = Message{Lines: []Line{
+		{Parts: []Part{{Marker: '1'}, {Raw: []byte("啊")}}},
+		{},
+	}}
+	tb.Messages[8] = Message{Lines: []Line{
+		{Parts: []Part{{Marker: '6'}, {Raw: []byte("我是")}, {Marker: '1'}}},
+		{},
+	}}
+	params := []string{"對手", "說話者"}
+
+	got, names, ok := tb.LinesStream(7, params)
+	if !ok || len(got) != 1 || got[0] != "對手啊" {
+		t.Fatalf("沒有 {6} 時 {1} 應該拿到對手，得到 %v（ok=%v）", got, ok)
+	}
+	if len(names) != 1 || names[0] != "對手" {
+		t.Errorf("要畫色 9 的名字回報成 %v，應為 [對手]", names)
+	}
+	got, names, ok = tb.LinesStream(8, params)
+	if !ok || len(got) != 1 || got[0] != "我是說話者" {
+		t.Fatalf("{6} 吃掉一個之後 {1} 應該拿到說話者，得到 %v（ok=%v）", got, ok)
+	}
+	if len(names) != 1 || names[0] != "說話者" {
+		t.Errorf("要畫色 9 的名字回報成 %v，應為 [說話者]", names)
+	}
+}
+
+// 參數不夠就整則丟棄，不畫半句（fail-closed，同 Lines）。
+func TestLinesStreamFailsClosedWhenParamsRunOut(t *testing.T) {
+	tb := &Table{enc: UTF8}
+	tb.Messages[7] = Message{Lines: []Line{
+		{Parts: []Part{{Marker: '6'}, {Marker: '1'}, {Marker: '1'}}},
+		{},
+	}}
+	if got, _, ok := tb.LinesStream(7, []string{"甲", "乙"}); ok {
+		t.Fatalf("參數只有兩個卻代出 %v，應該整則丟棄", got)
+	}
+}

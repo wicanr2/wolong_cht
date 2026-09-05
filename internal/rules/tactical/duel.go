@@ -82,10 +82,18 @@ func (b *Battle) SetDuelInput(in DuelInput) {
 }
 
 // TakeDuelTalks 取走累積的喊話（呈現層轉成 TALK 索引畫對白框）。
+//
+// ⚠ 名字留著沒改，但**它不只有單挑**——腳本指令 16（攻城戰的開場
+// 勸降，docs/spec/135）走同一條出口，原版兩者也都是 `sub_1C315`。
 func (b *Battle) TakeDuelTalks() []DuelTalk {
-	out := b.duel.talks
-	b.duel.talks = nil
+	out := b.talks
+	b.talks = nil
 	return out
+}
+
+// say 把一則對白排進出口。
+func (b *Battle) say(side, group int) {
+	b.talks = append(b.talks, DuelTalk{Side: side, Group: group})
 }
 
 // DuelActive 回報單挑流程是否進行中（挑戰喊話起、決著收尾止）。
@@ -103,9 +111,7 @@ func (b *Battle) OpeningActive() bool {
 	return b.DuelActive()
 }
 
-func (d *duelState) say(side, group int) {
-	d.talks = append(d.talks, DuelTalk{Side: side, Group: group})
-}
+
 
 // duelMorale 重現 `sub_1A34F`：氣勢 ＝ 大將**戰力 × 體力**，
 // 武術門檻（`max(0, 武術×3−統率)/2`）沒過整個歸零，最後加亂數尾。
@@ -250,7 +256,7 @@ func (b *Battle) stepDuel() {
 			return
 		}
 		// `sub_1A398`：喊話＋目標指向己側單挑位＋大將命令 8＋等 40。
-		d.say(d.strong, 0x1B7)
+		b.say(d.strong, 0x1B7)
 		x, y := duelSpot(d.strong)
 		b.duelGoal(d.strong, x, y)
 		b.orderDuelLeader(d.strong, true)
@@ -263,13 +269,13 @@ func (b *Battle) stepDuel() {
 		d.timer = 40
 	case duelChallenge:
 		if d.lo < duelMoraleFloor || d.lo < d.hi/2 {
-			d.say(weak, 0x1B9) // 拒戰
+			b.say(weak, 0x1B9) // 拒戰
 			d.phase = duelRefuseA
 			d.timer = 20
 			return
 		}
 		// 應戰（loc_1A341 → sub_1A398）：弱側喊 0x1B8、騎向己側單挑位。
-		d.say(weak, 0x1B8)
+		b.say(weak, 0x1B8)
 		x, y := duelSpot(weak)
 		b.duelGoal(weak, x, y)
 		b.orderDuelLeader(weak, true)
@@ -279,18 +285,18 @@ func (b *Battle) stepDuel() {
 		d.timer = 40
 	case duelRefuseA:
 		// 拒戰回應之後**立即**清命令回到正常戰鬥（原版 0x1CC 後沒有等待）。
-		d.say(d.strong, 0x1CC)
+		b.say(d.strong, 0x1CC)
 		b.orderDuelLeader(d.strong, false)
 		d.phase = duelIdle
 	case duelRegroup:
 		// 回合迴圈開頭：互嗆第一句（pair 與先講側一回合只算一次）。
 		d.pair = b.duelBanterPair()
-		d.say(d.first, d.pair)
+		b.say(d.first, d.pair)
 		d.phase = duelBanterA
 		d.timer = 10
 	case duelBanterA:
 		// 互嗆第二句＋兩大將騎向會合點 (0x20,0x20)，進對打段。
-		d.say(1-d.first, d.pair+1)
+		b.say(1-d.first, d.pair+1)
 		b.duelMeet(0x20, 0x20)
 		d.phase = duelMelee
 		d.timer = 0x50
@@ -306,13 +312,13 @@ func (b *Battle) stepDuel() {
 		// 敗方已在退卻就不喊、也不清命令（loc_1A251 的 `cmp [di+1Ah], 5`——
 		// 清命令那一行在 ≠5 的分支裡，退卻的維持退卻）。
 		if b.Sides[d.loser].Soldiers[0].Cmd != Retreat {
-			d.say(d.loser, 0x1CC)
+			b.say(d.loser, 0x1CC)
 			b.orderDuelLeader(d.loser, false)
 		}
 		d.phase = duelVerdictB
 		d.timer = 20
 	case duelVerdictB:
-		d.say(1-d.loser, 0x1CD)
+		b.say(1-d.loser, 0x1CD)
 		// 收尾清命令（loc_1A27A）。退卻中的維持退卻不清。
 		for i := range b.Sides {
 			if b.Sides[i].Soldiers[0].Cmd != Retreat {

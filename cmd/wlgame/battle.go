@@ -415,15 +415,17 @@ func (g *game) battleTalkState(b *tactical.Battle, p *state.Pending) battleTalkS
 		if !ok {
 			continue
 		}
-		text, ok := g.battleTalkText(entry)
+		text, name, ok := g.battleTalkText(entry)
 		if !ok {
 			s.queue.clear(side)
 			continue
 		}
+		// ⚠ 換色的是 `\1` **實際代進去**的名字，不一定是說話者
+		// （docs/spec/136）。
 		if side == 0 {
-			result.Top, result.TopPortrait, result.TopSpeaker = text, entry.Portrait, entry.Speaker
+			result.Top, result.TopPortrait, result.TopSpeaker = text, entry.Portrait, name
 		} else {
-			result.Bottom, result.BottomPortrait, result.BottomSpeaker = text, entry.Portrait, entry.Speaker
+			result.Bottom, result.BottomPortrait, result.BottomSpeaker = text, entry.Portrait, name
 		}
 	}
 	return result

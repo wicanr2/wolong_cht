@@ -1752,6 +1752,14 @@ func main() {
 	} else {
 		ascii = a
 	}
+	// ⭐ **全形字優先用原版自己內建的那一份**（`END_S13.DAT`，docs/spec/137）：
+	// 開頭 408 格全形符號與倚天 `SPCFONT.15` **不一樣**，逐像素對拍看得出來。
+	// 載不到就照舊走倚天鏈。
+	if f, err := cjk.LoadBuiltin(filepath.Join(*dir, "END_S13.DAT"), cjk.Options{}); err != nil {
+		log.Printf("⚠ 載不到原版內建字型（%v），改用自備的倚天字型", err)
+	} else {
+		langpack.SetBuiltinFont(f)
+	}
 	gameRNG := rng.Now()
 	if *seed >= 0 {
 		gameRNG = rng.NewFixed(*seed)

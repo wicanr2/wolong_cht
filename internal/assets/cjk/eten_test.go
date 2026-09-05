@@ -306,3 +306,40 @@ func TestBig5_RejectsUserDefinedArea(t *testing.T) {
 		}
 	}
 }
+
+// `END_S13.DAT` 一份切成兩塊：408 格符號 ＋ stdfont（`docs/spec/137`）。
+func TestLoadBuiltinSplitsSymbolsAndHanzi(t *testing.T) {
+	path := filepath.Join("..", "..", "..", "workplace", "orig", "dosv", "END_S13.DAT")
+	if _, err := os.Stat(path); err != nil {
+		t.Skip("沒有原版素材，跳過")
+	}
+	f, err := LoadBuiltin(path, Options{})
+	if err != nil {
+		t.Fatalf("LoadBuiltin：%v", err)
+	}
+	std, spc := f.GlyphCount()
+	if spc != lastSpc+1 {
+		t.Errorf("符號格數 %d，應為 %d", spc, lastSpc+1)
+	}
+	if std < nCommon {
+		t.Errorf("漢字只有 %d 格，少於常用字 %d", std, nCommon)
+	}
+	// 全形逗號要是原版那一版：墨從第 8 列開始（倚天 SPCFONT 是第 6 列）。
+	img, ok := f.Glyph('，')
+	if !ok {
+		t.Fatal("取不到全形逗號")
+	}
+	first := -1
+	for y := 0; y < GlyphHeight && first < 0; y++ {
+		for x := 0; x < GlyphWidth; x++ {
+			if img.AlphaAt(x, y).A != 0 {
+				first = y
+				break
+			}
+		}
+	}
+	if first != 8 {
+		t.Errorf("全形逗號的第一列墨在第 %d 列，原版內建那一份是第 8 列"+
+			"（倚天 SPCFONT.15 是第 6 列，兩者不同——docs/spec/137）", first)
+	}
+}

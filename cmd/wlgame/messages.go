@@ -93,6 +93,14 @@ func (g *game) talkLines(index int, vars map[byte]string) ([]string, bool) {
 	return g.talkLinesSeq(index, vars, nil)
 }
 
+// talkStream 用一條共用的參數游標代入（docs/spec/136）。
+func (g *game) talkStream(index int, params []string) ([]string, []string, bool) {
+	if g == nil || g.lib == nil {
+		return nil, nil, false
+	}
+	return g.lib.Talk.LinesStream(index, params)
+}
+
 // talkLinesSeq 多帶重複標記的依序取值（docs/spec/106）。
 func (g *game) talkLinesSeq(index int, vars map[byte]string, seq map[byte][]string) ([]string, bool) {
 	if g == nil || g.lib == nil {

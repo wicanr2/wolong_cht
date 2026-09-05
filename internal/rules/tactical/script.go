@@ -206,12 +206,56 @@ func (s *Script) exec(b *Battle, op, par, arg int) {
 		s.cond = b.Sides[side].Soldiers[0].HP
 
 	case opMessage:
-		// 訊息 0x1CE + N。戰場的訊息還沒接，先記進 Log。
-		b.Log = append(b.Log, "（訊息 "+itoa(0x1CE+arg)+"）")
+		s.message(b, par, arg)
 
 	case opBranch:
 		s.branch(par, arg)
 	}
+}
+
+// scriptTalkBase 是腳本訊息的 TALK 組起點（`sub_1A69F` 的 `add cx, 1CEh`）。
+const scriptTalkBase = 0x1CE
+
+// message 重現指令 16（`sub_1A69F`）：掛一個對白框。
+//
+// ⭐ **攻城戰開場那兩個勸降框就是它**（docs/spec/135）。
+// 32 段腳本全部以「訊息／等 15／訊息」開頭，所以第 50 拍與第 65 拍
+// 各掛一個、各活 60 拍——第 70 拍兩個都還在。
+// 野戰看不到，因為單挑成立時原版把腳本 PC 往前推 6 個 byte（見 SkipBytes）。
+//
+// 參數的三個位元不是「側別 ×3」，是**側別 ＋ 一道階段閘**：
+// bit 0 是講話的那一側，bit 1–2 說「戰鬥走到哪個收尾階段才講」。
+// bit 0 為 1 時 bit 1–2 要 `xor 6` 翻過來（原版的 `xor al, 6`），
+// **但 `參數 & 6 == 0` 那一支不翻**——它直接比 0。
+func (s *Script) message(b *Battle, par, arg int) {
+	// ⚠ **`par` 裡的側別是原版的編號**：原版的腳本永遠跑在 side 1，
+	// side 0 恆為玩家。remake 的 `Sides[0]` 是攻方，所以 bit 0 要
+	// 翻成角色——bit 0 ＝ 1 是**腳本自己那一側**（檔頭那條一般化）。
+	// 照編號直接用會把兩句話對調：攻方的勸降跑到守方的框裡。
+	own := par&1 == 1
+	side := 1 - s.side
+	if own {
+		side = s.side
+	}
+	// 階段閘（`byte_1D349`）。原版的值也是原版的側編號，同樣要翻。
+	want := 0
+	if v := par & 6; v != 0 {
+		if par&1 == 1 {
+			v ^= 6
+		}
+		switch v >> 1 {
+		case 1: // 原版側 0 ＝ 腳本的對面
+			want = (1 - s.side) + 1
+		case 2: // 原版側 1 ＝ 腳本自己
+			want = s.side + 1
+		default: // 3：`byte_1D349` 沒有這個值，永遠不成立
+			want = 3
+		}
+	}
+	if b.endPhase != want {
+		return
+	}
+	b.say(side, scriptTalkBase+arg)
 }
 
 // branch 重現 `sub_1A591`：目標是**下一個 word 的高位元組 × 2**，
@@ -268,20 +312,6 @@ func clampByte(v int) int {
 		return 0
 	}
 	return v
-}
-
-func itoa(v int) string {
-	if v == 0 {
-		return "0"
-	}
-	var b [8]byte
-	i := len(b)
-	for v > 0 {
-		i--
-		b[i] = byte('0' + v%10)
-		v /= 10
-	}
-	return string(b[i:])
 }
 
 // SetScript 讓某一側由腳本驅動。傳 nil 就改回手動（玩家操作）。

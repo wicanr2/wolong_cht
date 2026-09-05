@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**593 列分布在 244 份文件，平均每份 2.4 列。**
+**600 列分布在 248 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 181 | 174 | 6 | 1 |
-| 驗收 | 132 | 115 | 17 | 0 |
+| 驗收 | 133 | 116 | 17 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 243 | 224 | 18 | 1 |
-| **合計** | **593** | 544 | 46 | 3 |
+| 其他 | 249 | 230 | 18 | 1 |
+| **合計** | **600** | 551 | 46 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,9 +53,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 208 |
+| `docs/spec/` | 214 |
 | `docs/re/` | 181 |
-| `docs/playtest/` | 132 |
+| `docs/playtest/` | 133 |
 | `docs/formats/` | 20 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 11 |
@@ -162,7 +162,7 @@
 | [`re/28-text-number-rendering.md`](../re/28-text-number-rendering.md) | 屬性的其餘位元 | bit 2 是陰影已證實；`0x9001`／`0x9000` 的 bit 0 差在哪未讀 | 靜態 |
 | [`re/28-text-number-rendering.md`](../re/28-text-number-rendering.md) | `word_10D4C` 那一組 | 來源已解——`sub_100DF` 開機把 `ICONGRF` 段 3 切五塊，`word_10D54` 是 `+0x0840` 的 11 格 × 16 列數字字模（`../spec/52` §4）；緊接在後的 `+0x08F0` 另有一組 11 格，用途未解 | 靜態 |
 | [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `END_S10/S11` 與 `STR.EXE` 檔名不同步 | §6，要實跑裁決 | 實測 |
-| [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `END_S13.DAT` 前 408 格的來源 | 不是 `stdfont.15` 的任何一段，也不是 `usrfont.15m`（256 B） | 靜態 |
+| [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `END_S13.DAT` 前 408 格的**來源** | 不是 `stdfont.15` 的任何一段，也不是 `usrfont.15m`（256 B）。⭐ **用途已定案**：那就是遊戲實際用的全形符號字型——全形逗號的字模與倚天 `SPCFONT.15` 差 (+3, −2) 個像素，對拍畫面上量得到（`../spec/137`） | 靜態 |
 | [`re/30-corps-formation-ui.md`](../re/30-corps-formation-ui.md) | 軍團 `+0x00` 的位元 3／4／5 | 位元 1（有指令）、2（委任，`45`）已解；其餘仍未見成對的寫入端（`34` §4） | 靜態 |
 | [`re/31-faction-picker-screen.md`](../re/31-faction-picker-screen.md) | 分派表已印出，但 `sub_15AD1 → sub_15AFC` 的進入路徑仍未定位。 | （散句） | 靜態 |
 | [`re/31-faction-picker-screen.md`](../re/31-faction-picker-screen.md) | `cs:6056` 表的長度 | 前六筆是一組小 handler，後五筆疑似越過表尾（§1.2） | 靜態 |
@@ -290,7 +290,7 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
 
-## 2.4 驗收（132 條）
+## 2.4 驗收（133 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -422,10 +422,11 @@
 | [`playtest/72-same-battle-parity.md`](../playtest/72-same-battle-parity.md) | 野戰也開得出來嗎 | 只做了攻城（`sub_14ADE`）。野戰的外層是 `sub_14A7B`，參數不同（`si`／`di` 都是軍團） / 同一個作法照搬 | 靜態 |
 | [`playtest/73-opening-deployment-parity.md`](../playtest/73-opening-deployment-parity.md) | remake 要不要跟 | `Battle.Spawn` 已實作 ＋ 三支測試，**但接進遊戲路徑會讓攻城戰打不完**（`../spec/133` §3.5：60,000 幀剩餘兵數一個都沒變）。最可能是移動層不容許同格多兵 / 先解原版的移動與碰撞怎麼容許重疊 | 靜態 |
 | [`playtest/73-opening-deployment-parity.md`](../playtest/73-opening-deployment-parity.md) | 開場命令 | `sub_19B6D` 寫 `word ptr es:[di+1Ah], 1`（`+0x1A` ＝ 1 ＝ 攻擊），而執行期讀到的是 `00` / 兩者必有一個要修：可能是後面又被蓋掉，也可能 `+0x1A` 的偏移讀錯 | 靜態 |
-| [`playtest/74-settled-tick-parity.md`](../playtest/74-settled-tick-parity.md) | `field` 的對白框 | 捷徑路徑推完才武裝開場喊話（`spec/117`），自然流程要配 `-auto-messages`，但兩者的取樣點還沒調成一致 / 讓 `-open-siege` 也在推之前武裝，或用 `-shot-when battle-settled` 走自然流程 | 靜態 |
 | [`playtest/74-settled-tick-parity.md`](../playtest/74-settled-tick-parity.md) | 走位期的長度是怎麼決定的 | 兩邊剛好一致，但沒有從機器碼推出「幾拍走一格」 / 讀原版的移動節流 | 靜態 |
 | [`playtest/75-pathfind-detour.md`](../playtest/75-pathfind-detour.md) | `field` 的對白框 | 捷徑路徑推完才武裝開場喊話（`../spec/117`） / 讓 `-open-siege` 在推之前武裝 | 靜態 |
 | [`playtest/75-pathfind-detour.md`](../playtest/75-pathfind-detour.md) | 走位期「幾拍走一格」 | 還沒從機器碼推出來 / `sub_1ADC8` 的節流 | 靜態 |
+| [`playtest/76-battle-talk-parity.md`](../playtest/76-battle-talk-parity.md) | 那 408 格符號字模的來源 | 不是倚天的任何一份（`../re/29` §7） | 靜態 |
+| [`playtest/76-battle-talk-parity.md`](../playtest/76-battle-talk-parity.md) | 退卻的 120 拍倒數 | `byte_1D34A`，remake 的退卻沒有這一段（`../spec/135` §5） | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -438,7 +439,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（243 條）
+## 2.6 其他（249 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -551,6 +552,12 @@
 | [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | 走進陣形要走多久 | 原版節拍 9 已經散開，但沒有量過「全部到位」是第幾拍 | 靜態 |
 | [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | 既有的戰場對拍會不會漂 | 現有的取樣點（`-battle-steps 120`）在兩邊都已經到位之後，**理論上不受影響**，但沒重跑過 | 靜態 |
 | [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | **移動層怎麼處理同格多兵** | 擋住接線的就是它（§3.5）。原版不查佔用，remake 的 `tryMove`／`anyoneAt` 以「一格一個兵」為前提 / 先讀原版的移動與碰撞判定，看它怎麼容許重疊 | 靜態 |
+| [`spec/135-script-message-command.md`](../spec/135-script-message-command.md) | 退卻的 120 拍倒數（`byte_1D34A`） | `sub_1A8F6` 起、`sub_1A6FA` 遞減到 0 才 `sub_19FDC` 收尾。remake 的退卻沒有這段倒數 | 靜態 |
+| [`spec/135-script-message-command.md`](../spec/135-script-message-command.md) | 參數值 3 | `byte_1D349` 只會是 0／1／2，閘算得出 3 但沒有值對得上——沒有腳本用到，或是原版的死分支 | 靜態 |
+| [`spec/136-battle-talk-parameters.md`](../spec/136-battle-talk-parameters.md) | 參數超過兩個的訊息 | 戰場對白只推兩個。若有第三個標記，原版讀堆疊殘值，remake 丟棄整則 | 靜態 |
+| [`spec/137-builtin-symbol-font.md`](../spec/137-builtin-symbol-font.md) | （那 408 格**來自哪裡**仍未解。 | （散句） | 靜態 |
+| [`spec/137-builtin-symbol-font.md`](../spec/137-builtin-symbol-font.md) | 那 408 格的來源 | 不是 `stdfont.15` 的任何一段，也不是 `usrfont.15m`（`../re/29` §7） | 靜態 |
+| [`spec/137-builtin-symbol-font.md`](../spec/137-builtin-symbol-font.md) | 半形字 | 仍走 `ASCFONT.15`；`END_S14.DAT` 與它 byte-for-byte 相同，接過來就少一個依賴 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |

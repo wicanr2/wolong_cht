@@ -114,6 +114,39 @@ func LoadDir(dir string, opts Options) (*Font, error) {
 	return LoadWithOptions(std, spc, opts)
 }
 
+// builtinSymbolBytes 是 `END_S13.DAT` 開頭那塊符號區的長度：
+// 408 格 × 30 B（`docs/re/29` §5、`docs/spec/137`）。
+var builtinSymbolBytes = (lastSpc + 1) * glyphStride
+
+// LoadBuiltin 從原版的 `END_S13.DAT` 載字型。
+//
+// ⭐ **那個檔一份就有兩塊**：開頭 12,240 B 是 408 格全形符號、
+// 之後是 `stdfont.15` 的全文。**符號那一塊不是倚天的**——
+// 全形逗號與 `SPCFONT.15` 差 (+3, −2) 個像素（`docs/spec/137` §1），
+// 所以要逐像素對上原版就得用這一份。
+//
+// ⚠ 漢字那一塊**尾端截了 68 B**，不是 30 的整數倍；這裡截到整數格，
+// 最後那一格缺就走 fallback。`readFontFile` 的整除檢查對它不成立，
+// 所以不能共用那條路。
+func LoadBuiltin(path string, opts Options) (*Font, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return nil, fmt.Errorf("cjk: 讀取內建字型 %s 失敗: %w", path, err)
+	}
+	if len(data) < builtinSymbolBytes+glyphStride {
+		return nil, fmt.Errorf("cjk: %s 只有 %d B，放不下 408 格符號 ＋ 漢字",
+			path, len(data))
+	}
+	rest := data[builtinSymbolBytes:]
+	rest = rest[:len(rest)/glyphStride*glyphStride]
+	f := &Font{std: rest, spc: data[:builtinSymbolBytes], bold: opts.Bold}
+	// 與 LoadWithOptions 同一道自我檢查：切點錯了第 0 格就不是「一」。
+	if !f.looksLikeYi() {
+		return nil, fmt.Errorf("cjk: %s 的漢字第 0 格不像「一」，切點或檔案版本不符", path)
+	}
+	return f, nil
+}
+
 func fontPath(dir string, names ...string) (string, error) {
 	for _, name := range names {
 		path := filepath.Join(dir, name)

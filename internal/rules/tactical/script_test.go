@@ -186,3 +186,62 @@ func TestScriptLineUsesRoleNotSideIndex(t *testing.T) {
 		t.Fatalf("玩家攻方時腳本側的線 = %d，預期 %d", got, want)
 	}
 }
+
+// 指令 16 掛一個對白框：組 ＝ `0x1CE + 運算元`（`docs/spec/135`）。
+//
+// ⚠ **參數 bit 0 是「腳本自己那一側」，不是側編號**——原版的腳本永遠
+// 跑在 side 1，remake 的 `Sides[0]` 卻是攻方。照編號直接用會把
+// 攻方的勸降掛到守方的框裡。
+func TestScriptMessageEmitsATalk(t *testing.T) {
+	b := newTestBattle(flatField())
+	// 腳本跑在側 1；參數 bit 0 ＝ 1 ⇒ 掛在腳本自己那一側（側 1）
+	runScript(b, 1, []byte{opMessage | 1<<5, 5})
+	got := b.TakeDuelTalks()
+	if len(got) != 1 {
+		t.Fatalf("掛了 %d 個框 %v，應該正好一個", len(got), got)
+	}
+	if got[0].Group != 0x1CE+5 {
+		t.Errorf("TALK 組 %#x，應為 %#x（0x1CE ＋ 運算元）", got[0].Group, 0x1CE+5)
+	}
+	if got[0].Side != 1 {
+		t.Errorf("側別 %d，參數 bit 0 ＝ 1 應該是腳本自己那一側（1）", got[0].Side)
+	}
+	// 參數 bit 0 ＝ 0 ⇒ 對面
+	runScript(b, 1, []byte{opMessage | 0<<5, 0})
+	got = b.TakeDuelTalks()
+	if len(got) != 1 || got[0].Side != 0 {
+		t.Fatalf("參數 bit 0 ＝ 0 應該掛在對面（側 0），得到 %v", got)
+	}
+}
+
+// 同一段腳本掛到另一側，兩句話要跟著換邊——這一支才擋得住
+// 「把原版的側編號當成 remake 的側編號」。
+func TestScriptMessageSidesFollowTheScriptSide(t *testing.T) {
+	b := newTestBattle(flatField())
+	runScript(b, 0, []byte{opMessage | 1<<5, 0})
+	got := b.TakeDuelTalks()
+	if len(got) != 1 || got[0].Side != 0 {
+		t.Fatalf("腳本在側 0、參數 bit 0 ＝ 1 應該掛在側 0，得到 %v", got)
+	}
+}
+
+// 階段閘：`byte_1D349` 對不上就不掛（`docs/spec/135` §2）。
+func TestScriptMessageGateSkipsWhenPhaseDiffers(t *testing.T) {
+	b := newTestBattle(flatField())
+	// 腳本在側 1；參數 bit1–2 ＝ 2、bit 0 ＝ 0 ⇒ 要「對面（側 0）退卻中」
+	runScript(b, 1, []byte{opMessage | 2<<5, 0})
+	if got := b.TakeDuelTalks(); len(got) != 0 {
+		t.Fatalf("還沒有人退卻卻掛了框 %v", got)
+	}
+	b.Order(0, -1, Retreat)
+	runScript(b, 1, []byte{opMessage | 2<<5, 0})
+	if got := b.TakeDuelTalks(); len(got) != 1 {
+		t.Fatalf("側 0 退卻之後應該掛得出來，得到 %v", got)
+	}
+}
+
+// runScript 把一段腳本綁到某一側跑一幀。
+func runScript(b *Battle, side int, code []byte) {
+	s := NewScript(code, side)
+	s.Step(b)
+}

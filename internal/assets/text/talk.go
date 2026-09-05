@@ -224,6 +224,72 @@ func (t *Table) LinesSeq(index int, vars map[byte]string, seq map[byte][]string)
 	return t.lines(index, vars, seq, false)
 }
 
+// markerTakesParam 說一個標記吃不吃參數（`docs/re/79` §2）。
+//
+// `\4`（玩家軍師）與 `\5`（玩家君主）不吃——它們從
+// `cs:word_10CFD` 直接讀，handler 裡沒有 `inc di`。
+// ⭐ **`\6` 吃**：它不畫字，但 `inc di / inc di / sub dx, 30h` 三件事
+// 一起做，所以它會把下一個參數消耗掉（`docs/spec/136`）。
+func markerTakesParam(m byte) bool {
+	switch m {
+	case 1, 2, 3, 6, 7, '1', '2', '3', '6', '7':
+		return true
+	}
+	return false
+}
+
+// LinesStream 用**一條共用的參數游標**代入，而不是一個標記一個值。
+//
+// ⭐ 原版的 formatter 就是這樣：`sub_1C315` 把參數推上堆疊、`mov di, sp`，
+// 每支 handler `mov ax, ss:[di] / inc di / inc di`——**同一個游標**。
+// 所以 `{6}…{1}` 與 `{1}…` 兩種版面的 `{1}` 拿到的是**不同的參數**
+// （`docs/spec/136`）。
+//
+// 吃參數的標記照 markerTakesParam；`\6` 消耗一個但畫空字串。
+// **參數不夠就整則丟棄**（回 false）——原版會讀到堆疊殘值，
+// remake 寧可不畫，理由同 Lines 的 fail-closed。
+// 第二個回傳值是 `\1` 實際代進去的那幾個字串——原版把它們畫成**色 9**
+// （`docs/re/79` §2 的顏色欄），而句中哪一段要換色，只有代入的當下知道。
+func (t *Table) LinesStream(index int, params []string) ([]string, []string, bool) {
+	if t == nil || index < 0 || index >= len(t.Messages) {
+		return nil, nil, false
+	}
+	next := 0
+	var names []string
+	out := make([]string, 0, len(t.Messages[index].Lines))
+	for _, line := range t.Messages[index].Lines {
+		var b strings.Builder
+		for _, part := range line.Parts {
+			if part.Marker != 0 {
+				if !markerTakesParam(part.Marker) {
+					return nil, nil, false
+				}
+				if next >= len(params) {
+					return nil, nil, false
+				}
+				v := params[next]
+				next++
+				if part.Marker == 6 || part.Marker == '6' {
+					continue // 吃掉參數但不畫字
+				}
+				if part.Marker == 1 || part.Marker == '1' {
+					names = append(names, v)
+				}
+				b.WriteString(v)
+				continue
+			}
+			if len(part.Raw) > 0 {
+				b.WriteString(Decode(part.Raw, t.enc))
+			}
+		}
+		out = append(out, b.String())
+	}
+	if len(out) > 0 && out[len(out)-1] == "" {
+		out = out[:len(out)-1]
+	}
+	return out, names, true
+}
+
 // MenuLines 與 Lines 相同，但**保留行尾的全形空白**。
 //
 // 選單的框寬由字數決定，而原版把每一列補到等寬（`docs/spec/45` §2.2）。

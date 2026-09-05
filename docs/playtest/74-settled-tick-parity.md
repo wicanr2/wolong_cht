@@ -44,14 +44,16 @@
 |---|---:|---|
 | `sb-minimap` | **8 / 20,480（0.04%）** | NEAR ⇒ 已解為 **0 px**，見 [`75`](75-pathfind-detour.md) |
 | `bottom`／`sb-title`／`sb-enemy`／`sb-self`／`sb-formation`／`sb-command`／`sb-arrow` | **0** | **PASS** |
-| `field` | 39,395（22.30%）| FAIL ＝ **兩個開場對白框** |
+| `field` | 39,395（22.30%）| FAIL ＝ **兩個開場對白框** ⇒ 已解，見 [`76`](76-battle-talk-parity.md)（0.08%）|
 
 ⚠ **`field` 那 22% 是對白框，不是部隊。** 差分圖上是兩個實心矩形
 （左上與下方各一個 265×80），正是[`../spec/60`](../spec/60-battle-talk-duration.md)
 說的「每一側各一個框」。原版在第 50／67 拍掛上，各活 60 拍，
-所以第 70 拍兩個都在；remake 走 `-open-siege` 捷徑時**推完才武裝開場喊話**
-（[`../spec/117`](../spec/117-fixture-arms-duel-before-stepping.md)），於是那一刻沒有框。
-**那是驗收路徑的已知差異，不是繪圖差異。**
+所以第 70 拍兩個都在。
+
+⭐ **攻城戰的開場勸降走的是腳本指令 16**（`sub_1A69F`，
+[`../spec/135`](../spec/135-script-message-command.md)），與單挑喊話是兩條路。
+接上之後 `field` 降到 0.08%，細節在 [`76`](76-battle-talk-parity.md)。
 
 ## 3. `-shot-when battle-settled`
 
@@ -76,5 +78,4 @@
 
 | 項目 | 現況 | 下手點 |
 |---|---|---|
-| `field` 的對白框 | 捷徑路徑推完才武裝開場喊話（`spec/117`），自然流程要配 `-auto-messages`，但兩者的取樣點還沒調成一致 | 讓 `-open-siege` 也在推之前武裝，或用 `-shot-when battle-settled` 走自然流程 |
 | 走位期的長度是怎麼決定的 | 兩邊剛好一致，但沒有從機器碼推出「幾拍走一格」 | 讀原版的移動節流 |

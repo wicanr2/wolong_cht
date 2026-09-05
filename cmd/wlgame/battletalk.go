@@ -21,6 +21,8 @@ type BattleTalkEntry struct {
 	Portrait int
 	Side     int
 	Duration int
+	// Other 是對手大將的呼び名。參數串流的第一格（docs/spec/136 §2）。
+	Other string
 }
 
 const (
@@ -185,40 +187,54 @@ func (g *game) pumpDuelTalks(p *state.Pending) {
 			continue
 		}
 		general := g.world.Generals[commander]
+		// ⭐ **變體用 `+0x1E` 的原始值 0–7**（`sub_1C315` 的
+		// `mov ah, [bx+1Eh]`，docs/spec/136 §3）。「模 3 收成 0–2」
+		// 是進言那條路（`sub_13C99`）的作法，套到這裡會換成別人的台詞。
 		entry := BattleTalkEntry{
 			Speaker:  big5(general.TalkName()), // \1 ＝ 呼び名，docs/spec/119
-			Index:    resolveBattleTalkIndex(dt.Group, talkVariant(general.TalkVariant)),
+			Index:    resolveBattleTalkIndex(dt.Group, general.TalkVariant),
 			Portrait: general.Portrait,
 			Side:     dt.Side,
 			Duration: battleTalkDuration,
 		}
+		// 對手的呼び名：參數串流的第一格（docs/spec/136 §2）。
+		if o := g.battleCommander(p, 1-dt.Side); o >= 0 && o < len(g.world.Generals) {
+			entry.Other = big5(g.world.Generals[o].TalkName())
+		}
 		// 不能安全代入的 marker 直接丟棄該 entry，不顯示 debug／半句文字。
-		if _, ok := g.battleTalkText(entry); !ok {
+		if _, _, ok := g.battleTalkText(entry); !ok {
 			continue
 		}
 		s.queue.set(entry)
 	}
 }
 
-func (g *game) battleTalkText(entry BattleTalkEntry) (string, bool) {
+// battleTalkText 回傳整則文字，以及**句中要畫色 9 的那個名字**。
+//
+// ⚠ 那個名字不一定是說話者：`\1` 拿到誰由 `\6` 吃不吃參數決定
+// （docs/spec/136）。renderer 靠它在句中找出那一段換色，
+// 傳錯就會整句白字——與原版差在顏色，看起來卻像「字對了」。
+func (g *game) battleTalkText(entry BattleTalkEntry) (string, string, bool) {
 	if g == nil {
-		return "", false
+		return "", "", false
 	}
-	// \1 ＝ 說話武將名、\6 ＝ 排版控制（docs/formats/01 §3）。
-	// 標記鍵在既有呼叫端有 raw byte 與 ASCII 兩種寫法，兩種都給。
-	vars := map[byte]string{'6': ""}
-	if entry.Speaker != "" {
-		vars[1], vars['1'] = entry.Speaker, entry.Speaker
-	}
-	lines, ok := g.talkLines(entry.Index, vars)
+	// ⭐ **一條共用的參數游標，不是一個標記一個值**（docs/spec/136）：
+	// `sub_1C315` 推的是 `[對手, 說話者]`，而 `\6` **也吃一個**。
+	// 於是 `{6}…{1}` 的 `\1` 是說話者、`{1}…` 的 `\1` 是對手——
+	// 同一組八個變體裡兩種版面都有。
+	lines, names, ok := g.talkStream(entry.Index, []string{entry.Other, entry.Speaker})
 	if !ok || len(lines) == 0 {
-		return "", false
+		return "", "", false
 	}
 	text := strings.Join(lines, "\n")
 	if text == "" {
-		return "", false
+		return "", "", false
 	}
-	return text, true
+	name := ""
+	if len(names) > 0 {
+		name = names[0]
+	}
+	return text, name, true
 }
 
 func (g *game) advanceBattleTalkInput() bool {
