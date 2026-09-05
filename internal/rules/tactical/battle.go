@@ -512,6 +512,64 @@ func (b *Battle) Place() {
 	}
 }
 
+// 開場擺位的兩個常數（`docs/spec/133`，原版 `sub_19C45` 的立即值
+// `0101h`／`3E3Eh` 與 `and 1Fh` ／ `add 10h`）。
+const (
+	spawnXSide0 = 1
+	spawnXSide1 = 0x3E // 62
+	spawnYBase  = 0x10 // 16
+	spawnYMask  = 0x1F // ⇒ Y 落在 16–47
+)
+
+// Spawn 把每個兵放到**戰場邊界那一欄**，Y 隨機（`docs/spec/133`）。
+//
+// ⭐ **原版不是把兵直接放在陣形位置上**（那是 `Place()`）——它把人擺在
+// 邊界，讓他們自己走進去。實測節拍 0 時側 0 全部在 `X=1`，
+// 節拍 9 已經散到 `X 1..5`（`docs/playtest/73`）。
+//
+// ⚠ **不查佔用**：同一格可以有好幾個兵，原版就是這樣
+// （實測同一隊三個兵在 `(1,25)`）。加一道「那一格有人嗎」不是保險，
+// 是改行為。
+//
+// ⚠ **Y 是亂數 ⇒ 逐兵座標永遠對不到原版。** 判準是值域與落點，
+// 不是全等（`docs/spec/133` §3）。
+func (b *Battle) Spawn(rng Rand) {
+	if rng == nil {
+		rng = b.rng
+	}
+	if rng == nil {
+		// ⚠ **沒有亂數源也要能擺**（無頭模擬、部分測試不給）。
+		// 用一個遞增序列——值域與重疊都還成立，只是不隨機。
+		var seq spawnSeq
+		rng = &seq
+	}
+	for i := range b.Sides {
+		x := spawnXSide0
+		if i == 1 {
+			x = spawnXSide1
+		}
+		for k := range b.Sides[i].Soldiers {
+			s := &b.Sides[i].Soldiers[k]
+			if !s.Alive {
+				continue
+			}
+			y := spawnYBase + (rng.Next() & spawnYMask)
+			s.X, s.Y = x, y
+			s.Z = b.standZ(s, x, y)
+			s.syncTerrain(b.Field, x, y, s.Z)
+			// 目標仍是陣形位置——他們是走過去的。
+			gx, gy := b.formationSpot(i, k)
+			s.GoalX, s.GoalY, s.GoalZ = gx, gy, b.standZ(s, gx, gy)
+			s.StepX, s.StepY, s.StepZ = x, y, s.Z
+		}
+	}
+}
+
+// spawnSeq 是沒有亂數源時的替代：遞增序列。
+type spawnSeq int
+
+func (s *spawnSeq) Next() int { *s += 7; return int(*s) }
+
 // formationSpot 算出第 side 側第 k 個兵的陣形位置。
 //
 // 原版 `sub_1AA2C`：`陣形線 + 陣形表[陣形編號][兵編號]`，

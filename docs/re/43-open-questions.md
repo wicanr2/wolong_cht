@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**584 列分布在 240 份文件，平均每份 2.4 列。**
+**589 列分布在 242 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -41,11 +41,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 178 | 171 | 6 | 1 |
-| 驗收 | 130 | 113 | 17 | 0 |
+| 程式碼理解 | 181 | 174 | 6 | 1 |
+| 驗收 | 128 | 111 | 17 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 239 | 220 | 18 | 1 |
-| **合計** | **584** | 535 | 46 | 3 |
+| 其他 | 243 | 224 | 18 | 1 |
+| **合計** | **589** | 540 | 46 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,9 +53,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 204 |
-| `docs/re/` | 178 |
-| `docs/playtest/` | 130 |
+| `docs/spec/` | 208 |
+| `docs/re/` | 181 |
+| `docs/playtest/` | 128 |
 | `docs/formats/` | 20 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 11 |
@@ -104,7 +104,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 |
 
-## 2.3 程式碼理解（178 條）
+## 2.3 程式碼理解（181 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -286,8 +286,11 @@
 | [`re/85-march-target-hit-test.md`](../re/85-march-target-hit-test.md) | 行軍途中被擋住怎麼處理 | 下令攻宛之後跑了 108 個遊戲日都沒有開戰，軍團沒有到達；`+0x00` 位元 5（被擋住）的實際觸發條件沒查 | 靜態 |
 | [`re/86-march-turnback-at-peace.md`](../re/86-march-turnback-at-peace.md) | 掉頭之後為什麼停住 | 回到 87 之後 `+0x14` 等於 `+0x0E` ⇒ 到站 ⇒ `sub_14325` 分派，Stage 0 而 87 不是首都 ⇒ 什麼都不做。合理但沒有逐條驗過分派表的其他 Stage | 靜態 |
 | [`re/86-march-turnback-at-peace.md`](../re/86-march-turnback-at-peace.md) | 玩家軍團站在據點上時完全不判 | `sub_12662` 的 `jz → 12697` 跳過 `sub_14300`。這代表玩家的軍團**不會**自動留守受威脅的據點，但沒有實機驗過 | 靜態 |
+| [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `sub_1ECE0` 的亂數式 | 沒讀。remake 對不到逐兵座標，只能對值域與分佈 | 靜態 |
+| [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
+| [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
 
-## 2.4 驗收（130 條）
+## 2.4 驗收（128 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -417,9 +420,7 @@
 | [`playtest/71-corps-table-parity.md`](../playtest/71-corps-table-parity.md) | 武將表、據點表、勢力表 | 只對了軍團表 / `corps` 那一支的作法可以照搬（段值取自 `cs:word_10D52`） | 靜態 |
 | [`playtest/72-same-battle-parity.md`](../playtest/72-same-battle-parity.md) | `field` 的 180 px | 游標與旗相位，兩者原理上消不掉 / 要歸零得讓 remake 也畫游標、並讓旗相位可指定 | 靜態 |
 | [`playtest/72-same-battle-parity.md`](../playtest/72-same-battle-parity.md) | 野戰也開得出來嗎 | 只做了攻城（`sub_14ADE`）。野戰的外層是 `sub_14A7B`，參數不同（`si`／`di` 都是軍團） / 同一個作法照搬 | 靜態 |
-| [`playtest/73-opening-deployment-parity.md`](../playtest/73-opening-deployment-parity.md) | 原版的擺位常式 | `sub_19AF4` → `sub_19B6D` 只寫體力／戰力／命令（`+0x03`／`+0x04`／`+0x18`／`+0x19`／`+0x1A`），**沒有寫 `+0x06`／`+0x08`**。擺位在別的地方 / 用 `ida_disp_users.py` 掃「運算元位移 ＝ 6 或 8 的寫入」，或攔… | 靜態 |
-| [`playtest/73-opening-deployment-parity.md`](../playtest/73-opening-deployment-parity.md) | Y 為什麼會重複 | 同一隊三個兵在同一格 —— 亂數擺位而且不查佔用？還是那一欄本來就允許重疊？ / 先找到擺位常式再說 | 靜態 |
-| [`playtest/73-opening-deployment-parity.md`](../playtest/73-opening-deployment-parity.md) | remake 要不要跟 | 目前 `Place()` 直接放到陣形位置。要對齊得先解出原版的擺位規則與「走進去」那一段 / 解出來之後寫 spec | 靜態 |
+| [`playtest/73-opening-deployment-parity.md`](../playtest/73-opening-deployment-parity.md) | remake 要不要跟 | `Battle.Spawn` 已實作 ＋ 三支測試，**但接進遊戲路徑會讓攻城戰打不完**（`../spec/133` §3.5：60,000 幀剩餘兵數一個都沒變）。最可能是移動層不容許同格多兵 / 先解原版的移動與碰撞怎麼容許重疊 | 靜態 |
 | [`playtest/73-opening-deployment-parity.md`](../playtest/73-opening-deployment-parity.md) | 開場命令 | `sub_19B6D` 寫 `word ptr es:[di+1Ah], 1`（`+0x1A` ＝ 1 ＝ 攻擊），而執行期讀到的是 `00` / 兩者必有一個要修：可能是後面又被蓋掉，也可能 `+0x1A` 的偏移讀錯 | 靜態 |
 
 ## 2.5 外部資料（6 條）
@@ -433,7 +434,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（239 條）
+## 2.6 其他（243 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -542,6 +543,10 @@
 | [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | 視窗 x → 遊戲 x 的換算 | 視窗 416 對到遊戲 415，而同一批的 300／360／450 都是 1:1。成因未查，只影響游標位置（`../playtest/65` §3.1） | 實測 |
 | [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | 音源 | `int 61h` 只記錄不模擬（時鐘回呼除外）。音訊 parity 仍走 `29` 的錄音比對 | 靜態 |
 | [`spec/132-march-turnback-at-peace.md`](../spec/132-march-turnback-at-peace.md) | 折返之後會不會再出發 | 原版回到據點就停住（玩家的軍團在據點上完全不判）。**AI 的軍團**走 `sub_14300`，行為可能不同，沒有觀測過 | 靜態 |
+| [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | `sub_1ECE0` 的亂數式 | 沒讀。讀出來也未必要照抄——remake 有自己的 `rng` | 靜態 |
+| [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | 走進陣形要走多久 | 原版節拍 9 已經散開，但沒有量過「全部到位」是第幾拍 | 靜態 |
+| [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | 既有的戰場對拍會不會漂 | 現有的取樣點（`-battle-steps 120`）在兩邊都已經到位之後，**理論上不受影響**，但沒重跑過 | 靜態 |
+| [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | **移動層怎麼處理同格多兵** | 擋住接線的就是它（§3.5）。原版不查佔用，remake 的 `tryMove`／`anyoneAt` 以「一格一個兵」為前提 / 先讀原版的移動與碰撞判定，看它怎麼容許重疊 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |

@@ -201,6 +201,7 @@
 | [`docs/re/84-popup-row-band-and-world-cursor.md`](re/84-popup-row-band-and-world-cursor.md) | 84 — 彈出選單怎麼選列，以及滑鼠座標其實是世界座標 | 兩件都 confirmed（機器碼 ＋ 實跑）。 | 2026-09-05 |
 | [`docs/re/85-march-target-hit-test.md`](re/85-march-target-hit-test.md) | 85 — 行軍目標怎麼判定：一座城只有登記的那一格按得到 | confirmed（機器碼 ＋ 實跑）。 | 2026-09-05 |
 | [`docs/re/86-march-turnback-at-peace.md`](re/86-march-turnback-at-peace.md) | 86 — 和平就出不了兵：軍團走到別人的邊界會自己掉頭 | confirmed（機器碼 ＋ 執行期逐日追蹤）。 | 2026-09-05 |
+| [`docs/re/87-opening-deployment.md`](re/87-opening-deployment.md) | 87 — 開場擺位：X 寫死在戰場邊界，Y 是亂數 | confirmed（機器碼 ＋ 執行期寫入監看）。 | 2026-09-05 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-16 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -257,6 +258,7 @@
 | [`docs/spec/130-freelance-random-join.md`](spec/130-freelance-random-join.md) | 130 — 沒有心向的在野武將：隨機投靠，偏向武將最少的勢力 | CONFORMED。 | 2026-09-04 |
 | [`docs/spec/131-dosgolem-oracle.md`](spec/131-dosgolem-oracle.md) | 131 — 原版 oracle 換成 dosgolem：不再需要 DOSBox | CONFORMED。 | 2026-09-05 |
 | [`docs/spec/132-march-turnback-at-peace.md`](spec/132-march-turnback-at-peace.md) | 132 — 行軍走到和平勢力的邊界要掉頭 | CONFORMED。 | 2026-09-05 |
+| [`docs/spec/133-opening-deployment.md`](spec/133-opening-deployment.md) | 133 — 開場擺位：邊界那一欄 ＋ 亂數 Y | READY，但接線被擋住。 | 2026-09-05 |
 | [`docs/spec/14-finance-window.md`](spec/14-finance-window.md) | 14 — 財政視窗 | CONFORMED。版面已照原版重寫並有契約測試； 數值輸入器已接上（[78](78-amount-input-ed… | 2026-08-15 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
