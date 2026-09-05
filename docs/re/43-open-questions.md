@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**558 列分布在 228 份文件，平均每份 2.4 列。**
+**559 列分布在 228 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 172 | 165 | 6 | 1 |
-| 驗收 | 113 | 96 | 17 | 0 |
+| 驗收 | 114 | 96 | 18 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 236 | 217 | 18 | 1 |
-| **合計** | **558** | 509 | 46 | 3 |
+| **合計** | **559** | 509 | 47 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -55,7 +55,7 @@
 |---|---:|
 | `docs/spec/` | 201 |
 | `docs/re/` | 172 |
-| `docs/playtest/` | 113 |
+| `docs/playtest/` | 114 |
 | `docs/formats/` | 20 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 11 |
@@ -281,7 +281,7 @@
 | [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `+8+4k` 與 `+10+4k` 的語意 | 從軍團記錄 `+0x28+4k` 起搬進來的兩個 byte，`sub_19F58` 只讀 `+1`／`+3`，這兩格戰鬥中沒有讀取端被找到 | 靜態 |
 | [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `word_1D31A` 的語意 | `sub_1AEA9` 數「在場且 `+0x19` 非零」的兵，`sub_1ADC8` 尾段拿它算優勢（`byte_1D31E`）。`+0x19` 是一個倒數計時器（`sub_1AB7C` 寫 `28h`、`sub_1ADC8` 每幀 `dec`），**它代表什麼還沒解** | 靜態 |
 
-## 2.4 驗收（113 條）
+## 2.4 驗收（114 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -396,8 +396,9 @@
 | [`playtest/66-dosgolem-load-save.md`](../playtest/66-dosgolem-load-save.md) | 那 435 點的時間差是多少 | 只知道比 60 萬道指令小一個量級 / 做一個「跑到某個 tick／某個子刻」的取樣點，兩邊對齊到同一刻 | 靜態 |
 | [`playtest/66-dosgolem-load-save.md`](../playtest/66-dosgolem-load-save.md) | 走到戰術畫面 | 輸入模型解了，路還沒走 / 用熱區圖把「軍團 → 出兵」那條路列出來，再一步一步走 | 靜態 |
 | [`playtest/66-dosgolem-load-save.md`](../playtest/66-dosgolem-load-save.md) | `wait` 在遊戲中不適用 | 即時制的畫面永遠不會靜止，`wait` 會一路跑到預算上限（實測跑掉兩個遊戲日） / 遊戲中一律用 `steps:` 或 `until:` | 實測 |
-| [`playtest/67-dosgolem-popup-menus.md`](../playtest/67-dosgolem-popup-menus.md) | 走到戰術畫面 | 路徑摸清楚了：指令列 →「軍團」→「行軍指示」。但手上的存檔**一個軍團都沒有**（軍團一覽整排破折號），要先走「編成」 / 用熱區圖把編成流程列出來，或另外做一份已經有軍團的存檔 | 靜態 |
+| [`playtest/67-dosgolem-popup-menus.md`](../playtest/67-dosgolem-popup-menus.md) | 走到戰術畫面 | §5 走到第 6 步。**還缺**：編成後那則對話怎麼關、怎麼離開編成視窗（右鍵在那一張上沒作用，但在彈出選單上有作用——實測關掉選單差 4,931 點）、行軍目的地怎麼選、行軍要跑幾個遊戲日 / 一步一步用 `hotspots` ＋ `-watch` 問下去 | 實測 |
 | [`playtest/67-dosgolem-popup-menus.md`](../playtest/67-dosgolem-popup-menus.md) | 「位置確認」與「行軍指示」之後的畫面 | 尚未對拍（`60` 的未解表也列著） / 同上 | 靜態 |
+| [`playtest/67-dosgolem-popup-menus.md`](../playtest/67-dosgolem-popup-menus.md) | 編成視窗本身 | 已經開得出來，**還沒對拍**——手上沒有這一張的原版擷取（`workplace/promo-live/form-01` 是 remake 側的） / 用 `tools/dosgolem.sh` 拍一張當原版側 | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
