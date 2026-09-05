@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**578 列分布在 238 份文件，平均每份 2.4 列。**
+**581 列分布在 239 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 178 | 171 | 6 | 1 |
-| 驗收 | 124 | 107 | 17 | 0 |
+| 驗收 | 127 | 110 | 17 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 239 | 220 | 18 | 1 |
-| **合計** | **578** | 529 | 46 | 3 |
+| **合計** | **581** | 532 | 46 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -55,7 +55,7 @@
 |---|---:|
 | `docs/spec/` | 204 |
 | `docs/re/` | 178 |
-| `docs/playtest/` | 124 |
+| `docs/playtest/` | 127 |
 | `docs/formats/` | 20 |
 | `docs/release/` | 18 |
 | `docs/mechanics/` | 11 |
@@ -287,7 +287,7 @@
 | [`re/86-march-turnback-at-peace.md`](../re/86-march-turnback-at-peace.md) | 掉頭之後為什麼停住 | 回到 87 之後 `+0x14` 等於 `+0x0E` ⇒ 到站 ⇒ `sub_14325` 分派，Stage 0 而 87 不是首都 ⇒ 什麼都不做。合理但沒有逐條驗過分派表的其他 Stage | 靜態 |
 | [`re/86-march-turnback-at-peace.md`](../re/86-march-turnback-at-peace.md) | 玩家軍團站在據點上時完全不判 | `sub_12662` 的 `jz → 12697` 跳過 `sub_14300`。這代表玩家的軍團**不會**自動留守受威脅的據點，但沒有實機驗過 | 靜態 |
 
-## 2.4 驗收（124 條）
+## 2.4 驗收（127 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -415,6 +415,9 @@
 | [`playtest/70-dosgolem-tactical-commands.md`](../playtest/70-dosgolem-tactical-commands.md) | 對白框到期之後 | 只確認節拍 80 時兩個框都還活著（到期 127／110），沒有跑到它們消失 / 再跑 20 個節拍取樣一次 | 靜態 |
 | [`playtest/71-corps-table-parity.md`](../playtest/71-corps-table-parity.md) | 兩邊開同一場仗 | 兩邊的軍團表現在確定一致了，所以 `-siege-corps` 有共同基礎；**但原版沒有「指定兩支軍團開戰」的入口**——它要等遭遇 / `sub_11B5A` 是**無參數**的（狀態全在 `word_10D2E`／`word_10D30`／`byte_10D34`／`byte_10D35` 四個全域），所以… | 靜態 |
 | [`playtest/71-corps-table-parity.md`](../playtest/71-corps-table-parity.md) | 武將表、據點表、勢力表 | 只對了軍團表 / `corps` 那一支的作法可以照搬（段值取自 `cs:word_10D52`） | 靜態 |
+| [`playtest/72-same-battle-parity.md`](../playtest/72-same-battle-parity.md) | 小地圖的部隊點差異 | 原版兩排、remake 一排（§3）。可能是開場布陣的第二排沒擺對，也可能是小地圖只畫了一部分 / 讀 `word_1D30A` 起的兩側單位記錄，逐格比座標——**不要從畫面數點** | 靜態 |
+| [`playtest/72-same-battle-parity.md`](../playtest/72-same-battle-parity.md) | `field` 的 180 px | 游標與旗相位，兩者原理上消不掉 / 要歸零得讓 remake 也畫游標、並讓旗相位可指定 | 靜態 |
+| [`playtest/72-same-battle-parity.md`](../playtest/72-same-battle-parity.md) | 野戰也開得出來嗎 | 只做了攻城（`sub_14ADE`）。野戰的外層是 `sub_14A7B`，參數不同（`si`／`di` 都是軍團） / 同一個作法照搬 | 靜態 |
 
 ## 2.5 外部資料（6 條）
 

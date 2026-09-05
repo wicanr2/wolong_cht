@@ -33,6 +33,7 @@ DOSBox ＋ Xvfb ＋ xdotool。
 | 原版的內部狀態 | 只能從像素反推 | **直接讀記憶體**（`peek:0CF0:8`）|
 | 原版的控制流 | 問不到 | **攔任一支常式**（`WOLONG_DOSGOLEM_WATCH=11D8E`），印暫存器與呼叫端 |
 | 哪裡可以點 | 只能一格一格試 | **讀熱區圖**（`hotspots`）——`sub_1E453` 查的那張 80×50 格圖 |
+| **開一場指定的仗** | 只能等 AI 打過來（4.57 億道指令，而且打哪一場不由人）| ⭐ **`siege:攻方,據點`**：直接叫原版的 `sub_14ADE`，守方由它自己挑。4,380 萬道指令，要打哪一場自己挑（[`../playtest/72`](../playtest/72-same-battle-parity.md)）|
 | 大地圖上選一格 | 只能猜像素 | **`tile:TX,TY`**：閉迴路對到遊戲自己算的格座標，順便避開熱區（[`../re/85`](../re/85-march-target-hit-test.md)）|
 | 日期對不上 | 只能靠 `wait:N` 秒逼近，殘留在 `banner` | `until:196/4/20` 對齊到某一天，**110 px → 0 px**（[`../playtest/67`](../playtest/67-dosgolem-popup-menus.md) §3）|
 | 右鍵／瞬按 | `rclick`／`tap` | 都有（瞬按是獨立動作——彈出選單長按會當場選走第一列）|
@@ -80,6 +81,7 @@ tools/go.sh test ./internal/... ./oracle/ -run 'TestWriteMode3AppliesALU|TestFul
 | ⚠ 遊戲中的座標 | 大地圖有一層**捲動原點**（`畫面 ＝ 滑鼠 − 原點`），所以遊戲中要用 `sclick`／`stap`，選單畫面才用 `click`（[`../playtest/66`](../playtest/66-dosgolem-load-save.md) §2）|
 | ⚠ `wait` 在遊戲中不適用 | 即時制的畫面永遠不會靜止，`wait` 會跑到預算上限。遊戲中用 `steps:`、`until:` 或 `runto:` |
 | ⚠ 大地圖上選一格 | 用 `tile:TX,TY`，不要自己算像素——格座標是 `⌊原點÷16⌋＋⌊畫面÷16⌋` 兩次捨去的和，而且**游標不能停在熱區上**（[`../re/85`](../re/85-march-target-hit-test.md)）|
+| ~~兩邊開同一場仗~~ | **已通**（[`../playtest/72`](../playtest/72-same-battle-parity.md)）：同一份存檔、同兩支軍團、同一座城，九區裡**七區 0 px**、`field` 0.10%。⚠ 小地圖挖出一個新差異（部隊點原版兩排、remake 一排）|
 | ~~戰術畫面~~ | **已通**（[`../playtest/68`](../playtest/68-dosgolem-tactical-screen.md)）：跑到許昌攻防戰的戰術畫面，與 DOSBox-X 的擷取逐區比，四個不隨戰況變的區全部 0 px，`field` 的地形一點都不差 |
 | 視窗 x → 遊戲 x 的換算 | 視窗 416 對到遊戲 415，而同一批的 300／360／450 都是 1:1。成因未查，只影響游標位置（[`../playtest/65`](../playtest/65-dosgolem-oracle.md) §3.1）|
 | 音源 | `int 61h` 只記錄不模擬（時鐘回呼除外）。音訊 parity 仍走 [`29`](29-audio.md) 的錄音比對 |

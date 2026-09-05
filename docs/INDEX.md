@@ -105,6 +105,7 @@
 | [`docs/playtest/69-dosgolem-tactical-controls.md`](playtest/69-dosgolem-tactical-controls.md) | 69 — 戰術畫面的 20 個熱區，第一次從跑著的遊戲讀出來 | 通過。 | 2026-09-05 |
 | [`docs/playtest/70-dosgolem-tactical-commands.md`](playtest/70-dosgolem-tactical-commands.md) | 70 — 戰術指令真的下得下去，而開場對白在第 50 個 tick 才出現 | 通過。 | 2026-09-05 |
 | [`docs/playtest/71-corps-table-parity.md`](playtest/71-corps-table-parity.md) | 71 — 軍團表對拍：原版的記憶體 vs remake 解出來的存檔 | 通過。 | 2026-09-05 |
+| [`docs/playtest/72-same-battle-parity.md`](playtest/72-same-battle-parity.md) | 72 — 兩邊第一次開同一場仗：九區裡七區 0 px | 通過。 | 2026-09-05 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告是 72 秒， 含語言切換與原版並排兩段；遊戲段落是逐幀錄下來的實跑畫面。 2… | 2026-08-30 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
