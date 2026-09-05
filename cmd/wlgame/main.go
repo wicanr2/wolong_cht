@@ -56,6 +56,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/rules/march"
 	"github.com/wicanr2/wolong_cht/internal/rules/persuasion"
+	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
 	"github.com/wicanr2/wolong_cht/internal/rules/rng"
 	"github.com/wicanr2/wolong_cht/internal/savepath"
 	"github.com/wicanr2/wolong_cht/internal/state"
@@ -1684,6 +1685,7 @@ func main() {
 	siegeCorps := flag.String("siege-corps", "", "拿**存檔裡現成的**兩支軍團開攻城戰：`攻,守`（編號用 -list-corps 看，docs/spec/90 §2.3）")
 	battleSteps := flag.Int("battle-steps", 120, "截圖前推進幾個戰術 tick；0 ＝ 原版開場對白那一幀")
 	listCorps := flag.Bool("list-corps", false, "把載入後還活著的軍團印出來（編號、勢力、主將、兵力）")
+	listUnits := flag.Bool("list-units", false, "把戰場上每個兵的座標印出來（逐兵對拍用，docs/spec/91 §5.5）")
 	battleCam := flag.String("battle-cam", "", "覆寫戰術鏡頭的世界格 `X,Y`（驗收用；原版初值是 36,14）")
 	openFinance := flag.Bool("open-finance", false, "截圖前先開財政視窗（對拍用，docs/spec/14 §4）")
 	financeAmount := flag.Int("finance-amount", -1, "配 -open-finance：再開第 N 列（0–3）的數值輸入器（docs/spec/78）")
@@ -1823,6 +1825,9 @@ func main() {
 			*camAt, *battleCam)
 		if *battleFF {
 			g.toggleBattleFastForward()
+		}
+		if *listUnits {
+			logBattleUnits(g)
 		}
 	} else {
 		slots := inspectLauncherSlots(*saveFile)
@@ -2113,6 +2118,34 @@ func logAliveCorps(g *game) {
 	log.Printf("還活著的軍團共 %d 支", n)
 }
 
+
+// logBattleUnits 把場上每個兵的座標印出來（`docs/spec/91` §5.5）。
+//
+// ⚠ **`field` 比不出部隊。** 攻城戰的預設鏡頭對著城牆，而開場兩軍都在
+// 戰場的兩端——一個兵都不在畫面上。看得到全部部隊的只有小地圖，
+// 而它一個兵只佔 2×2 px。所以逐兵對拍要讀狀態，不要讀畫面。
+func logBattleUnits(g *game) {
+	p := g.world.PendingBattle()
+	if p == nil || p.Battle == nil {
+		log.Print("沒有戰鬥在進行，-list-units 沒有東西可印")
+		return
+	}
+	b := p.Battle
+	n := 0
+	for side := range b.Sides {
+		for k := range b.Sides[side].Soldiers {
+			u := &b.Sides[side].Soldiers[k]
+			if !u.Alive {
+				continue
+			}
+			n++
+			log.Printf("兵 %d/%d/%d (%2d,%2d) z%d 體%3d 種%d",
+				side, k/tactical.PerSquad, k%tactical.PerSquad,
+				u.X, u.Y, u.Z, u.HP, int(u.Kind))
+		}
+	}
+	log.Printf("場上活著的兵共 %d 個", n)
+}
 
 func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, adviseTarget, openCities, openFactions bool, openCityInfo int, openForm, openCorps, openMarchList, openMarchMode bool,
 	openCmdMenu string, openBattle, openSiege, openMessage, openFinance bool, financeAmount int, openFormPick bool, formPickRow, openTalkIndex int,
