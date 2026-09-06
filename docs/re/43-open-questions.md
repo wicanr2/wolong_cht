@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**676 列分布在 277 份文件，平均每份 2.4 列。**
+**678 列分布在 277 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 181 | 174 | 6 | 1 |
 | 驗收 | 182 | 158 | 24 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 276 | 256 | 19 | 1 |
-| **合計** | **676** | 619 | 54 | 3 |
+| 其他 | 278 | 257 | 20 | 1 |
+| **合計** | **678** | 620 | 55 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,7 +53,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 237 |
+| `docs/spec/` | 239 |
 | `docs/playtest/` | 182 |
 | `docs/re/` | 181 |
 | `docs/release/` | 22 |
@@ -488,7 +488,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（276 條）
+## 2.6 其他（278 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -634,7 +634,9 @@
 | [`spec/147-controlled-parity-save.md`](../spec/147-controlled-parity-save.md) | 還能關掉什麼 | 目前只有 `--no-clouds`。天災、AI 出兵、募兵都吃亂數，各自需要自己的「關掉」欄位 | 靜態 |
 | [`spec/147-controlled-parity-save.md`](../spec/147-controlled-parity-save.md) | 兩邊的**消費順序**能不能對齊 | 狀態可以搬（§5），順序還沒逐拍比過 | 靜態 |
 | [`spec/148-shared-candidate-filter.md`](../spec/148-shared-candidate-filter.md) | `sub_17663` 的 `xor cl, cl` | 比 `sub_175FA` 多一行，把清單游標歸零。remake 每次開清單本來就從 0 開始，行為相同；**但那代表原版的兩張清單共用同一個游標記憶體 `word_198AA`**，切換時的殘留還沒對過 | 靜態 |
-| [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | 游標推到畫面邊緣時鏡頭跟過去 | 原版的滑鼠座標是**世界座標**，推到視野外鏡頭會捲（`../re/84` §2）。remake 的滑鼠被視窗框住，還沒接這個行為 | 靜態 |
+| [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | 游標推到畫面邊緣時鏡頭跟過去 | 原版的滑鼠座標是**世界座標**（大地圖上驅動範圍 0–6143 × 0–4127），推到視野外鏡頭會捲（`../re/84` §2）。remake 的滑鼠被視窗框住，還沒接這個行為 | 靜態 |
+| [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | ⭐ **原版的鏡頭是像素級的** | 邊緣捲動之後量到的捲動原點是 `(2657,1457)`——**不是 16 的倍數**。remake 的 `camX`／`camY` 是**格**，所以只對得上 16 的倍數那些位置。開局與 `sub_12151` 移鏡頭都是格對齊的，所以現有的對拍全部落在對得上的那一半；**要拍邊緣捲動之後的畫面就得先把鏡頭改… | 靜態 |
+| [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | 熱區會吃掉點擊 | ⚠ 實測踩到 `../re/85` §3 記的坑：把滑鼠移到據點的世界座標時，鏡頭捲到底、**游標釘在畫面右下角**，那裡是軍團情報視窗的熱區 `#31`，於是那一圈根本不問據點。要先把鏡頭帶過去、再讓游標落在畫面中間 | 實測 |
 | [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | 別的狀態下的游標 | `../playtest/91` §3 還沒對上，所以只接選點這一個 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
