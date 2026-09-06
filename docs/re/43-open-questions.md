@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**695 列分布在 290 份文件，平均每份 2.4 列。**
+**694 列分布在 290 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 182 | 175 | 6 | 1 |
 | 驗收 | 199 | 174 | 25 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 277 | 256 | 20 | 1 |
-| **合計** | **695** | 636 | 56 | 3 |
+| 其他 | 276 | 255 | 20 | 1 |
+| **合計** | **694** | 635 | 56 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,7 +53,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 238 |
+| `docs/spec/` | 237 |
 | `docs/playtest/` | 199 |
 | `docs/re/` | 182 |
 | `docs/release/` | 22 |
@@ -506,7 +506,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（277 條）
+## 2.6 其他（276 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -652,7 +652,6 @@
 | [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | 別的狀態下的游標 | `../playtest/91` §3 還沒對上，所以只接選點這一個 | 靜態 |
 | [`spec/150-diplomacy-preconditions.md`](../spec/150-diplomacy-preconditions.md) | `sub_1304E` 的 `dx` 附加欄位 | 這兩個呼叫點都傳 `0FFFFh`（不比），別的呼叫點傳什麼還沒逐一讀 | 靜態 |
 | [`spec/151-map-click.md`](../spec/151-map-click.md) | `sub_11F0E` 的 X 夾制 `23h` | 夾住之後框的右緣落在 672，超出畫面 32 px（§1.2）。要嘛 `sub_193E9` 對超出的部分另有處理、要嘛這一張的框比 112 窄——**兩個都還沒驗**。目前照抄常數 | 靜態 |
-| [`spec/151-map-click.md`](../spec/151-map-click.md) | 佔用圖 | 原版查的是 `cs:word_19872` 的佔用圖，remake 直接掃軍團表比座標。**結果相同但來源不同**——佔用圖每 tick 由位置推導（`39` §2），還沒逐格比對過 | 靜態 |
 | [`spec/152-video-mode-lcd-palette.md`](../spec/152-video-mode-lcd-palette.md) | 素材頁的四季 | 肖像與據點景觀圖是**另一種**四季（換的是圖不是色），這一份沒動它們。⭐ **顏色那一半已經驗過**：切到液晶時肖像跟著換組，remake 逐像素 0 px（`../playtest/100` §5） | 靜態 |
 | [`spec/153-quit-confirm-menu.md`](../spec/153-quit-confirm-menu.md) | 離開時自動存檔 | `CLAUDE.md` §9 要求「離開前自動存檔，存檔失敗就不離開」，remake 兩條路目前都只是 `ebiten.Termination`。**原版這一段沒有存檔**（`xor al,al` 直接走），所以那是 remake 差異，還沒實作 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
