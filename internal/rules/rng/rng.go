@@ -103,3 +103,33 @@ func NewFixed(seed int) *Rand { return newRaw(0, 0, byte(seed)) }
 // bcd 把 0–99 的十進位值轉成 BCD 的那個 byte。
 // 超出範圍的值照原版的 byte 行為截斷。
 func bcd(v int) byte { return byte(v/10<<4 | v%10) }
+
+// RawStateLen 是原版產生器在記憶體裡的完整狀態長度：
+// `cs:1ECFCh` 起的 258 byte ＝ 計數器 c、狀態 s、256 byte 置換表
+// （docs/re/10 §1、docs/spec/147 §5）。
+const RawStateLen = 2 + 256
+
+// FromRaw 用原版當下的產生器狀態建一個一模一樣的。
+//
+// ⭐ **這是把原版的亂數流搬過來的入口**：`ipeek:1ECFC:258` 讀出來直接餵進來，
+// 兩邊從那一刻起會吐出同一串數。⚠ 但**流相同不等於結果相同**——
+// 還要兩邊每一拍取的亂數個數也一樣，否則序列會從第一個不一致的地方岔開。
+func FromRaw(b []byte) (*Rand, bool) {
+	if len(b) != RawStateLen {
+		return nil, false
+	}
+	r := &Rand{c: b[0], s: b[1]}
+	copy(r.table[:], b[2:])
+	return r, true
+}
+
+// Raw 是 FromRaw 的反向，給測試與除錯用。
+func (r *Rand) Raw() []byte {
+	if r == nil {
+		return nil
+	}
+	out := make([]byte, RawStateLen)
+	out[0], out[1] = r.c, r.s
+	copy(out[2:], r.table[:])
+	return out
+}

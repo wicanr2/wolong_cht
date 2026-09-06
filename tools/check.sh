@@ -40,6 +40,7 @@ echo "── 對拍工具正對照 ──"
 tools/py.sh tools/parity_diff.py --selftest
 tools/py.sh tools/state_diff.py --selftest
 tools/py.sh tools/parity_save.py --selftest
+tools/py.sh tools/rng_state.py --selftest
 echo "── 發行目錄交換 ──"
 tools/py.sh tools/release_all_fs.py --selftest
 echo "── 資產 deny-list ──"

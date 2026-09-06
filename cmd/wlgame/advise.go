@@ -75,7 +75,7 @@ func (g *game) openAdvise() {
 		return
 	}
 	g.advise = advisePickCommand
-	g.adviseCmdRow = 0
+	g.adviseCmdRow, g.adviseMenuStale = 0, false
 	g.sessCur = 0
 	g.ally = -1
 	g.target = -1
@@ -84,6 +84,7 @@ func (g *game) openAdvise() {
 
 func (g *game) closeAdvise() {
 	g.advise = adviseNone
+	g.adviseMenuStale = false
 	g.sess = nil
 	g.clearAdviseBoxes()
 }
@@ -240,7 +241,7 @@ func (g *game) updateAdvise() bool {
 					g.advise = advisePickAlly
 					g.setAdviseStatus()
 				} else {
-					g.advise = advisePickCommand
+					g.advise, g.adviseMenuStale = advisePickCommand, false
 				}
 			}
 		}
@@ -306,6 +307,8 @@ func (g *game) setAdviseStatus() {
 
 // pickAdviseCommand 分派進言的五項（原版 `sub_16224` 的 `funcs_16255[選項×2]`）。
 func (g *game) pickAdviseCommand(row int) {
+	// 選走了，但框還留在畫面上（docs/spec/126 §1.2）。
+	g.adviseCmdRow, g.adviseMenuStale = row, true
 	switch row {
 	case adviseRelocateRow:
 		g.openCapitalList()
@@ -327,8 +330,11 @@ func (g *game) pickAdviseCommand(row int) {
 }
 
 // openCapitalList 列出自己的據點讓玩家挑遷都目標。
-// 原版是 `sub_18853(cx=0Fh)` ＋ `sub_17400` 的地圖選點；
-// remake 用一覽表挑，**這是操作方式的差異，不是規則的差異**。
+//
+// 原版是 `sub_18853(cx = 0Fh)`（#15「請選擇遷都的對象據點。」）＋
+// `sub_17400`——**那是據點一覽的呼叫端，不是地圖選點**
+// （`docs/re/26` §4.1；原版擷取見 docs/playtest/89）。
+// 兩邊都是一覽表，操作方式相同。
 func (g *game) openCapitalList() {
 	var rows []int
 	for i := range g.world.Cities {
@@ -565,15 +571,24 @@ func (g *game) drawAdviseBoxes(screen *ebiten.Image) {
 	}
 }
 
+// drawAdviseMenu 畫進言的五項選單。
+//
+// ⭐ **選完之後不擦**（docs/spec/126 §1.2）：原版把目標一覽表直接畫在它
+// 上面，露出來的那一列一直掛在清單上緣，直到地圖被重畫為止。
+// 與指令列那三張彈出選單同一條規則，所以也在一覽表**之前**畫。
+func (g *game) drawAdviseMenu(screen *ebiten.Image) {
+	if g.advise != advisePickCommand && !g.adviseMenuStale {
+		return
+	}
+	// 原版的位置：`sub_16224` 的 `dx = 400h` ⇒ 粗格 (0, 4) ⇒ (0, 64)。
+	// 大小由內容算（docs/spec/45 §2.2），所以不必再挑一個寬度。
+	g.drawLegacyChoiceBox(screen, adviseMenuX, adviseMenuY,
+		g.adviseCommandLabels(), g.adviseCmdRow)
+}
+
 // drawAdvise 畫進言流程。
 func (g *game) drawAdvise(screen *ebiten.Image) {
 	switch g.advise {
-	case advisePickCommand:
-		// 原版的位置：`sub_16224` 的 `dx = 400h` ⇒ 粗格 (0, 4) ⇒ (0, 64)。
-		// 大小由內容算（docs/spec/45 §2.2），所以不必再挑一個寬度。
-		g.drawLegacyChoiceBox(screen, adviseMenuX, adviseMenuY,
-			g.adviseCommandLabels(), g.adviseCmdRow)
-
 	case adviseVerdict:
 		// 第四、五項沒有說服迴圈，畫面就是 `sub_13B08` 的三句。
 		g.drawIventScene(screen, 0)

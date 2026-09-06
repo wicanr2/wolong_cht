@@ -328,6 +328,10 @@ type game struct {
 	target    int
 	sess      *persuasion.Session
 	sessCur   int
+	// adviseMenuStale ＝ 進言選單已經選走了，**但框還留在畫面上**
+	// （docs/spec/126 §1.2，與指令列那三張同一條規則）。
+	// 地圖一重畫就沒了，所以 moveCamTo 會清掉它。
+	adviseMenuStale bool
 	// adviseCmdRow 是進言五項選單的游標。
 	adviseCmdRow int
 
@@ -1225,6 +1229,7 @@ func (g *game) moveCamTo(x, y int) {
 	if g.cmdMenu.stale {
 		g.closePopupMenu()
 	}
+	g.adviseMenuStale = false
 }
 
 func (g *game) clampCam() {
@@ -1322,6 +1327,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 	// 它上面（docs/spec/126 §1.2）。順序反過來的話露出來的那一列會蓋掉
 	// 清單的上緣。
 	g.drawPopupMenu(screen)
+	g.drawAdviseMenu(screen)
 	if g.list != nil {
 		g.drawList(screen)
 	}
@@ -1779,6 +1785,7 @@ func main() {
 	speed := flag.Int("speed", 2, "戰略速度檔位 0–4（0 ＝ 最高速、4 ＝ 最低速）")
 	tacticalSpeed := flag.Int("tactical-speed", 2, "戰術速度檔位 0–4（0 ＝ 最高速、4 ＝ 最低速）")
 	seed := flag.Int("seed", -1, "驗收用固定亂數種子；負值時照原版以時鐘播種")
+	rngState := flag.String("rng-state", "", "對拍用：載入原版當下的亂數狀態（`ipeek:1ECFC:258` 讀出來的 258 byte，docs/spec/147 §5）")
 	shot := flag.String("shot", "", "跑 N 幀之後截圖到這個路徑就結束（驗收用）")
 	framesDir := flag.String("frames-dir", "", "把每一張畫出來的圖寫成 fNNNNN.png（推廣片素材，docs/spec/71）")
 	framesN := flag.Int("frames", 300, "配 -frames-dir：錄幾張就結束")
@@ -1801,6 +1808,7 @@ func main() {
 	adviseMenu := flag.Bool("advise-menu", false, "單獨用：停在進言的五項選單；配 -open-advise：停在五選一的理由選單（驗收用）")
 	adviseSortie := flag.Bool("advise-sortie", false, "截圖前跑「請求君主出陣」的三句定案畫面（驗收用）")
 	adviseTarget := flag.Bool("advise-target", false, "截圖前停在進言→交戰的目標勢力清單（對拍用，docs/spec/90 §5.1）")
+	advisePickRow := flag.Int("advise-pick-row", 0, "配 -advise-target：選進言選單的第 N 列（0 交戰／1 停戰／2 協助／3 遷都，docs/spec/140 §1.1）")
 	openCities := flag.Bool("open-cities", false, "截圖前開據點一覽（對拍用，docs/spec/90 §5.1）")
 	openFactions := flag.Bool("open-factions", false, "截圖前開勢力一覽（對拍用，docs/spec/90 §5.1）")
 	openCityInfo := flag.Int("open-cityinfo", -2, "截圖前開第 N 個據點的情報卡（−1＝玩家首都；對拍用，docs/spec/90 §5.1）")
@@ -1913,6 +1921,21 @@ func main() {
 		gameRNG = rng.NewFixed(*seed)
 		log.Printf("驗收固定亂數種子：%d", *seed)
 	}
+	// ⭐ 原版的產生器狀態只有 258 byte 而且在固定位址，可以整個搬過來
+	// （docs/spec/147 §5）。⚠ 流相同不等於結果相同——還要消費順序也一樣。
+	if *rngState != "" {
+		raw, err := os.ReadFile(*rngState)
+		if err != nil {
+			log.Fatalf("-rng-state：%v", err)
+		}
+		r, ok := rng.FromRaw(raw)
+		if !ok {
+			log.Fatalf("-rng-state：%s 是 %d byte，預期 %d",
+				*rngState, len(raw), rng.RawStateLen)
+		}
+		gameRNG = r
+		log.Printf("載入原版亂數狀態：%s（%d byte）", *rngState, len(raw))
+	}
 	g := &game{lib: lib, rng: gameRNG, speed: *speed, tacticalSpeed: *tacticalSpeed,
 		lordCorps: true, // docs/spec/76：預設放行（remake 差異）
 		td:       textdraw.New(nil, ascii),
@@ -1981,7 +2004,7 @@ func main() {
 		g.lordCorps = *lordCorpsFlag
 		g.damageReport = *damageReportFlag
 		apply := func() {
-			configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *adviseTarget, *openCities, *openFactions, *openCityInfo, *openForm, *openCorps, *openMarchList,
+			configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *adviseTarget, *advisePickRow, *openCities, *openFactions, *openCityInfo, *openForm, *openCorps, *openMarchList,
 				*openMarchMode, *openCmdMenu, *openBattle, *openSiege, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow, *factionPickRow,
 				*openTalkIndex, *openOutcome, parseSiegeFixture(*siegeNode, *siegeDefend, *siegeCorps, *battleSteps),
 				corpsMapFixture{enabled: *corpsOnMap, marchTo: *marchTo},
@@ -2328,7 +2351,7 @@ func logBattleUnits(g *game) {
 	log.Printf("場上活著的兵共 %d 個", n)
 }
 
-func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, adviseTarget, openCities, openFactions bool, openCityInfo int, openForm, openCorps, openMarchList, openMarchMode bool,
+func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, adviseTarget bool, advisePickRow int, openCities, openFactions bool, openCityInfo int, openForm, openCorps, openMarchList, openMarchMode bool,
 	openCmdMenu string, openBattle, openSiege, openMessage, openFinance bool, financeAmount int, openFormPick bool, formPickRow, factionPickRow, openTalkIndex int,
 	openOutcome string, siege siegeFixture, corpsMap corpsMapFixture, camAt, battleCam string) {
 	w := g.world
@@ -2490,8 +2513,12 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 	}
 	if adviseTarget {
 		// 進言 → 交戰（第 0 列）：目標勢力清單剛開的狀態（docs/spec/90 §5.1）。
+		// 原版是點指令列的「進言」進來的，所以命令視窗開著、那一格反白，
+		// **而且選單的框還留在清單上緣**（docs/spec/126 §1.2）。
+		g.hudSet(hudCommand, true)
+		g.cmdCell = int(naturalCommandAdvise)
 		g.openAdvise()
-		g.pickAdviseCommand(0)
+		g.pickAdviseCommand(advisePickRow)
 		return
 	}
 	if openCities {

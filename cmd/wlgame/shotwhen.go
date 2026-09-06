@@ -90,12 +90,17 @@ func parseShotWhen(s string) (*shotCondition, error) {
 			return settled && b.Frame > 10
 		}}, nil
 	case strings.HasPrefix(s, "clock:"):
-		// `clock:年/月/日[/時]`——**狀態層對拍的取樣點**（docs/spec/138）。
+		// `clock:年/月/日[/時[/子刻]]`——**狀態層對拍的取樣點**（docs/spec/138）。
 		// 兩邊比表要在同一個遊戲時刻，否則內政每小時都在動幾個據點，
 		// 差異看起來像規則分歧，其實只是取樣點差了幾拍。
+		//
+		// ⭐ **一小時有八個子刻**，只對到「時」的話那八拍之內的內政都算殘差
+		// （docs/playtest/83 的 ±1 就是這樣來的）。要更緊就多給一格：
+		// 原版那一刻的子刻用 `ipeek:10CF2:1` 讀（時鐘在 `cs:0CF0h`，
+		// `+0x02` ＝ 子刻，docs/formats/08 §0）。
 		f := strings.Split(strings.TrimPrefix(s, "clock:"), "/")
-		if len(f) != 3 && len(f) != 4 {
-			return nil, fmt.Errorf("-shot-when %q：`clock:` 後面要 `年/月/日` 或 `年/月/日/時`", s)
+		if len(f) < 3 || len(f) > 5 {
+			return nil, fmt.Errorf("-shot-when %q：`clock:` 後面要 `年/月/日`、`年/月/日/時` 或 `年/月/日/時/子刻`", s)
 		}
 		want := make([]int, len(f))
 		for i, part := range f {
@@ -113,7 +118,10 @@ func parseShotWhen(s string) (*shotCondition, error) {
 			if c.Year != want[0] || c.Month != want[1] || c.Day != want[2] {
 				return false
 			}
-			return len(want) == 3 || c.Hour == want[3]
+			if len(want) >= 4 && c.Hour != want[3] {
+				return false
+			}
+			return len(want) < 5 || c.Subtick == want[4]
 		}}, nil
 	case strings.HasPrefix(s, "battle-frame:"):
 		n, err := strconv.Atoi(strings.TrimPrefix(s, "battle-frame:"))

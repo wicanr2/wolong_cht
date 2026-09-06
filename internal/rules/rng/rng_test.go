@@ -144,3 +144,43 @@ func equal(a, b []int) bool {
 	}
 	return true
 }
+
+// 原版的產生器狀態能整個搬過來（docs/spec/147 §5）：
+// 258 byte 進去、同一串數出來。
+func TestFromRawReproducesTheSameStream(t *testing.T) {
+	src := New(13, 37, 42)
+	raw := src.Raw()
+	if len(raw) != RawStateLen {
+		t.Fatalf("Raw() 是 %d byte，want %d", len(raw), RawStateLen)
+	}
+	dst, ok := FromRaw(raw)
+	if !ok {
+		t.Fatal("FromRaw 收不下自己吐出來的狀態")
+	}
+	for i := 0; i < 2000; i++ {
+		a, b := src.Next(), dst.Next()
+		if a != b {
+			t.Fatalf("第 %d 個數就分開了：%d != %d", i, a, b)
+		}
+	}
+	// 負對照：長度不對要擋下來，否則「什麼都收」等於沒驗。
+	for _, n := range []int{0, RawStateLen - 1, RawStateLen + 1} {
+		if _, ok := FromRaw(make([]byte, n)); ok {
+			t.Errorf("%d byte 竟然收了", n)
+		}
+	}
+	// 負對照：狀態不同就要吐不同的數，否則上面那條恆真。
+	other := New(1, 2, 3)
+	same := true
+	o, _ := FromRaw(other.Raw())
+	d2, _ := FromRaw(raw)
+	for i := 0; i < 64; i++ {
+		if o.Next() != d2.Next() {
+			same = false
+			break
+		}
+	}
+	if same {
+		t.Error("兩個不同的種子在 64 個數之內完全相同，這一支等於沒驗")
+	}
+}
