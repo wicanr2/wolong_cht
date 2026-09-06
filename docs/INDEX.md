@@ -117,6 +117,7 @@
 | [`docs/playtest/81-command-cell-highlight.md`](playtest/81-command-cell-highlight.md) | 81 — 指令列的反白涵蓋八格，狀態列提示框接上財政與編成 | 通過。 | 2026-09-06 |
 | [`docs/playtest/82-strategy-date-aligned-parity.md`](playtest/82-strategy-date-aligned-parity.md) | 82 — 戰略畫面的六張對拍：日期也對齊之後，四張整片 0 px | 通過。 | 2026-09-06 |
 | [`docs/playtest/83-city-list-parity.md`](playtest/83-city-list-parity.md) | 83 — 「據點一覽」對拍：3,085 → 278 px，剩下的是取樣的子刻 | 通過（定案）。 | 2026-09-06 |
+| [`docs/playtest/84-personnel-corps-list-parity.md`](playtest/84-personnel-corps-list-parity.md) | 84 — 人事四條、軍團兩條出口的對拍：四張 map 0 px | 通過。 | 2026-09-06 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告是 72 秒， 含語言切換與原版並排兩段；遊戲段落是逐幀錄下來的實跑畫面。 2… | 2026-08-30 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
@@ -279,6 +280,7 @@
 | [`docs/spec/14-finance-window.md`](spec/14-finance-window.md) | 14 — 財政視窗 | CONFORMED。版面已照原版重寫並有契約測試； 數值輸入器已接上（[78](78-amount-input-ed… | 2026-08-15 |
 | [`docs/spec/140-status-message-box.md`](spec/140-status-message-box.md) | 140 — 左下角的狀態列提示框 | CONFORMED。 | 2026-09-06 |
 | [`docs/spec/141-retreat-countdown.md`](spec/141-retreat-countdown.md) | 141 — 全軍退卻之後的 120 拍倒數 | CONFORMED。 | 2026-09-06 |
+| [`docs/spec/142-personnel-dismiss-flow.md`](spec/142-personnel-dismiss-flow.md) | 142 — 解任不先過濾：清單列全部，選到沒人的才回一則訊息 | CONFORMED。 | 2026-09-06 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |

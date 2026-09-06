@@ -1758,7 +1758,7 @@ func main() {
 	openEnding := flag.Int("open-ending", -1, "直接跳到結局的第幾幕（0–11，驗收用）")
 	openMarchMode := flag.Bool("open-march-mode", false, "截圖前停在行軍指示的三選一（驗收用）")
 	openMarchList := flag.Bool("open-march-list", false, "截圖前編一支軍團並停在行軍目的地一覽（驗收用）")
-	openCmdMenu := flag.String("open-command-menu", "", "截圖前停在指令列的彈出選單：`corps`／`city`／`personnel`（對拍用，docs/spec/126）")
+	openCmdMenu := flag.String("open-command-menu", "", "截圖前停在指令列的彈出選單：`corps`／`city`／`personnel`；加 `:第幾列` 就再選走那一列（對拍用，docs/spec/126）")
 	openNaming := flag.Bool("open-naming", false, "停在啟動殼層選君主那一頁並打開「自定」命名視窗（驗收用，docs/spec/104）")
 	battleFF := flag.Bool("battle-ff", false, "配 -open-battle／-open-siege：截圖前先按下 `▶▶` 快轉（驗收用，docs/spec/102）")
 	siegeNode := flag.Int("siege-node", -1, "指定攻城的戰場＝據點編號（驗收用，配 -open-siege）")
@@ -2392,11 +2392,28 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 	}
 	// 指令列的彈出選單（docs/spec/126）。原版是點那一格跳出來的，
 	// **命令視窗開著、那一格反白**——對拍要連這兩件事一起擺好。
-	if m, ok := popupMenusByName[openCmdMenu]; ok {
+	if openCmdMenu != "" {
+		// `名稱[:第幾列]`——帶列號就**走真實流程選走那一列**，
+		// 好比對「選完之後」的畫面（選單框留在清單上緣，docs/spec/126 §1.2）。
+		name, row := openCmdMenu, -1
+		if i := strings.IndexByte(name, ':'); i >= 0 {
+			n, err := strconv.Atoi(name[i+1:])
+			if err != nil || n < 0 {
+				log.Fatalf("⚠ -open-command-menu 的列號要是非負整數，收到 %q", openCmdMenu)
+			}
+			name, row = name[:i], n
+		}
+		m, ok := popupMenusByName[name]
+		if !ok {
+			log.Fatalf("⚠ -open-command-menu 只認得 corps／city／personnel"+
+				"（可加 `:第幾列`），收到 %q", openCmdMenu)
+		}
 		g.hudSet(hudCommand, true)
+		g.cmdCell = int(m.cell)
 		g.openPopupMenu(m)
-	} else if openCmdMenu != "" {
-		log.Fatalf("⚠ -open-command-menu 只認得 corps／city／personnel，收到 %q", openCmdMenu)
+		if row >= 0 {
+			g.dispatchPopupMenu(row)
+		}
 	}
 	if adviseMenu && !openAdvise {
 		g.hudSet(hudCommand, true)

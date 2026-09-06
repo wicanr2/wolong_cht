@@ -81,7 +81,22 @@ func (g *game) generalList(rows []int, hint string, pick func(int) bool) {
 
 
 
+// 人事的四條出口各自先掛一則狀態列提示（`sub_16A9B`／`sub_16B08`／
+// `sub_16B71`／`sub_16BE3` 開頭的 `sub_18853`，docs/re/25 §3、docs/spec/140）。
+const (
+	governorAssignTalk = 0x0B // #11「要派遣內政官到哪個據點？」
+	diplomatAssignTalk = 0x0C // #12「要派遣外交官到哪個勢力？」
+	governorRemoveTalk = 0x0D // #13「要解任哪個據點的內政官？」
+	diplomatRemoveTalk = 0x0E // #14「要解任哪個勢力的外交官？」
+
+	// 解任時選到「那裡本來就沒人」的兩則（`sub_16B08` 的 `cx = 36h`／
+	// `sub_16BE3` 的 `cx = 37h`，docs/spec/142）。
+	nobodyPostedTalk        = 0x36 // #54「是否有所差錯？{2}並未派遣任何人。」
+	factionNobodyPostedTalk = 0x37 // #55「{3}勢力仍未派遣任何人．．．」
+)
+
 func (g *game) pickCityForGovernor() {
+	g.setStatusTalk(governorAssignTalk, nil)
 	rows := g.playerCities()
 	if len(rows) == 0 {
 		g.lastEvent = "沒有據點"
@@ -106,28 +121,37 @@ func (g *game) pickCityForGovernor() {
 	})
 }
 
+// removeGovernor 是「內政官解任」。
+//
+// ⭐ **不先過濾**（docs/spec/142）：原版 `sub_16B08` 開的是全部據點的清單，
+// 選到沒派人的那一個才跳 TALK #54，**沒有「沒有派駐中的內政官」這種前置檢查**。
+// 先過濾會讓玩家看不到「那座城本來就沒人」這件事。
 func (g *game) removeGovernor() {
-	var rows []int
-	for _, i := range g.playerCities() {
-		if gv := g.world.Cities[i].Governor; gv >= 0 && gv < len(g.world.Generals) {
-			rows = append(rows, i)
-		}
-	}
+	g.setStatusTalk(governorRemoveTalk, nil)
+	rows := g.playerCities()
 	if len(rows) == 0 {
-		g.lastEvent = "沒有派駐中的內政官"
+		g.lastEvent = "沒有據點"
 		g.list = nil
 		return
 	}
 	g.cityList(rows, "選要解任的據點　Enter 決定　ESC 取消", func(city int) bool {
 		c := &g.world.Cities[city]
-		g.lastEvent = fmt.Sprintf("%s 解任內政官 %s",
-			big5(c.Name), big5(g.world.Generals[c.Governor].Name))
+		// 原版 `sub_16B4F`：先寫 0xFF、再看舊值是不是 0xFF。
+		old := c.Governor
 		c.Governor = NoOfficial
+		if old < 0 || old >= len(g.world.Generals) || old == NoOfficial {
+			g.enqueueTalk(nobodyPostedTalk,
+				map[byte]string{'2': padTalkField(big5(c.Name))})
+			return true
+		}
+		g.lastEvent = fmt.Sprintf("%s 解任內政官 %s",
+			big5(c.Name), big5(g.world.Generals[old].Name))
 		return true
 	})
 }
 
 func (g *game) pickFactionForDiplomat() {
+	g.setStatusTalk(diplomatAssignTalk, nil)
 	// 外交官派駐到**別的勢力**，所以候選是「活著且不是自己」。
 	var rows []int
 	for i := range g.world.Factions {
@@ -157,25 +181,34 @@ func (g *game) pickFactionForDiplomat() {
 	})
 }
 
+// removeDiplomat 是「外交官解任」。與 removeGovernor 同形（docs/spec/142）：
+// **不先過濾**，選到沒派人的才跳 TALK #55。
 func (g *game) removeDiplomat() {
+	g.setStatusTalk(diplomatRemoveTalk, nil)
 	var rows []int
 	for i := range g.world.Factions {
 		f := &g.world.Factions[i]
-		if f.Alive && i != g.world.Player &&
-			f.Diplomat >= 0 && f.Diplomat < len(g.world.Generals) {
+		if f.Alive && i != g.world.Player {
 			rows = append(rows, i)
 		}
 	}
 	if len(rows) == 0 {
-		g.lastEvent = "沒有派駐中的外交官"
+		g.lastEvent = "沒有可解任的勢力"
 		g.list = nil
 		return
 	}
 	g.factionList(rows, "選要召回外交官的勢力　Enter 決定　ESC 取消", func(f int) bool {
 		fa := &g.world.Factions[f]
-		g.lastEvent = fmt.Sprintf("召回派駐 %s 軍的 %s",
-			big5(g.world.LordName(f)), big5(g.world.Generals[fa.Diplomat].Name))
+		// 原版 `sub_16C2A`：先寫 0xFF、再看舊值。
+		old := fa.Diplomat
 		fa.Diplomat = NoOfficial
+		if old < 0 || old >= len(g.world.Generals) || old == NoOfficial {
+			g.enqueueTalk(factionNobodyPostedTalk,
+				map[byte]string{'3': padTalkField(big5(g.world.LordName(f)))})
+			return true
+		}
+		g.lastEvent = fmt.Sprintf("召回派駐 %s 軍的 %s",
+			big5(g.world.LordName(f)), big5(g.world.Generals[old].Name))
 		return true
 	})
 }

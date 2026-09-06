@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**631 列分布在 259 份文件，平均每份 2.4 列。**
+**636 列分布在 261 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 181 | 174 | 6 | 1 |
-| 驗收 | 155 | 133 | 22 | 0 |
+| 驗收 | 158 | 136 | 22 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 258 | 239 | 18 | 1 |
-| **合計** | **631** | 577 | 51 | 3 |
+| 其他 | 260 | 241 | 18 | 1 |
+| **合計** | **636** | 582 | 51 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,9 +53,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 219 |
+| `docs/spec/` | 221 |
 | `docs/re/` | 181 |
-| `docs/playtest/` | 155 |
+| `docs/playtest/` | 158 |
 | `docs/release/` | 22 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
@@ -290,7 +290,7 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
 
-## 2.4 驗收（155 條）
+## 2.4 驗收（158 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -449,6 +449,9 @@
 | [`playtest/82-strategy-date-aligned-parity.md`](../playtest/82-strategy-date-aligned-parity.md) | 武將／勢力兩格的指令列反白 | 原版走狀態列提示 ＋ 地圖游標，remake 開一覽表，**流程不同**（`../spec/124` §5） | 靜態 |
 | [`playtest/83-city-list-parity.md`](../playtest/83-city-list-parity.md) | 原版擷取裡的滑鼠游標 | 88 px。要消掉得讓原版把游標移到不會拖動鏡頭的位置再截圖 | 實測 |
 | [`playtest/83-city-list-parity.md`](../playtest/83-city-list-parity.md) | 其餘家族的破折號縮排 | 這一張十列全滿，**看不到空列**，所以驗不到據點家族的破折號（`../spec/38`） | 靜態 |
+| [`playtest/84-personnel-corps-list-parity.md`](../playtest/84-personnel-corps-list-parity.md) | 選完回到清單的迴圈 | 原版成功或失敗都回清單繼續選，**remake 選完就收掉**（`142` §5） | 靜態 |
+| [`playtest/84-personnel-corps-list-parity.md`](../playtest/84-personnel-corps-list-parity.md) | 成功時那位官員說的話 | 變體組 `1A2h`／`1A3h`，remake 目前沒有這一則 | 靜態 |
+| [`playtest/84-personnel-corps-list-parity.md`](../playtest/84-personnel-corps-list-parity.md) | 原版擷取裡的滑鼠游標 | 六張都是 88 px | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -461,7 +464,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（258 條）
+## 2.6 其他（260 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -590,6 +593,8 @@
 | [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 一般訊息框要不要一起改 | `\1`–`\5` 的定寬補白與逐標記換色是**全域規則**（`../re/79` §2），但一次改到所有訊息會動到四個語系的排版（`87`、`../playtest/32`）。要另外開一份規格，先量再改 | 靜態 |
 | [`spec/141-retreat-countdown.md`](../spec/141-retreat-countdown.md) | 退卻中要不要補兵 | 原版下令之後場上八拍歸零、**沒有補兵進場**；remake 的 `reinforce()` 會補（補進來的兵下一幀被 `applySquadLeaderGone` 改成退卻）。兩邊最後都會結束，但**中途的場上人數不同**，沒有逐拍對過 | 靜態 |
 | [`spec/141-retreat-countdown.md`](../spec/141-retreat-countdown.md) | `word_1D31C` 的兩個 byte | 量到開場是 48／48（＝六隊 × 八人），`../re/11` §5.9 寫的是「含畫面外待機的」。**兩種讀法都還沒有直接證據**，這一份只用到「它歸零時結束」這一點 | 靜態 |
+| [`spec/142-personnel-dismiss-flow.md`](../spec/142-personnel-dismiss-flow.md) | 選完回到清單的迴圈 | 原版成功或失敗都回清單繼續選，**remake 選完就收掉清單**。要改得動 `listPick` 的回傳語意，影響四條出口以外的地方，這一輪沒動 | 靜態 |
+| [`spec/142-personnel-dismiss-flow.md`](../spec/142-personnel-dismiss-flow.md) | 成功時那位官員說的話 | 變體組 `1A2h`／`1A3h`（＝ TALK 418／419 那兩組八個）。remake 目前沒有這一則 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |

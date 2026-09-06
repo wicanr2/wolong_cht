@@ -407,6 +407,7 @@ func (g *game) drawForm(screen *ebiten.Image) {
 
 // beginMarch 開始行軍：先選軍團，再選目的地。
 func (g *game) beginMarch() {
+	g.setStatusTalk(marchCorpsTalk, nil)
 	rows := g.playerCorps()
 	if len(rows) == 0 {
 		g.lastEvent = "沒有軍團可以行軍"
@@ -841,7 +842,14 @@ func (g *game) openCorpsCommandMenu() { g.openPopupMenu(corpsPopupMenu) }
 // 鏡頭 ＝ (X − 20, Y − 12)，與開局鏡頭是首都 −(20,12) 同一組立即值
 // （docs/spec/52）。軍團情報視窗照原版也在這條路上開
 // （`sub_1628F` 是 `docs/re/51` 的兩個呼叫者之一）。
+// 軍團兩條出口的狀態列提示（`sub_1628F` 的兩個分支，docs/spec/110 §1）。
+const (
+	locateCorpsTalk = 0x16 // #22「將游標移動至軍團的現在位置。」
+	marchCorpsTalk  = 0x02 // #2「請選擇進行行軍指示之軍團。」
+)
+
 func (g *game) beginLocateCorps() {
+	g.setStatusTalk(locateCorpsTalk, nil)
 	rows := g.playerCorps()
 	if len(rows) == 0 {
 		g.lastEvent = "還沒有軍團"
