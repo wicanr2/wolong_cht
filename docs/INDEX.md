@@ -119,6 +119,7 @@
 | [`docs/playtest/83-city-list-parity.md`](playtest/83-city-list-parity.md) | 83 — 「據點一覽」對拍：3,085 → 278 px，剩下的是取樣的子刻 | 通過（定案）。 | 2026-09-06 |
 | [`docs/playtest/84-personnel-corps-list-parity.md`](playtest/84-personnel-corps-list-parity.md) | 84 — 人事四條、軍團兩條出口的對拍：四張 map 0 px | 通過。 | 2026-09-06 |
 | [`docs/playtest/85-general-duty-field.md`](playtest/85-general-duty-field.md) | 85 — 武將職務 +0x17：原版逐值實跑確認，remake 攤開 | 通過。 | 2026-09-06 |
+| [`docs/playtest/86-general-faction-cells-parity.md`](playtest/86-general-faction-cells-parity.md) | 86 — 指令列最後兩格對拍：兩張 map 都是 0 px；順帶量到原版的暴風雨覆蓋層 | 通過。 | 2026-09-06 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告是 72 秒， 含語言切換與原版並排兩段；遊戲段落是逐幀錄下來的實跑畫面。 2… | 2026-08-30 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
@@ -284,6 +285,7 @@
 | [`docs/spec/142-personnel-dismiss-flow.md`](spec/142-personnel-dismiss-flow.md) | 142 — 人事四條出口是一個迴圈：不過濾、選完回清單、官員自己說一句 | CONFORMED。 | 2026-09-06 |
 | [`docs/spec/143-general-duty-field.md`](spec/143-general-duty-field.md) | 143 — 武將記錄 +0x17 是職務值，不是布林 | CONFORMED。 | 2026-09-06 |
 | [`docs/spec/144-advisor-leaves-general-table.md`](spec/144-advisor-leaves-general-table.md) | 144 — 選了軍師，那個人就從武將表消失 | CONFORMED。 | 2026-09-06 |
+| [`docs/spec/145-general-and-faction-cells.md`](spec/145-general-and-faction-cells.md) | 145 — 指令列最後兩格：武將是迴圈並自陳兵種，勢力是跳到首都開情報卡 | CONFORMED。 | 2026-09-06 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |

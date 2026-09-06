@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**642 列分布在 264 份文件，平均每份 2.4 列。**
+**648 列分布在 266 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 181 | 174 | 6 | 1 |
-| 驗收 | 160 | 137 | 23 | 0 |
+| 驗收 | 164 | 140 | 24 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 264 | 244 | 19 | 1 |
-| **合計** | **642** | 586 | 53 | 3 |
+| 其他 | 266 | 246 | 19 | 1 |
+| **合計** | **648** | 591 | 54 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,9 +53,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 225 |
+| `docs/spec/` | 227 |
 | `docs/re/` | 181 |
-| `docs/playtest/` | 160 |
+| `docs/playtest/` | 164 |
 | `docs/release/` | 22 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
@@ -290,7 +290,7 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
 
-## 2.4 驗收（160 條）
+## 2.4 驗收（164 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -454,6 +454,10 @@
 | [`playtest/85-general-duty-field.md`](../playtest/85-general-duty-field.md) | 身分欄的畫面對拍 | 原版擷取有了（§3），remake 同狀態的還沒拍——要讓 remake 也走到「已任命」再開武將一覽 | 靜態 |
 | [`playtest/85-general-duty-field.md`](../playtest/85-general-duty-field.md) | `sub_13771` 讀 `+0x17` 的分支 | 語意未解（`../spec/143` §8） | 靜態 |
 | [`playtest/85-general-duty-field.md`](../playtest/85-general-duty-field.md) | 自定軍師時原版那個越界寫 | `loc_11AF8` 在 `+0x02 ＝ 0x7F` 時照樣寫 `[0x7F×32 + 4240h]`，落在武將表尾端之後；寫進去的是什麼欄位沒查，remake 不照抄 | 靜態 |
+| [`playtest/86-general-faction-cells-parity.md`](../playtest/86-general-faction-cells-parity.md) | **暴風雨覆蓋層的畫法** | 已知是 50% 網點、灰白（`a2b2b2`／`f3f3f3`／`617171`）＋偶數列的黑點；**還沒讀到畫它的那一支**，也不知道會不會逐 frame 動。要改 remake 得先補一份規格 | 靜態 |
+| [`playtest/86-general-faction-cells-parity.md`](../playtest/86-general-faction-cells-parity.md) | 覆蓋範圍的邊界 | 實測涵蓋格 (271–283, 160–168)，而中心據點在 (278,164) ⇒ 左緣比 `中心−5` 多兩格。是量到的邊緣網點還是座標框差，沒分清楚 | 實測 |
+| [`playtest/86-general-faction-cells-parity.md`](../playtest/86-general-faction-cells-parity.md) | 情報卡的三個數字 | 隨時間變，`clock:` 只到「時」——同 `83` 的裁定 | 靜態 |
+| [`playtest/86-general-faction-cells-parity.md`](../playtest/86-general-faction-cells-parity.md) | 滑鼠游標 88 px | 五個分區鋪滿全畫面，游標停在哪都會落進某一區；remake 沒有自繪游標 | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -466,7 +470,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（264 條）
+## 2.6 其他（266 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -602,6 +606,8 @@
 | [`spec/143-general-duty-field.md`](../spec/143-general-duty-field.md) | 身分欄的畫面對拍 | 原版擷取有了，remake 同狀態的還沒拍 | 靜態 |
 | [`spec/144-advisor-leaves-general-table.md`](../spec/144-advisor-leaves-general-table.md) | 自定軍師時原版那個越界寫 | 位置在武將表尾端後一個 byte，寫進去的是什麼欄位沒查；remake 不照抄 | 靜態 |
 | [`spec/144-advisor-leaves-general-table.md`](../spec/144-advisor-leaves-general-table.md) | 軍師退場時（如果有）會不會放回表上 | 沒找到反向的寫入端 | 靜態 |
+| [`spec/145-general-and-faction-cells.md`](../spec/145-general-and-faction-cells.md) | `sub_175FA`／`sub_178A7` 的清單是不是只列本勢力 | 武將那張只有本勢力、勢力那張列全部活著的，兩張都拍過了（`../playtest/86`） | 靜態 |
+| [`spec/145-general-and-faction-cells.md`](../spec/145-general-and-faction-cells.md) | 適性欄位的低半位元組 | 四個劇本全是 0，語意未解 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |

@@ -420,8 +420,13 @@ func (g *game) focusCity(city int) {
 	g.openCityInfo(city)
 }
 
-// openFactionList 是命令視窗的「勢力」：他勢力一覽。
+// openFactionList 是指令列第 7 格「勢力」（`sub_163BF`，docs/spec/145）。
+//
+// ⭐ **選完把鏡頭移到那個勢力的首都並開那個據點的情報卡**——狀態列
+// 那句「將游標移動至指示之勢力的首都據點。」講的就是這件事。
+// 與武將那格不同，這一格**不迴圈**，選完就結束。
 func (g *game) openFactionList() {
+	g.setStatusTalk(factionCellTalk, nil)
 	var rows []int
 	for i := range g.world.Factions {
 		if g.world.Factions[i].Alive {
@@ -431,6 +436,11 @@ func (g *game) openFactionList() {
 	g.factionList(rows, "↑↓ 移動　Enter 選取／決定　1-4 排序　ESC 取消",
 		func(f int) bool {
 			g.lastEvent = big5(g.world.LordName(f)) + " 軍"
+			if c := g.world.Factions[f].Capital; c >= 0 && c < len(g.world.Cities) {
+				g.focusCity(c)
+			}
+			// 狀態列留到情報卡關掉為止——原版是 `sub_17E1F` **回來之後**
+			// 才 `mov cx, 0FFFFh`（`loc_163FE`），由 syncCommandFlow 收。
 			return true
 		})
 }

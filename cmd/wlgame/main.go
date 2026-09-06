@@ -454,7 +454,12 @@ func (g *game) timeRuns() bool {
 }
 
 // openGeneralList 開武將一覽。欄位照原版的六欄（docs/spec/38 §1.2）。
+// openGeneralList 是指令列第 6 格「武將」（`sub_16366`，docs/spec/145）。
+//
+// ⭐ **選完不關清單**：被點到的人自陳擅長哪一種戰場，然後回到清單繼續選，
+// **右鍵才離開**——與人事那四條同一種迴圈（docs/spec/142）。
 func (g *game) openGeneralList() {
+	g.setStatusTalk(generalCellTalk, nil)
 	var rows []int
 	for i, gen := range g.world.Generals {
 		if gen.Alive && gen.Faction == g.world.Player {
@@ -464,8 +469,23 @@ func (g *game) openGeneralList() {
 	g.openGeneralPicker(rows, "↑↓ 移動　Enter 選取／決定　1-6 排序　ESC 取消",
 		func(i int) bool {
 			g.lastEvent = "選擇了 " + big5(g.world.Generals[i].Name)
-			return true
+			g.officialSays(g.generalAptitudeTalk(i), i)
+			return false // ★ 回清單（原版 `jmp short sub_16366`）
 		})
+}
+
+// pickListRow 是驗收用的「把游標移到第 N 列再決定」。
+//
+// ⭐ **走真實的 confirmListSelection**，不繞過 listPick——原版的清單是
+// 兩段式（第一下反白、第二下決定，說明書 3.8），所以這裡也叫兩次。
+// 繞過去的話 fixture 擺出來的會是一個真實流程走不到的狀態。
+func (g *game) pickListRow(row int) {
+	if g.list == nil || row < 0 || row >= len(g.list.Rows) {
+		return
+	}
+	g.list.Cursor = row
+	g.confirmListSelection() // 反白
+	g.confirmListSelection() // 決定
 }
 
 // openGeneralPicker 開一張武將清單（看或選都用這一張，docs/re/26 §4.2）。
@@ -1740,6 +1760,7 @@ func main() {
 	openList := flag.Bool("open-list", false, "截圖前先開武將一覽（驗收用；開著、無選取）")
 	openFormPick := flag.Bool("open-form-pick", false, "截圖前停在編成的武將一覽（對拍用，與原版指令列 #3 剛開的狀態相同）")
 	formPickRow := flag.Int("form-pick-row", 0, "配 -open-form：選候選清單的第 N 列當主將（對拍用）")
+	factionPickRow := flag.Int("faction-pick-row", -1, "配 -open-factions：再選走勢力一覽的第 N 列（對拍用，docs/spec/145 §2）")
 	lordCorpsFlag := flag.Bool("lord-corps", true, "允許把君主編成軍團長（docs/spec/76；對拍原版行為時給 false）")
 	damageReportFlag := flag.Bool("siege-damage", false, "戰後結果多印一行攻城損害（remake 的驗收資訊，原版沒有；docs/spec/89）")
 	openAdvise := flag.Bool("open-advise", false, "截圖前先跑到說服畫面（驗收用）")
@@ -1927,7 +1948,7 @@ func main() {
 		g.damageReport = *damageReportFlag
 		apply := func() {
 			configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *adviseTarget, *openCities, *openFactions, *openCityInfo, *openForm, *openCorps, *openMarchList,
-				*openMarchMode, *openCmdMenu, *openBattle, *openSiege, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow,
+				*openMarchMode, *openCmdMenu, *openBattle, *openSiege, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow, *factionPickRow,
 				*openTalkIndex, *openOutcome, parseSiegeFixture(*siegeNode, *siegeDefend, *siegeCorps, *battleSteps),
 				corpsMapFixture{enabled: *corpsOnMap, marchTo: *marchTo},
 				*camAt, *battleCam)
@@ -2274,7 +2295,7 @@ func logBattleUnits(g *game) {
 }
 
 func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, adviseTarget, openCities, openFactions bool, openCityInfo int, openForm, openCorps, openMarchList, openMarchMode bool,
-	openCmdMenu string, openBattle, openSiege, openMessage, openFinance bool, financeAmount int, openFormPick bool, formPickRow, openTalkIndex int,
+	openCmdMenu string, openBattle, openSiege, openMessage, openFinance bool, financeAmount int, openFormPick bool, formPickRow, factionPickRow, openTalkIndex int,
 	openOutcome string, siege siegeFixture, corpsMap corpsMapFixture, camAt, battleCam string) {
 	w := g.world
 	if w == nil {
@@ -2341,6 +2362,10 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 	}
 	if openList {
 		// 開著、無選取——原版剛開窗沒有反白列（playtest/42 §4）。
+		// 原版是點指令列的「武將」進來的，所以命令視窗開著、那一格反白，
+		// 而且掛著狀態列 #24（docs/spec/145 §1）。
+		g.hudSet(hudCommand, true)
+		g.cmdCell = int(naturalCommandGeneral)
 		g.openGeneralList()
 	}
 	if openFormPick {
@@ -2449,6 +2474,12 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 		g.hudSet(hudCommand, true)
 		g.cmdCell = int(naturalCommandFaction)
 		g.openFactionList()
+		// `-faction-pick-row N` 再走一步：原版選完會把鏡頭移到那個勢力的
+		// 首都並開情報卡（docs/spec/145 §2）。
+		if factionPickRow >= 0 && g.list != nil &&
+			factionPickRow < len(g.list.Rows) && g.listPick != nil {
+			g.pickListRow(factionPickRow)
+		}
 		return
 	}
 	if openCityInfo > -2 {
