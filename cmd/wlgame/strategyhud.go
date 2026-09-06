@@ -393,12 +393,27 @@ const (
 // fallback——君主卡的兩顆鈕整片變灰（docs/spec/107）。
 // 原版在殼層固定切第 0 組（`sub_11A6E` 的 `mov al, 0`，docs/spec/79 §1.1.1），
 // 所以沒有世界時回 `launcherSeason`。
-func (g *game) uiPaletteBank() int {
-	if g == nil || g.world == nil {
-		return launcherSeason
+func (g *game) uiPaletteBank() int { return g.paletteBank() }
+
+// paletteBank 是**現在該用哪一組調色盤**：季節 0–3，切到「液晶」再 +4
+// （`GAMEPAL.BRG` 的 bank 4–7，docs/spec/152）。
+//
+// ⭐ 傳給 `Render`／`Portrait`／`RenderWorld` 的 `bank` **只當調色盤用**
+// （`RenderRGBA(data, page, pal, bank)`），圖形資料是同一份——
+// 所以「換畫面模式」就是把所有取 bank 的地方換成這一支。
+func (g *game) paletteBank() int {
+	season := launcherSeason
+	if g != nil && g.world != nil {
+		season = int(g.world.Clock.Season())
 	}
-	return int(g.world.Clock.Season())
+	if g != nil && g.videoLCD {
+		season += paletteBanksPerMode
+	}
+	return season
 }
+
+// paletteBanksPerMode 是一種畫面模式佔幾組（四季）。
+const paletteBanksPerMode = 4
 
 // paletteInk 取原版調色盤的指定色；取不到就用 fallback，不讓畫面消失。
 func (g *game) paletteInk(index int, fallback color.RGBA) color.RGBA {
@@ -566,6 +581,14 @@ const (
 // 現代螢幕上沒有對應的顯示器，接上去也沒有可對照的原版畫面。
 var videoModeLabels = [2]string{"１６色", " 液晶 "}
 
+// videoModeIndex 把布林換成 videoModeLabels 的索引。
+func videoModeIndex(lcd bool) int {
+	if lcd {
+		return 1
+	}
+	return 0
+}
+
 // speed.Labels 是原版兩個速度設定的**五個檔位**，字串在 `ds:6033h` 起
 // 五筆各 7 bytes（Big5，含前後的半形空白）。
 //
@@ -623,6 +646,9 @@ func (g *game) dispatchSystemRow(row int, left bool) {
 		g.lordCorps = !g.lordCorps
 	case sysRowDamageReport:
 		g.damageReport = !g.damageReport
+	case sysRowVideo:
+		// ⚠ 左右鍵都是 toggle：只有兩個值（docs/spec/152）。
+		g.videoLCD = !g.videoLCD
 	case sysRowSave:
 		g.beginSaveUI(saveWrite)
 	case sysRowQuit:
@@ -765,9 +791,8 @@ func (g *game) drawSystemWindow(dst *ebiten.Image) {
 	vector.DrawFilledRect(dst, sysRuleX, sysRuleY, sysRuleW, 1, ink, false)
 
 	// 第 2 列的兩個選項是「１６色」與「 液晶 」（原版字串表 ds:6002h，
-	// 對應 GAMEPAL 的 bank 0–3 與 4–7，docs/re/55 §4）。
-	// remake 只做了 1６色那一組，所以這一格是固定值。
-	values := [sysRows]string{"ＯＫ", videoModeLabels[0], g.soundValue(),
+	// 對應 GAMEPAL 的 bank 0–3 與 4–7，docs/spec/152）。
+	values := [sysRows]string{"ＯＫ", videoModeLabels[videoModeIndex(g.videoLCD)], g.soundValue(),
 		speed.Labels[clamp(g.speed, 0, speed.Levels-1)],
 		speed.Labels[clamp(g.tacticalSpeed, 0, speed.Levels-1)],
 		"ＯＫ", lordCorpsValue(g.lordCorps), damageReportValue(g.damageReport)}
@@ -803,7 +828,7 @@ func (g *game) drawHUDSidebar(screen *ebiten.Image) {
 
 	// 右上縮小地圖。ICONGRF 段 2 本身就是 192×128，不能用大地圖降採樣替代。
 	g.chrome.Window(screen, strategySidebarX, bannerH, strategySidebarW, strategyMinimapH, chrome.Menu)
-	if img, err := g.lib.Render(g.minimapAsset(), 0, int(g.world.Clock.Season())); err == nil {
+	if img, err := g.lib.Render(g.minimapAsset(), 0, g.paletteBank()); err == nil {
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Translate(float64(strategyMinimapX), float64(strategyMinimapY))
 		screen.DrawImage(ebiten.NewImageFromImage(img), op)
@@ -819,7 +844,7 @@ func (g *game) drawHUDSidebar(screen *ebiten.Image) {
 	// (440,168)）：左半紅、右半藍，各帶一個小色塊。圖裡沒有君主名，
 	// 那一層由 state 填（原版是 `sub_15DBB`，docs/re/62 §4.1）。
 	legendX := strategySidebarX + chrome.Tile
-	if img, err := g.lib.DOSVFactionLegend(int(g.world.Clock.Season())); err == nil {
+	if img, err := g.lib.DOSVFactionLegend(g.paletteBank()); err == nil {
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Translate(float64(legendX), float64(strategyMinimapLegendY))
 		screen.DrawImage(ebiten.NewImageFromImage(img), op)
@@ -912,7 +937,7 @@ func (g *game) drawMinimapViewBox(dst *ebiten.Image) {
 	}
 	x := strategyMinimapX + (g.camX-minimapCamBias)/2
 	y := strategyMinimapY + g.camY/2
-	season := int(g.world.Clock.Season())
+	season := g.paletteBank()
 	for dy := 0; dy < gfx.ViewBoxRows; dy++ {
 		for dx := 0; dx < gfx.ViewBoxWidth; dx++ {
 			c := pix[dy*gfx.ViewBoxWidth+dx]
@@ -931,7 +956,7 @@ func (g *game) drawMinimapViewBox(dst *ebiten.Image) {
 func (g *game) drawNaturalFactionHUD(dst *ebiten.Image, x, y int) {
 	p := g.world.Player
 	f := g.world.Factions[p]
-	season := int(g.world.Clock.Season())
+	season := g.paletteBank()
 
 	if lord := f.Lord; lord >= 0 && lord < len(g.world.Generals) {
 		if img, err := g.lib.Portrait(g.world.Generals[lord].Portrait, season); err == nil {

@@ -920,3 +920,42 @@ func TestCorpsMarksSkipDeadCorps(t *testing.T) {
 		t.Errorf("圖塊 = %d，期望 CorpsTile(1,2) = %d", marks[0].Tile, want)
 	}
 }
+
+// 畫面模式切的是調色盤 bank：季節 0–3 ＋ 液晶再 +4（docs/spec/152）。
+// **零值是 16 色**，與原版開機預設一致。
+func TestPaletteBankFollowsVideoMode(t *testing.T) {
+	g := &game{world: &state.World{}}
+	for season := 0; season < 4; season++ {
+		g.world.Clock.Month = 1 + season*3 // 春 1-3／夏 4-6／秋 7-9／冬 10-12
+		want := int(g.world.Clock.Season())
+		g.videoLCD = false
+		if got := g.paletteBank(); got != want {
+			t.Errorf("16 色第 %d 季 ＝ bank %d，want %d", season, got, want)
+		}
+		g.videoLCD = true
+		if got := g.paletteBank(); got != want+paletteBanksPerMode {
+			t.Errorf("液晶第 %d 季 ＝ bank %d，want %d", season, got,
+				want+paletteBanksPerMode)
+		}
+	}
+	// 零值安全：沒有世界時也要回一組合法的 bank。
+	if got := (&game{}).paletteBank(); got < 0 || got > 7 {
+		t.Errorf("零值 game 的 bank ＝ %d", got)
+	}
+}
+
+// 系統選單第 1 列會切換，而且值格的字跟著換（docs/spec/152 §2）。
+func TestSystemMenuVideoRowToggles(t *testing.T) {
+	g := &game{world: &state.World{}}
+	if videoModeIndex(g.videoLCD) != 0 {
+		t.Fatal("預設不是 16 色")
+	}
+	g.dispatchSystemRow(sysRowVideo, true)
+	if !g.videoLCD || videoModeLabels[videoModeIndex(g.videoLCD)] != " 液晶 " {
+		t.Errorf("左鍵沒切到液晶：%v", g.videoLCD)
+	}
+	g.dispatchSystemRow(sysRowVideo, false)
+	if g.videoLCD {
+		t.Error("右鍵要能切回來")
+	}
+}

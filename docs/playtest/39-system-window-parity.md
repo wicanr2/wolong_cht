@@ -103,5 +103,5 @@ remake 在原版六列之後多了兩列，視窗因此高 240 而不是 192—�
 | 項目 | 現況 | 下手點 |
 |---|---|---|
 | ~~音效的 TYPE 2/3/4~~ | **已解**：四個 TYPE 是**四段音量**不是四種音源（[`../re/81`](../re/81-sound-type-attenuation.md)）。remake 接成播放增益（[`../spec/122`](../spec/122-sound-type-levels.md)），值格預設仍是 TYPE 1，這一張的 0 px 不變 | — |
-| 「液晶」畫面模式 | 原版的畫面模式有兩個選項，對應 `GAMEPAL.BRG` 的 bank 0–3 與 4–7（[`../re/55`](../re/55-system-menu-window.md) §4）。remake 只做了 16 色那一組 | 載 bank 4–7 再對拍一次 |
+| ~~「液晶」畫面模式~~ | **接上了**（[`../spec/152`](../spec/152-video-mode-lcd-palette.md)）：[`100`](100-video-mode-parity.md) 切到液晶之後整片大地圖 0 px、系統選單逐列 0 px | 載 bank 4–7 再對拍一次 |
 | 日期對不上 | 原版跑到 4月9日才截到 | 要嘛用存檔定位，要嘛加一個「跑到指定日期」的驗收旗標 |

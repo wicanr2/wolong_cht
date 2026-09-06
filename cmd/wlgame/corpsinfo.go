@@ -106,7 +106,7 @@ func (g *game) drawCorpsInfo(screen *ebiten.Image) {
 
 	ink := g.paletteInk(strategyInkNormal, chrome.Paper)
 	labelInk := g.paletteInk(strategyInkDim, color.RGBA{255, 223, 154, 255})
-	season := int(g.world.Clock.Season())
+	season := g.paletteBank()
 
 	// 靜態層（顯示清單場景 4）。
 	vector.DrawFilledRect(screen, 456, corpsTotalY, 160, 112, color.Black, false)

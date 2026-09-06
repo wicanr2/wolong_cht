@@ -193,6 +193,7 @@
 | **行軍目標的地圖選點** | [`149-march-target-map-picker.md`](149-march-target-map-picker.md) | CONFORMED。原版選目標據點是**在大地圖上點**（`sub_1703C`），不是一覽表；選完軍團先開軍團情報面板。⭐ 第一次把原版自己畫的游標（15×15 空心框 ＋ 黑影）畫對——[`../playtest/94`](../playtest/94-march-map-picker.md) 五區全 0 px |
 | **外交的兩道前置閘** | [`150-diplomacy-preconditions.md`](150-diplomacy-preconditions.md) | CONFORMED。停戰與請求協助**要先派外交官到對方**（`sub_165EF`），而且同型的使者不能已經在路上。⚠ remake 的規則層把外交官那一條寫反了（要求「沒有」），而且有單元測試把錯的行為釘住——[`../playtest/95`](../playtest/95-diplomacy-preconditions.md) |
 | **大地圖點擊** | [`151-map-click.md`](151-map-click.md) | CONFORMED。原版的大地圖左鍵是一條完整的分派（`sub_11E46`）：據點開情報卡、軍團開情報面板、兩者都有先跳一張兩項選單（TALK #80）。remake 先前點地圖什麼都不做 |
+| **畫面模式（液晶）** | [`152-video-mode-lcd-palette.md`](152-video-mode-lcd-palette.md) | CONFORMED。系統選單第 1 列切的是 `GAMEPAL.BRG` 的 bank 0–3 ↔ 4–7。⭐ **bank 就是調色盤不是美術**，所以整個功能＝把所有取 bank 的地方換成一支 `paletteBank()`；順帶抓到「視窗外框開局載一次就不再重畫」——換季也一樣漏 |
 
 ## 怎麼加一份
 

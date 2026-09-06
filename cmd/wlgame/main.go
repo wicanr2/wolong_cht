@@ -239,6 +239,13 @@ type game struct {
 	customAdvisor        *customAdvisor
 
 	camX, camY int
+	// chromeBank 是 `g.chrome` 現在是用哪一組調色盤畫的。
+	// **視窗外框與底紋也吃調色盤**——換畫面模式（甚至換季）時要跟著重畫，
+	// 否則框還是舊配色（docs/spec/152 §2.1）。
+	chromeBank int
+	// videoLCD ＝ 系統選單「畫面模式」切到「液晶」了（docs/spec/152）。
+	// **零值 ＝ 16 色**，與原版開機預設一致。
+	videoLCD bool
 	// mapPick 是「在大地圖上選一格」（原版 `sub_1703C`，docs/spec/149）。
 	// 行軍目標走這一條，不是一覽表。
 	mapPick mapPickState
@@ -489,6 +496,24 @@ func (g *game) openGeneralList() {
 			g.officialSays(g.generalAptitudeTalk(i), i)
 			return false // ★ 回清單（原版 `jmp short sub_16366`）
 		})
+}
+
+// loadChrome 依現在的調色盤重畫視窗外框與底紋。
+func (g *game) loadChrome() {
+	bank := g.paletteBank()
+	g.chrome = chrome.Load(g.lib, bank)
+	g.chromeBank = bank
+}
+
+// syncChrome 在調色盤換組時把外框重畫一次（docs/spec/152 §2.1）。
+// **比較的是 bank 不是旗標**，所以換季也一樣涵蓋。
+func (g *game) syncChrome() {
+	if g.lib == nil {
+		return
+	}
+	if bank := g.paletteBank(); bank != g.chromeBank {
+		g.loadChrome()
+	}
 }
 
 // pickListRow 是驗收用的「把游標移到第 N 列再決定」。
@@ -931,6 +956,8 @@ func (g *game) Update() error {
 	defer g.applyFixtureIfReady()
 	// 指令流程結束 → 收掉指令列反白與狀態列提示（docs/spec/124 §3.5）。
 	g.syncCommandFlow()
+	// 調色盤換組（換畫面模式／換季）→ 外框與底紋跟著重畫（docs/spec/152）。
+	g.syncChrome()
 	// 截圖模式要等 Draw 真正取到像素後才結束；只用 `frame > shotAt`
 	// 會在高更新速率下跳過那一幀，讓 packaged smoke 沒有 PNG 卻仍 exit 0。
 	if g.shotPath != "" && g.shotDone {
@@ -1338,7 +1365,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 		g.maybeSaveShot(screen)
 		return
 	}
-	season := int(g.world.Clock.Season())
+	season := g.paletteBank()
 
 	// 大地圖鋪滿橫幅以下的全部畫面。四季調色盤直接吃時鐘算出來的季節——
 	// 所以畫面會隨遊戲時間換季，不需要另外驅動。
@@ -1532,7 +1559,7 @@ func (g *game) mapObjectImage(objectType, phase int) *ebiten.Image {
 	}
 	season := 0
 	if g.world != nil {
-		season = int(g.world.Clock.Season())
+		season = g.paletteBank()
 	}
 	key := ((season*4)+objectType)*8 + phase
 	if g.disasterImages == nil {
@@ -1900,6 +1927,7 @@ func main() {
 	mapClick := flag.String("map-click", "", "截圖前在大地圖上點格 `X,Y`；加 `:第幾列` 再選走那一格上的第 N 支軍團（對拍用，docs/spec/151）")
 	openPicker := flag.Bool("open-faction-picker", false, "截圖前開縮小地圖圖例的 22 勢力選擇視窗（熱區 0x17，對拍用；狀態列 #4）")
 	openSave := flag.String("open-save", "", "截圖前開四槽視窗：`write` 儲存／`read` 讀取（對拍用，docs/spec/25）")
+	videoLCD := flag.Bool("video-lcd", false, "畫面模式切成「液晶」（GAMEPAL bank 4–7，docs/spec/152）")
 	openCmdMenu := flag.String("open-command-menu", "", "截圖前停在指令列的彈出選單：`corps`／`city`／`personnel`；加 `:第幾列` 就再選走那一列，可以接好幾層（對拍用，docs/spec/126）")
 	openNaming := flag.Bool("open-naming", false, "停在啟動殼層選君主那一頁並打開「自定」命名視窗（驗收用，docs/spec/104）")
 	battleFF := flag.Bool("battle-ff", false, "配 -open-battle／-open-siege：截圖前先按下 `▶▶` 快轉（驗收用，docs/spec/102）")
@@ -2084,7 +2112,7 @@ func main() {
 		g.damageReport = *damageReportFlag
 		apply := func() {
 			configureDirectFixtures(g, *openWin, *openList, *listPickRow, *openAdvise, *adviseMenu, *adviseSortie, *adviseTarget, *advisePickRow, *adviseListRow, *openCities, *openFactions, *openCityInfo, *openForm, *openCorps, *openMarchList,
-				*openMarchMode, *openPicker, *openSave, *pickTile, *mapClick, *openCmdMenu, *openBattle, *openSiege, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow, *factionPickRow,
+				*openMarchMode, *openPicker, *videoLCD, *openSave, *pickTile, *mapClick, *openCmdMenu, *openBattle, *openSiege, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow, *factionPickRow,
 				*openTalkIndex, *openOutcome, parseSiegeFixture(*siegeNode, *siegeDefend, *siegeCorps, *battleSteps),
 				corpsMapFixture{enabled: *corpsOnMap, marchTo: *marchTo},
 				*camAt, *battleCam)
@@ -2216,8 +2244,8 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer, new
 	g.quitting = false
 	g.idleGate = idleClockGate{}
 
-	season := int(w.Clock.Season())
-	g.chrome = chrome.Load(g.lib, season)
+	season := g.paletteBank()
+	g.loadChrome()
 	if !g.chrome.Available() {
 		log.Printf("⚠ 取不到 ICONGRF 段 3 的視窗外框，改畫純色框")
 	}
@@ -2430,7 +2458,7 @@ func logBattleUnits(g *game) {
 	log.Printf("場上活著的兵共 %d 個", n)
 }
 
-func configureDirectFixtures(g *game, openWin int, openList bool, listPickRow int, openAdvise, adviseMenu, adviseSortie, adviseTarget bool, advisePickRow, adviseListRow int, openCities, openFactions bool, openCityInfo int, openForm, openCorps, openMarchList, openMarchMode, openPicker bool,
+func configureDirectFixtures(g *game, openWin int, openList bool, listPickRow int, openAdvise, adviseMenu, adviseSortie, adviseTarget bool, advisePickRow, adviseListRow int, openCities, openFactions bool, openCityInfo int, openForm, openCorps, openMarchList, openMarchMode, openPicker, videoLCD bool,
 	openSave, pickTile, mapClick, openCmdMenu string, openBattle, openSiege, openMessage, openFinance bool, financeAmount int, openFormPick bool, formPickRow, factionPickRow, openTalkIndex int,
 	openOutcome string, siege siegeFixture, corpsMap corpsMapFixture, camAt, battleCam string) {
 	w := g.world
@@ -2666,6 +2694,8 @@ func configureDirectFixtures(g *game, openWin int, openList bool, listPickRow in
 		for g.adviseAdvance() {
 		}
 	}
+	// 畫面模式（原版系統選單第 1 列，docs/spec/152）。
+	g.videoLCD = videoLCD
 	// 四槽視窗（原版系統選單第 0 列，docs/spec/25）。
 	switch openSave {
 	case "":

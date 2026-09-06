@@ -328,7 +328,7 @@ func (g *game) drawForm(screen *ebiten.Image) {
 
 	ink := g.paletteInk(strategyInkNormal, chrome.Paper)
 	labelInk := g.paletteInk(strategyInkDim, color.RGBA{255, 223, 154, 255})
-	season := int(g.world.Clock.Season())
+	season := g.paletteBank()
 
 	// 靜態層（顯示清單場景 5）。
 	for _, box := range []struct{ x, y, w, h int }{

@@ -261,7 +261,7 @@ func (g *game) drawFinance(screen *ebiten.Image) {
 	ink := g.paletteInk(strategyInkNormal, chrome.Paper)
 	labelInk := g.paletteInk(strategyInkDim, color.RGBA{255, 223, 154, 255})
 	warnInk := g.paletteInk(strategyInkGauge, color.RGBA{210, 48, 40, 255})
-	season := int(g.world.Clock.Season())
+	season := g.paletteBank()
 
 	// 靜態層：標籤、垂直線、四個值框（顯示清單場景 1）。
 	g.td.Draw(screen, "資金", financeFundsLabelX, financeFundsLabelY, ink)

@@ -155,7 +155,7 @@ func (g *game) drawIventScene(screen *ebiten.Image, page int) {
 	}
 	season := 0
 	if g.world != nil {
-		season = int(g.world.Clock.Season())
+		season = g.paletteBank()
 	}
 	img, err := g.lib.Render(asset, page, season)
 	if err != nil {
@@ -186,7 +186,7 @@ func (g *game) drawLegacyTalkBoxFields(screen *ebiten.Image, x, y, w, h int,
 	g.chrome.Window(screen, x, y, w, h, chrome.Blank)
 	bank := 0
 	if g.world != nil {
-		bank = int(g.world.Clock.Season())
+		bank = g.paletteBank()
 	}
 	g.drawPortrait(screen, portraitPage, x+talkPortraitX-talkBoxX,
 		y+talkPortraitY-talkBoxY, bank)

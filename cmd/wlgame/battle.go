@@ -443,7 +443,7 @@ func (g *game) drawBattleTalk(screen *ebiten.Image, text, speaker string, r batt
 
 	commander := g.battleCommander(p, side)
 	if commander >= 0 && commander < len(g.world.Generals) && g.lib != nil && portraitPage >= 0 {
-		if portrait, err := g.lib.Portrait(portraitPage, int(g.world.Clock.Season())); err == nil {
+		if portrait, err := g.lib.Portrait(portraitPage, g.paletteBank()); err == nil {
 			op := &ebiten.DrawImageOptions{}
 			op.GeoM.Translate(float64(r.X+chrome.Tile), float64(r.Y+chrome.Tile))
 			screen.DrawImage(ebiten.NewImageFromImage(portrait), op)

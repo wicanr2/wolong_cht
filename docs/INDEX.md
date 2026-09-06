@@ -43,6 +43,7 @@
 | [`docs/playtest/08-wlgame-normal-strategy-path.md`](playtest/08-wlgame-normal-strategy-path.md) | 08 — wlgame 正常編成／行軍路徑 | 真實 SINARIO.DAT 下的編成、行軍、城兵攻城，以及敵方 AI 軍團遭遇選單 都已由鍵盤正常操作驗收；使用者… | 2026-08-09 |
 | [`docs/playtest/09-wlgame-normal-tactical-path.md`](playtest/09-wlgame-normal-tactical-path.md) | 09 — wlgame 正常遭遇到戰術戰場 | 正常開局、正常 AI 遭遇、戰鬥指揮選單、戰術戰場、戰後結果報告與 GUI 戰後回戰略已驗收；原版同狀態逐像素對拍仍… | 2026-08-09 |
 | [`docs/playtest/10-event-message-modal.md`](playtest/10-event-message-modal.md) | 10 — 事件 TALK 通知 modal | 已完成通知資料接縫、Linux/Xvfb 視覺抽樣與 remake TALK 五行分頁；原版未知 事件流程／未定位 … | 2026-08-09 |
+| [`docs/playtest/100-video-mode-parity.md`](playtest/100-video-mode-parity.md) | 100 — 畫面模式「液晶」接上：地圖 0 px，系統選單逐列 0 px | 通過。 | 2026-09-06 |
 | [`docs/playtest/11-event6-original-fixture.md`](playtest/11-event6-original-fixture.md) | 11 — 原版事件 6 fixture oracle | 事件 6 主要結果畫面已由原版 fixture 證實；不是自然長程存檔，也不封閉次要 formatter。 | 2026-08-10 |
 | [`docs/playtest/12-event3-same-state-parity.md`](playtest/12-event3-same-state-parity.md) | event3 同狀態對拍（2026-08-10） | 同狀態事件接線、原版式 composite、3×6 實際格位選取、TALK 五行分頁、 DOS/V 內框／按鍵 gl… | 2026-08-10 |
 | [`docs/playtest/13-dosv-natural-and-target-gui.md`](playtest/13-dosv-natural-and-target-gui.md) | DOS/V 自然畫面與目標平台 GUI 驗收 | 歷史驗收紀錄（2026-08-11，影片 oracle）。 | 2026-08-11 |
@@ -305,6 +306,7 @@
 | [`docs/spec/149-march-target-map-picker.md`](spec/149-march-target-map-picker.md) | 149 — 行軍目標是在大地圖上點，不是一覽表 | CONFORMED。 | 2026-09-06 |
 | [`docs/spec/150-diplomacy-preconditions.md`](spec/150-diplomacy-preconditions.md) | 150 — 停戰與請求協助的兩道前置閘：先派外交官、同一件事不重複提 | CONFORMED。 | 2026-09-06 |
 | [`docs/spec/151-map-click.md`](spec/151-map-click.md) | 151 — 在大地圖上點一格：據點開情報卡、軍團開情報面板 | CONFORMED。 | 2026-09-06 |
+| [`docs/spec/152-video-mode-lcd-palette.md`](spec/152-video-mode-lcd-palette.md) | 152 — 畫面模式：「１６色」／「液晶」是同一份調色盤的兩組 bank | CONFORMED。 | 2026-09-06 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |

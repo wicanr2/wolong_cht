@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**692 列分布在 284 份文件，平均每份 2.4 列。**
+**694 列分布在 286 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 181 | 174 | 6 | 1 |
-| 驗收 | 196 | 171 | 25 | 0 |
+| 驗收 | 198 | 173 | 25 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 278 | 257 | 20 | 1 |
-| **合計** | **692** | 633 | 56 | 3 |
+| **合計** | **694** | 635 | 56 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -54,7 +54,7 @@
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/spec/` | 239 |
-| `docs/playtest/` | 196 |
+| `docs/playtest/` | 198 |
 | `docs/re/` | 181 |
 | `docs/release/` | 22 |
 | `docs/formats/` | 20 |
@@ -290,13 +290,16 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
 
-## 2.4 驗收（196 條）
+## 2.4 驗收（198 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
 | [`playtest/10-event-message-modal.md`](../playtest/10-event-message-modal.md) | 事件 10 producer 仍未定位。 | （未解小節內文） | 靜態 |
 | [`playtest/10-event-message-modal.md`](../playtest/10-event-message-modal.md) | 事件 6 #72 的缺失 formatter payload 維持 fail-closed。 | （未解小節內文） | 靜態 |
 | [`playtest/10-event-message-modal.md`](../playtest/10-event-message-modal.md) | 原版／remake 同狀態畫面對拍仍是剩餘驗收項。 | （未解小節內文） | 靜態 |
+| [`playtest/100-video-mode-parity.md`](../playtest/100-video-mode-parity.md) | 素材頁的四季 | 肖像與據點景觀圖換的是圖不是色，這一份沒動；切到液晶時那些圖的顏色會不會也跟著換，還沒對過 | 靜態 |
+| [`playtest/100-video-mode-parity.md`](../playtest/100-video-mode-parity.md) | 音效那一格 | fixture 沒帶 `-audio`，顯示「未接入」。要比那一格得先產 ogg | 靜態 |
+| [`playtest/100-video-mode-parity.md`](../playtest/100-video-mode-parity.md) | remake 多的兩列 | 「主君編成」與「損害報告」，已記錄的差異（`39`） | 靜態 |
 | [`playtest/17-expert-dosbox-remake.md`](../playtest/17-expert-dosbox-remake.md) | 松崗 DOS/V 原版 | **PASS（啟動至開場）** / 2026-08-12 證實空白確認／`0000`／`1234` 均越過密碼頁；完整自然長程驗證尚未執行 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 據點換手之後遮罩會不會跟著變 | `sub_1890A` 的行為，靜態讀得出來，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 松崗 DOS/V 側 | 這套 bridge 還沒在 DOS/V 上跑過。**密碼頁不構成阻礙**（四格留白按「確定」即可通過，`18`）——是還沒做 | 靜態 |
@@ -330,7 +333,6 @@
 | [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | DOSBox 的滑鼠座標 | 視窗 640×480、遊戲 640×400 置中，而 INT 33 把**整個視窗**等比對映到遊戲畫面（送 y 要乘 1.2）。這是本機設定的性質，不是原版的 / 把 `int33 max y` 改成 400 再量一次 | 實測 |
 | [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 進到大地圖之後的滑鼠座標 | **又換一套**：`sub_120D6` 把 INT 33 的範圍改成 `0..0x17FF × 0..0x101F`（6143×4127 ＝ 整個世界的像素），螢幕座標 ＝ 原始座標 − 鏡頭原點。所以同一個視窗位置在選單裡與在地圖上指到完全不同的地方 / 用 `tools/cursor_probe.py` 在… | 靜態 |
 | [`playtest/38-window-parity.md`](../playtest/38-window-parity.md) | 天候物件 | 原版跑了 10 天才截到，remake 停在第 1 天。**這是狀態差** / 要對就得讓兩邊同一天——用存檔定位（`../spec/90` §2） | 靜態 |
-| [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 「液晶」畫面模式 | 原版的畫面模式有兩個選項，對應 `GAMEPAL.BRG` 的 bank 0–3 與 4–7（`../re/55` §4）。remake 只做了 16 色那一組 / 載 bank 4–7 再對拍一次 | 靜態 |
 | [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 日期對不上 | 原版跑到 4月9日才截到 / 要嘛用存檔定位，要嘛加一個「跑到指定日期」的驗收旗標 | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-enemy` 的 44 px | 兩條都頂在上限，原版那一格已經打了 20 秒（§10） / 要對就得讓兩邊的**時刻**對齊，不是改算式 | 靜態 |
 | [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-enemy`／`sb-self` 1.5% | 兩格將旗的內容 / — | 靜態 |
@@ -604,7 +606,6 @@
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | **remake 沒有邊緣捲動** | **機制早就解了**（`../re/47` §6）：`sub_120D6` 進大地圖時把 INT 33 的範圍換成**整個世界**（水平 0–`17FFh` ＝ 384 格 × 16、垂直 0–`101Fh`），`sub_11F7F` 再把原始座標減掉鏡頭原點、夾在 0–639／0–399，**夾掉的量同時加回鏡… | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 六列的語意 | handler 讀到四支（`docs/re/55` §5）：畫面模式換調色盤組、音效走驅動、戰略速度只存值、戰術速度存值 ×16。**「資料儲存」與「遊戲結束」那兩支沒讀**，remake 照標籤字面接（開四槽視窗／走 ＹＥＳ／ＮＯ 確認） | 靜態 |
-| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 「畫面模式」 | 兩個選項是「１６色」與「 液晶 」，切的是 `GAMEPAL.BRG` 的 bank 0–3 ↔ 4–7（`docs/re/02` §6.2）。**remake 只做第 0 組**，這一格固定顯示「１６色」——液晶那組是給 8 階調液晶的高飽和純色，現代螢幕沒有對照物 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 戰場內調速度 | 戰場獨佔輸入，所以 `updateBattle` 自己接一次 ＋／−（調戰術速度），調完浮一行 1.5 秒的提示。**原版戰場沒有速度指示**，常駐顯示會破壞版面 parity | 靜態 |
 | [`spec/130-freelance-random-join.md`](../spec/130-freelance-random-join.md) | 平手時取編號小的 | 從 `jb`（嚴格小於）推出來的，**沒有實機驗過** | 靜態 |
 | [`spec/130-freelance-random-join.md`](../spec/130-freelance-random-join.md) | 這一條的實際發生頻率 | 開局 81 名在野武將**全部有心向**，所以隨機投靠要等他們兌現完才輪得到（`../mechanics/70` §3.9）。**長跑幾個月才會第一次觸發沒有量過** | 靜態 |
@@ -652,6 +653,7 @@
 | [`spec/150-diplomacy-preconditions.md`](../spec/150-diplomacy-preconditions.md) | `sub_1304E` 的 `dx` 附加欄位 | 這兩個呼叫點都傳 `0FFFFh`（不比），別的呼叫點傳什麼還沒逐一讀 | 靜態 |
 | [`spec/151-map-click.md`](../spec/151-map-click.md) | `sub_11F0E` 的 X 夾制 `23h` | 夾住之後框的右緣落在 672，超出畫面 32 px（§1.2）。要嘛 `sub_193E9` 對超出的部分另有處理、要嘛這一張的框比 112 窄——**兩個都還沒驗**。目前照抄常數 | 靜態 |
 | [`spec/151-map-click.md`](../spec/151-map-click.md) | 佔用圖 | 原版查的是 `cs:word_19872` 的佔用圖，remake 直接掃軍團表比座標。**結果相同但來源不同**——佔用圖每 tick 由位置推導（`39` §2），還沒逐格比對過 | 靜態 |
+| [`spec/152-video-mode-lcd-palette.md`](../spec/152-video-mode-lcd-palette.md) | 素材頁的四季 | 肖像與據點景觀圖是**另一種**四季（換的是圖不是色），這一份沒動它們——切到液晶時那些圖的顏色會不會也跟著換，還沒對過 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |
