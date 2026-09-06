@@ -82,6 +82,20 @@ and al, al / jnz 據點一覽
 這與編成視窗畫在武將一覽上面（[`../re/30`](../re/30-corps-formation-ui.md) §1）
 是同一種作法：**原版不擦，只是往上面畫**。
 
+⭐ **所以「哪一項會留框」不是選項的屬性，是「有沒有重畫地圖」的副產物。**
+同一支 `sub_193E9` 的兩條出口就分得出來：
+
+| 出口 | 之後做什麼 | 看得到殘影嗎 |
+|---|---|---|
+| 據點一覽 | 只開一張清單，鏡頭不動 | **看得到**（實測）|
+| 首都確認 | `sub_12151` 把鏡頭跳到首都 ＋ 開情報視窗 | **看不到**——重畫地圖把它蓋掉了 |
+
+remake 照抄的是**那個差別**：`moveCamTo()` 會順手擦掉殘留的框，
+而不是逐項寫死「這一項要留、那一項不留」。
+
+⚠ **只有據點一覽那一條有原版擷取。** 人事與軍團的四條出口也開清單，
+形狀應該一樣，但**沒比過**——列在 §4。
+
 ## 2. remake 實作
 
 四張選單長得一樣，所以**只留一份實作**（`CLAUDE.md` §7 第 6 條）：
@@ -100,6 +114,8 @@ type popupMenu struct {
 |---|---|
 | 型別與三張表 | `cmd/wlgame/popupmenu.go`：`corpsPopupMenu`／`cityPopupMenu`／`personnelPopupMenu` |
 | 狀態 | `game.cmdMenu`（`menu` 是 nil 就是沒開——**零值安全**，不必另外記 active 旗標）。`stale` ＝ 已經選走了但框還留在畫面上（§1.2）|
+| 擦掉的時機 | `moveCamTo()`（＝原版的重畫地圖）與 `syncCommandFlow()`（流程回來了）|
+| 畫序 | **選單先畫、一覽表後畫**——反過來的話露出來的那一列會蓋掉清單上緣 |
 | 狀態列提示 | `openCityList` 掛 TALK #23（`sub_162FB` 的 `mov cx, 17h`，[`140`](140-status-message-box.md)）|
 | 輸入／繪製 | `updatePopupMenu`／`drawPopupMenu`，兩處呼叫點不變 |
 | 反白 | `activeCommandCell()` 回傳 `cmdMenu.menu.cell`（[`124`](124-menu-highlight-xor.md)）|
@@ -126,4 +142,5 @@ type popupMenu struct {
 |---|---|
 | ~~據點／人事兩張的逐像素對拍~~ | **拍了也比了**（[`../playtest/61`](../playtest/61-city-personnel-menu-parity.md)，2026-09-03）：兩張都是四區 0 px，選單框與反白格也各 0 px。⭐ 原版側後來又用 dosgolem 重取一次並把 `banner` 也收到 0（[`../playtest/67`](../playtest/67-dosgolem-popup-menus.md)）|
 | ~~「據點一覽」列的是誰的城~~ | **玩家的**（實測，2026-09-06）：196年4月20日的原版清單是濟陰／洛陽／汜水關／滎陽／官渡／函谷關／虎牢關／陝／陳留／河南**十座**，與 `-list-cities 0` 印出來的「主 0」十座逐一相同（[`../playtest/83`](../playtest/83-city-list-parity.md)）。remake 的 `playerCities` 是對的 |
+| 人事／軍團那四條出口的殘影 | 只有據點一覽比過（[`../playtest/83`](../playtest/83-city-list-parity.md)）。另外四條也開清單，remake 走同一支 `dispatchPopupMenu`，**但沒有原版擷取** |
 | 進言那一張還沒併進來 | `openAdvise` 有自己的一套（五項 ＋ 說服流程）。**併之前要先確認它的取消語意一樣**，這一輪沒動 |

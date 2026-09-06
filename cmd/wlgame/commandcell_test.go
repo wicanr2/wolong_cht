@@ -80,3 +80,25 @@ func TestPopupMenuStaysDrawnAfterPick(t *testing.T) {
 		t.Error("流程結束了框還留著")
 	}
 }
+
+// 鏡頭一動就把殘留的選單框擦掉——原版沒有「擦選單」這個動作，
+// 選單是被**重畫地圖**蓋掉的（docs/spec/126 §1.2）。
+//
+// ⭐ 「據點一覽」不動鏡頭 ⇒ 看得到殘影；「首都確認」跳鏡頭 ⇒ 看不到。
+// 兩條走同一支 `dispatchPopupMenu`，差別只在有沒有重畫地圖。
+func TestCameraMoveErasesStalePopup(t *testing.T) {
+	g := &game{cmdCell: int(naturalCommandCity)}
+	g.openPopupMenu(cityPopupMenu)
+	g.cmdMenu.stale = true
+	g.moveCamTo(10, 10)
+	if g.popupMenuShown() {
+		t.Error("鏡頭動了，殘留的選單框應該被擦掉")
+	}
+	// 還在操作中的選單不受影響（鏡頭那時本來也不會動）。
+	g2 := &game{cmdCell: -1}
+	g2.openPopupMenu(cityPopupMenu)
+	g2.moveCamTo(10, 10)
+	if !g2.popupMenuShown() {
+		t.Error("還開著的選單不該被鏡頭擦掉")
+	}
+}

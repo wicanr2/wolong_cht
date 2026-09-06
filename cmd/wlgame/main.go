@@ -1191,6 +1191,22 @@ func (g *game) Update() error {
 	return nil
 }
 
+// moveCamTo 把鏡頭挪過去（會夾邊界），**並且擦掉選走之後留在畫面上的
+// 選單框**。
+//
+// ⭐ 原版沒有「擦選單」這個動作——選單是被**重畫地圖**蓋掉的
+// （docs/spec/126 §1.2）。所以「首都確認」那條路（鏡頭跳過去 ＋ 開情報
+// 視窗）看不到殘影，而「據點一覽」那條路（不動鏡頭，只開一張清單）
+// 看得到。⚠ 兩條走的是同一支 `dispatchPopupMenu`，差別**只在有沒有
+// 重畫地圖**——照抄的是那個差別，不是「哪一項要留框」。
+func (g *game) moveCamTo(x, y int) {
+	g.camX, g.camY = x, y
+	g.clampCam()
+	if g.cmdMenu.stale {
+		g.closePopupMenu()
+	}
+}
+
 func (g *game) clampCam() {
 	if g.camX < 0 {
 		g.camX = 0

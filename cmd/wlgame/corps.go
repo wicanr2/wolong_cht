@@ -864,6 +864,5 @@ func (g *game) focusCorps(corps int) {
 		return
 	}
 	c := g.world.Corps[corps]
-	g.camX, g.camY = c.X-centreCol, c.Y-centreRow
-	g.clampCam()
+	g.moveCamTo(c.X-centreCol, c.Y-centreRow)
 }

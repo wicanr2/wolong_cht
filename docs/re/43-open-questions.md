@@ -42,9 +42,9 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 181 | 174 | 6 | 1 |
-| 驗收 | 156 | 134 | 22 | 0 |
+| 驗收 | 155 | 133 | 22 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 257 | 238 | 18 | 1 |
+| 其他 | 258 | 239 | 18 | 1 |
 | **合計** | **631** | 577 | 51 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
@@ -53,9 +53,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 218 |
+| `docs/spec/` | 219 |
 | `docs/re/` | 181 |
-| `docs/playtest/` | 156 |
+| `docs/playtest/` | 155 |
 | `docs/release/` | 22 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
@@ -290,7 +290,7 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
 
-## 2.4 驗收（156 條）
+## 2.4 驗收（155 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -447,7 +447,6 @@
 | [`playtest/82-strategy-date-aligned-parity.md`](../playtest/82-strategy-date-aligned-parity.md) | 財政的 141 px | 校訂造成的，**刻意的差異**。要 0 px 得拿未校訂的文本跑，那不是遊戲會出的畫面 | 靜態 |
 | [`playtest/82-strategy-date-aligned-parity.md`](../playtest/82-strategy-date-aligned-parity.md) | 原版擷取裡的滑鼠游標 | 88 px。要消掉得讓原版把游標移開再截圖——`move:` 之後游標會拖動鏡頭（`../re/84` §2），得先確認拖不動的位置 | 實測 |
 | [`playtest/82-strategy-date-aligned-parity.md`](../playtest/82-strategy-date-aligned-parity.md) | 武將／勢力兩格的指令列反白 | 原版走狀態列提示 ＋ 地圖游標，remake 開一覽表，**流程不同**（`../spec/124` §5） | 靜態 |
-| [`playtest/83-city-list-parity.md`](../playtest/83-city-list-parity.md) | 子刻級的取樣點 | `clock:` 只到「時」。要 0 px 得比到子刻（`ds:0CF2`），兩邊都要加 | 靜態 |
 | [`playtest/83-city-list-parity.md`](../playtest/83-city-list-parity.md) | 原版擷取裡的滑鼠游標 | 88 px。要消掉得讓原版把游標移到不會拖動鏡頭的位置再截圖 | 實測 |
 | [`playtest/83-city-list-parity.md`](../playtest/83-city-list-parity.md) | 其餘家族的破折號縮排 | 這一張十列全滿，**看不到空列**，所以驗不到據點家族的破折號（`../spec/38`） | 靜態 |
 
@@ -462,7 +461,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（257 條）
+## 2.6 其他（258 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -551,6 +550,7 @@
 | [`spec/124-menu-highlight-xor.md`](../spec/124-menu-highlight-xor.md) | `sub_10B46` 的暫存器序列 | 只確認了它寫 `0Ch` 給繪圖控制器、而結果逐點等於 XOR 12。**中間那幾個 port 寫入沒有逐行讀** | 靜態 |
 | [`spec/125-menu-box-width-from-padding.md`](../spec/125-menu-box-width-from-padding.md) | 「據點」那兩項 | `TALK #82`（「　首都確認　」／「　據點一覽　」）同樣是兩項選單，remake 的「據點」目前直接開一覽（`110` §5）。做了之後框寬會自動對——但那是另一件事 | 靜態 |
 | [`spec/125-menu-box-width-from-padding.md`](../spec/125-menu-box-width-from-padding.md) | 原版只看第一列 | remake 取**所有列的最大值**。四則既有選單兩種算法同值，`#79`／`#82` 也同值；**沒有找到會分歧的例子，但也沒有窮舉過** | 靜態 |
+| [`spec/126-command-popup-menus.md`](../spec/126-command-popup-menus.md) | 人事／軍團那四條出口的殘影 | 只有據點一覽比過（`../playtest/83`）。另外四條也開清單，remake 走同一支 `dispatchPopupMenu`，**但沒有原版擷取** | 靜態 |
 | [`spec/126-command-popup-menus.md`](../spec/126-command-popup-menus.md) | 進言那一張還沒併進來 | `openAdvise` 有自己的一套（五項 ＋ 說服流程）。**併之前要先確認它的取消語意一樣**，這一輪沒動 | 靜態 |
 | [`spec/127-captured-sovereign-becomes-retainer.md`](../spec/127-captured-sovereign-becomes-retainer.md) | 被俘兩次會不會加兩次 | **不會，而且不需要另外防護**——`and [bx], 0BFh` 已經把 bit 6 清掉了，第二次 `test [bx], 40h` 不成立。所以 `+3` 至多發生一次，值域停在 3–5，不會溢出 `+0x1E` 的 0–7。remake 照抄同一個結構（先測 bit 再清）就自然有同樣的性質 | 靜態 |
 | [`spec/127-captured-sovereign-becomes-retainer.md`](../spec/127-captured-sovereign-becomes-retainer.md) | 劇本作者能不能給非君主 bit 6 | 四個劇本的 43 筆全是現任君主（`../re/77` §3），但那是**資料上的巧合還是規則**沒有讀出來。若有一筆說話類型 3–7 又帶 bit 6，`+3` 會把它推到 6–10 | 靜態 |

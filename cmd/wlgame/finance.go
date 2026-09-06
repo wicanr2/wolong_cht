@@ -416,8 +416,7 @@ func (g *game) beginLocateCapital() {
 // focusCity 是那條共用尾段：鏡頭 ＝ 據點 −(20,12)，再開情報視窗。
 func (g *game) focusCity(city int) {
 	c := g.world.Cities[city]
-	g.camX, g.camY = c.X-centreCol, c.Y-centreRow
-	g.clampCam()
+	g.moveCamTo(c.X-centreCol, c.Y-centreRow)
 	g.openCityInfo(city)
 }
 
