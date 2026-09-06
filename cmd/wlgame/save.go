@@ -37,13 +37,20 @@ type saveUIState struct {
 	action saveAction
 	slot   int
 	slots  []launcherSlot
+	// touched ＝ 玩家用過鍵盤選槽了。
+	//
+	// ⭐ **選中的那一列在原版沒有任何標示**——原版是直接點日期欄決定的，
+	// 沒有游標狀態（docs/spec/25 §2）。remake 多了鍵盤選槽，所以要標；
+	// 但**沒用過鍵盤就不標**，畫面才與原版一致。
+	// 與一覽表的 `listTouched` 同一種作法（`cmd/wlgame/corps.go`）。
+	touched bool
 }
 
 func (g *game) beginSaveUI(action saveAction) {
-	g.saveUI = saveUIState{active: true, action: action}
-	if action == saveRead {
-		g.saveUI.slots = inspectLauncherSlots(g.saveFile)
-	}
+	// ⭐ **兩種模式都要看槽**：儲存時也得看得到自己要覆蓋哪一格
+	// （原版兩邊同一份版面、同一份資料，docs/spec/25 §3.1）。
+	g.saveUI = saveUIState{active: true, action: action,
+		slots: inspectLauncherSlots(g.saveFile)}
 }
 
 type saveUIActionKind uint8
@@ -71,11 +78,14 @@ func (g *game) dispatchSaveUI(action saveUIAction) {
 	case saveActionSelect:
 		if action.slot >= 0 && action.slot < 4 {
 			g.saveUI.slot = action.slot
+			g.saveUI.touched = true
 		}
 	case saveActionPrev:
 		g.saveUI.slot = (g.saveUI.slot + 3) % 4
+		g.saveUI.touched = true
 	case saveActionNext:
 		g.saveUI.slot = (g.saveUI.slot + 1) % 4
+		g.saveUI.touched = true
 	case saveActionCancel:
 		g.saveUI = saveUIState{}
 	case saveActionConfirm:
@@ -340,7 +350,10 @@ func (g *game) drawSaveUI(screen *ebiten.Image) {
 
 	ink := g.paletteInk(strategyInkNormal, chrome.Paper)
 	labelInk := g.paletteInk(strategyInkDim, color.RGBA{255, 223, 154, 255})
-	dateInk := g.paletteInk(0x05, color.RGBA{200, 200, 255, 255})
+	// ⭐ **日期欄是黑字綠底**：原版 `sub_1062F(bx = 5003h)` 的 `bh = 50h`
+	// ＝ 背景 5 ／前景 0（docs/re/52 §4 的「色 `0x05`」是把兩個半位元組
+	// 讀反了，原版擷取逐像素量到的是黑，docs/spec/25 §3.1）。
+	dateInk := g.paletteInk(0, color.RGBA{0, 0, 0, 255})
 	warnInk := g.paletteInk(strategyInkGauge, color.RGBA{210, 48, 40, 255})
 	amber := color.RGBA{240, 200, 120, 255}
 
@@ -359,28 +372,33 @@ func (g *game) drawSaveUI(screen *ebiten.Image) {
 			saveNameBoxW, saveNameBoxH, color.Black, false)
 		// 日期欄是**凹槽**：底色 5、外圈 2／0、內圈 D／4（docs/re/48 §2.1）。
 		g.dlSunken(screen, saveSlotX, saveSlotY+dy, saveSlotW, saveSlotH)
-		g.td.Draw(screen, "年　月　日", saveDateLabelX, saveSlotY+dy, ink)
+		g.td.Draw(screen, "年　月　日", saveDateLabelX, saveSlotY+dy, dateInk)
 
 		slot, ok := launcherSlot{}, false
 		if i < len(g.saveUI.slots) {
 			slot, ok = g.saveUI.slots[i], g.saveUI.slots[i].Available
 		}
-		nameInk := labelInk
-		if i == g.saveUI.slot {
+		// 名稱一律色 9（原版 `sub_106F5` 的「色 09」，docs/spec/25 §1.2）。
+		// ⭐ **選中的那一列只在用過鍵盤之後才換色**——原版沒有這個標示。
+		nameInk := g.paletteInk(9, labelInk)
+		if g.saveUI.touched && i == g.saveUI.slot {
 			nameInk = amber
 		}
-		if !ok {
-			g.td.Draw(screen, "空白槽位", saveNameX, saveNameY+dy, warnInk)
-			continue
-		}
-		g.td.Draw(screen, strategyHUDSingleLine(slot.Title, saveNameBoxW-16),
+		// ⭐ **空槽也照畫**（docs/spec/25 §3.1）：名稱欄畫區塊 `+0x40` 的
+		// 原字串（空槽是一整排「－」）、日期欄畫三個數字（空槽是 0）。
+		// 原版沒有「空槽」這個分支——`ok` 只決定**能不能選**，不決定畫什麼。
+		_ = ok
+		// ⚠ 可用寬就是名稱欄本身（256 px ＝ 16 個全形字）——先前留了 16 px
+		// 的餘裕，空槽那一排「－」因此少畫一個（docs/spec/25 §3.1）。
+		g.td.Draw(screen, strategyHUDSingleLine(slot.Title, saveNameBoxW),
 			saveNameX, saveNameY+dy, nameInk)
-		g.td.Draw(screen, strategyHUDNumber(slot.Year, saveYearDigits),
-			saveYearX, saveSlotY+dy, dateInk)
-		g.td.Draw(screen, strategyHUDNumber(slot.Month, saveMonthDigits),
-			saveMonthX, saveSlotY+dy, dateInk)
-		g.td.Draw(screen, strategyHUDNumber(slot.Day, saveMonthDigits),
-			saveDayX, saveSlotY+dy, dateInk)
+		// 三個數字走原版的 8×16 字模（`sub_1062F`，與一覽表同一套）。
+		g.drawOriginalNumber(screen, slot.Year,
+			saveYearX, saveSlotY+dy, saveYearDigits, dateInk)
+		g.drawOriginalNumber(screen, slot.Month,
+			saveMonthX, saveSlotY+dy, saveMonthDigits, dateInk)
+		g.drawOriginalNumber(screen, slot.Day,
+			saveDayX, saveSlotY+dy, saveMonthDigits, dateInk)
 	}
 
 	// ↓ remake 差異：原版點槽就決定、右鍵取消，沒有這一框。

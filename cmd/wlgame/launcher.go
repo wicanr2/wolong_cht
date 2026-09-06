@@ -514,6 +514,12 @@ func inspectLauncherSlots(path string) []launcherSlot {
 		return slots
 	}
 	for i := range slots {
+		// ⭐ **載不起來的槽也要有名稱**：原版的名稱欄畫的是區塊 `+0x40`
+		// 的原字串，空槽的值是一整排「－」——原版沒有「空槽」這個分支
+		// （docs/spec/25 §3.1）。
+		if title, ok := state.SlotTitle(path, i); ok {
+			slots[i].Title = big5(title)
+		}
 		w, err := state.LoadScenario(path, i)
 		if err != nil || !validLauncherPlayer(w, w.Player) {
 			continue

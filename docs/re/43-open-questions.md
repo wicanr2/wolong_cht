@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**689 列分布在 283 份文件，平均每份 2.4 列。**
+**692 列分布在 284 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 181 | 174 | 6 | 1 |
-| 驗收 | 193 | 168 | 25 | 0 |
+| 驗收 | 196 | 171 | 25 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 278 | 257 | 20 | 1 |
-| **合計** | **689** | 630 | 56 | 3 |
+| **合計** | **692** | 633 | 56 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -54,7 +54,7 @@
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/spec/` | 239 |
-| `docs/playtest/` | 193 |
+| `docs/playtest/` | 196 |
 | `docs/re/` | 181 |
 | `docs/release/` | 22 |
 | `docs/formats/` | 20 |
@@ -290,7 +290,7 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
 
-## 2.4 驗收（193 條）
+## 2.4 驗收（196 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -487,6 +487,9 @@
 | [`playtest/98-enemy-corps-panel.md`](../playtest/98-enemy-corps-panel.md) | listInkWarn`／`listInkWarnSelected` 兩個常數各自來自一次量測， 機制列為未解。 | （散句） | 靜態 |
 | [`playtest/98-enemy-corps-panel.md`](../playtest/98-enemy-corps-panel.md) | 反白列換色的**機制** | §3：兩個色號各有一次量測，變換規則沒解。列繪製 callback（線性 `0x1727D`）IDA 沒建成函式，`ida_range.py` 只印得出 `db`；要另外做一次強制解碼 | 靜態 |
 | [`playtest/98-enemy-corps-panel.md`](../playtest/98-enemy-corps-panel.md) | 整張畫面 | 鏡頭是格級的（`../spec/149` §4） | 靜態 |
+| [`playtest/99-slot-window-parity.md`](../playtest/99-slot-window-parity.md) | 原版擷取裡的滑鼠游標 | 95 px，停在剛點的 `ＯＫ` 格上 | 靜態 |
+| [`playtest/99-slot-window-parity.md`](../playtest/99-slot-window-parity.md) | remake 的下方提示框 | 「檔案　SAVE.DAT」與鍵盤提示是 remake 差異，**畫在原版視窗外面**（`../spec/25` §3），所以不影響本體 | 靜態 |
+| [`playtest/99-slot-window-parity.md`](../playtest/99-slot-window-parity.md) | ＬＯＡＤ／ＮＥＷ 兩個標題 | 只比了 ＳＡＶＥ 那一張 | 靜態 |
 
 ## 2.5 外部資料（6 條）
 

@@ -1,6 +1,10 @@
 package state
 
-import "fmt"
+import (
+	"bytes"
+	"fmt"
+	"os"
+)
 
 // Snapshot 是 remake 存檔要保存、而**原版記錄裡沒有**的執行期狀態。
 //
@@ -105,4 +109,28 @@ func LoadBlock(b []byte) (*World, error) {
 		return nil, fmt.Errorf("區塊大小 %d，預期 %d", len(b), blockSize)
 	}
 	return loadBlock(b), nil
+}
+
+// SlotTitle 讀出某一槽的標題字串（區塊 `+0x40`），**不做完整載入**。
+//
+// ⭐ 原版的四槽視窗名稱欄畫的就是它，**空槽也照畫**——空槽的值是一整排
+// 「－」（空槽標記 `0xA1D0`），所以原版沒有「空槽」這個分支
+// （docs/spec/25 §3.1）。
+func SlotTitle(path string, slot int) (string, bool) {
+	if slot < 0 || slot > 3 {
+		return "", false
+	}
+	f, err := os.Open(path)
+	if err != nil {
+		return "", false
+	}
+	defer f.Close()
+	buf := make([]byte, titleMax)
+	if _, err := f.ReadAt(buf, int64(slot*blockSize+titleOffset)); err != nil {
+		return "", false
+	}
+	if i := bytes.IndexByte(buf, 0); i >= 0 {
+		buf = buf[:i]
+	}
+	return string(buf), true
 }
