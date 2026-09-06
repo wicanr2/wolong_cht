@@ -494,6 +494,11 @@ func (g *game) beginPersuasion() {
 	s := g.situation(g.target)
 	g.sessCur = 0
 	g.advise = advisePersuade
+	// 原版三條進言在呼叫 `sub_13830` 之前都先 `cx = 0FFFFh` 清狀態列
+	// （docs/spec/140 §2.0），所以說服場景上不會有那個框。
+	// ⚠ 場景只蓋掉 (0,32,432,336)，狀態列的下緣 32 px 蓋不到——
+	// 不清就會露出來。
+	g.clearStatusTalk()
 	// ① 君主開場（上框）、② 軍師的進言（下框）——原文與框的分工
 	// 都照原版（docs/spec/44 §2、docs/spec/45 §1）。
 	base := persuasion.TalkBase(g.adviseCmd)
@@ -591,7 +596,27 @@ func (g *game) adviseTalkVars() map[byte]string {
 			vars['4'] = big5(g.world.Generals[a].Name)
 		}
 	}
+	// 進言的兩個框同樣走 `sub_1075B`，所以代入的名字一樣是**定寬三格**
+	// （docs/spec/119 §3.1）——先前沒補白，兩字的名字就少一個全形空白。
+	vars, _ = padTalkVars(vars)
 	return vars
+}
+
+// adviseTalkFields 是同一組代入值的**換色欄位**。⭐ 顏色與定寬是
+// 標記的性質不是框的性質（docs/spec/119 §3.1）：進言的兩個框走的是
+// 同一支 `sub_1075B`，所以 `\4`（軍師）一樣是色 9、`\3`（君主）色 0x0C。
+func (g *game) adviseTalkFields() []talkField {
+	vars := map[byte]string{'6': ""}
+	if g.target >= 0 && g.target < len(g.world.Factions) {
+		vars['3'] = big5(g.world.LordName(g.target))
+	}
+	if p := g.world.Player; p >= 0 && p < len(g.world.Factions) {
+		if a := g.world.Factions[p].Advisor; a >= 0 && a < len(g.world.Generals) {
+			vars['4'] = big5(g.world.Generals[a].Name)
+		}
+	}
+	_, fields := padTalkVars(vars)
+	return fields
 }
 
 // commitAdvice 將第一反應直接同意或說服成功接到原版 producer：敵對
@@ -627,13 +652,14 @@ func (g *game) commitAdvice() bool {
 // 原版的框是 `sub_13C99`／`sub_13CDC` 在講那一句時才畫出來的，
 // 不是一直掛在那裡的空框。
 func (g *game) drawAdviseBoxes(screen *ebiten.Image) {
+	fields := g.adviseTalkFields()
 	if len(g.adviseLordSaid) > 0 {
-		g.drawLegacyTalkBox(screen, talkUpperBoxX, talkUpperBoxY,
-			talkBoxW, talkBoxH, g.adviseLordSaid, g.playerLordPortrait())
+		g.drawLegacyTalkBoxFields(screen, talkUpperBoxX, talkUpperBoxY,
+			talkBoxW, talkBoxH, g.adviseLordSaid, g.playerLordPortrait(), fields)
 	}
 	if len(g.adviseAdvisorSaid) > 0 {
-		g.drawLegacyTalkBox(screen, talkLowerBoxX, talkLowerBoxY,
-			talkBoxW, talkBoxH, g.adviseAdvisorSaid, g.playerAdvisorPortrait())
+		g.drawLegacyTalkBoxFields(screen, talkLowerBoxX, talkLowerBoxY,
+			talkBoxW, talkBoxH, g.adviseAdvisorSaid, g.playerAdvisorPortrait(), fields)
 	}
 }
 

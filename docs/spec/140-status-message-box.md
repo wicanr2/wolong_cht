@@ -69,6 +69,30 @@ sub_18853(cx = TALK 索引)
 清除：cx ＝ 0FFFFh
 ```
 
+### 2.0 ⭐ 進說服場景之前一定先清掉
+
+進言的三條（敵對 `sub_16405`／停戰 `sub_164F1`／請求協助 `sub_16623`）
+選完目標之後、呼叫說服場景 `sub_13830` 之前，**三支都做同樣兩件事**：
+
+```asm
+call sub_17906          ; 選目標（協助那條是第二層）
+jb  離開
+push ax / push bx / push dx
+mov  ax, 2 / call sub_20000   ; ★ 隱藏滑鼠游標（docs/re/88）
+pop  dx / pop bx / pop ax
+mov  cx, 0FFFFh
+call sub_18853          ; ★ 清狀態列
+…
+call sub_13830          ; 說服場景
+```
+
+所以**說服場景上不會有狀態列**。remake 先前留著，於是場景底下多一個
+框（[`../playtest/103`](../playtest/103-advise-scene-parity.md)）。
+
+⚠ 說服場景本身只蓋掉 (0, 32, 432, 336)（`sub_189A4(cx=151Bh)`），
+而狀態列在 (0, 320, 256, 80)——**下緣 32 px 蓋不到**。
+「畫面上看不到」是因為它被主動清掉了，不是被蓋住。
+
 ### 2.1 代入的名字：定寬三格、各有各的顏色
 
 七支 marker handler 的表在 [`../formats/01`](../formats/01-talk-dat.md) §3

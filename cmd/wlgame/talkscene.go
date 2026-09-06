@@ -55,8 +55,11 @@ const (
 	talkUpperBoxX, talkUpperBoxY = 0, 80
 	talkLowerBoxX, talkLowerBoxY = 128, 288
 
-	talkSceneX = 64
-	talkSceneY = 144
+	// 插圖的左上角。⭐ 原版是 VRAM 位址算出來的：`bx = 2A87h`、每列 80 byte
+	// ⇒ y ＝ 136、x ＝ 7 × 8 ＝ 56（docs/spec/45 §1.0）。先前寫 (64, 144)，
+	// 兩軸各多 8 px——那是拿 16 px 粗格去湊位址的結果。
+	talkSceneX = 56
+	talkSceneY = 136
 
 	// 選單框的左上角：外交三選一、撥款、說服五選一共用 `sub_13B7E`，
 	// 那一組座標是寫死的（docs/spec/45 §2）：

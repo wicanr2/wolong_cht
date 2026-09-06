@@ -80,6 +80,7 @@ remake 起初只在狀態列做，一般訊息框整段畫白的——
 | 繪製 | `drawTalkLineFields`：一行裡凡是等於某個欄位的那一段就換那個色，**長的先比**，避免「曹操」把「曹操軍」切一半 |
 | 狀態列 | `setStatusTalk` 存 `fields`，`drawStatusBox` 照畫 |
 | 一般訊息框 | `enqueueTalkWithPortraitSeq` 存 `fields` 到 `messageDialog`，`drawLegacyTalkBox` 照畫 |
+| **進言場景的兩個框** | `adviseTalkVars()` 也走 `padTalkVars`——**它同樣是 `sub_1075B` 底下的框**（`sub_13C99`／`sub_13CDC`），先前沒補白，於是軍師名少一個全形空白（[`../playtest/103`](../playtest/103-advise-scene-parity.md)）|
 
 ⚠ **補白收進 `padTalkVars` 之後，呼叫端不要再自己補**——重複補是無害的
 （已經滿三格就不動），但兩份實作會漂。
