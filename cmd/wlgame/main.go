@@ -242,6 +242,9 @@ type game struct {
 	// mapPick 是「在大地圖上選一格」（原版 `sub_1703C`，docs/spec/149）。
 	// 行軍目標走這一條，不是一覽表。
 	mapPick mapPickState
+	// mapChoice 是大地圖上「那一格既是據點又有軍團」時的兩項選單
+	// （原版 `sub_11F0E`，docs/spec/151）。
+	mapChoice mapChoiceState
 
 	// hud 是主畫面四個常駐視窗的開關集合，對應原版 `byte_198A6` 的
 	// bit 0–3（docs/spec/13）。**初值四個全開是 remake 差異**——
@@ -456,7 +459,8 @@ func (g *game) timeRuns() bool {
 	// 一覽表、進言、編成都是非常駐視窗 —— 開著就停時間。
 	if g.list != nil || g.adviseActive() || g.form.active || g.marchMode.active ||
 		g.finance.active ||
-		g.saveUI.active || g.messageActive() || g.mapPickActive() {
+		g.saveUI.active || g.messageActive() || g.mapPickActive() ||
+		g.mapChoice.active {
 		return false
 	}
 	// 四個常駐視窗裡**只有系統視窗會停時間**（說明書 3.1、
@@ -1141,6 +1145,15 @@ func (g *game) Update() error {
 	if g.updateMapPick() {
 		return nil
 	}
+	// 那張兩項選單開著時它吃輸入（docs/spec/151）。
+	if g.mapChoice.active {
+		g.updateMapChoice()
+		return nil
+	}
+	// 大地圖左鍵的分派：據點開情報卡、軍團開情報面板（docs/spec/151）。
+	if g.updateMapClick() {
+		return nil
+	}
 	for _, key := range []ebiten.Key{
 		ebiten.KeyP, ebiten.KeyJ, ebiten.KeyF, ebiten.KeyA,
 		ebiten.KeyC, ebiten.KeyT, ebiten.KeyG, ebiten.KeyK,
@@ -1386,6 +1399,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 	// 兩個框不重疊，但順序照原版排比較不會被之後的改動弄反。
 	g.drawStatusBox(screen)
 	g.drawMarchMode(screen)
+	g.drawMapChoice(screen)
 	g.drawFinance(screen)
 	g.drawCityInfo(screen)
 	g.drawCorpsInfo(screen)
@@ -1874,6 +1888,7 @@ func main() {
 	openMarchMode := flag.Bool("open-march-mode", false, "截圖前停在行軍指示的三選一（驗收用）")
 	openMarchList := flag.Bool("open-march-pick", false, "截圖前編一支軍團並停在行軍目標的**地圖選點**（驗收用，docs/spec/149）")
 	pickTile := flag.String("pick-tile", "", "配地圖選點：把游標釘在格 `X,Y`（對拍用；headless 的指標位置不可控）")
+	mapClick := flag.String("map-click", "", "截圖前在大地圖上點格 `X,Y`（對拍用，docs/spec/151）")
 	openCmdMenu := flag.String("open-command-menu", "", "截圖前停在指令列的彈出選單：`corps`／`city`／`personnel`；加 `:第幾列` 就再選走那一列，可以接好幾層（對拍用，docs/spec/126）")
 	openNaming := flag.Bool("open-naming", false, "停在啟動殼層選君主那一頁並打開「自定」命名視窗（驗收用，docs/spec/104）")
 	battleFF := flag.Bool("battle-ff", false, "配 -open-battle／-open-siege：截圖前先按下 `▶▶` 快轉（驗收用，docs/spec/102）")
@@ -2058,7 +2073,7 @@ func main() {
 		g.damageReport = *damageReportFlag
 		apply := func() {
 			configureDirectFixtures(g, *openWin, *openList, *listPickRow, *openAdvise, *adviseMenu, *adviseSortie, *adviseTarget, *advisePickRow, *adviseListRow, *openCities, *openFactions, *openCityInfo, *openForm, *openCorps, *openMarchList,
-				*openMarchMode, *pickTile, *openCmdMenu, *openBattle, *openSiege, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow, *factionPickRow,
+				*openMarchMode, *pickTile, *mapClick, *openCmdMenu, *openBattle, *openSiege, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow, *factionPickRow,
 				*openTalkIndex, *openOutcome, parseSiegeFixture(*siegeNode, *siegeDefend, *siegeCorps, *battleSteps),
 				corpsMapFixture{enabled: *corpsOnMap, marchTo: *marchTo},
 				*camAt, *battleCam)
@@ -2405,7 +2420,7 @@ func logBattleUnits(g *game) {
 }
 
 func configureDirectFixtures(g *game, openWin int, openList bool, listPickRow int, openAdvise, adviseMenu, adviseSortie, adviseTarget bool, advisePickRow, adviseListRow int, openCities, openFactions bool, openCityInfo int, openForm, openCorps, openMarchList, openMarchMode bool,
-	pickTile, openCmdMenu string, openBattle, openSiege, openMessage, openFinance bool, financeAmount int, openFormPick bool, formPickRow, factionPickRow, openTalkIndex int,
+	pickTile, mapClick, openCmdMenu string, openBattle, openSiege, openMessage, openFinance bool, financeAmount int, openFormPick bool, formPickRow, factionPickRow, openTalkIndex int,
 	openOutcome string, siege siegeFixture, corpsMap corpsMapFixture, camAt, battleCam string) {
 	w := g.world
 	if w == nil {
@@ -2639,6 +2654,16 @@ func configureDirectFixtures(g *game, openWin int, openList bool, listPickRow in
 		// 驗收要看的是講完之後的畫面，把逐句節拍跑完（docs/spec/45 §1.1）。
 		for g.adviseAdvance() {
 		}
+	}
+	// 大地圖點擊（docs/spec/151）：走真實的分派，不繞過。
+	if mapClick != "" {
+		var col, row int
+		if _, err := fmt.Sscanf(mapClick, "%d,%d", &col, &row); err != nil {
+			log.Fatalf("⚠ -map-click 要 `X,Y` 兩個整數，收到 %q", mapClick)
+		}
+		g.dispatchMapClick(col, row,
+			(col-g.camX)*world.TileSize,
+			strategyMapY+(row-g.camY)*world.TileSize)
 	}
 	// 地圖選點的游標釘在指定格（docs/spec/149 §2）——headless 沒有指標。
 	if pickTile != "" {

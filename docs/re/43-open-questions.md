@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**682 列分布在 279 份文件，平均每份 2.4 列。**
+**687 列分布在 281 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 181 | 174 | 6 | 1 |
-| 驗收 | 185 | 161 | 24 | 0 |
+| 驗收 | 188 | 163 | 25 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 279 | 258 | 20 | 1 |
-| **合計** | **682** | 624 | 55 | 3 |
+| 其他 | 281 | 260 | 20 | 1 |
+| **合計** | **687** | 628 | 56 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,8 +53,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 240 |
-| `docs/playtest/` | 185 |
+| `docs/spec/` | 242 |
+| `docs/playtest/` | 188 |
 | `docs/re/` | 181 |
 | `docs/release/` | 22 |
 | `docs/formats/` | 20 |
@@ -290,7 +290,7 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
 
-## 2.4 驗收（185 條）
+## 2.4 驗收（188 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -479,6 +479,9 @@
 | [`playtest/95-diplomacy-preconditions.md`](../playtest/95-diplomacy-preconditions.md) | 兩道閘通過之後的畫面 | 需要一個「已經派了外交官」的局面才走得到 #7；受控存檔還沒做那一版 | 靜態 |
 | [`playtest/95-diplomacy-preconditions.md`](../playtest/95-diplomacy-preconditions.md) | `sub_1304E` 的 `dx` 附加欄位 | 這兩個呼叫點都傳 `0FFFFh`（不比），別的呼叫點還沒逐一讀 | 靜態 |
 | [`playtest/95-diplomacy-preconditions.md`](../playtest/95-diplomacy-preconditions.md) | 原版擷取裡的滑鼠游標 | 兩張都是 95 px | 靜態 |
+| [`playtest/96-map-click.md`](../playtest/96-map-click.md) | 佔用圖 | 原版查的是 `cs:word_19872` 的佔用圖，remake 直接掃軍團表比座標。結果相同但來源不同 | 靜態 |
+| [`playtest/96-map-click.md`](../playtest/96-map-click.md) | `sub_11F0E` 的 X 夾制 `23h` | 夾住之後框的右緣落在 672，超出畫面 32 px（`../spec/151` §1.2）——與行軍三選一的 `21h` 剛好貼齊不一樣。照抄常數，成因未解 | 靜態 |
+| [`playtest/96-map-click.md`](../playtest/96-map-click.md) | `-map-click` 繞過忙碌判定 | fixture 直接呼叫 `dispatchMapClick`，所以截圖裡情報卡與選單同時開著；真實操作走 `updateMapClick` 會被擋 | 實測 |
 
 ## 2.5 外部資料（6 條）
 
@@ -491,7 +494,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（279 條）
+## 2.6 其他（281 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -642,6 +645,8 @@
 | [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | 熱區會吃掉點擊 | ⚠ 實測踩到 `../re/85` §3 記的坑：把滑鼠移到據點的世界座標時，鏡頭捲到底、**游標釘在畫面右下角**，那裡是軍團情報視窗的熱區 `#31`，於是那一圈根本不問據點。要先把鏡頭帶過去、再讓游標落在畫面中間 | 實測 |
 | [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | 別的狀態下的游標 | `../playtest/91` §3 還沒對上，所以只接選點這一個 | 靜態 |
 | [`spec/150-diplomacy-preconditions.md`](../spec/150-diplomacy-preconditions.md) | `sub_1304E` 的 `dx` 附加欄位 | 這兩個呼叫點都傳 `0FFFFh`（不比），別的呼叫點傳什麼還沒逐一讀 | 靜態 |
+| [`spec/151-map-click.md`](../spec/151-map-click.md) | `sub_11F0E` 的 X 夾制 `23h` | 夾住之後框的右緣落在 672，超出畫面 32 px（§1.2）。要嘛 `sub_193E9` 對超出的部分另有處理、要嘛這一張的框比 112 窄——**兩個都還沒驗**。目前照抄常數 | 靜態 |
+| [`spec/151-map-click.md`](../spec/151-map-click.md) | 佔用圖 | 原版查的是 `cs:word_19872` 的佔用圖，remake 直接掃軍團表比座標。**結果相同但來源不同**——佔用圖每 tick 由位置推導（`39` §2），還沒逐格比對過 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |
