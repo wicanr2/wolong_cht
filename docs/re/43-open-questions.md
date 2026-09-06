@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**698 列分布在 292 份文件，平均每份 2.4 列。**
+**701 列分布在 293 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 182 | 175 | 6 | 1 |
-| 驗收 | 203 | 178 | 25 | 0 |
+| 驗收 | 205 | 180 | 25 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 276 | 255 | 20 | 1 |
-| **合計** | **698** | 639 | 56 | 3 |
+| 其他 | 277 | 256 | 20 | 1 |
+| **合計** | **701** | 642 | 56 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,8 +53,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 237 |
-| `docs/playtest/` | 203 |
+| `docs/spec/` | 238 |
+| `docs/playtest/` | 205 |
 | `docs/re/` | 182 |
 | `docs/release/` | 22 |
 | `docs/formats/` | 20 |
@@ -291,7 +291,7 @@
 | [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 游標圖形資料 | 在 `sub_201E4` 附近，逐 byte 沒抓；remake 已經有量出來的 14×14 遮罩 | 靜態 |
 | [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 54 個 hide／show 點對應到 remake 的哪一段 | 沒做；這是「remake 要不要同步游標」的前置 | 靜態 |
 
-## 2.4 驗收（203 條）
+## 2.4 驗收（205 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -308,6 +308,8 @@
 | [`playtest/103-advise-scene-parity.md`](../playtest/103-advise-scene-parity.md) | 說服迴圈的每一句 | 這一份停在開場三句，**選了理由之後**的畫面還沒拍 | 靜態 |
 | [`playtest/104-advise-verdict-parity.md`](../playtest/104-advise-verdict-parity.md) | 「君主出征中」那一句 | `openAdvise` 仍寫事件列，而**原版是 TALK #64 訊息框**（`../re/22` §3.4）——不是「該不該寫事件列」，是呈現方式用錯了。還沒拍 | 靜態 |
 | [`playtest/104-advise-verdict-parity.md`](../playtest/104-advise-verdict-parity.md) | 「Enter 繼續」提示 | remake 自己加的操作說明，保留；它讓每一張說服／判決場景差 1,369–4,628 px | 靜態 |
+| [`playtest/105-advisor-naming-parity.md`](../playtest/105-advisor-naming-parity.md) | 視窗**外**的背景 | 原版這一頁後面疊著 NEW GAME 的勢力清單與君主卡（fixture 直接開命名視窗，背後只有地圖）。整張差 55,098 px 幾乎全在這裡——要對得走完整條新遊戲流程 | 靜態 |
+| [`playtest/105-advisor-naming-parity.md`](../playtest/105-advisor-naming-parity.md) | 選好字之後 | 這一份停在剛開啟的狀態，**選字、翻頁、換肖像**之後的畫面還沒拍 | 靜態 |
 | [`playtest/17-expert-dosbox-remake.md`](../playtest/17-expert-dosbox-remake.md) | 松崗 DOS/V 原版 | **PASS（啟動至開場）** / 2026-08-12 證實空白確認／`0000`／`1234` 均越過密碼頁；完整自然長程驗證尚未執行 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 據點換手之後遮罩會不會跟著變 | `sub_1890A` 的行為，靜態讀得出來，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 松崗 DOS/V 側 | 這套 bridge 還沒在 DOS/V 上跑過。**密碼頁不構成阻礙**（四格留白按「確定」即可通過，`18`）——是還沒做 | 靜態 |
@@ -510,7 +512,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（276 條）
+## 2.6 其他（277 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -561,7 +563,8 @@
 | [`spec/101-phone-glyph-scale2x.md`](../spec/101-phone-glyph-scale2x.md) | 高 DPI 上 Ebiten 把 960×540 再縮到螢幕（非整數倍）的殘餘鋸齒 | 那一層是 Ebiten 的螢幕縮放（預設線性濾波），本規格只處理字模那一層。要不要改成整數倍畫布得有實機回饋 | 靜態 |
 | [`spec/102-battle-fast-forward.md`](../spec/102-battle-fast-forward.md) | 快轉時戰場區的底紋 | 原版是**藍底綠線的菱形格**（`playtest/53` 的裁切），不是龍紋。已收斂到「讀哪裡」：`sub_1DC9D` 的 `es` ＝ `word_1E15E`，**唯一的寫入端**是 `sub_1D958`（`sub_19946` 用 `cx = word_1D2F6` 傳進去），而 `word_1D2F… | 靜態 |
 | [`spec/103-phone-diplomacy-amount-keypad.md`](../spec/103-phone-diplomacy-amount-keypad.md) | 撥款請求的「指定金額」 | 原版 `sub_17C6E` 的另一個呼叫端；手機版仍只給「照要求撥款／拒絕」，同一套鍵盤可以接，先不做 | 靜態 |
-| [`spec/104-advisor-naming-window.md`](../spec/104-advisor-naming-window.md) | 六格與本頁字的顏色 | 六格 15、游標底線 15／1、字 9：`sub_19223`／`sub_1928A` 的屬性值直讀，但沒逐像素對過 | 靜態 |
+| [`spec/104-advisor-naming-window.md`](../spec/104-advisor-naming-window.md) | 選好字之後的畫面 | `../playtest/105` 停在剛開啟的狀態，**選字、翻頁、換肖像**之後還沒拍 | 靜態 |
+| [`spec/104-advisor-naming-window.md`](../spec/104-advisor-naming-window.md) | 視窗外的背景 | 原版這一頁後面疊著 NEW GAME 的勢力清單與君主卡；`-open-naming` 直接開視窗，背後只有地圖。要對得走完整條新遊戲流程 | 靜態 |
 | [`spec/105-encounter-goes-straight-to-battle.md`](../spec/105-encounter-goes-straight-to-battle.md) | 遭遇當天的日期差一天 | **量到剩 2 個子刻**（§6）。原本記的「時鐘推進速率」不是成因——**接觸在第幾個子刻與速度檔無關**，節流只改牆鐘秒數不改 tick 數。缺的是原版接觸 tick 的一手數字 | 靜態 |
 | [`spec/106-message-box-reporter-portrait.md`](../spec/106-message-box-reporter-portrait.md) | `0x94`／`0x95` 兩頁保留肖像的用途 | `0x94` 是一張紅臉武將、`0x95` 是空白。沒找到傳這兩個值的呼叫點 | 靜態 |
 | [`spec/106-message-box-reporter-portrait.md`](../spec/106-message-box-reporter-portrait.md) | #217 的兩個 `{3}` | 機制已通（`SeqFactions`），但**發那一則的呼叫端還沒讀**，所以第二個勢力是誰未定 | 靜態 |

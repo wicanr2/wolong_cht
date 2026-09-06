@@ -24,7 +24,10 @@ const (
 
 	namingInputX, namingInputY, namingInputW, namingInputH = 272, 144, 256, 64
 	namingLineX, namingLineY, namingLineLen                = 273, 176, 54
-	namingLabelNameX, namingLabelAliasX, namingLabelY      = 336, 144, 144
+	// 標籤在六格左緣 −16：軍師名的六格 `dx = 160h` ＝ 352、別號 `dx = 1C0h`
+	// ＝ 448（`sub_19223`，docs/spec/104 §1.1）。⚠ 別號先前寫 144，
+	// 那落在視窗（x ≥ 192）外面。
+	namingLabelNameX, namingLabelAliasX, namingLabelY      = 336, 432, 144
 	// 六格名字：`sub_19223` 前三格從 x=352、後三格從 x=448，y=168；
 	// 目前格的底線畫在 y=186。
 	namingCellsX, namingCellsAliasX, namingCellsY, namingCellW = 352, 448, 168, 16
@@ -40,6 +43,10 @@ const (
 
 	namingInitialsY   = 216 // 聲母列（`cs:1871` 的 42 bytes，屬性 0F01）
 	namingInitialsX   = 200
+	// 聲母列的黑底：熱區 0x25 的矩形（docs/spec/104 §1.1）。
+	namingInitialsBoxX = 200
+	namingInitialsBoxW = 336
+	namingInitialsBoxH = 16
 	namingInitialHotX = 216 // 熱區 0x25：(216,216) 320×16，每個聲母 32 px
 
 	// 選字格：`sub_1928A` 起點 (210,238)、格距 20、16 欄 × 6 列。
@@ -277,13 +284,23 @@ func (g *game) drawNaming(screen *ebiten.Image, season int) {
 		label string
 	}{{namingRedoX, namingBtnW, "重來"}, {namingContX, namingBtnW, "繼續"}, {namingOKX, namingOKW, "確定"}} {
 		g.dlButton(screen, b.x, namingBtnY, b.w, namingBtnH)
-		g.td.Draw(screen, b.label, b.x+8, namingBtnY, g.dlButtonInk())
+		// ⭐ 文字在按鈕內**置中**，不是固定內縮 8：「重來」「繼續」寬 48
+		// 剛好 +8，而「確定」寬 64 是 +16（docs/spec/104 §1.1）。
+		g.td.Draw(screen, b.label, b.x+(b.w-g.td.Width(b.label))/2,
+			namingBtnY, g.dlButtonInk())
 	}
-	g.dlFill(screen, namingGridBoxX, namingGridBoxY, namingGridBoxW, namingGridBoxH, 0x00, color.RGBA{0, 0, 0, 255})
+	// ⭐ 選字表是**米色底黑字**：`sub_1928A` 的 `ax = 9000h` ⇒ `ah = 90h`
+	// ＝ 背景 9／前景 0（docs/spec/104 §1.1）。先前讀成「前景 9」，
+	// 於是整張表黑底——與 docs/re/52 §4 的日期欄同一個錯誤。
+	g.dlFill(screen, namingGridBoxX, namingGridBoxY, namingGridBoxW, namingGridBoxH, 0x09, chrome.Sheet)
 	g.dlFill(screen, namingGridBoxX, namingPagerY, namingGridBoxW, namingPagerH, 0x00, color.RGBA{0, 0, 0, 255})
 	g.dlFill(screen, namingPagerLineX, namingPagerY+1, 1, 14, 0x09, line9)
 	g.td.Draw(screen, "上一頁　▲　", namingPrevPageX, namingPagerY, ink)
 	g.td.Draw(screen, "下一頁　▼　", namingNextPageX, namingPagerY, ink)
+	// 聲母列自己有一條黑底（熱區 0x25 ＝ (216,216,320,16)，docs/spec/104 §1.1）。
+	// 不填的話會露出視窗的藍底龍紋。
+	g.dlFill(screen, namingInitialsBoxX, namingInitialsY,
+		namingInitialsBoxW, namingInitialsBoxH, 0x00, color.RGBA{0, 0, 0, 255})
 	initials := "　"
 	for _, r := range namingInitials {
 		initials += string(r) + "　"
@@ -306,7 +323,10 @@ func (g *game) drawNaming(screen *ebiten.Image, season int) {
 		if i == m.cursor {
 			col = 0x0F
 		}
-		g.dlFill(screen, x, namingCursorY, namingCellW-2, 1, col, chrome.Paper)
+		// 底線是 `sub_19223` 的 `sub_1F1A3`：從 x 畫到 `x + 0Eh`，
+		// **含端點 ⇒ 15 px**（docs/spec/104 §1.1）。先前寫 −2 少了一格，
+		// 六格各差 1 px。
+		g.dlFill(screen, x, namingCursorY, namingCellW-1, 1, col, chrome.Paper)
 	}
 	for row := 0; row < namingGridRows; row++ {
 		for c := 0; c < namingGridCols; c++ {
@@ -316,7 +336,7 @@ func (g *game) drawNaming(screen *ebiten.Image, season int) {
 			}
 			g.td.Draw(screen, string(m.table.Runes[idx]),
 				namingGridX+c*namingGridPitch, namingGridY+row*namingGridPitch,
-				g.paletteInk(0x09, chrome.Paper))
+				g.paletteInk(0x00, chrome.Ink))
 		}
 	}
 }

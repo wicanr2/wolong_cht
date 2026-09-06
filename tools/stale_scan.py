@@ -377,6 +377,11 @@ def check_parity_fixtures(problems, skipped):
             continue
         if "-save-file" in m.group(1):
             continue
+        # ⭐ 例外要明寫理由：有些對拍走的是**新遊戲流程**，`root-noclouds`
+        # 只是拿來當 gamedir（它有完整的原版檔案），根本沒載存檔。
+        # 這種豁免必須在文件裡講出來，不能靠掃描猜。
+        if "不載存檔" in text:
+            continue
         line = text[:m.start()].count("\n") + 1
         problems.append((
             os.path.relpath(doc, REPO), line, "對拍 fixture 不完整",
@@ -511,6 +516,8 @@ def selftest():
             want("對拍 fixture：擋下漏了受控存檔的", scan_pt(bad))
             want("對拍 fixture：帶了就放行", scan_pt(good), expect=False)
             want("對拍 fixture：沒跑受控存檔的不管", scan_pt(none), expect=False)
+            want("對拍 fixture：寫明「不載存檔」就豁免",
+                 scan_pt(bad + "\n這一份走新遊戲流程，不載存檔。\n"), expect=False)
         finally:
             globals()["REPO"] = saved
 
