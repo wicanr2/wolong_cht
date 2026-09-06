@@ -126,6 +126,7 @@
 | [`docs/playtest/90-formation-second-step.md`](playtest/90-formation-second-step.md) | 90 — 編成第二層：4,046 → 78 px，抓到反白列的字色錯了 | 通過。 | 2026-09-06 |
 | [`docs/playtest/91-general-boast-parity.md`](playtest/91-general-boast-parity.md) | 91 — 武將自陳那一張：五區全 0 px，事件列是唯一的差異 | 通過。 | 2026-09-06 |
 | [`docs/playtest/92-personnel-assign-parity.md`](playtest/92-personnel-assign-parity.md) | 92 — 人事四條「選完之後」的對拍：抓到四個缺陷，殘差收到游標 ＋ 已裁定的 ±1 | 通過。 | 2026-09-06 |
+| [`docs/playtest/93-status-bar-sweep.md`](playtest/93-status-bar-sweep.md) | 93 — 狀態列逐條補原版擷取：財政三格全部 95 px | 進行中。 | 2026-09-06 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告是 72 秒， 含語言切換與原版並排兩段；遊戲段落是逐幀錄下來的實跑畫面。 2… | 2026-08-30 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
