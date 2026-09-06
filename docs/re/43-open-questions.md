@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**695 列分布在 288 份文件，平均每份 2.4 列。**
+**698 列分布在 289 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -41,11 +41,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 180 | 173 | 6 | 1 |
+| 程式碼理解 | 183 | 176 | 6 | 1 |
 | 驗收 | 200 | 175 | 25 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 278 | 257 | 20 | 1 |
-| **合計** | **695** | 636 | 56 | 3 |
+| **合計** | **698** | 639 | 56 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -55,7 +55,7 @@
 |---|---:|
 | `docs/spec/` | 239 |
 | `docs/playtest/` | 200 |
-| `docs/re/` | 180 |
+| `docs/re/` | 183 |
 | `docs/release/` | 22 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
@@ -104,7 +104,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 |
 
-## 2.3 程式碼理解（180 條）
+## 2.3 程式碼理解（183 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -288,6 +288,9 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `sub_1ECE0` 的亂數式 | 沒讀。remake 對不到逐兵座標，只能對值域與分佈 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
+| [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | `ax = 9`（`byte_20100 = 2`）的第三種狀態 | 三個呼叫點（`sub_101DB`、`sub_11F5A`、`sub_104FF`），語意沒讀 | 靜態 |
+| [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 游標圖形資料 | 在 `sub_201E4` 附近，逐 byte 沒抓；remake 已經有量出來的 14×14 遮罩 | 靜態 |
+| [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 54 個 hide／show 點對應到 remake 的哪一段 | 沒做；這是「remake 要不要同步游標」的前置 | 靜態 |
 
 ## 2.4 驗收（200 條）
 
@@ -299,7 +302,7 @@
 | [`playtest/100-video-mode-parity.md`](../playtest/100-video-mode-parity.md) | 素材頁的四季 | 肖像與據點景觀圖換的是圖不是色，這一份沒動；切到液晶時那些圖的顏色會不會也跟著換，還沒對過 | 靜態 |
 | [`playtest/100-video-mode-parity.md`](../playtest/100-video-mode-parity.md) | 音效那一格 | fixture 沒帶 `-audio`，顯示「未接入」。要比那一格得先產 ogg | 靜態 |
 | [`playtest/100-video-mode-parity.md`](../playtest/100-video-mode-parity.md) | remake 多的兩列 | 「主君編成」與「損害報告」，已記錄的差異（`39`） | 靜態 |
-| [`playtest/101-quit-menu-parity.md`](../playtest/101-quit-menu-parity.md) | 原版游標的繪製規則 | §3 的四筆觀察互相衝突，還沒對上 | 靜態 |
+| [`playtest/101-quit-menu-parity.md`](../playtest/101-quit-menu-parity.md) | remake 要把游標的 hide／show 接在哪 | 規則已解（`../re/88`），但 54 個呼叫點還沒對應到 remake 的繪圖流程 | 靜態 |
 | [`playtest/101-quit-menu-parity.md`](../playtest/101-quit-menu-parity.md) | remake 多的兩列 | 「主君編成」「損害報告」是 remake 加的，`39` 已裁定保留 | 靜態 |
 | [`playtest/17-expert-dosbox-remake.md`](../playtest/17-expert-dosbox-remake.md) | 松崗 DOS/V 原版 | **PASS（啟動至開場）** / 2026-08-12 證實空白確認／`0000`／`1234` 均越過密碼頁；完整自然長程驗證尚未執行 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 據點換手之後遮罩會不會跟著變 | `sub_1890A` 的行為，靜態讀得出來，動態沒驗——要打下一座城才看得到 | 靜態 |
@@ -470,7 +473,7 @@
 | [`playtest/89-advise-status-parity.md`](../playtest/89-advise-status-parity.md) | 上昇率那一欄 | 差到 ±4，成因確定是亂數而不是公式；**公式本身還沒逐項對過** | 靜態 |
 | [`playtest/89-advise-status-parity.md`](../playtest/89-advise-status-parity.md) | 滑鼠游標 88 px | 五個分區把畫面鋪滿，游標停哪都會落進某一區；remake 沒有自繪游標 | 靜態 |
 | [`playtest/90-formation-second-step.md`](../playtest/90-formation-second-step.md) | 原版的滑鼠游標 | 選單上是 14×14 紅箭頭（白邊）、大地圖上是 15×15 白色空心框（＋1,+1 黑影）。**遊戲自己畫的**（dosgolem 的 INT 33h 不畫），所以它是 remake 的缺口；但繪製端還沒定位，而且 remake 用的是 OS 游標，要接得連「隱藏 OS 游標」一起決定 | 靜態 |
-| [`playtest/91-general-boast-parity.md`](../playtest/91-general-boast-parity.md) | 游標的繪製端 | §3 只是一個「有／沒有」的對照，成因未定，更沒找到畫它的那一支 | 靜態 |
+| [`playtest/91-general-boast-parity.md`](../playtest/91-general-boast-parity.md) | remake 要把游標的 hide／show 接在哪 | 原版的規則已解（`../re/88`），但 54 個呼叫點還沒對應到 remake 的繪圖流程 | 靜態 |
 | [`playtest/91-general-boast-parity.md`](../playtest/91-general-boast-parity.md) | `0x1A8`（俘虜）與 `0x1AB`（海戰）兩組 | 沒有原版擷取；需要一個有俘虜、或水戰適性最高的武將的局面 | 靜態 |
 | [`playtest/92-personnel-assign-parity.md`](../playtest/92-personnel-assign-parity.md) | 原版的滑鼠游標 | 95–109 px。⚠ `91` §3 那一張**沒有**游標，同樣有訊息框、同樣的點擊位置——差別還沒找到 | 靜態 |
 | [`playtest/92-personnel-assign-parity.md`](../playtest/92-personnel-assign-parity.md) | 每小時 ±1 | 據點一覽那兩欄，已裁定（`83` §4.1） | 靜態 |
