@@ -252,6 +252,8 @@ type game struct {
 	// mapChoice 是大地圖上「那一格既是據點又有軍團」時的兩項選單
 	// （原版 `sub_11F0E`，docs/spec/151）。
 	mapChoice mapChoiceState
+	// quitMenu 是系統選單「遊戲結束」那一列的兩項確認（docs/spec/153）。
+	quitMenu quitMenuState
 
 	// hud 是主畫面四個常駐視窗的開關集合，對應原版 `byte_198A6` 的
 	// bit 0–3（docs/spec/13）。**初值四個全開是 remake 差異**——
@@ -975,6 +977,14 @@ func (g *game) Update() error {
 	if g.recDone {
 		return ebiten.Termination
 	}
+	// 系統選單「遊戲結束」的兩項確認（docs/spec/153）。**排在最前面**：
+	// 它是模態的，原版在那個 `sub_193E9` 迴圈裡什麼都不做。
+	if g.quitMenu.active {
+		if g.updateQuitMenu() {
+			return ebiten.Termination
+		}
+		return nil
+	}
 	// [HARD] ESC 只取消／關視窗，F10 才離開（CLAUDE.md §10）。
 	if g.quitting {
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
@@ -1456,8 +1466,11 @@ func (g *game) Draw(screen *ebiten.Image) {
 
 	if g.quitting {
 		// 原版版面的 ＹＥＳ／ＮＯ 對話框（docs/spec/26），居中。
+		// ⚠ 這是 **F10** 那條路（remake 差異，CLAUDE.md §9）；
+		// 系統選單那一列走的是原版的兩項選單（docs/spec/153）。
 		g.drawYesNo(screen, quitDialogX, quitDialogY, "確定離開？", g.quitYes)
 	}
+	g.drawQuitMenu(screen)
 	g.maybeSaveShot(screen)
 }
 
@@ -1928,6 +1941,7 @@ func main() {
 	openPicker := flag.Bool("open-faction-picker", false, "截圖前開縮小地圖圖例的 22 勢力選擇視窗（熱區 0x17，對拍用；狀態列 #4）")
 	openSave := flag.String("open-save", "", "截圖前開四槽視窗：`write` 儲存／`read` 讀取（對拍用，docs/spec/25）")
 	videoLCD := flag.Bool("video-lcd", false, "畫面模式切成「液晶」（GAMEPAL bank 4–7，docs/spec/152）")
+	quitMenu := flag.Bool("quit-menu", false, "截圖前走系統選單第 6 列「遊戲結束」，跳出兩項確認（對拍用，docs/spec/153）")
 	openCmdMenu := flag.String("open-command-menu", "", "截圖前停在指令列的彈出選單：`corps`／`city`／`personnel`；加 `:第幾列` 就再選走那一列，可以接好幾層（對拍用，docs/spec/126）")
 	openNaming := flag.Bool("open-naming", false, "停在啟動殼層選君主那一頁並打開「自定」命名視窗（驗收用，docs/spec/104）")
 	battleFF := flag.Bool("battle-ff", false, "配 -open-battle／-open-siege：截圖前先按下 `▶▶` 快轉（驗收用，docs/spec/102）")
@@ -2112,7 +2126,7 @@ func main() {
 		g.damageReport = *damageReportFlag
 		apply := func() {
 			configureDirectFixtures(g, *openWin, *openList, *listPickRow, *openAdvise, *adviseMenu, *adviseSortie, *adviseTarget, *advisePickRow, *adviseListRow, *openCities, *openFactions, *openCityInfo, *openForm, *openCorps, *openMarchList,
-				*openMarchMode, *openPicker, *videoLCD, *openSave, *pickTile, *mapClick, *openCmdMenu, *openBattle, *openSiege, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow, *factionPickRow,
+				*openMarchMode, *openPicker, *videoLCD, *quitMenu, *openSave, *pickTile, *mapClick, *openCmdMenu, *openBattle, *openSiege, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow, *factionPickRow,
 				*openTalkIndex, *openOutcome, parseSiegeFixture(*siegeNode, *siegeDefend, *siegeCorps, *battleSteps),
 				corpsMapFixture{enabled: *corpsOnMap, marchTo: *marchTo},
 				*camAt, *battleCam)
@@ -2458,7 +2472,7 @@ func logBattleUnits(g *game) {
 	log.Printf("場上活著的兵共 %d 個", n)
 }
 
-func configureDirectFixtures(g *game, openWin int, openList bool, listPickRow int, openAdvise, adviseMenu, adviseSortie, adviseTarget bool, advisePickRow, adviseListRow int, openCities, openFactions bool, openCityInfo int, openForm, openCorps, openMarchList, openMarchMode, openPicker, videoLCD bool,
+func configureDirectFixtures(g *game, openWin int, openList bool, listPickRow int, openAdvise, adviseMenu, adviseSortie, adviseTarget bool, advisePickRow, adviseListRow int, openCities, openFactions bool, openCityInfo int, openForm, openCorps, openMarchList, openMarchMode, openPicker, videoLCD, quitMenu bool,
 	openSave, pickTile, mapClick, openCmdMenu string, openBattle, openSiege, openMessage, openFinance bool, financeAmount int, openFormPick bool, formPickRow, factionPickRow, openTalkIndex int,
 	openOutcome string, siege siegeFixture, corpsMap corpsMapFixture, camAt, battleCam string) {
 	w := g.world
@@ -2738,6 +2752,12 @@ func configureDirectFixtures(g *game, openWin int, openList bool, listPickRow in
 			}
 			g.pickListRow(pickRow)
 		}
+	}
+	// 系統選單第 6 列「遊戲結束」（docs/spec/153）。**走真實分派**：
+	// 視窗先開著、再讓 `dispatchSystemRow` 自己去開選單。
+	if quitMenu {
+		g.hudSet(hudSystem, true)
+		g.dispatchSystemRow(sysRowQuit, true)
 	}
 	// 地圖選點的游標釘在指定格（docs/spec/149 §2）——headless 沒有指標。
 	if pickTile != "" {

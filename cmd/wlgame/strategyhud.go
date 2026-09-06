@@ -652,7 +652,8 @@ func (g *game) dispatchSystemRow(row int, left bool) {
 	case sysRowSave:
 		g.beginSaveUI(saveWrite)
 	case sysRowQuit:
-		g.quitting, g.quitYes = true, false
+		// 原版是兩項選單「終　了」／「取　消」，位置寫死（docs/spec/153）。
+		g.openQuitMenu()
 	}
 }
 

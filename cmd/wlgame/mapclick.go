@@ -25,6 +25,10 @@ const (
 
 // mapChoiceState 是那張兩項選單開著時的狀態。
 // **active 是 false 就是沒開**——零值安全。
+//
+// ⭐ 原版這一族選單全部走同一支 `sub_193E9`：只有「字串的 TALK 索引、
+// 項數、框的左上角」三個參數不同（行軍三選一 `sub_1804E`、
+// 這一張 `sub_11F0E`、離開確認 `docs/spec/153`）。
 type mapChoiceState struct {
 	active bool
 	city   int
