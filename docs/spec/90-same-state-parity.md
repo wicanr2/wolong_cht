@@ -192,8 +192,13 @@ remake 的缺陷。已經遇過兩種：
 | **`-open-cities`** | 據點一覽（自勢力據點）| 指令列 #5（據點）|
 | **`-open-factions`** | 勢力一覽（他勢力）| 指令列 #7（勢力）|
 | **`-open-cityinfo N`** | 據點情報卡（`docs/spec/23`；N＝據點編號，−1＝玩家首都）| 指令列 #5（據點）的預設卡／地圖點據點 |
+| **`-open-launcher 階段`** | **啟動殼層**：`title`（NEW GAME ＹＥＳ／ＮＯ）／`scenario`（四章）／`faction`（勢力清單）／`player`（君主卡）／`load`（LOAD DATA）| 開場流程（[`../playtest/105`](../playtest/105-advisor-naming-parity.md) §0）|
 
 新的視窗對拍先在這張表登一列再動 `cmd/wlgame`。
+
+⚠ **`-shot` 本身就會觸發直啟**（`directStartFlagWasPassed` 的白名單裡有它），
+所以啟動殼層的畫面**拍不到**——除非那支旗標把自己排除在外。
+`-open-naming` 與 `-open-launcher` 兩支是僅有的例外。
 
 #### 5.1.1 多層列號：用冒號串起來
 

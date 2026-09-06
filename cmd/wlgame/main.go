@@ -1944,6 +1944,7 @@ func main() {
 	quitMenu := flag.Bool("quit-menu", false, "截圖前走系統選單第 6 列「遊戲結束」，跳出兩項確認（對拍用，docs/spec/153）")
 	openCmdMenu := flag.String("open-command-menu", "", "截圖前停在指令列的彈出選單：`corps`／`city`／`personnel`；加 `:第幾列` 就再選走那一列，可以接好幾層（對拍用，docs/spec/126）")
 	openNaming := flag.Bool("open-naming", false, "停在啟動殼層選君主那一頁並打開「自定」命名視窗（驗收用，docs/spec/104）")
+	openLauncher := flag.String("open-launcher", "", "截圖前停在啟動殼層的哪一頁：`title`／`scenario`／`faction`／`player`／`load`（對拍用，docs/spec/90 §5.1）")
 	battleFF := flag.Bool("battle-ff", false, "配 -open-battle／-open-siege：截圖前先按下 `▶▶` 快轉（驗收用，docs/spec/102）")
 	siegeNode := flag.Int("siege-node", -1, "指定攻城的戰場＝據點編號（驗收用，配 -open-siege）")
 	siegeDefend := flag.Bool("siege-defend", false, "攻城時玩家當守方（原版會把戰場轉 180 度，docs/spec/56）")
@@ -2084,7 +2085,9 @@ func main() {
 	}
 
 	// `-open-naming` 要的是啟動殼層本身，即使帶了 `-shot` 也不走直啟。
-	if (*directStart || directStartFlagWasPassed()) && !*openNaming {
+	// ⚠ `-open-naming` 與 `-open-launcher` 要的是**啟動殼層本身**，
+	// 即使帶了 `-shot` 也不走直啟（docs/spec/90 §5.1）。
+	if (*directStart || directStartFlagWasPassed()) && !*openNaming && *openLauncher == "" {
 		if err := g.startWorld(loadPath, *scenario, *player, true, loadPath == path); err != nil {
 			log.Fatal(err)
 		}
@@ -2154,6 +2157,29 @@ func main() {
 			}
 		}
 		g.launcher = newLauncher(hasAvailableLauncherSlot(slots), slots)
+		// 對拍用：停在啟動殼層的某一頁（docs/spec/90 §5.1）。
+		// **走真實的推進**——劇本要先 preview 過，那一頁才有資料。
+		switch *openLauncher {
+		case "":
+		case "title":
+		case "scenario":
+			g.launcher.phase = launcherScenario
+		case "faction", "player":
+			g.launcher.phase = launcherScenario
+			if err := g.applyLauncherResult(launcherResult{
+				kind: launcherPreviewScenario, scenario: 0}); err != nil {
+				log.Fatalf("-open-launcher %s：%v", *openLauncher, err)
+			}
+			if *openLauncher == "faction" {
+				g.launcher.phase = launcherSelectFaction
+			} else {
+				g.launcher.phase = launcherSelectPlayer
+			}
+		case "load":
+			g.launcher.phase = launcherLoad
+		default:
+			log.Fatalf("⚠ -open-launcher 只認得 title／scenario／faction／player／load，收到 %q", *openLauncher)
+		}
 		if *openNaming {
 			// 驗收用：跳到劇本 0 的選君主頁並打開命名視窗。
 			// setScenarioPlayers 只在「選劇本」那一頁收資料，先把狀態機擺過去。

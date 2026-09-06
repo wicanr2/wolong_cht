@@ -49,6 +49,7 @@
 | [`docs/playtest/103-advise-scene-parity.md`](playtest/103-advise-scene-parity.md) | 103 — 說服場景第一次逐像素比：插圖位置差 8 px，抓到三個缺陷 | 通過。 | 2026-09-07 |
 | [`docs/playtest/104-advise-verdict-parity.md`](playtest/104-advise-verdict-parity.md) | 104 — 判決畫面（請求君主出陣）：拿掉事件列之後只剩 remake 的提示 | 通過。 | 2026-09-07 |
 | [`docs/playtest/105-advisor-naming-parity.md`](playtest/105-advisor-naming-parity.md) | 105 — 軍師命名視窗：視窗內收到只剩原版游標，抓到五個缺陷 | 通過。 | 2026-09-07 |
+| [`docs/playtest/106-launcher-parity.md`](playtest/106-launcher-parity.md) | 106 — 啟動殼層的前三頁：背景 0 px，三個版面都是 remake 自己設計的 | 進行中（已歸因）。 | 2026-09-07 |
 | [`docs/playtest/11-event6-original-fixture.md`](playtest/11-event6-original-fixture.md) | 11 — 原版事件 6 fixture oracle | 事件 6 主要結果畫面已由原版 fixture 證實；不是自然長程存檔，也不封閉次要 formatter。 | 2026-08-10 |
 | [`docs/playtest/12-event3-same-state-parity.md`](playtest/12-event3-same-state-parity.md) | event3 同狀態對拍（2026-08-10） | 同狀態事件接線、原版式 composite、3×6 實際格位選取、TALK 五行分頁、 DOS/V 內框／按鍵 gl… | 2026-08-10 |
 | [`docs/playtest/13-dosv-natural-and-target-gui.md`](playtest/13-dosv-natural-and-target-gui.md) | DOS/V 自然畫面與目標平台 GUI 驗收 | 歷史驗收紀錄（2026-08-11，影片 oracle）。 | 2026-08-11 |
