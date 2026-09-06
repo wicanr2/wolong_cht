@@ -215,15 +215,23 @@ call sub_12151
 是這一層最密集的共用常式。
 
 ```asm
-mov al, 93h / mov dx, 0 / mov bx, 12h
-xor al, al
-cmp cx, 0FFFFh / jz → al 保持 0        ; 清除
+mov al, 93h / mov dx, 0 / mov bx, 12h  ; 肖像 93h、框在 (0, 320)
+push ax                                ; ★ al = 93h 先存起來
+xor al, al                             ; 給 sub_189A4 的樣式：0 ＝ 擦除
+cmp cx, 0FFFFh / jz → 樣式保持 0        ; 清除
 mov al, 1Eh                            ; 顯示
-mov cx, 510h / call sub_189A4
+mov cx, 510h / call sub_189A4          ; 框 (0, 320, 256, 80)
+pop ax                                 ; ★ al 還原成 93h
+cmp cx, 0FFFFh / jz 收尾
+mov dx, 0 / mov bx, 14h / call sub_1075B ; 肖像 ＋ 文字
 ```
 
 `cx` 是 TALK 訊息索引，`cx = 0xFFFF` 清除提示列。
 每個 handler 進入時設提示、離開時以 `0xFFFF` 清掉，成對出現。
+
+⚠ **`xor al, al` 沒有把肖像頁弄丟**——它夾在 `push ax`／`pop ax` 之間，
+被清掉的是傳給 `sub_189A4` 的**樣式**。框的幾何與 `sub_1075B` 的兩個參數
+見 [`66`](66-message-box-geometry.md) §1.2。
 
 ### `sub_193E9(ax, cx, dx)` — 彈出選單
 

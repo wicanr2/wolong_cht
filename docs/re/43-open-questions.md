@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**613 列分布在 252 份文件，平均每份 2.4 列。**
+**617 列分布在 254 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 181 | 174 | 6 | 1 |
-| 驗收 | 139 | 121 | 18 | 0 |
+| 驗收 | 141 | 122 | 19 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 256 | 237 | 18 | 1 |
-| **合計** | **613** | 563 | 47 | 3 |
+| 其他 | 258 | 239 | 18 | 1 |
+| **合計** | **617** | 566 | 48 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,9 +53,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 217 |
+| `docs/spec/` | 219 |
 | `docs/re/` | 181 |
-| `docs/playtest/` | 139 |
+| `docs/playtest/` | 141 |
 | `docs/release/` | 22 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
@@ -290,7 +290,7 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
 
-## 2.4 驗收（139 條）
+## 2.4 驗收（141 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -433,6 +433,8 @@
 | [`playtest/78-ai-decision-trace.md`](../playtest/78-ai-decision-trace.md) | 逐筆對齊 | 要兩邊同源的亂數；`sub_1ECE0` 的式子還沒讀 | 靜態 |
 | [`playtest/78-ai-decision-trace.md`](../playtest/78-ai-decision-trace.md) | 更長的窗口 | 速度解掉大半（`nodraw` ＋ `speed:0`，和平期 7.7×、戰時 2×，狀態軌跡逐欄相同，`../spec/131` §7）。⛔ **但天花板不是速度**：196年5月26日 2時「呂布的兵馬向許昌進攻過來了」——許昌是玩家首都，原版停下來等玩家，時鐘從此不動。無人值守的長跑要先有「按掉訊息 ＋ 讓… | 實測 |
 | [`playtest/78-ai-decision-trace.md`](../playtest/78-ai-decision-trace.md) | 事件 `0B`／`04`／`05`／`0D` | 內政官／外交官要求經費那幾支，開局全 `0xFF` 沒有官員，窗口內不會觸發 | 靜態 |
+| [`playtest/79-march-menu-original-layout.md`](../playtest/79-march-menu-original-layout.md) | 一般訊息框的名字 | `drawMessage` 還是整段畫白、名字還是裁掉補白。改動會波及四個語系的排版，要另外開規格（`../spec/140` §5） | 靜態 |
+| [`playtest/79-march-menu-original-layout.md`](../playtest/79-march-menu-original-layout.md) | 選單位置的實跑對照 | 位置只有單元測試與夾制推導，**沒有在同一個游標座標下拍過一張**——headless 的指標位置目前不可控 | 實測 |
 
 ## 2.5 外部資料（6 條）
 
@@ -445,7 +447,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（256 條）
+## 2.6 其他（258 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -571,6 +573,9 @@
 | [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | 逐筆對齊 | 需要兩邊同源的亂數，`sub_1ECE0` 的式子還沒讀（`133` §5） | 靜態 |
 | [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | 更長的窗口 | 原版跑過六月之後 AI 開打，戰術畫面會停住策略時鐘 | 靜態 |
 | [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | `⛔ until:` 的中途判定 | 已修（`../playtest/78` §4）：只在主迴圈閒置點取樣 | 靜態 |
+| [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 另外 47 個呼叫點 | 只接了行軍那一條。其餘 handler 的 TALK 索引在 `../re/22` §3 都有，但要一條一條接 | 靜態 |
+| [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 樣式 `1Eh` 是什麼 | `sub_189A4` 把它傳給 `sub_189DE` 當 `ah`。**只知道 0 ＝ 擦除、非 0 ＝ 畫**，`1Eh` 這個值本身沒解（一般訊息框傳的也是 `1Eh`） | 靜態 |
+| [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 一般訊息框要不要一起改 | `\1`–`\5` 的定寬補白與逐標記換色是**全域規則**（`../re/79` §2），但一次改到所有訊息會動到四個語系的排版（`87`、`../playtest/32`）。要另外開一份規格，先量再改 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |
@@ -607,7 +612,6 @@
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 俘虜身分 | remake 的 `Posted` 是 bool，存不下 `+0x17` 的 0–5；俘虜狀態目前推不出來 | 靜態 |
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「看」與「選」的內容差異 | 原版兩種取法的**列表內容**不同（`../re/26` §4.2），remake 只統一了欄位 | 靜態 |
 | [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「委任」那一格的顏色 | 實錄影格上看起來是紅字，但影片是壓縮過的、也沒有機器碼證據。remake 先畫成一般色 | 靜態 |
-| [`spec/39-march-order-menu.md`](../spec/39-march-order-menu.md) | remake 的選單位置與訊息窗 | §3.6 量出了原版的版面（游標格、112 × (n+1)×16、訊息走 TALK 訊息窗），**remake 還是固定位置＋併框** / 改用既有的 `popupMenu` 引擎（`docs/spec/126`），位置由游標算；訊息改走一般訊息窗 | 靜態 |
 | [`spec/39-march-order-menu.md`](../spec/39-march-order-menu.md) | `sub_193E9` 內部的列高與配色 | 只解出外框幾何，內部（`loc_19409`）沒逐行讀 / 反白的畫法已有 `docs/spec/124`，列高可由框高 ÷(n+1) 推但沒驗 | 靜態 |
 | [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 君主那一側的回話 | 原版事件場景會同時出現兩個框（`docs/re/66` §5.1 的影格就是），remake 只畫一個 | 靜態 |
 | [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 框的底紋 | 龍紋的點陣找到了（`../formats/03` §5.5），但 96 列的排法還沒解，remake 仍用純色 | 靜態 |

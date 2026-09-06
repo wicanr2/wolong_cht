@@ -112,6 +112,7 @@
 | [`docs/playtest/76-battle-talk-parity.md`](playtest/76-battle-talk-parity.md) | 76 — 攻城開場的兩個對白框：field 22.30% → 0.08%，剩下的全是已歸類的不可消項 | 通過。 | 2026-09-05 |
 | [`docs/playtest/77-state-table-parity.md`](playtest/77-state-table-parity.md) | 77 — 勢力表／據點表／武將表逐欄對拍：5,502 個欄位全部相同 | 通過。 | 2026-09-06 |
 | [`docs/playtest/78-ai-decision-trace.md`](playtest/78-ai-decision-trace.md) | 78 — AI 決策軌跡：原版與 remake 的事件產生形狀一致 | 通過（第一輪）。 | 2026-09-06 |
+| [`docs/playtest/79-march-menu-original-layout.md`](playtest/79-march-menu-original-layout.md) | 79 — 行軍三選一的版面接回原版：三塊都逐像素 0 px | 通過。 | 2026-09-06 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告是 72 秒， 含語言切換與原版並排兩段；遊戲段落是逐幀錄下來的實跑畫面。 2… | 2026-08-30 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
@@ -272,6 +273,7 @@
 | [`docs/spec/138-state-table-parity.md`](spec/138-state-table-parity.md) | 138 — 狀態層對拍：勢力表／據點表／武將表逐欄比 | CONFORMED。 | 2026-09-06 |
 | [`docs/spec/139-ai-decision-trace.md`](spec/139-ai-decision-trace.md) | 139 — AI 決策軌跡對拍：攔事件產生器，比「誰在什麼時候決定了什麼」 | CONFORMED。 | 2026-09-06 |
 | [`docs/spec/14-finance-window.md`](spec/14-finance-window.md) | 14 — 財政視窗 | CONFORMED。版面已照原版重寫並有契約測試； 數值輸入器已接上（[78](78-amount-input-ed… | 2026-08-15 |
+| [`docs/spec/140-status-message-box.md`](spec/140-status-message-box.md) | 140 — 左下角的狀態列提示框 | CONFORMED。 | 2026-09-06 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |

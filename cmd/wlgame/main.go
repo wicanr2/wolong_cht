@@ -296,6 +296,8 @@ type game struct {
 	form formState
 	// marchMode 是行軍指示的第二段（戰鬥指揮／委任／解體，docs/spec/39）。
 	marchMode marchModeState
+	// statusBox 是左下角的狀態列提示框（原版 `sub_18853`，docs/spec/140）。
+	statusBox statusBoxState
 
 	// finance 是財政畫面的狀態。與 form 一樣是**非常駐視窗**，
 	// 開著的時候時間會停（15-realtime.md §2）。
@@ -1236,6 +1238,9 @@ func (g *game) Draw(screen *ebiten.Image) {
 		g.drawList(screen)
 	}
 	g.drawForm(screen)
+	// 狀態列提示在選單**下面**畫：原版是先掛提示、再跳選單，
+	// 兩個框不重疊，但順序照原版排比較不會被之後的改動弄反。
+	g.drawStatusBox(screen)
 	g.drawMarchMode(screen)
 	g.drawFinance(screen)
 	g.drawCityInfo(screen)
@@ -1679,7 +1684,7 @@ func main() {
 	openForm := flag.Bool("open-form", false, "截圖前先編一支軍團並開編成畫面（驗收用）")
 	openCorps := flag.Bool("open-corps", false, "截圖前先編兩支軍團並開軍團一覽（驗收用）")
 	corpsOnMap := flag.Bool("corps-on-map", false, "截圖前編一支軍團，**不開任何視窗**停在大地圖（docs/spec/74 §4.1）")
-	marchTo := flag.Int("march-to", -1, "配 -corps-on-map：對那支軍團下行軍指示到據點 N；`-shot-frames` 推進的 tick 會讓它上路")
+	marchTo := flag.Int("march-to", -1, "配 -corps-on-map：對那支軍團下行軍指示到據點 N；`-shot-frames` 推進的 tick 會讓它上路。配 -open-march-mode 則是三選一的目的地（不是首都就只有兩項）")
 	openBattle := flag.Bool("open-battle", false, "截圖前先開一場野戰的戰術戰鬥（驗收用）")
 	openSiege := flag.Bool("open-siege", false, "截圖前先開一場攻城的戰術戰鬥（驗收用）")
 	openEnding := flag.Int("open-ending", -1, "直接跳到結局的第幾幕（0–11，驗收用）")
@@ -1955,6 +1960,7 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer, new
 	g.list = nil
 	g.form = formState{}
 	g.marchMode = marchModeState{}
+	g.statusBox = statusBoxState{}
 	g.finance = financeState{}
 	g.advise = adviseNone
 	g.messages = nil
@@ -2283,7 +2289,9 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 		}
 	}
 	if openMarchMode {
-		g.demoMarchMode()
+		// 目的地預設是首都（第三項「解體」才會出現）；`-march-to` 指去
+		// 別的據點就只有兩項——原版的兩張擷取正是這兩種（docs/spec/39 §3.6）。
+		g.demoMarchMode(corpsMap.marchTo)
 	}
 	if openMarchList {
 		g.demoMarchList()

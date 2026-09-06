@@ -1,9 +1,9 @@
 # 39 — 行軍指示的三選一：戰鬥指揮／委任／解體
 
 **狀態：CONFORMED。** 原版的流程、三個分支的寫入值與抵達時的狀態機都有
-機器碼出處，remake 已實作並有單測與截圖。
+機器碼出處，remake 已實作並有單測與截圖。**版面也接回原版了**（§3.7）。
 
-- 日期：2026-08-16
+- 日期：2026-08-16（§3.7 於 2026-09-06 補）
 - 出處：[`../re/45`](../re/45-corps-command-mode.md) §1–§2（流程與寫入值）、
   [`../re/64`](../re/64-corps-arrival-state-machine.md)（抵達分派、解體的五個動作）、
   [`../re/27`](../re/27-list-row-fields.md) §7（委任位元）、
@@ -58,7 +58,8 @@ TALK #21「向{2}移動下。請下達戰鬥指示。」
 
 | 項目 | 作法 |
 |---|---|
-| 選單 | `cmd/wlgame/marchmode.go`：選完目的地後跳三選一，字串取自 TALK **#76**（`sub_1804E` 的 `cx = 0x4Ch` 就是這個索引）；標題取 TALK **#21**；**第三項只在目的地 ＝ 玩家首都時出現** |
+| 選單 | `cmd/wlgame/marchmode.go`：選完目的地後跳三選一，字串取自 TALK **#76**（`sub_1804E` 的 `cx = 0x4Ch` 就是這個索引）；**第三項只在目的地 ＝ 玩家首都時出現**。版面見 §3.7 |
+| 訊息 #21 | 左下角的狀態列框（[`140`](140-status-message-box.md)），與選單是兩個獨立視窗 |
 | 戰鬥指揮 | `state.SetMarchMode(i, MarchCommand)`：`Delegated = false`、`Stage = 0` |
 | 委任 | `MarchDelegate`：`Delegated = true`、`Stage = 0` |
 | 解體 | `MarchDisband`：`Stage = 11`（`state.StageDisband`）；目標不是首都時回錯誤 |
@@ -83,8 +84,10 @@ remake 的 AI 軍團維持現有行為。
 | 單元測試 | `TestDisbandReturnsMenAndFreesLeader`：軍團數 −1、預備兵增加、`Alive=false`、主將 `Posted=false` |
 | 單元測試 | `TestArriveAtCapitalDisbands`、`TestArriveAtCapitalResupplies`、`TestFullCorpsDoesNotResupply` |
 | 單元測試 | `TestDelegatedPlayerSideSkipsEncounter`：四種攻守／委任組合 |
-| 單元測試 | `TestMarchModeRowsAndHitTest`（`cmd/wlgame`）：三列不重疊、兩項時第三列不可點 |
-| 截圖 | `-open-march-mode`：標題是 TALK #21 的原文、三個選項是 TALK #76 的原文，第三項因為目標是首都而出現 |
+| 單元測試 | `TestMarchModeAnchorClamps`（`cmd/wlgame`）：兩道夾制的邊界值，且夾住之後右／下緣剛好 640／400 |
+| 單元測試 | `TestMarchModeBoxMatchesOriginal`：兩項 `112×48`、三項 `112×64`，與 §3.6 量到的一致 |
+| 截圖 | `-open-march-mode`：三個選項是 TALK #76 的原文（第三項因為目標是首都而出現），訊息 #21 在左下角的狀態列框。**加 `-march-to N` 指到別的據點就只有兩項** |
+| 對原版 ✅ | [`../playtest/79`](../playtest/79-march-menu-original-layout.md)：**三項 `112×64`、兩項 `112×48`、狀態列框 `256×80`，三塊都是逐像素 0 px** |
 
 ## 3.5 選單開在游標旁邊，而且會被夾住不出畫面（2026-08-21）
 
@@ -145,23 +148,58 @@ remake 的 AI 軍團維持現有行為。
 [`../playtest/60`](../playtest/60-corps-menu-parity.md)）是**同一組幾何**——
 它們走的本來就是同一支 `sub_193E9`。
 
-**remake 差異（兩項，都還沒改）**：
-
-| 差異 | 原版 | remake |
-|---|---|---|
-| 選單位置 | 游標所在的 16 px 格，夾住不出畫面 | 固定在 `(168,128)` |
-| **訊息 #21 在哪** | **左下角的 TALK 訊息窗**（軍師肖像那一個），與選單是兩個獨立視窗 | **併進選單框裡**當標題 |
-
 原版側的兩張擷取都有了（`workplace/dosgolem/tac4/m2-menu3.png` 三項、
 `workplace/dosgolem/march2/e2-menu.png` 兩項），
-比對紀錄在 [`../playtest/70`](../playtest/70-dosgolem-tactical-commands.md) §4。
+第一次比對的紀錄在 [`../playtest/70`](../playtest/70-dosgolem-tactical-commands.md) §4——
+那一輪量到的兩項差異已於 §3.7 改掉。
+
+### 3.7 版面接回原版（2026-09-06）
+
+§3.6 量到的兩項差異（選單開在固定位置、訊息併進選單框當標題）都改掉了。
+
+**一、選單走 `sub_193E9` 的幾何**，與指令列那三張共用一份實作
+（[`126`](126-command-popup-menus.md)）：
+
+```
+框寬 ＝ (第一列的全形字數 + 1) × 16 ＝ (6 + 1) × 16 ＝ 112
+框高 ＝ (項目數 + 1) × 16
+```
+
+TALK #76 的三行都是 6 個全形字（「　戰鬥指揮　」補到等寬），所以
+`legacyChoiceRect` 算出來就是 §3.6 量到的 `112 × (n+1)×16`。
+⚠ **標籤要走 `talkmenu.MenuLabels` 不是 `talkLines`**——後者會 `TrimRight`
+掉行尾的全形空白，框會窄 16 px（[`124`](124-menu-highlight-xor.md)）。
+
+**二、位置由游標算，兩道夾制照抄 `sub_1804E`**：
+
+```
+欄 ＝ min(游標X ÷ 16, 0x21)        ; 33 × 16 + 112 ＝ 640
+列 ＝ min(游標Y ÷ 16, 0x18 − 項目數) ; (24−n) × 16 + (n+1) × 16 ＝ 400
+選單左上角 ＝ (欄 × 16, 列 × 16)
+```
+
+⭐ **兩個上限都是「右／下緣剛好貼齊畫面」**，所以夾制值自己就把框的大小
+說出來了（§3.6）。remake 讀的是滑鼠座標；原版讀的是 `word_19896`／
+`word_19898`，那兩個全域由 `sub_11F7F` 每圈寫入，值同樣是**游標相對鏡頭的
+格座標**（§3.5）——單位與座標框一致。
+
+**三、訊息 #21 改走左下角的狀態列框**（[`140`](140-status-message-box.md)）：
+`(0, 320, 256, 80)`、肖像 `0x93`，與選單是兩個獨立視窗。
+選單收掉時一起清（原版是 `sub_18853(cx = 0FFFFh)`）。
+框裡的 `\2`（據點名）畫色 `0x0B` 並補到三個全形字——五支 marker handler
+都是 `al = 3`（[`../re/79`](../re/79-talk-marker-handlers.md) §2）。
+
+⚠ **remake 的選目的地仍然是一覽表**，原版是在大地圖上用游標點一格
+（`sub_1703C`，[`../re/85`](../re/85-march-target-hit-test.md)）。
+這是既有的 remake 差異（[`../re/22`](../re/22-strategy-command-tree.md) §6），
+本輪沒有改；影響到的只有「開選單時游標在哪」，夾制之後仍然是合法位置。
 
 ## 4. 未解
 
 | 項目 | 現況 | 下手點 |
 |---|---|---|
 | ~~`word_19896`／`word_19898` 的寫入端~~ | **已解**（confirmed，2026-09-02）：`sub_11F7F` 的 `00012032`／`0001203F`，值是游標相對鏡頭的格座標。見 §3.5 | — |
-| remake 的選單位置與訊息窗 | §3.6 量出了原版的版面（游標格、112 × (n+1)×16、訊息走 TALK 訊息窗），**remake 還是固定位置＋併框** | 改用既有的 `popupMenu` 引擎（`docs/spec/126`），位置由游標算；訊息改走一般訊息窗 |
+| ~~remake 的選單位置與訊息窗~~ | **已改**（2026-09-06，§3.7）：選單走 `legacyChoiceRect` 的幾何 ＋ `sub_1804E` 的兩道夾制，訊息改走左下角的狀態列框（[`140`](140-status-message-box.md)）| — |
 | `sub_193E9` 內部的列高與配色 | 只解出外框幾何，內部（`loc_19409`）沒逐行讀 | 反白的畫法已有 `docs/spec/124`，列高可由框高 ÷(n+1) 推但沒驗 |
 
 <!-- 缺口：無 -->

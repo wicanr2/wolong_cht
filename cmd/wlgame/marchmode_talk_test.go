@@ -39,13 +39,20 @@ func TestMarchModePromptComesFromTalk(t *testing.T) {
 	if !strings.Contains(strings.Join(lines, ""), dest) {
 		t.Errorf("據點名沒有代進去：%q", lines)
 	}
-	// ⚠ 這兩條路的**輸出本來就一樣**（fallback 是照 TALK #21 抄的），
-	// 所以「畫面上有字」永遠是真，分不出走的是哪一條。真正的判準是上面
-	// 那個 `ok`。這裡把「一樣」也釘住：哪天 fallback 被改動，
-	// 這一行會提醒改的人「它不再是安全的退路了」。
-	fb := marchModePromptFallback(dest)
-	if strings.Join(lines, "") != strings.Join(fb, "") {
-		t.Errorf("fallback 與 TALK #21 不再一致：\nTALK     %q\nfallback %q", lines, fb)
+	// ⭐ **這一則沒有 fallback**（docs/spec/140）：取不到就不掛框，
+	// 與其他訊息路徑一樣 fail-closed。從前它是選單框的標題、還帶一份
+	// 與原文一字不差的中文備援，於是「畫面上有字」永遠為真，
+	// 走的是哪一條看不出來。現在唯一的判準就是上面那個 `ok`。
+	g.setStatusTalk(0x15, map[byte]string{'2': dest})
+	if !g.statusBoxActive() {
+		t.Fatal("setStatusTalk 之後狀態列框應該掛著")
+	}
+	if !strings.Contains(strings.Join(g.statusBox.lines, ""), dest) {
+		t.Errorf("狀態列框裡沒有據點名：%q", g.statusBox.lines)
+	}
+	g.setStatusTalk(0x15, map[byte]string{2: dest}) // 給錯 key
+	if g.statusBoxActive() {
+		t.Error("marker key 給錯時應該什麼都不掛，不是掛一個半殘的框")
 	}
 
 	// 給錯 key 就是這個 bug 原本的樣子——fail-closed，什麼都不說。
