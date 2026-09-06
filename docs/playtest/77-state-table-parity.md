@@ -73,5 +73,5 @@
 | 項目 | 現況 |
 |---|---|
 | 武將旗標 bit 0 | 四個劇本裡只有劇本三的張衛設著，語意未解，remake 載入時丟掉。劇本 1 沒有人設，所以這一輪比不出來 |
-| 武將 `+0x17` 職務 | 原版是五個值（0 無／1 出陣／2 內政官／3 外交官／4 捕虜），remake 壓成 `Posted bool`，職務改記在據點的 `Governor` 與勢力的 `Diplomat`。這一輪從那兩張表反查回來比，開局全部對上——但**壓縮本身還在**（[`../spec/138`](../spec/138-state-table-parity.md) §4）|
+| ~~武將 `+0x17` 職務~~ | **已修**（[`85`](85-general-duty-field.md)、[`../spec/143`](../spec/143-general-duty-field.md)）：`General.Duty` 直接存 0–4，狀態表不必再從 `Governor`／`Diplomat` 反查 |
 | 其他三個劇本 | 只比過劇本 1 |

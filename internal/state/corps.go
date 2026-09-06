@@ -338,7 +338,7 @@ func (w *World) FormCorps(leader int, kinds [army.Positions]army.TroopType,
 	c.Timer = 1
 
 	w.Corps[leader] = c
-	g.Posted = true
+	g.Duty = DutyCorpsLeader
 	f.Corps++
 	return nil
 }
@@ -1001,7 +1001,7 @@ func (w *World) corpsPerishes(ev *CorpsEvent, i, winner int, rng combat.Rand) {
 	}, winner, loser, rng)
 
 	c.Alive = false
-	g.Posted = false
+	g.Duty = DutyNone
 	if f.Corps > 0 {
 		f.Corps--
 	}
@@ -1052,7 +1052,8 @@ func (w *World) returnGovernor(node int) int {
 		return noGovernor
 	}
 	city.Governor = noGovernorSlot
-	w.Generals[id].Posted = false
+	// `sub_14D63` 只清職務，**不清 +0x1A**（那是手動解任才做的，docs/spec/143 §2）。
+	w.Generals[id].Duty = DutyNone
 	return id
 }
 

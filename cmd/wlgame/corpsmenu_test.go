@@ -82,7 +82,7 @@ func TestLocateCorpsMovesCamera(t *testing.T) {
 	// 找一個能帶兵的武將編一支軍團出來。
 	leader := -1
 	for i, gen := range w.Generals {
-		if gen.Alive && gen.Faction == w.Player && !gen.Posted && gen.Captor == 0xFF {
+		if gen.Alive && gen.Faction == w.Player && !gen.Posted() && gen.Captor == 0xFF {
 			leader = i
 			break
 		}

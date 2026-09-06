@@ -107,15 +107,24 @@
 | 2 | 內政官 | 內政官任命 |
 | 3 | 外交官 | 外交官任命 |
 | 4 | **俘虜** | 被俘 |
-| 5 | 君主 | 不寫進武將記錄，顯示時從勢力表反查 |
+| （5）| 君主 | **不寫進 `+0x17`**：`+0x17 == 0` 而記錄 `+0x00` 的 bit 6 立起時，畫的時候才算出來 |
 
 用字取自 `KI.EXE` 段內 `0x75A4` 的六筆名稱表——武將一覽最後一欄就是印它
 （`../re/26` §9）。**松崗版寫「俘虜」不是日文的「捕虜」**，
 面向玩家的文字一律以松崗版為準。
 
 **一個武將同時只能有一個身分**，所以派了內政官就不能編進軍團。
+
+⭐ **職務優先、君主墊底。** 說明書那句「君主を軍団長にした場合、身分は
+軍団長になります」不是特例說明，就是這個順序的自然結果——
+`sub_1770C` 先看 `+0x17`，非 0 就直接用它，只有 0 才去看 bit 6
+（[`../spec/143`](../spec/143-general-duty-field.md) §1）。
+**說明書與機器碼在這一點上互相印證**，原版實跑也同時看得到三種身分
+（[`../playtest/85`](../playtest/85-general-duty-field.md) §3）。
+
 欄位表與位址見 [`../formats/08-sinario-save.md`](../formats/08-sinario-save.md) §3，
-任免流程見 [`../re/25-message-variants-and-personnel.md`](../re/25-message-variants-and-personnel.md) §3。
+任免流程見 [`../re/25-message-variants-and-personnel.md`](../re/25-message-variants-and-personnel.md) §3，
+remake 的欄位與四支任免函式見 [`../spec/143`](../spec/143-general-duty-field.md)。
 
 ### 任免的實際流程
 

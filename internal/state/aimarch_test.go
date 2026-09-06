@@ -246,7 +246,7 @@ func TestEliminatedFactionLeavesNoCorps(t *testing.T) {
 	if w.Factions[f].Corps != 0 {
 		t.Errorf("滅亡的勢力軍團數 = %d", w.Factions[f].Corps)
 	}
-	if w.Generals[i].Posted {
+	if w.Generals[i].Posted() {
 		t.Error("軍團沒了，主將還標著出陣")
 	}
 	// 這裡不查全域不變量：測試是直接呼叫滅亡入口，該勢力的據點還在，
@@ -290,7 +290,7 @@ func TestRoutedCorpsDisappearsAfterTimer(t *testing.T) {
 	if w.Factions[f].Corps != before-1 {
 		t.Errorf("勢力軍團數 = %d，want %d", w.Factions[f].Corps, before-1)
 	}
-	if !w.Generals[i].Posted {
+	if !w.Generals[i].Posted() {
 		t.Error("倒數還沒歸零，主將不該解職")
 	}
 
@@ -300,7 +300,7 @@ func TestRoutedCorpsDisappearsAfterTimer(t *testing.T) {
 	if w.Corps[i].Routing {
 		t.Error("倒數歸零之後還在敗走狀態")
 	}
-	if w.Generals[i].Posted {
+	if w.Generals[i].Posted() {
 		t.Error("倒數歸零之後主將沒解職")
 	}
 }
@@ -716,7 +716,7 @@ func TestCityFallReturnsGovernor(t *testing.T) {
 		t.Skip("這個勢力沒有武將")
 	}
 	w.Cities[node].Governor = gov
-	w.Generals[gov].Posted = true
+	w.Generals[gov].Duty = DutyCorpsLeader
 
 	attacker := -1
 	for _, g := range w.AliveFactions() {
@@ -733,7 +733,7 @@ func TestCityFallReturnsGovernor(t *testing.T) {
 	if got := w.Cities[node].Governor; got != noGovernorSlot {
 		t.Errorf("內政官槽 = %d，要 0xFF", got)
 	}
-	if w.Generals[gov].Posted {
+	if w.Generals[gov].Posted() {
 		t.Error("被遣回的內政官還掛著「出陣中」")
 	}
 	if ev.GovernorReturned != gov {

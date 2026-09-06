@@ -45,7 +45,7 @@ func (w *World) produceApproximateEvent10(rng economy.Rand) bool {
 			// noFaction 是同一層的在野 sentinel。
 			next.Faction = noFaction
 			next.Captor = noFaction
-			next.Posted = false
+			next.Duty = DutyNone
 			talk = approximateEvent10EscapeTalk
 		case roll < 0x40:
 			// ⭐ 歸降**不是無條件的**：原版 sub_15940 先比
@@ -57,7 +57,7 @@ func (w *World) produceApproximateEvent10(rng economy.Rand) bool {
 			// 條件成立才「歸降我軍」：保留目前玩家勢力，只清掉
 			// 俘虜來源，讓下一輪可正常編成／派駐。
 			next.Captor = noFaction
-			next.Posted = false
+			next.Duty = DutyNone
 			talk = approximateEvent10JoinTalk
 		default:
 			// 原版 sub_15940 的其餘亂數區間不產生這兩種結果。

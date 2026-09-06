@@ -612,12 +612,12 @@ func TestQueuedEventHandlers(t *testing.T) {
 	w.Factions[invaded].Diplomat = noFaction
 	for i := range w.Generals {
 		if w.Generals[i].Faction == invaded {
-			w.Generals[i].Posted = true
+			w.Generals[i].Duty = DutyCorpsLeader
 		}
 	}
-	w.Generals[0] = General{Alive: true, Politics: 12, Posted: true, Faction: player, Captor: noFaction}
+	w.Generals[0] = General{Alive: true, Politics: 12, Duty: DutyCorpsLeader, Faction: player, Captor: noFaction}
 	w.Generals[1] = General{Alive: true, Politics: 8, Faction: invaded, Captor: noFaction}
-	w.Generals[2] = General{Alive: true, Faction: player, Captor: invaded, Posted: true}
+	w.Generals[2] = General{Alive: true, Faction: player, Captor: invaded, Duty: DutyCorpsLeader}
 	w.Corps[0] = Corps{Alive: true, Faction: player}
 	w.Factions[player].Funds = 10_000
 	w.Factions[invaded].Funds = 50_000
@@ -643,7 +643,7 @@ func TestQueuedEventHandlers(t *testing.T) {
 	if !w.Friendship[player][invader].AtWar() || !w.Friendship[invader][player].AtWar() {
 		t.Fatal("事件 2 合作成立後玩家與侵攻方仍是和平")
 	}
-	if g := w.Generals[2]; g.Faction != invaded || g.Captor != noFaction || g.Posted {
+	if g := w.Generals[2]; g.Faction != invaded || g.Captor != noFaction || g.Posted() {
 		t.Fatalf("事件 2 沒有釋放合作雙方俘虜：%+v", g)
 	}
 
@@ -660,10 +660,10 @@ func TestQueuedEventHandlers(t *testing.T) {
 	w.Factions[source].Diplomat = noFaction
 	for i := range w.Generals {
 		if w.Generals[i].Faction == source {
-			w.Generals[i].Posted = true
+			w.Generals[i].Duty = DutyCorpsLeader
 		}
 	}
-	w.Generals[targetLord] = General{Alive: true, Politics: 12, Posted: true, Faction: target, Captor: noFaction}
+	w.Generals[targetLord] = General{Alive: true, Politics: 12, Duty: DutyCorpsLeader, Faction: target, Captor: noFaction}
 	w.Generals[sourceGeneral] = General{Alive: true, Politics: 8, Faction: source, Captor: noFaction}
 	w.Corps[targetLord] = Corps{Alive: true, Faction: target}
 	w.Friendship[target][source] = diplomacy.Peace(20)
@@ -672,9 +672,9 @@ func TestQueuedEventHandlers(t *testing.T) {
 	w.Factions[target].Funds = 10_000
 	w.Factions[source].InvasionTarget = target
 	w.Factions[target].InvasionTarget = 9
-	w.Generals[2] = General{Alive: true, Faction: source, Captor: target, Posted: true}
-	w.Generals[3] = General{Alive: true, Faction: target, Captor: source, Posted: true}
-	w.Generals[4] = General{Alive: true, Faction: source, Captor: 5, Posted: true}
+	w.Generals[2] = General{Alive: true, Faction: source, Captor: target, Duty: DutyCorpsLeader}
+	w.Generals[3] = General{Alive: true, Faction: target, Captor: source, Duty: DutyCorpsLeader}
+	w.Generals[4] = General{Alive: true, Faction: source, Captor: 5, Duty: DutyCorpsLeader}
 	w.Cities[0].Owner, w.Cities[0].OwnerRecorded = source, target
 	w.Cities[1].Owner, w.Cities[1].OwnerRecorded = source, 5
 	w.events[0] = QueuedEvent{
@@ -695,13 +695,13 @@ func TestQueuedEventHandlers(t *testing.T) {
 	if got := w.Friendship[source][target]; got != diplomacy.Peace(20) || w.Friendship[target][source] != diplomacy.Peace(20) {
 		t.Fatalf("事件 3 交友度 = %#v／%#v，want 雙向和平 20", got, w.Friendship[target][source])
 	}
-	if g := w.Generals[2]; g.Faction != target || g.Captor != noFaction || g.Posted {
+	if g := w.Generals[2]; g.Faction != target || g.Captor != noFaction || g.Posted() {
 		t.Fatalf("事件 3 沒有釋放 source→target 俘虜：%+v", g)
 	}
-	if g := w.Generals[3]; g.Faction != source || g.Captor != noFaction || g.Posted {
+	if g := w.Generals[3]; g.Faction != source || g.Captor != noFaction || g.Posted() {
 		t.Fatalf("事件 3 沒有釋放 target→source 俘虜：%+v", g)
 	}
-	if g := w.Generals[4]; g.Faction != source || g.Captor != 5 || !g.Posted {
+	if g := w.Generals[4]; g.Faction != source || g.Captor != 5 || !g.Posted() {
 		t.Fatalf("事件 3 誤改非配對俘虜：%+v", g)
 	}
 	if w.Cities[0].OwnerRecorded != source || w.Cities[1].OwnerRecorded != 5 {
@@ -1176,7 +1176,7 @@ func TestQueuedDiplomacyReportTalkNotices(t *testing.T) {
 	w.Factions[other].Aggression = 1
 	for i := range w.Generals {
 		if w.Generals[i].Faction == other {
-			w.Generals[i].Posted = true
+			w.Generals[i].Duty = DutyCorpsLeader
 		}
 	}
 	w.Generals[1] = General{Alive: true, Politics: 8, Faction: other, Captor: noFaction}
@@ -1206,7 +1206,7 @@ func TestQueuedDiplomacyReportTalkNotices(t *testing.T) {
 	w.Factions[ally].Aggression = 1
 	for i := range w.Generals {
 		if w.Generals[i].Faction == ally {
-			w.Generals[i].Posted = true
+			w.Generals[i].Duty = DutyCorpsLeader
 		}
 	}
 	w.Generals[1] = General{Alive: true, Politics: 8, Faction: ally, Captor: noFaction}
@@ -1313,7 +1313,7 @@ func TestQueuedDiplomacyReportHandlers(t *testing.T) {
 	w.Factions[other].Aggression = 1
 	for i := range w.Generals {
 		if w.Generals[i].Faction == other {
-			w.Generals[i].Posted = true
+			w.Generals[i].Duty = DutyCorpsLeader
 		}
 	}
 	w.Generals[1] = General{
@@ -1351,7 +1351,7 @@ func TestQueuedDiplomacyReportHandlers(t *testing.T) {
 	w.Factions[ally].Aggression = 1
 	for i := range w.Generals {
 		if w.Generals[i].Faction == ally {
-			w.Generals[i].Posted = true
+			w.Generals[i].Duty = DutyCorpsLeader
 		}
 	}
 	w.Generals[1] = General{
@@ -1748,7 +1748,7 @@ func TestFormCorps(t *testing.T) {
 	if c.Men != 600 { // 六槽 × 100 點 = 6,000 人
 		t.Errorf("兵力 %d 點，應為 600（＝6,000 人）", c.Men)
 	}
-	if !w.Generals[lord].Posted {
+	if !w.Generals[lord].Posted() {
 		t.Error("武將沒有被標成出陣中")
 	}
 	if w.Factions[f].Corps != before+1 {
@@ -2252,7 +2252,7 @@ func TestNormalScenarioMarchIntoGarrison(t *testing.T) {
 
 	leader := -1
 	for i, g := range w.Generals {
-		if g.Alive && g.Faction == w.Player && !g.Posted {
+		if g.Alive && g.Faction == w.Player && !g.Posted() {
 			leader = i
 			break
 		}
@@ -2340,7 +2340,7 @@ func TestNormalScenarioTacticalBattleTerminates(t *testing.T) {
 
 	leader := -1
 	for i, g := range w.Generals {
-		if g.Alive && g.Faction == w.Player && !g.Posted {
+		if g.Alive && g.Faction == w.Player && !g.Posted() {
 			leader = i
 			break
 		}
@@ -2681,7 +2681,7 @@ func TestQueuedEventReleaseGeneral(t *testing.T) {
 	w.Player = -1
 	generalID, captor, faction := 7, 1, 2
 	w.Generals[generalID] = General{
-		Alive: true, Faction: faction, Captor: captor, Posted: true,
+		Alive: true, Faction: faction, Captor: captor, Duty: DutyCorpsLeader,
 	}
 	w.Factions[captor].Alive = true
 	w.events[0] = QueuedEvent{
@@ -2690,7 +2690,7 @@ func TestQueuedEventReleaseGeneral(t *testing.T) {
 	w.eventCursor, w.eventDelay = 0, 1
 	ev := &Event{}
 	w.dispatchQueuedEvent(ev)
-	if got := w.Generals[generalID]; got.Faction != captor || got.Captor != noFaction || got.Posted {
+	if got := w.Generals[generalID]; got.Faction != captor || got.Captor != noFaction || got.Posted() {
 		t.Fatalf("事件 9 未依存活俘虜方釋放武將：%+v", got)
 	}
 	if len(ev.ReleasedGenerals) != 1 || ev.ReleasedGenerals[0] != generalID {
@@ -2701,7 +2701,7 @@ func TestQueuedEventReleaseGeneral(t *testing.T) {
 	w.Player = -1
 	deadCaptor := 1
 	w.Generals[generalID] = General{
-		Alive: true, Faction: faction, Captor: deadCaptor, Posted: true,
+		Alive: true, Faction: faction, Captor: deadCaptor, Duty: DutyCorpsLeader,
 	}
 	w.Factions[deadCaptor].Alive = false
 	w.events[0] = QueuedEvent{
@@ -2709,7 +2709,7 @@ func TestQueuedEventReleaseGeneral(t *testing.T) {
 	}
 	w.eventCursor, w.eventDelay = 0, 1
 	w.dispatchQueuedEvent(&Event{})
-	if got := w.Generals[generalID]; got.Faction != noFaction || got.Captor != noFaction || got.Posted {
+	if got := w.Generals[generalID]; got.Faction != noFaction || got.Captor != noFaction || got.Posted() {
 		t.Fatalf("事件 9 未將已滅勢力俘虜放回在野：%+v", got)
 	}
 }
@@ -2726,10 +2726,10 @@ func TestQueuedDiplomacyChoice(t *testing.T) {
 	w.Factions[invaded].Diplomat = noFaction
 	for i := range w.Generals {
 		if w.Generals[i].Faction == invaded {
-			w.Generals[i].Posted = true
+			w.Generals[i].Duty = DutyCorpsLeader
 		}
 	}
-	w.Generals[0] = General{Alive: true, Politics: 12, Posted: true, Faction: player, Captor: noFaction}
+	w.Generals[0] = General{Alive: true, Politics: 12, Duty: DutyCorpsLeader, Faction: player, Captor: noFaction}
 	w.Generals[1] = General{Alive: true, Politics: 8, Faction: invaded, Captor: noFaction}
 	w.Corps[0] = Corps{Alive: true, Faction: player}
 	w.Factions[player].Funds = 10_000
@@ -2770,10 +2770,10 @@ func TestQueuedDiplomacyChoice(t *testing.T) {
 	w.Factions[source].Diplomat = noFaction
 	for i := range w.Generals {
 		if w.Generals[i].Faction == source {
-			w.Generals[i].Posted = true
+			w.Generals[i].Duty = DutyCorpsLeader
 		}
 	}
-	w.Generals[player] = General{Alive: true, Politics: 12, Posted: true, Faction: player, Captor: noFaction}
+	w.Generals[player] = General{Alive: true, Politics: 12, Duty: DutyCorpsLeader, Faction: player, Captor: noFaction}
 	w.Generals[source+1] = General{Alive: true, Politics: 8, Faction: source, Captor: noFaction}
 	w.Corps[player] = Corps{Alive: true, Faction: player}
 	w.Friendship[player][source] = diplomacy.Peace(20)
@@ -2811,10 +2811,10 @@ func TestQueuedDiplomacyChoiceTalkNotices(t *testing.T) {
 	w.Factions[invaded].Diplomat = noFaction
 	for i := range w.Generals {
 		if w.Generals[i].Faction == invader || w.Generals[i].Faction == invaded {
-			w.Generals[i].Posted = true
+			w.Generals[i].Duty = DutyCorpsLeader
 		}
 	}
-	w.Generals[0] = General{Alive: true, Politics: 12, Posted: true, Faction: player, Captor: noFaction}
+	w.Generals[0] = General{Alive: true, Politics: 12, Duty: DutyCorpsLeader, Faction: player, Captor: noFaction}
 	w.Generals[1] = General{Alive: true, Politics: 8, Faction: invaded, Captor: noFaction}
 	w.Corps[0] = Corps{Alive: true, Faction: player}
 	w.Factions[player].Funds = 10_000
@@ -2842,10 +2842,10 @@ func TestQueuedDiplomacyChoiceTalkNotices(t *testing.T) {
 	w.Factions[source].Diplomat = noFaction
 	for i := range w.Generals {
 		if w.Generals[i].Faction == source {
-			w.Generals[i].Posted = true
+			w.Generals[i].Duty = DutyCorpsLeader
 		}
 	}
-	w.Generals[player] = General{Alive: true, Politics: 12, Posted: true, Faction: player, Captor: noFaction}
+	w.Generals[player] = General{Alive: true, Politics: 12, Duty: DutyCorpsLeader, Faction: player, Captor: noFaction}
 	w.Generals[source+1] = General{Alive: true, Politics: 8, Faction: source, Captor: noFaction}
 	w.Corps[player] = Corps{Alive: true, Faction: player}
 	w.Friendship[player][source] = diplomacy.Peace(20)
@@ -2961,9 +2961,9 @@ func TestDiplomacyAndFundingAmountOutcomeBounds(t *testing.T) {
 	w.Factions[target].Lord = 2
 	w.Factions[player].Diplomat = noFaction
 	w.Factions[target].Diplomat = noFaction
-	w.Generals[0] = General{Alive: true, Faction: player, Politics: 12, Posted: true}
+	w.Generals[0] = General{Alive: true, Faction: player, Politics: 12, Duty: DutyCorpsLeader}
 	w.Generals[1] = General{Alive: true, Faction: invader, Politics: 8}
-	w.Generals[2] = General{Alive: true, Faction: target, Politics: 8, Posted: true}
+	w.Generals[2] = General{Alive: true, Faction: target, Politics: 8, Duty: DutyCorpsLeader}
 	w.Corps[0] = Corps{Alive: true, Faction: player}
 	w.Factions[player].Funds = 10_000
 	w.Factions[target].Funds = 50_000
@@ -3035,7 +3035,7 @@ func TestMarchWritesOrderedTargetIntoSave(t *testing.T) {
 	w.Player = 0
 	leader := -1
 	for i, g := range w.Generals {
-		if g.Alive && g.Faction == w.Player && !g.Posted {
+		if g.Alive && g.Faction == w.Player && !g.Posted() {
 			leader = i
 			break
 		}

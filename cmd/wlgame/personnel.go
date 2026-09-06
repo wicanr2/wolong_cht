@@ -14,10 +14,11 @@ package main
 import (
 	"fmt"
 
+	"github.com/wicanr2/wolong_cht/internal/state"
 )
 
-// NoOfficial 是「沒有派駐」的哨兵值（原版的 0xFF）。
-const NoOfficial = 0xFF
+// NoOfficial 是「沒有派駐」的哨兵值（原版的 0xFF）。規則層是同一個。
+const NoOfficial = state.NoOfficial
 
 // openPersonnel 開人事的第一層：選要做哪一件事。
 //
@@ -62,7 +63,7 @@ func (g *game) freeGenerals() []int {
 	var out []int
 	for i := range g.world.Generals {
 		gen := &g.world.Generals[i]
-		if gen.Alive && gen.Faction == g.world.Player && !gen.Posted {
+		if gen.Alive && gen.Faction == g.world.Player && !gen.Posted() {
 			out = append(out, i)
 		}
 	}
@@ -150,7 +151,9 @@ func (g *game) pickCityForGovernor() {
 		name := big5(c.Name)
 		g.setStatusTalk(pickOfficialTalk, nil)
 		g.generalList(free, "選要派去 "+name+" 的武將　Enter 決定", func(who int) bool {
-			c.Governor = who
+			// 職務（武將 +0x17 ＝ 2）與據點 +0x19 是同一步寫的，
+			// 收在規則層（docs/spec/143 §2）。
+			g.world.AssignGovernor(city, who)
 			g.lastEvent = fmt.Sprintf("%s 派任 %s 為內政官",
 				name, big5(g.world.Generals[who].Name))
 			g.officialSays(governorAssignedTalk, who)
@@ -176,10 +179,10 @@ func (g *game) removeGovernor() {
 	}
 	g.cityList(rows, "選要解任的據點　Enter 決定　ESC 取消", func(city int) bool {
 		c := &g.world.Cities[city]
-		// 原版 `sub_16B4F`：先寫 0xFF、再看舊值是不是 0xFF。
-		old := c.Governor
-		c.Governor = NoOfficial
-		if old < 0 || old >= len(g.world.Generals) || old == NoOfficial {
+		// 原版 `sub_16B4F`：先寫 0xFF、再看舊值是不是 0xFF；
+		// 有人的話連職務與經費餘額一起清（docs/spec/143 §2）。
+		old := g.world.DismissGovernor(city)
+		if old < 0 {
 			g.enqueueTalk(nobodyPostedTalk,
 				map[byte]string{'2': padTalkField(big5(c.Name))})
 			return false // ★ 回清單（原版 `jmp loc_16B11`）
@@ -223,7 +226,7 @@ func (g *game) pickFactionForDiplomat() {
 		}
 		g.setStatusTalk(pickOfficialTalk, nil)
 		g.generalList(free, "選要派去 "+name+" 的武將　Enter 決定", func(who int) bool {
-			fa.Diplomat = who
+			g.world.AssignDiplomat(f, who)
 			g.lastEvent = fmt.Sprintf("派 %s 出使 %s 軍",
 				big5(g.world.Generals[who].Name), name)
 			g.officialSays(diplomatAssignedTalk, who)
@@ -251,11 +254,10 @@ func (g *game) removeDiplomat() {
 		return
 	}
 	g.factionList(rows, "選要召回外交官的勢力　Enter 決定　ESC 取消", func(f int) bool {
-		fa := &g.world.Factions[f]
-		// 原版 `sub_16C2A`：先寫 0xFF、再看舊值。
-		old := fa.Diplomat
-		fa.Diplomat = NoOfficial
-		if old < 0 || old >= len(g.world.Generals) || old == NoOfficial {
+		// 原版 `sub_16C2A`：先寫 0xFF、再看舊值；有人的話連職務與
+		// 經費餘額一起清（docs/spec/143 §2）。
+		old := g.world.DismissDiplomat(f)
+		if old < 0 {
 			g.enqueueTalk(factionNobodyPostedTalk,
 				map[byte]string{'3': padTalkField(big5(g.world.LordName(f)))})
 			return false // ★ 回清單

@@ -687,7 +687,7 @@ func (w *World) applyQueuedCooperationReport(ally, invader int) bool {
 func (w *World) highestUnpostedPolitics(faction int) (int, bool) {
 	best := -1
 	for i, g := range w.Generals {
-		if !g.Alive || g.Faction != faction || g.Posted {
+		if !g.Alive || g.Faction != faction || g.Posted() {
 			continue
 		}
 		if best < 0 || g.Politics > w.Generals[best].Politics {
@@ -734,7 +734,7 @@ func (w *World) diplomacyRepresentative(si, di int) (int, bool) {
 		return 0, false
 	}
 	dl := w.Generals[lord].Politics
-	if w.Generals[lord].Posted {
+	if w.Generals[lord].Posted() {
 		// `sub_13771` 先讀平行的軍團記錄（段內 `2240h`，64 B／筆、127 筆，
 		// docs/re/08 §4）的 `+0x00`。**出陣中但沒有對應軍團的君主過不了
 		// 同一道有效性閘**——不要只憑武將的出陣旗標就生出一個代表。
@@ -776,7 +776,7 @@ func (w *World) releaseGeneral(generalID int) bool {
 
 	g := &w.Generals[generalID]
 	oldCaptor := g.Captor
-	g.Posted = false
+	g.Duty = DutyNone
 	g.Captor = noFaction
 	if oldCaptor >= 0 && oldCaptor < numFactions && w.Factions[oldCaptor].Alive {
 		g.Faction = oldCaptor

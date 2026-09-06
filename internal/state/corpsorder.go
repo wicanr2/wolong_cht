@@ -237,7 +237,7 @@ func (w *World) disbandCorps(i int) {
 		}
 	}
 	if i >= 0 && i < len(w.Generals) {
-		w.Generals[i].Posted = false // ④ 主將解職（軍團編號 ＝ 主將編號）
+		w.Generals[i].Duty = DutyNone // ④ 主將解職（軍團編號 ＝ 主將編號）
 	}
 	c.Alive = false // ③ 軍團記錄歸零
 	c.Stage = StageNormal
@@ -302,7 +302,7 @@ func (w *World) tickRout(i int) bool {
 		return true
 	}
 	g := &w.Generals[i]
-	g.Posted = false // 主將 +0x17 職務 ＝ 無職
+	g.Duty = DutyNone // 主將 +0x17 職務 ＝ 無職
 	// 原勢力已經滅了就變成在野武將（原版寫 +0x1C = 0xFF）。
 	if g.Faction >= 0 && g.Faction < numFactions && !w.Factions[g.Faction].Alive {
 		g.Faction = noFaction

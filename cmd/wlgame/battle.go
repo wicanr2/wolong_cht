@@ -1106,7 +1106,7 @@ func (g *game) demoBattle(siege bool, f siegeFixture) {
 	p := g.world.Player
 	var mine, theirs int = -1, -1
 	for i, gen := range g.world.Generals {
-		if !gen.Alive || gen.Posted {
+		if !gen.Alive || gen.Posted() {
 			continue
 		}
 		if gen.Faction == p && mine < 0 {

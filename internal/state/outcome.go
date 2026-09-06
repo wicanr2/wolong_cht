@@ -117,14 +117,16 @@ func (w *World) disperseFaction(i, winner int) {
 			w.releaseGeneral(gi)
 			continue
 		}
-		hadPost := g.Posted
-		g.Posted = false
+		hadPost := g.Posted()
+		g.Duty = DutyNone
 		if gi != lord && hadPost {
 			g.Faction = noFaction // 在野
 			continue
 		}
 		if winner >= 0 && winner < numFactions {
+			// `sub_129C3` 把職務寫成 4（俘虜），不是清成無職。
 			g.Captor, g.Faction = i, winner
+			g.Duty = DutyCaptive
 			demoteCapturedSovereign(g)
 		} else {
 			g.Faction = noFaction

@@ -56,3 +56,35 @@ func (w *World) SetCustomAdvisor(portrait int, name []byte) {
 		}
 	}
 }
+
+// TakeAdvisor 是新遊戲定案那一步（`sub_11AC3` 的 `loc_11AF8`，docs/spec/144）：
+// **選中的軍師整筆從武將表移除**——記錄 `+0x00` 寫 0，存在旗標一起沒了，
+// 同時把勢力的武將數 `+0x18` 減一。
+//
+// ⭐ 這就是軍師為什麼不出現在任何清單裡：建清單的 callback 第一個條件
+// 都是 `cmp byte ptr [si], 80h`，一次擋掉。**不需要每張清單各寫一次排除。**
+//
+// 自定軍師走 SetCustomAdvisor，不經過這裡——原版那一路 `+0x02` 已經是
+// `0x7F`，武將數不減，而它照樣寫的那個 byte 落在武將表尾端之後（越界），
+// 不照抄。
+func (w *World) TakeAdvisor(faction, who int) {
+	if w == nil || faction < 0 || faction >= len(w.Factions) ||
+		who < 0 || who >= len(w.Generals) {
+		return
+	}
+	f := &w.Factions[faction]
+	f.Advisor = who
+	if f.Generals > 0 {
+		f.Generals--
+	}
+	// 原版寫的是**整個 `+0x00`**（`mov byte ptr [si+4240h], 0`），
+	// 所以四個旗標一起沒了，不只存在旗標。
+	// ⚠ 那個 byte 的 bit 0 還沒解，remake 的改寫策略會把它原樣留著；
+	// 四個劇本裡只有劇本三的張衛設著它（docs/formats/08 §3）。
+	g := &w.Generals[who]
+	g.Alive = false
+	g.Sovereign = false
+	g.VanishIfAffinityGone = false
+	g.LoyalToDeath = false
+	g.Duty = DutyNone
+}

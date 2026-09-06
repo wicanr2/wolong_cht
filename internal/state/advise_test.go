@@ -34,7 +34,7 @@ func TestAdviseSortieFormsUndelegatedCorps(t *testing.T) {
 	if c.Delegated {
 		t.Error("君主親自出陣的軍團不該是委任的")
 	}
-	if !w.Generals[lord].Posted {
+	if !w.Generals[lord].Posted() {
 		t.Error("君主沒被標成出陣中")
 	}
 	// 君主已經帶著軍團就不能再出一次。

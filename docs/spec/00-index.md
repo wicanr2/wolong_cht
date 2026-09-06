@@ -184,6 +184,8 @@
 | **左下角的狀態列提示框** | [`140-status-message-box.md`](140-status-message-box.md) | CONFORMED。`sub_18853` 每個指令流程都掛的那個框 ＝ `(0, 320, 256, 80)`、肖像 `0x93`，與一般訊息框是**同一個框換位置**。已接三條：行軍（[`39`](39-march-order-menu.md) §3.7）、財政（#16）、編成（#0）|
 | **全軍退卻之後的 120 拍倒數** | [`141-retreat-countdown.md`](141-retreat-countdown.md) | CONFORMED。`sub_1A6FA` 的三條出口裡排最前面的那一條：退卻中每拍減 1，走完由**沒退卻的那一側**獲勝。⭐ 實測正常打完走的是「補不出兵」——退卻的兵八拍就走完了，倒數是**兜底** |
 | **解任不先過濾** | [`142-personnel-dismiss-flow.md`](142-personnel-dismiss-flow.md) | CONFORMED。原版的內政官／外交官解任**照列全部**，選到沒派人的才跳 TALK #54／#55。⭐ `sub_16B4F` 是**先寫 0xFF 再看舊值**；成功或失敗都回清單繼續選 |
+| **武將職務 `+0x17`** | [`143-general-duty-field.md`](143-general-duty-field.md) | CONFORMED。`+0x17` 是 0–4 的職務值（`－－－`／軍團長／內政官／外交官／俘虜），一覽表的身分欄直接查 `cs:75A4h`；`5 ＝ 君主`是「職務 0 ＋ bit 6」臨時算的。remake 收成 `Posted bool`，任命不寫職務、解任不清經費 |
+| **選了軍師就從武將表消失** | [`144-advisor-leaves-general-table.md`](144-advisor-leaves-general-table.md) | CONFORMED。新遊戲定案時 `loc_11AF8` 把選中的軍師記錄 `+0x00` 寫 0（存在旗標一起沒了）並把勢力武將數減一，所以他不出現在任何清單裡。⭐ **不是寫 `+0x17`**——`spec/76` §2 那條「寫入者未讀」的缺口就此關閉 |
 
 ## 怎麼加一份
 

@@ -17,7 +17,7 @@ func event10PrisonerFixture(t *testing.T) (*World, int) {
 		}
 		g.Faction = w.Player
 		g.Captor = 1
-		g.Posted = true
+		g.Duty = DutyCorpsLeader
 		g.Timer = 0
 		// 歸降那一支要 `+0x1C == +0x19`（docs/re/77 §2.2）：
 		// 關押他的勢力剛好是他心向的那一個。fixture 讓條件成立，
@@ -41,7 +41,7 @@ func TestApproximateEvent10ProducerUsesKnownRawContract(t *testing.T) {
 	}) {
 		t.Fatalf("逃走 raw payload = %#v，want General<<8|0A／TALK 41h", got)
 	}
-	if g := w.Generals[id]; g.Faction != noFaction || g.Captor != noFaction || g.Posted {
+	if g := w.Generals[id]; g.Faction != noFaction || g.Captor != noFaction || g.Posted() {
 		t.Fatalf("逃走近似狀態錯誤：%+v", g)
 	}
 
@@ -55,7 +55,7 @@ func TestApproximateEvent10ProducerUsesKnownRawContract(t *testing.T) {
 	}) {
 		t.Fatalf("歸降 raw payload = %#v，want General<<8|0A／TALK 42h", got)
 	}
-	if g := w.Generals[id]; g.Faction != w.Player || g.Captor != noFaction || g.Posted {
+	if g := w.Generals[id]; g.Faction != w.Player || g.Captor != noFaction || g.Posted() {
 		t.Fatalf("歸降近似狀態錯誤：%+v", g)
 	}
 }
@@ -110,7 +110,7 @@ func TestCaptiveSurrenderNeedsAffinity(t *testing.T) {
 	if w.produceApproximateEvent10(&sequenceRand{values: []int{0x20}}) {
 		t.Fatal("心向的勢力對不上，不該產生歸降事件")
 	}
-	if got := w.Generals[id]; got.Captor != 1 || !got.Posted {
+	if got := w.Generals[id]; got.Captor != 1 || !got.Posted() {
 		t.Fatalf("狀態不該被改：%+v", got)
 	}
 

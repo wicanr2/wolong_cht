@@ -95,31 +95,14 @@ func logCities(g *game) {
 	log.Printf("共 %d 個據點", len(g.world.Cities))
 }
 
-// generalDuty 把武將的職務還原成原版 `+0x17` 的五個值
-// （0 無／1 出陣中／2 內政官／3 外交官／4 捕虜）。
+// generalDuty 回傳武將的職務，就是原版 `+0x17` 的五個值
+// （0 無職／1 軍團長／2 內政官／3 外交官／4 俘虜，docs/spec/143 §1）。
 //
-// ⚠ **remake 沒有這個欄位。** 載入時 `+0x17` 被壓成
-// `General.Posted bool`（`r[0x17] != 0`），職務本身改記在別的地方：
-// 內政官記在據點的 `Governor`、外交官記在**被派駐**勢力的 `Diplomat`。
-// 所以要比這一欄就得從那兩張表反查回來——資訊沒丟，只是換了地方。
+// remake 有這個欄位了（`General.Duty`），所以這裡直接讀。
+// 先前是從據點 `Governor` 與勢力 `Diplomat` 反查——那是 `Posted bool`
+// 時代的權宜，反查不出俘虜。
 func generalDuty(g *game, id int) int {
-	if g.world.Generals[id].Captor != 0xFF {
-		return 4
-	}
-	for i := range g.world.Cities {
-		if g.world.Cities[i].Governor == id {
-			return 2
-		}
-	}
-	for i := range g.world.Factions {
-		if g.world.Factions[i].Diplomat == id {
-			return 3
-		}
-	}
-	if g.world.Generals[id].Posted {
-		return 1
-	}
-	return 0
+	return g.world.Generals[id].Duty
 }
 
 // generalFlags 把 remake 拆開的四個 bool 組回記錄 `+0x00` 那個 byte。

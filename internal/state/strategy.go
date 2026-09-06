@@ -389,7 +389,7 @@ func (w *World) autoFormCorps(faction, leader int, delegated bool) bool {
 	c.Timer = c.Interval
 
 	w.Corps[leader] = c
-	w.Generals[leader].Posted = true
+	w.Generals[leader].Duty = DutyCorpsLeader
 	f.Corps++
 
 	return true
@@ -412,7 +412,7 @@ func (w *World) formAICorpsTo(faction, dest int) *StrategyEvent {
 
 	leader := -1
 	for i, g := range w.Generals {
-		if !g.Alive || g.Faction != faction || g.Posted || g.Captor != noFaction {
+		if !g.Alive || g.Faction != faction || g.Posted() || g.Captor != noFaction {
 			continue
 		}
 		if leader < 0 || g.Martial > w.Generals[leader].Martial {

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
 )
 
@@ -18,33 +19,25 @@ func listNum(v, digits int) string { return fmt.Sprintf("%*d", digits, v) }
 
 // generalRank 回傳武將的身分（docs/re/26 §9 的名稱表索引）。
 //
-// ⚠ 原版存在武將記錄 `+0x17`（0–5），remake 只留了 `Posted bool`，
-// 所以這裡**從狀態反推**——君主那一格原版本來也是顯示時反查的。
-// 俘虜推不出來（docs/spec/38 §4）。
+// ⭐ 原版 `sub_1770C` 三行就算完：
+//
+//	al = [si+17h]            ; 職務值 0–4
+//	al == 0 && [si] & 40h → al = 5   ; 君主
+//
+// **順序是職務優先、君主墊底**——君主若也編了軍團，`+0x17` 是 1，
+// 顯示「軍團長」不是「君主」。`5` 不存在記錄裡，是畫的時候算的
+// （docs/spec/143 §1）。
 func (g *game) generalRank(id int) int {
 	w := g.world
 	if w == nil || id < 0 || id >= len(w.Generals) {
 		return 0
 	}
-	gen := w.Generals[id]
-	if gen.Faction >= 0 && gen.Faction < len(w.Factions) {
-		f := w.Factions[gen.Faction]
-		if f.Lord == id {
-			return 5 // 君主
-		}
+	gen := &w.Generals[id]
+	if gen.Duty != state.DutyNone {
+		return gen.Duty
 	}
-	for i := range w.Factions {
-		if w.Factions[i].Diplomat == id {
-			return 3 // 外交官
-		}
-	}
-	for i := range w.Cities {
-		if w.Cities[i].Governor == id {
-			return 2 // 內政官
-		}
-	}
-	if gen.Posted {
-		return 1 // 軍團長
+	if gen.Sovereign {
+		return 5 // 君主
 	}
 	return 0
 }

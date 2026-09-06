@@ -72,7 +72,7 @@ func (w *World) recruitFreelanceGenerals(rng economy.Rand) []int {
 		// 勢力已滅：旗標 bit 5 設著的整筆歸零，其餘留在原地。
 		if g.VanishIfAffinityGone {
 			g.Alive = false
-			g.Posted = false
+			g.Duty = DutyNone
 		}
 	}
 	return joined

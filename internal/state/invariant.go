@@ -121,7 +121,7 @@ func (w *World) CheckInvariants() []Violation {
 		if total != c.Men {
 			add("軍團兵力與六槽不符", "軍團 %d 記著 %d，六槽加起來 %d", i, c.Men, total)
 		}
-		if g := &w.Generals[w.Leader(i)]; !g.Posted {
+		if g := &w.Generals[w.Leader(i)]; !g.Posted() {
 			add("帶兵的武將沒標出陣", "軍團 %d 的武將 %d", i, w.Leader(i))
 		} else if !g.Alive {
 			add("帶兵的武將不存在", "軍團 %d 的武將 %d", i, w.Leader(i))

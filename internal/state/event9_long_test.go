@@ -34,7 +34,7 @@ func TestEvent9LongNaturalRoute(t *testing.T) {
 	for i, id := range ids {
 		g := w.Generals[id]
 		g.Alive = true
-		g.Posted = true
+		g.Duty = DutyCorpsLeader
 		g.Faction = 2
 		g.Captor = 0
 		if i == 1 {
@@ -83,13 +83,13 @@ func TestEvent9LongNaturalRoute(t *testing.T) {
 		}
 	}
 
-	if got := w.Generals[ids[0]]; got.Faction != w.Player || got.Captor != noFaction || got.Posted {
+	if got := w.Generals[ids[0]]; got.Faction != w.Player || got.Captor != noFaction || got.Posted() {
 		t.Fatalf("玩家通知武將釋放後狀態錯誤：%+v", got)
 	}
-	if got := w.Generals[ids[1]]; got.Faction != 1 || got.Captor != noFaction || got.Posted {
+	if got := w.Generals[ids[1]]; got.Faction != 1 || got.Captor != noFaction || got.Posted() {
 		t.Fatalf("非玩家通知武將釋放後狀態錯誤：%+v", got)
 	}
-	if got := w.Generals[ids[2]]; got.Faction != noFaction || got.Captor != noFaction || got.Posted {
+	if got := w.Generals[ids[2]]; got.Faction != noFaction || got.Captor != noFaction || got.Posted() {
 		t.Fatalf("滅亡勢力俘虜釋放後狀態錯誤：%+v", got)
 	}
 }

@@ -38,7 +38,7 @@ func TestRoutTalkUsesAlias(t *testing.T) {
 		t.Skip("劇本一裡找不到諸葛亮")
 	}
 	g0 := &w.Generals[lead]
-	g0.Alive, g0.Posted, g0.Faction = true, false, w.Player
+	g0.Alive, g0.Duty, g0.Faction = true, state.DutyNone, w.Player
 	w.Factions[w.Player].Reserves = [3]int{9000, 9000, 9000}
 
 	kinds := [6]army.TroopType{

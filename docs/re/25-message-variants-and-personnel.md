@@ -194,6 +194,10 @@ clc / retn
 五個值互斥，所以這是一個**職務列舉**。一個武將同時只能有一個身分——
 這解釋了為什麼派了內政官就不能編進軍團。
 
+顯示用的字是 `軍團長`／`內政官`／`外交官`／`俘虜　`（[`26`](26-list-window-engine.md) §9），
+五個值都在原版上實跑確認過（[`../playtest/85`](../playtest/85-general-duty-field.md)），
+remake 的欄位規格在 [`../spec/143`](../spec/143-general-duty-field.md)。
+
 ### 4.2 武將記錄 `+0x1E` 選訊息變體
 
 `sub_16A9B`／`sub_16B08`／`sub_16B71`／`sub_16BE3` 四支都以

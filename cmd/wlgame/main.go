@@ -2010,6 +2010,14 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer, new
 	}
 	w.EnableStrategicAI()
 	if newGame {
+		// 原版 `loc_11AF8`：選定君主之後**軍師整筆從武將表移除**
+		// （記錄 +0x00 寫 0）並把勢力武將數減一，docs/spec/144。
+		// 自定軍師（`+0x02` 已經是 0x7F）走 SetCustomAdvisor，不動武將表。
+		if g.customAdvisor == nil {
+			if a := w.Factions[w.Player].Advisor; a != state.NoAdvisor {
+				w.TakeAdvisor(w.Player, a)
+			}
+		}
 		// 原版新遊戲在選定君主後立即跑一次政略評估（sub_11AC3+66 →
 		// sub_12BD9）；讀檔路徑跳過——佇列隨存檔還原（docs/spec/83）。
 		w.RunInitialStrategyPass(g.rng)

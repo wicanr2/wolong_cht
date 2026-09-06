@@ -55,20 +55,20 @@ type formState struct {
 // ⚠ **這道擋只在玩家的編成指令上**，`autoFormCorps` 不受影響——
 // 出陣那條本來就是要讓君主帶兵。
 func (g *game) formCandidates() []int {
-	lord, advisor := -1, -1
+	lord := -1
 	if p := g.world.Player; p >= 0 && p < len(g.world.Factions) {
 		if !g.lordCorps {
 			lord = g.world.Factions[p].Lord
 		}
-		// 軍師也不在候選裡：原版實機 confirmed（playtest/42 §4 的 q0，
-		// 荀彧不在編成清單），機制上是執行期寫進 +0x17 的身分
-		// （寫入者未讀，docs/spec/76 §2）。
-		advisor = g.world.Factions[p].Advisor
 	}
+	// ⭐ **軍師不必在這裡排除**：原版新遊戲定案時就把他整筆從武將表移除
+	// （`loc_11AF8` 寫 `+0x00 = 0`，docs/spec/144），所以 `gen.Alive`
+	// 這一關就擋掉了。先前這裡比對 `Advisor` 編號是補丁——而且只貼在
+	// 編成這一張，人事任命那張漏了。
 	var rows []int
 	for i, gen := range g.world.Generals {
 		if gen.Alive && gen.Faction == g.world.Player &&
-			!gen.Posted && gen.Captor == 0xFF && i != lord && i != advisor {
+			!gen.Posted() && gen.Captor == 0xFF && i != lord {
 			rows = append(rows, i)
 		}
 	}

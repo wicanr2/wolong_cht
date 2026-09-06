@@ -102,7 +102,7 @@ func TestDisbandReturnsMenAndFreesLeader(t *testing.T) {
 	if w.Corps[i].Alive {
 		t.Error("解散之後軍團還在")
 	}
-	if w.Generals[i].Posted {
+	if w.Generals[i].Posted() {
 		t.Error("解散之後主將還掛著職務")
 	}
 	if got := w.Factions[f].Corps; got != corpsCount-1 {

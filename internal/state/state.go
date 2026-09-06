@@ -235,9 +235,12 @@ type General struct {
 	Politics int
 	Timer    int // 每月遞減，歸零才行動
 
-	// Posted 是「出陣中」（記錄 +0x17）。編成軍團時原版寫 1
-	// （`sub_16F26`），武將被俘時寫 4（`sub_129C3`）、釋放時歸零。
-	Posted bool
+	// Duty 是**職務**（記錄 +0x17），值域 0–4，見 docs/spec/143。
+	// 原版編成軍團寫 1（`sub_16F26`）、任命內政官寫 2（`sub_16A9B`）、
+	// 任命外交官寫 3（`sub_16B71`）、被俘寫 4（`sub_129C3`），解任歸零。
+	// **規則層只問「有沒有職務」（`Posted()`），呈現層才要值本身**——
+	// 武將一覽的身分欄拿它查 `cs:75A4h` 的字串表。
+	Duty int
 
 	// Tactic 是戰場行動腳本編號（記錄 +0x16，值域 0–7）。
 	// `BATTLE.DAT` 的段編號 ＝ 本值 × 4 ＋ 戰場類別（docs/re/11 §3.3）。
@@ -283,6 +286,21 @@ type General struct {
 	// 月結時判歸降（`sub_1585F`）。見 docs/re/09 §6。
 	Captor int
 }
+
+// 職務值（記錄 +0x17），docs/spec/143 §1。原版拿它當 `cs:75A4h`
+// 那張三全形字表的索引；**`5 ＝ 君主` 不存在這裡**，是「職務 0 ＋
+// 記錄 +0x00 的 bit 6」在畫的時候臨時算出來的。
+const (
+	DutyNone        = 0 // －－－
+	DutyCorpsLeader = 1 // 軍團長（`sub_16F26`）
+	DutyGovernor    = 2 // 內政官（`sub_16A9B`）
+	DutyDiplomat    = 3 // 外交官（`sub_16B71`）
+	DutyCaptive     = 4 // 俘虜（`sub_129C3`）
+)
+
+// Posted 是「身上有職務」。原版八個讀取端裡有七個只做這件事
+// （`cmp byte ptr [..+17h], 0`），只有武將一覽的 `sub_1770C` 用到值本身。
+func (g *General) Posted() bool { return g != nil && g.Duty != DutyNone }
 
 // TacticalRand 是開戰時記下來的亂數源。戰場選擇（類型 8 的四選一，
 // docs/spec/121）與戰術層共用同一條流——原版也是同一支 `sub_1ECE0`。
@@ -663,7 +681,7 @@ func loadBlock(b []byte) *World {
 			Politics:     int(r[0x13]),
 			Tactic:       int(r[0x16]),
 			Timer:        int(r[0x18]),
-			Posted:       r[0x17] != 0,
+			Duty:         int(r[0x17]),
 			LoyalToDeath: r[0x00]&0x10 != 0,
 			Budget:       int(r[0x1A]),
 			Faction:      int(r[0x1C]),
@@ -1473,11 +1491,7 @@ func (w *World) Bytes() []byte {
 		r[0x13] = byte(g.Politics)
 		r[0x16] = byte(g.Tactic)
 		r[0x18] = byte(g.Timer)
-		if g.Posted {
-			r[0x17] = 1
-		} else {
-			r[0x17] = 0
-		}
+		r[0x17] = byte(g.Duty)
 		r[0x1A] = byte(g.Budget)
 		r[0x1C] = byte(g.Faction)
 		r[0x1D] = byte(g.Captor)

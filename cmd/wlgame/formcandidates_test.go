@@ -17,7 +17,7 @@ func TestFormCandidatesLordToggle(t *testing.T) {
 		for _, i := range []int{3, 4, 5} {
 			w.Generals[i].Alive = true
 			w.Generals[i].Faction = 0
-			w.Generals[i].Posted = false
+			w.Generals[i].Duty = state.DutyNone
 			w.Generals[i].Captor = 0xFF
 		}
 		return &game{world: w, lordCorps: allow}
@@ -86,7 +86,7 @@ func TestFormCandidatesKeepsExistingFilters(t *testing.T) {
 	w := &state.World{Player: 0}
 	w.Factions[0].Alive = true
 	w.Factions[0].Lord = 0
-	w.Generals[1] = state.General{Alive: true, Faction: 0, Posted: true, Captor: 0xFF}
+	w.Generals[1] = state.General{Alive: true, Faction: 0, Duty: state.DutyCorpsLeader, Captor: 0xFF}
 	w.Generals[2] = state.General{Alive: true, Faction: 1, Captor: 0xFF}
 	w.Generals[3] = state.General{Alive: false, Faction: 0, Captor: 0xFF}
 	w.Generals[4] = state.General{Alive: true, Faction: 0, Captor: 7}
@@ -141,5 +141,62 @@ func TestFormationLeaderTalkSkipsEmpty(t *testing.T) {
 	g.enqueueTalkWithPortrait(idx, nil, 0)
 	if len(g.messages) == before {
 		t.Errorf("說話類型 7（#%d）有內容，卻沒開框", idx)
+	}
+}
+
+// 任命成內政官／外交官之後就不該在編成候選裡：原版 `sub_176A0` 的
+// 條件是 `cmp byte ptr [si+17h], 0`，而任命寫的是 2／3
+// （docs/spec/143 §3）。這條先前漏掉——`Posted` 是 bool 的時候
+// 任命根本沒碰武將那一格。
+func TestFormCandidatesExcludeAppointedOfficials(t *testing.T) {
+	newGame := func() *game {
+		w := &state.World{Player: 0}
+		w.Factions[0].Alive = true
+		w.Factions[0].Lord = 3
+		w.Factions[0].Advisor = 0xFF
+		w.Factions[1].Alive = true
+		w.Factions[1].Diplomat = state.NoOfficial
+		w.Cities[0].Governor = state.NoOfficial
+		for _, i := range []int{4, 5, 6} {
+			w.Generals[i].Alive = true
+			w.Generals[i].Faction = 0
+			w.Generals[i].Duty = state.DutyNone
+			w.Generals[i].Captor = 0xFF
+		}
+		return &game{world: w, lordCorps: true}
+	}
+	has := func(rows []int, n int) bool {
+		for _, r := range rows {
+			if r == n {
+				return true
+			}
+		}
+		return false
+	}
+
+	g := newGame()
+	if !has(g.formCandidates(), 4) {
+		t.Fatal("任命之前武將 4 就不在候選裡")
+	}
+	if !g.world.AssignGovernor(0, 4) {
+		t.Fatal("任命內政官失敗")
+	}
+	if has(g.formCandidates(), 4) {
+		t.Error("派了內政官還留在編成候選裡")
+	}
+
+	if !g.world.AssignDiplomat(1, 5) {
+		t.Fatal("派駐外交官失敗")
+	}
+	if has(g.formCandidates(), 5) {
+		t.Error("派了外交官還留在編成候選裡")
+	}
+
+	// 解任之後要回到候選。
+	if got := g.world.DismissGovernor(0); got != 4 {
+		t.Fatalf("解任回傳 %d，want 4", got)
+	}
+	if !has(g.formCandidates(), 4) {
+		t.Error("解任之後沒有回到編成候選")
 	}
 }
