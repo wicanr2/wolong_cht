@@ -140,3 +140,46 @@ func TestMinimapClickScrollsCamera(t *testing.T) {
 			g.camX, g.camY, 384-viewCols, 256-viewRows)
 	}
 }
+
+// pickerRowInk 是那一列的字色索引，抽出來給測試釘住三種情況。
+// ⭐ **選中的贏過自己的**——原版是兩次連續判斷，後面那次覆蓋前面
+// （docs/re/31 §2）。開局時圖例第二格盯的就是玩家自己，兩個條件同時成立，
+// 而原版畫的是**選中色**（藍，色 3）。
+func TestPickerInkSelectedBeatsOwn(t *testing.T) {
+	w := &state.World{Player: 0}
+	for i := range w.Factions {
+		w.Factions[i].Alive = true
+	}
+	g := &game{world: w, minimapFaction: 0}
+	if got := g.pickerRowInk(0); got != pickerInkSelected {
+		t.Errorf("同時是自己又被選中時 ＝ 色 %d，want %d（選中贏）",
+			got, pickerInkSelected)
+	}
+	g.minimapFaction = 3
+	if got := g.pickerRowInk(0); got != pickerInkOwn {
+		t.Errorf("只是自己時 ＝ 色 %d，want %d", got, pickerInkOwn)
+	}
+	if got := g.pickerRowInk(3); got != pickerInkSelected {
+		t.Errorf("只是選中時 ＝ 色 %d，want %d", got, pickerInkSelected)
+	}
+	if got := g.pickerRowInk(5); got != pickerInkNormal {
+		t.Errorf("其餘 ＝ 色 %d，want %d", got, pickerInkNormal)
+	}
+}
+
+// 勢力選擇視窗掛狀態列 #4「以滑鼠的右鍵回復。」，關掉要清乾淨
+// （原版 `sub_15AD1`，docs/spec/140 §1.1）。
+func TestFactionPickerStatusTalk(t *testing.T) {
+	if factionPickerTalk != 4 {
+		t.Fatalf("狀態列索引 ＝ %d，原版是 4", factionPickerTalk)
+	}
+	g := newTalkTestGame(t)
+	g.openMinimapFactionPicker()
+	if !g.factionPicker || !g.statusBoxActive() {
+		t.Fatal("開了視窗卻沒掛狀態列")
+	}
+	g.closeFactionPicker()
+	if g.factionPicker || g.statusBoxActive() {
+		t.Error("關掉之後狀態列還掛著")
+	}
+}

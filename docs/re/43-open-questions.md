@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**687 列分布在 281 份文件，平均每份 2.4 列。**
+**687 列分布在 282 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,9 +42,9 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 181 | 174 | 6 | 1 |
-| 驗收 | 188 | 163 | 25 | 0 |
+| 驗收 | 190 | 165 | 25 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 281 | 260 | 20 | 1 |
+| 其他 | 279 | 258 | 20 | 1 |
 | **合計** | **687** | 628 | 56 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
@@ -53,8 +53,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 242 |
-| `docs/playtest/` | 188 |
+| `docs/spec/` | 240 |
+| `docs/playtest/` | 190 |
 | `docs/re/` | 181 |
 | `docs/release/` | 22 |
 | `docs/formats/` | 20 |
@@ -290,7 +290,7 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
 
-## 2.4 驗收（188 條）
+## 2.4 驗收（190 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -482,6 +482,8 @@
 | [`playtest/96-map-click.md`](../playtest/96-map-click.md) | 佔用圖 | 原版查的是 `cs:word_19872` 的佔用圖，remake 直接掃軍團表比座標。結果相同但來源不同 | 靜態 |
 | [`playtest/96-map-click.md`](../playtest/96-map-click.md) | `sub_11F0E` 的 X 夾制 `23h` | 夾住之後框的右緣落在 672，超出畫面 32 px（`../spec/151` §1.2）——與行軍三選一的 `21h` 剛好貼齊不一樣。照抄常數，成因未解 | 靜態 |
 | [`playtest/96-map-click.md`](../playtest/96-map-click.md) | `-map-click` 繞過忙碌判定 | fixture 直接呼叫 `dispatchMapClick`，所以截圖裡情報卡與選單同時開著；真實操作走 `updateMapClick` 會被擋 | 實測 |
+| [`playtest/97-faction-picker-parity.md`](../playtest/97-faction-picker-parity.md) | 原版擷取裡的滑鼠游標 | 82 px，停在剛點的圖例上 | 靜態 |
+| [`playtest/97-faction-picker-parity.md`](../playtest/97-faction-picker-parity.md) | 只重畫兩列 | 原版換選中時只重畫舊的與新的那兩列，remake 整張重畫。**視覺上沒有差異**，但要知道原版沒有全畫面刷新（`../re/31` §2.2） | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -494,7 +496,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（281 條）
+## 2.6 其他（279 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -618,10 +620,8 @@
 | [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | 逐筆對齊 | 需要兩邊同源的亂數，`sub_1ECE0` 的式子還沒讀（`133` §5） | 靜態 |
 | [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | 更長的窗口 | 原版跑過六月之後 AI 開打，戰術畫面會停住策略時鐘 | 靜態 |
 | [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | `⛔ until:` 的中途判定 | 已修（`../playtest/78` §4）：只在主迴圈閒置點取樣 | 靜態 |
-| [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | `sub_15AD1` 的 #4 | 掛在「勢力一覽」那個常駐視窗上（`../re/31`）；remake 的對應視窗還沒接，也還沒拍 | 靜態 |
-| [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 逐條的原版擷取 | 這一輪拍了財政稅率（#17）與行軍目標（#3）。**其餘 20 幾條只有單元測試釘住索引與流程，沒有逐張擷取**——那是「接上了」不是「對過了」 | 靜態 |
+| [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 逐條的原版擷取 | **多數補完了**，逐條的結果收在 `../playtest/93`。⚠ 還沒拍的只剩「別人的軍團」那個 #4（要在地圖上點別人的軍團） | 靜態 |
 | [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 樣式 `1Eh` 是什麼 | `sub_189A4` 把它傳給 `sub_189DE` 當 `ah`。**只知道 0 ＝ 擦除、非 0 ＝ 畫**，`1Eh` 這個值本身沒解（一般訊息框傳的也是 `1Eh`） | 靜態 |
-| [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 一般訊息框要不要一起改 | `\1`–`\5` 的定寬補白與逐標記換色是**全域規則**（`../re/79` §2），但一次改到所有訊息會動到四個語系的排版（`87`、`../playtest/32`）。要另外開一份規格，先量再改 | 靜態 |
 | [`spec/141-retreat-countdown.md`](../spec/141-retreat-countdown.md) | 退卻中要不要補兵 | 原版下令之後場上八拍歸零、**沒有補兵進場**；remake 的 `reinforce()` 會補（補進來的兵下一幀被 `applySquadLeaderGone` 改成退卻）。兩邊最後都會結束，但**中途的場上人數不同**，沒有逐拍對過 | 靜態 |
 | [`spec/141-retreat-countdown.md`](../spec/141-retreat-countdown.md) | `word_1D31C` 的兩個 byte | 量到開場是 48／48（＝六隊 × 八人），`../re/11` §5.9 寫的是「含畫面外待機的」。**兩種讀法都還沒有直接證據**，這一份只用到「它歸零時結束」這一點 | 靜態 |
 | [`spec/142-personnel-dismiss-flow.md`](../spec/142-personnel-dismiss-flow.md) | 任命的「已經有人」訊息參數 | 原版 `push ax`（`ah = 0FFh`、`al` ＝ 武將編號）＋ `push bx`（**據點記錄位址**，直接位址式）。remake 直接代名字字串，**沒有走 formatter 的位址式**（`../re/79` §2） | 靜態 |

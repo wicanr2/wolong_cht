@@ -809,7 +809,12 @@ func (g *game) drawHUDSidebar(screen *ebiten.Image) {
 		screen.DrawImage(ebiten.NewImageFromImage(img), op)
 	}
 	g.drawMinimapMarkers(screen)
-	g.drawMinimapViewBox(screen)
+	// ⭐ **勢力選擇視窗開著時不畫視野框**：原版開那個視窗時
+	// `sub_15A3A` 把縮小地圖整個重鋪一次（底圖 → 勢力名 → 外框 → 192 個據點），
+	// 那份清單裡**沒有視野框**（docs/re/31 §1.3），所以框被蓋掉就不再回來。
+	if !g.factionPicker {
+		g.drawMinimapViewBox(screen)
+	}
 	// 勢力色標是**原版的一張 192×16 圖**（段 3 0x09A0，`sub_15A3A` 貼在
 	// (440,168)）：左半紅、右半藍，各帶一個小色塊。圖裡沒有君主名，
 	// 那一層由 state 填（原版是 `sub_15DBB`，docs/re/62 §4.1）。

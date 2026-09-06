@@ -107,13 +107,49 @@ func (g *game) pickerSelectable(n int) bool {
 	return g.world.Factions[n].Alive && n != g.world.Player
 }
 
+// factionPickerTalk 是這個視窗掛的狀態列：#4「以滑鼠的右鍵回復。」
+// 原版 `sub_15AD1` 在進 `sub_15AFC` 之前 `mov cx, 4 / call sub_18853`
+// （docs/re/31 §1.3、docs/spec/140 §1.1）。
+const factionPickerTalk = 4
+
+// openMinimapFactionPicker 開 22 勢力的選擇視窗（熱區 `0x17`）。
+// ⚠ 名字與 `openFactionPicker`（清單家族那一支）不同，別搞混。
+func (g *game) openMinimapFactionPicker() {
+	g.factionPicker = true
+	g.setStatusTalk(factionPickerTalk, nil)
+}
+
+// closeFactionPicker 關掉，順手清狀態列（原版離開 `sub_15AFC` 之後
+// 由呼叫端的 `cx = 0FFFFh` 清掉）。
+func (g *game) closeFactionPicker() {
+	g.factionPicker = false
+	g.clearStatusTalk()
+}
+
+// pickerRowInk 是那一列的字色索引（原版屬性 `0x90`／`0x9A`／`0x93`）。
+//
+// ⭐ **選中的贏過自己的**：原版是兩次「不符就跳過」的連續判斷，
+// 玩家那一次在前、選中那一次在後，**後面那次覆蓋前面**（docs/re/31 §2）。
+// 開局時圖例第二格盯的就是玩家自己，兩個條件同時成立——
+// 這時原版畫的是選中色（藍，色 3），不是自己色（紅，色 10）。
+// 順序反過來就會畫成紅的。
+func (g *game) pickerRowInk(n int) int {
+	switch {
+	case n == g.minimapFaction:
+		return pickerInkSelected
+	case g.world != nil && n == g.world.Player:
+		return pickerInkOwn
+	}
+	return pickerInkNormal
+}
+
 // updateFactionPicker 是視窗開著時的輸入：左鍵選、右鍵關。
 func (g *game) updateFactionPicker() bool {
 	if !g.factionPicker {
 		return false
 	}
 	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) || pressed(ebiten.KeyEscape) {
-		g.factionPicker = false
+		g.closeFactionPicker()
 		return true
 	}
 	if !inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
@@ -154,13 +190,7 @@ func (g *game) drawFactionPicker(dst *ebiten.Image) {
 				g.paletteInk(pickerInkNormal, color.RGBA{0, 0, 0, 255}))
 			continue
 		}
-		ink := pickerInkNormal
-		switch {
-		case n == g.world.Player:
-			ink = pickerInkOwn
-		case n == g.minimapFaction:
-			ink = pickerInkSelected
-		}
+		ink := g.pickerRowInk(n)
 		// 原版畫的是 `sub_188B0`（沒讀，docs/spec/35 §5），remake 沿用
 		// 既有的「勢力 ＝ 君主名」慣例，與外交視窗同一支。
 		g.td.Draw(dst, g.diplomacyFactionName(n), x, y,

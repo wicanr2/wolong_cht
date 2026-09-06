@@ -27,6 +27,7 @@
 | **#16** | **財政主畫面** | `stap:144,47` | `-open-finance` | 141 | 本份（§3：那是校訂）|
 | **#3** | **行軍：指示目標據點** | `stap:240,47` → 選單第 1 列 → 選軍團 | `-open-command-menu corps:1:0 -pick-tile 12,5` | **0** | [`94`](94-march-map-picker.md) |
 | **#21** | **行軍三選一（帶 `\2` 目標據點名）** | 接 #3 之後 `tile:206,114` → `press` | `-open-march-mode -lord-corps=false` | **0**※ | 本份 §4 |
+| **#4** | **22 勢力選擇視窗** | `sclick:416,15` → `stap:600,175` | `-open-faction-picker` | **0** | [`97`](97-faction-picker-parity.md) |
 | #22 | 軍團 → 位置確認 | `stap:240,47` → 選單第 0 列 | `-open-command-menu corps:0` | **0** | [`84`](84-personnel-corps-list-parity.md) |
 | #23 | 據點 → 據點一覽 | `stap:288,47` → 選單第 1 列 | `-open-cities` | 278 | [`83`](83-city-list-parity.md) |
 | #24／#25 | 武將／勢力一覽 | `stap:336,47`／`stap:384,47` | `-open-list`／`-open-factions` | **0** | [`86`](86-general-faction-cells-parity.md) |
@@ -39,7 +40,6 @@
 | TALK | 內容 | 為什麼還沒拍 |
 |---:|---|---|
 | #4 | 軍團情報面板（`sub_17F90`）| ⭐ **訂正**：那一則掛在**別人的**軍團上，自己的軍團狀態列是 #3（[`../spec/149`](../spec/149-march-target-map-picker.md) §1.3）。要在地圖上點別人的軍團才拍得到，而 remake 還沒接那個入口 |
-| #4 | 勢力一覽常駐視窗（`sub_15AD1`）| **remake 還沒接那個視窗**（[`../re/31`](../re/31-faction-picker-screen.md)）|
 | #7 | 請求協助的第二步（協同進攻對象）| 要再走一層：先選協助勢力 |
 | #10 | 「請選擇解任之武將。」| ⭐ **原版一個呼叫點都沒有**，是死文字，拍不到也不該拍 |
 

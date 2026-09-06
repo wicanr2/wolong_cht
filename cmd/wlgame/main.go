@@ -1106,7 +1106,7 @@ func (g *game) Update() error {
 		}
 		// 縮小地圖圖例的右半格（熱區 0x17 ＝ (536,168,96,16)）開勢力選擇視窗。
 		if left && g.hudOpen(hudMinimap) && hitTestMinimapLegend(x, y) {
-			g.factionPicker = true
+			g.openMinimapFactionPicker()
 			return nil
 		}
 		// 熱區 0x16：點地圖區把鏡頭捲過去（docs/spec/35 §2.5.1）。
@@ -1889,6 +1889,7 @@ func main() {
 	openMarchList := flag.Bool("open-march-pick", false, "截圖前編一支軍團並停在行軍目標的**地圖選點**（驗收用，docs/spec/149）")
 	pickTile := flag.String("pick-tile", "", "配地圖選點：把游標釘在格 `X,Y`（對拍用；headless 的指標位置不可控）")
 	mapClick := flag.String("map-click", "", "截圖前在大地圖上點格 `X,Y`（對拍用，docs/spec/151）")
+	openPicker := flag.Bool("open-faction-picker", false, "截圖前開縮小地圖圖例的 22 勢力選擇視窗（熱區 0x17，對拍用；狀態列 #4）")
 	openCmdMenu := flag.String("open-command-menu", "", "截圖前停在指令列的彈出選單：`corps`／`city`／`personnel`；加 `:第幾列` 就再選走那一列，可以接好幾層（對拍用，docs/spec/126）")
 	openNaming := flag.Bool("open-naming", false, "停在啟動殼層選君主那一頁並打開「自定」命名視窗（驗收用，docs/spec/104）")
 	battleFF := flag.Bool("battle-ff", false, "配 -open-battle／-open-siege：截圖前先按下 `▶▶` 快轉（驗收用，docs/spec/102）")
@@ -2073,7 +2074,7 @@ func main() {
 		g.damageReport = *damageReportFlag
 		apply := func() {
 			configureDirectFixtures(g, *openWin, *openList, *listPickRow, *openAdvise, *adviseMenu, *adviseSortie, *adviseTarget, *advisePickRow, *adviseListRow, *openCities, *openFactions, *openCityInfo, *openForm, *openCorps, *openMarchList,
-				*openMarchMode, *pickTile, *mapClick, *openCmdMenu, *openBattle, *openSiege, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow, *factionPickRow,
+				*openMarchMode, *openPicker, *pickTile, *mapClick, *openCmdMenu, *openBattle, *openSiege, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow, *factionPickRow,
 				*openTalkIndex, *openOutcome, parseSiegeFixture(*siegeNode, *siegeDefend, *siegeCorps, *battleSteps),
 				corpsMapFixture{enabled: *corpsOnMap, marchTo: *marchTo},
 				*camAt, *battleCam)
@@ -2419,7 +2420,7 @@ func logBattleUnits(g *game) {
 	log.Printf("場上活著的兵共 %d 個", n)
 }
 
-func configureDirectFixtures(g *game, openWin int, openList bool, listPickRow int, openAdvise, adviseMenu, adviseSortie, adviseTarget bool, advisePickRow, adviseListRow int, openCities, openFactions bool, openCityInfo int, openForm, openCorps, openMarchList, openMarchMode bool,
+func configureDirectFixtures(g *game, openWin int, openList bool, listPickRow int, openAdvise, adviseMenu, adviseSortie, adviseTarget bool, advisePickRow, adviseListRow int, openCities, openFactions bool, openCityInfo int, openForm, openCorps, openMarchList, openMarchMode, openPicker bool,
 	pickTile, mapClick, openCmdMenu string, openBattle, openSiege, openMessage, openFinance bool, financeAmount int, openFormPick bool, formPickRow, factionPickRow, openTalkIndex int,
 	openOutcome string, siege siegeFixture, corpsMap corpsMapFixture, camAt, battleCam string) {
 	w := g.world
@@ -2654,6 +2655,12 @@ func configureDirectFixtures(g *game, openWin int, openList bool, listPickRow in
 		// 驗收要看的是講完之後的畫面，把逐句節拍跑完（docs/spec/45 §1.1）。
 		for g.adviseAdvance() {
 		}
+	}
+	// 22 勢力的選擇視窗（原版熱區 0x17 → `sub_15AD1`，docs/spec/140）。
+	// 它是縮小地圖上的東西，所以那個視窗要先開著。
+	if openPicker {
+		g.hudSet(hudMinimap, true)
+		g.openMinimapFactionPicker()
 	}
 	// 大地圖點擊（docs/spec/151）：走真實的分派，不繞過。
 	if mapClick != "" {
