@@ -65,11 +65,16 @@ const (
 	corpsHintY = corpsWinY
 )
 
+// corpsInfoTalk 是軍團情報面板的狀態列（`sub_17F90` 的 `sub_18853(cx = 4)`，
+// docs/spec/140 §1.1）。
+const corpsInfoTalk = 4
+
 func (g *game) openCorpsInfo(corps int) {
 	if corps < 0 || corps >= len(g.world.Corps) || !g.world.Corps[corps].Alive {
 		return
 	}
 	g.corpsInfo = corpsInfoState{active: true, corps: corps}
+	g.setStatusTalk(corpsInfoTalk, nil)
 }
 
 func (g *game) updateCorpsInfo() {

@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**654 列分布在 268 份文件，平均每份 2.4 列。**
+**655 列分布在 268 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 181 | 174 | 6 | 1 |
 | 驗收 | 167 | 143 | 24 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 269 | 249 | 19 | 1 |
-| **合計** | **654** | 597 | 54 | 3 |
+| 其他 | 270 | 250 | 19 | 1 |
+| **合計** | **655** | 598 | 54 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,7 +53,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 230 |
+| `docs/spec/` | 231 |
 | `docs/re/` | 181 |
 | `docs/playtest/` | 167 |
 | `docs/release/` | 22 |
@@ -473,7 +473,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（269 條）
+## 2.6 其他（270 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -597,7 +597,8 @@
 | [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | 逐筆對齊 | 需要兩邊同源的亂數，`sub_1ECE0` 的式子還沒讀（`133` §5） | 靜態 |
 | [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | 更長的窗口 | 原版跑過六月之後 AI 開打，戰術畫面會停住策略時鐘 | 靜態 |
 | [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | `⛔ until:` 的中途判定 | 已修（`../playtest/78` §4）：只在主迴圈閒置點取樣 | 靜態 |
-| [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 另外 45 個呼叫點 | 接了行軍、財政、編成三條。其餘 handler 的 TALK 索引在 `../re/22` §3 都有，但**要一條一條接、一條一條拍**——沒有原版擷取就不算對過 | 靜態 |
+| [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | `sub_15AD1` 的 #4 | 掛在「勢力一覽」那個常駐視窗上（`../re/31`）；remake 的對應視窗還沒接，也還沒拍 | 靜態 |
+| [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 逐條的原版擷取 | 這一輪拍了財政稅率（#17）與行軍目標（#3）。**其餘 20 幾條只有單元測試釘住索引與流程，沒有逐張擷取**——那是「接上了」不是「對過了」 | 靜態 |
 | [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 樣式 `1Eh` 是什麼 | `sub_189A4` 把它傳給 `sub_189DE` 當 `ah`。**只知道 0 ＝ 擦除、非 0 ＝ 畫**，`1Eh` 這個值本身沒解（一般訊息框傳的也是 `1Eh`） | 靜態 |
 | [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 一般訊息框要不要一起改 | `\1`–`\5` 的定寬補白與逐標記換色是**全域規則**（`../re/79` §2），但一次改到所有訊息會動到四個語系的排版（`87`、`../playtest/32`）。要另外開一份規格，先量再改 | 靜態 |
 | [`spec/141-retreat-countdown.md`](../spec/141-retreat-countdown.md) | 退卻中要不要補兵 | 原版下令之後場上八拍歸零、**沒有補兵進場**；remake 的 `reinforce()` 會補（補進來的兵下一幀被 `applySquadLeaderGone` 改成退卻）。兩邊最後都會結束，但**中途的場上人數不同**，沒有逐拍對過 | 靜態 |

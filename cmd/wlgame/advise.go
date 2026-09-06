@@ -226,6 +226,7 @@ func (g *game) updateAdvise() bool {
 					g.ally = id
 					g.openTargetList()
 					g.advise = advisePickTarget
+					g.setAdviseStatus()
 				} else {
 					g.target = id
 					g.beginPersuasion()
@@ -237,6 +238,7 @@ func (g *game) updateAdvise() bool {
 				if g.advise == advisePickTarget && g.adviseCmd == persuasion.Cooperate {
 					g.openTargetList()
 					g.advise = advisePickAlly
+					g.setAdviseStatus()
 				} else {
 					g.advise = advisePickCommand
 				}
@@ -276,6 +278,32 @@ func (g *game) openTargetList() {
 	g.openFactionPicker(rows, "↑↓ 移動　Enter 選取／決定　1-6 排序　ESC 取消", nil)
 }
 
+// 進言四條出口各自的狀態列（docs/spec/140 §1.1）。
+const (
+	adviseHostilityTalk = 5  // #5「請選擇交戰之勢力。」（`sub_16405`）
+	adviseCeaseFireTalk = 6  // #6「請選擇停戰之勢力。」（`sub_164F1`）
+	adviseTargetTalk    = 7  // #7「請選擇協同進攻之勢力。」（`sub_16623` 的第二步）
+	adviseAllyTalk      = 8  // #8「請選擇協助勢力。」（同上，第一步）
+	adviseRelocateTalk  = 15 // #15「請選擇遷都的對象據點。」（`sub_16909`）
+)
+
+// setAdviseStatus 依「哪一項 ＋ 走到第幾步」掛狀態列。
+//
+// ⭐ 請求協助是**兩步兩則**：`sub_16623` 先 `cx = 8` 選要拜託誰，
+// 選完才換 `cx = 7` 選要一起打誰——連取消退回上一步都會換回去。
+func (g *game) setAdviseStatus() {
+	switch {
+	case g.adviseCmd == persuasion.Hostility:
+		g.setStatusTalk(adviseHostilityTalk, nil)
+	case g.adviseCmd == persuasion.CeaseFire:
+		g.setStatusTalk(adviseCeaseFireTalk, nil)
+	case g.adviseCmd == persuasion.Cooperate && g.advise == advisePickAlly:
+		g.setStatusTalk(adviseAllyTalk, nil)
+	case g.adviseCmd == persuasion.Cooperate:
+		g.setStatusTalk(adviseTargetTalk, nil)
+	}
+}
+
 // pickAdviseCommand 分派進言的五項（原版 `sub_16224` 的 `funcs_16255[選項×2]`）。
 func (g *game) pickAdviseCommand(row int) {
 	switch row {
@@ -294,6 +322,7 @@ func (g *game) pickAdviseCommand(row int) {
 		} else {
 			g.advise = advisePickTarget
 		}
+		g.setAdviseStatus()
 	}
 }
 
@@ -312,6 +341,7 @@ func (g *game) openCapitalList() {
 	}
 	g.openCityPicker(rows, "↑↓ 移動　Enter 選取／決定　ESC 取消", nil)
 	g.advise = advisePickCapital
+	g.setStatusTalk(adviseRelocateTalk, nil)
 }
 
 // beginRelocate 是進言第四項：君主看一眼就定案，沒有說服迴圈。

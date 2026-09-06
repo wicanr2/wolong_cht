@@ -107,8 +107,20 @@ func financeRowAtPointer() (int, bool) {
 	return 0, false
 }
 
+// financeAmountTalk 是四格數值輸入各自的狀態列（docs/spec/140 §1.1）：
+// `sub_167CD`／`sub_167E6`／`sub_16806`／`sub_16826` 依序 `cx = 11h`–`14h`。
+var financeAmountTalk = [financeRows]int{
+	0x11, // #17「請輸入下個月以後的稅率。」
+	0x12, // #18「請輸入下個月以後的騎兵募集人數。」
+	0x13, // #19「請輸入下個月以後的弓兵募集人數。」
+	0x14, // #20「請輸入下個月以後的步兵募集人數。」
+}
+
 func (g *game) beginFinanceAmount(row int) {
 	g.finance.editing, g.finance.value, g.finance.row = true, 0, row
+	if row >= 0 && row < len(financeAmountTalk) {
+		g.setStatusTalk(financeAmountTalk[row], nil)
+	}
 	g.beginAmountEditor(amountCursorFinance, financeAnchorX, financeAnchorY)
 }
 
@@ -118,6 +130,9 @@ func (g *game) updateFinanceAmount() {
 	f := &g.finance
 	if g.cancelled() {
 		f.editing = false
+		// 退回財政主畫面就換回 #16——原版四支各自成對設／清，
+		// 回到 `sub_1678D` 的迴圈時它會重設一次（docs/spec/140）。
+		g.setStatusTalk(financeStatusTalk, nil)
 		return
 	}
 	max := financeRowMax(f.row)
@@ -165,6 +180,7 @@ func (g *game) updateFinanceAmount() {
 func (g *game) commitFinanceAmount() {
 	f := &g.finance
 	f.editing = false
+	g.setStatusTalk(financeStatusTalk, nil) // 回到 `sub_1678D` 的迴圈
 	if f.row == 0 {
 		g.world.NextTaxRate = clamp(f.value, 0, TaxMax)
 		return

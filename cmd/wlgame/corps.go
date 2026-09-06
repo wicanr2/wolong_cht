@@ -84,6 +84,9 @@ func (g *game) formCandidates() []int {
 // docs/re/30 §1）。
 const formStatusTalk = 0
 
+// formOrderTalk 是編成第二層的狀態列（`sub_16C92` 的 `sub_18853(cx = 1)`）。
+const formOrderTalk = 1
+
 func (g *game) beginForm() {
 	rows := g.formCandidates()
 	if len(rows) == 0 {
@@ -96,6 +99,9 @@ func (g *game) beginForm() {
 	g.setStatusTalk(formStatusTalk, nil)
 	g.listPick = func(i int) bool {
 		g.form = formState{active: true, leader: i}
+		// 選完武將換第二則（`sub_16C92` 的 `mov cx, 1`）：
+		// 「請下達各部隊編成之指示。」
+		g.setStatusTalk(formOrderTalk, nil)
 		// 開窗預設編成照原版 sub_16D56：騎騎步步弓弓
 		// （docs/spec/22「開窗初值」，confirmed）。
 		g.form.kinds = [army.Positions]army.TroopType{
@@ -425,6 +431,7 @@ func (g *game) beginMarch() {
 // 全部 192 個據點都列出來，但**預設照距離排序**——一張 192 列的表
 // 若按編號排，玩家要翻半天才找得到隔壁那座城。
 func (g *game) pickDestination(corps int) {
+	g.setStatusTalk(marchTargetTalk, nil)
 	cs := g.world.Cities
 	from := g.world.Corps[corps]
 	dist := func(i int) int {
@@ -846,6 +853,8 @@ func (g *game) openCorpsCommandMenu() { g.openPopupMenu(corpsPopupMenu) }
 const (
 	locateCorpsTalk = 0x16 // #22「將游標移動至軍團的現在位置。」
 	marchCorpsTalk  = 0x02 // #2「請選擇進行行軍指示之軍團。」
+	// 選完軍團之後換這一則（`sub_17FDB` 的 `mov cx, 3`，docs/spec/140 §1.1）。
+	marchTargetTalk = 0x03 // #3「請指示行軍目標之據點。」
 )
 
 func (g *game) beginLocateCorps() {
