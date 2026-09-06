@@ -8,8 +8,10 @@ remake 先前那一列**點下去沒有任何反應**。
 - 規格：[`../spec/152`](../spec/152-video-mode-lcd-palette.md)
 - 原版側：`…;runto:11CD0;sclick:448,15;steps:400000;stap:376,184;
   steps:900000;shot:orig-sys1`
-- remake 側：`-open-window 3 -video-lcd -cam 0,0
+- remake 側：`-save-file workplace/dosgolem/root-noclouds/SAVE.DAT -load-slot 0
+  -open-window 3 -video-lcd -cam 0,0
   -fixture-when clock:196/4/16/10 -shot-when clock:196/4/16/10`
+  ⚠ **受控存檔不能省**（[`../spec/147`](../spec/147-controlled-parity-save.md)）：原版側跑的是 `root-noclouds`，remake 只用 `-direct` 從劇本跑到同一時刻會有雲、也會有軌跡分歧。這一行本輪補上，補之前照著跑對不出文中的數字
   （`-video-lcd` 本輪新增）
 
 ## 1. 結果

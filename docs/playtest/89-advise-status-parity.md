@@ -12,7 +12,10 @@
   [`../spec/147`](../spec/147-controlled-parity-save.md)（受控存檔 ＋ 亂數狀態）
 - 原版側：`WOLONG_DOSGOLEM_GAMEDIR=dosgolem/root-noclouds tools/dosgolem.sh …
   "…;sclick:352,15;stap:48,47;steps:400000;<move:48,200 × N>;press;steps:900000;shot:…"`
-- remake 側：`-advise-target -advise-pick-row N`
+- remake 側：`-save-file workplace/dosgolem/root-noclouds/SAVE.DAT -load-slot 0
+  -advise-target -advise-pick-row N -cam 0,0
+  -fixture-when clock:196/4/17/6 -shot-when clock:196/4/17/6`
+  ⚠ **受控存檔不能省**（[`../spec/147`](../spec/147-controlled-parity-save.md)）——只寫特有的旗標會讓下一個人照著跑對不出這裡的數字
 
 ## 1. 結果
 

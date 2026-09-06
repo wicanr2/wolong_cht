@@ -13,8 +13,10 @@
 - 原版側：`WOLONG_DOSGOLEM_GAMEDIR=dosgolem/root-noclouds tools/dosgolem.sh …
   "…;sclick:352,15;stap:96,47;steps:200000;[move:96,200;steps:100000;]*N;press;
   steps:400000;[stap:200,112;steps:400000;]*M;shot:…;clock"` → 196年4月17日 6時
-- remake 側：`-open-command-menu personnel:N[:列[:列]] -cam 0,0
+- remake 側：`-save-file workplace/dosgolem/root-noclouds/SAVE.DAT -load-slot 0
+  -open-command-menu personnel:N[:列[:列]] -cam 0,0
   -fixture-when clock:196/4/17/6 -shot-when clock:196/4/17/6`
+  ⚠ **受控存檔不能省**（[`../spec/147`](../spec/147-controlled-parity-save.md)）：原版側跑的是 `root-noclouds`，remake 只用 `-direct` 從劇本跑到同一時刻會有雲、也會有軌跡分歧。這一行本輪補上，補之前照著跑對不出文中的數字
   （`-open-command-menu` 本輪可以接好幾層列號）
 
 ## 0. 四張的結果

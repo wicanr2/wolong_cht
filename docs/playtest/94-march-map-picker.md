@@ -11,8 +11,10 @@
   workplace/parity/cells "…;sclick:352,15;stap:240,47;steps:200000;
   move:240,200;steps:100000;press;steps:400000;stap:200,112;steps:400000;
   stap:200,112;steps:900000;shot:orig-mar3;clock"` → 196年4月17日 6時
-- remake 側：`-open-command-menu corps:1:0 -pick-tile 12,5 -cam 0,0
+- remake 側：`-save-file workplace/dosgolem/root-noclouds/SAVE.DAT -load-slot 0
+  -open-command-menu corps:1:0 -pick-tile 12,5 -cam 0,0
   -fixture-when clock:196/4/17/6 -shot-when clock:196/4/17/6`
+  ⚠ **受控存檔不能省**（[`../spec/147`](../spec/147-controlled-parity-save.md)）：原版側跑的是 `root-noclouds`，remake 只用 `-direct` 從劇本跑到同一時刻會有雲、也會有軌跡分歧。這一行本輪補上，補之前照著跑對不出文中的數字
   （`-pick-tile` 本輪新增：headless 沒有指標，游標要釘住才畫得到指定的格）
 
 ## 1. 一路修下來的數字

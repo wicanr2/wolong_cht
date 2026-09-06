@@ -10,8 +10,10 @@
 - 原版側：`WOLONG_DOSGOLEM_GAMEDIR=dosgolem/root-noclouds tools/dosgolem.sh …
   "…;runto:11CD0;sclick:416,15;steps:400000;stap:600,175;steps:900000;shot:orig-picker"`
   （`416,15` ＝ 橫幅第三格開關 ＝ 縮小地圖；`600,175` ＝ 圖例右半格）
-- remake 側：`-open-faction-picker -cam 0,0
+- remake 側：`-save-file workplace/dosgolem/root-noclouds/SAVE.DAT -load-slot 0
+  -open-faction-picker -cam 0,0
   -fixture-when clock:196/4/17/6 -shot-when clock:196/4/17/6`
+  ⚠ **受控存檔不能省**（[`../spec/147`](../spec/147-controlled-parity-save.md)）：原版側跑的是 `root-noclouds`，remake 只用 `-direct` 從劇本跑到同一時刻會有雲、也會有軌跡分歧。這一行本輪補上，補之前照著跑對不出文中的數字
   （`-open-faction-picker` 本輪新增）
 
 ## 1. 一路修下來的數字
