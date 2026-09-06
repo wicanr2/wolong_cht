@@ -49,10 +49,14 @@ const (
 
 // 新遊戲那幾層的背景鏡頭：`sub_11A6E` 在 `sub_1D615` 前設的兩個立即值
 // （`dx=0AAh`／`bx=62h`），單位是**格**（docs/spec/79 §1.1.1）。
-// 調色盤是 `sub_10241(al=0)` 的第 0 組。
+//
+// ⭐ 調色盤組是 **1**，逐像素量出來的（docs/playtest/106 §4）。
+// ⚠ `sub_11A6E` 開頭那句 `mov al, 0 / call sub_10241` **是播第 0 曲**，
+// 不是載第 0 組調色盤——同一支在 `sub_13D09` 之後是 `al = 6`
+// ＝ 進言場景的第 6 曲（docs/spec/45 §1）。
 const (
 	launcherCamX, launcherCamY = 170, 98
-	launcherSeason             = 0
+	launcherSeason             = 1
 )
 
 // 標題與分隔線是原版字串照抄（`cs:7AC6`／`cs:7AEB`）。
