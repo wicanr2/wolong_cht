@@ -549,10 +549,32 @@ func launcherNewGamePath(sourceFile, overlay string) string {
 	return sourceFile
 }
 
+// syncLauncherSaveUI 讓殼層的 LOAD DATA 與遊戲中的四槽視窗用同一份狀態
+// （docs/spec/25 §2.9）。⭐ **選取仍由殼層的 cursor 決定**——這裡只同步，
+// 不接輸入，兩套選槽語意合成一套的代價太高而收益只有畫面。
+func (g *game) syncLauncherSaveUI() {
+	if g.launcher == nil {
+		return
+	}
+	if g.launcher.phase != launcherLoad {
+		if g.saveUI.active {
+			g.saveUI = saveUIState{}
+		}
+		return
+	}
+	if !g.saveUI.active {
+		g.beginSaveUI(saveRead)
+	}
+	if c := g.launcher.cursor; c >= 0 && c < 4 {
+		g.saveUI.slot = c
+	}
+}
+
 func (g *game) updateLauncher() error {
 	if g.launcher == nil {
 		return nil
 	}
+	defer g.syncLauncherSaveUI()
 	if g.naming != nil {
 		// 命名視窗開著時輸入全部歸它（原版 `sub_18FC9` 自己的等待迴圈）。
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
@@ -730,6 +752,17 @@ func (g *game) drawLauncher(screen *ebiten.Image) {
 	// 上下鍵換。**不畫 launcher 自己的大框**——兩個框疊起來很難看，
 	// 而原版這一頁本來就只有那一個框。
 	l := g.launcher
+	// LOAD DATA 與遊戲中的四槽視窗在原版是**同一支常式**（docs/spec/25 §2.9），
+	// 所以畫面交給同一支 `drawSaveUI`，不再另外畫一份。
+	if l.phase == launcherLoad && g.saveUI.active {
+		g.drawSaveUI(screen)
+		g.drawLauncherCaption(screen, "↑↓ 選擇　Enter 決定　ESC 返回",
+			savePanelX, savePanelY+savePanelH+8, dim)
+		g.drawLauncherCaption(screen, l.notice, savePanelX,
+			savePanelY+savePanelH+8+textdraw.GlyphH+2,
+			color.RGBA{255, 180, 180, 255})
+		return
+	}
 	if l.phase == launcherSelectFaction {
 		g.drawLauncherCaption(screen, g.launcherScenarioName(l.scenario),
 			factionListWinX, factionListWinY-textdraw.GlyphH-8, amber)
