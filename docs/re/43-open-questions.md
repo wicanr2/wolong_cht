@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**687 列分布在 282 份文件，平均每份 2.4 列。**
+**690 列分布在 283 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 181 | 174 | 6 | 1 |
-| 驗收 | 190 | 165 | 25 | 0 |
+| 驗收 | 193 | 168 | 25 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 279 | 258 | 20 | 1 |
-| **合計** | **687** | 628 | 56 | 3 |
+| **合計** | **690** | 631 | 56 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -54,7 +54,7 @@
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/spec/` | 240 |
-| `docs/playtest/` | 190 |
+| `docs/playtest/` | 193 |
 | `docs/re/` | 181 |
 | `docs/release/` | 22 |
 | `docs/formats/` | 20 |
@@ -290,7 +290,7 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
 
-## 2.4 驗收（190 條）
+## 2.4 驗收（193 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -467,7 +467,6 @@
 | [`playtest/89-advise-status-parity.md`](../playtest/89-advise-status-parity.md) | 上昇率那一欄 | 差到 ±4，成因確定是亂數而不是公式；**公式本身還沒逐項對過** | 靜態 |
 | [`playtest/89-advise-status-parity.md`](../playtest/89-advise-status-parity.md) | 滑鼠游標 88 px | 五個分區把畫面鋪滿，游標停哪都會落進某一區；remake 沒有自繪游標 | 靜態 |
 | [`playtest/90-formation-second-step.md`](../playtest/90-formation-second-step.md) | 原版的滑鼠游標 | 選單上是 14×14 紅箭頭（白邊）、大地圖上是 15×15 白色空心框（＋1,+1 黑影）。**遊戲自己畫的**（dosgolem 的 INT 33h 不畫），所以它是 remake 的缺口；但繪製端還沒定位，而且 remake 用的是 OS 游標，要接得連「隱藏 OS 游標」一起決定 | 靜態 |
-| [`playtest/90-formation-second-step.md`](../playtest/90-formation-second-step.md) | 反白列的 `listCellInk` 覆寫 | 上昇率 0 的紅字在反白列上是什麼顏色，沒有樣本 | 靜態 |
 | [`playtest/91-general-boast-parity.md`](../playtest/91-general-boast-parity.md) | 游標的繪製端 | §3 只是一個「有／沒有」的對照，成因未定，更沒找到畫它的那一支 | 靜態 |
 | [`playtest/91-general-boast-parity.md`](../playtest/91-general-boast-parity.md) | `0x1A8`（俘虜）與 `0x1AB`（海戰）兩組 | 沒有原版擷取；需要一個有俘虜、或水戰適性最高的武將的局面 | 靜態 |
 | [`playtest/92-personnel-assign-parity.md`](../playtest/92-personnel-assign-parity.md) | 原版的滑鼠游標 | 95–109 px。⚠ `91` §3 那一張**沒有**游標，同樣有訊息框、同樣的點擊位置——差別還沒找到 | 靜態 |
@@ -484,6 +483,10 @@
 | [`playtest/96-map-click.md`](../playtest/96-map-click.md) | `-map-click` 繞過忙碌判定 | fixture 直接呼叫 `dispatchMapClick`，所以截圖裡情報卡與選單同時開著；真實操作走 `updateMapClick` 會被擋 | 實測 |
 | [`playtest/97-faction-picker-parity.md`](../playtest/97-faction-picker-parity.md) | 原版擷取裡的滑鼠游標 | 82 px，停在剛點的圖例上 | 靜態 |
 | [`playtest/97-faction-picker-parity.md`](../playtest/97-faction-picker-parity.md) | 只重畫兩列 | 原版換選中時只重畫舊的與新的那兩列，remake 整張重畫。**視覺上沒有差異**，但要知道原版沒有全畫面刷新（`../re/31` §2.2） | 靜態 |
+| [`playtest/98-enemy-corps-panel.md`](../playtest/98-enemy-corps-panel.md) | 「反白列的 `listCellInk` 覆寫沒有樣本」。 | （未解小節內文） | 靜態 |
+| [`playtest/98-enemy-corps-panel.md`](../playtest/98-enemy-corps-panel.md) | listInkWarn`／`listInkWarnSelected` 兩個常數各自來自一次量測， 機制列為未解。 | （散句） | 靜態 |
+| [`playtest/98-enemy-corps-panel.md`](../playtest/98-enemy-corps-panel.md) | 反白列換色的**機制** | §3：兩個色號各有一次量測，變換規則沒解。列繪製 callback（線性 `0x1727D`）IDA 沒建成函式，`ida_range.py` 只印得出 `db`；要另外做一次強制解碼 | 靜態 |
+| [`playtest/98-enemy-corps-panel.md`](../playtest/98-enemy-corps-panel.md) | 整張畫面 | 鏡頭是格級的（`../spec/149` §4） | 靜態 |
 
 ## 2.5 外部資料（6 條）
 

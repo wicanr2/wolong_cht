@@ -296,7 +296,7 @@ type game struct {
 	listTitle string
 	// listCellInk 讓某一格換色：士氣 < 100、外交「交戰」都要換
 	// （docs/re/27 §2、§4）。回 false 就用預設墨色。
-	listCellInk func(id, col int) (color.RGBA, bool)
+	listCellInk func(id, col int) (int, bool)
 	// listPick 是決定一列之後要做的事。回傳 true 表示關掉一覽表。
 	listPick func(id int) bool
 	listHint string
@@ -526,13 +526,13 @@ func (g *game) openCityPicker(rows []int, hint string, pick func(int) bool) {
 	g.listTouched = false
 	g.listTitle = listFamilyCities.Title
 	g.listRow = g.listRowCity
-	g.listCellInk = func(id, col int) (color.RGBA, bool) {
+	g.listCellInk = func(id, col int) (int, bool) {
 		// 原版比的是存值 100（存值 ＝ 實際成長 ＋ 100），remake 的
 		// `Growth` 已經是實際成長，所以門檻是 0。
 		if col == 2 && g.world.Cities[id].Growth == 0 {
-			return listWarnInk, true
+			return listInkWarn, true
 		}
-		return color.RGBA{}, false
+		return 0, false
 	}
 	g.listHint = hint
 	g.listPick = pick
@@ -546,11 +546,11 @@ func (g *game) openFactionPicker(rows []int, hint string, pick func(int) bool) {
 	g.listTouched = false
 	g.listTitle = listFamilyFactions.Title
 	g.listRow = g.listRowFaction
-	g.listCellInk = func(id, col int) (color.RGBA, bool) {
+	g.listCellInk = func(id, col int) (int, bool) {
 		if col == 4 && g.factionDiplomacy(id) == 0 {
-			return listWarnInk, true
+			return listInkWarn, true
 		}
-		return color.RGBA{}, false
+		return 0, false
 	}
 	g.listHint = hint
 	g.listPick = pick
@@ -626,10 +626,12 @@ func (g *game) drawList(screen *ebiten.Image) {
 	for i, r := range rows {
 		y := listRowY(i)
 		rowInk := ink
+		selected := false
 		if first+i == l.Cursor &&
 			(g.listTouched || l.Phase() == listwin.Selected) {
 			hl := color.RGBA{200, 210, 170, 255}
 			if l.Phase() == listwin.Selected {
+				selected = true
 				hl = chrome.Select // 反白：原版就是這個綠
 				// ⭐ **反白列的字是黃的**（色 12，`chrome.Highlight`）——
 				// 實機量到的（docs/spec/38 §1.7）。先前整份清單一律用
@@ -648,8 +650,15 @@ func (g *game) drawList(screen *ebiten.Image) {
 			}
 			c := rowInk
 			if g.listCellInk != nil {
-				if got, ok := g.listCellInk(r, col); ok {
-					c = got
+				if idx, ok := g.listCellInk(r, col); ok {
+					// ⭐ **儲存格自己的顏色贏過反白列的字色**，而且
+					// **在反白列上換一個色號**：一般列色 10、反白列色 6
+					// （原版擷取兩種狀態各量一次，docs/playtest/98）。
+					// ⚠ 換色號的機制沒解，這裡是照抄兩個量到的值。
+					if selected {
+						idx = listInkWarnSelected
+					}
+					c = g.paletteInk(idx, listWarnInk)
 				}
 			}
 			// 數字欄右靠到分隔線右緣、用 8×16 原版字模（sub_1062F 那一套，
@@ -1888,7 +1897,7 @@ func main() {
 	openMarchMode := flag.Bool("open-march-mode", false, "截圖前停在行軍指示的三選一（驗收用）")
 	openMarchList := flag.Bool("open-march-pick", false, "截圖前編一支軍團並停在行軍目標的**地圖選點**（驗收用，docs/spec/149）")
 	pickTile := flag.String("pick-tile", "", "配地圖選點：把游標釘在格 `X,Y`（對拍用；headless 的指標位置不可控）")
-	mapClick := flag.String("map-click", "", "截圖前在大地圖上點格 `X,Y`（對拍用，docs/spec/151）")
+	mapClick := flag.String("map-click", "", "截圖前在大地圖上點格 `X,Y`；加 `:第幾列` 再選走那一格上的第 N 支軍團（對拍用，docs/spec/151）")
 	openPicker := flag.Bool("open-faction-picker", false, "截圖前開縮小地圖圖例的 22 勢力選擇視窗（熱區 0x17，對拍用；狀態列 #4）")
 	openCmdMenu := flag.String("open-command-menu", "", "截圖前停在指令列的彈出選單：`corps`／`city`／`personnel`；加 `:第幾列` 就再選走那一列，可以接好幾層（對拍用，docs/spec/126）")
 	openNaming := flag.Bool("open-naming", false, "停在啟動殼層選君主那一頁並打開「自定」命名視窗（驗收用，docs/spec/104）")
@@ -2664,13 +2673,30 @@ func configureDirectFixtures(g *game, openWin int, openList bool, listPickRow in
 	}
 	// 大地圖點擊（docs/spec/151）：走真實的分派，不繞過。
 	if mapClick != "" {
+		spec, pickRow := mapClick, -1
+		if i := strings.IndexByte(spec, ':'); i >= 0 {
+			n, err := strconv.Atoi(spec[i+1:])
+			if err != nil || n < 0 {
+				log.Fatalf("⚠ -map-click 的列號要是非負整數，收到 %q", mapClick)
+			}
+			spec, pickRow = spec[:i], n
+		}
 		var col, row int
-		if _, err := fmt.Sscanf(mapClick, "%d,%d", &col, &row); err != nil {
+		if _, err := fmt.Sscanf(spec, "%d,%d", &col, &row); err != nil {
 			log.Fatalf("⚠ -map-click 要 `X,Y` 兩個整數，收到 %q", mapClick)
 		}
 		g.dispatchMapClick(col, row,
 			(col-g.camX)*world.TileSize,
 			strategyMapY+(row-g.camY)*world.TileSize)
+		if pickRow >= 0 {
+			// 那一格既是據點又有軍團時會先跳兩項選單——帶了列號就是要看
+			// 軍團，所以替它選第 1 列（docs/spec/151 §1）。
+			if g.mapChoice.active {
+				g.mapChoice.row = 1
+				g.commitMapChoice()
+			}
+			g.pickListRow(pickRow)
+		}
 	}
 	// 地圖選點的游標釘在指定格（docs/spec/149 §2）——headless 沒有指標。
 	if pickTile != "" {

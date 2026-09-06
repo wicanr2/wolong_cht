@@ -43,7 +43,7 @@ func TestLatinListFieldsFitTheBody(t *testing.T) {
 		{"據點", latinFieldsCities, latinLabelsCities, listFamilyCities.fields(),
 			map[int]int{0: 12, 5: 10}},
 		{"軍團", latinFieldsCorps, latinLabelsCorps, listFamilyCorps.fields(),
-			map[int]int{0: 10, 3: 8, 4: 8, 5: 3}},
+			map[int]int{0: 10, 3: 8, 4: 8, 5: 4}},
 		{"勢力", latinFieldsFactions, latinLabelsFactions, listFamilyFactions.fields(),
 			map[int]int{0: 9, 3: 8, 4: 4, 5: 8}},
 	} {

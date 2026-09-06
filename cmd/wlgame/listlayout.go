@@ -269,6 +269,12 @@ func listFieldX(fields []listField, col int) int {
 	if col < 0 || col >= len(fields) {
 		return listBodyX()
 	}
+	// ⭐ **無標題那一欄不縮排**：它接在分隔線右邊，沒有對應的分隔線段，
+	// 所以 §1.5 那個「文字欄在欄起點 ＋ 8」的規則對它不成立。
+	// 原版擷取量到的是欄起點本身（docs/playtest/98）。
+	if fields[col].NoDash {
+		return listBodyX() + fields[col].X
+	}
 	return listBodyX() + fields[col].X + listTextInset
 }
 
@@ -284,6 +290,24 @@ func listFieldRight(fields []listField, col int) int {
 // listWarnInk 是換色用的前景色。原版把屬性的低 4 位由 0 改成 A
 // （`bh = 0x9A`，docs/re/27 §5），這裡用一個接近的紅。
 var listWarnInk = color.RGBA{200, 60, 40, 255}
+
+// listInkWarn／listInkDelegated 是換色用的**調色盤索引**。
+//
+// ⚠ `listWarnInk` 是寫死的近似值，還沒有逐像素樣本；這兩個索引有
+// （docs/playtest/98）。新的換色一律走索引 ＋ `paletteInk`，
+// 不要再寫死 RGB——調色盤是每季一組的（docs/spec/54）。
+const (
+	// listInkWarn 是換色那幾格在**一般列**上的色號（屬性 `0x9A` 的前景 A，
+	// docs/re/27 §5）。軍團一覽最右端「委任」那一格也是它。
+	listInkWarn = 10
+	// listInkWarnSelected 是同樣那幾格在**反白列**上的色號。
+	//
+	// ⚠ **機制沒解，這是量出來的**：同一格在一般列是色 10 `(211,0,0)`、
+	// 在反白列是色 6 `(130,65,32)`（docs/playtest/98 各量一次）。
+	// 一般文字則是黑（色 0）→ 黃（色 12）。兩組都不是同一種變換，
+	// 所以沒有硬推一條規則。
+	listInkWarnSelected = 6
+)
 
 // corpsHalfStrength 是「總兵數換色」的門檻：原版 `< 0x12C` ＝ 300 點
 // ＝ 3,000 人（半編）。
@@ -339,6 +363,11 @@ func listBlank(f listField) string {
 func listCellRoom(fields []listField, col int) int {
 	if col < 0 || col >= len(fields) {
 		return 0
+	}
+	// ⭐ **無標題那一欄用它自己的寬**：它沒有內縮、也沒有下一欄要讓，
+	// 原版就是照 `Extra` 個全形字畫滿（docs/playtest/98）。
+	if fields[col].NoDash {
+		return fields[col].W
 	}
 	limit := listBodyW()
 	if col+1 < len(fields) {

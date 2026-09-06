@@ -504,15 +504,19 @@ func (g *game) openCorpsListWith(rows []int, hint string, pick func(int) bool) {
 	g.listRow = g.listRowCorps
 	// 兩條換色（docs/re/27 §5）：**總兵數 < 300 點**（＝ 3,000 人，半編）
 	// 與**士氣 < 100**。兩者都是「值得注意」不是錯誤。
-	g.listCellInk = func(id, col int) (color.RGBA, bool) {
+	g.listCellInk = func(id, col int) (int, bool) {
 		c := g.world.Corps[id]
 		switch {
 		case col == 1 && c.Men < corpsHalfStrength:
-			return listWarnInk, true
+			return listInkWarn, true
 		case col == 2 && c.Morale < 100:
-			return listWarnInk, true
+			return listInkWarn, true
+		case col == 5 && c.Delegated:
+			// 最右端「委任」那一格與三條換色同一個色號
+			// （原版擷取逐像素量到，docs/playtest/98）。
+			return listInkWarn, true
 		}
-		return color.RGBA{}, false
+		return 0, false
 	}
 	g.listPick = pick
 	g.listHint = hint
