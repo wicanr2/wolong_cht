@@ -260,6 +260,9 @@ func (g *game) syncCommandFlow() {
 	}
 	g.cmdCell = -1
 	g.clearStatusTalk()
+	// 選走之後留在畫面上的選單框也一起收（docs/spec/126 §1.2）——
+	// 原版是靠重畫地圖擦掉的，時機一樣是「流程回來了」。
+	g.closePopupMenu()
 }
 
 func hitTestNaturalCommand(x, y int) (naturalCommandID, bool) {

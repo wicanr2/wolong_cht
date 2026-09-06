@@ -1282,6 +1282,10 @@ func (g *game) Draw(screen *ebiten.Image) {
 			color.RGBA{240, 140, 140, 255})
 	}
 
+	// ⭐ **選單先畫、一覽表後畫**：原版選完之後不擦選單，一覽表直接畫在
+	// 它上面（docs/spec/126 §1.2）。順序反過來的話露出來的那一列會蓋掉
+	// 清單的上緣。
+	g.drawPopupMenu(screen)
 	if g.list != nil {
 		g.drawList(screen)
 	}
@@ -1294,7 +1298,6 @@ func (g *game) Draw(screen *ebiten.Image) {
 	g.drawCityInfo(screen)
 	g.drawCorpsInfo(screen)
 	g.drawAdvise(screen)
-	g.drawPopupMenu(screen)
 	g.drawSaveUI(screen)
 	if choice := g.world.PendingDiplomacy(); choice != nil {
 		g.drawDiplomacy(screen, choice)
@@ -2392,10 +2395,18 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 		return
 	}
 	if openCities {
-		g.openCityList()
+		// 原版是「據點」那一格 → 彈出選單第二列進來的，所以命令視窗
+		// 開著、那一格反白（docs/spec/124 §3.5），**而且選單的框還留在
+		// 清單上緣**（docs/spec/126 §1.2）。走真實流程才擺得出這三件事。
+		g.hudSet(hudCommand, true)
+		g.cmdCell = int(naturalCommandCity)
+		g.openPopupMenu(cityPopupMenu)
+		g.dispatchPopupMenu(1) // 第 1 列 ＝ 據點一覽
 		return
 	}
 	if openFactions {
+		g.hudSet(hudCommand, true)
+		g.cmdCell = int(naturalCommandFaction)
 		g.openFactionList()
 		return
 	}

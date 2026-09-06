@@ -79,16 +79,30 @@ func init() {
 type popupMenuState struct {
 	menu *popupMenu
 	row  int
+	// stale ＝ 已經選走了，但**框還留在畫面上**。
+	//
+	// ⭐ 原版選完之後不擦選單，一覽表直接畫在它上面（docs/spec/126 §1.2）：
+	// 露出來的那一列一直掛在清單上緣，實測跑兩千萬道指令都不會消。
+	// 與編成視窗畫在武將一覽上面是同一種作法。
+	stale bool
 }
 
-// popupMenuActive 回報有沒有選單開著。
-func (g *game) popupMenuActive() bool { return g != nil && g.cmdMenu.menu != nil }
+// popupMenuActive 回報**現在能不能操作**那張選單。已經選走的框還會畫，
+// 但不吃輸入，也不算「選單開著」。
+func (g *game) popupMenuActive() bool {
+	return g != nil && g.cmdMenu.menu != nil && !g.cmdMenu.stale
+}
+
+// popupMenuShown 回報畫面上有沒有選單框（含選走之後留著的）。
+func (g *game) popupMenuShown() bool { return g != nil && g.cmdMenu.menu != nil }
 
 // openPopupMenu 開一張選單。
-func (g *game) openPopupMenu(m *popupMenu) { g.cmdMenu.menu, g.cmdMenu.row = m, 0 }
+func (g *game) openPopupMenu(m *popupMenu) {
+	g.cmdMenu = popupMenuState{menu: m}
+}
 
-// closePopupMenu 收掉目前那一張。
-func (g *game) closePopupMenu() { g.cmdMenu.menu = nil }
+// closePopupMenu 收掉目前那一張，連留在畫面上的框一起。
+func (g *game) closePopupMenu() { g.cmdMenu = popupMenuState{} }
 
 // popupMenuLabels 是那張選單的每一列，直接取自 `TALK.DAT`。
 func (g *game) popupMenuLabels(m *popupMenu) []string {
@@ -98,15 +112,17 @@ func (g *game) popupMenuLabels(m *popupMenu) []string {
 	return talkmenu.MenuLabels(g.lib.Talk, m.talk, nil, m.fallback)
 }
 
-// dispatchPopupMenu 收掉選單再走那一項。
+// dispatchPopupMenu 停用選單再走那一項。
 //
-// ⚠ **先收再走**：下一層可能自己開別的視窗，收在後面會把它一起關掉。
+// ⚠ **先停用再走**：下一層可能自己開別的視窗，收在後面會把它一起關掉。
+// ⭐ **停用不等於擦掉**——原版的框留在畫面上（docs/spec/126 §1.2），
+// 所以這裡只設 `stale`，真正清掉是流程結束時（`syncCommandFlow`）。
 func (g *game) dispatchPopupMenu(row int) {
 	m := g.cmdMenu.menu
 	if m == nil {
 		return
 	}
-	g.closePopupMenu()
+	g.cmdMenu.stale, g.cmdMenu.row = true, row
 	m.dispatch(g, row)
 }
 
@@ -143,7 +159,7 @@ func (g *game) updatePopupMenu() bool {
 
 // drawPopupMenu 畫目前開著的那一張。
 func (g *game) drawPopupMenu(screen *ebiten.Image) {
-	if !g.popupMenuActive() {
+	if !g.popupMenuShown() {
 		return
 	}
 	m := g.cmdMenu.menu

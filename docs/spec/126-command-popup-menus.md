@@ -62,6 +62,26 @@ and al, al / jnz 據點一覽
 鏡頭的 `(20, 12)` 與軍團的位置確認、開局鏡頭是同一組立即值
 （[`52`](52-main-screen-camera-and-banner-date.md)）。
 
+### 1.2 ⭐ 選單不會被擦掉，一覽表畫在它上面（2026-09-06）
+
+選「據點一覽」之後，**彈出選單的框還留在畫面上**——一覽表的視窗蓋住它的
+下半，露出來的那一列（`首都確認`）就一直掛在清單上緣。
+
+實測（dosgolem，`workplace/dosgolem/advise/` 的 `h1`／`h2`／`h3`）：
+
+| 檢查 | 結果 |
+|---|---|
+| 開清單之後再跑 2,000 萬道指令 | 整張畫面**逐像素不變**（五區全 0）|
+| 再把游標移到別處 | 一樣不變 |
+
+⇒ **殘影是持續的，不是還沒重畫的過渡態**；而且**清單開著時時間停住**
+（`banner` 一個像素都沒動）。幾何上也對得起來：選單框 `(240,64,112,48)`、
+一覽表的視窗從 `y = 80` 起，露出來的正是 `y 64..79` 這一條，
+量到的差異框 `x 240..351 y 64..79` 逐格相符。
+
+這與編成視窗畫在武將一覽上面（[`../re/30`](../re/30-corps-formation-ui.md) §1）
+是同一種作法：**原版不擦，只是往上面畫**。
+
 ## 2. remake 實作
 
 四張選單長得一樣，所以**只留一份實作**（`CLAUDE.md` §7 第 6 條）：
@@ -79,7 +99,8 @@ type popupMenu struct {
 | 項目 | 位置 |
 |---|---|
 | 型別與三張表 | `cmd/wlgame/popupmenu.go`：`corpsPopupMenu`／`cityPopupMenu`／`personnelPopupMenu` |
-| 狀態 | `game.cmdMenu`（`menu` 是 nil 就是沒開——**零值安全**，不必另外記 active 旗標）|
+| 狀態 | `game.cmdMenu`（`menu` 是 nil 就是沒開——**零值安全**，不必另外記 active 旗標）。`stale` ＝ 已經選走了但框還留在畫面上（§1.2）|
+| 狀態列提示 | `openCityList` 掛 TALK #23（`sub_162FB` 的 `mov cx, 17h`，[`140`](140-status-message-box.md)）|
 | 輸入／繪製 | `updatePopupMenu`／`drawPopupMenu`，兩處呼叫點不變 |
 | 反白 | `activeCommandCell()` 回傳 `cmdMenu.menu.cell`（[`124`](124-menu-highlight-xor.md)）|
 | 首都確認 | `beginLocateCapital()`：鏡頭 ＝ 首都 −(20,12) ＋ 情報視窗，與 `openCityList` 選中之後的尾段共用一支 |
@@ -104,5 +125,5 @@ type popupMenu struct {
 | 項目 | 現況 |
 |---|---|
 | ~~據點／人事兩張的逐像素對拍~~ | **拍了也比了**（[`../playtest/61`](../playtest/61-city-personnel-menu-parity.md)，2026-09-03）：兩張都是四區 0 px，選單框與反白格也各 0 px。⭐ 原版側後來又用 dosgolem 重取一次並把 `banner` 也收到 0（[`../playtest/67`](../playtest/67-dosgolem-popup-menus.md)）|
-| 「據點一覽」列的是誰的城 | remake 只列玩家的（`playerCities`）。原版 `sub_17400` 列的範圍沒查——「首都確認」那條路暗示這個指令是給自己人用的，但那是推論 |
+| ~~「據點一覽」列的是誰的城~~ | **玩家的**（實測，2026-09-06）：196年4月20日的原版清單是濟陰／洛陽／汜水關／滎陽／官渡／函谷關／虎牢關／陝／陳留／河南**十座**，與 `-list-cities 0` 印出來的「主 0」十座逐一相同（[`../playtest/83`](../playtest/83-city-list-parity.md)）。remake 的 `playerCities` 是對的 |
 | 進言那一張還沒併進來 | `openAdvise` 有自己的一套（五項 ＋ 說服流程）。**併之前要先確認它的取消語意一樣**，這一輪沒動 |

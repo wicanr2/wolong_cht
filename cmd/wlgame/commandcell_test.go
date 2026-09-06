@@ -56,3 +56,27 @@ func TestActiveCommandCellStillFollowsPopupMenus(t *testing.T) {
 		t.Errorf("關掉之後還亮著第 %d 格", got)
 	}
 }
+
+// 選完之後選單框**留在畫面上**，一覽表畫在它上面（docs/spec/126 §1.2）。
+//
+// ⭐ 原版不擦，只是往上面畫——實測跑兩千萬道指令那條殘影都不會消
+// （docs/playtest/83）。
+func TestPopupMenuStaysDrawnAfterPick(t *testing.T) {
+	g := &game{cmdCell: int(naturalCommandCity)}
+	g.openPopupMenu(cityPopupMenu)
+	if !g.popupMenuActive() || !g.popupMenuShown() {
+		t.Fatal("剛開的選單應該既能操作也畫得出來")
+	}
+	g.cmdMenu.stale = true // dispatchPopupMenu 做的事
+	if g.popupMenuActive() {
+		t.Error("選走之後不該再吃輸入")
+	}
+	if !g.popupMenuShown() {
+		t.Error("選走之後框還要留在畫面上")
+	}
+	// 流程結束 → 連框一起收掉（原版靠重畫地圖擦掉）。
+	g.syncCommandFlow()
+	if g.popupMenuShown() {
+		t.Error("流程結束了框還留著")
+	}
+}

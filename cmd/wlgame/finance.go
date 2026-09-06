@@ -359,12 +359,17 @@ func (g *game) drawFinance(screen *ebiten.Image) {
 }
 
 // openCityList 是命令視窗的「據點」：自勢力據點一覽。
+// cityListStatusTalk 是「據點一覽」的狀態列訊息：`sub_162FB` 的
+// `mov cx, 17h` ＝ TALK #23「將游標移動至指示之據點。」（docs/spec/140）。
+const cityListStatusTalk = 0x17
+
 func (g *game) openCityList() {
 	rows := g.playerCities()
 	if len(rows) == 0 {
 		g.lastEvent = "沒有據點"
 		return
 	}
+	g.setStatusTalk(cityListStatusTalk, nil)
 	g.cityList(rows, "↑↓ 移動　Enter 選取／決定　1-5 排序　ESC 取消",
 		func(city int) bool {
 			// 說明書：「選了游標移過去」。這裡把鏡頭移到該據點，
