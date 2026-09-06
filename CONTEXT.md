@@ -958,6 +958,8 @@ linear address，對已知有三個呼叫者的 `sub_1DD22` 也回 0。
 `tools/parity_diff.py`。輔助：`parity_shift.py`／`parity_locate.py`
 （位移還是畫錯）、`mdl_match.py`／`mch_match.py`（換成哪一張圖塊）、
 `find_camera.py`（從畫面反推鏡頭）、`patch_zoom.py`（並排放大）。
+→ `tools/symbol_roles.py`（稽核：同一個 IDA 符號在兩份文件裡被標成
+  互斥的角色。第一次跑就抓到 `sub_1EBDC`「疑似音源」，實際是寫 VGA DAC）
 
 ⚠ **點原版的主畫面要用 `click:x,y;press` 成對送**，而且進到大地圖之後
 INT 33 的範圍變成整個世界（一個主機像素 ≈ 9.6 個遊戲像素）。

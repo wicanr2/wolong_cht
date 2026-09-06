@@ -22,8 +22,8 @@
 | `sub_1EB5E` | 14 | Video status | 等垂直空白 |
 | `sub_1EB6C` | 39 | **INT 10h** ＋ EGA palette／overscan | **設畫面模式與調色盤**，開機時由 `sub_1006B` 呼叫一次 |
 | `sub_1EB93` | 73 | EGA palette ＋ Graphics Controller ×4 | 調色盤重設；`sub_1006B`、`sub_11A6E` |
-| `sub_1EBDC` | 82 | 四處 `out`（IDA 未標註埠）| 呼叫者含 `sub_19946`（戰術主迴圈）→ 疑似音源 |
-| `sub_1EC2E`／`sub_1EC6C` | 62／22 | 同上 | 由 `sub_10A65` 進入 |
+| `sub_1EBDC` | 82 | **`3C8h`／`3C9h`** ＝ VGA DAC | **寫調色盤**：`out 3C8h` 送色號、`3C9h` 連送三個分量，中間把 4 bit 值 `× 亮度 + 80h`（[`11`](11-tactical-battle.md) §調色盤）|
+| `sub_1EC2E`／`sub_1EC6C` | 62／22 | 同上（`3C8h`／`3C9h`）| 也是**寫調色盤**，由 `sub_10A65` 進入 |
 | `sub_1EC82` | 94 | **INT 1Ah**（BIOS 計時器）| **亂數種子**（[`10`](10-rng.md) 已定案）|
 | `sub_1ECE0` | 28 | — | **亂數**（[`10`](10-rng.md)），全庫最常被呼叫的常式之一 |
 
@@ -112,5 +112,4 @@ sub_20000 → nullsub_4(1) / sub_2002E(65) / sub_20070(42) / sub_2009A(35)
 | `sub_1F020` | 288 | 大圖塊繪製，戰術側專用 |
 | `sub_1F1A3` | 203 | T4 榜首，三個來源不同的呼叫者 |
 | `sub_1F7A4` `[DOS/BIOS]` | 212 | 字型 blitter，逐行未解。**同一支函式在 [`29`](29-font-service-int15.md) §9 也列著，那裡是正本**；未解的是「怎麼寫 VRAM」，而 remake 不碰 VGA 平面，所以不擋 remake |
-| `sub_1EBDC`／`sub_1EC2E` | 82／62 | 埠沒被 IDA 標註，是不是音源要驗 |
 | `sub_10414` 叢 | 161＋ | `sub_103E6` 的 `call cs:word_1036D` 是 [`21`](21-function-census.md) §7 未攤開的間接分派 |
