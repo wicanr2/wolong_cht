@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**690 列分布在 283 份文件，平均每份 2.4 列。**
+**689 列分布在 283 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 181 | 174 | 6 | 1 |
 | 驗收 | 193 | 168 | 25 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 279 | 258 | 20 | 1 |
-| **合計** | **690** | 631 | 56 | 3 |
+| 其他 | 278 | 257 | 20 | 1 |
+| **合計** | **689** | 630 | 56 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,7 +53,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 240 |
+| `docs/spec/` | 239 |
 | `docs/playtest/` | 193 |
 | `docs/re/` | 181 |
 | `docs/release/` | 22 |
@@ -499,7 +499,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（279 條）
+## 2.6 其他（278 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -543,7 +543,9 @@
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 正式簽章 | 出的是 debug 簽章，keystore 怎麼保管還沒決定 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | 16 KB page size 裝置 | `.so` 的 LOAD 段已是 `0x4000`，但沒有那種裝置或 AVD 實際載過 | 靜態 |
 | [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 據點換手之後 `+0x00` 低 4 位會不會跟著變 | `sub_1890A` 靜態讀過，動態沒驗——要打下一座城才看得到 | 靜態 |
-| [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 玩家據點求援的喇叭聲（`sub_10CDE`） | 呈現層未接 | 靜態 |
+| [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 玩家據點求援的喇叭聲（`sub_10CDE`） | ⭐ **量清楚了，但刻意不接**（見下） | 靜態 |
+| [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 1. **長度 ≈ 2 個垂直畫面**（VGA 400 列模式約 70 Hz ⇒ **≈ 28 ms**）， | （未解小節內文） | 靜態 |
+| [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 2. ⭐ **音高不是它決定的**——這一支只開關 PPI port `61h` 的 bit 0/1， | （未解小節內文） | 靜態 |
 | [`spec/100-phone-text-scale.md`](../spec/100-phone-text-scale.md) | 倍率不能在遊戲內調 | 固定 2。平板或小手機可能要 1 或 3，得先有實機回饋 | 靜態 |
 | [`spec/101-phone-glyph-scale2x.md`](../spec/101-phone-glyph-scale2x.md) | 高 DPI 上 Ebiten 把 960×540 再縮到螢幕（非整數倍）的殘餘鋸齒 | 那一層是 Ebiten 的螢幕縮放（預設線性濾波），本規格只處理字模那一層。要不要改成整數倍畫布得有實機回饋 | 靜態 |
 | [`spec/102-battle-fast-forward.md`](../spec/102-battle-fast-forward.md) | 快轉時戰場區的底紋 | 原版是**藍底綠線的菱形格**（`playtest/53` 的裁切），不是龍紋。已收斂到「讀哪裡」：`sub_1DC9D` 的 `es` ＝ `word_1E15E`，**唯一的寫入端**是 `sub_1D958`（`sub_19946` 用 `cx = word_1D2F6` 傳進去），而 `word_1D2F… | 靜態 |
@@ -593,7 +595,6 @@
 | [`spec/127-captured-sovereign-becomes-retainer.md`](../spec/127-captured-sovereign-becomes-retainer.md) | 被俘兩次會不會加兩次 | **不會，而且不需要另外防護**——`and [bx], 0BFh` 已經把 bit 6 清掉了，第二次 `test [bx], 40h` 不成立。所以 `+3` 至多發生一次，值域停在 3–5，不會溢出 `+0x1E` 的 0–7。remake 照抄同一個結構（先測 bit 再清）就自然有同樣的性質 | 靜態 |
 | [`spec/127-captured-sovereign-becomes-retainer.md`](../spec/127-captured-sovereign-becomes-retainer.md) | 劇本作者能不能給非君主 bit 6 | 四個劇本的 43 筆全是現任君主（`../re/77` §3），但那是**資料上的巧合還是規則**沒有讀出來。若有一筆說話類型 3–7 又帶 bit 6，`+3` 會把它推到 6–10 | 靜態 |
 | [`spec/128-squad-leader-gone-keeps-reserve.md`](../spec/128-squad-leader-gone-keeps-reserve.md) | 戰後兵力的逐槽對拍 | 原版打完之後每槽兵數是三項相加（`../re/83` §3），remake 的戰後回填**沒有逐槽比過原版** | 靜態 |
-| [`spec/128-squad-leader-gone-keeps-reserve.md`](../spec/128-squad-leader-gone-keeps-reserve.md) | 士氣按比例縮 | `sub_19F58` 最後三行：新士氣 ＝ 舊士氣 × 新總兵力 ÷ 舊總兵力。remake 的戰後士氣處理**還沒對照這一條** | 靜態 |
 | [`spec/129-post-battle-morale-scaling.md`](../spec/129-post-battle-morale-scaling.md) | 為什麼敗方是 99 不是 100 | 自動判定用 `64h`、戰術用 `63h`。**兩個立即值都讀出來了**，但差 1 的理由沒有解釋——可能只是 `xchg` 那個寫法順手（先寫 99 再比 99） | 靜態 |
 | [`spec/129-post-battle-morale-scaling.md`](../spec/129-post-battle-morale-scaling.md) | 戰後士氣的實機對照 | 沒有。要打完一場戰術戰鬥再看軍團一覽的士氣欄 | 靜態 |
 | [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |
@@ -623,7 +624,6 @@
 | [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | 逐筆對齊 | 需要兩邊同源的亂數，`sub_1ECE0` 的式子還沒讀（`133` §5） | 靜態 |
 | [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | 更長的窗口 | 原版跑過六月之後 AI 開打，戰術畫面會停住策略時鐘 | 靜態 |
 | [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | `⛔ until:` 的中途判定 | 已修（`../playtest/78` §4）：只在主迴圈閒置點取樣 | 靜態 |
-| [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 逐條的原版擷取 | **多數補完了**，逐條的結果收在 `../playtest/93`。⚠ 還沒拍的只剩「別人的軍團」那個 #4（要在地圖上點別人的軍團） | 靜態 |
 | [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 樣式 `1Eh` 是什麼 | `sub_189A4` 把它傳給 `sub_189DE` 當 `ah`。**只知道 0 ＝ 擦除、非 0 ＝ 畫**，`1Eh` 這個值本身沒解（一般訊息框傳的也是 `1Eh`） | 靜態 |
 | [`spec/141-retreat-countdown.md`](../spec/141-retreat-countdown.md) | 退卻中要不要補兵 | 原版下令之後場上八拍歸零、**沒有補兵進場**；remake 的 `reinforce()` 會補（補進來的兵下一幀被 `applySquadLeaderGone` 改成退卻）。兩邊最後都會結束，但**中途的場上人數不同**，沒有逐拍對過 | 靜態 |
 | [`spec/141-retreat-countdown.md`](../spec/141-retreat-countdown.md) | `word_1D31C` 的兩個 byte | 量到開場是 48／48（＝六隊 × 八人），`../re/11` §5.9 寫的是「含畫面外待機的」。**兩種讀法都還沒有直接證據**，這一份只用到「它歸零時結束」這一點 | 靜態 |
@@ -631,7 +631,6 @@
 | [`spec/143-general-duty-field.md`](../spec/143-general-duty-field.md) | `sub_13771` 讀 `+0x17` 的那個分支 | 只知道是每小時處理裡的一支，判斷後 `sub_137F5` 挑人；分支語意未解 | 靜態 |
 | [`spec/143-general-duty-field.md`](../spec/143-general-duty-field.md) | `+0x17` 有沒有第六個值 | 字串表只有 6 項而第 6 項要靠 bit 6 算出來，所以存得下的上限是 4；沒有反證 | 靜態 |
 | [`spec/143-general-duty-field.md`](../spec/143-general-duty-field.md) | **解任把 `+0x1A` 歸零沒有實跑正對照** | 機器碼確定（`mov byte [bx+1Ah], 0`），但實跑那一輪官員的經費本來就是 0，等於沒比。要先撥款再解任才驗得到 | 實測 |
-| [`spec/143-general-duty-field.md`](../spec/143-general-duty-field.md) | 身分欄的畫面對拍 | 原版擷取有了，remake 同狀態的還沒拍 | 靜態 |
 | [`spec/144-advisor-leaves-general-table.md`](../spec/144-advisor-leaves-general-table.md) | 自定軍師時原版那個越界寫 | 位置在武將表尾端後一個 byte，寫進去的是什麼欄位沒查；remake 不照抄 | 靜態 |
 | [`spec/144-advisor-leaves-general-table.md`](../spec/144-advisor-leaves-general-table.md) | 軍師退場時（如果有）會不會放回表上 | 沒找到反向的寫入端 | 靜態 |
 | [`spec/145-general-and-faction-cells.md`](../spec/145-general-and-faction-cells.md) | `sub_175FA`／`sub_178A7` 的清單是不是只列本勢力 | 武將那張只有本勢力、勢力那張列全部活著的，兩張都拍過了（`../playtest/86`） | 靜態 |
@@ -656,7 +655,7 @@
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 池的上限 | `sub_155EC` 的 `0xFFDC` 只在退兵路徑上驗過；月結加兵是不是同一支未查。**remake 兩條路徑現在都夾**（`economy.ClampReserve`），但那是照著同一個常數做的，不是證明原版共用同一支 | 靜態 |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 頭像的邊框 | `sub_107D2` 只 blit 64×64 的圖塊，**框在哪裡畫的沒找到**——場景 5 的 op 清單裡沒有頭像那一格的框 | 靜態 |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 兵種標籤 | 畫面用場景 5 的「主將」，規則層的 `army.Position` 第一個是「大將」（原版 TALK #62 也這樣說）。兩處用語不同是原版就有的，不要統一 | 靜態 |
-| [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 在地圖上直接點軍團 | 原版 `sub_11E46` 讓玩家在大地圖上點軍團就開這個面板，remake 只能從一覽表進來。⭐ 地圖選點的機制已經有了（`149`），缺的是「那一格上有沒有軍團」這道命中判定 | 靜態 |
+| [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 反白列上換色的機制 | `38` §1.7.1：兩個色號各有一次量測，變換規則沒解 | 靜態 |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 空槽標記 | 原版用名稱欄第一個字 `0xD0A1`；remake 用「載得起來且玩家勢力有效」判定，兩者不等價 | 靜態 |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 新遊戲共用 | remake 的啟動殼層是自己的畫面，還沒有換成這個四槽視窗 | 靜態 |
 | [`spec/26-yes-no-dialog.md`](../spec/26-yes-no-dialog.md) | 原版的使用者 | `sub_18DC8` 只有一個呼叫端 `sub_11AC3`（新遊戲流程），問題文字由那裡給，內容未讀 | 靜態 |

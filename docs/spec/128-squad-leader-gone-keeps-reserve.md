@@ -60,4 +60,4 @@
 | 項目 | 現況 |
 |---|---|
 | 戰後兵力的逐槽對拍 | 原版打完之後每槽兵數是三項相加（[`../re/83`](../re/83-post-battle-troop-accounting.md) §3），remake 的戰後回填**沒有逐槽比過原版** |
-| 士氣按比例縮 | `sub_19F58` 最後三行：新士氣 ＝ 舊士氣 × 新總兵力 ÷ 舊總兵力。remake 的戰後士氣處理**還沒對照這一條** |
+| ~~士氣按比例縮~~ | **已接**（[`129`](129-post-battle-morale-scaling.md)＝CONFORMED）：`postBattleMorale` 就是 `sub_19EBD` ＋ `sub_19F58` 那兩段 |
