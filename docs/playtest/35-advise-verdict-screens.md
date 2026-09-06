@@ -3,6 +3,8 @@
 **狀態：通過。** 選單五列與原版 `TALK.DAT` #77 逐字相同；
 請求出陣的三句對話與原版實錄影片 4 分 30 秒那一幕同一組訊息。
 
+⭐ **逐像素比在 [`104`](104-advise-verdict-parity.md)**（本份是目視驗收，看不出 8 px 級的差異）。
+
 - 日期：2026-08-17
 - 規格：[`../spec/49`](../spec/49-advise-relocate-and-sortie.md)、
   [`../spec/45`](../spec/45-advise-scene-layout.md)

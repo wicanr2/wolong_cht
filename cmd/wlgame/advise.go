@@ -425,9 +425,6 @@ func (g *game) beginRelocate(node int) {
 		// 搬成之後君主再講一句（`sub_133FD` 的玩家分支，docs/spec/64 §1.1）：
 		// 組編號 0x1A4 配**君主自己的原始說話型**，主公型落在 0–2。
 		g.sayCapitalMoved(node)
-		g.lastEvent = "遷都 " + big5(g.world.Cities[node].Name)
-	} else {
-		g.lastEvent = "遷都：君主不同意"
 	}
 }
 
@@ -465,14 +462,15 @@ func (g *game) sayCapitalMoved(node int) {
 func (g *game) beginSortie() {
 	ok := g.world.AdviseSortieAccepted()
 	g.sayVerdict(adviseSortieTalkBase, ok)
-	if ok && g.world.AdviseSortie() {
-		g.lastEvent = "君主親自出陣"
-	} else {
-		g.lastEvent = "請求出陣：君主不同意"
+	if ok {
+		g.world.AdviseSortie()
 	}
 }
 
 // sayVerdict 演 `sub_13B08` 的三句：上框君主開場、下框軍師、上框君主定案。
+//
+// ⭐ **這三句就是回報，不再寫事件列**（docs/spec/145 §1.1）：事件列補的是
+// 玩家沒在看的時候發生的事，玩家自己剛下的指令原版已經有自己的回報。
 //
 //	cx        君主開場（`sub_13C99` 自己加說話型變體）
 //	cx + 3    軍師（`sub_13CDC`，不加變體）
@@ -551,11 +549,7 @@ func (g *game) offerReason(r persuasion.Reason) {
 	switch out {
 	case persuasion.Agreed:
 		g.commitAdvice()
-	case persuasion.Failed:
-		g.lastEvent = "說服失敗"
-		g.sess = nil
-	case persuasion.Withdrawn:
-		g.lastEvent = "進言撤回"
+	case persuasion.Failed, persuasion.Withdrawn:
 		g.sess = nil
 	}
 }
@@ -636,13 +630,8 @@ func (g *game) commitAdvice() bool {
 		// remake 專屬的守門句：君主點頭之後規則層才發現條件變了。
 		// 原版沒有這條路徑，所以沒有對應的原文（docs/spec/44 §6）。
 		g.adviseLordSaid = []string{"局勢已變，這項進言", "沒有成立。"}
-		g.lastEvent = "進言失效"
 		g.sess = nil
 		return false
-	}
-	g.lastEvent = g.adviseCmd.String() + " 成立"
-	if g.adviseCmd == persuasion.CeaseFire || g.adviseCmd == persuasion.Cooperate {
-		g.lastEvent += "（外交事件已排入）"
 	}
 	g.sess = nil
 	return true

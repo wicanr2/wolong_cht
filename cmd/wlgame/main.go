@@ -2700,8 +2700,13 @@ func configureDirectFixtures(g *game, openWin int, openList bool, listPickRow in
 		return
 	}
 	if adviseSortie {
+		// 原版是點指令列的「進言」→ 選單第 4 列進來的，所以命令視窗開著、
+		// 那一格反白（docs/spec/124 §3.5），**而且選單的框還留在畫面上**
+		// （docs/spec/126 §1.2）。走真實流程才擺得出這三件事。
+		g.hudSet(hudCommand, true)
+		g.cmdCell = int(naturalCommandAdvise)
 		g.openAdvise()
-		g.beginSortie()
+		g.pickAdviseCommand(adviseSortieRow)
 		return
 	}
 	if openAdvise {

@@ -76,6 +76,14 @@ remake 的大地圖底下有一條事件列（原版沒有，是 remake 自己�
 自己的回報（官員台詞、訊息框），再登記一次就是同一件事講兩遍，
 而且那條列蓋在地圖上，逐像素對拍時往往是最大的一塊差異。
 
+同一條判準也套到**進言的八個出口**（遷都成／不成、出陣成／不成、說服失敗、
+進言撤回、進言失效、進言成立）：那四項各自有 `sub_13B08` 的三句判決台詞
+（[`45`](45-advise-scene-layout.md) §1），事件列是第二遍
+（[`../playtest/104`](../playtest/104-advise-verdict-parity.md)）。
+⚠ 留著的只有 `openAdvise` 那一句「君主出征中」——**那一條 remake 用錯了
+呈現方式**（原版是 TALK #64 訊息框，[`../re/22`](../re/22-strategy-command-tree.md) §3.4），
+不是「該不該寫事件列」的問題，見 §4。
+
 同一條判準套到人事四條（[`142`](142-personnel-dismiss-flow.md)）：
 任命／解任成功的四句都拿掉了，那位官員自己說的那一句就是回報
 （[`../playtest/92`](../playtest/92-personnel-assign-parity.md)：5,808 px）。
