@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**694 列分布在 289 份文件，平均每份 2.4 列。**
+**695 列分布在 290 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 182 | 175 | 6 | 1 |
-| 驗收 | 198 | 173 | 25 | 0 |
+| 驗收 | 199 | 174 | 25 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 277 | 256 | 20 | 1 |
-| **合計** | **694** | 635 | 56 | 3 |
+| **合計** | **695** | 636 | 56 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -54,7 +54,7 @@
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/spec/` | 238 |
-| `docs/playtest/` | 198 |
+| `docs/playtest/` | 199 |
 | `docs/re/` | 182 |
 | `docs/release/` | 22 |
 | `docs/formats/` | 20 |
@@ -291,7 +291,7 @@
 | [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 游標圖形資料 | 在 `sub_201E4` 附近，逐 byte 沒抓；remake 已經有量出來的 14×14 遮罩 | 靜態 |
 | [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 54 個 hide／show 點對應到 remake 的哪一段 | 沒做；這是「remake 要不要同步游標」的前置 | 靜態 |
 
-## 2.4 驗收（198 條）
+## 2.4 驗收（199 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -303,6 +303,7 @@
 | [`playtest/100-video-mode-parity.md`](../playtest/100-video-mode-parity.md) | remake 多的兩列 | 「主君編成」與「損害報告」，已記錄的差異（`39`） | 靜態 |
 | [`playtest/101-quit-menu-parity.md`](../playtest/101-quit-menu-parity.md) | remake 要把游標的 hide／show 接在哪 | 規則已解（`../re/88`），但 54 個呼叫點還沒對應到 remake 的繪圖流程 | 靜態 |
 | [`playtest/101-quit-menu-parity.md`](../playtest/101-quit-menu-parity.md) | remake 多的兩列 | 「主君編成」「損害報告」是 remake 加的，`39` 已裁定保留 | 靜態 |
+| [`playtest/102-help-second-step.md`](../playtest/102-help-second-step.md) | 選完協同進攻對象之後 | 這一份停在 #7 的畫面，**再選下去**（成案／被拒）還沒拍 | 靜態 |
 | [`playtest/17-expert-dosbox-remake.md`](../playtest/17-expert-dosbox-remake.md) | 松崗 DOS/V 原版 | **PASS（啟動至開場）** / 2026-08-12 證實空白確認／`0000`／`1234` 均越過密碼頁；完整自然長程驗證尚未執行 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 據點換手之後遮罩會不會跟著變 | `sub_1890A` 的行為，靜態讀得出來，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 松崗 DOS/V 側 | 這套 bridge 還沒在 DOS/V 上跑過。**密碼頁不構成阻礙**（四格留白按「確定」即可通過，`18`）——是還沒做 | 靜態 |
@@ -480,7 +481,7 @@
 | [`playtest/94-march-map-picker.md`](../playtest/94-march-map-picker.md) | 游標推到畫面邊緣時鏡頭跟過去 | 原版的滑鼠是**世界座標**，推出視野鏡頭會捲（`../re/84` §2）。remake 的滑鼠被視窗框住，還沒接 | 靜態 |
 | [`playtest/94-march-map-picker.md`](../playtest/94-march-map-picker.md) | 狀態列 #21（三選一） | 選完目標據點的下一張，還沒拍 | 靜態 |
 | [`playtest/94-march-map-picker.md`](../playtest/94-march-map-picker.md) | 別的狀態下的游標 | §2 | 靜態 |
-| [`playtest/95-diplomacy-preconditions.md`](../playtest/95-diplomacy-preconditions.md) | 兩道閘通過之後的畫面 | 需要一個「已經派了外交官」的局面才走得到 #7；受控存檔還沒做那一版 | 靜態 |
+| [`playtest/95-diplomacy-preconditions.md`](../playtest/95-diplomacy-preconditions.md) | 協同進攻的對象選完之後 | #7 那一張已經有了（`102`），**再選下去**（成案／被拒）還沒拍 | 靜態 |
 | [`playtest/95-diplomacy-preconditions.md`](../playtest/95-diplomacy-preconditions.md) | `sub_1304E` 的 `dx` 附加欄位 | 這兩個呼叫點都傳 `0FFFFh`（不比），別的呼叫點還沒逐一讀 | 靜態 |
 | [`playtest/95-diplomacy-preconditions.md`](../playtest/95-diplomacy-preconditions.md) | 原版擷取裡的滑鼠游標 | 兩張都是 95 px | 靜態 |
 | [`playtest/96-map-click.md`](../playtest/96-map-click.md) | 佔用圖 | 原版查的是 `cs:word_19872` 的佔用圖，remake 直接掃軍團表比座標。結果相同但來源不同 | 靜態 |

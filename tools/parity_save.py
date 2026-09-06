@@ -16,6 +16,13 @@ AI 的判斷都吃亂數，取樣點一拉長兩邊就分開，而分開之後�
                 停用的槽，所以清掉就等於整個關掉——**不移動也不繪製**
                 （`docs/spec/146`）。
 
+  --diplomat F:G  把武將 G 派駐到勢力 F 當外交官：勢力記錄 `+0x2A` ＝ G、
+                武將記錄 `+0x17` ＝ 3。**兩個欄位都要寫**——前者是外交前置閘
+                `sub_165EF` 讀的那一個，後者是一覽表「身分」欄與候選過濾
+                讀的那一個（`docs/spec/143`／`docs/spec/150`）。
+                停戰與請求協助**沒有外交官就走不到第二步**，所以那兩條
+                狀態列（#7）要靠這個改法才拍得到。
+
 ⚠ **輸出目錄要自己備妥其餘原版檔案**（dosgolem 的 gamedir 需要整套）。
 這一支只寫 `SAVE.DAT`，不碰來源，也不碰 `workplace/orig/`。
 """
@@ -35,6 +42,14 @@ MAP_OBJECT_BASE = 0x20C0
 MAP_OBJECT_SIZE = 16
 CLOUD_FIRST, CLOUD_COUNT = 16, 16
 
+# 勢力表 22 筆 × 64 B、武將表 128 槽 × 32 B（docs/formats/08 §1）。
+FACTION_BASE, FACTION_SIZE, FACTION_COUNT = 0x0080, 64, 22
+FACTION_DIPLOMAT = 0x2A          # 我方派駐在這個勢力的外交官（0xFF ＝ 無）
+GENERAL_BASE, GENERAL_SIZE, GENERAL_COUNT = 0x42C0, 32, 127
+GENERAL_DUTY = 0x17              # 職務值 0–4；3 ＝ 外交官（docs/spec/143）
+DUTY_DIPLOMAT = 3
+NO_ONE = 0xFF
+
 
 def disable_clouds(data: bytearray, block: int) -> int:
     """清掉雲的存在旗標，回傳實際關掉幾朵。"""
@@ -46,6 +61,24 @@ def disable_clouds(data: bytearray, block: int) -> int:
             data[off] &= ~0x80 & 0xFF
             n += 1
     return n
+
+
+def assign_diplomat(data: bytearray, block: int, faction: int, general: int) -> str:
+    """派 general 到 faction 當外交官，回傳一行說明。
+
+    ⚠ **兩個欄位都要寫。** 只寫勢力 `+0x2A` 的話前置閘會過，但那個武將的
+    「身分」欄還是「－－－」，而且他仍然出現在任命候選裡——**同一件事在
+    兩張表各存一份**（`docs/spec/143` §2），漏掉一半會做出一份原版自己
+    走不到的狀態，對拍就變成在比一個不存在的局面。
+    """
+    if not 0 <= faction < FACTION_COUNT:
+        raise ValueError(f"勢力編號要在 0–{FACTION_COUNT - 1}，收到 {faction}")
+    if not 0 <= general < GENERAL_COUNT:
+        raise ValueError(f"武將編號要在 0–{GENERAL_COUNT - 1}，收到 {general}")
+    base = block * BLOCK
+    data[base + FACTION_BASE + faction * FACTION_SIZE + FACTION_DIPLOMAT] = general
+    data[base + GENERAL_BASE + general * GENERAL_SIZE + GENERAL_DUTY] = DUTY_DIPLOMAT
+    return f"武將 {general} 派駐勢力 {faction} 當外交官"
 
 
 def selftest() -> int:
@@ -78,6 +111,29 @@ def selftest() -> int:
     for slot in range(32):
         two[BLOCK + base + slot * MAP_OBJECT_SIZE] = 0x80
     check("只動指定的區塊（負對照）", disable_clouds(two, 0) == 0)
+
+    # --diplomat：兩個欄位都要寫，而且只寫那兩個。
+    d = bytearray(FILE_SIZE)
+    for i in range(FILE_SIZE):
+        d[i] = 0xFF if i % 7 == 0 else 0x11
+    before = bytes(d)
+    assign_diplomat(d, 0, 5, 9)
+    fa = FACTION_BASE + 5 * FACTION_SIZE + FACTION_DIPLOMAT
+    ge = GENERAL_BASE + 9 * GENERAL_SIZE + GENERAL_DUTY
+    check("勢力 +0x2A 寫成武將編號", d[fa] == 9)
+    check("武將 +0x17 寫成職務 3", d[ge] == DUTY_DIPLOMAT)
+    check("其餘 byte 一個都沒動",
+          sum(1 for i in range(FILE_SIZE) if d[i] != before[i]) <= 2)
+    # 負對照：第 2 槽不受影響。
+    d2 = bytearray(FILE_SIZE)
+    assign_diplomat(d2, 1, 5, 9)
+    check("只動指定的區塊（負對照）", d2[fa] == 0 and d2[BLOCK + fa] == 9)
+    for bad in ((22, 0), (0, 127), (-1, 0)):
+        try:
+            assign_diplomat(bytearray(FILE_SIZE), 0, *bad)
+            check(f"擋下超出範圍的 {bad}", False)
+        except ValueError:
+            check(f"擋下超出範圍的 {bad}", True)
     return 0 if ok else 1
 
 
@@ -88,6 +144,8 @@ def main() -> int:
     ap.add_argument("outdir", nargs="?")
     ap.add_argument("--slot", type=int, default=0, help="改第幾個區塊（0–3）")
     ap.add_argument("--no-clouds", action="store_true")
+    ap.add_argument("--diplomat", metavar="勢力:武將",
+                    help="派一個外交官（勢力記錄 +0x2A ＋ 武將記錄 +0x17）")
     ap.add_argument("--selftest", action="store_true")
     ns = ap.parse_args()
 
@@ -105,6 +163,15 @@ def main() -> int:
     changes = []
     if ns.no_clouds:
         changes.append(f"停用 {disable_clouds(data, ns.slot)} 朵雲")
+    if ns.diplomat:
+        try:
+            faction, general = (int(v) for v in ns.diplomat.split(":", 1))
+        except ValueError:
+            ap.error("--diplomat 要寫成 `勢力:武將`，兩個都是十進位整數")
+        try:
+            changes.append(assign_diplomat(data, ns.slot, faction, general))
+        except ValueError as err:
+            ap.error(str(err))
     if not changes:
         ap.error("沒有指定任何改法")
 

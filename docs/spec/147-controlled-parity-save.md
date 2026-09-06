@@ -51,8 +51,26 @@ sub_12533:  cmp byte ptr [si], 80h / jb 跳過   ; 不繪製
 
 ```sh
 tools/py.sh tools/parity_save.py <來源 SAVE.DAT> <輸出目錄> --no-clouds
+tools/py.sh tools/parity_save.py <來源> <輸出目錄> --diplomat 勢力:武將
 tools/py.sh tools/parity_save.py --selftest
 ```
+
+### 3.1 `--diplomat 勢力:武將`：把外交官派好
+
+停戰與請求協助**沒有外交官就走不到第二步**（[`150`](150-diplomacy-preconditions.md)），
+所以狀態列 #7 一直沒有原版擷取。這個改法一次寫兩個欄位：
+
+| 欄位 | 值 | 誰讀它 |
+|---|---|---|
+| 勢力記錄 `+0x2A` | 武將編號 | 前置閘 `sub_165EF`、一覽表的「外交官」欄 |
+| 武將記錄 `+0x17` | 3（外交官）| 一覽表的「身分」欄、任命候選過濾（[`148`](148-shared-candidate-filter.md)）|
+
+⚠ **兩個都要寫**：同一件事在兩張表各存一份（[`143`](143-general-duty-field.md) §2），
+只寫一半就做出一份**原版自己走不到的狀態**。
+
+⚠ **派的必須是自己的武將。** 閘只看勢力 `+0x2A`，所以派別人的武將也會過——
+但原版的任命流程選不到他。**受控存檔繞過的應該是「要花多久才會發生」，
+不是「規則允不允許」**（[`../playtest/102`](../playtest/102-help-second-step.md) §2.2）。
 
 輸出只有 `SAVE.DAT`；**dosgolem 的 gamedir 要自己備妥其餘原版檔案**。
 這一支不碰來源、不碰 `workplace/orig/`。

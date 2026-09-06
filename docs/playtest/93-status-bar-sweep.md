@@ -19,6 +19,7 @@
 | #9 | 人事任命：選武將 | 人事 → 選城／勢力 → 選將 | `-open-command-menu personnel:0:0:0` | 95 | [`92`](92-personnel-assign-parity.md) |
 | #11／#13 | 內政官任命／解任 | `stap:96,47` → 選單第 0／1 列 | `-open-command-menu personnel:0|1` | 278 | [`84`](84-personnel-corps-list-parity.md) |
 | #12／#14 | 外交官任命／解任 | 同上第 2／3 列 | `-open-command-menu personnel:2|3` | **0** | [`84`](84-personnel-corps-list-parity.md) |
+| **#7** | **請求協助：協同進攻的對象** | `stap:48,47` → 選單第 2 列 → 選協助勢力 | `-advise-target -advise-pick-row 2 -advise-list-row 0` | **95** | [`102`](102-help-second-step.md)（要 `--diplomat` 的受控存檔）|
 | #15 | 進言 → 遷都 | `stap:48,47` → 選單第 3 列 | `-advise-target -advise-pick-row 3` | 805 | [`89`](89-advise-status-parity.md)（內政吃亂數）|
 | **#18** | **財政：騎兵募集人數** | `stap:144,47` → `stap:270,184` | `-open-finance -finance-amount 1` | **95** | 本份 |
 | **#19** | **財政：弓兵募集人數** | 同上 `stap:270,200` | `-open-finance -finance-amount 2` | **95** | 本份 |
@@ -37,11 +38,11 @@
 
 ## 2. 還沒拍的
 
-⭐ **27 個帶索引的呼叫點全部有原版擷取了。** 只剩兩條結構上拍不到的：
+⭐ **27 個帶索引的呼叫點全部有原版擷取了**，含最後補上的 #7：
 
-| TALK | 內容 | 為什麼 |
+| TALK | 內容 | 結果 |
 |---:|---|---|
-| #7 | 請求協助的第二步（協同進攻對象）| ⚠ 走不到——**要先派外交官到那個勢力**（[`../spec/150`](../spec/150-diplomacy-preconditions.md)），受控存檔還沒做那一版 |
+| #7 | 請求協助的第二步（協同進攻對象）| ✅ 95 px（原版游標）——靠 `parity_save.py --diplomat` 把外交官派好才走得到（[`102`](102-help-second-step.md)）|
 | #10 | 「請選擇解任之武將。」| ⭐ **原版一個呼叫點都沒有**，是死文字，拍不到也不該拍 |
 
 ## 3. ⭐ 第一次在逐像素上看到「校訂」造成的差異

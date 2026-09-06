@@ -45,6 +45,7 @@
 | [`docs/playtest/10-event-message-modal.md`](playtest/10-event-message-modal.md) | 10 — 事件 TALK 通知 modal | 已完成通知資料接縫、Linux/Xvfb 視覺抽樣與 remake TALK 五行分頁；原版未知 事件流程／未定位 … | 2026-08-09 |
 | [`docs/playtest/100-video-mode-parity.md`](playtest/100-video-mode-parity.md) | 100 — 畫面模式「液晶」接上：地圖 0 px，系統選單逐列 0 px | 通過。 | 2026-09-06 |
 | [`docs/playtest/101-quit-menu-parity.md`](playtest/101-quit-menu-parity.md) | 101 — 「遊戲結束」的兩項選單：框內逐像素 0 px | 通過。 | 2026-09-06 |
+| [`docs/playtest/102-help-second-step.md`](playtest/102-help-second-step.md) | 102 — 狀態列 #7：最後一條沒有原版擷取的，靠受控存檔派一個外交官走到 | 通過。 | 2026-09-07 |
 | [`docs/playtest/11-event6-original-fixture.md`](playtest/11-event6-original-fixture.md) | 11 — 原版事件 6 fixture oracle | 事件 6 主要結果畫面已由原版 fixture 證實；不是自然長程存檔，也不封閉次要 formatter。 | 2026-08-10 |
 | [`docs/playtest/12-event3-same-state-parity.md`](playtest/12-event3-same-state-parity.md) | event3 同狀態對拍（2026-08-10） | 同狀態事件接線、原版式 composite、3×6 實際格位選取、TALK 五行分頁、 DOS/V 內框／按鍵 gl… | 2026-08-10 |
 | [`docs/playtest/13-dosv-natural-and-target-gui.md`](playtest/13-dosv-natural-and-target-gui.md) | DOS/V 自然畫面與目標平台 GUI 驗收 | 歷史驗收紀錄（2026-08-11，影片 oracle）。 | 2026-08-11 |
