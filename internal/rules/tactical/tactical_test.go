@@ -689,7 +689,12 @@ func TestRetreatUsesOriginalExitTarget(t *testing.T) {
 	}
 }
 
-// 跑一場完整的戰鬥：一定會結束，而且勝方是還有兵的那一側。
+// 跑一場完整的戰鬥：一定會結束，而且結束的理由是原版那三條之一。
+//
+// ⚠ **「勝方是還有兵的那一側」不是不變量。** 原版有三條出口
+// （`sub_1A6FA`，docs/re/11 §5.9）：退卻的倒數走完、任一側補不出兵。
+// 大將體力不支會讓全軍退卻（`sub_1AE56`），於是一場勢均力敵的仗多半是
+// **倒數**先到——那時輸的一方帳上還有待機兵，這是原版行為不是缺陷。
 func TestBattleTerminates(t *testing.T) {
 	b := newTestBattle(flatField())
 	b.Order(0, -1, Attack)
@@ -701,12 +706,19 @@ func TestBattleTerminates(t *testing.T) {
 		t.Fatalf("跑了 20 萬幀還沒結束（攻方剩 %d、守方剩 %d）",
 			b.Sides[0].Remaining(), b.Sides[1].Remaining())
 	}
-	if b.Sides[1-b.Winner].Remaining() != 0 {
+	switch {
+	case b.endPhase != 0:
+		// 退卻的倒數：勝方一定是**沒退卻**的那一側。
+		if want := 2 - b.endPhase; b.Winner != want {
+			t.Errorf("側 %d 退卻，勝方 = %d，應為 %d",
+				b.endPhase-1, b.Winner, want)
+		}
+	case b.Sides[1-b.Winner].Remaining() != 0:
 		t.Errorf("判給第 %d 側，但對方還剩 %d",
 			b.Winner, b.Sides[1-b.Winner].Remaining())
 	}
-	t.Logf("第 %d 幀結束，勝方 %d（剩 %d 對 %d）", b.Frame, b.Winner,
-		b.Sides[b.Winner].Remaining(), b.Sides[1-b.Winner].Remaining())
+	t.Logf("第 %d 幀結束，勝方 %d（剩 %d 對 %d，退卻旗標 %d）", b.Frame, b.Winner,
+		b.Sides[b.Winner].Remaining(), b.Sides[1-b.Winner].Remaining(), b.endPhase)
 }
 
 // 真實 BATTLE.MAP 的攻城地形也不能讓核心戰鬥卡死。

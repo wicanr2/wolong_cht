@@ -19,6 +19,11 @@ IMAGE="${WOLONG_GO_IMAGE:-demonwinter-go}"
 CACHE_VOL=wl-gomod
 BUILD_VOL=wl-gobuild
 
+# 遊戲本身的上限。`-shot-when` 那種「跑到局面成立才拍」的條件會跑很久
+# （`battle-settled` 要模擬到布陣走完），120 秒不夠——而**逾時的症狀是
+# 沒有輸出檔**，看起來像「這一組參數拍不出來」。
+APP_TIMEOUT="${WOLONG_SHOT_TIMEOUT:-300}"
+
 OUT="${1:?用法: tools/parity_shot.sh <輸出.png> [wlgame 參數…]}"
 shift || true
 mkdir -p "$(dirname "$OUT")"
@@ -32,7 +37,7 @@ docker run --rm --log-opt max-size=10m --log-opt max-file=3 \
     -v "$CACHE_VOL:/gomod" -v "$BUILD_VOL:/gocache" \
     -u "$(id -u):$(id -g)" \
     -e HOME=/tmp -e GOCACHE=/gocache -e GOMODCACHE=/gomod \
-    -e LIBGL_ALWAYS_SOFTWARE=1 \
+    -e LIBGL_ALWAYS_SOFTWARE=1 -e APP_TIMEOUT="$APP_TIMEOUT" \
     -w /src \
     "$IMAGE" bash -c "
 set -e
@@ -44,7 +49,7 @@ for i in \$(seq 1 50); do xdpyinfo -display :99 >/dev/null 2>&1 && break; sleep 
 # 指標停到左上角：Xvfb 預設把指標放在桌面中央，映進遊戲畫面正中，
 # remake 的游標會畫在那裡，對拍時吃掉一塊（playtest/42 §3）。
 DISPLAY=:99 xdotool mousemove 0 0 2>/dev/null || true
-DISPLAY=:99 timeout 120 /tmp/app $* -shot /out/$OUT_BASE
+DISPLAY=:99 timeout $APP_TIMEOUT /tmp/app $* -shot /out/$OUT_BASE
 kill -9 \$XVFB_PID 2>/dev/null || true
 "
 echo "$OUT"

@@ -283,6 +283,14 @@ type Battle struct {
 	// 腳本指令 16 拿它當「現在該不該講這一句」的閘（docs/spec/135）。
 	endPhase int
 
+	// retreat 是原版的 `byte_1D34A`：全軍退卻之後的倒數拍數。
+	//
+	// ⚠ **原版在戰鬥初始化時就把它設成 120**，不是下退卻令時設
+	// （`sub_19A33`）——它只在 `endPhase != 0` 時遞減，而第二次退卻
+	// 不受理，所以兩種寫法在原版等價。這裡照抄原版那一種
+	// （docs/spec/141 §2）。
+	retreat int
+
 	// projectiles 是飛在空中的箭。原版是一張 32 筆的表（docs/re/11 §5.1）。
 	projectiles []projectile
 
@@ -390,7 +398,8 @@ func (b *Battle) Projectiles() []ProjectileView {
 // cityWall 是攻城時守方據點的城壁值（據點記錄 `+0x13`），決定城壁耐久；
 // 野戰用不到，傳 0 即可。
 func NewBattle(f *Field, forms *Formations, rng Rand, cityWall int) *Battle {
-	b := &Battle{Field: f, Forms: forms, rng: rng, Winner: -1}
+	b := &Battle{Field: f, Forms: forms, rng: rng, Winner: -1,
+		retreat: RetreatCountdown}
 	// 原版把兩側的陣形原點分開存（side 0 → word_1D33C，side 1 → word_1D33E），
 	// 而 side 1 是**把陣形表的 dx 取負**來鏡射（`sub_1AA2C` 的 `neg dl`），
 	// 不是把原點對稱過去。
@@ -683,8 +692,25 @@ func (b *Battle) Step() {
 	b.checkVictory()
 }
 
-// checkVictory 重現 `sub_1A6FA`：任一側補不出兵就結束。
+// checkVictory 重現 `sub_1A6FA` 的三條出口。**順序照原版**：
+// 退卻的倒數排在「補不出兵」那兩條之前（docs/re/11 §5.9）。
 func (b *Battle) checkVictory() {
+	// ① 全軍退卻之後的 120 拍倒數（docs/spec/141）。
+	//
+	// ⚠ 正常打完不會走到這裡——退卻的兵通常八拍就走完，由下面那條
+	// 「補不出兵」收尾。這一段是**兜底**：退不出去時才由它結束。
+	if b.endPhase != 0 {
+		b.retreat--
+		if b.retreat == 0 {
+			// 原版 `xchg` 之後只有 `al == 1` 才把 1 寫回去，
+			// 也就是**回傳沒退卻的那一側**。
+			b.Done, b.Winner = true, 2-b.endPhase
+			b.Log = append(b.Log,
+				sideName(b.Winner)+"勝："+sideName(1-b.Winner)+"退卻的倒數走完了")
+			return
+		}
+	}
+	// ②③ 任一側補不出兵就結束。
 	for i := range b.Sides {
 		if b.Sides[i].Remaining() == 0 {
 			b.Done, b.Winner = true, 1-i

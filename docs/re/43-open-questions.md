@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**617 列分布在 254 份文件，平均每份 2.4 列。**
+**620 列分布在 256 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 181 | 174 | 6 | 1 |
-| 驗收 | 141 | 122 | 19 | 0 |
+| 驗收 | 143 | 124 | 19 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 258 | 239 | 18 | 1 |
-| **合計** | **617** | 566 | 48 | 3 |
+| 其他 | 259 | 240 | 18 | 1 |
+| **合計** | **620** | 569 | 48 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,9 +53,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 219 |
+| `docs/spec/` | 220 |
 | `docs/re/` | 181 |
-| `docs/playtest/` | 141 |
+| `docs/playtest/` | 143 |
 | `docs/release/` | 22 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
@@ -290,7 +290,7 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
 
-## 2.4 驗收（141 條）
+## 2.4 驗收（143 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -426,7 +426,6 @@
 | [`playtest/75-pathfind-detour.md`](../playtest/75-pathfind-detour.md) | `field` 的對白框 | 捷徑路徑推完才武裝開場喊話（`../spec/117`） / 讓 `-open-siege` 在推之前武裝 | 靜態 |
 | [`playtest/75-pathfind-detour.md`](../playtest/75-pathfind-detour.md) | 走位期「幾拍走一格」 | 還沒從機器碼推出來 / `sub_1ADC8` 的節流 | 靜態 |
 | [`playtest/76-battle-talk-parity.md`](../playtest/76-battle-talk-parity.md) | 那 408 格符號字模的來源 | 不是倚天的任何一份（`../re/29` §7） | 靜態 |
-| [`playtest/76-battle-talk-parity.md`](../playtest/76-battle-talk-parity.md) | 退卻的 120 拍倒數 | `byte_1D34A`，remake 的退卻沒有這一段（`../spec/135` §5） | 靜態 |
 | [`playtest/77-state-table-parity.md`](../playtest/77-state-table-parity.md) | 武將旗標 bit 0 | 四個劇本裡只有劇本三的張衛設著，語意未解，remake 載入時丟掉。劇本 1 沒有人設，所以這一輪比不出來 | 靜態 |
 | [`playtest/77-state-table-parity.md`](../playtest/77-state-table-parity.md) | 武將 `+0x17` 職務 | 原版是五個值（0 無／1 出陣／2 內政官／3 外交官／4 捕虜），remake 壓成 `Posted bool`，職務改記在據點的 `Governor` 與勢力的 `Diplomat`。這一輪從那兩張表反查回來比，開局全部對上——但**壓縮本身還在**（`../spec/138` §4） | 靜態 |
 | [`playtest/77-state-table-parity.md`](../playtest/77-state-table-parity.md) | 其他三個劇本 | 只比過劇本 1 | 靜態 |
@@ -435,6 +434,9 @@
 | [`playtest/78-ai-decision-trace.md`](../playtest/78-ai-decision-trace.md) | 事件 `0B`／`04`／`05`／`0D` | 內政官／外交官要求經費那幾支，開局全 `0xFF` 沒有官員，窗口內不會觸發 | 靜態 |
 | [`playtest/79-march-menu-original-layout.md`](../playtest/79-march-menu-original-layout.md) | 一般訊息框的名字 | `drawMessage` 還是整段畫白、名字還是裁掉補白。改動會波及四個語系的排版，要另外開規格（`../spec/140` §5） | 靜態 |
 | [`playtest/79-march-menu-original-layout.md`](../playtest/79-march-menu-original-layout.md) | 選單位置的實跑對照 | 位置只有單元測試與夾制推導，**沒有在同一個游標座標下拍過一張**——headless 的指標位置目前不可控 | 實測 |
+| [`playtest/80-retreat-countdown.md`](../playtest/80-retreat-countdown.md) | 倒數真的走完那一場 | 這一輪是「補不出兵」先到。要看到倒數收尾，得找一場退卻方**走不出去**的仗（被擋住，或補兵一直進場） | 靜態 |
+| [`playtest/80-retreat-countdown.md`](../playtest/80-retreat-countdown.md) | `word_1D31C` 的兩個 byte | 開場是 48／48 ＝ 六隊 × 八人，看起來是**場上**人數；`../re/11` §5.9 寫的是「含畫面外待機的」。兩種讀法都還沒有直接證據 | 靜態 |
+| [`playtest/80-retreat-countdown.md`](../playtest/80-retreat-countdown.md) | `-battle-steps 70` 與 `battle-settled` 是不是同一拍 | §4 量到兩者對同一張原版圖差 680 px／336 px。`../spec/118` §4 寫「同一個狀態」，那是 `sb-minimap` 還是 8 px 那一輪的結論，**尋路修好之後沒有重量** | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -447,7 +449,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（258 條）
+## 2.6 其他（259 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -564,7 +566,6 @@
 | [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | 走進陣形要走多久 | 原版節拍 9 已經散開，但沒有量過「全部到位」是第幾拍 | 靜態 |
 | [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | 既有的戰場對拍會不會漂 | 現有的取樣點（`-battle-steps 120`）在兩邊都已經到位之後，**理論上不受影響**，但沒重跑過 | 靜態 |
 | [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | **移動層怎麼處理同格多兵** | 擋住接線的就是它（§3.5）。原版不查佔用，remake 的 `tryMove`／`anyoneAt` 以「一格一個兵」為前提 / 先讀原版的移動與碰撞判定，看它怎麼容許重疊 | 靜態 |
-| [`spec/135-script-message-command.md`](../spec/135-script-message-command.md) | 退卻的 120 拍倒數（`byte_1D34A`） | `sub_1A8F6` 起、`sub_1A6FA` 遞減到 0 才 `sub_19FDC` 收尾。remake 的退卻沒有這段倒數 | 靜態 |
 | [`spec/135-script-message-command.md`](../spec/135-script-message-command.md) | 參數值 3 | `byte_1D349` 只會是 0／1／2，閘算得出 3 但沒有值對得上——沒有腳本用到，或是原版的死分支 | 靜態 |
 | [`spec/136-battle-talk-parameters.md`](../spec/136-battle-talk-parameters.md) | 參數超過兩個的訊息 | 戰場對白只推兩個。若有第三個標記，原版讀堆疊殘值，remake 丟棄整則 | 靜態 |
 | [`spec/137-builtin-symbol-font.md`](../spec/137-builtin-symbol-font.md) | （那 408 格**來自哪裡**仍未解。 | （散句） | 靜態 |
@@ -576,6 +577,8 @@
 | [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 另外 47 個呼叫點 | 只接了行軍那一條。其餘 handler 的 TALK 索引在 `../re/22` §3 都有，但要一條一條接 | 靜態 |
 | [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 樣式 `1Eh` 是什麼 | `sub_189A4` 把它傳給 `sub_189DE` 當 `ah`。**只知道 0 ＝ 擦除、非 0 ＝ 畫**，`1Eh` 這個值本身沒解（一般訊息框傳的也是 `1Eh`） | 靜態 |
 | [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 一般訊息框要不要一起改 | `\1`–`\5` 的定寬補白與逐標記換色是**全域規則**（`../re/79` §2），但一次改到所有訊息會動到四個語系的排版（`87`、`../playtest/32`）。要另外開一份規格，先量再改 | 靜態 |
+| [`spec/141-retreat-countdown.md`](../spec/141-retreat-countdown.md) | 退卻中要不要補兵 | 原版下令之後場上八拍歸零、**沒有補兵進場**；remake 的 `reinforce()` 會補（補進來的兵下一幀被 `applySquadLeaderGone` 改成退卻）。兩邊最後都會結束，但**中途的場上人數不同**，沒有逐拍對過 | 靜態 |
+| [`spec/141-retreat-countdown.md`](../spec/141-retreat-countdown.md) | `word_1D31C` 的兩個 byte | 量到開場是 48／48（＝六隊 × 八人），`../re/11` §5.9 寫的是「含畫面外待機的」。**兩種讀法都還沒有直接證據**，這一份只用到「它歸零時結束」這一點 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |

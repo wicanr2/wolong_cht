@@ -182,6 +182,7 @@
 | **狀態層對拍：另外三張表** | [`138-state-table-parity.md`](138-state-table-parity.md) | CONFORMED。**5,502 個欄位逐欄比對通過**。勢力／據點／武將表逐欄比，作法照搬軍團表那一輪。名字兩邊都印 hex（dosgolem 零相依），補白是全形空格 `A1 40` |
 | **AI 決策軌跡對拍** | [`139-ai-decision-trace.md`](139-ai-decision-trace.md) | CONFORMED。第一輪比過：事件種類、參數形狀與每月量級一致。攔 `sub_12FBF`（所有事件的共用出口）取軌跡，比**種類／發起方／節奏**不比數值——亂數只影響時機與對象，種類與產生條件是規則決定的 |
 | **左下角的狀態列提示框** | [`140-status-message-box.md`](140-status-message-box.md) | CONFORMED。`sub_18853` 每個指令流程都掛的那個框 ＝ `(0, 320, 256, 80)`、肖像 `0x93`，與一般訊息框是**同一個框換位置**。第一個接上的是行軍三選一（[`39`](39-march-order-menu.md) §3.7）|
+| **全軍退卻之後的 120 拍倒數** | [`141-retreat-countdown.md`](141-retreat-countdown.md) | CONFORMED。`sub_1A6FA` 的三條出口裡排最前面的那一條：退卻中每拍減 1，走完由**沒退卻的那一側**獲勝。⭐ 實測正常打完走的是「補不出兵」——退卻的兵八拍就走完了，倒數是**兜底** |
 
 ## 怎麼加一份
 

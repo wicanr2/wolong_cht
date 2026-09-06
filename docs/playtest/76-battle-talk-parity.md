@@ -79,4 +79,4 @@ SHA-256 完全相同（`1d0cf09d…0d6918`），半形也接過來之後，
 | 項目 | 現況 |
 |---|---|
 | 那 408 格符號字模的來源 | 不是倚天的任何一份（[`../re/29`](../re/29-font-service-int15.md) §7）|
-| 退卻的 120 拍倒數 | `byte_1D34A`，remake 的退卻沒有這一段（[`../spec/135`](../spec/135-script-message-command.md) §5）|
+| ~~退卻的 120 拍倒數~~ | **已接**（[`../spec/141`](../spec/141-retreat-countdown.md)、[`80`](80-retreat-countdown.md)）|

@@ -1301,16 +1301,52 @@ mov [si+10h], ax / clc / retn         ; 設成下一個移動目標 (X, Y)
 | **`+0x1C`** | **鎖定的敵人**（記錄位址） |
 | **`+0x1E`** | **Z 平面位址的高位**；鎖敵時不同平面加 64 格距離懲罰 | **confirmed**（`seg000:1A85B`；§5.16） |
 
-### 5.9 ⭐ 勝負條件：先補不出兵的一方輸
+### 5.9 ⭐ 勝負條件：三條出口，退卻的倒數排在最前面
 
 ```asm
 sub_1A6FA:
-  cmp byte ptr cs:word_1D31C, 0 / jnz .1
-  mov cs:byte_1D349, 1 / call sub_19FDC      ; ★ 低位那一軍沒兵了
+  cmp cs:byte_1D349, 0 / jz .1               ; 沒有人在退卻就跳過倒數
+  dec cs:byte_1D34A / jnz .1                 ; ★ 退卻中每拍減 1
+  xor al, al / xchg al, cs:byte_1D349        ; al ＝ 舊值，旗標歸零
+  cmp al, 1 / jnz .0
+  mov cs:byte_1D349, 1                       ; 側 0 退卻 ⇒ 結果 1
+.0:
+  call sub_19FDC
 .1:
-  cmp byte ptr cs:word_1D31C+1, 0 / jnz .2
+  cmp byte ptr cs:word_1D31C, 0 / jnz .2
+  mov cs:byte_1D349, 1 / call sub_19FDC      ; ★ 低位那一軍沒兵了
+.2:
+  cmp byte ptr cs:word_1D31C+1, 0 / jnz .3
   mov cs:byte_1D349, 0 / call sub_19FDC      ; ★ 高位那一軍沒兵了
+.3:
+  call sub_1A754 / call sub_1A785            ; 隊長不在場（docs/re/83 §4）
 ```
+
+#### 5.9.1 退卻的 120 拍倒數（2026-09-06）
+
+`byte_1D34A` **在戰鬥初始化時就設成 `0x78`（120）**，不是下退卻令時設——
+`sub_19A33` 的 `mov cs:byte_1D349, al / mov cs:byte_1D34A, 78h`
+（`al` 那時是 0）。它只在 `byte_1D349 != 0`（有一側正在退卻）時才遞減，
+而 `sub_1A8F6` 開頭 `cmp cs:byte_1D349, 0 / jnz → stc` **拒絕第二次退卻**，
+所以效果等於「從那唯一一次退卻令起算 120 拍」。
+
+| `byte_1D349` | 意思 | 倒數走完後 `sub_19FDC` 的回傳 |
+|---:|---|---:|
+| 0 | 沒有人在退卻 | — |
+| 1 | **側 0 全軍退卻** | 1（＝側 1 勝）|
+| 2 | **側 1 全軍退卻** | 0（＝側 0 勝）|
+
+`xchg` 之後 `al == 1` 才把 1 寫回去，`al == 2` 就留 0——兩條合起來
+就是「**回傳沒退卻的那一側**」。`sub_19FDC` 最後 `mov al, byte_1D349`
+把它帶回戰略層。
+
+⭐ **實測一拍減一次**（dosgolem，[`../playtest/80`](../playtest/80-retreat-countdown.md)）：
+`word_1D318` 從 50 走到 58 的同時 `byte_1D34A` 從 `0x78` 走到 `0x70`。
+
+⚠ **正常打完不會用到這道倒數。** 同一輪量到：下退卻令之後
+`word_1D31C` 的那一個 byte **8 拍就從 48 掉到 0**（48 ＝ 六隊 × 八人，
+側 0 的兵本來就站在 X ＝ 1–5，走幾步就出畫面），於是走的是 `.1` 那條出口。
+倒數是**兜底**：退不出去（被擋住、或補進來的兵一直有）時才由它收尾。
 
 `word_1D31C` 的兩個 byte 就是**兩軍的剩餘兵數**（含畫面外待機的），
 `byte_1D349` 是勝方。說明書 4.1：

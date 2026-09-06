@@ -128,6 +128,9 @@ const (
 	GeneralRetreatHP = 50
 	// SiegeDrainInterval 是攻城方大將體力遞減的間隔（`sub_1AE56` 的 `mov cs:byte_1D321, 0Ah`）。
 	SiegeDrainInterval = 10
+	// RetreatCountdown 是全軍退卻之後的倒數拍數（`sub_19A33` 的
+	// `mov cs:byte_1D34A, 78h`，docs/spec/141）。
+	RetreatCountdown = 0x78
 )
 
 // 面向。`sub_1B047`／`sub_1B069` 直接寫 0 與 2，飛道具移動
