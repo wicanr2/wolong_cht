@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**655 列分布在 268 份文件，平均每份 2.4 列。**
+**660 列分布在 270 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 181 | 174 | 6 | 1 |
-| 驗收 | 167 | 143 | 24 | 0 |
+| 驗收 | 169 | 145 | 24 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 270 | 250 | 19 | 1 |
-| **合計** | **655** | 598 | 54 | 3 |
+| 其他 | 273 | 253 | 19 | 1 |
+| **合計** | **660** | 603 | 54 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,9 +53,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 231 |
+| `docs/spec/` | 234 |
 | `docs/re/` | 181 |
-| `docs/playtest/` | 167 |
+| `docs/playtest/` | 169 |
 | `docs/release/` | 22 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
@@ -290,7 +290,7 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
 
-## 2.4 驗收（167 條）
+## 2.4 驗收（169 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -461,6 +461,8 @@
 | [`playtest/87-map-clouds.md`](../playtest/87-map-clouds.md) | 雲的漂移長時間對齊 | 需要原版亂數流的完整消費端；§5 | 靜態 |
 | [`playtest/87-map-clouds.md`](../playtest/87-map-clouds.md) | `+0x01`／`+0x06`／`+0x07` | `sub_123FF` 對火災寫 `+0x06 = +0x07 = 1`，雲是 0；語意未解 | 靜態 |
 | [`playtest/87-map-clouds.md`](../playtest/87-map-clouds.md) | type 3 的產生端 | 目前所有可見的事件 12 producer 只建 type 1／2 | 靜態 |
+| [`playtest/88-controlled-save-parity.md`](../playtest/88-controlled-save-parity.md) | 原版的地圖游標框 | remake 沒畫；要接得先讀出顏色、線寬與更新時機 | 靜態 |
+| [`playtest/88-controlled-save-parity.md`](../playtest/88-controlled-save-parity.md) | 還能關掉什麼 | 目前只有雲。天災、AI 出兵、募兵都吃亂數，各自需要自己的欄位 | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -473,7 +475,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（270 條）
+## 2.6 其他（273 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -615,6 +617,9 @@
 | [`spec/146-map-cloud-objects.md`](../spec/146-map-cloud-objects.md) | 雲的漂移能不能長時間對齊 | 移動每次要抽兩個亂數（`sub_124FF`），與整條亂數流共用；載入當下位置相同，**跑久了必然分開**。要對齊得先解出原版亂數流的全部消費端 | 靜態 |
 | [`spec/146-map-cloud-objects.md`](../spec/146-map-cloud-objects.md) | type 3 的產生端 | 目前所有可見的事件 12 producer 只建 type 1／2（`../re/14` §6） | 靜態 |
 | [`spec/146-map-cloud-objects.md`](../spec/146-map-cloud-objects.md) | `+0x06`／`+0x07` | `sub_123FF` 寫 1，雲是 0；語意未解 | 靜態 |
+| [`spec/147-controlled-parity-save.md`](../spec/147-controlled-parity-save.md) | **原版的地圖游標框** | 白色空心 16×16，貼著游標所在的格。remake 沒有畫；要接得先讀出它的顏色、線寬與更新時機（`sub_11F7F` 每圈算游標所在格） | 靜態 |
+| [`spec/147-controlled-parity-save.md`](../spec/147-controlled-parity-save.md) | 還能關掉什麼 | 目前只有 `--no-clouds`。天災、AI 出兵、募兵都吃亂數，各自需要自己的「關掉」欄位 | 靜態 |
+| [`spec/147-controlled-parity-save.md`](../spec/147-controlled-parity-save.md) | 兩邊的亂數流能不能對齊 | 沒解。這一份是**繞過去**不是解決 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |

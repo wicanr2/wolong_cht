@@ -188,6 +188,7 @@
 | **選了軍師就從武將表消失** | [`144-advisor-leaves-general-table.md`](144-advisor-leaves-general-table.md) | CONFORMED。新遊戲定案時 `loc_11AF8` 把選中的軍師記錄 `+0x00` 寫 0（存在旗標一起沒了）並把勢力武將數減一，所以他不出現在任何清單裡。⭐ **不是寫 `+0x17`**——`spec/76` §2 那條「寫入者未讀」的缺口就此關閉 |
 | **指令列最後兩格** | [`145-general-and-faction-cells.md`](145-general-and-faction-cells.md) | CONFORMED。武將那格是**迴圈**，選完那位自陳擅長哪一種戰場（俘虜／城塞／野戰／海戰四組，由三個適性挑，**平手歸前面那一個**）；勢力那格把鏡頭移到該勢力首都並開那個據點的情報卡。兩格各有狀態列 #24／#25。八格到此全部有原版擷取 |
 | **大地圖上會飄的雲** | [`146-map-cloud-objects.md`](146-map-cloud-objects.md) | CONFORMED。`MMAP.MCH` 物件 **type 0** ＝ 16 朵常駐的雲（16×9 格），座標存在劇本與存檔的 `0x21C0`，每次 map-loop 移動、起暴風雨才被關進那 11×11 格。⭐ 順帶訂正**物件型別查表整體差一格**——remake 先前把火災畫成雲的圖形 |
+| **受控存檔** | [`147-controlled-parity-save.md`](147-controlled-parity-save.md) | CONFORMED。`tools/parity_save.py` 從既有存檔出發只改指定欄位，做出兩邊都載得進去的受控起點。⭐ **存檔本身也可以是實驗器材**——`--no-clouds` 把會飄的雲關掉之後，跑滿一個遊戲日的 `map` 殘差從 22,210 掉到 66（只剩原版的地圖游標框）|
 
 ## 怎麼加一份
 
