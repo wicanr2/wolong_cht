@@ -221,18 +221,7 @@ func (g *game) updateAdvise() bool {
 		case pressed(ebiten.KeyArrowDown):
 			g.list.Move(1)
 		case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
-			if id, ok := g.list.Confirm(); ok {
-				g.list = nil
-				if g.advise == advisePickAlly {
-					g.ally = id
-					g.openTargetList()
-					g.advise = advisePickTarget
-					g.setAdviseStatus()
-				} else {
-					g.target = id
-					g.beginPersuasion()
-				}
-			}
+			g.confirmAdviseSelection()
 		case g.cancelled():
 			if g.list.Cancel() {
 				g.list = nil
@@ -286,7 +275,84 @@ const (
 	adviseTargetTalk    = 7  // #7「請選擇協同進攻之勢力。」（`sub_16623` 的第二步）
 	adviseAllyTalk      = 8  // #8「請選擇協助勢力。」（同上，第一步）
 	adviseRelocateTalk  = 15 // #15「請選擇遷都的對象據點。」（`sub_16909`）
+
+	// 停戰與請求協助的兩道前置閘（docs/spec/150）。
+	//
+	// ⭐ 原版在**選完勢力那一刻**就查，不通過跳訊息並回去重選；
+	// 敵對提案沒有這兩道。
+	adviseNoDiplomatTalk = 0x37 // #55「{3}勢力仍未派遣任何人．．．」（`sub_165EF`）
+	adviseCeaseSentTalk  = 0x49 // #73「…已派遣停戰使者前往{3}。」（`sub_16605`）
+	adviseHelpSentTalk   = 0x4A // #74「…已派遣使者前往{3}請求協助。」（`sub_1676F`）
 )
+
+// confirmAdviseSelection 是進言清單的「決定」那一下——兩段式的第二下。
+//
+// ⭐ 抽成一支是為了讓驗收 fixture（`-advise-list-row`）走**同一條路**，
+// 而不是自己再實作一次。
+func (g *game) confirmAdviseSelection() {
+	if g.list == nil {
+		return
+	}
+	id, ok := g.list.Confirm()
+	if !ok {
+		return
+	}
+	// 停戰與請求協助的兩道前置閘（docs/spec/150）：
+	// 不通過就跳訊息並**留在這張清單上**，不往下走。
+	gate := g.adviseCmd == persuasion.CeaseFire ||
+		(g.adviseCmd == persuasion.Cooperate && g.advise == advisePickAlly)
+	if gate && !g.adviseFactionGate(id) {
+		g.list.KeepSelected()
+		return
+	}
+	g.list = nil
+	if g.advise == advisePickAlly {
+		g.ally = id
+		g.openTargetList()
+		g.advise = advisePickTarget
+		g.setAdviseStatus()
+		return
+	}
+	g.target = id
+	g.beginPersuasion()
+}
+
+// pickAdviseListRow 是驗收用的「把游標移到第 N 列再決定」，走真實的兩段式。
+func (g *game) pickAdviseListRow(row int) {
+	if g.list == nil || row < 0 || row >= len(g.list.Rows) {
+		return
+	}
+	g.list.Cursor = row
+	g.confirmAdviseSelection() // 反白
+	g.confirmAdviseSelection() // 決定
+}
+
+// adviseFactionGate 是停戰／請求協助選完勢力之後的兩道閘（docs/spec/150）。
+// 回 false ＝ 不通過：訊息已經入列，呼叫端要留在原本那張清單上。
+//
+// ⚠ **請求協助查的是「協助勢力」**，不是協同進攻的對象——原版兩道閘都在
+// 第一張清單之後。
+func (g *game) adviseFactionGate(faction int) bool {
+	if g.world == nil || faction < 0 || faction >= len(g.world.Factions) {
+		return true
+	}
+	lord := map[byte]string{'3': big5(g.world.LordName(faction))}
+	// 閘一：那個勢力要有我方派駐的外交官（`+0x2A ≠ 0FFh`）。
+	if g.world.Factions[faction].Diplomat == NoOfficial {
+		g.enqueueTalk(adviseNoDiplomatTalk, lord)
+		return false
+	}
+	// 閘二：同型的使者不能已經在路上。⭐ 訊息是肯定句，作用卻是拒絕。
+	code, talk := 6, adviseCeaseSentTalk
+	if g.adviseCmd == persuasion.Cooperate {
+		code, talk = 7, adviseHelpSentTalk
+	}
+	if g.world.HasQueuedFactionEvent(faction, code) {
+		g.enqueueTalk(talk, lord)
+		return false
+	}
+	return true
+}
 
 // setAdviseStatus 依「哪一項 ＋ 走到第幾步」掛狀態列。
 //

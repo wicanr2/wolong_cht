@@ -500,3 +500,31 @@ func TestLordLeadsCorpsBlocksAdvise(t *testing.T) {
 		t.Errorf("事件列 ＝ %q，want %q", g.lastEvent, adviseLordAwayEvent)
 	}
 }
+
+// 停戰與請求協助的兩道前置閘（docs/spec/150）：選到沒派外交官的勢力
+// 跳 TALK #55，而且**清單留著、那一列還反白**——原版是回去重選。
+func TestAdviseAllyGateShowsTalk(t *testing.T) {
+	g := newTalkTestGame(t)
+	w := g.world
+	for i := range w.Factions {
+		w.Factions[i].Alive, w.Factions[i].Diplomat = true, NoOfficial
+	}
+	w.Player = 0
+	g.adviseCmd, g.advise = persuasion.Cooperate, advisePickAlly
+
+	if g.adviseFactionGate(1) {
+		t.Fatal("沒派外交官卻通過了第一道閘")
+	}
+	if len(g.messages) != 1 {
+		t.Fatalf("訊息數 ＝ %d，want 1（TALK #55）", len(g.messages))
+	}
+	// 派了人就通過；再排一件同型事件就換第二道閘擋。
+	w.Factions[1].Diplomat = 5
+	g.messages = nil
+	if !g.adviseFactionGate(1) {
+		t.Fatal("派了外交官還是過不了")
+	}
+	if len(g.messages) != 0 {
+		t.Errorf("通過時不該有訊息，卻有 %d 則", len(g.messages))
+	}
+}

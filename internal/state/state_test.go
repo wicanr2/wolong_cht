@@ -771,12 +771,17 @@ func TestPlayerDiplomacyProducers(t *testing.T) {
 	player, target := 0, 1
 	w.Player = player
 	w.events = [eventQueueEntries]QueuedEvent{}
+	// ⭐ **要有外交官才提得成**（原版 `sub_165EF`，docs/spec/150 §1.1）。
 	w.Factions[target].Diplomat = noFaction
 	w.Friendship[player][target] = diplomacy.Peace(40).WithWar(true)
 	for i := 0x14; i < eventQueueDispatch; i++ {
 		w.events[i] = QueuedEvent{Code: 0x010C}
 	}
 	w.eventCursor, w.eventDelay = 0, 7
+	if w.QueuePlayerCeasefire(target) {
+		t.Fatal("那個勢力沒有派駐外交官，停戰提案不該成立")
+	}
+	w.Factions[target].Diplomat = 5
 	if !w.QueuePlayerCeasefire(target) {
 		t.Fatal("玩家停戰 producer 沒有寫入事件 6")
 	}
@@ -805,6 +810,10 @@ func TestPlayerDiplomacyProducers(t *testing.T) {
 	w.events = [eventQueueEntries]QueuedEvent{}
 	w.Factions[ally].Diplomat = noFaction
 	w.Friendship[player][invader] = diplomacy.Peace(40).WithWar(true)
+	if w.QueuePlayerCooperation(ally, invader) {
+		t.Fatal("協助勢力沒有派駐外交官，請求協助不該成立")
+	}
+	w.Factions[ally].Diplomat = 5
 	if !w.QueuePlayerCooperation(ally, invader) {
 		t.Fatal("玩家協力 producer 沒有寫入事件 7")
 	}

@@ -149,7 +149,10 @@ func (w *World) QueueEvent10(general, talkIndex int) bool {
 func (w *World) QueuePlayerCeasefire(target int) bool {
 	if w.Player < 0 || w.Player >= numFactions || target < 0 || target >= numFactions ||
 		target == w.Player || !w.Factions[w.Player].Alive || !w.Factions[target].Alive ||
-		w.Factions[target].Diplomat != noFaction || !w.Friendship[w.Player][target].AtWar() {
+		// ⭐ **要有外交官才提得成**（原版 `sub_165EF`：`+0x2A == 0FFh`
+		// 就跳 TALK #55 並回去重選，docs/spec/150 §1.1）。
+		// 勢力 `+0x2A` 是**我方派駐在那裡的**外交官——沒有管道就談不成。
+		w.Factions[target].Diplomat == noFaction || !w.Friendship[w.Player][target].AtWar() {
 		return false
 	}
 	for _, e := range w.events {
@@ -160,6 +163,22 @@ func (w *World) QueuePlayerCeasefire(target int) bool {
 	return w.queuePlayerEvent(target, 6, 0)
 }
 
+// HasQueuedFactionEvent 回答「這個勢力的這一型事件已經在佇列裡了嗎」——
+// 原版 `sub_1304E` 帶 `dx = 0FFFFh`（兩個附加欄位都不比）的那一種查詢，
+// 停戰（型別 6）與請求協助（型別 7）的前置閘用它（docs/spec/150 §1.2）。
+func (w *World) HasQueuedFactionEvent(faction, code int) bool {
+	if w == nil || faction < 0 || faction >= numFactions {
+		return false
+	}
+	want := uint16(faction)<<8 | uint16(code)
+	for _, e := range w.events {
+		if e.Code == want {
+			return true
+		}
+	}
+	return false
+}
+
 // QueuePlayerCooperation 是 sub_16623 在協力提案成立後寫入事件 7 的
 // producer。Param 的高低 byte 都是侵攻目標；handler 實際只取低 byte，
 // 但原始格式仍完整保留。
@@ -167,7 +186,10 @@ func (w *World) QueuePlayerCooperation(ally, invader int) bool {
 	if w.Player < 0 || w.Player >= numFactions || ally < 0 || ally >= numFactions ||
 		invader < 0 || invader >= numFactions || ally == w.Player || invader == w.Player ||
 		ally == invader || !w.Factions[w.Player].Alive || !w.Factions[ally].Alive ||
-		!w.Factions[invader].Alive || w.Factions[ally].Diplomat != noFaction ||
+		!w.Factions[invader].Alive ||
+		// 同 `QueuePlayerCeasefire`：閘查的是**協助勢力**（原版兩道閘都
+		// 在第一張清單之後，docs/spec/150 §1）。
+		w.Factions[ally].Diplomat == noFaction ||
 		!w.Friendship[w.Player][invader].AtWar() {
 		return false
 	}

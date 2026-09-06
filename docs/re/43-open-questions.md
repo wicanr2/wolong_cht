@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**678 列分布在 277 份文件，平均每份 2.4 列。**
+**682 列分布在 279 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 181 | 174 | 6 | 1 |
-| 驗收 | 182 | 158 | 24 | 0 |
+| 驗收 | 185 | 161 | 24 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 278 | 257 | 20 | 1 |
-| **合計** | **678** | 620 | 55 | 3 |
+| 其他 | 279 | 258 | 20 | 1 |
+| **合計** | **682** | 624 | 55 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,8 +53,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 239 |
-| `docs/playtest/` | 182 |
+| `docs/spec/` | 240 |
+| `docs/playtest/` | 185 |
 | `docs/re/` | 181 |
 | `docs/release/` | 22 |
 | `docs/formats/` | 20 |
@@ -290,7 +290,7 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
 
-## 2.4 驗收（182 條）
+## 2.4 驗收（185 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -476,6 +476,9 @@
 | [`playtest/94-march-map-picker.md`](../playtest/94-march-map-picker.md) | 游標推到畫面邊緣時鏡頭跟過去 | 原版的滑鼠是**世界座標**，推出視野鏡頭會捲（`../re/84` §2）。remake 的滑鼠被視窗框住，還沒接 | 靜態 |
 | [`playtest/94-march-map-picker.md`](../playtest/94-march-map-picker.md) | 狀態列 #21（三選一） | 選完目標據點的下一張，還沒拍 | 靜態 |
 | [`playtest/94-march-map-picker.md`](../playtest/94-march-map-picker.md) | 別的狀態下的游標 | §2 | 靜態 |
+| [`playtest/95-diplomacy-preconditions.md`](../playtest/95-diplomacy-preconditions.md) | 兩道閘通過之後的畫面 | 需要一個「已經派了外交官」的局面才走得到 #7；受控存檔還沒做那一版 | 靜態 |
+| [`playtest/95-diplomacy-preconditions.md`](../playtest/95-diplomacy-preconditions.md) | `sub_1304E` 的 `dx` 附加欄位 | 這兩個呼叫點都傳 `0FFFFh`（不比），別的呼叫點還沒逐一讀 | 靜態 |
+| [`playtest/95-diplomacy-preconditions.md`](../playtest/95-diplomacy-preconditions.md) | 原版擷取裡的滑鼠游標 | 兩張都是 95 px | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -488,7 +491,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（278 條）
+## 2.6 其他（279 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -638,6 +641,7 @@
 | [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | ⭐ **原版的鏡頭是像素級的** | 邊緣捲動之後量到的捲動原點是 `(2657,1457)`——**不是 16 的倍數**。remake 的 `camX`／`camY` 是**格**，所以只對得上 16 的倍數那些位置。開局與 `sub_12151` 移鏡頭都是格對齊的，所以現有的對拍全部落在對得上的那一半；**要拍邊緣捲動之後的畫面就得先把鏡頭改… | 靜態 |
 | [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | 熱區會吃掉點擊 | ⚠ 實測踩到 `../re/85` §3 記的坑：把滑鼠移到據點的世界座標時，鏡頭捲到底、**游標釘在畫面右下角**，那裡是軍團情報視窗的熱區 `#31`，於是那一圈根本不問據點。要先把鏡頭帶過去、再讓游標落在畫面中間 | 實測 |
 | [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | 別的狀態下的游標 | `../playtest/91` §3 還沒對上，所以只接選點這一個 | 靜態 |
+| [`spec/150-diplomacy-preconditions.md`](../spec/150-diplomacy-preconditions.md) | `sub_1304E` 的 `dx` 附加欄位 | 這兩個呼叫點都傳 `0FFFFh`（不比），別的呼叫點傳什麼還沒逐一讀 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |

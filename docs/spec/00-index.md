@@ -191,6 +191,7 @@
 | **受控存檔** | [`147-controlled-parity-save.md`](147-controlled-parity-save.md) | CONFORMED。`tools/parity_save.py` 從既有存檔出發只改指定欄位，做出兩邊都載得進去的受控起點。⭐ **存檔本身也可以是實驗器材**——`--no-clouds` 把會飄的雲關掉之後，跑滿一個遊戲日的 `map` 殘差從 22,210 掉到 66（只剩原版的地圖游標框）|
 | **共用候選過濾** | [`148-shared-candidate-filter.md`](148-shared-candidate-filter.md) | CONFORMED。內政官任命／外交官任命／編成選武將三條流程在原版是**同一支 `sub_17663`**：存在 ∧ 勢力＝玩家 ∧ 職務＝0 ∧ 不是君主。⭐ 原版沒有「俘虜」也沒有「軍師」那一關——**兩個都由別的機制吃掉**（職務 4／整筆不在武將表裡）|
 | **行軍目標的地圖選點** | [`149-march-target-map-picker.md`](149-march-target-map-picker.md) | CONFORMED。原版選目標據點是**在大地圖上點**（`sub_1703C`），不是一覽表；選完軍團先開軍團情報面板。⭐ 第一次把原版自己畫的游標（15×15 空心框 ＋ 黑影）畫對——[`../playtest/94`](../playtest/94-march-map-picker.md) 五區全 0 px |
+| **外交的兩道前置閘** | [`150-diplomacy-preconditions.md`](150-diplomacy-preconditions.md) | CONFORMED。停戰與請求協助**要先派外交官到對方**（`sub_165EF`），而且同型的使者不能已經在路上。⚠ remake 的規則層把外交官那一條寫反了（要求「沒有」），而且有單元測試把錯的行為釘住——[`../playtest/95`](../playtest/95-diplomacy-preconditions.md) |
 
 ## 怎麼加一份
 

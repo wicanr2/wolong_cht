@@ -128,6 +128,7 @@
 | [`docs/playtest/92-personnel-assign-parity.md`](playtest/92-personnel-assign-parity.md) | 92 — 人事四條「選完之後」的對拍：抓到四個缺陷，殘差收到游標 ＋ 已裁定的 ±1 | 通過。 | 2026-09-06 |
 | [`docs/playtest/93-status-bar-sweep.md`](playtest/93-status-bar-sweep.md) | 93 — 狀態列逐條補原版擷取：財政三格全部 95 px | 進行中。 | 2026-09-06 |
 | [`docs/playtest/94-march-map-picker.md`](playtest/94-march-map-picker.md) | 94 — 行軍目標改成大地圖選點：五區全 0 px，連原版自己畫的游標都對上 | 通過。 | 2026-09-06 |
+| [`docs/playtest/95-diplomacy-preconditions.md`](playtest/95-diplomacy-preconditions.md) | 95 — 停戰與請求協助的前置閘：抓到一個反向的條件 | 通過。 | 2026-09-06 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告是 72 秒， 含語言切換與原版並排兩段；遊戲段落是逐幀錄下來的實跑畫面。 2… | 2026-08-30 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
@@ -298,6 +299,7 @@
 | [`docs/spec/147-controlled-parity-save.md`](spec/147-controlled-parity-save.md) | 147 — 受控存檔：把會動的東西先關掉，長時間對拍才有意義 | CONFORMED。 | 2026-09-06 |
 | [`docs/spec/148-shared-candidate-filter.md`](spec/148-shared-candidate-filter.md) | 148 — 任命與編成共用同一份候選過濾（sub_17663） | CONFORMED。 | 2026-09-06 |
 | [`docs/spec/149-march-target-map-picker.md`](spec/149-march-target-map-picker.md) | 149 — 行軍目標是在大地圖上點，不是一覽表 | CONFORMED。 | 2026-09-06 |
+| [`docs/spec/150-diplomacy-preconditions.md`](spec/150-diplomacy-preconditions.md) | 150 — 停戰與請求協助的兩道前置閘：先派外交官、同一件事不重複提 | CONFORMED。 | 2026-09-06 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |

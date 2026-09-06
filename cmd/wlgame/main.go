@@ -1860,6 +1860,7 @@ func main() {
 	adviseSortie := flag.Bool("advise-sortie", false, "截圖前跑「請求君主出陣」的三句定案畫面（驗收用）")
 	adviseTarget := flag.Bool("advise-target", false, "截圖前停在進言→交戰的目標勢力清單（對拍用，docs/spec/90 §5.1）")
 	advisePickRow := flag.Int("advise-pick-row", 0, "配 -advise-target：選進言選單的第 N 列（0 交戰／1 停戰／2 協助／3 遷都，docs/spec/140 §1.1）")
+	adviseListRow := flag.Int("advise-list-row", -1, "配 -advise-target：再選走目標清單的第 N 列（請求協助有第二層：先選協助勢力、再選協同進攻的對象，狀態列 #8 → #7）")
 	openCities := flag.Bool("open-cities", false, "截圖前開據點一覽（對拍用，docs/spec/90 §5.1）")
 	openFactions := flag.Bool("open-factions", false, "截圖前開勢力一覽（對拍用，docs/spec/90 §5.1）")
 	openCityInfo := flag.Int("open-cityinfo", -2, "截圖前開第 N 個據點的情報卡（−1＝玩家首都；對拍用，docs/spec/90 §5.1）")
@@ -2056,7 +2057,7 @@ func main() {
 		g.lordCorps = *lordCorpsFlag
 		g.damageReport = *damageReportFlag
 		apply := func() {
-			configureDirectFixtures(g, *openWin, *openList, *listPickRow, *openAdvise, *adviseMenu, *adviseSortie, *adviseTarget, *advisePickRow, *openCities, *openFactions, *openCityInfo, *openForm, *openCorps, *openMarchList,
+			configureDirectFixtures(g, *openWin, *openList, *listPickRow, *openAdvise, *adviseMenu, *adviseSortie, *adviseTarget, *advisePickRow, *adviseListRow, *openCities, *openFactions, *openCityInfo, *openForm, *openCorps, *openMarchList,
 				*openMarchMode, *pickTile, *openCmdMenu, *openBattle, *openSiege, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow, *factionPickRow,
 				*openTalkIndex, *openOutcome, parseSiegeFixture(*siegeNode, *siegeDefend, *siegeCorps, *battleSteps),
 				corpsMapFixture{enabled: *corpsOnMap, marchTo: *marchTo},
@@ -2403,7 +2404,7 @@ func logBattleUnits(g *game) {
 	log.Printf("場上活著的兵共 %d 個", n)
 }
 
-func configureDirectFixtures(g *game, openWin int, openList bool, listPickRow int, openAdvise, adviseMenu, adviseSortie, adviseTarget bool, advisePickRow int, openCities, openFactions bool, openCityInfo int, openForm, openCorps, openMarchList, openMarchMode bool,
+func configureDirectFixtures(g *game, openWin int, openList bool, listPickRow int, openAdvise, adviseMenu, adviseSortie, adviseTarget bool, advisePickRow, adviseListRow int, openCities, openFactions bool, openCityInfo int, openForm, openCorps, openMarchList, openMarchMode bool,
 	pickTile, openCmdMenu string, openBattle, openSiege, openMessage, openFinance bool, financeAmount int, openFormPick bool, formPickRow, factionPickRow, openTalkIndex int,
 	openOutcome string, siege siegeFixture, corpsMap corpsMapFixture, camAt, battleCam string) {
 	w := g.world
@@ -2585,6 +2586,11 @@ func configureDirectFixtures(g *game, openWin int, openList bool, listPickRow in
 		g.cmdCell = int(naturalCommandAdvise)
 		g.openAdvise()
 		g.pickAdviseCommand(advisePickRow)
+		// 請求協助有第二層：選完協助勢力才輪到協同進攻的對象
+		// （狀態列 #8 → #7，docs/spec/140 §1.1）。
+		if adviseListRow >= 0 {
+			g.pickAdviseListRow(adviseListRow)
+		}
 		return
 	}
 	if openCities {
