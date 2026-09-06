@@ -207,16 +207,59 @@ func strategyCommandCellRect(index int) image.Rectangle {
 // activeCommandCell 是目前反白的指令列格子（−1 ＝ 沒有）。
 //
 // 原版在呼叫那一格的動作**之前**反白、動作回來之後再 XOR 一次還原
-// （`sub_161CA`），所以整段流程期間那一格都亮著。
+// （`sub_161CA` 的 `call sub_10B46` 夾住 `call cs:funcs_161FE[bx]`，
+// docs/spec/124 §3.5），所以整段流程期間那一格都亮著，**八格都一樣**。
 //
-// ⚠ **目前只認得三張彈出選單**（軍團／據點／人事，docs/spec/126）。
-// 其餘五格的流程沒有統一的「這一段還在跑」訊號，硬接會在錯的時刻亮著
-// ——缺口記在 docs/spec/124 §5。
+// ⚠ **原版靠的是呼叫堆疊，remake 沒有那個結構**——每個流程是一個狀態
+// 物件。所以改成一格一個謂詞（`commandFlowRunning`）。
 func (g *game) activeCommandCell() int {
 	if g.popupMenuActive() {
 		return int(g.cmdMenu.menu.cell)
 	}
+	if g.cmdCell >= 0 && g.commandFlowRunning(naturalCommandID(g.cmdCell)) {
+		return g.cmdCell
+	}
 	return -1
+}
+
+// commandFlowRunning 回答「這一格的 handler 回來了沒」。
+//
+// ⚠ **六格有原版擷取、兩格沒有**（docs/spec/124 §3.5.1）：武將與勢力
+// 在原版走的是狀態列提示 ＋ 地圖游標，remake 開的是一覽表——**流程本身
+// 就不一樣**，所以那兩格的時機只是強證據。
+func (g *game) commandFlowRunning(c naturalCommandID) bool {
+	switch c {
+	case naturalCommandAdvise:
+		return g.adviseActive()
+	case naturalCommandFinance:
+		return g.finance.active
+	case naturalCommandFormation:
+		return g.form.active || g.list != nil
+	case naturalCommandPersonnel, naturalCommandCorps, naturalCommandCity,
+		naturalCommandGeneral, naturalCommandFaction:
+		// 這幾格都是「開一張視窗或一覽」，關掉就等於 handler 回來了。
+		// 行軍三選一也算：它是「軍團 → 行軍指示」那條路的最後一步。
+		return g.list != nil || g.form.active || g.marchMode.active ||
+			g.cityInfo.active || g.corpsInfo.active
+	}
+	return false
+}
+
+// syncCommandFlow 在流程結束時把反白與狀態列提示一起收掉——
+// 對應原版離開 handler 時的第二次 XOR 與 `sub_18853(cx = 0FFFFh)`。
+//
+// ⭐ **收在一個地方**：每個流程各有好幾個關閉點（右鍵、ESC、選完、出錯），
+// 逐點補 `clearStatusTalk()` 遲早會漏掉一個，而漏掉的症狀是
+// **一個框留在畫面上**——看起來像繪圖 bug，不像少了一行。
+func (g *game) syncCommandFlow() {
+	if g.cmdCell < 0 || g.popupMenuActive() {
+		return
+	}
+	if g.commandFlowRunning(naturalCommandID(g.cmdCell)) {
+		return
+	}
+	g.cmdCell = -1
+	g.clearStatusTalk()
 }
 
 func hitTestNaturalCommand(x, y int) (naturalCommandID, bool) {
@@ -257,6 +300,8 @@ func (g *game) dispatchNaturalCommand(command naturalCommandID) bool {
 	if int(command) < 0 || int(command) >= len(naturalCommandActions) {
 		return false
 	}
+	// 原版在 `call` 之前就反白了（`sub_161CA`），所以記在動作前面。
+	g.cmdCell = int(command)
 	naturalCommandActions[command](g)
 	return true
 }

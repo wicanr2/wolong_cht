@@ -49,7 +49,15 @@ const recruitMenMax = 10000
 // （`sub_167CD` 等四支的 `dx = 128h`／`bx = 0B8h`）。
 const financeAnchorX, financeAnchorY = 296, 184
 
-func (g *game) beginFinance() { g.finance = financeState{active: true} }
+// beginFinance 開財政視窗。原版 `sub_1678D` 進來就先掛狀態列
+// TALK #16「請指示下個月以後的財政予定。」（docs/spec/140）。
+func (g *game) beginFinance() {
+	g.finance = financeState{active: true}
+	g.setStatusTalk(financeStatusTalk, nil)
+}
+
+// financeStatusTalk 是 `sub_1678D` 的 `mov cx, 10h`。
+const financeStatusTalk = 0x10
 
 // financeRowMax 是第 n 列開數值器時傳進去的上限。
 func financeRowMax(row int) int {
@@ -333,10 +341,16 @@ func (g *game) drawFinance(screen *ebiten.Image) {
 		vector.StrokeRect(screen, float32(sel.Min.X-1), float32(sel.Min.Y-1),
 			float32(sel.Dx()+2), float32(sel.Dy()+2), 1, ink, false)
 	}
-	g.chrome.Window(screen, financeWinX, financeHintY, financeWinW, financeHintH, chrome.Menu)
-	g.td.Draw(screen, "設定值於次月末生效", financeWinX+8, financeHintY+8, labelInk)
-	g.td.Draw(screen, "↑↓ 選欄　Enter 輸入　ESC 關閉",
-		financeWinX+8, financeHintY+8+textdraw.GlyphH+2, labelInk)
+	// ⚠ **提示框只在玩家用過鍵盤之後才畫**——原版那個位置是地圖，
+	// 而它要告訴玩家的事情原版寫在左下角的狀態列框裡（docs/spec/140）。
+	// 與上面那個選取框、編成視窗的 `f.keyboard` 是同一個先例。
+	if g.finance.keyboard {
+		g.chrome.Window(screen, financeWinX, financeHintY, financeWinW,
+			financeHintH, chrome.Menu)
+		g.td.Draw(screen, "設定值於次月末生效", financeWinX+8, financeHintY+8, labelInk)
+		g.td.Draw(screen, "↑↓ 選欄　Enter 輸入　ESC 關閉",
+			financeWinX+8, financeHintY+8+textdraw.GlyphH+2, labelInk)
+	}
 
 	// 數值輸入器疊在最上面（原版 sub_17C6E 會先存下底下的畫面）。
 	if g.finance.editing {

@@ -77,7 +77,9 @@ sub_18853(cx = TALK 索引)
 | 框本體 | 沿用 `drawLegacyTalkBox`（與一般訊息框同一支），肖像 `defaultPortraitPage` ＝ `0x93` |
 | 名字換色 | `talkInkCity` ＝ `0x0B`，用既有的 `drawTalkLineWithName`（戰場對白的 `\1` 走同一支，色 9）|
 | 定寬補白 | `padTalkField`／`talkFieldCells` ＝ 3：`setStatusTalk` 對 `\1`–`\5` 一律補到三個全形字 |
-| 差異 | 原版的 48 個呼叫點目前只接了行軍那一條（[`39`](39-march-order-menu.md)）。**其餘流程仍是 remake 自己的鍵盤提示條**，那是既有差異，不是這一份帶進來的 |
+| 財政（`cx = 10h`）| `beginFinance`／`endFinance`：TALK **#16**「請指示下個月以後的財政予定。」——`sub_1678D` 進入時 `mov cx, 10h`、離開時 `mov cx, 0FFFFh`，**成對出現**（[`../re/22`](../re/22-strategy-command-tree.md) §3.4）|
+| 編成（`cx = 0`）| `beginForm`／收尾：TALK **#0**「進行軍隊編組。請選擇武將。」——`sub_16288` 只是 `mov cx, 1 / call sub_16C5E`，狀態列在 `sub_16C5E` 裡設（[`../re/30`](../re/30-corps-formation-ui.md) §1）|
+| 差異 | 原版的 48 個呼叫點目前接了三條（行軍、財政、編成）。**其餘流程仍是 remake 自己的鍵盤提示條**，那是既有差異，不是這一份帶進來的 |
 | 差異 | 名字的換色與定寬補白目前只在這個框成立。**一般訊息框（`drawMessage`）還是整段畫成白的、名字也還是裁掉補白**——同樣是既有差異 |
 
 ## 4. 驗證
@@ -88,12 +90,13 @@ sub_18853(cx = TALK 索引)
 | 單元測試 | `TestStatusTalkClearsLikeFFFF`：`clearStatusTalk()` 之後不畫 |
 | 單元測試 | `TestPadTalkFieldKeepsFieldWidth`、`TestStatusTalkPadsAfterSubstitution` |
 | 對原版 ✅ | [`../playtest/79`](../playtest/79-march-menu-original-layout.md)：整個框 **256×80 逐像素 0 px**（框、肖像、四列字、名字的色 `0x0B` 與補白全部對上）|
+| 對原版 ✅ | [`../playtest/81`](../playtest/81-command-cell-highlight.md)：財政（#16）與編成（#0）兩條流程的狀態列框也各自對過 |
 
 ## 5. 未解
 
 | 項目 | 現況 |
 |---|---|
-| 另外 47 個呼叫點 | 只接了行軍那一條。其餘 handler 的 TALK 索引在 [`../re/22`](../re/22-strategy-command-tree.md) §3 都有，但要一條一條接 |
+| 另外 45 個呼叫點 | 接了行軍、財政、編成三條。其餘 handler 的 TALK 索引在 [`../re/22`](../re/22-strategy-command-tree.md) §3 都有，但**要一條一條接、一條一條拍**——沒有原版擷取就不算對過 |
 | 樣式 `1Eh` 是什麼 | `sub_189A4` 把它傳給 `sub_189DE` 當 `ah`。**只知道 0 ＝ 擦除、非 0 ＝ 畫**，`1Eh` 這個值本身沒解（一般訊息框傳的也是 `1Eh`）|
 | 一般訊息框要不要一起改 | `\1`–`\5` 的定寬補白與逐標記換色是**全域規則**（[`../re/79`](../re/79-talk-marker-handlers.md) §2），但一次改到所有訊息會動到四個語系的排版（[`87`](87-latin-screen-layout.md)、[`../playtest/32`](../playtest/32-talk-layout-fit.md)）。要另外開一份規格，先量再改 |
 

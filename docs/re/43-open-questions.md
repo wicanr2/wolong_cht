@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**620 列分布在 256 份文件，平均每份 2.4 列。**
+**625 列分布在 257 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 181 | 174 | 6 | 1 |
-| 驗收 | 143 | 124 | 19 | 0 |
+| 驗收 | 149 | 129 | 20 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 259 | 240 | 18 | 1 |
-| **合計** | **620** | 569 | 48 | 3 |
+| 其他 | 258 | 239 | 18 | 1 |
+| **合計** | **625** | 573 | 49 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,9 +53,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 220 |
+| `docs/spec/` | 219 |
 | `docs/re/` | 181 |
-| `docs/playtest/` | 143 |
+| `docs/playtest/` | 149 |
 | `docs/release/` | 22 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
@@ -290,7 +290,7 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
 
-## 2.4 驗收（143 條）
+## 2.4 驗收（149 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -437,6 +437,12 @@
 | [`playtest/80-retreat-countdown.md`](../playtest/80-retreat-countdown.md) | 倒數真的走完那一場 | 這一輪是「補不出兵」先到。要看到倒數收尾，得找一場退卻方**走不出去**的仗（被擋住，或補兵一直進場） | 靜態 |
 | [`playtest/80-retreat-countdown.md`](../playtest/80-retreat-countdown.md) | `word_1D31C` 的兩個 byte | 開場是 48／48 ＝ 六隊 × 八人，看起來是**場上**人數；`../re/11` §5.9 寫的是「含畫面外待機的」。兩種讀法都還沒有直接證據 | 靜態 |
 | [`playtest/80-retreat-countdown.md`](../playtest/80-retreat-countdown.md) | `battle-settled` 要不要往後挪 | §4.1 量到它停在兩個開場對白框之間。要當戰術對拍的取樣點就得再加一個條件（例如「兩個框都在」），或者乾脆只用 `-battle-steps 70` | 靜態 |
+| [`playtest/81-command-cell-highlight.md`](../playtest/81-command-cell-highlight.md) | 1 | 指令列的「進言」「財政」「編成」**不會反白** / `activeCommandCell()` 只認得三張彈出選單。原版是 `sub_161CA` 在 `call` 前後各 XOR 一次，**八格共用同一段程式碼** / `../spec/124` §3.5 | 靜態 |
+| [`playtest/81-command-cell-highlight.md`](../playtest/81-command-cell-highlight.md) | 2 | 左下角的**狀態列提示框沒有畫**；財政那一張反而多了一條 remake 自己的提示條 / `sub_18853` 的 48 個呼叫點只接了行軍那一條 / `../spec/140` | 靜態 |
+| [`playtest/81-command-cell-highlight.md`](../playtest/81-command-cell-highlight.md) | 編成那一張的完整對拍 | 要兩邊同一個局面同一步：原版停在武將一覽（4月20日），remake 要載同一份存檔、跑到同一天、停在同一步，而且 `-lord-corps=false` | 靜態 |
+| [`playtest/81-command-cell-highlight.md`](../playtest/81-command-cell-highlight.md) | 武將／勢力兩格的反白 | 照公式接了，**沒有原版擷取**。原版那兩格走狀態列提示 ＋ 地圖游標，remake 開的是一覽表（`../spec/124` §5） | 靜態 |
+| [`playtest/81-command-cell-highlight.md`](../playtest/81-command-cell-highlight.md) | 另外 45 個 `sub_18853` 呼叫點 | 接了行軍、財政、編成三條。其餘要一條一條接、一條一條拍 | 靜態 |
+| [`playtest/81-command-cell-highlight.md`](../playtest/81-command-cell-highlight.md) | 原版擷取裡的滑鼠游標 | `command` 那 88 px。原版自己畫的，remake 的截圖模式不畫——與 `76` §4 的 95 px 同一類 | 實測 |
 
 ## 2.5 外部資料（6 條）
 
@@ -449,7 +455,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（259 條）
+## 2.6 其他（258 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -533,12 +539,11 @@
 | [`spec/122-sound-type-levels.md`](../spec/122-sound-type-levels.md) | 四段的實際音量差 | 沒有錄下原版四個 TYPE 的波形量過。算式來自機器碼，聽感沒驗 | 靜態 |
 | [`spec/122-sound-type-levels.md`](../spec/122-sound-type-levels.md) | `AH=0Bh` 只重算三個聲部 | 原版那個迴圈是 `ah = 0、1、2`（`../re/81` §5）。remake 的主增益對所有聲部一致，這一點**沒有照抄** | 靜態 |
 | [`spec/123-captive-talk-messages.md`](../spec/123-captive-talk-messages.md) | 城兵那一側 | `sub_14FCE` 也呼叫 `sub_129C3`（守城武將被擒）。remake 的城兵路徑有沒有走到同一則沒驗 | 靜態 |
-| [`spec/124-menu-highlight-xor.md`](../spec/124-menu-highlight-xor.md) | 其餘幾格的反白 | ⭐ **三張已接**（軍團／據點／人事，`126` 的 `popupMenu.cell`，三張的反白格都對過 0 px：`../playtest/60`／`61`）。剩下的四格（進言／財政／編成／武將／勢力）流程沒有統一的「這一段還在跑」訊號，**硬接會在錯的時刻亮著**。要一格一格補謂詞，而且每一格都該有自己的對拍 | 靜態 |
+| [`spec/124-menu-highlight-xor.md`](../spec/124-menu-highlight-xor.md) | 武將／勢力兩格的反白時機 | **八格都接了**（§3.5），但這兩格**沒有原版擷取**：原版走狀態列提示 ＋ 地圖游標，remake 開的是一覽表，流程本身不同。其餘六格各有一張原版擷取對過 0 px | 靜態 |
 | [`spec/124-menu-highlight-xor.md`](../spec/124-menu-highlight-xor.md) | 清單視窗的反白條 | `chrome.Select` 色 5 是**沒有實機證據的猜測**（§3）。要一張選著某一列的原版清單才驗得了 | 靜態 |
 | [`spec/124-menu-highlight-xor.md`](../spec/124-menu-highlight-xor.md) | `sub_10B46` 的暫存器序列 | 只確認了它寫 `0Ch` 給繪圖控制器、而結果逐點等於 XOR 12。**中間那幾個 port 寫入沒有逐行讀** | 靜態 |
 | [`spec/125-menu-box-width-from-padding.md`](../spec/125-menu-box-width-from-padding.md) | 「據點」那兩項 | `TALK #82`（「　首都確認　」／「　據點一覽　」）同樣是兩項選單，remake 的「據點」目前直接開一覽（`110` §5）。做了之後框寬會自動對——但那是另一件事 | 靜態 |
 | [`spec/125-menu-box-width-from-padding.md`](../spec/125-menu-box-width-from-padding.md) | 原版只看第一列 | remake 取**所有列的最大值**。四則既有選單兩種算法同值，`#79`／`#82` 也同值；**沒有找到會分歧的例子，但也沒有窮舉過** | 靜態 |
-| [`spec/126-command-popup-menus.md`](../spec/126-command-popup-menus.md) | 據點／人事兩張的逐像素對拍 | 沒拍。三張共用同一份繪製程式碼，但**位置與字數是各自的立即值**，沒比過就不能說它們對 | 靜態 |
 | [`spec/126-command-popup-menus.md`](../spec/126-command-popup-menus.md) | 「據點一覽」列的是誰的城 | remake 只列玩家的（`playerCities`）。原版 `sub_17400` 列的範圍沒查——「首都確認」那條路暗示這個指令是給自己人用的，但那是推論 | 靜態 |
 | [`spec/126-command-popup-menus.md`](../spec/126-command-popup-menus.md) | 進言那一張還沒併進來 | `openAdvise` 有自己的一套（五項 ＋ 說服流程）。**併之前要先確認它的取消語意一樣**，這一輪沒動 | 靜態 |
 | [`spec/127-captured-sovereign-becomes-retainer.md`](../spec/127-captured-sovereign-becomes-retainer.md) | 被俘兩次會不會加兩次 | **不會，而且不需要另外防護**——`and [bx], 0BFh` 已經把 bit 6 清掉了，第二次 `test [bx], 40h` 不成立。所以 `+3` 至多發生一次，值域停在 3–5，不會溢出 `+0x1E` 的 0–7。remake 照抄同一個結構（先測 bit 再清）就自然有同樣的性質 | 靜態 |
@@ -574,7 +579,7 @@
 | [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | 逐筆對齊 | 需要兩邊同源的亂數，`sub_1ECE0` 的式子還沒讀（`133` §5） | 靜態 |
 | [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | 更長的窗口 | 原版跑過六月之後 AI 開打，戰術畫面會停住策略時鐘 | 靜態 |
 | [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | `⛔ until:` 的中途判定 | 已修（`../playtest/78` §4）：只在主迴圈閒置點取樣 | 靜態 |
-| [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 另外 47 個呼叫點 | 只接了行軍那一條。其餘 handler 的 TALK 索引在 `../re/22` §3 都有，但要一條一條接 | 靜態 |
+| [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 另外 45 個呼叫點 | 接了行軍、財政、編成三條。其餘 handler 的 TALK 索引在 `../re/22` §3 都有，但**要一條一條接、一條一條拍**——沒有原版擷取就不算對過 | 靜態 |
 | [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 樣式 `1Eh` 是什麼 | `sub_189A4` 把它傳給 `sub_189DE` 當 `ah`。**只知道 0 ＝ 擦除、非 0 ＝ 畫**，`1Eh` 這個值本身沒解（一般訊息框傳的也是 `1Eh`） | 靜態 |
 | [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 一般訊息框要不要一起改 | `\1`–`\5` 的定寬補白與逐標記換色是**全域規則**（`../re/79` §2），但一次改到所有訊息會動到四個語系的排版（`87`、`../playtest/32`）。要另外開一份規格，先量再改 | 靜態 |
 | [`spec/141-retreat-countdown.md`](../spec/141-retreat-countdown.md) | 退卻中要不要補兵 | 原版下令之後場上八拍歸零、**沒有補兵進場**；remake 的 `reinforce()` 會補（補進來的兵下一幀被 `applySquadLeaderGone` 改成退卻）。兩邊最後都會結束，但**中途的場上人數不同**，沒有逐拍對過 | 靜態 |

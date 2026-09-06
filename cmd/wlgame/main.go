@@ -299,6 +299,11 @@ type game struct {
 	// statusBox 是左下角的狀態列提示框（原版 `sub_18853`，docs/spec/140）。
 	statusBox statusBoxState
 
+	// cmdCell 是「哪一格指令的 handler 還沒回來」（−1 ＝ 沒有）。
+	// 原版 `sub_161CA` 在 `call` 前後各 XOR 一次，所以整段流程期間
+	// 那一格都亮著（docs/spec/124 §3.5）。
+	cmdCell int
+
 	// finance 是財政畫面的狀態。與 form 一樣是**非常駐視窗**，
 	// 開著的時候時間會停（15-realtime.md §2）。
 	finance financeState
@@ -808,6 +813,8 @@ func (g *game) updateMusic() {
 
 func (g *game) Update() error {
 	g.frame++
+	// 指令流程結束 → 收掉指令列反白與狀態列提示（docs/spec/124 §3.5）。
+	g.syncCommandFlow()
 	// 截圖模式要等 Draw 真正取到像素後才結束；只用 `frame > shotAt`
 	// 會在高更新速率下跳過那一幀，讓 packaged smoke 沒有 PNG 卻仍 exit 0。
 	if g.shotPath != "" && g.shotDone {
@@ -1792,7 +1799,8 @@ func main() {
 		shotPath: *shot, shotAt: *shotFrames, origDir: *dir, sourceFile: path,
 		shotWhen: shotCond, shotDeadline: *shotDeadline, autoMessages: *autoMessages,
 		rec: newRecorder(*framesDir, *framesN),
-		saveFile: *saveFile, saveBase: path, sound: sound.Open(*audioDir)}
+		saveFile: *saveFile, saveBase: path, sound: sound.Open(*audioDir),
+		cmdCell: -1} // −1 ＝ 沒有指令流程在跑（零值 0 是「進言」）
 	g.sound.SetSilent(silentAudio)
 	if *audioDir != "" && !g.sound.Available() {
 		log.Printf("音檔目錄 %s 沒有 ogg，靜音跑。要有音樂請跑 tools/bgm2ogg.sh", *audioDir)
@@ -1961,6 +1969,7 @@ func (g *game) startWorld(path string, slot int, player int, overridePlayer, new
 	g.form = formState{}
 	g.marchMode = marchModeState{}
 	g.statusBox = statusBoxState{}
+	g.cmdCell = -1
 	g.finance = financeState{}
 	g.advise = adviseNone
 	g.messages = nil
@@ -2272,6 +2281,9 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 		}
 	}
 	if openForm || openCorps {
+		// 同上：原版是點指令列的「編成」進來的。
+		g.hudSet(hudCommand, true)
+		g.cmdCell = int(naturalCommandFormation)
 		g.demoCorps(openCorps, formPickRow)
 	}
 	if corpsMap.enabled {
@@ -2280,6 +2292,10 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 	// 財政視窗（對拍用，docs/spec/14 §4）。原版是命令列 #2 直接開視窗，
 	// -finance-amount N 再開第 N 列的數值輸入器（docs/spec/78）。
 	if openFinance || financeAmount >= 0 {
+		// 原版是從指令列點進去的，所以**命令視窗開著、那一格反白**
+		// （docs/spec/124 §3.5）——對拍要連這兩件事一起擺好。
+		g.hudSet(hudCommand, true)
+		g.cmdCell = int(naturalCommandFinance)
 		g.beginFinance()
 		if financeAmount >= 0 && financeAmount < financeRows {
 			g.beginFinanceAmount(financeAmount)
@@ -2305,6 +2321,8 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 		log.Fatalf("⚠ -open-command-menu 只認得 corps／city／personnel，收到 %q", openCmdMenu)
 	}
 	if adviseMenu && !openAdvise {
+		g.hudSet(hudCommand, true)
+		g.cmdCell = int(naturalCommandAdvise)
 		g.openAdvise() // 停在五項選單
 		return
 	}

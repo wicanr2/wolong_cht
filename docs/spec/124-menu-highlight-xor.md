@@ -72,6 +72,49 @@ sub_161CA:                       ; 指令列的命中與反白
 （[`../playtest/42`](../playtest/42-window-parity.md) §4）。
 兩者可能是同一個機制，但**沒量到就不改**。
 
+## 3.5 ⭐ 反白涵蓋八格，不是只有彈出選單那三格（2026-09-06）
+
+`sub_161CA` 逐行讀完（74 B）之後，這一點沒有解釋空間：
+
+```asm
+000161E4  bx = 28h / si = 30h / di = 10h     ; 反白矩形 (24+48n, 40, 48, 16)
+000161ED  push dx / push bx / push si / push di
+000161F1  call sub_101B4 / call sub_10B46 / call sub_101DB   ; ★ 反白
+000161FE  call cs:funcs_161FE[bx]            ; ← 那一格的 handler
+00016203  pop di / pop si / pop bx / pop dx
+00016207  call sub_101B4 / call sub_11C8D / call sub_10B46 / call sub_101DB
+                                             ; ★ 再 XOR 一次 ＝ 還原
+00016213  retn
+```
+
+⭐ **XOR 在 `call` 的前後各一次，而且不分索引**——八格走的是同一段程式碼，
+所以**只要那一格的流程還沒回來，它就一直亮著**。
+
+原版擷取（dosgolem，[`../playtest/81`](../playtest/81-command-cell-highlight.md)）：
+進言的五項選單開著時「進言」亮、財政視窗開著時「財政」亮、
+編成的武將一覽開著時「編成」亮——與這一段逐格對上。
+
+### 3.5.1 remake 怎麼判斷「這一段還沒回來」
+
+原版靠**呼叫堆疊**，remake 沒有那個結構（每個流程是一個狀態物件）。
+所以改成**一格一個謂詞**：
+
+| 格 | 謂詞 | 有原版擷取嗎 |
+|---|---|---|
+| 0 進言 | `adviseActive()` | ✅ [`../playtest/81`](../playtest/81-command-cell-highlight.md) |
+| 1 人事 | 彈出選單開著，或它開出來的一覽還開著 | ✅ [`../playtest/61`](../playtest/61-city-personnel-menu-parity.md) |
+| 2 財政 | `finance.active` | ✅ [`../playtest/81`](../playtest/81-command-cell-highlight.md) |
+| 3 編成 | `form.active \|\| list != nil` | ✅ 同上 |
+| 4 軍團 | 同 1 | ✅ [`../playtest/60`](../playtest/60-corps-menu-parity.md) |
+| 5 據點 | 同 1 | ✅ [`../playtest/61`](../playtest/61-city-personnel-menu-parity.md) |
+| 6 武將 | `list != nil` | ⚠ **沒有原版擷取** |
+| 7 勢力 | `list != nil` | ⚠ **沒有原版擷取** |
+
+⚠ **6／7 兩格是照公式接的，不是量出來的。** 原版那兩格走的是狀態列提示
+＋ 地圖游標（[`../re/22`](../re/22-strategy-command-tree.md) §3.4），
+而 remake 開的是一覽表——**流程本身就不一樣**，所以那兩格的反白時機
+只能算強證據。要降級成 confirmed 得各拍一張。
+
 ## 4. 驗證
 
 | 方式 | 證據 |
@@ -80,11 +123,13 @@ sub_161CA:                       ; 指令列的命中與反白
 | 單元測試 | `TestHighlightIsXorOfInkAndPaper`（`internal/ui/chrome`）：兩個色號等於 XOR 12，且等於實機量到的 12／3 |
 | 單元測試 | `TestCommandHighlightRectMatchesHitRect`（`cmd/wlgame`）：軍團格 ＝ (216,40,48,16) |
 | 單元測試 | `TestActiveCommandCellFollowsCorpsMenu`（同上）：選單開著才亮 |
+| 單元測試 | `TestActiveCommandCellCoversEveryFlow`（同上）：八格各自的謂詞，流程結束就熄 |
+| 對原版 ✅ | [`../playtest/81`](../playtest/81-command-cell-highlight.md)：進言／財政／編成三格的 `command` 區各 0 px |
 
 ## 5. 未解
 
 | 項目 | 現況 |
 |---|---|
-| 其餘幾格的反白 | ⭐ **三張已接**（軍團／據點／人事，[`126`](126-command-popup-menus.md) 的 `popupMenu.cell`，三張的反白格都對過 0 px：[`../playtest/60`](../playtest/60-corps-menu-parity.md)／[`61`](../playtest/61-city-personnel-menu-parity.md)）。剩下的四格（進言／財政／編成／武將／勢力）流程沒有統一的「這一段還在跑」訊號，**硬接會在錯的時刻亮著**。要一格一格補謂詞，而且每一格都該有自己的對拍 |
+| 武將／勢力兩格的反白時機 | **八格都接了**（§3.5），但這兩格**沒有原版擷取**：原版走狀態列提示 ＋ 地圖游標，remake 開的是一覽表，流程本身不同。其餘六格各有一張原版擷取對過 0 px |
 | 清單視窗的反白條 | `chrome.Select` 色 5 是**沒有實機證據的猜測**（§3）。要一張選著某一列的原版清單才驗得了 |
 | `sub_10B46` 的暫存器序列 | 只確認了它寫 `0Ch` 給繪圖控制器、而結果逐點等於 XOR 12。**中間那幾個 port 寫入沒有逐行讀** |

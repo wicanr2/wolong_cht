@@ -80,6 +80,10 @@ func (g *game) formCandidates() []int {
 // **原版是「選武將 → 編成 → 回到選武將」的迴圈**（`sub_16C5E`，docs/re/30 §1），
 // 編成視窗畫在武將一覽**上面**，一覽表不會被擦掉。所以這裡選完不關一覽表，
 // 編成完或取消就回到它繼續選下一位，右鍵／ESC 才離開整條流程。
+// formStatusTalk 是編成流程的狀態列訊息（`sub_16C5E` 的 `sub_18853(cx = 0)`，
+// docs/re/30 §1）。
+const formStatusTalk = 0
+
 func (g *game) beginForm() {
 	rows := g.formCandidates()
 	if len(rows) == 0 {
@@ -87,6 +91,9 @@ func (g *game) beginForm() {
 		return
 	}
 	g.openGeneralPicker(rows, "選帶兵的武將　Enter 選取／決定　1-6 排序　ESC 取消", nil)
+	// 原版 `sub_16288` → `sub_16C5E` 先掛狀態列 TALK #0
+	// 「進行軍隊編組。請選擇武將。」（docs/spec/140）。
+	g.setStatusTalk(formStatusTalk, nil)
 	g.listPick = func(i int) bool {
 		g.form = formState{active: true, leader: i}
 		// 開窗預設編成照原版 sub_16D56：騎騎步步弓弓
