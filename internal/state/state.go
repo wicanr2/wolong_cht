@@ -693,6 +693,7 @@ func loadBlock(b []byte) *World {
 		}
 	}
 	w.loadCorps(b)
+	w.loadMapObjects(b)
 	// 記下據點數的基準差額，給不變量檢查用（見 invariant.go）。
 	w.snapshotBias()
 	return w
@@ -1504,6 +1505,7 @@ func (w *World) Bytes() []byte {
 		setFlag(&r[0x00], 0x10, g.LoyalToDeath)
 	}
 	w.saveCorps(b)
+	w.writeMapObjects(b)
 	return b
 }
 

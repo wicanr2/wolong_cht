@@ -136,3 +136,30 @@ func TestTakeAdvisorRemovesHimFromTheGeneralTable(t *testing.T) {
 		t.Errorf("寫回的 +0x00 = %#02x，除了未解的 bit 0 之外應該全 0", out[off])
 	}
 }
+
+// 32 筆物件記錄要 byte-for-byte round-trip（docs/spec/146 §2）。
+// ⭐ 後 16 筆是常駐的雲，劇本檔裡就有值——先前 remake 不讀這一段，
+// 靠「沒碰過就不會壞」蒙混；現在會寫回去了，就得真的比。
+func TestMapObjectsRoundTrip(t *testing.T) {
+	for idx := 0; idx < 4; idx++ {
+		w := load(t, idx)
+		out := w.Bytes()
+		for i := 0; i < 32*16; i++ {
+			off := mapObjectBase + i
+			if out[off] != w.raw[off] {
+				t.Fatalf("劇本 %d 物件區 +%#04x：%#02x != %#02x",
+					idx+1, i, out[off], w.raw[off])
+			}
+		}
+		// 正對照：那一段不是全 0，否則這支測試等於沒比。
+		clouds := 0
+		for slot := 16; slot < 32; slot++ {
+			if w.raw[mapObjectBase+slot*16]&0x80 != 0 {
+				clouds++
+			}
+		}
+		if clouds != 16 {
+			t.Fatalf("劇本 %d 只有 %d 朵雲，want 16", idx+1, clouds)
+		}
+	}
+}

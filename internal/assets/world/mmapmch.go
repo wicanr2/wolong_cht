@@ -122,21 +122,27 @@ func (m *MCH) Pattern(index int) (MCHPattern, bool) {
 }
 
 // ObjectPatternIndex 是原版 CS:[bx-67A6h]（16-bit wrap 後為 CS:985Ah）
-// 的固定查表。事件 12 的 sub_123FF 以高 byte 1／2 建立火災／暴動物件，
-// sub_12533 再以 object type×8＋frame 查表。
+// 的固定查表：`bx = 物件 type × 8 + 相位`，所以 **`bx = 0` 落在 985Ah**
+// ——那八個 byte 是 **type 0**，不是 type 1（docs/spec/146 §1）。
 //
-// type 1／2 的八個 phase 都有 IDA 與 MCH bytes 雙重證據；type 3 一併保留
-// 查表值，但本專案目前沒有把它誤標成某個事件的語意。
+//	type 0：18 19 1A 1B 1C 18 19 1A   16×9 格，會飄的雲（常駐 16 個）
+//	type 1：20 21 22 23 20 21 22 23   5×5，火災（sub_134B1 的 ah=1）
+//	type 2：28 29 2A 2B 28 29 2A 2B   5×5，暴動（ah=2）
+//	type 3：00 …                      3×3，目前沒有可見的產生端
+//
+// ⚠ 這張表先前整體位移一格（docs/re/14 §4 的初版），
+// 於是火災畫成 16×9 的雲、暴動畫成火災的圖。
 func ObjectPatternIndex(objectType, frame int) (int, bool) {
-	if objectType < 1 || objectType > 3 || frame < 0 || frame >= 8 {
+	if objectType < 0 || objectType > 3 || frame < 0 || frame >= 8 {
 		return 0, false
 	}
 	table := [...]byte{
 		0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x18, 0x19, 0x1A,
 		0x20, 0x21, 0x22, 0x23, 0x20, 0x21, 0x22, 0x23,
 		0x28, 0x29, 0x2A, 0x2B, 0x28, 0x29, 0x2A, 0x2B,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	}
-	return int(table[(objectType-1)*8+frame]), true
+	return int(table[objectType*8+frame]), true
 }
 
 // PatternFor 依原版 object type／phase 取物件矩陣。

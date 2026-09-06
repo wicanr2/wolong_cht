@@ -1371,6 +1371,11 @@ func (g *game) drawDisasterOverlay(screen *ebiten.Image) {
 	objects := g.world.RenderDisasterObjects()
 	objectByCity := make(map[int]state.DisasterObjectSnapshot, len(objects))
 	for _, object := range objects {
+		// ⭐ type 0 是**會飄的雲**，不掛在據點上，自己畫（docs/spec/146）。
+		if object.TypeCode == 0 {
+			g.drawMapObject(screen, object)
+			continue
+		}
 		// 原版掃描順序是 slot 0→31；同城重複時第一筆先被呈現層取用。
 		if _, exists := objectByCity[object.City]; !exists {
 			objectByCity[object.City] = object
@@ -1420,16 +1425,37 @@ func disasterObjectType(kind economy.Disaster) (int, bool) {
 	}
 }
 
-func (g *game) disasterImage(kind economy.Disaster, phase int) *ebiten.Image {
-	objectType, ok := disasterObjectType(kind)
-	if !ok || g.lib == nil || g.lib.MCH == nil || phase < 0 || phase >= 8 {
+// drawMapObject 依原版 `sub_12533` 把一筆 MCH 物件畫上去：
+// 左上角 ＝ `(X − 寬/2, Y − 高/2)`，圖塊自帶 mask 所以是半透明的網點。
+func (g *game) drawMapObject(screen *ebiten.Image, o state.DisasterObjectSnapshot) {
+	img := g.mapObjectImage(int(o.TypeCode), int(o.Phase))
+	if img == nil {
+		return
+	}
+	w, h := img.Bounds().Dx(), img.Bounds().Dy()
+	// ⭐ 對半是**以格為單位**的整數除法（原版 `shr cx,1`／`shr bx,1` 對的是
+	// metadata 的格數），先換算成格再除，不要在像素上除。
+	cols, rows := w/world.TileSize, h/world.TileSize
+	x := (o.X - cols/2 - g.camX) * world.TileSize
+	y := strategyMapY + (o.Y-rows/2-g.camY)*world.TileSize
+	if x+w <= 0 || x >= strategyMapW || y+h <= strategyMapY || y >= screenH {
+		return
+	}
+	op := &ebiten.DrawImageOptions{}
+	op.GeoM.Translate(float64(x), float64(y))
+	screen.DrawImage(img, op)
+}
+
+// mapObjectImage 取某個物件 type／相位的圖，含季節調色盤與快取。
+func (g *game) mapObjectImage(objectType, phase int) *ebiten.Image {
+	if g.lib == nil || g.lib.MCH == nil || phase < 0 || phase >= 8 {
 		return nil
 	}
 	season := 0
 	if g.world != nil {
 		season = int(g.world.Clock.Season())
 	}
-	key := (((season*3)+objectType)*8 + phase)
+	key := ((season*4)+objectType)*8 + phase
 	if g.disasterImages == nil {
 		g.disasterImages = make(map[int]*ebiten.Image)
 	}
@@ -1447,6 +1473,14 @@ func (g *game) disasterImage(kind economy.Disaster, phase int) *ebiten.Image {
 	result := ebiten.NewImageFromImage(img)
 	g.disasterImages[key] = result
 	return result
+}
+
+func (g *game) disasterImage(kind economy.Disaster, phase int) *ebiten.Image {
+	objectType, ok := disasterObjectType(kind)
+	if !ok {
+		return nil
+	}
+	return g.mapObjectImage(objectType, phase)
 }
 
 func (g *game) drawDisasterMarker(screen *ebiten.Image, x, y int, marker state.DisasterMarker) {

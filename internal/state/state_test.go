@@ -1058,13 +1058,26 @@ func TestDisasterObjectAnimationTiming(t *testing.T) {
 	w.rng = rng.NewFixed(17)
 	w.dispatchQueuedEvent(&Event{})
 
-	objects := w.RenderDisasterObjects()
+	// ⚠ 後 16 槽是**常駐的雲**（type 0，從區塊載入，docs/spec/146），
+	// 所以這一支只看災害那幾筆。先前這裡是 `len(objects) != 1`，
+	// 而那個寫法在雲接上之後會誤報。
+	disasters := func() []DisasterObjectSnapshot {
+		var out []DisasterObjectSnapshot
+		for _, o := range w.RenderDisasterObjects() {
+			if o.TypeCode == 1 || o.TypeCode == 2 {
+				out = append(out, o)
+			}
+		}
+		return out
+	}
+
+	objects := disasters()
 	if len(objects) != 1 || objects[0].TypeCode != 1 || objects[0].Phase != 1 {
 		t.Fatalf("火災物件初始記錄錯誤：%#v", objects)
 	}
 
 	w.AdvanceDisasterObjects()
-	objects = w.RenderDisasterObjects()
+	objects = disasters()
 	if len(objects) != 1 || objects[0].Phase != 1 {
 		t.Fatalf("第一次 dirty render 應先畫 phase=1：%#v", objects)
 	}
@@ -1072,7 +1085,7 @@ func TestDisasterObjectAnimationTiming(t *testing.T) {
 	for i := 0; i < disasterObjectInterval-1; i++ {
 		w.AdvanceDisasterObjects()
 	}
-	objects = w.RenderDisasterObjects()
+	objects = disasters()
 	if len(objects) != 1 || objects[0].Phase != 2 {
 		t.Fatalf("16 次 map update 後應畫 phase=2：%#v", objects)
 	}
@@ -1081,8 +1094,12 @@ func TestDisasterObjectAnimationTiming(t *testing.T) {
 	w.events[1] = QueuedEvent{Code: 0x000C, Param: runtimeCityBase}
 	w.eventCursor, w.eventDelay = eventQueueEntrySize, 1
 	w.dispatchQueuedEvent(&Event{})
-	if got := w.RenderDisasterObjects(); len(got) != 0 {
+	if got := disasters(); len(got) != 0 {
 		t.Fatalf("清除事件後仍有災害物件：%#v", got)
+	}
+	// 雲不受災害清除影響：16 朵都還在。
+	if got := len(w.RenderDisasterObjects()); got != 16 {
+		t.Fatalf("清除之後剩 %d 筆物件，want 16 朵雲", got)
 	}
 }
 

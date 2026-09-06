@@ -99,15 +99,19 @@ func TestMCHObjectLayout(t *testing.T) {
 		}
 	}
 
+	// ⭐ 查表的 base 是 **type 0**（`bx = type×8 + 相位`，bx=0 就是 985Ah，
+	// docs/spec/146 §1）。type 0 是會飄的雲，火災是 type 1、暴動 type 2。
 	for _, tc := range []struct {
 		objectType, frame, index, width, height int
 	}{
-		{1, 0, 0x18, 16, 9},
-		{1, 4, 0x1C, 16, 9},
-		{1, 7, 0x1A, 16, 9},
-		{2, 0, 0x20, 5, 5},
-		{2, 7, 0x23, 5, 5},
-		{3, 0, 0x28, 5, 5},
+		{0, 0, 0x18, 16, 9},
+		{0, 4, 0x1C, 16, 9},
+		{0, 7, 0x1A, 16, 9},
+		{1, 0, 0x20, 5, 5},
+		{1, 7, 0x23, 5, 5},
+		{2, 0, 0x28, 5, 5},
+		{2, 7, 0x2B, 5, 5},
+		{3, 0, 0x00, 3, 3},
 	} {
 		index, ok := ObjectPatternIndex(tc.objectType, tc.frame)
 		if !ok || index != tc.index {
@@ -120,9 +124,9 @@ func TestMCHObjectLayout(t *testing.T) {
 				tc.index, pattern.Width, pattern.Height, tc.width, tc.height)
 		}
 	}
-	p, ok := m.PatternFor(1, 0)
+	p, ok := m.PatternFor(0, 0)
 	if !ok || len(p.Tiles) != 16*9 || p.Tiles[4] != 0xD0 {
-		t.Fatalf("火災第 0 相位的 source 矩陣不符：ok=%v len=%d tile[4]=0x%02X",
+		t.Fatalf("雲第 0 相位的 source 矩陣不符：ok=%v len=%d tile[4]=0x%02X",
 			ok, len(p.Tiles), p.Tiles[4])
 	}
 }

@@ -244,3 +244,73 @@ func (w *World) RenderDisasterObjects() []DisasterObjectSnapshot {
 	}
 	return out
 }
+
+// mapObjectBase 是 32 筆物件記錄在區塊裡的位移（段內 `0x2040` ＋ `0x80`）。
+// **後 16 筆是常駐的雲**（type 0），前 16 筆給火災／暴動配置。
+// 欄位表與證據見 docs/spec/146 §2。
+const mapObjectBase = 0x20C0
+
+// loadMapObjects 從區塊讀回 32 筆物件記錄。
+//
+// ⭐ **雲是存在檔案裡的**，不是執行期生成——所以載同一份存檔就會得到
+// 同樣的雲。先前 remake 完全不讀這一段，於是大地圖上一朵雲都沒有。
+func (w *World) loadMapObjects(b []byte) {
+	for slot := 0; slot < disasterObjectSlots; slot++ {
+		r := b[mapObjectBase+slot*16:]
+		o := &w.disasterObjects[slot]
+		*o = disasterObject{}
+		if r[0]&0x80 == 0 {
+			continue
+		}
+		o.active = true
+		o.dirty = r[0]&1 != 0
+		o.x = int(int16(uint16(r[2]) | uint16(r[3])<<8))
+		o.y = int(int16(uint16(r[4]) | uint16(r[5])<<8))
+		o.xDrift = uint16(r[8]) | uint16(r[9])<<8
+		o.yDrift = uint16(r[0x0A]) | uint16(r[0x0B])<<8
+		o.timer, o.interval = r[0x0C], r[0x0D]
+		o.typeCode, o.phase = r[0x0E], r[0x0F]&7
+		o.city = noCity
+		switch o.typeCode {
+		case 1:
+			o.kind = economy.Fire
+		case 2:
+			o.kind = economy.Riot
+		}
+		if o.typeCode == 1 || o.typeCode == 2 {
+			// 原版的 sub_12438 用座標比對清除，所以據點編號只是
+			// remake 的方便欄位；對不上就留 noCity。
+			for i := range w.Cities {
+				if w.Cities[i].X == o.x && w.Cities[i].Y == o.y {
+					o.city = i
+					break
+				}
+			}
+		}
+	}
+}
+
+// writeMapObjects 把 32 筆物件記錄寫回區塊。**改寫不是重建**：
+// 只蓋已解的欄位，`+0x01`／`+0x06`／`+0x07` 那三個未解的 byte 原樣留著。
+func (w *World) writeMapObjects(b []byte) {
+	for slot := 0; slot < disasterObjectSlots; slot++ {
+		r := b[mapObjectBase+slot*16:]
+		o := &w.disasterObjects[slot]
+		if !o.active {
+			r[0] &^= 0x81
+			continue
+		}
+		r[0] |= 0x80
+		if o.dirty {
+			r[0] |= 1
+		} else {
+			r[0] &^= 1
+		}
+		r[2], r[3] = byte(o.x), byte(uint16(int16(o.x))>>8)
+		r[4], r[5] = byte(o.y), byte(uint16(int16(o.y))>>8)
+		r[8], r[9] = byte(o.xDrift), byte(o.xDrift>>8)
+		r[0x0A], r[0x0B] = byte(o.yDrift), byte(o.yDrift>>8)
+		r[0x0C], r[0x0D] = o.timer, o.interval
+		r[0x0E], r[0x0F] = o.typeCode, o.phase
+	}
+}
