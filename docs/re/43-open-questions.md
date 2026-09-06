@@ -298,7 +298,7 @@
 | [`playtest/10-event-message-modal.md`](../playtest/10-event-message-modal.md) | 事件 10 producer 仍未定位。 | （未解小節內文） | 靜態 |
 | [`playtest/10-event-message-modal.md`](../playtest/10-event-message-modal.md) | 事件 6 #72 的缺失 formatter payload 維持 fail-closed。 | （未解小節內文） | 靜態 |
 | [`playtest/10-event-message-modal.md`](../playtest/10-event-message-modal.md) | 原版／remake 同狀態畫面對拍仍是剩餘驗收項。 | （未解小節內文） | 靜態 |
-| [`playtest/100-video-mode-parity.md`](../playtest/100-video-mode-parity.md) | 素材頁的四季 | 肖像與據點景觀圖換的是圖不是色，這一份沒動；切到液晶時那些圖的顏色會不會也跟著換，還沒對過 | 靜態 |
+| [`playtest/100-video-mode-parity.md`](../playtest/100-video-mode-parity.md) | 素材頁的四季 | 肖像與據點景觀圖那種「換圖不換色」的四季，這一份沒有涵蓋——§5 量到的是顏色 | 靜態 |
 | [`playtest/100-video-mode-parity.md`](../playtest/100-video-mode-parity.md) | 音效那一格 | fixture 沒帶 `-audio`，顯示「未接入」。要比那一格得先產 ogg | 靜態 |
 | [`playtest/100-video-mode-parity.md`](../playtest/100-video-mode-parity.md) | remake 多的兩列 | 「主君編成」與「損害報告」，已記錄的差異（`39`） | 靜態 |
 | [`playtest/101-quit-menu-parity.md`](../playtest/101-quit-menu-parity.md) | remake 要把游標的 hide／show 接在哪 | 規則已解（`../re/88`），但 54 個呼叫點還沒對應到 remake 的繪圖流程 | 靜態 |
@@ -655,7 +655,7 @@
 | [`spec/150-diplomacy-preconditions.md`](../spec/150-diplomacy-preconditions.md) | `sub_1304E` 的 `dx` 附加欄位 | 這兩個呼叫點都傳 `0FFFFh`（不比），別的呼叫點傳什麼還沒逐一讀 | 靜態 |
 | [`spec/151-map-click.md`](../spec/151-map-click.md) | `sub_11F0E` 的 X 夾制 `23h` | 夾住之後框的右緣落在 672，超出畫面 32 px（§1.2）。要嘛 `sub_193E9` 對超出的部分另有處理、要嘛這一張的框比 112 窄——**兩個都還沒驗**。目前照抄常數 | 靜態 |
 | [`spec/151-map-click.md`](../spec/151-map-click.md) | 佔用圖 | 原版查的是 `cs:word_19872` 的佔用圖，remake 直接掃軍團表比座標。**結果相同但來源不同**——佔用圖每 tick 由位置推導（`39` §2），還沒逐格比對過 | 靜態 |
-| [`spec/152-video-mode-lcd-palette.md`](../spec/152-video-mode-lcd-palette.md) | 素材頁的四季 | 肖像與據點景觀圖是**另一種**四季（換的是圖不是色），這一份沒動它們——切到液晶時那些圖的顏色會不會也跟著換，還沒對過 | 靜態 |
+| [`spec/152-video-mode-lcd-palette.md`](../spec/152-video-mode-lcd-palette.md) | 素材頁的四季 | 肖像與據點景觀圖是**另一種**四季（換的是圖不是色），這一份沒動它們。⭐ **顏色那一半已經驗過**：切到液晶時肖像跟著換組，remake 逐像素 0 px（`../playtest/100` §5） | 靜態 |
 | [`spec/153-quit-confirm-menu.md`](../spec/153-quit-confirm-menu.md) | 離開時自動存檔 | `CLAUDE.md` §9 要求「離開前自動存檔，存檔失敗就不離開」，remake 兩條路目前都只是 `ebiten.Termination`。**原版這一段沒有存檔**（`xor al,al` 直接走），所以那是 remake 差異，還沒實作 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
