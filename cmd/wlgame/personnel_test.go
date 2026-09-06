@@ -72,3 +72,62 @@ func TestDismissEmptySlotReportsNobody(t *testing.T) {
 	// 沒有 TALK.DAT 時 enqueueTalk 是 fail-closed，所以這裡驗的是「不會爆」
 	// 與「資料沒被寫壞」；訊息本身的對拍在 docs/playtest/84。
 }
+
+// 選完**回到清單繼續選**，右鍵才離開（原版 `sub_16A9B`／`sub_16B08` 的
+// `jmp` 迴圈，docs/spec/142 §1）。
+func TestPersonnelFlowsLoopBackToTheList(t *testing.T) {
+	w := &state.World{Player: 0}
+	for i := range w.Cities {
+		w.Cities[i].Owner = 9
+		w.Cities[i].Governor = NoOfficial
+	}
+	w.Cities[0].Owner, w.Cities[1].Owner = 0, 0
+	w.Cities[0].Governor = 5 // 這一座已經有人
+	for i := range w.Generals {
+		w.Generals[i].Alive = false
+	}
+	w.Generals[5] = state.General{Alive: true, Faction: 0}
+
+	// 任命：選到「已經有人」的那一座 → 不關清單。
+	g := &game{world: w, cmdCell: -1}
+	g.pickCityForGovernor()
+	if g.list == nil {
+		t.Fatal("清單沒開")
+	}
+	if g.listPick(0) {
+		t.Error("選到已有內政官的據點時關掉了清單，原版是回清單再選")
+	}
+
+	// 解任：選到沒人的那一座 → 也不關清單。
+	g2 := &game{world: w, cmdCell: -1}
+	g2.removeGovernor()
+	if g2.listPick(1) {
+		t.Error("解任選到沒人的據點時關掉了清單，原版是回清單再選")
+	}
+	// 解任成功 → 一樣不關。
+	if g2.listPick(0) {
+		t.Error("解任成功之後關掉了清單，原版是回清單再選")
+	}
+	if w.Cities[0].Governor != NoOfficial {
+		t.Errorf("解任之後內政官欄 = %d，want %d", w.Cities[0].Governor, NoOfficial)
+	}
+}
+
+// 那位官員說的一句是**八格一組**，由武將 +0x1E 選組內第幾個
+// （原版 `sub_18810` 的 `ah`，docs/spec/142）。
+func TestOfficialLineUsesVariantGroup(t *testing.T) {
+	for _, tc := range []struct {
+		base, variant, want int
+	}{
+		{governorAssignedTalk, 3, 457},  // 「遵命。」
+		{governorAssignedTalk, 7, 461},  // 「我立刻前往。」
+		{diplomatAssignedTalk, 3, 465},
+		{governorDismissedTalk, 0, 502},
+		{diplomatDismissedTalk, 0, 510},
+	} {
+		if got := resolveBattleTalkIndex(tc.base, tc.variant); got != tc.want {
+			t.Errorf("組 %#x 變體 %d → #%d，want #%d",
+				tc.base, tc.variant, got, tc.want)
+		}
+	}
+}

@@ -1,8 +1,9 @@
-# 142 — 解任不先過濾：清單列全部，選到沒人的才回一則訊息
+# 142 — 人事四條出口是一個迴圈：不過濾、選完回清單、官員自己說一句
 
-**狀態：CONFORMED。** 原版的「內政官解任」「外交官解任」**不篩掉沒派人的
-那些**——清單照列全部，選到沒人的那一個才跳訊息，然後**回到清單繼續選**。
-remake 先前先過濾候選，沒有人派駐時直接回一句事件列訊息，連清單都不開。
+**狀態：CONFORMED。** 原版的人事四條（內政官／外交官各任命與解任）
+**是同一個迴圈**：不篩候選、選完不關清單、成功或失敗都回去繼續選，
+**右鍵才離開**；而且成功時那位官員會自己說一句（八格一組，由 `+0x1E` 選）。
+remake 先前四條都是「選一次就收掉」，解任還先過濾候選。
 
 - 日期：2026-09-06
 - 出處：`KI.EXE`（SHA-256 `fffeba98…d43868`）的 `sub_16B08`（`00016B08`）
@@ -67,8 +68,11 @@ sub_16B4F（34 B）
 |---|---|
 | 內政官解任 | `cmd/wlgame/personnel.go` 的 `removeGovernor`：候選改成 `playerCities()` 全部；選到沒有內政官的跳 TALK #54、有人的照舊 |
 | 外交官解任 | 同檔 `removeDiplomat`：候選改成「活著且不是自己」的全部勢力；沒人跳 TALK #55 |
+| 內政官／外交官任命 | 同檔 `pickCityForGovernor`／`pickFactionForDiplomat`：那裡已經有人就跳 TALK #52／#53；選武將那一步掛狀態列 #9 |
+| **迴圈** | 四條的清單 callback 一律回 `false`（＝不關清單）；任命成功之後再呼叫自己一次，等於原版的 `jmp` 回迴圈開頭（連狀態列都重設）|
+| 官員說的一句 | 同檔 `officialSays(base, who)`：`resolveBattleTalkIndex(base, 武將.TalkVariant)` ＋ 那位武將的肖像。四個組 `19Ch`／`19Dh`／`1A2h`／`1A3h` |
 | 狀態列 | 四條出口各自 `setStatusTalk`（[`140`](140-status-message-box.md)）|
-| 差異 | **選完不回到清單**——remake 的清單 callback 回 `true` 就收掉。原版是迴圈，右鍵才離開。這一條列在 §5 |
+| 差異 | 無 |
 
 ## 4. 驗證
 
@@ -77,10 +81,13 @@ sub_16B4F（34 B）
 | 對原版 ✅ | [`../playtest/84`](../playtest/84-personnel-corps-list-parity.md)：內政官解任那一張的清單**十列全在**，與原版逐列相同 |
 | 單元測試 | `TestDismissListsEveryTarget`（`cmd/wlgame`）：沒有任何人派駐時清單仍然開、列數 ＝ 全部 |
 | 單元測試 | `TestDismissEmptySlotReportsNobody`：選到沒人的那一個回 TALK #54／#55，不寫壞資料 |
+| 單元測試 | `TestPersonnelFlowsLoopBackToTheList`：四條的 callback 一律不關清單 |
+| 單元測試 | `TestOfficialLineUsesVariantGroup`：四個組展開後的索引（457／461／465／502／510）|
+| 突變測試 | 把 `return false` 改回 `true`、把過濾加回去，各要有測試變紅 |
 
 ## 5. 未解
 
 | 項目 | 現況 |
 |---|---|
-| 選完回到清單的迴圈 | 原版成功或失敗都回清單繼續選，**remake 選完就收掉清單**。要改得動 `listPick` 的回傳語意，影響四條出口以外的地方，這一輪沒動 |
-| 成功時那位官員說的話 | 變體組 `1A2h`／`1A3h`（＝ TALK 418／419 那兩組八個）。remake 目前沒有這一則 |
+| **武將記錄 `+0x17` 被收成 bool** | 原版任命時寫 `2`（內政官）／`3`（外交官），remake 的 `General.Posted` 只有真假，所以**任命之後那個人仍然出現在編成候選裡**。要修得把 `+0x17` 攤成職務值，會動到存檔 round-trip——另開一份 |
+| 任命的「已經有人」訊息參數 | 原版 `push ax`（`ah = 0FFh`、`al` ＝ 武將編號）＋ `push bx`（**據點記錄位址**，直接位址式）。remake 直接代名字字串，**沒有走 formatter 的位址式**（[`../re/79`](../re/79-talk-marker-handlers.md) §2）|

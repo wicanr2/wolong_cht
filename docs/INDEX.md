@@ -280,7 +280,7 @@
 | [`docs/spec/14-finance-window.md`](spec/14-finance-window.md) | 14 — 財政視窗 | CONFORMED。版面已照原版重寫並有契約測試； 數值輸入器已接上（[78](78-amount-input-ed… | 2026-08-15 |
 | [`docs/spec/140-status-message-box.md`](spec/140-status-message-box.md) | 140 — 左下角的狀態列提示框 | CONFORMED。 | 2026-09-06 |
 | [`docs/spec/141-retreat-countdown.md`](spec/141-retreat-countdown.md) | 141 — 全軍退卻之後的 120 拍倒數 | CONFORMED。 | 2026-09-06 |
-| [`docs/spec/142-personnel-dismiss-flow.md`](spec/142-personnel-dismiss-flow.md) | 142 — 解任不先過濾：清單列全部，選到沒人的才回一則訊息 | CONFORMED。 | 2026-09-06 |
+| [`docs/spec/142-personnel-dismiss-flow.md`](spec/142-personnel-dismiss-flow.md) | 142 — 人事四條出口是一個迴圈：不過濾、選完回清單、官員自己說一句 | CONFORMED。 | 2026-09-06 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |

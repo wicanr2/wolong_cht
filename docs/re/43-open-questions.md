@@ -449,8 +449,8 @@
 | [`playtest/82-strategy-date-aligned-parity.md`](../playtest/82-strategy-date-aligned-parity.md) | 武將／勢力兩格的指令列反白 | 原版走狀態列提示 ＋ 地圖游標，remake 開一覽表，**流程不同**（`../spec/124` §5） | 靜態 |
 | [`playtest/83-city-list-parity.md`](../playtest/83-city-list-parity.md) | 原版擷取裡的滑鼠游標 | 88 px。要消掉得讓原版把游標移到不會拖動鏡頭的位置再截圖 | 實測 |
 | [`playtest/83-city-list-parity.md`](../playtest/83-city-list-parity.md) | 其餘家族的破折號縮排 | 這一張十列全滿，**看不到空列**，所以驗不到據點家族的破折號（`../spec/38`） | 靜態 |
-| [`playtest/84-personnel-corps-list-parity.md`](../playtest/84-personnel-corps-list-parity.md) | 選完回到清單的迴圈 | 原版成功或失敗都回清單繼續選，**remake 選完就收掉**（`142` §5） | 靜態 |
-| [`playtest/84-personnel-corps-list-parity.md`](../playtest/84-personnel-corps-list-parity.md) | 成功時那位官員說的話 | 變體組 `1A2h`／`1A3h`，remake 目前沒有這一則 | 靜態 |
+| [`playtest/84-personnel-corps-list-parity.md`](../playtest/84-personnel-corps-list-parity.md) | **武將記錄 `+0x17` 被收成 bool** | 原版任命時寫 `2`／`3`，remake 的 `General.Posted` 只有真假，所以**任命之後那個人仍然出現在編成候選裡**（`142` §5） | 靜態 |
+| [`playtest/84-personnel-corps-list-parity.md`](../playtest/84-personnel-corps-list-parity.md) | 迴圈與台詞的畫面對拍 | 接上了但**沒拍**——要按下去才看得到，得再走一步 | 靜態 |
 | [`playtest/84-personnel-corps-list-parity.md`](../playtest/84-personnel-corps-list-parity.md) | 原版擷取裡的滑鼠游標 | 六張都是 88 px | 靜態 |
 
 ## 2.5 外部資料（6 條）
@@ -593,8 +593,8 @@
 | [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 一般訊息框要不要一起改 | `\1`–`\5` 的定寬補白與逐標記換色是**全域規則**（`../re/79` §2），但一次改到所有訊息會動到四個語系的排版（`87`、`../playtest/32`）。要另外開一份規格，先量再改 | 靜態 |
 | [`spec/141-retreat-countdown.md`](../spec/141-retreat-countdown.md) | 退卻中要不要補兵 | 原版下令之後場上八拍歸零、**沒有補兵進場**；remake 的 `reinforce()` 會補（補進來的兵下一幀被 `applySquadLeaderGone` 改成退卻）。兩邊最後都會結束，但**中途的場上人數不同**，沒有逐拍對過 | 靜態 |
 | [`spec/141-retreat-countdown.md`](../spec/141-retreat-countdown.md) | `word_1D31C` 的兩個 byte | 量到開場是 48／48（＝六隊 × 八人），`../re/11` §5.9 寫的是「含畫面外待機的」。**兩種讀法都還沒有直接證據**，這一份只用到「它歸零時結束」這一點 | 靜態 |
-| [`spec/142-personnel-dismiss-flow.md`](../spec/142-personnel-dismiss-flow.md) | 選完回到清單的迴圈 | 原版成功或失敗都回清單繼續選，**remake 選完就收掉清單**。要改得動 `listPick` 的回傳語意，影響四條出口以外的地方，這一輪沒動 | 靜態 |
-| [`spec/142-personnel-dismiss-flow.md`](../spec/142-personnel-dismiss-flow.md) | 成功時那位官員說的話 | 變體組 `1A2h`／`1A3h`（＝ TALK 418／419 那兩組八個）。remake 目前沒有這一則 | 靜態 |
+| [`spec/142-personnel-dismiss-flow.md`](../spec/142-personnel-dismiss-flow.md) | **武將記錄 `+0x17` 被收成 bool** | 原版任命時寫 `2`（內政官）／`3`（外交官），remake 的 `General.Posted` 只有真假，所以**任命之後那個人仍然出現在編成候選裡**。要修得把 `+0x17` 攤成職務值，會動到存檔 round-trip——另開一份 | 靜態 |
+| [`spec/142-personnel-dismiss-flow.md`](../spec/142-personnel-dismiss-flow.md) | 任命的「已經有人」訊息參數 | 原版 `push ax`（`ah = 0FFh`、`al` ＝ 武將編號）＋ `push bx`（**據點記錄位址**，直接位址式）。remake 直接代名字字串，**沒有走 formatter 的位址式**（`../re/79` §2） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |

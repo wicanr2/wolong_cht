@@ -93,7 +93,32 @@ const (
 	// `sub_16BE3` 的 `cx = 37h`，docs/spec/142）。
 	nobodyPostedTalk        = 0x36 // #54「是否有所差錯？{2}並未派遣任何人。」
 	factionNobodyPostedTalk = 0x37 // #55「{3}勢力仍未派遣任何人．．．」
+
+	// 任命時選到「那裡已經有人」的兩則（`sub_16A9B` 的 `cx = 34h`／
+	// `sub_16B71` 的 `cx = 35h`）。
+	cityStaffedTalk    = 0x34 // #52「{2}已有{1}大人前去赴任了。」
+	factionStaffedTalk = 0x35 // #53「{3}勢力已有{1}大人前去赴任了。」
+
+	// 選武將那一步的狀態列（`mov cx, 9`）。
+	pickOfficialTalk = 0x09 // #9「請選擇任命之武將。」
+
+	// 那位官員自己說的一句：**八格一組**，由武將記錄 +0x1E 選組內第幾個，
+	// 肖像取 +0x01（`sub_18810` 的 `ah`／`al`，docs/spec/142）。
+	governorAssignedTalk  = 0x19C
+	diplomatAssignedTalk  = 0x19D
+	governorDismissedTalk = 0x1A2
+	diplomatDismissedTalk = 0x1A3
 )
+
+// officialSays 把那位官員的一句掛出來（變體組 ＋ 他自己的肖像）。
+func (g *game) officialSays(base, who int) {
+	if g == nil || g.world == nil || who < 0 || who >= len(g.world.Generals) {
+		return
+	}
+	gen := &g.world.Generals[who]
+	g.enqueueTalkWithPortrait(
+		resolveBattleTalkIndex(base, gen.TalkVariant), nil, gen.Portrait)
+}
 
 func (g *game) pickCityForGovernor() {
 	g.setStatusTalk(governorAssignTalk, nil)
@@ -104,18 +129,33 @@ func (g *game) pickCityForGovernor() {
 		return
 	}
 	// **先選據點，再選武將**（說明書：內政官任命的順序）。
+	//
+	// ⭐ **選完回到據點清單**（原版 `sub_16A9B` 的 `jmp loc_16AA4`，
+	// docs/spec/142）：不論成功、那裡已經有人、還是選武將時取消，
+	// 都回到這一張清單，**右鍵才離開**。
 	g.cityList(rows, "選要派內政官的據點　Enter 決定　ESC 取消", func(city int) bool {
+		c := &g.world.Cities[city]
+		if c.Governor != NoOfficial {
+			g.enqueueTalk(cityStaffedTalk, map[byte]string{
+				'2': padTalkField(big5(c.Name)),
+				'1': padTalkField(big5(g.world.Generals[c.Governor].Name)),
+			})
+			return false // 回清單
+		}
 		free := g.freeGenerals()
 		if len(free) == 0 {
 			g.lastEvent = "沒有可派任的武將"
-			return true
+			return false
 		}
-		name := big5(g.world.Cities[city].Name)
+		name := big5(c.Name)
+		g.setStatusTalk(pickOfficialTalk, nil)
 		g.generalList(free, "選要派去 "+name+" 的武將　Enter 決定", func(who int) bool {
-			g.world.Cities[city].Governor = who
+			c.Governor = who
 			g.lastEvent = fmt.Sprintf("%s 派任 %s 為內政官",
 				name, big5(g.world.Generals[who].Name))
-			return true
+			g.officialSays(governorAssignedTalk, who)
+			g.pickCityForGovernor() // ★ 回到據點清單
+			return false
 		})
 		return false
 	})
@@ -142,11 +182,12 @@ func (g *game) removeGovernor() {
 		if old < 0 || old >= len(g.world.Generals) || old == NoOfficial {
 			g.enqueueTalk(nobodyPostedTalk,
 				map[byte]string{'2': padTalkField(big5(c.Name))})
-			return true
+			return false // ★ 回清單（原版 `jmp loc_16B11`）
 		}
 		g.lastEvent = fmt.Sprintf("%s 解任內政官 %s",
 			big5(c.Name), big5(g.world.Generals[old].Name))
-		return true
+		g.officialSays(governorDismissedTalk, old)
+		return false // ★ 成功也回清單
 	})
 }
 
@@ -164,18 +205,30 @@ func (g *game) pickFactionForDiplomat() {
 		g.list = nil
 		return
 	}
+	// 與內政官任命同形（原版 `sub_16B71` 的 `jmp loc_16B7A`，docs/spec/142）。
 	g.factionList(rows, "選要派外交官的勢力　Enter 決定　ESC 取消", func(f int) bool {
+		fa := &g.world.Factions[f]
+		name := big5(g.world.LordName(f))
+		if fa.Diplomat != NoOfficial {
+			g.enqueueTalk(factionStaffedTalk, map[byte]string{
+				'3': padTalkField(name),
+				'1': padTalkField(big5(g.world.Generals[fa.Diplomat].Name)),
+			})
+			return false
+		}
 		free := g.freeGenerals()
 		if len(free) == 0 {
 			g.lastEvent = "沒有可派任的武將"
-			return true
+			return false
 		}
-		name := big5(g.world.LordName(f))
+		g.setStatusTalk(pickOfficialTalk, nil)
 		g.generalList(free, "選要派去 "+name+" 的武將　Enter 決定", func(who int) bool {
-			g.world.Factions[f].Diplomat = who
+			fa.Diplomat = who
 			g.lastEvent = fmt.Sprintf("派 %s 出使 %s 軍",
 				big5(g.world.Generals[who].Name), name)
-			return true
+			g.officialSays(diplomatAssignedTalk, who)
+			g.pickFactionForDiplomat() // ★ 回到勢力清單
+			return false
 		})
 		return false
 	})
@@ -205,11 +258,12 @@ func (g *game) removeDiplomat() {
 		if old < 0 || old >= len(g.world.Generals) || old == NoOfficial {
 			g.enqueueTalk(factionNobodyPostedTalk,
 				map[byte]string{'3': padTalkField(big5(g.world.LordName(f)))})
-			return true
+			return false // ★ 回清單
 		}
 		g.lastEvent = fmt.Sprintf("召回派駐 %s 軍的 %s",
 			big5(g.world.LordName(f)), big5(g.world.Generals[old].Name))
-		return true
+		g.officialSays(diplomatDismissedTalk, old)
+		return false // ★ 成功也回清單
 	})
 }
 
