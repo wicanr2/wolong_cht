@@ -25,7 +25,7 @@ shots=(
 "wlgame-cht-paused|wlgame|-direct -scenario 0 -player 0 -seed 17 -open-window 3"
 "wlgame-advise|wlgame|-direct -scenario 0 -player 0 -seed 17 -open-advise -advise-menu"
 "wlgame-form|wlgame|-direct -scenario 0 -player 0 -seed 17 -open-form"
-"wlgame-march|wlgame|-direct -scenario 0 -player 0 -seed 17 -open-march-list"
+"wlgame-march|wlgame|-direct -scenario 0 -player 0 -seed 17 -open-march-pick"
 "wlgame-list|wlgame|-direct -scenario 0 -player 0 -seed 17 -open-list"
 "wlgame-corps|wlgame|-direct -scenario 0 -player 0 -seed 17 -open-corps"
 "wlgame-battle|wlgame|-direct -scenario 0 -player 0 -seed 17 -open-battle"

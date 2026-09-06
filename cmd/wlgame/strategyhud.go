@@ -239,8 +239,12 @@ func (g *game) commandFlowRunning(c naturalCommandID) bool {
 		naturalCommandGeneral, naturalCommandFaction:
 		// 這幾格都是「開一張視窗或一覽」，關掉就等於 handler 回來了。
 		// 行軍三選一也算：它是「軍團 → 行軍指示」那條路的最後一步。
+		//
+		// ⭐ **地圖選點也算**（docs/spec/149）：軍團 → 行軍指示選完軍團之後
+		// 畫面上一張視窗都沒有，但原版的 `sub_1703C` 還在等玩家點地圖，
+		// 指令格也還亮著。漏掉它的症狀是「反白與狀態列在選點那一刻整組消失」。
 		return g.list != nil || g.form.active || g.marchMode.active ||
-			g.cityInfo.active || g.corpsInfo.active
+			g.cityInfo.active || g.corpsInfo.active || g.mapPickActive()
 	}
 	return false
 }

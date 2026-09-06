@@ -129,7 +129,7 @@ MCH 4 ＝ `CorpsTile(0, HeadingStill)`，也就是曹操那一支靜止的軍團
 
 ### 4.1 驗收路徑：要看得到「軍團在路上」
 
-`-open-form`／`-open-corps`／`-open-march-list` 三個 fixture 都停在**視窗裡**，
+`-open-form`／`-open-corps`／`-open-march-pick` 三個 fixture 都停在**視窗裡**，
 而視窗蓋住大地圖——用它們截圖看不到軍團疊在哪。要驗這一條得有一條
 **停在大地圖**的路徑：
 

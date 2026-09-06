@@ -69,12 +69,26 @@ const (
 // docs/spec/140 §1.1）。
 const corpsInfoTalk = 4
 
+// openCorpsInfo 開軍團情報面板並掛狀態列 #4。
+//
+// ⭐ **#4 只在「別人的軍團」時掛**（原版 `sub_17F90`）：面板兩種情況都畫，
+// 但玩家自己的軍團接著走行軍指示（`sub_17FDB`，狀態列換成 #3），
+// 只有別人的軍團才停在 #4 讓玩家看（docs/spec/149 §1.3）。
 func (g *game) openCorpsInfo(corps int) {
-	if corps < 0 || corps >= len(g.world.Corps) || !g.world.Corps[corps].Alive {
+	if !g.showCorpsPanel(corps) {
 		return
 	}
-	g.corpsInfo = corpsInfoState{active: true, corps: corps}
 	g.setStatusTalk(corpsInfoTalk, nil)
+}
+
+// showCorpsPanel 只把面板叫出來，不碰狀態列——行軍指示那條路要用它，
+// 因為狀態列在下一步就被 `sub_17FDB` 換成 #3 了。
+func (g *game) showCorpsPanel(corps int) bool {
+	if corps < 0 || corps >= len(g.world.Corps) || !g.world.Corps[corps].Alive {
+		return false
+	}
+	g.corpsInfo = corpsInfoState{active: true, corps: corps}
+	return true
 }
 
 func (g *game) updateCorpsInfo() {
@@ -125,10 +139,14 @@ func (g *game) drawCorpsInfo(screen *ebiten.Image) {
 	}
 
 	// 「總兵力 6000／200」是一列：值、斜線、士氣。
-	g.td.Draw(screen, strategyHUDNumber(c.Men*strategyReserveMenPerPoint,
-		corpsTotalDigits), corpsTotalX, corpsTotalY, ink)
-	g.td.Draw(screen, strategyHUDNumber(c.Morale, corpsMoraleDigits),
-		corpsMoraleX, corpsTotalY, ink)
+	//
+	// ⭐ **數字用原版的 8×16 字模**（`sub_1062F` 那一套，與一覽表同一組）：
+	// `1` 只有 4 px 寬，文字字型的 `1` 是 6 px，整串就對不齊
+	// （docs/spec/149 §1.4，原版擷取量到的）。
+	g.drawOriginalNumber(screen, c.Men*strategyReserveMenPerPoint,
+		corpsTotalX, corpsTotalY, corpsTotalDigits, ink)
+	g.drawOriginalNumber(screen, c.Morale,
+		corpsMoraleX, corpsTotalY, corpsMoraleDigits, ink)
 
 	// 六個槽。**空槽照原版畫天秤**——原版的圖庫基底是紅色那一組，
 	// 而兵種 4 算出來剛好越界到綠色組的第一張（docs/re/51 §4）。
@@ -140,14 +158,18 @@ func (g *game) drawCorpsInfo(screen *ebiten.Image) {
 			op.GeoM.Translate(float64(corpsSlotIconX), float64(y))
 			screen.DrawImage(ebiten.NewImageFromImage(img), op)
 		}
-		g.td.Draw(screen, strategyHUDNumber(c.Units[k].Men*strategyReserveMenPerPoint,
-			corpsSlotDigits), corpsSlotValueX, y, labelInk)
+		g.drawOriginalNumber(screen, c.Units[k].Men*strategyReserveMenPerPoint,
+			corpsSlotValueX, y, corpsSlotDigits, labelInk)
 	}
 
 	// ↓ remake 差異：原版按右鍵關掉，沒有這行字。
-	g.chrome.Window(screen, corpsHintX, corpsHintY, corpsHintW, corpsHintH, chrome.Menu)
-	g.td.Draw(screen, "ESC 關閉", corpsHintX+8,
-		corpsHintY+(corpsHintH-textdraw.GlyphH)/2, labelInk)
+	// ⚠ **選點期間不畫**：那時候面板不吃輸入（右鍵是選點的取消），
+	// 這行字會說謊（docs/spec/149 §1.3）。
+	if !g.mapPickActive() {
+		g.chrome.Window(screen, corpsHintX, corpsHintY, corpsHintW, corpsHintH, chrome.Menu)
+		g.td.Draw(screen, "ESC 關閉", corpsHintX+8,
+			corpsHintY+(corpsHintH-textdraw.GlyphH)/2, labelInk)
+	}
 }
 
 // corpsSlotIcon 取軍團情報那一欄的兵種圖示：**紅色組**，兵種 4 越界到

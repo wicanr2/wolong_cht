@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**671 列分布在 275 份文件，平均每份 2.4 列。**
+**676 列分布在 277 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 181 | 174 | 6 | 1 |
-| 驗收 | 179 | 155 | 24 | 0 |
+| 驗收 | 182 | 158 | 24 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 274 | 254 | 19 | 1 |
-| **合計** | **671** | 614 | 54 | 3 |
+| 其他 | 276 | 256 | 19 | 1 |
+| **合計** | **676** | 619 | 54 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,9 +53,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 235 |
+| `docs/spec/` | 237 |
+| `docs/playtest/` | 182 |
 | `docs/re/` | 181 |
-| `docs/playtest/` | 179 |
 | `docs/release/` | 22 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
@@ -290,7 +290,7 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
 
-## 2.4 驗收（179 條）
+## 2.4 驗收（182 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -473,6 +473,9 @@
 | [`playtest/92-personnel-assign-parity.md`](../playtest/92-personnel-assign-parity.md) | 原版的滑鼠游標 | 95–109 px。⚠ `91` §3 那一張**沒有**游標，同樣有訊息框、同樣的點擊位置——差別還沒找到 | 靜態 |
 | [`playtest/92-personnel-assign-parity.md`](../playtest/92-personnel-assign-parity.md) | 每小時 ±1 | 據點一覽那兩欄，已裁定（`83` §4.1） | 靜態 |
 | [`playtest/92-personnel-assign-parity.md`](../playtest/92-personnel-assign-parity.md) | 兩張清單共用同一個游標記憶體 | `word_198AA`：原版關掉清單再開回來，游標停在原處。remake 每次從 0 開始（`148` §4） | 靜態 |
+| [`playtest/94-march-map-picker.md`](../playtest/94-march-map-picker.md) | 游標推到畫面邊緣時鏡頭跟過去 | 原版的滑鼠是**世界座標**，推出視野鏡頭會捲（`../re/84` §2）。remake 的滑鼠被視窗框住，還沒接 | 靜態 |
+| [`playtest/94-march-map-picker.md`](../playtest/94-march-map-picker.md) | 狀態列 #21（三選一） | 選完目標據點的下一張，還沒拍 | 靜態 |
+| [`playtest/94-march-map-picker.md`](../playtest/94-march-map-picker.md) | 別的狀態下的游標 | §2 | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -485,7 +488,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（274 條）
+## 2.6 其他（276 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -631,13 +634,15 @@
 | [`spec/147-controlled-parity-save.md`](../spec/147-controlled-parity-save.md) | 還能關掉什麼 | 目前只有 `--no-clouds`。天災、AI 出兵、募兵都吃亂數，各自需要自己的「關掉」欄位 | 靜態 |
 | [`spec/147-controlled-parity-save.md`](../spec/147-controlled-parity-save.md) | 兩邊的**消費順序**能不能對齊 | 狀態可以搬（§5），順序還沒逐拍比過 | 靜態 |
 | [`spec/148-shared-candidate-filter.md`](../spec/148-shared-candidate-filter.md) | `sub_17663` 的 `xor cl, cl` | 比 `sub_175FA` 多一行，把清單游標歸零。remake 每次開清單本來就從 0 開始，行為相同；**但那代表原版的兩張清單共用同一個游標記憶體 `word_198AA`**，切換時的殘留還沒對過 | 靜態 |
+| [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | 游標推到畫面邊緣時鏡頭跟過去 | 原版的滑鼠座標是**世界座標**，推到視野外鏡頭會捲（`../re/84` §2）。remake 的滑鼠被視窗框住，還沒接這個行為 | 靜態 |
+| [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | 別的狀態下的游標 | `../playtest/91` §3 還沒對上，所以只接選點這一個 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 池的上限 | `sub_155EC` 的 `0xFFDC` 只在退兵路徑上驗過；月結加兵是不是同一支未查。**remake 兩條路徑現在都夾**（`economy.ClampReserve`），但那是照著同一個常數做的，不是證明原版共用同一支 | 靜態 |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 頭像的邊框 | `sub_107D2` 只 blit 64×64 的圖塊，**框在哪裡畫的沒找到**——場景 5 的 op 清單裡沒有頭像那一格的框 | 靜態 |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 兵種標籤 | 畫面用場景 5 的「主將」，規則層的 `army.Position` 第一個是「大將」（原版 TALK #62 也這樣說）。兩處用語不同是原版就有的，不要統一 | 靜態 |
-| [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 指令流程的**入口**與 remake 不同 | `sub_17FDB` 已解（`../re/45` §1：選據點 → 選「戰鬥指揮／委任／解體」→ 寫 `+0x00` 位元 2、`+0x0B`、`+0x20`）。⚠ 先前這一列寫「remake 沒有那三個選項」——**那是錯的**：`cmd/wlgame/marchmode.go` 三個選項都在（`docs/s… | 靜態 |
+| [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 在地圖上直接點軍團 | 原版 `sub_11E46` 讓玩家在大地圖上點軍團就開這個面板，remake 只能從一覽表進來。⭐ 地圖選點的機制已經有了（`149`），缺的是「那一格上有沒有軍團」這道命中判定 | 靜態 |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 空槽標記 | 原版用名稱欄第一個字 `0xD0A1`；remake 用「載得起來且玩家勢力有效」判定，兩者不等價 | 靜態 |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 新遊戲共用 | remake 的啟動殼層是自己的畫面，還沒有換成這個四槽視窗 | 靜態 |
 | [`spec/26-yes-no-dialog.md`](../spec/26-yes-no-dialog.md) | 原版的使用者 | `sub_18DC8` 只有一個呼叫端 `sub_11AC3`（新遊戲流程），問題文字由那裡給，內容未讀 | 靜態 |

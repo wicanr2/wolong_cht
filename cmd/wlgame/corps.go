@@ -9,7 +9,6 @@ package main
 
 import (
 	"fmt"
-	"sort"
 	"image"
 	"image/color"
 	"strings"
@@ -434,53 +433,40 @@ func (g *game) beginMarch() {
 	}
 	g.openCorpsListWith(rows, "選擇行軍的軍團　Enter 選取／決定　ESC 取消",
 		func(i int) bool {
+			// ⭐ 原版選完軍團先開**軍團情報面板**（`sub_17F90` 的
+			// `sub_1807B`／`sub_1812A`），面板留著的同時在地圖上選目標
+			// （docs/spec/149 §1.3）。
+			g.showCorpsPanel(i)
 			g.pickDestination(i)
-			return false // 直接換成下一張一覽表，不關視窗
+			return false // 清單讓位給地圖
 		})
 }
 
-// pickDestination 選行軍的目的地。
+// pickDestination 選行軍的目的地：**在大地圖上點**（docs/spec/149）。
 //
-// 全部 192 個據點都列出來，但**預設照距離排序**——一張 192 列的表
-// 若按編號排，玩家要翻半天才找得到隔壁那座城。
+// ⭐ 原版 `sub_17FDB` 走的是 `sub_1703C`——畫一個空心框游標等玩家點地圖，
+// **不是一覽表**。一座城的圖形有 4×4 格，但只有登記的那一格按得到。
+// 右鍵取消 ＝ 整條流程結束。
 func (g *game) pickDestination(corps int) {
 	g.setStatusTalk(marchTargetTalk, nil)
-	cs := g.world.Cities
-	from := g.world.Corps[corps]
-	dist := func(i int) int {
-		dx, dy := cs[i].X-from.X, cs[i].Y-from.Y
-		if dx < 0 {
-			dx = -dx
-		}
-		if dy < 0 {
-			dy = -dy
-		}
-		if dx > dy {
-			return dx
-		}
-		return dy // 切比雪夫距離，與月結收入用的同一種
-	}
-	var rows []int
-	for i := range cs {
-		if i != from.Node {
-			rows = append(rows, i)
-		}
-	}
-	// 預設照距離排：一張 192 列的表按編號排，玩家要翻半天才找得到隔壁。
-	// **原版的欄位裡沒有「距離」**（docs/re/26 §4.1），所以只排順序、
-	// 不加欄——這是 remake 的便利，不是原版行為。
-	sort.SliceStable(rows, func(a, b int) bool { return dist(rows[a]) < dist(rows[b]) })
-	g.openCityPicker(rows, "選擇目的地　Enter 選取／決定　1-6 排序　ESC 取消", nil)
-	g.listPick = func(i int) bool {
-		if err := g.world.March(corps, i); err != nil {
+	// 軍團一覽讓位給地圖：原版選完軍團就回到大地圖，而**地圖一重畫，
+	// 留在清單上緣的那個選單框也跟著消失**（docs/spec/126 §1.2）。
+	g.list = nil
+	g.closePopupMenu()
+	g.beginMapPick(func(city int) {
+		if err := g.world.March(corps, city); err != nil {
 			g.setEvent(err.Error())
-			return true
+			g.clearStatusTalk()
+			return
 		}
 		// 原版選完據點還有第二段：戰鬥指揮／委任／解體（docs/spec/39）。
-		g.beginMarchMode(corps, i)
-		return true
-	}
-	g.listHint = "選擇目的地　Enter 選取／決定　1-4 排序　ESC 取消"
+		g.beginMarchMode(corps, city)
+	}, func() {
+		// 右鍵 ＝ 整條流程結束：面板與狀態列一起收（原版 `loc_18046`
+		// 之後 `sub_17F90` 走 `sub_1817D` 擦面板 ＋ `cx=0FFFFh` 清狀態列）。
+		g.corpsInfo.active = false
+		g.clearStatusTalk()
+	})
 }
 
 // ---------------------------------------------------------------------------

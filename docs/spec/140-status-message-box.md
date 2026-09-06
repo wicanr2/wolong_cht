@@ -37,7 +37,7 @@ sub_18853(cx = TALK 索引)
 | #1 | `sub_16C92` | 編成：下各部隊的編成指示 |
 | #2 | `sub_1628F` | 軍團 → 行軍指示：選軍團 |
 | #3 | `sub_17FDB` | 行軍：指示目標據點 |
-| #4 | `sub_17F90` | 軍團情報面板（自己的軍團）|
+| #4 | `sub_17F90` | 軍團情報面板——⭐ **別人的軍團**才掛（自己的直接進行軍指示，狀態列是 #3；[`149`](149-march-target-map-picker.md) §1.3）|
 | #4 | `sub_15AD1` | 勢力一覽那個常駐視窗（[`../re/31`](../re/31-faction-picker-screen.md)）|
 | #5 | `sub_16405` | 進言 → 敵對提案 |
 | #6 | `sub_164F1` | 進言 → 停戰提案 |
@@ -111,7 +111,7 @@ sub_18853(cx = TALK 索引)
 | 財政四格 | `financeAmountTalk`（`cmd/wlgame/finance.go`）：稅率 #17／騎兵 #18／弓兵 #19／步兵 #20；離開數值輸入器就換回 #16 |
 | 編成第二層 | `formOrderTalk` ＝ #1，選完武將那一刻換上去（`sub_16C92`）|
 | 行軍目標 | `marchTargetTalk` ＝ #3，`pickDestination` 掛（`sub_17FDB`）|
-| 軍團情報 | `corpsInfoTalk` ＝ #4，`openCorpsInfo` 掛（`sub_17F90`）|
+| 軍團情報 | `corpsInfoTalk` ＝ #4，`openCorpsInfo` 掛（`sub_17F90` 的 `loc_17FBC`）。**自己的軍團走 `showCorpsPanel` 不掛 #4**（[`149`](149-march-target-map-picker.md) §1.3）|
 | 差異 | **27 個帶索引的呼叫點裡接了 26 個**。只剩 `sub_15AD1` 那一個 #4——它掛在「勢力一覽」那個常駐視窗上（[`../re/31`](../re/31-faction-picker-screen.md)），remake 的對應視窗還沒接 |
 | 差異 | 名字的換色與定寬補白目前只在這個框成立。**一般訊息框（`drawMessage`）還是整段畫成白的、名字也還是裁掉補白**——同樣是既有差異 |
 
