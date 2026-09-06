@@ -36,11 +36,10 @@ const Tile = gfx.ChromeTile
 // 而 docs/spec/51 把調色盤換算改成走 VGA 的 6 bit DAC 之後，
 // 抄下來的值全部差了 2–4——**解碼修好了，常數不會跟著修**。
 const (
-	MenuIndex   = 8  // 選單／情報視窗的深藍底
-	SheetIndex  = 9  // 清單視窗的米色底
-	SelectIndex = 5  // 反白條
-	InkIndex    = 0  // 米色底上的字（也是命令列的底）
-	PaperIndex  = 15 // 深藍底上的字
+	MenuIndex  = 8  // 選單／情報視窗的深藍底
+	SheetIndex = 9  // 清單視窗的米色底
+	InkIndex   = 0  // 米色底上的字（也是命令列的底）
+	PaperIndex = 15 // 深藍底上的字
 
 	// HighlightXOR 是原版反白用的**互斥或遮罩**（`sub_10B46` 寫進
 	// VGA 繪圖控制器的 `0Ch`，docs/spec/124）。反白不是「換一個底色」，
@@ -49,6 +48,9 @@ const (
 	// 黑底白字那一族反白之後的兩個顏色，由上面的 XOR 直接算出來。
 	HighlightIndex    = InkIndex ^ HighlightXOR   // 12 黃
 	HighlightInkIndex = PaperIndex ^ HighlightXOR // 3 藍
+	// SelectIndex 是清單視窗的反白條，**也是同一個 XOR**：
+	// 清單底色 9 → 5（docs/spec/124 §3.6）。先前它是一個獨立的量測值。
+	SelectIndex = SheetIndex ^ HighlightXOR // 5 綠
 )
 
 // 內部底色。原版的選單視窗是深藍底 ＋ 龍紋，清單視窗是米色底。
@@ -63,7 +65,7 @@ var (
 	//
 	// ✅ **實機量到了**（docs/playtest/90）：編成選完武將之後那一列還反白著，
 	// 底是這個綠 `519241`、**字是黃的** `f3e300`（＝ Highlight）。
-	// 先前這裡標著「還沒有實機證據」，因為對拍過的那幾張都選不到列。
+	// ⭐ 它不是獨立的顏色：清單底色 9 XOR 12 就是 5（docs/spec/124 §3.6）。
 	Select = color.RGBA{81, 146, 65, 255}
 	// Highlight 是選單反白條的底色（色 12），HighlightInk 是上面的字色
 	// （色 3）。兩個都是 `InkIndex`／`PaperIndex` XOR 12 的結果。

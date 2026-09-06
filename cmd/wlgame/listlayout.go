@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
+	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
@@ -302,11 +303,11 @@ const (
 	listInkWarn = 10
 	// listInkWarnSelected 是同樣那幾格在**反白列**上的色號。
 	//
-	// ⚠ **機制沒解，這是量出來的**：同一格在一般列是色 10 `(211,0,0)`、
-	// 在反白列是色 6 `(130,65,32)`（docs/playtest/98 各量一次）。
-	// 一般文字則是黑（色 0）→ 黃（色 12）。兩組都不是同一種變換，
-	// 所以沒有硬推一條規則。
-	listInkWarnSelected = 6
+	// ⭐ 它是推導值不是量測值：反白就是**整塊 XOR 12**
+	// （`sub_10B46`，docs/spec/124 §3.6），儲存格自己的顏色也照套——
+	// 10 ^ 12 ＝ 6，與 docs/playtest/98 量到的 `(130,65,32)` 一致。
+	// 所以**新增一種換色只要給一般列的色號**，反白自動正確。
+	listInkWarnSelected = listInkWarn ^ chrome.HighlightXOR
 )
 
 // corpsHalfStrength 是「總兵數換色」的門檻：原版 `< 0x12C` ＝ 300 點

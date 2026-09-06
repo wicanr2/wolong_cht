@@ -5,6 +5,7 @@ import (
 
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
 	"github.com/wicanr2/wolong_cht/internal/state"
+	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 )
 
 // newTalkTestGame 起一個只有 TALK 資料的 game——這幾支測的是文字代入，
@@ -65,5 +66,16 @@ func TestGeneralMessageBoxCarriesTalkFields(t *testing.T) {
 	}
 	if fields[0].text != "濮陽　" {
 		t.Errorf("欄位文字 ＝ %q，want 補到三格", fields[0].text)
+	}
+}
+
+// 換色的儲存格在反白列上是 XOR 12，不是另一個量出來的常數
+//（docs/spec/124 §3.6）。⭐ 這一條釘住的是「新增一種換色不必再量一次」。
+func TestListWarnInkFollowsHighlightXor(t *testing.T) {
+	if got, want := listInkWarn^chrome.HighlightXOR, listInkWarnSelected; got != want {
+		t.Fatalf("%d XOR 12 ＝ %d，want %d", listInkWarn, got, want)
+	}
+	if listInkWarnSelected != 6 {
+		t.Errorf("反白列的換色 ＝ %d，docs/playtest/98 量到 6", listInkWarnSelected)
 	}
 }

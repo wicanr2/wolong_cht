@@ -63,3 +63,23 @@ func TestHighlightIsXorOfInkAndPaper(t *testing.T) {
 			HighlightIndex, HighlightInkIndex)
 	}
 }
+
+// 反白是**整塊 XOR 12**，清單的反白條也不例外（docs/spec/124 §3.6）。
+// 先前 SelectIndex 是一個獨立的量測值，於是「同一條規則」看起來像三條。
+func TestSelectIsSheetXorHighlight(t *testing.T) {
+	if got, want := SheetIndex^HighlightXOR, SelectIndex; got != want {
+		t.Errorf("清單底 %d XOR %d ＝ %d，want %d",
+			SheetIndex, HighlightXOR, got, want)
+	}
+	// docs/playtest/98 §3 量到的三組，逐組驗一次。
+	for _, tc := range []struct{ name string; normal, selected int }{
+		{"清單底色", SheetIndex, SelectIndex},
+		{"一般文字", InkIndex, HighlightIndex},
+		{"換色的儲存格", 10, 6},
+	} {
+		if got := tc.normal ^ HighlightXOR; got != tc.selected {
+			t.Errorf("%s：%d XOR 12 ＝ %d，實機量到 %d",
+				tc.name, tc.normal, got, tc.selected)
+		}
+	}
+}

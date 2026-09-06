@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**697 列分布在 289 份文件，平均每份 2.4 列。**
+**694 列分布在 289 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 182 | 175 | 6 | 1 |
-| 驗收 | 200 | 175 | 25 | 0 |
+| 驗收 | 198 | 173 | 25 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 278 | 257 | 20 | 1 |
-| **合計** | **697** | 638 | 56 | 3 |
+| 其他 | 277 | 256 | 20 | 1 |
+| **合計** | **694** | 635 | 56 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,8 +53,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 239 |
-| `docs/playtest/` | 200 |
+| `docs/spec/` | 238 |
+| `docs/playtest/` | 198 |
 | `docs/re/` | 182 |
 | `docs/release/` | 22 |
 | `docs/formats/` | 20 |
@@ -291,7 +291,7 @@
 | [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 游標圖形資料 | 在 `sub_201E4` 附近，逐 byte 沒抓；remake 已經有量出來的 14×14 遮罩 | 靜態 |
 | [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 54 個 hide／show 點對應到 remake 的哪一段 | 沒做；這是「remake 要不要同步游標」的前置 | 靜態 |
 
-## 2.4 驗收（200 條）
+## 2.4 驗收（198 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -489,8 +489,6 @@
 | [`playtest/97-faction-picker-parity.md`](../playtest/97-faction-picker-parity.md) | 原版擷取裡的滑鼠游標 | 82 px，停在剛點的圖例上 | 靜態 |
 | [`playtest/97-faction-picker-parity.md`](../playtest/97-faction-picker-parity.md) | 只重畫兩列 | 原版換選中時只重畫舊的與新的那兩列，remake 整張重畫。**視覺上沒有差異**，但要知道原版沒有全畫面刷新（`../re/31` §2.2） | 靜態 |
 | [`playtest/98-enemy-corps-panel.md`](../playtest/98-enemy-corps-panel.md) | 「反白列的 `listCellInk` 覆寫沒有樣本」。 | （未解小節內文） | 靜態 |
-| [`playtest/98-enemy-corps-panel.md`](../playtest/98-enemy-corps-panel.md) | listInkWarn`／`listInkWarnSelected` 兩個常數各自來自一次量測， 機制列為未解。 | （散句） | 靜態 |
-| [`playtest/98-enemy-corps-panel.md`](../playtest/98-enemy-corps-panel.md) | 反白列換色的**機制** | §3：兩個色號各有一次量測，變換規則沒解。列繪製 callback（線性 `0x1727D`）IDA 沒建成函式，`ida_range.py` 只印得出 `db`；要另外做一次強制解碼 | 靜態 |
 | [`playtest/98-enemy-corps-panel.md`](../playtest/98-enemy-corps-panel.md) | 整張畫面 | 鏡頭是格級的（`../spec/149` §4） | 靜態 |
 | [`playtest/99-slot-window-parity.md`](../playtest/99-slot-window-parity.md) | 原版擷取裡的滑鼠游標 | 95 px，停在剛點的 `ＯＫ` 格上 | 靜態 |
 | [`playtest/99-slot-window-parity.md`](../playtest/99-slot-window-parity.md) | remake 的下方提示框 | 「檔案　SAVE.DAT」與鍵盤提示是 remake 差異，**畫在原版視窗外面**（`../spec/25` §3），所以不影響本體 | 靜態 |
@@ -507,7 +505,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（278 條）
+## 2.6 其他（277 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -594,7 +592,6 @@
 | [`spec/122-sound-type-levels.md`](../spec/122-sound-type-levels.md) | `AH=0Bh` 只重算三個聲部 | 原版那個迴圈是 `ah = 0、1、2`（`../re/81` §5）。remake 的主增益對所有聲部一致，這一點**沒有照抄** | 靜態 |
 | [`spec/123-captive-talk-messages.md`](../spec/123-captive-talk-messages.md) | 城兵那一側 | `sub_14FCE` 也呼叫 `sub_129C3`（守城武將被擒）。remake 的城兵路徑有沒有走到同一則沒驗 | 靜態 |
 | [`spec/124-menu-highlight-xor.md`](../spec/124-menu-highlight-xor.md) | 武將／勢力兩格的反白時機 | **八格都接了**（§3.5），但這兩格**沒有原版擷取**：原版走狀態列提示 ＋ 地圖游標，remake 開的是一覽表，流程本身不同。其餘六格各有一張原版擷取對過 0 px | 靜態 |
-| [`spec/124-menu-highlight-xor.md`](../spec/124-menu-highlight-xor.md) | 清單視窗的反白條 | `chrome.Select` 色 5 是**沒有實機證據的猜測**（§3）。要一張選著某一列的原版清單才驗得了 | 靜態 |
 | [`spec/124-menu-highlight-xor.md`](../spec/124-menu-highlight-xor.md) | `sub_10B46` 的暫存器序列 | 只確認了它寫 `0Ch` 給繪圖控制器、而結果逐點等於 XOR 12。**中間那幾個 port 寫入沒有逐行讀** | 靜態 |
 | [`spec/125-menu-box-width-from-padding.md`](../spec/125-menu-box-width-from-padding.md) | 「據點」那兩項 | `TALK #82`（「　首都確認　」／「　據點一覽　」）同樣是兩項選單，remake 的「據點」目前直接開一覽（`110` §5）。做了之後框寬會自動對——但那是另一件事 | 靜態 |
 | [`spec/125-menu-box-width-from-padding.md`](../spec/125-menu-box-width-from-padding.md) | 原版只看第一列 | remake 取**所有列的最大值**。四則既有選單兩種算法同值，`#79`／`#82` 也同值；**沒有找到會分歧的例子，但也沒有窮舉過** | 靜態 |

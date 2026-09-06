@@ -679,11 +679,11 @@ func (g *game) drawList(screen *ebiten.Image) {
 			if g.listCellInk != nil {
 				if idx, ok := g.listCellInk(r, col); ok {
 					// ⭐ **儲存格自己的顏色贏過反白列的字色**，而且
-					// **在反白列上換一個色號**：一般列色 10、反白列色 6
-					// （原版擷取兩種狀態各量一次，docs/playtest/98）。
-					// ⚠ 換色號的機制沒解，這裡是照抄兩個量到的值。
+					// **在反白列上 XOR 12**（docs/spec/124 §3.6）——
+					// 反白是一支區塊常式，對矩形裡每一點做同一件事，
+					// 不分底色、文字或儲存格自己的顏色。
 					if selected {
-						idx = listInkWarnSelected
+						idx ^= chrome.HighlightXOR
 					}
 					c = g.paletteInk(idx, listWarnInk)
 				}
