@@ -70,17 +70,33 @@
 取樣點沒有人退卻，所以正確的結果就是**一個 byte 都不能變**。
 逐區比會把「差 0 px」與「根本沒有走到那段程式碼」講成同一句話。
 
-⚠ 同一輪順帶量到一件**與這次改動無關**的事：用 `-battle-steps 70` 拍的
-那一張，對 `workplace/dosgolem/siege/settled.png` 是 `field` 680 px／
-`sb-minimap` 336 px，而 [`76`](76-battle-talk-parity.md) 記的是 139 px／0 px。
-兩個數字量的**可能不是同一拍**——那一輪的 remake 側用的是
-`-shot-when battle-settled`（[`../spec/118`](../spec/118-shot-when-condition.md)），
-而 `battle-settled` 是「這一拍沒有人動」，不保證正好落在第 70 拍。
-改動前後兩張既然逐 byte 相同，這件事就與退卻倒數無關，另外查。
+九區也重量了一次，與 [`76`](76-battle-talk-parity.md) 記的相同：
 
-⚠ **`tools/parity_shot.sh` 的遊戲上限原本寫死 120 秒**，而
-`-shot-when battle-settled` 跑不完——**逾時的症狀是沒有輸出檔**，
-看起來像「這一組參數拍不出來」。已改成 `WOLONG_SHOT_TIMEOUT`（預設 300）。
+| 區 | 不同像素 |
+|---|---:|
+| `field` | 139 / 176,640（0.08%）|
+| 其餘八區 | **全部 0** |
+
+## 4.1 ⚠ 三個旗標組合，三個不同的畫面
+
+同一條命令列漏一個旗標就量到完全不同的數字。三種都跑過：
+
+| 旗標 | `field` | `sb-minimap` | 那是什麼 |
+|---|---:|---:|---|
+| `-battle-steps 70 -shot-frames 1` | **139** | **0** | ⭐ 對的那一個（＝ [`76`](76-battle-talk-parity.md)）|
+| `-battle-steps 70`（漏了 `-shot-frames 1`）| 680 | 336 | **戰鬥沒有停在第 70 拍**——`-battle-steps` 只是先推進，之後畫面每一幀還在推，預設拍在第 120 幀 |
+| `-shot-when battle-settled -battle-steps 0 -shot-frames 1` | 19,508 | **0** | 停在**第二個對白框還沒出現**的那一拍（框在第 50／65 拍，[`../spec/135`](../spec/135-script-message-command.md) §2）|
+
+⭐ 第三列順帶推翻一句話：[`../spec/118`](../spec/118-shot-when-condition.md) §4
+寫「`battle-settled` 取到的畫面與寫死 `-battle-steps 70` **同一個狀態**」，
+而當時的證據只有 `sb-minimap` 一區。**兵確實停在同一批格子上（0 px），
+但畫面不是同一個**——`battle-settled` 落在兩個開場對白框之間。
+兩區相同不等於同一個狀態，已改。
+
+⚠ **`tools/parity_shot.sh` 的遊戲上限原本寫死 120 秒**，而逾時的症狀是
+**沒有輸出檔**——看起來像「這一組參數拍不出來」，而不是「跑太久」。
+已改成 `WOLONG_SHOT_TIMEOUT`（預設 300），
+但上面第三列真正的成因不是逾時，是旗標組合。
 
 ## 5. 未解
 
@@ -88,4 +104,4 @@
 |---|---|
 | 倒數真的走完那一場 | 這一輪是「補不出兵」先到。要看到倒數收尾，得找一場退卻方**走不出去**的仗（被擋住，或補兵一直進場）|
 | `word_1D31C` 的兩個 byte | 開場是 48／48 ＝ 六隊 × 八人，看起來是**場上**人數；[`../re/11`](../re/11-tactical-battle.md) §5.9 寫的是「含畫面外待機的」。兩種讀法都還沒有直接證據 |
-| `-battle-steps 70` 與 `battle-settled` 是不是同一拍 | §4 量到兩者對同一張原版圖差 680 px／336 px。[`../spec/118`](../spec/118-shot-when-condition.md) §4 寫「同一個狀態」，那是 `sb-minimap` 還是 8 px 那一輪的結論，**尋路修好之後沒有重量** |
+| `battle-settled` 要不要往後挪 | §4.1 量到它停在兩個開場對白框之間。要當戰術對拍的取樣點就得再加一個條件（例如「兩個框都在」），或者乾脆只用 `-battle-steps 70` |

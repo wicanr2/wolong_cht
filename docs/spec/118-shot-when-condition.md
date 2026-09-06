@@ -77,7 +77,7 @@
 | 方式 | 內容 |
 |---|---|
 | 單元測試 | `cmd/wlgame/shotwhen_test.go`：各條件的成立／不成立、`battle-frame:` 的邊界、**不認得的值要回錯誤**（少了這一條，打錯字會靜靜退回「照幀數截圖」）、`TestBattleSettledWaitsForEveryoneToStop` |
-| 對原版 | `battle-settled` 取到的畫面與寫死 `-battle-steps 70` **同一個狀態**（`sb-minimap` 都是 8 px，[`../playtest/74`](../playtest/74-settled-tick-parity.md)）|
+| 對原版 | `battle-settled` 與寫死 `-battle-steps 70` 的**兵停在同一批格子上**（`sb-minimap` 兩邊都 0 px，[`../playtest/74`](../playtest/74-settled-tick-parity.md)、[`../playtest/80`](../playtest/80-retreat-countdown.md) §4.1）。⚠ **不是同一個畫面**：`battle-settled` 落在**兩個開場對白框之間**（框在第 50／65 拍），`field` 差 19,508 px。要對戰場那一區就用 `-battle-steps 70 -shot-frames 1`|
 | 對原版 | [`../playtest/59`](../playtest/59-shot-when-natural-flow.md)：野戰走**自然流程**（`-auto-messages -shot-when battle-frame:52`）與 `-open-battle` 那條捷徑截出同一張畫面；攻城用 `-shot-when gate-bar` 取樣 |
 
 ## 4.5 ⚠ `battle-settled` 的兩個坑，都是「成立在錯的地方」
@@ -89,6 +89,20 @@
 
 ⭐ 第二個坑**回了一張圖、退出碼 0**，只是那張圖是第 2 幀的——
 與這一份規格要消滅的失敗模式（打錯字靜靜退回照幀數截圖）是同一個形狀。
+
+## 4.6 ⚠ `-battle-steps N` 不會讓戰鬥停在第 N 拍
+
+`-battle-steps` 只是**先推進 N 拍**；之後畫面每一幀還在推戰鬥，
+而預設是拍**第 120 幀**。少了 `-shot-frames 1`，同一條命令列量到的是
+`field` 680 px／`sb-minimap` 336 px，不是 139 px／0 px
+（[`../playtest/80`](../playtest/80-retreat-countdown.md) §4.1）。
+
+⭐ **兩種寫法都會回一張看起來完全正常的圖**，差別只有數字——
+與 §4.5 那兩個坑同一個形狀。戰術對拍的標準組合是
+
+```
+-battle-steps 70 -shot-frames 1
+```
 
 ## 5. 未解
 

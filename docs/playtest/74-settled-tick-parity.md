@@ -70,7 +70,9 @@
 第二個坑特別要記：它**回了一張圖、退出碼 0**，只是那張圖是第 2 幀的。
 
 修好之後，`-shot-when battle-settled`（配 `-battle-steps 0 -shot-frames 1`）
-取到的畫面與寫死 `-battle-steps 70` **是同一個狀態**：
+取到的畫面與寫死 `-battle-steps 70` **兵停在同一批格子上**
+（⚠ 不是同一個畫面——`battle-settled` 落在兩個開場對白框之間，
+[`80`](80-retreat-countdown.md) §4.1）：
 `sb-minimap` 都是 **8 px**，`field` 39,445 vs 39,395（差在對白框的邊緣）。
 ⇒ **取樣點現在寫得出局面條件，不必再記一個 70。**
 

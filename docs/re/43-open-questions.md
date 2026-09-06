@@ -436,7 +436,7 @@
 | [`playtest/79-march-menu-original-layout.md`](../playtest/79-march-menu-original-layout.md) | 選單位置的實跑對照 | 位置只有單元測試與夾制推導，**沒有在同一個游標座標下拍過一張**——headless 的指標位置目前不可控 | 實測 |
 | [`playtest/80-retreat-countdown.md`](../playtest/80-retreat-countdown.md) | 倒數真的走完那一場 | 這一輪是「補不出兵」先到。要看到倒數收尾，得找一場退卻方**走不出去**的仗（被擋住，或補兵一直進場） | 靜態 |
 | [`playtest/80-retreat-countdown.md`](../playtest/80-retreat-countdown.md) | `word_1D31C` 的兩個 byte | 開場是 48／48 ＝ 六隊 × 八人，看起來是**場上**人數；`../re/11` §5.9 寫的是「含畫面外待機的」。兩種讀法都還沒有直接證據 | 靜態 |
-| [`playtest/80-retreat-countdown.md`](../playtest/80-retreat-countdown.md) | `-battle-steps 70` 與 `battle-settled` 是不是同一拍 | §4 量到兩者對同一張原版圖差 680 px／336 px。`../spec/118` §4 寫「同一個狀態」，那是 `sb-minimap` 還是 8 px 那一輪的結論，**尋路修好之後沒有重量** | 靜態 |
+| [`playtest/80-retreat-countdown.md`](../playtest/80-retreat-countdown.md) | `battle-settled` 要不要往後挪 | §4.1 量到它停在兩個開場對白框之間。要當戰術對拍的取樣點就得再加一個條件（例如「兩個框都在」），或者乾脆只用 `-battle-steps 70` | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
