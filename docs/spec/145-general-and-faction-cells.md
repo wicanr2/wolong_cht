@@ -10,7 +10,8 @@ remake 兩格都只寫了一行事件訊息就把清單關掉。
 - 出處：`KI.EXE`（SHA-256 `fffeba98…d43868`）的 `sub_16366`（`00016366`，
   指令列 #6）與 `sub_163BF`（`000163BF`，#7）；分派表 `funcs_161FE`
 - 推論等級：**confirmed**（兩支各 90／64 B，逐行讀完）
-- 驗證：[`../playtest/86`](../playtest/86-general-faction-cells-parity.md)（兩張 `map` 0 px ＋ 台詞的原版錨點）
+- 驗證：[`../playtest/86`](../playtest/86-general-faction-cells-parity.md)（兩張 `map` 0 px ＋ 台詞的原版錨點）、
+  [`../playtest/91`](../playtest/91-general-boast-parity.md)（自陳那一張逐像素）
 - 相關：[`140`](140-status-message-box.md)（狀態列）、
   [`142`](142-personnel-dismiss-flow.md)（同一種「選完回清單」的迴圈）、
   [`23`](23-city-info-window.md)（`sub_17E1F` 情報卡）、
@@ -61,6 +62,24 @@ loc_163B3:
 ⚠ 比較用的是**整個 byte**，remake 存的 `Aptitude` 已經 `>>4`。
 四個劇本的三個適性欄位低半位元組全是 0（`../formats/08` §3），
 所以兩種比法等價；**低半位元組哪天解出有值，這裡要回頭改**。
+
+### 1.1 自陳的同時**不寫事件列**
+
+remake 的大地圖底下有一條事件列（原版沒有，是 remake 自己加的）。
+武將那格原本在 callback 裡寫一句「選擇了 ○○○」——那是台詞還沒接上以前的
+暫時產物，接上之後就變成**同一件事講兩遍**，而且事件列剛好蓋在
+地圖上，逐像素對拍時是這一張唯一的差異
+（[`../playtest/91`](../playtest/91-general-boast-parity.md)：4,015 px 全在那條列上）。
+
+**判準**：事件列補的是**玩家沒在看的時候發生的事**（時間推進帶來的：
+月結、行軍、宣戰、災害）。**玩家自己剛下的指令不寫**——那些原版已經有
+自己的回報（官員台詞、訊息框），再登記一次就是同一件事講兩遍，
+而且那條列蓋在地圖上，逐像素對拍時往往是最大的一塊差異。
+
+同一條判準套到人事四條（[`142`](142-personnel-dismiss-flow.md)）：
+任命／解任成功的四句都拿掉了，那位官員自己說的那一句就是回報
+（[`../playtest/92`](../playtest/92-personnel-assign-parity.md)：5,808 px）。
+留著的只有「沒有據點」這種**原版走不到的狀態**——那是 remake 自己的防呆。
 
 ## 2. `sub_163BF`：勢力
 

@@ -21,7 +21,10 @@ func assertTalkSamplePage(t *testing.T, lib *library.Library, w *state.World,
 	if len(g.messages) != 1 {
 		t.Fatalf("%s TALK #%d modal 數 = %d，want 1", label, index, len(g.messages))
 	}
-	raw, ok := g.talkLines(index, vars)
+	// ⚠ `enqueueTalk` 會把 `\1`–`\5` 補到定寬（docs/spec/119 §3.1），
+	// 所以基準也要用補過的 vars，否則比的是補白不是那條鏈。
+	padded, _ := padTalkVars(vars)
+	raw, ok := g.talkLines(index, padded)
 	if !ok || len(raw) == 0 {
 		t.Fatalf("%s TALK #%d raw 展開失敗", label, index)
 	}
@@ -53,7 +56,8 @@ func assertTalkPairSample(t *testing.T, lib *library.Library, w *state.World,
 		t.Fatalf("%s modal 數 = %d，want %d", label, len(g.messages), len(indices))
 	}
 	for i, index := range indices {
-		raw, ok := g.talkLines(index, vars[i])
+		padded, _ := padTalkVars(vars[i])
+		raw, ok := g.talkLines(index, padded)
 		if !ok || len(raw) == 0 {
 			t.Fatalf("%s TALK #%d raw 展開失敗", label, index)
 		}

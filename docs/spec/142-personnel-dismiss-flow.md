@@ -70,9 +70,21 @@ sub_16B4F（34 B）
 | 外交官解任 | 同檔 `removeDiplomat`：候選改成「活著且不是自己」的全部勢力；沒人跳 TALK #55 |
 | 內政官／外交官任命 | 同檔 `pickCityForGovernor`／`pickFactionForDiplomat`：那裡已經有人就跳 TALK #52／#53；選武將那一步掛狀態列 #9 |
 | **迴圈** | 四條的清單 callback 一律回 `false`（＝不關清單）；任命成功之後再呼叫自己一次，等於原版的 `jmp` 回迴圈開頭（連狀態列都重設）|
+| **回迴圈的時機** | ⭐ **等那一句被按掉之後才回**（§3.1）：原版的 `sub_18810` 是**擋住的**，訊息還在畫面上時流程停在原地，所以那一刻看到的是**武將一覽 ＋ 狀態列 #9**，不是回去以後的據點一覽 ＋ #11 |
 | 官員說的一句 | 同檔 `officialSays(base, who)`：`resolveBattleTalkIndex(base, 武將.TalkVariant)` ＋ 那位武將的肖像。四個組 `19Ch`／`19Dh`／`1A2h`／`1A3h` |
 | 狀態列 | 四條出口各自 `setStatusTalk`（[`140`](140-status-message-box.md)）|
 | 差異 | 無 |
+
+### 3.1 `afterTalk`：把原版的「擋住」搬成續行
+
+原版 `sub_18810` 畫完訊息就**等**，玩家按掉才 `jmp` 回迴圈開頭。
+remake 的訊息是佇列式的（`enqueueTalk` 立刻回傳），照抄呼叫順序會讓
+**訊息還掛著、底下的畫面已經是下一步**——逐像素比就是整張清單換掉
+（[`../playtest/92`](../playtest/92-personnel-assign-parity.md)：19,927 px）。
+
+所以 `messageDialog` 多一個 `then func()`，`afterTalk(fn)` 掛在剛入列的那一則上，
+`updateMessageOnly` 把那一則收掉之後才呼叫。**這一條對每一個
+「先說一句、再換畫面」的流程都成立**，不只人事。
 
 ## 4. 驗證
 

@@ -82,6 +82,11 @@ func TestSystemMenuHasLordCorpsRow(t *testing.T) {
 
 // 已帶兵、俘虜、別的勢力、死掉的都不算——這些是原本就有的條件，
 // 加君主那一行不可以把它們弄壞。
+//
+// ⭐ **俘虜是靠職務 4 被擋掉的，不是靠 `Captor`**（docs/spec/148 §2）：
+// 原版的建表 callback 只有四個條件，沒有 `+0x1D` 那一關，而被俘時
+// `sub_129C3` 就把 `+0x17` 寫成 4、放回去時 `sub_150D7` 一起清掉
+// （docs/spec/143 §2），兩個欄位在原版永遠同步。
 func TestFormCandidatesKeepsExistingFilters(t *testing.T) {
 	w := &state.World{Player: 0}
 	w.Factions[0].Alive = true
@@ -89,7 +94,7 @@ func TestFormCandidatesKeepsExistingFilters(t *testing.T) {
 	w.Generals[1] = state.General{Alive: true, Faction: 0, Duty: state.DutyCorpsLeader, Captor: 0xFF}
 	w.Generals[2] = state.General{Alive: true, Faction: 1, Captor: 0xFF}
 	w.Generals[3] = state.General{Alive: false, Faction: 0, Captor: 0xFF}
-	w.Generals[4] = state.General{Alive: true, Faction: 0, Captor: 7}
+	w.Generals[4] = state.General{Alive: true, Faction: 0, Duty: state.DutyCaptive, Captor: 7}
 	w.Generals[5] = state.General{Alive: true, Faction: 0, Captor: 0xFF}
 	g := &game{world: w}
 	rows := g.formCandidates()

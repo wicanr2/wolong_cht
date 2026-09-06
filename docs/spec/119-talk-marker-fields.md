@@ -59,6 +59,31 @@ remake 顯示的就是錯的字。
 是空的就畫空白。remake 保留退路是因為 `Alias` 也可能在改造存檔裡沒填；
 **但四個劇本的原版資料一格都不缺**，所以正常玩不會走到（§5 的測試釘住這一點）。
 
+### 3.1 顏色與定寬是**標記的性質，不是框的性質**
+
+五支 handler 都在 `sub_1075B` 底下，而 `sub_1075B` 同時被
+`sub_18853`（左下角狀態列，[`140`](140-status-message-box.md)）與
+`sub_18810`（一般訊息框，[`41`](41-message-box-geometry.md)）呼叫。
+所以 **§1 那張顏色表對每一個畫 TALK 文字的框都成立**，
+定寬三格（五支一律 `al = 3` 再 `call loc_10701`）也一樣。
+
+remake 起初只在狀態列做，一般訊息框整段畫白的——
+[`../playtest/92`](../playtest/92-personnel-assign-parity.md) 的內政官解任
+逐像素量到那 150 px（`\2` 代入的「濮陽」原版是 `(243,162,0)`）。
+
+收法：代入與繪製各收成一支。
+
+| 項目 | 位置 |
+|---|---|
+| 每個標記的顏色 | `cmd/wlgame/statusbox.go` 的 `talkMarkerInk(marker)`：`\1`／`\4` → 9、`\2` → `0x0B`、`\3`／`\5` → `0x0C` |
+| 補白 ＋ 收集欄位 | 同檔 `padTalkVars(vars)`：回傳補好白的 `vars` 與 `[]talkField{文字, 色}` |
+| 繪製 | `drawTalkLineFields`：一行裡凡是等於某個欄位的那一段就換那個色，**長的先比**，避免「曹操」把「曹操軍」切一半 |
+| 狀態列 | `setStatusTalk` 存 `fields`，`drawStatusBox` 照畫 |
+| 一般訊息框 | `enqueueTalkWithPortraitSeq` 存 `fields` 到 `messageDialog`，`drawLegacyTalkBox` 照畫 |
+
+⚠ **補白收進 `padTalkVars` 之後，呼叫端不要再自己補**——重複補是無害的
+（已經滿三格就不動），但兩份實作會漂。
+
 ## 4. 驗證
 
 | 方式 | 內容 |

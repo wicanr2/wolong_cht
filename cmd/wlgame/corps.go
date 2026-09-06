@@ -55,20 +55,33 @@ type formState struct {
 // ⚠ **這道擋只在玩家的編成指令上**，`autoFormCorps` 不受影響——
 // 出陣那條本來就是要讓君主帶兵。
 func (g *game) formCandidates() []int {
+	return g.candidateGenerals(!g.lordCorps)
+}
+
+// candidateGenerals 是**任命與編成共用的那一份候選過濾**
+// （原版 `sub_17663` 的建表 callback，線性 `0x176A0`，docs/spec/148）。
+// 三條流程——內政官任命、外交官任命、編成選武將——在原版是同一支。
+//
+// 四個條件就是全部：
+//
+//	① 存在（+0x00 bit7）      → gen.Alive
+//	② 勢力 ＝ 玩家（+0x1C）    → gen.Faction == Player
+//	③ 職務 ＝ 0（+0x17）       → !gen.Posted()
+//	④ 不是君主（勢力 +0x01）   → excludeLord
+//
+// ⭐ **軍師與俘虜都不必另外排除**：軍師整筆不在武將表裡
+// （`loc_11AF8` 寫 `+0x00 = 0`，docs/spec/144）被 ① 擋掉；
+// 俘虜的職務是 4（docs/spec/143）被 ③ 擋掉。
+// **兩個看似缺少的過濾，各自由別的機制吃掉**——所以原版才只有四個條件。
+func (g *game) candidateGenerals(excludeLord bool) []int {
 	lord := -1
-	if p := g.world.Player; p >= 0 && p < len(g.world.Factions) {
-		if !g.lordCorps {
-			lord = g.world.Factions[p].Lord
-		}
+	if p := g.world.Player; excludeLord && p >= 0 && p < len(g.world.Factions) {
+		lord = g.world.Factions[p].Lord
 	}
-	// ⭐ **軍師不必在這裡排除**：原版新遊戲定案時就把他整筆從武將表移除
-	// （`loc_11AF8` 寫 `+0x00 = 0`，docs/spec/144），所以 `gen.Alive`
-	// 這一關就擋掉了。先前這裡比對 `Advisor` 編號是補丁——而且只貼在
-	// 編成這一張，人事任命那張漏了。
 	var rows []int
 	for i, gen := range g.world.Generals {
 		if gen.Alive && gen.Faction == g.world.Player &&
-			!gen.Posted() && gen.Captor == 0xFF && i != lord {
+			!gen.Posted() && i != lord {
 			rows = append(rows, i)
 		}
 	}

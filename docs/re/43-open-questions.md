@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**665 列分布在 272 份文件，平均每份 2.4 列。**
+**671 列分布在 275 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 181 | 174 | 6 | 1 |
-| 驗收 | 174 | 150 | 24 | 0 |
+| 驗收 | 179 | 155 | 24 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 273 | 253 | 19 | 1 |
-| **合計** | **665** | 608 | 54 | 3 |
+| 其他 | 274 | 254 | 19 | 1 |
+| **合計** | **671** | 614 | 54 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,9 +53,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 234 |
+| `docs/spec/` | 235 |
 | `docs/re/` | 181 |
-| `docs/playtest/` | 174 |
+| `docs/playtest/` | 179 |
 | `docs/release/` | 22 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
@@ -290,7 +290,7 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
 
-## 2.4 驗收（174 條）
+## 2.4 驗收（179 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -468,6 +468,11 @@
 | [`playtest/89-advise-status-parity.md`](../playtest/89-advise-status-parity.md) | 滑鼠游標 88 px | 五個分區把畫面鋪滿，游標停哪都會落進某一區；remake 沒有自繪游標 | 靜態 |
 | [`playtest/90-formation-second-step.md`](../playtest/90-formation-second-step.md) | 原版的滑鼠游標 | 選單上是 14×14 紅箭頭（白邊）、大地圖上是 15×15 白色空心框（＋1,+1 黑影）。**遊戲自己畫的**（dosgolem 的 INT 33h 不畫），所以它是 remake 的缺口；但繪製端還沒定位，而且 remake 用的是 OS 游標，要接得連「隱藏 OS 游標」一起決定 | 靜態 |
 | [`playtest/90-formation-second-step.md`](../playtest/90-formation-second-step.md) | 反白列的 `listCellInk` 覆寫 | 上昇率 0 的紅字在反白列上是什麼顏色，沒有樣本 | 靜態 |
+| [`playtest/91-general-boast-parity.md`](../playtest/91-general-boast-parity.md) | 游標的繪製端 | §3 只是一個「有／沒有」的對照，成因未定，更沒找到畫它的那一支 | 靜態 |
+| [`playtest/91-general-boast-parity.md`](../playtest/91-general-boast-parity.md) | `0x1A8`（俘虜）與 `0x1AB`（海戰）兩組 | 沒有原版擷取；需要一個有俘虜、或水戰適性最高的武將的局面 | 靜態 |
+| [`playtest/92-personnel-assign-parity.md`](../playtest/92-personnel-assign-parity.md) | 原版的滑鼠游標 | 95–109 px。⚠ `91` §3 那一張**沒有**游標，同樣有訊息框、同樣的點擊位置——差別還沒找到 | 靜態 |
+| [`playtest/92-personnel-assign-parity.md`](../playtest/92-personnel-assign-parity.md) | 每小時 ±1 | 據點一覽那兩欄，已裁定（`83` §4.1） | 靜態 |
+| [`playtest/92-personnel-assign-parity.md`](../playtest/92-personnel-assign-parity.md) | 兩張清單共用同一個游標記憶體 | `word_198AA`：原版關掉清單再開回來，游標停在原處。remake 每次從 0 開始（`148` §4） | 靜態 |
 
 ## 2.5 外部資料（6 條）
 
@@ -480,7 +485,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（273 條）
+## 2.6 其他（274 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -625,6 +630,7 @@
 | [`spec/147-controlled-parity-save.md`](../spec/147-controlled-parity-save.md) | **原版的地圖游標框** | 白色空心 16×16，貼著游標所在的格。remake 沒有畫；要接得先讀出它的顏色、線寬與更新時機（`sub_11F7F` 每圈算游標所在格） | 靜態 |
 | [`spec/147-controlled-parity-save.md`](../spec/147-controlled-parity-save.md) | 還能關掉什麼 | 目前只有 `--no-clouds`。天災、AI 出兵、募兵都吃亂數，各自需要自己的「關掉」欄位 | 靜態 |
 | [`spec/147-controlled-parity-save.md`](../spec/147-controlled-parity-save.md) | 兩邊的**消費順序**能不能對齊 | 狀態可以搬（§5），順序還沒逐拍比過 | 靜態 |
+| [`spec/148-shared-candidate-filter.md`](../spec/148-shared-candidate-filter.md) | `sub_17663` 的 `xor cl, cl` | 比 `sub_175FA` 多一行，把清單游標歸零。remake 每次開清單本來就從 0 開始，行為相同；**但那代表原版的兩張清單共用同一個游標記憶體 `word_198AA`**，切換時的殘留還沒對過 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |

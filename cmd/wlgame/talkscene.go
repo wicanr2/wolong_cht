@@ -170,6 +170,15 @@ func (g *game) drawIventScene(screen *ebiten.Image, page int) {
 // sub_1895D 的五行框。頁面切割在呼叫端完成；這裡不把結構尾空行畫出來。
 func (g *game) drawLegacyTalkBox(screen *ebiten.Image, x, y, w, h int,
 	lines []string, portraitPage int) {
+
+	g.drawLegacyTalkBoxFields(screen, x, y, w, h, lines, portraitPage, nil)
+}
+
+// drawLegacyTalkBoxFields 是同一個框，多帶代入欄位的換色與定寬
+// （docs/spec/119 §3.1）。原版兩個框走的是同一支 `sub_1075B`，
+// 所以顏色規則對兩個都成立。
+func (g *game) drawLegacyTalkBoxFields(screen *ebiten.Image, x, y, w, h int,
+	lines []string, portraitPage int, fields []talkField) {
 	// ⭐ **TALK 框的底是黑的，不是選單的藍底龍紋**（docs/spec/88 §1）。
 	// 實機量過：框內 6,298 px 全是 (0,0,0)。`chrome.Menu` 會鋪龍紋
 	//（`fillInterior` 只在 fill == Menu 時鋪），所以這裡要傳 `Blank`。
@@ -181,13 +190,13 @@ func (g *game) drawLegacyTalkBox(screen *ebiten.Image, x, y, w, h int,
 	}
 	g.drawPortrait(screen, portraitPage, x+talkPortraitX-talkBoxX,
 		y+talkPortraitY-talkBoxY, bank)
+	ink := g.paletteInk(strategyInkNormal, chrome.Paper)
 	for i, line := range lines {
 		if i >= messagePageRows {
 			break
 		}
-		g.td.Draw(screen, line, x+talkTextX-talkBoxX,
-			y+talkTextY-talkBoxY+i*talkLinePitch,
-			chrome.Paper)
+		g.drawTalkLineFields(screen, line, fields, x+talkTextX-talkBoxX,
+			y+talkTextY-talkBoxY+i*talkLinePitch, ink)
 	}
 }
 

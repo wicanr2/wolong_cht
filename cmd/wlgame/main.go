@@ -279,6 +279,13 @@ type game struct {
 	// 相同（docs/spec/38）。一覽表本身只管狀態機（listwin），
 	// 顯示什麼由開啟它的人決定。
 	listRow func(id int) []string
+	// listSnapshot 是**選走那一刻的儲存格文字**（docs/spec/38 §1.8）。
+	//
+	// ⭐ 原版的清單只在開啟與捲動時重畫，選完之後留在畫面上的是**殘影**：
+	// 記錄已經改了（內政官任命把 `+0x17` 寫成 2），那一列的像素沒有跟著變。
+	// remake 逐幀重繪，所以要把整張快照下來照著畫。
+	// **nil 就是沒凍**——零值安全，一般情況一個字都不變。
+	listSnapshot map[int][]string
 	// listTitle 是那一組欄位的標題字串（原版是一整條，不是逐欄拼的）。
 	listTitle string
 	// listCellInk 讓某一格換色：士氣 < 100、外交「交戰」都要換
@@ -472,7 +479,6 @@ func (g *game) openGeneralList() {
 	}
 	g.openGeneralPicker(rows, "↑↓ 移動　Enter 選取／決定　1-6 排序　ESC 取消",
 		func(i int) bool {
-			g.lastEvent = "選擇了 " + big5(g.world.Generals[i].Name)
 			g.officialSays(g.generalAptitudeTalk(i), i)
 			return false // ★ 回清單（原版 `jmp short sub_16366`）
 		})
@@ -494,6 +500,7 @@ func (g *game) pickListRow(row int) {
 
 // openGeneralPicker 開一張武將清單（看或選都用這一張，docs/re/26 §4.2）。
 func (g *game) openGeneralPicker(rows []int, hint string, pick func(int) bool) {
+	g.listSnapshot = nil
 	g.list = listwin.New(listwin.Generals, g.listColumnsGenerals(), rows,
 		listRowsPerPage, &g.sortMem)
 	g.listTouched = false
@@ -506,6 +513,7 @@ func (g *game) openGeneralPicker(rows []int, hint string, pick func(int) bool) {
 
 // openCityPicker 開一張據點清單。**上昇率 0 換色**（docs/re/27 §5）。
 func (g *game) openCityPicker(rows []int, hint string, pick func(int) bool) {
+	g.listSnapshot = nil
 	g.list = listwin.New(listwin.Cities, g.listColumnsCities(), rows,
 		listRowsPerPage, &g.sortMem)
 	g.listTouched = false
@@ -525,6 +533,7 @@ func (g *game) openCityPicker(rows []int, hint string, pick func(int) bool) {
 
 // openFactionPicker 開一張勢力清單。「交戰」那一格換色（docs/re/27 §4）。
 func (g *game) openFactionPicker(rows []int, hint string, pick func(int) bool) {
+	g.listSnapshot = nil
 	g.list = listwin.New(listwin.Factions, g.listColumnsFactions(), rows,
 		listRowsPerPage, &g.sortMem)
 	g.listTouched = false
@@ -546,6 +555,27 @@ func (g *game) openFactionPicker(rows []int, hint string, pick func(int) bool) {
 // 顏色常數沿用共用 ICONGRF／palette 證據，PC-98 實機只作歷史交叉驗證。
 // 兩段式選取的第一下就是把那一列變綠，第二下才決定——
 // 這在原版的君主選擇畫面上實際看得到。
+// listCells 取一列的儲存格文字：凍住的時候照快照畫（docs/spec/38 §1.8）。
+func (g *game) listCells(id int) []string {
+	if cells, ok := g.listSnapshot[id]; ok {
+		return cells
+	}
+	return g.listRow(id)
+}
+
+// freezeList 把整張清單的儲存格文字快照下來——選走的那一刻起，
+// 原版畫面上那一張已經是殘影了（docs/spec/38 §1.8）。
+func (g *game) freezeList() {
+	if g.list == nil || g.listRow == nil {
+		return
+	}
+	snap := make(map[int][]string, len(g.list.Rows))
+	for _, id := range g.list.Rows {
+		snap[id] = g.listRow(id)
+	}
+	g.listSnapshot = snap
+}
+
 func (g *game) drawList(screen *ebiten.Image) {
 	l := g.list
 	fields := listFieldsFor(l)
@@ -604,7 +634,7 @@ func (g *game) drawList(screen *ebiten.Image) {
 			vector.DrawFilledRect(screen, float32(listBodyX()), float32(y),
 				float32(listBodyW()), float32(listRowH), hl, false)
 		}
-		cells := g.listRow(r)
+		cells := g.listCells(r)
 		for col, cell := range cells {
 			if col >= len(fields) {
 				break
@@ -1804,6 +1834,7 @@ func main() {
 	openWin := flag.Int("open-window", -1, "截圖前先打開第幾個視窗（0–3；−2 ＝ 三個常駐視窗；−3 ＝ 再加系統選單。對拍用）")
 	camAt := flag.String("cam", "", "把大地圖鏡頭移到指定格 `X,Y`（對拍用；原版點過視窗開關之後鏡頭就不在開局位置了）")
 	openList := flag.Bool("open-list", false, "截圖前先開武將一覽（驗收用；開著、無選取）")
+	listPickRow := flag.Int("list-pick-row", -1, "配 -open-list：再選走第 N 列（那位會自陳擅長的戰場，docs/spec/145 §1）")
 	openFormPick := flag.Bool("open-form-pick", false, "截圖前停在編成的武將一覽（對拍用，與原版指令列 #3 剛開的狀態相同）")
 	formPickRow := flag.Int("form-pick-row", 0, "配 -open-form：選候選清單的第 N 列當主將（對拍用）")
 	factionPickRow := flag.Int("faction-pick-row", -1, "配 -open-factions：再選走勢力一覽的第 N 列（對拍用，docs/spec/145 §2）")
@@ -1826,7 +1857,7 @@ func main() {
 	openEnding := flag.Int("open-ending", -1, "直接跳到結局的第幾幕（0–11，驗收用）")
 	openMarchMode := flag.Bool("open-march-mode", false, "截圖前停在行軍指示的三選一（驗收用）")
 	openMarchList := flag.Bool("open-march-list", false, "截圖前編一支軍團並停在行軍目的地一覽（驗收用）")
-	openCmdMenu := flag.String("open-command-menu", "", "截圖前停在指令列的彈出選單：`corps`／`city`／`personnel`；加 `:第幾列` 就再選走那一列（對拍用，docs/spec/126）")
+	openCmdMenu := flag.String("open-command-menu", "", "截圖前停在指令列的彈出選單：`corps`／`city`／`personnel`；加 `:第幾列` 就再選走那一列，可以接好幾層（對拍用，docs/spec/126）")
 	openNaming := flag.Bool("open-naming", false, "停在啟動殼層選君主那一頁並打開「自定」命名視窗（驗收用，docs/spec/104）")
 	battleFF := flag.Bool("battle-ff", false, "配 -open-battle／-open-siege：截圖前先按下 `▶▶` 快轉（驗收用，docs/spec/102）")
 	siegeNode := flag.Int("siege-node", -1, "指定攻城的戰場＝據點編號（驗收用，配 -open-siege）")
@@ -2009,7 +2040,7 @@ func main() {
 		g.lordCorps = *lordCorpsFlag
 		g.damageReport = *damageReportFlag
 		apply := func() {
-			configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *adviseTarget, *advisePickRow, *openCities, *openFactions, *openCityInfo, *openForm, *openCorps, *openMarchList,
+			configureDirectFixtures(g, *openWin, *openList, *listPickRow, *openAdvise, *adviseMenu, *adviseSortie, *adviseTarget, *advisePickRow, *openCities, *openFactions, *openCityInfo, *openForm, *openCorps, *openMarchList,
 				*openMarchMode, *openCmdMenu, *openBattle, *openSiege, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow, *factionPickRow,
 				*openTalkIndex, *openOutcome, parseSiegeFixture(*siegeNode, *siegeDefend, *siegeCorps, *battleSteps),
 				corpsMapFixture{enabled: *corpsOnMap, marchTo: *marchTo},
@@ -2356,7 +2387,7 @@ func logBattleUnits(g *game) {
 	log.Printf("場上活著的兵共 %d 個", n)
 }
 
-func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseMenu, adviseSortie, adviseTarget bool, advisePickRow int, openCities, openFactions bool, openCityInfo int, openForm, openCorps, openMarchList, openMarchMode bool,
+func configureDirectFixtures(g *game, openWin int, openList bool, listPickRow int, openAdvise, adviseMenu, adviseSortie, adviseTarget bool, advisePickRow int, openCities, openFactions bool, openCityInfo int, openForm, openCorps, openMarchList, openMarchMode bool,
 	openCmdMenu string, openBattle, openSiege, openMessage, openFinance bool, financeAmount int, openFormPick bool, formPickRow, factionPickRow, openTalkIndex int,
 	openOutcome string, siege siegeFixture, corpsMap corpsMapFixture, camAt, battleCam string) {
 	w := g.world
@@ -2429,6 +2460,11 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 		g.hudSet(hudCommand, true)
 		g.cmdCell = int(naturalCommandGeneral)
 		g.openGeneralList()
+		// `-list-pick-row N` 再走一步：那位會自陳擅長哪一種戰場，
+		// 而**清單留著、那一列還反白**（docs/spec/145 §1、docs/spec/38 §1.7）。
+		if listPickRow >= 0 {
+			g.pickListRow(listPickRow)
+		}
 	}
 	if openFormPick {
 		// 編成的武將一覽（原版指令列 #3 剛開的狀態：候選已濾、無選取）。
@@ -2488,26 +2524,35 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 	// 指令列的彈出選單（docs/spec/126）。原版是點那一格跳出來的，
 	// **命令視窗開著、那一格反白**——對拍要連這兩件事一起擺好。
 	if openCmdMenu != "" {
-		// `名稱[:第幾列]`——帶列號就**走真實流程選走那一列**，
+		// `名稱[:第幾列]…`——帶列號就**走真實流程選走那一列**，
 		// 好比對「選完之後」的畫面（選單框留在清單上緣，docs/spec/126 §1.2）。
-		name, row := openCmdMenu, -1
-		if i := strings.IndexByte(name, ':'); i >= 0 {
-			n, err := strconv.Atoi(name[i+1:])
+		//
+		// ⭐ 列號可以接好幾個：第一個給彈出選單，後面每一個各走一張清單。
+		// 人事那四條是「選據點 → 選武將」兩層（docs/spec/142），
+		// 只給一個列號停不到官員說話那一幕。
+		fields := strings.Split(openCmdMenu, ":")
+		name, rows := fields[0], make([]int, 0, len(fields)-1)
+		for _, f := range fields[1:] {
+			n, err := strconv.Atoi(f)
 			if err != nil || n < 0 {
 				log.Fatalf("⚠ -open-command-menu 的列號要是非負整數，收到 %q", openCmdMenu)
 			}
-			name, row = name[:i], n
+			rows = append(rows, n)
 		}
 		m, ok := popupMenusByName[name]
 		if !ok {
 			log.Fatalf("⚠ -open-command-menu 只認得 corps／city／personnel"+
-				"（可加 `:第幾列`），收到 %q", openCmdMenu)
+				"（可加 `:第幾列`，可以接好幾層），收到 %q", openCmdMenu)
 		}
 		g.hudSet(hudCommand, true)
 		g.cmdCell = int(m.cell)
 		g.openPopupMenu(m)
-		if row >= 0 {
-			g.dispatchPopupMenu(row)
+		for i, row := range rows {
+			if i == 0 {
+				g.dispatchPopupMenu(row)
+				continue
+			}
+			g.pickListRow(row)
 		}
 	}
 	if adviseMenu && !openAdvise {

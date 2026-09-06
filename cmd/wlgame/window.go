@@ -84,6 +84,9 @@ func (g *game) dispatchListAction(action listUIAction) {
 		return
 	}
 	g.listTouched = true
+	// 任何一次互動都解凍（docs/spec/38 §1.8）。`confirmListSelection`
+	// 選走之後會再凍回去，所以放在最前面不影響它。
+	g.listSnapshot = nil
 	switch action.kind {
 	case listActionMove:
 		g.list.Move(action.value)
@@ -141,17 +144,31 @@ func (g *game) confirmListSelection() {
 	if g.list == nil {
 		return
 	}
+	// 任何一次互動都解凍：原版捲動／換游標會把那幾列重畫回**現在的**值
+	// （docs/spec/38 §1.8）。
+	g.listSnapshot = nil
+	// ⭐ 先記住是哪一張。callback 可能**換上另一張清單**
+	// （人事：選完據點就換成武將一覽），那一張是全新的，
+	// 不可以把上一張的反白帶過去（docs/spec/38 §1.7）。
+	before := g.list
 	if id, ok := g.list.Confirm(); ok && g.listPick != nil {
+		// ⭐ **先快照再動手**（docs/spec/38 §1.8）：選走之後畫面上那一張
+		// 是殘影，畫的是**動作之前**的值——內政官任命把 `+0x17` 寫成 2 了，
+		// 而原版那一列的身分欄還是「－－－」。凍在 callback 之後就晚了一步。
+		g.freezeList()
 		if g.listPick(id) {
-			g.list = nil
+			g.list, g.listSnapshot = nil, nil
 			return
 		}
-		// ⭐ **清單留著的話，那一列也要留著反白**（docs/spec/38 §1.7）：
+		// ⭐ **同一張清單留著的話，那一列也要留著反白**（docs/spec/38 §1.7）：
 		// 原版把新視窗畫在清單上面，被選中的那一列一直是反白的。
 		// `Confirm()` 依兩段式的規則已經退回 Browsing，這裡擺回去。
-		if g.list != nil {
+		if g.list != nil && g.list == before {
 			g.list.KeepSelected()
+			return
 		}
+		// 換了另一張（人事：選完據點就換成武將一覽）——那一張是全新畫的。
+		g.listSnapshot = nil
 	}
 }
 

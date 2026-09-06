@@ -12,8 +12,6 @@ package main
 // 派一個政治 15 的內政官會拉到 20。這不是錦上添花，是必要的補救。
 
 import (
-	"fmt"
-
 	"github.com/wicanr2/wolong_cht/internal/state"
 )
 
@@ -45,6 +43,11 @@ func (g *game) dispatchPersonnelMenu(row int) {
 }
 
 // playerCities 是玩家目前擁有的據點編號。
+// ⭐ **人事四條都不寫事件列**（docs/spec/145 §1.1 的判準）：
+// 那位官員自己會說一句（`officialSays`），事件列再登記一次就是
+// 同一件事講兩遍，而且那條列蓋在地圖上，逐像素對拍時是最大的差異
+// （docs/playtest/92：5,808 px）。留著的只有「沒有據點」這種
+// **原版走不到的狀態**——那是 remake 自己的防呆，不是重複的回報。
 func (g *game) playerCities() []int {
 	var out []int
 	for i := range g.world.Cities {
@@ -55,19 +58,12 @@ func (g *game) playerCities() []int {
 	return out
 }
 
-// freeGenerals 是可以派任的武將：活著、屬於玩家、沒出陣、不是俘虜。
-//
-// ⚠ 沒有排除「已經在別處當官的」——原版沒有這個限制，
-// 而任命本身就會把舊的那一格覆蓋掉。
+// freeGenerals 是人事任命的候選。⭐ **與編成共用同一份過濾**
+// （原版三條流程都走 `sub_17663`，docs/spec/148），差別只有：
+// **人事一律排除君主，沒有開關**——`-lord-corps` 那個使用者裁定的差異
+// （docs/spec/76 §3）只管編成。
 func (g *game) freeGenerals() []int {
-	var out []int
-	for i := range g.world.Generals {
-		gen := &g.world.Generals[i]
-		if gen.Alive && gen.Faction == g.world.Player && !gen.Posted() {
-			out = append(out, i)
-		}
-	}
-	return out
+	return g.candidateGenerals(true)
 }
 
 // cityList 開一張據點清單，選完呼叫 pick。欄位照原版家族（docs/spec/38）。
@@ -138,8 +134,8 @@ func (g *game) pickCityForGovernor() {
 		c := &g.world.Cities[city]
 		if c.Governor != NoOfficial {
 			g.enqueueTalk(cityStaffedTalk, map[byte]string{
-				'2': padTalkField(big5(c.Name)),
-				'1': padTalkField(big5(g.world.Generals[c.Governor].Name)),
+				'2': big5(c.Name),
+				'1': big5(g.world.Generals[c.Governor].Name),
 			})
 			return false // 回清單
 		}
@@ -154,10 +150,11 @@ func (g *game) pickCityForGovernor() {
 			// 職務（武將 +0x17 ＝ 2）與據點 +0x19 是同一步寫的，
 			// 收在規則層（docs/spec/143 §2）。
 			g.world.AssignGovernor(city, who)
-			g.lastEvent = fmt.Sprintf("%s 派任 %s 為內政官",
-				name, big5(g.world.Generals[who].Name))
 			g.officialSays(governorAssignedTalk, who)
-			g.pickCityForGovernor() // ★ 回到據點清單
+			// ★ 回到據點清單——**等那一句被按掉之後**（docs/spec/142 §3.1）。
+			// 原版的 `sub_18810` 擋在這裡，訊息還掛著時畫面上是
+			// 武將一覽 ＋ 狀態列 #9，不是回去以後的據點一覽。
+			g.afterTalk(g.pickCityForGovernor)
 			return false
 		})
 		return false
@@ -184,11 +181,9 @@ func (g *game) removeGovernor() {
 		old := g.world.DismissGovernor(city)
 		if old < 0 {
 			g.enqueueTalk(nobodyPostedTalk,
-				map[byte]string{'2': padTalkField(big5(c.Name))})
+				map[byte]string{'2': big5(c.Name)})
 			return false // ★ 回清單（原版 `jmp loc_16B11`）
 		}
-		g.lastEvent = fmt.Sprintf("%s 解任內政官 %s",
-			big5(c.Name), big5(g.world.Generals[old].Name))
 		g.officialSays(governorDismissedTalk, old)
 		return false // ★ 成功也回清單
 	})
@@ -214,8 +209,8 @@ func (g *game) pickFactionForDiplomat() {
 		name := big5(g.world.LordName(f))
 		if fa.Diplomat != NoOfficial {
 			g.enqueueTalk(factionStaffedTalk, map[byte]string{
-				'3': padTalkField(name),
-				'1': padTalkField(big5(g.world.Generals[fa.Diplomat].Name)),
+				'3': name,
+				'1': big5(g.world.Generals[fa.Diplomat].Name),
 			})
 			return false
 		}
@@ -227,10 +222,9 @@ func (g *game) pickFactionForDiplomat() {
 		g.setStatusTalk(pickOfficialTalk, nil)
 		g.generalList(free, "選要派去 "+name+" 的武將　Enter 決定", func(who int) bool {
 			g.world.AssignDiplomat(f, who)
-			g.lastEvent = fmt.Sprintf("派 %s 出使 %s 軍",
-				big5(g.world.Generals[who].Name), name)
 			g.officialSays(diplomatAssignedTalk, who)
-			g.pickFactionForDiplomat() // ★ 回到勢力清單
+			// ★ 回到勢力清單——同樣等那一句被按掉（docs/spec/142 §3.1）。
+			g.afterTalk(g.pickFactionForDiplomat)
 			return false
 		})
 		return false
@@ -259,11 +253,9 @@ func (g *game) removeDiplomat() {
 		old := g.world.DismissDiplomat(f)
 		if old < 0 {
 			g.enqueueTalk(factionNobodyPostedTalk,
-				map[byte]string{'3': padTalkField(big5(g.world.LordName(f)))})
+				map[byte]string{'3': big5(g.world.LordName(f))})
 			return false // ★ 回清單
 		}
-		g.lastEvent = fmt.Sprintf("召回派駐 %s 軍的 %s",
-			big5(g.world.LordName(f)), big5(g.world.Generals[old].Name))
 		g.officialSays(diplomatDismissedTalk, old)
 		return false // ★ 成功也回清單
 	})

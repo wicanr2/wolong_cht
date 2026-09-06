@@ -131,3 +131,58 @@ func TestOfficialLineUsesVariantGroup(t *testing.T) {
 		}
 	}
 }
+
+// candidateGenerals 是**任命與編成共用的那一份過濾**（docs/spec/148）：
+// ① 存在 ② 勢力 ＝ 玩家 ③ 職務 ＝ 0 ④ 不是君主。
+// 四個條件各給一個反例——少任何一關都會有一支變紅。
+func TestCandidateGeneralsMatchesOriginalFilter(t *testing.T) {
+	w := &state.World{Player: 0}
+	for i := range w.Generals {
+		w.Generals[i].Alive = false
+	}
+	w.Factions[0].Alive, w.Factions[0].Lord = true, 3
+	// 0 合格／1 死了（①）／2 別勢力（②）／3 君主（④）／
+	// 4 內政官（③）／5 俘虜（職務 4，同樣是③）
+	set := func(i, faction, duty int, alive bool) {
+		w.Generals[i].Alive, w.Generals[i].Faction = alive, faction
+		w.Generals[i].Duty = duty
+	}
+	set(0, 0, state.DutyNone, true)
+	set(1, 0, state.DutyNone, false)
+	set(2, 7, state.DutyNone, true)
+	set(3, 0, state.DutyNone, true)
+	set(4, 0, state.DutyGovernor, true)
+	set(5, 0, state.DutyCaptive, true)
+
+	g := &game{world: w, cmdCell: -1}
+	got := g.candidateGenerals(true)
+	if len(got) != 1 || got[0] != 0 {
+		t.Fatalf("候選 ＝ %v，want [0]（只有 0 號四關全過）", got)
+	}
+	// ④ 關掉就多一個君主，其餘三關不受影響。
+	if got := g.candidateGenerals(false); len(got) != 2 ||
+		got[0] != 0 || got[1] != 3 {
+		t.Errorf("放行君主之後候選 ＝ %v，want [0 3]", got)
+	}
+}
+
+// 人事任命**一律排除君主**：`-lord-corps` 那個使用者裁定的差異
+// （docs/spec/76 §3）只管編成，不管人事（docs/spec/148 §2）。
+func TestPersonnelCandidatesAlwaysExcludeLord(t *testing.T) {
+	w := &state.World{Player: 0}
+	for i := range w.Generals {
+		w.Generals[i].Alive = false
+	}
+	w.Factions[0].Alive, w.Factions[0].Lord = true, 0
+	w.Generals[0].Alive, w.Generals[0].Faction = true, 0
+	w.Generals[1].Alive, w.Generals[1].Faction = true, 0
+
+	g := &game{world: w, cmdCell: -1, lordCorps: true}
+	if got := g.freeGenerals(); len(got) != 1 || got[0] != 1 {
+		t.Errorf("人事候選 ＝ %v，want [1]（君主 0 一律不列）", got)
+	}
+	// 對照：編成那條開著開關就列得到君主，兩者確實分開。
+	if got := g.formCandidates(); len(got) != 2 {
+		t.Errorf("編成候選 ＝ %v，want 兩個（開關開著時含君主）", got)
+	}
+}

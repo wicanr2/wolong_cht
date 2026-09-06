@@ -24,6 +24,19 @@ type messageDialog struct {
 	// scene 是要留在背後的 IVENTGRF 頁；−1 表示不畫插圖。
 	// 原版的事件對話是疊在插圖上的，插圖不會因為換一句話而消失。
 	scene int
+
+	// fields 是代入的欄位，每個各有自己的顏色（docs/spec/119 §3.1）。
+	// **顏色與定寬是標記的性質，不是框的性質**——原版兩個框同一支
+	// `sub_1075B`，所以一般訊息框也要換色。
+	fields []talkField
+
+	// then 是這一則被按掉之後要做的事（docs/spec/142 §3.1）。
+	//
+	// ⭐ 原版的 `sub_18810` 是**擋住的**：訊息還在畫面上時流程停在原地，
+	// 玩家按掉才往下走。remake 的訊息是佇列式的，照抄呼叫順序會變成
+	// 「訊息還掛著、底下已經是下一步」——所以要換畫面的那些流程
+	// 把下一步掛在這裡，不要直接呼叫。nil 就是沒有下一步。
+	then func()
 }
 
 const (
@@ -80,11 +93,17 @@ func (g *game) updateMessageOnly() {
 		g.messages[0].page++
 		return
 	}
+	then := g.messages[0].then
 	g.messages = g.messages[1:]
 	// 訊息框收掉之後世界再停一次，玩家看完訊息、手還沒回到滑鼠時
 	// 時間不會先跑掉（原版 `sub_18810` 的 `mov cs:byte_198A5, 8`，
 	// docs/spec/112 §1）。
 	g.idleGate.Pause()
+	// ⭐ 續行要在收掉之後才跑（docs/spec/142 §3.1）：它可能自己又
+	// 入列一則訊息，先收再跑才不會把新的那一則一起丟掉。
+	if then != nil {
+		then()
+	}
 }
 
 // talkLines 取出 TALK.DAT 的原始行並代入目前已證實可用的 marker。
@@ -153,6 +172,8 @@ func (g *game) enqueueTalkWithPortrait(index int, vars map[byte]string, portrait
 }
 
 func (g *game) enqueueTalkWithPortraitSeq(index int, vars map[byte]string, seq map[byte][]string, portraitPage int) {
+	// `\1`–`\5` 補到定寬並收集顏色（docs/spec/119 §3.1）。
+	vars, fields := padTalkVars(vars)
 	lines, ok := g.talkLinesSeq(index, vars, seq)
 	if !ok || len(lines) == 0 {
 		return
@@ -177,7 +198,22 @@ func (g *game) enqueueTalkWithPortraitSeq(index int, vars map[byte]string, seq m
 		lines:        textdraw.WrapLines(lines, lineWidth),
 		portraitPage: portraitPage,
 		scene:        -1,
+		fields:       fields,
 	})
+}
+
+// afterTalk 把「這一則被按掉之後要做的事」掛在**剛入列的那一則**上
+// （docs/spec/142 §3.1）。⚠ **一則都沒入列時直接跑**——空槽被
+// `enqueueTalkWithPortraitSeq` 擋掉了，流程不能因此卡死。
+func (g *game) afterTalk(fn func()) {
+	if g == nil || fn == nil {
+		return
+	}
+	if len(g.messages) == 0 {
+		fn()
+		return
+	}
+	g.messages[len(g.messages)-1].then = fn
 }
 
 // enqueueAdvisorTalk 把一則放進**事件場景的下框**：軍師的肖像、
@@ -304,7 +340,8 @@ func (g *game) drawMessage(screen *ebiten.Image) {
 	if d.scene >= 0 {
 		g.drawIventScene(screen, d.scene)
 	}
-	g.drawLegacyTalkBox(screen, x, y, talkBoxW, talkBoxH, lines, portrait)
+	g.drawLegacyTalkBoxFields(screen, x, y, talkBoxW, talkBoxH, lines,
+		portrait, d.fields)
 	// 翻頁提示是 remake 加的：原版靠等待輸入，沒有頁碼。
 	if pages > 1 {
 		g.td.Draw(screen, fmt.Sprintf("%d／%d", d.page+1, pages),

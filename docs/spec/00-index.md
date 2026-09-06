@@ -189,6 +189,7 @@
 | **指令列最後兩格** | [`145-general-and-faction-cells.md`](145-general-and-faction-cells.md) | CONFORMED。武將那格是**迴圈**，選完那位自陳擅長哪一種戰場（俘虜／城塞／野戰／海戰四組，由三個適性挑，**平手歸前面那一個**）；勢力那格把鏡頭移到該勢力首都並開那個據點的情報卡。兩格各有狀態列 #24／#25。八格到此全部有原版擷取 |
 | **大地圖上會飄的雲** | [`146-map-cloud-objects.md`](146-map-cloud-objects.md) | CONFORMED。`MMAP.MCH` 物件 **type 0** ＝ 16 朵常駐的雲（16×9 格），座標存在劇本與存檔的 `0x21C0`，每次 map-loop 移動、起暴風雨才被關進那 11×11 格。⭐ 順帶訂正**物件型別查表整體差一格**——remake 先前把火災畫成雲的圖形 |
 | **受控存檔** | [`147-controlled-parity-save.md`](147-controlled-parity-save.md) | CONFORMED。`tools/parity_save.py` 從既有存檔出發只改指定欄位，做出兩邊都載得進去的受控起點。⭐ **存檔本身也可以是實驗器材**——`--no-clouds` 把會飄的雲關掉之後，跑滿一個遊戲日的 `map` 殘差從 22,210 掉到 66（只剩原版的地圖游標框）|
+| **共用候選過濾** | [`148-shared-candidate-filter.md`](148-shared-candidate-filter.md) | CONFORMED。內政官任命／外交官任命／編成選武將三條流程在原版是**同一支 `sub_17663`**：存在 ∧ 勢力＝玩家 ∧ 職務＝0 ∧ 不是君主。⭐ 原版沒有「俘虜」也沒有「軍師」那一關——**兩個都由別的機制吃掉**（職務 4／整筆不在武將表裡）|
 
 ## 怎麼加一份
 
