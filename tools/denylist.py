@@ -245,10 +245,21 @@ def main():
         print("deny-list 自我測試（正對照）")
         return selftest(repo)
     target = sys.argv[1] if len(sys.argv) > 1 else None
+    # ⛔ **掃不到東西一定要當成失敗。** 路徑打錯、或掃到一個已經被清掉的
+    # 暫存目錄，`walk_files` 只會回空清單，然後這支印「通過：沒有原版資產」
+    # ——一道什麼都沒檢查的閘看起來跟通過完全一樣
+    # （2026-09-06：`finalise` 會 `rmtree(.work)`，閘放在它之後就掃 0 個檔）。
+    if target is not None and not os.path.isdir(target):
+        print(f"⛔ 掃描目標不存在：{target}")
+        return 1
+
     bad, n, ntable = scan(repo, target)
 
     where = target or "git 追蹤的檔案"
     print(f"deny-list：掃了 {n} 個檔（{where}）")
+    if target is not None and n == 0:
+        print("⛔ 一個檔都沒掃到——這不是通過，是掃錯地方。")
+        return 1
     if ntable is None:
         # 這一行不能省。少了它，「沒跑第二層」看起來會跟「跑了沒中」一模一樣。
         print(f"⚠ 找不到 {ORIG}/，**內容雜湊那一層沒有跑**。"

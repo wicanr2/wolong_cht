@@ -44,8 +44,8 @@
 | 程式碼理解 | 181 | 174 | 6 | 1 |
 | 驗收 | 139 | 121 | 18 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 256 | 236 | 19 | 1 |
-| **合計** | **613** | 562 | 48 | 3 |
+| 其他 | 256 | 237 | 18 | 1 |
+| **合計** | **613** | 563 | 47 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -483,7 +483,7 @@
 | [`release/13-full-20260906.md`](../release/13-full-20260906.md) | Windows／macOS 原生 GUI | ❌ 沒有機器，仍未驗 | 靜態 |
 | [`release/13-full-20260906.md`](../release/13-full-20260906.md) | Android 實機 | ❌ 只有 debug 簽章，仍未驗 | 靜態 |
 | [`release/13-full-20260906.md`](../release/13-full-20260906.md) | Windows／macOS／Android 實機 | 外部條件：缺機器 | 靜態 |
-| [`release/13-full-20260906.md`](../release/13-full-20260906.md) | 可散布批次（`WOLONG_BUNDLE_DATA=0`） | 這一輪沒建；新接上的 deny-list 閘還沒在那條路徑上實跑過 | 實測 |
+| [`release/13-full-20260906.md`](../release/13-full-20260906.md) | `dist-public` 的 GUI smoke | `release_smoke.sh` 只跑 `dist-all`；可散布版要玩家自備資料才跑得起來，smoke 要另外給 `-orig`／`-font` | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Windows／macOS 原生 GUI | 交叉建置的產物只驗了檔頭，沒有在目標作業系統跑過。M8 唯一的閘 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 實機驗收 | 只有 Docker 模擬器；觸控手感、真實 GPU、高 DPI 上的點陣字可讀性都驗不到 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 正式簽章 | 出的是 debug 簽章，keystore 怎麼保管還沒決定 | 靜態 |

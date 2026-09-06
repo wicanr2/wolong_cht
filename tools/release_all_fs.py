@@ -15,6 +15,7 @@ import re
 import shutil
 import sys
 import tempfile
+import zipfile
 import tarfile
 from pathlib import Path
 
@@ -366,6 +367,37 @@ def android_apk_name(apk: Path) -> str:
     return f"wolong-remake-android-debug-{stamp}.apk"
 
 
+def check_apk_matches_batch(apk: Path) -> None:
+    """APK 的內嵌狀態要與這一批一致，**兩個方向都擋**。
+
+    ⛔ **這是 deny-list 掃不到的那條路。** 那一支只看攤開的檔案，
+    而 APK 是封裝檔；而且它在流程裡是 `finalise` 才複製進來的，
+    比打包前的掃描還晚（2026-09-06 查到）。
+
+    APK 由另一條管線（`tools/android_build.sh`）建，內不內嵌由那一邊的
+    `WOLONG_BUNDLE_DATA` 決定——**兩條管線的旗標不會自動一致**，
+    而且兩邊寫的是同一個路徑，所以建了一顆就蓋掉另一顆。
+
+    這裡直接讀 zip 目錄，看有沒有 `assets/gamedata/`：
+    不解壓縮、幾毫秒，而且問的正是「這顆 APK 裡有沒有原版資料」。
+
+    ⚠ **反方向同樣危險**：完整版批次收到一顆乾淨的 APK，出來的是一個
+    「四個桌面包都能直接玩、Android 卻要玩家自備資料」的批次——
+    不會外洩，但那批的說明會說謊，而且沒有人會發現。
+    """
+    with zipfile.ZipFile(apk) as z:
+        bundled = [n for n in z.namelist() if n.startswith("assets/gamedata/")]
+    if bundled and not BUNDLE_DATA:
+        raise SystemExit(
+            f"⛔ 可散布批次收到一顆內嵌原版資料的 APK（{len(bundled)} 個檔，"
+            f"例如 {bundled[0]}）：{apk}\n"
+            "   重建一顆乾淨的再來：tools/android_build.sh（不要帶 WOLONG_BUNDLE_DATA=1）")
+    if not bundled and BUNDLE_DATA:
+        raise SystemExit(
+            f"⛔ 完整版批次收到一顆**沒有**內嵌原版資料的 APK：{apk}\n"
+            "   重建：WOLONG_BUNDLE_DATA=1 tools/android_build.sh")
+
+
 def sync_android(apk: Path | None = None) -> str:
     """把最新的 debug APK 放進交付目錄，回傳它的發行檔名。
 
@@ -376,6 +408,7 @@ def sync_android(apk: Path | None = None) -> str:
     """
     if apk is None:
         apk = REPO / "android" / "app" / "build" / "outputs" / "apk" / "debug" / "app-debug.apk"
+    check_apk_matches_batch(apk)
     name = android_apk_name(apk)
     target = DIST / "packages"
     copy_file(apk, target / name)

@@ -126,17 +126,24 @@ run_macos bash -lc '
 run_repo_write python3 tools/release_all_fs.py stage
 run_repo_write python3 tools/release_all_fs.py appdir
 run_appimage bash -lc "ARCH=x86_64 /opt/appimagetool.d/usr/bin/appimagetool --no-appstream /out/.work/appdir /out/packages/wolong-remake-linux-amd64-${STAMP}.AppImage"
-# ⭐ **發行閘要掃封裝之前的樹。** deny-list 看不進 tar.gz／AppImage／APK
-# （2026-09-06 實測：對著 `dist-all` 掃會印「掃了 19 個檔、通過」，
-# 而那六個包裡塞滿原版資產）——所以它必須跑在 `finalise` 打包**之前**，
-# 掃 staging 底下那些還攤開著的平台目錄。
+# ⭐ **發行閘掃的是 `.work/stage` 底下那些還攤開著的樹**，不是 `packages/`。
+# deny-list 看不進 tar.gz／AppImage／APK：2026-09-06 實測對著 `dist-all`
+# 掃會印「掃了 19 個檔、通過」，而那六個包裡塞滿原版資產；
+# 把同一個包解開再掃就立刻擋下 `TALK.DAT`／`YNSOUND.COM`／`STR.EXE`。
+#
+# ⚠ **位置只能在 `finalise` 之前**：那一支結尾會 `rmtree(.work)`，
+# 放在後面就掃 0 個檔然後印「通過」——一道什麼都沒檢查的閘
+# 看起來跟通過完全一樣（2026-09-06 踩過，所以 `denylist.py` 現在
+# 掃 0 個檔會回非零）。
+# APK 走另一條：它是 `finalise` 才從另一條管線複製進來的封裝檔，
+# 由 `check_apk_matches_batch` 讀 zip 目錄擋，**兩個方向都擋**。
 #
 # ⚠ 完整版批次**本來就內含原版資產**，這道閘會（正確地）擋下來，
 # 所以只對可散布批次跑。**要在 log 裡明講跳過了**，
 # 否則「沒跑」與「跑了沒中」在輸出上長得一樣。
 if [ "$BUNDLE_DATA" = 0 ]; then
-    echo "── 發行閘：deny-list 掃 $(basename "$STAGING_ROOT") ──"
-    run_repo_write python3 tools/denylist.py "$(basename "$STAGING_ROOT")"
+    echo "── 發行閘：deny-list 掃 $(basename "$STAGING_ROOT")/.work/stage ──"
+    run_repo_write python3 tools/denylist.py "$(basename "$STAGING_ROOT")/.work/stage"
 else
     echo "── 發行閘：完整版批次刻意跳過 deny-list（包裡本來就有原版資產）──"
 fi
