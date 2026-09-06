@@ -348,6 +348,42 @@ def check_spec_counts(problems, skipped):
                     f"`docs/spec/` 現在是 {truth[0]} 份／{truth[1]}／{truth[2]}"))
 
 
+# `docs/playtest/` 的「remake 側」欄位。⭐ 對拍紀錄的價值在於**照著跑得回來**，
+# 而「參數欄漏了一項」與「參數欄是對的」在文件上長得一模一樣——
+# 只有真的重跑一次才分得出來（2026-09-07：六份漏了受控存檔，
+# 照著跑會有雲、也會有軌跡分歧，數字全部對不上）。
+REMAKE_SIDE = re.compile(r"^- remake 側：(.*?)(?=^- |^\s*$|^## )", re.M | re.S)
+
+
+def check_parity_fixtures(problems, skipped):
+    """原版側跑受控存檔時，remake 側也要載同一份。
+
+    判準是**文件自己講的**：內文提到 `root-noclouds` 就表示原版側把雲關掉了
+    （docs/spec/147），那 remake 側不載同一份存檔就不是同一個局面。
+    """
+    root = os.path.join(REPO, "docs", "playtest")
+    if not os.path.isdir(root):
+        skipped["對拍 fixture（沒有 docs/playtest）"] += 1
+        return
+    for name in sorted(os.listdir(root)):
+        if not name.endswith(".md"):
+            continue
+        doc = os.path.join(root, name)
+        text = read(doc)
+        if "root-noclouds" not in text:
+            continue
+        m = REMAKE_SIDE.search(text)
+        if not m:
+            continue
+        if "-save-file" in m.group(1):
+            continue
+        line = text[:m.start()].count("\n") + 1
+        problems.append((
+            os.path.relpath(doc, REPO), line, "對拍 fixture 不完整",
+            "原版側跑 `root-noclouds` 受控存檔，remake 側卻沒有 `-save-file`"
+            "——照著跑會有雲、也會有軌跡分歧（docs/spec/147）"))
+
+
 def selftest():
     """正對照：**先證明每一層抓得到，再相信它說沒事。**
 
@@ -454,6 +490,30 @@ def selftest():
              ).groups()) != truth,
              expect=False)
 
+    bad = ("提到 root-noclouds\n\n- 原版側：`WOLONG_DOSGOLEM_GAMEDIR=dosgolem/root-noclouds …`\n"
+           "- remake 側：`-open-list -cam 0,0\n  -shot-when clock:196/4/17/6`\n\n## 1. 結果\n")
+    good = bad.replace("`-open-list", "`-save-file x/SAVE.DAT -load-slot 0 -open-list")
+    none = bad.replace("root-noclouds", "別的目錄")
+    with tempfile.TemporaryDirectory() as tmp:
+        pt = os.path.join(tmp, "docs", "playtest")
+        os.makedirs(pt)
+        saved = globals()["REPO"]
+        try:
+            globals()["REPO"] = tmp
+
+            def scan_pt(body):
+                with open(os.path.join(pt, "x.md"), "w", encoding="utf-8") as fh:
+                    fh.write(body)
+                out, sink = [], {"對拍 fixture（沒有 docs/playtest）": 0}
+                check_parity_fixtures(out, sink)
+                return out
+
+            want("對拍 fixture：擋下漏了受控存檔的", scan_pt(bad))
+            want("對拍 fixture：帶了就放行", scan_pt(good), expect=False)
+            want("對拍 fixture：沒跑受控存檔的不管", scan_pt(none), expect=False)
+        finally:
+            globals()["REPO"] = saved
+
     print("正對照" + ("通過" if ok else "失敗"))
     return 0 if ok else 1
 
@@ -468,7 +528,8 @@ def main():
                  "旗標（沒有 cmd/）",
                  "覆蓋率（沒有 census.tsv）", "覆蓋率（重算失敗）",
                  "未解列數（沒有 docs/re/43）", "未解列數（43 讀不出總數）",
-                 "覆蓋率（讀不出重算結果）", "規格份數（沒有 docs/spec）"):
+                 "覆蓋率（讀不出重算結果）", "規格份數（沒有 docs/spec）",
+                 "對拍 fixture（沒有 docs/playtest）"):
         skipped[name] = 0
 
     check_hashes(problems, skipped)
@@ -477,6 +538,7 @@ def main():
     check_coverage(problems, skipped)
     check_open_questions(problems, skipped)
     check_spec_counts(problems, skipped)
+    check_parity_fixtures(problems, skipped)
 
     # ⭐ **跳過了什麼一定要印出來。** 「沒有找到問題」與「那一層根本沒跑」
     # 在輸出上長得一樣，而後者才是危險的（CLAUDE.md §7 第 21 條）。
