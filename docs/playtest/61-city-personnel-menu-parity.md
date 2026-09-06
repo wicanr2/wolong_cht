@@ -2,7 +2,9 @@
 
 **狀態：通過。** 兩張都是指令列、大地圖、縮小地圖、自勢力情報**四區逐像素相同**，
 選單框與反白的指令列格也各 0 px。`banner` 各剩 116 px，
-與 [`60`](60-corps-menu-parity.md) 同一個成因（原版 4月20日、remake 4月1日）。
+與 [`60`](60-corps-menu-parity.md) 同一個成因（原版 4月20日、remake 4月1日）——
+⭐ **2026-09-06 用 `-fixture-when clock:` 把日期也對齊之後，這一區也 0 px**
+（[`82`](82-strategy-date-aligned-parity.md)）。
 
 ⭐ **這一輪沒有抓到任何缺陷**——[`60`](60-corps-menu-parity.md) 修的那三件
 （框寬、反白 XOR、指令列反白）在這兩張上一次就對。三張走同一份

@@ -41,6 +41,7 @@
 | `-shot-when <條件>` | 截圖的時機改用局面條件。留白 ＝ 照 `-shot-frames`（原本的行為）|
 | `-shot-deadline N` | 配 `-shot-when`：等到第 N 幀還不成立就**放棄並回非零**（預設 20000）|
 | `-auto-messages` | 訊息框自動按掉（每幀推一頁），讓自然流程走得下去 |
+| **`-fixture-when <條件>`** | ⭐ **驗收 fixture 改成「條件成立才擺」**，不是啟動就擺。用同一組條件（§2.1）|
 
 `-shot-frames` 在有 `-shot-when` 時退成**下限**：先跑滿那麼多幀，再開始等條件。
 
@@ -52,6 +53,7 @@
 | `battle-frame:N` | 戰術戰鬥開著，而且 `Battle.Frame ≥ N` |
 | **`battle-settled`** | ⭐ **開場布陣走完的那一刻**：這一拍**沒有任何一個兵移動**（而且已經過了第 10 拍）。原版把兵擺在戰場邊界再讓他們走進陣形（[`133`](133-opening-deployment.md)），走完之後有一小段誰都不動的空窗，接著腳本才下第一道命令——**那是戰術對拍唯一「兩邊都靜止」的取樣窗**（[`../playtest/74`](../playtest/74-settled-tick-parity.md)）|
 | `gate-bar` | 戰術戰鬥開著，而且 `Battle.StructureBar()` 的第二個回傳值為真（門強度條顯示中）|
+| **`clock:年/月/日[/時]`** | 遊戲時鐘走到那一刻（[`138`](138-state-table-parity.md)）。⭐ **即時制的取樣點寫成日期**，與原版側的 `until:` 是同一個判準 |
 
 `gate-bar` 就是 [`91`](91-tactical-parity.md) §6 那張表的第二列，
 攻城取樣點的三個局面條件之一。
@@ -63,11 +65,36 @@
 （`~/diagnosis-notes/docs/03-silence-is-not-success` 的四個閘門）。
 所以逾時的處置是**不寫檔 ＋ `log.Fatal`**，訊息裡帶條件名與已經跑過的幀數。
 
+## 2.3 ⭐ `-fixture-when`：為什麼 fixture 要能延後
+
+戰略畫面的逐區對拍**一直剩著同一塊殘差：`banner` 116 px ＝ 日期**
+（[`../playtest/60`](../playtest/60-corps-menu-parity.md)、[`61`](../playtest/61-city-personnel-menu-parity.md)、
+[`81`](../playtest/81-command-cell-highlight.md) 都是）。成因是兩邊到不了同一個遊戲時刻：
+
+- **原版側**要走進遊戲才點得到指令列，而**每一個滑鼠動作都要幾百萬道指令**
+  ——`click` 的預設 settle 就是六百萬，約一又三分之一個遊戲日。
+  所以原版的截圖時刻由「走到那裡花了多久」決定，不是可以指定的。
+  可以指定的只有起點：`until:196/4/20` 先把時鐘對到某一天再動手。
+- **remake 側**的 fixture 是**啟動時**擺的，那一刻時鐘還在存檔的日期上，
+  而窗一開時間就停（`timeRuns()`），追不上去。
+
+`-fixture-when` 把 remake 那一側也變成「先跑到那一天，再擺 fixture」，
+於是兩邊用**同一個判準**（遊戲日期）對齊：
+
+```
+原版：  until:196/4/20 → 開視窗 → 截圖
+remake：-fixture-when clock:196/4/20 -shot-when clock:196/4/20
+```
+
+⭐ **fixture 在 `Update` 擺、截圖在 `Draw` 拍**，所以同一幀兩個條件都用
+`clock:` 也是對的順序——那一幀先擺好再拍。窗開了時鐘就停，條件不會再翻回去。
+
 ## 3. remake 實作
 
 | 項目 | 位置 |
 |---|---|
 | 條件解析 | `cmd/wlgame/shotwhen.go` 的 `parseShotWhen`（不認得的值在啟動時就失敗，不是跑到一半）|
+| 延後 fixture | 同檔 `game.fixtureWhen`／`game.applyFixture`；`Update` 一開頭檢查，成立就擺一次並清掉。**留白就照舊在啟動時擺**|
 | 截圖閘 | `cmd/wlgame/main.go` 的 `maybeSaveShot` |
 | 逾時 | 同檔 `Update`：`-shot-when` 沒成立而且過了 `-shot-deadline` 就回錯誤（`RunGame` → `log.Fatal` → exit 1）|
 | 訊息自動按掉 | `cmd/wlgame/messages.go` 的 `updateMessageOnly` |
@@ -78,6 +105,8 @@
 |---|---|
 | 單元測試 | `cmd/wlgame/shotwhen_test.go`：各條件的成立／不成立、`battle-frame:` 的邊界、**不認得的值要回錯誤**（少了這一條，打錯字會靜靜退回「照幀數截圖」）、`TestBattleSettledWaitsForEveryoneToStop` |
 | 對原版 | `battle-settled` 與寫死 `-battle-steps 70` 的**兵停在同一批格子上**（`sb-minimap` 兩邊都 0 px，[`../playtest/74`](../playtest/74-settled-tick-parity.md)、[`../playtest/80`](../playtest/80-retreat-countdown.md) §4.1）。⚠ **不是同一個畫面**：`battle-settled` 落在**兩個開場對白框之間**（框在第 50／65 拍），`field` 差 19,508 px。要對戰場那一區就用 `-battle-steps 70 -shot-frames 1`|
+| 單元測試 | `TestFixtureWhenDefersUntilConditionHolds`（`cmd/wlgame`）：條件沒成立就不擺、成立擺一次、不會擺第二次 |
+| 對原版 | [`../playtest/82`](../playtest/82-strategy-date-aligned-parity.md)：`-fixture-when clock:` 把 `banner` 那 116 px 收掉 |
 | 對原版 | [`../playtest/59`](../playtest/59-shot-when-natural-flow.md)：野戰走**自然流程**（`-auto-messages -shot-when battle-frame:52`）與 `-open-battle` 那條捷徑截出同一張畫面；攻城用 `-shot-when gate-bar` 取樣 |
 
 ## 4.5 ⚠ `battle-settled` 的兩個坑，都是「成立在錯的地方」

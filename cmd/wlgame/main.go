@@ -299,6 +299,11 @@ type game struct {
 	// statusBox 是左下角的狀態列提示框（原版 `sub_18853`，docs/spec/140）。
 	statusBox statusBoxState
 
+	// fixtureWhen／applyFixture 是「條件成立才擺 fixture」（docs/spec/118 §2.3）。
+	// applyFixture 是 nil 就表示已經擺過（或本來就不必延後）。
+	fixtureWhen  *shotCondition
+	applyFixture func()
+
 	// cmdCell 是「哪一格指令的 handler 還沒回來」（−1 ＝ 沒有）。
 	// 原版 `sub_161CA` 在 `call` 前後各 XOR 一次，所以整段流程期間
 	// 那一格都亮著（docs/spec/124 §3.5）。
@@ -546,9 +551,13 @@ func (g *game) drawList(screen *ebiten.Image) {
 		for _, f := range fields {
 			// 數字欄的破折號**貼欄本體、不加半格縮排**（parity-menus7 的
 			// m1：「----」左緣 120＝欄起點）；文字欄照 §1.5 在欄起點＋8。
+			// ⚠ **武將一覽是例外**——原版的分隔線與欄界是兩份資料，
+			// 那一張的數字欄破折號在欄起點 ＋ 8（docs/spec/38）。
 			x := listBodyX() + f.X
 			if !f.Numeric {
 				x += listTextInset
+			} else {
+				x += listDashInsetFor(l)
 			}
 			g.td.Draw(screen, listDashes(f), x, y, ink)
 		}
@@ -684,6 +693,20 @@ func (g *game) drawScrollbarAt(screen *ebiten.Image,
 	button(down, false)
 }
 
+// listDashInsetFor 是這張一覽表的**空列數字欄破折號**要往右推幾 px。
+//
+// ⭐ 原版的分隔線與欄界是兩份資料（docs/spec/38）：軍團一覽兩者重合、
+// 武將一覽差一個半格。⚠ 半形語系走自己那一套欄界，不套這個位移。
+func listDashInsetFor(l *listwin.List) int {
+	if l == nil || uiLang.Lang().Latin() {
+		return 0
+	}
+	if l.Kind == listwin.Generals {
+		return listFamilyGenerals.NumericDashInset
+	}
+	return 0
+}
+
 // listFieldsFor 取這張一覽表的欄位定義；沒設過就用武將那一組。
 func listFieldsFor(l *listwin.List) []listField {
 	if l == nil {
@@ -811,8 +834,26 @@ func (g *game) updateMusic() {
 	}
 }
 
+// applyFixtureIfReady 在 `-fixture-when` 的條件成立時擺一次驗收 fixture。
+func (g *game) applyFixtureIfReady() {
+	if g.applyFixture == nil || g.fixtureWhen == nil || !g.fixtureWhen.check(g) {
+		return
+	}
+	apply := g.applyFixture
+	g.applyFixture = nil
+	apply()
+}
+
 func (g *game) Update() error {
 	g.frame++
+	// 條件成立才擺的驗收 fixture（docs/spec/118 §2.3）。**只擺一次。**
+	//
+	// ⛔ **要在這一幀的世界推進完之後才檢查**，所以用 defer 而不是寫在
+	// 開頭：`-shot-when clock:` 的判定在 `Draw`，而時鐘是在 `Update`
+	// 中間走的。寫在開頭時，走到那一天的**那一幀**看到的還是前一天，
+	// fixture 晚一幀才擺——而截圖已經在那一幀拍掉了，畫面上什麼都沒有。
+	// 症狀是「日期對了、視窗沒開」，看起來像 fixture 壞了。
+	defer g.applyFixtureIfReady()
 	// 指令流程結束 → 收掉指令列反白與狀態列提示（docs/spec/124 §3.5）。
 	g.syncCommandFlow()
 	// 截圖模式要等 Draw 真正取到像素後才結束；只用 `frame > shotAt`
@@ -1669,6 +1710,7 @@ func main() {
 	framesDir := flag.String("frames-dir", "", "把每一張畫出來的圖寫成 fNNNNN.png（推廣片素材，docs/spec/71）")
 	framesN := flag.Int("frames", 300, "配 -frames-dir：錄幾張就結束")
 	shotFrames := flag.Int("shot-frames", 120, "截圖前先跑幾幀（配 -shot-when 時退成下限）")
+	fixtureWhen := flag.String("fixture-when", "", "驗收 fixture 改成「條件成立才擺」，條件同 -shot-when（docs/spec/118 §2.3）")
 	shotWhen := flag.String("shot-when", "", "截圖時機改用局面條件（docs/spec/118）：`battle`／`battle-frame:N`／`battle-settled`／`gate-bar`；留白＝照 -shot-frames")
 	shotDeadline := flag.Int("shot-deadline", 20000, "配 -shot-when：等到第 N 幀還不成立就放棄並回非零")
 	autoMessages := flag.Bool("auto-messages", false, "截圖模式自動按掉訊息框（驗收用，docs/spec/118）")
@@ -1724,6 +1766,10 @@ func main() {
 	*dir = resolveDataDir(*dir, defaultOrigDir, bundledOrigDir)
 	// ⛔ `-shot-when` 打錯字要在**啟動時**失敗，不是跑到一半才發現，
 	// 更不是靜靜退回「照幀數截圖」（docs/spec/118 §2.2）。
+	fixtureCond, err := parseShotWhen(*fixtureWhen)
+	if err != nil {
+		log.Fatalf("⚠ -fixture-when：%v", err)
+	}
 	shotCond, err := parseShotWhen(*shotWhen)
 	if err != nil {
 		log.Fatal(err)
@@ -1860,11 +1906,20 @@ func main() {
 		}
 		g.lordCorps = *lordCorpsFlag
 		g.damageReport = *damageReportFlag
-		configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *adviseTarget, *openCities, *openFactions, *openCityInfo, *openForm, *openCorps, *openMarchList,
-			*openMarchMode, *openCmdMenu, *openBattle, *openSiege, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow,
-			*openTalkIndex, *openOutcome, parseSiegeFixture(*siegeNode, *siegeDefend, *siegeCorps, *battleSteps),
-			corpsMapFixture{enabled: *corpsOnMap, marchTo: *marchTo},
-			*camAt, *battleCam)
+		apply := func() {
+			configureDirectFixtures(g, *openWin, *openList, *openAdvise, *adviseMenu, *adviseSortie, *adviseTarget, *openCities, *openFactions, *openCityInfo, *openForm, *openCorps, *openMarchList,
+				*openMarchMode, *openCmdMenu, *openBattle, *openSiege, *openMessage, *openFinance, *financeAmount, *openFormPick, *formPickRow,
+				*openTalkIndex, *openOutcome, parseSiegeFixture(*siegeNode, *siegeDefend, *siegeCorps, *battleSteps),
+				corpsMapFixture{enabled: *corpsOnMap, marchTo: *marchTo},
+				*camAt, *battleCam)
+		}
+		// ⭐ 有 `-fixture-when` 就等條件成立再擺（docs/spec/118 §2.3）——
+		// 戰略畫面的對拍要靠它把兩邊對到同一個遊戲時刻。
+		if fixtureCond != nil {
+			g.fixtureWhen, g.applyFixture = fixtureCond, apply
+		} else {
+			apply()
+		}
 		if *battleFF {
 			g.toggleBattleFastForward()
 		}
@@ -2263,6 +2318,10 @@ func configureDirectFixtures(g *game, openWin int, openList, openAdvise, adviseM
 	}
 	if openFormPick {
 		// 編成的武將一覽（原版指令列 #3 剛開的狀態：候選已濾、無選取）。
+		// 原版是點指令列的「編成」進來的，所以命令視窗開著、那一格反白
+		// （docs/spec/124 §3.5）。
+		g.hudSet(hudCommand, true)
+		g.cmdCell = int(naturalCommandFormation)
 		g.beginForm()
 	}
 	if openBattle || openSiege {

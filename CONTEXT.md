@@ -299,6 +299,7 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 | **新遊戲的四層流程** | ＹＥＳ／ＮＯ → 劇本 → **勢力清單** → 君主卡，每一層右鍵退一層；背景是大地圖、據點空白（`docs/spec/79`、`docs/re/73`）|
 | **財政的數值輸入器** | 原版的 3×6 小算盤，錨點 (296,184)、上限 100／10,000 人（`docs/spec/78`）|
 | **行軍三選一的版面接回原版** | `docs/spec/39` §3.7 ＋ 新的 `docs/spec/140`（左下角的狀態列提示框）。選單走與指令列同一份 `sub_193E9` 幾何、位置由游標算並照抄 `sub_1804E` 的兩道夾制；訊息 #21 移到 `(0, 320, 256, 80)`。**三塊逐像素 0 px**（`docs/playtest/79`）|
+| **戰略畫面六張逐區對拍** | `docs/playtest/82`。進言／人事／軍團／據點**五區全 0 px**；編成與財政只剩「原版自己畫的滑鼠游標」88 px 與 M7 校訂造成的 141 px。⭐ 靠的是新的 `-fixture-when`（`docs/spec/118` §2.3）——兩邊用同一個遊戲時刻取樣。順帶抓到**空列的數字欄破折號差一個半格**（原版的分隔線與欄界是兩份資料，`docs/spec/38`）|
 | **指令列的反白涵蓋八格** | `docs/spec/124` §3.5。`sub_161CA` 的 `call sub_10B46` **夾住** handler 的 `call`，而那一段不分索引——所以整段流程期間那一格都亮著。remake 先前只接了三張彈出選單。⭐ 順帶把左下角的狀態列提示框接到財政（TALK #16）與編成（TALK #0）（`docs/spec/140`）。驗收 `docs/playtest/81` |
 | **退卻的 120 拍倒數** | `docs/spec/141`。`sub_1A6FA` 的三條出口裡排最前面的那一條，remake 先前只有兩條。⭐ 實測**正常打完用不到它**——退卻令下去八拍場上就清空，走的是「補不出兵」；倒數是兜底（`docs/playtest/80`）|
 | GitHub repo | https://github.com/wicanr2/wolong_cht（private） |
@@ -1201,8 +1202,18 @@ UI 還沒有。
 #### ⚠ 戰略畫面對拍的標準命令列（2026-09-06）
 
 ```
--direct -scenario 0 -player 0 -seed 7 <fixture> -cam 0,0 -shot-frames 1
+-direct -scenario 0 -player 0 -seed 7 \
+  -save-file workplace/dosgolem/root-saveb/SAVE.DAT -load-slot 0 \
+  <fixture> -cam 0,0 -fixture-when clock:196/4/20 -shot-when clock:196/4/20
 ```
+
+原版側對應的是 `until:196/4/20` → `sclick:352,15` → `stap:<x>,47`
+（指令列八格的 x：進言 48、人事 96、財政 144、編成 192、軍團 240、據點 288）。
+
+⭐ **`-fixture-when` 讓 remake 也「先跑到那一天再擺 fixture」**
+（`docs/spec/118` §2.3）。沒有它，fixture 是啟動時擺的、窗一開時間就停，
+兩邊永遠差著日期——每一張戰略畫面的 `banner` 都因此剩 110–116 px。
+加上之後六張裡四張**五區全 0 px**（`docs/playtest/82`）。
 
 ⛔ **fixture 要自己把命令視窗打開**（`hudSet(hudCommand, true)` ＋ 記下格號）。
 `-advise-menu`／`-open-finance`／`-open-form` 先前都沒開，於是 `command` 區

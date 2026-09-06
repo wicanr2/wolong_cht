@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**625 列分布在 257 份文件，平均每份 2.4 列。**
+**629 列分布在 258 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 181 | 174 | 6 | 1 |
-| 驗收 | 149 | 129 | 20 | 0 |
+| 驗收 | 153 | 132 | 21 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 258 | 239 | 18 | 1 |
-| **合計** | **625** | 573 | 49 | 3 |
+| **合計** | **629** | 576 | 50 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -55,7 +55,7 @@
 |---|---:|
 | `docs/spec/` | 219 |
 | `docs/re/` | 181 |
-| `docs/playtest/` | 149 |
+| `docs/playtest/` | 153 |
 | `docs/release/` | 22 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
@@ -290,7 +290,7 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
 
-## 2.4 驗收（149 條）
+## 2.4 驗收（153 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -443,6 +443,10 @@
 | [`playtest/81-command-cell-highlight.md`](../playtest/81-command-cell-highlight.md) | 武將／勢力兩格的反白 | 照公式接了，**沒有原版擷取**。原版那兩格走狀態列提示 ＋ 地圖游標，remake 開的是一覽表（`../spec/124` §5） | 靜態 |
 | [`playtest/81-command-cell-highlight.md`](../playtest/81-command-cell-highlight.md) | 另外 45 個 `sub_18853` 呼叫點 | 接了行軍、財政、編成三條。其餘要一條一條接、一條一條拍 | 靜態 |
 | [`playtest/81-command-cell-highlight.md`](../playtest/81-command-cell-highlight.md) | 原版擷取裡的滑鼠游標 | `command` 那 88 px。原版自己畫的，remake 的截圖模式不畫——與 `76` §4 的 95 px 同一類 | 實測 |
+| [`playtest/82-strategy-date-aligned-parity.md`](../playtest/82-strategy-date-aligned-parity.md) | 其餘家族的破折號縮排 | 只有軍團（0）與武將（8）量過。據點／勢力那兩張**沒有原版擷取**，維持 0 | 靜態 |
+| [`playtest/82-strategy-date-aligned-parity.md`](../playtest/82-strategy-date-aligned-parity.md) | 財政的 141 px | 校訂造成的，**刻意的差異**。要 0 px 得拿未校訂的文本跑，那不是遊戲會出的畫面 | 靜態 |
+| [`playtest/82-strategy-date-aligned-parity.md`](../playtest/82-strategy-date-aligned-parity.md) | 原版擷取裡的滑鼠游標 | 88 px。要消掉得讓原版把游標移開再截圖——`move:` 之後游標會拖動鏡頭（`../re/84` §2），得先確認拖不動的位置 | 實測 |
+| [`playtest/82-strategy-date-aligned-parity.md`](../playtest/82-strategy-date-aligned-parity.md) | 武將／勢力兩格的指令列反白 | 原版走狀態列提示 ＋ 地圖游標，remake 開一覽表，**流程不同**（`../spec/124` §5） | 靜態 |
 
 ## 2.5 外部資料（6 條）
 

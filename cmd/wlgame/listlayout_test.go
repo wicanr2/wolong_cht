@@ -123,3 +123,38 @@ func TestLatinTitlesKeepLabelsApart(t *testing.T) {
 		}
 	}
 }
+
+// 空列的數字欄破折號：武將一覽在**欄起點 ＋ 8**（docs/spec/38）。
+//
+// ⭐ 原版的分隔線與欄界是兩份資料——軍團一覽兩者重合、武將一覽差一個
+// 半格。同一條 `Sep` 推不出兩者，所以這裡把量到的絕對座標釘住。
+func TestGeneralListEmptyRowDashesMatchOriginal(t *testing.T) {
+	f := listFamilyGenerals.fields()
+	// 三個數字欄（武術／統率／政治）。
+	var numeric []listField
+	for _, c := range f {
+		if c.Numeric {
+			numeric = append(numeric, c)
+		}
+	}
+	if len(numeric) != 3 {
+		t.Fatalf("武將一覽有 %d 個數字欄，want 3", len(numeric))
+	}
+	// 量到的破折號左緣（絕對，body ＝ 40）。
+	for i, want := range []int{120, 160, 200} {
+		got := listBodyX() + numeric[i].X + listFamilyGenerals.NumericDashInset
+		if got != want {
+			t.Errorf("第 %d 個數字欄的破折號左緣 = %d，want %d", i, got, want)
+		}
+	}
+	// 數值靠右對齊的右緣也一起釘住——它與破折號**不是同一個位置**。
+	for i, want := range []int{128, 168, 208} {
+		if got := listBodyX() + numeric[i].X + numeric[i].W; got != want {
+			t.Errorf("第 %d 個數字欄的數值右緣 = %d，want %d", i, got, want)
+		}
+	}
+	// 軍團一覽沒有這個位移：兩者重合。
+	if listFamilyCorps.NumericDashInset != 0 {
+		t.Error("軍團一覽的破折號是貼欄起點的（parity-menus7 m1），不該有位移")
+	}
+}

@@ -77,6 +77,13 @@ func listScrollThumbRect(top, total int) image.Rectangle {
 type listFamily struct {
 	Title string
 	Sep   string
+	// NumericDashInset 是**空列的數字欄破折號**要往右推幾 px。
+	//
+	// ⭐ **原版的分隔線與欄界是兩份資料**（docs/spec/38）：軍團一覽兩者
+	// 重合（破折號貼欄起點），武將一覽的破折號卻在**欄起點 ＋ 8**。
+	// 同一條 `Sep` 推不出兩者，所以差的那一份用這個欄位補。
+	// ⚠ 只有那兩張量過；其餘家族沒有原版擷取，維持 0。
+	NumericDashInset int
 	// Extra 是分隔線之後那個**無標題**欄的全形字數。
 	// 軍團表最右端有一格：委任中印「委任」，否則印兩個全形空白
 	// （docs/re/27 §2）。它不在分隔線裡，所以要另外給。
@@ -104,6 +111,9 @@ var (
 	listFamilyGenerals = listFamily{
 		Title: "武將名　武術 統率 政治　　勢力　　　身分",
 		Sep:   "－－－　 --　 --　 --　 　－－－　　－－－",
+		// 空列破折號左緣量到 120／160／200（絕對），而欄起點是
+		// 112／152／192 —— 差一個半格（docs/spec/38）。
+		NumericDashInset: textdraw.HalfW,
 	}
 	listFamilyFactions = listFamily{
 		Title: "勢力名　武將　據點　首都　　外交　　外交官",

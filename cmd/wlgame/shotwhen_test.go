@@ -134,3 +134,40 @@ func TestBattleSettledWaitsForEveryoneToStop(t *testing.T) {
 		t.Errorf("第 %d 拍就站定，太早——開場布陣要走一段路", settled)
 	}
 }
+
+// `-fixture-when`：條件沒成立就不擺、成立擺一次、不會擺第二次
+// （docs/spec/118 §2.3）。
+func TestFixtureWhenDefersUntilConditionHolds(t *testing.T) {
+	cond, err := parseShotWhen("battle")
+	if err != nil {
+		t.Fatal(err)
+	}
+	n := 0
+	g := &game{cmdCell: -1, fixtureWhen: cond, applyFixture: func() { n++ }}
+	// 條件靠 shotBattle()，沒有戰鬥就不成立。
+	if cond.check(g) {
+		t.Fatal("沒有戰鬥時 `battle` 不該成立")
+	}
+	if g.applyFixture == nil || n != 0 {
+		t.Errorf("條件沒成立就擺了 fixture（n=%d）", n)
+	}
+	// 手動走一次 Update 裡那一段。
+	apply := func() {
+		if g.applyFixture != nil && g.fixtureWhen != nil && g.fixtureWhen.check(g) {
+			f := g.applyFixture
+			g.applyFixture = nil
+			f()
+		}
+	}
+	apply()
+	if n != 0 {
+		t.Errorf("條件不成立卻擺了 %d 次", n)
+	}
+	// 讓條件成立：條件本身只看 shotBattle()，換一個恆真的來驗「只擺一次」。
+	g.fixtureWhen = &shotCondition{name: "always", check: func(*game) bool { return true }}
+	apply()
+	apply()
+	if n != 1 {
+		t.Errorf("fixture 擺了 %d 次，want 1", n)
+	}
+}
