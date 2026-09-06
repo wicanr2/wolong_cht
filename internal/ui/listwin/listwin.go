@@ -95,6 +95,17 @@ func New(kind Kind, cols []Column, rows []int, height int, mem *Memory) *List {
 // Phase 回報目前在瀏覽還是已選取。
 func (l *List) Phase() Phase { return l.phase }
 
+// KeepSelected 把狀態擺回「那一列還反白著」。
+//
+// ⭐ **選完不關清單的那幾條流程要用它**（編成、人事四條、武將自陳）：
+// 原版把新視窗畫在清單上面，而**被選中的那一列一直反白著**——
+// `Confirm()` 依兩段式的規則已經退回 Browsing，這裡再擺回去。
+func (l *List) KeepSelected() {
+	if l != nil && len(l.Rows) > 0 {
+		l.phase = Selected
+	}
+}
+
 // Selection 回傳目前游標所指的資料索引。清單是空的時回 -1。
 func (l *List) Selection() int {
 	if l.Cursor < 0 || l.Cursor >= len(l.Rows) {

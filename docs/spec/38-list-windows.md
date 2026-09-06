@@ -135,6 +135,27 @@ remake 的處置：`listFamily.NumericDashInset`（預設 0，武將一覽 8）�
 綠＝`GAMEPAL` 色 13（`#88aa66`）。色 14 春天同值但屬四季變化色
 （冬天是全白），UI 不可能用它——**13 定案**（強證據，見 §4）。
 
+### 1.7 反白列：綠底**黃字**，而且選完不關清單時會留著
+
+原版的兩段式選取（說明書 3.8）第一下把那一列反白。實機量到的是：
+
+| | 顏色 |
+|---|---|
+| 反白條的底 | `519241`（`chrome.Select`）|
+| **反白列的字** | **`f3e300`（`chrome.Highlight`，色 12）** |
+
+⭐ **字是黃的不是黑的。** 先前整份清單一律用 `chrome.Ink`（黑），
+所以反白列的字色錯了——而**對拍不到**，因為先前比過的每一張
+「剛開窗」都沒有反白列（[`../playtest/42`](../playtest/42-window-parity.md) §4）。
+第一次比到是編成選完武將那一張（[`../playtest/90`](../playtest/90-formation-second-step.md)）。
+
+⭐ **選完不關清單的那幾條流程，那一列要留著反白**：原版把新視窗
+（編成、官員台詞…）畫在清單上面，被選中的那一列一直是反白的。
+`listwin.Confirm()` 依兩段式的規則會退回 `Browsing`，所以呈現層
+在「`listPick` 回 false（清單留著）」時要 `KeepSelected()` 擺回去。
+涉及的流程：編成、人事四條（[`142`](142-personnel-dismiss-flow.md)）、
+武將自陳（[`145`](145-general-and-faction-cells.md)）。
+
 ## 2. remake 做什麼
 
 | 項目 | 做法 |

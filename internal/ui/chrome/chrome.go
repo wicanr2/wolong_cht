@@ -61,10 +61,9 @@ var (
 	Sheet = color.RGBA{243, 211, 146, 255}
 	// Select 是清單視窗反白條的顏色。
 	//
-	// ⚠ **這一個還沒有實機證據**——原版剛開窗沒有反白列
-	// （docs/playtest/42 §4），對拍過的那幾張都選不到列。
-	// 選單框那一族走 Highlight／HighlightInk（docs/spec/124），
-	// 那兩個是量到的。
+	// ✅ **實機量到了**（docs/playtest/90）：編成選完武將之後那一列還反白著，
+	// 底是這個綠 `519241`、**字是黃的** `f3e300`（＝ Highlight）。
+	// 先前這裡標著「還沒有實機證據」，因為對拍過的那幾張都選不到列。
 	Select = color.RGBA{81, 146, 65, 255}
 	// Highlight 是選單反白條的底色（色 12），HighlightInk 是上面的字色
 	// （色 3）。兩個都是 `InkIndex`／`PaperIndex` XOR 12 的結果。

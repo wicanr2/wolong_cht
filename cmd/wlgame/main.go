@@ -588,11 +588,16 @@ func (g *game) drawList(screen *ebiten.Image) {
 	}
 	for i, r := range rows {
 		y := listRowY(i)
+		rowInk := ink
 		if first+i == l.Cursor &&
 			(g.listTouched || l.Phase() == listwin.Selected) {
 			hl := color.RGBA{200, 210, 170, 255}
 			if l.Phase() == listwin.Selected {
 				hl = chrome.Select // 反白：原版就是這個綠
+				// ⭐ **反白列的字是黃的**（色 12，`chrome.Highlight`）——
+				// 實機量到的（docs/spec/38 §1.7）。先前整份清單一律用
+				// `chrome.Ink`，所以反白列的字是黑的。
+				rowInk = chrome.Highlight
 			}
 			// 反白列從清單本體的左緣起（原版 sub_184BC 是
 			// `word_181AE + 0x10`、寬 `word_181B2 − 0x10`）。
@@ -604,7 +609,7 @@ func (g *game) drawList(screen *ebiten.Image) {
 			if col >= len(fields) {
 				break
 			}
-			c := ink
+			c := rowInk
 			if g.listCellInk != nil {
 				if got, ok := g.listCellInk(r, col); ok {
 					c = got

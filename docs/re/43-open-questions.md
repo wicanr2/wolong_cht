@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**663 列分布在 271 份文件，平均每份 2.4 列。**
+**665 列分布在 272 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 181 | 174 | 6 | 1 |
-| 驗收 | 172 | 148 | 24 | 0 |
+| 驗收 | 174 | 150 | 24 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 273 | 253 | 19 | 1 |
-| **合計** | **663** | 606 | 54 | 3 |
+| **合計** | **665** | 608 | 54 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -55,7 +55,7 @@
 |---|---:|
 | `docs/spec/` | 234 |
 | `docs/re/` | 181 |
-| `docs/playtest/` | 172 |
+| `docs/playtest/` | 174 |
 | `docs/release/` | 22 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
@@ -290,7 +290,7 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
 
-## 2.4 驗收（172 條）
+## 2.4 驗收（174 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -466,6 +466,8 @@
 | [`playtest/89-advise-status-parity.md`](../playtest/89-advise-status-parity.md) | 兩邊的亂數**消費順序** | 這才是主因。機制接好了（`-rng-state` ＋ `tools/rng_state.py`），但**逐拍數兩邊各取幾個亂數**還沒做——那是讓長時間對拍成立的唯一路徑 | 靜態 |
 | [`playtest/89-advise-status-parity.md`](../playtest/89-advise-status-parity.md) | 上昇率那一欄 | 差到 ±4，成因確定是亂數而不是公式；**公式本身還沒逐項對過** | 靜態 |
 | [`playtest/89-advise-status-parity.md`](../playtest/89-advise-status-parity.md) | 滑鼠游標 88 px | 五個分區把畫面鋪滿，游標停哪都會落進某一區；remake 沒有自繪游標 | 靜態 |
+| [`playtest/90-formation-second-step.md`](../playtest/90-formation-second-step.md) | 原版的滑鼠游標 | 選單上是 14×14 紅箭頭（白邊）、大地圖上是 15×15 白色空心框（＋1,+1 黑影）。**遊戲自己畫的**（dosgolem 的 INT 33h 不畫），所以它是 remake 的缺口；但繪製端還沒定位，而且 remake 用的是 OS 游標，要接得連「隱藏 OS 游標」一起決定 | 靜態 |
+| [`playtest/90-formation-second-step.md`](../playtest/90-formation-second-step.md) | 反白列的 `listCellInk` 覆寫 | 上昇率 0 的紅字在反白列上是什麼顏色，沒有樣本 | 靜態 |
 
 ## 2.5 外部資料（6 條）
 

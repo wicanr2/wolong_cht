@@ -141,8 +141,17 @@ func (g *game) confirmListSelection() {
 	if g.list == nil {
 		return
 	}
-	if id, ok := g.list.Confirm(); ok && g.listPick != nil && g.listPick(id) {
-		g.list = nil
+	if id, ok := g.list.Confirm(); ok && g.listPick != nil {
+		if g.listPick(id) {
+			g.list = nil
+			return
+		}
+		// ⭐ **清單留著的話，那一列也要留著反白**（docs/spec/38 §1.7）：
+		// 原版把新視窗畫在清單上面，被選中的那一列一直是反白的。
+		// `Confirm()` 依兩段式的規則已經退回 Browsing，這裡擺回去。
+		if g.list != nil {
+			g.list.KeepSelected()
+		}
 	}
 }
 

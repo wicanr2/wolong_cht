@@ -123,6 +123,7 @@
 | [`docs/playtest/87-map-clouds.md`](playtest/87-map-clouds.md) | 87 — 大地圖上會飄的雲：原版一直有，remake 一朵都沒畫 | 通過。 | 2026-09-06 |
 | [`docs/playtest/88-controlled-save-parity.md`](playtest/88-controlled-save-parity.md) | 88 — 受控存檔對拍：跑滿一個遊戲日，四區 0 px、map 只剩游標框 | 通過。 | 2026-09-06 |
 | [`docs/playtest/89-advise-status-parity.md`](playtest/89-advise-status-parity.md) | 89 — 進言三條 map 0 px；遷都那張露出「內政吃亂數」 | 通過（進言三條）／已歸因（遷都）。 | 2026-09-06 |
+| [`docs/playtest/90-formation-second-step.md`](playtest/90-formation-second-step.md) | 90 — 編成第二層：4,046 → 78 px，抓到反白列的字色錯了 | 通過。 | 2026-09-06 |
 | [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告是 72 秒， 含語言切換與原版並排兩段；遊戲段落是逐幀錄下來的實跑畫面。 2… | 2026-08-30 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
