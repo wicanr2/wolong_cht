@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**703 列分布在 294 份文件，平均每份 2.4 列。**
+**701 列分布在 294 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 182 | 175 | 6 | 1 |
-| 驗收 | 208 | 183 | 25 | 0 |
+| 驗收 | 206 | 181 | 25 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 276 | 255 | 20 | 1 |
-| **合計** | **703** | 644 | 56 | 3 |
+| **合計** | **701** | 642 | 56 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -54,7 +54,7 @@
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/spec/` | 237 |
-| `docs/playtest/` | 208 |
+| `docs/playtest/` | 206 |
 | `docs/re/` | 182 |
 | `docs/release/` | 22 |
 | `docs/formats/` | 20 |
@@ -291,7 +291,7 @@
 | [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 游標圖形資料 | 在 `sub_201E4` 附近，逐 byte 沒抓；remake 已經有量出來的 14×14 遮罩 | 靜態 |
 | [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 54 個 hide／show 點對應到 remake 的哪一段 | 沒做；這是「remake 要不要同步游標」的前置 | 靜態 |
 
-## 2.4 驗收（208 條）
+## 2.4 驗收（206 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -311,8 +311,6 @@
 | [`playtest/105-advisor-naming-parity.md`](../playtest/105-advisor-naming-parity.md) | 視窗**外**的背景 | 原版這一頁後面疊著 NEW GAME 的勢力清單與君主卡（fixture 直接開命名視窗，背後只有地圖）。整張差 55,098 px 幾乎全在這裡——要對得走完整條新遊戲流程 | 靜態 |
 | [`playtest/105-advisor-naming-parity.md`](../playtest/105-advisor-naming-parity.md) | 選好字之後 | 這一份停在剛開啟的狀態，**選字、翻頁、換肖像**之後的畫面還沒拍 | 靜態 |
 | [`playtest/106-launcher-parity.md`](../playtest/106-launcher-parity.md) | 原版殼層三頁的版面 | 框矩形與欄位都還沒從機器碼讀出來。入口：`sub_11AC3`（新遊戲流程）、`sub_18B5D`（四槽視窗） | 靜態 |
-| [`playtest/106-launcher-parity.md`](../playtest/106-launcher-parity.md) | `title` 的三項選單 | remake 多一項 `LANGUAGE`（`../spec/86` §4 的 remake 差異）。原版只有 ＹＥＳ／ＮＯ——**要不要改成兩項＋另找語言入口還沒裁定** | 靜態 |
-| [`playtest/106-launcher-parity.md`](../playtest/106-launcher-parity.md) | `load` 的兩份實作 | 殼層那一份與 `drawSaveUI` 應該收成一支（§2） | 靜態 |
 | [`playtest/17-expert-dosbox-remake.md`](../playtest/17-expert-dosbox-remake.md) | 松崗 DOS/V 原版 | **PASS（啟動至開場）** / 2026-08-12 證實空白確認／`0000`／`1234` 均越過密碼頁；完整自然長程驗證尚未執行 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 據點換手之後遮罩會不會跟著變 | `sub_1890A` 的行為，靜態讀得出來，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 松崗 DOS/V 側 | 這套 bridge 還沒在 DOS/V 上跑過。**密碼頁不構成阻礙**（四格留白按「確定」即可通過，`18`）——是還沒做 | 靜態 |
