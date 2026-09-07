@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**706 列分布在 296 份文件，平均每份 2.4 列。**
+**708 列分布在 297 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 182 | 175 | 6 | 1 |
 | 驗收 | 208 | 182 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 279 | 257 | 21 | 1 |
-| **合計** | **706** | 645 | 58 | 3 |
+| 其他 | 281 | 259 | 21 | 1 |
+| **合計** | **708** | 647 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -56,7 +56,7 @@
 | `docs/spec/` | 240 |
 | `docs/playtest/` | 208 |
 | `docs/re/` | 182 |
-| `docs/release/` | 22 |
+| `docs/release/` | 24 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
 | `docs/mobile/` | 11 |
@@ -515,7 +515,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（279 條）
+## 2.6 其他（281 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -554,6 +554,8 @@
 | [`release/13-full-20260906.md`](../release/13-full-20260906.md) | Android 實機 | ❌ 只有 debug 簽章，仍未驗 | 靜態 |
 | [`release/13-full-20260906.md`](../release/13-full-20260906.md) | Windows／macOS／Android 實機 | 外部條件：缺機器 | 靜態 |
 | [`release/13-full-20260906.md`](../release/13-full-20260906.md) | `dist-public` 的 GUI smoke | `release_smoke.sh` 只跑 `dist-all`；可散布版要玩家自備資料才跑得起來，smoke 要另外給 `-orig`／`-font` | 靜態 |
+| [`release/14-full-20260907.md`](../release/14-full-20260907.md) | APK 沒跟著這一批重建 | §2。Android 沒有改動，但批次日期不一致會讓人以為漏了 | 靜態 |
+| [`release/14-full-20260907.md`](../release/14-full-20260907.md) | 各目標平台的**實機**驗收 | M8 的閘：Windows／macOS GUI、Android 實機與 release signing 都要真的機器，Docker 代不了 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Windows／macOS 原生 GUI | 交叉建置的產物只驗了檔頭，沒有在目標作業系統跑過。M8 唯一的閘 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 實機驗收 | 只有 Docker 模擬器；觸控手感、真實 GPU、高 DPI 上的點陣字可讀性都驗不到 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 正式簽章 | 出的是 debug 簽章，keystore 怎麼保管還沒決定 | 靜態 |
