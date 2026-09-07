@@ -195,6 +195,7 @@
 | **大地圖點擊** | [`151-map-click.md`](151-map-click.md) | CONFORMED。原版的大地圖左鍵是一條完整的分派（`sub_11E46`）：據點開情報卡、軍團開情報面板、兩者都有先跳一張兩項選單（TALK #80）。remake 先前點地圖什麼都不做 |
 | **畫面模式（液晶）** | [`152-video-mode-lcd-palette.md`](152-video-mode-lcd-palette.md) | CONFORMED。系統選單第 1 列切的是 `GAMEPAL.BRG` 的 bank 0–3 ↔ 4–7。⭐ **bank 就是調色盤不是美術**，所以整個功能＝把所有取 bank 的地方換成一支 `paletteBank()`；順帶抓到「視窗外框開局載一次就不再重畫」——換季也一樣漏 |
 | **「遊戲結束」的確認選單** | [`153-quit-confirm-menu.md`](153-quit-confirm-menu.md) | CONFORMED。系統選單第 6 列跳的是 TALK #81 兩項選單「終　了」／「取　消」，⭐ **位置寫死在 (352, 272)**——六個 handler 裡唯一不跟游標走的。F10 那條保留 remake 的 ＹＥＳ／ＮＯ（[`26`](26-yes-no-dialog.md)）|
+| **原版的滑鼠游標** | [`154-mouse-cursor.md`](154-mouse-cursor.md) | CONFORMED（對拍端）。逐像素殘差裡那 95 px 就是它：14×14 紅箭頭，圖樣從兩張不同背景的原版擷取抽出來。接上 `-cursor X,Y` 之後**請求協助第二步那一張整個 640×400 一個像素都不差**。⚠ 遊玩端還不自繪——原版在清單等待時不畫游標，而那是不是 oracle 的限制沒定案 |
 
 ## 怎麼加一份
 

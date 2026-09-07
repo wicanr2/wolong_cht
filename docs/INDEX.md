@@ -50,6 +50,7 @@
 | [`docs/playtest/104-advise-verdict-parity.md`](playtest/104-advise-verdict-parity.md) | 104 — 判決畫面（請求君主出陣）：拿掉事件列之後只剩 remake 的提示 | 通過。 | 2026-09-07 |
 | [`docs/playtest/105-advisor-naming-parity.md`](playtest/105-advisor-naming-parity.md) | 105 — 軍師命名視窗：視窗內收到只剩原版游標，抓到五個缺陷 | 通過。 | 2026-09-07 |
 | [`docs/playtest/106-launcher-parity.md`](playtest/106-launcher-parity.md) | 106 — 啟動殼層的前三頁：背景 0 px，三個版面都是 remake 自己設計的 | 進行中（已歸因）。 | 2026-09-07 |
+| [`docs/playtest/107-cursor-parity.md`](playtest/107-cursor-parity.md) | 107 — 原版游標接上對拍：orig-help7b 整張 0 / 256,000 | 通過。 | 2026-09-07 |
 | [`docs/playtest/11-event6-original-fixture.md`](playtest/11-event6-original-fixture.md) | 11 — 原版事件 6 fixture oracle | 事件 6 主要結果畫面已由原版 fixture 證實；不是自然長程存檔，也不封閉次要 formatter。 | 2026-08-10 |
 | [`docs/playtest/12-event3-same-state-parity.md`](playtest/12-event3-same-state-parity.md) | event3 同狀態對拍（2026-08-10） | 同狀態事件接線、原版式 composite、3×6 實際格位選取、TALK 五行分頁、 DOS/V 內框／按鍵 gl… | 2026-08-10 |
 | [`docs/playtest/13-dosv-natural-and-target-gui.md`](playtest/13-dosv-natural-and-target-gui.md) | DOS/V 自然畫面與目標平台 GUI 驗收 | 歷史驗收紀錄（2026-08-11，影片 oracle）。 | 2026-08-11 |
@@ -315,6 +316,7 @@
 | [`docs/spec/151-map-click.md`](spec/151-map-click.md) | 151 — 在大地圖上點一格：據點開情報卡、軍團開情報面板 | CONFORMED。 | 2026-09-06 |
 | [`docs/spec/152-video-mode-lcd-palette.md`](spec/152-video-mode-lcd-palette.md) | 152 — 畫面模式：「１６色」／「液晶」是同一份調色盤的兩組 bank | CONFORMED。 | 2026-09-06 |
 | [`docs/spec/153-quit-confirm-menu.md`](spec/153-quit-confirm-menu.md) | 153 — 「遊戲結束」的確認是兩項選單，位置寫死在 (352, 272) | CONFORMED。 | 2026-09-06 |
+| [`docs/spec/154-mouse-cursor.md`](spec/154-mouse-cursor.md) | 154 — 原版的滑鼠游標：14×14 紅箭頭，畫不畫由 byte_20100 決定 | CONFORMED（對拍端）。 | 2026-09-07 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |

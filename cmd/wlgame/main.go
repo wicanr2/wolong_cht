@@ -256,6 +256,8 @@ type game struct {
 	mapChoice mapChoiceState
 	// quitMenu 是系統選單「遊戲結束」那一列的兩項確認（docs/spec/153）。
 	quitMenu quitMenuState
+	// cursorAt 是對拍用的滑鼠游標位置（docs/spec/154）。**nil ＝ 不畫**。
+	cursorAt *image.Point
 
 	// hud 是主畫面四個常駐視窗的開關集合，對應原版 `byte_198A6` 的
 	// bit 0–3（docs/spec/13）。**初值四個全開是 remake 差異**——
@@ -1651,6 +1653,11 @@ func (g *game) drawStormArea(screen *ebiten.Image, area economy.StormArea) {
 // 逐幀錄製（docs/spec/71）也掛在這裡：`Draw` 有四個 return 點，
 // 每一個都呼叫這一支，掛在別處會漏掉戰場或結局那幾條路徑。
 func (g *game) maybeSaveShot(screen *ebiten.Image) {
+	// ⭐ 游標畫在**最上層**（原版是直接寫 VRAM，蓋在所有東西之上），
+	// 而且要涵蓋每一條 Draw 路徑——啟動殼層、結局、命名視窗都各自
+	// `return`，畫在主路徑尾端會漏掉（docs/spec/154 §3）。
+	// **`cursorAt` 是 nil 就什麼都不做**，所以這一行對正常遊玩無影響。
+	g.drawMouseCursor(screen)
 	if g.rec != nil && !g.recDone {
 		g.recDone = g.rec.shot(screen)
 	}
@@ -1947,6 +1954,7 @@ func main() {
 	openCmdMenu := flag.String("open-command-menu", "", "截圖前停在指令列的彈出選單：`corps`／`city`／`personnel`；加 `:第幾列` 就再選走那一列，可以接好幾層（對拍用，docs/spec/126）")
 	openNaming := flag.Bool("open-naming", false, "停在啟動殼層選君主那一頁並打開「自定」命名視窗（驗收用，docs/spec/104）")
 	openLauncher := flag.String("open-launcher", "", "截圖前停在啟動殼層的哪一頁：`title`／`scenario`／`faction`／`player`／`load`（對拍用，docs/spec/90 §5.1）")
+	cursorAt := flag.String("cursor", "", "截圖時把原版的滑鼠游標畫在 `X,Y`（對拍用；headless 沒有真實滑鼠，docs/spec/154）")
 	battleFF := flag.Bool("battle-ff", false, "配 -open-battle／-open-siege：截圖前先按下 `▶▶` 快轉（驗收用，docs/spec/102）")
 	siegeNode := flag.Int("siege-node", -1, "指定攻城的戰場＝據點編號（驗收用，配 -open-siege）")
 	siegeDefend := flag.Bool("siege-defend", false, "攻城時玩家當守方（原版會把戰場轉 180 度，docs/spec/56）")
@@ -2200,6 +2208,8 @@ func main() {
 		}
 	}
 
+	// 對拍用的游標位置（docs/spec/154）。**沒帶就不畫**。
+	g.cursorAt = cursorPoint(*cursorAt)
 	ebiten.SetWindowSize(screenW*2, screenH*2)
 	ebiten.SetWindowTitle("臥龍傳－三國制霸之計")
 	if err := ebiten.RunGame(g); err != nil && err != ebiten.Termination {
