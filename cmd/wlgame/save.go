@@ -30,6 +30,9 @@ type saveAction uint8
 const (
 	saveWrite saveAction = iota + 1
 	saveRead
+	// saveNewGame 是**新遊戲的選劇本**。原版沒有獨立的選劇本畫面——
+	// 同一個視窗換一個檔讀（docs/spec/25 §2.9.1）。
+	saveNewGame
 )
 
 type saveUIState struct {
@@ -47,10 +50,21 @@ type saveUIState struct {
 }
 
 func (g *game) beginSaveUI(action saveAction) {
-	// ⭐ **兩種模式都要看槽**：儲存時也得看得到自己要覆蓋哪一格
-	// （原版兩邊同一份版面、同一份資料，docs/spec/25 §3.1）。
-	g.saveUI = saveUIState{active: true, action: action,
-		slots: inspectLauncherSlots(g.saveFile)}
+	// ⭐ **三個模式同一份版面**，只差標題與讀哪一個檔
+	// （docs/spec/25 §2.9.1）。儲存時也得看得到自己要覆蓋哪一格。
+	path, all := g.saveFile, false
+	if action == saveNewGame {
+		// 劇本那四槽一律可選：`validLauncherPlayer` 是給存檔用的
+		// （存檔要有合法的玩家勢力），劇本沒有玩家。
+		path, all = g.scenarioFile, true
+	}
+	slots := inspectLauncherSlots(path)
+	if all {
+		for i := range slots {
+			slots[i].Available = true
+		}
+	}
+	g.saveUI = saveUIState{active: true, action: action, slots: slots}
 }
 
 type saveUIActionKind uint8
@@ -360,8 +374,13 @@ func (g *game) drawSaveUI(screen *ebiten.Image) {
 	// 標題：原版是 ＮＥＷ　ＧＡＭＥ／ＬＯＡＤ　ＤＡＴＡ／ＳＡＶＥ　ＤＡＴＡ
 	// 三選一（docs/re/52 §2）。remake 這個視窗只做讀取與儲存。
 	title := "ＳＡＶＥ　ＤＡＴＡ"
-	if g.saveUI.action == saveRead {
+	switch g.saveUI.action {
+	case saveRead:
 		title = "ＬＯＡＤ　ＤＡＴＡ"
+	case saveNewGame:
+		// ⚠ 字尾那個全形空白是原版字串的一部分（每筆 19 bytes ＝
+		// 16 個全形字 ＋ 終止，docs/re/52 §2）——**框寬吃它**。
+		title = "ＮＥＷ　ＧＡＭＥ　"
 	}
 	g.td.Draw(screen, title, saveTitleX, saveTitleY, ink)
 	vector.DrawFilledRect(screen, saveRuleX, saveRuleY, saveRuleW, 1, ink, false)

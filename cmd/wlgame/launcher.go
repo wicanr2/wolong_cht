@@ -521,12 +521,19 @@ func inspectLauncherSlots(path string) []launcherSlot {
 			slots[i].Title = big5(title)
 		}
 		w, err := state.LoadScenario(path, i)
-		if err != nil || !validLauncherPlayer(w, w.Player) {
+		if err != nil {
+			continue
+		}
+		// ⭐ **日期與標題與「這一槽能不能選」無關**：原版畫的是區塊裡的值
+		// （docs/spec/25 §1.2）。劇本那四槽的玩家勢力本來就是空的
+		// （`validLauncherPlayer` 是給存檔用的），先前擺在檢查之後
+		// 所以選劇本那一頁四列日期全是 0（docs/spec/25 §2.9.1）。
+		slots[i].Title = big5(w.Title)
+		slots[i].Year, slots[i].Month, slots[i].Day = w.Clock.Year, w.Clock.Month, w.Clock.Day
+		if !validLauncherPlayer(w, w.Player) {
 			continue
 		}
 		slots[i].Available = true
-		slots[i].Title = big5(w.Title)
-		slots[i].Year, slots[i].Month, slots[i].Day = w.Clock.Year, w.Clock.Month, w.Clock.Day
 		slots[i].Label = fmt.Sprintf("%d年%d月%d日　%s", w.Clock.Year, w.Clock.Month,
 			w.Clock.Day, big5(w.LordName(w.Player)))
 	}
@@ -556,14 +563,21 @@ func (g *game) syncLauncherSaveUI() {
 	if g.launcher == nil {
 		return
 	}
-	if g.launcher.phase != launcherLoad {
+	want := saveAction(0)
+	switch g.launcher.phase {
+	case launcherLoad:
+		want = saveRead
+	case launcherScenario:
+		want = saveNewGame
+	}
+	if want == 0 {
 		if g.saveUI.active {
 			g.saveUI = saveUIState{}
 		}
 		return
 	}
-	if !g.saveUI.active {
-		g.beginSaveUI(saveRead)
+	if !g.saveUI.active || g.saveUI.action != want {
+		g.beginSaveUI(want)
 	}
 	if c := g.launcher.cursor; c >= 0 && c < 4 {
 		g.saveUI.slot = c
@@ -754,7 +768,7 @@ func (g *game) drawLauncher(screen *ebiten.Image) {
 	l := g.launcher
 	// LOAD DATA 與遊戲中的四槽視窗在原版是**同一支常式**（docs/spec/25 §2.9），
 	// 所以畫面交給同一支 `drawSaveUI`，不再另外畫一份。
-	if l.phase == launcherLoad && g.saveUI.active {
+	if (l.phase == launcherLoad || l.phase == launcherScenario) && g.saveUI.active {
 		g.drawSaveUI(screen)
 		g.drawLauncherCaption(screen, "↑↓ 選擇　Enter 決定　ESC 返回",
 			savePanelX, savePanelY+savePanelH+8, dim)

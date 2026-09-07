@@ -225,6 +225,8 @@ type game struct {
 	endingCache map[int]*ebiten.Image
 	sourceFile string
 	saveFile   string
+	// scenarioFile 是 SINARIO.DAT 的路徑：選劇本那一頁讀它（docs/spec/25 §2.9.1）。
+	scenarioFile string
 	saveBase   string
 	saveUI     saveUIState
 	// battleFastForward 是戰場 `▶▶`（快轉）開著；battleFFTouched 記錄按過
@@ -2149,10 +2151,14 @@ func main() {
 		}
 	} else {
 		slots := inspectLauncherSlots(*saveFile)
+		// ⚠ 劇本一律讀 `path`（SINARIO.DAT）不是 `loadPath`——後者在
+		// 有存檔時是**存檔**，讀出來的標題會變成「第一章勢力：曹操　
+		// 軍師：荀彧」那種存檔摘要（docs/spec/25 §2.9.1）。
+		g.scenarioFile = path
 		// 劇本標題從檔案讀，不硬編（docs/spec/25 §1.2）。
 		g.scenarioTitles = map[int]string{}
 		for i := 0; i < 4; i++ {
-			if w, err := state.LoadScenario(loadPath, i); err == nil {
+			if w, err := state.LoadScenario(path, i); err == nil {
 				g.scenarioTitles[i] = big5(w.Title)
 			}
 		}

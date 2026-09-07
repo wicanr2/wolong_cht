@@ -310,7 +310,7 @@
 | [`playtest/104-advise-verdict-parity.md`](../playtest/104-advise-verdict-parity.md) | 「Enter 繼續」提示 | remake 自己加的操作說明，保留；它讓每一張說服／判決場景差 1,369–4,628 px | 靜態 |
 | [`playtest/105-advisor-naming-parity.md`](../playtest/105-advisor-naming-parity.md) | 視窗**外**的背景 | 原版這一頁後面疊著 NEW GAME 的勢力清單與君主卡（fixture 直接開命名視窗，背後只有地圖）。整張差 55,098 px 幾乎全在這裡——要對得走完整條新遊戲流程 | 靜態 |
 | [`playtest/105-advisor-naming-parity.md`](../playtest/105-advisor-naming-parity.md) | 選好字之後 | 這一份停在剛開啟的狀態，**選字、翻頁、換肖像**之後的畫面還沒拍 | 靜態 |
-| [`playtest/106-launcher-parity.md`](../playtest/106-launcher-parity.md) | 原版殼層三頁的版面 | 框矩形與欄位都還沒從機器碼讀出來。入口：`sub_11AC3`（新遊戲流程）、`sub_18B5D`（四槽視窗） | 靜態 |
+| [`playtest/106-launcher-parity.md`](../playtest/106-launcher-parity.md) | `title` 那一頁的框 | 原版 (208,128,224,88) 兩項、remake (112,56,416,288) 三項——**維持三項是裁定**（§2.2），所以那個框不會對齊。原版的 ＹＥＳ／ＮＯ 對話框是 `sub_18DC8(si=98C8h, dx=0D0h, bx=80h, di=28h)`，還沒逐欄讀 | 靜態 |
 | [`playtest/17-expert-dosbox-remake.md`](../playtest/17-expert-dosbox-remake.md) | 松崗 DOS/V 原版 | **PASS（啟動至開場）** / 2026-08-12 證實空白確認／`0000`／`1234` 均越過密碼頁；完整自然長程驗證尚未執行 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 據點換手之後遮罩會不會跟著變 | `sub_1890A` 的行為，靜態讀得出來，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 松崗 DOS/V 側 | 這套 bridge 還沒在 DOS/V 上跑過。**密碼頁不構成阻礙**（四格留白按「確定」即可通過，`18`）——是還沒做 | 靜態 |
