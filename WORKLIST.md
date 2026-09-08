@@ -17,7 +17,7 @@
 
 ## 目前目標
 
-2026-09-08：目前桌面交付版 v.1.0.18-20260908。自評 84／100；完整版、公開引擎包與 56 秒桌面推廣片已整理，GitHub 登入回覆 HTTP 401，發布仍待恢復。
+2026-09-08：目前桌面交付版 v.1.0.18-20260908。自評 84／100；完整版、公開引擎包與 56 秒桌面推廣片已整理，已使用主機 gh 正式發布 Release，本輪交付結案。
 行軍委任與戰術不下令皆呂布勝；逐拍與退路差異仍保留。本輪 Windows／macOS 人工驗收，Android 與全局通關排除。
 現況見 [桌面交付紀錄](docs/release/15-desktop-closeout-20260908.md)，勝負根因見 [playtest/115](docs/playtest/115-delegated-battle-cause.md)。
 行軍下令後回原父清單與殘留面板已修，
@@ -53,7 +53,7 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 - 自評 84／100（83.85）；僅發行軸由 60 至 70。GitHub 兩次回覆 HTTP 401，已請使用者恢復登入；尚未發布，不能冒稱完全結案。
 - 最終完整檢查、公開 AppImage 實際解包逐檔核對及 `git diff --check` 通過；123 個交付檔案雜湊與 349 個來源相符。工作樹變更保留，尚未 commit、push 或建立新 tag。
 - 本輪建置、影片、AppImage、GitHub 查核與整理容器皆已退出並自動移除；未動其他專案容器。
-- 唯一待辦：恢復 `wicanr2` 的 GitHub 登入後，將本輪來源定稿並建立同版 tag，發布 `release/` 的三個引擎包、`manifest.json`、`SHA256SUMS.txt`、`LICENSE` 與發行說明。不得把 tag 指向未含本輪修正的舊 HEAD，也不得上傳 `full/`、`promo/`、`verification/`。現有遠端舊 tag 保留。
+- 發布阻礙已解除：使用者指定主機 gh 後確認 keyring 登入有效；容器中的 401 是憑證來源不同，不是主機帳號失效。來源 ef666c5 與 tag 已推送，8 個附件的伺服器 SHA-256／大小與 349 個來源核對通過。Release：https://github.com/wicanr2/wolong_cht/releases/tag/v.1.0.18-20260908。本輪交付結案，既有原版差異與人工驗收限制保留。
 
 
 ### 2026-09-08 呂布野戰勝負的根因

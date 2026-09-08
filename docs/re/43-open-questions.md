@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**722 列分布在 306 份文件，平均每份 2.4 列。**
+**721 列分布在 306 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 182 | 175 | 6 | 1 |
 | 驗收 | 217 | 191 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 286 | 264 | 21 | 1 |
-| **合計** | **722** | 661 | 58 | 3 |
+| 其他 | 285 | 263 | 21 | 1 |
+| **合計** | **721** | 660 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -56,7 +56,7 @@
 | `docs/spec/` | 242 |
 | `docs/playtest/` | 217 |
 | `docs/re/` | 182 |
-| `docs/release/` | 27 |
+| `docs/release/` | 26 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
 | `docs/mobile/` | 11 |
@@ -524,7 +524,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（286 條）
+## 2.6 其他（285 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -565,7 +565,6 @@
 | [`release/13-full-20260906.md`](../release/13-full-20260906.md) | `dist-public` 的 GUI smoke | `release_smoke.sh` 只跑 `dist-all`；可散布版要玩家自備資料才跑得起來，smoke 要另外給 `-orig`／`-font` | 靜態 |
 | [`release/14-full-20260907.md`](../release/14-full-20260907.md) | APK 沒跟著這一批重建 | §2。Android 沒有改動，但批次日期不一致會讓人以為漏了 | 靜態 |
 | [`release/14-full-20260907.md`](../release/14-full-20260907.md) | 各目標平台的**實機**驗收 | M8 的閘：Windows／macOS GUI、Android 實機與 release signing 都要真的機器，Docker 代不了 | 靜態 |
-| [`release/15-desktop-closeout-20260908.md`](../release/15-desktop-closeout-20260908.md) | GitHub Release | 既有登入回覆 HTTP 401，已請使用者重新登入；尚未發布，不冒稱完成 | 靜態 |
 | [`release/15-desktop-closeout-20260908.md`](../release/15-desktop-closeout-20260908.md) | 原生平台操作 | Windows／macOS 待人工回報；不由 Linux 封包查核替代 | 靜態 |
 | [`release/15-desktop-closeout-20260908.md`](../release/15-desktop-closeout-20260908.md) | 完整原版一致性 | playtest/115 所列逐拍及世界結算差異保留，不阻止本輪有揭露限制的交付整理 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Windows／macOS 原生 GUI | 交叉建置的產物只驗了檔頭，沒有在目標作業系統跑過。M8 唯一的閘 | 靜態 |
