@@ -35,6 +35,7 @@ func minimapWorldAt(x, y int) (col, row int, ok bool) {
 // 正是開局鏡頭那一組立即值（docs/spec/52）。共用同一段換算，
 // 不要各寫一次——那是 CLAUDE.md §7 第 6 條講的「一條規則只留一份實作」。
 func (g *game) centreCamOn(col, row int) {
+	g.camSubX, g.camSubY = 0, 0
 	g.camX = col - centreCol
 	g.camY = row - centreRow
 	g.clampCam()
@@ -60,7 +61,7 @@ const (
 	pickerRightX  = 580 // dx=0x244
 	pickerSplitX  = 576 // cmp cx, 0x240：X ≥ 576 ⇒ 右欄
 	pickerSlots   = pickerRows * 2
-	pickerEmptyZh = "－－－" // cs:5C0D
+	pickerEmptyZh = "－－－"  // cs:5C0D
 	pickerTitleZh = "勢力一覽" // cs:5C04
 
 	// 字色的調色盤索引（docs/re/62 §4.2 的屬性 0x90／0x9A／0x93）。
@@ -155,7 +156,7 @@ func (g *game) updateFactionPicker() bool {
 	if !inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		return true
 	}
-	x, y := ebiten.CursorPosition()
+	x, y := cursorPosition()
 	if n, ok := pickerSlotAt(x, y); ok && g.pickerSelectable(n) {
 		g.minimapFaction = n
 	}

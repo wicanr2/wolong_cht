@@ -177,11 +177,11 @@ func (g *game) updateSaveUI() {
 		return
 	}
 	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
-		x, y := ebiten.CursorPosition()
+		x, y := cursorPosition()
 		p := image.Point{X: x, Y: y}
 		for slot := 0; slot < 4; slot++ {
 			if p.In(saveSlotRect(slot)) {
-				g.dispatchSaveUI(saveUIAction{kind: saveActionSelect, slot: slot})
+				g.clickSaveSlot(slot)
 				return
 			}
 		}
@@ -212,6 +212,19 @@ func (g *game) updateSaveUI() {
 			}
 		}
 	}
+}
+
+// clickSaveSlot 是桌面滑鼠入口：原版點日期即決定，空讀檔槽不接受。
+// 鍵盤與觸控的 saveActionSelect 仍只選取，見 docs/spec/155。
+func (g *game) clickSaveSlot(slot int) {
+	if !g.saveUI.active || slot < 0 || slot >= 4 {
+		return
+	}
+	if g.saveUI.action != saveWrite && (slot >= len(g.saveUI.slots) || !g.saveUI.slots[slot].Available) {
+		return
+	}
+	g.saveUI.slot = slot
+	g.dispatchSaveUI(saveUIAction{kind: saveActionConfirm})
 }
 
 // writeSave 以暫存檔加同目錄改名完成一次儲存，避免中途停止留下半個
@@ -300,14 +313,9 @@ func (g *game) readSave(slot int) error {
 	}
 	// 優先讀原生檔——原版格式裝不下 routes／游標那些欄位，
 	// 從它讀回來的世界會少掉一部分執行期狀態（`docs/spec/20` §2.4）。
-	w, native, err := g.readNativeSave(slot)
+	w, native, err := g.loadSavedWorld(slot)
 	if err != nil {
 		return err
-	}
-	if w == nil {
-		if w, err = state.LoadScenario(g.saveFile, slot); err != nil {
-			return fmt.Errorf("讀取第 %d 槽失敗：%w", slot+1, err)
-		}
 	}
 	player := w.Player
 	if player < 0 {
@@ -323,6 +331,7 @@ func (g *game) readSave(slot int) error {
 		cap := w.Factions[player].Capital
 		if cap >= 0 && cap < len(w.Cities) {
 			g.camX, g.camY = w.Cities[cap].X-centreCol, w.Cities[cap].Y-centreRow
+			g.camSubX, g.camSubY = 0, 0
 			g.clampCam()
 		}
 	}
@@ -332,6 +341,19 @@ func (g *game) readSave(slot int) error {
 	}
 	g.lastEvent = fmt.Sprintf("已讀取第 %d 槽（%s）；信賴度 %d", slot+1, kind, w.Trust)
 	return nil
+}
+
+// loadSavedWorld 供首頁與遊戲內共用：原生檔損壞不退回較少狀態的原版格式。
+func (g *game) loadSavedWorld(slot int) (*state.World, bool, error) {
+	w, native, err := g.readNativeSave(slot)
+	if err != nil || w != nil {
+		return w, native, err
+	}
+	w, err = state.LoadScenario(g.saveFile, slot)
+	if err != nil {
+		return nil, false, fmt.Errorf("讀取第 %d 槽失敗：%w", slot+1, err)
+	}
+	return w, false, nil
 }
 
 // readNativeSave 讀這一槽的原生存檔。檔案不存在時回 (nil, false, nil)，

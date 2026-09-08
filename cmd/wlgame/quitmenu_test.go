@@ -56,7 +56,7 @@ func TestQuitMenuRowSemantics(t *testing.T) {
 }
 
 // 框是六個全形字兩列 ⇒ 112×48，右下角落在 (464, 320) 都還在畫面內
-//（docs/spec/153 §1.2）。
+// （docs/spec/153 §1.2）。
 func TestQuitMenuBoxRect(t *testing.T) {
 	g := newTalkTestGame(t)
 	bx, by, w, h := legacyChoiceRect(quitMenuX, quitMenuY, g.quitMenuRows())

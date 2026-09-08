@@ -131,8 +131,8 @@ func TestTextDoesNotOverlapPortrait(t *testing.T) {
 // 事件場景的兩個講話框：位置對原版，寬高與訊息框相同（docs/re/66 §5.1）。
 func TestEventSceneBoxesMatchOriginal(t *testing.T) {
 	for _, tc := range []struct {
-		name       string
-		x, y       int
+		name         string
+		x, y         int
 		wantX, wantY int
 	}{
 		{"講話者的框", talkUpperBoxX, talkUpperBoxY, 0, 80},

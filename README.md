@@ -18,7 +18,11 @@
 
 ## 現在做到哪裡
 
-**核心規則與可玩垂直切片已接通；完整交付集中在 `dist-all/`（三平台桌面包、Linux AppImage、Android APK、推廣片）。目前是一致的 `wolong-remake-20260828` 批次（[`docs/release/10`](docs/release/10-full-20260828.md)），**四個遊戲包連 APK 都各帶 32 個 ogg**。Windows／macOS 原生 GUI 與 Android 的實機驗收仍待完成。**
+核心規則與可玩垂直切片已接通。目前桌面修正版為
+[`v.1.0.18-20260908`](dist-all/v.1.0.18-20260908/README.md)，包含 AppImage、Windows 與 macOS 封包，
+完整版只限本機使用。選章、兩段確認及君主卡直接開局已由 AppImage 正常操作驗證，
+行軍中重啟及返回流程見 [驗證紀錄](docs/playtest/110-desktop-march-restart.md)；Windows／macOS 原生 GUI 仍待實機驗收。
+Android 不在這次桌面修正版範圍。
 
 ⭐ **靜態反組譯收斂**：739 支函式每一支都有 `docs/re/` 筆記
 （[`docs/re/21`](docs/re/21-function-census.md)）。那代表「每一支都有人寫過」，
@@ -91,14 +95,14 @@
 | ⭐ **狀態層**（原版記憶體 vs remake 解出來的存檔）| 四張表全部逐欄比過：軍團表八支的每一欄，以及**勢力 22 × 13 ＋ 據點 192 × 17 ＋ 武將 122 × 16 ＝ 5,502 個欄位一個都不差**——含兩個 remake 自己算出來的衍生值（武將評價、旗標 byte）。畫面相同只證明畫得一樣，這一份證明**讀得一樣** | [`playtest/71`](docs/playtest/71-corps-table-parity.md)、[`playtest/77`](docs/playtest/77-state-table-parity.md) |
 | ⭐ **AI 決策軌跡**（原版執行期 vs remake 規則層）| 攔原版所有事件的共用出口（`sub_12FBF`），拿到「誰在哪一天決定了什麼」：**事件種類、參數形狀與每月量級一致**，都在月結觸發。原版 196 年 5 月 1 日**曹操對呂布宣戰**，劇本一的主線 | [`playtest/78`](docs/playtest/78-ai-decision-trace.md) |
 | 音訊 | 會出聲、場景對應已解、與原版錄音比對過；**音色的諧波結構沒量化比對** | [`spec/29`](docs/spec/29-audio.md) |
-| 規則規格 | **140 份**（不含索引與 `TEMPLATE.md`）：**139 CONFORMED**／1 READY（`83-initial-strategy-pass`）／0 DRAFT | [`spec/00`](docs/spec/00-index.md) |
+| 規則規格 | **143 份**（不含索引與 `TEMPLATE.md`）：**142 CONFORMED**／1 READY／0 DRAFT | [`spec/00`](docs/spec/00-index.md) |
 | 反組譯 | 739/739 支有筆記；`docs/re/` 自己標成未解的有 **172 列**（每寫一份新的反組譯筆記就帶進自己的未解表）| [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
-| 全專案的未解 | **708 列**（另有 6 列是 DOS／BIOS 平台層與編譯器 runtime，不計入）。⚠ **這個數字比較接近「文件有多少份」**——708 列分布在 297 份文件、平均每份 2.4 列，而每寫一份新文件就帶進約三列自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
+| 全專案的未解 | **722 列**（另有 6 列是 DOS／BIOS 平台層與編譯器 runtime，不計入）。⚠ **這個數字比較接近「文件有多少份」**——722 列分布在 306 份文件、平均每份 2.4 列，而每寫一份新文件就帶進約三列自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
 
-#### 那 708 列對 remake 代表什麼
+#### 那些未解項對 remake 代表什麼
 
 **它不衡量「離做完還有多遠」。** 最直接的證據是這兩個數字同時成立：
-未解 694 列，而開局主畫面 **256,000 個像素與原版一個不差**。
+未解列數與開局主畫面的 **256,000 個像素對拍結果**，不能互相替代。
 兩者量的是不同的軸——未解列數量的是「**原版還有多少我們解釋不了**」，
 parity 量的是「**我們做出來的東西對不對**」。
 
@@ -110,102 +114,47 @@ parity 量的是「**我們做出來的東西對不對**」。
 逐類的列數、讀法與那次稽核的組成在
 [`re/43`](docs/re/43-open-questions.md) §0–§1 與 [`WORKLIST.md`](WORKLIST.md)。
 
-**要看進度看別的**：規格的 CONFORMED 份數（82/84）、
+**要看進度看別的**：規格的 CONFORMED 份數（142/143）、
 逐像素對拍的數字（主畫面 0 px）、[`re/21`](docs/re/21-function-census.md) 的覆蓋地圖。
 這一份回答「還有什麼沒解」，**不回答「還剩多少」**。
 
-**真正擋著發行的只有四件事**，而且**同一件事會被數很多列**——
-`re/43` 是把各文件的未解表集中起來，一個事實寫在四份文件裡就佔四列：
+本輪桌面交付保留三項限制：Windows／macOS 原生操作待人工驗收；完整逐拍戰況與
+戰後退路仍有已知差異；音訊尚未重新做人耳與原生平台抽驗。
+Android 與長程全局通關不在本輪範圍。未解研究列數不作發行完成率。
 
-| 擋什麼 | 為什麼卡住 |
-|---|---|
-| Windows／macOS 原生 GUI 實機驗收 | ⛔ 沒有那兩個平台的機器。交叉建置的產物只驗了檔頭；完整版「解開就能跑」在那兩個 OS 上也沒實跑過 |
-| Android 實機驗收 ＋ release signing | ⛔ 沒有裝置；keystore 怎麼保管還沒決定，目前出的是 debug 簽章 |
-| 16 KB page size 的實測 | `.so` 的 LOAD 段已是 `0x4000`，但沒有那種裝置或 AVD 實際載過 |
-| **沒有音效裝置時遊戲會掛** | 完整版會自己找到音檔並開音訊，而 Ebiten 沒有可查詢的音訊 API——一般啟動遇到沒有音效卡的機器就結束（[`docs/spec/75`](docs/spec/75-bundled-audio.md) §5）。**它還有一個下游**：無頭驗收拍不到啟動殼層（[`docs/release/06`](docs/release/06-appimage-20260824.md) §4.1）|
+### 自評分數（2026-09-08）
 
-其餘的十幾列是設計取捨（手機小卡放哪些欄位、戰場要不要能縮放）與
-流程小事（`verification/` 截圖不進管線），不擋發行。
+**整體 84／100。這是證據導向的主觀自評，不是完成率或全遊戲對拍通過率。**
+本輪評估桌面 AppImage／Windows／macOS；Android 不納入本次加減分。
+使用下表權重計算 83.85，再四捨五入為 84；
+曾驗出野戰勝負相反，現已修正 AI 比較方向；逐拍及戰後退路仍有差異，因此維持規則分數。本輪僅因交付完整性提高發行項目；歷史理由保存在 [WORKLIST](WORKLIST.md)。
 
-⭐ **另有 4 列是 DOS／BIOS 平台層，不計入總數**（`INT 61h` 的音效 TSR
-服務號、VRAM 寫入迴圈、`YNFONT.EXE` 怎麼畫字）。remake 跑在 Go／Ebiten 上，
-**不跟 DOS TSR 講話**——知道 `ah=4` 是什麼不會改變任何一行 Go。
+| 評估軸 | 分數／100 | 權重 | 現有證據與保留限制 |
+|---|---:|---:|---|
+| 資料格式保存 | 90 | 10% | 沿用既有解碼與存檔往返證據；本輪沒有新格式研究加分。 |
+| 文字保存與校訂 | 92 | 10% | 沿用文本與校訂驗證；本輪未新增母語或全語系畫面驗收。 |
+| 反組譯理解 | 72 | 5% | 沿用已有分級證據；函式有筆記不代表語意全部證實。 |
+| 規則還原 | 75 | 25% | 開場擺兵與 AI 分支比較已修；同輸入野戰勝方已對齊，第 1 拍及結算細節仍有差異，完整規則驗收未通過。 |
+| 畫面一致 | 98 | 15% | 地圖格框、水平／垂直整格外推與編成視窗抽樣吻合；先前 1 像素差異已歸因並修正繪圖。不代表全遊戲畫面皆一致。 |
+| 音訊 | 72 | 5% | 本輪未重新做人耳或原生平台音訊驗收，不加分。 |
+| 桌面操作 | 90 | 20% | 設定重啟、結果頁及系統視窗修正保留；快速切焦捕捉基準已修，原生平台手感仍由人工驗收。 |
+| 發行與桌面平台 | 70 | 10% | RRSAL-1.0、完整版／公開包分流、安裝說明與媒體驗收已補齊；Windows／macOS 原生 GUI 尚未驗收。 |
 
-### 自評分數（2026-09-06）
+主要依據：[桌面操作修正](docs/playtest/109-desktop-launcher-fix.md)、
+[行軍與重啟](docs/playtest/110-desktop-march-restart.md)、
+[滑鼠外推](docs/playtest/111-desktop-map-scroll.md)、
+[戰後結果頁選項](docs/playtest/112-desktop-battle-result-options.md)、
+[桌面打磨與限制](docs/playtest/113-desktop-polish.md)、
+[快速切焦與完整戰況](docs/playtest/114-focus-and-same-battle.md)。
+整體仍不能標為完成：原生平台操作待驗，完整戰況已有明確分歧。
 
-每一軸的分數都綁著上面的量測，扣分理由寫明；
-**沒量過的部分不計入加分**。
+#### 目前驗收缺口
 
-⭐ **這一版的變動全部來自同一件事**：原版側的取樣換成
-[dosgolem](https://github.com/wicanr2/dosgolem)（`docs/spec/131`）之後，
-**原版的執行期狀態與控制流問得到了**——不只是畫面。
-兩個方向的影響相反，所以分數有升有降：
-
-- **升**：戰術畫面對 DOSBox 四區 0 px、20 個熱區執行期驗過、
-  軍團表 8/8 逐欄相同（`docs/playtest/68`／`69`／`71`）。
-- **降**：第一次做行為層對拍就抓到一個規則分歧
-  （**和平就出不了兵**，`docs/spec/132`）。那條規則在機器碼裡擺了很久，
-  靜態讀漏掉了，**而所有既有測試都跑在「不會觸發它」的局面上**。
-  ⇒ 規則層的分數要反映「行為層幾乎沒有對過」這件事。
-
-⭐ **2026-09-06 這一輪（＋1／＋1）**：
-
-- **畫面 95 → 96**：行軍三選一的版面接回原版，選單框（兩種項數）與
-  左下角的狀態列框**三塊都逐像素 0 px**（`docs/playtest/79`）。
-  ⭐ 最後那 530 px 不在版面而在代入——`\2` 的 handler 是 `al = 3`，
-  **照欄位寬度畫滿三個全形字**而且是色 `0x0B`，而這兩件事
-  `docs/formats/01` §3 的表裡早就寫著。
-- **規則 82 → 83**：補上原版勝負判定的第三條出口（**退卻的 120 拍倒數**，
-  `docs/spec/141`）。⚠ 只加 1 分是因為同一輪也**量出一條新的分歧**：
-  退卻中原版不補兵、remake 會補，兩邊中途的場上人數不同（`spec/141` §5）。
-  加分的理由是「量過了」，而這一項量出來的是「還有一段沒對」。
-
-| 軸 | 分數 | 依據 | 扣分在哪 |
-|---|---:|---|---|
-| 資料格式保存（M1）| **90%** | 全部檔種有 Go 解碼器＋測試，`TALK.DAT`／存檔 byte-for-byte round-trip，過場、音訊、地圖族全解 | `ICONGRF` 段 1 的 UI 語意；`formats` 還有 20 列登記在案的細節 |
-| 文字保存與校訂（M2／M7）| **92%** | 1,022 則全保存、60 筆校訂可重跑、兩版 1,022 則逐句對照讀完、排版 parity 全量 0 超寬；**四個語系端到端可玩且能在遊戲中切換**（`-lang` 或 F9／啟動殼層／手機系統面板，[`docs/spec/86`](docs/spec/86-runtime-language-switch.md)）：日文直接取 PC-98 原版（含 34 個外字靠兩版對齊反推）、簡體 OpenCC 機轉＋逐則校訂、英文 1,022 則逐則英譯、343 個人名地名三語對照（[`docs/spec/84`](docs/spec/84-multilanguage.md)）；半形語系的版面另排一套（清單四家 [`85`](docs/spec/85-latin-list-layout.md)、其餘畫面 [`87`](docs/spec/87-latin-screen-layout.md)）| 缺兩版並排的畫面對照這最後一格；簡體與英文已第二人覆核（簡體 23 則校訂、英文無誤，[`docs/spec/84`](docs/spec/84-multilanguage.md) §6），但沒有母語者看過 |
-| 反組譯理解（M3）| **72%** | 739/739 支函式都有筆記、四個分級收斂；單挑這種末端子系統都能讀到逐 tick。⭐ **現在可以攔任一支常式看參數與呼叫端**（`WOLONG_DOSGOLEM_WATCH`），「這支在做什麼」不必再只從呼叫端反推 | 「有筆記」≠「讀懂」——`docs/re/` 自己登記的未解還有 181 列。⚠ 而 `sub_142AB` 證明了**標籤也會錯**：它被記成「玩家下行軍令」記了很久，dump 的第二行一直印著「呼叫者：`sub_12662`」（只有一支）卻沒有人讀 |
-| 規則還原（M4／M5）| **83%** | 政略／行軍／戰術／外交／說服／單挑都以機器碼出處實作，規則層 5 年長跑不變量成立；2026-08-25 把上一輪列的七條缺口全數收掉：災害傷害量（[`docs/spec/81`](docs/spec/81-disaster-quantities.md)）、應戰挑選＝評價的去向（[`docs/spec/82`](docs/spec/82-defender-selection.md)）、信賴度增減全帳本與初始值 `0xFF`（實機定案，[`docs/playtest/44`](docs/playtest/44-trust-init-oracle.md)）、行軍中間節點（查證後**缺口不存在**）、事件 10 訊息（端到端已通）；**AI 長程對照完成**：原版半年四大擴張事件與 remake 方向幅度一致、呂布／曹操終值逐城相同；孫策攻劉繇的分歧定案為 `sub_12BD9` 缺新遊戲開局呼叫點，已補（[`docs/spec/83`](docs/spec/83-initial-strategy-pass.md)、[`docs/playtest/45`](docs/playtest/45-ai-longrun-comparison.md)）| ⚠ **降 5 分**：2026-09-05 第一次做**行為層**對拍（逐日讀原版記憶體裡的軍團表）就抓到一個規則分歧——**和平就出不了兵**（軍團走到和平勢力的邊界會掉頭，[`docs/spec/132`](docs/spec/132-march-turnback-at-peace.md)）。已補上並做過三組突變測試，但它暴露的是**行為層幾乎沒有對過**：既有六支「派軍團去打」的測試全部跑在開局的和平狀態上，六支一起錯了很久。同一條路子在戰術層又抓到第二條：**尋路的繞路成本從來沒有生效過**（`FindPath` 用純先進先出，直線一定先碰到終點，於是被大將擋住的兵永久卡死；[`docs/spec/134`](docs/spec/134-pathfind-wave-order.md)）——已改成原版的波數佇列，兩條突變測試釘住。⭐ **加分的理由永遠是「量過了」**：同一場第 70 拍 96 個兵逐槽全等；
-再加 2 分是因為**狀態層四張表全部逐欄比過**——勢力 22×13 ＋ 據點 192×17 ＋
-武將 122×16 ＝ **5,502 個欄位一個都不差**，含兩個 remake 自己算出來的
-衍生值（[`playtest/77`](docs/playtest/77-state-table-parity.md)）。⭐ **2026-09-06 再加 1 分**：補上原版勝負判定的**第三條出口**——全軍退卻之後的 120 拍倒數（[`docs/spec/141`](docs/spec/141-retreat-countdown.md)），先前 remake 只有「任一側補不出兵」兩條，退卻的兵走不出去就永遠打不完。⚠ **只加 1 分**：同一輪量出一條新的分歧（退卻中原版不補兵、remake 會補，`spec/141` §5），而且實測發現**這道倒數正常打完根本用不到**（退卻令下去八拍場上就清空）——接上的是兜底那一條。其餘：對照只有一次原版跑、孫策擴張節奏比原版快、`docs/re/` 登記的未解細項 |
-| 畫面一致（M6）| **98%** | 十個局面逐像素：主畫面／系統選單／三視窗／五張清單／財政全 0 px，野戰 0.05%；攻城側欄四區 0 px、戰場區 0.86%（＝兩邊開的不是同一場）。⭐ **2026-09-05 兩邊第一次開同一場仗**：九區裡**七區 0 px**、`field` 0.10%——先前戰場那一組 0.86% 的成因「兩邊開的不是同一場」拿掉了（[`playtest/72`](docs/playtest/72-same-battle-parity.md)）。原版側的取樣也不再需要 DOSBox，取樣點可以寫成**遊戲日期或事件** | ⚠ 逐兵對拍一開始是 **0/48 相同**，同一天解出原版的擺位常式並接上（[`re/87`](docs/re/87-opening-deployment.md)、[`spec/133`](docs/spec/133-opening-deployment.md)）之後，**兩邊的走位期逐拍對齊**（同在第 70 拍站定、第 75/76 拍重新開動），那一刻小地圖只差 **8 px**（[`playtest/74`](docs/playtest/74-settled-tick-parity.md)）；再逐兵追那 8 px，抓到**尋路的繞路成本從來沒有生效過**（[`spec/134`](docs/spec/134-pathfind-wave-order.md)），修好之後 **96 個兵逐槽全等、小地圖 0 px**（[`playtest/75`](docs/playtest/75-pathfind-detour.md)）。再追 `field` 那 22%，抓到**攻城戰的開場勸降走腳本指令 16 而 remake 的 `opMessage` 是空的**（[`spec/135`](docs/spec/135-script-message-command.md)）、掛框的**側別／變體／`\1` 三個參數都取錯**（[`spec/136`](docs/spec/136-battle-talk-parameters.md)）、以及**全形標點的字模用錯來源**（[`spec/137`](docs/spec/137-builtin-symbol-font.md)）——修完 `field` 22.30% → **0.08%**，剩下的 139 px 全是已歸類的不可消項（[`playtest/76`](docs/playtest/76-battle-talk-parity.md)）。⭐ **2026-09-06 再加 1 分**：行軍三選一的版面接回原版——選單框（三項 `112×64`、兩項 `112×48`）與左下角的狀態列框（`256×80`）**三塊都逐像素 0 px**（[`playtest/79`](docs/playtest/79-march-menu-original-layout.md)）；順帶把 `\2` 代入的名字接成**定寬三個全形字＋色 `0x0B`**（`al = 3`，[`re/79`](docs/re/79-talk-marker-handlers.md) §2）。剩下的：攻城那一組舊 fixture 從 0.85% 漂到 1.19%（**本來就不是同一場**）；⭐ **同一天再加 1 分**：拿 dosgolem 拍原版的進言／財政／編成三條流程，一次抓到**兩個「沒畫」的缺口**——指令列的反白只接了三張彈出選單（原版 `sub_161CA` 是**八格共用同一段程式碼**）、左下角的狀態列提示框只接了行軍。修完進言那一張 `command` 13,642 → **0**、財政 `map` 35,492 → **195**（三群全部有解釋）、編成的狀態列框 **0 px**（[`playtest/81`](docs/playtest/81-command-cell-highlight.md)）。⭐ **同一天第三次加分**：新的 `-fixture-when`（[`spec/118`](docs/spec/118-shot-when-condition.md) §2.3）讓兩邊用**同一個遊戲時刻**取樣，每一張戰略畫面都剩著的那塊 `banner` 110–116 px（日期）收掉了——**六張裡四張五區全 0 px**，另兩張只剩「原版自己畫的滑鼠游標」88 px 與 M7 校訂造成的 141 px（[`playtest/82`](docs/playtest/82-strategy-date-aligned-parity.md)）。⭐ **據點一覽也對上了**（[`playtest/83`](docs/playtest/83-city-list-parity.md)）：`map` 23,073 → **278 px**，途中抓到**原版選完之後不擦彈出選單**（一覽表畫在它上面；而「首都確認」那條路因為跳鏡頭重畫地圖就看不到——照抄的是那個差別）。剩下的 ±1 **使用者裁定為已歸類的殘差**（2026-09-06）：只在每小時會動的兩欄上，城兵十列完全相同。⭐ **彈出選單選走之後開清單的六條出口也比完了**（[`playtest/84`](docs/playtest/84-personnel-corps-list-parity.md)）：四張 `map` 0 px，其中軍團一覽有九列空列破折號而 0 px ⇒ 獨立驗證了那個家族的破折號縮排。同一輪抓到**解任不先過濾**（[`spec/142`](docs/spec/142-personnel-dismiss-flow.md)）——原版照列全部、選到沒人的才跳訊息。⚠ 一般訊息框的名字**還是整段畫白、補白還是裁掉**，那是全域規則要另外開規格（[`spec/140`](docs/spec/140-status-message-box.md) §5）|
-| 音訊 | **72%** | 格式與場景對應全從機器碼讀出、OPL3 合成與原版錄音人耳比對過；選曲規則抽成一份給桌面與手機共用，**Android 的完整版也內嵌 32 個 ogg**（[`docs/spec/92`](docs/spec/92-android-music.md)）| 諧波結構沒有量化比對；無音效裝置會掛的問題還在；手機端沒有實機聽過 |
-| 發行與平台（M8／M9）| **50%** | 四平台包出得來且批次一致、Linux 有 GUI smoke、Android 模擬器指紋與桌面相同、發行閘擋原版資產 | Windows／macOS／Android 都沒有實機驗收；Android 只有 debug 簽章 |
-| **整體** | **84%** | ⭐ **戰略畫面這一層收斂了**：六張逐區對拍、四張整片 0 px，殘差全部歸類完畢。量過的地方幾乎都對到 0 px、規則層可玩且穩定、保存目標（格式＋文字）接近完備。⭐ **原版現在是一個可以問問題的物件**：記憶體讀得到、控制流攔得到、狀態存得起來分岔——這是這一輪最大的結構性改變 | 拉低整體的是平台實機驗收（外部條件：缺機器），以及**行為層對拍才剛開始**——三輪各抓到一件事（和平掉頭、尋路排序、退卻沒有倒數），而第三輪同時量出一條還沒對的（退卻中補不補兵）|
-
-讀法同上一節：**分數對應「量過的部分對不對」**，不是進度條。
-72% 那兩軸的天花板是「未解列數收斂」，50% 那一軸的天花板是實機——
-後者不是工作量，是缺裝置。
-
-⚠ **規則還原那一軸的分數跟著「量過多少」走，不跟著「做過多少」走。**
-它的軌跡是 83 → 78 → 80 → 82 → 83，每一步都綁著一次量測：
-
-| 分數 | 依據 |
-|---:|---|
-| 83 | 靜態讀完機器碼 ＋ 規則層長跑不變量成立 ＋ AI 長程方向一致 |
-| **78** | 第一次把原版的**執行期狀態**逐日讀出來對，抓到一條漏掉的規則（和平掉頭）|
-| 80 | 同一套作法推到戰術層、逐兵比座標，抓到第二條並補上——**同一場第 70 拍 96 個兵逐槽全等** |
-| 82 | 狀態層四張表**5,502 個欄位一個都不差** ＋ AI 決策軌跡形狀一致 |
-| **83** | 補上勝負判定的第三條出口（退卻的 120 拍倒數）。**只加 1**——同一輪也量出一條還沒對的（退卻中補不補兵）|
-
-畫面那一軸同一天走了 95 → 96 → 97 → 98，每一格也各綁一次量測：
-行軍三選一三塊 0 px、指令列反白涵蓋八格、戰略畫面六張裡四張整片 0 px。
-
-加分的理由永遠是「量過了」，不是「修好了」；而**量出一條新的分歧同時
-加分又扣分**——它證明作法有效，也證明還有一段沒對。
-未解細項仍然列在 [`re/43`](docs/re/43-open-questions.md) §9，分開數。
-
-#### 還沒對過的
-
-| 項目 | 現況 |
-|---|---|
-| ~~一覽表、編成、進言、財政等視窗~~ | **都有逐像素數字了**：一覽四家與財政視窗（[`playtest/42`](docs/playtest/42-window-parity.md)）、四張彈出選單（[`60`](docs/playtest/60-corps-menu-parity.md)／[`61`](docs/playtest/61-city-personnel-menu-parity.md)／[`81`](docs/playtest/81-command-cell-highlight.md)）、行軍三選一（[`79`](docs/playtest/79-march-menu-original-layout.md)）。⚠ **編成那一張還沒比完**——原版停在武將一覽、remake 走到編成面板，兩邊不是同一步（[`81`](docs/playtest/81-command-cell-highlight.md) §4）|
-| 野戰打起來之後的戰場 | **開戰第一拍已經對過**（九區裡七區 0 px、`field` 0.05%，[`playtest/43`](docs/playtest/43-field-battle-parity.md)）。沒對過的是**開戰之後**——野戰的地形是從大地圖即時長出來的，兩邊要走到同一個 tick 比攻城更難湊 |
-| 跑完一整局 | 沒對過。目前最長的是規則層長跑，不是畫面 |
-| ~~兩邊開同一場仗~~ | **做到了**（2026-09-05，[`playtest/72`](docs/playtest/72-same-battle-parity.md)）：九區裡七區 0 px、`field` 0.10%。⚠ 順帶挖出一個新差異——**小地圖上的部隊點原版是兩排、remake 是一排**，而 `field` 看不到它（鏡頭外的部隊只有小地圖畫得到）|
-| **行為層（不是畫面）的對拍** | 狀態層**四張表全部逐欄比過**（5,502 個欄位不差，[`playtest/77`](docs/playtest/77-state-table-parity.md)）、AI 決策軌跡形狀一致（[`playtest/78`](docs/playtest/78-ai-decision-trace.md)）、戰術層逐兵座標全等（[`playtest/75`](docs/playtest/75-pathfind-detour.md)）。⚠ **逐拍的行為還沒對**：2026-09-06 量退卻時就看到一段——原版退卻中不補兵、remake 會補（[`spec/141`](docs/spec/141-retreat-countdown.md) §5）|
-| 日文原版逐句對照 | 1,022 則**兩批逐句讀完**、60 筆校訂已定案、校訂後的畫面抽樣也做了（[`playtest/41`](docs/playtest/41-m7-corrected-text-on-screen.md)）。**沒做的是兩版並排的畫面對照** |
+- Windows／macOS 原生操作由人工檢驗，尚未回報；本輪不評 Android。
+- 同一戰前資料與 RNG 的攻城退卻、野戰自然勝負都已重播；野戰勝負反轉根因已修，逐拍仍不一致。行軍委任另驗呂布勝，見 [playtest/115](docs/playtest/115-delegated-battle-cause.md)。
+- 快速切焦的捕捉基準已修；Windows／macOS 仍須實機抽驗。依使用者決定不做全局通關。
+- 原生平台音訊、母語檢視與全語系並排畫面未在本輪重驗。
+- 戰後結果頁預設關閉；系統選單可選 3／5／10／15／30 秒後自動返回，無須每場確認。
 
 #### 刻意不一樣的（remake 差異）
 
@@ -215,32 +164,24 @@ parity 量的是「**我們做出來的東西對不對**」。
 |---|---|
 | 固定時間基準 | 原版沒有固定 tick rate，速度上限跟著機器跑（說明書 3.5）；照抄會得到一個在現代機器上快到不能玩的遊戲（[`spec/34`](docs/spec/34-speed-steps.md)）|
 | 鍵盤操作 | 原版是純滑鼠；remake 保留滑鼠熱區，另外加鍵盤（[`spec/26`](docs/spec/26-yes-no-dialog.md)、[`27`](docs/spec/27-lord-select-window.md)）|
-| 遷都與勢力選擇的視窗 | 原版在地圖上選點／有專屬視窗，remake 先用簡化版（[`spec/49`](docs/spec/49-advise-relocate-and-sortie.md)、[`35`](docs/spec/35-strategy-minimap.md)）|
+| 戰後結果頁 | 使用者選擇保留為可選摘要，預設關閉；開啟可設定秒數自動返回（[`spec/89`](docs/spec/89-siege-damage-report-toggle.md)）。原版沒有這張頁面。 |
+| 桌面設定記憶 | 系統偏好與語言保存到使用者設定目錄，下次啟動還原；原版與原生遊戲存檔不變（[`spec/156`](docs/spec/156-desktop-preferences.md)）。 |
 | 存檔多幾個欄位 | 原版沒有的欄位另外存，**未解區域一個 byte 都不動**（[`spec/20`](docs/spec/20-save-format.md)）|
 | 結局第一幕不捲動 | 原版是逐列捲上來，remake 用整張淡入（[`spec/67`](docs/spec/67-ending-playback.md) §3）|
 | 訊息模板 | 原版是「片段 ＋ 控制位元組」，remake 用具名參數；原版機制仍完整記錄在 `docs/formats/` |
 
-### 候選封裝與推廣片
+### 桌面交付與推廣片
 
-- 完整交付根目錄：[`dist-all`](dist-all)，包含**四平台完整包**（Linux／Windows／macOS／Android）、Linux AppImage、**一支合成推廣片**、雜湊與 GUI smoke 截圖。目前是 `wolong-remake-20260907` 批次（[`docs/release/14`](docs/release/14-full-20260907.md)）——**APK 是 `20260906` 那一顆**，Android 這一輪沒有改動。⚠ **「全平台重建」是兩支腳本**：`tools/release_all.sh` 不會重建 APK（Android 是另一條管線，檔名取的是 APK 自己的 mtime），要一起換得再跑 `WOLONG_BUNDLE_DATA=1 tools/android_build.sh`。
-- ⛔ **本機這一批內含原版資產，不可外流**（`dist-all/DO-NOT-DISTRIBUTE.md`）。四個平台的包裡都有原版資料與倚天字型，解開或裝上去就能玩。要一份可散布的：`WOLONG_BUNDLE_DATA=0 tools/release_all.sh <YYYYMMDD>`，出來的包不含任何原版資產（[`docs/spec/72`](docs/spec/72-bundled-game-data.md)）。
-- Linux AppImage：[`wolong-remake-linux-amd64-20260907.AppImage`](dist-all/packages/wolong-remake-linux-amd64-20260907.AppImage)。已通過 Linux／Xvfb 固定種子 smoke（含結局過場，且**不帶任何資料旗標**就跑得起來），並與原版逐關卡對拍過（[`docs/release/12`](docs/release/12-full-20260902.md) §4，那一批的 AppImage）。**公開散布的版本仍要由玩家提供合法 DOS/V 資料與中文字型。**
-- 三平台候選包與 SHA-256：[`dist-all/packages`](dist-all/packages)。Windows／macOS 是交叉建置候選，尚未在目標作業系統完成原生 GUI runtime 驗收。
-- 推廣片：[`wolong-remake-promo.mp4`](dist-all/promo/wolong-remake-promo.mp4)，176 秒，**發行目錄裡唯一的一支**。三段接成一支：主預告（大地圖、野戰、攻城是逐幀錄的實跑畫面，另有四語系切換與原版並排）、原版實機對照（原版側是自己跑的受控 DOSBox-X 實機遊玩）、手機版。**全片鋪原版曲子**——remake 自己的 OPL3 從玩家自備的 `BGM.DAT` 算出來的，不是取樣原版錄音；那條音軌只用在推廣片，不進任何遊戲包（[`docs/promo/combined.md`](docs/promo/combined.md)）。
-- 三支素材片與兩支研究用對照片留在 `dist/promo/`，製作紀錄與重錄命令都還在（[`docs/promo/README.md`](docs/promo/README.md)），**只是不進發行**。原版並排段與 DOS/V 對照段都不是同日期／同輸入的逐像素 parity，片上已標明。
-- Android：見下一節。APK 與另外三個平台並列在 [`dist-all/packages`](dist-all/packages)，**仍不宣稱 Android release**（只有 debug 簽章、沒有實機驗收）。完整版 APK 內含 32 個原版 ogg，遊戲內走的是與桌面同一份 `internal/ui/sound`（[`docs/promo/android.md`](docs/promo/android.md)）。
+目前版本為 **v.1.0.18-20260908**，唯一交付根目錄是
+[`dist-all/v.1.0.18-20260908/`](dist-all/v.1.0.18-20260908/)。
 
-`wlgame` 的持久化要明確指定可寫路徑，例如：
+- `full/`：Linux AppImage、Windows 與 macOS 完整版，內含原版資料與所需素材，只限本機保存。
+- `release/`：不含原版資料、音樂與倚天字型的桌面引擎包；玩家需自備合法資料，安裝命令在各包 README。
+- `promo/`：本輪重新剪輯的桌面推廣片、分鏡、音訊來源與媒體驗收。歷史實錄與新版畫面分別標明；不當作完整同狀態對拍。
+- Windows／macOS 原生操作由人工檢驗；Android 不在本批。
 
-```text
-tools/shot.sh /tmp/wlgame-save.png KEYS=4,s,Return \
-  -orig workplace/orig/dosv -save-file /out/SAVE.DAT
-```
-
-遊戲中先開「系統」視窗，按 `S` 儲存或 `L` 讀取，再以方向鍵／`1`–`4` 選槽。
-`-save-file` 是 overlay；原始 `SINARIO.DAT` 只讀，且儲存會先寫同目錄暫存檔再改名。
-
-![四槽存檔視窗](docs/images/wlgame-save-ui.png)
+遊戲自動保存設定至使用者設定目錄的 `wolong-remake/`；可用 `-save-file` 指定可寫存檔。
+原始劇本只讀，存檔先寫暫存檔再改名。當前發行與發布狀態見 `CONTEXT.md` §7.0。
 
 ### 已解出的格式
 
@@ -825,7 +766,7 @@ tools/phone_shot.sh out.png 60  # 手機 UI 的桌面截圖（一輪約 30 秒�
 | 這個遊戲怎麼運作 | [`docs/mechanics/00-index.md`](docs/mechanics/00-index.md) |
 | 我們打算怎麼實作 | [`docs/spec/00-index.md`](docs/spec/00-index.md)（`DRAFT`／`READY`／`CONFORMED` 三態）|
 | 驗過什麼、量到多少 | [`docs/playtest/`](docs/playtest/) |
-| 這一批發行包裡有什麼 | [`docs/release/10`](docs/release/10-full-20260828.md) |
+| 這一批發行包裡有什麼 | [`桌面交付紀錄`](docs/release/15-desktop-closeout-20260908.md) |
 | 每一輪做了什麼 | [`WORKLIST.md`](WORKLIST.md)——逐輪紀錄與勘誤都在這裡，不散回上面那幾份 |
 | 動手前要遵守什麼 | [`CLAUDE.md`](CLAUDE.md) |
 
@@ -853,18 +794,10 @@ PC-98 日文原版與松崗繁中版是同一份程式的兩次編譯，
 
 ### 授權
 
-本儲存庫由著作權人創作的部分——程式碼、文件、規格、反組譯筆記與校訂紀錄——
-採 [`LICENSE`](LICENSE) 的專有授權：
-
-- **非商業用途免費**：使用、重製、散布都不必事先取得同意，也可以修改並散布
-  修改版；條件是保留授權條款、標明自己改了什麼並指回原始出處，
-  以及不對作品本身收費。
-- **商業用途要先洽談**：販售、付費提供、隨商品或服務散布、加廣告或內購、
-  在營利事業的營運中使用，都需要書面授權。寄 wicanr2@gmail.com，
-  **歡迎來談**——這一條是為了保留商業條件的決定權，不是拒絕合作。
-
-⚠ **授權不涵蓋原版素材**：原版的執行檔、資料檔、美術、音樂與倚天點陣字
-屬於各自的權利人，本專案不散布它們（見下面的致謝與聲明）。
+本專案由著作權人創作的部分採 [`LICENSE`](LICENSE) 的 **RRSAL-1.0**，
+屬於原始碼可閱（source-available）授權：非商業用途免費，實況、影片、評論與
+平台分潤明示允許；貢獻採回授條款，商業用途另洽 wicanr2@gmail.com。
+授權不涵蓋原版遊戲資料、美術、音樂與倚天字型，各第三方元件依其原授權。
 
 ### 致謝與聲明
 

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"fmt"
+	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
 	"image"
 	"testing"
 
@@ -164,10 +164,10 @@ func TestDOSVBattleCommandLabelsFit80PixelCells(t *testing.T) {
 func TestDOSVBattleSideCellLayoutMatchesRawCoordinates(t *testing.T) {
 	l := dosvBattleLayoutFor(dosvBattleScreenW, dosvBattleScreenH)
 	for _, c := range []struct {
-		name                     string
-		cell                     battleRect
-		top                      bool
-		nameY, menBarY, healthY  int
+		name                    string
+		cell                    battleRect
+		top                     bool
+		nameY, menBarY, healthY int
 	}{
 		{"上格（對方）", l.SideFoe, true, 52, 72, 75},
 		{"下格（我方）", l.SideAlly, false, 221, 211, 214},
@@ -627,7 +627,10 @@ func TestParseSiegeFixture(t *testing.T) {
 // 三張橫向接續，最後一張的右緣正好落在 80 px 格內。
 func TestBattleSlotIconGeometry(t *testing.T) {
 	const iconW = 24
-	for _, tc := range []struct{ name string; x int }{
+	for _, tc := range []struct {
+		name string
+		x    int
+	}{
 		{"位置名", battleSlotGlyphX},
 		{"兵種", battleSlotArmX},
 		{"命令", battleSlotOrderX},

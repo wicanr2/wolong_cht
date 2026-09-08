@@ -549,8 +549,7 @@ const (
 // （實測同一隊三個兵在 `(1,25)`）。加一道「那一格有人嗎」不是保險，
 // 是改行為。
 //
-// ⚠ **Y 是亂數 ⇒ 逐兵座標永遠對不到原版。** 判準是值域與落點，
-// 不是全等（`docs/spec/133` §3）。
+// 相同 RNG 狀態時可逐槽對拍；取數順序依玩家側先行（spec/133 §6）。
 func (b *Battle) Spawn(rng Rand) {
 	if rng == nil {
 		rng = b.rng
@@ -561,7 +560,7 @@ func (b *Battle) Spawn(rng Rand) {
 		var seq spawnSeq
 		rng = &seq
 	}
-	for i := range b.Sides {
+	for _, i := range [2]int{b.PlayerSide, 1 - b.PlayerSide} {
 		// ⚠ **擺在哪一邊要看陣形線，不能看側的編號。**
 		// 原版的側 0 恆為玩家，而且玩家守城時整個戰場轉 180 度，
 		// 所以「側 0 → X=1」在原版的座標框裡永遠成立
@@ -575,10 +574,11 @@ func (b *Battle) Spawn(rng Rand) {
 		}
 		for k := range b.Sides[i].Soldiers {
 			s := &b.Sides[i].Soldiers[k]
+			y := spawnYBase + (rng.Next() & spawnYMask)
 			if !s.Alive {
 				continue
 			}
-			y := spawnYBase + (rng.Next() & spawnYMask)
+			s.Cmd, s.Next = Attack, Form
 			s.X, s.Y = x, y
 			s.Z = b.standZ(s, x, y)
 			s.syncTerrain(b.Field, x, y, s.Z)

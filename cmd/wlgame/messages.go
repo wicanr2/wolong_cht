@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
@@ -84,8 +85,9 @@ func (g *game) messageActive() bool {
 func (g *game) updateMessageOnly() {
 	// `-auto-messages`（docs/spec/118）：截圖模式沒有人按 Enter，
 	// 自然流程就停在遭遇訊息上走不到戰場。**只在帶了旗標時成立**——
-	// 一般遊玩這一支的行為一個字都沒變。
-	if !g.autoMessages && !pressed(ebiten.KeyEnter) && !pressed(ebiten.KeySpace) {
+	// 桌面左鍵與鍵盤都能確認，原版正常編軍對話證據見 docs/spec/155。
+	if !g.autoMessages && !pressed(ebiten.KeyEnter) && !pressed(ebiten.KeySpace) &&
+		!inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		return
 	}
 	if _, pages, ok := messagePage(g.messages[0].lines, g.messages[0].page); ok &&

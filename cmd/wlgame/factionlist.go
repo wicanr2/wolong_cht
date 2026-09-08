@@ -203,15 +203,17 @@ func (g *game) drawFactionList(screen *ebiten.Image) {
 			g.td.Draw(screen, factionListDash, factionListRowX(), y, dim)
 			continue
 		}
-		if n == l.cursor {
+		selected := n == l.cursor && l.factionSelected
+		if selected {
 			r := factionListRowRect(i)
 			vector.DrawFilledRect(screen, float32(r.Min.X), float32(r.Min.Y),
 				float32(r.Dx()), float32(r.Dy()), chrome.Select, false)
 		}
-		// 反白列的字色**不換**——原版的一覽表整頁都用色 0，
-		// 選中那一列只是底下多鋪一條綠（cmd/wlgame/main.go 的 drawList
-		// 走的是同一套）。
+		// 與 drawList 共用原版反白字色；先前只鋪綠底、字仍黑色。
 		col := rowInk
+		if selected {
+			col = chrome.Highlight
+		}
 		p := l.players[n]
 		x := factionListWinX
 		g.td.Draw(screen, p.Lord, x+factionColLordX, y, col)
@@ -284,7 +286,7 @@ func (g *game) drawFactionListScrollbar(screen *ebiten.Image, top, total int, in
 		float32(track.Dx()-6), float32(h), ink, false)
 }
 
-// updateFactionListPointer 是清單的滑鼠：滾輪捲、點一列選它並進君主卡、
+// updateFactionListPointer 是清單的滑鼠：滾輪捲、兩段式選列並進君主卡、
 // 點上下箭頭捲一列。
 // 回傳 handled=true 表示這一幀的**點擊**處理完了，不要再走鍵盤那一段。
 //
@@ -304,7 +306,7 @@ func (g *game) updateFactionListPointer() (bool, error) {
 	if !inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		return false, nil
 	}
-	x, y := ebiten.CursorPosition()
+	x, y := cursorPosition()
 	p := image.Pt(x, y)
 	switch {
 	case p.In(factionListScrollUpRect()):
@@ -315,9 +317,20 @@ func (g *game) updateFactionListPointer() (bool, error) {
 		return true, nil
 	}
 	if n, ok := l.factionListSelectAt(x, y); ok {
-		l.cursor = n
-		return true, g.applyLauncherResult(l.apply(launcherConfirm))
+		return true, g.applyLauncherResult(l.clickFactionRow(n))
 	}
 	// 點在別的地方什麼都不做——與君主卡同一條規則。
 	return true, nil
+}
+
+// clickFactionRow 的兩階段交給 confirm，與 Enter 共用同一條狀態轉移。
+// 反白後點另一列仍確認原列，dosgolem 邊界證據見 docs/spec/155。
+func (l *launcherModel) clickFactionRow(row int) launcherResult {
+	if l.phase != launcherSelectFaction || row < 0 || row >= len(l.players) {
+		return launcherResult{}
+	}
+	if !l.factionSelected {
+		l.cursor = row
+	}
+	return l.apply(launcherConfirm)
 }

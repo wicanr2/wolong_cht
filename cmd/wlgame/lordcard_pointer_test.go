@@ -60,9 +60,8 @@ func TestLordCardIgnoresPointerOutsideItsTwoHotspots(t *testing.T) {
 func TestLordCardHotspotActions(t *testing.T) {
 	newGame := func() *game {
 		return &game{launcher: &launcherModel{
-			phase:           launcherSelectPlayer,
-			players:         []launcherPlayer{{ID: 3, Lord: "曹操"}},
-			confirmedPlayer: -1,
+			phase:   launcherSelectPlayer,
+			players: []launcherPlayer{{ID: 3, Lord: "曹操"}},
 		}}
 	}
 
@@ -70,7 +69,7 @@ func TestLordCardHotspotActions(t *testing.T) {
 	if err := g.applyLordCardHotspot(lordCardCustom); err != nil {
 		t.Fatal(err)
 	}
-	if g.launcher.phase != launcherSelectPlayer || g.launcher.confirmedPlayer != -1 {
+	if g.launcher.phase != launcherSelectPlayer {
 		t.Error("「自定」把君主決定下去了")
 	}
 	if g.launcher.notice == "" {
@@ -89,8 +88,8 @@ func TestLordCardHotspotActions(t *testing.T) {
 	if err := g.applyLordCardHotspot(lordCardConfirm); err != nil {
 		t.Fatal(err)
 	}
-	if g.launcher.confirmedPlayer != 3 || g.launcher.phase != launcherGameConfirm {
-		t.Errorf("「確定」沒有往下走：player=%d phase=%v",
-			g.launcher.confirmedPlayer, g.launcher.phase)
+	// 此 fixture 沒有來源檔；直接嘗試開局失敗後須保留君主卡供重試。
+	if g.launcher == nil || g.launcher.phase != launcherSelectPlayer || g.launcher.notice == "" || g.launcher.players[g.launcher.cursor].ID != 3 {
+		t.Errorf("開局失敗應保留原選取並提示：%#v", g.launcher)
 	}
 }

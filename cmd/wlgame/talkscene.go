@@ -261,7 +261,7 @@ func (g *game) talkChoiceClick(x0, y0 int, lines []string) (int, bool) {
 		return 0, false
 	}
 	bx, by, w, h := legacyChoiceRect(x0, y0, lines)
-	x, y := ebiten.CursorPosition()
+	x, y := cursorPosition()
 	if !inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) ||
 		x < bx+chrome.Tile || x >= bx+w-chrome.Tile ||
 		y < by+chrome.Tile || y >= by+h-chrome.Tile {

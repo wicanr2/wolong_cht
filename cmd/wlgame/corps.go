@@ -170,7 +170,7 @@ func (g *game) updateForm() {
 		return
 	}
 	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
-		x, y := ebiten.CursorPosition()
+		x, y := cursorPosition()
 		if k, ok := formSlotAt(x, y); ok {
 			f.keyboard, f.slot = false, k
 			f.cycleKind(k)
@@ -256,13 +256,13 @@ const (
 	formPortraitX, formPortraitY = 152, 120
 	formNameX, formNameY         = 296, 128
 
-	formHeadLabelX               = 248
-	formTitleY                   = 128
-	formTotalY, formMoraleY      = 152, 168
-	formTotalValueX              = 312
-	formMoraleValueX             = 320
-	formTotalDigits              = 4
-	formMoraleDigits             = 3
+	formHeadLabelX          = 248
+	formTitleY              = 128
+	formTotalY, formMoraleY = 152, 168
+	formTotalValueX         = 312
+	formMoraleValueX        = 320
+	formTotalDigits         = 4
+	formMoraleDigits        = 3
 
 	// 六個槽：標籤 → 兵種圖示 → 兵力，一列三段。
 	formSlotLabelX = 160
@@ -425,9 +425,11 @@ func (g *game) drawForm(screen *ebiten.Image) {
 
 // beginMarch 開始行軍：先選軍團，再選目的地。
 func (g *game) beginMarch() {
+	g.marchReturn = g.beginMarch
 	g.setStatusTalk(marchCorpsTalk, nil)
 	rows := g.playerCorps()
 	if len(rows) == 0 {
+		g.marchReturn = nil
 		g.lastEvent = "沒有軍團可以行軍"
 		return
 	}
@@ -464,9 +466,19 @@ func (g *game) pickDestination(corps int) {
 	}, func() {
 		// 右鍵 ＝ 整條流程結束：面板與狀態列一起收（原版 `loc_18046`
 		// 之後 `sub_17F90` 走 `sub_1817D` 擦面板 ＋ `cx=0FFFFh` 清狀態列）。
-		g.corpsInfo.active = false
-		g.clearStatusTalk()
+		g.finishMarchOrder()
 	})
+}
+
+// finishMarchOrder 回到發起指示的入口；清單中的情報面板只留作背景。
+func (g *game) finishMarchOrder() {
+	g.marchMode.active = false
+	g.clearStatusTalk()
+	if g.marchReturn != nil {
+		g.marchReturn()
+		return
+	}
+	g.corpsInfo.active = false
 }
 
 // ---------------------------------------------------------------------------

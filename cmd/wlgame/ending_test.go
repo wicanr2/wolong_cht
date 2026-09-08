@@ -11,13 +11,13 @@ import (
 // 而且**不能歸零**——歸零的話整段動畫會一幀跑完。
 func TestEndingDelayConversion(t *testing.T) {
 	cases := []struct {
-		name        string
-		units       int
-		min, max    int
+		name     string
+		units    int
+		min, max int
 	}{
 		{"第一幕淡入", endingFirstFadeInUnits, 7, 9},        // ≈ 0.14 s
 		{"第一幕淡出", endingFirstFadeOutUnits, 4, 7},       // ≈ 0.10 s
-		{"「終」淡出", endingFinalFadeOutUnits, 10, 13},      // ≈ 0.19 s
+		{"「終」淡出", endingFinalFadeOutUnits, 10, 13},     // ≈ 0.19 s
 		{"打字", endingTypeUnits, 14, 16},                // ≈ 0.25 s
 		{"幕間黑畫面", endingInterludeUnits, 163, 166},      // ≈ 2.7 s
 		{"第 2–11 幕淡入淡出", endingSceneFadeUnits, 1, 2},   // ≈ 0.03 s，會被夾到 1 幀
@@ -42,10 +42,10 @@ func TestEndingDelayConversion(t *testing.T) {
 // （docs/spec/67 §8）。這一條把每一幕的三個參數釘住。
 func TestScenePaceMatchesOriginal(t *testing.T) {
 	cases := []struct {
-		scene              int
-		finalPage          bool
-		pre, fade, hold    int
-		fadeOut            int
+		scene           int
+		finalPage       bool
+		pre, fade, hold int
+		fadeOut         int
 	}{
 		// 第一幕第一趟：淡入 0x0A、沒有黑幕停留、hold 由打字取代，淡出 0x07
 		{0, false, 0, 0x0A, 0, 0x07},

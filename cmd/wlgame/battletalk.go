@@ -4,7 +4,6 @@ import (
 	"strings"
 
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/inpututil"
 
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
@@ -16,7 +15,7 @@ import (
 type BattleTalkEntry struct {
 	// Speaker 是說話武將的名字（Big5 已轉），供 \1 標記代入；
 	// 空字串表示這一則沒有名字可代（fail-closed 會把帶 \1 的訊息丟棄）。
-	Speaker string
+	Speaker  string
 	Index    int
 	Portrait int
 	Side     int
@@ -245,8 +244,9 @@ func (g *game) advanceBattleTalkInput() bool {
 	if !s.queue.active() {
 		return false
 	}
-	if !pressed(ebiten.KeyEnter) && !pressed(ebiten.KeySpace) &&
-		!inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+	// 戰術喊話不阻擋左鍵選隊／下令（docs/spec/155）；原版喊話仍在時
+	// 同一下點擊就執行熱區，不能先把它吃成額外的訊息確認。
+	if !pressed(ebiten.KeyEnter) && !pressed(ebiten.KeySpace) {
 		return false
 	}
 	return s.queue.clearAll()

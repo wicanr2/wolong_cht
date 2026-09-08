@@ -1,7 +1,6 @@
 package main
 
 import (
-
 	"github.com/hajimehoshi/ebiten/v2"
 
 	"github.com/wicanr2/wolong_cht/internal/rules/persuasion"

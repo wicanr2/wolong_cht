@@ -76,8 +76,6 @@ func (g *game) generalList(rows []int, hint string, pick func(int) bool) {
 	g.openGeneralPicker(rows, hint, pick)
 }
 
-
-
 // 人事的四條出口各自先掛一則狀態列提示（`sub_16A9B`／`sub_16B08`／
 // `sub_16B71`／`sub_16BE3` 開頭的 `sub_18853`，docs/re/25 §3、docs/spec/140）。
 const (
@@ -265,5 +263,3 @@ func (g *game) removeDiplomat() {
 func (g *game) factionList(rows []int, hint string, pick func(int) bool) {
 	g.openFactionPicker(rows, hint, pick)
 }
-
-

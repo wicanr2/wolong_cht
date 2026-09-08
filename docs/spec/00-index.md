@@ -197,6 +197,11 @@
 | **「遊戲結束」的確認選單** | [`153-quit-confirm-menu.md`](153-quit-confirm-menu.md) | CONFORMED。系統選單第 6 列跳的是 TALK #81 兩項選單「終　了」／「取　消」，⭐ **位置寫死在 (352, 272)**——六個 handler 裡唯一不跟游標走的。F10 那條保留 remake 的 ＹＥＳ／ＮＯ（[`26`](26-yes-no-dialog.md)）|
 | **原版的滑鼠游標** | [`154-mouse-cursor.md`](154-mouse-cursor.md) | CONFORMED（對拍端）。逐像素殘差裡那 95 px 就是它：14×14 紅箭頭，圖樣從兩張不同背景的原版擷取抽出來。接上 `-cursor X,Y` 之後**請求協助第二步那一張整個 640×400 一個像素都不差**。⚠ 遊玩端還不自繪——原版在清單等待時不畫游標，而那是不是 oracle 的限制沒定案 |
 
+| **桌面啟動選章與兩段確認** | [`155-desktop-launcher-input.md`](155-desktop-launcher-input.md) | CONFORMED。日期欄與命中共用幾何，勢力清單兩段確認與右鍵分層返回；Android 不在本輪範圍 |
+| **桌面偏好保存** | [`156-desktop-preferences.md`](156-desktop-preferences.md) | CONFORMED。正常啟動還原使用者偏好，原版存檔與 Android 不變；明示參數優先，直接驗收入口不讀寫偏好。 |
+
+| **戰術 AI 分支比較** | [`157-battle-script-comparisons.md`](157-battle-script-comparisons.md) | CONFORMED。參數 3／4 為無號大於等於／小於等於；修正呂布兵力充足卻誤退卻。 |
+
 ## 怎麼加一份
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的

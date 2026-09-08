@@ -27,7 +27,7 @@ const (
 	// 標籤在六格左緣 −16：軍師名的六格 `dx = 160h` ＝ 352、別號 `dx = 1C0h`
 	// ＝ 448（`sub_19223`，docs/spec/104 §1.1）。⚠ 別號先前寫 144，
 	// 那落在視窗（x ≥ 192）外面。
-	namingLabelNameX, namingLabelAliasX, namingLabelY      = 336, 432, 144
+	namingLabelNameX, namingLabelAliasX, namingLabelY = 336, 432, 144
 	// 六格名字：`sub_19223` 前三格從 x=352、後三格從 x=448，y=168；
 	// 目前格的底線畫在 y=186。
 	namingCellsX, namingCellsAliasX, namingCellsY, namingCellW = 352, 448, 168, 16
@@ -37,17 +37,17 @@ const (
 	namingPrevX, namingPrevY         = 280, 152 // 「前 ▲」（熱區 0x27：(272,152) 56×32）
 	namingNextX, namingNextY         = 280, 184 // 「後 ▼」（熱區 0x28：(272,176) 56×32）
 
-	namingBtnY                         = 192
+	namingBtnY                          = 192
 	namingRedoX, namingContX, namingOKX = 352, 408, 464
-	namingBtnW, namingOKW, namingBtnH  = 48, 64, 16
+	namingBtnW, namingOKW, namingBtnH   = 48, 64, 16
 
-	namingInitialsY   = 216 // 聲母列（`cs:1871` 的 42 bytes，屬性 0F01）
-	namingInitialsX   = 200
+	namingInitialsY = 216 // 聲母列（`cs:1871` 的 42 bytes，屬性 0F01）
+	namingInitialsX = 200
 	// 聲母列的黑底：熱區 0x25 的矩形（docs/spec/104 §1.1）。
 	namingInitialsBoxX = 200
 	namingInitialsBoxW = 336
 	namingInitialsBoxH = 16
-	namingInitialHotX = 216 // 熱區 0x25：(216,216) 320×16，每個聲母 32 px
+	namingInitialHotX  = 216 // 熱區 0x25：(216,216) 320×16，每個聲母 32 px
 
 	// 選字格：`sub_1928A` 起點 (210,238)、格距 20、16 欄 × 6 列。
 	namingGridX, namingGridY, namingGridPitch = 210, 238, 20
@@ -61,8 +61,8 @@ const (
 	namingNextPageX            = 400
 
 	namingPageChars = namingGridCols * namingGridRows // 96
-	namingMaxPage   = 0x13BA / 2                     // `sub_1908D` 的上限（字索引）
-	namingMaxIndex  = 0x1478 / 2                     // `sub_192E3` 的上限
+	namingMaxPage   = 0x13BA / 2                      // `sub_1908D` 的上限（字索引）
+	namingMaxIndex  = 0x1478 / 2                      // `sub_192E3` 的上限
 	namingCells     = 6
 	namingPortraits = 0x93 // 肖像 0..0x92（`sub_1912D`／`sub_19144`）
 )
@@ -74,16 +74,16 @@ var namingInitials = []rune("ㄅㄈㄋㄍㄐㄑㄓㄕㄙㄨ")
 type namingHotspot int
 
 const (
-	namingNone namingHotspot = iota
-	namingOK                 // 0x20 確定
-	namingRedo               // 0x21 重來：清掉目前格、退一格（`sub_1905E`）
-	namingCont               // 0x22 繼續：清掉目前格、跳下一格（`sub_1906E`）
-	namingPrevPage           // 0x23
-	namingNextPage           // 0x24
-	namingInitial            // 0x25 聲母列
-	namingPick               // 0x26 選字
-	namingPortraitPrev       // 0x27 前 ▲
-	namingPortraitNext       // 0x28 後 ▼
+	namingNone         namingHotspot = iota
+	namingOK                         // 0x20 確定
+	namingRedo                       // 0x21 重來：清掉目前格、退一格（`sub_1905E`）
+	namingCont                       // 0x22 繼續：清掉目前格、跳下一格（`sub_1906E`）
+	namingPrevPage                   // 0x23
+	namingNextPage                   // 0x24
+	namingInitial                    // 0x25 聲母列
+	namingPick                       // 0x26 選字
+	namingPortraitPrev               // 0x27 前 ▲
+	namingPortraitNext               // 0x28 後 ▼
 )
 
 // namingModel 是視窗的狀態。

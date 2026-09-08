@@ -1,9 +1,41 @@
 package tactical
 
 import (
+	"fmt"
 	"os"
 	"testing"
 )
+
+// 原始 6A／8A opcode 的比較方向來自 IDA 0001A5BD jnb／0001A5C6 jbe。
+// 使用實際查詢與退卻命令，包含相等及 byte 上下界，避免只測內部布林值。
+func TestScriptUnsignedInclusiveBranch(t *testing.T) {
+	for _, tc := range []struct {
+		op              byte
+		value, argument int
+		jump            bool
+	}{
+		{0x6a, 0, 100, false}, {0x6a, 99, 100, false},
+		{0x6a, 100, 100, true}, {0x6a, 101, 100, true}, {0x6a, 255, 100, true},
+		{0x8a, 0, 100, true}, {0x8a, 99, 100, true},
+		{0x8a, 100, 100, true}, {0x8a, 101, 100, false}, {0x8a, 255, 100, false},
+		{0x6a, 0, 0, true}, {0x8a, 0, 0, true},
+		{0x6a, 255, 255, true}, {0x8a, 255, 255, true},
+	} {
+		for side := 0; side < 2; side++ {
+			t.Run(fmt.Sprintf("%02x/%d/%d/side%d", tc.op, tc.value, tc.argument, side), func(t *testing.T) {
+				b := newTestBattle(flatField())
+				b.Sides[side].Soldiers[0].HP = tc.value
+				s := NewScript([]byte{18, 0, tc.op, byte(tc.argument), 0, 4, 0, 255, 0xe3, 5}, side)
+				s.Step(b)
+				s.Step(b)
+				s.Step(b)
+				if retreat := b.Sides[side].Soldiers[1].Next == Retreat; retreat != tc.jump {
+					t.Fatalf("原版分支跳躍=%v，實際退卻=%v", tc.jump, retreat)
+				}
+			})
+		}
+	}
+}
 
 // runQuery 跑一個查詢指令再跑一個「等於 want 就下退卻」的分支，
 // 回報分支有沒有成立——用得到的行為去檢查 cond，不用暴露內部欄位。

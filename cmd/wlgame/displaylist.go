@@ -20,11 +20,11 @@ import (
 // 顯示清單實際用到的調色盤索引。
 const (
 	// 凹槽：可輸入／可選的欄位（四槽視窗的日期欄、ＹＥＳ／ＮＯ 的兩格）。
-	dlSunkenFill              = 0x05
-	dlSunkenOuterLight        = 0x02
-	dlSunkenOuterDark         = 0x00
-	dlSunkenInnerLight        = 0x0D
-	dlSunkenInnerDark         = 0x04
+	dlSunkenFill       = 0x05
+	dlSunkenOuterLight = 0x02
+	dlSunkenOuterDark  = 0x00
+	dlSunkenInnerLight = 0x0D
+	dlSunkenInnerDark  = 0x04
 
 	// 按鈕：「確定」「自定」「重來」「繼續」。
 	dlButtonFill  = 0x07

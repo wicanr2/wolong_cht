@@ -8,13 +8,14 @@ package main
 // （64 × 62 的格、立體的層、陣形位置、鎖敵）。
 
 import (
-	"strings"
+	"fmt"
 	"github.com/wicanr2/wolong_cht/internal/assets/world"
 	"github.com/wicanr2/wolong_cht/internal/battlesetup"
 	"github.com/wicanr2/wolong_cht/internal/rules/speed"
-	"fmt"
 	"image/color"
 	"log"
+	"strings"
+	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
@@ -84,7 +85,7 @@ func (g *game) updateBattle() {
 		// 右鍵先過熱區表（docs/spec/32 §2.1）。放在對白推進之前，
 		// 因為原版的右鍵分派（0x1C01D）不看對白狀態。
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) {
-			if x, y := ebiten.CursorPosition(); handleBattleRightClick(b, x, y) {
+			if x, y := cursorPosition(); handleBattleRightClick(b, x, y) {
 				return
 			}
 		}
@@ -104,7 +105,7 @@ func (g *game) updateBattle() {
 					g.issueBattleCommand(b, i)
 				}
 			}
-			if x, y := ebiten.CursorPosition(); inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+			if x, y := cursorPosition(); inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 				if g.view != nil && l.SideMiniMap.containsPoint(x, y) {
 					g.view.SetCameraFromMiniMap(x, y)
 					return
@@ -156,7 +157,7 @@ func (g *game) updateBattle() {
 		return
 	}
 	clearBattleTalkSession(g, b)
-	// 打完了，按 Enter 或**點一下滑鼠**結算回戰略層（docs/spec/89 §3）。
+	// 結果頁預設關閉，直接結算；開啟時到期或新輸入才返回（docs/spec/89 §7）。
 	//
 	// ⚠ 用 `JustPressed` 不是 `Pressed`：戰鬥是用滑鼠下令的，
 	// 最後一個指令那一下如果還按著，用「持續按著」判定會讓結果畫面
@@ -164,11 +165,12 @@ func (g *game) updateBattle() {
 	clicked := inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) ||
 		inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) ||
 		inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonMiddle)
-	if pressed(ebiten.KeyEnter) || pressed(ebiten.KeySpace) || clicked {
+	if g.battleResult.ready(b, g.battleResultSeconds, time.Now(), pressed(ebiten.KeyEnter) || pressed(ebiten.KeySpace) || clicked) {
 		if ev := g.world.ResolvePending(g.rng); ev != nil {
 			g.setEvent(battleLine(g, *ev))
 		}
 		g.view = nil
+		g.battleResult = battleResultTimer{}
 	}
 }
 
@@ -335,12 +337,12 @@ func (g *game) drawBattle(screen *ebiten.Image) {
 }
 
 // drawBattleResult 是戰術戰鬥完成後、回寫戰略層之前的明確結果畫面。
-// 這個停留點對應原版「戰鬥結束後仍先顯示結果，玩家確認才返回」的
-// 玩家路徑；按 Enter 仍由 updateBattle 呼叫 ResolvePending。
+// 原版直接返回；這是可選的 remake 摘要頁，預設關閉，到期自動返回。
 func (g *game) drawBattleResult(screen *ebiten.Image, b *tactical.Battle, p *state.Pending) {
-	if !b.Done {
+	if !b.Done || g.battleResultSeconds <= 0 {
 		return
 	}
+	g.battleResult.show(b, time.Now())
 	o := b.Result()
 	const x, y, w, h = 72, 104, 496, 160
 	g.chrome.Window(screen, x, y, w, h, chrome.Menu)
@@ -374,7 +376,9 @@ func (g *game) drawBattleResult(screen *ebiten.Image, b *tactical.Battle, p *sta
 		g.td.Draw(screen, fmt.Sprintf("攻城損害　%d", b.CityDamage(p.CityWall)),
 			x+chrome.Tile+4, y+chrome.Tile+3*(textdraw.GlyphH+8), dim)
 	}
-	g.td.Draw(screen, "Enter 或點一下　回到戰略畫面", x+chrome.Tile+4,
+	remaining := time.Duration(g.battleResultSeconds)*time.Second - time.Since(g.battleResult.shownAt)
+	seconds := max(0, int((remaining+time.Second-1)/time.Second))
+	g.td.Draw(screen, fmt.Sprintf("%d 秒後自動返回　可點擊提前關閉", seconds), x+chrome.Tile+4,
 		y+h-chrome.Tile-textdraw.GlyphH, dim)
 }
 
@@ -1150,11 +1154,17 @@ func (g *game) demoBattle(siege bool, f siegeFixture) {
 // 由那兩支軍團的勢力決定，戰場要不要轉 180 度也跟著（docs/spec/56 §1）。
 func (g *game) demoBattleWithCorps(siege bool, siegeNode, att, def, steps int) {
 	if att >= len(g.world.Corps) || def >= len(g.world.Corps) || att == def {
+		if g.battleExactFixture {
+			log.Fatal("精確戰況的軍團編號超出範圍")
+		}
 		g.setEvent("-siege-corps 的編號超出範圍")
 		return
 	}
 	me, foe := &g.world.Corps[att], &g.world.Corps[def]
 	if !me.Alive || !foe.Alive {
+		if g.battleExactFixture {
+			log.Fatal("精確戰況指到不存在的軍團")
+		}
 		g.setEvent("-siege-corps 指到的軍團不存在（用 -list-corps 看有哪些）")
 		return
 	}
@@ -1167,9 +1177,27 @@ func (g *game) demoBattleWithCorps(siege bool, siegeNode, att, def, steps int) {
 func (g *game) stageEncounter(siege bool, siegeNode, steps int, me, foe *state.Corps) {
 	// 擺位與遭遇的規則在 `internal/battlesetup`，手機版的驗收路徑用同一支。
 	att, def := corpsIndex(g.world, me), corpsIndex(g.world, foe)
-	battlesetup.StageEncounter(g.world, g.rng, battlesetup.StageOptions{
-		Siege: siege, Node: siegeNode, Attacker: att, Defender: def,
-	})
+	if g.battleExactFixture {
+		if att < 0 || def < 0 {
+			log.Fatal("精確戰況必須指定既有軍團")
+		}
+		mode, oldNode := combat.Field, me.Node
+		if siege {
+			if siegeNode < 0 || siegeNode >= len(g.world.Cities) {
+				log.Fatal("精確攻城需要有效 -siege-node")
+			}
+			mode, me.Node = combat.Siege, siegeNode
+		}
+		err := g.world.StageBattle(att, def, mode, g.rng)
+		me.Node = oldNode
+		if err != nil {
+			log.Fatalf("精確戰況初始化失敗：%v", err)
+		}
+	} else {
+		battlesetup.StageEncounter(g.world, g.rng, battlesetup.StageOptions{
+			Siege: siege, Node: siegeNode, Attacker: att, Defender: def,
+		})
+	}
 
 	if g.battleActive() {
 		p := g.world.PendingBattle()

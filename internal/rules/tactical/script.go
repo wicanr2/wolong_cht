@@ -48,8 +48,8 @@ const (
 	cmpAlways = 0
 	cmpEQ     = 1
 	cmpNE     = 2
-	cmpLT     = 3
-	cmpGT     = 4
+	cmpGE     = 3 // 0001A5BD jnb：無號大於等於
+	cmpLE     = 4 // 0001A5C6 jbe：無號小於等於
 )
 
 // kindStride 是指令 13 挑隊時乘的倍數。與兵種編碼同源（兵種 × 18）。
@@ -269,10 +269,10 @@ func (s *Script) branch(par, arg int) {
 		take = s.cond == arg
 	case cmpNE:
 		take = s.cond != arg
-	case cmpLT:
-		take = s.cond < arg
-	case cmpGT:
-		take = s.cond > arg
+	case cmpGE:
+		take = s.cond >= arg
+	case cmpLE:
+		take = s.cond <= arg
 	}
 	if s.pc+1 >= len(s.code) || s.code[s.pc] != 0 {
 		// 後面那個 word 不是目標（低位元組非 0）——原版也是這樣就不跳。

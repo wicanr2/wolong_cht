@@ -38,8 +38,8 @@ func TestSystemMenuKeepsOriginalSixRowsInPlace(t *testing.T) {
 		t.Errorf("remake 的兩列不在最後：lordCorps=%d damageReport=%d",
 			sysRowLordCorps, sysRowDamageReport)
 	}
-	if sysRows != 8 {
-		t.Errorf("列數 ＝ %d，預期 8", sysRows)
+	if sysRows != 9 {
+		t.Errorf("列數 ＝ %d，預期 9", sysRows)
 	}
 	// 原版那六列的值格 y 座標不能因為加列而改變。
 	for k := 0; k < 6; k++ {

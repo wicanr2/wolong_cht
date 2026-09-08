@@ -119,8 +119,8 @@ func TestOfficialLineUsesVariantGroup(t *testing.T) {
 	for _, tc := range []struct {
 		base, variant, want int
 	}{
-		{governorAssignedTalk, 3, 457},  // 「遵命。」
-		{governorAssignedTalk, 7, 461},  // 「我立刻前往。」
+		{governorAssignedTalk, 3, 457}, // 「遵命。」
+		{governorAssignedTalk, 7, 461}, // 「我立刻前往。」
 		{diplomatAssignedTalk, 3, 465},
 		{governorDismissedTalk, 0, 502},
 		{diplomatDismissedTalk, 0, 510},

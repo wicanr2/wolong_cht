@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/wicanr2/wolong_cht/internal/ui/isoview"
 	"encoding/json"
+	"github.com/wicanr2/wolong_cht/internal/ui/isoview"
 	"os"
 	"strings"
 	"testing"

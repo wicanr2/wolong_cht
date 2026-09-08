@@ -91,7 +91,7 @@ func (g *game) updateMapClick() bool {
 	if !inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		return false
 	}
-	x, y := ebiten.CursorPosition()
+	x, y := cursorPosition()
 	col, row, ok := g.mapPickTileAt(x, y)
 	if !ok {
 		return false
@@ -132,6 +132,7 @@ func (g *game) openCorpsOnTile(rows []int) {
 	if len(rows) == 0 {
 		return
 	}
+	g.marchReturn = func() { g.openCorpsOnTile(rows) }
 	g.openCorpsListWith(rows, "選擇要看的軍團　Enter 選取／決定　ESC 取消",
 		func(i int) bool {
 			g.enterCorpsFromMap(i)

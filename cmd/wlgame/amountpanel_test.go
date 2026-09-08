@@ -10,11 +10,11 @@ import (
 // 只驗事件那一組的話，寫死成常數也會通過。
 func TestAmountPanelGeometryFollowsAnchor(t *testing.T) {
 	for _, tc := range []struct {
-		name             string
-		ax, ay           int
-		panelX, panelY   int
-		firstX, firstY   int
-		lastX, lastY     int
+		name           string
+		ax, ay         int
+		panelX, panelY int
+		firstX, firstY int
+		lastX, lastY   int
 	}{
 		{"事件 2／3／4／5", amountAnchorEventX, amountAnchorEventY,
 			80, 176, 88, 200, 168, 232},

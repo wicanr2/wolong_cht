@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/wicanr2/wolong_cht/internal/rules/speed"
 	"fmt"
+	"github.com/wicanr2/wolong_cht/internal/rules/speed"
 	"image"
 	"image/color"
 	"log"
@@ -85,9 +85,9 @@ const (
 	strategyCommandTextW = 32
 	// 命中判定照原版的 sub_161CA：索引 ＝ (x − 24) ÷ 48，
 	// 所以第 n 格是 [24 + 48n, 72 + 48n)，Y 只命中 40–56 的文字列。
-	strategyCommandHitX        = 24
-	strategyCommandHitY        = strategyCommandY + chrome.Tile
-	strategyCommandHitH        = strategyCommandH - 2*chrome.Tile
+	strategyCommandHitX = 24
+	strategyCommandHitY = strategyCommandY + chrome.Tile
+	strategyCommandHitH = strategyCommandH - 2*chrome.Tile
 	// 自勢力情報視窗的內部座標，出自 docs/re/47 §4.2（相對視窗左上角 432,192）：
 	//
 	//	底圖（頭像＋標籤）(440,200)   sub_10337(dx=0x1B8, bx=0xC8)
@@ -114,29 +114,29 @@ const (
 	// 標籤與名字之間那條垂直線：顯示清單 op 06，(560,208) 長 48、顏色 0x0F。
 	strategyInfoDividerXOffset = 128 // 560 − 432
 	strategyInfoDividerH       = 48
-	strategyTrustLabelX      = 16  // 448 − 432
-	strategyTrustLabelY      = 80  // 272 − 192
-	strategyTrustSlotX       = 16  // 448 − 432
-	strategyTrustSlotY       = 96  // 288 − 192
-	strategyTrustSlotW       = 176 // 623 − 448 + 1
-	strategyTrustSlotH       = 10
-	strategyTrustYOffset     = 100 // 292 − 192
-	strategyTrustXOffset     = 24  // 456 − 432
-	strategyTrustMaxW        = 160
+	strategyTrustLabelX        = 16  // 448 − 432
+	strategyTrustLabelY        = 80  // 272 − 192
+	strategyTrustSlotX         = 16  // 448 − 432
+	strategyTrustSlotY         = 96  // 288 − 192
+	strategyTrustSlotW         = 176 // 623 − 448 + 1
+	strategyTrustSlotH         = 10
+	strategyTrustYOffset       = 100 // 292 − 192
+	strategyTrustXOffset       = 24  // 456 − 432
+	strategyTrustMaxW          = 160
 	// 量條高 2 px：`sub_10AAA` 兩次呼叫都帶 `ch = 2`。滿長 160 來自
 	// `sub_15F27` 沒有重載的 `ch = 0A0h`（cx ＝ 總長<<8 ｜ 已填長度）。
-	strategyTrustBarH = 2
-	strategyResourceBoxX     = 16  // 448 − 432
-	strategyResourceBoxY     = 112 // 304 − 192
-	strategyResourceBoxW     = 176
-	strategyResourceBoxH     = 80
-	strategyResourceLabelX   = 24  // 456 − 432
-	strategyFundsYOffset     = 120 // 312 − 192
-	strategyFundsXOffset     = 128 // 560 − 432
-	strategyReserveYOffset   = 136 // 328 − 192
-	strategyReserveXOffset   = 136 // 568 − 432
-	strategyIconXOffset      = 96  // 528 − 432：四張 24×16 圖形的欄
-	strategyResourceRowStep  = 16
+	strategyTrustBarH       = 2
+	strategyResourceBoxX    = 16  // 448 − 432
+	strategyResourceBoxY    = 112 // 304 − 192
+	strategyResourceBoxW    = 176
+	strategyResourceBoxH    = 80
+	strategyResourceLabelX  = 24  // 456 − 432
+	strategyFundsYOffset    = 120 // 312 − 192
+	strategyFundsXOffset    = 128 // 560 − 432
+	strategyReserveYOffset  = 136 // 328 − 192
+	strategyReserveXOffset  = 136 // 568 − 432
+	strategyIconXOffset     = 96  // 528 − 432：四張 24×16 圖形的欄
+	strategyResourceRowStep = 16
 	// 原版是資金 7 位、預備兵 6 位，兩者右端都對齊 x=616。
 	strategyFundsDigits   = 7
 	strategyReserveDigits = 6
@@ -145,8 +145,8 @@ const (
 	// 目前與原版不一致（`army.MenPerUnit` 是 1000，等於把存值當人數扣），
 	// 那要另外開規格處理，不在畫面這一輪動它（docs/re/47 §5）。
 	strategyReserveMenPerPoint = 10
-	strategyNumberSlots   = strategyFundsDigits
-	strategyNumberW       = strategyNumberSlots * textdraw.HalfW
+	strategyNumberSlots        = strategyFundsDigits
+	strategyNumberW            = strategyNumberSlots * textdraw.HalfW
 )
 
 // naturalCommandLabels 是原版 `cs:6181h` 那一串裡的八個詞。
@@ -526,10 +526,10 @@ func (g *game) drawNaturalStrategyHUD(screen *ebiten.Image) {
 const (
 	sysWinX, sysWinY = 208, 112
 	// ⚠ **原版是 192（六列）。** remake 多了「主君編成」（docs/spec/76）
-	// 與「損害報告」（docs/spec/89）兩列，視窗因此加高兩個列距。
+	// 與「損害報告」、「戰後結果」（docs/spec/89），視窗因此加高三個列距。
 	// 代價寫在 docs/playtest/39：系統選單開著時不再與原版逐像素相同，
 	// 比的是**原版 192 高的那一半**。
-	sysWinW, sysWinH = 208, 192+2*sysRowStep
+	sysWinW, sysWinH = 208, 192 + 3*sysRowStep
 
 	sysTitleX, sysTitleY = 228, 124
 	sysRuleX, sysRuleY   = 216, 142
@@ -543,14 +543,14 @@ const (
 	sysValueW, sysValueH       = 48, 16
 	sysRowStep                 = 24
 	// ⚠ 原版六列；第 7 列是「主君編成」（docs/spec/76）、
-	// 第 8 列是「損害報告」（docs/spec/89），兩列都是 remake 加的。
-	sysRows = 8
+	// 第 8 列是「損害報告」、第 9 列是「戰後結果」（docs/spec/89），都是 remake 選項。
+	sysRows = 9
 )
 
 // sysMenuLabels 是六列的標籤，取自顯示清單場景 2 的字串。
 var sysMenuLabels = [sysRows]string{
 	"資料儲存", "畫面模式", "音　　效", "戰略速度", "戰術速度", "遊戲結束",
-	"主君編成", "損害報告"}
+	"主君編成", "損害報告", "戰後結果"}
 
 // 系統選單六列的索引。原版的六個 handler 沒讀（docs/re/55 §4），
 // 所以**哪一列做什麼是 remake 自己接的**，照標籤的字面意思。
@@ -572,6 +572,7 @@ const (
 	// **原版戰術結束後沒有損害報告**，那一行是 remake 的驗收資訊，
 	// 所以預設關著。
 	sysRowDamageReport
+	sysRowBattleResult
 )
 
 // videoModeLabels 是「畫面模式」那一列的兩個選項（原版字串表 `ds:6002h`）。
@@ -615,6 +616,7 @@ func (g *game) cycleSpeed(tactical bool, forward bool) {
 		step = speed.Levels - 1
 	}
 	*p = (clamp(*p, 0, speed.Levels-1) + step) % speed.Levels
+	g.saveDesktopPreferences()
 }
 
 // adjustSpeed 是 remake 額外的細調（＋／− 鍵），不是原版行為。
@@ -625,6 +627,7 @@ func (g *game) adjustSpeed(tactical bool, delta int) {
 		p = &g.tacticalSpeed
 	}
 	*p = clamp(*p-delta, 0, speed.Levels-1)
+	g.saveDesktopPreferences()
 }
 
 // dispatchSystemRow 處理點到系統選單某一列。left ＝ 左鍵。
@@ -644,11 +647,17 @@ func (g *game) dispatchSystemRow(row int, left bool) {
 		// ⚠ 左右鍵都是 toggle：這一列只有兩個值，原版那套
 		// 「左鍵下一檔／右鍵上一檔」在兩個值上沒有意義。
 		g.lordCorps = !g.lordCorps
+		g.saveDesktopPreferences()
+	case sysRowBattleResult:
+		g.cycleBattleResultDuration()
+		g.saveDesktopPreferences()
 	case sysRowDamageReport:
 		g.damageReport = !g.damageReport
+		g.saveDesktopPreferences()
 	case sysRowVideo:
 		// ⚠ 左右鍵都是 toggle：只有兩個值（docs/spec/152）。
 		g.videoLCD = !g.videoLCD
+		g.saveDesktopPreferences()
 	case sysRowSave:
 		g.beginSaveUI(saveWrite)
 	case sysRowQuit:
@@ -740,7 +749,6 @@ func (g *game) setSoundOption(v int) {
 	g.sound.SetEnabled(true)
 }
 
-
 // cycleSound 換下一個選項。**原版是環狀遞增**（`sub_16062`：加一、
 // 到頂繞回 0，docs/re/55 §4），所以左鍵走 ＯＦＦ → TYPE 1 → … → TYPE 4 → ＯＦＦ。
 //
@@ -758,6 +766,7 @@ func (g *game) cycleSound(left bool) {
 		v = (v + n - 1) % n
 	}
 	g.setSoundOption(v)
+	g.saveDesktopPreferences()
 }
 
 // drawSystemWindow 畫系統選單（docs/spec/13 §2.6）。
@@ -796,7 +805,7 @@ func (g *game) drawSystemWindow(dst *ebiten.Image) {
 	values := [sysRows]string{"ＯＫ", videoModeLabels[videoModeIndex(g.videoLCD)], g.soundValue(),
 		speed.Labels[clamp(g.speed, 0, speed.Levels-1)],
 		speed.Labels[clamp(g.tacticalSpeed, 0, speed.Levels-1)],
-		"ＯＫ", lordCorpsValue(g.lordCorps), damageReportValue(g.damageReport)}
+		"ＯＫ", lordCorpsValue(g.lordCorps), damageReportValue(g.damageReport), battleResultValue(g.battleResultSeconds)}
 	for k := 0; k < sysRows; k++ {
 		dy := k * sysRowStep
 		vector.DrawFilledRect(dst, sysLabelBoxX, float32(sysLabelBoxY+dy),

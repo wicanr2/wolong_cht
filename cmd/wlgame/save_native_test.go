@@ -5,11 +5,66 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/wicanr2/wolong_cht/internal/assets/library"
 	"github.com/wicanr2/wolong_cht/internal/savepath"
 	"github.com/wicanr2/wolong_cht/internal/state"
 )
 
 const nativeScenario = "../../workplace/orig/dosv/SINARIO.DAT"
+
+func TestLauncherLoadRestoresNativeRuntime(t *testing.T) {
+	if _, err := os.Stat(nativeScenario); err != nil {
+		t.Skip("缺少原版資料")
+	}
+	w, err := state.LoadScenario(nativeScenario, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	w.Player = 0
+	snap := w.TakeSnapshot()
+	snap.CityCursor = 91
+	snap.Routes = map[int][][2]int{2: {{5, 6}, {7, 8}}}
+	if err := w.Restore(snap); err != nil {
+		t.Fatal(err)
+	}
+	save := filepath.Join(t.TempDir(), "SAVE.DAT")
+	writer := &game{world: w, sourceFile: nativeScenario, saveBase: nativeScenario, saveFile: save}
+	if err := writer.writeSave(1); err != nil {
+		t.Fatal(err)
+	}
+	lib, err := library.Load(filepath.Dir(nativeScenario))
+	if err != nil {
+		t.Fatal(err)
+	}
+	reader := &game{lib: lib, origDir: filepath.Dir(nativeScenario), sourceFile: nativeScenario, saveFile: save,
+		launcher: &launcherModel{phase: launcherLoad}, saveUI: saveUIState{active: true, action: saveRead}}
+	if err := reader.applyLauncherResult(launcherResult{kind: launcherStartLoad, slot: 1}); err != nil {
+		t.Fatal(err)
+	}
+	if reader.launcher != nil || reader.saveUI.active || reader.world == nil {
+		t.Fatalf("讀檔未完成：%#v", reader.launcher)
+	}
+	got := reader.world.TakeSnapshot()
+	if got.CityCursor != 91 || len(got.Routes[2]) != 2 {
+		t.Fatalf("首頁讀檔遺失原生狀態：cursor=%d routes=%v", got.CityCursor, got.Routes)
+	}
+	nativePath, err := savepath.NativePath(save, 1)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(nativePath, []byte("broken native save"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	previous := reader.world
+	reader.launcher = &launcherModel{phase: launcherLoad}
+	reader.saveUI = saveUIState{active: true, action: saveRead}
+	if err := reader.applyLauncherResult(launcherResult{kind: launcherStartLoad, slot: 1}); err != nil {
+		t.Fatal(err)
+	}
+	if reader.launcher == nil || reader.launcher.notice == "" || !reader.saveUI.active || reader.world != previous {
+		t.Fatal("原生檔損壞時應保留原世界及選槽錯誤，不可降級讀取")
+	}
+}
 
 // 存檔要一次寫兩份：原版格式（拿去 DOSBox 的）與原生檔（遊戲讀的）。
 // 讀檔優先原生檔，而且 routes／cityCursor 那些原版裝不下的狀態要活著。
@@ -35,8 +90,10 @@ func TestSaveWritesBothFormatsAndReadsBackNative(t *testing.T) {
 		saveBase:   nativeScenario,
 		saveFile:   filepath.Join(dir, "SAVE.DAT"),
 	}
-	if err := g.writeSave(1); err != nil {
-		t.Fatal(err)
+	g.saveUI = saveUIState{active: true, action: saveWrite}
+	g.clickSaveSlot(1)
+	if g.saveUI.active {
+		t.Fatalf("桌面點第二槽未直接完成存檔：%s", g.lastEvent)
 	}
 
 	// ① 原版格式那一份在，而且大小對得上（四個 22,208 B 區塊）。

@@ -3,6 +3,10 @@
 **狀態：CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。
 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。**
 
+2026-09-08 訂正：此前首頁 startWorld 未接原生優先，只有遊戲內讀檔符合。
+已在 v.1.0.5 修正兩入口共用讀取，窄狀態測試與正常 GUI 證據見
+[155](155-desktop-launcher-input.md) 及 [playtest/109](../playtest/109-desktop-launcher-fix.md)。
+
 - 日期：2026-08-14
 - 出處：[`docs/formats/08`](../formats/08-sinario-save.md)（原版區塊版面）、
   `internal/state/state.go`（現行載入／寫回）、`internal/savepath`（路徑邊界）

@@ -34,8 +34,8 @@ const (
 	cityKindX            = 192
 	cityLordX, cityLordY = 192, 304
 
-	cityLabelX = 128
-	cityRowY   = 320
+	cityLabelX  = 128
+	cityRowY    = 320
 	cityRowStep = 16
 	cityRows    = 4
 

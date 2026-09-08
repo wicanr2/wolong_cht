@@ -51,7 +51,15 @@
 | [`docs/playtest/105-advisor-naming-parity.md`](playtest/105-advisor-naming-parity.md) | 105 — 軍師命名視窗：視窗內收到只剩原版游標，抓到五個缺陷 | 通過。 | 2026-09-07 |
 | [`docs/playtest/106-launcher-parity.md`](playtest/106-launcher-parity.md) | 106 — 啟動殼層的前三頁：背景 0 px，三個版面都是 remake 自己設計的 | 進行中（已歸因）。 | 2026-09-07 |
 | [`docs/playtest/107-cursor-parity.md`](playtest/107-cursor-parity.md) | 107 — 原版游標接上對拍：orig-help7b 整張 0 / 256,000 | 通過。 | 2026-09-07 |
+| [`docs/playtest/108-appimage-dosgolem-input-audit.md`](playtest/108-appimage-dosgolem-input-audit.md) | 108 — AppImage 與 dosgolem 正常滑鼠操作抽驗 | 未通過操作一致性驗收。 | 2026-09-07 |
+| [`docs/playtest/109-desktop-launcher-fix.md`](playtest/109-desktop-launcher-fix.md) | 109 — 桌面選章與兩段確認修正 | 兩項修正已通過 AppImage 正常操作驗證；Windows／macOS 封包檢查通過，原生 GUI 未驗。 | 2026-09-07 |
 | [`docs/playtest/11-event6-original-fixture.md`](playtest/11-event6-original-fixture.md) | 11 — 原版事件 6 fixture oracle | 事件 6 主要結果畫面已由原版 fixture 證實；不是自然長程存檔，也不封閉次要 formatter。 | 2026-08-10 |
+| [`docs/playtest/110-desktop-march-restart.md`](playtest/110-desktop-march-restart.md) | 110 — 行軍指示返回清單與行軍中重啟 | 返回流程與行軍中重啟抽驗通過；整體桌面體驗仍未完成。 | 2026-09-08 |
+| [`docs/playtest/111-desktop-map-scroll.md`](playtest/111-desktop-map-scroll.md) | 111 — 桌面滑鼠外推捲動與行軍選點 | v.1.0.11-20260908 AppImage 正常操作通過；原生 Windows／macOS 未驗。 | 2026-09-08 |
+| [`docs/playtest/112-desktop-battle-result-options.md`](playtest/112-desktop-battle-result-options.md) | 112 — 戰後結果頁預設關閉與限時摘要 | v.1.0.12-20260908 AppImage 正常操作通過；Windows／macOS 封包查核通過，原生 … | 2026-09-08 |
+| [`docs/playtest/113-desktop-polish.md`](playtest/113-desktop-polish.md) | 113 — 桌面設定記憶、戰後連續操作與畫面殘差歸因 | v.1.0.14-20260908 AppImage 桌面打磨抽驗與三平台封包查核通過；快速切焦仍有限制，Windo… | 2026-09-08 |
+| [`docs/playtest/114-focus-and-same-battle.md`](playtest/114-focus-and-same-battle.md) | 114 — 快速切焦與同一戰前資料的完整戰鬥重播 | 快速切焦修正已驗；完整戰況對拍未通過。 | 2026-09-08 |
+| [`docs/playtest/115-delegated-battle-cause.md`](playtest/115-delegated-battle-cause.md) | 115 — 呂布野戰勝負反轉：委任確認與 AI 分支根因 | 原版委任呂布勝已證實；戰術 AI 比較方向已修，完整逐拍仍有差異。 | 2026-09-08 |
 | [`docs/playtest/12-event3-same-state-parity.md`](playtest/12-event3-same-state-parity.md) | event3 同狀態對拍（2026-08-10） | 同狀態事件接線、原版式 composite、3×6 實際格位選取、TALK 五行分頁、 DOS/V 內框／按鍵 gl… | 2026-08-10 |
 | [`docs/playtest/13-dosv-natural-and-target-gui.md`](playtest/13-dosv-natural-and-target-gui.md) | DOS/V 自然畫面與目標平台 GUI 驗收 | 歷史驗收紀錄（2026-08-11，影片 oracle）。 | 2026-08-11 |
 | [`docs/playtest/14-m7-review.md`](playtest/14-m7-review.md) | M7 校訂文字人工審查報告 | 60 筆定案校訂已完成逐筆語意、marker、硬換行、寬度與代表畫面抽樣。 | 2026-08-11 |
@@ -145,6 +153,7 @@
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
 | [`docs/promo/combined.md`](promo/combined.md) | 合成推廣片：三支接成一支，全片鋪原版配樂 | 已產出並驗過媒體規格。這是發行目錄裡唯一的一支推廣片 | 2026-08-30 |
+| [`docs/promo/desktop-closeout-20260908.md`](promo/desktop-closeout-20260908.md) | 桌面收尾推廣片 | 56 秒桌面版已產出並檢查；留在本機，不隨公開引擎包上傳。 | 2026-09-08 |
 | [`docs/promo/dosv-adlib-and-tactical-review.md`](promo/dosv-adlib-and-tactical-review.md) | 推廣片原版 AdLib 與戰術骨架審查 | 歷史審查紀錄（2026-08-12）。 | 2026-08-12 |
 | [`docs/promo/dosv-live-comparison.md`](promo/dosv-live-comparison.md) | DOS/V 原版／remake 實機動態比較推廣片 | 已產出並驗過，已被 dosv-realmachine 取代。 | 2026-08-12 |
 | [`docs/promo/dosv-realmachine.md`](promo/dosv-realmachine.md) | 原版實機遊玩 × remake 實機的對照推廣片 | 已產出並驗過。原版側是自己跑的受控 DOSBox-X 實機遊玩， 只有戰術戰場那一格仍取自使用者提供的錄影。 | 2026-08-23 |
@@ -191,7 +200,7 @@
 | [`docs/re/39-remaining-unread.md`](re/39-remaining-unread.md) | 39 — 剩餘未讀函式的逐支歸屬 | 清單。 | 2026-08-14 |
 | [`docs/re/40-garrison-relief-request.md`](re/40-garrison-relief-request.md) | 40 — 據點求援與援軍派遣 | 整條鏈 confirmed（每一支都逐行讀過）。 sub_140C9 的距離算式裡有一處 | 2026-08-14 |
 | [`docs/re/42-leaf-functions.md`](re/42-leaf-functions.md) | 42 — 戰術以外的 47 支葉節點 | 47 支全部逐行讀過。四件事因此定案：INT 61h 是音源 TSR 的介面、 byte_198A6 的位元圖完整、… | 2026-08-14 |
-| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的） | 生成的清單，跑 tools/py.sh tools/re_open_questions.py 重出。 這一份不下結論… | 2026-09-07 |
+| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的） | 生成的清單，跑 tools/py.sh tools/re_open_questions.py 重出。 這一份不下結論… | 2026-09-08 |
 | [`docs/re/44-threat-and-reinforcement-ai.md`](re/44-threat-and-reinforcement-ai.md) | 44 — 威脅偵測與 AI 出兵：據點每 tick 掃一次 | 整條鏈逐行讀完。三件事定案：據點 +0x18 是佔用圖讀回來的軍團數、 +0x00 低 4 位是「哪幾個鄰居是敵方」… | 2026-08-14 |
 | [`docs/re/45-corps-command-mode.md`](re/45-corps-command-mode.md) | 45 — 軍團的三種指令模式：戰鬥指揮／委任／解體 | 軍團 +0x00 位元 2 定案 ＝ | 2026-08-14 |
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |
@@ -256,6 +265,7 @@
 | [`docs/release/12-full-20260902.md`](release/12-full-20260902.md) | 12 — 2026-09-02 四平台完整版（呂布流程的六項修正進包） | 已建置並驗過。⛔ 內含原版資產，不可外流。 | 2026-09-02 |
 | [`docs/release/13-full-20260906.md`](release/13-full-20260906.md) | 13 — 2026-09-06 四平台完整版（尋路、對白框、字型與狀態層對拍進包） | 已建置並驗過。⛔ 內含原版資產，不可外流。 | 2026-09-06 |
 | [`docs/release/14-full-20260907.md`](release/14-full-20260907.md) | 14 — 2026-09-07 四平台完整版（對拍推到啟動殼層，游標接上） | 已建置並驗過。⛔ 內含原版資產，不可外流。 | 2026-09-07 |
+| [`docs/release/15-desktop-closeout-20260908.md`](release/15-desktop-closeout-20260908.md) | 15 — 桌面版交付收尾 | 本機完整版、公開引擎包與推廣片已產出；GitHub 發布待登入恢復。 | 2026-09-08 |
 | [`docs/release/README-RELEASE.md`](release/README-RELEASE.md) | 臥龍傳 remake 可執行封裝 | 四平台完整包、Linux AppImage、推廣片與驗收紀錄已集中於 [dist-all](../../dist-a… | 2026-08-24 |
 | [`docs/spec/00-index.md`](spec/00-index.md) | 00 — 規格索引：已解的規則有沒有被實作、有沒有被驗過 | 索引。規格是 docs/re/（程式碼在哪）與 internal/（我們寫了什麼） 之間的那一層——它回答「這條規則… | 2026-08-14 |
 | [`docs/spec/10-city-tick.md`](spec/10-city-tick.md) | 10 — 據點整備、威脅偵測與求援 | CONFORMED。整條鏈已實作，並在 PC-98 原版的執行期記憶體上取樣驗過 （+0x18／+0x14 各 0/… | 2026-08-14 |
@@ -318,6 +328,9 @@
 | [`docs/spec/152-video-mode-lcd-palette.md`](spec/152-video-mode-lcd-palette.md) | 152 — 畫面模式：「１６色」／「液晶」是同一份調色盤的兩組 bank | CONFORMED。 | 2026-09-06 |
 | [`docs/spec/153-quit-confirm-menu.md`](spec/153-quit-confirm-menu.md) | 153 — 「遊戲結束」的確認是兩項選單，位置寫死在 (352, 272) | CONFORMED。 | 2026-09-06 |
 | [`docs/spec/154-mouse-cursor.md`](spec/154-mouse-cursor.md) | 154 — 原版的滑鼠游標：14×14 紅箭頭，畫不畫由 byte_20100 決定 | CONFORMED（對拍端）。 | 2026-09-07 |
+| [`docs/spec/155-desktop-launcher-input.md`](spec/155-desktop-launcher-input.md) | 155 — 桌面啟動流程的日期熱區與兩段確認 | CONFORMED。 | 2026-09-07 |
+| [`docs/spec/156-desktop-preferences.md`](spec/156-desktop-preferences.md) | 156 — 桌面偏好跨次啟動保存 | CONFORMED（2026-09-08，正式 AppImage 正常設定與重啟通過）。 | 2026-09-08 |
+| [`docs/spec/157-battle-script-comparisons.md`](spec/157-battle-script-comparisons.md) | 157 — 戰術 AI 分支比較方向勘誤 | CONFORMED。原版指令、單項隔離重播、正式兩條野戰重播及攻城回歸已通過。 | 2026-09-08 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |

@@ -5,7 +5,7 @@ package main
 // ⭐ 圖樣是**逐像素從原版擷取抽出來的**：拿有游標與沒游標的兩張同狀態
 // 截圖相減，兩個不同背景抽出來的結果逐格相同。
 //
-// ⚠ **只在對拍時畫**（`-cursor X,Y`）。遊玩端維持系統游標——原版在
+// 桌面捕捉模式也用此圖樣顯示虛擬游標；`-cursor X,Y` 可固定對拍位置。原版在
 // 「清單等待點選」時旗標是 0（畫面上沒有游標），而那到底是原版行為
 // 還是 oracle 的限制還沒定案（docs/spec/154 §4）。
 
@@ -44,9 +44,20 @@ const (
 )
 
 // drawMouseCursor 在 `cursorAt` 指定的位置畫那個箭頭。
-// **沒有指定就什麼都不畫**——這是對拍用的旗標，不是遊玩路徑。
+// 未指定固定位置時，捕捉模式使用正常玩家游標位置。
 func (g *game) drawMouseCursor(screen *ebiten.Image) {
-	if g == nil || g.cursorAt == nil {
+	if g == nil {
+		return
+	}
+	at := g.cursorAt
+	if at == nil && desktopPointer.active {
+		if g.desktopMapCursorVisible() {
+			return
+		}
+		x, y := cursorPosition()
+		at = &image.Point{X: x, Y: y}
+	}
+	if at == nil {
 		return
 	}
 	edge := g.paletteInk(arrowCursorEdge, chrome.Paper)
@@ -62,10 +73,30 @@ func (g *game) drawMouseCursor(screen *ebiten.Image) {
 				continue
 			}
 			vector.DrawFilledRect(screen,
-				float32(g.cursorAt.X+dx), float32(g.cursorAt.Y+dy),
+				float32(at.X+dx), float32(at.Y+dy),
 				1, 1, col, false)
 		}
 	}
+}
+
+// desktopMapCursorVisible 與可點選地圖共用熱區界線；其他 UI 維持箭頭。
+func (g *game) desktopMapCursorVisible() bool {
+	if g == nil || !desktopPointer.active || g.cursorAt != nil || g.world == nil ||
+		g.launcher != nil || g.battleActive() || g.hudOpen(hudSystem) ||
+		g.quitting || g.quitMenu.active || g.endingActive() || g.messageActive() {
+		return false
+	}
+	if !g.mapPickActive() && g.mapClickBusy() {
+		return false
+	}
+	x, y := cursorPosition()
+	if g.hudOpen(hudCommand) && x < strategyCommandW && y < strategyCommandY+strategyCommandH ||
+		g.hudOpen(hudMinimap) && x >= strategySidebarX && y < strategyFactionY ||
+		g.hudOpen(hudFaction) && x >= strategySidebarX && y >= strategyFactionY {
+		return false
+	}
+	_, _, ok := g.mapPickTileAt(x, y)
+	return ok
 }
 
 // cursorPoint 解析 `-cursor X,Y`。空字串回 nil（不畫）。

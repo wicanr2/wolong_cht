@@ -4,7 +4,7 @@ import "testing"
 
 // 開場擺位（`docs/spec/133`）：邊界那一欄 ＋ 亂數 Y。
 //
-// ⚠ **判準是值域與落點，不是逐兵全等**——Y 是亂數，兩邊的亂數不同源。
+// 相同亂數狀態另驗逐槽順序（spec/133 §6）。
 func spawnBattle(t *testing.T) *Battle {
 	t.Helper()
 	stack := make([][]int, Height)
@@ -35,6 +35,39 @@ func TestSpawnPutsEveryoneOnTheEdgeColumn(t *testing.T) {
 			}
 			if s.X != want[side] {
 				t.Fatalf("側 %d 第 %d 個兵在 X=%d，應為 %d", side, k, s.X, want[side])
+			}
+		}
+	}
+}
+
+type countedSpawnRandom struct{ calls int }
+
+func (r *countedSpawnRandom) Next() int {
+	v := r.calls
+	r.calls++
+	return v
+}
+
+func TestSpawnConsumesPlayerThenOpponentIncludingEmptySlots(t *testing.T) {
+	for _, player := range []int{AttackerSide, DefenderSide} {
+		b := spawnBattle(t)
+		b.SetPlayerSide(player)
+		// 空槽仍佔一個取數位置；後面的兵不能偷用它的亂數。
+		b.Sides[player].Soldiers[1].Alive = false
+		var r countedSpawnRandom
+		b.Spawn(&r)
+		if r.calls != 96 {
+			t.Fatalf("玩家側 %d：取數 %d 次，應為 96", player, r.calls)
+		}
+		for role, side := range [2]int{player, 1 - player} {
+			for k, u := range b.Sides[side].Soldiers {
+				if !u.Alive {
+					continue
+				}
+				want := 16 + ((role*48 + k) & 31)
+				if u.Y != want || u.Cmd != Attack || u.Next != Form {
+					t.Fatalf("玩家側 %d、角色 %d 槽 %d：Y=%d，令 %d/%d；預期 Y=%d、1/0", player, role, k, u.Y, u.Cmd, u.Next, want)
+				}
 			}
 		}
 	}

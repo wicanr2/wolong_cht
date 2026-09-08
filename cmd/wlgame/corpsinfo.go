@@ -41,12 +41,12 @@ const (
 	corpsDividerX   = 560
 	corpsDividerH   = 48
 
-	corpsTotalLabelX = 464
-	corpsTotalY      = 272
-	corpsTotalX      = 536
-	corpsSlashX      = 568
-	corpsMoraleX     = 584
-	corpsTotalDigits = 4
+	corpsTotalLabelX  = 464
+	corpsTotalY       = 272
+	corpsTotalX       = 536
+	corpsSlashX       = 568
+	corpsMoraleX      = 584
+	corpsTotalDigits  = 4
 	corpsMoraleDigits = 3
 
 	// 六個槽：標籤 → 兵種圖示 → 兵力。
@@ -165,7 +165,7 @@ func (g *game) drawCorpsInfo(screen *ebiten.Image) {
 	// ↓ remake 差異：原版按右鍵關掉，沒有這行字。
 	// ⚠ **選點期間不畫**：那時候面板不吃輸入（右鍵是選點的取消），
 	// 這行字會說謊（docs/spec/149 §1.3）。
-	if !g.mapPickActive() {
+	if !g.mapPickActive() && !g.marchMode.active && g.marchReturn == nil {
 		g.chrome.Window(screen, corpsHintX, corpsHintY, corpsHintW, corpsHintH, chrome.Menu)
 		g.td.Draw(screen, "ESC 關閉", corpsHintX+8,
 			corpsHintY+(corpsHintH-textdraw.GlyphH)/2, labelInk)

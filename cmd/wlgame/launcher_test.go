@@ -22,11 +22,9 @@ func TestLauncherNewGameSelectionReachesConfirmedWorldRequest(t *testing.T) {
 		t.Fatal("valid scenario player list was rejected")
 	}
 	// 選完劇本先進**勢力清單**，再進君主卡（docs/spec/79 §1）。
+	l.apply(launcherConfirm) // 第一次只反白。
 	if got := l.apply(launcherConfirm); got.kind != launcherNoResult || l.phase != launcherSelectPlayer {
 		t.Fatalf("faction confirm = %#v phase=%v", got, l.phase)
-	}
-	if got := l.apply(launcherConfirm); got.kind != launcherNoResult || l.phase != launcherGameConfirm {
-		t.Fatalf("player confirm = %#v phase=%v", got, l.phase)
 	}
 	got := l.apply(launcherConfirm)
 	if got.kind != launcherStartNewGame || got.scenario != 2 || got.player != 7 {
@@ -134,7 +132,6 @@ func TestLauncherConfirmHitRectsMatchDrawnRows(t *testing.T) {
 	}{
 		{launcherTitle, 152},
 		{launcherNewGameConfirm, 184},
-		{launcherGameConfirm, 192},
 	}
 	for _, tc := range checks {
 		if got := launcherRowRect(tc.phase, 0).Min.Y; got != tc.wantY {

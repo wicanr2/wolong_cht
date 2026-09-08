@@ -28,7 +28,6 @@ const (
 	// 原版的新遊戲是四層：ＹＥＳ／ＮＯ → 劇本 → **清單** → 君主卡。
 	launcherSelectFaction
 	launcherSelectPlayer
-	launcherGameConfirm
 	launcherLoad
 	// launcherLanguage 是 remake 自己的一頁（docs/spec/86 §4）。
 	// **不加在原版的系統選單裡**——那一頁是逐像素對過的（docs/playtest/39）。
@@ -89,19 +88,20 @@ type launcherSlot struct {
 }
 
 type launcherModel struct {
-	phase  launcherPhase
-	cursor  int
-	hasSave bool
-	scenario        int
-	scenarioName    string
-	players         []launcherPlayer
-	slots           []launcherSlot
-	confirmedPlayer int
-	confirmLord     string
-	notice          string
+	phase        launcherPhase
+	cursor       int
+	hasSave      bool
+	scenario     int
+	scenarioName string
+	players      []launcherPlayer
+	slots        []launcherSlot
+	notice       string
 	// factionTop 是勢力清單的捲動位置（docs/spec/79）。選中的是 cursor，
 	// 清單與君主卡**共用同一個 cursor**，不另存一份。
-	factionTop      int
+	factionTop int
+	// factionSelected 只記兩段式的反白階段；勢力仍唯一由 cursor 決定。
+	// 原版在反白後再次左鍵確認原列，右鍵只解除反白（docs/spec/155）。
+	factionSelected bool
 	pointerSeen     bool
 	pointerX        int
 	pointerY        int
@@ -126,7 +126,7 @@ func (l *launcherModel) rowCount() int {
 		return 2
 	case launcherLanguage:
 		return len(langpack.Choices)
-	case launcherNewGameConfirm, launcherGameConfirm:
+	case launcherNewGameConfirm:
 		return 2
 	case launcherScenario:
 		return 4
@@ -171,6 +171,9 @@ func (l *launcherModel) move(delta int) {
 		return
 	}
 	l.cursor += delta
+	if l.phase == launcherSelectFaction {
+		l.factionSelected = false
+	}
 	l.clampCursor()
 	// 勢力清單要讓選中的那一列留在畫面上（docs/spec/79 §2）。
 	// 君主卡的 ↑↓ 也算——退回清單時才不會停在看不到的位置。
@@ -201,7 +204,7 @@ func (l *launcherModel) selectPlayer(id int) bool {
 }
 
 // setScenarioPlayers 是讀取劇本摘要後的唯一接縫。這裡只保存可選玩家的
-// 顯示資料，正式 World 仍要在 launcherGameConfirm 確認後重新建立。
+// 顯示資料，正式 World 仍要在 君主卡確認後重新建立。
 func (l *launcherModel) setScenarioPlayers(index int, name string, players []launcherPlayer) bool {
 	if l.phase != launcherScenario || index < 0 || index >= 4 {
 		return false
@@ -217,10 +220,9 @@ func (l *launcherModel) setScenarioPlayers(index int, name string, players []lau
 	}
 	l.phase = launcherSelectFaction
 	l.factionTop = 0
+	l.factionSelected = false
 	return true
 }
-
-
 
 func (l *launcherModel) back() {
 	l.notice = ""
@@ -232,13 +234,16 @@ func (l *launcherModel) back() {
 		l.phase = launcherNewGameConfirm
 		l.cursor = 0
 	case launcherSelectFaction:
+		if l.factionSelected {
+			l.factionSelected = false
+			return
+		}
 		l.phase = launcherScenario
 		l.cursor = l.scenario
 	case launcherSelectPlayer:
 		// 君主卡退回清單——原版就是這一層（docs/re/73 §1）。
 		l.phase = launcherSelectFaction
-	case launcherGameConfirm:
-		l.phase = launcherSelectPlayer
+		l.factionSelected = false
 	}
 }
 
@@ -300,6 +305,10 @@ func (l *launcherModel) confirm() launcherResult {
 			l.notice = "玩家勢力無效"
 			return launcherResult{}
 		}
+		if !l.factionSelected {
+			l.factionSelected = true
+			return launcherResult{}
+		}
 		l.phase = launcherSelectPlayer
 		l.notice = ""
 	case launcherSelectPlayer:
@@ -307,24 +316,12 @@ func (l *launcherModel) confirm() launcherResult {
 			l.notice = "玩家勢力無效"
 			return launcherResult{}
 		}
-		l.confirmedPlayer = l.players[l.cursor].ID
-		l.confirmLord = l.players[l.cursor].Lord
-		l.phase = launcherGameConfirm
-		l.cursor = 0
-		l.notice = ""
-	case launcherGameConfirm:
-		if l.cursor == 0 {
-			if l.scenario < 0 || l.scenario >= 4 || l.confirmedPlayer < 0 {
-				l.notice = "玩家勢力無效"
-				return launcherResult{}
-			}
-			return launcherResult{
-				kind:     launcherStartNewGame,
-				scenario: l.scenario,
-				player:   l.confirmedPlayer,
-			}
+		if l.scenario < 0 || l.scenario >= 4 || l.players[l.cursor].ID < 0 {
+			l.notice = "玩家勢力無效"
+			return launcherResult{}
 		}
-		l.back()
+		l.notice = ""
+		return launcherResult{kind: launcherStartNewGame, scenario: l.scenario, player: l.players[l.cursor].ID}
 	case launcherLoad:
 		if l.cursor < 0 || l.cursor >= len(l.slots) || !l.slots[l.cursor].Available {
 			l.notice = "這個槽位沒有可讀取的資料"
@@ -343,20 +340,20 @@ func (l *launcherModel) playerIndex() int {
 }
 
 const (
-	launcherPanelX      = 112
-	launcherPanelY      = 56
-	launcherPanelW      = 416
-	launcherPanelH      = 288
-	launcherTextInset   = 16
-	launcherListX       = launcherPanelX + launcherTextInset
-	launcherListY       = 112
-	launcherListW       = launcherPanelW - launcherTextInset*2
-	launcherRowH        = 24
-	launcherLoadListY   = 96
-	launcherLoadRowH    = 32
-	launcherNoticeY     = 288
-	launcherHintY       = 312
-	launcherHint        = "↑↓ 選擇　Enter 決定　ESC 返回"
+	launcherPanelX    = 112
+	launcherPanelY    = 56
+	launcherPanelW    = 416
+	launcherPanelH    = 288
+	launcherTextInset = 16
+	launcherListX     = launcherPanelX + launcherTextInset
+	launcherListY     = 112
+	launcherListW     = launcherPanelW - launcherTextInset*2
+	launcherRowH      = 24
+	launcherLoadListY = 96
+	launcherLoadRowH  = 32
+	launcherNoticeY   = 288
+	launcherHintY     = 312
+	launcherHint      = "↑↓ 選擇　Enter 決定　ESC 返回"
 )
 
 // launcherTextSafeRect 是外框內、供字與反白列使用的共同安全區。
@@ -377,18 +374,13 @@ func launcherRowRect(phase launcherPhase, row int) image.Rectangle {
 		return image.Rect(launcherListX, 152+row*32, launcherListX+launcherListW, 184+row*32)
 	case launcherNewGameConfirm:
 		return image.Rect(launcherListX, 184+row*32, launcherListX+launcherListW, 216+row*32)
-	case launcherGameConfirm:
-		return image.Rect(launcherListX, 192+row*32, launcherListX+launcherListW, 224+row*32)
-	case launcherScenario:
-		return image.Rect(launcherListX, launcherListY+row*launcherRowH,
-			launcherListX+launcherListW, launcherListY+(row+1)*launcherRowH)
+	case launcherScenario, launcherLoad:
+		// 同一張四槽視窗的繪圖與點擊共用日期欄幾何（docs/spec/155）。
+		return saveSlotRect(row)
 	case launcherSelectFaction, launcherSelectPlayer:
 		// 這兩頁都不走殼層的清單列：清單有自己的幾何（docs/spec/79），
 		// 君主卡只有兩個熱區（docs/spec/27 §2.1）。
 		return image.Rectangle{}
-	case launcherLoad:
-		return image.Rect(launcherListX, launcherLoadListY+row*launcherLoadRowH,
-			launcherListX+launcherListW, launcherLoadListY+(row+1)*launcherLoadRowH)
 	default:
 		return image.Rectangle{}
 	}
@@ -419,20 +411,20 @@ func (l *launcherModel) pointerRow(x, y int) (int, bool) {
 func directStartFlagWasPassed() bool {
 	const name = true
 	directFlags := map[string]bool{
-		"scenario-file":      name,
-		"scenario":           name,
-		"player":             name,
-		"shot":               name,
-		"open-window":        name,
-		"open-list":          name,
-		"open-advise":        name,
-		"open-form":          name,
-		"open-corps":         name,
-		"open-battle":        name,
-		"open-siege":         name,
-		"open-message":       name,
-		"open-talk-index":    name,
-		"open-outcome":       name,
+		"scenario-file":   name,
+		"scenario":        name,
+		"player":          name,
+		"shot":            name,
+		"open-window":     name,
+		"open-list":       name,
+		"open-advise":     name,
+		"open-form":       name,
+		"open-corps":      name,
+		"open-battle":     name,
+		"open-siege":      name,
+		"open-message":    name,
+		"open-talk-index": name,
+		"open-outcome":    name,
 	}
 	found := false
 	flagVisit(func(flagName string) {
@@ -558,7 +550,7 @@ func launcherNewGamePath(sourceFile, overlay string) string {
 
 // syncLauncherSaveUI 讓殼層的 LOAD DATA 與遊戲中的四槽視窗用同一份狀態
 // （docs/spec/25 §2.9）。⭐ **選取仍由殼層的 cursor 決定**——這裡只同步，
-// 不接輸入，兩套選槽語意合成一套的代價太高而收益只有畫面。
+// 不接遊戲中的讀寫分派；殼層點擊也共用 saveSlotRect，避免畫面與命中錯位。
 func (g *game) syncLauncherSaveUI() {
 	if g.launcher == nil {
 		return
@@ -592,7 +584,7 @@ func (g *game) updateLauncher() error {
 	if g.naming != nil {
 		// 命名視窗開著時輸入全部歸它（原版 `sub_18FC9` 自己的等待迴圈）。
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
-			g.naming.click(ebiten.CursorPosition())
+			g.naming.click(cursorPosition())
 		}
 		if pressed(ebiten.KeyEscape) || g.cancelled() {
 			g.naming.cancel = true
@@ -600,7 +592,7 @@ func (g *game) updateLauncher() error {
 		g.settleNaming()
 		return nil
 	}
-	x, y := ebiten.CursorPosition()
+	x, y := cursorPosition()
 	if !g.launcher.pointerSeen {
 		g.launcher.pointerSeen = true
 		g.launcher.pointerX, g.launcher.pointerY = x, y
@@ -623,7 +615,7 @@ func (g *game) updateLauncher() error {
 	if g.launcher.phase != launcherSelectPlayer &&
 		g.launcher.phase != launcherSelectFaction &&
 		inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
-		if row, ok := g.launcher.pointerRow(ebiten.CursorPosition()); ok {
+		if row, ok := g.launcher.pointerRow(cursorPosition()); ok {
 			g.launcher.selectRow(row)
 			if result := g.launcher.apply(launcherConfirm); result.kind != launcherNoResult {
 				return g.applyLauncherResult(result)
@@ -659,7 +651,7 @@ func (g *game) updateLordCardPointer() (bool, error) {
 	if !inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		return false, nil
 	}
-	return true, g.applyLordCardHotspot(lordCardHotspotAt(ebiten.CursorPosition()))
+	return true, g.applyLordCardHotspot(lordCardHotspotAt(cursorPosition()))
 }
 
 // applyLordCardHotspot 是上面那一支的決定部分，**與讀滑鼠分開**。
@@ -706,12 +698,14 @@ func (g *game) applyLauncherResult(result launcherResult) error {
 			g.world.SetCustomAdvisor(c.portrait, c.name)
 		}
 		g.launcher = nil
+		g.saveUI = saveUIState{}
 	case launcherStartLoad:
 		if err := g.startWorld(g.saveFile, result.slot, -1, false, false); err != nil {
 			g.launcher.notice = fmt.Sprintf("讀取存檔失敗：%v", err)
 			return nil
 		}
 		g.launcher = nil
+		g.saveUI = saveUIState{}
 	case launcherSetLanguage:
 		if result.lang < 0 || result.lang >= len(langpack.Choices) {
 			return nil
@@ -772,16 +766,24 @@ func (g *game) drawLauncher(screen *ebiten.Image) {
 		g.drawSaveUI(screen)
 		g.drawLauncherCaption(screen, "↑↓ 選擇　Enter 決定　ESC 返回",
 			savePanelX, savePanelY+savePanelH+8, dim)
-		g.drawLauncherCaption(screen, l.notice, savePanelX,
-			savePanelY+savePanelH+8+textdraw.GlyphH+2,
-			color.RGBA{255, 180, 180, 255})
+		noticeY := savePanelY + savePanelH + 8 + textdraw.GlyphH + 2
+		noticeW := screenW - savePanelX - 8
+		lines := textdraw.WrapLine(l.notice, noticeW)
+		maxLines := (screenH - noticeY - 2) / (textdraw.GlyphH + 2)
+		for i := 0; i < len(lines) && i < maxLines; i++ {
+			line := lines[i]
+			if i == maxLines-1 && len(lines) > maxLines {
+				line = strategyHUDSingleLine(line, noticeW-24) + "…"
+			}
+			g.drawLauncherCaption(screen, line, savePanelX, noticeY+i*(textdraw.GlyphH+2), color.RGBA{255, 180, 180, 255})
+		}
 		return
 	}
 	if l.phase == launcherSelectFaction {
 		g.drawLauncherCaption(screen, g.launcherScenarioName(l.scenario),
 			factionListWinX, factionListWinY-textdraw.GlyphH-8, amber)
 		g.drawFactionList(screen)
-		g.drawLauncherCaption(screen, "點一列選君主　↑↓ 移動　Enter 決定　ESC 返回",
+		g.drawLauncherCaption(screen, "點選反白　再點確認　右鍵返回",
 			factionListWinX, factionListWinY+factionListWinH+8, dim)
 		g.drawLauncherCaption(screen, l.notice, factionListWinX,
 			factionListWinY+factionListWinH+8+textdraw.GlyphH+2,
@@ -852,15 +854,7 @@ func (g *game) drawLauncher(screen *ebiten.Image) {
 			rows[i] = g.launcherScenarioName(i)
 		}
 		drawRows(rows, launcherListY, l.cursor, launcherRowH)
-	case launcherGameConfirm:
-		g.td.Draw(screen, "確認新遊戲", launcherListX+16, 112, amber)
-		lord := l.confirmLord
-		if l.confirmedPlayer < 0 {
-			lord = "（無效玩家）"
-		}
-		g.td.Draw(screen, l.scenarioName, launcherListX+16, 136, white)
-		g.td.Draw(screen, lord, launcherListX+16, 152, white)
-		drawRows([]string{"開始", "返回"}, 192, l.cursor, 32)
+
 	case launcherLoad:
 		g.td.Draw(screen, "LOAD DATA", launcherListX+16, 72, amber)
 		rows := make([]string, len(l.slots))
@@ -874,4 +868,3 @@ func (g *game) drawLauncher(screen *ebiten.Image) {
 	}
 	g.td.Draw(screen, launcherHint, launcherListX, launcherHintY, dim)
 }
-

@@ -69,7 +69,7 @@ func (g *game) updateOutcome() error {
 		return g.returnToLauncher()
 	}
 	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
-		x, y := ebiten.CursorPosition()
+		x, y := cursorPosition()
 		if image.Pt(x, y).In(outcomeConfirmRect()) {
 			return g.returnToLauncher()
 		}

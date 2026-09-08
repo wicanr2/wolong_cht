@@ -239,7 +239,7 @@ func (g *game) drawDOSVAmountCursor(screen *ebiten.Image) {
 		return
 	}
 	ax, ay := g.amountAnchor()
-	x, y := ebiten.CursorPosition()
+	x, y := cursorPosition()
 	if !image.Pt(x, y).In(amountPanelRectAt(ax, ay)) {
 		if !g.amountKeyboard {
 			return // 滑鼠不在盤上、也沒用過鍵盤：原版此時的游標在盤外

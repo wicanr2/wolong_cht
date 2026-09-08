@@ -107,6 +107,11 @@ func (g *game) dispatchListAction(action listUIAction) {
 	case listActionCancel:
 		if g.list.Cancel() {
 			g.list = nil
+			if g.marchReturn != nil {
+				g.marchReturn = nil
+				g.corpsInfo.active = false
+				g.clearStatusTalk()
+			}
 		}
 	case listActionSort:
 		g.list.SortBy(action.value)
@@ -181,7 +186,7 @@ func (g *game) updateListUI() {
 		return
 	}
 	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
-		x, y := ebiten.CursorPosition()
+		x, y := cursorPosition()
 		if row, ok := listRowAt(g.list, x, y); ok {
 			g.dispatchListAction(listUIAction{kind: listActionClickRow, value: row})
 			return
@@ -251,7 +256,6 @@ var commandMenu = []struct{ key, name string }{
 
 // archorRight 讓視窗靠右邊，留 8 px 邊。
 func archorRight(w int) int { return screenW - w - 8 }
-
 
 // minimapAsset 找出 ICONGRF 段 2（192×128 縮小地圖底圖）在素材清單裡的位置。
 func (g *game) minimapAsset() int {

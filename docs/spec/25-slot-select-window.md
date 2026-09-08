@@ -3,6 +3,10 @@
 **狀態：CONFORMED。讀取／儲存已照原版版面實作；
 新遊戲仍走 remake 自己的啟動殼層（§5）。**
 
+2026-09-07 訂正：新遊戲／啟動讀檔已共用四槽繪圖；本輪再修正殼層點擊也使用
+`saveSlotRect`，四章日期與邊界已由 AppImage 實跑驗證，見 [155](155-desktop-launcher-input.md)。
+下方「新遊戲共用」未解列保留歷史成因，其待辦狀態由此訂正取代。
+
 - 日期：2026-08-15
 - 出處：[`docs/re/52`](../re/52-slot-select-window.md)（版面、判定、標題表）、
   [`docs/formats/08`](../formats/08-sinario-save.md)（區塊頭欄位）

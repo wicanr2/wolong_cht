@@ -98,7 +98,7 @@ func financeRowAtPointer() (int, bool) {
 	if !inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		return 0, false
 	}
-	x, y := ebiten.CursorPosition()
+	x, y := cursorPosition()
 	for row := 0; row < financeRows; row++ {
 		if image.Pt(x, y).In(financeRowRect(row)) {
 			return row, true

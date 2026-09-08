@@ -306,8 +306,8 @@ func TestAdviseSceneLinesGoToTheRightBox(t *testing.T) {
 // 第四、五項的六個位置（docs/spec/49 §1）。
 func TestVerdictTalkIndicesMatchOriginal(t *testing.T) {
 	for _, tc := range []struct {
-		name                            string
-		base, open, advisor, yes, no    int
+		name                         string
+		base, open, advisor, yes, no int
 	}{
 		{"遷都", adviseRelocateTalkBase, 386, 389, 390, 393},
 		{"請求出陣", adviseSortieTalkBase, 396, 399, 400, 403},

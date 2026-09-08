@@ -115,7 +115,7 @@ func TestFactionListPointerRow(t *testing.T) {
 
 // 流程：劇本 → 清單 → 君主卡，取消各退一層（docs/re/73 §1）。
 func TestLauncherFlowGoesThroughFactionList(t *testing.T) {
-	l := &launcherModel{phase: launcherScenario, confirmedPlayer: -1}
+	l := &launcherModel{phase: launcherScenario}
 	players := []launcherPlayer{{ID: 0, Lord: "曹操"}, {ID: 4, Lord: "孫策"}}
 	if !l.setScenarioPlayers(0, "第一章", players) {
 		t.Fatal("setScenarioPlayers 失敗")
@@ -125,6 +125,7 @@ func TestLauncherFlowGoesThroughFactionList(t *testing.T) {
 	}
 
 	l.cursor = 1
+	l.apply(launcherConfirm) // 先反白。
 	l.apply(launcherConfirm)
 	if l.phase != launcherSelectPlayer {
 		t.Fatalf("在清單上決定應該進君主卡，得到 %v", l.phase)
@@ -149,11 +150,11 @@ func TestLauncherFlowGoesThroughFactionList(t *testing.T) {
 	// 再走一次到底，確認確定會帶著正確的勢力編號。
 	l.setScenarioPlayers(0, "第一章", players)
 	l.cursor = 1
+	l.apply(launcherConfirm) // 先反白。
 	l.apply(launcherConfirm)
-	l.apply(launcherConfirm)
-	if l.phase != launcherGameConfirm || l.confirmedPlayer != 4 {
-		t.Errorf("最後 = %v／player %d，want launcherGameConfirm／4",
-			l.phase, l.confirmedPlayer)
+	got := l.apply(launcherConfirm)
+	if got.kind != launcherStartNewGame || got.player != 4 || got.scenario != 0 || l.cursor != 1 {
+		t.Errorf("君主卡應直接要求開局並保留選取：%#v cursor=%d", got, l.cursor)
 	}
 }
 

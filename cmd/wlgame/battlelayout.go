@@ -65,8 +65,8 @@ type dosvBattleLayout struct {
 	SideFormation battleRect
 	SideCommands  battleRect
 	// SideLines 是陣形線那三格（熱區 0x04–0x06，docs/spec/37 §2.2）。
-	SideLines [3]battleRect
-	SideFooter    battleRect
+	SideLines  [3]battleRect
+	SideFooter battleRect
 }
 
 // battleTalkState 是呈現層的最小 TALK contract；文案來自 TALK.DAT，
@@ -149,7 +149,7 @@ const (
 	battleSlotArmY   = 6
 	battleSlotOrderX = 54 // 目前命令的圖示（sub_1C673 的 `add dx, 36h`）
 	battleSlotOrderY = 6
-	battleSlotBarX   = 2 // 待機兵條
+	battleSlotBarX   = 2   // 待機兵條
 	battleSlotBarY   = 396 // sub_1C74C 的 bx=0x18C
 	battleSlotBarLen = 0x4C
 	battleSlotBarH   = 2
@@ -277,7 +277,6 @@ func battleSideCommandIndexAt(r battleRect, x, y int) (int, bool) {
 	return battleCommandIndexAt(battleSideCommandCells(r), x, y)
 }
 
-
 // battleSideCellLayout 是一格將旗裡三件東西的位置。
 //
 // 出處 docs/re/60 §3／§5：主將名走 sub_106FD（固定三個全形字），
@@ -395,7 +394,7 @@ func dosvBattleLayoutFor(w, h int) dosvBattleLayout {
 		SideFormation: battleRect{X: sideX + 16, Y: 248, W: 128, H: 32},
 		// sub_1C863：segment1+0x1800，AX=0x6008，目的 (496,280)。
 		SideCommands: battleRect{X: sideX + 16, Y: 280, W: 128, H: 96},
-		SideLines: battleLineRects(sideX),
+		SideLines:    battleLineRects(sideX),
 		// sub_1C863：segment1+0x3500，AX=0x1008，目的 (496,376)。
 		SideFooter: battleRect{X: sideX + 16, Y: 376, W: 128, H: 16},
 	}

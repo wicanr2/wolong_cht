@@ -72,7 +72,7 @@ func (g *game) beginMarchMode(corps, dest int) {
 	if g.world.DisbandAllowed(corps) {
 		rows = 3 // ★ 目標是首都才有「解體」
 	}
-	cx, cy := ebiten.CursorPosition()
+	cx, cy := cursorPosition()
 	x, y := marchModeAnchor(cx, cy, rows)
 	g.marchMode = marchModeState{
 		active: true, corps: corps, dest: dest, rows: rows, x: x, y: y,
@@ -166,8 +166,7 @@ func (g *game) commitMarchMode() {
 		dest = "原地"
 	}
 	g.lastEvent = name + " 向 " + dest + " 行軍（" + mode.String() + "）"
-	m.active = false
-	g.clearStatusTalk()
+	g.finishMarchOrder()
 }
 
 func (g *game) drawMarchMode(screen *ebiten.Image) {

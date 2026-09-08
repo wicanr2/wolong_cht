@@ -3,6 +3,11 @@
 **狀態：CONFORMED。** 視窗、五欄、一頁列數與候選條件都有機器碼出處，
 remake 已實作並有單測。
 
+2026-09-07 訂正：點擊亦已用 dosgolem 與新版 AppImage 正常滑鼠重驗，
+先前「無頭點擊送不進去」是歷史驗證限制，不能作目前結論。
+兩段確認、右鍵先取消反白、卡片返回未反白清單與反白字色的現行契約見
+[155](155-desktop-launcher-input.md)；本輪實跑紀錄見 [109](../playtest/109-desktop-launcher-fix.md)。
+
 - 日期：2026-08-24
 - 出處：[`../re/73`](../re/73-new-game-faction-list.md)
   （`sub_17B3C` `00017B3C`、callback `cs:7B6F`／`cs:7B90`、`sub_17BC0` `00017BC0`、

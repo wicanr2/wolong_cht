@@ -20,6 +20,7 @@ func newTalkTestGame(t *testing.T) *game {
 	}
 	return &game{lib: lib, world: &state.World{Player: 0}}
 }
+
 // 代入欄位的顏色與定寬是**標記的性質**（docs/spec/119 §3.1）：
 // `\1`／`\4` 色 9、`\2` 色 0x0B、`\3`／`\5` 色 0x0C，五個都補到三個全形字。
 func TestTalkMarkerInkAndPadding(t *testing.T) {
@@ -70,7 +71,7 @@ func TestGeneralMessageBoxCarriesTalkFields(t *testing.T) {
 }
 
 // 換色的儲存格在反白列上是 XOR 12，不是另一個量出來的常數
-//（docs/spec/124 §3.6）。⭐ 這一條釘住的是「新增一種換色不必再量一次」。
+// （docs/spec/124 §3.6）。⭐ 這一條釘住的是「新增一種換色不必再量一次」。
 func TestListWarnInkFollowsHighlightXor(t *testing.T) {
 	if got, want := listInkWarn^chrome.HighlightXOR, listInkWarnSelected; got != want {
 		t.Fatalf("%d XOR 12 ＝ %d，want %d", listInkWarn, got, want)

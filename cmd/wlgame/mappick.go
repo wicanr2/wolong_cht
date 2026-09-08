@@ -40,9 +40,9 @@ func (g *game) endMapPick() { g.mapPick = mapPickState{} }
 
 // mapPickTileAt 把螢幕座標換成格座標。
 //
-// ⭐ remake 的鏡頭本來就是**以格為單位**（`camX`／`camY` 是欄與列），
-// 所以沒有原版那個「原點與畫面座標各捨去一次、各吃掉一格」的問題
-// （docs/re/85 §2）。地圖區以外回 false。
+// camX／camY 是相機像素原點除以 16 的整數部分，餘數不參與命中。
+// 原版先分別取整再相加（docs/re/85 §2），不可把餘數加進畫面座標。
+// 地圖區以外回 false。
 func (g *game) mapPickTileAt(x, y int) (col, row int, ok bool) {
 	if x < 0 || x >= strategyMapW || y < strategyMapY || y >= screenH {
 		return 0, 0, false
@@ -92,7 +92,7 @@ func (g *game) updateMapPick() bool {
 	if !inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		return false
 	}
-	x, y := ebiten.CursorPosition()
+	x, y := cursorPosition()
 	col, row, ok := g.mapPickTileAt(x, y)
 	if !ok {
 		return false
@@ -160,13 +160,13 @@ func (g *game) mapPickCursorTile() (col, row int, ok bool) {
 	if g.mapPick.tile != nil {
 		return g.mapPick.tile.X, g.mapPick.tile.Y, true
 	}
-	return g.mapPickTileAt(ebiten.CursorPosition())
+	return g.mapPickTileAt(cursorPosition())
 }
 
 // drawMapPickCursor 把游標畫在**游標所在那一格的左上角**——
 // 原版是格對齊的，不跟著像素走（docs/spec/149 §1.1）。
 func (g *game) drawMapPickCursor(screen *ebiten.Image) {
-	if !g.mapPickActive() {
+	if !g.mapPickActive() && !g.desktopMapCursorVisible() {
 		return
 	}
 	col, row, ok := g.mapPickCursorTile()

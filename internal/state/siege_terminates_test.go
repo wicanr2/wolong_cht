@@ -130,7 +130,7 @@ func TestFieldBattleTerminates(t *testing.T) {
 	if err != nil {
 		t.Skipf("讀不到原版素材：%v", err)
 	}
-	_, setup, err := battlesetup.Load(battlesetup.Options{
+	provider, setup, err := battlesetup.Load(battlesetup.Options{
 		Dir: "../../workplace/orig/dosv", World: w, Map: lib.World,
 	})
 	if err != nil {
@@ -150,6 +150,14 @@ func TestFieldBattleTerminates(t *testing.T) {
 		t.Fatal("選了戰鬥指揮卻沒有戰場")
 	}
 	b := pb.Battle
+	// 正常玩家入口會由 startBattleTalk 武裝單挑。舊 fixture 漏接這一段，
+	// 只因 AI 比較方向錯誤、誤下退卻才通過「會結束」；不能靠那個缺陷封口。
+	duel := tactical.DuelInput{FieldNumber: provider.FieldNumber(pb.Node, false)}
+	for side, corps := range [2]int{pb.Attacker, pb.Defender} {
+		g := w.Generals[w.Leader(corps)]
+		duel.Martial[side], duel.CommandStat[side] = g.Martial, g.Command
+	}
+	b.SetDuelInput(duel)
 
 	const limit = 8000
 	for b.Frame < limit && !b.Done {

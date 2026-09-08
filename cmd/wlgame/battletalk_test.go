@@ -94,7 +94,7 @@ func TestBattleTalkSlotsExpireIndependently(t *testing.T) {
 	q.set(BattleTalkEntry{Index: 3, Side: 0, Duration: 60})
 	q.set(BattleTalkEntry{Index: 4, Side: 1, Duration: 60})
 	if !q.clearAll() || q.active() {
-		t.Fatal("Enter／Space／滑鼠應一次收掉兩側")
+		t.Fatal("Enter／Space 應一次收掉兩側")
 	}
 }
 

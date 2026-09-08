@@ -54,7 +54,7 @@ func (g *game) setAmountCursorAction(edit state.AmountEdit, digit int) {
 
 func (g *game) amountPointerButton() (amountPanelButton, bool) {
 	ax, ay := g.amountAnchor()
-	x, y := ebiten.CursorPosition()
+	x, y := cursorPosition()
 	button, row, col, ok := amountPanelButtonAtPoint(ax, ay, x, y)
 	if !ok {
 		return amountPanelButton{}, false
