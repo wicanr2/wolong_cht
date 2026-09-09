@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**769 列分布在 323 份文件，平均每份 2.4 列。**
+**767 列分布在 323 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -41,11 +41,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 182 | 175 | 6 | 1 |
+| 程式碼理解 | 180 | 173 | 6 | 1 |
 | 驗收 | 232 | 206 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 318 | 296 | 21 | 1 |
-| **合計** | **769** | 708 | 58 | 3 |
+| **合計** | **767** | 706 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -55,7 +55,7 @@
 |---|---:|
 | `docs/spec/` | 275 |
 | `docs/playtest/` | 232 |
-| `docs/re/` | 182 |
+| `docs/re/` | 180 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
@@ -104,7 +104,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 |
 
-## 2.3 程式碼理解（182 條）
+## 2.3 程式碼理解（180 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -168,12 +168,10 @@
 | [`re/31-faction-picker-screen.md`](../re/31-faction-picker-screen.md) | `cs:6056` 表的長度 | 前六筆是一組小 handler，後五筆疑似越過表尾（§1.2） | 靜態 |
 | [`re/32-strategy-detail-panels.md`](../re/32-strategy-detail-panels.md) | 軍團 `+0x00` 的位元怎麼清 | 三處設定都找到了，清除點未找到 | 靜態 |
 | [`re/33-shared-draw-helpers.md`](../re/33-shared-draw-helpers.md) | `cs:word_10D40` | 肖像圖庫所在的段，誰載入它未追 | 靜態 |
-| [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | 0 | `sub_12459`／`sub_126FF`（候選） / `sub_12533`（候選） / 未定 | 靜態 |
 | [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | 4 | **`sub_12B3C`（confirmed）** / `sub_12BA8`（候選） / **設定端定案**（2026-09-02）：`sub_12B3C` 開頭就是 `or byte ptr [si], 10h`，而同一支後面用 `[si+10h]`／`[si+12h]` 當地圖座標——**`si` 確定是… | 靜態 |
-| [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | 位元 0／4／5 的語意 | 有成對的設定與清除點，但那幾支函式的操作對象尚未逐支確認是軍團 | 靜態 |
+| [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | 位元 4 的語意 | 設定端 `sub_12B3C`（大地圖畫軍團）開頭就設它，清除端 `sub_12BA8` 清完接著呼叫 `sub_19656`／`sub_196ED`（繪圖）。**像是「這一格要重畫」的髒旗標**，不是規則狀態——待確認 | 靜態 |
 | [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | 位元 3 | 掃描裡沒出現。間接寫入抓不到，不能據此說它不存在 | 靜態 |
-| [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | `sub_12977` 的 `mov byte [si], 8` | 該函式同時碰武將表與軍團表，`si` 指哪一張未確認 | 靜態 |
-| [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | `sub_12880` 的 `or [si], 20h` | 表歸屬指向據點表，語意要另外讀（`sub_144A9`／`sub_144D6` 已解：Stage 10／11 把目標校正成首都並設位元 1，見 `64` §2） | 靜態 |
+| [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | `+0x21` | `sub_1264A` 在沒對峙時把它與 `+0x03` 一起歸零；`sub_12B3C` 拿它 `<< 2` 加上 `+0x03 & 3` 合成圖塊索引。**像是對峙動畫的第二個維度**，語意未讀 | 靜態 |
 | [`re/35-strategy-ui-module-map.md`](../re/35-strategy-ui-module-map.md) | `sub_18FC9` 叢 | — / 存檔畫面的槽位與按鈕對應未驗（§2.8） | 靜態 |
 | [`re/40-garrison-relief-request.md`](../re/40-garrison-relief-request.md) | `+0x20` 與 `+0x14` 的關係 | §5 的張力，要實測 | 實測 |
 | [`re/40-garrison-relief-request.md`](../re/40-garrison-relief-request.md) | 據點 `+0x00` 的 bit 4／5 | bit 6／7 已解（§2），中間兩位未見 | 靜態 |
@@ -728,7 +726,7 @@
 | [`spec/173-corps-flag-bit0-and-sprite-fields.md`](../spec/173-corps-flag-bit0-and-sprite-fields.md) | `sub_12708` 的地形 `0CEh`–`0DDh` | 位元 0 設著時才走 `sub_12880`（讀連結記錄的兩端節點）。那一段地形是什麼還沒讀 | 靜態 |
 | [`spec/174-relief-dispatch-does-not-move-marching-corps.md`](../spec/174-relief-dispatch-does-not-move-marching-corps.md) | `sub_14057` 的 `dl` | 用的是「威脅目標的索引」（亂數 & 3，0 當 1），不是威脅量算出來的支數。看起來像原版的怪癖，照抄 | 靜態 |
 | [`spec/175-encounter-standoff-countdown.md`](../spec/175-encounter-standoff-countdown.md) | `+0x00` 位元 4 | `sub_12B3C` 設、`sub_12BA8` 清，而 `sub_12BA8` 接著呼叫 `sub_19656`／`sub_196ED`（繪圖）。**像是「這一格要重畫」的髒旗標**，不是規則狀態——待確認 | 靜態 |
-| [`spec/175-encounter-standoff-countdown.md`](../spec/175-encounter-standoff-countdown.md) | `+0x21` | `sub_1264A` 在沒卡住時一併歸零，語意未讀 | 靜態 |
+| [`spec/175-encounter-standoff-countdown.md`](../spec/175-encounter-standoff-countdown.md) | `+0x21` | `sub_1264A` 在沒卡住時一併歸零；`sub_12B3C` 拿 `<< 2` 與 `+0x03 & 3` 合成圖塊索引。**像是對峙動畫的第二個維度**，語意未讀 | 靜態 |
 | [`spec/175-encounter-standoff-countdown.md`](../spec/175-encounter-standoff-countdown.md) | `sub_102F5(al=3)` | 對峙期間每個週期呼叫一次，推測是音效 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |

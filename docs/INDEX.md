@@ -196,7 +196,7 @@
 | [`docs/re/31-faction-picker-screen.md`](re/31-faction-picker-screen.md) | 31 — 勢力一覽：22 格的兩欄版面與領地重繪 | 版面、命中判定、顏色規則、兩個守門條件與介面字串 confirmed。 分派表已印出，但 sub_15AD1 → s… | 2026-08-14 |
 | [`docs/re/32-strategy-detail-panels.md`](re/32-strategy-detail-panels.md) | 32 — 戰略側的兩個詳情面板：據點與軍團 | 兩支面板函式與軍團面板的外層 confirmed，欄位與字串表全部對出。 畫肖像的 sub_107D2 見 [33]… | 2026-08-14 |
 | [`docs/re/33-shared-draw-helpers.md`](re/33-shared-draw-helpers.md) | 33 — 共用繪圖層：字串包裝、肖像快取、小地圖上色 | 六支共用常式 confirmed。肖像快取的替換策略、小地圖的座標換算與 據點標記的畫法都定案。實際載入 bytes… | 2026-08-14 |
-| [`docs/re/34-corps-status-bits.md`](re/34-corps-status-bits.md) | 34 — 軍團記錄 +0x00 的位元圖，與改用 IDAPython 之後的掃法 | 位元 1／2 的設定端、清除端與語意 confirmed （位元 1 ＝ 下一步要重算、位元 2 ＝ 委任）。 位元… | 2026-08-14 |
+| [`docs/re/34-corps-status-bits.md`](re/34-corps-status-bits.md) | 34 — 軍團記錄 +0x00 的位元圖，與改用 IDAPython 之後的掃法 | 位元 0／1／2／5 的設定端、清除端與語意 confirmed （0 ＝ 已經走上路徑、1 ＝ 下一步要重算、2 … | 2026-08-14 |
 | [`docs/re/35-strategy-ui-module-map.md`](re/35-strategy-ui-module-map.md) | 35 — 戰略 UI 模組全圖：108 支函式的叢集歸屬 | 叢集歸屬 confirmed（呼叫圖是精確的，不是啟發式）。 各叢集的角色標籤是強證據——來自「它呼叫哪些已定案語意… | 2026-08-14 |
 | [`docs/re/36-tactical-module-map.md`](re/36-tactical-module-map.md) | 36 — 戰術戰鬥模組全圖：主迴圈與它的十一個子系統 | 叢集歸屬 confirmed（呼叫圖精確）。角色標籤是強證據， 來自「呼叫哪些已定案語意的共用常式」與 I/O 埠使… | 2026-08-14 |
 | [`docs/re/37-graphics-and-runtime-module-map.md`](re/37-graphics-and-runtime-module-map.md) | 37 — 圖庫、繪圖底層與 C runtime 兩個模組的全圖 | 叢集歸屬 confirmed。硬體層的角色由 I/O 埠直接判定（精確）， 其餘角色標籤是強證據。 | 2026-08-14 |
@@ -352,7 +352,7 @@
 | [`docs/spec/172-corps-march-fields.md`](spec/172-corps-march-fields.md) | 172 — 補齊軍團行軍的五個欄位：+0x0A／+0x0C／+0x0E／+0x1A／+0x1C | CONFORMED。 | 2026-09-09 |
 | [`docs/spec/173-corps-flag-bit0-and-sprite-fields.md`](spec/173-corps-flag-bit0-and-sprite-fields.md) | 173 — 軍團的 +0x00 位元 0、+0x08／+0x09 與 AI 編成的初值 | CONFORMED。 | 2026-09-09 |
 | [`docs/spec/174-relief-dispatch-does-not-move-marching-corps.md`](spec/174-relief-dispatch-does-not-move-marching-corps.md) | 174 — 求援調兵只調站著的軍團，而且只寫意圖 | CONFORMED。 | 2026-09-09 |
-| [`docs/spec/175-encounter-standoff-countdown.md`](spec/175-encounter-standoff-countdown.md) | 175 — 撞上敵人不是立刻開打：+0x03 先倒數 12 次（96 拍） | READY。 | 2026-09-09 |
+| [`docs/spec/175-encounter-standoff-countdown.md`](spec/175-encounter-standoff-countdown.md) | 175 — 撞上敵人不是立刻開打：+0x03 先倒數 12 次（96 拍） | READY（+0x03 的用途已分開，見 §3；對峙的觸發還沒接）。 | 2026-09-09 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |

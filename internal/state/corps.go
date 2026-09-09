@@ -25,7 +25,10 @@ const (
 	newCorps  = 0xC0
 	// modelledCorpsBits 是 remake 真的有在維護的那幾個位元：
 	// 7／6（存在）與 2（委任）。其餘位元寫回時原樣保留（docs/spec/166）。
-	modelledCorpsBits = 0xC0 | 0x04 | 0x01
+	modelledCorpsBits = 0xC0 | 0x04 | 0x01 | standoffBit
+
+	// standoffBit 是 `+0x00` 的位元 5 ＝ 對峙中（docs/spec/175）。
+	standoffBit = 0x20
 
 	// corpsSpriteStride 是一個勢力佔幾張軍團圖塊：四個方向 ＋ 停著。
 	// 與 `internal/assets/world` 的 `CorpsHeadings` 是同一個數字
@@ -116,9 +119,30 @@ type Corps struct {
 	// ⚠ 旗標 8 < 0x80，所以這支軍團**不算活著**——地圖上不畫、
 	// 勢力的軍團數已經減掉；但它還沒消失，`sub_12A7E` 每 tick 處理它。
 	Routing bool
-	// RoutTimer 是記錄 +0x03：敗走的倒數，進狀態時寫 48，
-	// 每 tick 減 1，歸零時軍團記錄歸零、主將解職。
-	RoutTimer int
+
+	// Standoff 是記錄 +0x00 的**位元 5 ＝ 對峙中**：要踏進去的那一格被
+	// 敵方軍團佔著（`sub_12831`），或那是別人的據點（`sub_12880`）。
+	// 對峙中軍團**停在原地**，`Countdown` 倒數完才結算（docs/spec/175）。
+	//
+	// ⚠ 每次「輪到移動」時原版先清掉它（`sub_125A3` 的 `and [si],0DFh`），
+	// 擋著的東西還在才會被再設一次——所以它是**每個週期重算的狀態**，
+	// 不是黏著的旗標。
+	Standoff bool
+
+	// Countdown 是記錄 `+0x03`。⭐ **原版同一個 byte 兩種用途**，
+	// 用 `+0x00` 分辨，而兩種狀態互斥（docs/spec/175 §1.5）：
+	//
+	//   - `Routing`（旗標 `08h`，已經不 Alive）→ **敗走倒數**，
+	//     進狀態時 48，歸零時軍團記錄歸零、主將解職（docs/spec/43）。
+	//   - `Standoff`（位元 5，還活著）→ **對峙倒數**，撞上時 12，
+	//     每個軍團巡迴週期減 1，減到 1 的那一次才開打。
+	//   - 兩者都不成立 → 恆為 **0**（`sub_1264A` 每個週期歸零）。
+	//
+	// ⚠ **不要拆成兩個 Go 欄位。** 一個 byte 拆成兩個欄位會多出
+	// 「兩個欄位、一個 byte」的失步風險；原版本來就是靠 `+0x00` 分辨，
+	// 照抄那個結構，載入／寫回／讀取三處都不可能對不上。
+	// 分開的是**用途**（哪個狀態讀它），不是儲存。
+	Countdown int
 }
 
 // ⚠ **行軍路線刻意不放在 Corps 裡**，放在 `World.routes`。
@@ -157,7 +181,10 @@ func (w *World) loadCorps(b []byte) {
 			Stage:     int(r[0x23]),
 			// 旗標 8 而且不到 0x80 ＝ 敗走中（docs/spec/43）。
 			Routing:   r[0x00] < aliveFlag && r[0x00]&0x08 != 0,
-			RoutTimer: int(r[0x03]),
+			// ⭐ 對峙只在**活著**的軍團身上成立；敗走的旗標是 `08h`，
+			// 位元 5 本來就不會設（`sub_12977` 整個 byte 寫 8）。
+			Standoff:  r[0x00] >= aliveFlag && r[0x00]&standoffBit != 0,
+			Countdown: int(r[0x03]),
 		}
 		for k := range c.Units {
 			s := r[unitSlotBase+k*unitSlotSize:]
@@ -202,7 +229,7 @@ func (w *World) saveCorps(b []byte) {
 			// （原版 `sub_12977` 也只改這兩個，docs/spec/43）。
 			if c.Routing {
 				r[0x00] = 0x08
-				r[0x03] = byte(c.RoutTimer)
+				r[0x03] = byte(c.Countdown)
 			}
 			// 其餘不存在的軍團**一個 byte 都不動**——重建會抹掉痕跡。
 			continue
@@ -227,6 +254,14 @@ func (w *World) saveCorps(b []byte) {
 		} else {
 			r[0x00] &^= 0x01
 		}
+		if c.Standoff {
+			r[0x00] |= standoffBit
+		} else {
+			r[0x00] &^= standoffBit
+		}
+		// ⚠ **活著的軍團也要寫 `+0x03`。** 不在對峙時原版恆為 0
+		// （`sub_1264A` 每個週期歸零）——不寫就會留著存檔裡的舊值。
+		r[0x03] = byte(c.Countdown)
 		r[0x01] = byte(c.Faction)
 		r[0x02] = byte(i)
 		putU16(r, 0x04, c.Men)
@@ -588,8 +623,41 @@ func (w *World) tickCorps(hour int, rng combat.Rand) []CorpsEvent {
 		if ev := w.tickOneCorps(i, hour, rng); ev != nil {
 			out = append(out, *ev)
 		}
+		// ⭐ `sub_1264A` 由 `sub_125A3` 在**每次巡到**時呼叫，
+		// 不論這一拍有沒有輪到移動——倒數因此是「每 8 拍減 1」，
+		// 不是「每 24 拍減 1」（docs/spec/175 §1.3）。
+		w.tickStandoff(i)
 	}
 	return out
+}
+
+// tickStandoff 是 `sub_1264A`：對峙倒數。
+//
+//	test byte ptr [si], 20h
+//	jnz  .hold
+//	mov  byte ptr [si+3], 0      ; 沒卡著 → 歸零
+//	mov  byte ptr [si+21h], 0
+//	retn
+//	.hold:
+//	dec  byte ptr [si+3]
+//	jnz  retn
+//	mov  byte ptr [si+3], 1      ; 減到 0 就停在 1，等下一次撞上開打
+//
+// ⚠ `dec` 是 byte 運算：`+0x03` 是 0 時會變成 255，不是負的。
+// 正常流程碰不到（設位元 5 的同一支常式當場寫 12），但**存檔可以**，
+// 所以照抄比「看起來比較合理」的寫法安全。
+//
+// ⚠ `+0x21` 也一起歸零，remake 還沒建模那一欄（docs/spec/175 §5）。
+func (w *World) tickStandoff(i int) {
+	c := &w.Corps[i]
+	if !c.Standoff {
+		c.Countdown = 0
+		return
+	}
+	c.Countdown = int(byte(c.Countdown - 1))
+	if c.Countdown == 0 {
+		c.Countdown = 1
+	}
 }
 
 func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
@@ -614,6 +682,10 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 	c.Timer--
 	if c.Timer <= 0 {
 		c.Timer = c.Interval
+		// ⭐ **輪到移動就先清對峙旗標**（`sub_125A3` 的 `and [si],0DFh`）。
+		// 擋著的東西還在的話，下面的移動會把它再設回來——所以它是
+		// 每個週期重算的狀態，不是黏著的旗標（docs/spec/175）。
+		c.Standoff = false
 		// ⚠ **停在目標上也要跑抵達處理**：原版 `sub_12662` 一開頭就比
 		// 「現在節點 ＝ 目標節點」，相同就直接呼叫 `sub_14325` 分派，
 		// 不需要移動（`docs/re/64` §1）。解體下在「已經在首都」時就靠這條。

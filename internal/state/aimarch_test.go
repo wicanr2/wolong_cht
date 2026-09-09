@@ -283,9 +283,9 @@ func TestRoutedCorpsDisappearsAfterTimer(t *testing.T) {
 	if w.Corps[i].Alive {
 		t.Error("敗走中的軍團不該算活著")
 	}
-	if !w.Corps[i].Routing || w.Corps[i].RoutTimer != routDuration {
+	if !w.Corps[i].Routing || w.Corps[i].Countdown != routDuration {
 		t.Fatalf("敗走狀態 = %v／%d，want true／%d",
-			w.Corps[i].Routing, w.Corps[i].RoutTimer, routDuration)
+			w.Corps[i].Routing, w.Corps[i].Countdown, routDuration)
 	}
 	if w.Factions[f].Corps != before-1 {
 		t.Errorf("勢力軍團數 = %d，want %d", w.Factions[f].Corps, before-1)
@@ -330,7 +330,7 @@ func TestRoutingSurvivesSaveRoundTrip(t *testing.T) {
 	node := w.clampCity(w.Factions[f].Capital)
 	i := aiCorps(t, w, f, node)
 	w.routCorps(i)
-	w.Corps[i].RoutTimer = 17
+	w.Corps[i].Countdown = 17
 
 	raw := make([]byte, corpsBase+numCorps*corpsSize)
 	w.saveCorps(raw)
@@ -341,9 +341,9 @@ func TestRoutingSurvivesSaveRoundTrip(t *testing.T) {
 
 	var back World
 	back.loadCorps(raw)
-	if !back.Corps[i].Routing || back.Corps[i].RoutTimer != 17 {
+	if !back.Corps[i].Routing || back.Corps[i].Countdown != 17 {
 		t.Errorf("讀回來 = %v／%d，want true／17",
-			back.Corps[i].Routing, back.Corps[i].RoutTimer)
+			back.Corps[i].Routing, back.Corps[i].Countdown)
 	}
 	if back.Corps[i].Alive {
 		t.Error("旗標 8 不到 0x80，不該算活著")
@@ -771,7 +771,7 @@ func TestRoutEndSignalsOnlyOnce(t *testing.T) {
 
 	for n := 0; n < routDuration-1; n++ {
 		if w.tickRout(i) {
-			t.Fatalf("第 %d tick 就宣告結束，倒數還有 %d", n+1, w.Corps[i].RoutTimer)
+			t.Fatalf("第 %d tick 就宣告結束，倒數還有 %d", n+1, w.Corps[i].Countdown)
 		}
 	}
 	if !w.tickRout(i) {

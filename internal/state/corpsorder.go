@@ -283,7 +283,10 @@ func (w *World) routCorps(i int) {
 	if !c.Alive {
 		return
 	}
-	c.Alive, c.Routing, c.RoutTimer = false, true, routDuration
+	// 原版 `sub_12977` 把旗標整個 byte 寫成 `8`，所以對峙那個位元
+	// 一併被清掉——兩種倒數不會同時成立（docs/spec/175 §1.5）。
+	c.Alive, c.Routing, c.Standoff = false, true, false
+	c.Countdown = routDuration
 	if c.Faction >= 0 && c.Faction < numFactions {
 		if f := &w.Factions[c.Faction]; f.Corps > 0 {
 			f.Corps--
@@ -295,10 +298,10 @@ func (w *World) routCorps(i int) {
 // 回傳 true 表示**這一 tick 剛歸零**——訊息掛在這一刻（`docs/spec/77`）。
 func (w *World) tickRout(i int) bool {
 	c := &w.Corps[i]
-	if c.RoutTimer > 0 {
-		c.RoutTimer--
+	if c.Countdown > 0 {
+		c.Countdown--
 	}
-	if c.RoutTimer > 0 {
+	if c.Countdown > 0 {
 		return false
 	}
 	c.Routing = false
