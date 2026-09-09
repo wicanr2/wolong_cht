@@ -60,7 +60,30 @@ type RoadEdge struct {
 	// StubA、StubB 是頭尾那兩段的格數。要逐格檢查「有沒有踩在路上」時
 	// 得把它們排除——**城池圖形本身不是道路圖塊**。
 	StubA, StubB int
+
+	// Seq 是**建表序號**：這條邊是第幾次走出來的。
+	//
+	// ⭐ 原版的連結記錄照建表順序排在 `0x0800` 起、每筆 16 B，
+	// 路徑點照同一個順序從 `0x2000` 起接排——所以序號決定了
+	// 軍團 `+0x0C`／`+0x0E` 那兩個指標的值（docs/spec/172）。
+	// 輸出本身仍照 (A, B) 排序，序號只是附帶的身分。
+	Seq int
+
+	// LinkAddr、PathAddr 是這條邊在**原版執行期道路表**裡的段內位址
+	// （`cs:word_19874` 段）：連結記錄 `0x0800 + Seq × 16`、
+	// 路徑點從 `0x2000` 起照 `Seq` 依序接排（docs/spec/172 §2）。
+	//
+	// ⚠ 只給存檔寫回用（軍團 `+0x0C`／`+0x0E`），不進路由邏輯。
+	LinkAddr, PathAddr int
 }
+
+// 原版道路表的版面（`docs/re/08` §7.1）。
+const (
+	linkTableBase = 0x0800 // 連結記錄，每筆 16 B
+	linkRecordLen = 16
+	pathTableBase = 0x2000 // 路徑點，每筆 4 B
+	pathPointLen  = 4
+)
 
 // tileClass 是 `sub_1E961` 的分類。回 −1 表示不可走。
 func tileClass(v byte) int {
@@ -157,6 +180,7 @@ func RoadEdges(m *Map, cities [][2]int) ([]RoadEdge, error) {
 	// ③ 從每個城門格走一次。
 	best := map[[2]int][][2]int{}
 	stub := map[[2]int][2]int{}
+	seq := map[[2]int]int{}
 	for _, s := range starts {
 		cells, end := walkRoad(t, s.gate, s.dir)
 		other, ok := gateCity[end]
@@ -179,6 +203,9 @@ func RoadEdges(m *Map, cities [][2]int) ([]RoadEdge, error) {
 			}
 		}
 		full, sa, sb := withCityEnds(cells, nodeOf[a], nodeOf[b], cities[a], cities[b])
+		if _, seen := seq[k]; !seen {
+			seq[k] = len(seq) // 先走到先得，與原版「第一次走到就建記錄」同義
+		}
 		best[k] = full
 		stub[k] = [2]int{sa, sb}
 	}
@@ -187,9 +214,34 @@ func RoadEdges(m *Map, cities [][2]int) ([]RoadEdge, error) {
 	for k, path := range best {
 		out = append(out, RoadEdge{
 			A: k[0], B: k[1], Steps: len(path), Path: path,
-			StubA: stub[k][0], StubB: stub[k][1],
+			StubA: stub[k][0], StubB: stub[k][1], Seq: seq[k],
 		})
 	}
+	// ⭐ 原版表的位址：連結記錄照建表序號排，路徑點照同一個序號接排。
+	// 這裡的「點數」是**原版的路徑點數**——`Path` 多了一個終點城中心
+	// （`withCityEnds`），那一格不在原版的表裡。
+	byPathAddr := make([]int, len(out))
+	{
+		order := make([]int, len(out))
+		for i := range out {
+			order[i] = i
+		}
+		for i := 1; i < len(order); i++ {
+			for j := i; j > 0 && out[order[j]].Seq < out[order[j-1]].Seq; j-- {
+				order[j], order[j-1] = order[j-1], order[j]
+			}
+		}
+		addr := pathTableBase
+		for _, i := range order {
+			byPathAddr[i] = addr
+			addr += (len(out[i].Path) - 1) * pathPointLen
+		}
+	}
+	for i := range out {
+		out[i].LinkAddr = linkTableBase + out[i].Seq*linkRecordLen
+		out[i].PathAddr = byPathAddr[i]
+	}
+
 	for i := 1; i < len(out); i++ {
 		for j := i; j > 0 && less(out[j], out[j-1]); j-- {
 			out[j], out[j-1] = out[j-1], out[j]
@@ -308,7 +360,8 @@ func MarchEdges(edges []RoadEdge, cities [][2]int) []march.Edge {
 		if e.A >= 0 && e.A < len(cities) {
 			start = cities[e.A]
 		}
-		out[i] = march.Edge{A: e.A, B: e.B, Steps: e.Steps, Path: e.Path, ACell: start}
+		out[i] = march.Edge{A: e.A, B: e.B, Steps: e.Steps, Path: e.Path, ACell: start,
+			LinkAddr: e.LinkAddr, PathAddr: e.PathAddr}
 	}
 	return out
 }

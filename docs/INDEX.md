@@ -349,6 +349,7 @@
 | [`docs/spec/169-march-has-no-city-stub.md`](spec/169-march-has-no-city-stub.md) | 169 — 出城與進城是一步跳過去，原版沒有那段直線 | CONFORMED。 | 2026-09-09 |
 | [`docs/spec/170-ai-target-takes-two-ticks.md`](spec/170-ai-target-takes-two-ticks.md) | 170 — AI 挑到新目標要兩拍才會出發：+0x20 是意圖、+0x14 是行軍目標 | CONFORMED。 | 2026-09-09 |
 | [`docs/spec/171-ai-only-expands-via-relief.md`](spec/171-ai-only-expands-via-relief.md) | 171 — AI 擴軍的唯一入口是據點求援，不是每拍每據點 | CONFORMED。 | 2026-09-09 |
+| [`docs/spec/172-corps-march-fields.md`](spec/172-corps-march-fields.md) | 172 — 補齊軍團行軍的五個欄位：+0x0A／+0x0C／+0x0E／+0x1A／+0x1C | CONFORMED。 | 2026-09-09 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |

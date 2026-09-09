@@ -74,8 +74,9 @@ func main() {
 	withTactical := flag.Bool("tactical", true, "接戰術層——玩家捲進去而且沒委任時才用得到")
 	player := flag.Int("player", -1, "覆寫玩家勢力（-1 ＝ 用存檔裡的）")
 	events := flag.Bool("events", false, "印每一次事件推送，對應原版的 eventwatch（docs/spec/139）")
-	runPastPending := flag.Bool("run-past-pending", false,
-		"出現「等玩家」的狀態之後繼續跑——⚠ 世界會停在半路，之後的比較沒有意義")
+	answer := flag.String("answer", "reject",
+		"自動回應「等玩家」的視窗：reject（一律拒絕，對應「什麼都不做」的實驗）／"+
+			"accept（一律接受）／stop（停下來，之後的比較沒有意義）")
 	saveOut := flag.String("save-out", "", "跑完之後把世界寫成一份 SAVE.DAT（拿去跟原版同一拍的記憶體逐 byte 比）")
 	corpsWatch := flag.Int("corps", -1, "逐拍印這支軍團的位置——只在它動了的那一拍印")
 	flag.Parse()
@@ -178,7 +179,8 @@ func main() {
 	}
 	markAt := []int{}
 	var lastCorps [4]int
-	pendingDiplo, pendingBattle := 0, 0
+	pendingDiplo, pendingFunding, pendingBattle := 0, 0, 0
+	answeredDiplo, answeredFunding := 0, 0
 	ticksRun := *ticks
 	perTickWhere := make([][]string, 0, *ticks)
 	perTick := make([]int, 0, *ticks)
@@ -232,16 +234,43 @@ func main() {
 		// ⭐ **夾具要說出自己卡在哪。** 規則層沒有 pending 閘，所以這兩種
 		// 「等玩家」的狀態不會讓 `Tick` 停下來，但世界會停在半路——
 		// 症狀是「某些拍完全沒跑內政」，而那長得像規則差異。
-		if w.PendingDiplomacy() != nil && pendingDiplo == 0 {
-			pendingDiplo = i + 1
+		// ⭐ **停在半路的拍不能拿來比。** 規則層沒有 pending 閘，所以
+		// `Tick` 照樣被呼叫，但 `tickCity` 不跑——症狀是「連續幾千拍
+		// 取 0 個數」，而那會把逐拍不一致的總數整個灌爆。
+		//
+		// 這個實驗是「玩家什麼都不做」，所以預設**一律拒絕**並繼續。
+		// 回應的次數會印出來——原版在同一段沒有停，所以那個次數本身
+		// 就是一個待查的差異，不能讓它靜靜地消失。
+		if c := w.PendingDiplomacy(); c != nil {
+			if pendingDiplo == 0 {
+				pendingDiplo = i + 1
+			}
+			switch *answer {
+			case "reject":
+				w.ResolveDiplomacy(state.DiplomacyReject)
+			case "accept":
+				w.ResolveDiplomacy(state.DiplomacyAcceptFree)
+			}
+			answeredDiplo++
+		}
+		if c := w.PendingFunding(); c != nil {
+			if pendingFunding == 0 {
+				pendingFunding = i + 1
+			}
+			switch *answer {
+			case "reject":
+				w.ResolveFunding(state.FundingReject)
+			case "accept":
+				w.ResolveFunding(state.FundingFullAmount)
+			}
+			answeredFunding++
 		}
 		if w.PendingBattle() != nil && pendingBattle == 0 {
 			pendingBattle = i + 1
 		}
-		// ⭐ **停在半路的拍不能拿來比。** 規則層沒有 pending 閘，所以
-		// `Tick` 照樣被呼叫，但 `tickCity` 不跑——症狀是「連續幾千拍
-		// 取 0 個數」，而那會把逐拍不一致的總數整個灌爆。
-		if !*runPastPending && (pendingDiplo > 0 || pendingBattle > 0) {
+		// ⚠ 戰術戰鬥沒有「固定回答」可用——它要真的打完。停下來說明，
+		// 不要假裝跑得動。
+		if pendingBattle > 0 || (*answer == "stop" && pendingDiplo > 0) {
 			ticksRun = i + 1
 			break
 		}
@@ -265,8 +294,13 @@ func main() {
 	fmt.Printf("終點 %d年%d月%d日 %d時 子刻 %d；活軍團 %d\n",
 		w.Clock.Year, w.Clock.Month, w.Clock.Day, w.Clock.Hour, w.Clock.Subtick,
 		len(w.AliveCorps()))
-	if pendingDiplo > 0 {
-		fmt.Printf("  ⚠ 第 %d 拍起有外交三選一等著（規則層沒有 pending 閘）\n", pendingDiplo)
+	if answeredDiplo > 0 {
+		fmt.Printf("  外交三選一：第 %d 拍起，自動以 %q 回應 %d 次\n",
+			pendingDiplo, *answer, answeredDiplo)
+	}
+	if answeredFunding > 0 {
+		fmt.Printf("  撥款視窗：第 %d 拍起，自動以 %q 回應 %d 次\n",
+			pendingFunding, *answer, answeredFunding)
 	}
 	if pendingBattle > 0 {
 		fmt.Printf("  ⚠ 第 %d 拍起有戰術戰鬥等著——**世界從那一拍起就停在半路**\n", pendingBattle)

@@ -48,7 +48,9 @@ type Corps struct {
 	// 沒差才看 Y。野戰要取樣大地圖上的哪兩格由它決定（`sub_14B63`）。
 	Heading int
 
-	Direction int // +0x0A，沿路徑表前進的**步進量**（`sub_127F6` 取負再相加）
+	// Direction 是 +0x0A：沿路徑表前進的**步進量**（`sub_127F6` 取負再相加）。
+	// 存的是原始 byte：正向 `4`、反向 `0xFC`（＝ −4）。
+	Direction int
 	Timer     int // +0x0B，每 tick 減 1，歸零走一步
 	Interval  int // +0x1E，速度 ＝ 間隔的倒數
 
@@ -64,6 +66,19 @@ type Corps struct {
 	// 舊首都的改成新首都，但 +0x14 只在它等於新首都×8 時才改）。
 	// 合併成一個欄位會讓那一段自我抵銷。
 	Ordered int
+
+	// PathPtr、LinkAddr 是行軍在**原版道路表**裡的位置
+	// （記錄 `+0x0C`／`+0x0E`，docs/spec/172）。步進量在 `Direction`（`+0x0A`）。
+	//
+	// ⭐ `+0x0E` 有兩種語意：停在據點上是**據點編號 × 8**，行軍中是
+	// **連結記錄的位址**（≥ 0x800）。`LinkAddr` 只放後者，前者由 `Node` 表示；
+	// `LinkAddr == 0` 就代表「現在用據點那一種」。
+	//
+	// ⚠ 這三個是 remake 沒有拿來做決策的欄位——路由走的是 `routes`。
+	// 它們存在的理由是**存檔要與原版互通**：不寫就等於每次存檔都把
+	// 原版的行軍狀態抹掉（`CLAUDE.md` §9 的「改寫不是重建」）。
+	PathPtr  int
+	LinkAddr int
 
 	// Delegated 是記錄 +0x00 的位元 2 ＝ **「委任」**（交給電腦指揮）。
 	//
@@ -102,6 +117,7 @@ type Corps struct {
 func (w *World) Leader(corps int) int { return corps }
 
 func (w *World) loadCorps(b []byte) {
+	w.occupancySeg = 0
 	for i := range w.Corps {
 		r := b[corpsBase+i*corpsSize:]
 		c := Corps{
@@ -120,6 +136,7 @@ func (w *World) loadCorps(b []byte) {
 			TargetY:    u16(r, 0x18),
 			Interval:   int(r[0x1E]),
 			Ordered:   int(r[0x20]),
+			PathPtr:   u16(r, 0x0C),
 			Delegated: r[0x00]&0x04 != 0,
 			Stage:     int(r[0x23]),
 			// 旗標 8 而且不到 0x80 ＝ 敗走中（docs/spec/43）。
@@ -130,6 +147,13 @@ func (w *World) loadCorps(b []byte) {
 			s := r[unitSlotBase+k*unitSlotSize:]
 			c.Units[k] = combat.Unit{Men: int(s[1]), Kind: kindFromByte(s[2])}
 		}
+		// ⭐ `+0x0E` ≥ 0x800 是**連結記錄的位址**（行軍中），不是據點編號。
+		// 照 `/8` 讀會得到 470、488 這種不存在的據點（docs/spec/172 §1）。
+		if raw := u16(r, 0x0E); raw >= 0x800 {
+			c.LinkAddr = raw
+			c.Node = c.TargetNode // 行軍中的「所在據點」沿用出發地的語意
+		}
+
 		// ⚠ **載入不可信的資料要驗範圍。** 未使用的軍團槽裡是垃圾，
 		// 而 `Faction` 會被直接拿來索引 `w.Factions`（22 筆）——超範圍就是
 		// 執行期 panic，而不是一個看得懂的錯誤。對拍時拿原版記憶體重建
@@ -137,6 +161,12 @@ func (w *World) loadCorps(b []byte) {
 		// 這裡把它降級成「這個槽不存在」，讓壞資料不會變成 crash。
 		if c.Faction < 0 || c.Faction >= numFactions {
 			c.Alive, c.Faction = false, 0
+		}
+		// 佔用圖的段基底只要從任何一支活著的軍團反推一次就夠。
+		if c.Alive && w.occupancySeg == 0 {
+			if seg := u16(r, 0x1C) - c.Y*24; seg > 0 {
+				w.occupancySeg = seg
+			}
 		}
 		w.Corps[i] = c
 	}
@@ -177,9 +207,20 @@ func (w *World) saveCorps(b []byte) {
 		r[0x08] = byte(c.Heading)
 		r[0x0A] = byte(c.Direction)
 		r[0x0B] = byte(c.Timer)
-		putU16(r, 0x0E, c.Node*8)
+		putU16(r, 0x0C, c.PathPtr)
+		// `+0x0E` 的兩種語意：行軍中是連結記錄位址、停著是據點 × 8。
+		if c.LinkAddr != 0 {
+			putU16(r, 0x0E, c.LinkAddr)
+		} else {
+			putU16(r, 0x0E, c.Node*8)
+		}
 		putU16(r, 0x10, c.X)
 		putU16(r, 0x12, c.Y)
+		// 佔用圖的兩欄是導出值：偏移 ＝ X、段 ＝ 基底 ＋ Y × 24。
+		if w.occupancySeg > 0 {
+			putU16(r, 0x1A, c.X)
+			putU16(r, 0x1C, w.occupancySeg+c.Y*24)
+		}
 		putU16(r, 0x14, c.TargetNode*8)
 		putU16(r, 0x16, c.TargetX)
 		putU16(r, 0x18, c.TargetY)
@@ -593,6 +634,12 @@ func (w *World) step(i int) bool {
 	if cells := w.routes[i]; len(cells) > 0 {
 		next := cells[0]
 		w.routes[i] = cells[1:]
+		// 同步吃掉一格標記：原版每走一步就 `bx += [si+0Ah]` 再寫回 `+0x0C`。
+		if mk := w.routeMarks[i]; len(mk) > 0 {
+			c.PathPtr, c.LinkAddr, c.Direction = mk[0].PathPtr, mk[0].LinkAddr,
+				byteStep(mk[0].Step)
+			w.routeMarks[i] = mk[1:]
+		}
 		c.Heading = headingTo(c.X, c.Y, next[0], next[1])
 		c.X, c.Y = next[0], next[1]
 		// 踩到某個據點的座標就算抵達那個據點。中繼據點也要更新，
@@ -603,6 +650,9 @@ func (w *World) step(i int) bool {
 		if len(w.routes[i]) == 0 {
 			c.Node = c.TargetNode
 			c.Heading = HeadingStill
+			// 到站：`+0x0E` 換回據點編號 × 8（`sub_127A2`），
+			// 而 `+0x0C`／`+0x0A` **留著最後一筆**——原版沒有清它們。
+			c.LinkAddr = 0
 		}
 		return true
 	}
@@ -659,7 +709,10 @@ func (w *World) turnBackAtBorder(i int) bool {
 	back := c.Node
 	c.TargetNode, c.Ordered = back, back
 	c.TargetX, c.TargetY = w.Cities[back].X, w.Cities[back].Y
-	w.routes[i] = w.reverseLeg(next, back, c.X, c.Y)
+	// ⚠ 掉頭走的是自己算的反向段，不是道路表的 leg，所以沒有標記可對。
+	// 清掉，讓 `+0x0C`／`+0x0E` 留在掉頭前的值——原版 `sub_142AB` 也是
+	// 直接改 `+0x14`／`+0x0E`，不重排路徑點。
+	w.routes[i], w.routeMarks[i] = w.reverseLeg(next, back, c.X, c.Y), nil
 	c.Heading = headingTo(c.X, c.Y, c.TargetX, c.TargetY)
 	return true
 }
@@ -1186,7 +1239,7 @@ func (w *World) March(corps, node int) error {
 	// 存檔的 +0x20 會停在編成時的首都，與原版分歧。
 	c.Ordered = node
 	c.TargetX, c.TargetY = w.Cities[node].X, w.Cities[node].Y
-	w.routes[corps] = nil
+	w.routes[corps], w.routeMarks[corps] = nil, nil
 	if w.roads == nil || node == c.Node {
 		return nil
 	}
@@ -1200,7 +1253,9 @@ func (w *World) March(corps, node int) error {
 			w.Cities[w.clampCity(c.Node)].Name, w.Cities[node].Name)
 	}
 	// 有格子序列就用格子序列（沿真正的道路走）；沒有就留空，退回直線。
-	w.routes[corps] = w.roads.CellRoute(c.Node, node)
+	// `marks` 與格子逐格對應，是軍團 `+0x0A`／`+0x0C`／`+0x0E` 的來源
+	// （docs/spec/172）。
+	w.routes[corps], w.routeMarks[corps] = w.roads.CellRouteMarked(c.Node, node)
 	return nil
 }
 
@@ -1209,7 +1264,50 @@ func (w *World) March(corps, node int) error {
 //
 // 沒有掛的話行軍退回直線移動——缺原版素材時要能降級跑，
 // 不是整個動不了。
-func (w *World) SetRoads(g *march.Graph) { w.roads = g }
+func (w *World) SetRoads(g *march.Graph) {
+	w.roads = g
+	w.restoreMarchRoutes()
+}
+
+// restoreMarchRoutes 把「載入存檔時正在行軍」的軍團接回格子路徑。
+//
+// ⭐ 存檔裡的 `+0x0E`（連結記錄位址）＋ `+0x0C`（路徑點位址）＋ `+0x0A`
+// （步進方向）**完整描述了軍團走在哪一條路的第幾格**，所以路徑重建得回來。
+// 少了這一步，載入之後那些軍團走的是直線退路——而畫面與存檔欄位看起來
+// 都正常，只有逐格對拍才看得見（docs/spec/172）。
+//
+// ⚠ 道路圖是呼叫端注入的，所以這件事只能掛在 `SetRoads` 上，不能放在
+// `loadCorps` 裡——那時還沒有圖。
+func (w *World) restoreMarchRoutes() {
+	if w.roads == nil {
+		return
+	}
+	for i := range w.Corps {
+		c := &w.Corps[i]
+		if !c.Alive || c.LinkAddr == 0 {
+			continue
+		}
+		a, b, ok := w.roads.EdgeByLink(c.LinkAddr)
+		if !ok {
+			continue
+		}
+		// `+0x0A` 是 0xFC（−4）就表示沿路徑表倒著走，出發地是 B。
+		from := a
+		if int8(c.Direction) < 0 {
+			from = b
+		}
+		c.Node = from
+		cells, marks := w.roads.CellRouteMarked(from, c.TargetNode)
+		// 丟掉已經走過的前綴：對齊到存檔記的那個路徑點位址。
+		for k := range marks {
+			if marks[k].PathPtr == c.PathPtr {
+				cells, marks = cells[k+1:], marks[k+1:]
+				break
+			}
+		}
+		w.routes[i], w.routeMarks[i] = cells, marks
+	}
+}
 
 // AliveCorps 回傳還在的軍團編號。
 func (w *World) AliveCorps() []int {
@@ -1221,3 +1319,6 @@ func (w *World) AliveCorps() []int {
 	}
 	return out
 }
+
+// byteStep 把 ±4 的步進量換成記錄裡的 byte（`4` 與 `0xFC`）。
+func byteStep(step int) int { return int(byte(int8(step))) }

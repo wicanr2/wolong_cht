@@ -62,7 +62,7 @@ func main() {
 		}
 		rows = append(rows, map[string]any{
 			"a": e.A, "b": e.B, "stub_a": e.StubA, "stub_b": e.StubB,
-			"steps": e.Steps, "points": pts,
+			"steps": e.Steps, "seq": e.Seq, "points": pts,
 		})
 	}
 	fmt.Printf("remake 邊 %d 條，路徑點 %d 個\n", len(rows), func() int {

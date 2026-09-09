@@ -434,6 +434,16 @@ type World struct {
 	// 見 corps.go 的說明：它刻意不放進 Corps，
 	// 那樣 Corps 才留得住 `==` 可比性（存檔 round-trip 測試靠它）。
 	routes [numCorps][][2]int
+	// routeMarks 與 routes 逐格對應，指回原版道路表（docs/spec/172）。
+	routeMarks [numCorps][]march.CellMark
+
+	// occupancySeg 是原版佔用圖的段基底（`cs:word_19872`，實測 `0x46B3`）。
+	// 軍團 `+0x1C` ＝ 這個值 ＋ Y × 24，`+0x1A` ＝ X。
+	//
+	// ⚠ **它是執行期配置的，不在存檔的語意裡**——所以從載入來源的既有
+	// 欄位反推（`+0x1C − Y × 24`），推不出來就不寫那兩欄，不要編一個
+	// 段位址出來（docs/spec/172 §4）。
+	occupancySeg int
 
 	// hourFaction 是下一個輪到的勢力（原版 cs:0D1Ch，以 si 步進 0x40）。
 	// 不匯出——它是迴圈的內部游標，不是遊戲狀態的一部分。
