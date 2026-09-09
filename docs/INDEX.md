@@ -352,6 +352,7 @@
 | [`docs/spec/172-corps-march-fields.md`](spec/172-corps-march-fields.md) | 172 — 補齊軍團行軍的五個欄位：+0x0A／+0x0C／+0x0E／+0x1A／+0x1C | CONFORMED。 | 2026-09-09 |
 | [`docs/spec/173-corps-flag-bit0-and-sprite-fields.md`](spec/173-corps-flag-bit0-and-sprite-fields.md) | 173 — 軍團的 +0x00 位元 0、+0x08／+0x09 與 AI 編成的初值 | CONFORMED。 | 2026-09-09 |
 | [`docs/spec/174-relief-dispatch-does-not-move-marching-corps.md`](spec/174-relief-dispatch-does-not-move-marching-corps.md) | 174 — 求援調兵只調站著的軍團，而且只寫意圖 | CONFORMED。 | 2026-09-09 |
+| [`docs/spec/175-encounter-standoff-countdown.md`](spec/175-encounter-standoff-countdown.md) | 175 — 撞上敵人不是立刻開打：+0x03 先倒數 12 次（96 拍） | READY。 | 2026-09-09 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |
@@ -435,7 +436,7 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 128 條。**要查「這件事解了沒」先看這裡**，
+共 129 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（77 條）
@@ -520,12 +521,13 @@
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x1E | `docs/re/08-hourly-update.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x20 | `docs/re/08-hourly-update.md` |
 
-### READY（2 條）
+### READY（3 條）
 
 | 鍵 | 出處 |
 |---|---|
 | 索引 ▸ 委任將領混合值保留原統率 | `docs/spec/00-index.md` |
 | 索引 ▸ 戰術命令批次與移動體力順序 | `docs/spec/00-index.md` |
+| 索引 ▸ 撞上敵人先對峙 12 個週期（96 拍）才開打 | `docs/spec/00-index.md` |
 
 ### 強證據（22 條）
 
