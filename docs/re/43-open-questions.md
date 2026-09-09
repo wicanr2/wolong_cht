@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**749 列分布在 313 份文件，平均每份 2.4 列。**
+**751 列分布在 314 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 182 | 175 | 6 | 1 |
 | 驗收 | 232 | 206 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 298 | 276 | 21 | 1 |
-| **合計** | **749** | 688 | 58 | 3 |
+| 其他 | 300 | 278 | 21 | 1 |
+| **合計** | **751** | 690 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,7 +53,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 255 |
+| `docs/spec/` | 257 |
 | `docs/playtest/` | 232 |
 | `docs/re/` | 182 |
 | `docs/release/` | 26 |
@@ -539,7 +539,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（298 條）
+## 2.6 其他（300 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -710,6 +710,8 @@
 | [`spec/162-city-cursor-from-save.md`](../spec/162-city-cursor-from-save.md) | 徵兵被跳過的次數還差 1 | 356 子刻裡原版 9、remake 10（每子刻只取 2 個數的那些）。與游標無關，是另一條規則 | 靜態 |
 | [`spec/162-city-cursor-from-save.md`](../spec/162-city-cursor-from-save.md) | 劇本開局的游標值 | `SINARIO.DAT` 同一個位移是什麼還沒量；開新遊戲時應該是 0，要確認 | 靜態 |
 | [`spec/162-city-cursor-from-save.md`](../spec/162-city-cursor-from-save.md) | 存回去要不要寫 | 目前只解讀取。存檔寫回是「改寫不是重建」（`CLAUDE.md` §9），這個欄位在未解區裡原封不動 | 靜態 |
+| [`spec/163-city-tick-order.md`](../spec/163-city-tick-order.md) | `formAICorps` 在原版的位置 | 沒有證據。這一輪沿用「跟著威脅」的現況 | 靜態 |
+| [`spec/163-city-tick-order.md`](../spec/163-city-tick-order.md) | ② 易主 → 原主勢力 `+0x17` | remake 在 `refreshCityThreat` 裡，順序與原版一致，但沒有單獨驗過 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |

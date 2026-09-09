@@ -340,6 +340,7 @@
 | [`docs/spec/160-rng-consumption-alignment.md`](spec/160-rng-consumption-alignment.md) | 160 — 亂數消費順序對齊：逐次比「誰取了第幾個數」 | READY。 | 2026-09-09 |
 | [`docs/spec/161-liubei-idle-longrun-parity.md`](spec/161-liubei-idle-longrun-parity.md) | 161 — 劉備不作為長時間對拍：把玩家這個變因拿掉，以子刻為單位比 | DRAFT。 | 2026-09-09 |
 | [`docs/spec/162-city-cursor-from-save.md`](spec/162-city-cursor-from-save.md) | 162 — 載入存檔要還原據點巡迴游標（word_10D1E） | CONFORMED。 | 2026-09-09 |
+| [`docs/spec/163-city-tick-order.md`](spec/163-city-tick-order.md) | 163 — 據點整備一拍之內的處理順序 | CONFORMED。 | 2026-09-09 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |

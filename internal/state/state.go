@@ -1563,6 +1563,19 @@ func (w *World) tickCity(rng economy.Rand) ([]StrategyEvent, []TalkNotice) {
 	// 而玩家與 AI 的上昇值統計都是 +100，**看起來完全正常**。
 	// 症狀出現在統計欄位看不到的那一群身上。
 
+	// ① 求援冷卻 −1、② 易主記錄、③ 佔用圖抄進 +0x18、④ 威脅偵測與求援。
+	// ⭐ **順序照原版 `sub_13EFD`**（docs/re/44 §1、docs/spec/163）：
+	// 這四件事在內政之前。`+0x18` 是每 tick 被佔用圖覆寫的**快取**，
+	// 冷卻也是下一拍的輸入——順序一換，兩個子系統就各差一拍，
+	// 而狀態表對拍抓不到（同一時刻取樣，欄位值都還沒動）。
+	//
+	// 中立據點只更新佔用數與鄰接遮罩，不做威脅判斷——
+	// 原版的 `cmp byte ptr [si+841h], 18h / jz` 只跳過 sub_13F74。
+	notices := w.refreshCityThreat(w.cityCursor, rng)
+	var aiEvent *StrategyEvent
+	if w.strategicAI && c.Owner >= 0 && c.Owner < numFactions && c.Owner != w.Player {
+		aiEvent = w.formAICorps(c.Owner)
+	}
 	gc := governor.City{
 		Growth: c.Growth, Prevention: c.Prevention,
 		Garrison: c.Garrison, GarrisonCap: c.GarrisonCap,
@@ -1585,14 +1598,8 @@ func (w *World) tickCity(rng economy.Rand) ([]StrategyEvent, []TalkNotice) {
 	// 原版 sub_13EFD 在 sub_14194 之後無條件呼叫 sub_14269；
 	// 事件 11／12 寫入的 +0x15 marker 不是只有畫面效果。
 	w.applyCityDisasterEffect(w.cityCursor)
-	// 威脅偵測（原版 sub_13EFD 的佔用圖抄寫 ＋ sub_13F74 → sub_13FA9）。
-	// 中立據點只更新佔用數與鄰接遮罩，不做威脅判斷——
-	// 原版的 `cmp byte ptr [si+841h], 18h / jz` 只跳過 sub_13F74。
-	notices := w.refreshCityThreat(w.cityCursor, rng)
-	if w.strategicAI && c.Owner >= 0 && c.Owner < numFactions && c.Owner != w.Player {
-		if ev := w.formAICorps(c.Owner); ev != nil {
-			return []StrategyEvent{*ev}, notices
-		}
+	if aiEvent != nil {
+		return []StrategyEvent{*aiEvent}, notices
 	}
 	return nil, notices
 }
