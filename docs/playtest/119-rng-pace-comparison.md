@@ -163,3 +163,25 @@ remake 的 `tickCity`：
 remake 沒有君主召見這個機制。所以**同一條時間軸的逐子刻對拍到 5,236 拍為止**；
 再往後原版走的是「玩家回應之後」的分支，remake 走的是沒有中斷的分支，
 兩者不再是同一個局面。要比滿 90 天，得先在 remake 實作召見與回應。
+
+## 10. 召見：畫面早就做好了，缺的是事件觸發
+
+原以為 remake 沒有君主召見。實際查下來**呈現層與規則層的介面都在**：
+
+| 層 | 位置 | 現況 |
+|---|---|---|
+| 畫面 | `cmd/wlgame/diplomacy.go` | prompt、三選一選單、三種回應都接了 |
+| 畫面的暫停閘 | `cmd/wlgame/main.go`：`if PendingDiplomacy() != nil { updateDiplomacy(); return nil }` | **會凍結戰略時間**，與原版一致 |
+| 規則層 | `internal/state/diplomacy_event.go`：`PendingDiplomacy`／`BeginDiplomacyChoice`／`ResolveDiplomacy` | 有 |
+| 規則層的暫停閘 | `World.tick` | **沒有**——pending 時照樣往下跑 |
+
+⭐ **真正的缺口在更前面**：拿同一份存檔跑 5,236 拍（到原版的召見點），
+`PendingDiplomacy()` **一次都沒有非 nil**——事件根本沒被觸發。
+
+原版側的 `eventwatch` 在同一段時間有一筆
+`事件02 發起 2 對象 13`（196/5/1 前後），而畫面在 5/11 停住等玩家。
+remake 這一段完全沒有事件 2。
+
+⇒ 下一步是查事件 2（協力請求）的**產生條件**，不是做畫面。
+兩個子問題：原版誰在什麼條件下推事件 2；remake 對應的產生端在哪、
+為什麼沒觸發。

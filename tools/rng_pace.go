@@ -112,6 +112,9 @@ func main() {
 				markAt = append(markAt, i+1)
 			}
 		}
+		if w.PendingDiplomacy() != nil {
+			fmt.Printf("  ⚠ 第 %d 拍出現外交三選一（規則層沒有 pending 閘，繼續跑）\n", i+1)
+		}
 		prev = tr.seq
 	}
 
