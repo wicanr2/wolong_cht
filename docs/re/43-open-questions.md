@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**739 列分布在 311 份文件，平均每份 2.4 列。**
+**742 列分布在 311 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 182 | 175 | 6 | 1 |
 | 驗收 | 228 | 202 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 292 | 270 | 21 | 1 |
-| **合計** | **739** | 678 | 58 | 3 |
+| 其他 | 295 | 273 | 21 | 1 |
+| **合計** | **742** | 681 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,7 +53,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 249 |
+| `docs/spec/` | 252 |
 | `docs/playtest/` | 228 |
 | `docs/re/` | 182 |
 | `docs/release/` | 26 |
@@ -535,7 +535,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（292 條）
+## 2.6 其他（295 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -696,6 +696,9 @@
 | [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | `14060` 屬於哪一支、取數做什麼用 | 只知道在 `sub_13EFD` 底下，12 次／36 小時的節奏還沒對到機制 | 靜態 |
 | [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | 開戰期的消費端清單 | 還沒統計；閒置期的四個位址不足以涵蓋 | 靜態 |
 | [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | remake 的呼叫點與原版位址的對照表 | 要邊比邊建，沒有現成的 | 靜態 |
+| [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | **remake 側還沒跑同一條時間軸** | 原版側的 90 天基線已經有了；remake 要用同一份存檔、同一個 `-rng-state` 跑出對應的三份軌跡 | 靜態 |
+| [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | **召見要靠人先跑一次才知道在哪** | 回應序列是寫死在腳本裡的（`playtest/118` §3），dosgolem 沒有條件分支。要自動化得在那端加「時鐘停住就回應」的偵測 | 靜態 |
+| [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | 「同意呂布」那條分支 | 這 90 天只遇到一次召見（曹操請求協助）。呂布的請求還沒出現 | 靜態 |
 | [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | 起點要不要從劇本開局 196/4/1 起 | 現成的受控存檔是 196/4/16。從開局起最乾淨，但要另外做一份存檔或走新遊戲流程 | 靜態 |
 | [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | 原版側的鏡頭會自己跳 | 「固定在沛」在 remake 側靠 `-cam`，原版側做不到；這一項只影響畫面比對，狀態層不受影響 | 靜態 |
 | [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | 開戰期的取樣成本 | 只有閒置期量過。真正要看的四個現象多半發生在開戰期 | 靜態 |

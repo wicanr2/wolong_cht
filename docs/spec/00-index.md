@@ -57,7 +57,7 @@
 | 主題 | 規格 | 狀態 |
 |---|---|---|
 | 亂數消費順序對齊（長時間對拍前置）| [`160-rng-consumption-alignment.md`](160-rng-consumption-alignment.md) | DRAFT；原版側軌跡已取得，remake 側與比對工具未做 |
-| 劉備不作為長時間對拍管線 | [`161-liubei-idle-longrun-parity.md`](161-liubei-idle-longrun-parity.md) | DRAFT；量測設計已定，管線未串 |
+| 劉備不作為長時間對拍管線 | [`161-liubei-idle-longrun-parity.md`](161-liubei-idle-longrun-parity.md) | DRAFT；原版側 90 天已跑通（26 秒、兩次逐 byte 相同），remake 側未做 |
 | 戰術命令批次與移動體力順序 | [`159-tactical-command-movement-order.md`](159-tactical-command-movement-order.md) | READY；窄批次修正已測，完整排程仍待對拍 |
 | 委任將領混合值保留原統率 | [`158-delegated-leader-mix.md`](158-delegated-leader-mix.md) | READY；完整驗收進行中 |
 | 據點整備、威脅偵測與求援（`sub_13EFD` 鏈）| [`10-city-tick.md`](10-city-tick.md) | 已實作並對原版取樣驗過 |
