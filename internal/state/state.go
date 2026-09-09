@@ -1552,8 +1552,13 @@ func (w *World) tickCity(rng economy.Rand) ([]StrategyEvent, []TalkNotice) {
 	if len(w.Cities) == 0 {
 		return nil, nil
 	}
-	w.cityCursor = (w.cityCursor + 1) % len(w.Cities)
-	c := &w.Cities[w.cityCursor]
+	// ⭐ **先處理再前進**（原版 `sub_13EFD` 讀 `word_10D1E` 指的據點，
+	// 處理完才 `si += 0x20`，docs/re/44 §1）。先前是先 +1 再處理，
+	// 於是每一拍都比原版快一格——載入存檔時 cursor ＝ 144 的話，
+	// 原版處理 144 而 remake 處理 145，中立據點會被錯開成非中立的那一個。
+	id := w.cityCursor
+	c := &w.Cities[id]
+	defer func() { w.cityCursor = (id + 1) % len(w.Cities) }()
 	// ⚠ **中立據點也要整備。** 原版 `sub_13EFD` 的
 	// `cmp byte ptr [si+841h], 18h / jz` 只跳過 `sub_13F74`，
 	// **`sub_14194` 是無條件呼叫的**。
@@ -1571,7 +1576,7 @@ func (w *World) tickCity(rng economy.Rand) ([]StrategyEvent, []TalkNotice) {
 	//
 	// 中立據點只更新佔用數與鄰接遮罩，不做威脅判斷——
 	// 原版的 `cmp byte ptr [si+841h], 18h / jz` 只跳過 sub_13F74。
-	notices := w.refreshCityThreat(w.cityCursor, rng)
+	notices := w.refreshCityThreat(id, rng)
 	var aiEvent *StrategyEvent
 	if w.strategicAI && c.Owner >= 0 && c.Owner < numFactions && c.Owner != w.Player {
 		aiEvent = w.formAICorps(c.Owner)
@@ -1597,7 +1602,7 @@ func (w *World) tickCity(rng economy.Rand) ([]StrategyEvent, []TalkNotice) {
 	}
 	// 原版 sub_13EFD 在 sub_14194 之後無條件呼叫 sub_14269；
 	// 事件 11／12 寫入的 +0x15 marker 不是只有畫面效果。
-	w.applyCityDisasterEffect(w.cityCursor)
+	w.applyCityDisasterEffect(id)
 	if aiEvent != nil {
 		return []StrategyEvent{*aiEvent}, notices
 	}

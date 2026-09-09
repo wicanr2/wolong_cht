@@ -53,6 +53,7 @@ func main() {
 	seed := flag.Int("seed", 1, "亂數種子（沒給 -rng-state 時用）")
 	cursor := flag.Int("city-cursor", -1, "載入後把據點巡迴游標設成這個值（原版存檔 +0x2E ÷ 32）")
 	seqOut := flag.String("seq-out", "", "把逐子刻取數序列寫到檔案（供與原版 diff）")
+	traceN := flag.Int("trace", 0, "印前 N 拍的據點狀態（小樣本追蹤）")
 	mark := flag.String("mark", "", "印出含這個呼叫點的子刻位置（例：strategy.go:630）")
 	rngState := flag.String("rng-state", "", "載入原版當下的亂數狀態（258 byte，docs/spec/147 §5）")
 	flag.Parse()
@@ -98,6 +99,11 @@ func main() {
 	fmt.Printf("跳過 %d 子刻後：%d年%d月%d日 %d時 子刻 %d\n",
 		*skip, w.Clock.Year, w.Clock.Month, w.Clock.Day, w.Clock.Hour, w.Clock.Subtick)
 
+	start := 0
+	if len(w.Cities) > 0 {
+		s := w.TakeSnapshot()
+		start = s.CityCursor
+	}
 	markAt := []int{}
 	perTick := make([]int, 0, *ticks)
 	total := map[string]int{}
@@ -111,6 +117,13 @@ func main() {
 			if *mark != "" && strings.Contains(s, *mark) {
 				markAt = append(markAt, i+1)
 			}
+		}
+		if *traceN > 0 && i < *traceN {
+			cs := w.Cities
+			id := (start + i + 1) % len(cs)
+			c := cs[id]
+			fmt.Printf("  拍 %2d 據點 %3d 主 %2d 佔用 %d 威脅 %3d 鄰敵 %d 冷卻 %d ← 取 %d 個\n",
+				i+1, id, c.Owner, c.Occupancy, c.Threat, c.EnemyNeighbours, c.ReliefCooldown, n)
 		}
 		if w.PendingDiplomacy() != nil {
 			fmt.Printf("  ⚠ 第 %d 拍出現外交三選一（規則層沒有 pending 閘，繼續跑）\n", i+1)

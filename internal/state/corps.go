@@ -127,6 +127,14 @@ func (w *World) loadCorps(b []byte) {
 			s := r[unitSlotBase+k*unitSlotSize:]
 			c.Units[k] = combat.Unit{Men: int(s[1]), Kind: kindFromByte(s[2])}
 		}
+		// ⚠ **載入不可信的資料要驗範圍。** 未使用的軍團槽裡是垃圾，
+		// 而 `Faction` 會被直接拿來索引 `w.Factions`（22 筆）——超範圍就是
+		// 執行期 panic，而不是一個看得懂的錯誤。對拍時拿原版記憶體重建
+		// 存檔踩過這個：欄位讀成 83，`tickOneCorps` 當場炸掉。
+		// 這裡把它降級成「這個槽不存在」，讓壞資料不會變成 crash。
+		if c.Faction < 0 || c.Faction >= numFactions {
+			c.Alive, c.Faction = false, 0
+		}
 		w.Corps[i] = c
 	}
 }
@@ -481,6 +489,11 @@ func (w *World) tickCorps(hour int, rng combat.Rand) []CorpsEvent {
 
 func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 	c := &w.Corps[i]
+	// 第二道保險：載入端已經擋過（loadCorps），這裡再擋一次，
+	// 因為 Faction 在下面被當索引用，而快照/測試也可能塞進別的值。
+	if c.Faction < 0 || c.Faction >= numFactions {
+		return nil
+	}
 	ev := CorpsEvent{Corps: i, Enemy: -1, Captured: -1,
 		Relocated: capital.None, GovernorReturned: noGovernor}
 
