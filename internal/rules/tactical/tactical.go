@@ -222,6 +222,9 @@ type Soldier struct {
 	// 受擊的兵轉向正面、畫受擊的圖，而且那一幀不能被換位置。
 	Hurt bool
 
+	// MoveFlag 對應原版 +0x00 bit 5；成功移動出口保留，阻擋被換位。
+	MoveFlag bool
+
 	// Swapped 是「這一幀已經被別人換過位置了」（原版 `+0x00` 的 bit 6）。
 	//
 	// `sub_1B732` 換完會對被換的那一個 `or byte ptr [di], 40h`，

@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/wicanr2/wolong_cht/internal/assets/battle"
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
@@ -31,6 +32,18 @@ func main() {
 	noOrders := flag.Bool("no-orders", false, "進戰術畫面後不下令；不是行軍委任")
 	commandTick := flag.Int("command-tick", -1, "原版退卻輸入節拍；預設從 command-events.json 讀取")
 	flag.Parse()
+	// 原版收據明示野戰時，不容許默認攻城造成假同狀態比較。
+	if data, err := os.ReadFile(filepath.Join(*original, "result.json")); err == nil {
+		var identity struct {
+			Fixture string `json:"fixture"`
+		}
+		if err := json.Unmarshal(data, &identity); err != nil {
+			panic(err)
+		}
+		if strings.Contains(identity.Fixture, "SAVE-FIELD.DAT") && !*field {
+			panic("原版收據為野戰；必須指定 -field，禁止以預設攻城模式重播")
+		}
+	}
 	must := func(err error) {
 		if err != nil {
 			panic(err)

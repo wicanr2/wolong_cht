@@ -55,6 +55,38 @@ func (s *Soldier) applyNewOrder() bool {
 
 // updateSoldier 是一個兵的一幀。
 func (b *Battle) updateSoldier(side, k int) {
+	b.updateSoldierCommand(side, k)
+	b.updateSoldierMovement(side, k)
+}
+
+// updateSoldierCommand 在移動與硬直閘之前執行（docs/spec/159）。
+func (b *Battle) updateSoldierCommand(side, k int) {
+	s := &b.Sides[side].Soldiers[k]
+	s.HitGeneral = false
+	b.lockOnNearest(side, k)
+	s.applyNewOrder()
+
+	switch s.Cmd {
+	case Form:
+		b.doFormation(side, k)
+	case Attack, Charge:
+		b.doAttack(side, k)
+	case ScaleWal:
+		b.doScaleWall(side, k)
+	case Guard:
+		b.doGuard(side, k)
+	case Retreat:
+		b.doRetreat(side, k)
+	case Holding:
+		// 已就位，原地待命。
+	case Duel:
+		// 命令 8：分派是 nullsub（`funcs_1A7E1[8]`）——目標座標由
+		// 單挑狀態機寫，移動與接觸命中照走下面的共通路徑
+		// （docs/spec/80 §4）。
+	}
+}
+
+func (b *Battle) updateSoldierMovement(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
 	// ⭐ **這一幀被別人換走的兵不動**（`sub_1ADC8` 的
 	// `0001ADED test al, 40h / jnz loc_1AE26`，docs/spec/62）：
@@ -80,28 +112,6 @@ func (b *Battle) updateSoldier(side, k int) {
 		s.PoseStep ^= 1
 		return
 	}
-	s.HitGeneral = false
-	b.lockOnNearest(side, k)
-	s.applyNewOrder()
-
-	switch s.Cmd {
-	case Form:
-		b.doFormation(side, k)
-	case Attack, Charge:
-		b.doAttack(side, k)
-	case ScaleWal:
-		b.doScaleWall(side, k)
-	case Guard:
-		b.doGuard(side, k)
-	case Retreat:
-		b.doRetreat(side, k)
-	case Holding:
-		// 已就位，原地待命。
-	case Duel:
-		// 命令 8：分派是 nullsub（`funcs_1A7E1[8]`）——目標座標由
-		// 單挑狀態機寫，移動與接觸命中照走下面的共通路徑
-		// （docs/spec/80 §4）。
-	}
 	b.moveToward(side, k)
 	// `sub_1B240` 尾端的 `xor byte ptr [si+2], 1`。特殊投射物在
 	// 本幀攻擊時先取舊值，下一幀人物姿勢再翻面。
@@ -118,7 +128,10 @@ func (b *Battle) doFormation(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
 	if b.walkToFormation(side, k) {
 		s.Stamina = StaminaFull
-		s.Cmd, s.Next = Holding, Holding
+		// 隊長 sub_1A92E 才改 7；隊員直接走 sub_1AA2C（spec/159）。
+		if k%PerSquad == 0 {
+			s.Cmd, s.Next = Holding, Holding
+		}
 	}
 }
 
@@ -307,27 +320,30 @@ func (b *Battle) applySquadLeaderGone() {
 // docs/re/11 §5.8k），那張清單由 `loc_1BD46` 算（§5.15）。
 func (b *Battle) moveToward(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
-	s.StepX, s.StepY, s.StepZ = s.GoalX, s.GoalY, s.GoalZ
-
-	// 有繞路點就先走目前的中繼點。原版 `sub_1B00D` 只有在抵達
-	// 目前的 X/Y/Z 後才消費它；不能每幀直接取下一個點，否則兵只
-	// 走一步就會跳過轉角（§5.15）。
-	if p, ok := s.Path.Current(); ok {
-		pz := b.standZ(s, p.X, p.Y)
-		if s.X == p.X && s.Y == p.Y && s.Z == pz {
-			s.Path.Advance()
-			p, ok = s.Path.Current()
+	s.MoveFlag = true
+	defer func() {
+		if s.Stamina > 0 {
+			s.Stamina--
 		}
-		if ok {
-			s.StepX, s.StepY, s.StepZ = p.X, p.Y, b.standZ(s, p.X, p.Y)
+	}()
+	if s.X == s.StepX && s.Y == s.StepY && (!s.CanClimb() || s.Z == s.StepZ) {
+		if p, ok := s.Path.Current(); ok {
+			s.Path.Advance()
+			s.StepX, s.StepY = p.X, p.Y
+		} else {
+			s.MoveFlag = false
+			b.faceLockedTarget(side, s)
+			if s.Target >= 0 && s.Target < len(b.Sides[1-side].Soldiers) {
+				e := &b.Sides[1-side].Soldiers[s.Target]
+				if max(abs(s.X-e.X), abs(s.Y-e.Y)) == 1 && s.X == s.GoalX && s.Y == s.GoalY {
+					s.StepX, s.StepY, s.StepZ = e.X, e.Y, e.Z
+					return
+				}
+			}
+			s.StepX, s.StepY = s.GoalX, s.GoalY
+			return
 		}
 	}
-
-	// ⭐ **面向只在真的走成功那一步才更新。**
-	// 原版把 `[si+5]` 寫在四個移動常式裡（`sub_1B047`／`1B069`／`1B08B`／
-	// `1B0AF`），而那些常式只有在走得動時才被呼叫——所以**被牆擋住的兵
-	// 保持原本的面向**。差別看得見：面向決定畫哪一張圖，也決定
-	// §5.9 那個城壁分支成不成立。
 	moved, walled := false, false
 	if s.X != s.StepX {
 		d, face := 1, East
@@ -376,8 +392,28 @@ func (b *Battle) moveToward(side, k int) {
 	if !moved || walled {
 		b.requestPath(side, k)
 	}
-	if moved && s.Stamina > 0 {
-		s.Stamina-- // 移動每幀 −1（`sub_1ADC8`）
+	if !moved {
+		s.MoveFlag = false
+		b.faceLockedTarget(side, s)
+	}
+}
+
+// faceLockedTarget 對應 0001ACA4：最大軸決定面向，等距選 X。
+func (b *Battle) faceLockedTarget(side int, s *Soldier) {
+	if s.Target < 0 || s.Target >= len(b.Sides[1-side].Soldiers) {
+		return
+	}
+	e := &b.Sides[1-side].Soldiers[s.Target]
+	if abs(s.X-e.X) >= abs(s.Y-e.Y) {
+		s.Facing = West
+		if s.X < e.X {
+			s.Facing = East
+		}
+	} else {
+		s.Facing = North
+		if s.Y < e.Y {
+			s.Facing = South
+		}
 	}
 }
 
@@ -441,6 +477,8 @@ func (b *Battle) standZ(s *Soldier, x, y int) int {
 // 由 `pathQueue` 管（`docs/spec/120`）。
 func (b *Battle) computePath(side, k int) {
 	s := &b.Sides[side].Soldiers[k]
+	s.Path = nil
+	s.StepX, s.StepY, s.StepZ = s.X, s.Y, s.Z
 	from, to := Point{X: s.X, Y: s.Y}, Point{X: s.GoalX, Y: s.GoalY}
 	occupied := b.occupancyCost()
 	pts := b.Field.FindPath(from, to, s.CanClimb(), occupied)
@@ -455,7 +493,8 @@ func (b *Battle) computePath(side, k int) {
 	if len(pts) == 0 {
 		return
 	}
-	s.Path = &Waypoints{pts: pts}
+	s.Path = &Waypoints{pts: pts, i: 1}
+	s.StepX, s.StepY = pts[0].X, pts[0].Y
 }
 
 // tryMove 試著走到一格。走得上去才動。
@@ -510,11 +549,19 @@ func (b *Battle) tryMove(side, k, x, y, z int) (moved, walled bool) {
 	// **自我修改碼**寫進去的（`byte_1B562`／`byte_1B56A`，由 `sub_19A33`
 	// 依雙方的編號範圍填）——這是本作第四處自我修改碼。
 	if side2, k2 := b.anyoneAt(x, y, z); k2 >= 0 {
+		// 0001B548–0001B557：大將陣形／退卻直接走平面與換位分支。
+		if s.IsGeneral() && (s.Cmd == Form || s.Cmd == Retreat) {
+			return b.swapWith(side, k, side2, k2), false
+		}
 		if side2 != side {
 			e := &b.Sides[side2].Soldiers[k2]
 			// 大將走 `sub_1B6BC`，其餘敵人走 `sub_1B618`。
-			b.attackCollision(side, s, e)
-			return false, false
+			if e.Alive {
+				b.attackCollision(side, s, e)
+			}
+			// 原版 0001B5B5 / 0001B065：CF=0 結束該拍，不繼續試 Y/Z。
+			// true 表示本次處理完成，不保證座標改變（spec/159）。
+			return true, false
 		}
 		return b.swapWith(side, k, side2, k2), false
 	}
@@ -600,16 +647,24 @@ func (b *Battle) swapWith(side, k, side2, k2 int) bool {
 
 	// bit 6：這一幀已經被換過了就不能再換，否則兩個兵會原地互換不停。
 	// bit 4 of +0x02：剛被打中的兵這一幀不能被換走。
-	if other.Swapped || other.Hurt || other.IsGeneral() || other.Cmd == Retreat {
+	generalReturn := me.IsGeneral() && (me.Cmd == Form || me.Cmd == Retreat)
+	if !generalReturn && (!other.Alive || other.MoveFlag || other.Swapped || other.Hurt || other.IsGeneral() || other.Cmd == Retreat) {
 		return false
 	}
 	// 跨層對調只有弓兵與步兵做得到。
-	if me.Z != other.Z && (!me.CanClimb() || !other.CanClimb()) {
+	if me.PlaneHigh != other.PlaneHigh && (!me.CanClimb() || !other.CanClimb()) {
 		return false
 	}
 	me.X, other.X = other.X, me.X
 	me.Y, other.Y = other.Y, me.Y
 	me.Z, other.Z = other.Z, me.Z
+	if b.unitCollision != nil {
+		a, aok := collisionCell(other.X, other.Y, other.Z)
+		c, cok := collisionCell(me.X, me.Y, me.Z)
+		if aok && cok {
+			b.unitCollision.swapSlots(b.collisionSlot(side, k), b.collisionSlot(side2, k2), a, c)
+		}
+	}
 	me.PlaneHigh, other.PlaneHigh = other.PlaneHigh, me.PlaneHigh
 	me.HighTerrain, other.HighTerrain = other.HighTerrain, me.HighTerrain
 	me.Climbing, other.Climbing = other.Climbing, me.Climbing
@@ -619,6 +674,16 @@ func (b *Battle) swapWith(side, k, side2, k2 int) bool {
 
 // anyoneAt 回傳站在那一格的兵（側別與索引），沒有人回 (0, −1)。
 func (b *Battle) anyoneAt(x, y, z int) (int, int) {
+	if b.unitCollision != nil {
+		id := b.unitCollision.at(x, y, z)
+		if id < 0 || id >= 2*SoldiersOnFoot {
+			return 0, -1
+		}
+		if id < SoldiersOnFoot {
+			return b.PlayerSide, id
+		}
+		return 1 - b.PlayerSide, id - SoldiersOnFoot
+	}
 	for i := range b.Sides {
 		for k := range b.Sides[i].Soldiers {
 			s := &b.Sides[i].Soldiers[k]

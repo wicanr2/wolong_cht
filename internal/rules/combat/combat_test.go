@@ -94,7 +94,11 @@ func TestLeaderValue(t *testing.T) {
 		comment string
 	}{
 		{"武力高，多數情況", Leader{Martial: 12, Command: 6}, 1, 24, "12 × 2"},
-		{"武力高，少數情況", Leader{Martial: 12, Command: 6}, 0, 21, "12 − 3 ＋ 12"},
+		{"武力高，少數情況", Leader{Martial: 12, Command: 6}, 0, 15, "原版 00015304：12 − 3 ＋ 原統率 6"},
+		{"呂布混合分支", Leader{Martial: 15, Command: 11}, 0, 23, "原版實測 15 − 3 ＋ 11"},
+		{"能力相等混合分支", Leader{Martial: 15, Command: 15}, 0, 27, "原版實測 15 − 3 ＋ 15"},
+		{"零能力", Leader{}, 0, 0, "原版實測 0"},
+		{"截斷邊界", Leader{Martial: 1, Command: 0}, 0, 1, "原版實測 1 − 0 ＋ 0"},
 		{"統率高", Leader{Martial: 4, Command: 12}, 0, 21, "12 − 3 ＋ 12"},
 	} {
 		got := leaderValue(tc.l, &fixedRand{seq: []int{tc.roll}})
@@ -107,6 +111,27 @@ func TestLeaderValue(t *testing.T) {
 	leaderValue(Leader{Martial: 1, Command: 9}, rng)
 	if rng.i != 0 {
 		t.Errorf("統率較高時不該擲骰，卻用掉了 %d 次", rng.i)
+	}
+}
+
+// 原版將領混合值 12/6 → 15，必須進入野戰與攻城兩側的實際戰力路徑。
+func TestMixedLeaderPowerAcrossModes(t *testing.T) {
+	c := fullCorps(army.Infantry, Leader{Martial: 12, Command: 6}, 200)
+	for _, tc := range []struct {
+		mode     Mode
+		attacker bool
+		want     int
+	}{
+		{Field, true, 219}, {Field, false, 219},
+		{Siege, true, 439}, {Siege, false, 659},
+	} {
+		r := &fixedRand{seq: []int{0}}
+		if got := Power(c, tc.mode, tc.attacker, 0, r); got != tc.want {
+			t.Errorf("模式 %v，攻方 %v：戰力 %d，應為 %d", tc.mode, tc.attacker, got, tc.want)
+		}
+		if r.i != 1 {
+			t.Errorf("混合分支消費 %d 次亂數，應恰一次", r.i)
+		}
 	}
 }
 

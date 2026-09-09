@@ -3,7 +3,7 @@
 **狀態：生成的清單，跑 `tools/py.sh tools/re_open_questions.py` 重出。
 這一份不下結論，只把各文件的「未解」表集中到一處。**
 
-- 日期：2026-09-08
+- 日期：2026-09-09
 - 產生工具：`tools/re_open_questions.py`
 - 來源：`docs/` 底下所有文件的未解小節、表格裡標未解的列，與收尾是「…未解」的散句
 
@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**721 列分布在 306 份文件，平均每份 2.4 列。**
+**735 列分布在 310 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 182 | 175 | 6 | 1 |
-| 驗收 | 217 | 191 | 26 | 0 |
+| 驗收 | 224 | 198 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 285 | 263 | 21 | 1 |
-| **合計** | **721** | 660 | 58 | 3 |
+| 其他 | 292 | 270 | 21 | 1 |
+| **合計** | **735** | 674 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,8 +53,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 242 |
-| `docs/playtest/` | 217 |
+| `docs/spec/` | 249 |
+| `docs/playtest/` | 224 |
 | `docs/re/` | 182 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
@@ -291,7 +291,7 @@
 | [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 游標圖形資料 | 在 `sub_201E4` 附近，逐 byte 沒抓；remake 已經有量出來的 14×14 遮罩 | 靜態 |
 | [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 54 個 hide／show 點對應到 remake 的哪一段 | 沒做；這是「remake 要不要同步游標」的前置 | 靜態 |
 
-## 2.4 驗收（217 條）
+## 2.4 驗收（224 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -322,6 +322,13 @@
 | [`playtest/112-desktop-battle-result-options.md`](../playtest/112-desktop-battle-result-options.md) | 狀態：v.1.0.12-20260908 AppImage 正常操作通過；Windows／macOS 封包查核通過，原生 GUI 未驗。 | （散句） | 靜態 |
 | [`playtest/113-desktop-polish.md`](../playtest/113-desktop-polish.md) | 完整世界狀態與亂數相同的戰況對拍、全劇本正常通關仍未證實；這些是規則驗收限制， | （未解小節內文） | 靜態 |
 | [`playtest/114-focus-and-same-battle.md`](../playtest/114-focus-and-same-battle.md) | 第 1 拍的單位更新順序／移動閘是下一個窄查證點；「它導致後續單挑差異」目前只屬強推論。 | （未解小節內文） | 靜態 |
+| [`playtest/116-rng-consumption-census.md`](../playtest/116-rng-consumption-census.md) | `14216` 的分支條件 | 只知道次數少 542 次，條件還沒讀機器碼 | 靜態 |
+| [`playtest/116-rng-consumption-census.md`](../playtest/116-rng-consumption-census.md) | remake 側的對應軌跡 | 還沒做（`../spec/160` §3） | 靜態 |
+| [`playtest/116-rng-consumption-census.md`](../playtest/116-rng-consumption-census.md) | 開戰期的消費端 | 這一輪沒有涵蓋（§4） | 靜態 |
+| [`playtest/116-rng-consumption-census.md`](../playtest/116-rng-consumption-census.md) | `sub_12286` 的兩個 Code | 事件碼 `0x010C`／`0x020C` 的語意還沒對到機制 | 靜態 |
+| [`playtest/117-field-battle-needs-player-order.md`](../playtest/117-field-battle-needs-player-order.md) | **野戰單挑的觸發判定** | 原版依武將個性自動觸發，`Tactic`（武將 `+0x16`）同時也選 `BATTLE.DAT` 的腳本段。remake 還沒解觸發條件，fixture 是無條件武裝單挑 | 靜態 |
+| [`playtest/117-field-battle-needs-player-order.md`](../playtest/117-field-battle-needs-player-order.md) | AI 側腳本在這一場下了什麼命令 | 只觀察到開場的 `Form`；腳本後續有沒有下攻擊還沒逐指令追 | 靜態 |
+| [`playtest/117-field-battle-needs-player-order.md`](../playtest/117-field-battle-needs-player-order.md) | 攻擊與突擊在這一場結果相同 | 兩者都是 339 幀、600／159。大將出不出擊的差異在這個局面看不出來，要另找場景 | 靜態 |
 | [`playtest/17-expert-dosbox-remake.md`](../playtest/17-expert-dosbox-remake.md) | 松崗 DOS/V 原版 | **PASS（啟動至開場）** / 2026-08-12 證實空白確認／`0000`／`1234` 均越過密碼頁；完整自然長程驗證尚未執行 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 據點換手之後遮罩會不會跟著變 | `sub_1890A` 的行為，靜態讀得出來，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 松崗 DOS/V 側 | 這套 bridge 還沒在 DOS/V 上跑過。**密碼頁不構成阻礙**（四格留白按「確定」即可通過，`18`）——是還沒做 | 靜態 |
@@ -524,7 +531,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（285 條）
+## 2.6 其他（292 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -682,6 +689,13 @@
 | [`spec/154-mouse-cursor.md`](../spec/154-mouse-cursor.md) | 遊玩端的自繪 | 等 §4 定案 | 靜態 |
 | [`spec/155-desktop-launcher-input.md`](../spec/155-desktop-launcher-input.md) | 戰後結算與地圖捲動仍待補強；Windows／macOS 原生操作未驗收。 | （未解小節內文） | 靜態 |
 | [`spec/156-desktop-preferences.md`](../spec/156-desktop-preferences.md) | 無阻擋實作的偏好語意缺口；Windows／macOS 原生設定路徑與操作由人工驗收。 | （未解小節內文） | 靜態 |
+| [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | `14060` 屬於哪一支、取數做什麼用 | 只知道在 `sub_13EFD` 底下，12 次／36 小時的節奏還沒對到機制 | 靜態 |
+| [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | 開戰期的消費端清單 | 還沒統計；閒置期的四個位址不足以涵蓋 | 靜態 |
+| [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | remake 的呼叫點與原版位址的對照表 | 要邊比邊建，沒有現成的 | 靜態 |
+| [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | 起點要不要從劇本開局 196/4/1 起 | 現成的受控存檔是 196/4/16。從開局起最乾淨，但要另外做一份存檔或走新遊戲流程 | 靜態 |
+| [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | 原版側的鏡頭會自己跳 | 「固定在沛」在 remake 側靠 `-cam`，原版側做不到；這一項只影響畫面比對，狀態層不受影響 | 靜態 |
+| [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | 開戰期的取樣成本 | 只有閒置期量過。真正要看的四個現象多半發生在開戰期 | 靜態 |
+| [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | 沛的地圖座標 | 還沒量，`-cam` 要填的值未知 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |

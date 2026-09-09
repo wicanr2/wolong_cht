@@ -37,6 +37,7 @@ func TestColumnFormationFillsEverySlot(t *testing.T) {
 	for k := range b.Sides[0].Soldiers {
 		s := &b.Sides[0].Soldiers[k]
 		s.X, s.Y = 1, 10+k%40
+		s.StepX, s.StepY, s.StepZ = s.X, s.Y, s.Z
 	}
 	b.Sides[0].Line, b.Sides[0].Mirror = 3, true
 	b.Sides[1].Line, b.Sides[1].Mirror = 62, false
@@ -46,6 +47,7 @@ func TestColumnFormationFillsEverySlot(t *testing.T) {
 	for k := 0; k < PerSquad; k++ {
 		s := &b.Sides[1].Soldiers[k]
 		s.X, s.Y = 62, ys[k]
+		s.StepX, s.StepY, s.StepZ = s.X, s.Y, s.Z
 	}
 	for f := 0; f < 200; f++ {
 		b.Step()

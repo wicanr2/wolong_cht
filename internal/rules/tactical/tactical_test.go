@@ -100,12 +100,17 @@ func TestStaminaOnlyRefillsOnArrival(t *testing.T) {
 	// 直接放到定位再跑一幀。
 	x, y := b.formationSpot(0, 3)
 	s.X, s.Y = x, y
-	b.updateSoldier(0, 3)
+	b.updateSoldierCommand(0, 3)
 	if s.Stamina != StaminaFull {
 		t.Errorf("到位後疲勞度 %d，應補滿 %d", s.Stamina, StaminaFull)
 	}
-	if s.Cmd != Holding {
-		t.Errorf("到位後命令是 %v，應轉成就位", s.Cmd)
+	// 原版命令批次補滿，之後移動批次即使未位移也扣一（spec/159）。
+	b.updateSoldierMovement(0, 3)
+	if s.Stamina != StaminaFull-1 {
+		t.Errorf("移動批次後體力 %d，應為 %d", s.Stamina, StaminaFull-1)
+	}
+	if s.Cmd != Form {
+		t.Errorf("隊員到位後命令是 %v，原版應保持陣形命令", s.Cmd)
 	}
 }
 
@@ -643,7 +648,8 @@ func TestHorizontalStepAdjustsOneLevelForNonClimber(t *testing.T) {
 	b := NewBattle(NewField(stack, 0), SyntheticFormations(), &fixedRand{seq: []int{1}}, 0)
 	s := &b.Sides[0].Soldiers[1]
 	*s = Soldier{Alive: true, Kind: Cavalry, HP: MaxHP, Stamina: StaminaFull,
-		Cmd: Attack, Next: Attack, X: 10, Y: 20, Z: 1, GoalX: 11, GoalY: 20, GoalZ: 2}
+		Cmd: Attack, Next: Attack, X: 10, Y: 20, Z: 1, GoalX: 11, GoalY: 20, GoalZ: 2,
+		StepX: 11, StepY: 20, StepZ: 1}
 	b.moveToward(0, 1)
 	if s.X != 11 || s.Z != 2 {
 		t.Fatalf("水平跨一層未同步高度：位置=%d,%d,%d", s.X, s.Y, s.Z)
@@ -959,8 +965,8 @@ func TestEnemyCollisionAttacks(t *testing.T) {
 	e.X, e.Y, e.Z = 21, 20, 0
 	hp := e.HP
 
-	if ok, _ := b.tryMove(0, 10, 21, 20, 0); ok {
-		t.Error("敵人擋著不該走得過去")
+	if handled, _ := b.tryMove(0, 10, 21, 20, 0); !handled {
+		t.Error("原版撞敵 CF=0：該拍處理完成，不能繼續試另一軸")
 	}
 	if a.X != 20 {
 		t.Errorf("撞到敵人卻移動了，X ＝ %d", a.X)

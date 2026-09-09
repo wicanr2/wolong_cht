@@ -56,6 +56,10 @@
 
 | 主題 | 規格 | 狀態 |
 |---|---|---|
+| 亂數消費順序對齊（長時間對拍前置）| [`160-rng-consumption-alignment.md`](160-rng-consumption-alignment.md) | DRAFT；原版側軌跡已取得，remake 側與比對工具未做 |
+| 劉備不作為長時間對拍管線 | [`161-liubei-idle-longrun-parity.md`](161-liubei-idle-longrun-parity.md) | DRAFT；量測設計已定，管線未串 |
+| 戰術命令批次與移動體力順序 | [`159-tactical-command-movement-order.md`](159-tactical-command-movement-order.md) | READY；窄批次修正已測，完整排程仍待對拍 |
+| 委任將領混合值保留原統率 | [`158-delegated-leader-mix.md`](158-delegated-leader-mix.md) | READY；完整驗收進行中 |
 | 據點整備、威脅偵測與求援（`sub_13EFD` 鏈）| [`10-city-tick.md`](10-city-tick.md) | 已實作並對原版取樣驗過 |
 | 進言「請求君主出陣」（`sub_1699E`）| [`11-ai-sortie.md`](11-ai-sortie.md) | 已實作並有單測；兩道閘都從機器碼讀出來 |
 | 主畫面的視窗外框與指令列 | [`12-strategy-chrome.md`](12-strategy-chrome.md) | 版面與各視窗內部排版都照機器碼；主畫面五區逐像素對過 |
@@ -203,6 +207,7 @@
 | **戰術 AI 分支比較** | [`157-battle-script-comparisons.md`](157-battle-script-comparisons.md) | CONFORMED。參數 3／4 為無號大於等於／小於等於；修正呂布兵力充足卻誤退卻。 |
 
 ## 怎麼加一份
+
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的
    現況反寫規格，那只會把既有的偏差固定下來。

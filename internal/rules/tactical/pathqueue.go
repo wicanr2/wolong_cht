@@ -6,6 +6,7 @@ package tactical
 // 三軸各試一步；**走不動才把自己排進這條佇列**。佇列由
 // `sub_1AED2` 在逐兵迴圈**之前**消化，而且**每幀最多兩筆**——
 // 所以「重算」不是每個兵各自的計時器，是一份**全域預算**。
+// 命令在出隊之前，移動在出隊之後；兩者新排請求的等待時間不同（spec/159）。
 
 // pathQueueSize 是佇列格數。原版是 `and di, 0FFh` 的環狀陣列
 // （`CS:0xD352` 起 `100h` byte ＝ 128 筆 × 2 byte，`docs/re/80` §2）。
@@ -66,8 +67,8 @@ func (b *Battle) requestPath(side, k int) {
 
 // drainPathQueue 消化佇列（原版 `sub_1AED2`）。
 //
-// ⭐ **呼叫點在逐兵迴圈之前**（`sub_1ADC8` 的順序），所以這一幀排進去的
-// 請求最快也要下一幀才算得到。
+// 呼叫點在命令批次之後、逐兵移動之前（`sub_1ADC8`）。命令排入的請求
+// 可同拍算路，移動時排入的請求最快下一拍處理（docs/spec/159）。
 func (b *Battle) drainPathQueue() {
 	for i := 0; i < pathQueuePerFrame; i++ {
 		r, ok := b.paths.pop()

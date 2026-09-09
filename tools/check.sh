@@ -24,10 +24,15 @@
 set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
+# workplace/ 是素材與實驗區：overlay 探針宣告成 package tactical 卻放在那裡，
+# 單獨編譯本來就不會過。它不進版控，也不該進 vet/test 的範圍——
+# 不排除的話第一步就中止，後面五組檢查一次都跑不到。
+GO_PKGS=$(tools/go.sh list -e ./... | grep -v "/workplace/" | tr "\n" " ")
+
 echo "── go vet ──"
-tools/go.sh vet ./...
+tools/go.sh vet $GO_PKGS
 echo "── go test ──"
-tools/go.sh test ./...
+tools/go.sh test $GO_PKGS
 echo "── 文件索引 ──"
 tools/py.sh tools/index.py generate
 tools/py.sh tools/re_open_questions.py --strict > docs/re/43-open-questions.md

@@ -4,8 +4,8 @@ package tactical
 //
 // 血歸零時原版只清掉「在場」那個位元、把同一個計時器設成 4，
 // 之後每幀由 `sub_1B360` 換一組圖重畫，歸零才由 `sub_1B4B8(ah=1)` 收掉。
-// ⭐ **那四幀不擋路也不算場上人數**——`0001B697` 的 `and [di], 10h`
-// 把 bit 7 清掉了，而占格與選目標看的就是那個位元。
+// 四幀不算存活單位，但碰撞格保留到 sub_1B3B2 清除（spec/159）。
+// 不能由 bit 7 已清推定碰撞格為空。
 
 const (
 	// DeathFrames 是倒地要幾幀（`0001B69D` 的 `mov byte ptr [di+1], 4`）。
@@ -21,6 +21,7 @@ const (
 
 // Death 是一筆倒地動畫。位置固定，只有計時在走。
 type Death struct {
+	Slot       int
 	Side       int
 	X, Y, Z    int
 	Kind       Kind
@@ -67,7 +68,14 @@ func (b *Battle) addDeath(s *Soldier, side int) {
 	if b == nil || s == nil {
 		return
 	}
-	b.deaths = append(b.deaths, Death{Side: side, X: s.X, Y: s.Y, Z: s.Z,
+	slot := -1
+	for k := range b.Sides[side].Soldiers {
+		if s == &b.Sides[side].Soldiers[k] {
+			slot = k
+			break
+		}
+	}
+	b.deaths = append(b.deaths, Death{Side: side, Slot: slot, X: s.X, Y: s.Y, Z: s.Z,
 		Kind: s.Kind, FramesLeft: DeathFrames})
 }
 
@@ -80,6 +88,8 @@ func (b *Battle) stepDeaths() {
 	for _, d := range b.deaths {
 		if d.FramesLeft--; d.FramesLeft > 0 {
 			out = append(out, d)
+		} else if b.unitCollision != nil && d.Slot >= 0 {
+			b.unitCollision.clearSlot(b.collisionSlot(d.Side, d.Slot))
 		}
 	}
 	b.deaths = out

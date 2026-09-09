@@ -33,12 +33,13 @@ def common(p):
     (p / 'README.md').write_text(f'''# 臥龍傳 {version} 桌面引擎包
 
 本包採 RRSAL-1.0，不含原版遊戲資料、音樂或倚天字型。
-請自備合法松崗 DOS/V 版資料；`-orig` 指向包含 SINARIO.DAT、TALK.DAT 等檔案的資料夾，
-`-font` 指向自己的倚天字型資料夾。不要使用 PC-98 資料替代。
+請自備完整合法松崗 DOS/V 版資料；`-orig` 指向包含 SINARIO.DAT、TALK.DAT、
+END_S13.DAT、END_S14.DAT 等檔案的資料夾。繁中直接使用原版內建字型，不必另備倚天字型。
+不要使用 PC-98 資料替代。只有原版內建字型缺失、且您有合法替代字型時，才加 `-font`。
 
-Linux：`./wolong-remake-engine-linux-amd64-{version}.AppImage -orig /完整路徑/dosv -font /完整路徑/fonts`
-Windows PowerShell：`./wlgame.exe -orig C:/Games/dosv -font C:/Games/fonts`
-macOS：依架構執行 `./darwin-arm64/wlgame` 或 `./darwin-amd64/wlgame`，加上相同 `-orig`、`-font` 參數。
+Linux：`./wolong-remake-engine-linux-amd64-{version}.AppImage -orig /完整路徑/dosv`
+Windows PowerShell：`./wlgame.exe -orig C:/Games/dosv`
+macOS：依架構執行 `./darwin-arm64/wlgame` 或 `./darwin-amd64/wlgame`，加上相同 `-orig` 參數。
 AppImage 若無 FUSE，可先 `--appimage-extract`，再以 `squashfs-root/AppRun` 加上述參數啟動。
 音樂為可選項，`-audio` 指向自行合法轉出的 ogg 資料夾；未提供時靜音。
 

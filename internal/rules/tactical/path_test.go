@@ -152,17 +152,17 @@ func TestWaypointsAdvanceOnlyAfterArrival(t *testing.T) {
 	}
 
 	b.moveToward(0, 0)
-	if s.X != 11 || s.Path.Len() != 2 {
-		t.Fatalf("第一幀走到 (%d,%d)，剩 %d 點；應為 (11,20) 與 2 點",
+	if s.X != 11 || s.Path.Len() != 1 {
+		t.Fatalf("第一幀走到 (%d,%d)，剩 %d 點；應為 (11,20) 與 1 個未取點",
 			s.X, s.Y, s.Path.Len())
 	}
 	b.moveToward(0, 0)
-	if s.X != 12 || s.Y != 20 || s.Path.Len() != 2 {
+	if s.X != 12 || s.Y != 20 || s.Path.Len() != 1 {
 		t.Fatalf("抵達第一中繼點後座標 (%d,%d)、剩 %d 點錯誤",
 			s.X, s.Y, s.Path.Len())
 	}
 	b.moveToward(0, 0)
-	if s.X != 12 || s.Y != 21 || s.Path.Len() != 1 {
+	if s.X != 12 || s.Y != 21 || s.Path.Len() != 0 {
 		t.Fatalf("下一幀沒有前進到第二段：座標 (%d,%d)、剩 %d 點",
 			s.X, s.Y, s.Path.Len())
 	}

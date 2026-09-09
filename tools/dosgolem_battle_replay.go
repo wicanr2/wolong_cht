@@ -22,8 +22,13 @@ func main() {
 	field := flag.Bool("field", false, "從受控野戰存檔等待正常遭遇")
 	attack := flag.Bool("attack", false, "下攻擊令並等待自然勝負，不主動退卻")
 	noOrders := flag.Bool("no-orders", false, "進戰術畫面後不下令；不是行軍委任")
-	traceStart := flag.Bool("trace-start", false, "只取前三拍呼叫順序，不宣稱戰鬥完成")
+	traceStart := flag.Bool("trace-start", false, "只取開場呼叫順序，不宣稱戰鬥完成")
+	traceTicks := flag.Int("trace-ticks", 3, "開場追蹤拍數（1–20，配合 trace-start）")
+	traceAll := flag.Bool("trace-all-units", false, "配合 trace-start 取全部兵及換位呼叫")
 	flag.Parse()
+	if *traceTicks < 1 || *traceTicks > 20 {
+		panic("trace-ticks 必須介於 1 與 20")
+	}
 	must := func(err error) {
 		if err != nil {
 			panic(err)
@@ -48,6 +53,11 @@ func main() {
 			seg := o.Word(o.IDA(0x1D30E))
 			data["unit_segment"] = seg
 			data["unit_bytes"] = hex.EncodeToString(o.Bytes(oracle.Far(seg, 0), 0xC00))
+			if *traceStart {
+				data["path_segment"] = seg
+				data["path_offset"] = 0x1800
+				data["path_bytes"] = hex.EncodeToString(o.Bytes(oracle.Far(seg, 0x1800), 96*128))
+			}
 			seg = o.Word(o.IDA(0x1D30A))
 			data["summary_segment"] = seg
 			data["summary_bytes"] = hex.EncodeToString(o.Bytes(oracle.Far(seg, 0), 64))
@@ -86,10 +96,18 @@ func main() {
 	jsonFile("rng-calls-initialized", calls)
 	var startCalls []any
 	if *traceStart {
-		for _, addr := range []uint32{0x1A12A, 0x1A6FA, 0x1ADC8, 0x1AF69, 0x1A7B7, 0x1A85B, 0x1B240} {
+		for _, addr := range []uint32{0x1A12A, 0x1A6FA, 0x1ADC8, 0x1AF69, 0x1A7B7, 0x1A85B, 0x1B240, 0x1B732} {
 			address := addr
 			o.OnCall(o.IDA(address), func(o *oracle.Oracle) {
-				if len(startCalls) < 512 && (o.Regs().SI == 0 || o.Regs().SI == 0x600 || address == 0x1A12A || address == 0x1ADC8) {
+				if *traceAll && logicalTick == 2 && address == 0x1AF69 {
+					// 保留該呼叫 ES 段的碰撞層原始資料；位址基準見同筆 registers。
+					write(fmt.Sprintf("collision-tick2-%04x.bin", o.Regs().SI), o.Bytes(oracle.Far(o.Regs().ES, 0), 0x8000))
+				}
+				limit := 512
+				if *traceAll {
+					limit = 10000
+				}
+				if len(startCalls) < limit && (*traceAll || o.Regs().SI == 0 || o.Regs().SI == 0x600 || address == 0x1A12A || address == 0x1ADC8) {
 					startCalls = append(startCalls, map[string]any{"tick": logicalTick, "address": fmt.Sprintf("%05X", address), "registers": o.Regs(), "caller": fmt.Sprintf("%05X", o.ToIDA(o.NearCaller())), "unit": hex.EncodeToString(o.Bytes(oracle.Far(o.Word(o.IDA(0x1D30E)), o.Regs().SI), 32))})
 				}
 			})
@@ -114,7 +132,7 @@ func main() {
 		logicalTick++
 	})
 	if *traceStart {
-		must(o.RunUntil(oracle.NewCond("前三拍完成", func(*oracle.Oracle) bool { return logicalTick >= 4 }), oracle.Budget(100_000_000)))
+		must(o.RunUntil(oracle.NewCond("指定開場拍數完成", func(*oracle.Oracle) bool { return logicalTick >= *traceTicks+1 }), oracle.Budget(100_000_000)))
 		jsonFile("start-calls", startCalls)
 		return
 	}

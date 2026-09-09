@@ -150,8 +150,10 @@ func TestFieldBattleTerminates(t *testing.T) {
 		t.Fatal("選了戰鬥指揮卻沒有戰場")
 	}
 	b := pb.Battle
-	// 正常玩家入口會由 startBattleTalk 武裝單挑。舊 fixture 漏接這一段，
-	// 只因 AI 比較方向錯誤、誤下退卻才通過「會結束」；不能靠那個缺陷封口。
+	// 正常玩家入口會由 startBattleTalk 武裝單挑，這裡照做。
+	// ⚠ 原版的野戰單挑是**依武將個性自動觸發**的（武將 `+0x16` ＝ `Tactic`，
+	// 同一個值也選 `BATTLE.DAT` 的腳本段）。remake 還沒解那個觸發判定，
+	// 所以這裡是無條件武裝——它是 fixture 的簡化，不是原版行為。
 	duel := tactical.DuelInput{FieldNumber: provider.FieldNumber(pb.Node, false)}
 	for side, corps := range [2]int{pb.Attacker, pb.Defender} {
 		g := w.Generals[w.Leader(corps)]
@@ -160,8 +162,18 @@ func TestFieldBattleTerminates(t *testing.T) {
 	b.SetDuelInput(duel)
 
 	const limit = 8000
+	// ⭐ **玩家側開場站在陣形線上等下令**（internal/state/tactical.go 的
+	// `b.Order(side, -1, tactical.Form)`），而「攻擊」的定義是**大將以外的兵**
+	// 攻擊、大將除非「突擊」不主動出擊。所以這一場要打得起來，必須補上
+	// 原版流程裡的那一步：單挑結束後玩家下命令。沒有這一步，兩軍對峙到天荒
+	// 地老才是**正確**的原版行為，不是規則層的缺陷。
+	ordered := false
 	for b.Frame < limit && !b.Done {
 		b.Step()
+		if !ordered && !b.OpeningActive() {
+			b.OrderSelected(b.PlayerSide, tactical.Attack)
+			ordered = true
+		}
 	}
 	if !b.Done {
 		t.Fatalf("野戰跑了 %d 幀還沒結束：側 0 剩 %d 兵、側 1 剩 %d 兵",

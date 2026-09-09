@@ -111,8 +111,6 @@ func (b *Battle) OpeningActive() bool {
 	return b.DuelActive()
 }
 
-
-
 // duelMorale 重現 `sub_1A34F`：氣勢 ＝ 大將**戰力 × 體力**，
 // 武術門檻（`max(0, 武術×3−統率)/2`）沒過整個歸零，最後加亂數尾。
 //
@@ -134,9 +132,9 @@ func (b *Battle) duelMorale(side int) int {
 	return core + (b.rng.Next()&7)<<8
 }
 
-// duelSpot 是側 side 大將的單挑位（攻 (0x18,0x20)／守 (0x28,0x20)）。
-func duelSpot(side int) (int, int) {
-	if side == 0 {
+// duelSpot 依玩家／對方選單挑位，不依攻守（spec/80 角色訂正）。
+func (b *Battle) duelSpot(side int) (int, int) {
+	if side == b.PlayerSide {
 		return 0x18, 0x20
 	}
 	return 0x28, 0x20
@@ -154,7 +152,7 @@ func (b *Battle) duelGoal(side, x, y int) {
 // duelFace 把兩側大將的目標指回各自的單挑位（loc_1A202）。
 func (b *Battle) duelFace() {
 	for i := range b.Sides {
-		x, y := duelSpot(i)
+		x, y := b.duelSpot(i)
 		b.duelGoal(i, x, y)
 	}
 }
@@ -257,7 +255,7 @@ func (b *Battle) stepDuel() {
 		}
 		// `sub_1A398`：喊話＋目標指向己側單挑位＋大將命令 8＋等 40。
 		b.say(d.strong, 0x1B7)
-		x, y := duelSpot(d.strong)
+		x, y := b.duelSpot(d.strong)
 		b.duelGoal(d.strong, x, y)
 		b.orderDuelLeader(d.strong, true)
 		// `add word_1D311, 6`：跳過腳本開頭的「message／wait 15／message」，
@@ -276,7 +274,7 @@ func (b *Battle) stepDuel() {
 		}
 		// 應戰（loc_1A341 → sub_1A398）：弱側喊 0x1B8、騎向己側單挑位。
 		b.say(weak, 0x1B8)
-		x, y := duelSpot(weak)
+		x, y := b.duelSpot(weak)
 		b.duelGoal(weak, x, y)
 		b.orderDuelLeader(weak, true)
 		d.round = 0

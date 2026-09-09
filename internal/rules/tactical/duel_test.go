@@ -76,7 +76,7 @@ func TestDuelRefuse(t *testing.T) {
 	if g.GoalX != 0x18 || g.GoalY != 0x20 {
 		t.Errorf("強側大將目標 (%d,%d)，應為單挑位 (0x18,0x20)", g.GoalX, g.GoalY)
 	}
-	if x, y := duelSpot(0); g.X == x && g.Y == y {
+	if x, y := b.duelSpot(0); g.X == x && g.Y == y {
 		t.Errorf("挑戰當下大將不該已經在單挑位")
 	}
 	duelTick(b) // 弱側 lo=0 < 0x12C0 → 拒戰
@@ -192,9 +192,13 @@ func TestDuelCommandMovesTowardGoalOnly(t *testing.T) {
 	if s.X != x || s.Y != y {
 		t.Errorf("目標原地卻動了：(%d,%d)→(%d,%d)", x, y, s.X, s.Y)
 	}
-	// 目標在東邊：走一格，命令仍是 8。
+	// 目標在東邊：首拍取目標，下一拍走一格，命令仍是 8。
 	s.GoalX = s.X + 4
 	s.Path = nil
+	b.updateSoldier(0, 0)
+	if s.X != x {
+		t.Fatal("取新目標的同拍不可直接位移")
+	}
 	b.updateSoldier(0, 0)
 	if s.X != x+1 {
 		t.Errorf("朝目標走了 %d 格，應為 1", s.X-x)
@@ -220,5 +224,24 @@ func TestOpeningBlocksScripts(t *testing.T) {
 	duelTick(b)
 	if !b.OpeningActive() {
 		t.Fatal("單挑進行中應算 opening（腳本與輸入被擋）")
+	}
+}
+
+// 玩家即使是守方，也使用原版記錄 0 的單挑位。
+func TestDuelPositionsFollowPlayerRole(t *testing.T) {
+	for _, player := range []int{AttackerSide, DefenderSide} {
+		b := newTestBattle(flatField())
+		b.SetPlayerSide(player)
+		b.duelFace()
+		for side := range b.Sides {
+			wantX := 40
+			if side == player {
+				wantX = 24
+			}
+			g := b.Sides[side].Soldiers[0]
+			if g.GoalX != wantX || g.GoalY != 32 {
+				t.Fatalf("玩家側 %d，大將側 %d：目標 %d,%d，應為 %d,32", player, side, g.GoalX, g.GoalY, wantX)
+			}
+		}
 	}
 }

@@ -239,7 +239,8 @@ func computeAdvantage(mine, theirs int) Advantage {
 
 // Battle 是一場進行中的戰術戰鬥。
 type Battle struct {
-	Field *Field
+	unitCollision *collisionGrid
+	Field         *Field
 	// PlayerSide 是玩家在哪一側（0 攻／1 守）。**原版的 side 0 永遠是玩家**，
 	// remake 的 Sides[0] 固定是攻方，所以要另外記——見 SetPlayerSide。
 	PlayerSide int
@@ -646,17 +647,15 @@ func (b *Battle) Step() {
 	if b.Done {
 		return
 	}
+	if b.unitCollision == nil {
+		b.initUnitCollision()
+	}
 	b.Frame++
 	// 原版在同一個地方（0001A12A）遞增計時器並檢查三個 UI 的到期。
 	b.expireStructureBar()
 
 	// 開戰單挑（`sub_1A1C5` 在主迴圈最前面，docs/spec/80）。
 	b.stepDuel()
-
-	// ⭐ **尋路佇列在逐兵迴圈之前消化**，每幀最多兩筆——與原版
-	// `sub_1ADC8` 的順序相同（`docs/spec/120`）。所以這一幀排進去的
-	// 請求最快也要下一幀才算得到。
-	b.drainPathQueue()
 
 	// 腳本先跑：原版的主迴圈是「執行一個腳本指令 → 更新實體」。
 	// ⭐ 開場 50 tick ＋ 整段單挑期間**腳本不跑**——腳本直譯器在
@@ -670,10 +669,25 @@ func (b *Battle) Step() {
 		}
 	}
 
-	for i := range b.Sides {
+	// 原版先完成兩側命令，之後才進入移動批次（docs/spec/159）。
+	for _, i := range [2]int{b.PlayerSide, 1 - b.PlayerSide} {
+		for k := range b.Sides[i].Soldiers {
+			if k%PerSquad == 0 && !b.Sides[i].Soldiers[k].Alive {
+				b.squadLeaderGone(i, k)
+			}
+			if b.Sides[i].Soldiers[k].Alive {
+				b.updateSoldierCommand(i, k)
+			}
+		}
+	}
+	// 0001ADDD：命令批次的新請求可同拍消化；移動中的請求等下一拍。
+	// 仍維持每拍兩筆 FIFO 預算（docs/spec/159）。
+	b.drainPathQueue()
+	for _, i := range [2]int{b.PlayerSide, 1 - b.PlayerSide} {
 		for k := range b.Sides[i].Soldiers {
 			if b.Sides[i].Soldiers[k].Alive {
-				b.updateSoldier(i, k)
+				b.updateSoldierMovement(i, k)
+				b.drawUnitCollision(i, k)
 			}
 		}
 	}
@@ -764,11 +778,18 @@ func (b *Battle) reinforce() {
 				if s.Soldiers[j].Alive {
 					continue
 				}
+				if b.unitDying(i, j) {
+					continue
+				}
 				// 隊長那一格不補——大將倒下是全隊退卻，不是換人。
 				if j == k*PerSquad {
 					continue
 				}
 				x, y := b.formationSpot(i, j)
+				z := b.Field.StandLevel(x, y)
+				if b.unitCollision != nil && b.unitCollision.at(x, y, z) >= 0 {
+					continue
+				}
 				s.Soldiers[j] = Soldier{
 					Alive: true, Kind: s.Kinds[k], Power: s.squadPower(k),
 					HP: s.startHP(), Stamina: StaminaFull, Target: -1,
@@ -779,6 +800,7 @@ func (b *Battle) reinforce() {
 				s.Soldiers[j].GoalX, s.Soldiers[j].GoalY = x, y
 				s.Soldiers[j].StepX, s.Soldiers[j].StepY = x, y
 				s.Reserve[k]--
+				b.drawUnitCollision(i, j)
 				break
 			}
 		}

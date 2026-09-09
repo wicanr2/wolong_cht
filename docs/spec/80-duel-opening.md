@@ -1,5 +1,16 @@
 # 80 — 開戰單挑：挑戰、拒戰、應戰、回合互嗆、決著
 
+> 2026-09-08 角色訂正（窄修正 READY）：原版單挑位依玩家／對方分為
+> (24,32)／(40,32)，不是攻／守。來源為 IDA Pro 9.4、DOS/V linear
+> `0001A39D–0001A3A7`（依 DL 選 0x2018／0x2028）及
+> `0001A1F9–0001A213`（依 SI=0 選玩家位，另一人用相反位置）；
+> 原始指令在 `workplace/delegated-battle-20260908/ida-script/battle-cause.json`。
+> 輸入 KI.EXE SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`。
+> 上述座標選擇為已證實；remake Sides 是攻守編號，必須用 PlayerSide 轉換，
+> 挑戰、應戰及歸位三個呼叫點一併修改並測玩家攻守兩側。
+> 下方歷史 CONFORMED 不代表本輪完整開場時序已通過；亂數順序、目標寫入
+> 與開放指令時間仍待同狀態驗證，不藉此窄位置修正宣告完成。
+
 **狀態：CONFORMED（2026-08-25）。狀態機在
 `internal/rules/tactical/duel.go`，單元測試齊，b0（挑戰幀）對拍
 回到 field 0.05%＝原版游標（[`../playtest/43`](../playtest/43-field-battle-parity.md)）。

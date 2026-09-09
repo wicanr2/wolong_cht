@@ -102,13 +102,15 @@ type Corps struct {
 // 武術高的將領大多數時候發揮兩倍武術，偶爾退回混合值。
 func leaderValue(l Leader, rng Rand) int {
 	m, c := l.Martial, l.Command
+	base := c
 	if m >= c {
 		if rng.Next()&3 != 0 {
 			return m * 2
 		}
-		c = m // 原版 mov dh, dl
+		base = m // 000152FA mov dh, dl；原記錄的統率不變。
 	}
-	return c - c>>2 + c
+	// 00015304 add ch,[bx+4252h] 重新讀原統率，不是加已覆寫的 DH。
+	return base - base>>2 + c
 }
 
 // Power 回傳一方的戰力。

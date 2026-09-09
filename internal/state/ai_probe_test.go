@@ -186,18 +186,21 @@ func TestStrategicAIScenarioOneProducesEnemyWarPath(t *testing.T) {
 	w := load(t, 0)
 	w.Player = 0
 	w.EnableStrategicAI()
-	// seed 是挑過的：這支是**情境探針**，斷言「六個月內敵方會走完
-	// 宣戰→編成→戰鬥」，對世界演化的蝴蝶效應敏感。應戰軍團改照
-	// sub_14C72 計分挑（docs/spec/82）之後，舊 seed 17 的歷史變成
-	// 玩家第 4 個月被淘汰——那是合法動力學不是 bug；規則改動後這支
-	// 失敗時，先確認新規則的機器碼出處，再換 seed。
+	// 固定 seed 2，驗「六個月內宣戰→編成→戰鬥」及每拍不變量。
+	// spec/158 修正混合戰力後，此局在第 4 月失去最後據點。
+	// 不換 seed 或要求玩家必須活滿六個月；合法敗亡仍須通過下面
+	// 的勢力狀態檢查與三項事件斷言，不能把提早結束直接當成功。
 	r := rng.NewFixed(2)
 	months, declarations, formed, battles := 0, 0, 0, 0
 	for months < 6 {
 		// 世界提早分出勝負時 Tick 永遠空轉——沒有這一道，
 		// 迴圈會靜默地跑到測試逾時。
 		if w.Outcome() != InProgress {
-			t.Fatalf("第 %d 個月世界提早結束：outcome=%v", months, w.Outcome())
+			f := w.Factions[w.Player]
+			if w.Outcome() != DefeatFactionEliminated || f.Alive || f.Cities != 0 || f.Capital != noCity {
+				t.Fatalf("第 %d 個月非預期終局：outcome=%v faction=%+v", months, w.Outcome(), f)
+			}
+			break
 		}
 		ev := w.Tick(r)
 		for _, se := range ev.Strategy {
@@ -254,7 +257,7 @@ func TestStrategicAIScenarioOneProducesEnemyWarPath(t *testing.T) {
 	if battles == 0 {
 		t.Fatal("敵方軍團六個月內沒有進入戰鬥")
 	}
-	t.Logf("6 個月：宣戰 %d、編成 %d、戰鬥 %d、活著軍團 %d", declarations, formed, battles, len(w.AliveCorps()))
+	t.Logf("%d 個月：宣戰 %d、編成 %d、戰鬥 %d、活著軍團 %d", months, declarations, formed, battles, len(w.AliveCorps()))
 }
 
 func chebyshev(a, b City) int {
@@ -316,7 +319,7 @@ func TestCityThreatIsRecomputedOnTick(t *testing.T) {
 		X: w.Cities[nb].X, Y: w.Cities[nb].Y, Node: nb}
 
 	r := rng.NewFixed(1)
-	w.refreshCityThreat(nb, r)  // 先算鄰居的佔用數，威脅量才有東西可加
+	w.refreshCityThreat(nb, r) // 先算鄰居的佔用數，威脅量才有東西可加
 	w.refreshCityThreat(site, r)
 
 	if got := w.Cities[nb].Occupancy; got != 1 {

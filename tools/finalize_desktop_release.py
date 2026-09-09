@@ -68,8 +68,9 @@ AI 比較方向寫反造成的誤退卻已修；dosgolem 驗證呂布委任獲�
 完整逐拍戰況、單挑位置與戰後退路仍有已知差異，不宣稱完全原版一致。
 
 附件為 Linux AppImage、Windows amd64、macOS amd64／arm64 引擎包，
-不含原版資料、音樂與倚天字型。請自備合法松崗 DOS/V 資料，依包內 README 的
-`-orig`、`-font` 命令啟動。Windows／macOS 原生操作仍待人工驗收；Android 不在本批。
+不含原版資料、音樂與倚天字型。請自備完整合法松崗 DOS/V 資料，依包內 README 的
+`-orig` 命令啟動；繁中使用原版內建字型，不必另備倚天字型。
+Windows／macOS 原生操作仍待人工驗收；Android 不在本批。
 
 Linux AppImage 正常流程、公開包自備資料啟動、三平台封包／架構／雜湊均已查核。
 自評 84／100（主觀證據評分，不是完成率）。採 RRSAL-1.0：非商業免費、

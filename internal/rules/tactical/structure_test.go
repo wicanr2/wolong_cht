@@ -512,6 +512,7 @@ func TestClimbTriedWhenBlockedBeforeReachingGoal(t *testing.T) {
 		t.Skip("門那一格的高平面沒有地面")
 	}
 	s.GoalZ = lv
+	s.StepX, s.StepY, s.StepZ = s.GoalX, s.GoalY, s.GoalZ
 	s.Path = nil
 
 	b.moveToward(0, 0)
@@ -573,6 +574,8 @@ func TestFacingOnlyUpdatesOnSuccessfulMove(t *testing.T) {
 	s.X, s.Y, s.Z = 31, 10, 0 // 牆的正左邊（那一列沒有門）
 	s.Facing = West
 	s.GoalX, s.GoalY, s.GoalZ = 40, 10, 0 // 目標在牆的另一邊
+	s.StepX, s.StepY, s.StepZ = 40, 10, 0
+	s.Target = -1 // 沒有鎖敵，受阻出口不額外轉向；有鎖敵另驗 spec/159。
 
 	b.moveToward(0, 0)
 	if s.X != 31 {
