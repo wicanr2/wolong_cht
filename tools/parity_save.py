@@ -23,6 +23,10 @@ AI 的判斷都吃亂數，取樣點一拉長兩邊就分開，而分開之後�
                 停戰與請求協助**沒有外交官就走不到第二步**，所以那兩條
                 狀態列（#7）要靠這個改法才拍得到。
 
+  --player F     把玩家所仕的勢力改成 F（區塊 `+0x0D` ＝ F × 0x40、`+0x0F` ＝ F）。
+                長時間對拍要「玩家什麼都不做」時，用它把觀察平台固定在
+                指定勢力上（劉備＝勢力 2，`docs/spec/161`）。
+
 ⚠ **輸出目錄要自己備妥其餘原版檔案**（dosgolem 的 gamedir 需要整套）。
 這一支只寫 `SAVE.DAT`，不碰來源，也不碰 `workplace/orig/`。
 """
@@ -45,6 +49,9 @@ CLOUD_FIRST, CLOUD_COUNT = 16, 16
 # 勢力表 22 筆 × 64 B、武將表 128 槽 × 32 B（docs/formats/08 §1）。
 FACTION_BASE, FACTION_SIZE, FACTION_COUNT = 0x0080, 64, 22
 FACTION_DIPLOMAT = 0x2A          # 我方派駐在這個勢力的外交官（0xFF ＝ 無）
+# 玩家所仕的勢力：+0x0D 是勢力表位址（編號 × 0x40）、+0x0F 是編號本身
+# （docs/formats/08 §1.2.1，`sub_11AC3` 同時寫這兩個）。
+PLAYER_PTR, PLAYER_ID = 0x0D, 0x0F
 GENERAL_BASE, GENERAL_SIZE, GENERAL_COUNT = 0x42C0, 32, 127
 GENERAL_DUTY = 0x17              # 職務值 0–4；3 ＝ 外交官（docs/spec/143）
 DUTY_DIPLOMAT = 3
@@ -79,6 +86,24 @@ def assign_diplomat(data: bytearray, block: int, faction: int, general: int) -> 
     data[base + FACTION_BASE + faction * FACTION_SIZE + FACTION_DIPLOMAT] = general
     data[base + GENERAL_BASE + general * GENERAL_SIZE + GENERAL_DUTY] = DUTY_DIPLOMAT
     return f"武將 {general} 派駐勢力 {faction} 當外交官"
+
+
+def set_player(data: bytearray, block: int, faction: int) -> str:
+    """把玩家所仕的勢力改成 faction，回傳一行說明。
+
+    ⚠ **兩個欄位都要寫**（`docs/formats/08` §1.2.1，兩者都 confirmed）：
+    `+0x0D` 是勢力表**位址**（＝ 勢力編號 × 0x40），`+0x0F` 是勢力**編號**。
+    原版 `sub_11AC3` 選定勢力時同時寫這兩個，只改一個會做出一份
+    原版自己走不到的狀態——而對拍最怕的就是比一個不存在的局面。
+    """
+    if not 0 <= faction < FACTION_COUNT:
+        raise ValueError(f"勢力編號要在 0–{FACTION_COUNT - 1}，收到 {faction}")
+    base = block * BLOCK
+    ptr = faction * FACTION_SIZE
+    data[base + PLAYER_PTR] = ptr & 0xFF
+    data[base + PLAYER_PTR + 1] = (ptr >> 8) & 0xFF
+    data[base + PLAYER_ID] = faction
+    return f"玩家勢力 ＝ {faction}（+0x0D ＝ {ptr:#06x}、+0x0F ＝ {faction}）"
 
 
 def selftest() -> int:
@@ -134,6 +159,34 @@ def selftest() -> int:
             check(f"擋下超出範圍的 {bad}", False)
         except ValueError:
             check(f"擋下超出範圍的 {bad}", True)
+    # --player：兩個欄位都要寫（位址與編號），而且只寫那兩個。
+    p = bytearray(FILE_SIZE)
+    for i in range(FILE_SIZE):
+        p[i] = 0xFF if i % 5 == 0 else 0x22
+    before_p = bytes(p)
+    set_player(p, 0, 2)                      # 劉備＝勢力 2，2 × 0x40 ＝ 0x80
+    check("+0x0D 低位元組 ＝ 0x80", p[PLAYER_PTR] == 0x80)
+    check("+0x0E 高位元組 ＝ 0x00", p[PLAYER_PTR + 1] == 0x00)
+    check("+0x0F ＝ 勢力編號 2", p[PLAYER_ID] == 2)
+    check("其餘 byte 一個都沒動",
+          sum(1 for i in range(FILE_SIZE) if p[i] != before_p[i]) <= 3)
+    # 高位元組真的會用到：勢力 21 × 0x40 ＝ 0x540。
+    p21 = bytearray(FILE_SIZE)
+    set_player(p21, 0, 21)
+    check("勢力 21 的位址跨到高位元組（0x540）",
+          p21[PLAYER_PTR] == 0x40 and p21[PLAYER_PTR + 1] == 0x05)
+    # 負對照：只動指定的區塊。
+    p2 = bytearray(FILE_SIZE)
+    set_player(p2, 1, 2)
+    check("只動指定的區塊（負對照）",
+          p2[PLAYER_ID] == 0 and p2[BLOCK + PLAYER_ID] == 2)
+    for bad in (22, -1, 127):
+        try:
+            set_player(bytearray(FILE_SIZE), 0, bad)
+            check(f"擋下超出範圍的勢力 {bad}", False)
+        except ValueError:
+            check(f"擋下超出範圍的勢力 {bad}", True)
+
     return 0 if ok else 1
 
 
@@ -146,6 +199,8 @@ def main() -> int:
     ap.add_argument("--no-clouds", action="store_true")
     ap.add_argument("--diplomat", metavar="勢力:武將",
                     help="派一個外交官（勢力記錄 +0x2A ＋ 武將記錄 +0x17）")
+    ap.add_argument("--player", type=int, metavar="勢力",
+                    help="改玩家所仕的勢力（區塊 +0x0D ＋ +0x0F）")
     ap.add_argument("--selftest", action="store_true")
     ns = ap.parse_args()
 
@@ -170,6 +225,11 @@ def main() -> int:
             ap.error("--diplomat 要寫成 `勢力:武將`，兩個都是十進位整數")
         try:
             changes.append(assign_diplomat(data, ns.slot, faction, general))
+        except ValueError as err:
+            ap.error(str(err))
+    if ns.player is not None:
+        try:
+            changes.append(set_player(data, ns.slot, ns.player))
         except ValueError as err:
             ap.error(str(err))
     if not changes:

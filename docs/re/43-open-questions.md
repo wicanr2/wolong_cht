@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**735 列分布在 310 份文件，平均每份 2.4 列。**
+**739 列分布在 311 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 182 | 175 | 6 | 1 |
-| 驗收 | 224 | 198 | 26 | 0 |
+| 驗收 | 228 | 201 | 27 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 292 | 270 | 21 | 1 |
-| **合計** | **735** | 674 | 58 | 3 |
+| **合計** | **739** | 677 | 59 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -54,7 +54,7 @@
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/spec/` | 249 |
-| `docs/playtest/` | 224 |
+| `docs/playtest/` | 228 |
 | `docs/re/` | 182 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
@@ -291,7 +291,7 @@
 | [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 游標圖形資料 | 在 `sub_201E4` 附近，逐 byte 沒抓；remake 已經有量出來的 14×14 遮罩 | 靜態 |
 | [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 54 個 hide／show 點對應到 remake 的哪一段 | 沒做；這是「remake 要不要同步游標」的前置 | 靜態 |
 
-## 2.4 驗收（224 條）
+## 2.4 驗收（228 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -329,6 +329,10 @@
 | [`playtest/117-field-battle-needs-player-order.md`](../playtest/117-field-battle-needs-player-order.md) | **野戰單挑的觸發判定** | 原版依武將個性自動觸發，`Tactic`（武將 `+0x16`）同時也選 `BATTLE.DAT` 的腳本段。remake 還沒解觸發條件，fixture 是無條件武裝單挑 | 靜態 |
 | [`playtest/117-field-battle-needs-player-order.md`](../playtest/117-field-battle-needs-player-order.md) | AI 側腳本在這一場下了什麼命令 | 只觀察到開場的 `Form`；腳本後續有沒有下攻擊還沒逐指令追 | 靜態 |
 | [`playtest/117-field-battle-needs-player-order.md`](../playtest/117-field-battle-needs-player-order.md) | 攻擊與突擊在這一場結果相同 | 兩者都是 339 幀、600／159。大將出不出擊的差異在這個局面看不出來，要另找場景 | 靜態 |
+| [`playtest/118-liubei-90day-blocked-by-audience.md`](../playtest/118-liubei-90day-blocked-by-audience.md) | **輸入沒進到遊戲眼裡** | 讀 `sub_20070` 的座標快取（`cs:word_200FC`／`200FE`，`../re/01`）得到 `40 01 E0 00` ＝ **(320, 224)**，而 `move:287,199` 之後**一個 byte 都沒變**。所以不是點錯位置——dosgolem 送的滑鼠事件沒有反映到遊戲讀… | 實測 |
+| [`playtest/118-liubei-90day-blocked-by-audience.md`](../playtest/118-liubei-90day-blocked-by-audience.md) | 起點不是劇本開局 | 現用存檔是 196/4/16，玩家勢力由 `--player` 改成劉備。從 196/4/1 開局起跑要另外做一份存檔或走新遊戲流程 | 靜態 |
+| [`playtest/118-liubei-90day-blocked-by-audience.md`](../playtest/118-liubei-90day-blocked-by-audience.md) | 90 天的完整基線 | 只跑到第 25 天（196/5/11）。前 20 天已取得每 10 日的狀態表與事件軌跡 | 靜態 |
+| [`playtest/118-liubei-90day-blocked-by-audience.md`](../playtest/118-liubei-90day-blocked-by-audience.md) | 劉備前 20 天的變化 | 城 1→1、金 17000→16790（`45` 的「按兵不動 1→1」一致） | 靜態 |
 | [`playtest/17-expert-dosbox-remake.md`](../playtest/17-expert-dosbox-remake.md) | 松崗 DOS/V 原版 | **PASS（啟動至開場）** / 2026-08-12 證實空白確認／`0000`／`1234` 均越過密碼頁；完整自然長程驗證尚未執行 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 據點換手之後遮罩會不會跟著變 | `sub_1890A` 的行為，靜態讀得出來，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 松崗 DOS/V 側 | 這套 bridge 還沒在 DOS/V 上跑過。**密碼頁不構成阻礙**（四格留白按「確定」即可通過，`18`）——是還沒做 | 靜態 |

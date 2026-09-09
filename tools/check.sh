@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # 提交前的單一入口。三件事一起跑，任何一件不過就回非 0。
 #
-#   tools/check.sh
+#   tools/check.sh          全部（Go ＋ 文件／資產）
+#   tools/check.sh --docs   只跑文件／資產那半邊，跳過 go vet/test
+#   tools/check.sh --go     只跑 Go 那半邊
 #
 # 為什麼要有這支：檢查分屬多個工具，分開記就會有一個被忘記。
 # 實際被忘記過的是文件那一組——狀態行與內文矛盾了好幾輪都沒人發現
@@ -24,32 +26,61 @@
 set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
-# workplace/ 是素材與實驗區：overlay 探針宣告成 package tactical 卻放在那裡，
-# 單獨編譯本來就不會過。它不進版控，也不該進 vet/test 的範圍——
-# 不排除的話第一步就中止，後面五組檢查一次都跑不到。
-GO_PKGS=$(tools/go.sh list -e ./... | grep -v "/workplace/" | tr "\n" " ")
+WANT_GO=1 WANT_DOCS=1
+case "${1:-}" in
+    --docs) WANT_GO=0 ;;
+    --go)   WANT_DOCS=0 ;;
+    "")     ;;
+    *) echo "用法：tools/check.sh [--docs|--go]" >&2; exit 2 ;;
+esac
 
-echo "── go vet ──"
-tools/go.sh vet $GO_PKGS
-echo "── go test ──"
-tools/go.sh test $GO_PKGS
-echo "── 文件索引 ──"
-tools/py.sh tools/index.py generate
-tools/py.sh tools/re_open_questions.py --strict > docs/re/43-open-questions.md
-echo "── 幽靈引用（指向不存在的東西）──"
-tools/py.sh tools/phantom_scan.py
-echo "── 過期斷言（指到的東西存在，但值不對）──"
-tools/py.sh tools/stale_scan.py --selftest
-tools/py.sh tools/stale_scan.py
-echo "── 對拍工具正對照 ──"
-tools/py.sh tools/parity_diff.py --selftest
-tools/py.sh tools/state_diff.py --selftest
-tools/py.sh tools/parity_save.py --selftest
-tools/py.sh tools/rng_state.py --selftest
-echo "── 發行目錄交換 ──"
-tools/py.sh tools/release_all_fs.py --selftest
-echo "── 資產 deny-list ──"
-tools/py.sh tools/denylist.py --selftest
-tools/py.sh tools/denylist.py
-echo "── TALK.DAT 校訂工具 ──"
-tools/py.sh tools/talkdat_selftest.py
+# 每一段都報耗時。**沒有這個就分不出「還在編譯」與「卡住了」**——
+# 冷快取的 go vet 要編掉整棵依賴樹，看起來跟當掉一樣。
+step() {
+    local name=$1; shift
+    local t0=$SECONDS
+    echo "── $name ──"
+    "$@"
+    echo "   （$name：$((SECONDS - t0)) 秒）"
+}
+
+# vet/test 的範圍：**workplace/ 排除在外**。那是素材與實驗區，overlay 探針
+# 宣告成 `package tactical` 卻放在那裡，單獨編譯必然 `undefined: Battle`；
+# 不排除的話 `set -e` 會讓第一步就中止，後面五組檢查一次都跑不到。
+#
+# 直接列 pattern，不多開一次容器跑 `go list`（實測省 1.2 秒）。
+# 下面那道迴圈擋「新增了頂層 Go 目錄卻忘了補進來」。
+GO_PKGS="./cmd/... ./internal/... ./mobile/... ./tools/... ./translations/..."
+for d in */; do
+    d=${d%/}
+    case "$d" in cmd|internal|mobile|tools|translations|workplace) continue ;; esac
+    if compgen -G "$d/*.go" > /dev/null 2>&1 || compgen -G "$d/*/*.go" > /dev/null 2>&1; then
+        echo "⚠ $d/ 底下有 Go 檔卻不在 GO_PKGS 裡，補進 tools/check.sh 再跑" >&2
+        exit 1
+    fi
+done
+
+if [[ $WANT_GO == 1 ]]; then
+    step "go vet" tools/go.sh vet $GO_PKGS
+    step "go test" tools/go.sh test $GO_PKGS
+fi
+
+if [[ $WANT_DOCS == 1 ]]; then
+    step "文件索引" bash -c '
+        tools/py.sh tools/index.py generate
+        tools/py.sh tools/re_open_questions.py --strict > docs/re/43-open-questions.md'
+    step "幽靈引用（指向不存在的東西）" tools/py.sh tools/phantom_scan.py
+    step "過期斷言（指到的東西存在，但值不對）" bash -c '
+        tools/py.sh tools/stale_scan.py --selftest
+        tools/py.sh tools/stale_scan.py'
+    step "對拍工具正對照" bash -c '
+        tools/py.sh tools/parity_diff.py --selftest
+        tools/py.sh tools/state_diff.py --selftest
+        tools/py.sh tools/parity_save.py --selftest
+        tools/py.sh tools/rng_state.py --selftest'
+    step "發行目錄交換" tools/py.sh tools/release_all_fs.py --selftest
+    step "資產 deny-list" bash -c '
+        tools/py.sh tools/denylist.py --selftest
+        tools/py.sh tools/denylist.py'
+    step "TALK.DAT 校訂工具" tools/py.sh tools/talkdat_selftest.py
+fi
