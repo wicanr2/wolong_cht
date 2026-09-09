@@ -35,11 +35,14 @@ func TestRoadGraphCountsArePinned(t *testing.T) {
 	if len(edges) != 254 {
 		t.Errorf("邊數 = %d，期望 254", len(edges))
 	}
-	if total != 5852 {
-		t.Errorf("路徑總長（含頭尾城內那一小段）= %d，期望 5852", total)
+	// ⭐ 5,780 ＝ 原版道路表的 5,526 個路徑點 ＋ 254 個終點城中心
+	// （每條邊一格）。與原版執行期建的表**整條逐格相同**，
+	// 證據在 docs/spec/169。
+	if total != 5780 {
+		t.Errorf("路徑總長 = %d，期望 5780", total)
 	}
-	if longest != 86 {
-		t.Errorf("最長一條 = %d 格，期望 86", longest)
+	if longest != 85 {
+		t.Errorf("最長一條 = %d 格，期望 85", longest)
 	}
 }
 

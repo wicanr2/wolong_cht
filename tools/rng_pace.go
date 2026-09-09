@@ -20,6 +20,9 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/wicanr2/wolong_cht/internal/assets/library"
+	"github.com/wicanr2/wolong_cht/internal/assets/world"
+	"github.com/wicanr2/wolong_cht/internal/rules/march"
 	"github.com/wicanr2/wolong_cht/internal/rules/rng"
 	"github.com/wicanr2/wolong_cht/internal/state"
 )
@@ -56,7 +59,9 @@ func main() {
 	traceN := flag.Int("trace", 0, "印前 N 拍的據點狀態（小樣本追蹤）")
 	mark := flag.String("mark", "", "印出含這個呼叫點的子刻位置（例：strategy.go:630）")
 	rngState := flag.String("rng-state", "", "載入原版當下的亂數狀態（258 byte，docs/spec/147 §5）")
+	root := flag.String("root", "workplace/orig/dosv", "原版目錄——⭐ **要掛道路圖**，否則行軍走的是直線退路")
 	saveOut := flag.String("save-out", "", "跑完之後把世界寫成一份 SAVE.DAT（拿去跟原版同一拍的記憶體逐 byte 比）")
+	corpsWatch := flag.Int("corps", -1, "逐拍印這支軍團的位置——只在它動了的那一拍印")
 	flag.Parse()
 
 	w, err := state.LoadScenario(*save, *slot)
@@ -64,6 +69,25 @@ func main() {
 		fmt.Fprintln(os.Stderr, "讀不到存檔：", err)
 		os.Exit(1)
 	}
+	// ⭐ **規則層不讀檔案，道路圖要由呼叫端注入。** 少了這一步，
+	// `w.step` 走的是直線退路，軍團的每一格都與原版不同——而畫面與
+	// 存檔欄位看起來都正常，只有逐格對拍才看得見（docs/spec/169）。
+	lib, err := library.Load(*root)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "讀不到素材：", err)
+		os.Exit(1)
+	}
+	xy := make([][2]int, len(w.Cities))
+	for i := range w.Cities {
+		xy[i] = [2]int{w.Cities[i].X, w.Cities[i].Y}
+	}
+	edges, err := world.RoadEdges(lib.World, xy)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "RoadEdges：", err)
+		os.Exit(1)
+	}
+	w.SetRoads(march.New(len(w.Cities), world.MarchEdges(edges, xy)))
+
 	r := rng.NewFixed(*seed)
 	if *rngState != "" {
 		raw, err := os.ReadFile(*rngState)
@@ -106,6 +130,7 @@ func main() {
 		start = s.CityCursor
 	}
 	markAt := []int{}
+	var lastCorps [4]int
 	perTick := make([]int, 0, *ticks)
 	total := map[string]int{}
 	prev := 0
@@ -141,6 +166,16 @@ func main() {
 				}
 				fmt.Printf("      鄰 %d：據點 %3d 主 %2d 佔用 %d 交友度 %3d\n",
 					k, nb, cs[nb].Owner, cs[nb].Occupancy, f)
+			}
+		}
+		if *corpsWatch >= 0 && *corpsWatch < len(w.Corps) {
+			c := w.Corps[*corpsWatch]
+			cur := [4]int{c.X, c.Y, c.Node, c.TargetNode}
+			if cur != lastCorps {
+				fmt.Printf("  拍 %4d 軍團 %d xy(%d,%d) 節點 %d → %d 計時 %d 間隔 %d 朝向 %d 階段 %d\n",
+					i+1, *corpsWatch, c.X, c.Y, c.Node, c.TargetNode,
+					c.Timer, c.Interval, c.Heading, c.Stage)
+				lastCorps = cur
 			}
 		}
 		if w.PendingDiplomacy() != nil {

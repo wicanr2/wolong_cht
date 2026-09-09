@@ -336,8 +336,12 @@ func TestRoadPathStaysOnRoad(t *testing.T) {
 	}
 }
 
-// 路徑要是**連續**的：相鄰兩格必須 8-連通。
+// 路徑的**中段**要是連續的：相鄰兩格必須 8-連通。
 // 斷開的話軍團會瞬移，而總步數看起來還是對的。
+//
+// ⚠ **頭尾各一格是刻意跳的**（docs/spec/169）：原版出城時軍團從據點座標
+// 一步跳到路徑表的第一筆（城門格），進城時也是一步跳回據點座標。
+// 先前 remake 在兩端補了逐格直線讓它連續，代價是整條路的相位與原版錯開。
 func TestRoadPathIsContiguous(t *testing.T) {
 	m, err := ParseMap(read(t, "dosv", "MMAP.MAP"))
 	if err != nil {
@@ -349,16 +353,17 @@ func TestRoadPathIsContiguous(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, e := range edges {
-		prev := xy[e.A]
-		for i, c := range e.Path {
+		// 中段：Path[0]（城門格）到 Path[len-2]（另一端的城門格）。
+		for i := 1; i < len(e.Path)-1; i++ {
+			prev, c := e.Path[i-1], e.Path[i]
 			dx, dy := c[0]-prev[0], c[1]-prev[1]
 			if dx < -1 || dx > 1 || dy < -1 || dy > 1 || (dx == 0 && dy == 0) {
 				t.Fatalf("邊 %d–%d 的第 %d 格從 %v 跳到 %v", e.A, e.B, i, prev, c)
 			}
-			prev = c
 		}
-		if prev != xy[e.B] {
-			t.Fatalf("邊 %d–%d 的終點是 %v，應該是 %v", e.A, e.B, prev, xy[e.B])
+		if e.Path[len(e.Path)-1] != xy[e.B] {
+			t.Fatalf("邊 %d–%d 的終點是 %v，應該是 %v",
+				e.A, e.B, e.Path[len(e.Path)-1], xy[e.B])
 		}
 	}
 }
@@ -438,7 +443,9 @@ func TestRoadPathNotShorterThanStraightLine(t *testing.T) {
 		if dy > dx {
 			straightLine = dy // 切比雪夫距離 ＝ 8 方向的下限
 		}
-		if len(e.Path) < straightLine {
+		// ⚠ 頭尾各有一格是**跳**的（docs/spec/169），一格可以跨好幾格，
+		// 所以下限要扣掉那兩步能吃掉的距離。這裡放寬成「中段的格數」。
+		if len(e.Path)+2 < straightLine {
 			t.Errorf("邊 %d–%d 只有 %d 格，直線下限是 %d",
 				e.A, e.B, len(e.Path), straightLine)
 		}

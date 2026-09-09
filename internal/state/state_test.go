@@ -2665,11 +2665,22 @@ func TestMarchFollowsRoads(t *testing.T) {
 		t.Fatal("沒有算出格子路徑")
 	}
 	// ⭐ 路徑必須逐格連續。斷開的話軍團會瞬移，而「有沒有抵達」看不出來。
+	//
+	// ⚠ **出城與進城各有一跳是對的**（docs/spec/169）：原版軍團從據點座標
+	// 一步跳到路徑表的第一筆（城門格），到站時一步跳回據點座標。
+	// 所以每一處不連續的兩端**一定有一端是據點中心**——這一條比
+	// 「完全連續」嚴格，因為它擋得住「在半路上瞬移」。
+	centres := map[[2]int]bool{}
+	for i := range w.Cities {
+		centres[[2]int{w.Cities[i].X, w.Cities[i].Y}] = true
+	}
 	prev := [2]int{c.X, c.Y}
 	for k, cell := range w.routes[lord] {
 		dx, dy := cell[0]-prev[0], cell[1]-prev[1]
 		if dx < -1 || dx > 1 || dy < -1 || dy > 1 {
-			t.Fatalf("第 %d 格從 %v 跳到 %v", k, prev, cell)
+			if !centres[prev] && !centres[cell] {
+				t.Fatalf("第 %d 格在半路上從 %v 跳到 %v", k, prev, cell)
+			}
 		}
 		prev = cell
 	}

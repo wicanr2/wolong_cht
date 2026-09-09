@@ -346,6 +346,7 @@
 | [`docs/spec/166-save-writeback-keeps-unmodelled-bits.md`](spec/166-save-writeback-keeps-unmodelled-bits.md) | 166 — 存檔寫回：軍團旗標的未解位元與據點游標 | READY | 2026-09-09 |
 | [`docs/spec/167-day-is-23-hours.md`](spec/167-day-is-23-hours.md) | 167 — 一個遊戲日是 23 小時 ＝ 207 子刻，時從 1 走到 23 | READY | 2026-09-09 |
 | [`docs/spec/168-corps-and-hour-cursors.md`](spec/168-corps-and-hour-cursors.md) | 168 — 另外兩個巡迴游標：軍團 +0x28、每「時」勢力 +0x2C | READY | 2026-09-09 |
+| [`docs/spec/169-march-has-no-city-stub.md`](spec/169-march-has-no-city-stub.md) | 169 — 出城與進城是一步跳過去，原版沒有那段直線 | READY | 2026-09-09 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |
@@ -429,7 +430,7 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 133 條。**要查「這件事解了沒」先看這裡**，
+共 134 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（77 條）
@@ -514,12 +515,13 @@
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x1E | `docs/re/08-hourly-update.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x20 | `docs/re/08-hourly-update.md` |
 
-### READY（7 條）
+### READY（8 條）
 
 | 鍵 | 出處 |
 |---|---|
 | 索引 ▸ 一個遊戲日是 23 小時 ＝ 207 子刻 | `docs/spec/00-index.md` |
 | 索引 ▸ 上昇值的上下限套在存值上 | `docs/spec/00-index.md` |
+| 索引 ▸ 出城與進城是一步跳過去，沒有那段直線 | `docs/spec/00-index.md` |
 | 索引 ▸ 委任將領混合值保留原統率 | `docs/spec/00-index.md` |
 | 索引 ▸ 存檔寫回保留未建模的位元與據點游標 | `docs/spec/00-index.md` |
 | 索引 ▸ 戰術命令批次與移動體力順序 | `docs/spec/00-index.md` |

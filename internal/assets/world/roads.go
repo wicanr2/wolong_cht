@@ -251,45 +251,27 @@ func walkRoad(t []byte, gate, dir int) ([]int, int) {
 // withCityEnds 把「城門格到城門格」的路徑補成「據點座標到據點座標」，
 // 並回傳頭尾兩段的長度。
 //
-// 軍團的位置用的是據點記錄的 (X, Y)，而路是從城門格開始的。
-// 少了這兩段，軍團出城與進城時會**跳好幾格**。
+// ⭐ **原版沒有「城中心 → 節點格 → 城門格」那一段直線**：軍團在據點上時
+// 位置是據點記錄的 (X, Y)，一走起來 `sub_12708` 直接把座標寫成路徑表的
+// 第一筆（城門格），到站時 `sub_127A2` 也是一步換回據點座標。
+// **出城與進城各只花一拍，位置跳過去**（docs/spec/169）。
+//
+// 先前這裡補了兩段逐格直線讓畫面平滑，代價是每條邊平均長 1.3 格、
+// 行軍時間多 5.9%，而且 `straight` 走對角——軍團出城時斜切出去，
+// 與原版逐格四方向的路徑表整條錯開。
 //
 // 回傳的序列**不含起點格、含終點格**——接起來時中繼據點不會重複一格。
+// `cells[0]` 就是城門格，要留著（它是原版路徑表的第一筆）。
 func withCityEnds(cells []int, nodeA, nodeB int, from, to [2]int) ([][2]int, int, int) {
-	// ⚠ `between` 與 `straight` 都是「不含起點、含終點」，
-	// 所以 `節點格 → 城門格` 已經含了城門格，而 `cells[0]` 也是城門格。
-	// **接的時候要跳過 `cells[0]`**，不然路徑裡會出現重複的一格——
-	// 那在畫面上看不出來（軍團原地停一拍），但連續性檢查會抓到。
-	head := straight(from, cellXY(nodeA))            // 城中心 → 節點格
-	head = append(head, between(nodeA, cells[0])...) // 節點格 → 城門格（含）
-	tail := between(cells[len(cells)-1], nodeB)      // 城門格 → 節點格
-	tail = append(tail, straight(cellXY(nodeB), to)...)
-
-	out := make([][2]int, 0, len(head)+len(cells)+len(tail))
-	out = append(out, head...)
-	for _, c := range cells[1:] {
+	out := make([][2]int, 0, len(cells)+1)
+	for _, c := range cells {
 		out = append(out, cellXY(c))
 	}
-	out = append(out, tail...)
-	return out, len(head), len(tail)
+	out = append(out, to) // 終點是據點中心，同樣一步跳過去
+	return out, 1, 1
 }
 
 func cellXY(c int) [2]int { return [2]int{c % Width, c / Width} }
-
-// straight 產生 from（不含）到 to（含）的直線格子。兩點共用一個座標軸時
-// 就是一條直線；不共用時走對角再補直——城門那一小段只會是前者。
-func straight(from, to [2]int) [][2]int {
-	var out [][2]int
-	x, y := from[0], from[1]
-	for x != to[0] || y != to[1] {
-		x += sign(to[0] - x)
-		y += sign(to[1] - y)
-		out = append(out, [2]int{x, y})
-	}
-	return out
-}
-
-func between(a, b int) [][2]int { return straight(cellXY(a), cellXY(b)) }
 
 func abs(v int) int {
 	if v < 0 {
