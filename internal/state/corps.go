@@ -25,7 +25,12 @@ const (
 	newCorps  = 0xC0
 	// modelledCorpsBits 是 remake 真的有在維護的那幾個位元：
 	// 7／6（存在）與 2（委任）。其餘位元寫回時原樣保留（docs/spec/166）。
-	modelledCorpsBits = 0xC0 | 0x04
+	modelledCorpsBits = 0xC0 | 0x04 | 0x01
+
+	// corpsSpriteStride 是一個勢力佔幾張軍團圖塊：四個方向 ＋ 停著。
+	// 與 `internal/assets/world` 的 `CorpsHeadings` 是同一個數字
+	// （`sub_12B2A`：圖塊 ＝ `[si+9]` ＋ `[si+8]`，docs/spec/74 §3）。
+	corpsSpriteStride = 5
 )
 
 // Corps 是一支軍團。
@@ -79,6 +84,16 @@ type Corps struct {
 	// 原版的行軍狀態抹掉（`CLAUDE.md` §9 的「改寫不是重建」）。
 	PathPtr  int
 	LinkAddr int
+
+	// OnPath 是記錄 +0x00 的**位元 0 ＝「已經走上路徑」**（docs/spec/173 §1.1）。
+	//
+	// 兩個設定端都在「拿到／推進路徑指標」那一刻——`sub_126FF`（推進一個
+	// 路徑點）與 `sub_147BB`（選路徑）——而**全庫沒有清除端**，
+	// 所以它是一次性的：設起來就永遠留著。
+	//
+	// `sub_12662` 靠它分「重算完要不要判 leg 盡頭」，`sub_12708` 靠它
+	// 決定要不要跑地形 0CEh–0DDh 那一段。
+	OnPath bool
 
 	// Delegated 是記錄 +0x00 的位元 2 ＝ **「委任」**（交給電腦指揮）。
 	//
@@ -137,6 +152,7 @@ func (w *World) loadCorps(b []byte) {
 			Interval:   int(r[0x1E]),
 			Ordered:   int(r[0x20]),
 			PathPtr:   u16(r, 0x0C),
+			OnPath:    r[0x00]&0x01 != 0,
 			Delegated: r[0x00]&0x04 != 0,
 			Stage:     int(r[0x23]),
 			// 旗標 8 而且不到 0x80 ＝ 敗走中（docs/spec/43）。
@@ -206,11 +222,20 @@ func (w *World) saveCorps(b []byte) {
 		} else {
 			r[0x00] &^= 0x04
 		}
+		if c.OnPath {
+			r[0x00] |= 0x01
+		} else {
+			r[0x00] &^= 0x01
+		}
 		r[0x01] = byte(c.Faction)
 		r[0x02] = byte(i)
 		putU16(r, 0x04, c.Men)
 		r[0x06] = byte(c.Morale)
 		r[0x08] = byte(c.Heading)
+		// `+0x09` 是導出值：**勢力編號 × 5**（`sub_16FD2`，docs/spec/173 §1.3）。
+		// 每個勢力五張圖塊（四方向 ＋ 停著），與 `world.CorpsHeadings` 同一個
+		// 常數——狀態層不依賴資產層，所以這裡另寫一份並互指。
+		r[0x09] = byte(c.Faction * corpsSpriteStride)
 		r[0x0A] = byte(c.Direction)
 		r[0x0B] = byte(c.Timer)
 		putU16(r, 0x0C, c.PathPtr)
@@ -324,6 +349,36 @@ func distributeReserves(pool *[economy.NumTroopTypes]int,
 	return out
 }
 
+// newCorpsRecord 是**兩條編成路徑共用的初值**（原版 `sub_16F26` 建記錄、
+// `sub_16FD2` 收尾）。玩家編成走 `FormCorps`、AI 編成走 `autoFormCorps`，
+// 兩邊各抄一份的結果是抄漏的欄位用 Go 的零值頂上——
+// `+0x08` 變成「往 X 減」、`+0x0B` 變成間隔（docs/spec/173 §2）。
+//
+// ⭐ **靜止是 4 不是 0**（docs/spec/74 §3）。Go 的零值 0 是「朝 X 減的
+// 方向走」，大地圖上會畫成側面行進的圖塊——剛編成的軍團站在城裡，
+// 該畫靜止那一張（CLAUDE.md §7 第 11 條）。
+//
+// ⭐ **計時是 1 不是間隔**：`sub_16FD2` 收尾寫 `[si+0Bh] = 1`，
+// 新編的軍團**下一拍就輪得到**。
+func (w *World) newCorpsRecord(faction, capital, morale int) Corps {
+	home := w.clampCity(capital)
+	return Corps{
+		Alive:   true,
+		Faction: faction,
+		Morale:  morale,
+		Ordered: capital,
+		Node:    home,
+		Heading: HeadingStill,
+		Timer:   1,
+		X:       w.Cities[home].X,
+		Y:       w.Cities[home].Y,
+		// 目標先設成原地，行軍指令下達前不會動。
+		TargetNode: home,
+		TargetX:    w.Cities[home].X,
+		TargetY:    w.Cities[home].Y,
+	}
+}
+
 // FormCorps 編成一支軍團（原版 `sub_16F26`）。
 //
 // leader 是帶兵的武將編號，kinds 是六個位置的兵種，manned 標哪幾個位置要有兵。
@@ -364,25 +419,7 @@ func (w *World) FormCorps(leader int, kinds [army.Positions]army.TroopType,
 		return fmt.Errorf("state: 大將的位置分不到兵（預備兵 %v）", f.Reserves)
 	}
 
-	home := w.clampCity(f.Capital)
-	c := Corps{
-		Alive:   true,
-		Faction: g.Faction,
-		Morale:  f.MoraleBase,
-		Ordered:    f.Capital,
-		Node:    home,
-		// ⭐ **靜止是 4 不是 0**（docs/spec/74 §3）。Go 的零值 0 是
-		// 「朝 X 減的方向走」，大地圖上會畫成側面行進的圖塊——
-		// 剛編成的軍團站在城裡，該畫靜止那一張。
-		// （CLAUDE.md §7 第 11 條：原版的哨兵值不等於 Go 的零值。）
-		Heading: HeadingStill,
-		X:       w.Cities[home].X,
-		Y:       w.Cities[home].Y,
-		// 目標先設成原地，行軍指令下達前不會動。
-		TargetNode: home,
-		TargetX:    w.Cities[home].X,
-		TargetY:    w.Cities[home].Y,
-	}
+	c := w.newCorpsRecord(g.Faction, f.Capital, f.MoraleBase)
 	allCav := false
 	for k, ok := range manned {
 		if !ok || men[k] == 0 {
@@ -648,6 +685,9 @@ func (w *World) step(i int) bool {
 	if cells := w.routes[i]; len(cells) > 0 {
 		next := cells[0]
 		w.routes[i] = cells[1:]
+		// `+0x00` 位元 0：軍團一走上路徑就設，**沒有清除端**
+		// （`sub_126FF`／`sub_147BB`，docs/spec/173 §1.1）。
+		c.OnPath = true
 		// 同步吃掉一格標記：原版每走一步就 `bx += [si+0Ah]` 再寫回 `+0x0C`。
 		if mk := w.routeMarks[i]; len(mk) > 0 {
 			c.PathPtr, c.LinkAddr, c.Direction = mk[0].PathPtr, mk[0].LinkAddr,

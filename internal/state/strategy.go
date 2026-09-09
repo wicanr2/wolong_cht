@@ -357,13 +357,11 @@ func (w *World) autoFormCorps(faction, leader int, delegated bool) bool {
 	for _, kind := range kinds {
 		counts[kind]++
 	}
-	var c Corps
-	c.Alive, c.Faction, c.Morale = true, faction, f.MoraleBase
+	// ⚠ **初值走共用的那一支**（docs/spec/173 §2）。這裡本來是
+	// `var c Corps` 再逐欄補，漏掉的 `+0x08`／`+0x0B` 就用 Go 的零值
+	// 頂上——朝向變成「往 X 減」、計時變成間隔，兩個都與原版不同。
+	c := w.newCorpsRecord(faction, f.Capital, f.MoraleBase)
 	c.Delegated = delegated
-	c.Ordered = f.Capital
-	home := w.clampCity(f.Capital)
-	c.Node, c.X, c.Y = home, w.Cities[home].X, w.Cities[home].Y
-	c.TargetNode, c.TargetX, c.TargetY = c.Node, c.X, c.Y
 	for slot, kind := range kinds {
 		remaining := counts[kind]
 		available := f.Reserves[kind]
@@ -390,7 +388,6 @@ func (w *World) autoFormCorps(faction, leader int, delegated bool) bool {
 	if allCavalry {
 		c.Interval = IntervalCavalry
 	}
-	c.Timer = c.Interval
 
 	w.Corps[leader] = c
 	w.Generals[leader].Duty = DutyCorpsLeader
