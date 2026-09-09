@@ -52,6 +52,7 @@ func main() {
 	skip := flag.Int("skip", 0, "先推幾個子刻不記錄——用來對齊原版的起點")
 	seed := flag.Int("seed", 1, "亂數種子（沒給 -rng-state 時用）")
 	cursor := flag.Int("city-cursor", -1, "載入後把據點巡迴游標設成這個值（原版存檔 +0x2E ÷ 32）")
+	seqOut := flag.String("seq-out", "", "把逐子刻取數序列寫到檔案（供與原版 diff）")
 	mark := flag.String("mark", "", "印出含這個呼叫點的子刻位置（例：strategy.go:630）")
 	rngState := flag.String("rng-state", "", "載入原版當下的亂數狀態（258 byte，docs/spec/147 §5）")
 	flag.Parse()
@@ -149,14 +150,18 @@ func main() {
 	}
 	fmt.Println()
 
-	fmt.Print("\n序列：")
-	for i, n := range perTick {
-		if i >= 60 {
-			break
+	if *seqOut != "" {
+		f, err := os.Create(*seqOut)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "-seq-out：", err)
+			os.Exit(1)
 		}
-		fmt.Printf(" %d", n)
+		for i, n := range perTick {
+			fmt.Fprintf(f, "%d %d\n", i+1, n)
+		}
+		f.Close()
+		fmt.Printf("\n逐子刻序列寫到 %s\n", *seqOut)
 	}
-	fmt.Println()
 
 	if *mark != "" {
 		fmt.Printf("\n含 %s 的子刻（%d 次）：%v\n", *mark, len(markAt), markAt)
