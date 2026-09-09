@@ -56,6 +56,7 @@
 
 | 主題 | 規格 | 狀態 |
 |---|---|---|
+| 載入存檔要還原據點巡迴游標 | [`162-city-cursor-from-save.md`](162-city-cursor-from-save.md) | CONFORMED；13 個觸發子刻逐項對上原版 |
 | 亂數消費順序對齊（長時間對拍前置）| [`160-rng-consumption-alignment.md`](160-rng-consumption-alignment.md) | READY；兩側軌跡工具齊備，第一輪比對定位到 `sub_14057` 差 4 次 |
 | 劉備不作為長時間對拍管線 | [`161-liubei-idle-longrun-parity.md`](161-liubei-idle-longrun-parity.md) | DRAFT；原版側 90 天已跑通（26 秒、兩次逐 byte 相同），remake 側未做 |
 | 戰術命令批次與移動體力順序 | [`159-tactical-command-movement-order.md`](159-tactical-command-movement-order.md) | READY；窄批次修正已測，完整排程仍待對拍 |

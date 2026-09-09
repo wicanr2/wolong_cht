@@ -18,6 +18,7 @@ import (
 	"runtime"
 	"sort"
 	"strconv"
+	"strings"
 
 	"github.com/wicanr2/wolong_cht/internal/rules/rng"
 	"github.com/wicanr2/wolong_cht/internal/state"
@@ -50,6 +51,8 @@ func main() {
 	ticks := flag.Int("ticks", 324, "要記錄幾個子刻")
 	skip := flag.Int("skip", 0, "先推幾個子刻不記錄——用來對齊原版的起點")
 	seed := flag.Int("seed", 1, "亂數種子（沒給 -rng-state 時用）")
+	cursor := flag.Int("city-cursor", -1, "載入後把據點巡迴游標設成這個值（原版存檔 +0x2E ÷ 32）")
+	mark := flag.String("mark", "", "印出含這個呼叫點的子刻位置（例：strategy.go:630）")
 	rngState := flag.String("rng-state", "", "載入原版當下的亂數狀態（258 byte，docs/spec/147 §5）")
 	flag.Parse()
 
@@ -75,6 +78,15 @@ func main() {
 	}
 	tr := &tracing{inner: r}
 
+	if *cursor >= 0 {
+		s := w.TakeSnapshot()
+		s.CityCursor = *cursor
+		if err := w.Restore(s); err != nil {
+			fmt.Fprintln(os.Stderr, "-city-cursor：", err)
+			os.Exit(1)
+		}
+		fmt.Printf("據點游標設成 %d\n", *cursor)
+	}
 	fmt.Printf("起點 %d年%d月%d日 %d時 子刻 %d\n",
 		w.Clock.Year, w.Clock.Month, w.Clock.Day, w.Clock.Hour, w.Clock.Subtick)
 
@@ -85,6 +97,7 @@ func main() {
 	fmt.Printf("跳過 %d 子刻後：%d年%d月%d日 %d時 子刻 %d\n",
 		*skip, w.Clock.Year, w.Clock.Month, w.Clock.Day, w.Clock.Hour, w.Clock.Subtick)
 
+	markAt := []int{}
 	perTick := make([]int, 0, *ticks)
 	total := map[string]int{}
 	prev := 0
@@ -94,6 +107,9 @@ func main() {
 		perTick = append(perTick, n)
 		for _, s := range tr.where[prev:tr.seq] {
 			total[s]++
+			if *mark != "" && strings.Contains(s, *mark) {
+				markAt = append(markAt, i+1)
+			}
 		}
 		prev = tr.seq
 	}
@@ -141,6 +157,10 @@ func main() {
 		fmt.Printf(" %d", n)
 	}
 	fmt.Println()
+
+	if *mark != "" {
+		fmt.Printf("\n含 %s 的子刻（%d 次）：%v\n", *mark, len(markAt), markAt)
+	}
 
 	fmt.Println("\n呼叫點：")
 	for _, r := range rows {

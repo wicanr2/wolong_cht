@@ -63,7 +63,7 @@
 | [`docs/playtest/116-rng-consumption-census.md`](playtest/116-rng-consumption-census.md) | 116 — 原版一個遊戲月的亂數消費普查：18 個呼叫點、12 支函式 | 通過。 | 2026-09-09 |
 | [`docs/playtest/117-field-battle-needs-player-order.md`](playtest/117-field-battle-needs-player-order.md) | 117 — 野戰打不完的成因是 fixture 缺了玩家命令，不是規則層回歸 | 通過。 | 2026-09-09 |
 | [`docs/playtest/118-liubei-90day-audience-response.md`](playtest/118-liubei-90day-audience-response.md) | 118 — 劉備 90 天無人值守：君主召見用右鍵推進，選項用移動次數 | 通過。 | 2026-09-09 |
-| [`docs/playtest/119-rng-pace-comparison.md`](playtest/119-rng-pace-comparison.md) | 119 — 取數節拍對齊：remake 的節拍不吃亂數值，差異是真的規則分歧 | 已定位，未修。 | 2026-09-09 |
+| [`docs/playtest/119-rng-pace-comparison.md`](playtest/119-rng-pace-comparison.md) | 119 — 取數節拍對齊：remake 的節拍不吃亂數值，差異是真的規則分歧 | 已修正並驗過（§6）。 | 2026-09-09 |
 | [`docs/playtest/12-event3-same-state-parity.md`](playtest/12-event3-same-state-parity.md) | event3 同狀態對拍（2026-08-10） | 同狀態事件接線、原版式 composite、3×6 實際格位選取、TALK 五行分頁、 DOS/V 內框／按鍵 gl… | 2026-08-10 |
 | [`docs/playtest/13-dosv-natural-and-target-gui.md`](playtest/13-dosv-natural-and-target-gui.md) | DOS/V 自然畫面與目標平台 GUI 驗收 | 歷史驗收紀錄（2026-08-11，影片 oracle）。 | 2026-08-11 |
 | [`docs/playtest/14-m7-review.md`](playtest/14-m7-review.md) | M7 校訂文字人工審查報告 | 60 筆定案校訂已完成逐筆語意、marker、硬換行、寬度與代表畫面抽樣。 | 2026-08-11 |
@@ -339,6 +339,7 @@
 | [`docs/spec/159-tactical-command-movement-order.md`](spec/159-tactical-command-movement-order.md) | 159 — 戰術命令批次與移動體力順序 | READY。原始指令與既有 dosgolem 追蹤支持本節的窄排程修正。 | 2026-09-08 |
 | [`docs/spec/160-rng-consumption-alignment.md`](spec/160-rng-consumption-alignment.md) | 160 — 亂數消費順序對齊：逐次比「誰取了第幾個數」 | READY。 | 2026-09-09 |
 | [`docs/spec/161-liubei-idle-longrun-parity.md`](spec/161-liubei-idle-longrun-parity.md) | 161 — 劉備不作為長時間對拍：把玩家這個變因拿掉，以子刻為單位比 | DRAFT。 | 2026-09-09 |
+| [`docs/spec/162-city-cursor-from-save.md`](spec/162-city-cursor-from-save.md) | 162 — 載入存檔要還原據點巡迴游標（word_10D1E） | CONFORMED。 | 2026-09-09 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |

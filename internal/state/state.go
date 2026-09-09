@@ -40,6 +40,10 @@ const (
 	cityBase, citySize, numCities         = 0x08C0, 32, 192
 	generalBase, generalSize, numGenerals = 0x42C0, 32, 127
 
+	// 據點整備的輪轉游標（原版 `word_10D1E`）。區塊前 59 B 對映到
+	// cs:0CF0h，所以 0D1Eh − 0CF0h = 0x2E（docs/spec/162）。
+	cityCursorOffset = 0x2E
+
 	// 稅率與三兵種募兵數。原版載到 cs:0D08h，而區塊前 59 B 對映到
 	// cs:0CF0h，所以 0D08h − 0CF0h = 0x18 就是區塊內的偏移。
 	// 信賴度則是 cs:0D00h（IDA `byte_10D00`），所以是區塊內的 +0x10。
@@ -592,6 +596,15 @@ func loadBlock(b []byte) *World {
 		Month:   u16(b, 0x04),
 		Year:    u16(b, 0x06),
 	}
+	// 據點整備的輪轉游標（原版 `word_10D1E` ＝ `ds:0D1E`，docs/spec/162）。
+	// ⭐ **不還原它的後果不是「差一格」，是整條 AI 時間軸相位錯開**：
+	// 原版每 tick 只處理一個據點，游標決定 AI 在哪一拍看哪一座城。
+	// 而這種差異狀態表對拍抓不到——同一個時刻取樣，兩邊的欄位都還沒動。
+	// 單位是段內偏移，每筆據點記錄 32 B。
+	if cur := int(u16(b, cityCursorOffset)) / citySize; cur < len(w.Cities) {
+		w.cityCursor = cur
+	}
+
 	// 存活勢力數（區塊 +0x3A，59 byte 全域區塊的最後一格）。
 	// 原版 `cs:0D2Ah` 全庫只有一個 `dec`，靠這個欄位載入初值；
 	// 減到 1 就是結局（docs/re/59 §3）。
