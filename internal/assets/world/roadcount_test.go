@@ -35,14 +35,13 @@ func TestRoadGraphCountsArePinned(t *testing.T) {
 	if len(edges) != 254 {
 		t.Errorf("邊數 = %d，期望 254", len(edges))
 	}
-	// ⭐ 5,780 ＝ 原版道路表的 5,526 個路徑點 ＋ 254 個終點城中心
-	// （每條邊一格）。與原版執行期建的表**整條逐格相同**，
-	// 證據在 docs/spec/169。
-	if total != 5780 {
-		t.Errorf("路徑總長 = %d，期望 5780", total)
+	// ⭐ 5,526 ＝ 原版道路表的路徑點數，**一格對一筆**：最後一格的座標
+	// 已經是據點中心（另一端的城門格不會被停留，docs/spec/169 §3.1）。
+	if total != 5526 {
+		t.Errorf("路徑總長 = %d，期望 5526", total)
 	}
-	if longest != 85 {
-		t.Errorf("最長一條 = %d 格，期望 85", longest)
+	if longest != 84 {
+		t.Errorf("最長一條 = %d 格，期望 84", longest)
 	}
 }
 
@@ -79,7 +78,10 @@ func TestHuiJiZhangAnEdgeIsRealNotWrapAround(t *testing.T) {
 	if found == nil {
 		t.Fatal("會稽–章安不在道路圖裡")
 	}
-	for i := 1; i < len(found.Path); i++ {
+	// ⚠ **最後一格是刻意跳的**：那一拍的座標已經換成據點中心
+	// （docs/spec/169 §3.1），所以只檢查中段。這裡要抓的是
+	// 「列邊界繞行」憑空生出的一條邊，那種指紋出現在中段。
+	for i := 1; i < len(found.Path)-1; i++ {
 		if d := abs(found.Path[i][0] - found.Path[i-1][0]); d > 1 {
 			t.Fatalf("第 %d 步的 x 位移 %d > 1，這是列邊界繞行的指紋", i, d)
 		}

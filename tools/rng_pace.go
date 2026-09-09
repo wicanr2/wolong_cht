@@ -108,7 +108,10 @@ func main() {
 		os.Exit(1)
 	}
 	w.SetRoads(march.New(len(w.Cities), world.MarchEdges(edges, xy)))
-	wired = append(wired, fmt.Sprintf("道路圖 %d 條邊", len(edges)))
+	// ⭐ 夾具要說得出自己的狀態：還原不了的軍團會**不動**（docs/spec/172 §4.5），
+	// 而不動與「原版也沒動」在取數序列上長得一樣。
+	wired = append(wired, fmt.Sprintf("道路圖 %d 條邊（行軍還原不了 %d 支）",
+		len(edges), w.UnresolvedMarches()))
 
 	if *withAI {
 		w.EnableStrategicAI()

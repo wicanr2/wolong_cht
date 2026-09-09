@@ -305,7 +305,9 @@ func StageEncounter(w *state.World, rng combat.Rand, opt StageOptions) bool {
 			foe.Node, foe.TargetNode = node, node
 			foe.X, foe.Y = w.Cities[node].X, w.Cities[node].Y
 			foe.TargetX, foe.TargetY = foe.X, foe.Y
+			w.ClearMarchRoute(opt.Defender)
 		}
+		w.ClearMarchRoute(opt.Attacker)
 		me.Node = node
 		me.X, me.Y = w.Cities[node].X-1, w.Cities[node].Y
 		me.TargetNode = node
@@ -314,6 +316,10 @@ func StageEncounter(w *state.World, rng combat.Rand, opt StageOptions) bool {
 	} else {
 		// 野戰：把敵方放在隔壁一格、目標設成我方所在的那一格——
 		// 下一次輪到它移動就會撞上（遭遇條件是「同格、不同勢力」）。
+		// ⚠ 座標被外力改掉，存檔記的那條 leg 就作廢了——不丟掉的話
+		// 這支軍團會被行軍還原守衛凍住，遭遇一次都不會發生
+		// （docs/spec/172 §4.6）。
+		w.ClearMarchRoute(opt.Defender)
 		foe.X, foe.Y = me.X-1, me.Y
 		foe.TargetX, foe.TargetY = me.X, me.Y
 		foe.TargetNode = me.Node

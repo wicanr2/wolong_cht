@@ -234,7 +234,7 @@ func RoadEdges(m *Map, cities [][2]int) ([]RoadEdge, error) {
 		addr := pathTableBase
 		for _, i := range order {
 			byPathAddr[i] = addr
-			addr += (len(out[i].Path) - 1) * pathPointLen
+			addr += len(out[i].Path) * pathPointLen
 		}
 	}
 	for i := range out {
@@ -315,11 +315,15 @@ func walkRoad(t []byte, gate, dir int) ([]int, int) {
 // 回傳的序列**不含起點格、含終點格**——接起來時中繼據點不會重複一格。
 // `cells[0]` 就是城門格，要留著（它是原版路徑表的第一筆）。
 func withCityEnds(cells []int, nodeA, nodeB int, from, to [2]int) ([][2]int, int, int) {
-	out := make([][2]int, 0, len(cells)+1)
-	for _, c := range cells {
+	out := make([][2]int, 0, len(cells))
+	// ⭐ **另一端的城門格不會被停留。** `sub_12708` 走到「自己前進方向那
+	// 一端」的路徑點時，同一拍就 `sub_127A2` 換節點，而換節點會把座標
+	// 整個改寫成據點中心——所以那一格的座標從來沒有出現在畫面上。
+	// 多排一格會讓每條邊多花一拍，進城的時刻整條偏掉（docs/spec/169 §3.1）。
+	for _, c := range cells[:len(cells)-1] {
 		out = append(out, cellXY(c))
 	}
-	out = append(out, to) // 終點是據點中心，同樣一步跳過去
+	out = append(out, to)
 	return out, 1, 1
 }
 

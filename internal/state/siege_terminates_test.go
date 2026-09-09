@@ -5,7 +5,9 @@ import (
 	"testing"
 
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
+	"github.com/wicanr2/wolong_cht/internal/assets/world"
 	"github.com/wicanr2/wolong_cht/internal/battlesetup"
+	"github.com/wicanr2/wolong_cht/internal/rules/march"
 	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
 	"github.com/wicanr2/wolong_cht/internal/state"
 )
@@ -137,13 +139,28 @@ func TestFieldBattleTerminates(t *testing.T) {
 		t.Fatalf("battlesetup.Load: %v", err)
 	}
 	w.SetTactical(setup)
+	// ⭐ **道路圖是正式路徑的一部分。** 少了它 `w.step` 走直線退路，
+	// 而存檔裡「正在行軍」的軍團連路徑都還原不了（docs/spec/172 §4.5）——
+	// 這個 fixture 先前就是靠直線碰巧撞出遭遇的。
+	xy := make([][2]int, len(w.Cities))
+	for i := range w.Cities {
+		xy[i] = [2]int{w.Cities[i].X, w.Cities[i].Y}
+	}
+	edges, err := world.RoadEdges(lib.World, xy)
+	if err != nil {
+		t.Fatalf("RoadEdges: %v", err)
+	}
+	w.SetRoads(march.New(len(w.Cities), world.MarchEdges(edges, xy)))
+	if n := w.UnresolvedMarches(); n != 0 {
+		t.Fatalf("%d 支軍團的行軍狀態還原不了", n)
+	}
 
 	rng := siegeRand{}
-	for i := 0; i < 4000 && w.PendingBattle() == nil; i++ {
+	for i := 0; i < 20000 && w.PendingBattle() == nil; i++ {
 		w.Tick(rng)
 	}
 	if w.PendingBattle() == nil {
-		t.Fatal("推了 4,000 tick 都沒有撞出遭遇——存檔的行軍狀態可能不對")
+		t.Fatal("推了 20,000 tick 都沒有撞出遭遇——存檔的行軍狀態可能不對")
 	}
 	pb := w.PendingBattle()
 	if pb == nil || pb.Battle == nil {

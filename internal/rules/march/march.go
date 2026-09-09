@@ -70,14 +70,15 @@ type link struct {
 
 // cellMarks 算出一條 link 每一格對應的原版路徑點。
 //
-// `Path` 的最後一格是**終點的據點中心**（`withCityEnds`），它不在原版的
-// 路徑點表裡——原版到站時 `+0x0C` 留著最後一筆的位址，所以那一格沿用
-// 前一格的指標。反向走時指標從最後一筆遞減（`+0x0A` ＝ −4）。
+// `Path` 與原版的路徑點**一對一**：最後一格的座標已經換成據點中心
+// （`withCityEnds`），但它對應的仍是最後那一筆路徑點——原版在那一拍
+// 先寫路徑點的座標、再被 `sub_127A2` 的換節點覆寫成據點中心。
+// 反向走時指標從最後一筆遞減（`+0x0A` ＝ −4）。
 func cellMarks(e Edge, n int, forward bool) []CellMark {
 	if n <= 0 {
 		return nil
 	}
-	out := make([]CellMark, n+1)
+	out := make([]CellMark, n)
 	step := 4
 	if !forward {
 		step = -4
@@ -86,12 +87,6 @@ func cellMarks(e Edge, n int, forward bool) []CellMark {
 		idx := k
 		if !forward {
 			idx = n - 1 - k
-		}
-		if idx > n-1 {
-			idx = n - 1
-		}
-		if idx < 0 {
-			idx = 0
 		}
 		out[k] = CellMark{
 			PathPtr:  e.PathAddr + idx*4,
@@ -109,7 +104,7 @@ func New(n int, edges []Edge) *Graph {
 		if e.A < 0 || e.A >= n || e.B < 0 || e.B >= n {
 			continue
 		}
-		n := len(e.Path) - 1 // 原版的路徑點數（`Path` 多了終點城中心）
+		n := len(e.Path) // 與原版的路徑點一對一（docs/spec/169 §3.1）
 		if e.LinkAddr != 0 {
 			g.byLink[e.LinkAddr] = [2]int{e.A, e.B}
 		}

@@ -149,9 +149,15 @@ func (w *World) loadCorps(b []byte) {
 		}
 		// ⭐ `+0x0E` ≥ 0x800 是**連結記錄的位址**（行軍中），不是據點編號。
 		// 照 `/8` 讀會得到 470、488 這種不存在的據點（docs/spec/172 §1）。
+		//
+		// ⚠ 這時 `Node`（出發據點）**還算不出來**——要有道路圖才知道那條
+		// leg 的兩端是誰。先擺目標當佔位，真正的值由 `restoreMarchRoutes`
+		// 在 `SetRoads` 時填。在那之前這支軍團算「行軍狀態未還原」，
+		// `tickOneCorps` 不會動它（否則第一次移動就會被判成抵達目標，
+		// 連帶在錯的地方觸發攻城）。
 		if raw := u16(r, 0x0E); raw >= 0x800 {
 			c.LinkAddr = raw
-			c.Node = c.TargetNode // 行軍中的「所在據點」沿用出發地的語意
+			c.Node = c.TargetNode
 		}
 
 		// ⚠ **載入不可信的資料要驗範圍。** 未使用的軍團槽裡是垃圾，
@@ -554,6 +560,14 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 	// 第二道保險：載入端已經擋過（loadCorps），這裡再擋一次，
 	// 因為 Faction 在下面被當索引用，而快照/測試也可能塞進別的值。
 	if c.Faction < 0 || c.Faction >= numFactions {
+		return nil
+	}
+	// ⚠ **行軍狀態還沒還原就不要動它。** 存檔記著「走在哪一條路的第幾格」
+	// （`+0x0E`／`+0x0C`／`+0x0A`），但那要有道路圖才解得開；在
+	// `SetRoads` 之前 `Node` 只是暫時擺著目標，這時候跑一步會被判成抵達，
+	// 連帶在錯的地方觸發攻城（docs/spec/172 §4.5）。
+	// 不動比走錯好——不動看得出來，走錯看不出來。
+	if c.LinkAddr != 0 && len(w.routes[i]) == 0 {
 		return nil
 	}
 	ev := CorpsEvent{Corps: i, Enemy: -1, Captured: -1,
@@ -1266,8 +1280,28 @@ func (w *World) March(corps, node int) error {
 // 不是整個動不了。
 func (w *World) SetRoads(g *march.Graph) {
 	w.roads = g
-	w.restoreMarchRoutes()
+	w.unresolvedMarches = w.restoreMarchRoutes()
 }
+
+// ClearMarchRoute 丟掉一支軍團的格子路徑與存檔裡的路徑指標。
+//
+// ⭐ 給「把軍團直接擺到某一格」的驗收捷徑用（`internal/battlesetup`）：
+// 座標被外力改掉之後，`+0x0C`／`+0x0E` 描述的那條 leg 就不再是它走的路。
+// 留著有兩個後果——沿舊路徑走回去，或者被 `tickOneCorps` 的還原守衛
+// 當成「有 `LinkAddr` 卻沒有路徑」而**整支凍住**（docs/spec/172 §4.6）。
+func (w *World) ClearMarchRoute(i int) {
+	if i < 0 || i >= len(w.Corps) {
+		return
+	}
+	w.routes[i], w.routeMarks[i] = nil, nil
+	w.Corps[i].LinkAddr, w.Corps[i].PathPtr = 0, 0
+}
+
+// UnresolvedMarches 回傳「載入之後行軍狀態還原不了」的軍團數。
+//
+// ⭐ 給對拍夾具與長跑用：那些軍團**完全不動**（`tickOneCorps` 早退），
+// 所以少了這個計數，症狀會長得像「AI 什麼都沒做」而不是「載入沒還原」。
+func (w *World) UnresolvedMarches() int { return w.unresolvedMarches }
 
 // restoreMarchRoutes 把「載入存檔時正在行軍」的軍團接回格子路徑。
 //
@@ -1278,35 +1312,77 @@ func (w *World) SetRoads(g *march.Graph) {
 //
 // ⚠ 道路圖是呼叫端注入的，所以這件事只能掛在 `SetRoads` 上，不能放在
 // `loadCorps` 裡——那時還沒有圖。
-func (w *World) restoreMarchRoutes() {
+func (w *World) restoreMarchRoutes() int {
 	if w.roads == nil {
-		return
+		return 0
 	}
+	unresolved := 0
 	for i := range w.Corps {
 		c := &w.Corps[i]
-		if !c.Alive || c.LinkAddr == 0 {
+		if !c.Alive || len(w.routes[i]) > 0 {
 			continue
 		}
-		a, b, ok := w.roads.EdgeByLink(c.LinkAddr)
-		if !ok {
-			continue
-		}
-		// `+0x0A` 是 0xFC（−4）就表示沿路徑表倒著走，出發地是 B。
-		from := a
-		if int8(c.Direction) < 0 {
-			from = b
-		}
-		c.Node = from
-		cells, marks := w.roads.CellRouteMarked(from, c.TargetNode)
-		// 丟掉已經走過的前綴：對齊到存檔記的那個路徑點位址。
-		for k := range marks {
-			if marks[k].PathPtr == c.PathPtr {
-				cells, marks = cells[k+1:], marks[k+1:]
+		switch {
+		case c.LinkAddr != 0:
+			// ① 走在某條 leg 上：`+0x0E` 說是哪一條、`+0x0A` 說往哪一邊、
+			//    `+0x0C` 說走到第幾格。
+			a, b, ok := w.roads.EdgeByLink(c.LinkAddr)
+			if !ok {
+				unresolved++
+				continue
+			}
+			// ⚠ **`+0x0A` 可能是 0**：軍團已經在野外、但路徑指標還沒設
+			// （`+0x00` 位元 1 ＝「下一步要重算」，原版下一拍才跑
+			// `sub_147BB` 選路）。這時方向要從別處推——先看目標是不是
+			// 這條邊的一端，再兩端都試一次，能對齊的才算數。
+			cands := []int{a, b}
+			switch {
+			case int8(c.Direction) < 0:
+				cands = []int{b, a} // 0xFC ＝ −4，沿路徑表倒著走
+			case a == c.TargetNode:
+				cands = []int{b, a}
+			}
+			done := false
+			for _, from := range cands {
+				cells, marks := w.roads.CellRouteMarked(from, c.TargetNode)
+				k := alignRoute(cells, marks, c.PathPtr, c.X, c.Y)
+				if k < 0 {
+					continue
+				}
+				c.Node = from
+				w.routes[i], w.routeMarks[i] = cells[k+1:], marks[k+1:]
+				done = true
 				break
 			}
+			if !done {
+				unresolved++
+			}
+		case c.Node != c.TargetNode:
+			// ② 目標已經定了但還沒踏出去（原版是下一拍 `sub_147BB` 才選路）。
+			//    整條重算就好，軍團還站在出發據點上。
+			w.routes[i], w.routeMarks[i] = w.roads.CellRouteMarked(c.Node, c.TargetNode)
 		}
-		w.routes[i], w.routeMarks[i] = cells, marks
 	}
+	return unresolved
+}
+
+// alignRoute 找出軍團現在站在整條路線的第幾格。
+//
+// ⭐ 兩層：先比**路徑點位址**（`+0x0C`，精確），對不上再比**座標**——
+// 目標被改過時位址會落在別條 leg 上，但軍團的座標一定還在路線上。
+// 兩層都對不上就回 −1，呼叫端把它算成「還原不了」而不是默默從頭走。
+func alignRoute(cells [][2]int, marks []march.CellMark, pathPtr, x, y int) int {
+	for k := range marks {
+		if marks[k].PathPtr == pathPtr {
+			return k
+		}
+	}
+	for k := range cells {
+		if cells[k][0] == x && cells[k][1] == y {
+			return k
+		}
+	}
+	return -1
 }
 
 // AliveCorps 回傳還在的軍團編號。

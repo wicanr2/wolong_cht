@@ -1,8 +1,15 @@
 #!/usr/bin/env python3
 """把 dosgolem 的 `-watch` 記錄切成子刻，逐拍與 remake 的取數序列比對。
 
-    tools/py.sh tools/parity_pace_diff.py 原版.log remake_seq.txt [--from-step N]
+    tools/py.sh tools/parity_pace_diff.py 原版.log remake_seq.txt [--skip-orig N]
     tools/py.sh tools/parity_pace_diff.py --selftest
+
+⚠ **兩邊的第 1 拍不一定是同一拍。** 原版側的 `-watch` 常常比快照早開始
+記錄，實測差 **27 個子刻**（＝ 3 小時，`-skip 27` 那個老差距的另一面）。
+沒有對齊就比，會得到一個「看起來很像規則差異」的 18.8%，
+而第一個分歧落在第 11 拍——**形狀與真的規則分歧一模一樣**。
+所以本工具會自己掃 0–48 的位移做**對齊自檢**：找到明顯更好的位移就大聲說，
+不會安靜地比一個錯的對齊（`--skip-orig N` 手動指定原版要先丟掉幾拍）。
 
 ⭐ **切拍要照原版一拍內的順序**（`sub_13EFD`，docs/re/44 §1）：
 
@@ -81,7 +88,45 @@ def selftest():
             naive[-1] += 1
     check("負對照：照字面切會多一拍", len(naive) == 3)
     check("負對照：照字面切會把 14060 算進前一拍", naive[0] == 3)
+
+    # 對齊自檢：正對照要抓到 27 拍的位移，負對照（本來就對齊）要閉嘴。
+    import random
+    rnd = random.Random(7)
+    body = [rnd.choice((2, 3, 3, 3, 4)) for _ in range(600)]
+    shifted = [rnd.choice((2, 3, 4)) for _ in range(27)] + body
+    hit = align_check(shifted, body, 0)
+    check("對齊自檢：抓到 27 拍的位移", hit is not None and hit[0] == 27)
+    check("對齊自檢：本來就對齊時不吭聲", align_check(body, body, 0) is None)
+    check("對齊自檢：位移已經給對時不吭聲", align_check(shifted, body, 27) is None)
     return 1 if fails else 0
+
+
+def align_check(orig, remake, base, span=48, factor=2.0):
+    """掃 0–span 的位移；找到比 `base` 好一倍以上的就回報。
+
+    ⭐ **這是防「安靜地比錯對齊」的閘。** 沒有它，起點差 27 拍的兩條序列
+    會得到 18.8% 的不一致與一個落在第 11 拍的「第一個分歧」，
+    而那個形狀與真的規則分歧分不出來。
+    """
+    def rate(k):
+        n = min(len(orig) - k, len(remake))
+        if n <= 0:
+            return None, 0
+        return sum(1 for i in range(n) if orig[k + i] != remake[i]), n
+
+    cur, curn = rate(base)
+    if cur is None or curn == 0:
+        return None
+    best, bestk, bestn = cur, base, curn
+    for k in range(span + 1):
+        bad, n = rate(k)
+        if bad is None or n == 0:
+            continue
+        if bad * bestn < best * n:      # 比率比較，避免可比區間不同時失真
+            best, bestk, bestn = bad, k, n
+    if bestk == base or best * curn * factor >= cur * bestn:
+        return None
+    return bestk, best, bestn, cur, curn
 
 
 def main():
@@ -91,13 +136,16 @@ def main():
     if len(args) < 2:
         print(__doc__)
         return 2
-    from_step = 0
+    from_step, base = 0, None
     if "--from-step" in args:
         i = args.index("--from-step")
         from_step = int(args[i + 1])
         del args[i:i + 2]
+    if "--skip-orig" in args:
+        i = args.index("--skip-orig")
+        base = int(args[i + 1])
+        del args[i:i + 2]
     ticks = parse(open(args[0], encoding="utf-8", errors="replace").read())
-    base = 0
     if from_step:
         base = next(i for i, t in enumerate(ticks) if t["step"] > from_step)
     remake, rwhere = [], []
@@ -107,6 +155,13 @@ def main():
         f = l.split()
         remake.append(int(f[1]))
         rwhere.append(f[2].split(",") if len(f) > 2 else [])
+    if base is None:
+        base = 0
+    hint = align_check([len(t["rng"]) for t in ticks], remake, base)
+    if hint is not None:
+        print(f"⚠ 對齊自檢：原版先丟 {hint[0]} 拍會降到 {hint[1] * 100.0 / hint[2]:.1f}%"
+              f"（現在的 {base} 拍是 {hint[3] * 100.0 / hint[4]:.1f}%）——"
+              f"先確認起點對齊再讀下面的數字")
     n = min(len(ticks) - base, len(remake))
     bad = []
     for k in range(n):
