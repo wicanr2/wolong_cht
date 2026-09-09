@@ -448,6 +448,15 @@ type World struct {
 	// 0xFF／0xFFFF，只有玩家選定或有效存檔才有值。
 	Player int
 
+	// formedThisTick 是這一拍由**據點求援**編出來的軍團事件
+	// （原版 `sub_140C9` → `sub_14575`）。`tickCity` 取走之後清空。
+	//
+	// ⚠ **不是持久狀態**：它只在一次 `tickCity` 之內存在，不進快照、
+	// 不進存檔、不算進指紋。放這裡是因為求援鏈埋在
+	// `refreshCityThreat` → `relieve` → `requestRelief` 三層底下，
+	// 為了往上傳一個報告結構去改三層的簽章不划算。
+	formedThisTick []StrategyEvent
+
 	// strategicAI 是執行期開關。載入／存檔本身不包含「誰是玩家」這個
 	// 啟動參數；wlgame／wlsim 在設定 Player 後明確啟用，讓純格式／規則
 	// 測試可以仍然只跑已驗證的時鐘與月結，不被長期 AI 軌跡混入。
@@ -1598,10 +1607,11 @@ func (w *World) tickCity(rng economy.Rand) ([]StrategyEvent, []TalkNotice) {
 	// 中立據點只更新佔用數與鄰接遮罩，不做威脅判斷——
 	// 原版的 `cmp byte ptr [si+841h], 18h / jz` 只跳過 sub_13F74。
 	notices := w.refreshCityThreat(id, rng)
-	var aiEvent *StrategyEvent
-	if w.strategicAI && c.Owner >= 0 && c.Owner < numFactions && c.Owner != w.Player {
-		aiEvent = w.formAICorps(c.Owner)
-	}
+	// ⚠ **這裡沒有編成入口。** 先前每一拍、每一個非玩家的據點都試著
+	// `formAICorps`，於是 AI 幾拍之內就把軍團編到上限——實測 200 拍後
+	// 原版 8 支、remake 20 支。原版 AI 擴軍**只有據點求援那一條鏈**
+	// （`sub_140C9` → `sub_14575` → `sub_145C1` → `sub_16E8F`），
+	// 而求援本身就在上面的 `refreshCityThreat` 裡（docs/spec/171）。
 	gc := governor.City{
 		Growth: c.Growth, Prevention: c.Prevention,
 		Garrison: c.Garrison, GarrisonCap: c.GarrisonCap,
@@ -1624,8 +1634,10 @@ func (w *World) tickCity(rng economy.Rand) ([]StrategyEvent, []TalkNotice) {
 	// 原版 sub_13EFD 在 sub_14194 之後無條件呼叫 sub_14269；
 	// 事件 11／12 寫入的 +0x15 marker 不是只有畫面效果。
 	w.applyCityDisasterEffect(id)
-	if aiEvent != nil {
-		return []StrategyEvent{*aiEvent}, notices
+	if len(w.formedThisTick) > 0 {
+		formed := w.formedThisTick
+		w.formedThisTick = nil
+		return formed, notices
 	}
 	return nil, notices
 }

@@ -57,13 +57,14 @@
 | 主題 | 規格 | 狀態 |
 |---|---|---|
 | 據點整備一拍之內的處理順序 | [`163-city-tick-order.md`](163-city-tick-order.md) | CONFORMED；已重排，逐子刻不一致 910 → 863 |
-| 求援的三道閘（立刻求援的條件、求援記錄、冷卻寫入） | [`164-relief-request-gates.md`](164-relief-request-gates.md) | READY |
-| 上昇值的上下限套在存值上 | [`165-growth-bounds-are-on-stored-value.md`](165-growth-bounds-are-on-stored-value.md) | READY |
-| 存檔寫回保留未建模的位元與據點游標 | [`166-save-writeback-keeps-unmodelled-bits.md`](166-save-writeback-keeps-unmodelled-bits.md) | READY |
-| 一個遊戲日是 23 小時 ＝ 207 子刻 | [`167-day-is-23-hours.md`](167-day-is-23-hours.md) | READY |
-| 軍團與每「時」勢力的巡迴游標也要從存檔還原 | [`168-corps-and-hour-cursors.md`](168-corps-and-hour-cursors.md) | READY |
-| 出城與進城是一步跳過去，沒有那段直線 | [`169-march-has-no-city-stub.md`](169-march-has-no-city-stub.md) | READY |
-| AI 挑到新目標要兩拍才出發（`+0x20` 意圖／`+0x14` 行軍目標）| [`170-ai-target-takes-two-ticks.md`](170-ai-target-takes-two-ticks.md) | READY |
+| 求援的三道閘（立刻求援的條件、求援記錄、冷卻寫入） | [`164-relief-request-gates.md`](164-relief-request-gates.md) | CONFORMED |
+| 上昇值的上下限套在存值上 | [`165-growth-bounds-are-on-stored-value.md`](165-growth-bounds-are-on-stored-value.md) | CONFORMED；據點表五個檢查點逐 byte 相同 |
+| 存檔寫回保留未建模的位元與據點游標 | [`166-save-writeback-keeps-unmodelled-bits.md`](166-save-writeback-keeps-unmodelled-bits.md) | CONFORMED；0 拍 round-trip 四表全同 |
+| 一個遊戲日是 23 小時 ＝ 207 子刻 | [`167-day-is-23-hours.md`](167-day-is-23-hours.md) | CONFORMED；推翻 `re/06` 的 216 |
+| 軍團與每「時」勢力的巡迴游標也要從存檔還原 | [`168-corps-and-hour-cursors.md`](168-corps-and-hour-cursors.md) | CONFORMED；軍團一圈是 128 格不是 127 |
+| 出城與進城是一步跳過去，沒有那段直線 | [`169-march-has-no-city-stub.md`](169-march-has-no-city-stub.md) | CONFORMED；254 條邊整條逐格相同 |
+| AI 挑到新目標要兩拍才出發（`+0x20` 意圖／`+0x14` 行軍目標）| [`170-ai-target-takes-two-ticks.md`](170-ai-target-takes-two-ticks.md) | CONFORMED；軍團逐拍與原版相同 |
+| AI 擴軍的唯一入口是據點求援 | [`171-ai-only-expands-via-relief.md`](171-ai-only-expands-via-relief.md) | CONFORMED；活軍團數與原版相同 |
 | 載入存檔要還原據點巡迴游標 | [`162-city-cursor-from-save.md`](162-city-cursor-from-save.md) | CONFORMED；13 個觸發子刻逐項對上原版 |
 | 亂數消費順序對齊（長時間對拍前置）| [`160-rng-consumption-alignment.md`](160-rng-consumption-alignment.md) | READY；兩側軌跡工具齊備，第一輪比對定位到 `sub_14057` 差 4 次 |
 | 劉備不作為長時間對拍管線 | [`161-liubei-idle-longrun-parity.md`](161-liubei-idle-longrun-parity.md) | DRAFT；原版側 90 天已跑通（26 秒、兩次逐 byte 相同），remake 側未做 |

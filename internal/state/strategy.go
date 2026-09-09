@@ -315,7 +315,11 @@ func (w *World) driftPlayerFriendship(player int, ordered []strategyai.Candidate
 // 分配、單槽上限 100」扣預備兵。它刻意不呼叫玩家 UI 的 FormCorps，因為
 // 玩家介面採固定 1,000 人一槽的現代輸入適配，而原版 AI 編成的預備兵尺度
 // 是 0–100 的軍團槽兵力。
-// formAICorps 編一支新軍團，目標由侵攻對象決定（原版的一般路徑）。
+// formAICorps 編一支新軍團，目標由侵攻對象決定。
+//
+// ⚠ **這不是每拍的入口。** 原版 AI 擴軍只走據點求援那一條鏈
+// （`sub_140C9` → `sub_14575`），呼叫端是 `requestRelief`；
+// 這一支只給「不指定目的地」的探針用（docs/spec/171）。
 func (w *World) formAICorps(faction int) *StrategyEvent {
 	return w.formAICorpsTo(faction, -1)
 }
@@ -583,9 +587,12 @@ func (w *World) requestRelief(site, want int, rng economy.Rand) []TalkNotice {
 	}
 	formed := 0
 	for n := threat.Budget(f.Funds, f.Corps); n > 0 && want > 0; n-- {
-		if w.formAICorpsTo(c.Owner, site) == nil {
+		ev := w.formAICorpsTo(c.Owner, site)
+		if ev == nil {
 			break
 		}
+		// 編成的報告往上傳到這一拍的事件裡（`tickCity` 取走）。
+		w.formedThisTick = append(w.formedThisTick, *ev)
 		formed, want = formed+1, want-1
 	}
 	// ⚠ **一支都沒編出來就不進冷卻**（原版 `sub_14575` 回 CF=1，

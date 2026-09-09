@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**760 列分布在 318 份文件，平均每份 2.4 列。**
+**761 列分布在 319 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 182 | 175 | 6 | 1 |
 | 驗收 | 232 | 206 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 309 | 286 | 22 | 1 |
-| **合計** | **760** | 698 | 59 | 3 |
+| 其他 | 310 | 288 | 21 | 1 |
+| **合計** | **761** | 700 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,7 +53,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 266 |
+| `docs/spec/` | 267 |
 | `docs/playtest/` | 232 |
 | `docs/re/` | 182 |
 | `docs/release/` | 26 |
@@ -284,7 +284,7 @@
 | [`re/85-march-target-hit-test.md`](../re/85-march-target-hit-test.md) | 圖塊 `0CBh`–`0D3h` 這 9 種各對應什麼外觀 | 只知道區間，沒有逐一對上據點類型（`+0x16` 低 4 位只有 5 種） | 靜態 |
 | [`re/85-march-target-hit-test.md`](../re/85-march-target-hit-test.md) | 行軍途中被擋住怎麼處理 | 下令攻宛之後跑了 108 個遊戲日都沒有開戰，軍團沒有到達；`+0x00` 位元 5（被擋住）的實際觸發條件沒查 | 靜態 |
 | [`re/86-march-turnback-at-peace.md`](../re/86-march-turnback-at-peace.md) | 掉頭之後為什麼停住 | 回到 87 之後 `+0x14` 等於 `+0x0E` ⇒ 到站 ⇒ `sub_14325` 分派，Stage 0 而 87 不是首都 ⇒ 什麼都不做。合理但沒有逐條驗過分派表的其他 Stage | 靜態 |
-| [`re/86-march-turnback-at-peace.md`](../re/86-march-turnback-at-peace.md) | 玩家軍團站在據點上時完全不判 | `sub_12662` 的 `jz → 12697` 跳過 `sub_14300`。這代表玩家的軍團**不會**自動留守受威脅的據點，但沒有實機驗過 | 靜態 |
+| [`re/86-march-turnback-at-peace.md`](../re/86-march-turnback-at-peace.md) | 玩家軍團站在據點上時完全不判 | `sub_12662` 的 `jz → 12697` 跳過 `sub_14300`。這代表玩家的軍團**不會**自動留守受威脅的據點，但沒有實機驗過（`sub_14300` 自己的三個條件已 confirmed，見 §2.1） | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `sub_1ECE0` 的亂數式 | 沒讀。remake 對不到逐兵座標，只能對值域與分佈 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
@@ -539,7 +539,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（309 條）
+## 2.6 其他（310 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -653,7 +653,7 @@
 | [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | ⚠ 大地圖上選一格 | 用 `tile:TX,TY`，不要自己算像素——格座標是 `⌊原點÷16⌋＋⌊畫面÷16⌋` 兩次捨去的和，而且**游標不能停在熱區上**（`../re/85`） | 靜態 |
 | [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | 視窗 x → 遊戲 x 的換算 | 視窗 416 對到遊戲 415，而同一批的 300／360／450 都是 1:1。成因未查，只影響游標位置（`../playtest/65` §3.1） | 實測 |
 | [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | 音源 | `int 61h` 只記錄不模擬（時鐘回呼除外）。音訊 parity 仍走 `29` 的錄音比對 | 靜態 |
-| [`spec/132-march-turnback-at-peace.md`](../spec/132-march-turnback-at-peace.md) | 折返之後會不會再出發 | 原版回到據點就停住（玩家的軍團在據點上完全不判）。**AI 的軍團**走 `sub_14300`，行為可能不同，沒有觀測過 | 靜態 |
+| [`spec/132-march-turnback-at-peace.md`](../spec/132-march-turnback-at-peace.md) | 折返之後會不會再出發 | 原版回到據點就停住（玩家的軍團在據點上完全不判）。**AI 的軍團**走 `sub_14300`：只有「腳下的據點受威脅、而且這一格的軍團數 ≤ 1」才會留守，否則照常繼續行軍（`../re/86` §2.1）。折返之後 AI 要不要再出發由 `sub_14325` 的 Stage 機決定，仍沒有實機觀測 | 靜態 |
 | [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | `sub_1ECE0` 的亂數式 | 沒讀。讀出來也未必要照抄——remake 有自己的 `rng` | 靜態 |
 | [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | 走進陣形要走多久 | 原版節拍 9 已經散開，但沒有量過「全部到位」是第幾拍 | 靜態 |
 | [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | 既有的戰場對拍會不會漂 | 現有的取樣點（`-battle-steps 120`）在兩邊都已經到位之後，**理論上不受影響**，但沒重跑過 | 靜態 |
@@ -717,10 +717,11 @@
 | [`spec/166-save-writeback-keeps-unmodelled-bits.md`](../spec/166-save-writeback-keeps-unmodelled-bits.md) | 勢力／據點／武將 | 完全相同 | 靜態 |
 | [`spec/166-save-writeback-keeps-unmodelled-bits.md`](../spec/166-save-writeback-keeps-unmodelled-bits.md) | **軍團** | `+0x00` 有 6 支不同（`C5` → `C4`） | 靜態 |
 | [`spec/166-save-writeback-keeps-unmodelled-bits.md`](../spec/166-save-writeback-keeps-unmodelled-bits.md) | 位元 0／1／4／5 有設定端與清除端、語意尚未定案 | （散句） | 靜態 |
-| [`spec/169-march-has-no-city-stub.md`](../spec/169-march-has-no-city-stub.md) | 出發那一拍 | 原版軍團在據點上時，`sub_12662` 先走 `sub_14300`（AI 的行軍判斷）；實測拍 32 與拍 56 都只呼叫 `sub_12662` 而沒有 `sub_12708`，拍 80 才真的走第一格。remake 少了其中一拍 | 實測 |
-| [`spec/169-march-has-no-city-stub.md`](../spec/169-march-has-no-city-stub.md) | `sub_14300` 的 Stage handler 各自回 CF 的條件 | `../re/65` 有 Stage 0–3 的骨架，但「哪些情況會用掉一拍而不移動」沒逐支對過 | 靜態 |
+| [`spec/169-march-has-no-city-stub.md`](../spec/169-march-has-no-city-stub.md) | `sub_14325` 分派表的 16 項 | 玩家半張與 AI 半張各 8 項；remake 只對到 0–3 與 8／10／11，其餘未逐支對過 | 靜態 |
 | [`spec/170-ai-target-takes-two-ticks.md`](../spec/170-ai-target-takes-two-ticks.md) | 軍團 `+0x00` 位元 1 | remake 沒建模。它的效果（下一次移動前重查道路表）被 remake 的「`March` 當場算好 routes」涵蓋，但存檔寫回是靠 `modelledCorpsBits` 原樣保留的，不是真的維護 | 靜態 |
 | [`spec/170-ai-target-takes-two-ticks.md`](../spec/170-ai-target-takes-two-ticks.md) | `sub_14325` 分派表的 16 項 | 玩家半張與 AI 半張各 8 項，remake 只對到 0–3 與 8/10/11；其餘未逐支對過 | 靜態 |
+| [`spec/171-ai-only-expands-via-relief.md`](../spec/171-ai-only-expands-via-relief.md) | 求援機率路徑的次數 | 原版 210 次（`sub_14057`）、remake 9 次。方向與軍團數相反，成因還沒查 | 靜態 |
+| [`spec/171-ai-only-expands-via-relief.md`](../spec/171-ai-only-expands-via-relief.md) | `sub_1699E`（君主親自出陣） | remake 未實作；它是 `sub_16E8F` 的第二個呼叫端 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |

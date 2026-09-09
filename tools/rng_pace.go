@@ -74,6 +74,8 @@ func main() {
 	withTactical := flag.Bool("tactical", true, "接戰術層——玩家捲進去而且沒委任時才用得到")
 	player := flag.Int("player", -1, "覆寫玩家勢力（-1 ＝ 用存檔裡的）")
 	events := flag.Bool("events", false, "印每一次事件推送，對應原版的 eventwatch（docs/spec/139）")
+	runPastPending := flag.Bool("run-past-pending", false,
+		"出現「等玩家」的狀態之後繼續跑——⚠ 世界會停在半路，之後的比較沒有意義")
 	saveOut := flag.String("save-out", "", "跑完之後把世界寫成一份 SAVE.DAT（拿去跟原版同一拍的記憶體逐 byte 比）")
 	corpsWatch := flag.Int("corps", -1, "逐拍印這支軍團的位置——只在它動了的那一拍印")
 	flag.Parse()
@@ -176,6 +178,8 @@ func main() {
 	}
 	markAt := []int{}
 	var lastCorps [4]int
+	pendingDiplo, pendingBattle := 0, 0
+	ticksRun := *ticks
 	perTickWhere := make([][]string, 0, *ticks)
 	perTick := make([]int, 0, *ticks)
 	total := map[string]int{}
@@ -225,8 +229,21 @@ func main() {
 				lastCorps = cur
 			}
 		}
-		if w.PendingDiplomacy() != nil {
-			fmt.Printf("  ⚠ 第 %d 拍出現外交三選一（規則層沒有 pending 閘，繼續跑）\n", i+1)
+		// ⭐ **夾具要說出自己卡在哪。** 規則層沒有 pending 閘，所以這兩種
+		// 「等玩家」的狀態不會讓 `Tick` 停下來，但世界會停在半路——
+		// 症狀是「某些拍完全沒跑內政」，而那長得像規則差異。
+		if w.PendingDiplomacy() != nil && pendingDiplo == 0 {
+			pendingDiplo = i + 1
+		}
+		if w.PendingBattle() != nil && pendingBattle == 0 {
+			pendingBattle = i + 1
+		}
+		// ⭐ **停在半路的拍不能拿來比。** 規則層沒有 pending 閘，所以
+		// `Tick` 照樣被呼叫，但 `tickCity` 不跑——症狀是「連續幾千拍
+		// 取 0 個數」，而那會把逐拍不一致的總數整個灌爆。
+		if !*runPastPending && (pendingDiplo > 0 || pendingBattle > 0) {
+			ticksRun = i + 1
+			break
 		}
 		prev = tr.seq
 	}
@@ -241,6 +258,20 @@ func main() {
 		fmt.Printf("世界寫到 %s\n", *saveOut)
 	}
 
+	if ticksRun < *ticks {
+		fmt.Printf("⚠ 第 %d 拍停下（要 %d 拍）——出現「等玩家」的狀態，"+
+			"再往下跑世界會停在半路。要硬跑加 -run-past-pending\n", ticksRun, *ticks)
+	}
+	fmt.Printf("終點 %d年%d月%d日 %d時 子刻 %d；活軍團 %d\n",
+		w.Clock.Year, w.Clock.Month, w.Clock.Day, w.Clock.Hour, w.Clock.Subtick,
+		len(w.AliveCorps()))
+	if pendingDiplo > 0 {
+		fmt.Printf("  ⚠ 第 %d 拍起有外交三選一等著（規則層沒有 pending 閘）\n", pendingDiplo)
+	}
+	if pendingBattle > 0 {
+		fmt.Printf("  ⚠ 第 %d 拍起有戰術戰鬥等著——**世界從那一拍起就停在半路**\n", pendingBattle)
+	}
+
 	// 每子刻取幾個：分布比平均值有用——原版是「每子刻 2 或 3 個」。
 	dist := map[int]int{}
 	for _, n := range perTick {
@@ -252,7 +283,7 @@ func main() {
 	}
 	sort.Ints(keys)
 	fmt.Printf("\n%d 個子刻，共取 %d 個亂數（平均 %.2f／子刻）\n",
-		*ticks, tr.seq, float64(tr.seq)/float64(*ticks))
+		ticksRun, tr.seq, float64(tr.seq)/float64(ticksRun))
 	fmt.Println("每子刻取數的分布：")
 	for _, k := range keys {
 		fmt.Printf("  %d 個 × %d 子刻\n", k, dist[k])
