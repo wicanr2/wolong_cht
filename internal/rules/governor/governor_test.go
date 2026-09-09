@@ -104,3 +104,30 @@ func TestDraftCostsGrowth(t *testing.T) {
 		t.Errorf("上昇值 %d，預期 %d", city.Growth, 50-BaseDraft)
 	}
 }
+
+// TestGrowthBoundsAreOnStoredValue 釘住 docs/spec/165：上昇值的兩個夾值
+// 在原版是做在**存值**上（上限 0C8h、下限 0），而 `City.Growth` 是實際值
+// （存值 − 100），所以界是 +100 與 −100，不是 200 與 0。
+func TestGrowthBoundsAreOnStoredValue(t *testing.T) {
+	// 上限：實際 +100 ＝ 存值 200，再成功也不會長。
+	c := City{Growth: MaxGrowth, Prevention: 0, Garrison: 5, GarrisonCap: 5}
+	Tick(&c, nil, false, func() int { return 0 }) // 0 ⇒ 兩次判定都成功
+	if c.Growth != MaxGrowth {
+		t.Fatalf("上昇值上限：得到 %d，要 %d", c.Growth, MaxGrowth)
+	}
+
+	// 下限：夾在實際 −100（存值 0）。從 −100 出發，上昇 +1 再徵兵 −4，
+	// 結果停在 −100。
+	c = City{Growth: MinGrowth, Prevention: 0, Garrison: 0, GarrisonCap: 99}
+	Tick(&c, nil, false, func() int { return 0 })
+	if c.Growth != MinGrowth {
+		t.Fatalf("上昇值下限：得到 %d，要 %d", c.Growth, MinGrowth)
+	}
+
+	// ⚠ 負對照：地板若還套在實際值 0 上，下面這一格會停在 0 而不是 −99。
+	c = City{Growth: -96, Prevention: 0, Garrison: 0, GarrisonCap: 99}
+	Tick(&c, nil, false, func() int { return 0 })
+	if c.Growth != -99 {
+		t.Fatalf("上昇值要能掉到負值：得到 %d，要 -99", c.Growth)
+	}
+}

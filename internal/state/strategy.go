@@ -564,28 +564,40 @@ func (w *World) invasionTarget(faction int) int {
 // 冷卻寫「離首都的距離」。兩條路最後都在勢力記錄留下求援的據點編號。
 func (w *World) requestRelief(site, want int, rng economy.Rand) []TalkNotice {
 	c := &w.Cities[site]
+	f := &w.Factions[c.Owner]
+	// ⭐ **`sub_140B3` 是獨立的一次呼叫**：兩個呼叫端都寫成
+	// `call sub_140C9 / call sub_140B3`，所以冷卻只擋住「發出請求」
+	// （`sub_140C9` 開頭就 return），擋不住「記下是哪個據點在求援」。
+	// 勢力記錄 `+0x16` 是 AI 軍團挑目標時讀的（docs/spec/164 §3）。
+	defer func() { f.ReliefSite = site }()
 	if c.ReliefCooldown != 0 {
 		return nil
 	}
-	f := &w.Factions[c.Owner]
 	var notices []TalkNotice
 	if c.Owner == w.Player {
 		notices = append(notices, TalkNotice{
 			Index: threat.ReliefMessage, City: site, Faction: c.Owner,
 		})
 		c.ReliefCooldown = threat.PlayerCooldown(rng.Next())
-	} else {
-		for n := threat.Budget(f.Funds, f.Corps); n > 0 && want > 0; n-- {
-			if w.formAICorpsTo(c.Owner, site) == nil {
-				break
-			}
-			want--
-		}
-		cap := w.clampCity(f.Capital)
-		c.ReliefCooldown = threat.AICooldown(c.X, c.Y, w.Cities[cap].X)
+		return notices
 	}
-	f.ReliefSite = site
-	return notices
+	formed := 0
+	for n := threat.Budget(f.Funds, f.Corps); n > 0 && want > 0; n-- {
+		if w.formAICorpsTo(c.Owner, site) == nil {
+			break
+		}
+		formed, want = formed+1, want-1
+	}
+	// ⚠ **一支都沒編出來就不進冷卻**（原版 `sub_14575` 回 CF=1，
+	// `sub_140C9` 的 `jb loc_14153` 直接跳過寫入）。冷卻的語意是
+	// 「剛剛真的叫到援軍了」——沒叫到還進冷卻，據點會在最需要援軍的
+	// 時候閉嘴三十拍（docs/spec/164 §4）。
+	if formed == 0 {
+		return nil
+	}
+	cap := w.clampCity(f.Capital)
+	c.ReliefCooldown = threat.AICooldown(c.X, c.Y, w.Cities[cap].X)
+	return nil
 }
 
 // dispatchGarrison 把已經停在這個據點的軍團調去 target（原版 `sub_14155`）。
@@ -619,8 +631,15 @@ func (w *World) relieve(site int, r threat.Result, rng economy.Rand) []TalkNotic
 		c.ReliefCooldown = 0
 		return nil
 	}
-	// sub_14028：有具體目標而且這一格沒有軍團 → 立刻求援一支。
-	if r.Specific && c.Occupancy == 0 {
+	// sub_14028：受威脅而且這一格沒有軍團 → 立刻求援一支。
+	//
+	// ⚠ **條件裡沒有「威脅是不是具體目標」。** 原版的 `jb`（具體）與
+	// `jz`（一般）匯流到同一個 `loc_14040`，具體與否只多設 `+0x00` 的
+	// bit 6；分支條件從頭到尾只有 `[si+858h]`（停在這一格的軍團數）。
+	// 多加一個 `Specific` 會讓「鄰居敵對但不是侵攻目標、又沒有守軍」
+	// 的據點永遠不求援——那正是「電腦被打了也不調兵」的形狀
+	// （docs/spec/164 §2）。
+	if c.Occupancy == 0 {
 		return w.requestRelief(site, 1, rng)
 	}
 	// sub_14057：從最多四個威脅裡隨機挑一個。

@@ -2338,10 +2338,10 @@ func TestNormalScenarioMarchIntoGarrison(t *testing.T) {
 	}
 }
 
-// 真實劇本的敵方 AI 遭遇：從正常編成／道路行軍進入戰鬥指揮後，
-// 真實 BATTLE.MAP／BATTLE.MDL／BATTLE.DAT 也必須能完成並回寫戰略軍團。
-// 這不是 `StageBattle` 或 `demoBattle` 捷徑；只有素材缺席時才跳過。
-func TestNormalScenarioTacticalBattleTerminates(t *testing.T) {
+// normalScenarioWorld 建一個「玩家正常編成 → 沿道路行軍到濮陽」的真實劇本世界，
+// 接好戰術層（真實 BATTLE.MAP／MDL／DAT）。每顆種子都要一個全新的世界。
+func normalScenarioWorld(t *testing.T) *World {
+	t.Helper()
 	w := load(t, 0)
 	w.Player = 0
 	w.EnableStrategicAI()
@@ -2432,13 +2432,37 @@ func TestNormalScenarioTacticalBattleTerminates(t *testing.T) {
 		},
 	})
 
-	r := rng.NewFixed(17)
-	for i := 0; i < 200000 && w.PendingBattle() == nil; i++ {
-		w.Tick(r)
+	return w
+}
+
+// 真實劇本的敵方 AI 遭遇：從正常編成／道路行軍進入戰鬥指揮後，
+// 真實 BATTLE.MAP／BATTLE.MDL／BATTLE.DAT 也必須能完成並回寫戰略軍團。
+// 這不是 `StageBattle` 或 `demoBattle` 捷徑；只有素材缺席時才跳過。
+func TestNormalScenarioTacticalBattleTerminates(t *testing.T) {
+	// ⚠ **這個 fixture 釘的是「湧現的遭遇」**：玩家的軍團出發之後會不會
+	// 碰上敵軍，由 AI 的行軍決定，而那條軌跡吃亂數。所以**單一種子會隨著
+	// 任何一次（正確的）AI 規則修正而失效**——實測改一條求援條件就讓
+	// 通過的種子從 {2,17,23} 變成 {1,3,11,23}。
+	//
+	// 這裡改成掃一串種子：測的是「真實素材的戰鬥打得完、而且回寫得回去」，
+	// 不是「第 17 顆種子會不會遇敵」。⭐ 全部種子都遇不到才是真的回歸。
+	seeds := []int{23, 1, 3, 11, 2, 17, 5}
+	var w *World
+	var r *rng.Rand
+	var p *Pending
+	for _, seed := range seeds {
+		w = normalScenarioWorld(t)
+		r = rng.NewFixed(seed)
+		for i := 0; i < 200000 && w.PendingBattle() == nil; i++ {
+			w.Tick(r)
+		}
+		if p = w.PendingBattle(); p != nil {
+			t.Logf("種子 %d 觸發敵方 AI 遭遇", seed)
+			break
+		}
 	}
-	p := w.PendingBattle()
 	if p == nil {
-		t.Fatal("正常敵方遭遇沒有建立戰術戰鬥")
+		t.Fatalf("%d 顆種子都沒有觸發敵方 AI 遭遇", len(seeds))
 	}
 	beforeMen := [2]int{w.Corps[p.Attacker].Men, w.Corps[p.Defender].Men}
 	if !p.Battle.Run(200000) {

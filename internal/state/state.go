@@ -43,6 +43,14 @@ const (
 	// 據點整備的輪轉游標（原版 `word_10D1E`）。區塊前 59 B 對映到
 	// cs:0CF0h，所以 0D1Eh − 0CF0h = 0x2E（docs/spec/162）。
 	cityCursorOffset = 0x2E
+	// 另外兩條輪轉的游標，單位同樣是段內偏移（docs/spec/168）：
+	// 軍團更新 `cs:word_10D18`（÷ 0x40 ＝ 軍團編號）、
+	// 每「時」的勢力更新 `cs:word_10D1C`（÷ 0x40 ＝ 勢力編號）。
+	corpsCursorOffset = 0x28
+	hourCursorOffset  = 0x2C
+	// corpsSlots 是軍團游標的模數。軍團表有 128 格（`0x22C0`–`0x42C0`），
+	// remake 只建模前 127 格，但**游標要照原版轉滿 128**（docs/spec/168 §2.1）。
+	corpsSlots = 128
 
 	// 稅率與三兵種募兵數。原版載到 cs:0D08h，而區塊前 59 B 對映到
 	// cs:0CF0h，所以 0D08h − 0CF0h = 0x18 就是區塊內的偏移。
@@ -604,6 +612,12 @@ func loadBlock(b []byte) *World {
 	if cur := int(u16(b, cityCursorOffset)) / citySize; cur < len(w.Cities) {
 		w.cityCursor = cur
 	}
+	if cur := int(u16(b, corpsCursorOffset)) / corpsSize; cur < corpsSlots {
+		w.corpsCursor = cur
+	}
+	if cur := int(u16(b, hourCursorOffset)) / factionSize; cur < numFactions {
+		w.hourFaction = cur
+	}
 
 	// 存活勢力數（區塊 +0x3A，59 byte 全域區塊的最後一格）。
 	// 原版 `cs:0D2Ah` 全庫只有一個 `dec`，靠這個欄位載入初值；
@@ -994,7 +1008,7 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 
 	// ① 據點整備：**每 tick 一個**，游標輪轉（原版 `sub_13EFD` 的
 	// `mov si, word_10D1E` … `add si, 20h`）。192 個據點輪一圈，
-	// 而一天是 216 tick，所以每個據點大約每天一次。
+	// 而一天是 207 tick，所以每個據點大約每天一次。
 	cityStrategy, cityNotices := w.tickCity(rng)
 	ev.Strategy = append(ev.Strategy, cityStrategy...)
 	ev.TalkNotices = append(ev.TalkNotices, cityNotices...)
@@ -1447,6 +1461,13 @@ func (w *World) Bytes() []byte {
 		r[0x28] = byte(f.Aggression)
 		r[0x2A] = byte(f.Diplomat)
 	}
+
+	// 據點巡迴游標（`word_10D1E`）。載入端讀它（docs/spec/162），
+	// 寫回端也要寫——否則存檔再讀回來，AI 的時間軸會跳回原點。
+	// 單位是段內偏移 ＝ 據點編號 × 32。
+	putU16(b, cityCursorOffset, w.cityCursor*citySize)
+	putU16(b, corpsCursorOffset, w.corpsCursor*corpsSize)
+	putU16(b, hourCursorOffset, w.hourFaction*factionSize)
 
 	for i := range w.Friendship {
 		row := b[friendBase+i*friendStride:]

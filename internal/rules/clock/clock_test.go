@@ -43,11 +43,11 @@ func TestScenarioStartDates(t *testing.T) {
 	}
 }
 
-// 一個遊戲日 = 24 時 × 9 子刻 = 216 tick，而且整整 216 步之後
-// 才會出現一次 Day 進位。
+// 一個遊戲日 = 23 時 × 9 子刻 = 207 tick（**0 時不存在**，docs/spec/167），
+// 而且整整 207 步之後才會出現一次 Day 進位。
 func TestTicksPerDay(t *testing.T) {
-	if TicksPerDay != 216 {
-		t.Fatalf("TicksPerDay = %d, want 216", TicksPerDay)
+	if TicksPerDay != 207 {
+		t.Fatalf("TicksPerDay = %d, want 207", TicksPerDay)
 	}
 	c := New(196, 4, 1)
 	days, hours := 0, 0
@@ -61,17 +61,17 @@ func TestTicksPerDay(t *testing.T) {
 		}
 	}
 	if hours != HoursPerDay {
-		t.Errorf("216 tick 內的「時」進位 = %d, want %d", hours, HoursPerDay)
+		t.Errorf("%d tick 內的「時」進位 = %d, want %d", TicksPerDay, hours, HoursPerDay)
 	}
 	if days != 1 {
-		t.Errorf("216 tick 內的「日」進位 = %d, want 1", days)
+		t.Errorf("%d tick 內的「日」進位 = %d, want 1", TicksPerDay, days)
 	}
 	if c.Day != 2 || c.Hour != 1 || c.Subtick != 0 {
-		t.Errorf("216 tick 後 = %d日 %d時 %d子刻, want 2日 1時 0子刻", c.Day, c.Hour, c.Subtick)
+		t.Errorf("%d tick 後 = %d日 %d時 %d子刻, want 2日 1時 0子刻", TicksPerDay, c.Day, c.Hour, c.Subtick)
 	}
 }
 
-// 進位鏈：跑滿一個月要正好 天數 × 216 個 tick，而且只觸發一次月進位。
+// 進位鏈：跑滿一個月要正好 天數 × TicksPerDay 個 tick，而且只觸發一次月進位。
 func TestMonthRollover(t *testing.T) {
 	c := New(196, 4, 1) // 4 月有 30 天
 	months := 0
@@ -227,5 +227,36 @@ func TestInvariants(t *testing.T) {
 		if c.Subtick < 0 || c.Subtick >= SubticksPerHour {
 			t.Fatalf("子刻 = %d 超出 0–8", c.Subtick)
 		}
+	}
+}
+
+// TestDayIsTwentyThreeHours 釘住 docs/spec/167：時只走到 23，換日之後從 1 開始，
+// 0 時不存在，所以一天是 23 × 9 ＝ 207 個子刻。
+func TestDayIsTwentyThreeHours(t *testing.T) {
+	// 23 時 子刻 8 的下一拍是隔天 1 時 子刻 0。
+	c := Clock{Year: 196, Month: 4, Day: 16, Hour: 23, Subtick: 8}
+	ev := c.Advance()
+	if !ev.Day || c.Day != 17 || c.Hour != 1 || c.Subtick != 0 {
+		t.Fatalf("換日：得到 %d日 %d時 子刻 %d（Day=%v），要 17日 1時 子刻 0",
+			c.Day, c.Hour, c.Subtick, ev.Day)
+	}
+
+	// ⚠ 負對照：0 時不能出現在任何一拍。
+	c = Clock{Year: 196, Month: 4, Day: 16, Hour: 1, Subtick: 0}
+	for i := 0; i < 3*TicksPerDay; i++ {
+		c.Advance()
+		if c.Hour == 0 || c.Hour > HoursPerDay {
+			t.Fatalf("第 %d 拍出現 %d 時——時的值域是 1–%d", i+1, c.Hour, HoursPerDay)
+		}
+	}
+
+	// 一天剛好 TicksPerDay 拍：從 1 時 子刻 0 走一天回到 1 時 子刻 0。
+	c = Clock{Year: 196, Month: 4, Day: 16, Hour: 1, Subtick: 0}
+	for i := 0; i < TicksPerDay; i++ {
+		c.Advance()
+	}
+	if c.Day != 17 || c.Hour != 1 || c.Subtick != 0 {
+		t.Fatalf("一天 %d 拍之後：得到 %d日 %d時 子刻 %d，要 17日 1時 子刻 0",
+			TicksPerDay, c.Day, c.Hour, c.Subtick)
 	}
 }

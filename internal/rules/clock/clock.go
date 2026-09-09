@@ -6,9 +6,9 @@
 //
 // 原版把時間切成五層，而說明書只提了其中三層：
 //
-//	子刻 (0–8，9 階) → 時 (1–24，24 階) → 日 → 月 → 年
+//	子刻 (0–8，9 階) → 時 (1–23，23 階) → 日 → 月 → 年
 //
-// 一個遊戲日 = 24 × 9 = 216 個 tick。
+// 一個遊戲日 = 23 × 9 = 207 個 tick。⭐ **0 時不存在**（docs/spec/167）。
 //
 // 「時」這一層在說明書裡從沒出現過，但它才是世界更新的實際節拍——
 // 季節漸變、每時的世界更新、日期重繪都掛在它上面。remake 若照說明書
@@ -36,11 +36,15 @@ const (
 	SubticksPerHour = 9
 
 	// HoursPerDay 是「日」進位前的時數。
-	// 原版：`cmp byte ptr ds:0CF3h, 17h` / `jb` → 時 1..24 共 24 階。
-	HoursPerDay = 24
+	//
+	// ⭐ 原版 `cmp byte ptr ds:0CF3h, 17h` ＋ `jb` 是**嚴格小於 23**，
+	// 所以時只被 inc 到 23；時 ＝ 23 那一拍走的是換日那條路，而換日把時
+	// 歸零之後**落到 `loc_11DE0` 又 inc 一次**——新的一天從 1 時開始，
+	// **0 時整個遊戲不會出現**。值域是 1–23，共 23 階（docs/spec/167）。
+	HoursPerDay = 23
 
 	// TicksPerDay 是一個遊戲日的 tick 數。
-	TicksPerDay = HoursPerDay * SubticksPerHour // 216
+	TicksPerDay = HoursPerDay * SubticksPerHour // 207
 
 	// MaxYear 是年份的上限。原版 `cmp word ptr ds:0CF6h, 3E8h`
 	// 超過就設回 `3E6h` 再 `inc`，實際效果是停在 999。

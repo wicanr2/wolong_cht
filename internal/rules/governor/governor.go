@@ -1,7 +1,7 @@
 // Package governor 是內政官：**每個據點每天一次**的整備。
 //
 // 出處是 `sub_14194`（docs/re/07 §19），掛在主迴圈的每 tick 據點更新
-// `sub_13EFD` 上——一次一個據點，192 個輪一圈，而一天是 216 tick，
+// `sub_13EFD` 上——一次一個據點，192 個輪一圈，而一天是 207 tick，
 // 所以「每個據點大約每天被處理一次」。
 //
 // ⭐ **這一支是「120 個月 1872 次暴動」的正解。**
@@ -29,8 +29,14 @@ const (
 
 	// gainOffset 是把 rate 換成增量的那個減數（`sub ch, 0Fh`）。
 	gainOffset = 15
-	// MaxValue 是上昇值與防災值的上限（`cmp al, 0C8h`）。
+	// MaxValue 是**防災值**的上限（`cmp al, 0C8h`）。防災值沒有偏移。
 	MaxValue = 200
+	// ⚠ **上昇值的界不是 0–200。** 據點 `+0x10` 在檔案裡帶 +100 偏移，
+	// 而原版的兩個夾值都做在**存值**上：上限 `0C8h` ＝ 實際 +100、
+	// 下限 `0` ＝ 實際 −100。`City.Growth` 存的是實際值，界要跟著換算，
+	// 否則地板變成實際 0 ＝ 存值 100——等於給每個據點免費保底
+	// （docs/spec/165）。
+	MaxGrowth, MinGrowth = 100, -100
 	// draftChance 是徵兵的門檻：`call rng / cmp al, 18h / jnb 不徵`。
 	// 亂數是 0–255，所以機率是 24/256 ≈ 9.4%。
 	draftChance = 24
@@ -83,7 +89,7 @@ func Tick(c *City, gov *Official, isPlayer bool, rnd func() int) {
 
 	// ① 上昇值。成功條件是 `cmp cl, al / jb 跳過` ＝ rate ≥ rand(0..15)。
 	if rate >= rnd()&rateMask {
-		c.Growth = min(c.Growth+gain, MaxValue)
+		c.Growth = min(c.Growth+gain, MaxGrowth)
 	}
 	// ② 防災值。增量是 `shr ch,1 / inc ch`，**先除再加一**。
 	if rate >= rnd()&rateMask {
@@ -101,7 +107,7 @@ func Tick(c *City, gov *Official, isPlayer bool, rnd func() int) {
 		return
 	}
 	if rnd() < draftChance {
-		c.Growth = max(c.Growth-draft, 0)
+		c.Growth = max(c.Growth-draft, MinGrowth)
 		c.Garrison = min(min(c.Garrison+draft, 255), c.GarrisonCap)
 	}
 }

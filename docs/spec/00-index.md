@@ -57,6 +57,11 @@
 | 主題 | 規格 | 狀態 |
 |---|---|---|
 | 據點整備一拍之內的處理順序 | [`163-city-tick-order.md`](163-city-tick-order.md) | CONFORMED；已重排，逐子刻不一致 910 → 863 |
+| 求援的三道閘（立刻求援的條件、求援記錄、冷卻寫入） | [`164-relief-request-gates.md`](164-relief-request-gates.md) | READY |
+| 上昇值的上下限套在存值上 | [`165-growth-bounds-are-on-stored-value.md`](165-growth-bounds-are-on-stored-value.md) | READY |
+| 存檔寫回保留未建模的位元與據點游標 | [`166-save-writeback-keeps-unmodelled-bits.md`](166-save-writeback-keeps-unmodelled-bits.md) | READY |
+| 一個遊戲日是 23 小時 ＝ 207 子刻 | [`167-day-is-23-hours.md`](167-day-is-23-hours.md) | READY |
+| 軍團與每「時」勢力的巡迴游標也要從存檔還原 | [`168-corps-and-hour-cursors.md`](168-corps-and-hour-cursors.md) | READY |
 | 載入存檔要還原據點巡迴游標 | [`162-city-cursor-from-save.md`](162-city-cursor-from-save.md) | CONFORMED；13 個觸發子刻逐項對上原版 |
 | 亂數消費順序對齊（長時間對拍前置）| [`160-rng-consumption-alignment.md`](160-rng-consumption-alignment.md) | READY；兩側軌跡工具齊備，第一輪比對定位到 `sub_14057` 差 4 次 |
 | 劉備不作為長時間對拍管線 | [`161-liubei-idle-longrun-parity.md`](161-liubei-idle-longrun-parity.md) | DRAFT；原版側 90 天已跑通（26 秒、兩次逐 byte 相同），remake 側未做 |

@@ -23,6 +23,9 @@ const (
 	// aliveFlag 是存在旗標的門檻。編成時寫 0xC0，掃描時比 `cmp byte ptr [si], 80h`。
 	aliveFlag = 0x80
 	newCorps  = 0xC0
+	// modelledCorpsBits 是 remake 真的有在維護的那幾個位元：
+	// 7／6（存在）與 2（委任）。其餘位元寫回時原樣保留（docs/spec/166）。
+	modelledCorpsBits = 0xC0 | 0x04
 )
 
 // Corps 是一支軍團。
@@ -152,7 +155,16 @@ func (w *World) saveCorps(b []byte) {
 			// 其餘不存在的軍團**一個 byte 都不動**——重建會抹掉痕跡。
 			continue
 		}
-		r[0x00] = newCorps
+		// ⚠ **不要整個 byte 寫死。** remake 只建模位元 7／6（存在）與
+		// 位元 2（委任）；位元 0／1／4／5 有設定端與清除端、語意還沒定案
+		// （docs/re/34 §2），但它們是原版的狀態——覆寫等於每次存檔都抹掉。
+		// 原版只在**建立軍團**時整個寫 0xC0（`sub_16F26`），既有軍團的
+		// 其他位元由各自的維護端負責（docs/spec/166）。
+		keep := byte(0)
+		if r[0x00] >= aliveFlag {
+			keep = r[0x00] &^ modelledCorpsBits
+		}
+		r[0x00] = newCorps | keep
 		if c.Delegated {
 			r[0x00] |= 0x04
 		} else {
@@ -469,7 +481,16 @@ func (w *World) tickCorps(hour int, rng combat.Rand) []CorpsEvent {
 	var out []CorpsEvent
 	for n := 0; n < corpsPerTick; n++ {
 		i := w.corpsCursor
-		w.corpsCursor = (w.corpsCursor + 1) % numCorps
+		// ⭐ **一圈是 128 格不是 127。** 原版 `sub_125A3` 在 16 次
+		// `add si, 40h` 之後才 `cmp si, 1FC0h`，所以檢查點上的 si 只會是
+		// 0x400 的倍數，一圈實際走過 si = 0…0x1FC0 ＝ 128 格、8 拍。
+		// 軍團表本身也是 128 格（`0x22C0`–`0x42C0` ＝ 0x2000 ÷ 64）；
+		// remake 只建模前 127 格（跟著武將數），第 128 格空轉一拍
+		// ——用 127 取模會每 8 拍就比原版多轉一格（docs/spec/168 §2.1）。
+		w.corpsCursor = (w.corpsCursor + 1) % corpsSlots
+		if i >= numCorps {
+			continue
+		}
 		if !w.Corps[i].Alive {
 			// 敗走中的軍團不算活著，但還有一個倒數要跑
 			// （原版 `sub_125A3` 的 `test byte [si+2240h], 8`）。

@@ -56,6 +56,7 @@ func main() {
 	traceN := flag.Int("trace", 0, "印前 N 拍的據點狀態（小樣本追蹤）")
 	mark := flag.String("mark", "", "印出含這個呼叫點的子刻位置（例：strategy.go:630）")
 	rngState := flag.String("rng-state", "", "載入原版當下的亂數狀態（258 byte，docs/spec/147 §5）")
+	saveOut := flag.String("save-out", "", "跑完之後把世界寫成一份 SAVE.DAT（拿去跟原版同一拍的記憶體逐 byte 比）")
 	flag.Parse()
 
 	w, err := state.LoadScenario(*save, *slot)
@@ -120,15 +121,42 @@ func main() {
 		}
 		if *traceN > 0 && i < *traceN {
 			cs := w.Cities
-			id := (start + i + 1) % len(cs)
+			// ⭐ **原版是「先處理再前進」**（`sub_13EFD` 讀 `word_10D1E`
+			// 指的那一格，處理完才 `si += 0x20`），所以第 i 拍處理的是
+			// `start + i`，不是 `start + i + 1`。
+			id := (start + i) % len(cs)
 			c := cs[id]
-			fmt.Printf("  拍 %2d 據點 %3d 主 %2d 佔用 %d 威脅 %3d 鄰敵 %d 冷卻 %d ← 取 %d 個\n",
-				i+1, id, c.Owner, c.Occupancy, c.Threat, c.EnemyNeighbours, c.ReliefCooldown, n)
+			fmt.Printf("  拍 %2d 據點 %3d(si=%04X) 主 %2d 侵攻目標 %3d 佔用 %d 威脅 %3d "+
+				"鄰敵 %d 冷卻 %d 受威脅 %v 具體 %v ← 取 %d 個\n",
+				i+1, id, id*32, c.Owner, invasion(w, c.Owner), c.Occupancy, c.Threat,
+				c.EnemyNeighbours, c.ReliefCooldown, c.Threatened, c.Specific, n)
+			for k, nb := range c.Neighbours {
+				if nb < 0 || nb >= len(cs) {
+					fmt.Printf("      鄰 %d：（無）\n", k)
+					continue
+				}
+				f := -1
+				if c.Owner >= 0 && c.Owner < 22 && cs[nb].Owner >= 0 && cs[nb].Owner < 22 {
+					f = w.Friendship[c.Owner][cs[nb].Owner].Raw()
+				}
+				fmt.Printf("      鄰 %d：據點 %3d 主 %2d 佔用 %d 交友度 %3d\n",
+					k, nb, cs[nb].Owner, cs[nb].Occupancy, f)
+			}
 		}
 		if w.PendingDiplomacy() != nil {
 			fmt.Printf("  ⚠ 第 %d 拍出現外交三選一（規則層沒有 pending 閘，繼續跑）\n", i+1)
 		}
 		prev = tr.seq
+	}
+
+	if *saveOut != "" {
+		// ⭐ **改寫不是重建**：`SaveInto` 從來源 bytes 出發只蓋已解欄位，
+		// 所以跟原版記憶體的 diff 只會落在 remake 真的有在寫的欄位上。
+		if err := w.SaveInto(*save, *saveOut, *slot); err != nil {
+			fmt.Fprintln(os.Stderr, "-save-out：", err)
+			os.Exit(1)
+		}
+		fmt.Printf("世界寫到 %s\n", *saveOut)
 	}
 
 	// 每子刻取幾個：分布比平均值有用——原版是「每子刻 2 或 3 個」。
@@ -187,4 +215,12 @@ func main() {
 	for _, r := range rows {
 		fmt.Printf("  %6d  %s\n", r.v, r.k)
 	}
+}
+
+// invasion 讀勢力的侵攻目標（勢力記錄 +0x19），越界回 -1。
+func invasion(w *state.World, f int) int {
+	if f < 0 || f >= len(w.Factions) {
+		return -1
+	}
+	return w.Factions[f].InvasionTarget
 }
