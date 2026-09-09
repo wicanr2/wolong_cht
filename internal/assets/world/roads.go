@@ -57,6 +57,11 @@ type RoadEdge struct {
 	// 那幾格踩在城池圖形上而不是道路上（Stub 記著長度）。
 	Path [][2]int
 
+	// BGate 是 **B 那一端的城門格**——正向走法把它吃掉了（走到它的同一拍
+	// 就換成 B 中心），但**反向走法從它開始**（docs/spec/169 §3.1.1）。
+	// 少了它，反向序列只能靠倒轉正向序列去湊，而那會整條差一格。
+	BGate [2]int
+
 	// StubA、StubB 是頭尾那兩段的格數。要逐格檢查「有沒有踩在路上」時
 	// 得把它們排除——**城池圖形本身不是道路圖塊**。
 	StubA, StubB int
@@ -180,6 +185,7 @@ func RoadEdges(m *Map, cities [][2]int) ([]RoadEdge, error) {
 	// ③ 從每個城門格走一次。
 	best := map[[2]int][][2]int{}
 	stub := map[[2]int][2]int{}
+	gate := map[[2]int][2]int{}
 	seq := map[[2]int]int{}
 	for _, s := range starts {
 		cells, end := walkRoad(t, s.gate, s.dir)
@@ -202,18 +208,19 @@ func RoadEdges(m *Map, cities [][2]int) ([]RoadEdge, error) {
 				cells[i], cells[j] = cells[j], cells[i]
 			}
 		}
-		full, sa, sb := withCityEnds(cells, nodeOf[a], nodeOf[b], cities[a], cities[b])
+		full, bgate, sa, sb := withCityEnds(cells, nodeOf[a], nodeOf[b], cities[a], cities[b])
 		if _, seen := seq[k]; !seen {
 			seq[k] = len(seq) // 先走到先得，與原版「第一次走到就建記錄」同義
 		}
 		best[k] = full
+		gate[k] = bgate
 		stub[k] = [2]int{sa, sb}
 	}
 
 	out := make([]RoadEdge, 0, len(best))
 	for k, path := range best {
 		out = append(out, RoadEdge{
-			A: k[0], B: k[1], Steps: len(path), Path: path,
+			A: k[0], B: k[1], Steps: len(path), Path: path, BGate: gate[k],
 			StubA: stub[k][0], StubB: stub[k][1], Seq: seq[k],
 		})
 	}
@@ -314,7 +321,7 @@ func walkRoad(t []byte, gate, dir int) ([]int, int) {
 //
 // 回傳的序列**不含起點格、含終點格**——接起來時中繼據點不會重複一格。
 // `cells[0]` 就是城門格，要留著（它是原版路徑表的第一筆）。
-func withCityEnds(cells []int, nodeA, nodeB int, from, to [2]int) ([][2]int, int, int) {
+func withCityEnds(cells []int, nodeA, nodeB int, from, to [2]int) ([][2]int, [2]int, int, int) {
 	out := make([][2]int, 0, len(cells))
 	// ⭐ **另一端的城門格不會被停留。** `sub_12708` 走到「自己前進方向那
 	// 一端」的路徑點時，同一拍就 `sub_127A2` 換節點，而換節點會把座標
@@ -324,7 +331,8 @@ func withCityEnds(cells []int, nodeA, nodeB int, from, to [2]int) ([][2]int, int
 		out = append(out, cellXY(c))
 	}
 	out = append(out, to)
-	return out, 1, 1
+	// 第二個回傳值是被吃掉的那一格（B 那一端的城門格）：**反向走法要從它開始**。
+	return out, cellXY(cells[len(cells)-1]), 1, 1
 }
 
 func cellXY(c int) [2]int { return [2]int{c % Width, c / Width} }
@@ -364,7 +372,8 @@ func MarchEdges(edges []RoadEdge, cities [][2]int) []march.Edge {
 		if e.A >= 0 && e.A < len(cities) {
 			start = cities[e.A]
 		}
-		out[i] = march.Edge{A: e.A, B: e.B, Steps: e.Steps, Path: e.Path, ACell: start,
+		out[i] = march.Edge{A: e.A, B: e.B, Steps: e.Steps, Path: e.Path,
+			ACell: start, BGate: e.BGate,
 			LinkAddr: e.LinkAddr, PathAddr: e.PathAddr}
 	}
 	return out

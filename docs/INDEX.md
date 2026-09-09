@@ -63,7 +63,7 @@
 | [`docs/playtest/116-rng-consumption-census.md`](playtest/116-rng-consumption-census.md) | 116 — 原版一個遊戲月的亂數消費普查：18 個呼叫點、12 支函式 | 通過。 | 2026-09-09 |
 | [`docs/playtest/117-field-battle-needs-player-order.md`](playtest/117-field-battle-needs-player-order.md) | 117 — 野戰打不完的成因是 fixture 缺了玩家命令，不是規則層回歸 | 通過。 | 2026-09-09 |
 | [`docs/playtest/118-liubei-90day-audience-response.md`](playtest/118-liubei-90day-audience-response.md) | 118 — 劉備 90 天無人值守：君主召見用右鍵推進，選項用移動次數 | 通過。 | 2026-09-09 |
-| [`docs/playtest/119-rng-pace-comparison.md`](playtest/119-rng-pace-comparison.md) | 119 — 取數節拍對齊：remake 的節拍不吃亂數值，差異是真的規則分歧 | 已修正並驗過（§6、§28）。 | 2026-09-09 |
+| [`docs/playtest/119-rng-pace-comparison.md`](playtest/119-rng-pace-comparison.md) | 119 — 取數節拍對齊：remake 的節拍不吃亂數值，差異是真的規則分歧 | 已修正並驗過（§6、§28–§31）。 | 2026-09-09 |
 | [`docs/playtest/12-event3-same-state-parity.md`](playtest/12-event3-same-state-parity.md) | event3 同狀態對拍（2026-08-10） | 同狀態事件接線、原版式 composite、3×6 實際格位選取、TALK 五行分頁、 DOS/V 內框／按鍵 gl… | 2026-08-10 |
 | [`docs/playtest/13-dosv-natural-and-target-gui.md`](playtest/13-dosv-natural-and-target-gui.md) | DOS/V 自然畫面與目標平台 GUI 驗收 | 歷史驗收紀錄（2026-08-11，影片 oracle）。 | 2026-08-11 |
 | [`docs/playtest/14-m7-review.md`](playtest/14-m7-review.md) | M7 校訂文字人工審查報告 | 60 筆定案校訂已完成逐筆語意、marker、硬換行、寬度與代表畫面抽樣。 | 2026-08-11 |
@@ -351,6 +351,7 @@
 | [`docs/spec/171-ai-only-expands-via-relief.md`](spec/171-ai-only-expands-via-relief.md) | 171 — AI 擴軍的唯一入口是據點求援，不是每拍每據點 | CONFORMED。 | 2026-09-09 |
 | [`docs/spec/172-corps-march-fields.md`](spec/172-corps-march-fields.md) | 172 — 補齊軍團行軍的五個欄位：+0x0A／+0x0C／+0x0E／+0x1A／+0x1C | CONFORMED。 | 2026-09-09 |
 | [`docs/spec/173-corps-flag-bit0-and-sprite-fields.md`](spec/173-corps-flag-bit0-and-sprite-fields.md) | 173 — 軍團的 +0x00 位元 0、+0x08／+0x09 與 AI 編成的初值 | CONFORMED。 | 2026-09-09 |
+| [`docs/spec/174-relief-dispatch-does-not-move-marching-corps.md`](spec/174-relief-dispatch-does-not-move-marching-corps.md) | 174 — 求援調兵只調站著的軍團，而且只寫意圖 | CONFORMED。 | 2026-09-09 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |

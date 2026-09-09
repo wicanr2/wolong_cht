@@ -78,7 +78,8 @@ func main() {
 		"自動回應「等玩家」的視窗：reject（一律拒絕，對應「什麼都不做」的實驗）／"+
 			"accept（一律接受）／stop（停下來，之後的比較沒有意義）")
 	saveOut := flag.String("save-out", "", "跑完之後把世界寫成一份 SAVE.DAT（拿去跟原版同一拍的記憶體逐 byte 比）")
-	corpsWatch := flag.Int("corps", -1, "逐拍印這支軍團的位置——只在它動了的那一拍印")
+	corpsWatch := flag.String("corps", "",
+		"逐拍印這幾支軍團（逗號分隔）——只在**任何一個追蹤欄位變了**的那一拍印")
 	flag.Parse()
 
 	w, err := state.LoadScenario(*save, *slot)
@@ -110,8 +111,8 @@ func main() {
 	w.SetRoads(march.New(len(w.Cities), world.MarchEdges(edges, xy)))
 	// ⭐ 夾具要說得出自己的狀態：還原不了的軍團會**不動**（docs/spec/172 §4.5），
 	// 而不動與「原版也沒動」在取數序列上長得一樣。
-	wired = append(wired, fmt.Sprintf("道路圖 %d 條邊（行軍還原不了 %d 支）",
-		len(edges), w.UnresolvedMarches()))
+	wired = append(wired, fmt.Sprintf("道路圖 %d 條邊（行軍還原 %d 支、還原不了 %d 支）",
+		len(edges), w.RestoredMarches(), w.UnresolvedMarches()))
 
 	if *withAI {
 		w.EnableStrategicAI()
@@ -180,16 +181,33 @@ func main() {
 		s := w.TakeSnapshot()
 		start = s.CityCursor
 	}
+	startClock := w.Clock
 	markAt := []int{}
-	var lastCorps [4]int
+	watched := []int{}
+	for _, f := range strings.Split(*corpsWatch, ",") {
+		if f = strings.TrimSpace(f); f == "" {
+			continue
+		}
+		if n, err := strconv.Atoi(f); err == nil && n >= 0 && n < len(w.Corps) {
+			watched = append(watched, n)
+		}
+	}
+	// ⚠ 追蹤欄位要含**意圖與階段**，不只位置：AI 的分歧常常先出現在
+	// 「決定去哪」而位置還沒動（docs/spec/170：從決定到踏出去跨三個週期）。
+	lastCorps := map[int][6]int{}
 	pendingDiplo, pendingFunding, pendingBattle := 0, 0, 0
 	answeredDiplo, answeredFunding := 0, 0
 	ticksRun := *ticks
 	perTickWhere := make([][]string, 0, *ticks)
 	perTick := make([]int, 0, *ticks)
+	// ⭐ **每一拍處理的是哪一個據點**：原版側從 `sub_14194` 的 SI 拿得到
+	// （`SI ÷ 32`），remake 這邊就是 `Tick` 之前的巡迴游標（先處理再前進）。
+	// 兩邊都記下來，對齊就不必靠人工填位移（docs/playtest/119 §27）。
+	perTickCity := make([]int, 0, *ticks)
 	total := map[string]int{}
 	prev := 0
 	for i := 0; i < *ticks; i++ {
+		perTickCity = append(perTickCity, w.TakeSnapshot().CityCursor)
 		w.Tick(tr)
 		n := tr.seq - prev
 		perTick = append(perTick, n)
@@ -224,14 +242,18 @@ func main() {
 					k, nb, cs[nb].Owner, cs[nb].Occupancy, f)
 			}
 		}
-		if *corpsWatch >= 0 && *corpsWatch < len(w.Corps) {
-			c := w.Corps[*corpsWatch]
-			cur := [4]int{c.X, c.Y, c.Node, c.TargetNode}
-			if cur != lastCorps {
-				fmt.Printf("  拍 %4d 軍團 %d xy(%d,%d) 節點 %d → %d 計時 %d 間隔 %d 朝向 %d 階段 %d\n",
-					i+1, *corpsWatch, c.X, c.Y, c.Node, c.TargetNode,
-					c.Timer, c.Interval, c.Heading, c.Stage)
-				lastCorps = cur
+		for _, n := range watched {
+			c := w.Corps[n]
+			alive := 0
+			if c.Alive {
+				alive = 1
+			}
+			cur := [6]int{c.X, c.Y, c.Node, c.TargetNode, c.Ordered, c.Stage*2 + alive}
+			if cur != lastCorps[n] {
+				fmt.Printf("  拍 %4d 軍團 %d xy(%d,%d) 節點 %d → %d 意圖 %d 階段 %d 朝向 %d 在 %d\n",
+					i+1, n, c.X, c.Y, c.Node, c.TargetNode, c.Ordered,
+					c.Stage, c.Heading, alive)
+				lastCorps[n] = cur
 			}
 		}
 		// ⭐ **夾具要說出自己卡在哪。** 規則層沒有 pending 閘，所以這兩種
@@ -352,8 +374,18 @@ func main() {
 		}
 		// ⭐ 連**來源**一起寫：分歧要能自己說明是哪一支多取／少取，
 		// 否則每次都得再跑一輪 `-mark` 去猜。
+		// ⭐ **檔頭寫起點時鐘**：原版側的 `-watch` 記錄常常比快照早開始，
+		// 而 dosgolem 的 `clock` 步驟會在 log 裡留下同一個時刻——
+		// 對齊點因此從資料本身讀得出來，不必人工填位移
+		// （docs/playtest/119 §27）。
+		fmt.Fprintf(f, "# 起點 %d年%d月%d日 %d時 子刻 %d\n",
+			startClock.Year, startClock.Month, startClock.Day,
+			startClock.Hour, startClock.Subtick)
+		// 版面：`拍 個數 據點 來源1,來源2,…`。第三欄是**這一拍處理的據點**，
+		// `tools/parity_pace_diff.py` 拿它逐拍檢查兩邊沒有脫節。
 		for i, n := range perTick {
-			fmt.Fprintf(f, "%d %d %s\n", i+1, n, strings.Join(perTickWhere[i], ","))
+			fmt.Fprintf(f, "%d %d %d %s\n", i+1, n, perTickCity[i],
+				strings.Join(perTickWhere[i], ","))
 		}
 		f.Close()
 		fmt.Printf("\n逐子刻序列寫到 %s\n", *seqOut)

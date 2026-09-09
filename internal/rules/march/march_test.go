@@ -56,24 +56,32 @@ func TestNilGraphIsSafe(t *testing.T) {
 // 序列的約定是「不含起點、含終點」，所以**直接反轉是錯的**——
 // 那會少掉 A 的格子、多出 B 的格子。這條把那個 off-by-one 釘住。
 func TestReversePathEndsAtOrigin(t *testing.T) {
-	a := [2]int{10, 10}
-	b := [2]int{13, 10}
+	// ⭐ 版面照 docs/spec/169 §3.1.1：原版的路徑點是 p0…p2，
+	// **正向吃掉 p2**（走到它的同一拍就換成 B 中心），
+	// **反向吃掉 p0**（同理換成 A 中心）。
+	a := [2]int{10, 10}  // A 中心
+	b := [2]int{14, 10}  // B 中心
+	p0 := [2]int{11, 10}
+	p1 := [2]int{12, 10}
+	p2 := [2]int{13, 10} // B 那一端的城門格
 	g := New(2, []Edge{{
-		A: 0, B: 1, Steps: 3, ACell: a,
-		Path: [][2]int{{11, 10}, {12, 10}, b},
+		A: 0, B: 1, Steps: 3, ACell: a, BGate: p2,
+		Path: [][2]int{p0, p1, b},
 	}})
 
 	fwd := g.CellRoute(0, 1)
-	if len(fwd) != 3 || fwd[len(fwd)-1] != b {
-		t.Fatalf("正向 %v，應以 %v 結尾", fwd, b)
+	if len(fwd) != 3 || fwd[0] != p0 || fwd[1] != p1 || fwd[2] != b {
+		t.Fatalf("正向 %v，應該是 %v", fwd, [][2]int{p0, p1, b})
 	}
 	back := g.CellRoute(1, 0)
-	if len(back) != 3 || back[len(back)-1] != a {
-		t.Fatalf("反向 %v，應以 %v 結尾", back, a)
+	want := [][2]int{p2, p1, a}
+	if len(back) != 3 || back[0] != want[0] || back[1] != want[1] || back[2] != want[2] {
+		t.Fatalf("反向 %v，應該是 %v——"+
+			"⚠ 反向不是正向的倒轉：它從 B 那一端的城門格開始、以 A 中心結尾", back, want)
 	}
-	// 中間那兩格要是同一組，順序相反。
-	if back[0] != fwd[1] || back[1] != fwd[0] {
-		t.Fatalf("反向的中段不是正向倒著走：%v vs %v", back, fwd)
+	// 負對照：倒轉正向序列會得到 [B中心, p1, p0]，長得很像但頭尾都錯。
+	if back[0] == fwd[2] {
+		t.Fatal("反向的第一格是 B 中心——那是「把正向倒過來」的指紋")
 	}
 }
 

@@ -448,6 +448,7 @@ type World struct {
 	// unresolvedMarches 是 SetRoads 時還原不了行軍狀態的軍團數
 	// （docs/spec/172 §4.5）。0 以外的值代表有軍團完全不動。
 	unresolvedMarches int
+	restoredMarches   int
 
 	// hourFaction 是下一個輪到的勢力（原版 cs:0D1Ch，以 si 步進 0x40）。
 	// 不匯出——它是迴圈的內部游標，不是遊戲狀態的一部分。

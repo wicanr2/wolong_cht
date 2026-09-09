@@ -27,6 +27,11 @@ type Edge struct {
 	// 但反向的序列需要它當結尾，所以要另外帶進來。
 	ACell [2]int
 
+	// BGate 是 **B 那一端的城門格**。`Path` 刻意不含它（走到它的同一拍
+	// 就換成 B 中心了），但**反向走法從它開始**——
+	// 反向序列不是正向序列的倒轉（docs/spec/169 §3.1.1）。
+	BGate [2]int
+
 	// LinkAddr、PathAddr 是這條邊在原版執行期道路表裡的段內位址。
 	// 只用來還原軍團記錄的 `+0x0C`／`+0x0E`（docs/spec/172），
 	// 路由本身不看它們。
@@ -41,6 +46,14 @@ type CellMark struct {
 	PathPtr  int
 	LinkAddr int
 	Step     int
+
+	// Next 是**下一個路徑點**的座標。朝向（`+0x08`）看的是它，不是剛走過
+	// 的那一格——原版 `sub_12804` 用 `+0x0C ＋ 步進` 取下一筆再比座標
+	// （docs/spec/173 §1.2）。用「上一格到現在」算會整整晚一步，
+	// 而**位置完全正確**，所以只有逐欄比對看得見。
+	//
+	// 最後一格（據點中心）沒有下一筆，是零值——到站時朝向本來就寫 4。
+	Next [2]int
 }
 
 // Graph 是據點道路圖。
@@ -78,6 +91,21 @@ func cellMarks(e Edge, n int, forward bool) []CellMark {
 	if n <= 0 {
 		return nil
 	}
+	// ⭐ **真正的路徑點序列**（不是走過的格子序列）。兩者只差終點那一格：
+	// 格子序列的最後一格是據點中心，路徑點序列的最後一筆是那一端的城門格。
+	// 朝向要用它算——`sub_12804` 看的是**下一個路徑點**（docs/spec/173 §1.2）。
+	//   正向 q ＝ p0 … p(n-2), p(n-1)      ＝ Path[0…n-2] ＋ BGate
+	//   反向 q ＝ p(n-1) … p1, p0           ＝ BGate ＋ Path[n-2…0]
+	pts := make([][2]int, n)
+	if forward {
+		copy(pts, e.Path[:n-1])
+		pts[n-1] = e.BGate
+	} else {
+		pts[0] = e.BGate
+		for k := 1; k < n; k++ {
+			pts[k] = e.Path[n-1-k]
+		}
+	}
 	out := make([]CellMark, n)
 	step := 4
 	if !forward {
@@ -88,10 +116,15 @@ func cellMarks(e Edge, n int, forward bool) []CellMark {
 		if !forward {
 			idx = n - 1 - k
 		}
+		var next [2]int
+		if k+1 < n {
+			next = pts[k+1]
+		}
 		out[k] = CellMark{
 			PathPtr:  e.PathAddr + idx*4,
 			LinkAddr: e.LinkAddr,
 			Step:     step,
+			Next:     next,
 		}
 	}
 	return out
@@ -110,26 +143,34 @@ func New(n int, edges []Edge) *Graph {
 		}
 		g.adj[e.A] = append(g.adj[e.A],
 			link{e.B, e.Steps, e.Path, cellMarks(e, n, true)})
-		// 反向要把格子序列倒過來，而且**最後一格換成起點**：
-		// 序列的約定是「不含起點、含終點」，直接反轉會少了 A 的格子、
-		// 多出 B 的格子。
+		// ⚠ **反向不是正向的倒轉。** 正向序列是 `p0 … p(n-2) ＋ B 中心`，
+		// 反向要的是 `p(n-1) … p1 ＋ A 中心`——兩個方向各吃掉自己終點
+		// 那一格（docs/spec/169 §3.1.1）。倒轉會以 B 中心開頭、以 `p0`
+		// 結尾，整條差一格，而**路徑指標照樣對得上**，所以只有逐格
+		// 對拍看得見。
 		g.adj[e.B] = append(g.adj[e.B],
-			link{e.A, e.Steps, reversePath(e.Path, e.ACell), cellMarks(e, n, false)})
+			link{e.A, e.Steps, reversePath(e.Path, e.ACell, e.BGate), cellMarks(e, n, false)})
 	}
 	return g
 }
 
 // reversePath 把 A→B 的序列翻成 B→A：反轉之後去掉頭（原本的 B 格），
 // 再把 A 的格子接到尾巴。
-func reversePath(p [][2]int, a [2]int) [][2]int {
+// reversePath 從正向序列 `p0 … p(n-2) ＋ B 中心` 造出反向序列
+// `p(n-1) … p1 ＋ A 中心`（docs/spec/169 §3.1.1）。
+//
+// b 是 B 那一端的城門格（`p(n-1)`），正向序列裡沒有它；
+// a 是 A 的所在格，反向的終點。
+func reversePath(p [][2]int, a, b [2]int) [][2]int {
 	if len(p) == 0 {
 		return nil
 	}
 	out := make([][2]int, 0, len(p))
-	for i := len(p) - 2; i >= 0; i-- {
+	out = append(out, b)                  // 反向的第一格 ＝ B 那一端的城門格
+	for i := len(p) - 2; i >= 1; i-- {    // 中段：p(n-2) … p1
 		out = append(out, p[i])
 	}
-	return append(out, a)
+	return append(out, a)                 // 反向的終點 ＝ A 中心
 }
 
 // CellRoute 回傳 from 走到 to 要經過的**每一格**，不含 from 的所在格。

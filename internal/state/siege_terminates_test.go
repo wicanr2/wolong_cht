@@ -154,14 +154,33 @@ func TestFieldBattleTerminates(t *testing.T) {
 	if n := w.UnresolvedMarches(); n != 0 {
 		t.Fatalf("%d 支軍團的行軍狀態還原不了", n)
 	}
+	// ⭐ **正對照**：上面那一句在「沒有軍團需要還原」時也會通過，
+	// 兩者在斷言上長得一樣。這一句把假零擋掉——這份存檔就是為了
+	// 「有軍團正走在路上」而做的（docs/playtest/43 §2）。
+	if n := w.RestoredMarches(); n == 0 {
+		t.Fatal("這份存檔一支行軍中的軍團都沒有，" +
+			"那上面那句 UnresolvedMarches()==0 什麼都沒驗到")
+	}
 
 	rng := siegeRand{}
-	for i := 0; i < 20000 && w.PendingBattle() == nil; i++ {
+	// ⚠ **上限要夠緊才擋得住「還是會撞到，只是晚了很多」**——那正是
+	// 「靠直線退路碰巧撞出來」那種缺陷的樣子，而寬鬆的上限對它完全無感。
+	// 實測是第 134 拍（道路圖接上、兩支行軍中的軍團還原之後）；
+	// 600 是四倍餘裕。要改這個數字先確認變化有解釋。
+	const meetLimit = 600
+	met := -1
+	for i := 0; i < meetLimit && w.PendingBattle() == nil; i++ {
 		w.Tick(rng)
+		if w.PendingBattle() != nil {
+			met = i + 1
+		}
 	}
 	if w.PendingBattle() == nil {
-		t.Fatal("推了 20,000 tick 都沒有撞出遭遇——存檔的行軍狀態可能不對")
+		t.Fatalf("推了 %d 拍都沒有撞出遭遇——存檔的行軍狀態可能不對，"+
+			"或是軍團沒有走在道路圖上", meetLimit)
 	}
+	t.Logf("第 %d 拍撞出遭遇（還原了 %d 支行軍中的軍團）",
+		met, w.RestoredMarches())
 	pb := w.PendingBattle()
 	if pb == nil || pb.Battle == nil {
 		t.Fatal("選了戰鬥指揮卻沒有戰場")

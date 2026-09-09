@@ -605,23 +605,37 @@ func (w *World) requestRelief(site, want int, rng economy.Rand) []TalkNotice {
 }
 
 // dispatchGarrison 把已經停在這個據點的軍團調去 target（原版 `sub_14155`）。
+//
+// ⚠ 兩件事照抄，少一件就會出事（docs/spec/174）：
+//
+//   - **只調此刻站在那一格的軍團。** 原版比的是 `+0x0E`，行軍中那是
+//     連結記錄的位址（≥ 0x800），**永遠不等於據點編號 × 8**。
+//     `Node` 是出發據點、行軍中不變，拿它當所在地會把半路上的軍團也調走。
+//   - **只寫意圖與 Stage。** 原版是 `mov [di+20h], cl` ＋ `mov [di+23h], ch`
+//     （呼叫端 `sub_14057` 傳 `ch = 0`），行軍目標留給下一拍的 `sub_14548`。
+//
+// 兩個一起做錯會形成閉環：軍團出發 → 192 拍後這個據點又走一次求援 →
+// 被當成守軍重新下令 → `March` 從 `Node` 重算路徑 → 彈回第一格。
+// **走八格、彈回、再走八格，永遠到不了**（docs/playtest/119 §29）。
 func (w *World) dispatchGarrison(site, target, want, skip int, rng economy.Rand) {
 	gs := make([]threat.Garrison, len(w.Corps))
 	for i := range w.Corps {
 		cp := &w.Corps[i]
+		at := cp.Node
+		if !cp.Alive || cp.LinkAddr != 0 {
+			at = -1
+		}
 		// 位元 2 ＝「委任」（docs/re/45）：求援只調得動交給電腦指揮的軍團，
 		// 玩家自己指揮的不會被搶走。`+0x23 >= 8` 是待解體，也調不動。
 		gs[i] = threat.Garrison{
-			At:    cp.Node,
+			At:    at,
 			Ready: cp.Alive && cp.Faction == w.Cities[site].Owner && cp.Delegated,
 			Stage: cp.Stage,
 		}
-		if !cp.Alive {
-			gs[i].At = -1
-		}
 	}
 	for _, i := range threat.Dispatch(gs, site, want, skip, func() int { return rng.Next() }) {
-		_ = w.March(i, target)
+		w.Corps[i].Ordered = target
+		w.Corps[i].Stage = StageNormal
 	}
 }
 

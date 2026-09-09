@@ -2617,12 +2617,11 @@ func TestMarchFollowsRoads(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	me := make([]march.Edge, len(edges))
-	for i, e := range edges {
-		me[i] = march.Edge{A: e.A, B: e.B, Steps: e.Steps,
-			Path: e.Path, ACell: xy[e.A]}
-	}
-	g := march.New(len(w.Cities), me)
+	// ⭐ 用 `world.MarchEdges` 轉，不要在這裡自己抄一份——
+	// 它的存在理由就是「少填一個欄位的 bug 會只在其中一個呼叫端出現」，
+	// 而這支測試自己抄了一份、漏掉 `BGate`，反向路徑因此整條差一格
+	// （docs/spec/169 §3.1.1）。
+	g := march.New(len(w.Cities), world.MarchEdges(edges, xy))
 	w.SetRoads(g)
 
 	// 找一對距離最遠的據點當測試對象——最遠的那一對必然要經過中繼點。

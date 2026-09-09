@@ -449,16 +449,31 @@ func TestReliefOnlyMovesDelegatedCorps(t *testing.T) {
 	at(0, false, 0) // 玩家自己指揮
 	at(1, true, 11) // 待解體
 	at(2, true, 0)  // 委任中 ✓
+	at(3, true, 0)  // 委任中，但**正走在路上** ✗
+	w.Corps[3].LinkAddr = 0x0800
 
-	w.dispatchGarrison(site, target, 3, 0, rng.NewFixed(1))
+	for i := range w.Corps {
+		w.Corps[i].Ordered = site
+	}
+	w.dispatchGarrison(site, target, 4, 0, rng.NewFixed(1))
 
-	if w.Corps[0].TargetNode != site {
+	// ⚠ 判準是**意圖**（`+0x20`），不是行軍目標：`sub_14155` 只寫
+	// `+0x20` 與 `+0x23`，`+0x14` 要等下一拍的 `sub_14548`（docs/spec/174）。
+	if w.Corps[0].Ordered != site {
 		t.Error("玩家自己指揮的軍團被調走了")
 	}
-	if w.Corps[1].TargetNode != site {
+	if w.Corps[1].Ordered != site {
 		t.Error("等著解體的軍團被調走了")
 	}
-	if w.Corps[2].TargetNode == site {
+	if w.Corps[2].Ordered != target {
 		t.Error("委任中的軍團沒有被調走")
+	}
+	if w.Corps[2].TargetNode != site {
+		t.Error("行軍目標被提早寫掉了——那是下一拍 sub_14548 的事")
+	}
+	// ⭐ 負對照：行軍中的軍團**調不動**。原版比的是 `+0x0E`，
+	// 行軍中那是連結記錄位址，永遠不等於據點編號 × 8（docs/spec/174 §1.1）。
+	if w.Corps[3].Ordered != site {
+		t.Error("正走在路上的軍團被當成守軍調走了")
 	}
 }

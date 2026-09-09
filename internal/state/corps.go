@@ -689,12 +689,23 @@ func (w *World) step(i int) bool {
 		// （`sub_126FF`／`sub_147BB`，docs/spec/173 §1.1）。
 		c.OnPath = true
 		// 同步吃掉一格標記：原版每走一步就 `bx += [si+0Ah]` 再寫回 `+0x0C`。
+		var head = -1
 		if mk := w.routeMarks[i]; len(mk) > 0 {
 			c.PathPtr, c.LinkAddr, c.Direction = mk[0].PathPtr, mk[0].LinkAddr,
 				byteStep(mk[0].Step)
+			// ⭐ 朝向看的是**下一個路徑點**，不是剛走過的那一格
+			// （`sub_12804`，docs/spec/173 §1.2）。
+			if n := mk[0].Next; n != ([2]int{}) {
+				head = headingTo(next[0], next[1], n[0], n[1])
+			}
 			w.routeMarks[i] = mk[1:]
 		}
-		c.Heading = headingTo(c.X, c.Y, next[0], next[1])
+		if head < 0 {
+			// 沒有標記（掉頭走的反向段、或圖裡沒有格子序列）→ 退回
+			// 「這一步走的方向」。值域相同，只是晚一步。
+			head = headingTo(c.X, c.Y, next[0], next[1])
+		}
+		c.Heading = head
 		c.X, c.Y = next[0], next[1]
 		// 踩到某個據點的座標就算抵達那個據點。中繼據點也要更新，
 		// 不然攻城、遭遇這些判定會在錯的地方觸發。
@@ -1320,7 +1331,7 @@ func (w *World) March(corps, node int) error {
 // 不是整個動不了。
 func (w *World) SetRoads(g *march.Graph) {
 	w.roads = g
-	w.unresolvedMarches = w.restoreMarchRoutes()
+	w.restoredMarches, w.unresolvedMarches = w.restoreMarchRoutes()
 }
 
 // ClearMarchRoute 丟掉一支軍團的格子路徑與存檔裡的路徑指標。
@@ -1343,6 +1354,13 @@ func (w *World) ClearMarchRoute(i int) {
 // 所以少了這個計數，症狀會長得像「AI 什麼都沒做」而不是「載入沒還原」。
 func (w *World) UnresolvedMarches() int { return w.unresolvedMarches }
 
+// RestoredMarches 回傳「載入之後**接回**行軍路徑」的軍團數。
+//
+// ⭐ 它是 `UnresolvedMarches() == 0` 的**正對照**。沒有它，
+// 「一支都沒還原不了」與「根本沒有軍團需要還原」在斷言上長得一樣——
+// 那是假零（`~/diagnosis-notes` 02：查詢回空的四種形狀）。
+func (w *World) RestoredMarches() int { return w.restoredMarches }
+
 // restoreMarchRoutes 把「載入存檔時正在行軍」的軍團接回格子路徑。
 //
 // ⭐ 存檔裡的 `+0x0E`（連結記錄位址）＋ `+0x0C`（路徑點位址）＋ `+0x0A`
@@ -1352,11 +1370,10 @@ func (w *World) UnresolvedMarches() int { return w.unresolvedMarches }
 //
 // ⚠ 道路圖是呼叫端注入的，所以這件事只能掛在 `SetRoads` 上，不能放在
 // `loadCorps` 裡——那時還沒有圖。
-func (w *World) restoreMarchRoutes() int {
+func (w *World) restoreMarchRoutes() (restored, unresolved int) {
 	if w.roads == nil {
-		return 0
+		return 0, 0
 	}
-	unresolved := 0
 	for i := range w.Corps {
 		c := &w.Corps[i]
 		if !c.Alive || len(w.routes[i]) > 0 {
@@ -1394,16 +1411,19 @@ func (w *World) restoreMarchRoutes() int {
 				done = true
 				break
 			}
-			if !done {
+			if done {
+				restored++
+			} else {
 				unresolved++
 			}
 		case c.Node != c.TargetNode:
 			// ② 目標已經定了但還沒踏出去（原版是下一拍 `sub_147BB` 才選路）。
 			//    整條重算就好，軍團還站在出發據點上。
 			w.routes[i], w.routeMarks[i] = w.roads.CellRouteMarked(c.Node, c.TargetNode)
+			restored++
 		}
 	}
-	return unresolved
+	return restored, unresolved
 }
 
 // alignRoute 找出軍團現在站在整條路線的第幾格。
