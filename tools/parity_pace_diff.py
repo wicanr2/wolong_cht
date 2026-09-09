@@ -100,17 +100,26 @@ def main():
     base = 0
     if from_step:
         base = next(i for i, t in enumerate(ticks) if t["step"] > from_step)
-    remake = [int(l.split()[1]) for l in open(args[1]) if l.strip()]
+    remake, rwhere = [], []
+    for l in open(args[1]):
+        if not l.strip():
+            continue
+        f = l.split()
+        remake.append(int(f[1]))
+        rwhere.append(f[2].split(",") if len(f) > 2 else [])
     n = min(len(ticks) - base, len(remake))
     bad = []
     for k in range(n):
         o = ticks[base + k]
         if len(o["rng"]) != remake[k]:
-            bad.append((k + 1, o["city"], len(o["rng"]), remake[k], o["rng"]))
+            bad.append((k + 1, o["city"], len(o["rng"]), remake[k], o["rng"],
+                        rwhere[k] if k < len(rwhere) else []))
     print(f"原版 {len(ticks)} 拍（從第 {base + 1} 拍起比），比 {n} 拍，"
           f"不一致 {len(bad)}（{len(bad) * 100.0 / n:.1f}%）")
     for b in bad[:40]:
-        print(f"  拍 {b[0]:5d} 據點 {b[1]:3d} 原版 {b[2]:3d} remake {b[3]:3d}  來源 {b[4][:8]}")
+        print(f"  拍 {b[0]:5d} 據點 {b[1]:3d} 原版 {b[2]:3d} remake {b[3]:3d}")
+        print(f"        原版 {b[4][:8]}")
+        print(f"        remake {b[5][:8]}")
     return 0
 
 

@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**758 列分布在 317 份文件，平均每份 2.4 列。**
+**760 列分布在 318 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 182 | 175 | 6 | 1 |
 | 驗收 | 232 | 206 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 307 | 284 | 22 | 1 |
-| **合計** | **758** | 696 | 59 | 3 |
+| 其他 | 309 | 286 | 22 | 1 |
+| **合計** | **760** | 698 | 59 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,7 +53,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 264 |
+| `docs/spec/` | 266 |
 | `docs/playtest/` | 232 |
 | `docs/re/` | 182 |
 | `docs/release/` | 26 |
@@ -539,7 +539,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（307 條）
+## 2.6 其他（309 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -719,6 +719,8 @@
 | [`spec/166-save-writeback-keeps-unmodelled-bits.md`](../spec/166-save-writeback-keeps-unmodelled-bits.md) | 位元 0／1／4／5 有設定端與清除端、語意尚未定案 | （散句） | 靜態 |
 | [`spec/169-march-has-no-city-stub.md`](../spec/169-march-has-no-city-stub.md) | 出發那一拍 | 原版軍團在據點上時，`sub_12662` 先走 `sub_14300`（AI 的行軍判斷）；實測拍 32 與拍 56 都只呼叫 `sub_12662` 而沒有 `sub_12708`，拍 80 才真的走第一格。remake 少了其中一拍 | 實測 |
 | [`spec/169-march-has-no-city-stub.md`](../spec/169-march-has-no-city-stub.md) | `sub_14300` 的 Stage handler 各自回 CF 的條件 | `../re/65` 有 Stage 0–3 的骨架，但「哪些情況會用掉一拍而不移動」沒逐支對過 | 靜態 |
+| [`spec/170-ai-target-takes-two-ticks.md`](../spec/170-ai-target-takes-two-ticks.md) | 軍團 `+0x00` 位元 1 | remake 沒建模。它的效果（下一次移動前重查道路表）被 remake 的「`March` 當場算好 routes」涵蓋，但存檔寫回是靠 `modelledCorpsBits` 原樣保留的，不是真的維護 | 靜態 |
+| [`spec/170-ai-target-takes-two-ticks.md`](../spec/170-ai-target-takes-two-ticks.md) | `sub_14325` 分派表的 16 項 | 玩家半張與 AI 半張各 8 項，remake 只對到 0–3 與 8/10/11；其餘未逐支對過 | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |

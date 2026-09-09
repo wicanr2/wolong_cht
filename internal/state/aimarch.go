@@ -46,10 +46,18 @@ func (w *World) aiArrive(i int, rng rander) {
 // rander 只要 Next()，讓 Stage 1 的延遲不必牽進整個 combat 套件。
 type rander interface{ Next() int }
 
-// aiStage0 是 `sub_1439D`：到了目標就換檔，除非這一格的威脅還有具體目標。
+// aiStage0 是 `sub_1439D`：**先把意圖落實成行軍目標**，已經站在那裡才換檔。
+//
+// ⭐ 第一件事是 `sub_14548`（`retarget`）：把 `+0x14`／`+0x16`／`+0x18`
+// 設成 `+0x20` 指的據點。AI 挑目標的那一支（`sub_1440F`／`aiStage2`）
+// **只寫意圖**，落實是這裡的事——所以從「決定去哪」到「踏出第一步」
+// 要跨三個更新週期（docs/spec/170）。
 func (w *World) aiStage0(i int) {
 	c := &w.Corps[i]
-	if w.citySpecific(c.TargetNode) {
+	if !w.retarget(i, c.Ordered) {
+		return // 還沒到，這一拍只設目標
+	}
+	if w.citySpecific(c.Node) {
 		return // 威脅有具體目標 → 原地駐守
 	}
 	c.Stage = 1
@@ -111,9 +119,10 @@ func (w *World) aiStage2(i int) {
 		w.leaveCell(node)
 		return
 	}
-	if c.Ordered != dest {
-		_ = w.March(i, dest)
-	}
+	// ⚠ **只寫意圖，不碰行軍目標。** 原版 `sub_1440F` 寫的是 `+0x20`
+	// 與位元 1，`+0x14` 要等下一拍的 `sub_1439D` 才落實（docs/spec/170）。
+	// 兩件事併成一步會讓 AI 早一個更新週期出發，整條行軍軌跡跟著平移。
+	c.Ordered = dest
 	c.Stage = StageNormal
 	w.leaveCell(node)
 }

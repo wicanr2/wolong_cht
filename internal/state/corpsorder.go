@@ -127,7 +127,12 @@ func (w *World) arriveCorps(i int, rng rander) {
 		return
 	}
 	// 玩家的 Stage 0–3 走同一支（`sub_14370`）：歸零，然後看要不要補兵。
+	// ⭐ 第一件事同樣是 `sub_14548`——兩半張分派表都靠它把 `+0x20`
+	// 落實成行軍目標（docs/spec/170）。
 	c.Stage = StageNormal
+	if !w.retarget(i, c.Ordered) {
+		return
+	}
 	if c.Faction < 0 || c.Faction >= numFactions {
 		return
 	}
@@ -308,4 +313,27 @@ func (w *World) tickRout(i int) bool {
 		g.Faction = noFaction
 	}
 	return true
+}
+
+// retarget 是 `sub_14548`：把軍團的行軍目標設成 `node` 那個據點
+// （`+0x14` 節點 × 8、`+0x16`／`+0x18` 座標），並回報**現在是不是已經
+// 站在那裡**（原版用 CF=1 表示）。
+//
+// ⭐ 原版比的是三個欄位：`+0x10`／`+0x12`（座標）與 `+0x0E`（節點）。
+// 三個都相同才算「已經到了」——單看節點會把「還在路上但經過該據點」
+// 誤判成抵達（docs/spec/170 §1）。
+//
+// 寫目標的動作**無條件執行**，判斷只影響回傳值。
+func (w *World) retarget(i, node int) bool {
+	if i < 0 || i >= numCorps {
+		return false
+	}
+	c := &w.Corps[i]
+	node = w.clampCity(node)
+	dst := &w.Cities[node]
+	here := c.Node == node && c.X == dst.X && c.Y == dst.Y
+	if c.TargetNode != node || c.TargetX != dst.X || c.TargetY != dst.Y {
+		_ = w.March(i, node)
+	}
+	return here
 }

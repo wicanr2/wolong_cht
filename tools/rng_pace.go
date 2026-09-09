@@ -1,13 +1,22 @@
 //go:build ignore
 
-// 量 remake 每個子刻取幾個亂數、由誰取——拿來跟原版的節拍對齊
-// （docs/spec/160、docs/playtest/116）。
+// 對拍夾具：從一份快照起跑，量 remake 每個子刻取幾個亂數、由誰取、
+// 世界變成什麼樣——拿來跟原版逐拍比（docs/spec/160、docs/playtest/119）。
 //
-//	tools/go.sh run tools/rng_pace.go -save <SAVE.DAT> -ticks 324
+//	tools/go.sh run tools/rng_pace.go -save <SAVE.DAT> -ticks 5480 \
+//	    -rng-state rng.bin -seq-out seq.txt -save-out out.DAT
 //
 // ⭐ **不改 internal/**：`World.Tick` 的 rng 是外部傳進來的介面，
 // 這裡包一層記錄就好。`runtime.Caller(1)` 在包裝層取到的正是規則層的
 // 呼叫點，與原版 `-watch 1ECE0` 的「來自 近=」是同一種東西。
+//
+// ⚠⚠ **夾具要把正式遊戲會做的設定全部做齊。** `state.LoadScenario` 只還原
+// 存檔裡有的東西；道路圖、戰術層與政略 AI 都是**執行期注入**的，少掛一項
+// 不會報錯也不會警告——`w.roads` 是 nil 時行軍走直線退路、`strategicAI`
+// 是 false 時 AI 不編軍團也不做月結政略評估。兩者都讓對拍量到的是夾具，
+// 而症狀長得像規則差異（docs/spec/169 §7）。
+//
+// ⭐ 所以這支程式**開跑前把接了什麼印出來**，缺一項就是一行看得見的字。
 package main
 
 import (
@@ -22,6 +31,7 @@ import (
 
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
 	"github.com/wicanr2/wolong_cht/internal/assets/world"
+	"github.com/wicanr2/wolong_cht/internal/battlesetup"
 	"github.com/wicanr2/wolong_cht/internal/rules/march"
 	"github.com/wicanr2/wolong_cht/internal/rules/rng"
 	"github.com/wicanr2/wolong_cht/internal/state"
@@ -59,7 +69,11 @@ func main() {
 	traceN := flag.Int("trace", 0, "印前 N 拍的據點狀態（小樣本追蹤）")
 	mark := flag.String("mark", "", "印出含這個呼叫點的子刻位置（例：strategy.go:630）")
 	rngState := flag.String("rng-state", "", "載入原版當下的亂數狀態（258 byte，docs/spec/147 §5）")
-	root := flag.String("root", "workplace/orig/dosv", "原版目錄——⭐ **要掛道路圖**，否則行軍走的是直線退路")
+	root := flag.String("root", "workplace/orig/dosv", "原版目錄（道路圖與戰術層都從這裡讀）")
+	withAI := flag.Bool("ai", true, "開政略 AI（月結的宣戰／遷都評估與 AI 編軍團）")
+	withTactical := flag.Bool("tactical", true, "接戰術層——玩家捲進去而且沒委任時才用得到")
+	player := flag.Int("player", -1, "覆寫玩家勢力（-1 ＝ 用存檔裡的）")
+	events := flag.Bool("events", false, "印每一次事件推送，對應原版的 eventwatch（docs/spec/139）")
 	saveOut := flag.String("save-out", "", "跑完之後把世界寫成一份 SAVE.DAT（拿去跟原版同一拍的記憶體逐 byte 比）")
 	corpsWatch := flag.Int("corps", -1, "逐拍印這支軍團的位置——只在它動了的那一拍印")
 	flag.Parse()
@@ -69,9 +83,13 @@ func main() {
 		fmt.Fprintln(os.Stderr, "讀不到存檔：", err)
 		os.Exit(1)
 	}
-	// ⭐ **規則層不讀檔案，道路圖要由呼叫端注入。** 少了這一步，
-	// `w.step` 走的是直線退路，軍團的每一格都與原版不同——而畫面與
-	// 存檔欄位看起來都正常，只有逐格對拍才看得見（docs/spec/169）。
+	if *player >= 0 {
+		w.Player = *player
+	}
+
+	// ⭐ **規則層不讀檔案**：道路圖與戰術層由呼叫端注入，政略 AI 是執行期開關。
+	// 三樣都不是「載入就有」的東西，缺哪一樣都不會報錯（docs/spec/169 §7）。
+	wired := []string{}
 	lib, err := library.Load(*root)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "讀不到素材：", err)
@@ -87,6 +105,33 @@ func main() {
 		os.Exit(1)
 	}
 	w.SetRoads(march.New(len(w.Cities), world.MarchEdges(edges, xy)))
+	wired = append(wired, fmt.Sprintf("道路圖 %d 條邊", len(edges)))
+
+	if *withAI {
+		w.EnableStrategicAI()
+		wired = append(wired, "政略 AI")
+	}
+	if *withTactical {
+		_, setup, err := battlesetup.Load(battlesetup.Options{
+			Dir: *root, World: w, Map: lib.World,
+			Warn: func(string) {},
+		})
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "戰術層接不上：", err)
+			os.Exit(1)
+		}
+		w.SetTactical(setup)
+		wired = append(wired, "戰術層")
+	}
+	if *events {
+		w.OnEvent = func(e state.EventTrace) {
+			fmt.Printf("  ▶ %d年%d月%d日 %d時 事件%02X 發起%3d 對象%3d 第二%3d 槽%3d\n",
+				e.Year, e.Month, e.Day, e.Hour, e.Code, e.Source,
+				e.Param&0xFF, e.Param>>8, e.Slot)
+		}
+		wired = append(wired, "事件軌跡")
+	}
+	fmt.Printf("已接：%s；玩家勢力 %d\n", strings.Join(wired, "、"), w.Player)
 
 	r := rng.NewFixed(*seed)
 	if *rngState != "" {
@@ -131,6 +176,7 @@ func main() {
 	}
 	markAt := []int{}
 	var lastCorps [4]int
+	perTickWhere := make([][]string, 0, *ticks)
 	perTick := make([]int, 0, *ticks)
 	total := map[string]int{}
 	prev := 0
@@ -138,6 +184,7 @@ func main() {
 		w.Tick(tr)
 		n := tr.seq - prev
 		perTick = append(perTick, n)
+		perTickWhere = append(perTickWhere, append([]string(nil), tr.where[prev:tr.seq]...))
 		for _, s := range tr.where[prev:tr.seq] {
 			total[s]++
 			if *mark != "" && strings.Contains(s, *mark) {
@@ -235,8 +282,10 @@ func main() {
 			fmt.Fprintln(os.Stderr, "-seq-out：", err)
 			os.Exit(1)
 		}
+		// ⭐ 連**來源**一起寫：分歧要能自己說明是哪一支多取／少取，
+		// 否則每次都得再跑一輪 `-mark` 去猜。
 		for i, n := range perTick {
-			fmt.Fprintf(f, "%d %d\n", i+1, n)
+			fmt.Fprintf(f, "%d %d %s\n", i+1, n, strings.Join(perTickWhere[i], ","))
 		}
 		f.Close()
 		fmt.Printf("\n逐子刻序列寫到 %s\n", *seqOut)
