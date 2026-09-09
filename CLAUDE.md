@@ -113,8 +113,10 @@
 **並標記為 remake 差異**。見 `docs/mechanics/15-realtime.md`。
 
 即時制也讓 oracle 變難：回合制送固定按鍵序列就能重現畫面，即時制不行。
-**DOSBox oracle 的第一件事是先解決可重現性**——最慢速度檔、固定 cycles、
-靠存檔而不是操作序列定位狀態。沒解決之前，「我跑過了，畫面是這樣」不可信。
+**原版側的取樣點要寫成遊戲自己的時間，不是牆上的秒數**——dosgolem 以指令數計時，
+取樣點寫成遊戲日期（`until:196/4/9`）、戰術節拍（`ticks:N`）或跑到某支常式
+（`runto:11B5A`），同輸入同輸出（§4.02）。
+「等幾秒再截圖」每次停在不同的遊戲日期，那種截圖不可信。
 
 ### 3.2 玩家是軍師，不是君主
 
@@ -146,8 +148,9 @@
 
 ## 4. Oracle 優先序
 
-1. **實機實測**（DOSBox 跑松崗版、Neko Project／np2 跑 PC-98 版；
-   固定存檔、固定操作序列、截圖）。
+1. **實機實測**：`dosv` 跑 [dosgolem](https://github.com/wicanr2/dosgolem)、
+   `pc98` 跑 [pc98golem](https://github.com/wicanr2/pc98golem)；
+   固定存檔、以指令數計時的固定時間軸、截圖。**對拍一律走這兩支**（§4.02）。
 2. **執行檔反組譯**（`KI.EXE` 起手，兩版都已進 IDA，見 §2.1）。
 3. **日文原版說明書**（38 頁，已到手，§2）。松崗中文版說明書同級，尚未取得。
 4. 社群 wiki、部落格、攻略、實況影片、**2017 MOD**——最低，
@@ -170,6 +173,38 @@
 > `tools/index.py` 因此加了一道檢查擋這個字樣；
 > **會復發的斷言要同時有規則與檢查，只有其中一個都不夠。**
 
+### 4.02 `[HARD]` 對拍走 golem，不走 DOSBox
+
+原版側的畫面與狀態一律從 golem 取，**不再經過 DOSBox ＋ Xvfb ＋ xdotool**：
+
+| 版本 | 執行器 | 入口 |
+|---|---|---|
+| `dosv` | [dosgolem](https://github.com/wicanr2/dosgolem) | `tools/dosgolem.sh`（工作副本預設 `~/cht/dosgolem-wolong`，可用 `WOLONG_DOSGOLEM` 指過去）|
+| `pc98` | [pc98golem](https://github.com/wicanr2/pc98golem) | 工作副本 `~/cht/pc98golem` |
+
+換掉的理由不是「新工具比較好」，是 DOSBox 那條路回答不了即時制的問題
+（[`docs/spec/131`](docs/spec/131-dosgolem-oracle.md) §2）：
+
+- **取樣點寫得成遊戲時間**：`until:196/4/20`（遊戲日期）、`ticks:N`（戰術節拍）、
+  `runto:LIN`（跑到程式走進某支常式）。DOSBox 只有 `wait:3` 這種秒數，
+  即時制之下每次停在不同的遊戲日期。
+- **座標就是遊戲座標**（0–639 × 0–399），送什麼就是什麼；輸出已經是裁好的
+  640×400，直接餵 `tools/parity_diff.py`，**不必再跑 `tools/parity_crop.py`**。
+- **原版的內部狀態與控制流問得到**：`peek`／`ipeek` 讀記憶體、
+  `WOLONG_DOSGOLEM_WATCH` 攔任一支常式、`eventwatch` 拿 AI 決策軌跡、
+  `hotspots` 讀熱區圖、`siege:攻方,據點` 直接開一場指定的仗。
+- **決定性靠指令數**，不靠 `cycles=fixed` 加固定 sleep。
+
+⚠ **`pc98golem` 目前只有 `apps/pool`，GDC 與文字 VRAM 那一層還沒做**，
+所以臥龍傳的 PC-98 畫面對拍要先在 pc98golem 那邊補 `apps/wolong`。
+在那之前，PC-98 已有的畫面證據出自 `tools/dosboxx.sh`——
+**那是既有紀錄，不是新工作的起點**。
+
+⚠ **DOSBox-X 不刪，但降級成正對照**（`docs/spec/131` §3）：
+只在「懷疑 golem 自己算錯」時拿來比，**新的對拍不要從它開始**。
+舊腳本的視窗座標搬過來要加 `-y dosbox`，換算是
+`遊戲 y ＝ 視窗 y × 399 ÷ 479`（分母 479 不是 480）。
+
 ### 4.05 兩版對照是第五種 oracle
 
 PC-98 日文原版與松崗 DOS/V 版是同一份程式的兩次編譯（§2.1）。
@@ -189,9 +224,8 @@ PC-98 日文原版與松崗 DOS/V 版是同一份程式的兩次編譯（§2.1�
 
 > **⚠ 即時制讓 oracle 1 變難。** 回合制遊戲送固定按鍵序列就能重現畫面；
 > 即時制不行——同一串按鍵每次跑到的時間點都不同。
-> **DOSBox oracle 的第一件事是先解決可重現性**：
-> 用 `戰略速度`／`戰術速度` 的最慢檔、固定 cycles、
-> 必要時靠存檔而不是操作序列來定位狀態。
+> 取樣點要寫成遊戲日期、戰術節拍或某支常式的進入點，不是秒數（§4.02）；
+> 定位狀態靠受控存檔，不靠操作序列。
 > 這件事沒解決之前，任何「我跑過了，畫面是這樣」都不可信。
 
 ### 4.1 反組譯工具：`[HARD]` IDA Pro 優先
@@ -503,13 +537,13 @@ grep `.asm` 只能從呼叫端的參數順序反推——那是間接證據，�
 
 | | 里程碑 | 現況 | 內容 |
 |---|---|---|---|
-| M0 | 環境與偵查 | ✅ **完成** | 兩版素材入庫、兩版 `KI.EXE` 進 IDA、逐檔比對、DOSBox-X docker 化並確認可重現、**密碼頁確認可通過**（§4.0）、說明書判讀完 |
+| M0 | 環境與偵查 | ✅ **完成** | 兩版素材入庫、兩版 `KI.EXE` 進 IDA、逐檔比對、**原版側 oracle 走 dosgolem 並確認可重現**（§4.02、[`docs/spec/131`](docs/spec/131-dosgolem-oracle.md)）、**密碼頁確認可通過**（§4.0）、說明書判讀完 |
 | M1 | 資料格式全解 | ✅ **完成**（`ICONGRF` 段 1 的 UI 語意除外）| `.BRG`、`*GRF.DAT`、`.MAP/.MDL/.SCH/.MCH`、`TALK.DAT`、`SINARIO/SAVE.DAT`、音訊、**過場 `OPEN_S*`／`END_S*`**（[`docs/formats/09`](docs/formats/09-cutscene-images.md)）都有 Go 解碼器 ＋ 測試 |
 | M2 | 文本抽取與日中對照 | ✅ **完成** | 兩版對照表產出；Big5 原文抽成語系檔並能 byte-for-byte 寫回。變數插入的**機制**全解（`sub_1075B`／`sub_1084A` ＋ 七項跳躍表，`\6` 是排版控制、`\7` 走數值繪製），但 `\1`–`\4` 的**文字語意**仍是實務推定，不是機器碼定案（[`docs/formats/01`](docs/formats/01-talk-dat.md) §3）|
 | M3 | 執行檔反組譯 | ✅ **靜態分析完成** | 739 支函式**全部**有 `docs/re/` 記錄（四個分級全部收斂到 T1，最後兩批記在 [`docs/re/68`](docs/re/68-t3-frontier-functions.md)／[`69`](docs/re/69-t2-cross-reference.md)）。**這不等於全部讀懂**——各文件的「未解」表是真正的缺口（[`docs/re/21`](docs/re/21-function-census.md)）。**引用覆蓋率要用排除目錄後的數字**（`re/21` §3.1）。兩版對照當交叉驗證（§4.0） |
 | M4 | 規則規格 ＋ 機制文件 | 🔵 進行中 | 政略、行軍、戰鬥、經濟、外交、勝負。**同步產出 `docs/mechanics/`（§5）**。規格已到 `docs/spec/79`（另有對拍規格 `90`／`91`），索引在 [`docs/spec/00-index.md`](docs/spec/00-index.md) |
 | M5 | Go 引擎（規則層） | 🔵 大致完成 | 純邏輯，不認識畫面。以 tick 驅動。時鐘／月結／內政官／外交／說服／戰術／遷都／沿原版道路的行軍都在 |
-| M6 | 呈現層 | 🔵 **同狀態逐區對拍到位** | Ebiten、大地圖 ＋ 45 度戰場。⭐ 拿原版存檔開同一個局面比像素：**主畫面五區逐像素相同**（[`docs/playtest/37`](docs/playtest/37-main-screen-parity.md)）、**戰場九區裡六區逐像素相同**（[`docs/playtest/40`](docs/playtest/40-tactical-parity.md)，2026-08-18）。⭐ **2026-08-27 重跑挖出四個真的缺陷並修好**：城壁一撞就垮（[`docs/spec/93`](docs/spec/93-siege-wall-instant-break-facing.md)）、門強度視窗少畫外框（[`docs/spec/32`](docs/spec/32-gate-strength-bar.md) §2.2）、攻城戰打不完（[`94`](docs/spec/94-retreat-path-not-cleared-every-frame.md)）、開場擺兵的高度用錯表（[`95`](docs/spec/95-spawn-height-uses-ground-plane.md)）。**同狀態要帶 `-siege-corps`**，否則開出來的不是原版那一場（[`docs/playtest/51`](docs/playtest/51-siege-deadlock.md)）。⭐ **2026-09-02／03 兵的戰力接回統率力之後重跑，沒有回歸**（[`docs/playtest/58`](docs/playtest/58-parity-retest-20260902.md)）；⛔ **推戰場的旋鈕是 `-battle-steps` 不是 `-shot-frames`**，取樣點用 `-shot-when` 帶條件檢查（[`docs/spec/118`](docs/spec/118-shot-when-condition.md)、[`docs/playtest/59`](docs/playtest/59-shot-when-natural-flow.md)）。**音樂與音效已實作並與原版錄音比對過**（[`docs/spec/29`](docs/spec/29-audio.md)）|
+| M6 | 呈現層 | 🔵 **同狀態逐區對拍到位** | Ebiten、大地圖 ＋ 45 度戰場。⭐ **原版側的取樣走 dosgolem**（§4.02）：取樣點寫成遊戲日期或事件，不再經過 DOSBox。⭐ 拿原版存檔開同一個局面比像素：**主畫面五區逐像素相同**（[`docs/playtest/37`](docs/playtest/37-main-screen-parity.md)）、**戰場九區裡六區逐像素相同**（[`docs/playtest/40`](docs/playtest/40-tactical-parity.md)，2026-08-18）。⭐ **2026-08-27 重跑挖出四個真的缺陷並修好**：城壁一撞就垮（[`docs/spec/93`](docs/spec/93-siege-wall-instant-break-facing.md)）、門強度視窗少畫外框（[`docs/spec/32`](docs/spec/32-gate-strength-bar.md) §2.2）、攻城戰打不完（[`94`](docs/spec/94-retreat-path-not-cleared-every-frame.md)）、開場擺兵的高度用錯表（[`95`](docs/spec/95-spawn-height-uses-ground-plane.md)）。**同狀態要帶 `-siege-corps`**，否則開出來的不是原版那一場（[`docs/playtest/51`](docs/playtest/51-siege-deadlock.md)）。⭐ **2026-09-02／03 兵的戰力接回統率力之後重跑，沒有回歸**（[`docs/playtest/58`](docs/playtest/58-parity-retest-20260902.md)）；⛔ **推戰場的旋鈕是 `-battle-steps` 不是 `-shot-frames`**，取樣點用 `-shot-when` 帶條件檢查（[`docs/spec/118`](docs/spec/118-shot-when-condition.md)、[`docs/playtest/59`](docs/playtest/59-shot-when-natural-flow.md)）。**音樂與音效已實作並與原版錄音比對過**（[`docs/spec/29`](docs/spec/29-audio.md)）|
 | M7 | 日文原版對照與校訂 | 🔵 只差兩版並排 | 60 筆校訂可重跑；**1,022 則兩批逐句讀完**（[`docs/reference/02`](docs/reference/02-jp-cht-diff.md) §11／§12）；**排版 parity 全量量過**（單行超寬 0 行，[`docs/playtest/32`](docs/playtest/32-talk-layout-fit.md)）；**校訂後的畫面抽樣也做了**（18 則，[`docs/playtest/41`](docs/playtest/41-m7-corrected-text-on-screen.md)）。缺的是**兩版並排的畫面對照** |
 | M8 | 打包發行 | 🔵 進行中 | 發行閘（`denylist.py` ＋ `release.sh`）已接進 `check.sh`；缺各目標平台實機驗收 |
 
@@ -520,9 +554,19 @@ grep `.asm` 只能從呼叫端的參數順序反推——那是間接證據，�
 
 ## 9. 硬規則 `[HARD]`
 
-- **建置一律走 docker**（Go、IDA、DOSBox、Python 全部）。不裝到系統環境。
+- **建置一律走 docker**（Go、IDA、golem 對拍、DOSBox-X、Python 全部）。不裝到系統環境。
 - **Python 一律 docker + uv venv**，不污染系統。
-- **手打 `docker run` 一律帶 `--rm --log-opt max-size=10m --log-opt max-file=3`。**
+- **不在主機直接跑 Python、Go、專案程式、測試或 GUI**——文件索引與資產掃描也一樣。
+  主機只做必要的 `docker`、`git`、工作樹檢查與檔案編輯。
+  包裝器若違反這點，**先修工具鏈**，不要在主機繞過去。
+- **優先沿用既有包裝器**：`tools/go.sh`、`tools/py.sh`、`tools/ida.sh`、
+  `tools/dosgolem.sh`、`tools/dosbox.sh`、`tools/dosboxx.sh`、`tools/shot.sh`。
+  **不可因一次失敗另造重複工具鏈。**
+- **手打 `docker run` 一律帶 `--rm --log-opt max-size=10m --log-opt max-file=3`**，
+  另帶相稱的 `--memory`／`--cpus`／`--pids-limit` 與 `--network none`
+  （明確需要網路才開放），並以目前的 UID/GID 執行可寫容器。
+- **原始素材唯讀掛載，輸出只掛到工作樹的明確目錄。** 寫既有檔案前檢查 UID/GID，
+  寫完抽查擁有權；禁止整庫或 `$HOME` 遞迴 chown。
 - **原版資產唯讀。** 測試存檔一律寫到 `/tmp` 或明確的測試輸出目錄，
   **不覆蓋原版 `SAVE.DAT`／`SINARIO.DAT`**。
 - **存檔寫回策略是「改寫」不是「重建」**：從原始 bytes 出發，只蓋已解欄位，
@@ -593,6 +637,15 @@ grep `.asm` 只能從呼叫端的參數順序反推——那是間接證據，�
 `denylist` 都有 `--selftest`，`check.sh` 會先跑它再跑本體。
 同理，`stale_scan` **跳過了哪幾層一定會印出來**（缺原版素材、缺 census）。
 
+`check.sh` 之外自己再做 `git diff --check` 與 dirty-tree 檢查，
+並用 `tools/go.sh clean -testcache` 冷跑一次測試——`(cached)` 會把
+「這個套件根本沒重編」印成綠燈（§7 第 20 條），而 Ebiten 那幾支需要顯示器
+（`tools/go.sh` 已內建 Xvfb）。
+
+- **除非使用者明確要求，不自行 commit 或 push。**
+- **測試綠不等於原版 parity。** 宣告完成還要有原版對拍（§4.02）與
+  正常玩家路徑的證據。
+
 ### `[HARD]` **動手之前**查這五張表（不是下結論之前）
 
 **「還沒解」與「我不記得解過」在動手那一刻長得一模一樣**，
@@ -654,9 +707,11 @@ internal/ui/      Ebiten 呈現層（textdraw、listwin、mobile；排版刻意�
 cmd/              wlgame（遊戲本體）、wlsim（規則層模擬）、wlandroid
 mobile/、android/ gomobile 綁定與 Android 專案（只收原始檔）
 packaging/        AppImage 與發行說明範本
-docker/           自建映像（dosboxx＝PC-98 oracle、dosboxx-bridge＝帶原生除錯器的版本）
-tools/            docker 包裝（go.sh、py.sh、ida.sh、dosbox.sh、dosboxx.sh、shot.sh、
-                  dosboxx_bridge.sh ＋ dosboxx_probe.py＝動態取樣）、
+docker/           自建映像（dosboxx＝DOSBox-X 正對照與 PC-98 既有紀錄、
+                  dosboxx-bridge＝帶原生除錯器的版本）
+tools/            docker 包裝（go.sh、py.sh、ida.sh、shot.sh、
+                  dosgolem.sh＝原版對拍主線（§4.02）、
+                  dosbox.sh、dosboxx.sh、dosboxx_bridge.sh ＋ dosboxx_probe.py＝正對照）、
                   check.sh（提交前的單一入口）、denylist.py ＋ release.sh（發行閘）、
                   phantom_scan.py（指向不存在的東西）＋ stale_scan.py（值已經不對）、
                   index.py（文件索引）、re_coverage.py（RE 覆蓋地圖）、
@@ -674,6 +729,68 @@ workplace/ida/{dosv,pc98}/  IDA database 與 dump（gitignore）
 
 `CONTEXT.md` 的骨架：現況一覽表／文件索引／術語表／**已被推翻的斷言**／
 Worklist（含「一句話現況」與「下一步」）／已建好的工具清單。
+
+---
+
+## 12. 代理接手與外部知識
+
+這一節寫給接手這個 repo 的自動化代理（Codex、Claude 或其他）。
+**目標、oracle、逆向規則、機制文件化、里程碑與硬規則以前面各節為準**，
+這裡只補「換人接手」與「外部知識怎麼引用」。
+面向使用者的文字與新增文件預設繁體中文；程式識別字、命令、API、工具、
+產品名稱與檔名保留原文。
+
+### 12.1 接手順序
+
+新 session、對話被壓縮、或工作交接時依序做：
+
+1. 讀最新的使用者需求。
+2. 讀 `CONTEXT.md` 的現況與 worklist。**不要把歷史段落當成目前待辦。**
+3. 讀本檔的目標、硬規則與證據契約。
+4. 先看 [`docs/INDEX.md`](docs/INDEX.md) 的斷言總表，再讀任務直接相關的
+   `docs/re/`、`docs/formats/`、`docs/mechanics/`、`docs/spec/`、`docs/playtest/`。
+   要碰反組譯就把 §10 那五張表查完，子系統的入口是
+   [`docs/re/00-index.md`](docs/re/00-index.md)。
+5. `git status --short`。**既有改動屬於使用者或前一輪工作，不得 reset、覆蓋或丟棄。**
+6. [`WORKLIST.md`](WORKLIST.md) 只當快速入口；狀態仍以 `CONTEXT.md`、
+   `docs/INDEX.md`、目前程式與可重現測試為準。
+
+每一輪的工作紀律在 §10，這裡不重複。
+
+### 12.2 版本代號
+
+`dosv` ＝ 1995 松崗 DOS/V 繁中版；`pc98` ＝ 1994 PC-9801 日文原版。
+**一律用這兩個代號**，不要把「中文版」當成平台名稱。
+`workplace/orig/` 的目錄分層就是為了讓路徑本身標明素材版本（§11）。
+
+### 12.3 外部知識引用
+
+- 命中復古遊戲、逆向、原版對拍、推廣片、音訊、跨平台或 Android 工作時，
+  先讀 `~/.codex/knowledge-base/knowledge-router.md` 的「復古遊戲」路由，
+  再只讀一份命中的任務入口與它直接指定的必要 reference；**不可預讀整個知識庫**。
+- 本專案的 `CLAUDE.md`、`CONTEXT.md`、`docs/INDEX.md` 與可重現的原版證據優先。
+  外部知識只提供方法，**不能推翻本專案已定案的 DOS/V 座標、資產、流程或權利邊界**。
+- `~/.claude` 一律唯讀。需要 Claude Code 那邊的復古遊戲技巧時，用
+  `~/.codex/knowledge-base/sources/claude/` 的受控快照，清單在
+  `~/.codex/knowledge-base/SYNC-MANIFEST.md`（在 kb 根目錄，不在 `sources/claude/` 裡）；
+  不得從本專案或 `~/.codex` 回寫、同步覆蓋或污染 `~/.claude`。
+- 推廣片工作固定命中
+  `~/.codex/knowledge-base/sources/claude/retro-cht/game-promo-video-ffmpeg.md`；
+  原版 AdLib 與素材來源再加讀
+  `~/.claude/rulebook/93-promo-video-original-assets.md`。
+  這是階層式引用，不代表要把上述知識全部轉成技能。
+
+### 12.4 交接文件的分工
+
+| 檔案 | 角色 |
+|---|---|
+| `CONTEXT.md` | **專案狀態的單一真相來源** |
+| `CLAUDE.md` | 目標、硬規則與證據契約。`AGENTS.md` 是它的符號連結，兩邊同一份內容 |
+| `docs/INDEX.md` | 由 `tools/index.py generate` 產生的文件與斷言索引，**不手改** |
+| `WORKLIST.md` | 交接、剩餘工作、命令閘與容器狀態的唯一入口；不另建 `HANDOFF.md` |
+| `RESEARCH-LOG.md`、`REMAKE-PLAN.md` | 逆向研究的證據台帳；架構、法務邊界與刻意的 remake 差異 |
+
+深層證據只放 `docs/` 對應文件，上表這幾份不複製證據。
 
 ---
 
