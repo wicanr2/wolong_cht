@@ -162,6 +162,36 @@ remake **不必再給任何游標旗標**，第一個分歧從拍 24 推到 **78
 > 看起來是退步，真正的比較「369 → 332」是改善
 > （[`docs/playtest/119`](docs/playtest/119-rng-pace-comparison.md) §33.1）。
 
+### ⭐⭐⭐ 2026-09-10 這一輪（同局面對拍：四張表對到 5 月 3 日）
+
+**二十個檢查點（拍 200 … 3,400）的據點、勢力、軍團、全域四張表全部逐 byte 相同**
+——也就是從 196 年 4 月 16 日 16 時的快照起跑，對到 **5 月 3 日 2 時**。
+逐拍取數不一致從 305 降到 **113 / 5,480（2.1%）**，第一個分歧從拍 307
+推到 **3,415**。
+
+| 修的東西 | 第一個分歧 |
+|---|---|
+| 起點（對峙 96 拍接上）| 拍 781 |
+| ＋ 事件佇列游標（[`spec/176`](docs/spec/176-event-queue-cursor-not-restored.md)）| 拍 2,455 |
+| ＋ `sub_147BB` 的兩半、軍費士氣閘、`Corps.Node` 五處（[`177`](docs/spec/177-replan-on-leg-not-from-city.md)／[`178`](docs/spec/178-upkeep-and-morale-gate-is-on-leg.md)）| 拍 2,455 |
+| ＋ 位元 1 的延後重算、戰後重算、到站判準（[`179`](docs/spec/179-recalc-on-battle-and-arrival-test.md)）| 拍 3,304 |
+| ＋ 調兵的 `want` 數候選不數選中（[`180`](docs/spec/180-relief-dispatch-want-counts-candidates.md)）| 拍 3,415 |
+| ＋ AI 募兵節制、月結順序（[`181`](docs/spec/181-ai-recruit-gate-and-monthly-globals.md)／[`182`](docs/spec/182-monthly-settlement-before-hourly.md)）| 拍 **3,415**（四張表對到 3,400）|
+
+**這一輪最貴的一課：勢力表與全域欄位從來沒被比過。** 預備兵從 5 月 1 日的
+月結起一路偏高，而症狀出現在五百拍之後某支軍團補兵時每槽多分 4 個兵。
+現在 `tools/parity_ck.sh` 一次比四張表，`faction_diff.py` 與 `global_diff.py`
+各有正反對照並接進 `check.sh`。
+
+⭐ **對拍工具的三個假象**都在這一輪露出來，形狀一模一樣——
+「看起來像一種規則差異」：
+
+| 假象 | 真相 |
+|---|---|
+| 原版多取一個亂數（拍 3,304）| dosgolem 重複攔截，17,214 次裡 2 次。判準是指令距離：`sub_1ECE0` 只有 12 條 |
+| 原版一直在改劇本標題 | `ipeek` 抓的是執行期記憶體，`+0x3B` 之後與存檔語意無關 |
+| 上昇值與防災值差 1（游標前一兩座）| remake 跑了檔名上的標稱拍數。**拍數要由據點游標反推**，`tools/parity_ck.sh` 因此不接受手打拍數 |
+
 ### 2026-09-09 上一輪（同局面的行為對拍：逐子刻取數 ＋ 逐欄狀態）
 
 拿原版某一刻的記憶體重建成 SAVE.DAT，**同一次執行繼續往下跑**當原版側紀錄，

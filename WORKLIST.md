@@ -62,7 +62,7 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 
 <!-- worklist:begin 由 tools/worklist.py render 產生，不要手改 -->
 
-共 **9 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
+共 **10 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
 
 跑 `tools/py.sh tools/worklist.py verify` 逐條問一次；`check.sh` 會替你跑。
 
@@ -85,6 +85,18 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 **怎樣算做完**：同一首曲子兩邊各取一段做頻譜比對，給出一個可重跑的量化指標。
 
 **verify**：`present` `/音色的諧波結構沒量化比對/` 在 `README.md`
+
+#### 拍 3,415 的調兵：remake 的佔用數比原版多 1
+
+同局面對拍的第一個分歧。據點 129 的求援調兵，原版取一次 `14171`（跳過判定）、remake 取兩次 `strategy.go:642`。
+
+倒推 `want = 威脅量 + 2 − 佔用數`（下限 1）與 `skip = 佔用數 − want`：要取到兩次亂數，remake 的**佔用數至少是 3**，而原版是 2。拍 3,410 的四張表逐 byte 相同（據點 129 的 `+0x18` 兩邊都是 2），所以差異發生在那五拍之內。
+
+⚠ 候選是**原版的佔用圖**（`sub_12662` 的 `dec byte [di]` 與 `loc_126F5` 的 `inc byte [di]` 增量維護）對上 remake 的 `occupancyAt(x, y)`（每次重算、只算活著的軍團）。敗走中的軍團（旗標 `08h`）走 `sub_12A7E` 那一支，不經過 `sub_12662` 的加減——它在佔用圖上留不留著還沒對過。
+
+**怎樣算做完**：`tools/parity_ck.sh` 在拍 3,415 之後仍是四張表 0；逐拍取數的第一個分歧往後推。
+
+**verify**：`present` `/那是拍 3,415 的調兵分歧/` 在 `docs/spec/182-monthly-settlement-before-hourly.md`
 
 ### fidelity — 原版有這個機制，remake 還沒建模
 
