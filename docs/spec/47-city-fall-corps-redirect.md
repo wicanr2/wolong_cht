@@ -5,7 +5,7 @@ remake 已實作並有單測。
 ⭐ **調頭排在「遷都」之後、「滅亡判定」之前**——順序不是細節，
 因為 `sub_1487B` 找的是**新首都**的方向。
 
-- 日期：2026-08-17
+- 日期：2026-08-17（§4.1 補於 2026-09-10）
 - 原始 `KI.EXE` SHA-256：`fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`
 - 分析時的 `KI.EXE.i64` SHA-256：`8a8fd7d528e0498000fd04282300588b637fbcb8aa48deb09242f1f41f532691`
 - 工具：**IDAPython** `tools/ida_dump.py`
@@ -89,12 +89,31 @@ loc_14DDC:
 
 | 項目 | 作法 |
 |---|---|
-| 名單 | `redirectFallenCityCorps` 現掃：`Alive && Faction == 舊主 && Node == 那一格`。**等價**——原版的名單是開打前收的，死掉的那幾支在 remake 已經 `Alive = false` |
+| 名單 | `redirectFallenCityCorps` 現掃：`Alive && Faction == 舊主 && 座標就在那一格上`。**現掃與開打前收等價**——死掉的那幾支在 remake 已經 `Alive = false`。⚠ 條件比的是**座標**不是 `Node`，見 §4.1 |
 | 逐支算 vs 算一次 | remake 對每一支各算一次 `nextHopHome`。輸入相同 ⇒ 結果相同（§3）|
 | 順序 | `capture` 改成「換旗 → 舊主據點數 −1 → 遷都 → 調頭 → 滅亡 → 新主 +1」，與 `sub_14CF3` 逐行對齊 |
 | 下一站 | `nextHopHome`（[`46`](46-post-battle-retreat.md) §2）|
 | 退不了 | `corpsPerishes`：軍團消失、勢力軍團數 −1、主將擲一次下場。**與戰敗壞滅同一個出口**（原版也是同一支 `sub_1291A`）|
 | 起步 | `March` ＋ `Timer = 1` |
+
+### 4.1 ⭐ 名單比的是座標，不是節點欄（2026-09-10）
+
+`sub_14C72` 收名單的兩行是**座標比對**：
+
+```asm
+00014C80  cmp ax, [bx+12h]   / jnz →   ; 同一個 Y
+00014C85  cmp dx, [bx+10h]   / jnz →   ; 同一個 X
+```
+
+⚠ **座標與 remake 的 `Node` 不等價**：`Node` 在行軍中留著出發／中繼
+那一站，所以「從這座城出發、還走在半路上」的軍團 `Node` 仍然等於它。
+拿 `Node` 當條件會把那些軍團一起調頭，而原版只動**站在那一格上**的守軍。
+
+⇒ 走在半路上的軍團原版**完全不碰**。它們繼續走，走到城下才發現不是自己的
+城，然後照 [`175`](175-encounter-standoff-countdown.md) 對峙 12 個週期再開打。
+「退卻途中那座城易主了」在原版就是這樣收尾的——沒有第二套機制。
+
+判準抽成 `World.standsOn(i, node)`；`onCity` 也走同一支。
 
 ## 5. 驗證
 
@@ -103,6 +122,7 @@ loc_14DDC:
 | 單元測試 | `TestFallenCityCorpsRetreatOneHop`：疊在那一格上、沒出戰的守軍目標變成回家的下一站 |
 | 單元測試 | `TestFallenCityCorpsWithNoRetreatPerish`：退不了的走壞滅同一個出口，進 `ev.Destroyed` |
 | 單元測試 | `TestFallenCapitalRedirectsTowardTheNewCapital`：首都被打下來時，那一格上的守軍最後朝新首都走。**驗的是結果不是順序**（§2.1）|
+| 單元測試 | `TestRedirectListComparesCoordinatesNotNode`：站在城上的守軍調頭、**走在半路上的不調頭**。兩個 subtest 是一組正／負對照——少了前半，「名單永遠是空的」也會通過（§4.1）|
 | 長跑 | `cmd/wlsim` 5 年 60 個月，不變量不違反 |
 
 ## 6. 未解

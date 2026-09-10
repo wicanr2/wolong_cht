@@ -1,6 +1,7 @@
 package state
 
 import (
+	"github.com/wicanr2/wolong_cht/internal/rules/capital"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/march"
 	"github.com/wicanr2/wolong_cht/internal/rules/rng"
@@ -600,6 +601,134 @@ func TestRetreatingIntoLostCityStillFights(t *testing.T) {
 	if got.Mode != combat.Siege {
 		t.Errorf("打成 %v，want 攻城", got.Mode)
 	}
+}
+
+// linkedThree 蓋掉 `threeInARow` 的圖，讓 b—c 那條邊帶**原版連結記錄的位址**，
+// 這樣才擺得出「軍團走在那條邊上」的局面。
+func linkedThree(w *World, a, b, c, link int) {
+	w.SetRoads(march.New(len(w.Cities), []march.Edge{
+		{A: a, B: b, Steps: 1},
+		{A: b, B: c, Steps: 1, LinkAddr: link},
+	}))
+}
+
+// ⭐ 走在**兩端都是自己的**那條邊上時，起點取的是 `+8`（B 端），
+// 不是軍團出發的那一端（`sub_1487B`，docs/spec/46 §2.1）。
+//
+// 圖是 a（首都）— b — c，軍團從 b 出發走向 c：
+//
+//   - 起點取 B 端 c ⇒ 往首都的下一站是 **b**
+//   - 起點取出發端 b ⇒ 下一站是 **a**
+//
+// **兩者在這張圖上分得開**——只有一端屬於自己時同解，所以原版實測
+// （§5.1）分不出來。
+func TestRetreatOriginPrefersBEnd(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[1]
+	a, b, c := threeInARow(t, w, f)
+	const link = 0x1234
+	linkedThree(w, a, b, c, link)
+
+	i := aiCorps(t, w, f, b)
+	w.Corps[i].Men = army60000Points
+	w.Corps[i].LinkAddr = link
+	// 走在路上：座標離開據點中心，才不會走「站在自家城裡不退」那一支。
+	w.Corps[i].X, w.Corps[i].Y = w.Cities[b].X+1, w.Cities[b].Y
+
+	if dead := w.retreatOrPerish(i, false); dead {
+		t.Fatal("有退路卻判成壞滅")
+	}
+	if got := w.Corps[i].Ordered; got != b {
+		t.Errorf("退到 %d，want %d（起點取 B 端 %d）——"+
+			"退到 %d 表示起點取的是出發那一站", got, b, c, a)
+	}
+}
+
+// 兩端都不是自己的 ⇒ 退不了 ⇒ 壞滅（`loc_14903` 的 STC）。
+//
+// ⚠ 這一條與「下一站不是自己的」是**兩個不同的閘**：這個擋的是起點，
+// `TestNextHopHomeStopsAtForeignGround` 擋的是終點。
+func TestRetreatOriginFailsWhenBothEndsForeign(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[1]
+	a, b, c := threeInARow(t, w, f)
+	const link = 0x1234
+	linkedThree(w, a, b, c, link)
+
+	i := aiCorps(t, w, f, b)
+	w.Corps[i].Men = army60000Points
+	w.Corps[i].LinkAddr = link
+	w.Corps[i].X, w.Corps[i].Y = w.Cities[b].X+1, w.Cities[b].Y
+	// 走的那條邊兩端都換成別人的（首都 a 仍是自己的，所以擋下來的
+	// 一定是起點那一關，不是「沒有首都」）。
+	standOnForeignGround(w, b, f)
+	standOnForeignGround(w, c, f)
+
+	if dead := w.retreatOrPerish(i, false); !dead {
+		t.Errorf("兩端都不是自己的地，卻退到了 %d——起點那一關沒擋",
+			w.Corps[i].Ordered)
+	}
+}
+
+// ⭐ **走在半路上的軍團不在「調頭」名單裡。**
+//
+// 原版 `sub_14C72` 收的是「**座標**相同、同勢力、還活著」的軍團
+// （`cmp ax, [bx+12h]` ＋ `cmp dx, [bx+10h]`），`sub_14DA4` 只調頭
+// 名單裡的那幾支。remake 的 `Node` 在行軍中留著出發那一站，
+// 拿它當條件會把還在路上的軍團一起調頭（docs/spec/47 §4.1）。
+//
+// ⚠ 那些軍團不是沒人管——它們**繼續走**，走到城下才發現不是自己的城，
+// 然後照 `docs/spec/175` 對峙、開打（`TestRetreatingIntoLostCityStillFights`）。
+//
+// 兩個 subtest 是一組正／負對照：少了前半，「名單永遠是空的」也會通過。
+func TestRedirectListComparesCoordinatesNotNode(t *testing.T) {
+	setup := func(t *testing.T, inField bool) (*World, int, int, int) {
+		t.Helper()
+		w := load(t, 0)
+		f := w.AliveFactions()[1]
+		_, b, c := threeInARow(t, w, f)
+		i := aiCorps(t, w, f, c)
+		if inField {
+			// `Node` 仍是 c，但人已經走到城外一格。
+			w.Corps[i].X = w.Cities[c].X + 1
+		}
+		w.Corps[i].Timer = 5 // `sub_14DA4` 會把它寫成 1
+		return w, i, b, c
+	}
+	fallen := func(w *World, node, old int) {
+		other := 0
+		for o := range w.Factions {
+			if o != old {
+				other = o
+				break
+			}
+		}
+		ev := &CorpsEvent{Corps: -1, Enemy: -1, Captured: -1,
+			Relocated: capital.None, GovernorReturned: noGovernor}
+		w.redirectFallenCityCorps(ev, node, old, other, &testRand{s: 1})
+	}
+
+	t.Run("站在城上要調頭", func(t *testing.T) {
+		w, i, b, c := setup(t, false)
+		fallen(w, c, w.Corps[i].Faction)
+		if got := w.Corps[i].Ordered; got != b {
+			t.Errorf("目標 = %d，want %d（回家的下一站）", got, b)
+		}
+		if got := w.Corps[i].Timer; got != 1 {
+			t.Errorf("計時器 = %d，want 1——原版 `mov byte [si+0Bh], 1`", got)
+		}
+	})
+
+	t.Run("走在半路上不調頭", func(t *testing.T) {
+		w, i, _, c := setup(t, true)
+		fallen(w, c, w.Corps[i].Faction)
+		if got := w.Corps[i].Ordered; got != c {
+			t.Errorf("目標被改成 %d 了——名單比的是座標不是 Node", got)
+		}
+		if got := w.Corps[i].Timer; got != 5 {
+			t.Errorf("計時器被寫成 %d——這一支不該進名單", got)
+		}
+	})
 }
 
 // 勝方（原版的 `cl == 0`）原地不動。

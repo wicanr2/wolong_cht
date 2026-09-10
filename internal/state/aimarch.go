@@ -190,10 +190,14 @@ func (w *World) nextHopHome(i int) int {
 	if !validCity(capital) {
 		return -1 // `cmp al, 0FFh` ⇒ 沒有首都就無處可退
 	}
-	if c.Node == capital || w.roads == nil {
+	from, ok := w.retreatOrigin(i)
+	if !ok {
+		return -1 // 走的那條邊兩端都不是自己的 ⇒ `loc_14903` 的 STC
+	}
+	if from == capital || w.roads == nil {
 		return capital
 	}
-	path := w.roads.Route(c.Node, capital)
+	path := w.roads.Route(from, capital)
 	if len(path) < 2 {
 		// 廣度優先回 carry 時原版拿首都本身當下一站，而且**不再檢查歸屬**
 		// （`loc_1490C` 直接 CLC）。
@@ -204,6 +208,40 @@ func (w *World) nextHopHome(i int) int {
 		return -1 // `cmp dl, [bx+841h]` 不符 ⇒ STC
 	}
 	return next
+}
+
+// retreatOrigin 是 `sub_1487B` 前半：**從哪一個節點開始往首都找路**。
+//
+// 站在節點上（`+0x0E < 800h`）就是它自己；**走在路上**（`+0x0E` 是連結
+// 記錄的位址）時，起點是這條邊兩端裡屬於自己的那一個——
+// ⭐ **先看 `+8`（B 端），不是自己的才退回 `+6`（A 端）**；兩端都不是
+// 自己的就失敗（docs/spec/46 §2.1）。
+//
+// ⚠ 判準是「這條邊的兩端誰屬於自己」，**與軍團從哪一端出發無關**。
+// 用 `Node`（出發那一站）在只有一端屬於自己時同解，兩端都是自己的
+// 邊上才會岔開——也就是敵人深入自家領地的局面。
+func (w *World) retreatOrigin(i int) (int, bool) {
+	c := &w.Corps[i]
+	if c.LinkAddr == 0 || w.roads == nil {
+		return c.Node, true
+	}
+	a, b, ok := w.roads.EdgeByLink(c.LinkAddr)
+	if !ok {
+		// 缺道路圖或這條邊不在圖裡：退回出發那一站，不要整支停擺。
+		return c.Node, true
+	}
+	if w.nodeOwnedBy(b, c.Faction) {
+		return b, true
+	}
+	if w.nodeOwnedBy(a, c.Faction) {
+		return a, true
+	}
+	return 0, false
+}
+
+// nodeOwnedBy 是 `cmp dl, es:[di+841h]`：那個節點的所屬欄等於這個勢力。
+func (w *World) nodeOwnedBy(node, faction int) bool {
+	return node >= 0 && node < len(w.Cities) && w.Cities[node].Owner == faction
 }
 
 // retreatOrPerish 是 `sub_1474A` 的後半段：敗方退一站回家。

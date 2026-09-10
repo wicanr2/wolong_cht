@@ -976,11 +976,23 @@ func sign(v int) int {
 // 「走在路上」讀成「站在城裡」。座標一起看才等價——`turnBackAtBorder`
 // 早就是這樣問的，這裡把同一個判準抽出來共用。
 func (w *World) onCity(i int) bool {
-	c := &w.Corps[i]
-	if c.Node < 0 || c.Node >= len(w.Cities) || army.KindOf(c.Node) != army.CityNode {
+	// ⚠ `army.KindOf` 對**負數**回 `CityNode`（它只比上界），
+	// 所以範圍檢查要靠 `standsOn`，不能只看 KindOf。
+	return army.KindOf(w.Corps[i].Node) == army.CityNode &&
+		w.standsOn(i, w.Corps[i].Node)
+}
+
+// standsOn 回「這支軍團的**座標**是不是就在 node 那個據點上」。
+//
+// 原版 `sub_14C72` 收「同一格上有誰」的名單用的是座標比對
+// （`cmp ax, [bx+12h]` ＋ `cmp dx, [bx+10h]`），**不是節點欄**——
+// 走在路上的軍團節點欄放的是連結記錄位址，本來就對不上任何據點。
+func (w *World) standsOn(i, node int) bool {
+	if node < 0 || node >= len(w.Cities) || i < 0 || i >= len(w.Corps) {
 		return false
 	}
-	return c.X == w.Cities[c.Node].X && c.Y == w.Cities[c.Node].Y
+	c := &w.Corps[i]
+	return c.X == w.Cities[node].X && c.Y == w.Cities[node].Y
 }
 
 // nextCell 回「這一拍要踏進去的那一格」，沒有下一步就回 false。
@@ -1465,7 +1477,11 @@ func (w *World) redirectFallenCityCorps(ev *CorpsEvent, node, old, winner int, r
 	}
 	for i := range w.Corps {
 		c := &w.Corps[i]
-		if !c.Alive || c.Faction != old || c.Node != node {
+		// ⚠ **名單比的是座標，不是 `Node`**（`sub_14C72` 的
+		// `cmp ax, [bx+12h]` ＋ `cmp dx, [bx+10h]`）。remake 的 `Node`
+		// 在行軍中留著出發／中繼那一站，拿它當條件會把**還走在半路上**
+		// 的軍團也調頭——原版只動站在那一格上的守軍（docs/spec/47 §4.1）。
+		if !c.Alive || c.Faction != old || !w.standsOn(i, node) {
 			continue
 		}
 		hop := w.nextHopHome(i)
