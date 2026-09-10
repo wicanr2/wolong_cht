@@ -468,6 +468,34 @@
           "pattern": "沒消費"
         }
       }
+    },
+    {
+      "id": "answer-already-in-own-docs",
+      "title": "要說「卡住了」之前，先查自己的 docs/",
+      "trigger": "準備下「這裡是天花板／解不出來／需要決策」的結論，或準備開一項新工作",
+      "rule": "**先用關鍵詞查一次自己的文件**（`tools/py.sh tools/askdocs.py <詞>`）。答案常常是自己前幾天寫的，而且**標題就寫著**。\n\n⚠ 把「卡住」寫成決策呈給使用者，比自己多查五分鐘貴得多——那消耗的是別人的注意力，而且會讓一份已經驗過的結論看起來像未解的問題。",
+      "occurrences": [
+        {
+          "date": "2026-09-10",
+          "what": "同局面對拍撞到「孫乾　大人，主公有事召見。」停住，於是把「玩家事件怎麼處理」寫成三選一的決策呈給使用者。而 `docs/playtest/118` 的**標題**就是「劉備 90 天無人值守：君主召見用右鍵推進，選項用移動次數」，狀態「通過」——連 90 天跑得完、一輪 26 秒、兩次逐 byte 相同都驗過了",
+          "doc": "`docs/playtest/118`、`tools/askdocs.py` 的 docstring"
+        }
+      ],
+      "remind_on": [
+        "parity",
+        "ida"
+      ],
+      "guard": {
+        "kind": "tool",
+        "note": "`tools/py.sh tools/askdocs.py <關鍵詞>` 掃 `docs/` 的標題與狀態行，只印標題／狀態／路徑——一眼看得出「那份說通過了」。`grep -r` 做得到同樣的事，差別在它不會被全文淹沒。⚠ 回空**不代表沒解過**，再查 `docs/INDEX.md` 的斷言總表。",
+        "verify": {
+          "kind": "present",
+          "paths": [
+            "tools/askdocs.py"
+          ],
+          "pattern": "準備說卡住"
+        }
+      }
     }
   ]
 }
