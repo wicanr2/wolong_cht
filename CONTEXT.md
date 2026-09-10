@@ -162,12 +162,12 @@ remake **不必再給任何游標旗標**，第一個分歧從拍 24 推到 **78
 > 看起來是退步，真正的比較「369 → 332」是改善
 > （[`docs/playtest/119`](docs/playtest/119-rng-pace-comparison.md) §33.1）。
 
-### ⭐⭐⭐ 2026-09-10 這一輪（同局面對拍：**五張表**對到拍 4,910）
+### ⭐⭐⭐ 2026-09-10 這一輪（同局面對拍：**五張表**對到拍 4,950）
 
-**二十二個檢查點（拍 200 … 4,910）的據點、勢力、軍團、全域、事件佇列
+**二十四個檢查點（拍 200 … 4,950）的據點、勢力、軍團、全域、事件佇列
 五張表全部逐 byte 相同**——從 196 年 4 月 16 日 16 時的快照起跑。
-逐拍取數不一致從 305 降到 **17 / 5,480（0.3%）**，第一個分歧從拍 307
-推到 **4,911**（同一場攻城戰的勝負判定相反）。
+逐拍取數不一致從 305 降到 **15 / 5,480（0.3%）**，第一個分歧從拍 307
+推到 **5,016**。原版側攔到的**十場戰鬥同序、同雙方、同模式**。
 
 ⭐ **第五張表（事件佇列）以前從來沒真的比過。** `orig_snapshot.py` 只拼
 全域與四張表，佇列那一段是從原版 `SAVE.DAT` **模板**複製的——
@@ -189,9 +189,10 @@ remake **不必再給任何游標旗標**，第一個分歧從拍 24 推到 **78
 | ＋ 位元 1 的延後重算、戰後重算、到站判準（[`179`](docs/spec/179-recalc-on-battle-and-arrival-test.md)）| 拍 3,304 |
 | ＋ 調兵的 `want` 數候選不數選中（[`180`](docs/spec/180-relief-dispatch-want-counts-candidates.md)）| 拍 3,415 |
 | ＋ AI 募兵節制、月結順序（[`181`](docs/spec/181-ai-recruit-gate-and-monthly-globals.md)／[`182`](docs/spec/182-monthly-settlement-before-hourly.md)）| 拍 3,415（四張表對到 3,400）|
-| ＋ 佔用圖增量維護、調兵的 `want` 恆為 1（[`183`](docs/spec/183-occupancy-map-incremental.md)／[`184`](docs/spec/184-relief-dispatch-want-is-always-one.md)）| 拍 3,566 |
+| ＋ 佔用圖增量維護、調兵的 `want` 恆為 1（[`183`](docs/spec/183-occupancy-map-is-incremental.md)／[`184`](docs/spec/184-relief-dispatch-want-is-always-one.md)）| 拍 3,566 |
 | ＋ 事件佇列進第五張表、**月結內部的呼叫順序**、挑目標的「亂數 & 3」是步數（[`185`](docs/spec/185-monthly-settlement-call-order.md)）| 拍 4,750 |
-| ＋ `+0x0E` 在中繼據點換記法、位元 0 在「問擋不擋」之前就寫好（[`../re/34`](docs/re/34-corps-status-bits.md) §2.05）| 拍 **4,911**（五張表對到 4,910）|
+| ＋ `+0x0E` 在中繼據點換記法、位元 0 在「問擋不擋」之前就寫好（[`docs/re/34`](docs/re/34-corps-status-bits.md) §2.05）| 拍 4,911 |
+| ＋ **擋路問的是路徑點不是走到的格子**、先問軍團再問據點（[`186`](docs/spec/186-standoff-corps-before-city.md)）| 拍 **5,016**（五張表對到 4,950）|
 
 **這一輪最貴的一課：勢力表與全域欄位從來沒被比過。** 預備兵從 5 月 1 日的
 月結起一路偏高，而症狀出現在五百拍之後某支軍團補兵時每槽多分 4 個兵。

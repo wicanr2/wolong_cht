@@ -1193,6 +1193,14 @@ func (w *World) standsOn(i, node int) bool {
 // （docs/spec/173 §1.1）。
 func (w *World) nextCell(i int) (int, int, bool) {
 	if cells := w.routes[i]; len(cells) > 0 {
+		// ⭐ **問的是原版的路徑點，不是走到的格子。** 兩者只差終點
+		// 那一筆：格子序列的最後一格是據點中心，路徑點序列的最後一筆是
+		// **那一端的城門格**（`march.Edge.BGate`）。守軍站在城門格上時
+		// 原版撞到的是軍團（野戰），拿據點中心去問會撞到據點（攻城）——
+		// 同局面拍 4,910 就差在這裡（docs/spec/186）。
+		if mk := w.routeMarks[i]; len(mk) > 0 && mk[0].Point != ([2]int{}) {
+			return mk[0].Point[0], mk[0].Point[1], true
+		}
 		return cells[0][0], cells[0][1], true
 	}
 	// 沒有道路圖時 `step` 走直線退路（缺素材要能降級跑），
@@ -1220,31 +1228,53 @@ func (w *World) nextCell(i int) (int, int, bool) {
 // 打成野戰、攻城那條路永遠走不到（docs/re/09 §2）。
 func (w *World) blockerAt(i, x, y int) (int, int) {
 	c := &w.Corps[i]
-	// `sub_12880`：下一格是**別人的**據點就擋。
-	//
-	// ⚠ 原版這一條前面還有 `test byte ptr [si], 1`（位元 0 ＝ 已經走上
-	// 路徑）。**remake 不照抄那個閘**，理由與順序倒置同源：原版一個據點
-	// 佔 `0CEh`–`0DDh` 一整段圖塊，軍團站在自家城裡時**下一格往往還在
-	// 自己的據點圖塊上**，位元 0 是用來擋掉那一步的；remake 的據點只佔
-	// 一個點，出城第一步永遠踏在道路格上，沒有這個情況。
-	// 照抄反而會漏掉直線退路（缺道路圖時 `OnPath` 一次都不會設）。
-	if n := w.cityAt(x, y); n >= 0 && w.Cities[n].Owner != c.Faction {
-		return n, -1
+	// ⚠ **缺道路圖時沒有「城門格」這回事**（`routes` 是空的，`nextCell`
+	// 回的是逼近目標的那一步 ＝ 據點中心）。那時守軍必然站在同一格上，
+	// 照原版順序問會把每一場攻城都變成野戰——所以降級路徑**據點先問**。
+	// 這是明示的 remake 差異，只在缺原版素材時走到（docs/spec/186 §3）。
+	if len(w.routes[i]) == 0 {
+		if n := w.cityAt(x, y); n >= 0 && w.Cities[n].Owner != c.Faction {
+			return n, -1
+		}
 	}
-	// `sub_12831`：掃軍團表找**第一支**站在那一格上而且活著的。
-	// ⚠ 原版找到就停，**是自己人就放行**（軍團可以疊同格）——
-	// 不是「掃出所有敵人」。掃描順序與槽序一致才對得上原版。
+	// ⭐ **① 先問軍團**（`sub_12831`），沒被擋才問據點（`sub_12880`）。
+	// 掃軍團表找**第一支**站在那一格上而且活著的；找到就停，
+	// 是自己人就放行（軍團可以疊同格）而且**繼續往下問據點**
+	// （原版 `sub_12831` 回 STC，`sub_12708` 的 `jb loc_1273C`）。
+	//
+	// ⚠ 這裡的 `(x, y)` 是**路徑點**，不是走到的格子——最後一步的
+	// 路徑點是城門格，據點中心是格子（docs/spec/186）。守軍站在
+	// 城門格上時撞到的是軍團，站在據點中心時撞不到、往下走攻城。
 	for j := range w.Corps {
 		d := &w.Corps[j]
 		if j == i || !d.Alive {
 			continue
 		}
 		if d.X == x && d.Y == y {
-			if d.Faction == c.Faction {
-				return -1, -1
+			if d.Faction != c.Faction {
+				return -1, j
 			}
-			return -1, j
+			break
 		}
+	}
+	// ⭐ **② 再問據點**（`sub_12880`）：這條連結通往的據點是別人的就擋。
+	//
+	// 原版看的是連結的端點據點，而 `sub_12708` 用「下一格的圖塊落在
+	// `0CEh`–`0DDh`」＋ `test byte ptr [si], 1` 把它限制在**快踏進據點**
+	// 的那幾步。remake 的等價條件是「這一步走到的格子是段的終點
+	// （據點中心），而路徑點已經是城門格」——兩者只在那一步不相等。
+	cell := [2]int{x, y}
+	if cells, mk := w.routes[i], w.routeMarks[i]; len(cells) > 0 {
+		cell = cells[0]
+		// 路徑點就是這一格 ⇒ 還沒走到城門格，據點那一條不成立。
+		// ⚠ `Point` 是零值表示這一段沒有道路表的標記（`cellRoute` 補的
+		// 零值 CellMark），那時沒有城門格可比，退回舊行為逐格問。
+		if len(mk) > 0 && mk[0].Point != ([2]int{}) && mk[0].Point == cells[0] {
+			return -1, -1
+		}
+	}
+	if n := w.cityAt(cell[0], cell[1]); n >= 0 && w.Cities[n].Owner != c.Faction {
+		return n, -1
 	}
 	return -1, -1
 }

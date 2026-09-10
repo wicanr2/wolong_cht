@@ -54,6 +54,14 @@ type CellMark struct {
 	//
 	// 最後一格（據點中心）沒有下一筆，是零值——到站時朝向本來就寫 4。
 	Next [2]int
+
+	// Point 是**這一格對應的原版路徑點**（`es:[bx]`／`es:[bx+2]`）。
+	//
+	// ⭐ 它與走過的格子只差終點那一筆：格子序列的最後一格是據點中心，
+	// 路徑點序列的最後一筆是**那一端的城門格**。`sub_12708` 踏進去之前
+	// 問的是路徑點，不是據點中心——守軍站在城門格上時，原版撞到的是
+	// 軍團（野戰），而拿據點中心去問會撞到據點（攻城，docs/spec/186）。
+	Point [2]int
 }
 
 // Graph 是據點道路圖。
@@ -125,6 +133,7 @@ func cellMarks(e Edge, n int, forward bool) []CellMark {
 			LinkAddr: e.LinkAddr,
 			Step:     step,
 			Next:     next,
+			Point:    pts[k],
 		}
 	}
 	return out
