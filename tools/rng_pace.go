@@ -86,7 +86,7 @@ func main() {
 	// ⭐ 原版側對應 `WOLONG_DOSGOLEM_WATCH=147BB` 並 grep `SI=<基址+編號×64>`
 	// （執行期軍團表基址是 `0x2240`，**不是快照的 `0x22C0`**，docs/spec/191 §3）。
 	corpsLog := flag.Int("corps-log", -1,
-		"每拍印這一支軍團的節點與座標（−1 ＝ 關）")
+		"每拍印這一支軍團的節點與座標（−1 ＝ 關，**−2 ＝ 所有活著的**）")
 	traceN := flag.Int("trace", 0, "印前 N 拍的據點狀態（小樣本追蹤）")
 	mark := flag.String("mark", "", "印出含這個呼叫點的子刻位置（例：strategy.go:630）")
 	rngState := flag.String("rng-state", "", "載入原版當下的亂數狀態（258 byte，docs/spec/147 §5）")
@@ -312,13 +312,19 @@ func main() {
 			}
 			answeredFunding++
 		}
-		if *corpsLog >= 0 && *corpsLog < len(w.Corps) {
-			c := &w.Corps[*corpsLog]
-			if c.Alive {
+		if *corpsLog == -2 || (*corpsLog >= 0 && *corpsLog < len(w.Corps)) {
+			for k := range w.Corps {
+				if *corpsLog >= 0 && k != *corpsLog {
+					continue
+				}
+				c := &w.Corps[k]
+				if !c.Alive {
+					continue
+				}
 				fmt.Printf("  拍 %d 軍團 %d 節點 %04X 座標 (%d,%d) 目標 %04X "+
-					"朝向 %d 計時 %d 間隔 %d\n",
-					i+1, *corpsLog, c.Node*8, c.X, c.Y, c.TargetNode*8,
-					c.Heading, c.Timer, c.Interval)
+					"朝向 %d 計時 %d 間隔 %d 階段 %d 士氣 %d 兵 %d\n",
+					i+1, k, c.Node*8, c.X, c.Y, c.TargetNode*8,
+					c.Heading, c.Timer, c.Interval, c.Stage, c.Morale, c.Men)
 			}
 		}
 		n := tr.seq - prev

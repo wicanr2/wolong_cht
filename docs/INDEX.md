@@ -371,6 +371,7 @@
 | [`docs/spec/190-adjacency-mask-is-a-capture-time-snapshot.md`](spec/190-adjacency-mask-is-a-capture-time-snapshot.md) | 190 — 鄰接遮罩是易主時的快照，不是現況 | CONFORMED。 | 2026-09-10 |
 | [`docs/spec/191-garrison-leader-is-general-127.md`](spec/191-garrison-leader-is-general-127.md) | 191 — 城兵的將領是武將表第 127 筆，不是空的 | CONFORMED。 | 2026-09-11 |
 | [`docs/spec/192-route-cost-model.md`](spec/192-route-cost-model.md) | 192 — 選路的成本不是格數：每個節點 +4，敵城 +0xA6 | CONFORMED。 | 2026-09-11 |
+| [`docs/spec/193-post-battle-stage-not-set-when-spent.md`](spec/193-post-battle-stage-not-set-when-spent.md) | 193 — 士氣或大將槽歸零時，戰後的階段不設 | READY（已實作，但沒有對拍樣本能分開）。 | 2026-09-11 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |

@@ -311,6 +311,17 @@ func (w *World) retreatOrPerish(i int, won bool) bool {
 	// ⭐ `sub_1474A` **第一行就是 `call sub_16FD2`**（docs/spec/179）：
 	// 總兵力、移動間隔重算，而且 `+0x0B` 移動計時寫 1——勝敗都跑。
 	w.recalcCorps(i)
+	// ⭐ **原版在這裡就可能提早返回**（`cmp [si+6],0` / `cmp [si+29h],0`）：
+	// 士氣或大將槽（第 0 槽）兵力歸零 ⇒ `stc retn`，而且
+	// **`+0x23` 一個字都沒寫**（docs/spec/193）。
+	//
+	// 攻城會把**雙方**士氣清零，而攻城的勝方不判壞滅（docs/spec/187），
+	// 所以打下城的軍團常常是「活著、士氣 0」——原版讓它**帶著戰前的
+	// 階段繼續走**，remake 原本無條件寫 8（等士氣）就停了 656 拍
+	// （同局面軍團 88，拍 7,091 攻下據點 56）。
+	if c.Morale == 0 || c.Units[0].Men == 0 {
+		return true
+	}
 	if won {
 		c.Stage = StageWaitMorale
 		return false
