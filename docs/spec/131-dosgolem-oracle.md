@@ -9,7 +9,7 @@
   [`spec/007` VGA 平面模式](https://github.com/wicanr2/dosgolem/blob/master/docs/spec/007-vga-planar.md)、
   [`spec/008` 臥龍傳要的服務](https://github.com/wicanr2/dosgolem/blob/master/docs/spec/008-wolong-services.md)、
   [`findings/003` 五格對拍](https://github.com/wicanr2/dosgolem/blob/master/docs/findings/003-wolong-boots-and-matches.md)。
-  工作副本在 `~/cht/dosgolem-wolong`
+  工作副本在 `~/cht/dosgolem-wolong`（2026-09-10 起以 dosgolem 的 `main` 為 base，分支 `wolong-oracle-main`；換 base 之後跑過正對照，見 §3.1）
 - 推論等級：confirmed（逐點對拍，不是推的）
 
 ## 1. 原版做什麼
@@ -63,6 +63,20 @@ DOSBox ＋ Xvfb ＋ xdotool。
 
 DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只有它跑得動
 （dosgolem 沒有 PC-98 的機器層）。
+
+### 3.1 ⭐ 換 base 之後的正對照（2026-09-10）
+
+dosgolem 上游把八條分支合進 `main`（`wolong-oracle` 的 364 個 commit 全部在裡面，
+`git log origin/main..wolong-oracle` 是 0），所以工作分支改成從 `main` fork 的
+`wolong-oracle-main`。
+
+⚠ **換工具的 base 要先跑正對照**——不然「對拍數字變了」會被讀成規則差異。
+重跑兩個已知的收據，**逐行完全相同**：
+
+| 收據 | 內容 |
+|---|---|
+| 進遊戲後的軍團表 | `wait;click:320,200;click:300,151;clock;corps`，8 支活著的軍團逐欄相同 |
+| `siege:19,122` 的戰後狀態 | 軍團 19 兵 600 → 500、士氣 123、狀態欄 `08`；守方 72 兵 600 → 568 |
 
 ## 3.5 ⭐⭐ 彈出選單上的 `move:` 是「往下一格」，不是絕對座標
 
