@@ -1800,10 +1800,14 @@ func (w *World) redirectFallenCityCorps(ev *CorpsEvent, node, old, winner int, r
 			w.corpsPerishes(ev, i, winner, rng)
 			continue
 		}
-		_ = w.March(i, hop)
-		// 原版還會 `mov byte ptr [si+0Bh], 1` ＋ `or byte ptr [si], 2`：
-		// 下一個 tick 就重算並起步。
-		c.Timer = 1
+		// ⚠ **`sub_14DA4` 只寫四格**：`+0x20`（意圖）、`+0x14`（目標節點）、
+		// `+0x0B` ← 1（移動計時）與位元 1，**不碰 `+0x16`／`+0x18`**
+		// （目標 X／Y 留著舊目標的值）。用 `March` 會把座標一起換掉
+		// （同局面拍 5,176 的軍團 39：原版留著據點 88 的座標、
+		// remake 換成了據點 85 的）。
+		w.retargetAndReplan(i, hop, false)
+		c.Replan = true // `or byte ptr [si], 2`
+		c.Timer = 1     // `mov byte ptr [si+0Bh], 1`
 	}
 }
 
