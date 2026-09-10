@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**767 列分布在 323 份文件，平均每份 2.4 列。**
+**768 列分布在 323 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 180 | 173 | 6 | 1 |
-| 驗收 | 232 | 206 | 26 | 0 |
+| 驗收 | 233 | 207 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 318 | 296 | 21 | 1 |
-| **合計** | **767** | 706 | 58 | 3 |
+| **合計** | **768** | 707 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -54,7 +54,7 @@
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/spec/` | 275 |
-| `docs/playtest/` | 232 |
+| `docs/playtest/` | 233 |
 | `docs/re/` | 180 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
@@ -289,7 +289,7 @@
 | [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 游標圖形資料 | 在 `sub_201E4` 附近，逐 byte 沒抓；remake 已經有量出來的 14×14 遮罩 | 靜態 |
 | [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 54 個 hide／show 點對應到 remake 的哪一段 | 沒做；這是「remake 要不要同步游標」的前置 | 靜態 |
 
-## 2.4 驗收（232 條）
+## 2.4 驗收（233 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -331,6 +331,7 @@
 | [`playtest/118-liubei-90day-audience-response.md`](../playtest/118-liubei-90day-audience-response.md) | **腳本沒有條件分支** | 召見出現的時刻要先跑一次才知道，回應序列是寫死在腳本裡的。要自動化就得在 dosgolem 那端加「卡住就回應」的偵測 | 靜態 |
 | [`playtest/118-liubei-90day-audience-response.md`](../playtest/118-liubei-90day-audience-response.md) | 起點不是劇本開局 | 現用存檔是 196/4/16。從 196/4/1 起跑要另做一份存檔或走新遊戲流程 | 靜態 |
 | [`playtest/118-liubei-90day-audience-response.md`](../playtest/118-liubei-90day-audience-response.md) | 逐小時取樣還沒接上 | 這一輪只在第 90 天取狀態表。三份軌跡（狀態／事件／亂數）的逐小時版本見 `../spec/161` §4 | 靜態 |
+| [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | 43–65 | 勢力表之後那 704 B 的未解區 | 靜態 |
 | [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | **那 4 次差在哪個子刻** | 只比了分布，還沒逐子刻對齊找第一個分歧點 | 靜態 |
 | [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | 檢查條件的語意差 | 原版看第一個槽、remake 看整個清單；要確認 `[bp+0]` 那個槽在原版是怎麼填的（`docs/re/40` §3 的迴圈會跳過空槽重抽，所以「第一個槽空」與「全空」在原版是兩件事） | 靜態 |
 | [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | 「2 個」差 1 | 徵兵被跳過的次數原版 9、remake 10 | 靜態 |
