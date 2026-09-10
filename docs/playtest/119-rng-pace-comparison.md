@@ -1,9 +1,10 @@
 # 119 — 取數節拍對齊：remake 的節拍不吃亂數值，差異是真的規則分歧
 
-**狀態：已修正並驗過（§6、§28–§34）。**
-⚠ **對齊法在 §34 訂正過**：先前的 `-skip 27` 會讓亂數流岔開 27 拍，
-正解是 `-city-cursor 171`。吃亂數的欄位（上昇值、防災值、城兵、資金）
-在那之前量到的數字都要重量。 現況是 5,480 個子刻**逐拍不一致
+**狀態：已修正並驗過（§6、§28–§36）。** 現況是**前 780 拍完全一致**、
+逐拍不一致 375 / 5,480（§36.3）。
+⚠ **原版側的收據在 §36 整組重生過**：舊的那一組是 dosgolem 舊分支產生的，
+與 `main` 差 27 子刻。標準命令列見 §36.4；吃亂數的欄位在那之前量到的
+數字都要重量。 現況是 5,480 個子刻**逐拍不一致
 332（6.1%）**，第一場 AI 自動判定戰鬥落在拍 2,121、原版拍 2,119（§33）；
 五個檢查點的軍團表對原版是 4／1／1／1／25 個 byte。
 ⚠ §31 記的「229、前 2,022 拍完全相同」量在**還沒提交的工作樹**上，
@@ -992,3 +993,43 @@ tools/go.sh run tools/rng_pace.go -save workplace/parity/orig-at-13h.DAT \
 
 ⇒ 快照會自帶正確的游標，`-city-cursor`／`-corps-cursor` 就不必手動補。
 `Snapshot.CorpsCursor`（§35）仍然要留——那是原本就缺的欄位。
+
+### 36.3 ⭐ 重生完成：第一個分歧推到拍 781
+
+| 收據 ＋ 對齊 | 逐拍不一致 | 第一個分歧 |
+|---|---:|---:|
+| 舊 base ＋ `-skip 27` | 332 | 拍 307 |
+| 舊 base ＋ 兩個游標手動補 | 339 | 拍 24 |
+| **新 base 整組重生** | 375 | **拍 781** |
+
+⭐ **前 780 拍完全一致**，而且 remake 不必給任何游標旗標——
+`parity_pace_diff` 自己說「原版先丟 27 拍——`clock` 標記 196年4月16日
+16時 對上 remake 的起點」。
+
+⚠ 總數反而升高（339 → 375）：之前的分歧被錯的對齊掩蓋成別的形狀。
+**第一個分歧點才是有意義的指標**（§28 已經記過一次）。
+
+拍 781 的分歧是 `strategy.go:667`（remake 多取一個），不再是軍團出擊。
+
+**新收據**（`workplace/parity/`）：
+
+| 檔案 | 內容 |
+|---|---|
+| `orig-at-16h.DAT` | 快照（時鐘 16 時、據點游標 171、軍團游標 48）|
+| `liubei-rng16.bin` | 同一刻的亂數狀態 258 B |
+| `pace/orig-16h-watch.log` | `-watch 1ECE0,14194`，5,509 拍 |
+
+⚠ **`-watch` 要攔兩個位址**：只攔 `1ECE0` 的話切拍找不到 `14194` 錨點，
+可比拍數為 0。舊的 `orig-t13-long.log`／`orig-at-13h.DAT`／`liubei-rng13.bin`
+是**舊 base** 的，留作對照但不要與新收據混用。
+
+⚠ 五個檢查點（`pace/ck/orig-ck*.DAT`）還是舊 base 的，還沒重生。
+
+### 36.4 remake 側的標準命令列（新收據）
+
+```
+tools/go.sh run tools/rng_pace.go -save workplace/parity/orig-at-16h.DAT \
+    -rng-state workplace/parity/liubei-rng16.bin -ticks 5480 -seq-out seq.txt
+tools/py.sh tools/parity_pace_diff.py \
+    workplace/parity/pace/orig-16h-watch.log seq.txt
+```
