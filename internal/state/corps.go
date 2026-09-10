@@ -1532,8 +1532,18 @@ func (w *World) resolveCorpsBattle(ev *CorpsEvent, att, def, node int, m combat.
 	// 原版兩邊各跑一次 `sub_1474A`：士氣判定之外，**敗方退不了也算壞滅**
 	// （docs/spec/46 §1）。守方站在自家城裡走「不退」那一支，
 	// 所以攻城的易主判定不受影響。
-	attDead := r.AttackerDestroyed || w.retreatOrPerish(att, !r.DefenderWins)
-	defDead := r.DefenderDestroyed || w.retreatOrPerish(def, r.DefenderWins)
+	// ⛔ **不要寫成 `r.AttackerDestroyed || w.retreatOrPerish(…)`**：
+	// Go 的 `||` 會短路，而 `retreatOrPerish` 有副作用——它第一行就是
+	// `recalcCorps`（`sub_1474A` → `sub_16FD2`：總兵力、移動間隔、
+	// **`+0x0B` 計時寫 1**）。壞滅旗標先成立的那一側就整支被跳過，
+	// 症狀是**移動節拍從那一場起漂掉一個 byte 並永遠帶著**
+	// （同局面軍團 73：原版拍 5,108 就輪到移動，remake 拖到 5,122）。
+	//
+	// 原版兩邊各跑一次，差的只是哪一位會被消費（docs/spec/187）。
+	attRetreat := w.retreatOrPerish(att, !r.DefenderWins)
+	defRetreat := w.retreatOrPerish(def, r.DefenderWins)
+	attDead := r.AttackerDestroyed || attRetreat
+	defDead := r.DefenderDestroyed || defRetreat
 	// ⭐ **兩個入口判誰的規則不一樣**（docs/spec/187）：
 	//
 	//   - `sub_14ADE`（攻城）拿 `al`（誰贏）分流——攻方贏就只
@@ -1587,7 +1597,9 @@ func (w *World) fightGarrison(att, node int, ev *CorpsEvent, rng combat.Rand) {
 	// 守方是城兵不是軍團，所以只有攻方要跑 `sub_1474A`。
 	// ⭐ 攻方贏時**不判攻將**（`sub_14ADE` 的 `loc_14B34` 之後也是
 	// `and al, al / jnz loc_14B4B`，攻方贏就直接易主，docs/spec/187）。
-	attDead := r.AttackerDestroyed || w.retreatOrPerish(att, !r.DefenderWins)
+	// ⛔ 同上：`retreatOrPerish` 有副作用，不能被 `||` 短路掉。
+	attRetreat := w.retreatOrPerish(att, !r.DefenderWins)
+	attDead := r.AttackerDestroyed || attRetreat
 	if !r.DefenderWins {
 		attDead = false
 	}

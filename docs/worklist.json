@@ -137,20 +137,6 @@
    }
   },
   {
-   "id": "corps-move-timer-phase",
-   "layer": "parity",
-   "title": "軍團 73 的移動計時在拍 5,104 之後相位差 1",
-   "body": "整個對拍區間只剩這一個 byte，而且**穩定不擴散**——拍 5,275／5,373／5,472 都是原版 3、remake 2。\n\n分歧點在**拍 5,104 那一場攻城**（軍團 44 攻據點 2，守軍軍團 73）：早期檢查點（拍 700／1,200／2,800／4,000）的 `+0x0B` 兩邊相同。\n\n寫 `+0x0B` ← 1 的有兩處：`sub_1474A` 第一行的 `sub_16FD2`（戰後兩邊各一次）與 `sub_14DA4`（據點失守後同格守軍調頭）。remake 兩處都有，所以差的是**時機或涵蓋範圍**——`redirectFallenCityCorps` 用 `standsOn` 過濾，而軍團 73 打完仗之後可能已經被 `retreatOrPerish` 改過目標。\n\n⚠ **移動拍數的逐筆 diff 不可靠**：用 `sub_14194` 數拍與 `parity_pace_diff` 的切拍在重複攔截處會漂 ±1，前 23 筆對齊 −27、之後看起來差 1，那是對齊的假象不是分歧。可靠的判準是檢查點。",
-   "acceptance": "`tools/parity_ck.sh` 在拍 5,300／5,500 的軍團表是 0。",
-   "verify": {
-    "kind": "present",
-    "paths": [
-     "docs/playtest/119-rng-pace-comparison.md"
-    ],
-    "pattern": "移動計時）差 1–2"
-   }
-  },
-  {
    "id": "parity-extend-past-summons",
    "layer": "parity",
    "title": "把召見的回應序列接進對拍腳本，延長到 90 天",

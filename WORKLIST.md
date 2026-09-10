@@ -62,7 +62,7 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 
 <!-- worklist:begin 由 tools/worklist.py render 產生，不要手改 -->
 
-共 **11 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
+共 **10 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
 
 跑 `tools/py.sh tools/worklist.py verify` 逐條問一次；`check.sh` 會替你跑。
 
@@ -85,20 +85,6 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 **怎樣算做完**：同一首曲子兩邊各取一段做頻譜比對，給出一個可重跑的量化指標。
 
 **verify**：`present` `/音色的諧波結構沒量化比對/` 在 `README.md`
-
-#### 軍團 73 的移動計時在拍 5,104 之後相位差 1
-
-整個對拍區間只剩這一個 byte，而且**穩定不擴散**——拍 5,275／5,373／5,472 都是原版 3、remake 2。
-
-分歧點在**拍 5,104 那一場攻城**（軍團 44 攻據點 2，守軍軍團 73）：早期檢查點（拍 700／1,200／2,800／4,000）的 `+0x0B` 兩邊相同。
-
-寫 `+0x0B` ← 1 的有兩處：`sub_1474A` 第一行的 `sub_16FD2`（戰後兩邊各一次）與 `sub_14DA4`（據點失守後同格守軍調頭）。remake 兩處都有，所以差的是**時機或涵蓋範圍**——`redirectFallenCityCorps` 用 `standsOn` 過濾，而軍團 73 打完仗之後可能已經被 `retreatOrPerish` 改過目標。
-
-⚠ **移動拍數的逐筆 diff 不可靠**：用 `sub_14194` 數拍與 `parity_pace_diff` 的切拍在重複攔截處會漂 ±1，前 23 筆對齊 −27、之後看起來差 1，那是對齊的假象不是分歧。可靠的判準是檢查點。
-
-**怎樣算做完**：`tools/parity_ck.sh` 在拍 5,300／5,500 的軍團表是 0。
-
-**verify**：`present` `/移動計時）差 1–2/` 在 `docs/playtest/119-rng-pace-comparison.md`
 
 #### 把召見的回應序列接進對拍腳本，延長到 90 天
 

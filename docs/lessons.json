@@ -528,6 +528,34 @@
      "pattern": "回應要在這一拍的統計之前"
     }
    }
+  },
+  {
+   "id": "short-circuit-eats-the-side-effect",
+   "title": "`||` 短路把有副作用的呼叫吃掉",
+   "trigger": "寫或讀 `旗標 || 某個會改狀態的函式(…)`，尤其是重現「原版兩邊都要跑」的那種常式",
+   "rule": "**有副作用的呼叫要單獨一行**，不要當成布林運算元。原版的 `call` 是無條件的，Go 的 `||`／`&&` 不是——旗標先成立的那一側整支被跳過，而症狀往往只是一個 byte，而且**穩定不擴散**，看起來像「還沒建模的小欄位」。判準：那個函式的註解裡有沒有寫「兩邊都要跑」。",
+   "occurrences": [
+    {
+     "date": "2026-09-11",
+     "what": "`resolveCorpsBattle` 的 `r.DefenderDestroyed || w.retreatOrPerish(def, …)`：守方壞滅旗標先成立，`sub_1474A` → `sub_16FD2` 整支被跳過，`+0x0B` 移動計時沒有歸 1——軍團 73 的節拍從拍 5,104 那一場起漂掉一個 byte，掛在 worklist 上好幾天",
+     "doc": "`docs/playtest/119` §47.7"
+    }
+   ],
+   "remind_on": [
+    "parity",
+    "commit"
+   ],
+   "guard": {
+    "kind": "remind",
+    "note": "只有規則。`go vet` 不管這個，測試也照不到——那一個 byte 只有同局面逐欄對拍看得見。",
+    "verify": {
+     "kind": "present",
+     "paths": [
+      "internal/state/corps.go"
+     ],
+     "pattern": "Go 的 `||` 會短路"
+    }
+   }
   }
  ]
 }

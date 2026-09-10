@@ -10,7 +10,7 @@
 
 <!-- lessons:begin 由 tools/lessons.py render 產生，不要手改 -->
 
-共 **16 條**。權威是 [`lessons.json`](lessons.json)，這一份由 `tools/py.sh tools/lessons.py render` 產生。
+共 **17 條**。權威是 [`lessons.json`](lessons.json)，這一份由 `tools/py.sh tools/lessons.py render` 產生。
 
 ⭐ **按「什麼時候要想起這一條」索引**——教訓要防的動作發生在任務中間，不是開始時；按事件時間排的清單那時查不到。
 
@@ -32,6 +32,7 @@
 | 追一支函式追到它設了旗標／回了 CF／寫了欄位，就下「所以會發生 X」的結論 | [「這個值被算出來」不等於「有人會看它」](#flag-set-without-consumer) | 3 | tool |
 | 準備下「這裡是天花板／解不出來／需要決策」的結論，或準備開一項新工作 | [要說「卡住了」之前，先查自己的 docs/](#answer-already-in-own-docs) | 1 | tool |
 | 改了規則層卻發現「比對結果一模一樣」，或夾具在某個階段之後才做一件會改狀態的事 | [夾具自己吃掉一筆，指標不會變紅](#silent-fixture-drop) | 1 | remind（❌ 不見了） |
+| 寫或讀 `旗標 || 某個會改狀態的函式(…)`，尤其是重現「原版兩邊都要跑」的那種常式 | [`||` 短路把有副作用的呼叫吃掉](#short-circuit-eats-the-side-effect) | 1 | remind |
 
 ### IDA 把整段解成資料時，先問是不是自我修改碼
 
@@ -245,7 +246,21 @@
 
 **防線**：`remind` — 規則印在 `tools/dosgolem.sh` 的教訓提示（`docs/lessons/parity.txt`）。⚠ 目前只有規則——要變成檢查，得讓 `rng_pace.go` 對「一拍之外發生的取數」直接報錯。
 
+### `||` 短路把有副作用的呼叫吃掉
+
+<a id="short-circuit-eats-the-side-effect"></a>**什麼時候想起**：寫或讀 `旗標 || 某個會改狀態的函式(…)`，尤其是重現「原版兩邊都要跑」的那種常式
+
+**要做的**：**有副作用的呼叫要單獨一行**，不要當成布林運算元。原版的 `call` 是無條件的，Go 的 `||`／`&&` 不是——旗標先成立的那一側整支被跳過，而症狀往往只是一個 byte，而且**穩定不擴散**，看起來像「還沒建模的小欄位」。判準：那個函式的註解裡有沒有寫「兩邊都要跑」。
+
+| 日期 | 犯在哪 | 收據 |
+|---|---|---|
+| 2026-09-11 | `resolveCorpsBattle` 的 `r.DefenderDestroyed || w.retreatOrPerish(def, …)`：守方壞滅旗標先成立，`sub_1474A` → `sub_16FD2` 整支被跳過，`+0x0B` 移動計時沒有歸 1——軍團 73 的節拍從拍 5,104 那一場起漂掉一個 byte，掛在 worklist 上好幾天 | `docs/playtest/119` §47.7 |
+
+**防線**：`remind` — 只有規則。`go vet` 不管這個，測試也照不到——那一個 byte 只有同局面逐欄對拍看得見。
+
 <!-- lessons:end -->
+
+<!-- 缺口：無 -->
 
 <!-- 缺口：無 -->
 
