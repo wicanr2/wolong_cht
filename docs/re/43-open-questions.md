@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**767 列分布在 323 份文件，平均每份 2.4 列。**
+**768 列分布在 323 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 180 | 173 | 6 | 1 |
 | 驗收 | 232 | 206 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 318 | 296 | 21 | 1 |
-| **合計** | **767** | 706 | 58 | 3 |
+| 其他 | 319 | 297 | 21 | 1 |
+| **合計** | **768** | 707 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,7 +53,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 275 |
+| `docs/spec/` | 276 |
 | `docs/playtest/` | 232 |
 | `docs/re/` | 180 |
 | `docs/release/` | 26 |
@@ -537,7 +537,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（318 條）
+## 2.6 其他（319 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -771,7 +771,8 @@
 | [`spec/44-advise-original-text.md`](../spec/44-advise-original-text.md) | 逐句節拍 | 原版每句要等玩家按鍵才往下走，remake 直接顯示最新一句（`45` §3.1） | 靜態 |
 | [`spec/45-advise-scene-layout.md`](../spec/45-advise-scene-layout.md) | 選單的反白樣式 | 原版怎麼畫游標列沒解，remake 用自己的反白條 | 靜態 |
 | [`spec/46-post-battle-retreat.md`](../spec/46-post-battle-retreat.md) | `loc_1491B` 的方向回傳 | `±4` 決定讀哪一個鄰接槽，remake 用 `Route` 的第 2 個節點取代，沒有逐條對過兩者選的是不是同一站 | 靜態 |
-| [`spec/46-post-battle-retreat.md`](../spec/46-post-battle-retreat.md) | 野外那一格的鄰接槽 | remake 的 `Node` 在行軍途中停在上一個據點，所以走的是「從上一個據點找路」，不是原版的「從野外那一格的鄰接槽挑」 | 靜態 |
+| [`spec/46-post-battle-retreat.md`](../spec/46-post-battle-retreat.md) | 野外那一格的鄰接槽 | remake 的 `Node` 在行軍途中停在上一個據點，所以走的是「從上一個據點找路」，不是原版的「從野外那一格的鄰接槽挑」。原版 `sub_1487B` 的挑法是**先看 `+8`（B 端）是不是自己的，是就用 B；不是才退回 `+6`（A 端）；兩端都不是自己的就失敗**——與「軍團從哪一端出發」無關。§5… | 靜態 |
+| [`spec/46-post-battle-retreat.md`](../spec/46-post-battle-retreat.md) | 退卻中途城易主 | remake 靠 `175` 的城門檢查接住（`TestRetreatingIntoLostCityStillFights`）。原版另有 `sub_14DA4` 專門處理**站在那一格上**的軍團（`47`），**走在半路上的那些**是不是也走同一支，沒有對過 | 靜態 |
 | [`spec/47-city-fall-corps-redirect.md`](../spec/47-city-fall-corps-redirect.md) | `[si+1Ah]` | 據點記錄記下舊主，remake 的 `OwnerRecorded` 是同一格但語意沒逐位元對過 | 靜態 |
 | [`spec/48-governor-returns-on-city-fall.md`](../spec/48-governor-returns-on-city-fall.md) | 武將 `+0x1E` 的值域 | 534/535/536 與 542 是空的，所以實際用到的變體大概只有 3–6。哪些武將拿到哪個值沒統計過 | 靜態 |
 | [`spec/48-governor-returns-on-city-fall.md`](../spec/48-governor-returns-on-city-fall.md) | `sub_10CE7` 的變數表 | 這裡推出 `{1}` ＝ 武將、`{2}` ＝ 據點（照 push 的順序與譯文），沒有逐個 handler 讀 | 靜態 |

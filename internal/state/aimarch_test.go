@@ -3,6 +3,7 @@ package state
 import (
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/march"
+	"github.com/wicanr2/wolong_cht/internal/rules/rng"
 )
 
 
@@ -499,6 +500,105 @@ func TestWeakLoserSwitchesToHomeResupply(t *testing.T) {
 	}
 	if got := w.Corps[i].Stage; got != StageHomeResupply {
 		t.Errorf("Stage = %d，兵力 ≤ %d 時要 %d", got, aiHomeThreshold, StageHomeResupply)
+	}
+}
+
+// ⭐ **走在路上戰敗要退**——不能因為 `Node` 還記著自家據點就當成「守在城裡」。
+//
+// 原版的判準是節點欄 `+0x0E < 600h`（`sub_1474A` 的 `cmp bx, 600h`）：
+// 行軍中那一欄放的是**連結記錄位址**，一定 ≥ `800h`。remake 的 `Node`
+// 在行軍中留著出發那一站，只看它會把城外對峙的攻方讀成「站在自家城裡」
+// 而不退（`docs/spec/46` §4.1）。
+//
+// 原版實測（`docs/spec/46` §5.1）：軍團 19 在 `(302,158)` 城外對峙，
+// 攻據點 122 打輸之後目標從 122 改成 129、狀態欄寫 `0A`、開始往回走。
+func TestLoserInFieldRetreatsEvenWhenNodeIsOwnCity(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[1]
+	a, b, c := threeInARow(t, w, f)
+	i := aiCorps(t, w, f, c)
+	w.Corps[i].Men = army60000Points // 兵力夠 ⇒ 不是靠 Stage 10 那條退的
+	// ⭐ 腳下那一格仍是自家據點 c，但軍團**站在野外**——座標偏離據點
+	// 中心一格，正是城外對峙的位置。
+	w.Corps[i].X, w.Corps[i].Y = w.Cities[c].X+1, w.Cities[c].Y
+
+	if dead := w.retreatOrPerish(i, false); dead {
+		t.Fatal("有退路卻判成壞滅")
+	}
+	if got := w.Corps[i].Ordered; got != b {
+		t.Errorf("退到 %d，要退一站到 %d（首都在 %d）——"+
+			"停在原地表示判準只看了 Node，沒看座標", got, b, a)
+	}
+}
+
+// 兵力還夠、但退的那一站**就是首都** ⇒ 一樣轉 Stage 10
+// （`sub_1474A` 的 `cmp al, [bx+3]`，兩個條件是 or）。
+//
+// 原版實測：軍團 19 打輸時兵力 494 點（> 300），退到據點 129 ＝
+// 勢力 1 的首都，狀態欄是 `0A`。**只驗兵力那一條會漏掉這一半。**
+func TestStrongLoserRetreatingIntoCapitalGoesHomeResupply(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[1]
+	a, b, _ := threeInARow(t, w, f)
+	i := aiCorps(t, w, f, b) // 站在 b，退一站就是首都 a
+	standOnForeignGround(w, b, f)
+	w.Corps[i].Men = army60000Points
+
+	if dead := w.retreatOrPerish(i, false); dead {
+		t.Fatal("有退路卻判成壞滅")
+	}
+	if got := w.Corps[i].Ordered; got != a {
+		t.Fatalf("退到 %d，要退到首都 %d", got, a)
+	}
+	if got := w.Corps[i].Stage; got != StageHomeResupply {
+		t.Errorf("Stage = %d，退的那一站就是首都時要 %d", got, StageHomeResupply)
+	}
+}
+
+// ⭐ **退到一半那座城易主了，走到城下一樣要打。**
+//
+// 退卻只改目標與 Stage，移動走的還是同一條路；`sub_12708` 在踏進去之前
+// 問的是「那一格是不是自己的」，不問軍團為什麼要去（`docs/spec/175`）。
+// 所以退卻途中目標城被別人拿走，到了城下就是一場攻城——先對峙 12 個
+// 巡迴週期，再結算。
+func TestRetreatingIntoLostCityStillFights(t *testing.T) {
+	w := load(t, 0)
+	f := w.AliveFactions()[1]
+	a, b, c := threeInARow(t, w, f)
+	i := aiCorps(t, w, f, c)
+	w.Corps[i].Men = army60000Points
+	w.Corps[i].X, w.Corps[i].Y = w.Cities[c].X+1, w.Cities[c].Y
+	if dead := w.retreatOrPerish(i, false); dead {
+		t.Fatal("有退路卻判成壞滅")
+	}
+	if got := w.Corps[i].Ordered; got != b {
+		t.Fatalf("退到 %d，要退一站到 %d（首都在 %d）", got, b, a)
+	}
+
+	// 退到一半，b 被別的勢力拿走。
+	standOnForeignGround(w, b, f)
+	// 擺到 b 的隔壁一格，下一步就要踏進去。
+	cc := &w.Corps[i]
+	w.ClearMarchRoute(i)
+	cc.X, cc.Y = w.Cities[b].X-1, w.Cities[b].Y
+	cc.TargetX, cc.TargetY = w.Cities[b].X, w.Cities[b].Y
+	cc.Interval, cc.Timer = 1, 1
+	cc.Standoff, cc.Countdown = false, 0
+
+	r := rng.New(0, 0, 0)
+	var got *CorpsEvent
+	for cycle := 1; cycle <= 24 && got == nil; cycle++ {
+		ev := w.tickOneCorps(i, 0, r)
+		w.tickStandoff(i)
+		if ev != nil && ev.Battle != nil {
+			got = ev
+		}
+	}
+	if got == nil {
+		t.Fatal("退卻途中走到已經不是自己的城，卻沒有打起來")
+	}
+	if got.Mode != combat.Siege {
+		t.Errorf("打成 %v，want 攻城", got.Mode)
 	}
 }
 
