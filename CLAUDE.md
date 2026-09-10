@@ -620,6 +620,7 @@ grep `.asm` 只能從呼叫端的參數順序反推——那是間接證據，�
 | `index.py` | **狀態行與內文矛盾**——說「未解／受阻」而內文已經一堆 confirmed。本專案最常犯的錯，`docs/formats/07`、`docs/playtest/04`、`CONTEXT.md` 的「進行中／受阻」表都中過。另擋缺狀態行／缺日期／連結壞掉／**目錄的 `00-index.md` 漏列該目錄的文件**（2026-08-28 抓到 spec 漏 17、re 漏 24）|
 | `phantom_scan.py` | **指向不存在的東西**——檔案、目錄、Go 識別字、IDA 符號、**Go 測試名** |
 | `symbol_roles.py` | **同一個 IDA 符號在兩份文件裡被標成互斥的角色**（播曲 vs 調色盤、存檔 vs 亂數）。⚠ **稽核用不是閘**，誤報是預期的——一支函式可以既畫圖又讀輸入，但不會既播曲又載調色盤。不接進 `check.sh` |
+| `worklist.py` | **未完成項的 verify 還成立嗎**——權威是 `docs/worklist.json`，每一條掛一個 verify（`present`／`absent`／`json_len`／`manual`），**跑起來為真＝這一條仍然未完成**。做好了而條目沒改就當場開口；`WORKLIST.md` 的那一節由 `render` 產生（規則見 `rulebook/61`）|
 | `stale_scan.py` | **指到的東西存在，但值不對**——檔案雜湊、docker 映像標籤、命令列旗標、RE 覆蓋率、抄到別份文件的未解列數與規格份數，以及**對拍紀錄的 `remake 側` 漏了受控存檔**（原版側跑 `root-noclouds` 而 remake 側沒有 `-save-file`，照著跑對不出文中的數字）|
 
 第三類最貴也最晚才有檢查：**格式完全正確、連結都通、只有數字是舊的**。
@@ -714,7 +715,8 @@ tools/            docker 包裝（go.sh、py.sh、ida.sh、shot.sh、
                   dosbox.sh、dosboxx.sh、dosboxx_bridge.sh ＋ dosboxx_probe.py＝正對照）、
                   check.sh（提交前的單一入口）、denylist.py ＋ release.sh（發行閘）、
                   phantom_scan.py（指向不存在的東西）＋ stale_scan.py（值已經不對）、
-                  index.py（文件索引）、re_coverage.py（RE 覆蓋地圖）、
+                  index.py（文件索引）、worklist.py（未完成項的 verify／render）、
+                  re_coverage.py（RE 覆蓋地圖）、
                   re_open_questions.py（缺口總表）、
                   fdi_extract.py、talkdat.py、ida_*.idc
 workplace/orig/dosv/      松崗 DOS/V 繁中版 69 檔（gitignore，唯讀）

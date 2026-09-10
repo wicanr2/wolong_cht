@@ -1,0 +1,156 @@
+{
+  "schema": "wolong-worklist/1",
+  "note": "未完成項的權威是這一份。WORKLIST.md 的那一節由 `tools/py.sh tools/worklist.py render` 產生，不要手改。約定：verify 跑起來為真 ＝ 這一條仍然未完成。",
+  "layers": {
+    "parity": "與原版對不上，或還沒對過",
+    "fidelity": "原版有這個機制，remake 還沒建模",
+    "re": "原版的碼還沒讀懂",
+    "release": "交付前還沒做的驗收"
+  },
+  "items": [
+    {
+      "id": "tick307-city93-garrison",
+      "layer": "parity",
+      "title": "同局面對拍的第一個分歧：拍 307 據點 93 少取一個亂數",
+      "body": "逐子刻對拍現在是 329 / 5,480（6.0%），第一個分歧落在拍 307：據點 93（後來還有 118）每 192 拍少取一個亂數。`governor.Tick` 的第三個取數是徵兵，只在城兵**未達上限**時發生，所以那兩座城的城兵在 remake 的世界裡提早滿了。與對峙、退卻兩條線都無關。",
+      "acceptance": "找出城兵提早到上限的來源並修掉；第一個分歧往後推，或說明為什麼那一拍的差異是原版行為。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "docs/playtest/119-rng-pace-comparison.md"
+        ],
+        "pattern": "成因還沒追",
+        "note": "綁 §33.1 那句自承。追出來之後那句會被改掉。"
+      }
+    },
+    {
+      "id": "m7-side-by-side-screens",
+      "layer": "parity",
+      "title": "M7 只差兩版並排的畫面對照",
+      "body": "1,022 則兩批逐句讀完（`docs/reference/02` §11／§12），排版 parity 全量量過（`docs/playtest/32`），校訂後的畫面抽樣也做了（`docs/playtest/41`）。缺的是**把 PC-98 日文原版與松崗版的同一個畫面並排**——那需要 pc98golem 補上 `apps/wolong`（`CLAUDE.md` §4.02）。",
+      "blocked_by": "pc98golem 目前只有 `apps/pool`，GDC 與文字 VRAM 那一層還沒做。",
+      "acceptance": "同一則訊息在兩版的畫面並排，逐區比過並留下收據。",
+      "verify": {
+        "kind": "manual",
+        "note": "做完會有一份 `docs/playtest/` 的並排紀錄。到時把這一條改成 absent，綁那份文件裡的識別字樣——現在猜檔名等於猜一個永遠不會中的 pattern。"
+      }
+    },
+    {
+      "id": "m8-native-platform-acceptance",
+      "layer": "release",
+      "title": "各目標平台的實機執行還沒驗",
+      "body": "發行閘（`tools/denylist.py` ＋ `tools/release.sh`）已接進 `check.sh`，交叉建置與檔頭檢查都過。缺的是 **Windows／macOS 在原生環境真的跑起來**——交叉編譯的檔頭檢查代替不了它。",
+      "acceptance": "三個平台各自在原生環境啟動、進遊戲、存讀檔一輪，留下截圖或錄影。",
+      "verify": {
+        "kind": "manual",
+        "note": "沒有機器訊號：本機跑不出別的平台。使用者 2026-09-08 裁定 Windows／macOS 由人工檢驗。"
+      }
+    },
+    {
+      "id": "retreat-endpoint-tie-break",
+      "layer": "fidelity",
+      "title": "退卻時兩端到首都等距，取哪一端沒解",
+      "body": "`sub_1487B` 走在路上那一半已經對過兩組原版實測（`docs/spec/46` §5.2）：退到這條邊上**離首都近的那個端點**。等距時原版由 `loc_1491B` 的廣度優先展開順序決定，而那一段是自我修改碼；remake 取 A 端。",
+      "acceptance": "解出展開順序，或找到一組等距的原版樣本把它釘住。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "internal/state/aimarch.go"
+        ],
+        "pattern": "等距\\*\\*時原版由廣度優先的展開順序決定，還沒解",
+        "note": "綁 `retreatEndpoint` 的註解。解出來之後那句會被改掉。"
+      }
+    },
+    {
+      "id": "corps-field-0x21",
+      "layer": "fidelity",
+      "title": "軍團記錄 `+0x21` 沒建模",
+      "body": "`sub_1264A` 在軍團沒卡住時把 `+0x03` 與 `+0x21` 一起歸零，`sub_12B3C` 拿 `+0x21 << 2` 與 `+0x03 & 3` 合成大地圖上的軍團圖塊索引。看起來是對峙動畫的第二個維度，語意未讀（`docs/spec/175` §5）。",
+      "acceptance": "讀出 `+0x21` 的寫入端與語意，接進 `Corps` 並讓存檔 round-trip 保住它。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "internal/state/corps.go"
+        ],
+        "pattern": "remake 還沒建模那一欄",
+        "note": "綁 `tickStandoff` 的註解。"
+      }
+    },
+    {
+      "id": "standoff-animation-and-sfx",
+      "layer": "fidelity",
+      "title": "對峙那 96 拍的動畫與音效沒接",
+      "body": "撞上敵人先對峙 12 個巡迴週期才開打已經接上並對過拍（`docs/spec/175`）。原版那 96 拍畫面上是兩軍對砍的動畫（`+0x03 & 3` 是相位），每個週期還播一次 `sub_102F5(al=3)`。remake 那段是靜的。",
+      "acceptance": "動畫相位與音效都接上；對峙期間的畫面與原版逐區比過。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "internal/state/corps.go"
+        ],
+        "pattern": "兩者 remake 都還沒接",
+        "note": "綁 `standoffBlocks` 的註解。"
+      }
+    },
+    {
+      "id": "bfs-self-modifying-code",
+      "layer": "re",
+      "title": "`loc_1491B` 的廣度優先是自我修改碼，還沒解",
+      "body": "`mov cs:word_149B8, bx`／`mov cs:word_149BE, cx`／`mov cs:byte_149D2, dl` 把值寫進後面幾行的 inline 立即值，IDA 因此把 `byte_149B6` 起整段解成資料。展開後是「碰到任一端就停」，但**展開順序與權重細節沒有逐條讀過**——退卻與行軍重算都走它。",
+      "acceptance": "交叉解碼那段 bytes，把展開順序寫成規格，並拿它解釋等距時取哪一端。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "docs/spec/46-post-battle-retreat.md"
+        ],
+        "pattern": "要逐條對就得先交叉解碼那段 bytes",
+        "note": "綁 §6 那一列。解完之後那一列會被改寫。"
+      }
+    },
+    {
+      "id": "icongrf-seg1-ui-semantics",
+      "layer": "re",
+      "title": "`ICONGRF` 段 1 前三塊的 UI 語意未解",
+      "body": "七個圖塊的偏移與尺寸已定位（`docs/re/18` §2、`docs/formats/03` §5.3），尾端四塊已逐像素對過是戰術側欄的橫帶、四角與兩根柱子（`docs/spec/31` §1.1）。**前三塊各代表什麼、`0x3000` 背板上的文字由誰合成**還沒解——這是 M1 唯一沒收掉的缺口。",
+      "acceptance": "三塊各自的用途有機器碼出處，或在畫面上指得出來。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "docs/re/03-image-blitter.md"
+        ],
+        "pattern": "段 1 `0x0000` 那一塊畫了什麼",
+        "note": "綁 re/03 的未解小節。"
+      }
+    },
+    {
+      "id": "audio-timbre-harmonics",
+      "layer": "parity",
+      "title": "音色的諧波結構沒量化比對過",
+      "body": "音訊整條接通：格式解完、純 Go 的 OPL3、場景對應從機器碼讀出來，與原版錄音的包絡互相關 0.704（`docs/playtest/26`）。**包絡對得上不等於音色對得上**——諧波結構沒有量化比過，手機也沒有實機聽過（模擬器是 `-no-audio` 起的）。",
+      "acceptance": "同一首曲子兩邊各取一段做頻譜比對，給出一個可重跑的量化指標。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "README.md"
+        ],
+        "pattern": "音色的諧波結構沒量化比對",
+        "note": "綁 README 的現況表。量過之後那一格會改寫。"
+      }
+    },
+    {
+      "id": "worklist-migration-incomplete",
+      "layer": "release",
+      "title": "`WORKLIST.md` 的舊敘述還沒逐條收進 JSON",
+      "body": "未完成項的權威已經改成 `docs/worklist.json`，機制（verify ／ render ／自我測試）已接進 `check.sh`。但 `WORKLIST.md` 的「目前目標」那一段仍是 2026-09-08 的散文敘述——**六項品質修正**（委任戰力混合公式、戰術移動排程、單挑角色與開場時間、完整戰後結算對拍、桌面音訊可靠性、公開包安裝說明）還沒逐條驗過狀態、掛上 verify。\n\n⚠ 在收完之前，未完成項有**兩份清單**——那正是這套機制要消滅的東西。",
+      "acceptance": "六項各自驗過現況、掛上 verify 進 JSON（做完的移進 `resolved`）；「目前目標」那一段只留一句指向 render 區。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "WORKLIST.md"
+        ],
+        "pattern": "六項品質修正尚未完成",
+        "note": "綁「目前目標」那一段的開頭。收完之後那一段會被改寫成一句指標，這個 pattern 就不見了。⚠ render 區不會產出這句話，所以不會自己中自己。"
+      }
+    }
+  ],
+  "resolved": []
+}
