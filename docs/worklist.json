@@ -153,18 +153,18 @@
       }
     },
     {
-      "id": "checkpoints-still-old-base",
+      "id": "tick700-extra-relief-corps",
       "layer": "parity",
-      "title": "五個檢查點還是舊 base 的，沒重生",
-      "body": "原版側的快照與 `-watch` 記錄已經用 dosgolem `main` 重生（`docs/playtest/119` §36.3），第一個分歧因此從拍 24 推到 **781**。⚠ 但 `workplace/parity/pace/ck/orig-ck*.DAT` 那五個逐欄檢查點還是舊分支產生的，與新收據差 27 子刻——拿它們比會得到假差異。",
-      "acceptance": "五個檢查點用同一個 base 重生；拍 200／700／1,200／1,600／1,900 的據點表與軍團表重新量過。",
+      "title": "拍 700：remake 多編四支軍團（求援多觸發）",
+      "body": "五個檢查點已用新 base 重生，**拍 200 逐 byte 完全一致**（`docs/playtest/119` §36.5）。拍 700 起 remake 多編了軍團 52／79／110／119，對應的四座據點（93／103／183／188）差的正好是「受威脅／有具體目標」旗標與求援冷卻計時器——**那四座在 remake 求援過、原版沒有**。\\n\\n`sub_14028` 每輪先清再設，remake 也是，所以不是旗標沒清，是威脅判定的結果不同。下一個要比的是勢力表。",
+      "acceptance": "拍 700 的據點表與軍團表都回到 0；五個檢查點逐 byte 一致。",
       "verify": {
         "kind": "present",
         "paths": [
           "docs/playtest/119-rng-pace-comparison.md"
         ],
-        "pattern": "還是舊 base 的，還沒重生",
-        "note": "綁 §36.3 那句。重生之後那句會被改掉。"
+        "pattern": "下一個要比的是勢力表",
+        "note": "綁 §36.5 那句。追出來之後那句會被改掉。"
       }
     }
   ],

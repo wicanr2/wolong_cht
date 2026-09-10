@@ -84,6 +84,7 @@ if [[ $WANT_DOCS == 1 ]]; then
         tools/py.sh tools/lessons.py render --check
         tools/py.sh tools/lessons.py verify
         [[ -s docs/lessons/commit.txt ]] && cat docs/lessons/commit.txt'
+    step "據點表比對工具正對照" tools/py.sh tools/city_diff.py --selftest
     step "對拍工具正對照" bash -c '
         tools/py.sh tools/parity_diff.py --selftest
         tools/py.sh tools/state_diff.py --selftest

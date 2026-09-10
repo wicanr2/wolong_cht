@@ -720,6 +720,7 @@ tools/            docker 包裝（go.sh、py.sh、ida.sh、shot.sh、
                   lessons.py（教訓的防線稽核＋把教訓印進 ida.sh／dosgolem.sh）、
                   re_coverage.py（RE 覆蓋地圖）、
                   re_open_questions.py（缺口總表）、
+                  corps_diff.py ＋ city_diff.py（兩份 SAVE.DAT 的軍團表／據點表逐 byte 比）、
                   fdi_extract.py、talkdat.py、ida_*.idc
 workplace/orig/dosv/      松崗 DOS/V 繁中版 69 檔（gitignore，唯讀）
 workplace/orig/pc98/      PC-98 日文原版 69 檔，由 fdi_extract.py 抽出（gitignore，唯讀）

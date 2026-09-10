@@ -96,13 +96,13 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 
 **verify**：`present` `/音色的諧波結構沒量化比對/` 在 `README.md`
 
-#### 五個檢查點還是舊 base 的，沒重生
+#### 拍 700：remake 多編四支軍團（求援多觸發）
 
-原版側的快照與 `-watch` 記錄已經用 dosgolem `main` 重生（`docs/playtest/119` §36.3），第一個分歧因此從拍 24 推到 **781**。⚠ 但 `workplace/parity/pace/ck/orig-ck*.DAT` 那五個逐欄檢查點還是舊分支產生的，與新收據差 27 子刻——拿它們比會得到假差異。
+五個檢查點已用新 base 重生，**拍 200 逐 byte 完全一致**（`docs/playtest/119` §36.5）。拍 700 起 remake 多編了軍團 52／79／110／119，對應的四座據點（93／103／183／188）差的正好是「受威脅／有具體目標」旗標與求援冷卻計時器——**那四座在 remake 求援過、原版沒有**。\n\n`sub_14028` 每輪先清再設，remake 也是，所以不是旗標沒清，是威脅判定的結果不同。下一個要比的是勢力表。
 
-**怎樣算做完**：五個檢查點用同一個 base 重生；拍 200／700／1,200／1,600／1,900 的據點表與軍團表重新量過。
+**怎樣算做完**：拍 700 的據點表與軍團表都回到 0；五個檢查點逐 byte 一致。
 
-**verify**：`present` `/還是舊 base 的，還沒重生/` 在 `docs/playtest/119-rng-pace-comparison.md`
+**verify**：`present` `/下一個要比的是勢力表/` 在 `docs/playtest/119-rng-pace-comparison.md`
 
 ### fidelity — 原版有這個機制，remake 還沒建模
 
