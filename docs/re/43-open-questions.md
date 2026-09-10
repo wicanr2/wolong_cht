@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**786 列分布在 335 份文件，平均每份 2.3 列。**
+**787 列分布在 336 份文件，平均每份 2.3 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -44,8 +44,8 @@
 | 程式碼理解 | 180 | 173 | 6 | 1 |
 | 驗收 | 233 | 207 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 336 | 314 | 21 | 1 |
-| **合計** | **786** | 725 | 58 | 3 |
+| 其他 | 337 | 315 | 21 | 1 |
+| **合計** | **787** | 726 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,7 +53,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 293 |
+| `docs/spec/` | 294 |
 | `docs/playtest/` | 233 |
 | `docs/re/` | 180 |
 | `docs/release/` | 26 |
@@ -538,7 +538,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（336 條）
+## 2.6 其他（337 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -747,6 +747,7 @@
 | [`spec/186-standoff-corps-before-city.md`](../spec/186-standoff-corps-before-city.md) | sub_12708` 的圖塊區間 `0CEh`–`0DDh` 在 remake 沒有對應物 | （未解小節內文） | 靜態 |
 | [`spec/187-only-the-loser-is-judged.md`](../spec/187-only-the-loser-is-judged.md) | 拍 5,176 的據點表 | 103 個 byte／57 座 / **1 個 byte／1 座**（語意未解的 `+0x15`） | 靜態 |
 | [`spec/187-only-the-loser-is-judged.md`](../spec/187-only-the-loser-is-judged.md) | 野戰在 `ah` ＝ 3 時為什麼只判攻方，還沒有解釋。 | （未解小節內文） | 靜態 |
+| [`spec/192-route-cost-model.md`](../spec/192-route-cost-model.md) | 同成本時的 tie-break：原版是環形佇列 ＋「掃一遍取第一個等於最小值的 | （未解小節內文） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |

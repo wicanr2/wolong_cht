@@ -3,17 +3,25 @@
 // 圖從 `MMAP` 推導出來（`internal/assets/world` 的 RoadEdges），
 // 這一層只負責找路，不認識地圖也不認識檔案格式。
 //
-// ⚠ **原版沒有「找路」這一步。** 它的軍團記錄裡直接存著目標
-// （`+0x14`／`+0x16`／`+0x18`），沿著載入時建好的連結表一段一段走
-// （`docs/re/08` §7）。玩家下指令時選的是**相鄰的據點**，
-// 所以原版不需要跨多段的規劃。
+// ⭐ **原版也找路，只是一次只找一步**：軍團記錄存著目標
+// （`+0x14`／`+0x16`／`+0x18`），每次輪到移動就跑一次 `loc_1491B`
+// ——一個**從目標往回**的 uniform-cost 搜尋——決定「往這條邊的哪一端走」
+// （`docs/spec/192`）。
 //
-// remake 讓玩家可以直接點遠處的據點，中間的路由這裡算——
-// **這是操作方式的差異，不是規則的差異**：走的還是同一條路、
-// 同一個距離，只是不必一段一段點。
+// remake 一次算好整條路再照著走。兩者在成本模型一致時等價，
+// 所以 `RouteCost` 必須照原版的三項成本算（Σ邊長 ＋ 4×節點 ＋
+// 0xA6×非己方據點），不能只用格數。
+//
+// remake 讓玩家可以直接點遠處的據點，這一層也負責那個路由——
+// **多段規劃是操作方式的差異，不是規則的差異**：走的還是同一條路。
 package march
 
 import "container/heap"
+
+// nodeCost 是原版 `loc_1491B` 的 `add dx, 4`：**每個節點固定 4**。
+// 它讓「經過的節點少」勝過「格數少一點」——兩種度量會選出不同的路
+// （docs/spec/192）。
+const nodeCost = 4
 
 // Edge 是一條路。
 type Edge struct {
@@ -196,7 +204,12 @@ func (g *Graph) CellRoute(from, to int) [][2]int {
 // CellRouteMarked 與 CellRoute 相同，另外回傳每一格在**原版道路表**裡的
 // 位置（docs/spec/172）。兩個序列等長。
 func (g *Graph) CellRouteMarked(from, to int) ([][2]int, []CellMark) {
-	route := g.Route(from, to)
+	return g.CellRouteMarkedCost(from, to, nil)
+}
+
+// CellRouteMarkedCost 與 CellRouteMarked 相同，但用 RouteCost 的成本模型。
+func (g *Graph) CellRouteMarkedCost(from, to int, penalty func(int) int) ([][2]int, []CellMark) {
+	route := g.RouteCost(from, to, penalty)
 	if len(route) < 2 {
 		return nil, nil
 	}
@@ -233,7 +246,23 @@ func (g *Graph) cellRoute(route []int) ([][2]int, []CellMark) {
 //
 // 走不到回 nil。from == to 回長度 1 的序列——
 // **不是 nil**：「已經到了」與「走不到」是兩件事，呼叫端要分得出來。
-func (g *Graph) Route(from, to int) []int {
+func (g *Graph) Route(from, to int) []int { return g.RouteCost(from, to, nil) }
+
+// RouteCost 是 Route 帶上**每個節點的額外成本**的版本。
+//
+// ⭐ 原版的成本不是格數（`loc_1491B`，docs/spec/192）：
+//
+//	成本 ＝ Σ(邊長) ＋ 4 × 節點數 ＋ penalty(節點)
+//
+// 那個 `4` 是 `add dx, 4`，對**每個展開的節點**加一次；`penalty` 對應
+// `add dx, 0A6h`——非己方的據點加 166，大到足以蓋過任何合理的邊長差。
+//
+// ⚠ **節點成本歸給「進入該節點的邊」**：原版是從**目標**往回搜、在
+// 終止檢查**之前**累加，所以起點（軍團現在的位置）不算、目標算。
+// 反過來搜要把它掛在 `l.to` 上才等價（docs/spec/192 §3）。
+//
+// penalty 是 nil 就只有那個 4。
+func (g *Graph) RouteCost(from, to int, penalty func(city int) int) []int {
 	if g == nil || from < 0 || from >= len(g.adj) || to < 0 || to >= len(g.adj) {
 		return nil
 	}
@@ -258,7 +287,11 @@ func (g *Graph) Route(from, to int) []int {
 			break
 		}
 		for _, l := range g.adj[it.node] {
-			if n := it.cost + l.steps; n < dist[l.to] {
+			w := l.steps + nodeCost
+			if penalty != nil {
+				w += penalty(l.to)
+			}
+			if n := it.cost + w; n < dist[l.to] {
 				dist[l.to] = n
 				prev[l.to] = it.node
 				heap.Push(pq, item{node: l.to, cost: n})

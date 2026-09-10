@@ -2708,7 +2708,9 @@ func TestMarchFollowsRoads(t *testing.T) {
 	if c.Node != to {
 		t.Fatal("走不到目的地")
 	}
-	route := g.Route(from, to)
+	// ⚠ 驗證要用**同一個成本模型**（docs/spec/192）：`March` 走的是
+	// 帶敵城懲罰的路，拿無懲罰的 `Route` 來比會比到另一條路。
+	route := g.RouteCost(from, to, w.routePenalty(w.Corps[lord].Faction))
 	for _, n := range route[1 : len(route)-1] {
 		if !seen[n] {
 			t.Errorf("沒有經過中繼據點 %s", big5Name(w.Cities[n].Name))

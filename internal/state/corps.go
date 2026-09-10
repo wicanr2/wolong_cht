@@ -1902,7 +1902,8 @@ func (w *World) March(corps, node int) error {
 	if w.roads == nil || node == c.Node {
 		return nil
 	}
-	path := w.roads.Route(c.Node, node)
+	pen := w.routePenalty(c.Faction)
+	path := w.roads.RouteCost(c.Node, node, pen)
 	if path == nil {
 		// **走不到要說走不到**，不要默默走直線穿過山河。
 		c.TargetNode = c.Node
@@ -1914,8 +1915,23 @@ func (w *World) March(corps, node int) error {
 	// 有格子序列就用格子序列（沿真正的道路走）；沒有就留空，退回直線。
 	// `marks` 與格子逐格對應，是軍團 `+0x0A`／`+0x0C`／`+0x0E` 的來源
 	// （docs/spec/172）。
-	w.routes[corps], w.routeMarks[corps] = w.roads.CellRouteMarked(c.Node, node)
+	w.routes[corps], w.routeMarks[corps] = w.roads.CellRouteMarkedCost(c.Node, node, pen)
 	return nil
+}
+
+// routePenalty 是 `loc_1491B` 的 `add dx, 0A6h`：路上每經過一個
+// **非己方據點**就加 166（docs/spec/192 §3）。比的是軍團的勢力
+// （原版 `mov dl, [si+1]`），**無主（0x18）也算非己方**。
+//
+// 這個數大到足以蓋過任何合理的邊長差——效果是「有敵城的路只在沒有
+// 別條路時才走」，不是軟性偏好。
+func (w *World) routePenalty(faction int) func(int) int {
+	return func(city int) int {
+		if city < 0 || city >= len(w.Cities) || w.Cities[city].Owner != faction {
+			return 0xA6
+		}
+		return 0
+	}
 }
 
 // SetRoads 掛上道路圖。**規則層不讀檔案**，所以圖由呼叫端
