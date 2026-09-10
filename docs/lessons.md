@@ -17,7 +17,7 @@
 | 什麼時候想起 | 這一條 | 犯過 | 防線 |
 |---|---|---:|---|
 | 反組譯時看到一整段 `db`，而前面有 `mov cs:xxx, reg` | [IDA 把整段解成資料時，先問是不是自我修改碼](#self-modifying-code-reads-as-data) | 2 | remind |
-| 要引用文件裡的數字、或 `workplace/` 底下存下來的產物，當成「改之前是多少」 | [拿舊產物當基線＝拿舊程式碼當基線](#baseline-from-stale-artifact) | 3 | remind |
+| 要引用文件裡的數字、或 `workplace/` 底下存下來的產物，當成「改之前是多少」 | [拿舊產物當基線＝拿舊程式碼當基線](#baseline-from-stale-artifact) | 4 | remind |
 | 要下「這個規則是這樣」的結論，而手上只有一組原版樣本 | [一組樣本分不開兩種讀法，就不算驗證](#one-sample-cannot-separate) | 3 | remind |
 | 同狀態對拍之前，宣稱兩邊起點對齊 | [「兩邊對齊了」要對每一種狀態各問一次](#alignment-per-state) | 1 | remind |
 | 要用一個 remake 有、而原版沒有對應物的欄位當判準 | [remake 自己加的欄位最危險](#remake-only-field) | 3 | remind |
@@ -55,6 +55,7 @@
 
 | 日期 | 犯在哪 | 收據 |
 |---|---|---|
+| 2026-09-11 | 全檢查點跑到一半改了 `internal/state`，而 `tools/parity_ck.sh` 每個檢查點都 `go run` 重新編譯——**同一份 log 裡前 53 個是舊版、後面是新版**。停掉重跑才算數 | `docs/playtest/119` §50.2 |
 | 2026-09-10 | 文件寫 229，HEAD 重跑是 369——差點把一個改善（369 → 332）讀成退步（229 → 332） | `docs/playtest/119` §33.1 |
 | 2026-09-10 | `remake-ck200.DAT` 對原版 0 個 byte，同一條命令列在 HEAD 重跑是 4 個 | 同上 |
 | 2026-08 | `tools/go.sh` 沒把 `GOOS` 傳進 docker，三個平台建出一模一樣的執行檔，每次都 exit 0 | `CLAUDE.md` §7 第 21 條 |
@@ -259,6 +260,8 @@
 **防線**：`remind` — 只有規則。`go vet` 不管這個，測試也照不到——那一個 byte 只有同局面逐欄對拍看得見。
 
 <!-- lessons:end -->
+
+<!-- 缺口：無 -->
 
 <!-- 缺口：無 -->
 

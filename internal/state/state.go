@@ -394,6 +394,17 @@ type World struct {
 	Cities   [numCities]City
 	Generals [numGenerals]General
 
+	// stage1DI 重現原版殘留在 `di` 的**位址**（docs/spec/195 §2）。
+	// `sub_143AF` 的第三個條件 `cmp byte ptr [di+18h], 2` 讀它，而 `di`
+	// 沒有被 `sub_14325` 設過——兩個來源都會留下值：
+	//
+	//	`sub_1440F` 第一行 `mov di, ax`  ⇒ **意圖據點**的記錄（`0x840 + 城×32`）
+	//	`sub_143AF` 的留守分支 `mov di, ax` ⇒ **勢力**的記錄（`勢力×64`）
+	//
+	// 實測 181 次呼叫裡 172 次是據點記錄、4 次是勢力記錄，其餘零星。
+	// −1 ＝ 還沒有人設過（第一次呼叫前的值來自更早的呼叫鏈，讀不出來）。
+	stage1DI int
+
 	// terrain 是大地圖圖塊查詢。**規則層不讀檔案**，所以由呼叫端注入
 	// （與 `SetRoads` 同一個做法）。nil ＝ 沒接上，野戰不擲戰場骰
 	// （降級路徑，docs/spec/196 §3）。
@@ -636,6 +647,7 @@ func loadBlock(b []byte) *World {
 		player = p
 	}
 	w := &World{
+		stage1DI:    -1,
 		Player:      player,
 		Title:       blockTitle(b),
 		Trust:       int(b[trustOffset]),

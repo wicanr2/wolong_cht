@@ -86,20 +86,31 @@ func (w *World) aiStage1(i int, rng rander) {
 		c.Stage = StageNormal
 		return
 	}
-	// ⚠ **remake 差異**：第三個條件的 `di` 在原版沒有被 `sub_14325`
-	// 設過——最可能是上一次 `sub_1440F` 留下的（那一支第一行就是
-	// `mov di, ax`，同樣是意圖據點）。這裡照那個讀法用意圖據點，
-	// 推論等級**假說**（`docs/re/65` §3.2）。
-	if !w.cityThreatened(site) || w.cityOccupancy(site) > aiCrowded {
+	// ⭐⭐ **第三個條件讀的是上一支軍團留在 `di` 的位址**
+	// （`cmp byte ptr [di+18h], 2`，docs/spec/195 §2）：`di` 在
+	// `sub_14325` 裡沒被設過，兩支會留下值——
+	// `sub_1440F` 的第一行（**意圖據點**的記錄）與這一支自己的留守分支
+	// （**勢力**的記錄）。同一個 `+0x18` 在兩張表是不同的東西：
+	// 據點是「那一格的軍團數」、勢力是「武將數」。
+	//
+	// 這是原版的未初始化變數，但**是決定性的**。實測 181 次呼叫裡
+	// 172 次是據點記錄（`DI=0B00` ⇒ 據點 22）、4 次是勢力記錄
+	// （`DI=0100` ⇒ 勢力 4）。
+	if !w.cityThreatened(site) || w.residualField18() > aiCrowded {
 		// 出擊前隨機等 1–8 個 tick，讓同一批軍團不會一起動。
 		c.Timer = rng.Next()&7 + 1
 		c.Stage = 2
 		return
 	}
 	// 留守。順便看要不要補兵——只有站在首都而且未滿編才補。
+	//
+	// ⚠ 原版的 `cmp [si+4], 258h / jnb retn` 排在 `mov di, ax` **之前**，
+	// 所以兵力 ≥ 600 的軍團**不會**更新那個殘留的 `di`（docs/spec/195 §2）。
 	if c.Men >= army60000Points || c.Faction < 0 || c.Faction >= numFactions {
 		return
 	}
+	// 原版 `mov di, ax`（ax ＝ 勢力 × 64）——**勢力表基址是 0**。
+	w.stage1DI = c.Faction * factionSize
 	// ⚠ **「在首都」要腳踩在上面**，不是 `Node` 記著它。行軍中 `Node`
 	// 留著出發那一站——從首都出發的軍團會被讀成「已經到家」
 	// （原版 `sub_14548` 比三個欄位：座標兩格 ＋ `+0x0E`）。
@@ -111,6 +122,14 @@ func (w *World) aiStage1(i int, rng rander) {
 // aiStage2 是 `sub_1440F`：從勢力層的兩格待辦裡挑下一個目標。
 func (w *World) aiStage2(i int) {
 	c := &w.Corps[i]
+	// ⭐ 原版第一行是 `mov di, ax`（ax ＝ 意圖據點的記錄位址）——
+	// 那個 `di` 會留到下一次 `sub_143AF` 被當成 `+0x18` 讀
+	// （docs/spec/195 §2）。
+	//
+	// ⚠ **無條件設**：`sub_14325` 不管 `+0x20` 是不是有效據點都算得出
+	// 位址（`0xFF` ⇒ `0x840 + 255×32`，落在據點表之外），而 `sub_1440F`
+	// 的 `mov di, ax` 排在所有分支之前。加範圍檢查會讓那幾次不更新。
+	w.stage1DI = runtimeCityBase + c.Ordered*citySize
 	node := c.TargetNode
 	if w.citySpecific(node) {
 		c.Stage = 1
@@ -136,6 +155,32 @@ func (w *World) aiStage2(i int) {
 	c.Ordered = dest
 	c.Stage = StageNormal
 	w.leaveCell(node)
+}
+
+// residualField18 回傳原版那個殘留 `di` 指到的記錄 `+0x18`
+// ——據點記錄是**軍團數**、勢力記錄是**武將數**（docs/spec/195 §2）。
+//
+// ⚠ **第一次呼叫之前 `di` 來自更早的呼叫鏈**，靜態讀不出來——
+// remake 用「未知 ⇒ 視為大於門檻」（也就是出擊）。
+func (w *World) residualField18() int {
+	d := w.stage1DI
+	switch {
+	case d < 0:
+		// 沒有人設過：第一次呼叫前的值來自更早的呼叫鏈，讀不出來。
+		// 用「大於門檻」＝出擊。
+		return aiCrowded + 1
+	case d >= runtimeCityBase:
+		// 據點記錄：`+0x18` ＝ 停在那一格的軍團數。
+		if city := (d - runtimeCityBase) / citySize; validCity(city) && city < len(w.Cities) {
+			return w.Cities[city].Occupancy
+		}
+	default:
+		// 勢力記錄：`+0x18` ＝ 武將數。
+		if f := d / factionSize; f >= 0 && f < numFactions {
+			return w.Factions[f].Generals
+		}
+	}
+	return aiCrowded + 1
 }
 
 // aiStage3 是 `sub_14466`：補完兵之後的體檢。

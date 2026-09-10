@@ -62,7 +62,7 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 
 <!-- worklist:begin 由 tools/worklist.py render 產生，不要手改 -->
 
-共 **10 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
+共 **11 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
 
 跑 `tools/py.sh tools/worklist.py verify` 逐條問一次；`check.sh` 會替你跑。
 
@@ -99,6 +99,18 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 **怎樣算做完**：`tools/parity_ck.sh 196/7/16` 六張表全 0。
 
 **verify**：`absent` `/196/7/16/` 在 `docs/playtest/119-rng-pace-comparison.md`
+
+#### `sub_143AF` 第三個條件的殘留 `di` 模型還不完整
+
+`cmp byte ptr [di+18h], 2` 讀的是**上一支軍團留在 `di` 的位址**（docs/spec/195 §2）。兩個來源都追了——`sub_1440F` 的第一行（意圖據點的記錄）與 `sub_143AF` 自己的留守分支（勢力的記錄）——而 5/25 與 5/31 的六張表因此全綠。
+
+⚠ 但拍 9,274 仍對不上：原版那時的 `DI=0100`（勢力 4），而 remake 已經被某一次 Stage 2 覆蓋成據點。這個條件會回頭決定「誰走到留守分支」，所以早期的一點分歧會自我放大。
+
+下一步：攔 `1440F` 與 `143AF` 兩支的入口暫存器，把原版的 `di` 逐次記下來與 remake 並排——**不要再用推的**（第一版只追勢力那一個來源，5/25 從 0 變 735 個 byte）。
+
+**怎樣算做完**：`tools/parity_ck.sh 196/6/1` 的六張表全 0。
+
+**verify**：`present` `/模型還不完整/` 在 `docs/spec/195-ai-stage1-asks-about-the-intent.md`
 
 ### fidelity — 原版有這個機制，remake 還沒建模
 

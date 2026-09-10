@@ -150,6 +150,21 @@
     "pattern": "196/7/16",
     "note": "跑到第 90 天並把結果記進 playtest/119 之後，這個日期就會出現。"
    }
+  },
+  {
+   "id": "stage1-di-residual-model",
+   "layer": "parity",
+   "title": "`sub_143AF` 第三個條件的殘留 `di` 模型還不完整",
+   "body": "`cmp byte ptr [di+18h], 2` 讀的是**上一支軍團留在 `di` 的位址**（docs/spec/195 §2）。兩個來源都追了——`sub_1440F` 的第一行（意圖據點的記錄）與 `sub_143AF` 自己的留守分支（勢力的記錄）——而 5/25 與 5/31 的六張表因此全綠。\n\n⚠ 但拍 9,274 仍對不上：原版那時的 `DI=0100`（勢力 4），而 remake 已經被某一次 Stage 2 覆蓋成據點。這個條件會回頭決定「誰走到留守分支」，所以早期的一點分歧會自我放大。\n\n下一步：攔 `1440F` 與 `143AF` 兩支的入口暫存器，把原版的 `di` 逐次記下來與 remake 並排——**不要再用推的**（第一版只追勢力那一個來源，5/25 從 0 變 735 個 byte）。",
+   "acceptance": "`tools/parity_ck.sh 196/6/1` 的六張表全 0。",
+   "verify": {
+    "kind": "present",
+    "paths": [
+     "docs/spec/195-ai-stage1-asks-about-the-intent.md"
+    ],
+    "pattern": "模型還不完整",
+    "note": "模型補齊之後把 spec/195 那一段改寫，這一條就不成立。"
+   }
   }
  ],
  "resolved": [
