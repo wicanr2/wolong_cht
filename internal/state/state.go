@@ -1237,9 +1237,14 @@ func (w *World) hourly(ev *Event, rng economy.Rand) {
 	// 原版 sub_13E11 的第一個呼叫就是 sub_131AE；它與當小時輪到的
 	// 勢力財政檢查分開，不能把事件延後到月結或直接同步套用。
 	w.dispatchQueuedEvent(ev)
-	if w.diplomacy != nil || w.funding != nil {
-		return
-	}
+	// ⚠ **派發開出玩家視窗時不要提早返回。** 原版的視窗是 modal：
+	// `sub_131AE` 開完視窗、玩家回應之後，`sub_13E11` 的其餘三步
+	// （侵攻財政檢查、預備兵維持費、外交官）**照樣跑完**，
+	// 每時勢力游標因此照樣推進一格。
+	//
+	// 世界暫停由 `tick` 開頭那道閘負責（`w.diplomacy != nil` 就整個
+	// 不前進），這裡再擋一次會讓那一小時的游標憑空少推一格
+	// ——同局面拍 3,291 的外交三選一就是這樣差出來的（docs/spec/182 §5）。
 
 	i := w.hourFaction
 	w.hourFaction = (i + 1) % numFactions

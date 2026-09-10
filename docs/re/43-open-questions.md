@@ -737,7 +737,7 @@
 | [`spec/180-relief-dispatch-want-counts-candidates.md`](../spec/180-relief-dispatch-want-counts-candidates.md) | 原版**沒有比勢力**（`sub_14155` 只看節點欄、活著、位元 2、Stage）， | （未解小節內文） | 靜態 |
 | [`spec/181-ai-recruit-gate-and-monthly-globals.md`](../spec/181-ai-recruit-gate-and-monthly-globals.md) | 勢力 7 的本月支出在月結那一小時差一次累加（原版 46、remake 0）， | （未解小節內文） | 靜態 |
 | [`spec/181-ai-recruit-gate-and-monthly-globals.md`](../spec/181-ai-recruit-gate-and-monthly-globals.md) | 拍 3,400 的每時勢力游標（`+0x2C`）差 1。 | （未解小節內文） | 靜態 |
-| [`spec/182-monthly-settlement-before-hourly.md`](../spec/182-monthly-settlement-before-hourly.md) | 拍 3,400（5/3 2 時）的每時勢力游標差 1：兩邊都有一小時沒推進游標， | （未解小節內文） | 靜態 |
+| [`spec/182-monthly-settlement-before-hourly.md`](../spec/182-monthly-settlement-before-hourly.md) | 拍 3,420 的據點 129 上昇值與防災值各差 1——那是拍 3,415 的調兵分歧 | （未解小節內文） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |
