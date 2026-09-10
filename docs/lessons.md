@@ -10,7 +10,7 @@
 
 <!-- lessons:begin 由 tools/lessons.py render 產生，不要手改 -->
 
-共 **9 條**。權威是 [`lessons.json`](lessons.json)，這一份由 `tools/py.sh tools/lessons.py render` 產生。
+共 **10 條**。權威是 [`lessons.json`](lessons.json)，這一份由 `tools/py.sh tools/lessons.py render` 產生。
 
 ⭐ **按「什麼時候要想起這一條」索引**——教訓要防的動作發生在任務中間，不是開始時；按事件時間排的清單那時查不到。
 
@@ -20,11 +20,12 @@
 | 要引用文件裡的數字、或 `workplace/` 底下存下來的產物，當成「改之前是多少」 | [拿舊產物當基線＝拿舊程式碼當基線](#baseline-from-stale-artifact) | 3 | remind |
 | 要下「這個規則是這樣」的結論，而手上只有一組原版樣本 | [一組樣本分不開兩種讀法，就不算驗證](#one-sample-cannot-separate) | 3 | remind |
 | 同狀態對拍之前，宣稱兩邊起點對齊 | [「兩邊對齊了」要對每一種狀態各問一次](#alignment-per-state) | 1 | remind |
-| 要用一個 remake 有、而原版沒有對應物的欄位當判準 | [remake 自己加的欄位最危險](#remake-only-field) | 1 | remind |
+| 要用一個 remake 有、而原版沒有對應物的欄位當判準 | [remake 自己加的欄位最危險](#remake-only-field) | 2 | remind |
 | 處理原版的顏色屬性 byte | [屬性 byte 的兩個半位元組是「背景︰前景」](#attribute-nibble-order) | 2 | remind |
 | 寫下一條新規則或新教訓的那一刻 | [規則沒有觸發時機，等於不存在](#rule-without-trigger) | 3 | tool |
 | 用 grep 或 pgrep 判斷「某個東西還在不在」 | [grep／pgrep 會匹配到查詢自己](#query-matches-itself) | 2 | test |
 | 對拍時要把某個原版欄位標成「畫面用」「導出值」「remake 走自己那一套」而放進「不必比」那一格 | [宣告一個欄位「remake 不必建模」等於為它關掉所有檢查](#not-modelled-turns-off-checks) | 1 | remind |
+| 寫掃描條件去問「有沒有人做某件事」，而答案是 0 處 | [過濾器自己有洞：清除端的立即值是補數](#filter-has-a-hole) | 1 | tool |
 
 ### IDA 把整段解成資料時，先問是不是自我修改碼
 
@@ -88,6 +89,7 @@
 | 日期 | 犯在哪 | 收據 |
 |---|---|---|
 | 2026-09-10 | `Corps.Node` 被當成「站在哪裡」用了三處：退卻的「站在自家據點上」、退卻起點、據點失守的調頭名單。原版分別用 `+0x0E < 600h`、邊的兩端、**座標** | `CONTEXT.md` §6 |
+| 2026-09-10 | 又五處：四個 `c.Node == capital`（留守補兵、Stage 9 轉補兵、補兵、解散）與 `army.KindOf(c.Node) == army.FieldNode`（軍費與士氣）。原版 `sub_14548` 比三個欄位（座標兩格 ＋ `+0x0E`），`sub_12600` 比 `+0x0E ≥ 800h`。**「從 X 出發、目標也是 X」在退卻與回首都補兵時是常態**，所以這個誤判不是邊角 | `CONTEXT.md` §6、`docs/spec/177` §1.5、`docs/spec/178` |
 
 **防線**：`remind` — `tools/ida.sh` 與 `tools/check.sh` 都會印。
 
@@ -142,5 +144,17 @@
 | 2026-09-10 | 全域 `+0x30` 被記成「`cs:word_10D20`，大地圖捲動原點，畫面用」。它其實是**事件佇列的派發游標**，`docs/re/15`／`docs/re/07` 早就寫清楚了。沒還原它 ⇒ 整個月的宣戰被重播 ⇒ 四個勢力重設侵攻目標、多編四支救援軍團，拍 1,200 的據點表差到 172 座 | `CONTEXT.md` §6、`docs/spec/176` |
 
 **防線**：`remind` — `tools/dosgolem.sh` 與 `tools/ida.sh` 開頭會印。真正的防線要等逐欄比對工具能列出「被免除的欄位＋理由」才做得起來。
+
+### 過濾器自己有洞：清除端的立即值是補數
+
+<a id="filter-has-a-hole"></a>**什麼時候想起**：寫掃描條件去問「有沒有人做某件事」，而答案是 0 處
+
+**要做的**：**把條件對「反面的寫法」也套一次。** 位元的設定端立即值含那個位元，清除端的立即值是**補數**（`and …, 0FEh` 清位元 0，而 `0FEh & 01h == 0`）——只篩「含」的一側，清除端全部落空，而輸出看起來完全正常。工具要**按角色分組**並在某一組是 0 處時明講，不要讓「這一類我沒在找」與「這一類真的沒有」印成同一個樣子。
+
+| 日期 | 犯在哪 | 收據 |
+|---|---|---|
+| 2026-09-10 | `tools/ida_bitflag_users.py` 照「立即值含指定位元」篩，於是 `docs/spec/173` 斷言軍團 `+0x00` 位元 0「沒有清除端，所以是一次性的」。清除端就在 `sub_147BB` 的 `00014869`，語意整個相反 | `CONTEXT.md` §6、`docs/spec/177` §1.3 |
+
+**防線**：`tool` — `tools/ida_bitflag_users.py` 現在按角色分組（設／清／翻轉／測／遮罩保留），空的那一組會印出「一條都沒有——下結論前先確認掃描本身有正對照」。
 
 <!-- lessons:end -->

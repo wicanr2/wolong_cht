@@ -353,24 +353,29 @@ func Garrison(faction, men int) Corps {
 
 // Upkeep 回傳軍團這一 tick 的軍費。
 //
-//	據點或道路上   兵力 ÷ 32 ＋ 1
-//	野外           兵力 × 3/4
+//	停著（據點或野外節點）  兵力 ÷ 32 ＋ 1
+//	走在路段上              兵力 × 3/4
 //
-// **差距 24 倍。** 野外駐留貴到不可能長期維持，這是原版逼軍團回城的手段。
-func Upkeep(men int, inField bool) int {
-	if inField {
+// **差距 24 倍。** 行軍貴到不可能長期維持，這是原版逼軍團回城的手段。
+//
+// ⚠ 判準是原版的 `cmp word ptr [si+0Eh], 800h`——**「有沒有走在兩個
+// 據點之間的那條路段上」**，不是「站在哪一種節點上」。野外節點
+// （`600h`–`7FFh`）走的是便宜那一邊（docs/spec/178）。
+func Upkeep(men int, onLeg bool) int {
+	if onLeg {
 		return men>>1 + men>>2
 	}
 	return men>>5 + 1
 }
 
-// MoraleRegen 是每 tick 的士氣回復量。只有在據點或道路上才回。
+// MoraleRegen 是每 tick 的士氣回復量（原版 `add byte ptr [si+6], 0Ah`）。
 const MoraleRegen = 10
 
 // Recover 讓軍團回一次士氣，上限是勢力的士氣基準（勢力記錄 +0x1D，開局 200）。
-// 在野外不回復。
-func Recover(c *Corps, factionMorale int, inField bool) {
-	if inField {
+//
+// ⚠ **走在路段上不回**（同 `Upkeep` 的判準，`+0x0E ≥ 800h`）。
+func Recover(c *Corps, factionMorale int, onLeg bool) {
+	if onLeg {
 		return
 	}
 	c.Morale += MoraleRegen

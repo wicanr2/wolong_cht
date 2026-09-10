@@ -15,6 +15,16 @@
 #   - 目標是記憶體 → 直接寫旗標
 #   - 目標是暫存器 → 可能是先讀進來改再寫回，附近幾條指令一起印出來判斷
 #
+# ⛔ **清除端的立即值是補數，不含那個位元。** `and byte ptr [si], 0FEh`
+# 清掉位元 0，而 `0FEh & 01h == 0`——照「立即值含指定位元」去篩，
+# 清除端一條都篩不到，而輸出看起來完全正常。2026-09-10：`docs/spec/173`
+# 因此斷言「位元 0 沒有清除端，所以它是一次性的」，實際上
+# `sub_147BB` 的 `loc_1482F`（`00014869`）就在清它，語意整個相反。
+# 所以現在**按角色分組**：`or`／`bts` 含位元 ＝ 設，`and`／`btr` 不含 ＝ 清，
+# `test` 含 ＝ 測，`mov` 兩邊都可能（含 ＝ 設、不含 ＝ 清），
+# `xor` 含 ＝ 翻轉。⚠ `and` **含**該位元是「遮罩時保留它」，
+# 既不是設也不是清——舊版把 `and 3Fh` 對位元 5 印成設定端，是誤導。
+#
 # ⭐ 逐 **segment** 掃，不是逐函式。IDA 靠 xref 建函式，**沒有呼叫端的
 # 常式就不會變成函式**，於是 `idautils.Functions()` 一條都看不到它。
 # 2026-09-03：顯示格旗標 bit 5 的**唯一**設定端（`0x1D98B`）與清除端
@@ -61,6 +71,37 @@ def ctx(head, before=2, after=2):
         out.append(nxt)
         ea = nxt
     return out
+
+
+def classify(mnem, imm, mask, kind):
+    """這條指令對這個位元做了什麼。回 None ＝ 與這個位元無關。
+
+    ⛔ **清除端的立即值不含那個位元**（`and …, 0FEh` 清位元 0）。
+    照「含位元」單一條件去篩，清除端會全部落空而輸出看起來正常。
+
+    `kind` 是目標型別（"記憶體"／"暫存器"）。`and`／`mov` 的「不含」
+    這一側太寬——每一條 `mov al, 4` 都符合——所以它們只收記憶體目標；
+    位元運算（`or`／`and`／`xor`／`test`）的暫存器版仍然要收，
+    因為「讀進來改再寫回」是常見寫法，前後幾條指令會一起印出來判斷。
+    """
+    has = (imm & mask) == mask
+    none = (imm & mask) == 0
+    mem = kind == "記憶體"
+    if mnem in ("or", "bts"):
+        return "設" if has else None
+    if mnem in ("and", "btr"):
+        # `and` 不含 ⇒ 清掉；含 ⇒ 遮罩時保留它，兩者都不是設定端。
+        if none:
+            return "清" if (mem or imm != 0) else None
+        return "遮罩保留"
+    if mnem == "test":
+        return "測" if has else None
+    if mnem == "xor":
+        return "翻轉" if has else None
+    if mnem == "mov" and mem:
+        # 整個旗標寫成常數：含 ＝ 連帶設起、不含 ＝ 連帶清掉。
+        return "設" if has else "清"
+    return None
 
 
 def main():
@@ -116,17 +157,30 @@ def main():
                     ida_nalt.retrieve_input_file_sha256().hex()[:16],
                     "、".join("%02X" % m for m, _ in want)))
         for mask, note in want:
-            sel = [r for r in rows if (r[0] & mask) == mask and r[0] <= 0xFF]
+            groups = {"設": [], "清": [], "測": [], "翻轉": [], "遮罩保留": []}
+            for r in rows:
+                if r[0] > 0xFF:
+                    continue
+                role = classify(r[3], r[0], mask, r[4])
+                if role:
+                    groups[role].append(r)
+            total = sum(len(v) for v in groups.values())
             fh.write("\n==== 遮罩 %02Xh（%s）：%d 處 ====\n"
-                     % (mask, note, len(sel)))
-            for imm, fn, head, mnem, kind, dis in sel:
-                fh.write("  %-12s %08X %s %-4s imm=%02Xh  %s\n"
-                         % (fn, head, kind, mnem, imm, dis.strip()))
-                if kind == "暫存器":
-                    for c in ctx(head):
-                        tag = ">>" if c == head else "  "
-                        fh.write("        %s %08X  %s\n"
-                                 % (tag, c, idc.GetDisasm(c).strip()))
+                     % (mask, note, total))
+            for role in ("設", "清", "翻轉", "測", "遮罩保留"):
+                sel = groups[role]
+                fh.write("  -- %s：%d 處%s\n"
+                         % (role, len(sel),
+                            "" if sel else "　⚠ 一條都沒有——"
+                            "下結論前先確認掃描本身有正對照"))
+                for imm, fn, head, mnem, kind, dis in sel:
+                    fh.write("  %-12s %08X %s %-4s imm=%02Xh  %s\n"
+                             % (fn, head, kind, mnem, imm, dis.strip()))
+                    if kind == "暫存器":
+                        for c in ctx(head):
+                            tag = ">>" if c == head else "  "
+                            fh.write("        %s %08X  %s\n"
+                                     % (tag, c, idc.GetDisasm(c).strip()))
     ida_pro.qexit(0)
 
 

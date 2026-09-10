@@ -93,11 +93,13 @@ type Corps struct {
 	PathPtr  int
 	LinkAddr int
 
-	// OnPath 是記錄 +0x00 的**位元 0 ＝「已經走上路徑」**（docs/spec/173 §1.1）。
+	// OnPath 是記錄 +0x00 的**位元 0 ＝「這一步是從路段中間走出來的」**
+	// （docs/spec/173 §1.1）。
 	//
-	// 兩個設定端都在「拿到／推進路徑指標」那一刻——`sub_126FF`（推進一個
-	// 路徑點）與 `sub_147BB`（選路徑）——而**全庫沒有清除端**，
-	// 所以它是一次性的：設起來就永遠留著。
+	// 設定端是 `sub_126FF`（推進一個路徑點）與 `sub_147BB` 的三個
+	// 「已經在路段上」分支；**清除端在 `sub_147BB` 的 `loc_1482F`**
+	// （`and byte ptr [si], 0FEh`）——軍團站在據點上重新選路時清掉。
+	// 所以它不是一次性的旗標，而是每次移動判定都會重寫。
 	//
 	// `sub_12662` 靠它分「重算完要不要判 leg 盡頭」，`sub_12708` 靠它
 	// 決定要不要跑地形 0CEh–0DDh 那一段。
@@ -730,11 +732,15 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 	// 差在月中：出兵中的勢力資金會即時往下掉，而每小時的侵攻財政閘
 	// 讀的正是資金。
 	if hour == upkeepHour && c.Alive {
-		inField := army.KindOf(c.Node) == army.FieldNode
+		// ⚠ 判準是 `cmp word ptr [si+0Eh], 800h` ＝ **有沒有走在路段上**，
+		// 不是節點的種類（docs/spec/178）。`Corps.Node` 在行軍中留著
+		// 出發那一站，拿它去問「在不在野外」永遠答「在城裡」——
+		// 於是行軍中的軍團收便宜的軍費、而且每小時回 10 點士氣。
+		onLeg := c.LinkAddr != 0
 		f := &w.Factions[c.Faction]
-		f.Funds = economy.ClampFunds(f.Funds - combat.Upkeep(c.Men, inField))
+		f.Funds = economy.ClampFunds(f.Funds - combat.Upkeep(c.Men, onLeg))
 		cc := combat.Corps{Morale: c.Morale}
-		combat.Recover(&cc, f.MoraleBase, inField)
+		combat.Recover(&cc, f.MoraleBase, onLeg)
 		c.Morale = cc.Morale
 	}
 
@@ -766,9 +772,12 @@ func (w *World) step(i int) bool {
 	if cells := w.routes[i]; len(cells) > 0 {
 		next := cells[0]
 		w.routes[i] = cells[1:]
-		// `+0x00` 位元 0：軍團一走上路徑就設，**沒有清除端**
-		// （`sub_126FF`／`sub_147BB`，docs/spec/173 §1.1）。
-		c.OnPath = true
+		// `+0x00` 位元 0 ＝「**這一步是從路段中間走出來的**」。
+		// 原版 `sub_147BB` 在每次要移動時重寫它，看的是**移動前**的
+		// `+0x0E`：站在據點上（< `800h`）重新選路就 `and [si],0FEh`
+		// **清掉**，已經在路段上才走那三個 `or [si],1` 分支設起來
+		// （docs/spec/173 §1.1）。所以出發那一拍是 0，下一拍才變 1。
+		c.OnPath = c.LinkAddr != 0
 		// 同步吃掉一格標記：原版每走一步就 `bx += [si+0Ah]` 再寫回 `+0x0C`。
 		var head = -1
 		if mk := w.routeMarks[i]; len(mk) > 0 {
@@ -780,6 +789,12 @@ func (w *World) step(i int) bool {
 				head = headingTo(next[0], next[1], n[0], n[1])
 			}
 			w.routeMarks[i] = mk[1:]
+		} else if c.LinkAddr != 0 {
+			// 掉頭走的反向段沒有道路表的標記，但原版照樣每走一步就
+			// `bx += [si+0Ah]` 寫回 `+0x0C`——步進是有號的，反向就是
+			// 往回數（docs/spec/177 §1.1）。少了這一步，路徑點位址會
+			// 凍在掉頭那一格，與原版逐格拉開。
+			c.PathPtr += int8Step(c.Direction)
 		}
 		if head < 0 {
 			// 沒有標記（掉頭走的反向段、或圖裡沒有格子序列）→ 退回
@@ -894,6 +909,63 @@ func (w *World) nextCityOnRoute(i int) int {
 	}
 	return w.Corps[i].TargetNode
 }
+
+// replanOnLeg 是 `sub_147BB` 的「`+0x0E` ≥ `800h`」那一半：軍團走在
+// 某條邊上時**只決定往這條邊的哪一端**，不從出發據點重算整條路
+// （docs/spec/177 §1.1）。
+//
+// 原版三個分支：目標就是端點 B ⇒ 步進 `4`（正向）、目標就是端點 A ⇒
+// `0FCh`（反向）、都不是 ⇒ `loc_1491B` 算成本挑一端。remake 用「離目標
+// 較近的那一端」代替第三支——成本函數是自我修改碼，還沒讀出來
+// （docs/spec/177 §5）。
+//
+// 回傳有沒有換方向。換了方向的那一 tick 不再往前走，與 `turnBackAtBorder`
+// 一致：原版也是改完等下一次重算才動。
+func (w *World) replanOnLeg(i int) bool {
+	c := &w.Corps[i]
+	if c.LinkAddr == 0 || w.roads == nil {
+		return false
+	}
+	a, b, ok := w.roads.EdgeByLink(c.LinkAddr)
+	if !ok {
+		return false
+	}
+	// 站在端點上就不算「在邊上」——那是 `< 800h` 那一半的事。
+	for _, n := range []int{a, b} {
+		if n >= 0 && n < len(w.Cities) &&
+			c.X == w.Cities[n].X && c.Y == w.Cities[n].Y {
+			return false
+		}
+	}
+	want := b
+	switch {
+	case c.TargetNode == b:
+	case c.TargetNode == a:
+		want = a
+	default:
+		da, db := w.roads.Distance(a, c.TargetNode), w.roads.Distance(b, c.TargetNode)
+		if da >= 0 && (db < 0 || da < db) {
+			want = a
+		}
+	}
+	ahead := w.nextCityOnRoute(i)
+	if ahead == want {
+		return false // 已經朝著那一端走，什麼都不必動
+	}
+	cells := w.reverseLeg(ahead, want, c.X, c.Y)
+	if len(cells) == 0 {
+		return false // 切不到就不要把路徑清空——那會讓軍團整支凍住
+	}
+	// ⚠ 反向段沒有道路表的標記可對，`+0x0C`／`+0x0E` 留在換向前的值：
+	// 原版這一半也只寫 `+0x0A`，不碰那兩格。
+	w.routes[i], w.routeMarks[i] = cells, nil
+	c.Direction = byteStep(-int8Step(c.Direction))
+	c.Heading = headingTo(c.X, c.Y, cells[0][0], cells[0][1])
+	return true
+}
+
+// int8Step 把 `+0x0A` 的 byte 讀成有號步進（`4` 或 `0FCh` ＝ −4）。
+func int8Step(v int) int { return int(int8(v)) }
 
 // reverseLeg 回「從目前這一格走回 back」的格子序列。
 //

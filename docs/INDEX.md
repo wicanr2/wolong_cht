@@ -355,6 +355,8 @@
 | [`docs/spec/174-relief-dispatch-does-not-move-marching-corps.md`](spec/174-relief-dispatch-does-not-move-marching-corps.md) | 174 — 求援調兵只調站著的軍團，而且只寫意圖 | CONFORMED。 | 2026-09-09 |
 | [`docs/spec/175-encounter-standoff-countdown.md`](spec/175-encounter-standoff-countdown.md) | 175 — 撞上敵人不是立刻開打：+0x03 先倒數 12 次（96 拍） | CONFORMED。 | 2026-09-09 |
 | [`docs/spec/176-event-queue-cursor-not-restored.md`](spec/176-event-queue-cursor-not-restored.md) | 176 — 事件佇列游標要從存檔還原（區塊 +0x30） | CONFORMED。 | 2026-09-10 |
+| [`docs/spec/177-replan-on-leg-not-from-city.md`](spec/177-replan-on-leg-not-from-city.md) | 177 — 走在路段上重新選路只在這條邊上決定方向 | READY。 | 2026-09-10 |
+| [`docs/spec/178-upkeep-and-morale-gate-is-on-leg.md`](spec/178-upkeep-and-morale-gate-is-on-leg.md) | 178 — 軍費與士氣的判準是「有沒有走在路段上」 | CONFORMED。 | 2026-09-10 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |

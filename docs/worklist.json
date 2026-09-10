@@ -9,22 +9,6 @@
   },
   "items": [
     {
-      "id": "tick19-ai-sortie-extra-draw",
-      "layer": "parity",
-      "title": "同局面對拍的第一個分歧：拍 19 多取一個出擊計時",
-      "body": "對齊法訂正之後（`-city-cursor 171`，不是 `-skip 27`，`docs/playtest/119` §34），第一個分歧從拍 307 提前到**拍 19**：那一拍 remake 多取一個 `aimarch.go:87`——`sub_143AF` 的「出擊前隨機等 1–8 拍」。\\n\\n那一支的四道閘與 `sub_143AF` 逐條對得上，裝探針照抄 `[di+18h]` 那個未初始化讀取也**一個字都沒變**，所以觸發者是條件的前半（`cityThreatened`）或更前面的 Stage 判斷。\\n\\n⚠ 亂數流一岔開，**所有吃亂數的欄位就跟著漂**——拍 200 的據點表還有 141 座對不上，形狀是對稱雙向的小幅偏移（上昇值 ±5），那是亂數岔開的指紋不是規則錯。",
-      "acceptance": "第一個分歧往後推；拍 200 的據點表差異大幅下降（現在 220 byte／141 座）。",
-      "verify": {
-        "kind": "present",
-        "paths": [
-          "docs/playtest/119-rng-pace-comparison.md"
-        ],
-        "pattern": "要往下追得取原版拍 19 附近的檢查點",
-        "note": "綁 §34.4 那句自承。追出來之後那句會被改掉。"
-      },
-      "blocked_by": "要往下追得取原版拍 19 附近的檢查點（`corps` ＋ 據點表），現在只有拍 200／700／1,200／1,600／1,900。"
-    },
-    {
       "id": "m7-side-by-side-screens",
       "layer": "parity",
       "title": "M7 只差兩版並排的畫面對照",
@@ -153,18 +137,33 @@
       }
     },
     {
-      "id": "corps50-onpath-bit",
+      "id": "corps-flag-bit1-deferred-replan",
       "layer": "parity",
-      "title": "拍 1,900 軍團 50 的 `+0x00` 位元 0 多設了",
-      "body": "五個檢查點裡唯一剩下的 byte：軍團 50 的旗標原版 `C4`、remake `C5`，差的是**位元 0（已經走上路徑）**。其他 63 個 byte 全部相同——同一條路徑指標（`+0x0C` ＝ `57FCh`）、同一個連結記錄、同一組座標。\n\n它在拍 1,600 時還停在據點 129（兩邊都是 `C4`），1,600–1,900 之間走上路徑。位元 0 **沒有清除端**（`docs/spec/173` §1.1），所以原版走了一格卻沒設它 ⇒ 那一步不是經過 `sub_126FF`／`sub_147BB` 這兩個已知設定端進來的，還有第三條路徑。\n\n這個位元是 `sub_12708` 第二個入口的閘（`docs/spec/175` §3.2），會影響對峙判定，不是純顯示欄位。",
-      "acceptance": "`tools/parity_ck.sh` 五個檢查點全部 0 個 byte。",
+      "title": "軍團 `+0x00` 位元 1（下一步要重算）沒建模，換向太早",
+      "body": "原版改行軍目標時只設位元 1（`or byte ptr [si], 2`），**方向要等下一次「輪到移動」`sub_147BB` 才換**；`sub_12662` 在 `0x126A5` 清掉它。remake 在改目標的當下就呼叫 `replanOnLeg` 換向，早了一個移動週期。\n\n同局面拍 2,120 的軍團 19：原版旗標 `C7`（位元 1 還設著）、步進仍是 `FC`；remake 旗標 `C5`、步進已經是 `04`。\n\n要建模就得把位元 1 加進 `Corps` 與 `modelledCorpsBits`，並把 `replanOnLeg` 移到「輪到移動」那一刻。",
+      "acceptance": "`tools/parity_ck.sh 2120 2140 2200` 的軍團表回到 0 個 byte。",
       "verify": {
-        "kind": "present",
+        "kind": "absent",
         "paths": [
-          "docs/playtest/119-rng-pace-comparison.md"
+          "internal/state/corps.go"
         ],
-        "pattern": "還有第三條路徑|不是.*經過 `sub_126FF`／`sub_147BB`",
-        "note": "綁 §37.5 那句自承。找到第三個設定端（或原版那一步的真正路徑）之後那句會被改掉。"
+        "pattern": "modelledCorpsBits = 0xC0 \\| 0x04 \\| 0x01 \\| standoffBit \\| 0x02|Replan\\s+bool",
+        "note": "建模之後位元 1 會進 modelledCorpsBits、Corps 會多一個 Replan 欄位。⚠ pattern 綁的是**還沒出現**的識別字，所以立刻對現在的樹 grep 過一次：兩者都不中（rulebook/61）。"
+      }
+    },
+    {
+      "id": "corps-flag-bit4-display-only",
+      "layer": "parity",
+      "title": "軍團 `+0x00` 位元 4 是繪圖狀態，規則層永遠不設",
+      "body": "`sub_12B3C` 開頭 `or byte ptr [si], 10h`，同一支接著算螢幕座標、用 `[si+3]` 的低 2 位當動畫幀，然後 `loc_1D51F`（blit）與 `sub_15D19`。**它是畫軍團的常式**，所以原版跑起來一定會設它，而 remake 的規則層不畫圖就永遠是 0。\n\n拍 2,100 的檢查點只差這一個 byte（軍團 19，`F5` 對 `E5`）。\n\n⚠ 這一條不要用「remake 不建模」草草帶過——那正是教訓 `not-modelled-turns-off-checks` 要防的。要嘛在 `corps_diff.py` 列成**具名的已知差異**（帶出處），要嘛在寫回時依「這一格在不在畫面上」補。清除端 `sub_12BA8` 也還沒讀。",
+      "acceptance": "位元 4 有明確處置：`corps_diff.py` 把它列成帶出處的已知差異，或 remake 依原版時機設它。",
+      "verify": {
+        "kind": "absent",
+        "paths": [
+          "tools/corps_diff.py"
+        ],
+        "pattern": "位元 4|0x10.*繪圖|sub_12B3C",
+        "note": "處置之後 corps_diff.py 會提到它。現在對這棵樹 grep 三個都不中。"
       }
     }
   ],
@@ -182,6 +181,20 @@
       "date": "2026-09-10",
       "how": "不是規則差異，是**取樣點沒對齊**。原版側的檢查點用 `steps:拍 × 24509` 停下，誤差累積讓 `orig-ck700.DAT` 實際落在第 702 拍；remake 跑 700 拍就少走兩座據點的整備。用游標反推拍數（200／702／1,203／1,604／1,905）重生之後，四個檢查點逐 byte 完全一致，第五個只剩軍團 50 的一個位元。",
       "caught_by": "差異座數與超出拍數一一對應（+2 → 2 座、+3 → 3 座、+5 → 5 座），而且全部緊貼游標。⚠ `docs/playtest/119` §36.5 早就寫了「對齊要看游標不能看拍數」並列出正確拍數，下一輪還是照檔名跑了——所以改成工具 `tools/parity_ck.sh`，它自己讀原版檢查點的 `+0x2E` 反推，不接受手打拍數。"
+    },
+    {
+      "id": "tick19-ai-sortie-extra-draw",
+      "title": "同局面對拍的第一個分歧：拍 19 多取一個出擊計時",
+      "date": "2026-09-10",
+      "how": "不是 `sub_143AF` 的四道閘寫錯（逐條對過、探針也照抄了那個未初始化讀取）。觸發者在更前面：事件佇列游標沒還原（docs/spec/176），整個月的宣戰被重播一次，勢力的侵攻目標被填上之後邊境據點就變成「受威脅」，出擊判定跟著多跑。接上游標之後拍 19 的分歧消失。",
+      "caught_by": "acceptance 自己達成：第一個分歧從拍 19 退到 2,455，拍 200 的據點表從 220 B／141 座回到 0。"
+    },
+    {
+      "id": "corps50-onpath-bit",
+      "title": "拍 1,900 軍團 50 的 `+0x00` 位元 0 多設了",
+      "date": "2026-09-10",
+      "how": "位元 0 不是一次性旗標——`sub_147BB` 的 `00014869`（`and byte ptr [si], 0FEh`）就是清除端。語意是「這一步是從路段中間走出來的」：移動前 `+0x0E < 800h` 清、`≥ 800h` 設。remake 的 `step` 改成 `c.OnPath = c.LinkAddr != 0`，五個檢查點回到 0 個 byte。規格 docs/spec/173（訂正）與 177。",
+      "caught_by": "拍 1,900 只差這一個 byte，所以非查不可。⚠ 舊斷言「沒有清除端」是掃描工具的洞：`tools/ida_bitflag_users.py` 照「立即值含指定位元」篩，而清除的立即值是補數（教訓 `filter-has-a-hole`）。"
     }
   ]
 }

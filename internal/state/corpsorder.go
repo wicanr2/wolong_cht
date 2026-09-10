@@ -140,7 +140,8 @@ func (w *World) arriveCorps(i int, rng rander) {
 	if c.Men >= army60000Points {
 		return
 	}
-	if c.Node == w.Factions[c.Faction].Capital {
+	// ⚠ **「在首都」要腳踩在上面**（原版 `sub_14548` 比座標兩格 ＋ `+0x0E`）。
+	if w.onCity(i) && c.Node == w.Factions[c.Faction].Capital {
 		c.Stage = StageResupply
 	}
 }
@@ -160,12 +161,14 @@ func (w *World) arriveDisband(i int) {
 	if c.Ordered != capital {
 		// 原版還會設 `+0x00` 位元 1 ＝「下一步要重算」，由 `sub_12662`
 		// 清掉並呼叫 `sub_147BB` 重查道路表（`docs/re/64` §6）。
-		// remake 的 `March` 一次算完整條路徑，重下一次就等價。
-		_ = w.March(i, capital)
-		w.routIfBlocked(i)
-		return
+		// ⚠ 那支的重算**分兩半**：走在邊上時只決定往哪一端，站在據點上
+		// 才算整條路（docs/spec/177）。
+		c.Ordered = capital
 	}
-	if c.Node != capital {
+	// ⭐ `sub_14548` 是**無條件**呼叫的（`loc_144ED` 落下去就是），
+	// 不管意圖有沒有變——三個目標欄位每一輪都會被重寫。
+	if !w.retarget(i, capital) {
+		w.routIfBlocked(i)
 		return // 還在路上
 	}
 	w.disbandCorps(i)
@@ -327,6 +330,11 @@ func (w *World) tickRout(i int) bool {
 // 誤判成抵達（docs/spec/170 §1）。
 //
 // 寫目標的動作**無條件執行**，判斷只影響回傳值。
+//
+// ⚠ 它寫的是 `+0x14`／`+0x16`／`+0x18` 三格，**不碰 `+0x20`（意圖）**——
+// 那是呼叫端自己寫的（`sub_144A9` 的 `mov [si+20h], bh`）。
+// 路徑重算走 `retargetAndReplan`：軍團在邊上時只換方向，不從據點重排
+// （docs/spec/177 §1.1）。
 func (w *World) retarget(i, node int) bool {
 	if i < 0 || i >= numCorps {
 		return false
@@ -336,7 +344,9 @@ func (w *World) retarget(i, node int) bool {
 	dst := &w.Cities[node]
 	here := c.Node == node && c.X == dst.X && c.Y == dst.Y
 	if c.TargetNode != node || c.TargetX != dst.X || c.TargetY != dst.Y {
-		_ = w.March(i, node)
+		ordered := c.Ordered
+		w.retargetAndReplan(i, node, true)
+		c.Ordered = ordered
 	}
 	return here
 }

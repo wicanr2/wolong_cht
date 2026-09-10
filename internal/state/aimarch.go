@@ -92,7 +92,10 @@ func (w *World) aiStage1(i int, rng rander) {
 	if c.Men >= army60000Points || c.Faction < 0 || c.Faction >= numFactions {
 		return
 	}
-	if c.Node == w.Factions[c.Faction].Capital {
+	// ⚠ **「在首都」要腳踩在上面**，不是 `Node` 記著它。行軍中 `Node`
+	// 留著出發那一站——從首都出發的軍團會被讀成「已經到家」
+	// （原版 `sub_14548` 比三個欄位：座標兩格 ＋ `+0x0E`）。
+	if w.onCity(i) && c.Node == w.Factions[c.Faction].Capital {
 		c.Stage = StageResupply
 	}
 }
@@ -163,12 +166,47 @@ func (w *World) headHomeResupply(i int) {
 	}
 	capital := w.clampCity(w.Factions[c.Faction].Capital)
 	if c.Ordered != capital {
-		_ = w.March(i, capital)
-		w.routIfBlocked(i)
+		// 原版這裡還設位元 1 ＝「下一步要重算」（remake 未建模）。
+		c.Ordered = capital
+	}
+	// ⭐ `sub_14548` 是**無條件**呼叫的（`loc_144C0` 落下去就是），
+	// 不管意圖有沒有變——三個目標欄位每一輪都會被重寫，
+	// 而它回 CF=1（座標兩格 ＋ `+0x0E` 都相同）才轉 Stage 9。
+	if w.retarget(i, capital) {
+		c.Stage = StageResupply
 		return
 	}
-	if c.Node == capital {
-		c.Stage = StageResupply
+	w.routIfBlocked(i)
+}
+
+// retargetAndReplan 是 AI 改行軍目標那一刻該做的事（docs/spec/177）。
+//
+// ⚠ **與玩家下指令的 `March` 是兩回事**，兩點都要照抄：
+//
+//   - `coords` ＝ 要不要一起寫 `+0x16`／`+0x18`。`sub_144A9`／`sub_144D6`
+//     經 `sub_14548` **會**寫（三個欄位一起），`sub_1474A`（戰後退卻）
+//     **只寫 `+0x14`／`+0x20`**，座標留著上一次寫進去的值（§1.4）。
+//   - 軍團走在邊上時，原版設位元 1、下一拍 `sub_147BB` 只決定「往這條邊的
+//     哪一端」（`replanOnLeg`），不從出發據點重排整條路線。照 `March` 走
+//     會排出一條從據點起算的路線，與軍團現在的座標對不上，`step` 就
+//     走不動——**軍團原地凍住**。
+func (w *World) retargetAndReplan(i, node int, coords bool) {
+	if i < 0 || i >= numCorps || !validCity(node) {
+		return
+	}
+	c := &w.Corps[i]
+	if c.LinkAddr != 0 {
+		c.TargetNode, c.Ordered = node, node
+		if coords {
+			c.TargetX, c.TargetY = w.Cities[node].X, w.Cities[node].Y
+		}
+		w.replanOnLeg(i)
+		return
+	}
+	x, y := c.TargetX, c.TargetY
+	_ = w.March(i, node)
+	if !coords {
+		c.TargetX, c.TargetY = x, y
 	}
 }
 
@@ -287,7 +325,9 @@ func (w *World) retreatOrPerish(i int, won bool) bool {
 	if next < 0 {
 		return true
 	}
-	_ = w.March(i, next)
+	// ⚠ `sub_1474A` 只寫 `+0x14`／`+0x20` 與位元 1，**不碰 `+0x16`／`+0x18`**
+	// （docs/spec/177 §1.4）——它不經過 `sub_14548`。
+	w.retargetAndReplan(i, next, false)
 	// 兵力 ≤ 300 或退到首都就轉回首都補兵，否則先等士氣。
 	if c.Men <= aiHomeThreshold || next == w.Factions[c.Faction].Capital {
 		c.Stage = StageHomeResupply
