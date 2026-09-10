@@ -62,6 +62,17 @@ func main() {
 	save := flag.String("save", "workplace/dosgolem/root-liubei/SAVE.DAT", "存檔")
 	slot := flag.Int("slot", 0, "存檔槽 0–3")
 	ticks := flag.Int("ticks", 324, "要記錄幾個子刻")
+	// ⭐ **跑到某個遊戲時刻**，而不是跑幾拍。
+	//
+	// 原版側的 `steps:` 與拍數只是估計，而**召見那種「停下來等玩家」
+	// 會把兩者的對應整個打亂**——回應期間指令照跑而時鐘不動，之後
+	// 又繼續跑，`拍 × 24509` 因此低估或高估好幾百拍，
+	// `parity_ck.sh` 的據點游標反推（192 循環、±96）就會鎖錯相位。
+	//
+	// 遊戲時鐘是兩邊唯一無歧義的共同錨點（CLAUDE.md §4.02）。
+	// 格式 `年/月/日/時/子刻`，例：`-until 196/5/18/10/1`。
+	until := flag.String("until", "",
+		"跑到這個遊戲時刻為止（`年/月/日/時/子刻`），比 -ticks 優先")
 	skip := flag.Int("skip", 0, "先推幾個子刻不記錄——用來對齊原版的起點")
 	seed := flag.Int("seed", 1, "亂數種子（沒給 -rng-state 時用）")
 	cursor := flag.Int("city-cursor", -1, "載入後把據點巡迴游標設成這個值（原版 `word_10D1E` ÷ 32）")
@@ -75,9 +86,13 @@ func main() {
 	withTactical := flag.Bool("tactical", true, "接戰術層——玩家捲進去而且沒委任時才用得到")
 	player := flag.Int("player", -1, "覆寫玩家勢力（-1 ＝ 用存檔裡的）")
 	events := flag.Bool("events", false, "印每一次事件推送，對應原版的 eventwatch（docs/spec/139）")
-	answer := flag.String("answer", "reject",
-		"自動回應「等玩家」的視窗：reject（一律拒絕，對應「什麼都不做」的實驗）／"+
-			"accept（一律接受）／stop（停下來，之後的比較沒有意義）")
+	// ⭐ **預設一律接受**（使用者裁定 2026-09-10：「都固定 yes」）。
+	// 原版側的對拍腳本按的是三選一的第 1 列——`press` 直接選反白那一列，
+	// 軍師回「為今後的外交設想，或許無條件比較好吧。」
+	// 兩邊要走同一條，預設就得一致（docs/playtest/119 §46.21）。
+	answer := flag.String("answer", "accept",
+		"自動回應「等玩家」的視窗：accept（一律接受，**預設**，對應原版側按第 1 列）／"+
+			"reject（一律拒絕）／stop（停下來，之後的比較沒有意義）")
 	saveOut := flag.String("save-out", "", "跑完之後把世界寫成一份 SAVE.DAT（拿去跟原版同一拍的記憶體逐 byte 比）")
 	corpsWatch := flag.String("corps", "",
 		"逐拍印這幾支軍團（逗號分隔）——只在**任何一個追蹤欄位變了**的那一拍印")
@@ -207,6 +222,30 @@ func main() {
 	pendingDiplo, pendingFunding, pendingBattle := 0, 0, 0
 	answeredDiplo, answeredFunding := 0, 0
 	ticksRun := *ticks
+	// `-until` 的目標時刻。`ok` 為假表示沒給，照 `-ticks` 跑。
+	untilY, untilM, untilD, untilH, untilS, hasUntil := 0, 0, 0, 0, 0, false
+	if *until != "" {
+		parts := strings.Split(*until, "/")
+		if len(parts) != 5 {
+			fmt.Fprintln(os.Stderr, "-until 要五段：年/月/日/時/子刻")
+			os.Exit(2)
+		}
+		v := make([]int, 5)
+		for i, p := range parts {
+			n, err := strconv.Atoi(p)
+			if err != nil {
+				fmt.Fprintln(os.Stderr, "-until：", err)
+				os.Exit(2)
+			}
+			v[i] = n
+		}
+		untilY, untilM, untilD, untilH, untilS = v[0], v[1], v[2], v[3], v[4]
+		hasUntil = true
+		// 上限給大一點，讓 `-ticks` 只當保險絲。
+		if *ticks < 100000 {
+			*ticks = 100000
+		}
+	}
 	perTickWhere := make([][]string, 0, *ticks)
 	perTick := make([]int, 0, *ticks)
 	// ⭐ **每一拍處理的是哪一個據點**：原版側從 `sub_14194` 的 SI 拿得到
@@ -216,6 +255,16 @@ func main() {
 	total := map[string]int{}
 	prev := 0
 	for i := 0; i < *ticks; i++ {
+		if hasUntil {
+			c := w.Clock
+			if c.Year == untilY && c.Month == untilM && c.Day == untilD &&
+				c.Hour == untilH && c.Subtick == untilS {
+				ticksRun = i
+				fmt.Printf("跑到 %d年%d月%d日 %d時 子刻 %d，共 %d 拍\n",
+					c.Year, c.Month, c.Day, c.Hour, c.Subtick, i)
+				break
+			}
+		}
 		perTickCity = append(perTickCity, w.TakeSnapshot().CityCursor)
 		w.Tick(tr)
 		n := tr.seq - prev

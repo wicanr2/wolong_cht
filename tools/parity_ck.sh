@@ -29,6 +29,13 @@ cursor() {  # 讀一份區塊的據點游標
     od -An -tu1 -j "$CURSOR_OFF" -N2 "$1" | awk '{print ($1 + $2 * 256) / 32}'
 }
 
+# ⭐ **時鐘是兩邊唯一無歧義的錨點**（CLAUDE.md §4.02）。
+# 區塊 `+0x00` 日、`+0x02` 子刻、`+0x03` 時、`+0x04` 月、`+0x06` 年。
+clockof() {
+    od -An -tu1 -j 0 -N8 "$1" |
+        awk '{printf "%d/%d/%d/%d/%d\n", $7 + $8 * 256, $5, $1, $4, $3}'
+}
+
 start=$(cursor "$SNAP")
 echo "快照起始據點游標：$start"
 fail=0
@@ -36,11 +43,18 @@ for t in "${ticks[@]}"; do
     orig="$CK/orig-ck$t.DAT"
     [[ -f "$orig" ]] || { echo "跳過拍 $t：找不到 $orig"; continue; }
     cur=$(cursor "$orig")
-    n=$(( (cur - start + PERIOD * 100) % PERIOD ))
-    while (( n < t - PERIOD / 2 )); do n=$(( n + PERIOD )); done
-
+    # ⛔ **不要用標稱拍數反推。** 據點游標 192 循環，靠標稱值鎖相位只在
+    #    ±96 內有效——而「停下來等玩家」會讓 `拍 × 24509` 差好幾百拍
+    #    （召見的回應期間指令照跑而時鐘不動，之後又繼續跑）。
+    #    時鐘沒有這個問題：讀原版檢查點的時刻，讓 remake 跑到同一刻。
+    clk=$(clockof "$orig")
     tools/go.sh run tools/rng_pace.go -save "$SNAP" -rng-state "$RNG" \
-        -ticks "$n" -save-out "$CK/remake-$t.DAT" >/dev/null
+        -until "$clk" -save-out "$CK/remake-$t.DAT" > "$CK/remake-$t.log" 2>&1
+    n=$(sed -n 's/.*共 \([0-9]*\) 拍/\1/p' "$CK/remake-$t.log" | tail -1)
+    [[ -n "$n" ]] || { echo "拍 $t：remake 跑不到 $clk"; fail=1; continue; }
+    # 交叉檢查：跑到同一時刻時據點游標也該相同。
+    rc=$(cursor "$CK/remake-$t.DAT")
+    (( rc == cur )) || echo "  ⚠ 游標對不上：原版 $cur、remake $rc"
     c=$(tools/py.sh tools/city_diff.py "$orig" "$CK/remake-$t.DAT" | grep 合計)
     p=$(tools/py.sh tools/corps_diff.py "$orig" "$CK/remake-$t.DAT" | grep 合計)
     f=$(tools/py.sh tools/faction_diff.py "$orig" "$CK/remake-$t.DAT" | grep 合計)
