@@ -28,6 +28,12 @@
 ⚠ **同一次呼叫可能被攔兩次。** 實測 `#30740174` 與 `#30740182` 是同一個
 `sub_14194`（SI 相同、相差 8 道指令）。不去重就會多出一拍取數 0 的
 幽靈子刻——而那長得就像「原版這一拍什麼都沒做」。
+
+⚠ **`sub_1ECE0` 也會被攔兩次**，而且更難認：多出來的那一筆長得像
+「原版在這一拍多取一個亂數」，也就是**一種規則差異的形狀**。判準是
+指令距離——`sub_1ECE0` 本體 12 條指令，兩次真呼叫之間不可能更短
+（實測 17,214 次裡有 2 次相差 8 條、暫存器完全相同）。
+去掉幾筆會印在報表上，不會靜靜吃掉。
 """
 
 import re
@@ -37,6 +43,9 @@ import sys
 PRE = ("14060", "14171")
 # 兩次錨點相差不到這麼多道指令就當成同一次呼叫。一拍是兩萬多道，差距懸殊。
 DEDUPE_STEPS = 1000
+# `sub_1ECE0` 本體 12 條指令（`0001ECE0`–`0001ECFB`），所以兩次**真**呼叫
+# 之間至少差這麼多。比這更近而且來源相同的，是同一次被攔了兩下。
+RNG_MIN_STEPS = 12
 
 LINE = re.compile(r"#(\d+) 呼叫 (\w+) .*SI=([0-9A-F]{4}).*近=([0-9A-F]+)")
 # dosgolem 的 `clock` 步驟會印這一行。它是**對齊點的一手證據**：
@@ -51,6 +60,7 @@ def parse(text, anchor="14194"):
     `(前面有幾個錨點, (年,月,日,時))`。
     """
     ticks, pend, clocks = [], [], []
+    last_rng, dropped = None, 0
     for line in text.splitlines():
         c = CLOCK.search(line)
         if c:
@@ -66,10 +76,17 @@ def parse(text, anchor="14194"):
             ticks.append({"city": si // 32, "step": step, "rng": list(pend)})
             pend = []
         elif label == "1ECE0":
+            if last_rng and last_rng[0] == near and step - last_rng[1] < RNG_MIN_STEPS:
+                dropped += 1  # 同一次呼叫被攔兩下
+                continue
+            last_rng = (near, step)
             if near in PRE:
                 pend.append(near)
             elif ticks:
                 ticks[-1]["rng"].append(near)
+    if dropped:
+        print(f"⚠ 去掉 {dropped} 筆重複攔截的 `sub_1ECE0`"
+              f"（來源相同而且相差不到 {RNG_MIN_STEPS} 道指令）")
     return ticks, clocks
 
 
@@ -157,6 +174,24 @@ def selftest():
     check("負對照：同一個時刻出現兩次就不敢認",
           align_by_clock(clocks + [(300, (196, 4, 16, 16))], (196, 4, 16, 16, 3))[0] is None)
     check("負對照：沒有 clock 標記時說沒有", align_by_clock([], (196, 4, 16, 16, 3))[0] is None)
+
+    # `sub_1ECE0` 的重複攔截：來源相同而且相差不到 12 道指令的才去掉。
+    dup = "\n".join([
+        "  #100 呼叫 14194 AX=0 BX=0 CX=0 DX=0 SI=1200 DI=0 來自 近=13F5D 遠=0",
+        "  #110 呼叫 1ECE0 AX=0 BX=0 CX=0 DX=0 SI=1200 DI=0 來自 近=14216 遠=0",
+        "  #118 呼叫 1ECE0 AX=0 BX=0 CX=0 DX=0 SI=1200 DI=0 來自 近=14216 遠=0",
+    ])
+    t, _ = parse(dup)
+    check("重複攔截的亂數被去掉", len(t) == 1 and t[0]["rng"] == ["14216"])
+    # 反對照 ①：距離夠遠就是兩次真的取數。
+    far = dup.replace("#118", "#130")
+    t, _ = parse(far)
+    check("負對照：距離夠遠的兩次都算數", t[0]["rng"] == ["14216", "14216"])
+    # 反對照 ②：來源不同就不是同一次呼叫，再近也都算數。
+    other = dup.replace("#118 呼叫 1ECE0 AX=0 BX=0 CX=0 DX=0 SI=1200 DI=0 來自 近=14216",
+                        "#118 呼叫 1ECE0 AX=0 BX=0 CX=0 DX=0 SI=1200 DI=0 來自 近=141F1")
+    t, _ = parse(other)
+    check("負對照：來源不同就都算數", t[0]["rng"] == ["14216", "141F1"])
     return 1 if fails else 0
 
 

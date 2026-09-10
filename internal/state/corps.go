@@ -875,8 +875,16 @@ func (w *World) step(i int) bool {
 			c.PathPtr += int8Step(c.Direction)
 		}
 		if head < 0 {
-			// 沒有標記（掉頭走的反向段、或圖裡沒有格子序列）→ 退回
-			// 「這一步走的方向」。值域相同，只是晚一步。
+			// 沒有標記（掉頭走的反向段、或圖裡沒有格子序列）。
+			// ⭐ 剩下的格子序列就是路徑點序列，所以**下一個路徑點**照樣
+			// 問得到——原版 `sub_12804` 看的是它，不是剛走過的那一格
+			// （docs/spec/173 §1.2）。
+			if rest := w.routes[i]; len(rest) > 0 {
+				head = headingTo(next[0], next[1], rest[0][0], rest[0][1])
+			}
+		}
+		if head < 0 {
+			// 真的沒有下一格（最後一步）→ 退回「這一步走的方向」。
 			head = headingTo(c.X, c.Y, next[0], next[1])
 		}
 		c.Heading = head
