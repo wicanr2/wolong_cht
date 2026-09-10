@@ -791,14 +791,12 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 				// `ev.Moved` 維持 false，對峙的 96 拍在事件層是靜的。
 			} else if w.step(i) {
 				ev.Moved = true
+				// ⚠ **走完最後一格的那一拍不分派。** 原版 `sub_12708`
+				// 寫完座標就落到 `loc_126F5`（佔用圖 +1）然後 `retn`；
+				// `sub_14325` 只在**下一次輪到移動**時跑——那時
+				// `cmp bx, [si+14h]` 才相等（docs/spec/179 §2.1）。
+				// 少了這一拍的間隔，Stage 機會整條早一個移動週期。
 				ev.Arrived = w.atTargetNode(i)
-				if ev.Arrived {
-					w.arriveCorps(i, rng)
-					if !c.Alive {
-						ev.Disbanded, ev.Routed = !c.Routing, c.Routing
-						return &ev
-					}
-				}
 			}
 		}
 	}

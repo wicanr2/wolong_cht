@@ -434,7 +434,13 @@ func (w *World) formAICorpsTo(faction, dest int) *StrategyEvent {
 		destination = w.nearestFactionCity(home, f.InvasionTarget)
 	}
 	if destination >= 0 {
-		_ = w.March(leader, destination)
+		// ⚠ 原版 `sub_16E8F` **只設意圖**（`+0x20`）。行軍目標 `+0x14`
+		// 要等下一次「輪到移動」由 `sub_14548` 落實（`aiStage0`），
+		// 所以**編成到踏出第一步要跨兩個更新週期**（docs/spec/170）。
+		// 直接 `March` 會少掉一個週期——新編成的軍團當場就上路，
+		// 而原版那一拍走的是「到站分派」（`+0x0E == +0x14`，兩者都是
+		// 腳下的首都）。
+		w.Corps[leader].Ordered = destination
 	}
 	return &StrategyEvent{
 		Faction: faction, Target: f.InvasionTarget,

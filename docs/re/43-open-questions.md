@@ -733,7 +733,7 @@
 | [`spec/177-replan-on-leg-not-from-city.md`](../spec/177-replan-on-leg-not-from-city.md) | 移動計時器 `+0x0B` 的相位**：拍 2,120 之後軍團 19 與 72 的計時差 1–2。 | （未解小節內文） | 靜態 |
 | [`spec/177-replan-on-leg-not-from-city.md`](../spec/177-replan-on-leg-not-from-city.md) | loc_1491B` 在「已經在邊上」那一支回傳的 `dx` 與 `bp` 比較的語意 | （未解小節內文） | 靜態 |
 | [`spec/178-upkeep-and-morale-gate-is-on-leg.md`](../spec/178-upkeep-and-morale-gate-is-on-leg.md) | byte_10CF3`（「一時」的判準）remake 用 `hour == upkeepHour` 代替， | （未解小節內文） | 靜態 |
-| [`spec/179-recalc-on-battle-and-arrival-test.md`](../spec/179-recalc-on-battle-and-arrival-test.md) | 拍 2,454 起據點 29 的佔用數差 2、軍團 20 的目標與意圖不同， | （未解小節內文） | 靜態 |
+| [`spec/179-recalc-on-battle-and-arrival-test.md`](../spec/179-recalc-on-battle-and-arrival-test.md) | 拍 2,454 起軍團 19 的 Stage 機仍快一步：原版 10 → 9 → **8**， | （未解小節內文） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |

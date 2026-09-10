@@ -62,7 +62,7 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 
 <!-- worklist:begin 由 tools/worklist.py render 產生，不要手改 -->
 
-共 **10 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
+共 **9 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
 
 跑 `tools/py.sh tools/worklist.py verify` 逐條問一次；`check.sh` 會替你跑。
 
@@ -85,18 +85,6 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 **怎樣算做完**：同一首曲子兩邊各取一段做頻譜比對，給出一個可重跑的量化指標。
 
 **verify**：`present` `/音色的諧波結構沒量化比對/` 在 `README.md`
-
-#### 軍團 `+0x00` 位元 4 是繪圖狀態，規則層永遠不設
-
-`sub_12B3C` 開頭 `or byte ptr [si], 10h`，同一支接著算螢幕座標、用 `[si+3]` 的低 2 位當動畫幀，然後 `loc_1D51F`（blit）與 `sub_15D19`。**它是畫軍團的常式**，所以原版跑起來一定會設它，而 remake 的規則層不畫圖就永遠是 0。
-
-拍 2,100 的檢查點只差這一個 byte（軍團 19，`F5` 對 `E5`）。
-
-⚠ 這一條不要用「remake 不建模」草草帶過——那正是教訓 `not-modelled-turns-off-checks` 要防的。要嘛在 `corps_diff.py` 列成**具名的已知差異**（帶出處），要嘛在寫回時依「這一格在不在畫面上」補。清除端 `sub_12BA8` 也還沒讀。
-
-**怎樣算做完**：位元 4 有明確處置：`corps_diff.py` 把它列成帶出處的已知差異，或 remake 依原版時機設它。
-
-**verify**：`absent` `/位元 4|0x10.*繪圖|sub_12B3C/` 在 `tools/corps_diff.py`
 
 ### fidelity — 原版有這個機制，remake 還沒建模
 

@@ -135,21 +135,6 @@
         "pattern": "六項品質修正尚未完成",
         "note": "綁「目前目標」那一段的開頭。收完之後那一段會被改寫成一句指標，這個 pattern 就不見了。⚠ render 區不會產出這句話，所以不會自己中自己。"
       }
-    },
-    {
-      "id": "corps-flag-bit4-display-only",
-      "layer": "parity",
-      "title": "軍團 `+0x00` 位元 4 是繪圖狀態，規則層永遠不設",
-      "body": "`sub_12B3C` 開頭 `or byte ptr [si], 10h`，同一支接著算螢幕座標、用 `[si+3]` 的低 2 位當動畫幀，然後 `loc_1D51F`（blit）與 `sub_15D19`。**它是畫軍團的常式**，所以原版跑起來一定會設它，而 remake 的規則層不畫圖就永遠是 0。\n\n拍 2,100 的檢查點只差這一個 byte（軍團 19，`F5` 對 `E5`）。\n\n⚠ 這一條不要用「remake 不建模」草草帶過——那正是教訓 `not-modelled-turns-off-checks` 要防的。要嘛在 `corps_diff.py` 列成**具名的已知差異**（帶出處），要嘛在寫回時依「這一格在不在畫面上」補。清除端 `sub_12BA8` 也還沒讀。",
-      "acceptance": "位元 4 有明確處置：`corps_diff.py` 把它列成帶出處的已知差異，或 remake 依原版時機設它。",
-      "verify": {
-        "kind": "absent",
-        "paths": [
-          "tools/corps_diff.py"
-        ],
-        "pattern": "位元 4|0x10.*繪圖|sub_12B3C",
-        "note": "處置之後 corps_diff.py 會提到它。現在對這棵樹 grep 三個都不中。"
-      }
     }
   ],
   "resolved": [
@@ -187,6 +172,13 @@
       "date": "2026-09-10",
       "how": "`Corps.Replan` 對應位元 1，進 `modelledCorpsBits`；改目標的常式只設它，重算移到 `tickOneCorps` 的「輪到移動」那一刻（`sub_12662` 的 `0x126A5` 清掉 → `sub_147BB` → **照樣走一格**）。順帶讀出另一半：位元 1 沒設而且走在邊上時，`sub_147BB` 根本不會被呼叫。規格 docs/spec/177 §1.6。",
       "caught_by": "⭐ **verify 自己開口**：`absent` 的 pattern 綁「建模之後才會出現的識別字」，做完就從『還沒出現』翻成『已經出現在 internal/state/corps.go』，`check.sh` 直接標成「可能已完成」。第一個逐拍分歧從拍 2,455 推到 2,647。"
+    },
+    {
+      "id": "corps-flag-bit4-display-only",
+      "title": "軍團 `+0x00` 位元 4 是繪圖狀態，規則層永遠不設",
+      "date": "2026-09-10",
+      "how": "`tools/corps_diff.py` 加 `EXEMPT` 清單：每一條帶出處與「為什麼規則層不會有」，而且報表最後**逐筆列出這一次豁免了哪幾支**——不是靜靜跳過。位元 4 的出處是 `sub_12B3C`（`or byte ptr [si], 10h` 之後算螢幕座標、`loc_1D51F` blit）。",
+      "caught_by": "拍 2,300 只剩這一個 byte，非處理不可。⚠ 沒有直接用「remake 不建模」草草帶過——那正是教訓 `not-modelled-turns-off-checks` 要防的。豁免要跟斷言同級：寫明出處，而且看得見。"
     }
   ]
 }
