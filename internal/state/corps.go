@@ -1546,7 +1546,15 @@ func (w *World) resolveCorpsBattle(ev *CorpsEvent, att, def, node int, m combat.
 	w.afterBattle(ev, att, node, attDead, def, rng)
 	w.afterBattle(ev, def, node, defDead, att, rng)
 
-	if defDead && !attDead && m == combat.Siege {
+	// ⭐ **攻方贏就易主，不管守軍有沒有壞滅。** `sub_14ADE` 的
+	// `test ah, 2 / jz loc_14B41` 兩條路都落到 `loc_14B41` 的
+	// `call sub_14CF3`——判守將只是多一步，不是易主的條件
+	// （docs/spec/187 §1）。
+	//
+	// ⛔ 要求 `defDead` 會讓「攻方贏但守軍只是撤退」那一場白打：
+	// 同局面拍 5,072 軍團 35（勢力 13）打下據點 88，remake 沒易主，
+	// 之後整個戰線跟著歪掉。
+	if !r.DefenderWins && !attDead && m == combat.Siege {
 		w.capture(att, node, ev, rng)
 	}
 }
@@ -1733,7 +1741,16 @@ func (w *World) capture(att, node int, ev *CorpsEvent, rng combat.Rand) {
 		}
 	}
 	city.Owner = next
-	city.OwnerRecorded = next
+	// ⭐ **`+0x1A` ← 舊主，不是新主。** `sub_14CF3` 的頭三條就是
+	// `mov bh, al / xchg bh, [si+1] / mov [si+1Ah], bh`——
+	// `xchg` 讓 `[si+1]` 收下新主而 `bh` 拿到舊主，寫進 `+0x1A` 的是後者。
+	//
+	// 這一格是「這座城本來是誰的」（docs/formats/08）：`+0x1A` 指著自己
+	// 而 `+0x01` 已經不是，就是失土——`sub_13EFD` 靠它把據點編號填進
+	// 原主的 `+0x17`（一格佇列），AI 才知道要反攻。
+	// 寫成新主等於**每次易主都把失土紀錄抹掉**（同局面拍 5,176：
+	// 據點 88 的 `+0x1a` 原版 0、remake 13，勢力 0 的 `+0x17` 因此沒設）。
+	city.OwnerRecorded = old
 	ev.Captured = node
 	// 換旗之後第一件事是把派駐的內政官遣回（`sub_14D63`，docs/spec/48）。
 	// **舊主是無主時整段跳過**（原版 `cmp bh, 18h / jz`）。

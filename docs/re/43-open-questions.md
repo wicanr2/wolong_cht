@@ -42,9 +42,9 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 180 | 173 | 6 | 1 |
-| 驗收 | 234 | 208 | 26 | 0 |
+| 驗收 | 233 | 207 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 335 | 313 | 21 | 1 |
+| 其他 | 336 | 314 | 21 | 1 |
 | **合計** | **786** | 725 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
@@ -53,8 +53,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 292 |
-| `docs/playtest/` | 234 |
+| `docs/spec/` | 293 |
+| `docs/playtest/` | 233 |
 | `docs/re/` | 180 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
@@ -289,7 +289,7 @@
 | [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 游標圖形資料 | 在 `sub_201E4` 附近，逐 byte 沒抓；remake 已經有量出來的 14×14 遮罩 | 靜態 |
 | [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 54 個 hide／show 點對應到 remake 的哪一段 | 沒做；這是「remake 要不要同步游標」的前置 | 靜態 |
 
-## 2.4 驗收（234 條）
+## 2.4 驗收（233 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -332,7 +332,6 @@
 | [`playtest/118-liubei-90day-audience-response.md`](../playtest/118-liubei-90day-audience-response.md) | 起點不是劇本開局 | 現用存檔是 196/4/16。從 196/4/1 起跑要另做一份存檔或走新遊戲流程 | 靜態 |
 | [`playtest/118-liubei-90day-audience-response.md`](../playtest/118-liubei-90day-audience-response.md) | 逐小時取樣還沒接上 | 這一輪只在第 90 天取狀態表。三份軌跡（狀態／事件／亂數）的逐小時版本見 `../spec/161` §4 | 靜態 |
 | [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | 43–65 | 勢力表之後那 704 B 的未解區 | 靜態 |
-| [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | 那個欄位在 `docs/formats/08` 沒有記錄**，語意未解。 | （散句） | 靜態 |
 | [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | **那 4 次差在哪個子刻** | 只比了分布，還沒逐子刻對齊找第一個分歧點 | 靜態 |
 | [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | 檢查條件的語意差 | 原版看第一個槽、remake 看整個清單；要確認 `[bp+0]` 那個槽在原版是怎麼填的（`docs/re/40` §3 的迴圈會跳過空槽重抽，所以「第一個槽空」與「全空」在原版是兩件事） | 靜態 |
 | [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | 「2 個」差 1 | 徵兵被跳過的次數原版 9、remake 10 | 靜態 |
@@ -539,7 +538,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（335 條）
+## 2.6 其他（336 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -746,6 +745,7 @@
 | [`spec/185-monthly-settlement-call-order.md`](../spec/185-monthly-settlement-call-order.md) | 拍 4,911：同一場攻城戰的勝負判定相反。 | （未解小節內文） | 靜態 |
 | [`spec/185-monthly-settlement-call-order.md`](../spec/185-monthly-settlement-call-order.md) | 拍 5,200** 仍然雪崩，要等上面那一項解掉再看。 | （未解小節內文） | 靜態 |
 | [`spec/186-standoff-corps-before-city.md`](../spec/186-standoff-corps-before-city.md) | sub_12708` 的圖塊區間 `0CEh`–`0DDh` 在 remake 沒有對應物 | （未解小節內文） | 靜態 |
+| [`spec/187-only-the-loser-is-judged.md`](../spec/187-only-the-loser-is-judged.md) | 拍 5,176 的據點表 | 103 個 byte／57 座 / **1 個 byte／1 座**（語意未解的 `+0x15`） | 靜態 |
 | [`spec/187-only-the-loser-is-judged.md`](../spec/187-only-the-loser-is-judged.md) | 野戰在 `ah` ＝ 3 時為什麼只判攻方，還沒有解釋。 | （未解小節內文） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |

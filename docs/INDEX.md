@@ -449,7 +449,7 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 128 條。**要查「這件事解了沒」先看這裡**，
+共 129 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（77 條）
@@ -589,7 +589,7 @@
 |---|---|
 | 索引 ▸ 「自定」軍師命名視窗 | `docs/spec/00-index.md` |
 
-### 未解（16 條）
+### 未解（17 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -601,6 +601,7 @@
 | 3. 曲塊內部 ▸ +0x00 | `docs/re/23-bgm-resource-format.md` |
 | 3. 曲塊內部 ▸ +0x06–+0x0F | `docs/re/23-bgm-resource-format.md` |
 | 3. 軍團記錄的欄位（部分） ▸ +0x08 | `docs/re/05-battle-selection.md` |
+| 3. 驗證 ▸ 拍 5,176 的據點表 | `docs/spec/187-only-the-loser-is-judged.md` |
 | 3.2 ⭐ 大地圖是 640×368，四個視窗蓋在它上面 ▸ 0x80 | `docs/re/47-main-screen-window-registry.md` |
 | 4. 只在單邊存在的檔（confirmed） ▸ PASS.MAP／PASS.SCH | `docs/re/01-first-recon.md` |
 | 4. 數字字模在 ICONGRF 段 3 裡 ▸ +0x0000 | `docs/spec/52-main-screen-camera-and-banner-date.md` |
