@@ -86,7 +86,7 @@ func TestEmptyCityFallReportsTalk26(t *testing.T) {
 	if w.wantsTactical(1, -1) {
 		t.Fatal("打空城不該進戰術畫面")
 	}
-	w.fightGarrison(1, ev, rng.NewFixed(5))
+	w.fightGarrison(1, w.Corps[1].Node, ev, rng.NewFixed(5))
 	if ev.Captured != 7 {
 		t.Fatalf("空城沒被攻下（Captured=%d），這一場的佈局有問題", ev.Captured)
 	}
@@ -104,7 +104,7 @@ func TestEmptyCityFallReportsTalk26(t *testing.T) {
 
 	// 玩家（5）自己攻下敵方的空城 → 原版是靜的。
 	w2, ev2 := stage(5, 5)
-	w2.fightGarrison(1, ev2, rng.NewFixed(5))
+	w2.fightGarrison(1, w2.Corps[1].Node, ev2, rng.NewFixed(5))
 	if ev2.Captured != 7 {
 		t.Fatalf("玩家沒攻下空城（Captured=%d）", ev2.Captured)
 	}

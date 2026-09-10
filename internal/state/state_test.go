@@ -2169,7 +2169,7 @@ func TestPlayerBattleCanBeDelegated(t *testing.T) {
 	r := rng.NewFixed(5)
 	// 玩家那一方沒委任：直接開戰術畫面，沒有選單（docs/spec/105）。
 	queued := &CorpsEvent{}
-	w.fight(la, lb, queued, combat.Field, 0, r)
+	w.fight(la, lb, w.Corps[la].Node, queued, combat.Field, 0, r)
 	if w.PendingBattle() == nil {
 		t.Fatal("玩家遭遇沒有直接進戰場")
 	}
@@ -2182,7 +2182,7 @@ func TestPlayerBattleCanBeDelegated(t *testing.T) {
 	// 委任中：自動判定，回傳戰果，不開戰場。
 	w.Corps[la].Delegated = true
 	ev := &CorpsEvent{}
-	w.fight(la, lb, ev, combat.Field, 0, r)
+	w.fight(la, lb, w.Corps[la].Node, ev, combat.Field, 0, r)
 	if ev.Battle == nil {
 		t.Fatal("委任沒有回傳自動判定結果")
 	}
@@ -2226,6 +2226,12 @@ func TestMarchIntoDefendedCityIsSiege(t *testing.T) {
 	c.TargetNode = node
 	c.TargetX, c.TargetY = w.Cities[node].X, w.Cities[node].Y
 	c.Timer = 1
+	// ⭐ **撞上不等於開打**：原版先對峙 12 個軍團巡迴週期（＝ 96 拍）
+	// 才結算（docs/spec/175）。這一支要驗的是「撞上據點打的是攻城不是
+	// 野戰」，所以把倒數直接推到最後一格——等滿 96 拍的話守軍會在那段
+	// 空檔裡被 AI 判成無事可做而解散，測到的就變成打空城。
+	// 倒數本身由 `standoff_test.go` 專門驗。
+	c.Standoff, c.Countdown = true, 1
 
 	var got *CorpsEvent
 	for i := 0; i < 64 && got == nil; i++ {

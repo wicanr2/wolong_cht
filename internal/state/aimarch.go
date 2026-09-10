@@ -222,8 +222,12 @@ func (w *World) retreatOrPerish(i int, won bool) bool {
 	}
 	// 站在自家據點上就不退（`cmp al, [si+1] / jz .stay`）。
 	// 攻城時守方正是這一支，所以據點易主不受這條規則影響。
-	if army.KindOf(c.Node) == army.CityNode && c.Node >= 0 && c.Node < len(w.Cities) &&
-		w.Cities[c.Node].Owner == c.Faction {
+	//
+	// ⚠ **判準是「腳踩在據點上」，不是「`Node` 記著哪個據點」**：
+	// 行軍中 `Node` 留著出發那一站，光看它會把野外遭遇與城外對峙的
+	// 攻方讀成「站在自家城裡」而不退（原版 `+0x0E` 這時 ≥ `800h`，
+	// docs/spec/46 §2、docs/spec/175 §3）。
+	if w.onCity(i) && w.Cities[c.Node].Owner == c.Faction {
 		c.Stage = StageWaitMorale
 		return false
 	}

@@ -313,6 +313,7 @@ func StageEncounter(w *state.World, rng combat.Rand, opt StageOptions) bool {
 		me.TargetNode = node
 		me.TargetX, me.TargetY = w.Cities[node].X, w.Cities[node].Y
 		me.Timer = 1
+		skipStandoff(me)
 	} else {
 		// 野戰：把敵方放在隔壁一格、目標設成我方所在的那一格——
 		// 下一次輪到它移動就會撞上（遭遇條件是「同格、不同勢力」）。
@@ -324,9 +325,21 @@ func StageEncounter(w *state.World, rng combat.Rand, opt StageOptions) bool {
 		foe.TargetX, foe.TargetY = me.X, me.Y
 		foe.TargetNode = me.Node
 		foe.Timer = 1
+		skipStandoff(foe)
 	}
 	for i := 0; i < 64 && w.PendingBattle() == nil; i++ {
 		w.Tick(rng)
 	}
 	return w.PendingBattle() != nil
+}
+
+// skipStandoff 把對峙倒數推到最後一格，讓下一個移動拍當場結算。
+//
+// ⚠ **這是 fixture 的捷徑，不是規則。** 原版撞上之後要對峙 12 個軍團
+// 巡迴週期（＝ 96 拍）才開打（docs/spec/175）；驗收捷徑只跑 64 拍，
+// 而且多推那 96 拍會把世界帶到別的狀態——守方還可能在那段空檔裡被
+// AI 判成無事可做而解散，於是「同狀態對拍」比的就不是同一個狀態了。
+// 對峙倒數本身由 `internal/state` 的單元測試驗。
+func skipStandoff(c *state.Corps) {
+	c.Standoff, c.Countdown = true, 1
 }

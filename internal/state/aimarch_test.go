@@ -586,7 +586,7 @@ func TestFallenCityCorpsRetreatOneHop(t *testing.T) {
 	att := stackedDefender(t, w, attacker, c)
 
 	ev := &CorpsEvent{Captured: -1}
-	w.capture(att, ev, &testRand{s: 1})
+	w.capture(att, w.Corps[att].Node, ev, &testRand{s: 1})
 
 	if w.Cities[c].Owner != attacker {
 		t.Fatalf("據點沒換手：%d", w.Cities[c].Owner)
@@ -621,7 +621,7 @@ func TestFallenCityCorpsWithNoRetreatPerish(t *testing.T) {
 
 	before := w.Factions[f].Corps
 	ev := &CorpsEvent{Captured: -1}
-	w.capture(att, ev, &testRand{s: 1})
+	w.capture(att, w.Corps[att].Node, ev, &testRand{s: 1})
 
 	if w.Corps[i].Alive {
 		t.Fatal("退不了的守軍還在")
@@ -681,7 +681,7 @@ func TestFallenCapitalRedirectsTowardTheNewCapital(t *testing.T) {
 	att := stackedDefender(t, w, attacker, c)
 
 	ev := &CorpsEvent{Captured: -1}
-	w.capture(att, ev, &testRand{s: 1})
+	w.capture(att, w.Corps[att].Node, ev, &testRand{s: 1})
 
 	newCapital := w.Factions[f].Capital
 	if newCapital == c || newCapital == noCity {
@@ -728,7 +728,7 @@ func TestCityFallReturnsGovernor(t *testing.T) {
 	att := stackedDefender(t, w, attacker, node)
 
 	ev := &CorpsEvent{Captured: -1, GovernorReturned: noGovernor}
-	w.capture(att, ev, &testRand{s: 1})
+	w.capture(att, w.Corps[att].Node, ev, &testRand{s: 1})
 
 	if got := w.Cities[node].Governor; got != noGovernorSlot {
 		t.Errorf("內政官槽 = %d，要 0xFF", got)
@@ -751,7 +751,7 @@ func TestNeutralCityFallKeepsNoGovernor(t *testing.T) {
 
 	att := stackedDefender(t, w, f, node)
 	ev := &CorpsEvent{Captured: -1, GovernorReturned: noGovernor}
-	w.capture(att, ev, &testRand{s: 1})
+	w.capture(att, w.Corps[att].Node, ev, &testRand{s: 1})
 
 	if ev.GovernorReturned != noGovernor {
 		t.Errorf("無主的據點不該跑遣回那一段，卻回了 %d", ev.GovernorReturned)

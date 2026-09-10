@@ -1,6 +1,13 @@
 package state
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/wicanr2/wolong_cht/internal/rules/army"
+	"github.com/wicanr2/wolong_cht/internal/rules/combat"
+	"github.com/wicanr2/wolong_cht/internal/rules/economy"
+	"github.com/wicanr2/wolong_cht/internal/rules/rng"
+)
 
 // aliveCorpsSlot 找一個劇本裡活著的軍團槽；沒有就自己灌一個進原始 bytes。
 func aliveCorpsSlot(t *testing.T, w *World) int {
@@ -164,5 +171,221 @@ func TestAliveCorpsWritesCountdownByte(t *testing.T) {
 	w2.Corps[i].Standoff, w2.Corps[i].Countdown = false, 0
 	if got := w2.Bytes()[off+0x03]; got != 0 {
 		t.Fatalf("沒在對峙時寫回的 +0x03 = %#02x，want 0", got)
+	}
+}
+
+// ── 觸發層：`sub_12708` 踏進去之前先問（docs/spec/175 §1.1–§1.35）──
+
+// standoffFixture 編出兩個敵對勢力的軍團，回傳世界與兩支的槽序。
+func standoffFixture(t *testing.T) (*World, int, int) {
+	t.Helper()
+	w := load(t, 0)
+	alive := w.AliveFactions()
+	if len(alive) < 2 {
+		t.Skip("這個劇本只有一個勢力")
+	}
+	a, b := alive[0], alive[1]
+	for _, f := range []int{a, b} {
+		w.Factions[f].Reserves = [economy.NumTroopTypes]int{6000, 6000, 6000}
+	}
+	kinds := [army.Positions]army.TroopType{}
+	manned := [army.Positions]bool{true, true, true, true, true, true}
+	att, def := w.Factions[a].Lord, w.Factions[b].Lord
+	if err := w.FormCorps(att, kinds, manned); err != nil {
+		t.Fatal(err)
+	}
+	if err := w.FormCorps(def, kinds, manned); err != nil {
+		t.Fatal(err)
+	}
+	// 交戰中——邊界掉頭（docs/spec/132）會在和平時把軍團彈回去，
+	// 那一條先發生，對峙就一次都測不到。
+	w.Friendship[a][b] = w.Friendship[a][b].WithWar(true)
+	w.Friendship[b][a] = w.Friendship[b][a].WithWar(true)
+	return w, att, def
+}
+
+// emptyPair 找兩格相鄰的野外空地（沒有據點、也沒有別的軍團站著）。
+func emptyPair(t *testing.T, w *World) (int, int) {
+	t.Helper()
+	occupied := func(x, y int) bool {
+		if w.cityAt(x, y) >= 0 {
+			return true
+		}
+		for i := range w.Corps {
+			if w.Corps[i].Alive && w.Corps[i].X == x && w.Corps[i].Y == y {
+				return true
+			}
+		}
+		return false
+	}
+	for y := 1; y < 240; y++ {
+		for x := 2; x < 320; x++ {
+			if !occupied(x, y) && !occupied(x-1, y) {
+				return x, y
+			}
+		}
+	}
+	t.Fatal("找不到兩格相鄰的空地")
+	return 0, 0
+}
+
+// faceOff 把守方擺在 (x,y)、攻方擺在它左邊一格，攻方下一步就要踏上去。
+// **每個巡迴週期都是移動拍**（`Interval = 1`），這樣「第幾個週期開打」
+// 直接等於原版的倒數次數。
+func faceOff(w *World, att, def, x, y int) {
+	w.ClearMarchRoute(att)
+	w.ClearMarchRoute(def)
+	d := &w.Corps[def]
+	d.X, d.Y = x, y
+	d.TargetX, d.TargetY = x, y
+	d.TargetNode = d.Node
+
+	c := &w.Corps[att]
+	c.X, c.Y = x-1, y
+	c.TargetX, c.TargetY = x, y
+	c.Interval, c.Timer = 1, 1
+	c.Standoff, c.Countdown = false, 0
+}
+
+// TestStandoffStopsBeforeEnemyCell 釘住 §1.1–§1.2：下一格站著敵方軍團時
+// **這一拍不動**，設 `+0x00` 位元 5、`+0x03` ← 12。
+//
+// ⭐ 「不動」是這一條的重點。只驗旗標的話，「照樣走進去但順便設個旗標」
+// 也會通過——而那正是 remake 原本的行為（一走到就結算）。
+func TestStandoffStopsBeforeEnemyCell(t *testing.T) {
+	w, att, def := standoffFixture(t)
+	x, y := emptyPair(t, w)
+	faceOff(w, att, def, x, y)
+
+	ev := w.tickOneCorps(att, 0, rng.New(0, 0, 0))
+	c := &w.Corps[att]
+	if c.X != x-1 || c.Y != y {
+		t.Errorf("軍團走到 (%d,%d)，應該停在 (%d,%d)——撞上敵人的那一格不進去",
+			c.X, c.Y, x-1, y)
+	}
+	if !c.Standoff {
+		t.Error("位元 5 沒設")
+	}
+	if c.Countdown != standoffTicks {
+		t.Errorf("+0x03 = %d，want %d", c.Countdown, standoffTicks)
+	}
+	if ev != nil && ev.Battle != nil {
+		t.Error("第一次撞上就開打了——原版要先對峙 12 個週期")
+	}
+}
+
+// TestStandoffFightsOnTwelfthCycle 釘住 §1.3：倒數由**每次巡到**減 1，
+// 減到 1 的那一次才結算 ⇒ 第 12 個巡迴週期，一圈 8 拍就是 96 拍。
+//
+// ⭐ 這一支同時是「一撞上就打」與「用移動拍計數」兩種寫法的負對照：
+// 前者會落在第 1 個週期，後者在 `Interval > 1` 時會晚好幾倍。
+func TestStandoffFightsOnTwelfthCycle(t *testing.T) {
+	w, att, def := standoffFixture(t)
+	x, y := emptyPair(t, w)
+	faceOff(w, att, def, x, y)
+
+	r := rng.New(0, 0, 0)
+	fought := 0
+	for cycle := 1; cycle <= 24 && fought == 0; cycle++ {
+		// 原版 `sub_125A3` 對一支軍團做的就是這兩件事：
+		// 移動／軍費（`sub_12662`／`sub_12600`）→ 倒數（`sub_1264A`）。
+		ev := w.tickOneCorps(att, 0, r)
+		w.tickStandoff(att)
+		if ev != nil && ev.Battle != nil {
+			fought = cycle
+		}
+	}
+	if fought != 12 {
+		t.Fatalf("第 %d 個巡迴週期開打，want 12（12 × 8 拍 ＝ 96 拍）", fought)
+	}
+}
+
+// TestStandoffAtEnemyCityIsSiege 釘住 §1.35：下一格是**別人的據點**時
+// 走的是同一套倒數，倒數完打的是攻城不是野戰。
+func TestStandoffAtEnemyCityIsSiege(t *testing.T) {
+	w, att, def := standoffFixture(t)
+	node := w.Corps[def].Node
+	if army.KindOf(node) != army.CityNode {
+		t.Skip("守方不在據點上")
+	}
+	w.Cities[node].Owner = w.Corps[def].Faction
+	w.ClearMarchRoute(att)
+	c := &w.Corps[att]
+	c.X, c.Y = w.Cities[node].X-1, w.Cities[node].Y
+	c.TargetNode = node
+	c.TargetX, c.TargetY = w.Cities[node].X, w.Cities[node].Y
+	c.Interval, c.Timer = 1, 1
+	c.Standoff, c.Countdown = false, 0
+
+	r := rng.New(0, 0, 0)
+	var got *CorpsEvent
+	for cycle := 1; cycle <= 24 && got == nil; cycle++ {
+		ev := w.tickOneCorps(att, 0, r)
+		w.tickStandoff(att)
+		if ev != nil && ev.Battle != nil {
+			got = ev
+		}
+		if cycle < 12 && (c.X != w.Cities[node].X-1 || c.Y != w.Cities[node].Y) {
+			t.Fatalf("第 %d 個週期就走進城了 (%d,%d)——對峙期間軍團不動",
+				cycle, c.X, c.Y)
+		}
+	}
+	if got == nil {
+		t.Fatal("對峙走完沒有打起來")
+	}
+	if got.Mode != combat.Siege {
+		t.Errorf("打成 %v，want 攻城——據點那一條走的是 sub_12880", got.Mode)
+	}
+}
+
+// TestStandoffClearsWhenBlockerLeaves 釘住「位元 5 是每個週期重算的狀態」
+// （`sub_125A3` 的 `and [si],0DFh`）：擋路的走了，對峙就散了，`+0x03` 歸零。
+func TestStandoffClearsWhenBlockerLeaves(t *testing.T) {
+	w, att, def := standoffFixture(t)
+	x, y := emptyPair(t, w)
+	faceOff(w, att, def, x, y)
+
+	r := rng.New(0, 0, 0)
+	w.tickOneCorps(att, 0, r)
+	w.tickStandoff(att)
+	if !w.Corps[att].Standoff {
+		t.Fatal("第一次撞上沒進對峙，後面驗不到解除")
+	}
+
+	// 擋路的那一支讓開。
+	w.Corps[def].X, w.Corps[def].Y = x+5, y+5
+	w.tickOneCorps(att, 0, r)
+	w.tickStandoff(att)
+	c := &w.Corps[att]
+	if c.Standoff {
+		t.Error("擋路的走了，位元 5 還留著")
+	}
+	if c.Countdown != 0 {
+		t.Errorf("+0x03 = %d，want 0——`sub_1264A` 沒卡住就歸零", c.Countdown)
+	}
+	if c.X != x || c.Y != y {
+		t.Errorf("軍團停在 (%d,%d)，路空了應該走到 (%d,%d)", c.X, c.Y, x, y)
+	}
+}
+
+// TestOwnCorpsDoesNotBlock 釘住 `sub_12831` 的放行條件：
+// 佔著那一格的是**自己人**就照常走進去（原版允許軍團疊同格）。
+//
+// ⚠ 這一條也擋住「掃出所有敵人」那種寫法——原版找到第一支就停，
+// 是自己人就 `stc` 放行，不會再往後看。
+func TestOwnCorpsDoesNotBlock(t *testing.T) {
+	w, att, def := standoffFixture(t)
+	x, y := emptyPair(t, w)
+	faceOff(w, att, def, x, y)
+	// 讓擋路的那一支改成自己人。
+	w.Corps[def].Faction = w.Corps[att].Faction
+
+	w.tickOneCorps(att, 0, rng.New(0, 0, 0))
+	c := &w.Corps[att]
+	if c.Standoff {
+		t.Error("自己人擋不住，不該進對峙")
+	}
+	if c.X != x || c.Y != y {
+		t.Errorf("軍團停在 (%d,%d)，應該疊到 (%d,%d) 上", c.X, c.Y, x, y)
 	}
 }

@@ -112,8 +112,7 @@ func (w *World) wantsTactical(att, def int) bool {
 }
 
 // beginTactical 準備一場戰術戰鬥。回傳 false 表示開不成，呼叫端該自動判定。
-func (w *World) beginTactical(att, def int, m combat.Mode, garrison int) bool {
-	node := w.Corps[att].Node
+func (w *World) beginTactical(att, def, node int, m combat.Mode, garrison int) bool {
 	// ⭐ **玩家守城 → 戰場轉 180 度**（docs/spec/56 §1）。判準是「玩家在哪一邊」，
 	// 不是誰攻誰守：原版兩個位元一起設，側欄換邊與戰場翻轉是同一件事的兩面。
 	rotate := m == combat.Siege && def >= 0 && def < len(w.Corps) &&
@@ -217,7 +216,8 @@ func (w *World) StageBattle(att, def int, m combat.Mode, rng combat.Rand) error 
 			return fmt.Errorf("state: 軍團 %d 不存在", i)
 		}
 	}
-	if !w.beginTactical(att, def, m, w.Cities[w.clampCity(w.Corps[att].Node)].Garrison) {
+	node := w.clampCity(w.Corps[att].Node)
+	if !w.beginTactical(att, def, node, m, w.Cities[node].Garrison) {
 		return fmt.Errorf("state: 擺不出戰場（據點 %d）", w.Corps[att].Node)
 	}
 	return nil
@@ -320,10 +320,10 @@ func (w *World) ResolvePending(rng combat.Rand) *CorpsEvent {
 	w.damageCity(p.Node, p.Mode, r)
 	attDead := r.AttackerDestroyed || w.retreatOrPerish(p.Attacker, !r.DefenderWins)
 	defDead := r.DefenderDestroyed || w.retreatOrPerish(p.Defender, r.DefenderWins)
-	w.afterBattle(ev, p.Attacker, attDead, p.Defender, rng)
-	w.afterBattle(ev, p.Defender, defDead, p.Attacker, rng)
+	w.afterBattle(ev, p.Attacker, p.Node, attDead, p.Defender, rng)
+	w.afterBattle(ev, p.Defender, p.Node, defDead, p.Attacker, rng)
 	if o.AttackerWins && p.Mode == combat.Siege && !attDead {
-		w.capture(p.Attacker, ev, rng)
+		w.capture(p.Attacker, p.Node, ev, rng)
 	}
 	return ev
 }

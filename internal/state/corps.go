@@ -30,6 +30,11 @@ const (
 	// standoffBit 是 `+0x00` 的位元 5 ＝ 對峙中（docs/spec/175）。
 	standoffBit = 0x20
 
+	// standoffTicks 是撞上之後 `+0x03` 的初值（`sub_12831`／`sub_12880`
+	// 的 `mov byte ptr [si+3], 0Ch`）。每個軍團巡迴週期減 1，一圈 8 拍，
+	// 所以對峙整整 12 × 8 ＝ 96 拍才開打（docs/spec/175）。
+	standoffTicks = 0x0C
+
 	// corpsSpriteStride 是一個勢力佔幾張軍團圖塊：四個方向 ＋ 停著。
 	// 與 `internal/assets/world` 的 `CorpsHeadings` 是同一個數字
 	// （`sub_12B2A`：圖塊 ＝ `[si+9]` ＋ `[si+8]`，docs/spec/74 §3）。
@@ -698,6 +703,11 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 				ev.Disbanded, ev.Routed = !c.Routing, c.Routing
 				return &ev
 			}
+		} else if w.standoffBlocks(i, &ev, rng) {
+			// ⭐ **踏進去之前先問**（`sub_12708`）：下一格被敵方軍團佔著
+			// 或是別人的據點，這一拍就**不動**——設位元 5、`+0x03` 從 12
+			// 倒數，減到 1 的那一次才結算（docs/spec/175）。
+			// `ev.Moved` 維持 false，對峙的 96 拍在事件層是靜的。
 		} else if w.step(i) {
 			ev.Moved = true
 			ev.Arrived = c.Node == c.TargetNode
@@ -708,7 +718,6 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 					return &ev
 				}
 			}
-			w.resolveContact(i, &ev, rng)
 		}
 	}
 
@@ -957,68 +966,182 @@ func sign(v int) int {
 	return 0
 }
 
-// resolveContact 檢查這一步之後有沒有撞上敵人或走進別人的據點。
+// onCity 回「這支軍團現在是不是**站在據點上**」。
 //
-// 兩條路對應原版的 `sub_12831`（野戰遭遇）與 `sub_12880`（攻城），
-// 判定條件照原版：**同格且不同勢力**才打，走進自家據點直接通過。
-func (w *World) resolveContact(i int, ev *CorpsEvent, rng combat.Rand) {
-	c := w.Corps[i]
-
-	// ⭐ **據點要先問，野戰後問。**
-	//
-	// 原版的順序反過來（`sub_12708` 先看佔用圖 `cmp byte ptr [di], 0`，
-	// 有人才叫 `sub_12831` 打野戰，沒人而且是據點圖塊才叫 `sub_12880`
-	// 打攻城），但那是建立在**一個據點佔好幾格地圖**上的：
-	// 據點的圖塊值是 `0xCE`–`0xDD` 一整段，守軍站在其中一格，
-	// 攻方通常踏進的是**別的那幾格**——那幾格佔用圖是 0，所以走攻城，
-	// 接著 `sub_14C72` 再用**據點自己的座標**把守軍找出來。
-	//
-	// 本專案的據點是**一個點**，攻方必然踏在守軍那一格上，
-	// 照抄順序的話永遠打成野戰、攻城那條路永遠走不到。
-	// 所以這裡把順序倒過來——**這是為了補上地圖模型的差異，
-	// 不是規則不同**（docs/re/09 §2）。
-	if army.KindOf(c.Node) == army.CityNode {
-		city := &w.Cities[c.Node]
-		switch {
-		case city.Owner == combat.NeutralFaction:
-			// 中立據點沒有主人，所以沒有「首都失守」這回事。
-			city.Owner = c.Faction
-			w.Factions[c.Faction].Cities++
-			ev.Captured = c.Node
-			return
-		case city.Owner != c.Faction:
-			// 城裡有守軍就打守軍（多支疊同格時照 `sub_14C72` 計分挑
-			// 應戰者，docs/spec/82），沒有就打城兵。
-			if j := w.pickDefender(i, city.Owner, func(d *Corps) bool {
-				return d.Node == c.Node
-			}); j >= 0 {
-				w.fight(i, j, ev, combat.Siege, city.Garrison, rng)
-				return
-			}
-			w.fightGarrison(i, ev, rng)
-			return
-		}
-		// 自家的據點：不打，繼續往下看有沒有敵軍團同格（不該發生，但不擋）。
+// 原版的判準是節點欄 `+0x0E` 小於 `800h`（`sub_12662` 的
+// `cmp bx, 800h`、`sub_1487B` 的「現在在野外」，docs/spec/46 §2）：
+// 行軍中那一欄放的是**連結記錄的位址**，一定 ≥ `800h`。
+//
+// ⚠ **remake 的 `Node` 在行軍中留著出發／中繼據點的編號**，光看它會把
+// 「走在路上」讀成「站在城裡」。座標一起看才等價——`turnBackAtBorder`
+// 早就是這樣問的，這裡把同一個判準抽出來共用。
+func (w *World) onCity(i int) bool {
+	c := &w.Corps[i]
+	if c.Node < 0 || c.Node >= len(w.Cities) || army.KindOf(c.Node) != army.CityNode {
+		return false
 	}
+	return c.X == w.Cities[c.Node].X && c.Y == w.Cities[c.Node].Y
+}
 
-	// 野戰：同一格上有別的勢力的軍團。先找出撞到的是哪個勢力，
-	// 再在**那個勢力**疊同格的軍團裡照 `sub_14C72` 計分挑應戰者
-	// （原版的名單以 `[di+1]` 的勢力圈，docs/spec/82）。
+// nextCell 回「這一拍要踏進去的那一格」，沒有下一步就回 false。
+//
+// 對應原版 `sub_12708` 進來時 `es:[bx]`／`es:[bx+2]` 指的那一筆路徑點：
+// 指標已經在 `sub_126FF` 加過步進，所以是**下一筆**，不是腳下這一筆
+// （docs/spec/173 §1.1）。
+func (w *World) nextCell(i int) (int, int, bool) {
+	if cells := w.routes[i]; len(cells) > 0 {
+		return cells[0][0], cells[0][1], true
+	}
+	// 沒有道路圖時 `step` 走直線退路（缺素材要能降級跑），
+	// 下一格就是逼近目標的那一步。
+	c := &w.Corps[i]
+	if c.X == c.TargetX && c.Y == c.TargetY {
+		return 0, 0, false
+	}
+	return c.X + sign(c.TargetX-c.X), c.Y + sign(c.TargetY-c.Y), true
+}
+
+// blockerAt 回「(x,y) 這一格擋不擋得住 i 這支軍團」：
+// 回傳擋路的據點編號（攻城那條）或軍團編號（野戰那條），都沒有就回 −1／−1。
+//
+// 兩條路對應原版 `sub_12708` 裡**串聯**的兩個閘：
+//
+//	cmp byte ptr [di], 0   ; 佔用圖有人 → sub_12831（是敵人就擋）
+//	test byte ptr [si], 1  ; 已經走上路徑，而且
+//	cmp al, 0CEh / 0DDh    ; 下一格的地形是據點圖塊 → sub_12880（不是自己的就擋）
+//
+// ⭐ **據點要先問，佔用圖後問**——順序與原版相反，理由是地圖模型不同：
+// 原版一個據點佔 `0CEh`–`0DDh` 一整段圖塊，攻方踏進的通常是**別的那幾格**，
+// 那幾格佔用圖是 0 所以走攻城，再由 `sub_14C72` 用據點座標把守軍找出來。
+// 本專案的據點是**一個點**，攻方必然踏在守軍那一格上，照抄順序會永遠
+// 打成野戰、攻城那條路永遠走不到（docs/re/09 §2）。
+func (w *World) blockerAt(i, x, y int) (int, int) {
+	c := &w.Corps[i]
+	// `sub_12880`：下一格是**別人的**據點就擋。
+	//
+	// ⚠ 原版這一條前面還有 `test byte ptr [si], 1`（位元 0 ＝ 已經走上
+	// 路徑）。**remake 不照抄那個閘**，理由與順序倒置同源：原版一個據點
+	// 佔 `0CEh`–`0DDh` 一整段圖塊，軍團站在自家城裡時**下一格往往還在
+	// 自己的據點圖塊上**，位元 0 是用來擋掉那一步的；remake 的據點只佔
+	// 一個點，出城第一步永遠踏在道路格上，沒有這個情況。
+	// 照抄反而會漏掉直線退路（缺道路圖時 `OnPath` 一次都不會設）。
+	if n := w.cityAt(x, y); n >= 0 && w.Cities[n].Owner != c.Faction {
+		return n, -1
+	}
+	// `sub_12831`：掃軍團表找**第一支**站在那一格上而且活著的。
+	// ⚠ 原版找到就停，**是自己人就放行**（軍團可以疊同格）——
+	// 不是「掃出所有敵人」。掃描順序與槽序一致才對得上原版。
 	for j := range w.Corps {
-		d := w.Corps[j]
-		if j == i || !d.Alive || d.Faction == c.Faction {
+		d := &w.Corps[j]
+		if j == i || !d.Alive {
 			continue
 		}
-		if d.X == c.X && d.Y == c.Y {
-			if k := w.pickDefender(i, d.Faction, func(d *Corps) bool {
-				return d.X == c.X && d.Y == c.Y
-			}); k >= 0 {
-				j = k
+		if d.X == x && d.Y == y {
+			if d.Faction == c.Faction {
+				return -1, -1
 			}
-			w.fight(i, j, ev, combat.Field, 0, rng)
-			return
+			return -1, j
 		}
 	}
+	return -1, -1
+}
+
+// standoffBlocks 是 `sub_12708` 的「踏進去之前先問」：擋住就**這一拍不動**，
+// 設 `+0x00` 位元 5、`+0x03` ← 12，減到 1 的那一次才結算（docs/spec/175）。
+//
+// 回傳 true 表示這一拍不移動。倒數由 `tickStandoff`（＝ `sub_1264A`）
+// 在**每次巡到**時減 1，一圈 8 拍 ⇒ 對峙整整 96 拍。
+//
+// ⚠ 擋路的對象**每個移動拍重新找一次**，不記在軍團記錄裡——原版也是
+// 這樣（`sub_12831` 每次都重掃 127 支）。敵人先走掉，對峙就自己散了。
+func (w *World) standoffBlocks(i int, ev *CorpsEvent, rng combat.Rand) bool {
+	c := &w.Corps[i]
+	x, y, ok := w.nextCell(i)
+	if !ok {
+		return false
+	}
+	node, enemy := w.blockerAt(i, x, y)
+	if node < 0 && enemy < 0 {
+		return false
+	}
+	c.Standoff = true
+	switch {
+	case c.Countdown > 1:
+		// 還在倒數。原版每個週期播一次音效（`sub_102F5(al=3)`），
+		// 而且 `+0x03 & 3` 是對峙動畫的相位——兩者 remake 都還沒接
+		// （docs/spec/175 §5）。
+		return true
+	case c.Countdown == 1:
+		// ⭐ 減到 1 的那一次才結算。`sub_14A7B`／`sub_14ADE` 一進去
+		// 就把雙方的位元 5 與 `+0x03` 清掉。
+		c.Standoff, c.Countdown = false, 0
+		if enemy >= 0 {
+			w.Corps[enemy].Standoff, w.Corps[enemy].Countdown = false, 0
+		}
+		if node >= 0 {
+			w.siegeAt(i, node, ev, rng)
+		} else {
+			w.fieldAt(i, enemy, ev, rng)
+		}
+		return true
+	default:
+		// 第一次撞上：`mov byte ptr [si+3], 0Ch`。
+		c.Countdown = standoffTicks
+		return true
+	}
+}
+
+// siegeAt 是對峙倒數走完之後**打據點**那一條（`sub_12880` 的
+// `call sub_14ADE`）。
+//
+// ⚠ 目標據點由呼叫端指定，不能用 `Node` 去找：軍團**還沒踏進去**，
+// `Node` 留在前一站（docs/spec/175 §2）。
+func (w *World) siegeAt(i, node int, ev *CorpsEvent, rng combat.Rand) {
+	c := &w.Corps[i]
+	if node < 0 || node >= len(w.Cities) {
+		return
+	}
+	city := &w.Cities[node]
+	if city.Owner == combat.NeutralFaction {
+		// 中立據點沒有主人，所以沒有「首都失守」這回事。
+		// ⚠ 它一樣要對峙滿 12 個週期——`sub_12880` 的歸屬檢查是
+		// `cmp [di+841h], al`，無主（0x18）與別人的據點走同一條路。
+		city.Owner = c.Faction
+		w.Factions[c.Faction].Cities++
+		ev.Captured = node
+		return
+	}
+	if city.Owner == c.Faction {
+		return
+	}
+	// 城裡有守軍就打守軍（多支疊同格時照 `sub_14C72` 計分挑應戰者，
+	// docs/spec/82），沒有就打城兵。
+	if j := w.pickDefender(i, city.Owner, func(d *Corps) bool {
+		return d.Node == node
+	}); j >= 0 {
+		w.fight(i, j, node, ev, combat.Siege, city.Garrison, rng)
+		return
+	}
+	w.fightGarrison(i, node, ev, rng)
+}
+
+// fieldAt 是對峙倒數走完之後**打軍團**那一條（`sub_12831` 的
+// `call sub_14A7B`）。撞到的那一支由 `blockerAt` 指定；同一格上疊了
+// 好幾支時照 `sub_14C72` 計分挑應戰者（docs/spec/82）。
+//
+// 戰場沿用攻方的 `Node`——原版的野戰戰場是 `sub_14B63` 從**守方那一格
+// 周圍的五格地形**算出來的，remake 這一層還是近似（docs/re/78）。
+func (w *World) fieldAt(i, enemy int, ev *CorpsEvent, rng combat.Rand) {
+	if enemy < 0 || enemy >= len(w.Corps) {
+		return
+	}
+	x, y, f := w.Corps[enemy].X, w.Corps[enemy].Y, w.Corps[enemy].Faction
+	if k := w.pickDefender(i, f, func(d *Corps) bool {
+		return d.X == x && d.Y == y
+	}); k >= 0 {
+		enemy = k
+	}
+	w.fight(i, enemy, w.Corps[i].Node, ev, combat.Field, 0, rng)
 }
 
 // pickDefender 是 `sub_14C72` 的挑選：faction 勢力裡通過 at 條件
@@ -1047,18 +1170,18 @@ func (w *World) pickDefender(attacker, faction int, at func(*Corps) bool) int {
 	return best
 }
 
-func (w *World) fight(att, def int, ev *CorpsEvent, m combat.Mode, garrison int, rng combat.Rand) {
+func (w *World) fight(att, def, node int, ev *CorpsEvent, m combat.Mode, garrison int, rng combat.Rand) {
 	// ⭐ 玩家的勢力捲進去而且那一方**沒有委任**，就直接開戰術畫面
 	// （原版 `sub_14E5C`／`sub_14ED7`：`sub_14EB9` → `sub_11B5A`，**中間沒有選單**，
 	// 實機 docs/playtest/55）。「戰鬥指揮／委任」是行軍指示時就決定的
 	// （docs/spec/39），遭遇當下只看委任位元。其餘自動判定。
 	ev.Mode = m
-	if w.wantsTactical(att, def) && w.beginTactical(att, def, m, garrison) {
+	if w.wantsTactical(att, def) && w.beginTactical(att, def, node, m, garrison) {
 		// 原版進戰術畫面前先跳一則訊息（`sub_14EB9`／`sub_14F58`，docs/spec/105）。
 		ev.TalkNotices = append(ev.TalkNotices, w.encounterNotice(att, def, m))
 		return
 	}
-	w.resolveCorpsBattle(ev, att, def, m, garrison, rng)
+	w.resolveCorpsBattle(ev, att, def, node, m, garrison, rng)
 }
 
 // 進戰術畫面前那一則訊息的 TALK 索引（原版 `sub_14E5C`／`sub_14ED7` 的 `cx`）。
@@ -1104,7 +1227,7 @@ func (w *World) encounterNotice(att, def int, m combat.Mode) TalkNotice {
 
 // resolveCorpsBattle 執行一場已決定委任的軍團對軍團戰鬥。
 // 戰鬥指揮的出口走 ResolvePending；兩者最後共用同一組戰後處理。
-func (w *World) resolveCorpsBattle(ev *CorpsEvent, att, def int, m combat.Mode, garrison int, rng combat.Rand) {
+func (w *World) resolveCorpsBattle(ev *CorpsEvent, att, def, node int, m combat.Mode, garrison int, rng combat.Rand) {
 	a, d := w.battle(att), w.battle(def)
 	ev.BattleBefore = [2]int{a.Men, d.Men}
 	r := combat.Resolve(&a, &d, m, garrison, rng)
@@ -1113,25 +1236,24 @@ func (w *World) resolveCorpsBattle(ev *CorpsEvent, att, def int, m combat.Mode, 
 	ev.Battle, ev.Enemy, ev.Mode = &r, def, m
 	ev.BattleAfter = [2]int{a.Men, d.Men}
 	ev.BattleCityDamage = r.CityDamage
-	w.damageCity(w.Corps[att].Node, m, r)
+	w.damageCity(node, m, r)
 
 	// 原版兩邊各跑一次 `sub_1474A`：士氣判定之外，**敗方退不了也算壞滅**
 	// （docs/spec/46 §1）。守方站在自家城裡走「不退」那一支，
 	// 所以攻城的易主判定不受影響。
 	attDead := r.AttackerDestroyed || w.retreatOrPerish(att, !r.DefenderWins)
 	defDead := r.DefenderDestroyed || w.retreatOrPerish(def, r.DefenderWins)
-	w.afterBattle(ev, att, attDead, def, rng)
-	w.afterBattle(ev, def, defDead, att, rng)
+	w.afterBattle(ev, att, node, attDead, def, rng)
+	w.afterBattle(ev, def, node, defDead, att, rng)
 
 	if defDead && !attDead && m == combat.Siege {
-		w.capture(att, ev, rng)
+		w.capture(att, node, ev, rng)
 	}
 }
 
 // fightGarrison 打的是據點的城兵——原版在 `ds:4200h` 現搭一支臨時軍團
 // （`sub_14F8A`，docs/re/09 §7）。守方不是軍團，所以不會有壞滅或被擒。
-func (w *World) fightGarrison(att int, ev *CorpsEvent, rng combat.Rand) {
-	node := w.Corps[att].Node
+func (w *World) fightGarrison(att, node int, ev *CorpsEvent, rng combat.Rand) {
 	city := &w.Cities[node]
 	a := w.battle(att)
 	g := combat.Garrison(city.Owner, city.Garrison)
@@ -1145,7 +1267,7 @@ func (w *World) fightGarrison(att int, ev *CorpsEvent, rng combat.Rand) {
 
 	// 守方是城兵不是軍團，所以只有攻方要跑 `sub_1474A`。
 	attDead := r.AttackerDestroyed || w.retreatOrPerish(att, !r.DefenderWins)
-	w.afterBattle(ev, att, attDead, -1, rng)
+	w.afterBattle(ev, att, node, attDead, -1, rng)
 	if !r.DefenderWins && !attDead {
 		// ⭐ **敵軍攻下玩家的空城** → 原版跳 #26（`sub_14ED7` 的 `loc_14EF1`：
 		// 玩家是守方而 `bx == 4200h`（城裡沒有駐守軍團）→ `sub_15130`
@@ -1155,7 +1277,7 @@ func (w *World) fightGarrison(att int, ev *CorpsEvent, rng combat.Rand) {
 		// 變數順序照 `sub_14F71` 推堆疊的次序：先據點（`di`）後主將
 		// （`ax = [si+2]`），對應 #26「{2}受到{1}兵馬的攻擊」。
 		fellForPlayer := city.Owner == w.Player
-		w.capture(att, ev, rng)
+		w.capture(att, node, ev, rng)
 		if fellForPlayer && ev.Captured == node {
 			ev.TalkNotices = append(ev.TalkNotices, TalkNotice{
 				Index: talkSiegeCityFallen, City: node, Faction: -1,
@@ -1189,15 +1311,17 @@ func clampDown(v, d int) int {
 //
 // victor 是勝方的軍團編號，−1 表示勝方是據點的城兵
 // （那時勝方勢力就是該據點的所屬）。
-func (w *World) afterBattle(ev *CorpsEvent, i int, destroyed bool, victor int, rng combat.Rand) {
+func (w *World) afterBattle(ev *CorpsEvent, i, node int, destroyed bool, victor int, rng combat.Rand) {
 	if !destroyed {
 		return
 	}
 	winner := combat.NeutralFaction
 	if victor >= 0 {
 		winner = w.Corps[victor].Faction
-	} else if n := w.Corps[i].Node; army.KindOf(n) == army.CityNode {
-		winner = w.Cities[n].Owner
+	} else if army.KindOf(node) == army.CityNode && node >= 0 && node < len(w.Cities) {
+		// 勝方是城兵：那一場的據點由呼叫端指定——軍團對峙時還沒踏進去，
+		// `Node` 找不到它（docs/spec/175 §2）。
+		winner = w.Cities[node].Owner
 	}
 	w.corpsPerishes(ev, i, winner, rng)
 }
@@ -1286,9 +1410,8 @@ func (w *World) returnGovernor(node int) int {
 const noGovernorSlot = 0xFF
 
 // capture 把據點換手（`sub_14CF3`）。
-func (w *World) capture(att int, ev *CorpsEvent, rng combat.Rand) {
-	node := w.Corps[att].Node
-	if army.KindOf(node) != army.CityNode {
+func (w *World) capture(att, node int, ev *CorpsEvent, rng combat.Rand) {
+	if node < 0 || node >= len(w.Cities) || army.KindOf(node) != army.CityNode {
 		return
 	}
 	city := &w.Cities[node]

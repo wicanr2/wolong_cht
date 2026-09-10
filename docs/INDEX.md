@@ -63,7 +63,7 @@
 | [`docs/playtest/116-rng-consumption-census.md`](playtest/116-rng-consumption-census.md) | 116 — 原版一個遊戲月的亂數消費普查：18 個呼叫點、12 支函式 | 通過。 | 2026-09-09 |
 | [`docs/playtest/117-field-battle-needs-player-order.md`](playtest/117-field-battle-needs-player-order.md) | 117 — 野戰打不完的成因是 fixture 缺了玩家命令，不是規則層回歸 | 通過。 | 2026-09-09 |
 | [`docs/playtest/118-liubei-90day-audience-response.md`](playtest/118-liubei-90day-audience-response.md) | 118 — 劉備 90 天無人值守：君主召見用右鍵推進，選項用移動次數 | 通過。 | 2026-09-09 |
-| [`docs/playtest/119-rng-pace-comparison.md`](playtest/119-rng-pace-comparison.md) | 119 — 取數節拍對齊：remake 的節拍不吃亂數值，差異是真的規則分歧 | 已修正並驗過（§6、§28–§31）。 | 2026-09-09 |
+| [`docs/playtest/119-rng-pace-comparison.md`](playtest/119-rng-pace-comparison.md) | 119 — 取數節拍對齊：remake 的節拍不吃亂數值，差異是真的規則分歧 | 已修正並驗過（§6、§28–§33）。 | 2026-09-09 |
 | [`docs/playtest/12-event3-same-state-parity.md`](playtest/12-event3-same-state-parity.md) | event3 同狀態對拍（2026-08-10） | 同狀態事件接線、原版式 composite、3×6 實際格位選取、TALK 五行分頁、 DOS/V 內框／按鍵 gl… | 2026-08-10 |
 | [`docs/playtest/13-dosv-natural-and-target-gui.md`](playtest/13-dosv-natural-and-target-gui.md) | DOS/V 自然畫面與目標平台 GUI 驗收 | 歷史驗收紀錄（2026-08-11，影片 oracle）。 | 2026-08-11 |
 | [`docs/playtest/14-m7-review.md`](playtest/14-m7-review.md) | M7 校訂文字人工審查報告 | 60 筆定案校訂已完成逐筆語意、marker、硬換行、寬度與代表畫面抽樣。 | 2026-08-11 |
@@ -204,7 +204,7 @@
 | [`docs/re/39-remaining-unread.md`](re/39-remaining-unread.md) | 39 — 剩餘未讀函式的逐支歸屬 | 清單。 | 2026-08-14 |
 | [`docs/re/40-garrison-relief-request.md`](re/40-garrison-relief-request.md) | 40 — 據點求援與援軍派遣 | 整條鏈 confirmed（每一支都逐行讀過）。 sub_140C9 的距離算式裡有一處 | 2026-08-14 |
 | [`docs/re/42-leaf-functions.md`](re/42-leaf-functions.md) | 42 — 戰術以外的 47 支葉節點 | 47 支全部逐行讀過。四件事因此定案：INT 61h 是音源 TSR 的介面、 byte_198A6 的位元圖完整、… | 2026-08-14 |
-| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的） | 生成的清單，跑 tools/py.sh tools/re_open_questions.py 重出。 這一份不下結論… | 2026-09-09 |
+| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的） | 生成的清單，跑 tools/py.sh tools/re_open_questions.py 重出。 這一份不下結論… | 2026-09-10 |
 | [`docs/re/44-threat-and-reinforcement-ai.md`](re/44-threat-and-reinforcement-ai.md) | 44 — 威脅偵測與 AI 出兵：據點每 tick 掃一次 | 整條鏈逐行讀完。三件事定案：據點 +0x18 是佔用圖讀回來的軍團數、 +0x00 低 4 位是「哪幾個鄰居是敵方」… | 2026-08-14 |
 | [`docs/re/45-corps-command-mode.md`](re/45-corps-command-mode.md) | 45 — 軍團的三種指令模式：戰鬥指揮／委任／解體 | 軍團 +0x00 位元 2 定案 ＝ | 2026-08-14 |
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |
@@ -352,7 +352,7 @@
 | [`docs/spec/172-corps-march-fields.md`](spec/172-corps-march-fields.md) | 172 — 補齊軍團行軍的五個欄位：+0x0A／+0x0C／+0x0E／+0x1A／+0x1C | CONFORMED。 | 2026-09-09 |
 | [`docs/spec/173-corps-flag-bit0-and-sprite-fields.md`](spec/173-corps-flag-bit0-and-sprite-fields.md) | 173 — 軍團的 +0x00 位元 0、+0x08／+0x09 與 AI 編成的初值 | CONFORMED。 | 2026-09-09 |
 | [`docs/spec/174-relief-dispatch-does-not-move-marching-corps.md`](spec/174-relief-dispatch-does-not-move-marching-corps.md) | 174 — 求援調兵只調站著的軍團，而且只寫意圖 | CONFORMED。 | 2026-09-09 |
-| [`docs/spec/175-encounter-standoff-countdown.md`](spec/175-encounter-standoff-countdown.md) | 175 — 撞上敵人不是立刻開打：+0x03 先倒數 12 次（96 拍） | READY（+0x03 的用途已分開，見 §3；對峙的觸發還沒接）。 | 2026-09-09 |
+| [`docs/spec/175-encounter-standoff-countdown.md`](spec/175-encounter-standoff-countdown.md) | 175 — 撞上敵人不是立刻開打：+0x03 先倒數 12 次（96 拍） | CONFORMED。 | 2026-09-09 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |
@@ -436,7 +436,7 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 129 條。**要查「這件事解了沒」先看這裡**，
+共 128 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（77 條）
@@ -521,13 +521,12 @@
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x1E | `docs/re/08-hourly-update.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x20 | `docs/re/08-hourly-update.md` |
 
-### READY（3 條）
+### READY（2 條）
 
 | 鍵 | 出處 |
 |---|---|
 | 索引 ▸ 委任將領混合值保留原統率 | `docs/spec/00-index.md` |
 | 索引 ▸ 戰術命令批次與移動體力順序 | `docs/spec/00-index.md` |
-| 索引 ▸ 撞上敵人先對峙 12 個週期（96 拍）才開打 | `docs/spec/00-index.md` |
 
 ### 強證據（22 條）
 
