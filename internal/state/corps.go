@@ -1095,10 +1095,23 @@ func (w *World) reverseLeg(from, back, x, y int) [][2]int {
 	if w.roads == nil {
 		return nil
 	}
-	rev := w.roads.CellRoute(from, back)
+	rev, mk := w.roads.CellRouteMarked(from, back)
 	for k, cell := range rev {
 		if cell[0] == x && cell[1] == y {
 			return append([][2]int(nil), rev[k+1:]...)
+		}
+	}
+	// ⭐ **站在城門格上時格子序列裡找不到它。** 兩個方向各吃掉自己終點
+	// 那一格：正向以 B 中心結尾（不含 B 端的城門格），反向以 A 中心結尾
+	// （不含 A 端的城門格）。而軍團**可以**停在城門格上——那是正向的
+	// 第一格。路徑點序列含它（`march.CellMark.Point`，docs/spec/186），
+	// 所以格子比不到就比路徑點；那一格的下一步正是 `rev[k]` 本身。
+	//
+	// 少了這一段，戰敗後要掉頭的軍團切不到反向路徑就不掉頭，
+	// 於是往前撞上剛打過的對手重新對峙（同局面拍 5,000 的軍團 73）。
+	for k := range mk {
+		if mk[k].Point == ([2]int{x, y}) {
+			return append([][2]int(nil), rev[k:]...)
 		}
 	}
 	return nil
