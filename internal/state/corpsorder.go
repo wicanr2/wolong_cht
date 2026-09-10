@@ -255,8 +255,7 @@ func (w *World) disbandCorps(i int) {
 	}
 	c.Alive = false // ③ 軍團記錄歸零
 	c.Stage = StageNormal
-	// ⑤ 大地圖佔用圖 −1：remake 的佔用是每 tick 由位置推導的，
-	// 沒有要維護的計數器（`docs/re/44` §1 記的那張表是快取）。
+	w.exitCell(c.X, c.Y) // ⑤ 大地圖佔用圖 −1（docs/spec/183）
 }
 
 // routDuration 是敗走的倒數（原版 `sub_12977` 的 `mov byte [si+3], 30h`）。

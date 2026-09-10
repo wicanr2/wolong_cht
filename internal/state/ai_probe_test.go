@@ -317,6 +317,10 @@ func TestCityThreatIsRecomputedOnTick(t *testing.T) {
 	}
 	w.Corps[0] = Corps{Alive: true, Faction: foe,
 		X: w.Cities[nb].X, Y: w.Cities[nb].Y, Node: nb}
+	// ⚠ **佔用圖是增量維護的**（docs/spec/183）：直接寫 `w.Corps[...]`
+	// 不會讓它出現在圖上——原版的圖也一樣，只有「走進來」才 `inc`。
+	// 測試場面是外力擺的，所以要重建一次。
+	w.rebuildOccupancy()
 
 	r := rng.NewFixed(1)
 	w.refreshCityThreat(nb, r) // 先算鄰居的佔用數，威脅量才有東西可加

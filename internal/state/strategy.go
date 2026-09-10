@@ -390,6 +390,9 @@ func (w *World) autoFormCorps(faction, leader int, delegated bool) bool {
 	}
 
 	w.Corps[leader] = c
+	// ⭐ 編成**會**進佔用圖：`sub_16F86` 設完 `+0x1A`／`+0x1C` 之後
+	// `inc byte ptr [bx]`（docs/spec/183）。
+	w.enterCell(c.X, c.Y)
 	w.Generals[leader].Duty = DutyCorpsLeader
 	f.Corps++
 
@@ -507,18 +510,43 @@ func (w *World) cityNeighbours(i int) []threat.Neighbour {
 	return out
 }
 
-// occupancyAt 數停在 (x, y) 那一格的軍團數。
+// occupancyAt 回傳原版佔用圖上 (x, y) 那一格的值（`docs/spec/183`）。
 //
-// 原版存的是一張 384 × 256 的計數器陣列（`word_19872`），軍團出發時
-// `dec`、到站時 `inc`。remake 直接數——**佔用數是導出值，記帳會漂**。
-func (w *World) occupancyAt(x, y int) int {
-	n := 0
+// ⚠ **不是「數一數站在那裡的軍團」**：那張圖是增量維護的，
+// 在某一格編成、從來沒走進來過的軍團不在上面。詳見 `World.occupancy`。
+func (w *World) occupancyAt(x, y int) int { return w.occupancy[[2]int{x, y}] }
+
+// enterCell／exitCell 是原版 `sub_12662` 的 `inc byte [di]`／`dec byte [di]`。
+// 只有「輪到移動而且真的走了一步」才動圖。
+func (w *World) enterCell(x, y int) {
+	if w.occupancy == nil {
+		w.occupancy = map[[2]int]int{}
+	}
+	w.occupancy[[2]int{x, y}]++
+}
+
+func (w *World) exitCell(x, y int) {
+	k := [2]int{x, y}
+	if n := w.occupancy[k]; n > 1 {
+		w.occupancy[k] = n - 1
+	} else {
+		delete(w.occupancy, k)
+	}
+}
+
+// rebuildOccupancy 從現在的軍團位置重建整張圖。
+//
+// ⚠ **只有載入／還原時能這樣做。** 存檔沒有這張圖，所以載入端只能假設
+// 「每一支活著的軍團都在自己那一格上」；原版的圖帶著歷史（少掉那些
+// 在原地編成的），兩者在快照當下相同，之後才會分岔——所以對拍期間
+// **不要再呼叫它**，一律走 `enterCell`／`exitCell`。
+func (w *World) rebuildOccupancy() {
+	w.occupancy = map[[2]int]int{}
 	for i := range w.Corps {
-		if w.Corps[i].Alive && w.Corps[i].X == x && w.Corps[i].Y == y {
-			n++
+		if w.Corps[i].Alive {
+			w.occupancy[[2]int{w.Corps[i].X, w.Corps[i].Y}]++
 		}
 	}
-	return n
 }
 
 // refreshCityThreat 重算一個據點的佔用數、敵方鄰接遮罩與威脅量

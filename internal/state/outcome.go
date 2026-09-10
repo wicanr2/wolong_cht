@@ -139,6 +139,7 @@ func (w *World) disperseFaction(i, winner int) {
 		}
 		c.Alive = false
 		c.Stage = StageNormal
+		w.exitCell(c.X, c.Y) // 佔用圖 −1（docs/spec/183）
 	}
 	w.Factions[i].Corps = 0
 	w.Factions[i].Generals = 0

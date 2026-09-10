@@ -361,6 +361,7 @@
 | [`docs/spec/180-relief-dispatch-want-counts-candidates.md`](spec/180-relief-dispatch-want-counts-candidates.md) | 180 — 求援調兵的 want 數的是候選不是選中 | CONFORMED。 | 2026-09-10 |
 | [`docs/spec/181-ai-recruit-gate-and-monthly-globals.md`](spec/181-ai-recruit-gate-and-monthly-globals.md) | 181 — AI 的募兵節制；月結的顯示用收支在保存區塊裡 | CONFORMED。 | 2026-09-10 |
 | [`docs/spec/182-monthly-settlement-before-hourly.md`](spec/182-monthly-settlement-before-hourly.md) | 182 — 月結跑在每「時」更新之前 | CONFORMED。 | 2026-09-10 |
+| [`docs/spec/183-occupancy-map-is-incremental.md`](spec/183-occupancy-map-is-incremental.md) | 183 — 佔用圖是增量維護的，據點 +0x18 從它抄 | CONFORMED（結構）。 | 2026-09-10 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |

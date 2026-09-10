@@ -95,9 +95,9 @@ Android 不在這次桌面修正版範圍。
 | ⭐ **狀態層**（原版記憶體 vs remake 解出來的存檔）| 四張表全部逐欄比過：軍團表八支的每一欄，以及**勢力 22 × 13 ＋ 據點 192 × 17 ＋ 武將 122 × 16 ＝ 5,502 個欄位一個都不差**——含兩個 remake 自己算出來的衍生值（武將評價、旗標 byte）。畫面相同只證明畫得一樣，這一份證明**讀得一樣** | [`playtest/71`](docs/playtest/71-corps-table-parity.md)、[`playtest/77`](docs/playtest/77-state-table-parity.md) |
 | ⭐ **AI 決策軌跡**（原版執行期 vs remake 規則層）| 攔原版所有事件的共用出口（`sub_12FBF`），拿到「誰在哪一天決定了什麼」：**事件種類、參數形狀與每月量級一致**，都在月結觸發。原版 196 年 5 月 1 日**曹操對呂布宣戰**，劇本一的主線 | [`playtest/78`](docs/playtest/78-ai-decision-trace.md) |
 | 音訊 | 會出聲、場景對應已解、與原版錄音比對過；**音色的諧波結構沒量化比對** | [`spec/29`](docs/spec/29-audio.md) |
-| 規則規格 | **168 份**（不含索引與 `TEMPLATE.md`）：**163 CONFORMED**／4 READY／1 DRAFT | [`spec/00`](docs/spec/00-index.md) |
-| 反組譯 | 739/739 支有筆記；`docs/re/` 自己標成未解的有 **777 列**（每寫一份新的反組譯筆記就帶進自己的未解表）| [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
-| 全專案的未解 | **777 列**（另有 6 列是 DOS／BIOS 平台層與編譯器 runtime，不計入）。⚠ **這個數字比較接近「文件有多少份」**——777 列分布在 330 份文件、平均每份 2.4 列，而每寫一份新文件就帶進約三列自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
+| 規則規格 | **169 份**（不含索引與 `TEMPLATE.md`）：**164 CONFORMED**／4 READY／1 DRAFT | [`spec/00`](docs/spec/00-index.md) |
+| 反組譯 | 739/739 支有筆記；`docs/re/` 自己標成未解的有 **778 列**（每寫一份新的反組譯筆記就帶進自己的未解表）| [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
+| 全專案的未解 | **778 列**（另有 6 列是 DOS／BIOS 平台層與編譯器 runtime，不計入）。⚠ **這個數字比較接近「文件有多少份」**——778 列分布在 331 份文件、平均每份 2.4 列，而每寫一份新文件就帶進約三列自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
 
 #### 那些未解項對 remake 代表什麼
 

@@ -237,6 +237,8 @@ func (w *World) loadCorps(b []byte) {
 		}
 		w.Corps[i] = c
 	}
+	// 存檔沒有佔用圖，載入端只能從位置重建（docs/spec/183）。
+	w.rebuildOccupancy()
 }
 
 func (w *World) saveCorps(b []byte) {
@@ -529,6 +531,9 @@ func (w *World) FormCorps(leader int, kinds [army.Positions]army.TroopType,
 	c.Timer = 1
 
 	w.Corps[leader] = c
+	// ⭐ 編成**會**進佔用圖：`sub_16F86` 設完 `+0x1A`／`+0x1C` 之後
+	// `inc byte ptr [bx]`（docs/spec/183）。
+	w.enterCell(c.X, c.Y)
 	g.Duty = DutyCorpsLeader
 	f.Corps++
 	return nil
@@ -888,7 +893,12 @@ func (w *World) step(i int) bool {
 			head = headingTo(c.X, c.Y, next[0], next[1])
 		}
 		c.Heading = head
+		// 原版 `sub_12662` 的 `dec byte [di]`（`loc_12697`，走之前）與
+		// `inc byte [di]`（`loc_126F5`，走完之後）——**只有真的走了一步
+		// 才動圖**（docs/spec/183）。
+		w.exitCell(c.X, c.Y)
 		c.X, c.Y = next[0], next[1]
+		w.enterCell(c.X, c.Y)
 		// 踩到某個據點的座標就算抵達那個據點。中繼據點也要更新，
 		// 不然攻城、遭遇這些判定會在錯的地方觸發。
 		if n := w.cityAt(next[0], next[1]); n >= 0 {
@@ -915,8 +925,10 @@ func (w *World) step(i int) bool {
 		return false
 	}
 	c.Heading = headingTo(c.X, c.Y, c.TargetX, c.TargetY)
+	w.exitCell(c.X, c.Y) // 同 §① 的佔用圖維護（docs/spec/183）
 	c.X += sign(c.TargetX - c.X)
 	c.Y += sign(c.TargetY - c.Y)
+	w.enterCell(c.X, c.Y)
 	if c.X == c.TargetX && c.Y == c.TargetY {
 		c.Node = c.TargetNode
 		c.Heading = HeadingStill
@@ -1525,6 +1537,7 @@ func (w *World) corpsPerishes(ev *CorpsEvent, i, winner int, rng combat.Rand) {
 	}, winner, loser, rng)
 
 	c.Alive = false
+	w.exitCell(c.X, c.Y) // 佔用圖 −1（原版 `sub_12977`，docs/spec/183）
 	g.Duty = DutyNone
 	if f.Corps > 0 {
 		f.Corps--
