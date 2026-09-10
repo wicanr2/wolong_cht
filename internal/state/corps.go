@@ -753,6 +753,17 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 	// 連帶在錯的地方觸發攻城（docs/spec/172 §4.5）。
 	// 不動比走錯好——不動看得出來，走錯看不出來。
 	if c.LinkAddr != 0 && len(w.routes[i]) == 0 {
+		// ⚠ **倒數仍然要跑。** 原版 `sub_125A3` 的 `dec byte ptr [si+0Bh]`
+		// 是無條件的（只要 `+0x00 ≥ 80h`），減到 0 才重設成 `+0x1E`
+		// 並呼叫 `sub_12662`。這條退場路徑是 remake 自己的保護
+		// （道路圖還沒建好），原版沒有對應，所以照抄那個 `dec`。
+		//
+		// ⚠ 同局面 5,480 拍**沒有走到這裡**（補上前後的對拍結果一樣），
+		// 所以這是照機器碼補的，不是由觀測推的。
+		c.Timer--
+		if c.Timer <= 0 {
+			c.Timer = c.Interval
+		}
 		return nil
 	}
 	ev := CorpsEvent{Corps: i, Enemy: -1, Captured: -1,

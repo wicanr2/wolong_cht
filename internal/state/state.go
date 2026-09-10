@@ -743,6 +743,9 @@ func loadBlock(b []byte) *World {
 			ReliefCooldown:  int(r[0x17]),
 			Neighbours:    [4]int{int(r[0x1C]), int(r[0x1D]), int(r[0x1E]), int(r[0x1F])},
 		}
+		// `+0x15` ＝ 天災強度（`sub_134B1`／`sub_1237E`）。它是執行期狀態，
+		// 從存檔起跑時要帶著走，否則沒跑到事件 12 的據點會一直是 0。
+		w.disasterMarkerLevels[i] = r[0x15]
 	}
 
 	for i := range w.Generals {
@@ -1619,6 +1622,12 @@ func (w *World) Bytes() []byte {
 		}
 		r[0x00] = r[0x00]&0x30 | flags | byte(c.Adjacency&0x0F)
 		r[0x14] = byte(c.Threat)
+		// ⭐ `+0x15` ＝ **這座據點的天災強度**：`sub_134B1` 在事件 12
+		// 派發時寫「亂數(0–7) ＋ 4」（4–11），事件 0x0C 到期時寫 0；
+		// `sub_1237E`（暴風雨）則寫「強度 − 切比雪夫距離 ÷ 2」，
+		// 距離超過 20 的據點不動。remake 存在 `disasterMarkerLevels`，
+		// 之前沒寫回存檔（同局面拍 5,019 的據點 106：原版 06、remake 00）。
+		r[0x15] = w.disasterMarkerLevels[i]
 		r[0x18] = byte(c.Occupancy)
 		r[0x17] = byte(c.ReliefCooldown)
 		r[0x1B] = byte(c.EnemyNeighbours)
