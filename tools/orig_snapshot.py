@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """把 dosgolem 的 `ipeek` 輸出拼成一份 SAVE.DAT，讓 remake 從**原版的那一刻**起跑。
 
-    tools/dosgolem.sh out "…;ipeek:10CF0:2048;ipeek:114F0:2048;…"   ← 11 段
+    tools/dosgolem.sh out "…;ipeek:10CF0:128;peek:2754:…;peek:2514:…"   ← 三個來源
     tools/py.sh tools/orig_snapshot.py peek.log 來源SAVE.DAT 輸出SAVE.DAT [--slot N]
     tools/py.sh tools/orig_snapshot.py --selftest
 
@@ -37,6 +37,19 @@ GLOBAL_BASE, GLOBAL_LEN = 0x10CF0, 0x80      # 區塊 +0x00 起的全域欄位�
 # 要用 `peek:段:偏移:長度` 的真實定址。段內偏移 ＋ 0x80 ＝ 區塊偏移。
 TABLE_SEG, TABLE_OFF = 0x2754, 0x80
 TABLE_LEN = 0x5220                           # 勢力 ＋ 據點 ＋ 軍團 ＋ 武將
+# ⚠ **事件佇列在第三個段**（`cs:word_10D56`，實測 0x2514），
+# 不在四張表那一段裡。它是區塊的最後 1,024 B（256 筆 × 4 B）——
+# `0x52C0 + 0x400 = 0x56C0 = BLOCK`。
+#
+# ⭐ 少了它，檢查點的佇列是從來源 `SAVE.DAT` **模板**複製的，
+# 而佇列決定「哪一天會發生什麼」（宣戰、遷都、合作、停戰、撥款）。
+# 拿模板去比 remake 的活狀態，看到的是「模板 vs 執行期」
+# （docs/playtest/119 §44）。
+#
+# 兩個段值都是執行期動態配置的，重取時用
+# `ipeek:10D56:2`（佇列）與 `ipeek:10D52:2`（四張表）確認。
+QUEUE_SEG, QUEUE_OFF = 0x2514, 0x52C0
+QUEUE_LEN = 0x400                            # 256 筆 × 4 B
 
 
 def chunks():
@@ -47,6 +60,11 @@ def chunks():
     while off < TABLE_LEN:
         n = min(CHUNK, TABLE_LEN - off)
         out.append((f"{TABLE_SEG:04X}:{off:04X}", TABLE_OFF + off, n))
+        off += n
+    off = 0
+    while off < QUEUE_LEN:
+        n = min(CHUNK, QUEUE_LEN - off)
+        out.append((f"{QUEUE_SEG:04X}:{off:04X}", QUEUE_OFF + off, n))
         off += n
     return out
 
@@ -84,13 +102,22 @@ def selftest() -> int:
           cs[1][0].startswith("2754:") and cs[1][1] == TABLE_OFF)
     check("四張表總長 0x5220",
           sum(n for k, _, n in cs if k.startswith("2754:")) == TABLE_LEN)
+    check("事件佇列走 peek:2514 且落在區塊 +0x52C0",
+          any(k.startswith("2514:") and o == QUEUE_OFF for k, o, _ in cs))
+    check("事件佇列總長 0x400",
+          sum(n for k, _, n in cs if k.startswith("2514:")) == QUEUE_LEN)
+    check("佇列剛好貼到區塊尾端", QUEUE_OFF + QUEUE_LEN == BLOCK)
     check("⚠ 不覆蓋整個區塊（未解區域保留來源）",
           sum(n for _, _, n in cs) < BLOCK)
+    # 負對照：三段不能重疊，否則後寫的會蓋掉前面。
+    spans = sorted((o, o + n) for _, o, n in cs)
+    check("負對照：三段互不重疊",
+          all(spans[i][1] <= spans[i + 1][0] for i in range(len(spans) - 1)))
 
     text = "\n".join(f"   {k} = " + " ".join(f"{(i % 256):02X}" for i in range(n))
                      for k, _, n in cs)
     got = parse(text)
-    check("兩段都解出來", 0 in got and TABLE_OFF in got)
+    check("三段都解出來", 0 in got and TABLE_OFF in got and QUEUE_OFF in got)
     check("全域段長度正確", len(got[0]) == GLOBAL_LEN)
     check("內容照位址順序", got[0][:4] == bytes([0, 1, 2, 3]))
     # 負對照：少一段就要報錯，不能默默補零。

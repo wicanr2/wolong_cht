@@ -162,12 +162,24 @@ remake **不必再給任何游標旗標**，第一個分歧從拍 24 推到 **78
 > 看起來是退步，真正的比較「369 → 332」是改善
 > （[`docs/playtest/119`](docs/playtest/119-rng-pace-comparison.md) §33.1）。
 
-### ⭐⭐⭐ 2026-09-10 這一輪（同局面對拍：四張表對到 5 月 3 日）
+### ⭐⭐⭐ 2026-09-10 這一輪（同局面對拍：**五張表**對到拍 4,910）
 
-**二十個檢查點（拍 200 … 3,400）的據點、勢力、軍團、全域四張表全部逐 byte 相同**
-——也就是從 196 年 4 月 16 日 16 時的快照起跑，對到 **5 月 3 日 2 時**。
-逐拍取數不一致從 305 降到 **113 / 5,480（2.1%）**，第一個分歧從拍 307
-推到 **3,415**。
+**二十二個檢查點（拍 200 … 4,910）的據點、勢力、軍團、全域、事件佇列
+五張表全部逐 byte 相同**——從 196 年 4 月 16 日 16 時的快照起跑。
+逐拍取數不一致從 305 降到 **17 / 5,480（0.3%）**，第一個分歧從拍 307
+推到 **4,911**（同一場攻城戰的勝負判定相反）。
+
+⭐ **第五張表（事件佇列）以前從來沒真的比過。** `orig_snapshot.py` 只拼
+全域與四張表，佇列那一段是從原版 `SAVE.DAT` **模板**複製的——
+「三份佇列逐 byte 相同」是必然，沒有證據力。補上 `peek:2514`
+（`cs:word_10D56`）之後才是活狀態（`docs/playtest/119` §44、§45）。
+
+⛔ **而最後一課是：逐拍取數比對只比次數，不比序列。** 5/1 月結那一拍
+兩邊都是 647 次，指標一片綠，實際上原版把政略（`sub_12BD9`）排在災害
+之前、remake 排在之後，647 個亂數值全部餵給了別的判斷
+（[`spec/185`](docs/spec/185-monthly-settlement-call-order.md)）。
+`parity_pace_diff.py --tick N` 現在把兩邊的呼叫來源逐筆並排。
+同一個形狀還有第二種：**行軍根本不取亂數**，所以那一欄對它結構上是盲的。
 
 | 修的東西 | 第一個分歧 |
 |---|---|
@@ -176,7 +188,10 @@ remake **不必再給任何游標旗標**，第一個分歧從拍 24 推到 **78
 | ＋ `sub_147BB` 的兩半、軍費士氣閘、`Corps.Node` 五處（[`177`](docs/spec/177-replan-on-leg-not-from-city.md)／[`178`](docs/spec/178-upkeep-and-morale-gate-is-on-leg.md)）| 拍 2,455 |
 | ＋ 位元 1 的延後重算、戰後重算、到站判準（[`179`](docs/spec/179-recalc-on-battle-and-arrival-test.md)）| 拍 3,304 |
 | ＋ 調兵的 `want` 數候選不數選中（[`180`](docs/spec/180-relief-dispatch-want-counts-candidates.md)）| 拍 3,415 |
-| ＋ AI 募兵節制、月結順序（[`181`](docs/spec/181-ai-recruit-gate-and-monthly-globals.md)／[`182`](docs/spec/182-monthly-settlement-before-hourly.md)）| 拍 **3,415**（四張表對到 3,400）|
+| ＋ AI 募兵節制、月結順序（[`181`](docs/spec/181-ai-recruit-gate-and-monthly-globals.md)／[`182`](docs/spec/182-monthly-settlement-before-hourly.md)）| 拍 3,415（四張表對到 3,400）|
+| ＋ 佔用圖增量維護、調兵的 `want` 恆為 1（[`183`](docs/spec/183-occupancy-map-incremental.md)／[`184`](docs/spec/184-relief-dispatch-want-is-always-one.md)）| 拍 3,566 |
+| ＋ 事件佇列進第五張表、**月結內部的呼叫順序**、挑目標的「亂數 & 3」是步數（[`185`](docs/spec/185-monthly-settlement-call-order.md)）| 拍 4,750 |
+| ＋ `+0x0E` 在中繼據點換記法、位元 0 在「問擋不擋」之前就寫好（[`../re/34`](docs/re/34-corps-status-bits.md) §2.05）| 拍 **4,911**（五張表對到 4,910）|
 
 **這一輪最貴的一課：勢力表與全域欄位從來沒被比過。** 預備兵從 5 月 1 日的
 月結起一路偏高，而症狀出現在五百拍之後某支軍團補兵時每槽多分 4 個兵。

@@ -46,13 +46,13 @@ for t in "${ticks[@]}"; do
     f=$(tools/py.sh tools/faction_diff.py "$orig" "$CK/remake-$t.DAT" | grep 合計)
     g=$(tools/py.sh tools/global_diff.py "$orig" "$CK/remake-$t.DAT" | grep 合計)
     e=$(tools/py.sh tools/event_diff.py "$orig" "$CK/remake-$t.DAT" | grep 合計)
-    # ⚠ 佇列**只印不判**：`tools/orig_snapshot.py` 只拼「全域 ＋ 四張表」，
-    #    事件佇列（`+0x52C0`）那一段是從原版 `SAVE.DAT` **模板**來的，
-    #    不是執行期的內容——比它等於拿模板對 remake 的活狀態
-    #    （worklist `event-queue-not-peeked`）。要判就得先 peek 那一段。
-    printf '拍 %-5s 游標 %-4s 跑 %-5s 據點 %-18s 勢力 %-20s 軍團 %-34s 全域 %-18s 佇列 %s（原版側是模板）\n' \
+    # ⭐ 佇列**也判**：`tools/orig_snapshot.py` 已經走 `peek:2514` 把
+    #    事件佇列（`+0x52C0`）那 1,024 B 從執行期記憶體讀回來，不再是
+    #    來源 `SAVE.DAT` 的模板（docs/playtest/119 §44）。⚠ 用舊快照或
+    #    舊檢查點跑會在這一欄看到假差異——重取一次再判。
+    printf '拍 %-5s 游標 %-4s 跑 %-5s 據點 %-18s 勢力 %-20s 軍團 %-34s 全域 %-18s 佇列 %s\n' \
         "$t" "$cur" "$n" "$c" "$f" "$p" "${g%%（*}" "${e%%，*}"
     [[ "$c$f$p$g" == *"0 個 byte／0 座"*"0 個 byte／0 個勢力"*"0 個 byte／0 支"* \
-        && "$g" == "合計 0 個 byte"* ]] || fail=1
+        && "$g" == "合計 0 個 byte"* && "$e" == "合計 0 筆"* ]] || fail=1
 done
 exit $fail

@@ -1144,15 +1144,11 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 		c.Production, c.Growth = cs.Production, cs.Growth
 	}
 
-	// ③ 災害。
+	// ③ 災害的骰子**不在這裡**——原版 `sub_15358` 把 `sub_122DB`
+	//    （暴風雨）與 `sub_12286`（逐據點火災／暴動）排在 `sub_12BD9`
+	//    的政略評估與兩支撥款請求**之後**（docs/spec/185 §1）。
+	//    提前骰會讓同一拍的亂數次數相同而值全部錯位。
 	ev.Disaster = map[int]economy.Disaster{}
-	for i := range w.Cities {
-		c := &w.Cities[i]
-		if d := economy.RollCityDisaster(c.Prevention, c.Growth+100, rng); d != economy.NoDisaster {
-			ev.Disaster[i] = d
-		}
-	}
-	ev.Storm = economy.RollStorm(cities, rng)
 
 	// 原版 sub_12BD9 緊接月結經濟處理後壓縮事件佇列，並重設
 	// `word_10D20`／`byte_131AD`。已證實的 queue 邊界先照原版保存，避免
@@ -1171,45 +1167,65 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 		}
 	}
 	w.compactEventQueue()
-	// 原版 sub_15358 在月結壓縮後先跑 sub_15715／sub_1578F，將玩家
-	// 內政官／外交官的撥款請求放進事件佇列，再進入其他政略評估。
-	if w.Player >= 0 && w.Player < numFactions {
-		w.queueFundingRequests(rng)
-	}
-	// 暴風雨與火災／暴動也是月結產生的事件：sub_122DB 先寫事件 11，
-	// sub_12286 再按據點順序寫事件 0x010C／0x020C。事件 12 的 Param
-	// 保存原版 runtime city record 位址，不把檔案偏移或 city ID 偷換進去。
-	w.stormArea = ev.Storm
-	if ev.Storm != nil {
-		w.queueEvent(rng, 0, 11, 0, 0xFF)
-	}
-	for i := range w.Cities {
-		d, ok := ev.Disaster[i]
-		if !ok {
-			continue
-		}
-		variant := 0
-		if d == economy.Fire {
-			variant = 1
-		} else if d == economy.Riot {
-			variant = 2
-		} else {
-			continue
-		}
-		param := uint16(runtimeCityBase + i*citySize)
-		w.queueEvent(rng, variant, 12, param, 0xFF)
-	}
 
-	// 原版 sub_12BD9 在月結的經濟處理之後跑政略評估。宣戰／遷都決策先
-	// 寫入 queue，再由每小時的 sub_131AE 邊界逐筆處理；其餘尚未解出的
-	// handler 仍不在這個轉接層裡。每一筆決策仍只使用已由機器碼確認的
-	// 欄位與比較式。
+	// ⭐ **政略排在撥款請求與災害之前**（原版 `sub_15358` 的
+	//    `sub_12BD9` → `sub_15715` → `sub_1578F` → `sub_122DB` →
+	//    `sub_12286`，docs/spec/185 §1）。這個順序不是風格問題——
+	//    月結那一拍取的亂數有數百次，順序一錯，次數還是對得上
+	//    而每一個值都跑到別的判斷裡去了。
+	//
+	//    宣戰／遷都決策先寫入 queue，再由每小時的 sub_131AE 邊界逐筆
+	//    處理；其餘尚未解出的 handler 仍不在這個轉接層裡。每一筆決策
+	//    仍只使用已由機器碼確認的欄位與比較式。
 	if w.strategicAI {
 		strategyEvents, relocated := w.runStrategicAI(rng)
 		ev.Strategy = append(ev.Strategy, strategyEvents...)
 		if len(relocated) > 0 {
 			ev.Relocated = relocated
 		}
+	}
+
+	// 原版 sub_15358 在政略評估之後跑 sub_15715／sub_1578F，將玩家
+	// 內政官／外交官的撥款請求放進事件佇列。
+	if w.Player >= 0 && w.Player < numFactions {
+		w.queueFundingRequests(rng)
+	}
+
+	// sub_122DB：暴風雨。⭐ **槽位提示是算出來的，不是 0xFF**
+	//（`(亂數&7 ＋ 8) × 4`），所以 `queueEvent` 走 `bl × 4` 那一支、
+	// 內部不再取亂數；而且**入佇列失敗就不設範圍**（`jb loc_1237A`）。
+	ev.Storm = economy.RollStorm(cities, rng)
+	if ev.Storm != nil {
+		slot := byte((rng.Next()&7 + 8) * 4)
+		if w.queueEvent(rng, 0, 11, 0, slot) {
+			w.stormArea = ev.Storm
+		} else {
+			ev.Storm = nil
+		}
+	} else {
+		w.stormArea = nil
+	}
+
+	// sub_12286：逐據點的火災／暴動。⭐ **骰子與入佇列是交錯的**——
+	// 每一座骰完就當場寫佇列，而 `queueEvent` 在 slotHint ＝ 0xFF 時
+	// 自己會取一次亂數，那一次就夾在兩座據點的骰子之間。
+	// 事件 12 的 Param 保存原版 runtime city record 位址，
+	// 不把檔案偏移或 city ID 偷換進去。
+	for i := range w.Cities {
+		c := &w.Cities[i]
+		d := economy.RollCityDisaster(c.Prevention, c.Growth+100, rng)
+		variant := 0
+		switch d {
+		case economy.Fire:
+			variant = 1
+		case economy.Riot:
+			variant = 2
+		default:
+			continue
+		}
+		ev.Disaster[i] = d
+		param := uint16(runtimeCityBase + i*citySize)
+		w.queueEvent(rng, variant, 12, param, 0xFF)
 	}
 
 	// 原版 event 10 的自然 writer 仍未知。remake 在所有已證實的月結／

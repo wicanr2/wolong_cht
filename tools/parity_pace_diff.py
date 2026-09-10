@@ -2,7 +2,13 @@
 """把 dosgolem 的 `-watch` 記錄切成子刻，逐拍與 remake 的取數序列比對。
 
     tools/py.sh tools/parity_pace_diff.py 原版.log remake_seq.txt [--skip-orig N]
+    tools/py.sh tools/parity_pace_diff.py 原版.log remake_seq.txt --tick 2967
     tools/py.sh tools/parity_pace_diff.py --selftest
+
+⛔ **這支只比「這一拍取了幾次」，不比取數的來源。** 順序錯位而次數相同時
+它一片綠——2026-09-10 的月結就是這樣：`sub_12BD9` 的政略在原版排在災害
+之前，remake 排在之後，兩邊都是 647 次，`--tick 2967` 並排才看得出來
+（docs/spec/185）。**下「這一拍一致」的結論之前，先用 `--tick` 看一次序列。**
 
 ⚠ **兩邊的第 1 拍不一定是同一拍。** 原版側的 `-watch` 常常比快照早開始
 記錄，實測差 **27 個子刻**。沒有對齊就比，會得到一個「看起來很像規則差異」
@@ -326,6 +332,11 @@ def main():
         i = args.index("--skip-orig")
         base = int(args[i + 1])
         del args[i:i + 2]
+    only = None
+    if "--tick" in args:
+        i = args.index("--tick")
+        only = int(args[i + 1])
+        del args[i:i + 2]
     ticks, clocks = parse(open(args[0], encoding="utf-8", errors="replace").read())
     if from_step:
         base = next(i for i, t in enumerate(ticks) if t["step"] > from_step)
@@ -356,6 +367,19 @@ def main():
             print(f"⚠ 據點游標在第 {drift[0]} 拍脫節：原版 {drift[1]}、remake {drift[2]}"
                   f"——之後的逐拍比對沒有意義")
     n = min(len(ticks) - base, len(remake))
+    if only is not None:
+        k = only - 1
+        if not 0 <= k < n:
+            print(f"拍 {only} 不在可比區間（1–{n}）")
+            return 2
+        o = ticks[base + k]
+        a, b = o["rng"], rwhere[k] if k < len(rwhere) else []
+        print(f"拍 {only} 據點 {o['city']}：原版 {len(a)} 次、remake {len(b)} 次")
+        for i in range(max(len(a), len(b))):
+            x = a[i] if i < len(a) else "—"
+            y = b[i] if i < len(b) else "—"
+            print(f"  {i:3d}  {x:<8} {y}")
+        return 0
     bad = []
     for k in range(n):
         o = ticks[base + k]

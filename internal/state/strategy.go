@@ -89,7 +89,8 @@ func (w *World) runStrategicAI(rng economy.Rand) ([]StrategyEvent, map[int]int) 
 	}
 
 	// 先做每個勢力的月度交友度漂移。原版緩衝區已建好，所以後面的
-	// 目標排序不重新排列；宣戰事件也延後到本輪評估完才套用。
+	// 目標排序不重新排列。
+	var out []StrategyEvent
 	for i := range w.Factions {
 		if !w.Factions[i].Alive {
 			continue
@@ -105,48 +106,55 @@ func (w *World) runStrategicAI(rng economy.Rand) ([]StrategyEvent, map[int]int) 
 		// 產生器讀取的交友度與國力是此刻的 live state。
 		w.queueCooperationProposal(rng, i, orders[i])
 		w.queueCeasefireProposals(rng, i, orders[i])
+		w.queueDeclaration(rng, i, orders[i], &out)
 	}
 
-	type declaration struct{ faction, target int }
-	var declarations []declaration
-	for i := range w.Factions {
-		if !w.Factions[i].Alive || len(orders[i]) == 0 {
-			continue
-		}
-		first := orders[i][0]
-		fr := w.Friendship[i][first.Faction]
-		f := &w.Factions[i]
-
-		// 已有目標時，原版尾段要求排序後第一筆確實是交戰中的
-		// 最敵對鄰居，否則把 +0x19 快取清回 0xFF。沒有目標時，
-		// sub_12EFB 會直接用第一筆候選跑三道閘；事件稍後才把和平
-		// 轉成交戰，所以這裡不能先用 AtWar() 把新宣戰擋掉。
-		if f.InvasionTarget != diplomacy.NoTarget {
-			if f.InvasionTarget != first.Faction || !fr.AtWar() {
-				f.InvasionTarget = diplomacy.NoTarget
-			}
-			continue
-		}
-		if i == w.Player {
-			continue
-		}
-		self, target := w.strategyFaction(i), w.strategyFaction(first.Faction)
-		if strategyai.ShouldDeclareWar(self, target, strategyai.Candidate{
-			Faction: first.Faction, Friendship: fr,
-		}) {
-			declarations = append(declarations, declaration{faction: i, target: first.Faction})
-		}
-	}
-
-	var out []StrategyEvent
-	for _, d := range declarations {
-		// sub_12EFB 發的是事件 1；不要在月結邊界直接改寫 +0x19
-		// 或交友度，否則會跳過 sub_131AE 的每十次節拍。
-		if w.queueEvent(rng, d.faction, 1, uint16(0xFF00|d.target), 0xFF) {
-			out = append(out, StrategyEvent{Faction: d.faction, Target: d.target, Corps: -1, Destination: -1})
-		}
-	}
 	return out, nil
+}
+
+// queueDeclaration 是 sub_12EFB 的宣戰產生端。
+//
+// ⭐ **它跑在 sub_12D58 的同一個勢力迴圈裡**，緊接在 sub_12E33（合作）
+// 與 sub_12E89（停戰）之後——不是等 22 個勢力全部評估完再一起發。
+// 拆成獨立迴圈會讓「勢力 2 的合作」排在「勢力 0 的宣戰」前面，
+// 於是兩者拿到的佇列槽位互換（同局面 5/1 月結，docs/spec/185 §2）。
+//
+// 而且尾段那個「把 +0x19 清回哨兵」**會當場改狀態**，後面勢力的
+// 合作／停戰產生器讀的就是改過的值——那也是原版的行為。
+func (w *World) queueDeclaration(rng economy.Rand, i int, ordered []strategyai.Candidate,
+	out *[]StrategyEvent) {
+	if len(ordered) == 0 {
+		return
+	}
+	first := ordered[0]
+	fr := w.Friendship[i][first.Faction]
+	f := &w.Factions[i]
+
+	// 已有目標時，原版尾段要求排序後第一筆確實是交戰中的
+	// 最敵對鄰居，否則把 +0x19 快取清回 0xFF。沒有目標時，
+	// sub_12EFB 會直接用第一筆候選跑三道閘；事件稍後才把和平
+	// 轉成交戰，所以這裡不能先用 AtWar() 把新宣戰擋掉。
+	if f.InvasionTarget != diplomacy.NoTarget {
+		if f.InvasionTarget != first.Faction || !fr.AtWar() {
+			f.InvasionTarget = diplomacy.NoTarget
+		}
+		return
+	}
+	if i == w.Player {
+		return
+	}
+	self, target := w.strategyFaction(i), w.strategyFaction(first.Faction)
+	if !strategyai.ShouldDeclareWar(self, target, strategyai.Candidate{
+		Faction: first.Faction, Friendship: fr,
+	}) {
+		return
+	}
+	// sub_12EFB 發的是事件 1；不要在月結邊界直接改寫 +0x19
+	// 或交友度，否則會跳過 sub_131AE 的每十次節拍。
+	if w.queueEvent(rng, i, 1, uint16(0xFF00|first.Faction), 0xFF) {
+		*out = append(*out, StrategyEvent{
+			Faction: i, Target: first.Faction, Corps: -1, Destination: -1})
+	}
 }
 
 // queueCooperationProposal 重現 sub_12E33 的事件 2 產生端。
@@ -698,7 +706,24 @@ func (w *World) relieve(site int, r threat.Result, rng economy.Rand) []TalkNotic
 	if len(r.Targets) == 0 {
 		return nil
 	}
-	pick := r.Targets[rng.Next()&3%len(r.Targets)]
+	// ⭐ **`dec al` 在空槽檢查之後**，所以「亂數 & 3」是**步數**不是索引：
+	//
+	//	loc_14062: mov di, bp                       ; 掃到空槽就從頭再來
+	//	loc_14064: cmp byte ptr ss:[di], 0FEh / jnb loc_14062
+	//	           dec al / jz loc_14073            ; 減到 0 才選中
+	//	           add di, 4 / jmp loc_14064
+	//
+	// `al` ＝ 1／2／3 各走 1／2／3 步；**`al` ＝ 0 時 `dec` 得到 `0FFh`**，
+	// 要繞 256 步才回到 0。緩衝區只有前幾格非空，繞回開頭時是取模——
+	// 所以選中的是第 `(步數 − 1) mod n` 格。
+	//
+	// ⛔ 寫成 `亂數 & 3 % n` 在 n ＝ 1 時剛好相同，n ≥ 2 就分岔
+	// （同局面拍 4,700–4,750：軍團 35 被派去據點 74 而原版是 88）。
+	steps := rng.Next() & 3
+	if steps == 0 {
+		steps = 256
+	}
+	pick := r.Targets[(steps-1)%len(r.Targets)]
 	if c.Occupancy <= 1 {
 		// ⚠ 這一條**玩家的據點不走**（原版 `cmp cl, [si+841h] / jz 結束`）。
 		// 玩家只從上面那條貼身威脅的路徑收到求援訊息。

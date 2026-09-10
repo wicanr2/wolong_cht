@@ -21,6 +21,10 @@ for off in 0000 0800 1000 1800 2000 2800 3000 3800 4000 4800; do
     PEEKS="$PEEKS;peek:2754:$off:2048"
 done
 PEEKS="$PEEKS;peek:2754:5000:544"
+# ⚠ 事件佇列在**第三個段**（`cs:word_10D56`，實測 0x2514），區塊的最後
+# 1,024 B。少了它，檢查點那一段是從來源 `SAVE.DAT` 模板複製的
+# （docs/playtest/119 §44）。
+PEEKS="$PEEKS;peek:2514:0000:1024"
 
 for t in "$@"; do
     steps=$((t * STEPS_PER_TICK))

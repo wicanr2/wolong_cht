@@ -789,6 +789,18 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 				c.Replan = false
 				w.replanOnLeg(i)
 			}
+			// ⭐ **位元 0 在「問擋不擋」之前就寫好了。**
+			// `sub_12662` 的 `loc_126F2` 走 `sub_126FF`（`or [si], 1`
+			// ＋ 路徑指標前進），而 `sub_126FF` **尾端落空**到
+			// `sub_12708`——也就是先設旗標、再問下一格擋不擋
+			// （docs/re/34 §2.05）。剛從據點出發那一步走的是
+			// `loc_126C0`，直接進 `sub_12708`，位元 0 維持 0。
+			//
+			// ⇒ 判準是**移動前**的 `+0x0E`：`≥ 800h`（在邊上）設、
+			// `< 800h`（站在據點上）清。把它擺到 `standoffBlocks`
+			// 之後就會漏掉「對峙那一拍」——原版那時已經設好了
+			// （同局面拍 4,900 的軍團 73）。
+			c.OnPath = c.LinkAddr != 0
 			if w.standoffBlocks(i, &ev, rng) {
 				// ⭐ **踏進去之前先問**（`sub_12708`）：下一格被敵方軍團
 				// 佔著或是別人的據點，這一拍就**不動**——設位元 5、
@@ -855,12 +867,8 @@ func (w *World) step(i int) bool {
 	if cells := w.routes[i]; len(cells) > 0 {
 		next := cells[0]
 		w.routes[i] = cells[1:]
-		// `+0x00` 位元 0 ＝「**這一步是從路段中間走出來的**」。
-		// 原版 `sub_147BB` 在每次要移動時重寫它，看的是**移動前**的
-		// `+0x0E`：站在據點上（< `800h`）重新選路就 `and [si],0FEh`
-		// **清掉**，已經在路段上才走那三個 `or [si],1` 分支設起來
-		// （docs/spec/173 §1.1）。所以出發那一拍是 0，下一拍才變 1。
-		c.OnPath = c.LinkAddr != 0
+		// ⚠ 位元 0 **不在這裡維護**——原版寫它的是 `sub_147BB`，
+		// 而那一支不是每拍都跑（docs/re/34 §2.05）。維護點在呼叫端。
 		// 同步吃掉一格標記：原版每走一步就 `bx += [si+0Ah]` 再寫回 `+0x0C`。
 		var head = -1
 		if mk := w.routeMarks[i]; len(mk) > 0 {
@@ -901,8 +909,20 @@ func (w *World) step(i int) bool {
 		w.enterCell(c.X, c.Y)
 		// 踩到某個據點的座標就算抵達那個據點。中繼據點也要更新，
 		// 不然攻城、遭遇這些判定會在錯的地方觸發。
+		//
+		// ⭐ **中繼據點也要把 `+0x0E` 換回據點編號 × 8。** 原版
+		// `sub_127A2` 走完一條連結就 `mov [si+0Eh], bx`，而 `bx < 600h`
+		// 時那就是據點節點——它不分「中途經過」與「終點」。下一拍
+		// `sub_147BB` 的 `bx < 800h` 那一半再重新選路、寫新的連結位址
+		// 並 `and [si], 0FEh` 清掉位元 0（`loc_14869`）。
+		//
+		// 少了這一步，remake 一路記著連結位址走完全程，於是
+		// `+0x0E` 與位元 0 在每個中繼據點都與原版差一拍
+		// （同局面拍 4,750：軍團 4 的 `+0x0E`、軍團 89 的位元 0）。
+		// 連帶影響軍費與士氣——站在據點上那一拍不算在野外。
 		if n := w.cityAt(next[0], next[1]); n >= 0 {
 			c.Node = n
+			c.LinkAddr = 0
 		}
 		if len(w.routes[i]) == 0 {
 			c.Node = c.TargetNode

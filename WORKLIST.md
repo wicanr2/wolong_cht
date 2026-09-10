@@ -62,7 +62,7 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 
 <!-- worklist:begin 由 tools/worklist.py render 產生，不要手改 -->
 
-共 **11 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
+共 **10 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
 
 跑 `tools/py.sh tools/worklist.py verify` 逐條問一次；`check.sh` 會替你跑。
 
@@ -86,31 +86,21 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 
 **verify**：`present` `/音色的諧波結構沒量化比對/` 在 `README.md`
 
-#### 拍 3,566：remake 的求援目標清單是空的
+#### 拍 4,911：同一場攻城戰的勝負判定相反
 
-同局面對拍的第一個分歧。據點 88：原版取了 `sub_14057` 的挑目標亂數（`14060`），remake 完全沒取 ⇒ `relieve` 在 `len(r.Targets) == 0` 就返回了。
+十九個檢查點（拍 200 … 4,910）五張表全 0 之後的第一個分歧。
 
-`Targets` 的條件是 `invasionTarget != NoTarget && n.Owner == invasionTarget`（`threat.Scan`）。所以是**侵攻目標**或**鄰居歸屬**兩者之一不同——拍 3,420 的四張表還是逐 byte 相同，所以差異在那之後的 146 拍內。
+拍 4,910 戰前兩邊完全相同：軍團 1（勢力 11）兵力 585／士氣 195，軍團 11（勢力 14，守據點 2）兵力 532／士氣 98。逐拍取數的前 17 筆也逐筆對上（`sub_152D7` ×2 ＋ `sub_151B3` 的 12 次逐槽扣兵）。
 
-⚠ 另外還有一個已知的不等價：挑目標的位置。原版 `al` 初值為 0 時 `dec al` → `0FFh`，要繞 255 步（掃到空槽會 `mov di, bp` 從頭再來）才回到 0；remake 是 `亂數 & 3 % len(Targets)`。目標只有一個時兩者相同，多個時會分岔（docs/spec/184 §4）。
+**結果相反**：原版的軍團 1 掉 116 兵（585→469）＝ 敗方，remake 只掉 20 兵（585→565）＝ 勝方，還攻下了據點 2（`+0x01` 由 14 變成 11）並消滅守軍軍團 11（多擲一次 `RollFate`）。
 
-**怎樣算做完**：`tools/parity_ck.sh` 在拍 3,566 之後仍是四張表 0；逐拍取數的第一個分歧往後推。
+⇒ 差在 `sub_15130` 的 `cmp cx, dx`，也就是 `sub_15285`（基礎戰力）或 `sub_152D7`（將領修正）。守城方在 `sub_15285` 裡**又加了一次**`[bx+13h]`（城兵數，`docs/re/09` §3.1）——那是最可能的落點。
 
-**verify**：`present` `/remake 的 `Targets` 是空的/` 在 `docs/spec/184-relief-dispatch-want-is-always-one.md`
+⚠ `sub_1474A` 的壞滅 STC 在自動判定這條路**沒有消費端**：`sub_14E5C`／`sub_14ED7` 呼叫 `sub_15130` 之後完全不看回傳值，軍團的消滅是 `sub_14A7B`／`sub_14ADE` 自己判的。
 
-#### 同局面對拍的第五張表：事件佇列還沒 peek
+**怎樣算做完**：`tools/parity_ck.sh` 在拍 4,930 與 4,950 的五張表都是 0。
 
-`tools/orig_snapshot.py` 只拼兩段——全域 59 B（`ipeek:10CF0`）與四張表（`peek:2754`，`TABLE_LEN = 0x5220`）。**事件佇列（區塊 `+0x52C0`，256 筆 × 4 B）不在裡面**，所以檢查點那一段是從原版 `SAVE.DAT` **模板**複製來的。
-
-⇒ `tools/event_diff.py` 現在比的是「模板 vs remake 的執行期」，不是「原版 vs remake」。拍 200／1,900 顯示 0 筆只是因為 remake 那時還沒動過佇列；月結（5/1）一壓縮就差 16 筆，而那 16 筆**看不出誰對**。
-
-佇列在另一個段：`cs:word_10D56`（`docs/re/15` §3.3）。要 peek 得先讀出那個段值——`sub_100DF` 建立它。
-
-⚠ 這張表值得補：它決定「哪一天會發生什麼」（宣戰、遷都、合作、停戰、撥款），而拍 3,500 的兩個狀態差異（勢力 0 的侵攻目標沒設、勢力 19 遷都到不同據點）都指向它。
-
-**怎樣算做完**：`orig_snapshot.py` 把佇列那一段也 peek 進來；`tools/parity_ck.sh` 把佇列納入 fail 判定，而且既有的檢查點仍然全 0。
-
-**verify**：`present` `/原版側是模板/` 在 `tools/parity_ck.sh`
+**verify**：`present` `/同一場攻城戰的勝負判定相反/` 在 `docs/spec/185-monthly-settlement-call-order.md`
 
 ### fidelity — 原版有這個機制，remake 還沒建模
 
