@@ -218,12 +218,14 @@ func (p *Provider) neighbours(node int) (battlefield.Neighbours, bool) {
 		}
 		return battlefield.Terrain(t)
 	}
+	// ⭐ 五格是**以那一格為中心的十字**（docs/spec/196 §1）：
+	// `sub_14B63` 的 `sub dx, 18h` 讓整組往上位移一列。
 	return battlefield.Neighbours{
-		Centre:    at(0, 0),
-		Down:      at(0, 1),
-		DownLeft:  at(-1, 1),
-		DownRight: at(1, 1),
-		TwoDown:   at(0, 2),
+		Up:     at(0, -1),
+		Left:   at(-1, 0),
+		Right:  at(1, 0),
+		Centre: at(0, 0),
+		Down:   at(0, 1),
 	}, true
 }
 

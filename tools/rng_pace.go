@@ -134,6 +134,10 @@ func main() {
 		os.Exit(1)
 	}
 	w.SetRoads(march.New(len(w.Cities), world.MarchEdges(edges, xy)))
+	// ⭐ 野戰開打前要照 `sub_14B63` 取樣地形決定戰場，水域那一格會
+	// **擲一次骰**（docs/spec/196）。沒接上就少一次亂數，之後全錯位。
+	w.SetTerrain(func(x, y int) byte { t, _ := lib.World.Tile(x, y); return t })
+	wired = append(wired, "地形圖（野戰的戰場骰）")
 	// ⭐ 夾具要說得出自己的狀態：還原不了的軍團會**不動**（docs/spec/172 §4.5），
 	// 而不動與「原版也沒動」在取數序列上長得一樣。
 	wired = append(wired, fmt.Sprintf("道路圖 %d 條邊（行軍還原 %d 支、還原不了 %d 支）",

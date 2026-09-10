@@ -74,8 +74,20 @@ const plainFallback = 6
 //	DownLeft   +384 − 1
 //	DownRight  +384 + 1
 //	TwoDown    +768
+// ⭐ **五格是以軍團所在格為中心的十字**，不是「本格加下方一片」。
+// `sub_14B63` 在算 `ds` 時 `sub dx, 18h`——一列 24 段 ＝ 0x180 byte——
+// 所以整組取樣**往上位移一列**（docs/spec/196 §1）：
+//
+//	[bx]      ＝ (X, Y−1)  上
+//	[bx+17Fh] ＝ (X−1, Y)  左
+//	[bx+181h] ＝ (X+1, Y)  右
+//	[bx+180h] ＝ (X,   Y)  **中心** ← 分流看這一格
+//	[bx+300h] ＝ (X, Y+1)  下
+//
+// ⚠ 舊版把它讀成「本格、左下、正下、右下、再下一列」，
+// 因為 `docs/re/05` 抄了 `sub dx, 18h` 那一行卻沒有把它算進去。
 type Neighbours struct {
-	Centre, Down, DownLeft, DownRight, TwoDown int
+	Up, Left, Right, Centre, Down int
 }
 
 // Select 依周圍地形挑一張野戰的戰場。
@@ -91,7 +103,7 @@ func Select(dir int, n Neighbours) (field int, rotate bool) {
 // ⭐ 只有**類型 8**（碼頭，圖塊 `0xCA`）要——`sub_14C1A` 在那一支才呼叫
 // `sub_1ECE0`。類型 9 是固定值。**不要無條件抽**：多抽一次會讓整條
 // 亂數流錯位，而戰術與戰略共用同一條。
-func NeedsWaterRoll(n Neighbours) bool { return n.Down == 8 }
+func NeedsWaterRoll(n Neighbours) bool { return n.Centre == 8 }
 
 // SelectWith 是帶亂數的版本。roll 只有 `NeedsWaterRoll` 為真時會用到。
 //
@@ -99,8 +111,8 @@ func NeedsWaterRoll(n Neighbours) bool { return n.Down == 8 }
 // 而戰場只有 0–213（`NumFields`），呼叫端會退回合成戰場。
 // 原版走的是 `sub_14C1A`（docs/spec/121）。
 func SelectWith(dir int, n Neighbours, roll int) (field int, rotate bool) {
-	// 正下方那一格決定走哪一條路（`sub_14B63` 的三分）。
-	switch b := n.Down; {
+	// **中心格**決定走哪一條路（`sub_14B63` 的三分）。
+	switch b := n.Centre; {
 	case b == 0:
 		return plainField(dir, n)
 	case b >= 8:
@@ -116,22 +128,22 @@ func SelectWith(dir int, n Neighbours, roll int) (field int, rotate bool) {
 //
 // **哪兩格由行進方向決定**：
 //
-//	0     兩格下方 ＋ 中心
-//	1     中心 ＋ 兩格下方   （順序相反）
-//	2     左下 ＋ 右下
-//	3     右下 ＋ 左下       （順序相反）
-//	其餘  左下 ＋ 右下
+//	0     下 ＋ 上
+//	1     上 ＋ 下     （順序相反）
+//	2     左 ＋ 右
+//	3     右 ＋ 左     （順序相反）
+//	其餘  左 ＋ 右
 func plainField(dir int, n Neighbours) (int, bool) {
 	var a, b int
 	switch dir {
 	case 0:
-		a, b = n.TwoDown, n.Centre
+		a, b = n.Down, n.Up
 	case 1:
-		a, b = n.Centre, n.TwoDown
+		a, b = n.Up, n.Down
 	case 3:
-		a, b = n.DownRight, n.DownLeft
+		a, b = n.Right, n.Left
 	default:
-		a, b = n.DownLeft, n.DownRight
+		a, b = n.Left, n.Right
 	}
 	for _, p := range plainPairs {
 		if p.A == a && p.B == b {

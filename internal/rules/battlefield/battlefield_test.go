@@ -55,17 +55,17 @@ func TestTerrainClassification(t *testing.T) {
 // 平原的配對：山＋山 → 192、平原＋平原 → 198、配不到 → 198。
 // 這幾張的高處格數在 docs/re/11 §4.4 用另一份資料獨立驗過。
 func TestPlainPairing(t *testing.T) {
-	mount := Neighbours{DownLeft: 3, DownRight: 3}
+	mount := Neighbours{Left: 3, Right: 3}
 	if f, rot := plainField(2, mount); f != 192 || rot {
 		t.Errorf("山＋山 → %d（轉 %v），應為 192（不轉）", f, rot)
 	}
-	plain := Neighbours{DownLeft: 0, DownRight: 0}
+	plain := Neighbours{Left: 0, Right: 0}
 	if f, _ := plainField(2, plain); f != 198 {
 		t.Errorf("平原＋平原 → %d，應為 198", f)
 	}
 	// ⭐ 換過順序才中 → 轉 180 度。「山 ＋ 平原」有登記、「平原 ＋ 山」沒有。
-	fwd, rotF := plainField(2, Neighbours{DownLeft: 3, DownRight: 0})
-	rev, rotR := plainField(2, Neighbours{DownLeft: 0, DownRight: 3})
+	fwd, rotF := plainField(2, Neighbours{Left: 3, Right: 0})
+	rev, rotR := plainField(2, Neighbours{Left: 0, Right: 3})
 	if fwd != rev {
 		t.Errorf("同一組地形換順序選到不同戰場：%d 對 %d", fwd, rev)
 	}
@@ -76,14 +76,14 @@ func TestPlainPairing(t *testing.T) {
 		t.Error("表上登記的順序不該轉")
 	}
 	// 配不到的組合走 fallback。
-	if f, _ := plainField(2, Neighbours{DownLeft: 1, DownRight: 2}); f != 198 {
+	if f, _ := plainField(2, Neighbours{Left: 1, Right: 2}); f != 198 {
 		t.Errorf("配不到的組合 → %d，應為 198（偏移 6）", f)
 	}
 }
 
 // 行進方向決定取樣哪兩格。
 func TestDirectionPicksNeighbours(t *testing.T) {
-	n := Neighbours{Centre: 3, TwoDown: 0, DownLeft: 6, DownRight: 6}
+	n := Neighbours{Up: 3, Down: 0, Left: 6, Right: 6}
 	// 方向 0／1 用「中心 ＋ 兩格下方」，順序相反。
 	f0, rot0 := plainField(0, n)
 	f1, rot1 := plainField(1, n)
@@ -102,7 +102,7 @@ func TestDirectionPicksNeighbours(t *testing.T) {
 // 地形類型 1–7 直接對到 0xCF–0xD5。
 func TestTerrainFieldsAreContiguous(t *testing.T) {
 	for k := 1; k <= 7; k++ {
-		f, _ := Select(0, Neighbours{Down: k})
+		f, _ := Select(0, Neighbours{Centre: k})
 		if want := 0xCE + k; f != want {
 			t.Errorf("地形類型 %d → 戰場 %d，應為 %d", k, f, want)
 		}
@@ -131,8 +131,8 @@ func TestSelectAlwaysInRange(t *testing.T) {
 	for kind := 0; kind <= 9; kind++ {
 		for dir := 0; dir < 5; dir++ {
 			for roll := 0; roll < 4; roll++ {
-				n := Neighbours{Centre: kind, Down: kind,
-					DownLeft: kind, DownRight: kind, TwoDown: kind}
+				n := Neighbours{Up: kind, Centre: kind,
+					Left: kind, Right: kind, Down: kind}
 				f, _ := SelectWith(dir, n, roll)
 				if f < 0 || f >= NumFields {
 					t.Fatalf("類型 %d／方向 %d／亂數 %d → 戰場 %d，"+
@@ -147,7 +147,7 @@ func TestSelectAlwaysInRange(t *testing.T) {
 func TestNeedsWaterRollOnlyForKind8(t *testing.T) {
 	for kind := 0; kind <= 9; kind++ {
 		want := kind == 8
-		if got := NeedsWaterRoll(Neighbours{Down: kind}); got != want {
+		if got := NeedsWaterRoll(Neighbours{Centre: kind}); got != want {
 			t.Errorf("類型 %d：NeedsWaterRoll = %v，want %v", kind, got, want)
 		}
 	}

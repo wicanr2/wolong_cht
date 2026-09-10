@@ -374,6 +374,7 @@
 | [`docs/spec/193-post-battle-stage-not-set-when-spent.md`](spec/193-post-battle-stage-not-set-when-spent.md) | 193 — 士氣或大將槽歸零時，戰後的階段不設 | READY（已實作，但沒有對拍樣本能分開）。 | 2026-09-11 |
 | [`docs/spec/194-ai-holds-a-threatened-city-on-the-way.md`](spec/194-ai-holds-a-threatened-city-on-the-way.md) | 194 — AI 行軍中經過受威脅的據點就留守 | CONFORMED。 | 2026-09-11 |
 | [`docs/spec/195-ai-stage1-asks-about-the-intent.md`](spec/195-ai-stage1-asks-about-the-intent.md) | 195 — AI 階段 1 問的是意圖，不是行軍目標 | CONFORMED。 | 2026-09-11 |
+| [`docs/spec/196-field-battle-rolls-the-battlefield.md`](spec/196-field-battle-rolls-the-battlefield.md) | 196 — 野戰開打前要先決定戰場，而水域那一格要擲骰 | CONFORMED。 | 2026-09-11 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |

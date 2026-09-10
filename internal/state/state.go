@@ -394,6 +394,11 @@ type World struct {
 	Cities   [numCities]City
 	Generals [numGenerals]General
 
+	// terrain 是大地圖圖塊查詢。**規則層不讀檔案**，所以由呼叫端注入
+	// （與 `SetRoads` 同一個做法）。nil ＝ 沒接上，野戰不擲戰場骰
+	// （降級路徑，docs/spec/196 §3）。
+	terrain func(x, y int) byte
+
 	// garrisonLeader 是武將表第 `garrisonGeneral` 筆——城兵臨時軍團的
 	// 將領（`sub_14F8A`，docs/spec/191）。它不參與人事、不進 `Generals`，
 	// 只在 `fightGarrison` 用一次。

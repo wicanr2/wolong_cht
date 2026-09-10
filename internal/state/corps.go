@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
+	"github.com/wicanr2/wolong_cht/internal/rules/battlefield"
 	"github.com/wicanr2/wolong_cht/internal/rules/capital"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
@@ -1487,6 +1488,10 @@ func (w *World) fieldAt(i, enemy int, ev *CorpsEvent, rng combat.Rand) {
 	}); k >= 0 {
 		enemy = k
 	}
+	// ⭐ **開打之前先決定戰場**（`sub_14A7B` 的第一行 `call sub_14B63`，
+	// docs/spec/196）：水域那一格會擲一次骰，少了它之後每一場戰鬥的
+	// 傷亡都換一組亂數。
+	w.rollBattlefield(enemy, rng)
 	w.fight(i, enemy, w.Corps[i].Node, ev, combat.Field, 0, rng)
 }
 
@@ -1998,6 +2003,39 @@ func (w *World) routePenalty(faction int) func(int) int {
 			return 0xA6
 		}
 		return 0
+	}
+}
+
+// SetTerrain 掛上大地圖圖塊查詢。野戰開打前要照 `sub_14B63` 取樣
+// **守方**腳下與下方四格的地形決定戰場，而正下方是水域（類型 8）時
+// `sub_14C1A` 會**擲一次骰**（docs/spec/196）。沒掛就不擲——
+// 降級跑得動，但與原版不一致。
+func (w *World) SetTerrain(at func(x, y int) byte) { w.terrain = at }
+
+// rollBattlefield 是 `sub_14B63`：野戰開打前決定戰場。
+//
+// 這裡只需要它的**副作用**——正下方那一格是水域時 `sub_14C1A` 取一次
+// 亂數（`0D1h + 亂數 & 3`）。戰場編號本身由呈現層的
+// `internal/battlesetup` 算（同一組 `battlefield` 規則），自動判定用不到。
+//
+// ⚠ 取樣的座標是**守方**的（原版 `mov bx, [di+1Ah]`，di ＝ 守方），
+// 不是攻方也不是據點。
+func (w *World) rollBattlefield(defender int, rng combat.Rand) {
+	if w.terrain == nil || rng == nil ||
+		defender < 0 || defender >= len(w.Corps) {
+		return
+	}
+	d := &w.Corps[defender]
+	at := func(dx, dy int) int { return battlefield.Terrain(w.terrain(d.X+dx, d.Y+dy)) }
+	n := battlefield.Neighbours{
+		Up:     at(0, -1),
+		Left:   at(-1, 0),
+		Right:  at(1, 0),
+		Centre: at(0, 0),
+		Down:   at(0, 1),
+	}
+	if battlefield.NeedsWaterRoll(n) {
+		rng.Next()
 	}
 }
 

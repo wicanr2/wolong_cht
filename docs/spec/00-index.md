@@ -89,6 +89,7 @@
 | 戰後士氣歸零就不設階段 | [`193-post-battle-stage-not-set-when-spent.md`](193-post-battle-stage-not-set-when-spent.md) | READY；機器碼 confirmed 但**沒有對拍樣本能分開**（自動判定湊不出「壞滅的勝方」）|
 | AI 行軍中經過受威脅的據點就留守 | [`194-ai-holds-a-threatened-city-on-the-way.md`](194-ai-holds-a-threatened-city-on-the-way.md) | CONFORMED；`sub_14300` 早就解過而沒接進 remake |
 | AI 階段 1 問的是意圖不是行軍目標 | [`195-ai-stage1-asks-about-the-intent.md`](195-ai-stage1-asks-about-the-intent.md) | CONFORMED；與 194 一起讓 5/25 六張表歸零 |
+| 野戰開打前要先擲戰場骰 | [`196-field-battle-rolls-the-battlefield.md`](196-field-battle-rolls-the-battlefield.md) | CONFORMED；順帶推翻「五格取樣是本格加下方一片」，五格是**十字** |
 | 載入存檔要還原據點巡迴游標 | [`162-city-cursor-from-save.md`](162-city-cursor-from-save.md) | CONFORMED；13 個觸發子刻逐項對上原版 |
 | 亂數消費順序對齊（長時間對拍前置）| [`160-rng-consumption-alignment.md`](160-rng-consumption-alignment.md) | READY；兩側軌跡工具齊備，第一輪比對定位到 `sub_14057` 差 4 次 |
 | 劉備不作為長時間對拍管線 | [`161-liubei-idle-longrun-parity.md`](161-liubei-idle-longrun-parity.md) | DRAFT；原版側 90 天已跑通（26 秒、兩次逐 byte 相同），remake 側未做 |
