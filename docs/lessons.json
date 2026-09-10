@@ -1,0 +1,173 @@
+{
+  "schema": "wolong-lessons/1",
+  "note": "教訓的權威是這一份。docs/lessons.md 與 docs/lessons/*.txt 由 `tools/py.sh tools/lessons.py render` 產生，不要手改。verify 問的是「這一條的防線還在嗎」——與 worklist.py 相反。",
+  "guard_kinds": {
+    "tool": "有工具會在 check.sh 每次問一次",
+    "test": "有測試釘住",
+    "remind": "工具會在對的時機把它印出來——擋不住，但保證看得到",
+    "rule": "只有文字規則，人要自己記得",
+    "none": "連規則都還沒寫"
+  },
+  "lessons": [
+    {
+      "id": "self-modifying-code-reads-as-data",
+      "title": "IDA 把整段解成資料時，先問是不是自我修改碼",
+      "trigger": "反組譯時看到一整段 `db`，而前面有 `mov cs:xxx, reg`",
+      "rule": "先當自我修改碼——那幾行寫的是**後面幾行的運算元**。交叉解碼那段 bytes 再下結論；「解不出指令」在讀的時候長得像「這段不重要」。",
+      "occurrences": [
+        {"date": "2026-09-10", "what": "`loc_1491B` 的退卻廣度優先：把兩個**終止條件**讀成「起點」，連錯兩種讀法，`commit` 並 `push` 之後才被第二組實測推翻", "doc": "`docs/playtest/119` §34.5"},
+        {"date": "2026-08", "what": "`loc_1A065` 的每輪更新、`loc_10701` 把屬性 patch 進 inline 立即值", "doc": "`docs/re/28` §3"}
+      ],
+      "remind_on": ["ida"],
+      "guard": {
+        "kind": "remind",
+        "note": "規則在 `CLAUDE.md` §7 第 28 條；`tools/ida.sh` 每次跑會把它印出來。⚠ 光有規則擋不住——2026-09-10 那次規則就在載入的 `CLAUDE.md` 裡，讀碼時一次都沒被想起來。",
+        "verify": {
+          "kind": "present",
+          "paths": ["CLAUDE.md"],
+          "pattern": "先懷疑自我修改碼"
+        }
+      }
+    },
+    {
+      "id": "baseline-from-stale-artifact",
+      "title": "拿舊產物當基線＝拿舊程式碼當基線",
+      "trigger": "要引用文件裡的數字、或 `workplace/` 底下存下來的產物，當成「改之前是多少」",
+      "rule": "**先在當前 commit 重跑一次基線**。存下來的序列檔、`.DAT`、截圖都不會告訴你它是哪一版跑的。",
+      "occurrences": [
+        {"date": "2026-09-10", "what": "文件寫 229，HEAD 重跑是 369——差點把一個改善（369 → 332）讀成退步（229 → 332）", "doc": "`docs/playtest/119` §33.1"},
+        {"date": "2026-09-10", "what": "`remake-ck200.DAT` 對原版 0 個 byte，同一條命令列在 HEAD 重跑是 4 個", "doc": "同上"},
+        {"date": "2026-08", "what": "`tools/go.sh` 沒把 `GOOS` 傳進 docker，三個平台建出一模一樣的執行檔，每次都 exit 0", "doc": "`CLAUDE.md` §7 第 21 條"}
+      ],
+      "remind_on": ["parity"],
+      "guard": {
+        "kind": "remind",
+        "note": "`tools/dosgolem.sh` 每次跑會印。⚠ 只有規則擋不住——這一類的產物看起來永遠是對的。",
+        "verify": {
+          "kind": "present",
+          "paths": ["CLAUDE.md"],
+          "pattern": "第一件事是驗產出真的不一樣"
+        }
+      }
+    },
+    {
+      "id": "one-sample-cannot-separate",
+      "title": "一組樣本分不開兩種讀法，就不算驗證",
+      "trigger": "要下「這個規則是這樣」的結論，而手上只有一組原版樣本",
+      "rule": "先問：**別的讀法在這一組上會給出不同答案嗎？** 會，才算驗證；不會，那一組只是「相容」。至少要兩組能互相分開的。",
+      "occurrences": [
+        {"date": "2026-09-10", "what": "退卻起點：第一組（軍團 1）「離首都近的端點」與「固定取 B 端」剛好同解，當成通過並 push；第二組（軍團 39）才把兩者分開", "doc": "`docs/spec/46` §5.2"},
+        {"date": "2026-08", "what": "拓樸一樣不等於路一樣：254 條邊裡 253 條兩邊都有，其中 109 條路徑長度差 > 2 格", "doc": "`CLAUDE.md` §7 第 16 條"},
+        {"date": "2026-08", "what": "把城池圖形當成橋加進去，連通性真的從 27 群收成 1 群——結果對不代表理由對", "doc": "`CLAUDE.md` §7 第 18 條"}
+      ],
+      "remind_on": ["parity", "ida"],
+      "guard": {
+        "kind": "remind",
+        "note": "`tools/ida.sh` 與 `tools/dosgolem.sh` 都會印。",
+        "verify": {
+          "kind": "present",
+          "paths": ["CLAUDE.md"],
+          "pattern": "錯誤的理由可以得到正確的結果"
+        }
+      }
+    },
+    {
+      "id": "alignment-per-state",
+      "title": "「兩邊對齊了」要對每一種狀態各問一次",
+      "trigger": "同狀態對拍之前，宣稱兩邊起點對齊",
+      "rule": "游標、取數**個數**、亂數**值**是三件事。個數序列對值完全不敏感，所以那道自檢永遠不會為了值開口——要直接問值。",
+      "occurrences": [
+        {"date": "2026-09-10", "what": "`-skip 27` 讓 remake 拿快照的亂數狀態多跑 27 拍，亂數流岔開；游標與個數都「對齊」了，值沒有。代價是把真正的第一個分歧藏了 288 拍", "doc": "`docs/playtest/119` §34"}
+      ],
+      "remind_on": ["parity"],
+      "guard": {
+        "kind": "remind",
+        "note": "`tools/dosgolem.sh` 會印。問亂數值的方法在 `docs/playtest/119` §34.1。",
+        "verify": {
+          "kind": "present",
+          "paths": ["CONTEXT.md"],
+          "pattern": "要對每一種狀態各問一次"
+        }
+      }
+    },
+    {
+      "id": "remake-only-field",
+      "title": "remake 自己加的欄位最危險",
+      "trigger": "要用一個 remake 有、而原版沒有對應物的欄位當判準",
+      "rule": "先問原版用什麼判準。多出來的欄位讓每個判斷都能寫成 `X == Y` 而**看起來合理、測試也綠**——原版根本沒有那個概念。",
+      "occurrences": [
+        {"date": "2026-09-10", "what": "`Corps.Node` 被當成「站在哪裡」用了三處：退卻的「站在自家據點上」、退卻起點、據點失守的調頭名單。原版分別用 `+0x0E < 600h`、邊的兩端、**座標**", "doc": "`CONTEXT.md` §6"}
+      ],
+      "remind_on": ["ida", "commit"],
+      "guard": {
+        "kind": "remind",
+        "note": "`tools/ida.sh` 與 `tools/check.sh` 都會印。",
+        "verify": {
+          "kind": "present",
+          "paths": ["CONTEXT.md"],
+          "pattern": "remake 多出來的欄位最危險"
+        }
+      }
+    },
+    {
+      "id": "attribute-nibble-order",
+      "title": "屬性 byte 的兩個半位元組是「背景︰前景」",
+      "trigger": "處理原版的顏色屬性 byte",
+      "rule": "高半位元組是**背景**、低半位元組是前景，不是相反。⚠ 抄反了在別處未必看得出來——只有背景剛好等於前景那一次才會整個消失。",
+      "occurrences": [
+        {"date": "2026-09-06", "what": "`docs/re/52` §4 的日期欄顏色", "doc": "`CONTEXT.md` §6"},
+        {"date": "2026-09-07", "what": "軍師命名視窗的選字表顏色——**同一種錯誤第二次**", "doc": "`CONTEXT.md` §6"}
+      ],
+      "remind_on": ["ida"],
+      "guard": {
+        "kind": "remind",
+        "note": "`tools/ida.sh` 會印。",
+        "verify": {
+          "kind": "present",
+          "paths": ["CONTEXT.md"],
+          "pattern": "背景︰前景"
+        }
+      }
+    },
+    {
+      "id": "rule-without-trigger",
+      "title": "規則沒有觸發時機，等於不存在",
+      "trigger": "寫下一條新規則或新教訓的那一刻",
+      "rule": "同時給出**什麼時候會想起它**與**什麼會檢查它**。會復發的斷言要規則與檢查兩者都有，只有其中一個都不夠。",
+      "occurrences": [
+        {"date": "2026-09-03", "what": "git 身分規則早就存在，但觸發點寫成「第一個 commit 之前」，接手既有 repo 時一次都沒成立——131 個 commit 裡 58 個掛公司信箱", "doc": "`CLAUDE.md` §10"},
+        {"date": "2026-08", "what": "「密碼頁不擋 oracle」在四份文件裡復發，包括解出來的同一天新寫的筆記", "doc": "`CLAUDE.md` §4.0"}
+      ],
+      "remind_on": ["commit"],
+      "guard": {
+        "kind": "tool",
+        "note": "`tools/index.py` 擋「密碼頁受阻」那個字樣的復發；這一份 JSON 本身也是同一條規則的產物——每條教訓都必須說出 `trigger` 與 `guard`。",
+        "verify": {
+          "kind": "present",
+          "paths": ["tools/index.py"],
+          "pattern": "密碼"
+        }
+      }
+    },
+    {
+      "id": "query-matches-itself",
+      "title": "grep／pgrep 會匹配到查詢自己",
+      "trigger": "用 grep 或 pgrep 判斷「某個東西還在不在」",
+      "rule": "先確認那個 pattern 不會中到**查詢自己**：等待腳本的指令行、條目自己的 body、掃描工具自己的原始碼。",
+      "occurrences": [
+        {"date": "2026-09-10", "what": "`while pgrep -f \"apps/wolong\"` 匹配到等待腳本自己的指令行，條件永遠成立——多等了二十分鐘等一個早就結束的程序", "doc": "本輪"},
+        {"date": "2026-09-10", "what": "`worklist.py` 的 verify 會掃到 `worklist.json` 自己（條目的 body 幾乎一定含 pattern 的字樣），每一條都會永遠說「仍未完成」——寫工具時就擋掉了", "doc": "`tools/worklist.py`"}
+      ],
+      "remind_on": ["commit"],
+      "guard": {
+        "kind": "test",
+        "note": "`tools/worklist.py --selftest` 有一條「不掃 worklist.json 自己」的正反對照。⚠ pgrep 那一半還沒有防線。",
+        "verify": {
+          "kind": "present",
+          "paths": ["tools/worklist.py"],
+          "pattern": "不掃 worklist.json 自己"
+        }
+      }
+    }
+  ]
+}

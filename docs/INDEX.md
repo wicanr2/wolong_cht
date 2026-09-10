@@ -21,6 +21,7 @@
 | [`docs/formats/08-sinario-save.md`](formats/08-sinario-save.md) | 08 — SINARIO.DAT / SAVE.DAT：劇本與存檔 | 整體結構 confirmed，武將能力值 confirmed，其餘欄位進行中。 | 2026-08-07 |
 | [`docs/formats/09-cutscene-images.md`](formats/09-cutscene-images.md) | 09 — OPEN_S.DAT／END_S.DAT：過場畫面 | READY。 | 2026-08-18 |
 | [`docs/formats/10-end-s15-namechars.md`](formats/10-end-s15-namechars.md) | 10 — END_S15.DAT：軍師命名的選字表（松崗版特有） | READY（格式 confirmed，Go 解碼器有測試）。 | 2026-08-29 |
+| [`docs/lessons.md`](lessons.md) | 教訓：按觸發點索引 | 由 tools/lessons.py render 產生，不要手改。 | 2026-09-10 |
 | [`docs/mechanics/00-index.md`](mechanics/00-index.md) | 00 — 遊戲機制索引 | 索引與推論等級定義，長期有效。 | 2026-08-08 |
 | [`docs/mechanics/10-strategy.md`](mechanics/10-strategy.md) | 10 — 大地圖政略 | 指令清單完整；戰略數值與 AI 決策大多已由機器碼解出並實作。 剩六個位置的效果一項（§7）。 | 2026-08-13 |
 | [`docs/mechanics/15-realtime.md`](mechanics/15-realtime.md) | 15 — 即時制的時間模型 | ✅ READY。整條時間鏈已在機器碼裡讀出來。 | 2026-08-08 |

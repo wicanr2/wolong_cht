@@ -17,6 +17,11 @@
 # 而筆記要靠雜湊標明「這個結論是在哪一份資料庫上驗的」。
 # 對副本跑，原始 .i64 的身分才穩定。輸出落在 workplace/ida/<版本>/census/。
 set -euo pipefail
+# ⭐ **教訓印在動手之前**（`docs/lessons.json`，`tools/lessons.py render` 產生）。
+# 光把教訓寫進常駐文件不夠——它們要防的動作發生在任務中間，那時沒有東西會問。
+_LESSONS="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/docs/lessons/ida.txt"
+[[ -s "$_LESSONS" ]] && cat "$_LESSONS" >&2
+
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 IMAGE=ida-pro-9.4-ver2
 # IDAPython 專用 image。**可用環境變數覆寫**——這一行寫死過一次

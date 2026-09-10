@@ -43,6 +43,11 @@
 #
 # 規格：docs/spec/131-dosgolem-oracle.md，實跑紀錄：docs/playtest/65、66
 set -euo pipefail
+# ⭐ **教訓印在動手之前**（`docs/lessons.json`，`tools/lessons.py render` 產生）。
+# 光把教訓寫進常駐文件不夠——它們要防的動作發生在任務中間，那時沒有東西會問。
+_LESSONS="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/docs/lessons/parity.txt"
+[[ -s "$_LESSONS" ]] && cat "$_LESSONS" >&2
+
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 GOLEM="${WOLONG_DOSGOLEM:-$HOME/cht/dosgolem-wolong}"

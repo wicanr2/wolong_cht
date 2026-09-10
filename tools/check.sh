@@ -17,6 +17,7 @@
 #   phantom_scan   指向不存在的東西（檔案、Go 識別字、IDA 符號、測試名）
 #   stale_scan     指到的東西存在，但值不對（雜湊、映像標籤、旗標、覆蓋率、未解列數、規格份數）
 #   worklist       未完成項的 verify 還成立嗎（做好了而條目沒改 → 當場開口）
+#   lessons        教訓的防線還在嗎（規則被順手刪掉、工具被移走 → 當場開口）
 #
 # 第三類最貴也最晚才有檢查：**格式完全正確、連結都通、只有數字是舊的**。
 # 2026-08-27 的稽核靠人工抓到六處，其中三處已經印在交付給使用者的檔案裡
@@ -78,6 +79,11 @@ if [[ $WANT_DOCS == 1 ]]; then
         tools/py.sh tools/worklist.py --selftest
         tools/py.sh tools/worklist.py render --check
         tools/py.sh tools/worklist.py verify'
+    step "教訓的防線還在嗎" bash -c '
+        tools/py.sh tools/lessons.py --selftest
+        tools/py.sh tools/lessons.py render --check
+        tools/py.sh tools/lessons.py verify
+        [[ -s docs/lessons/commit.txt ]] && cat docs/lessons/commit.txt'
     step "對拍工具正對照" bash -c '
         tools/py.sh tools/parity_diff.py --selftest
         tools/py.sh tools/state_diff.py --selftest
