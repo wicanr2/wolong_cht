@@ -190,10 +190,12 @@ func (w *World) nextHopHome(i int) int {
 	if !validCity(capital) {
 		return -1 // `cmp al, 0FFh` ⇒ 沒有首都就無處可退
 	}
-	from, ok := w.retreatOrigin(i)
-	if !ok {
-		return -1 // 走的那條邊兩端都不是自己的 ⇒ `loc_14903` 的 STC
+	// ⭐ **走在路上時，下一站就是這條邊的端點**，不必再往前算一步
+	// （§2.1）。站在節點上才走下面的「往首都的第一站」。
+	if end, onRoad := w.retreatEndpoint(i, capital); onRoad {
+		return end
 	}
+	from := c.Node
 	if from == capital || w.roads == nil {
 		return capital
 	}
@@ -210,33 +212,45 @@ func (w *World) nextHopHome(i int) int {
 	return next
 }
 
-// retreatOrigin 是 `sub_1487B` 前半：**從哪一個節點開始往首都找路**。
+// retreatEndpoint 是 `sub_1487B` 走在路上時的那一半：
+// **回家的下一站就是這條邊的某一個端點**。
 //
-// 站在節點上（`+0x0E < 800h`）就是它自己；**走在路上**（`+0x0E` 是連結
-// 記錄的位址）時，起點是這條邊兩端裡屬於自己的那一個——
-// ⭐ **先看 `+8`（B 端），不是自己的才退回 `+6`（A 端）**；兩端都不是
-// 自己的就失敗（docs/spec/46 §2.1）。
+// `+0x0E` ≥ `800h` 表示軍團走在路上，那一欄是連結記錄的位址。原版把這條
+// 邊的兩端寫進廣度優先的**終止條件**（`loc_1491B` 的
+// `mov cs:word_149B8, bx` ／ `mov cs:word_149BE, cx`，那一段是自我修改碼），
+// 然後**從首都往外搜**（`mov si, ax`，ax ＝ 首都 × 8）；搜到之後
+// `mov bx, [bx+6]` 取的就是被搜到的那一端。
 //
-// ⚠ 判準是「這條邊的兩端誰屬於自己」，**與軍團從哪一端出發無關**。
-// 用 `Node`（出發那一站）在只有一端屬於自己時同解，兩端都是自己的
-// 邊上才會岔開——也就是敵人深入自家領地的局面。
-func (w *World) retreatOrigin(i int) (int, bool) {
+// ⇒ 兩端都屬於自己時退到**離首都近的那個**，只有一端屬於自己就退到那一端，
+// 兩端都不是自己的地就退不了。回傳的第二個值是「軍團是不是走在路上」——
+// false 表示它站在節點上，那時走的是另一條路（往首都的第一站）。
+//
+// ⚠ 兩端到首都**等距**時原版由廣度優先的展開順序決定，還沒解
+// （docs/spec/46 §6）。
+func (w *World) retreatEndpoint(i, capital int) (int, bool) {
 	c := &w.Corps[i]
 	if c.LinkAddr == 0 || w.roads == nil {
-		return c.Node, true
+		return 0, false
 	}
 	a, b, ok := w.roads.EdgeByLink(c.LinkAddr)
 	if !ok {
-		// 缺道路圖或這條邊不在圖裡：退回出發那一站，不要整支停擺。
-		return c.Node, true
+		// 缺道路圖或這條邊不在圖裡：當成站在節點上，不要整支停擺。
+		return 0, false
 	}
-	if w.nodeOwnedBy(b, c.Faction) {
+	oa, ob := w.nodeOwnedBy(a, c.Faction), w.nodeOwnedBy(b, c.Faction)
+	switch {
+	case oa && ob:
+		da, db := w.roads.Distance(a, capital), w.roads.Distance(b, capital)
+		if db >= 0 && (da < 0 || db < da) {
+			return b, true
+		}
+		return a, true
+	case ob:
 		return b, true
-	}
-	if w.nodeOwnedBy(a, c.Faction) {
+	case oa:
 		return a, true
 	}
-	return 0, false
+	return -1, true // `loc_14903` 的 STC
 }
 
 // nodeOwnedBy 是 `cmp dl, es:[di+841h]`：那個節點的所屬欄等於這個勢力。

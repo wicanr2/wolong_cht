@@ -612,17 +612,19 @@ func linkedThree(w *World, a, b, c, link int) {
 	}))
 }
 
-// ⭐ 走在**兩端都是自己的**那條邊上時，起點取的是 `+8`（B 端），
-// 不是軍團出發的那一端（`sub_1487B`，docs/spec/46 §2.1）。
+// ⭐ 走在路上戰敗時，**下一站就是這條邊上離首都近的那個端點**。
 //
-// 圖是 a（首都）— b — c，軍團從 b 出發走向 c：
+// 原版把兩端都寫進廣度優先的終止條件，從首都往外搜，搜到之後直接取
+// 被搜到的那一端當下一站（`sub_1487B` ＋ `loc_1491B`，docs/spec/46 §2.1）。
 //
-//   - 起點取 B 端 c ⇒ 往首都的下一站是 **b**
-//   - 起點取出發端 b ⇒ 下一站是 **a**
+// 圖是 a（首都）— b — c，軍團走在 b—c 那條邊上：
 //
-// **兩者在這張圖上分得開**——只有一端屬於自己時同解，所以原版實測
-// （§5.1）分不出來。
-func TestRetreatOriginPrefersBEnd(t *testing.T) {
+//   - 退到離首都近的端點 ⇒ **b**
+//   - 拿端點當起點再往首都走一步 ⇒ **a**
+//   - 固定取 `+8`（B 端 c）⇒ **c**
+//
+// 三種讀法在這張圖上互相分得開。原版兩組實測都指向第一種（§5.2）。
+func TestRetreatOnRoadGoesToTheNearerEndpoint(t *testing.T) {
 	w := load(t, 0)
 	f := w.AliveFactions()[1]
 	a, b, c := threeInARow(t, w, f)
@@ -638,9 +640,15 @@ func TestRetreatOriginPrefersBEnd(t *testing.T) {
 	if dead := w.retreatOrPerish(i, false); dead {
 		t.Fatal("有退路卻判成壞滅")
 	}
-	if got := w.Corps[i].Ordered; got != b {
-		t.Errorf("退到 %d，want %d（起點取 B 端 %d）——"+
-			"退到 %d 表示起點取的是出發那一站", got, b, c, a)
+	switch got := w.Corps[i].Ordered; got {
+	case b:
+		// 對的：b 是這條邊上離首都近的端點。
+	case a:
+		t.Errorf("退到首都 %d——端點被當成起點又往前算了一步", a)
+	case c:
+		t.Errorf("退到 %d——取的是固定的 B 端，不是離首都近的那一端", c)
+	default:
+		t.Errorf("退到 %d，want %d", got, b)
 	}
 }
 

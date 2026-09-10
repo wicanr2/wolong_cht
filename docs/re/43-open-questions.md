@@ -44,8 +44,8 @@
 | 程式碼理解 | 180 | 173 | 6 | 1 |
 | 驗收 | 232 | 206 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 318 | 295 | 22 | 1 |
-| **合計** | **767** | 705 | 59 | 3 |
+| 其他 | 318 | 296 | 21 | 1 |
+| **合計** | **767** | 706 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -770,8 +770,8 @@
 | [`spec/43-rout-on-blocked-return.md`](../spec/43-rout-on-blocked-return.md) | `loc_1491B` 的其他成本項 | 只解出「非己方據點 ＋0xA6」，廣度優先搜尋本身沒逐條讀 | 靜態 |
 | [`spec/44-advise-original-text.md`](../spec/44-advise-original-text.md) | 逐句節拍 | 原版每句要等玩家按鍵才往下走，remake 直接顯示最新一句（`45` §3.1） | 靜態 |
 | [`spec/45-advise-scene-layout.md`](../spec/45-advise-scene-layout.md) | 選單的反白樣式 | 原版怎麼畫游標列沒解，remake 用自己的反白條 | 靜態 |
-| [`spec/46-post-battle-retreat.md`](../spec/46-post-battle-retreat.md) | `loc_1491B` 的方向回傳 | `±4` 決定讀哪一個鄰接槽，remake 用 `Route` 的第 2 個節點取代，沒有逐條對過兩者選的是不是同一站 | 靜態 |
-| [`spec/46-post-battle-retreat.md`](../spec/46-post-battle-retreat.md) | `sub_1487B` 的起點在原版實測上還沒分開 | 已照原版改（§2.1、§4）並有單測與兩個突變。但**在真實局面裡幾乎總是同解**：兩端只有一端屬於自己時，「B 端優先」與「出發端」給同一個答案。要分開得找「兩端都屬於同一勢力、而且兩端往首都的下一站不同」的邊，再讓軍團在那條邊上戰敗。開局的道路表上這種邊有 **80 條**（`workplace/parity… | 實測 |
+| [`spec/46-post-battle-retreat.md`](../spec/46-post-battle-retreat.md) | `loc_1491B` 的 tie-break | `±4` 決定讀哪一個鄰接槽，remake 用 `Route`（Dijkstra，權重同樣是連結記錄 `+0x04` 的路徑點數）的第 2 個節點取代。兩者只有在**最短路不唯一**時才可能挑到不同的第一站——開局的道路表上「自家據點 → 自家首都」共 **108 組，其中第一站不唯一的只有 2 組**（勢力 3… | 靜態 |
+| [`spec/46-post-battle-retreat.md`](../spec/46-post-battle-retreat.md) | 兩端到首都**等距**時取哪一端 | 原版由廣度優先的展開順序決定，而那一段是自我修改碼（§2.1）。remake 取 A 端。開局的道路表上「自家據點 → 自家首都」108 組裡第一站不唯一的只有 2 組（`workplace/parity/retreat/hop_unique.py`），兩端等距的邊更少，但沒有窮舉過 | 靜態 |
 | [`spec/47-city-fall-corps-redirect.md`](../spec/47-city-fall-corps-redirect.md) | `[si+1Ah]` | 據點記錄記下舊主，remake 的 `OwnerRecorded` 是同一格但語意沒逐位元對過 | 靜態 |
 | [`spec/48-governor-returns-on-city-fall.md`](../spec/48-governor-returns-on-city-fall.md) | 武將 `+0x1E` 的值域 | 534/535/536 與 542 是空的，所以實際用到的變體大概只有 3–6。哪些武將拿到哪個值沒統計過 | 靜態 |
 | [`spec/48-governor-returns-on-city-fall.md`](../spec/48-governor-returns-on-city-fall.md) | `sub_10CE7` 的變數表 | 這裡推出 `{1}` ＝ 武將、`{2}` ＝ 據點（照 push 的順序與譯文），沒有逐個 handler 讀 | 靜態 |
