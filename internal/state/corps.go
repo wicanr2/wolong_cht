@@ -791,6 +791,20 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 				ev.Disbanded, ev.Routed = !c.Routing, c.Routing
 				return &ev
 			}
+		} else if w.holdThreatenedCity(i) {
+			// ⭐ **第二條到站路徑**（`sub_12662` 的 `call sub_14300` ／
+			// `jb loc_1266A`，docs/spec/194）：AI 的軍團站在一座
+			// **受威脅而且只有自己這一支**的據點上，就停下來守它——
+			// 意圖改成腳下這座，當拍分派，不再往前走。
+			//
+			// ⚠ 走這一條**不動佔用圖**：原版分派完直接 `retn`，
+			// 跳過結尾的 `inc byte ptr [di]`。
+			c.Heading = HeadingStill
+			w.arriveCorps(i, rng)
+			if !c.Alive {
+				ev.Disbanded, ev.Routed = !c.Routing, c.Routing
+				return &ev
+			}
 		} else {
 			// ⭐ 位元 1 ＝「下一步要重算」：`sub_12662` 在 `0x126A5`
 			// 清掉它並呼叫 `sub_147BB`，**然後照樣走一格**（沒有出口）。
@@ -854,6 +868,47 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 		return nil
 	}
 	return &ev
+}
+
+// holdThreatenedCity 是 `sub_14300`：**AI 的軍團在行軍途中踩到一座
+// 受威脅的據點就留守**（[`docs/re/86`](../../docs/re/86-march-turnback-at-peace.md) §2.1）。
+//
+// 三個條件全成立才留守，而且**意圖（`+0x20`）當場改成腳下這座據點**：
+//
+//	① 這一格的軍團數 ≤ 1（`cmp [bx+858h], 1 / ja`）
+//	② 軍團不是靜止的（`cmp [si+8], 4 / jz`）——已經停下的不重複處理
+//	③ 據點受威脅（`cmp [bx+840h], 80h / jb`，`+0x00` 位元 7）
+//
+// ⚠ **玩家的軍團完全不判**：呼叫端 `sub_12662` 先 `cmp al, cs:byte_10CFF`，
+// 是玩家就跳過整段。
+//
+// ⚠ **只在站在據點上時問**（`cmp bx, 800h / jnb` 走另一條）——
+// 走在路段上的軍團不適用。
+func (w *World) holdThreatenedCity(i int) bool {
+	if i < 0 || i >= numCorps {
+		return false
+	}
+	c := &w.Corps[i]
+	if c.Faction == w.Player {
+		return false
+	}
+	// ⚠ **判準是「腳踩在據點的座標上」**，不是 `Node` 記著哪一座。
+	// 原版問的是 `+0x0E < 800h`，而 remake 的 `Node` 在行軍中留著出發
+	// 那一站——只看它會把**走在半路上**的軍團讀成「站在城裡」
+	// （`CLAUDE.md` 與 docs/spec/46 §2、175 §3 反覆踩過的同一個坑）。
+	if c.LinkAddr != 0 || !w.onCity(i) {
+		return false
+	}
+	node := c.Node
+	if !validCity(node) || node >= len(w.Cities) {
+		return false
+	}
+	city := &w.Cities[node]
+	if city.Occupancy > 1 || c.Heading == HeadingStill || !city.Threatened {
+		return false
+	}
+	c.Ordered = node
+	return true
 }
 
 // step 把軍團往目標推進一格，回傳有沒有真的動。

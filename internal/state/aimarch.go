@@ -75,14 +75,22 @@ func (w *World) aiStage1(i int, rng rander) {
 		c.Stage = StageHomeResupply
 		return
 	}
-	if w.citySpecific(c.TargetNode) {
+	// ⭐ **這三個條件問的是「意圖」（`+0x20`）指的據點，不是行軍目標
+	// （`+0x14`）**：`sub_143AF` 的 `mov bx, ax`，而 `ax` 是
+	// `sub_14325` 用 `[si+20h]` 算出來的據點記錄位址（docs/spec/195）。
+	//
+	// 兩者在「意圖 ＝ 目標」時相同，**不同時就分岔**——AI 挑到新目標
+	// 之後要兩拍才落實（docs/spec/170），中間那一拍正是不同的。
+	site := c.Ordered
+	if w.citySpecific(site) {
 		c.Stage = StageNormal
 		return
 	}
-	// ⚠ **remake 差異**：原版這一行的 `di` 沒設就用，讀到的位址比據點
-	// 記錄少 0x840（`docs/re/65` §3.2）。這裡實作作者意圖的版本——
-	// 同一家族的 `sub_1440F` 就是這樣讀的。
-	if !w.cityThreatened(c.TargetNode) || w.cityOccupancy(c.TargetNode) > aiCrowded {
+	// ⚠ **remake 差異**：第三個條件的 `di` 在原版沒有被 `sub_14325`
+	// 設過——最可能是上一次 `sub_1440F` 留下的（那一支第一行就是
+	// `mov di, ax`，同樣是意圖據點）。這裡照那個讀法用意圖據點，
+	// 推論等級**假說**（`docs/re/65` §3.2）。
+	if !w.cityThreatened(site) || w.cityOccupancy(site) > aiCrowded {
 		// 出擊前隨機等 1–8 個 tick，讓同一批軍團不會一起動。
 		c.Timer = rng.Next()&7 + 1
 		c.Stage = 2

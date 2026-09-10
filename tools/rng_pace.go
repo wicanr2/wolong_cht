@@ -283,9 +283,10 @@ func main() {
 					continue
 				}
 				fmt.Printf("  拍 %d 戰鬥：軍團 %d vs %d 模式 %v 比值 %d "+
-					"城損 %d 守方勝 %v 壞滅 %v\n",
+					"城損 %d 守方勝 %v 壞滅 %v 佔領 %d\n",
 					i+1, ce.Corps, ce.Enemy, ce.Mode, ce.Battle.Ratio,
-					ce.BattleCityDamage, ce.Battle.DefenderWins, ce.Destroyed)
+					ce.BattleCityDamage, ce.Battle.DefenderWins, ce.Destroyed,
+					ce.Captured)
 			}
 		}
 		if c := w.PendingDiplomacy(); c != nil {
