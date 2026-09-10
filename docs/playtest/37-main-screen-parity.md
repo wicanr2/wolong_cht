@@ -47,6 +47,10 @@ remake 走 `-direct -scenario 0 -player N -shot-frames 1`。
 ⭐ **五個區加起來鋪滿整張 640×400**（左欄 0–431 的三段 ＋ 右欄 432–639 的三段），
 所以「五區全 PASS」＝ **256,000 個像素一個不差**。
 
+⚠ **這是 2026-08-17 的值。** 2026-09-11 用同一張原版圖重量，
+`map` 區有 **101 px（0.07%）**——地圖正中央一個 16×16 格子的相位差
+（[`120`](120-screen-parity-retest-20260911.md) §1.1）。
+
 差分圖 [`parity/main-cao.png`](parity/main-cao.png)（本機產出，含原版像素所以 gitignore）
 
 > 四個視窗全關時，`command`／`minimap`／`faction` 三區看到的也是地圖

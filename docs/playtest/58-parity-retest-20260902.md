@@ -37,6 +37,10 @@ tools/parity_shot.sh out.png -direct -scenario 0 -player 0 -seed 1 \
 ⭐ **一個像素都沒有退步。** 開場對白（呂布的挑戰、框的版面、代入的名字）
 與地形層逐像素一致。
 
+⚠ **這是 2026-09-02 的值。** 2026-09-11 用同一張原版圖重量，
+`field` 是 **190 px**、`sb-minimap` 是 **128 px（FAIL）**
+（[`120`](120-screen-parity-retest-20260911.md) §1）。
+
 ### 1.2 攻城（`SAVE-E.DAT`，張遼 81 攻／夏侯惇 39 守，據點 82）
 
 ```

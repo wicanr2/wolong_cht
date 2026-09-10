@@ -66,6 +66,7 @@
 | [`docs/playtest/118-liubei-90day-audience-response.md`](playtest/118-liubei-90day-audience-response.md) | 118 — 劉備 90 天無人值守：君主召見用右鍵推進，選項用移動次數 | 通過。 | 2026-09-09 |
 | [`docs/playtest/119-rng-pace-comparison.md`](playtest/119-rng-pace-comparison.md) | 119 — 取數節拍對齊：remake 的節拍不吃亂數值，差異是真的規則分歧 | 已修正並驗過（§6、§28–§36）。 | 2026-09-09 |
 | [`docs/playtest/12-event3-same-state-parity.md`](playtest/12-event3-same-state-parity.md) | event3 同狀態對拍（2026-08-10） | 同狀態事件接線、原版式 composite、3×6 實際格位選取、TALK 五行分頁、 DOS/V 內框／按鍵 gl… | 2026-08-10 |
+| [`docs/playtest/120-screen-parity-retest-20260911.md`](playtest/120-screen-parity-retest-20260911.md) | 120 — 打包前重量畫面對拍：三組都不是全 PASS，而且都不是這一輪造成的 | 不通過。 | 2026-09-11 |
 | [`docs/playtest/13-dosv-natural-and-target-gui.md`](playtest/13-dosv-natural-and-target-gui.md) | DOS/V 自然畫面與目標平台 GUI 驗收 | 歷史驗收紀錄（2026-08-11，影片 oracle）。 | 2026-08-11 |
 | [`docs/playtest/14-m7-review.md`](playtest/14-m7-review.md) | M7 校訂文字人工審查報告 | 60 筆定案校訂已完成逐筆語意、marker、硬換行、寬度與代表畫面抽樣。 | 2026-08-11 |
 | [`docs/playtest/15-event2-5-talk-sampling.md`](playtest/15-event2-5-talk-sampling.md) | 事件 2–5 TALK 完整分支抽樣 | 36 個 raw TALK 頁面、18 組雙頁回應的分支、marker、硬換行、字寬與五列版面 抽樣通過；不宣稱完整… | 2026-08-11 |

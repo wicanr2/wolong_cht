@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**787 列分布在 336 份文件，平均每份 2.3 列。**
+**790 列分布在 337 份文件，平均每份 2.3 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 180 | 173 | 6 | 1 |
-| 驗收 | 233 | 207 | 26 | 0 |
+| 驗收 | 236 | 210 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 337 | 315 | 21 | 1 |
-| **合計** | **787** | 726 | 58 | 3 |
+| **合計** | **790** | 729 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -54,7 +54,7 @@
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/spec/` | 294 |
-| `docs/playtest/` | 233 |
+| `docs/playtest/` | 236 |
 | `docs/re/` | 180 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
@@ -289,7 +289,7 @@
 | [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 游標圖形資料 | 在 `sub_201E4` 附近，逐 byte 沒抓；remake 已經有量出來的 14×14 遮罩 | 靜態 |
 | [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 54 個 hide／show 點對應到 remake 的哪一段 | 沒做；這是「remake 要不要同步游標」的前置 | 靜態 |
 
-## 2.4 驗收（233 條）
+## 2.4 驗收（236 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -336,6 +336,9 @@
 | [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | 檢查條件的語意差 | 原版看第一個槽、remake 看整個清單；要確認 `[bp+0]` 那個槽在原版是怎麼填的（`docs/re/40` §3 的迴圈會跳過空槽重抽，所以「第一個槽空」與「全空」在原版是兩件事） | 靜態 |
 | [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | 「2 個」差 1 | 徵兵被跳過的次數原版 9、remake 10 | 靜態 |
 | [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | remake 的呼叫點解析度 | `governor.Tick` 的三個 `rnd()` 都記成 `state.go:1566`（closure 那一行），分不出是上昇值、防災還是徵兵 | 靜態 |
+| [`playtest/120-screen-parity-retest-20260911.md`](../playtest/120-screen-parity-retest-20260911.md) | 主畫面 `map` 那 101 px 的相位差是誰造成的（2026-09-02 之後的某一輪）。 | （未解小節內文） | 靜態 |
+| [`playtest/120-screen-parity-retest-20260911.md`](../playtest/120-screen-parity-retest-20260911.md) | 野戰 `field` 95 → 190、`sb-minimap` 32 → 128 的成因。 | （未解小節內文） | 靜態 |
+| [`playtest/120-screen-parity-retest-20260911.md`](../playtest/120-screen-parity-retest-20260911.md) | 攻城的取樣點與原版圖要重新對上號，或重跑一次受控擷取。 | （未解小節內文） | 靜態 |
 | [`playtest/17-expert-dosbox-remake.md`](../playtest/17-expert-dosbox-remake.md) | 松崗 DOS/V 原版 | **PASS（啟動至開場）** / 2026-08-12 證實空白確認／`0000`／`1234` 均越過密碼頁；完整自然長程驗證尚未執行 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 據點換手之後遮罩會不會跟著變 | `sub_1890A` 的行為，靜態讀得出來，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 松崗 DOS/V 側 | 這套 bridge 還沒在 DOS/V 上跑過。**密碼頁不構成阻礙**（四格留白按「確定」即可通過，`18`）——是還沒做 | 靜態 |

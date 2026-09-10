@@ -62,7 +62,7 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 
 <!-- worklist:begin 由 tools/worklist.py render 產生，不要手改 -->
 
-共 **11 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
+共 **12 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
 
 跑 `tools/py.sh tools/worklist.py verify` 逐條問一次；`check.sh` 會替你跑。
 
@@ -111,6 +111,22 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 **怎樣算做完**：`tools/parity_ck.sh 196/6/1` 的六張表全 0。
 
 **verify**：`present` `/模型還不完整/` 在 `docs/spec/195-ai-stage1-asks-about-the-intent.md`
+
+#### 畫面對拍落後規則對拍：三組都不是全 PASS
+
+規則層的同狀態對拍已經到 196/5/31（拍 9,177、66 個取樣點、六張表逐 byte 相同），但畫面那一側落後（docs/playtest/120）：
+
+· 主畫面：`map` 101 px（0.07%），文件記的是五區全 PASS
+· 野戰：`field` 190 px、`sb-minimap` 128 px（FAIL），文件記的是 95／32
+· 攻城：**重跑不出來**——playtest/58 沒寫哪一張原版 PNG 對應哪一個取樣點
+
+⭐ 三組都用 `c2c3522`（2026-09-11 那一輪之前）重截驗證過，**數字一模一樣**，所以是 2026-09-02 之後某一輪引入的，而那段期間每一輪都在改規則層、沒有一輪回頭重跑畫面。
+
+下一步：先把攻城的取樣點與原版圖對上號（不然那一組永遠驗不了），再用二分找出主畫面那 101 px 是哪一輪進來的。
+
+**怎樣算做完**：主畫面五區全 PASS、野戰九區回到七區 PASS 且無 FAIL、攻城三個取樣點可重跑。
+
+**verify**：`present` `/狀態：不通過/` 在 `docs/playtest/120-screen-parity-retest-20260911.md`
 
 ### fidelity — 原版有這個機制，remake 還沒建模
 
