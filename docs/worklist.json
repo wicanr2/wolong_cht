@@ -151,6 +151,21 @@
         "pattern": "六項品質修正尚未完成",
         "note": "綁「目前目標」那一段的開頭。收完之後那一段會被改寫成一句指標，這個 pattern 就不見了。⚠ render 區不會產出這句話，所以不會自己中自己。"
       }
+    },
+    {
+      "id": "snapshot-cursors-lag-27-ticks",
+      "layer": "parity",
+      "title": "快照的兩個游標欄位慢 27 拍",
+      "body": "`tools/orig_snapshot.py` 拼出來的 `SAVE.DAT`，全域那 128 B（`ipeek:10CF0:128`）不是快照那一刻的值：據點游標記 144 而實測是 171、軍團游標記 0 而實測是 48——**兩個都正好慢 27 拍**（`docs/playtest/119` §35）。\\n\\n現在靠 `-city-cursor 171 -corps-cursor 48` 手動補。成因還沒追，所以每份新快照都要重新量一次那兩個值。",
+      "acceptance": "快照拼出來就帶對的游標，對拍不必再手動給那兩個旗標。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "docs/playtest/119-rng-pace-comparison.md"
+        ],
+        "pattern": "不是快照那一刻的值。成因還沒追",
+        "note": "綁 §35 那句自承。"
+      }
     }
   ],
   "resolved": []

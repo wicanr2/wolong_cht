@@ -22,6 +22,15 @@ type Snapshot struct {
 	// CityCursor 是據點整備的輪轉游標（原版 `word_10D1E`）。
 	CityCursor int `json:"city_cursor"`
 
+	// CorpsCursor 是軍團更新的輪轉游標（原版 `word_10D18`，每拍推 16 支、
+	// 一圈 128 格 ＝ 8 拍，docs/spec/168）。
+	//
+	// ⚠ **對拍時要跟 CityCursor 一起設。** 只對齊據點那一個，軍團的巡迴
+	// 相位還是錯的——症狀是「某一支軍團在 remake 動了而原版沒動」，
+	// 而它吃亂數（出擊前的隨機等待），所以整條亂數流跟著岔開
+	// （docs/playtest/119 §35）。
+	CorpsCursor int `json:"corps_cursor"`
+
 	// EventCursor／EventDelay 是事件佇列的執行期游標（`word_10D20`／`byte_131AD`）。
 	EventCursor int   `json:"event_cursor"`
 	EventDelay  uint8 `json:"event_delay"`
@@ -51,6 +60,7 @@ func (w *World) TakeSnapshot() Snapshot {
 	s := Snapshot{
 		Player:             w.Player,
 		CityCursor:         w.cityCursor,
+		CorpsCursor:        w.corpsCursor,
 		EventCursor:        w.eventCursor,
 		EventDelay:         w.eventDelay,
 		StrategicAI:        w.strategicAI,
@@ -77,6 +87,9 @@ func (w *World) Restore(s Snapshot) error {
 	if s.CityCursor < 0 || s.CityCursor >= numCities {
 		return fmt.Errorf("據點游標 %d 超出 0–%d", s.CityCursor, numCities-1)
 	}
+	if s.CorpsCursor < 0 || s.CorpsCursor >= corpsSlots {
+		return fmt.Errorf("軍團游標 %d 超出 0–%d", s.CorpsCursor, corpsSlots-1)
+	}
 	if s.EventCursor < 0 || s.EventCursor >= eventQueueEntries {
 		return fmt.Errorf("事件游標 %d 超出 0–%d", s.EventCursor, eventQueueEntries-1)
 	}
@@ -87,6 +100,7 @@ func (w *World) Restore(s Snapshot) error {
 	}
 	w.Player = s.Player
 	w.cityCursor = s.CityCursor
+	w.corpsCursor = s.CorpsCursor
 	w.eventCursor = s.EventCursor
 	w.eventDelay = s.EventDelay
 	w.strategicAI = s.StrategicAI

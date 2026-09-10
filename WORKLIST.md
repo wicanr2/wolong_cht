@@ -62,7 +62,7 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 
 <!-- worklist:begin 由 tools/worklist.py render 產生，不要手改 -->
 
-共 **10 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
+共 **11 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
 
 跑 `tools/py.sh tools/worklist.py verify` 逐條問一次；`check.sh` 會替你跑。
 
@@ -95,6 +95,14 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 **怎樣算做完**：同一首曲子兩邊各取一段做頻譜比對，給出一個可重跑的量化指標。
 
 **verify**：`present` `/音色的諧波結構沒量化比對/` 在 `README.md`
+
+#### 快照的兩個游標欄位慢 27 拍 （⚠ verify 已不成立，回頭看這一條）
+
+`tools/orig_snapshot.py` 拼出來的 `SAVE.DAT`，全域那 128 B（`ipeek:10CF0:128`）不是快照那一刻的值：據點游標記 144 而實測是 171、軍團游標記 0 而實測是 48——**兩個都正好慢 27 拍**（`docs/playtest/119` §35）。\n\n現在靠 `-city-cursor 171 -corps-cursor 48` 手動補。成因還沒追，所以每份新快照都要重新量一次那兩個值。
+
+**怎樣算做完**：快照拼出來就帶對的游標，對拍不必再手動給那兩個旗標。
+
+**verify**：`present` `/不是快照那一刻的值。成因還沒追/` 在 `docs/playtest/119-rng-pace-comparison.md`
 
 ### fidelity — 原版有這個機制，remake 還沒建模
 

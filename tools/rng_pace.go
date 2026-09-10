@@ -64,7 +64,8 @@ func main() {
 	ticks := flag.Int("ticks", 324, "要記錄幾個子刻")
 	skip := flag.Int("skip", 0, "先推幾個子刻不記錄——用來對齊原版的起點")
 	seed := flag.Int("seed", 1, "亂數種子（沒給 -rng-state 時用）")
-	cursor := flag.Int("city-cursor", -1, "載入後把據點巡迴游標設成這個值（原版存檔 +0x2E ÷ 32）")
+	cursor := flag.Int("city-cursor", -1, "載入後把據點巡迴游標設成這個值（原版 `word_10D1E` ÷ 32）")
+	corpsCur := flag.Int("corps-cursor", -1, "載入後把軍團巡迴游標設成這個值（原版 `word_10D18` ÷ 64）")
 	seqOut := flag.String("seq-out", "", "把逐子刻取數序列寫到檔案（供與原版 diff）")
 	traceN := flag.Int("trace", 0, "印前 N 拍的據點狀態（小樣本追蹤）")
 	mark := flag.String("mark", "", "印出含這個呼叫點的子刻位置（例：strategy.go:630）")
@@ -157,14 +158,22 @@ func main() {
 	}
 	tr := &tracing{inner: r}
 
-	if *cursor >= 0 {
+	if *cursor >= 0 || *corpsCur >= 0 {
+		// ⚠ **兩個游標要一起設。** 快照的那兩個欄位不等於快照那一刻的
+		// 記憶體（實測慢 27 拍，docs/playtest/119 §35），只補據點那一個
+		// 的話軍團巡迴相位還是錯的——而軍團出擊會取亂數。
 		s := w.TakeSnapshot()
-		s.CityCursor = *cursor
+		if *cursor >= 0 {
+			s.CityCursor = *cursor
+		}
+		if *corpsCur >= 0 {
+			s.CorpsCursor = *corpsCur
+		}
 		if err := w.Restore(s); err != nil {
-			fmt.Fprintln(os.Stderr, "-city-cursor：", err)
+			fmt.Fprintln(os.Stderr, "-city-cursor／-corps-cursor：", err)
 			os.Exit(1)
 		}
-		fmt.Printf("據點游標設成 %d\n", *cursor)
+		fmt.Printf("游標設成：據點 %d、軍團 %d\n", s.CityCursor, s.CorpsCursor)
 	}
 	fmt.Printf("起點 %d年%d月%d日 %d時 子刻 %d\n",
 		w.Clock.Year, w.Clock.Month, w.Clock.Day, w.Clock.Hour, w.Clock.Subtick)
