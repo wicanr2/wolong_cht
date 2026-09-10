@@ -14,8 +14,9 @@ and  cl, cl / jz .stay               ; cl ＝ 0（勝方）→ `[si+23h] ← 8`
 ```
 
 ⇒ **打完之後士氣歸零的軍團，`+0x23` 保持原值**。攻城的勝方不判壞滅
-（[`187`](187-only-the-loser-is-judged.md)），所以它活著，而且
-**帶著戰前的階段繼續走**——不會停下來等士氣。
+（[`187`](187-only-the-loser-is-judged.md)），所以它活著並帶著戰前的
+階段——階段 8（等士氣）只在軍團**站到目標上**時才被分派器讀到，
+所以這個差別要等它走到目的地才顯現。
 
 remake 的 `retreatOrPerish` 在 `won` 時無條件寫 `StageWaitMorale`。
 
