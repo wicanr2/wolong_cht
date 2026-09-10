@@ -699,19 +699,27 @@ func (w *World) relieve(site int, r threat.Result, rng economy.Rand) []TalkNotic
 		return nil
 	}
 	pick := r.Targets[rng.Next()&3%len(r.Targets)]
-	want := threat.Requested(c.Threat, c.Occupancy)
 	if c.Occupancy <= 1 {
 		// ⚠ 這一條**玩家的據點不走**（原版 `cmp cl, [si+841h] / jz 結束`）。
 		// 玩家只從上面那條貼身威脅的路徑收到求援訊息。
+		//
+		// ⭐ `sub_14057` 只在**這一支**用 `+0x14 ＋ 2 − +0x18` 當數量
+		// （`al = [si+854h] / add al,2 / sub al,[si+858h] / jbe 結束`）。
+		want := threat.Requested(c.Threat, c.Occupancy)
 		if want == 0 || c.Owner == w.Player {
 			return nil
 		}
 		return w.requestRelief(site, want, rng)
 	}
-	if want < 1 {
-		want = 1
-	}
-	w.dispatchGarrison(site, pick, want, c.Occupancy-want, rng)
+	// ⭐⭐ **調兵的 want 恆為 1**（docs/spec/184）。原版 `loc_14099` 的
+	// `dl = al`，而 `al` 是最開頭那個「亂數 & 3」在挑目標的迴圈裡被
+	// `dec` 到 **0**（`jz` 才跳得出迴圈），接著
+	// `and al, al / jnz / mov al, 1` 又把它設成 1。
+	//
+	// ⛔ 拿 `Requested(威脅量, 佔用數)` 當它是錯的——那是**求援的數量**，
+	// 走的是上面那一支。同局面拍 3,415 的據點 129：威脅量 3、佔用數 3，
+	// `Requested` 給 2 而原版是 1（`sub_14155` 進來時 `DX=0201`）。
+	w.dispatchGarrison(site, pick, 1, c.Occupancy-1, rng)
 	c.ReliefCooldown = 0
 	return nil
 }
