@@ -55,6 +55,12 @@ type Faction struct {
 	// Expense 是本月累計的支出。月結扣完之後歸零。
 	Expense int
 
+	// CorpsWeight 是 AI 募兵節制那道閘要用的「軍團兵力和」
+	// （原版 `sub_15456` 的 `dx`，16 位無號、會繞回）。
+	// **算法照抄原版的錯步進**，見 `Settle` 的註解與 docs/spec/181。
+	// 玩家勢力不看它。
+	CorpsWeight int
+
 	// AI 為 true 時不使用 TaxRate，收入固定除以 2
 	// （原版 `sub_15456` 對非玩家勢力就是 `shr`/`rcr` 一次）。
 	AI bool
@@ -193,6 +199,18 @@ func Settle(f *Faction, cities []City, owner int, rng Rand) Result {
 		res.Income = res.GrossBase * f.TaxRate / 100
 	}
 
+	// ⭐ **AI 的募兵是有節制的**（原版 `sub_15456` 的後半，docs/spec/181）：
+	//
+	//	(軍團兵力和 >> 8 的低 byte ＋ 本月支出 >> 8) × 2 ≥ 收入 >> 8
+	//	  ⇒ 這個月不募兵
+	//
+	// 收入是**除以 2 之後**的（AI 固定稅率 50%）。少了這道閘，AI 每個月
+	// 都會募到滿，預備兵一路往上漂——而症狀出現在完全不相干的地方
+	// （補兵的每槽分配差 4）。
+	if f.AI && recruitBlocked(f.CorpsWeight, f.Expense, res.Income) {
+		recruit = [NumTroopTypes]int{}
+	}
+
 	// 募兵數設定是**上限**：取可募量與設定值的較小者。
 	for t := TroopType(0); t < NumTroopTypes; t++ {
 		got := recruit[t]
@@ -225,6 +243,21 @@ func Settle(f *Faction, cities []City, owner int, rng Rand) Result {
 		}
 	}
 	return res
+}
+
+// recruitBlocked 是 `sub_15456` 的三行判斷：
+//
+//	mov al, dh / xor ah, ah      ; 軍團兵力和的**高 byte**
+//	add ax, [si+1Bh]             ; ＋ 勢力記錄 +0x1B（＝本月支出 >> 8，word）
+//	shl ax, 1                    ; × 2
+//	cmp ax, [bp+1] / jnb .no     ; ≥ 收入 >> 8 ⇒ 不募兵
+//
+// ⚠ 三個「高 byte」都是照抄：`dh` 是 16 位和的高半、`[si+1Bh]` 是 24 位
+// 支出的中間兩個 byte、`[bp+1]` 是 24 位收入的高 16 位。拿完整值去比會
+// 得到完全不同的答案——這道閘實際上幾乎總是成立，AI 因此很少募兵。
+func recruitBlocked(corpsWeight, expense, income int) bool {
+	left := (corpsWeight>>8)&0xFF + (expense>>8)&0xFFFF
+	return (left*2)&0xFFFF >= (income>>8)&0xFFFF
 }
 
 // ClampFunds 把值鉗在 ±655,000。原版收入（`sub_15609`）與支出

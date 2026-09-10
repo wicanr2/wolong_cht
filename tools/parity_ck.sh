@@ -44,8 +44,10 @@ for t in "${ticks[@]}"; do
     c=$(tools/py.sh tools/city_diff.py "$orig" "$CK/remake-$t.DAT" | grep 合計)
     p=$(tools/py.sh tools/corps_diff.py "$orig" "$CK/remake-$t.DAT" | grep 合計)
     f=$(tools/py.sh tools/faction_diff.py "$orig" "$CK/remake-$t.DAT" | grep 合計)
-    printf '拍 %-5s 游標 %-4s remake 跑 %-5s 據點 %-20s 勢力 %-22s 軍團 %s\n' \
-        "$t" "$cur" "$n" "$c" "$f" "$p"
-    [[ "$c$f$p" == *"0 個 byte／0 座"*"0 個 byte／0 個勢力"*"0 個 byte／0 支"* ]] || fail=1
+    g=$(tools/py.sh tools/global_diff.py "$orig" "$CK/remake-$t.DAT" | grep 合計)
+    printf '拍 %-5s 游標 %-4s 跑 %-5s 據點 %-18s 勢力 %-20s 軍團 %-34s 全域 %s\n' \
+        "$t" "$cur" "$n" "$c" "$f" "$p" "$g"
+    [[ "$c$f$p$g" == *"0 個 byte／0 座"*"0 個 byte／0 個勢力"*"0 個 byte／0 支"* \
+        && "$g" == "合計 0 個 byte"* ]] || fail=1
 done
 exit $fail

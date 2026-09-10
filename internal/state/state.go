@@ -63,6 +63,9 @@ const (
 	playerPtrOffset  = 0x0D
 	playerOffset     = 0x0F
 	trustOffset      = 0x10
+	// 財政視窗的月結快照（`cs:0D02h`／`0D05h`），各 24 位。
+	incomeSnapOffset  = 0x12
+	expenseSnapOffset = 0x15
 
 	// titleOffset 是劇本／存檔的標題字串（Big5，NUL 結尾）。
 	// 原版四槽選擇視窗的名稱欄畫的就是它（docs/re/52 §4）。
@@ -357,7 +360,10 @@ func (g General) Rules() general.General {
 type World struct {
 	// IncomeSnap／ExpenseSnap 是財政視窗的月結快照（原版顯示用全域
 	// `cs:0D02h`／`0D05h`，`sub_1548F` 寫入；docs/spec/14 §5）。
-	// **不序列化**：原版讀檔後歸零。
+	//
+	// ⚠ **它們在保存區塊裡**（`+0x12`／`+0x15`，各 24 位）——`cs:0CF0h`
+	// 那 59 個 byte 是連在一起存的。同局面對拍比的就是那一段，
+	// 所以載入端要讀、寫回端要寫（docs/spec/181 §3）。
 	IncomeSnap  int `json:"-"`
 	ExpenseSnap int `json:"-"`
 
@@ -654,6 +660,8 @@ func loadBlock(b []byte) *World {
 	// 存活勢力數（區塊 +0x3A，59 byte 全域區塊的最後一格）。
 	// 原版 `cs:0D2Ah` 全庫只有一個 `dec`，靠這個欄位載入初值；
 	// 減到 1 就是結局（docs/re/59 §3）。
+	w.IncomeSnap = i24(b, incomeSnapOffset)
+	w.ExpenseSnap = i24(b, expenseSnapOffset)
 	w.LivingFactions = int(b[livingFactionsOffset])
 	w.TaxRate = int(b[taxOffset])
 	w.NextTaxRate = int(b[nextSettings])
@@ -1084,6 +1092,7 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 			RecruitCap: w.RecruitCap,
 			Expense:    f.Expense,
 			AI:         i != w.Player,
+			CorpsWeight: w.aiCorpsWeight(i),
 		}
 		expense := f.Expense
 		res := economy.Settle(&ef, cities, i, rng)
@@ -1256,6 +1265,33 @@ func (w *World) hourly(ev *Event, rng economy.Rand) {
 	//    所以要改的是「派遣方 → 這個勢力」那一格交友度。
 	ev.FriendshipUp = w.runDiplomat(i, rng)
 
+}
+
+// aiCorpsWeight 是 `sub_15456` 前半段掃出來的「軍團兵力和」——AI 募兵
+// 節制那道閘的左半（docs/spec/181）。
+//
+// ⛔ **原版掃錯了步進，這裡照抄。** `add bx, 20h` 走的是 32 B，而軍團記錄
+// 是 64 B；127 次迴圈因此只走到軍團表的一半，而且**奇數次落在記錄中間**
+// ——那時 `[bx]` 讀到的是 `+0x20`（意圖）、`[bx+1]` 是 `+0x21`、
+// `[bx+4]` 是 `+0x24`。所以真正被加總的不只是軍團兵力。
+//
+// 用當前狀態的區塊 bytes 來算，才拿得到那幾格「不該被當成欄位」的值。
+// 月結一個月跑一次，成本可以接受。
+func (w *World) aiCorpsWeight(faction int) int {
+	b := w.Bytes()
+	const seg = factionBase // 段內偏移 0 ↔ 檔案偏移 0x80
+	total := 0
+	for k := 0; k < 0x7F; k++ {
+		bx := seg + 0x2240 + k*0x20
+		if bx+6 > len(b) {
+			break
+		}
+		if b[bx] < aliveFlag || int(b[bx+1]) != faction {
+			continue
+		}
+		total += int(b[bx+4]) | int(b[bx+5])<<8
+	}
+	return total & 0xFFFF // `add dx, …` 是 16 位，會繞回
 }
 
 // relocateCapital 把 faction 的首都搬到 `internal/rules/capital` 選出的據點。
@@ -1501,6 +1537,8 @@ func (w *World) Bytes() []byte {
 	putU16(b, corpsCursorOffset, w.corpsCursor*corpsSize)
 	putU16(b, hourCursorOffset, w.hourFaction*factionSize)
 	putU16(b, eventCursorOffset, w.eventCursor)
+	putI24(b, incomeSnapOffset, w.IncomeSnap)
+	putI24(b, expenseSnapOffset, w.ExpenseSnap)
 
 	for i := range w.Friendship {
 		row := b[friendBase+i*friendStride:]
