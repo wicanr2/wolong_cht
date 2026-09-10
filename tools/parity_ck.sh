@@ -45,8 +45,13 @@ for t in "${ticks[@]}"; do
     p=$(tools/py.sh tools/corps_diff.py "$orig" "$CK/remake-$t.DAT" | grep 合計)
     f=$(tools/py.sh tools/faction_diff.py "$orig" "$CK/remake-$t.DAT" | grep 合計)
     g=$(tools/py.sh tools/global_diff.py "$orig" "$CK/remake-$t.DAT" | grep 合計)
-    printf '拍 %-5s 游標 %-4s 跑 %-5s 據點 %-18s 勢力 %-20s 軍團 %-34s 全域 %s\n' \
-        "$t" "$cur" "$n" "$c" "$f" "$p" "$g"
+    e=$(tools/py.sh tools/event_diff.py "$orig" "$CK/remake-$t.DAT" | grep 合計)
+    # ⚠ 佇列**只印不判**：`tools/orig_snapshot.py` 只拼「全域 ＋ 四張表」，
+    #    事件佇列（`+0x52C0`）那一段是從原版 `SAVE.DAT` **模板**來的，
+    #    不是執行期的內容——比它等於拿模板對 remake 的活狀態
+    #    （worklist `event-queue-not-peeked`）。要判就得先 peek 那一段。
+    printf '拍 %-5s 游標 %-4s 跑 %-5s 據點 %-18s 勢力 %-20s 軍團 %-34s 全域 %-18s 佇列 %s（原版側是模板）\n' \
+        "$t" "$cur" "$n" "$c" "$f" "$p" "${g%%（*}" "${e%%，*}"
     [[ "$c$f$p$g" == *"0 個 byte／0 座"*"0 個 byte／0 個勢力"*"0 個 byte／0 支"* \
         && "$g" == "合計 0 個 byte"* ]] || fail=1
 done

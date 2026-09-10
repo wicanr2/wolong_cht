@@ -150,6 +150,20 @@
         "pattern": "remake 的 `Targets` 是空的",
         "note": "綁 §4 那句自承。追出來之後那句會被改掉。"
       }
+    },
+    {
+      "id": "event-queue-not-peeked",
+      "layer": "parity",
+      "title": "同局面對拍的第五張表：事件佇列還沒 peek",
+      "body": "`tools/orig_snapshot.py` 只拼兩段——全域 59 B（`ipeek:10CF0`）與四張表（`peek:2754`，`TABLE_LEN = 0x5220`）。**事件佇列（區塊 `+0x52C0`，256 筆 × 4 B）不在裡面**，所以檢查點那一段是從原版 `SAVE.DAT` **模板**複製來的。\n\n⇒ `tools/event_diff.py` 現在比的是「模板 vs remake 的執行期」，不是「原版 vs remake」。拍 200／1,900 顯示 0 筆只是因為 remake 那時還沒動過佇列；月結（5/1）一壓縮就差 16 筆，而那 16 筆**看不出誰對**。\n\n佇列在另一個段：`cs:word_10D56`（`docs/re/15` §3.3）。要 peek 得先讀出那個段值——`sub_100DF` 建立它。\n\n⚠ 這張表值得補：它決定「哪一天會發生什麼」（宣戰、遷都、合作、停戰、撥款），而拍 3,500 的兩個狀態差異（勢力 0 的侵攻目標沒設、勢力 19 遷都到不同據點）都指向它。",
+      "acceptance": "`orig_snapshot.py` 把佇列那一段也 peek 進來；`tools/parity_ck.sh` 把佇列納入 fail 判定，而且既有的檢查點仍然全 0。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "tools/parity_ck.sh"
+        ],
+        "pattern": "原版側是模板"
+      }
     }
   ],
   "resolved": [

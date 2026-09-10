@@ -62,7 +62,7 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 
 <!-- worklist:begin 由 tools/worklist.py render 產生，不要手改 -->
 
-共 **10 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
+共 **11 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
 
 跑 `tools/py.sh tools/worklist.py verify` 逐條問一次；`check.sh` 會替你跑。
 
@@ -97,6 +97,20 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 **怎樣算做完**：`tools/parity_ck.sh` 在拍 3,566 之後仍是四張表 0；逐拍取數的第一個分歧往後推。
 
 **verify**：`present` `/remake 的 `Targets` 是空的/` 在 `docs/spec/184-relief-dispatch-want-is-always-one.md`
+
+#### 同局面對拍的第五張表：事件佇列還沒 peek
+
+`tools/orig_snapshot.py` 只拼兩段——全域 59 B（`ipeek:10CF0`）與四張表（`peek:2754`，`TABLE_LEN = 0x5220`）。**事件佇列（區塊 `+0x52C0`，256 筆 × 4 B）不在裡面**，所以檢查點那一段是從原版 `SAVE.DAT` **模板**複製來的。
+
+⇒ `tools/event_diff.py` 現在比的是「模板 vs remake 的執行期」，不是「原版 vs remake」。拍 200／1,900 顯示 0 筆只是因為 remake 那時還沒動過佇列；月結（5/1）一壓縮就差 16 筆，而那 16 筆**看不出誰對**。
+
+佇列在另一個段：`cs:word_10D56`（`docs/re/15` §3.3）。要 peek 得先讀出那個段值——`sub_100DF` 建立它。
+
+⚠ 這張表值得補：它決定「哪一天會發生什麼」（宣戰、遷都、合作、停戰、撥款），而拍 3,500 的兩個狀態差異（勢力 0 的侵攻目標沒設、勢力 19 遷都到不同據點）都指向它。
+
+**怎樣算做完**：`orig_snapshot.py` 把佇列那一段也 peek 進來；`tools/parity_ck.sh` 把佇列納入 fail 判定，而且既有的檢查點仍然全 0。
+
+**verify**：`present` `/原版側是模板/` 在 `tools/parity_ck.sh`
 
 ### fidelity — 原版有這個機制，remake 還沒建模
 

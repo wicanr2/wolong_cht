@@ -87,6 +87,7 @@ if [[ $WANT_DOCS == 1 ]]; then
     step "據點表比對工具正對照" tools/py.sh tools/city_diff.py --selftest
     step "勢力表比對工具正對照" tools/py.sh tools/faction_diff.py --selftest
     step "全域欄位比對工具正對照" tools/py.sh tools/global_diff.py --selftest
+    step "事件佇列比對工具正對照" tools/py.sh tools/event_diff.py --selftest
     step "對拍工具正對照" bash -c '
         tools/py.sh tools/parity_diff.py --selftest
         tools/py.sh tools/state_diff.py --selftest
