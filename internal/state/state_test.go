@@ -1991,20 +1991,24 @@ func TestCorpsMeetAndFight(t *testing.T) {
 	w.Friendship[a][b] = w.Friendship[a][b].WithWar(true)
 	w.Friendship[b][a] = w.Friendship[b][a].WithWar(true)
 
-	// 互相往對方的首都走。
-	if err := w.March(la, w.Factions[b].Capital); err != nil {
-		t.Fatal(err)
-	}
+	// 留守那一邊要是玩家，否則 AI 會把它派出去（`w.Player` 預設是存檔裡的）。
+	// 沒有 `SetTactical` 所以 `beginTactical` 回 false，仍走自動判定。
+	w.Player = a
+	// ⚠ **一邊留守、一邊進攻。** 守軍名單比的是**據點座標**
+	// （`sub_14C72`，docs/spec/82），所以守方得真的站在城裡。
+	// 兩邊都出征的話會錯身而過——這個測試原本靠 `Corps.Node` 在行軍中
+	// 留著出發據點，才在攻城時「找到守軍」，那是誤判不是場面。
 	if err := w.March(lb, w.Factions[a].Capital); err != nil {
 		t.Fatal(err)
 	}
+	_ = la
 
 	r := rng.NewFixed(5)
 	var fought *CorpsEvent
 	for i := 0; i < 200000 && fought == nil; i++ {
 		ev := w.Tick(r)
 		for k := range ev.Corps {
-			// 要的是兩支軍團的野戰遭遇，不是走到城下打城兵。
+			// 要的是**軍團對軍團**，不是打城兵（`Enemy < 0`）。
 			if ev.Corps[k].Battle != nil && ev.Corps[k].Enemy >= 0 {
 				fought = &ev.Corps[k]
 			}
@@ -2091,12 +2095,11 @@ func TestPlayerBattleGoesTactical(t *testing.T) {
 	// ⚠ 先交戰，否則軍團在邊界掉頭（`docs/spec/132`）。
 	w.Friendship[a][b] = w.Friendship[a][b].WithWar(true)
 	w.Friendship[b][a] = w.Friendship[b][a].WithWar(true)
-	if err := w.March(la, w.Factions[b].Capital); err != nil {
-		t.Fatal(err)
-	}
+	// ⚠ **玩家留守、AI 來攻**（同 `TestCorpsMeetAndFight` 的理由）。
 	if err := w.March(lb, w.Factions[a].Capital); err != nil {
 		t.Fatal(err)
 	}
+	_ = la
 
 	r := rng.NewFixed(5)
 	for i := 0; i < 200000 && w.PendingBattle() == nil; i++ {

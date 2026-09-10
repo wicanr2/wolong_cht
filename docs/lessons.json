@@ -158,6 +158,11 @@
           "date": "2026-09-10",
           "what": "又五處：四個 `c.Node == capital`（留守補兵、Stage 9 轉補兵、補兵、解散）與 `army.KindOf(c.Node) == army.FieldNode`（軍費與士氣）。原版 `sub_14548` 比三個欄位（座標兩格 ＋ `+0x0E`），`sub_12600` 比 `+0x0E ≥ 800h`。**「從 X 出發、目標也是 X」在退卻與回首都補兵時是常態**，所以這個誤判不是邊角",
           "doc": "`CONTEXT.md` §6、`docs/spec/177` §1.5、`docs/spec/178`"
+        },
+        {
+          "date": "2026-09-10",
+          "what": "第六處：攻城的守軍名單 `pickDefender(..., d.Node == node)`。`sub_14C72` 收的是**同一格**的名單（攻城時就是據點座標）。拿 `Node` 比會把「從這座城出發、正走在路上」的軍團算成守軍——而**三個測試一直靠這個誤判通過**（兩支軍團其實錯身而過，攻城時憑 `Node` 憑空找到守軍）",
+          "doc": "`docs/spec/82`、`CONTEXT.md` §6"
         }
       ],
       "remind_on": [
@@ -330,6 +335,34 @@
             "tools/ida_bitflag_users.py"
           ],
           "pattern": "一條都沒有"
+        }
+      }
+    },
+    {
+      "id": "tests-green-on-the-bug",
+      "title": "測試可能正是靠那個 bug 才綠的",
+      "trigger": "修好一個規則錯之後，本來綠的測試紅了",
+      "rule": "**先問「這個測試原本是怎麼通過的」，不要先假設自己改壞了。** 端對端測試搭的場面常常沒有被驗證過——它只驗「有沒有發生」，不驗「該不該發生」。修好判準之後場面不成立了，那代表原本的綠燈是假的。修法是**把場面改成真的成立**（並在測試裡寫明為什麼），不是把判準改回去。",
+      "occurrences": [
+        {
+          "date": "2026-09-10",
+          "what": "攻城守軍改用座標判準之後，三個端對端測試同時紅。查下去發現它們讓兩個君主互相攻打對方首都，而兩支其實**錯身而過**——攻城時憑 `Corps.Node`（行軍中留著出發據點）憑空找到守軍才打起來。改成「玩家留守、AI 來攻」之後場面才真的成立",
+          "doc": "`internal/state/state_test.go`、`internal/state/tactical_resolve_test.go`"
+        }
+      ],
+      "remind_on": [
+        "commit",
+        "parity"
+      ],
+      "guard": {
+        "kind": "rule",
+        "note": "沒有機器訊號——這一條要在「測試紅了」的當下想起來。測試裡把場面成立的理由寫成註解，是下一個人唯一的線索。",
+        "verify": {
+          "kind": "present",
+          "paths": [
+            "internal/state/state_test.go"
+          ],
+          "pattern": "那是誤判不是場面"
         }
       }
     }

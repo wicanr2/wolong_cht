@@ -43,7 +43,11 @@ func TestTacticalBattleAlwaysResolves(t *testing.T) {
 	// ⚠ 先交戰，否則軍團在邊界掉頭（`docs/spec/132`）。
 	w.Friendship[a][b] = w.Friendship[a][b].WithWar(true)
 	w.Friendship[b][a] = w.Friendship[b][a].WithWar(true)
-	w.March(la, w.Factions[b].Capital)
+	// ⚠ **玩家留守、AI 來攻。** 守軍名單比的是**據點座標**
+	// （`sub_14C72`，docs/spec/82），所以守方得真的站在城裡；
+	// 而玩家的軍團不會被 AI 派走，留守這一邊只能是玩家。
+	// （這個測試原本兩邊都出征，靠 `Corps.Node` 在行軍中留著出發據點
+	// 才「找得到守軍」——那是誤判，不是場面：兩支其實錯身而過。）
 	w.March(lb, w.Factions[a].Capital)
 	r := rng.NewFixed(5)
 	for i := 0; i < 200000 && w.PendingBattle() == nil; i++ {
@@ -51,7 +55,9 @@ func TestTacticalBattleAlwaysResolves(t *testing.T) {
 	}
 	p := w.PendingBattle()
 	if p == nil {
-		t.Fatal("沒開戰術")
+		t.Fatalf("沒開戰術：攻方在 (%d,%d) alive=%v，守方在 (%d,%d) alive=%v",
+			w.Corps[la].X, w.Corps[la].Y, w.Corps[la].Alive,
+			w.Corps[lb].X, w.Corps[lb].Y, w.Corps[lb].Alive)
 	}
 	for n := 1; n <= 40; n++ {
 		if p.Battle.Run(5000) {

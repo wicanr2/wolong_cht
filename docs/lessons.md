@@ -10,7 +10,7 @@
 
 <!-- lessons:begin 由 tools/lessons.py render 產生，不要手改 -->
 
-共 **10 條**。權威是 [`lessons.json`](lessons.json)，這一份由 `tools/py.sh tools/lessons.py render` 產生。
+共 **11 條**。權威是 [`lessons.json`](lessons.json)，這一份由 `tools/py.sh tools/lessons.py render` 產生。
 
 ⭐ **按「什麼時候要想起這一條」索引**——教訓要防的動作發生在任務中間，不是開始時；按事件時間排的清單那時查不到。
 
@@ -20,12 +20,13 @@
 | 要引用文件裡的數字、或 `workplace/` 底下存下來的產物，當成「改之前是多少」 | [拿舊產物當基線＝拿舊程式碼當基線](#baseline-from-stale-artifact) | 3 | remind |
 | 要下「這個規則是這樣」的結論，而手上只有一組原版樣本 | [一組樣本分不開兩種讀法，就不算驗證](#one-sample-cannot-separate) | 3 | remind |
 | 同狀態對拍之前，宣稱兩邊起點對齊 | [「兩邊對齊了」要對每一種狀態各問一次](#alignment-per-state) | 1 | remind |
-| 要用一個 remake 有、而原版沒有對應物的欄位當判準 | [remake 自己加的欄位最危險](#remake-only-field) | 2 | remind |
+| 要用一個 remake 有、而原版沒有對應物的欄位當判準 | [remake 自己加的欄位最危險](#remake-only-field) | 3 | remind |
 | 處理原版的顏色屬性 byte | [屬性 byte 的兩個半位元組是「背景︰前景」](#attribute-nibble-order) | 2 | remind |
 | 寫下一條新規則或新教訓的那一刻 | [規則沒有觸發時機，等於不存在](#rule-without-trigger) | 3 | tool |
 | 用 grep 或 pgrep 判斷「某個東西還在不在」 | [grep／pgrep 會匹配到查詢自己](#query-matches-itself) | 2 | test |
 | 對拍時要把某個原版欄位標成「畫面用」「導出值」「remake 走自己那一套」而放進「不必比」那一格 | [宣告一個欄位「remake 不必建模」等於為它關掉所有檢查](#not-modelled-turns-off-checks) | 1 | remind |
 | 寫掃描條件去問「有沒有人做某件事」，而答案是 0 處 | [過濾器自己有洞：清除端的立即值是補數](#filter-has-a-hole) | 1 | tool |
+| 修好一個規則錯之後，本來綠的測試紅了 | [測試可能正是靠那個 bug 才綠的](#tests-green-on-the-bug) | 1 | rule（❌ 不見了） |
 
 ### IDA 把整段解成資料時，先問是不是自我修改碼
 
@@ -90,6 +91,7 @@
 |---|---|---|
 | 2026-09-10 | `Corps.Node` 被當成「站在哪裡」用了三處：退卻的「站在自家據點上」、退卻起點、據點失守的調頭名單。原版分別用 `+0x0E < 600h`、邊的兩端、**座標** | `CONTEXT.md` §6 |
 | 2026-09-10 | 又五處：四個 `c.Node == capital`（留守補兵、Stage 9 轉補兵、補兵、解散）與 `army.KindOf(c.Node) == army.FieldNode`（軍費與士氣）。原版 `sub_14548` 比三個欄位（座標兩格 ＋ `+0x0E`），`sub_12600` 比 `+0x0E ≥ 800h`。**「從 X 出發、目標也是 X」在退卻與回首都補兵時是常態**，所以這個誤判不是邊角 | `CONTEXT.md` §6、`docs/spec/177` §1.5、`docs/spec/178` |
+| 2026-09-10 | 第六處：攻城的守軍名單 `pickDefender(..., d.Node == node)`。`sub_14C72` 收的是**同一格**的名單（攻城時就是據點座標）。拿 `Node` 比會把「從這座城出發、正走在路上」的軍團算成守軍——而**三個測試一直靠這個誤判通過**（兩支軍團其實錯身而過，攻城時憑 `Node` 憑空找到守軍） | `docs/spec/82`、`CONTEXT.md` §6 |
 
 **防線**：`remind` — `tools/ida.sh` 與 `tools/check.sh` 都會印。
 
@@ -156,5 +158,17 @@
 | 2026-09-10 | `tools/ida_bitflag_users.py` 照「立即值含指定位元」篩，於是 `docs/spec/173` 斷言軍團 `+0x00` 位元 0「沒有清除端，所以是一次性的」。清除端就在 `sub_147BB` 的 `00014869`，語意整個相反 | `CONTEXT.md` §6、`docs/spec/177` §1.3 |
 
 **防線**：`tool` — `tools/ida_bitflag_users.py` 現在按角色分組（設／清／翻轉／測／遮罩保留），空的那一組會印出「一條都沒有——下結論前先確認掃描本身有正對照」。
+
+### 測試可能正是靠那個 bug 才綠的
+
+<a id="tests-green-on-the-bug"></a>**什麼時候想起**：修好一個規則錯之後，本來綠的測試紅了
+
+**要做的**：**先問「這個測試原本是怎麼通過的」，不要先假設自己改壞了。** 端對端測試搭的場面常常沒有被驗證過——它只驗「有沒有發生」，不驗「該不該發生」。修好判準之後場面不成立了，那代表原本的綠燈是假的。修法是**把場面改成真的成立**（並在測試裡寫明為什麼），不是把判準改回去。
+
+| 日期 | 犯在哪 | 收據 |
+|---|---|---|
+| 2026-09-10 | 攻城守軍改用座標判準之後，三個端對端測試同時紅。查下去發現它們讓兩個君主互相攻打對方首都，而兩支其實**錯身而過**——攻城時憑 `Corps.Node`（行軍中留著出發據點）憑空找到守軍才打起來。改成「玩家留守、AI 來攻」之後場面才真的成立 | `internal/state/state_test.go`、`internal/state/tactical_resolve_test.go` |
+
+**防線**：`rule` — 沒有機器訊號——這一條要在「測試紅了」的當下想起來。測試裡把場面成立的理由寫成註解，是下一個人唯一的線索。
 
 <!-- lessons:end -->

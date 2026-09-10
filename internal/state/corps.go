@@ -1227,8 +1227,13 @@ func (w *World) siegeAt(i, node int, ev *CorpsEvent, rng combat.Rand) {
 	}
 	// 城裡有守軍就打守軍（多支疊同格時照 `sub_14C72` 計分挑應戰者，
 	// docs/spec/82），沒有就打城兵。
+	//
+	// ⚠ **判準是「腳踩在據點的座標上」**（`sub_14C72` 收的是同一格的名單，
+	// 攻城時那一格就是據點座標）。拿 `Node` 比會把「從這座城出發、
+	// 正走在路上」的軍團算成守軍——`Node` 在行軍中留著出發那一站。
+	cx, cy := city.X, city.Y
 	if j := w.pickDefender(i, city.Owner, func(d *Corps) bool {
-		return d.Node == node
+		return d.X == cx && d.Y == cy
 	}); j >= 0 {
 		w.fight(i, j, node, ev, combat.Siege, city.Garrison, rng)
 		return

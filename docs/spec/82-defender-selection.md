@@ -26,8 +26,12 @@
 
 | 項目 | 位置 |
 |---|---|
-| 挑選 | `internal/state/corps.go` 的 `pickDefender(faction, 同格條件)`——攻城以 `Node`、野戰以 `X/Y` 圈名單，分數照 §1（`general.Rating()` 當評價）|
+| 挑選 | `internal/state/corps.go` 的 `pickDefender(faction, 同格條件)`——**兩條路都以 `X/Y` 圈名單**（攻城那一格就是據點座標），分數照 §1（`general.Rating()` 當評價）|
 | 修正 | 先前兩條路都拿**第一個找到的**軍團應戰——多軍團疊同格時與原版分歧 |
+
+⚠ 攻城那一側**不能拿 `Corps.Node` 比**。它在行軍中留著出發那一站，
+所以「從這座城出發、正走在路上」的軍團會被算成守軍——憑空生出一場
+根本不存在的仗（`CONTEXT.md` §6，`Corps.Node` 的第六次）。
 
 ## 3. 驗證
 
