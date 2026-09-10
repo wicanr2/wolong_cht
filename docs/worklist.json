@@ -137,21 +137,6 @@
       }
     },
     {
-      "id": "corps-flag-bit1-deferred-replan",
-      "layer": "parity",
-      "title": "軍團 `+0x00` 位元 1（下一步要重算）沒建模，換向太早",
-      "body": "原版改行軍目標時只設位元 1（`or byte ptr [si], 2`），**方向要等下一次「輪到移動」`sub_147BB` 才換**；`sub_12662` 在 `0x126A5` 清掉它。remake 在改目標的當下就呼叫 `replanOnLeg` 換向，早了一個移動週期。\n\n同局面拍 2,120 的軍團 19：原版旗標 `C7`（位元 1 還設著）、步進仍是 `FC`；remake 旗標 `C5`、步進已經是 `04`。\n\n要建模就得把位元 1 加進 `Corps` 與 `modelledCorpsBits`，並把 `replanOnLeg` 移到「輪到移動」那一刻。",
-      "acceptance": "`tools/parity_ck.sh 2120 2140 2200` 的軍團表回到 0 個 byte。",
-      "verify": {
-        "kind": "absent",
-        "paths": [
-          "internal/state/corps.go"
-        ],
-        "pattern": "modelledCorpsBits = 0xC0 \\| 0x04 \\| 0x01 \\| standoffBit \\| 0x02|Replan\\s+bool",
-        "note": "建模之後位元 1 會進 modelledCorpsBits、Corps 會多一個 Replan 欄位。⚠ pattern 綁的是**還沒出現**的識別字，所以立刻對現在的樹 grep 過一次：兩者都不中（rulebook/61）。"
-      }
-    },
-    {
       "id": "corps-flag-bit4-display-only",
       "layer": "parity",
       "title": "軍團 `+0x00` 位元 4 是繪圖狀態，規則層永遠不設",
@@ -195,6 +180,13 @@
       "date": "2026-09-10",
       "how": "位元 0 不是一次性旗標——`sub_147BB` 的 `00014869`（`and byte ptr [si], 0FEh`）就是清除端。語意是「這一步是從路段中間走出來的」：移動前 `+0x0E < 800h` 清、`≥ 800h` 設。remake 的 `step` 改成 `c.OnPath = c.LinkAddr != 0`，五個檢查點回到 0 個 byte。規格 docs/spec/173（訂正）與 177。",
       "caught_by": "拍 1,900 只差這一個 byte，所以非查不可。⚠ 舊斷言「沒有清除端」是掃描工具的洞：`tools/ida_bitflag_users.py` 照「立即值含指定位元」篩，而清除的立即值是補數（教訓 `filter-has-a-hole`）。"
+    },
+    {
+      "id": "corps-flag-bit1-deferred-replan",
+      "title": "軍團 `+0x00` 位元 1（下一步要重算）沒建模，換向太早",
+      "date": "2026-09-10",
+      "how": "`Corps.Replan` 對應位元 1，進 `modelledCorpsBits`；改目標的常式只設它，重算移到 `tickOneCorps` 的「輪到移動」那一刻（`sub_12662` 的 `0x126A5` 清掉 → `sub_147BB` → **照樣走一格**）。順帶讀出另一半：位元 1 沒設而且走在邊上時，`sub_147BB` 根本不會被呼叫。規格 docs/spec/177 §1.6。",
+      "caught_by": "⭐ **verify 自己開口**：`absent` 的 pattern 綁「建模之後才會出現的識別字」，做完就從『還沒出現』翻成『已經出現在 internal/state/corps.go』，`check.sh` 直接標成「可能已完成」。第一個逐拍分歧從拍 2,455 推到 2,647。"
     }
   ]
 }

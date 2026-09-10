@@ -62,7 +62,7 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 
 <!-- worklist:begin 由 tools/worklist.py render 產生，不要手改 -->
 
-共 **11 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
+共 **10 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
 
 跑 `tools/py.sh tools/worklist.py verify` 逐條問一次；`check.sh` 會替你跑。
 
@@ -85,18 +85,6 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 **怎樣算做完**：同一首曲子兩邊各取一段做頻譜比對，給出一個可重跑的量化指標。
 
 **verify**：`present` `/音色的諧波結構沒量化比對/` 在 `README.md`
-
-#### 軍團 `+0x00` 位元 1（下一步要重算）沒建模，換向太早
-
-原版改行軍目標時只設位元 1（`or byte ptr [si], 2`），**方向要等下一次「輪到移動」`sub_147BB` 才換**；`sub_12662` 在 `0x126A5` 清掉它。remake 在改目標的當下就呼叫 `replanOnLeg` 換向，早了一個移動週期。
-
-同局面拍 2,120 的軍團 19：原版旗標 `C7`（位元 1 還設著）、步進仍是 `FC`；remake 旗標 `C5`、步進已經是 `04`。
-
-要建模就得把位元 1 加進 `Corps` 與 `modelledCorpsBits`，並把 `replanOnLeg` 移到「輪到移動」那一刻。
-
-**怎樣算做完**：`tools/parity_ck.sh 2120 2140 2200` 的軍團表回到 0 個 byte。
-
-**verify**：`absent` `/modelledCorpsBits = 0xC0 \| 0x04 \| 0x01 \| standoffBit \| 0x02|Replan\s+bool/` 在 `internal/state/corps.go`
 
 #### 軍團 `+0x00` 位元 4 是繪圖狀態，規則層永遠不設
 

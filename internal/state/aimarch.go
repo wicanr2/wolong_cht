@@ -200,7 +200,9 @@ func (w *World) retargetAndReplan(i, node int, coords bool) {
 		if coords {
 			c.TargetX, c.TargetY = w.Cities[node].X, w.Cities[node].Y
 		}
-		w.replanOnLeg(i)
+		// ⭐ **方向不當場換**：原版只設位元 1，等下一次「輪到移動」
+		// `sub_12662` 清掉它才呼叫 `sub_147BB`（docs/spec/177 §1.6）。
+		c.Replan = true
 		return
 	}
 	x, y := c.TargetX, c.TargetY

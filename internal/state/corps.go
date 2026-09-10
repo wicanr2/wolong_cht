@@ -25,7 +25,7 @@ const (
 	newCorps  = 0xC0
 	// modelledCorpsBits 是 remake 真的有在維護的那幾個位元：
 	// 7／6（存在）與 2（委任）。其餘位元寫回時原樣保留（docs/spec/166）。
-	modelledCorpsBits = 0xC0 | 0x04 | 0x01 | standoffBit
+	modelledCorpsBits = 0xC0 | 0x04 | 0x02 | 0x01 | standoffBit
 
 	// standoffBit 是 `+0x00` 的位元 5 ＝ 對峙中（docs/spec/175）。
 	standoffBit = 0x20
@@ -104,6 +104,16 @@ type Corps struct {
 	// `sub_12662` 靠它分「重算完要不要判 leg 盡頭」，`sub_12708` 靠它
 	// 決定要不要跑地形 0CEh–0DDh 那一段。
 	OnPath bool
+
+	// Replan 是記錄 +0x00 的**位元 1 ＝「下一步要重算」**（docs/re/34 §2.1）。
+	//
+	// 改行軍目標的常式只設這個旗標，**方向不當場換**——要等下一次
+	// 「輪到移動」時 `sub_12662` 清掉它並呼叫 `sub_147BB`
+	// （`0x126A5`），重算完那一拍照樣走一格（docs/spec/177 §1.6）。
+	//
+	// ⚠ 位元 1 沒設而且軍團走在邊上時，`sub_147BB` **根本不會被呼叫**：
+	// 方向就照現有的 `+0x0A` 一路走到端點。
+	Replan bool
 
 	// Delegated 是記錄 +0x00 的位元 2 ＝ **「委任」**（交給電腦指揮）。
 	//
@@ -184,6 +194,7 @@ func (w *World) loadCorps(b []byte) {
 			Ordered:   int(r[0x20]),
 			PathPtr:   u16(r, 0x0C),
 			OnPath:    r[0x00]&0x01 != 0,
+			Replan:    r[0x00]&0x02 != 0,
 			Delegated: r[0x00]&0x04 != 0,
 			Stage:     int(r[0x23]),
 			// 旗標 8 而且不到 0x80 ＝ 敗走中（docs/spec/43）。
@@ -260,6 +271,11 @@ func (w *World) saveCorps(b []byte) {
 			r[0x00] |= 0x01
 		} else {
 			r[0x00] &^= 0x01
+		}
+		if c.Replan {
+			r[0x00] |= 0x02
+		} else {
+			r[0x00] &^= 0x02
 		}
 		if c.Standoff {
 			r[0x00] |= standoffBit
@@ -705,19 +721,29 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 				ev.Disbanded, ev.Routed = !c.Routing, c.Routing
 				return &ev
 			}
-		} else if w.standoffBlocks(i, &ev, rng) {
-			// ⭐ **踏進去之前先問**（`sub_12708`）：下一格被敵方軍團佔著
-			// 或是別人的據點，這一拍就**不動**——設位元 5、`+0x03` 從 12
-			// 倒數，減到 1 的那一次才結算（docs/spec/175）。
-			// `ev.Moved` 維持 false，對峙的 96 拍在事件層是靜的。
-		} else if w.step(i) {
-			ev.Moved = true
-			ev.Arrived = c.Node == c.TargetNode
-			if ev.Arrived {
-				w.arriveCorps(i, rng)
-				if !c.Alive {
-					ev.Disbanded, ev.Routed = !c.Routing, c.Routing
-					return &ev
+		} else {
+			// ⭐ 位元 1 ＝「下一步要重算」：`sub_12662` 在 `0x126A5`
+			// 清掉它並呼叫 `sub_147BB`，**然後照樣走一格**（沒有出口）。
+			// 位元 1 沒設而且走在邊上時，方向根本不重算——就照現有的
+			// `+0x0A` 一路走到端點（docs/spec/177 §1.6）。
+			if c.Replan {
+				c.Replan = false
+				w.replanOnLeg(i)
+			}
+			if w.standoffBlocks(i, &ev, rng) {
+				// ⭐ **踏進去之前先問**（`sub_12708`）：下一格被敵方軍團
+				// 佔著或是別人的據點，這一拍就**不動**——設位元 5、
+				// `+0x03` 從 12 倒數，減到 1 的那一次才結算（docs/spec/175）。
+				// `ev.Moved` 維持 false，對峙的 96 拍在事件層是靜的。
+			} else if w.step(i) {
+				ev.Moved = true
+				ev.Arrived = c.Node == c.TargetNode
+				if ev.Arrived {
+					w.arriveCorps(i, rng)
+					if !c.Alive {
+						ev.Disbanded, ev.Routed = !c.Routing, c.Routing
+						return &ev
+					}
 				}
 			}
 		}
@@ -919,8 +945,9 @@ func (w *World) nextCityOnRoute(i int) int {
 // 較近的那一端」代替第三支——成本函數是自我修改碼，還沒讀出來
 // （docs/spec/177 §5）。
 //
-// 回傳有沒有換方向。換了方向的那一 tick 不再往前走，與 `turnBackAtBorder`
-// 一致：原版也是改完等下一次重算才動。
+// 回傳有沒有換方向。⚠ **重算完那一拍照樣走一格**——原版
+// `sub_12662` 在 `0x126A8` 呼叫完 `sub_147BB` 之後就落到 `sub_12708`
+// 寫座標，中間沒有出口。
 func (w *World) replanOnLeg(i int) bool {
 	c := &w.Corps[i]
 	if c.LinkAddr == 0 || w.roads == nil {
