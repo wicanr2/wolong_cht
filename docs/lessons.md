@@ -22,7 +22,7 @@
 | 同狀態對拍之前，宣稱兩邊起點對齊 | [「兩邊對齊了」要對每一種狀態各問一次](#alignment-per-state) | 1 | remind |
 | 要用一個 remake 有、而原版沒有對應物的欄位當判準 | [remake 自己加的欄位最危險](#remake-only-field) | 1 | remind |
 | 處理原版的顏色屬性 byte | [屬性 byte 的兩個半位元組是「背景︰前景」](#attribute-nibble-order) | 2 | remind |
-| 寫下一條新規則或新教訓的那一刻 | [規則沒有觸發時機，等於不存在](#rule-without-trigger) | 2 | tool |
+| 寫下一條新規則或新教訓的那一刻 | [規則沒有觸發時機，等於不存在](#rule-without-trigger) | 3 | tool |
 | 用 grep 或 pgrep 判斷「某個東西還在不在」 | [grep／pgrep 會匹配到查詢自己](#query-matches-itself) | 2 | test |
 | 對拍時要把某個原版欄位標成「畫面用」「導出值」「remake 走自己那一套」而放進「不必比」那一格 | [宣告一個欄位「remake 不必建模」等於為它關掉所有檢查](#not-modelled-turns-off-checks) | 1 | remind |
 
@@ -114,8 +114,9 @@
 |---|---|---|
 | 2026-09-03 | git 身分規則早就存在，但觸發點寫成「第一個 commit 之前」，接手既有 repo 時一次都沒成立——131 個 commit 裡 58 個掛公司信箱 | `CLAUDE.md` §10 |
 | 2026-08 | 「密碼頁不擋 oracle」在四份文件裡復發，包括解出來的同一天新寫的筆記 | `CLAUDE.md` §4.0 |
+| 2026-09-10 | `docs/playtest/119` §36.5 寫了「對齊要看據點游標，不能看拍數」並列出正確拍數（200／702／1,203／1,604／1,905），**下一輪重生 remake 檢查點還是照檔名跑了 700／1200／1600／1900**。症狀是四個檢查點各有 2–5 座據點的上昇值與防災值差 1，看起來像規則錯，其實只是取樣點差 2–5 拍。改成工具 `tools/parity_ck.sh` 之後不接受手打拍數 | `docs/playtest/119` §37.4 |
 
-**防線**：`tool` — `tools/index.py` 擋「密碼頁受阻」那個字樣的復發；這一份 JSON 本身也是同一條規則的產物——每條教訓都必須說出 `trigger` 與 `guard`。
+**防線**：`tool` — `tools/index.py` 擋「密碼頁受阻」那個字樣的復發；`tools/parity_ck.sh` 把「拍數由游標反推」從一句警告變成唯一的入口。這一份 JSON 本身也是同一條規則的產物——每條教訓都必須說出 `trigger` 與 `guard`。
 
 ### grep／pgrep 會匹配到查詢自己
 
