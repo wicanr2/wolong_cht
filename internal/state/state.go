@@ -1069,10 +1069,17 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 	// ④ 最後才進入 sub_11D8E。
 	ev.Clock = w.Clock.Advance()
 
-	if ev.Clock.Hour {
-		w.hourly(&ev, rng)
-	}
+	// ⭐ **月結在每小時更新之前。** 原版的時鐘常式是一層層 fall through
+	// （`docs/re/06` §1）：`loc_11DC1` 的 `call sub_15358`（月結）落在
+	// `loc_11DE0` 的 `call sub_13E11`（每「時」更新）**之前**。
+	//
+	// 順序反過來的後果不是「差一拍」：月初那一小時輪到的勢力會先累加
+	// 一次預備兵維持費、再被月結歸零，於是那一次累加**憑空消失**，
+	// 而且資金多扣了同一筆（docs/spec/182）。
 	if !ev.Clock.Month {
+		if ev.Clock.Hour {
+			w.hourly(&ev, rng)
+		}
 		return ev
 	}
 	ev.Settled = true
@@ -1214,6 +1221,10 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 			ev.Eliminated = append(ev.Eliminated, i)
 		}
 	}
+
+	// ⑥ 月結跑完才輪到每「時」的世界更新（`sub_13E11`，見上面的說明）。
+	//    換月一定也換時，所以這裡不必再問一次 `ev.Clock.Hour`。
+	w.hourly(&ev, rng)
 	return ev
 }
 
