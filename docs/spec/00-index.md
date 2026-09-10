@@ -73,6 +73,7 @@
 | 走在路段上重新選路只在這條邊上決定方向 | [`177-replan-on-leg-not-from-city.md`](177-replan-on-leg-not-from-city.md) | CONFORMED；`sub_147BB` 分兩半 ＋ 位元 1 的延後重算，第一個分歧推到拍 2,647 |
 | 軍費與士氣的判準是「有沒有走在路段上」 | [`178-upkeep-and-morale-gate-is-on-leg.md`](178-upkeep-and-morale-gate-is-on-leg.md) | CONFORMED；行軍中的軍團不該回士氣，軍費也差 24 倍 |
 | 戰後重算把移動計時寫 1；「到了沒」比節點欄不比 `Corps.Node` | [`179-recalc-on-battle-and-arrival-test.md`](179-recalc-on-battle-and-arrival-test.md) | CONFORMED；八個檢查點逐 byte 相同 |
+| 求援調兵的 `want` 數的是候選不是選中 | [`180-relief-dispatch-want-counts-candidates.md`](180-relief-dispatch-want-counts-candidates.md) | CONFORMED；第一個分歧推到拍 3,304 |
 | 載入存檔要還原據點巡迴游標 | [`162-city-cursor-from-save.md`](162-city-cursor-from-save.md) | CONFORMED；13 個觸發子刻逐項對上原版 |
 | 亂數消費順序對齊（長時間對拍前置）| [`160-rng-consumption-alignment.md`](160-rng-consumption-alignment.md) | READY；兩側軌跡工具齊備，第一輪比對定位到 `sub_14057` 差 4 次 |
 | 劉備不作為長時間對拍管線 | [`161-liubei-idle-longrun-parity.md`](161-liubei-idle-longrun-parity.md) | DRAFT；原版側 90 天已跑通（26 秒、兩次逐 byte 相同），remake 側未做 |

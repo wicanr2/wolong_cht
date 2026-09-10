@@ -196,6 +196,12 @@ func (w *World) resupplyCorps(i int) {
 		c.Units[k] = combat.Unit{Men: men[k], Kind: kinds[k]}
 		c.Men += men[k]
 	}
+	// ⭐ `sub_14499` 也是 `sub_16FD2` 的呼叫者（`docs/re/30` §5）：
+	// 總兵力與移動間隔重算，而且 **`+0x0B` 計時寫 1**——所以補完兵的
+	// 軍團**下一次輪到（8 拍後）就跑 Stage 3 的分派**，不必再等一個
+	// 完整的移動週期。少了這一步，Stage 3 會多停 16 拍，剛好夠讓
+	// 求援的調兵把它掃走（`+0x23 < 8` 才調得動，docs/spec/179 §1）。
+	w.recalcCorps(i)
 	c.Stage = StageDone
 }
 

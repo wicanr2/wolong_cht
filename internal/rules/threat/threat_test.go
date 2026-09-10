@@ -183,3 +183,29 @@ func TestDispatchSkipBudgetIsSpentOnlyWhenItSkips(t *testing.T) {
 		t.Fatalf("抽了 %d 次亂數，期望 1——額度用完之後不該再抽", i)
 	}
 }
+
+// ⭐ **want 是「掃過幾支候選」不是「收到幾支」**（原版 `dec dl` 在
+// `loc_1418A`，位在「收」與「不收」兩條路匯流之後）。
+//
+// 一支 `Stage >= 8` 的守軍會**消耗掉額度**——原版就此結束，不會再往下找。
+// 少了這一條，同局面拍 2,455 會多取一次亂數而且調走原版不會動的那一支
+// （docs/spec/180）。
+func TestDispatchWantCountsCandidatesNotPicks(t *testing.T) {
+	gs := []Garrison{
+		{At: 5, Ready: true, Stage: 8}, // 不收，但吃掉 want
+		{At: 5, Ready: true},           // 原版掃不到它
+	}
+	if got := Dispatch(gs, 5, 1, 0, func() int { return 0xFF }); len(got) != 0 {
+		t.Fatalf("選出 %v，期望空——第一支候選吃掉 want 就結束了", got)
+	}
+	// 反對照：額度夠時掃得到第二支，證明這個 fixture 看得見它。
+	if got := Dispatch(gs, 5, 2, 0, func() int { return 0xFF }); len(got) != 1 || got[0] != 1 {
+		t.Fatalf("want=2 時選出 %v，期望 [1]", got)
+	}
+	// 亂數次數也要對：skip 還有額度時第一支抽一次，然後 want 歸零結束。
+	n := 0
+	Dispatch(gs, 5, 1, 1, func() int { n++; return 0xFF })
+	if n != 1 {
+		t.Fatalf("抽了 %d 次亂數，期望 1——第一支之後就不該再掃", n)
+	}
+}

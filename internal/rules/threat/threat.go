@@ -178,18 +178,26 @@ type Garrison struct {
 
 // Dispatch 選出要調去 target 的軍團（原版 `sub_14155`，docs/re/40 §5）。
 //
-// 三件事照抄：
+// 四件事照抄：
 //
 //   - **只調「人已經在這個據點」的軍團**——援軍不是憑空生的，是把守軍調去別處。
 //   - want 是要派幾支，skip 是可以跳過幾支（原版 `dh = +0x18 − dl`）。
-//     還有跳過額度時，每一支有 25% 機率被跳過（亂數 < 0x40）。
+//     還有跳過額度時，每一支有 25% 機率被跳過（亂數 < 0x40）；
+//     **skip 只在真的跳過時才減**，沒被跳過的候選不消耗額度。
 //   - 位元 2 沒設、或 `+0x23 >= 8` 的軍團不收。
+//   - ⭐ **want 是「掃過幾支候選」不是「收到幾支」**：原版的 `dec dl`
+//     在 `loc_1418A`，位在「收」與「不收」兩條路匯流之後——**不論收沒收
+//     都減**，歸零就整支結束。
+//
+//     少了這一條，一支 `Stage >= 8` 的守軍會被跳過而繼續往下找，
+//     於是多取一次亂數、而且調走了原版不會動的那一支
+//     （同局面拍 2,455，docs/spec/180）。
 //
 // rand 回傳 0–255，對應原版 `sub_1ECE0` 的 `al`。
 func Dispatch(gs []Garrison, site, want, skip int, rand func() int) []int {
 	var out []int
 	for i, g := range gs {
-		if len(out) >= want {
+		if want <= 0 {
 			break
 		}
 		if g.At != site {
@@ -201,10 +209,10 @@ func Dispatch(gs []Garrison, site, want, skip int, rand func() int) []int {
 				continue
 			}
 		}
-		if !g.Ready || g.Stage >= 8 {
-			continue
+		if g.Ready && g.Stage < 8 {
+			out = append(out, i)
 		}
-		out = append(out, i)
+		want-- // `dec dl`：掃過一支候選就減，收不收都一樣
 	}
 	return out
 }
