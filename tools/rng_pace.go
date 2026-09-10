@@ -78,6 +78,15 @@ func main() {
 	cursor := flag.Int("city-cursor", -1, "載入後把據點巡迴游標設成這個值（原版 `word_10D1E` ÷ 32）")
 	corpsCur := flag.Int("corps-cursor", -1, "載入後把軍團巡迴游標設成這個值（原版 `word_10D18` ÷ 64）")
 	seqOut := flag.String("seq-out", "", "把逐子刻取數序列寫到檔案（供與原版 diff）")
+	// ⭐ 原版側對應 `WOLONG_DOSGOLEM_WATCH=151B3`：`al` 就是比值、
+	// `si`／`di` 是勝方／敗方的軍團記錄（`docs/re/09` §4）。
+	// 兩邊都印得出比值，才問得出「同一場為什麼傷城差這麼多」。
+	battleLog := flag.Bool("battle-log", false,
+		"每打一場就印一行：拍、雙方、模式、比值、城損")
+	// ⭐ 原版側對應 `WOLONG_DOSGOLEM_WATCH=147BB` 並 grep `SI=<基址+編號×64>`
+	// （執行期軍團表基址是 `0x2240`，**不是快照的 `0x22C0`**，docs/spec/191 §3）。
+	corpsLog := flag.Int("corps-log", -1,
+		"每拍印這一支軍團的節點與座標（−1 ＝ 關）")
 	traceN := flag.Int("trace", 0, "印前 N 拍的據點狀態（小樣本追蹤）")
 	mark := flag.String("mark", "", "印出含這個呼叫點的子刻位置（例：strategy.go:630）")
 	rngState := flag.String("rng-state", "", "載入原版當下的亂數狀態（258 byte，docs/spec/147 §5）")
@@ -266,7 +275,19 @@ func main() {
 			}
 		}
 		perTickCity = append(perTickCity, w.TakeSnapshot().CityCursor)
-		w.Tick(tr)
+		evt := w.Tick(tr)
+		if *battleLog {
+			for k := range evt.Corps {
+				ce := &evt.Corps[k]
+				if ce.Battle == nil {
+					continue
+				}
+				fmt.Printf("  拍 %d 戰鬥：軍團 %d vs %d 模式 %v 比值 %d "+
+					"城損 %d 守方勝 %v 壞滅 %v\n",
+					i+1, ce.Corps, ce.Enemy, ce.Mode, ce.Battle.Ratio,
+					ce.BattleCityDamage, ce.Battle.DefenderWins, ce.Destroyed)
+			}
+		}
 		if c := w.PendingDiplomacy(); c != nil {
 			if pendingDiplo == 0 {
 				pendingDiplo = i + 1
@@ -290,6 +311,15 @@ func main() {
 				w.ResolveFunding(state.FundingFullAmount)
 			}
 			answeredFunding++
+		}
+		if *corpsLog >= 0 && *corpsLog < len(w.Corps) {
+			c := &w.Corps[*corpsLog]
+			if c.Alive {
+				fmt.Printf("  拍 %d 軍團 %d 節點 %04X 座標 (%d,%d) 目標 %04X "+
+					"朝向 %d 計時 %d 間隔 %d\n",
+					i+1, *corpsLog, c.Node*8, c.X, c.Y, c.TargetNode*8,
+					c.Heading, c.Timer, c.Interval)
+			}
 		}
 		n := tr.seq - prev
 		perTick = append(perTick, n)

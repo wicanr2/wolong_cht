@@ -1575,7 +1575,7 @@ func (w *World) resolveCorpsBattle(ev *CorpsEvent, att, def, node int, m combat.
 func (w *World) fightGarrison(att, node int, ev *CorpsEvent, rng combat.Rand) {
 	city := &w.Cities[node]
 	a := w.battle(att)
-	g := combat.Garrison(city.Owner, city.Garrison)
+	g := combat.Garrison(city.Owner, city.Garrison, w.garrisonLeader)
 	ev.BattleBefore = [2]int{a.Men, g.Men}
 	r := combat.Resolve(&a, &g, combat.Siege, city.Garrison, rng)
 	w.applyBattle(att, a)
@@ -1786,6 +1786,63 @@ func (w *World) capture(att, node int, ev *CorpsEvent, rng combat.Rand) {
 		w.eliminateFaction(old, next)
 	}
 	w.Factions[next].Cities++
+	// ⭐ 鄰接遮罩**只在這裡更新**（`sub_14CF3` 的 `call sub_188CC`，
+	// 排在新主據點數 +1 之後）。docs/spec/190。
+	w.updateAdjacencyOnCapture(node)
+}
+
+// updateAdjacencyOnCapture 是 `sub_188CC` ＋ `sub_1890A`：據點易主之後，
+// 把它與四個鄰接槽之間的「敵鄰」位元**雙向**重設一次。
+//
+// ⭐ 這兩欄（`+0x00` 低 4 位與 `+0x1B`）是**易主那一刻的快照，不是現況**——
+// 平時的據點 tick 碰都不碰它們，所以它們可以跟實際的所屬關係不符，
+// 而原版就照著陳舊值判威脅、挑目標。
+//
+// ⚠ **鄰接關係不對稱時兩側都不更新**：`sub_1890A` 第一件事是在**鄰居的**
+// 四個槽裡找自己，找不到就 `retn`——連自己這一側的位元都不設。
+// 同局面 196/5/17 的據點 116／122／129 就差在這裡（docs/spec/190 §2）。
+func (w *World) updateAdjacencyOnCapture(node int) {
+	if node < 0 || node >= len(w.Cities) {
+		return
+	}
+	c := &w.Cities[node]
+	for j, nb := range c.Neighbours {
+		if nb < 0 || nb >= len(w.Cities) {
+			continue // 槽值 0xFF
+		}
+		n := &w.Cities[nb]
+		// 我在鄰居的哪一槽？（`cmp ah, [di]`，四槽掃完沒有就整支 return）
+		k := -1
+		for t, back := range n.Neighbours {
+			if back == node {
+				k = t
+				break
+			}
+		}
+		if k < 0 {
+			continue
+		}
+		mine, theirs := 1<<uint(j), 1<<uint(k)
+		if c.Owner != n.Owner {
+			if n.Adjacency&theirs == 0 {
+				n.Adjacency |= theirs
+				n.EnemyNeighbours++
+			}
+			if c.Adjacency&mine == 0 {
+				c.Adjacency |= mine
+				c.EnemyNeighbours++
+			}
+			continue
+		}
+		if n.Adjacency&theirs != 0 {
+			n.Adjacency &^= theirs
+			n.EnemyNeighbours--
+		}
+		if c.Adjacency&mine != 0 {
+			c.Adjacency &^= mine
+			c.EnemyNeighbours--
+		}
+	}
 }
 
 // redirectFallenCityCorps 是 `sub_14DA4`：據點易主之後，**舊主留在那一格上

@@ -25,7 +25,7 @@
 | 寫下一條新規則或新教訓的那一刻 | [規則沒有觸發時機，等於不存在](#rule-without-trigger) | 3 | tool |
 | 用 grep 或 pgrep 判斷「某個東西還在不在」 | [grep／pgrep 會匹配到查詢自己](#query-matches-itself) | 2 | test |
 | 對拍時要把某個原版欄位標成「畫面用」「導出值」「remake 走自己那一套」而放進「不必比」那一格 | [宣告一個欄位「remake 不必建模」等於為它關掉所有檢查](#not-modelled-turns-off-checks) | 1 | remind |
-| 寫掃描條件去問「有沒有人做某件事」，而答案是 0 處 | [過濾器自己有洞：清除端的立即值是補數](#filter-has-a-hole) | 1 | tool |
+| 寫掃描條件去問「有沒有人做某件事」，而答案是 0 處 | [過濾器自己有洞：清除端的立即值是補數](#filter-has-a-hole) | 2 | tool |
 | 修好一個規則錯之後，本來綠的測試紅了 | [測試可能正是靠那個 bug 才綠的](#tests-green-on-the-bug) | 1 | rule |
 | 手上沒有某個值，於是拿一條式子從別的值反解出來，然後拿它去解釋現象 | [倒推出來的數字是假說，不是觀測](#derived-number-as-observation) | 1 | tool |
 | 拿「這一拍取了幾次亂數」當同步的判準，或看到某個逐拍指標全綠就宣告那一段沒問題 | [取數次數相同，不代表取數序列相同](#count-matches-sequence-differs) | 3 | tool |
@@ -160,6 +160,7 @@
 
 | 日期 | 犯在哪 | 收據 |
 |---|---|---|
+| 2026-09-10 | `parity_pace_diff.py` 的切拍規則 `PRE` 少列 `140F9`（求援冷卻擲骰在錨點 `sub_14194` 之前 43 道指令），報表因此說「原版拍 5654 求援、remake 拍 5655 求援」——**remake 才是對的** | `docs/playtest/119` §47.1 |
 | 2026-09-10 | `tools/ida_bitflag_users.py` 照「立即值含指定位元」篩，於是 `docs/spec/173` 斷言軍團 `+0x00` 位元 0「沒有清除端，所以是一次性的」。清除端就在 `sub_147BB` 的 `00014869`，語意整個相反 | `CONTEXT.md` §6、`docs/spec/177` §1.3 |
 
 **防線**：`tool` — `tools/ida_bitflag_users.py` 現在按角色分組（設／清／翻轉／測／遮罩保留），空的那一組會印出「一條都沒有——下結論前先確認掃描本身有正對照」。
@@ -245,5 +246,7 @@
 **防線**：`remind` — 規則印在 `tools/dosgolem.sh` 的教訓提示（`docs/lessons/parity.txt`）。⚠ 目前只有規則——要變成檢查，得讓 `rng_pace.go` 對「一拍之外發生的取數」直接報錯。
 
 <!-- lessons:end -->
+
+<!-- 缺口：無 -->
 
 <!-- 缺口：無 -->

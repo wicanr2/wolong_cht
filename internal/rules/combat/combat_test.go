@@ -270,9 +270,18 @@ func TestGeneralSlotNeverEmpties(t *testing.T) {
 	}
 }
 
-// 城兵：六隊步兵、士氣 255，餘數散給前幾槽。
+// 城兵：六隊步兵、士氣 255，餘數散給前幾槽，將領照傳進來的那一筆。
 func TestGarrison(t *testing.T) {
-	g := Garrison(3, 100)
+	g := Garrison(3, 100, Leader{Martial: 8, Command: 8})
+	if g.Leader.Martial != 8 || g.Leader.Command != 8 {
+		t.Errorf("城兵將領 %+v，應照傳進來的武將 127（docs/spec/191）", g.Leader)
+	}
+	// ⭐ 負對照：將領留空會讓 `leaderValue` 回 0，戰力整個歸零——
+	// 那正是 2026-09-11 之前的 bug，比值因此直接撞上限 100。
+	if p := Power(Garrison(3, 100, Leader{}), Siege, false, 100,
+		&fixedRand{seq: []int{1}}); p != 0 {
+		t.Errorf("空將領的城兵戰力 %d，應為 0（這是 bug 的形狀，不是規格）", p)
+	}
 	if g.Morale != GarrisonMorale {
 		t.Errorf("城兵士氣 %d，應為 %d", g.Morale, GarrisonMorale)
 	}

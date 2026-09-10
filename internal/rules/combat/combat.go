@@ -330,13 +330,18 @@ const GarrisonLeader = 0x7F
 // GarrisonMorale 是城兵的士氣，原版直接寫 0xFF。
 const GarrisonMorale = 0xFF
 
-// Garrison 把據點的城兵數攤成一支臨時軍團：**六隊步兵、士氣 255、
-// 將領是空記錄**。餘數散給前幾槽。
+// Garrison 把據點的城兵數攤成一支臨時軍團：**六隊步兵、士氣 255**。
+// 餘數散給前幾槽。
 //
 // 原版把它搭在 `ds:4200h`——軍團表與武將表中間那 64 byte，
 // 戰後 `sub_14FC8` 清掉。
-func Garrison(faction, men int) Corps {
-	c := Corps{Faction: faction, Morale: GarrisonMorale, Men: men}
+//
+// ⭐ `leader` 是**武將表第 127 筆**（`sub_14F8A` 的
+// `mov byte ptr [bx+2], 7Fh`），劇本裡填的是武力 8／統率 8／適性 0——
+// **不是空記錄**。留成零值會讓 `leaderValue` 回 0，`factor` 跟著是 0，
+// 守方戰力整個歸零、比值直接撞上限 100（docs/spec/191）。
+func Garrison(faction, men int, leader Leader) Corps {
+	c := Corps{Faction: faction, Morale: GarrisonMorale, Men: men, Leader: leader}
 	each, extra := men/army.Positions, men%army.Positions
 	for i := range c.Units {
 		c.Units[i] = Unit{Men: each, Kind: army.Infantry}

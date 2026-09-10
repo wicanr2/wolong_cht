@@ -593,7 +593,10 @@ func (w *World) refreshCityThreat(i int, rng economy.Rand) []TalkNotice {
 	}
 	c.Occupancy = w.occupancyAt(c.X, c.Y)
 	ns := w.cityNeighbours(i)
-	c.Adjacency, c.EnemyNeighbours = threat.EnemyMask(c.Owner, ns)
+	// ⛔ **這裡不重算 `Adjacency`／`EnemyNeighbours`**：原版的據點 tick
+	// 碰都不碰它們，它們是**易主那一刻的快照**（`sub_188CC`，
+	// docs/spec/190）。由現況重算會在鄰接不對稱的據點上分岔——
+	// 同局面 196/5/17 的據點 116／122／129。
 	if c.Owner == threat.Neutral || c.Owner < 0 || c.Owner >= numFactions {
 		c.Threat = 0
 		c.Threatened, c.Specific = false, false

@@ -83,6 +83,8 @@
 | 戰後判誰、易主與 `+0x1A` | [`187-only-the-loser-is-judged.md`](187-only-the-loser-is-judged.md) | CONFORMED；**逐拍取數 0 不一致**（5,480 拍）|
 | 玩家第一鄰居的交友度：和平掉 8、交戰掉 1 | [`188-friendship-drift-peace-loses-more.md`](188-friendship-drift-peace-loses-more.md) | CONFORMED；**第六張表（交友度矩陣）**接進對拍後歸零 |
 | 玩家答完之後君主再擲一次骰 | [`189-lord-may-ignore-the-strategists-answer.md`](189-lord-may-ignore-the-strategists-answer.md) | CONFORMED；召見那一拍的取數對上，5/14 六張表只剩軍團 1 個 byte |
+| 鄰接遮罩是易主時的快照 | [`190-adjacency-mask-is-a-capture-time-snapshot.md`](190-adjacency-mask-is-a-capture-time-snapshot.md) | CONFORMED；5/17 的據點表由 5 個 byte／3 座歸零 |
+| 城兵的將領是武將表第 127 筆 | [`191-garrison-leader-is-general-127.md`](191-garrison-leader-is-general-127.md) | CONFORMED；攻城比值由 100 回到 14，5/18 與 5/20 的據點表歸零 |
 | 載入存檔要還原據點巡迴游標 | [`162-city-cursor-from-save.md`](162-city-cursor-from-save.md) | CONFORMED；13 個觸發子刻逐項對上原版 |
 | 亂數消費順序對齊（長時間對拍前置）| [`160-rng-consumption-alignment.md`](160-rng-consumption-alignment.md) | READY；兩側軌跡工具齊備，第一輪比對定位到 `sub_14057` 差 4 次 |
 | 劉備不作為長時間對拍管線 | [`161-liubei-idle-longrun-parity.md`](161-liubei-idle-longrun-parity.md) | DRAFT；原版側 90 天已跑通（26 秒、兩次逐 byte 相同），remake 側未做 |

@@ -39,6 +39,11 @@ const (
 	friendBase, friendStride              = 0x0680, 24
 	cityBase, citySize, numCities         = 0x08C0, 32, 192
 	generalBase, generalSize, numGenerals = 0x42C0, 32, 127
+	// ⭐ 武將表**第 127 筆**是城兵專用的佔位記錄（`sub_14F8A` 寫死
+	// `7Fh`）。它不在 `Generals` 裡——那 127 筆與軍團一一對應，
+	// 而這一筆的旗標是 0（不是活著的武將）、名字是全形空白。
+	// 存檔寫回也不碰它（改寫不重建，CLAUDE.md §9）。
+	garrisonGeneral = 127
 
 	// 據點整備的輪轉游標（原版 `word_10D1E`）。區塊前 59 B 對映到
 	// cs:0CF0h，所以 0D1Eh − 0CF0h = 0x2E（docs/spec/162）。
@@ -388,6 +393,11 @@ type World struct {
 	Factions [numFactions]Faction
 	Cities   [numCities]City
 	Generals [numGenerals]General
+
+	// garrisonLeader 是武將表第 `garrisonGeneral` 筆——城兵臨時軍團的
+	// 將領（`sub_14F8A`，docs/spec/191）。它不參與人事、不進 `Generals`，
+	// 只在 `fightGarrison` 用一次。
+	garrisonLeader combat.Leader
 
 	// Corps 是軍團表。**索引與武將表平行**——軍團 i 由武將 i 帶
 	// （`sub_1291A` 直接換算兩張表的位址，docs/re/09 §6）。
@@ -774,6 +784,20 @@ func loadBlock(b []byte) *World {
 			VanishIfAffinityGone: r[0x00]&0x20 != 0,
 			Sovereign:            r[0x00]&0x40 != 0,
 		}
+	}
+	// ⭐ 城兵的將領（武將表第 127 筆）。它在 `Generals` 之外，
+	// 因為那 127 筆與軍團一一對應而這一筆不是任何軍團的主將。
+	if r := b[generalBase+garrisonGeneral*generalSize:]; len(r) >= generalSize {
+		w.garrisonLeader = combat.Leader{
+			Martial: int(r[0x11]), Command: int(r[0x12]),
+			SiegeAptitude: int(r[0x0E]) >> 4, FieldAptitude: int(r[0x0F]) >> 4,
+		}
+	}
+	// 劇本沒填那一筆時退回實測值（`orig-at-16h-v2.DAT` 的第 127 筆是
+	// 武力 8／統率 8／適性 0）。⚠ 這是**觀測值不是常數**——
+	// 有第二份劇本的樣本再回頭確認。
+	if w.garrisonLeader.Martial == 0 && w.garrisonLeader.Command == 0 {
+		w.garrisonLeader.Martial, w.garrisonLeader.Command = 8, 8
 	}
 	w.loadCorps(b)
 	w.loadMapObjects(b)

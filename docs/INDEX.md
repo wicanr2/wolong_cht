@@ -205,7 +205,7 @@
 | [`docs/re/39-remaining-unread.md`](re/39-remaining-unread.md) | 39 — 剩餘未讀函式的逐支歸屬 | 清單。 | 2026-08-14 |
 | [`docs/re/40-garrison-relief-request.md`](re/40-garrison-relief-request.md) | 40 — 據點求援與援軍派遣 | 整條鏈 confirmed（每一支都逐行讀過）。 sub_140C9 的距離算式裡有一處 | 2026-08-14 |
 | [`docs/re/42-leaf-functions.md`](re/42-leaf-functions.md) | 42 — 戰術以外的 47 支葉節點 | 47 支全部逐行讀過。四件事因此定案：INT 61h 是音源 TSR 的介面、 byte_198A6 的位元圖完整、… | 2026-08-14 |
-| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的） | 生成的清單，跑 tools/py.sh tools/re_open_questions.py 重出。 這一份不下結論… | 2026-09-10 |
+| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的） | 生成的清單，跑 tools/py.sh tools/re_open_questions.py 重出。 這一份不下結論… | 2026-09-11 |
 | [`docs/re/44-threat-and-reinforcement-ai.md`](re/44-threat-and-reinforcement-ai.md) | 44 — 威脅偵測與 AI 出兵：據點每 tick 掃一次 | 整條鏈逐行讀完。三件事定案：據點 +0x18 是佔用圖讀回來的軍團數、 +0x00 低 4 位是「哪幾個鄰居是敵方」… | 2026-08-14 |
 | [`docs/re/45-corps-command-mode.md`](re/45-corps-command-mode.md) | 45 — 軍團的三種指令模式：戰鬥指揮／委任／解體 | 軍團 +0x00 位元 2 定案 ＝ | 2026-08-14 |
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |
@@ -368,6 +368,8 @@
 | [`docs/spec/187-only-the-loser-is-judged.md`](spec/187-only-the-loser-is-judged.md) | 187 — 戰後判誰：攻城只判敗方，野戰誰壞滅就判誰 | CONFORMED。 | 2026-09-10 |
 | [`docs/spec/188-friendship-drift-peace-loses-more.md`](spec/188-friendship-drift-peace-loses-more.md) | 188 — 玩家的第一鄰居：和平掉 8，交戰只掉 1 | CONFORMED。 | 2026-09-10 |
 | [`docs/spec/189-lord-may-ignore-the-strategists-answer.md`](spec/189-lord-may-ignore-the-strategists-answer.md) | 189 — 玩家答完之後，君主還要擲一次骰 | CONFORMED。 | 2026-09-10 |
+| [`docs/spec/190-adjacency-mask-is-a-capture-time-snapshot.md`](spec/190-adjacency-mask-is-a-capture-time-snapshot.md) | 190 — 鄰接遮罩是易主時的快照，不是現況 | CONFORMED。 | 2026-09-10 |
+| [`docs/spec/191-garrison-leader-is-general-127.md`](spec/191-garrison-leader-is-general-127.md) | 191 — 城兵的將領是武將表第 127 筆，不是空的 | CONFORMED。 | 2026-09-11 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |

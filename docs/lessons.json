@@ -318,6 +318,11 @@
    "occurrences": [
     {
      "date": "2026-09-10",
+     "what": "`parity_pace_diff.py` 的切拍規則 `PRE` 少列 `140F9`（求援冷卻擲骰在錨點 `sub_14194` 之前 43 道指令），報表因此說「原版拍 5654 求援、remake 拍 5655 求援」——**remake 才是對的**",
+     "doc": "`docs/playtest/119` §47.1"
+    },
+    {
+     "date": "2026-09-10",
      "what": "`tools/ida_bitflag_users.py` 照「立即值含指定位元」篩，於是 `docs/spec/173` 斷言軍團 `+0x00` 位元 0「沒有清除端，所以是一次性的」。清除端就在 `sub_147BB` 的 `00014869`，語意整個相反",
      "doc": "`CONTEXT.md` §6、`docs/spec/177` §1.3"
     }
