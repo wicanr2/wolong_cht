@@ -96,13 +96,13 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 
 **verify**：`present` `/音色的諧波結構沒量化比對/` 在 `README.md`
 
-#### 快照的兩個游標欄位慢 27 拍 （⚠ verify 已不成立，回頭看這一條）
+#### 原版側的對拍收據要用現在的 base 重生 （⚠ verify 已不成立，回頭看這一條）
 
-`tools/orig_snapshot.py` 拼出來的 `SAVE.DAT`，全域那 128 B（`ipeek:10CF0:128`）不是快照那一刻的值：據點游標記 144 而實測是 171、軍團游標記 0 而實測是 48——**兩個都正好慢 27 拍**（`docs/playtest/119` §35）。\n\n現在靠 `-city-cursor 171 -corps-cursor 48` 手動補。成因還沒追，所以每份新快照都要重新量一次那兩個值。
+快照與 `-watch` 記錄都是 dosgolem **舊分支**產生的：同一條時間軸跑到 17,400,000，舊 base 停在 13 時、`main` 停在 16 時，差正好 27 子刻（`docs/playtest/119` §36）。所有游標的「慢 27 拍」都是這一件事的投影。\n\n現在靠 `-city-cursor 171 -corps-cursor 48` 手動補，但那是拿新 base 的記憶體去對舊 base 的快照——**不該混用**。
 
-**怎樣算做完**：快照拼出來就帶對的游標，對拍不必再手動給那兩個旗標。
+**怎樣算做完**：快照與 watch 記錄用同一個 base、同一次執行重生；對拍不必再手動給游標旗標。
 
-**verify**：`present` `/不是快照那一刻的值。成因還沒追/` 在 `docs/playtest/119-rng-pace-comparison.md`
+**verify**：`present` `/拿新 base 去驗證它們才出現矛盾/` 在 `docs/playtest/119-rng-pace-comparison.md`
 
 ### fidelity — 原版有這個機制，remake 還沒建模
 

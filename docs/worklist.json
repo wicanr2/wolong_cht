@@ -155,16 +155,16 @@
     {
       "id": "snapshot-cursors-lag-27-ticks",
       "layer": "parity",
-      "title": "快照的兩個游標欄位慢 27 拍",
-      "body": "`tools/orig_snapshot.py` 拼出來的 `SAVE.DAT`，全域那 128 B（`ipeek:10CF0:128`）不是快照那一刻的值：據點游標記 144 而實測是 171、軍團游標記 0 而實測是 48——**兩個都正好慢 27 拍**（`docs/playtest/119` §35）。\\n\\n現在靠 `-city-cursor 171 -corps-cursor 48` 手動補。成因還沒追，所以每份新快照都要重新量一次那兩個值。",
-      "acceptance": "快照拼出來就帶對的游標，對拍不必再手動給那兩個旗標。",
+      "title": "原版側的對拍收據要用現在的 base 重生",
+      "body": "快照與 `-watch` 記錄都是 dosgolem **舊分支**產生的：同一條時間軸跑到 17,400,000，舊 base 停在 13 時、`main` 停在 16 時，差正好 27 子刻（`docs/playtest/119` §36）。所有游標的「慢 27 拍」都是這一件事的投影。\\n\\n現在靠 `-city-cursor 171 -corps-cursor 48` 手動補，但那是拿新 base 的記憶體去對舊 base 的快照——**不該混用**。",
+      "acceptance": "快照與 watch 記錄用同一個 base、同一次執行重生；對拍不必再手動給游標旗標。",
       "verify": {
         "kind": "present",
         "paths": [
           "docs/playtest/119-rng-pace-comparison.md"
         ],
-        "pattern": "不是快照那一刻的值。成因還沒追",
-        "note": "綁 §35 那句自承。"
+        "pattern": "拿新 base 去驗證它們才出現矛盾",
+        "note": "綁 §36.2 那句。收據重生之後那一節會改寫。"
       }
     }
   ],
