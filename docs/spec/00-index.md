@@ -80,6 +80,7 @@
 | 求援調兵的 `want` 恆為 1 | [`184-relief-dispatch-want-is-always-one.md`](184-relief-dispatch-want-is-always-one.md) | CONFORMED；二十二個檢查點四張表全 0 |
 | 月結內部的呼叫順序：政略在災害之前 | [`185-monthly-settlement-call-order.md`](185-monthly-settlement-call-order.md) | CONFORMED；十六個檢查點**五張表**全 0（拍 200 … 4,700）|
 | 擋路判定的順序：先問軍團，再問據點 | [`186-standoff-corps-before-city.md`](186-standoff-corps-before-city.md) | CONFORMED；十場戰鬥同序同模式，五張表對到拍 4,950 |
+| 戰後判誰：攻城只判敗方，野戰誰壞滅就判誰 | [`187-only-the-loser-is-judged.md`](187-only-the-loser-is-judged.md) | CONFORMED；逐拍取數不一致降到 3／5,480 |
 | 載入存檔要還原據點巡迴游標 | [`162-city-cursor-from-save.md`](162-city-cursor-from-save.md) | CONFORMED；13 個觸發子刻逐項對上原版 |
 | 亂數消費順序對齊（長時間對拍前置）| [`160-rng-consumption-alignment.md`](160-rng-consumption-alignment.md) | READY；兩側軌跡工具齊備，第一輪比對定位到 `sub_14057` 差 4 次 |
 | 劉備不作為長時間對拍管線 | [`161-liubei-idle-longrun-parity.md`](161-liubei-idle-longrun-parity.md) | DRAFT；原版側 90 天已跑通（26 秒、兩次逐 byte 相同），remake 側未做 |

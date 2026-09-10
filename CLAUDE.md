@@ -267,6 +267,7 @@ tools/ida.sh raw    dosv idat -A "-S/work/tools/ida_func.idc sub_12E89" KI.EXE.i
 | **`ida_range.py`** | **IDAPython**：逐條反組譯一段位址區間（跳表選中的 handler 不是函式，`ida_dump.py` dump 不到）|
 | **`ida_disp_users.py`** | **IDAPython**：全庫掃「運算元位移等於指定值」的指令。段內欄位（`[si+858h]`）**沒有交叉參考**，grep 反組譯會漏掉換了基址暫存器的寫法，而漏掉的通常正是寫入端 |
 | **`ida_bitflag_users.py`** | **IDAPython**：全庫掃「對記憶體做位元運算而立即值含指定位元」的指令。問的是「**誰設這個旗標**」，不是「誰碰這個欄位」。⭐ 逐 **segment** 不逐函式 |
+| **`ida_return_consumers.py`** | **IDAPython**：查一支函式的**回傳值有沒有被消費**——對每個呼叫端印呼叫之後 4 條指令並判「消費 CF／消費 AX／⚠ 沒消費」。⚠ 只看直線的下幾條，**輸出是候選不是結論**；「看起來沒消費」要再往上追一層 |
 | **`ida_callers.py`** | **IDAPython**：查「誰呼叫這個位址」，四層——IDA xref／全 segment 的 `call`／`jmp`／指令立即值／資料段裡的 word（跳表）。⚠ 16-bit near call 的 `op.addr` 是**段內 offset 不是 linear address** |
 
 四支 Python 把上面的輸出變成可查的表：

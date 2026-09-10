@@ -878,6 +878,16 @@ func (w *World) step(i int) bool {
 			// （`sub_12804`，docs/spec/173 §1.2）。
 			if n := mk[0].Next; n != ([2]int{}) {
 				head = headingTo(next[0], next[1], n[0], n[1])
+			} else if p := mk[0].Point; p != ([2]int{}) && p != next {
+				// ⭐ **跨節點那一步看的是城門格。** 原版走
+				// `sub_127F6` ＋ `sub_127A2`，而 `sub_127F6` 算的是
+				// 「上一個路徑點 → 現在座標」——那時座標還是**城門格**
+				// （`sub_127A2` 之後才換成據點中心）。
+				//
+				// remake 的格子序列不含城門格，一步就從它的前一格跳到
+				// 據點中心；拿據點中心去算會在轉彎處差一個方向
+				// （同局面拍 5,019 的軍團 89：原版 2、remake 1）。
+				head = headingTo(c.X, c.Y, p[0], p[1])
 			}
 			w.routeMarks[i] = mk[1:]
 		} else if c.LinkAddr != 0 {
@@ -991,7 +1001,13 @@ func (w *World) turnBackAtBorder(i int) bool {
 	// ⚠ 掉頭走的是自己算的反向段，不是道路表的 leg，所以沒有標記可對。
 	// 清掉，讓 `+0x0C`／`+0x0E` 留在掉頭前的值——原版 `sub_142AB` 也是
 	// 直接改 `+0x14`／`+0x0E`，不重排路徑點。
-	w.routes[i], w.routeMarks[i] = w.reverseLeg(next, back, c.X, c.Y), nil
+	cells, atGate := w.reverseLeg(next, back, c.X, c.Y)
+	w.routes[i], w.routeMarks[i] = cells, nil
+	if atGate {
+		// 同 `replanOnLeg`：起點在城門格時剩下的一步是跨節點，
+		// 原版不動 `+0x0C`，先補回來抵消 `step` 無條件加的那一次。
+		c.PathPtr -= int8Step(c.Direction)
+	}
 	c.Heading = headingTo(c.X, c.Y, c.TargetX, c.TargetY)
 	return true
 }
@@ -1071,7 +1087,7 @@ func (w *World) replanOnLeg(i int) bool {
 	if ahead == want {
 		return false // 已經朝著那一端走，什麼都不必動
 	}
-	cells := w.reverseLeg(ahead, want, c.X, c.Y)
+	cells, atGate := w.reverseLeg(ahead, want, c.X, c.Y)
 	if len(cells) == 0 {
 		return false // 切不到就不要把路徑清空——那會讓軍團整支凍住
 	}
@@ -1079,6 +1095,17 @@ func (w *World) replanOnLeg(i int) bool {
 	// 原版這一半也只寫 `+0x0A`，不碰那兩格。
 	w.routes[i], w.routeMarks[i] = cells, nil
 	c.Direction = byteStep(-int8Step(c.Direction))
+	if atGate {
+		// ⭐ **站在城門格上掉頭**：剩下的一步在原版是
+		// `sub_127F6` ＋ `sub_127A2`（跨節點），而加 `+0x0C` 的是另一條
+		// 分支 `sub_126FF`——兩者互斥（`sub_12662` 的 `loc_126C8`）。
+		//
+		// 一般的反向段最後一步 remake 是「一步從普通格走到據點中心」，
+		// 而原版走的是「城門格（`sub_126FF`，加）→ 跨節點（不加）」
+		// 兩步，淨加一次——所以 `step` 無條件加是對的。
+		// 起點就在城門格時那個「加」已經發生過了，先補回來抵消。
+		c.PathPtr -= int8Step(c.Direction)
+	}
 	c.Heading = headingTo(c.X, c.Y, cells[0][0], cells[0][1])
 	return true
 }
@@ -1091,14 +1118,16 @@ func int8Step(v int) int { return int(int8(v)) }
 // 反向那一段路的格子序列與正向是同一批，所以取 `CellRoute(from, back)`
 // 再從目前這一格切開就好。切不到（缺道路圖、或這一段沒有格子序列）
 // 就回 nil，讓 `step` 退回直線逼近。
-func (w *World) reverseLeg(from, back, x, y int) [][2]int {
+// 第二個回傳值是「起點就在城門格上」——那時剩下的第一步是
+// `sub_127A2`（跨節點），原版不動 `+0x0C`（見下面的註解）。
+func (w *World) reverseLeg(from, back, x, y int) ([][2]int, bool) {
 	if w.roads == nil {
-		return nil
+		return nil, false
 	}
 	rev, mk := w.roads.CellRouteMarked(from, back)
 	for k, cell := range rev {
 		if cell[0] == x && cell[1] == y {
-			return append([][2]int(nil), rev[k+1:]...)
+			return append([][2]int(nil), rev[k+1:]...), false
 		}
 	}
 	// ⭐ **站在城門格上時格子序列裡找不到它。** 兩個方向各吃掉自己終點
@@ -1111,10 +1140,10 @@ func (w *World) reverseLeg(from, back, x, y int) [][2]int {
 	// 於是往前撞上剛打過的對手重新對峙（同局面拍 5,000 的軍團 73）。
 	for k := range mk {
 		if mk[k].Point == ([2]int{x, y}) {
-			return append([][2]int(nil), rev[k:]...)
+			return append([][2]int(nil), rev[k:]...), true
 		}
 	}
-	return nil
+	return nil, false
 }
 
 // cityAt 回傳座標上的據點編號，沒有回 −1。
@@ -1494,6 +1523,26 @@ func (w *World) resolveCorpsBattle(ev *CorpsEvent, att, def, node int, m combat.
 	// 所以攻城的易主判定不受影響。
 	attDead := r.AttackerDestroyed || w.retreatOrPerish(att, !r.DefenderWins)
 	defDead := r.DefenderDestroyed || w.retreatOrPerish(def, r.DefenderWins)
+	// ⭐ **兩個入口判誰的規則不一樣**（docs/spec/187）：
+	//
+	//   - `sub_14ADE`（攻城）拿 `al`（誰贏）分流——攻方贏就只
+	//     `test ah, 2`（守方壞滅），守方贏就只 `test ah, 1`。
+	//     **勝方即使 `sub_1474A` 回 STC（士氣歸零）也不判。**
+	//   - `sub_14A7B`（野戰）不看誰贏，`ah` 哪一位設起來就判誰；
+	//     **兩邊都壞滅（`ah` ＝ 3）時只判攻方**——`cmp ah,2` 的
+	//     `jb` 與 `jz` 都不成立，落到 `loc_14AC1`。
+	//
+	// `sub_1474A` 本身兩邊都要跑（總兵力重算、移動計時、Stage 都在裡面），
+	// 差的只是哪一位會被消費。
+	if m == combat.Siege {
+		if r.DefenderWins {
+			defDead = false
+		} else {
+			attDead = false
+		}
+	} else if attDead && defDead {
+		defDead = false
+	}
 	w.afterBattle(ev, att, node, attDead, def, rng)
 	w.afterBattle(ev, def, node, defDead, att, rng)
 
@@ -1517,7 +1566,12 @@ func (w *World) fightGarrison(att, node int, ev *CorpsEvent, rng combat.Rand) {
 	w.damageCity(node, combat.Siege, r)
 
 	// 守方是城兵不是軍團，所以只有攻方要跑 `sub_1474A`。
+	// ⭐ 攻方贏時**不判攻將**（`sub_14ADE` 的 `loc_14B34` 之後也是
+	// `and al, al / jnz loc_14B4B`，攻方贏就直接易主，docs/spec/187）。
 	attDead := r.AttackerDestroyed || w.retreatOrPerish(att, !r.DefenderWins)
+	if !r.DefenderWins {
+		attDead = false
+	}
 	w.afterBattle(ev, att, node, attDead, -1, rng)
 	if !r.DefenderWins && !attDead {
 		// ⭐ **敵軍攻下玩家的空城** → 原版跳 #26（`sub_14ED7` 的 `loc_14EF1`：
