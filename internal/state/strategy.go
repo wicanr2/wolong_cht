@@ -301,10 +301,28 @@ func (w *World) driftAIFriendship(faction, target int) {
 func (w *World) driftPlayerFriendship(player int, ordered []strategyai.Candidate) {
 	if len(ordered) > 0 {
 		target := ordered[0].Faction
+		// ⭐⭐ **和平才再扣 7，交戰不扣**——極性與直覺相反，兩支合起來看：
+		//
+		//	sub_12C52（建緩衝區）：
+		//	    cmp al, 80h / jnb .1        ; al ＝ 交友度
+		//	    or  di, 8000h               ; ★ 交友度 < 80h（交戰）→ 設 bit 15
+		//	sub_12DF3（漂移）：
+		//	    mov bx, di / and di, 7FFFh  ; bx ＝ 緩衝區原始值（含 bit 15）
+		//	    mov al, 1 / call sub_130F0  ; 先 −1
+		//	    cmp bh, 80h / jnb .rest     ; ★ bit 15 設了（交戰）→ **跳過**
+		//	    mov al, 7 / call sub_130F0  ; 只有和平才再 −7
+		//
+		// ⇒ 交戰中的鄰居每月只掉 1，和平的掉 8。`docs/re/07` §22 的
+		// 「交戰再 −7」把極性寫反了（同局面 5/1 月結的勢力 2 → 13：
+		// 原版 28、remake 35，docs/playtest/119 §46.22）。
+		//
+		// ⚠ 判準是**緩衝區那一筆的快照**，不是當下的交友度：`sub_12C52`
+		// 在月結一開始就把 22 個勢力的緩衝區全部建好，之後每個勢力的
+		// 漂移／合作／停戰都會改交友度，而後面的勢力仍然看自己那份。
 		fr := w.Friendship[player][target]
-		wasWar := fr.AtWar()
+		wasWar := ordered[0].Friendship.AtWar()
 		fr = fr.WithValue(fr.Value() - 1)
-		if wasWar {
+		if !wasWar {
 			fr = fr.WithValue(fr.Value() - 7)
 		}
 		w.Friendship[player][target] = fr

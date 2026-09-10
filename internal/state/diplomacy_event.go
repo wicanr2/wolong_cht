@@ -146,6 +146,29 @@ func (w *World) ResolveDiplomacy(option DiplomacyOption) bool {
 		return false
 	}
 	w.diplomacy = nil
+
+	// ⭐⭐ **軍師答完，君主還要擲一次骰**（`sub_13902`，docs/spec/189）：
+	//
+	//	call sub_1ECE0            ; ★ 不論玩家選哪一列都取，含「拒絕」
+	//	cmp  al, cs:byte_10D00    ; 與信賴度比
+	//	ja   short loc_139BF      ; 亂數 > 信賴度 ⇒ 整段套用被跳過
+	//
+	// 這是 `CLAUDE.md` §3.2「玩家是軍師不是君主」在程式碼裡的樣子。
+	// ⚠ 撥款（`sub_139E8`）**沒有**這一擲，兩支不要一起改。
+	//
+	// ⚠ 亂數要在 `option` 分流**之前**取——原版是無條件的，
+	// 少取一次就讓之後每一座據點換一組亂數（同局面跑到 5/14
+	// 差 89 座據點，docs/playtest/119 §47）。
+	roll := 0
+	if w.rng != nil {
+		roll = w.rng.Next() & 0xFF
+	}
+	// ⚠ 這一支在信賴度 0xFF 時結構上走不到（`al` 是 8 位元），
+	// 所以「不採納會怎樣」還沒有被原版驗過——形狀照機器碼寫，
+	// 標為假說（docs/spec/189 §3）。
+	if roll > clampU8(w.Trust) {
+		return false
+	}
 	if option == DiplomacyReject {
 		return false
 	}

@@ -40,7 +40,7 @@ start=$(cursor "$SNAP")
 echo "快照起始據點游標：$start"
 fail=0
 for t in "${ticks[@]}"; do
-    orig="$CK/orig-ck$t.DAT"
+    orig="$CK/orig-ck${t//\//-}.DAT"
     [[ -f "$orig" ]] || { echo "跳過拍 $t：找不到 $orig"; continue; }
     cur=$(cursor "$orig")
     # ⛔ **不要用標稱拍數反推。** 據點游標 192 循環，靠標稱值鎖相位只在
@@ -49,24 +49,36 @@ for t in "${ticks[@]}"; do
     #    時鐘沒有這個問題：讀原版檢查點的時刻，讓 remake 跑到同一刻。
     clk=$(clockof "$orig")
     tools/go.sh run tools/rng_pace.go -save "$SNAP" -rng-state "$RNG" \
-        -until "$clk" -save-out "$CK/remake-$t.DAT" > "$CK/remake-$t.log" 2>&1
-    n=$(sed -n 's/.*共 \([0-9]*\) 拍/\1/p' "$CK/remake-$t.log" | tail -1)
+        -until "$clk" -save-out "$CK/remake-${t//\//-}.DAT" > "$CK/remake-${t//\//-}.log" 2>&1
+    n=$(sed -n 's/.*共 \([0-9]*\) 拍/\1/p' "$CK/remake-${t//\//-}.log" | tail -1)
     [[ -n "$n" ]] || { echo "拍 $t：remake 跑不到 $clk"; fail=1; continue; }
     # 交叉檢查：跑到同一時刻時據點游標也該相同。
-    rc=$(cursor "$CK/remake-$t.DAT")
+    rc=$(cursor "$CK/remake-${t//\//-}.DAT")
     (( rc == cur )) || echo "  ⚠ 游標對不上：原版 $cur、remake $rc"
-    c=$(tools/py.sh tools/city_diff.py "$orig" "$CK/remake-$t.DAT" | grep 合計)
-    p=$(tools/py.sh tools/corps_diff.py "$orig" "$CK/remake-$t.DAT" | grep 合計)
-    f=$(tools/py.sh tools/faction_diff.py "$orig" "$CK/remake-$t.DAT" | grep 合計)
-    g=$(tools/py.sh tools/global_diff.py "$orig" "$CK/remake-$t.DAT" | grep 合計)
-    e=$(tools/py.sh tools/event_diff.py "$orig" "$CK/remake-$t.DAT" | grep 合計)
+    c=$(tools/py.sh tools/city_diff.py "$orig" "$CK/remake-${t//\//-}.DAT" | grep 合計)
+    p=$(tools/py.sh tools/corps_diff.py "$orig" "$CK/remake-${t//\//-}.DAT" | grep 合計)
+    f=$(tools/py.sh tools/faction_diff.py "$orig" "$CK/remake-${t//\//-}.DAT" | grep 合計)
+    g=$(tools/py.sh tools/global_diff.py "$orig" "$CK/remake-${t//\//-}.DAT" | grep 合計)
+    # ⭐ **原版側的 log 沒有 `peek:2514` 就代表這份檢查點的佇列是**
+    #    來源 `SAVE.DAT` 的模板（`tools/parity_ck_orig.sh` 2026-09-10 之前
+    #    取的 17 個檢查點都是），那一欄的差異是假的。**標 n/a，不要算 fail
+    #    也不要當成綠**——把假差異當紅燈與把假綠燈當通過一樣壞。
+    if grep -q "peek:2514" "$CK/ck${t//\//-}.log" 2>/dev/null; then
+        e=$(tools/py.sh tools/event_diff.py "$orig" "$CK/remake-${t//\//-}.DAT" | grep 合計)
+    else
+        e="合計 0 筆（n/a：原版側沒讀佇列）"
+    fi
+    # ⭐ **交友度矩陣**（區塊 `+0x680`）：快照裡一直有，2026-09-10 之前
+    #    沒有任何工具在比。宣戰／停戰／協力的效果主要落在這張表。
+    r=$(tools/py.sh tools/friendship_diff.py "$orig" "$CK/remake-${t//\//-}.DAT" | grep 合計)
     # ⭐ 佇列**也判**：`tools/orig_snapshot.py` 已經走 `peek:2514` 把
     #    事件佇列（`+0x52C0`）那 1,024 B 從執行期記憶體讀回來，不再是
     #    來源 `SAVE.DAT` 的模板（docs/playtest/119 §44）。⚠ 用舊快照或
     #    舊檢查點跑會在這一欄看到假差異——重取一次再判。
-    printf '拍 %-5s 游標 %-4s 跑 %-5s 據點 %-18s 勢力 %-20s 軍團 %-34s 全域 %-18s 佇列 %s\n' \
-        "$t" "$cur" "$n" "$c" "$f" "$p" "${g%%（*}" "${e%%，*}"
+    printf '拍 %-7s 游標 %-4s 跑 %-5s 據點 %-18s 勢力 %-20s 軍團 %-34s 全域 %-18s 佇列 %-14s 交友度 %s\n' \
+        "$t" "$cur" "$n" "$c" "$f" "$p" "${g%%（*}" "${e%%，*}" "$r"
     [[ "$c$f$p$g" == *"0 個 byte／0 座"*"0 個 byte／0 個勢力"*"0 個 byte／0 支"* \
-        && "$g" == "合計 0 個 byte"* && "$e" == "合計 0 筆"* ]] || fail=1
+        && "$g" == "合計 0 個 byte"* && "$e" == "合計 0 筆"* \
+        && "$r" == "合計 0 個 byte"* ]] || fail=1
 done
 exit $fail

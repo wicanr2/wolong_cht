@@ -950,7 +950,7 @@ mov al, 8 / mov dx, 0FFFFh / mov bl, dl / call sub_12FB1   ; 發事件 8
 |---|---|---|---|
 | `sub_12C52`／`sub_12CDF` | 掃己方據點的 `+0x1C..+0x1F` 四個鄰接槽，依交友度去重排序 | `City.Neighbours` 保留原始槽位；`strategyCandidates` 依 `Adjacency` 掃描並排序 | 已證實／已接入 |
 | `sub_12DB8` | 非玩家勢力對排序第一鄰居：和平 −2（下限 20），交戰 +1（上限 50；對玩家不加） | `driftAIFriendship` | 已證實／已接入 |
-| `sub_12DF3` | 玩家勢力第一鄰居 −1；交戰再 −7；其他勢力對玩家 −1 | `driftPlayerFriendship` | 已證實／已接入 |
+| `sub_12DF3` | 玩家勢力第一鄰居 −1，**和平中的再 −7**（交戰不再扣，[`../spec/188`](../spec/188-friendship-drift-peace-loses-more.md)）；其他勢力對玩家 −1 | `driftPlayerFriendship` | 已證實／已接入 |
 | `sub_12EFB` | 資金、交友度、國力三道嚴格比較 | `internal/rules/strategyai.ShouldDeclareWar` | 已證實／已接入 |
 | `sub_13526`／`sub_13639` | 宣戰後寫入 `+0x19`，雙向交友度取小值後右移一位並清和平位元 | `World.dispatchQueuedEvent`／`applyQueuedDeclaration` | 已證實／已接入 |
 | `sub_12E33`／`sub_13220`／`sub_13712`／`sub_135ED` | 合作事件的鄰接／交友度產生閘、代表政治／交友度 gate、被侵攻方付費、俘虜釋放與對侵攻方宣戰 | `World.queueCooperationProposal`／`applyQueuedCooperation`／`beginDiplomacy`／`ResolveDiplomacy`；`TestStrategicAIDiplomacyEventGenerators`／`TestQueuedEventHandlers`／`TestQueuedDiplomacyChoice` | 已證實／產生器、狀態與三選一接縫已接入；完整接受／金額輸入／原版訊息 UI 未完 |

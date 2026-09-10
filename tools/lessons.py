@@ -154,6 +154,11 @@ def render_text(data):
         out.append(f'**防線**：`{g["kind"]}` — {g.get("note", "")}'.rstrip())
         out.append("")
     out.append(END)
+    # ⭐ `tools/index.py` 的盲區檢查會看到教訓正文裡的「未解」「還沒」，
+    # 而這一份的缺口是**每條教訓自己的 `guard`**，不是一個「未解」小節。
+    # 明講一次，免得每加一條教訓就多一個假警報。
+    out.append("")
+    out.append("<!-- 缺口：無 -->")
     return "\n".join(out)
 
 

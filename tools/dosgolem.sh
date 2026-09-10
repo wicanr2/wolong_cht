@@ -9,7 +9,12 @@
 #   steps:N       再跑 N 道指令
 #   click:X,Y     點左鍵
 #   rclick:X,Y    **點右鍵** ← 對話框在等的是它，不是左鍵（docs/playtest/118 §2）
-#   press／rpress 只按下不放（選單選項要 move 到位再 press）
+#   press／rpress 原地按左／右鍵（要先 move 到位）
+#
+# ⛔ **`click`／`rclick` 的 settle 預設六百萬道指令**（≈ 二十幾個遊戲節拍），
+#    而 `rclick` **忽略**第三個參數——只有 `click:X,Y,N` 吃得到 settle。
+#    連按十次就白跑十一個遊戲日，取樣點完全失控。
+#    ⇒ 要精確控制就 `move` 一次再用 `press`／`rpress` ＋ 自己給的 `steps:`。
 #   move:X,Y      只移動游標
 #   profile:N     取樣 N 道指令，印出 CS:IP 的熱區——**卡住時第一個要跑的**
 #   sclick:X,Y    **進到遊戲之後**用這一支：畫面座標點擊（先把捲動原點歸零）

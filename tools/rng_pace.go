@@ -267,6 +267,30 @@ func main() {
 		}
 		perTickCity = append(perTickCity, w.TakeSnapshot().CityCursor)
 		w.Tick(tr)
+		if c := w.PendingDiplomacy(); c != nil {
+			if pendingDiplo == 0 {
+				pendingDiplo = i + 1
+			}
+			switch *answer {
+			case "reject":
+				w.ResolveDiplomacy(state.DiplomacyReject)
+			case "accept":
+				w.ResolveDiplomacy(state.DiplomacyAcceptFree)
+			}
+			answeredDiplo++
+		}
+		if c := w.PendingFunding(); c != nil {
+			if pendingFunding == 0 {
+				pendingFunding = i + 1
+			}
+			switch *answer {
+			case "reject":
+				w.ResolveFunding(state.FundingReject)
+			case "accept":
+				w.ResolveFunding(state.FundingFullAmount)
+			}
+			answeredFunding++
+		}
 		n := tr.seq - prev
 		perTick = append(perTick, n)
 		perTickWhere = append(perTickWhere, append([]string(nil), tr.where[prev:tr.seq]...))
@@ -321,33 +345,15 @@ func main() {
 		// `Tick` 照樣被呼叫，但 `tickCity` 不跑——症狀是「連續幾千拍
 		// 取 0 個數」，而那會把逐拍不一致的總數整個灌爆。
 		//
-		// 這個實驗是「玩家什麼都不做」，所以預設**一律拒絕**並繼續。
-		// 回應的次數會印出來——原版在同一段沒有停，所以那個次數本身
-		// 就是一個待查的差異，不能讓它靜靜地消失。
-		if c := w.PendingDiplomacy(); c != nil {
-			if pendingDiplo == 0 {
-				pendingDiplo = i + 1
-			}
-			switch *answer {
-			case "reject":
-				w.ResolveDiplomacy(state.DiplomacyReject)
-			case "accept":
-				w.ResolveDiplomacy(state.DiplomacyAcceptFree)
-			}
-			answeredDiplo++
-		}
-		if c := w.PendingFunding(); c != nil {
-			if pendingFunding == 0 {
-				pendingFunding = i + 1
-			}
-			switch *answer {
-			case "reject":
-				w.ResolveFunding(state.FundingReject)
-			case "accept":
-				w.ResolveFunding(state.FundingFullAmount)
-			}
-			answeredFunding++
-		}
+		// ⭐ 預設 `accept` ＝ **原版側按反白的第 1 列**（使用者裁定
+		// 2026-09-10「都固定 yes」）。外交是 `DiplomacyAcceptFree`
+		// ＝「無條件」，撥款是 `FundingFullAmount`；實測原版 5/13 的
+		// 召見選第 1 列出來的正是「為今後的外交設想，或許無條件比較好吧」
+		// （`tools/parity_ck_orig.sh` 的 `SUMMON_REPLY`）。
+		//
+		// 回應的次數會印出來——原版在同一段停了幾次是可以數的
+		// （對話框推進的按鍵次數），兩邊對不上就是待查的差異，
+		// 不能讓它靜靜地消失。
 		if w.PendingBattle() != nil && pendingBattle == 0 {
 			pendingBattle = i + 1
 		}

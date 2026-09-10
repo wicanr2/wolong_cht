@@ -53,13 +53,53 @@ SUMMON_STEPS=${WOLONG_SUMMON_STEPS:-147054000}
 # 由實測校準（`docs/playtest/119` §46.21）：跑到 `SUMMON_STEPS` 時
 # 遊戲時鐘停在 5/13 11 時、據點游標 144。
 SUMMON_WASTE=${WOLONG_SUMMON_WASTE:-0}
-SUMMON_REPLY="rclick:287,199;steps:500000;rclick:287,199;steps:500000"
-SUMMON_REPLY="$SUMMON_REPLY;press;steps:2000000"
-for _ in 1 2 3 4 5 6 7 8; do
-    SUMMON_REPLY="$SUMMON_REPLY;rclick:287,199;steps:500000"
+# ⛔ **不要用 `rclick`**：它的 settle 預設**六百萬道指令**（dosgolem 的
+# `click` 註解），對即時制是二十幾個遊戲節拍——十次 rclick 就白跑十一天，
+# 取樣點完全失控。`rclick` 還**忽略**第三個參數（只有 `click` 吃 settle）。
+#
+# ⇒ `move` 一次把游標放到對話框上，之後用 `rpress`（原地按右鍵）／
+#   `press`（原地按左鍵）＋ 自己給的 `steps:`，每一步都可控。
+#
+# ⭐ **次數是量出來的，不能「多按幾次保險」**：對話關掉之後多的右鍵會在
+#   大地圖上開選單並把遊戲暫停，之後的 `until:` 永遠跑不到。實測序列
+#   （`workplace/parity/summon/a0`–`a7`，2026-09-10）：
+#
+#   | 按鍵 | 畫面 |
+#   |---|---|
+#   | （召見點）| 「孫乾　大人，主公有事召見。」|
+#   | rpress ×2 | 推進到「曹操　的使者前來希望我國協助一事，我想聽聽你的意見。」|
+#   | press | 選反白的第 1 列「為今後的外交設想，或許無條件比較好吧」＝ **無條件同意協力** |
+#   | rpress ×4 | 逐段推完回覆與「已經不能再與呂布　共存了。立即固守國境。」，最後一下回到大地圖 |
+#
+#   判準是**時鐘**：a0–a6 都停在 5/13 11 時，第 7 下之後才開始走。
+SUMMON_REPLY="move:287,199;rpress;steps:100000;rpress;steps:100000"
+SUMMON_REPLY="$SUMMON_REPLY;press;steps:200000"
+for _ in 1 2 3 4; do
+    SUMMON_REPLY="$SUMMON_REPLY;rpress;steps:50000"
 done
 
+# ⭐ **參數含 `/` 就當遊戲日期**（`196/5/14`），走 dosgolem 的 `until:`。
+#
+# 召見之後 `steps` 與遊戲時間的對應整個垮掉：實測回應完之後 120 萬道指令
+# 就走了 4 天 15 小時（≈ 每拍 1,050 道，正常是 24,509）——**對話關掉之後
+# 遊戲不用重畫，跑得快得多**。日期取樣沒有這個問題。
 for t in "$@"; do
+    if [[ "$t" == */* ]]; then
+        RUN="steps:$SUMMON_STEPS;$SUMMON_REPLY;until:$t"
+        echo "=== $t（召見回應後跑到這一天）==="
+        WOLONG_DOSGOLEM_GAMEDIR=dosgolem/root-liubei13 \
+        WOLONG_DOSGOLEM_TIMEOUT=${WOLONG_DOSGOLEM_TIMEOUT:-60m} \
+        WOLONG_DOSGOLEM_BUDGET=${WOLONG_DOSGOLEM_BUDGET:-200000000} \
+            tools/dosgolem.sh "$CK" \
+            "wait;click:320,200;click:300,151;$RUN;clock;$PEEKS" \
+            > "$CK/ck${t//\//-}.log" 2>&1
+        grep "遊戲時鐘" "$CK/ck${t//\//-}.log" | tail -1
+        tools/py.sh tools/orig_snapshot.py "$CK/ck${t//\//-}.log" \
+            workplace/orig/dosv/SAVE.DAT "$CK/orig-ck${t//\//-}.DAT" | tail -1
+        od -An -tu1 -j $((0x2E)) -N2 "$CK/orig-ck${t//\//-}.DAT" |
+            awk '{printf "  據點游標 %d\n", ($1 + $2 * 256) / 32}'
+        continue
+    fi
     steps=$((t * STEPS_PER_TICK))
     if (( steps >= SUMMON_STEPS )); then
         # ⚠ **跑到 `SUMMON_STEPS` 時遊戲已經卡住一陣子了**，那一段的指令

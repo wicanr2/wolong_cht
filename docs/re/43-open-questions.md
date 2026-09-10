@@ -890,4 +890,37 @@
 或用別的詞說「這個還不知道」的缺口抽不到**——下列檔案提到未解
 卻一列都沒抽出來，要嘛缺口寫成別的句式，要嘛那些字樣只是在講別的事：
 
-- `docs/lessons.md`
+（沒有）
+
+只印抽得到的部分，會讓解析失敗長得像「那份文件沒有缺口」。
+這一節就是為了讓那個差別看得見。
+
+## 9. 平台層與工具鏈產物（不計入總數）
+
+兩類東西掛 `[DOS/BIOS]`，都**不算 remake 的缺口**：
+
+1. **原版與 DOS／BIOS 之間的介面**：`INT` 服務號、顯示卡暫存器、磁碟服務。
+   知道 `INT 61h` 的 `ah=4` 是什麼，不會改變任何一行 Go。
+2. **編譯器 runtime、連結進來的驅動與程式庫**：C runtime 啟動碼、算術／字串
+   輔助常式、被靜態連結進執行檔的驅動模組（本作的 segment `0x2000` 整段是
+   `INT 33h` 滑鼠包裝，見 [`24`](24-unread-function-catalogue.md) §3）。
+   **這些是 toolchain 產物，不是玩家看得到的遊戲邏輯。**
+
+使用者裁定：第 1 類 2026-08-23、第 2 類 2026-09-02。
+
+⚠ **排除的是「怎麼跟平台講話」，不是「原版選了什麼參數」。**
+滑鼠驅動把游標範圍設成 640×400 是**遊戲行為**，仍然要讀；
+`INT 33h` 本身的呼叫慣例不用。判準與流程見
+`~/.claude/knowledge-base/retro/compiler-runtime-helper-fingerprints.md`。
+
+⚠ **分開數不是不數。** 這些仍然是原版的未解之處，只是**不擋 remake**；
+哪天要寫「原版怎麼跟 DOS 講話」的文件，這一節就是清單。
+
+| 出處 | 缺口 | 現況 |
+|---|---|---|
+| [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | `INT 61h` 的 `ax=09F2h` `[DOS/BIOS]` | `AH=09h` 對 `ds:[0A4Ch]` 個聲部逐一呼叫 `0x049E`（`al=91h`／`ah=0F2h`），那一支沒讀（[`81`](81-sound-type-attenuation.md) §5）。`ah=4`／`7`／`8`／`0Bh`／`0Ch`（含 `ax=0C01h`）都已定案，見 §2。⚠ **這是原版與音效 TSR 的介面，不擋 remake**——音訊走純 Go 的 OPL3 渲染（[`../spec/29`](../spec/29-audio.md)），不經過 DOS |
+| [`re/28-text-number-rendering.md`](../re/28-text-number-rendering.md) | `sub_1F7A4` `[DOS/BIOS]` | 把 32 B 字模緩衝畫上 VRAM 的實際迴圈，未逐行讀。⚠ remake 要的是**畫什麼**（字模版面，已解），不是**怎麼寫 VRAM**——Ebiten 不碰 VGA 平面（同 [`29`](29-font-service-int15.md) §9） |
+| [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `sub_1F7A4` `[DOS/BIOS]` | 把 32 B 緩衝畫上 VRAM 的實際迴圈，未逐行讀。⚠ remake 要的是**畫什麼**（字模版面，已解），不是**怎麼寫 VRAM** |
+| [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `YNFONT.EXE` 怎麼顯示中文 `[DOS/BIOS]` | 它不走 INT 15h（0 次），密碼輸入畫面的中文是它自己畫的。⚠ 那是一支 DOS TSR，remake 沒有對應物；密碼頁本身也不擋任何事（`CLAUDE.md` §4.0） |
+| [`re/37-graphics-and-runtime-module-map.md`](../re/37-graphics-and-runtime-module-map.md) | `sub_1F7A4` `[DOS/BIOS]` | 212 / 字型 blitter，逐行未解。**同一支函式在 [`29`](29-font-service-int15.md) §9 也列著，那裡是正本**；未解的是「怎麼寫 VRAM」，而 remake 不碰 VGA 平面，所以不擋 remake |
+| [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `INT 61h` 的四個服務號（`ah=4`／`7`／`8`、`ax=09F2h`／`0C01h`）`[DOS/BIOS]` | 對應什麼音效動作要看 `YNSOUND.COM`（[`17`](17-dosv-audio-tsr.md)）。⚠ 原版與音效 TSR 的介面，**不擋 remake** |

@@ -366,6 +366,8 @@
 | [`docs/spec/185-monthly-settlement-call-order.md`](spec/185-monthly-settlement-call-order.md) | 185 — 月結內部的呼叫順序：政略在災害之前 | CONFORMED。 | 2026-09-10 |
 | [`docs/spec/186-standoff-corps-before-city.md`](spec/186-standoff-corps-before-city.md) | 186 — 擋路判定的順序：先問軍團，再問據點 | CONFORMED。 | 2026-09-10 |
 | [`docs/spec/187-only-the-loser-is-judged.md`](spec/187-only-the-loser-is-judged.md) | 187 — 戰後判誰：攻城只判敗方，野戰誰壞滅就判誰 | CONFORMED。 | 2026-09-10 |
+| [`docs/spec/188-friendship-drift-peace-loses-more.md`](spec/188-friendship-drift-peace-loses-more.md) | 188 — 玩家的第一鄰居：和平掉 8，交戰只掉 1 | CONFORMED。 | 2026-09-10 |
+| [`docs/spec/189-lord-may-ignore-the-strategists-answer.md`](spec/189-lord-may-ignore-the-strategists-answer.md) | 189 — 玩家答完之後，君主還要擲一次骰 | CONFORMED。 | 2026-09-10 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |
