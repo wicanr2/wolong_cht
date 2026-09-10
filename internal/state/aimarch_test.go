@@ -494,6 +494,13 @@ func TestWeakLoserSwitchesToHomeResupply(t *testing.T) {
 	_, _, c := threeInARow(t, w, f)
 	i := aiCorps(t, w, f, c)
 	standOnForeignGround(w, c, f)
+	// ⚠ 要設**槽位**不是 `Men`：`sub_1474A` 第一行 `sub_16FD2` 會從六槽
+	// 重算總兵力，判斷 `cmp word [si+4], 12Ch` 用的是重算後的值
+	// （docs/spec/179）。直接寫 `Men` 會被蓋掉。
+	for k := range w.Corps[i].Units {
+		w.Corps[i].Units[k].Men = 0
+	}
+	w.Corps[i].Units[0].Men = aiHomeThreshold
 	w.Corps[i].Men = aiHomeThreshold
 
 	if dead := w.retreatOrPerish(i, false); dead {

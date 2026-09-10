@@ -245,6 +245,14 @@ func faceOff(w *World, att, def, x, y int) {
 	c.TargetX, c.TargetY = x, y
 	c.Interval, c.Timer = 1, 1
 	c.Standoff, c.Countdown = false, 0
+	// ⚠ 攻方要處在「**還沒到行軍目標**」的狀態，否則 `tickOneCorps` 走的是
+	// 抵達分派那一條而不是移動——`atTargetNode` 的判準是
+	// 「`LinkAddr == 0` 而且 `Node == TargetNode`」，而 `ClearMarchRoute`
+	// 剛把 `LinkAddr` 清成 0（docs/spec/179 §2）。借守方的據點當目標。
+	c.TargetNode = d.Node
+	if c.TargetNode == c.Node {
+		c.TargetNode = (c.Node + 1) % len(w.Cities)
+	}
 }
 
 // TestStandoffStopsBeforeEnemyCell 釘住 §1.1–§1.2：下一格站著敵方軍團時

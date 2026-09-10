@@ -337,6 +337,35 @@ func kindFromByte(v byte) army.TroopType {
 	return army.TroopType(v - 1)
 }
 
+// recalcCorps 是 `sub_16FD2`：軍團內容變了就重算的統一入口
+// （`docs/re/30` §5）。四個呼叫者，戰後的 `sub_1474A` 第一行就是它。
+//
+// 三件事：
+//
+//   - `+0x04` 總兵力 ＝ 六槽 `+1` 的和（16 位無號）
+//   - `+0x1E` 移動間隔 ＝ 全騎馬 2、否則 3
+//   - **`+0x0B` 移動計時寫 1**（`0001701D`）——不是寫成間隔，
+//     所以重算過的軍團**下一次輪到就走**
+//
+// ⭐ 第三件事對同局面對拍是看得見的：一場戰鬥之後兩邊的計時器會同步
+// 歸到 1，少了它，攻守雙方的移動節拍會各自漂掉（docs/spec/179）。
+func (w *World) recalcCorps(i int) {
+	c := &w.Corps[i]
+	men, allCav := 0, true
+	for _, u := range c.Units {
+		if u.Kind != army.Cavalry {
+			allCav = false
+		}
+		men += u.Men
+	}
+	c.Men = men & 0xFFFF
+	c.Interval = IntervalMixed
+	if allCav {
+		c.Interval = IntervalCavalry
+	}
+	c.Timer = 1
+}
+
 func byteFromKind(t army.TroopType) byte { return byte(t) + 1 }
 
 // 移動間隔。純騎馬編成走得快（說明書 5.5「騎馬隊のみの軍団は
@@ -683,6 +712,29 @@ func (w *World) tickStandoff(i int) {
 	}
 }
 
+// atTargetNode 是原版 `sub_12662` 開頭的 `cmp bx, [si+14h]`
+// （`+0x0E` 對 `+0x14`）：**軍團的現在節點就是行軍目標**。
+//
+// ⚠ 不能只比 `Corps.Node`。它是 remake 自己的欄位，行軍中留著出發那一站，
+// 所以「從 X 出發、目標也是 X」（退卻回首都、掉頭）會**每走一格都判成
+// 抵達**——連帶每一格都跑一次 `arriveCorps`，把目標欄位重寫一遍。
+// 原版沒有這個問題：`+0x0E` 在路上是連結記錄位址（≥ `800h`），
+// 一定不等於 `+0x14`（docs/spec/179 §2）。
+func (w *World) atTargetNode(i int) bool {
+	c := &w.Corps[i]
+	if c.LinkAddr != 0 || c.Node != c.TargetNode {
+		return false
+	}
+	// ⚠ 缺道路圖時 `LinkAddr` 恆為 0（`step` 退回直線逼近），上面那道閘
+	// 就失效了，所以再問一次座標。比的是**目標據點的座標**，不是
+	// `TargetX`／`TargetY`——後兩格在戰後退卻時留著舊目標的值
+	// （`sub_1474A` 不寫它們，docs/spec/177 §1.4）。
+	if !validCity(c.TargetNode) {
+		return true
+	}
+	return c.X == w.Cities[c.TargetNode].X && c.Y == w.Cities[c.TargetNode].Y
+}
+
 func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 	c := &w.Corps[i]
 	// 第二道保險：載入端已經擋過（loadCorps），這裡再擋一次，
@@ -712,10 +764,12 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 		// ⚠ **停在目標上也要跑抵達處理**：原版 `sub_12662` 一開頭就比
 		// 「現在節點 ＝ 目標節點」，相同就直接呼叫 `sub_14325` 分派，
 		// 不需要移動（`docs/re/64` §1）。解體下在「已經在首都」時就靠這條。
-		// ⚠ 判「到了」要連座標一起看：remake 的 `Node` 在**踩到據點座標**
-		// 時就更新（中繼據點也算），單看它會把「還在路上但經過目標據點」
-		// 誤判成抵達。
-		if c.Node == c.TargetNode && c.X == c.TargetX && c.Y == c.TargetY {
+		// ⚠ 原版比的是 `+0x0E` 與 `+0x14`，而 `+0x0E` 在行軍中是**連結
+		// 記錄位址**（≥ `800h`），所以「還在路上」永遠不會相等。
+		// remake 的 `Node` 語意不同（行軍中留著出發那一站），等價寫法是
+		// **先問還在不在路段上**——`LinkAddr` 只在走完整條路線時歸零
+		// （docs/spec/179 §2）。
+		if w.atTargetNode(i) {
 			w.arriveCorps(i, rng)
 			if !c.Alive {
 				ev.Disbanded, ev.Routed = !c.Routing, c.Routing
@@ -737,7 +791,7 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 				// `ev.Moved` 維持 false，對峙的 96 拍在事件層是靜的。
 			} else if w.step(i) {
 				ev.Moved = true
-				ev.Arrived = c.Node == c.TargetNode
+				ev.Arrived = w.atTargetNode(i)
 				if ev.Arrived {
 					w.arriveCorps(i, rng)
 					if !c.Alive {

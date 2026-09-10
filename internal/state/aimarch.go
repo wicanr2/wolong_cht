@@ -308,6 +308,9 @@ func (w *World) retreatOrPerish(i int, won bool) bool {
 		return false
 	}
 	c := &w.Corps[i]
+	// ⭐ `sub_1474A` **第一行就是 `call sub_16FD2`**（docs/spec/179）：
+	// 總兵力、移動間隔重算，而且 `+0x0B` 移動計時寫 1——勝敗都跑。
+	w.recalcCorps(i)
 	if won {
 		c.Stage = StageWaitMorale
 		return false
