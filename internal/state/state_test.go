@@ -3242,3 +3242,59 @@ func TestStormMarkerUsesChebyshevDistance(t *testing.T) {
 // SeqFactions，docs/spec/106）之後就不能用 `!=` 比了——**加一個切片欄位會讓
 // 所有 `!=` 比較編不過**，這一支把那件事收在一處。
 func sameNotice(a, b TalkNotice) bool { return reflect.DeepEqual(a, b) }
+
+// 事件佇列游標（區塊 `+0x30` ＝ `cs:word_10D20`）要從存檔還原，
+// 而且寫回時原封不動（docs/spec/176）。
+//
+// **不還原的後果不是「差一格」**：佇列前段留的是這個月已經派發過的
+// 事件，從 0 重跑會把宣戰再派發一次，連帶重設侵攻目標、觸發回頭宣戰、
+// 邊境求援與救援軍團的編成。
+func TestEventCursorRestoredFromBlock(t *testing.T) {
+	w := load(t, 0)
+	b := w.Bytes()
+
+	// 正對照：把游標設成第 37 筆（同局面對拍那份 16 時快照的值），
+	// 載入端要讀到它。
+	const cursor = 37 * eventQueueEntrySize
+	putU16(b, eventCursorOffset, cursor)
+	got := loadBlock(b)
+	if got.eventCursor != cursor {
+		t.Errorf("eventCursor = %d, want %d", got.eventCursor, cursor)
+	}
+
+	// 反對照：訊號拿掉（游標歸零）就該讀到 0，不是沿用上一次的值。
+	putU16(b, eventCursorOffset, 0)
+	if zero := loadBlock(b); zero.eventCursor != 0 {
+		t.Errorf("游標為 0 時 eventCursor = %d, want 0", zero.eventCursor)
+	}
+
+	// round-trip：寫回去要拿得回同一個值。
+	putU16(b, eventCursorOffset, cursor)
+	if back := u16(loadBlock(b).Bytes(), eventCursorOffset); int(back) != cursor {
+		t.Errorf("寫回後 +0x30 = %d, want %d", back, cursor)
+	}
+}
+
+// 游標不在 0 時，前面那幾筆事件不會再被取出來。
+func TestEventCursorSkipsAlreadyDispatched(t *testing.T) {
+	w := load(t, 0)
+	b := w.Bytes()
+	// 第 0 筆放一個事件 1，游標指到第 1 筆之後。
+	putU16(b, eventQueueOffset, 0x0301)
+	putU16(b, eventQueueOffset+2, 0xFF04)
+	putU16(b, eventCursorOffset, eventQueueEntrySize)
+
+	got := loadBlock(b)
+	got.eventDelay = 1 // 讓下一次呼叫就到期
+	if e, ok := got.takeNextQueuedEvent(); ok && e.Code == 0x0301 {
+		t.Error("游標已經走過第 0 筆，不該再取到它")
+	}
+
+	// 反對照：游標歸零就取得到——證明這個測試看得見那一筆。
+	putU16(b, eventCursorOffset, 0)
+	zero := loadBlock(b)
+	zero.eventDelay = 1
+	if e, ok := zero.takeNextQueuedEvent(); !ok || e.Code != 0x0301 {
+		t.Errorf("游標為 0 時取到 %#04x（ok=%v），want 0x0301", e.Code, ok)
+	}
+}

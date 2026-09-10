@@ -69,6 +69,7 @@
 | 軍團 `+0x00` 位元 0、`+0x08`／`+0x09` 與 AI 編成的初值 | [`173-corps-flag-bit0-and-sprite-fields.md`](173-corps-flag-bit0-and-sprite-fields.md) | CONFORMED；軍團表四個檢查點逐 byte 相同 |
 | 求援調兵只調站著的軍團，而且只寫意圖 | [`174-relief-dispatch-does-not-move-marching-corps.md`](174-relief-dispatch-does-not-move-marching-corps.md) | CONFORMED；AI 軍團走八格被彈回起點的根因 |
 | 撞上敵人先對峙 12 個週期（96 拍）才開打 | [`175-encounter-standoff-countdown.md`](175-encounter-standoff-countdown.md) | CONFORMED；對拍量到 96 拍，戰鬥時機從早 94 拍變成晚 2 拍 |
+| 事件佇列游標要從存檔還原（區塊 `+0x30`）| [`176-event-queue-cursor-not-restored.md`](176-event-queue-cursor-not-restored.md) | CONFORMED；不還原會把整個月的宣戰重播一次，第一個分歧從拍 781 推到 2,455 |
 | 載入存檔要還原據點巡迴游標 | [`162-city-cursor-from-save.md`](162-city-cursor-from-save.md) | CONFORMED；13 個觸發子刻逐項對上原版 |
 | 亂數消費順序對齊（長時間對拍前置）| [`160-rng-consumption-alignment.md`](160-rng-consumption-alignment.md) | READY；兩側軌跡工具齊備，第一輪比對定位到 `sub_14057` 差 4 次 |
 | 劉備不作為長時間對拍管線 | [`161-liubei-idle-longrun-parity.md`](161-liubei-idle-longrun-parity.md) | DRAFT；原版側 90 天已跑通（26 秒、兩次逐 byte 相同），remake 側未做 |

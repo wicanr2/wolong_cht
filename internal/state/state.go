@@ -48,6 +48,9 @@ const (
 	// 每「時」的勢力更新 `cs:word_10D1C`（÷ 0x40 ＝ 勢力編號）。
 	corpsCursorOffset = 0x28
 	hourCursorOffset  = 0x2C
+	// 事件佇列的派發游標 `cs:word_10D20`（0D20h − 0CF0h ＝ 0x30）。
+	// 單位是佇列裡的 byte offset，一筆 4 B（docs/spec/176）。
+	eventCursorOffset = 0x30
 	// corpsSlots 是軍團游標的模數。軍團表有 128 格（`0x22C0`–`0x42C0`），
 	// remake 只建模前 127 格，但**游標要照原版轉滿 128**（docs/spec/168 §2.1）。
 	corpsSlots = 128
@@ -605,7 +608,6 @@ func loadBlock(b []byte) *World {
 		AdvisorPortrait: int(b[advisorPortraitOffset]),
 		raw:         append([]byte(nil), b...),
 		eventDelay:  7,
-		eventCursor: 0,
 		// 事件 10 的原版 producer unknown；remake 預設使用明確標示的
 		// 近似 producer，仍可由 SetApproximateEvent10(false) 關閉。
 		approximateEvent10: true,
@@ -641,6 +643,12 @@ func loadBlock(b []byte) *World {
 	}
 	if cur := int(u16(b, hourCursorOffset)) / factionSize; cur < numFactions {
 		w.hourFaction = cur
+	}
+	// ⭐ 事件佇列游標（`word_10D20`）。**不還原它會把這個月已經派發過的
+	// 事件再派發一次**——重設侵攻目標、觸發回頭宣戰、邊境求援與救援軍團
+	// （docs/spec/176）。原版只在月結歸零，月中的存檔帶的是續跑位置。
+	if cur := int(u16(b, eventCursorOffset)); cur < eventQueueEntries*eventQueueEntrySize {
+		w.eventCursor = cur
 	}
 
 	// 存活勢力數（區塊 +0x3A，59 byte 全域區塊的最後一格）。
@@ -1492,6 +1500,7 @@ func (w *World) Bytes() []byte {
 	putU16(b, cityCursorOffset, w.cityCursor*citySize)
 	putU16(b, corpsCursorOffset, w.corpsCursor*corpsSize)
 	putU16(b, hourCursorOffset, w.hourFaction*factionSize)
+	putU16(b, eventCursorOffset, w.eventCursor)
 
 	for i := range w.Friendship {
 		row := b[friendBase+i*friendStride:]

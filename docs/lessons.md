@@ -10,7 +10,7 @@
 
 <!-- lessons:begin 由 tools/lessons.py render 產生，不要手改 -->
 
-共 **8 條**。權威是 [`lessons.json`](lessons.json)，這一份由 `tools/py.sh tools/lessons.py render` 產生。
+共 **9 條**。權威是 [`lessons.json`](lessons.json)，這一份由 `tools/py.sh tools/lessons.py render` 產生。
 
 ⭐ **按「什麼時候要想起這一條」索引**——教訓要防的動作發生在任務中間，不是開始時；按事件時間排的清單那時查不到。
 
@@ -24,6 +24,7 @@
 | 處理原版的顏色屬性 byte | [屬性 byte 的兩個半位元組是「背景︰前景」](#attribute-nibble-order) | 2 | remind |
 | 寫下一條新規則或新教訓的那一刻 | [規則沒有觸發時機，等於不存在](#rule-without-trigger) | 2 | tool |
 | 用 grep 或 pgrep 判斷「某個東西還在不在」 | [grep／pgrep 會匹配到查詢自己](#query-matches-itself) | 2 | test |
+| 對拍時要把某個原版欄位標成「畫面用」「導出值」「remake 走自己那一套」而放進「不必比」那一格 | [宣告一個欄位「remake 不必建模」等於為它關掉所有檢查](#not-modelled-turns-off-checks) | 1 | remind |
 
 ### IDA 把整段解成資料時，先問是不是自我修改碼
 
@@ -128,5 +129,17 @@
 | 2026-09-10 | `worklist.py` 的 verify 會掃到 `worklist.json` 自己（條目的 body 幾乎一定含 pattern 的字樣），每一條都會永遠說「仍未完成」——寫工具時就擋掉了 | `tools/worklist.py` |
 
 **防線**：`test` — `tools/worklist.py --selftest` 有一條「不掃 worklist.json 自己」的正反對照。⚠ pgrep 那一半還沒有防線。
+
+### 宣告一個欄位「remake 不必建模」等於為它關掉所有檢查
+
+<a id="not-modelled-turns-off-checks"></a>**什麼時候想起**：對拍時要把某個原版欄位標成「畫面用」「導出值」「remake 走自己那一套」而放進「不必比」那一格
+
+**要做的**：先 grep `docs/` 問那個符號已經有沒有答案，再決定。符號查對了不代表語意查對了——**錯的是符號後面那句話**，而那句話一旦寫成「畫面用」，之後每一次逐欄比對都會合法地跳過它，於是它再也不會開口。要免除一個欄位，理由要跟斷言同級：寫明出處與推論等級。
+
+| 日期 | 犯在哪 | 收據 |
+|---|---|---|
+| 2026-09-10 | 全域 `+0x30` 被記成「`cs:word_10D20`，大地圖捲動原點，畫面用」。它其實是**事件佇列的派發游標**，`docs/re/15`／`docs/re/07` 早就寫清楚了。沒還原它 ⇒ 整個月的宣戰被重播 ⇒ 四個勢力重設侵攻目標、多編四支救援軍團，拍 1,200 的據點表差到 172 座 | `CONTEXT.md` §6、`docs/spec/176` |
+
+**防線**：`remind` — `tools/dosgolem.sh` 與 `tools/ida.sh` 開頭會印。真正的防線要等逐欄比對工具能列出「被免除的欄位＋理由」才做得起來。
 
 <!-- lessons:end -->
