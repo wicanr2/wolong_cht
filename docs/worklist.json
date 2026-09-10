@@ -137,19 +137,18 @@
       }
     },
     {
-      "id": "tick3415-relief-dispatch-occupancy",
+      "id": "tick3566-relief-targets-empty",
       "layer": "parity",
-      "title": "快照沒有帶佔用圖：對拍的可信範圍停在拍 3,415",
-      "body": "同局面對拍的第一個分歧。據點 129 的求援調兵，原版取一次 `14171`（跳過判定）、remake 取兩次 `strategy.go:642`。\n\n兩邊的參數量出來了——原版的 `-watch` log 直接有暫存器（`sub_14155` 進來時 `dx` ＝ 佔用數:want，`sub dh, dl` 之後 `DX=0201` ⇒ skip 2、want 1）：\n\n| | 佔用數(129) | 威脅量(129) | want | skip |\n|---|---:|---:|---:|---:|\n| 原版 | 3 | **2** | 1 | 2 |\n| remake | 3 | **3** | 2 | 1 |\n\n⇒ 只有威脅量差 1。威脅量是 Σ 敵方鄰居的佔用數，而據點 129 的敵方鄰居只有 122 （139 中立、118 和平），所以**據點 122 的佔用數原版 2、remake 3**。\n\n⭐ 那一格（座標 `(304,158)`）實際站著**三支**軍團（34／72／114，`+0x1A`／`+0x1C` 都指向同一格）。原版算出 2 ⇒ **有一支從來沒被 `inc` 進佔用圖**。\n\n根因追到底了（`docs/spec/183` §3）：**不在維護，在起點**。五個維護點全部照抄之後還是差一——原版側是**同一次執行繼續往下跑**，圖是從開新遊戲以來累積的歷史；remake 是**從快照重建**，得到的是「每一支活著的軍團都在自己那一格」這個理想值。兩者在快照當下就可能不同，只是要等到那一格被 `sub_13EFD` 重算（每 192 拍一次）才顯現。\n\n⇒ 要修就得讓快照帶著這張圖：`tools/orig_snapshot.py` 多 `peek` 軍團所在的那幾格（段基底從軍團 `+0x1C` 反推，`Y × 24 + 段`、偏移 `X`），`tools/rng_pace.go` 用它初始化 `World.occupancy`。**夾具層的工作，不是規則層的。**",
-      "acceptance": "快照帶佔用圖之後，`tools/parity_ck.sh` 在拍 3,415 之後仍是四張表 0；逐拍取數的第一個分歧往後推。",
+      "title": "拍 3,566：remake 的求援目標清單是空的",
+      "body": "同局面對拍的第一個分歧。據點 88：原版取了 `sub_14057` 的挑目標亂數（`14060`），remake 完全沒取 ⇒ `relieve` 在 `len(r.Targets) == 0` 就返回了。\n\n`Targets` 的條件是 `invasionTarget != NoTarget && n.Owner == invasionTarget`（`threat.Scan`）。所以是**侵攻目標**或**鄰居歸屬**兩者之一不同——拍 3,420 的四張表還是逐 byte 相同，所以差異在那之後的 146 拍內。\n\n⚠ 另外還有一個已知的不等價：挑目標的位置。原版 `al` 初值為 0 時 `dec al` → `0FFh`，要繞 255 步（掃到空槽會 `mov di, bp` 從頭再來）才回到 0；remake 是 `亂數 & 3 % len(Targets)`。目標只有一個時兩者相同，多個時會分岔（docs/spec/184 §4）。",
+      "acceptance": "`tools/parity_ck.sh` 在拍 3,566 之後仍是四張表 0；逐拍取數的第一個分歧往後推。",
       "verify": {
-        "kind": "absent",
+        "kind": "present",
         "paths": [
-          "tools/orig_snapshot.py",
-          "tools/rng_pace.go"
+          "docs/spec/184-relief-dispatch-want-is-always-one.md"
         ],
-        "pattern": "occupancy|佔用圖",
-        "note": "夾具帶了佔用圖之後這兩支會提到它。⚠ 現在對這棵樹 grep 都不中。"
+        "pattern": "remake 的 `Targets` 是空的",
+        "note": "綁 §4 那句自承。追出來之後那句會被改掉。"
       }
     }
   ],
@@ -195,6 +194,13 @@
       "date": "2026-09-10",
       "how": "`tools/corps_diff.py` 加 `EXEMPT` 清單：每一條帶出處與「為什麼規則層不會有」，而且報表最後**逐筆列出這一次豁免了哪幾支**——不是靜靜跳過。位元 4 的出處是 `sub_12B3C`（`or byte ptr [si], 10h` 之後算螢幕座標、`loc_1D51F` blit）。",
       "caught_by": "拍 2,300 只剩這一個 byte，非處理不可。⚠ 沒有直接用「remake 不建模」草草帶過——那正是教訓 `not-modelled-turns-off-checks` 要防的。豁免要跟斷言同級：寫明出處，而且看得見。"
+    },
+    {
+      "id": "tick3415-relief-dispatch-occupancy",
+      "title": "拍 3,415 的調兵分歧",
+      "date": "2026-09-10",
+      "how": "不是佔用圖——是 `want` 的算式讀錯了。`sub_14057` 的 `loc_14099` 傳給 `sub_14155` 的 `dl` **恆為 1**（`al` 在挑目標的迴圈裡被 `dec` 到 0，再被 `mov al, 1` 設回來）；`Requested(威脅量, 佔用數)` 是「佔用數 ≤ 1」那一支的求援數量。規格 docs/spec/184。二十二個檢查點四張表全 0，第一個分歧推到 3,566。",
+      "caught_by": "⚠ **倒推出來的數字被當成觀測**。「原版佔用數 2」是拿錯的 `want` 算式反解出來的，而它讓我花了一整輪去建模佔用圖。新工具 `tools/orig_occupancy.py` 直接把原版的圖 peek 出來逐格比，兩個取樣點完全相同——假說當場被推翻。教訓記在 lessons.json 的 derived-number-as-observation。"
     }
   ]
 }

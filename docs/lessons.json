@@ -356,13 +356,41 @@
       ],
       "guard": {
         "kind": "rule",
-        "note": "沒有機器訊號——這一條要在「測試紅了」的當下想起來。測試裡把場面成立的理由寫成註解，是下一個人唯一的線索。",
+        "note": "沒有機器訊號——這一條要在「測試紅了」的當下想起來。⚠ verify **不能綁測試檔**：`lessons.py` 與 `worklist.py` 都只掃產品程式碼（`rulebook/61` 的硬規則），綁在 `_test.go` 的 pattern 永遠找不到，而那看起來就像「防線不見了」。改綁 `CONTEXT.md` 的推翻紀錄。",
         "verify": {
           "kind": "present",
           "paths": [
-            "internal/state/state_test.go"
+            "CONTEXT.md"
           ],
-          "pattern": "那是誤判不是場面"
+          "pattern": "這個測試原本是怎麼通過的"
+        }
+      }
+    },
+    {
+      "id": "derived-number-as-observation",
+      "title": "倒推出來的數字是假說，不是觀測",
+      "trigger": "手上沒有某個值，於是拿一條式子從別的值反解出來，然後拿它去解釋現象",
+      "rule": "**先問這個數字有幾個獨立來源。** 反解用的式子本身可能就是錯的那一個——那時反解出來的值會「完美地」解釋現象，因為它就是為了解釋而生的。真正的觀測要能直接讀到（原版的記憶體、log 的暫存器、程式碼的常數）。拿不到就標成假說，並**先去找能直接讀的那一個**。",
+      "occurrences": [
+        {
+          "date": "2026-09-10",
+          "what": "拍 3,415 的調兵分歧。從 `want = 威脅量 + 2 − 佔用數` 反解出「原版的佔用數是 2」，據此花一整輪建模佔用圖、寫規格、追五個維護點。實際上那條式子用錯了支（`want` 恆為 1），而原版的佔用圖 peek 出來與 remake **逐格相同**",
+          "doc": "`docs/spec/184`、`docs/playtest/119` §43.1"
+        }
+      ],
+      "remind_on": [
+        "parity",
+        "ida"
+      ],
+      "guard": {
+        "kind": "tool",
+        "note": "`tools/orig_occupancy.py` 把原版的佔用圖直接 peek 出來逐格比——那一類「只能倒推」的狀態，能 peek 就 peek。dosgolem 的 `-watch` log 也帶暫存器，`sub_14155` 的 `DX` 就是 skip:want。",
+        "verify": {
+          "kind": "present",
+          "paths": [
+            "tools/orig_occupancy.py"
+          ],
+          "pattern": "為什麼快照非帶它不可|直接 peek"
         }
       }
     }

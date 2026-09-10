@@ -10,7 +10,7 @@
 
 <!-- lessons:begin 由 tools/lessons.py render 產生，不要手改 -->
 
-共 **11 條**。權威是 [`lessons.json`](lessons.json)，這一份由 `tools/py.sh tools/lessons.py render` 產生。
+共 **12 條**。權威是 [`lessons.json`](lessons.json)，這一份由 `tools/py.sh tools/lessons.py render` 產生。
 
 ⭐ **按「什麼時候要想起這一條」索引**——教訓要防的動作發生在任務中間，不是開始時；按事件時間排的清單那時查不到。
 
@@ -26,7 +26,8 @@
 | 用 grep 或 pgrep 判斷「某個東西還在不在」 | [grep／pgrep 會匹配到查詢自己](#query-matches-itself) | 2 | test |
 | 對拍時要把某個原版欄位標成「畫面用」「導出值」「remake 走自己那一套」而放進「不必比」那一格 | [宣告一個欄位「remake 不必建模」等於為它關掉所有檢查](#not-modelled-turns-off-checks) | 1 | remind |
 | 寫掃描條件去問「有沒有人做某件事」，而答案是 0 處 | [過濾器自己有洞：清除端的立即值是補數](#filter-has-a-hole) | 1 | tool |
-| 修好一個規則錯之後，本來綠的測試紅了 | [測試可能正是靠那個 bug 才綠的](#tests-green-on-the-bug) | 1 | rule（❌ 不見了） |
+| 修好一個規則錯之後，本來綠的測試紅了 | [測試可能正是靠那個 bug 才綠的](#tests-green-on-the-bug) | 1 | rule |
+| 手上沒有某個值，於是拿一條式子從別的值反解出來，然後拿它去解釋現象 | [倒推出來的數字是假說，不是觀測](#derived-number-as-observation) | 1 | tool |
 
 ### IDA 把整段解成資料時，先問是不是自我修改碼
 
@@ -169,6 +170,18 @@
 |---|---|---|
 | 2026-09-10 | 攻城守軍改用座標判準之後，三個端對端測試同時紅。查下去發現它們讓兩個君主互相攻打對方首都，而兩支其實**錯身而過**——攻城時憑 `Corps.Node`（行軍中留著出發據點）憑空找到守軍才打起來。改成「玩家留守、AI 來攻」之後場面才真的成立 | `internal/state/state_test.go`、`internal/state/tactical_resolve_test.go` |
 
-**防線**：`rule` — 沒有機器訊號——這一條要在「測試紅了」的當下想起來。測試裡把場面成立的理由寫成註解，是下一個人唯一的線索。
+**防線**：`rule` — 沒有機器訊號——這一條要在「測試紅了」的當下想起來。⚠ verify **不能綁測試檔**：`lessons.py` 與 `worklist.py` 都只掃產品程式碼（`rulebook/61` 的硬規則），綁在 `_test.go` 的 pattern 永遠找不到，而那看起來就像「防線不見了」。改綁 `CONTEXT.md` 的推翻紀錄。
+
+### 倒推出來的數字是假說，不是觀測
+
+<a id="derived-number-as-observation"></a>**什麼時候想起**：手上沒有某個值，於是拿一條式子從別的值反解出來，然後拿它去解釋現象
+
+**要做的**：**先問這個數字有幾個獨立來源。** 反解用的式子本身可能就是錯的那一個——那時反解出來的值會「完美地」解釋現象，因為它就是為了解釋而生的。真正的觀測要能直接讀到（原版的記憶體、log 的暫存器、程式碼的常數）。拿不到就標成假說，並**先去找能直接讀的那一個**。
+
+| 日期 | 犯在哪 | 收據 |
+|---|---|---|
+| 2026-09-10 | 拍 3,415 的調兵分歧。從 `want = 威脅量 + 2 − 佔用數` 反解出「原版的佔用數是 2」，據此花一整輪建模佔用圖、寫規格、追五個維護點。實際上那條式子用錯了支（`want` 恆為 1），而原版的佔用圖 peek 出來與 remake **逐格相同** | `docs/spec/184`、`docs/playtest/119` §43.1 |
+
+**防線**：`tool` — `tools/orig_occupancy.py` 把原版的佔用圖直接 peek 出來逐格比——那一類「只能倒推」的狀態，能 peek 就 peek。dosgolem 的 `-watch` log 也帶暫存器，`sub_14155` 的 `DX` 就是 skip:want。
 
 <!-- lessons:end -->
