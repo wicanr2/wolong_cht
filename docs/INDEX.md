@@ -273,7 +273,7 @@
 | [`docs/release/13-full-20260906.md`](release/13-full-20260906.md) | 13 — 2026-09-06 四平台完整版（尋路、對白框、字型與狀態層對拍進包） | 已建置並驗過。⛔ 內含原版資產，不可外流。 | 2026-09-06 |
 | [`docs/release/14-full-20260907.md`](release/14-full-20260907.md) | 14 — 2026-09-07 四平台完整版（對拍推到啟動殼層，游標接上） | 已建置並驗過。⛔ 內含原版資產，不可外流。 | 2026-09-07 |
 | [`docs/release/15-desktop-closeout-20260908.md`](release/15-desktop-closeout-20260908.md) | 15 — 桌面版交付收尾 | 本機完整版、公開引擎包與推廣片完成；GitHub Release 已發布，本輪交付結案。 | 2026-09-08 |
-| [`docs/release/16-full-20260911.md`](release/16-full-20260911.md) | 16 — 2026-09-11 四平台完整版（規則對拍到 5/31；畫面對拍不是全 PASS） | 已建置。⛔ 內含原版資產，不可外流。 | 2026-09-11 |
+| [`docs/release/16-full-20260911.md`](release/16-full-20260911.md) | 16 — 2026-09-11 四平台完整版（同日重打一次，含當天的四個修正） | 已建置。⛔ 內含原版資產，不可外流。 | 2026-09-11 |
 | [`docs/release/README-RELEASE.md`](release/README-RELEASE.md) | 臥龍傳 remake 可執行封裝 | 四平台完整包、Linux AppImage、推廣片與驗收紀錄已集中於 [dist-all](../../dist-a… | 2026-08-24 |
 | [`docs/spec/00-index.md`](spec/00-index.md) | 00 — 規格索引：已解的規則有沒有被實作、有沒有被驗過 | 索引。規格是 docs/re/（程式碼在哪）與 internal/（我們寫了什麼） 之間的那一層——它回答「這條規則… | 2026-08-14 |
 | [`docs/spec/10-city-tick.md`](spec/10-city-tick.md) | 10 — 據點整備、威脅偵測與求援 | CONFORMED。整條鏈已實作，並在 PC-98 原版的執行期記憶體上取樣驗過 （+0x18／+0x14 各 0/… | 2026-08-14 |
