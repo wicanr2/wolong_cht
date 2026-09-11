@@ -763,7 +763,7 @@
 | [`spec/199-persuade-scene-clears-the-advise-menu.md`](../spec/199-persuade-scene-clears-the-advise-menu.md) | 判決畫面（遷都／請求君主出陣，`49`）走的不是 | （未解小節內文） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
-| [`spec/200-opening-move-delay.md`](../spec/200-opening-move-delay.md) | 拍 4 之後仍有 **2 個兵**對不上（96 槽裡的 2 個），那是另一件事。 | （未解小節內文） | 靜態 |
+| [`spec/200-opening-move-delay.md`](../spec/200-opening-move-delay.md) | 拍 4 之後仍有 **2 個兵**對不上：`0/2/0`（隊 2 的隊長）與 `0/5/2`。 | （未解小節內文） | 靜態 |
 | [`spec/200-opening-move-delay.md`](../spec/200-opening-move-delay.md) | 0001 9DB1`（`280h`）與 `0001 9E35`（`3C0h`）那兩種物件是什麼，還沒對。 | （未解小節內文） | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 池的上限 | `sub_155EC` 的 `0xFFDC` 只在退兵路徑上驗過；月結加兵是不是同一支未查。**remake 兩條路徑現在都夾**（`economy.ClampReserve`），但那是照著同一個常數做的，不是證明原版共用同一支 | 靜態 |

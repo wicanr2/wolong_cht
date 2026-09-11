@@ -659,11 +659,11 @@
       "gap": {
         "bottom": [
           306,
-          "開場第 0 拍落在初始化中間，六個部隊格的命令圖示還沒設好（攻城那一組第 0 拍是 930，第 2 拍起歸零）"
+          "開場第 0 拍落在初始化中間，六個部隊格的命令圖示還沒設好（第 3 拍起歸零）"
         ],
         "sb-minimap": [
           212,
-          "⭐ **原版開場的縮圖上沒有部隊點，remake 畫了**——放大頂緣看，原版只有地形，remake 一排藍點。逐兵座標全等（96 槽）、`field` 區 0 px，所以這是**繪製時機**不是位置差"
+          "⭐ **原版是增量繪製**：縮圖上的部隊點由 `sub_1B240` 畫，而它掛在移動批次（`0001AE26`）——擺位剛完成那一幀還沒跑過移動批次，所以原版的縮圖上**還沒有點**，remake 每幀從狀態重繪就有。拍 3 起這一格降到 24 px，拍 6 降到 16 ⇒ 不是缺陷，是取樣點落在原版還沒畫的時刻"
         ]
       }
     },
@@ -706,6 +706,49 @@
         "sb-minimap": [
           48,
           "逐兵殘差。開場延遲接上之後（`docs/spec/200`）拍 0–3 的 96 槽逐槽相同、拍 4–6 只差 2 個兵；縮圖每格 2 px、一個兵錯位貢獻 8 px，2 兵 ≈ 16 px，其餘是更後面幾拍累積的"
+        ]
+      }
+    },
+    {
+      "name": "field-exact-6",
+      "doc": "docs/playtest/121-screen-parity-gate.md",
+      "note": "野戰第 6 個戰術節拍（精確初始化）：八區 0、只剩原版游標與 2 個兵。原版側重建：WOLONG_DOSGOLEM_GAMEDIR=dosgolem/root-field tools/dosgolem.sh workplace/parity/field-exact \"wait;click:320,200;click:300,152;runto:11B5A;runto:19C45;<RNG ＋ parity_ck_orig.sh 的 PEEKS>;runto:19FA0;units;shot:orig-f0;ticks:52;units;shot:orig-f52\"，再跑 rng_state.py 與 orig_snapshot.py。root-field ＝ root-saveb 的副本換上 workplace/parity/SAVE-FIELD.DAT",
+      "orig": "workplace/parity/field-exact/g6.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/parity/field-exact/orig.DAT",
+        "-load-slot",
+        "0",
+        "-rng-state",
+        "workplace/parity/field-exact/spawn-rng.bin",
+        "-battle-exact",
+        "-open-battle",
+        "-siege-corps",
+        "39,35",
+        "-battle-steps",
+        "6",
+        "-shot-frames",
+        "1"
+      ],
+      "regions": "tactical",
+      "allow": {
+        "field": [
+          95,
+          "原版錄影自己畫的滑鼠游標（playtest/107、spec/197）"
+        ]
+      },
+      "gap": {
+        "sb-minimap": [
+          16,
+          "2 個兵的中繼目標與原版不同（`0/2/0` 隊長與 `0/5/2`，`docs/spec/200` §7）；縮圖每格 2 px、一個兵錯位貢獻 8 px ⇒ 16 px ＝ 2 個兵。屬於 `docs/spec/159` 中繼目標接縫的未完成實作"
         ]
       }
     }
