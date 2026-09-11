@@ -156,7 +156,7 @@
 | [`docs/playtest/97-faction-picker-parity.md`](playtest/97-faction-picker-parity.md) | 97 — 22 勢力選擇視窗：四區 0 px，抓到兩個缺陷 | 通過。 | 2026-09-06 |
 | [`docs/playtest/98-enemy-corps-panel.md`](playtest/98-enemy-corps-panel.md) | 98 — 別人的軍團：面板與狀態列 #4 各 0 px；換色在反白列上會換一個色號 | 通過（面板／狀態列／清單）。 | 2026-09-06 |
 | [`docs/playtest/99-slot-window-parity.md`](playtest/99-slot-window-parity.md) | 99 — 四槽視窗：本體 95 px（只剩游標），抓到四個缺陷 | 通過。 | 2026-09-06 |
-| [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 五支影片都已產出並驗過媒體規格。主預告是 72 秒， 含語言切換與原版並排兩段；遊戲段落是逐幀錄下來的實跑畫面。 2… | 2026-08-30 |
+| [`docs/promo/README.md`](promo/README.md) | 推廣片產出紀錄 | 推廣片就一支 | 2026-08-30 |
 | [`docs/promo/android.md`](promo/android.md) | Android 版推廣片 | 已產出 48 秒片；素材只有 remake 自己的畫面與本專案原創的合成配樂。 | 2026-08-20 |
 | [`docs/promo/classic-revival.md`](promo/classic-revival.md) | 「經典再現」推廣片 | 已產出研究／推廣用 60 秒比較片；不把代表幀比較宣稱為同狀態逐像素 parity。 | 2026-08-11 |
 | [`docs/promo/combined.md`](promo/combined.md) | 合成推廣片：三支接成一支，全片鋪原版配樂 | 已產出並驗過媒體規格。這是發行目錄裡唯一的一支推廣片 | 2026-08-30 |

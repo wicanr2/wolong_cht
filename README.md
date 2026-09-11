@@ -19,7 +19,7 @@
 ## 現在做到哪裡
 
 核心規則與可玩垂直切片已接通。目前桌面修正版為
-[`v.1.0.18-20260908`](dist-all/v.1.0.18-20260908/README.md)，包含 AppImage、Windows 與 macOS 封包，
+[`dist-all/`](dist-all/README.md)（v.1.0.18-20260908），包含 AppImage、Windows 與 macOS 封包，
 完整版只限本機使用。選章、兩段確認及君主卡直接開局已由 AppImage 正常操作驗證，
 行軍中重啟及返回流程見 [驗證紀錄](docs/playtest/110-desktop-march-restart.md)；Windows／macOS 原生 GUI 仍待實機驗收。
 Android 不在這次桌面修正版範圍。
@@ -174,8 +174,9 @@ Android 與長程全局通關不在本輪範圍。未解研究列數不作發行
 
 正式下載：[v.1.0.18-20260908](https://github.com/wicanr2/wolong_cht/releases/tag/v.1.0.18-20260908)。
 
-目前版本為 **v.1.0.18-20260908**，唯一交付根目錄是
-[`dist-all/v.1.0.18-20260908/`](dist-all/v.1.0.18-20260908/)。
+目前版本為 **v.1.0.18-20260908**，唯一交付根目錄是 [`dist-all/`](dist-all/)。
+⚠ **批次不再各佔一個子目錄**：`release_all_fs.py promote` 是整個目錄交換，
+所以 `dist-all/` 底下就是現行批次本身，沒有 `v.*` 這一層。
 
 - `full/`：Linux AppImage、Windows 與 macOS 完整版，內含原版資料與所需素材，只限本機保存。
 - `release/`：不含原版資料、音樂與倚天字型的桌面引擎包；玩家需自備合法資料，安裝命令在各包 README。

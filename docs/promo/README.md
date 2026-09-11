@@ -1,19 +1,21 @@
 # 推廣片產出紀錄
 
-**狀態：五支影片都已產出並驗過媒體規格。主預告是 72 秒，
-含語言切換與原版並排兩段；遊戲段落是逐幀錄下來的實跑畫面。
-2026-08-29 因為訊息框肖像、戰場快轉鈕與手機金額鍵盤都動過，
-主預告、原版實機對照片與手機片三支全部重錄重剪。**
+**狀態：推廣片就一支** —— [`dist-all/promo/wolong-remake-promo.mp4`](../../dist-all/promo/wolong-remake-promo.mp4)，
+176.469 秒，全片鋪原版曲子（使用者裁定 2026-08-30 合成、2026-09-11 確認只留這一支）。
+它由主預告（72 秒）、原版實機對照（72 秒）與手機片（48 秒）接成，
+分鏡、剪點與曲目見 [`combined.md`](combined.md)。
 
-⭐ **發行目錄裡只有一支合成片**（2026-08-30 起）：主預告、原版實機對照與
-手機片接成 `wolong-remake-promo.mp4`，176.469 秒，全片鋪原版曲子。
-分鏡、剪點與曲目見 [`combined.md`](combined.md)；這一份仍是**三支素材片**
-各自怎麼錄、怎麼剪的紀錄。
+⚠ **那三支素材片與兩支早期研究對照片的檔案都已經不在。**
+它們的內容要嘛已經整段包在合成片裡（主預告／實機對照／手機片），
+要嘛已被後來的路線取代（`classic-revival`、`yt-comparison`，都是 2026-08-11）。
+**要重剪合成片才需要它們**，重錄命令在各自那一份紀錄裡。
+這一份仍是三支素材片各自怎麼錄、怎麼剪的紀錄。
 
 - 日期：2026-08-30（合成成一支）／2026-08-29（三支重錄重剪）／2026-08-26（主預告改成 72 秒的分鏡）／2026-08-21（其餘）
 
-可交付推廣片已集中在 [`dist-all/promo`](../../dist-all/promo)。主預告輸出為
-`dist/promo/wolong-remake-trailer.mp4`，長度 72 秒、1280×720、H.264／AAC。
+可交付推廣片集中在 [`dist-all/promo`](../../dist-all/promo)，**只有合成片那一支**。
+主預告是素材片，輸出檔名 `wolong-remake-trailer.mp4`，長度 72 秒、1280×720、H.264／AAC
+（檔案已不在，重錄命令見下）。
 
 ⚠ **主預告有兩處原版衍生物，都是刻意的、也都標明了**：50–60 秒的並排段
 左半是原版實機（`tools/dosv_capture.sh` 的受控擷取），配樂自 2026-08-26 起
@@ -115,7 +117,7 @@ F9 在遊戲中即時切換，切出來的畫面與 `-lang` 啟動**逐像素相
 ## YouTube 原版／remake 畫面比較
 
 依使用者要求，已把 YouTube 原版代表幀與推廣片所使用的 remake 畫面製成研究用
-[對照片](../../dist/promo/wolong-remake-yt-comparison.mp4)，並保留[自然畫面並排圖](yt-remake-natural-side-by-side.png)
+對照片 `wolong-remake-yt-comparison.mp4`（**檔案已不在**：推廣片只留合成片一支，使用者裁定 2026-09-11），並保留[自然畫面並排圖](yt-remake-natural-side-by-side.png)
 與[像素差異圖](yt-remake-natural-difference.png)。量測與解讀見
 [yt-remake-pixel-review.md](yt-remake-pixel-review.md)。
 
@@ -176,8 +178,7 @@ docker run --rm --network none --memory 4g --cpus 2 --pids-limit 256 \
 ## 「經典再現」比較片
 
 依使用者提供的 YouTube 遊玩影片與 `retro` deterministic DOSBox 技巧，新增
-[`classic-revival.md`](classic-revival.md) 與
-[`dist/promo/wolong-remake-classic-revival.mp4`](../../dist/promo/wolong-remake-classic-revival.mp4)。
+[`classic-revival.md`](classic-revival.md) 與 `wolong-remake-classic-revival.mp4`（**檔案已不在**：推廣片只留合成片一支，使用者裁定 2026-09-11）。
 影片的原版側使用代表幀，remake 側使用固定 `seed=17` 的驗收畫面；片中清楚標示
 `core=normal`、`cputype=486`、`cycles=20000` 的重播基準與「非同狀態逐像素 parity」界線。
 重現命令：
@@ -189,9 +190,8 @@ PROMO_FONTFILE=/fonts/NotoSansTC-Regular.otf \
 
 ## DOS/V／remake 實機對照片
 
-現行的是
-[`wolong-remake-dosv-realmachine.mp4`](../../dist/promo/wolong-remake-dosv-realmachine.mp4)，
-72 秒，SHA-256 `522313d127846d57a14ed732960fcc81635cac68c47c40f170da08091346de02`。
+現行的是 `wolong-remake-dosv-realmachine.mp4`（**素材片，不在發行目錄**；
+內容是合成片的第二段），72 秒，SHA-256 `522313d127846d57a14ed732960fcc81635cac68c47c40f170da08091346de02`。
 **原版側是自己跑的受控 DOSBox-X 實機遊玩**：開新遊戲、劇本與君主選擇、
 大地圖與時鐘、軍團編成、事件訊息、行軍指示，全部照 timeline 可以重跑。
 只有戰術戰場那一格取自使用者提供的錄影，並在片上標明。

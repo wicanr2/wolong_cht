@@ -30,6 +30,9 @@ assert all(sha(root / p) == h for p, h in inputs['source_files'].items())
 shutil.copy2(root / 'LICENSE', public / 'LICENSE')
 shutil.copy2(root / 'docs/release/15-desktop-closeout-20260908.md', verification / 'release-report.md')
 shutil.copy2(root / 'docs/promo/desktop-closeout-20260908.md', promo / 'README.md')
+# ⚠ 這是 2026-09-08 那一輪的一次性收尾腳本（docs/release/15）。前兩支素材片
+# 的檔案已經不在（2026-09-11：推廣片就一支，見 docs/promo/README.md），
+# 所以要重跑得先照 docs/promo/ 的重錄命令把它們產回來。
 source_paths = ['dist/promo/wolong-remake-trailer.mp4', 'dist/promo/wolong-remake-dosv-realmachine.mp4',
                 'workplace/promo-live/original-audio/original-adlib.wav',
                 'workplace/promo-live/original-audio/capture-metadata.txt',

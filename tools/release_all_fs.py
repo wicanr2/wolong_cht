@@ -73,8 +73,9 @@ BUNDLED_AUDIO = "audio"
 # ⭐ **發行只帶一支合成片**（使用者裁定 2026-08-30）。
 # 主預告、原版實機對照與手機片接成 `wolong-remake-promo.mp4`，
 # 配樂全片統一鋪原版曲子（`tools/promo_combined.sh`，docs/promo/combined.md）。
-# 那三支與兩支研究用對照片仍留在 `dist/promo/` 當素材，製作紀錄與重錄命令
-# 也都還在——**只是不進發行目錄**。
+# ⚠ 那三支素材片與兩支研究用對照片的**檔案已經不在**（2026-09-11 確認：
+# 推廣片就一支）。內容要嘛整段包在合成片裡，要嘛已被後來的路線取代；
+# 製作紀錄與重錄命令都還在 `docs/promo/`，**要重剪合成片才需要它們**。
 PROMO_FILES = ("wolong-remake-promo.mp4",)
 
 

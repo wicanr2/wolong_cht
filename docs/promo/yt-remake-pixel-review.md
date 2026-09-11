@@ -13,8 +13,8 @@
 
 ## 產物
 
-- [remake 推廣片](../../dist/promo/wolong-remake-trailer.mp4)：1280×720，H.264／AAC（本文寫作時是 60 秒版；現行主預告是 72 秒，見 [`README.md`](README.md)）。
-- [YouTube／remake 對照片](../../dist/promo/wolong-remake-yt-comparison.mp4)：24 秒、
+- `wolong-remake-trailer.mp4`（**素材片，不在發行目錄**，見 [`README.md`](README.md)）：1280×720，H.264／AAC（本文寫作時是 60 秒版；現行主預告是 72 秒，見 [`README.md`](README.md)）。
+- `wolong-remake-yt-comparison.mp4`（**檔案已不在**：推廣片只留合成片一支，使用者裁定 2026-09-11）：24 秒、
   1280×400、H.264；六組原版代表幀與 remake 驗收畫面並排，無原版音訊。
 - [自然畫面並排圖](yt-remake-natural-side-by-side.png)。
 - [自然畫面差異圖](yt-remake-natural-difference.png)。

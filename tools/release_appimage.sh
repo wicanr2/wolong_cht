@@ -4,7 +4,8 @@
 #   tools/release_appimage.sh [版本日期]        # 預設今天，格式 YYYYMMDD
 #
 # 與 `tools/release_all.sh` 的差別：那一支重建整個 dist-all（三平台 ＋ 推廣片
-# ＋ Android 附件），需要 `dist/promo/` 的四支影片與 Android APK 都在位；
+# ＋ Android 附件），需要合成推廣片 `wolong-remake-promo.mp4` 與 Android APK
+# 都在位（**推廣片就一支**，`release_all_fs.py` 的 `PROMO_FILES`）；
 # 這一支只做 Linux amd64 的 AppImage，**其餘產物一個都不動**。
 #
 # 邊界寫在這裡，不寫在對話裡：
