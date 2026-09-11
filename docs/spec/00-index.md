@@ -93,6 +93,7 @@
 | 截圖對拍不畫桌面模式的游標 | [`197-shot-mode-draws-no-desktop-cursor.md`](197-shot-mode-draws-no-desktop-cursor.md) | CONFORMED；主畫面回到五區全 PASS、野戰 `field` 回到 95 px |
 | 事件插圖少了外面那個框 | [`198-ivent-scene-frame.md`](198-ivent-scene-frame.md) | CONFORMED；`sortie` `map` 6,998 → 1,509、`advise-scene` 8,843 → 3,354 |
 | 說服場景進場要擦掉進言選單 | [`199-persuade-scene-clears-the-advise-menu.md`](199-persuade-scene-clears-the-advise-menu.md) | CONFORMED；`advise-scene` 的 `map` 3,354 → 1,604，殘影整塊消掉 |
+| 開場的兵晚一拍才走 | [`200-opening-move-delay.md`](200-opening-move-delay.md) | DRAFT；第一個分歧釘在拍 2，錯開一拍後 96 槽全等。設定端未找到，**不要照著實作** |
 | 載入存檔要還原據點巡迴游標 | [`162-city-cursor-from-save.md`](162-city-cursor-from-save.md) | CONFORMED；13 個觸發子刻逐項對上原版 |
 | 亂數消費順序對齊（長時間對拍前置）| [`160-rng-consumption-alignment.md`](160-rng-consumption-alignment.md) | READY；兩側軌跡工具齊備，第一輪比對定位到 `sub_14057` 差 4 次 |
 | 劉備不作為長時間對拍管線 | [`161-liubei-idle-longrun-parity.md`](161-liubei-idle-longrun-parity.md) | DRAFT；原版側 90 天已跑通（26 秒、兩次逐 byte 相同），remake 側未做 |

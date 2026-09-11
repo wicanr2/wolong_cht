@@ -183,16 +183,16 @@
     {
       "id": "tactical-unit-step-drift",
       "layer": "parity",
-      "title": "戰術層逐兵移動有 ±1 格的差異",
-      "body": "攻城那一組（`tools/parity_screens.sh siege`）走精確初始化之後：**開場 96 槽逐槽全等**，跑 6 個戰術節拍之後 8 個兵裡 2 個完全相同、6 個差 1 格，而且**方向不一致**（+1／−1 混著）——不是取樣相位。\n\n`sb-minimap` 的殘差對得上算術：縮圖每格 2 px，一個兵錯 1 格貢獻 8 px，48 兵 × 8 ≈ 384，與 `ticks:6` 那一輪量到的 388 相符（`docs/playtest/121` §4.3）。\n\n⚠ **這一格連錯三次歸因**（亂數不同源／擺位結果不同／縮圖換算），三次都是拿一個沒對齊的比較去解釋差異。現在的說法有逐兵數字支撐。\n\n下一步：規則層的逐拍比對——像 `tools/parity_ck.sh` 對六張表做的那樣，找出**第幾拍開始差**。畫面對拍只告訴你「有差」。",
-      "acceptance": "原版 `ticks:N` 與 remake `-battle-steps N` 在同一 N 下 96 槽逐槽相同，`sb-minimap` 收到 0 px。",
+      "title": "開場的兵晚一拍才走：設定端還沒找到",
+      "body": "逐拍對拍（`workplace/parity/drift/`）把攻城的第一個分歧釘在**拍 2**：原版拍 0／1／2 一格都沒動、拍 3 才走，remake 拍 2 就走了。**把 remake 的取樣往後錯一拍，拍 0–2 的 96 槽完全相同、拍 3–5 只差 2 個兵**（`docs/spec/200`）。\n\n移動那一側的閘已經讀出來：`sub_1ADC8` 的 `0001ADF1`–`0001ADFE`，兵記錄 `+0x01` 非零就遞減並**跳過移動**。remake 已經有這個欄位（`Soldier.Stun`，`docs/spec/63`）、移動端也接上了——**缺的只是開場那一次的設定**。\n\n⚠ **不要照現象把它設成 1**。擺位段唯一碰 `+1` 位移的兩行是軍團記錄不是兵記錄，所以設定端還沒定位。下一個要看的是 `funcs_1A7E1` 跳表選中的命令 handler（跳表 offset 要正確的段基底，第一次用 0x10000 湊，`[0]` 落在一段 `db 0` 上）。\n\n拍 3 之後仍有 2 個兵對不上，最大位移隨拍數增加，那是另一件事。",
+      "acceptance": "找到原版開場設 `+0x01` 的那一行，remake 接上之後逐拍 96 槽全等到至少拍 6。",
       "verify": {
         "kind": "present",
         "paths": [
-          "tools/parity_screens.json"
+          "docs/spec/200-opening-move-delay.md"
         ],
-        "pattern": "逐兵有 ±1 格的差異",
-        "note": "收掉之後把那一格的 gap 拿掉，這一條就不成立。"
+        "pattern": "狀態：DRAFT",
+        "note": "設定端找到、spec 升到 CONFORMED 之後這一條就不成立。"
       }
     },
     {
