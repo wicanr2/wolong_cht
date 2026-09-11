@@ -128,9 +128,9 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 
 剩下那 2 個兵是另一件事。要追一樣用逐拍 `units`（原版 `ticks:1` × N vs remake `-battle-steps N -list-units`），資料在 `workplace/parity/drift/`。
 
-⚠ 順帶未解：`+0x01` 開場值 1 的**靜態設定端**還沒定位——掃「位移 ＝ 1 的寫入」找不到（`docs/spec/200` §5），下一步是掃對兵記錄的整筆寫入（word 或 `rep stos`）。
+⭐ `+0x01` 的設定端已經找到：`0001 9D20  mov word ptr es:[di], 180h`（`docs/spec/200` §5）——掃「位移 1」掃不到是因為那是 word 寫入、位移算 0。
 
-**怎樣算做完**：逐拍 96 槽相同到至少拍 10，且 `+0x01` 的設定端在 `docs/spec/200` 裡有位址。
+**怎樣算做完**：逐拍 96 槽相同到至少拍 10。
 
 **verify**：`present` `/仍有 \*\*2 個兵\*\*對不上/` 在 `docs/spec/200-opening-move-delay.md`
 

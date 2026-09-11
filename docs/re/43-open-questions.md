@@ -764,7 +764,7 @@
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/200-opening-move-delay.md`](../spec/200-opening-move-delay.md) | 拍 4 之後仍有 **2 個兵**對不上（96 槽裡的 2 個），那是另一件事。 | （未解小節內文） | 靜態 |
-| [`spec/200-opening-move-delay.md`](../spec/200-opening-move-delay.md) | 設定端的靜態位置**（§5）：掃「位移 ＝ 1 的寫入」找不到，下一步是掃 | （未解小節內文） | 靜態 |
+| [`spec/200-opening-move-delay.md`](../spec/200-opening-move-delay.md) | 0001 9DB1`（`280h`）與 `0001 9E35`（`3C0h`）那兩種物件是什麼，還沒對。 | （未解小節內文） | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 池的上限 | `sub_155EC` 的 `0xFFDC` 只在退兵路徑上驗過；月結加兵是不是同一支未查。**remake 兩條路徑現在都夾**（`economy.ClampReserve`），但那是照著同一個常數做的，不是證明原版共用同一支 | 靜態 |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 頭像的邊框 | `sub_107D2` 只 blit 64×64 的圖塊，**框在哪裡畫的沒找到**——場景 5 的 op 清單裡沒有頭像那一格的框 | 靜態 |
