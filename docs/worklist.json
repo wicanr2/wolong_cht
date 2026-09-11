@@ -181,18 +181,18 @@
       }
     },
     {
-      "id": "tactical-unit-step-drift",
+      "id": "tactical-drift-after-tick-4",
       "layer": "parity",
-      "title": "開場的兵晚一拍才走：設定端還沒找到",
-      "body": "逐拍對拍（`workplace/parity/drift/`）把攻城的第一個分歧釘在**拍 2**：原版拍 0／1／2 一格都沒動、拍 3 才走，remake 拍 2 就走了。**錯開一拍後拍 0–2 的 96 槽完全相同、拍 3–5 只差 2 個兵**（`docs/spec/200`）。\n\n⛔ **「開場設了一個計時器」的假說已經否證**：`ida_disp_users.py` 掃全庫「位移 1 的寫入」，兵記錄那一段每一個寫入端都是命中或發射（`sub_1AD2D`／`sub_1B618`／`sub_1B97E`…），**沒有一支在開場設**。\n\n⭐ `docs/spec/159` 早就寫過另一半：原版**首拍有呼叫移動常式**（體力 128→127）**只是沒走成**。⇒ 不是被擋住，是前兩拍算不出可以走的一步。\n\n下一個要讀的是移動常式 `sub_1AF69` 與陣形 handler 尾端的 `sub_1AA2C`（中繼目標）；`docs/spec/159` 的「中繼目標追查補記」已列了四支相關函式。",
-      "acceptance": "找到原版開場設 `+0x01` 的那一行，remake 接上之後逐拍 96 槽全等到至少拍 6。",
+      "title": "戰術逐拍對拍：拍 4 之後仍有 2 個兵對不上",
+      "body": "開場延遲接上之後（`docs/spec/200`）逐拍 96 槽：**拍 0–3 逐槽相同**、拍 4–6 各差 **2 個兵**。畫面上攻城 `sb-minimap` 264 → 120、野戰第 52 拍 56 → 48。\n\n剩下那 2 個兵是另一件事。要追一樣用逐拍 `units`（原版 `ticks:1` × N vs remake `-battle-steps N -list-units`），資料在 `workplace/parity/drift/`。\n\n⚠ 順帶未解：`+0x01` 開場值 1 的**靜態設定端**還沒定位——掃「位移 ＝ 1 的寫入」找不到（`docs/spec/200` §5），下一步是掃對兵記錄的整筆寫入（word 或 `rep stos`）。",
+      "acceptance": "逐拍 96 槽相同到至少拍 10，且 `+0x01` 的設定端在 `docs/spec/200` 裡有位址。",
       "verify": {
         "kind": "present",
         "paths": [
           "docs/spec/200-opening-move-delay.md"
         ],
-        "pattern": "狀態：DRAFT",
-        "note": "設定端找到、spec 升到 CONFORMED 之後這一條就不成立。"
+        "pattern": "仍有 \\*\\*2 個兵\\*\\*對不上",
+        "note": "那 2 個兵收掉之後這一條就不成立。"
       }
     },
     {

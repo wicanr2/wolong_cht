@@ -580,6 +580,12 @@ func (b *Battle) Spawn(rng Rand) {
 				continue
 			}
 			s.Cmd, s.Next = Attack, Form
+			// ⭐ 開場先等一拍（docs/spec/200）：兵記錄 `+0x01` 的開場值是 1，
+			// 移動批次 `sub_1ADC8`（0001ADF1–0001ADF8）看到它非零就遞減並
+			// **跳過移動**。少了這一拍，remake 從第 2 拍起整場都早原版一拍。
+			// 值與時機出自 `WOLONG_DOSGOLEM_WATCH=1AF69` 的執行期攔截：
+			// 拍 1 零呼叫、拍 2 第一次呼叫時 `ah`（＝ +0x01）已經是 0。
+			s.Stun = 1
 			s.X, s.Y = x, y
 			s.Z = b.standZ(s, x, y)
 			s.syncTerrain(b.Field, x, y, s.Z)
