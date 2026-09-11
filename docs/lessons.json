@@ -605,14 +605,41 @@
         "parity"
       ],
       "guard": {
+        "kind": "tool",
+        "note": "`tools/parity_screens.py --selftest` 擋住了：`regions == tactical` 的組必須同時明寫 `-battle-steps` 與 `-shot-frames`，缺一就不過。自我測試自己帶負對照（拿掉旗標要被抓到），否則「永遠放行」與「真的都寫了」印出來一樣。`check.sh` 會跑它。",
+        "verify": {
+          "kind": "present",
+          "paths": [
+            "tools/parity_screens.py"
+          ],
+          "pattern": "沒明寫 %s；它的預設是 120"
+        }
+      }
+    },
+    {
+      "id": "sampling-unit-mismatch",
+      "title": "兩邊的取樣單位不同，比出來的差異全部是假的",
+      "trigger": "拿原版與 remake 的同一個局面對拍，而兩側推進用的是不同的量詞時",
+      "rule": "**先問「我這一步在推什麼」**：指令數、戰術節拍、幀、遊戲日期是四種東西。即時制底下它們彼此不成比例，用錯一個，差異會穩定地出現在每一次量測上，看起來就像一個結論。`tools/dosgolem.sh` 的說明已經寫著走位期要用 `ticks:` 不要用 `steps:`——**照著工具自己的說明走，比事後解釋差異便宜得多**。",
+      "occurrences": [
+        {
+          "date": "2026-09-11",
+          "what": "攻城畫面對拍：原版側推 `steps:6000000`（指令）、remake 推 `-battle-steps`（節拍），逐兵差到 4–7 格，我把它讀成「縮圖的座標換算不同」。改用 `ticks:6` 之後 8 個兵裡 2 個全等、6 個差 1 格",
+          "doc": "`docs/playtest/121` §4.2"
+        }
+      ],
+      "remind_on": [
+        "parity"
+      ],
+      "guard": {
         "kind": "remind",
-        "note": "只有規則。`tools/parity_screens.json` 的攻城那組 note 把「兩個都要明寫」寫進去了。",
+        "note": "只有規則。`tools/parity_screens.json` 的攻城那組 note 寫明了取樣單位，但沒有機器擋得住「原版側寫了 steps」——原版側的時間軸是自由字串。",
         "verify": {
           "kind": "present",
           "paths": [
             "docs/lessons.json"
           ],
-          "pattern": "另一個旗標把狀態推到了穩定態"
+          "pattern": "指令數、戰術節拍、幀、遊戲日期是四種東西"
         }
       }
     }

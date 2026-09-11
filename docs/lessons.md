@@ -10,7 +10,7 @@
 
 <!-- lessons:begin 由 tools/lessons.py render 產生，不要手改 -->
 
-共 **19 條**。權威是 [`lessons.json`](lessons.json)，這一份由 `tools/py.sh tools/lessons.py render` 產生。
+共 **20 條**。權威是 [`lessons.json`](lessons.json)，這一份由 `tools/py.sh tools/lessons.py render` 產生。
 
 ⭐ **按「什麼時候要想起這一條」索引**——教訓要防的動作發生在任務中間，不是開始時；按事件時間排的清單那時查不到。
 
@@ -34,7 +34,8 @@
 | 改了規則層卻發現「比對結果一模一樣」，或夾具在某個階段之後才做一件會改狀態的事 | [夾具自己吃掉一筆，指標不會變紅](#silent-fixture-drop) | 1 | remind（❌ 不見了） |
 | 寫或讀 `旗標 || 某個會改狀態的函式(…)`，尤其是重現「原版兩邊都要跑」的那種常式 | [`||` 短路把有副作用的呼叫吃掉](#short-circuit-eats-the-side-effect) | 1 | remind |
 | 要寫下或引用「這個永遠對不上／不可能全等／必然有殘差」這種結論時 | [「永遠不可能」要標明前提，否則它讀起來像物理定律](#impossible-without-its-premise) | 1 | remind |
-| 拿 fixture 掃參數找對齊點，而指標「完全不隨那個參數變」時 | [掃一個旗標的時候，另一個旗標正掛在預設值上](#default-flag-advances-the-fixture) | 1 | remind |
+| 拿 fixture 掃參數找對齊點，而指標「完全不隨那個參數變」時 | [掃一個旗標的時候，另一個旗標正掛在預設值上](#default-flag-advances-the-fixture) | 1 | tool |
+| 拿原版與 remake 的同一個局面對拍，而兩側推進用的是不同的量詞時 | [兩邊的取樣單位不同，比出來的差異全部是假的](#sampling-unit-mismatch) | 1 | remind |
 
 ### IDA 把整段解成資料時，先問是不是自我修改碼
 
@@ -283,9 +284,25 @@
 |---|---|---|
 | 2026-09-11 | 掃 `-shot-frames` 20/60/100/150 時 `sb-minimap` 恆為 624，我因此寫成「擺位結果本身不同」。真相是 `-battle-steps` 掛在預設 120，兵早就走進陣形；兩個都明寫之後**96 槽逐槽全等** | `docs/playtest/121` §4 |
 
-**防線**：`remind` — 只有規則。`tools/parity_screens.json` 的攻城那組 note 把「兩個都要明寫」寫進去了。
+**防線**：`tool` — `tools/parity_screens.py --selftest` 擋住了：`regions == tactical` 的組必須同時明寫 `-battle-steps` 與 `-shot-frames`，缺一就不過。自我測試自己帶負對照（拿掉旗標要被抓到），否則「永遠放行」與「真的都寫了」印出來一樣。`check.sh` 會跑它。
+
+### 兩邊的取樣單位不同，比出來的差異全部是假的
+
+<a id="sampling-unit-mismatch"></a>**什麼時候想起**：拿原版與 remake 的同一個局面對拍，而兩側推進用的是不同的量詞時
+
+**要做的**：**先問「我這一步在推什麼」**：指令數、戰術節拍、幀、遊戲日期是四種東西。即時制底下它們彼此不成比例，用錯一個，差異會穩定地出現在每一次量測上，看起來就像一個結論。`tools/dosgolem.sh` 的說明已經寫著走位期要用 `ticks:` 不要用 `steps:`——**照著工具自己的說明走，比事後解釋差異便宜得多**。
+
+| 日期 | 犯在哪 | 收據 |
+|---|---|---|
+| 2026-09-11 | 攻城畫面對拍：原版側推 `steps:6000000`（指令）、remake 推 `-battle-steps`（節拍），逐兵差到 4–7 格，我把它讀成「縮圖的座標換算不同」。改用 `ticks:6` 之後 8 個兵裡 2 個全等、6 個差 1 格 | `docs/playtest/121` §4.2 |
+
+**防線**：`remind` — 只有規則。`tools/parity_screens.json` 的攻城那組 note 寫明了取樣單位，但沒有機器擋得住「原版側寫了 steps」——原版側的時間軸是自由字串。
 
 <!-- lessons:end -->
+
+<!-- 缺口：無 -->
+
+<!-- 缺口：無 -->
 
 <!-- 缺口：無 -->
 

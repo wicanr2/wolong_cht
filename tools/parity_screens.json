@@ -479,9 +479,9 @@
     },
     {
       "name": "siege",
-      "note": "攻城：呂布 35 攻許昌 82，**精確初始化**（-battle-exact ＋原版擺位前的 RNG）。⚠ -battle-steps 與 -shot-frames 的預設都是 120，兩個都要明寫。原版側重建：WOLONG_DOSGOLEM_GAMEDIR=dosgolem/root-saveb tools/dosgolem.sh workplace/parity/exact2 \"wait;click:320,200;click:300,151;siege:35,82;runto:11B5A;runto:19C45;ipeek:1ECFC:258;ipeek:10CF0:128;<parity_ck_orig.sh 的 PEEKS>;steps:6000000;shot:orig-exact2\"，再跑 rng_state.py 與 orig_snapshot.py",
+      "note": "攻城：呂布 35 攻許昌 82，**精確初始化**（-battle-exact ＋原版擺位前的 RNG）。\n⚠ 兩件事：(1) -battle-steps 與 -shot-frames 的預設都是 120，兩個都要明寫；(2) 原版側的取樣單位是 **ticks（戰術節拍）不是 steps（指令）**——tools/dosgolem.sh 的說明就寫著走位期要用 ticks。\n原版側重建：WOLONG_DOSGOLEM_GAMEDIR=dosgolem/root-saveb tools/dosgolem.sh workplace/parity/exact4 \"wait;click:320,200;click:300,151;siege:35,82;runto:11B5A;runto:19C45;runto:19FA0;ticks:6;units;shot:orig-t6;ticks:6;units;shot:orig-t12\"；RNG 與快照來自 workplace/parity/exact2（同一條 runto:19C45 ＋ ipeek:1ECFC:258 ＋ parity_ck_orig.sh 的 PEEKS，再跑 rng_state.py 與 orig_snapshot.py）",
       "doc": "docs/playtest/121-screen-parity-gate.md",
-      "orig": "workplace/parity/exact2/orig-exact2.png",
+      "orig": "workplace/parity/exact4/orig-t12.png",
       "crop": false,
       "args": [
         "-direct",
@@ -504,23 +504,22 @@
         "-siege-node",
         "82",
         "-battle-steps",
-        "6",
+        "12",
         "-audio",
         "workplace/audio",
         "-shot-frames",
         "1"
       ],
       "regions": "tactical",
-      "allow": {
-        "field": [
-          95,
-          "原版錄影自己畫的滑鼠游標（playtest/107、spec/197）"
-        ]
-      },
+      "allow": {},
       "gap": {
+        "field": [
+          317,
+          "與 sb-minimap 同一個成因；field 區只看得到戰場的一部分，多數兵在可視範圍外，所以這一區對逐兵差異不敏感"
+        ],
         "sb-minimap": [
-          428,
-          "**縮圖的座標換算**：逐兵座標已經全等（96 槽逐槽比過，playtest/121 §4），地形也逐像素相同，差的只有縮圖上部隊點的落點——那是繪製層的換算，不是狀態"
+          264,
+          "**逐兵有 ±1 格的差異**。開場（-battle-steps 0）96 槽逐槽全等；跑 6 個節拍之後 8 個兵裡 2 個完全相同、6 個差 1 格，而且**方向不一致**（+1／−1 混著），所以不是單純的取樣相位。縮圖上每格 2 px、一個兵錯位貢獻 8 px，48 兵 × 8 ≈ 384 對得上 t6 那一輪量到的 388。要追得用規則層的逐拍比對（像 tools/parity_ck.sh 那樣），不是畫面對拍（docs/playtest/121 §4）"
         ]
       }
     },

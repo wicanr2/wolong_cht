@@ -181,18 +181,18 @@
       }
     },
     {
-      "id": "minimap-unit-dot-mapping",
+      "id": "tactical-unit-step-drift",
       "layer": "parity",
-      "title": "戰場縮圖上部隊點的座標換算與原版不同",
-      "body": "攻城那一組（`tools/parity_screens.sh siege`）現在走**精確初始化**（`-battle-exact` ＋ 原版擺位前的 RNG），**逐兵 96 槽全等**、地形逐像素相同、`field` 收到 95 px（＝原版錄影的游標），只剩 `sb-minimap` 428 px（`docs/playtest/121` §4）。\n\n放大並排看：差的只有部隊點的落點——藍點在 remake 這側整體右移、分布較窄。**狀態已經對了，差的是「戰場座標 → 縮圖像素」那一步的換算。**\n\n⚠ 野戰那一組還沒改成精確初始化（要那一場的 RNG 與快照），仍是 128 px，成因待確認是否同一個。",
-      "acceptance": "`tools/parity_screens.sh field siege` 的 `sb-minimap` 兩格都收到 0 px。",
+      "title": "戰術層逐兵移動有 ±1 格的差異",
+      "body": "攻城那一組（`tools/parity_screens.sh siege`）走精確初始化之後：**開場 96 槽逐槽全等**，跑 6 個戰術節拍之後 8 個兵裡 2 個完全相同、6 個差 1 格，而且**方向不一致**（+1／−1 混著）——不是取樣相位。\n\n`sb-minimap` 的殘差對得上算術：縮圖每格 2 px，一個兵錯 1 格貢獻 8 px，48 兵 × 8 ≈ 384，與 `ticks:6` 那一輪量到的 388 相符（`docs/playtest/121` §4.3）。\n\n⚠ **這一格連錯三次歸因**（亂數不同源／擺位結果不同／縮圖換算），三次都是拿一個沒對齊的比較去解釋差異。現在的說法有逐兵數字支撐。\n\n下一步：規則層的逐拍比對——像 `tools/parity_ck.sh` 對六張表做的那樣，找出**第幾拍開始差**。畫面對拍只告訴你「有差」。",
+      "acceptance": "原版 `ticks:N` 與 remake `-battle-steps N` 在同一 N 下 96 槽逐槽相同，`sb-minimap` 收到 0 px。",
       "verify": {
         "kind": "present",
         "paths": [
           "tools/parity_screens.json"
         ],
-        "pattern": "縮圖的座標換算",
-        "note": "收掉之後把那兩格的 gap 拿掉，這一條就不成立。"
+        "pattern": "逐兵有 ±1 格的差異",
+        "note": "收掉之後把那一格的 gap 拿掉，這一條就不成立。"
       }
     }
   ],

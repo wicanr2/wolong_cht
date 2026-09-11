@@ -138,11 +138,33 @@ def selftest():
                 assert len(why) == 2 and why[1], "%s 的 %s[%s] 沒寫理由" % (g["name"], field, region)
         both = set(g.get("allow", {})) & set(g.get("gap", {}))
         assert not both, "%s 的 %s 同時在 allow 與 gap" % (g["name"], both)
+        # ⭐ **戰場組必須把兩個推進旗標都明寫。** `-battle-steps` 與
+        #   `-shot-frames` 的預設都是 120，只寫一個等於讓另一個替你決定
+        #   取樣點——2026-09-11 我掃 `-shot-frames` 找對齊點，而
+        #   `-battle-steps` 一直掛在預設值上，兵早就走進陣形，於是
+        #   「指標完全不動」被讀成「擺位結果本身不同」
+        #   （`docs/lessons.json` 的 `default-flag-advances-the-fixture`）。
+        if g["regions"] == "tactical":
+            for flag in ("-battle-steps", "-shot-frames"):
+                assert flag in g["args"], (
+                    "%s 是戰場組卻沒明寫 %s；它的預設是 120，"
+                    "不寫等於讓它替你決定取樣點" % (g["name"], flag))
         for rname, rect in g.get("rects", {}).items():
             # 名稱進 shell 的空白分隔清單，含空白就會被切成兩段而靜默比錯一塊。
             assert " " not in rname and ":" not in rname, "%s 的矩形名 %r 不能含空白或冒號" % (g["name"], rname)
             assert len(rect.split(",")) == 4, "%s 的 %s 不是 x,y,w,h" % (g["name"], rname)
-    print("✓ parity_screens selftest：%d 組、解析與理由欄都在" % len(groups))
+    # ⚠ 負對照：拿掉旗標必須被抓到。少了它，一支「永遠放行」的檢查
+    #   與「真的都寫了」印出來一模一樣。
+    probe = {"name": "probe", "note": "n", "doc": "d", "orig": "o", "crop": False,
+             "regions": "tactical", "args": ["-shot-frames", "1"]}
+    try:
+        for flag in ("-battle-steps", "-shot-frames"):
+            assert flag in probe["args"], "x"
+    except AssertionError:
+        pass
+    else:
+        raise AssertionError("戰場組缺 -battle-steps 竟然放行了")
+    print("✓ parity_screens selftest：%d 組、解析、理由欄、戰場組的兩個推進旗標都在" % len(groups))
     return 0
 
 
