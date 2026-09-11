@@ -16,7 +16,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**790 列分布在 337 份文件，平均每份 2.3 列。**
+**799 列分布在 340 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -42,10 +42,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 180 | 173 | 6 | 1 |
-| 驗收 | 236 | 210 | 26 | 0 |
+| 驗收 | 240 | 214 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 337 | 315 | 21 | 1 |
-| **合計** | **790** | 729 | 58 | 3 |
+| 其他 | 342 | 320 | 21 | 1 |
+| **合計** | **799** | 738 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -53,10 +53,10 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 294 |
-| `docs/playtest/` | 236 |
+| `docs/spec/` | 296 |
+| `docs/playtest/` | 240 |
 | `docs/re/` | 180 |
-| `docs/release/` | 26 |
+| `docs/release/` | 29 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
 | `docs/mobile/` | 11 |
@@ -289,7 +289,7 @@
 | [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 游標圖形資料 | 在 `sub_201E4` 附近，逐 byte 沒抓；remake 已經有量出來的 14×14 遮罩 | 靜態 |
 | [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 54 個 hide／show 點對應到 remake 的哪一段 | 沒做；這是「remake 要不要同步游標」的前置 | 靜態 |
 
-## 2.4 驗收（236 條）
+## 2.4 驗收（240 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -336,9 +336,13 @@
 | [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | 檢查條件的語意差 | 原版看第一個槽、remake 看整個清單；要確認 `[bp+0]` 那個槽在原版是怎麼填的（`docs/re/40` §3 的迴圈會跳過空槽重抽，所以「第一個槽空」與「全空」在原版是兩件事） | 靜態 |
 | [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | 「2 個」差 1 | 徵兵被跳過的次數原版 9、remake 10 | 靜態 |
 | [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | remake 的呼叫點解析度 | `governor.Tick` 的三個 `rnd()` 都記成 `state.go:1566`（closure 那一行），分不出是上昇值、防災還是徵兵 | 靜態 |
-| [`playtest/120-screen-parity-retest-20260911.md`](../playtest/120-screen-parity-retest-20260911.md) | 主畫面 `map` 那 101 px 的相位差是誰造成的（2026-09-02 之後的某一輪）。 | （未解小節內文） | 靜態 |
-| [`playtest/120-screen-parity-retest-20260911.md`](../playtest/120-screen-parity-retest-20260911.md) | 野戰 `field` 95 → 190、`sb-minimap` 32 → 128 的成因。 | （未解小節內文） | 靜態 |
-| [`playtest/120-screen-parity-retest-20260911.md`](../playtest/120-screen-parity-retest-20260911.md) | 攻城的取樣點與原版圖要重新對上號，或重跑一次受控擷取。 | （未解小節內文） | 靜態 |
+| [`playtest/120-screen-parity-retest-20260911.md`](../playtest/120-screen-parity-retest-20260911.md) | 野戰 `sb-minimap` 128 px（FAIL）**，文件記的是 32 px。 | （未解小節內文） | 靜態 |
+| [`playtest/120-screen-parity-retest-20260911.md`](../playtest/120-screen-parity-retest-20260911.md) | 攻城那一組重跑不出來**（§3）。 | （未解小節內文） | 靜態 |
+| [`playtest/120-screen-parity-retest-20260911.md`](../playtest/120-screen-parity-retest-20260911.md) | 主畫面與野戰之外的對拍組還沒逐一重量。 | （未解小節內文） | 靜態 |
+| [`playtest/121-screen-parity-gate.md`](../playtest/121-screen-parity-gate.md) | 進言選單在說服場景上沒關掉 | remake 殘影 1,750 px；原版進場時清掉。`advise-scene` 的 `gap` | 靜態 |
+| [`playtest/121-screen-parity-gate.md`](../playtest/121-screen-parity-gate.md) | 「Enter 繼續」提示要不要登記成 remake 差異 | 目前只在 `cmd/wlgame/advise.go:678` 與 `104` §1，沒有 spec | 靜態 |
+| [`playtest/121-screen-parity-gate.md`](../playtest/121-screen-parity-gate.md) | 插圖框的填色 | 中間被插圖全蓋住，這個畫面量不到（`../spec/198` §5） | 靜態 |
+| [`playtest/121-screen-parity-gate.md`](../playtest/121-screen-parity-gate.md) | 閘還沒收進去的組 | `38`／`39`／`42`／`83`／`84`／`92`／`94`／`96`／`98`／`99`／`105`／`106` 等；`37` 的孫策第二樣本與 `40` 的攻城第二輪原版側不是同狀態 | 靜態 |
 | [`playtest/17-expert-dosbox-remake.md`](../playtest/17-expert-dosbox-remake.md) | 松崗 DOS/V 原版 | **PASS（啟動至開場）** / 2026-08-12 證實空白確認／`0000`／`1234` 均越過密碼頁；完整自然長程驗證尚未執行 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 據點換手之後遮罩會不會跟著變 | `sub_1890A` 的行為，靜態讀得出來，動態沒驗——要打下一座城才看得到 | 靜態 |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 松崗 DOS/V 側 | 這套 bridge 還沒在 DOS/V 上跑過。**密碼頁不構成阻礙**（四格留白按「確定」即可通過，`18`）——是還沒做 | 靜態 |
@@ -541,7 +545,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
 
-## 2.6 其他（337 條）
+## 2.6 其他（342 條）
 
 | 出處 | 缺口 | 現況 | 裁決 |
 |---|---|---|---|
@@ -584,6 +588,9 @@
 | [`release/14-full-20260907.md`](../release/14-full-20260907.md) | 各目標平台的**實機**驗收 | M8 的閘：Windows／macOS GUI、Android 實機與 release signing 都要真的機器，Docker 代不了 | 靜態 |
 | [`release/15-desktop-closeout-20260908.md`](../release/15-desktop-closeout-20260908.md) | 原生平台操作 | Windows／macOS 待人工回報；不由 Linux 封包查核替代 | 靜態 |
 | [`release/15-desktop-closeout-20260908.md`](../release/15-desktop-closeout-20260908.md) | 完整原版一致性 | playtest/115 所列逐拍及世界結算差異保留，不阻止本輪有揭露限制的交付整理 | 靜態 |
+| [`release/16-full-20260911.md`](../release/16-full-20260911.md) | 畫面對拍那三組（見 worklist `screen-parity-behind-rules`）。 | （未解小節內文） | 靜態 |
+| [`release/16-full-20260911.md`](../release/16-full-20260911.md) | Windows 與 macOS 的 GUI runtime smoke（一直都缺，M8 的驗收條件）。 | （未解小節內文） | 靜態 |
+| [`release/16-full-20260911.md`](../release/16-full-20260911.md) | Android APK 沒有跟著這一批重建。 | （未解小節內文） | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Windows／macOS 原生 GUI | 交叉建置的產物只驗了檔頭，沒有在目標作業系統跑過。M8 唯一的閘 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 實機驗收 | 只有 Docker 模擬器；觸控手感、真實 GPU、高 DPI 上的點陣字可讀性都驗不到 | 靜態 |
 | [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 正式簽章 | 出的是 debug 簽章，keystore 怎麼保管還沒決定 | 靜態 |
@@ -751,6 +758,8 @@
 | [`spec/187-only-the-loser-is-judged.md`](../spec/187-only-the-loser-is-judged.md) | 拍 5,176 的據點表 | 103 個 byte／57 座 / **1 個 byte／1 座**（語意未解的 `+0x15`） | 靜態 |
 | [`spec/187-only-the-loser-is-judged.md`](../spec/187-only-the-loser-is-judged.md) | 野戰在 `ah` ＝ 3 時為什麼只判攻方，還沒有解釋。 | （未解小節內文） | 靜態 |
 | [`spec/192-route-cost-model.md`](../spec/192-route-cost-model.md) | 同成本時的 tie-break：原版是環形佇列 ＋「掃一遍取第一個等於最小值的 | （未解小節內文） | 靜態 |
+| [`spec/198-ivent-scene-frame.md`](../spec/198-ivent-scene-frame.md) | 進言選單在說服場景上沒關掉**（remake 殘影 1,750 px，原版進場時清掉）。 | （未解小節內文） | 靜態 |
+| [`spec/198-ivent-scene-frame.md`](../spec/198-ivent-scene-frame.md) | 框的填色在原版是什麼：插圖把中間 288×176 全蓋住，露出來的只有邊框那 | （未解小節內文） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
 | [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |

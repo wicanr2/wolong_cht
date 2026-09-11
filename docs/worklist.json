@@ -1,236 +1,250 @@
 {
- "schema": "wolong-worklist/1",
- "note": "未完成項的權威是這一份。WORKLIST.md 的那一節由 `tools/py.sh tools/worklist.py render` 產生，不要手改。約定：verify 跑起來為真 ＝ 這一條仍然未完成。",
- "layers": {
-  "parity": "與原版對不上，或還沒對過",
-  "fidelity": "原版有這個機制，remake 還沒建模",
-  "re": "原版的碼還沒讀懂",
-  "release": "交付前還沒做的驗收"
- },
- "items": [
-  {
-   "id": "m7-side-by-side-screens",
-   "layer": "parity",
-   "title": "M7 只差兩版並排的畫面對照",
-   "body": "1,022 則兩批逐句讀完（`docs/reference/02` §11／§12），排版 parity 全量量過（`docs/playtest/32`），校訂後的畫面抽樣也做了（`docs/playtest/41`）。缺的是**把 PC-98 日文原版與松崗版的同一個畫面並排**——那需要 pc98golem 補上 `apps/wolong`（`CLAUDE.md` §4.02）。",
-   "blocked_by": "pc98golem 目前只有 `apps/pool`，GDC 與文字 VRAM 那一層還沒做。",
-   "acceptance": "同一則訊息在兩版的畫面並排，逐區比過並留下收據。",
-   "verify": {
-    "kind": "manual",
-    "note": "做完會有一份 `docs/playtest/` 的並排紀錄。到時把這一條改成 absent，綁那份文件裡的識別字樣——現在猜檔名等於猜一個永遠不會中的 pattern。"
-   }
+  "schema": "wolong-worklist/1",
+  "note": "未完成項的權威是這一份。WORKLIST.md 的那一節由 `tools/py.sh tools/worklist.py render` 產生，不要手改。約定：verify 跑起來為真 ＝ 這一條仍然未完成。",
+  "layers": {
+    "parity": "與原版對不上，或還沒對過",
+    "fidelity": "原版有這個機制，remake 還沒建模",
+    "re": "原版的碼還沒讀懂",
+    "release": "交付前還沒做的驗收"
   },
-  {
-   "id": "m8-native-platform-acceptance",
-   "layer": "release",
-   "title": "各目標平台的實機執行還沒驗",
-   "body": "發行閘（`tools/denylist.py` ＋ `tools/release.sh`）已接進 `check.sh`，交叉建置與檔頭檢查都過。缺的是 **Windows／macOS 在原生環境真的跑起來**——交叉編譯的檔頭檢查代替不了它。",
-   "acceptance": "三個平台各自在原生環境啟動、進遊戲、存讀檔一輪，留下截圖或錄影。",
-   "verify": {
-    "kind": "manual",
-    "note": "沒有機器訊號：本機跑不出別的平台。使用者 2026-09-08 裁定 Windows／macOS 由人工檢驗。"
-   }
-  },
-  {
-   "id": "retreat-endpoint-tie-break",
-   "layer": "fidelity",
-   "title": "退卻時兩端到首都等距，取哪一端沒解",
-   "body": "`sub_1487B` 走在路上那一半已經對過兩組原版實測（`docs/spec/46` §5.2）：退到這條邊上**離首都近的那個端點**。等距時原版由 `loc_1491B` 的廣度優先展開順序決定，而那一段是自我修改碼；remake 取 A 端。",
-   "acceptance": "解出展開順序，或找到一組等距的原版樣本把它釘住。",
-   "verify": {
-    "kind": "present",
-    "paths": [
-     "internal/state/aimarch.go"
-    ],
-    "pattern": "等距\\*\\*時原版由廣度優先的展開順序決定，還沒解",
-    "note": "綁 `retreatEndpoint` 的註解。解出來之後那句會被改掉。"
-   }
-  },
-  {
-   "id": "corps-field-0x21",
-   "layer": "fidelity",
-   "title": "軍團記錄 `+0x21` 沒建模",
-   "body": "`sub_1264A` 在軍團沒卡住時把 `+0x03` 與 `+0x21` 一起歸零，`sub_12B3C` 拿 `+0x21 << 2` 與 `+0x03 & 3` 合成大地圖上的軍團圖塊索引。看起來是對峙動畫的第二個維度，語意未讀（`docs/spec/175` §5）。",
-   "acceptance": "讀出 `+0x21` 的寫入端與語意，接進 `Corps` 並讓存檔 round-trip 保住它。",
-   "verify": {
-    "kind": "present",
-    "paths": [
-     "internal/state/corps.go"
-    ],
-    "pattern": "remake 還沒建模那一欄",
-    "note": "綁 `tickStandoff` 的註解。"
-   }
-  },
-  {
-   "id": "standoff-animation-and-sfx",
-   "layer": "fidelity",
-   "title": "對峙那 96 拍的動畫與音效沒接",
-   "body": "撞上敵人先對峙 12 個巡迴週期才開打已經接上並對過拍（`docs/spec/175`）。原版那 96 拍畫面上是兩軍對砍的動畫（`+0x03 & 3` 是相位），每個週期還播一次 `sub_102F5(al=3)`。remake 那段是靜的。",
-   "acceptance": "動畫相位與音效都接上；對峙期間的畫面與原版逐區比過。",
-   "verify": {
-    "kind": "present",
-    "paths": [
-     "internal/state/corps.go"
-    ],
-    "pattern": "兩者 remake 都還沒接",
-    "note": "綁 `standoffBlocks` 的註解。"
-   }
-  },
-  {
-   "id": "bfs-self-modifying-code",
-   "layer": "re",
-   "title": "`loc_1491B` 的廣度優先是自我修改碼，還沒解",
-   "body": "`mov cs:word_149B8, bx`／`mov cs:word_149BE, cx`／`mov cs:byte_149D2, dl` 把值寫進後面幾行的 inline 立即值，IDA 因此把 `byte_149B6` 起整段解成資料。展開後是「碰到任一端就停」，但**展開順序與權重細節沒有逐條讀過**——退卻與行軍重算都走它。",
-   "acceptance": "交叉解碼那段 bytes，把展開順序寫成規格，並拿它解釋等距時取哪一端。",
-   "verify": {
-    "kind": "present",
-    "paths": [
-     "docs/spec/46-post-battle-retreat.md"
-    ],
-    "pattern": "要逐條對就得先交叉解碼那段 bytes",
-    "note": "綁 §6 那一列。解完之後那一列會被改寫。"
-   }
-  },
-  {
-   "id": "icongrf-seg1-ui-semantics",
-   "layer": "re",
-   "title": "`ICONGRF` 段 1 前三塊的 UI 語意未解",
-   "body": "七個圖塊的偏移與尺寸已定位（`docs/re/18` §2、`docs/formats/03` §5.3），尾端四塊已逐像素對過是戰術側欄的橫帶、四角與兩根柱子（`docs/spec/31` §1.1）。**前三塊各代表什麼、`0x3000` 背板上的文字由誰合成**還沒解——這是 M1 唯一沒收掉的缺口。",
-   "acceptance": "三塊各自的用途有機器碼出處，或在畫面上指得出來。",
-   "verify": {
-    "kind": "present",
-    "paths": [
-     "docs/re/03-image-blitter.md"
-    ],
-    "pattern": "段 1 `0x0000` 那一塊畫了什麼",
-    "note": "綁 re/03 的未解小節。"
-   }
-  },
-  {
-   "id": "audio-timbre-harmonics",
-   "layer": "parity",
-   "title": "音色的諧波結構沒量化比對過",
-   "body": "音訊整條接通：格式解完、純 Go 的 OPL3、場景對應從機器碼讀出來，與原版錄音的包絡互相關 0.704（`docs/playtest/26`）。**包絡對得上不等於音色對得上**——諧波結構沒有量化比過，手機也沒有實機聽過（模擬器是 `-no-audio` 起的）。",
-   "acceptance": "同一首曲子兩邊各取一段做頻譜比對，給出一個可重跑的量化指標。",
-   "verify": {
-    "kind": "present",
-    "paths": [
-     "README.md"
-    ],
-    "pattern": "音色的諧波結構沒量化比對",
-    "note": "綁 README 的現況表。量過之後那一格會改寫。"
-   }
-  },
-  {
-   "id": "worklist-migration-incomplete",
-   "layer": "release",
-   "title": "`WORKLIST.md` 的舊敘述還沒逐條收進 JSON",
-   "body": "未完成項的權威已經改成 `docs/worklist.json`，機制（verify ／ render ／自我測試）已接進 `check.sh`。但 `WORKLIST.md` 的「目前目標」那一段仍是 2026-09-08 的散文敘述——**六項品質修正**（委任戰力混合公式、戰術移動排程、單挑角色與開場時間、完整戰後結算對拍、桌面音訊可靠性、公開包安裝說明）還沒逐條驗過狀態、掛上 verify。\n\n⚠ 在收完之前，未完成項有**兩份清單**——那正是這套機制要消滅的東西。",
-   "acceptance": "六項各自驗過現況、掛上 verify 進 JSON（做完的移進 `resolved`）；「目前目標」那一段只留一句指向 render 區。",
-   "verify": {
-    "kind": "present",
-    "paths": [
-     "WORKLIST.md"
-    ],
-    "pattern": "六項品質修正尚未完成",
-    "note": "綁「目前目標」那一段的開頭。收完之後那一段會被改寫成一句指標，這個 pattern 就不見了。⚠ render 區不會產出這句話，所以不會自己中自己。"
-   }
-  },
-  {
-   "id": "parity-extend-past-summons",
-   "layer": "parity",
-   "title": "把召見的回應序列接進對拍腳本，延長到 90 天",
-   "body": "召見（196 年 5 月 13 日 11 時，「孫乾　大人，主公有事召見。」）已經推得過去，兩邊都接好了：\n\n· 原版側 `tools/parity_ck_orig.sh` 的 `SUMMON_REPLY` ＝ `rpress ×2 → press → rpress ×4`（次數是量出來的，多按會在大地圖開選單把遊戲暫停；`docs/playtest/119` §46.21）。\n· remake 側 `rng_pace.go -answer accept` ＝ `DiplomacyAcceptFree`，對應原版按反白的第 1 列（使用者裁定 2026-09-10「都固定 yes」）。\n· 召見那一拍的君主採納判定也接了（`docs/spec/189`）。\n\n**剩下的是往後跑**：取樣點改用遊戲日期（參數含 `/` 走 `until:`）。目前對到 5/14（六張表只差軍團 1 個 byte）、5/20（據點 3 B）、6/1（月結全面分歧，待追）。第 90 天是 196 年 7 月 16 日。",
-   "acceptance": "`tools/parity_ck.sh 196/7/16` 六張表全 0。",
-   "verify": {
-    "kind": "absent",
-    "paths": [
-     "docs/playtest/119-rng-pace-comparison.md"
-    ],
-    "pattern": "196/7/16",
-    "note": "跑到第 90 天並把結果記進 playtest/119 之後，這個日期就會出現。"
-   }
-  },
-  {
-   "id": "stage1-di-residual-model",
-   "layer": "parity",
-   "title": "`sub_143AF` 第三個條件的殘留 `di` 模型還不完整",
-   "body": "`cmp byte ptr [di+18h], 2` 讀的是**上一支軍團留在 `di` 的位址**（docs/spec/195 §2）。兩個來源都追了——`sub_1440F` 的第一行（意圖據點的記錄）與 `sub_143AF` 自己的留守分支（勢力的記錄）——而 5/25 與 5/31 的六張表因此全綠。\n\n⚠ 但拍 9,274 仍對不上：原版那時的 `DI=0100`（勢力 4），而 remake 已經被某一次 Stage 2 覆蓋成據點。這個條件會回頭決定「誰走到留守分支」，所以早期的一點分歧會自我放大。\n\n下一步：攔 `1440F` 與 `143AF` 兩支的入口暫存器，把原版的 `di` 逐次記下來與 remake 並排——**不要再用推的**（第一版只追勢力那一個來源，5/25 從 0 變 735 個 byte）。",
-   "acceptance": "`tools/parity_ck.sh 196/6/1` 的六張表全 0。",
-   "verify": {
-    "kind": "present",
-    "paths": [
-     "docs/spec/195-ai-stage1-asks-about-the-intent.md"
-    ],
-    "pattern": "模型還不完整",
-    "note": "模型補齊之後把 spec/195 那一段改寫，這一條就不成立。"
-   }
-  },
-  {
-   "id": "screen-parity-behind-rules",
-   "layer": "parity",
-   "title": "畫面對拍落後規則對拍：三組都不是全 PASS",
-   "body": "規則層的同狀態對拍已經到 196/5/31（拍 9,177、66 個取樣點、六張表逐 byte 相同），但畫面那一側落後（docs/playtest/120）：\n\n· 主畫面：`map` 101 px（0.07%），文件記的是五區全 PASS\n· 野戰：`field` 190 px、`sb-minimap` 128 px（FAIL），文件記的是 95／32\n· 攻城：**重跑不出來**——playtest/58 沒寫哪一張原版 PNG 對應哪一個取樣點\n\n⭐ 三組都用 `c2c3522`（2026-09-11 那一輪之前）重截驗證過，**數字一模一樣**，所以是 2026-09-02 之後某一輪引入的，而那段期間每一輪都在改規則層、沒有一輪回頭重跑畫面。\n\n下一步：先把攻城的取樣點與原版圖對上號（不然那一組永遠驗不了），再用二分找出主畫面那 101 px 是哪一輪進來的。",
-   "acceptance": "主畫面五區全 PASS、野戰九區回到七區 PASS 且無 FAIL、攻城三個取樣點可重跑。",
-   "verify": {
-    "kind": "present",
-    "paths": [
-     "docs/playtest/120-screen-parity-retest-20260911.md"
-    ],
-    "pattern": "狀態：不通過",
-    "note": "三組都回到 PASS 之後把 120 的狀態行改掉，這一條就不成立。"
-   }
-  }
- ],
- "resolved": [
-  {
-   "id": "tick700-extra-relief-corps",
-   "title": "拍 700：remake 多編四支軍團（求援多觸發）",
-   "date": "2026-09-10",
-   "how": "根因不是威脅判定，是**事件佇列游標（區塊 `+0x30` ＝ `cs:word_10D20`）載入時寫死 0**，於是這個月已經派發過的宣戰被重播一次，四個勢力重設侵攻目標、邊境求援、各編一支救援軍團。接上還原與寫回之後（docs/spec/176），五個檢查點的「只在單邊存在」全部歸零，第一個分歧從拍 781 推到 2,455。",
-   "caught_by": "順著資料流往回追：據點旗標 → 勢力 `+0x19` → 事件佇列。佇列三份逐 byte 相同、只有游標不同，一比就出來。⚠ verify 這次沒有開口——`docs/playtest/119` §20 把 `+0x30` 標成「畫面用」，逐欄比對就合法地跳過它（教訓 `not-modelled-turns-off-checks`）。"
-  },
-  {
-   "id": "checkpoint-off-by-one-upkeep-and-timer",
-   "title": "五個檢查點剩下的差異：整備值與移動計時器各差 1",
-   "date": "2026-09-10",
-   "how": "不是規則差異，是**取樣點沒對齊**。原版側的檢查點用 `steps:拍 × 24509` 停下，誤差累積讓 `orig-ck700.DAT` 實際落在第 702 拍；remake 跑 700 拍就少走兩座據點的整備。用游標反推拍數（200／702／1,203／1,604／1,905）重生之後，四個檢查點逐 byte 完全一致，第五個只剩軍團 50 的一個位元。",
-   "caught_by": "差異座數與超出拍數一一對應（+2 → 2 座、+3 → 3 座、+5 → 5 座），而且全部緊貼游標。⚠ `docs/playtest/119` §36.5 早就寫了「對齊要看游標不能看拍數」並列出正確拍數，下一輪還是照檔名跑了——所以改成工具 `tools/parity_ck.sh`，它自己讀原版檢查點的 `+0x2E` 反推，不接受手打拍數。"
-  },
-  {
-   "id": "tick19-ai-sortie-extra-draw",
-   "title": "同局面對拍的第一個分歧：拍 19 多取一個出擊計時",
-   "date": "2026-09-10",
-   "how": "不是 `sub_143AF` 的四道閘寫錯（逐條對過、探針也照抄了那個未初始化讀取）。觸發者在更前面：事件佇列游標沒還原（docs/spec/176），整個月的宣戰被重播一次，勢力的侵攻目標被填上之後邊境據點就變成「受威脅」，出擊判定跟著多跑。接上游標之後拍 19 的分歧消失。",
-   "caught_by": "acceptance 自己達成：第一個分歧從拍 19 退到 2,455，拍 200 的據點表從 220 B／141 座回到 0。"
-  },
-  {
-   "id": "corps50-onpath-bit",
-   "title": "拍 1,900 軍團 50 的 `+0x00` 位元 0 多設了",
-   "date": "2026-09-10",
-   "how": "位元 0 不是一次性旗標——`sub_147BB` 的 `00014869`（`and byte ptr [si], 0FEh`）就是清除端。語意是「這一步是從路段中間走出來的」：移動前 `+0x0E < 800h` 清、`≥ 800h` 設。remake 的 `step` 改成 `c.OnPath = c.LinkAddr != 0`，五個檢查點回到 0 個 byte。規格 docs/spec/173（訂正）與 177。",
-   "caught_by": "拍 1,900 只差這一個 byte，所以非查不可。⚠ 舊斷言「沒有清除端」是掃描工具的洞：`tools/ida_bitflag_users.py` 照「立即值含指定位元」篩，而清除的立即值是補數（教訓 `filter-has-a-hole`）。"
-  },
-  {
-   "id": "corps-flag-bit1-deferred-replan",
-   "title": "軍團 `+0x00` 位元 1（下一步要重算）沒建模，換向太早",
-   "date": "2026-09-10",
-   "how": "`Corps.Replan` 對應位元 1，進 `modelledCorpsBits`；改目標的常式只設它，重算移到 `tickOneCorps` 的「輪到移動」那一刻（`sub_12662` 的 `0x126A5` 清掉 → `sub_147BB` → **照樣走一格**）。順帶讀出另一半：位元 1 沒設而且走在邊上時，`sub_147BB` 根本不會被呼叫。規格 docs/spec/177 §1.6。",
-   "caught_by": "⭐ **verify 自己開口**：`absent` 的 pattern 綁「建模之後才會出現的識別字」，做完就從『還沒出現』翻成『已經出現在 internal/state/corps.go』，`check.sh` 直接標成「可能已完成」。第一個逐拍分歧從拍 2,455 推到 2,647。"
-  },
-  {
-   "id": "corps-flag-bit4-display-only",
-   "title": "軍團 `+0x00` 位元 4 是繪圖狀態，規則層永遠不設",
-   "date": "2026-09-10",
-   "how": "`tools/corps_diff.py` 加 `EXEMPT` 清單：每一條帶出處與「為什麼規則層不會有」，而且報表最後**逐筆列出這一次豁免了哪幾支**——不是靜靜跳過。位元 4 的出處是 `sub_12B3C`（`or byte ptr [si], 10h` 之後算螢幕座標、`loc_1D51F` blit）。",
-   "caught_by": "拍 2,300 只剩這一個 byte，非處理不可。⚠ 沒有直接用「remake 不建模」草草帶過——那正是教訓 `not-modelled-turns-off-checks` 要防的。豁免要跟斷言同級：寫明出處，而且看得見。"
-  },
-  {
-   "id": "tick3415-relief-dispatch-occupancy",
-   "title": "拍 3,415 的調兵分歧",
-   "date": "2026-09-10",
-   "how": "不是佔用圖——是 `want` 的算式讀錯了。`sub_14057` 的 `loc_14099` 傳給 `sub_14155` 的 `dl` **恆為 1**（`al` 在挑目標的迴圈裡被 `dec` 到 0，再被 `mov al, 1` 設回來）；`Requested(威脅量, 佔用數)` 是「佔用數 ≤ 1」那一支的求援數量。規格 docs/spec/184。二十二個檢查點四張表全 0，第一個分歧推到 3,566。",
-   "caught_by": "⚠ **倒推出來的數字被當成觀測**。「原版佔用數 2」是拿錯的 `want` 算式反解出來的，而它讓我花了一整輪去建模佔用圖。新工具 `tools/orig_occupancy.py` 直接把原版的圖 peek 出來逐格比，兩個取樣點完全相同——假說當場被推翻。教訓記在 lessons.json 的 derived-number-as-observation。"
-  }
- ]
+  "items": [
+    {
+      "id": "m7-side-by-side-screens",
+      "layer": "parity",
+      "title": "M7 只差兩版並排的畫面對照",
+      "body": "1,022 則兩批逐句讀完（`docs/reference/02` §11／§12），排版 parity 全量量過（`docs/playtest/32`），校訂後的畫面抽樣也做了（`docs/playtest/41`）。缺的是**把 PC-98 日文原版與松崗版的同一個畫面並排**——那需要 pc98golem 補上 `apps/wolong`（`CLAUDE.md` §4.02）。",
+      "blocked_by": "pc98golem 目前只有 `apps/pool`，GDC 與文字 VRAM 那一層還沒做。",
+      "acceptance": "同一則訊息在兩版的畫面並排，逐區比過並留下收據。",
+      "verify": {
+        "kind": "manual",
+        "note": "做完會有一份 `docs/playtest/` 的並排紀錄。到時把這一條改成 absent，綁那份文件裡的識別字樣——現在猜檔名等於猜一個永遠不會中的 pattern。"
+      }
+    },
+    {
+      "id": "m8-native-platform-acceptance",
+      "layer": "release",
+      "title": "各目標平台的實機執行還沒驗",
+      "body": "發行閘（`tools/denylist.py` ＋ `tools/release.sh`）已接進 `check.sh`，交叉建置與檔頭檢查都過。缺的是 **Windows／macOS 在原生環境真的跑起來**——交叉編譯的檔頭檢查代替不了它。",
+      "acceptance": "三個平台各自在原生環境啟動、進遊戲、存讀檔一輪，留下截圖或錄影。",
+      "verify": {
+        "kind": "manual",
+        "note": "沒有機器訊號：本機跑不出別的平台。使用者 2026-09-08 裁定 Windows／macOS 由人工檢驗。"
+      }
+    },
+    {
+      "id": "retreat-endpoint-tie-break",
+      "layer": "fidelity",
+      "title": "退卻時兩端到首都等距，取哪一端沒解",
+      "body": "`sub_1487B` 走在路上那一半已經對過兩組原版實測（`docs/spec/46` §5.2）：退到這條邊上**離首都近的那個端點**。等距時原版由 `loc_1491B` 的廣度優先展開順序決定，而那一段是自我修改碼；remake 取 A 端。",
+      "acceptance": "解出展開順序，或找到一組等距的原版樣本把它釘住。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "internal/state/aimarch.go"
+        ],
+        "pattern": "等距\\*\\*時原版由廣度優先的展開順序決定，還沒解",
+        "note": "綁 `retreatEndpoint` 的註解。解出來之後那句會被改掉。"
+      }
+    },
+    {
+      "id": "corps-field-0x21",
+      "layer": "fidelity",
+      "title": "軍團記錄 `+0x21` 沒建模",
+      "body": "`sub_1264A` 在軍團沒卡住時把 `+0x03` 與 `+0x21` 一起歸零，`sub_12B3C` 拿 `+0x21 << 2` 與 `+0x03 & 3` 合成大地圖上的軍團圖塊索引。看起來是對峙動畫的第二個維度，語意未讀（`docs/spec/175` §5）。",
+      "acceptance": "讀出 `+0x21` 的寫入端與語意，接進 `Corps` 並讓存檔 round-trip 保住它。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "internal/state/corps.go"
+        ],
+        "pattern": "remake 還沒建模那一欄",
+        "note": "綁 `tickStandoff` 的註解。"
+      }
+    },
+    {
+      "id": "standoff-animation-and-sfx",
+      "layer": "fidelity",
+      "title": "對峙那 96 拍的動畫與音效沒接",
+      "body": "撞上敵人先對峙 12 個巡迴週期才開打已經接上並對過拍（`docs/spec/175`）。原版那 96 拍畫面上是兩軍對砍的動畫（`+0x03 & 3` 是相位），每個週期還播一次 `sub_102F5(al=3)`。remake 那段是靜的。",
+      "acceptance": "動畫相位與音效都接上；對峙期間的畫面與原版逐區比過。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "internal/state/corps.go"
+        ],
+        "pattern": "兩者 remake 都還沒接",
+        "note": "綁 `standoffBlocks` 的註解。"
+      }
+    },
+    {
+      "id": "bfs-self-modifying-code",
+      "layer": "re",
+      "title": "`loc_1491B` 的廣度優先是自我修改碼，還沒解",
+      "body": "`mov cs:word_149B8, bx`／`mov cs:word_149BE, cx`／`mov cs:byte_149D2, dl` 把值寫進後面幾行的 inline 立即值，IDA 因此把 `byte_149B6` 起整段解成資料。展開後是「碰到任一端就停」，但**展開順序與權重細節沒有逐條讀過**——退卻與行軍重算都走它。",
+      "acceptance": "交叉解碼那段 bytes，把展開順序寫成規格，並拿它解釋等距時取哪一端。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "docs/spec/46-post-battle-retreat.md"
+        ],
+        "pattern": "要逐條對就得先交叉解碼那段 bytes",
+        "note": "綁 §6 那一列。解完之後那一列會被改寫。"
+      }
+    },
+    {
+      "id": "icongrf-seg1-ui-semantics",
+      "layer": "re",
+      "title": "`ICONGRF` 段 1 前三塊的 UI 語意未解",
+      "body": "七個圖塊的偏移與尺寸已定位（`docs/re/18` §2、`docs/formats/03` §5.3），尾端四塊已逐像素對過是戰術側欄的橫帶、四角與兩根柱子（`docs/spec/31` §1.1）。**前三塊各代表什麼、`0x3000` 背板上的文字由誰合成**還沒解——這是 M1 唯一沒收掉的缺口。",
+      "acceptance": "三塊各自的用途有機器碼出處，或在畫面上指得出來。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "docs/re/03-image-blitter.md"
+        ],
+        "pattern": "段 1 `0x0000` 那一塊畫了什麼",
+        "note": "綁 re/03 的未解小節。"
+      }
+    },
+    {
+      "id": "audio-timbre-harmonics",
+      "layer": "parity",
+      "title": "音色的諧波結構沒量化比對過",
+      "body": "音訊整條接通：格式解完、純 Go 的 OPL3、場景對應從機器碼讀出來，與原版錄音的包絡互相關 0.704（`docs/playtest/26`）。**包絡對得上不等於音色對得上**——諧波結構沒有量化比過，手機也沒有實機聽過（模擬器是 `-no-audio` 起的）。",
+      "acceptance": "同一首曲子兩邊各取一段做頻譜比對，給出一個可重跑的量化指標。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "README.md"
+        ],
+        "pattern": "音色的諧波結構沒量化比對",
+        "note": "綁 README 的現況表。量過之後那一格會改寫。"
+      }
+    },
+    {
+      "id": "worklist-migration-incomplete",
+      "layer": "release",
+      "title": "`WORKLIST.md` 的舊敘述還沒逐條收進 JSON",
+      "body": "未完成項的權威已經改成 `docs/worklist.json`，機制（verify ／ render ／自我測試）已接進 `check.sh`。但 `WORKLIST.md` 的「目前目標」那一段仍是 2026-09-08 的散文敘述——**六項品質修正**（委任戰力混合公式、戰術移動排程、單挑角色與開場時間、完整戰後結算對拍、桌面音訊可靠性、公開包安裝說明）還沒逐條驗過狀態、掛上 verify。\n\n⚠ 在收完之前，未完成項有**兩份清單**——那正是這套機制要消滅的東西。",
+      "acceptance": "六項各自驗過現況、掛上 verify 進 JSON（做完的移進 `resolved`）；「目前目標」那一段只留一句指向 render 區。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "WORKLIST.md"
+        ],
+        "pattern": "六項品質修正尚未完成",
+        "note": "綁「目前目標」那一段的開頭。收完之後那一段會被改寫成一句指標，這個 pattern 就不見了。⚠ render 區不會產出這句話，所以不會自己中自己。"
+      }
+    },
+    {
+      "id": "parity-extend-past-summons",
+      "layer": "parity",
+      "title": "把召見的回應序列接進對拍腳本，延長到 90 天",
+      "body": "召見（196 年 5 月 13 日 11 時，「孫乾　大人，主公有事召見。」）已經推得過去，兩邊都接好了：\n\n· 原版側 `tools/parity_ck_orig.sh` 的 `SUMMON_REPLY` ＝ `rpress ×2 → press → rpress ×4`（次數是量出來的，多按會在大地圖開選單把遊戲暫停；`docs/playtest/119` §46.21）。\n· remake 側 `rng_pace.go -answer accept` ＝ `DiplomacyAcceptFree`，對應原版按反白的第 1 列（使用者裁定 2026-09-10「都固定 yes」）。\n· 召見那一拍的君主採納判定也接了（`docs/spec/189`）。\n\n**剩下的是往後跑**：取樣點改用遊戲日期（參數含 `/` 走 `until:`）。目前對到 5/14（六張表只差軍團 1 個 byte）、5/20（據點 3 B）、6/1（月結全面分歧，待追）。第 90 天是 196 年 7 月 16 日。",
+      "acceptance": "`tools/parity_ck.sh 196/7/16` 六張表全 0。",
+      "verify": {
+        "kind": "absent",
+        "paths": [
+          "docs/playtest/119-rng-pace-comparison.md"
+        ],
+        "pattern": "196/7/16",
+        "note": "跑到第 90 天並把結果記進 playtest/119 之後，這個日期就會出現。"
+      }
+    },
+    {
+      "id": "stage1-di-residual-model",
+      "layer": "parity",
+      "title": "`sub_143AF` 第三個條件的殘留 `di` 模型還不完整",
+      "body": "`cmp byte ptr [di+18h], 2` 讀的是**上一支軍團留在 `di` 的位址**（docs/spec/195 §2）。兩個來源都追了——`sub_1440F` 的第一行（意圖據點的記錄）與 `sub_143AF` 自己的留守分支（勢力的記錄）——而 5/25 與 5/31 的六張表因此全綠。\n\n⚠ 但拍 9,274 仍對不上：原版那時的 `DI=0100`（勢力 4），而 remake 已經被某一次 Stage 2 覆蓋成據點。這個條件會回頭決定「誰走到留守分支」，所以早期的一點分歧會自我放大。\n\n下一步：攔 `1440F` 與 `143AF` 兩支的入口暫存器，把原版的 `di` 逐次記下來與 remake 並排——**不要再用推的**（第一版只追勢力那一個來源，5/25 從 0 變 735 個 byte）。",
+      "acceptance": "`tools/parity_ck.sh 196/6/1` 的六張表全 0。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "docs/spec/195-ai-stage1-asks-about-the-intent.md"
+        ],
+        "pattern": "模型還不完整",
+        "note": "模型補齊之後把 spec/195 那一段改寫，這一條就不成立。"
+      }
+    },
+    {
+      "id": "advise-menu-residue-on-scene",
+      "layer": "parity",
+      "title": "進言選單在說服場景上沒關掉",
+      "body": "說服場景（`tools/parity_screens.sh advise-scene`）的 `map` 區剩 3,354 px，其中 **1,750 px 是進言那五項選單的殘影**——原版進說服場景時把它清掉了，remake 留著。另外 2,127 px 是 remake 自加的「Enter 繼續」提示。\n\n⭐ 同一張畫面的插圖外框已經修好了（`docs/spec/198`），所以剩下的這一塊是獨立的一條，不會被那個修正帶走。",
+      "acceptance": "`tools/parity_screens.sh advise-scene` 的 `map` 降到只剩 Enter 提示那 2,127 px，並把 JSON 的 gap 改成 allow。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "tools/parity_screens.json"
+        ],
+        "pattern": "進言選單沒關掉",
+        "note": "修好之後把那一格的 gap 拿掉，這一條就不成立。"
+      }
+    },
+    {
+      "id": "screen-parity-gate-coverage",
+      "layer": "parity",
+      "title": "畫面對拍閘只收了十七組，還有十幾組沒進來",
+      "body": "`tools/parity_screens.json` 現在有 17 組（`docs/playtest/121`）。還沒收的：`38` 三視窗、`39` 系統選單、`42` 四個視窗、`83` 據點一覽、`84` 人事／軍團六個出口、`92` 人事四個任免、`94` 行軍選點、`96` 大地圖點擊、`98` 敵軍團面板、`99` 存檔槽、`105` 命名視窗、`106` 啟動殼層三頁。\n\n⚠ 這些的文件裡 remake 側多半只有旗標片段（`89`–`104` 整批全文沒有出現 `parity_shot`），收進來要逐組把命令補齊並實測——**照抄跑不起來的那一種，正是下一輪規則改動之後不會開口的那一種**。",
+      "acceptance": "上列每一組都在 `tools/parity_screens.json` 裡，且 `tools/parity_screens.sh` 全跑 exit 0。",
+      "verify": {
+        "kind": "json_len",
+        "path": "tools/parity_screens.json",
+        "field": "groups",
+        "max": 28,
+        "note": "收滿 29 組（17 + 12）就不成立。數字是目標不是上限，之後再加組要一併調。"
+      }
+    }
+  ],
+  "resolved": [
+    {
+      "id": "tick700-extra-relief-corps",
+      "title": "拍 700：remake 多編四支軍團（求援多觸發）",
+      "date": "2026-09-10",
+      "how": "根因不是威脅判定，是**事件佇列游標（區塊 `+0x30` ＝ `cs:word_10D20`）載入時寫死 0**，於是這個月已經派發過的宣戰被重播一次，四個勢力重設侵攻目標、邊境求援、各編一支救援軍團。接上還原與寫回之後（docs/spec/176），五個檢查點的「只在單邊存在」全部歸零，第一個分歧從拍 781 推到 2,455。",
+      "caught_by": "順著資料流往回追：據點旗標 → 勢力 `+0x19` → 事件佇列。佇列三份逐 byte 相同、只有游標不同，一比就出來。⚠ verify 這次沒有開口——`docs/playtest/119` §20 把 `+0x30` 標成「畫面用」，逐欄比對就合法地跳過它（教訓 `not-modelled-turns-off-checks`）。"
+    },
+    {
+      "id": "checkpoint-off-by-one-upkeep-and-timer",
+      "title": "五個檢查點剩下的差異：整備值與移動計時器各差 1",
+      "date": "2026-09-10",
+      "how": "不是規則差異，是**取樣點沒對齊**。原版側的檢查點用 `steps:拍 × 24509` 停下，誤差累積讓 `orig-ck700.DAT` 實際落在第 702 拍；remake 跑 700 拍就少走兩座據點的整備。用游標反推拍數（200／702／1,203／1,604／1,905）重生之後，四個檢查點逐 byte 完全一致，第五個只剩軍團 50 的一個位元。",
+      "caught_by": "差異座數與超出拍數一一對應（+2 → 2 座、+3 → 3 座、+5 → 5 座），而且全部緊貼游標。⚠ `docs/playtest/119` §36.5 早就寫了「對齊要看游標不能看拍數」並列出正確拍數，下一輪還是照檔名跑了——所以改成工具 `tools/parity_ck.sh`，它自己讀原版檢查點的 `+0x2E` 反推，不接受手打拍數。"
+    },
+    {
+      "id": "tick19-ai-sortie-extra-draw",
+      "title": "同局面對拍的第一個分歧：拍 19 多取一個出擊計時",
+      "date": "2026-09-10",
+      "how": "不是 `sub_143AF` 的四道閘寫錯（逐條對過、探針也照抄了那個未初始化讀取）。觸發者在更前面：事件佇列游標沒還原（docs/spec/176），整個月的宣戰被重播一次，勢力的侵攻目標被填上之後邊境據點就變成「受威脅」，出擊判定跟著多跑。接上游標之後拍 19 的分歧消失。",
+      "caught_by": "acceptance 自己達成：第一個分歧從拍 19 退到 2,455，拍 200 的據點表從 220 B／141 座回到 0。"
+    },
+    {
+      "id": "corps50-onpath-bit",
+      "title": "拍 1,900 軍團 50 的 `+0x00` 位元 0 多設了",
+      "date": "2026-09-10",
+      "how": "位元 0 不是一次性旗標——`sub_147BB` 的 `00014869`（`and byte ptr [si], 0FEh`）就是清除端。語意是「這一步是從路段中間走出來的」：移動前 `+0x0E < 800h` 清、`≥ 800h` 設。remake 的 `step` 改成 `c.OnPath = c.LinkAddr != 0`，五個檢查點回到 0 個 byte。規格 docs/spec/173（訂正）與 177。",
+      "caught_by": "拍 1,900 只差這一個 byte，所以非查不可。⚠ 舊斷言「沒有清除端」是掃描工具的洞：`tools/ida_bitflag_users.py` 照「立即值含指定位元」篩，而清除的立即值是補數（教訓 `filter-has-a-hole`）。"
+    },
+    {
+      "id": "corps-flag-bit1-deferred-replan",
+      "title": "軍團 `+0x00` 位元 1（下一步要重算）沒建模，換向太早",
+      "date": "2026-09-10",
+      "how": "`Corps.Replan` 對應位元 1，進 `modelledCorpsBits`；改目標的常式只設它，重算移到 `tickOneCorps` 的「輪到移動」那一刻（`sub_12662` 的 `0x126A5` 清掉 → `sub_147BB` → **照樣走一格**）。順帶讀出另一半：位元 1 沒設而且走在邊上時，`sub_147BB` 根本不會被呼叫。規格 docs/spec/177 §1.6。",
+      "caught_by": "⭐ **verify 自己開口**：`absent` 的 pattern 綁「建模之後才會出現的識別字」，做完就從『還沒出現』翻成『已經出現在 internal/state/corps.go』，`check.sh` 直接標成「可能已完成」。第一個逐拍分歧從拍 2,455 推到 2,647。"
+    },
+    {
+      "id": "corps-flag-bit4-display-only",
+      "title": "軍團 `+0x00` 位元 4 是繪圖狀態，規則層永遠不設",
+      "date": "2026-09-10",
+      "how": "`tools/corps_diff.py` 加 `EXEMPT` 清單：每一條帶出處與「為什麼規則層不會有」，而且報表最後**逐筆列出這一次豁免了哪幾支**——不是靜靜跳過。位元 4 的出處是 `sub_12B3C`（`or byte ptr [si], 10h` 之後算螢幕座標、`loc_1D51F` blit）。",
+      "caught_by": "拍 2,300 只剩這一個 byte，非處理不可。⚠ 沒有直接用「remake 不建模」草草帶過——那正是教訓 `not-modelled-turns-off-checks` 要防的。豁免要跟斷言同級：寫明出處，而且看得見。"
+    },
+    {
+      "id": "tick3415-relief-dispatch-occupancy",
+      "title": "拍 3,415 的調兵分歧",
+      "date": "2026-09-10",
+      "how": "不是佔用圖——是 `want` 的算式讀錯了。`sub_14057` 的 `loc_14099` 傳給 `sub_14155` 的 `dl` **恆為 1**（`al` 在挑目標的迴圈裡被 `dec` 到 0，再被 `mov al, 1` 設回來）；`Requested(威脅量, 佔用數)` 是「佔用數 ≤ 1」那一支的求援數量。規格 docs/spec/184。二十二個檢查點四張表全 0，第一個分歧推到 3,566。",
+      "caught_by": "⚠ **倒推出來的數字被當成觀測**。「原版佔用數 2」是拿錯的 `want` 算式反解出來的，而它讓我花了一整輪去建模佔用圖。新工具 `tools/orig_occupancy.py` 直接把原版的圖 peek 出來逐格比，兩個取樣點完全相同——假說當場被推翻。教訓記在 lessons.json 的 derived-number-as-observation。"
+    }
+  ]
 }

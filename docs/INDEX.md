@@ -66,7 +66,8 @@
 | [`docs/playtest/118-liubei-90day-audience-response.md`](playtest/118-liubei-90day-audience-response.md) | 118 — 劉備 90 天無人值守：君主召見用右鍵推進，選項用移動次數 | 通過。 | 2026-09-09 |
 | [`docs/playtest/119-rng-pace-comparison.md`](playtest/119-rng-pace-comparison.md) | 119 — 取數節拍對齊：remake 的節拍不吃亂數值，差異是真的規則分歧 | 已修正並驗過（§6、§28–§36）。 | 2026-09-09 |
 | [`docs/playtest/12-event3-same-state-parity.md`](playtest/12-event3-same-state-parity.md) | event3 同狀態對拍（2026-08-10） | 同狀態事件接線、原版式 composite、3×6 實際格位選取、TALK 五行分頁、 DOS/V 內框／按鍵 gl… | 2026-08-10 |
-| [`docs/playtest/120-screen-parity-retest-20260911.md`](playtest/120-screen-parity-retest-20260911.md) | 120 — 打包前重量畫面對拍：三組都不是全 PASS，而且都不是這一輪造成的 | 不通過。 | 2026-09-11 |
+| [`docs/playtest/120-screen-parity-retest-20260911.md`](playtest/120-screen-parity-retest-20260911.md) | 120 — 打包前重量畫面對拍：三組都不是全 PASS，而且都不是這一輪造成的 | 主畫面已修回全 PASS；野戰剩一區、攻城仍重跑不出來。 | 2026-09-11 |
+| [`docs/playtest/121-screen-parity-gate.md`](playtest/121-screen-parity-gate.md) | 121 — 十七組畫面逐區重量：十四組符合預期，缺口剩三個 | 通過（帶三個已登記的缺口）。 | 2026-09-11 |
 | [`docs/playtest/13-dosv-natural-and-target-gui.md`](playtest/13-dosv-natural-and-target-gui.md) | DOS/V 自然畫面與目標平台 GUI 驗收 | 歷史驗收紀錄（2026-08-11，影片 oracle）。 | 2026-08-11 |
 | [`docs/playtest/14-m7-review.md`](playtest/14-m7-review.md) | M7 校訂文字人工審查報告 | 60 筆定案校訂已完成逐筆語意、marker、硬換行、寬度與代表畫面抽樣。 | 2026-08-11 |
 | [`docs/playtest/15-event2-5-talk-sampling.md`](playtest/15-event2-5-talk-sampling.md) | 事件 2–5 TALK 完整分支抽樣 | 36 個 raw TALK 頁面、18 組雙頁回應的分支、marker、硬換行、字寬與五列版面 抽樣通過；不宣稱完整… | 2026-08-11 |
@@ -272,6 +273,7 @@
 | [`docs/release/13-full-20260906.md`](release/13-full-20260906.md) | 13 — 2026-09-06 四平台完整版（尋路、對白框、字型與狀態層對拍進包） | 已建置並驗過。⛔ 內含原版資產，不可外流。 | 2026-09-06 |
 | [`docs/release/14-full-20260907.md`](release/14-full-20260907.md) | 14 — 2026-09-07 四平台完整版（對拍推到啟動殼層，游標接上） | 已建置並驗過。⛔ 內含原版資產，不可外流。 | 2026-09-07 |
 | [`docs/release/15-desktop-closeout-20260908.md`](release/15-desktop-closeout-20260908.md) | 15 — 桌面版交付收尾 | 本機完整版、公開引擎包與推廣片完成；GitHub Release 已發布，本輪交付結案。 | 2026-09-08 |
+| [`docs/release/16-full-20260911.md`](release/16-full-20260911.md) | 16 — 2026-09-11 四平台完整版（規則對拍到 5/31；畫面對拍不是全 PASS） | 已建置。⛔ 內含原版資產，不可外流。 | 2026-09-11 |
 | [`docs/release/README-RELEASE.md`](release/README-RELEASE.md) | 臥龍傳 remake 可執行封裝 | 四平台完整包、Linux AppImage、推廣片與驗收紀錄已集中於 [dist-all](../../dist-a… | 2026-08-24 |
 | [`docs/spec/00-index.md`](spec/00-index.md) | 00 — 規格索引：已解的規則有沒有被實作、有沒有被驗過 | 索引。規格是 docs/re/（程式碼在哪）與 internal/（我們寫了什麼） 之間的那一層——它回答「這條規則… | 2026-08-14 |
 | [`docs/spec/10-city-tick.md`](spec/10-city-tick.md) | 10 — 據點整備、威脅偵測與求援 | CONFORMED。整條鏈已實作，並在 PC-98 原版的執行期記憶體上取樣驗過 （+0x18／+0x14 各 0/… | 2026-08-14 |
@@ -376,6 +378,8 @@
 | [`docs/spec/194-ai-holds-a-threatened-city-on-the-way.md`](spec/194-ai-holds-a-threatened-city-on-the-way.md) | 194 — AI 行軍中經過受威脅的據點就留守 | CONFORMED。 | 2026-09-11 |
 | [`docs/spec/195-ai-stage1-asks-about-the-intent.md`](spec/195-ai-stage1-asks-about-the-intent.md) | 195 — AI 階段 1 問的是意圖，不是行軍目標 | CONFORMED。 | 2026-09-11 |
 | [`docs/spec/196-field-battle-rolls-the-battlefield.md`](spec/196-field-battle-rolls-the-battlefield.md) | 196 — 野戰開打前要先決定戰場，而水域那一格要擲骰 | CONFORMED。 | 2026-09-11 |
+| [`docs/spec/197-shot-mode-draws-no-desktop-cursor.md`](spec/197-shot-mode-draws-no-desktop-cursor.md) | 197 — 截圖對拍不畫桌面模式的游標 | CONFORMED。 | 2026-09-11 |
+| [`docs/spec/198-ivent-scene-frame.md`](spec/198-ivent-scene-frame.md) | 198 — 事件插圖少了外面那個框 | CONFORMED。 | 2026-09-11 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |

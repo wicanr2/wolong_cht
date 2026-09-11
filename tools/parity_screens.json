@@ -1,0 +1,628 @@
+{
+  "_說明": [
+    "畫面對拍組的權威清單。規則層有 tools/parity_ck.sh 逐欄對拍，畫面層一直沒有",
+    "對應物——規則改了沒有人回頭重截畫面，就是 2026-09-11 那次「主畫面 101 px」",
+    "拖了三天才被發現的根因（docs/spec/197）。",
+    "",
+    "每一組要同時寫齊三件事，少一件就重跑不出來：",
+    "  orig  原版 PNG 的**路徑**（不是目錄）。crop=true ＝ DOSBox-X 的 640×480，",
+    "        要先切掉上下黑邊；dosgolem 出的已經是 640×400，crop=false。",
+    "  args  remake 側**完整**的 wlgame 參數，照抄就能跑。",
+    "  regions strategy（主畫面五區）或 tactical（戰場九區）。",
+    "",
+    "allow 是**有正當理由的**殘差上限，理由要寫在第二欄。沒有理由就是 0——",
+    "這是保存專案，PASS 才是目標，NEAR 不是及格（tools/parity_diff.py）。",
+    "沒列進 allow 的區一律要 0。"
+  ],
+  "groups": [
+    {
+      "name": "main",
+      "note": "開局主畫面（曹操／許昌 196/4/1）",
+      "doc": "docs/playtest/37-main-screen-parity.md",
+      "orig": "workplace/promo-live/parity-probe/p2-ok2.png",
+      "crop": true,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-shot-frames",
+        "1"
+      ],
+      "regions": "strategy",
+      "allow": {}
+    },
+    {
+      "name": "menu-corps",
+      "note": "指令列第 4 格的軍團選單（日期對齊 196/4/20）",
+      "doc": "docs/playtest/82-strategy-date-aligned-parity.md",
+      "orig": "workplace/dosgolem/advise/d-corps.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/dosgolem/root-saveb/SAVE.DAT",
+        "-load-slot",
+        "0",
+        "-open-command-menu",
+        "corps",
+        "-cam",
+        "0,0",
+        "-fixture-when",
+        "clock:196/4/20/2",
+        "-shot-when",
+        "clock:196/4/20/2"
+      ],
+      "regions": "strategy",
+      "allow": {}
+    },
+    {
+      "name": "menu-city",
+      "note": "指令列第 8 格的據點選單（日期對齊 196/4/20）",
+      "doc": "docs/playtest/82-strategy-date-aligned-parity.md",
+      "orig": "workplace/dosgolem/advise/e-city.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/dosgolem/root-saveb/SAVE.DAT",
+        "-load-slot",
+        "0",
+        "-open-command-menu",
+        "city",
+        "-cam",
+        "0,0",
+        "-fixture-when",
+        "clock:196/4/20/2",
+        "-shot-when",
+        "clock:196/4/20/2"
+      ],
+      "regions": "strategy",
+      "allow": {}
+    },
+    {
+      "name": "menu-personnel",
+      "note": "指令列第 2 格的人事選單（日期對齊 196/4/20）",
+      "doc": "docs/playtest/82-strategy-date-aligned-parity.md",
+      "orig": "workplace/dosgolem/advise/f-personnel.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/dosgolem/root-saveb/SAVE.DAT",
+        "-load-slot",
+        "0",
+        "-open-command-menu",
+        "personnel",
+        "-cam",
+        "0,0",
+        "-fixture-when",
+        "clock:196/4/20/2",
+        "-shot-when",
+        "clock:196/4/20/2"
+      ],
+      "regions": "strategy",
+      "allow": {}
+    },
+    {
+      "name": "nc-cam",
+      "note": "受控存檔（--no-clouds）＋ 鏡頭捲到 (271,153) 的主畫面",
+      "doc": "docs/playtest/88-controlled-save-parity.md",
+      "orig": "workplace/parity/status/orig-nc-cam.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/dosgolem/root-noclouds/SAVE.DAT",
+        "-load-slot",
+        "0",
+        "-cam",
+        "271,153",
+        "-open-window",
+        "0",
+        "-shot-when",
+        "clock:196/4/21/11"
+      ],
+      "regions": "strategy",
+      "allow": {
+        "map": [
+          66,
+          "原版最後一次點擊留下的游標，未接 -cursor"
+        ]
+      }
+    },
+    {
+      "name": "picker",
+      "note": "縮小地圖的勢力圖例選擇器",
+      "doc": "docs/playtest/97-faction-picker-parity.md",
+      "orig": "workplace/parity/cells/orig-picker.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/dosgolem/root-noclouds/SAVE.DAT",
+        "-load-slot",
+        "0",
+        "-open-faction-picker",
+        "-cam",
+        "0,0",
+        "-fixture-when",
+        "clock:196/4/17/6",
+        "-shot-when",
+        "clock:196/4/17/6"
+      ],
+      "regions": "strategy",
+      "allow": {
+        "minimap": [
+          82,
+          "原版游標停在圖例上，未接 -cursor（playtest/97）"
+        ]
+      }
+    },
+    {
+      "name": "general-said",
+      "note": "武將一覽 → 曹操的台詞",
+      "doc": "docs/playtest/91-general-boast-parity.md",
+      "orig": "workplace/parity/cells/orig-gen1.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/dosgolem/root-noclouds/SAVE.DAT",
+        "-load-slot",
+        "0",
+        "-open-list",
+        "-list-pick-row",
+        "0",
+        "-cam",
+        "0,0",
+        "-fixture-when",
+        "clock:196/4/17/6",
+        "-shot-when",
+        "clock:196/4/17/6"
+      ],
+      "regions": "strategy",
+      "allow": {}
+    },
+    {
+      "name": "help7b",
+      "note": "請求協助第二步（狀態列 #7）",
+      "doc": "docs/playtest/102-help-second-step.md",
+      "orig": "workplace/parity/cells/orig-help7b.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/dosgolem/root-diplomat/SAVE.DAT",
+        "-load-slot",
+        "0",
+        "-advise-target",
+        "-advise-pick-row",
+        "2",
+        "-advise-list-row",
+        "0",
+        "-cursor",
+        "200,112",
+        "-cam",
+        "0,0",
+        "-fixture-when",
+        "clock:196/4/17/6",
+        "-shot-when",
+        "clock:196/4/17/6"
+      ],
+      "regions": "strategy",
+      "allow": {}
+    },
+    {
+      "name": "advise-scene",
+      "note": "說服場景（插圖＋君主框＋軍師框）",
+      "doc": "docs/playtest/103-advise-scene-parity.md",
+      "orig": "workplace/parity/cells/orig-help-done.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/dosgolem/root-diplomat/SAVE.DAT",
+        "-load-slot",
+        "0",
+        "-advise-target",
+        "-advise-pick-row",
+        "2",
+        "-advise-list-row",
+        "0:0",
+        "-cursor",
+        "200,112",
+        "-cam",
+        "0,0",
+        "-fixture-when",
+        "clock:196/4/17/6",
+        "-shot-when",
+        "clock:196/4/17/6"
+      ],
+      "regions": "strategy",
+      "allow": {
+        "上框": [
+          95,
+          "原版錄影自己畫的滑鼠游標，remake 的截圖模式不畫（playtest/107、spec/197）"
+        ],
+        "command": [
+          1369,
+          "remake 自加的操作提示「Enter 繼續」（cmd/wlgame/advise.go:678、playtest/104 §1）"
+        ]
+      },
+      "rects": {
+        "插圖": "56,136,288,176",
+        "上框": "0,80,256,80",
+        "下半畫面": "0,320,432,80"
+      },
+      "gap": {
+        "map": [
+          3354,
+          "2,127 px 是 remake 自加的「Enter 繼續」提示；1,750 px 是**進言選單沒關掉**的殘影——原版進說服場景時把它清掉了"
+        ]
+      }
+    },
+    {
+      "name": "sortie",
+      "note": "判決畫面（請求君主出陣）",
+      "doc": "docs/playtest/104-advise-verdict-parity.md",
+      "orig": "workplace/parity/cells/orig-sortie.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/dosgolem/root-noclouds/SAVE.DAT",
+        "-load-slot",
+        "0",
+        "-advise-sortie",
+        "-cam",
+        "0,0",
+        "-fixture-when",
+        "clock:196/4/17/6",
+        "-shot-when",
+        "clock:196/4/17/6"
+      ],
+      "regions": "strategy",
+      "allow": {
+        "command": [
+          1369,
+          "remake 自加的操作提示「Enter 繼續」（cmd/wlgame/advise.go:678、playtest/104 §1）"
+        ],
+        "map": [
+          1509,
+          "remake 自加的操作提示「Enter 繼續」（cmd/wlgame/advise.go:678、playtest/104 §1）（跨到 map 區的下半）"
+        ]
+      },
+      "rects": {
+        "插圖": "56,136,288,176",
+        "上框": "0,80,256,80",
+        "選單殘影": "0,64,120,32",
+        "下半畫面": "0,320,432,80"
+      }
+    },
+    {
+      "name": "video-lcd",
+      "note": "系統選單的畫面模式「液晶」",
+      "doc": "docs/playtest/100-video-mode-parity.md",
+      "orig": "workplace/parity/cells/orig-sys1.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/dosgolem/root-noclouds/SAVE.DAT",
+        "-load-slot",
+        "0",
+        "-open-window",
+        "3",
+        "-video-lcd",
+        "-cam",
+        "0,0",
+        "-fixture-when",
+        "clock:196/4/16/10",
+        "-shot-when",
+        "clock:196/4/16/10",
+        "-audio",
+        "workplace/audio"
+      ],
+      "regions": "strategy",
+      "allow": {
+        "map": [
+          15345,
+          "remake 刻意多三列系統設定：主君編成（spec/76）、損害報告（spec/89）、戰後結果秒數（spec/156）"
+        ],
+        "肖像與清單": [
+          15289,
+          "remake 刻意多三列系統設定：主君編成（spec/76）、損害報告（spec/89）、戰後結果秒數（spec/156）"
+        ]
+      },
+      "rects": {
+        "視窗外大地圖": "0,64,208,336",
+        "肖像與清單": "0,192,432,208"
+      }
+    },
+    {
+      "name": "quit-menu",
+      "note": "系統選單的「遊戲結束」兩項選單",
+      "doc": "docs/playtest/101-quit-menu-parity.md",
+      "orig": "workplace/parity/sys5/orig-sys5b.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/dosgolem/root-noclouds/SAVE.DAT",
+        "-load-slot",
+        "0",
+        "-open-window",
+        "3",
+        "-quit-menu",
+        "-cam",
+        "0,0",
+        "-audio",
+        "workplace/audio"
+      ],
+      "regions": "strategy",
+      "allow": {
+        "map": [
+          14795,
+          "remake 刻意多三列系統設定：主君編成（spec/76）、損害報告（spec/89）、戰後結果秒數（spec/156）"
+        ]
+      },
+      "rects": {
+        "選單框": "352,272,112,48",
+        "視窗外大地圖": "0,64,208,336"
+      }
+    },
+    {
+      "name": "field",
+      "note": "野戰開戰第 52 拍（夏侯惇 39 對呂布 35）",
+      "doc": "docs/playtest/59-shot-when-natural-flow.md",
+      "orig": "workplace/promo-live/parity-field14/b0.png",
+      "crop": true,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "1",
+        "-save-file",
+        "workplace/parity/SAVE-FIELD.DAT",
+        "-load-slot",
+        "0",
+        "-open-battle",
+        "-siege-corps",
+        "39,35",
+        "-battle-steps",
+        "52",
+        "-shot-frames",
+        "1"
+      ],
+      "regions": "tactical",
+      "allow": {
+        "field": [
+          95,
+          "原版錄影自己畫的滑鼠游標，remake 的截圖模式不畫（playtest/107、spec/197）"
+        ]
+      },
+      "gap": {
+        "sb-minimap": [
+          128,
+          "開場擺位的 Y 是亂數而兩邊亂數不同源，縮圖上的兵點位置必然不同（spec/133 §3.6／§4：判準是值域與落點不是全等）。這一格擋的是它別再變大"
+        ]
+      }
+    },
+    {
+      "name": "siege",
+      "note": "攻城：同一場仗（呂布 35 攻許昌 82），dosgolem 的 siege:35,82。⚠ 取樣點是第 6 拍不是第 0 拍——第 0 拍落在開場初始化中間，六個部隊格的命令圖示還沒設好（bottom 930 px）",
+      "doc": "docs/playtest/72-same-battle-parity.md",
+      "orig": "workplace/dosgolem/siege/s1.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/promo-live/parity-battle4/SAVE-B.DAT",
+        "-load-slot",
+        "0",
+        "-open-siege",
+        "-siege-corps",
+        "35,39",
+        "-siege-node",
+        "82",
+        "-battle-steps",
+        "6",
+        "-audio",
+        "workplace/audio",
+        "-shot-frames",
+        "1"
+      ],
+      "regions": "tactical",
+      "allow": {},
+      "gap": {
+        "field": [
+          179,
+          "95 px 是原版錄影的滑鼠游標，另外 84 px 是城牆上一個兵的位置——開場擺位 Y 是亂數、兩邊不同源（spec/133 §3.6）"
+        ],
+        "sb-minimap": [
+          432,
+          "同上：縮圖看得到全場，畫面外的兵位置差都落在這裡"
+        ]
+      }
+    },
+    {
+      "name": "menu-advise",
+      "note": "指令列第 1 格的進言選單（五項）",
+      "doc": "docs/playtest/82-strategy-date-aligned-parity.md",
+      "orig": "workplace/dosgolem/advise/a1-advise.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/dosgolem/root-saveb/SAVE.DAT",
+        "-load-slot",
+        "0",
+        "-advise-menu",
+        "-cam",
+        "0,0",
+        "-fixture-when",
+        "clock:196/4/20/2",
+        "-shot-when",
+        "clock:196/4/20/2"
+      ],
+      "regions": "strategy",
+      "allow": {}
+    },
+    {
+      "name": "finance",
+      "note": "財政視窗。⚠ 取樣點要寫到「時」：a3dedbb 把一天改成 23 小時、新的一天從 1 時開始之後，clock:196/4/20 停在 1 時而原版的 until:196/4/20 停在 2 時，資金差 19（73696 vs 73715）",
+      "doc": "docs/playtest/82-strategy-date-aligned-parity.md",
+      "orig": "workplace/dosgolem/advise/b-finance.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/dosgolem/root-saveb/SAVE.DAT",
+        "-load-slot",
+        "0",
+        "-open-finance",
+        "-cam",
+        "0,0",
+        "-fixture-when",
+        "clock:196/4/20/2",
+        "-shot-when",
+        "clock:196/4/20/2"
+      ],
+      "regions": "strategy",
+      "allow": {
+        "command": [
+          88,
+          "原版自己畫的滑鼠游標，14×14（playtest/82）"
+        ],
+        "map": [
+          141,
+          "M7 校訂：TALK #16「財政予定」→「財政計畫」（translations/corrections.json id 16）"
+        ]
+      }
+    },
+    {
+      "name": "form",
+      "note": "編成第一步（武將一覽）。⚠ fixture 是 -open-form-pick：-open-form 會直接走到第二步的編成面板",
+      "doc": "docs/playtest/82-strategy-date-aligned-parity.md",
+      "orig": "workplace/dosgolem/advise/c-form.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/dosgolem/root-saveb/SAVE.DAT",
+        "-load-slot",
+        "0",
+        "-open-form-pick",
+        "-lord-corps=false",
+        "-cam",
+        "0,0",
+        "-fixture-when",
+        "clock:196/4/20/2",
+        "-shot-when",
+        "clock:196/4/20/2"
+      ],
+      "regions": "strategy",
+      "allow": {
+        "command": [
+          88,
+          "原版自己畫的滑鼠游標，14×14（playtest/82）"
+        ]
+      }
+    }
+  ]
+}

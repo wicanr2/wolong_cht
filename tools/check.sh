@@ -55,7 +55,11 @@ step() {
 GO_PKGS="./cmd/... ./internal/... ./mobile/... ./tools/... ./translations/..."
 for d in */; do
     d=${d%/}
-    case "$d" in cmd|internal|mobile|tools|translations|workplace) continue ;; esac
+    # ⚠ `dist`／`dist-*` 是**產物**目錄，不是原始碼：`release_fs.py finalize`
+    # 會把整個 `translations/`（含 `embed.go`）複製進去，於是這道護欄在
+    # 打包之後每次都紅，而它想擋的是「新增了頂層 Go 目錄卻忘了補進
+    # GO_PKGS」——產物目錄不在那個問題的範圍內。
+    case "$d" in cmd|internal|mobile|tools|translations|workplace|dist|dist-*) continue ;; esac
     if compgen -G "$d/*.go" > /dev/null 2>&1 || compgen -G "$d/*/*.go" > /dev/null 2>&1; then
         echo "⚠ $d/ 底下有 Go 檔卻不在 GO_PKGS 裡，補進 tools/check.sh 再跑" >&2
         exit 1
@@ -92,7 +96,8 @@ if [[ $WANT_DOCS == 1 ]]; then
         tools/py.sh tools/parity_diff.py --selftest
         tools/py.sh tools/state_diff.py --selftest
         tools/py.sh tools/parity_save.py --selftest
-        tools/py.sh tools/rng_state.py --selftest'
+        tools/py.sh tools/rng_state.py --selftest
+        tools/py.sh tools/parity_screens.py --selftest'
     step "發行目錄交換" tools/py.sh tools/release_all_fs.py --selftest
     step "資產 deny-list" bash -c '
         tools/py.sh tools/denylist.py --selftest

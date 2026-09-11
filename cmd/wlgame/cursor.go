@@ -50,6 +50,13 @@ func (g *game) drawMouseCursor(screen *ebiten.Image) {
 		return
 	}
 	at := g.cursorAt
+	// ⛔ **截圖對拍不畫虛擬游標。** `-shot` 是對拍用的路徑，畫面上多一個
+	// 14×14 的箭頭就會讓那一格對不上——主畫面的 `map` 區因此從 0 px
+	// 變成 101 px（docs/playtest/120 §1.1）。要在對拍裡放游標請用
+	// `-cursor X,Y` 明講位置（docs/spec/154）。
+	if at == nil && g.shotPath != "" {
+		return
+	}
 	if at == nil && desktopPointer.active {
 		if g.desktopMapCursorVisible() {
 			return
@@ -80,8 +87,13 @@ func (g *game) drawMouseCursor(screen *ebiten.Image) {
 }
 
 // desktopMapCursorVisible 與可點選地圖共用熱區界線；其他 UI 維持箭頭。
+//
+// ⛔ **截圖對拍不算**（`-shot`）：桌面捕捉模式會在游標所在那一格畫一個
+// 16×16 的白黑框，而原版同狀態的那一格沒有它——主畫面的 `map` 區因此
+// 從 0 px 變成 101 px（docs/playtest/120 §1.1，二分到 `ef666c5`）。
+// 要在對拍裡放游標請用 `-cursor X,Y` 明講位置（docs/spec/154）。
 func (g *game) desktopMapCursorVisible() bool {
-	if g == nil || !desktopPointer.active || g.cursorAt != nil || g.world == nil ||
+	if g == nil || g.shotPath != "" || !desktopPointer.active || g.cursorAt != nil || g.world == nil ||
 		g.launcher != nil || g.battleActive() || g.hudOpen(hudSystem) ||
 		g.quitting || g.quitMenu.active || g.endingActive() || g.messageActive() {
 		return false

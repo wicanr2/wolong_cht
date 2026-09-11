@@ -62,7 +62,7 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 
 <!-- worklist:begin 由 tools/worklist.py render 產生，不要手改 -->
 
-共 **12 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
+共 **13 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
 
 跑 `tools/py.sh tools/worklist.py verify` 逐條問一次；`check.sh` 會替你跑。
 
@@ -112,21 +112,25 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 
 **verify**：`present` `/模型還不完整/` 在 `docs/spec/195-ai-stage1-asks-about-the-intent.md`
 
-#### 畫面對拍落後規則對拍：三組都不是全 PASS
+#### 進言選單在說服場景上沒關掉
 
-規則層的同狀態對拍已經到 196/5/31（拍 9,177、66 個取樣點、六張表逐 byte 相同），但畫面那一側落後（docs/playtest/120）：
+說服場景（`tools/parity_screens.sh advise-scene`）的 `map` 區剩 3,354 px，其中 **1,750 px 是進言那五項選單的殘影**——原版進說服場景時把它清掉了，remake 留著。另外 2,127 px 是 remake 自加的「Enter 繼續」提示。
 
-· 主畫面：`map` 101 px（0.07%），文件記的是五區全 PASS
-· 野戰：`field` 190 px、`sb-minimap` 128 px（FAIL），文件記的是 95／32
-· 攻城：**重跑不出來**——playtest/58 沒寫哪一張原版 PNG 對應哪一個取樣點
+⭐ 同一張畫面的插圖外框已經修好了（`docs/spec/198`），所以剩下的這一塊是獨立的一條，不會被那個修正帶走。
 
-⭐ 三組都用 `c2c3522`（2026-09-11 那一輪之前）重截驗證過，**數字一模一樣**，所以是 2026-09-02 之後某一輪引入的，而那段期間每一輪都在改規則層、沒有一輪回頭重跑畫面。
+**怎樣算做完**：`tools/parity_screens.sh advise-scene` 的 `map` 降到只剩 Enter 提示那 2,127 px，並把 JSON 的 gap 改成 allow。
 
-下一步：先把攻城的取樣點與原版圖對上號（不然那一組永遠驗不了），再用二分找出主畫面那 101 px 是哪一輪進來的。
+**verify**：`present` `/進言選單沒關掉/` 在 `tools/parity_screens.json`
 
-**怎樣算做完**：主畫面五區全 PASS、野戰九區回到七區 PASS 且無 FAIL、攻城三個取樣點可重跑。
+#### 畫面對拍閘只收了十七組，還有十幾組沒進來
 
-**verify**：`present` `/狀態：不通過/` 在 `docs/playtest/120-screen-parity-retest-20260911.md`
+`tools/parity_screens.json` 現在有 17 組（`docs/playtest/121`）。還沒收的：`38` 三視窗、`39` 系統選單、`42` 四個視窗、`83` 據點一覽、`84` 人事／軍團六個出口、`92` 人事四個任免、`94` 行軍選點、`96` 大地圖點擊、`98` 敵軍團面板、`99` 存檔槽、`105` 命名視窗、`106` 啟動殼層三頁。
+
+⚠ 這些的文件裡 remake 側多半只有旗標片段（`89`–`104` 整批全文沒有出現 `parity_shot`），收進來要逐組把命令補齊並實測——**照抄跑不起來的那一種，正是下一輪規則改動之後不會開口的那一種**。
+
+**怎樣算做完**：上列每一組都在 `tools/parity_screens.json` 裡，且 `tools/parity_screens.sh` 全跑 exit 0。
+
+**verify**：`json_len` `tools/parity_screens.json` ≤ 28
 
 ### fidelity — 原版有這個機制，remake 還沒建模
 

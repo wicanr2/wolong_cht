@@ -280,9 +280,13 @@ def selftest():
     check("docs/lessons.json 讀得動而且 schema 過關", bool(data["lessons"]))
     check("每條都有 occurrences（沒犯過的不是教訓）",
           all(l["occurrences"] for l in data["lessons"]))
-    check("render 產得出來而且含首尾標記",
-          render_text(data).startswith(BEGIN)
-          and render_text(data).endswith(END))
+    # ⚠ 判準不能用 `endswith(END)`：本體會在 END 之後再加一行缺口註腳，
+    #   於是這一格從某一輪起恆為假——而 `check.sh` 在它之前的幽靈掃描
+    #   就停住了，所以沒有人看到它紅。改成問「標記成對且順序正確」。
+    text = render_text(data)
+    check("render 產得出來而且首尾標記成對",
+          text.startswith(BEGIN) and text.count(BEGIN) == 1
+          and text.count(END) == 1 and text.index(END) > text.index(BEGIN))
     # ⚠ 提示檔要真的挑得出東西——空字串與「沒有這個 key」長得一樣。
     keys = sorted({k for l in data["lessons"] for k in l.get("remind_on", [])})
     check("每條教訓至少掛一個 remind_on（否則工具印不到它）",

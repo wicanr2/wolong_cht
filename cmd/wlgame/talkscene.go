@@ -61,6 +61,13 @@ const (
 	talkSceneX = 56
 	talkSceneY = 136
 
+	// 插圖底下那個框：`sub_13D68` 先 `sub_10C14(dx=3, bx=8, cx=0C13h)`
+	// ⇒ 粗格 (3, 8) ＝ (48, 128)、`cl=13h` 19 × 16 ＝ 304 寬、
+	// `ch=0Ch` 12 × 16 ＝ 192 高（docs/spec/198）。插圖蓋住中間，
+	// 四邊各露 8 px。
+	talkSceneFrameX, talkSceneFrameY = 48, 128
+	talkSceneFrameW, talkSceneFrameH = 304, 192
+
 	// 選單框的左上角：外交三選一、撥款、說服五選一共用 `sub_13B7E`，
 	// 那一組座標是寫死的（docs/spec/45 §2）：
 	//
@@ -164,6 +171,11 @@ func (g *game) drawIventScene(screen *ebiten.Image, page int) {
 	if err != nil {
 		return
 	}
+	// ⭐ 插圖底下先畫一個框（docs/spec/198）：`sub_13D68` 貼圖之前
+	// 呼叫 `sub_10C14(dx=3, bx=8, cx=0C13h)` ⇒ (48, 128) 304×192，
+	// 比插圖大 8 px 一圈，露出來的那一圈就是畫面上的黃色邊。
+	g.chrome.Window(screen, talkSceneFrameX, talkSceneFrameY,
+		talkSceneFrameW, talkSceneFrameH, chrome.Menu)
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(talkSceneX, talkSceneY)
 	screen.DrawImage(ebiten.NewImageFromImage(img), op)
