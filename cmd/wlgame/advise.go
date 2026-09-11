@@ -496,6 +496,10 @@ func (g *game) beginPersuasion() {
 	// ⚠ 場景只蓋掉 (0,32,432,336)，狀態列的下緣 32 px 蓋不到——
 	// 不清就會露出來。
 	g.clearStatusTalk()
+	// ⭐ 進言選單在 (0, 64)，**整個在場景蓋掉的那個矩形裡**，所以原版的
+	// 說服畫面上看不到它（docs/spec/199）。它要留到這一刻才消失，不是
+	// 選完就消失——目標一覽表是直接畫在它上面的（docs/spec/126 §1.2）。
+	g.adviseMenuStale = false
 	// ① 君主開場（上框）、② 軍師的進言（下框）——原文與框的分工
 	// 都照原版（docs/spec/44 §2、docs/spec/45 §1）。
 	base := persuasion.TalkBase(g.adviseCmd)

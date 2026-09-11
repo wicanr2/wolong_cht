@@ -61,16 +61,48 @@
 | `sortie` `map` | 6,998 | **1,509**（只剩 Enter 提示）|
 | `advise-scene` `map` | 8,843 | **3,354** |
 
-## 4. 縮圖那幾格永遠不會是 0
+## 4. 縮圖那幾格：差的是輸入狀態，不是亂數流
 
-`sb-minimap`（野戰 128、攻城 432）與攻城 `field` 的 84 px 是**結構性的**：
-開場擺位的 Y 座標是亂數，而兩邊的亂數不同源，所以縮圖上的兵點位置必然不同
-（[`../spec/133`](../spec/133-opening-deployment.md) §3.6：判準是值域與落點，不是全等）。
+第一版我把 `sb-minimap`（野戰 128、攻城 432）記成「結構性、永遠不會是 0」，
+理由是 [`../spec/133`](../spec/133-opening-deployment.md) §3.6 的
+「開場擺位的 Y 是亂數，兩邊不同源」。**那個歸因不對。**
 
-⚠ **所以文件裡記過的 32／37／40／64／128 都只是不同亂數落點的取樣，
-拿它當回歸指標是錯的。** `bisect` 追這一格追到 `948318e`，而那個 commit
-自己的訊息就寫了「`sb-minimap` 37 → 64 px」——它是**已登記的漂移**，不是回歸。
-閘現在把它記成 `gap`：擋住它再變大，但不假裝它會是 0。
+`wlgame` 早就有 `-battle-exact`（[`../spec/90`](../spec/90-same-state-parity.md) §2.5）：
+不推進世界、不重擺兩軍，直接以 `-rng-state` 給的原版亂數狀態初始化戰場。
+[`114`](114-focus-and-same-battle.md) 那一輪用它逐槽核對過，**兩案例各 96 槽的
+座標與體力都相同**——所以「兩邊亂數不同源」早就不是事實了。
+
+這一輪照 `tools/dosgolem_battle_replay.go:91` 的取樣點（**擺位前是 `0x19C45`**）
+重取了一次原版側：
+
+```
+WOLONG_DOSGOLEM_GAMEDIR=dosgolem/root-saveb tools/dosgolem.sh workplace/parity/exact   "wait;click:320,200;click:300,151;siege:35,82;runto:11B5A;runto:19C45;   ipeek:1ECFC:258;steps:6000000;shot:orig-exact"
+tools/py.sh tools/rng_state.py workplace/parity/exact/run.log   workplace/parity/exact/spawn-rng.bin
+```
+
+⭐ 新擷取的 `orig-exact.png` 對 [`72`](72-same-battle-parity.md) 的 `s1.png`
+只差 `field` 138 px，其餘八區 0——**管線一致，是同一場同一階段**。
+
+把那份 RNG 灌進 remake 的 `-battle-exact` 之後：
+
+| `-shot-frames` | 20 | 60 | 100 | 150 |
+|---|---:|---:|---:|---:|
+| `field` | 41,809 | 29,377 | 28,445 | 28,195 |
+| `sb-minimap` | **624** | **624** | **624** | **624** |
+
+⇒ **縮圖恆為 624，一點都不隨取樣幀動。** 部隊在開場對白期間沒有移動，
+所以那 624 px 是**擺位結果本身就不同**——而亂數流已經同步了。
+
+⇒ 差異在**輸入狀態**：原版的 `siege:35,82` 會先改軍團記錄
+（清「被擋住」位元、寫 `word_10D32`，[`72`](72-same-battle-parity.md) §1），
+而 remake 這一側讀的是 `root-saveb/SAVE.DAT` 的**存檔**狀態。
+兩邊開仗前的軍團表就不一樣了。
+
+**下一步是把原版執行期的狀態讀回來當 fixture**（`peek` ＋
+`tools/orig_snapshot.py`，規則層對拍一直是這樣做的），不是再調亂數。
+素材已經在 `workplace/parity/exact/`。
+
+⚠ 在那之前，閘把這幾格記成 `gap`：擋住它再變大，但**不再宣稱它不可能是 0**。
 
 ## 5. 攻城到底能不能對拍
 

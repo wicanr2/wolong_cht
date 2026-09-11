@@ -297,18 +297,16 @@
         "command": [
           1369,
           "remake 自加的操作提示「Enter 繼續」（cmd/wlgame/advise.go:678、playtest/104 §1）"
+        ],
+        "map": [
+          1604,
+          "remake 自加的操作提示「Enter 繼續」（REMAKE-PLAN.md 的 Intentional differences、cmd/wlgame/advise.go）。進言選單那 1,750 px 的殘影已於 docs/spec/199 修掉"
         ]
       },
       "rects": {
         "插圖": "56,136,288,176",
         "上框": "0,80,256,80",
         "下半畫面": "0,320,432,80"
-      },
-      "gap": {
-        "map": [
-          3354,
-          "2,127 px 是 remake 自加的「Enter 繼續」提示；1,750 px 是**進言選單沒關掉**的殘影——原版進說服場景時把它清掉了"
-        ]
       }
     },
     {
@@ -475,7 +473,7 @@
       "gap": {
         "sb-minimap": [
           128,
-          "開場擺位的 Y 是亂數而兩邊亂數不同源，縮圖上的兵點位置必然不同（spec/133 §3.6／§4：判準是值域與落點不是全等）。這一格擋的是它別再變大"
+          "開仗前的**輸入狀態**不同，不是亂數流不同：把原版 0x19C45（擺位前）的 RNG 灌進 -battle-exact 之後這一格恆為 624 且不隨取樣幀變（docs/playtest/121 §4）。原版的 siege: 會先改軍團記錄，remake 這側讀的是存檔。下一步是用 peek ＋ orig_snapshot.py 把原版執行期狀態做成 fixture"
         ]
       }
     },
@@ -514,11 +512,11 @@
       "gap": {
         "field": [
           179,
-          "95 px 是原版錄影的滑鼠游標，另外 84 px 是城牆上一個兵的位置——開場擺位 Y 是亂數、兩邊不同源（spec/133 §3.6）"
+          "95 px 是原版錄影的滑鼠游標；另外 84 px 是城牆上一個兵的位置，與 sb-minimap 同一個成因"
         ],
         "sb-minimap": [
           432,
-          "同上：縮圖看得到全場，畫面外的兵位置差都落在這裡"
+          "開仗前的**輸入狀態**不同，不是亂數流不同：把原版 0x19C45（擺位前）的 RNG 灌進 -battle-exact 之後這一格恆為 624 且不隨取樣幀變（docs/playtest/121 §4）。原版的 siege: 會先改軍團記錄，remake 這側讀的是存檔。下一步是用 peek ＋ orig_snapshot.py 把原版執行期狀態做成 fixture"
         ]
       }
     },

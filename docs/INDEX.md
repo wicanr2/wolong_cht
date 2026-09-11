@@ -380,6 +380,7 @@
 | [`docs/spec/196-field-battle-rolls-the-battlefield.md`](spec/196-field-battle-rolls-the-battlefield.md) | 196 — 野戰開打前要先決定戰場，而水域那一格要擲骰 | CONFORMED。 | 2026-09-11 |
 | [`docs/spec/197-shot-mode-draws-no-desktop-cursor.md`](spec/197-shot-mode-draws-no-desktop-cursor.md) | 197 — 截圖對拍不畫桌面模式的游標 | CONFORMED。 | 2026-09-11 |
 | [`docs/spec/198-ivent-scene-frame.md`](spec/198-ivent-scene-frame.md) | 198 — 事件插圖少了外面那個框 | CONFORMED。 | 2026-09-11 |
+| [`docs/spec/199-persuade-scene-clears-the-advise-menu.md`](spec/199-persuade-scene-clears-the-advise-menu.md) | 199 — 說服場景進場要擦掉進言選單 | CONFORMED。 | 2026-09-11 |
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |

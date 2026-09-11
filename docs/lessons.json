@@ -1,566 +1,593 @@
 {
- "schema": "wolong-lessons/1",
- "note": "教訓的權威是這一份。docs/lessons.md 與 docs/lessons/*.txt 由 `tools/py.sh tools/lessons.py render` 產生，不要手改。verify 問的是「這一條的防線還在嗎」——與 worklist.py 相反。",
- "guard_kinds": {
-  "tool": "有工具會在 check.sh 每次問一次",
-  "test": "有測試釘住",
-  "remind": "工具會在對的時機把它印出來——擋不住，但保證看得到",
-  "rule": "只有文字規則，人要自己記得",
-  "none": "連規則都還沒寫"
- },
- "lessons": [
-  {
-   "id": "self-modifying-code-reads-as-data",
-   "title": "IDA 把整段解成資料時，先問是不是自我修改碼",
-   "trigger": "反組譯時看到一整段 `db`，而前面有 `mov cs:xxx, reg`",
-   "rule": "先當自我修改碼——那幾行寫的是**後面幾行的運算元**。交叉解碼那段 bytes 再下結論；「解不出指令」在讀的時候長得像「這段不重要」。",
-   "occurrences": [
-    {
-     "date": "2026-09-10",
-     "what": "`loc_1491B` 的退卻廣度優先：把兩個**終止條件**讀成「起點」，連錯兩種讀法，`commit` 並 `push` 之後才被第二組實測推翻",
-     "doc": "`docs/playtest/119` §34.5"
-    },
-    {
-     "date": "2026-08",
-     "what": "`loc_1A065` 的每輪更新、`loc_10701` 把屬性 patch 進 inline 立即值",
-     "doc": "`docs/re/28` §3"
-    }
-   ],
-   "remind_on": [
-    "ida"
-   ],
-   "guard": {
-    "kind": "remind",
-    "note": "規則在 `CLAUDE.md` §7 第 28 條；`tools/ida.sh` 每次跑會把它印出來。⚠ 光有規則擋不住——2026-09-10 那次規則就在載入的 `CLAUDE.md` 裡，讀碼時一次都沒被想起來。",
-    "verify": {
-     "kind": "present",
-     "paths": [
-      "CLAUDE.md"
-     ],
-     "pattern": "先懷疑自我修改碼"
-    }
-   }
+  "schema": "wolong-lessons/1",
+  "note": "教訓的權威是這一份。docs/lessons.md 與 docs/lessons/*.txt 由 `tools/py.sh tools/lessons.py render` 產生，不要手改。verify 問的是「這一條的防線還在嗎」——與 worklist.py 相反。",
+  "guard_kinds": {
+    "tool": "有工具會在 check.sh 每次問一次",
+    "test": "有測試釘住",
+    "remind": "工具會在對的時機把它印出來——擋不住，但保證看得到",
+    "rule": "只有文字規則，人要自己記得",
+    "none": "連規則都還沒寫"
   },
-  {
-   "id": "baseline-from-stale-artifact",
-   "title": "拿舊產物當基線＝拿舊程式碼當基線",
-   "trigger": "要引用文件裡的數字、或 `workplace/` 底下存下來的產物，當成「改之前是多少」",
-   "rule": "**先在當前 commit 重跑一次基線**。存下來的序列檔、`.DAT`、截圖都不會告訴你它是哪一版跑的。",
-   "occurrences": [
+  "lessons": [
     {
-     "date": "2026-09-11",
-     "what": "全檢查點跑到一半改了 `internal/state`，而 `tools/parity_ck.sh` 每個檢查點都 `go run` 重新編譯——**同一份 log 裡前 53 個是舊版、後面是新版**。停掉重跑才算數",
-     "doc": "`docs/playtest/119` §50.2"
+      "id": "self-modifying-code-reads-as-data",
+      "title": "IDA 把整段解成資料時，先問是不是自我修改碼",
+      "trigger": "反組譯時看到一整段 `db`，而前面有 `mov cs:xxx, reg`",
+      "rule": "先當自我修改碼——那幾行寫的是**後面幾行的運算元**。交叉解碼那段 bytes 再下結論；「解不出指令」在讀的時候長得像「這段不重要」。",
+      "occurrences": [
+        {
+          "date": "2026-09-10",
+          "what": "`loc_1491B` 的退卻廣度優先：把兩個**終止條件**讀成「起點」，連錯兩種讀法，`commit` 並 `push` 之後才被第二組實測推翻",
+          "doc": "`docs/playtest/119` §34.5"
+        },
+        {
+          "date": "2026-08",
+          "what": "`loc_1A065` 的每輪更新、`loc_10701` 把屬性 patch 進 inline 立即值",
+          "doc": "`docs/re/28` §3"
+        }
+      ],
+      "remind_on": [
+        "ida"
+      ],
+      "guard": {
+        "kind": "remind",
+        "note": "規則在 `CLAUDE.md` §7 第 28 條；`tools/ida.sh` 每次跑會把它印出來。⚠ 光有規則擋不住——2026-09-10 那次規則就在載入的 `CLAUDE.md` 裡，讀碼時一次都沒被想起來。",
+        "verify": {
+          "kind": "present",
+          "paths": [
+            "CLAUDE.md"
+          ],
+          "pattern": "先懷疑自我修改碼"
+        }
+      }
     },
     {
-     "date": "2026-09-10",
-     "what": "文件寫 229，HEAD 重跑是 369——差點把一個改善（369 → 332）讀成退步（229 → 332）",
-     "doc": "`docs/playtest/119` §33.1"
+      "id": "baseline-from-stale-artifact",
+      "title": "拿舊產物當基線＝拿舊程式碼當基線",
+      "trigger": "要引用文件裡的數字、或 `workplace/` 底下存下來的產物，當成「改之前是多少」",
+      "rule": "**先在當前 commit 重跑一次基線**。存下來的序列檔、`.DAT`、截圖都不會告訴你它是哪一版跑的。",
+      "occurrences": [
+        {
+          "date": "2026-09-11",
+          "what": "全檢查點跑到一半改了 `internal/state`，而 `tools/parity_ck.sh` 每個檢查點都 `go run` 重新編譯——**同一份 log 裡前 53 個是舊版、後面是新版**。停掉重跑才算數",
+          "doc": "`docs/playtest/119` §50.2"
+        },
+        {
+          "date": "2026-09-10",
+          "what": "文件寫 229，HEAD 重跑是 369——差點把一個改善（369 → 332）讀成退步（229 → 332）",
+          "doc": "`docs/playtest/119` §33.1"
+        },
+        {
+          "date": "2026-09-10",
+          "what": "`remake-ck200.DAT` 對原版 0 個 byte，同一條命令列在 HEAD 重跑是 4 個",
+          "doc": "同上"
+        },
+        {
+          "date": "2026-08",
+          "what": "`tools/go.sh` 沒把 `GOOS` 傳進 docker，三個平台建出一模一樣的執行檔，每次都 exit 0",
+          "doc": "`CLAUDE.md` §7 第 21 條"
+        }
+      ],
+      "remind_on": [
+        "parity"
+      ],
+      "guard": {
+        "kind": "remind",
+        "note": "`tools/dosgolem.sh` 每次跑會印。⚠ 只有規則擋不住——這一類的產物看起來永遠是對的。",
+        "verify": {
+          "kind": "present",
+          "paths": [
+            "CLAUDE.md"
+          ],
+          "pattern": "第一件事是驗產出真的不一樣"
+        }
+      }
     },
     {
-     "date": "2026-09-10",
-     "what": "`remake-ck200.DAT` 對原版 0 個 byte，同一條命令列在 HEAD 重跑是 4 個",
-     "doc": "同上"
+      "id": "one-sample-cannot-separate",
+      "title": "一組樣本分不開兩種讀法，就不算驗證",
+      "trigger": "要下「這個規則是這樣」的結論，而手上只有一組原版樣本",
+      "rule": "先問：**別的讀法在這一組上會給出不同答案嗎？** 會，才算驗證；不會，那一組只是「相容」。至少要兩組能互相分開的。",
+      "occurrences": [
+        {
+          "date": "2026-09-10",
+          "what": "退卻起點：第一組（軍團 1）「離首都近的端點」與「固定取 B 端」剛好同解，當成通過並 push；第二組（軍團 39）才把兩者分開",
+          "doc": "`docs/spec/46` §5.2"
+        },
+        {
+          "date": "2026-08",
+          "what": "拓樸一樣不等於路一樣：254 條邊裡 253 條兩邊都有，其中 109 條路徑長度差 > 2 格",
+          "doc": "`CLAUDE.md` §7 第 16 條"
+        },
+        {
+          "date": "2026-08",
+          "what": "把城池圖形當成橋加進去，連通性真的從 27 群收成 1 群——結果對不代表理由對",
+          "doc": "`CLAUDE.md` §7 第 18 條"
+        }
+      ],
+      "remind_on": [
+        "parity",
+        "ida"
+      ],
+      "guard": {
+        "kind": "remind",
+        "note": "`tools/ida.sh` 與 `tools/dosgolem.sh` 都會印。",
+        "verify": {
+          "kind": "present",
+          "paths": [
+            "CLAUDE.md"
+          ],
+          "pattern": "錯誤的理由可以得到正確的結果"
+        }
+      }
     },
     {
-     "date": "2026-08",
-     "what": "`tools/go.sh` 沒把 `GOOS` 傳進 docker，三個平台建出一模一樣的執行檔，每次都 exit 0",
-     "doc": "`CLAUDE.md` §7 第 21 條"
-    }
-   ],
-   "remind_on": [
-    "parity"
-   ],
-   "guard": {
-    "kind": "remind",
-    "note": "`tools/dosgolem.sh` 每次跑會印。⚠ 只有規則擋不住——這一類的產物看起來永遠是對的。",
-    "verify": {
-     "kind": "present",
-     "paths": [
-      "CLAUDE.md"
-     ],
-     "pattern": "第一件事是驗產出真的不一樣"
-    }
-   }
-  },
-  {
-   "id": "one-sample-cannot-separate",
-   "title": "一組樣本分不開兩種讀法，就不算驗證",
-   "trigger": "要下「這個規則是這樣」的結論，而手上只有一組原版樣本",
-   "rule": "先問：**別的讀法在這一組上會給出不同答案嗎？** 會，才算驗證；不會，那一組只是「相容」。至少要兩組能互相分開的。",
-   "occurrences": [
-    {
-     "date": "2026-09-10",
-     "what": "退卻起點：第一組（軍團 1）「離首都近的端點」與「固定取 B 端」剛好同解，當成通過並 push；第二組（軍團 39）才把兩者分開",
-     "doc": "`docs/spec/46` §5.2"
+      "id": "alignment-per-state",
+      "title": "「兩邊對齊了」要對每一種狀態各問一次",
+      "trigger": "同狀態對拍之前，宣稱兩邊起點對齊",
+      "rule": "游標、取數**個數**、亂數**值**是三件事。個數序列對值完全不敏感，所以那道自檢永遠不會為了值開口——要直接問值。",
+      "occurrences": [
+        {
+          "date": "2026-09-10",
+          "what": "`-skip 27` 讓 remake 拿快照的亂數狀態多跑 27 拍，亂數流岔開；游標與個數都「對齊」了，值沒有。代價是把真正的第一個分歧藏了 288 拍",
+          "doc": "`docs/playtest/119` §34"
+        }
+      ],
+      "remind_on": [
+        "parity"
+      ],
+      "guard": {
+        "kind": "remind",
+        "note": "`tools/dosgolem.sh` 會印。問亂數值的方法在 `docs/playtest/119` §34.1。",
+        "verify": {
+          "kind": "present",
+          "paths": [
+            "CONTEXT.md"
+          ],
+          "pattern": "要對每一種狀態各問一次"
+        }
+      }
     },
     {
-     "date": "2026-08",
-     "what": "拓樸一樣不等於路一樣：254 條邊裡 253 條兩邊都有，其中 109 條路徑長度差 > 2 格",
-     "doc": "`CLAUDE.md` §7 第 16 條"
+      "id": "remake-only-field",
+      "title": "remake 自己加的欄位最危險",
+      "trigger": "要用一個 remake 有、而原版沒有對應物的欄位當判準",
+      "rule": "先問原版用什麼判準。多出來的欄位讓每個判斷都能寫成 `X == Y` 而**看起來合理、測試也綠**——原版根本沒有那個概念。",
+      "occurrences": [
+        {
+          "date": "2026-09-10",
+          "what": "`Corps.Node` 被當成「站在哪裡」用了三處：退卻的「站在自家據點上」、退卻起點、據點失守的調頭名單。原版分別用 `+0x0E < 600h`、邊的兩端、**座標**",
+          "doc": "`CONTEXT.md` §6"
+        },
+        {
+          "date": "2026-09-10",
+          "what": "又五處：四個 `c.Node == capital`（留守補兵、Stage 9 轉補兵、補兵、解散）與 `army.KindOf(c.Node) == army.FieldNode`（軍費與士氣）。原版 `sub_14548` 比三個欄位（座標兩格 ＋ `+0x0E`），`sub_12600` 比 `+0x0E ≥ 800h`。**「從 X 出發、目標也是 X」在退卻與回首都補兵時是常態**，所以這個誤判不是邊角",
+          "doc": "`CONTEXT.md` §6、`docs/spec/177` §1.5、`docs/spec/178`"
+        },
+        {
+          "date": "2026-09-10",
+          "what": "第六處：攻城的守軍名單 `pickDefender(..., d.Node == node)`。`sub_14C72` 收的是**同一格**的名單（攻城時就是據點座標）。拿 `Node` 比會把「從這座城出發、正走在路上」的軍團算成守軍——而**三個測試一直靠這個誤判通過**（兩支軍團其實錯身而過，攻城時憑 `Node` 憑空找到守軍）",
+          "doc": "`docs/spec/82`、`CONTEXT.md` §6"
+        }
+      ],
+      "remind_on": [
+        "ida",
+        "commit"
+      ],
+      "guard": {
+        "kind": "remind",
+        "note": "`tools/ida.sh` 與 `tools/check.sh` 都會印。",
+        "verify": {
+          "kind": "present",
+          "paths": [
+            "CONTEXT.md"
+          ],
+          "pattern": "remake 多出來的欄位最危險"
+        }
+      }
     },
     {
-     "date": "2026-08",
-     "what": "把城池圖形當成橋加進去，連通性真的從 27 群收成 1 群——結果對不代表理由對",
-     "doc": "`CLAUDE.md` §7 第 18 條"
-    }
-   ],
-   "remind_on": [
-    "parity",
-    "ida"
-   ],
-   "guard": {
-    "kind": "remind",
-    "note": "`tools/ida.sh` 與 `tools/dosgolem.sh` 都會印。",
-    "verify": {
-     "kind": "present",
-     "paths": [
-      "CLAUDE.md"
-     ],
-     "pattern": "錯誤的理由可以得到正確的結果"
-    }
-   }
-  },
-  {
-   "id": "alignment-per-state",
-   "title": "「兩邊對齊了」要對每一種狀態各問一次",
-   "trigger": "同狀態對拍之前，宣稱兩邊起點對齊",
-   "rule": "游標、取數**個數**、亂數**值**是三件事。個數序列對值完全不敏感，所以那道自檢永遠不會為了值開口——要直接問值。",
-   "occurrences": [
-    {
-     "date": "2026-09-10",
-     "what": "`-skip 27` 讓 remake 拿快照的亂數狀態多跑 27 拍，亂數流岔開；游標與個數都「對齊」了，值沒有。代價是把真正的第一個分歧藏了 288 拍",
-     "doc": "`docs/playtest/119` §34"
-    }
-   ],
-   "remind_on": [
-    "parity"
-   ],
-   "guard": {
-    "kind": "remind",
-    "note": "`tools/dosgolem.sh` 會印。問亂數值的方法在 `docs/playtest/119` §34.1。",
-    "verify": {
-     "kind": "present",
-     "paths": [
-      "CONTEXT.md"
-     ],
-     "pattern": "要對每一種狀態各問一次"
-    }
-   }
-  },
-  {
-   "id": "remake-only-field",
-   "title": "remake 自己加的欄位最危險",
-   "trigger": "要用一個 remake 有、而原版沒有對應物的欄位當判準",
-   "rule": "先問原版用什麼判準。多出來的欄位讓每個判斷都能寫成 `X == Y` 而**看起來合理、測試也綠**——原版根本沒有那個概念。",
-   "occurrences": [
-    {
-     "date": "2026-09-10",
-     "what": "`Corps.Node` 被當成「站在哪裡」用了三處：退卻的「站在自家據點上」、退卻起點、據點失守的調頭名單。原版分別用 `+0x0E < 600h`、邊的兩端、**座標**",
-     "doc": "`CONTEXT.md` §6"
+      "id": "attribute-nibble-order",
+      "title": "屬性 byte 的兩個半位元組是「背景︰前景」",
+      "trigger": "處理原版的顏色屬性 byte",
+      "rule": "高半位元組是**背景**、低半位元組是前景，不是相反。⚠ 抄反了在別處未必看得出來——只有背景剛好等於前景那一次才會整個消失。",
+      "occurrences": [
+        {
+          "date": "2026-09-06",
+          "what": "`docs/re/52` §4 的日期欄顏色",
+          "doc": "`CONTEXT.md` §6"
+        },
+        {
+          "date": "2026-09-07",
+          "what": "軍師命名視窗的選字表顏色——**同一種錯誤第二次**",
+          "doc": "`CONTEXT.md` §6"
+        }
+      ],
+      "remind_on": [
+        "ida"
+      ],
+      "guard": {
+        "kind": "remind",
+        "note": "`tools/ida.sh` 會印。",
+        "verify": {
+          "kind": "present",
+          "paths": [
+            "CONTEXT.md"
+          ],
+          "pattern": "背景︰前景"
+        }
+      }
     },
     {
-     "date": "2026-09-10",
-     "what": "又五處：四個 `c.Node == capital`（留守補兵、Stage 9 轉補兵、補兵、解散）與 `army.KindOf(c.Node) == army.FieldNode`（軍費與士氣）。原版 `sub_14548` 比三個欄位（座標兩格 ＋ `+0x0E`），`sub_12600` 比 `+0x0E ≥ 800h`。**「從 X 出發、目標也是 X」在退卻與回首都補兵時是常態**，所以這個誤判不是邊角",
-     "doc": "`CONTEXT.md` §6、`docs/spec/177` §1.5、`docs/spec/178`"
+      "id": "rule-without-trigger",
+      "title": "規則沒有觸發時機，等於不存在",
+      "trigger": "寫下一條新規則或新教訓的那一刻",
+      "rule": "同時給出**什麼時候會想起它**與**什麼會檢查它**。會復發的斷言要規則與檢查兩者都有，只有其中一個都不夠。",
+      "occurrences": [
+        {
+          "date": "2026-09-03",
+          "what": "git 身分規則早就存在，但觸發點寫成「第一個 commit 之前」，接手既有 repo 時一次都沒成立——131 個 commit 裡 58 個掛公司信箱",
+          "doc": "`CLAUDE.md` §10"
+        },
+        {
+          "date": "2026-08",
+          "what": "「密碼頁不擋 oracle」在四份文件裡復發，包括解出來的同一天新寫的筆記",
+          "doc": "`CLAUDE.md` §4.0"
+        },
+        {
+          "date": "2026-09-10",
+          "what": "`docs/playtest/119` §36.5 寫了「對齊要看據點游標，不能看拍數」並列出正確拍數（200／702／1,203／1,604／1,905），**下一輪重生 remake 檢查點還是照檔名跑了 700／1200／1600／1900**。症狀是四個檢查點各有 2–5 座據點的上昇值與防災值差 1，看起來像規則錯，其實只是取樣點差 2–5 拍。改成工具 `tools/parity_ck.sh` 之後不接受手打拍數",
+          "doc": "`docs/playtest/119` §37.4"
+        }
+      ],
+      "remind_on": [
+        "commit"
+      ],
+      "guard": {
+        "kind": "tool",
+        "note": "`tools/index.py` 擋「密碼頁受阻」那個字樣的復發；`tools/parity_ck.sh` 把「拍數由游標反推」從一句警告變成唯一的入口。這一份 JSON 本身也是同一條規則的產物——每條教訓都必須說出 `trigger` 與 `guard`。",
+        "verify": {
+          "kind": "present",
+          "paths": [
+            "tools/index.py"
+          ],
+          "pattern": "密碼"
+        }
+      }
     },
     {
-     "date": "2026-09-10",
-     "what": "第六處：攻城的守軍名單 `pickDefender(..., d.Node == node)`。`sub_14C72` 收的是**同一格**的名單（攻城時就是據點座標）。拿 `Node` 比會把「從這座城出發、正走在路上」的軍團算成守軍——而**三個測試一直靠這個誤判通過**（兩支軍團其實錯身而過，攻城時憑 `Node` 憑空找到守軍）",
-     "doc": "`docs/spec/82`、`CONTEXT.md` §6"
-    }
-   ],
-   "remind_on": [
-    "ida",
-    "commit"
-   ],
-   "guard": {
-    "kind": "remind",
-    "note": "`tools/ida.sh` 與 `tools/check.sh` 都會印。",
-    "verify": {
-     "kind": "present",
-     "paths": [
-      "CONTEXT.md"
-     ],
-     "pattern": "remake 多出來的欄位最危險"
-    }
-   }
-  },
-  {
-   "id": "attribute-nibble-order",
-   "title": "屬性 byte 的兩個半位元組是「背景︰前景」",
-   "trigger": "處理原版的顏色屬性 byte",
-   "rule": "高半位元組是**背景**、低半位元組是前景，不是相反。⚠ 抄反了在別處未必看得出來——只有背景剛好等於前景那一次才會整個消失。",
-   "occurrences": [
-    {
-     "date": "2026-09-06",
-     "what": "`docs/re/52` §4 的日期欄顏色",
-     "doc": "`CONTEXT.md` §6"
+      "id": "query-matches-itself",
+      "title": "grep／pgrep 會匹配到查詢自己",
+      "trigger": "用 grep 或 pgrep 判斷「某個東西還在不在」",
+      "rule": "先確認那個 pattern 不會中到**查詢自己**：等待腳本的指令行、條目自己的 body、掃描工具自己的原始碼。",
+      "occurrences": [
+        {
+          "date": "2026-09-10",
+          "what": "`while pgrep -f \"apps/wolong\"` 匹配到等待腳本自己的指令行，條件永遠成立——多等了二十分鐘等一個早就結束的程序",
+          "doc": "本輪"
+        },
+        {
+          "date": "2026-09-10",
+          "what": "`worklist.py` 的 verify 會掃到 `worklist.json` 自己（條目的 body 幾乎一定含 pattern 的字樣），每一條都會永遠說「仍未完成」——寫工具時就擋掉了",
+          "doc": "`tools/worklist.py`"
+        }
+      ],
+      "remind_on": [
+        "commit"
+      ],
+      "guard": {
+        "kind": "test",
+        "note": "`tools/worklist.py --selftest` 有一條「不掃 worklist.json 自己」的正反對照。⚠ pgrep 那一半還沒有防線。",
+        "verify": {
+          "kind": "present",
+          "paths": [
+            "tools/worklist.py"
+          ],
+          "pattern": "不掃 worklist.json 自己"
+        }
+      }
     },
     {
-     "date": "2026-09-07",
-     "what": "軍師命名視窗的選字表顏色——**同一種錯誤第二次**",
-     "doc": "`CONTEXT.md` §6"
-    }
-   ],
-   "remind_on": [
-    "ida"
-   ],
-   "guard": {
-    "kind": "remind",
-    "note": "`tools/ida.sh` 會印。",
-    "verify": {
-     "kind": "present",
-     "paths": [
-      "CONTEXT.md"
-     ],
-     "pattern": "背景︰前景"
-    }
-   }
-  },
-  {
-   "id": "rule-without-trigger",
-   "title": "規則沒有觸發時機，等於不存在",
-   "trigger": "寫下一條新規則或新教訓的那一刻",
-   "rule": "同時給出**什麼時候會想起它**與**什麼會檢查它**。會復發的斷言要規則與檢查兩者都有，只有其中一個都不夠。",
-   "occurrences": [
-    {
-     "date": "2026-09-03",
-     "what": "git 身分規則早就存在，但觸發點寫成「第一個 commit 之前」，接手既有 repo 時一次都沒成立——131 個 commit 裡 58 個掛公司信箱",
-     "doc": "`CLAUDE.md` §10"
+      "id": "not-modelled-turns-off-checks",
+      "title": "宣告一個欄位「remake 不必建模」等於為它關掉所有檢查",
+      "trigger": "對拍時要把某個原版欄位標成「畫面用」「導出值」「remake 走自己那一套」而放進「不必比」那一格",
+      "rule": "先 grep `docs/` 問那個符號已經有沒有答案，再決定。符號查對了不代表語意查對了——**錯的是符號後面那句話**，而那句話一旦寫成「畫面用」，之後每一次逐欄比對都會合法地跳過它，於是它再也不會開口。要免除一個欄位，理由要跟斷言同級：寫明出處與推論等級。",
+      "occurrences": [
+        {
+          "date": "2026-09-10",
+          "what": "全域 `+0x30` 被記成「`cs:word_10D20`，大地圖捲動原點，畫面用」。它其實是**事件佇列的派發游標**，`docs/re/15`／`docs/re/07` 早就寫清楚了。沒還原它 ⇒ 整個月的宣戰被重播 ⇒ 四個勢力重設侵攻目標、多編四支救援軍團，拍 1,200 的據點表差到 172 座",
+          "doc": "`CONTEXT.md` §6、`docs/spec/176`"
+        }
+      ],
+      "remind_on": [
+        "parity",
+        "ida"
+      ],
+      "guard": {
+        "kind": "remind",
+        "note": "`tools/dosgolem.sh` 與 `tools/ida.sh` 開頭會印。真正的防線要等逐欄比對工具能列出「被免除的欄位＋理由」才做得起來。",
+        "verify": {
+          "kind": "present",
+          "paths": [
+            "CONTEXT.md"
+          ],
+          "pattern": "等於為它關掉所有檢查"
+        }
+      }
     },
     {
-     "date": "2026-08",
-     "what": "「密碼頁不擋 oracle」在四份文件裡復發，包括解出來的同一天新寫的筆記",
-     "doc": "`CLAUDE.md` §4.0"
+      "id": "filter-has-a-hole",
+      "title": "過濾器自己有洞：清除端的立即值是補數",
+      "trigger": "寫掃描條件去問「有沒有人做某件事」，而答案是 0 處",
+      "rule": "**把條件對「反面的寫法」也套一次。** 位元的設定端立即值含那個位元，清除端的立即值是**補數**（`and …, 0FEh` 清位元 0，而 `0FEh & 01h == 0`）——只篩「含」的一側，清除端全部落空，而輸出看起來完全正常。工具要**按角色分組**並在某一組是 0 處時明講，不要讓「這一類我沒在找」與「這一類真的沒有」印成同一個樣子。",
+      "occurrences": [
+        {
+          "date": "2026-09-10",
+          "what": "`parity_pace_diff.py` 的切拍規則 `PRE` 少列 `140F9`（求援冷卻擲骰在錨點 `sub_14194` 之前 43 道指令），報表因此說「原版拍 5654 求援、remake 拍 5655 求援」——**remake 才是對的**",
+          "doc": "`docs/playtest/119` §47.1"
+        },
+        {
+          "date": "2026-09-10",
+          "what": "`tools/ida_bitflag_users.py` 照「立即值含指定位元」篩，於是 `docs/spec/173` 斷言軍團 `+0x00` 位元 0「沒有清除端，所以是一次性的」。清除端就在 `sub_147BB` 的 `00014869`，語意整個相反",
+          "doc": "`CONTEXT.md` §6、`docs/spec/177` §1.3"
+        }
+      ],
+      "remind_on": [
+        "ida",
+        "parity"
+      ],
+      "guard": {
+        "kind": "tool",
+        "note": "`tools/ida_bitflag_users.py` 現在按角色分組（設／清／翻轉／測／遮罩保留），空的那一組會印出「一條都沒有——下結論前先確認掃描本身有正對照」。",
+        "verify": {
+          "kind": "present",
+          "paths": [
+            "tools/ida_bitflag_users.py"
+          ],
+          "pattern": "一條都沒有"
+        }
+      }
     },
     {
-     "date": "2026-09-10",
-     "what": "`docs/playtest/119` §36.5 寫了「對齊要看據點游標，不能看拍數」並列出正確拍數（200／702／1,203／1,604／1,905），**下一輪重生 remake 檢查點還是照檔名跑了 700／1200／1600／1900**。症狀是四個檢查點各有 2–5 座據點的上昇值與防災值差 1，看起來像規則錯，其實只是取樣點差 2–5 拍。改成工具 `tools/parity_ck.sh` 之後不接受手打拍數",
-     "doc": "`docs/playtest/119` §37.4"
-    }
-   ],
-   "remind_on": [
-    "commit"
-   ],
-   "guard": {
-    "kind": "tool",
-    "note": "`tools/index.py` 擋「密碼頁受阻」那個字樣的復發；`tools/parity_ck.sh` 把「拍數由游標反推」從一句警告變成唯一的入口。這一份 JSON 本身也是同一條規則的產物——每條教訓都必須說出 `trigger` 與 `guard`。",
-    "verify": {
-     "kind": "present",
-     "paths": [
-      "tools/index.py"
-     ],
-     "pattern": "密碼"
-    }
-   }
-  },
-  {
-   "id": "query-matches-itself",
-   "title": "grep／pgrep 會匹配到查詢自己",
-   "trigger": "用 grep 或 pgrep 判斷「某個東西還在不在」",
-   "rule": "先確認那個 pattern 不會中到**查詢自己**：等待腳本的指令行、條目自己的 body、掃描工具自己的原始碼。",
-   "occurrences": [
-    {
-     "date": "2026-09-10",
-     "what": "`while pgrep -f \"apps/wolong\"` 匹配到等待腳本自己的指令行，條件永遠成立——多等了二十分鐘等一個早就結束的程序",
-     "doc": "本輪"
+      "id": "tests-green-on-the-bug",
+      "title": "測試可能正是靠那個 bug 才綠的",
+      "trigger": "修好一個規則錯之後，本來綠的測試紅了",
+      "rule": "**先問「這個測試原本是怎麼通過的」，不要先假設自己改壞了。** 端對端測試搭的場面常常沒有被驗證過——它只驗「有沒有發生」，不驗「該不該發生」。修好判準之後場面不成立了，那代表原本的綠燈是假的。修法是**把場面改成真的成立**（並在測試裡寫明為什麼），不是把判準改回去。",
+      "occurrences": [
+        {
+          "date": "2026-09-10",
+          "what": "攻城守軍改用座標判準之後，三個端對端測試同時紅。查下去發現它們讓兩個君主互相攻打對方首都，而兩支其實**錯身而過**——攻城時憑 `Corps.Node`（行軍中留著出發據點）憑空找到守軍才打起來。改成「玩家留守、AI 來攻」之後場面才真的成立",
+          "doc": "`internal/state/state_test.go`、`internal/state/tactical_resolve_test.go`"
+        }
+      ],
+      "remind_on": [
+        "commit",
+        "parity"
+      ],
+      "guard": {
+        "kind": "rule",
+        "note": "沒有機器訊號——這一條要在「測試紅了」的當下想起來。⚠ verify **不能綁測試檔**：`lessons.py` 與 `worklist.py` 都只掃產品程式碼（`rulebook/61` 的硬規則），綁在 `_test.go` 的 pattern 永遠找不到，而那看起來就像「防線不見了」。改綁 `CONTEXT.md` 的推翻紀錄。",
+        "verify": {
+          "kind": "present",
+          "paths": [
+            "CONTEXT.md"
+          ],
+          "pattern": "這個測試原本是怎麼通過的"
+        }
+      }
     },
     {
-     "date": "2026-09-10",
-     "what": "`worklist.py` 的 verify 會掃到 `worklist.json` 自己（條目的 body 幾乎一定含 pattern 的字樣），每一條都會永遠說「仍未完成」——寫工具時就擋掉了",
-     "doc": "`tools/worklist.py`"
-    }
-   ],
-   "remind_on": [
-    "commit"
-   ],
-   "guard": {
-    "kind": "test",
-    "note": "`tools/worklist.py --selftest` 有一條「不掃 worklist.json 自己」的正反對照。⚠ pgrep 那一半還沒有防線。",
-    "verify": {
-     "kind": "present",
-     "paths": [
-      "tools/worklist.py"
-     ],
-     "pattern": "不掃 worklist.json 自己"
-    }
-   }
-  },
-  {
-   "id": "not-modelled-turns-off-checks",
-   "title": "宣告一個欄位「remake 不必建模」等於為它關掉所有檢查",
-   "trigger": "對拍時要把某個原版欄位標成「畫面用」「導出值」「remake 走自己那一套」而放進「不必比」那一格",
-   "rule": "先 grep `docs/` 問那個符號已經有沒有答案，再決定。符號查對了不代表語意查對了——**錯的是符號後面那句話**，而那句話一旦寫成「畫面用」，之後每一次逐欄比對都會合法地跳過它，於是它再也不會開口。要免除一個欄位，理由要跟斷言同級：寫明出處與推論等級。",
-   "occurrences": [
-    {
-     "date": "2026-09-10",
-     "what": "全域 `+0x30` 被記成「`cs:word_10D20`，大地圖捲動原點，畫面用」。它其實是**事件佇列的派發游標**，`docs/re/15`／`docs/re/07` 早就寫清楚了。沒還原它 ⇒ 整個月的宣戰被重播 ⇒ 四個勢力重設侵攻目標、多編四支救援軍團，拍 1,200 的據點表差到 172 座",
-     "doc": "`CONTEXT.md` §6、`docs/spec/176`"
-    }
-   ],
-   "remind_on": [
-    "parity",
-    "ida"
-   ],
-   "guard": {
-    "kind": "remind",
-    "note": "`tools/dosgolem.sh` 與 `tools/ida.sh` 開頭會印。真正的防線要等逐欄比對工具能列出「被免除的欄位＋理由」才做得起來。",
-    "verify": {
-     "kind": "present",
-     "paths": [
-      "CONTEXT.md"
-     ],
-     "pattern": "等於為它關掉所有檢查"
-    }
-   }
-  },
-  {
-   "id": "filter-has-a-hole",
-   "title": "過濾器自己有洞：清除端的立即值是補數",
-   "trigger": "寫掃描條件去問「有沒有人做某件事」，而答案是 0 處",
-   "rule": "**把條件對「反面的寫法」也套一次。** 位元的設定端立即值含那個位元，清除端的立即值是**補數**（`and …, 0FEh` 清位元 0，而 `0FEh & 01h == 0`）——只篩「含」的一側，清除端全部落空，而輸出看起來完全正常。工具要**按角色分組**並在某一組是 0 處時明講，不要讓「這一類我沒在找」與「這一類真的沒有」印成同一個樣子。",
-   "occurrences": [
-    {
-     "date": "2026-09-10",
-     "what": "`parity_pace_diff.py` 的切拍規則 `PRE` 少列 `140F9`（求援冷卻擲骰在錨點 `sub_14194` 之前 43 道指令），報表因此說「原版拍 5654 求援、remake 拍 5655 求援」——**remake 才是對的**",
-     "doc": "`docs/playtest/119` §47.1"
+      "id": "derived-number-as-observation",
+      "title": "倒推出來的數字是假說，不是觀測",
+      "trigger": "手上沒有某個值，於是拿一條式子從別的值反解出來，然後拿它去解釋現象",
+      "rule": "**先問這個數字有幾個獨立來源。** 反解用的式子本身可能就是錯的那一個——那時反解出來的值會「完美地」解釋現象，因為它就是為了解釋而生的。真正的觀測要能直接讀到（原版的記憶體、log 的暫存器、程式碼的常數）。拿不到就標成假說，並**先去找能直接讀的那一個**。",
+      "occurrences": [
+        {
+          "date": "2026-09-10",
+          "what": "拍 3,415 的調兵分歧。從 `want = 威脅量 + 2 − 佔用數` 反解出「原版的佔用數是 2」，據此花一整輪建模佔用圖、寫規格、追五個維護點。實際上那條式子用錯了支（`want` 恆為 1），而原版的佔用圖 peek 出來與 remake **逐格相同**",
+          "doc": "`docs/spec/184`、`docs/playtest/119` §43.1"
+        }
+      ],
+      "remind_on": [
+        "parity",
+        "ida"
+      ],
+      "guard": {
+        "kind": "tool",
+        "note": "`tools/orig_occupancy.py` 把原版的佔用圖直接 peek 出來逐格比——那一類「只能倒推」的狀態，能 peek 就 peek。dosgolem 的 `-watch` log 也帶暫存器，`sub_14155` 的 `DX` 就是 skip:want。",
+        "verify": {
+          "kind": "present",
+          "paths": [
+            "tools/orig_occupancy.py"
+          ],
+          "pattern": "為什麼快照非帶它不可|直接 peek"
+        }
+      }
     },
     {
-     "date": "2026-09-10",
-     "what": "`tools/ida_bitflag_users.py` 照「立即值含指定位元」篩，於是 `docs/spec/173` 斷言軍團 `+0x00` 位元 0「沒有清除端，所以是一次性的」。清除端就在 `sub_147BB` 的 `00014869`，語意整個相反",
-     "doc": "`CONTEXT.md` §6、`docs/spec/177` §1.3"
-    }
-   ],
-   "remind_on": [
-    "ida",
-    "parity"
-   ],
-   "guard": {
-    "kind": "tool",
-    "note": "`tools/ida_bitflag_users.py` 現在按角色分組（設／清／翻轉／測／遮罩保留），空的那一組會印出「一條都沒有——下結論前先確認掃描本身有正對照」。",
-    "verify": {
-     "kind": "present",
-     "paths": [
-      "tools/ida_bitflag_users.py"
-     ],
-     "pattern": "一條都沒有"
-    }
-   }
-  },
-  {
-   "id": "tests-green-on-the-bug",
-   "title": "測試可能正是靠那個 bug 才綠的",
-   "trigger": "修好一個規則錯之後，本來綠的測試紅了",
-   "rule": "**先問「這個測試原本是怎麼通過的」，不要先假設自己改壞了。** 端對端測試搭的場面常常沒有被驗證過——它只驗「有沒有發生」，不驗「該不該發生」。修好判準之後場面不成立了，那代表原本的綠燈是假的。修法是**把場面改成真的成立**（並在測試裡寫明為什麼），不是把判準改回去。",
-   "occurrences": [
-    {
-     "date": "2026-09-10",
-     "what": "攻城守軍改用座標判準之後，三個端對端測試同時紅。查下去發現它們讓兩個君主互相攻打對方首都，而兩支其實**錯身而過**——攻城時憑 `Corps.Node`（行軍中留著出發據點）憑空找到守軍才打起來。改成「玩家留守、AI 來攻」之後場面才真的成立",
-     "doc": "`internal/state/state_test.go`、`internal/state/tactical_resolve_test.go`"
-    }
-   ],
-   "remind_on": [
-    "commit",
-    "parity"
-   ],
-   "guard": {
-    "kind": "rule",
-    "note": "沒有機器訊號——這一條要在「測試紅了」的當下想起來。⚠ verify **不能綁測試檔**：`lessons.py` 與 `worklist.py` 都只掃產品程式碼（`rulebook/61` 的硬規則），綁在 `_test.go` 的 pattern 永遠找不到，而那看起來就像「防線不見了」。改綁 `CONTEXT.md` 的推翻紀錄。",
-    "verify": {
-     "kind": "present",
-     "paths": [
-      "CONTEXT.md"
-     ],
-     "pattern": "這個測試原本是怎麼通過的"
-    }
-   }
-  },
-  {
-   "id": "derived-number-as-observation",
-   "title": "倒推出來的數字是假說，不是觀測",
-   "trigger": "手上沒有某個值，於是拿一條式子從別的值反解出來，然後拿它去解釋現象",
-   "rule": "**先問這個數字有幾個獨立來源。** 反解用的式子本身可能就是錯的那一個——那時反解出來的值會「完美地」解釋現象，因為它就是為了解釋而生的。真正的觀測要能直接讀到（原版的記憶體、log 的暫存器、程式碼的常數）。拿不到就標成假說，並**先去找能直接讀的那一個**。",
-   "occurrences": [
-    {
-     "date": "2026-09-10",
-     "what": "拍 3,415 的調兵分歧。從 `want = 威脅量 + 2 − 佔用數` 反解出「原版的佔用數是 2」，據此花一整輪建模佔用圖、寫規格、追五個維護點。實際上那條式子用錯了支（`want` 恆為 1），而原版的佔用圖 peek 出來與 remake **逐格相同**",
-     "doc": "`docs/spec/184`、`docs/playtest/119` §43.1"
-    }
-   ],
-   "remind_on": [
-    "parity",
-    "ida"
-   ],
-   "guard": {
-    "kind": "tool",
-    "note": "`tools/orig_occupancy.py` 把原版的佔用圖直接 peek 出來逐格比——那一類「只能倒推」的狀態，能 peek 就 peek。dosgolem 的 `-watch` log 也帶暫存器，`sub_14155` 的 `DX` 就是 skip:want。",
-    "verify": {
-     "kind": "present",
-     "paths": [
-      "tools/orig_occupancy.py"
-     ],
-     "pattern": "為什麼快照非帶它不可|直接 peek"
-    }
-   }
-  },
-  {
-   "id": "count-matches-sequence-differs",
-   "title": "取數次數相同，不代表取數序列相同",
-   "trigger": "拿「這一拍取了幾次亂數」當同步的判準，或看到某個逐拍指標全綠就宣告那一段沒問題",
-   "rule": "**比次數是比一個雜湊，不是比內容。** 呼叫順序換位而總數不變時，兩邊的亂數值會全部餵給不同的判斷，而指標一片綠。下「這一拍一致」的結論之前，先把**兩邊的呼叫來源並排看一次**（`tools/parity_pace_diff.py --tick N`）。\n\n同一個形狀還有第二種：**那個維度根本不取亂數。** 行軍、路徑選擇、旗標維護都不取，所以取數比對對它們結構上是盲的——要抓它們得比狀態表，不是比取數。",
-   "occurrences": [
-    {
-     "date": "2026-09-10",
-     "what": "5/1 月結那一拍兩邊都是 647 次，逐拍取數比對說「一致」。實際上原版 `sub_15358` 把政略（`sub_12BD9`）排在災害之前，remake 排在之後——647 個值全部錯位，遷都的勢力集合、宣戰落在哪個佇列槽全不同，而第一個看得見的分歧要到 565 拍之後才浮出來",
-     "doc": "`docs/spec/185`、`docs/playtest/119` §45"
+      "id": "count-matches-sequence-differs",
+      "title": "取數次數相同，不代表取數序列相同",
+      "trigger": "拿「這一拍取了幾次亂數」當同步的判準，或看到某個逐拍指標全綠就宣告那一段沒問題",
+      "rule": "**比次數是比一個雜湊，不是比內容。** 呼叫順序換位而總數不變時，兩邊的亂數值會全部餵給不同的判斷，而指標一片綠。下「這一拍一致」的結論之前，先把**兩邊的呼叫來源並排看一次**（`tools/parity_pace_diff.py --tick N`）。\n\n同一個形狀還有第二種：**那個維度根本不取亂數。** 行軍、路徑選擇、旗標維護都不取，所以取數比對對它們結構上是盲的——要抓它們得比狀態表，不是比取數。",
+      "occurrences": [
+        {
+          "date": "2026-09-10",
+          "what": "5/1 月結那一拍兩邊都是 647 次，逐拍取數比對說「一致」。實際上原版 `sub_15358` 把政略（`sub_12BD9`）排在災害之前，remake 排在之後——647 個值全部錯位，遷都的勢力集合、宣戰落在哪個佇列槽全不同，而第一個看得見的分歧要到 565 拍之後才浮出來",
+          "doc": "`docs/spec/185`、`docs/playtest/119` §45"
+        },
+        {
+          "date": "2026-09-10",
+          "what": "月結修好之後取數不一致降到 21/5,480，第一個分歧報在拍 4,910；但軍團表在拍 4,900 就差了 15 個 byte——軍團 35 走上另一條路，而**行軍不取亂數**",
+          "doc": "`docs/spec/185` §4"
+        },
+        {
+          "date": "2026-09-10",
+          "what": "拍 5,020 的檢查點看起來是分歧（軍團 `+0x03` 差 1、子刻差 1、軍團游標差一個移動週期），實際是 `steps:` 停在**戰鬥中間**而 remake 跑完整拍。據點游標對得上只代表同一拍，不代表同一個位置",
+          "doc": "`docs/playtest/119` §46.6、`tools/parity_ck_orig.sh` 的註解"
+        }
+      ],
+      "remind_on": [
+        "parity"
+      ],
+      "guard": {
+        "kind": "tool",
+        "note": "`tools/parity_pace_diff.py --tick N` 把兩邊的呼叫來源逐筆並排；工具的 docstring 也明寫它只比次數。狀態面則靠 `tools/parity_ck.sh` 的五張表逐 byte 比。",
+        "verify": {
+          "kind": "present",
+          "paths": [
+            "tools/parity_pace_diff.py"
+          ],
+          "pattern": "只比「這一拍取了幾次」，不比取數的來源"
+        }
+      }
     },
     {
-     "date": "2026-09-10",
-     "what": "月結修好之後取數不一致降到 21/5,480，第一個分歧報在拍 4,910；但軍團表在拍 4,900 就差了 15 個 byte——軍團 35 走上另一條路，而**行軍不取亂數**",
-     "doc": "`docs/spec/185` §4"
+      "id": "flag-set-without-consumer",
+      "title": "「這個值被算出來」不等於「有人會看它」",
+      "trigger": "追一支函式追到它設了旗標／回了 CF／寫了欄位，就下「所以會發生 X」的結論",
+      "rule": "**下結論前要找到讀那個值的那一行。** 回傳值可能被整個丟掉，旗標可能只在某些呼叫端被消費，欄位可能只有一半的路徑會看。`tools/ida_callers.py` 查呼叫端、`tools/ida_disp_users.py` 查誰讀那個位移——**兩邊都要，因為「誰設」與「誰看」是不同的問題**（`docs/re/34` §2.05 是同一個形狀：位元 0 的設定端早就記了，消費端沒記，於是它被當成顯示狀態）。",
+      "occurrences": [
+        {
+          "date": "2026-09-10",
+          "what": "`sub_1474A` 士氣 0 回 STC ⇒ 斷言「士氣不足 100 的軍團打贏也會散掉」，還據此判說明書 5.5 與機器碼不符。實際上 `sub_14ADE`（攻城）拿「誰贏」分流，**勝方那一位根本不看**——說明書是對的",
+          "doc": "`docs/spec/187`、`docs/re/09` §4.3、`CONTEXT.md` §6"
+        },
+        {
+          "date": "2026-09-10",
+          "what": "同一輪先斷言 `sub_14E5C`／`sub_14ED7` 不看 `sub_15130` 的回傳值 ⇒ 「壞滅在自動判定這條路沒有消費端」。實際上看的是它們的**呼叫端** `sub_14A7B`／`sub_14ADE`——只往下追一層不夠",
+          "doc": "`docs/spec/187` §1"
+        },
+        {
+          "date": "2026-09-10",
+          "what": "軍團 `+0x00` 位元 0 的設定端與清除端都記了，消費端沒記，於是 remake 把它當顯示狀態寫成 `LinkAddr != 0` 的衍生值。它其實決定行軍主迴圈這一拍走 `sub_12708` 還是 `sub_127A2`",
+          "doc": "`docs/re/34` §2.05"
+        }
+      ],
+      "remind_on": [
+        "ida",
+        "parity"
+      ],
+      "guard": {
+        "kind": "tool",
+        "note": "`tools/ida_return_consumers.py` 對每個呼叫端印呼叫之後的 4 條指令，並判「消費 CF／消費 AX／⚠ 沒消費」。⚠ 它只看直線的下幾條，**輸出是候選不是結論**——「看起來沒消費」要再往上追一層（那正是第二次踩坑的地方）。欄位那一側用 `ida_disp_users.py`（誰讀那個位移）。",
+        "verify": {
+          "kind": "present",
+          "paths": [
+            "tools/ida_return_consumers.py"
+          ],
+          "pattern": "沒消費"
+        }
+      }
     },
     {
-     "date": "2026-09-10",
-     "what": "拍 5,020 的檢查點看起來是分歧（軍團 `+0x03` 差 1、子刻差 1、軍團游標差一個移動週期），實際是 `steps:` 停在**戰鬥中間**而 remake 跑完整拍。據點游標對得上只代表同一拍，不代表同一個位置",
-     "doc": "`docs/playtest/119` §46.6、`tools/parity_ck_orig.sh` 的註解"
-    }
-   ],
-   "remind_on": [
-    "parity"
-   ],
-   "guard": {
-    "kind": "tool",
-    "note": "`tools/parity_pace_diff.py --tick N` 把兩邊的呼叫來源逐筆並排；工具的 docstring 也明寫它只比次數。狀態面則靠 `tools/parity_ck.sh` 的五張表逐 byte 比。",
-    "verify": {
-     "kind": "present",
-     "paths": [
-      "tools/parity_pace_diff.py"
-     ],
-     "pattern": "只比「這一拍取了幾次」，不比取數的來源"
-    }
-   }
-  },
-  {
-   "id": "flag-set-without-consumer",
-   "title": "「這個值被算出來」不等於「有人會看它」",
-   "trigger": "追一支函式追到它設了旗標／回了 CF／寫了欄位，就下「所以會發生 X」的結論",
-   "rule": "**下結論前要找到讀那個值的那一行。** 回傳值可能被整個丟掉，旗標可能只在某些呼叫端被消費，欄位可能只有一半的路徑會看。`tools/ida_callers.py` 查呼叫端、`tools/ida_disp_users.py` 查誰讀那個位移——**兩邊都要，因為「誰設」與「誰看」是不同的問題**（`docs/re/34` §2.05 是同一個形狀：位元 0 的設定端早就記了，消費端沒記，於是它被當成顯示狀態）。",
-   "occurrences": [
-    {
-     "date": "2026-09-10",
-     "what": "`sub_1474A` 士氣 0 回 STC ⇒ 斷言「士氣不足 100 的軍團打贏也會散掉」，還據此判說明書 5.5 與機器碼不符。實際上 `sub_14ADE`（攻城）拿「誰贏」分流，**勝方那一位根本不看**——說明書是對的",
-     "doc": "`docs/spec/187`、`docs/re/09` §4.3、`CONTEXT.md` §6"
+      "id": "answer-already-in-own-docs",
+      "title": "要說「卡住了」之前，先查自己的 docs/",
+      "trigger": "準備下「這裡是天花板／解不出來／需要決策」的結論，或準備開一項新工作",
+      "rule": "**先用關鍵詞查一次自己的文件**（`tools/py.sh tools/askdocs.py <詞>`）。答案常常是自己前幾天寫的，而且**標題就寫著**。\n\n⚠ 把「卡住」寫成決策呈給使用者，比自己多查五分鐘貴得多——那消耗的是別人的注意力，而且會讓一份已經驗過的結論看起來像未解的問題。",
+      "occurrences": [
+        {
+          "date": "2026-09-10",
+          "what": "同局面對拍撞到「孫乾　大人，主公有事召見。」停住，於是把「玩家事件怎麼處理」寫成三選一的決策呈給使用者。而 `docs/playtest/118` 的**標題**就是「劉備 90 天無人值守：君主召見用右鍵推進，選項用移動次數」，狀態「通過」——連 90 天跑得完、一輪 26 秒、兩次逐 byte 相同都驗過了",
+          "doc": "`docs/playtest/118`、`tools/askdocs.py` 的 docstring"
+        }
+      ],
+      "remind_on": [
+        "parity",
+        "ida"
+      ],
+      "guard": {
+        "kind": "tool",
+        "note": "`tools/py.sh tools/askdocs.py <關鍵詞>` 掃 `docs/` 的標題與狀態行，只印標題／狀態／路徑——一眼看得出「那份說通過了」。`grep -r` 做得到同樣的事，差別在它不會被全文淹沒。⚠ 回空**不代表沒解過**，再查 `docs/INDEX.md` 的斷言總表。",
+        "verify": {
+          "kind": "present",
+          "paths": [
+            "tools/askdocs.py"
+          ],
+          "pattern": "準備說卡住"
+        }
+      }
     },
     {
-     "date": "2026-09-10",
-     "what": "同一輪先斷言 `sub_14E5C`／`sub_14ED7` 不看 `sub_15130` 的回傳值 ⇒ 「壞滅在自動判定這條路沒有消費端」。實際上看的是它們的**呼叫端** `sub_14A7B`／`sub_14ADE`——只往下追一層不夠",
-     "doc": "`docs/spec/187` §1"
+      "id": "silent-fixture-drop",
+      "title": "夾具自己吃掉一筆，指標不會變紅",
+      "trigger": "改了規則層卻發現「比對結果一模一樣」，或夾具在某個階段之後才做一件會改狀態的事",
+      "rule": "先問**夾具在哪一刻把那一拍的數字定案**。統計之後才發生的副作用（自動回應、收尾、補寫）會落在兩次快照之間，**兩邊都不算**——比對一片綠，而狀態表在幾十拍之後才浮出來。判準：改了會取亂數的路徑，序列的**總數**要跟著變；沒變就先懷疑夾具，不要先懷疑規則沒生效。",
+      "occurrences": [
+        {
+          "date": "2026-09-10",
+          "what": "`rng_pace.go` 在 `w.Tick(tr)` 之後立刻記錄該拍取數，而自動回應（`ResolveDiplomacy`）排在記錄之後、`prev = tr.seq` 之前，於是 `sub_13902` 的君主採納那一擲兩拍都不算",
+          "doc": "`docs/playtest/119` §47"
+        }
+      ],
+      "remind_on": [
+        "parity"
+      ],
+      "guard": {
+        "kind": "remind",
+        "note": "規則印在 `tools/dosgolem.sh` 的教訓提示（`docs/lessons/parity.txt`）。⚠ 目前只有規則——要變成檢查，得讓 `rng_pace.go` 對「一拍之外發生的取數」直接報錯。",
+        "verify": {
+          "kind": "present",
+          "paths": [
+            "tools/rng_pace.go"
+          ],
+          "pattern": "回應要在這一拍的統計之前"
+        }
+      }
     },
     {
-     "date": "2026-09-10",
-     "what": "軍團 `+0x00` 位元 0 的設定端與清除端都記了，消費端沒記，於是 remake 把它當顯示狀態寫成 `LinkAddr != 0` 的衍生值。它其實決定行軍主迴圈這一拍走 `sub_12708` 還是 `sub_127A2`",
-     "doc": "`docs/re/34` §2.05"
-    }
-   ],
-   "remind_on": [
-    "ida",
-    "parity"
-   ],
-   "guard": {
-    "kind": "tool",
-    "note": "`tools/ida_return_consumers.py` 對每個呼叫端印呼叫之後的 4 條指令，並判「消費 CF／消費 AX／⚠ 沒消費」。⚠ 它只看直線的下幾條，**輸出是候選不是結論**——「看起來沒消費」要再往上追一層（那正是第二次踩坑的地方）。欄位那一側用 `ida_disp_users.py`（誰讀那個位移）。",
-    "verify": {
-     "kind": "present",
-     "paths": [
-      "tools/ida_return_consumers.py"
-     ],
-     "pattern": "沒消費"
-    }
-   }
-  },
-  {
-   "id": "answer-already-in-own-docs",
-   "title": "要說「卡住了」之前，先查自己的 docs/",
-   "trigger": "準備下「這裡是天花板／解不出來／需要決策」的結論，或準備開一項新工作",
-   "rule": "**先用關鍵詞查一次自己的文件**（`tools/py.sh tools/askdocs.py <詞>`）。答案常常是自己前幾天寫的，而且**標題就寫著**。\n\n⚠ 把「卡住」寫成決策呈給使用者，比自己多查五分鐘貴得多——那消耗的是別人的注意力，而且會讓一份已經驗過的結論看起來像未解的問題。",
-   "occurrences": [
+      "id": "short-circuit-eats-the-side-effect",
+      "title": "`||` 短路把有副作用的呼叫吃掉",
+      "trigger": "寫或讀 `旗標 || 某個會改狀態的函式(…)`，尤其是重現「原版兩邊都要跑」的那種常式",
+      "rule": "**有副作用的呼叫要單獨一行**，不要當成布林運算元。原版的 `call` 是無條件的，Go 的 `||`／`&&` 不是——旗標先成立的那一側整支被跳過，而症狀往往只是一個 byte，而且**穩定不擴散**，看起來像「還沒建模的小欄位」。判準：那個函式的註解裡有沒有寫「兩邊都要跑」。",
+      "occurrences": [
+        {
+          "date": "2026-09-11",
+          "what": "`resolveCorpsBattle` 的 `r.DefenderDestroyed || w.retreatOrPerish(def, …)`：守方壞滅旗標先成立，`sub_1474A` → `sub_16FD2` 整支被跳過，`+0x0B` 移動計時沒有歸 1——軍團 73 的節拍從拍 5,104 那一場起漂掉一個 byte，掛在 worklist 上好幾天",
+          "doc": "`docs/playtest/119` §47.7"
+        }
+      ],
+      "remind_on": [
+        "parity",
+        "commit"
+      ],
+      "guard": {
+        "kind": "remind",
+        "note": "只有規則。`go vet` 不管這個，測試也照不到——那一個 byte 只有同局面逐欄對拍看得見。",
+        "verify": {
+          "kind": "present",
+          "paths": [
+            "internal/state/corps.go"
+          ],
+          "pattern": "Go 的 `||` 會短路"
+        }
+      }
+    },
     {
-     "date": "2026-09-10",
-     "what": "同局面對拍撞到「孫乾　大人，主公有事召見。」停住，於是把「玩家事件怎麼處理」寫成三選一的決策呈給使用者。而 `docs/playtest/118` 的**標題**就是「劉備 90 天無人值守：君主召見用右鍵推進，選項用移動次數」，狀態「通過」——連 90 天跑得完、一輪 26 秒、兩次逐 byte 相同都驗過了",
-     "doc": "`docs/playtest/118`、`tools/askdocs.py` 的 docstring"
+      "id": "impossible-without-its-premise",
+      "title": "「永遠不可能」要標明前提，否則它讀起來像物理定律",
+      "trigger": "要寫下或引用「這個永遠對不上／不可能全等／必然有殘差」這種結論時",
+      "rule": "把**前提**寫進同一句話。「兩邊的亂數不同源」是**當時 fixture 的性質**，不是規則的性質；句子沒帶限定詞，下一個人（包括自己）就會把它當成不可跨越的界線，照著它把可修的缺口記成結構性殘差。⭐ **引用這種斷言之前先問「它是在什麼條件下成立的」**——條件常常早就變了。",
+      "occurrences": [
+        {
+          "date": "2026-09-11",
+          "what": "`docs/spec/133` §3.6 寫「Y 是亂數，逐兵座標永遠不可能全等」，我照它把畫面對拍的 `sb-minimap` 128／432 px 記成結構性殘差。實際上 `-battle-exact` ＋ `-rng-state` **早在三天前就存在**（`docs/playtest/114` 逐槽核對過 96 槽全同）——**推翻它的東西比它本身還早**",
+          "doc": "`docs/playtest/121` §4、`CONTEXT.md` §6"
+        }
+      ],
+      "remind_on": [
+        "parity"
+      ],
+      "guard": {
+        "kind": "remind",
+        "note": "只有規則。要變成工具得能辨識「永遠／必然／不可能」這類措辭旁邊有沒有前提子句，不容易做得準。先靠 `tools/dosgolem.sh` 開頭的提示。",
+        "verify": {
+          "kind": "present",
+          "paths": [
+            "docs/lessons.json"
+          ],
+          "pattern": "永遠不可能"
+        }
+      }
     }
-   ],
-   "remind_on": [
-    "parity",
-    "ida"
-   ],
-   "guard": {
-    "kind": "tool",
-    "note": "`tools/py.sh tools/askdocs.py <關鍵詞>` 掃 `docs/` 的標題與狀態行，只印標題／狀態／路徑——一眼看得出「那份說通過了」。`grep -r` 做得到同樣的事，差別在它不會被全文淹沒。⚠ 回空**不代表沒解過**，再查 `docs/INDEX.md` 的斷言總表。",
-    "verify": {
-     "kind": "present",
-     "paths": [
-      "tools/askdocs.py"
-     ],
-     "pattern": "準備說卡住"
-    }
-   }
-  },
-  {
-   "id": "silent-fixture-drop",
-   "title": "夾具自己吃掉一筆，指標不會變紅",
-   "trigger": "改了規則層卻發現「比對結果一模一樣」，或夾具在某個階段之後才做一件會改狀態的事",
-   "rule": "先問**夾具在哪一刻把那一拍的數字定案**。統計之後才發生的副作用（自動回應、收尾、補寫）會落在兩次快照之間，**兩邊都不算**——比對一片綠，而狀態表在幾十拍之後才浮出來。判準：改了會取亂數的路徑，序列的**總數**要跟著變；沒變就先懷疑夾具，不要先懷疑規則沒生效。",
-   "occurrences": [
-    {
-     "date": "2026-09-10",
-     "what": "`rng_pace.go` 在 `w.Tick(tr)` 之後立刻記錄該拍取數，而自動回應（`ResolveDiplomacy`）排在記錄之後、`prev = tr.seq` 之前，於是 `sub_13902` 的君主採納那一擲兩拍都不算",
-     "doc": "`docs/playtest/119` §47"
-    }
-   ],
-   "remind_on": [
-    "parity"
-   ],
-   "guard": {
-    "kind": "remind",
-    "note": "規則印在 `tools/dosgolem.sh` 的教訓提示（`docs/lessons/parity.txt`）。⚠ 目前只有規則——要變成檢查，得讓 `rng_pace.go` 對「一拍之外發生的取數」直接報錯。",
-    "verify": {
-     "kind": "present",
-     "paths": [
-      "tools/rng_pace.go"
-     ],
-     "pattern": "回應要在這一拍的統計之前"
-    }
-   }
-  },
-  {
-   "id": "short-circuit-eats-the-side-effect",
-   "title": "`||` 短路把有副作用的呼叫吃掉",
-   "trigger": "寫或讀 `旗標 || 某個會改狀態的函式(…)`，尤其是重現「原版兩邊都要跑」的那種常式",
-   "rule": "**有副作用的呼叫要單獨一行**，不要當成布林運算元。原版的 `call` 是無條件的，Go 的 `||`／`&&` 不是——旗標先成立的那一側整支被跳過，而症狀往往只是一個 byte，而且**穩定不擴散**，看起來像「還沒建模的小欄位」。判準：那個函式的註解裡有沒有寫「兩邊都要跑」。",
-   "occurrences": [
-    {
-     "date": "2026-09-11",
-     "what": "`resolveCorpsBattle` 的 `r.DefenderDestroyed || w.retreatOrPerish(def, …)`：守方壞滅旗標先成立，`sub_1474A` → `sub_16FD2` 整支被跳過，`+0x0B` 移動計時沒有歸 1——軍團 73 的節拍從拍 5,104 那一場起漂掉一個 byte，掛在 worklist 上好幾天",
-     "doc": "`docs/playtest/119` §47.7"
-    }
-   ],
-   "remind_on": [
-    "parity",
-    "commit"
-   ],
-   "guard": {
-    "kind": "remind",
-    "note": "只有規則。`go vet` 不管這個，測試也照不到——那一個 byte 只有同局面逐欄對拍看得見。",
-    "verify": {
-     "kind": "present",
-     "paths": [
-      "internal/state/corps.go"
-     ],
-     "pattern": "Go 的 `||` 會短路"
-    }
-   }
-  }
- ]
+  ]
 }

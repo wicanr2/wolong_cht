@@ -112,16 +112,6 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 
 **verify**：`present` `/模型還不完整/` 在 `docs/spec/195-ai-stage1-asks-about-the-intent.md`
 
-#### 進言選單在說服場景上沒關掉
-
-說服場景（`tools/parity_screens.sh advise-scene`）的 `map` 區剩 3,354 px，其中 **1,750 px 是進言那五項選單的殘影**——原版進說服場景時把它清掉了，remake 留著。另外 2,127 px 是 remake 自加的「Enter 繼續」提示。
-
-⭐ 同一張畫面的插圖外框已經修好了（`docs/spec/198`），所以剩下的這一塊是獨立的一條，不會被那個修正帶走。
-
-**怎樣算做完**：`tools/parity_screens.sh advise-scene` 的 `map` 降到只剩 Enter 提示那 2,127 px，並把 JSON 的 gap 改成 allow。
-
-**verify**：`present` `/進言選單沒關掉/` 在 `tools/parity_screens.json`
-
 #### 畫面對拍閘只收了十七組，還有十幾組沒進來
 
 `tools/parity_screens.json` 現在有 17 組（`docs/playtest/121`）。還沒收的：`38` 三視窗、`39` 系統選單、`42` 四個視窗、`83` 據點一覽、`84` 人事／軍團六個出口、`92` 人事四個任免、`94` 行軍選點、`96` 大地圖點擊、`98` 敵軍團面板、`99` 存檔槽、`105` 命名視窗、`106` 啟動殼層三頁。
@@ -131,6 +121,20 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 **怎樣算做完**：上列每一組都在 `tools/parity_screens.json` 裡，且 `tools/parity_screens.sh` 全跑 exit 0。
 
 **verify**：`json_len` `tools/parity_screens.json` ≤ 28
+
+#### 戰場對拍的 fixture 要從原版執行期狀態出發，不是從存檔
+
+野戰與攻城的 `sb-minimap`（128／432 px）與攻城 `field` 的 84 px 差在**開仗前的輸入狀態**，不是亂數流：把原版 `0x19C45`（擺位前）的 RNG 灌進 `-battle-exact` 之後這一格**恆為 624 且完全不隨取樣幀變**（`docs/playtest/121` §4）。
+
+成因是原版的 `siege:攻,據點` 會先改軍團記錄（清「被擋住」位元、寫 `word_10D32`，`docs/playtest/72` §1），而 remake 這一側讀的是存檔。
+
+⚠ 先前把它記成「開場擺位 Y 是亂數、兩邊不同源，所以永遠不會是 0」（`docs/spec/133` §3.6）。那個歸因**已被推翻**——`-battle-exact` 就是為了同步亂數而存在的，`docs/playtest/114` 也逐槽核對過 96 槽全同。
+
+下一步：照規則層對拍的做法，用 `peek` ＋ `tools/orig_snapshot.py` 把原版執行期的軍團／戰場狀態做成 fixture。素材（RNG、原版畫面）已經在 `workplace/parity/exact/`。
+
+**怎樣算做完**：`tools/parity_screens.sh field siege` 的 `sb-minimap` 兩格都收到 0 px，JSON 的 gap 拿掉。
+
+**verify**：`present` `/開仗前的\*\*輸入狀態\*\*不同/` 在 `tools/parity_screens.json`
 
 ### fidelity — 原版有這個機制，remake 還沒建模
 
