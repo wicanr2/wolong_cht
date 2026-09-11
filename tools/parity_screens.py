@@ -133,6 +133,12 @@ def selftest():
         for key in ("name", "note", "doc", "orig", "crop", "args", "regions"):
             assert key in g, "%s 缺 %s" % (g.get("name"), key)
         assert g["regions"] in ("strategy", "tactical"), g["name"]
+        # ⚠ `list` 的輸出是 TSV，呼叫端用 `read` 一行一筆。欄位裡有換行
+        #   會把一組切成好幾行，而多出來的那幾行**看起來像新的組**
+        #   （`parity_screens.sh` 報「原版圖不在」，組數莫名變多）。
+        for key in ("name", "note", "doc", "orig"):
+            assert "\n" not in g[key] and "\t" not in g[key], (
+                "%s 的 %s 含換行或 tab，會把 list 的 TSV 切斷" % (g["name"], key))
         for field in ("allow", "gap"):
             for region, why in g.get(field, {}).items():
                 assert len(why) == 2 and why[1], "%s 的 %s[%s] 沒寫理由" % (g["name"], field, region)

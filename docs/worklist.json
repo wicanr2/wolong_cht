@@ -194,6 +194,36 @@
         "pattern": "逐兵有 ±1 格的差異",
         "note": "收掉之後把那一格的 gap 拿掉，這一條就不成立。"
       }
+    },
+    {
+      "id": "minimap-dots-drawn-too-early",
+      "layer": "parity",
+      "title": "原版開場的戰場縮圖上沒有部隊點，remake 立刻就畫",
+      "body": "野戰開場（`tools/parity_screens.sh field-exact-0`）：逐兵 96 槽全等、`field` 區 **0 px**（480×368 一個像素不差），`sb-minimap` 卻有 212 px。\n\n放大縮圖頂緣並排：**原版只有地形，remake 一排藍點**。位置既然全等，那就是**繪製時機**——原版的部隊點要晚一點才出現在縮圖上。\n\n⭐ 開場那一格是唯一分得開「位置差」與「繪製差」的取樣點，因為那時位置全等。",
+      "acceptance": "`tools/parity_screens.sh field-exact-0` 的 `sb-minimap` 收到 0 px。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "tools/parity_screens.json"
+        ],
+        "pattern": "原版開場的縮圖上沒有部隊點",
+        "note": "收掉之後把那一格的 gap 拿掉，這一條就不成立。"
+      }
+    },
+    {
+      "id": "battle-opening-talk-timing",
+      "layer": "parity",
+      "title": "野戰開場對白框的出現時機與原版不同",
+      "body": "野戰第 52 個戰術節拍（`tools/parity_screens.sh field-exact-52`）的 `field` 區差 39,531 px，而差分圖上**只有左上與右下兩塊**——地形與部隊整片相同。\n\n那兩塊是開場的對白框（挑戰喊話）。原版在 `ticks:52` 時的狀態與 remake 的`-battle-steps 52` 不同：不是內容不同，是**什麼時候在畫面上**不同。\n\n⚠ 同一組的 `sb-minimap` 只差 56 px（7 個兵），所以戰場本身是接近的。",
+      "acceptance": "同一個節拍上兩邊的對白框同時在或同時不在，`field` 區降到只剩游標那一類的殘差。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "tools/parity_screens.json"
+        ],
+        "pattern": "開場對白框",
+        "note": "對齊之後把那一格的 gap 拿掉，這一條就不成立。"
+      }
     }
   ],
   "resolved": [

@@ -62,7 +62,7 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 
 <!-- worklist:begin 由 tools/worklist.py render 產生，不要手改 -->
 
-共 **13 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
+共 **15 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
 
 跑 `tools/py.sh tools/worklist.py verify` 逐條問一次；`check.sh` 會替你跑。
 
@@ -135,6 +135,30 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 **怎樣算做完**：原版 `ticks:N` 與 remake `-battle-steps N` 在同一 N 下 96 槽逐槽相同，`sb-minimap` 收到 0 px。
 
 **verify**：`present` `/逐兵有 ±1 格的差異/` 在 `tools/parity_screens.json`
+
+#### 原版開場的戰場縮圖上沒有部隊點，remake 立刻就畫
+
+野戰開場（`tools/parity_screens.sh field-exact-0`）：逐兵 96 槽全等、`field` 區 **0 px**（480×368 一個像素不差），`sb-minimap` 卻有 212 px。
+
+放大縮圖頂緣並排：**原版只有地形，remake 一排藍點**。位置既然全等，那就是**繪製時機**——原版的部隊點要晚一點才出現在縮圖上。
+
+⭐ 開場那一格是唯一分得開「位置差」與「繪製差」的取樣點，因為那時位置全等。
+
+**怎樣算做完**：`tools/parity_screens.sh field-exact-0` 的 `sb-minimap` 收到 0 px。
+
+**verify**：`present` `/原版開場的縮圖上沒有部隊點/` 在 `tools/parity_screens.json`
+
+#### 野戰開場對白框的出現時機與原版不同
+
+野戰第 52 個戰術節拍（`tools/parity_screens.sh field-exact-52`）的 `field` 區差 39,531 px，而差分圖上**只有左上與右下兩塊**——地形與部隊整片相同。
+
+那兩塊是開場的對白框（挑戰喊話）。原版在 `ticks:52` 時的狀態與 remake 的`-battle-steps 52` 不同：不是內容不同，是**什麼時候在畫面上**不同。
+
+⚠ 同一組的 `sb-minimap` 只差 56 px（7 個兵），所以戰場本身是接近的。
+
+**怎樣算做完**：同一個節拍上兩邊的對白框同時在或同時不在，`field` 區降到只剩游標那一類的殘差。
+
+**verify**：`present` `/開場對白框/` 在 `tools/parity_screens.json`
 
 ### fidelity — 原版有這個機制，remake 還沒建模
 
