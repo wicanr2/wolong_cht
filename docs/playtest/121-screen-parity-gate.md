@@ -61,48 +61,59 @@
 | `sortie` `map` | 6,998 | **1,509**（只剩 Enter 提示）|
 | `advise-scene` `map` | 8,843 | **3,354** |
 
-## 4. 縮圖那幾格：差的是輸入狀態，不是亂數流
+## 4. 縮圖那幾格：先錯兩次，最後定位到繪製層
 
-第一版我把 `sb-minimap`（野戰 128、攻城 432）記成「結構性、永遠不會是 0」，
-理由是 [`../spec/133`](../spec/133-opening-deployment.md) §3.6 的
-「開場擺位的 Y 是亂數，兩邊不同源」。**那個歸因不對。**
+這一格我連續給了**兩個錯的歸因**，記在這裡因為兩次的形狀一樣。
 
-`wlgame` 早就有 `-battle-exact`（[`../spec/90`](../spec/90-same-state-parity.md) §2.5）：
-不推進世界、不重擺兩軍，直接以 `-rng-state` 給的原版亂數狀態初始化戰場。
-[`114`](114-focus-and-same-battle.md) 那一輪用它逐槽核對過，**兩案例各 96 槽的
-座標與體力都相同**——所以「兩邊亂數不同源」早就不是事實了。
+**第一次**：照 [`../spec/133`](../spec/133-opening-deployment.md) §3.6 的
+「Y 是亂數、兩邊不同源」寫成「結構性、永遠不會是 0」。
+錯在沒查那條斷言的前提——`wlgame` 的 `-battle-exact`
+（[`../spec/90`](../spec/90-same-state-parity.md) §2.5）就是為了同步亂數而存在的，
+[`114`](114-focus-and-same-battle.md) 還逐槽核對過 96 槽全同，**而它比那條斷言早三天**。
 
-這一輪照 `tools/dosgolem_battle_replay.go:91` 的取樣點（**擺位前是 `0x19C45`**）
-重取了一次原版側：
+**第二次**：接上 `-battle-exact` ＋ 原版擺位前的 RNG（`0x19C45`）之後，
+`sb-minimap` 恆為 624 且不隨 `-shot-frames` 變，於是我寫成「擺位結果本身不同」。
+錯在 **`-battle-steps` 的預設是 120**——我掃的是 `-shot-frames`，
+而真正推進戰場的那個旗標一直掛在預設值上，兵早就走進陣形了。
+
+### 4.1 把兩個旗標都明寫之後：逐兵全等
 
 ```
-WOLONG_DOSGOLEM_GAMEDIR=dosgolem/root-saveb tools/dosgolem.sh workplace/parity/exact   "wait;click:320,200;click:300,151;siege:35,82;runto:11B5A;runto:19C45;   ipeek:1ECFC:258;steps:6000000;shot:orig-exact"
-tools/py.sh tools/rng_state.py workplace/parity/exact/run.log   workplace/parity/exact/spawn-rng.bin
+tools/go.sh run ./cmd/wlgame -direct -scenario 0 -player 0 \
+  -save-file workplace/parity/exact2/orig.DAT -load-slot 0 \
+  -rng-state workplace/parity/exact2/spawn-rng.bin \
+  -battle-exact -open-siege -siege-corps 35,39 -siege-node 82 \
+  -shot /tmp/x.png -shot-frames 0 -battle-steps 0 -list-units
 ```
 
-⭐ 新擷取的 `orig-exact.png` 對 [`72`](72-same-battle-parity.md) 的 `s1.png`
-只差 `field` 138 px，其餘八區 0——**管線一致，是同一場同一階段**。
+| 槽 | 原版 | remake | |
+|---|---|---|---|
+| 側 1 / 隊 0 | (62,26) 體 220、(62,21)、(62,35)、(62,38)、(62,44)… | **側 0** 同值 | ✅ |
+| 側 0 / 隊 0 | ( 1,25) 體 188、( 1,41)、( 1,26)、( 1,44)、( 1,22)… | **側 1** 同值 | ✅ |
 
-把那份 RNG 灌進 remake 的 `-battle-exact` 之後：
+**96 槽逐槽相同**，側號對調是已知的（remake 的 `Sides[0]` 恆為攻方、
+原版的側 0 恆為玩家，[`../spec/133`](../spec/133-opening-deployment.md) §3.5）。
 
-| `-shot-frames` | 20 | 60 | 100 | 150 |
-|---|---:|---:|---:|---:|
-| `field` | 41,809 | 29,377 | 28,445 | 28,195 |
-| `sb-minimap` | **624** | **624** | **624** | **624** |
+⇒ 擺位沒有問題，亂數也同步了。
 
-⇒ **縮圖恆為 624，一點都不隨取樣幀動。** 部隊在開場對白期間沒有移動，
-所以那 624 px 是**擺位結果本身就不同**——而亂數流已經同步了。
+### 4.2 剩下的是縮圖的座標換算
 
-⇒ 差異在**輸入狀態**：原版的 `siege:35,82` 會先改軍團記錄
-（清「被擋住」位元、寫 `word_10D32`，[`72`](72-same-battle-parity.md) §1），
-而 remake 這一側讀的是 `root-saveb/SAVE.DAT` 的**存檔**狀態。
-兩邊開仗前的軍團表就不一樣了。
+把取樣點也對齊（`-battle-steps 6`）之後：
 
-**下一步是把原版執行期的狀態讀回來當 fixture**（`peek` ＋
-`tools/orig_snapshot.py`，規則層對拍一直是這樣做的），不是再調亂數。
-素材已經在 `workplace/parity/exact/`。
+| 區 | px |
+|---|---:|
+| `field` | **95**（＝原版錄影的游標，最佳值）|
+| `bottom`、`sb-title`、`sb-enemy`、`sb-self`、三個純美術區 | **0** |
+| `sb-minimap` | **428** |
 
-⚠ 在那之前，閘把這幾格記成 `gap`：擋住它再變大，但**不再宣稱它不可能是 0**。
+放大兩邊的縮圖並排：**地形（城牆、水面、地面）逐像素相同**，
+差的只有部隊點的落點——藍點在 remake 這側整體右移、分布較窄。
+逐兵座標既然全等，那是**縮圖把戰場座標換算成縮圖像素**那一步的差異，
+不是狀態差。這一格因此留成 `gap`，理由寫在
+[`tools/parity_screens.json`](../../tools/parity_screens.json)。
+
+⚠ 野戰那一組還沒改成精確初始化（需要那一場的 RNG 與快照），
+仍是 128 px，成因待確認是否同一個。
 
 ## 5. 攻城到底能不能對拍
 

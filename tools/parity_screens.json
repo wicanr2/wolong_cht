@@ -479,9 +479,9 @@
     },
     {
       "name": "siege",
-      "note": "攻城：同一場仗（呂布 35 攻許昌 82），dosgolem 的 siege:35,82。⚠ 取樣點是第 6 拍不是第 0 拍——第 0 拍落在開場初始化中間，六個部隊格的命令圖示還沒設好（bottom 930 px）",
-      "doc": "docs/playtest/72-same-battle-parity.md",
-      "orig": "workplace/dosgolem/siege/s1.png",
+      "note": "攻城：呂布 35 攻許昌 82，**精確初始化**（-battle-exact ＋原版擺位前的 RNG）。⚠ -battle-steps 與 -shot-frames 的預設都是 120，兩個都要明寫。原版側重建：WOLONG_DOSGOLEM_GAMEDIR=dosgolem/root-saveb tools/dosgolem.sh workplace/parity/exact2 \"wait;click:320,200;click:300,151;siege:35,82;runto:11B5A;runto:19C45;ipeek:1ECFC:258;ipeek:10CF0:128;<parity_ck_orig.sh 的 PEEKS>;steps:6000000;shot:orig-exact2\"，再跑 rng_state.py 與 orig_snapshot.py",
+      "doc": "docs/playtest/121-screen-parity-gate.md",
+      "orig": "workplace/parity/exact2/orig-exact2.png",
       "crop": false,
       "args": [
         "-direct",
@@ -492,9 +492,12 @@
         "-seed",
         "7",
         "-save-file",
-        "workplace/promo-live/parity-battle4/SAVE-B.DAT",
+        "workplace/parity/exact2/orig.DAT",
         "-load-slot",
         "0",
+        "-rng-state",
+        "workplace/parity/exact2/spawn-rng.bin",
+        "-battle-exact",
         "-open-siege",
         "-siege-corps",
         "35,39",
@@ -508,15 +511,16 @@
         "1"
       ],
       "regions": "tactical",
-      "allow": {},
-      "gap": {
+      "allow": {
         "field": [
-          179,
-          "95 px 是原版錄影的滑鼠游標；另外 84 px 是城牆上一個兵的位置，與 sb-minimap 同一個成因"
-        ],
+          95,
+          "原版錄影自己畫的滑鼠游標（playtest/107、spec/197）"
+        ]
+      },
+      "gap": {
         "sb-minimap": [
-          432,
-          "開仗前的**輸入狀態**不同，不是亂數流不同：把原版 0x19C45（擺位前）的 RNG 灌進 -battle-exact 之後這一格恆為 624 且不隨取樣幀變（docs/playtest/121 §4）。原版的 siege: 會先改軍團記錄，remake 這側讀的是存檔。下一步是用 peek ＋ orig_snapshot.py 把原版執行期狀態做成 fixture"
+          428,
+          "**縮圖的座標換算**：逐兵座標已經全等（96 槽逐槽比過，playtest/121 §4），地形也逐像素相同，差的只有縮圖上部隊點的落點——那是繪製層的換算，不是狀態"
         ]
       }
     },

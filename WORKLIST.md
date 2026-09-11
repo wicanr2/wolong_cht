@@ -122,19 +122,17 @@ Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commi
 
 **verify**：`json_len` `tools/parity_screens.json` ≤ 28
 
-#### 戰場對拍的 fixture 要從原版執行期狀態出發，不是從存檔
+#### 戰場縮圖上部隊點的座標換算與原版不同
 
-野戰與攻城的 `sb-minimap`（128／432 px）與攻城 `field` 的 84 px 差在**開仗前的輸入狀態**，不是亂數流：把原版 `0x19C45`（擺位前）的 RNG 灌進 `-battle-exact` 之後這一格**恆為 624 且完全不隨取樣幀變**（`docs/playtest/121` §4）。
+攻城那一組（`tools/parity_screens.sh siege`）現在走**精確初始化**（`-battle-exact` ＋ 原版擺位前的 RNG），**逐兵 96 槽全等**、地形逐像素相同、`field` 收到 95 px（＝原版錄影的游標），只剩 `sb-minimap` 428 px（`docs/playtest/121` §4）。
 
-成因是原版的 `siege:攻,據點` 會先改軍團記錄（清「被擋住」位元、寫 `word_10D32`，`docs/playtest/72` §1），而 remake 這一側讀的是存檔。
+放大並排看：差的只有部隊點的落點——藍點在 remake 這側整體右移、分布較窄。**狀態已經對了，差的是「戰場座標 → 縮圖像素」那一步的換算。**
 
-⚠ 先前把它記成「開場擺位 Y 是亂數、兩邊不同源，所以永遠不會是 0」（`docs/spec/133` §3.6）。那個歸因**已被推翻**——`-battle-exact` 就是為了同步亂數而存在的，`docs/playtest/114` 也逐槽核對過 96 槽全同。
+⚠ 野戰那一組還沒改成精確初始化（要那一場的 RNG 與快照），仍是 128 px，成因待確認是否同一個。
 
-下一步：照規則層對拍的做法，用 `peek` ＋ `tools/orig_snapshot.py` 把原版執行期的軍團／戰場狀態做成 fixture。素材（RNG、原版畫面）已經在 `workplace/parity/exact/`。
+**怎樣算做完**：`tools/parity_screens.sh field siege` 的 `sb-minimap` 兩格都收到 0 px。
 
-**怎樣算做完**：`tools/parity_screens.sh field siege` 的 `sb-minimap` 兩格都收到 0 px，JSON 的 gap 拿掉。
-
-**verify**：`present` `/開仗前的\*\*輸入狀態\*\*不同/` 在 `tools/parity_screens.json`
+**verify**：`present` `/縮圖的座標換算/` 在 `tools/parity_screens.json`
 
 ### fidelity — 原版有這個機制，remake 還沒建模
 

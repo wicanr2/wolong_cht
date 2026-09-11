@@ -676,6 +676,25 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 > `occurrences` 裡，不要開新的一條。
 
 
+### 「攻城的開場擺位對不上原版」（2026-09-11，同一天連錯兩次）
+
+**推翻者**：把 `-battle-steps` 與 `-shot-frames` **兩個**都明寫成 0 之後，
+`-battle-exact` ＋ 原版 `0x19C45` 的 RNG 讓**96 槽逐槽全等**（側號對調是已知的）。
+
+第一次錯是照 [`docs/spec/133`](docs/spec/133-opening-deployment.md) §3.6 的
+「Y 是亂數、兩邊不同源」寫成「結構性、永遠不會是 0」；
+第二次錯是接上 `-battle-exact` 之後掃 `-shot-frames`，看到 `sb-minimap`
+恆為 624 就寫成「擺位結果本身不同」——**而真正推進戰場的 `-battle-steps`
+一直掛在預設 120**，兵早就走進陣形了。
+
+⭐ 兩次的形狀一樣：**指標不動不代表那個維度無關**，可能是另一個旗標
+把狀態推到了穩定態。教訓 `default-flag-advances-the-fixture` 在
+[`docs/lessons.json`](docs/lessons.json)。
+
+改對之後攻城那一組：八區 0（含 `bottom`）、`field` 95 px（原版錄影的游標）、
+只剩 `sb-minimap` 428——**地形逐像素相同、逐兵座標全等**，
+差的是縮圖把戰場座標換算成縮圖像素那一步。
+
 ### 「開場擺位的 Y 是亂數、兩邊不同源，縮圖永遠不會是 0」（2026-09-11）
 
 **推翻者**：`wlgame` 的 `-battle-exact` ＋ `-rng-state`

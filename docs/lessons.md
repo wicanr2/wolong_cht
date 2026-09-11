@@ -10,7 +10,7 @@
 
 <!-- lessons:begin 由 tools/lessons.py render 產生，不要手改 -->
 
-共 **18 條**。權威是 [`lessons.json`](lessons.json)，這一份由 `tools/py.sh tools/lessons.py render` 產生。
+共 **19 條**。權威是 [`lessons.json`](lessons.json)，這一份由 `tools/py.sh tools/lessons.py render` 產生。
 
 ⭐ **按「什麼時候要想起這一條」索引**——教訓要防的動作發生在任務中間，不是開始時；按事件時間排的清單那時查不到。
 
@@ -34,6 +34,7 @@
 | 改了規則層卻發現「比對結果一模一樣」，或夾具在某個階段之後才做一件會改狀態的事 | [夾具自己吃掉一筆，指標不會變紅](#silent-fixture-drop) | 1 | remind（❌ 不見了） |
 | 寫或讀 `旗標 || 某個會改狀態的函式(…)`，尤其是重現「原版兩邊都要跑」的那種常式 | [`||` 短路把有副作用的呼叫吃掉](#short-circuit-eats-the-side-effect) | 1 | remind |
 | 要寫下或引用「這個永遠對不上／不可能全等／必然有殘差」這種結論時 | [「永遠不可能」要標明前提，否則它讀起來像物理定律](#impossible-without-its-premise) | 1 | remind |
+| 拿 fixture 掃參數找對齊點，而指標「完全不隨那個參數變」時 | [掃一個旗標的時候，另一個旗標正掛在預設值上](#default-flag-advances-the-fixture) | 1 | remind |
 
 ### IDA 把整段解成資料時，先問是不是自我修改碼
 
@@ -272,7 +273,21 @@
 
 **防線**：`remind` — 只有規則。要變成工具得能辨識「永遠／必然／不可能」這類措辭旁邊有沒有前提子句，不容易做得準。先靠 `tools/dosgolem.sh` 開頭的提示。
 
+### 掃一個旗標的時候，另一個旗標正掛在預設值上
+
+<a id="default-flag-advances-the-fixture"></a>**什麼時候想起**：拿 fixture 掃參數找對齊點，而指標「完全不隨那個參數變」時
+
+**要做的**：**指標不動**通常不是「這個維度無關」，而是**另一個旗標把狀態推到了穩定態**。動手掃之前先把同一條路徑上每個會推進狀態的旗標都明寫出來，`-battle-steps` 與 `-shot-frames` 的預設都是 120，只寫一個等於讓另一個替你決定取樣點。
+
+| 日期 | 犯在哪 | 收據 |
+|---|---|---|
+| 2026-09-11 | 掃 `-shot-frames` 20/60/100/150 時 `sb-minimap` 恆為 624，我因此寫成「擺位結果本身不同」。真相是 `-battle-steps` 掛在預設 120，兵早就走進陣形；兩個都明寫之後**96 槽逐槽全等** | `docs/playtest/121` §4 |
+
+**防線**：`remind` — 只有規則。`tools/parity_screens.json` 的攻城那組 note 把「兩個都要明寫」寫進去了。
+
 <!-- lessons:end -->
+
+<!-- 缺口：無 -->
 
 <!-- 缺口：無 -->
 
