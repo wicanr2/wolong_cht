@@ -1,32 +1,15 @@
 #!/usr/bin/env python3
-"""未完成項的權威是 `docs/worklist.json`；`WORKLIST.md` 的那一節由這支產生。
+"""以 GitHub Issues 為現行工作入口的本地輔助 verify。
 
-    tools/py.sh tools/worklist.py verify     # 逐條問「這一條還成立嗎」
-    tools/py.sh tools/worklist.py render     # 把未完成項寫回 WORKLIST.md
-    tools/py.sh tools/worklist.py render --check  # 只比對，不寫檔（check.sh 用）
-    tools/py.sh tools/worklist.py --selftest # 正反對照
+    tools/py.sh tools/worklist.py verify
+    tools/py.sh tools/worklist.py --selftest
 
-⭐ **約定：`verify` 跑起來為真 ＝ 這一條仍然未完成。** 為假就是東西做好了
-而條目沒跟著改——那正是要抓的過期斷言（`rulebook/61`、`rulebook/63`）。
+docs/worklist.json 只保存本地檢查訊號與對應的 GitHub Issue，不再生成或驗證
+WORKLIST.md。Issue 的狀態、內容與完成條件才是現行工作的權威；Markdown 只保存
+證據、規格與歷史，不得用來登記未處理工作。
 
-markdown 的 `- [ ]` 清單會長出過期斷言：東西做好了，而沒有人回頭改那一條。
-症狀不是報錯，是清單上留著一句自信的「還沒接」，然後有人照它去重做一遍、
-或拿它當「還剩多少」的依據。它活得久是因為**沒有任何機制會問這一條還成不成立**。
-
-四種 verify：
-
-| kind | 語意 | 綁什麼 |
-|---|---|---|
-| `present` | pattern 找得到 → 仍未完成 | 程式碼或文件裡的**自承**（「remake 還沒接…」）|
-| `absent` | pattern 找不到 → 仍未完成 | 東西還沒出現（型別名、函式名、檔名）|
-| `json_len` | 某份 JSON 的欄位長度 ≤ max → 仍未完成 | 進度型的清單（校訂幾則、抽樣幾項）|
-| `manual` | **一律回「仍未完成」並標出來** | 真的沒有機器訊號的（實機驗收、兩版並排畫面）|
-
-⚠ **不掃測試檔。** 測試本來就會提到還沒接上的東西——為了釘住將來的行為。
-把 `*_test.go` 算進來，`absent` 會因為測試裡有一行呼叫就判成「已經做了」。
-
-⚠ **不掃 `docs/worklist.json` 自己。** 條目的 body 幾乎一定含 pattern 的字樣，
-掃進去等於自己中自己，每一條都會永遠說「仍未完成」。
+verify 跑起來為真，表示對應 Issue 仍可能未完成；跑起來為假，表示 Issue
+需要回查並更新，而不是讓本地 JSON 自動關閉 Issue。
 """
 
 import json
@@ -34,78 +17,81 @@ import re
 import sys
 from pathlib import Path
 
+
 ROOT = Path(__file__).resolve().parent.parent
 DATA_PATH = ROOT / "docs/worklist.json"
-RENDER_TARGET = ROOT / "WORKLIST.md"
-BEGIN = "<!-- worklist:begin 由 tools/worklist.py render 產生，不要手改 -->"
-END = "<!-- worklist:end -->"
-
 SCANNED_SUFFIXES = {".go", ".py", ".sh", ".md", ".json", ".idc"}
 SELF = "worklist.json"
 
 
-def is_test_file(p: Path) -> bool:
-    """測試檔不算——它們本來就會提到還沒接上的東西。"""
-    n = p.name
-    return "_test." in n or n.startswith("test_") or n.endswith("_test.py")
+def is_test_file(path):
+    """測試檔不算，因為測試本來就會提到尚未接上的行為。"""
+    name = path.name
+    return "_test." in name or name.startswith("test_") or name.endswith("_test.py")
 
 
 def scan_files(paths):
     for target in paths:
-        p = ROOT / target
-        if p.is_dir():
-            files = sorted(p.rglob("*"))
-        else:
-            files = [p]
-        for f in files:
-            if not f.is_file() or f.suffix not in SCANNED_SUFFIXES:
+        path = ROOT / target
+        files = sorted(path.rglob("*")) if path.is_dir() else [path]
+        for file_path in files:
+            if not file_path.is_file() or file_path.suffix not in SCANNED_SUFFIXES:
                 continue
-            if is_test_file(f) or f.name == SELF:
+            if is_test_file(file_path) or file_path.name == SELF:
                 continue
-            yield f
+            yield file_path
 
 
 def find_hit(verify):
-    """回第一個命中的檔案（相對路徑），沒有就回 None。"""
-    expr = re.compile(verify["pattern"])
-    for f in scan_files(verify["paths"]):
+    """回傳第一個命中的相對路徑，沒有命中則回傳 None。"""
+    expression = re.compile(verify["pattern"])
+    for file_path in scan_files(verify["paths"]):
         try:
-            text = f.read_text(encoding="utf-8", errors="ignore")
+            content = file_path.read_text(encoding="utf-8", errors="ignore")
         except OSError:
             continue
-        if expr.search(text):
-            return str(f.relative_to(ROOT))
+        if expression.search(content):
+            return str(file_path.relative_to(ROOT))
     return None
 
 
 def still_open(item):
-    """回 (仍未完成, 說明)。"""
-    v = item["verify"]
-    kind = v["kind"]
+    """回傳（仍未完成、說明）。"""
+    verify = item["verify"]
+    kind = verify["kind"]
     if kind == "manual":
         return True, "要人判（沒有機器訊號）"
     if kind == "json_len":
-        blob = json.loads((ROOT / v["path"]).read_text(encoding="utf-8"))
-        field = blob[v["field"]] if v.get("field") else blob
-        n = len(field)
-        return n <= v["max"], f'{v["path"]} 有 {n} 項（門檻 {v["max"]}）'
-    where = find_hit(v)
+        blob = json.loads((ROOT / verify["path"]).read_text(encoding="utf-8"))
+        field = blob[verify["field"]] if verify.get("field") else blob
+        count = len(field)
+        return count <= verify["max"], (
+            f'{verify["path"]} 有 {count} 項（門檻 {verify["max"]}）'
+        )
+    where = find_hit(verify)
     if kind == "present":
         if where:
-            return True, f"自承還在 {where}"
-        return False, f'找不到 /{v["pattern"]}/'
+            return True, f'自承還在 {where}'
+        return False, f'找不到 /{verify["pattern"]}/'
     if kind == "absent":
         if where:
-            return False, f"已經出現在 {where}"
-        return True, f'還沒出現 /{v["pattern"]}/'
+            return False, f'已經出現在 {where}'
+        return True, f'還沒出現 /{verify["pattern"]}/'
     raise SystemExit(f'不認得的 verify kind：{kind}（條目 {item["id"]}）')
 
 
 def load(path=DATA_PATH):
     data = json.loads(Path(path).read_text(encoding="utf-8"))
+    if data.get("schema") != "wolong-worklist/2":
+        raise SystemExit(
+            f'不支援的 worklist schema：{data.get("schema")!r}'
+            "（需要 wolong-worklist/2）"
+        )
+
     seen = set()
     for item in data["items"]:
-        for key in ("id", "layer", "title", "body", "acceptance", "verify"):
+        required = ("id", "layer", "title", "body", "acceptance", "verify", "github_issue")
+        for key in required:
             if key not in item:
                 raise SystemExit(f'條目 {item.get("id", "?")} 缺 {key}')
         if item["id"] in seen:
@@ -113,6 +99,14 @@ def load(path=DATA_PATH):
         seen.add(item["id"])
         if item["layer"] not in data["layers"]:
             raise SystemExit(f'條目 {item["id"]} 的 layer 不在 layers 裡')
+        issue = item["github_issue"]
+        if (
+            not isinstance(issue, dict)
+            or not isinstance(issue.get("number"), int)
+            or issue["number"] <= 0
+            or not issue.get("url")
+        ):
+            raise SystemExit(f'條目 {item["id"]} 的 github_issue 不完整')
     return data
 
 
@@ -127,151 +121,114 @@ def cmd_verify(data, quiet=False):
         if item["verify"]["kind"] == "manual":
             manual += 1
         mark = "仍未完成" if open_ else "⚠ 可能已完成"
-        lines.append(f'  {item["id"]:<34} {mark:<14} {why}')
+        issue = item["github_issue"]
+        lines.append(
+            f'  #{issue["number"]:<4} {item["id"]:<34} {mark:<14} {why}'
+        )
     if not quiet:
-        print(f'worklist：{len(data["items"])} 條未完成項'
-              f'（其中 {manual} 條要人判）')
+        print(
+            f'GitHub Issues 對應的本地 verify：{len(data["items"])} 條工作'
+            f'（其中 {manual} 條要人判）'
+        )
         print("\n".join(lines))
         if stale:
-            print(f"\n⚠ {len(stale)} 條的 verify 已經不成立——"
-                  f"東西可能做好了而條目沒改：")
-            for id_, why in stale:
-                print(f"  {id_}：{why}")
+            print(
+                f"\n⚠ {len(stale)} 條的 verify 已經不成立——"
+                "回查對應 Issue 並更新 JSON："
+            )
+            for item_id, why in stale:
+                print(f"  {item_id}：{why}")
     return 1 if stale else 0
 
 
-def render_text(data):
-    out = [BEGIN, "",
-           f'共 **{len(data["items"])} 條**未完成項。權威是 '
-           f'[`docs/worklist.json`](docs/worklist.json)，'
-           f'每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。',
-           "", "跑 `tools/py.sh tools/worklist.py verify` 逐條問一次；"
-           "`check.sh` 會替你跑。", ""]
-    by_layer = {}
-    for item in data["items"]:
-        by_layer.setdefault(item["layer"], []).append(item)
-    for layer, desc in data["layers"].items():
-        items = by_layer.get(layer)
-        if not items:
-            continue
-        out.append(f"### {layer} — {desc}")
-        out.append("")
-        for item in items:
-            open_, why = still_open(item)
-            mark = "" if open_ else "（⚠ verify 已不成立，回頭看這一條）"
-            out.append(f'#### {item["title"]} {mark}'.rstrip())
-            out.append("")
-            out.append(item["body"])
-            out.append("")
-            if item.get("blocked_by"):
-                out.append(f'**卡在**：{item["blocked_by"]}')
-                out.append("")
-            out.append(f'**怎樣算做完**：{item["acceptance"]}')
-            out.append("")
-            v = item["verify"]
-            if v["kind"] == "manual":
-                out.append(f'**verify**：`manual` — {v.get("note", "要人判")}')
-            elif v["kind"] == "json_len":
-                out.append(f'**verify**：`json_len` `{v["path"]}` ≤ {v["max"]}')
-            else:
-                out.append(f'**verify**：`{v["kind"]}` `/{v["pattern"]}/` '
-                           f'在 `{"`、`".join(v["paths"])}`')
-            out.append("")
-    out.append(END)
-    return "\n".join(out)
-
-
-def cmd_render(data, check=False):
-    text = RENDER_TARGET.read_text(encoding="utf-8")
-    block = render_text(data)
-    if BEGIN not in text or END not in text:
-        raise SystemExit(
-            f"{RENDER_TARGET.name} 裡找不到 render 標記；"
-            f"請先放一對：\n{BEGIN}\n{END}")
-    head = text[:text.index(BEGIN)]
-    tail = text[text.index(END) + len(END):]
-    updated = head + block + tail
-    if check:
-        # ⚠ **markdown 與 JSON 不同步，就是過期斷言的溫床**：有人手改了那一節，
-        # 或改完 JSON 忘了 render。這一關讓它當場開口。
-        if updated != text:
-            print(f"⚠ {RENDER_TARGET.name} 的未完成項那一節與 "
-                  f"docs/worklist.json 不同步——跑 "
-                  f"`tools/py.sh tools/worklist.py render`")
-            return 1
-        print(f'{RENDER_TARGET.name} 與 docs/worklist.json 同步'
-              f'（{len(data["items"])} 條）')
-        return 0
-    RENDER_TARGET.write_text(updated, encoding="utf-8")
-    print(f'寫回 {RENDER_TARGET.name}：{len(data["items"])} 條')
-    return 0
-
-
 def selftest():
-    """⚠ 正反對照：只驗「它印出仍未完成」證明不了機制有在看。
-
-    每一種 kind 都要先確認**訊號在時報未完成**，再把訊號拿掉、
-    確認它真的開口。
-    """
+    """驗證各種訊號的正反兩面，以及現行 JSON 的 Issue 對照。"""
     import tempfile
 
     ok = True
 
-    def check(name, cond):
+    def check(name, condition):
         nonlocal ok
-        print(f'  {"✓" if cond else "✗"} {name}')
-        ok = ok and cond
+        print(f'  {"✓" if condition else "✗"} {name}')
+        ok = ok and condition
 
-    with tempfile.TemporaryDirectory(dir=str(ROOT / "workplace")) as td:
-        d = Path(td)
-        (d / "sub").mkdir()
-        (d / "sub" / "prod.go").write_text("// 這一段 remake 還沒接\n",
-                                           encoding="utf-8")
-        (d / "sub" / "prod_test.go").write_text("// TypeThatOnlyTestsMention\n",
-                                                encoding="utf-8")
-        rel = str(d.relative_to(ROOT))
+    with tempfile.TemporaryDirectory(dir=str(ROOT / "workplace")) as temp_dir:
+        directory = Path(temp_dir)
+        (directory / "sub").mkdir()
+        (directory / "sub" / "prod.go").write_text(
+            "// 這一段 remake 還沒接\n", encoding="utf-8"
+        )
+        (directory / "sub" / "prod_test.go").write_text(
+            "// TypeThatOnlyTestsMention\n", encoding="utf-8"
+        )
+        relative = str(directory.relative_to(ROOT))
 
-        present = {"kind": "present", "paths": [rel + "/sub"],
-                   "pattern": "remake 還沒接"}
-        check("present：自承還在 → 仍未完成",
-              still_open({"verify": present})[0])
-        (d / "sub" / "prod.go").write_text("// 已經接上了\n", encoding="utf-8")
-        check("present：自承不見了 → 開口說可能已完成",
-              not still_open({"verify": present})[0])
+        present = {
+            "kind": "present",
+            "paths": [relative + "/sub"],
+            "pattern": "remake 還沒接",
+        }
+        check("present：自承還在 → 仍未完成", still_open({"verify": present})[0])
+        (directory / "sub" / "prod.go").write_text("// 已經接上了\n", encoding="utf-8")
+        check(
+            "present：自承不見了 → 開口說可能已完成",
+            not still_open({"verify": present})[0],
+        )
 
-        absent = {"kind": "absent", "paths": [rel + "/sub"],
-                  "pattern": "TypeThatOnlyTestsMention"}
-        check("absent：只有測試檔提到 → 仍未完成（測試檔不算）",
-              still_open({"verify": absent})[0])
-        (d / "sub" / "prod.go").write_text("type TypeThatOnlyTestsMention int\n",
-                                           encoding="utf-8")
-        check("absent：產品碼出現了 → 開口說可能已完成",
-              not still_open({"verify": absent})[0])
+        absent = {
+            "kind": "absent",
+            "paths": [relative + "/sub"],
+            "pattern": "TypeThatOnlyTestsMention",
+        }
+        check(
+            "absent：只有測試檔提到 → 仍未完成（測試檔不算）",
+            still_open({"verify": absent})[0],
+        )
+        (directory / "sub" / "prod.go").write_text(
+            "type TypeThatOnlyTestsMention int\n", encoding="utf-8"
+        )
+        check(
+            "absent：產品碼出現了 → 開口說可能已完成",
+            not still_open({"verify": absent})[0],
+        )
 
-        (d / "n.json").write_text('{"rows": [1, 2]}', encoding="utf-8")
-        jl = {"kind": "json_len", "path": rel + "/n.json",
-              "field": "rows", "max": 2}
-        check("json_len：還沒超過門檻 → 仍未完成",
-              still_open({"verify": jl})[0])
-        (d / "n.json").write_text('{"rows": [1, 2, 3]}', encoding="utf-8")
-        check("json_len：超過門檻 → 開口說可能已完成",
-              not still_open({"verify": jl})[0])
+        (directory / "n.json").write_text('{"rows": [1, 2]}', encoding="utf-8")
+        json_length = {
+            "kind": "json_len",
+            "path": relative + "/n.json",
+            "field": "rows",
+            "max": 2,
+        }
+        check(
+            "json_len：還沒超過門檻 → 仍未完成",
+            still_open({"verify": json_length})[0],
+        )
+        (directory / "n.json").write_text('{"rows": [1, 2, 3]}', encoding="utf-8")
+        check(
+            "json_len：超過門檻 → 開口說可能已完成",
+            not still_open({"verify": json_length})[0],
+        )
 
-        check("manual：一律回仍未完成",
-              still_open({"verify": {"kind": "manual"}})[0])
+        check("manual：一律回仍未完成", still_open({"verify": {"kind": "manual"}})[0])
 
-        # ⚠ 自己中自己：條目的 body 幾乎一定含 pattern 的字樣。
-        (d / "worklist.json").write_text("remake 還沒接", encoding="utf-8")
-        (d / "sub" / "prod.go").write_text("// 已經接上了\n", encoding="utf-8")
-        selfhit = {"kind": "present", "paths": [rel],
-                   "pattern": "remake 還沒接"}
-        check("不掃 worklist.json 自己（否則每一條都永遠成立）",
-              not still_open({"verify": selfhit})[0])
+        (directory / "worklist.json").write_text("remake 還沒接", encoding="utf-8")
+        (directory / "sub" / "prod.go").write_text("// 已經接上了\n", encoding="utf-8")
+        selfhit = {
+            "kind": "present",
+            "paths": [relative],
+            "pattern": "remake 還沒接",
+        }
+        check(
+            "不掃 worklist.json 自己（否則每一條都永遠成立）",
+            not still_open({"verify": selfhit})[0],
+        )
 
     data = load()
     check("docs/worklist.json 讀得動而且 schema 過關", bool(data["items"]))
-    check("render 產得出來而且含首尾標記",
-          render_text(data).startswith(BEGIN) and render_text(data).endswith(END))
+    check(
+        "每個現行工作都掛有 GitHub Issue",
+        all(item.get("github_issue", {}).get("number", 0) > 0 for item in data["items"]),
+    )
     print("worklist 自我測試：" + ("通過" if ok else "**失敗**"))
     return 0 if ok else 1
 
@@ -279,13 +236,13 @@ def selftest():
 def main(argv):
     if "--selftest" in argv:
         return selftest()
-    if len(argv) < 2 or argv[1] not in {"verify", "render"}:
+    if len(argv) < 2 or argv[1] != "verify":
+        if len(argv) >= 2 and argv[1] == "render":
+            print("render 已移除：目前工作由 GitHub Issues 管理，Markdown 不再保存未處理清單。")
+            return 2
         print(__doc__)
         return 2
-    data = load()
-    if argv[1] == "verify":
-        return cmd_verify(data)
-    return cmd_render(data, check="--check" in argv)
+    return cmd_verify(load())
 
 
 if __name__ == "__main__":

@@ -81,7 +81,6 @@ if [[ $WANT_DOCS == 1 ]]; then
         tools/py.sh tools/stale_scan.py'
     step "未完成項（verify 還成立嗎）" bash -c '
         tools/py.sh tools/worklist.py --selftest
-        tools/py.sh tools/worklist.py render --check
         tools/py.sh tools/worklist.py verify'
     step "教訓的防線還在嗎" bash -c '
         tools/py.sh tools/lessons.py --selftest

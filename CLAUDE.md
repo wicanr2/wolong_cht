@@ -2,8 +2,9 @@
 
 ## ⚡ 動手前先讀 CONTEXT.md
 
-`CONTEXT.md` 是全專案的單一入口：現況一覽、文件索引、術語表、oracle 優先序、
-**已被推翻的斷言清單**、worklist。對話被壓縮或新 session 接手時先讀它。
+`CONTEXT.md` 是全專案的現況與證據入口：現況一覽、文件索引、術語表、oracle 優先序、
+**已被推翻的斷言清單**。現行工作與狀態在 GitHub Issues；本地 worklist JSON 只作
+verify 輔助。對話被壓縮或新 session 接手時先讀它，再查 Issues。
 
 **要查「某件事解了沒」先看 [`docs/INDEX.md`](docs/INDEX.md)**——那份是
 `tools/index.py generate` 從各文件內文生出來的，含一張斷言總表
@@ -622,7 +623,7 @@ grep `.asm` 只能從呼叫端的參數順序反推——那是間接證據，�
 | `phantom_scan.py` | **指向不存在的東西**——檔案、目錄、Go 識別字、IDA 符號、**Go 測試名** |
 | `symbol_roles.py` | **同一個 IDA 符號在兩份文件裡被標成互斥的角色**（播曲 vs 調色盤、存檔 vs 亂數）。⚠ **稽核用不是閘**，誤報是預期的——一支函式可以既畫圖又讀輸入，但不會既播曲又載調色盤。不接進 `check.sh` |
 | `lessons.py` | **教訓的防線還在嗎**——權威是 `docs/lessons.json`，每條掛 `trigger`（什麼時候想起）、`occurrences`（犯過幾次）與 `guard`（工具／測試／提示／只有規則）。⭐ **`render` 把教訓攤成 `docs/lessons/*.txt`，`ida.sh`／`dosgolem.sh` 開頭 `cat` 它**——教訓要防的動作發生在任務中間，光寫進常駐文件那時沒有東西會問 |
-| `worklist.py` | **未完成項的 verify 還成立嗎**——權威是 `docs/worklist.json`，每一條掛一個 verify（`present`／`absent`／`json_len`／`manual`），**跑起來為真＝這一條仍然未完成**。做好了而條目沒改就當場開口；`WORKLIST.md` 的那一節由 `render` 產生（規則見 `rulebook/61`）|
+| `worklist.py` | **GitHub Issue 對應的本地 verify 還成立嗎**——現行工作權威是 GitHub Issues；`docs/worklist.json` 只保存 Issue 對照與 `present`／`absent`／`json_len`／`manual` 訊號。**跑起來為真＝仍可能未完成**，跑起來為假就回查 Issue；不生成、不驗證 Markdown 清單，也不自動改 Issue 狀態|
 | `stale_scan.py` | **指到的東西存在，但值不對**——檔案雜湊、docker 映像標籤、命令列旗標、RE 覆蓋率、抄到別份文件的未解列數與規格份數，以及**對拍紀錄的 `remake 側` 漏了受控存檔**（原版側跑 `root-noclouds` 而 remake 側沒有 `-save-file`，照著跑對不出文中的數字）|
 
 第三類最貴也最晚才有檢查：**格式完全正確、連結都通、只有數字是舊的**。
@@ -659,15 +660,17 @@ grep `.asm` 只能從呼叫端的參數順序反推——那是間接證據，�
 | 這件事解了沒？ | [`docs/INDEX.md`](docs/INDEX.md) 的斷言總表（欄位／常數 → 推論等級 → 出處）|
 | 這支函式有人讀過嗎？ | [`docs/re/21`](docs/re/21-function-census.md) 的覆蓋地圖 |
 | 這支函式大概在做什麼？ | [`docs/re/24`](docs/re/24-unread-function-catalogue.md) 的未讀目錄 |
-| **還有什麼沒解？** | [`docs/re/43`](docs/re/43-open-questions.md) 的缺口總表 |
+| **目前工作與狀態？** | GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) |
+| **還有什麼原版證據缺口？** | [`docs/re/43`](docs/re/43-open-questions.md) 的生成索引；由 Issue #28 分流 |
 | **想了解某個子系統？** | [`docs/re/00-index.md`](docs/re/00-index.md) 的 RE 知識庫入口 |
 
 `grep` 一次幾乎零成本，漏查的代價是重推一次已經有答案的東西——
 或更糟，繞著一道**已經不存在的閘**打轉。
 
 
-1. 動手前讀 `CONTEXT.md` worklist（狀態的單一真相來源）與相關的
-   `docs/re/`、`docs/spec/`。
+1. 動手前讀 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 的現行工作、
+   `CONTEXT.md` 現況與相關的 `docs/re/`、`docs/spec/`；再跑
+   `tools/py.sh tools/worklist.py verify` 作本地輔助檢查。
 2. 看 `git status --short`。既有改動屬於使用者或當前任務，**不要 reset 或丟棄**。
 3. 做完一項：更新 markdown → **清掉被推翻的斷言**（不是加註解，是刪掉並記進推翻清單）
    → 跑測試 → 留視覺／實跑證據 → commit + push → 更新 `CONTEXT.md` 現況。
@@ -717,7 +720,7 @@ tools/            docker 包裝（go.sh、py.sh、ida.sh、shot.sh、
                   dosbox.sh、dosboxx.sh、dosboxx_bridge.sh ＋ dosboxx_probe.py＝正對照）、
                   check.sh（提交前的單一入口）、denylist.py ＋ release.sh（發行閘）、
                   phantom_scan.py（指向不存在的東西）＋ stale_scan.py（值已經不對）、
-                  index.py（文件索引）、worklist.py（未完成項的 verify／render）、
+                  index.py（文件索引）、worklist.py（GitHub Issue 對照的 verify）、
                   lessons.py（教訓的防線稽核＋把教訓印進 ida.sh／dosgolem.sh）、
                   re_coverage.py（RE 覆蓋地圖）、
                   re_open_questions.py（缺口總表）、
@@ -734,7 +737,7 @@ workplace/ida/{dosv,pc98}/  IDA database 與 dump（gitignore）
 路徑本身就標明了這份素材是哪一版，寫筆記時不會混。
 
 `CONTEXT.md` 的骨架：現況一覽表／文件索引／術語表／**已被推翻的斷言**／
-Worklist（含「一句話現況」與「下一步」）／已建好的工具清單。
+GitHub Issue 工作入口說明／歷史證據快照／已建好的工具清單。
 
 ---
 
@@ -751,15 +754,18 @@ Worklist（含「一句話現況」與「下一步」）／已建好的工具清
 新 session、對話被壓縮、或工作交接時依序做：
 
 1. 讀最新的使用者需求。
-2. 讀 `CONTEXT.md` 的現況與 worklist。**不要把歷史段落當成目前待辦。**
+2. 讀 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 的現行工作與
+   `CONTEXT.md` 的現況／證據；再跑 `tools/py.sh tools/worklist.py verify`。
+   **不要把歷史段落當成目前待辦。**
 3. 讀本檔的目標、硬規則與證據契約。
 4. 先看 [`docs/INDEX.md`](docs/INDEX.md) 的斷言總表，再讀任務直接相關的
    `docs/re/`、`docs/formats/`、`docs/mechanics/`、`docs/spec/`、`docs/playtest/`。
    要碰反組譯就把 §10 那五張表查完，子系統的入口是
    [`docs/re/00-index.md`](docs/re/00-index.md)。
 5. `git status --short`。**既有改動屬於使用者或前一輪工作，不得 reset、覆蓋或丟棄。**
-6. [`WORKLIST.md`](WORKLIST.md) 只當快速入口；狀態仍以 `CONTEXT.md`、
-   `docs/INDEX.md`、目前程式與可重現測試為準。
+6. 現行工作只看 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues)；
+   [`WORKLIST.md`](WORKLIST.md)、`REMAKE-PLAN.md` 與 `CONTEXT.md` 的歷史段落
+   只作證據回查。狀態仍以 Issue、`docs/INDEX.md`、目前程式與可重現測試為準。
 
 每一輪的工作紀律在 §10，這裡不重複。
 
@@ -790,10 +796,12 @@ Worklist（含「一句話現況」與「下一步」）／已建好的工具清
 
 | 檔案 | 角色 |
 |---|---|
-| `CONTEXT.md` | **專案狀態的單一真相來源** |
+| `CONTEXT.md` | 專案現況、證據邊界與已被推翻的斷言；不登記現行待辦 |
 | `CLAUDE.md` | 目標、硬規則與證據契約。`AGENTS.md` 是它的符號連結，兩邊同一份內容 |
 | `docs/INDEX.md` | 由 `tools/index.py generate` 產生的文件與斷言索引，**不手改** |
-| `WORKLIST.md` | 交接、剩餘工作、命令閘與容器狀態的唯一入口；不另建 `HANDOFF.md` |
+| GitHub Issues | **現行工作、狀態、完成條件與交接入口** |
+| `docs/worklist.json` | GitHub Issue 對照與本地 Python verify 輔助；不取代 Issue |
+| `WORKLIST.md` | 歷史封口、勘誤與容器紀錄；不保存現行待辦，不另建 `HANDOFF.md` |
 | `RESEARCH-LOG.md`、`REMAKE-PLAN.md` | 逆向研究的證據台帳；架構、法務邊界與刻意的 remake 差異 |
 
 深層證據只放 `docs/` 對應文件，上表這幾份不複製證據。

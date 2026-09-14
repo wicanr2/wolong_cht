@@ -6,7 +6,7 @@
 
 - 日期：2026-09-10
 - 規則：`~/.claude/rulebook/61-worklist-as-data-with-verify.md`（同一個做法用在教訓上）
-- 相關：[`CONTEXT.md`](../CONTEXT.md) §6（事件台帳）、`CLAUDE.md` §7（歷史清單）
+- 相關：[`CONTEXT.md`](../CONTEXT.md) §6（事件台帳）、`CLAUDE.md` §7（GitHub Issue 工作管理與歷史證據）
 
 <!-- lessons:begin 由 tools/lessons.py render 產生，不要手改 -->
 

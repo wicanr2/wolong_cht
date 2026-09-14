@@ -1190,17 +1190,27 @@ grep `.go`，實際踩到六筆）。
    沒擋表格列，於是 `mechanics/80` 的「已解的」整張表都進了缺口總表。
    **在一半的路徑上生效的過濾器，比沒有過濾器更難察覺。**
 
-## 7. Worklist（狀態的單一真相來源）
+## 7. 工作管理與現況（GitHub Issues）
 
-> ⭐ **「還有什麼沒做」的權威已經改成 [`docs/worklist.json`](docs/worklist.json)**：
-> 每一條掛一個 verify，**跑起來為真就是這一條仍然未完成**；做好了而條目沒改，
-> `check.sh` 會當場開口（`tools/worklist.py`，規則見 `rulebook/61`）。
-> `WORKLIST.md` 的「未完成項」那一節由 `render` 產生。
-> 這一節留的是**狀態與過程**——量到什麼、踩過什麼坑、下一步為什麼是那個。
+> ⭐ **現行工作的唯一入口是 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues)**：
+> Issue 的開／關狀態、內容與完成條件才是工作真相；建立、拆分、關閉或重開工作
+> 都在 Issue 完成，不在 Markdown 維護待辦清單。
+>
+> [`docs/worklist.json`](docs/worklist.json) 是本地輔助資料，保存 Issue 對照與
+> `tools/worklist.py verify` 訊號。verify 跑起來為真表示仍可能未完成，跑起來為假
+> 只要求回查 Issue；它不會自動變更 GitHub 狀態。[`WORKLIST.md`](WORKLIST.md)、
+> `REMAKE-PLAN.md` 與本檔本節以下的舊段落只保存歷史、規格與證據，不是現行工作清單。
+>
+> 目前已登記 Issues #1–#28；其中 #28 分流生成的 `docs/re/43`，不把 802 列誤當
+> 成 802 個獨立 backlog。新增工作時先建立 Issue，再把證據文件連回該 Issue。
 
-### 7.0 下一步（2026-08-25 基準）
+### 7.0 遷移前現況快照（歷史證據，不是工作清單）
 
-#### 2026-09-08 六項品質修正（目前工作）
+以下內容是 2026-09-14 遷移前的狀態與證據快照；其中的「未完成」只描述當時
+的證據邊界，現行追蹤一律回到上列 GitHub Issues。不要在這裡新增待辦或以本段
+判定 Issue 是否應關閉。
+
+#### 2026-09-08 六項品質修正（遷移前快照）
 
 **目前狀態：進行中（2026-09-09 恢復）。** 六項目標保留，不宣告完成；
 本輪改動已提交，已發布 v.1.0.18 不變，未發布新版。
@@ -1959,9 +1969,10 @@ UI 還沒有。
 
 ---
 
-### 7.1 里程碑現況
+### 7.1 里程碑證據快照（歷史）
 
-以 `CLAUDE.md` §8 的表為準，這裡只記「還沒完成的那幾項在缺什麼」。
+以 `CLAUDE.md` §8 的表為歷史交叉參照；這裡只保存遷移前的證據邊界，
+不再登記或排序現行工作。
 
 | | 缺什麼 |
 |---|---|
@@ -2012,12 +2023,13 @@ UI 還沒有。
 
 ## 9. 按日期的紀錄在哪裡
 
-本檔只寫**現況**。按日期的封口紀錄在 [`WORKLIST.md`](WORKLIST.md)，
-逆向的證據台帳在 [`RESEARCH-LOG.md`](RESEARCH-LOG.md)。
+本檔只寫**專案現況與證據邊界**。現行工作與狀態在 GitHub
+[Issues](https://github.com/wicanr2/wolong_cht/issues)；按日期的歷史封口紀錄在
+[`WORKLIST.md`](WORKLIST.md)，逆向證據台帳在 [`RESEARCH-LOG.md`](RESEARCH-LOG.md)。
+本地 [`docs/worklist.json`](docs/worklist.json) 與 verify 只作輔助，不是第二份工作清單。
 
-⚠ **`WORKLIST.md` 的最後一節是 2026-08-12**——那之後每一輪的內容都寫進
-本檔 §7.0，沒有再補日期節。**接手時看 §7.0，不要以為 `WORKLIST.md`
-是最新的。**
+接手時先查 GitHub Issues，再跑 `tools/py.sh tools/worklist.py verify`；不要從
+本檔、`WORKLIST.md` 或 `REMAKE-PLAN.md` 的歷史「未完成」文字重新建立待辦。
 
 > **為什麼這裡不留一份。** 本檔曾經在 §8 之後掛著 50 節
 > 「2026-08-09／08-10 最新接手狀態」，內容與 `RESEARCH-LOG.md` 同期的條目重疊，

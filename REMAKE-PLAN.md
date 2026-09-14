@@ -1,6 +1,6 @@
 # 臥龍傳 remake 計畫
 
-> ⚠ **待辦看 [`CONTEXT.md`](CONTEXT.md) §7，不是這裡。**
+> ⚠ **現行工作看 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues)，不是這裡。**
 > 本檔是**架構與垂直切片的定位**：法務邊界、素材盤點、資料流、
 > 刻意的 remake 差異，以及各切片的驗收方式。
 > 下半部按日期的節是**當時的封口紀錄**，不是現況。
@@ -44,18 +44,16 @@ Android 先沿用同一條資料流，只在平台殼增加安全區、視口轉
 | save/load | `SINARIO.DAT`／`SAVE.DAT` 四槽 | `state.SaveInto` + `cmd/wlgame` system modal + `internal/savepath` | round-trip、overlay 差異、pristine hash、Trust `+0x10`／Player `+0x0D,+0x0F` round-trip、事件佇列 raw／節拍／月壓縮／1／2／3／4／5／6／7／8／9／13 handler 測試、`TestQueuedTalkNotices`／`TestQueuedDiplomacyReportTalkNotices`／`TestRawAmountEditorSemantics`、event3 fixture、Xvfb `4→S→Return` | 可玩 overlay、Trust、Player 雙欄、事件佇列原始 256 筆、每十次節拍、月度壓縮與事件 1／2／3／4／5／6／7／8／9（狀態、主要 TALK 句型取用）／13 handler、事件 11／12／13 的 `TalkNotice` 與 modal GUI 已接、玩家外交／撥款三選一與 raw 3×6 數值選取、event3 raw fixture→composite→消像已接；事件 6／7 次要反應／原版數值排版、事件 10、事件 11／12 物件動畫與完整原版 save parity 仍未完 |
 | release | remake builds only | `tools/release.sh` + Docker 等價封裝流程 + deny-list | PE/ELF/Mach-O 檔頭、unpacked smoke、asset scan | Linux amd64、Windows amd64、macOS Intel／Apple Silicon 候選包已產出；Linux 封裝 Xvfb smoke 與 deny-list 通過；Windows／macOS GUI 目標 runtime 實跑仍未完 |
 
-## Worklist
+## Issue tracking
 
-| ID | Deliverable | Evidence needed | Acceptance gate | Status |
-|---|---|---|---|---|
-| M7-A | 60 筆 `translations/corrections.json` | `TALK.DAT` 兩版索引、IDA 槽位索引證據、逐句內容對照 | `talkdat.py correct`／`verify` + selftest + `WrapLines`／Xvfb 抽樣 | 60 筆已可重跑套用並接入 `wlgame`；**#0–#1021 兩批逐句讀完**（`docs/reference/02` §11／§12）；remake 實測行寬／hard line／五行分頁／尾空行已測；**校訂後的畫面抽樣已做**（18 則，`docs/playtest/41`）。未定位 formatter 仍未完 |
-| M7-B | 1,022 則文意層校訂 | 日文／繁中逐句對照 | 變數、名詞、漏譯、刪節與決策可回查 | **兩批逐句讀取完成**；60 筆 runtime 產出已鎖定；**排版 parity 全量量過**（`docs/playtest/32`，單行超寬 0 行）、**畫面抽樣已做**（`docs/playtest/41`）。缺的是**兩版並排的畫面對照** |
-| M8-A | 目標平台建置 | `tools/release.sh` 等價 Docker 矩陣、PE/ELF/Mach-O 檢查、packaged Linux `-shot` | 交叉編譯目標正確、產物非同一平台假成功、發行目錄可啟動 | Linux／Windows／Darwin 純 Go 產物、Linux 原生本體與封裝 smoke 通過；Windows／macOS GUI runtime 未實機驗證 |
-| M8-B | 正常玩家路徑與畫面 | PC-98 固定狀態 oracle、event3 raw fixture、有效時鐘的原版／AI 存檔 | 無 debug hook、同狀態截圖／狀態對拍 | 編成／行軍／城兵攻城／敵方 AI 遭遇選單／戰術畫面、攻擊命令、結果報告與 GUI 回戰略接縫已完成；事件 3 raw fixture→前置 TALK→三選一→3×6 實際點擊→消像短路徑已完成；DOS/V 96×64 內框、3×6 button glyph、`KI.EXE` 16×16 hardware cursor 已解碼接線；⭐ **同狀態逐區對拍已完成**（主畫面五區逐像素相同、戰場九區裡六區；`docs/playtest/37`／`40`）；仍缺其他事件物件與跨平台實機 |
-| M8-C | 發行隔離 | deny-list、可寫 save overlay | 原始資產零命中、解包 smoke | deny-list／overlay smoke 已通過；完整目標平台矩陣未完成 |
-| M9-A | Android 手機版 | `docs/mobile/android-plan.md`、`docs/mobile/android-ux.md`、固定 Android Docker 工具鏈、`arm64-v8a` debug APK | 橫向安全區、觸控 hitbox、TALK／數值二段確認、pause/resume 不重複 tick | **核心已接入**：手機端共用 `internal/rules`／`internal/state`，模擬器與桌面在 frame 1／60／120 的指紋逐字相同；四個入口、戰場、存讀檔、四語系切換與音樂都在。剩下的兩件不是程式：**實機驗收**（沒有裝置）與 **release signing**（keystore 保管未決）|
-| RE-1 | ICONGRF 段 1／龍紋／MCH 等 | IDA／原版畫面或檔案不變量 | `docs/re/` + `docs/mechanics/` 雙寫 | `MMAP.MCH` type 1／2 已完成；⭐ **全函式靜態分析收斂到 T1**（739/739 有 `docs/re/` 筆記）；ICONGRF 段 1 的 UI 語意／龍紋仍待排程 |
+本檔只保存架構、垂直切片、驗收證據與歷史定位，不再維護現行工作表。
 
+- 現行工作與狀態：GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues)。
+- 本地輔助對照：[`docs/worklist.json`](docs/worklist.json)；以 `tools/py.sh tools/worklist.py verify` 檢查訊號，不以 Markdown 或 verify 輸出取代 Issue。
+- 垂直切片表中的「尚未完成」是證據邊界，不是待辦登記；要新增或拆分工作，先建立／更新 Issue，再在證據文件連回它。
+- 目前已登記的完整規則／對拍／發行分支見 Issues #1–#28；`docs/re/43` 的 802 筆生成列由 Issue #28 分流。
+
+本節取代舊 Worklist 表；舊表的狀態敘述已保留在按日期紀錄或對應證據文件，不再作為現行清單。
 ## Intentional differences
 
 | Area | Original | Remake | Reason | Player impact |

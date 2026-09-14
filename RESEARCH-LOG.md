@@ -12,7 +12,8 @@
 ## Current question
 
 本輪接手先不重新逆向已定案格式；問題是「如何以目前證據安全完成 M7／M8，並讓下一個
-session 能在不重推舊結論的情況下繼續」。
+session 能在不重推舊結論的情況下繼續」。現行工作已改由 GitHub Issues 管理；
+本台帳只保存研究證據與歷史狀態。
 
 ## Prior claims
 
@@ -50,7 +51,8 @@ session 能在不重推舊結論的情況下繼續」。
 
 - Status：strong inference（接手範圍）；工具鏈與 smoke 已驗證，尚未宣稱本輪完成 remake
 - Behavior：先重建可重現的驗證基線，再處理校訂與發行，不重新挖已 READY 的格式
-- Remake mapping：以 `CONTEXT.md` worklist 為狀態入口，`docs/re/`／`docs/mechanics/` 為證據與機制雙帳
+- Remake mapping：以 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 為現行工作入口，
+  `docs/worklist.json`／`tools/worklist.py verify` 為本地輔助；`docs/re/`／`docs/mechanics/` 為證據與機制雙帳
 - Remaining uncertainty：M7 1,022 則逐句文意／畫面抽樣與 M8 目標平台實機／完整正常玩家路徑驗收
 
 ## Reproduction

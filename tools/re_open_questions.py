@@ -369,9 +369,12 @@ def main():
 
     out = sys.stdout
     w = out.write
-    w("# 43 — 未解缺口總表（生成的）\n\n")
-    w("**狀態：生成的清單，跑 `tools/py.sh tools/re_open_questions.py` 重出。\n")
-    w("這一份不下結論，只把各文件的「未解」表集中到一處。**\n\n")
+    w("# 43 — 未解缺口總表（生成的證據索引）\n\n")
+    w("**狀態：生成的證據索引，跑 `tools/py.sh tools/re_open_questions.py` 重出。\n")
+    w("這一份不下結論，只把各文件的「未解」表集中到一處；它不是現行工作清單。**\n\n")
+    w("現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；\n")
+    w("本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。\n")
+    w("802 列不是 802 個獨立 backlog；可執行項目由 Issue #28 分流，證據／歷史項目留在本索引。\n\n")
     # 生成日期用今天：這份是重跑就重出的東西，寫死日期等於謊報新鮮度。
     w("- 日期：%s\n" % datetime.date.today().isoformat())
     w("- 產生工具：`tools/re_open_questions.py`\n")
@@ -380,7 +383,7 @@ def main():
     w("既有的三張表回答別的問題（`CLAUDE.md` §10）：`docs/INDEX.md` 是**已解**的斷言、\n")
     w("[`21`](21-function-census.md) 是函式有沒有人寫過、"
       "[`24`](24-unread-function-catalogue.md) 是未讀函式在做什麼。\n")
-    w("**這一份是唯一回答「還有什麼沒解」的。**\n\n")
+    w("**這一份是唯一集中「原版證據還有哪些未解列」的索引，不回答目前還剩多少工作。**\n\n")
     w("> 「擋住什麼」由來源目錄決定，「怎麼裁決」由關鍵字決定——"
       "兩欄都是機械算出來的，\n> **不是逐條判斷過的優先序**。"
       "要排優先序請自己讀那一列指到的小節。\n\n")
@@ -399,7 +402,7 @@ def main():
         w("把它從 570 降到 431，而那 −139 沒有一列是靠解出新東西減掉的。\n\n")
         w("**要看進度請看別的東西**：`docs/spec/` 的 CONFORMED 份數、\n")
         w("`docs/playtest/` 的逐像素數字、`docs/re/21` 的覆蓋地圖。\n")
-        w("這一份回答的是「還有什麼沒解」，**不是「還剩多少」**。\n\n")
+        w("這一份回答的是「原版證據索引有哪些未解列」，**不是「目前還剩多少工作」**。\n\n")
 
     if platform:
         w("> ⭐ 另有 **%d 列標成 `[DOS/BIOS]`**，"

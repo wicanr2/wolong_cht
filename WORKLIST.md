@@ -1,12 +1,11 @@
 # 臥龍傳 remake 工作清單
 
-> ⚠ **待辦看 [`CONTEXT.md`](CONTEXT.md) §7，不是這裡。**
+> ⚠ **現行工作看 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues)，不是本檔。**
 > 本檔是**按日期的完成紀錄**：每一節記下那一天封口了什麼、當時的邊界在哪。
-> 每一輪都會更新的「現在該做什麼」在 `CONTEXT.md` §7.0
-> （`CLAUDE.md` §10 也指向那裡）。
+> 本檔不再保存「現在該做什麼」；本地 JSON 只供
+> `tools/worklist.py verify` 輔助檢查。
 >
-> 兩邊都寫「唯一來源」會讓接手的人拿到舊快照——本檔只在封口時補一節，
-> 而 `CONTEXT.md` §7 每一輪都動。最新一節的日期就是本檔的時效。
+> Issue 的開／關狀態與完成條件是唯一現行工作真相；本檔的日期節只是歷史快照。
 >
 > 自 2026-08-10 起不再建立或更新 `HANDOFF.md`；歷史交接內容已濃縮到本檔，
 > 深層證據請回查 `RESEARCH-LOG.md`、`CONTEXT.md` 與 `docs/`。
@@ -15,214 +14,14 @@
 > （例如密碼頁一度被當成 oracle 的阻擋，2026-08-12 測出**不擋**）。
 > 推翻紀錄集中在 `CONTEXT.md` §6。
 
-## 目前目標
+## 工作管理入口（非工作清單）
 
-> ⭐ **未完成項的權威是 [`docs/worklist.json`](docs/worklist.json)**，
-> 渲染在下面的「未完成項」那一節。這一段是 2026-09-08／09 的敘述，
-> 逐條收進 JSON 的工作還沒做完（條目 `worklist-migration-incomplete`）。
+本檔只保存已完成事項、歷史封口與勘誤，不再登記未處理工作。
 
-**2026-09-09 進行中。** 六項品質修正尚未完成。最新尋路探針確認兩兵的路徑
-產生結果已與 dosgolem 不同，尚未區分成本表回溯與佔用成本的影響。
-續作入口為 CONTEXT.md §7.0 最上方的目前工作表，勿以歷史通過結果替代候選驗收。
-現行交付維持 v.1.0.18、自評 84；本輪改動已提交，未發布新版。
-⭐ **`TestFieldBattleTerminates` 已修正並通過**（第 339 幀結束）：
-原本的 8000 拍不結束是 fixture 缺了「單挑後玩家下命令」那一步，
-不是規則層回歸（[`docs/playtest/117`](docs/playtest/117-field-battle-needs-player-order.md)）。
-
-六項品質修正已開始，完整目標與各項狀態見 `CONTEXT.md` §7.0 的目前工作表。
-委任公式已有 dosgolem 12 組對照並完成窄修正；其他分支不得因這一項通過而宣告整體完成。
-歷史交付基準如下，已發布封包不覆寫。
-
-2026-09-08：目前桌面交付版 v.1.0.18-20260908。自評 84／100；完整版、公開引擎包與 56 秒桌面推廣片已整理，已使用主機 gh 正式發布 Release，本輪交付結案。
-行軍委任與戰術不下令皆呂布勝；逐拍與退路差異仍保留。本輪 Windows／macOS 人工驗收，Android 與全局通關排除。
-現況見 [桌面交付紀錄](docs/release/15-desktop-closeout-20260908.md)，勝負根因見 [playtest/115](docs/playtest/115-delegated-battle-cause.md)。
-行軍下令後回原父清單與殘留面板已修，
-正常行軍中儲存、首頁重啟保留路線、繼續抵達目的地通過。地圖入口也有父清單，
-最初相反推論已由原版重播訂正；v.1.0.8 不作交付完成收據。詳見 playtest/110。
-滑鼠捲動與戰後結果頁選項已完成，見 playtest/111、112。使用者於 2026-09-08 決定 Windows／macOS 原生操作由人工檢驗；其餘桌面打磨已授權執行，本輪狀態與收據見 [playtest/113](docs/playtest/113-desktop-polish.md)。
-
-
-桌面交付版：`dist-all/v.1.0.18-20260908/`。
-選章錯位與勢力清單兩段確認已修，AppImage 正常滑鼠流程通過；Windows／macOS 封包與架構查核通過，原生 GUI 未驗。
-Android 未改動。證據見 [playtest/109](docs/playtest/109-desktop-launcher-fix.md)；
-君主卡後的額外確認頁已依使用者同意移除，正常開局對拍通過。現況已回填 `CONTEXT.md` §7.0。
-Docker 本輪工作皆用 `--rm`；收尾確認無本輪容器殘留。未 commit 或 push。
-
-完成《臥龍傳－三國制霸之計》的證據導向 remake：核心規則、松崗 DOS/V
-呈現、繁中 TALK、存檔與正常玩家路徑接到可重播的跨平台程式。
-
-本輪以松崗繁中版為唯一畫面／行為 oracle（`workplace/orig/dosv` 是沿用的資料夾名稱）：
-
-- 640×400 畫面外框與數值視窗以 DOS/V 對準。
-- PC-98 與其他版本只保留歷史研究，不作本輪視覺、行為或 release 驗收基準。
-- 依使用者要求不跑完整長程遊戲測試；採窄 fixture、單測、Docker/Xvfb 短 smoke。
-- 三平台候選包可在短驗收 gate 通過後建立；原生 Windows／macOS runtime 仍是獨立 gate，不能由交叉編譯檔頭代替。
-
-## 未完成項
-
-<!-- worklist:begin 由 tools/worklist.py render 產生，不要手改 -->
-
-共 **14 條**未完成項。權威是 [`docs/worklist.json`](docs/worklist.json)，每一條掛一個 verify——**跑起來為真就是這一條仍然未完成**。
-
-跑 `tools/py.sh tools/worklist.py verify` 逐條問一次；`check.sh` 會替你跑。
-
-### parity — 與原版對不上，或還沒對過
-
-#### M7 只差兩版並排的畫面對照
-
-1,022 則兩批逐句讀完（`docs/reference/02` §11／§12），排版 parity 全量量過（`docs/playtest/32`），校訂後的畫面抽樣也做了（`docs/playtest/41`）。缺的是**把 PC-98 日文原版與松崗版的同一個畫面並排**——那需要 pc98golem 補上 `apps/wolong`（`CLAUDE.md` §4.02）。
-
-**卡在**：pc98golem 目前只有 `apps/pool`，GDC 與文字 VRAM 那一層還沒做。
-
-**怎樣算做完**：同一則訊息在兩版的畫面並排，逐區比過並留下收據。
-
-**verify**：`manual` — 做完會有一份 `docs/playtest/` 的並排紀錄。到時把這一條改成 absent，綁那份文件裡的識別字樣——現在猜檔名等於猜一個永遠不會中的 pattern。
-
-#### 音色的諧波結構沒量化比對過
-
-音訊整條接通：格式解完、純 Go 的 OPL3、場景對應從機器碼讀出來，與原版錄音的包絡互相關 0.704（`docs/playtest/26`）。**包絡對得上不等於音色對得上**——諧波結構沒有量化比過，手機也沒有實機聽過（模擬器是 `-no-audio` 起的）。
-
-**怎樣算做完**：同一首曲子兩邊各取一段做頻譜比對，給出一個可重跑的量化指標。
-
-**verify**：`present` `/音色的諧波結構沒量化比對/` 在 `README.md`
-
-#### 把召見的回應序列接進對拍腳本，延長到 90 天
-
-召見（196 年 5 月 13 日 11 時，「孫乾　大人，主公有事召見。」）已經推得過去，兩邊都接好了：
-
-· 原版側 `tools/parity_ck_orig.sh` 的 `SUMMON_REPLY` ＝ `rpress ×2 → press → rpress ×4`（次數是量出來的，多按會在大地圖開選單把遊戲暫停；`docs/playtest/119` §46.21）。
-· remake 側 `rng_pace.go -answer accept` ＝ `DiplomacyAcceptFree`，對應原版按反白的第 1 列（使用者裁定 2026-09-10「都固定 yes」）。
-· 召見那一拍的君主採納判定也接了（`docs/spec/189`）。
-
-**剩下的是往後跑**：取樣點改用遊戲日期（參數含 `/` 走 `until:`）。目前對到 5/14（六張表只差軍團 1 個 byte）、5/20（據點 3 B）、6/1（月結全面分歧，待追）。第 90 天是 196 年 7 月 16 日。
-
-**怎樣算做完**：`tools/parity_ck.sh 196/7/16` 六張表全 0。
-
-**verify**：`absent` `/196/7/16/` 在 `docs/playtest/119-rng-pace-comparison.md`
-
-#### `sub_143AF` 第三個條件的殘留 `di` 模型還不完整
-
-`cmp byte ptr [di+18h], 2` 讀的是**上一支軍團留在 `di` 的位址**（docs/spec/195 §2）。兩個來源都追了——`sub_1440F` 的第一行（意圖據點的記錄）與 `sub_143AF` 自己的留守分支（勢力的記錄）——而 5/25 與 5/31 的六張表因此全綠。
-
-⚠ 但拍 9,274 仍對不上：原版那時的 `DI=0100`（勢力 4），而 remake 已經被某一次 Stage 2 覆蓋成據點。這個條件會回頭決定「誰走到留守分支」，所以早期的一點分歧會自我放大。
-
-下一步：攔 `1440F` 與 `143AF` 兩支的入口暫存器，把原版的 `di` 逐次記下來與 remake 並排——**不要再用推的**（第一版只追勢力那一個來源，5/25 從 0 變 735 個 byte）。
-
-**怎樣算做完**：`tools/parity_ck.sh 196/6/1` 的六張表全 0。
-
-**verify**：`present` `/模型還不完整/` 在 `docs/spec/195-ai-stage1-asks-about-the-intent.md`
-
-#### 畫面對拍閘只收了十七組，還有十幾組沒進來
-
-`tools/parity_screens.json` 現在有 17 組（`docs/playtest/121`）。還沒收的：`38` 三視窗、`39` 系統選單、`42` 四個視窗、`83` 據點一覽、`84` 人事／軍團六個出口、`92` 人事四個任免、`94` 行軍選點、`96` 大地圖點擊、`98` 敵軍團面板、`99` 存檔槽、`105` 命名視窗、`106` 啟動殼層三頁。
-
-⚠ 這些的文件裡 remake 側多半只有旗標片段（`89`–`104` 整批全文沒有出現 `parity_shot`），收進來要逐組把命令補齊並實測——**照抄跑不起來的那一種，正是下一輪規則改動之後不會開口的那一種**。
-
-**怎樣算做完**：上列每一組都在 `tools/parity_screens.json` 裡，且 `tools/parity_screens.sh` 全跑 exit 0。
-
-**verify**：`json_len` `tools/parity_screens.json` ≤ 28
-
-#### 拍 4 之後那 2 個兵：中繼目標的接縫（併入 spec/159 的未完成實作）
-
-開場延遲接上之後（`docs/spec/200`）逐拍 96 槽**拍 0–3 逐槽相同**，拍 4–6 各差 **2 個兵**：`0/2/0`（隊 2 的**隊長**）與 `0/5/2`。
-
-| 兵 | 前拍 | 原版 | remake |
-|---|---|---|---|
-| `0/2/0` | (1,41) 旗 98 | (1,40) 走 **Y** | (2,41) 走 **X** |
-| `0/5/2` | (1,41) 旗 88 | (2,41) 走了 | (1,41) 沒動 |
-
-移動常式 `sub_1AF69` 是**先比 X、X 相等才比 Y**（`0001AF6E`–`0001AF80`），所以「原版走 Y」等於「原版認為 X 已到位」⇒ **兩邊的中繼目標 `+0x10`／`+0x11` 不同**。
-
-⚠ **`docs/spec/159` 的相關 READY 項目其實都已經實作了**（2026-09-11 查證）：
-· 隊長／隊員差別 → `soldier.go` 的 `doFormation` 已有 `if k%PerSquad == 0`
-· 算路後立即消費首點 → `computePath` 已經 `Path = &Waypoints{pts, i: 1}` ＋ `Step = pts[0]`
-· 無繞路點時設 `Step = Goal` 留待下拍 → `moveToward` 已是這樣
-
-⇒ **不要再去接那一份**。剩下的差異更細，要逐兵比 `+0x10`／`+0x11`（中繼目標）與 `+0x14`（陣形座標）才看得出來——而 dosgolem 的 `units` 只印座標／體力／令／旗，**下一步得先讓原版側印得出那幾個欄位**（peek 兵記錄段，段值在 `cs:1D30E`，每筆 32 B、96 筆 ＝ 0xC00）。
-
-⚠ 那兩個兵的旗標與其他兵不同（98／88 vs A8），所以它們在不同狀態——`0/2/0` 是隊長（`sub_1A8DE` 只把命令下給隊員，隊長自己的命令來自別處）。
-
-**怎樣算做完**：逐拍 96 槽相同到至少拍 10（目前拍 0–3 相同、拍 4 起差 2 個兵）。
-
-**verify**：`present` `/仍有 \*\*2 個兵\*\*對不上/` 在 `docs/spec/200-opening-move-delay.md`
-
-#### 野戰開場對白框的持續時間與原版不同
-
-野戰**第 6 拍**兩邊的 `field` 區只差 95 px（原版錄影的游標）⇒ 那時對白框是同步的。但**第 52 拍**差 39,531 px，差分圖上只有左上與右下兩塊（地形與部隊整片相同）⇒ 對白框在 remake 這側還在、原版已經收掉（或相反）。
-
-⇒ 不是「什麼時候出現」，是**持續多久**。
-
-重跑：`tools/parity_screens.sh field-exact-6 field-exact-52`。
-
-**怎樣算做完**：第 52 拍的 `field` 區降到只剩游標那一類的殘差。
-
-**verify**：`present` `/開場對白框/` 在 `tools/parity_screens.json`
-
-### fidelity — 原版有這個機制，remake 還沒建模
-
-#### 退卻時兩端到首都等距，取哪一端沒解
-
-`sub_1487B` 走在路上那一半已經對過兩組原版實測（`docs/spec/46` §5.2）：退到這條邊上**離首都近的那個端點**。等距時原版由 `loc_1491B` 的廣度優先展開順序決定，而那一段是自我修改碼；remake 取 A 端。
-
-**怎樣算做完**：解出展開順序，或找到一組等距的原版樣本把它釘住。
-
-**verify**：`present` `/等距\*\*時原版由廣度優先的展開順序決定，還沒解/` 在 `internal/state/aimarch.go`
-
-#### 軍團記錄 `+0x21` 沒建模
-
-`sub_1264A` 在軍團沒卡住時把 `+0x03` 與 `+0x21` 一起歸零，`sub_12B3C` 拿 `+0x21 << 2` 與 `+0x03 & 3` 合成大地圖上的軍團圖塊索引。看起來是對峙動畫的第二個維度，語意未讀（`docs/spec/175` §5）。
-
-**怎樣算做完**：讀出 `+0x21` 的寫入端與語意，接進 `Corps` 並讓存檔 round-trip 保住它。
-
-**verify**：`present` `/remake 還沒建模那一欄/` 在 `internal/state/corps.go`
-
-#### 對峙那 96 拍的動畫與音效沒接
-
-撞上敵人先對峙 12 個巡迴週期才開打已經接上並對過拍（`docs/spec/175`）。原版那 96 拍畫面上是兩軍對砍的動畫（`+0x03 & 3` 是相位），每個週期還播一次 `sub_102F5(al=3)`。remake 那段是靜的。
-
-**怎樣算做完**：動畫相位與音效都接上；對峙期間的畫面與原版逐區比過。
-
-**verify**：`present` `/兩者 remake 都還沒接/` 在 `internal/state/corps.go`
-
-### re — 原版的碼還沒讀懂
-
-#### `loc_1491B` 的廣度優先是自我修改碼，還沒解
-
-`mov cs:word_149B8, bx`／`mov cs:word_149BE, cx`／`mov cs:byte_149D2, dl` 把值寫進後面幾行的 inline 立即值，IDA 因此把 `byte_149B6` 起整段解成資料。展開後是「碰到任一端就停」，但**展開順序與權重細節沒有逐條讀過**——退卻與行軍重算都走它。
-
-**怎樣算做完**：交叉解碼那段 bytes，把展開順序寫成規格，並拿它解釋等距時取哪一端。
-
-**verify**：`present` `/要逐條對就得先交叉解碼那段 bytes/` 在 `docs/spec/46-post-battle-retreat.md`
-
-#### `ICONGRF` 段 1 前三塊的 UI 語意未解
-
-七個圖塊的偏移與尺寸已定位（`docs/re/18` §2、`docs/formats/03` §5.3），尾端四塊已逐像素對過是戰術側欄的橫帶、四角與兩根柱子（`docs/spec/31` §1.1）。**前三塊各代表什麼、`0x3000` 背板上的文字由誰合成**還沒解——這是 M1 唯一沒收掉的缺口。
-
-**怎樣算做完**：三塊各自的用途有機器碼出處，或在畫面上指得出來。
-
-**verify**：`present` `/段 1 `0x0000` 那一塊畫了什麼/` 在 `docs/re/03-image-blitter.md`
-
-### release — 交付前還沒做的驗收
-
-#### 各目標平台的實機執行還沒驗
-
-發行閘（`tools/denylist.py` ＋ `tools/release.sh`）已接進 `check.sh`，交叉建置與檔頭檢查都過。缺的是 **Windows／macOS 在原生環境真的跑起來**——交叉編譯的檔頭檢查代替不了它。
-
-**怎樣算做完**：三個平台各自在原生環境啟動、進遊戲、存讀檔一輪，留下截圖或錄影。
-
-**verify**：`manual` — 沒有機器訊號：本機跑不出別的平台。使用者 2026-09-08 裁定 Windows／macOS 由人工檢驗。
-
-#### `WORKLIST.md` 的舊敘述還沒逐條收進 JSON
-
-未完成項的權威已經改成 `docs/worklist.json`，機制（verify ／ render ／自我測試）已接進 `check.sh`。但 `WORKLIST.md` 的「目前目標」那一段仍是 2026-09-08 的散文敘述——**六項品質修正**（委任戰力混合公式、戰術移動排程、單挑角色與開場時間、完整戰後結算對拍、桌面音訊可靠性、公開包安裝說明）還沒逐條驗過狀態、掛上 verify。
-
-⚠ 在收完之前，未完成項有**兩份清單**——那正是這套機制要消滅的東西。
-
-**怎樣算做完**：六項各自驗過現況、掛上 verify 進 JSON（做完的移進 `resolved`）；「目前目標」那一段只留一句指向 render 區。
-
-**verify**：`present` `/六項品質修正尚未完成/` 在 `WORKLIST.md`
-
-<!-- worklist:end -->
+- 現行工作與狀態：GitHub repository [Issues](https://github.com/wicanr2/wolong_cht/issues)。Issue 的標題、內容、完成條件與開／關狀態是唯一現行工作入口。
+- 本地輔助：[`docs/worklist.json`](docs/worklist.json) 保存 Issue 對照與 verify 訊號；用 `tools/py.sh tools/worklist.py verify` 檢查，不能用它取代或自動關閉 Issue。
+- `docs/re/43` 是生成的反組譯證據索引，不是 backlog；真正可執行的項目由 Issue #28 分流。
+- 本檔及其他 Markdown 若要保存未完成狀態，只能作為證據／規格／歷史上下文，必須連回對應 Issue，不得新增 Markdown 待辦清單。
 
 ## 已完成且可回查
 
@@ -1736,7 +1535,7 @@ Go 產出的 `libgojni.so` 預設 LOAD 段 `align=0x1000`，那種 `.so` 在 16 
   僅作測試 oracle，不進發行包。`denylist.py dist-all` 通過，根目錄 `SHA256SUMS.txt` 已驗證。
 - [x] Android APK 收在 `dist-all/experimental/android/`，並清楚標為觸控 shell 原型，不計入
   三平台完整遊戲發行。
-- [ ] Windows／macOS 尚缺目標作業系統的原生 GUI／輸入／音訊／字型短 smoke；交叉 ABI
+- （歷史快照）Windows／macOS 尚缺目標作業系統的原生 GUI／輸入／音訊／字型短 smoke；現行追蹤見 GitHub Issue #2。
   檔頭已驗證，不能取代該 gate。
 
 ## 本輪高優先工作
@@ -2101,19 +1900,19 @@ docker ps -a
 - [x] `cmd/wlgame/launcher_test.go` 覆蓋新局成功、取消／返回、非法玩家、空槽拒讀與成功讀槽狀態轉移。
 - [x] 正式視窗標題改為「臥龍傳－三國制霸之計」；本切片不處理戰術或自然 HUD polish，不宣稱逐像素 parity。
 - [x] Docker/Xvfb 實際擷取修正後三張 640×400 launcher 畫格：`/tmp/wolong-launcher-title.png`（`60def98e0cf54726ad62794b92906017f200863241442db68aa3f536eb3b5150`）、`/tmp/wolong-launcher-scenario.png`（`9fc49e523b75e45b5a939177272a4b199fe1a36d4dd7fb67fc506b70d70eeb04`）、`/tmp/wolong-launcher-player.png`（`0b3a7f4709b538a6c9729a3bb745e3b49c523d999c8e7bfc596e1178cf5f38eb`）；確認 title／scenario 未選文字可讀，player 8 列、標題、反白與提示均未越過 panel 安全區。
-- [ ] 四劇本與可用存檔槽的逐一代表畫面仍未錄製；不阻擋本小切片交付，完整長程測試依使用者要求不跑。
+- （歷史快照）四劇本與可用存檔槽的逐一代表畫面仍未錄製；現行追蹤已轉至 GitHub Issue #28 的證據分流。
 
 ## 2026-08-12 Mentor polish 收斂
 
-- [ ] DOS/V 戰術畫面已有可玩骨架與鍵鼠 dispatcher，但推廣片複驗證實戰場 viewport、上下 TALK 區、右側縮圖／狀態／命令 glyph 與底列配置尚未對齊原版；撤銷「完整骨架」宣稱。
+- （歷史快照）DOS/V 戰術畫面幾何尚未對齊原版；現行相關對拍工作見 GitHub Issue #24。
 - [x] 戰術縮圖由 `BATTLE.MAP` 與 `BATTLE.MDL` attribute 動態產生 128×128 圖，不再使用高度圖替代。
 - [x] 依 `sub_1075B` 已證實公式接入開戰兩筆 `TALK.DAT`；每場只初始化一次、未知 marker fail-closed、戰場時間不因對話停止。實機證據：`docs/images/wlgame-tactical-opening-talk.png`。
 - [x] 已證實兩種敗北 latch：信賴度歸零優先顯示 TALK #414；最後據點失守使用克制 fallback。研究備註不進 GUI。
 - [x] 存讀檔四槽與一覽表新增滑鼠／觸控列、分頁、確認、取消；遵守原版兩段式選取且 modal 不穿透背景。
-- [ ] 指揮／事件／一覽畫面的 DOS/V 幾何 parity 未完成；現有推廣片「指令與事件」左右不是同類畫面，不能作為還原證據，必須重做同類畫面對拍。
+- （歷史快照）指揮／事件／一覽畫面的 DOS/V 幾何 parity 未完成；現行畫面對拍工作見 GitHub Issue #12。
 - [x] 推廣片異類「事件 vs 目的地」鏡頭已撤換為「原版系統設定 vs remake 系統設定」；戰術段已重錄為 `240:80` 主要幾何。影片視訊與音訊均為 60 秒。
 - [x] 系統設定中央五列、事件左下 TALK、一覽第一層主要外框已依松崗錄影正規化座標修正。
-- [ ] 戰術右欄原版命令 glyph／內框、一覽左側捲軸與選取後的前層武將詳細窗仍未完成；不得以本輪主要幾何修正宣稱完整 parity。
+- （歷史快照）戰術右欄、一覽捲軸與前層武將窗仍未完成；現行畫面 gate 見 GitHub Issue #12。
 - [x] Docker＋Xvfb `go test -p=1 -vet=off ./... -count=1` 與 `go vet ./...` 通過；文件索引 65 份通過。
 - [x] 三平台包與「經典再現」推廣片已以本輪畫面重建；`dist-all/` deny-list 與全部 SHA-256 驗證通過。實機對照主片的新版戰術段含 TALK、縮圖、六指令與動態戰場。
 ## 2026-08-12 攻城／兩軍遭遇共用戰術骨架
@@ -2126,15 +1925,15 @@ docker ps -a
 - [x] 原版指令 glyph／右欄複合面板已依 `sub_1C7F4`、`sub_1C863`、`sub_1F888`、`sub_1C6BF` 接入；舊的 2×3 文字格與綠色選取框已移除。
 - [x] 三平台完整包與 AppImage 已重建至 `dist-all/`；Linux tar／AppImage Xvfb smoke 皆維持基準 SHA-256 `45a68852…b5150`，deny-list 掃描 19 個交付檔並比對 120 個原版檔後通過。
 - [x] DOS/V／remake 推廣片的 40–45 秒戰術段已替換為原版 glyph／右欄面板實機畫面；繁中 overlay 以 Noto CJK 代表幀驗收，成品 60 秒、1800 幀，SHA-256 `feddd663…3961e8`。
-- [ ] 兩模式仍共用同一組未完成項：戰術動畫時序與同狀態逐像素 parity。
+- （歷史快照）兩模式共用的戰術動畫時序與同狀態 parity；現行相關工作見 GitHub Issue #24。
 # 2026-08-12 推廣片 AdLib／戰術骨架勘誤
 
 - [x] 移除推廣片對 `tools/promo_score.py` 的依賴，改用使用者松崗 DOS 原版錄影中
   的實際遊戲 AdLib 音軌；來源與權利邊界見 `docs/promo/dosv-adlib-and-tactical-review.md`。
 - [x] 原版錄影先正規化／裁成 640×400，再與 remake 共用最近鄰縮放鏈。
 - [x] 戰術離屏 buffer 從 496×384 收斂到 480×368，消除右、下各 16 px 的遮切。
-- [ ] 完成同戰況戰術 capture pair：同攻城節點、攻守方、編成、命令、鏡頭與 frame。
-- [ ] 依 pair 修完雙 TALK、右欄完整狀態、底列／側欄 glyph 與選取時序。
+- （歷史快照）同戰況戰術 capture pair 尚未完成；現行相關工作見 GitHub Issue #24。
+- （歷史快照）雙 TALK、右欄完整狀態、底列／側欄 glyph 與選取時序待 pair 驗證；現行相關工作見 GitHub Issue #24。
 
 
 ## 2026-09-06 自評歷史快照（2026-09-08 更新時保存）

@@ -23,6 +23,8 @@
 完整版只限本機使用。選章、兩段確認及君主卡直接開局已由 AppImage 正常操作驗證，
 行軍中重啟及返回流程見 [驗證紀錄](docs/playtest/110-desktop-march-restart.md)；Windows／macOS 原生 GUI 仍待實機驗收。
 Android 不在這次桌面修正版範圍。
+現行工作與狀態統一管理在 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues)；
+本地 [`docs/worklist.json`](docs/worklist.json) 與 `tools/worklist.py verify` 只作輔助。
 
 ⭐ **靜態反組譯收斂**：739 支函式每一支都有 `docs/re/` 筆記
 （[`docs/re/21`](docs/re/21-function-census.md)）。那代表「每一支都有人寫過」，
@@ -112,11 +114,11 @@ parity 量的是「**我們做出來的東西對不對**」。
 反過來也一樣：**變小不自動等於進度**——2026-08-21 的稽核把它從 570 降到 431，
 那 −139 沒有一列是靠解出新東西減掉的。
 逐類的列數、讀法與那次稽核的組成在
-[`re/43`](docs/re/43-open-questions.md) §0–§1 與 [`WORKLIST.md`](WORKLIST.md)。
+[`re/43`](docs/re/43-open-questions.md) §0–§1；現行可執行工作則在 GitHub Issue #28 的分流。
 
 **要看進度看別的**：規格的 CONFORMED 份數（142/145）、
 逐像素對拍的數字（主畫面 0 px）、[`re/21`](docs/re/21-function-census.md) 的覆蓋地圖。
-這一份回答「還有什麼沒解」，**不回答「還剩多少」**。
+這一份是原版證據缺口索引，**不回答目前還剩多少工作**。
 
 本輪桌面交付保留三項限制：Windows／macOS 原生操作待人工驗收；完整逐拍戰況與
 戰後退路仍有已知差異；音訊尚未重新做人耳與原生平台抽驗。
@@ -150,11 +152,10 @@ Android 與長程全局通關不在本輪範圍。未解研究列數不作發行
 
 #### 目前驗收缺口
 
-- Windows／macOS 原生操作由人工檢驗，尚未回報；本輪不評 Android。
-- 同一戰前資料與 RNG 的攻城退卻、野戰自然勝負都已重播；野戰勝負反轉根因已修，逐拍仍不一致。行軍委任另驗呂布勝，見 [playtest/115](docs/playtest/115-delegated-battle-cause.md)。
-- 快速切焦的捕捉基準已修；Windows／macOS 仍須實機抽驗。依使用者決定不做全局通關。
-- 原生平台音訊、母語檢視與全語系並排畫面未在本輪重驗。
-- 戰後結果頁預設關閉；系統選單可選 3／5／10／15／30 秒後自動返回，無須每場確認。
+目前不再在 README 維護待辦清單；請看 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues)。
+目前已登記的規則、對拍、平台、發行與證據分流工作見 Issues #1–#28；
+[`docs/re/43`](docs/re/43-open-questions.md) 只是生成的證據索引，不是 802 個獨立工作。
+本節其餘內容是已驗收結果或刻意的 remake 差異，不作工作狀態來源。
 
 #### 刻意不一樣的（remake 差異）
 
@@ -761,16 +762,17 @@ tools/phone_shot.sh out.png 60  # 手機 UI 的桌面截圖（一輪約 30 秒�
 
 | 想知道 | 看哪一份 |
 |---|---|
-| **現況**（唯一真相來源）| [`CONTEXT.md`](CONTEXT.md)——現況一覽、術語表、**已被推翻的斷言**、worklist |
+| **現況**（專案真相）| [`CONTEXT.md`](CONTEXT.md)——現況一覽、術語表、**已被推翻的斷言**與證據索引 |
+| **目前工作與狀態**（唯一工作入口）| GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) |
 | 某個欄位／常數解了沒 | [`docs/INDEX.md`](docs/INDEX.md) 的斷言總表（斷言 → 推論等級 → 出處）|
-| 還有什麼沒解 | [`docs/re/43`](docs/re/43-open-questions.md) 的缺口總表 |
+| **還有什麼原版證據缺口** | [`docs/re/43`](docs/re/43-open-questions.md) 的生成索引；可執行項目由 Issue #28 分流 |
 | 原版的資料長什麼樣 | [`docs/formats/`](docs/formats/) |
 | 原版的程式碼在哪 | [`docs/re/00-index.md`](docs/re/00-index.md)；函式覆蓋地圖在 [`docs/re/21`](docs/re/21-function-census.md) |
 | 這個遊戲怎麼運作 | [`docs/mechanics/00-index.md`](docs/mechanics/00-index.md) |
 | 我們打算怎麼實作 | [`docs/spec/00-index.md`](docs/spec/00-index.md)（`DRAFT`／`READY`／`CONFORMED` 三態）|
 | 驗過什麼、量到多少 | [`docs/playtest/`](docs/playtest/) |
 | 這一批發行包裡有什麼 | [`桌面交付紀錄`](docs/release/15-desktop-closeout-20260908.md) |
-| 每一輪做了什麼 | [`WORKLIST.md`](WORKLIST.md)——逐輪紀錄與勘誤都在這裡，不散回上面那幾份 |
+| 每一輪做了什麼 | [`WORKLIST.md`](WORKLIST.md)——歷史封口與勘誤；不保存現行待辦 |
 | 動手前要遵守什麼 | [`CLAUDE.md`](CLAUDE.md) |
 
 ## 這個專案的兩條硬性原則
