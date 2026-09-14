@@ -329,7 +329,7 @@ func (b *Battle) moveToward(side, k int) {
 	if s.X == s.StepX && s.Y == s.StepY && (!s.CanClimb() || s.Z == s.StepZ) {
 		if p, ok := s.Path.Current(); ok {
 			s.Path.Advance()
-			s.StepX, s.StepY = p.X, p.Y
+			applyWaypoint(s, p)
 		} else {
 			s.MoveFlag = false
 			b.faceLockedTarget(side, s)
@@ -396,6 +396,17 @@ func (b *Battle) moveToward(side, k int) {
 		s.MoveFlag = false
 		b.faceLockedTarget(side, s)
 	}
+}
+
+// applyWaypoint 對應 `sub_1B00D` 的兩個出口：普通點只更新 StepXY，
+// 高位標記的點只更新 StepZ。後者不能順手改 XY，否則兵會在尚未抵達門格
+// 時跳過原版的純 Z 移動。
+func applyWaypoint(s *Soldier, p Point) {
+	if p.HasZ {
+		s.StepZ = p.Z
+		return
+	}
+	s.StepX, s.StepY = p.X, p.Y
 }
 
 // faceLockedTarget 對應 0001ACA4：最大軸決定面向，等距選 X。
@@ -480,13 +491,20 @@ func (b *Battle) computePath(side, k int) {
 	s.Path = nil
 	s.StepX, s.StepY, s.StepZ = s.X, s.Y, s.Z
 	from, to := Point{X: s.X, Y: s.Y}, Point{X: s.GoalX, Y: s.GoalY}
+	startPlane := s.Plane()
+	goalPlane := PlaneLow
+	if startPlane == PlaneHigh {
+		goalPlane = PlaneHigh
+	} else if high, ok := b.Field.GroundLevel(s.GoalX, s.GoalY, PlaneHigh); ok && s.GoalZ == high {
+		goalPlane = PlaneHigh
+	}
 	occupied := b.occupancyCost()
-	pts := b.Field.FindPath(from, to, s.CanClimb(), occupied)
+	pts := b.Field.FindPathForPlanes(from, to, startPlane, goalPlane, s.CanClimb(), occupied)
 	if len(pts) == 0 {
 		// 地形走不通 → 改成「可以拆的就穿過去」。兵會走到那一格前面
 		// 撞上去，`tryMove` 把它算成一次耐久損傷，撞穿了地形就通了。
 		// 沒有這一步的話，攻城時攻方會整團卡在打不壞的城體前面。
-		pts = b.Field.FindPathForcing(from, to, s.CanClimb(),
+		pts = b.Field.FindPathForPlanesForcing(from, to, startPlane, goalPlane, s.CanClimb(),
 			func(x, y int) int { return b.breachCost(x, y) + occupied(x, y) },
 			b.breakableAt)
 	}
@@ -494,7 +512,7 @@ func (b *Battle) computePath(side, k int) {
 		return
 	}
 	s.Path = &Waypoints{pts: pts, i: 1}
-	s.StepX, s.StepY = pts[0].X, pts[0].Y
+	applyWaypoint(s, pts[0])
 }
 
 // tryMove 試著走到一格。走得上去才動。

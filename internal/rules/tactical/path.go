@@ -25,8 +25,17 @@ package tactical
 // MaxWaypoints 是一條路徑最多幾個轉彎點（原版 `mov cl, 40h`）。
 const MaxWaypoints = 64
 
-// Point 是戰場上的一格。
-type Point struct{ X, Y int }
+// Point 是戰場上的一格，或一個只改高度的繞路點。
+//
+// 原版的 128-byte 路徑緩衝區不是每一筆都代表 XY：`sub_1B00D`
+// 看到第一 byte >= 0x80 時，只把第二 byte 寫進 StepZ，XY 保持不變
+// （docs/spec/159）。HasZ 用來保存這個非破壞性差異；一般 XY 點維持
+// HasZ=false，避免把普通路徑誤當成高度切換。
+type Point struct {
+	X, Y int
+	Z    int
+	HasZ bool
+}
 
 // Penalty 是走進 (x, y) 的**額外**成本（0 ＝ 沒有額外成本）。
 //
@@ -52,7 +61,18 @@ const unreached = 0xFFFF
 // 走不到就回 nil。點數超過 MaxWaypoints 時只回前 64 個——與原版一致
 // （原版的緩衝區就只有那麼大，`dec cl / jz` 到了就停）。
 func (f *Field) FindPath(from, to Point, climb bool, penalty Penalty) []Point {
-	return f.FindPathForcing(from, to, climb, penalty, nil)
+	return f.FindPathForPlanes(from, to, f.planeAt(from.X, from.Y, PlaneLow), -1, climb, penalty)
+}
+
+// FindPathForPlanes 與 FindPath 相同，但明確指定起點／終點平面。
+//
+// 舊呼叫端只給 XY 時，原版會從低平面開始、在 XY 目的地先到就停止；
+// 戰術單位則可能已在牆頂，或明確要走到敵人的高平面，因此正式移動路徑
+// 不能再把目前平面遺失。goalPlane=-1 保留「任一平面到達 XY 即可」的
+// 舊語意。
+func (f *Field) FindPathForPlanes(from, to Point, startPlane, goalPlane int,
+	climb bool, penalty Penalty) []Point {
+	return f.findPathForPlanes(from, to, startPlane, goalPlane, climb, penalty, nil)
 }
 
 // FindPathForcing 與 FindPath 相同，但把 force(x, y) 為真的格子**當成可通行**，
@@ -73,10 +93,26 @@ func (f *Field) FindPath(from, to Point, climb bool, penalty Penalty) []Point {
 // 不是待補的缺口。
 func (f *Field) FindPathForcing(from, to Point, climb bool, penalty Penalty,
 	force func(x, y int) bool) []Point {
+	return f.FindPathForPlanesForcing(from, to, f.planeAt(from.X, from.Y, PlaneLow), -1,
+		climb, penalty, force)
+}
+
+// FindPathForPlanesForcing 是 FindPathForPlanes 的攻城 fallback 版本。
+func (f *Field) FindPathForPlanesForcing(from, to Point, startPlane, goalPlane int,
+	climb bool, penalty Penalty, force func(x, y int) bool) []Point {
+	return f.findPathForPlanes(from, to, startPlane, goalPlane, climb, penalty, force)
+}
+
+func (f *Field) findPathForPlanes(from, to Point, startPlane, goalPlane int,
+	climb bool, penalty Penalty, force func(x, y int) bool) []Point {
 	if !inBounds(from.X, from.Y) || !inBounds(to.X, to.Y) {
 		return nil
 	}
-	if from == to {
+	if startPlane < 0 || startPlane >= numPlanes ||
+		(goalPlane < -1 || goalPlane >= numPlanes) {
+		return nil
+	}
+	if from.X == to.X && from.Y == to.Y && (goalPlane < 0 || startPlane == goalPlane) {
 		return nil
 	}
 	if penalty == nil {
@@ -101,7 +137,6 @@ func (f *Field) FindPathForcing(from, to Point, climb bool, penalty Penalty,
 	// ⚠ **少了「推回」那一步，`penalty` 就完全不起作用**——純先進先出
 	// 之下直線一定比繞路先碰到終點，於是被大將擋住（大將不能對調，
 	// §5.16）的兵會永久卡死在原地。
-	startPlane := f.planeAt(from.X, from.Y, PlaneLow)
 	start := idx(from.X, from.Y, startPlane)
 	nodes[start].cost = 1
 
@@ -115,7 +150,8 @@ func (f *Field) FindPathForcing(from, to Point, climb bool, penalty Penalty,
 
 	for {
 		// `cmp bx, cs:word_1BD44 / jz loc_1BE4A`：彈到終點就收工。
-		if cur%cells%Width == to.X && cur%cells/Width == to.Y {
+		if cur%cells%Width == to.X && cur%cells/Width == to.Y &&
+			(goalPlane < 0 || cur/cells == goalPlane) {
 			goal = cur
 			break
 		}
@@ -191,8 +227,17 @@ func (f *Field) FindPathForcing(from, to Point, climb bool, penalty Penalty,
 		dy := cur%cells/Width - prev%cells/Width
 		if dx == 0 && dy == 0 {
 			// 換平面那一步：位置沒變，一定要留一個點，
-			// 不然兵走到門那一格就會直接跳過爬牆。
-			back = append(back, Point{X: cur % cells % Width, Y: cur % cells / Width})
+			// 不然兵走到門那一格就會直接跳過爬牆。這不是普通 XY
+			// 點：`sub_1B00D` 的高位標記只更新 StepZ。
+			x, y := cur%cells%Width, cur%cells/Width
+			z, ok := f.GroundLevel(x, y, cur/cells)
+			if !ok {
+				// 正常的平面邊界只發生在門格；若資料不完整，保留
+				// 座標點也比捏造高度安全，並讓後續驗證看見缺口。
+				back = append(back, Point{X: x, Y: y})
+			} else {
+				back = append(back, Point{X: x, Y: y, Z: z, HasZ: true})
+			}
 			lastDX, lastDY = 0, 0
 			cur = prev
 			continue

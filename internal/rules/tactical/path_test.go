@@ -72,6 +72,38 @@ func TestPathRespectsClimb(t *testing.T) {
 	}
 }
 
+// 平面切換不是一個普通 XY 轉角：原版路徑點的高位標記只改 StepZ，
+// 讓兵停在門格後再走純 Z 移動。
+func TestPathPlaneTransitionEmitsIndependentZWaypoint(t *testing.T) {
+	f := flatField()
+	y := 30
+	gateX := 20
+	for x := gateX; x <= 30; x++ {
+		f.lvl[PlaneHigh][y][x] = 4
+	}
+	for x := gateX; x < 30; x++ {
+		f.nav[PlaneHigh][y][x] |= navRight
+		f.nav[PlaneHigh][y][x+1] |= navLeft
+	}
+	f.nav[PlaneLow][y][gateX] |= navGate
+	f.nav[PlaneHigh][y][gateX] |= navGate
+
+	got := f.FindPathForPlanes(Point{X: 10, Y: y}, Point{X: 30, Y: y},
+		PlaneLow, PlaneHigh, true, nil)
+	if len(got) == 0 {
+		t.Fatal("指定高平面目的地卻找不到經門格的路")
+	}
+	for _, p := range got {
+		if p.HasZ {
+			if p.X != gateX || p.Y != y || p.Z != 4 {
+				t.Fatalf("獨立 Z 點錯誤：%+v", p)
+			}
+			return
+		}
+	}
+	t.Fatalf("路徑 %v 沒有獨立 Z 中繼點", got)
+}
+
 // 走不到的目標要回 nil，不能回半條路。
 func TestPathUnreachable(t *testing.T) {
 	// 一道只有一層高的坎：**所有兵種都跨得過**。
@@ -165,6 +197,25 @@ func TestWaypointsAdvanceOnlyAfterArrival(t *testing.T) {
 	if s.X != 12 || s.Y != 21 || s.Path.Len() != 0 {
 		t.Fatalf("下一幀沒有前進到第二段：座標 (%d,%d)、剩 %d 點",
 			s.X, s.Y, s.Path.Len())
+	}
+}
+
+func TestWaypointsApplyIndependentZWithoutOverwritingXY(t *testing.T) {
+	b := NewBattle(flatField(), SyntheticFormations(), &fixedRand{seq: []int{1}}, 0)
+	s := &b.Sides[0].Soldiers[0]
+	*s = Soldier{
+		Alive: true, Kind: Infantry, HP: MaxHP, Power: DefaultPower,
+		X: 20, Y: 20, Z: 0, GoalX: 20, GoalY: 20, GoalZ: 4,
+		StepX: 20, StepY: 20, StepZ: 0, Cmd: Attack, Next: Attack,
+		Path: &Waypoints{pts: []Point{{X: 20, Y: 20, Z: 4, HasZ: true}}},
+	}
+
+	b.moveToward(0, 0)
+	if s.X != 20 || s.Y != 20 || s.StepX != 20 || s.StepY != 20 || s.StepZ != 4 {
+		t.Fatalf("獨立 Z 點不應改 XY：%+v", *s)
+	}
+	if s.Path.Len() != 0 {
+		t.Fatalf("獨立 Z 點未被消費：剩 %d 點", s.Path.Len())
 	}
 }
 
