@@ -1,12 +1,17 @@
 # 158 — 委任將領混合值保留原統率
 
-**狀態：READY。IDA 原始指令與 dosgolem 12 組狀態對照一致，允許窄公式修正。**
+**狀態：CONFORMED。IDA 原始指令、dosgolem 12 組狀態對照與固定 seed 2 長流程回歸均通過。**
 
 - 日期：2026-09-08
 - 輸入：dosv `KI.EXE`，SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`。
 - 工具：IDA Pro 9.4、dosgolem；位址空間為 IDA DOS/V linear。
 - 證據：`workplace/delegated-battle-20260908/ida-script/battle-cause.json`；
   `workplace/six-fixes-20260908/leader-original.json`，由 `tools/dosgolem_leader_probe.go` 重生。
+  2026-09-14 以 dosgolem-wolong `c8aa69af3999fb6a9d6331dc50fb680b13779a2f`
+  重生的 12 組收據為
+  `workplace/six-fixes-20260908/leader-original-20260914.json`，長流程收據為
+  `workplace/six-fixes-20260908/issue15-retest-20260914.log`；兩者身分與雜湊見
+  `workplace/six-fixes-20260908/evidence-identity.json`。
 
 ## 已證實契約
 
@@ -31,7 +36,8 @@
 - 分開保存混合基數與原統率，保持其他分支與 RNG 消費不變。
 - 修正將 12/6 → 21 固化為答案的舊測試；加入原版動態邊界答案。
 - 野戰與攻城共用 Power 路徑都要涵蓋混合分支。
-- 原有委任收據重播與完整檢查通過；完整世界結算仍由另一項工作驗證。
+- 12 組窄案例逐筆符合上述公式；固定 seed 2、`load(t, 0)`、玩家勢力 0、啟用政略 AI
+  的長流程冷測通過。完整世界結算仍由另一項工作驗證。
 - 不改存檔、能力資料、戰術傷害、玩家流程或已發布封包。
 
 本規格只定義將領混合值，世界結算與戰術排程不在本規格範圍。

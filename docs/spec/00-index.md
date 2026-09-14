@@ -98,7 +98,7 @@
 | 亂數消費順序對齊（長時間對拍前置）| [`160-rng-consumption-alignment.md`](160-rng-consumption-alignment.md) | READY；兩側軌跡工具齊備，第一輪比對定位到 `sub_14057` 差 4 次 |
 | 劉備不作為長時間對拍管線 | [`161-liubei-idle-longrun-parity.md`](161-liubei-idle-longrun-parity.md) | DRAFT；原版側 90 天已跑通（26 秒、兩次逐 byte 相同），remake 側未做 |
 | 戰術命令批次與移動體力順序 | [`159-tactical-command-movement-order.md`](159-tactical-command-movement-order.md) | READY；窄批次修正已測，完整排程仍待對拍 |
-| 委任將領混合值保留原統率 | [`158-delegated-leader-mix.md`](158-delegated-leader-mix.md) | READY；完整驗收進行中 |
+| 委任將領混合值保留原統率 | [`158-delegated-leader-mix.md`](158-delegated-leader-mix.md) | CONFORMED；12 組窄案例與固定 seed 2 長流程通過 |
 | 據點整備、威脅偵測與求援（`sub_13EFD` 鏈）| [`10-city-tick.md`](10-city-tick.md) | 已實作並對原版取樣驗過 |
 | 進言「請求君主出陣」（`sub_1699E`）| [`11-ai-sortie.md`](11-ai-sortie.md) | 已實作並有單測；兩道閘都從機器碼讀出來 |
 | 主畫面的視窗外框與指令列 | [`12-strategy-chrome.md`](12-strategy-chrome.md) | 版面與各視窗內部排版都照機器碼；主畫面五區逐像素對過 |

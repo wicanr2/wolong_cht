@@ -187,8 +187,8 @@ func TestStrategicAIScenarioOneProducesEnemyWarPath(t *testing.T) {
 	w.Player = 0
 	w.EnableStrategicAI()
 	// 固定 seed 2，驗「六個月內宣戰→編成→戰鬥」及每拍不變量。
-	// spec/158 修正混合戰力後，此局在第 4 月失去最後據點。
-	// 不換 seed 或要求玩家必須活滿六個月；合法敗亡仍須通過下面
+	// spec/158 修正混合戰力後，終局月份由固定狀態的實際收據記錄，
+	// 不把特定月份當成驗收門檻，也不換 seed 或要求玩家必須活滿六個月；合法敗亡仍須通過下面
 	// 的勢力狀態檢查與三項事件斷言，不能把提早結束直接當成功。
 	r := rng.NewFixed(2)
 	months, declarations, formed, battles := 0, 0, 0, 0

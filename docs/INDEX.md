@@ -207,7 +207,7 @@
 | [`docs/re/39-remaining-unread.md`](re/39-remaining-unread.md) | 39 — 剩餘未讀函式的逐支歸屬 | 清單。 | 2026-08-14 |
 | [`docs/re/40-garrison-relief-request.md`](re/40-garrison-relief-request.md) | 40 — 據點求援與援軍派遣 | 整條鏈 confirmed（每一支都逐行讀過）。 sub_140C9 的距離算式裡有一處 | 2026-08-14 |
 | [`docs/re/42-leaf-functions.md`](re/42-leaf-functions.md) | 42 — 戰術以外的 47 支葉節點 | 47 支全部逐行讀過。四件事因此定案：INT 61h 是音源 TSR 的介面、 byte_198A6 的位元圖完整、… | 2026-08-14 |
-| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的） | 生成的清單，跑 tools/py.sh tools/re_open_questions.py 重出。 這一份不下結論… | 2026-09-11 |
+| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的證據索引） | 生成的證據索引，跑 tools/py.sh tools/re_open_questions.py 重出。 證據欄不下… | 2026-09-14 |
 | [`docs/re/44-threat-and-reinforcement-ai.md`](re/44-threat-and-reinforcement-ai.md) | 44 — 威脅偵測與 AI 出兵：據點每 tick 掃一次 | 整條鏈逐行讀完。三件事定案：據點 +0x18 是佔用圖讀回來的軍團數、 +0x00 低 4 位是「哪幾個鄰居是敵方」… | 2026-08-14 |
 | [`docs/re/45-corps-command-mode.md`](re/45-corps-command-mode.md) | 45 — 軍團的三種指令模式：戰鬥指揮／委任／解體 | 軍團 +0x00 位元 2 定案 ＝ | 2026-08-14 |
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |
@@ -339,7 +339,7 @@
 | [`docs/spec/155-desktop-launcher-input.md`](spec/155-desktop-launcher-input.md) | 155 — 桌面啟動流程的日期熱區與兩段確認 | CONFORMED。 | 2026-09-07 |
 | [`docs/spec/156-desktop-preferences.md`](spec/156-desktop-preferences.md) | 156 — 桌面偏好跨次啟動保存 | CONFORMED（2026-09-08，正式 AppImage 正常設定與重啟通過）。 | 2026-09-08 |
 | [`docs/spec/157-battle-script-comparisons.md`](spec/157-battle-script-comparisons.md) | 157 — 戰術 AI 分支比較方向勘誤 | CONFORMED。原版指令、單項隔離重播、正式兩條野戰重播及攻城回歸已通過。 | 2026-09-08 |
-| [`docs/spec/158-delegated-leader-mix.md`](spec/158-delegated-leader-mix.md) | 158 — 委任將領混合值保留原統率 | READY。IDA 原始指令與 dosgolem 12 組狀態對照一致，允許窄公式修正。 | 2026-09-08 |
+| [`docs/spec/158-delegated-leader-mix.md`](spec/158-delegated-leader-mix.md) | 158 — 委任將領混合值保留原統率 | CONFORMED。IDA 原始指令、dosgolem 12 組狀態對照與固定 seed 2 長流程回歸均通過。 | 2026-09-08 |
 | [`docs/spec/159-tactical-command-movement-order.md`](spec/159-tactical-command-movement-order.md) | 159 — 戰術命令批次與移動體力順序 | READY。原始指令與既有 dosgolem 追蹤支持本節的窄排程修正。 | 2026-09-08 |
 | [`docs/spec/160-rng-consumption-alignment.md`](spec/160-rng-consumption-alignment.md) | 160 — 亂數消費順序對齊：逐次比「誰取了第幾個數」 | READY。 | 2026-09-09 |
 | [`docs/spec/161-liubei-idle-longrun-parity.md`](spec/161-liubei-idle-longrun-parity.md) | 161 — 劉備不作為長時間對拍：把玩家這個變因拿掉，以子刻為單位比 | DRAFT。 | 2026-09-09 |
@@ -465,7 +465,7 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 129 條。**要查「這件事解了沒」先看這裡**，
+共 128 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（77 條）
@@ -550,11 +550,10 @@
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x1E | `docs/re/08-hourly-update.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x20 | `docs/re/08-hourly-update.md` |
 
-### READY（2 條）
+### READY（1 條）
 
 | 鍵 | 出處 |
 |---|---|
-| 索引 ▸ 委任將領混合值保留原統率 | `docs/spec/00-index.md` |
 | 索引 ▸ 戰術命令批次與移動體力順序 | `docs/spec/00-index.md` |
 
 ### 強證據（22 條）

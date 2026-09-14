@@ -232,21 +232,6 @@
       }
     },
     {
-      "id": "delegated-power-mix-regression",
-      "github_issue": {
-        "number": 15,
-        "url": "https://github.com/wicanr2/wolong_cht/issues/15"
-      },
-      "layer": "parity",
-      "title": "完成委任戰力混合公式與長流程回歸",
-      "body": "窄案例的委任戰力混合公式已修正，但長期政略流程仍失敗，不能宣告整條規則完成。",
-      "acceptance": "12 個窄案例與長流程在固定 seed、初始狀態與正常玩家路徑下通過，或留下可重播反例與證據等級。",
-      "verify": {
-        "kind": "manual",
-        "note": "需重跑 12 個 dosgolem 分支與長流程收據。"
-      }
-    },
-    {
       "id": "tactical-movement-scheduling",
       "github_issue": {
         "number": 16,
@@ -488,6 +473,17 @@
     }
   ],
   "resolved": [
+    {
+      "id": "delegated-power-mix-regression",
+      "title": "完成委任戰力混合公式與長流程回歸",
+      "date": "2026-09-14",
+      "github_issue": {
+        "number": 15,
+        "url": "https://github.com/wicanr2/wolong_cht/issues/15"
+      },
+      "how": "以 dosgolem-wolong c8aa69af3999fb6a9d6331dc50fb680b13779a2f、root-battle 的 KI.EXE（SHA-256 fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868）重生 12 組窄案例；收據與長流程 seed 2 冷測均通過，詳見 workplace/six-fixes-20260908/leader-original-20260914.json、issue15-retest-20260914.log 與 evidence-identity.json。GitHub Issue #15 已關閉。",
+      "caught_by": "GitHub repository Issues 是唯一現行工作入口；docs/worklist.json 只作本地 verify 輔助，Markdown 僅保存證據、規格與歷史。"
+    },
     {
       "id": "screen-parity-gate-coverage",
       "title": "修正畫面對拍 gate 的群組覆蓋與完成門檻",
