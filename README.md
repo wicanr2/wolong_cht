@@ -98,8 +98,8 @@ Android 不在這次桌面修正版範圍。
 | ⭐ **AI 決策軌跡**（原版執行期 vs remake 規則層）| 攔原版所有事件的共用出口（`sub_12FBF`），拿到「誰在哪一天決定了什麼」：**事件種類、參數形狀與每月量級一致**，都在月結觸發。原版 196 年 5 月 1 日**曹操對呂布宣戰**，劇本一的主線 | [`playtest/78`](docs/playtest/78-ai-decision-trace.md) |
 | 音訊 | 會出聲、場景對應已解、與原版錄音比對過；**音色的諧波結構沒量化比對** | [`spec/29`](docs/spec/29-audio.md) |
 | 規則規格 | **186 份**（不含索引與 `TEMPLATE.md`）：**180 CONFORMED**／5 READY／1 DRAFT | [`spec/00`](docs/spec/00-index.md) |
-| 反組譯 | 739/739 支有筆記；`docs/re/` 自己標成未解的有 **802 列**（每寫一份新的反組譯筆記就帶進自己的未解表）| [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
-| 全專案的未解 | **802 列**（另有 6 列是 DOS／BIOS 平台層與編譯器 runtime，不計入）。⚠ **這個數字比較接近「文件有多少份」**——802 列分布在 342 份文件、平均每份 2.3 列，而每寫一份新文件就帶進約三列自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
+| 反組譯 | 739/739 支有筆記；`docs/re/43` 目前主表有 **799 列**，另列 6 筆 DOS／BIOS 平台層 | [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
+| 全專案的未解 | **805 列**（主表 799 列，另有 6 列 DOS／BIOS 平台層不計入主表）。⚠ **這個數字比較接近「文件有多少份」**——主表分布在 341 份文件、平均每份 2.3 列，而每寫一份新文件就可能帶進自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
 
 #### 那些未解項對 remake 代表什麼
 
@@ -114,7 +114,7 @@ parity 量的是「**我們做出來的東西對不對**」。
 反過來也一樣：**變小不自動等於進度**——2026-08-21 的稽核把它從 570 降到 431，
 那 −139 沒有一列是靠解出新東西減掉的。
 逐類的列數、讀法與那次稽核的組成在
-[`re/43`](docs/re/43-open-questions.md) §0–§1；現行可執行工作則在 GitHub Issue #28 的分流。
+[`re/43`](docs/re/43-open-questions.md) §0–§1；現行可執行工作則在已完成 #28 分流出的開放 Issues。
 
 **要看進度看別的**：規格的 CONFORMED 份數（142/145）、
 逐像素對拍的數字（主畫面 0 px）、[`re/21`](docs/re/21-function-census.md) 的覆蓋地圖。
@@ -153,8 +153,8 @@ Android 與長程全局通關不在本輪範圍。未解研究列數不作發行
 #### 目前驗收缺口
 
 目前不再在 README 維護待辦清單；請看 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues)。
-目前已登記的規則、對拍、平台、發行與證據分流工作見 Issues #1–#28；
-[`docs/re/43`](docs/re/43-open-questions.md) 只是生成的證據索引，不是 802 個獨立工作。
+目前已登記的規則、對拍、平台、發行與證據分流工作見 Issues #1–#32（#28 已完成）；
+[`docs/re/43`](docs/re/43-open-questions.md) 只是生成的證據索引，不是 805 個獨立工作。
 本節其餘內容是已驗收結果或刻意的 remake 差異，不作工作狀態來源。
 
 #### 刻意不一樣的（remake 差異）
@@ -765,7 +765,7 @@ tools/phone_shot.sh out.png 60  # 手機 UI 的桌面截圖（一輪約 30 秒�
 | **現況**（專案真相）| [`CONTEXT.md`](CONTEXT.md)——現況一覽、術語表、**已被推翻的斷言**與證據索引 |
 | **目前工作與狀態**（唯一工作入口）| GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) |
 | 某個欄位／常數解了沒 | [`docs/INDEX.md`](docs/INDEX.md) 的斷言總表（斷言 → 推論等級 → 出處）|
-| **還有什麼原版證據缺口** | [`docs/re/43`](docs/re/43-open-questions.md) 的生成索引；可執行項目由 Issue #28 分流 |
+| **還有什麼原版證據缺口** | [`docs/re/43`](docs/re/43-open-questions.md) 的生成索引；已由完成的 Issue #28 分流，現行狀態回查開放 Issues |
 | 原版的資料長什麼樣 | [`docs/formats/`](docs/formats/) |
 | 原版的程式碼在哪 | [`docs/re/00-index.md`](docs/re/00-index.md)；函式覆蓋地圖在 [`docs/re/21`](docs/re/21-function-census.md) |
 | 這個遊戲怎麼運作 | [`docs/mechanics/00-index.md`](docs/mechanics/00-index.md) |

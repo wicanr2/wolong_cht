@@ -20,7 +20,7 @@
 
 - 現行工作與狀態：GitHub repository [Issues](https://github.com/wicanr2/wolong_cht/issues)。Issue 的標題、內容、完成條件與開／關狀態是唯一現行工作入口。
 - 本地輔助：[`docs/worklist.json`](docs/worklist.json) 保存 Issue 對照與 verify 訊號；用 `tools/py.sh tools/worklist.py verify` 檢查，不能用它取代或自動關閉 Issue。
-- `docs/re/43` 是生成的反組譯證據索引，不是 backlog；真正可執行的項目由 Issue #28 分流。
+- `docs/re/43` 是生成的反組譯證據索引，不是 backlog；已由已完成的 Issue #28 分流，現行狀態回查其連結的開放 Issues。
 - 本檔及其他 Markdown 若要保存未完成狀態，只能作為證據／規格／歷史上下文，必須連回對應 Issue，不得新增 Markdown 待辦清單。
 
 ## 已完成且可回查

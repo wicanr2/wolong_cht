@@ -51,7 +51,7 @@ Android 先沿用同一條資料流，只在平台殼增加安全區、視口轉
 - 現行工作與狀態：GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues)。
 - 本地輔助對照：[`docs/worklist.json`](docs/worklist.json)；以 `tools/py.sh tools/worklist.py verify` 檢查訊號，不以 Markdown 或 verify 輸出取代 Issue。
 - 垂直切片表中的「尚未完成」是證據邊界，不是待辦登記；要新增或拆分工作，先建立／更新 Issue，再在證據文件連回它。
-- 目前已登記的完整規則／對拍／發行分支見 Issues #1–#28；`docs/re/43` 的 802 筆生成列由 Issue #28 分流。
+- 目前已登記的完整規則／對拍／發行分支見 Issues #1–#32（#28 已完成）；`docs/re/43` 的 805 筆生成列由 Issue #28 分流（主表 799 列，另有 6 列 DOS／BIOS 平台層），現行狀態回查開放 Issues。
 
 本節取代舊 Worklist 表；舊表的狀態敘述已保留在按日期紀錄或對應證據文件，不再作為現行清單。
 ## Intentional differences

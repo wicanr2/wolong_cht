@@ -624,6 +624,7 @@ grep `.asm` 只能從呼叫端的參數順序反推——那是間接證據，�
 | `symbol_roles.py` | **同一個 IDA 符號在兩份文件裡被標成互斥的角色**（播曲 vs 調色盤、存檔 vs 亂數）。⚠ **稽核用不是閘**，誤報是預期的——一支函式可以既畫圖又讀輸入，但不會既播曲又載調色盤。不接進 `check.sh` |
 | `lessons.py` | **教訓的防線還在嗎**——權威是 `docs/lessons.json`，每條掛 `trigger`（什麼時候想起）、`occurrences`（犯過幾次）與 `guard`（工具／測試／提示／只有規則）。⭐ **`render` 把教訓攤成 `docs/lessons/*.txt`，`ida.sh`／`dosgolem.sh` 開頭 `cat` 它**——教訓要防的動作發生在任務中間，光寫進常駐文件那時沒有東西會問 |
 | `worklist.py` | **GitHub Issue 對應的本地 verify 還成立嗎**——現行工作權威是 GitHub Issues；`docs/worklist.json` 只保存 Issue 對照與 `present`／`absent`／`json_len`／`manual` 訊號。**跑起來為真＝仍可能未完成**，跑起來為假就回查 Issue；不生成、不驗證 Markdown 清單，也不自動改 Issue 狀態|
+| `re_triage.py` | **`docs/re/43` 每列是否都有固定指紋、分流分類與必要的 Issue 對應**——`init` 生成 `docs/re/43-open-question-triage.json`，`verify` 在來源列變動或漏分流時失敗；不把證據索引直接當成 backlog|
 | `stale_scan.py` | **指到的東西存在，但值不對**——檔案雜湊、docker 映像標籤、命令列旗標、RE 覆蓋率、抄到別份文件的未解列數與規格份數，以及**對拍紀錄的 `remake 側` 漏了受控存檔**（原版側跑 `root-noclouds` 而 remake 側沒有 `-save-file`，照著跑對不出文中的數字）|
 
 第三類最貴也最晚才有檢查：**格式完全正確、連結都通、只有數字是舊的**。

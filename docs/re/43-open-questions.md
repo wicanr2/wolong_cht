@@ -1,11 +1,13 @@
 # 43 — 未解缺口總表（生成的證據索引）
 
 **狀態：生成的證據索引，跑 `tools/py.sh tools/re_open_questions.py` 重出。
-這一份不下結論，只把各文件的「未解」表集中到一處；它不是現行工作清單。**
+證據欄不下原版語意結論；逐列的分流分類與 GitHub Issue 目標由
+[`43-open-question-triage.json`](43-open-question-triage.json) 驗證並附在下表。
+這一份不是現行工作清單。**
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-802 列不是 802 個獨立 backlog；可執行項目由 Issue #28 分流，證據／歷史項目留在本索引。
+805 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
 - 日期：2026-09-14
 - 產生工具：`tools/re_open_questions.py`
@@ -69,832 +71,832 @@
 
 ## 2.1 規則正確性（11 條）
 
-| 出處 | 缺口 | 現況 | 裁決 |
-|---|---|---|---|
-| [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | `sub_10A65` 的內插演算法 | 只影響畫面 | 靜態 |
-| [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | 最高速那一檔在原版實機上是多少 | 機器相依，要實測才有數字；只影響手感調校 | 實測 |
-| [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 原版投射物的圖形與動畫 | `BATTLE.SCH` 裡的圖形沒對出來，目前畫的是側別標記 | 靜態 |
-| [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 少數戰術腳本與 `BATTLE` 資料欄位 | 十九個指令已全讀，剩的是資料側的殘留欄位 | 靜態 |
-| [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 原版被擋住之後怎麼處理 | remake 每 30 幀可重算一次（`replanInterval`）是**已標記的 remake 差異**，不是缺口；缺口只有「原版被擋住之後怎麼處理」這一條沒讀 | 靜態 |
-| [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0` 旗標的 bit 0 | 只出現一次（劇本三的張衛），**兩版都沒有讀取端**。⭐ 「PC-98 版才用的位元」這條假說 **2026-09-04 排除了**：PC-98 的 `KI.EXE` 早就進 IDA，掃遮罩 `01` 的結果與 DOS/V **同構**（各三處 `test byte ptr [si], 1`，位址帶相同），而三處… | 兩版對照 |
-| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 說話類型 6／7 取到哪一則、其他理由的索引公式、`cx ≥ 0x100` 分支（§1.3） | `SI+1Eh` 本身已定案是說話類型（§1.6）。剩下的是：`sub_13C99` 只減一次 3，所以 6／7 摺成 3／4 而超出三變體組，而那是多數武將。三者都在 `sub_13830` 一帶 | 靜態 |
-| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 「拉玩家合攻一個對玩家友善的對象」的**意圖**（§1.2 末） | 機制已照抄，意圖無證據。要定案得靠實機長跑統計，不是反組譯 | 靜態 |
-| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 事件 2／3 的完整接受流程與原版訊息、4／5 的逐位金額輸入、6／7 的 `TALK.DAT` 反應、9 的原版完整流程、11／12 的物件動畫 | 事件佇列的 runtime 已在，缺的是各事件的原版畫面流程；逐一對 `sub_14269` 一帶的分派做 oracle | 實測 |
-| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 入佇列的隨機空格分佈 | 目前是 remake 的明示差異；要對齊得先解出原版排程時挑空格的那段 | 靜態 |
-| [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 四個劇本的結局是否不同 | **觸發條件四劇本共用**，差別只在初始勢力數；結局的十二幕也是一條路播完，沒有依劇本分支的證據（`../re/70` §3）。**但沒有實跑四個劇本對過** | 實測 |
+| 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
+|---|---|---|---|---|---|
+| [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | `sub_10A65` 的內插演算法 | 只影響畫面 | 靜態 | evidence-only | — |
+| [`mechanics/15-realtime.md`](../mechanics/15-realtime.md) | 最高速那一檔在原版實機上是多少 | 機器相依，要實測才有數字；只影響手感調校 | 實測 | evidence-only | — |
+| [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 原版投射物的圖形與動畫 | `BATTLE.SCH` 裡的圖形沒對出來，目前畫的是側別標記 | 靜態 | actionable | [#24](https://github.com/wicanr2/wolong_cht/issues/24) |
+| [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 少數戰術腳本與 `BATTLE` 資料欄位 | 十九個指令已全讀，剩的是資料側的殘留欄位 | 靜態 | evidence-only | — |
+| [`mechanics/30-combat.md`](../mechanics/30-combat.md) | 原版被擋住之後怎麼處理 | remake 每 30 幀可重算一次（`replanInterval`）是**已標記的 remake 差異**，不是缺口；缺口只有「原版被擋住之後怎麼處理」這一條沒讀 | 靜態 | evidence-only | — |
+| [`mechanics/60-personnel.md`](../mechanics/60-personnel.md) | 武將 `+0` 旗標的 bit 0 | 只出現一次（劇本三的張衛），**兩版都沒有讀取端**。⭐ 「PC-98 版才用的位元」這條假說 **2026-09-04 排除了**：PC-98 的 `KI.EXE` 早就進 IDA，掃遮罩 `01` 的結果與 DOS/V **同構**（各三處 `test byte ptr [si], 1`，位址帶相同），而三處… | 兩版對照 | evidence-only | — |
+| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 說話類型 6／7 取到哪一則、其他理由的索引公式、`cx ≥ 0x100` 分支（§1.3） | `SI+1Eh` 本身已定案是說話類型（§1.6）。剩下的是：`sub_13C99` 只減一次 3，所以 6／7 摺成 3／4 而超出三變體組，而那是多數武將。三者都在 `sub_13830` 一帶 | 靜態 | evidence-only | — |
+| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 「拉玩家合攻一個對玩家友善的對象」的**意圖**（§1.2 末） | 機制已照抄，意圖無證據。要定案得靠實機長跑統計，不是反組譯 | 靜態 | actionable | [#26](https://github.com/wicanr2/wolong_cht/issues/26) |
+| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 事件 2／3 的完整接受流程與原版訊息、4／5 的逐位金額輸入、6／7 的 `TALK.DAT` 反應、9 的原版完整流程、11／12 的物件動畫 | 事件佇列的 runtime 已在，缺的是各事件的原版畫面流程；逐一對 `sub_14269` 一帶的分派做 oracle | 實測 | actionable | [#23](https://github.com/wicanr2/wolong_cht/issues/23) |
+| [`mechanics/70-ai.md`](../mechanics/70-ai.md) | 入佇列的隨機空格分佈 | 目前是 remake 的明示差異；要對齊得先解出原版排程時挑空格的那段 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`mechanics/80-victory.md`](../mechanics/80-victory.md) | 四個劇本的結局是否不同 | **觸發條件四劇本共用**，差別只在初始勢力數；結局的十二幕也是一條路播完，沒有依劇本分支的證據（`../re/70` §3）。**但沒有實跑四個劇本對過** | 實測 | evidence-only | — |
 
 ## 2.2 資料保存（20 條）
 
-| 出處 | 缺口 | 現況 | 裁決 |
-|---|---|---|---|
-| [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 只有格 0 有字的三組（`0x1A1`／`0x1AD`／`0x1AE`） | 呼叫端傳不傳 `ah`、為什麼不需要八格變體，未讀。`0x1AD`／`0x1AE` 像單挑台詞，但不在 `../re/75` 盤過的 `0x1B6`–`0x1CD` 範圍內 | 靜態 |
-| [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 訊息索引與遊戲事件的對應 | 逐則的顯示時機沒有全表。**已對出來的散在各規格**（進言 `../spec/44`、遷都 `../spec/64`、結局 `../spec/30`），未讀的部分見 `../re/24` | 靜態 |
-| [`formats/03-grf-images.md`](../formats/03-grf-images.md) | `0x0480` | 24×16 × 3 / 兵種圖示的**橘色版**：馬／弓／步 / 尚未找到取用端 | 靜態 |
-| [`formats/04-map-sch-container.md`](../formats/04-map-sch-container.md) | 狀態：容器格式的索引層 READY，壓縮演算法未解。 | （散句） | 靜態 |
-| [`formats/05-mmap-worldmap.md`](../formats/05-mmap-worldmap.md) | `MMAP.MCH` 的 object **type 3** | 圖塊、`0xA000` metadata 與事件 12 的火災／暴動（type 1／2）查表已解（`../re/14`）。type 3 的事件語意、object timer 與逐 frame 的原版時序仍未知——remake 的 timer 是呈現層 substitute | 靜態 |
-| [`formats/05-mmap-worldmap.md`](../formats/05-mmap-worldmap.md) | 比對的正是方向碼那個欄位）。 強證據，未定案。 | （散句） | 靜態 |
-| [`formats/07-battle.md`](../formats/07-battle.md) | 表頭與尾段執行期會不會被寫 | 靜態全 0 是 confirmed（§2.1）。**沒有窮舉「有沒有人在執行期寫進那 128 B」**——地形緩衝區與佔用圖是兩塊，但沒有逐個寫入端查過 | 靜態 |
-| [`formats/07-battle.md`](../formats/07-battle.md) | `GateX` ＝ 0 的六個據點戰場 | 已定位是關隘／古戰場（§2.5）。**沒有實跑過一場**——打官渡或赤壁時 `IsSiege` 為假，城壁與門一段都建不出來，那條路沒有驗收紀錄 | 實測 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x0008` | 51 / 未解的全域狀態（一起載入 `cs:0CF0h`） | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x0080` | 2,112 / **勢力表：22 筆 × 64 B**（`docs/re/06` §5）＋ 其後未解 | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x1EC0` | 7,168 / 未解 | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x3AC0`…`+0x42C0` | — / 未解 | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0` | 1 / 旗標。四劇本 508 筆只出現 **8 種值**（0／0x80／0x81／0x90／0xA0／0xC0／0xD0／0xE0）。**bit 7 ＝ 在場**（381 筆）；**bit 6 ＝ 主公型**（43 筆，全是現任君主，**被俘時**清掉並把 `+30` 說話類型 `+3`，`sub_129C3`；… | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+20`（`0x14`） | 1 / 值域 **0–7**、8 種，四劇本 508 筆都有值（0 佔 158、2 佔 98）。**與 `+0x1E` 的說話類型同值域但不同值**，交叉表也沒有結構 / 語意未解。**讀取端全庫掃過是零**（`../re/77` §5） | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`（`0x1B`） | 1 / 只有兩種值：0（481 筆）與 `0xFF`（27 筆）。劇本一的 `0xFF` 是笮融、張英、周倉、嚴輿、周昕、李別、刑道榮、劉賢、武安國九人 / 語意未解。**讀取端全庫掃過是零**（`../re/77` §5） | 靜態 |
-| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 |
-| [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `OPEN_S1` 的捲動節拍 | 版面三塊已解（`../re/76` §6），但每步捲幾列、26 格的動畫多久換一格，要先定 `int 61h` 的計時單位 | 靜態 |
-| [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `OPEN_S5` 的來源列距 | `sub_103EF` 每兩列消耗 720 B，推不出單純的「一列 240 B」；沒有畫面驗證（同 §10） | 靜態 |
-| [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 |
-| [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 |
+| 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
+|---|---|---|---|---|---|
+| [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 只有格 0 有字的三組（`0x1A1`／`0x1AD`／`0x1AE`） | 呼叫端傳不傳 `ah`、為什麼不需要八格變體，未讀。`0x1AD`／`0x1AE` 像單挑台詞，但不在 `../re/75` 盤過的 `0x1B6`–`0x1CD` 範圍內 | 靜態 | merge-target | [#17](https://github.com/wicanr2/wolong_cht/issues/17) |
+| [`formats/01-talk-dat.md`](../formats/01-talk-dat.md) | 訊息索引與遊戲事件的對應 | 逐則的顯示時機沒有全表。**已對出來的散在各規格**（進言 `../spec/44`、遷都 `../spec/64`、結局 `../spec/30`），未讀的部分見 `../re/24` | 靜態 | merge-target | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
+| [`formats/03-grf-images.md`](../formats/03-grf-images.md) | `0x0480` | 24×16 × 3 / 兵種圖示的**橘色版**：馬／弓／步 / 尚未找到取用端 | 靜態 | evidence-only | — |
+| [`formats/04-map-sch-container.md`](../formats/04-map-sch-container.md) | 狀態：容器格式的索引層 READY，壓縮演算法未解。 | （散句） | 靜態 | evidence-only | — |
+| [`formats/05-mmap-worldmap.md`](../formats/05-mmap-worldmap.md) | `MMAP.MCH` 的 object **type 3** | 圖塊、`0xA000` metadata 與事件 12 的火災／暴動（type 1／2）查表已解（`../re/14`）。type 3 的事件語意、object timer 與逐 frame 的原版時序仍未知——remake 的 timer 是呈現層 substitute | 靜態 | actionable | [#23](https://github.com/wicanr2/wolong_cht/issues/23) |
+| [`formats/05-mmap-worldmap.md`](../formats/05-mmap-worldmap.md) | 比對的正是方向碼那個欄位）。 強證據，未定案。 | （散句） | 靜態 | evidence-only | — |
+| [`formats/07-battle.md`](../formats/07-battle.md) | 表頭與尾段執行期會不會被寫 | 靜態全 0 是 confirmed（§2.1）。**沒有窮舉「有沒有人在執行期寫進那 128 B」**——地形緩衝區與佔用圖是兩塊，但沒有逐個寫入端查過 | 靜態 | evidence-only | — |
+| [`formats/07-battle.md`](../formats/07-battle.md) | `GateX` ＝ 0 的六個據點戰場 | 已定位是關隘／古戰場（§2.5）。**沒有實跑過一場**——打官渡或赤壁時 `IsSiege` 為假，城壁與門一段都建不出來，那條路沒有驗收紀錄 | 實測 | evidence-only | — |
+| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x0008` | 51 / 未解的全域狀態（一起載入 `cs:0CF0h`） | 靜態 | actionable | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x0080` | 2,112 / **勢力表：22 筆 × 64 B**（`docs/re/06` §5）＋ 其後未解 | 靜態 | actionable | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x1EC0` | 7,168 / 未解 | 靜態 | actionable | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0x3AC0`…`+0x42C0` | — / 未解 | 靜態 | actionable | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0` | 1 / 旗標。四劇本 508 筆只出現 **8 種值**（0／0x80／0x81／0x90／0xA0／0xC0／0xD0／0xE0）。**bit 7 ＝ 在場**（381 筆）；**bit 6 ＝ 主公型**（43 筆，全是現任君主，**被俘時**清掉並把 `+30` 說話類型 `+3`，`sub_129C3`；… | 靜態 | actionable | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+20`（`0x14`） | 1 / 值域 **0–7**、8 種，四劇本 508 筆都有值（0 佔 158、2 佔 98）。**與 `+0x1E` 的說話類型同值域但不同值**，交叉表也沒有結構 / 語意未解。**讀取端全庫掃過是零**（`../re/77` §5） | 靜態 | actionable | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+27`（`0x1B`） | 1 / 只有兩種值：0（481 筆）與 `0xFF`（27 筆）。劇本一的 `0xFF` 是笮融、張英、周倉、嚴輿、周昕、李別、刑道榮、劉賢、武安國九人 / 語意未解。**讀取端全庫掃過是零**（`../re/77` §5） | 靜態 | actionable | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`formats/08-sinario-save.md`](../formats/08-sinario-save.md) | `+0`／`+3` | 未解 | 靜態 | actionable | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `OPEN_S1` 的捲動節拍 | 版面三塊已解（`../re/76` §6），但每步捲幾列、26 格的動畫多久換一格，要先定 `int 61h` 的計時單位 | 靜態 | evidence-only | — |
+| [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `OPEN_S5` 的來源列距 | `sub_103EF` 每兩列消耗 720 B，推不出單純的「一列 240 B」；沒有畫面驗證（同 §10） | 靜態 | evidence-only | — |
+| [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 | evidence-only | — |
+| [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 | evidence-only | — |
 
 ## 2.3 程式碼理解（180 條）
 
-| 出處 | 缺口 | 現況 | 裁決 |
-|---|---|---|---|
-| [`re/01-first-recon.md`](../re/01-first-recon.md) | 是加了新過場、還是把原本的長段拆開，未解。 | （散句） | 靜態 |
-| [`re/01-first-recon.md`](../re/01-first-recon.md) | `PASS.MAP`／`PASS.SCH` | dosv / **PC-98 沒有**。關隘資料，移植時新增或改名。未解 | 靜態 |
-| [`re/02-palette-routine.md`](../re/02-palette-routine.md) | OPENPAL`（6 組）、`ENDPAL`（12 組）的分組對應哪些畫面。 | （未解小節內文） | 靜態 |
-| [`re/02-palette-routine.md`](../re/02-palette-routine.md) | 設定表 `cs:0x5FF4` 每筆後三個 byte 是什麼（第 4 筆的第二個 word | （未解小節內文） | 靜態 |
-| [`re/03-image-blitter.md`](../re/03-image-blitter.md) | ICONGRF` **段 1 `0x0000` 那一塊畫了什麼**。 | （未解小節內文） | 靜態 |
-| [`re/03-image-blitter.md`](../re/03-image-blitter.md) | sub_1FAC2` 是另一支繪製常式（`shl al, 1` 後才 `mov cx, ax`），用途未解。 | （散句） | 靜態 |
-| [`re/04-mmap-entry-points.md`](../re/04-mmap-entry-points.md) | MMAP.MCH` 的 object **type 3**：事件語意、原版 object timer 與畫面 | （未解小節內文） | 靜態 |
-| [`re/05-battle-selection.md`](../re/05-battle-selection.md) | `+0x08` | 勢力相符時取用的值 / 未解 | 靜態 |
-| [`re/06-game-clock.md`](../re/06-game-clock.md) | `cs:0CF0h` 那 59 byte 裡除了時鐘的其餘部分 | 對照存檔 diff | 靜態 |
-| [`re/06-game-clock.md`](../re/06-game-clock.md) | `sub_10A65` 的內插演算法 | 直接讀 | 靜態 |
-| [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | 10 | `sub_13496` / 訊息-only：建立武將／參數 formatter 游標；持久狀態尚未找到 | 靜態 |
-| [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | `sub_15940` 的兩個分支 | 已派駐武將的每月行動，會發訊息 `0x41`／`0x42`。分支 2 有一行 `mov byte ptr [si+1Ch], 18h`（把所屬勢力寫成 24）**與「+1Ch 是勢力編號、只有 0–21」矛盾**，還沒解釋 | 靜態 |
-| [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | `sub_14269`／`sub_13EFD` | 事件 11／12 寫入的據點 `+0x15` marker 在據點輪轉時先扣防災值；不足時再扣上昇值、生產力與城兵，已接入 `World.applyCityDisasterEffect`；物件動畫仍未完 | 靜態 |
-| [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | 武將 `+1Ah` | 官員「要錢中」的旗標／金額，`sub_12FBF` 的事件會寫它 | 靜態 |
-| [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | `sub_157FE` 觸發的事件內容 | `sub_12FBF(ax=0Dh, dx=196h)` | 靜態 |
-| [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | 軍團記錄剩下的欄位 | 段內 `2240h`，**64 B／筆、127 筆**（不是 32 B）。已具名的見 `08` §4 與 `34` | 靜態 |
-| [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | 段內 `2040h`／`2140h` 的兩張 16 × 16 B 表 | `sub_123FF` 會在 `2040h` 那張找空位配置；`2140h` 那張開局已有 16 筆，`+2`／`+4` 看起來是地圖座標 | 靜態 |
-| [`re/08-hourly-update.md`](../re/08-hourly-update.md) | `sub_15456` 用 stride 32 掃軍團表 | 與 64 矛盾，疑似原版 bug | 靜態 |
-| [`re/08-hourly-update.md`](../re/08-hourly-update.md) | `+0x0C` | 行軍中的暫存（`sub_12708` 寫） / 未解 | 靜態 |
-| [`re/08-hourly-update.md`](../re/08-hourly-update.md) | `+0x04` | byte / `sub_1E81C` 的回傳 `ah` / 未解 | 靜態 |
-| [`re/08-hourly-update.md`](../re/08-hourly-update.md) | `+0x08` | word / 另一張表的索引（`bx << 3`） / 未解 | 靜態 |
-| [`re/09-combat.md`](../re/09-combat.md) | **戰術完整結算** | `TestNormalScenarioTacticalBattleTerminates` 已證實真實正常攻城的狀態層勝負／傷亡回寫，`wlgame-ai-postbattle.png` 證明正常 GUI 回戰略；GUI 戰後訊息、完整狀態對拍與少數分支仍未完 | 靜態 |
-| [`re/09-combat.md`](../re/09-combat.md) | `sub_1AD7F` 攻擊分支 | `shootSpecial` 已接入 `CH=0x20` 的相鄰格／垂直效果；`+0x1E` 的初始化／上移／下移／交換來源與 `sub_1AC55` 的 raw 比較已確認並接成 `PlaneHigh`，普通箭原版 SCH 單幀圖形已接回，完整投射物動畫／同狀態對拍仍待確認 | 靜態 |
-| [`re/09-combat.md`](../re/09-combat.md) | 原版／remake 同狀態對拍 | 需有效時序原版存檔或可重建的同狀態 oracle | 實測 |
-| [`re/09-combat.md`](../re/09-combat.md) | 地形係數表的列 2 | 要 `al = 2` 才取得到，**戰略層**沒有呼叫點。⚠ 適性 `+0x10` 已經不是缺口——戰術層的 `sub_19C13` 取得到（`78` §2.1） | 靜態 |
-| [`re/09-combat.md`](../re/09-combat.md) | 武將旗標 `+0x00` 的 bit 4（自刎） | 值域已知有 7 種，只解出這一個位元 | 靜態 |
-| [`re/09-combat.md`](../re/09-combat.md) | 據點 `+0x10`／`+0x11` 被攻城扣減 | 欄位語意已知（上昇值／防災值），但「被打過的城成長變慢」還沒在數值上驗過 | 靜態 |
-| [`re/09-combat.md`](../re/09-combat.md) | `[si+3]` 的 0／1／≥2 是誰設的 | 決定哪一支軍團會進戰鬥畫面 | 靜態 |
-| [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `ds:0D2F8` | 4,096 / 未解（第二份戰場？） | 靜態 |
-| [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `ds:0D306` | 30,720 / 未解 | 靜態 |
-| [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | 兵士記錄剩下的欄位 | `ds:0D30E`，32 B／筆 / 目前具名的有 `+0x00`／`+0x01`／`+0x02`／`+0x03` 體力／`+0x04` 大將／`+0x05` 面向／`+0x14` 陣形座標／`+0x16`・`+0x17` 繞路游標／`+0x19` 疲勞／`+0x1A`・`+0x1B` 命令／`+0x1E` Z… | 靜態 |
-| [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `ds:0D306` 那 30,720 B | 未解 / 大小是 `0x7800`，與任何已知的表都對不起來 | 靜態 |
-| [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `loc_1A065` 的自我修改碼 | `▶▶` 列切換的機制 confirmed（`byte_1A06A` 在 `0xEB`／`0x74` 間切），**擋掉的是什麼**沒逐行讀（`60` §） | 靜態 |
-| [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | `AH` 的完整欄位名稱 | 語意由日中原文並列確認，欄位名本身未定（§3） | 靜態 |
-| [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | #367–#372／#380–#385 的 AH／信賴度次要回覆 | 未解，不可當成完整的原版對話流程（§8） | 靜態 |
-| [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | #73／#77 | 未定位，不得拿來補接事件 6／7（§9） | 靜態 |
-| [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | 事件 6／7 次要 TALK 的 formatter 參數契約 | 缺參數且語意未知，維持 fail-closed（§10） | 靜態 |
-| [`re/15-event10-producer.md`](../re/15-event10-producer.md) | 以下來源沒有證據，不能補成事實：未被 IDA 建成函式的 far code、以暫存器或指標 | （未解小節內文） | 靜態 |
-| [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | `0x330` 的用途 | MPU-401 的標準埠，沒找到讀它的地方 | 靜態 |
-| [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | 效果碼 ↔ 聽起來像什麼 | `SOUND.DAT` 的記錄結構已解（`57` §6），但哪一號對應哪個動作只有 §3 的三個 | 靜態 |
-| [`re/19-outcome.md`](../re/19-outcome.md) | 勢力滅亡 selector | 未定位。remake 只顯示克制的 fallback 句，不冒充原版文字 | 靜態 |
-| [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | 同狀態動態 oracle | 沒有可重放的存檔／輸入序列，所以「原版等價」目前無法驗。**這是還沒做，不是做不了**——DOS/V 的密碼頁空白確認就會過（`../playtest/18`），PC-98 側連除錯器都接好了（`../playtest/21`） | 實測 |
-| [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | 逐幀執行順序 | 顯示串列與相機已重建，但整幀的呼叫順序沒有逐幀對過 | 靜態 |
-| [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | `loc_1A065` 的 runtime bytes | 自我修改碼，靜態影像看不到每輪的實際內容（§2.2） | 靜態 |
-| [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | 四層差分（terrain／display list／composited／HUD） | 沒有 machine-readable diff，目前只有 layout-only 比較 | 靜態 |
-| [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x00` | 2 B / 未解 | 靜態 |
-| [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x06`–`+0x0F` | 10 B / 未解 | 靜態 |
-| [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x04` 那張表 | 大小與音效記錄相同（3 × 16 B），但驅動沒讀它。見 `57` §8 | 靜態 |
-| [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x00`、`+0x06`–`+0x0F` | 12 B 未解 | 靜態 |
-| [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | 曲號 ↔ 場景的對應 | `KI.EXE` 呼叫端傳哪個索引還沒對過 | 靜態 |
-| [`re/27-list-row-fields.md`](../re/27-list-row-fields.md) | 開局選勢力的逐列 `sub_17BC0` | 未逐欄對照（欄位與勢力一覽重疊，但少了外交兩欄） | 靜態 |
-| [`re/28-text-number-rendering.md`](../re/28-text-number-rendering.md) | 屬性的其餘位元 | bit 2 是陰影已證實；`0x9001`／`0x9000` 的 bit 0 差在哪未讀 | 靜態 |
-| [`re/28-text-number-rendering.md`](../re/28-text-number-rendering.md) | `word_10D4C` 那一組 | 來源已解——`sub_100DF` 開機把 `ICONGRF` 段 3 切五塊，`word_10D54` 是 `+0x0840` 的 11 格 × 16 列數字字模（`../spec/52` §4）；緊接在後的 `+0x08F0` 另有一組 11 格，用途未解 | 靜態 |
-| [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `END_S10/S11` 與 `STR.EXE` 檔名不同步 | §6，要實跑裁決 | 實測 |
-| [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `END_S13.DAT` 前 408 格的**來源** | 不是 `stdfont.15` 的任何一段，也不是 `usrfont.15m`（256 B）。⭐ **用途已定案**：那就是遊戲實際用的全形符號字型——全形逗號的字模與倚天 `SPCFONT.15` 差 (+3, −2) 個像素，對拍畫面上量得到（`../spec/137`） | 靜態 |
-| [`re/30-corps-formation-ui.md`](../re/30-corps-formation-ui.md) | 軍團 `+0x00` 的位元 3／4／5 | 位元 1（有指令）、2（委任，`45`）已解；其餘仍未見成對的寫入端（`34` §4） | 靜態 |
-| [`re/31-faction-picker-screen.md`](../re/31-faction-picker-screen.md) | 分派表已印出，但 `sub_15AD1 → sub_15AFC` 的進入路徑仍未定位。 | （散句） | 靜態 |
-| [`re/31-faction-picker-screen.md`](../re/31-faction-picker-screen.md) | `cs:6056` 表的長度 | 前六筆是一組小 handler，後五筆疑似越過表尾（§1.2） | 靜態 |
-| [`re/32-strategy-detail-panels.md`](../re/32-strategy-detail-panels.md) | 軍團 `+0x00` 的位元怎麼清 | 三處設定都找到了，清除點未找到 | 靜態 |
-| [`re/33-shared-draw-helpers.md`](../re/33-shared-draw-helpers.md) | `cs:word_10D40` | 肖像圖庫所在的段，誰載入它未追 | 靜態 |
-| [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | 4 | **`sub_12B3C`（confirmed）** / `sub_12BA8`（候選） / **設定端定案**（2026-09-02）：`sub_12B3C` 開頭就是 `or byte ptr [si], 10h`，而同一支後面用 `[si+10h]`／`[si+12h]` 當地圖座標——**`si` 確定是… | 靜態 |
-| [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | 位元 4 的語意 | 設定端 `sub_12B3C`（大地圖畫軍團）開頭就設它，清除端 `sub_12BA8` 清完接著呼叫 `sub_19656`／`sub_196ED`（繪圖）。**像是「這一格要重畫」的髒旗標**，不是規則狀態——待確認 | 靜態 |
-| [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | 位元 3 | 掃描裡沒出現。間接寫入抓不到，不能據此說它不存在 | 靜態 |
-| [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | `+0x21` | `sub_1264A` 在沒對峙時把它與 `+0x03` 一起歸零；`sub_12B3C` 拿它 `<< 2` 加上 `+0x03 & 3` 合成圖塊索引。**像是對峙動畫的第二個維度**，語意未讀 | 靜態 |
-| [`re/35-strategy-ui-module-map.md`](../re/35-strategy-ui-module-map.md) | `sub_18FC9` 叢 | — / 存檔畫面的槽位與按鈕對應未驗（§2.8） | 靜態 |
-| [`re/40-garrison-relief-request.md`](../re/40-garrison-relief-request.md) | `+0x20` 與 `+0x14` 的關係 | §5 的張力，要實測 | 實測 |
-| [`re/40-garrison-relief-request.md`](../re/40-garrison-relief-request.md) | 據點 `+0x00` 的 bit 4／5 | bit 6／7 已解（§2），中間兩位未見 | 靜態 |
-| [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `cs:byte_198A6` 位元 3 | **全庫沒有任何一處寫它**（2026-09-02 三種寫法全掃：`byte_198A6`、`cs:byte_198A6`、`ds:98A6h`，整個 `KI.EXE.asm` 只有 19 行提到這個位址）。位元 0 在 `or ds:98A6h, 1`／`and ds:98A6h, 0FEh` 成對、位元 1 … | 靜態 |
-| [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `sub_1E9A7` 的 8 bytes 參數表 | 寫入端已解（2026-09-02）：整支是 `bx = bl × 8 + 0EAF1h` 之後 `cs:[bx] = ax`／`cs:[bx+2] = dx`／`cs:[bx+4] = cx`——**一筆 8 B 但只寫前 6 B**，後兩個 byte 沒有任何寫入端。**表的內容（各筆代表什麼）仍未讀** | 靜態 |
-| [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `byte_1020E`／`byte_10CF9` | 音源相關的兩個旗標 | 靜態 |
-| [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | 據點 `+0x00` 的 bit 4／5 | bit 6／7 是威脅旗標、低 4 位是敵方鄰居，中間兩位仍未見寫入端 | 靜態 |
-| [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | `+0x20` 與 `+0x14` 的張力 | `sub_14575` 與 `sub_14155` 都只寫 `+0x20`，`40` §5 的張力還在 | 靜態 |
-| [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `sub_193E9` 內部（`loc_19409`） | 只知道入口參數與框的外框幾何（§6），列高、配色、反白的畫法沒逐行讀 | 靜態 |
-| [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | 樣式碼 | 只確定 `0` ＝ 擦除、`0x0B` ＝ 指令列、`0x0C`／`0x0F` 出現在別處；完整值域未列 | 靜態 |
-| [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | `ax = 0F01h`／`0801h` | 顏色／樣式的位元編碼未逐位對過 | 靜態 |
-| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | `0x80` | 繪製時 `and …, 7Fh` 清掉 / 未解 | 靜態 |
-| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 格子屬性 bit `0x80` | 擦除時被清掉，沒找到設它的地方 | 靜態 |
-| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 系統視窗開著時時間停止 | 說明書明講，機器碼的實作位置未找（`sub_15FAA` 的等待迴圈是候選） | 靜態 |
-| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 右鍵表 `funcs_159C0` 的真實表長 | 已 dump（`71` §2.1）：它與左鍵表 `off_159D2` **只差 9 個 word 且內容重疊**，前九筆沒有一筆是函式起點。是「表只有 9 筆」還是「兩張刻意重疊」，靜態分不出來 | 靜態 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `08` 的模式 byte | `03` 只畫字、`01` 連背景一起填，是**強推論**——兩個用例（系統選單的「 ＯＫ 」、注音聲母列）都只有這個讀法說得通，但 `sub_106F5` 沒逐行讀（`55` §3） | 靜態 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `sub_1E9A7(bl=0, ax=1800h, cx=2020h)` | **登記內容已解**（2026-09-02）：`sub_1030F` 在 `start` 裡做兩件事——① `sub_1E993(ax=0E16h, dx=cs, bx=cs, cx=word_10D50)` 把 far 指標 `cs:0E16`（顯示清單本身）寫進 `cs:dword_1EAE9`，另外兩個參數… | 靜態 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `op 01` 的用法 | 它是直線（§2.2），但 handler 不展開座標而十個場景又沒用到它——**預期的呼叫方式無法驗證** | 靜態 |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `op 02` 與 `op 03` 的差別 | 兩支都畫矩形（`sub_1F020` 對 `cs:F1A3`），前者另有五個戰術區呼叫者。哪一支是實心、哪一支帶遮罩，沒有資料可分辨 | 靜態 |
-| [`re/49-corps-formation-window.md`](../re/49-corps-formation-window.md) | `sub_1F9B0` 的 `ax = 1003h` | 貼圖的樣式參數；`sub_10C14` 用 `0801h`（`46` §3）。位元編碼未逐位對過 | 靜態 |
-| [`re/51-corps-info-window.md`](../re/51-corps-info-window.md) | `or byte ptr [si], 2` | 位元 1 ＝「有指令」（`34`），這裡是它的其中一個寫入端 | 靜態 |
-| [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | 檔名 | `sub_18C20` 沒設 `dx`，靠 `sub_18B7C` 的 `push dx`／`pop dx` 從更上層傳進來 | 靜態 |
-| [`re/54-advisor-naming-window.md`](../re/54-advisor-naming-window.md) | 屬性低 byte | `01` 與 `03` 的差別未讀（§3） | 靜態 |
-| [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | `sub_15FAA` 的 `cmp bx, 0Ah` | 熱區碼 `0x2A` 不在這個視窗的 `0x20`–`0x25` 裡，哪來的沒查 | 靜態 |
-| [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | `sub_106F5` 的屬性解碼 | §3 的低 byte 讀法是強推論，沒逐行驗 | 靜態 |
-| [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | 設定表每筆的第 4 個 byte | 四筆都是 `00`，用途不明 | 靜態 |
-| [`re/56-bgm-track-events.md`](../re/56-bgm-track-events.md) | 全音符 ＝ 192 tick | 從長度表的二分序列推的，**強證據不是 confirmed**。沒有樂譜可對 | 靜態 |
-| [`re/56-bgm-track-events.md`](../re/56-bgm-track-events.md) | `+0x04` 那張表 | 見 `57` §8 | 靜態 |
-| [`re/56-bgm-track-events.md`](../re/56-bgm-track-events.md) | PC-98 側 | 事件編碼共用，但音色與音源程式設計完全沒讀 | 靜態 |
-| [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | 曲塊 `+0x04` 的表 | 固定 `0x30` B ＝ 3 × 16，與音效記錄同大小。但 parser 存進 `cs:099Ch` 之後，**整個驅動沒有任何一處讀它**（全庫掃立即值只有一筆寫入）。是舊版遺留還是由別處使用，未解 | 靜態 |
-| [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | 曲塊 `+0x00`、`+0x06`–`+0x0F` | 12 B 未解 | 靜態 |
-| [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | 音色記錄 `+0x16`–`+0x1F` | 驅動不讀，內容意義未解 | 靜態 |
-| [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | `word [097Eh]` ＝ `0x0330` | MPU-401 的標準埠，但沒找到讀它的地方 | 靜態 |
-| [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | 全域音量偏移 `[0996h]` | 誰設、範圍多少未解 | 靜態 |
-| [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | 曲號 ↔ 場景 | `KI.EXE` 的呼叫端還沒對過（`23` §5） | 靜態 |
-| [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | PC-98 側的音源程式設計 | 完全沒讀。YM2203 的暫存器路徑與音色版面都未解 | 靜態 |
-| [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | 曲 1 | **DOS/V 的 `KI.EXE` 裡沒有任何呼叫端傳 1。** 掃過的範圍：`sub_10241` 的八個直接呼叫點（立即值全部列在 §3）、`cs:9309h` 那張表（只有 2–5）、`sub_19946` 的計算式（只到 7–10），以及全庫搜 `sub_10241` 的位址有沒有被當立即值取走（**沒… | 靜態 |
-| [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | `AX=09F2h` | 換曲前送的服務號，TSR 那一側還沒讀（`17` §7） | 靜態 |
-| [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | `AL` 的 6 vs 5 | `sub_10241` 對曲號 ≥ 2 把 `AL` 從 6 改成 5，語意未解 | 靜態 |
-| [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | 音色聽感 | 這一份只解「哪一首」。**渲染出來像不像原版是另一回事**（`../playtest/26` §5） | 靜態 |
-| [`re/59-game-over-exit-codes.md`](../re/59-game-over-exit-codes.md) | `sub_14DF0` 的 CF | 「找不到替代據點」與「據點數 0」是不是同一件事，還沒逐行讀 | 靜態 |
-| [`re/59-game-over-exit-codes.md`](../re/59-game-over-exit-codes.md) | 無主城 `0x18` | 值 24 落在 22 個勢力之外，但劇本裡有沒有無主城沒查過 | 靜態 |
-| [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | 城兵臨時軍團的主將名 | `sub_14F58` 已讀（2026-09-02）：`push [si+2] ＋ 0FF00h` 當 formatter 參數（`di = sp`）→ `sub_10CDE` 嗶一聲 → `al = 93h`（**預設肖像，不是訊息索引**）→ `sub_18810`，訊息索引在呼叫端的 `cx`（`0x1B`… | 靜態 |
-| [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | 段 1 `0x0000`／`0x0800`／`0x1000`／`0x1800`／`0x3500` 的圖形內容 | 貼點與尺寸 confirmed，**圖上畫了什麼**要另外解碼（`../formats/03` §5.3 的 UI 語意缺口） | 靜態 |
-| [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | 熱區 `0x01`／`0x1F` | 兩張表裡都有 handler，但沒找到註冊它們的 `sub_1E3D7` 呼叫點 | 靜態 |
-| [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | 側欄美術的調色盤 | 本份記的都是**調色盤索引**，不是 RGB。要比顏色得用 `GAMEPAL.BRG` 的當季 bank | 靜態 |
-| [`re/61-timer-tick-source.md`](../re/61-timer-tick-source.md) | 音樂 tempo 分頻器 `cs:0B68h` 的算式 | `0x859` 那 20 條指令：`al = ((0FFh − ah) × 13) >> 3`，`ah` 從哪來沒讀 | 靜態 |
-| [`re/61-timer-tick-source.md`](../re/61-timer-tick-source.md) | `cs:099Eh` 的 bit 1 | 「音樂啟用」是從用法推的，寫入端沒讀 | 靜態 |
-| [`re/61-timer-tick-source.md`](../re/61-timer-tick-source.md) | 無音效驅動時的行為 | §3 推論「會卡死」，**沒有實測**——DOSBox 拿掉 `YNSOUND.COM` 跑一次就能驗 | 實測 |
-| [`re/62-strategy-minimap.md`](../re/62-strategy-minimap.md) | `byte_198A7` 的初值 | 靜態影像裡是 `0`。**開新遊戲時有沒有被寫過沒查** | 靜態 |
-| [`re/62-strategy-minimap.md`](../re/62-strategy-minimap.md) | 圖例底圖在哪個資源 | `sub_1FA37` 的 `ds` 來自 `word_10D50`；`47` 記成段 3 `0x09A0`，兩者沒對過 | 靜態 |
-| [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 段變數的配置迴圈 | `word_1D2F6`–`word_1D30E` 沒有直接寫入的 xref，§1 的相鄰關係是推論 | 靜態 |
-| [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 命令 6 為什麼擋高平面橫移 | `[si+1Ah] == 6`，命令碼 6 是什麼沒對過 | 靜態 |
-| [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | `loc_1491B` 的完整成本模型 | 只解出「穿過非己方據點 ＋0xA6 並設高位元」（§8.1）。廣度優先搜尋本身的佇列結構與其他成本項沒逐條讀 | 靜態 |
-| [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | remake 的對應 | §8 已實作（`../spec/43`）；**§8.4 的「逐站前進」沒有移植**，remake 一次算完整條路 | 靜態 |
-| [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | `sub_128F4` 的 STC 分支 | 走到敵方據點時呼叫 `sub_1291A`（俘虜／脫離判定），之後 `di` 不可信。本文件的 `di` 推論只涵蓋一般路徑 | 靜態 |
-| [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `sub_10AD9` 的 `cx = 40B0h` | 肖像繪製的尺寸／來源參數，沒逐位元解 | 靜態 |
-| [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `sub_189A4(al=1, dx=0, bx=2, cx=151Bh)` | `sub_13D09` 在貼完 `IVENTGRF` 之後畫的框，與 `sub_1895D` 是不是同一組單位沒驗 | 靜態 |
-| [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `IVENTGRF` 插圖本身的位置 | `sub_13D09` 的 `dx = 0E07h` 是餵給 `sub_1E38C`（讀檔）的參數，不是座標。插圖在畫面上的位置沒量 | 靜態 |
-| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 推論等級：位置與顏色分類 **強證據**（四座 × 三種歸屬）；繪製常式 **未解 | （散句） | 靜態 |
-| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 換圖塊的那一支機器碼 | **規則是從資料與畫面反推的，不是讀出來的。** 每一格都對得上，但「原版在哪裡做這件事」還沒定位——`sub_1D615` 只複製圖塊編號，`sub_11CC9` 的兩個 overlay 只畫軍團與災害 / 找誰在據點換手時改地圖或格子記錄（`sub_188CC` 一帶） | 靜態 |
-| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 208 那一組 | 全圖 4 格，這一輪的兩張截圖裡沒有入鏡 / 找一局讓它入鏡，驗 206／207／208 | 實測 |
-| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 「圖例選中的勢力」 | 縮小地圖有第四種顏色（`62` §2），大地圖有沒有對應的圖塊沒驗 / 開縮小地圖、切圖例第二格再截一張 | 靜態 |
-| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 230 為什麼分位置 | 關隘上下換、大城左右不換。remake 照位置實作，但沒有機器碼解釋 / 同第一列 | 靜態 |
-| [`re/68-t3-frontier-functions.md`](../re/68-t3-frontier-functions.md) | `sub_1304E(al=7)` 到底登記了什麼 | `sub_1676F` 只看它的進位旗標。那一支是 T1，但 `al` 的七種值各代表什麼還沒逐一對過 | 靜態 |
-| [`re/68-t3-frontier-functions.md`](../re/68-t3-frontier-functions.md) | `sub_16D56` 的 `1,1,3,3,2,2` 對應哪三個兵種 | 位移確定是六個編成槽的兵種欄；值到兵種的對映要與 `kindFromByte` 對一次 | 靜態 |
-| [`re/69-t2-cross-reference.md`](../re/69-t2-cross-reference.md) | `0x2040` 那張 16 筆表 | `sub_12438` 依 `(dx, bx)` 作廢一筆，`[si] ≥ 0x80` 是「這筆有效」 / 找誰寫 `[si+2]`／`[si+4]` | 靜態 |
-| [`re/69-t2-cross-reference.md`](../re/69-t2-cross-reference.md) | `sub_1E6FF` 那張待繪表 | 欄位對應到什麼還沒查 / `byte_1E47F` 的其他使用端 | 靜態 |
-| [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | `sub_1041E`（`ENDPAL.BRG`）怎麼套 | 只知道它載檔 / 與 `GAMEPAL.BRG` 同格式的話直接沿用（`../formats/02`） | 靜態 |
-| [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | 淡入淡出的階數與色階 | 17 階（`cx` 0–0x10）已確定，每階怎麼算沒讀 / `sub_1035F`／`sub_103DC` | 靜態 |
-| [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | `cs:0x780` 那張字幕描述子表 | §3.1 解出結構（幕序索引 → 筆數 ＋ 每筆三個 word），**表的內容沒 dump** / `ida_dump.py` 對 `D7END.EXE` 的 `0x780` 起 | 靜態 |
-| [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | BGM 的**起訖時點** | `ENDBGM.DAT` 走 INT 61h、與 `KI.EXE` 同一條音源路徑（已解）。⚠ 2026-08-23 起 remake **整段結局都放 `endbgm-0`**（`musicTrack()`）——先前放的是 `overbgm-0`，那是 `D7OVER.EXE` 的遊戲結束曲。**剩下的缺口只有… | 靜態 |
-| [`re/71-strategy-hotspot-dispatch.md`](../re/71-strategy-hotspot-dispatch.md) | 右鍵表的真實表長 | §2.1。兩種讀法都說得通，靜態影像分不出來，要動態取樣哪些碼會配右鍵 | 靜態 |
-| [`re/71-strategy-hotspot-dispatch.md`](../re/71-strategy-hotspot-dispatch.md) | `funcs_159C0[0x00]`–`[0x08]` 那九筆 | 都不是函式起點。是別的資料還是真的 handler，沒查 | 靜態 |
-| [`re/71-strategy-hotspot-dispatch.md`](../re/71-strategy-hotspot-dispatch.md) | `22` 的「`off_159D2` 的其餘槽位」、 | （未解小節內文） | 靜態 |
-| [`re/72-world-map-display-list.md`](../re/72-world-map-display-list.md) | 那 110 張軍團圖的逐張外觀 | 算式定案、抽驗過勢力 0 靜止那一張（紅色軍旗），**22 × 5 沒有逐張看過** | 靜態 |
-| [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | `sub_18DC8` 的 `si=98C8h` | 那一則字串沒取出來看 | 靜態 |
-| [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | 欄位表的「型別」與「屬性」兩個 word | `0x76`／`0x73` 與 `0x0206`／`0x0204` 只由「名字欄 vs 數字欄」的對應推出語意，沒有讀 `sub_1820E` 裡消費它們的那一段 | 靜態 |
-| [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | `sub_18607` | **算式已讀**（2026-09-02）：`ax = (word_181B4 − 30h) × dl ÷ byte_181BE`，**有餘數就進位**，結果存回 `cs:word_181A4` 再 `sub_18662`；前半段在 `word_181B0 + 20h + word_181A4` 不進位時用 `su… | 靜態 |
-| [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | `word_1D311 += 6` | 疑似喊話框位置位移，未驗 | 靜態 |
-| [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | 開場凍結與大將騎出的機器碼形式 | 實機定案（b0–b3），但 `sub_1A1C5` 內部的等待常式怎麼擋住實體更新未逐條讀——見 `spec/80` §3.1 | 靜態 |
-| [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | 變體 0／2／3／5／6 的臨場抽驗 | 專屬句只在 1／4／7；預設句與它們共用選句機制，公式已 confirmed，抽驗優先度低 | 靜態 |
-| [`re/76-d7open-opening-player.md`](../re/76-d7open-opening-player.md) | 第 5 幕來源的列距 | `sub_103EF` 每兩列消耗 720 B（240 × 2 ＋ `add si, 0F0h`），推不出單純的「一列 240 B」；要嘛來源有 stride，要嘛捲動是重疊取樣。沒有畫面驗證 | 靜態 |
-| [`re/76-d7open-opening-player.md`](../re/76-d7open-opening-player.md) | `sub_10A70` | 第 5 幕與開場初始化各叫一次，內容未讀 | 靜態 |
-| [`re/76-d7open-opening-player.md`](../re/76-d7open-opening-player.md) | 旁白的推進速度 | 逐字之間沒有顯式延遲，靠 `sub_10056` 主迴圈的 `sub_10777` 節拍；換算成秒要先定 `int 61h` 的計時單位 | 靜態 |
-| [`re/76-d7open-opening-player.md`](../re/76-d7open-opening-player.md) | PC-98 版的差異 | 4,836 B，尚未進 IDA。旁白應為 Shift-JIS，位址不同 | 靜態 |
-| [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | `+0x14` 的語意 | 值域 0–7（在場 381 筆：0 佔 126、2 佔 68），與 `+0x1E` 說話類型交叉表沒有結構。沒有讀取端（§5） | 靜態 |
-| [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | `+0x1B` 的語意 | 只有 0（368）與 `0xFF`（13）。沒有讀取端 | 靜態 |
-| [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | 旗標 bit 0 | 只出現一次（劇本三的張衛），沒有讀取端 | 靜態 |
-| [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | `+0x19` 誰寫非 `0xFF` 值 | **只有劇本作者**：`KI.EXE` 裡只找得到清成 `0xFF` 的寫入端（`sub_15899`）。所以它是純劇本資料，執行期只會消耗不會補充 | 靜態 |
-| [`re/78-soldier-power-from-command.md`](../re/78-soldier-power-from-command.md) | 側摘要 `word_1D30A` 的完整版面 | `+2`（軍團編號）、`+6`（士氣）、`+0x0A` 起六個兵種確定，其餘沒讀 | 靜態 |
-| [`re/79-talk-marker-handlers.md`](../re/79-talk-marker-handlers.md) | `ah ≠ 0xFF` 的直接位址形式誰在用 | 五支都留了這條路（參數直接當段內位址）。呼叫端有沒有真的用它，要逐個 `sub_18810` 呼叫點看 `push` 進去的值 | 靜態 |
-| [`re/79-talk-marker-handlers.md`](../re/79-talk-marker-handlers.md) | `loc_10701` 的 `al = 3` | 五支都傳 3。屬性的位元編碼見 `28`，`al` 那一格沒逐位讀 | 靜態 |
-| [`re/79-talk-marker-handlers.md`](../re/79-talk-marker-handlers.md) | `\7` 的數值格式 | 進到 `sub_1062F` 之後的位數／補零規則沒逐行讀 | 靜態 |
-| [`re/80-pathfind-request-queue.md`](../re/80-pathfind-request-queue.md) | `sub_1ACA4` | `loc_1AFD0` 排隊之後緊接著呼叫它，內容沒逐行讀。它也出現在 `sub_1ABFF:loc_1AC3A` | 靜態 |
-| [`re/80-pathfind-request-queue.md`](../re/80-pathfind-request-queue.md) | `loc_1B612` 那一處的前提 | 只確認它在碰撞處理的尾段，哪幾條分支會走到沒有逐條追 | 靜態 |
-| [`re/80-pathfind-request-queue.md`](../re/80-pathfind-request-queue.md) | 佇列滿了會怎樣 | bit 4 去重讓在飛請求 ≤ 96 < 128，**結構上塞不滿**；沒有溢位檢查也就沒有可觀察的行為 | 靜態 |
-| [`re/80-pathfind-request-queue.md`](../re/80-pathfind-request-queue.md) | `[si+0x10]` 的完整語意 | 這裡確認它是「這一步的目標座標」（出隊時先設成目前座標，再由 `sub_1B00D` 覆寫成第一個繞路點）；誰還會寫它沒有窮舉 | 靜態 |
-| [`re/81-sound-type-attenuation.md`](../re/81-sound-type-attenuation.md) | `0x060F` 的音色來源 | `es:[si]` 從 `ds:[0992h]` 指的段讀，`si` 由 `[bx+0A5Ch] << 5 + ds:[099Ah]` 算出。**這一段的資料結構沒逐行讀**，所以「換音色之後型別要不要重送」還不確定 | 靜態 |
-| [`re/81-sound-type-attenuation.md`](../re/81-sound-type-attenuation.md) | `AH=0Bh` 只重算三個聲部 | 迴圈是 `ah = 0、1、2`，而靜音路徑跑的是六個（`ah = 5..0`）。剩下三個什麼時候拿到新的衰減沒查 | 靜態 |
-| [`re/81-sound-type-attenuation.md`](../re/81-sound-type-attenuation.md) | `AH=09h`（`ax=09F2h`） | `cs:[099Eh]` bit 1 沒設就直接回；設了就對 `ds:[0A4Ch]` 個聲部逐一呼叫 `0x049E`，參數 `al=91h`／`ah=0F2h`。`0x049E` 沒讀 | 靜態 |
-| [`re/82-display-slot-dead-flags.md`](../re/82-display-slot-dead-flags.md) | 這兩支常式原本要做什麼 | `ax = 0` 送進 `sub_1E085`／`sub_1E0E1` ＝ 拿**子圖塊 0** 對自己與四個鄰格各貼一次。子圖塊 0 在深度迴圈裡是「空」（`and ax,ax / jz` 跳過），只有這條死路徑會真的去畫它。兩版都沒有呼叫端，所以**沒有實機可以觀察**，只能說它是開發期留下的東西 | 兩版對照 |
-| [`re/82-display-slot-dead-flags.md`](../re/82-display-slot-dead-flags.md) | 大地圖那一族的 bit 5 | 是**另一個**旗標（顯示清單一格 8 B），`sub_1D4C7` 換圖時 `or byte ptr [si], 20h` 打髒，見 `../spec/74`。與本份無關，並列在這裡是為了擋掉下一次的混淆 | 靜態 |
-| [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | 補兵會不會補到隊長那一格 | `sub_1B413` 只在**待機數為 0** 那條路才判 `test si, 0FFh`（隊長格）；待機非 0 的路徑沒有排除它。remake 的 `reinforce` 是**一律不補隊長格**。要對得先在原版上量「隊長死後那一格會不會出現新的兵」 | 靜態 |
-| [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `+8+4k` 與 `+10+4k` 的語意 | 從軍團記錄 `+0x28+4k` 起搬進來的兩個 byte，`sub_19F58` 只讀 `+1`／`+3`，這兩格戰鬥中沒有讀取端被找到 | 靜態 |
-| [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `word_1D31A` 的語意 | `sub_1AEA9` 數「在場且 `+0x19` 非零」的兵，`sub_1ADC8` 尾段拿它算優勢（`byte_1D31E`）。`+0x19` 是一個倒數計時器（`sub_1AB7C` 寫 `28h`、`sub_1ADC8` 每幀 `dec`），**它代表什麼還沒解** | 靜態 |
-| [`re/84-popup-row-band-and-world-cursor.md`](../re/84-popup-row-band-and-world-cursor.md) | IDA `0x1074D`／`0x1079B` | 選擇上／下移一格的實作沒有逐行讀（只從呼叫脈絡定名） | 靜態 |
-| [`re/85-march-target-hit-test.md`](../re/85-march-target-hit-test.md) | 圖塊 `0CBh`–`0D3h` 這 9 種各對應什麼外觀 | 只知道區間，沒有逐一對上據點類型（`+0x16` 低 4 位只有 5 種） | 靜態 |
-| [`re/85-march-target-hit-test.md`](../re/85-march-target-hit-test.md) | 行軍途中被擋住怎麼處理 | 下令攻宛之後跑了 108 個遊戲日都沒有開戰，軍團沒有到達；`+0x00` 位元 5（被擋住）的實際觸發條件沒查 | 靜態 |
-| [`re/86-march-turnback-at-peace.md`](../re/86-march-turnback-at-peace.md) | 掉頭之後為什麼停住 | 回到 87 之後 `+0x14` 等於 `+0x0E` ⇒ 到站 ⇒ `sub_14325` 分派，Stage 0 而 87 不是首都 ⇒ 什麼都不做。合理但沒有逐條驗過分派表的其他 Stage | 靜態 |
-| [`re/86-march-turnback-at-peace.md`](../re/86-march-turnback-at-peace.md) | 玩家軍團站在據點上時完全不判 | `sub_12662` 的 `jz → 12697` 跳過 `sub_14300`。這代表玩家的軍團**不會**自動留守受威脅的據點，但沒有實機驗過（`sub_14300` 自己的三個條件已 confirmed，見 §2.1） | 靜態 |
-| [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `sub_1ECE0` 的亂數式 | 沒讀。remake 對不到逐兵座標，只能對值域與分佈 | 靜態 |
-| [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 |
-| [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 |
-| [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 游標圖形資料 | 在 `sub_201E4` 附近，逐 byte 沒抓；remake 已經有量出來的 14×14 遮罩 | 靜態 |
-| [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 54 個 hide／show 點對應到 remake 的哪一段 | 沒做；這是「remake 要不要同步游標」的前置 | 靜態 |
+| 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
+|---|---|---|---|---|---|
+| [`re/01-first-recon.md`](../re/01-first-recon.md) | 是加了新過場、還是把原本的長段拆開，未解。 | （散句） | 靜態 | evidence-only | — |
+| [`re/01-first-recon.md`](../re/01-first-recon.md) | `PASS.MAP`／`PASS.SCH` | dosv / **PC-98 沒有**。關隘資料，移植時新增或改名。未解 | 靜態 | evidence-only | — |
+| [`re/02-palette-routine.md`](../re/02-palette-routine.md) | OPENPAL`（6 組）、`ENDPAL`（12 組）的分組對應哪些畫面。 | （未解小節內文） | 靜態 | evidence-only | — |
+| [`re/02-palette-routine.md`](../re/02-palette-routine.md) | 設定表 `cs:0x5FF4` 每筆後三個 byte 是什麼（第 4 筆的第二個 word | （未解小節內文） | 靜態 | evidence-only | — |
+| [`re/03-image-blitter.md`](../re/03-image-blitter.md) | ICONGRF` **段 1 `0x0000` 那一塊畫了什麼**。 | （未解小節內文） | 靜態 | actionable | [#7](https://github.com/wicanr2/wolong_cht/issues/7) |
+| [`re/03-image-blitter.md`](../re/03-image-blitter.md) | sub_1FAC2` 是另一支繪製常式（`shl al, 1` 後才 `mov cx, ax`），用途未解。 | （散句） | 靜態 | evidence-only | — |
+| [`re/04-mmap-entry-points.md`](../re/04-mmap-entry-points.md) | MMAP.MCH` 的 object **type 3**：事件語意、原版 object timer 與畫面 | （未解小節內文） | 靜態 | evidence-only | — |
+| [`re/05-battle-selection.md`](../re/05-battle-selection.md) | `+0x08` | 勢力相符時取用的值 / 未解 | 靜態 | evidence-only | — |
+| [`re/06-game-clock.md`](../re/06-game-clock.md) | `cs:0CF0h` 那 59 byte 裡除了時鐘的其餘部分 | 對照存檔 diff | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`re/06-game-clock.md`](../re/06-game-clock.md) | `sub_10A65` 的內插演算法 | 直接讀 | 靜態 | evidence-only | — |
+| [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | 10 | `sub_13496` / 訊息-only：建立武將／參數 formatter 游標；持久狀態尚未找到 | 靜態 | merge-target | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
+| [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | `sub_15940` 的兩個分支 | 已派駐武將的每月行動，會發訊息 `0x41`／`0x42`。分支 2 有一行 `mov byte ptr [si+1Ch], 18h`（把所屬勢力寫成 24）**與「+1Ch 是勢力編號、只有 0–21」矛盾**，還沒解釋 | 靜態 | evidence-only | — |
+| [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | `sub_14269`／`sub_13EFD` | 事件 11／12 寫入的據點 `+0x15` marker 在據點輪轉時先扣防災值；不足時再扣上昇值、生產力與城兵，已接入 `World.applyCityDisasterEffect`；物件動畫仍未完 | 靜態 | actionable | [#23](https://github.com/wicanr2/wolong_cht/issues/23) |
+| [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | 武將 `+1Ah` | 官員「要錢中」的旗標／金額，`sub_12FBF` 的事件會寫它 | 靜態 | evidence-only | — |
+| [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | `sub_157FE` 觸發的事件內容 | `sub_12FBF(ax=0Dh, dx=196h)` | 靜態 | evidence-only | — |
+| [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | 軍團記錄剩下的欄位 | 段內 `2240h`，**64 B／筆、127 筆**（不是 32 B）。已具名的見 `08` §4 與 `34` | 靜態 | evidence-only | — |
+| [`re/07-monthly-settlement.md`](../re/07-monthly-settlement.md) | 段內 `2040h`／`2140h` 的兩張 16 × 16 B 表 | `sub_123FF` 會在 `2040h` 那張找空位配置；`2140h` 那張開局已有 16 筆，`+2`／`+4` 看起來是地圖座標 | 靜態 | evidence-only | — |
+| [`re/08-hourly-update.md`](../re/08-hourly-update.md) | `sub_15456` 用 stride 32 掃軍團表 | 與 64 矛盾，疑似原版 bug | 靜態 | evidence-only | — |
+| [`re/08-hourly-update.md`](../re/08-hourly-update.md) | `+0x0C` | 行軍中的暫存（`sub_12708` 寫） / 未解 | 靜態 | evidence-only | — |
+| [`re/08-hourly-update.md`](../re/08-hourly-update.md) | `+0x04` | byte / `sub_1E81C` 的回傳 `ah` / 未解 | 靜態 | evidence-only | — |
+| [`re/08-hourly-update.md`](../re/08-hourly-update.md) | `+0x08` | word / 另一張表的索引（`bx << 3`） / 未解 | 靜態 | evidence-only | — |
+| [`re/09-combat.md`](../re/09-combat.md) | **戰術完整結算** | `TestNormalScenarioTacticalBattleTerminates` 已證實真實正常攻城的狀態層勝負／傷亡回寫，`wlgame-ai-postbattle.png` 證明正常 GUI 回戰略；GUI 戰後訊息、完整狀態對拍與少數分支仍未完 | 靜態 | actionable | [#18](https://github.com/wicanr2/wolong_cht/issues/18) |
+| [`re/09-combat.md`](../re/09-combat.md) | `sub_1AD7F` 攻擊分支 | `shootSpecial` 已接入 `CH=0x20` 的相鄰格／垂直效果；`+0x1E` 的初始化／上移／下移／交換來源與 `sub_1AC55` 的 raw 比較已確認並接成 `PlaneHigh`，普通箭原版 SCH 單幀圖形已接回，完整投射物動畫／同狀態對拍仍待確認 | 靜態 | actionable | [#24](https://github.com/wicanr2/wolong_cht/issues/24) |
+| [`re/09-combat.md`](../re/09-combat.md) | 原版／remake 同狀態對拍 | 需有效時序原版存檔或可重建的同狀態 oracle | 實測 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`re/09-combat.md`](../re/09-combat.md) | 地形係數表的列 2 | 要 `al = 2` 才取得到，**戰略層**沒有呼叫點。⚠ 適性 `+0x10` 已經不是缺口——戰術層的 `sub_19C13` 取得到（`78` §2.1） | 靜態 | evidence-only | — |
+| [`re/09-combat.md`](../re/09-combat.md) | 武將旗標 `+0x00` 的 bit 4（自刎） | 值域已知有 7 種，只解出這一個位元 | 靜態 | evidence-only | — |
+| [`re/09-combat.md`](../re/09-combat.md) | 據點 `+0x10`／`+0x11` 被攻城扣減 | 欄位語意已知（上昇值／防災值），但「被打過的城成長變慢」還沒在數值上驗過 | 靜態 | evidence-only | — |
+| [`re/09-combat.md`](../re/09-combat.md) | `[si+3]` 的 0／1／≥2 是誰設的 | 決定哪一支軍團會進戰鬥畫面 | 靜態 | evidence-only | — |
+| [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `ds:0D2F8` | 4,096 / 未解（第二份戰場？） | 靜態 | evidence-only | — |
+| [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `ds:0D306` | 30,720 / 未解 | 靜態 | evidence-only | — |
+| [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | 兵士記錄剩下的欄位 | `ds:0D30E`，32 B／筆 / 目前具名的有 `+0x00`／`+0x01`／`+0x02`／`+0x03` 體力／`+0x04` 大將／`+0x05` 面向／`+0x14` 陣形座標／`+0x16`・`+0x17` 繞路游標／`+0x19` 疲勞／`+0x1A`・`+0x1B` 命令／`+0x1E` Z… | 靜態 | evidence-only | — |
+| [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `ds:0D306` 那 30,720 B | 未解 / 大小是 `0x7800`，與任何已知的表都對不起來 | 靜態 | evidence-only | — |
+| [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `loc_1A065` 的自我修改碼 | `▶▶` 列切換的機制 confirmed（`byte_1A06A` 在 `0xEB`／`0x74` 間切），**擋掉的是什麼**沒逐行讀（`60` §） | 靜態 | actionable | [#6](https://github.com/wicanr2/wolong_cht/issues/6) |
+| [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | `AH` 的完整欄位名稱 | 語意由日中原文並列確認，欄位名本身未定（§3） | 靜態 | evidence-only | — |
+| [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | #367–#372／#380–#385 的 AH／信賴度次要回覆 | 未解，不可當成完整的原版對話流程（§8） | 靜態 | evidence-only | — |
+| [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | #73／#77 | 未定位，不得拿來補接事件 6／7（§9） | 靜態 | actionable | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
+| [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | 事件 6／7 次要 TALK 的 formatter 參數契約 | 缺參數且語意未知，維持 fail-closed（§10） | 靜態 | actionable | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
+| [`re/15-event10-producer.md`](../re/15-event10-producer.md) | 以下來源沒有證據，不能補成事實：未被 IDA 建成函式的 far code、以暫存器或指標 | （未解小節內文） | 靜態 | evidence-only | — |
+| [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | `0x330` 的用途 | MPU-401 的標準埠，沒找到讀它的地方 | 靜態 | evidence-only | — |
+| [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | 效果碼 ↔ 聽起來像什麼 | `SOUND.DAT` 的記錄結構已解（`57` §6），但哪一號對應哪個動作只有 §3 的三個 | 靜態 | evidence-only | — |
+| [`re/19-outcome.md`](../re/19-outcome.md) | 勢力滅亡 selector | 未定位。remake 只顯示克制的 fallback 句，不冒充原版文字 | 靜態 | evidence-only | — |
+| [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | 同狀態動態 oracle | 沒有可重放的存檔／輸入序列，所以「原版等價」目前無法驗。**這是還沒做，不是做不了**——DOS/V 的密碼頁空白確認就會過（`../playtest/18`），PC-98 側連除錯器都接好了（`../playtest/21`） | 實測 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | 逐幀執行順序 | 顯示串列與相機已重建，但整幀的呼叫順序沒有逐幀對過 | 靜態 | evidence-only | — |
+| [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | `loc_1A065` 的 runtime bytes | 自我修改碼，靜態影像看不到每輪的實際內容（§2.2） | 靜態 | actionable | [#6](https://github.com/wicanr2/wolong_cht/issues/6) |
+| [`re/20-ida-re-coverage-audit.md`](../re/20-ida-re-coverage-audit.md) | 四層差分（terrain／display list／composited／HUD） | 沒有 machine-readable diff，目前只有 layout-only 比較 | 靜態 | evidence-only | — |
+| [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x00` | 2 B / 未解 | 靜態 | evidence-only | — |
+| [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x06`–`+0x0F` | 10 B / 未解 | 靜態 | evidence-only | — |
+| [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x04` 那張表 | 大小與音效記錄相同（3 × 16 B），但驅動沒讀它。見 `57` §8 | 靜態 | evidence-only | — |
+| [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | `+0x00`、`+0x06`–`+0x0F` | 12 B 未解 | 靜態 | evidence-only | — |
+| [`re/23-bgm-resource-format.md`](../re/23-bgm-resource-format.md) | 曲號 ↔ 場景的對應 | `KI.EXE` 呼叫端傳哪個索引還沒對過 | 靜態 | evidence-only | — |
+| [`re/27-list-row-fields.md`](../re/27-list-row-fields.md) | 開局選勢力的逐列 `sub_17BC0` | 未逐欄對照（欄位與勢力一覽重疊，但少了外交兩欄） | 靜態 | evidence-only | — |
+| [`re/28-text-number-rendering.md`](../re/28-text-number-rendering.md) | 屬性的其餘位元 | bit 2 是陰影已證實；`0x9001`／`0x9000` 的 bit 0 差在哪未讀 | 靜態 | evidence-only | — |
+| [`re/28-text-number-rendering.md`](../re/28-text-number-rendering.md) | `word_10D4C` 那一組 | 來源已解——`sub_100DF` 開機把 `ICONGRF` 段 3 切五塊，`word_10D54` 是 `+0x0840` 的 11 格 × 16 列數字字模（`../spec/52` §4）；緊接在後的 `+0x08F0` 另有一組 11 格，用途未解 | 靜態 | merge-target | [#7](https://github.com/wicanr2/wolong_cht/issues/7) |
+| [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `END_S10/S11` 與 `STR.EXE` 檔名不同步 | §6，要實跑裁決 | 實測 | evidence-only | — |
+| [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `END_S13.DAT` 前 408 格的**來源** | 不是 `stdfont.15` 的任何一段，也不是 `usrfont.15m`（256 B）。⭐ **用途已定案**：那就是遊戲實際用的全形符號字型——全形逗號的字模與倚天 `SPCFONT.15` 差 (+3, −2) 個像素，對拍畫面上量得到（`../spec/137`） | 靜態 | evidence-only | — |
+| [`re/30-corps-formation-ui.md`](../re/30-corps-formation-ui.md) | 軍團 `+0x00` 的位元 3／4／5 | 位元 1（有指令）、2（委任，`45`）已解；其餘仍未見成對的寫入端（`34` §4） | 靜態 | evidence-only | — |
+| [`re/31-faction-picker-screen.md`](../re/31-faction-picker-screen.md) | 分派表已印出，但 `sub_15AD1 → sub_15AFC` 的進入路徑仍未定位。 | （散句） | 靜態 | evidence-only | — |
+| [`re/31-faction-picker-screen.md`](../re/31-faction-picker-screen.md) | `cs:6056` 表的長度 | 前六筆是一組小 handler，後五筆疑似越過表尾（§1.2） | 靜態 | evidence-only | — |
+| [`re/32-strategy-detail-panels.md`](../re/32-strategy-detail-panels.md) | 軍團 `+0x00` 的位元怎麼清 | 三處設定都找到了，清除點未找到 | 靜態 | evidence-only | — |
+| [`re/33-shared-draw-helpers.md`](../re/33-shared-draw-helpers.md) | `cs:word_10D40` | 肖像圖庫所在的段，誰載入它未追 | 靜態 | evidence-only | — |
+| [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | 4 | **`sub_12B3C`（confirmed）** / `sub_12BA8`（候選） / **設定端定案**（2026-09-02）：`sub_12B3C` 開頭就是 `or byte ptr [si], 10h`，而同一支後面用 `[si+10h]`／`[si+12h]` 當地圖座標——**`si` 確定是… | 靜態 | evidence-only | — |
+| [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | 位元 4 的語意 | 設定端 `sub_12B3C`（大地圖畫軍團）開頭就設它，清除端 `sub_12BA8` 清完接著呼叫 `sub_19656`／`sub_196ED`（繪圖）。**像是「這一格要重畫」的髒旗標**，不是規則狀態——待確認 | 靜態 | evidence-only | — |
+| [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | 位元 3 | 掃描裡沒出現。間接寫入抓不到，不能據此說它不存在 | 靜態 | evidence-only | — |
+| [`re/34-corps-status-bits.md`](../re/34-corps-status-bits.md) | `+0x21` | `sub_1264A` 在沒對峙時把它與 `+0x03` 一起歸零；`sub_12B3C` 拿它 `<< 2` 加上 `+0x03 & 3` 合成圖塊索引。**像是對峙動畫的第二個維度**，語意未讀 | 靜態 | actionable | [#4](https://github.com/wicanr2/wolong_cht/issues/4) |
+| [`re/35-strategy-ui-module-map.md`](../re/35-strategy-ui-module-map.md) | `sub_18FC9` 叢 | — / 存檔畫面的槽位與按鈕對應未驗（§2.8） | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`re/40-garrison-relief-request.md`](../re/40-garrison-relief-request.md) | `+0x20` 與 `+0x14` 的關係 | §5 的張力，要實測 | 實測 | evidence-only | — |
+| [`re/40-garrison-relief-request.md`](../re/40-garrison-relief-request.md) | 據點 `+0x00` 的 bit 4／5 | bit 6／7 已解（§2），中間兩位未見 | 靜態 | evidence-only | — |
+| [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `cs:byte_198A6` 位元 3 | **全庫沒有任何一處寫它**（2026-09-02 三種寫法全掃：`byte_198A6`、`cs:byte_198A6`、`ds:98A6h`，整個 `KI.EXE.asm` 只有 19 行提到這個位址）。位元 0 在 `or ds:98A6h, 1`／`and ds:98A6h, 0FEh` 成對、位元 1 … | 靜態 | evidence-only | — |
+| [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `sub_1E9A7` 的 8 bytes 參數表 | 寫入端已解（2026-09-02）：整支是 `bx = bl × 8 + 0EAF1h` 之後 `cs:[bx] = ax`／`cs:[bx+2] = dx`／`cs:[bx+4] = cx`——**一筆 8 B 但只寫前 6 B**，後兩個 byte 沒有任何寫入端。**表的內容（各筆代表什麼）仍未讀** | 靜態 | evidence-only | — |
+| [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `byte_1020E`／`byte_10CF9` | 音源相關的兩個旗標 | 靜態 | evidence-only | — |
+| [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | 據點 `+0x00` 的 bit 4／5 | bit 6／7 是威脅旗標、低 4 位是敵方鄰居，中間兩位仍未見寫入端 | 靜態 | evidence-only | — |
+| [`re/44-threat-and-reinforcement-ai.md`](../re/44-threat-and-reinforcement-ai.md) | `+0x20` 與 `+0x14` 的張力 | `sub_14575` 與 `sub_14155` 都只寫 `+0x20`，`40` §5 的張力還在 | 靜態 | merge-target | [#29](https://github.com/wicanr2/wolong_cht/issues/29) |
+| [`re/45-corps-command-mode.md`](../re/45-corps-command-mode.md) | `sub_193E9` 內部（`loc_19409`） | 只知道入口參數與框的外框幾何（§6），列高、配色、反白的畫法沒逐行讀 | 靜態 | evidence-only | — |
+| [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | 樣式碼 | 只確定 `0` ＝ 擦除、`0x0B` ＝ 指令列、`0x0C`／`0x0F` 出現在別處；完整值域未列 | 靜態 | evidence-only | — |
+| [`re/46-strategy-chrome-cell-layer.md`](../re/46-strategy-chrome-cell-layer.md) | `ax = 0F01h`／`0801h` | 顏色／樣式的位元編碼未逐位對過 | 靜態 | evidence-only | — |
+| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | `0x80` | 繪製時 `and …, 7Fh` 清掉 / 未解 | 靜態 | evidence-only | — |
+| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 格子屬性 bit `0x80` | 擦除時被清掉，沒找到設它的地方 | 靜態 | evidence-only | — |
+| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 系統視窗開著時時間停止 | 說明書明講，機器碼的實作位置未找（`sub_15FAA` 的等待迴圈是候選） | 靜態 | evidence-only | — |
+| [`re/47-main-screen-window-registry.md`](../re/47-main-screen-window-registry.md) | 右鍵表 `funcs_159C0` 的真實表長 | 已 dump（`71` §2.1）：它與左鍵表 `off_159D2` **只差 9 個 word 且內容重疊**，前九筆沒有一筆是函式起點。是「表只有 9 筆」還是「兩張刻意重疊」，靜態分不出來 | 靜態 | evidence-only | — |
+| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `08` 的模式 byte | `03` 只畫字、`01` 連背景一起填，是**強推論**——兩個用例（系統選單的「 ＯＫ 」、注音聲母列）都只有這個讀法說得通，但 `sub_106F5` 沒逐行讀（`55` §3） | 靜態 | evidence-only | — |
+| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `sub_1E9A7(bl=0, ax=1800h, cx=2020h)` | **登記內容已解**（2026-09-02）：`sub_1030F` 在 `start` 裡做兩件事——① `sub_1E993(ax=0E16h, dx=cs, bx=cs, cx=word_10D50)` 把 far 指標 `cs:0E16`（顯示清單本身）寫進 `cs:dword_1EAE9`，另外兩個參數… | 靜態 | evidence-only | — |
+| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `op 01` 的用法 | 它是直線（§2.2），但 handler 不展開座標而十個場景又沒用到它——**預期的呼叫方式無法驗證** | 靜態 | evidence-only | — |
+| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `op 02` 與 `op 03` 的差別 | 兩支都畫矩形（`sub_1F020` 對 `cs:F1A3`），前者另有五個戰術區呼叫者。哪一支是實心、哪一支帶遮罩，沒有資料可分辨 | 靜態 | evidence-only | — |
+| [`re/49-corps-formation-window.md`](../re/49-corps-formation-window.md) | `sub_1F9B0` 的 `ax = 1003h` | 貼圖的樣式參數；`sub_10C14` 用 `0801h`（`46` §3）。位元編碼未逐位對過 | 靜態 | evidence-only | — |
+| [`re/51-corps-info-window.md`](../re/51-corps-info-window.md) | `or byte ptr [si], 2` | 位元 1 ＝「有指令」（`34`），這裡是它的其中一個寫入端 | 靜態 | evidence-only | — |
+| [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | 檔名 | `sub_18C20` 沒設 `dx`，靠 `sub_18B7C` 的 `push dx`／`pop dx` 從更上層傳進來 | 靜態 | evidence-only | — |
+| [`re/54-advisor-naming-window.md`](../re/54-advisor-naming-window.md) | 屬性低 byte | `01` 與 `03` 的差別未讀（§3） | 靜態 | evidence-only | — |
+| [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | `sub_15FAA` 的 `cmp bx, 0Ah` | 熱區碼 `0x2A` 不在這個視窗的 `0x20`–`0x25` 裡，哪來的沒查 | 靜態 | evidence-only | — |
+| [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | `sub_106F5` 的屬性解碼 | §3 的低 byte 讀法是強推論，沒逐行驗 | 靜態 | evidence-only | — |
+| [`re/55-system-menu-window.md`](../re/55-system-menu-window.md) | 設定表每筆的第 4 個 byte | 四筆都是 `00`，用途不明 | 靜態 | evidence-only | — |
+| [`re/56-bgm-track-events.md`](../re/56-bgm-track-events.md) | 全音符 ＝ 192 tick | 從長度表的二分序列推的，**強證據不是 confirmed**。沒有樂譜可對 | 靜態 | evidence-only | — |
+| [`re/56-bgm-track-events.md`](../re/56-bgm-track-events.md) | `+0x04` 那張表 | 見 `57` §8 | 靜態 | evidence-only | — |
+| [`re/56-bgm-track-events.md`](../re/56-bgm-track-events.md) | PC-98 側 | 事件編碼共用，但音色與音源程式設計完全沒讀 | 靜態 | merge-target | [#8](https://github.com/wicanr2/wolong_cht/issues/8) |
+| [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | 曲塊 `+0x04` 的表 | 固定 `0x30` B ＝ 3 × 16，與音效記錄同大小。但 parser 存進 `cs:099Ch` 之後，**整個驅動沒有任何一處讀它**（全庫掃立即值只有一筆寫入）。是舊版遺留還是由別處使用，未解 | 靜態 | evidence-only | — |
+| [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | 曲塊 `+0x00`、`+0x06`–`+0x0F` | 12 B 未解 | 靜態 | evidence-only | — |
+| [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | 音色記錄 `+0x16`–`+0x1F` | 驅動不讀，內容意義未解 | 靜態 | actionable | [#8](https://github.com/wicanr2/wolong_cht/issues/8) |
+| [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | `word [097Eh]` ＝ `0x0330` | MPU-401 的標準埠，但沒找到讀它的地方 | 靜態 | evidence-only | — |
+| [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | 全域音量偏移 `[0996h]` | 誰設、範圍多少未解 | 靜態 | evidence-only | — |
+| [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | 曲號 ↔ 場景 | `KI.EXE` 的呼叫端還沒對過（`23` §5） | 靜態 | evidence-only | — |
+| [`re/57-opl3-register-map.md`](../re/57-opl3-register-map.md) | PC-98 側的音源程式設計 | 完全沒讀。YM2203 的暫存器路徑與音色版面都未解 | 靜態 | actionable | [#8](https://github.com/wicanr2/wolong_cht/issues/8) |
+| [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | 曲 1 | **DOS/V 的 `KI.EXE` 裡沒有任何呼叫端傳 1。** 掃過的範圍：`sub_10241` 的八個直接呼叫點（立即值全部列在 §3）、`cs:9309h` 那張表（只有 2–5）、`sub_19946` 的計算式（只到 7–10），以及全庫搜 `sub_10241` 的位址有沒有被當立即值取走（**沒… | 靜態 | evidence-only | — |
+| [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | `AX=09F2h` | 換曲前送的服務號，TSR 那一側還沒讀（`17` §7） | 靜態 | evidence-only | — |
+| [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | `AL` 的 6 vs 5 | `sub_10241` 對曲號 ≥ 2 把 `AL` 從 6 改成 5，語意未解 | 靜態 | evidence-only | — |
+| [`re/58-bgm-scene-mapping.md`](../re/58-bgm-scene-mapping.md) | 音色聽感 | 這一份只解「哪一首」。**渲染出來像不像原版是另一回事**（`../playtest/26` §5） | 靜態 | actionable | [#8](https://github.com/wicanr2/wolong_cht/issues/8) |
+| [`re/59-game-over-exit-codes.md`](../re/59-game-over-exit-codes.md) | `sub_14DF0` 的 CF | 「找不到替代據點」與「據點數 0」是不是同一件事，還沒逐行讀 | 靜態 | evidence-only | — |
+| [`re/59-game-over-exit-codes.md`](../re/59-game-over-exit-codes.md) | 無主城 `0x18` | 值 24 落在 22 個勢力之外，但劇本裡有沒有無主城沒查過 | 靜態 | evidence-only | — |
+| [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | 城兵臨時軍團的主將名 | `sub_14F58` 已讀（2026-09-02）：`push [si+2] ＋ 0FF00h` 當 formatter 參數（`di = sp`）→ `sub_10CDE` 嗶一聲 → `al = 93h`（**預設肖像，不是訊息索引**）→ `sub_18810`，訊息索引在呼叫端的 `cx`（`0x1B`… | 靜態 | evidence-only | — |
+| [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | 段 1 `0x0000`／`0x0800`／`0x1000`／`0x1800`／`0x3500` 的圖形內容 | 貼點與尺寸 confirmed，**圖上畫了什麼**要另外解碼（`../formats/03` §5.3 的 UI 語意缺口） | 靜態 | evidence-only | — |
+| [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | 熱區 `0x01`／`0x1F` | 兩張表裡都有 handler，但沒找到註冊它們的 `sub_1E3D7` 呼叫點 | 靜態 | evidence-only | — |
+| [`re/60-tactical-sidebar.md`](../re/60-tactical-sidebar.md) | 側欄美術的調色盤 | 本份記的都是**調色盤索引**，不是 RGB。要比顏色得用 `GAMEPAL.BRG` 的當季 bank | 靜態 | evidence-only | — |
+| [`re/61-timer-tick-source.md`](../re/61-timer-tick-source.md) | 音樂 tempo 分頻器 `cs:0B68h` 的算式 | `0x859` 那 20 條指令：`al = ((0FFh − ah) × 13) >> 3`，`ah` 從哪來沒讀 | 靜態 | evidence-only | — |
+| [`re/61-timer-tick-source.md`](../re/61-timer-tick-source.md) | `cs:099Eh` 的 bit 1 | 「音樂啟用」是從用法推的，寫入端沒讀 | 靜態 | evidence-only | — |
+| [`re/61-timer-tick-source.md`](../re/61-timer-tick-source.md) | 無音效驅動時的行為 | §3 推論「會卡死」，**沒有實測**——DOSBox 拿掉 `YNSOUND.COM` 跑一次就能驗 | 實測 | merge-target | [#19](https://github.com/wicanr2/wolong_cht/issues/19) |
+| [`re/62-strategy-minimap.md`](../re/62-strategy-minimap.md) | `byte_198A7` 的初值 | 靜態影像裡是 `0`。**開新遊戲時有沒有被寫過沒查** | 靜態 | evidence-only | — |
+| [`re/62-strategy-minimap.md`](../re/62-strategy-minimap.md) | 圖例底圖在哪個資源 | `sub_1FA37` 的 `ds` 來自 `word_10D50`；`47` 記成段 3 `0x09A0`，兩者沒對過 | 靜態 | evidence-only | — |
+| [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 段變數的配置迴圈 | `word_1D2F6`–`word_1D30E` 沒有直接寫入的 xref，§1 的相鄰關係是推論 | 靜態 | evidence-only | — |
+| [`re/63-ground-plane-map.md`](../re/63-ground-plane-map.md) | 命令 6 為什麼擋高平面橫移 | `[si+1Ah] == 6`，命令碼 6 是什麼沒對過 | 靜態 | evidence-only | — |
+| [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | `loc_1491B` 的完整成本模型 | 只解出「穿過非己方據點 ＋0xA6 並設高位元」（§8.1）。廣度優先搜尋本身的佇列結構與其他成本項沒逐條讀 | 靜態 | merge-target | [#3](https://github.com/wicanr2/wolong_cht/issues/3) |
+| [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | remake 的對應 | §8 已實作（`../spec/43`）；**§8.4 的「逐站前進」沒有移植**，remake 一次算完整條路 | 靜態 | evidence-only | — |
+| [`re/65-ai-march-decision-chain.md`](../re/65-ai-march-decision-chain.md) | `sub_128F4` 的 STC 分支 | 走到敵方據點時呼叫 `sub_1291A`（俘虜／脫離判定），之後 `di` 不可信。本文件的 `di` 推論只涵蓋一般路徑 | 靜態 | evidence-only | — |
+| [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `sub_10AD9` 的 `cx = 40B0h` | 肖像繪製的尺寸／來源參數，沒逐位元解 | 靜態 | evidence-only | — |
+| [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `sub_189A4(al=1, dx=0, bx=2, cx=151Bh)` | `sub_13D09` 在貼完 `IVENTGRF` 之後畫的框，與 `sub_1895D` 是不是同一組單位沒驗 | 靜態 | evidence-only | — |
+| [`re/66-message-box-geometry.md`](../re/66-message-box-geometry.md) | `IVENTGRF` 插圖本身的位置 | `sub_13D09` 的 `dx = 0E07h` 是餵給 `sub_1E38C`（讀檔）的參數，不是座標。插圖在畫面上的位置沒量 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 推論等級：位置與顏色分類 **強證據**（四座 × 三種歸屬）；繪製常式 **未解 | （散句） | 靜態 | evidence-only | — |
+| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 換圖塊的那一支機器碼 | **規則是從資料與畫面反推的，不是讀出來的。** 每一格都對得上，但「原版在哪裡做這件事」還沒定位——`sub_1D615` 只複製圖塊編號，`sub_11CC9` 的兩個 overlay 只畫軍團與災害 / 找誰在據點換手時改地圖或格子記錄（`sub_188CC` 一帶） | 靜態 | merge-target | [#23](https://github.com/wicanr2/wolong_cht/issues/23) |
+| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 208 那一組 | 全圖 4 格，這一輪的兩張截圖裡沒有入鏡 / 找一局讓它入鏡，驗 206／207／208 | 實測 | evidence-only | — |
+| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 「圖例選中的勢力」 | 縮小地圖有第四種顏色（`62` §2），大地圖有沒有對應的圖塊沒驗 / 開縮小地圖、切圖例第二格再截一張 | 靜態 | evidence-only | — |
+| [`re/67-city-emblem-on-strategy-map.md`](../re/67-city-emblem-on-strategy-map.md) | 230 為什麼分位置 | 關隘上下換、大城左右不換。remake 照位置實作，但沒有機器碼解釋 / 同第一列 | 靜態 | evidence-only | — |
+| [`re/68-t3-frontier-functions.md`](../re/68-t3-frontier-functions.md) | `sub_1304E(al=7)` 到底登記了什麼 | `sub_1676F` 只看它的進位旗標。那一支是 T1，但 `al` 的七種值各代表什麼還沒逐一對過 | 靜態 | evidence-only | — |
+| [`re/68-t3-frontier-functions.md`](../re/68-t3-frontier-functions.md) | `sub_16D56` 的 `1,1,3,3,2,2` 對應哪三個兵種 | 位移確定是六個編成槽的兵種欄；值到兵種的對映要與 `kindFromByte` 對一次 | 靜態 | evidence-only | — |
+| [`re/69-t2-cross-reference.md`](../re/69-t2-cross-reference.md) | `0x2040` 那張 16 筆表 | `sub_12438` 依 `(dx, bx)` 作廢一筆，`[si] ≥ 0x80` 是「這筆有效」 / 找誰寫 `[si+2]`／`[si+4]` | 靜態 | evidence-only | — |
+| [`re/69-t2-cross-reference.md`](../re/69-t2-cross-reference.md) | `sub_1E6FF` 那張待繪表 | 欄位對應到什麼還沒查 / `byte_1E47F` 的其他使用端 | 靜態 | evidence-only | — |
+| [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | `sub_1041E`（`ENDPAL.BRG`）怎麼套 | 只知道它載檔 / 與 `GAMEPAL.BRG` 同格式的話直接沿用（`../formats/02`） | 靜態 | evidence-only | — |
+| [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | 淡入淡出的階數與色階 | 17 階（`cx` 0–0x10）已確定，每階怎麼算沒讀 / `sub_1035F`／`sub_103DC` | 靜態 | evidence-only | — |
+| [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | `cs:0x780` 那張字幕描述子表 | §3.1 解出結構（幕序索引 → 筆數 ＋ 每筆三個 word），**表的內容沒 dump** / `ida_dump.py` 對 `D7END.EXE` 的 `0x780` 起 | 靜態 | evidence-only | — |
+| [`re/70-d7end-ending-player.md`](../re/70-d7end-ending-player.md) | BGM 的**起訖時點** | `ENDBGM.DAT` 走 INT 61h、與 `KI.EXE` 同一條音源路徑（已解）。⚠ 2026-08-23 起 remake **整段結局都放 `endbgm-0`**（`musicTrack()`）——先前放的是 `overbgm-0`，那是 `D7OVER.EXE` 的遊戲結束曲。**剩下的缺口只有… | 靜態 | evidence-only | — |
+| [`re/71-strategy-hotspot-dispatch.md`](../re/71-strategy-hotspot-dispatch.md) | 右鍵表的真實表長 | §2.1。兩種讀法都說得通，靜態影像分不出來，要動態取樣哪些碼會配右鍵 | 靜態 | evidence-only | — |
+| [`re/71-strategy-hotspot-dispatch.md`](../re/71-strategy-hotspot-dispatch.md) | `funcs_159C0[0x00]`–`[0x08]` 那九筆 | 都不是函式起點。是別的資料還是真的 handler，沒查 | 靜態 | evidence-only | — |
+| [`re/71-strategy-hotspot-dispatch.md`](../re/71-strategy-hotspot-dispatch.md) | `22` 的「`off_159D2` 的其餘槽位」、 | （未解小節內文） | 靜態 | evidence-only | — |
+| [`re/72-world-map-display-list.md`](../re/72-world-map-display-list.md) | 那 110 張軍團圖的逐張外觀 | 算式定案、抽驗過勢力 0 靜止那一張（紅色軍旗），**22 × 5 沒有逐張看過** | 靜態 | evidence-only | — |
+| [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | `sub_18DC8` 的 `si=98C8h` | 那一則字串沒取出來看 | 靜態 | evidence-only | — |
+| [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | 欄位表的「型別」與「屬性」兩個 word | `0x76`／`0x73` 與 `0x0206`／`0x0204` 只由「名字欄 vs 數字欄」的對應推出語意，沒有讀 `sub_1820E` 裡消費它們的那一段 | 靜態 | evidence-only | — |
+| [`re/73-new-game-faction-list.md`](../re/73-new-game-faction-list.md) | `sub_18607` | **算式已讀**（2026-09-02）：`ax = (word_181B4 − 30h) × dl ÷ byte_181BE`，**有餘數就進位**，結果存回 `cs:word_181A4` 再 `sub_18662`；前半段在 `word_181B0 + 20h + word_181A4` 不進位時用 `su… | 靜態 | evidence-only | — |
+| [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | `word_1D311 += 6` | 疑似喊話框位置位移，未驗 | 靜態 | actionable | [#17](https://github.com/wicanr2/wolong_cht/issues/17) |
+| [`re/74-battle-opening-duel.md`](../re/74-battle-opening-duel.md) | 開場凍結與大將騎出的機器碼形式 | 實機定案（b0–b3），但 `sub_1A1C5` 內部的等待常式怎麼擋住實體更新未逐條讀——見 `spec/80` §3.1 | 靜態 | actionable | [#17](https://github.com/wicanr2/wolong_cht/issues/17) |
+| [`re/75-duel-talk-audit.md`](../re/75-duel-talk-audit.md) | 變體 0／2／3／5／6 的臨場抽驗 | 專屬句只在 1／4／7；預設句與它們共用選句機制，公式已 confirmed，抽驗優先度低 | 靜態 | merge-target | [#17](https://github.com/wicanr2/wolong_cht/issues/17) |
+| [`re/76-d7open-opening-player.md`](../re/76-d7open-opening-player.md) | 第 5 幕來源的列距 | `sub_103EF` 每兩列消耗 720 B（240 × 2 ＋ `add si, 0F0h`），推不出單純的「一列 240 B」；要嘛來源有 stride，要嘛捲動是重疊取樣。沒有畫面驗證 | 靜態 | evidence-only | — |
+| [`re/76-d7open-opening-player.md`](../re/76-d7open-opening-player.md) | `sub_10A70` | 第 5 幕與開場初始化各叫一次，內容未讀 | 靜態 | evidence-only | — |
+| [`re/76-d7open-opening-player.md`](../re/76-d7open-opening-player.md) | 旁白的推進速度 | 逐字之間沒有顯式延遲，靠 `sub_10056` 主迴圈的 `sub_10777` 節拍；換算成秒要先定 `int 61h` 的計時單位 | 靜態 | evidence-only | — |
+| [`re/76-d7open-opening-player.md`](../re/76-d7open-opening-player.md) | PC-98 版的差異 | 4,836 B，尚未進 IDA。旁白應為 Shift-JIS，位址不同 | 靜態 | evidence-only | — |
+| [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | `+0x14` 的語意 | 值域 0–7（在場 381 筆：0 佔 126、2 佔 68），與 `+0x1E` 說話類型交叉表沒有結構。沒有讀取端（§5） | 靜態 | evidence-only | — |
+| [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | `+0x1B` 的語意 | 只有 0（368）與 `0xFF`（13）。沒有讀取端 | 靜態 | evidence-only | — |
+| [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | 旗標 bit 0 | 只出現一次（劇本三的張衛），沒有讀取端 | 靜態 | evidence-only | — |
+| [`re/77-general-affinity-and-flags.md`](../re/77-general-affinity-and-flags.md) | `+0x19` 誰寫非 `0xFF` 值 | **只有劇本作者**：`KI.EXE` 裡只找得到清成 `0xFF` 的寫入端（`sub_15899`）。所以它是純劇本資料，執行期只會消耗不會補充 | 靜態 | evidence-only | — |
+| [`re/78-soldier-power-from-command.md`](../re/78-soldier-power-from-command.md) | 側摘要 `word_1D30A` 的完整版面 | `+2`（軍團編號）、`+6`（士氣）、`+0x0A` 起六個兵種確定，其餘沒讀 | 靜態 | evidence-only | — |
+| [`re/79-talk-marker-handlers.md`](../re/79-talk-marker-handlers.md) | `ah ≠ 0xFF` 的直接位址形式誰在用 | 五支都留了這條路（參數直接當段內位址）。呼叫端有沒有真的用它，要逐個 `sub_18810` 呼叫點看 `push` 進去的值 | 靜態 | evidence-only | — |
+| [`re/79-talk-marker-handlers.md`](../re/79-talk-marker-handlers.md) | `loc_10701` 的 `al = 3` | 五支都傳 3。屬性的位元編碼見 `28`，`al` 那一格沒逐位讀 | 靜態 | evidence-only | — |
+| [`re/79-talk-marker-handlers.md`](../re/79-talk-marker-handlers.md) | `\7` 的數值格式 | 進到 `sub_1062F` 之後的位數／補零規則沒逐行讀 | 靜態 | evidence-only | — |
+| [`re/80-pathfind-request-queue.md`](../re/80-pathfind-request-queue.md) | `sub_1ACA4` | `loc_1AFD0` 排隊之後緊接著呼叫它，內容沒逐行讀。它也出現在 `sub_1ABFF:loc_1AC3A` | 靜態 | evidence-only | — |
+| [`re/80-pathfind-request-queue.md`](../re/80-pathfind-request-queue.md) | `loc_1B612` 那一處的前提 | 只確認它在碰撞處理的尾段，哪幾條分支會走到沒有逐條追 | 靜態 | evidence-only | — |
+| [`re/80-pathfind-request-queue.md`](../re/80-pathfind-request-queue.md) | 佇列滿了會怎樣 | bit 4 去重讓在飛請求 ≤ 96 < 128，**結構上塞不滿**；沒有溢位檢查也就沒有可觀察的行為 | 靜態 | evidence-only | — |
+| [`re/80-pathfind-request-queue.md`](../re/80-pathfind-request-queue.md) | `[si+0x10]` 的完整語意 | 這裡確認它是「這一步的目標座標」（出隊時先設成目前座標，再由 `sub_1B00D` 覆寫成第一個繞路點）；誰還會寫它沒有窮舉 | 靜態 | evidence-only | — |
+| [`re/81-sound-type-attenuation.md`](../re/81-sound-type-attenuation.md) | `0x060F` 的音色來源 | `es:[si]` 從 `ds:[0992h]` 指的段讀，`si` 由 `[bx+0A5Ch] << 5 + ds:[099Ah]` 算出。**這一段的資料結構沒逐行讀**，所以「換音色之後型別要不要重送」還不確定 | 靜態 | merge-target | [#8](https://github.com/wicanr2/wolong_cht/issues/8) |
+| [`re/81-sound-type-attenuation.md`](../re/81-sound-type-attenuation.md) | `AH=0Bh` 只重算三個聲部 | 迴圈是 `ah = 0、1、2`，而靜音路徑跑的是六個（`ah = 5..0`）。剩下三個什麼時候拿到新的衰減沒查 | 靜態 | evidence-only | — |
+| [`re/81-sound-type-attenuation.md`](../re/81-sound-type-attenuation.md) | `AH=09h`（`ax=09F2h`） | `cs:[099Eh]` bit 1 沒設就直接回；設了就對 `ds:[0A4Ch]` 個聲部逐一呼叫 `0x049E`，參數 `al=91h`／`ah=0F2h`。`0x049E` 沒讀 | 靜態 | evidence-only | — |
+| [`re/82-display-slot-dead-flags.md`](../re/82-display-slot-dead-flags.md) | 這兩支常式原本要做什麼 | `ax = 0` 送進 `sub_1E085`／`sub_1E0E1` ＝ 拿**子圖塊 0** 對自己與四個鄰格各貼一次。子圖塊 0 在深度迴圈裡是「空」（`and ax,ax / jz` 跳過），只有這條死路徑會真的去畫它。兩版都沒有呼叫端，所以**沒有實機可以觀察**，只能說它是開發期留下的東西 | 兩版對照 | evidence-only | — |
+| [`re/82-display-slot-dead-flags.md`](../re/82-display-slot-dead-flags.md) | 大地圖那一族的 bit 5 | 是**另一個**旗標（顯示清單一格 8 B），`sub_1D4C7` 換圖時 `or byte ptr [si], 20h` 打髒，見 `../spec/74`。與本份無關，並列在這裡是為了擋掉下一次的混淆 | 靜態 | evidence-only | — |
+| [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | 補兵會不會補到隊長那一格 | `sub_1B413` 只在**待機數為 0** 那條路才判 `test si, 0FFh`（隊長格）；待機非 0 的路徑沒有排除它。remake 的 `reinforce` 是**一律不補隊長格**。要對得先在原版上量「隊長死後那一格會不會出現新的兵」 | 靜態 | evidence-only | — |
+| [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `+8+4k` 與 `+10+4k` 的語意 | 從軍團記錄 `+0x28+4k` 起搬進來的兩個 byte，`sub_19F58` 只讀 `+1`／`+3`，這兩格戰鬥中沒有讀取端被找到 | 靜態 | evidence-only | — |
+| [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `word_1D31A` 的語意 | `sub_1AEA9` 數「在場且 `+0x19` 非零」的兵，`sub_1ADC8` 尾段拿它算優勢（`byte_1D31E`）。`+0x19` 是一個倒數計時器（`sub_1AB7C` 寫 `28h`、`sub_1ADC8` 每幀 `dec`），**它代表什麼還沒解** | 靜態 | evidence-only | — |
+| [`re/84-popup-row-band-and-world-cursor.md`](../re/84-popup-row-band-and-world-cursor.md) | IDA `0x1074D`／`0x1079B` | 選擇上／下移一格的實作沒有逐行讀（只從呼叫脈絡定名） | 靜態 | evidence-only | — |
+| [`re/85-march-target-hit-test.md`](../re/85-march-target-hit-test.md) | 圖塊 `0CBh`–`0D3h` 這 9 種各對應什麼外觀 | 只知道區間，沒有逐一對上據點類型（`+0x16` 低 4 位只有 5 種） | 靜態 | actionable | [#30](https://github.com/wicanr2/wolong_cht/issues/30) |
+| [`re/85-march-target-hit-test.md`](../re/85-march-target-hit-test.md) | 行軍途中被擋住怎麼處理 | 下令攻宛之後跑了 108 個遊戲日都沒有開戰，軍團沒有到達；`+0x00` 位元 5（被擋住）的實際觸發條件沒查 | 靜態 | actionable | [#30](https://github.com/wicanr2/wolong_cht/issues/30) |
+| [`re/86-march-turnback-at-peace.md`](../re/86-march-turnback-at-peace.md) | 掉頭之後為什麼停住 | 回到 87 之後 `+0x14` 等於 `+0x0E` ⇒ 到站 ⇒ `sub_14325` 分派，Stage 0 而 87 不是首都 ⇒ 什麼都不做。合理但沒有逐條驗過分派表的其他 Stage | 靜態 | merge-target | [#29](https://github.com/wicanr2/wolong_cht/issues/29) |
+| [`re/86-march-turnback-at-peace.md`](../re/86-march-turnback-at-peace.md) | 玩家軍團站在據點上時完全不判 | `sub_12662` 的 `jz → 12697` 跳過 `sub_14300`。這代表玩家的軍團**不會**自動留守受威脅的據點，但沒有實機驗過（`sub_14300` 自己的三個條件已 confirmed，見 §2.1） | 靜態 | evidence-only | — |
+| [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `sub_1ECE0` 的亂數式 | 沒讀。remake 對不到逐兵座標，只能對值域與分佈 | 靜態 | evidence-only | — |
+| [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | `+0x10`／`+0x11` | 與 `+0x06`／`+0x08` 同時被寫成同一個值，用途未查 | 靜態 | evidence-only | — |
+| [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 | evidence-only | — |
+| [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 游標圖形資料 | 在 `sub_201E4` 附近，逐 byte 沒抓；remake 已經有量出來的 14×14 遮罩 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 54 個 hide／show 點對應到 remake 的哪一段 | 沒做；這是「remake 要不要同步游標」的前置 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 
 ## 2.4 驗收（240 條）
 
-| 出處 | 缺口 | 現況 | 裁決 |
-|---|---|---|---|
-| [`playtest/10-event-message-modal.md`](../playtest/10-event-message-modal.md) | 事件 10 producer 仍未定位。 | （未解小節內文） | 靜態 |
-| [`playtest/10-event-message-modal.md`](../playtest/10-event-message-modal.md) | 事件 6 #72 的缺失 formatter payload 維持 fail-closed。 | （未解小節內文） | 靜態 |
-| [`playtest/10-event-message-modal.md`](../playtest/10-event-message-modal.md) | 原版／remake 同狀態畫面對拍仍是剩餘驗收項。 | （未解小節內文） | 靜態 |
-| [`playtest/100-video-mode-parity.md`](../playtest/100-video-mode-parity.md) | 素材頁的四季 | 肖像與據點景觀圖那種「換圖不換色」的四季，這一份沒有涵蓋——§5 量到的是顏色 | 靜態 |
-| [`playtest/100-video-mode-parity.md`](../playtest/100-video-mode-parity.md) | 音效那一格 | fixture 沒帶 `-audio`，顯示「未接入」。要比那一格得先產 ogg | 靜態 |
-| [`playtest/100-video-mode-parity.md`](../playtest/100-video-mode-parity.md) | remake 多的兩列 | 「主君編成」與「損害報告」，已記錄的差異（`39`） | 靜態 |
-| [`playtest/101-quit-menu-parity.md`](../playtest/101-quit-menu-parity.md) | remake 要把游標的 hide／show 接在哪 | 規則已解（`../re/88`），但 54 個呼叫點還沒對應到 remake 的繪圖流程 | 靜態 |
-| [`playtest/101-quit-menu-parity.md`](../playtest/101-quit-menu-parity.md) | remake 多的兩列 | 「主君編成」「損害報告」是 remake 加的，`39` 已裁定保留 | 靜態 |
-| [`playtest/102-help-second-step.md`](../playtest/102-help-second-step.md) | 選完協同進攻對象之後 | 這一份停在 #7 的畫面，**再選下去**（成案／被拒）還沒拍 | 靜態 |
-| [`playtest/103-advise-scene-parity.md`](../playtest/103-advise-scene-parity.md) | `sub_10C14(dx=3, bx=8, cx=0C13h)` 那個底 | (48, 128) 304×192，比插圖大 8 px 一圈。**畫的是什麼還沒讀**——這一張上插圖蓋滿了它，看不出來 | 靜態 |
-| [`playtest/103-advise-scene-parity.md`](../playtest/103-advise-scene-parity.md) | 說服迴圈的每一句 | 這一份停在開場三句，**選了理由之後**的畫面還沒拍 | 靜態 |
-| [`playtest/104-advise-verdict-parity.md`](../playtest/104-advise-verdict-parity.md) | 「君主出征中」那一句 | `openAdvise` 仍寫事件列，而**原版是 TALK #64 訊息框**（`../re/22` §3.4）——不是「該不該寫事件列」，是呈現方式用錯了。還沒拍 | 靜態 |
-| [`playtest/104-advise-verdict-parity.md`](../playtest/104-advise-verdict-parity.md) | 「Enter 繼續」提示 | remake 自己加的操作說明，保留；它讓每一張說服／判決場景差 1,369–4,628 px | 靜態 |
-| [`playtest/105-advisor-naming-parity.md`](../playtest/105-advisor-naming-parity.md) | 視窗**外**的背景 | 原版這一頁後面疊著 NEW GAME 的勢力清單與君主卡（fixture 直接開命名視窗，背後只有地圖）。整張差 55,098 px 幾乎全在這裡——要對得走完整條新遊戲流程 | 靜態 |
-| [`playtest/105-advisor-naming-parity.md`](../playtest/105-advisor-naming-parity.md) | 選好字之後 | 這一份停在剛開啟的狀態，**選字、翻頁、換肖像**之後的畫面還沒拍 | 靜態 |
-| [`playtest/106-launcher-parity.md`](../playtest/106-launcher-parity.md) | `title` 那一頁的框 | 原版 (208,128,224,88) 兩項、remake (112,56,416,288) 三項——**維持三項是裁定**（§2.2），所以那個框不會對齊。原版的 ＹＥＳ／ＮＯ 對話框是 `sub_18DC8(si=98C8h, dx=0D0h, bx=80h, di=28h)`，還沒逐欄讀 | 靜態 |
-| [`playtest/107-cursor-parity.md`](../playtest/107-cursor-parity.md) | 遊玩端要不要自繪 | `../spec/154` §4：原版在「清單等待點選」時旗標是 0，而那到底是原版行為還是 oracle 的限制沒有實機佐證 | 實測 |
-| [`playtest/107-cursor-parity.md`](../playtest/107-cursor-parity.md) | 大地圖上的那一種 | 15×15 白色空心框（`../spec/149`），**什麼時候換成箭頭**沒對過 | 靜態 |
-| [`playtest/108-appimage-dosgolem-input-audit.md`](../playtest/108-appimage-dosgolem-input-audit.md) | 勢力清單初次點第一列 `(450,128)` | 第一列反白，再點一次才進君主卡 / 點一次便進君主卡 / 確認步驟不同；尚未在本輪裁定修改方式 | 靜態 |
-| [`playtest/109-desktop-launcher-fix.md`](../playtest/109-desktop-launcher-fix.md) | 狀態：兩項修正已通過 AppImage 正常操作驗證；Windows／macOS 封包檢查通過，原生 GUI 未驗。 | （散句） | 靜態 |
-| [`playtest/109-desktop-launcher-fix.md`](../playtest/109-desktop-launcher-fix.md) | 原生檔 | 不適用 / SAVE-slot2.wlsave 已產生；尚未以行軍路線驗證重啟完整恢復 | 靜態 |
-| [`playtest/109-desktop-launcher-fix.md`](../playtest/109-desktop-launcher-fix.md) | Windows／macOS 封包內容、雜湊與架構通過，原生操作未驗。 | （散句） | 靜態 |
-| [`playtest/109-desktop-launcher-fix.md`](../playtest/109-desktop-launcher-fix.md) | Windows／macOS 原生操作仍未驗。 | （散句） | 靜態 |
-| [`playtest/111-desktop-map-scroll.md`](../playtest/111-desktop-map-scroll.md) | 狀態：v.1.0.11-20260908 AppImage 正常操作通過；原生 Windows／macOS 未驗。 | （散句） | 靜態 |
-| [`playtest/112-desktop-battle-result-options.md`](../playtest/112-desktop-battle-result-options.md) | 狀態：v.1.0.12-20260908 AppImage 正常操作通過；Windows／macOS 封包查核通過，原生 GUI 未驗。 | （散句） | 靜態 |
-| [`playtest/113-desktop-polish.md`](../playtest/113-desktop-polish.md) | 完整世界狀態與亂數相同的戰況對拍、全劇本正常通關仍未證實；這些是規則驗收限制， | （未解小節內文） | 靜態 |
-| [`playtest/114-focus-and-same-battle.md`](../playtest/114-focus-and-same-battle.md) | 第 1 拍的單位更新順序／移動閘是下一個窄查證點；「它導致後續單挑差異」目前只屬強推論。 | （未解小節內文） | 靜態 |
-| [`playtest/116-rng-consumption-census.md`](../playtest/116-rng-consumption-census.md) | `14216` 的分支條件 | 只知道次數少 542 次，條件還沒讀機器碼 | 靜態 |
-| [`playtest/116-rng-consumption-census.md`](../playtest/116-rng-consumption-census.md) | remake 側的對應軌跡 | 還沒做（`../spec/160` §3） | 靜態 |
-| [`playtest/116-rng-consumption-census.md`](../playtest/116-rng-consumption-census.md) | 開戰期的消費端 | 這一輪沒有涵蓋（§4） | 靜態 |
-| [`playtest/116-rng-consumption-census.md`](../playtest/116-rng-consumption-census.md) | `sub_12286` 的兩個 Code | 事件碼 `0x010C`／`0x020C` 的語意還沒對到機制 | 靜態 |
-| [`playtest/117-field-battle-needs-player-order.md`](../playtest/117-field-battle-needs-player-order.md) | **野戰單挑的觸發判定** | 原版依武將個性自動觸發，`Tactic`（武將 `+0x16`）同時也選 `BATTLE.DAT` 的腳本段。remake 還沒解觸發條件，fixture 是無條件武裝單挑 | 靜態 |
-| [`playtest/117-field-battle-needs-player-order.md`](../playtest/117-field-battle-needs-player-order.md) | AI 側腳本在這一場下了什麼命令 | 只觀察到開場的 `Form`；腳本後續有沒有下攻擊還沒逐指令追 | 靜態 |
-| [`playtest/117-field-battle-needs-player-order.md`](../playtest/117-field-battle-needs-player-order.md) | 攻擊與突擊在這一場結果相同 | 兩者都是 339 幀、600／159。大將出不出擊的差異在這個局面看不出來，要另找場景 | 靜態 |
-| [`playtest/118-liubei-90day-audience-response.md`](../playtest/118-liubei-90day-audience-response.md) | **呂布的請求還沒出現** | 這 90 天只有一次召見，是曹操請求協助。「同意呂布」那條分支要另找時間點或另一份存檔 | 靜態 |
-| [`playtest/118-liubei-90day-audience-response.md`](../playtest/118-liubei-90day-audience-response.md) | **腳本沒有條件分支** | 召見出現的時刻要先跑一次才知道，回應序列是寫死在腳本裡的。要自動化就得在 dosgolem 那端加「卡住就回應」的偵測 | 靜態 |
-| [`playtest/118-liubei-90day-audience-response.md`](../playtest/118-liubei-90day-audience-response.md) | 起點不是劇本開局 | 現用存檔是 196/4/16。從 196/4/1 起跑要另做一份存檔或走新遊戲流程 | 靜態 |
-| [`playtest/118-liubei-90day-audience-response.md`](../playtest/118-liubei-90day-audience-response.md) | 逐小時取樣還沒接上 | 這一輪只在第 90 天取狀態表。三份軌跡（狀態／事件／亂數）的逐小時版本見 `../spec/161` §4 | 靜態 |
-| [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | 43–65 | 勢力表之後那 704 B 的未解區 | 靜態 |
-| [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | **那 4 次差在哪個子刻** | 只比了分布，還沒逐子刻對齊找第一個分歧點 | 靜態 |
-| [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | 檢查條件的語意差 | 原版看第一個槽、remake 看整個清單；要確認 `[bp+0]` 那個槽在原版是怎麼填的（`docs/re/40` §3 的迴圈會跳過空槽重抽，所以「第一個槽空」與「全空」在原版是兩件事） | 靜態 |
-| [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | 「2 個」差 1 | 徵兵被跳過的次數原版 9、remake 10 | 靜態 |
-| [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | remake 的呼叫點解析度 | `governor.Tick` 的三個 `rnd()` 都記成 `state.go:1566`（closure 那一行），分不出是上昇值、防災還是徵兵 | 靜態 |
-| [`playtest/120-screen-parity-retest-20260911.md`](../playtest/120-screen-parity-retest-20260911.md) | 野戰 `sb-minimap` 128 px（FAIL）**，文件記的是 32 px。 | （未解小節內文） | 靜態 |
-| [`playtest/120-screen-parity-retest-20260911.md`](../playtest/120-screen-parity-retest-20260911.md) | 攻城那一組重跑不出來**（§3）。 | （未解小節內文） | 靜態 |
-| [`playtest/120-screen-parity-retest-20260911.md`](../playtest/120-screen-parity-retest-20260911.md) | 主畫面與野戰之外的對拍組還沒逐一重量。 | （未解小節內文） | 靜態 |
-| [`playtest/121-screen-parity-gate.md`](../playtest/121-screen-parity-gate.md) | 進言選單在說服場景上沒關掉 | remake 殘影 1,750 px；原版進場時清掉。`advise-scene` 的 `gap` | 靜態 |
-| [`playtest/121-screen-parity-gate.md`](../playtest/121-screen-parity-gate.md) | 「Enter 繼續」提示要不要登記成 remake 差異 | 目前只在 `cmd/wlgame/advise.go:678` 與 `104` §1，沒有 spec | 靜態 |
-| [`playtest/121-screen-parity-gate.md`](../playtest/121-screen-parity-gate.md) | 插圖框的填色 | 中間被插圖全蓋住，這個畫面量不到（`../spec/198` §5） | 靜態 |
-| [`playtest/121-screen-parity-gate.md`](../playtest/121-screen-parity-gate.md) | 閘還沒收進去的組 | `38`／`39`／`42`／`83`／`84`／`92`／`94`／`96`／`98`／`99`／`105`／`106` 等；`37` 的孫策第二樣本與 `40` 的攻城第二輪原版側不是同狀態 | 靜態 |
-| [`playtest/17-expert-dosbox-remake.md`](../playtest/17-expert-dosbox-remake.md) | 松崗 DOS/V 原版 | **PASS（啟動至開場）** / 2026-08-12 證實空白確認／`0000`／`1234` 均越過密碼頁；完整自然長程驗證尚未執行 | 靜態 |
-| [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 據點換手之後遮罩會不會跟著變 | `sub_1890A` 的行為，靜態讀得出來，動態沒驗——要打下一座城才看得到 | 靜態 |
-| [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 松崗 DOS/V 側 | 這套 bridge 還沒在 DOS/V 上跑過。**密碼頁不構成阻礙**（四格留白按「確定」即可通過，`18`）——是還沒做 | 靜態 |
-| [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 上游授權 | `DOSBox-X-MCP-Debugger` 的原創碼**尚未選定授權條款**（README 明講是刻意留白）。本專案只在本機使用，未再散布 | 實測 |
-| [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 各視窗內部的像素 | 只對過邊線位置，沒有對過內容。⭐ **四個視窗同時開著的對拍已經有了**：`39` 的 `-open-window -3` 就是四窗全開，命令列／縮小地圖／自勢力情報三區與系統選單原版那六列都是 0 px（2026-09-03 重量） | 靜態 |
-| [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 系統視窗的四個項目 | 存檔／畫面模式／音源／戰略速度，不在這一輪範圍 | 靜態 |
-| [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | **逐曲觸發** | 只錄到開場動畫（`D7OPEN.EXE` 自己會播）。⚠ 這一項**不再擋住任何事**——音檔改由 `tools/bgm2ogg.sh` 離線渲染，不需要在模擬器裡逐首觸發。要當對照組才需要它 | 靜態 |
-| [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | **音效** | 戰術的三個 effect code 已知（`re/17` §3），但沒錄過 | 靜態 |
-| [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | **音源正確性** | DOSBox 用 `sbtype=sb16`／`oplmode=auto` 模擬，與真實硬體的音色差異沒有對照組 | 實測 |
-| [`playtest/26-bgm-render-vs-recording.md`](../playtest/26-bgm-render-vs-recording.md) | 音色的聽感 | 頻譜只驗了基頻。諧波結構（也就是「像不像那個音色」）沒有量化比對 | 靜態 |
-| [`playtest/26-bgm-render-vs-recording.md`](../playtest/26-bgm-render-vs-recording.md) | 相關係數為什麼不是 0.9 | DOSBox 的 OPL 模擬與這顆的包絡實作不同，加上錄音有系統噪訊。**沒有排除「還有小錯」的可能** | 實測 |
-| [`playtest/26-bgm-render-vs-recording.md`](../playtest/26-bgm-render-vs-recording.md) | 其他曲子 | 只有開場曲有錄音對照組。另外 13 首沒有 | 靜態 |
-| [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 門強度條的 remake 截圖 | 規則與版面已解並實作（`../re/60` §11、`../spec/32`），但 remake 側沒截到——**這條只亮 20 幀** | 實測 |
-| [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 一覽表視窗 | 影片裡有武將／據點／財政的實錄，**還沒量** | 靜態 |
-| [`playtest/29-strategy-minimap-markers.md`](../playtest/29-strategy-minimap-markers.md) | 22 勢力的選擇視窗 | 原版點圖例右半格會開一個兩欄的選單（`../re/62` §4.2）。**行為已解、版面未解**，remake 先用「點一下換下一個」代替 | 靜態 |
-| [`playtest/29-strategy-minimap-markers.md`](../playtest/29-strategy-minimap-markers.md) | 視野框的美術 | 原版在 `word_10D4C`，尺寸沒從程式碼讀到 | 靜態 |
-| [`playtest/29-strategy-minimap-markers.md`](../playtest/29-strategy-minimap-markers.md) | 點地圖區（熱區 `0x16`） | 原版做什麼沒讀 | 靜態 |
-| [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 一幀能有幾個兵撞牆 | 原版沒量過。前排寬度決定破牆速度，而破牆速度決定攻城打不打得下來 | 靜態 |
-| [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 高平面的橫向移動沒有實測 | 守方站到牆頂的情境還沒跑過 | 實測 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 勢力一覽的欄位 | 沒有逐欄比對 | 靜態 |
-| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 「委任」那一格的顏色 | 實錄影格上看起來是紅字，但影片是壓縮過的、也沒有機器碼證據。remake 先畫成一般色（`../spec/38`） | 靜態 |
-| [`playtest/32-talk-layout-fit.md`](../playtest/32-talk-layout-fit.md) | 變數的實際長度分布 | 這一輪用固定三全形替身。人名多半是 2–3 全形、地名 2–3，但**軍團名與勢力名沒有逐一量過** | 靜態 |
-| [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 逐句節拍 | 原版每句要等玩家按鍵才往下走；remake 直接顯示最新一句 | 靜態 |
-| [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 插圖之外的畫面 | 原版這一頁底下是不是還留著大地圖沒驗過，remake 留著 | 靜態 |
-| [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 選單的反白樣式 | 原版怎麼畫游標列沒解，remake 用自己的反白條 ＋ `>` | 靜態 |
-| [`playtest/35-advise-verdict-screens.md`](../playtest/35-advise-verdict-screens.md) | 遷都的畫面 | 沒有截圖。⚠ 目標用一覽表挑**與原版相同**——`sub_17400` 是據點一覽的呼叫端（`../re/26` §4），不是地圖選點 | 實測 |
-| [`playtest/36-window-texture.md`](../playtest/36-window-texture.md) | 取用端 | `KI.EXE` 裡哪一段程式把這 128 byte 鋪上去的還沒找到（三條路都排除了）。**排法已經由實機畫面定案**，取用端只影響「還有沒有別的用法」 | 靜態 |
-| [`playtest/36-window-texture.md`](../playtest/36-window-texture.md) | 米色視窗 | 一覽表那種米色底原版有沒有紋路沒量過（截圖裡那一片是純色） | 實測 |
-| [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 換圖塊的那一支機器碼 | 規則是從資料與畫面反推的，每一格都對得上，但**原版在哪裡做這件事**還沒定位（`../re/67` §5） / 找誰在據點換手時改地圖或格子記錄 | 靜態 |
-| [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 四個視窗**同時**開著時的對拍 | 還沒做。三個視窗開著（`38`）與系統選單開著（`39`）都做了 / 送點擊的方法已解：`click:x,y;press` 成對送，見 `38` §1 | 靜態 |
-| [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | DOSBox 的滑鼠座標 | 視窗 640×480、遊戲 640×400 置中，而 INT 33 把**整個視窗**等比對映到遊戲畫面（送 y 要乘 1.2）。這是本機設定的性質，不是原版的 / 把 `int33 max y` 改成 400 再量一次 | 實測 |
-| [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 進到大地圖之後的滑鼠座標 | **又換一套**：`sub_120D6` 把 INT 33 的範圍改成 `0..0x17FF × 0..0x101F`（6143×4127 ＝ 整個世界的像素），螢幕座標 ＝ 原始座標 − 鏡頭原點。所以同一個視窗位置在選單裡與在地圖上指到完全不同的地方 / 用 `tools/cursor_probe.py` 在… | 靜態 |
-| [`playtest/38-window-parity.md`](../playtest/38-window-parity.md) | 天候物件 | 原版跑了 10 天才截到，remake 停在第 1 天。**這是狀態差** / 要對就得讓兩邊同一天——用存檔定位（`../spec/90` §2） | 靜態 |
-| [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 日期對不上 | 原版跑到 4月9日才截到 / 要嘛用存檔定位，要嘛加一個「跑到指定日期」的驗收旗標 | 靜態 |
-| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-enemy` 的 44 px | 兩條都頂在上限，原版那一格已經打了 20 秒（§10） / 要對就得讓兩邊的**時刻**對齊，不是改算式 | 靜態 |
-| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-enemy`／`sb-self` 1.5% | 兩格將旗的內容 / — | 靜態 |
-| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sub_1DFBB` 的快路徑 | remake 一律走合成。兩條路在全畫面重繪下應該畫出同樣的像素（`../spec/58` §4），但沒有逐格驗過 / — | 靜態 |
-| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | unit 0 的第二趟 | 深度迴圈跑完後 `dl & 0x20` 成立時會對五個鄰格各跑一次 `ax = 0`；**觸發條件（旗標 bit 5）誰設還沒解** / 掃誰對顯示格的 `+0` 寫 `0x20` | 靜態 |
-| [`playtest/41-m7-corrected-text-on-screen.md`](../playtest/41-m7-corrected-text-on-screen.md) | 原版側的同狀態對照 | 這一份只驗 remake 自己「有沒有溢出」。**原版同一則長什麼樣沒有並排比過**——要用 `-open-talk-index` 對應的原版操作序列，還沒做 | 靜態 |
-| [`playtest/41-m7-corrected-text-on-screen.md`](../playtest/41-m7-corrected-text-on-screen.md) | 變數的實際長度分布 | 截圖用的是實際遊戲值（如「袁胤」兩字），而 `TestAllTalkLinesFitTheirBox` 用三全形替身。**軍團名與勢力名的長端沒有逐一量過**（`32`） | 實測 |
-| [`playtest/42-window-parity.md`](../playtest/42-window-parity.md) | 進言五項選單的原版截圖 | §5 的輸入模型限制 / 需要能送「瞬時 click」的擷取動作（縮短按住時間），或改用鍵盤路徑（未驗證原版是否支援） | 實測 |
-| [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | 佔用圖快取欄的讀檔重建 | §3 是強證據不是 confirmed / 讀原版的讀檔常式（`sub_18CAE` 一帶）確認重建走哪個欄位 | 靜態 |
-| [`playtest/45-ai-longrun-comparison.md`](../playtest/45-ai-longrun-comparison.md) | 原版側只有一次跑、三個資料點 | 存檔輪換的點擊序列要修（m1–m4 沒重存：疑似覆寫確認框的 YES 座標沒點中）；修好後可加拍幾輪拉出分佈 | 靜態 |
-| [`playtest/45-ai-longrun-comparison.md`](../playtest/45-ai-longrun-comparison.md) | remake 孫策的擴張比原版猛（一個月滅劉繇 vs 原版半年拿兩城） | 幅度差在戰鬥節奏層（編成／行軍／攻城的耗時），不是決策層；要縮就得對拍單場攻城的時間線 | 靜態 |
-| [`playtest/46-runtime-language-switch.md`](../playtest/46-runtime-language-switch.md) | Android 實機／模擬器沒實地切過 | 這裡的手機畫面是桌面 Xvfb 跑 `cmd/wlandroid` 拍的（同一份 `internal/ui/phone`）；實機驗收排在下一次 Android 打包 | 靜態 |
-| [`playtest/47-latin-screen-survey.md`](../playtest/47-latin-screen-survey.md) | 戰術畫面的截圖不可重現 | 找出 `-shot-frames` 之下仍隨牆鐘走的那一段（動畫幀？音訊回呼？），改成照 tick 推進 | 實測 |
-| [`playtest/47-latin-screen-survey.md`](../playtest/47-latin-screen-survey.md) | 半形語系的戰場標題沒有地名 | 見 `docs/spec/87` §9 | 靜態 |
-| [`playtest/48-display-polish.md`](../playtest/48-display-polish.md) | 對拍沒有開闊地的 fixture | `playtest/40` 量的兩個局面都在城壁邊；要擋住這一類回歸得再加一個開闊地的 fixture | 靜態 |
-| [`playtest/48-display-polish.md`](../playtest/48-display-polish.md) | 事件列本身是 remake 自創 | 原版怎麼提示月結（如果有）沒查過 | 靜態 |
-| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 修正前 | 45.55% / 45.18% / 45.83% | 靜態 |
-| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 量表那一塊 | 0.13% / 0.09% / 0.06% | 靜態 |
-| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | `field` | 0.86% / 0.81% / 0.84% | 靜態 |
-| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 61 | X 58..60（出發線） / X 3..5 | 靜態 |
-| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 120 | X 50..57 / X 3..5 | 靜態 |
-| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 300 | X 8..43（已越過城門） / X 3..5 | 靜態 |
-| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 600 | X 5..60（散開） / X 3..5 | 靜態 |
-| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 攻城對拍的取樣點 | 兩個缺口修好之後 `field` 0.86%，剩下的是局面不等價（§3.3） / 要回到 0 px 得讓原版與 remake 開出**同一場**（同一批武將、同一個 tick）。條件寫進 `../spec/91`，不要再寫死步數 | 靜態 |
-| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 系統選單的兩列 remake 差異 | `map` 7.87%——主君編成與損害報告把視窗撐高 48 px（§2） / 這是**已標記的 remake 差異**，不是缺口。要對到 0 px 得有一個「照原版六列」的驗收模式 | 靜態 |
-| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 原版側沒有重跑 | 這一輪用的是 08-16／17／24 的存檔擷取 / 要重跑得先建 `wolong-dosboxx`（`docker/dosboxx/Dockerfile`） | 靜態 |
-| [`playtest/50-corps-on-map.md`](../playtest/50-corps-on-map.md) | 首都疊圖為什麼不畫 | 行為定案，機制未讀（§4） | 靜態 |
-| [`playtest/50-corps-on-map.md`](../playtest/50-corps-on-map.md) | 別的疊圖組合 | 只驗過「首都 ＋ 軍團」。災害物件 ＋ 軍團、非首都據點 ＋ 軍團都沒有樣本 | 靜態 |
-| [`playtest/50-corps-on-map.md`](../playtest/50-corps-on-map.md) | 「軍團在路上」對原版 | 要新的原版擷取：編成 → 行軍指示 → 等幾天。滑鼠腳本點得到行軍那一列之後才做得起來（`40` §1.2） | 靜態 |
-| [`playtest/51-siege-deadlock.md`](../playtest/51-siege-deadlock.md) | 三個讀數仍對不上同一幀 | §2。兩軍會打了，但這條 fixture 的守方是**玩家側而玩家沒下令**，所以站著挨打——攻方只折損 1 點。⚠ **不是委任**：委任那條路走 `combat.Resolve` 抽象判定，根本不開戰場，而 e10 是戰場畫面 | 靜態 |
-| [`playtest/51-siege-deadlock.md`](../playtest/51-siege-deadlock.md) | 原版擺兵寫的是哪一個表 | `spec/95` 是靠內部一致性定的，不是照抄。原版 `[si+0Ah]` 的來源沒讀出來 | 靜態 |
-| [`playtest/51-siege-deadlock.md`](../playtest/51-siege-deadlock.md) | 攻方大將體力歸零 | `drainSiegeGeneral` 扣到 0，而戰鬥傷害最低留 1（`../re/11` §5.16）。攻城計時器要不要也留 1，沒讀出來 | 靜態 |
-| [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | ⭐ **破牆速度** | remake 量得很乾淨（§5）：三個兵貼著打、每幀約 2 點、第 ~1,100 幀破。**原版那一側量不出來**——體力同時被攻城計時器與挨打扣，單張畫面分不開 / ⛔ **要新的原版擷取**：從存檔載入之後在開戰的**前兩百幀密集取樣**（現有的 `wait:6` 一格就跨掉五十幾幀）。這是這一項唯一的路，靜… | 靜態 |
-| [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | ⛔ 試過但**不是**成因：不翻轉 `gateX` | `sub_1CAEB`（`0001CB0F`）寫進立即值的是**未翻轉**的索引第二欄，而 remake 對它套了 `RotateGateX`。實驗把翻轉拿掉（`GateX` 從 27 變回 36）跑同一條 fixture：**城壁照樣被磨穿**（1,660 → 0），門一點傷都沒有，結束時間只從 f1116 變… | 靜態 |
-| [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | 索引第二欄到底是什麼 | `../re/11` §4.5 稱它「城門附近的 X」，§5.8i 定案為「命令 3 的目標 X」。但這張圖上它落在城壁本體、離最近的門有 3–7 格 / 掃 186 張攻城圖：第二欄那一欄的圖塊值是什麼、與門的距離分布 | 靜態 |
-| [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | 守方為什麼在 t6 掉那麼快 | 原版守方大將體力兩段內 124 → 37 / 要先讓攻方以原版的方式進城，才比得了 | 靜態 |
-| [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | 原版的行軍目的地一覽與三選一 | **「軍團」彈出選單的第二列「行軍指示」點不到。** 四輪都停在第一列「位置確認」：`tap:25,10,5`、`tap:25,9,5`、`click:25,10;press` 三種送法都一樣。這與 `docs/playtest/42` §5 記的是同一類限制——`playtest/54` 證明的是「**能把選單… | 靜態 |
-| [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | 原版的攻城結算 | 卡在上一列。remake 側在 196/4/8「張遼 對 城兵　攻方勝　兵力 1000→960／910→60　據點損害 54　攻下 譙」 | 靜態 |
-| [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | 捲軸滑塊的 1 px | 只有一個取樣點（`../spec/107` §7） | 靜態 |
-| [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | 「軍團」彈出選單的逐像素對拍 | 位置與兩列文字對得上，**框本身沒有比過**——原版那張參考圖是另一個局面（4/20、讀了存檔、游標停在第一列） | 靜態 |
-| [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | 攻城**戰場**（不是結算） | 兩邊都一樣：空城攻城是自動判定，不進戰術畫面（`internal/state/corps.go` 的 `fightGarrison`；原版 `sub_14ED7` 的 `cmp bx, 4200h`）。要看到戰場得等守方有軍團駐守，而那一刻兩邊不會同時發生 | 靜態 |
-| [`playtest/57-appimage-20260902-reverify.md`](../playtest/57-appimage-20260902-reverify.md) | 沿用 `56` §6，沒有新增：軍團選單的同狀態原版參考、原版的行軍目的地一覽、 | （未解小節內文） | 靜態 |
-| [`playtest/58-parity-retest-20260902.md`](../playtest/58-parity-retest-20260902.md) | 攻城 `field` 的 0.84% 地板 | 局面不等價：原版擷取是 5月20日的張遼軍攻許昌，存檔是 5月10日（`51` §2） / 要對到 0 px 得有「存檔與影格出自同一次擷取」的攻城素材，同 `52` 那一組 | 靜態 |
-| [`playtest/58-parity-retest-20260902.md`](../playtest/58-parity-retest-20260902.md) | 第 300 拍的 2.00% | 兵的密度不同（§1.2） / 取樣點要用局面條件挑，不是寫死步數——`-shot-when` 已經做出來了（`../spec/118`），要挑的是**哪一個**條件 | 靜態 |
-| [`playtest/58-parity-retest-20260902.md`](../playtest/58-parity-retest-20260902.md) | 原版側沒有重跑 | 用的是 08-16／17／24 的擷取 / 要重跑得先建 `wolong-dosboxx`（`docker/dosboxx/Dockerfile`） | 靜態 |
-| [`playtest/59-shot-when-natural-flow.md`](../playtest/59-shot-when-natural-flow.md) | 一次只判一個條件 | `../spec/91` §6 的攻城取樣點是三個條件同時成立，現在只判得了「條顯示中」 / 條件字串改成可以用 `+` 串接，或直接支援 `gate-bar+talk-clear` | 靜態 |
-| [`playtest/59-shot-when-natural-flow.md`](../playtest/59-shot-when-natural-flow.md) | 對白框到期沒有條件可判 | 規則層沒有把 `word_1D322`／`word_1D324` 的到期時刻露出來 / `internal/rules/tactical` 加一支唯讀的查詢 | 靜態 |
-| [`playtest/59-shot-when-natural-flow.md`](../playtest/59-shot-when-natural-flow.md) | 攻城取樣點的 0.84% 地板 | 局面不等價，與這兩個旗標無關（`58` §4） / 要「存檔與影格出自同一次擷取」的攻城素材 | 靜態 |
-| [`playtest/60-corps-menu-parity.md`](../playtest/60-corps-menu-parity.md) | 日期對不上 | 原版跑到 4月20日才截到 / 同 `39` §4：要嘛用存檔定位，要嘛加一個「跑到指定日期」的驗收旗標 | 靜態 |
-| [`playtest/60-corps-menu-parity.md`](../playtest/60-corps-menu-parity.md) | 選完之後的兩條流程 | 位置確認的軍團一覽、行軍指示的目的地一覽，**都沒有對拍** / 原版側再拍一次：`tap:25,5,5` 之後再 `tap` 第一列／第二列 | 靜態 |
-| [`playtest/60-corps-menu-parity.md`](../playtest/60-corps-menu-parity.md) | 「據點」與「人事」那兩張的對拍 | **沒有原版截圖**。三張走同一份繪製程式碼（`../spec/126`），但位置與字數是各自的立即值，沒比過就不能說它們對 / `tap:30,5,5`／`tap:10,5,5` 照 `54` 的方式拍 | 實測 |
-| [`playtest/61-city-personnel-menu-parity.md`](../playtest/61-city-personnel-menu-parity.md) | 日期對不上 | 原版跑到 4月20日才截到，`banner` 因此永遠 116 px / 同 `39` §4：用存檔定位，或加一個「跑到指定日期」的驗收旗標 | 靜態 |
-| [`playtest/61-city-personnel-menu-parity.md`](../playtest/61-city-personnel-menu-parity.md) | 選完之後的流程 | 據點的「首都確認」／「據點一覽」、人事的四項，**選下去之後的畫面都沒有對拍** / 原版側在 `tap` 之後再 `tap` 一次那一列 | 靜態 |
-| [`playtest/61-city-personnel-menu-parity.md`](../playtest/61-city-personnel-menu-parity.md) | 進言那一張 | 五項選單**確定拍不到**（`42` §5：30 ms 瞬按與右鍵回退兩條路都試過），而且 remake 還沒併進 `popupMenu` / — | 靜態 |
-| [`playtest/62-parity-retest-20260903.md`](../playtest/62-parity-retest-20260903.md) | 攻城 `field` 的 0.84% 地板 | 局面不等價（`58` §1.2、`51` §2），與這一輪無關 | 靜態 |
-| [`playtest/62-parity-retest-20260903.md`](../playtest/62-parity-retest-20260903.md) | 野戰 `sb-minimap` 32 → 40 px | 推定是同一個成因（`db7859f` 改變了兵走到同一格的時刻），但**沒有單獨二分過**——攻城那一組二分不自動涵蓋野戰 | 靜態 |
-| [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 「有做」與「做對了」的差距 | 這一份只證明前者。後者要逐行對機器碼或與原版做行為對照——而規則層的行為對照目前只有 `45` 一次 / 再跑一輪 AI 長程對照，或針對單一機制設計同狀態實驗 | 靜態 |
-| [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 第 11.3「擊破狀態」 | 是現象不是機制，沒有獨立程式碼。**沒有驗過 remake 會不會產生同樣的現象** / 要設計一個「把對方壓到邊緣」的局面，看新兵出陣是否立刻挨打 | 靜態 |
-| [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 三種災害的實機觀察 | 仍然沒有，但**依裁定不擋 CONFORMED**。要做的話：災害是機率觸發的，長跑等它或找一個災害剛發生的存檔，`spec/81` 的數值可以當預期值 | 靜態 |
-| [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 第 7 章外交的行為對照 | 停戰／協力的成立與否沒有跟原版比過 / 同狀態存檔 ＋ 兩邊各下同一個提案，比結果 | 靜態 |
-| [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 第 11 章的戰術攻略規則 | 追擊／回り込み／誘餌／疲勞度沒有實跑證據 / 這幾條是**玩家操作技巧**，要設計特定局面才觀察得到 | 實測 |
-| [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 第 1 章結局播放 | 有 remake 截圖，沒有與原版並排 / 原版要打到結局，或用存檔跳到最後一場 | 實測 |
-| [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 軍師命名視窗的逐像素 | 有截圖沒有比 / 原版側 `tap` 到那一頁，照 `54` | 實測 |
-| [`playtest/64-appimage-20260904-reverify.md`](../playtest/64-appimage-20260904-reverify.md) | 軍團選單 `184,56,120,56` | 沒驗。`57` §3 記著原版那張是**另一個局面**（4/20、讀了存檔、游標停在第一列），所以它記的 4,298 px 本來就不是有效比對 / 用 `60` 的原版素材（同狀態），但那一張是曹操局面，要另外配一條 AppImage 的操作序列 | 靜態 |
-| [`playtest/65-dosgolem-oracle.md`](../playtest/65-dosgolem-oracle.md) | 載入既有存檔 | 沒試 / 把 `-save` 之類的旗標接進 `apps/wolong`，或直接讓遊戲走「載入」選單 | 靜態 |
-| [`playtest/65-dosgolem-oracle.md`](../playtest/65-dosgolem-oracle.md) | 戰術畫面 | 沒試 / 戰場走同一套繪製層，預期沒有新的機器層缺口——**但沒驗過就是沒驗過** | 靜態 |
-| [`playtest/65-dosgolem-oracle.md`](../playtest/65-dosgolem-oracle.md) | 事件對話會擋住時鐘 | 已觀察到：跑到 196年4月3日 2時會出現「就將呂布擊潰吧」的對話框，時鐘停住等點擊 / 那是原版行為不是缺口；腳本要把它點掉 | 靜態 |
-| [`playtest/65-dosgolem-oracle.md`](../playtest/65-dosgolem-oracle.md) | 視窗 x 416 → 遊戲 415 | §3.1，成因未查。只影響游標位置 / 拿一批已知的原版擷取逐點掃 x，看換算式長什麼樣 | 靜態 |
-| [`playtest/65-dosgolem-oracle.md`](../playtest/65-dosgolem-oracle.md) | 半形字模 | dosgolem 側每次跑分都是 **0 次呼叫**——數字走遊戲自己的 8×16 點陣字 / 找一個會用到半形的畫面，或確認那條路是死路 | 靜態 |
-| [`playtest/65-dosgolem-oracle.md`](../playtest/65-dosgolem-oracle.md) | `STR.EXE` 的檔名懸案 | `../re/29` §6 仍未裁決 / dosgolem 的字型檔名是參數，把它改成 `END_S10/S11` 跑一次就知道 | 靜態 |
-| [`playtest/65-dosgolem-oracle.md`](../playtest/65-dosgolem-oracle.md) | PC-98 版 | dosgolem 沒有 PC-98 的機器層 / 那一版仍走 DOSBox-X | 實測 |
-| [`playtest/66-dosgolem-load-save.md`](../playtest/66-dosgolem-load-save.md) | 那 435 點的時間差是多少 | 只知道比 60 萬道指令小一個量級 / 做一個「跑到某個 tick／某個子刻」的取樣點，兩邊對齊到同一刻 | 靜態 |
-| [`playtest/66-dosgolem-load-save.md`](../playtest/66-dosgolem-load-save.md) | 走到戰術畫面 | 輸入模型解了，路還沒走 / 用熱區圖把「軍團 → 出兵」那條路列出來，再一步一步走 | 靜態 |
-| [`playtest/66-dosgolem-load-save.md`](../playtest/66-dosgolem-load-save.md) | `wait` 在遊戲中不適用 | 即時制的畫面永遠不會靜止，`wait` 會一路跑到預算上限（實測跑掉兩個遊戲日） / 遊戲中一律用 `steps:` 或 `until:` | 實測 |
-| [`playtest/67-dosgolem-popup-menus.md`](../playtest/67-dosgolem-popup-menus.md) | 「位置確認」與「行軍指示」之後的畫面 | 原版側**走得到了**（§5 第 10–12 步），但還沒與 remake 逐區比 / 兩邊各拍一張目的地選擇與兩項選單 | 靜態 |
-| [`playtest/67-dosgolem-popup-menus.md`](../playtest/67-dosgolem-popup-menus.md) | 編成視窗本身 | 已經開得出來，**還沒對拍**——手上沒有這一張的原版擷取（`workplace/promo-live/form-01` 是 remake 側的） / 用 `tools/dosgolem.sh` 拍一張當原版側 | 靜態 |
-| [`playtest/68-dosgolem-tactical-screen.md`](../playtest/68-dosgolem-tactical-screen.md) | 兩邊開同一場仗 | 這一次比的是**不同的兩場**。要 0 px 得讓 dosgolem 與 remake 站在同一個局面上（`-siege-corps`，`../spec/91` §3） / dosgolem 側加「從存檔直接開戰場」的入口，或把這一場的軍團寫進測試存檔 | 靜態 |
-| [`playtest/68-dosgolem-tactical-screen.md`](../playtest/68-dosgolem-tactical-screen.md) | 行軍途中被擋住 | 下令攻宛之後 108 個遊戲日沒有開戰，軍團沒到 / 攔 `sub_12662`（軍團到站）看它每一步走到哪 | 靜態 |
-| [`playtest/68-dosgolem-tactical-screen.md`](../playtest/68-dosgolem-tactical-screen.md) | 戰術畫面的操作 | 只拍到進場，還沒送過任何戰術指令 / 側欄六列指令的熱區還沒問過 | 靜態 |
-| [`playtest/69-dosgolem-tactical-controls.md`](../playtest/69-dosgolem-tactical-controls.md) | 指令有沒有真的下下去 | 只看到反白與命令碼那一格變色，**沒有看到部隊照著動**——分支只跑了 80 萬道指令 / 同一個快照分兩支跑兩千萬道指令，一支下「突擊」一支不下，比 `field` | 靜態 |
-| [`playtest/69-dosgolem-tactical-controls.md`](../playtest/69-dosgolem-tactical-controls.md) | 開場台詞會擋輸入多久 | 進場約一千萬道指令後跳呂布的台詞（`a3`），期間的點擊去向沒查 / 攔 `sub_14F58`（開戰訊息）看它什麼時候回 | 靜態 |
-| [`playtest/69-dosgolem-tactical-controls.md`](../playtest/69-dosgolem-tactical-controls.md) | 玩家的軍團行軍不會到 | 下令攻宛之後 24 個遊戲日內 `0x14F2B`（玩家攻）**一次都沒觸發**，遭遇全部是雙方都不是玩家、或玩家守空城 / 讀軍團記錄本身：段在 `cs:word_10D52`，軍團表段內偏移 `0x2240` | 靜態 |
-| [`playtest/70-dosgolem-tactical-commands.md`](../playtest/70-dosgolem-tactical-commands.md) | remake 的三選一版面 | 量出來了，**還沒改**（`spec/39` §4） / 改用既有的 `popupMenu` 引擎，位置由游標算 | 靜態 |
-| [`playtest/70-dosgolem-tactical-commands.md`](../playtest/70-dosgolem-tactical-commands.md) | 兩邊開同一場仗 | 仍然沒有。dosgolem 這一場是 AI 觸發的，remake 側湊不出同一組軍團 / 把這一場的兩支軍團寫成測試存檔，兩邊都用 `-siege-corps` | 靜態 |
-| [`playtest/70-dosgolem-tactical-commands.md`](../playtest/70-dosgolem-tactical-commands.md) | 對白框到期之後 | 只確認節拍 80 時兩個框都還活著（到期 127／110），沒有跑到它們消失 / 再跑 20 個節拍取樣一次 | 靜態 |
-| [`playtest/71-corps-table-parity.md`](../playtest/71-corps-table-parity.md) | 兩邊開同一場仗 | 兩邊的軍團表現在確定一致了，所以 `-siege-corps` 有共同基礎；**但原版沒有「指定兩支軍團開戰」的入口**——它要等遭遇 / `sub_11B5A` 是**無參數**的（狀態全在 `word_10D2E`／`word_10D30`／`byte_10D34`／`byte_10D35` 四個全域），所以… | 靜態 |
-| [`playtest/71-corps-table-parity.md`](../playtest/71-corps-table-parity.md) | 武將表、據點表、勢力表 | 只對了軍團表 / `corps` 那一支的作法可以照搬（段值取自 `cs:word_10D52`） | 靜態 |
-| [`playtest/72-same-battle-parity.md`](../playtest/72-same-battle-parity.md) | `field` 的 180 px | 游標與旗相位，兩者原理上消不掉 / 要歸零得讓 remake 也畫游標、並讓旗相位可指定 | 靜態 |
-| [`playtest/72-same-battle-parity.md`](../playtest/72-same-battle-parity.md) | 野戰也開得出來嗎 | 只做了攻城（`sub_14ADE`）。野戰的外層是 `sub_14A7B`，參數不同（`si`／`di` 都是軍團） / 同一個作法照搬 | 靜態 |
-| [`playtest/73-opening-deployment-parity.md`](../playtest/73-opening-deployment-parity.md) | remake 要不要跟 | `Battle.Spawn` 已實作 ＋ 三支測試，**但接進遊戲路徑會讓攻城戰打不完**（`../spec/133` §3.5：60,000 幀剩餘兵數一個都沒變）。最可能是移動層不容許同格多兵 / 先解原版的移動與碰撞怎麼容許重疊 | 靜態 |
-| [`playtest/73-opening-deployment-parity.md`](../playtest/73-opening-deployment-parity.md) | 開場命令 | `sub_19B6D` 寫 `word ptr es:[di+1Ah], 1`（`+0x1A` ＝ 1 ＝ 攻擊），而執行期讀到的是 `00` / 兩者必有一個要修：可能是後面又被蓋掉，也可能 `+0x1A` 的偏移讀錯 | 靜態 |
-| [`playtest/74-settled-tick-parity.md`](../playtest/74-settled-tick-parity.md) | 走位期的長度是怎麼決定的 | 兩邊剛好一致，但沒有從機器碼推出「幾拍走一格」 / 讀原版的移動節流 | 靜態 |
-| [`playtest/75-pathfind-detour.md`](../playtest/75-pathfind-detour.md) | `field` 的對白框 | 捷徑路徑推完才武裝開場喊話（`../spec/117`） / 讓 `-open-siege` 在推之前武裝 | 靜態 |
-| [`playtest/75-pathfind-detour.md`](../playtest/75-pathfind-detour.md) | 走位期「幾拍走一格」 | 還沒從機器碼推出來 / `sub_1ADC8` 的節流 | 靜態 |
-| [`playtest/76-battle-talk-parity.md`](../playtest/76-battle-talk-parity.md) | 那 408 格符號字模的來源 | 不是倚天的任何一份（`../re/29` §7） | 靜態 |
-| [`playtest/77-state-table-parity.md`](../playtest/77-state-table-parity.md) | 武將旗標 bit 0 | 四個劇本裡只有劇本三的張衛設著，語意未解，remake 載入時丟掉。劇本 1 沒有人設，所以這一輪比不出來 | 靜態 |
-| [`playtest/77-state-table-parity.md`](../playtest/77-state-table-parity.md) | 其他三個劇本 | 只比過劇本 1 | 靜態 |
-| [`playtest/78-ai-decision-trace.md`](../playtest/78-ai-decision-trace.md) | 逐筆對齊 | 要兩邊同源的亂數；`sub_1ECE0` 的式子還沒讀 | 靜態 |
-| [`playtest/78-ai-decision-trace.md`](../playtest/78-ai-decision-trace.md) | 更長的窗口 | 速度解掉大半（`nodraw` ＋ `speed:0`，和平期 7.7×、戰時 2×，狀態軌跡逐欄相同，`../spec/131` §7）。⛔ **但天花板不是速度**：196年5月26日 2時「呂布的兵馬向許昌進攻過來了」——許昌是玩家首都，原版停下來等玩家，時鐘從此不動。無人值守的長跑要先有「按掉訊息 ＋ 讓… | 實測 |
-| [`playtest/78-ai-decision-trace.md`](../playtest/78-ai-decision-trace.md) | 事件 `0B`／`04`／`05`／`0D` | 內政官／外交官要求經費那幾支，開局全 `0xFF` 沒有官員，窗口內不會觸發 | 靜態 |
-| [`playtest/79-march-menu-original-layout.md`](../playtest/79-march-menu-original-layout.md) | 一般訊息框的名字 | `drawMessage` 還是整段畫白、名字還是裁掉補白。改動會波及四個語系的排版，要另外開規格（`../spec/140` §5） | 靜態 |
-| [`playtest/79-march-menu-original-layout.md`](../playtest/79-march-menu-original-layout.md) | 選單位置的實跑對照 | 位置只有單元測試與夾制推導，**沒有在同一個游標座標下拍過一張**——headless 的指標位置目前不可控 | 實測 |
-| [`playtest/80-retreat-countdown.md`](../playtest/80-retreat-countdown.md) | 倒數真的走完那一場 | 這一輪是「補不出兵」先到。要看到倒數收尾，得找一場退卻方**走不出去**的仗（被擋住，或補兵一直進場） | 靜態 |
-| [`playtest/80-retreat-countdown.md`](../playtest/80-retreat-countdown.md) | `word_1D31C` 的兩個 byte | 開場是 48／48 ＝ 六隊 × 八人，看起來是**場上**人數；`../re/11` §5.9 寫的是「含畫面外待機的」。兩種讀法都還沒有直接證據 | 靜態 |
-| [`playtest/80-retreat-countdown.md`](../playtest/80-retreat-countdown.md) | `battle-settled` 要不要往後挪 | §4.1 量到它停在兩個開場對白框之間。要當戰術對拍的取樣點就得再加一個條件（例如「兩個框都在」），或者乾脆只用 `-battle-steps 70` | 靜態 |
-| [`playtest/81-command-cell-highlight.md`](../playtest/81-command-cell-highlight.md) | 1 | 指令列的「進言」「財政」「編成」**不會反白** / `activeCommandCell()` 只認得三張彈出選單。原版是 `sub_161CA` 在 `call` 前後各 XOR 一次，**八格共用同一段程式碼** / `../spec/124` §3.5 | 靜態 |
-| [`playtest/81-command-cell-highlight.md`](../playtest/81-command-cell-highlight.md) | 2 | 左下角的**狀態列提示框沒有畫**；財政那一張反而多了一條 remake 自己的提示條 / `sub_18853` 的 48 個呼叫點只接了行軍那一條 / `../spec/140` | 靜態 |
-| [`playtest/81-command-cell-highlight.md`](../playtest/81-command-cell-highlight.md) | 編成那一張的完整對拍 | 要兩邊同一個局面同一步：原版停在武將一覽（4月20日），remake 要載同一份存檔、跑到同一天、停在同一步，而且 `-lord-corps=false` | 靜態 |
-| [`playtest/81-command-cell-highlight.md`](../playtest/81-command-cell-highlight.md) | 武將／勢力兩格的反白 | 照公式接了，**沒有原版擷取**。原版那兩格走狀態列提示 ＋ 地圖游標，remake 開的是一覽表（`../spec/124` §5） | 靜態 |
-| [`playtest/81-command-cell-highlight.md`](../playtest/81-command-cell-highlight.md) | 另外 45 個 `sub_18853` 呼叫點 | 接了行軍、財政、編成三條。其餘要一條一條接、一條一條拍 | 靜態 |
-| [`playtest/81-command-cell-highlight.md`](../playtest/81-command-cell-highlight.md) | 原版擷取裡的滑鼠游標 | `command` 那 88 px。原版自己畫的，remake 的截圖模式不畫——與 `76` §4 的 95 px 同一類 | 實測 |
-| [`playtest/82-strategy-date-aligned-parity.md`](../playtest/82-strategy-date-aligned-parity.md) | 其餘家族的破折號縮排 | 只有軍團（0）與武將（8）量過。據點／勢力那兩張**沒有原版擷取**，維持 0 | 靜態 |
-| [`playtest/82-strategy-date-aligned-parity.md`](../playtest/82-strategy-date-aligned-parity.md) | 財政的 141 px | 校訂造成的，**刻意的差異**。要 0 px 得拿未校訂的文本跑，那不是遊戲會出的畫面 | 靜態 |
-| [`playtest/82-strategy-date-aligned-parity.md`](../playtest/82-strategy-date-aligned-parity.md) | 原版擷取裡的滑鼠游標 | 88 px。要消掉得讓原版把游標移開再截圖——`move:` 之後游標會拖動鏡頭（`../re/84` §2），得先確認拖不動的位置 | 實測 |
-| [`playtest/82-strategy-date-aligned-parity.md`](../playtest/82-strategy-date-aligned-parity.md) | 武將／勢力兩格的指令列反白 | 原版走狀態列提示 ＋ 地圖游標，remake 開一覽表，**流程不同**（`../spec/124` §5） | 靜態 |
-| [`playtest/83-city-list-parity.md`](../playtest/83-city-list-parity.md) | 原版擷取裡的滑鼠游標 | 88 px。要消掉得讓原版把游標移到不會拖動鏡頭的位置再截圖 | 實測 |
-| [`playtest/83-city-list-parity.md`](../playtest/83-city-list-parity.md) | 其餘家族的破折號縮排 | 這一張十列全滿，**看不到空列**，所以驗不到據點家族的破折號（`../spec/38`） | 靜態 |
-| [`playtest/84-personnel-corps-list-parity.md`](../playtest/84-personnel-corps-list-parity.md) | 迴圈與台詞的畫面對拍 | 接上了但**沒拍**——要按下去才看得到，得再走一步 | 靜態 |
-| [`playtest/84-personnel-corps-list-parity.md`](../playtest/84-personnel-corps-list-parity.md) | 原版擷取裡的滑鼠游標 | 六張都是 88 px | 靜態 |
-| [`playtest/85-general-duty-field.md`](../playtest/85-general-duty-field.md) | **解任把 `+0x1A` 歸零沒有實跑正對照** | 機器碼是 `mov byte [bx+1Ah], 0`（`../re/25` §3.1，confirmed），但這一輪那位官員的經費本來就是 0，**實跑等於沒比**。要撥過款再解任才驗得到 | 實測 |
-| [`playtest/85-general-duty-field.md`](../playtest/85-general-duty-field.md) | 身分欄的畫面對拍 | 原版擷取有了（§3），remake 同狀態的還沒拍——要讓 remake 也走到「已任命」再開武將一覽 | 靜態 |
-| [`playtest/85-general-duty-field.md`](../playtest/85-general-duty-field.md) | `sub_13771` 讀 `+0x17` 的分支 | 語意未解（`../spec/143` §8） | 靜態 |
-| [`playtest/85-general-duty-field.md`](../playtest/85-general-duty-field.md) | 自定軍師時原版那個越界寫 | `loc_11AF8` 在 `+0x02 ＝ 0x7F` 時照樣寫 `[0x7F×32 + 4240h]`，落在武將表尾端之後；寫進去的是什麼欄位沒查，remake 不照抄 | 靜態 |
-| [`playtest/86-general-faction-cells-parity.md`](../playtest/86-general-faction-cells-parity.md) | **暴風雨覆蓋層的畫法** | 已知是 50% 網點、灰白（`a2b2b2`／`f3f3f3`／`617171`）＋偶數列的黑點；**還沒讀到畫它的那一支**，也不知道會不會逐 frame 動。要改 remake 得先補一份規格 | 靜態 |
-| [`playtest/86-general-faction-cells-parity.md`](../playtest/86-general-faction-cells-parity.md) | 覆蓋範圍的邊界 | 實測涵蓋格 (271–283, 160–168)，而中心據點在 (278,164) ⇒ 左緣比 `中心−5` 多兩格。是量到的邊緣網點還是座標框差，沒分清楚 | 實測 |
-| [`playtest/86-general-faction-cells-parity.md`](../playtest/86-general-faction-cells-parity.md) | 情報卡的三個數字 | 隨時間變，`clock:` 只到「時」——同 `83` 的裁定 | 靜態 |
-| [`playtest/86-general-faction-cells-parity.md`](../playtest/86-general-faction-cells-parity.md) | 滑鼠游標 88 px | 五個分區鋪滿全畫面，游標停在哪都會落進某一區；remake 沒有自繪游標 | 靜態 |
-| [`playtest/87-map-clouds.md`](../playtest/87-map-clouds.md) | 雲的漂移長時間對齊 | 需要原版亂數流的完整消費端；§5 | 靜態 |
-| [`playtest/87-map-clouds.md`](../playtest/87-map-clouds.md) | `+0x01`／`+0x06`／`+0x07` | `sub_123FF` 對火災寫 `+0x06 = +0x07 = 1`，雲是 0；語意未解 | 靜態 |
-| [`playtest/87-map-clouds.md`](../playtest/87-map-clouds.md) | type 3 的產生端 | 目前所有可見的事件 12 producer 只建 type 1／2 | 靜態 |
-| [`playtest/88-controlled-save-parity.md`](../playtest/88-controlled-save-parity.md) | 原版的地圖游標框 | remake 沒畫；要接得先讀出顏色、線寬與更新時機 | 靜態 |
-| [`playtest/88-controlled-save-parity.md`](../playtest/88-controlled-save-parity.md) | 還能關掉什麼 | 目前只有雲。天災、AI 出兵、募兵都吃亂數，各自需要自己的欄位 | 靜態 |
-| [`playtest/89-advise-status-parity.md`](../playtest/89-advise-status-parity.md) | 兩邊的亂數**消費順序** | 這才是主因。機制接好了（`-rng-state` ＋ `tools/rng_state.py`），但**逐拍數兩邊各取幾個亂數**還沒做——那是讓長時間對拍成立的唯一路徑 | 靜態 |
-| [`playtest/89-advise-status-parity.md`](../playtest/89-advise-status-parity.md) | 上昇率那一欄 | 差到 ±4，成因確定是亂數而不是公式；**公式本身還沒逐項對過** | 靜態 |
-| [`playtest/89-advise-status-parity.md`](../playtest/89-advise-status-parity.md) | 滑鼠游標 88 px | 五個分區把畫面鋪滿，游標停哪都會落進某一區；remake 沒有自繪游標 | 靜態 |
-| [`playtest/90-formation-second-step.md`](../playtest/90-formation-second-step.md) | 原版的滑鼠游標 | 選單上是 14×14 紅箭頭（白邊）、大地圖上是 15×15 白色空心框（＋1,+1 黑影）。**遊戲自己畫的**（dosgolem 的 INT 33h 不畫），所以它是 remake 的缺口；但繪製端還沒定位，而且 remake 用的是 OS 游標，要接得連「隱藏 OS 游標」一起決定 | 靜態 |
-| [`playtest/91-general-boast-parity.md`](../playtest/91-general-boast-parity.md) | remake 要把游標的 hide／show 接在哪 | 原版的規則已解（`../re/88`），但 54 個呼叫點還沒對應到 remake 的繪圖流程 | 靜態 |
-| [`playtest/91-general-boast-parity.md`](../playtest/91-general-boast-parity.md) | `0x1A8`（俘虜）與 `0x1AB`（海戰）兩組 | 沒有原版擷取；需要一個有俘虜、或水戰適性最高的武將的局面 | 靜態 |
-| [`playtest/92-personnel-assign-parity.md`](../playtest/92-personnel-assign-parity.md) | 原版的滑鼠游標 | 95–109 px。⚠ `91` §3 那一張**沒有**游標，同樣有訊息框、同樣的點擊位置——差別還沒找到 | 靜態 |
-| [`playtest/92-personnel-assign-parity.md`](../playtest/92-personnel-assign-parity.md) | 每小時 ±1 | 據點一覽那兩欄，已裁定（`83` §4.1） | 靜態 |
-| [`playtest/92-personnel-assign-parity.md`](../playtest/92-personnel-assign-parity.md) | 兩張清單共用同一個游標記憶體 | `word_198AA`：原版關掉清單再開回來，游標停在原處。remake 每次從 0 開始（`148` §4） | 靜態 |
-| [`playtest/94-march-map-picker.md`](../playtest/94-march-map-picker.md) | 游標推到畫面邊緣時鏡頭跟過去 | 原版的滑鼠是**世界座標**，推出視野鏡頭會捲（`../re/84` §2）。remake 的滑鼠被視窗框住，還沒接 | 靜態 |
-| [`playtest/94-march-map-picker.md`](../playtest/94-march-map-picker.md) | 狀態列 #21（三選一） | 選完目標據點的下一張，還沒拍 | 靜態 |
-| [`playtest/94-march-map-picker.md`](../playtest/94-march-map-picker.md) | 別的狀態下的游標 | §2 | 靜態 |
-| [`playtest/95-diplomacy-preconditions.md`](../playtest/95-diplomacy-preconditions.md) | 協同進攻的對象選完之後 | #7 那一張已經有了（`102`），**再選下去**（成案／被拒）還沒拍 | 靜態 |
-| [`playtest/95-diplomacy-preconditions.md`](../playtest/95-diplomacy-preconditions.md) | `sub_1304E` 的 `dx` 附加欄位 | 這兩個呼叫點都傳 `0FFFFh`（不比），別的呼叫點還沒逐一讀 | 靜態 |
-| [`playtest/95-diplomacy-preconditions.md`](../playtest/95-diplomacy-preconditions.md) | 原版擷取裡的滑鼠游標 | 兩張都是 95 px | 靜態 |
-| [`playtest/96-map-click.md`](../playtest/96-map-click.md) | 佔用圖 | 原版查的是 `cs:word_19872` 的佔用圖，remake 直接掃軍團表比座標。結果相同但來源不同 | 靜態 |
-| [`playtest/96-map-click.md`](../playtest/96-map-click.md) | `sub_11F0E` 的 X 夾制 `23h` | 夾住之後框的右緣落在 672，超出畫面 32 px（`../spec/151` §1.2）——與行軍三選一的 `21h` 剛好貼齊不一樣。照抄常數，成因未解 | 靜態 |
-| [`playtest/96-map-click.md`](../playtest/96-map-click.md) | `-map-click` 繞過忙碌判定 | fixture 直接呼叫 `dispatchMapClick`，所以截圖裡情報卡與選單同時開著；真實操作走 `updateMapClick` 會被擋 | 實測 |
-| [`playtest/97-faction-picker-parity.md`](../playtest/97-faction-picker-parity.md) | 原版擷取裡的滑鼠游標 | 82 px，停在剛點的圖例上 | 靜態 |
-| [`playtest/97-faction-picker-parity.md`](../playtest/97-faction-picker-parity.md) | 只重畫兩列 | 原版換選中時只重畫舊的與新的那兩列，remake 整張重畫。**視覺上沒有差異**，但要知道原版沒有全畫面刷新（`../re/31` §2.2） | 靜態 |
-| [`playtest/98-enemy-corps-panel.md`](../playtest/98-enemy-corps-panel.md) | 「反白列的 `listCellInk` 覆寫沒有樣本」。 | （未解小節內文） | 靜態 |
-| [`playtest/98-enemy-corps-panel.md`](../playtest/98-enemy-corps-panel.md) | 整張畫面 | 鏡頭是格級的（`../spec/149` §4） | 靜態 |
-| [`playtest/99-slot-window-parity.md`](../playtest/99-slot-window-parity.md) | 原版擷取裡的滑鼠游標 | 95 px，停在剛點的 `ＯＫ` 格上 | 靜態 |
-| [`playtest/99-slot-window-parity.md`](../playtest/99-slot-window-parity.md) | remake 的下方提示框 | 「檔案　SAVE.DAT」與鍵盤提示是 remake 差異，**畫在原版視窗外面**（`../spec/25` §3），所以不影響本體 | 靜態 |
-| [`playtest/99-slot-window-parity.md`](../playtest/99-slot-window-parity.md) | ＬＯＡＤ／ＮＥＷ 兩個標題 | 只比了 ＳＡＶＥ 那一張 | 靜態 |
+| 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
+|---|---|---|---|---|---|
+| [`playtest/10-event-message-modal.md`](../playtest/10-event-message-modal.md) | 事件 10 producer 仍未定位。 | （未解小節內文） | 靜態 | evidence-only | — |
+| [`playtest/10-event-message-modal.md`](../playtest/10-event-message-modal.md) | 事件 6 #72 的缺失 formatter payload 維持 fail-closed。 | （未解小節內文） | 靜態 | actionable | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
+| [`playtest/10-event-message-modal.md`](../playtest/10-event-message-modal.md) | 原版／remake 同狀態畫面對拍仍是剩餘驗收項。 | （未解小節內文） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/100-video-mode-parity.md`](../playtest/100-video-mode-parity.md) | 素材頁的四季 | 肖像與據點景觀圖那種「換圖不換色」的四季，這一份沒有涵蓋——§5 量到的是顏色 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/100-video-mode-parity.md`](../playtest/100-video-mode-parity.md) | 音效那一格 | fixture 沒帶 `-audio`，顯示「未接入」。要比那一格得先產 ogg | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/100-video-mode-parity.md`](../playtest/100-video-mode-parity.md) | remake 多的兩列 | 「主君編成」與「損害報告」，已記錄的差異（`39`） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/101-quit-menu-parity.md`](../playtest/101-quit-menu-parity.md) | remake 要把游標的 hide／show 接在哪 | 規則已解（`../re/88`），但 54 個呼叫點還沒對應到 remake 的繪圖流程 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/101-quit-menu-parity.md`](../playtest/101-quit-menu-parity.md) | remake 多的兩列 | 「主君編成」「損害報告」是 remake 加的，`39` 已裁定保留 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/102-help-second-step.md`](../playtest/102-help-second-step.md) | 選完協同進攻對象之後 | 這一份停在 #7 的畫面，**再選下去**（成案／被拒）還沒拍 | 靜態 | actionable | [#26](https://github.com/wicanr2/wolong_cht/issues/26) |
+| [`playtest/103-advise-scene-parity.md`](../playtest/103-advise-scene-parity.md) | `sub_10C14(dx=3, bx=8, cx=0C13h)` 那個底 | (48, 128) 304×192，比插圖大 8 px 一圈。**畫的是什麼還沒讀**——這一張上插圖蓋滿了它，看不出來 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/103-advise-scene-parity.md`](../playtest/103-advise-scene-parity.md) | 說服迴圈的每一句 | 這一份停在開場三句，**選了理由之後**的畫面還沒拍 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/104-advise-verdict-parity.md`](../playtest/104-advise-verdict-parity.md) | 「君主出征中」那一句 | `openAdvise` 仍寫事件列，而**原版是 TALK #64 訊息框**（`../re/22` §3.4）——不是「該不該寫事件列」，是呈現方式用錯了。還沒拍 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/104-advise-verdict-parity.md`](../playtest/104-advise-verdict-parity.md) | 「Enter 繼續」提示 | remake 自己加的操作說明，保留；它讓每一張說服／判決場景差 1,369–4,628 px | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/105-advisor-naming-parity.md`](../playtest/105-advisor-naming-parity.md) | 視窗**外**的背景 | 原版這一頁後面疊著 NEW GAME 的勢力清單與君主卡（fixture 直接開命名視窗，背後只有地圖）。整張差 55,098 px 幾乎全在這裡——要對得走完整條新遊戲流程 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/105-advisor-naming-parity.md`](../playtest/105-advisor-naming-parity.md) | 選好字之後 | 這一份停在剛開啟的狀態，**選字、翻頁、換肖像**之後的畫面還沒拍 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/106-launcher-parity.md`](../playtest/106-launcher-parity.md) | `title` 那一頁的框 | 原版 (208,128,224,88) 兩項、remake (112,56,416,288) 三項——**維持三項是裁定**（§2.2），所以那個框不會對齊。原版的 ＹＥＳ／ＮＯ 對話框是 `sub_18DC8(si=98C8h, dx=0D0h, bx=80h, di=28h)`，還沒逐欄讀 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/107-cursor-parity.md`](../playtest/107-cursor-parity.md) | 遊玩端要不要自繪 | `../spec/154` §4：原版在「清單等待點選」時旗標是 0，而那到底是原版行為還是 oracle 的限制沒有實機佐證 | 實測 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/107-cursor-parity.md`](../playtest/107-cursor-parity.md) | 大地圖上的那一種 | 15×15 白色空心框（`../spec/149`），**什麼時候換成箭頭**沒對過 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/108-appimage-dosgolem-input-audit.md`](../playtest/108-appimage-dosgolem-input-audit.md) | 勢力清單初次點第一列 `(450,128)` | 第一列反白，再點一次才進君主卡 / 點一次便進君主卡 / 確認步驟不同；尚未在本輪裁定修改方式 | 靜態 | evidence-only | — |
+| [`playtest/109-desktop-launcher-fix.md`](../playtest/109-desktop-launcher-fix.md) | 狀態：兩項修正已通過 AppImage 正常操作驗證；Windows／macOS 封包檢查通過，原生 GUI 未驗。 | （散句） | 靜態 | actionable | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
+| [`playtest/109-desktop-launcher-fix.md`](../playtest/109-desktop-launcher-fix.md) | 原生檔 | 不適用 / SAVE-slot2.wlsave 已產生；尚未以行軍路線驗證重啟完整恢復 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/109-desktop-launcher-fix.md`](../playtest/109-desktop-launcher-fix.md) | Windows／macOS 封包內容、雜湊與架構通過，原生操作未驗。 | （散句） | 靜態 | actionable | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
+| [`playtest/109-desktop-launcher-fix.md`](../playtest/109-desktop-launcher-fix.md) | Windows／macOS 原生操作仍未驗。 | （散句） | 靜態 | actionable | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
+| [`playtest/111-desktop-map-scroll.md`](../playtest/111-desktop-map-scroll.md) | 狀態：v.1.0.11-20260908 AppImage 正常操作通過；原生 Windows／macOS 未驗。 | （散句） | 靜態 | actionable | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
+| [`playtest/112-desktop-battle-result-options.md`](../playtest/112-desktop-battle-result-options.md) | 狀態：v.1.0.12-20260908 AppImage 正常操作通過；Windows／macOS 封包查核通過，原生 GUI 未驗。 | （散句） | 靜態 | actionable | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
+| [`playtest/113-desktop-polish.md`](../playtest/113-desktop-polish.md) | 完整世界狀態與亂數相同的戰況對拍、全劇本正常通關仍未證實；這些是規則驗收限制， | （未解小節內文） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/114-focus-and-same-battle.md`](../playtest/114-focus-and-same-battle.md) | 第 1 拍的單位更新順序／移動閘是下一個窄查證點；「它導致後續單挑差異」目前只屬強推論。 | （未解小節內文） | 靜態 | merge-target | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
+| [`playtest/116-rng-consumption-census.md`](../playtest/116-rng-consumption-census.md) | `14216` 的分支條件 | 只知道次數少 542 次，條件還沒讀機器碼 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`playtest/116-rng-consumption-census.md`](../playtest/116-rng-consumption-census.md) | remake 側的對應軌跡 | 還沒做（`../spec/160` §3） | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`playtest/116-rng-consumption-census.md`](../playtest/116-rng-consumption-census.md) | 開戰期的消費端 | 這一輪沒有涵蓋（§4） | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`playtest/116-rng-consumption-census.md`](../playtest/116-rng-consumption-census.md) | `sub_12286` 的兩個 Code | 事件碼 `0x010C`／`0x020C` 的語意還沒對到機制 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`playtest/117-field-battle-needs-player-order.md`](../playtest/117-field-battle-needs-player-order.md) | **野戰單挑的觸發判定** | 原版依武將個性自動觸發，`Tactic`（武將 `+0x16`）同時也選 `BATTLE.DAT` 的腳本段。remake 還沒解觸發條件，fixture 是無條件武裝單挑 | 靜態 | actionable | [#17](https://github.com/wicanr2/wolong_cht/issues/17) |
+| [`playtest/117-field-battle-needs-player-order.md`](../playtest/117-field-battle-needs-player-order.md) | AI 側腳本在這一場下了什麼命令 | 只觀察到開場的 `Form`；腳本後續有沒有下攻擊還沒逐指令追 | 靜態 | actionable | [#17](https://github.com/wicanr2/wolong_cht/issues/17) |
+| [`playtest/117-field-battle-needs-player-order.md`](../playtest/117-field-battle-needs-player-order.md) | 攻擊與突擊在這一場結果相同 | 兩者都是 339 幀、600／159。大將出不出擊的差異在這個局面看不出來，要另找場景 | 靜態 | actionable | [#17](https://github.com/wicanr2/wolong_cht/issues/17) |
+| [`playtest/118-liubei-90day-audience-response.md`](../playtest/118-liubei-90day-audience-response.md) | **呂布的請求還沒出現** | 這 90 天只有一次召見，是曹操請求協助。「同意呂布」那條分支要另找時間點或另一份存檔 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/118-liubei-90day-audience-response.md`](../playtest/118-liubei-90day-audience-response.md) | **腳本沒有條件分支** | 召見出現的時刻要先跑一次才知道，回應序列是寫死在腳本裡的。要自動化就得在 dosgolem 那端加「卡住就回應」的偵測 | 靜態 | actionable | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`playtest/118-liubei-90day-audience-response.md`](../playtest/118-liubei-90day-audience-response.md) | 起點不是劇本開局 | 現用存檔是 196/4/16。從 196/4/1 起跑要另做一份存檔或走新遊戲流程 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/118-liubei-90day-audience-response.md`](../playtest/118-liubei-90day-audience-response.md) | 逐小時取樣還沒接上 | 這一輪只在第 90 天取狀態表。三份軌跡（狀態／事件／亂數）的逐小時版本見 `../spec/161` §4 | 靜態 | actionable | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | 43–65 | 勢力表之後那 704 B 的未解區 | 靜態 | actionable | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | **那 4 次差在哪個子刻** | 只比了分布，還沒逐子刻對齊找第一個分歧點 | 靜態 | actionable | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | 檢查條件的語意差 | 原版看第一個槽、remake 看整個清單；要確認 `[bp+0]` 那個槽在原版是怎麼填的（`docs/re/40` §3 的迴圈會跳過空槽重抽，所以「第一個槽空」與「全空」在原版是兩件事） | 靜態 | actionable | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | 「2 個」差 1 | 徵兵被跳過的次數原版 9、remake 10 | 靜態 | actionable | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`playtest/119-rng-pace-comparison.md`](../playtest/119-rng-pace-comparison.md) | remake 的呼叫點解析度 | `governor.Tick` 的三個 `rnd()` 都記成 `state.go:1566`（closure 那一行），分不出是上昇值、防災還是徵兵 | 靜態 | actionable | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`playtest/120-screen-parity-retest-20260911.md`](../playtest/120-screen-parity-retest-20260911.md) | 野戰 `sb-minimap` 128 px（FAIL）**，文件記的是 32 px。 | （未解小節內文） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/120-screen-parity-retest-20260911.md`](../playtest/120-screen-parity-retest-20260911.md) | 攻城那一組重跑不出來**（§3）。 | （未解小節內文） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/120-screen-parity-retest-20260911.md`](../playtest/120-screen-parity-retest-20260911.md) | 主畫面與野戰之外的對拍組還沒逐一重量。 | （未解小節內文） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/121-screen-parity-gate.md`](../playtest/121-screen-parity-gate.md) | 進言選單在說服場景上沒關掉 | remake 殘影 1,750 px；原版進場時清掉。`advise-scene` 的 `gap` | 靜態 | actionable | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/121-screen-parity-gate.md`](../playtest/121-screen-parity-gate.md) | 「Enter 繼續」提示要不要登記成 remake 差異 | 目前只在 `cmd/wlgame/advise.go:678` 與 `104` §1，沒有 spec | 靜態 | actionable | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/121-screen-parity-gate.md`](../playtest/121-screen-parity-gate.md) | 插圖框的填色 | 中間被插圖全蓋住，這個畫面量不到（`../spec/198` §5） | 靜態 | actionable | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/121-screen-parity-gate.md`](../playtest/121-screen-parity-gate.md) | 閘還沒收進去的組 | `38`／`39`／`42`／`83`／`84`／`92`／`94`／`96`／`98`／`99`／`105`／`106` 等；`37` 的孫策第二樣本與 `40` 的攻城第二輪原版側不是同狀態 | 靜態 | actionable | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/17-expert-dosbox-remake.md`](../playtest/17-expert-dosbox-remake.md) | 松崗 DOS/V 原版 | **PASS（啟動至開場）** / 2026-08-12 證實空白確認／`0000`／`1234` 均越過密碼頁；完整自然長程驗證尚未執行 | 靜態 | evidence-only | — |
+| [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 據點換手之後遮罩會不會跟著變 | `sub_1890A` 的行為，靜態讀得出來，動態沒驗——要打下一座城才看得到 | 靜態 | evidence-only | — |
+| [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 松崗 DOS/V 側 | 這套 bridge 還沒在 DOS/V 上跑過。**密碼頁不構成阻礙**（四格留白按「確定」即可通過，`18`）——是還沒做 | 靜態 | evidence-only | — |
+| [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 上游授權 | `DOSBox-X-MCP-Debugger` 的原創碼**尚未選定授權條款**（README 明講是刻意留白）。本專案只在本機使用，未再散布 | 實測 | evidence-only | — |
+| [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 各視窗內部的像素 | 只對過邊線位置，沒有對過內容。⭐ **四個視窗同時開著的對拍已經有了**：`39` 的 `-open-window -3` 就是四窗全開，命令列／縮小地圖／自勢力情報三區與系統選單原版那六列都是 0 px（2026-09-03 重量） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/24-window-toggles.md`](../playtest/24-window-toggles.md) | 系統視窗的四個項目 | 存檔／畫面模式／音源／戰略速度，不在這一輪範圍 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | **逐曲觸發** | 只錄到開場動畫（`D7OPEN.EXE` 自己會播）。⚠ 這一項**不再擋住任何事**——音檔改由 `tools/bgm2ogg.sh` 離線渲染，不需要在模擬器裡逐首觸發。要當對照組才需要它 | 靜態 | actionable | [#8](https://github.com/wicanr2/wolong_cht/issues/8) |
+| [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | **音效** | 戰術的三個 effect code 已知（`re/17` §3），但沒錄過 | 靜態 | actionable | [#8](https://github.com/wicanr2/wolong_cht/issues/8) |
+| [`playtest/25-audio-capture-feasibility.md`](../playtest/25-audio-capture-feasibility.md) | **音源正確性** | DOSBox 用 `sbtype=sb16`／`oplmode=auto` 模擬，與真實硬體的音色差異沒有對照組 | 實測 | actionable | [#8](https://github.com/wicanr2/wolong_cht/issues/8) |
+| [`playtest/26-bgm-render-vs-recording.md`](../playtest/26-bgm-render-vs-recording.md) | 音色的聽感 | 頻譜只驗了基頻。諧波結構（也就是「像不像那個音色」）沒有量化比對 | 靜態 | actionable | [#8](https://github.com/wicanr2/wolong_cht/issues/8) |
+| [`playtest/26-bgm-render-vs-recording.md`](../playtest/26-bgm-render-vs-recording.md) | 相關係數為什麼不是 0.9 | DOSBox 的 OPL 模擬與這顆的包絡實作不同，加上錄音有系統噪訊。**沒有排除「還有小錯」的可能** | 實測 | actionable | [#8](https://github.com/wicanr2/wolong_cht/issues/8) |
+| [`playtest/26-bgm-render-vs-recording.md`](../playtest/26-bgm-render-vs-recording.md) | 其他曲子 | 只有開場曲有錄音對照組。另外 13 首沒有 | 靜態 | actionable | [#8](https://github.com/wicanr2/wolong_cht/issues/8) |
+| [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 門強度條的 remake 截圖 | 規則與版面已解並實作（`../re/60` §11、`../spec/32`），但 remake 側沒截到——**這條只亮 20 幀** | 實測 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/27-original-video-frame-parity.md`](../playtest/27-original-video-frame-parity.md) | 一覽表視窗 | 影片裡有武將／據點／財政的實錄，**還沒量** | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/29-strategy-minimap-markers.md`](../playtest/29-strategy-minimap-markers.md) | 22 勢力的選擇視窗 | 原版點圖例右半格會開一個兩欄的選單（`../re/62` §4.2）。**行為已解、版面未解**，remake 先用「點一下換下一個」代替 | 靜態 | evidence-only | — |
+| [`playtest/29-strategy-minimap-markers.md`](../playtest/29-strategy-minimap-markers.md) | 視野框的美術 | 原版在 `word_10D4C`，尺寸沒從程式碼讀到 | 靜態 | evidence-only | — |
+| [`playtest/29-strategy-minimap-markers.md`](../playtest/29-strategy-minimap-markers.md) | 點地圖區（熱區 `0x16`） | 原版做什麼沒讀 | 靜態 | evidence-only | — |
+| [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 一幀能有幾個兵撞牆 | 原版沒量過。前排寬度決定破牆速度，而破牆速度決定攻城打不打得下來 | 靜態 | evidence-only | — |
+| [`playtest/30-ground-planes-implemented.md`](../playtest/30-ground-planes-implemented.md) | 高平面的橫向移動沒有實測 | 守方站到牆頂的情境還沒跑過 | 實測 | evidence-only | — |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 勢力一覽的欄位 | 沒有逐欄比對 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/31-parity-inventory.md`](../playtest/31-parity-inventory.md) | 「委任」那一格的顏色 | 實錄影格上看起來是紅字，但影片是壓縮過的、也沒有機器碼證據。remake 先畫成一般色（`../spec/38`） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/32-talk-layout-fit.md`](../playtest/32-talk-layout-fit.md) | 變數的實際長度分布 | 這一輪用固定三全形替身。人名多半是 2–3 全形、地名 2–3，但**軍團名與勢力名沒有逐一量過** | 靜態 | evidence-only | — |
+| [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 逐句節拍 | 原版每句要等玩家按鍵才往下走；remake 直接顯示最新一句 | 靜態 | merge-target | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
+| [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 插圖之外的畫面 | 原版這一頁底下是不是還留著大地圖沒驗過，remake 留著 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/34-advise-scene-screens.md`](../playtest/34-advise-scene-screens.md) | 選單的反白樣式 | 原版怎麼畫游標列沒解，remake 用自己的反白條 ＋ `>` | 靜態 | merge-target | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
+| [`playtest/35-advise-verdict-screens.md`](../playtest/35-advise-verdict-screens.md) | 遷都的畫面 | 沒有截圖。⚠ 目標用一覽表挑**與原版相同**——`sub_17400` 是據點一覽的呼叫端（`../re/26` §4），不是地圖選點 | 實測 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/36-window-texture.md`](../playtest/36-window-texture.md) | 取用端 | `KI.EXE` 裡哪一段程式把這 128 byte 鋪上去的還沒找到（三條路都排除了）。**排法已經由實機畫面定案**，取用端只影響「還有沒有別的用法」 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/36-window-texture.md`](../playtest/36-window-texture.md) | 米色視窗 | 一覽表那種米色底原版有沒有紋路沒量過（截圖裡那一片是純色） | 實測 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 換圖塊的那一支機器碼 | 規則是從資料與畫面反推的，每一格都對得上，但**原版在哪裡做這件事**還沒定位（`../re/67` §5） / 找誰在據點換手時改地圖或格子記錄 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 四個視窗**同時**開著時的對拍 | 還沒做。三個視窗開著（`38`）與系統選單開著（`39`）都做了 / 送點擊的方法已解：`click:x,y;press` 成對送，見 `38` §1 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | DOSBox 的滑鼠座標 | 視窗 640×480、遊戲 640×400 置中，而 INT 33 把**整個視窗**等比對映到遊戲畫面（送 y 要乘 1.2）。這是本機設定的性質，不是原版的 / 把 `int33 max y` 改成 400 再量一次 | 實測 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/37-main-screen-parity.md`](../playtest/37-main-screen-parity.md) | 進到大地圖之後的滑鼠座標 | **又換一套**：`sub_120D6` 把 INT 33 的範圍改成 `0..0x17FF × 0..0x101F`（6143×4127 ＝ 整個世界的像素），螢幕座標 ＝ 原始座標 − 鏡頭原點。所以同一個視窗位置在選單裡與在地圖上指到完全不同的地方 / 用 `tools/cursor_probe.py` 在… | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/38-window-parity.md`](../playtest/38-window-parity.md) | 天候物件 | 原版跑了 10 天才截到，remake 停在第 1 天。**這是狀態差** / 要對就得讓兩邊同一天——用存檔定位（`../spec/90` §2） | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/39-system-window-parity.md`](../playtest/39-system-window-parity.md) | 日期對不上 | 原版跑到 4月9日才截到 / 要嘛用存檔定位，要嘛加一個「跑到指定日期」的驗收旗標 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-enemy` 的 44 px | 兩條都頂在上限，原版那一格已經打了 20 秒（§10） / 要對就得讓兩邊的**時刻**對齊，不是改算式 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sb-enemy`／`sb-self` 1.5% | 兩格將旗的內容 / — | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | `sub_1DFBB` 的快路徑 | remake 一律走合成。兩條路在全畫面重繪下應該畫出同樣的像素（`../spec/58` §4），但沒有逐格驗過 / — | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/40-tactical-parity.md`](../playtest/40-tactical-parity.md) | unit 0 的第二趟 | 深度迴圈跑完後 `dl & 0x20` 成立時會對五個鄰格各跑一次 `ax = 0`；**觸發條件（旗標 bit 5）誰設還沒解** / 掃誰對顯示格的 `+0` 寫 `0x20` | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/41-m7-corrected-text-on-screen.md`](../playtest/41-m7-corrected-text-on-screen.md) | 原版側的同狀態對照 | 這一份只驗 remake 自己「有沒有溢出」。**原版同一則長什麼樣沒有並排比過**——要用 `-open-talk-index` 對應的原版操作序列，還沒做 | 靜態 | merge-target | [#1](https://github.com/wicanr2/wolong_cht/issues/1) |
+| [`playtest/41-m7-corrected-text-on-screen.md`](../playtest/41-m7-corrected-text-on-screen.md) | 變數的實際長度分布 | 截圖用的是實際遊戲值（如「袁胤」兩字），而 `TestAllTalkLinesFitTheirBox` 用三全形替身。**軍團名與勢力名的長端沒有逐一量過**（`32`） | 實測 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/42-window-parity.md`](../playtest/42-window-parity.md) | 進言五項選單的原版截圖 | §5 的輸入模型限制 / 需要能送「瞬時 click」的擷取動作（縮短按住時間），或改用鍵盤路徑（未驗證原版是否支援） | 實測 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/43-field-battle-parity.md`](../playtest/43-field-battle-parity.md) | 佔用圖快取欄的讀檔重建 | §3 是強證據不是 confirmed / 讀原版的讀檔常式（`sub_18CAE` 一帶）確認重建走哪個欄位 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/45-ai-longrun-comparison.md`](../playtest/45-ai-longrun-comparison.md) | 原版側只有一次跑、三個資料點 | 存檔輪換的點擊序列要修（m1–m4 沒重存：疑似覆寫確認框的 YES 座標沒點中）；修好後可加拍幾輪拉出分佈 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/45-ai-longrun-comparison.md`](../playtest/45-ai-longrun-comparison.md) | remake 孫策的擴張比原版猛（一個月滅劉繇 vs 原版半年拿兩城） | 幅度差在戰鬥節奏層（編成／行軍／攻城的耗時），不是決策層；要縮就得對拍單場攻城的時間線 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/46-runtime-language-switch.md`](../playtest/46-runtime-language-switch.md) | Android 實機／模擬器沒實地切過 | 這裡的手機畫面是桌面 Xvfb 跑 `cmd/wlandroid` 拍的（同一份 `internal/ui/phone`）；實機驗收排在下一次 Android 打包 | 靜態 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`playtest/47-latin-screen-survey.md`](../playtest/47-latin-screen-survey.md) | 戰術畫面的截圖不可重現 | 找出 `-shot-frames` 之下仍隨牆鐘走的那一段（動畫幀？音訊回呼？），改成照 tick 推進 | 實測 | actionable | [#32](https://github.com/wicanr2/wolong_cht/issues/32) |
+| [`playtest/47-latin-screen-survey.md`](../playtest/47-latin-screen-survey.md) | 半形語系的戰場標題沒有地名 | 見 `docs/spec/87` §9 | 靜態 | actionable | [#32](https://github.com/wicanr2/wolong_cht/issues/32) |
+| [`playtest/48-display-polish.md`](../playtest/48-display-polish.md) | 對拍沒有開闊地的 fixture | `playtest/40` 量的兩個局面都在城壁邊；要擋住這一類回歸得再加一個開闊地的 fixture | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/48-display-polish.md`](../playtest/48-display-polish.md) | 事件列本身是 remake 自創 | 原版怎麼提示月結（如果有）沒查過 | 靜態 | evidence-only | — |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 修正前 | 45.55% / 45.18% / 45.83% | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 量表那一塊 | 0.13% / 0.09% / 0.06% | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | `field` | 0.86% / 0.81% / 0.84% | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 61 | X 58..60（出發線） / X 3..5 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 120 | X 50..57 / X 3..5 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 300 | X 8..43（已越過城門） / X 3..5 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 600 | X 5..60（散開） / X 3..5 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 攻城對拍的取樣點 | 兩個缺口修好之後 `field` 0.86%，剩下的是局面不等價（§3.3） / 要回到 0 px 得讓原版與 remake 開出**同一場**（同一批武將、同一個 tick）。條件寫進 `../spec/91`，不要再寫死步數 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 系統選單的兩列 remake 差異 | `map` 7.87%——主君編成與損害報告把視窗撐高 48 px（§2） / 這是**已標記的 remake 差異**，不是缺口。要對到 0 px 得有一個「照原版六列」的驗收模式 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/49-parity-retest-20260827.md`](../playtest/49-parity-retest-20260827.md) | 原版側沒有重跑 | 這一輪用的是 08-16／17／24 的存檔擷取 / 要重跑得先建 `wolong-dosboxx`（`docker/dosboxx/Dockerfile`） | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/50-corps-on-map.md`](../playtest/50-corps-on-map.md) | 首都疊圖為什麼不畫 | 行為定案，機制未讀（§4） | 靜態 | evidence-only | — |
+| [`playtest/50-corps-on-map.md`](../playtest/50-corps-on-map.md) | 別的疊圖組合 | 只驗過「首都 ＋ 軍團」。災害物件 ＋ 軍團、非首都據點 ＋ 軍團都沒有樣本 | 靜態 | merge-target | [#23](https://github.com/wicanr2/wolong_cht/issues/23) |
+| [`playtest/50-corps-on-map.md`](../playtest/50-corps-on-map.md) | 「軍團在路上」對原版 | 要新的原版擷取：編成 → 行軍指示 → 等幾天。滑鼠腳本點得到行軍那一列之後才做得起來（`40` §1.2） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/51-siege-deadlock.md`](../playtest/51-siege-deadlock.md) | 三個讀數仍對不上同一幀 | §2。兩軍會打了，但這條 fixture 的守方是**玩家側而玩家沒下令**，所以站著挨打——攻方只折損 1 點。⚠ **不是委任**：委任那條路走 `combat.Resolve` 抽象判定，根本不開戰場，而 e10 是戰場畫面 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/51-siege-deadlock.md`](../playtest/51-siege-deadlock.md) | 原版擺兵寫的是哪一個表 | `spec/95` 是靠內部一致性定的，不是照抄。原版 `[si+0Ah]` 的來源沒讀出來 | 靜態 | merge-target | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
+| [`playtest/51-siege-deadlock.md`](../playtest/51-siege-deadlock.md) | 攻方大將體力歸零 | `drainSiegeGeneral` 扣到 0，而戰鬥傷害最低留 1（`../re/11` §5.16）。攻城計時器要不要也留 1，沒讀出來 | 靜態 | evidence-only | — |
+| [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | ⭐ **破牆速度** | remake 量得很乾淨（§5）：三個兵貼著打、每幀約 2 點、第 ~1,100 幀破。**原版那一側量不出來**——體力同時被攻城計時器與挨打扣，單張畫面分不開 / ⛔ **要新的原版擷取**：從存檔載入之後在開戰的**前兩百幀密集取樣**（現有的 `wait:6` 一格就跨掉五十幾幀）。這是這一項唯一的路，靜… | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | ⛔ 試過但**不是**成因：不翻轉 `gateX` | `sub_1CAEB`（`0001CB0F`）寫進立即值的是**未翻轉**的索引第二欄，而 remake 對它套了 `RotateGateX`。實驗把翻轉拿掉（`GateX` 從 27 變回 36）跑同一條 fixture：**城壁照樣被磨穿**（1,660 → 0），門一點傷都沒有，結束時間只從 f1116 變… | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | 索引第二欄到底是什麼 | `../re/11` §4.5 稱它「城門附近的 X」，§5.8i 定案為「命令 3 的目標 X」。但這張圖上它落在城壁本體、離最近的門有 3–7 格 / 掃 186 張攻城圖：第二欄那一欄的圖塊值是什麼、與門的距離分布 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/52-siege-timeseries-parity.md`](../playtest/52-siege-timeseries-parity.md) | 守方為什麼在 t6 掉那麼快 | 原版守方大將體力兩段內 124 → 37 / 要先讓攻方以原版的方式進城，才比得了 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | 原版的行軍目的地一覽與三選一 | **「軍團」彈出選單的第二列「行軍指示」點不到。** 四輪都停在第一列「位置確認」：`tap:25,10,5`、`tap:25,9,5`、`click:25,10;press` 三種送法都一樣。這與 `docs/playtest/42` §5 記的是同一類限制——`playtest/54` 證明的是「**能把選單… | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | 原版的攻城結算 | 卡在上一列。remake 側在 196/4/8「張遼 對 城兵　攻方勝　兵力 1000→960／910→60　據點損害 54　攻下 譙」 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | 捲軸滑塊的 1 px | 只有一個取樣點（`../spec/107` §7） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | 「軍團」彈出選單的逐像素對拍 | 位置與兩列文字對得上，**框本身沒有比過**——原版那張參考圖是另一個局面（4/20、讀了存檔、游標停在第一列） | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/56-lubu-flow-parity.md`](../playtest/56-lubu-flow-parity.md) | 攻城**戰場**（不是結算） | 兩邊都一樣：空城攻城是自動判定，不進戰術畫面（`internal/state/corps.go` 的 `fightGarrison`；原版 `sub_14ED7` 的 `cmp bx, 4200h`）。要看到戰場得等守方有軍團駐守，而那一刻兩邊不會同時發生 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/57-appimage-20260902-reverify.md`](../playtest/57-appimage-20260902-reverify.md) | 沿用 `56` §6，沒有新增：軍團選單的同狀態原版參考、原版的行軍目的地一覽、 | （未解小節內文） | 靜態 | evidence-only | — |
+| [`playtest/58-parity-retest-20260902.md`](../playtest/58-parity-retest-20260902.md) | 攻城 `field` 的 0.84% 地板 | 局面不等價：原版擷取是 5月20日的張遼軍攻許昌，存檔是 5月10日（`51` §2） / 要對到 0 px 得有「存檔與影格出自同一次擷取」的攻城素材，同 `52` 那一組 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/58-parity-retest-20260902.md`](../playtest/58-parity-retest-20260902.md) | 第 300 拍的 2.00% | 兵的密度不同（§1.2） / 取樣點要用局面條件挑，不是寫死步數——`-shot-when` 已經做出來了（`../spec/118`），要挑的是**哪一個**條件 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/58-parity-retest-20260902.md`](../playtest/58-parity-retest-20260902.md) | 原版側沒有重跑 | 用的是 08-16／17／24 的擷取 / 要重跑得先建 `wolong-dosboxx`（`docker/dosboxx/Dockerfile`） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/59-shot-when-natural-flow.md`](../playtest/59-shot-when-natural-flow.md) | 一次只判一個條件 | `../spec/91` §6 的攻城取樣點是三個條件同時成立，現在只判得了「條顯示中」 / 條件字串改成可以用 `+` 串接，或直接支援 `gate-bar+talk-clear` | 靜態 | merge-target | [#14](https://github.com/wicanr2/wolong_cht/issues/14) |
+| [`playtest/59-shot-when-natural-flow.md`](../playtest/59-shot-when-natural-flow.md) | 對白框到期沒有條件可判 | 規則層沒有把 `word_1D322`／`word_1D324` 的到期時刻露出來 / `internal/rules/tactical` 加一支唯讀的查詢 | 靜態 | merge-target | [#14](https://github.com/wicanr2/wolong_cht/issues/14) |
+| [`playtest/59-shot-when-natural-flow.md`](../playtest/59-shot-when-natural-flow.md) | 攻城取樣點的 0.84% 地板 | 局面不等價，與這兩個旗標無關（`58` §4） / 要「存檔與影格出自同一次擷取」的攻城素材 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/60-corps-menu-parity.md`](../playtest/60-corps-menu-parity.md) | 日期對不上 | 原版跑到 4月20日才截到 / 同 `39` §4：要嘛用存檔定位，要嘛加一個「跑到指定日期」的驗收旗標 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/60-corps-menu-parity.md`](../playtest/60-corps-menu-parity.md) | 選完之後的兩條流程 | 位置確認的軍團一覽、行軍指示的目的地一覽，**都沒有對拍** / 原版側再拍一次：`tap:25,5,5` 之後再 `tap` 第一列／第二列 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/60-corps-menu-parity.md`](../playtest/60-corps-menu-parity.md) | 「據點」與「人事」那兩張的對拍 | **沒有原版截圖**。三張走同一份繪製程式碼（`../spec/126`），但位置與字數是各自的立即值，沒比過就不能說它們對 / `tap:30,5,5`／`tap:10,5,5` 照 `54` 的方式拍 | 實測 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/61-city-personnel-menu-parity.md`](../playtest/61-city-personnel-menu-parity.md) | 日期對不上 | 原版跑到 4月20日才截到，`banner` 因此永遠 116 px / 同 `39` §4：用存檔定位，或加一個「跑到指定日期」的驗收旗標 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/61-city-personnel-menu-parity.md`](../playtest/61-city-personnel-menu-parity.md) | 選完之後的流程 | 據點的「首都確認」／「據點一覽」、人事的四項，**選下去之後的畫面都沒有對拍** / 原版側在 `tap` 之後再 `tap` 一次那一列 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/61-city-personnel-menu-parity.md`](../playtest/61-city-personnel-menu-parity.md) | 進言那一張 | 五項選單**確定拍不到**（`42` §5：30 ms 瞬按與右鍵回退兩條路都試過），而且 remake 還沒併進 `popupMenu` / — | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/62-parity-retest-20260903.md`](../playtest/62-parity-retest-20260903.md) | 攻城 `field` 的 0.84% 地板 | 局面不等價（`58` §1.2、`51` §2），與這一輪無關 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/62-parity-retest-20260903.md`](../playtest/62-parity-retest-20260903.md) | 野戰 `sb-minimap` 32 → 40 px | 推定是同一個成因（`db7859f` 改變了兵走到同一格的時刻），但**沒有單獨二分過**——攻城那一組二分不自動涵蓋野戰 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 「有做」與「做對了」的差距 | 這一份只證明前者。後者要逐行對機器碼或與原版做行為對照——而規則層的行為對照目前只有 `45` 一次 / 再跑一輪 AI 長程對照，或針對單一機制設計同狀態實驗 | 靜態 | merge-target | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
+| [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 第 11.3「擊破狀態」 | 是現象不是機制，沒有獨立程式碼。**沒有驗過 remake 會不會產生同樣的現象** / 要設計一個「把對方壓到邊緣」的局面，看新兵出陣是否立刻挨打 | 靜態 | merge-target | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
+| [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 三種災害的實機觀察 | 仍然沒有，但**依裁定不擋 CONFORMED**。要做的話：災害是機率觸發的，長跑等它或找一個災害剛發生的存檔，`spec/81` 的數值可以當預期值 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 第 7 章外交的行為對照 | 停戰／協力的成立與否沒有跟原版比過 / 同狀態存檔 ＋ 兩邊各下同一個提案，比結果 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 第 11 章的戰術攻略規則 | 追擊／回り込み／誘餌／疲勞度沒有實跑證據 / 這幾條是**玩家操作技巧**，要設計特定局面才觀察得到 | 實測 | merge-target | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
+| [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 第 1 章結局播放 | 有 remake 截圖，沒有與原版並排 / 原版要打到結局，或用存檔跳到最後一場 | 實測 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/63-manual-coverage.md`](../playtest/63-manual-coverage.md) | 軍師命名視窗的逐像素 | 有截圖沒有比 / 原版側 `tap` 到那一頁，照 `54` | 實測 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/64-appimage-20260904-reverify.md`](../playtest/64-appimage-20260904-reverify.md) | 軍團選單 `184,56,120,56` | 沒驗。`57` §3 記著原版那張是**另一個局面**（4/20、讀了存檔、游標停在第一列），所以它記的 4,298 px 本來就不是有效比對 / 用 `60` 的原版素材（同狀態），但那一張是曹操局面，要另外配一條 AppImage 的操作序列 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/65-dosgolem-oracle.md`](../playtest/65-dosgolem-oracle.md) | 載入既有存檔 | 沒試 / 把 `-save` 之類的旗標接進 `apps/wolong`，或直接讓遊戲走「載入」選單 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/65-dosgolem-oracle.md`](../playtest/65-dosgolem-oracle.md) | 戰術畫面 | 沒試 / 戰場走同一套繪製層，預期沒有新的機器層缺口——**但沒驗過就是沒驗過** | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/65-dosgolem-oracle.md`](../playtest/65-dosgolem-oracle.md) | 事件對話會擋住時鐘 | 已觀察到：跑到 196年4月3日 2時會出現「就將呂布擊潰吧」的對話框，時鐘停住等點擊 / 那是原版行為不是缺口；腳本要把它點掉 | 靜態 | evidence-only | — |
+| [`playtest/65-dosgolem-oracle.md`](../playtest/65-dosgolem-oracle.md) | 視窗 x 416 → 遊戲 415 | §3.1，成因未查。只影響游標位置 / 拿一批已知的原版擷取逐點掃 x，看換算式長什麼樣 | 靜態 | evidence-only | — |
+| [`playtest/65-dosgolem-oracle.md`](../playtest/65-dosgolem-oracle.md) | 半形字模 | dosgolem 側每次跑分都是 **0 次呼叫**——數字走遊戲自己的 8×16 點陣字 / 找一個會用到半形的畫面，或確認那條路是死路 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/65-dosgolem-oracle.md`](../playtest/65-dosgolem-oracle.md) | `STR.EXE` 的檔名懸案 | `../re/29` §6 仍未裁決 / dosgolem 的字型檔名是參數，把它改成 `END_S10/S11` 跑一次就知道 | 靜態 | evidence-only | — |
+| [`playtest/65-dosgolem-oracle.md`](../playtest/65-dosgolem-oracle.md) | PC-98 版 | dosgolem 沒有 PC-98 的機器層 / 那一版仍走 DOSBox-X | 實測 | evidence-only | — |
+| [`playtest/66-dosgolem-load-save.md`](../playtest/66-dosgolem-load-save.md) | 那 435 點的時間差是多少 | 只知道比 60 萬道指令小一個量級 / 做一個「跑到某個 tick／某個子刻」的取樣點，兩邊對齊到同一刻 | 靜態 | evidence-only | — |
+| [`playtest/66-dosgolem-load-save.md`](../playtest/66-dosgolem-load-save.md) | 走到戰術畫面 | 輸入模型解了，路還沒走 / 用熱區圖把「軍團 → 出兵」那條路列出來，再一步一步走 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/66-dosgolem-load-save.md`](../playtest/66-dosgolem-load-save.md) | `wait` 在遊戲中不適用 | 即時制的畫面永遠不會靜止，`wait` 會一路跑到預算上限（實測跑掉兩個遊戲日） / 遊戲中一律用 `steps:` 或 `until:` | 實測 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/67-dosgolem-popup-menus.md`](../playtest/67-dosgolem-popup-menus.md) | 「位置確認」與「行軍指示」之後的畫面 | 原版側**走得到了**（§5 第 10–12 步），但還沒與 remake 逐區比 / 兩邊各拍一張目的地選擇與兩項選單 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/67-dosgolem-popup-menus.md`](../playtest/67-dosgolem-popup-menus.md) | 編成視窗本身 | 已經開得出來，**還沒對拍**——手上沒有這一張的原版擷取（`workplace/promo-live/form-01` 是 remake 側的） / 用 `tools/dosgolem.sh` 拍一張當原版側 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/68-dosgolem-tactical-screen.md`](../playtest/68-dosgolem-tactical-screen.md) | 兩邊開同一場仗 | 這一次比的是**不同的兩場**。要 0 px 得讓 dosgolem 與 remake 站在同一個局面上（`-siege-corps`，`../spec/91` §3） / dosgolem 側加「從存檔直接開戰場」的入口，或把這一場的軍團寫進測試存檔 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/68-dosgolem-tactical-screen.md`](../playtest/68-dosgolem-tactical-screen.md) | 行軍途中被擋住 | 下令攻宛之後 108 個遊戲日沒有開戰，軍團沒到 / 攔 `sub_12662`（軍團到站）看它每一步走到哪 | 靜態 | actionable | [#30](https://github.com/wicanr2/wolong_cht/issues/30) |
+| [`playtest/68-dosgolem-tactical-screen.md`](../playtest/68-dosgolem-tactical-screen.md) | 戰術畫面的操作 | 只拍到進場，還沒送過任何戰術指令 / 側欄六列指令的熱區還沒問過 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/69-dosgolem-tactical-controls.md`](../playtest/69-dosgolem-tactical-controls.md) | 指令有沒有真的下下去 | 只看到反白與命令碼那一格變色，**沒有看到部隊照著動**——分支只跑了 80 萬道指令 / 同一個快照分兩支跑兩千萬道指令，一支下「突擊」一支不下，比 `field` | 靜態 | actionable | [#30](https://github.com/wicanr2/wolong_cht/issues/30) |
+| [`playtest/69-dosgolem-tactical-controls.md`](../playtest/69-dosgolem-tactical-controls.md) | 開場台詞會擋輸入多久 | 進場約一千萬道指令後跳呂布的台詞（`a3`），期間的點擊去向沒查 / 攔 `sub_14F58`（開戰訊息）看它什麼時候回 | 靜態 | evidence-only | — |
+| [`playtest/69-dosgolem-tactical-controls.md`](../playtest/69-dosgolem-tactical-controls.md) | 玩家的軍團行軍不會到 | 下令攻宛之後 24 個遊戲日內 `0x14F2B`（玩家攻）**一次都沒觸發**，遭遇全部是雙方都不是玩家、或玩家守空城 / 讀軍團記錄本身：段在 `cs:word_10D52`，軍團表段內偏移 `0x2240` | 靜態 | actionable | [#30](https://github.com/wicanr2/wolong_cht/issues/30) |
+| [`playtest/70-dosgolem-tactical-commands.md`](../playtest/70-dosgolem-tactical-commands.md) | remake 的三選一版面 | 量出來了，**還沒改**（`spec/39` §4） / 改用既有的 `popupMenu` 引擎，位置由游標算 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/70-dosgolem-tactical-commands.md`](../playtest/70-dosgolem-tactical-commands.md) | 兩邊開同一場仗 | 仍然沒有。dosgolem 這一場是 AI 觸發的，remake 側湊不出同一組軍團 / 把這一場的兩支軍團寫成測試存檔，兩邊都用 `-siege-corps` | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/70-dosgolem-tactical-commands.md`](../playtest/70-dosgolem-tactical-commands.md) | 對白框到期之後 | 只確認節拍 80 時兩個框都還活著（到期 127／110），沒有跑到它們消失 / 再跑 20 個節拍取樣一次 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/71-corps-table-parity.md`](../playtest/71-corps-table-parity.md) | 兩邊開同一場仗 | 兩邊的軍團表現在確定一致了，所以 `-siege-corps` 有共同基礎；**但原版沒有「指定兩支軍團開戰」的入口**——它要等遭遇 / `sub_11B5A` 是**無參數**的（狀態全在 `word_10D2E`／`word_10D30`／`byte_10D34`／`byte_10D35` 四個全域），所以… | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/71-corps-table-parity.md`](../playtest/71-corps-table-parity.md) | 武將表、據點表、勢力表 | 只對了軍團表 / `corps` 那一支的作法可以照搬（段值取自 `cs:word_10D52`） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/72-same-battle-parity.md`](../playtest/72-same-battle-parity.md) | `field` 的 180 px | 游標與旗相位，兩者原理上消不掉 / 要歸零得讓 remake 也畫游標、並讓旗相位可指定 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/72-same-battle-parity.md`](../playtest/72-same-battle-parity.md) | 野戰也開得出來嗎 | 只做了攻城（`sub_14ADE`）。野戰的外層是 `sub_14A7B`，參數不同（`si`／`di` 都是軍團） / 同一個作法照搬 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/73-opening-deployment-parity.md`](../playtest/73-opening-deployment-parity.md) | remake 要不要跟 | `Battle.Spawn` 已實作 ＋ 三支測試，**但接進遊戲路徑會讓攻城戰打不完**（`../spec/133` §3.5：60,000 幀剩餘兵數一個都沒變）。最可能是移動層不容許同格多兵 / 先解原版的移動與碰撞怎麼容許重疊 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/73-opening-deployment-parity.md`](../playtest/73-opening-deployment-parity.md) | 開場命令 | `sub_19B6D` 寫 `word ptr es:[di+1Ah], 1`（`+0x1A` ＝ 1 ＝ 攻擊），而執行期讀到的是 `00` / 兩者必有一個要修：可能是後面又被蓋掉，也可能 `+0x1A` 的偏移讀錯 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/74-settled-tick-parity.md`](../playtest/74-settled-tick-parity.md) | 走位期的長度是怎麼決定的 | 兩邊剛好一致，但沒有從機器碼推出「幾拍走一格」 / 讀原版的移動節流 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/75-pathfind-detour.md`](../playtest/75-pathfind-detour.md) | `field` 的對白框 | 捷徑路徑推完才武裝開場喊話（`../spec/117`） / 讓 `-open-siege` 在推之前武裝 | 靜態 | merge-target | [#17](https://github.com/wicanr2/wolong_cht/issues/17) |
+| [`playtest/75-pathfind-detour.md`](../playtest/75-pathfind-detour.md) | 走位期「幾拍走一格」 | 還沒從機器碼推出來 / `sub_1ADC8` 的節流 | 靜態 | evidence-only | — |
+| [`playtest/76-battle-talk-parity.md`](../playtest/76-battle-talk-parity.md) | 那 408 格符號字模的來源 | 不是倚天的任何一份（`../re/29` §7） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/77-state-table-parity.md`](../playtest/77-state-table-parity.md) | 武將旗標 bit 0 | 四個劇本裡只有劇本三的張衛設著，語意未解，remake 載入時丟掉。劇本 1 沒有人設，所以這一輪比不出來 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/77-state-table-parity.md`](../playtest/77-state-table-parity.md) | 其他三個劇本 | 只比過劇本 1 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/78-ai-decision-trace.md`](../playtest/78-ai-decision-trace.md) | 逐筆對齊 | 要兩邊同源的亂數；`sub_1ECE0` 的式子還沒讀 | 靜態 | evidence-only | — |
+| [`playtest/78-ai-decision-trace.md`](../playtest/78-ai-decision-trace.md) | 更長的窗口 | 速度解掉大半（`nodraw` ＋ `speed:0`，和平期 7.7×、戰時 2×，狀態軌跡逐欄相同，`../spec/131` §7）。⛔ **但天花板不是速度**：196年5月26日 2時「呂布的兵馬向許昌進攻過來了」——許昌是玩家首都，原版停下來等玩家，時鐘從此不動。無人值守的長跑要先有「按掉訊息 ＋ 讓… | 實測 | evidence-only | — |
+| [`playtest/78-ai-decision-trace.md`](../playtest/78-ai-decision-trace.md) | 事件 `0B`／`04`／`05`／`0D` | 內政官／外交官要求經費那幾支，開局全 `0xFF` 沒有官員，窗口內不會觸發 | 靜態 | evidence-only | — |
+| [`playtest/79-march-menu-original-layout.md`](../playtest/79-march-menu-original-layout.md) | 一般訊息框的名字 | `drawMessage` 還是整段畫白、名字還是裁掉補白。改動會波及四個語系的排版，要另外開規格（`../spec/140` §5） | 靜態 | evidence-only | — |
+| [`playtest/79-march-menu-original-layout.md`](../playtest/79-march-menu-original-layout.md) | 選單位置的實跑對照 | 位置只有單元測試與夾制推導，**沒有在同一個游標座標下拍過一張**——headless 的指標位置目前不可控 | 實測 | evidence-only | — |
+| [`playtest/80-retreat-countdown.md`](../playtest/80-retreat-countdown.md) | 倒數真的走完那一場 | 這一輪是「補不出兵」先到。要看到倒數收尾，得找一場退卻方**走不出去**的仗（被擋住，或補兵一直進場） | 靜態 | merge-target | [#18](https://github.com/wicanr2/wolong_cht/issues/18) |
+| [`playtest/80-retreat-countdown.md`](../playtest/80-retreat-countdown.md) | `word_1D31C` 的兩個 byte | 開場是 48／48 ＝ 六隊 × 八人，看起來是**場上**人數；`../re/11` §5.9 寫的是「含畫面外待機的」。兩種讀法都還沒有直接證據 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/80-retreat-countdown.md`](../playtest/80-retreat-countdown.md) | `battle-settled` 要不要往後挪 | §4.1 量到它停在兩個開場對白框之間。要當戰術對拍的取樣點就得再加一個條件（例如「兩個框都在」），或者乾脆只用 `-battle-steps 70` | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/81-command-cell-highlight.md`](../playtest/81-command-cell-highlight.md) | 1 | 指令列的「進言」「財政」「編成」**不會反白** / `activeCommandCell()` 只認得三張彈出選單。原版是 `sub_161CA` 在 `call` 前後各 XOR 一次，**八格共用同一段程式碼** / `../spec/124` §3.5 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/81-command-cell-highlight.md`](../playtest/81-command-cell-highlight.md) | 2 | 左下角的**狀態列提示框沒有畫**；財政那一張反而多了一條 remake 自己的提示條 / `sub_18853` 的 48 個呼叫點只接了行軍那一條 / `../spec/140` | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/81-command-cell-highlight.md`](../playtest/81-command-cell-highlight.md) | 編成那一張的完整對拍 | 要兩邊同一個局面同一步：原版停在武將一覽（4月20日），remake 要載同一份存檔、跑到同一天、停在同一步，而且 `-lord-corps=false` | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/81-command-cell-highlight.md`](../playtest/81-command-cell-highlight.md) | 武將／勢力兩格的反白 | 照公式接了，**沒有原版擷取**。原版那兩格走狀態列提示 ＋ 地圖游標，remake 開的是一覽表（`../spec/124` §5） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/81-command-cell-highlight.md`](../playtest/81-command-cell-highlight.md) | 另外 45 個 `sub_18853` 呼叫點 | 接了行軍、財政、編成三條。其餘要一條一條接、一條一條拍 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/81-command-cell-highlight.md`](../playtest/81-command-cell-highlight.md) | 原版擷取裡的滑鼠游標 | `command` 那 88 px。原版自己畫的，remake 的截圖模式不畫——與 `76` §4 的 95 px 同一類 | 實測 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/82-strategy-date-aligned-parity.md`](../playtest/82-strategy-date-aligned-parity.md) | 其餘家族的破折號縮排 | 只有軍團（0）與武將（8）量過。據點／勢力那兩張**沒有原版擷取**，維持 0 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/82-strategy-date-aligned-parity.md`](../playtest/82-strategy-date-aligned-parity.md) | 財政的 141 px | 校訂造成的，**刻意的差異**。要 0 px 得拿未校訂的文本跑，那不是遊戲會出的畫面 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/82-strategy-date-aligned-parity.md`](../playtest/82-strategy-date-aligned-parity.md) | 原版擷取裡的滑鼠游標 | 88 px。要消掉得讓原版把游標移開再截圖——`move:` 之後游標會拖動鏡頭（`../re/84` §2），得先確認拖不動的位置 | 實測 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/82-strategy-date-aligned-parity.md`](../playtest/82-strategy-date-aligned-parity.md) | 武將／勢力兩格的指令列反白 | 原版走狀態列提示 ＋ 地圖游標，remake 開一覽表，**流程不同**（`../spec/124` §5） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/83-city-list-parity.md`](../playtest/83-city-list-parity.md) | 原版擷取裡的滑鼠游標 | 88 px。要消掉得讓原版把游標移到不會拖動鏡頭的位置再截圖 | 實測 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/83-city-list-parity.md`](../playtest/83-city-list-parity.md) | 其餘家族的破折號縮排 | 這一張十列全滿，**看不到空列**，所以驗不到據點家族的破折號（`../spec/38`） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/84-personnel-corps-list-parity.md`](../playtest/84-personnel-corps-list-parity.md) | 迴圈與台詞的畫面對拍 | 接上了但**沒拍**——要按下去才看得到，得再走一步 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/84-personnel-corps-list-parity.md`](../playtest/84-personnel-corps-list-parity.md) | 原版擷取裡的滑鼠游標 | 六張都是 88 px | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/85-general-duty-field.md`](../playtest/85-general-duty-field.md) | **解任把 `+0x1A` 歸零沒有實跑正對照** | 機器碼是 `mov byte [bx+1Ah], 0`（`../re/25` §3.1，confirmed），但這一輪那位官員的經費本來就是 0，**實跑等於沒比**。要撥過款再解任才驗得到 | 實測 | evidence-only | — |
+| [`playtest/85-general-duty-field.md`](../playtest/85-general-duty-field.md) | 身分欄的畫面對拍 | 原版擷取有了（§3），remake 同狀態的還沒拍——要讓 remake 也走到「已任命」再開武將一覽 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/85-general-duty-field.md`](../playtest/85-general-duty-field.md) | `sub_13771` 讀 `+0x17` 的分支 | 語意未解（`../spec/143` §8） | 靜態 | evidence-only | — |
+| [`playtest/85-general-duty-field.md`](../playtest/85-general-duty-field.md) | 自定軍師時原版那個越界寫 | `loc_11AF8` 在 `+0x02 ＝ 0x7F` 時照樣寫 `[0x7F×32 + 4240h]`，落在武將表尾端之後；寫進去的是什麼欄位沒查，remake 不照抄 | 靜態 | evidence-only | — |
+| [`playtest/86-general-faction-cells-parity.md`](../playtest/86-general-faction-cells-parity.md) | **暴風雨覆蓋層的畫法** | 已知是 50% 網點、灰白（`a2b2b2`／`f3f3f3`／`617171`）＋偶數列的黑點；**還沒讀到畫它的那一支**，也不知道會不會逐 frame 動。要改 remake 得先補一份規格 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/86-general-faction-cells-parity.md`](../playtest/86-general-faction-cells-parity.md) | 覆蓋範圍的邊界 | 實測涵蓋格 (271–283, 160–168)，而中心據點在 (278,164) ⇒ 左緣比 `中心−5` 多兩格。是量到的邊緣網點還是座標框差，沒分清楚 | 實測 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/86-general-faction-cells-parity.md`](../playtest/86-general-faction-cells-parity.md) | 情報卡的三個數字 | 隨時間變，`clock:` 只到「時」——同 `83` 的裁定 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/86-general-faction-cells-parity.md`](../playtest/86-general-faction-cells-parity.md) | 滑鼠游標 88 px | 五個分區鋪滿全畫面，游標停在哪都會落進某一區；remake 沒有自繪游標 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/87-map-clouds.md`](../playtest/87-map-clouds.md) | 雲的漂移長時間對齊 | 需要原版亂數流的完整消費端；§5 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`playtest/87-map-clouds.md`](../playtest/87-map-clouds.md) | `+0x01`／`+0x06`／`+0x07` | `sub_123FF` 對火災寫 `+0x06 = +0x07 = 1`，雲是 0；語意未解 | 靜態 | merge-target | [#23](https://github.com/wicanr2/wolong_cht/issues/23) |
+| [`playtest/87-map-clouds.md`](../playtest/87-map-clouds.md) | type 3 的產生端 | 目前所有可見的事件 12 producer 只建 type 1／2 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`playtest/88-controlled-save-parity.md`](../playtest/88-controlled-save-parity.md) | 原版的地圖游標框 | remake 沒畫；要接得先讀出顏色、線寬與更新時機 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/88-controlled-save-parity.md`](../playtest/88-controlled-save-parity.md) | 還能關掉什麼 | 目前只有雲。天災、AI 出兵、募兵都吃亂數，各自需要自己的欄位 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/89-advise-status-parity.md`](../playtest/89-advise-status-parity.md) | 兩邊的亂數**消費順序** | 這才是主因。機制接好了（`-rng-state` ＋ `tools/rng_state.py`），但**逐拍數兩邊各取幾個亂數**還沒做——那是讓長時間對拍成立的唯一路徑 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/89-advise-status-parity.md`](../playtest/89-advise-status-parity.md) | 上昇率那一欄 | 差到 ±4，成因確定是亂數而不是公式；**公式本身還沒逐項對過** | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/89-advise-status-parity.md`](../playtest/89-advise-status-parity.md) | 滑鼠游標 88 px | 五個分區把畫面鋪滿，游標停哪都會落進某一區；remake 沒有自繪游標 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/90-formation-second-step.md`](../playtest/90-formation-second-step.md) | 原版的滑鼠游標 | 選單上是 14×14 紅箭頭（白邊）、大地圖上是 15×15 白色空心框（＋1,+1 黑影）。**遊戲自己畫的**（dosgolem 的 INT 33h 不畫），所以它是 remake 的缺口；但繪製端還沒定位，而且 remake 用的是 OS 游標，要接得連「隱藏 OS 游標」一起決定 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/91-general-boast-parity.md`](../playtest/91-general-boast-parity.md) | remake 要把游標的 hide／show 接在哪 | 原版的規則已解（`../re/88`），但 54 個呼叫點還沒對應到 remake 的繪圖流程 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/91-general-boast-parity.md`](../playtest/91-general-boast-parity.md) | `0x1A8`（俘虜）與 `0x1AB`（海戰）兩組 | 沒有原版擷取；需要一個有俘虜、或水戰適性最高的武將的局面 | 靜態 | merge-target | [#31](https://github.com/wicanr2/wolong_cht/issues/31) |
+| [`playtest/92-personnel-assign-parity.md`](../playtest/92-personnel-assign-parity.md) | 原版的滑鼠游標 | 95–109 px。⚠ `91` §3 那一張**沒有**游標，同樣有訊息框、同樣的點擊位置——差別還沒找到 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/92-personnel-assign-parity.md`](../playtest/92-personnel-assign-parity.md) | 每小時 ±1 | 據點一覽那兩欄，已裁定（`83` §4.1） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/92-personnel-assign-parity.md`](../playtest/92-personnel-assign-parity.md) | 兩張清單共用同一個游標記憶體 | `word_198AA`：原版關掉清單再開回來，游標停在原處。remake 每次從 0 開始（`148` §4） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/94-march-map-picker.md`](../playtest/94-march-map-picker.md) | 游標推到畫面邊緣時鏡頭跟過去 | 原版的滑鼠是**世界座標**，推出視野鏡頭會捲（`../re/84` §2）。remake 的滑鼠被視窗框住，還沒接 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/94-march-map-picker.md`](../playtest/94-march-map-picker.md) | 狀態列 #21（三選一） | 選完目標據點的下一張，還沒拍 | 靜態 | evidence-only | — |
+| [`playtest/94-march-map-picker.md`](../playtest/94-march-map-picker.md) | 別的狀態下的游標 | §2 | 靜態 | evidence-only | — |
+| [`playtest/95-diplomacy-preconditions.md`](../playtest/95-diplomacy-preconditions.md) | 協同進攻的對象選完之後 | #7 那一張已經有了（`102`），**再選下去**（成案／被拒）還沒拍 | 靜態 | actionable | [#26](https://github.com/wicanr2/wolong_cht/issues/26) |
+| [`playtest/95-diplomacy-preconditions.md`](../playtest/95-diplomacy-preconditions.md) | `sub_1304E` 的 `dx` 附加欄位 | 這兩個呼叫點都傳 `0FFFFh`（不比），別的呼叫點還沒逐一讀 | 靜態 | evidence-only | — |
+| [`playtest/95-diplomacy-preconditions.md`](../playtest/95-diplomacy-preconditions.md) | 原版擷取裡的滑鼠游標 | 兩張都是 95 px | 靜態 | evidence-only | — |
+| [`playtest/96-map-click.md`](../playtest/96-map-click.md) | 佔用圖 | 原版查的是 `cs:word_19872` 的佔用圖，remake 直接掃軍團表比座標。結果相同但來源不同 | 靜態 | evidence-only | — |
+| [`playtest/96-map-click.md`](../playtest/96-map-click.md) | `sub_11F0E` 的 X 夾制 `23h` | 夾住之後框的右緣落在 672，超出畫面 32 px（`../spec/151` §1.2）——與行軍三選一的 `21h` 剛好貼齊不一樣。照抄常數，成因未解 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/96-map-click.md`](../playtest/96-map-click.md) | `-map-click` 繞過忙碌判定 | fixture 直接呼叫 `dispatchMapClick`，所以截圖裡情報卡與選單同時開著；真實操作走 `updateMapClick` 會被擋 | 實測 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/97-faction-picker-parity.md`](../playtest/97-faction-picker-parity.md) | 原版擷取裡的滑鼠游標 | 82 px，停在剛點的圖例上 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/97-faction-picker-parity.md`](../playtest/97-faction-picker-parity.md) | 只重畫兩列 | 原版換選中時只重畫舊的與新的那兩列，remake 整張重畫。**視覺上沒有差異**，但要知道原版沒有全畫面刷新（`../re/31` §2.2） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/98-enemy-corps-panel.md`](../playtest/98-enemy-corps-panel.md) | 「反白列的 `listCellInk` 覆寫沒有樣本」。 | （未解小節內文） | 靜態 | evidence-only | — |
+| [`playtest/98-enemy-corps-panel.md`](../playtest/98-enemy-corps-panel.md) | 整張畫面 | 鏡頭是格級的（`../spec/149` §4） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/99-slot-window-parity.md`](../playtest/99-slot-window-parity.md) | 原版擷取裡的滑鼠游標 | 95 px，停在剛點的 `ＯＫ` 格上 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/99-slot-window-parity.md`](../playtest/99-slot-window-parity.md) | remake 的下方提示框 | 「檔案　SAVE.DAT」與鍵盤提示是 remake 差異，**畫在原版視窗外面**（`../spec/25` §3），所以不影響本體 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`playtest/99-slot-window-parity.md`](../playtest/99-slot-window-parity.md) | ＬＯＡＤ／ＮＥＷ 兩個標題 | 只比了 ＳＡＶＥ 那一張 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 
 ## 2.5 外部資料（6 條）
 
-| 出處 | 缺口 | 現況 | 裁決 |
-|---|---|---|---|
-| [`reference/02-jp-cht-diff.md`](../reference/02-jp-cht-diff.md) | 逐句對照的**日文原版側畫面** | 兩版的同一則並排截圖沒有做過——這一輪的畫面抽樣只驗 remake 自己（`../playtest/41` §6） | 實測 |
-| [`reference/02-jp-cht-diff.md`](../reference/02-jp-cht-diff.md) | `#223` 等訊息的欄位完整語意 | 只修已證實的標記編號，欄位語意仍未解（§9） | 靜態 |
-| [`reference/03-baked-japanese.md`](../reference/03-baked-japanese.md) | 橫幅上寫的是**「臥竜伝」**——日文漢字，不是「臥龍傳」。 | （未解小節內文） | 靜態 |
-| [`reference/04-first-survey.md`](../reference/04-first-survey.md) | `SHOW.O` | 57,148 B / 被 `INSTALL.EXE` 與 `LOGO.EXE` 引用。開頭 `3c df 00 00 11 af 01 00 50 00 80 07`。**未解** | 靜態 |
-| [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 |
-| [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 |
+| 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
+|---|---|---|---|---|---|
+| [`reference/02-jp-cht-diff.md`](../reference/02-jp-cht-diff.md) | 逐句對照的**日文原版側畫面** | 兩版的同一則並排截圖沒有做過——這一輪的畫面抽樣只驗 remake 自己（`../playtest/41` §6） | 實測 | actionable | [#1](https://github.com/wicanr2/wolong_cht/issues/1) |
+| [`reference/02-jp-cht-diff.md`](../reference/02-jp-cht-diff.md) | `#223` 等訊息的欄位完整語意 | 只修已證實的標記編號，欄位語意仍未解（§9） | 靜態 | actionable | [#1](https://github.com/wicanr2/wolong_cht/issues/1) |
+| [`reference/03-baked-japanese.md`](../reference/03-baked-japanese.md) | 橫幅上寫的是**「臥竜伝」**——日文漢字，不是「臥龍傳」。 | （未解小節內文） | 靜態 | evidence-only | — |
+| [`reference/04-first-survey.md`](../reference/04-first-survey.md) | `SHOW.O` | 57,148 B / 被 `INSTALL.EXE` 與 `LOGO.EXE` 引用。開頭 `3c df 00 00 11 af 01 00 50 00 80 07`。**未解** | 靜態 | evidence-only | — |
+| [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
+| [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
 ## 2.6 其他（342 條）
 
-| 出處 | 缺口 | 現況 | 裁決 |
-|---|---|---|---|
-| [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | 實機驗收 | ⛔ 沒有裝置。里程碑 H 保持未完成 | 靜態 |
-| [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | SAF 匯入的複製流程 | 入口做完了，但「選資料夾 → 複製 69 檔」沒有自動驗過：要驅動系統的檔案選擇器。smoke 走的是 `adb` ＋ `run-as`，那是驗收路徑不是玩家路徑 | 靜態 |
-| [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | 高 DPI 下的點陣字 | 定為 2 倍（`../spec/100`）；實機上要不要另一檔未驗 | 靜態 |
-| [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | release signing | keystore 怎麼保管還沒決定；目前出的是 debug 簽章 | 靜態 |
-| [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | 16 KB 對齊只驗到建置那一層 | `readelf` 確認 LOAD 段是 `0x4000`，但**沒有 16 KB page size 的裝置或 AVD 實際載過**。這一條與「實機驗收」是同一個缺口 | 靜態 |
-| [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 點陣字在高 DPI 上要放大幾倍 | 定為 2（§6）；平板或小手機要不要另一檔，得有實機回饋 | 靜態 |
-| [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 小卡要放哪些欄位 | 目前放名稱／歸屬／生產力／防災／城兵五項。原版一覽表的欄位全表在 `docs/spec/38`，還沒逐項比對過取捨 | 靜態 |
-| [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 縮放的下限 | 整張大地圖 384×256 格全塞進手機會小到看不見，最小縮放級距還沒定 | 靜態 |
-| [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 戰場的縮放 | 目前固定 1×（原版的 480×368 剛好塞進主區）。放大之後看得到的格子會變少，**那會改變決策**，所以沒有做 | 靜態 |
-| [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 戰場縮圖的點選 | 原版點縮圖可以移動鏡頭，手機版目前只顯示 | 靜態 |
-| [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 事件訊息的停留時間 | 六秒是估的。原版沒有這個機制（它要按鍵才消），所以沒有可抄的數字 | 靜態 |
-| [`promo/android.md`](../promo/android.md) | 實機錄影 | ⛔ 沒有裝置。片中畫面出自桌面的同一份 `internal/ui/phone`，與 APK 是同一份程式碼，但**不是實機錄影** | 靜態 |
-| [`promo/android.md`](../promo/android.md) | 模擬器錄影 | 模擬器在這台機器上只有個位數 fps，錄出來會頓 | 靜態 |
-| [`promo/combined.md`](../promo/combined.md) | 三段的響度沒有逐段量 | 配樂那一軌過了 `loudnorm=I=-18`，但三段畫面本身沒有音效，所以整片只有一條音軌——目前沒有段間響度落差的來源。**換成保留各段原音的版本時要重量** | 靜態 |
-| [`promo/dosv-realmachine.md`](../promo/dosv-realmachine.md) | 原版戰術戰場的實機擷取 | 四次未觸發（§4）。要嘛接受原版 RNG 的變異多跑幾次，要嘛從存檔直接進戰場——後者要先解「怎麼從存檔載入到開戰的那一刻」 | 靜態 |
-| [`promo/dosv-realmachine.md`](../promo/dosv-realmachine.md) | 原版 AdLib 的同場錄音 | `ctrl+F6` 的 WAV 擷取這次沒生效，配樂沿用 2026-08-12 那次的實錄 | 靜態 |
-| [`promo/dosv-realmachine.md`](../promo/dosv-realmachine.md) | 兩側時鐘速度可比 | remake 用最高速檔才看得到動靜；要真的可比，得先量原版預設檔的每日實時秒數 | 靜態 |
-| [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | 目標 OS 實跑 | **做不到**：這台是 Linux，沒有 Mac／Windows。檔頭驗過（PE32+／Mach-O），但視窗、輸入、音訊、字型載入都沒有在目標系統上跑過 | 實測 |
-| [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | linux/arm64 的本體 | 要在 arm64 的 Linux 上建（Ebiten 的 cgo 沒有交叉工具鏈） | 靜態 |
-| [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | Windows 的 smoke | 同第一項 | 靜態 |
-| [`release/10-full-20260828.md`](../release/10-full-20260828.md) | Windows／macOS 原生 GUI 實機驗收 | ⛔ 沒有那兩個平台的機器。交叉建置的產物只驗了檔頭 | 靜態 |
-| [`release/10-full-20260828.md`](../release/10-full-20260828.md) | Android 實機驗收 ＋ release signing | ⛔ 沒有裝置；目前是 debug 簽章 | 靜態 |
-| [`release/10-full-20260828.md`](../release/10-full-20260828.md) | Android 模擬器 smoke | 這一批跳過（§3）。要跑得先重建 13.7 GB 的模擬器映像 | 靜態 |
-| [`release/10-full-20260828.md`](../release/10-full-20260828.md) | 沒有音效裝置時遊戲會掛 | 完整版會自己找到音檔並開音訊，而 Ebiten 沒有可查詢的音訊 API（`../spec/75` §5） | 靜態 |
-| [`release/11-full-20260830.md`](../release/11-full-20260830.md) | Windows／macOS 原生 GUI 實機驗收 | 沒有 Mac／Windows 主機。交叉建置的檔頭與 ABI 已驗，但不以檔頭取代實測 | 實測 |
-| [`release/11-full-20260830.md`](../release/11-full-20260830.md) | Android 實機／模擬器 smoke | 沒有裝置；模擬器映像不在機器上，重建要重下 13.7 GB | 靜態 |
-| [`release/11-full-20260830.md`](../release/11-full-20260830.md) | 合成片的段間響度 | 目前整片只有一條配樂軌，沒有段間落差的來源；換成保留各段原音的版本時要重量（`../promo/combined.md` §6） | 靜態 |
-| [`release/12-full-20260902.md`](../release/12-full-20260902.md) | Windows／macOS 原生 GUI | 沒有實機或 VM，只驗了檔頭 | 靜態 |
-| [`release/12-full-20260902.md`](../release/12-full-20260902.md) | Android 實機與 release signing | 沒有裝置；金鑰保管方式未定 | 靜態 |
-| [`release/12-full-20260902.md`](../release/12-full-20260902.md) | Android 模擬器 smoke | `wolong-android-emulator` 映像不在這台機器上 | 靜態 |
-| [`release/12-full-20260902.md`](../release/12-full-20260902.md) | 可散布批次 | 仍停在 `20260830`，這一輪的六項修正還沒進公開發行 | 靜態 |
-| [`release/13-full-20260906.md`](../release/13-full-20260906.md) | Windows／macOS 原生 GUI | ❌ 沒有機器，仍未驗 | 靜態 |
-| [`release/13-full-20260906.md`](../release/13-full-20260906.md) | Android 實機 | ❌ 只有 debug 簽章，仍未驗 | 靜態 |
-| [`release/13-full-20260906.md`](../release/13-full-20260906.md) | Windows／macOS／Android 實機 | 外部條件：缺機器 | 靜態 |
-| [`release/13-full-20260906.md`](../release/13-full-20260906.md) | `dist-public` 的 GUI smoke | `release_smoke.sh` 只跑 `dist-all`；可散布版要玩家自備資料才跑得起來，smoke 要另外給 `-orig`／`-font` | 靜態 |
-| [`release/14-full-20260907.md`](../release/14-full-20260907.md) | APK 沒跟著這一批重建 | §2。Android 沒有改動，但批次日期不一致會讓人以為漏了 | 靜態 |
-| [`release/14-full-20260907.md`](../release/14-full-20260907.md) | 各目標平台的**實機**驗收 | M8 的閘：Windows／macOS GUI、Android 實機與 release signing 都要真的機器，Docker 代不了 | 靜態 |
-| [`release/15-desktop-closeout-20260908.md`](../release/15-desktop-closeout-20260908.md) | 原生平台操作 | Windows／macOS 待人工回報；不由 Linux 封包查核替代 | 靜態 |
-| [`release/15-desktop-closeout-20260908.md`](../release/15-desktop-closeout-20260908.md) | 完整原版一致性 | playtest/115 所列逐拍及世界結算差異保留，不阻止本輪有揭露限制的交付整理 | 靜態 |
-| [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Windows／macOS 原生 GUI | 交叉建置的產物只驗了檔頭，沒有在目標作業系統跑過。M8 唯一的閘 | 靜態 |
-| [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 實機驗收 | 只有 Docker 模擬器；觸控手感、真實 GPU、高 DPI 上的點陣字可讀性都驗不到 | 靜態 |
-| [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 正式簽章 | 出的是 debug 簽章，keystore 怎麼保管還沒決定 | 靜態 |
-| [`release/README-RELEASE.md`](../release/README-RELEASE.md) | 16 KB page size 裝置 | `.so` 的 LOAD 段已是 `0x4000`，但沒有那種裝置或 AVD 實際載過 | 靜態 |
-| [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 據點換手之後 `+0x00` 低 4 位會不會跟著變 | `sub_1890A` 靜態讀過，動態沒驗——要打下一座城才看得到 | 靜態 |
-| [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 玩家據點求援的喇叭聲（`sub_10CDE`） | ⭐ **量清楚了，但刻意不接**（見下） | 靜態 |
-| [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 1. **長度 ≈ 2 個垂直畫面**（VGA 400 列模式約 70 Hz ⇒ **≈ 28 ms**）， | （未解小節內文） | 靜態 |
-| [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 2. ⭐ **音高不是它決定的**——這一支只開關 PPI port `61h` 的 bit 0/1， | （未解小節內文） | 靜態 |
-| [`spec/100-phone-text-scale.md`](../spec/100-phone-text-scale.md) | 倍率不能在遊戲內調 | 固定 2。平板或小手機可能要 1 或 3，得先有實機回饋 | 靜態 |
-| [`spec/101-phone-glyph-scale2x.md`](../spec/101-phone-glyph-scale2x.md) | 高 DPI 上 Ebiten 把 960×540 再縮到螢幕（非整數倍）的殘餘鋸齒 | 那一層是 Ebiten 的螢幕縮放（預設線性濾波），本規格只處理字模那一層。要不要改成整數倍畫布得有實機回饋 | 靜態 |
-| [`spec/102-battle-fast-forward.md`](../spec/102-battle-fast-forward.md) | 快轉時戰場區的底紋 | 原版是**藍底綠線的菱形格**（`playtest/53` 的裁切），不是龍紋。已收斂到「讀哪裡」：`sub_1DC9D` 的 `es` ＝ `word_1E15E`，**唯一的寫入端**是 `sub_1D958`（`sub_19946` 用 `cx = word_1D2F6` 傳進去），而 `word_1D2F… | 靜態 |
-| [`spec/103-phone-diplomacy-amount-keypad.md`](../spec/103-phone-diplomacy-amount-keypad.md) | 撥款請求的「指定金額」 | 原版 `sub_17C6E` 的另一個呼叫端；手機版仍只給「照要求撥款／拒絕」，同一套鍵盤可以接，先不做 | 靜態 |
-| [`spec/104-advisor-naming-window.md`](../spec/104-advisor-naming-window.md) | 選好字之後的畫面 | `../playtest/105` 停在剛開啟的狀態，**選字、翻頁、換肖像**之後還沒拍 | 靜態 |
-| [`spec/104-advisor-naming-window.md`](../spec/104-advisor-naming-window.md) | 視窗外的背景 | 原版這一頁後面疊著 NEW GAME 的勢力清單與君主卡；`-open-naming` 直接開視窗，背後只有地圖。要對得走完整條新遊戲流程 | 靜態 |
-| [`spec/105-encounter-goes-straight-to-battle.md`](../spec/105-encounter-goes-straight-to-battle.md) | 遭遇當天的日期差一天 | **量到剩 2 個子刻**（§6）。原本記的「時鐘推進速率」不是成因——**接觸在第幾個子刻與速度檔無關**，節流只改牆鐘秒數不改 tick 數。缺的是原版接觸 tick 的一手數字 | 靜態 |
-| [`spec/106-message-box-reporter-portrait.md`](../spec/106-message-box-reporter-portrait.md) | `0x94`／`0x95` 兩頁保留肖像的用途 | `0x94` 是一張紅臉武將、`0x95` 是空白。沒找到傳這兩個值的呼叫點 | 靜態 |
-| [`spec/106-message-box-reporter-portrait.md`](../spec/106-message-box-reporter-portrait.md) | #217 的兩個 `{3}` | 機制已通（`SeqFactions`），但**發那一則的呼叫端還沒讀**，所以第二個勢力是誰未定 | 靜態 |
-| [`spec/107-launcher-ui-colours.md`](../spec/107-launcher-ui-colours.md) | 殼層其餘幾頁（ＹＥＳ／ＮＯ、劇本、四槽讀檔）的配色 | 這一輪只對過勢力清單與君主卡。其餘幾頁同樣走 `paletteInk`，修完應該一起好，但**沒有逐像素比過** | 靜態 |
-| [`spec/107-launcher-ui-colours.md`](../spec/107-launcher-ui-colours.md) | 捲軸滑塊的位置差 1 px | 量到：22 筆、`top` ＝ 4 時，原版的綠面在 y 161–216，remake 在 160–215（高度都是 56）。`⌊128×4/22⌋ ＝ 23` 給 159，原版對應的是 24。**只有這一個取樣點**，分不出是無條件進位、四捨五入還是槽的起點差 1；`38` §1.6 的實機量測只釘住高度沒釘位… | 靜態 |
-| [`spec/107-launcher-ui-colours.md`](../spec/107-launcher-ui-colours.md) | 反白條 | remake 的鍵盤游標，原版沒有。要不要照戰略層一覽表那樣「碰過才畫」（`g.listTouched`）沒有定案 | 靜態 |
-| [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | `資金高位 >= 0x80` 那一支 | `cmp bh, 80h / jnb` 會直接算「答應」，等於資金超過約 840 萬時門檻失效。**看起來像有號數的邊界處理**，未逐位對過 | 靜態 |
-| [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | 君主出陣之後的行為 | 那支軍團跟一般軍團有沒有差別，未讀 | 靜態 |
-| [`spec/110-corps-command-menu.md`](../spec/110-corps-command-menu.md) | 選完之後的兩條流程 | 位置確認的軍團一覽、行軍指示的目的地一覽，**都沒有對拍**（`../playtest/60` §4） | 靜態 |
-| [`spec/112-cursor-idle-resume-delay.md`](../spec/112-cursor-idle-resume-delay.md) | `sub_20000(ax=2)` 為什麼在恢復時被呼叫 | 那是滑鼠層跳表的第 2 號（`sub_2009A`，回傳快取座標並清旗標），在這個時點叫它的理由沒讀 | 靜態 |
-| [`spec/112-cursor-idle-resume-delay.md`](../spec/112-cursor-idle-resume-delay.md) | 訊息框那一路的 `8` 與游標的 `0Ch` 為什麼不同 | 兩個立即值都是 confirmed，但差別的用意沒有證據；remake 兩邊都用同一個延遲 | 靜態 |
-| [`spec/113-rle-length-header.md`](../spec/113-rle-length-header.md) | `BATTLE.MAP`／`MMAP.MCH`／`BATTLE.MDL` 走哪一支載入器 | 沒查（`../formats/06` §6）。它們的前 4 byte 不是長度，所以**至少不是這一族** | 靜態 |
-| [`spec/114-general-affinity.md`](../spec/114-general-affinity.md) | 旗標 bit 5 之外的退場條件 | `sub_15899` 只在「心向的勢力已滅」時看 bit 5；bit 5 沒設的武將會留在原地等下一輪，這一點沒有實機驗證 | 靜態 |
-| [`spec/115-soldier-power.md`](../spec/115-soldier-power.md) | 海戰適性實際被取到過沒有 | 算式與接線都對了，但**沒有跑過一場橋上的野戰**。要驗得讓兩支軍團在圖塊 `0xCA` 那一格遭遇 | 靜態 |
-| [`spec/115-soldier-power.md`](../spec/115-soldier-power.md) | 地形類型 3–7 各是什麼地形 | `cs:982Fh` 的範圍已攤開（`../re/05`），但「類型 3 ＝ 山地／丘陵」那一欄的標籤是從圖塊外觀推的，沒有機器碼出處 | 靜態 |
-| [`spec/116-retreat-cannot-leave-the-city.md`](../spec/116-retreat-cannot-leave-the-city.md) | 還有誰在用 `NewFieldFromTiles` 配真戰場資料 | `internal/rules/tactical/tactical_test.go` 有一處。它驗的是圖塊解碼不是連通性，但同一個陷阱在那裡也成立 | 靜態 |
-| [`spec/116-retreat-cannot-leave-the-city.md`](../spec/116-retreat-cannot-leave-the-city.md) | 退路要不要留 | 合成戰場（`NewField`）確實只有堆疊高度。**能不能在圖塊 ≥ `0xF0` 時不用堆疊高度**，是另一個問題 | 靜態 |
-| [`spec/117-fixture-arms-duel-before-stepping.md`](../spec/117-fixture-arms-duel-before-stepping.md) | 野戰 `field` 的殘差 | 修好之後還剩多少，量在 `../playtest/58` | 靜態 |
-| [`spec/117-fixture-arms-duel-before-stepping.md`](../spec/117-fixture-arms-duel-before-stepping.md) | 自然流程那條路 | 遭遇訊息會擋住 `-shot-frames`（`105` §4 已寫明是預期行為）。要用自然流程做野戰對拍，得有一個「訊息自動按掉」的驗收旗標 | 靜態 |
-| [`spec/118-shot-when-condition.md`](../spec/118-shot-when-condition.md) | docs/playtest/40` 的攻城取樣點是「第 61 步」。 | （未解小節內文） | 靜態 |
-| [`spec/118-shot-when-condition.md`](../spec/118-shot-when-condition.md) | 條件的組合 | 一次只吃一個條件。`91` §6 的攻城取樣點其實是三個條件同時成立（城壁挨過打、條顯示中、對白框已收），現在只判得了第二個 | 靜態 |
-| [`spec/118-shot-when-condition.md`](../spec/118-shot-when-condition.md) | 對白框的收掉時刻 | 沒有條件可以判「兩側的對白框都到期」，那要規則層先把 `word_1D322`／`word_1D324` 的到期時刻露出來 | 靜態 |
-| [`spec/119-talk-marker-fields.md`](../spec/119-talk-marker-fields.md) | 有沒有一則原版訊息真的提到那三個人 | 沒有窮舉。`\1` 的參數由呼叫端給，要逐個 `sub_18810` 呼叫點看 | 靜態 |
-| [`spec/119-talk-marker-fields.md`](../spec/119-talk-marker-fields.md) | `\5` 沒有接 | `TALK.DAT` 裡零次使用（`../formats/01` §3），接了也沒有東西會走到 | 靜態 |
-| [`spec/119-talk-marker-fields.md`](../spec/119-talk-marker-fields.md) | 同狀態截圖 | 要一張原版畫面上出現「孔明」的訊息才驗得到字本身 | 實測 |
-| [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝命令、`0x0Bh`／`0x10h`／`0x15h`／`0x1Fh` 各自出現在哪個視窗已知，完整值域未列 | 靜態 |
-| [`spec/120-pathfind-request-queue.md`](../spec/120-pathfind-request-queue.md) | `sub_1ACA4` | 排隊之後緊接著呼叫，內容沒讀（`../re/80` §5） | 靜態 |
-| [`spec/120-pathfind-request-queue.md`](../spec/120-pathfind-request-queue.md) | 碰撞尾段那一處的前提 | 哪幾條分支會走到 `loc_1B612` 沒有逐條追 | 靜態 |
-| [`spec/120-pathfind-request-queue.md`](../spec/120-pathfind-request-queue.md) | 佇列順序對戰局的影響 | FIFO 與無序在同一場攻城裡差多少，沒有量化 | 靜態 |
-| [`spec/121-water-battlefield-selection.md`](../spec/121-water-battlefield-selection.md) | 類型 9 的另一條分支 | `loc_14C2C` 還會看鄰格是不是 `0xCA` 並設 `ch = 0x40`（翻轉旗標），remake 固定回 213、不翻轉。那一段沒逐行讀 | 靜態 |
-| [`spec/121-water-battlefield-selection.md`](../spec/121-water-battlefield-selection.md) | 實跑一場碼頭野戰 | 沒有。要讓兩支軍團在圖塊 `0xCA` 上遭遇 | 實測 |
-| [`spec/122-sound-type-levels.md`](../spec/122-sound-type-levels.md) | 四段的實際音量差 | 沒有錄下原版四個 TYPE 的波形量過。算式來自機器碼，聽感沒驗 | 靜態 |
-| [`spec/122-sound-type-levels.md`](../spec/122-sound-type-levels.md) | `AH=0Bh` 只重算三個聲部 | 原版那個迴圈是 `ah = 0、1、2`（`../re/81` §5）。remake 的主增益對所有聲部一致，這一點**沒有照抄** | 靜態 |
-| [`spec/123-captive-talk-messages.md`](../spec/123-captive-talk-messages.md) | 城兵那一側 | `sub_14FCE` 也呼叫 `sub_129C3`（守城武將被擒）。remake 的城兵路徑有沒有走到同一則沒驗 | 靜態 |
-| [`spec/124-menu-highlight-xor.md`](../spec/124-menu-highlight-xor.md) | 武將／勢力兩格的反白時機 | **八格都接了**（§3.5），但這兩格**沒有原版擷取**：原版走狀態列提示 ＋ 地圖游標，remake 開的是一覽表，流程本身不同。其餘六格各有一張原版擷取對過 0 px | 靜態 |
-| [`spec/124-menu-highlight-xor.md`](../spec/124-menu-highlight-xor.md) | `sub_10B46` 的暫存器序列 | 只確認了它寫 `0Ch` 給繪圖控制器、而結果逐點等於 XOR 12。**中間那幾個 port 寫入沒有逐行讀** | 靜態 |
-| [`spec/125-menu-box-width-from-padding.md`](../spec/125-menu-box-width-from-padding.md) | 「據點」那兩項 | `TALK #82`（「　首都確認　」／「　據點一覽　」）同樣是兩項選單，remake 的「據點」目前直接開一覽（`110` §5）。做了之後框寬會自動對——但那是另一件事 | 靜態 |
-| [`spec/125-menu-box-width-from-padding.md`](../spec/125-menu-box-width-from-padding.md) | 原版只看第一列 | remake 取**所有列的最大值**。四則既有選單兩種算法同值，`#79`／`#82` 也同值；**沒有找到會分歧的例子，但也沒有窮舉過** | 靜態 |
-| [`spec/126-command-popup-menus.md`](../spec/126-command-popup-menus.md) | 人事／軍團那四條出口的殘影 | 只有據點一覽比過（`../playtest/83`）。另外四條也開清單，remake 走同一支 `dispatchPopupMenu`，**但沒有原版擷取** | 靜態 |
-| [`spec/126-command-popup-menus.md`](../spec/126-command-popup-menus.md) | 進言那一張還沒併進來 | `openAdvise` 有自己的一套（五項 ＋ 說服流程）。**併之前要先確認它的取消語意一樣**，這一輪沒動 | 靜態 |
-| [`spec/127-captured-sovereign-becomes-retainer.md`](../spec/127-captured-sovereign-becomes-retainer.md) | 被俘兩次會不會加兩次 | **不會，而且不需要另外防護**——`and [bx], 0BFh` 已經把 bit 6 清掉了，第二次 `test [bx], 40h` 不成立。所以 `+3` 至多發生一次，值域停在 3–5，不會溢出 `+0x1E` 的 0–7。remake 照抄同一個結構（先測 bit 再清）就自然有同樣的性質 | 靜態 |
-| [`spec/127-captured-sovereign-becomes-retainer.md`](../spec/127-captured-sovereign-becomes-retainer.md) | 劇本作者能不能給非君主 bit 6 | 四個劇本的 43 筆全是現任君主（`../re/77` §3），但那是**資料上的巧合還是規則**沒有讀出來。若有一筆說話類型 3–7 又帶 bit 6，`+3` 會把它推到 6–10 | 靜態 |
-| [`spec/128-squad-leader-gone-keeps-reserve.md`](../spec/128-squad-leader-gone-keeps-reserve.md) | 戰後兵力的逐槽對拍 | 原版打完之後每槽兵數是三項相加（`../re/83` §3），remake 的戰後回填**沒有逐槽比過原版** | 靜態 |
-| [`spec/129-post-battle-morale-scaling.md`](../spec/129-post-battle-morale-scaling.md) | 為什麼敗方是 99 不是 100 | 自動判定用 `64h`、戰術用 `63h`。**兩個立即值都讀出來了**，但差 1 的理由沒有解釋——可能只是 `xchg` 那個寫法順手（先寫 99 再比 99） | 靜態 |
-| [`spec/129-post-battle-morale-scaling.md`](../spec/129-post-battle-morale-scaling.md) | 戰後士氣的實機對照 | 沒有。要打完一場戰術戰鬥再看軍團一覽的士氣欄 | 靜態 |
-| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 |
-| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 |
-| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | **remake 沒有邊緣捲動** | **機制早就解了**（`../re/47` §6）：`sub_120D6` 進大地圖時把 INT 33 的範圍換成**整個世界**（水平 0–`17FFh` ＝ 384 格 × 16、垂直 0–`101Fh`），`sub_11F7F` 再把原始座標減掉鏡頭原點、夾在 0–639／0–399，**夾掉的量同時加回鏡… | 靜態 |
-| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 戰場內調速度 | 戰場獨佔輸入，所以 `updateBattle` 自己接一次 ＋／−（調戰術速度），調完浮一行 1.5 秒的提示。**原版戰場沒有速度指示**，常駐顯示會破壞版面 parity | 靜態 |
-| [`spec/130-freelance-random-join.md`](../spec/130-freelance-random-join.md) | 平手時取編號小的 | 從 `jb`（嚴格小於）推出來的，**沒有實機驗過** | 靜態 |
-| [`spec/130-freelance-random-join.md`](../spec/130-freelance-random-join.md) | 這一條的實際發生頻率 | 開局 81 名在野武將**全部有心向**，所以隨機投靠要等他們兌現完才輪得到（`../mechanics/70` §3.9）。**長跑幾個月才會第一次觸發沒有量過** | 靜態 |
-| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | PC-98 版 | dosgolem 沒有 PC-98 的機器層（不同的顯示與字型架構）。那一版仍走 DOSBox-X | 實測 |
-| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | ⚠ 遊戲中的座標 | 大地圖有一層**捲動原點**（`畫面 ＝ 滑鼠 − 原點`），所以遊戲中要用 `sclick`／`stap`，選單畫面才用 `click`（`../playtest/66` §2） | 靜態 |
-| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | ⚠ `wait` 在遊戲中不適用 | 即時制的畫面永遠不會靜止，`wait` 會跑到預算上限。遊戲中用 `steps:`、`until:` 或 `runto:` | 靜態 |
-| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | ⚠ 大地圖上選一格 | 用 `tile:TX,TY`，不要自己算像素——格座標是 `⌊原點÷16⌋＋⌊畫面÷16⌋` 兩次捨去的和，而且**游標不能停在熱區上**（`../re/85`） | 靜態 |
-| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | 視窗 x → 遊戲 x 的換算 | 視窗 416 對到遊戲 415，而同一批的 300／360／450 都是 1:1。成因未查，只影響游標位置（`../playtest/65` §3.1） | 實測 |
-| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | 音源 | `int 61h` 只記錄不模擬（時鐘回呼除外）。音訊 parity 仍走 `29` 的錄音比對 | 靜態 |
-| [`spec/132-march-turnback-at-peace.md`](../spec/132-march-turnback-at-peace.md) | 折返之後會不會再出發 | 原版回到據點就停住（玩家的軍團在據點上完全不判）。**AI 的軍團**走 `sub_14300`：只有「腳下的據點受威脅、而且這一格的軍團數 ≤ 1」才會留守，否則照常繼續行軍（`../re/86` §2.1）。折返之後 AI 要不要再出發由 `sub_14325` 的 Stage 機決定，仍沒有實機觀測 | 靜態 |
-| [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | `sub_1ECE0` 的亂數式 | 沒讀。讀出來也未必要照抄——remake 有自己的 `rng` | 靜態 |
-| [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | 走進陣形要走多久 | 原版節拍 9 已經散開，但沒有量過「全部到位」是第幾拍 | 靜態 |
-| [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | 既有的戰場對拍會不會漂 | 現有的取樣點（`-battle-steps 120`）在兩邊都已經到位之後，**理論上不受影響**，但沒重跑過 | 靜態 |
-| [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | **移動層怎麼處理同格多兵** | 擋住接線的就是它（§3.5）。原版不查佔用，remake 的 `tryMove`／`anyoneAt` 以「一格一個兵」為前提 / 先讀原版的移動與碰撞判定，看它怎麼容許重疊 | 靜態 |
-| [`spec/135-script-message-command.md`](../spec/135-script-message-command.md) | 參數值 3 | `byte_1D349` 只會是 0／1／2，閘算得出 3 但沒有值對得上——沒有腳本用到，或是原版的死分支 | 靜態 |
-| [`spec/136-battle-talk-parameters.md`](../spec/136-battle-talk-parameters.md) | 參數超過兩個的訊息 | 戰場對白只推兩個。若有第三個標記，原版讀堆疊殘值，remake 丟棄整則 | 靜態 |
-| [`spec/137-builtin-symbol-font.md`](../spec/137-builtin-symbol-font.md) | （那 408 格**來自哪裡**仍未解。 | （散句） | 靜態 |
-| [`spec/137-builtin-symbol-font.md`](../spec/137-builtin-symbol-font.md) | 那 408 格的來源 | 不是 `stdfont.15` 的任何一段，也不是 `usrfont.15m`（`../re/29` §7） | 靜態 |
-| [`spec/137-builtin-symbol-font.md`](../spec/137-builtin-symbol-font.md) | 其他語系 | 簡體／日文仍需自備 `HZK16`／`JISKAN16`——那兩套字集不在原版資料裡 | 靜態 |
-| [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | 逐筆對齊 | 需要兩邊同源的亂數，`sub_1ECE0` 的式子還沒讀（`133` §5） | 靜態 |
-| [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | 更長的窗口 | 原版跑過六月之後 AI 開打，戰術畫面會停住策略時鐘 | 靜態 |
-| [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | `⛔ until:` 的中途判定 | 已修（`../playtest/78` §4）：只在主迴圈閒置點取樣 | 靜態 |
-| [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 樣式 `1Eh` 是什麼 | `sub_189A4` 把它傳給 `sub_189DE` 當 `ah`。**只知道 0 ＝ 擦除、非 0 ＝ 畫**，`1Eh` 這個值本身沒解（一般訊息框傳的也是 `1Eh`） | 靜態 |
-| [`spec/141-retreat-countdown.md`](../spec/141-retreat-countdown.md) | 退卻中要不要補兵 | 原版下令之後場上八拍歸零、**沒有補兵進場**；remake 的 `reinforce()` 會補（補進來的兵下一幀被 `applySquadLeaderGone` 改成退卻）。兩邊最後都會結束，但**中途的場上人數不同**，沒有逐拍對過 | 靜態 |
-| [`spec/141-retreat-countdown.md`](../spec/141-retreat-countdown.md) | `word_1D31C` 的兩個 byte | 量到開場是 48／48（＝六隊 × 八人），`../re/11` §5.9 寫的是「含畫面外待機的」。**兩種讀法都還沒有直接證據**，這一份只用到「它歸零時結束」這一點 | 靜態 |
-| [`spec/142-personnel-dismiss-flow.md`](../spec/142-personnel-dismiss-flow.md) | 任命的「已經有人」訊息參數 | 原版 `push ax`（`ah = 0FFh`、`al` ＝ 武將編號）＋ `push bx`（**據點記錄位址**，直接位址式）。remake 直接代名字字串，**沒有走 formatter 的位址式**（`../re/79` §2） | 靜態 |
-| [`spec/143-general-duty-field.md`](../spec/143-general-duty-field.md) | `sub_13771` 讀 `+0x17` 的那個分支 | 只知道是每小時處理裡的一支，判斷後 `sub_137F5` 挑人；分支語意未解 | 靜態 |
-| [`spec/143-general-duty-field.md`](../spec/143-general-duty-field.md) | `+0x17` 有沒有第六個值 | 字串表只有 6 項而第 6 項要靠 bit 6 算出來，所以存得下的上限是 4；沒有反證 | 靜態 |
-| [`spec/143-general-duty-field.md`](../spec/143-general-duty-field.md) | **解任把 `+0x1A` 歸零沒有實跑正對照** | 機器碼確定（`mov byte [bx+1Ah], 0`），但實跑那一輪官員的經費本來就是 0，等於沒比。要先撥款再解任才驗得到 | 實測 |
-| [`spec/144-advisor-leaves-general-table.md`](../spec/144-advisor-leaves-general-table.md) | 自定軍師時原版那個越界寫 | 位置在武將表尾端後一個 byte，寫進去的是什麼欄位沒查；remake 不照抄 | 靜態 |
-| [`spec/144-advisor-leaves-general-table.md`](../spec/144-advisor-leaves-general-table.md) | 軍師退場時（如果有）會不會放回表上 | 沒找到反向的寫入端 | 靜態 |
-| [`spec/145-general-and-faction-cells.md`](../spec/145-general-and-faction-cells.md) | `sub_175FA`／`sub_178A7` 的清單是不是只列本勢力 | 武將那張只有本勢力、勢力那張列全部活著的，兩張都拍過了（`../playtest/86`） | 靜態 |
-| [`spec/145-general-and-faction-cells.md`](../spec/145-general-and-faction-cells.md) | 適性欄位的低半位元組 | 四個劇本全是 0，語意未解 | 靜態 |
-| [`spec/146-map-cloud-objects.md`](../spec/146-map-cloud-objects.md) | 雲的漂移能不能長時間對齊 | 移動每次要抽兩個亂數（`sub_124FF`），與整條亂數流共用；載入當下位置相同，**跑久了必然分開**。要對齊得先解出原版亂數流的全部消費端 | 靜態 |
-| [`spec/146-map-cloud-objects.md`](../spec/146-map-cloud-objects.md) | type 3 的產生端 | 目前所有可見的事件 12 producer 只建 type 1／2（`../re/14` §6） | 靜態 |
-| [`spec/146-map-cloud-objects.md`](../spec/146-map-cloud-objects.md) | `+0x06`／`+0x07` | `sub_123FF` 寫 1，雲是 0；語意未解 | 靜態 |
-| [`spec/147-controlled-parity-save.md`](../spec/147-controlled-parity-save.md) | **原版的地圖游標框** | 白色空心 16×16，貼著游標所在的格。remake 沒有畫；要接得先讀出它的顏色、線寬與更新時機（`sub_11F7F` 每圈算游標所在格） | 靜態 |
-| [`spec/147-controlled-parity-save.md`](../spec/147-controlled-parity-save.md) | 還能關掉什麼 | 目前只有 `--no-clouds`。天災、AI 出兵、募兵都吃亂數，各自需要自己的「關掉」欄位 | 靜態 |
-| [`spec/147-controlled-parity-save.md`](../spec/147-controlled-parity-save.md) | 兩邊的**消費順序**能不能對齊 | 狀態可以搬（§5），順序還沒逐拍比過 | 靜態 |
-| [`spec/148-shared-candidate-filter.md`](../spec/148-shared-candidate-filter.md) | `sub_17663` 的 `xor cl, cl` | 比 `sub_175FA` 多一行，把清單游標歸零。remake 每次開清單本來就從 0 開始，行為相同；**但那代表原版的兩張清單共用同一個游標記憶體 `word_198AA`**，切換時的殘留還沒對過 | 靜態 |
-| [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | 游標推到畫面邊緣時鏡頭跟過去 | 原版的滑鼠座標是**世界座標**（大地圖上驅動範圍 0–6143 × 0–4127），推到視野外鏡頭會捲（`../re/84` §2）。remake 的滑鼠被視窗框住，還沒接這個行為 | 靜態 |
-| [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | ⭐ **原版的鏡頭是像素級的** | 邊緣捲動之後量到的捲動原點是 `(2657,1457)`——**不是 16 的倍數**。remake 的 `camX`／`camY` 是**格**，所以只對得上 16 的倍數那些位置。開局與 `sub_12151` 移鏡頭都是格對齊的，所以現有的對拍全部落在對得上的那一半；**要拍邊緣捲動之後的畫面就得先把鏡頭改… | 靜態 |
-| [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | 熱區會吃掉點擊 | ⚠ 實測踩到 `../re/85` §3 記的坑：把滑鼠移到據點的世界座標時，鏡頭捲到底、**游標釘在畫面右下角**，那裡是軍團情報視窗的熱區 `#31`，於是那一圈根本不問據點。要先把鏡頭帶過去、再讓游標落在畫面中間 | 實測 |
-| [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | 別的狀態下的游標 | `../playtest/91` §3 還沒對上，所以只接選點這一個 | 靜態 |
-| [`spec/150-diplomacy-preconditions.md`](../spec/150-diplomacy-preconditions.md) | `sub_1304E` 的 `dx` 附加欄位 | 這兩個呼叫點都傳 `0FFFFh`（不比），別的呼叫點傳什麼還沒逐一讀 | 靜態 |
-| [`spec/151-map-click.md`](../spec/151-map-click.md) | `sub_11F0E` 的 X 夾制 `23h` | 夾住之後框的右緣落在 672，超出畫面 32 px（§1.2）。要嘛 `sub_193E9` 對超出的部分另有處理、要嘛這一張的框比 112 窄——**兩個都還沒驗**。目前照抄常數 | 靜態 |
-| [`spec/152-video-mode-lcd-palette.md`](../spec/152-video-mode-lcd-palette.md) | 素材頁的四季 | 肖像與據點景觀圖是**另一種**四季（換的是圖不是色），這一份沒動它們。⭐ **顏色那一半已經驗過**：切到液晶時肖像跟著換組，remake 逐像素 0 px（`../playtest/100` §5） | 靜態 |
-| [`spec/153-quit-confirm-menu.md`](../spec/153-quit-confirm-menu.md) | 離開時自動存檔 | `CLAUDE.md` §9 要求「離開前自動存檔，存檔失敗就不離開」，remake 兩條路目前都只是 `ebiten.Termination`。**原版這一段沒有存檔**（`xor al,al` 直接走），所以那是 remake 差異，還沒實作 | 靜態 |
-| [`spec/154-mouse-cursor.md`](../spec/154-mouse-cursor.md) | 旗標 0 時真機會不會重畫 | §4。要一次真機（或另一個模擬器）的實測才能定案 | 實測 |
-| [`spec/154-mouse-cursor.md`](../spec/154-mouse-cursor.md) | 大地圖上的那一種 | 15×15 白色空心框（`149`），**什麼時候換成箭頭**沒對過 | 靜態 |
-| [`spec/154-mouse-cursor.md`](../spec/154-mouse-cursor.md) | 遊玩端的自繪 | 等 §4 定案 | 靜態 |
-| [`spec/155-desktop-launcher-input.md`](../spec/155-desktop-launcher-input.md) | 戰後結算與地圖捲動仍待補強；Windows／macOS 原生操作未驗收。 | （未解小節內文） | 靜態 |
-| [`spec/156-desktop-preferences.md`](../spec/156-desktop-preferences.md) | 無阻擋實作的偏好語意缺口；Windows／macOS 原生設定路徑與操作由人工驗收。 | （未解小節內文） | 靜態 |
-| [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | `14060` 屬於哪一支、取數做什麼用 | 只知道在 `sub_13EFD` 底下，12 次／36 小時的節奏還沒對到機制 | 靜態 |
-| [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | 開戰期的消費端清單 | 還沒統計；閒置期的四個位址不足以涵蓋 | 靜態 |
-| [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | remake 的呼叫點與原版位址的對照表 | 要邊比邊建，沒有現成的 | 靜態 |
-| [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | **remake 側還沒跑同一條時間軸** | 原版側的 90 天基線已經有了；remake 要用同一份存檔、同一個 `-rng-state` 跑出對應的三份軌跡 | 靜態 |
-| [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | **召見要靠人先跑一次才知道在哪** | 回應序列是寫死在腳本裡的（`playtest/118` §3），dosgolem 沒有條件分支。要自動化得在那端加「時鐘停住就回應」的偵測 | 靜態 |
-| [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | 「同意呂布」那條分支 | 這 90 天只遇到一次召見（曹操請求協助）。呂布的請求還沒出現 | 靜態 |
-| [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | 起點要不要從劇本開局 196/4/1 起 | 現成的受控存檔是 196/4/16。從開局起最乾淨，但要另外做一份存檔或走新遊戲流程 | 靜態 |
-| [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | 原版側的鏡頭會自己跳 | 「固定在沛」在 remake 側靠 `-cam`，原版側做不到；這一項只影響畫面比對，狀態層不受影響 | 靜態 |
-| [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | 開戰期的取樣成本 | 只有閒置期量過。真正要看的四個現象多半發生在開戰期 | 靜態 |
-| [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | 沛的地圖座標 | 還沒量，`-cam` 要填的值未知 | 靜態 |
-| [`spec/162-city-cursor-from-save.md`](../spec/162-city-cursor-from-save.md) | 徵兵被跳過的次數還差 1 | 356 子刻裡原版 9、remake 10（每子刻只取 2 個數的那些）。與游標無關，是另一條規則 | 靜態 |
-| [`spec/162-city-cursor-from-save.md`](../spec/162-city-cursor-from-save.md) | 劇本開局的游標值 | `SINARIO.DAT` 同一個位移是什麼還沒量；開新遊戲時應該是 0，要確認 | 靜態 |
-| [`spec/162-city-cursor-from-save.md`](../spec/162-city-cursor-from-save.md) | 存回去要不要寫 | 目前只解讀取。存檔寫回是「改寫不是重建」（`CLAUDE.md` §9），這個欄位在未解區裡原封不動 | 靜態 |
-| [`spec/163-city-tick-order.md`](../spec/163-city-tick-order.md) | `formAICorps` 在原版的位置 | 沒有證據。這一輪沿用「跟著威脅」的現況 | 靜態 |
-| [`spec/163-city-tick-order.md`](../spec/163-city-tick-order.md) | ② 易主 → 原主勢力 `+0x17` | remake 在 `refreshCityThreat` 裡，順序與原版一致，但沒有單獨驗過 | 靜態 |
-| [`spec/164-relief-request-gates.md`](../spec/164-relief-request-gates.md) | AI 自動判定戰鬥的觸發時機 | 對拍第一個分歧在拍 1978（remake）／2119（原版），差 141 拍。成因未解 | 靜態 |
-| [`spec/164-relief-request-gates.md`](../spec/164-relief-request-gates.md) | `sub_145C1` 挑武將的規則 | 取 `+0x11` 最大且 `+0x17 == 0` 的那一位；remake 的 `formAICorpsTo` 是否同序未驗 | 靜態 |
-| [`spec/166-save-writeback-keeps-unmodelled-bits.md`](../spec/166-save-writeback-keeps-unmodelled-bits.md) | 勢力／據點／武將 | 完全相同 | 靜態 |
-| [`spec/166-save-writeback-keeps-unmodelled-bits.md`](../spec/166-save-writeback-keeps-unmodelled-bits.md) | **軍團** | `+0x00` 有 6 支不同（`C5` → `C4`） | 靜態 |
-| [`spec/166-save-writeback-keeps-unmodelled-bits.md`](../spec/166-save-writeback-keeps-unmodelled-bits.md) | 位元 0／1／4／5 有設定端與清除端、語意尚未定案 | （散句） | 靜態 |
-| [`spec/169-march-has-no-city-stub.md`](../spec/169-march-has-no-city-stub.md) | `sub_14325` 分派表的 16 項 | 玩家半張與 AI 半張各 8 項；remake 只對到 0–3 與 8／10／11，其餘未逐支對過 | 靜態 |
-| [`spec/170-ai-target-takes-two-ticks.md`](../spec/170-ai-target-takes-two-ticks.md) | 軍團 `+0x00` 位元 1 | remake 沒建模。它的效果（下一次移動前重查道路表）被 remake 的「`March` 當場算好 routes」涵蓋，但存檔寫回是靠 `modelledCorpsBits` 原樣保留的，不是真的維護 | 靜態 |
-| [`spec/170-ai-target-takes-two-ticks.md`](../spec/170-ai-target-takes-two-ticks.md) | `sub_14325` 分派表的 16 項 | 玩家半張與 AI 半張各 8 項，remake 只對到 0–3 與 8/10/11；其餘未逐支對過 | 靜態 |
-| [`spec/171-ai-only-expands-via-relief.md`](../spec/171-ai-only-expands-via-relief.md) | 求援機率路徑的次數 | 原版 210 次（`sub_14057`）、remake 9 次。方向與軍團數相反，成因還沒查 | 靜態 |
-| [`spec/171-ai-only-expands-via-relief.md`](../spec/171-ai-only-expands-via-relief.md) | `sub_1699E`（君主親自出陣） | remake 未實作；它是 `sub_16E8F` 的第二個呼叫端 | 靜態 |
-| [`spec/172-corps-march-fields.md`](../spec/172-corps-march-fields.md) | 軍團 `+0x00` 位元 4／5 | 有成對的設定與清除端，語意未定（`../re/34` §2）。寫回靠 `modelledCorpsBits` 原樣保留。位元 0 已解（`173`） | 靜態 |
-| [`spec/172-corps-march-fields.md`](../spec/172-corps-march-fields.md) | 索引表 `0x0000`–`0x07FF` 的 `+6`／`+8` | 一個據點只放得下兩個方向，四方向的據點怎麼放沒讀 | 靜態 |
-| [`spec/173-corps-flag-bit0-and-sprite-fields.md`](../spec/173-corps-flag-bit0-and-sprite-fields.md) | 軍團 `+0x00` 位元 4／5 | 有成對的設定與清除端，語意未定（`../re/34` §2） | 靜態 |
-| [`spec/173-corps-flag-bit0-and-sprite-fields.md`](../spec/173-corps-flag-bit0-and-sprite-fields.md) | `sub_12708` 的地形 `0CEh`–`0DDh` | 位元 0 設著時才走 `sub_12880`（讀連結記錄的兩端節點）。那一段地形是什麼還沒讀 | 靜態 |
-| [`spec/174-relief-dispatch-does-not-move-marching-corps.md`](../spec/174-relief-dispatch-does-not-move-marching-corps.md) | `sub_14057` 的 `dl` | 用的是「威脅目標的索引」（亂數 & 3，0 當 1），不是威脅量算出來的支數。看起來像原版的怪癖，照抄 | 靜態 |
-| [`spec/175-encounter-standoff-countdown.md`](../spec/175-encounter-standoff-countdown.md) | `+0x00` 位元 4 | `sub_12B3C` 設、`sub_12BA8` 清，而 `sub_12BA8` 接著呼叫 `sub_19656`／`sub_196ED`（繪圖）。**像是「這一格要重畫」的髒旗標**，不是規則狀態——待確認 | 靜態 |
-| [`spec/175-encounter-standoff-countdown.md`](../spec/175-encounter-standoff-countdown.md) | `+0x21` | `sub_1264A` 在沒卡住時一併歸零；`sub_12B3C` 拿 `<< 2` 與 `+0x03 & 3` 合成圖塊索引。**像是對峙動畫的第二個維度**，語意未讀 | 靜態 |
-| [`spec/175-encounter-standoff-countdown.md`](../spec/175-encounter-standoff-countdown.md) | `sub_102F5(al=3)` | 對峙期間每個週期呼叫一次，推測是音效 | 靜態 |
-| [`spec/176-event-queue-cursor-not-restored.md`](../spec/176-event-queue-cursor-not-restored.md) | eventDelay`（`byte_131AD`）的相位。 | （未解小節內文） | 靜態 |
-| [`spec/177-replan-on-leg-not-from-city.md`](../spec/177-replan-on-leg-not-from-city.md) | 移動計時器 `+0x0B` 的相位**：拍 2,120 之後軍團 19 與 72 的計時差 1–2。 | （未解小節內文） | 靜態 |
-| [`spec/177-replan-on-leg-not-from-city.md`](../spec/177-replan-on-leg-not-from-city.md) | loc_1491B` 在「已經在邊上」那一支回傳的 `dx` 與 `bp` 比較的語意 | （未解小節內文） | 靜態 |
-| [`spec/178-upkeep-and-morale-gate-is-on-leg.md`](../spec/178-upkeep-and-morale-gate-is-on-leg.md) | byte_10CF3`（「一時」的判準）remake 用 `hour == upkeepHour` 代替， | （未解小節內文） | 靜態 |
-| [`spec/179-recalc-on-battle-and-arrival-test.md`](../spec/179-recalc-on-battle-and-arrival-test.md) | 拍 2,454 起軍團 19 的 Stage 機仍快一步：原版 10 → 9 → **8**， | （未解小節內文） | 靜態 |
-| [`spec/180-relief-dispatch-want-counts-candidates.md`](../spec/180-relief-dispatch-want-counts-candidates.md) | 原版**沒有比勢力**（`sub_14155` 只看節點欄、活著、位元 2、Stage）， | （未解小節內文） | 靜態 |
-| [`spec/181-ai-recruit-gate-and-monthly-globals.md`](../spec/181-ai-recruit-gate-and-monthly-globals.md) | 勢力 7 的本月支出在月結那一小時差一次累加（原版 46、remake 0）， | （未解小節內文） | 靜態 |
-| [`spec/181-ai-recruit-gate-and-monthly-globals.md`](../spec/181-ai-recruit-gate-and-monthly-globals.md) | 拍 3,400 的每時勢力游標（`+0x2C`）差 1。 | （未解小節內文） | 靜態 |
-| [`spec/182-monthly-settlement-before-hourly.md`](../spec/182-monthly-settlement-before-hourly.md) | 拍 3,420 的據點 129 上昇值與防災值各差 1——那是拍 3,415 的調兵分歧 | （未解小節內文） | 靜態 |
-| [`spec/183-occupancy-map-is-incremental.md`](../spec/183-occupancy-map-is-incremental.md) | 對拍期間 remake 不再呼叫 `rebuildOccupancy`，所以圖也會累積誤差。 | （未解小節內文） | 靜態 |
-| [`spec/184-relief-dispatch-want-is-always-one.md`](../spec/184-relief-dispatch-want-is-always-one.md) | 拍 3,566 那個分歧已經解掉了：`Targets` 是空的，根因不在求援也不在 | （未解小節內文） | 靜態 |
-| [`spec/184-relief-dispatch-want-is-always-one.md`](../spec/184-relief-dispatch-want-is-always-one.md) | 挑目標的位置在 `al` 初值為 0 時不等價：原版 `dec al` → `0FFh`， | （未解小節內文） | 靜態 |
-| [`spec/185-monthly-settlement-call-order.md`](../spec/185-monthly-settlement-call-order.md) | sub_15695`／`sub_155A6`／`sub_157FE` 在 remake 的對應位置還沒逐條核對， | （未解小節內文） | 靜態 |
-| [`spec/185-monthly-settlement-call-order.md`](../spec/185-monthly-settlement-call-order.md) | 拍 4,911：同一場攻城戰的勝負判定相反。 | （未解小節內文） | 靜態 |
-| [`spec/185-monthly-settlement-call-order.md`](../spec/185-monthly-settlement-call-order.md) | 拍 5,200** 仍然雪崩，要等上面那一項解掉再看。 | （未解小節內文） | 靜態 |
-| [`spec/186-standoff-corps-before-city.md`](../spec/186-standoff-corps-before-city.md) | sub_12708` 的圖塊區間 `0CEh`–`0DDh` 在 remake 沒有對應物 | （未解小節內文） | 靜態 |
-| [`spec/187-only-the-loser-is-judged.md`](../spec/187-only-the-loser-is-judged.md) | 拍 5,176 的據點表 | 103 個 byte／57 座 / **1 個 byte／1 座**（語意未解的 `+0x15`） | 靜態 |
-| [`spec/187-only-the-loser-is-judged.md`](../spec/187-only-the-loser-is-judged.md) | 野戰在 `ah` ＝ 3 時為什麼只判攻方，還沒有解釋。 | （未解小節內文） | 靜態 |
-| [`spec/192-route-cost-model.md`](../spec/192-route-cost-model.md) | 同成本時的 tie-break：原版是環形佇列 ＋「掃一遍取第一個等於最小值的 | （未解小節內文） | 靜態 |
-| [`spec/198-ivent-scene-frame.md`](../spec/198-ivent-scene-frame.md) | 進言選單在說服場景上沒關掉**（remake 殘影 1,750 px，原版進場時清掉）。 | （未解小節內文） | 靜態 |
-| [`spec/198-ivent-scene-frame.md`](../spec/198-ivent-scene-frame.md) | 框的填色在原版是什麼：插圖把中間 288×176 全蓋住，露出來的只有邊框那 | （未解小節內文） | 靜態 |
-| [`spec/199-persuade-scene-clears-the-advise-menu.md`](../spec/199-persuade-scene-clears-the-advise-menu.md) | 判決畫面（遷都／請求君主出陣，`49`）走的不是 | （未解小節內文） | 靜態 |
-| [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 |
-| [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 |
-| [`spec/200-opening-move-delay.md`](../spec/200-opening-move-delay.md) | 拍 4 之後仍有 **2 個兵**對不上：`0/2/0`（隊 2 的隊長）與 `0/5/2`。 | （未解小節內文） | 靜態 |
-| [`spec/200-opening-move-delay.md`](../spec/200-opening-move-delay.md) | 0001 9DB1`（`280h`）與 `0001 9E35`（`3C0h`）那兩種物件是什麼，還沒對。 | （未解小節內文） | 靜態 |
-| [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 |
-| [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 池的上限 | `sub_155EC` 的 `0xFFDC` 只在退兵路徑上驗過；月結加兵是不是同一支未查。**remake 兩條路徑現在都夾**（`economy.ClampReserve`），但那是照著同一個常數做的，不是證明原版共用同一支 | 靜態 |
-| [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 頭像的邊框 | `sub_107D2` 只 blit 64×64 的圖塊，**框在哪裡畫的沒找到**——場景 5 的 op 清單裡沒有頭像那一格的框 | 靜態 |
-| [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 兵種標籤 | 畫面用場景 5 的「主將」，規則層的 `army.Position` 第一個是「大將」（原版 TALK #62 也這樣說）。兩處用語不同是原版就有的，不要統一 | 靜態 |
-| [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 反白列上換色的機制 | `38` §1.7.1：兩個色號各有一次量測，變換規則沒解 | 靜態 |
-| [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 空槽標記 | 原版用名稱欄第一個字 `0xD0A1`；remake 用「載得起來且玩家勢力有效」判定，兩者不等價 | 靜態 |
-| [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 新遊戲共用 | remake 的啟動殼層是自己的畫面，還沒有換成這個四槽視窗 | 靜態 |
-| [`spec/26-yes-no-dialog.md`](../spec/26-yes-no-dialog.md) | 原版的使用者 | `sub_18DC8` 只有一個呼叫端 `sub_11AC3`（新遊戲流程），問題文字由那裡給，內容未讀 | 靜態 |
-| [`spec/26-yes-no-dialog.md`](../spec/26-yes-no-dialog.md) | `cx = 600Dh` 的尺寸編碼 | `sub_19796`／`sub_197C3` 是**保存／還原被蓋住的畫面**，`dx`／`bx` 是像素座標、換算成 VRAM 位址（`45` §2 逐行解過）。這個呼叫端的 `cx` 高低位元組怎麼對到寬高沒逐位對過 | 靜態 |
-| [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 頭像尺寸 | 軍師頭像的下緣照原版座標會略微超出那個 208×104 的底框；沒有 oracle 可比，先照機器碼畫 | 實測 |
-| [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 事件佇列 | 這一輪不進 JSON。編輯器要動它得先有 UI 語意 | 靜態 |
-| [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 未解區域 | `+0x1EC0` 那 7 KB 仍是黑盒，只能靠改寫保留 | 靜態 |
-| [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 編輯器 | 這一份只做資料層。UI 是另一份規格 | 靜態 |
-| [`spec/29-audio.md`](../spec/29-audio.md) | 曲 1 | DOS/V 的 `KI.EXE` 裡沒有任何呼叫端（`re/58` §5）。PC-98 版還沒掃 | 靜態 |
-| [`spec/29-audio.md`](../spec/29-audio.md) | 曲 6 的接法 | 原版是四支對話／事件常式，remake 用「事件訊息開著」與「進言對話開著」兩個狀態代替，**不是一對一** | 靜態 |
-| [`spec/29-audio.md`](../spec/29-audio.md) | 換季的兩段時序 | 原版第 1 天停、第 2 天換曲，調色盤另外漸變 16 天。remake 只做了換曲那一半 | 靜態 |
-| [`spec/29-audio.md`](../spec/29-audio.md) | 迴圈點怎麼呈現 | 原版靠控制事件 `C1`／`C3` 無限循環；ogg 是有限長度，要決定渲染幾輪或另存迴圈點 | 靜態 |
-| [`spec/29-audio.md`](../spec/29-audio.md) | 全域音量偏移 | `cs:0996h` 誰設、範圍多少未解（`re/57` §8） | 靜態 |
-| [`spec/29-audio.md`](../spec/29-audio.md) | PC-98 版 | 音源是 YM2203，暫存器路徑完全沒讀。要不要做是待裁定的問題 | 靜態 |
-| [`spec/30-victory.md`](../spec/30-victory.md) | 四個劇本的結局是否不同 | 十二幕依序播，**沒有依劇本分支的證據**（`D7END.EXE` 的 `start` 只有一條路，`../re/70` §3）；四劇本是否真的共用同一段沒有實跑對過 | 實測 |
-| [`spec/30-victory.md`](../spec/30-victory.md) | 君主陣亡時軍師怎麼辦 | 未知（同上） | 靜態 |
-| [`spec/31-tactical-sidebar.md`](../spec/31-tactical-sidebar.md) | 段 1 五塊美術的圖形語意 | 貼點與尺寸 confirmed，圖上畫什麼要另外解（`../formats/03` §5.3） | 靜態 |
-| [`spec/31-tactical-sidebar.md`](../spec/31-tactical-sidebar.md) | 城兵臨時軍團的主將名 | `0x4200` 的索引算式指到武將表全零那一筆（`../re/60` §4.1） | 靜態 |
-| [`spec/33-squad-selection.md`](../spec/33-squad-selection.md) | 待機兵條的欄位語意 | `word_1D30A:+0x09 + 4k` 在 `../re/11` §3.9 記成「第 k 隊的待機兵數」；條的上限 76 遠小於一隊 100 兵，所以開局會頂在上限 | 靜態 |
-| [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 最高速在原版實機是多少 | 機器相依。DOSBox 固定 cycles 量得到「那台的上限」，量不到「原版的答案」 | 實測 |
-| [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 戰場幀是否等於 remake 的一次 `Step()` | 原版一幀做完整條戰場迴圈；remake 的 `Step()` 是規則層一步。**兩者對齊過但沒逐項比** | 靜態 |
-| [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 音效驅動不在時的行為 | `../re/61` §6 | 靜態 |
-| [`spec/36-ground-planes-and-climbing.md`](../spec/36-ground-planes-and-climbing.md) | 命令 6 為什麼擋高平面橫移 | 命令碼 6 是什麼沒對過 | 靜態 |
-| [`spec/36-ground-planes-and-climbing.md`](../spec/36-ground-planes-and-climbing.md) | 擋路時的換位 | 原版被兵擋住還會試 `loc_1B533`（§1.4），remake 的 `tryClimb` 直接失敗。水平移動那條路的換位已經有了（`swapWith`） | 靜態 |
-| [`spec/37-tactical-player-controls.md`](../spec/37-tactical-player-controls.md) | 選了陣形之後原版有沒有立刻重排 | 機器碼只寫偏移，**沒有看到立刻移動的呼叫**；remake 照抄（等命令） | 靜態 |
-| [`spec/37-tactical-player-controls.md`](../spec/37-tactical-player-controls.md) | 陣形線在小地圖上的線寬與端點 | `sub_1C5AE` 沒逐行讀，remake 畫整條 1 px 的線 | 靜態 |
-| [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「看」與「選」的內容差異 | 原版兩種取法的**列表內容**不同（`../re/26` §4.2），remake 只統一了欄位 | 靜態 |
-| [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「委任」那一格的顏色 | 實錄影格上看起來是紅字，但影片是壓縮過的、也沒有機器碼證據。remake 先畫成一般色 | 靜態 |
-| [`spec/39-march-order-menu.md`](../spec/39-march-order-menu.md) | `sub_193E9` 內部的列高與配色 | 只解出外框幾何，內部（`loc_19409`）沒逐行讀 / 反白的畫法已有 `docs/spec/124`，列高可由框高 ÷(n+1) 推但沒驗 | 靜態 |
-| [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 君主那一側的回話 | 原版事件場景會同時出現兩個框（`docs/re/66` §5.1 的影格就是），remake 只畫一個 | 靜態 |
-| [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 框的底紋 | 龍紋的點陣找到了（`../formats/03` §5.5），但 96 列的排法還沒解，remake 仍用純色 | 靜態 |
-| [`spec/42-event-scene-speakers.md`](../spec/42-event-scene-speakers.md) | 撥款事件（4／5） | 同上，還沒對過哪一則進下框 | 靜態 |
-| [`spec/43-rout-on-blocked-return.md`](../spec/43-rout-on-blocked-return.md) | `loc_1491B` 的其他成本項 | 只解出「非己方據點 ＋0xA6」，廣度優先搜尋本身沒逐條讀 | 靜態 |
-| [`spec/44-advise-original-text.md`](../spec/44-advise-original-text.md) | 逐句節拍 | 原版每句要等玩家按鍵才往下走，remake 直接顯示最新一句（`45` §3.1） | 靜態 |
-| [`spec/45-advise-scene-layout.md`](../spec/45-advise-scene-layout.md) | 選單的反白樣式 | 原版怎麼畫游標列沒解，remake 用自己的反白條 | 靜態 |
-| [`spec/46-post-battle-retreat.md`](../spec/46-post-battle-retreat.md) | `loc_1491B` 的 tie-break | `±4` 決定讀哪一個鄰接槽，remake 用 `Route`（Dijkstra，權重同樣是連結記錄 `+0x04` 的路徑點數）的第 2 個節點取代。兩者只有在**最短路不唯一**時才可能挑到不同的第一站——開局的道路表上「自家據點 → 自家首都」共 **108 組，其中第一站不唯一的只有 2 組**（勢力 3… | 靜態 |
-| [`spec/46-post-battle-retreat.md`](../spec/46-post-battle-retreat.md) | 兩端到首都**等距**時取哪一端 | 原版由廣度優先的展開順序決定，而那一段是自我修改碼（§2.1）。remake 取 A 端。開局的道路表上「自家據點 → 自家首都」108 組裡第一站不唯一的只有 2 組（`workplace/parity/retreat/hop_unique.py`），兩端等距的邊更少，但沒有窮舉過 | 靜態 |
-| [`spec/47-city-fall-corps-redirect.md`](../spec/47-city-fall-corps-redirect.md) | `[si+1Ah]` | 據點記錄記下舊主，remake 的 `OwnerRecorded` 是同一格但語意沒逐位元對過 | 靜態 |
-| [`spec/48-governor-returns-on-city-fall.md`](../spec/48-governor-returns-on-city-fall.md) | 武將 `+0x1E` 的值域 | 534/535/536 與 542 是空的，所以實際用到的變體大概只有 3–6。哪些武將拿到哪個值沒統計過 | 靜態 |
-| [`spec/48-governor-returns-on-city-fall.md`](../spec/48-governor-returns-on-city-fall.md) | `sub_10CE7` 的變數表 | 這裡推出 `{1}` ＝ 武將、`{2}` ＝ 據點（照 push 的順序與譯文），沒有逐個 handler 讀 | 靜態 |
-| [`spec/49-advise-relocate-and-sortie.md`](../spec/49-advise-relocate-and-sortie.md) | `sub_16E8F` 編成前的其餘檢查 | 只確認「君主還沒帶軍團」這一條。⚠ 它呼叫的 `sub_16EC9` 本身已解（六槽 × 三候選兵種表、每槽門檻 `0x32`、試算在堆疊副本上做，見 `../re/30` §7.3） | 靜態 |
-| [`spec/49-advise-relocate-and-sortie.md`](../spec/49-advise-relocate-and-sortie.md) | 進言的指令列 | 五項在原版指令樹裡的排法（`docs/re/22`）沒有逐格對過，remake 用自己的小視窗 | 靜態 |
-| [`spec/52-main-screen-camera-and-banner-date.md`](../spec/52-main-screen-camera-and-banner-date.md) | `+0x0000` | 0x6C0 / — / 未解 | 靜態 |
-| [`spec/52-main-screen-camera-and-banner-date.md`](../spec/52-main-screen-camera-and-banner-date.md) | `+0x08F0` | 0x0B0 / `word_10D4C` / 另一組 11 格（未解，可能是別的字重） | 靜態 |
-| [`spec/52-main-screen-camera-and-banner-date.md`](../spec/52-main-screen-camera-and-banner-date.md) | `word_10D4C` 那一組 | 與數字字模同樣是 11 格 × 16 列，緊接在後面，用途未解 / 找誰把 `ds` 設成 `cs:word_10D4C`（`KI.EXE.asm` 只有一處） | 靜態 |
-| [`spec/54-ui-colours-from-palette.md`](../spec/54-ui-colours-from-palette.md) | 季節換色 | 五個索引在四季調色盤裡的值只有色 14 會變（`../formats/02` §4），而這五個都不是 14，所以目前用第 0 組。**若之後有視窗在別的調色盤組下畫，要改成跟著組走** | 靜態 |
-| [`spec/55-minimap-view-box.md`](../spec/55-minimap-view-box.md) | 剩下的 11 byte | `+0x8F0` 那一塊有 176 byte，框只用 165 | 靜態 |
-| [`spec/56-battlefield-rotation.md`](../spec/56-battlefield-rotation.md) | 表頭與尾段那各 64 byte | 轉的時候原版**不動它們**（迴圈只掃 `0x40`–`0xFBF`）。內容仍未解 | 靜態 |
-| [`spec/56-battlefield-rotation.md`](../spec/56-battlefield-rotation.md) | 鏡頭差一個等角格 | 翻轉之後戰場區還差 (−16, −8)（`../playtest/40` §4.1）。小地圖沒有位移，所以不是翻轉中心的問題 | 靜態 |
-| [`spec/57-tactical-projection.md`](../spec/57-tactical-projection.md) | 物件與地形差一列會不會看得出來 | 奇數鏡頭時 anchor 那一半的物件比自己腳下的地形低一格。**原版就是這樣算的**，但沒有找到能單獨驗證這一點的畫面 | 靜態 |
-| [`spec/58-display-slot-depth-range.md`](../spec/58-display-slot-depth-range.md) | 那兩支死碼原本要做什麼 | `ax = 0` ＝ 拿子圖塊 0 對自己與四鄰各貼一次。兩版都沒有呼叫端 ⇒ **沒有實機可以觀察**（`../re/82` §5） | 兩版對照 |
-| [`spec/59-battle-opening-orders.md`](../spec/59-battle-opening-orders.md) | 玩家側的開場常令 | 畫面上看起來是「站在陣形上」，但原版是哪一個命令碼（`Form`／`Holding`／`Guard`）沒有直接證據。⚠ **三個在開場那一幀畫出來一模一樣**——守陣沒有敵人靠近時也是站在陣形位置上，所以截圖分不出來 | 實測 |
-| [`spec/59-battle-opening-orders.md`](../spec/59-battle-opening-orders.md) | ⤷ 試過的一條線索 | 原版 `probe-march/e10.png` 那一刻**攻方已折損 115 點兵力**（兵力條反推，`../playtest/51` §2），而 remake 的守方站著不還手。把玩家側的開場常令改成守陣試跑（2026-08-27）：攻方只折損 **30 點**，離 115 還差得遠，而且守方仍然全滅。**所… | 靜態 |
-| [`spec/59-battle-opening-orders.md`](../spec/59-battle-opening-orders.md) | 腳本節奏與原版的 tick 對應 | 第 40 步對上那一張截圖，但「原版的 40 個 tick 是多久」還沒對過（`34`） | 實測 |
-| [`spec/60-battle-talk-duration.md`](../spec/60-battle-talk-duration.md) | 開戰 pair 的側別對應 | `0x1BA` → 上格、`0x1BB` → 下格是**強推論**（照影格位置接的）；`sub_1A3C3` 怎麼決定側別沒讀（§3.5） | 靜態 |
-| [`spec/60-battle-talk-duration.md`](../spec/60-battle-talk-duration.md) | `byte_1D349` 的三個值 | `sub_1A69F` 拿它當「這句要不要顯示」的閘（`al & 6` 那一段還沒逐位讀）。0／1／2 三種值由 `sub_1A6FA` 切換 | 靜態 |
-| [`spec/60-battle-talk-duration.md`](../spec/60-battle-talk-duration.md) | 玩家按鍵能不能提早關掉 | remake 可以按鍵推進；原版是否有這條路沒讀 | 靜態 |
-| [`spec/61-soldier-initial-hp-from-morale.md`](../spec/61-soldier-initial-hp-from-morale.md) | 挨打那一半的逐次對拍 | 只對過量級（§6.1），沒有逐次比。要對得先讓兩邊的時刻對齊——同 `../playtest/40` §13 那一類 | 靜態 |
-| [`spec/63-hit-stun.md`](../spec/63-hit-stun.md) | `+0x13` ← 8 | `sub_1B618` 寫、`sub_1B6BC` 不寫。那個欄位誰讀還沒查 | 靜態 |
-| [`spec/63-hit-stun.md`](../spec/63-hit-stun.md) | 倒地動畫（§1.2） | 4 幀之後 `sub_1B4B8` 收掉，remake 直接把 `Alive` 設成 false | 靜態 |
-| [`spec/66-broken-walls-repaint.md`](../spec/66-broken-walls-repaint.md) | 縮小地圖要不要跟著換 | 側欄的縮圖也是從同一個緩衝區來的，但重畫時機還沒讀。這一版只換戰場本身 | 靜態 |
-| [`spec/66-broken-walls-repaint.md`](../spec/66-broken-walls-repaint.md) | 對拍那 88 px | 兩邊的時刻不同（§1.2），要對就得讓門在同一個 tick 破 | 靜態 |
-| [`spec/67-ending-playback.md`](../spec/67-ending-playback.md) | 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`）；remake 先用疊黑 | 靜態 |
-| [`spec/67-ending-playback.md`](../spec/67-ending-playback.md) | `END_S12` 右半 | 用 640 版面畫出來右邊是雜訊，可能還有第二塊（`formats/09` §6） | 實測 |
-| [`spec/67-ending-playback.md`](../spec/67-ending-playback.md) | 第一幕的捲動 | §3 標成 remake 差異；要做就得先對 `sub_10094` 那一段的逐列位移 | 靜態 |
-| [`spec/67-ending-playback.md`](../spec/67-ending-playback.md) | 音樂的**起訖時點** | ⚠ 2026-08-23 起整段結局都放 `endbgm-0`（`cmd/wlgame` 的 `musicTrack()`，排在 `world == nil` 之前——`-open-ending` 那條 fixture 沒有世界）。**先前放的是 `overbgm-0`**，那是另一支執行檔的遊戲結束曲。剩下的缺… | 靜態 |
-| [`spec/68-death-animation.md`](../spec/68-death-animation.md) | 大將陣亡 | 大將不會死（`sub_1B618` 的 `IsGeneral` 那一條），所以 `+0` 那一組實際只有騎馬會用到；大將的倒地圖是不是死碼還沒查 | 靜態 |
-| [`spec/69-world-fingerprint.md`](../spec/69-world-fingerprint.md) | 跨平台實測 | Android 端還沒有東西可以跑（里程碑 A 本身） | 實測 |
-| [`spec/69-world-fingerprint.md`](../spec/69-world-fingerprint.md) | 戰術戰鬥要不要進指紋 | 目前不進。要驗戰場的決定性得另外做一個，`tactical.Battle` 的欄位更多 | 靜態 |
-| [`spec/70-phone-chrome.md`](../spec/70-phone-chrome.md) | 外框在高 DPI 上的觀感 | 8×8 的點陣框在 960×540 上是原尺寸；字已放大 2 倍（`100`），框要不要跟著放大**沒量過**，要實機回饋 | 靜態 |
-| [`spec/70-phone-chrome.md`](../spec/70-phone-chrome.md) | 龍紋的對齊 | 手機版的面板不是 640×400 的格子，龍紋仍釘在螢幕上，與原版的相位不同。**視覺上看得出來的差異只有相位，不是圖案** | 靜態 |
-| [`spec/72-bundled-game-data.md`](../spec/72-bundled-game-data.md) | Windows／macOS 上「解開就能跑」 | ⛔ 沒有那兩個平台的機器。包內版面驗過（`gamedata/`、`fonts/` 位置正確），但 `resolveDataDir` 在那兩個 OS 上沒實跑過 | 實測 |
-| [`spec/72-bundled-game-data.md`](../spec/72-bundled-game-data.md) | APK 內嵌後的實機驗收 | ⛔ 沒有裝置。模擬器驗到了解包與指紋，驗不到真實儲存空間與 DPI | 靜態 |
-| [`spec/72-bundled-game-data.md`](../spec/72-bundled-game-data.md) | 25 MB 的 APK 在低容量裝置上 | 解包後 app 私有目錄再佔約 4.8 MB，總共約 30 MB。**沒有量過安裝失敗的門檻** | 靜態 |
-| [`spec/73-right-click-cancel.md`](../spec/73-right-click-cancel.md) | 原版右鍵是否也關常駐視窗 | 沒量過。常駐視窗不走模態等待常式，推測不關，但**沒有實機證據** | 靜態 |
-| [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 那 110 張圖在 MCH 裡的實際外觀 | 算式定案，但**沒有逐張看過** 22 勢力 × 5 方向長什麼樣。已看過的：勢力 0 的靜止與行進（`../playtest/50`） | 靜態 |
-| [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 每格 4 層上限 | 刻意沒做（§4） | 靜態 |
-| [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 首都疊圖為什麼不畫 | **機制讀出來了**（2026-09-02）：`sub_1D4C7` 是「往一格推一個疊圖」，**一格最多 4 個**——`bl = [si+1]`（目前疊圖數）`cmp bl, 4 / jnb` 就整個跳過，而且 `[si]` 的 **bit 4 設起來的格子完全不接受疊圖**。顯示清單一格 8 B：`+0` … | 靜態 |
-| [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 別的疊圖組合 | 只驗過「首都 ＋ 軍團」。**災害物件 ＋ 軍團**、**非首都據點 ＋ 軍團**都沒有樣本 | 靜態 |
-| [`spec/75-bundled-audio.md`](../spec/75-bundled-audio.md) | 音檔大小 | ogg 全套 19 MB，桌面包從 11.7 MB 漲到 29 MB | 靜態 |
-| [`spec/75-bundled-audio.md`](../spec/75-bundled-audio.md) | 沒有音效裝置的**真實玩家** | ⛔ 仍然會掛。驗收模式擋住的是截圖路徑，一般啟動沒有擋——Ebiten 沒有可查詢的音訊 API，目前沒有乾淨的偵測法 | 實測 |
-| [`spec/75-bundled-audio.md`](../spec/75-bundled-audio.md) | 音效與場景的對應完整度 | 見 `29`，本規格不重複 | 靜態 |
-| [`spec/76-lord-not-in-formation.md`](../spec/76-lord-not-in-formation.md) | 君主被編成之後原版會怎樣 | 沒試過。若原版其實允許、只是清單排序讓人以為不行，§2 要推翻（但開關本身照樣成立） | 靜態 |
-| [`spec/76-lord-not-in-formation.md`](../spec/76-lord-not-in-formation.md) | 開關要不要進存檔 | **不進**。與旁邊的速度設定一樣是 session 設定，讀檔不會帶回來 | 靜態 |
-| [`spec/77-rout-talk-messages.md`](../spec/77-rout-talk-messages.md) | 對原版的實跑驗證 | §4 仍是**未做**：要讓原版跑出一支回不了家的軍團，得先有對應的存檔 | 實測 |
-| [`spec/78-amount-input-editor.md`](../spec/78-amount-input-editor.md) | `sub_17D5F` 讀 `CS:7D93` 之外還做什麼 | 每格的 raw byte 表已解，但那一支怎麼把 glyph 貼上去沒逐行讀 | 靜態 |
-| [`spec/78-amount-input-editor.md`](../spec/78-amount-input-editor.md) | 稅率上限 100 的意義 | 是「100%」還是別的刻度沒有第二個證據；remake 照抄 100 | 靜態 |
-| [`spec/79-new-game-faction-list.md`](../spec/79-new-game-faction-list.md) | 欄位表的「屬性」與「型別」兩個 word | `0x0206`／`0x0204` 與 `0x76`／`0x73` 只由「名字欄 vs 數字欄」推語意，消費它們的那一段沒讀（`../re/73` §6） | 靜態 |
-| [`spec/79-new-game-faction-list.md`](../spec/79-new-game-faction-list.md) | 捲軸的滑塊樣式 | 同 `38` §4，原版那一支沒讀 | 靜態 |
-| [`spec/79-new-game-faction-list.md`](../spec/79-new-game-faction-list.md) | 標題列的底色與字色 | 屬性 `0x9000`／`0x9001` 沒有換算成調色盤索引；remake 沿用一覽表既有的用色 | 靜態 |
-| [`spec/79-new-game-faction-list.md`](../spec/79-new-game-faction-list.md) | 無頭點擊 | §3.1：建置 image 沒有視窗管理員，滑鼠按鍵送不進 Ebiten。加一個 WM 就能把所有點擊路徑納入自動驗收 | 靜態 |
-| [`spec/79-new-game-faction-list.md`](../spec/79-new-game-faction-list.md) | 橫幅在不在 | remake 的啟動殼層一直有畫橫幅（`ICONGRF` 段 0）。`sub_11A6E` 沒有明顯的橫幅呼叫，**原版那 32 px 是什麼沒驗過**——地圖只佔 y 32–400 | 靜態 |
-| [`spec/80-duel-opening.md`](../spec/80-duel-opening.md) | 變體 0／2／3／5／6 的臨場抽驗 | 專屬句只在變體 1／4／7（`../re/75` §1.1），預設句共用同一選句機制；優先度低 | 靜態 |
-| [`spec/81-disaster-quantities.md`](../spec/81-disaster-quantities.md) | 事件 11 在風暴期間被重排的節奏 | 產生端一次排 32–60 延遲；期間事件 11 重擲強度的觸發頻率沒逐格讀（推定隨佇列輪到） | 靜態 |
-| [`spec/82-defender-selection.md`](../spec/82-defender-selection.md) | 名單上限 127 的邊界 | 原版緩衝區 0x100 bytes ÷ 2；remake 不設上限（軍團總數 127 本來就到不了）——記為等效差異 | 靜態 |
-| [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | UI 詞表只涵蓋靜態 literal 與 `%d` 樣板 | `%s` 樣板（內容是任意文字）反查不回去，這一類仍顯示繁中 | 靜態 |
-| [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | 版面沒有為非全形語系重算 | 訊息框 10 全形字／列是原版幾何；英文靠折行與翻頁吃下去，固定寬的欄位只做了「不可超過原文寬度」的約束 | 靜態 |
-| [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | UI 詞表與名表的第二人覆核 | **做了**（2026-08-28，374 條 UI 詞、343 個名）：改 4 條 UI 詞（`敵正侵攻他國` 縮成 `Enemy invades others` 對齊 TALK #102、`原版格式`→`Original format`、`提出外交要求` 補 diplomatic、`成立`→`agreed` … | 靜態 |
-| [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | 兩個專有名詞的英文寫法未經查證 | `松崗` 目前寫 `Sung Kang`、遊戲名寫 `Wolong`。原版包裝上有沒有官方英文名沒查過——**拿到一手資料再定案**，不要照現在這個沿用 | 靜態 |
-| [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | **16 px 字型在清單裡列距為 0** | 版面是照倚天的 16×15 排的（列高 16 ⇒ 1 px 間隙），JIS／GB 的字是 16×16 ⇒ 貼在一起。**裁掉首列或末列會傷到 89% 的字**（量過：兩份字型的第 0 列與第 15 列各有 82–91% 帶墨），所以不裁。PC-98 原版的文字模式本來就是 16 px 列距貼齊，日文這樣看是對的；… | 靜態 |
-| [`spec/85-latin-list-layout.md`](../spec/85-latin-list-layout.md) | 軍團／勢力兩家仍有 8–9 字的欄 | 要再寬就得動視窗本身的寬度（384 px 是原版幾何），那會影響對拍基準——**要做就整個視窗一起重排，不要只加寬一欄** | 靜態 |
-| [`spec/85-latin-list-layout.md`](../spec/85-latin-list-layout.md) | 其他視窗（HUD、據點情報卡、編成）還沒為半形語系重排 | 那些是固定座標的欄位，逐一量過再改；目前靠「英文不可超過原文寬度」的約束擋住溢出 | 靜態 |
-| [`spec/86-runtime-language-switch.md`](../spec/86-runtime-language-switch.md) | Android 實機／模擬器還沒實地切過語言 | 面板與 `syncLanguage` 都有單測，但手機版的畫面沒拍過；下一次 Android 打包驗收時補 | 靜態 |
-| [`spec/86-runtime-language-switch.md`](../spec/86-runtime-language-switch.md) | 語言不進存檔 | 原版存檔格式沒有這一欄，塞進去會破壞 round-trip。要記住偏好得另存 remake 自己的設定檔 | 靜態 |
-| [`spec/86-runtime-language-switch.md`](../spec/86-runtime-language-switch.md) | F9 是 remake 自創的鍵 | 原版沒有這個鍵；`docs/spec/13` 的按鍵表要同步記一筆 | 靜態 |
-| [`spec/87-latin-screen-layout.md`](../spec/87-latin-screen-layout.md) | 半形語系的戰場標題沒有地名 | 要顯示就得動側欄幾何（128 px 是原版的），那會影響對拍基準——要做就整格重排 | 靜態 |
-| [`spec/87-latin-screen-layout.md`](../spec/87-latin-screen-layout.md) | 原版美術上的中文（§2） | 只能重畫美術，本專案不做 | 靜態 |
-| [`spec/87-latin-screen-layout.md`](../spec/87-latin-screen-layout.md) | 將旗名字 8 字仍有 10 個撞號 | 地板是 8（同音不同字）；再多兩個是 `XIAHOU-D`／`XIAHOU-Y` 這類，要解得換呈現方式不是換寬度 | 靜態 |
-| [`spec/88-display-polish-parity.md`](../spec/88-display-polish-parity.md) | 事件列本身是 remake 自創 | 原版怎麼提示月結（如果有）沒查過；目前只是讓它不擋畫面 | 靜態 |
-| [`spec/88-display-polish-parity.md`](../spec/88-display-polish-parity.md) | `playtest/40` 沒有涵蓋開闊地的兵 | 那一份量的兩個局面都在城壁邊。要擋住這一類回歸，得再加一個**開闊地**的對拍 fixture | 靜態 |
-| [`spec/89-siege-damage-report-toggle.md`](../spec/89-siege-damage-report-toggle.md) | 設定不進存檔 | 與語言同一條（`86` §7）：原版存檔沒有這一欄，要記住偏好得另存 remake 自己的設定檔 | 靜態 |
-| [`spec/89-siege-damage-report-toggle.md`](../spec/89-siege-damage-report-toggle.md) | 結果畫面本身原版沒有 | 原版打完直接回戰略畫面。要不要整頁拿掉是另一個裁定，本規格只讓多出來的那一行可關 | 靜態 |
-| [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 |
-| [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 |
-| [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 |
-| [`spec/91-tactical-parity.md`](../spec/91-tactical-parity.md) | 動畫幀序 | 原版的兵有 `PoseStep`，截圖時機差一幀就整批不同。這是 `field` 剩下那 299 px 的來源之一（`../playtest/40` §13） | 實測 |
-| [`spec/91-tactical-parity.md`](../spec/91-tactical-parity.md) | 野戰打起來之後的戰場 | **開戰第一拍已經對過**（九區裡七區 0 px、`field` 0.05%，`../playtest/43`）。沒對過的是**開戰之後**的畫面——野戰的地形是從大地圖即時長出來的，兩邊要走到同一個 tick 比攻城更難湊 | 靜態 |
-| [`spec/92-android-music.md`](../spec/92-android-music.md) | 手機沒有實機聽過 | 沒有裝置；模擬器是 `-no-audio` 起的 | 靜態 |
-| [`spec/92-android-music.md`](../spec/92-android-music.md) | 桌面「沒有音效裝置就掛」那一條 | `../release/08` §5 的老問題，手機端要確認 Ebiten 在 Android 上不會踩同一個 | 靜態 |
-| [`spec/94-retreat-path-not-cleared-every-frame.md`](../spec/94-retreat-path-not-cleared-every-frame.md) | 守方一兵未損 | 這條 fixture 從頭到尾守方 48 人全活、兵 600 不變（`../playtest/51` §3）。守方站在 Z=1，攻方在 Z=0，而 `doAttack` 的碰撞要求 `s.Z == e.Z`——攻方走到腳下卻上不去。原版靠命令 3（城壁）登城，這條 fixture 的腳本沒有下過那道命令 | 靜態 |
-| [`spec/94-retreat-path-not-cleared-every-frame.md`](../spec/94-retreat-path-not-cleared-every-frame.md) | 攻方大將體力歸零卻還在 | `drainSiegeGeneral` 會扣到 0，而 `docs/re/11` §5.16 說戰鬥傷害最低留 1。攻城計時器要不要也留 1，沒有讀出來 | 靜態 |
-| [`spec/95-spawn-height-uses-ground-plane.md`](../spec/95-spawn-height-uses-ground-plane.md) | 原版擺兵寫進 `[si+0Ah]` 的是哪一個表 | 沒讀出來。remake 這一版是靠內部一致性定的（§2），不是照抄 | 靜態 |
-| [`spec/98-climb-into-a-gate-hits-it.md`](../spec/98-climb-into-a-gate-hits-it.md) | `loc_1B533` 的完整分流 | 這裡只用到「撞到結構物」那一條。它同時也是敵我碰撞的入口（`../re/11` §5.16），另外兩條在水平移動那邊已經接了 | 靜態 |
-| [`spec/99-about-page-license.md`](../spec/99-about-page-license.md) | 條款全文沒有在手機上顯示 | 只顯示摘要與全文出處。全文 104 行，要另做可捲動的文字頁；摘要已滿足「收到的人知道自己被授權了什麼」 | 靜態 |
+| 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
+|---|---|---|---|---|---|
+| [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | 實機驗收 | ⛔ 沒有裝置。里程碑 H 保持未完成 | 靜態 | actionable | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | SAF 匯入的複製流程 | 入口做完了，但「選資料夾 → 複製 69 檔」沒有自動驗過：要驅動系統的檔案選擇器。smoke 走的是 `adb` ＋ `run-as`，那是驗收路徑不是玩家路徑 | 靜態 | actionable | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | 高 DPI 下的點陣字 | 定為 2 倍（`../spec/100`）；實機上要不要另一檔未驗 | 靜態 | actionable | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | release signing | keystore 怎麼保管還沒決定；目前出的是 debug 簽章 | 靜態 | actionable | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`docs/mobile/android-plan.md`](../mobile/android-plan.md) | 16 KB 對齊只驗到建置那一層 | `readelf` 確認 LOAD 段是 `0x4000`，但**沒有 16 KB page size 的裝置或 AVD 實際載過**。這一條與「實機驗收」是同一個缺口 | 靜態 | actionable | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 點陣字在高 DPI 上要放大幾倍 | 定為 2（§6）；平板或小手機要不要另一檔，得有實機回饋 | 靜態 | actionable | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 小卡要放哪些欄位 | 目前放名稱／歸屬／生產力／防災／城兵五項。原版一覽表的欄位全表在 `docs/spec/38`，還沒逐項比對過取捨 | 靜態 | actionable | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 縮放的下限 | 整張大地圖 384×256 格全塞進手機會小到看不見，最小縮放級距還沒定 | 靜態 | actionable | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 戰場的縮放 | 目前固定 1×（原版的 480×368 剛好塞進主區）。放大之後看得到的格子會變少，**那會改變決策**，所以沒有做 | 靜態 | actionable | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 戰場縮圖的點選 | 原版點縮圖可以移動鏡頭，手機版目前只顯示 | 靜態 | actionable | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`docs/mobile/android-ux.md`](../mobile/android-ux.md) | 事件訊息的停留時間 | 六秒是估的。原版沒有這個機制（它要按鍵才消），所以沒有可抄的數字 | 靜態 | actionable | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`promo/android.md`](../promo/android.md) | 實機錄影 | ⛔ 沒有裝置。片中畫面出自桌面的同一份 `internal/ui/phone`，與 APK 是同一份程式碼，但**不是實機錄影** | 靜態 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`promo/android.md`](../promo/android.md) | 模擬器錄影 | 模擬器在這台機器上只有個位數 fps，錄出來會頓 | 靜態 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`promo/combined.md`](../promo/combined.md) | 三段的響度沒有逐段量 | 配樂那一軌過了 `loudnorm=I=-18`，但三段畫面本身沒有音效，所以整片只有一條音軌——目前沒有段間響度落差的來源。**換成保留各段原音的版本時要重量** | 靜態 | evidence-only | — |
+| [`promo/dosv-realmachine.md`](../promo/dosv-realmachine.md) | 原版戰術戰場的實機擷取 | 四次未觸發（§4）。要嘛接受原版 RNG 的變異多跑幾次，要嘛從存檔直接進戰場——後者要先解「怎麼從存檔載入到開戰的那一刻」 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`promo/dosv-realmachine.md`](../promo/dosv-realmachine.md) | 原版 AdLib 的同場錄音 | `ctrl+F6` 的 WAV 擷取這次沒生效，配樂沿用 2026-08-12 那次的實錄 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`promo/dosv-realmachine.md`](../promo/dosv-realmachine.md) | 兩側時鐘速度可比 | remake 用最高速檔才看得到動靜；要真的可比，得先量原版預設檔的每日實時秒數 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | 目標 OS 實跑 | **做不到**：這台是 Linux，沒有 Mac／Windows。檔頭驗過（PE32+／Mach-O），但視窗、輸入、音訊、字型載入都沒有在目標系統上跑過 | 實測 | actionable | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
+| [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | linux/arm64 的本體 | 要在 arm64 的 Linux 上建（Ebiten 的 cgo 沒有交叉工具鏈） | 靜態 | evidence-only | — |
+| [`release/01-cross-build-gate.md`](../release/01-cross-build-gate.md) | Windows 的 smoke | 同第一項 | 靜態 | actionable | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
+| [`release/10-full-20260828.md`](../release/10-full-20260828.md) | Windows／macOS 原生 GUI 實機驗收 | ⛔ 沒有那兩個平台的機器。交叉建置的產物只驗了檔頭 | 靜態 | actionable | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
+| [`release/10-full-20260828.md`](../release/10-full-20260828.md) | Android 實機驗收 ＋ release signing | ⛔ 沒有裝置；目前是 debug 簽章 | 靜態 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`release/10-full-20260828.md`](../release/10-full-20260828.md) | Android 模擬器 smoke | 這一批跳過（§3）。要跑得先重建 13.7 GB 的模擬器映像 | 靜態 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`release/10-full-20260828.md`](../release/10-full-20260828.md) | 沒有音效裝置時遊戲會掛 | 完整版會自己找到音檔並開音訊，而 Ebiten 沒有可查詢的音訊 API（`../spec/75` §5） | 靜態 | actionable | [#19](https://github.com/wicanr2/wolong_cht/issues/19) |
+| [`release/11-full-20260830.md`](../release/11-full-20260830.md) | Windows／macOS 原生 GUI 實機驗收 | 沒有 Mac／Windows 主機。交叉建置的檔頭與 ABI 已驗，但不以檔頭取代實測 | 實測 | actionable | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
+| [`release/11-full-20260830.md`](../release/11-full-20260830.md) | Android 實機／模擬器 smoke | 沒有裝置；模擬器映像不在機器上，重建要重下 13.7 GB | 靜態 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`release/11-full-20260830.md`](../release/11-full-20260830.md) | 合成片的段間響度 | 目前整片只有一條配樂軌，沒有段間落差的來源；換成保留各段原音的版本時要重量（`../promo/combined.md` §6） | 靜態 | evidence-only | — |
+| [`release/12-full-20260902.md`](../release/12-full-20260902.md) | Windows／macOS 原生 GUI | 沒有實機或 VM，只驗了檔頭 | 靜態 | actionable | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
+| [`release/12-full-20260902.md`](../release/12-full-20260902.md) | Android 實機與 release signing | 沒有裝置；金鑰保管方式未定 | 靜態 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`release/12-full-20260902.md`](../release/12-full-20260902.md) | Android 模擬器 smoke | `wolong-android-emulator` 映像不在這台機器上 | 靜態 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`release/12-full-20260902.md`](../release/12-full-20260902.md) | 可散布批次 | 仍停在 `20260830`，這一輪的六項修正還沒進公開發行 | 靜態 | evidence-only | — |
+| [`release/13-full-20260906.md`](../release/13-full-20260906.md) | Windows／macOS 原生 GUI | ❌ 沒有機器，仍未驗 | 靜態 | actionable | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
+| [`release/13-full-20260906.md`](../release/13-full-20260906.md) | Android 實機 | ❌ 只有 debug 簽章，仍未驗 | 靜態 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`release/13-full-20260906.md`](../release/13-full-20260906.md) | Windows／macOS／Android 實機 | 外部條件：缺機器 | 靜態 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`release/13-full-20260906.md`](../release/13-full-20260906.md) | `dist-public` 的 GUI smoke | `release_smoke.sh` 只跑 `dist-all`；可散布版要玩家自備資料才跑得起來，smoke 要另外給 `-orig`／`-font` | 靜態 | actionable | [#20](https://github.com/wicanr2/wolong_cht/issues/20) |
+| [`release/14-full-20260907.md`](../release/14-full-20260907.md) | APK 沒跟著這一批重建 | §2。Android 沒有改動，但批次日期不一致會讓人以為漏了 | 靜態 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`release/14-full-20260907.md`](../release/14-full-20260907.md) | 各目標平台的**實機**驗收 | M8 的閘：Windows／macOS GUI、Android 實機與 release signing 都要真的機器，Docker 代不了 | 靜態 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`release/15-desktop-closeout-20260908.md`](../release/15-desktop-closeout-20260908.md) | 原生平台操作 | Windows／macOS 待人工回報；不由 Linux 封包查核替代 | 靜態 | actionable | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
+| [`release/15-desktop-closeout-20260908.md`](../release/15-desktop-closeout-20260908.md) | 完整原版一致性 | playtest/115 所列逐拍及世界結算差異保留，不阻止本輪有揭露限制的交付整理 | 靜態 | merge-target | [#18](https://github.com/wicanr2/wolong_cht/issues/18) |
+| [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Windows／macOS 原生 GUI | 交叉建置的產物只驗了檔頭，沒有在目標作業系統跑過。M8 唯一的閘 | 靜態 | actionable | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
+| [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 實機驗收 | 只有 Docker 模擬器；觸控手感、真實 GPU、高 DPI 上的點陣字可讀性都驗不到 | 靜態 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`release/README-RELEASE.md`](../release/README-RELEASE.md) | Android 正式簽章 | 出的是 debug 簽章，keystore 怎麼保管還沒決定 | 靜態 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`release/README-RELEASE.md`](../release/README-RELEASE.md) | 16 KB page size 裝置 | `.so` 的 LOAD 段已是 `0x4000`，但沒有那種裝置或 AVD 實際載過 | 靜態 | evidence-only | — |
+| [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 據點換手之後 `+0x00` 低 4 位會不會跟著變 | `sub_1890A` 靜態讀過，動態沒驗——要打下一座城才看得到 | 靜態 | evidence-only | — |
+| [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 玩家據點求援的喇叭聲（`sub_10CDE`） | ⭐ **量清楚了，但刻意不接**（見下） | 靜態 | evidence-only | — |
+| [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 1. **長度 ≈ 2 個垂直畫面**（VGA 400 列模式約 70 Hz ⇒ **≈ 28 ms**）， | （未解小節內文） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/10-city-tick.md`](../spec/10-city-tick.md) | 2. ⭐ **音高不是它決定的**——這一支只開關 PPI port `61h` 的 bit 0/1， | （未解小節內文） | 靜態 | evidence-only | — |
+| [`spec/100-phone-text-scale.md`](../spec/100-phone-text-scale.md) | 倍率不能在遊戲內調 | 固定 2。平板或小手機可能要 1 或 3，得先有實機回饋 | 靜態 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`spec/101-phone-glyph-scale2x.md`](../spec/101-phone-glyph-scale2x.md) | 高 DPI 上 Ebiten 把 960×540 再縮到螢幕（非整數倍）的殘餘鋸齒 | 那一層是 Ebiten 的螢幕縮放（預設線性濾波），本規格只處理字模那一層。要不要改成整數倍畫布得有實機回饋 | 靜態 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`spec/102-battle-fast-forward.md`](../spec/102-battle-fast-forward.md) | 快轉時戰場區的底紋 | 原版是**藍底綠線的菱形格**（`playtest/53` 的裁切），不是龍紋。已收斂到「讀哪裡」：`sub_1DC9D` 的 `es` ＝ `word_1E15E`，**唯一的寫入端**是 `sub_1D958`（`sub_19946` 用 `cx = word_1D2F6` 傳進去），而 `word_1D2F… | 靜態 | evidence-only | — |
+| [`spec/103-phone-diplomacy-amount-keypad.md`](../spec/103-phone-diplomacy-amount-keypad.md) | 撥款請求的「指定金額」 | 原版 `sub_17C6E` 的另一個呼叫端；手機版仍只給「照要求撥款／拒絕」，同一套鍵盤可以接，先不做 | 靜態 | evidence-only | — |
+| [`spec/104-advisor-naming-window.md`](../spec/104-advisor-naming-window.md) | 選好字之後的畫面 | `../playtest/105` 停在剛開啟的狀態，**選字、翻頁、換肖像**之後還沒拍 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/104-advisor-naming-window.md`](../spec/104-advisor-naming-window.md) | 視窗外的背景 | 原版這一頁後面疊著 NEW GAME 的勢力清單與君主卡；`-open-naming` 直接開視窗，背後只有地圖。要對得走完整條新遊戲流程 | 靜態 | evidence-only | — |
+| [`spec/105-encounter-goes-straight-to-battle.md`](../spec/105-encounter-goes-straight-to-battle.md) | 遭遇當天的日期差一天 | **量到剩 2 個子刻**（§6）。原本記的「時鐘推進速率」不是成因——**接觸在第幾個子刻與速度檔無關**，節流只改牆鐘秒數不改 tick 數。缺的是原版接觸 tick 的一手數字 | 靜態 | evidence-only | — |
+| [`spec/106-message-box-reporter-portrait.md`](../spec/106-message-box-reporter-portrait.md) | `0x94`／`0x95` 兩頁保留肖像的用途 | `0x94` 是一張紅臉武將、`0x95` 是空白。沒找到傳這兩個值的呼叫點 | 靜態 | evidence-only | — |
+| [`spec/106-message-box-reporter-portrait.md`](../spec/106-message-box-reporter-portrait.md) | #217 的兩個 `{3}` | 機制已通（`SeqFactions`），但**發那一則的呼叫端還沒讀**，所以第二個勢力是誰未定 | 靜態 | evidence-only | — |
+| [`spec/107-launcher-ui-colours.md`](../spec/107-launcher-ui-colours.md) | 殼層其餘幾頁（ＹＥＳ／ＮＯ、劇本、四槽讀檔）的配色 | 這一輪只對過勢力清單與君主卡。其餘幾頁同樣走 `paletteInk`，修完應該一起好，但**沒有逐像素比過** | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/107-launcher-ui-colours.md`](../spec/107-launcher-ui-colours.md) | 捲軸滑塊的位置差 1 px | 量到：22 筆、`top` ＝ 4 時，原版的綠面在 y 161–216，remake 在 160–215（高度都是 56）。`⌊128×4/22⌋ ＝ 23` 給 159，原版對應的是 24。**只有這一個取樣點**，分不出是無條件進位、四捨五入還是槽的起點差 1；`38` §1.6 的實機量測只釘住高度沒釘位… | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/107-launcher-ui-colours.md`](../spec/107-launcher-ui-colours.md) | 反白條 | remake 的鍵盤游標，原版沒有。要不要照戰略層一覽表那樣「碰過才畫」（`g.listTouched`）沒有定案 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | `資金高位 >= 0x80` 那一支 | `cmp bh, 80h / jnb` 會直接算「答應」，等於資金超過約 840 萬時門檻失效。**看起來像有號數的邊界處理**，未逐位對過 | 靜態 | evidence-only | — |
+| [`spec/11-ai-sortie.md`](../spec/11-ai-sortie.md) | 君主出陣之後的行為 | 那支軍團跟一般軍團有沒有差別，未讀 | 靜態 | evidence-only | — |
+| [`spec/110-corps-command-menu.md`](../spec/110-corps-command-menu.md) | 選完之後的兩條流程 | 位置確認的軍團一覽、行軍指示的目的地一覽，**都沒有對拍**（`../playtest/60` §4） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/112-cursor-idle-resume-delay.md`](../spec/112-cursor-idle-resume-delay.md) | `sub_20000(ax=2)` 為什麼在恢復時被呼叫 | 那是滑鼠層跳表的第 2 號（`sub_2009A`，回傳快取座標並清旗標），在這個時點叫它的理由沒讀 | 靜態 | merge-target | [#14](https://github.com/wicanr2/wolong_cht/issues/14) |
+| [`spec/112-cursor-idle-resume-delay.md`](../spec/112-cursor-idle-resume-delay.md) | 訊息框那一路的 `8` 與游標的 `0Ch` 為什麼不同 | 兩個立即值都是 confirmed，但差別的用意沒有證據；remake 兩邊都用同一個延遲 | 靜態 | merge-target | [#14](https://github.com/wicanr2/wolong_cht/issues/14) |
+| [`spec/113-rle-length-header.md`](../spec/113-rle-length-header.md) | `BATTLE.MAP`／`MMAP.MCH`／`BATTLE.MDL` 走哪一支載入器 | 沒查（`../formats/06` §6）。它們的前 4 byte 不是長度，所以**至少不是這一族** | 靜態 | evidence-only | — |
+| [`spec/114-general-affinity.md`](../spec/114-general-affinity.md) | 旗標 bit 5 之外的退場條件 | `sub_15899` 只在「心向的勢力已滅」時看 bit 5；bit 5 沒設的武將會留在原地等下一輪，這一點沒有實機驗證 | 靜態 | evidence-only | — |
+| [`spec/115-soldier-power.md`](../spec/115-soldier-power.md) | 海戰適性實際被取到過沒有 | 算式與接線都對了，但**沒有跑過一場橋上的野戰**。要驗得讓兩支軍團在圖塊 `0xCA` 那一格遭遇 | 靜態 | actionable | [#31](https://github.com/wicanr2/wolong_cht/issues/31) |
+| [`spec/115-soldier-power.md`](../spec/115-soldier-power.md) | 地形類型 3–7 各是什麼地形 | `cs:982Fh` 的範圍已攤開（`../re/05`），但「類型 3 ＝ 山地／丘陵」那一欄的標籤是從圖塊外觀推的，沒有機器碼出處 | 靜態 | actionable | [#31](https://github.com/wicanr2/wolong_cht/issues/31) |
+| [`spec/116-retreat-cannot-leave-the-city.md`](../spec/116-retreat-cannot-leave-the-city.md) | 還有誰在用 `NewFieldFromTiles` 配真戰場資料 | `internal/rules/tactical/tactical_test.go` 有一處。它驗的是圖塊解碼不是連通性，但同一個陷阱在那裡也成立 | 靜態 | evidence-only | — |
+| [`spec/116-retreat-cannot-leave-the-city.md`](../spec/116-retreat-cannot-leave-the-city.md) | 退路要不要留 | 合成戰場（`NewField`）確實只有堆疊高度。**能不能在圖塊 ≥ `0xF0` 時不用堆疊高度**，是另一個問題 | 靜態 | evidence-only | — |
+| [`spec/117-fixture-arms-duel-before-stepping.md`](../spec/117-fixture-arms-duel-before-stepping.md) | 野戰 `field` 的殘差 | 修好之後還剩多少，量在 `../playtest/58` | 靜態 | actionable | [#17](https://github.com/wicanr2/wolong_cht/issues/17) |
+| [`spec/117-fixture-arms-duel-before-stepping.md`](../spec/117-fixture-arms-duel-before-stepping.md) | 自然流程那條路 | 遭遇訊息會擋住 `-shot-frames`（`105` §4 已寫明是預期行為）。要用自然流程做野戰對拍，得有一個「訊息自動按掉」的驗收旗標 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/118-shot-when-condition.md`](../spec/118-shot-when-condition.md) | docs/playtest/40` 的攻城取樣點是「第 61 步」。 | （未解小節內文） | 靜態 | evidence-only | — |
+| [`spec/118-shot-when-condition.md`](../spec/118-shot-when-condition.md) | 條件的組合 | 一次只吃一個條件。`91` §6 的攻城取樣點其實是三個條件同時成立（城壁挨過打、條顯示中、對白框已收），現在只判得了第二個 | 靜態 | merge-target | [#14](https://github.com/wicanr2/wolong_cht/issues/14) |
+| [`spec/118-shot-when-condition.md`](../spec/118-shot-when-condition.md) | 對白框的收掉時刻 | 沒有條件可以判「兩側的對白框都到期」，那要規則層先把 `word_1D322`／`word_1D324` 的到期時刻露出來 | 靜態 | merge-target | [#14](https://github.com/wicanr2/wolong_cht/issues/14) |
+| [`spec/119-talk-marker-fields.md`](../spec/119-talk-marker-fields.md) | 有沒有一則原版訊息真的提到那三個人 | 沒有窮舉。`\1` 的參數由呼叫端給，要逐個 `sub_18810` 呼叫點看 | 靜態 | evidence-only | — |
+| [`spec/119-talk-marker-fields.md`](../spec/119-talk-marker-fields.md) | `\5` 沒有接 | `TALK.DAT` 裡零次使用（`../formats/01` §3），接了也沒有東西會走到 | 靜態 | evidence-only | — |
+| [`spec/119-talk-marker-fields.md`](../spec/119-talk-marker-fields.md) | 同狀態截圖 | 要一張原版畫面上出現「孔明」的訊息才驗得到字本身 | 實測 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝命令、`0x0Bh`／`0x10h`／`0x15h`／`0x1Fh` 各自出現在哪個視窗已知，完整值域未列 | 靜態 | evidence-only | — |
+| [`spec/120-pathfind-request-queue.md`](../spec/120-pathfind-request-queue.md) | `sub_1ACA4` | 排隊之後緊接著呼叫，內容沒讀（`../re/80` §5） | 靜態 | evidence-only | — |
+| [`spec/120-pathfind-request-queue.md`](../spec/120-pathfind-request-queue.md) | 碰撞尾段那一處的前提 | 哪幾條分支會走到 `loc_1B612` 沒有逐條追 | 靜態 | evidence-only | — |
+| [`spec/120-pathfind-request-queue.md`](../spec/120-pathfind-request-queue.md) | 佇列順序對戰局的影響 | FIFO 與無序在同一場攻城裡差多少，沒有量化 | 靜態 | evidence-only | — |
+| [`spec/121-water-battlefield-selection.md`](../spec/121-water-battlefield-selection.md) | 類型 9 的另一條分支 | `loc_14C2C` 還會看鄰格是不是 `0xCA` 並設 `ch = 0x40`（翻轉旗標），remake 固定回 213、不翻轉。那一段沒逐行讀 | 靜態 | actionable | [#31](https://github.com/wicanr2/wolong_cht/issues/31) |
+| [`spec/121-water-battlefield-selection.md`](../spec/121-water-battlefield-selection.md) | 實跑一場碼頭野戰 | 沒有。要讓兩支軍團在圖塊 `0xCA` 上遭遇 | 實測 | actionable | [#31](https://github.com/wicanr2/wolong_cht/issues/31) |
+| [`spec/122-sound-type-levels.md`](../spec/122-sound-type-levels.md) | 四段的實際音量差 | 沒有錄下原版四個 TYPE 的波形量過。算式來自機器碼，聽感沒驗 | 靜態 | merge-target | [#8](https://github.com/wicanr2/wolong_cht/issues/8) |
+| [`spec/122-sound-type-levels.md`](../spec/122-sound-type-levels.md) | `AH=0Bh` 只重算三個聲部 | 原版那個迴圈是 `ah = 0、1、2`（`../re/81` §5）。remake 的主增益對所有聲部一致，這一點**沒有照抄** | 靜態 | merge-target | [#8](https://github.com/wicanr2/wolong_cht/issues/8) |
+| [`spec/123-captive-talk-messages.md`](../spec/123-captive-talk-messages.md) | 城兵那一側 | `sub_14FCE` 也呼叫 `sub_129C3`（守城武將被擒）。remake 的城兵路徑有沒有走到同一則沒驗 | 靜態 | merge-target | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
+| [`spec/124-menu-highlight-xor.md`](../spec/124-menu-highlight-xor.md) | 武將／勢力兩格的反白時機 | **八格都接了**（§3.5），但這兩格**沒有原版擷取**：原版走狀態列提示 ＋ 地圖游標，remake 開的是一覽表，流程本身不同。其餘六格各有一張原版擷取對過 0 px | 靜態 | evidence-only | — |
+| [`spec/124-menu-highlight-xor.md`](../spec/124-menu-highlight-xor.md) | `sub_10B46` 的暫存器序列 | 只確認了它寫 `0Ch` 給繪圖控制器、而結果逐點等於 XOR 12。**中間那幾個 port 寫入沒有逐行讀** | 靜態 | evidence-only | — |
+| [`spec/125-menu-box-width-from-padding.md`](../spec/125-menu-box-width-from-padding.md) | 「據點」那兩項 | `TALK #82`（「　首都確認　」／「　據點一覽　」）同樣是兩項選單，remake 的「據點」目前直接開一覽（`110` §5）。做了之後框寬會自動對——但那是另一件事 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/125-menu-box-width-from-padding.md`](../spec/125-menu-box-width-from-padding.md) | 原版只看第一列 | remake 取**所有列的最大值**。四則既有選單兩種算法同值，`#79`／`#82` 也同值；**沒有找到會分歧的例子，但也沒有窮舉過** | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/126-command-popup-menus.md`](../spec/126-command-popup-menus.md) | 人事／軍團那四條出口的殘影 | 只有據點一覽比過（`../playtest/83`）。另外四條也開清單，remake 走同一支 `dispatchPopupMenu`，**但沒有原版擷取** | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/126-command-popup-menus.md`](../spec/126-command-popup-menus.md) | 進言那一張還沒併進來 | `openAdvise` 有自己的一套（五項 ＋ 說服流程）。**併之前要先確認它的取消語意一樣**，這一輪沒動 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/127-captured-sovereign-becomes-retainer.md`](../spec/127-captured-sovereign-becomes-retainer.md) | 被俘兩次會不會加兩次 | **不會，而且不需要另外防護**——`and [bx], 0BFh` 已經把 bit 6 清掉了，第二次 `test [bx], 40h` 不成立。所以 `+3` 至多發生一次，值域停在 3–5，不會溢出 `+0x1E` 的 0–7。remake 照抄同一個結構（先測 bit 再清）就自然有同樣的性質 | 靜態 | evidence-only | — |
+| [`spec/127-captured-sovereign-becomes-retainer.md`](../spec/127-captured-sovereign-becomes-retainer.md) | 劇本作者能不能給非君主 bit 6 | 四個劇本的 43 筆全是現任君主（`../re/77` §3），但那是**資料上的巧合還是規則**沒有讀出來。若有一筆說話類型 3–7 又帶 bit 6，`+3` 會把它推到 6–10 | 靜態 | evidence-only | — |
+| [`spec/128-squad-leader-gone-keeps-reserve.md`](../spec/128-squad-leader-gone-keeps-reserve.md) | 戰後兵力的逐槽對拍 | 原版打完之後每槽兵數是三項相加（`../re/83` §3），remake 的戰後回填**沒有逐槽比過原版** | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/129-post-battle-morale-scaling.md`](../spec/129-post-battle-morale-scaling.md) | 為什麼敗方是 99 不是 100 | 自動判定用 `64h`、戰術用 `63h`。**兩個立即值都讀出來了**，但差 1 的理由沒有解釋——可能只是 `xchg` 那個寫法順手（先寫 99 再比 99） | 靜態 | actionable | [#18](https://github.com/wicanr2/wolong_cht/issues/18) |
+| [`spec/129-post-battle-morale-scaling.md`](../spec/129-post-battle-morale-scaling.md) | 戰後士氣的實機對照 | 沒有。要打完一場戰術戰鬥再看軍團一覽的士氣欄 | 靜態 | actionable | [#18](https://github.com/wicanr2/wolong_cht/issues/18) |
+| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 對得上（`docs/playtest/24`）。 原版執行期的開關行為仍未驗。 | （散句） | 靜態 | evidence-only | — |
+| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 熱區 5 | 原版登記了但不接任何常式，remake 照樣不做事 | 靜態 | evidence-only | — |
+| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | **remake 沒有邊緣捲動** | **機制早就解了**（`../re/47` §6）：`sub_120D6` 進大地圖時把 INT 33 的範圍換成**整個世界**（水平 0–`17FFh` ＝ 384 格 × 16、垂直 0–`101Fh`），`sub_11F7F` 再把原始座標減掉鏡頭原點、夾在 0–639／0–399，**夾掉的量同時加回鏡… | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/13-main-window-toggles.md`](../spec/13-main-window-toggles.md) | 戰場內調速度 | 戰場獨佔輸入，所以 `updateBattle` 自己接一次 ＋／−（調戰術速度），調完浮一行 1.5 秒的提示。**原版戰場沒有速度指示**，常駐顯示會破壞版面 parity | 靜態 | evidence-only | — |
+| [`spec/130-freelance-random-join.md`](../spec/130-freelance-random-join.md) | 平手時取編號小的 | 從 `jb`（嚴格小於）推出來的，**沒有實機驗過** | 靜態 | evidence-only | — |
+| [`spec/130-freelance-random-join.md`](../spec/130-freelance-random-join.md) | 這一條的實際發生頻率 | 開局 81 名在野武將**全部有心向**，所以隨機投靠要等他們兌現完才輪得到（`../mechanics/70` §3.9）。**長跑幾個月才會第一次觸發沒有量過** | 靜態 | evidence-only | — |
+| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | PC-98 版 | dosgolem 沒有 PC-98 的機器層（不同的顯示與字型架構）。那一版仍走 DOSBox-X | 實測 | evidence-only | — |
+| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | ⚠ 遊戲中的座標 | 大地圖有一層**捲動原點**（`畫面 ＝ 滑鼠 − 原點`），所以遊戲中要用 `sclick`／`stap`，選單畫面才用 `click`（`../playtest/66` §2） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | ⚠ `wait` 在遊戲中不適用 | 即時制的畫面永遠不會靜止，`wait` 會跑到預算上限。遊戲中用 `steps:`、`until:` 或 `runto:` | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | ⚠ 大地圖上選一格 | 用 `tile:TX,TY`，不要自己算像素——格座標是 `⌊原點÷16⌋＋⌊畫面÷16⌋` 兩次捨去的和，而且**游標不能停在熱區上**（`../re/85`） | 靜態 | merge-target | [#30](https://github.com/wicanr2/wolong_cht/issues/30) |
+| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | 視窗 x → 遊戲 x 的換算 | 視窗 416 對到遊戲 415，而同一批的 300／360／450 都是 1:1。成因未查，只影響游標位置（`../playtest/65` §3.1） | 實測 | evidence-only | — |
+| [`spec/131-dosgolem-oracle.md`](../spec/131-dosgolem-oracle.md) | 音源 | `int 61h` 只記錄不模擬（時鐘回呼除外）。音訊 parity 仍走 `29` 的錄音比對 | 靜態 | evidence-only | — |
+| [`spec/132-march-turnback-at-peace.md`](../spec/132-march-turnback-at-peace.md) | 折返之後會不會再出發 | 原版回到據點就停住（玩家的軍團在據點上完全不判）。**AI 的軍團**走 `sub_14300`：只有「腳下的據點受威脅、而且這一格的軍團數 ≤ 1」才會留守，否則照常繼續行軍（`../re/86` §2.1）。折返之後 AI 要不要再出發由 `sub_14325` 的 Stage 機決定，仍沒有實機觀測 | 靜態 | actionable | [#29](https://github.com/wicanr2/wolong_cht/issues/29) |
+| [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | `sub_1ECE0` 的亂數式 | 沒讀。讀出來也未必要照抄——remake 有自己的 `rng` | 靜態 | actionable | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
+| [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | 走進陣形要走多久 | 原版節拍 9 已經散開，但沒有量過「全部到位」是第幾拍 | 靜態 | actionable | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
+| [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | 既有的戰場對拍會不會漂 | 現有的取樣點（`-battle-steps 120`）在兩邊都已經到位之後，**理論上不受影響**，但沒重跑過 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/133-opening-deployment.md`](../spec/133-opening-deployment.md) | **移動層怎麼處理同格多兵** | 擋住接線的就是它（§3.5）。原版不查佔用，remake 的 `tryMove`／`anyoneAt` 以「一格一個兵」為前提 / 先讀原版的移動與碰撞判定，看它怎麼容許重疊 | 靜態 | actionable | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
+| [`spec/135-script-message-command.md`](../spec/135-script-message-command.md) | 參數值 3 | `byte_1D349` 只會是 0／1／2，閘算得出 3 但沒有值對得上——沒有腳本用到，或是原版的死分支 | 靜態 | evidence-only | — |
+| [`spec/136-battle-talk-parameters.md`](../spec/136-battle-talk-parameters.md) | 參數超過兩個的訊息 | 戰場對白只推兩個。若有第三個標記，原版讀堆疊殘值，remake 丟棄整則 | 靜態 | merge-target | [#14](https://github.com/wicanr2/wolong_cht/issues/14) |
+| [`spec/137-builtin-symbol-font.md`](../spec/137-builtin-symbol-font.md) | （那 408 格**來自哪裡**仍未解。 | （散句） | 靜態 | evidence-only | — |
+| [`spec/137-builtin-symbol-font.md`](../spec/137-builtin-symbol-font.md) | 那 408 格的來源 | 不是 `stdfont.15` 的任何一段，也不是 `usrfont.15m`（`../re/29` §7） | 靜態 | evidence-only | — |
+| [`spec/137-builtin-symbol-font.md`](../spec/137-builtin-symbol-font.md) | 其他語系 | 簡體／日文仍需自備 `HZK16`／`JISKAN16`——那兩套字集不在原版資料裡 | 靜態 | evidence-only | — |
+| [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | 逐筆對齊 | 需要兩邊同源的亂數，`sub_1ECE0` 的式子還沒讀（`133` §5） | 靜態 | evidence-only | — |
+| [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | 更長的窗口 | 原版跑過六月之後 AI 開打，戰術畫面會停住策略時鐘 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/139-ai-decision-trace.md`](../spec/139-ai-decision-trace.md) | `⛔ until:` 的中途判定 | 已修（`../playtest/78` §4）：只在主迴圈閒置點取樣 | 靜態 | evidence-only | — |
+| [`spec/140-status-message-box.md`](../spec/140-status-message-box.md) | 樣式 `1Eh` 是什麼 | `sub_189A4` 把它傳給 `sub_189DE` 當 `ah`。**只知道 0 ＝ 擦除、非 0 ＝ 畫**，`1Eh` 這個值本身沒解（一般訊息框傳的也是 `1Eh`） | 靜態 | evidence-only | — |
+| [`spec/141-retreat-countdown.md`](../spec/141-retreat-countdown.md) | 退卻中要不要補兵 | 原版下令之後場上八拍歸零、**沒有補兵進場**；remake 的 `reinforce()` 會補（補進來的兵下一幀被 `applySquadLeaderGone` 改成退卻）。兩邊最後都會結束，但**中途的場上人數不同**，沒有逐拍對過 | 靜態 | merge-target | [#18](https://github.com/wicanr2/wolong_cht/issues/18) |
+| [`spec/141-retreat-countdown.md`](../spec/141-retreat-countdown.md) | `word_1D31C` 的兩個 byte | 量到開場是 48／48（＝六隊 × 八人），`../re/11` §5.9 寫的是「含畫面外待機的」。**兩種讀法都還沒有直接證據**，這一份只用到「它歸零時結束」這一點 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/142-personnel-dismiss-flow.md`](../spec/142-personnel-dismiss-flow.md) | 任命的「已經有人」訊息參數 | 原版 `push ax`（`ah = 0FFh`、`al` ＝ 武將編號）＋ `push bx`（**據點記錄位址**，直接位址式）。remake 直接代名字字串，**沒有走 formatter 的位址式**（`../re/79` §2） | 靜態 | merge-target | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
+| [`spec/143-general-duty-field.md`](../spec/143-general-duty-field.md) | `sub_13771` 讀 `+0x17` 的那個分支 | 只知道是每小時處理裡的一支，判斷後 `sub_137F5` 挑人；分支語意未解 | 靜態 | evidence-only | — |
+| [`spec/143-general-duty-field.md`](../spec/143-general-duty-field.md) | `+0x17` 有沒有第六個值 | 字串表只有 6 項而第 6 項要靠 bit 6 算出來，所以存得下的上限是 4；沒有反證 | 靜態 | evidence-only | — |
+| [`spec/143-general-duty-field.md`](../spec/143-general-duty-field.md) | **解任把 `+0x1A` 歸零沒有實跑正對照** | 機器碼確定（`mov byte [bx+1Ah], 0`），但實跑那一輪官員的經費本來就是 0，等於沒比。要先撥款再解任才驗得到 | 實測 | evidence-only | — |
+| [`spec/144-advisor-leaves-general-table.md`](../spec/144-advisor-leaves-general-table.md) | 自定軍師時原版那個越界寫 | 位置在武將表尾端後一個 byte，寫進去的是什麼欄位沒查；remake 不照抄 | 靜態 | evidence-only | — |
+| [`spec/144-advisor-leaves-general-table.md`](../spec/144-advisor-leaves-general-table.md) | 軍師退場時（如果有）會不會放回表上 | 沒找到反向的寫入端 | 靜態 | evidence-only | — |
+| [`spec/145-general-and-faction-cells.md`](../spec/145-general-and-faction-cells.md) | `sub_175FA`／`sub_178A7` 的清單是不是只列本勢力 | 武將那張只有本勢力、勢力那張列全部活著的，兩張都拍過了（`../playtest/86`） | 靜態 | evidence-only | — |
+| [`spec/145-general-and-faction-cells.md`](../spec/145-general-and-faction-cells.md) | 適性欄位的低半位元組 | 四個劇本全是 0，語意未解 | 靜態 | evidence-only | — |
+| [`spec/146-map-cloud-objects.md`](../spec/146-map-cloud-objects.md) | 雲的漂移能不能長時間對齊 | 移動每次要抽兩個亂數（`sub_124FF`），與整條亂數流共用；載入當下位置相同，**跑久了必然分開**。要對齊得先解出原版亂數流的全部消費端 | 靜態 | evidence-only | — |
+| [`spec/146-map-cloud-objects.md`](../spec/146-map-cloud-objects.md) | type 3 的產生端 | 目前所有可見的事件 12 producer 只建 type 1／2（`../re/14` §6） | 靜態 | evidence-only | — |
+| [`spec/146-map-cloud-objects.md`](../spec/146-map-cloud-objects.md) | `+0x06`／`+0x07` | `sub_123FF` 寫 1，雲是 0；語意未解 | 靜態 | evidence-only | — |
+| [`spec/147-controlled-parity-save.md`](../spec/147-controlled-parity-save.md) | **原版的地圖游標框** | 白色空心 16×16，貼著游標所在的格。remake 沒有畫；要接得先讀出它的顏色、線寬與更新時機（`sub_11F7F` 每圈算游標所在格） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/147-controlled-parity-save.md`](../spec/147-controlled-parity-save.md) | 還能關掉什麼 | 目前只有 `--no-clouds`。天災、AI 出兵、募兵都吃亂數，各自需要自己的「關掉」欄位 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/147-controlled-parity-save.md`](../spec/147-controlled-parity-save.md) | 兩邊的**消費順序**能不能對齊 | 狀態可以搬（§5），順序還沒逐拍比過 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/148-shared-candidate-filter.md`](../spec/148-shared-candidate-filter.md) | `sub_17663` 的 `xor cl, cl` | 比 `sub_175FA` 多一行，把清單游標歸零。remake 每次開清單本來就從 0 開始，行為相同；**但那代表原版的兩張清單共用同一個游標記憶體 `word_198AA`**，切換時的殘留還沒對過 | 靜態 | evidence-only | — |
+| [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | 游標推到畫面邊緣時鏡頭跟過去 | 原版的滑鼠座標是**世界座標**（大地圖上驅動範圍 0–6143 × 0–4127），推到視野外鏡頭會捲（`../re/84` §2）。remake 的滑鼠被視窗框住，還沒接這個行為 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | ⭐ **原版的鏡頭是像素級的** | 邊緣捲動之後量到的捲動原點是 `(2657,1457)`——**不是 16 的倍數**。remake 的 `camX`／`camY` 是**格**，所以只對得上 16 的倍數那些位置。開局與 `sub_12151` 移鏡頭都是格對齊的，所以現有的對拍全部落在對得上的那一半；**要拍邊緣捲動之後的畫面就得先把鏡頭改… | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | 熱區會吃掉點擊 | ⚠ 實測踩到 `../re/85` §3 記的坑：把滑鼠移到據點的世界座標時，鏡頭捲到底、**游標釘在畫面右下角**，那裡是軍團情報視窗的熱區 `#31`，於是那一圈根本不問據點。要先把鏡頭帶過去、再讓游標落在畫面中間 | 實測 | merge-target | [#30](https://github.com/wicanr2/wolong_cht/issues/30) |
+| [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | 別的狀態下的游標 | `../playtest/91` §3 還沒對上，所以只接選點這一個 | 靜態 | evidence-only | — |
+| [`spec/150-diplomacy-preconditions.md`](../spec/150-diplomacy-preconditions.md) | `sub_1304E` 的 `dx` 附加欄位 | 這兩個呼叫點都傳 `0FFFFh`（不比），別的呼叫點傳什麼還沒逐一讀 | 靜態 | evidence-only | — |
+| [`spec/151-map-click.md`](../spec/151-map-click.md) | `sub_11F0E` 的 X 夾制 `23h` | 夾住之後框的右緣落在 672，超出畫面 32 px（§1.2）。要嘛 `sub_193E9` 對超出的部分另有處理、要嘛這一張的框比 112 窄——**兩個都還沒驗**。目前照抄常數 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/152-video-mode-lcd-palette.md`](../spec/152-video-mode-lcd-palette.md) | 素材頁的四季 | 肖像與據點景觀圖是**另一種**四季（換的是圖不是色），這一份沒動它們。⭐ **顏色那一半已經驗過**：切到液晶時肖像跟著換組，remake 逐像素 0 px（`../playtest/100` §5） | 靜態 | evidence-only | — |
+| [`spec/153-quit-confirm-menu.md`](../spec/153-quit-confirm-menu.md) | 離開時自動存檔 | `CLAUDE.md` §9 要求「離開前自動存檔，存檔失敗就不離開」，remake 兩條路目前都只是 `ebiten.Termination`。**原版這一段沒有存檔**（`xor al,al` 直接走），所以那是 remake 差異，還沒實作 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/154-mouse-cursor.md`](../spec/154-mouse-cursor.md) | 旗標 0 時真機會不會重畫 | §4。要一次真機（或另一個模擬器）的實測才能定案 | 實測 | evidence-only | — |
+| [`spec/154-mouse-cursor.md`](../spec/154-mouse-cursor.md) | 大地圖上的那一種 | 15×15 白色空心框（`149`），**什麼時候換成箭頭**沒對過 | 靜態 | evidence-only | — |
+| [`spec/154-mouse-cursor.md`](../spec/154-mouse-cursor.md) | 遊玩端的自繪 | 等 §4 定案 | 靜態 | evidence-only | — |
+| [`spec/155-desktop-launcher-input.md`](../spec/155-desktop-launcher-input.md) | 戰後結算與地圖捲動仍待補強；Windows／macOS 原生操作未驗收。 | （未解小節內文） | 靜態 | actionable | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
+| [`spec/156-desktop-preferences.md`](../spec/156-desktop-preferences.md) | 無阻擋實作的偏好語意缺口；Windows／macOS 原生設定路徑與操作由人工驗收。 | （未解小節內文） | 靜態 | merge-target | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
+| [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | `14060` 屬於哪一支、取數做什麼用 | 只知道在 `sub_13EFD` 底下，12 次／36 小時的節奏還沒對到機制 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | 開戰期的消費端清單 | 還沒統計；閒置期的四個位址不足以涵蓋 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`spec/160-rng-consumption-alignment.md`](../spec/160-rng-consumption-alignment.md) | remake 的呼叫點與原版位址的對照表 | 要邊比邊建，沒有現成的 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | **remake 側還沒跑同一條時間軸** | 原版側的 90 天基線已經有了；remake 要用同一份存檔、同一個 `-rng-state` 跑出對應的三份軌跡 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | **召見要靠人先跑一次才知道在哪** | 回應序列是寫死在腳本裡的（`playtest/118` §3），dosgolem 沒有條件分支。要自動化得在那端加「時鐘停住就回應」的偵測 | 靜態 | actionable | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | 「同意呂布」那條分支 | 這 90 天只遇到一次召見（曹操請求協助）。呂布的請求還沒出現 | 靜態 | actionable | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | 起點要不要從劇本開局 196/4/1 起 | 現成的受控存檔是 196/4/16。從開局起最乾淨，但要另外做一份存檔或走新遊戲流程 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | 原版側的鏡頭會自己跳 | 「固定在沛」在 remake 側靠 `-cam`，原版側做不到；這一項只影響畫面比對，狀態層不受影響 | 靜態 | actionable | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | 開戰期的取樣成本 | 只有閒置期量過。真正要看的四個現象多半發生在開戰期 | 靜態 | actionable | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`spec/161-liubei-idle-longrun-parity.md`](../spec/161-liubei-idle-longrun-parity.md) | 沛的地圖座標 | 還沒量，`-cam` 要填的值未知 | 靜態 | actionable | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`spec/162-city-cursor-from-save.md`](../spec/162-city-cursor-from-save.md) | 徵兵被跳過的次數還差 1 | 356 子刻裡原版 9、remake 10（每子刻只取 2 個數的那些）。與游標無關，是另一條規則 | 靜態 | evidence-only | — |
+| [`spec/162-city-cursor-from-save.md`](../spec/162-city-cursor-from-save.md) | 劇本開局的游標值 | `SINARIO.DAT` 同一個位移是什麼還沒量；開新遊戲時應該是 0，要確認 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/162-city-cursor-from-save.md`](../spec/162-city-cursor-from-save.md) | 存回去要不要寫 | 目前只解讀取。存檔寫回是「改寫不是重建」（`CLAUDE.md` §9），這個欄位在未解區裡原封不動 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/163-city-tick-order.md`](../spec/163-city-tick-order.md) | `formAICorps` 在原版的位置 | 沒有證據。這一輪沿用「跟著威脅」的現況 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`spec/163-city-tick-order.md`](../spec/163-city-tick-order.md) | ② 易主 → 原主勢力 `+0x17` | remake 在 `refreshCityThreat` 裡，順序與原版一致，但沒有單獨驗過 | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`spec/164-relief-request-gates.md`](../spec/164-relief-request-gates.md) | AI 自動判定戰鬥的觸發時機 | 對拍第一個分歧在拍 1978（remake）／2119（原版），差 141 拍。成因未解 | 靜態 | actionable | [#29](https://github.com/wicanr2/wolong_cht/issues/29) |
+| [`spec/164-relief-request-gates.md`](../spec/164-relief-request-gates.md) | `sub_145C1` 挑武將的規則 | 取 `+0x11` 最大且 `+0x17 == 0` 的那一位；remake 的 `formAICorpsTo` 是否同序未驗 | 靜態 | actionable | [#29](https://github.com/wicanr2/wolong_cht/issues/29) |
+| [`spec/166-save-writeback-keeps-unmodelled-bits.md`](../spec/166-save-writeback-keeps-unmodelled-bits.md) | 勢力／據點／武將 | 完全相同 | 靜態 | evidence-only | — |
+| [`spec/166-save-writeback-keeps-unmodelled-bits.md`](../spec/166-save-writeback-keeps-unmodelled-bits.md) | **軍團** | `+0x00` 有 6 支不同（`C5` → `C4`） | 靜態 | evidence-only | — |
+| [`spec/166-save-writeback-keeps-unmodelled-bits.md`](../spec/166-save-writeback-keeps-unmodelled-bits.md) | 位元 0／1／4／5 有設定端與清除端、語意尚未定案 | （散句） | 靜態 | evidence-only | — |
+| [`spec/169-march-has-no-city-stub.md`](../spec/169-march-has-no-city-stub.md) | `sub_14325` 分派表的 16 項 | 玩家半張與 AI 半張各 8 項；remake 只對到 0–3 與 8／10／11，其餘未逐支對過 | 靜態 | actionable | [#29](https://github.com/wicanr2/wolong_cht/issues/29) |
+| [`spec/170-ai-target-takes-two-ticks.md`](../spec/170-ai-target-takes-two-ticks.md) | 軍團 `+0x00` 位元 1 | remake 沒建模。它的效果（下一次移動前重查道路表）被 remake 的「`March` 當場算好 routes」涵蓋，但存檔寫回是靠 `modelledCorpsBits` 原樣保留的，不是真的維護 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/170-ai-target-takes-two-ticks.md`](../spec/170-ai-target-takes-two-ticks.md) | `sub_14325` 分派表的 16 項 | 玩家半張與 AI 半張各 8 項，remake 只對到 0–3 與 8/10/11；其餘未逐支對過 | 靜態 | actionable | [#29](https://github.com/wicanr2/wolong_cht/issues/29) |
+| [`spec/171-ai-only-expands-via-relief.md`](../spec/171-ai-only-expands-via-relief.md) | 求援機率路徑的次數 | 原版 210 次（`sub_14057`）、remake 9 次。方向與軍團數相反，成因還沒查 | 靜態 | actionable | [#29](https://github.com/wicanr2/wolong_cht/issues/29) |
+| [`spec/171-ai-only-expands-via-relief.md`](../spec/171-ai-only-expands-via-relief.md) | `sub_1699E`（君主親自出陣） | remake 未實作；它是 `sub_16E8F` 的第二個呼叫端 | 靜態 | actionable | [#29](https://github.com/wicanr2/wolong_cht/issues/29) |
+| [`spec/172-corps-march-fields.md`](../spec/172-corps-march-fields.md) | 軍團 `+0x00` 位元 4／5 | 有成對的設定與清除端，語意未定（`../re/34` §2）。寫回靠 `modelledCorpsBits` 原樣保留。位元 0 已解（`173`） | 靜態 | evidence-only | — |
+| [`spec/172-corps-march-fields.md`](../spec/172-corps-march-fields.md) | 索引表 `0x0000`–`0x07FF` 的 `+6`／`+8` | 一個據點只放得下兩個方向，四方向的據點怎麼放沒讀 | 靜態 | evidence-only | — |
+| [`spec/173-corps-flag-bit0-and-sprite-fields.md`](../spec/173-corps-flag-bit0-and-sprite-fields.md) | 軍團 `+0x00` 位元 4／5 | 有成對的設定與清除端，語意未定（`../re/34` §2） | 靜態 | evidence-only | — |
+| [`spec/173-corps-flag-bit0-and-sprite-fields.md`](../spec/173-corps-flag-bit0-and-sprite-fields.md) | `sub_12708` 的地形 `0CEh`–`0DDh` | 位元 0 設著時才走 `sub_12880`（讀連結記錄的兩端節點）。那一段地形是什麼還沒讀 | 靜態 | evidence-only | — |
+| [`spec/174-relief-dispatch-does-not-move-marching-corps.md`](../spec/174-relief-dispatch-does-not-move-marching-corps.md) | `sub_14057` 的 `dl` | 用的是「威脅目標的索引」（亂數 & 3，0 當 1），不是威脅量算出來的支數。看起來像原版的怪癖，照抄 | 靜態 | evidence-only | — |
+| [`spec/175-encounter-standoff-countdown.md`](../spec/175-encounter-standoff-countdown.md) | `+0x00` 位元 4 | `sub_12B3C` 設、`sub_12BA8` 清，而 `sub_12BA8` 接著呼叫 `sub_19656`／`sub_196ED`（繪圖）。**像是「這一格要重畫」的髒旗標**，不是規則狀態——待確認 | 靜態 | actionable | [#5](https://github.com/wicanr2/wolong_cht/issues/5) |
+| [`spec/175-encounter-standoff-countdown.md`](../spec/175-encounter-standoff-countdown.md) | `+0x21` | `sub_1264A` 在沒卡住時一併歸零；`sub_12B3C` 拿 `<< 2` 與 `+0x03 & 3` 合成圖塊索引。**像是對峙動畫的第二個維度**，語意未讀 | 靜態 | actionable | [#4](https://github.com/wicanr2/wolong_cht/issues/4) |
+| [`spec/175-encounter-standoff-countdown.md`](../spec/175-encounter-standoff-countdown.md) | `sub_102F5(al=3)` | 對峙期間每個週期呼叫一次，推測是音效 | 靜態 | actionable | [#5](https://github.com/wicanr2/wolong_cht/issues/5) |
+| [`spec/176-event-queue-cursor-not-restored.md`](../spec/176-event-queue-cursor-not-restored.md) | eventDelay`（`byte_131AD`）的相位。 | （未解小節內文） | 靜態 | evidence-only | — |
+| [`spec/177-replan-on-leg-not-from-city.md`](../spec/177-replan-on-leg-not-from-city.md) | 移動計時器 `+0x0B` 的相位**：拍 2,120 之後軍團 19 與 72 的計時差 1–2。 | （未解小節內文） | 靜態 | evidence-only | — |
+| [`spec/177-replan-on-leg-not-from-city.md`](../spec/177-replan-on-leg-not-from-city.md) | loc_1491B` 在「已經在邊上」那一支回傳的 `dx` 與 `bp` 比較的語意 | （未解小節內文） | 靜態 | merge-target | [#3](https://github.com/wicanr2/wolong_cht/issues/3) |
+| [`spec/178-upkeep-and-morale-gate-is-on-leg.md`](../spec/178-upkeep-and-morale-gate-is-on-leg.md) | byte_10CF3`（「一時」的判準）remake 用 `hour == upkeepHour` 代替， | （未解小節內文） | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`spec/179-recalc-on-battle-and-arrival-test.md`](../spec/179-recalc-on-battle-and-arrival-test.md) | 拍 2,454 起軍團 19 的 Stage 機仍快一步：原版 10 → 9 → **8**， | （未解小節內文） | 靜態 | evidence-only | — |
+| [`spec/180-relief-dispatch-want-counts-candidates.md`](../spec/180-relief-dispatch-want-counts-candidates.md) | 原版**沒有比勢力**（`sub_14155` 只看節點欄、活著、位元 2、Stage）， | （未解小節內文） | 靜態 | actionable | [#29](https://github.com/wicanr2/wolong_cht/issues/29) |
+| [`spec/181-ai-recruit-gate-and-monthly-globals.md`](../spec/181-ai-recruit-gate-and-monthly-globals.md) | 勢力 7 的本月支出在月結那一小時差一次累加（原版 46、remake 0）， | （未解小節內文） | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`spec/181-ai-recruit-gate-and-monthly-globals.md`](../spec/181-ai-recruit-gate-and-monthly-globals.md) | 拍 3,400 的每時勢力游標（`+0x2C`）差 1。 | （未解小節內文） | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`spec/182-monthly-settlement-before-hourly.md`](../spec/182-monthly-settlement-before-hourly.md) | 拍 3,420 的據點 129 上昇值與防災值各差 1——那是拍 3,415 的調兵分歧 | （未解小節內文） | 靜態 | evidence-only | — |
+| [`spec/183-occupancy-map-is-incremental.md`](../spec/183-occupancy-map-is-incremental.md) | 對拍期間 remake 不再呼叫 `rebuildOccupancy`，所以圖也會累積誤差。 | （未解小節內文） | 靜態 | actionable | [#29](https://github.com/wicanr2/wolong_cht/issues/29) |
+| [`spec/184-relief-dispatch-want-is-always-one.md`](../spec/184-relief-dispatch-want-is-always-one.md) | 拍 3,566 那個分歧已經解掉了：`Targets` 是空的，根因不在求援也不在 | （未解小節內文） | 靜態 | actionable | [#29](https://github.com/wicanr2/wolong_cht/issues/29) |
+| [`spec/184-relief-dispatch-want-is-always-one.md`](../spec/184-relief-dispatch-want-is-always-one.md) | 挑目標的位置在 `al` 初值為 0 時不等價：原版 `dec al` → `0FFh`， | （未解小節內文） | 靜態 | actionable | [#29](https://github.com/wicanr2/wolong_cht/issues/29) |
+| [`spec/185-monthly-settlement-call-order.md`](../spec/185-monthly-settlement-call-order.md) | sub_15695`／`sub_155A6`／`sub_157FE` 在 remake 的對應位置還沒逐條核對， | （未解小節內文） | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`spec/185-monthly-settlement-call-order.md`](../spec/185-monthly-settlement-call-order.md) | 拍 4,911：同一場攻城戰的勝負判定相反。 | （未解小節內文） | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`spec/185-monthly-settlement-call-order.md`](../spec/185-monthly-settlement-call-order.md) | 拍 5,200** 仍然雪崩，要等上面那一項解掉再看。 | （未解小節內文） | 靜態 | merge-target | [#10](https://github.com/wicanr2/wolong_cht/issues/10) |
+| [`spec/186-standoff-corps-before-city.md`](../spec/186-standoff-corps-before-city.md) | sub_12708` 的圖塊區間 `0CEh`–`0DDh` 在 remake 沒有對應物 | （未解小節內文） | 靜態 | actionable | [#5](https://github.com/wicanr2/wolong_cht/issues/5) |
+| [`spec/187-only-the-loser-is-judged.md`](../spec/187-only-the-loser-is-judged.md) | 拍 5,176 的據點表 | 103 個 byte／57 座 / **1 個 byte／1 座**（語意未解的 `+0x15`） | 靜態 | evidence-only | — |
+| [`spec/187-only-the-loser-is-judged.md`](../spec/187-only-the-loser-is-judged.md) | 野戰在 `ah` ＝ 3 時為什麼只判攻方，還沒有解釋。 | （未解小節內文） | 靜態 | evidence-only | — |
+| [`spec/192-route-cost-model.md`](../spec/192-route-cost-model.md) | 同成本時的 tie-break：原版是環形佇列 ＋「掃一遍取第一個等於最小值的 | （未解小節內文） | 靜態 | merge-target | [#3](https://github.com/wicanr2/wolong_cht/issues/3) |
+| [`spec/198-ivent-scene-frame.md`](../spec/198-ivent-scene-frame.md) | 進言選單在說服場景上沒關掉**（remake 殘影 1,750 px，原版進場時清掉）。 | （未解小節內文） | 靜態 | evidence-only | — |
+| [`spec/198-ivent-scene-frame.md`](../spec/198-ivent-scene-frame.md) | 框的填色在原版是什麼：插圖把中間 288×176 全蓋住，露出來的只有邊框那 | （未解小節內文） | 靜態 | evidence-only | — |
+| [`spec/199-persuade-scene-clears-the-advise-menu.md`](../spec/199-persuade-scene-clears-the-advise-menu.md) | 判決畫面（遷都／請求君主出陣，`49`）走的不是 | （未解小節內文） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/20-save-format.md`](../spec/20-save-format.md) | 存檔區塊的 7 KB 未解區 | `+0x1EC0`–`+0x42C0`，靠 `raw` 原樣保存，但**內容仍不知道**（`docs/formats/08`） | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/20-save-format.md`](../spec/20-save-format.md) | 原版 `SAVE.DAT` 的槽位語意 | 四個槽與 `SINARIO.DAT` 的四個劇本是不是同一個編號空間，未確認 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/200-opening-move-delay.md`](../spec/200-opening-move-delay.md) | 拍 4 之後仍有 **2 個兵**對不上：`0/2/0`（隊 2 的隊長）與 `0/5/2`。 | （未解小節內文） | 靜態 | actionable | [#13](https://github.com/wicanr2/wolong_cht/issues/13) |
+| [`spec/200-opening-move-delay.md`](../spec/200-opening-move-delay.md) | 0001 9DB1`（`280h`）與 `0001 9E35`（`3C0h`）那兩種物件是什麼，還沒對。 | （未解小節內文） | 靜態 | actionable | [#13](https://github.com/wicanr2/wolong_cht/issues/13) |
+| [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 池的上限 | `sub_155EC` 的 `0xFFDC` 只在退兵路徑上驗過；月結加兵是不是同一支未查。**remake 兩條路徑現在都夾**（`economy.ClampReserve`），但那是照著同一個常數做的，不是證明原版共用同一支 | 靜態 | evidence-only | — |
+| [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 頭像的邊框 | `sub_107D2` 只 blit 64×64 的圖塊，**框在哪裡畫的沒找到**——場景 5 的 op 清單裡沒有頭像那一格的框 | 靜態 | evidence-only | — |
+| [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 兵種標籤 | 畫面用場景 5 的「主將」，規則層的 `army.Position` 第一個是「大將」（原版 TALK #62 也這樣說）。兩處用語不同是原版就有的，不要統一 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 反白列上換色的機制 | `38` §1.7.1：兩個色號各有一次量測，變換規則沒解 | 靜態 | evidence-only | — |
+| [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 空槽標記 | 原版用名稱欄第一個字 `0xD0A1`；remake 用「載得起來且玩家勢力有效」判定，兩者不等價 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 新遊戲共用 | remake 的啟動殼層是自己的畫面，還沒有換成這個四槽視窗 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/26-yes-no-dialog.md`](../spec/26-yes-no-dialog.md) | 原版的使用者 | `sub_18DC8` 只有一個呼叫端 `sub_11AC3`（新遊戲流程），問題文字由那裡給，內容未讀 | 靜態 | evidence-only | — |
+| [`spec/26-yes-no-dialog.md`](../spec/26-yes-no-dialog.md) | `cx = 600Dh` 的尺寸編碼 | `sub_19796`／`sub_197C3` 是**保存／還原被蓋住的畫面**，`dx`／`bx` 是像素座標、換算成 VRAM 位址（`45` §2 逐行解過）。這個呼叫端的 `cx` 高低位元組怎麼對到寬高沒逐位對過 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 頭像尺寸 | 軍師頭像的下緣照原版座標會略微超出那個 208×104 的底框；沒有 oracle 可比，先照機器碼畫 | 實測 | evidence-only | — |
+| [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 事件佇列 | 這一輪不進 JSON。編輯器要動它得先有 UI 語意 | 靜態 | evidence-only | — |
+| [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 未解區域 | `+0x1EC0` 那 7 KB 仍是黑盒，只能靠改寫保留 | 靜態 | evidence-only | — |
+| [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 編輯器 | 這一份只做資料層。UI 是另一份規格 | 靜態 | evidence-only | — |
+| [`spec/29-audio.md`](../spec/29-audio.md) | 曲 1 | DOS/V 的 `KI.EXE` 裡沒有任何呼叫端（`re/58` §5）。PC-98 版還沒掃 | 靜態 | merge-target | [#8](https://github.com/wicanr2/wolong_cht/issues/8) |
+| [`spec/29-audio.md`](../spec/29-audio.md) | 曲 6 的接法 | 原版是四支對話／事件常式，remake 用「事件訊息開著」與「進言對話開著」兩個狀態代替，**不是一對一** | 靜態 | merge-target | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
+| [`spec/29-audio.md`](../spec/29-audio.md) | 換季的兩段時序 | 原版第 1 天停、第 2 天換曲，調色盤另外漸變 16 天。remake 只做了換曲那一半 | 靜態 | merge-target | [#8](https://github.com/wicanr2/wolong_cht/issues/8) |
+| [`spec/29-audio.md`](../spec/29-audio.md) | 迴圈點怎麼呈現 | 原版靠控制事件 `C1`／`C3` 無限循環；ogg 是有限長度，要決定渲染幾輪或另存迴圈點 | 靜態 | merge-target | [#8](https://github.com/wicanr2/wolong_cht/issues/8) |
+| [`spec/29-audio.md`](../spec/29-audio.md) | 全域音量偏移 | `cs:0996h` 誰設、範圍多少未解（`re/57` §8） | 靜態 | merge-target | [#8](https://github.com/wicanr2/wolong_cht/issues/8) |
+| [`spec/29-audio.md`](../spec/29-audio.md) | PC-98 版 | 音源是 YM2203，暫存器路徑完全沒讀。要不要做是待裁定的問題 | 靜態 | merge-target | [#8](https://github.com/wicanr2/wolong_cht/issues/8) |
+| [`spec/30-victory.md`](../spec/30-victory.md) | 四個劇本的結局是否不同 | 十二幕依序播，**沒有依劇本分支的證據**（`D7END.EXE` 的 `start` 只有一條路，`../re/70` §3）；四劇本是否真的共用同一段沒有實跑對過 | 實測 | evidence-only | — |
+| [`spec/30-victory.md`](../spec/30-victory.md) | 君主陣亡時軍師怎麼辦 | 未知（同上） | 靜態 | evidence-only | — |
+| [`spec/31-tactical-sidebar.md`](../spec/31-tactical-sidebar.md) | 段 1 五塊美術的圖形語意 | 貼點與尺寸 confirmed，圖上畫什麼要另外解（`../formats/03` §5.3） | 靜態 | evidence-only | — |
+| [`spec/31-tactical-sidebar.md`](../spec/31-tactical-sidebar.md) | 城兵臨時軍團的主將名 | `0x4200` 的索引算式指到武將表全零那一筆（`../re/60` §4.1） | 靜態 | evidence-only | — |
+| [`spec/33-squad-selection.md`](../spec/33-squad-selection.md) | 待機兵條的欄位語意 | `word_1D30A:+0x09 + 4k` 在 `../re/11` §3.9 記成「第 k 隊的待機兵數」；條的上限 76 遠小於一隊 100 兵，所以開局會頂在上限 | 靜態 | evidence-only | — |
+| [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 最高速在原版實機是多少 | 機器相依。DOSBox 固定 cycles 量得到「那台的上限」，量不到「原版的答案」 | 實測 | evidence-only | — |
+| [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 戰場幀是否等於 remake 的一次 `Step()` | 原版一幀做完整條戰場迴圈；remake 的 `Step()` 是規則層一步。**兩者對齊過但沒逐項比** | 靜態 | evidence-only | — |
+| [`spec/34-speed-steps.md`](../spec/34-speed-steps.md) | 音效驅動不在時的行為 | `../re/61` §6 | 靜態 | evidence-only | — |
+| [`spec/36-ground-planes-and-climbing.md`](../spec/36-ground-planes-and-climbing.md) | 命令 6 為什麼擋高平面橫移 | 命令碼 6 是什麼沒對過 | 靜態 | merge-target | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
+| [`spec/36-ground-planes-and-climbing.md`](../spec/36-ground-planes-and-climbing.md) | 擋路時的換位 | 原版被兵擋住還會試 `loc_1B533`（§1.4），remake 的 `tryClimb` 直接失敗。水平移動那條路的換位已經有了（`swapWith`） | 靜態 | merge-target | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
+| [`spec/37-tactical-player-controls.md`](../spec/37-tactical-player-controls.md) | 選了陣形之後原版有沒有立刻重排 | 機器碼只寫偏移，**沒有看到立刻移動的呼叫**；remake 照抄（等命令） | 靜態 | evidence-only | — |
+| [`spec/37-tactical-player-controls.md`](../spec/37-tactical-player-controls.md) | 陣形線在小地圖上的線寬與端點 | `sub_1C5AE` 沒逐行讀，remake 畫整條 1 px 的線 | 靜態 | merge-target | [#3](https://github.com/wicanr2/wolong_cht/issues/3) |
+| [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「看」與「選」的內容差異 | 原版兩種取法的**列表內容**不同（`../re/26` §4.2），remake 只統一了欄位 | 靜態 | evidence-only | — |
+| [`spec/38-list-windows.md`](../spec/38-list-windows.md) | 「委任」那一格的顏色 | 實錄影格上看起來是紅字，但影片是壓縮過的、也沒有機器碼證據。remake 先畫成一般色 | 靜態 | evidence-only | — |
+| [`spec/39-march-order-menu.md`](../spec/39-march-order-menu.md) | `sub_193E9` 內部的列高與配色 | 只解出外框幾何，內部（`loc_19409`）沒逐行讀 / 反白的畫法已有 `docs/spec/124`，列高可由框高 ÷(n+1) 推但沒驗 | 靜態 | evidence-only | — |
+| [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 君主那一側的回話 | 原版事件場景會同時出現兩個框（`docs/re/66` §5.1 的影格就是），remake 只畫一個 | 靜態 | evidence-only | — |
+| [`spec/41-message-box-geometry.md`](../spec/41-message-box-geometry.md) | 框的底紋 | 龍紋的點陣找到了（`../formats/03` §5.5），但 96 列的排法還沒解，remake 仍用純色 | 靜態 | evidence-only | — |
+| [`spec/42-event-scene-speakers.md`](../spec/42-event-scene-speakers.md) | 撥款事件（4／5） | 同上，還沒對過哪一則進下框 | 靜態 | evidence-only | — |
+| [`spec/43-rout-on-blocked-return.md`](../spec/43-rout-on-blocked-return.md) | `loc_1491B` 的其他成本項 | 只解出「非己方據點 ＋0xA6」，廣度優先搜尋本身沒逐條讀 | 靜態 | merge-target | [#3](https://github.com/wicanr2/wolong_cht/issues/3) |
+| [`spec/44-advise-original-text.md`](../spec/44-advise-original-text.md) | 逐句節拍 | 原版每句要等玩家按鍵才往下走，remake 直接顯示最新一句（`45` §3.1） | 靜態 | merge-target | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
+| [`spec/45-advise-scene-layout.md`](../spec/45-advise-scene-layout.md) | 選單的反白樣式 | 原版怎麼畫游標列沒解，remake 用自己的反白條 | 靜態 | merge-target | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
+| [`spec/46-post-battle-retreat.md`](../spec/46-post-battle-retreat.md) | `loc_1491B` 的 tie-break | `±4` 決定讀哪一個鄰接槽，remake 用 `Route`（Dijkstra，權重同樣是連結記錄 `+0x04` 的路徑點數）的第 2 個節點取代。兩者只有在**最短路不唯一**時才可能挑到不同的第一站——開局的道路表上「自家據點 → 自家首都」共 **108 組，其中第一站不唯一的只有 2 組**（勢力 3… | 靜態 | actionable | [#3](https://github.com/wicanr2/wolong_cht/issues/3) |
+| [`spec/46-post-battle-retreat.md`](../spec/46-post-battle-retreat.md) | 兩端到首都**等距**時取哪一端 | 原版由廣度優先的展開順序決定，而那一段是自我修改碼（§2.1）。remake 取 A 端。開局的道路表上「自家據點 → 自家首都」108 組裡第一站不唯一的只有 2 組（`workplace/parity/retreat/hop_unique.py`），兩端等距的邊更少，但沒有窮舉過 | 靜態 | actionable | [#3](https://github.com/wicanr2/wolong_cht/issues/3) |
+| [`spec/47-city-fall-corps-redirect.md`](../spec/47-city-fall-corps-redirect.md) | `[si+1Ah]` | 據點記錄記下舊主，remake 的 `OwnerRecorded` 是同一格但語意沒逐位元對過 | 靜態 | merge-target | [#18](https://github.com/wicanr2/wolong_cht/issues/18) |
+| [`spec/48-governor-returns-on-city-fall.md`](../spec/48-governor-returns-on-city-fall.md) | 武將 `+0x1E` 的值域 | 534/535/536 與 542 是空的，所以實際用到的變體大概只有 3–6。哪些武將拿到哪個值沒統計過 | 靜態 | evidence-only | — |
+| [`spec/48-governor-returns-on-city-fall.md`](../spec/48-governor-returns-on-city-fall.md) | `sub_10CE7` 的變數表 | 這裡推出 `{1}` ＝ 武將、`{2}` ＝ 據點（照 push 的順序與譯文），沒有逐個 handler 讀 | 靜態 | evidence-only | — |
+| [`spec/49-advise-relocate-and-sortie.md`](../spec/49-advise-relocate-and-sortie.md) | `sub_16E8F` 編成前的其餘檢查 | 只確認「君主還沒帶軍團」這一條。⚠ 它呼叫的 `sub_16EC9` 本身已解（六槽 × 三候選兵種表、每槽門檻 `0x32`、試算在堆疊副本上做，見 `../re/30` §7.3） | 靜態 | merge-target | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
+| [`spec/49-advise-relocate-and-sortie.md`](../spec/49-advise-relocate-and-sortie.md) | 進言的指令列 | 五項在原版指令樹裡的排法（`docs/re/22`）沒有逐格對過，remake 用自己的小視窗 | 靜態 | merge-target | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
+| [`spec/52-main-screen-camera-and-banner-date.md`](../spec/52-main-screen-camera-and-banner-date.md) | `+0x0000` | 0x6C0 / — / 未解 | 靜態 | merge-target | [#7](https://github.com/wicanr2/wolong_cht/issues/7) |
+| [`spec/52-main-screen-camera-and-banner-date.md`](../spec/52-main-screen-camera-and-banner-date.md) | `+0x08F0` | 0x0B0 / `word_10D4C` / 另一組 11 格（未解，可能是別的字重） | 靜態 | merge-target | [#7](https://github.com/wicanr2/wolong_cht/issues/7) |
+| [`spec/52-main-screen-camera-and-banner-date.md`](../spec/52-main-screen-camera-and-banner-date.md) | `word_10D4C` 那一組 | 與數字字模同樣是 11 格 × 16 列，緊接在後面，用途未解 / 找誰把 `ds` 設成 `cs:word_10D4C`（`KI.EXE.asm` 只有一處） | 靜態 | evidence-only | — |
+| [`spec/54-ui-colours-from-palette.md`](../spec/54-ui-colours-from-palette.md) | 季節換色 | 五個索引在四季調色盤裡的值只有色 14 會變（`../formats/02` §4），而這五個都不是 14，所以目前用第 0 組。**若之後有視窗在別的調色盤組下畫，要改成跟著組走** | 靜態 | evidence-only | — |
+| [`spec/55-minimap-view-box.md`](../spec/55-minimap-view-box.md) | 剩下的 11 byte | `+0x8F0` 那一塊有 176 byte，框只用 165 | 靜態 | evidence-only | — |
+| [`spec/56-battlefield-rotation.md`](../spec/56-battlefield-rotation.md) | 表頭與尾段那各 64 byte | 轉的時候原版**不動它們**（迴圈只掃 `0x40`–`0xFBF`）。內容仍未解 | 靜態 | evidence-only | — |
+| [`spec/56-battlefield-rotation.md`](../spec/56-battlefield-rotation.md) | 鏡頭差一個等角格 | 翻轉之後戰場區還差 (−16, −8)（`../playtest/40` §4.1）。小地圖沒有位移，所以不是翻轉中心的問題 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/57-tactical-projection.md`](../spec/57-tactical-projection.md) | 物件與地形差一列會不會看得出來 | 奇數鏡頭時 anchor 那一半的物件比自己腳下的地形低一格。**原版就是這樣算的**，但沒有找到能單獨驗證這一點的畫面 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/58-display-slot-depth-range.md`](../spec/58-display-slot-depth-range.md) | 那兩支死碼原本要做什麼 | `ax = 0` ＝ 拿子圖塊 0 對自己與四鄰各貼一次。兩版都沒有呼叫端 ⇒ **沒有實機可以觀察**（`../re/82` §5） | 兩版對照 | evidence-only | — |
+| [`spec/59-battle-opening-orders.md`](../spec/59-battle-opening-orders.md) | 玩家側的開場常令 | 畫面上看起來是「站在陣形上」，但原版是哪一個命令碼（`Form`／`Holding`／`Guard`）沒有直接證據。⚠ **三個在開場那一幀畫出來一模一樣**——守陣沒有敵人靠近時也是站在陣形位置上，所以截圖分不出來 | 實測 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/59-battle-opening-orders.md`](../spec/59-battle-opening-orders.md) | ⤷ 試過的一條線索 | 原版 `probe-march/e10.png` 那一刻**攻方已折損 115 點兵力**（兵力條反推，`../playtest/51` §2），而 remake 的守方站著不還手。把玩家側的開場常令改成守陣試跑（2026-08-27）：攻方只折損 **30 點**，離 115 還差得遠，而且守方仍然全滅。**所… | 靜態 | merge-target | [#17](https://github.com/wicanr2/wolong_cht/issues/17) |
+| [`spec/59-battle-opening-orders.md`](../spec/59-battle-opening-orders.md) | 腳本節奏與原版的 tick 對應 | 第 40 步對上那一張截圖，但「原版的 40 個 tick 是多久」還沒對過（`34`） | 實測 | evidence-only | — |
+| [`spec/60-battle-talk-duration.md`](../spec/60-battle-talk-duration.md) | 開戰 pair 的側別對應 | `0x1BA` → 上格、`0x1BB` → 下格是**強推論**（照影格位置接的）；`sub_1A3C3` 怎麼決定側別沒讀（§3.5） | 靜態 | actionable | [#14](https://github.com/wicanr2/wolong_cht/issues/14) |
+| [`spec/60-battle-talk-duration.md`](../spec/60-battle-talk-duration.md) | `byte_1D349` 的三個值 | `sub_1A69F` 拿它當「這句要不要顯示」的閘（`al & 6` 那一段還沒逐位讀）。0／1／2 三種值由 `sub_1A6FA` 切換 | 靜態 | actionable | [#14](https://github.com/wicanr2/wolong_cht/issues/14) |
+| [`spec/60-battle-talk-duration.md`](../spec/60-battle-talk-duration.md) | 玩家按鍵能不能提早關掉 | remake 可以按鍵推進；原版是否有這條路沒讀 | 靜態 | actionable | [#14](https://github.com/wicanr2/wolong_cht/issues/14) |
+| [`spec/61-soldier-initial-hp-from-morale.md`](../spec/61-soldier-initial-hp-from-morale.md) | 挨打那一半的逐次對拍 | 只對過量級（§6.1），沒有逐次比。要對得先讓兩邊的時刻對齊——同 `../playtest/40` §13 那一類 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/63-hit-stun.md`](../spec/63-hit-stun.md) | `+0x13` ← 8 | `sub_1B618` 寫、`sub_1B6BC` 不寫。那個欄位誰讀還沒查 | 靜態 | merge-target | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
+| [`spec/63-hit-stun.md`](../spec/63-hit-stun.md) | 倒地動畫（§1.2） | 4 幀之後 `sub_1B4B8` 收掉，remake 直接把 `Alive` 設成 false | 靜態 | merge-target | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
+| [`spec/66-broken-walls-repaint.md`](../spec/66-broken-walls-repaint.md) | 縮小地圖要不要跟著換 | 側欄的縮圖也是從同一個緩衝區來的，但重畫時機還沒讀。這一版只換戰場本身 | 靜態 | evidence-only | — |
+| [`spec/66-broken-walls-repaint.md`](../spec/66-broken-walls-repaint.md) | 對拍那 88 px | 兩邊的時刻不同（§1.2），要對就得讓門在同一個 tick 破 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/67-ending-playback.md`](../spec/67-ending-playback.md) | 淡入淡出的色階算式 | 17 階已確定，每階怎麼算色值沒讀（`sub_1035F`／`sub_103DC`）；remake 先用疊黑 | 靜態 | evidence-only | — |
+| [`spec/67-ending-playback.md`](../spec/67-ending-playback.md) | `END_S12` 右半 | 用 640 版面畫出來右邊是雜訊，可能還有第二塊（`formats/09` §6） | 實測 | evidence-only | — |
+| [`spec/67-ending-playback.md`](../spec/67-ending-playback.md) | 第一幕的捲動 | §3 標成 remake 差異；要做就得先對 `sub_10094` 那一段的逐列位移 | 靜態 | evidence-only | — |
+| [`spec/67-ending-playback.md`](../spec/67-ending-playback.md) | 音樂的**起訖時點** | ⚠ 2026-08-23 起整段結局都放 `endbgm-0`（`cmd/wlgame` 的 `musicTrack()`，排在 `world == nil` 之前——`-open-ending` 那條 fixture 沒有世界）。**先前放的是 `overbgm-0`**，那是另一支執行檔的遊戲結束曲。剩下的缺… | 靜態 | evidence-only | — |
+| [`spec/68-death-animation.md`](../spec/68-death-animation.md) | 大將陣亡 | 大將不會死（`sub_1B618` 的 `IsGeneral` 那一條），所以 `+0` 那一組實際只有騎馬會用到；大將的倒地圖是不是死碼還沒查 | 靜態 | evidence-only | — |
+| [`spec/69-world-fingerprint.md`](../spec/69-world-fingerprint.md) | 跨平台實測 | Android 端還沒有東西可以跑（里程碑 A 本身） | 實測 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`spec/69-world-fingerprint.md`](../spec/69-world-fingerprint.md) | 戰術戰鬥要不要進指紋 | 目前不進。要驗戰場的決定性得另外做一個，`tactical.Battle` 的欄位更多 | 靜態 | evidence-only | — |
+| [`spec/70-phone-chrome.md`](../spec/70-phone-chrome.md) | 外框在高 DPI 上的觀感 | 8×8 的點陣框在 960×540 上是原尺寸；字已放大 2 倍（`100`），框要不要跟著放大**沒量過**，要實機回饋 | 靜態 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`spec/70-phone-chrome.md`](../spec/70-phone-chrome.md) | 龍紋的對齊 | 手機版的面板不是 640×400 的格子，龍紋仍釘在螢幕上，與原版的相位不同。**視覺上看得出來的差異只有相位，不是圖案** | 靜態 | evidence-only | — |
+| [`spec/72-bundled-game-data.md`](../spec/72-bundled-game-data.md) | Windows／macOS 上「解開就能跑」 | ⛔ 沒有那兩個平台的機器。包內版面驗過（`gamedata/`、`fonts/` 位置正確），但 `resolveDataDir` 在那兩個 OS 上沒實跑過 | 實測 | merge-target | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
+| [`spec/72-bundled-game-data.md`](../spec/72-bundled-game-data.md) | APK 內嵌後的實機驗收 | ⛔ 沒有裝置。模擬器驗到了解包與指紋，驗不到真實儲存空間與 DPI | 靜態 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`spec/72-bundled-game-data.md`](../spec/72-bundled-game-data.md) | 25 MB 的 APK 在低容量裝置上 | 解包後 app 私有目錄再佔約 4.8 MB，總共約 30 MB。**沒有量過安裝失敗的門檻** | 靜態 | evidence-only | — |
+| [`spec/73-right-click-cancel.md`](../spec/73-right-click-cancel.md) | 原版右鍵是否也關常駐視窗 | 沒量過。常駐視窗不走模態等待常式，推測不關，但**沒有實機證據** | 靜態 | evidence-only | — |
+| [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 那 110 張圖在 MCH 裡的實際外觀 | 算式定案，但**沒有逐張看過** 22 勢力 × 5 方向長什麼樣。已看過的：勢力 0 的靜止與行進（`../playtest/50`） | 靜態 | evidence-only | — |
+| [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 每格 4 層上限 | 刻意沒做（§4） | 靜態 | evidence-only | — |
+| [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 首都疊圖為什麼不畫 | **機制讀出來了**（2026-09-02）：`sub_1D4C7` 是「往一格推一個疊圖」，**一格最多 4 個**——`bl = [si+1]`（目前疊圖數）`cmp bl, 4 / jnb` 就整個跳過，而且 `[si]` 的 **bit 4 設起來的格子完全不接受疊圖**。顯示清單一格 8 B：`+0` … | 靜態 | evidence-only | — |
+| [`spec/74-corps-on-world-map.md`](../spec/74-corps-on-world-map.md) | 別的疊圖組合 | 只驗過「首都 ＋ 軍團」。**災害物件 ＋ 軍團**、**非首都據點 ＋ 軍團**都沒有樣本 | 靜態 | merge-target | [#23](https://github.com/wicanr2/wolong_cht/issues/23) |
+| [`spec/75-bundled-audio.md`](../spec/75-bundled-audio.md) | 音檔大小 | ogg 全套 19 MB，桌面包從 11.7 MB 漲到 29 MB | 靜態 | evidence-only | — |
+| [`spec/75-bundled-audio.md`](../spec/75-bundled-audio.md) | 沒有音效裝置的**真實玩家** | ⛔ 仍然會掛。驗收模式擋住的是截圖路徑，一般啟動沒有擋——Ebiten 沒有可查詢的音訊 API，目前沒有乾淨的偵測法 | 實測 | actionable | [#19](https://github.com/wicanr2/wolong_cht/issues/19) |
+| [`spec/75-bundled-audio.md`](../spec/75-bundled-audio.md) | 音效與場景的對應完整度 | 見 `29`，本規格不重複 | 靜態 | evidence-only | — |
+| [`spec/76-lord-not-in-formation.md`](../spec/76-lord-not-in-formation.md) | 君主被編成之後原版會怎樣 | 沒試過。若原版其實允許、只是清單排序讓人以為不行，§2 要推翻（但開關本身照樣成立） | 靜態 | evidence-only | — |
+| [`spec/76-lord-not-in-formation.md`](../spec/76-lord-not-in-formation.md) | 開關要不要進存檔 | **不進**。與旁邊的速度設定一樣是 session 設定，讀檔不會帶回來 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/77-rout-talk-messages.md`](../spec/77-rout-talk-messages.md) | 對原版的實跑驗證 | §4 仍是**未做**：要讓原版跑出一支回不了家的軍團，得先有對應的存檔 | 實測 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/78-amount-input-editor.md`](../spec/78-amount-input-editor.md) | `sub_17D5F` 讀 `CS:7D93` 之外還做什麼 | 每格的 raw byte 表已解，但那一支怎麼把 glyph 貼上去沒逐行讀 | 靜態 | evidence-only | — |
+| [`spec/78-amount-input-editor.md`](../spec/78-amount-input-editor.md) | 稅率上限 100 的意義 | 是「100%」還是別的刻度沒有第二個證據；remake 照抄 100 | 靜態 | evidence-only | — |
+| [`spec/79-new-game-faction-list.md`](../spec/79-new-game-faction-list.md) | 欄位表的「屬性」與「型別」兩個 word | `0x0206`／`0x0204` 與 `0x76`／`0x73` 只由「名字欄 vs 數字欄」推語意，消費它們的那一段沒讀（`../re/73` §6） | 靜態 | evidence-only | — |
+| [`spec/79-new-game-faction-list.md`](../spec/79-new-game-faction-list.md) | 捲軸的滑塊樣式 | 同 `38` §4，原版那一支沒讀 | 靜態 | evidence-only | — |
+| [`spec/79-new-game-faction-list.md`](../spec/79-new-game-faction-list.md) | 標題列的底色與字色 | 屬性 `0x9000`／`0x9001` 沒有換算成調色盤索引；remake 沿用一覽表既有的用色 | 靜態 | evidence-only | — |
+| [`spec/79-new-game-faction-list.md`](../spec/79-new-game-faction-list.md) | 無頭點擊 | §3.1：建置 image 沒有視窗管理員，滑鼠按鍵送不進 Ebiten。加一個 WM 就能把所有點擊路徑納入自動驗收 | 靜態 | evidence-only | — |
+| [`spec/79-new-game-faction-list.md`](../spec/79-new-game-faction-list.md) | 橫幅在不在 | remake 的啟動殼層一直有畫橫幅（`ICONGRF` 段 0）。`sub_11A6E` 沒有明顯的橫幅呼叫，**原版那 32 px 是什麼沒驗過**——地圖只佔 y 32–400 | 靜態 | merge-target | [#7](https://github.com/wicanr2/wolong_cht/issues/7) |
+| [`spec/80-duel-opening.md`](../spec/80-duel-opening.md) | 變體 0／2／3／5／6 的臨場抽驗 | 專屬句只在變體 1／4／7（`../re/75` §1.1），預設句共用同一選句機制；優先度低 | 靜態 | merge-target | [#17](https://github.com/wicanr2/wolong_cht/issues/17) |
+| [`spec/81-disaster-quantities.md`](../spec/81-disaster-quantities.md) | 事件 11 在風暴期間被重排的節奏 | 產生端一次排 32–60 延遲；期間事件 11 重擲強度的觸發頻率沒逐格讀（推定隨佇列輪到） | 靜態 | merge-target | [#23](https://github.com/wicanr2/wolong_cht/issues/23) |
+| [`spec/82-defender-selection.md`](../spec/82-defender-selection.md) | 名單上限 127 的邊界 | 原版緩衝區 0x100 bytes ÷ 2；remake 不設上限（軍團總數 127 本來就到不了）——記為等效差異 | 靜態 | evidence-only | — |
+| [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | UI 詞表只涵蓋靜態 literal 與 `%d` 樣板 | `%s` 樣板（內容是任意文字）反查不回去，這一類仍顯示繁中 | 靜態 | evidence-only | — |
+| [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | 版面沒有為非全形語系重算 | 訊息框 10 全形字／列是原版幾何；英文靠折行與翻頁吃下去，固定寬的欄位只做了「不可超過原文寬度」的約束 | 靜態 | evidence-only | — |
+| [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | UI 詞表與名表的第二人覆核 | **做了**（2026-08-28，374 條 UI 詞、343 個名）：改 4 條 UI 詞（`敵正侵攻他國` 縮成 `Enemy invades others` 對齊 TALK #102、`原版格式`→`Original format`、`提出外交要求` 補 diplomatic、`成立`→`agreed` … | 靜態 | evidence-only | — |
+| [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | 兩個專有名詞的英文寫法未經查證 | `松崗` 目前寫 `Sung Kang`、遊戲名寫 `Wolong`。原版包裝上有沒有官方英文名沒查過——**拿到一手資料再定案**，不要照現在這個沿用 | 靜態 | evidence-only | — |
+| [`spec/84-multilanguage.md`](../spec/84-multilanguage.md) | **16 px 字型在清單裡列距為 0** | 版面是照倚天的 16×15 排的（列高 16 ⇒ 1 px 間隙），JIS／GB 的字是 16×16 ⇒ 貼在一起。**裁掉首列或末列會傷到 89% 的字**（量過：兩份字型的第 0 列與第 15 列各有 82–91% 帶墨），所以不裁。PC-98 原版的文字模式本來就是 16 px 列距貼齊，日文這樣看是對的；… | 靜態 | evidence-only | — |
+| [`spec/85-latin-list-layout.md`](../spec/85-latin-list-layout.md) | 軍團／勢力兩家仍有 8–9 字的欄 | 要再寬就得動視窗本身的寬度（384 px 是原版幾何），那會影響對拍基準——**要做就整個視窗一起重排，不要只加寬一欄** | 靜態 | actionable | [#32](https://github.com/wicanr2/wolong_cht/issues/32) |
+| [`spec/85-latin-list-layout.md`](../spec/85-latin-list-layout.md) | 其他視窗（HUD、據點情報卡、編成）還沒為半形語系重排 | 那些是固定座標的欄位，逐一量過再改；目前靠「英文不可超過原文寬度」的約束擋住溢出 | 靜態 | actionable | [#32](https://github.com/wicanr2/wolong_cht/issues/32) |
+| [`spec/86-runtime-language-switch.md`](../spec/86-runtime-language-switch.md) | Android 實機／模擬器還沒實地切過語言 | 面板與 `syncLanguage` 都有單測，但手機版的畫面沒拍過；下一次 Android 打包驗收時補 | 靜態 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`spec/86-runtime-language-switch.md`](../spec/86-runtime-language-switch.md) | 語言不進存檔 | 原版存檔格式沒有這一欄，塞進去會破壞 round-trip。要記住偏好得另存 remake 自己的設定檔 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/86-runtime-language-switch.md`](../spec/86-runtime-language-switch.md) | F9 是 remake 自創的鍵 | 原版沒有這個鍵；`docs/spec/13` 的按鍵表要同步記一筆 | 靜態 | evidence-only | — |
+| [`spec/87-latin-screen-layout.md`](../spec/87-latin-screen-layout.md) | 半形語系的戰場標題沒有地名 | 要顯示就得動側欄幾何（128 px 是原版的），那會影響對拍基準——要做就整格重排 | 靜態 | actionable | [#32](https://github.com/wicanr2/wolong_cht/issues/32) |
+| [`spec/87-latin-screen-layout.md`](../spec/87-latin-screen-layout.md) | 原版美術上的中文（§2） | 只能重畫美術，本專案不做 | 靜態 | actionable | [#32](https://github.com/wicanr2/wolong_cht/issues/32) |
+| [`spec/87-latin-screen-layout.md`](../spec/87-latin-screen-layout.md) | 將旗名字 8 字仍有 10 個撞號 | 地板是 8（同音不同字）；再多兩個是 `XIAHOU-D`／`XIAHOU-Y` 這類，要解得換呈現方式不是換寬度 | 靜態 | actionable | [#32](https://github.com/wicanr2/wolong_cht/issues/32) |
+| [`spec/88-display-polish-parity.md`](../spec/88-display-polish-parity.md) | 事件列本身是 remake 自創 | 原版怎麼提示月結（如果有）沒查過；目前只是讓它不擋畫面 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/88-display-polish-parity.md`](../spec/88-display-polish-parity.md) | `playtest/40` 沒有涵蓋開闊地的兵 | 那一份量的兩個局面都在城壁邊。要擋住這一類回歸，得再加一個**開闊地**的對拍 fixture | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/89-siege-damage-report-toggle.md`](../spec/89-siege-damage-report-toggle.md) | 設定不進存檔 | 與語言同一條（`86` §7）：原版存檔沒有這一欄，要記住偏好得另存 remake 自己的設定檔 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/89-siege-damage-report-toggle.md`](../spec/89-siege-damage-report-toggle.md) | 結果畫面本身原版沒有 | 原版打完直接回戰略畫面。要不要整頁拿掉是另一個裁定，本規格只讓多出來的那一行可關 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 各視窗**內部**的排版 | 分區的外框已由機器碼定死（§3），框內的頭像／文字列座標仍是影片估值（`docs/spec/12` §7） | 靜態 | evidence-only | — |
+| [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 送點擊的座標 | DOSBox-X 的**視窗**是 640×480，遊戲的 640×400 在 y 偏移 40（`tools/parity_crop.py` 量的），而 INT 33 把整個視窗等比對映到遊戲畫面——**送 y 要乘 1.2，不是減 40**。這是本機設定的性質，把 `int33 max y` 改成 400 應該… | 實測 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/90-same-state-parity.md`](../spec/90-same-state-parity.md) | 調色盤季節組 | 兩側都要鎖同一組，否則整片顏色不同（`docs/formats/02`） | 靜態 | evidence-only | — |
+| [`spec/91-tactical-parity.md`](../spec/91-tactical-parity.md) | 動畫幀序 | 原版的兵有 `PoseStep`，截圖時機差一幀就整批不同。這是 `field` 剩下那 299 px 的來源之一（`../playtest/40` §13） | 實測 | evidence-only | — |
+| [`spec/91-tactical-parity.md`](../spec/91-tactical-parity.md) | 野戰打起來之後的戰場 | **開戰第一拍已經對過**（九區裡七區 0 px、`field` 0.05%，`../playtest/43`）。沒對過的是**開戰之後**的畫面——野戰的地形是從大地圖即時長出來的，兩邊要走到同一個 tick 比攻城更難湊 | 靜態 | merge-target | [#31](https://github.com/wicanr2/wolong_cht/issues/31) |
+| [`spec/92-android-music.md`](../spec/92-android-music.md) | 手機沒有實機聽過 | 沒有裝置；模擬器是 `-no-audio` 起的 | 靜態 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`spec/92-android-music.md`](../spec/92-android-music.md) | 桌面「沒有音效裝置就掛」那一條 | `../release/08` §5 的老問題，手機端要確認 Ebiten 在 Android 上不會踩同一個 | 靜態 | merge-target | [#21](https://github.com/wicanr2/wolong_cht/issues/21) |
+| [`spec/94-retreat-path-not-cleared-every-frame.md`](../spec/94-retreat-path-not-cleared-every-frame.md) | 守方一兵未損 | 這條 fixture 從頭到尾守方 48 人全活、兵 600 不變（`../playtest/51` §3）。守方站在 Z=1，攻方在 Z=0，而 `doAttack` 的碰撞要求 `s.Z == e.Z`——攻方走到腳下卻上不去。原版靠命令 3（城壁）登城，這條 fixture 的腳本沒有下過那道命令 | 靜態 | evidence-only | — |
+| [`spec/94-retreat-path-not-cleared-every-frame.md`](../spec/94-retreat-path-not-cleared-every-frame.md) | 攻方大將體力歸零卻還在 | `drainSiegeGeneral` 會扣到 0，而 `docs/re/11` §5.16 說戰鬥傷害最低留 1。攻城計時器要不要也留 1，沒有讀出來 | 靜態 | evidence-only | — |
+| [`spec/95-spawn-height-uses-ground-plane.md`](../spec/95-spawn-height-uses-ground-plane.md) | 原版擺兵寫進 `[si+0Ah]` 的是哪一個表 | 沒讀出來。remake 這一版是靠內部一致性定的（§2），不是照抄 | 靜態 | merge-target | [#16](https://github.com/wicanr2/wolong_cht/issues/16) |
+| [`spec/98-climb-into-a-gate-hits-it.md`](../spec/98-climb-into-a-gate-hits-it.md) | `loc_1B533` 的完整分流 | 這裡只用到「撞到結構物」那一條。它同時也是敵我碰撞的入口（`../re/11` §5.16），另外兩條在水平移動那邊已經接了 | 靜態 | evidence-only | — |
+| [`spec/99-about-page-license.md`](../spec/99-about-page-license.md) | 條款全文沒有在手機上顯示 | 只顯示摘要與全文出處。全文 104 行，要另做可捲動的文字頁；摘要已滿足「收到的人知道自己被授權了什麼」 | 靜態 | evidence-only | — |
 
 ## 3. 這支工具的盲區
 

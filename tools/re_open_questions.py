@@ -36,13 +36,16 @@
 末段列出**提到未解卻一列都沒抽到**的檔案，那是這支工具自己的盲區清單。
 """
 import datetime
+import hashlib
 import io
+import json
 import os
 import re
 import sys
 
 DOC_ROOTS = ("docs",)
 SELF = "docs/re/43-open-questions.md"
+TRIAGE_MANIFEST = "docs/re/43-open-question-triage.json"
 # TEMPLATE.md 是骨架不是文件：它的「未解」小節是空表頭，
 # 抽不到東西是正確行為，不是盲區。
 SKIP = (SELF, "docs/INDEX.md", "docs/spec/TEMPLATE.md")
@@ -177,6 +180,42 @@ def verdict_of(text):
         if pat.search(text):
             return name
     return "靜態"
+
+
+def row_id(row):
+    """給 triage manifest 使用的穩定列指紋；內容變動要重新分流。"""
+    payload = "\0".join(
+        str(row.get(key, ""))
+        for key in ("file", "section", "item", "status", "occurrence")
+    )
+    return "oq-" + hashlib.sha256(payload.encode("utf-8")).hexdigest()[:20]
+
+
+def load_triage(repo, rows):
+    """載入並驗證 #28 的逐列分流；缺資料時失敗即關閉。"""
+    path = os.path.join(repo, TRIAGE_MANIFEST)
+    try:
+        with open(path, encoding="utf-8") as fh:
+            manifest = json.load(fh)
+    except (OSError, json.JSONDecodeError) as exc:
+        raise RuntimeError(
+            f"找不到或無法讀取 {TRIAGE_MANIFEST}：先執行 tools/re_triage.py init"
+        ) from exc
+    by_id = {entry.get("id"): entry for entry in manifest.get("rows", [])}
+    current = {row["id"] for row in rows}
+    missing = sorted(current - set(by_id))
+    stale = sorted(set(by_id) - current)
+    if missing or stale or len(by_id) != len(rows):
+        details = []
+        if missing:
+            details.append(f"缺 {len(missing)} 列")
+        if stale:
+            details.append(f"有 {len(stale)} 列已不在來源")
+        raise RuntimeError(
+            f"{TRIAGE_MANIFEST} 與目前來源不同（{'、'.join(details)}）；"
+            "先執行 tools/re_triage.py init，再逐項複核。"
+        )
+    return by_id
 
 
 def cells(line):
@@ -335,6 +374,7 @@ def main():
     files.sort()
 
     rows, silent, superseded = [], [], []
+    occurrences = {}
     for path in files:
         rel = os.path.relpath(path, repo).replace(os.sep, "/")
         if rel in SKIP or os.path.basename(rel) == INDEX_NAME:
@@ -353,28 +393,37 @@ def main():
                 silent.append(rel)
             continue
         for item, status, section in items:
-            rows.append({
+            identity = (rel, item, status, section)
+            occurrence = occurrences.get(identity, 0)
+            occurrences[identity] = occurrence + 1
+            row = {
                 "file": rel,
                 "item": item,
                 "status": status,
                 "section": section,
                 "domain": domain_of(rel),
                 "verdict": verdict_of(item + " " + status),
-            })
+                "occurrence": occurrence,
+            }
+            row["id"] = row_id(row)
+            rows.append(row)
 
     # ⭐ DOS／BIOS 平台層分流出去（使用者裁定 2026-08-23）。
     # 不是刪掉——另外列一節，讓「不算缺口」這個決定看得見。
     platform = [r for r in rows if PLATFORM.search(r["item"] + " " + r["status"])]
     rows = [r for r in rows if r not in platform]
+    triage = load_triage(repo, rows)
 
     out = sys.stdout
     w = out.write
     w("# 43 — 未解缺口總表（生成的證據索引）\n\n")
     w("**狀態：生成的證據索引，跑 `tools/py.sh tools/re_open_questions.py` 重出。\n")
-    w("這一份不下結論，只把各文件的「未解」表集中到一處；它不是現行工作清單。**\n\n")
+    w("證據欄不下原版語意結論；逐列的分流分類與 GitHub Issue 目標由\n")
+    w("[`43-open-question-triage.json`](43-open-question-triage.json) 驗證並附在下表。\n")
+    w("這一份不是現行工作清單。**\n\n")
     w("現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；\n")
     w("本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。\n")
-    w("802 列不是 802 個獨立 backlog；可執行項目由 Issue #28 分流，證據／歷史項目留在本索引。\n\n")
+    w(f"{len(rows) + len(platform)} 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。\n\n")
     # 生成日期用今天：這份是重跑就重出的東西，寫死日期等於謊報新鮮度。
     w("- 日期：%s\n" % datetime.date.today().isoformat())
     w("- 產生工具：`tools/re_open_questions.py`\n")
@@ -455,7 +504,7 @@ def main():
         if not sel:
             continue
         w(f"## 2.{order.index(dom)+1} {dom}（{len(sel)} 條）\n\n")
-        w("| 出處 | 缺口 | 現況 | 裁決 |\n|---|---|---|---|\n")
+        w("| 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |\n|---|---|---|---|---|---|\n")
         for r in sorted(sel, key=lambda r: (r["file"], r["section"])):
             short = r["file"][len("docs/"):]
             link = "../" + short
@@ -470,7 +519,16 @@ def main():
             st = MDLINK.sub(r"\1", r["status"]).replace("\n", " ")
             if len(st) > 160:
                 st = st[:157] + "…"
-            w(f"| [`{label}`]({link}) | {item} | {st} | {v} |\n")
+            decision = triage[r["id"]]
+            classification = decision["classification"]
+            issue = decision.get("github_issue")
+            issue_cell = (
+                f"[#{issue}](https://github.com/wicanr2/wolong_cht/issues/{issue})"
+                if issue is not None
+                else "—"
+            )
+            w(f"| [`{label}`]({link}) | {item} | {st} | {v} | "
+              f"{classification} | {issue_cell} |\n")
         w("\n")
 
     w("## 3. 這支工具的盲區\n\n")

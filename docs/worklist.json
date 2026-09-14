@@ -445,22 +445,78 @@
       }
     },
     {
-      "id": "re-open-questions-triage",
+      "id": "ai-march-dispatch-complete",
       "github_issue": {
-        "number": 28,
-        "url": "https://github.com/wicanr2/wolong_cht/issues/28"
+        "number": 29,
+        "url": "https://github.com/wicanr2/wolong_cht/issues/29"
       },
-      "layer": "re",
-      "title": "分流 docs/re/43 的 802 筆反組譯開放問題",
-      "body": "docs/re/43 是由 342 份文件生成的證據索引，不等於 802 個獨立 backlog；需要逐項標為現行玩家阻塞、可合併工作、證據限制或歷史問題。",
-      "acceptance": "每一列都有 actionable、evidence-only、history 或合併目標分類；真正改變玩家路徑、規則或交付 gate 的項目連到專用 Issue。",
+      "layer": "parity",
+      "title": "完成 AI 行軍分派與救援路徑完整對拍",
+      "body": "AI 救援挑將與分派表仍有未覆蓋分支；君主親自出陣尚未實作，救援路徑次數與 remake 不同。",
+      "acceptance": "覆蓋玩家與 AI 的 Stage 分派、救援候選、佔用圖更新、君主出陣與折返後決策，留下固定 seed、同狀態 dosgolem replay 與 IDA 證據。",
       "verify": {
         "kind": "manual",
-        "note": "需逐項分流，不能以索引列數當完成率。"
+        "note": "需以正常玩家／AI 路徑驗證，不能以 direct-entry 代替。"
+      }
+    },
+    {
+      "id": "player-march-block-and-arrival",
+      "github_issue": {
+        "number": 30,
+        "url": "https://github.com/wicanr2/wolong_cht/issues/30"
+      },
+      "layer": "parity",
+      "title": "完成玩家軍團行軍阻塞與到站流程對拍",
+      "body": "玩家下令攻擊後長時間不到站，玩家攻方戰鬥入口沒有觸發；行軍阻塞、佔用圖與到站條件尚未完成正常玩家路徑對拍。",
+      "acceptance": "以固定存檔、seed、遊戲日期與輸入對齊路徑點、佔用圖、碰撞、到站與戰鬥觸發，覆蓋玩家攻方與守方。",
+      "verify": {
+        "kind": "manual",
+        "note": "需留下第一個差異 tick 與正常玩家路徑收據。"
+      }
+    },
+    {
+      "id": "field-terrain-and-water-branch-parity",
+      "github_issue": {
+        "number": 31,
+        "url": "https://github.com/wicanr2/wolong_cht/issues/31"
+      },
+      "layer": "parity",
+      "title": "完成野戰地形選擇與海戰分支對拍",
+      "body": "海戰適性尚未以橋上野戰驗證；類型 9 遇 0xCA 的翻轉分支未逐行讀，remake 目前固定回 213 且不翻轉；野戰開戰前地形／戰場選擇未完成雙側收據。",
+      "acceptance": "在固定戰場、seed、雙方狀態與正常玩家／AI 路徑下對齊地形類型、0xCA 鄰格、翻轉旗標、戰場選擇、海戰適性與玩家可見結果。",
+      "verify": {
+        "kind": "manual",
+        "note": "需保留 KI.EXE 位址、bytes、雜湊與同狀態畫面／狀態收據。"
+      }
+    },
+    {
+      "id": "halfwidth-language-layout-acceptance",
+      "github_issue": {
+        "number": 32,
+        "url": "https://github.com/wicanr2/wolong_cht/issues/32"
+      },
+      "layer": "parity",
+      "title": "完成半形語系固定欄位排版驗收",
+      "body": "英文與其他半形語系的固定座標欄位、戰場標題、據點／勢力／軍團欄位尚未逐項重排與驗收。",
+      "acceptance": "以 zh-Hant、zh-Hans、ja、en 的正常玩家路徑驗證 HUD、據點情報、編成、軍團／勢力清單與戰場標題，留下寬度、換行、裁切、游標與代表畫面收據。",
+      "verify": {
+        "kind": "manual",
+        "note": "不得以單一語系或單一畫面代替完整驗收。"
       }
     }
   ],
   "resolved": [
+    {
+      "id": "re-open-questions-triage",
+      "title": "分流 docs/re/43 的 805 筆反組譯開放問題",
+      "date": "2026-09-14",
+      "github_issue": {
+        "number": 28,
+        "url": "https://github.com/wicanr2/wolong_cht/issues/28"
+      },
+      "how": "已將 docs/re/43 的 799 筆主表與 6 筆 DOS/BIOS 平台列以 docs/re/43-open-question-triage.json 固定指紋並完成分流：actionable=128、merge-target=320、evidence-only=351、history=0。會改變玩家路徑、規則或交付 gate 的項目已連到 Issues #1–#8、#10–#27、#29–#32；新增 #29–#32 覆蓋 AI 行軍、玩家行軍、野戰地形／海戰與半形語系排版。re43 可決定性重生，index、phantom_scan、worklist selftest/verify 均通過；GitHub Issue #28 已關閉。",
+      "caught_by": "GitHub repository Issues 是唯一現行工作入口；docs/worklist.json 只作本地 verify 輔助，Markdown 僅保存證據、規格與歷史。"
+    },
     {
       "id": "worklist-migration-incomplete",
       "title": "將現行工作管理遷移到 GitHub Issues 與 JSON verify",
@@ -469,7 +525,7 @@
         "number": 9,
         "url": "https://github.com/wicanr2/wolong_cht/issues/9"
       },
-      "how": "已將現行 JSON 項目與散落 Markdown 的可執行工作登記為 GitHub Issues #1–#28；移除 WORKLIST.md 的未處理區塊與 CONTEXT／README／REMAKE-PLAN 的現行待辦入口；docs/worklist.json 升為 wolong-worklist/2 並回填 Issue 對照；tools/worklist.py 改為 verify-only，check.sh 不再呼叫 render。docs/re/43 保留為證據索引，另由 Issue #28 分流，不把 802 列誤當成 802 個 backlog。",
+      "how": "已將現行 JSON 項目與散落 Markdown 的可執行工作登記為 GitHub Issues #1–#32；移除 WORKLIST.md 的未處理區塊與 CONTEXT／README／REMAKE-PLAN 的現行待辦入口；docs/worklist.json 升為 wolong-worklist/2 並回填 Issue 對照；tools/worklist.py 改為 verify-only，check.sh 不再呼叫 render。docs/re/43 保留為證據索引，另由 Issue #28 分流，不把 805 列誤當成 805 個 backlog。",
       "caught_by": "GitHub repository 目前以 Issues 作為唯一現行工作入口；本地 JSON 與 Python verify 只作輔助，Markdown 僅保存證據、規格與歷史。"
     },
     {
