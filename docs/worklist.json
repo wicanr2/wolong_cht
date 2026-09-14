@@ -194,24 +194,6 @@
       }
     },
     {
-      "id": "screen-parity-gate-coverage",
-      "github_issue": {
-        "number": 12,
-        "url": "https://github.com/wicanr2/wolong_cht/issues/12"
-      },
-      "layer": "parity",
-      "title": "修正畫面對拍 gate 的群組覆蓋與完成門檻",
-      "body": "`tools/parity_screens.json` 目前有 20 組；另有 12 組待補，總目標是 32 組。待補範圍沿用 `docs/playtest/121` 的收據，需逐組補命令與實測，不以檔案存在代替畫面驗收。",
-      "acceptance": "目前 20 組與待補 12 組全部登記在 `tools/parity_screens.json`，總計 32 組，且 `tools/parity_screens.sh` 全跑 exit 0。",
-      "verify": {
-        "kind": "json_len",
-        "path": "tools/parity_screens.json",
-        "field": "groups",
-        "max": 31,
-        "note": "目前 20 組；收滿 32 組（20 + 12）就不成立。數字是目標不是上限，之後再加組要一併調。"
-      }
-    },
-    {
       "id": "tactical-drift-after-tick-4",
       "github_issue": {
         "number": 13,
@@ -506,6 +488,17 @@
     }
   ],
   "resolved": [
+    {
+      "id": "screen-parity-gate-coverage",
+      "title": "修正畫面對拍 gate 的群組覆蓋與完成門檻",
+      "date": "2026-09-14",
+      "github_issue": {
+        "number": 12,
+        "url": "https://github.com/wicanr2/wolong_cht/issues/12"
+      },
+      "how": "已將 parity_screens.json 補齊至 32 組，完成新增 12 組畫面／選單場景；parity_screens selftest 與全 32 組 gate 均 exit 0，正式套件冷啟動測試通過。已知背景差異保留在各組 gap，視窗／選單本體局部 gate 通過；GitHub Issue #12 已關閉。",
+      "caught_by": "GitHub repository Issues 是唯一現行工作入口；docs/worklist.json 只作本地 verify 輔助，Markdown 僅保存證據、規格與歷史。"
+    },
     {
       "id": "re-open-questions-triage",
       "title": "分流 docs/re/43 的 805 筆反組譯開放問題",

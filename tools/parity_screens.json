@@ -751,6 +751,460 @@
           "2 個兵的中繼目標與原版不同（`0/2/0` 隊長與 `0/5/2`，`docs/spec/200` §7）；縮圖每格 2 px、一個兵錯位貢獻 8 px ⇒ 16 px ＝ 2 個兵。屬於 `docs/spec/159` 中繼目標接縫的未完成實作"
         ]
       }
+    },
+    {
+      "name": "window-all",
+      "note": "三個常駐視窗全開（原版 196/4/11；天候與日期殘差明列）",
+      "doc": "docs/playtest/38-window-parity.md",
+      "orig": "workplace/promo-live/parity-win/w3-all.png",
+      "crop": true,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-open-window",
+        "-2",
+        "-cam",
+        "0,0",
+        "-shot-frames",
+        "1"
+      ],
+      "regions": "strategy",
+      "allow": {},
+      "gap": {
+        "banner": [
+          30,
+          "原版擷取停在 196/4/11，remake fixture 停在 196/4/1；橫幅日期差是取樣狀態差（playtest/38 §2）"
+        ],
+        "map": [
+          7553,
+          "原版擷取比 remake 多跑九日，天候物件因此不同；不是視窗或地圖幾何差（playtest/38 §2）"
+        ]
+      }
+    },
+    {
+      "name": "system-window",
+      "note": "系統選單六列原版視窗（remake 保留三列現代化設定差異）",
+      "doc": "docs/playtest/39-system-window-parity.md",
+      "orig": "workplace/promo-live/parity-sys/s1-system.png",
+      "crop": true,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-open-window",
+        "-3",
+        "-cam",
+        "0,0",
+        "-audio",
+        "workplace/audio",
+        "-shot-frames",
+        "1"
+      ],
+      "regions": "strategy",
+      "allow": {},
+      "gap": {
+        "banner": [
+          158,
+          "原版擷取的日期與滑鼠游標和 remake fixture 不同；系統視窗開啟時其餘橫幅內容已對齊（playtest/39 §2）"
+        ],
+        "map": [
+          17131,
+          "remake 刻意保留三列現代化設定，原版只有六列；差異集中在系統視窗下緣（playtest/39 §0）"
+        ]
+      }
+    },
+    {
+      "name": "finance-amount",
+      "note": "財政數值輸入器 0（只把可比的 112×80 存還原區另列）",
+      "doc": "docs/playtest/42-window-parity.md",
+      "orig": "workplace/promo-live/parity-windows/p6-amount.png",
+      "crop": true,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-open-finance",
+        "-finance-amount",
+        "0",
+        "-shot-frames",
+        "1"
+      ],
+      "regions": "strategy",
+      "allow": {},
+      "gap": {
+        "banner": [
+          89,
+          "原版財政數值輸入流程與 remake 的橫幅取樣狀態不同；只把可比的輸入視窗列為硬 gate（playtest/42 §4）"
+        ],
+        "map": [
+          40915,
+          "原版財政數值輸入流程與 remake 的地圖背景取樣狀態不同；只把可比的輸入視窗列為硬 gate（playtest/42 §4）"
+        ],
+        "minimap": [
+          15472,
+          "原版財政數值輸入流程與 remake 的小地圖取樣狀態不同；只把可比的輸入視窗列為硬 gate（playtest/42 §4）"
+        ],
+        "faction": [
+          24719,
+          "原版財政數值輸入流程與 remake 的勢力列取樣狀態不同；只把可比的輸入視窗列為硬 gate（playtest/42 §4）"
+        ]
+      },
+      "rects": {
+        "amount-input": "288,176,112,80"
+      }
+    },
+    {
+      "name": "city-list",
+      "note": "據點一覽（受控存檔，196/4/17 5 時；每小時欄位 ±1 已裁定）",
+      "doc": "docs/playtest/83-city-list-parity.md",
+      "orig": "workplace/parity/p83-cities2.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/dosgolem/root-noclouds/SAVE.DAT",
+        "-load-slot",
+        "0",
+        "-open-cities",
+        "-cam",
+        "0,0",
+        "-fixture-when",
+        "clock:196/4/17/5",
+        "-shot-when",
+        "clock:196/4/17/5"
+      ],
+      "regions": "strategy",
+      "allow": {
+        "command": [
+          0,
+          "原版自己畫的滑鼠游標（playtest/83 §1）"
+        ]
+      },
+      "gap": {
+        "map": [
+          571,
+          "防災值／上昇率只差同一小時內的子刻 ±1；成因與裁定見 playtest/83 §4.1"
+        ]
+      }
+    },
+    {
+      "name": "corps-list",
+      "note": "軍團位置確認清單（196/4/17 5 時）",
+      "doc": "docs/playtest/84-personnel-corps-list-parity.md",
+      "orig": "workplace/parity/p84-cm0.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/dosgolem/root-noclouds/SAVE.DAT",
+        "-load-slot",
+        "0",
+        "-open-command-menu",
+        "corps:0",
+        "-cam",
+        "0,0",
+        "-fixture-when",
+        "clock:196/4/17/5",
+        "-shot-when",
+        "clock:196/4/17/5"
+      ],
+      "regions": "strategy",
+      "allow": {
+        "command": [
+          0,
+          "原版自己畫的滑鼠游標（playtest/84 §1）"
+        ]
+      }
+    },
+    {
+      "name": "personnel-assign",
+      "note": "內政官任命：選城、選將後的台詞畫面（196/4/17 6 時）",
+      "doc": "docs/playtest/92-personnel-assign-parity.md",
+      "orig": "workplace/parity/cells/orig-gov1.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/dosgolem/root-noclouds/SAVE.DAT",
+        "-load-slot",
+        "0",
+        "-open-command-menu",
+        "personnel:0:0:0",
+        "-cursor",
+        "200,112",
+        "-cam",
+        "0,0",
+        "-fixture-when",
+        "clock:196/4/17/6",
+        "-shot-when",
+        "clock:196/4/17/6"
+      ],
+      "regions": "strategy",
+      "allow": {}
+    },
+    {
+      "name": "march-picker",
+      "note": "行軍指示的大地圖選點（五區全 0 px）",
+      "doc": "docs/playtest/94-march-map-picker.md",
+      "orig": "workplace/parity/cells/orig-mar3.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/dosgolem/root-noclouds/SAVE.DAT",
+        "-load-slot",
+        "0",
+        "-open-command-menu",
+        "corps:1:0",
+        "-pick-tile",
+        "12,5",
+        "-cam",
+        "0,0",
+        "-fixture-when",
+        "clock:196/4/17/6",
+        "-shot-when",
+        "clock:196/4/17/6"
+      ],
+      "regions": "strategy",
+      "allow": {}
+    },
+    {
+      "name": "map-click",
+      "note": "大地圖點擊後的據點／軍團兩項選單（只比 112×48 框）",
+      "doc": "docs/playtest/96-map-click.md",
+      "orig": "workplace/parity/cells/orig-mapclick.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/dosgolem/root-noclouds/SAVE.DAT",
+        "-load-slot",
+        "0",
+        "-map-click",
+        "206,114",
+        "-cam",
+        "186,106",
+        "-fixture-when",
+        "clock:196/4/16/10",
+        "-shot-when",
+        "clock:196/4/16/10",
+        "-shot-frames",
+        "1"
+      ],
+      "regions": "strategy",
+      "allow": {},
+      "gap": {
+        "banner": [
+          61,
+          "原版取樣的日期／游標與受控存檔 fixture 不同；選單本體仍以局部框精確比對（playtest/96 §4）"
+        ],
+        "command": [
+          12647,
+          "原版取樣的命令列狀態與受控存檔 fixture 不同；選單本體仍以局部框精確比對（playtest/96 §4）"
+        ]
+      },
+      "rects": {
+        "map-click-menu": "320,160,112,48"
+      }
+    },
+    {
+      "name": "enemy-corps",
+      "note": "大地圖點擊敵方軍團：面板、狀態列與清單上半部各自比對",
+      "doc": "docs/playtest/98-enemy-corps-panel.md",
+      "orig": "workplace/parity/cells/orig-enemycorps.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/dosgolem/root-noclouds/SAVE.DAT",
+        "-load-slot",
+        "0",
+        "-map-click",
+        "257,17:0",
+        "-cam",
+        "0,0",
+        "-fixture-when",
+        "clock:196/4/16/10",
+        "-cursor",
+        "200,112",
+        "-shot-when",
+        "clock:196/4/16/10"
+      ],
+      "regions": "strategy",
+      "allow": {},
+      "gap": {
+        "command": [
+          9218,
+          "原版敵軍團面板取樣的命令列與 remake fixture 狀態不同；三個面板局部框為硬 gate（playtest/98 §4）"
+        ],
+        "map": [
+          26684,
+          "原版敵軍團面板取樣的地圖背景與 remake fixture 狀態不同；三個面板局部框為硬 gate（playtest/98 §4）"
+        ],
+        "minimap": [
+          19022,
+          "原版敵軍團面板取樣的小地圖背景與 remake fixture 狀態不同；三個面板局部框為硬 gate（playtest/98 §4）"
+        ]
+      },
+      "rects": {
+        "corps-panel": "432,192,208,208",
+        "status": "0,320,256,80",
+        "list-upper": "24,88,384,96"
+      }
+    },
+    {
+      "name": "save-slots",
+      "note": "系統選單的 SAVE DATA 四槽視窗本體",
+      "doc": "docs/playtest/99-slot-window-parity.md",
+      "orig": "workplace/parity/cells/orig-save.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-save-file",
+        "workplace/dosgolem/root-noclouds/SAVE.DAT",
+        "-load-slot",
+        "0",
+        "-open-save",
+        "write",
+        "-cursor",
+        "376,160",
+        "-cam",
+        "0,0",
+        "-fixture-when",
+        "clock:196/4/16/10",
+        "-shot-when",
+        "clock:196/4/16/10"
+      ],
+      "regions": "strategy",
+      "allow": {},
+      "gap": {
+        "map": [
+          19519,
+          "原版存檔槽視窗取樣的地圖背景與 remake fixture 狀態不同；存檔視窗本體為硬 gate（playtest/99 §4）"
+        ]
+      },
+      "rects": {
+        "save-window": "96,80,304,240"
+      }
+    },
+    {
+      "name": "advisor-naming",
+      "note": "新遊戲流程的軍師命名視窗（只比 352×256 視窗本體）",
+      "doc": "docs/playtest/105-advisor-naming-parity.md",
+      "orig": "workplace/parity/cells/orig-naming.png",
+      "crop": false,
+      "args": [
+        "-direct",
+        "-scenario",
+        "0",
+        "-player",
+        "0",
+        "-seed",
+        "7",
+        "-open-naming",
+        "-cursor",
+        "350,255",
+        "-shot-frames",
+        "1"
+      ],
+      "regions": "strategy",
+      "allow": {},
+      "gap": {
+        "map": [
+          23236,
+          "原版命名視窗取樣的地圖背景與 remake fixture 狀態不同；命名視窗本體為硬 gate（playtest/105 §4）"
+        ],
+        "minimap": [
+          2642,
+          "原版命名視窗取樣的小地圖背景與 remake fixture 狀態不同；命名視窗本體為硬 gate（playtest/105 §4）"
+        ]
+      },
+      "rects": {
+        "naming-window": "192,128,352,256"
+      }
+    },
+    {
+      "name": "launcher-load",
+      "note": "啟動殼層 LOAD DATA 四槽視窗（視窗內沿用 spec/25）",
+      "doc": "docs/playtest/106-launcher-parity.md",
+      "orig": "workplace/parity/naming/s2.png",
+      "crop": false,
+      "args": [
+        "-save-file",
+        "workplace/dosgolem/root-noclouds/SAVE.DAT",
+        "-open-launcher",
+        "load",
+        "-cursor",
+        "320,200",
+        "-shot-frames",
+        "1"
+      ],
+      "regions": "strategy",
+      "allow": {},
+      "gap": {
+        "map": [
+          15979,
+          "原版啟動殼層取樣的地圖背景與 remake launcher 狀態不同；LOAD DATA 視窗本體為硬 gate（playtest/106 §4）"
+        ]
+      },
+      "rects": {
+        "load-window": "96,80,304,240"
+      }
     }
   ]
 }
