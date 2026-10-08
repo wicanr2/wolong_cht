@@ -1,0 +1,37 @@
+{
+  "schema": "wolong-matching-code-build-v1",
+  "whole_file_exact": true,
+  "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "rebuilt_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "rebuilt_size": 67099,
+  "instruction_count": 24376,
+  "compiled_instruction_bytes": 55392,
+  "imported_instruction_bytes": 0,
+  "imported_private_bytes": 11707,
+  "all_noncode_placeholders_zero": true,
+  "manifest_sha256": "cac70844538490d0923243ceed97bbd1eaf47e2f3735f2a4b6edc0ab881a493a",
+  "source_sha256": "fa8e44e799281c15fdad7a723bc7985e39726617703fcc0751e6030868ab8f40",
+  "linker_sha256": "a301287e77bf1a79a717c206dc0754e2c0ccb3a75b3eae38815bfff0a1995ac7",
+  "record_tool_sha256": "ff3b80133ae2822065b7933412e87c0c046cf3fd4880a741fa1e37a27c200410",
+  "build_image_id": "sha256:474f41ef91c354dd4754b08ef9302e965271e32417d6fba1772aecca0a5f9e2e",
+  "assembler_version": "GNU assembler (GNU Binutils for Debian) 2.40",
+  "linker_version": "GNU ld (GNU Binutils for Debian) 2.40",
+  "objcopy_version": "GNU objcopy (GNU Binutils for Debian) 2.40",
+  "negative_controls": [
+    {
+      "kind": "instruction",
+      "rejected": true,
+      "changed_code_ranges": 1
+    },
+    {
+      "kind": "linker-constant",
+      "rejected": true,
+      "changed_code_ranges": 1
+    },
+    {
+      "kind": "private-input-identity",
+      "rejected": true
+    }
+  ],
+  "c_machine_code_match": false
+}

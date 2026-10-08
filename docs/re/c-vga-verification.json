@@ -1,0 +1,135 @@
+{
+  "schema": "wolong-c-vga-verification-v1",
+  "status": "semantic-conformed",
+  "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "portrait_sha256": "b9c7745e3ed9b32f0c12003fe81f82756136f738427dc421ec96f6c4ed5c4ac8",
+  "routine_sha256": {
+    "sub_19796": "3f0323c2f7f830fd32f9116d0d3c5488065cca95e24bc65bec64feaf4ddeca96",
+    "sub_197C3": "c3f10cbed5072780a0a47cd0e296328a0ad9ec4962ac4cbffdb434fcae779432",
+    "sub_1F9B0": "a726cf761a3374ed51b4bd4071d19c58740bfdd4198125036d01eb9a5c8d20af",
+    "sub_1FA1B": "3588f7577c616bd0863ad448e48988e72903a33f298fd8c514094498a33340fc",
+    "sub_1FA37": "a726cf761a3374ed51b4bd4071d19c58740bfdd4198125036d01eb9a5c8d20af",
+    "sub_1FAA2": "b7dfe81484318abdab2be0e5d182869211ca53dfbd602c9d5f8fe24f7f525089",
+    "sub_1FAC2": "8d1bdbc213bd60adb503e409dcbdb20a8c75b522884d05af12b5fc88eb79a9af",
+    "sub_1FB11": "7a863344c8b41e0072429d82d7f70ec2c9795b9322f708443bb9afd476313681"
+  },
+  "ida_database_sha256": "7e11f676288faef8bf0e105d9a6ee8c338cf8a77fe8fe6064c867fc64abd7118",
+  "source_sha256": {
+    "tools/c_recovery/rng.c": "1e6500c692d652c07cd31b99afa5693275bdab91d0f2d2c9ce9c8ef1188cb0fd",
+    "tools/c_recovery/rng.h": "71d82996afa8df2387e9899f8a78872ad35d617ed1276b31aaf12c68dd66c0f0",
+    "tools/c_recovery/economy.c": "a8dfb96bc788326cc8641ffa78a64739d2544dfbf63ed7149dc334ef85f2ab8e",
+    "tools/c_recovery/economy.h": "57958375c3f3cf604e0dffb8a56e2d0b464c727702d1e076b6f303a3806e89ec",
+    "tools/c_recovery/settlement.c": "c6573bbfef750ca81c847efe88b0b3d2b51ac1623a321e8925983bbd59a750a3",
+    "tools/c_recovery/settlement.h": "5714b35cff296141a05bd25428728dc78cc4f22773c6d4d8b4b229f741f6c0f7",
+    "tools/c_recovery/vga.c": "9c9c75270422a8950d9d09c1321d5093423d2eada6d5bde3e417c9d711ba9b5b",
+    "tools/c_recovery/vga.h": "40f9e9ee054830df5c95e5bbe0185f82f3b8d7d8e9e780510da29794b2ab7699",
+    "tools/c_recovery/vga_fixture.h": "97ab311f79b371c26b90d450466173e9ac90e70c55f6862a204bef40db569096",
+    "tools/c_recovery_vga.go": "3e0b75bce9fde3175dc056672134b0a256c9a58d601a927f65b867e2dc37bfbd",
+    "tools/c_recovery_vga_bus.go": "b842e1561a96da289bac5ed83f4756c2d6e77883681227651034aad3625d0c86"
+  },
+  "compiled_source_manifest_sha256": "03632a6dd02c01cb857608b40167b58c0e1031f9fc466e4ce1259805fde557cf",
+  "cases_per_optimization": 9942,
+  "groups": {
+    "draw": 2800,
+    "leaf": 5880,
+    "save": 200,
+    "wrapper": 1000,
+    "real-assets": 8,
+    "roundtrip": 54
+  },
+  "full_ram_plane_audits_per_optimization": 9942,
+  "indexed_pixel_audits_per_optimization": 310,
+  "receipt_sha256": {
+    "O0": "67413f4a383ce39fbe1c297d9fb6743d018cc3d773630d7c0485481f4b4fbbe3",
+    "O2": "67413f4a383ce39fbe1c297d9fb6743d018cc3d773630d7c0485481f4b4fbbe3"
+  },
+  "negative_controls_rejected": 8,
+  "mutants": {
+    "1": {
+      "group": "leaf",
+      "first_rejected": 1,
+      "receipt_sha256": "61a313bc3212767fff010bbd7e6c414bac599bcd2ac739984a8a3054ed19f9fd"
+    },
+    "2": {
+      "group": "draw",
+      "first_rejected": 1401,
+      "receipt_sha256": "55b9551d603ec38a1352b60ce992f2f9c7dfd87210cc8bd5a20239f3c1d7b554"
+    },
+    "3": {
+      "group": "leaf",
+      "first_rejected": 1,
+      "receipt_sha256": "2ab32bd33f0cb04e8be147d332027a122aa0c538d2c8857e2fe0693e03a868cb"
+    },
+    "4": {
+      "group": "draw",
+      "first_rejected": 1,
+      "receipt_sha256": "83dcd7c15474a00208bf3d814dcb294ef36d99ba928cb77f27ef65bf31b17a4c"
+    },
+    "5": {
+      "group": "draw",
+      "first_rejected": 1,
+      "receipt_sha256": "099a73375d077273357f16e1d1a6cd89f1cba287640d34a23c2063062582a69a"
+    },
+    "6": {
+      "group": "save",
+      "first_rejected": 1,
+      "receipt_sha256": "0eaf77f50ce2e6905c30c999d04580c6fc46c342a528f693a0daa87b444e63c8"
+    },
+    "7": {
+      "group": "wrapper",
+      "first_rejected": 21,
+      "receipt_sha256": "316966b77bcf9963233edbdd803ebaf8985923de8024020b89d6c2d0d0f85f0f"
+    },
+    "8": {
+      "group": "draw",
+      "first_rejected": 2,
+      "receipt_sha256": "366d5e5a5fb17c9e3a9f20fe7f781135559ee3d63d50b9a47ca1389cfce692e6"
+    }
+  },
+  "entries_seen": {
+    "sub_19796": 518,
+    "sub_197C3": 518,
+    "sub_1F9B0": 1400,
+    "sub_1FA1B": 7560,
+    "sub_1FA37": 1944,
+    "sub_1FAA2": 9736,
+    "sub_1FAC2": 718,
+    "sub_1FB11": 4832
+  },
+  "oracle_revision": "a9714ebdab2ad6b529f81225472680f2b11f2842",
+  "oracle_compiled_tree_sha256": "d37ffeb9be887541f89e9cff80ea5a159620b77b524d54527950ce3554a6f126",
+  "local_debug_palette_png_sha256": {
+    "asset-0-0-original.png": "ee0ddbd395506adc581d9542c0585f17ec7a49bcdb717172faffe54f4c36f868",
+    "asset-0-0-c.png": "ee0ddbd395506adc581d9542c0585f17ec7a49bcdb717172faffe54f4c36f868",
+    "asset-0-1280-original.png": "118fe341edc404e2f0af9ab386f01948bc2b62bd315b853bfb990e5e6e1a1bc9",
+    "asset-0-1280-c.png": "118fe341edc404e2f0af9ab386f01948bc2b62bd315b853bfb990e5e6e1a1bc9",
+    "asset-5-0-original.png": "b72d01580f66efe916cb99c1f6caa2b7222ec8ab2b7fb797c6e363bced15af9a",
+    "asset-5-0-c.png": "b72d01580f66efe916cb99c1f6caa2b7222ec8ab2b7fb797c6e363bced15af9a",
+    "asset-5-1280-original.png": "84567306a073e82c7d32966a77e7371c2ca611f21656ee22deca4e04d08f6381",
+    "asset-5-1280-c.png": "84567306a073e82c7d32966a77e7371c2ca611f21656ee22deca4e04d08f6381",
+    "asset-49-0-original.png": "5ac40a10f4e42330dde626f6e329395415a2d66e85eacf5329c35f7045d2b039",
+    "asset-49-0-c.png": "5ac40a10f4e42330dde626f6e329395415a2d66e85eacf5329c35f7045d2b039",
+    "asset-49-1280-original.png": "9bbcb9af428209b453ceb9762e48d222f2426d8ee4ce0286c9c886be72ae3465",
+    "asset-49-1280-c.png": "9bbcb9af428209b453ceb9762e48d222f2426d8ee4ce0286c9c886be72ae3465",
+    "asset-149-0-original.png": "351a6856d057735a00344f5078e0e9d08acfc0774c6de11a869065125994607c",
+    "asset-149-0-c.png": "351a6856d057735a00344f5078e0e9d08acfc0774c6de11a869065125994607c",
+    "asset-149-1280-original.png": "2eaf40668354d06e95a468cbe28fb119cdd1cd72080c200792655bd364168c31",
+    "asset-149-1280-c.png": "2eaf40668354d06e95a468cbe28fb119cdd1cd72080c200792655bd364168c31"
+  },
+  "scope_backlinks": {
+    "docs/re/103-c-hotspot-restoration.md": [
+      "後續 C VGA 證據見",
+      "104-c-vga-blit-restoration.md"
+    ],
+    "docs/spec/222-c-hotspot-map.md": [
+      "後續 C VGA 證據見",
+      "223-c-vga-blit.md"
+    ],
+    "docs/re/03-image-blitter.md": [
+      "後續 C 控制流證據見",
+      "104-c-vga-blit-restoration.md"
+    ]
+  },
+  "platform_contract": "Two independent pinned dosgolem Machine/VGA instances; original guest CPU and C native algorithm share only mature platform contract; IF/TF=0; no wall-clock claim",
+  "c_machine_code_match": false
+}

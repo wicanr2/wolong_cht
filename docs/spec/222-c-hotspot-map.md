@@ -26,6 +26,9 @@ BL／DL low-byte F8h 對完整 word 等價 FFF8h，不能丟 high byte。
 
 ## 3. 產物與未解範圍
 
+後續 C VGA 證據見 [spec/223](223-c-vga-blit.md)。本規格的舊RAM／RET收據保留，新VGA收據
+另比四plane／latch／I/O，不能把先前平面RAM通過改寫為VGA像素證據。
+
 正式 Go 不直接猜補；研究 C／工具進 Git，原版／DB／RAM 收據只留 ignored
 `workplace/matching-decompilation/c-hotspot/`。舊 glyph 名稱與 word 公式按同版直接證據勘誤，
 保留歷史收據及原始定位，不把舊 C ABI 成功改寫成像素匹配。

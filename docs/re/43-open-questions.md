@@ -7,7 +7,7 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-930 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+938 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
 - 日期：2026-10-08
 - 產生工具：`tools/re_open_questions.py`
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**924 列分布在 377 份文件，平均每份 2.5 列。**
+**932 列分布在 379 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -47,11 +47,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 244 | 237 | 6 | 1 |
+| 程式碼理解 | 248 | 241 | 6 | 1 |
 | 驗收 | 240 | 214 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 403 | 381 | 21 | 1 |
-| **合計** | **924** | 863 | 58 | 3 |
+| 其他 | 407 | 385 | 21 | 1 |
+| **合計** | **932** | 871 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,8 +59,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 360 |
-| `docs/re/` | 244 |
+| `docs/spec/` | 364 |
+| `docs/re/` | 248 |
 | `docs/playtest/` | 240 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
@@ -110,7 +110,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 | evidence-only | — |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 | evidence-only | — |
 
-## 2.3 程式碼理解（244 條）
+## 2.3 程式碼理解（248 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -158,6 +158,10 @@
 | [`re/103-c-hotspot-restoration.md`](../re/103-c-hotspot-restoration.md) | 真實滑鼠polling與正常玩家視窗 | 固定pixel只量控制流／map，Issue #22保持OPEN | 靜態 | evidence-only | — |
 | [`re/103-c-hotspot-restoration.md`](../re/103-c-hotspot-restoration.md) | 完整Go視窗／財政 | 局部map／scalar不外推完整玩家路徑 | 靜態 | evidence-only | — |
 | [`re/103-c-hotspot-restoration.md`](../re/103-c-hotspot-restoration.md) | C機器碼與原作者工具鏈 | 未驗證，整檔binary match仍是組語基準 | 靜態 | evidence-only | — |
+| [`re/104-c-vga-blit-restoration.md`](../re/104-c-vga-blit-restoration.md) | 完整normal-player畫面／視窗合成 | 局部primitive與debug PNG不代證正常玩家路徑，Issue #22保持OPEN | 靜態 | evidence-only | — |
+| [`re/104-c-vga-blit-restoration.md`](../re/104-c-vga-blit-restoration.md) | 實機VGA逐週期／wall-clock | 固定成熟平台模型的局部對拍，不稱同硬體時間 | 靜態 | evidence-only | — |
+| [`re/104-c-vga-blit-restoration.md`](../re/104-c-vga-blit-restoration.md) | 完整Go圖形三方 | 未驗證 | 靜態 | evidence-only | — |
+| [`re/104-c-vga-blit-restoration.md`](../re/104-c-vga-blit-restoration.md) | C機器碼與原作者工具鏈 | 未驗證，整檔binary match仍是組語基準 | 靜態 | evidence-only | — |
 | [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `ds:0D2F8` | 4,096 / 未解（第二份戰場？） | 靜態 | evidence-only | — |
 | [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `ds:0D306` | 30,720 / 未解 | 靜態 | evidence-only | — |
 | [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | 兵士記錄剩下的欄位 | `ds:0D30E`，32 B／筆 / 目前具名的有 `+0x00`／`+0x01`／`+0x02`／`+0x03` 體力／`+0x04` 大將／`+0x05` 面向／`+0x14` 陣形座標／`+0x16`・`+0x17` 繞路游標／`+0x19` 疲勞／`+0x1A`・`+0x1B` 命令／`+0x1E` Z… | 靜態 | evidence-only | — |
@@ -615,7 +619,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（403 條）
+## 2.6 其他（407 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -898,6 +902,10 @@
 | [`spec/222-c-hotspot-map.md`](../spec/222-c-hotspot-map.md) | 自然滑鼠與玩家視窗 | 固定 pixel fixture 不作正常玩家證據 | 靜態 | evidence-only | — |
 | [`spec/222-c-hotspot-map.md`](../spec/222-c-hotspot-map.md) | 完整 Go 視窗三方 | 未驗證 | 靜態 | evidence-only | — |
 | [`spec/222-c-hotspot-map.md`](../spec/222-c-hotspot-map.md) | C 機器碼匹配 | 未驗證 | 靜態 | evidence-only | — |
+| [`spec/223-c-vga-blit.md`](../spec/223-c-vga-blit.md) | 正常玩家完整畫面／視窗 | 局部blit不代表production route | 靜態 | evidence-only | — |
+| [`spec/223-c-vga-blit.md`](../spec/223-c-vga-blit.md) | 實機時序／wall-clock | 只使用固定VGA模型 | 靜態 | evidence-only | — |
+| [`spec/223-c-vga-blit.md`](../spec/223-c-vga-blit.md) | 完整Go圖形三方 | 未驗證 | 靜態 | evidence-only | — |
+| [`spec/223-c-vga-blit.md`](../spec/223-c-vga-blit.md) | C機器碼匹配 | 未驗證 | 靜態 | evidence-only | — |
 | [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 反白列上換色的機制 | `38` §1.7.1：兩個色號各有一次量測，變換規則沒解 | 靜態 | evidence-only | — |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 空槽標記 | 原版用名稱欄第一個字 `0xD0A1`；remake 用「載得起來且玩家勢力有效」判定，兩者不等價 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 新遊戲共用 | remake 的啟動殼層是自己的畫面，還沒有換成這個四槽視窗 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |

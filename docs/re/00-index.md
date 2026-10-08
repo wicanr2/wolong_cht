@@ -146,7 +146,7 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 | 筆記 | 回答什麼 |
 |---|---|
 | [`89`](89-matching-decompilation-pilot.md) | 比對式反編譯試點：三函式組語重組 233 bytes 相同；C 試驗與原版工具鏈的證據限制 |
-| [`90`](90-assembly-reconstruction.md) | 組語基準：24,376 條 IDA 指令全部匹配，完整 KI.EXE 逐位元組相同，附 C 函式定位台帳 |
+| [`90`](90-assembly-reconstruction.md) | 組語基準：24,376 條 IDA 指令全部匹配，完整 KI.EXE 逐位元組相同，附版控指令來源、冷重建收據與 C 函式定位台帳 |
 | [`91`](91-c-rng-restoration.md) | 第一個 C 函式：sub_1ECE0 原版/C 263,680 組、Go 263,168 組局部對照，含暫存器、旗標與堆疊邊界 |
 | [`92`](92-c-rng-seed-restoration.md) | C 播種：所有合法時分秒與固定 RTC 回覆，原版/C 86,420 組、Go 86,408 組相同 |
 | [`93`](93-c-game-clock-restoration.md) | C 時鐘：原版/C 292,297 組、Go 292,249 組相同，修正 999→1000→999 的年份邊界 |
@@ -160,6 +160,7 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 | [`101`](101-c-modal-restoration.md) | 外交／金額視窗控制流、CF retry、遠呼叫與原始 stack／code patch |
 | [`102`](102-c-numeric-editor-restoration.md) | 數值輸入、六鍵／全 u16、裝置保護、財政 caller 與 Go 數值核心 |
 | [`103`](103-c-hotspot-restoration.md) | 真實熱區 map／query、word 定址與數值視窗接線，勘誤 glyph 導覽 |
+| [`104`](104-c-vga-blit-restoration.md) | 真實VGA plane／latch、blit／save／restore與原始I/O序列 |
 | [`21`](21-function-census.md) | 全函式覆蓋普查；**§3.1 為什麼要排除目錄型文件** |
 | [`24`](24-unread-function-catalogue.md) | 未讀函式的證據與下手順序 |
 | [`39`](39-remaining-unread.md) | 未讀函式的逐支歸屬（生成的，可重跑）|

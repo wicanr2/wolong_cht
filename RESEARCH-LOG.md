@@ -1884,3 +1884,17 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - 勘誤：0x1E3D7是熱區writer，舊glyph前提與灰表不成立；原始BL／DL只遮low byte，完整word等價FFF8h。保留原始名稱、運算元、歷史DB／收據與舊群組名，回填re/22、re/47、re/102、spec/78、spec/221並機器核對backlinks。
 - Init的DI=FFFFh按固定dosgolem模型把word第二個byte寫同段0000h；C清圖按byte實作。外部C include快取漏重編則以source manifest digest進CGOflags並驗binary build info，不能新source配舊binary。
 - 正式Go未改，VGA plane／blit／自然input／完整玩家UI未驗證，Issue #22維持OPEN；完整matching decompilation Goal仍active。
+
+## 2026-10-08：真實四plane C blit與保存鏈
+
+- KI.EXE與原始KAOGRF.DAT逐檔SHA-256在[re/104](docs/re/104-c-vga-blit-restoration.md)；IDA9.4 DB SHA-256 `7e11f676288faef8bf0e105d9a6ee8c338cf8a77fe8fe6064c867fc64abd7118`，八chunk467 bytes無relocation，names／operands／xref原樣保留。
+- 兩個獨立dosgolem machine／VGA，原版guest CPU與C native算法只共用固定平台契約，沒有共用mutable狀態或原版函式結果。契約引用IBM VGA手冊，C bus處理真正VRAM plane／latch，不再平面RAM冒充。
+- O0/O2各9,942例完整RAM／四plane／GC／seq／latch／port／register相同、310次indexed pixels相同，18條save/draw/restore全plane回到保存前；八個實際頭像blit的debug PNG也逐byte相同，僅留本機。
+- 八個dummy read／列寬／pitch／OR／plane select／read map／X shift／DF錯版全拒絕。八C函式已分級回填，累計136；production Go未改，正常玩家合成與實機wall-clock未驗證。
+- PNG外送檢視由自動審查拒絕，原因是可能披露未授權原版美術，未繞過；技術驗證改用容器內plane／indexed／PNG bytes，沒有將原版或衍生美術加入Git。
+
+## 2026-10-08：版控完整指令來源冷重建
+
+- 原版、IDA9.4、DB 與 binutils2.40 身分沿用 [re/90](docs/re/90-assembly-reconstruction.md#7-版控程式碼與冷重建紀錄)。新增版控指令來源與 76 段檔案範圍索引，非指令 bytes 不進公開來源。
+- 固定工具容器冷組譯全部 24,376 條指令，55,392 bytes 與原版一致，零指令匯入。只匯入原版標頭與非指令區後，完整 SHA-256 仍為 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`。
+- 改一個指令或 linker 常數都使編譯的指令範圍不同，私有輸入身分改動也拒絕。等級已證實，限組語 bytes 與重建；各函式語意與 C 機器碼保留既有分級。

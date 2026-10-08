@@ -125,3 +125,40 @@ IDA image ID：`sha256:4ac62de83339c215bab10e455cee3a22d9c6efed9fd0d8ed0f068327b
 組譯 image ID：`sha256:474f41ef91c354dd4754b08ef9302e965271e32417d6fba1772aecca0a5f9e2e`。
 恢復入口與先行試點在 [`89`](89-matching-decompilation-pilot.md)，本輪過程在
 [`WORKLOG.md`](../../WORKLOG.md)。
+
+## 7. 版控程式碼與冷重建紀錄
+
+2026-10-08，依使用者要求，完整指令來源另存至 GitHub repo。
+本節追加版控產物與驗證，前述含資料的完整來源與歷史收據仍保留在本機。
+
+| 版控產物 | 用途 |
+|---|---|
+| [`KI.code.S`](../../tools/c_recovery/KI.code.S) | 全部 24,376 條已匹配指令，保留原始 IDA 名稱、線性位址、檔案偏移與運算元，自動合併分級語意、出處與未知警示 |
+| [`KI.code.ld`](../../tools/c_recovery/KI.code.ld) | 66 個編碼所需的立即數常數與區段配置 |
+| [`assembly-code-record.json`](assembly-code-record.json) | 輸入、DB、來源與工具雜湊，76 個指令範圍與逐範圍雜湊 |
+| [`assembly-code-verification.json`](assembly-code-verification.json) | 冷組譯、完整 EXE 比較與三個負對照的收據 |
+| [`matching_code_record.py`](../../tools/matching_code_record.py) | 從已驗證基準匯出指令來源，以及本機組譯與資料匯入 |
+| [`matching_code_record.sh`](../../tools/matching_code_record.sh) | 使用固定 GNU binutils 2.40 image 的 Docker 重跑入口 |
+
+組語來源不含 `.byte`、`.word`、`.incbin` 或字串資料宣告。非指令範圍使用 `.org`
+零值佔位。組譯後先比較全部 55,392 個指令 bytes 與逐範圍雜湊，再只從使用者自備的
+固定 SHA-256 原版匯入 11,707 bytes。匯入範圍包含 512-byte MZ 標頭與其餘非指令區，
+匯入的指令 bytes 為零。完整 67,099-byte EXE 與原版逐 byte 及 SHA-256 相同，等級為已證實。
+
+把 `clc` 改為 `stc`、改一個 linker 常數，都使實際組譯的指令範圍不同而被拒絕。
+改動私有輸入的標頭則被完整輸入雜湊拒絕。原版 EXE、資料區與重建 EXE 均留在本機。
+來源與 linker SHA-256 分別為 `fa8e44e799281c15fdad7a723bc7985e39726617703fcc0751e6030868ab8f40`
+與 `a301287e77bf1a79a717c206dc0754e2c0ccb3a75b3eae38815bfff0a1995ac7`。
+
+```sh
+tools/matching_code_record.sh
+```
+
+重建輸出在 `workplace/matching-decompilation/assembly/code-record/`。
+首次重生指令紀錄時，以 `matching_code_record.py export --repo /repo` 在容器中讀取
+既有 `assembly/build/` 基準，只有 `tools/c_recovery/` 與 `docs/re/` 可寫；原版與基準唯讀。
+一般驗證只需要版控來源、索引與自備原版，不依賴本機 IDA DB 或含資料的組語來源。
+
+指令 bytes 已匹配不會提升函式語意等級。語意仍查
+[`matching-semantic-index.json`](matching-semantic-index.json)，C 現況查
+[`c-recovery-status.json`](c-recovery-status.json)。C 來源同樣進版控，局部行為等價與 C 機器碼匹配分開記錄。

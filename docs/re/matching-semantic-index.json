@@ -892,6 +892,62 @@
       "sources": [
         "docs/re/103-c-hotspot-restoration.md"
       ]
+    },
+    "0x19796": {
+      "meaning": "原始pixel-to-byte保存wrapper、80-byte row offset、ES／DI與register保存",
+      "level": "proven",
+      "sources": [
+        "docs/re/104-c-vga-blit-restoration.md"
+      ]
+    },
+    "0x197C3": {
+      "meaning": "原始pixel-to-byte恢復wrapper、DS／SI與register保存",
+      "level": "proven",
+      "sources": [
+        "docs/re/104-c-vga-blit-restoration.md"
+      ]
+    },
+    "0x1F9B0": {
+      "meaning": "原始四plane單byte列blit、GC序列、dummy latch read與CLD",
+      "level": "proven",
+      "sources": [
+        "docs/re/104-c-vga-blit-restoration.md"
+      ]
+    },
+    "0x1FA1B": {
+      "meaning": "原始單byte列MOVSB、dummy ES read、DF／word wrap與row pitch",
+      "level": "proven",
+      "sources": [
+        "docs/re/104-c-vga-blit-restoration.md"
+      ]
+    },
+    "0x1FA37": {
+      "meaning": "原始四plane雙byte列blit、GC序列、來源連續性與CLD",
+      "level": "proven",
+      "sources": [
+        "docs/re/104-c-vga-blit-restoration.md"
+      ]
+    },
+    "0x1FAA2": {
+      "meaning": "原始雙MOVSB列、dummy ES read、DF／word wrap與row pitch",
+      "level": "proven",
+      "sources": [
+        "docs/re/104-c-vga-blit-restoration.md"
+      ]
+    },
+    "0x1FAC2": {
+      "meaning": "原始四plane保存、byte width倍乘、Read Map Select與保存",
+      "level": "proven",
+      "sources": [
+        "docs/re/104-c-vga-blit-restoration.md"
+      ]
+    },
+    "0x1FB11": {
+      "meaning": "原始REP MOVSB保存列、來源pitch80／目的連續、DF／word wrap",
+      "level": "proven",
+      "sources": [
+        "docs/re/104-c-vga-blit-restoration.md"
+      ]
     }
   },
   "operands": {

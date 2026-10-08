@@ -11,6 +11,10 @@
 
 使用者於 2026-10-08 決定先用組語建立原版基準，後續再由組語還原 C 函式。
 這條研究線用可重組來源審查原版控制流，與 Go remake 的既有驗收分開記錄。
+使用者已授權把驗證通過的還原程式碼提交至現有 GitHub repo。
+完整指令來源在 [`KI.code.S`](tools/c_recovery/KI.code.S)，非指令資料由本機原版匯入；
+版控收據在 [`assembly-code-verification.json`](docs/re/assembly-code-verification.json)，重跑入口
+[`tools/matching_code_record.sh`](tools/matching_code_record.sh)。
 研究入口：[`docs/re/90`](docs/re/90-assembly-reconstruction.md)；C 還原：
 [`docs/re/91`](docs/re/91-c-rng-restoration.md) 與
 [`c-recovery-status.json`](docs/re/c-recovery-status.json)；先行試點：
@@ -35,9 +39,10 @@
 | 2026-10-08；十七個外交／金額視窗 C 函式 | O0/O2 各 53,322 組原版/C 相同，十個突變拒絕；每版 417 次完整 RAM、二十筆 MZ／runtime 重定位及十七函式入口通過 | 原始 FAR、CF 輪詢／取消重試、SS frame、金額／信賴度、code patch 已接入；底層 primitive、自然玩家 UI 與 Go 三方仍未驗證 | spec/220、[re/101](docs/re/101-c-modal-restoration.md)、逐位址／ABI／中途狀態收據 |
 | 2026-10-08；十七個數值／裝置保護／財政 C 函式 | O0/O2 各原版/C 788,931 組、有效 Go scalar 787,839 組相同；十個突變拒絕，每版 6164 次完整 RAM、十七函式入口及原始 key table 通過 | 原始六鍵、數值主迴圈、裝置／popup 保護、四財政 caller 已接入；輸入為有界固定事件，Go 只量數值核心，圖形／自然玩家流程仍未驗證 | spec/221、[re/102](docs/re/102-c-numeric-editor-restoration.md)、full-u16／input／Go scalar 收據 |
 | 2026-10-08；十個熱區／window memory C 函式 | O0/O2 各261,367組原版/C、80組Go數值相同，八個突變拒絕；全部640×400 query、每版2042次完整RAM與binary source-digest通過 | 真實map／query接回數值與財政pixel流；更正glyph導覽與word high-byte公式，VGA／自然UI仍未驗證 | spec/222、[re/103](docs/re/103-c-hotspot-restoration.md)、map／flags／pixel／編譯來源收據 |
+| 2026-10-08；八個VGA blit／保存C函式 | O0/O2各9,942例完整RAM／四plane／GC／seq／latch／I/O相同，八個突變拒絕；310次indexed pixels、八個實際asset與18條三步roundtrip通過 | 使用兩個獨立固定VGA裝置，C不呼叫原版guest算法；debug PNG僅留本機，正常玩家合成／實機時間仍未驗證 | spec/223、[re/104](docs/re/104-c-vga-blit-restoration.md)、完整裝置與source-digest收據 |
 
-持續 Goal 為完成整個 matching decompilation；目前有整檔組語基準與 128 個 C 函式，不能據此宣布完整 C 還原完成。
-使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3` 與數值 `99d914b` 已推到 origin/main。
+持續 Goal 為完成整個 matching decompilation；目前有整檔組語基準與 136 個 C 函式，不能據此宣布完整 C 還原完成。
+使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b` 與熱區 `a8605b5` 已推到 origin/main。
 
 未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。
 

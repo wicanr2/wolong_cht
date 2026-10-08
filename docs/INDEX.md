@@ -180,6 +180,7 @@
 | [`docs/re/101-c-modal-restoration.md`](re/101-c-modal-restoration.md) | 101：C 外交與金額視窗控制流 | 十七函式 O0/O2 各 53,322 組原版/C 相同，十個負對照拒絕；限明示底層 primitive／輸入／裝置… | 2026-10-08 |
 | [`docs/re/102-c-numeric-editor-restoration.md`](re/102-c-numeric-editor-restoration.md) | 102：C 數值輸入器與財政 caller | 十七函式 O0/O2 各 788,931 組原版/C、787,839 組 Go 數值相同，十個負對照拒絕；限原始 A… | 2026-10-08 |
 | [`docs/re/103-c-hotspot-restoration.md`](re/103-c-hotspot-restoration.md) | 103：C 熱區資料路徑與數值視窗接線 | 十函式 O0/O2 各 261,367 組原版/C 相同，80 組 Go 數值相同，八個負對照拒絕；限原始 memo… | 2026-10-08 |
+| [`docs/re/104-c-vga-blit-restoration.md`](re/104-c-vga-blit-restoration.md) | 104：C VGA blit 與畫面保存 | 八函式 O0/O2 各 9,942 組原版/C 的完整 RAM／四 plane／latch／I/O 相同，八個負對照… | 2026-10-08 |
 | [`docs/re/11-tactical-battle.md`](re/11-tactical-battle.md) | 11 — 戰術戰鬥：模組結構與戰場資料模型 | 模組骨架、戰場資料模型、核心移動／命中／傷害規則已大致解出並接入測試； 正常玩家已可由遭遇選單進入攻城戰術畫面並送出… | 2026-08-09 |
 | [`docs/re/12-diplomacy-dialogue.md`](re/12-diplomacy-dialogue.md) | 12 — 停戰說服訊息索引：#190–#198 | 三變體槽位與停戰說服這條索引路徑已證實；事件 6／7 的次要呼叫已定位， 但 formatter 參數契約與完整可見… | 2026-08-09 |
 | [`docs/re/13-pc98-numeric-window.md`](re/13-pc98-numeric-window.md) | 13 — DOS/V 數字輸入視窗量測與 CJK 版面決策 | 以 DOS/V 為唯一畫面基準；原始座標、DOS/V 96×64 內框 blit、3×6 每格操作、 實際按鍵 gl… | 2026-08-10 |
@@ -422,6 +423,7 @@
 | [`docs/spec/220-c-modal-control.md`](spec/220-c-modal-control.md) | 220：C 外交／金額視窗與原始回應控制 | CONFORMED。十七函式 O0/O2 各 53,322 組原版/C 相同，十個負對照拒絕；底層 primitiv… | 2026-10-08 |
 | [`docs/spec/221-c-numeric-editor.md`](spec/221-c-numeric-editor.md) | 221：C 數值輸入、原始按鍵與財政返回 | CONFORMED。十七函式 O0/O2 各 788,931 組原版/C、787,839 組 Go scalar 相… | 2026-10-08 |
 | [`docs/spec/222-c-hotspot-map.md`](spec/222-c-hotspot-map.md) | 222：C 熱區、視窗 wrapper 與真實 query 接線 | CONFORMED。十函式 O0/O2 各261,367組原版/C與80組Go scalar相同，八個負對照拒絕。 | 2026-10-08 |
+| [`docs/spec/223-c-vga-blit.md`](spec/223-c-vga-blit.md) | 223：C 四平面 blit 與保存／恢復 | CONFORMED。八函式O0/O2各9,942組完整RAM／四plane／latch／I/O相同，八個負對照拒絕。 | 2026-10-08 |
 | [`docs/spec/23-city-info-window.md`](spec/23-city-info-window.md) | 23 — 據點情報視窗 | CONFORMED。版面已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/24-corps-info-window.md`](spec/24-corps-info-window.md) | 24 — 軍團情報視窗 | CONFORMED。版面已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/25-slot-select-window.md`](spec/25-slot-select-window.md) | 25 — 四槽選擇視窗（新遊戲／讀取／儲存） | CONFORMED。讀取／儲存已照原版版面實作； 新遊戲仍走 remake 自己的啟動殼層（§5）。 | 2026-08-15 |

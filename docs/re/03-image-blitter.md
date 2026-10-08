@@ -79,6 +79,10 @@ loc_107E0:
 
 ## 2. `sub_1FA37`：四平面繪製
 
+後續 C 控制流證據見 [re/104](104-c-vga-blit-restoration.md)：同版0x1FA37／row helper與
+0x19796／0x197C3保存鏈已量完整RAM／plane／latch／port。平台契約與原始shader順序沿用，
+正常玩家合成與實機時序仍不由局部blit證據代替。
+
 進入時 `ax` 是尺寸參數；頭像的呼叫端是 `mov ax, 4004h`。
 
 常式對 VGA Graphics Controller 做設定，然後**呼叫 `sub_1FAA2` 四次**，

@@ -223,3 +223,26 @@
 - C台帳累計128函式，完整Goal保持active；本輪依授權完成後commit、push，不把map／scalar結果稱完整UI或C機器碼匹配。
 - 收尾文件與工具21／25通過、924列分流與嚴格索引通過；四項既有缺檔／教訓失敗保留。最終研究改寫後四列source fingerprint按實際來源重審，檢查容器cwd補為/repo後同一矩陣重跑，沒有放寬分類。
 - 128個C來源、十筆分級證據、最終ABI／map／pixel／compiled source digest與原版EXE／DAT身分核對。輸出UID/GID 1000:1000，既有root-owned路徑仍27筆，本輪容器已全部退出移除。
+
+## 2026-10-08：八函式VGA四plane與保存／恢復
+
+- 前輪`a8605b5`已推送，分類為progress。核對乾淨工作樹、現行狀態、逆向／IDA／GUI／平台規格／文件職責路由與Issue #22。
+- 八個原始chunk467 bytes，IDA9.4無relocation；平台probe確認MZ loader與兩個獨立plane／latch狀態。標準VGA引用IBM規格，遊戲RE只追原始port參數、source連續性、dummy read與loop。
+- C算法保留原始register／FLAGS／DF／SS、MOVSB／REP、single/double byte列、GC序列與保存major layout；bus callback到第二台獨立成熟VGA。不讀原版結果回填C、不用平面RAM假證明VRAM。
+- 新Go工具goto跨configs宣告，移到所有跳躍前以同一矩陣重跑；smoke數量8截斷第三次roundtrip，改為9保留完整三步，沒有改保存／恢復算法。
+- O0/O2各9,942例全部RAM／四plane／GC／seq／latch／index／port序列與原始register相同，310次640×400 indexed pixels相同，18條save/draw/restore全plane回到保存前。
+- 四個原始2KB頭像×兩destination，原版／C本機debug-palette PNG逐byte相同；來源檔count／大小／SHA核對。自動審查拒絕PNG base64外送檢視，理由可能披露未授權美術；未執行或繞過，改以本機技術收據完成驗證。
+- 原版port log的Step保留定位，C不宣稱相同CPU instruction count／wall-clock。所有CGO build flags含source manifest digest，由實際binary build info核對，研究檔用matching_vga tag隔離後完整重生。
+- 八個dummy latch／列寬／pitch／OR／plane／read map／wrapper X／DF突變全拒絕，原版資料與衍生圖沒有進Git。正常玩家／整體UI／完整Go圖形與C機器碼仍未驗證，Issue #22保持OPEN。
+- re/103、spec/222與re/03加同版後續範圍backlink。C台帳累計136，完整Goal保持active，本輪依持續授權完成後commit、push。
+
+## 2026-10-08：還原程式碼加入 GitHub 紀錄
+
+- 使用者要求把驗證通過的 matching decompilation 程式碼放進現有 GitHub repo。C 來源已逐輪版控，本輪另加入完整組語指令來源與 linker script。
+- 沿用 re/90 與既有研究目錄，新增來源索引、公開驗證摘要與 Docker 重跑入口。所有指令保留原始 IDA 定位，沒有加入資料宣告，原版資料區只從本機自備 EXE 匯入。
+- 版控來源冷組譯 24,376 條／55,392 bytes 全部匹配；匯入 11,707 個非指令 bytes 後，完整 67,099-byte EXE 相同。指令、linker 常數與私有輸入身分三個負對照均拒絕。
+- README、CONTEXT、re/90、re/104與研究索引同輪連結來源、台帳與驗證紀錄；原版 EXE、DB、圖庫、RAM、plane 與 PNG 留在 ignored 本機研究目錄。
+- 只掛載版控指令來源、索引與自備 EXE 的第二個容器同樣冷重建通過，不依賴本機 DB 或含資料的組語。公開摘要與實際收據逐 byte 相同。
+- 文件與工具檢查 21／25 通過，932 列分流與嚴格索引通過。四項既有失敗仍是歷史圖片／研究產物缺檔、教訓文件不同步與一條教訓文字缺失，沒有新增來源引用問題。
+- Docker stdin 檢查首次未開 interactive 而沒有執行，補 `-i` 後同一檢查矩陣有完整 probe。一般 tools 套件本來沒有非研究 Go 檔，改用 `go list -e` 核對新兩檔確實被排除；格式檢查通過。
+- 最終核對全部 136 個 C 來源、八筆 VGA 分級、組語自動合併的語意／原始運算元、公開與本機收據。原版與來源雜湊不變，輸出 UID/GID 1000:1000，既有 root-owned 路徑仍 27 筆，本輪容器全部退出移除。
