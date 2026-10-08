@@ -21,7 +21,7 @@
 | `sub_17C6E` | `0x17C6E` | `0x7E6E` | 147 | 0 | 原始數值主迴圈、raw key table、完成／取消、SS frame 與 LAHF／SAHF |
 | `sub_17D0D` | `0x17D0D` | `0x7F0D` | 58 | 0 | 原始數值外框、word 座標運算與圖形 callee 參數 |
 | `sub_17D47` | `0x17D47` | `0x7F47` | 24 | 0 | 原始數值外框恢復參數與保存 |
-| `sub_17D5F` | `0x17D5F` | `0x7F5F` | 52 | 0 | 十八格 raw byte、CLD／LODSB、三列六欄位置與 glyph callee |
+| `sub_17D5F` | `0x17D5F` | `0x7F5F` | 52 | 0 | 十八格 raw byte、CLD／LODSB、三列六欄位置與熱區登記 callee |
 | `sub_17DA5` | `0x17DA5` | `0x7FA5` | 30 | 0 | word 乘十加 digit、carry／飽和、cap 及 CF |
 | `sub_17DC3` | `0x17DC3` | `0x7FC3` | 26 | 0 | word 乘百、高 word／飽和、cap 及 CF |
 | `sub_17DDD` | `0x17DDD` | `0x7FDD` | 13 | 0 | 原始 word 除十、DIV FLAGS 模型與 CF |
@@ -45,7 +45,7 @@ IDA loader 加 0x1000 為 0x2000；runtime load paragraph 0x0110，遠 callee �
 間接 table 位於 IDA 0x17D01（CS:7D01）；六個 word 為 7DA5／7DC3／7DDD／7DF1／7DEC／7DEA。
 十八格資料位於 IDA 0x17D93（CS:7D93），raw bytes：
 `59 5A 5B 5D 5E 5E 56 57 58 52 5F 5F 53 54 55 5C 60 60`。
-C 真正讀 table 與 LODSB，不用預列 handler 結果或 glyph layout 取代原始資料。
+C 真正讀 table 與 LODSB，不用預列 handler 結果或熱區 layout 取代原始資料。
 
 乘十加數字用 DX high-word 與 ADD carry 判斷超出 word，先飽和 FFFF 再按 cap 鉗制；
 乘百同樣保留 high-word。退位以 word DIV 除十，未定義 FLAGS 沿用 dosgolem 的 high-half
@@ -126,7 +126,7 @@ popup leaf IDA 0x19409 提供固定回應／CF 忙碌，數值取消後的下一
 
 較早 [spec/220](../spec/220-c-modal-control.md)、[re/101](101-c-modal-restoration.md)
 與 [spec/78](../spec/78-amount-input-editor.md) 已加同版位址範圍 backlink，verifier 自動核對。
-0x17D5F caller 的十八格／位置／LODSB／參數閉合；0x1E3D7 的實際 glyph primitive 仍未驗證。
+0x17D5F caller 的十八格／位置／LODSB／參數閉合；0x1E3D7 的熱區 writer 新證據見 re/103，實際 VGA blit 仍未驗證。
 現行玩家政略視窗 Issue #22 保持 OPEN。
 
 ```sh
@@ -158,3 +158,9 @@ shift／logic／DIV 未定義 FLAGS 沿用固定 dosgolem 模型，不外推實�
 | 完整 Go 財政／視窗垂直鏈 | 局部數值核心不能外推完整玩家流程 |
 | 硬體 wall-clock／自然輸入時間 | 未驗證 |
 | C 機器碼與原作者工具鏈 | 未驗證，整檔 binary match 仍是組語基準 |
+
+## 熱區 callee 勘誤（2026-10-08）
+
+`sub_1E3D7` 是熱區 writer，由同一 segment／base 的 `sub_1E453` 回讀。先前 glyph
+導覽名稱不成立。歷史群組名 `glyph` 與舊收據保留，只量 caller／RET primitive；
+真正 map／pixel query 接線見 [`re/103`](103-c-hotspot-restoration.md)，不能把舊 ABI 通過當作 glyph 畫面證據。

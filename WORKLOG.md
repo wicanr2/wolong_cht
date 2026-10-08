@@ -209,3 +209,17 @@
 - spec/220、re/101 與 spec/78 的同版範圍 backlink 由 verifier 核對。現行 C 台帳累計 118 個，Go 欄只記每函式直接 scalar 比較；完整 Goal 保持 active，本輪依授權完成後 commit、push。
 - 收尾文件與工具檢查 21／25 通過，917 列分流、嚴格研究索引、過期斷言、校訂、資產 deny-list 與全部正對照通過。四項既有缺檔／教訓失敗保留，本輪沒有新增引用錯誤。
 - 118 個 C 函式來源身分、十七筆分級出處、最終原版/C/Go 收據、原版 EXE／DAT、重定位／終止輸入與擁有權核對。輸出 UID/GID 1000:1000，既有 root-owned 路徑仍為 27 筆，本輪容器已退出移除。
+
+## 2026-10-08：熱區 map／query 與數值 pixel 接線
+
+- 前輪`99d914b`已推送，分類為progress。核對乾淨工作樹、現況、逆向／IDA／GUI／文件職責路由與Issue #22。
+- 十函式491 bytes，IDA9.4保留原始names／chunks／operand／xref／file bytes，無重定位。Writer／reader與舊re/22、re/47證據確認0x1E3D7為熱區，不是glyph，spec/222 READY後實作C。
+- 原始map init／register／clear／query、window wrapper、tile flags與border caller真實接線。輸入改事先固定CX／DX pixels／cancel，從十八個raw key table定位，不直接覆寫query回傳AL。
+- 生成器找舊模板位置失敗，核對後修正；新C的hex literal尾E與加號連為preprocessing number，補空白再跑，均為工具問題。DI=FFFFh抽樣找出word第二byte應同段wrap，C init改byte write，不移除邊界。
+- Init修正後結果仍舊，回查build發現外部C include未觸發cgo cache。加入source manifest SHA-256至CGO flags，另匯出每個binary的build info並驗證，強制來源變更真正重編。
+- O0/O2各261,367組原版/C、80組正式Go數值相同，各版2042次完整1 MB相同。全640×400 query、raw word／base wrap、原始0尺寸、重疊CF、flags／border、四劇本及財政／數值pixel鏈均比完整ABI。
+- 八個init／high-byte／collision／pitch／tile flags／border／Y offset突變全拒絕，query丟high Y在第163,841組被拒絕，不以隨機pattern相同掩蓋。正式Go原始碼沒改，VGA primitive和正常玩家仍未驗證。
+- 勘誤現行glyph導覽與FFF8h word公式，保留舊群組名、operand與歷史收據，取消spec/78的一列假glyph未讀前提；其餘分流保留，backlink由verifier機器核對。
+- C台帳累計128函式，完整Goal保持active；本輪依授權完成後commit、push，不把map／scalar結果稱完整UI或C機器碼匹配。
+- 收尾文件與工具21／25通過、924列分流與嚴格索引通過；四項既有缺檔／教訓失敗保留。最終研究改寫後四列source fingerprint按實際來源重審，檢查容器cwd補為/repo後同一矩陣重跑，沒有放寬分類。
+- 128個C來源、十筆分級證據、最終ABI／map／pixel／compiled source digest與原版EXE／DAT身分核對。輸出UID/GID 1000:1000，既有root-owned路徑仍27筆，本輪容器已全部退出移除。

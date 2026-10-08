@@ -7,7 +7,7 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-923 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+930 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
 - 日期：2026-10-08
 - 產生工具：`tools/re_open_questions.py`
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**917 列分布在 375 份文件，平均每份 2.4 列。**
+**924 列分布在 377 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -47,11 +47,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 240 | 233 | 6 | 1 |
+| 程式碼理解 | 244 | 237 | 6 | 1 |
 | 驗收 | 240 | 214 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 400 | 378 | 21 | 1 |
-| **合計** | **917** | 856 | 58 | 3 |
+| 其他 | 403 | 381 | 21 | 1 |
+| **合計** | **924** | 863 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,9 +59,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 357 |
+| `docs/spec/` | 360 |
+| `docs/re/` | 244 |
 | `docs/playtest/` | 240 |
-| `docs/re/` | 240 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
@@ -110,7 +110,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 | evidence-only | — |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 | evidence-only | — |
 
-## 2.3 程式碼理解（240 條）
+## 2.3 程式碼理解（244 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -154,6 +154,10 @@
 | [`re/102-c-numeric-editor-restoration.md`](../re/102-c-numeric-editor-restoration.md) | 完整 Go 財政／視窗垂直鏈 | 局部數值核心不能外推完整玩家流程 | 靜態 | evidence-only | — |
 | [`re/102-c-numeric-editor-restoration.md`](../re/102-c-numeric-editor-restoration.md) | 硬體 wall-clock／自然輸入時間 | 未驗證 | 靜態 | evidence-only | — |
 | [`re/102-c-numeric-editor-restoration.md`](../re/102-c-numeric-editor-restoration.md) | C 機器碼與原作者工具鏈 | 未驗證，整檔 binary match 仍是組語基準 | 靜態 | evidence-only | — |
+| [`re/103-c-hotspot-restoration.md`](../re/103-c-hotspot-restoration.md) | VGA plane／blit／畫面保存 | primitive 不代證真實 memory device 或像素 | 靜態 | evidence-only | — |
+| [`re/103-c-hotspot-restoration.md`](../re/103-c-hotspot-restoration.md) | 真實滑鼠polling與正常玩家視窗 | 固定pixel只量控制流／map，Issue #22保持OPEN | 靜態 | evidence-only | — |
+| [`re/103-c-hotspot-restoration.md`](../re/103-c-hotspot-restoration.md) | 完整Go視窗／財政 | 局部map／scalar不外推完整玩家路徑 | 靜態 | evidence-only | — |
+| [`re/103-c-hotspot-restoration.md`](../re/103-c-hotspot-restoration.md) | C機器碼與原作者工具鏈 | 未驗證，整檔binary match仍是組語基準 | 靜態 | evidence-only | — |
 | [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `ds:0D2F8` | 4,096 / 未解（第二份戰場？） | 靜態 | evidence-only | — |
 | [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `ds:0D306` | 30,720 / 未解 | 靜態 | evidence-only | — |
 | [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | 兵士記錄剩下的欄位 | `ds:0D30E`，32 B／筆 / 目前具名的有 `+0x00`／`+0x01`／`+0x02`／`+0x03` 體力／`+0x04` 大將／`+0x05` 面向／`+0x14` 陣形座標／`+0x16`・`+0x17` 繞路游標／`+0x19` 疲勞／`+0x1A`・`+0x1B` 命令／`+0x1E` Z… | 靜態 | evidence-only | — |
@@ -611,7 +615,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（400 條）
+## 2.6 其他（403 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -890,6 +894,10 @@
 | [`spec/221-c-numeric-editor.md`](../spec/221-c-numeric-editor.md) | 完整 Go 財政／視窗三方 | 局部數值核心不作完整玩家證據 | 靜態 | evidence-only | — |
 | [`spec/221-c-numeric-editor.md`](../spec/221-c-numeric-editor.md) | 自然執行時間與硬體 | 未驗證 | 靜態 | evidence-only | — |
 | [`spec/221-c-numeric-editor.md`](../spec/221-c-numeric-editor.md) | C 機器碼匹配 | 未驗證 | 靜態 | evidence-only | — |
+| [`spec/222-c-hotspot-map.md`](../spec/222-c-hotspot-map.md) | 真實 VGA plane／blit／保存像素 | primitive 不代證實際 memory device | 靜態 | evidence-only | — |
+| [`spec/222-c-hotspot-map.md`](../spec/222-c-hotspot-map.md) | 自然滑鼠與玩家視窗 | 固定 pixel fixture 不作正常玩家證據 | 靜態 | evidence-only | — |
+| [`spec/222-c-hotspot-map.md`](../spec/222-c-hotspot-map.md) | 完整 Go 視窗三方 | 未驗證 | 靜態 | evidence-only | — |
+| [`spec/222-c-hotspot-map.md`](../spec/222-c-hotspot-map.md) | C 機器碼匹配 | 未驗證 | 靜態 | evidence-only | — |
 | [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 反白列上換色的機制 | `38` §1.7.1：兩個色號各有一次量測，變換規則沒解 | 靜態 | evidence-only | — |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 空槽標記 | 原版用名稱欄第一個字 `0xD0A1`；remake 用「載得起來且玩家勢力有效」判定，兩者不等價 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 新遊戲共用 | remake 的啟動殼層是自己的畫面，還沒有換成這個四槽視窗 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
@@ -976,7 +984,6 @@
 | [`spec/76-lord-not-in-formation.md`](../spec/76-lord-not-in-formation.md) | 君主被編成之後原版會怎樣 | 沒試過。若原版其實允許、只是清單排序讓人以為不行，§2 要推翻（但開關本身照樣成立） | 靜態 | evidence-only | — |
 | [`spec/76-lord-not-in-formation.md`](../spec/76-lord-not-in-formation.md) | 開關要不要進存檔 | **不進**。與旁邊的速度設定一樣是 session 設定，讀檔不會帶回來 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/77-rout-talk-messages.md`](../spec/77-rout-talk-messages.md) | 對原版的實跑驗證 | §4 仍是**未做**：要讓原版跑出一支回不了家的軍團，得先有對應的存檔 | 實測 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
-| [`spec/78-amount-input-editor.md`](../spec/78-amount-input-editor.md) | `sub_17D5F` 讀 `CS:7D93` 之外還做什麼 | 每格的 raw byte 表已解，但那一支怎麼把 glyph 貼上去沒逐行讀 | 靜態 | evidence-only | — |
 | [`spec/78-amount-input-editor.md`](../spec/78-amount-input-editor.md) | 稅率上限 100 的意義 | 是「100%」還是別的刻度沒有第二個證據；remake 照抄 100 | 靜態 | evidence-only | — |
 | [`spec/79-new-game-faction-list.md`](../spec/79-new-game-faction-list.md) | 欄位表的「屬性」與「型別」兩個 word | `0x0206`／`0x0204` 與 `0x76`／`0x73` 只由「名字欄 vs 數字欄」推語意，消費它們的那一段沒讀（`../re/73` §6） | 靜態 | evidence-only | — |
 | [`spec/79-new-game-faction-list.md`](../spec/79-new-game-faction-list.md) | 捲軸的滑塊樣式 | 同 `38` §4，原版那一支沒讀 | 靜態 | evidence-only | — |

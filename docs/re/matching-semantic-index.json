@@ -725,10 +725,11 @@
       ]
     },
     "0x17D5F": {
-      "meaning": "十八格 raw byte、CLD／LODSB、三列六欄位置與 glyph callee",
+      "meaning": "十八格 raw 熱區 byte、CLD／LODSB、三列六欄位置與熱區 writer callee",
       "level": "proven",
       "sources": [
-        "docs/re/102-c-numeric-editor-restoration.md"
+        "docs/re/102-c-numeric-editor-restoration.md",
+        "docs/re/103-c-hotspot-restoration.md"
       ]
     },
     "0x17DA5": {
@@ -820,6 +821,76 @@
       "level": "proven",
       "sources": [
         "docs/re/102-c-numeric-editor-restoration.md"
+      ]
+    },
+    "0x1E3C0": {
+      "meaning": "熱區 segment／base 初始化、CLD、4000 bytes 清除與 STOSW offset wrap",
+      "level": "proven",
+      "sources": [
+        "docs/re/103-c-hotspot-restoration.md"
+      ]
+    },
+    "0x1E3D7": {
+      "meaning": "熱區矩形 raw byte 登記、word 定址、零 byte loop 與重疊 CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/103-c-hotspot-restoration.md"
+      ]
+    },
+    "0x1E41B": {
+      "meaning": "熱區矩形清除、原始 word 定址與保存",
+      "level": "proven",
+      "sources": [
+        "docs/re/103-c-hotspot-restoration.md"
+      ]
+    },
+    "0x1E453": {
+      "meaning": "熱區 pixel query、保留 high Y byte、AL 及原始 ABI",
+      "level": "proven",
+      "sources": [
+        "docs/re/103-c-hotspot-restoration.md"
+      ]
+    },
+    "0x1895D": {
+      "meaning": "視窗 raw style、tile flags／border、Y+2 與熱區接線",
+      "level": "proven",
+      "sources": [
+        "docs/re/103-c-hotspot-restoration.md"
+      ]
+    },
+    "0x189DE": {
+      "meaning": "16px wrapper 至8px熱區尺寸／座標的原始參數",
+      "level": "proven",
+      "sources": [
+        "docs/re/103-c-hotspot-restoration.md"
+      ]
+    },
+    "0x1D5D4": {
+      "meaning": "原始 tile byte flags、8-byte record、40欄word offset與保存",
+      "level": "proven",
+      "sources": [
+        "docs/re/103-c-hotspot-restoration.md"
+      ]
+    },
+    "0x10C14": {
+      "meaning": "原始外框幾何、水平／垂直 caller、word arith 與保存",
+      "level": "proven",
+      "sources": [
+        "docs/re/103-c-hotspot-restoration.md"
+      ]
+    },
+    "0x10C60": {
+      "meaning": "原始水平 border 的 primitive 參數／LOOP／保存",
+      "level": "proven",
+      "sources": [
+        "docs/re/103-c-hotspot-restoration.md"
+      ]
+    },
+    "0x10C77": {
+      "meaning": "原始垂直 border 的 primitive 參數／LOOP／保存",
+      "level": "proven",
+      "sources": [
+        "docs/re/103-c-hotspot-restoration.md"
       ]
     }
   },

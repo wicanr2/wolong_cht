@@ -1876,3 +1876,11 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - O0/O2 各原版/C 788,931 組、正式 Go `EditAmountValue` 787,839 組有效數值相同，各版 6164 次完整 1 MB 核對相同。六鍵、主迴圈、LAHF／SAHF、裝置／popup 保護與財政四 caller 真實接線，十個突變拒絕。
 - 跳表負對照先前越過宣告事件，改為明示末端取消後完整重生，最終只消費兩個事件，由機器核對 index／cancel。舊 driver／收據保留，沒有挑 seed 或放寬判準。
 - Go 比數值與 action-valid 範圍，沒有把 bool 當 CF。原版/C 仍量完整 raw u16／FLAGS／register／memory；圖形、自然 input 與完整 Go 財政 UI 不由 scalar 證據代替。正式 Go 未改，Issue #22 保持 OPEN。
+
+## 2026-10-08：真實 C 熱區 map 與 pixel query
+
+- KI.EXE／SINARIO.DAT 身分同固定原版；IDA9.4 DB SHA-256 `e5b4874f382093fb14953bc6bb25fe8072338061f7ce72010621a37b8be71d5a`，十函式491 bytes無重定位，原始writer／reader與caller在[re/103](docs/re/103-c-hotspot-restoration.md)。
+- O0/O2各261,367組原版/C、80組Go數值相同，每版2042次完整1 MB相同，八個突變拒絕。全部640×400 pixels、word high-byte／base wrap、零尺寸、碰撞CF、flags／border與真實pixel數值鏈驗證。
+- 勘誤：0x1E3D7是熱區writer，舊glyph前提與灰表不成立；原始BL／DL只遮low byte，完整word等價FFF8h。保留原始名稱、運算元、歷史DB／收據與舊群組名，回填re/22、re/47、re/102、spec/78、spec/221並機器核對backlinks。
+- Init的DI=FFFFh按固定dosgolem模型把word第二個byte寫同段0000h；C清圖按byte實作。外部C include快取漏重編則以source manifest digest進CGOflags並驗binary build info，不能新source配舊binary。
+- 正式Go未改，VGA plane／blit／自然input／完整玩家UI未驗證，Issue #22維持OPEN；完整matching decompilation Goal仍active。

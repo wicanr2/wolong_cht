@@ -103,8 +103,8 @@ jb  → 玩家取消，不要寫回                ; CF ＝ 取消
 
 後續 C 控制流證據見 [`re/102`](../re/102-c-numeric-editor-restoration.md)：DOS/V 原始
 0x17C6E／六鍵／財政 caller 的完整 ABI，以及有效狀態的 Go 數值核心另有直接比較。
-0x17D5F 的十八格／CLD／LODSB／位置／callee 參數已閉合，0x1E3D7 的實際 glyph primitive
-仍未由新收據驗證。本規格的玩家 UI／像素證據範圍保留。
+0x17D5F 的十八格／CLD／LODSB／位置／callee 參數已閉合，0x1E3D7 是熱區登記 caller 的下游，不是 glyph primitive。其真實 map／query 接線
+見 [re/103](../re/103-c-hotspot-restoration.md)，實際 VGA blit 仍未由新收據驗證。本規格的玩家 UI／像素證據範圍保留。
 
 | 方式 | 證據 |
 |---|---|
@@ -118,5 +118,11 @@ jb  → 玩家取消，不要寫回                ; CF ＝ 取消
 
 | 項目 | 現況 |
 |---|---|
-| `sub_17D5F` 讀 `CS:7D93` 之外還做什麼 | 每格的 raw byte 表已解，但那一支怎麼把 glyph 貼上去沒逐行讀 |
+
 | 稅率上限 100 的意義 | 是「100%」還是別的刻度沒有第二個證據；remake 照抄 100 |
+
+## 熱區與 glyph 勘誤（2026-10-08）
+
+`sub_17D5F` 讀十八個 raw byte 去呼叫 `sub_1E3D7` 建熱區。原始 writer／reader
+證據見 [re/103](../re/103-c-hotspot-restoration.md)。舊灰表的 glyph 前提已被直接記憶體證據否定，
+不再掛成這支 caller 的未讀工作；實際圖形 primitive 與正常玩家 UI 邊界仍保留。

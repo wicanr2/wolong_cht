@@ -40,3 +40,8 @@ O0/O2 全 register、FLAGS、SS、callee trace、控制欄位與完整 RAM 抽�
 | 完整 Go 財政／視窗三方 | 局部數值核心不作完整玩家證據 |
 | 自然執行時間與硬體 | 未驗證 |
 | C 機器碼匹配 | 未驗證 |
+
+## 熱區 callee 後續證據
+
+後續 C 熱區證據見 [spec/222](222-c-hotspot-map.md)。本規格原始 bytes／ABI 收據保留，
+`sub_17D5F` 的十八格導覽更正為 raw 熱區登記，舊 `glyph` 群組名不作語意證據。

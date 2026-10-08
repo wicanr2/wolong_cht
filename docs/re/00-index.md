@@ -159,6 +159,7 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 | [`100`](100-c-event-handlers-restoration.md) | 十三碼事件的其餘 handler、落下尾端與政治／災害依賴，原始 byte 控制流研究 |
 | [`101`](101-c-modal-restoration.md) | 外交／金額視窗控制流、CF retry、遠呼叫與原始 stack／code patch |
 | [`102`](102-c-numeric-editor-restoration.md) | 數值輸入、六鍵／全 u16、裝置保護、財政 caller 與 Go 數值核心 |
+| [`103`](103-c-hotspot-restoration.md) | 真實熱區 map／query、word 定址與數值視窗接線，勘誤 glyph 導覽 |
 | [`21`](21-function-census.md) | 全函式覆蓋普查；**§3.1 為什麼要排除目錄型文件** |
 | [`24`](24-unread-function-catalogue.md) | 未讀函式的證據與下手順序 |
 | [`39`](39-remaining-unread.md) | 未讀函式的逐支歸屬（生成的，可重跑）|

@@ -43,13 +43,13 @@ sub al, <base>     減掉該畫面的熱區基底，得到索引，再查跳表
 ```asm
 shr cx, 1 / shr cx, 1 / shr cx, 1   ; cx = x >> 3
 and dl, 0F8h                        ; dl = y & 0xF8
-shl dx, 1        / add cx, dx       ; cx += 2 × (y & 0xF8)
-shl dx, 1 / shl dx, 1 / add cx, dx  ; cx += 8 × (y & 0xF8)
+shl dx, 1        / add cx, dx       ; cx += 2 × (y & 0xFFF8)
+shl dx, 1 / shl dx, 1 / add cx, dx  ; cx += 8 × (y & 0xFFF8)
 mov bx, cx / add bx, cs:word_1E47B
 mov al, [bx]                        ; ds = cs:word_1E479
 ```
 
-合起來是 `offset = (x >> 3) + 10 × (y & 0xF8)`。y 每加 8 位移就加 80 →
+合起來是 `offset = (x >> 3) + 10 × (y & 0xFFF8)`。y 每加 8 位移就加 80 →
 **每列 80 個 byte、每個 byte 管一格 8×8 像素**。80 格 × 8 = 640 像素寬，
 50 列 × 8 = 400 像素高，全圖 4,000 bytes。這是 DOS/V 的 640×400，
 由定址式獨立推出，不靠畫面觀察。
@@ -261,3 +261,9 @@ remake 的戰略層用鍵盤（`A` 編成、`M` 選軍團、`=` 行軍，見
 但差異的來源現在有了原版側的具體對照：原版的八格指令列與兩層子選單。
 
 機制面的整理見 [`../mechanics/10-strategy.md`](../mechanics/10-strategy.md) §3。
+
+## 原始 word 定址勘誤（2026-10-08）
+
+原始 `and dl,0F8h`／`and bl,0F8h` 只改 low byte，high byte 保留。完整 word 等價
+遮罩為 FFF8h，先前公式的 F8h 少了 high byte；Y≥256 的直接原版/C 矩陣見
+[`re/103`](103-c-hotspot-restoration.md)。原始運算元與歷史 DB 身分不變。
