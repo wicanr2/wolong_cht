@@ -471,6 +471,18 @@ func TestRiotGate(t *testing.T) {
 // 長期行為：稅率低於平衡點（30 − 7.5 ≈ 22.5）時據點會長大，
 // 高於就會萎縮。這是攻略章「通常は税率を下げるだけで、
 // 内政の必要はありません」那句話的可驗證版本。
+func TestGrowthOriginalWordWidth(t *testing.T) {
+	for _, tc := range []struct{ production, growth, tax, want int }{
+		{65000, 100, 30, 12114}, {65535, 100, 0, 33149}, {65535, -100, 100, 11092},
+	} {
+		c := CityState{Production: tc.production, ProductionCap: 65535, Growth: tc.growth}
+		GrowCity(&c, tc.tax, true, zeroRand())
+		if c.Production != tc.want {
+			t.Fatalf("production %d growth %d tax %d: got %d want %d", tc.production, tc.growth, tc.tax, c.Production, tc.want)
+		}
+	}
+}
+
 func TestLongRunTaxBehaviour(t *testing.T) {
 	// 用固定的平均衰減 8 來代表 rand(0..15) 的期望值。
 	avg := func() Rand { return &fixedRand{seq: []int{8}} }

@@ -360,19 +360,18 @@ func GrowCity(c *CityState, taxRate int, applyTax bool, rng Rand) {
 	if scale == 0 {
 		scale = 1
 	}
-	d := scale * r
-
-	switch {
-	case r >= 0:
-		c.Production += d / 2
-		if c.Production > c.ProductionCap {
-			c.Production = c.ProductionCap
-		}
-	default:
-		c.Production += d // d 已經是負的
+	// 原版以 IMUL 的有號 low word 選分支，ADD 也先以 word 繞回（spec/210）。
+	d := int(int16(scale * r))
+	if d >= 0 {
+		c.Production = int(uint16(c.Production + d/2))
+	} else {
+		c.Production -= int(uint16(-d))
 		if c.Production < 0 {
 			c.Production = 0
 		}
+	}
+	if c.Production > c.ProductionCap {
+		c.Production = c.ProductionCap
 	}
 
 	// 上昇值每月自然衰減 rand(0..15)。期望值 7.5，

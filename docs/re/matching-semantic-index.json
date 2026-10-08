@@ -100,6 +100,83 @@
       "sources": [
         "docs/re/95-c-city-settlement-restoration.md"
       ]
+    },
+    "0x15695": {
+      "meaning": "192 據點生產力與上昇值更新，原始 word 寬度及 RNG",
+      "level": "proven",
+      "sources": [
+        "docs/re/96-c-monthly-world-update-restoration.md"
+      ]
+    },
+    "0x155A6": {
+      "meaning": "127 武將存在旗標與五能力 byte 移位評分",
+      "level": "proven",
+      "sources": [
+        "docs/re/96-c-monthly-world-update-restoration.md"
+      ]
+    },
+    "0x12FBF": {
+      "meaning": "指定或隨機起點的 raw 事件 writer，低 byte 判空與 CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/96-c-monthly-world-update-restoration.md"
+      ]
+    },
+    "0x157FE": {
+      "meaning": "玩家赤字門檻與事件 13 通知 writer",
+      "level": "proven",
+      "sources": [
+        "docs/re/96-c-monthly-world-update-restoration.md"
+      ]
+    },
+    "0x15715": {
+      "meaning": "內政官狀態閘與事件 4 請款 writer",
+      "level": "proven",
+      "sources": [
+        "docs/re/96-c-monthly-world-update-restoration.md"
+      ]
+    },
+    "0x1578F": {
+      "meaning": "外交官雙向關係取值及事件 5 請款 writer",
+      "level": "proven",
+      "sources": [
+        "docs/re/96-c-monthly-world-update-restoration.md"
+      ]
+    },
+    "0x130CB": {
+      "meaning": "關係 byte 查值與 BX 保存",
+      "level": "proven",
+      "sources": [
+        "docs/re/96-c-monthly-world-update-restoration.md"
+      ]
+    },
+    "0x13119": {
+      "meaning": "SI／DI 的原始關係 byte 位址計算",
+      "level": "proven",
+      "sources": [
+        "docs/re/96-c-monthly-world-update-restoration.md"
+      ]
+    },
+    "0x122DB": {
+      "meaning": "暴風雨 RNG、writer 成功閘與四個區域 word",
+      "level": "proven",
+      "sources": [
+        "docs/re/96-c-monthly-world-update-restoration.md"
+      ]
+    },
+    "0x12286": {
+      "meaning": "192 據點火災／暴動互斥判斷與 writer",
+      "level": "proven",
+      "sources": [
+        "docs/re/96-c-monthly-world-update-restoration.md"
+      ]
+    },
+    "0x1237E": {
+      "meaning": "暴風雨區域衰減標記與玩家通知參數",
+      "level": "proven",
+      "sources": [
+        "docs/re/96-c-monthly-world-update-restoration.md"
+      ]
     }
   },
   "operands": {

@@ -27,9 +27,10 @@
 | 2026-10-08；`sub_11D8E` 的 C 還原；Go 年份修正 | O0/O2 各原版/C 292,297 組、Go 292,249 組相同；四組突變被拒絕 | 時鐘局部語意通過，callee 與等待為明示 fixture；不外推完整月結、硬體時序或玩家流程 | spec/203、spec/204、[re/93](docs/re/93-c-game-clock-restoration.md) 與局部收據 |
 | 2026-10-08；月結主流程與五個經濟 C 函式；Go 赤字修正 | O0/O2 各原版/C 1,775,568 組、Go 1,326,175 組相同；六個突變拒絕；經濟與狀態層冷測通過 | C 資金／赤字／RNG 已形成月結呼叫鏈；其他 callee 明示 fixture，不外推完整經濟、AI 或玩家流程 | spec/205、spec/206、[re/94](docs/re/94-c-monthly-economy-restoration.md) 與局部收據 |
 | 2026-10-08；五個據點結算 C 函式；Go 收入 carry／募兵 wrap 修正 | O0/O2 各原版/C 1,779,300 組、Go 1,385,882 組相同；四劇本經濟接線、五個突變與狀態層冷測通過 | C 據點收入／募兵已接入月結；尾端世界更新與 UI 仍未還原，不外推完整玩家月結 | spec/207、spec/208、[re/95](docs/re/95-c-city-settlement-restoration.md) 與局部收據 |
+| 2026-10-08；十一個 C 世界更新函式；Go 生產力寬度修正 | O0/O2 各原版/C 142,864 組、Go 生產力 560 組相同；七個突變拒絕，四劇本接線與狀態層冷測通過 | 七個月結尾端與真實 event writer 已接入；政治／俘虜、月度佇列初始化、UI 仍未還原 | spec/209、spec/210、[re/96](docs/re/96-c-monthly-world-update-restoration.md) 與局部收據 |
 
-持續 Goal 為完成整個 matching decompilation；目前有整檔組語基準與十四個 C 函式，不能據此宣布完整 C 還原完成。
-使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d` 與經濟 `4e50f80` 已推到 origin/main。
+持續 Goal 為完成整個 matching decompilation；目前有整檔組語基準與二十五個 C 函式，不能據此宣布完整 C 還原完成。
+使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80` 與據點 `259df4f` 已推到 origin/main。
 
 未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。
 
@@ -704,6 +705,13 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 > 台帳會一直長；教訓應該收斂。同一個模式犯第二次就記在同一條的
 > `occurrences` 裡，不要開新的一條。
 
+
+### 「生產力以普通整數加法、上昇值正負選分支」（2026-10-08）
+
+原版 `sub_15695` 以 IMUL 的有號 low word 選分支，正分支 ADD 先以 16-bit 繞回，再套上限。
+65000／上昇值100／稅率30 的原版為 12114，舊 Go 鉗成 65535。
+兩個乘積符號翻轉向量也由原版/C/Go 矩陣核對，Go 已依 spec/210 修正。
+證據、原始位址與範圍在 [`docs/re/96`](docs/re/96-c-monthly-world-update-restoration.md)。
 
 ### 「玩家收入用普通乘除；募兵無寬度累計後再鉗制」（2026-10-08）
 

@@ -260,6 +260,7 @@
 | [`docs/re/93-c-game-clock-restoration.md`](re/93-c-game-clock-restoration.md) | 93：C 時鐘還原與年份邊界對照 | 局部語意對照通過。第三個 C 函式可回查原版控制流，並修正 Go 年份邊界。 | 2026-10-08 |
 | [`docs/re/94-c-monthly-economy-restoration.md`](re/94-c-monthly-economy-restoration.md) | 94：月結呼叫鏈與五個經濟 C 函式 | 六個 C 函式局部對照通過。月結的資金、赤字與 RNG 已由 C 函式實際相接。 | 2026-10-08 |
 | [`docs/re/95-c-city-settlement-restoration.md`](re/95-c-city-settlement-restoration.md) | 95：據點收入、募兵與 C 經濟月結接線 | 五個 C 函式 O0/O2 與 Go 局部對照通過；據點結算已接入 C 經濟月結。 | 2026-10-08 |
+| [`docs/re/96-c-monthly-world-update-restoration.md`](re/96-c-monthly-world-update-restoration.md) | 96：C 月結世界更新與真實事件寫入 | 十一函式 O0/O2 局部對照通過，七個月結尾端已由真實 C 函式執行。 | 2026-10-08 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-16 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -398,7 +399,9 @@
 | [`docs/spec/206-deficit-high-word-rounding.md`](spec/206-deficit-high-word-rounding.md) | 206：赤字扣兵的高位取值與進位 | CONFORMED。Go 赤字捨位已修正，局部原版/C/Go 矩陣與經濟、狀態層冷測通過。 | 2026-10-08 |
 | [`docs/spec/207-c-city-settlement.md`](spec/207-c-city-settlement.md) | 207：據點收入、募兵與 C 月結接線 | CONFORMED。五函式 O0/O2 各 1,779,300 組原版/C 相同，Go 1,385,882 組相同。 | 2026-10-08 |
 | [`docs/spec/208-settlement-width-parity.md`](spec/208-settlement-width-parity.md) | 208：玩家收入與募兵累計的原始整數寬度 | CONFORMED。原版 word carry 與募兵 wrap 已對齊，局部矩陣、四劇本接線及狀態層冷測通過。 | 2026-10-08 |
+| [`docs/spec/209-c-monthly-world-update.md`](spec/209-c-monthly-world-update.md) | 209：C 月結世界更新與事件寫入接線 | CONFORMED。十一函式 O0/O2 各 142,864 組原版/C 相同，七個負對照皆被拒絕。 | 2026-10-08 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
+| [`docs/spec/210-growth-word-parity.md`](spec/210-growth-word-parity.md) | 210：生產力的有號乘積與 word 加法 | CONFORMED。Go 生產力寬度已對齊，560 組原版/C/Go 與經濟、狀態層冷測通過。 | 2026-10-08 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |
 | [`docs/spec/23-city-info-window.md`](spec/23-city-info-window.md) | 23 — 據點情報視窗 | CONFORMED。版面已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/24-corps-info-window.md`](spec/24-corps-info-window.md) | 24 — 軍團情報視窗 | CONFORMED。版面已照原版實作並有契約測試。 | 2026-08-15 |
