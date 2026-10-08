@@ -177,6 +177,153 @@
       "sources": [
         "docs/re/96-c-monthly-world-update-restoration.md"
       ]
+    },
+    "0x1585F": {
+      "meaning": "武將月度 timer、入仕與俘虜分派",
+      "level": "proven",
+      "sources": [
+        "docs/re/97-c-monthly-politics-restoration.md"
+      ]
+    },
+    "0x15899": {
+      "meaning": "原始入仕與勢力選擇／冷卻",
+      "level": "proven",
+      "sources": [
+        "docs/re/97-c-monthly-politics-restoration.md"
+      ]
+    },
+    "0x15940": {
+      "meaning": "俘虜歸降與逃脫及真實事件 writer",
+      "level": "proven",
+      "sources": [
+        "docs/re/97-c-monthly-politics-restoration.md"
+      ]
+    },
+    "0x12AD2": {
+      "meaning": "勢力任官數 byte 加減與 FF sentinel",
+      "level": "proven",
+      "sources": [
+        "docs/re/97-c-monthly-politics-restoration.md"
+      ]
+    },
+    "0x15990": {
+      "meaning": "原始玩家通知參數與 SS 堆疊",
+      "level": "proven",
+      "sources": [
+        "docs/re/97-c-monthly-politics-restoration.md"
+      ]
+    },
+    "0x1301C": {
+      "meaning": "256-slot raw writer 的 byte 判空與向後搜尋",
+      "level": "proven",
+      "sources": [
+        "docs/re/97-c-monthly-politics-restoration.md"
+      ]
+    },
+    "0x12BD9": {
+      "meaning": "月度 queue 搬移與 scratch 初始化／政治兩輪更新",
+      "level": "proven",
+      "sources": [
+        "docs/re/97-c-monthly-politics-restoration.md"
+      ]
+    },
+    "0x12C52": {
+      "meaning": "邊境清單收集及原始 relation 排序",
+      "level": "proven",
+      "sources": [
+        "docs/re/97-c-monthly-politics-restoration.md"
+      ]
+    },
+    "0x12CDF": {
+      "meaning": "據點四方向鄰接、去重及中立 marker",
+      "level": "proven",
+      "sources": [
+        "docs/re/97-c-monthly-politics-restoration.md"
+      ]
+    },
+    "0x12D3A": {
+      "meaning": "原始 RNG 遷都事件 8",
+      "level": "proven",
+      "sources": [
+        "docs/re/97-c-monthly-politics-restoration.md"
+      ]
+    },
+    "0x12FB1": {
+      "meaning": "SI 轉 raw event code.high 的 writer 適配",
+      "level": "proven",
+      "sources": [
+        "docs/re/97-c-monthly-politics-restoration.md"
+      ]
+    },
+    "0x12D58": {
+      "meaning": "原始政治呼叫順序與 CF／目標更新",
+      "level": "proven",
+      "sources": [
+        "docs/re/97-c-monthly-politics-restoration.md"
+      ]
+    },
+    "0x12DB8": {
+      "meaning": "AI 第一鄰居 relation 漂移",
+      "level": "proven",
+      "sources": [
+        "docs/re/97-c-monthly-politics-restoration.md"
+      ]
+    },
+    "0x12DF3": {
+      "meaning": "玩家及反向勢力 relation 漂移",
+      "level": "proven",
+      "sources": [
+        "docs/re/97-c-monthly-politics-restoration.md"
+      ]
+    },
+    "0x130F0": {
+      "meaning": "relation 低 7-bit 減值並保留 war bit",
+      "level": "proven",
+      "sources": [
+        "docs/re/97-c-monthly-politics-restoration.md"
+      ]
+    },
+    "0x1310A": {
+      "meaning": "雙向 relation 位址及 AX／DX 介面",
+      "level": "proven",
+      "sources": [
+        "docs/re/97-c-monthly-politics-restoration.md"
+      ]
+    },
+    "0x13091": {
+      "meaning": "預備兵／據點／資金的原始力量指標",
+      "level": "proven",
+      "sources": [
+        "docs/re/97-c-monthly-politics-restoration.md"
+      ]
+    },
+    "0x12E33": {
+      "meaning": "協力要請門檻與事件 2",
+      "level": "proven",
+      "sources": [
+        "docs/re/97-c-monthly-politics-restoration.md"
+      ]
+    },
+    "0x12E89": {
+      "meaning": "停戰力量累減與事件 3／CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/97-c-monthly-politics-restoration.md"
+      ]
+    },
+    "0x12EFB": {
+      "meaning": "宣戰門檻與事件 1／CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/97-c-monthly-politics-restoration.md"
+      ]
+    },
+    "0x12F71": {
+      "meaning": "中立政治分支與目標保留／清除",
+      "level": "proven",
+      "sources": [
+        "docs/re/97-c-monthly-politics-restoration.md"
+      ]
     }
   },
   "operands": {

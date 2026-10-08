@@ -28,9 +28,10 @@
 | 2026-10-08；月結主流程與五個經濟 C 函式；Go 赤字修正 | O0/O2 各原版/C 1,775,568 組、Go 1,326,175 組相同；六個突變拒絕；經濟與狀態層冷測通過 | C 資金／赤字／RNG 已形成月結呼叫鏈；其他 callee 明示 fixture，不外推完整經濟、AI 或玩家流程 | spec/205、spec/206、[re/94](docs/re/94-c-monthly-economy-restoration.md) 與局部收據 |
 | 2026-10-08；五個據點結算 C 函式；Go 收入 carry／募兵 wrap 修正 | O0/O2 各原版/C 1,779,300 組、Go 1,385,882 組相同；四劇本經濟接線、五個突變與狀態層冷測通過 | C 據點收入／募兵已接入月結；尾端世界更新與 UI 仍未還原，不外推完整玩家月結 | spec/207、spec/208、[re/95](docs/re/95-c-city-settlement-restoration.md) 與局部收據 |
 | 2026-10-08；十一個 C 世界更新函式；Go 生產力寬度修正 | O0/O2 各原版/C 142,864 組、Go 生產力 560 組相同；七個突變拒絕，四劇本接線與狀態層冷測通過 | 七個月結尾端與真實 event writer 已接入；政治／俘虜、月度佇列初始化、UI 仍未還原 | spec/209、spec/210、[re/96](docs/re/96-c-monthly-world-update-restoration.md) 與局部收據 |
+| 2026-10-08；二十一個政治／俘虜 C 函式 | O0/O2 各原版/C 11,632 組相同，八個突變拒絕，四劇本完整 C 月結規則接線通過 | 九個月結尾端均有真實 C；僅 UI／音效／重畫仍為 fixture，不外推正常玩家流程或完整 Go 月結 parity | spec/211、[re/97](docs/re/97-c-monthly-politics-restoration.md) 與局部收據 |
 
-持續 Goal 為完成整個 matching decompilation；目前有整檔組語基準與二十五個 C 函式，不能據此宣布完整 C 還原完成。
-使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80` 與據點 `259df4f` 已推到 origin/main。
+持續 Goal 為完成整個 matching decompilation；目前有整檔組語基準與四十六個 C 函式，不能據此宣布完整 C 還原完成。
+使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f` 與世界更新 `5402deb` 已推到 origin/main。
 
 未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。
 

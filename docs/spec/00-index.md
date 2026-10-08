@@ -259,6 +259,7 @@
 | 玩家收入 word carry 與募兵累計 wrap | [`208-settlement-width-parity.md`](208-settlement-width-parity.md) | CONFORMED，原版反例、O0/O2／Go 矩陣及經濟、狀態層冷測 |
 | C 月結世界更新與事件 writer | [`209-c-monthly-world-update.md`](209-c-monthly-world-update.md) | CONFORMED，十一函式原版/C 142,864 組及四劇本接線，七個負對照拒絕 |
 | 生產力 low-word 乘積與 word 加法 | [`210-growth-word-parity.md`](210-growth-word-parity.md) | CONFORMED，Go 原版生產力 560 組、邊界冷測與狀態層冷測 |
+| C 月結政治、俘虜與 queue 初始化 | [`211-c-monthly-politics.md`](211-c-monthly-politics.md) | CONFORMED，21 函式原版/C 11,632 組與四劇本月結規則；UI 仍為 fixture |
 
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的
