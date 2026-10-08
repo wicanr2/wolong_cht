@@ -126,6 +126,10 @@ IF/TF=0、獨立SS／來源／保存buffer。未定義FLAGS依固定CPU模型，
 
 ## 6. 未解範圍
 
+後續 C 位元對齊證據見 [re/105](105-c-aligned-blit-restoration.md)：新增遮罩與按鈕 caller，
+並接回既有外框的實際 VGA。這份收據的 310 次 indexed 抽查取 VRAM 前 400 列；
+新收據改按臥龍傳內容區取第 40 至 439 列。舊完整四平面比對與收據雜湊沒有變更。
+
 | 項目 | 邊界 |
 |---|---|
 | 完整normal-player畫面／視窗合成 | 局部primitive與debug PNG不代證正常玩家路徑，Issue #22保持OPEN |

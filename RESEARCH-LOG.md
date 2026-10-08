@@ -1898,3 +1898,10 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - 原版、IDA9.4、DB 與 binutils2.40 身分沿用 [re/90](docs/re/90-assembly-reconstruction.md#7-版控程式碼與冷重建紀錄)。新增版控指令來源與 76 段檔案範圍索引，非指令 bytes 不進公開來源。
 - 固定工具容器冷組譯全部 24,376 條指令，55,392 bytes 與原版一致，零指令匯入。只匯入原版標頭與非指令區後，完整 SHA-256 仍為 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`。
 - 改一個指令或 linker 常數都使編譯的指令範圍不同，私有輸入身分改動也拒絕。等級已證實，限組語 bytes 與重建；各函式語意與 C 機器碼保留既有分級。
+
+## 2026-10-09：位元對齊四平面與原始按鈕 caller
+
+- KI.EXE／ICONGRF.DAT 原始雜湊與 IDA9.4 DB `0d0bd6bded0fe104b1648c8fa3af852ef209b57ee7e1464b84b786dc0f2affa8` 在 [re/105](docs/re/105-c-aligned-blit-restoration.md)，新五函式 429 bytes，十八原始入口與既有三筆 relocation 保留。
+- O0/O2 各 4,954 組完整 RAM／四 plane／I/O／ABI 相同，683 次正確內容區像素與 36 次六按鈕 hit 消費相同。native C 不呼叫原版 guest 程式，裝置狀態獨立。
+- 十一錯版全部拒絕。SI=FFFFh 的來源 word 按 CPU 同段回繞，連續實體讀取的反例與來源仍保留；FAR stub 的 CS prefix 修正只處理驗證工具。
+- 五函式原始控制流與來源連續性標已證實，完整 C 台帳 141；固定裝置 fixture、正常玩家戰術與 C 機器碼界線保留，現行 Issue #22 維持 OPEN。

@@ -161,6 +161,7 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 | [`102`](102-c-numeric-editor-restoration.md) | 數值輸入、六鍵／全 u16、裝置保護、財政 caller 與 Go 數值核心 |
 | [`103`](103-c-hotspot-restoration.md) | 真實熱區 map／query、word 定址與數值視窗接線，勘誤 glyph 導覽 |
 | [`104`](104-c-vga-blit-restoration.md) | 真實VGA plane／latch、blit／save／restore與原始I/O序列 |
+| [`105`](105-c-aligned-blit-restoration.md) | 位元對齊貼圖、四平面 row mask 與六按鈕來源連續性 |
 | [`21`](21-function-census.md) | 全函式覆蓋普查；**§3.1 為什麼要排除目錄型文件** |
 | [`24`](24-unread-function-catalogue.md) | 未讀函式的證據與下手順序 |
 | [`39`](39-remaining-unread.md) | 未讀函式的逐支歸屬（生成的，可重跑）|

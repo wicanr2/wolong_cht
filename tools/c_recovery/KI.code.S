@@ -79727,123 +79727,123 @@ ret
 .org 0xc873
 sub_1C673:
 # IDA 0x1c673; file 0xc873; locator=proven; call    sub_101B4
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 call .+15169
 .org 0xc876
 # IDA 0x1c676; file 0xc876; locator=proven; push    ds
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 push ds
 .org 0xc877
 # IDA 0x1c677; file 0xc877; locator=proven; push    ax
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 push ax
 .org 0xc878
 # IDA 0x1c678; file 0xc878; locator=proven; push    bx
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 push bx
 .org 0xc879
 # IDA 0x1c679; file 0xc879; locator=proven; push    cx
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 push cx
 .org 0xc87a
 # IDA 0x1c67a; file 0xc87a; locator=proven; push    dx
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 push dx
 .org 0xc87b
 # IDA 0x1c67b; file 0xc87b; locator=proven; push    si
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 push si
 .org 0xc87c
 # IDA 0x1c67c; file 0xc87c; locator=proven; mov     bl, ah
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} mov bl, ah
 .org 0xc87e
 # IDA 0x1c67e; file 0xc87e; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} xor bh, bh
 .org 0xc880
 # IDA 0x1c680; file 0xc880; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 shl bx, 0x1
 .org 0xc882
 # IDA 0x1c682; file 0xc882; locator=proven; mov     dx, cs:[bx-2D16h]
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 cs; mov dx, word ptr [bx+0xd2ea]
 .org 0xc887
 # IDA 0x1c687; file 0xc887; locator=proven; mov     ah, al
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} mov ah, al
 .org 0xc889
 # IDA 0x1c689; file 0xc889; locator=proven; xor     al, al
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} xor al, al
 .org 0xc88b
 # IDA 0x1c68b; file 0xc88b; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 shr ax, 0x1
 .org 0xc88d
 # IDA 0x1c68d; file 0xc88d; locator=proven; mov     si, ax
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} mov si, ax
 .org 0xc88f
 # IDA 0x1c68f; file 0xc88f; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 shr ax, 0x1
 .org 0xc891
 # IDA 0x1c691; file 0xc891; locator=proven; add     si, ax
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} add si, ax
 .org 0xc893
 # IDA 0x1c693; file 0xc893; locator=proven; mov     ds, cs:word_10D48
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 cs; mov ds, word ptr [0xd48]
 .org 0xc898
 # IDA 0x1c698; file 0xc898; locator=proven; add     dx, 36h
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 add dx, 0x36
 .org 0xc89b
 # IDA 0x1c69b; file 0xc89b; locator=proven; mov     bx, 176h
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov bx, 0x176
 .org 0xc89e
 # IDA 0x1c69e; file 0xc89e; locator=proven; mov     cx, 1018h
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov cx, 0x1018
 .org 0xc8a1
 # IDA 0x1c6a1; file 0xc8a1; locator=proven; call    sub_1F888
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 call .+12775
 .org 0xc8a4
 # IDA 0x1c6a4; file 0xc8a4; locator=proven; pop     si
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 pop si
 .org 0xc8a5
 # IDA 0x1c6a5; file 0xc8a5; locator=proven; pop     dx
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 pop dx
 .org 0xc8a6
 # IDA 0x1c6a6; file 0xc8a6; locator=proven; pop     cx
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 pop cx
 .org 0xc8a7
 # IDA 0x1c6a7; file 0xc8a7; locator=proven; pop     bx
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 pop bx
 .org 0xc8a8
 # IDA 0x1c6a8; file 0xc8a8; locator=proven; pop     ax
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 pop ax
 .org 0xc8a9
 # IDA 0x1c6a9; file 0xc8a9; locator=proven; pop     ds
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 pop ds
 .org 0xc8aa
 # IDA 0x1c6aa; file 0xc8aa; locator=proven; call    sub_101DB
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 call .+15153
 .org 0xc8ad
 # IDA 0x1c6ad; file 0xc8ad; locator=proven; retn
-# ⚠ 函式 sub_1C673; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C673; [proven] 原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖; 出處: docs/re/105-c-aligned-blit-restoration.md
 ret
 .org 0xc8ae
 sub_1C6AE:
@@ -80474,121 +80474,121 @@ ret
 .org 0xc9f4
 sub_1C7F4:
 # IDA 0x1c7f4; file 0xc9f4; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} xor dx, dx
 .org 0xc9f6
 # IDA 0x1c7f6; file 0xc9f6; locator=proven; mov     bp, 0D2E4h
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov bp, 0xd2e4
 .org 0xc9f9
 # IDA 0x1c7f9; file 0xc9f9; locator=proven; mov     di, 7300h
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov di, 0x7300
 .org 0xc9fc
 loc_1C7FC:
 # IDA 0x1c7fc; file 0xc9fc; locator=proven; push    dx
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 push dx
 .org 0xc9fd
 # IDA 0x1c7fd; file 0xc9fd; locator=proven; mov     bx, 170h
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov bx, 0x170
 .org 0xca00
 # IDA 0x1c800; file 0xca00; locator=proven; mov     cx, 40Ah
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov cx, 0x40a
 .org 0xca03
 # IDA 0x1c803; file 0xca03; locator=proven; mov     al, cs:[bp+0]
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 cs; mov al, byte ptr [bp]
 .org 0xca07
 # IDA 0x1c807; file 0xca07; locator=proven; add     al, 15h
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 add al, 0x15
 .org 0xca09
 # IDA 0x1c809; file 0xca09; locator=proven; call    sub_1E3D7
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 call .+7118
 .org 0xca0c
 # IDA 0x1c80c; file 0xca0c; locator=proven; pop     dx
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 pop dx
 .org 0xca0d
 # IDA 0x1c80d; file 0xca0d; locator=proven; mov     ax, 2005h
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov ax, 0x2005
 .org 0xca10
 # IDA 0x1c810; file 0xca10; locator=proven; mov     bx, di
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} mov bx, di
 .org 0xca12
 # IDA 0x1c812; file 0xca12; locator=proven; mov     si, 3000h
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov si, 0x3000
 .org 0xca15
 # IDA 0x1c815; file 0xca15; locator=proven; call    sub_1FA37
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 call .+12834
 .org 0xca18
 # IDA 0x1c818; file 0xca18; locator=proven; inc     bp
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 inc bp
 .org 0xca19
 # IDA 0x1c819; file 0xca19; locator=proven; add     di, 0Ah
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 add di, 0xa
 .org 0xca1c
 # IDA 0x1c81c; file 0xca1c; locator=proven; add     dx, 50h
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 add dx, 0x50
 .org 0xca1f
 # IDA 0x1c81f; file 0xca1f; locator=proven; cmp     dx, 1E0h
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 cmp dx, 0x1e0
 .org 0xca23
 # IDA 0x1c823; file 0xca23; locator=proven; jb      short loc_1C7FC
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 jb .-39
 .org 0xca25
 # IDA 0x1c825; file 0xca25; locator=proven; mov     si, 3900h
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov si, 0x3900
 .org 0xca28
 # IDA 0x1c828; file 0xca28; locator=proven; mov     ax, 6
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov ax, 0x6
 .org 0xca2b
 # IDA 0x1c82b; file 0xca2b; locator=proven; mov     dx, 4
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov dx, 0x4
 .org 0xca2e
 # IDA 0x1c82e; file 0xca2e; locator=proven; mov     bx, 176h
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov bx, 0x176
 .org 0xca31
 loc_1C831:
 # IDA 0x1c831; file 0xca31; locator=proven; mov     cx, 1018h
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov cx, 0x1018
 .org 0xca34
 # IDA 0x1c834; file 0xca34; locator=proven; call    sub_1F888
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 call .+12372
 .org 0xca37
 # IDA 0x1c837; file 0xca37; locator=proven; add     dx, 50h
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 add dx, 0x50
 .org 0xca3a
 # IDA 0x1c83a; file 0xca3a; locator=proven; dec     ax
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 dec ax
 .org 0xca3b
 # IDA 0x1c83b; file 0xca3b; locator=proven; jnz     short loc_1C831
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 jnz .-10
 .org 0xca3d
 # IDA 0x1c83d; file 0xca3d; locator=proven; retn
-# ⚠ 函式 sub_1C7F4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C7F4; [proven] 原始六次 hit map／背板與六次連續 glyph caller; 出處: docs/re/105-c-aligned-blit-restoration.md
 ret
 .org 0xca3e
 sub_1C83E:
@@ -96694,662 +96694,662 @@ ret
 .org 0xfa88
 sub_1F888:
 # IDA 0x1f888; file 0xfa88; locator=proven; cld
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 cld
 .org 0xfa89
 # IDA 0x1f889; file 0xfa89; locator=proven; push    es
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 push es
 .org 0xfa8a
 # IDA 0x1f88a; file 0xfa8a; locator=proven; push    ax
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 push ax
 .org 0xfa8b
 # IDA 0x1f88b; file 0xfa8b; locator=proven; push    bx
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 push bx
 .org 0xfa8c
 # IDA 0x1f88c; file 0xfa8c; locator=proven; push    cx
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 push cx
 .org 0xfa8d
 # IDA 0x1f88d; file 0xfa8d; locator=proven; push    dx
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 push dx
 .org 0xfa8e
 # IDA 0x1f88e; file 0xfa8e; locator=proven; push    di
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 push di
 .org 0xfa8f
 # IDA 0x1f88f; file 0xfa8f; locator=proven; push    bp
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 push bp
 .org 0xfa90
 # IDA 0x1f890; file 0xfa90; locator=proven; mov     bp, dx
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} mov bp, dx
 .org 0xfa92
 # IDA 0x1f892; file 0xfa92; locator=proven; shr     bp, 1
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 shr bp, 0x1
 .org 0xfa94
 # IDA 0x1f894; file 0xfa94; locator=proven; shr     bp, 1
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 shr bp, 0x1
 .org 0xfa96
 # IDA 0x1f896; file 0xfa96; locator=proven; shr     bp, 1
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 shr bp, 0x1
 .org 0xfa98
 # IDA 0x1f898; file 0xfa98; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 shl bx, 0x1
 .org 0xfa9a
 # IDA 0x1f89a; file 0xfa9a; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 shl bx, 0x1
 .org 0xfa9c
 # IDA 0x1f89c; file 0xfa9c; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 shl bx, 0x1
 .org 0xfa9e
 # IDA 0x1f89e; file 0xfa9e; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 shl bx, 0x1
 .org 0xfaa0
 # IDA 0x1f8a0; file 0xfaa0; locator=proven; add     bp, bx
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} add bp, bx
 .org 0xfaa2
 # IDA 0x1f8a2; file 0xfaa2; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 shl bx, 0x1
 .org 0xfaa4
 # IDA 0x1f8a4; file 0xfaa4; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 shl bx, 0x1
 .org 0xfaa6
 # IDA 0x1f8a6; file 0xfaa6; locator=proven; add     bp, bx
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} add bp, bx
 .org 0xfaa8
 # IDA 0x1f8a8; file 0xfaa8; locator=proven; and     dl, 7
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 and dl, 0x7
 .org 0xfaab
 # IDA 0x1f8ab; file 0xfaab; locator=proven; mov     dh, cl
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} mov dh, cl
 .org 0xfaad
 # IDA 0x1f8ad; file 0xfaad; locator=proven; add     dh, dl
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} add dh, dl
 .org 0xfaaf
 # IDA 0x1f8af; file 0xfaaf; locator=proven; mov     bl, cl
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} mov bl, cl
 .org 0xfab1
 # IDA 0x1f8b1; file 0xfab1; locator=proven; mov     bh, dh
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} mov bh, dh
 .org 0xfab3
 # IDA 0x1f8b3; file 0xfab3; locator=proven; add     bl, 7
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 add bl, 0x7
 .org 0xfab6
 # IDA 0x1f8b6; file 0xfab6; locator=proven; and     bx, 0F8F8h
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 and bx, 0xf8f8
 .org 0xfaba
 # IDA 0x1f8ba; file 0xfaba; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 shr bx, 0x1
 .org 0xfabc
 # IDA 0x1f8bc; file 0xfabc; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 shr bx, 0x1
 .org 0xfabe
 # IDA 0x1f8be; file 0xfabe; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 shr bx, 0x1
 .org 0xfac0
 # IDA 0x1f8c0; file 0xfac0; locator=proven; and     dh, 7
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 and dh, 0x7
 .org 0xfac3
 # IDA 0x1f8c3; file 0xfac3; locator=proven; mov     cl, dh
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} mov cl, dh
 .org 0xfac5
 # IDA 0x1f8c5; file 0xfac5; locator=proven; mov     ax, 0FFFFh
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov ax, 0xffff
 .org 0xfac8
 # IDA 0x1f8c8; file 0xfac8; locator=proven; shr     ah, cl
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 shr ah, cl
 .org 0xfaca
 # IDA 0x1f8ca; file 0xfaca; locator=proven; not     ah
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 not ah
 .org 0xfacc
 # IDA 0x1f8cc; file 0xfacc; locator=proven; mov     cl, dl
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} mov cl, dl
 .org 0xface
 # IDA 0x1f8ce; file 0xface; locator=proven; shr     al, cl
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 shr al, cl
 .org 0xfad0
 # IDA 0x1f8d0; file 0xfad0; locator=proven; and     bh, bh
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} and bh, bh
 .org 0xfad2
 # IDA 0x1f8d2; file 0xfad2; locator=proven; jnz     short loc_1F8D6
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 jnz .+4
 .org 0xfad4
 # IDA 0x1f8d4; file 0xfad4; locator=proven; and     al, ah
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} and al, ah
 .org 0xfad6
 loc_1F8D6:
 # IDA 0x1f8d6; file 0xfad6; locator=proven; mov     di, ax
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} mov di, ax
 .org 0xfad8
 # IDA 0x1f8d8; file 0xfad8; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov dx, 0x3ce
 .org 0xfadb
 # IDA 0x1f8db; file 0xfadb; locator=proven; mov     al, 5
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov al, 0x5
 .org 0xfadd
 # IDA 0x1f8dd; file 0xfadd; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 out dx, al
 .org 0xfade
 # IDA 0x1f8de; file 0xfade; locator=proven; inc     dx
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 inc dx
 .org 0xfadf
 # IDA 0x1f8df; file 0xfadf; locator=proven; xor     al, al
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} xor al, al
 .org 0xfae1
 # IDA 0x1f8e1; file 0xfae1; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 out dx, al
 .org 0xfae2
 # IDA 0x1f8e2; file 0xfae2; locator=proven; dec     dx
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 dec dx
 .org 0xfae3
 # IDA 0x1f8e3; file 0xfae3; locator=proven; xor     al, al
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} xor al, al
 .org 0xfae5
 # IDA 0x1f8e5; file 0xfae5; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 out dx, al
 .org 0xfae6
 # IDA 0x1f8e6; file 0xfae6; locator=proven; inc     dx
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 inc dx
 .org 0xfae7
 # IDA 0x1f8e7; file 0xfae7; locator=proven; xor     al, al
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} xor al, al
 .org 0xfae9
 # IDA 0x1f8e9; file 0xfae9; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 out dx, al
 .org 0xfaea
 # IDA 0x1f8ea; file 0xfaea; locator=proven; dec     dx
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 dec dx
 .org 0xfaeb
 # IDA 0x1f8eb; file 0xfaeb; locator=proven; mov     al, 3
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov al, 0x3
 .org 0xfaed
 # IDA 0x1f8ed; file 0xfaed; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 out dx, al
 .org 0xfaee
 # IDA 0x1f8ee; file 0xfaee; locator=proven; inc     dx
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 inc dx
 .org 0xfaef
 # IDA 0x1f8ef; file 0xfaef; locator=proven; xor     al, al
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} xor al, al
 .org 0xfaf1
 # IDA 0x1f8f1; file 0xfaf1; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 out dx, al
 .org 0xfaf2
 # IDA 0x1f8f2; file 0xfaf2; locator=proven; dec     dx
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 dec dx
 .org 0xfaf3
 # IDA 0x1f8f3; file 0xfaf3; locator=proven; mov     al, 8
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov al, 0x8
 .org 0xfaf5
 # IDA 0x1f8f5; file 0xfaf5; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 out dx, al
 .org 0xfaf6
 # IDA 0x1f8f6; file 0xfaf6; locator=proven; inc     dx
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 inc dx
 .org 0xfaf7
 # IDA 0x1f8f7; file 0xfaf7; locator=proven; mov     al, 0FFh
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov al, 0xff
 .org 0xfaf9
 # IDA 0x1f8f9; file 0xfaf9; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 out dx, al
 .org 0xfafa
 # IDA 0x1f8fa; file 0xfafa; locator=proven; dec     dx
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 dec dx
 .org 0xfafb
 # IDA 0x1f8fb; file 0xfafb; locator=proven; mov     ax, di
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} mov ax, di
 .org 0xfafd
 # IDA 0x1f8fd; file 0xfafd; locator=proven; mov     dx, 0A0C8h
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov dx, 0xa0c8
 .org 0xfb00
 # IDA 0x1f900; file 0xfb00; locator=proven; mov     es, dx
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov es, dx
 .org 0xfb02
 # IDA 0x1f902; file 0xfb02; locator=proven; mov     dl, 0Eh
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov dl, 0xe
 .org 0xfb04
 # IDA 0x1f904; file 0xfb04; locator=proven; call    sub_1F999
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 call .+149
 .org 0xfb07
 # IDA 0x1f907; file 0xfb07; locator=proven; call    sub_1F938
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 call .+49
 .org 0xfb0a
 # IDA 0x1f90a; file 0xfb0a; locator=proven; mov     di, ax
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} mov di, ax
 .org 0xfb0c
 # IDA 0x1f90c; file 0xfb0c; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov dx, 0x3ce
 .org 0xfb0f
 # IDA 0x1f90f; file 0xfb0f; locator=proven; mov     al, 3
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov al, 0x3
 .org 0xfb11
 # IDA 0x1f911; file 0xfb11; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 out dx, al
 .org 0xfb12
 # IDA 0x1f912; file 0xfb12; locator=proven; inc     dx
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 inc dx
 .org 0xfb13
 # IDA 0x1f913; file 0xfb13; locator=proven; mov     al, 10h
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov al, 0x10
 .org 0xfb15
 # IDA 0x1f915; file 0xfb15; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 out dx, al
 .org 0xfb16
 # IDA 0x1f916; file 0xfb16; locator=proven; mov     ax, di
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} mov ax, di
 .org 0xfb18
 # IDA 0x1f918; file 0xfb18; locator=proven; mov     dl, 0Dh
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov dl, 0xd
 .org 0xfb1a
 # IDA 0x1f91a; file 0xfb1a; locator=proven; call    sub_1F999
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 call .+127
 .org 0xfb1d
 # IDA 0x1f91d; file 0xfb1d; locator=proven; call    sub_1F938
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 call .+27
 .org 0xfb20
 # IDA 0x1f920; file 0xfb20; locator=proven; mov     dl, 0Bh
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov dl, 0xb
 .org 0xfb22
 # IDA 0x1f922; file 0xfb22; locator=proven; call    sub_1F999
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 call .+119
 .org 0xfb25
 # IDA 0x1f925; file 0xfb25; locator=proven; call    sub_1F938
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 call .+19
 .org 0xfb28
 # IDA 0x1f928; file 0xfb28; locator=proven; mov     dl, 7
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov dl, 0x7
 .org 0xfb2a
 # IDA 0x1f92a; file 0xfb2a; locator=proven; call    sub_1F999
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 call .+111
 .org 0xfb2d
 # IDA 0x1f92d; file 0xfb2d; locator=proven; call    sub_1F938
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 call .+11
 .org 0xfb30
 # IDA 0x1f930; file 0xfb30; locator=proven; pop     bp
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 pop bp
 .org 0xfb31
 # IDA 0x1f931; file 0xfb31; locator=proven; pop     di
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 pop di
 .org 0xfb32
 # IDA 0x1f932; file 0xfb32; locator=proven; pop     dx
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 pop dx
 .org 0xfb33
 # IDA 0x1f933; file 0xfb33; locator=proven; pop     cx
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 pop cx
 .org 0xfb34
 # IDA 0x1f934; file 0xfb34; locator=proven; pop     bx
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 pop bx
 .org 0xfb35
 # IDA 0x1f935; file 0xfb35; locator=proven; pop     ax
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 pop ax
 .org 0xfb36
 # IDA 0x1f936; file 0xfb36; locator=proven; pop     es
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 pop es
 .org 0xfb37
 # IDA 0x1f937; file 0xfb37; locator=proven; retn
-# ⚠ 函式 sub_1F888; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F888; [proven] 原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進; 出處: docs/re/105-c-aligned-blit-restoration.md
 ret
 .org 0xfb38
 sub_1F938:
 # IDA 0x1f938; file 0xfb38; locator=proven; push    cx
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 push cx
 .org 0xfb39
 # IDA 0x1f939; file 0xfb39; locator=proven; push    bp
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 push bp
 .org 0xfb3a
 loc_1F93A:
 # IDA 0x1f93a; file 0xfb3a; locator=proven; push    si
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 push si
 .org 0xfb3b
 # IDA 0x1f93b; file 0xfb3b; locator=proven; push    bx
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 push bx
 .org 0xfb3c
 # IDA 0x1f93c; file 0xfb3c; locator=proven; mov     di, bp
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} mov di, bp
 .org 0xfb3e
 # IDA 0x1f93e; file 0xfb3e; locator=proven; mov     dx, 3CFh
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov dx, 0x3cf
 .org 0xfb41
 # IDA 0x1f941; file 0xfb41; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 out dx, al
 .org 0xfb42
 # IDA 0x1f942; file 0xfb42; locator=proven; mov     dl, [si]
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov dl, byte ptr [si]
 .org 0xfb44
 # IDA 0x1f944; file 0xfb44; locator=proven; shr     dl, cl
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 shr dl, cl
 .org 0xfb46
 # IDA 0x1f946; file 0xfb46; locator=proven; mov     dh, es:[di]
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 es; mov dh, byte ptr [di]
 .org 0xfb49
 # IDA 0x1f949; file 0xfb49; locator=proven; mov     es:[di], dl
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 es; mov byte ptr [di], dl
 .org 0xfb4c
 # IDA 0x1f94c; file 0xfb4c; locator=proven; inc     di
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 inc di
 .org 0xfb4d
 # IDA 0x1f94d; file 0xfb4d; locator=proven; dec     bh
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 dec bh
 .org 0xfb4f
 # IDA 0x1f94f; file 0xfb4f; locator=proven; jl      short loc_1F987
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 jl .+56
 .org 0xfb51
 # IDA 0x1f951; file 0xfb51; locator=proven; jz      short loc_1F96F
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 jz .+30
 .org 0xfb53
 # IDA 0x1f953; file 0xfb53; locator=proven; mov     dx, 3CFh
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov dx, 0x3cf
 .org 0xfb56
 # IDA 0x1f956; file 0xfb56; locator=proven; mov     bl, al
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} mov bl, al
 .org 0xfb58
 # IDA 0x1f958; file 0xfb58; locator=proven; mov     al, 0FFh
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov al, 0xff
 .org 0xfb5a
 # IDA 0x1f95a; file 0xfb5a; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 out dx, al
 .org 0xfb5b
 # IDA 0x1f95b; file 0xfb5b; locator=proven; mov     al, bl
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} mov al, bl
 .org 0xfb5d
 loc_1F95D:
 # IDA 0x1f95d; file 0xfb5d; locator=proven; mov     dx, [si]
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov dx, word ptr [si]
 .org 0xfb5f
 # IDA 0x1f95f; file 0xfb5f; locator=proven; xchg    dl, dh
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} xchg dl, dh
 .org 0xfb61
 # IDA 0x1f961; file 0xfb61; locator=proven; shr     dx, cl
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 shr dx, cl
 .org 0xfb63
 # IDA 0x1f963; file 0xfb63; locator=proven; mov     dh, es:[di]
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 es; mov dh, byte ptr [di]
 .org 0xfb66
 # IDA 0x1f966; file 0xfb66; locator=proven; mov     es:[di], dl
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 es; mov byte ptr [di], dl
 .org 0xfb69
 # IDA 0x1f969; file 0xfb69; locator=proven; inc     si
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 inc si
 .org 0xfb6a
 # IDA 0x1f96a; file 0xfb6a; locator=proven; inc     di
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 inc di
 .org 0xfb6b
 # IDA 0x1f96b; file 0xfb6b; locator=proven; dec     bh
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 dec bh
 .org 0xfb6d
 # IDA 0x1f96d; file 0xfb6d; locator=proven; jnz     short loc_1F95D
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 jnz .-16
 .org 0xfb6f
 loc_1F96F:
 # IDA 0x1f96f; file 0xfb6f; locator=proven; and     ah, ah
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} and ah, ah
 .org 0xfb71
 # IDA 0x1f971; file 0xfb71; locator=proven; jz      short loc_1F987
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 jz .+22
 .org 0xfb73
 # IDA 0x1f973; file 0xfb73; locator=proven; mov     dx, 3CFh
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov dx, 0x3cf
 .org 0xfb76
 # IDA 0x1f976; file 0xfb76; locator=proven; xchg    al, ah
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} xchg al, ah
 .org 0xfb78
 # IDA 0x1f978; file 0xfb78; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 out dx, al
 .org 0xfb79
 # IDA 0x1f979; file 0xfb79; locator=proven; xchg    al, ah
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} xchg al, ah
 .org 0xfb7b
 # IDA 0x1f97b; file 0xfb7b; locator=proven; mov     dx, [si]
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov dx, word ptr [si]
 .org 0xfb7d
 # IDA 0x1f97d; file 0xfb7d; locator=proven; xchg    dl, dh
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} xchg dl, dh
 .org 0xfb7f
 # IDA 0x1f97f; file 0xfb7f; locator=proven; shr     dx, cl
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 shr dx, cl
 .org 0xfb81
 # IDA 0x1f981; file 0xfb81; locator=proven; mov     dh, es:[di]
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 es; mov dh, byte ptr [di]
 .org 0xfb84
 # IDA 0x1f984; file 0xfb84; locator=proven; mov     es:[di], dl
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 es; mov byte ptr [di], dl
 .org 0xfb87
 loc_1F987:
 # IDA 0x1f987; file 0xfb87; locator=proven; pop     bx
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 pop bx
 .org 0xfb88
 # IDA 0x1f988; file 0xfb88; locator=proven; pop     si
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 pop si
 .org 0xfb89
 # IDA 0x1f989; file 0xfb89; locator=proven; mov     dl, bl
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} mov dl, bl
 .org 0xfb8b
 # IDA 0x1f98b; file 0xfb8b; locator=proven; xor     dh, dh
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} xor dh, dh
 .org 0xfb8d
 # IDA 0x1f98d; file 0xfb8d; locator=proven; add     si, dx
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} add si, dx
 .org 0xfb8f
 # IDA 0x1f98f; file 0xfb8f; locator=proven; add     bp, 50h
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 add bp, 0x50
 .org 0xfb92
 # IDA 0x1f992; file 0xfb92; locator=proven; dec     ch
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 dec ch
 .org 0xfb94
 # IDA 0x1f994; file 0xfb94; locator=proven; jnz     short loc_1F93A
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 jnz .-90
 .org 0xfb96
 # IDA 0x1f996; file 0xfb96; locator=proven; pop     bp
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 pop bp
 .org 0xfb97
 # IDA 0x1f997; file 0xfb97; locator=proven; pop     cx
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 pop cx
 .org 0xfb98
 # IDA 0x1f998; file 0xfb98; locator=proven; retn
-# ⚠ 函式 sub_1F938; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F938; [proven] 原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅; 出處: docs/re/105-c-aligned-blit-restoration.md
 ret
 .org 0xfb99
 sub_1F999:
 # IDA 0x1f999; file 0xfb99; locator=proven; push    ax
-# ⚠ 函式 sub_1F999; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F999; [proven] 原始 DL 到 Enable Set/Reset，再選 Bit Mask 的 I/O 序列與 AX／DX 保存; 出處: docs/re/105-c-aligned-blit-restoration.md
 push ax
 .org 0xfb9a
 # IDA 0x1f99a; file 0xfb9a; locator=proven; push    dx
-# ⚠ 函式 sub_1F999; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F999; [proven] 原始 DL 到 Enable Set/Reset，再選 Bit Mask 的 I/O 序列與 AX／DX 保存; 出處: docs/re/105-c-aligned-blit-restoration.md
 push dx
 .org 0xfb9b
 # IDA 0x1f99b; file 0xfb9b; locator=proven; mov     ah, dl
-# ⚠ 函式 sub_1F999; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F999; [proven] 原始 DL 到 Enable Set/Reset，再選 Bit Mask 的 I/O 序列與 AX／DX 保存; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} mov ah, dl
 .org 0xfb9d
 # IDA 0x1f99d; file 0xfb9d; locator=proven; mov     al, 1
-# ⚠ 函式 sub_1F999; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F999; [proven] 原始 DL 到 Enable Set/Reset，再選 Bit Mask 的 I/O 序列與 AX／DX 保存; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov al, 0x1
 .org 0xfb9f
 # IDA 0x1f99f; file 0xfb9f; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_1F999; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F999; [proven] 原始 DL 到 Enable Set/Reset，再選 Bit Mask 的 I/O 序列與 AX／DX 保存; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov dx, 0x3ce
 .org 0xfba2
 # IDA 0x1f9a2; file 0xfba2; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F999; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F999; [proven] 原始 DL 到 Enable Set/Reset，再選 Bit Mask 的 I/O 序列與 AX／DX 保存; 出處: docs/re/105-c-aligned-blit-restoration.md
 out dx, al
 .org 0xfba3
 # IDA 0x1f9a3; file 0xfba3; locator=proven; inc     dx
-# ⚠ 函式 sub_1F999; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F999; [proven] 原始 DL 到 Enable Set/Reset，再選 Bit Mask 的 I/O 序列與 AX／DX 保存; 出處: docs/re/105-c-aligned-blit-restoration.md
 inc dx
 .org 0xfba4
 # IDA 0x1f9a4; file 0xfba4; locator=proven; mov     al, ah
-# ⚠ 函式 sub_1F999; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F999; [proven] 原始 DL 到 Enable Set/Reset，再選 Bit Mask 的 I/O 序列與 AX／DX 保存; 出處: docs/re/105-c-aligned-blit-restoration.md
 {load} mov al, ah
 .org 0xfba6
 # IDA 0x1f9a6; file 0xfba6; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F999; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F999; [proven] 原始 DL 到 Enable Set/Reset，再選 Bit Mask 的 I/O 序列與 AX／DX 保存; 出處: docs/re/105-c-aligned-blit-restoration.md
 out dx, al
 .org 0xfba7
 # IDA 0x1f9a7; file 0xfba7; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_1F999; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F999; [proven] 原始 DL 到 Enable Set/Reset，再選 Bit Mask 的 I/O 序列與 AX／DX 保存; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov dx, 0x3ce
 .org 0xfbaa
 # IDA 0x1f9aa; file 0xfbaa; locator=proven; mov     al, 8
-# ⚠ 函式 sub_1F999; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F999; [proven] 原始 DL 到 Enable Set/Reset，再選 Bit Mask 的 I/O 序列與 AX／DX 保存; 出處: docs/re/105-c-aligned-blit-restoration.md
 mov al, 0x8
 .org 0xfbac
 # IDA 0x1f9ac; file 0xfbac; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F999; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F999; [proven] 原始 DL 到 Enable Set/Reset，再選 Bit Mask 的 I/O 序列與 AX／DX 保存; 出處: docs/re/105-c-aligned-blit-restoration.md
 out dx, al
 .org 0xfbad
 # IDA 0x1f9ad; file 0xfbad; locator=proven; pop     dx
-# ⚠ 函式 sub_1F999; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F999; [proven] 原始 DL 到 Enable Set/Reset，再選 Bit Mask 的 I/O 序列與 AX／DX 保存; 出處: docs/re/105-c-aligned-blit-restoration.md
 pop dx
 .org 0xfbae
 # IDA 0x1f9ae; file 0xfbae; locator=proven; pop     ax
-# ⚠ 函式 sub_1F999; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F999; [proven] 原始 DL 到 Enable Set/Reset，再選 Bit Mask 的 I/O 序列與 AX／DX 保存; 出處: docs/re/105-c-aligned-blit-restoration.md
 pop ax
 .org 0xfbaf
 # IDA 0x1f9af; file 0xfbaf; locator=proven; retn
-# ⚠ 函式 sub_1F999; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F999; [proven] 原始 DL 到 Enable Set/Reset，再選 Bit Mask 的 I/O 序列與 AX／DX 保存; 出處: docs/re/105-c-aligned-blit-restoration.md
 ret
 .org 0xfbb0
 sub_1F9B0:

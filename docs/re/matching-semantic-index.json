@@ -948,6 +948,41 @@
       "sources": [
         "docs/re/104-c-vga-blit-restoration.md"
       ]
+    },
+    "0x1F888": {
+      "meaning": "原始 X 位元對齊、左右遮罩與四平面貼圖，SI 連續前進",
+      "level": "proven",
+      "sources": [
+        "docs/re/105-c-aligned-blit-restoration.md"
+      ]
+    },
+    "0x1F938": {
+      "meaning": "原始首／中／尾 byte 列寫入、有號 BH 分支、同段 word 回繞與 BL 來源步幅",
+      "level": "proven",
+      "sources": [
+        "docs/re/105-c-aligned-blit-restoration.md"
+      ]
+    },
+    "0x1F999": {
+      "meaning": "原始 DL 到 Enable Set/Reset，再選 Bit Mask 的 I/O 序列與 AX／DX 保存",
+      "level": "proven",
+      "sources": [
+        "docs/re/105-c-aligned-blit-restoration.md"
+      ]
+    },
+    "0x1C7F4": {
+      "meaning": "原始六次 hit map／背板與六次連續 glyph caller",
+      "level": "proven",
+      "sources": [
+        "docs/re/105-c-aligned-blit-restoration.md"
+      ]
+    },
+    "0x1C673": {
+      "meaning": "原始位置表／圖塊索引重畫 caller，裝置保存／恢復包住位元對齊貼圖",
+      "level": "proven",
+      "sources": [
+        "docs/re/105-c-aligned-blit-restoration.md"
+      ]
     }
   },
   "operands": {

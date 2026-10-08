@@ -170,6 +170,10 @@ IDA `sub_1C6BF`（`0001C6BF–0001C6F6`）以 `AL=0..5` 查
 
 ## 5A. 2026-08-12 深入勘誤後的定案
 
+後續 C 控制流證據見 [re/105](105-c-aligned-blit-restoration.md)：同版 `sub_1F888`、
+兩個 helper 與六按鈕／單一重畫 caller 的 byte 來源、遮罩與 VGA 接線另附動態收據。
+既有來源偏移與 hit 順序保留，局部 caller 不代替正常玩家戰術流程。
+
 ### 已證實
 
 1. `sub_1F938` 在每列後以 `add si,dx`（`DX=3`）前進來源；

@@ -147,7 +147,7 @@ IDA image ID：`sha256:4ac62de83339c215bab10e455cee3a22d9c6efed9fd0d8ed0f068327b
 
 把 `clc` 改為 `stc`、改一個 linker 常數，都使實際組譯的指令範圍不同而被拒絕。
 改動私有輸入的標頭則被完整輸入雜湊拒絕。原版 EXE、資料區與重建 EXE 均留在本機。
-來源與 linker SHA-256 分別為 `fa8e44e799281c15fdad7a723bc7985e39726617703fcc0751e6030868ab8f40`
+來源與 linker SHA-256 分別為 `6ff8a69389b74507d7fdbf4c9a7aa15e1f696b35b9b474bd06a9efe8d8ea1ed9`
 與 `a301287e77bf1a79a717c206dc0754e2c0ccb3a75b3eae38815bfff0a1995ac7`。
 
 ```sh

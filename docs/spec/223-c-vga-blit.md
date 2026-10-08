@@ -25,6 +25,9 @@ source manifest digest進實際CGO build flags並由binary build info核對。
 
 ## 3. 產物與未解範圍
 
+後續 C 位元對齊證據見 [spec/224](224-c-aligned-blit.md)，追加非 byte 對齊貼圖、
+caller 與第 40 列起的內容區抽查；原先完整 plane／ABI 收據仍保留。
+
 研究來源與工具進Git，原版、DB、RAM、plane收據只留本機ignored `workplace/matching-decompilation/c-vga/`。
 正式Go／玩家路徑不猜補，原版資料不散布。
 

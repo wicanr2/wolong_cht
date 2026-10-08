@@ -139,6 +139,9 @@ RNG表固定12:34:56、raw c/s執行前同寫兩側，沒有重擲；IF/TF=0，S
 
 ## 6. 未解範圍
 
+後續 C 裝置接線見 [re/105](105-c-aligned-blit-restoration.md)：既有外框與 hit map 接入
+獨立 VGA、真實貼圖與六按鈕查詢。原始 bytes 與較早收據保留，正常玩家流程仍待驗證。
+
 後續 C VGA 證據見 [re/104](104-c-vga-blit-restoration.md)。本規格原始熱區收據的blit仍是RET；
 新收據對0x1F9B0／0x1FA37及保存wrapper使用獨立VGA裝置，整條正常玩家與其他primitive範圍保留。
 

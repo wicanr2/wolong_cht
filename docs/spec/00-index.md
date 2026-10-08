@@ -272,6 +272,7 @@
 | C 數值輸入器與財政 caller | [`221-c-numeric-editor.md`](221-c-numeric-editor.md) | CONFORMED，17 函式原版/C 788,931 組、Go 787,839 組及十個拒絕閘門 |
 | C 熱區與真實 query | [`222-c-hotspot-map.md`](222-c-hotspot-map.md) | CONFORMED，10函式原版/C 261,367組、80組Go數值與八個拒絕閘門 |
 | C VGA blit與保存 | [`223-c-vga-blit.md`](223-c-vga-blit.md) | CONFORMED，8函式／9,942例完整RAM與四plane／八個拒絕閘門 |
+| C 位元對齊貼圖與六按鈕 caller | [`224-c-aligned-blit.md`](224-c-aligned-blit.md) | CONFORMED，五函式／4,954 組／六按鈕查詢與十一個拒絕閘門 |
 
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的
