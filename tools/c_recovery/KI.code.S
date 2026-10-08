@@ -1322,88 +1322,88 @@ ret
 .org 0x50f
 sub_1030F:
 # IDA 0x1030f; file 0x50f; locator=proven; push    ax
-# ⚠ 函式 sub_1030F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1030F; [proven] 原始顯示清單／來源段與圖樣表初始化; 出處: docs/re/107-c-display-interpreter-restoration.md
 push ax
 .org 0x510
 # IDA 0x10310; file 0x510; locator=proven; push    bx
-# ⚠ 函式 sub_1030F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1030F; [proven] 原始顯示清單／來源段與圖樣表初始化; 出處: docs/re/107-c-display-interpreter-restoration.md
 push bx
 .org 0x511
 # IDA 0x10311; file 0x511; locator=proven; push    cx
-# ⚠ 函式 sub_1030F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1030F; [proven] 原始顯示清單／來源段與圖樣表初始化; 出處: docs/re/107-c-display-interpreter-restoration.md
 push cx
 .org 0x512
 # IDA 0x10312; file 0x512; locator=proven; push    dx
-# ⚠ 函式 sub_1030F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1030F; [proven] 原始顯示清單／來源段與圖樣表初始化; 出處: docs/re/107-c-display-interpreter-restoration.md
 push dx
 .org 0x513
 # IDA 0x10313; file 0x513; locator=proven; mov     dx, cs
-# ⚠ 函式 sub_1030F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1030F; [proven] 原始顯示清單／來源段與圖樣表初始化; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov dx, cs
 .org 0x515
 # IDA 0x10315; file 0x515; locator=proven; mov     ax, 0E16h
-# ⚠ 函式 sub_1030F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1030F; [proven] 原始顯示清單／來源段與圖樣表初始化; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov ax, 0xe16
 .org 0x518
 # IDA 0x10318; file 0x518; locator=proven; mov     bx, cs
-# ⚠ 函式 sub_1030F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1030F; [proven] 原始顯示清單／來源段與圖樣表初始化; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov bx, cs
 .org 0x51a
 # IDA 0x1031a; file 0x51a; locator=proven; mov     cx, cs:word_10D50
-# ⚠ 函式 sub_1030F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1030F; [proven] 原始顯示清單／來源段與圖樣表初始化; 出處: docs/re/107-c-display-interpreter-restoration.md
 cs; mov cx, word ptr [0xd50]
 .org 0x51f
 # IDA 0x1031f; file 0x51f; locator=proven; call    sub_1E993
-# ⚠ 函式 sub_1030F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1030F; [proven] 原始顯示清單／來源段與圖樣表初始化; 出處: docs/re/107-c-display-interpreter-restoration.md
 call .-6540
 .org 0x522
 # IDA 0x10322; file 0x522; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_1030F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1030F; [proven] 原始顯示清單／來源段與圖樣表初始化; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} xor bl, bl
 .org 0x524
 # IDA 0x10324; file 0x524; locator=proven; mov     dx, cs:word_10D50
-# ⚠ 函式 sub_1030F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1030F; [proven] 原始顯示清單／來源段與圖樣表初始化; 出處: docs/re/107-c-display-interpreter-restoration.md
 cs; mov dx, word ptr [0xd50]
 .org 0x529
 # IDA 0x10329; file 0x529; locator=proven; mov     ax, 1800h
-# ⚠ 函式 sub_1030F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1030F; [proven] 原始顯示清單／來源段與圖樣表初始化; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov ax, 0x1800
 .org 0x52c
 # IDA 0x1032c; file 0x52c; locator=proven; mov     cx, 2020h
-# ⚠ 函式 sub_1030F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1030F; [proven] 原始顯示清單／來源段與圖樣表初始化; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov cx, 0x2020
 .org 0x52f
 # IDA 0x1032f; file 0x52f; locator=proven; call    sub_1E9A7
-# ⚠ 函式 sub_1030F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1030F; [proven] 原始顯示清單／來源段與圖樣表初始化; 出處: docs/re/107-c-display-interpreter-restoration.md
 call .-6536
 .org 0x532
 # IDA 0x10332; file 0x532; locator=proven; pop     dx
-# ⚠ 函式 sub_1030F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1030F; [proven] 原始顯示清單／來源段與圖樣表初始化; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop dx
 .org 0x533
 # IDA 0x10333; file 0x533; locator=proven; pop     cx
-# ⚠ 函式 sub_1030F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1030F; [proven] 原始顯示清單／來源段與圖樣表初始化; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop cx
 .org 0x534
 # IDA 0x10334; file 0x534; locator=proven; pop     bx
-# ⚠ 函式 sub_1030F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1030F; [proven] 原始顯示清單／來源段與圖樣表初始化; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop bx
 .org 0x535
 # IDA 0x10335; file 0x535; locator=proven; pop     ax
-# ⚠ 函式 sub_1030F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1030F; [proven] 原始顯示清單／來源段與圖樣表初始化; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop ax
 .org 0x536
 # IDA 0x10336; file 0x536; locator=proven; retn
-# ⚠ 函式 sub_1030F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1030F; [proven] 原始顯示清單／來源段與圖樣表初始化; 出處: docs/re/107-c-display-interpreter-restoration.md
 ret
 .org 0x537
 sub_10337:
 # IDA 0x10337; file 0x537; locator=proven; call    sub_1E9C1
-# ⚠ 函式 sub_10337; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10337; [proven] 原始場景 caller; 出處: docs/re/107-c-display-interpreter-restoration.md
 call .-6518
 .org 0x53a
 # IDA 0x1033a; file 0x53a; locator=proven; retn
-# ⚠ 函式 sub_10337; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10337; [proven] 原始場景 caller; 出處: docs/re/107-c-display-interpreter-restoration.md
 ret
 .org 0x53b
 sub_1033B:
@@ -91140,285 +91140,636 @@ ret
 .org 0xeb93
 sub_1E993:
 # IDA 0x1e993; file 0xeb93; locator=proven; mov     word ptr cs:dword_1EAE9, ax
-# ⚠ 函式 sub_1E993; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E993; [proven] 原始 far 顯示清單與字串／圖库段登記; 出處: docs/re/107-c-display-interpreter-restoration.md
 cs; mov word ptr [0xeae9], ax
 .org 0xeb97
 # IDA 0x1e997; file 0xeb97; locator=proven; mov     word ptr cs:dword_1EAE9+2, dx
-# ⚠ 函式 sub_1E993; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E993; [proven] 原始 far 顯示清單與字串／圖库段登記; 出處: docs/re/107-c-display-interpreter-restoration.md
 cs; mov word ptr [0xeaeb], dx
 .org 0xeb9c
 # IDA 0x1e99c; file 0xeb9c; locator=proven; mov     cs:word_1EAED, bx
-# ⚠ 函式 sub_1E993; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E993; [proven] 原始 far 顯示清單與字串／圖库段登記; 出處: docs/re/107-c-display-interpreter-restoration.md
 cs; mov word ptr [0xeaed], bx
 .org 0xeba1
 # IDA 0x1e9a1; file 0xeba1; locator=proven; mov     cs:word_1EAEF, cx
-# ⚠ 函式 sub_1E993; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E993; [proven] 原始 far 顯示清單與字串／圖库段登記; 出處: docs/re/107-c-display-interpreter-restoration.md
 cs; mov word ptr [0xeaef], cx
 .org 0xeba6
 # IDA 0x1e9a6; file 0xeba6; locator=proven; retn
-# ⚠ 函式 sub_1E993; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E993; [proven] 原始 far 顯示清單與字串／圖库段登記; 出處: docs/re/107-c-display-interpreter-restoration.md
 ret
 .org 0xeba7
 sub_1E9A7:
 # IDA 0x1e9a7; file 0xeba7; locator=proven; push    bx
-# ⚠ 函式 sub_1E9A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9A7; [proven] 原始八 byte 圖樣條目寫入; 出處: docs/re/107-c-display-interpreter-restoration.md
 push bx
 .org 0xeba8
 # IDA 0x1e9a8; file 0xeba8; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_1E9A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9A7; [proven] 原始八 byte 圖樣條目寫入; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} xor bh, bh
 .org 0xebaa
 # IDA 0x1e9aa; file 0xebaa; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1E9A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9A7; [proven] 原始八 byte 圖樣條目寫入; 出處: docs/re/107-c-display-interpreter-restoration.md
 shl bx, 0x1
 .org 0xebac
 # IDA 0x1e9ac; file 0xebac; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1E9A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9A7; [proven] 原始八 byte 圖樣條目寫入; 出處: docs/re/107-c-display-interpreter-restoration.md
 shl bx, 0x1
 .org 0xebae
 # IDA 0x1e9ae; file 0xebae; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1E9A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9A7; [proven] 原始八 byte 圖樣條目寫入; 出處: docs/re/107-c-display-interpreter-restoration.md
 shl bx, 0x1
 .org 0xebb0
 # IDA 0x1e9b0; file 0xebb0; locator=proven; add     bx, 0EAF1h
-# ⚠ 函式 sub_1E9A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9A7; [proven] 原始八 byte 圖樣條目寫入; 出處: docs/re/107-c-display-interpreter-restoration.md
 add bx, 0xeaf1
 .org 0xebb4
 # IDA 0x1e9b4; file 0xebb4; locator=proven; mov     cs:[bx], ax
-# ⚠ 函式 sub_1E9A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9A7; [proven] 原始八 byte 圖樣條目寫入; 出處: docs/re/107-c-display-interpreter-restoration.md
 cs; mov word ptr [bx], ax
 .org 0xebb7
 # IDA 0x1e9b7; file 0xebb7; locator=proven; mov     cs:[bx+2], dx
-# ⚠ 函式 sub_1E9A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9A7; [proven] 原始八 byte 圖樣條目寫入; 出處: docs/re/107-c-display-interpreter-restoration.md
 cs; mov word ptr [bx+0x2], dx
 .org 0xebbb
 # IDA 0x1e9bb; file 0xebbb; locator=proven; mov     cs:[bx+4], cx
-# ⚠ 函式 sub_1E9A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9A7; [proven] 原始八 byte 圖樣條目寫入; 出處: docs/re/107-c-display-interpreter-restoration.md
 cs; mov word ptr [bx+0x4], cx
 .org 0xebbf
 # IDA 0x1e9bf; file 0xebbf; locator=proven; pop     bx
-# ⚠ 函式 sub_1E9A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9A7; [proven] 原始八 byte 圖樣條目寫入; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop bx
 .org 0xebc0
 # IDA 0x1e9c0; file 0xebc0; locator=proven; retn
-# ⚠ 函式 sub_1E9A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9A7; [proven] 原始八 byte 圖樣條目寫入; 出處: docs/re/107-c-display-interpreter-restoration.md
 ret
 .org 0xebc1
 sub_1E9C1:
 # IDA 0x1e9c1; file 0xebc1; locator=proven; push    ds
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 push ds
 .org 0xebc2
 # IDA 0x1e9c2; file 0xebc2; locator=proven; push    es
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 push es
 .org 0xebc3
 # IDA 0x1e9c3; file 0xebc3; locator=proven; push    ax
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 push ax
 .org 0xebc4
 # IDA 0x1e9c4; file 0xebc4; locator=proven; push    bx
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 push bx
 .org 0xebc5
 # IDA 0x1e9c5; file 0xebc5; locator=proven; push    cx
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 push cx
 .org 0xebc6
 # IDA 0x1e9c6; file 0xebc6; locator=proven; push    dx
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 push dx
 .org 0xebc7
 # IDA 0x1e9c7; file 0xebc7; locator=proven; push    si
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 push si
 .org 0xebc8
 # IDA 0x1e9c8; file 0xebc8; locator=proven; push    di
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 push di
 .org 0xebc9
 # IDA 0x1e9c9; file 0xebc9; locator=proven; push    bp
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 push bp
 .org 0xebca
 # IDA 0x1e9ca; file 0xebca; locator=proven; sub     sp, 4
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 sub sp, 0x4
 .org 0xebcd
 # IDA 0x1e9cd; file 0xebcd; locator=proven; mov     bp, sp
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} mov bp, sp
 .org 0xebcf
 # IDA 0x1e9cf; file 0xebcf; locator=proven; mov     [bp+0], dx
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov word ptr [bp], dx
 .org 0xebd2
 # IDA 0x1e9d2; file 0xebd2; locator=proven; mov     [bp+2], bx
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov word ptr [bp+0x2], bx
 .org 0xebd5
 # IDA 0x1e9d5; file 0xebd5; locator=proven; lds     si, cs:dword_1EAE9
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 cs; lds si, dword ptr [0xeae9]
 .org 0xebda
 loc_1E9DA:
 # IDA 0x1e9da; file 0xebda; locator=proven; cmp     byte ptr [si], 0
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 cmp byte ptr [si], 0x0
 .org 0xebdd
 # IDA 0x1e9dd; file 0xebdd; locator=proven; jnz     short loc_1E9E5
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 jnz .+8
 .org 0xebdf
 # IDA 0x1e9df; file 0xebdf; locator=proven; and     al, al
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} and al, al
 .org 0xebe1
 # IDA 0x1e9e1; file 0xebe1; locator=proven; jz      short loc_1E9EA
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 jz .+9
 .org 0xebe3
 # IDA 0x1e9e3; file 0xebe3; locator=proven; dec     al
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 dec al
 .org 0xebe5
 loc_1E9E5:
 # IDA 0x1e9e5; file 0xebe5; locator=proven; add     si, 0Ch
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 add si, 0xc
 .org 0xebe8
 # IDA 0x1e9e8; file 0xebe8; locator=proven; jmp     short loc_1E9DA
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 jmp .-14
 .org 0xebea
 loc_1E9EA:
 # IDA 0x1e9ea; file 0xebea; locator=proven; add     si, 0Ch
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 add si, 0xc
 .org 0xebed
 # IDA 0x1e9ed; file 0xebed; locator=proven; mov     bl, [si]
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov bl, byte ptr [si]
 .org 0xebef
 # IDA 0x1e9ef; file 0xebef; locator=proven; and     bl, bl
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} and bl, bl
 .org 0xebf1
 # IDA 0x1e9f1; file 0xebf1; locator=proven; jz      short loc_1EA00
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 jz .+15
 .org 0xebf3
 # IDA 0x1e9f3; file 0xebf3; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} xor bh, bh
 .org 0xebf5
 # IDA 0x1e9f5; file 0xebf5; locator=proven; dec     bx
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 dec bx
 .org 0xebf6
 # IDA 0x1e9f6; file 0xebf6; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 shl bx, 0x1
 .org 0xebf8
 # IDA 0x1e9f8; file 0xebf8; locator=proven; push    si
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 push si
 .org 0xebf9
 # IDA 0x1e9f9; file 0xebf9; locator=proven; call    word ptr [bx-15F3h]
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 call word ptr [bx+0xea0d]
 .org 0xebfd
 # IDA 0x1e9fd; file 0xebfd; locator=proven; pop     si
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop si
 .org 0xebfe
 # IDA 0x1e9fe; file 0xebfe; locator=proven; jmp     short loc_1E9EA
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 jmp .-20
 .org 0xec00
 loc_1EA00:
 # IDA 0x1ea00; file 0xec00; locator=proven; add     sp, 4
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 add sp, 0x4
 .org 0xec03
 # IDA 0x1ea03; file 0xec03; locator=proven; pop     bp
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop bp
 .org 0xec04
 # IDA 0x1ea04; file 0xec04; locator=proven; pop     di
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop di
 .org 0xec05
 # IDA 0x1ea05; file 0xec05; locator=proven; pop     si
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop si
 .org 0xec06
 # IDA 0x1ea06; file 0xec06; locator=proven; pop     dx
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop dx
 .org 0xec07
 # IDA 0x1ea07; file 0xec07; locator=proven; pop     cx
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop cx
 .org 0xec08
 # IDA 0x1ea08; file 0xec08; locator=proven; pop     bx
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop bx
 .org 0xec09
 # IDA 0x1ea09; file 0xec09; locator=proven; pop     ax
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop ax
 .org 0xec0a
 # IDA 0x1ea0a; file 0xec0a; locator=proven; pop     es
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop es
 .org 0xec0b
 # IDA 0x1ea0b; file 0xec0b; locator=proven; pop     ds
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop ds
 .org 0xec0c
 # IDA 0x1ea0c; file 0xec0c; locator=proven; retn
-# ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E9C1; [proven] 原始 12-byte 場景選擇、DS near table 與九 opcode 分派; 出處: docs/re/107-c-display-interpreter-restoration.md
+ret
+.org 0xec1f
+# IDA 0x1ea1f; file 0xec1f; locator=proven; mov     ah, [si+0Ah]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 1; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/107-c-display-interpreter-restoration.md
+mov ah, byte ptr [si+0xa]
+.org 0xec22
+# IDA 0x1ea22; file 0xec22; locator=proven; call    near ptr byte_1ECFE+100h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 1; 原 IDA 資料行: call    near ptr byte_1ECFE+100h; 出處: docs/re/107-c-display-interpreter-restoration.md
+call .+988
+.org 0xec25
+# IDA 0x1ea25; file 0xec25; locator=proven; retn
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 1; 原 IDA 資料行: retn; 出處: docs/re/107-c-display-interpreter-restoration.md
 ret
 .org 0xec26
-# IDA 0x1ea26; file 0xec26; locator=proven; mov ah, byte ptr [si+0xa]
+# IDA 0x1ea26; file 0xec26; locator=proven; mov     ah, [si+0Ah]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 2; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/106-c-rectangle-bars-restoration.md
+# [proven] opcode 2; 原 IDA 資料行: db  8Ah; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov ah, byte ptr [si+0xa]
 .org 0xec29
-# IDA 0x1ea29; file 0xec29; locator=proven; call .+167
+# IDA 0x1ea29; file 0xec29; locator=proven; call    near ptr unk_1EAD0
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 2; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/106-c-rectangle-bars-restoration.md
+# [proven] opcode 2; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/107-c-display-interpreter-restoration.md
 call .+167
 .org 0xec2c
-# IDA 0x1ea2c; file 0xec2c; locator=proven; call .+1524
+# IDA 0x1ea2c; file 0xec2c; locator=proven; call    sub_1F020
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 2; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/106-c-rectangle-bars-restoration.md
+# [proven] opcode 2; 原 IDA 資料行: call    sub_1F020; 出處: docs/re/107-c-display-interpreter-restoration.md
 call .+1524
 .org 0xec2f
-# IDA 0x1ea2f; file 0xec2f; locator=proven; ret
+# IDA 0x1ea2f; file 0xec2f; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 2; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/106-c-rectangle-bars-restoration.md
+# [proven] opcode 2; 原 IDA 資料行: retn; 出處: docs/re/107-c-display-interpreter-restoration.md
 ret
 .org 0xec30
-# IDA 0x1ea30; file 0xec30; locator=proven; mov ah, byte ptr [si+0xa]
+# IDA 0x1ea30; file 0xec30; locator=proven; mov     ah, [si+0Ah]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 3; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/106-c-rectangle-bars-restoration.md
+# [proven] opcode 3; 原 IDA 資料行: db  8Ah; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov ah, byte ptr [si+0xa]
 .org 0xec33
-# IDA 0x1ea33; file 0xec33; locator=proven; call .+157
+# IDA 0x1ea33; file 0xec33; locator=proven; call    near ptr unk_1EAD0
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 3; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/106-c-rectangle-bars-restoration.md
+# [proven] opcode 3; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/107-c-display-interpreter-restoration.md
 call .+157
 .org 0xec36
-# IDA 0x1ea36; file 0xec36; locator=proven; call .+1901
+# IDA 0x1ea36; file 0xec36; locator=proven; call    sub_1F1A3
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 3; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/106-c-rectangle-bars-restoration.md
+# [proven] opcode 3; 原 IDA 資料行: call    sub_1F1A3; 出處: docs/re/107-c-display-interpreter-restoration.md
 call .+1901
 .org 0xec39
-# IDA 0x1ea39; file 0xec39; locator=proven; ret
+# IDA 0x1ea39; file 0xec39; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 3; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/106-c-rectangle-bars-restoration.md
+# [proven] opcode 3; 原 IDA 資料行: retn; 出處: docs/re/107-c-display-interpreter-restoration.md
+ret
+.org 0xec3a
+# IDA 0x1ea3a; file 0xec3a; locator=proven; mov     ax, [si+0Ah]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 4; 原 IDA 資料行: db  8Bh; 出處: docs/re/107-c-display-interpreter-restoration.md
+mov ax, word ptr [si+0xa]
+.org 0xec3d
+# IDA 0x1ea3d; file 0xec3d; locator=proven; call    near ptr unk_1EAD0
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 4; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/107-c-display-interpreter-restoration.md
+call .+147
+.org 0xec40
+# IDA 0x1ea40; file 0xec40; locator=proven; call    loc_1F465
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 4; 原 IDA 資料行: call    loc_1F465; 出處: docs/re/107-c-display-interpreter-restoration.md
+call .+2597
+.org 0xec43
+# IDA 0x1ea43; file 0xec43; locator=proven; retn
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 4; 原 IDA 資料行: retn; 出處: docs/re/107-c-display-interpreter-restoration.md
+ret
+.org 0xec44
+# IDA 0x1ea44; file 0xec44; locator=proven; mov     ah, [si+8]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 5; 原 IDA 資料行: db  8Ah; 出處: docs/re/107-c-display-interpreter-restoration.md
+mov ah, byte ptr [si+0x8]
+.org 0xec47
+# IDA 0x1ea47; file 0xec47; locator=proven; mov     dx, [bp+0]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 5; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/107-c-display-interpreter-restoration.md
+mov dx, word ptr [bp]
+.org 0xec4a
+# IDA 0x1ea4a; file 0xec4a; locator=proven; mov     bx, [bp+2]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 5; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/107-c-display-interpreter-restoration.md
+mov bx, word ptr [bp+0x2]
+.org 0xec4d
+# IDA 0x1ea4d; file 0xec4d; locator=proven; add     dx, [si+2]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 5; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/107-c-display-interpreter-restoration.md
+add dx, word ptr [si+0x2]
+.org 0xec50
+# IDA 0x1ea50; file 0xec50; locator=proven; add     bx, [si+4]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 5; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/107-c-display-interpreter-restoration.md
+add bx, word ptr [si+0x4]
+.org 0xec53
+# IDA 0x1ea53; file 0xec53; locator=proven; mov     cx, [si+6]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 5; 原 IDA 資料行: mov     cx, [si+6]; 出處: docs/re/107-c-display-interpreter-restoration.md
+mov cx, word ptr [si+0x6]
+.org 0xec56
+# IDA 0x1ea56; file 0xec56; locator=proven; call    sub_1FB29
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 5; 原 IDA 資料行: call    sub_1FB29; 出處: docs/re/107-c-display-interpreter-restoration.md
+call .+4307
+.org 0xec59
+# IDA 0x1ea59; file 0xec59; locator=proven; retn
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 5; 原 IDA 資料行: retn; 出處: docs/re/107-c-display-interpreter-restoration.md
+ret
+.org 0xec5a
+# IDA 0x1ea5a; file 0xec5a; locator=proven; mov     ah, [si+8]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 6; 原 IDA 資料行: db  8Ah; 出處: docs/re/107-c-display-interpreter-restoration.md
+mov ah, byte ptr [si+0x8]
+.org 0xec5d
+# IDA 0x1ea5d; file 0xec5d; locator=proven; mov     dx, [bp+0]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 6; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/107-c-display-interpreter-restoration.md
+mov dx, word ptr [bp]
+.org 0xec60
+# IDA 0x1ea60; file 0xec60; locator=proven; mov     bx, [bp+2]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 6; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/107-c-display-interpreter-restoration.md
+mov bx, word ptr [bp+0x2]
+.org 0xec63
+# IDA 0x1ea63; file 0xec63; locator=proven; add     dx, [si+2]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 6; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/107-c-display-interpreter-restoration.md
+add dx, word ptr [si+0x2]
+.org 0xec66
+# IDA 0x1ea66; file 0xec66; locator=proven; add     bx, [si+4]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 6; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/107-c-display-interpreter-restoration.md
+add bx, word ptr [si+0x4]
+.org 0xec69
+# IDA 0x1ea69; file 0xec69; locator=proven; mov     cx, [si+6]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 6; 原 IDA 資料行: mov     cx, [si+6]; 出處: docs/re/107-c-display-interpreter-restoration.md
+mov cx, word ptr [si+0x6]
+.org 0xec6c
+# IDA 0x1ea6c; file 0xec6c; locator=proven; call    sub_1FBA7
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 6; 原 IDA 資料行: call    sub_1FBA7; 出處: docs/re/107-c-display-interpreter-restoration.md
+call .+4411
+.org 0xec6f
+# IDA 0x1ea6f; file 0xec6f; locator=proven; retn
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 6; 原 IDA 資料行: retn; 出處: docs/re/107-c-display-interpreter-restoration.md
+ret
+.org 0xec70
+# IDA 0x1ea70; file 0xec70; locator=proven; push    ds
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 7; 原 IDA 資料行: db  1Eh; 出處: docs/re/107-c-display-interpreter-restoration.md
+push ds
+.org 0xec71
+# IDA 0x1ea71; file 0xec71; locator=proven; mov     bl, [si+0Ah]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 7; 原 IDA 資料行: mov     bl, [si+0Ah]; 出處: docs/re/107-c-display-interpreter-restoration.md
+mov bl, byte ptr [si+0xa]
+.org 0xec74
+# IDA 0x1ea74; file 0xec74; locator=proven; xor     bh, bh
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 7; 原 IDA 資料行: xor     bh, bh; 出處: docs/re/107-c-display-interpreter-restoration.md
+{load} xor bh, bh
+.org 0xec76
+# IDA 0x1ea76; file 0xec76; locator=proven; shl     bx, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/107-c-display-interpreter-restoration.md
+shl bx, 0x1
+.org 0xec78
+# IDA 0x1ea78; file 0xec78; locator=proven; shl     bx, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/107-c-display-interpreter-restoration.md
+shl bx, 0x1
+.org 0xec7a
+# IDA 0x1ea7a; file 0xec7a; locator=proven; shl     bx, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/107-c-display-interpreter-restoration.md
+shl bx, 0x1
+.org 0xec7c
+# IDA 0x1ea7c; file 0xec7c; locator=proven; add     bx, 0EAF1h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 7; 原 IDA 資料行: add     bx, 0EAF1h; 出處: docs/re/107-c-display-interpreter-restoration.md
+add bx, 0xeaf1
+.org 0xec80
+# IDA 0x1ea80; file 0xec80; locator=proven; mov     ax, cs:[bx]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 7; 原 IDA 資料行: mov     ax, cs:[bx]; 出處: docs/re/107-c-display-interpreter-restoration.md
+cs; mov ax, word ptr [bx]
+.org 0xec83
+# IDA 0x1ea83; file 0xec83; locator=proven; mov     cx, cs:[bx+4]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 7; 原 IDA 資料行: mov     cx, cs:[bx+4]; 出處: docs/re/107-c-display-interpreter-restoration.md
+cs; mov cx, word ptr [bx+0x4]
+.org 0xec87
+# IDA 0x1ea87; file 0xec87; locator=proven; push    word ptr cs:[bx+2]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 7; 原 IDA 資料行: push    word ptr cs:[bx+2]; 出處: docs/re/107-c-display-interpreter-restoration.md
+cs; push word ptr [bx+0x2]
+.org 0xec8b
+# IDA 0x1ea8b; file 0xec8b; locator=proven; push    cx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 7; 原 IDA 資料行: push    cx; 出處: docs/re/107-c-display-interpreter-restoration.md
+push cx
+.org 0xec8c
+# IDA 0x1ea8c; file 0xec8c; locator=proven; call    near ptr unk_1EAD0
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 7; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/107-c-display-interpreter-restoration.md
+call .+68
+.org 0xec8f
+# IDA 0x1ea8f; file 0xec8f; locator=proven; pop     cx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 7; 原 IDA 資料行: pop     cx; 出處: docs/re/107-c-display-interpreter-restoration.md
+pop cx
+.org 0xec90
+# IDA 0x1ea90; file 0xec90; locator=proven; pop     ds
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 7; 原 IDA 資料行: pop     ds; 出處: docs/re/107-c-display-interpreter-restoration.md
+pop ds
+.org 0xec91
+# IDA 0x1ea91; file 0xec91; locator=proven; call    loc_1F26E
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 7; 原 IDA 資料行: call    loc_1F26E; 出處: docs/re/107-c-display-interpreter-restoration.md
+call .+2013
+.org 0xec94
+# IDA 0x1ea94; file 0xec94; locator=proven; pop     ds
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 7; 原 IDA 資料行: pop     ds; 出處: docs/re/107-c-display-interpreter-restoration.md
+pop ds
+.org 0xec95
+# IDA 0x1ea95; file 0xec95; locator=proven; retn
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 7; 原 IDA 資料行: retn; 出處: docs/re/107-c-display-interpreter-restoration.md
+ret
+.org 0xec96
+# IDA 0x1ea96; file 0xec96; locator=proven; push    ds
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 8; 原 IDA 資料行: db  1Eh; 出處: docs/re/107-c-display-interpreter-restoration.md
+push ds
+.org 0xec97
+# IDA 0x1ea97; file 0xec97; locator=proven; mov     dx, [bp+0]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 8; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/107-c-display-interpreter-restoration.md
+mov dx, word ptr [bp]
+.org 0xec9a
+# IDA 0x1ea9a; file 0xec9a; locator=proven; mov     bx, [bp+2]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 8; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/107-c-display-interpreter-restoration.md
+mov bx, word ptr [bp+0x2]
+.org 0xec9d
+# IDA 0x1ea9d; file 0xec9d; locator=proven; add     dx, [si+2]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 8; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/107-c-display-interpreter-restoration.md
+add dx, word ptr [si+0x2]
+.org 0xeca0
+# IDA 0x1eaa0; file 0xeca0; locator=proven; add     bx, [si+4]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 8; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/107-c-display-interpreter-restoration.md
+add bx, word ptr [si+0x4]
+.org 0xeca3
+# IDA 0x1eaa3; file 0xeca3; locator=proven; mov     ax, [si+8]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 8; 原 IDA 資料行: mov     ax, [si+8]; 出處: docs/re/107-c-display-interpreter-restoration.md
+mov ax, word ptr [si+0x8]
+.org 0xeca6
+# IDA 0x1eaa6; file 0xeca6; locator=proven; mov     si, [si+6]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 8; 原 IDA 資料行: mov     si, [si+6]; 出處: docs/re/107-c-display-interpreter-restoration.md
+mov si, word ptr [si+0x6]
+.org 0xeca9
+# IDA 0x1eaa9; file 0xeca9; locator=proven; mov     ds, cs:word_1EAED
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 8; 原 IDA 資料行: mov     ds, cs:word_1EAED; 出處: docs/re/107-c-display-interpreter-restoration.md
+cs; mov ds, word ptr [0xeaed]
+.org 0xecae
+# IDA 0x1eaae; file 0xecae; locator=proven; call    sub_1F6DC
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 8; 原 IDA 資料行: call    sub_1F6DC; 出處: docs/re/107-c-display-interpreter-restoration.md
+call .+3118
+.org 0xecb1
+# IDA 0x1eab1; file 0xecb1; locator=proven; pop     ds
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 8; 原 IDA 資料行: pop     ds; 出處: docs/re/107-c-display-interpreter-restoration.md
+pop ds
+.org 0xecb2
+# IDA 0x1eab2; file 0xecb2; locator=proven; retn
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 8; 原 IDA 資料行: retn; 出處: docs/re/107-c-display-interpreter-restoration.md
+ret
+.org 0xecb3
+# IDA 0x1eab3; file 0xecb3; locator=proven; push    ds
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 9; 原 IDA 資料行: db  1Eh; 出處: docs/re/107-c-display-interpreter-restoration.md
+push ds
+.org 0xecb4
+# IDA 0x1eab4; file 0xecb4; locator=proven; mov     dx, [bp+0]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 9; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/107-c-display-interpreter-restoration.md
+mov dx, word ptr [bp]
+.org 0xecb7
+# IDA 0x1eab7; file 0xecb7; locator=proven; mov     bx, [bp+2]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 9; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/107-c-display-interpreter-restoration.md
+mov bx, word ptr [bp+0x2]
+.org 0xecba
+# IDA 0x1eaba; file 0xecba; locator=proven; add     dx, [si+2]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 9; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/107-c-display-interpreter-restoration.md
+add dx, word ptr [si+0x2]
+.org 0xecbd
+# IDA 0x1eabd; file 0xecbd; locator=proven; add     bx, [si+4]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 9; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/107-c-display-interpreter-restoration.md
+add bx, word ptr [si+0x4]
+.org 0xecc0
+# IDA 0x1eac0; file 0xecc0; locator=proven; mov     cx, [si+8]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 9; 原 IDA 資料行: mov     cx, [si+8]; 出處: docs/re/107-c-display-interpreter-restoration.md
+mov cx, word ptr [si+0x8]
+.org 0xecc3
+# IDA 0x1eac3; file 0xecc3; locator=proven; mov     si, [si+6]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 9; 原 IDA 資料行: mov     si, [si+6]; 出處: docs/re/107-c-display-interpreter-restoration.md
+mov si, word ptr [si+0x6]
+.org 0xecc6
+# IDA 0x1eac6; file 0xecc6; locator=proven; mov     ds, cs:word_1EAEF
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 9; 原 IDA 資料行: mov     ds, cs:word_1EAEF; 出處: docs/re/107-c-display-interpreter-restoration.md
+cs; mov ds, word ptr [0xeaef]
+.org 0xeccb
+# IDA 0x1eacb; file 0xeccb; locator=proven; call    sub_1F888
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 9; 原 IDA 資料行: call    sub_1F888; 出處: docs/re/107-c-display-interpreter-restoration.md
+call .+3517
+.org 0xecce
+# IDA 0x1eace; file 0xecce; locator=proven; pop     ds
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 9; 原 IDA 資料行: pop     ds; 出處: docs/re/107-c-display-interpreter-restoration.md
+pop ds
+.org 0xeccf
+# IDA 0x1eacf; file 0xeccf; locator=proven; retn
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 9; 原 IDA 資料行: retn; 出處: docs/re/107-c-display-interpreter-restoration.md
+ret
+.org 0xecd0
+loc_1EAD0:
+# IDA 0x1ead0; file 0xecd0; locator=proven; mov     dx, [bp+0]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov dx, word ptr [bp]
+.org 0xecd3
+# IDA 0x1ead3; file 0xecd3; locator=proven; mov     cx, dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov cx, dx
+.org 0xecd5
+# IDA 0x1ead5; file 0xecd5; locator=proven; mov     bx, [bp+2]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov bx, word ptr [bp+0x2]
+.org 0xecd8
+# IDA 0x1ead8; file 0xecd8; locator=proven; mov     di, bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov di, bx
+.org 0xecda
+# IDA 0x1eada; file 0xecda; locator=proven; add     dx, [si+2]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add dx, word ptr [si+0x2]
+.org 0xecdd
+# IDA 0x1eadd; file 0xecdd; locator=proven; add     bx, [si+4]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add bx, word ptr [si+0x4]
+.org 0xece0
+# IDA 0x1eae0; file 0xece0; locator=proven; add     cx, [si+6]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add cx, word ptr [si+0x6]
+.org 0xece3
+# IDA 0x1eae3; file 0xece3; locator=proven; add     di, [si+8]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add di, word ptr [si+0x8]
+.org 0xece6
+# IDA 0x1eae6; file 0xece6; locator=proven; mov     si, cx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov si, cx
+.org 0xece8
+# IDA 0x1eae8; file 0xece8; locator=proven; retn
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
 ret
 .org 0xed11
 sub_1EB11:
@@ -92501,6 +92852,975 @@ pop ds
 .org 0xeefb
 # IDA 0x1ecfb; file 0xeefb; locator=proven; retn
 # 函式 sub_1ECE0; [proven] 以置換表與兩個 byte 狀態取一個亂數; 出處: docs/re/10-rng.md
+ret
+.org 0xeffe
+# IDA 0x1edfe; file 0xeffe; locator=proven; push    ds
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push ds
+.org 0xefff
+# IDA 0x1edff; file 0xefff; locator=proven; push    cx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push cx
+.org 0xf000
+# IDA 0x1ee00; file 0xf000; locator=proven; push    bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push bp
+.org 0xf001
+# IDA 0x1ee01; file 0xf001; locator=proven; mov     cx, 0A0C8h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov cx, 0xa0c8
+.org 0xf004
+# IDA 0x1ee04; file 0xf004; locator=proven; mov     ds, cx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ds, cx
+.org 0xf006
+# IDA 0x1ee06; file 0xf006; locator=proven; mov     cx, dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov cx, dx
+.org 0xf008
+# IDA 0x1ee08; file 0xf008; locator=proven; mov     dx, 3CEh
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov dx, 0x3ce
+.org 0xf00b
+# IDA 0x1ee0b; file 0xf00b; locator=proven; mov     al, 5
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov al, 0x5
+.org 0xf00d
+# IDA 0x1ee0d; file 0xf00d; locator=proven; out     dx, al
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+out dx, al
+.org 0xf00e
+# IDA 0x1ee0e; file 0xf00e; locator=proven; inc     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc dx
+.org 0xf00f
+# IDA 0x1ee0f; file 0xf00f; locator=proven; mov     al, 3
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov al, 0x3
+.org 0xf011
+# IDA 0x1ee11; file 0xf011; locator=proven; out     dx, al
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+out dx, al
+.org 0xf012
+# IDA 0x1ee12; file 0xf012; locator=proven; dec     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+dec dx
+.org 0xf013
+# IDA 0x1ee13; file 0xf013; locator=proven; xor     al, al
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} xor al, al
+.org 0xf015
+# IDA 0x1ee15; file 0xf015; locator=proven; out     dx, al
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+out dx, al
+.org 0xf016
+# IDA 0x1ee16; file 0xf016; locator=proven; inc     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc dx
+.org 0xf017
+# IDA 0x1ee17; file 0xf017; locator=proven; mov     al, ah
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov al, ah
+.org 0xf019
+# IDA 0x1ee19; file 0xf019; locator=proven; out     dx, al
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+out dx, al
+.org 0xf01a
+# IDA 0x1ee1a; file 0xf01a; locator=proven; dec     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+dec dx
+.org 0xf01b
+# IDA 0x1ee1b; file 0xf01b; locator=proven; mov     al, 3
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov al, 0x3
+.org 0xf01d
+# IDA 0x1ee1d; file 0xf01d; locator=proven; out     dx, al
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+out dx, al
+.org 0xf01e
+# IDA 0x1ee1e; file 0xf01e; locator=proven; inc     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc dx
+.org 0xf01f
+# IDA 0x1ee1f; file 0xf01f; locator=proven; xor     al, al
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} xor al, al
+.org 0xf021
+# IDA 0x1ee21; file 0xf021; locator=proven; out     dx, al
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+out dx, al
+.org 0xf022
+# IDA 0x1ee22; file 0xf022; locator=proven; dec     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+dec dx
+.org 0xf023
+# IDA 0x1ee23; file 0xf023; locator=proven; mov     al, 8
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov al, 0x8
+.org 0xf025
+# IDA 0x1ee25; file 0xf025; locator=proven; out     dx, al
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+out dx, al
+.org 0xf026
+# IDA 0x1ee26; file 0xf026; locator=proven; inc     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc dx
+.org 0xf027
+# IDA 0x1ee27; file 0xf027; locator=proven; mov     al, 0FFh
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov al, 0xff
+.org 0xf029
+# IDA 0x1ee29; file 0xf029; locator=proven; out     dx, al
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+out dx, al
+.org 0xf02a
+# IDA 0x1ee2a; file 0xf02a; locator=proven; mov     dx, cx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov dx, cx
+.org 0xf02c
+# IDA 0x1ee2c; file 0xf02c; locator=proven; add     dx, 8000h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add dx, 0x8000
+.org 0xf030
+# IDA 0x1ee30; file 0xf030; locator=proven; add     si, 8000h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add si, 0x8000
+.org 0xf034
+# IDA 0x1ee34; file 0xf034; locator=proven; add     bx, 8000h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add bx, 0x8000
+.org 0xf038
+# IDA 0x1ee38; file 0xf038; locator=proven; add     di, 8000h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add di, 0x8000
+.org 0xf03c
+# IDA 0x1ee3c; file 0xf03c; locator=proven; mov     ax, di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov ax, di
+.org 0xf03e
+# IDA 0x1ee3e; file 0xf03e; locator=proven; sub     ax, bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} sub ax, bx
+.org 0xf040
+# IDA 0x1ee40; file 0xf040; locator=proven; jnb     short near ptr unk_1EE48
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+8
+.org 0xf042
+# IDA 0x1ee42; file 0xf042; locator=proven; xchg    dx, si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} xchg dx, si
+.org 0xf044
+# IDA 0x1ee44; file 0xf044; locator=proven; xchg    bx, di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} xchg bx, di
+.org 0xf046
+# IDA 0x1ee46; file 0xf046; locator=proven; neg     ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+neg ax
+.org 0xf048
+loc_1EE48:
+# IDA 0x1ee48; file 0xf048; locator=proven; mov     bp, si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov bp, si
+.org 0xf04a
+# IDA 0x1ee4a; file 0xf04a; locator=proven; sub     bp, dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} sub bp, dx
+.org 0xf04c
+# IDA 0x1ee4c; file 0xf04c; locator=proven; jnb     short near ptr unk_1EE57
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+11
+.org 0xf04e
+# IDA 0x1ee4e; file 0xf04e; locator=proven; neg     bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+neg bp
+.org 0xf050
+# IDA 0x1ee50; file 0xf050; locator=proven; cmp     bp, ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} cmp bp, ax
+.org 0xf052
+# IDA 0x1ee52; file 0xf052; locator=proven; jnb     short near ptr unk_1EE64
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+18
+.org 0xf054
+# IDA 0x1ee54; file 0xf054; locator=proven; jmp     near ptr unk_1EF29
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{disp16} jmp .+213
+.org 0xf057
+loc_1EE57:
+# IDA 0x1ee57; file 0xf057; locator=proven; cmp     bp, ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} cmp bp, ax
+.org 0xf059
+# IDA 0x1ee59; file 0xf059; locator=proven; jnb     short near ptr unk_1EEC6
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+109
+.org 0xf05b
+# IDA 0x1ee5b; file 0xf05b; locator=proven; jmp     near ptr unk_1EF8C
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{disp16} jmp .+305
+.org 0xf05e
+# IDA 0x1ee5e; file 0xf05e; locator=proven; pop     bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop bp
+.org 0xf05f
+# IDA 0x1ee5f; file 0xf05f; locator=proven; pop     cx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop cx
+.org 0xf060
+# IDA 0x1ee60; file 0xf060; locator=proven; pop     ds
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop ds
+.org 0xf061
+# IDA 0x1ee61; file 0xf061; locator=proven; retn
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+ret
+.org 0xf064
+loc_1EE64:
+# IDA 0x1ee64; file 0xf064; locator=proven; mov     cs:word_1EE62, si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; mov word ptr [0xee62], si
+.org 0xf069
+# IDA 0x1ee69; file 0xf069; locator=proven; xor     si, si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} xor si, si
+.org 0xf06b
+# IDA 0x1ee6b; file 0xf06b; locator=proven; cmp     dx, 8000h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp dx, 0x8000
+.org 0xf06f
+# IDA 0x1ee6f; file 0xf06f; locator=proven; jb      short near ptr unk_1EEC4
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jb .+85
+.org 0xf071
+# IDA 0x1ee71; file 0xf071; locator=proven; cmp     bx, 8190h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp bx, 0x8190
+.org 0xf075
+# IDA 0x1ee75; file 0xf075; locator=proven; jnb     short near ptr unk_1EEC4
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+79
+.org 0xf077
+# IDA 0x1ee77; file 0xf077; locator=proven; cmp     dx, 8280h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp dx, 0x8280
+.org 0xf07b
+# IDA 0x1ee7b; file 0xf07b; locator=proven; jnb     short near ptr unk_1EE83
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+8
+.org 0xf07d
+# IDA 0x1ee7d; file 0xf07d; locator=proven; cmp     bx, 8000h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp bx, 0x8000
+.org 0xf081
+# IDA 0x1ee81; file 0xf081; locator=proven; jnb     short near ptr unk_1EE96
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+21
+.org 0xf083
+loc_1EE83:
+# IDA 0x1ee83; file 0xf083; locator=proven; cmp     dx, cs:word_1EE62
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; cmp dx, word ptr [0xee62]
+.org 0xf088
+# IDA 0x1ee88; file 0xf088; locator=proven; jz      short near ptr unk_1EEC4
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jz .+60
+.org 0xf08a
+# IDA 0x1ee8a; file 0xf08a; locator=proven; dec     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+dec dx
+.org 0xf08b
+# IDA 0x1ee8b; file 0xf08b; locator=proven; add     si, ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} add si, ax
+.org 0xf08d
+# IDA 0x1ee8d; file 0xf08d; locator=proven; cmp     si, bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} cmp si, bp
+.org 0xf08f
+# IDA 0x1ee8f; file 0xf08f; locator=proven; jb      short loc_1EE77
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jb .-24
+.org 0xf091
+# IDA 0x1ee91; file 0xf091; locator=proven; sub     si, bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} sub si, bp
+.org 0xf093
+# IDA 0x1ee93; file 0xf093; locator=proven; inc     bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc bx
+.org 0xf094
+# IDA 0x1ee94; file 0xf094; locator=proven; jmp     short loc_1EE77
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jmp .-29
+.org 0xf096
+loc_1EE96:
+# IDA 0x1ee96; file 0xf096; locator=proven; call    near ptr unk_1EFEF
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .+345
+.org 0xf099
+# IDA 0x1ee99; file 0xf099; locator=proven; cmp     dx, 8000h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp dx, 0x8000
+.org 0xf09d
+# IDA 0x1ee9d; file 0xf09d; locator=proven; jb      short near ptr unk_1EEC4
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jb .+39
+.org 0xf09f
+# IDA 0x1ee9f; file 0xf09f; locator=proven; cmp     bx, 8190h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp bx, 0x8190
+.org 0xf0a3
+# IDA 0x1eea3; file 0xf0a3; locator=proven; jnb     short near ptr unk_1EEC4
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+33
+.org 0xf0a5
+# IDA 0x1eea5; file 0xf0a5; locator=proven; mov     cl, [di]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov cl, byte ptr [di]
+.org 0xf0a7
+# IDA 0x1eea7; file 0xf0a7; locator=proven; mov     [di], ch
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov byte ptr [di], ch
+.org 0xf0a9
+# IDA 0x1eea9; file 0xf0a9; locator=proven; cmp     dx, cs:word_1EE62
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; cmp dx, word ptr [0xee62]
+.org 0xf0ae
+# IDA 0x1eeae; file 0xf0ae; locator=proven; jz      short near ptr unk_1EEC4
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jz .+22
+.org 0xf0b0
+# IDA 0x1eeb0; file 0xf0b0; locator=proven; dec     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+dec dx
+.org 0xf0b1
+# IDA 0x1eeb1; file 0xf0b1; locator=proven; rol     ch, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+rol ch, 0x1
+.org 0xf0b3
+# IDA 0x1eeb3; file 0xf0b3; locator=proven; jnb     short near ptr unk_1EEB6
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+3
+.org 0xf0b5
+# IDA 0x1eeb5; file 0xf0b5; locator=proven; dec     di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+dec di
+.org 0xf0b6
+loc_1EEB6:
+# IDA 0x1eeb6; file 0xf0b6; locator=proven; add     si, ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} add si, ax
+.org 0xf0b8
+# IDA 0x1eeb8; file 0xf0b8; locator=proven; cmp     si, bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} cmp si, bp
+.org 0xf0ba
+# IDA 0x1eeba; file 0xf0ba; locator=proven; jb      short loc_1EE99
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jb .-33
+.org 0xf0bc
+# IDA 0x1eebc; file 0xf0bc; locator=proven; sub     si, bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} sub si, bp
+.org 0xf0be
+# IDA 0x1eebe; file 0xf0be; locator=proven; inc     bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc bx
+.org 0xf0bf
+# IDA 0x1eebf; file 0xf0bf; locator=proven; add     di, 50h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add di, 0x50
+.org 0xf0c2
+# IDA 0x1eec2; file 0xf0c2; locator=proven; jmp     short loc_1EE99
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jmp .-41
+.org 0xf0c4
+loc_1EEC4:
+# IDA 0x1eec4; file 0xf0c4; locator=proven; jmp     short loc_1EE5E
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jmp .-102
+.org 0xf0c6
+loc_1EEC6:
+# IDA 0x1eec6; file 0xf0c6; locator=proven; mov     cs:word_1EE62, si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; mov word ptr [0xee62], si
+.org 0xf0cb
+# IDA 0x1eecb; file 0xf0cb; locator=proven; xor     si, si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} xor si, si
+.org 0xf0cd
+# IDA 0x1eecd; file 0xf0cd; locator=proven; cmp     dx, 8280h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp dx, 0x8280
+.org 0xf0d1
+# IDA 0x1eed1; file 0xf0d1; locator=proven; jnb     short near ptr unk_1EF26
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+85
+.org 0xf0d3
+# IDA 0x1eed3; file 0xf0d3; locator=proven; cmp     bx, 8190h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp bx, 0x8190
+.org 0xf0d7
+# IDA 0x1eed7; file 0xf0d7; locator=proven; jnb     short near ptr unk_1EF26
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+79
+.org 0xf0d9
+# IDA 0x1eed9; file 0xf0d9; locator=proven; cmp     dx, 8000h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp dx, 0x8000
+.org 0xf0dd
+# IDA 0x1eedd; file 0xf0dd; locator=proven; jb      short near ptr unk_1EEE5
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jb .+8
+.org 0xf0df
+# IDA 0x1eedf; file 0xf0df; locator=proven; cmp     bx, 8000h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp bx, 0x8000
+.org 0xf0e3
+# IDA 0x1eee3; file 0xf0e3; locator=proven; jnb     short near ptr unk_1EEF8
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+21
+.org 0xf0e5
+loc_1EEE5:
+# IDA 0x1eee5; file 0xf0e5; locator=proven; cmp     dx, cs:word_1EE62
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; cmp dx, word ptr [0xee62]
+.org 0xf0ea
+# IDA 0x1eeea; file 0xf0ea; locator=proven; jz      short near ptr unk_1EF26
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jz .+60
+.org 0xf0ec
+# IDA 0x1eeec; file 0xf0ec; locator=proven; inc     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc dx
+.org 0xf0ed
+# IDA 0x1eeed; file 0xf0ed; locator=proven; add     si, ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} add si, ax
+.org 0xf0ef
+# IDA 0x1eeef; file 0xf0ef; locator=proven; cmp     si, bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} cmp si, bp
+.org 0xf0f1
+# IDA 0x1eef1; file 0xf0f1; locator=proven; jb      short loc_1EED9
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jb .-24
+.org 0xf0f3
+# IDA 0x1eef3; file 0xf0f3; locator=proven; sub     si, bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} sub si, bp
+.org 0xf0f5
+# IDA 0x1eef5; file 0xf0f5; locator=proven; inc     bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc bx
+.org 0xf0f6
+# IDA 0x1eef6; file 0xf0f6; locator=proven; jmp     short loc_1EED9
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jmp .-29
+.org 0xf0f8
+loc_1EEF8:
+# IDA 0x1eef8; file 0xf0f8; locator=proven; call    near ptr unk_1EFEF
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .+247
+.org 0xf0fb
+# IDA 0x1eefb; file 0xf0fb; locator=proven; cmp     dx, 8280h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp dx, 0x8280
+.org 0xf0ff
+# IDA 0x1eeff; file 0xf0ff; locator=proven; jnb     short near ptr unk_1EF26
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+39
+.org 0xf101
+# IDA 0x1ef01; file 0xf101; locator=proven; cmp     bx, 8190h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp bx, 0x8190
+.org 0xf105
+# IDA 0x1ef05; file 0xf105; locator=proven; jnb     short near ptr unk_1EF26
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+33
+.org 0xf107
+# IDA 0x1ef07; file 0xf107; locator=proven; mov     cl, [di]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov cl, byte ptr [di]
+.org 0xf109
+# IDA 0x1ef09; file 0xf109; locator=proven; mov     [di], ch
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov byte ptr [di], ch
+.org 0xf10b
+# IDA 0x1ef0b; file 0xf10b; locator=proven; cmp     dx, cs:word_1EE62
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; cmp dx, word ptr [0xee62]
+.org 0xf110
+# IDA 0x1ef10; file 0xf110; locator=proven; jz      short near ptr unk_1EF26
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jz .+22
+.org 0xf112
+# IDA 0x1ef12; file 0xf112; locator=proven; inc     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc dx
+.org 0xf113
+# IDA 0x1ef13; file 0xf113; locator=proven; ror     ch, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+ror ch, 0x1
+.org 0xf115
+# IDA 0x1ef15; file 0xf115; locator=proven; jnb     short near ptr unk_1EF18
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+3
+.org 0xf117
+# IDA 0x1ef17; file 0xf117; locator=proven; inc     di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc di
+.org 0xf118
+loc_1EF18:
+# IDA 0x1ef18; file 0xf118; locator=proven; add     si, ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} add si, ax
+.org 0xf11a
+# IDA 0x1ef1a; file 0xf11a; locator=proven; cmp     si, bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} cmp si, bp
+.org 0xf11c
+# IDA 0x1ef1c; file 0xf11c; locator=proven; jb      short loc_1EEFB
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jb .-33
+.org 0xf11e
+# IDA 0x1ef1e; file 0xf11e; locator=proven; sub     si, bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} sub si, bp
+.org 0xf120
+# IDA 0x1ef20; file 0xf120; locator=proven; inc     bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc bx
+.org 0xf121
+# IDA 0x1ef21; file 0xf121; locator=proven; add     di, 50h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add di, 0x50
+.org 0xf124
+# IDA 0x1ef24; file 0xf124; locator=proven; jmp     short loc_1EEFB
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jmp .-41
+.org 0xf126
+loc_1EF26:
+# IDA 0x1ef26; file 0xf126; locator=proven; jmp     loc_1EE5E
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{disp16} jmp .-200
+.org 0xf129
+loc_1EF29:
+# IDA 0x1ef29; file 0xf129; locator=proven; mov     cs:word_1EE62, di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; mov word ptr [0xee62], di
+.org 0xf12e
+# IDA 0x1ef2e; file 0xf12e; locator=proven; xor     si, si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} xor si, si
+.org 0xf130
+# IDA 0x1ef30; file 0xf130; locator=proven; cmp     dx, 8000h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp dx, 0x8000
+.org 0xf134
+# IDA 0x1ef34; file 0xf134; locator=proven; jb      short near ptr unk_1EF89
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jb .+85
+.org 0xf136
+# IDA 0x1ef36; file 0xf136; locator=proven; cmp     bx, 8190h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp bx, 0x8190
+.org 0xf13a
+# IDA 0x1ef3a; file 0xf13a; locator=proven; jnb     short near ptr unk_1EF89
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+79
+.org 0xf13c
+# IDA 0x1ef3c; file 0xf13c; locator=proven; cmp     dx, 8280h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp dx, 0x8280
+.org 0xf140
+# IDA 0x1ef40; file 0xf140; locator=proven; jnb     short near ptr unk_1EF48
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+8
+.org 0xf142
+# IDA 0x1ef42; file 0xf142; locator=proven; cmp     bx, 8000h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp bx, 0x8000
+.org 0xf146
+# IDA 0x1ef46; file 0xf146; locator=proven; jnb     short near ptr unk_1EF5B
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+21
+.org 0xf148
+loc_1EF48:
+# IDA 0x1ef48; file 0xf148; locator=proven; cmp     bx, cs:word_1EE62
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; cmp bx, word ptr [0xee62]
+.org 0xf14d
+# IDA 0x1ef4d; file 0xf14d; locator=proven; jz      short near ptr unk_1EF89
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jz .+60
+.org 0xf14f
+# IDA 0x1ef4f; file 0xf14f; locator=proven; inc     bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc bx
+.org 0xf150
+# IDA 0x1ef50; file 0xf150; locator=proven; add     si, bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} add si, bp
+.org 0xf152
+# IDA 0x1ef52; file 0xf152; locator=proven; cmp     si, ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} cmp si, ax
+.org 0xf154
+# IDA 0x1ef54; file 0xf154; locator=proven; jb      short loc_1EF3C
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jb .-24
+.org 0xf156
+# IDA 0x1ef56; file 0xf156; locator=proven; sub     si, ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} sub si, ax
+.org 0xf158
+# IDA 0x1ef58; file 0xf158; locator=proven; dec     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+dec dx
+.org 0xf159
+# IDA 0x1ef59; file 0xf159; locator=proven; jmp     short loc_1EF3C
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jmp .-29
+.org 0xf15b
+loc_1EF5B:
+# IDA 0x1ef5b; file 0xf15b; locator=proven; call    near ptr unk_1EFEF
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .+148
+.org 0xf15e
+# IDA 0x1ef5e; file 0xf15e; locator=proven; cmp     dx, 8000h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp dx, 0x8000
+.org 0xf162
+# IDA 0x1ef62; file 0xf162; locator=proven; jb      short near ptr unk_1EF89
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jb .+39
+.org 0xf164
+# IDA 0x1ef64; file 0xf164; locator=proven; cmp     bx, 8190h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp bx, 0x8190
+.org 0xf168
+# IDA 0x1ef68; file 0xf168; locator=proven; jnb     short near ptr unk_1EF89
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+33
+.org 0xf16a
+# IDA 0x1ef6a; file 0xf16a; locator=proven; mov     cl, [di]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov cl, byte ptr [di]
+.org 0xf16c
+# IDA 0x1ef6c; file 0xf16c; locator=proven; mov     [di], ch
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov byte ptr [di], ch
+.org 0xf16e
+# IDA 0x1ef6e; file 0xf16e; locator=proven; cmp     bx, cs:word_1EE62
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; cmp bx, word ptr [0xee62]
+.org 0xf173
+# IDA 0x1ef73; file 0xf173; locator=proven; jz      short near ptr unk_1EF89
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jz .+22
+.org 0xf175
+# IDA 0x1ef75; file 0xf175; locator=proven; inc     bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc bx
+.org 0xf176
+# IDA 0x1ef76; file 0xf176; locator=proven; add     di, 50h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add di, 0x50
+.org 0xf179
+# IDA 0x1ef79; file 0xf179; locator=proven; add     si, bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} add si, bp
+.org 0xf17b
+# IDA 0x1ef7b; file 0xf17b; locator=proven; cmp     si, ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} cmp si, ax
+.org 0xf17d
+# IDA 0x1ef7d; file 0xf17d; locator=proven; jb      short loc_1EF5E
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jb .-31
+.org 0xf17f
+# IDA 0x1ef7f; file 0xf17f; locator=proven; sub     si, ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} sub si, ax
+.org 0xf181
+# IDA 0x1ef81; file 0xf181; locator=proven; dec     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+dec dx
+.org 0xf182
+# IDA 0x1ef82; file 0xf182; locator=proven; rol     ch, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+rol ch, 0x1
+.org 0xf184
+# IDA 0x1ef84; file 0xf184; locator=proven; jnb     short loc_1EF5E
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .-38
+.org 0xf186
+# IDA 0x1ef86; file 0xf186; locator=proven; dec     di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+dec di
+.org 0xf187
+# IDA 0x1ef87; file 0xf187; locator=proven; jmp     short loc_1EF5E
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jmp .-41
+.org 0xf189
+loc_1EF89:
+# IDA 0x1ef89; file 0xf189; locator=proven; jmp     loc_1EE5E
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{disp16} jmp .-299
+.org 0xf18c
+loc_1EF8C:
+# IDA 0x1ef8c; file 0xf18c; locator=proven; mov     cs:word_1EE62, di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; mov word ptr [0xee62], di
+.org 0xf191
+# IDA 0x1ef91; file 0xf191; locator=proven; xor     si, si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} xor si, si
+.org 0xf193
+# IDA 0x1ef93; file 0xf193; locator=proven; cmp     dx, 8280h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp dx, 0x8280
+.org 0xf197
+# IDA 0x1ef97; file 0xf197; locator=proven; jnb     short near ptr unk_1EFEC
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+85
+.org 0xf199
+# IDA 0x1ef99; file 0xf199; locator=proven; cmp     bx, 8190h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp bx, 0x8190
+.org 0xf19d
+# IDA 0x1ef9d; file 0xf19d; locator=proven; jnb     short near ptr unk_1EFEC
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+79
+.org 0xf19f
+# IDA 0x1ef9f; file 0xf19f; locator=proven; cmp     dx, 8000h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp dx, 0x8000
+.org 0xf1a3
+# IDA 0x1efa3; file 0xf1a3; locator=proven; jb      short near ptr unk_1EFAB
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jb .+8
+.org 0xf1a5
+# IDA 0x1efa5; file 0xf1a5; locator=proven; cmp     bx, 8000h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp bx, 0x8000
+.org 0xf1a9
+# IDA 0x1efa9; file 0xf1a9; locator=proven; jnb     short near ptr unk_1EFBE
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+21
+.org 0xf1ab
+loc_1EFAB:
+# IDA 0x1efab; file 0xf1ab; locator=proven; cmp     bx, cs:word_1EE62
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; cmp bx, word ptr [0xee62]
+.org 0xf1b0
+# IDA 0x1efb0; file 0xf1b0; locator=proven; jz      short near ptr unk_1EFEC
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jz .+60
+.org 0xf1b2
+# IDA 0x1efb2; file 0xf1b2; locator=proven; inc     bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc bx
+.org 0xf1b3
+# IDA 0x1efb3; file 0xf1b3; locator=proven; add     si, bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} add si, bp
+.org 0xf1b5
+# IDA 0x1efb5; file 0xf1b5; locator=proven; cmp     si, ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} cmp si, ax
+.org 0xf1b7
+# IDA 0x1efb7; file 0xf1b7; locator=proven; jb      short loc_1EF9F
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jb .-24
+.org 0xf1b9
+# IDA 0x1efb9; file 0xf1b9; locator=proven; sub     si, ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} sub si, ax
+.org 0xf1bb
+# IDA 0x1efbb; file 0xf1bb; locator=proven; inc     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc dx
+.org 0xf1bc
+# IDA 0x1efbc; file 0xf1bc; locator=proven; jmp     short loc_1EF9F
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jmp .-29
+.org 0xf1be
+loc_1EFBE:
+# IDA 0x1efbe; file 0xf1be; locator=proven; call    near ptr unk_1EFEF
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .+49
+.org 0xf1c1
+# IDA 0x1efc1; file 0xf1c1; locator=proven; cmp     dx, 8280h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp dx, 0x8280
+.org 0xf1c5
+# IDA 0x1efc5; file 0xf1c5; locator=proven; jnb     short near ptr unk_1EFEC
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+39
+.org 0xf1c7
+# IDA 0x1efc7; file 0xf1c7; locator=proven; cmp     bx, 8190h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp bx, 0x8190
+.org 0xf1cb
+# IDA 0x1efcb; file 0xf1cb; locator=proven; jnb     short near ptr unk_1EFEC
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+33
+.org 0xf1cd
+# IDA 0x1efcd; file 0xf1cd; locator=proven; mov     cl, [di]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov cl, byte ptr [di]
+.org 0xf1cf
+# IDA 0x1efcf; file 0xf1cf; locator=proven; mov     [di], ch
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov byte ptr [di], ch
+.org 0xf1d1
+# IDA 0x1efd1; file 0xf1d1; locator=proven; cmp     bx, cs:word_1EE62
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; cmp bx, word ptr [0xee62]
+.org 0xf1d6
+# IDA 0x1efd6; file 0xf1d6; locator=proven; jz      short near ptr unk_1EFEC
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jz .+22
+.org 0xf1d8
+# IDA 0x1efd8; file 0xf1d8; locator=proven; inc     bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc bx
+.org 0xf1d9
+# IDA 0x1efd9; file 0xf1d9; locator=proven; add     di, 50h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add di, 0x50
+.org 0xf1dc
+# IDA 0x1efdc; file 0xf1dc; locator=proven; add     si, bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} add si, bp
+.org 0xf1de
+# IDA 0x1efde; file 0xf1de; locator=proven; cmp     si, ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} cmp si, ax
+.org 0xf1e0
+# IDA 0x1efe0; file 0xf1e0; locator=proven; jb      short loc_1EFC1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jb .-31
+.org 0xf1e2
+# IDA 0x1efe2; file 0xf1e2; locator=proven; sub     si, ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} sub si, ax
+.org 0xf1e4
+# IDA 0x1efe4; file 0xf1e4; locator=proven; inc     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc dx
+.org 0xf1e5
+# IDA 0x1efe5; file 0xf1e5; locator=proven; ror     ch, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+ror ch, 0x1
+.org 0xf1e7
+# IDA 0x1efe7; file 0xf1e7; locator=proven; jnb     short loc_1EFC1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .-38
+.org 0xf1e9
+# IDA 0x1efe9; file 0xf1e9; locator=proven; inc     di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc di
+.org 0xf1ea
+# IDA 0x1efea; file 0xf1ea; locator=proven; jmp     short loc_1EFC1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jmp .-41
+.org 0xf1ec
+loc_1EFEC:
+# IDA 0x1efec; file 0xf1ec; locator=proven; jmp     loc_1EE5E
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{disp16} jmp .-398
+.org 0xf1ef
+loc_1EFEF:
+# IDA 0x1efef; file 0xf1ef; locator=proven; mov     cx, bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov cx, bx
+.org 0xf1f1
+# IDA 0x1eff1; file 0xf1f1; locator=proven; sub     cx, 8000h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+sub cx, 0x8000
+.org 0xf1f5
+# IDA 0x1eff5; file 0xf1f5; locator=proven; shl     cx, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shl cx, 0x1
+.org 0xf1f7
+# IDA 0x1eff7; file 0xf1f7; locator=proven; shl     cx, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shl cx, 0x1
+.org 0xf1f9
+# IDA 0x1eff9; file 0xf1f9; locator=proven; shl     cx, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shl cx, 0x1
+.org 0xf1fb
+# IDA 0x1effb; file 0xf1fb; locator=proven; shl     cx, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shl cx, 0x1
+.org 0xf1fd
+# IDA 0x1effd; file 0xf1fd; locator=proven; mov     di, cx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov di, cx
+.org 0xf1ff
+# IDA 0x1efff; file 0xf1ff; locator=proven; shl     cx, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shl cx, 0x1
+.org 0xf201
+# IDA 0x1f001; file 0xf201; locator=proven; shl     cx, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shl cx, 0x1
+.org 0xf203
+# IDA 0x1f003; file 0xf203; locator=proven; add     di, cx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} add di, cx
+.org 0xf205
+# IDA 0x1f005; file 0xf205; locator=proven; sub     dx, 8000h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+sub dx, 0x8000
+.org 0xf209
+# IDA 0x1f009; file 0xf209; locator=proven; mov     cx, dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov cx, dx
+.org 0xf20b
+# IDA 0x1f00b; file 0xf20b; locator=proven; shr     cx, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shr cx, 0x1
+.org 0xf20d
+# IDA 0x1f00d; file 0xf20d; locator=proven; shr     cx, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shr cx, 0x1
+.org 0xf20f
+# IDA 0x1f00f; file 0xf20f; locator=proven; shr     cx, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shr cx, 0x1
+.org 0xf211
+# IDA 0x1f011; file 0xf211; locator=proven; add     di, cx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} add di, cx
+.org 0xf213
+# IDA 0x1f013; file 0xf213; locator=proven; mov     cl, 7
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov cl, 0x7
+.org 0xf215
+# IDA 0x1f015; file 0xf215; locator=proven; and     cl, dl
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} and cl, dl
+.org 0xf217
+# IDA 0x1f017; file 0xf217; locator=proven; mov     ch, 80h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ch, 0x80
+.org 0xf219
+# IDA 0x1f019; file 0xf219; locator=proven; shr     ch, cl
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shr ch, cl
+.org 0xf21b
+# IDA 0x1f01b; file 0xf21b; locator=proven; add     dx, 8000h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add dx, 0x8000
+.org 0xf21f
+# IDA 0x1f01f; file 0xf21f; locator=proven; retn
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
 ret
 .org 0xf220
 sub_1F020:
@@ -95854,183 +97174,183 @@ ret
 .org 0xf8dc
 sub_1F6DC:
 # IDA 0x1f6dc; file 0xf8dc; locator=proven; push    cx
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 push cx
 .org 0xf8dd
 # IDA 0x1f6dd; file 0xf8dd; locator=proven; push    di
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 push di
 .org 0xf8de
 loc_1F6DE:
 # IDA 0x1f6de; file 0xf8de; locator=proven; mov     di, 10h
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov di, 0x10
 .org 0xf8e1
 # IDA 0x1f6e1; file 0xf8e1; locator=proven; mov     ch, [si]
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov ch, byte ptr [si]
 .org 0xf8e3
 # IDA 0x1f6e3; file 0xf8e3; locator=proven; inc     si
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 inc si
 .org 0xf8e4
 # IDA 0x1f6e4; file 0xf8e4; locator=proven; cmp     ch, 0
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 cmp ch, 0x0
 .org 0xf8e7
 # IDA 0x1f6e7; file 0xf8e7; locator=proven; jz      short loc_1F71D
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 jz .+54
 .org 0xf8e9
 # IDA 0x1f6e9; file 0xf8e9; locator=proven; mov     cl, [si]
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov cl, byte ptr [si]
 .org 0xf8eb
 # IDA 0x1f6eb; file 0xf8eb; locator=proven; inc     si
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 inc si
 .org 0xf8ec
 # IDA 0x1f6ec; file 0xf8ec; locator=proven; xchg    ax, cx
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 xchg ax, cx
 .org 0xf8ed
 # IDA 0x1f6ed; file 0xf8ed; locator=proven; call    sub_1F878
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 call .+395
 .org 0xf8f0
 # IDA 0x1f6f0; file 0xf8f0; locator=proven; jnb     short loc_1F6F6
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 jnb .+6
 .org 0xf8f2
 # IDA 0x1f6f2; file 0xf8f2; locator=proven; mov     di, 8
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov di, 0x8
 .org 0xf8f5
 # IDA 0x1f6f5; file 0xf8f5; locator=proven; dec     si
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 dec si
 .org 0xf8f6
 loc_1F6F6:
 # IDA 0x1f6f6; file 0xf8f6; locator=proven; xchg    ax, cx
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 xchg ax, cx
 .org 0xf8f7
 # IDA 0x1f6f7; file 0xf8f7; locator=proven; test    al, 4
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 test al, 0x4
 .org 0xf8f9
 # IDA 0x1f6f9; file 0xf8f9; locator=proven; jz      short loc_1F710
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 jz .+23
 .org 0xf8fb
 # IDA 0x1f6fb; file 0xf8fb; locator=proven; push    ax
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 push ax
 .org 0xf8fc
 # IDA 0x1f6fc; file 0xf8fc; locator=proven; push    bx
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 push bx
 .org 0xf8fd
 # IDA 0x1f6fd; file 0xf8fd; locator=proven; push    dx
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 push dx
 .org 0xf8fe
 # IDA 0x1f6fe; file 0xf8fe; locator=proven; push    cx
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 push cx
 .org 0xf8ff
 # IDA 0x1f6ff; file 0xf8ff; locator=proven; inc     bx
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 inc bx
 .org 0xf900
 # IDA 0x1f700; file 0xf900; locator=proven; inc     dx
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 inc dx
 .org 0xf901
 # IDA 0x1f701; file 0xf901; locator=proven; shr     ah, 1
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 shr ah, 0x1
 .org 0xf903
 # IDA 0x1f703; file 0xf903; locator=proven; shr     ah, 1
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 shr ah, 0x1
 .org 0xf905
 # IDA 0x1f705; file 0xf905; locator=proven; shr     ah, 1
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 shr ah, 0x1
 .org 0xf907
 # IDA 0x1f707; file 0xf907; locator=proven; shr     ah, 1
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 shr ah, 0x1
 .org 0xf909
 # IDA 0x1f709; file 0xf909; locator=proven; call    loc_1F75E
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 call .+85
 .org 0xf90c
 # IDA 0x1f70c; file 0xf90c; locator=proven; pop     cx
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop cx
 .org 0xf90d
 # IDA 0x1f70d; file 0xf90d; locator=proven; pop     dx
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop dx
 .org 0xf90e
 # IDA 0x1f70e; file 0xf90e; locator=proven; pop     bx
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop bx
 .org 0xf90f
 # IDA 0x1f70f; file 0xf90f; locator=proven; pop     ax
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop ax
 .org 0xf910
 loc_1F710:
 # IDA 0x1f710; file 0xf910; locator=proven; push    ax
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 push ax
 .org 0xf911
 # IDA 0x1f711; file 0xf911; locator=proven; push    bx
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 push bx
 .org 0xf912
 # IDA 0x1f712; file 0xf912; locator=proven; push    dx
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 push dx
 .org 0xf913
 # IDA 0x1f713; file 0xf913; locator=proven; call    loc_1F75E
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 call .+75
 .org 0xf916
 # IDA 0x1f716; file 0xf916; locator=proven; pop     dx
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop dx
 .org 0xf917
 # IDA 0x1f717; file 0xf917; locator=proven; pop     bx
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop bx
 .org 0xf918
 # IDA 0x1f718; file 0xf918; locator=proven; pop     ax
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop ax
 .org 0xf919
 # IDA 0x1f719; file 0xf919; locator=proven; add     dx, di
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} add dx, di
 .org 0xf91b
 # IDA 0x1f71b; file 0xf91b; locator=proven; jmp     short loc_1F6DE
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 jmp .-61
 .org 0xf91d
 loc_1F71D:
 # IDA 0x1f71d; file 0xf91d; locator=proven; pop     di
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop di
 .org 0xf91e
 # IDA 0x1f71e; file 0xf91e; locator=proven; pop     cx
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop cx
 .org 0xf91f
 # IDA 0x1f71f; file 0xf91f; locator=proven; retn
-# ⚠ 函式 sub_1F6DC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F6DC; [proven] 原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流; 出處: docs/re/107-c-display-interpreter-restoration.md
 ret
 .org 0xf920
 sub_1F720:
@@ -96695,41 +98015,41 @@ ret
 .org 0xfa78
 sub_1F878:
 # IDA 0x1f878; file 0xfa78; locator=proven; cmp     ah, 80h
-# ⚠ 函式 sub_1F878; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F878; [proven] 原始 AH 判斷單／雙 byte 碼，AX／CF 回應; 出處: docs/re/107-c-display-interpreter-restoration.md
 cmp ah, 0x80
 .org 0xfa7b
 # IDA 0x1f87b; file 0xfa7b; locator=proven; jb      short loc_1F880
-# ⚠ 函式 sub_1F878; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F878; [proven] 原始 AH 判斷單／雙 byte 碼，AX／CF 回應; 出處: docs/re/107-c-display-interpreter-restoration.md
 jb .+5
 .org 0xfa7d
 # IDA 0x1f87d; file 0xfa7d; locator=proven; clc
-# ⚠ 函式 sub_1F878; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F878; [proven] 原始 AH 判斷單／雙 byte 碼，AX／CF 回應; 出處: docs/re/107-c-display-interpreter-restoration.md
 clc
 .org 0xfa7e
 # IDA 0x1f87e; file 0xfa7e; locator=proven; jmp     short locret_1F887
-# ⚠ 函式 sub_1F878; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F878; [proven] 原始 AH 判斷單／雙 byte 碼，AX／CF 回應; 出處: docs/re/107-c-display-interpreter-restoration.md
 jmp .+9
 .org 0xfa80
 loc_1F880:
 # IDA 0x1f880; file 0xfa80; locator=proven; mov     al, ah
-# ⚠ 函式 sub_1F878; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F878; [proven] 原始 AH 判斷單／雙 byte 碼，AX／CF 回應; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} mov al, ah
 .org 0xfa82
 # IDA 0x1f882; file 0xfa82; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_1F878; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F878; [proven] 原始 AH 判斷單／雙 byte 碼，AX／CF 回應; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} xor ah, ah
 .org 0xfa84
 # IDA 0x1f884; file 0xfa84; locator=proven; stc
-# ⚠ 函式 sub_1F878; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F878; [proven] 原始 AH 判斷單／雙 byte 碼，AX／CF 回應; 出處: docs/re/107-c-display-interpreter-restoration.md
 stc
 .org 0xfa85
 # IDA 0x1f885; file 0xfa85; locator=proven; jmp     short $+2
-# ⚠ 函式 sub_1F878; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F878; [proven] 原始 AH 判斷單／雙 byte 碼，AX／CF 回應; 出處: docs/re/107-c-display-interpreter-restoration.md
 jmp .+2
 .org 0xfa87
 locret_1F887:
 # IDA 0x1f887; file 0xfa87; locator=proven; retn
-# ⚠ 函式 sub_1F878; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F878; [proven] 原始 AH 判斷單／雙 byte 碼，AX／CF 回應; 出處: docs/re/107-c-display-interpreter-restoration.md
 ret
 .org 0xfa88
 sub_1F888:
@@ -98325,523 +99645,523 @@ ret
 .org 0xfd29
 sub_1FB29:
 # IDA 0x1fb29; file 0xfd29; locator=proven; push    ds
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 push ds
 .org 0xfd2a
 # IDA 0x1fb2a; file 0xfd2a; locator=proven; push    ax
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 push ax
 .org 0xfd2b
 # IDA 0x1fb2b; file 0xfd2b; locator=proven; push    bx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 push bx
 .org 0xfd2c
 # IDA 0x1fb2c; file 0xfd2c; locator=proven; push    cx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 push cx
 .org 0xfd2d
 # IDA 0x1fb2d; file 0xfd2d; locator=proven; push    dx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 push dx
 .org 0xfd2e
 # IDA 0x1fb2e; file 0xfd2e; locator=proven; push    cx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 push cx
 .org 0xfd2f
 # IDA 0x1fb2f; file 0xfd2f; locator=proven; mov     cx, 0A0C8h
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov cx, 0xa0c8
 .org 0xfd32
 # IDA 0x1fb32; file 0xfd32; locator=proven; mov     ds, cx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov ds, cx
 .org 0xfd34
 # IDA 0x1fb34; file 0xfd34; locator=proven; mov     cx, 4
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov cx, 0x4
 .org 0xfd37
 # IDA 0x1fb37; file 0xfd37; locator=proven; mov     cx, dx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} mov cx, dx
 .org 0xfd39
 # IDA 0x1fb39; file 0xfd39; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 shr dx, 0x1
 .org 0xfd3b
 # IDA 0x1fb3b; file 0xfd3b; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 shr dx, 0x1
 .org 0xfd3d
 # IDA 0x1fb3d; file 0xfd3d; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 shr dx, 0x1
 .org 0xfd3f
 # IDA 0x1fb3f; file 0xfd3f; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 shl bx, 0x1
 .org 0xfd41
 # IDA 0x1fb41; file 0xfd41; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 shl bx, 0x1
 .org 0xfd43
 # IDA 0x1fb43; file 0xfd43; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 shl bx, 0x1
 .org 0xfd45
 # IDA 0x1fb45; file 0xfd45; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 shl bx, 0x1
 .org 0xfd47
 # IDA 0x1fb47; file 0xfd47; locator=proven; add     dx, bx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} add dx, bx
 .org 0xfd49
 # IDA 0x1fb49; file 0xfd49; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 shl bx, 0x1
 .org 0xfd4b
 # IDA 0x1fb4b; file 0xfd4b; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 shl bx, 0x1
 .org 0xfd4d
 # IDA 0x1fb4d; file 0xfd4d; locator=proven; add     bx, dx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} add bx, dx
 .org 0xfd4f
 # IDA 0x1fb4f; file 0xfd4f; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov dx, 0x3ce
 .org 0xfd52
 # IDA 0x1fb52; file 0xfd52; locator=proven; mov     al, 5
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov al, 0x5
 .org 0xfd54
 # IDA 0x1fb54; file 0xfd54; locator=proven; out     dx, al
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 out dx, al
 .org 0xfd55
 # IDA 0x1fb55; file 0xfd55; locator=proven; inc     dx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 inc dx
 .org 0xfd56
 # IDA 0x1fb56; file 0xfd56; locator=proven; mov     al, 3
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov al, 0x3
 .org 0xfd58
 # IDA 0x1fb58; file 0xfd58; locator=proven; out     dx, al
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 out dx, al
 .org 0xfd59
 # IDA 0x1fb59; file 0xfd59; locator=proven; dec     dx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 dec dx
 .org 0xfd5a
 # IDA 0x1fb5a; file 0xfd5a; locator=proven; xor     al, al
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} xor al, al
 .org 0xfd5c
 # IDA 0x1fb5c; file 0xfd5c; locator=proven; out     dx, al
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 out dx, al
 .org 0xfd5d
 # IDA 0x1fb5d; file 0xfd5d; locator=proven; inc     dx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 inc dx
 .org 0xfd5e
 # IDA 0x1fb5e; file 0xfd5e; locator=proven; mov     al, ah
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} mov al, ah
 .org 0xfd60
 # IDA 0x1fb60; file 0xfd60; locator=proven; out     dx, al
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 out dx, al
 .org 0xfd61
 # IDA 0x1fb61; file 0xfd61; locator=proven; dec     dx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 dec dx
 .org 0xfd62
 # IDA 0x1fb62; file 0xfd62; locator=proven; mov     al, 3
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov al, 0x3
 .org 0xfd64
 # IDA 0x1fb64; file 0xfd64; locator=proven; out     dx, al
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 out dx, al
 .org 0xfd65
 # IDA 0x1fb65; file 0xfd65; locator=proven; inc     dx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 inc dx
 .org 0xfd66
 # IDA 0x1fb66; file 0xfd66; locator=proven; xor     al, al
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} xor al, al
 .org 0xfd68
 # IDA 0x1fb68; file 0xfd68; locator=proven; out     dx, al
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 out dx, al
 .org 0xfd69
 # IDA 0x1fb69; file 0xfd69; locator=proven; dec     dx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 dec dx
 .org 0xfd6a
 # IDA 0x1fb6a; file 0xfd6a; locator=proven; mov     al, 8
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov al, 0x8
 .org 0xfd6c
 # IDA 0x1fb6c; file 0xfd6c; locator=proven; out     dx, al
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 out dx, al
 .org 0xfd6d
 # IDA 0x1fb6d; file 0xfd6d; locator=proven; inc     dx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 inc dx
 .org 0xfd6e
 # IDA 0x1fb6e; file 0xfd6e; locator=proven; mov     al, 0FFh
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov al, 0xff
 .org 0xfd70
 # IDA 0x1fb70; file 0xfd70; locator=proven; out     dx, al
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 out dx, al
 .org 0xfd71
 # IDA 0x1fb71; file 0xfd71; locator=proven; and     cx, 7
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 and cx, 0x7
 .org 0xfd74
 # IDA 0x1fb74; file 0xfd74; locator=proven; mov     al, 0FFh
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov al, 0xff
 .org 0xfd76
 # IDA 0x1fb76; file 0xfd76; locator=proven; shr     al, cl
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 shr al, cl
 .org 0xfd78
 # IDA 0x1fb78; file 0xfd78; locator=proven; pop     dx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop dx
 .org 0xfd79
 # IDA 0x1fb79; file 0xfd79; locator=proven; add     dx, cx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} add dx, cx
 .org 0xfd7b
 # IDA 0x1fb7b; file 0xfd7b; locator=proven; mov     cx, dx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} mov cx, dx
 .org 0xfd7d
 # IDA 0x1fb7d; file 0xfd7d; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 shr dx, 0x1
 .org 0xfd7f
 # IDA 0x1fb7f; file 0xfd7f; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 shr dx, 0x1
 .org 0xfd81
 # IDA 0x1fb81; file 0xfd81; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 shr dx, 0x1
 .org 0xfd83
 # IDA 0x1fb83; file 0xfd83; locator=proven; and     cx, 7
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 and cx, 0x7
 .org 0xfd86
 # IDA 0x1fb86; file 0xfd86; locator=proven; mov     ah, 0FFh
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov ah, 0xff
 .org 0xfd88
 # IDA 0x1fb88; file 0xfd88; locator=proven; shr     ah, cl
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 shr ah, cl
 .org 0xfd8a
 # IDA 0x1fb8a; file 0xfd8a; locator=proven; not     ah
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 not ah
 .org 0xfd8c
 # IDA 0x1fb8c; file 0xfd8c; locator=proven; mov     cx, dx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} mov cx, dx
 .org 0xfd8e
 # IDA 0x1fb8e; file 0xfd8e; locator=proven; mov     dl, [bx]
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov dl, byte ptr [bx]
 .org 0xfd90
 # IDA 0x1fb90; file 0xfd90; locator=proven; mov     [bx], al
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov byte ptr [bx], al
 .org 0xfd92
 # IDA 0x1fb92; file 0xfd92; locator=proven; inc     bx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 inc bx
 .org 0xfd93
 # IDA 0x1fb93; file 0xfd93; locator=proven; dec     cx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 dec cx
 .org 0xfd94
 # IDA 0x1fb94; file 0xfd94; locator=proven; jz      short loc_1FB9D
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 jz .+9
 .org 0xfd96
 # IDA 0x1fb96; file 0xfd96; locator=proven; mov     al, 0FFh
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov al, 0xff
 .org 0xfd98
 loc_1FB98:
 # IDA 0x1fb98; file 0xfd98; locator=proven; mov     [bx], al
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov byte ptr [bx], al
 .org 0xfd9a
 # IDA 0x1fb9a; file 0xfd9a; locator=proven; inc     bx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 inc bx
 .org 0xfd9b
 # IDA 0x1fb9b; file 0xfd9b; locator=proven; loop    loc_1FB98
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 loop .-3
 .org 0xfd9d
 loc_1FB9D:
 # IDA 0x1fb9d; file 0xfd9d; locator=proven; mov     dl, [bx]
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov dl, byte ptr [bx]
 .org 0xfd9f
 # IDA 0x1fb9f; file 0xfd9f; locator=proven; mov     [bx], ah
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov byte ptr [bx], ah
 .org 0xfda1
 # IDA 0x1fba1; file 0xfda1; locator=proven; pop     dx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop dx
 .org 0xfda2
 # IDA 0x1fba2; file 0xfda2; locator=proven; pop     cx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop cx
 .org 0xfda3
 # IDA 0x1fba3; file 0xfda3; locator=proven; pop     bx
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop bx
 .org 0xfda4
 # IDA 0x1fba4; file 0xfda4; locator=proven; pop     ax
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop ax
 .org 0xfda5
 # IDA 0x1fba5; file 0xfda5; locator=proven; pop     ds
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop ds
 .org 0xfda6
 # IDA 0x1fba6; file 0xfda6; locator=proven; retn
-# ⚠ 函式 sub_1FB29; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FB29; [proven] 原始水平線 byte mask、latch 與 register 保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 ret
 .org 0xfda7
 sub_1FBA7:
 # IDA 0x1fba7; file 0xfda7; locator=proven; push    ds
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 push ds
 .org 0xfda8
 # IDA 0x1fba8; file 0xfda8; locator=proven; push    ax
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 push ax
 .org 0xfda9
 # IDA 0x1fba9; file 0xfda9; locator=proven; push    bx
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 push bx
 .org 0xfdaa
 # IDA 0x1fbaa; file 0xfdaa; locator=proven; push    cx
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 push cx
 .org 0xfdab
 # IDA 0x1fbab; file 0xfdab; locator=proven; push    dx
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 push dx
 .org 0xfdac
 # IDA 0x1fbac; file 0xfdac; locator=proven; push    cx
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 push cx
 .org 0xfdad
 # IDA 0x1fbad; file 0xfdad; locator=proven; mov     cx, 0A0C8h
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov cx, 0xa0c8
 .org 0xfdb0
 # IDA 0x1fbb0; file 0xfdb0; locator=proven; mov     ds, cx
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov ds, cx
 .org 0xfdb2
 # IDA 0x1fbb2; file 0xfdb2; locator=proven; mov     cx, dx
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} mov cx, dx
 .org 0xfdb4
 # IDA 0x1fbb4; file 0xfdb4; locator=proven; shr     dx, 3
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 shr dx, 0x3
 .org 0xfdb7
 # IDA 0x1fbb7; file 0xfdb7; locator=proven; shl     bx, 4
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 shl bx, 0x4
 .org 0xfdba
 # IDA 0x1fbba; file 0xfdba; locator=proven; add     dx, bx
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} add dx, bx
 .org 0xfdbc
 # IDA 0x1fbbc; file 0xfdbc; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 shl bx, 0x1
 .org 0xfdbe
 # IDA 0x1fbbe; file 0xfdbe; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 shl bx, 0x1
 .org 0xfdc0
 # IDA 0x1fbc0; file 0xfdc0; locator=proven; add     bx, dx
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} add bx, dx
 .org 0xfdc2
 # IDA 0x1fbc2; file 0xfdc2; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov dx, 0x3ce
 .org 0xfdc5
 # IDA 0x1fbc5; file 0xfdc5; locator=proven; mov     al, 5
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov al, 0x5
 .org 0xfdc7
 # IDA 0x1fbc7; file 0xfdc7; locator=proven; out     dx, al
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 out dx, al
 .org 0xfdc8
 # IDA 0x1fbc8; file 0xfdc8; locator=proven; inc     dx
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 inc dx
 .org 0xfdc9
 # IDA 0x1fbc9; file 0xfdc9; locator=proven; mov     al, 3
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov al, 0x3
 .org 0xfdcb
 # IDA 0x1fbcb; file 0xfdcb; locator=proven; out     dx, al
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 out dx, al
 .org 0xfdcc
 # IDA 0x1fbcc; file 0xfdcc; locator=proven; dec     dx
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 dec dx
 .org 0xfdcd
 # IDA 0x1fbcd; file 0xfdcd; locator=proven; xor     al, al
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} xor al, al
 .org 0xfdcf
 # IDA 0x1fbcf; file 0xfdcf; locator=proven; out     dx, al
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 out dx, al
 .org 0xfdd0
 # IDA 0x1fbd0; file 0xfdd0; locator=proven; inc     dx
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 inc dx
 .org 0xfdd1
 # IDA 0x1fbd1; file 0xfdd1; locator=proven; mov     al, ah
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} mov al, ah
 .org 0xfdd3
 # IDA 0x1fbd3; file 0xfdd3; locator=proven; out     dx, al
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 out dx, al
 .org 0xfdd4
 # IDA 0x1fbd4; file 0xfdd4; locator=proven; dec     dx
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 dec dx
 .org 0xfdd5
 # IDA 0x1fbd5; file 0xfdd5; locator=proven; mov     al, 3
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov al, 0x3
 .org 0xfdd7
 # IDA 0x1fbd7; file 0xfdd7; locator=proven; out     dx, al
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 out dx, al
 .org 0xfdd8
 # IDA 0x1fbd8; file 0xfdd8; locator=proven; inc     dx
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 inc dx
 .org 0xfdd9
 # IDA 0x1fbd9; file 0xfdd9; locator=proven; xor     al, al
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 {load} xor al, al
 .org 0xfddb
 # IDA 0x1fbdb; file 0xfddb; locator=proven; out     dx, al
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 out dx, al
 .org 0xfddc
 # IDA 0x1fbdc; file 0xfddc; locator=proven; dec     dx
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 dec dx
 .org 0xfddd
 # IDA 0x1fbdd; file 0xfddd; locator=proven; mov     al, 8
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov al, 0x8
 .org 0xfddf
 # IDA 0x1fbdf; file 0xfddf; locator=proven; out     dx, al
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 out dx, al
 .org 0xfde0
 # IDA 0x1fbe0; file 0xfde0; locator=proven; inc     dx
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 inc dx
 .org 0xfde1
 # IDA 0x1fbe1; file 0xfde1; locator=proven; mov     al, 0FFh
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov al, 0xff
 .org 0xfde3
 # IDA 0x1fbe3; file 0xfde3; locator=proven; out     dx, al
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 out dx, al
 .org 0xfde4
 # IDA 0x1fbe4; file 0xfde4; locator=proven; and     cl, 7
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 and cl, 0x7
 .org 0xfde7
 # IDA 0x1fbe7; file 0xfde7; locator=proven; mov     al, 80h
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov al, 0x80
 .org 0xfde9
 # IDA 0x1fbe9; file 0xfde9; locator=proven; shr     al, cl
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 shr al, cl
 .org 0xfdeb
 # IDA 0x1fbeb; file 0xfdeb; locator=proven; pop     cx
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop cx
 .org 0xfdec
 loc_1FBEC:
 # IDA 0x1fbec; file 0xfdec; locator=proven; mov     ah, [bx]
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov ah, byte ptr [bx]
 .org 0xfdee
 # IDA 0x1fbee; file 0xfdee; locator=proven; mov     [bx], al
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 mov byte ptr [bx], al
 .org 0xfdf0
 # IDA 0x1fbf0; file 0xfdf0; locator=proven; add     bx, 50h
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 add bx, 0x50
 .org 0xfdf3
 # IDA 0x1fbf3; file 0xfdf3; locator=proven; loop    loc_1FBEC
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 loop .-7
 .org 0xfdf5
 # IDA 0x1fbf5; file 0xfdf5; locator=proven; pop     dx
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop dx
 .org 0xfdf6
 # IDA 0x1fbf6; file 0xfdf6; locator=proven; pop     cx
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop cx
 .org 0xfdf7
 # IDA 0x1fbf7; file 0xfdf7; locator=proven; pop     bx
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop bx
 .org 0xfdf8
 # IDA 0x1fbf8; file 0xfdf8; locator=proven; pop     ax
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop ax
 .org 0xfdf9
 # IDA 0x1fbf9; file 0xfdf9; locator=proven; pop     ds
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 pop ds
 .org 0xfdfa
 # IDA 0x1fbfa; file 0xfdfa; locator=proven; retn
-# ⚠ 函式 sub_1FBA7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1FBA7; [proven] 原始垂直線像素 mask、80-byte pitch 與保存; 出處: docs/re/107-c-display-interpreter-restoration.md
 ret
 .org 0x10200
 sub_20000:

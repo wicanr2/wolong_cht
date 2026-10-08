@@ -275,6 +275,7 @@
 | C 位元對齊貼圖與六按鈕 caller | [`224-c-aligned-blit.md`](224-c-aligned-blit.md) | CONFORMED，五函式／4,954 組／六按鈕查詢與十一個拒絕閘門 |
 | C 矩形與計量條 | [`225-c-rectangle-bars.md`](225-c-rectangle-bars.md) | CONFORMED，16 函式／134,958 組／十二錯版拒絕 |
 | 側欄計量原始取 byte | [`226-sidebar-bar-widths.md`](226-sidebar-bar-widths.md) | CONFORMED，131,072 原版／C／Go word 長度 |
+| C 顯示清單分派 | [`227-c-display-interpreter.md`](227-c-display-interpreter.md) | CONFORMED，原始九 opcode／382 組／十錯版拒絕 |
 
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的

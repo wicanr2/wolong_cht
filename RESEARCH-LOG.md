@@ -1912,3 +1912,10 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - 描框、實心、兩層選取、六待機與四側欄全接真實 C／VGA。O0/O2 134,958 原版/C、131,072 Go 長度與 2,441 內容區抽查相同，十二負對照拒絕。Source digest 綁定實際 flags 與正式 Go 來源。
 - 精確計量取 AL／CL 後限 124，體力兩次截斷；Go 原乘三除四與 word 不回繞有反例。正確第 3 段命令／框 bank 新收據補上，舊第 1 段 raw 輸入收據保留。
 - 原始 DS table 的 opcode 02／03 目標為 IDA 資料項；直接 insn 解碼與固定原 bytes 證實分別呼叫描框／實心。八條／20 bytes 併入組語後整檔仍匹配，不用原 bytes 作指令 fallback。完整 interpreter 尚未還原。
+
+## 2026-10-09：原始顯示清單與未分類 code
+
+- 固定 KI.EXE、IDA9.4 DB `135353e5c2ec69804fc6b7bb6a627a3008b0a0a55e78b7fa5feb331f6f6edc4c`，所有原名稱／位址／code-data 保留，來源見 [re/107](docs/re/107-c-display-interpreter-restoration.md)。
+- 九個原始 C 函式、17個原始 code 入口接原始 DS near table，十場景和每opcode同狀態比較；O0/O2各382全RAM／plane／ABI相同，十個突變拒絕。原點反例用不對称座標，沒有放寬判準。
+- 原始書寫資料槽1EE62、1F45B維持資料；新增317指令／746bytes以GNU實際組譯匹配，不用原bytes作指令fallback。整檔仍相同，C台帳166函式，另17無函式入口保留導覽界線。
+- 生成來源只含具體C運算與goto原位址，不執行opcode；glyph raster為明示邊界，原字串迴圈、CF碼寬、陰影與來源前進是真實C。正常玩家和C機器碼匹配仍未完成。

@@ -163,6 +163,7 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 | [`104`](104-c-vga-blit-restoration.md) | 真實VGA plane／latch、blit／save／restore與原始I/O序列 |
 | [`105`](105-c-aligned-blit-restoration.md) | 位元對齊貼圖、四平面 row mask 與六按鈕來源連續性 |
 | [`106`](106-c-rectangle-bars-restoration.md) | 矩形描框／實心、兩層選取、側欄／待機條與 raw byte 計量 |
+| [`107`](107-c-display-interpreter-restoration.md) | 原始顯示清單 DS table、九 opcode、未分類線段／底紋與 native C |
 | [`21`](21-function-census.md) | 全函式覆蓋普查；**§3.1 為什麼要排除目錄型文件** |
 | [`24`](24-unread-function-catalogue.md) | 未讀函式的證據與下手順序 |
 | [`39`](39-remaining-unread.md) | 未讀函式的逐支歸屬（生成的，可重跑）|

@@ -67,9 +67,10 @@ def verify(repo,out):
  for path,(marker,link) in BACKLINKS.items():s=(repo/path).read_text();assert marker in s and link in s
  assert 'ok  ' in (out/'go-ui-tests.log').read_text()
  assert 'ok  ' in (out/'go-ui-full-tests.log').read_text()
- supplement=json.loads((repo/'docs/re/rectangle-handler-code.json').read_text());assert supplement['input_sha256']==EXPECTED and len(supplement['instructions'])==8
- assert sum(r['file_end']-r['file_start'] for r in supplement['instructions'])==20
- for r in supplement['instructions']:assert raw[r['file_start']:r['file_end']]==bytes.fromhex(r['bytes']) and not r['ida_code_classified']
+ supplement=json.loads((repo/'docs/re/rectangle-handler-code.json').read_text());assert supplement['input_sha256']==EXPECTED
+ original_handlers=[r for r in supplement['instructions'] if 0x1EA26<=r['ida_linear']<0x1EA3A]
+ assert len(original_handlers)==8 and sum(r['file_end']-r['file_start'] for r in original_handlers)==20
+ for r in original_handlers:assert raw[r['file_start']:r['file_end']]==bytes.fromhex(r['bytes'])
  result={'schema':'wolong-c-rect-verification-v1','status':'semantic-conformed','input_sha256':EXPECTED,'icon_sha256':ICON,
          'new_routine_sha256':new,'dependency_routine_sha256':routines,'ida_database_sha256':sha(out/'ida/input.exe.i64'),
          'source_sha256':source,'compiled_source_manifest_sha256':compiled,'go_helper_source_sha256':sha(out/'results/go-helper-source.txt'),

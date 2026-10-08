@@ -24,6 +24,8 @@
 
 ## 3. 產物與未解範圍
 
+後續 C 顯示清單見 [spec/227](227-c-display-interpreter.md)，補真實原始分派、線段／底紋与文字控制流。
+
 研究來源與驗證摘要進 GitHub，原版、資料與狀態只留本機 `workplace/matching-decompilation/c-rect/`。
 正常玩家、自然時序、其餘 renderer 與 C 機器碼仍未完成。Go 顯示修正另查
 [spec/226](226-sidebar-bar-widths.md)，不改規則與存檔格式。

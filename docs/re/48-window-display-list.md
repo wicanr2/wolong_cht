@@ -248,6 +248,9 @@ word_10D50:X  ＝  ICONGRF 段 3 的 (X + 0x9A0)
 
 ## 7. 未解
 
+後續 C 分派證據見 [re/107](107-c-display-interpreter-restoration.md)：原始 DS table、九 opcode、
+十場景、底紋／線段／字串迴圈有 native C 收據；真正 glyph raster 仍是明示 fixture。
+
 後續矩形證據見 [re/106](106-c-rectangle-bars-restoration.md)：原始分派表的 opcode 02／03
 兩個 handler 雖被 IDA 標成資料，直接解碼仍分別呼叫 `sub_1F020` 描框與 `sub_1F1A3` 填色。
 

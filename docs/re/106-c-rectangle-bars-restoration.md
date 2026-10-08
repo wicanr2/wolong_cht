@@ -72,6 +72,9 @@ O0/O2 需比較完整 RAM、四 plane、十四暫存器、FLAGS、stack、GC／s
 
 ## 5. 動態收據與分派 code 補充
 
+後續顯示清單證據見 [re/107](107-c-display-interpreter-restoration.md)，沿用矩形／圖庫 C，
+再補全部 handler、原始 DS near table 与未分類線段／底紋。較早二十 bytes 的來源快照保留。
+
 O0/O2 各 134,958 組完整 1 MB RAM、四個 65536-byte plane、十四暫存器／FLAGS、
 GC／seq／latch／index、port 與 90-byte 入口快照相同；2,441 次內容區像素相同。
 兵力與體力各 0..65535，共 131,072 組原版／C／正式 Go 函式長度相同。

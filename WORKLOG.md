@@ -271,3 +271,15 @@
 - C 台帳累計 157，完整 Goal 保持 active。新的來源與原始位址／分級／收據進 GitHub；正式計量只依原版校訂，規則／存檔格式未改，自然戰術與 C 機器碼仍未完成。
 - 收尾文件／工具 21／25 通過、950 列分流與嚴格索引通過。原始雜湊曾被掃描器誤綁到同段工具連結，分開 DB／manifest 檔案段落後過期斷言檢查通過；四項既有缺檔／教訓問題保留。
 - 正式 wlgame 全套 `go test -count=1` 在 SDK／Xvfb 通過。最終 157 個 C 來源、16 分級、8 追加組語、公開／本機收據、compiled source 與擁有權核對；輸出 UID/GID 1000:1000，既有 root-owned 路徑仍 27 筆，容器全部退出移除，依授權提交並推送。
+
+## 2026-10-09：顯示清單九 C 函式與十七原始入口
+
+- 前輪 `c7dc8df` 已推送，分類為 progress。核對現況、乾淨 main、逆向／IDA／文件與 Issue #22，沿用獨立成熟 VGA，還原原始登記／DS table 與九個 opcode。
+- 臨時 DB 解碼先保存原名稱／資料行／bytes，遇 ret 後 word 資料與切在前綴中間的邊界後回查寫入／分支；保留 1EE62 與 1F45B 資料，完整 code 不以資料硬解。
+- 固定 IDA 832 指令產生 native C 具體運算與 label，不讀 opcode／不呼叫 guest CPU。明示 MUL／DIV operand 修正，原始像素 EFEF 與舊矩形 helper 給兩側對称擷取；有限字串 fixture DS 改讀宣告 bank。
+- 十個原始場景與九 opcode、替代 DS／交換 table、線段／底紋／雙色／文字迴圈 O0/O2 各 382 全 RAM／四 plane／I/O／ABI 相同。X／Y 相同使錯源突變不能拒絕，改不對称輸入後同矩陣重生，十個錯版全拒絕。
+- 新增九個原始 named C 函式與 17 原始 code 入口，函式界線導覽與無函式 data 項分開記錄，glyph raster 還是明示 fixture。正式 Go 未改，完整 Goal 保持 active。
+- 317 條／746 bytes 未分類 code 經實際組譯匹配，來源同輪進 GitHub。合併為 24,693 條／56,138 bytes，完整 67,099-byte EXE 與 SHA 相同，三個錯版拒絕，資料槽維持原始 bytes。
+- 生成 C 在乾淨容器從同一 IDA 證據逐 byte 重生相同。完整 C 來源摘要、166 named 函式／17 code 入口、317 補充指令與公開／本機收據核對；只保留 glyph raster 的明示邊界。
+- 收尾文件／工具 21／25 通過、958 列分流與嚴格索引通過，四項既有缺檔／教訓問題保留。舊 verifier 的補充範圍改為原兩個 handler 子集，修正縮排後全部 AST／語法通過，未改其原矩陣。
+- 研究 driver 以 matching_display 隔離，輸出 UID/GID 1000:1000，既有 root-owned 路徑仍 27 筆，容器已全部退出移除；依授權提交並推送原始來源與收據。

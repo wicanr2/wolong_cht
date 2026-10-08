@@ -1095,6 +1095,69 @@
       "sources": [
         "docs/re/106-c-rectangle-bars-restoration.md"
       ]
+    },
+    "0x1030F": {
+      "meaning": "原始顯示清單／來源段與圖樣表初始化",
+      "level": "proven",
+      "sources": [
+        "docs/re/107-c-display-interpreter-restoration.md"
+      ]
+    },
+    "0x10337": {
+      "meaning": "原始場景 caller",
+      "level": "proven",
+      "sources": [
+        "docs/re/107-c-display-interpreter-restoration.md"
+      ]
+    },
+    "0x1E993": {
+      "meaning": "原始 far 顯示清單與字串／圖库段登記",
+      "level": "proven",
+      "sources": [
+        "docs/re/107-c-display-interpreter-restoration.md"
+      ]
+    },
+    "0x1E9A7": {
+      "meaning": "原始八 byte 圖樣條目寫入",
+      "level": "proven",
+      "sources": [
+        "docs/re/107-c-display-interpreter-restoration.md"
+      ]
+    },
+    "0x1E9C1": {
+      "meaning": "原始 12-byte 場景選擇、DS near table 與九 opcode 分派",
+      "level": "proven",
+      "sources": [
+        "docs/re/107-c-display-interpreter-restoration.md"
+      ]
+    },
+    "0x1FB29": {
+      "meaning": "原始水平線 byte mask、latch 與 register 保存",
+      "level": "proven",
+      "sources": [
+        "docs/re/107-c-display-interpreter-restoration.md"
+      ]
+    },
+    "0x1FBA7": {
+      "meaning": "原始垂直線像素 mask、80-byte pitch 與保存",
+      "level": "proven",
+      "sources": [
+        "docs/re/107-c-display-interpreter-restoration.md"
+      ]
+    },
+    "0x1F6DC": {
+      "meaning": "原始有限字串、窄／寬碼來源、陰影與 glyph 邊界控制流",
+      "level": "proven",
+      "sources": [
+        "docs/re/107-c-display-interpreter-restoration.md"
+      ]
+    },
+    "0x1F878": {
+      "meaning": "原始 AH 判斷單／雙 byte 碼，AX／CF 回應",
+      "level": "proven",
+      "sources": [
+        "docs/re/107-c-display-interpreter-restoration.md"
+      ]
     }
   },
   "operands": {
