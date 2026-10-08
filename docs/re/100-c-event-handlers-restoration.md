@@ -142,6 +142,9 @@ SHR／logic 的未定義 AF 沿用 dosgolem 模型，IF/TF=0，stack／資料段
 
 ## 5. 未解範圍
 
+後續 C 視窗證據見 [`re/101`](101-c-modal-restoration.md)。本輪歷史收據的 modal
+fixture 保留；re/101 新收據執行視窗控制流／原始 stack，底層 primitive 與玩家 UI 邊界保留。
+
 | 項目 | 邊界 |
 |---|---|
 | 完整 UI／選擇／戰鬥／金額 callee | 本輪量 caller 與受控回傳，不能宣稱正常玩家 parity |

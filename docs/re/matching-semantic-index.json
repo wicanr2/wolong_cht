@@ -583,6 +583,125 @@
       "sources": [
         "docs/re/100-c-event-handlers-restoration.md"
       ]
+    },
+    "0x12078": {
+      "meaning": "局部滑鼠範圍／座標的原始 FAR 呼叫與保存",
+      "level": "proven",
+      "sources": [
+        "docs/re/101-c-modal-restoration.md"
+      ]
+    },
+    "0x120D6": {
+      "meaning": "世界滑鼠範圍、word 座標與原始 FAR／保存",
+      "level": "proven",
+      "sources": [
+        "docs/re/101-c-modal-restoration.md"
+      ]
+    },
+    "0x138C7": {
+      "meaning": "停戰 modal 包裝、主公取址、保存與遠呼叫接線",
+      "level": "proven",
+      "sources": [
+        "docs/re/101-c-modal-restoration.md"
+      ]
+    },
+    "0x138E6": {
+      "meaning": "協力 modal 包裝、主公取址、保存與遠呼叫接線",
+      "level": "proven",
+      "sources": [
+        "docs/re/101-c-modal-restoration.md"
+      ]
+    },
+    "0x13902": {
+      "meaning": "原始外交回應、金額、CF retry、RNG／trust 與 SS frame",
+      "level": "proven",
+      "sources": [
+        "docs/re/101-c-modal-restoration.md"
+      ]
+    },
+    "0x139E8": {
+      "meaning": "原始金額下界、回應、CF retry、raw +0x1A byte／扣款與 SS frame",
+      "level": "proven",
+      "sources": [
+        "docs/re/101-c-modal-restoration.md"
+      ]
+    },
+    "0x13C3D": {
+      "meaning": "回應 formatter、byte 條件及信賴度 raw 參數",
+      "level": "proven",
+      "sources": [
+        "docs/re/101-c-modal-restoration.md"
+      ]
+    },
+    "0x13B7E": {
+      "meaning": "原始三選一的 CF 輪詢、參數與返回",
+      "level": "proven",
+      "sources": [
+        "docs/re/101-c-modal-restoration.md"
+      ]
+    },
+    "0x13D09": {
+      "meaning": "原始場景 block 參數、word MUL／保存與 renderer ABI",
+      "level": "proven",
+      "sources": [
+        "docs/re/101-c-modal-restoration.md"
+      ]
+    },
+    "0x13D45": {
+      "meaning": "原始場景還原參數、保存與 renderer ABI",
+      "level": "proven",
+      "sources": [
+        "docs/re/101-c-modal-restoration.md"
+      ]
+    },
+    "0x13C99": {
+      "meaning": "原始說話型減三一次、訊息與肖像參數",
+      "level": "proven",
+      "sources": [
+        "docs/re/101-c-modal-restoration.md"
+      ]
+    },
+    "0x13CDC": {
+      "meaning": "原始玩家軍師記錄與下框訊息／肖像參數",
+      "level": "proven",
+      "sources": [
+        "docs/re/101-c-modal-restoration.md"
+      ]
+    },
+    "0x19321": {
+      "meaning": "原始 byte 表格取址與恢復服務參數",
+      "level": "proven",
+      "sources": [
+        "docs/re/101-c-modal-restoration.md"
+      ]
+    },
+    "0x187FF": {
+      "meaning": "玩家主公 raw 記錄的原始取址",
+      "level": "proven",
+      "sources": [
+        "docs/re/101-c-modal-restoration.md"
+      ]
+    },
+    "0x13D68": {
+      "meaning": "原始場景框參數、記錄與 renderer ABI",
+      "level": "proven",
+      "sources": [
+        "docs/re/101-c-modal-restoration.md"
+      ]
+    },
+    "0x11D46": {
+      "meaning": "原始 resume、byte flags gate、world／畫面 helper 呼叫次序與保存",
+      "level": "proven",
+      "sources": [
+        "docs/re/101-c-modal-restoration.md"
+      ]
+    },
+    "0x12216": {
+      "meaning": "原始 code word patch、callee 入口觀測及恢復",
+      "level": "proven",
+      "sources": [
+        "docs/re/101-c-modal-restoration.md"
+      ]
     }
   },
   "operands": {

@@ -1862,3 +1862,10 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - O0/O2 各 43,476 組原版/C、340 次完整 1 MB 核對相同；八個突變拒絕，三十函式都有實際入口收據。其餘十一 handler、event 8 落下尾端、政治／災害依賴接到原始十三碼 table，modal／戰術仍是明示 fixture。
 - `sub_135AB` 的 raw 0x24 比較與 `sub_13138` 的 `cmp ax, ax` 原樣保留。前者的高層玩家語意與 Issue #27 未定，本輪不改正式 Go、不猜補玩法。推論等級已證實只套用本輪 raw 控制流範圍。
 - spec/218 的「四劇本連續每時」更正為各自獨立一個每時入口，原收據與矩陣沒有變更。spec/218、re/99、spec/64 加後續 C 範圍 backlink，由新 verifier 自動核對。
+
+## 2026-10-08：外交／金額視窗原始 C 控制流
+
+- KI.EXE／SINARIO.DAT 身分同固定原版；IDA Pro 9.4 DB SHA-256 `42181f593431ef87bb95cb5e66c6945fc7e92c86d0d8ef8f9e4df23209f338d2`。十七函式共 1280 bytes，二十筆 MZ 重定位逐 word 核對，保留 file bytes、IDA bytes 與 runtime paragraph 的不同基準，見 [`docs/re/101`](docs/re/101-c-modal-restoration.md)。
+- 視窗 FAR／RETF、外交回應／RNG／信賴度、金額／扣款、CF 輪詢與取消重試、PUSHF／POPF、SS frame、中途 code patch／恢復由真實 C 執行。繪圖／輸入／裝置 leaf 仍是明示 fixture，不能外推完整 UI 或自然時序。
+- O0/O2 各 53,322 組原版/C、417 次完整 1 MB 相同，十個突變拒絕；實際入口覆蓋十七函式。原始 code word patch 在 callee 中途觀測，未初始化 stack 槽保留原樣。
+- 較早 spec/219、re/100 加範圍 backlink；另外十一份同位址玩家規格核對為不受影響。正式 Go 未改，Issue #22 保持 OPEN；32768／65535 等數值回應只是 raw word 邊界，沒有當作合法玩家輸入。

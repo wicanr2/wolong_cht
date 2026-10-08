@@ -183,3 +183,16 @@
 - 收尾檢查的 DB 雜湊少了明確檔案路徑，stale_scan 誤配到上一個 Markdown 連結；補上 DB 路徑後通過。兩個自我測試需要 workplace 暫存案例，改掛有界 tmpfs 後以同一工具鏈重跑通過，首次環境失敗 log 保留。
 - 收尾腳本用 basename 去比完整路徑，漏寫 docs/re/43；改為明確重生，並正查新兩份文件都已收錄。文件與工具檢查 21／25 通過、901 列分流與嚴格索引通過，四項既有缺檔／教訓失敗保留，本輪沒有新增引用錯誤。
 - 八十四個 C 函式來源身分、三十筆分級出處、原版 EXE／DAT、實際入口與 backlink 均核對。輸出 UID/GID 1000:1000，既有 root-owned 路徑仍為 27 筆，本輪容器已退出移除。
+
+## 2026-10-08：十七個外交／金額視窗 C 函式
+
+- 前輪 `b5ad756` 已推送，分類為 progress。開工核對乾淨工作樹、現行狀態、逆向／IDA／視窗／文件職責路由與 GitHub Issue #22。
+- 十七函式共 1280 bytes。第一次直接比 IDA 與 file chunks，在二十個 FAR segment word 失敗；確認全都來自 MZ loader 加 paragraph。保留舊 probe／DB，按原始 116 筆 MZ 表逐 word 記錄兩種 bytes 與 runtime paragraph，沒有遮罩差異。
+- IDA 9.4 probe 審查通過、spec/220 READY 後實作 C 原始名入口。真正的 FAR／RETF、原始 SS frame、PUSHF／POPF、CF 輪詢／取消重試、RNG／trust、金額／扣款、code word 修改及恢復已接線。
+- 受控裝置 FAR leaf 會 clobber FLAGS，讓 PUSHF／POPF 成為可拒絕的 gate。選單忙碌與數值取消分開，原始 caller 迴圈真實執行，底層繪圖／輸入／音效仍為明示 primitive fixture。
+- O0/O2 各 53,322 組原版/C 相同，每版 417 次完整 1 MB 核對相同；十七函式皆有實際入口、252-byte callee 快照、控制欄位與中途 code word 證據，十個突變均拒絕。
+- 收尾抽查查出訊息向量寫到 world bank，實際讀取端是 SS:BP。補 typed message、改寫真正的 SS frame 後，以完整矩陣與全部負對照重生，舊來源與收據保留在 c-modal 的 pre-message 檔案。
+- 較早 spec/219、re/100 範圍 backlink 由 verifier 核對，另十一份同位址規格逐份確認不受影響。正式 Go 未改，原始未初始化 stack 槽不補值、raw 大數值不冒稱玩家輸入，Issue #22 保持 OPEN。
+- 現行 C 台帳加入十七函式，共 101 個。完整 Goal 保持 active，本輪依授權完成後 commit、push；本輪不宣稱完整視窗／正常玩家／Go 三方或 C 機器碼完成。
+- 收尾文件與工具檢查 21／25 通過，909 列分流、嚴格研究索引、過期斷言、校訂、資產 deny-list 與全部正對照通過。四項既有缺檔／教訓失敗保留，新文件沒有新增引用錯誤。
+- 101 個 C 函式來源身分、十七筆分級出處、最終 driver／收據、原版 EXE／DAT、重定位與擁有權核對。輸出 UID/GID 1000:1000，既有 root-owned 路徑仍為 27 筆，本輪容器已退出移除。

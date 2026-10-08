@@ -268,6 +268,7 @@
 | 玩家勢力月度宣戰 producer | [`217-player-monthly-declaration.md`](217-player-monthly-declaration.md) | CONFORMED，原版 Player gate 不存在、玩家事件與三方向量 |
 | C 每時更新與事件分派核心 | [`218-c-hourly-update.md`](218-c-hourly-update.md) | CONFORMED，8 函式原版/C 21,871 組與七個拒絕閘門；其餘 handler／UI 仍為 fixture |
 | C 十三碼事件 handler 與依賴 | [`219-c-event-handlers.md`](219-c-event-handlers.md) | CONFORMED，30 函式原版/C 43,476 組、八個負對照與原始落下尾端 |
+| C 外交／金額視窗控制流 | [`220-c-modal-control.md`](220-c-modal-control.md) | CONFORMED，17 函式原版/C 53,322 組、十個負對照及原始 FAR／CF retry |
 
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的
