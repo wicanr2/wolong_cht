@@ -150,6 +150,7 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 | [`91`](91-c-rng-restoration.md) | 第一個 C 函式：sub_1ECE0 原版/C 263,680 組、Go 263,168 組局部對照，含暫存器、旗標與堆疊邊界 |
 | [`92`](92-c-rng-seed-restoration.md) | C 播種：所有合法時分秒與固定 RTC 回覆，原版/C 86,420 組、Go 86,408 組相同 |
 | [`93`](93-c-game-clock-restoration.md) | C 時鐘：原版/C 292,297 組、Go 292,249 組相同，修正 999→1000→999 的年份邊界 |
+| [`94`](94-c-monthly-economy-restoration.md) | 月結及五個經濟 C 函式：原版/C 1,775,568 組、Go 1,326,175 組相同；資金／赤字／RNG 已相接，修正赤字捨位 |
 | [`21`](21-function-census.md) | 全函式覆蓋普查；**§3.1 為什麼要排除目錄型文件** |
 | [`24`](24-unread-function-catalogue.md) | 未讀函式的證據與下手順序 |
 | [`39`](39-remaining-unread.md) | 未讀函式的逐支歸屬（生成的，可重跑）|

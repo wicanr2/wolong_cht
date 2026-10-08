@@ -194,7 +194,7 @@ func TestFundsClamp(t *testing.T) {
 	}
 }
 
-// 赤字懲罰：每個兵種各扣 (|資金|>>8)×16 ＋ 亂數(0–31)。
+// 赤字懲罰：每個兵種各扣 ceil(欠款/256)×16 ＋ 亂數(0–31)。
 // 注意是**每個兵種各扣一次**，總損失是三倍。
 func TestDeficitPenalty(t *testing.T) {
 	f := &Faction{
@@ -204,7 +204,7 @@ func TestDeficitPenalty(t *testing.T) {
 		Reserves: [NumTroopTypes]int{5000, 5000, 5000},
 	}
 	res := Settle(f, nil, 0, &fixedRand{seq: []int{0}})
-	want := ((16000) >> 8) * 16 // = 62 × 16 = 992
+	want := 1008 // 原版高位先取值再 NEG：63 × 16（docs/spec/206）。
 	for tt := TroopType(0); tt < NumTroopTypes; tt++ {
 		if res.Deficit[tt] != want {
 			t.Errorf("兵種 %d 扣了 %d, want %d", tt, res.Deficit[tt], want)
@@ -215,6 +215,21 @@ func TestDeficitPenalty(t *testing.T) {
 	}
 	if !f.Exhausted() {
 		t.Error("資金為負時 Exhausted() 應為 true")
+	}
+}
+
+func TestDeficitHighWordRounding(t *testing.T) {
+	for _, tc := range []struct{ funds, penalty int }{
+		{-1, 16}, {-255, 16}, {-256, 16}, {-257, 32}, {-16000, 1008}, {-655000, 40944},
+	} {
+		f := Faction{Funds: tc.funds, Reserves: [NumTroopTypes]int{MaxReserve, MaxReserve, MaxReserve}}
+		res := Settle(&f, nil, 0, &fixedRand{seq: []int{31}})
+		for tt := TroopType(0); tt < NumTroopTypes; tt++ {
+			want := tc.penalty + 31
+			if res.Deficit[tt] != want || f.Reserves[tt] != MaxReserve-want {
+				t.Fatalf("funds %d troop %d: deficit %d reserve %d, want %d/%d", tc.funds, tt, res.Deficit[tt], f.Reserves[tt], want, MaxReserve-want)
+			}
+		}
 	}
 }
 

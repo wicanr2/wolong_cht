@@ -25,9 +25,10 @@
 | 同上；`sub_1ECE0` 的 C 還原 | O0/O2 各原版/C 263,680 組、Go 263,168 組相同，四組 C 突變被拒絕 | C 局部語意對照通過；IF/TF=0、四張受控表，不宣稱 C 機器碼匹配或正常玩家路徑 | C 資料函式、介面適配層、spec/201 與局部收據 |
 | 同上；`sub_1EC82` 的 C 還原 | O0/O2 各原版/C 86,420 組、Go 86,408 組相同，三組突變被拒絕 | 播種局部語意通過；合法 BCD、固定 RTC、分離堆疊，不外推實機 RTC | spec/202、[re/92](docs/re/92-c-rng-seed-restoration.md) 與局部收據 |
 | 2026-10-08；`sub_11D8E` 的 C 還原；Go 年份修正 | O0/O2 各原版/C 292,297 組、Go 292,249 組相同；四組突變被拒絕 | 時鐘局部語意通過，callee 與等待為明示 fixture；不外推完整月結、硬體時序或玩家流程 | spec/203、spec/204、[re/93](docs/re/93-c-game-clock-restoration.md) 與局部收據 |
+| 2026-10-08；月結主流程與五個經濟 C 函式；Go 赤字修正 | O0/O2 各原版/C 1,775,568 組、Go 1,326,175 組相同；六個突變拒絕；經濟與狀態層冷測通過 | C 資金／赤字／RNG 已形成月結呼叫鏈；其他 callee 明示 fixture，不外推完整經濟、AI 或玩家流程 | spec/205、spec/206、[re/94](docs/re/94-c-monthly-economy-restoration.md) 與局部收據 |
 
-持續 Goal 為完成整個 matching decompilation；目前有整檔組語基準與三個 C 函式，不能據此宣布完整 C 還原完成。
-使用者已授權每輪完成後 commit、push。基準 `1d21147` 與 C 播種 `f688881` 已推到 origin/main。
+持續 Goal 為完成整個 matching decompilation；目前有整檔組語基準與九個 C 函式，不能據此宣布完整 C 還原完成。
+使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881` 與時鐘 `228f30d` 已推到 origin/main。
 
 未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。
 
@@ -702,6 +703,14 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 > 台帳會一直長；教訓應該收斂。同一個模式犯第二次就記在同一條的
 > `occurrences` 裡，不要開新的一條。
 
+
+### 「赤字扣兵先取欠款絕對值再右移」（2026-10-08）
+
+舊 `economy.Settle`、`TestDeficitPenalty` 與機制摘要採用 `(欠款>>8)*16`。
+原版 `sub_15828` 先讀負資金的高 16 位，再 NEG，合法範圍的精確式是 `ceil(欠款/256)*16`。
+因此欠款 -16000 的基礎扣兵是 1008，舊測試的 992 少了 16。
+[`docs/re/94`](docs/re/94-c-monthly-economy-restoration.md) 保留固定 RNG 的首次原版差異與
+196,608 組原版/C、15,351 組合法資金 Go 對照。Go、現況公式與測試已訂正，原始指令保留。
 
 ### 「年份永遠封頂 999」（2026-10-08）
 

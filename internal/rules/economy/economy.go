@@ -229,10 +229,9 @@ func Settle(f *Faction, cities []City, owner int, rng Rand) Result {
 
 	// ⑤ 赤字懲罰。
 	if f.Funds < 0 {
-		// 原版：dx = (|資金| >> 8) × 16，等價於 |資金| / 16。
-		// 這裡照原版先右移再左移，因為捨去的位元不會回來——
-		// 直接寫 |資金|/16 在某些值上會差 1。
-		penalty := ((-f.Funds) >> 8) * 16
+		// 原版先讀負資金的高 16 位再 NEG、SHL，不是先取絕對值。
+		// 在合法資金範圍等於 ceil(欠款/256)×16（docs/spec/206）。
+		penalty := ((-f.Funds + 255) >> 8) * 16
 		for t := TroopType(0); t < NumTroopTypes; t++ {
 			cut := penalty + (rng.Next() & 0x1F)
 			res.Deficit[t] = cut

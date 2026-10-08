@@ -3,13 +3,94 @@
   "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
   "address_space": "IDA database linear",
   "functions": {
-    "0x11D8E": {"meaning": "遊戲日期進位、月結與每時更新的呼叫順序，以及速度節流", "level": "proven", "sources": ["docs/re/06-game-clock.md"]},
-    "0x131AE": {"meaning": "節流後取出一筆事件，再依低位元組間接分派", "level": "proven", "sources": ["docs/re/15-event10-producer.md"]},
-    "0x1ECE0": {"meaning": "以置換表與兩個 byte 狀態取一個亂數", "level": "proven", "sources": ["docs/re/10-rng.md"]}
+    "0x11D8E": {
+      "meaning": "遊戲日期進位、月結與每時更新的呼叫順序，以及速度節流",
+      "level": "proven",
+      "sources": [
+        "docs/re/06-game-clock.md"
+      ]
+    },
+    "0x131AE": {
+      "meaning": "節流後取出一筆事件，再依低位元組間接分派",
+      "level": "proven",
+      "sources": [
+        "docs/re/15-event10-producer.md"
+      ]
+    },
+    "0x1ECE0": {
+      "meaning": "以置換表與兩個 byte 狀態取一個亂數",
+      "level": "proven",
+      "sources": [
+        "docs/re/10-rng.md"
+      ]
+    },
+    "0x15358": {
+      "meaning": "22 勢力的月結呼叫順序、四個設定 word 搬移及 ABI",
+      "level": "proven",
+      "sources": [
+        "docs/re/94-c-monthly-economy-restoration.md"
+      ]
+    },
+    "0x15609": {
+      "meaning": "24-bit 資金入帳及上界鉗制",
+      "level": "proven",
+      "sources": [
+        "docs/re/94-c-monthly-economy-restoration.md"
+      ]
+    },
+    "0x1563B": {
+      "meaning": "24-bit 資金扣款及下界鉗制",
+      "level": "proven",
+      "sources": [
+        "docs/re/94-c-monthly-economy-restoration.md"
+      ]
+    },
+    "0x154FC": {
+      "meaning": "切比雪夫距離對收入除數查表",
+      "level": "proven",
+      "sources": [
+        "docs/re/94-c-monthly-economy-restoration.md"
+      ]
+    },
+    "0x155EC": {
+      "meaning": "預備兵加法的 carry 與 65500 上界",
+      "level": "proven",
+      "sources": [
+        "docs/re/94-c-monthly-economy-restoration.md"
+      ]
+    },
+    "0x15828": {
+      "meaning": "負資金高位取值、三次 RNG 與赤字扣兵",
+      "level": "proven",
+      "sources": [
+        "docs/re/94-c-monthly-economy-restoration.md"
+      ]
+    }
   },
   "operands": {
-    "0x11DCB:1": {"original": "[bx-6755h]", "meaning": "月份天數表的索引讀取；有效位址仍依 BX 與 DS 決定", "level": "proven", "sources": ["docs/re/06-game-clock.md"]},
-    "0x1ECED:1": {"original": "byte_1ECFC", "meaning": "亂數計數器 c", "level": "proven", "sources": ["docs/re/10-rng.md"]},
-    "0x1ECF1:0": {"original": "byte_1ECFC", "meaning": "亂數計數器 c", "level": "proven", "sources": ["docs/re/10-rng.md"]}
+    "0x11DCB:1": {
+      "original": "[bx-6755h]",
+      "meaning": "月份天數表的索引讀取；有效位址仍依 BX 與 DS 決定",
+      "level": "proven",
+      "sources": [
+        "docs/re/06-game-clock.md"
+      ]
+    },
+    "0x1ECED:1": {
+      "original": "byte_1ECFC",
+      "meaning": "亂數計數器 c",
+      "level": "proven",
+      "sources": [
+        "docs/re/10-rng.md"
+      ]
+    },
+    "0x1ECF1:0": {
+      "original": "byte_1ECFC",
+      "meaning": "亂數計數器 c",
+      "level": "proven",
+      "sources": [
+        "docs/re/10-rng.md"
+      ]
+    }
   }
 }
