@@ -1511,1031 +1511,1031 @@ retf
 .org 0x56f
 sub_1036F:
 # IDA 0x1036f; file 0x56f; locator=proven; sub     sp, 18h
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 sub sp, 0x18
 .org 0x572
 # IDA 0x10372; file 0x572; locator=proven; mov     bp, sp
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} mov bp, sp
 .org 0x574
 # IDA 0x10374; file 0x574; locator=proven; call    sub_104B5
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+321
 .org 0x577
 # IDA 0x10377; file 0x577; locator=proven; cmp     al, ch
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} cmp al, ch
 .org 0x579
 # IDA 0x10379; file 0x579; locator=proven; jnb     short loc_1037D
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jnb .+4
 .org 0x57b
 # IDA 0x1037b; file 0x57b; locator=proven; mov     ch, al
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} mov ch, al
 .org 0x57d
 loc_1037D:
 # IDA 0x1037d; file 0x57d; locator=proven; mov     [bp+0], al
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov byte ptr [bp], al
 .org 0x580
 # IDA 0x10380; file 0x580; locator=proven; dec     byte ptr [bp+0]
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 dec byte ptr [bp]
 .org 0x583
 # IDA 0x10383; file 0x583; locator=proven; mov     [bp+1], ch
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov byte ptr [bp+0x1], ch
 .org 0x586
 # IDA 0x10386; file 0x586; locator=proven; dec     byte ptr [bp+1]
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 dec byte ptr [bp+0x1]
 .org 0x589
 # IDA 0x10389; file 0x589; locator=proven; mov     cs:word_1036D, bx
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 cs; mov word ptr [0x36d], bx
 .org 0x58e
 # IDA 0x1038e; file 0x58e; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} xor bx, bx
 .org 0x590
 # IDA 0x10390; file 0x590; locator=proven; xchg    bl, dh
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} xchg bl, dh
 .org 0x592
 # IDA 0x10392; file 0x592; locator=proven; cmp     si, 0FFFFh
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 cmp si, 0xffff
 .org 0x595
 # IDA 0x10395; file 0x595; locator=proven; jz      short loc_1039C
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jz .+7
 .org 0x597
 # IDA 0x10397; file 0x597; locator=proven; call    sub_103C3
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+44
 .org 0x59a
 # IDA 0x1039a; file 0x59a; locator=proven; inc     bx
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 inc bx
 .org 0x59b
 # IDA 0x1039b; file 0x59b; locator=proven; inc     bx
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 inc bx
 .org 0x59c
 loc_1039C:
 # IDA 0x1039c; file 0x59c; locator=proven; call    sub_103E6
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+74
 .org 0x59f
 # IDA 0x1039f; file 0x59f; locator=proven; mov     al, cl
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} mov al, cl
 .org 0x5a1
 # IDA 0x103a1; file 0x5a1; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} xor ah, ah
 .org 0x5a3
 # IDA 0x103a3; file 0x5a3; locator=proven; mov     [bp+11h], cl
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov byte ptr [bp+0x11], cl
 .org 0x5a6
 # IDA 0x103a6; file 0x5a6; locator=proven; mov     cl, 4
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov cl, 0x4
 .org 0x5a8
 # IDA 0x103a8; file 0x5a8; locator=proven; shl     ax, cl
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shl ax, cl
 .org 0x5aa
 # IDA 0x103aa; file 0x5aa; locator=proven; mov     [bp+12h], ax
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov word ptr [bp+0x12], ax
 .org 0x5ad
 # IDA 0x103ad; file 0x5ad; locator=proven; shl     dx, cl
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shl dx, cl
 .org 0x5af
 # IDA 0x103af; file 0x5af; locator=proven; shl     bx, cl
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shl bx, cl
 .org 0x5b1
 # IDA 0x103b1; file 0x5b1; locator=proven; add     dx, 8
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 add dx, 0x8
 .org 0x5b4
 # IDA 0x103b4; file 0x5b4; locator=proven; add     bx, 8
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 add bx, 0x8
 .org 0x5b7
 # IDA 0x103b7; file 0x5b7; locator=proven; call    sub_10414
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+93
 .org 0x5ba
 # IDA 0x103ba; file 0x5ba; locator=proven; lahf
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 lahf
 .org 0x5bb
 # IDA 0x103bb; file 0x5bb; locator=proven; call    sub_104FF
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+324
 .org 0x5be
 # IDA 0x103be; file 0x5be; locator=proven; add     sp, 18h
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 add sp, 0x18
 .org 0x5c1
 # IDA 0x103c1; file 0x5c1; locator=proven; sahf
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 sahf
 .org 0x5c2
 # IDA 0x103c2; file 0x5c2; locator=proven; retn
-# ⚠ 函式 sub_1036F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1036F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 ret
 .org 0x5c3
 sub_103C3:
 # IDA 0x103c3; file 0x5c3; locator=proven; push    ax
-# ⚠ 函式 sub_103C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103C3; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push ax
 .org 0x5c4
 # IDA 0x103c4; file 0x5c4; locator=proven; push    bx
-# ⚠ 函式 sub_103C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103C3; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push bx
 .org 0x5c5
 # IDA 0x103c5; file 0x5c5; locator=proven; push    cx
-# ⚠ 函式 sub_103C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103C3; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push cx
 .org 0x5c6
 # IDA 0x103c6; file 0x5c6; locator=proven; push    dx
-# ⚠ 函式 sub_103C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103C3; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push dx
 .org 0x5c7
 # IDA 0x103c7; file 0x5c7; locator=proven; add     cl, 1
-# ⚠ 函式 sub_103C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103C3; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 add cl, 0x1
 .org 0x5ca
 # IDA 0x103ca; file 0x5ca; locator=proven; mov     ch, 3
-# ⚠ 函式 sub_103C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103C3; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ch, 0x3
 .org 0x5cc
 # IDA 0x103cc; file 0x5cc; locator=proven; call    sub_10BCD
-# ⚠ 函式 sub_103C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103C3; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+2049
 .org 0x5cf
 # IDA 0x103cf; file 0x5cf; locator=proven; mov     cl, 4
-# ⚠ 函式 sub_103C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103C3; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov cl, 0x4
 .org 0x5d1
 # IDA 0x103d1; file 0x5d1; locator=proven; shl     dx, cl
-# ⚠ 函式 sub_103C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103C3; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shl dx, cl
 .org 0x5d3
 # IDA 0x103d3; file 0x5d3; locator=proven; shl     bx, cl
-# ⚠ 函式 sub_103C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103C3; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shl bx, cl
 .org 0x5d5
 # IDA 0x103d5; file 0x5d5; locator=proven; add     dx, 8
-# ⚠ 函式 sub_103C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103C3; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 add dx, 0x8
 .org 0x5d8
 # IDA 0x103d8; file 0x5d8; locator=proven; add     bx, 0Ch
-# ⚠ 函式 sub_103C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103C3; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 add bx, 0xc
 .org 0x5db
 # IDA 0x103db; file 0x5db; locator=proven; mov     ax, 0F01h
-# ⚠ 函式 sub_103C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103C3; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ax, 0xf01
 .org 0x5de
 # IDA 0x103de; file 0x5de; locator=proven; call    sub_1F6DC
-# ⚠ 函式 sub_103C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103C3; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .-3330
 .org 0x5e1
 # IDA 0x103e1; file 0x5e1; locator=proven; pop     dx
-# ⚠ 函式 sub_103C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103C3; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop dx
 .org 0x5e2
 # IDA 0x103e2; file 0x5e2; locator=proven; pop     cx
-# ⚠ 函式 sub_103C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103C3; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop cx
 .org 0x5e3
 # IDA 0x103e3; file 0x5e3; locator=proven; pop     bx
-# ⚠ 函式 sub_103C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103C3; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop bx
 .org 0x5e4
 # IDA 0x103e4; file 0x5e4; locator=proven; pop     ax
-# ⚠ 函式 sub_103C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103C3; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop ax
 .org 0x5e5
 # IDA 0x103e5; file 0x5e5; locator=proven; retn
-# ⚠ 函式 sub_103C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103C3; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 ret
 .org 0x5e6
 sub_103E6:
 # IDA 0x103e6; file 0x5e6; locator=proven; push    ax
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push ax
 .org 0x5e7
 # IDA 0x103e7; file 0x5e7; locator=proven; push    bx
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push bx
 .org 0x5e8
 # IDA 0x103e8; file 0x5e8; locator=proven; push    cx
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push cx
 .org 0x5e9
 # IDA 0x103e9; file 0x5e9; locator=proven; push    dx
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push dx
 .org 0x5ea
 # IDA 0x103ea; file 0x5ea; locator=proven; push    cx
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push cx
 .org 0x5eb
 # IDA 0x103eb; file 0x5eb; locator=proven; add     cx, 101h
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 add cx, 0x101
 .org 0x5ef
 # IDA 0x103ef; file 0x5ef; locator=proven; call    sub_10BCD
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+2014
 .org 0x5f2
 # IDA 0x103f2; file 0x5f2; locator=proven; mov     cl, 4
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov cl, 0x4
 .org 0x5f4
 # IDA 0x103f4; file 0x5f4; locator=proven; shl     dx, cl
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shl dx, cl
 .org 0x5f6
 # IDA 0x103f6; file 0x5f6; locator=proven; shl     bx, cl
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shl bx, cl
 .org 0x5f8
 # IDA 0x103f8; file 0x5f8; locator=proven; add     dx, 8
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 add dx, 0x8
 .org 0x5fb
 # IDA 0x103fb; file 0x5fb; locator=proven; add     bx, 8
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 add bx, 0x8
 .org 0x5fe
 # IDA 0x103fe; file 0x5fe; locator=proven; pop     cx
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop cx
 .org 0x5ff
 # IDA 0x103ff; file 0x5ff; locator=proven; xor     ax, ax
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} xor ax, ax
 .org 0x601
 loc_10401:
 # IDA 0x10401; file 0x601; locator=proven; call    cs:word_1036D
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 cs; call word ptr [0x36d]
 .org 0x606
 # IDA 0x10406; file 0x606; locator=proven; add     bx, 10h
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 add bx, 0x10
 .org 0x609
 # IDA 0x10409; file 0x609; locator=proven; inc     al
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 inc al
 .org 0x60b
 # IDA 0x1040b; file 0x60b; locator=proven; dec     ch
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 dec ch
 .org 0x60d
 # IDA 0x1040d; file 0x60d; locator=proven; jnz     short loc_10401
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jnz .-12
 .org 0x60f
 # IDA 0x1040f; file 0x60f; locator=proven; pop     dx
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop dx
 .org 0x610
 # IDA 0x10410; file 0x610; locator=proven; pop     cx
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop cx
 .org 0x611
 # IDA 0x10411; file 0x611; locator=proven; pop     bx
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop bx
 .org 0x612
 # IDA 0x10412; file 0x612; locator=proven; pop     ax
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop ax
 .org 0x613
 # IDA 0x10413; file 0x613; locator=proven; retn
-# ⚠ 函式 sub_103E6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_103E6; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 ret
 .org 0x614
 sub_10414:
 # IDA 0x10414; file 0x614; locator=proven; mov     [bp+0Ah], dx
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov word ptr [bp+0xa], dx
 .org 0x617
 # IDA 0x10417; file 0x617; locator=proven; mov     [bp+0Ch], bx
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov word ptr [bp+0xc], bx
 .org 0x61a
 # IDA 0x1041a; file 0x61a; locator=proven; mov     byte ptr [bp+0Eh], 0
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov byte ptr [bp+0xe], 0x0
 .org 0x61e
 # IDA 0x1041e; file 0x61e; locator=proven; mov     byte ptr [bp+0Fh], 0
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov byte ptr [bp+0xf], 0x0
 .org 0x622
 # IDA 0x10422; file 0x622; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shr dx, 0x1
 .org 0x624
 # IDA 0x10424; file 0x624; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shr dx, 0x1
 .org 0x626
 # IDA 0x10426; file 0x626; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shr dx, 0x1
 .org 0x628
 # IDA 0x10428; file 0x628; locator=proven; mov     ax, bx
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} mov ax, bx
 .org 0x62a
 # IDA 0x1042a; file 0x62a; locator=proven; mov     bx, dx
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} mov bx, dx
 .org 0x62c
 # IDA 0x1042c; file 0x62c; locator=proven; mov     dx, 50h
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov dx, 0x50
 .org 0x62f
 # IDA 0x1042f; file 0x62f; locator=proven; mul     dx
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mul dx
 .org 0x631
 # IDA 0x10431; file 0x631; locator=proven; add     bx, ax
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} add bx, ax
 .org 0x633
 # IDA 0x10433; file 0x633; locator=proven; mov     [bp+14h], bx
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov word ptr [bp+0x14], bx
 .org 0x636
 # IDA 0x10436; file 0x636; locator=proven; mov     al, [bp+1]
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov al, byte ptr [bp+0x1]
 .org 0x639
 # IDA 0x10439; file 0x639; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} xor ah, ah
 .org 0x63b
 # IDA 0x1043b; file 0x63b; locator=proven; mov     dx, 500h
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov dx, 0x500
 .org 0x63e
 # IDA 0x1043e; file 0x63e; locator=proven; mul     dx
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mul dx
 .org 0x640
 # IDA 0x10440; file 0x640; locator=proven; add     bx, ax
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} add bx, ax
 .org 0x642
 # IDA 0x10442; file 0x642; locator=proven; add     bx, 4B0h
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 add bx, 0x4b0
 .org 0x646
 # IDA 0x10446; file 0x646; locator=proven; mov     [bp+16h], bx
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov word ptr [bp+0x16], bx
 .org 0x649
 # IDA 0x10449; file 0x649; locator=proven; call    sub_1061F
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+470
 .org 0x64c
 loc_1044C:
 # IDA 0x1044c; file 0x64c; locator=proven; mov     ax, 3
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ax, 0x3
 .org 0x64f
 # IDA 0x1044f; file 0x64f; locator=proven; call    sub_20000
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 lcall 0x1000, 0x0
 .org 0x654
 # IDA 0x10454; file 0x654; locator=proven; test    bx, 1
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 test bx, 0x1
 .org 0x658
 # IDA 0x10458; file 0x658; locator=proven; jnz     short loc_10491
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jnz .+57
 .org 0x65a
 # IDA 0x1045a; file 0x65a; locator=proven; test    bx, 2
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 test bx, 0x2
 .org 0x65e
 # IDA 0x1045e; file 0x65e; locator=proven; jnz     short loc_104A4
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jnz .+70
 .org 0x660
 # IDA 0x10460; file 0x660; locator=proven; cmp     dx, 83h
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 cmp dx, 0x83
 .org 0x664
 # IDA 0x10464; file 0x664; locator=proven; ja      short loc_1047F
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 ja .+27
 .org 0x666
 # IDA 0x10466; file 0x666; locator=proven; cmp     dx, 64h
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 cmp dx, 0x64
 .org 0x669
 # IDA 0x10469; file 0x669; locator=proven; jnb     short loc_1044C
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jnb .-29
 .org 0x66b
 # IDA 0x1046b; file 0x66b; locator=proven; ja      short loc_1047F
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 ja .+20
 .org 0x66d
 # IDA 0x1046d; file 0x66d; locator=proven; mov     ax, 4
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ax, 0x4
 .org 0x670
 # IDA 0x10470; file 0x670; locator=proven; xor     cx, cx
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} xor cx, cx
 .org 0x672
 # IDA 0x10472; file 0x672; locator=proven; mov     dx, 83h
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov dx, 0x83
 .org 0x675
 # IDA 0x10475; file 0x675; locator=proven; call    sub_20000
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 lcall 0x1000, 0x0
 .org 0x67a
 # IDA 0x1047a; file 0x67a; locator=proven; call    sub_1054D
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+211
 .org 0x67d
 # IDA 0x1047d; file 0x67d; locator=proven; jmp     short loc_1044C
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jmp .-49
 .org 0x67f
 loc_1047F:
 # IDA 0x1047f; file 0x67f; locator=proven; mov     ax, 4
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ax, 0x4
 .org 0x682
 # IDA 0x10482; file 0x682; locator=proven; xor     cx, cx
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} xor cx, cx
 .org 0x684
 # IDA 0x10484; file 0x684; locator=proven; mov     dx, 64h
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov dx, 0x64
 .org 0x687
 # IDA 0x10487; file 0x687; locator=proven; call    sub_20000
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 lcall 0x1000, 0x0
 .org 0x68c
 # IDA 0x1048c; file 0x68c; locator=proven; call    sub_1059B
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+271
 .org 0x68f
 # IDA 0x1048f; file 0x68f; locator=proven; jmp     short loc_1044C
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jmp .-67
 .org 0x691
 loc_10491:
 # IDA 0x10491; file 0x691; locator=proven; mov     ax, 5
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ax, 0x5
 .org 0x694
 # IDA 0x10494; file 0x694; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} xor bx, bx
 .org 0x696
 # IDA 0x10496; file 0x696; locator=proven; call    sub_20000
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 lcall 0x1000, 0x0
 .org 0x69b
 # IDA 0x1049b; file 0x69b; locator=proven; and     bx, bx
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} and bx, bx
 .org 0x69d
 # IDA 0x1049d; file 0x69d; locator=proven; jz      short loc_1044C
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jz .-81
 .org 0x69f
 # IDA 0x1049f; file 0x69f; locator=proven; mov     al, [bp+0Eh]
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov al, byte ptr [bp+0xe]
 .org 0x6a2
 # IDA 0x104a2; file 0x6a2; locator=proven; clc
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 clc
 .org 0x6a3
 # IDA 0x104a3; file 0x6a3; locator=proven; retn
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 ret
 .org 0x6a4
 loc_104A4:
 # IDA 0x104a4; file 0x6a4; locator=proven; mov     ax, 5
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ax, 0x5
 .org 0x6a7
 # IDA 0x104a7; file 0x6a7; locator=proven; mov     bx, 1
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov bx, 0x1
 .org 0x6aa
 # IDA 0x104aa; file 0x6aa; locator=proven; call    sub_20000
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 lcall 0x1000, 0x0
 .org 0x6af
 # IDA 0x104af; file 0x6af; locator=proven; and     bx, bx
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} and bx, bx
 .org 0x6b1
 # IDA 0x104b1; file 0x6b1; locator=proven; jz      short loc_1044C
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jz .-101
 .org 0x6b3
 # IDA 0x104b3; file 0x6b3; locator=proven; stc
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 stc
 .org 0x6b4
 # IDA 0x104b4; file 0x6b4; locator=proven; retn
-# ⚠ 函式 sub_10414; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10414; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 ret
 .org 0x6b5
 sub_104B5:
 # IDA 0x104b5; file 0x6b5; locator=proven; push    ax
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push ax
 .org 0x6b6
 # IDA 0x104b6; file 0x6b6; locator=proven; push    bx
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push bx
 .org 0x6b7
 # IDA 0x104b7; file 0x6b7; locator=proven; push    cx
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push cx
 .org 0x6b8
 # IDA 0x104b8; file 0x6b8; locator=proven; push    dx
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push dx
 .org 0x6b9
 # IDA 0x104b9; file 0x6b9; locator=proven; mov     ax, 5
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ax, 0x5
 .org 0x6bc
 # IDA 0x104bc; file 0x6bc; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} xor bx, bx
 .org 0x6be
 # IDA 0x104be; file 0x6be; locator=proven; call    sub_20000
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 lcall 0x1000, 0x0
 .org 0x6c3
 # IDA 0x104c3; file 0x6c3; locator=proven; mov     ax, 5
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ax, 0x5
 .org 0x6c6
 # IDA 0x104c6; file 0x6c6; locator=proven; mov     bx, 1
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov bx, 0x1
 .org 0x6c9
 # IDA 0x104c9; file 0x6c9; locator=proven; call    sub_20000
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 lcall 0x1000, 0x0
 .org 0x6ce
 # IDA 0x104ce; file 0x6ce; locator=proven; mov     ax, 2
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ax, 0x2
 .org 0x6d1
 # IDA 0x104d1; file 0x6d1; locator=proven; call    sub_20000
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 lcall 0x1000, 0x0
 .org 0x6d6
 # IDA 0x104d6; file 0x6d6; locator=proven; mov     [bp+6], dx
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov word ptr [bp+0x6], dx
 .org 0x6d9
 # IDA 0x104d9; file 0x6d9; locator=proven; mov     [bp+8], bx
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov word ptr [bp+0x8], bx
 .org 0x6dc
 # IDA 0x104dc; file 0x6dc; locator=proven; mov     [bp+10h], al
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov byte ptr [bp+0x10], al
 .org 0x6df
 # IDA 0x104df; file 0x6df; locator=proven; mov     ax, 3
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ax, 0x3
 .org 0x6e2
 # IDA 0x104e2; file 0x6e2; locator=proven; call    sub_20000
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 lcall 0x1000, 0x0
 .org 0x6e7
 # IDA 0x104e7; file 0x6e7; locator=proven; mov     [bp+2], cx
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov word ptr [bp+0x2], cx
 .org 0x6ea
 # IDA 0x104ea; file 0x6ea; locator=proven; mov     [bp+4], dx
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov word ptr [bp+0x4], dx
 .org 0x6ed
 # IDA 0x104ed; file 0x6ed; locator=proven; mov     ax, 4
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ax, 0x4
 .org 0x6f0
 # IDA 0x104f0; file 0x6f0; locator=proven; xor     cx, cx
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} xor cx, cx
 .org 0x6f2
 # IDA 0x104f2; file 0x6f2; locator=proven; mov     dx, 64h
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov dx, 0x64
 .org 0x6f5
 # IDA 0x104f5; file 0x6f5; locator=proven; call    sub_20000
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 lcall 0x1000, 0x0
 .org 0x6fa
 # IDA 0x104fa; file 0x6fa; locator=proven; pop     dx
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop dx
 .org 0x6fb
 # IDA 0x104fb; file 0x6fb; locator=proven; pop     cx
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop cx
 .org 0x6fc
 # IDA 0x104fc; file 0x6fc; locator=proven; pop     bx
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop bx
 .org 0x6fd
 # IDA 0x104fd; file 0x6fd; locator=proven; pop     ax
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop ax
 .org 0x6fe
 # IDA 0x104fe; file 0x6fe; locator=proven; retn
-# ⚠ 函式 sub_104B5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104B5; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 ret
 .org 0x6ff
 sub_104FF:
 # IDA 0x104ff; file 0x6ff; locator=proven; push    ax
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push ax
 .org 0x700
 # IDA 0x10500; file 0x700; locator=proven; push    bx
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push bx
 .org 0x701
 # IDA 0x10501; file 0x701; locator=proven; push    cx
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push cx
 .org 0x702
 # IDA 0x10502; file 0x702; locator=proven; push    dx
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push dx
 .org 0x703
 # IDA 0x10503; file 0x703; locator=proven; mov     ax, 4
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ax, 0x4
 .org 0x706
 # IDA 0x10506; file 0x706; locator=proven; mov     cx, [bp+2]
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov cx, word ptr [bp+0x2]
 .org 0x709
 # IDA 0x10509; file 0x709; locator=proven; mov     dx, [bp+4]
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov dx, word ptr [bp+0x4]
 .org 0x70c
 # IDA 0x1050c; file 0x70c; locator=proven; call    sub_20000
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 lcall 0x1000, 0x0
 .org 0x711
 # IDA 0x10511; file 0x711; locator=proven; mov     ax, 5
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ax, 0x5
 .org 0x714
 # IDA 0x10514; file 0x714; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} xor bx, bx
 .org 0x716
 # IDA 0x10516; file 0x716; locator=proven; call    sub_20000
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 lcall 0x1000, 0x0
 .org 0x71b
 # IDA 0x1051b; file 0x71b; locator=proven; mov     ax, 5
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ax, 0x5
 .org 0x71e
 # IDA 0x1051e; file 0x71e; locator=proven; mov     bx, 1
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov bx, 0x1
 .org 0x721
 # IDA 0x10521; file 0x721; locator=proven; call    sub_20000
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 lcall 0x1000, 0x0
 .org 0x726
 # IDA 0x10526; file 0x726; locator=proven; cmp     byte ptr [bp+10h], 0
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 cmp byte ptr [bp+0x10], 0x0
 .org 0x72a
 # IDA 0x1052a; file 0x72a; locator=proven; jl      short loc_10548
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jl .+30
 .org 0x72c
 # IDA 0x1052c; file 0x72c; locator=proven; jz      short loc_1053E
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jz .+18
 .org 0x72e
 # IDA 0x1052e; file 0x72e; locator=proven; mov     dx, [bp+6]
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov dx, word ptr [bp+0x6]
 .org 0x731
 # IDA 0x10531; file 0x731; locator=proven; mov     bx, [bp+8]
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov bx, word ptr [bp+0x8]
 .org 0x734
 # IDA 0x10534; file 0x734; locator=proven; mov     ax, 9
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ax, 0x9
 .org 0x737
 # IDA 0x10537; file 0x737; locator=proven; call    sub_20000
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 lcall 0x1000, 0x0
 .org 0x73c
 # IDA 0x1053c; file 0x73c; locator=proven; jmp     short loc_10548
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jmp .+12
 .org 0x73e
 loc_1053E:
 # IDA 0x1053e; file 0x73e; locator=proven; mov     ax, 1
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ax, 0x1
 .org 0x741
 # IDA 0x10541; file 0x741; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} xor bx, bx
 .org 0x743
 # IDA 0x10543; file 0x743; locator=proven; call    sub_20000
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 lcall 0x1000, 0x0
 .org 0x748
 loc_10548:
 # IDA 0x10548; file 0x748; locator=proven; pop     dx
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop dx
 .org 0x749
 # IDA 0x10549; file 0x749; locator=proven; pop     cx
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop cx
 .org 0x74a
 # IDA 0x1054a; file 0x74a; locator=proven; pop     bx
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop bx
 .org 0x74b
 # IDA 0x1054b; file 0x74b; locator=proven; pop     ax
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop ax
 .org 0x74c
 # IDA 0x1054c; file 0x74c; locator=proven; retn
-# ⚠ 函式 sub_104FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_104FF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 ret
 .org 0x74d
 sub_1054D:
 # IDA 0x1054d; file 0x74d; locator=proven; cmp     byte ptr [bp+0Eh], 0
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 cmp byte ptr [bp+0xe], 0x0
 .org 0x751
 # IDA 0x10551; file 0x751; locator=proven; jz      short locret_1059A
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jz .+73
 .org 0x753
 # IDA 0x10553; file 0x753; locator=proven; call    sub_1061F
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+204
 .org 0x756
 # IDA 0x10556; file 0x756; locator=proven; cmp     byte ptr [bp+0Fh], 0
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 cmp byte ptr [bp+0xf], 0x0
 .org 0x75a
 # IDA 0x1055a; file 0x75a; locator=proven; jz      short loc_10568
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jz .+14
 .org 0x75c
 # IDA 0x1055c; file 0x75c; locator=proven; sub     word ptr [bp+0Ch], 10h
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 sub word ptr [bp+0xc], 0x10
 .org 0x760
 # IDA 0x10560; file 0x760; locator=proven; dec     byte ptr [bp+0Eh]
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 dec byte ptr [bp+0xe]
 .org 0x763
 # IDA 0x10563; file 0x763; locator=proven; dec     byte ptr [bp+0Fh]
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 dec byte ptr [bp+0xf]
 .org 0x766
 # IDA 0x10566; file 0x766; locator=proven; jmp     short loc_10597
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jmp .+49
 .org 0x768
 loc_10568:
 # IDA 0x10568; file 0x768; locator=proven; mov     dx, [bp+16h]
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov dx, word ptr [bp+0x16]
 .org 0x76b
 # IDA 0x1056b; file 0x76b; locator=proven; mov     bx, dx
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} mov bx, dx
 .org 0x76d
 # IDA 0x1056d; file 0x76d; locator=proven; sub     bx, 500h
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 sub bx, 0x500
 .org 0x771
 # IDA 0x10571; file 0x771; locator=proven; mov     al, [bp+11h]
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov al, byte ptr [bp+0x11]
 .org 0x774
 # IDA 0x10574; file 0x774; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} xor ah, ah
 .org 0x776
 # IDA 0x10576; file 0x776; locator=proven; mov     cx, [bp+14h]
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov cx, word ptr [bp+0x14]
 .org 0x779
 loc_10579:
 # IDA 0x10579; file 0x779; locator=proven; call    nullsub_5
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+116
 .org 0x77c
 # IDA 0x1057c; file 0x77c; locator=proven; sub     dx, 50h
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 sub dx, 0x50
 .org 0x77f
 # IDA 0x1057f; file 0x77f; locator=proven; sub     bx, 50h
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 sub bx, 0x50
 .org 0x782
 # IDA 0x10582; file 0x782; locator=proven; cmp     bx, cx
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} cmp bx, cx
 .org 0x784
 # IDA 0x10584; file 0x784; locator=proven; jnb     short loc_10579
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jnb .-11
 .org 0x786
 # IDA 0x10586; file 0x786; locator=proven; dec     byte ptr [bp+0Eh]
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 dec byte ptr [bp+0xe]
 .org 0x789
 # IDA 0x10589; file 0x789; locator=proven; mov     dx, [bp+0Ah]
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov dx, word ptr [bp+0xa]
 .org 0x78c
 # IDA 0x1058c; file 0x78c; locator=proven; mov     bx, [bp+0Ch]
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov bx, word ptr [bp+0xc]
 .org 0x78f
 # IDA 0x1058f; file 0x78f; locator=proven; mov     al, [bp+0Eh]
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov al, byte ptr [bp+0xe]
 .org 0x792
 # IDA 0x10592; file 0x792; locator=proven; call    cs:word_1036D
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 cs; call word ptr [0x36d]
 .org 0x797
 loc_10597:
 # IDA 0x10597; file 0x797; locator=proven; call    sub_1061F
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+136
 .org 0x79a
 locret_1059A:
 # IDA 0x1059a; file 0x79a; locator=proven; retn
-# ⚠ 函式 sub_1054D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1054D; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 ret
 .org 0x79b
 sub_1059B:
 # IDA 0x1059b; file 0x79b; locator=proven; mov     al, [bp+0Eh]
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov al, byte ptr [bp+0xe]
 .org 0x79e
 # IDA 0x1059e; file 0x79e; locator=proven; cmp     al, [bp+0]
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 cmp al, byte ptr [bp]
 .org 0x7a1
 # IDA 0x105a1; file 0x7a1; locator=proven; jnb     short locret_105EC
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jnb .+75
 .org 0x7a3
 # IDA 0x105a3; file 0x7a3; locator=proven; call    sub_1061F
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+124
 .org 0x7a6
 # IDA 0x105a6; file 0x7a6; locator=proven; mov     al, [bp+0Fh]
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov al, byte ptr [bp+0xf]
 .org 0x7a9
 # IDA 0x105a9; file 0x7a9; locator=proven; cmp     al, [bp+1]
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 cmp al, byte ptr [bp+0x1]
 .org 0x7ac
 # IDA 0x105ac; file 0x7ac; locator=proven; jz      short loc_105BA
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jz .+14
 .org 0x7ae
 # IDA 0x105ae; file 0x7ae; locator=proven; add     word ptr [bp+0Ch], 10h
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 add word ptr [bp+0xc], 0x10
 .org 0x7b2
 # IDA 0x105b2; file 0x7b2; locator=proven; inc     byte ptr [bp+0Eh]
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 inc byte ptr [bp+0xe]
 .org 0x7b5
 # IDA 0x105b5; file 0x7b5; locator=proven; inc     byte ptr [bp+0Fh]
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 inc byte ptr [bp+0xf]
 .org 0x7b8
 # IDA 0x105b8; file 0x7b8; locator=proven; jmp     short loc_105E9
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jmp .+49
 .org 0x7ba
 loc_105BA:
 # IDA 0x105ba; file 0x7ba; locator=proven; mov     dx, [bp+14h]
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov dx, word ptr [bp+0x14]
 .org 0x7bd
 # IDA 0x105bd; file 0x7bd; locator=proven; mov     bx, dx
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} mov bx, dx
 .org 0x7bf
 # IDA 0x105bf; file 0x7bf; locator=proven; add     bx, 500h
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 add bx, 0x500
 .org 0x7c3
 # IDA 0x105c3; file 0x7c3; locator=proven; mov     al, [bp+11h]
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov al, byte ptr [bp+0x11]
 .org 0x7c6
 # IDA 0x105c6; file 0x7c6; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} xor ah, ah
 .org 0x7c8
 # IDA 0x105c8; file 0x7c8; locator=proven; mov     cx, [bp+16h]
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov cx, word ptr [bp+0x16]
 .org 0x7cb
 loc_105CB:
 # IDA 0x105cb; file 0x7cb; locator=proven; call    nullsub_5
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+34
 .org 0x7ce
 # IDA 0x105ce; file 0x7ce; locator=proven; add     dx, 50h
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 add dx, 0x50
 .org 0x7d1
 # IDA 0x105d1; file 0x7d1; locator=proven; add     bx, 50h
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 add bx, 0x50
 .org 0x7d4
 # IDA 0x105d4; file 0x7d4; locator=proven; cmp     bx, cx
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} cmp bx, cx
 .org 0x7d6
 # IDA 0x105d6; file 0x7d6; locator=proven; jbe     short loc_105CB
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jbe .-11
 .org 0x7d8
 # IDA 0x105d8; file 0x7d8; locator=proven; inc     byte ptr [bp+0Eh]
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 inc byte ptr [bp+0xe]
 .org 0x7db
 # IDA 0x105db; file 0x7db; locator=proven; mov     dx, [bp+0Ah]
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov dx, word ptr [bp+0xa]
 .org 0x7de
 # IDA 0x105de; file 0x7de; locator=proven; mov     bx, [bp+0Ch]
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov bx, word ptr [bp+0xc]
 .org 0x7e1
 # IDA 0x105e1; file 0x7e1; locator=proven; mov     al, [bp+0Eh]
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov al, byte ptr [bp+0xe]
 .org 0x7e4
 # IDA 0x105e4; file 0x7e4; locator=proven; call    cs:word_1036D
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 cs; call word ptr [0x36d]
 .org 0x7e9
 loc_105E9:
 # IDA 0x105e9; file 0x7e9; locator=proven; call    sub_1061F
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+54
 .org 0x7ec
 locret_105EC:
 # IDA 0x105ec; file 0x7ec; locator=proven; retn
-# ⚠ 函式 sub_1059B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1059B; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 ret
 .org 0x7ed
 nullsub_5:
@@ -2655,27 +2655,27 @@ ret
 .org 0x81f
 sub_1061F:
 # IDA 0x1061f; file 0x81f; locator=proven; mov     dx, [bp+0Ah]
-# ⚠ 函式 sub_1061F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1061F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov dx, word ptr [bp+0xa]
 .org 0x822
 # IDA 0x10622; file 0x822; locator=proven; mov     bx, [bp+0Ch]
-# ⚠ 函式 sub_1061F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1061F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov bx, word ptr [bp+0xc]
 .org 0x825
 # IDA 0x10625; file 0x825; locator=proven; mov     si, [bp+12h]
-# ⚠ 函式 sub_1061F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1061F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov si, word ptr [bp+0x12]
 .org 0x828
 # IDA 0x10628; file 0x828; locator=proven; mov     di, 10h
-# ⚠ 函式 sub_1061F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1061F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov di, 0x10
 .org 0x82b
 # IDA 0x1062b; file 0x82b; locator=proven; call    sub_10B46
-# ⚠ 函式 sub_1061F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1061F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+1307
 .org 0x82e
 # IDA 0x1062e; file 0x82e; locator=proven; retn
-# ⚠ 函式 sub_1061F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1061F; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 ret
 .org 0x82f
 sub_1062F:
@@ -5389,316 +5389,316 @@ ret
 .org 0xd46
 sub_10B46:
 # IDA 0x10b46; file 0xd46; locator=proven; push    ds
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push ds
 .org 0xd47
 # IDA 0x10b47; file 0xd47; locator=proven; push    ax
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push ax
 .org 0xd48
 # IDA 0x10b48; file 0xd48; locator=proven; push    cx
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push cx
 .org 0xd49
 # IDA 0x10b49; file 0xd49; locator=proven; push    bp
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push bp
 .org 0xd4a
 # IDA 0x10b4a; file 0xd4a; locator=proven; mov     cl, dl
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} mov cl, dl
 .org 0xd4c
 # IDA 0x10b4c; file 0xd4c; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shr dx, 0x1
 .org 0xd4e
 # IDA 0x10b4e; file 0xd4e; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shr dx, 0x1
 .org 0xd50
 # IDA 0x10b50; file 0xd50; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shr dx, 0x1
 .org 0xd52
 # IDA 0x10b52; file 0xd52; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shl bx, 0x1
 .org 0xd54
 # IDA 0x10b54; file 0xd54; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shl bx, 0x1
 .org 0xd56
 # IDA 0x10b56; file 0xd56; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shl bx, 0x1
 .org 0xd58
 # IDA 0x10b58; file 0xd58; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shl bx, 0x1
 .org 0xd5a
 # IDA 0x10b5a; file 0xd5a; locator=proven; add     dx, bx
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} add dx, bx
 .org 0xd5c
 # IDA 0x10b5c; file 0xd5c; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shl bx, 0x1
 .org 0xd5e
 # IDA 0x10b5e; file 0xd5e; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shl bx, 0x1
 .org 0xd60
 # IDA 0x10b60; file 0xd60; locator=proven; add     bx, dx
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} add bx, dx
 .org 0xd62
 # IDA 0x10b62; file 0xd62; locator=proven; and     cx, 7
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 and cx, 0x7
 .org 0xd65
 # IDA 0x10b65; file 0xd65; locator=proven; mov     dx, 80FFh
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov dx, 0x80ff
 .org 0xd68
 # IDA 0x10b68; file 0xd68; locator=proven; shr     dx, cl
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shr dx, cl
 .org 0xd6a
 # IDA 0x10b6a; file 0xd6a; locator=proven; add     cx, si
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} add cx, si
 .org 0xd6c
 # IDA 0x10b6c; file 0xd6c; locator=proven; dec     cx
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 dec cx
 .org 0xd6d
 # IDA 0x10b6d; file 0xd6d; locator=proven; mov     bp, cx
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} mov bp, cx
 .org 0xd6f
 # IDA 0x10b6f; file 0xd6f; locator=proven; shr     bp, 1
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shr bp, 0x1
 .org 0xd71
 # IDA 0x10b71; file 0xd71; locator=proven; shr     bp, 1
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shr bp, 0x1
 .org 0xd73
 # IDA 0x10b73; file 0xd73; locator=proven; shr     bp, 1
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shr bp, 0x1
 .org 0xd75
 # IDA 0x10b75; file 0xd75; locator=proven; inc     bp
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 inc bp
 .org 0xd76
 # IDA 0x10b76; file 0xd76; locator=proven; and     cx, 7
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 and cx, 0x7
 .org 0xd79
 # IDA 0x10b79; file 0xd79; locator=proven; xor     cl, 7
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 xor cl, 0x7
 .org 0xd7c
 # IDA 0x10b7c; file 0xd7c; locator=proven; mov     ax, 0FEFFh
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ax, 0xfeff
 .org 0xd7f
 # IDA 0x10b7f; file 0xd7f; locator=proven; shl     ax, cl
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shl ax, cl
 .org 0xd81
 # IDA 0x10b81; file 0xd81; locator=proven; not     ah
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 not ah
 .org 0xd83
 # IDA 0x10b83; file 0xd83; locator=proven; mov     si, bx
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} mov si, bx
 .org 0xd85
 # IDA 0x10b85; file 0xd85; locator=proven; mov     bx, ax
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} mov bx, ax
 .org 0xd87
 # IDA 0x10b87; file 0xd87; locator=proven; push    ax
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push ax
 .org 0xd88
 # IDA 0x10b88; file 0xd88; locator=proven; push    dx
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push dx
 .org 0xd89
 # IDA 0x10b89; file 0xd89; locator=proven; call    sub_10CAC
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+291
 .org 0xd8c
 # IDA 0x10b8c; file 0xd8c; locator=proven; mov     dx, 3CFh
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov dx, 0x3cf
 .org 0xd8f
 # IDA 0x10b8f; file 0xd8f; locator=proven; mov     al, 0Ch
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov al, 0xc
 .org 0xd91
 # IDA 0x10b91; file 0xd91; locator=proven; out     dx, al
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 out dx, al
 .org 0xd92
 # IDA 0x10b92; file 0xd92; locator=proven; dec     dx
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 dec dx
 .org 0xd93
 # IDA 0x10b93; file 0xd93; locator=proven; mov     al, 3
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov al, 0x3
 .org 0xd95
 # IDA 0x10b95; file 0xd95; locator=proven; out     dx, al
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 out dx, al
 .org 0xd96
 # IDA 0x10b96; file 0xd96; locator=proven; inc     dx
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 inc dx
 .org 0xd97
 # IDA 0x10b97; file 0xd97; locator=proven; mov     al, 18h
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov al, 0x18
 .org 0xd99
 # IDA 0x10b99; file 0xd99; locator=proven; out     dx, al
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 out dx, al
 .org 0xd9a
 # IDA 0x10b9a; file 0xd9a; locator=proven; pop     dx
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop dx
 .org 0xd9b
 # IDA 0x10b9b; file 0xd9b; locator=proven; pop     ax
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop ax
 .org 0xd9c
 # IDA 0x10b9c; file 0xd9c; locator=proven; mov     ax, 0A0C8h
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ax, 0xa0c8
 .org 0xd9f
 # IDA 0x10b9f; file 0xd9f; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ds, ax
 .org 0xda1
 loc_10BA1:
 # IDA 0x10ba1; file 0xda1; locator=proven; call    sub_10BAF
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+14
 .org 0xda4
 # IDA 0x10ba4; file 0xda4; locator=proven; add     si, 50h
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 add si, 0x50
 .org 0xda7
 # IDA 0x10ba7; file 0xda7; locator=proven; dec     di
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 dec di
 .org 0xda8
 # IDA 0x10ba8; file 0xda8; locator=proven; jnz     short loc_10BA1
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jnz .-7
 .org 0xdaa
 # IDA 0x10baa; file 0xdaa; locator=proven; pop     bp
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop bp
 .org 0xdab
 # IDA 0x10bab; file 0xdab; locator=proven; pop     cx
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop cx
 .org 0xdac
 # IDA 0x10bac; file 0xdac; locator=proven; pop     ax
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop ax
 .org 0xdad
 # IDA 0x10bad; file 0xdad; locator=proven; pop     ds
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop ds
 .org 0xdae
 # IDA 0x10bae; file 0xdae; locator=proven; retn
-# ⚠ 函式 sub_10B46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10B46; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 ret
 .org 0xdaf
 sub_10BAF:
 # IDA 0x10baf; file 0xdaf; locator=proven; mov     cx, bp
-# ⚠ 函式 sub_10BAF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BAF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} mov cx, bp
 .org 0xdb1
 # IDA 0x10bb1; file 0xdb1; locator=proven; push    si
-# ⚠ 函式 sub_10BAF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BAF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push si
 .org 0xdb2
 # IDA 0x10bb2; file 0xdb2; locator=proven; mov     ah, [si]
-# ⚠ 函式 sub_10BAF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BAF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ah, byte ptr [si]
 .org 0xdb4
 # IDA 0x10bb4; file 0xdb4; locator=proven; mov     [si], dl
-# ⚠ 函式 sub_10BAF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BAF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov byte ptr [si], dl
 .org 0xdb6
 # IDA 0x10bb6; file 0xdb6; locator=proven; dec     cx
-# ⚠ 函式 sub_10BAF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BAF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 dec cx
 .org 0xdb7
 # IDA 0x10bb7; file 0xdb7; locator=proven; jz      short loc_10BCB
-# ⚠ 函式 sub_10BAF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BAF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jz .+20
 .org 0xdb9
 # IDA 0x10bb9; file 0xdb9; locator=proven; inc     si
-# ⚠ 函式 sub_10BAF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BAF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 inc si
 .org 0xdba
 # IDA 0x10bba; file 0xdba; locator=proven; dec     cx
-# ⚠ 函式 sub_10BAF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BAF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 dec cx
 .org 0xdbb
 # IDA 0x10bbb; file 0xdbb; locator=proven; jz      short loc_10BC7
-# ⚠ 函式 sub_10BAF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BAF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jz .+12
 .org 0xdbd
 # IDA 0x10bbd; file 0xdbd; locator=proven; mov     al, 0FFh
-# ⚠ 函式 sub_10BAF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BAF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov al, 0xff
 .org 0xdbf
 loc_10BBF:
 # IDA 0x10bbf; file 0xdbf; locator=proven; mov     ah, [si]
-# ⚠ 函式 sub_10BAF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BAF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ah, byte ptr [si]
 .org 0xdc1
 # IDA 0x10bc1; file 0xdc1; locator=proven; mov     [si], al
-# ⚠ 函式 sub_10BAF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BAF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov byte ptr [si], al
 .org 0xdc3
 # IDA 0x10bc3; file 0xdc3; locator=proven; inc     si
-# ⚠ 函式 sub_10BAF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BAF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 inc si
 .org 0xdc4
 # IDA 0x10bc4; file 0xdc4; locator=proven; dec     cx
-# ⚠ 函式 sub_10BAF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BAF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 dec cx
 .org 0xdc5
 # IDA 0x10bc5; file 0xdc5; locator=proven; jnz     short loc_10BBF
-# ⚠ 函式 sub_10BAF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BAF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 jnz .-6
 .org 0xdc7
 loc_10BC7:
 # IDA 0x10bc7; file 0xdc7; locator=proven; mov     ah, [si]
-# ⚠ 函式 sub_10BAF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BAF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ah, byte ptr [si]
 .org 0xdc9
 # IDA 0x10bc9; file 0xdc9; locator=proven; mov     [si], bl
-# ⚠ 函式 sub_10BAF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BAF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov byte ptr [si], bl
 .org 0xdcb
 loc_10BCB:
 # IDA 0x10bcb; file 0xdcb; locator=proven; pop     si
-# ⚠ 函式 sub_10BAF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BAF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop si
 .org 0xdcc
 # IDA 0x10bcc; file 0xdcc; locator=proven; retn
-# ⚠ 函式 sub_10BAF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BAF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 ret
 .org 0xdcd
 sub_10BCD:
@@ -58911,6 +58911,14 @@ pop ax
 # IDA 0x1943d; file 0x963d; locator=proven; mov     bx, 945Ah
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
 mov bx, 0x945a
+.org 0x9640
+# IDA 0x19440; file 0x9640; locator=proven; mov     dl, 9
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov dl, 0x9
+.org 0x9642
+# IDA 0x19442; file 0x9642; locator=proven; mov     dh, 0Fh
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov dh, 0xf
 .org 0x9644
 # IDA 0x19444; file 0x9644; locator=proven; mov     si, 0FFFFh
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
@@ -58965,6 +58973,38 @@ pop ds
 # IDA 0x19459; file 0x9659; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
 ret
+.org 0x965a
+# IDA 0x1945a; file 0x965a; locator=proven; push    ds
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push ds
+.org 0x965b
+# IDA 0x1945b; file 0x965b; locator=proven; push    ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push ax
+.org 0x965c
+# IDA 0x1945c; file 0x965c; locator=proven; push    bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push bx
+.org 0x965d
+# IDA 0x1945d; file 0x965d; locator=proven; push    dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push dx
+.org 0x965e
+# IDA 0x1945e; file 0x965e; locator=proven; push    si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push si
+.org 0x965f
+# IDA 0x1945f; file 0x965f; locator=proven; mov     ds, cs:word_10D38
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; mov ds, word ptr [0xd38]
+.org 0x9664
+# IDA 0x19464; file 0x9664; locator=proven; mov     ah, 0Ch
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ah, 0xc
+.org 0x9666
+# IDA 0x19466; file 0x9666; locator=proven; mov     si, 1234h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov si, 0x1234
 .org 0x9669
 # IDA 0x19469; file 0x9669; locator=proven; mul     ah
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
@@ -59008,316 +59048,316 @@ ret
 .org 0x9679
 sub_19479:
 # IDA 0x19479; file 0x9679; locator=proven; push    bp
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push bp
 .org 0x967a
 # IDA 0x1947a; file 0x967a; locator=proven; sub     sp, 6
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 sub sp, 0x6
 .org 0x967d
 # IDA 0x1947d; file 0x967d; locator=proven; mov     bp, sp
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} mov bp, sp
 .org 0x967f
 # IDA 0x1947f; file 0x967f; locator=proven; sub     dh, 2
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 sub dh, 0x2
 .org 0x9682
 # IDA 0x19482; file 0x9682; locator=proven; push    ax
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push ax
 .org 0x9683
 # IDA 0x19483; file 0x9683; locator=proven; push    bx
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push bx
 .org 0x9684
 # IDA 0x19484; file 0x9684; locator=proven; push    cx
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push cx
 .org 0x9685
 # IDA 0x19485; file 0x9685; locator=proven; push    dx
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push dx
 .org 0x9686
 # IDA 0x19486; file 0x9686; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} xor bx, bx
 .org 0x9688
 # IDA 0x19488; file 0x9688; locator=proven; mov     ah, bl
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} mov ah, bl
 .org 0x968a
 # IDA 0x1948a; file 0x968a; locator=proven; xchg    dh, bl
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} xchg dh, bl
 .org 0x968c
 # IDA 0x1948c; file 0x968c; locator=proven; inc     cl
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 inc cl
 .org 0x968e
 # IDA 0x1948e; file 0x968e; locator=proven; inc     ch
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 inc ch
 .org 0x9690
 # IDA 0x19490; file 0x9690; locator=proven; mov     [bp+0], dx
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov word ptr [bp], dx
 .org 0x9693
 # IDA 0x19493; file 0x9693; locator=proven; mov     [bp+2], bx
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov word ptr [bp+0x2], bx
 .org 0x9696
 # IDA 0x19496; file 0x9696; locator=proven; mov     [bp+4], cx
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov word ptr [bp+0x4], cx
 .org 0x9699
 # IDA 0x19499; file 0x9699; locator=proven; call    sub_1D5D4
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+16699
 .org 0x969c
 # IDA 0x1949c; file 0x969c; locator=proven; pop     dx
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop dx
 .org 0x969d
 # IDA 0x1949d; file 0x969d; locator=proven; pop     cx
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop cx
 .org 0x969e
 # IDA 0x1949e; file 0x969e; locator=proven; pop     bx
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop bx
 .org 0x969f
 # IDA 0x1949f; file 0x969f; locator=proven; pop     ax
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop ax
 .org 0x96a0
 # IDA 0x194a0; file 0x96a0; locator=proven; push    bp
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push bp
 .org 0x96a1
 # IDA 0x194a1; file 0x96a1; locator=proven; add     dh, 2
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 add dh, 0x2
 .org 0x96a4
 # IDA 0x194a4; file 0x96a4; locator=proven; call    sub_1036F
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+28363
 .org 0x96a7
 # IDA 0x194a7; file 0x96a7; locator=proven; lahf
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 lahf
 .org 0x96a8
 # IDA 0x194a8; file 0x96a8; locator=proven; pop     bp
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop bp
 .org 0x96a9
 # IDA 0x194a9; file 0x96a9; locator=proven; push    ax
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push ax
 .org 0x96aa
 # IDA 0x194aa; file 0x96aa; locator=proven; mov     dx, [bp+0]
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov dx, word ptr [bp]
 .org 0x96ad
 # IDA 0x194ad; file 0x96ad; locator=proven; mov     bx, [bp+2]
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov bx, word ptr [bp+0x2]
 .org 0x96b0
 # IDA 0x194b0; file 0x96b0; locator=proven; mov     cx, [bp+4]
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov cx, word ptr [bp+0x4]
 .org 0x96b3
 # IDA 0x194b3; file 0x96b3; locator=proven; mov     ah, 1
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov ah, 0x1
 .org 0x96b5
 # IDA 0x194b5; file 0x96b5; locator=proven; call    sub_1D5D4
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+16671
 .org 0x96b8
 # IDA 0x194b8; file 0x96b8; locator=proven; pop     ax
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop ax
 .org 0x96b9
 # IDA 0x194b9; file 0x96b9; locator=proven; add     sp, 6
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 add sp, 0x6
 .org 0x96bc
 # IDA 0x194bc; file 0x96bc; locator=proven; pop     bp
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop bp
 .org 0x96bd
 # IDA 0x194bd; file 0x96bd; locator=proven; sahf
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 sahf
 .org 0x96be
 # IDA 0x194be; file 0x96be; locator=proven; retn
-# ⚠ 函式 sub_19479; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19479; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 ret
 .org 0x96bf
 sub_194BF:
 # IDA 0x194bf; file 0x96bf; locator=proven; push    bp
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push bp
 .org 0x96c0
 # IDA 0x194c0; file 0x96c0; locator=proven; sub     sp, 6
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 sub sp, 0x6
 .org 0x96c3
 # IDA 0x194c3; file 0x96c3; locator=proven; mov     bp, sp
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} mov bp, sp
 .org 0x96c5
 # IDA 0x194c5; file 0x96c5; locator=proven; sub     dh, 2
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 sub dh, 0x2
 .org 0x96c8
 # IDA 0x194c8; file 0x96c8; locator=proven; push    ax
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push ax
 .org 0x96c9
 # IDA 0x194c9; file 0x96c9; locator=proven; push    bx
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push bx
 .org 0x96ca
 # IDA 0x194ca; file 0x96ca; locator=proven; push    cx
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push cx
 .org 0x96cb
 # IDA 0x194cb; file 0x96cb; locator=proven; push    dx
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push dx
 .org 0x96cc
 # IDA 0x194cc; file 0x96cc; locator=proven; mov     ax, cx
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} mov ax, cx
 .org 0x96ce
 # IDA 0x194ce; file 0x96ce; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} xor bx, bx
 .org 0x96d0
 # IDA 0x194d0; file 0x96d0; locator=proven; xchg    dh, bl
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} xchg dh, bl
 .org 0x96d2
 # IDA 0x194d2; file 0x96d2; locator=proven; add     bx, 2
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 add bx, 0x2
 .org 0x96d5
 # IDA 0x194d5; file 0x96d5; locator=proven; mov     cl, 4
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov cl, 0x4
 .org 0x96d7
 # IDA 0x194d7; file 0x96d7; locator=proven; shl     bx, cl
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shl bx, cl
 .org 0x96d9
 # IDA 0x194d9; file 0x96d9; locator=proven; shl     dx, cl
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shl dx, cl
 .org 0x96db
 # IDA 0x194db; file 0x96db; locator=proven; add     ax, 101h
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 add ax, 0x101
 .org 0x96de
 # IDA 0x194de; file 0x96de; locator=proven; shl     ah, cl
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 shl ah, cl
 .org 0x96e0
 # IDA 0x194e0; file 0x96e0; locator=proven; mov     cx, ax
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 {load} mov cx, ax
 .org 0x96e2
 # IDA 0x194e2; file 0x96e2; locator=proven; mov     [bp+0], dx
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov word ptr [bp], dx
 .org 0x96e5
 # IDA 0x194e5; file 0x96e5; locator=proven; mov     [bp+2], bx
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov word ptr [bp+0x2], bx
 .org 0x96e8
 # IDA 0x194e8; file 0x96e8; locator=proven; mov     [bp+4], cx
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov word ptr [bp+0x4], cx
 .org 0x96eb
 # IDA 0x194eb; file 0x96eb; locator=proven; call    sub_19796
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+683
 .org 0x96ee
 # IDA 0x194ee; file 0x96ee; locator=proven; pop     dx
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop dx
 .org 0x96ef
 # IDA 0x194ef; file 0x96ef; locator=proven; pop     cx
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop cx
 .org 0x96f0
 # IDA 0x194f0; file 0x96f0; locator=proven; pop     bx
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop bx
 .org 0x96f1
 # IDA 0x194f1; file 0x96f1; locator=proven; pop     ax
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop ax
 .org 0x96f2
 # IDA 0x194f2; file 0x96f2; locator=proven; push    bp
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push bp
 .org 0x96f3
 # IDA 0x194f3; file 0x96f3; locator=proven; add     dh, 2
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 add dh, 0x2
 .org 0x96f6
 # IDA 0x194f6; file 0x96f6; locator=proven; call    sub_1036F
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+28281
 .org 0x96f9
 # IDA 0x194f9; file 0x96f9; locator=proven; lahf
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 lahf
 .org 0x96fa
 # IDA 0x194fa; file 0x96fa; locator=proven; pop     bp
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop bp
 .org 0x96fb
 # IDA 0x194fb; file 0x96fb; locator=proven; push    ax
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 push ax
 .org 0x96fc
 # IDA 0x194fc; file 0x96fc; locator=proven; mov     dx, [bp+0]
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov dx, word ptr [bp]
 .org 0x96ff
 # IDA 0x194ff; file 0x96ff; locator=proven; mov     bx, [bp+2]
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov bx, word ptr [bp+0x2]
 .org 0x9702
 # IDA 0x19502; file 0x9702; locator=proven; mov     cx, [bp+4]
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 mov cx, word ptr [bp+0x4]
 .org 0x9705
 # IDA 0x19505; file 0x9705; locator=proven; call    sub_197C3
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 call .+702
 .org 0x9708
 # IDA 0x19508; file 0x9708; locator=proven; pop     ax
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop ax
 .org 0x9709
 # IDA 0x19509; file 0x9709; locator=proven; add     sp, 6
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 add sp, 0x6
 .org 0x970c
 # IDA 0x1950c; file 0x970c; locator=proven; pop     bp
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 pop bp
 .org 0x970d
 # IDA 0x1950d; file 0x970d; locator=proven; sahf
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 sahf
 .org 0x970e
 # IDA 0x1950e; file 0x970e; locator=proven; retn
-# ⚠ 函式 sub_194BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_194BF; [proven] 原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據; 出處: docs/re/112-c-choice-selector-restoration.md, docs/spec/232-c-choice-selector.md
 ret
 .org 0x970f
 sub_1950F:
@@ -91545,352 +91585,352 @@ ret
 .org 0xec1f
 # IDA 0x1ea1f; file 0xec1f; locator=proven; mov     ah, [si+0Ah]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 1; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 1; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/112-c-choice-selector-restoration.md
 mov ah, byte ptr [si+0xa]
 .org 0xec22
 # IDA 0x1ea22; file 0xec22; locator=proven; call    near ptr byte_1ECFE+100h
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 1; 原 IDA 資料行: call    near ptr byte_1ECFE+100h; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 1; 原 IDA 資料行: call    near ptr byte_1ECFE+100h; 出處: docs/re/112-c-choice-selector-restoration.md
 call .+988
 .org 0xec25
 # IDA 0x1ea25; file 0xec25; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 1; 原 IDA 資料行: retn; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 1; 原 IDA 資料行: retn; 出處: docs/re/112-c-choice-selector-restoration.md
 ret
 .org 0xec26
 # IDA 0x1ea26; file 0xec26; locator=proven; mov     ah, [si+0Ah]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 2; 原 IDA 資料行: db  8Ah; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 2; 原 IDA 資料行: db  8Ah; 出處: docs/re/112-c-choice-selector-restoration.md
 mov ah, byte ptr [si+0xa]
 .org 0xec29
 # IDA 0x1ea29; file 0xec29; locator=proven; call    near ptr unk_1EAD0
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 2; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 2; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/112-c-choice-selector-restoration.md
 call .+167
 .org 0xec2c
 # IDA 0x1ea2c; file 0xec2c; locator=proven; call    sub_1F020
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 2; 原 IDA 資料行: call    sub_1F020; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 2; 原 IDA 資料行: call    sub_1F020; 出處: docs/re/112-c-choice-selector-restoration.md
 call .+1524
 .org 0xec2f
 # IDA 0x1ea2f; file 0xec2f; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 2; 原 IDA 資料行: retn; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 2; 原 IDA 資料行: retn; 出處: docs/re/112-c-choice-selector-restoration.md
 ret
 .org 0xec30
 # IDA 0x1ea30; file 0xec30; locator=proven; mov     ah, [si+0Ah]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 3; 原 IDA 資料行: db  8Ah; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 3; 原 IDA 資料行: db  8Ah; 出處: docs/re/112-c-choice-selector-restoration.md
 mov ah, byte ptr [si+0xa]
 .org 0xec33
 # IDA 0x1ea33; file 0xec33; locator=proven; call    near ptr unk_1EAD0
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 3; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 3; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/112-c-choice-selector-restoration.md
 call .+157
 .org 0xec36
 # IDA 0x1ea36; file 0xec36; locator=proven; call    sub_1F1A3
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 3; 原 IDA 資料行: call    sub_1F1A3; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 3; 原 IDA 資料行: call    sub_1F1A3; 出處: docs/re/112-c-choice-selector-restoration.md
 call .+1901
 .org 0xec39
 # IDA 0x1ea39; file 0xec39; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 3; 原 IDA 資料行: retn; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 3; 原 IDA 資料行: retn; 出處: docs/re/112-c-choice-selector-restoration.md
 ret
 .org 0xec3a
 # IDA 0x1ea3a; file 0xec3a; locator=proven; mov     ax, [si+0Ah]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 4; 原 IDA 資料行: db  8Bh; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 4; 原 IDA 資料行: db  8Bh; 出處: docs/re/112-c-choice-selector-restoration.md
 mov ax, word ptr [si+0xa]
 .org 0xec3d
 # IDA 0x1ea3d; file 0xec3d; locator=proven; call    near ptr unk_1EAD0
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 4; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 4; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/112-c-choice-selector-restoration.md
 call .+147
 .org 0xec40
 # IDA 0x1ea40; file 0xec40; locator=proven; call    loc_1F465
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 4; 原 IDA 資料行: call    loc_1F465; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 4; 原 IDA 資料行: call    loc_1F465; 出處: docs/re/112-c-choice-selector-restoration.md
 call .+2597
 .org 0xec43
 # IDA 0x1ea43; file 0xec43; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 4; 原 IDA 資料行: retn; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 4; 原 IDA 資料行: retn; 出處: docs/re/112-c-choice-selector-restoration.md
 ret
 .org 0xec44
 # IDA 0x1ea44; file 0xec44; locator=proven; mov     ah, [si+8]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: db  8Ah; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: db  8Ah; 出處: docs/re/112-c-choice-selector-restoration.md
 mov ah, byte ptr [si+0x8]
 .org 0xec47
 # IDA 0x1ea47; file 0xec47; locator=proven; mov     dx, [bp+0]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/112-c-choice-selector-restoration.md
 mov dx, word ptr [bp]
 .org 0xec4a
 # IDA 0x1ea4a; file 0xec4a; locator=proven; mov     bx, [bp+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/112-c-choice-selector-restoration.md
 mov bx, word ptr [bp+0x2]
 .org 0xec4d
 # IDA 0x1ea4d; file 0xec4d; locator=proven; add     dx, [si+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/112-c-choice-selector-restoration.md
 add dx, word ptr [si+0x2]
 .org 0xec50
 # IDA 0x1ea50; file 0xec50; locator=proven; add     bx, [si+4]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/112-c-choice-selector-restoration.md
 add bx, word ptr [si+0x4]
 .org 0xec53
 # IDA 0x1ea53; file 0xec53; locator=proven; mov     cx, [si+6]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: mov     cx, [si+6]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: mov     cx, [si+6]; 出處: docs/re/112-c-choice-selector-restoration.md
 mov cx, word ptr [si+0x6]
 .org 0xec56
 # IDA 0x1ea56; file 0xec56; locator=proven; call    sub_1FB29
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: call    sub_1FB29; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: call    sub_1FB29; 出處: docs/re/112-c-choice-selector-restoration.md
 call .+4307
 .org 0xec59
 # IDA 0x1ea59; file 0xec59; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: retn; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: retn; 出處: docs/re/112-c-choice-selector-restoration.md
 ret
 .org 0xec5a
 # IDA 0x1ea5a; file 0xec5a; locator=proven; mov     ah, [si+8]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: db  8Ah; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: db  8Ah; 出處: docs/re/112-c-choice-selector-restoration.md
 mov ah, byte ptr [si+0x8]
 .org 0xec5d
 # IDA 0x1ea5d; file 0xec5d; locator=proven; mov     dx, [bp+0]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/112-c-choice-selector-restoration.md
 mov dx, word ptr [bp]
 .org 0xec60
 # IDA 0x1ea60; file 0xec60; locator=proven; mov     bx, [bp+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/112-c-choice-selector-restoration.md
 mov bx, word ptr [bp+0x2]
 .org 0xec63
 # IDA 0x1ea63; file 0xec63; locator=proven; add     dx, [si+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/112-c-choice-selector-restoration.md
 add dx, word ptr [si+0x2]
 .org 0xec66
 # IDA 0x1ea66; file 0xec66; locator=proven; add     bx, [si+4]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/112-c-choice-selector-restoration.md
 add bx, word ptr [si+0x4]
 .org 0xec69
 # IDA 0x1ea69; file 0xec69; locator=proven; mov     cx, [si+6]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: mov     cx, [si+6]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: mov     cx, [si+6]; 出處: docs/re/112-c-choice-selector-restoration.md
 mov cx, word ptr [si+0x6]
 .org 0xec6c
 # IDA 0x1ea6c; file 0xec6c; locator=proven; call    sub_1FBA7
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: call    sub_1FBA7; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: call    sub_1FBA7; 出處: docs/re/112-c-choice-selector-restoration.md
 call .+4411
 .org 0xec6f
 # IDA 0x1ea6f; file 0xec6f; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: retn; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: retn; 出處: docs/re/112-c-choice-selector-restoration.md
 ret
 .org 0xec70
 # IDA 0x1ea70; file 0xec70; locator=proven; push    ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: db  1Eh; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: db  1Eh; 出處: docs/re/112-c-choice-selector-restoration.md
 push ds
 .org 0xec71
 # IDA 0x1ea71; file 0xec71; locator=proven; mov     bl, [si+0Ah]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: mov     bl, [si+0Ah]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: mov     bl, [si+0Ah]; 出處: docs/re/112-c-choice-selector-restoration.md
 mov bl, byte ptr [si+0xa]
 .org 0xec74
 # IDA 0x1ea74; file 0xec74; locator=proven; xor     bh, bh
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: xor     bh, bh; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: xor     bh, bh; 出處: docs/re/112-c-choice-selector-restoration.md
 {load} xor bh, bh
 .org 0xec76
 # IDA 0x1ea76; file 0xec76; locator=proven; shl     bx, 1
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/112-c-choice-selector-restoration.md
 shl bx, 0x1
 .org 0xec78
 # IDA 0x1ea78; file 0xec78; locator=proven; shl     bx, 1
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/112-c-choice-selector-restoration.md
 shl bx, 0x1
 .org 0xec7a
 # IDA 0x1ea7a; file 0xec7a; locator=proven; shl     bx, 1
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/112-c-choice-selector-restoration.md
 shl bx, 0x1
 .org 0xec7c
 # IDA 0x1ea7c; file 0xec7c; locator=proven; add     bx, 0EAF1h
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: add     bx, 0EAF1h; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: add     bx, 0EAF1h; 出處: docs/re/112-c-choice-selector-restoration.md
 add bx, 0xeaf1
 .org 0xec80
 # IDA 0x1ea80; file 0xec80; locator=proven; mov     ax, cs:[bx]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: mov     ax, cs:[bx]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: mov     ax, cs:[bx]; 出處: docs/re/112-c-choice-selector-restoration.md
 cs; mov ax, word ptr [bx]
 .org 0xec83
 # IDA 0x1ea83; file 0xec83; locator=proven; mov     cx, cs:[bx+4]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: mov     cx, cs:[bx+4]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: mov     cx, cs:[bx+4]; 出處: docs/re/112-c-choice-selector-restoration.md
 cs; mov cx, word ptr [bx+0x4]
 .org 0xec87
 # IDA 0x1ea87; file 0xec87; locator=proven; push    word ptr cs:[bx+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: push    word ptr cs:[bx+2]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: push    word ptr cs:[bx+2]; 出處: docs/re/112-c-choice-selector-restoration.md
 cs; push word ptr [bx+0x2]
 .org 0xec8b
 # IDA 0x1ea8b; file 0xec8b; locator=proven; push    cx
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: push    cx; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: push    cx; 出處: docs/re/112-c-choice-selector-restoration.md
 push cx
 .org 0xec8c
 # IDA 0x1ea8c; file 0xec8c; locator=proven; call    near ptr unk_1EAD0
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/112-c-choice-selector-restoration.md
 call .+68
 .org 0xec8f
 # IDA 0x1ea8f; file 0xec8f; locator=proven; pop     cx
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: pop     cx; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: pop     cx; 出處: docs/re/112-c-choice-selector-restoration.md
 pop cx
 .org 0xec90
 # IDA 0x1ea90; file 0xec90; locator=proven; pop     ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: pop     ds; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: pop     ds; 出處: docs/re/112-c-choice-selector-restoration.md
 pop ds
 .org 0xec91
 # IDA 0x1ea91; file 0xec91; locator=proven; call    loc_1F26E
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: call    loc_1F26E; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: call    loc_1F26E; 出處: docs/re/112-c-choice-selector-restoration.md
 call .+2013
 .org 0xec94
 # IDA 0x1ea94; file 0xec94; locator=proven; pop     ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: pop     ds; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: pop     ds; 出處: docs/re/112-c-choice-selector-restoration.md
 pop ds
 .org 0xec95
 # IDA 0x1ea95; file 0xec95; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: retn; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: retn; 出處: docs/re/112-c-choice-selector-restoration.md
 ret
 .org 0xec96
 # IDA 0x1ea96; file 0xec96; locator=proven; push    ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: db  1Eh; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: db  1Eh; 出處: docs/re/112-c-choice-selector-restoration.md
 push ds
 .org 0xec97
 # IDA 0x1ea97; file 0xec97; locator=proven; mov     dx, [bp+0]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/112-c-choice-selector-restoration.md
 mov dx, word ptr [bp]
 .org 0xec9a
 # IDA 0x1ea9a; file 0xec9a; locator=proven; mov     bx, [bp+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/112-c-choice-selector-restoration.md
 mov bx, word ptr [bp+0x2]
 .org 0xec9d
 # IDA 0x1ea9d; file 0xec9d; locator=proven; add     dx, [si+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/112-c-choice-selector-restoration.md
 add dx, word ptr [si+0x2]
 .org 0xeca0
 # IDA 0x1eaa0; file 0xeca0; locator=proven; add     bx, [si+4]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/112-c-choice-selector-restoration.md
 add bx, word ptr [si+0x4]
 .org 0xeca3
 # IDA 0x1eaa3; file 0xeca3; locator=proven; mov     ax, [si+8]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: mov     ax, [si+8]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: mov     ax, [si+8]; 出處: docs/re/112-c-choice-selector-restoration.md
 mov ax, word ptr [si+0x8]
 .org 0xeca6
 # IDA 0x1eaa6; file 0xeca6; locator=proven; mov     si, [si+6]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: mov     si, [si+6]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: mov     si, [si+6]; 出處: docs/re/112-c-choice-selector-restoration.md
 mov si, word ptr [si+0x6]
 .org 0xeca9
 # IDA 0x1eaa9; file 0xeca9; locator=proven; mov     ds, cs:word_1EAED
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: mov     ds, cs:word_1EAED; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: mov     ds, cs:word_1EAED; 出處: docs/re/112-c-choice-selector-restoration.md
 cs; mov ds, word ptr [0xeaed]
 .org 0xecae
 # IDA 0x1eaae; file 0xecae; locator=proven; call    sub_1F6DC
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: call    sub_1F6DC; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: call    sub_1F6DC; 出處: docs/re/112-c-choice-selector-restoration.md
 call .+3118
 .org 0xecb1
 # IDA 0x1eab1; file 0xecb1; locator=proven; pop     ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: pop     ds; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: pop     ds; 出處: docs/re/112-c-choice-selector-restoration.md
 pop ds
 .org 0xecb2
 # IDA 0x1eab2; file 0xecb2; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: retn; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: retn; 出處: docs/re/112-c-choice-selector-restoration.md
 ret
 .org 0xecb3
 # IDA 0x1eab3; file 0xecb3; locator=proven; push    ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: db  1Eh; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: db  1Eh; 出處: docs/re/112-c-choice-selector-restoration.md
 push ds
 .org 0xecb4
 # IDA 0x1eab4; file 0xecb4; locator=proven; mov     dx, [bp+0]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/112-c-choice-selector-restoration.md
 mov dx, word ptr [bp]
 .org 0xecb7
 # IDA 0x1eab7; file 0xecb7; locator=proven; mov     bx, [bp+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/112-c-choice-selector-restoration.md
 mov bx, word ptr [bp+0x2]
 .org 0xecba
 # IDA 0x1eaba; file 0xecba; locator=proven; add     dx, [si+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/112-c-choice-selector-restoration.md
 add dx, word ptr [si+0x2]
 .org 0xecbd
 # IDA 0x1eabd; file 0xecbd; locator=proven; add     bx, [si+4]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/112-c-choice-selector-restoration.md
 add bx, word ptr [si+0x4]
 .org 0xecc0
 # IDA 0x1eac0; file 0xecc0; locator=proven; mov     cx, [si+8]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: mov     cx, [si+8]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: mov     cx, [si+8]; 出處: docs/re/112-c-choice-selector-restoration.md
 mov cx, word ptr [si+0x8]
 .org 0xecc3
 # IDA 0x1eac3; file 0xecc3; locator=proven; mov     si, [si+6]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: mov     si, [si+6]; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: mov     si, [si+6]; 出處: docs/re/112-c-choice-selector-restoration.md
 mov si, word ptr [si+0x6]
 .org 0xecc6
 # IDA 0x1eac6; file 0xecc6; locator=proven; mov     ds, cs:word_1EAEF
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: mov     ds, cs:word_1EAEF; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: mov     ds, cs:word_1EAEF; 出處: docs/re/112-c-choice-selector-restoration.md
 cs; mov ds, word ptr [0xeaef]
 .org 0xeccb
 # IDA 0x1eacb; file 0xeccb; locator=proven; call    sub_1F888
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: call    sub_1F888; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: call    sub_1F888; 出處: docs/re/112-c-choice-selector-restoration.md
 call .+3517
 .org 0xecce
 # IDA 0x1eace; file 0xecce; locator=proven; pop     ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: pop     ds; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: pop     ds; 出處: docs/re/112-c-choice-selector-restoration.md
 pop ds
 .org 0xeccf
 # IDA 0x1eacf; file 0xeccf; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: retn; 出處: docs/re/111-c-input-mouse-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: retn; 出處: docs/re/112-c-choice-selector-restoration.md
 ret
 .org 0xecd0
 loc_1EAD0:

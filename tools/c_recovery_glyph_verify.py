@@ -59,7 +59,7 @@ def verify(repo,out):
  before=(out/'results/golem-source-before.sha256').read_bytes();assert before==(out/'results/golem-source-after.sha256').read_bytes()
  platform=(repo/'tools/c_recovery_glyph_platform.go').read_text();assert '.IntHook(c,' in platform and '.Step(' not in platform
  for path,(marker,link) in BACKLINKS.items():s=(repo/path).read_text();assert marker in s and link in s
- supplement=json.loads((repo/'docs/re/rectangle-handler-code.json').read_text());original_subset=[x for x in supplement['instructions'] if not 0x12239<=x['ida_linear']<0x12280];assert len(original_subset)==338 and sum(x['file_end']-x['file_start'] for x in original_subset)==805
+ supplement=json.loads((repo/'docs/re/rectangle-handler-code.json').read_text());original_subset=[x for x in supplement['instructions'] if not (0x12239<=x['ida_linear']<0x12280 or 0x19440<=x['ida_linear']<0x19444 or 0x1945a<=x['ida_linear']<0x19469)];assert len(original_subset)==338 and sum(x['file_end']-x['file_start'] for x in original_subset)==805
  result={'schema':'wolong-c-glyph-verification-v1','status':'semantic-conformed','input_sha256':EXPECTED,'fonts':FONTS,'new_routine_sha256':{n:routines[n] for n in NEW},
          'ida_database_sha256':sha(out/'ida/input.exe.i64'),'source_sha256':source,'compiled_source_manifest_sha256':compiled,'cases_per_optimization':252,'groups':GROUPS,
          'full_ram_plane_audits_per_optimization':252,'indexed_content_audits_per_optimization':252,'font_calls_per_optimization':[740,150],'font_missing':0,

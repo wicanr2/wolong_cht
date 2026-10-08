@@ -216,3 +216,9 @@ dh = 0Bh ⇒ y = 11 × 16 = 176
 證實左右鍵分支及十個 counter 間隔。早期「不 patch 就不等待」已由完整原指令推翻；
 原模式也會輪詢右鍵與 counter。此處不由 `0xFF × 10` 推算實機秒數，正常玩家／timer producer
 仍按各自證據驗收。
+
+## 後續原始 C selector
+
+[spec/232](232-c-choice-selector.md) 將 `sub_13B7E`／`sub_193E9` 的原 popup frame、
+`sub_1036F` 選列與 callback、游標與 CF 恢復接到真實 C。原 speaker／advisor caller
+也用原字庫與 patch 等待重跑，固定按鍵／counter 不代證正常玩家的完整進言操作。

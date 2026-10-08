@@ -1506,6 +1506,134 @@
         "docs/re/111-c-input-mouse-restoration.md",
         "docs/spec/231-c-input-mouse.md"
       ]
+    },
+    "0x1036F": {
+      "meaning": "原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/112-c-choice-selector-restoration.md",
+        "docs/spec/232-c-choice-selector.md"
+      ]
+    },
+    "0x103C3": {
+      "meaning": "原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/112-c-choice-selector-restoration.md",
+        "docs/spec/232-c-choice-selector.md"
+      ]
+    },
+    "0x103E6": {
+      "meaning": "原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/112-c-choice-selector-restoration.md",
+        "docs/spec/232-c-choice-selector.md"
+      ]
+    },
+    "0x10414": {
+      "meaning": "原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/112-c-choice-selector-restoration.md",
+        "docs/spec/232-c-choice-selector.md"
+      ]
+    },
+    "0x104B5": {
+      "meaning": "原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/112-c-choice-selector-restoration.md",
+        "docs/spec/232-c-choice-selector.md"
+      ]
+    },
+    "0x104FF": {
+      "meaning": "原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/112-c-choice-selector-restoration.md",
+        "docs/spec/232-c-choice-selector.md"
+      ]
+    },
+    "0x1054D": {
+      "meaning": "原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/112-c-choice-selector-restoration.md",
+        "docs/spec/232-c-choice-selector.md"
+      ]
+    },
+    "0x1059B": {
+      "meaning": "原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/112-c-choice-selector-restoration.md",
+        "docs/spec/232-c-choice-selector.md"
+      ]
+    },
+    "0x105ED": {
+      "meaning": "原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/112-c-choice-selector-restoration.md",
+        "docs/spec/232-c-choice-selector.md"
+      ]
+    },
+    "0x1061F": {
+      "meaning": "原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/112-c-choice-selector-restoration.md",
+        "docs/spec/232-c-choice-selector.md"
+      ]
+    },
+    "0x10B46": {
+      "meaning": "原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/112-c-choice-selector-restoration.md",
+        "docs/spec/232-c-choice-selector.md"
+      ]
+    },
+    "0x10BAF": {
+      "meaning": "原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/112-c-choice-selector-restoration.md",
+        "docs/spec/232-c-choice-selector.md"
+      ]
+    },
+    "0x19479": {
+      "meaning": "原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/112-c-choice-selector-restoration.md",
+        "docs/spec/232-c-choice-selector.md"
+      ]
+    },
+    "0x194BF": {
+      "meaning": "原始 selector frame、選列／可見列、帶狀 mouse／cursor 或 XOR 控制；具體範圍見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/112-c-choice-selector-restoration.md",
+        "docs/spec/232-c-choice-selector.md"
+      ]
+    },
+    "0x19409": {
+      "meaning": "原始選單量第一列、設定 live stride／string／位置並選 map／pixel 保護",
+      "level": "proven",
+      "sources": [
+        "docs/re/112-c-choice-selector-restoration.md",
+        "docs/spec/232-c-choice-selector.md"
+      ]
+    },
+    "0x1945A": {
+      "meaning": "原始 row callback 讀 live stride／string operand 並畫原始字串",
+      "level": "proven",
+      "sources": [
+        "docs/re/112-c-choice-selector-restoration.md",
+        "docs/spec/232-c-choice-selector.md"
+      ]
     }
   },
   "operands": {

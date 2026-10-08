@@ -5927,19 +5927,6 @@
       "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
     },
     {
-      "file": "docs/re/84-popup-row-band-and-world-cursor.md",
-      "item": "IDA `0x1074D`／`0x1079B`",
-      "status": "選擇上／下移一格的實作沒有逐行讀（只從呼叫脈絡定名）",
-      "section": "4. 未解",
-      "domain": "程式碼理解",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-011a79d063179a7d3a65",
-      "classification": "evidence-only",
-      "github_issue": null,
-      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
-    },
-    {
       "file": "docs/re/85-march-target-hit-test.md",
       "item": "圖塊 `0CBh`–`0D3h` 這 9 種各對應什麼外觀",
       "status": "只知道區間，沒有逐一對上據點類型（`+0x16` 低 4 位只有 5 種）",
@@ -12776,6 +12763,84 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "原始 input／cursor C 還原的局部證據界線；counter producer、正常派送與原作者工具鏈不由此收據代證。"
+    },
+    {
+      "file": "docs/re/112-c-choice-selector-restoration.md",
+      "item": "自然玩家完整進言流程",
+      "status": "固定 pointer／按鍵序列的局部 caller 不代證正常玩家入口",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-2741433537c9e5bf080a",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原始 selector／callback C 局部證據界線；正常玩家、scroll helper 執行期安裝與工具鏈不由此 consumer 代證。"
+    },
+    {
+      "file": "docs/re/112-c-choice-selector-restoration.md",
+      "item": "原版動態安裝 scroll helper",
+      "status": "原 `nullsub_5` 的已載入狀態另留證據界線",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-d71fdf5a16b73ff30ccc",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原始 selector／callback C 局部證據界線；正常玩家、scroll helper 執行期安裝與工具鏈不由此 consumer 代證。"
+    },
+    {
+      "file": "docs/re/112-c-choice-selector-restoration.md",
+      "item": "原作者工具鏈／C 機器碼",
+      "status": "仍待確認",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-87b5f71b6518b4f64e97",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原始 selector／callback C 局部證據界線；正常玩家、scroll helper 執行期安裝與工具鏈不由此 consumer 代證。"
+    },
+    {
+      "file": "docs/spec/232-c-choice-selector.md",
+      "item": "自然玩家／進言 producer",
+      "status": "局部 consumer 與固定序列不代證",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-520598dfb51899db5a8c",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原始 selector／callback C 局部證據界線；正常玩家、scroll helper 執行期安裝與工具鏈不由此 consumer 代證。"
+    },
+    {
+      "file": "docs/spec/232-c-choice-selector.md",
+      "item": "scroll helper 的執行期改寫",
+      "status": "本輪依目前原始 image bytes，是否被改寫另追來源",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-91c764f054e8555ec412",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原始 selector／callback C 局部證據界線；正常玩家、scroll helper 執行期安裝與工具鏈不由此 consumer 代證。"
+    },
+    {
+      "file": "docs/spec/232-c-choice-selector.md",
+      "item": "原作者 C 工具鏈與機器碼",
+      "status": "尚未確認",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-66f2cca5d0d007886e0a",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原始 selector／callback C 局部證據界線；正常玩家、scroll helper 執行期安裝與工具鏈不由此 consumer 代證。"
     }
   ]
 }

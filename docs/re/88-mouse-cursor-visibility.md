@@ -153,3 +153,10 @@ sub_104FF:  ax=4 移回舊座標
 |---|---|
 | 游標圖形資料 | 在 `sub_201E4` 附近，逐 byte 沒抓；remake 已經有量出來的 14×14 遮罩 |
 | 54 個 hide／show 點對應到 remake 的哪一段 | 沒做；這是「remake 要不要同步游標」的前置 |
+
+## 後續原始 C selector
+
+2026-10-09：[re/112](112-c-choice-selector-restoration.md) 驗 `sub_104B5`／`sub_104FF`
+與真正 mouse segment 的 0／1／2 狀態，將原保存與還原接回 selector。
+[re/111](111-c-input-mouse-restoration.md) 已保留原游標 masks、callback 和保存／恢復，
+較早圖形未抓的界線由新 byte／VGA 收據補充；正常玩家 hide／show 時序仍按原範圍驗。

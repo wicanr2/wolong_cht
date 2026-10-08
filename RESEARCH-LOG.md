@@ -1946,3 +1946,10 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - 418 指令為 native C，保留 mouse far table、near／far／fall-through、CLI／STI、PUSHF／POPF、真正游標 mask／保存恢復、IN／OUT 與訊息等待擦除。兩側獨立成熟 DOS Mouse，C 不跑 guest CPU。
 - O0/O2 各 210 完整 RAM／四 plane／ABI／平台／mouse 狀態與像素相同；三個 show／move／hide 背景完整還原，十二錯版拒絕。原與 NOP patch 都有十個 counter 間隔的結束，差別是是否輪詢左鍵；舊不等說法已勘誤，未換算 wall-clock。
 - 等待區 21 指令／71 bytes 與三個 file／IDA 分列 far 重定位欄位已實際組譯匹配。總 24,735 指令／56,268 code bytes、整檔 67,099 bytes 仍相同，C 台帳 201 函式／28 code 入口。正常玩家／自動 callback／timer producer 與 C 機器碼保留原界線。
+
+## 2026-10-09：原 selector、row callback 與進言 caller
+
+- 固定 KI.EXE／原資料與 IDA9.4 DB `4d84b66126fbcb8377707155cf56f45c190b9321faa224b05ab15fb943a0e8d9`，原函式／raw 邊界與 hash 見 [re/112](docs/re/112-c-choice-selector-restoration.md)。14 named 940 bytes、兩 raw 112 bytes，共 474 原指令。
+- SS 24-byte frame、絕對／可見列、帶狀 Y、live row stride／string／坐標、XOR／cursor 還原與 map-pixel 保護接到真實 C。既有進言選單及 speaker／advisor caller 也重新接 native mouse／TALK／字庫。
+- O0/O2 138 完整 RAM／四 plane／ABI／平台／Mouse／像素相同，三 XOR 還原、2153全形／6半形無缺字，十二錯版拒絕。畫面保存段補上之後重生全部有效收據，沒有放寬等待 budget。
+- re/84 原 0x1074D／0x1079B 是 file offset 誤寫 IDA linear，原兩個回置 Y 值也反了，按原 branch／固定回播勘誤。新增十組語／19 bytes助憶碼匹配，24,745指令／56,287codebytes與67099-byteEXE相同；正常玩家、原 scroll helper 動態安裝、C 機器碼維持原範圍。

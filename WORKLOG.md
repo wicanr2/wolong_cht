@@ -330,3 +330,14 @@
 - 收尾讀取 Issue #22 現況，仍為 OPEN，未以局部 C 換成正常玩家完成聲明。982 列分流、嚴格問題索引、生成 C／source flags 與所有來源 binding 通過；文件與工具 21／25，四項既有缺檔／教訓問題維持基線。
 - 六個唯讀資料／字庫身分重驗，201 函式／28 入口與公開／本機收據相同。舊 glyph verifier 在隔離暫存輸出通過，不覆寫其歷史收據；本輪所有輸出 UID/GID 1000:1000，既有 root-owned 路徑仍 27 筆。
 - 全矩陣與每批 Docker 容器皆已退出移除；依授權提交並推送來源、原始定位與驗證紀錄，完整 Goal 保持 active。
+
+## 2026-10-09：selector 與原進言 GUI C 接線
+
+- 前輪 `95b951a` 已推送，分類 progress，核對原始狀態、逆向／IDA 路由和 Issue #22 後接 popup 選列、捲動與 cursor 保存還原；spec/232 READY 後還原 14 named 函式和兩 raw 入口，474 指令 native C。
+- 原 `0x9441`／`0x9443`／`0x9465`／`0x9467` live operand與 `0x36D` row callback保留。map／pixel兩分支與原 `sub_193E9`／`sub_13B7E`、speaker／advisor caller接入真正字形／mouse／等待C；原 nullsub_5 照原image，沒有猜補。
+- Prototype未初始化CS:987C畫面保存段，原版保存覆蓋服務區導致超budget；查原sub_19796後設定7200獨立段，用同wrapper和輸入重新跑。沒有調高steps或以fixture代替原分支。
+- O0/O2各138完整RAM／四plane／IN／OUT／Mouse／ABI／像素相同，三個XOR雙切還原、2153全形／6半形、缺字0；十二錯版全拒絕，生成C在乾淨容器重生相同。原版正常玩家與scroll helper動態改寫仍有獨立界線，正式Go不改。
+- 原re/84錯置file／IDA位址與Y回置值已按完整原branch和固定回播勘誤，保留原斷言形成背景。新增10組語／19bytes，先前369以前的補充原記錄保留，24,745指令／56,287codebytes與完整EXE匹配。
+- 全錯版終止後獨立驗證最新完整來源與 flags；987 列分流與嚴格索引通過，re/84 已閉合缺口加明示無缺口標記。文件／工具21／25通過，四項既有缺檔／教訓問題維持基線；gofmt與預設build排除通過。
+- 舊glyph與input verifier在隔離暫存輸出通過，原始歷史收據不覆寫；215函式／30raw入口binding、六個原始唯讀素材、完整組語／C收據與擁有權核對。所有輸出UID/GID1000:1000，既有root-owned路徑仍27筆。
+- 最後全矩陣與每批工具容器皆已退出移除，依授權把原始定位、C來源與驗證紀錄提交並推送GitHub；完整Goal保持active，未把局部consumer取代正常玩家驗收。

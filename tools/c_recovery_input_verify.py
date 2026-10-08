@@ -113,7 +113,8 @@ def verify(repo, out):
         generator.generate(root, out / 'ida/ida-probe.json')
         assert (root / 'tools/c_recovery/input_generated.inc').read_bytes() == (repo / 'tools/c_recovery/input_generated.inc').read_bytes()
     supplement = json.loads((repo / 'docs/re/rectangle-handler-code.json').read_text())
-    assert len(supplement['instructions']) == 359
+    historical = [r for r in supplement['instructions'] if not (0x19440 <= r['ida_linear'] < 0x19444 or 0x1945a <= r['ida_linear'] < 0x19469)]
+    assert len(historical) == 359
     new_code = [r for r in supplement['instructions'] if 0x12239 <= r['ida_linear'] < 0x12280]
     assert len(new_code) == 21 and sum(r['file_end'] - r['file_start'] for r in new_code) == 71
     assert sum(len(r.get('relocation_file_offsets', [])) for r in new_code) == 3

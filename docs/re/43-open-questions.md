@@ -7,7 +7,7 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-988 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+993 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
 - 日期：2026-10-08
 - 產生工具：`tools/re_open_questions.py`
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**982 列分布在 394 份文件，平均每份 2.5 列。**
+**987 列分布在 395 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -47,11 +47,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 272 | 265 | 6 | 1 |
+| 程式碼理解 | 274 | 267 | 6 | 1 |
 | 驗收 | 240 | 214 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 433 | 411 | 21 | 1 |
-| **合計** | **982** | 921 | 58 | 3 |
+| 其他 | 436 | 414 | 21 | 1 |
+| **合計** | **987** | 926 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,8 +59,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 390 |
-| `docs/re/` | 272 |
+| `docs/spec/` | 393 |
+| `docs/re/` | 274 |
 | `docs/playtest/` | 240 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
@@ -110,7 +110,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 | evidence-only | — |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 | evidence-only | — |
 
-## 2.3 程式碼理解（272 條）
+## 2.3 程式碼理解（274 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -192,6 +192,9 @@
 | [`re/111-c-input-mouse-restoration.md`](../re/111-c-input-mouse-restoration.md) | 原版 timer producer 與 wall-clock | 本輪注入明示 counter 輸入，驗等待消費端，不換算牆上秒數 | 靜態 | evidence-only | — |
 | [`re/111-c-input-mouse-restoration.md`](../re/111-c-input-mouse-restoration.md) | 自然玩家與自動 callback 派送 | direct callback／固定 press 序列不代證正常玩家操作 | 靜態 | evidence-only | — |
 | [`re/111-c-input-mouse-restoration.md`](../re/111-c-input-mouse-restoration.md) | 原作者 C 工具鏈與機器碼 | 仍需另驗 | 靜態 | evidence-only | — |
+| [`re/112-c-choice-selector-restoration.md`](../re/112-c-choice-selector-restoration.md) | 自然玩家完整進言流程 | 固定 pointer／按鍵序列的局部 caller 不代證正常玩家入口 | 靜態 | evidence-only | — |
+| [`re/112-c-choice-selector-restoration.md`](../re/112-c-choice-selector-restoration.md) | 原版動態安裝 scroll helper | 原 `nullsub_5` 的已載入狀態另留證據界線 | 靜態 | evidence-only | — |
+| [`re/112-c-choice-selector-restoration.md`](../re/112-c-choice-selector-restoration.md) | 原作者工具鏈／C 機器碼 | 仍待確認 | 靜態 | evidence-only | — |
 | [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | `AH` 的完整欄位名稱 | 語意由日中原文並列確認，欄位名本身未定（§3） | 靜態 | evidence-only | — |
 | [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | #367–#372／#380–#385 的 AH／信賴度次要回覆 | 未解，不可當成完整的原版對話流程（§8） | 靜態 | evidence-only | — |
 | [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | #73／#77 | 未定位，不得拿來補接事件 6／7（§9） | 靜態 | actionable | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
@@ -328,7 +331,6 @@
 | [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | 補兵會不會補到隊長那一格 | `sub_1B413` 只在**待機數為 0** 那條路才判 `test si, 0FFh`（隊長格）；待機非 0 的路徑沒有排除它。remake 的 `reinforce` 是**一律不補隊長格**。要對得先在原版上量「隊長死後那一格會不會出現新的兵」 | 靜態 | evidence-only | — |
 | [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `+8+4k` 與 `+10+4k` 的語意 | 從軍團記錄 `+0x28+4k` 起搬進來的兩個 byte，`sub_19F58` 只讀 `+1`／`+3`，這兩格戰鬥中沒有讀取端被找到 | 靜態 | evidence-only | — |
 | [`re/83-post-battle-troop-accounting.md`](../re/83-post-battle-troop-accounting.md) | `word_1D31A` 的語意 | `sub_1AEA9` 數「在場且 `+0x19` 非零」的兵，`sub_1ADC8` 尾段拿它算優勢（`byte_1D31E`）。`+0x19` 是一個倒數計時器（`sub_1AB7C` 寫 `28h`、`sub_1ADC8` 每幀 `dec`），**它代表什麼還沒解** | 靜態 | evidence-only | — |
-| [`re/84-popup-row-band-and-world-cursor.md`](../re/84-popup-row-band-and-world-cursor.md) | IDA `0x1074D`／`0x1079B` | 選擇上／下移一格的實作沒有逐行讀（只從呼叫脈絡定名） | 靜態 | evidence-only | — |
 | [`re/85-march-target-hit-test.md`](../re/85-march-target-hit-test.md) | 圖塊 `0CBh`–`0D3h` 這 9 種各對應什麼外觀 | 只知道區間，沒有逐一對上據點類型（`+0x16` 低 4 位只有 5 種） | 靜態 | actionable | [#30](https://github.com/wicanr2/wolong_cht/issues/30) |
 | [`re/85-march-target-hit-test.md`](../re/85-march-target-hit-test.md) | 行軍途中被擋住怎麼處理 | 下令攻宛之後跑了 108 個遊戲日都沒有開戰，軍團沒有到達；`+0x00` 位元 5（被擋住）的實際觸發條件沒查 | 靜態 | actionable | [#30](https://github.com/wicanr2/wolong_cht/issues/30) |
 | [`re/86-march-turnback-at-peace.md`](../re/86-march-turnback-at-peace.md) | 掉頭之後為什麼停住 | 回到 87 之後 `+0x14` 等於 `+0x0E` ⇒ 到站 ⇒ `sub_14325` 分派，Stage 0 而 87 不是首都 ⇒ 什麼都不做。合理但沒有逐條驗過分派表的其他 Stage | 靜態 | merge-target | [#29](https://github.com/wicanr2/wolong_cht/issues/29) |
@@ -643,7 +645,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（433 條）
+## 2.6 其他（436 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -956,6 +958,9 @@
 | [`spec/231-c-input-mouse.md`](../spec/231-c-input-mouse.md) | counter 的真實初始化／timer cadence | 只驗原 consumer，不推算硬體時間 | 靜態 | evidence-only | — |
 | [`spec/231-c-input-mouse.md`](../spec/231-c-input-mouse.md) | 正常玩家 callback／訊息流程 | 局部完整 device 對照仍有 direct-entry 界線 | 靜態 | evidence-only | — |
 | [`spec/231-c-input-mouse.md`](../spec/231-c-input-mouse.md) | C 機器碼與原作者工具鏈 | 尚未確認 | 靜態 | evidence-only | — |
+| [`spec/232-c-choice-selector.md`](../spec/232-c-choice-selector.md) | 自然玩家／進言 producer | 局部 consumer 與固定序列不代證 | 靜態 | evidence-only | — |
+| [`spec/232-c-choice-selector.md`](../spec/232-c-choice-selector.md) | scroll helper 的執行期改寫 | 本輪依目前原始 image bytes，是否被改寫另追來源 | 靜態 | evidence-only | — |
+| [`spec/232-c-choice-selector.md`](../spec/232-c-choice-selector.md) | 原作者 C 工具鏈與機器碼 | 尚未確認 | 靜態 | evidence-only | — |
 | [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 反白列上換色的機制 | `38` §1.7.1：兩個色號各有一次量測，變換規則沒解 | 靜態 | evidence-only | — |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 空槽標記 | 原版用名稱欄第一個字 `0xD0A1`；remake 用「載得起來且玩家勢力有效」判定，兩者不等價 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 新遊戲共用 | remake 的啟動殼層是自己的畫面，還沒有換成這個四槽視窗 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |

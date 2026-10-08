@@ -189,6 +189,7 @@
 | [`docs/re/11-tactical-battle.md`](re/11-tactical-battle.md) | 11 — 戰術戰鬥：模組結構與戰場資料模型 | 模組骨架、戰場資料模型、核心移動／命中／傷害規則已大致解出並接入測試； 正常玩家已可由遭遇選單進入攻城戰術畫面並送出… | 2026-08-09 |
 | [`docs/re/110-c-talk-rendering-restoration.md`](re/110-c-talk-rendering-restoration.md) | 110：C TALK、參數標記與肖像讀檔 | 八個 C 函式／六個原始 handler 通過，O0/O2 各 1,277 全 RAM／VGA／ABI 相同，十錯版… | 2026-10-09 |
 | [`docs/re/111-c-input-mouse-restoration.md`](re/111-c-input-mouse-restoration.md) | 111：C 訊息等待、滑鼠分派與游標 | 19 個 C 函式／兩 raw 入口，O0/O2 各 210 全裝置／ABI 相同，三個背景還原與十二錯版通過。 | 2026-10-09 |
+| [`docs/re/112-c-choice-selector-restoration.md`](re/112-c-choice-selector-restoration.md) | 112：C 選單 selector、捲動與文字 callback | 14 named／兩 raw 入口通過；O0/O2 各 138 全裝置／ABI 相同，三個 XOR 還原與十二錯版通過。 | 2026-10-09 |
 | [`docs/re/12-diplomacy-dialogue.md`](re/12-diplomacy-dialogue.md) | 12 — 停戰說服訊息索引：#190–#198 | 三變體槽位與停戰說服這條索引路徑已證實；事件 6／7 的次要呼叫已定位， 但 formatter 參數契約與完整可見… | 2026-08-09 |
 | [`docs/re/13-pc98-numeric-window.md`](re/13-pc98-numeric-window.md) | 13 — DOS/V 數字輸入視窗量測與 CJK 版面決策 | 以 DOS/V 為唯一畫面基準；原始座標、DOS/V 96×64 內框 blit、3×6 每格操作、 實際按鍵 gl… | 2026-08-10 |
 | [`docs/re/14-mmap-mch-objects.md`](re/14-mmap-mch-objects.md) | 14 — MMAP.MCH 戰略地圖物件 | 資產格式、事件 12 的火災／暴動圖形鏈與 typed 動畫／移動時序 confirmed； type 3 的事件語… | 2026-08-10 |
@@ -440,6 +441,7 @@
 | [`docs/spec/23-city-info-window.md`](spec/23-city-info-window.md) | 23 — 據點情報視窗 | CONFORMED。版面已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/230-c-talk-rendering.md`](spec/230-c-talk-rendering.md) | 230：C 原始 TALK 與肖像快取 | CONFORMED。O0/O2 各 1,277 組全 RAM／VGA／ABI 相同，1,022 槽與十錯版通過。 | 2026-10-09 |
 | [`docs/spec/231-c-input-mouse.md`](spec/231-c-input-mouse.md) | 231：C 原始訊息等待與滑鼠游標 | CONFORMED。O0/O2 各 210 全裝置／ABI 相同，三個背景還原與十二錯版通過。 | 2026-10-09 |
+| [`docs/spec/232-c-choice-selector.md`](spec/232-c-choice-selector.md) | 232：C 原始選列、捲動與 popup caller | CONFORMED。O0/O2 各 138 全裝置／ABI 相同，三個 XOR 還原與十二錯版通過。 | 2026-10-09 |
 | [`docs/spec/24-corps-info-window.md`](spec/24-corps-info-window.md) | 24 — 軍團情報視窗 | CONFORMED。版面已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/25-slot-select-window.md`](spec/25-slot-select-window.md) | 25 — 四槽選擇視窗（新遊戲／讀取／儲存） | CONFORMED。讀取／儲存已照原版版面實作； 新遊戲仍走 remake 自己的啟動殼層（§5）。 | 2026-08-15 |
 | [`docs/spec/26-yes-no-dialog.md`](spec/26-yes-no-dialog.md) | 26 — ＹＥＳ／ＮＯ 對話框 | CONFORMED。版面與命中算式已照原版實作並有契約測試。 | 2026-08-15 |
