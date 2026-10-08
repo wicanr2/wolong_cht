@@ -257,6 +257,7 @@
 | [`docs/re/90-assembly-reconstruction.md`](re/90-assembly-reconstruction.md) | 90：組語基準：完整重建松崗版 KI.EXE | 整檔組語重建通過。指令來源、MZ 封裝與資料宣告可獨立產生相同 EXE。 | 2026-10-08 |
 | [`docs/re/91-c-rng-restoration.md`](re/91-c-rng-restoration.md) | 91：第一個 C 函式：sub_1ECE0 的語意還原與對照 | 局部語意對照通過。可讀 C 取數函式、呼叫介面適配層與 Go 資料規則均有收據。 | 2026-10-08 |
 | [`docs/re/92-c-rng-seed-restoration.md`](re/92-c-rng-seed-restoration.md) | 92：C 播種函式：固定 RTC 的原版與 Go 對照 | 局部播種對照通過。合法時分秒、明示 RTC AL 與堆疊邊界有原版/C/Go 收據。 | 2026-10-08 |
+| [`docs/re/93-c-game-clock-restoration.md`](re/93-c-game-clock-restoration.md) | 93：C 時鐘還原與年份邊界對照 | 局部語意對照通過。第三個 C 函式可回查原版控制流，並修正 Go 年份邊界。 | 2026-10-08 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-16 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -389,6 +390,8 @@
 | [`docs/spec/200-opening-move-delay.md`](spec/200-opening-move-delay.md) | 200 — 開場的兵晚一拍才走 | CONFORMED。 | 2026-09-11 |
 | [`docs/spec/201-c-rng-function.md`](spec/201-c-rng-function.md) | 201：sub_1ECE0 的 C 還原契約 | CONFORMED。原版與 C 的局部介面對照、C 與 Go 的資料規則對照均通過。 | 2026-10-08 |
 | [`docs/spec/202-c-rng-seed.md`](spec/202-c-rng-seed.md) | 202：sub_1EC82 的 C 播種契約 | CONFORMED。固定 RTC 回覆下，完整播種介面及合法時間矩陣的原版/C/Go 對照通過。 | 2026-10-08 |
+| [`docs/spec/203-c-game-clock.md`](spec/203-c-game-clock.md) | 203：sub_11D8E 的 C 時鐘契約 | CONFORMED。O0/O2 各 292,297 組原版/C 局部對照相同；callee 與等待輸入使用明示 fi… | 2026-10-08 |
+| [`docs/spec/204-year-999-1000.md`](spec/204-year-999-1000.md) | 204：年份上界在 999 與 1000 間交替 | CONFORMED。Go 年份修正通過冷測與全部 65,536 個 16-bit 年份入口對照。 | 2026-10-08 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |
 | [`docs/spec/23-city-info-window.md`](spec/23-city-info-window.md) | 23 — 據點情報視窗 | CONFORMED。版面已照原版實作並有契約測試。 | 2026-08-15 |

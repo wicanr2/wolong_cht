@@ -54,7 +54,7 @@ sub_11D8E:
     jb   loc_11DC1                   ;   → 進位到「月」
     cmp  word ptr ds:0CF6h, 3E8h     ; 年 < 1000 ?
     jb   loc_11DB8
-    mov  word ptr ds:0CF6h, 3E6h     ;   年封頂：設 998
+    mov  word ptr ds:0CF6h, 3E6h     ;   入口年 >=1000：設 998，再 inc 為 999
 loc_11DB8:
     inc  word ptr ds:0CF6h           ; 年++
     mov  byte ptr ds:0CF4h, 0        ; 月 = 0

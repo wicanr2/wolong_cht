@@ -7,7 +7,7 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-821 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+831 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
 - 日期：2026-10-08
 - 產生工具：`tools/re_open_questions.py`
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**815 列分布在 346 份文件，平均每份 2.4 列。**
+**825 列分布在 349 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -47,11 +47,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 192 | 185 | 6 | 1 |
+| 程式碼理解 | 196 | 189 | 6 | 1 |
 | 驗收 | 240 | 214 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 346 | 324 | 21 | 1 |
-| **合計** | **815** | 754 | 58 | 3 |
+| 其他 | 352 | 330 | 21 | 1 |
+| **合計** | **825** | 764 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,9 +59,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 303 |
+| `docs/spec/` | 309 |
 | `docs/playtest/` | 240 |
-| `docs/re/` | 192 |
+| `docs/re/` | 196 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
@@ -110,7 +110,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 | evidence-only | — |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 | evidence-only | — |
 
-## 2.3 程式碼理解（192 條）
+## 2.3 程式碼理解（196 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -306,6 +306,10 @@
 | [`re/92-c-rng-seed-restoration.md`](../re/92-c-rng-seed-restoration.md) | 非法 BCD、其他 CS、堆疊重疊 | 未驗證，不能外推 | 靜態 | evidence-only | — |
 | [`re/92-c-rng-seed-restoration.md`](../re/92-c-rng-seed-restoration.md) | C 機器碼匹配與玩家流程 | 未驗證，不宣稱整個 matching decompilation 完成 | 靜態 | evidence-only | — |
 | [`re/92-c-rng-seed-restoration.md`](../re/92-c-rng-seed-restoration.md) | XOR 的 AF | 本輪按工具模型比對，不聲稱硬體定義 | 靜態 | evidence-only | — |
+| [`re/93-c-game-clock-restoration.md`](../re/93-c-game-clock-restoration.md) | 月結、季節、世界更新與繪圖 | 未驗證完整 callee，fixture 只驗呼叫者如何接收其作用 | 靜態 | evidence-only | — |
+| [`re/93-c-game-clock-restoration.md`](../re/93-c-game-clock-restoration.md) | 等待 wall-clock | 未驗證 PIT 與硬體時序，不外推速度的實際秒數 | 靜態 | evidence-only | — |
+| [`re/93-c-game-clock-restoration.md`](../re/93-c-game-clock-restoration.md) | 原版 1000 年 UI 與長期玩家流程 | 未驗證，不從日期 bytes 外推畫面或存檔垂直鏈完成 | 靜態 | evidence-only | — |
+| [`re/93-c-game-clock-restoration.md`](../re/93-c-game-clock-restoration.md) | C 機器碼匹配 | 未驗證，原版 C 工具鏈尚未知；整檔匹配成果仍是組語基準 | 靜態 | evidence-only | — |
 
 ## 2.4 驗收（240 條）
 
@@ -563,7 +567,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（346 條）
+## 2.6 其他（352 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -784,6 +788,12 @@
 | [`spec/202-c-rng-seed.md`](../spec/202-c-rng-seed.md) | 非法 BCD 與堆疊重疊 | 未驗證，不能從合法資料層推定 | 靜態 | evidence-only | — |
 | [`spec/202-c-rng-seed.md`](../spec/202-c-rng-seed.md) | C 機器碼匹配 | 未驗證，這是 C 語意還原 | 靜態 | evidence-only | — |
 | [`spec/202-c-rng-seed.md`](../spec/202-c-rng-seed.md) | 玩家流程與 RTC 時序 | 未驗證，不作硬體時序考古 | 靜態 | evidence-only | — |
+| [`spec/203-c-game-clock.md`](../spec/203-c-game-clock.md) | `0x15358` | 月結；月已換，日仍為 0，小時／子刻尚未重設 | 靜態 | evidence-only | — |
+| [`spec/203-c-game-clock.md`](../spec/203-c-game-clock.md) | callee 完整作用 | 未驗證，fixture 不替代其原版語意 | 靜態 | evidence-only | — |
+| [`spec/203-c-game-clock.md`](../spec/203-c-game-clock.md) | 等待 wall-clock | 未驗證，不作 PIT driver 時序逆向 | 靜態 | evidence-only | — |
+| [`spec/203-c-game-clock.md`](../spec/203-c-game-clock.md) | C 機器碼與正常玩家流程 | 未驗證，保留局部語意對照的範圍 | 靜態 | evidence-only | — |
+| [`spec/204-year-999-1000.md`](../spec/204-year-999-1000.md) | 原版的 1000 年畫面格式 | 未驗證，原版 formatter 與正常 UI 另驗，不從日期 bytes 外推 | 靜態 | evidence-only | — |
+| [`spec/204-year-999-1000.md`](../spec/204-year-999-1000.md) | 長期玩家流程 | 未驗證，本輪只修已證實的日期轉移 | 靜態 | evidence-only | — |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 池的上限 | `sub_155EC` 的 `0xFFDC` 只在退兵路徑上驗過；月結加兵是不是同一支未查。**remake 兩條路徑現在都夾**（`economy.ClampReserve`），但那是照著同一個常數做的，不是證明原版共用同一支 | 靜態 | evidence-only | — |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 頭像的邊框 | `sub_107D2` 只 blit 64×64 的圖塊，**框在哪裡畫的沒找到**——場景 5 的 op 清單裡沒有頭像那一格的框 | 靜態 | evidence-only | — |

@@ -3,6 +3,23 @@
   "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
   "address_space": "IDA Pro 9.4 database linear",
   "functions": {
+    "sub_11D8E": {
+      "ida_linear": 73102,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/203-c-game-clock.md",
+      "evidence": "docs/re/93-c-game-clock-restoration.md",
+      "source": "tools/c_recovery/clock.c",
+      "header": "tools/c_recovery/clock.h",
+      "fixture": "tools/c_recovery/clock_fixture.h",
+      "source_sha256": "4a845847e050d0d7ff1ebd641fb827602a6ab10fc8fecd643584612e73158439",
+      "header_sha256": "40d3d4b630dabed9b3f7f98d492fa60734b2a0a6d86d30e0a2961738d2df7284",
+      "fixture_sha256": "0a7812df9b5331f463acc5fe8f03ae11c5f3313843b6d7119eaf29ac8433167b",
+      "receipt": "workplace/matching-decompilation/c-clock/verification.json",
+      "oracle_cases_per_optimization": 292297,
+      "go_cases_per_optimization": 292249,
+      "c_machine_code_match": false,
+      "scope": "Legal dates and all u16 year rollovers; explicit callee/poll fixtures; full registers, flags, call snapshots and sampled RAM; IF/TF=0; disjoint stack; AF follows dosgolem model."
+    },
     "sub_1EC82": {
       "ida_linear": 126082,
       "status": "semantic-conformed",

@@ -1807,3 +1807,10 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - RTC 為明示 fixture ISR 回覆，AL 保留為參數；原始程式與 INT／IRET 都實際執行。沒有把 dosgolem 缺少成功 RTC 的預設當成實機證據。
 - XOR AF 限於目前模型；非法 BCD、其他 CS、重疊堆疊、RTC 時序與玩家流程保持證據限制。
 - 出處與來源／工具身分在 [`docs/re/92`](docs/re/92-c-rng-seed-restoration.md)，研究契約在 [`docs/spec/202`](docs/spec/202-c-rng-seed.md)。
+
+## 2026-10-08：sub_11D8E 的 C 還原與年份邊界
+
+- 輸入為松崗 DOS/V KI.EXE，SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`；工具位址為 IDA 9.4 線性 `0x11D8E`–`0x11E17`，檔案偏移 `0x1F8E`–`0x2017`，右界不含。
+- 原版的年份進位是 999→1000→999，Go 的舊上限摘要與測試因此訂正。原始比較 bytes、固定 DB 身分、C 來源與完整收據在 [`docs/re/93`](docs/re/93-c-game-clock-restoration.md)。
+- O0/O2 各 292,297 組原版/C 與 292,249 組 Go 對照相同，全部 65,536 個年份入口納入；四個刻意錯誤版本皆被拒絕。推論等級已證實，範圍限原始時鐘與明示 callee／等待輸入。
+- 原版完整 callee、硬體 wall-clock、1000 年 UI 與正常長期玩家流程仍未驗證。整檔逐位元組匹配仍由組語基準提供，C 本輪完成局部語意還原。

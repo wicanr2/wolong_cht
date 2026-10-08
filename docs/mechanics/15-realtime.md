@@ -38,7 +38,7 @@
 | 五層時間單位如上 | **confirmed**（`sub_11D8E`） |
 | 每月天數表 `31 28 31 30 31 30 31 31 30 31 30 31` | **confirmed**（`ds:98ABh`） |
 | **二月固定 28 天，沒有閏年** | **confirmed** |
-| 年封頂在 999 | **confirmed**（`cmp year,3E8h` → 設 `3E6h`） |
+| 999 換年到 1000；入口年 >=1000 換年回到 999 | **confirmed**（IDA `0x11DAA`–`0x11DBC`；[`re/93`](../re/93-c-game-clock-restoration.md) 的全 16-bit 年份對照） |
 | 戰略速度存在 `ds:0CFAh`，`0` ＝ 不等待 | **confirmed** |
 | 戰術速度存在 `ds:0CFBh`，用之前 ×16 | **confirmed**（`sub_160A5`）|
 | 計時中斷 ＝ 音效驅動的回呼，**291.3 Hz** | **confirmed**（`docs/re/61`）|

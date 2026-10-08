@@ -18,7 +18,7 @@ package clock
 // 每月天數表。原版在 `ds:98ABh`，索引 1–12（索引 0 是填充用的 0）。
 //
 // ⚠ 二月固定 28 天，**原版沒有閏年判斷**。這不是簡化，是照抄——
-// 遊戲的年份跑到 999 就封頂，四年一閏在這裡沒有意義，
+// 原版上界在 999 與 1000 間交替（docs/spec/204），
 // 而加上閏年會讓月結的日期與原版錯開。
 var daysInMonth = [13]int{0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
 
@@ -47,8 +47,8 @@ const (
 	TicksPerDay = HoursPerDay * SubticksPerHour // 207
 
 	// MaxYear 是年份的上限。原版 `cmp word ptr ds:0CF6h, 3E8h`
-	// 超過就設回 `3E6h` 再 `inc`，實際效果是停在 999。
-	MaxYear = 999
+	// 999 換年到 1000；入口達 1000 時先設 998，再 inc 到 999。
+	MaxYear = 1000
 )
 
 // Clock 是遊戲時鐘的狀態。
@@ -138,8 +138,8 @@ func (c *Clock) Advance() Event {
 
 	if ev.Year {
 		if c.Year >= MaxYear {
-			// 原版：設 3E6h 後 inc → 停在 999。
-			c.Year = MaxYear - 1
+			// 原版：入口 >=1000 才設 3E6h，之後 inc 到 999。
+			c.Year = MaxYear - 2
 		}
 		c.Year++
 		c.Month = 0

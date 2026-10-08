@@ -105,7 +105,7 @@ func TestYearRollover(t *testing.T) {
 	}
 }
 
-// 年份封頂在 999（原版 cmp 3E8h → 設 3E6h → inc）。
+// 原版先比入口是否 >=1000；999 可增到 1000（docs/spec/204）。
 func TestYearCap(t *testing.T) {
 	c := New(999, 12, 31)
 	for i := 0; i < TicksPerDay; i++ {
@@ -116,6 +116,27 @@ func TestYearCap(t *testing.T) {
 	}
 	if c.Month != 1 || c.Day != 1 {
 		t.Errorf("= %d月%d日, want 1月1日", c.Month, c.Day)
+	}
+}
+
+func TestYearBoundaryAlternates(t *testing.T) {
+	for _, initial := range []int{998, 999, 1000, 1001, 65535} {
+		c := Clock{Year: initial, Month: 12, Day: 31, Hour: 23, Subtick: 8}
+		c.Advance()
+		want := initial + 1
+		if initial >= 1000 {
+			want = 999
+		}
+		if c.Year != want || c.Month != 1 || c.Day != 1 || c.Hour != 1 || c.Subtick != 0 {
+			t.Fatalf("initial year %d: %+v, want year %d at 1/1 1:0", initial, c, want)
+		}
+	}
+	c := Clock{Year: 999, Month: 12, Day: 31, Hour: 23, Subtick: 8}
+	c.Advance()
+	c.Month, c.Day, c.Hour, c.Subtick = 12, 31, 23, 8
+	c.Advance()
+	if c.Year != 999 {
+		t.Fatalf("second year rollover: %d, want 999", c.Year)
 	}
 }
 

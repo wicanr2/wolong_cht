@@ -149,6 +149,7 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 | [`90`](90-assembly-reconstruction.md) | 組語基準：24,376 條 IDA 指令全部匹配，完整 KI.EXE 逐位元組相同，附 C 函式定位台帳 |
 | [`91`](91-c-rng-restoration.md) | 第一個 C 函式：sub_1ECE0 原版/C 263,680 組、Go 263,168 組局部對照，含暫存器、旗標與堆疊邊界 |
 | [`92`](92-c-rng-seed-restoration.md) | C 播種：所有合法時分秒與固定 RTC 回覆，原版/C 86,420 組、Go 86,408 組相同 |
+| [`93`](93-c-game-clock-restoration.md) | C 時鐘：原版/C 292,297 組、Go 292,249 組相同，修正 999→1000→999 的年份邊界 |
 | [`21`](21-function-census.md) | 全函式覆蓋普查；**§3.1 為什麼要排除目錄型文件** |
 | [`24`](24-unread-function-catalogue.md) | 未讀函式的證據與下手順序 |
 | [`39`](39-remaining-unread.md) | 未讀函式的逐支歸屬（生成的，可重跑）|
