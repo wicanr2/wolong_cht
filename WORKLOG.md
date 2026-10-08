@@ -306,3 +306,15 @@
 - 分級語意、四函式／一 code 入口與公開驗證摘要進版控，台帳目前 174 函式／20 code 入口。組語分級註解重生後，24,714 指令與完整原 EXE 相同，三個組語錯版拒絕。
 - 文件與工具 21／25 通過，971 列分流與嚴格問題索引通過。新增規格份數已回填 README；四項既有缺圖／研究產物／教訓同步問題維持基線。Go package 檢查補上容器 HOME 與 cache 後同命令通過，研究 driver 正常被預設 build 排除。
 - 公開與本機收據、174 函式／20 入口來源、整檔組語、原版字庫、source digest 與 UID/GID 逐項核對。既有 root-owned 路徑仍 27 筆，沒有新 root 輸出；本輪容器已退出移除，依授權提交並推送來源及驗證紀錄。
+
+## 2026-10-09：TALK、參數與原始肖像載入
+
+- 前輪 `06fff77` 已推送，分類 progress，核對乾淨工作樹、逆向／IDA／backlink 路由與 Issue #22。依既有 commit／push 授權繼續完整 Goal，不把本輪 renderer 完成當成全專案完成。
+- 八個 named C 函式與六個原始 handler 共 743 bytes／376 指令，spec/230 READY 後接到真實字庫、數字、背景與肖像。保留原 near table、word offset、CF、LAHF／SAHF、原始四格替換與 DOS open／seek／read／close。
+- IDA 探針原先只按 basename 找出處，上一輪 spec/229 使匯出失敗。改完整 docs 唯讀掛載與完整路徑 resolver，同名錯目錄與越界拒絕通過，再從原 EXE 建一次性 DB。
+- driver 少了入口計數後補回，status 樣本的 AX personality 與 speaker 分離，避免越界索引。初期 corpus 格／像素單位混用讓 glyph 被裁切，字庫計數暴露假完整；改格座標 0，停止舊工作並以同 wrapper 全部重跑。
+- O0/O2 各 1,277 組全 RAM／四 plane／ABI／port／DOS API／像素相同，1,022 槽各一次、150 肖像、15,287 全形／178 半形、缺字 0。十個錯版與裁切工作量護欄拒絕通過，生成 C 在乾淨容器重生相同。
+- 正式 Go 保持既有實作，INT50 媒體 UI、自然事件／producer 與 C 機器碼沒有擴大完成聲明。分級語意與公開來源台帳目前 182 函式／26 code 入口；整檔 24,714 組語與 67,099-byte 原 EXE 仍匹配。
+- 較早三份訊息／快取文件回填可驗 backlink；直接位址 consumer 的「五支」改為三支，數字格式移出已解缺口，其餘 producer／屬性限制保留。976 列分流與嚴格問題索引通過，文件與工具 21／25 通過，四項既有缺檔／教訓問題維持基線。
+- 最新公開收據在驗完六個唯讀素材與 resolver 拒絕對照後重生，182 函式／26 入口的來源 binding、生成 C、編譯 flags、所有八個新入口與完整 RAM／plane 收據相符。研究 driver 預設 build 排除，所有輸出 UID/GID 1000:1000，既有 root-owned 路徑仍 27 筆。
+- 舊裁切工作已停止且刪除，最後全矩陣與每批工具容器皆已退出移除；依授權把還原來源、原始定位及驗證紀錄提交並推送 GitHub，完整 Goal 保持 active。

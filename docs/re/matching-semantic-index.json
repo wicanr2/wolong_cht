@@ -1226,6 +1226,118 @@
         "docs/re/109-c-number-raster-restoration.md",
         "docs/spec/229-c-number-raster.md"
       ]
+    },
+    "0x106F9": {
+      "meaning": "原始 TALK 逐字 renderer 的 near 包裝",
+      "level": "proven",
+      "sources": [
+        "docs/re/110-c-talk-rendering-restoration.md",
+        "docs/spec/230-c-talk-rendering.md"
+      ]
+    },
+    "0x1075B": {
+      "meaning": "原始八變體訊息索引、肖像／背景與 TALK 字串呼叫",
+      "level": "proven",
+      "sources": [
+        "docs/re/110-c-talk-rendering-restoration.md",
+        "docs/spec/230-c-talk-rendering.md"
+      ]
+    },
+    "0x107D2": {
+      "meaning": "原始四格環形肖像快取、miss 讀檔與四平面 blit",
+      "level": "proven",
+      "sources": [
+        "docs/re/110-c-talk-rendering-restoration.md",
+        "docs/spec/230-c-talk-rendering.md"
+      ]
+    },
+    "0x1084A": {
+      "meaning": "原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派",
+      "level": "proven",
+      "sources": [
+        "docs/re/110-c-talk-rendering-restoration.md",
+        "docs/spec/230-c-talk-rendering.md"
+      ]
+    },
+    "0x18853": {
+      "meaning": "原始狀態列清除／TALK 訊息 caller，FFFF 只清除",
+      "level": "proven",
+      "sources": [
+        "docs/re/110-c-talk-rendering-restoration.md",
+        "docs/spec/230-c-talk-rendering.md"
+      ]
+    },
+    "0x189A4": {
+      "meaning": "原始訊息框 map 標記與背景繪製 caller",
+      "level": "proven",
+      "sources": [
+        "docs/re/110-c-talk-rendering-restoration.md",
+        "docs/spec/230-c-talk-rendering.md"
+      ]
+    },
+    "0x1E38C": {
+      "meaning": "原始載入包裝與 CF 媒體重試分支；INT50 介面語意仍未知",
+      "level": "proven",
+      "sources": [
+        "docs/re/110-c-talk-rendering-restoration.md",
+        "docs/spec/230-c-talk-rendering.md"
+      ]
+    },
+    "0x1F4DF": {
+      "meaning": "原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/110-c-talk-rendering-restoration.md",
+        "docs/spec/230-c-talk-rendering.md"
+      ]
+    },
+    "0x108B2": {
+      "meaning": "原始 SS word 武將參數、直接／FF編號模式與呼び名 +8",
+      "level": "proven",
+      "sources": [
+        "docs/re/110-c-talk-rendering-restoration.md",
+        "docs/spec/230-c-talk-rendering.md"
+      ]
+    },
+    "0x108DB": {
+      "meaning": "原始 SS word 據點參數、直接／FF編號模式與名稱 +2",
+      "level": "proven",
+      "sources": [
+        "docs/re/110-c-talk-rendering-restoration.md",
+        "docs/spec/230-c-talk-rendering.md"
+      ]
+    },
+    "0x10904": {
+      "meaning": "原始 SS word 勢力參數、直接／FF編號與君主姓名",
+      "level": "proven",
+      "sources": [
+        "docs/re/110-c-talk-rendering-restoration.md",
+        "docs/spec/230-c-talk-rendering.md"
+      ]
+    },
+    "0x10939": {
+      "meaning": "原始玩家軍師呼び名，不消耗 SS 參數",
+      "level": "proven",
+      "sources": [
+        "docs/re/110-c-talk-rendering-restoration.md",
+        "docs/spec/230-c-talk-rendering.md"
+      ]
+    },
+    "0x1095B": {
+      "meaning": "原始玩家君主姓名，不消耗 SS 參數",
+      "level": "proven",
+      "sources": [
+        "docs/re/110-c-talk-rendering-restoration.md",
+        "docs/spec/230-c-talk-rendering.md"
+      ]
+    },
+    "0x1097E": {
+      "meaning": "原始無字形標記，消耗 SS word 並抵銷 48px cursor",
+      "level": "proven",
+      "sources": [
+        "docs/re/110-c-talk-rendering-restoration.md",
+        "docs/spec/230-c-talk-rendering.md"
+      ]
     }
   },
   "operands": {

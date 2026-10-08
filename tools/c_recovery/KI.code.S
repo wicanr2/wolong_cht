@@ -3100,11 +3100,11 @@ ret
 .org 0x8f9
 sub_106F9:
 # IDA 0x106f9; file 0x8f9; locator=proven; call    sub_1084A
-# ⚠ 函式 sub_106F9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_106F9; [proven] 原始 TALK 逐字 renderer 的 near 包裝; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 call .+337
 .org 0x8fc
 # IDA 0x106fc; file 0x8fc; locator=proven; retn
-# ⚠ 函式 sub_106F9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_106F9; [proven] 原始 TALK 逐字 renderer 的 near 包裝; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 ret
 .org 0x8fd
 sub_106FD:
@@ -3279,690 +3279,690 @@ ret
 .org 0x95b
 sub_1075B:
 # IDA 0x1075b; file 0x95b; locator=proven; push    ds
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push ds
 .org 0x95c
 # IDA 0x1075c; file 0x95c; locator=proven; push    si
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push si
 .org 0x95d
 # IDA 0x1075d; file 0x95d; locator=proven; push    ax
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push ax
 .org 0x95e
 # IDA 0x1075e; file 0x95e; locator=proven; mov     ds, cs:word_10D38
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 cs; mov ds, word ptr [0xd38]
 .org 0x963
 # IDA 0x10763; file 0x963; locator=proven; cmp     cx, 196h
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 cmp cx, 0x196
 .org 0x967
 # IDA 0x10767; file 0x967; locator=proven; jb      short loc_1077C
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 jb .+21
 .org 0x969
 # IDA 0x10769; file 0x969; locator=proven; sub     cx, 196h
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 sub cx, 0x196
 .org 0x96d
 # IDA 0x1076d; file 0x96d; locator=proven; shl     cx, 1
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl cx, 0x1
 .org 0x96f
 # IDA 0x1076f; file 0x96f; locator=proven; shl     cx, 1
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl cx, 0x1
 .org 0x971
 # IDA 0x10771; file 0x971; locator=proven; shl     cx, 1
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl cx, 0x1
 .org 0x973
 # IDA 0x10773; file 0x973; locator=proven; add     cl, ah
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} add cl, ah
 .org 0x975
 # IDA 0x10775; file 0x975; locator=proven; adc     ch, 0
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 adc ch, 0x0
 .org 0x978
 # IDA 0x10778; file 0x978; locator=proven; add     cx, 196h
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 add cx, 0x196
 .org 0x97c
 loc_1077C:
 # IDA 0x1077c; file 0x97c; locator=proven; shl     cx, 1
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl cx, 0x1
 .org 0x97e
 # IDA 0x1077e; file 0x97e; locator=proven; mov     si, cx
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} mov si, cx
 .org 0x980
 # IDA 0x10780; file 0x980; locator=proven; mov     si, [si]
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov si, word ptr [si]
 .org 0x982
 # IDA 0x10782; file 0x982; locator=proven; mov     cx, 510h
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov cx, 0x510
 .org 0x985
 # IDA 0x10785; file 0x985; locator=proven; call    sub_10BCD
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 call .+1096
 .org 0x988
 # IDA 0x10788; file 0x988; locator=proven; push    bx
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push bx
 .org 0x989
 # IDA 0x10789; file 0x989; locator=proven; mov     bh, bl
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} mov bh, bl
 .org 0x98b
 # IDA 0x1078b; file 0x98b; locator=proven; shl     bh, 1
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl bh, 0x1
 .org 0x98d
 # IDA 0x1078d; file 0x98d; locator=proven; shl     bh, 1
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl bh, 0x1
 .org 0x98f
 # IDA 0x1078f; file 0x98f; locator=proven; add     bh, bl
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} add bh, bl
 .org 0x991
 # IDA 0x10791; file 0x991; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} xor bl, bl
 .org 0x993
 # IDA 0x10793; file 0x993; locator=proven; add     bx, 280h
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 add bx, 0x280
 .org 0x997
 # IDA 0x10797; file 0x997; locator=proven; push    bx
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push bx
 .org 0x998
 # IDA 0x10798; file 0x998; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl dx, 0x1
 .org 0x99a
 # IDA 0x1079a; file 0x99a; locator=proven; add     bx, dx
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} add bx, dx
 .org 0x99c
 # IDA 0x1079c; file 0x99c; locator=proven; inc     bx
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 inc bx
 .org 0x99d
 # IDA 0x1079d; file 0x99d; locator=proven; call    sub_107D2
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 call .+53
 .org 0x9a0
 # IDA 0x107a0; file 0x9a0; locator=proven; pop     bx
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop bx
 .org 0x9a1
 # IDA 0x107a1; file 0x9a1; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl dx, 0x1
 .org 0x9a3
 # IDA 0x107a3; file 0x9a3; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl dx, 0x1
 .org 0x9a5
 # IDA 0x107a5; file 0x9a5; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl dx, 0x1
 .org 0x9a7
 # IDA 0x107a7; file 0x9a7; locator=proven; add     dx, 48h
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 add dx, 0x48
 .org 0x9aa
 # IDA 0x107aa; file 0x9aa; locator=proven; mov     cx, 40B0h
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov cx, 0x40b0
 .org 0x9ad
 # IDA 0x107ad; file 0x9ad; locator=proven; mov     ah, 0
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov ah, 0x0
 .org 0x9af
 # IDA 0x107af; file 0x9af; locator=proven; call    sub_10AD9
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 call .+810
 .org 0x9b2
 # IDA 0x107b2; file 0x9b2; locator=proven; add     dx, 8
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 add dx, 0x8
 .org 0x9b5
 # IDA 0x107b5; file 0x9b5; locator=proven; pop     bx
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop bx
 .org 0x9b6
 # IDA 0x107b6; file 0x9b6; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl bx, 0x1
 .org 0x9b8
 # IDA 0x107b8; file 0x9b8; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl bx, 0x1
 .org 0x9ba
 # IDA 0x107ba; file 0x9ba; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl bx, 0x1
 .org 0x9bc
 # IDA 0x107bc; file 0x9bc; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl bx, 0x1
 .org 0x9be
 # IDA 0x107be; file 0x9be; locator=proven; add     bx, 10h
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 add bx, 0x10
 .org 0x9c1
 # IDA 0x107c1; file 0x9c1; locator=proven; pop     ax
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop ax
 .org 0x9c2
 # IDA 0x107c2; file 0x9c2; locator=proven; mov     al, ah
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} mov al, ah
 .org 0x9c4
 # IDA 0x107c4; file 0x9c4; locator=proven; mov     ah, 0FFh
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov ah, 0xff
 .org 0x9c6
 # IDA 0x107c6; file 0x9c6; locator=proven; push    ax
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push ax
 .org 0x9c7
 # IDA 0x107c7; file 0x9c7; locator=proven; push    bx
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push bx
 .org 0x9c8
 # IDA 0x107c8; file 0x9c8; locator=proven; push    dx
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push dx
 .org 0x9c9
 # IDA 0x107c9; file 0x9c9; locator=proven; call    sub_106F9
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 call .-208
 .org 0x9cc
 # IDA 0x107cc; file 0x9cc; locator=proven; pop     dx
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop dx
 .org 0x9cd
 # IDA 0x107cd; file 0x9cd; locator=proven; pop     bx
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop bx
 .org 0x9ce
 # IDA 0x107ce; file 0x9ce; locator=proven; pop     ax
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop ax
 .org 0x9cf
 # IDA 0x107cf; file 0x9cf; locator=proven; pop     si
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop si
 .org 0x9d0
 # IDA 0x107d0; file 0x9d0; locator=proven; pop     ds
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop ds
 .org 0x9d1
 # IDA 0x107d1; file 0x9d1; locator=proven; retn
-# ⚠ 函式 sub_1075B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1075B; [proven] 原始八變體訊息索引、肖像／背景與 TALK 字串呼叫; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 ret
 .org 0x9d2
 sub_107D2:
 # IDA 0x107d2; file 0x9d2; locator=proven; push    ds
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push ds
 .org 0x9d3
 # IDA 0x107d3; file 0x9d3; locator=proven; push    ax
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push ax
 .org 0x9d4
 # IDA 0x107d4; file 0x9d4; locator=proven; push    bx
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push bx
 .org 0x9d5
 # IDA 0x107d5; file 0x9d5; locator=proven; push    cx
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push cx
 .org 0x9d6
 # IDA 0x107d6; file 0x9d6; locator=proven; push    dx
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push dx
 .org 0x9d7
 # IDA 0x107d7; file 0x9d7; locator=proven; push    si
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push si
 .org 0x9d8
 # IDA 0x107d8; file 0x9d8; locator=proven; push    di
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push di
 .org 0x9d9
 # IDA 0x107d9; file 0x9d9; locator=proven; push    bx
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push bx
 .org 0x9da
 # IDA 0x107da; file 0x9da; locator=proven; mov     bx, cs
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov bx, cs
 .org 0x9dc
 # IDA 0x107dc; file 0x9dc; locator=proven; mov     ds, bx
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov ds, bx
 .org 0x9de
 # IDA 0x107de; file 0x9de; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} xor bx, bx
 .org 0x9e0
 loc_107E0:
 # IDA 0x107e0; file 0x9e0; locator=proven; cmp     al, [bx+846h]
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 cmp al, byte ptr [bx+0x846]
 .org 0x9e4
 # IDA 0x107e4; file 0x9e4; locator=proven; jz      short loc_10828
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 jz .+68
 .org 0x9e6
 # IDA 0x107e6; file 0x9e6; locator=proven; inc     bx
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 inc bx
 .org 0x9e7
 # IDA 0x107e7; file 0x9e7; locator=proven; cmp     bl, 4
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 cmp bl, 0x4
 .org 0x9ea
 # IDA 0x107ea; file 0x9ea; locator=proven; jb      short loc_107E0
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 jb .-10
 .org 0x9ec
 # IDA 0x107ec; file 0x9ec; locator=proven; mov     bl, byte_10845
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov bl, byte ptr [0x845]
 .org 0x9f0
 # IDA 0x107f0; file 0x9f0; locator=proven; push    bx
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push bx
 .org 0x9f1
 # IDA 0x107f1; file 0x9f1; locator=proven; mov     [bx+846h], al
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov byte ptr [bx+0x846], al
 .org 0x9f5
 # IDA 0x107f5; file 0x9f5; locator=proven; xchg    bh, bl
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} xchg bh, bl
 .org 0x9f7
 # IDA 0x107f7; file 0x9f7; locator=proven; mov     si, bx
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} mov si, bx
 .org 0x9f9
 # IDA 0x107f9; file 0x9f9; locator=proven; inc     bh
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 inc bh
 .org 0x9fb
 # IDA 0x107fb; file 0x9fb; locator=proven; and     bh, 3
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 and bh, 0x3
 .org 0x9fe
 # IDA 0x107fe; file 0x9fe; locator=proven; mov     byte_10845, bh
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov byte ptr [0x845], bh
 .org 0xa02
 # IDA 0x10802; file 0xa02; locator=proven; mov     dx, 0D79h
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov dx, 0xd79
 .org 0xa05
 # IDA 0x10805; file 0xa05; locator=proven; shl     si, 1
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl si, 0x1
 .org 0xa07
 # IDA 0x10807; file 0xa07; locator=proven; shl     si, 1
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl si, 0x1
 .org 0xa09
 # IDA 0x10809; file 0xa09; locator=proven; shl     si, 1
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl si, 0x1
 .org 0xa0b
 # IDA 0x1080b; file 0xa0b; locator=proven; mov     bx, word_10D40
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov bx, word ptr [0xd40]
 .org 0xa0f
 # IDA 0x1080f; file 0xa0f; locator=proven; mov     ah, al
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} mov ah, al
 .org 0xa11
 # IDA 0x10811; file 0xa11; locator=proven; xor     cx, cx
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} xor cx, cx
 .org 0xa13
 # IDA 0x10813; file 0xa13; locator=proven; mov     al, cl
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} mov al, cl
 .org 0xa15
 # IDA 0x10815; file 0xa15; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl ax, 0x1
 .org 0xa17
 # IDA 0x10817; file 0xa17; locator=proven; rcl     cx, 1
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 rcl cx, 0x1
 .org 0xa19
 # IDA 0x10819; file 0xa19; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl ax, 0x1
 .org 0xa1b
 # IDA 0x1081b; file 0xa1b; locator=proven; rcl     cx, 1
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 rcl cx, 0x1
 .org 0xa1d
 # IDA 0x1081d; file 0xa1d; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl ax, 0x1
 .org 0xa1f
 # IDA 0x1081f; file 0xa1f; locator=proven; rcl     cx, 1
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 rcl cx, 0x1
 .org 0xa21
 # IDA 0x10821; file 0xa21; locator=proven; mov     di, 800h
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov di, 0x800
 .org 0xa24
 # IDA 0x10824; file 0xa24; locator=proven; call    sub_1E38C
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 call .-9368
 .org 0xa27
 # IDA 0x10827; file 0xa27; locator=proven; pop     bx
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop bx
 .org 0xa28
 loc_10828:
 # IDA 0x10828; file 0xa28; locator=proven; xchg    bl, bh
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} xchg bl, bh
 .org 0xa2a
 # IDA 0x1082a; file 0xa2a; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl bx, 0x1
 .org 0xa2c
 # IDA 0x1082c; file 0xa2c; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl bx, 0x1
 .org 0xa2e
 # IDA 0x1082e; file 0xa2e; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl bx, 0x1
 .org 0xa30
 # IDA 0x10830; file 0xa30; locator=proven; mov     si, bx
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} mov si, bx
 .org 0xa32
 # IDA 0x10832; file 0xa32; locator=proven; mov     ds, word_10D40
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov ds, word ptr [0xd40]
 .org 0xa36
 # IDA 0x10836; file 0xa36; locator=proven; pop     bx
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop bx
 .org 0xa37
 # IDA 0x10837; file 0xa37; locator=proven; mov     ax, 4004h
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov ax, 0x4004
 .org 0xa3a
 # IDA 0x1083a; file 0xa3a; locator=proven; call    sub_1FA37
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 call .-3587
 .org 0xa3d
 # IDA 0x1083d; file 0xa3d; locator=proven; pop     di
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop di
 .org 0xa3e
 # IDA 0x1083e; file 0xa3e; locator=proven; pop     si
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop si
 .org 0xa3f
 # IDA 0x1083f; file 0xa3f; locator=proven; pop     dx
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop dx
 .org 0xa40
 # IDA 0x10840; file 0xa40; locator=proven; pop     cx
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop cx
 .org 0xa41
 # IDA 0x10841; file 0xa41; locator=proven; pop     bx
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop bx
 .org 0xa42
 # IDA 0x10842; file 0xa42; locator=proven; pop     ax
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop ax
 .org 0xa43
 # IDA 0x10843; file 0xa43; locator=proven; pop     ds
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop ds
 .org 0xa44
 # IDA 0x10844; file 0xa44; locator=proven; retn
-# ⚠ 函式 sub_107D2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_107D2; [proven] 原始四格環形肖像快取、miss 讀檔與四平面 blit; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 ret
 .org 0xa4a
 sub_1084A:
 # IDA 0x1084a; file 0xa4a; locator=proven; push    es
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push es
 .org 0xa4b
 # IDA 0x1084b; file 0xa4b; locator=proven; push    cx
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push cx
 .org 0xa4c
 # IDA 0x1084c; file 0xa4c; locator=proven; push    bp
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push bp
 .org 0xa4d
 # IDA 0x1084d; file 0xa4d; locator=proven; mov     ch, ah
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} mov ch, ah
 .org 0xa4f
 loc_1084F:
 # IDA 0x1084f; file 0xa4f; locator=proven; push    dx
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push dx
 .org 0xa50
 loc_10850:
 # IDA 0x10850; file 0xa50; locator=proven; mov     bp, 10h
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov bp, 0x10
 .org 0xa53
 # IDA 0x10853; file 0xa53; locator=proven; mov     ax, [si]
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov ax, word ptr [si]
 .org 0xa55
 # IDA 0x10855; file 0xa55; locator=proven; xchg    al, ah
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} xchg al, ah
 .org 0xa57
 # IDA 0x10857; file 0xa57; locator=proven; inc     si
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 inc si
 .org 0xa58
 # IDA 0x10858; file 0xa58; locator=proven; inc     si
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 inc si
 .org 0xa59
 # IDA 0x10859; file 0xa59; locator=proven; and     ah, ah
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} and ah, ah
 .org 0xa5b
 # IDA 0x1085b; file 0xa5b; locator=proven; jz      short loc_1087B
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 jz .+32
 .org 0xa5d
 # IDA 0x1085d; file 0xa5d; locator=proven; cmp     ah, 5Ch
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 cmp ah, 0x5c
 .org 0xa60
 # IDA 0x10860; file 0xa60; locator=proven; jz      short loc_1088A
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 jz .+42
 .org 0xa62
 # IDA 0x10862; file 0xa62; locator=proven; call    sub_1F878
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 call .-4074
 .org 0xa65
 # IDA 0x10865; file 0xa65; locator=proven; jnb     short loc_1086B
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 jnb .+6
 .org 0xa67
 # IDA 0x10867; file 0xa67; locator=proven; mov     bp, 8
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov bp, 0x8
 .org 0xa6a
 # IDA 0x1086a; file 0xa6a; locator=proven; dec     si
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 dec si
 .org 0xa6b
 loc_1086B:
 # IDA 0x1086b; file 0xa6b; locator=proven; push    cx
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push cx
 .org 0xa6c
 # IDA 0x1086c; file 0xa6c; locator=proven; xchg    ax, cx
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 xchg ax, cx
 .org 0xa6d
 # IDA 0x1086d; file 0xa6d; locator=proven; mov     al, 3
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov al, 0x3
 .org 0xa6f
 # IDA 0x1086f; file 0xa6f; locator=proven; push    bx
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push bx
 .org 0xa70
 # IDA 0x10870; file 0xa70; locator=proven; push    dx
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push dx
 .org 0xa71
 # IDA 0x10871; file 0xa71; locator=proven; call    loc_1F75E
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 call .-4371
 .org 0xa74
 # IDA 0x10874; file 0xa74; locator=proven; pop     dx
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop dx
 .org 0xa75
 # IDA 0x10875; file 0xa75; locator=proven; pop     bx
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop bx
 .org 0xa76
 # IDA 0x10876; file 0xa76; locator=proven; pop     cx
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop cx
 .org 0xa77
 # IDA 0x10877; file 0xa77; locator=proven; add     dx, bp
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} add dx, bp
 .org 0xa79
 # IDA 0x10879; file 0xa79; locator=proven; jmp     short loc_10850
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 jmp .-41
 .org 0xa7b
 loc_1087B:
 # IDA 0x1087b; file 0xa7b; locator=proven; pop     dx
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop dx
 .org 0xa7c
 # IDA 0x1087c; file 0xa7c; locator=proven; and     ax, ax
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} and ax, ax
 .org 0xa7e
 # IDA 0x1087e; file 0xa7e; locator=proven; jz      short loc_10886
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 jz .+8
 .org 0xa80
 # IDA 0x10880; file 0xa80; locator=proven; dec     si
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 dec si
 .org 0xa81
 # IDA 0x10881; file 0xa81; locator=proven; add     bx, 10h
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 add bx, 0x10
 .org 0xa84
 # IDA 0x10884; file 0xa84; locator=proven; jmp     short loc_1084F
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 jmp .-53
 .org 0xa86
 loc_10886:
 # IDA 0x10886; file 0xa86; locator=proven; pop     bp
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop bp
 .org 0xa87
 # IDA 0x10887; file 0xa87; locator=proven; pop     cx
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop cx
 .org 0xa88
 # IDA 0x10888; file 0xa88; locator=proven; pop     es
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop es
 .org 0xa89
 # IDA 0x10889; file 0xa89; locator=proven; retn
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 ret
 .org 0xa8a
 loc_1088A:
 # IDA 0x1088a; file 0xa8a; locator=proven; sub     al, 31h
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 sub al, 0x31
 .org 0xa8c
 # IDA 0x1088c; file 0xa8c; locator=proven; push    ds
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push ds
 .org 0xa8d
 # IDA 0x1088d; file 0xa8d; locator=proven; push    cx
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push cx
 .org 0xa8e
 # IDA 0x1088e; file 0xa8e; locator=proven; push    si
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push si
 .org 0xa8f
 # IDA 0x1088f; file 0xa8f; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} xor ah, ah
 .org 0xa91
 # IDA 0x10891; file 0xa91; locator=proven; mov     si, ax
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} mov si, ax
 .org 0xa93
 # IDA 0x10893; file 0xa93; locator=proven; shl     si, 1
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl si, 0x1
 .org 0xa95
 # IDA 0x10895; file 0xa95; locator=proven; mov     ax, cs:[si+8A4h]
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 cs; mov ax, word ptr [si+0x8a4]
 .org 0xa9a
 # IDA 0x1089a; file 0xa9a; locator=proven; call    ax
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 call ax
 .org 0xa9c
 # IDA 0x1089c; file 0xa9c; locator=proven; pop     si
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop si
 .org 0xa9d
 # IDA 0x1089d; file 0xa9d; locator=proven; pop     cx
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop cx
 .org 0xa9e
 # IDA 0x1089e; file 0xa9e; locator=proven; pop     ds
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop ds
 .org 0xa9f
 # IDA 0x1089f; file 0xa9f; locator=proven; add     dx, 30h
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 add dx, 0x30
 .org 0xaa2
 # IDA 0x108a2; file 0xaa2; locator=proven; jmp     short loc_10850
-# ⚠ 函式 sub_1084A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1084A; [proven] 原始 TALK 雙 byte／半形、NUL 換行與七項 live near 分派; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 jmp .-82
 .org 0xaa4
 # IDA 0x108a4; file 0xaa4; locator=proven; mov     dl, 8
@@ -53314,105 +53314,105 @@ ret
 .org 0x8a53
 sub_18853:
 # IDA 0x18853; file 0x8a53; locator=proven; push    ax
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push ax
 .org 0x8a54
 # IDA 0x18854; file 0x8a54; locator=proven; push    bx
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push bx
 .org 0x8a55
 # IDA 0x18855; file 0x8a55; locator=proven; push    dx
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push dx
 .org 0x8a56
 # IDA 0x18856; file 0x8a56; locator=proven; mov     al, 93h
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov al, 0x93
 .org 0x8a58
 # IDA 0x18858; file 0x8a58; locator=proven; mov     dx, 0
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov dx, 0x0
 .org 0x8a5b
 # IDA 0x1885b; file 0x8a5b; locator=proven; mov     bx, 12h
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov bx, 0x12
 .org 0x8a5e
 # IDA 0x1885e; file 0x8a5e; locator=proven; push    ax
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push ax
 .org 0x8a5f
 # IDA 0x1885f; file 0x8a5f; locator=proven; push    cx
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push cx
 .org 0x8a60
 # IDA 0x18860; file 0x8a60; locator=proven; xor     al, al
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} xor al, al
 .org 0x8a62
 # IDA 0x18862; file 0x8a62; locator=proven; cmp     cx, 0FFFFh
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 cmp cx, 0xffff
 .org 0x8a65
 # IDA 0x18865; file 0x8a65; locator=proven; jz      short loc_18869
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 jz .+4
 .org 0x8a67
 # IDA 0x18867; file 0x8a67; locator=proven; mov     al, 1Eh
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov al, 0x1e
 .org 0x8a69
 loc_18869:
 # IDA 0x18869; file 0x8a69; locator=proven; mov     cx, 510h
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov cx, 0x510
 .org 0x8a6c
 # IDA 0x1886c; file 0x8a6c; locator=proven; call    sub_189A4
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 call .+312
 .org 0x8a6f
 # IDA 0x1886f; file 0x8a6f; locator=proven; pop     cx
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop cx
 .org 0x8a70
 # IDA 0x18870; file 0x8a70; locator=proven; pop     ax
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop ax
 .org 0x8a71
 # IDA 0x18871; file 0x8a71; locator=proven; cmp     cx, 0FFFFh
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 cmp cx, 0xffff
 .org 0x8a74
 # IDA 0x18874; file 0x8a74; locator=proven; jz      short loc_1887F
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 jz .+11
 .org 0x8a76
 # IDA 0x18876; file 0x8a76; locator=proven; mov     dx, 0
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov dx, 0x0
 .org 0x8a79
 # IDA 0x18879; file 0x8a79; locator=proven; mov     bx, 14h
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov bx, 0x14
 .org 0x8a7c
 # IDA 0x1887c; file 0x8a7c; locator=proven; call    sub_1075B
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 call .+32479
 .org 0x8a7f
 loc_1887F:
 # IDA 0x1887f; file 0x8a7f; locator=proven; pop     dx
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop dx
 .org 0x8a80
 # IDA 0x18880; file 0x8a80; locator=proven; pop     bx
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop bx
 .org 0x8a81
 # IDA 0x18881; file 0x8a81; locator=proven; pop     ax
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop ax
 .org 0x8a82
 # IDA 0x18882; file 0x8a82; locator=proven; retn
-# ⚠ 函式 sub_18853; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18853; [proven] 原始狀態列清除／TALK 訊息 caller，FFFF 只清除; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 ret
 .org 0x8a83
 # IDA 0x18883; file 0x8a83; locator=proven; push    bx
@@ -54026,149 +54026,149 @@ ret
 .org 0x8ba4
 sub_189A4:
 # IDA 0x189a4; file 0x8ba4; locator=proven; push    ax
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push ax
 .org 0x8ba5
 # IDA 0x189a5; file 0x8ba5; locator=proven; push    bx
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push bx
 .org 0x8ba6
 # IDA 0x189a6; file 0x8ba6; locator=proven; push    cx
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push cx
 .org 0x8ba7
 # IDA 0x189a7; file 0x8ba7; locator=proven; push    dx
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push dx
 .org 0x8ba8
 # IDA 0x189a8; file 0x8ba8; locator=proven; push    si
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push si
 .org 0x8ba9
 # IDA 0x189a9; file 0x8ba9; locator=proven; push    di
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push di
 .org 0x8baa
 # IDA 0x189aa; file 0x8baa; locator=proven; push    bp
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push bp
 .org 0x8bab
 # IDA 0x189ab; file 0x8bab; locator=proven; mov     si, bx
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} mov si, bx
 .org 0x8bad
 # IDA 0x189ad; file 0x8bad; locator=proven; mov     di, dx
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} mov di, dx
 .org 0x8baf
 # IDA 0x189af; file 0x8baf; locator=proven; mov     bp, cx
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} mov bp, cx
 .org 0x8bb1
 # IDA 0x189b1; file 0x8bb1; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} xor ah, ah
 .org 0x8bb3
 # IDA 0x189b3; file 0x8bb3; locator=proven; push    ax
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push ax
 .org 0x8bb4
 # IDA 0x189b4; file 0x8bb4; locator=proven; and     al, al
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} and al, al
 .org 0x8bb6
 # IDA 0x189b6; file 0x8bb6; locator=proven; jnz     short loc_189BA
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 jnz .+4
 .org 0x8bb8
 # IDA 0x189b8; file 0x8bb8; locator=proven; inc     ah
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 inc ah
 .org 0x8bba
 loc_189BA:
 # IDA 0x189ba; file 0x8bba; locator=proven; call    sub_1D5D4
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 call .+19482
 .org 0x8bbd
 # IDA 0x189bd; file 0x8bbd; locator=proven; pop     ax
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop ax
 .org 0x8bbe
 # IDA 0x189be; file 0x8bbe; locator=proven; add     si, 2
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 add si, 0x2
 .org 0x8bc1
 # IDA 0x189c1; file 0x8bc1; locator=proven; mov     bx, si
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} mov bx, si
 .org 0x8bc3
 # IDA 0x189c3; file 0x8bc3; locator=proven; mov     dx, di
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} mov dx, di
 .org 0x8bc5
 # IDA 0x189c5; file 0x8bc5; locator=proven; mov     cx, bp
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} mov cx, bp
 .org 0x8bc7
 # IDA 0x189c7; file 0x8bc7; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl bx, 0x1
 .org 0x8bc9
 # IDA 0x189c9; file 0x8bc9; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl dx, 0x1
 .org 0x8bcb
 # IDA 0x189cb; file 0x8bcb; locator=proven; shl     cx, 1
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 shl cx, 0x1
 .org 0x8bcd
 # IDA 0x189cd; file 0x8bcd; locator=proven; and     al, al
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} and al, al
 .org 0x8bcf
 # IDA 0x189cf; file 0x8bcf; locator=proven; jz      short loc_189D3
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 jz .+4
 .org 0x8bd1
 # IDA 0x189d1; file 0x8bd1; locator=proven; mov     ah, al
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} mov ah, al
 .org 0x8bd3
 loc_189D3:
 # IDA 0x189d3; file 0x8bd3; locator=proven; call    sub_189DE
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 call .+11
 .org 0x8bd6
 # IDA 0x189d6; file 0x8bd6; locator=proven; pop     bp
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop bp
 .org 0x8bd7
 # IDA 0x189d7; file 0x8bd7; locator=proven; pop     di
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop di
 .org 0x8bd8
 # IDA 0x189d8; file 0x8bd8; locator=proven; pop     si
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop si
 .org 0x8bd9
 # IDA 0x189d9; file 0x8bd9; locator=proven; pop     dx
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop dx
 .org 0x8bda
 # IDA 0x189da; file 0x8bda; locator=proven; pop     cx
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop cx
 .org 0x8bdb
 # IDA 0x189db; file 0x8bdb; locator=proven; pop     bx
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop bx
 .org 0x8bdc
 # IDA 0x189dc; file 0x8bdc; locator=proven; pop     ax
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop ax
 .org 0x8bdd
 # IDA 0x189dd; file 0x8bdd; locator=proven; retn
-# ⚠ 函式 sub_189A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189A4; [proven] 原始訊息框 map 標記與背景繪製 caller; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 ret
 .org 0x8bde
 sub_189DE:
@@ -88468,84 +88468,84 @@ ret
 .org 0xe58c
 sub_1E38C:
 # IDA 0x1e38c; file 0xe58c; locator=proven; push    ds
-# ⚠ 函式 sub_1E38C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E38C; [proven] 原始載入包裝與 CF 媒體重試分支；INT50 介面語意仍未知; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push ds
 .org 0xe58d
 # IDA 0x1e38d; file 0xe58d; locator=proven; push    ax
-# ⚠ 函式 sub_1E38C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E38C; [proven] 原始載入包裝與 CF 媒體重試分支；INT50 介面語意仍未知; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push ax
 .org 0xe58e
 # IDA 0x1e38e; file 0xe58e; locator=proven; push    bx
-# ⚠ 函式 sub_1E38C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E38C; [proven] 原始載入包裝與 CF 媒體重試分支；INT50 介面語意仍未知; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push bx
 .org 0xe58f
 # IDA 0x1e38f; file 0xe58f; locator=proven; push    cx
-# ⚠ 函式 sub_1E38C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E38C; [proven] 原始載入包裝與 CF 媒體重試分支；INT50 介面語意仍未知; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push cx
 .org 0xe590
 # IDA 0x1e390; file 0xe590; locator=proven; push    dx
-# ⚠ 函式 sub_1E38C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E38C; [proven] 原始載入包裝與 CF 媒體重試分支；INT50 介面語意仍未知; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push dx
 .org 0xe591
 # IDA 0x1e391; file 0xe591; locator=proven; push    si
-# ⚠ 函式 sub_1E38C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E38C; [proven] 原始載入包裝與 CF 媒體重試分支；INT50 介面語意仍未知; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push si
 .org 0xe592
 # IDA 0x1e392; file 0xe592; locator=proven; push    di
-# ⚠ 函式 sub_1E38C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E38C; [proven] 原始載入包裝與 CF 媒體重試分支；INT50 介面語意仍未知; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push di
 .org 0xe593
 # IDA 0x1e393; file 0xe593; locator=proven; call    sub_1F4DF
-# ⚠ 函式 sub_1E38C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E38C; [proven] 原始載入包裝與 CF 媒體重試分支；INT50 介面語意仍未知; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 call .+4428
 .org 0xe596
 # IDA 0x1e396; file 0xe596; locator=proven; pop     di
-# ⚠ 函式 sub_1E38C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E38C; [proven] 原始載入包裝與 CF 媒體重試分支；INT50 介面語意仍未知; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop di
 .org 0xe597
 # IDA 0x1e397; file 0xe597; locator=proven; pop     si
-# ⚠ 函式 sub_1E38C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E38C; [proven] 原始載入包裝與 CF 媒體重試分支；INT50 介面語意仍未知; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop si
 .org 0xe598
 # IDA 0x1e398; file 0xe598; locator=proven; pop     dx
-# ⚠ 函式 sub_1E38C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E38C; [proven] 原始載入包裝與 CF 媒體重試分支；INT50 介面語意仍未知; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop dx
 .org 0xe599
 # IDA 0x1e399; file 0xe599; locator=proven; pop     cx
-# ⚠ 函式 sub_1E38C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E38C; [proven] 原始載入包裝與 CF 媒體重試分支；INT50 介面語意仍未知; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop cx
 .org 0xe59a
 # IDA 0x1e39a; file 0xe59a; locator=proven; pop     bx
-# ⚠ 函式 sub_1E38C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E38C; [proven] 原始載入包裝與 CF 媒體重試分支；INT50 介面語意仍未知; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop bx
 .org 0xe59b
 # IDA 0x1e39b; file 0xe59b; locator=proven; pop     ax
-# ⚠ 函式 sub_1E38C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E38C; [proven] 原始載入包裝與 CF 媒體重試分支；INT50 介面語意仍未知; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop ax
 .org 0xe59c
 # IDA 0x1e39c; file 0xe59c; locator=proven; pop     ds
-# ⚠ 函式 sub_1E38C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E38C; [proven] 原始載入包裝與 CF 媒體重試分支；INT50 介面語意仍未知; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop ds
 .org 0xe59d
 # IDA 0x1e39d; file 0xe59d; locator=proven; jnb     short locret_1E3A5
-# ⚠ 函式 sub_1E38C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E38C; [proven] 原始載入包裝與 CF 媒體重試分支；INT50 介面語意仍未知; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 jnb .+8
 .org 0xe59f
 # IDA 0x1e39f; file 0xe59f; locator=proven; mov     ah, 0
-# ⚠ 函式 sub_1E38C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E38C; [proven] 原始載入包裝與 CF 媒體重試分支；INT50 介面語意仍未知; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov ah, 0x0
 .org 0xe5a1
 # IDA 0x1e3a1; file 0xe5a1; locator=proven; int     50h
-# ⚠ 函式 sub_1E38C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E38C; [proven] 原始載入包裝與 CF 媒體重試分支；INT50 介面語意仍未知; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 int 0x50
 .org 0xe5a3
 # IDA 0x1e3a3; file 0xe5a3; locator=proven; jmp     short sub_1E38C
-# ⚠ 函式 sub_1E38C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E38C; [proven] 原始載入包裝與 CF 媒體重試分支；INT50 介面語意仍未知; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 jmp .-23
 .org 0xe5a5
 locret_1E3A5:
 # IDA 0x1e3a5; file 0xe5a5; locator=proven; retn
-# ⚠ 函式 sub_1E38C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E38C; [proven] 原始載入包裝與 CF 媒體重試分支；INT50 介面語意仍未知; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 ret
 .org 0xe5a6
 sub_1E3A6:
@@ -96217,145 +96217,145 @@ ret
 .org 0xf6df
 sub_1F4DF:
 # IDA 0x1f4df; file 0xf6df; locator=proven; push    bp
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push bp
 .org 0xf6e0
 # IDA 0x1f4e0; file 0xf6e0; locator=proven; sub     sp, 6
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 sub sp, 0x6
 .org 0xf6e3
 # IDA 0x1f4e3; file 0xf6e3; locator=proven; mov     bp, sp
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} mov bp, sp
 .org 0xf6e5
 # IDA 0x1f4e5; file 0xf6e5; locator=proven; mov     [bp+2], ax
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov word ptr [bp+0x2], ax
 .org 0xf6e8
 # IDA 0x1f4e8; file 0xf6e8; locator=proven; mov     [bp+4], cx
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov word ptr [bp+0x4], cx
 .org 0xf6eb
 # IDA 0x1f4eb; file 0xf6eb; locator=proven; mov     ax, 3D00h
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov ax, 0x3d00
 .org 0xf6ee
 # IDA 0x1f4ee; file 0xf6ee; locator=proven; int     21h
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 int 0x21
 .org 0xf6f0
 # IDA 0x1f4f0; file 0xf6f0; locator=proven; jb      short loc_1F51F
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 jb .+47
 .org 0xf6f2
 # IDA 0x1f4f2; file 0xf6f2; locator=proven; push    ds
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 push ds
 .org 0xf6f3
 # IDA 0x1f4f3; file 0xf6f3; locator=proven; mov     ds, bx
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov ds, bx
 .org 0xf6f5
 # IDA 0x1f4f5; file 0xf6f5; locator=proven; mov     [bp+0], ax
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov word ptr [bp], ax
 .org 0xf6f8
 # IDA 0x1f4f8; file 0xf6f8; locator=proven; mov     bx, ax
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} mov bx, ax
 .org 0xf6fa
 # IDA 0x1f4fa; file 0xf6fa; locator=proven; mov     ax, 4200h
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov ax, 0x4200
 .org 0xf6fd
 # IDA 0x1f4fd; file 0xf6fd; locator=proven; mov     cx, [bp+4]
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov cx, word ptr [bp+0x4]
 .org 0xf700
 # IDA 0x1f500; file 0xf700; locator=proven; mov     dx, [bp+2]
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov dx, word ptr [bp+0x2]
 .org 0xf703
 # IDA 0x1f503; file 0xf703; locator=proven; int     21h
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 int 0x21
 .org 0xf705
 # IDA 0x1f505; file 0xf705; locator=proven; jb      short loc_1F513
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 jb .+14
 .org 0xf707
 # IDA 0x1f507; file 0xf707; locator=proven; mov     ah, 3Fh
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov ah, 0x3f
 .org 0xf709
 # IDA 0x1f509; file 0xf709; locator=proven; mov     dx, si
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} mov dx, si
 .org 0xf70b
 # IDA 0x1f50b; file 0xf70b; locator=proven; mov     cx, di
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} mov cx, di
 .org 0xf70d
 # IDA 0x1f50d; file 0xf70d; locator=proven; mov     bx, [bp+0]
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov bx, word ptr [bp]
 .org 0xf710
 # IDA 0x1f510; file 0xf710; locator=proven; int     21h
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 int 0x21
 .org 0xf712
 # IDA 0x1f512; file 0xf712; locator=proven; pop     ds
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop ds
 .org 0xf713
 loc_1F513:
 # IDA 0x1f513; file 0xf713; locator=proven; lahf
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 lahf
 .org 0xf714
 # IDA 0x1f514; file 0xf714; locator=proven; mov     ah, 3Eh
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov ah, 0x3e
 .org 0xf716
 # IDA 0x1f516; file 0xf716; locator=proven; mov     bx, [bp+0]
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov bx, word ptr [bp]
 .org 0xf719
 # IDA 0x1f519; file 0xf719; locator=proven; int     21h
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 int 0x21
 .org 0xf71b
 # IDA 0x1f51b; file 0xf71b; locator=proven; sahf
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 sahf
 .org 0xf71c
 # IDA 0x1f51c; file 0xf71c; locator=proven; mov     ax, 0FFFFh
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 mov ax, 0xffff
 .org 0xf71f
 loc_1F51F:
 # IDA 0x1f51f; file 0xf71f; locator=proven; mov     dx, ax
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 {load} mov dx, ax
 .org 0xf721
 # IDA 0x1f521; file 0xf721; locator=proven; lahf
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 lahf
 .org 0xf722
 # IDA 0x1f522; file 0xf722; locator=proven; add     sp, 6
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 add sp, 0x6
 .org 0xf725
 # IDA 0x1f525; file 0xf725; locator=proven; pop     bp
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 pop bp
 .org 0xf726
 # IDA 0x1f526; file 0xf726; locator=proven; sahf
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 sahf
 .org 0xf727
 # IDA 0x1f527; file 0xf727; locator=proven; retn
-# ⚠ 函式 sub_1F4DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4DF; [proven] 原始 DOS open／seek／read／close，SS frame 與 LAHF／SAHF／CF; 出處: docs/re/110-c-talk-rendering-restoration.md, docs/spec/230-c-talk-rendering.md
 ret
 .org 0xf728
 # IDA 0x1f528; file 0xf728; locator=proven; push    di

@@ -74,6 +74,7 @@ if [[ "$MODE" == probe ]]; then
     --mount "type=bind,src=$ROOT/workplace/orig/$VER,dst=/input,readonly" \
     --mount "type=bind,src=$ROOT/tools,dst=/tools,readonly" \
     --mount "type=bind,src=$ROOT/docs/re,dst=/evidence,readonly" \
+    --mount "type=bind,src=$ROOT/docs,dst=/documents,readonly" \
     --mount "type=bind,src=$OUTPUT,dst=/output" \
     --mount "type=bind,src=$SCRATCH,dst=/work" \
     --workdir /work --entrypoint /bin/bash "$IMAGE_PY" -c '

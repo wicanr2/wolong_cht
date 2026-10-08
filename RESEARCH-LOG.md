@@ -1932,3 +1932,10 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - 四個 C 函式 245 bytes 與一個原始 code 入口 43 bytes，共 143 原始指令。保留 DX:AX 補數 carry、byte 欄寬、真實數字／負號／背景、DF／CH、SS 參數與日期欄位。第一個 DIV 的 AX quotient 限制記為明示範圍。
 - O0/O2 各 4,881 組完整 1 MB RAM／四 plane／ABI／port／內容區像素相同，八個錯版拒絕，生成 C 在乾淨容器重生相同。原版執行 guest，C 用 native 運算與獨立 VGA 裝置；不回填原版輸出。
 - 組語只增加分級註解，24,714 指令／56,197 code bytes 與完整 67,099-byte EXE 仍匹配。C 台帳增至 174 函式／20 code 入口；正式 Go、正常玩家流程與 C 機器碼完成聲明維持原範圍。
+
+## 2026-10-09：TALK 與肖像快取的原始 C 閉包
+
+- 固定 DOS/V KI.EXE、TALK、四劇本、肖像與字庫，IDA9.4 DB `a163c3d4d90122c716b690e2af60b03d7bc60e6adaf79e9758650238d2e2f87e`。原始位址、533-byte 八函式、210-byte 六 handler 與完整 hash 見 [re/110](docs/re/110-c-talk-rendering-restoration.md)。
+- 376 原始指令為 native C；完整七個 live near table、SS 參數、原姓名／呼び名、八變體、字形、數字、背景與四格肖像快取接在同一條鏈。DOS ABI 用獨立平台 API，C 不執行 guest CPU。
+- O0/O2 各 1,277 全 RAM／四 plane／ABI／port／API／像素相同；1,022 槽實際 SI、150 肖像、15,287 全形／178 半形字模、無缺字與十個錯版通過。快取 hit 零 I/O，miss 四 API，低階不存在檔案保留原 CF 返回。
+- 初期以像素 X 當文字格，導致訊息 glyph 裁切而兩側仍相同。修正輸入後完整重生，加入字庫工作量下限與裁切形狀拒絕護欄。直接位址形式僅三個參數 handler，舊「五支」泛稱已回填；上游 producer 與 INT50 媒體介面維持原證據限制。

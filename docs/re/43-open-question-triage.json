@@ -5759,19 +5759,6 @@
     },
     {
       "file": "docs/re/79-talk-marker-handlers.md",
-      "item": "`ah ≠ 0xFF` 的直接位址形式誰在用",
-      "status": "五支都留了這條路（參數直接當段內位址）。呼叫端有沒有真的用它，要逐個 `sub_18810` 呼叫點看 `push` 進去的值",
-      "section": "5. 未解",
-      "domain": "程式碼理解",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-7ac28ab2092a585fa118",
-      "classification": "evidence-only",
-      "github_issue": null,
-      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
-    },
-    {
-      "file": "docs/re/79-talk-marker-handlers.md",
       "item": "`loc_10701` 的 `al = 3`",
       "status": "五支都傳 3。屬性的位元編碼見 [`28`](28-text-number-rendering.md)，`al` 那一格沒逐位讀",
       "section": "5. 未解",
@@ -5779,19 +5766,6 @@
       "verdict": "靜態",
       "occurrence": 0,
       "id": "oq-2b91ee1efa5ca75c5764",
-      "classification": "evidence-only",
-      "github_issue": null,
-      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
-    },
-    {
-      "file": "docs/re/79-talk-marker-handlers.md",
-      "item": "`\\7` 的數值格式",
-      "status": "進到 `sub_1062F` 之後的位數／補零規則沒逐行讀",
-      "section": "5. 未解",
-      "domain": "程式碼理解",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-72b0c5cde075af2f2b40",
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
@@ -12633,6 +12607,97 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "matching C 局部數字對照的證據限制，保留原版工具鏈／正常玩家／DIV 例外邊界，不代替現行 remake Issue 驗收。"
+    },
+    {
+      "file": "docs/re/110-c-talk-rendering-restoration.md",
+      "item": "原版 INT 50h 媒體錯誤介面",
+      "status": "保留呼叫與重試分支；自然錯誤介面另有原始初始化依賴",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-5ec14c11bc986ccef15c",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原始 C renderer 對照的證據界線，INT50／正常玩家與原作者工具鏈分開記錄，不代替現行 remake Issue 驗收。"
+    },
+    {
+      "file": "docs/re/110-c-talk-rendering-restoration.md",
+      "item": "自然玩家完整事件 UI",
+      "status": "此 renderer／caller 對照不代證完整輸入流程",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-95f83d20a01d19e957e3",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原始 C renderer 對照的證據界線，INT50／正常玩家與原作者工具鏈分開記錄，不代替現行 remake Issue 驗收。"
+    },
+    {
+      "file": "docs/re/110-c-talk-rendering-restoration.md",
+      "item": "原作者工具鏈與 C 機器碼",
+      "status": "語意對照不證明 C 機器碼匹配",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-4b0795e8859947ee4462",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原始 C renderer 對照的證據界線，INT50／正常玩家與原作者工具鏈分開記錄，不代替現行 remake Issue 驗收。"
+    },
+    {
+      "file": "docs/re/79-talk-marker-handlers.md",
+      "item": "`ah ≠ 0xFF` 的直接位址形式誰在用",
+      "status": "`\\1`–`\\3` 的三個參數 handler 支援直接位址；`\\4`／`\\5` 讀玩家記錄且不消耗 SS 參數。正常呼叫端哪些真的送直接位址，仍要逐個 `sub_18810` 呼叫點看 `push` 值；後續消費端證據見 [`110`](110-c-talk-rendering-restoration.md)",
+      "section": "5. 未解",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-42ce1c1ca83de708d9aa",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
+    },
+    {
+      "file": "docs/spec/230-c-talk-rendering.md",
+      "item": "INT 50h 與實機磁碟時序",
+      "status": "保留原始呼叫，不以平台 API 代證原媒體錯誤 UI 或 wall-clock",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-2cc464b410498762436a",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原始 C renderer 對照的證據界線，INT50／正常玩家與原作者工具鏈分開記錄，不代替現行 remake Issue 驗收。"
+    },
+    {
+      "file": "docs/spec/230-c-talk-rendering.md",
+      "item": "正常玩家事件流程",
+      "status": "renderer 接線不取代自然輸入驗收",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-03837e04d2ba2ea4ae04",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原始 C renderer 對照的證據界線，INT50／正常玩家與原作者工具鏈分開記錄，不代替現行 remake Issue 驗收。"
+    },
+    {
+      "file": "docs/spec/230-c-talk-rendering.md",
+      "item": "原作者 C 工具鏈與機器碼",
+      "status": "尚未確認",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-6f9f1e0a72761aa3cf6e",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原始 C renderer 對照的證據界線，INT50／正常玩家與原作者工具鏈分開記錄，不代替現行 remake Issue 驗收。"
     }
   ]
 }

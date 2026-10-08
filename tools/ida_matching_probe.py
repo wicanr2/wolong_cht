@@ -29,6 +29,13 @@ TARGETS = (0x1ECE0, 0x11D8E, 0x131AE)
 SEMANTICS = {}
 
 
+def evidence_path(source, docs_root=Path('/documents')):
+    path = Path(source)
+    if path.is_absolute() or '..' in path.parts or not path.parts or path.parts[0] != 'docs':
+        raise ValueError(f'invalid semantic evidence path: {source}')
+    return docs_root / path.relative_to('docs')
+
+
 def annotation(kind, key, original=None):
     row = SEMANTICS.get(kind, {}).get(key)
     if row and original is not None and row.get('original') != original:
@@ -81,7 +88,7 @@ def main():
                 if row['level'] not in ('proven', 'strong inference', 'hypothesis', 'unknown'):
                     raise ValueError('ungraded semantic index row')
                 for source in row['sources']:
-                    if not Path('/evidence', Path(source).name).is_file():
+                    if not evidence_path(source).is_file():
                         raise ValueError(f'missing semantic evidence: {source}')
     functions = list(idautils.Functions())
     inventory = []

@@ -162,3 +162,10 @@ ax = 9000h >> cl → 寫 [bx+50h]、[bx+51h]、[bx+0A0h]、[bx+0A1h]
 | 項目 | 現況 |
 |---|---|
 | `cs:word_10D40` | 肖像圖庫所在的段，誰載入它未追 |
+
+## 後續原始 C TALK
+
+2026-10-09：[re/110](110-c-talk-rendering-restoration.md) 保留 `sub_107D2` 的四格環形快取、
+`sub_1E38C`／`sub_1F4DF` 的原始 DOS ABI，實際讀取 KAOGRF 2,048-byte 肖像。
+命中不讀檔也不前進 cursor；替換保持原先順序。`word_10D40` 的來源段指派仍由較早範圍定位，
+本輪設定該段作同狀態輸入，不將它的初始化 producer 冒稱為已還原。
