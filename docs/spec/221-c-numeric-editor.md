@@ -45,3 +45,9 @@ O0/O2 全 register、FLAGS、SS、callee trace、控制欄位與完整 RAM 抽�
 
 後續 C 熱區證據見 [spec/222](222-c-hotspot-map.md)。本規格原始 bytes／ABI 收據保留，
 `sub_17D5F` 的十八格導覽更正為 raw 熱區登記，舊 `glyph` 群組名不作語意證據。
+
+## 後續 C 數字 raster
+
+`sub_1062F` 已由 [spec/229](229-c-number-raster.md) 的真實數字字庫與 O0/O2 全 RAM／VGA
+收據閉合。此規格原有 editor 收據保留舊 primitive 邊界；正常玩家 UI 與完整新 renderer 接線
+需要另以同狀態原版流程驗證，本輪不升級原 editor 的完成聲明。

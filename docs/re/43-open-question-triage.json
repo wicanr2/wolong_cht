@@ -1,7 +1,7 @@
 {
   "schema": "wolong-re-open-question-triage/1",
   "generated_by": "tools/re_triage.py",
-  "generated_on": "2026-09-14",
+  "generated_on": "2026-10-09",
   "source": "tools/re_open_questions.py",
   "source_note": "每列以來源檔、章節、內容、狀態與 occurrence 固定指紋；內容變動必須重新稽核。",
   "classification_policy": {
@@ -12555,6 +12555,84 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "固定原始 C glyph／平台字庫證據界線；原始 TSR／時序、自然 UI 與 C 機器碼不由本矩陣代證。"
+    },
+    {
+      "file": "docs/re/109-c-number-raster-restoration.md",
+      "item": "原作者 C 工具鏈與機器碼",
+      "status": "native C 語意測試不證明編譯匹配",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-f02ff1dda7becf5b862a",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "matching C 局部數字對照的證據限制，保留原版工具鏈／正常玩家／DIV 例外邊界，不代替現行 remake Issue 驗收。"
+    },
+    {
+      "file": "docs/re/109-c-number-raster-restoration.md",
+      "item": "自然玩家日期／訊息流程",
+      "status": "局部入口不證明完整 UI 操作",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-d9392ead43c5376bbd20",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "matching C 局部數字對照的證據限制，保留原版工具鏈／正常玩家／DIV 例外邊界，不代替現行 remake Issue 驗收。"
+    },
+    {
+      "file": "docs/re/109-c-number-raster-restoration.md",
+      "item": "超出 DIV quotient 範圍",
+      "status": "原版可能產生除法例外，本輪不替原版猜補",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-a464249dff8f8710bece",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "matching C 局部數字對照的證據限制，保留原版工具鏈／正常玩家／DIV 例外邊界，不代替現行 remake Issue 驗收。"
+    },
+    {
+      "file": "docs/spec/229-c-number-raster.md",
+      "item": "原作者編譯器與 C 機器碼",
+      "status": "尚未確認",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-8b59e2ab92e2d83cd889",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "matching C 局部數字對照的證據限制，保留原版工具鏈／正常玩家／DIV 例外邊界，不代替現行 remake Issue 驗收。"
+    },
+    {
+      "file": "docs/spec/229-c-number-raster.md",
+      "item": "正常玩家 UI／訊息參數 producer",
+      "status": "此局部驗證不代證",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-35d4ce5c45e5c2f0a06e",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "matching C 局部數字對照的證據限制，保留原版工具鏈／正常玩家／DIV 例外邊界，不代替現行 remake Issue 驗收。"
+    },
+    {
+      "file": "docs/spec/229-c-number-raster.md",
+      "item": "DIV 例外",
+      "status": "只驗證可執行數值範圍，不宣稱原版接受任意 signed 32-bit",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-a77fc17063c3381eb56b",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "matching C 局部數字對照的證據限制，保留原版工具鏈／正常玩家／DIV 例外邊界，不代替現行 remake Issue 驗收。"
     }
   ]
 }

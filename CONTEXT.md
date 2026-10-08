@@ -44,9 +44,10 @@
 | 2026-10-09；十六矩形／選取／計量 C 函式；Go 顯示校訂 | O0/O2 各 134,958 全 RAM／plane／ABI 相同，131,072 原版／C／Go 長度、2,441 內容區與十二錯版通過；八條未分類 handler 指令合併後 24,384 條／整檔匹配 | 修正兩次右移／byte 回繞，補第 3 段正確 bank；完整 interpreter／正常玩家與 C 機器碼尚未驗證 | spec/225–226、[re/106](docs/re/106-c-rectangle-bars-restoration.md)、新來源／code 補充／完整收據 |
 | 2026-10-09；顯示清單九原始 C 函式／17 code 入口 | O0/O2 各 382 原始場景／opcode／DS table 全 RAM／plane／ABI 相同，十錯版拒絕；317 未分類指令整合後 24,693 條／整檔匹配 | 真實 native C 登記／分派／線段／底紋／文字迴圈，glyph raster 仍明示 fixture；自然玩家與 C 機器碼未驗證 | spec/227、[re/107](docs/re/107-c-display-interpreter-restoration.md)、產生來源／原始入口／完整收據 |
 | 2026-10-09；原始 glyph 四 C 函式／兩 code 入口 | O0/O2 各252真實字庫／far／全RAM／plane／ABI相同，九錯版拒絕；740全形/150半形無缺字，24714組語／整檔匹配 | 字形no-op已移除，初始化與raster、live operand為真實C；平台字型API無C-side CPU.Step，原TSR／自然UI／C機器碼未驗證 | spec/228、[re/108](docs/re/108-c-glyph-raster-restoration.md)、源碼／獨立字庫／完整收據 |
+| 2026-10-09；原始數字四 C 函式／一 code 入口 | O0/O2 各 4,881 真實字庫／日期／SS 參數全 RAM／VGA／ABI 相同，八錯版拒絕；整檔組語重建匹配 | 數字／負號／背景與兩個原始 caller 已有 C；合法 DIV quotient、自然 UI 與 C 機器碼界線保留 | spec/229、[re/109](docs/re/109-c-number-raster-restoration.md)、來源／完整收據 |
 
-持續 Goal 為完成整個 matching decompilation；目前有整檔組語基準與 170 個 C 函式、十九個原始 code 入口，不能據此宣布完整 C 還原完成。
-使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b`、熱區 `a8605b5` 、版控組語／VGA `47e16c9` 、對齊貼圖 `6139f9e` 、矩形／計量 `c7dc8df` 與顯示分派 `4d31520` 已推到 origin/main。
+持續 Goal 為完成整個 matching decompilation；目前有整檔組語基準與 174 個 C 函式、二十個原始 code 入口，不能據此宣布完整 C 還原完成。
+使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b`、熱區 `a8605b5` 、版控組語／VGA `47e16c9` 、對齊貼圖 `6139f9e` 、矩形／計量 `c7dc8df`、顯示分派 `4d31520` 與字形 `85f06de` 已推到 origin/main。
 
 未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。
 

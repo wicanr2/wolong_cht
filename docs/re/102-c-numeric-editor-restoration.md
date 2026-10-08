@@ -164,3 +164,9 @@ shift／logic／DIV 未定義 FLAGS 沿用固定 dosgolem 模型，不外推實�
 `sub_1E3D7` 是熱區 writer，由同一 segment／base 的 `sub_1E453` 回讀。先前 glyph
 導覽名稱不成立。歷史群組名 `glyph` 與舊收據保留，只量 caller／RET primitive；
 真正 map／pixel query 接線見 [`re/103`](103-c-hotspot-restoration.md)，不能把舊 ABI 通過當作 glyph 畫面證據。
+
+## 後續 C 數字 raster
+
+2026-10-09：[re/109](109-c-number-raster-restoration.md) 讓 `sub_1062F` 與數字／負號／背景
+有真實 C 和原版字庫收據。此頁舊數值 editor 收據仍使用原明示 primitive，
+本輪只閉合 renderer、日期與 SS 參數入口，不外推整個 editor 或自然玩家操作。

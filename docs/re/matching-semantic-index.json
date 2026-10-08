@@ -1186,6 +1186,46 @@
       "sources": [
         "docs/re/108-c-glyph-raster-restoration.md"
       ]
+    },
+    "0x1062F": {
+      "meaning": "原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient",
+      "level": "proven",
+      "sources": [
+        "docs/re/109-c-number-raster-restoration.md",
+        "docs/spec/229-c-number-raster.md"
+      ]
+    },
+    "0x1069A": {
+      "meaning": "原始數字／負號 16 列字模的前景與補背景 VGA raster",
+      "level": "proven",
+      "sources": [
+        "docs/re/109-c-number-raster-restoration.md",
+        "docs/spec/229-c-number-raster.md"
+      ]
+    },
+    "0x106DE": {
+      "meaning": "原始 16 列背景填入、CX 高 byte 與 DF 副作用",
+      "level": "proven",
+      "sources": [
+        "docs/re/109-c-number-raster-restoration.md",
+        "docs/spec/229-c-number-raster.md"
+      ]
+    },
+    "0x11E17": {
+      "meaning": "讀原 DS 日期三欄位並呼叫三次數字 raster",
+      "level": "proven",
+      "sources": [
+        "docs/re/109-c-number-raster-restoration.md",
+        "docs/spec/229-c-number-raster.md"
+      ]
+    },
+    "0x10984": {
+      "meaning": "原始無名稱 SS:[di] word 參數、CWD、VGA 起點與六欄數字呼叫",
+      "level": "proven",
+      "sources": [
+        "docs/re/109-c-number-raster-restoration.md",
+        "docs/spec/229-c-number-raster.md"
+      ]
     }
   },
   "operands": {

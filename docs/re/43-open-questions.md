@@ -7,7 +7,7 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-971 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+977 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
 - 日期：2026-10-08
 - 產生工具：`tools/re_open_questions.py`
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**965 列分布在 388 份文件，平均每份 2.5 列。**
+**971 列分布在 390 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -47,11 +47,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 264 | 257 | 6 | 1 |
+| 程式碼理解 | 267 | 260 | 6 | 1 |
 | 驗收 | 240 | 214 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 424 | 402 | 21 | 1 |
-| **合計** | **965** | 904 | 58 | 3 |
+| 其他 | 427 | 405 | 21 | 1 |
+| **合計** | **971** | 910 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,8 +59,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 381 |
-| `docs/re/` | 264 |
+| `docs/spec/` | 384 |
+| `docs/re/` | 267 |
 | `docs/playtest/` | 240 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
@@ -110,7 +110,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 | evidence-only | — |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 | evidence-only | — |
 
-## 2.3 程式碼理解（264 條）
+## 2.3 程式碼理解（267 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -178,6 +178,9 @@
 | [`re/108-c-glyph-raster-restoration.md`](../re/108-c-glyph-raster-restoration.md) | 真實硬體 wall-clock | 固定平台模型不代證 | 靜態 | evidence-only | — |
 | [`re/108-c-glyph-raster-restoration.md`](../re/108-c-glyph-raster-restoration.md) | 正常玩家完整 UI 操作 | glyph／場景矩陣不代證自然操作 | 靜態 | evidence-only | — |
 | [`re/108-c-glyph-raster-restoration.md`](../re/108-c-glyph-raster-restoration.md) | C 機器碼與完整 C | 本輪仍未完成 | 靜態 | evidence-only | — |
+| [`re/109-c-number-raster-restoration.md`](../re/109-c-number-raster-restoration.md) | 原作者 C 工具鏈與機器碼 | native C 語意測試不證明編譯匹配 | 靜態 | evidence-only | — |
+| [`re/109-c-number-raster-restoration.md`](../re/109-c-number-raster-restoration.md) | 自然玩家日期／訊息流程 | 局部入口不證明完整 UI 操作 | 靜態 | evidence-only | — |
+| [`re/109-c-number-raster-restoration.md`](../re/109-c-number-raster-restoration.md) | 超出 DIV quotient 範圍 | 原版可能產生除法例外，本輪不替原版猜補 | 靜態 | evidence-only | — |
 | [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `ds:0D2F8` | 4,096 / 未解（第二份戰場？） | 靜態 | evidence-only | — |
 | [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `ds:0D306` | 30,720 / 未解 | 靜態 | evidence-only | — |
 | [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | 兵士記錄剩下的欄位 | `ds:0D30E`，32 B／筆 / 目前具名的有 `+0x00`／`+0x01`／`+0x02`／`+0x03` 體力／`+0x04` 大將／`+0x05` 面向／`+0x14` 陣形座標／`+0x16`・`+0x17` 繞路游標／`+0x19` 疲勞／`+0x1A`・`+0x1B` 命令／`+0x1E` Z… | 靜態 | evidence-only | — |
@@ -635,7 +638,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（424 條）
+## 2.6 其他（427 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -939,6 +942,9 @@
 | [`spec/228-c-glyph-raster.md`](../spec/228-c-glyph-raster.md) | 原版 TSR／逐字磁碟時序 | 採用成熟字型平台契約 | 靜態 | evidence-only | — |
 | [`spec/228-c-glyph-raster.md`](../spec/228-c-glyph-raster.md) | 實機／正常玩家操作 | 局部 glyph／場景不足以代證 | 靜態 | evidence-only | — |
 | [`spec/228-c-glyph-raster.md`](../spec/228-c-glyph-raster.md) | C 原作者工具鏈與機器碼 | 尚未驗證 | 靜態 | evidence-only | — |
+| [`spec/229-c-number-raster.md`](../spec/229-c-number-raster.md) | 原作者編譯器與 C 機器碼 | 尚未確認 | 靜態 | evidence-only | — |
+| [`spec/229-c-number-raster.md`](../spec/229-c-number-raster.md) | 正常玩家 UI／訊息參數 producer | 此局部驗證不代證 | 靜態 | evidence-only | — |
+| [`spec/229-c-number-raster.md`](../spec/229-c-number-raster.md) | DIV 例外 | 只驗證可執行數值範圍，不宣稱原版接受任意 signed 32-bit | 靜態 | evidence-only | — |
 | [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 反白列上換色的機制 | `38` §1.7.1：兩個色號各有一次量測，變換規則沒解 | 靜態 | evidence-only | — |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 空槽標記 | 原版用名稱欄第一個字 `0xD0A1`；remake 用「載得起來且玩家勢力有效」判定，兩者不等價 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 新遊戲共用 | remake 的啟動殼層是自己的畫面，還沒有換成這個四槽視窗 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
@@ -1105,7 +1111,7 @@
 |---|---|---|
 | [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | `INT 61h` 的 `ax=09F2h` `[DOS/BIOS]` | `AH=09h` 對 `ds:[0A4Ch]` 個聲部逐一呼叫 `0x049E`（`al=91h`／`ah=0F2h`），那一支沒讀（[`81`](81-sound-type-attenuation.md) §5）。`ah=4`／`7`／`8`／`0Bh`／`0Ch`（含 `ax=0C01h`）都已定案，見 §2。⚠ **這是原版與音效 TSR 的介面，不擋 remake**——音訊走純 Go 的 OPL3 渲染（[`../spec/29`](../spec/29-audio.md)），不經過 DOS |
 | [`re/28-text-number-rendering.md`](../re/28-text-number-rendering.md) | `sub_1F7A4` `[DOS/BIOS]` | 把 32 B 字模緩衝畫上 VRAM 的實際迴圈，未逐行讀。⚠ remake 要的是**畫什麼**（字模版面，已解），不是**怎麼寫 VRAM**——Ebiten 不碰 VGA 平面（同 [`29`](29-font-service-int15.md) §9） |
-| [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `sub_1F7A4` `[DOS/BIOS]` | 把 32 B 緩衝畫上 VRAM 的實際迴圈，未逐行讀。⚠ remake 要的是**畫什麼**（字模版面，已解），不是**怎麼寫 VRAM** |
+| [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `sub_1F7A4` `[DOS/BIOS]` | 原始 32 B buffer／mask／16列／前景背景／VGA 迴圈已由 [re/108](108-c-glyph-raster-restoration.md) 的真實字庫／C plane 收據確認；正常 UI 與實機時序不由本輪代證 |
 | [`re/29-font-service-int15.md`](../re/29-font-service-int15.md) | `YNFONT.EXE` 怎麼顯示中文 `[DOS/BIOS]` | 它不走 INT 15h（0 次），密碼輸入畫面的中文是它自己畫的。⚠ 那是一支 DOS TSR，remake 沒有對應物；密碼頁本身也不擋任何事（`CLAUDE.md` §4.0） |
 | [`re/37-graphics-and-runtime-module-map.md`](../re/37-graphics-and-runtime-module-map.md) | `sub_1F7A4` `[DOS/BIOS]` | 212 / 字型 blitter，逐行未解。**同一支函式在 [`29`](29-font-service-int15.md) §9 也列著，那裡是正本**；未解的是「怎麼寫 VRAM」，而 remake 不碰 VGA 平面，所以不擋 remake |
 | [`re/42-leaf-functions.md`](../re/42-leaf-functions.md) | `INT 61h` 的四個服務號（`ah=4`／`7`／`8`、`ax=09F2h`／`0C01h`）`[DOS/BIOS]` | 對應什麼音效動作要看 `YNSOUND.COM`（[`17`](17-dosv-audio-tsr.md)）。⚠ 原版與音效 TSR 的介面，**不擋 remake** |

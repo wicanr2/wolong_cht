@@ -277,6 +277,7 @@
 | 側欄計量原始取 byte | [`226-sidebar-bar-widths.md`](226-sidebar-bar-widths.md) | CONFORMED，131,072 原版／C／Go word 長度 |
 | C 顯示清單分派 | [`227-c-display-interpreter.md`](227-c-display-interpreter.md) | CONFORMED，原始九 opcode／382 組／十錯版拒絕 |
 | C 字型向量與 raster | [`228-c-glyph-raster.md`](228-c-glyph-raster.md) | CONFORMED，252真實glyph／全raster／九錯版拒絕 |
+| C 原始數字 raster | [`229-c-number-raster.md`](229-c-number-raster.md) | CONFORMED，四函式／4,881 組／八錯版拒絕 |
 
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的

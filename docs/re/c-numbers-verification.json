@@ -1,0 +1,168 @@
+{
+  "schema": "wolong-c-numbers-verification-v1",
+  "status": "semantic-conformed",
+  "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "ida_database_sha256": "07acecae5db3e134e1892c0c4b2618a4577fe214683101db5a933fb8ce657513",
+  "new_routine_sha256": {
+    "sub_1062F": "eab64322fe88fa08d3a5d87659c83d9ace98e5242599c5ee0944b949e2243058",
+    "sub_1069A": "81ee3b238ac146f97347c1c3f762bba100f6d6408eaea5389990c3b07f4f421d",
+    "sub_106DE": "4bbff6514f031c02c2fad0f6769c6d793d5735045fa4b1c1e77ec86a8a27b6b0",
+    "sub_11E17": "86531ba370e1ff86a1ccdb697a2d33843e855a8d46135ebdda3e6589535e3a3a"
+  },
+  "code_entry_sha256": {
+    "0x10984": "3ea1872d9426a96476ba63e46aa4eaf9b7d7650bc75f14cafa463b2e89b88940"
+  },
+  "source_sha256": {
+    "tools/c_recovery/aligned.c": "4e3e53bb951cd9692ffb8722b2efc6ef1549602300f7ff32ca0ced70f90de467",
+    "tools/c_recovery/aligned.h": "865e3c92435f848ea7d57f7e54d1a1c9976e86ce13938858503e8a2431111c7e",
+    "tools/c_recovery/aligned_fixture.h": "6d5d293961f3c0b2f4a8fd6551cb3ec4c31945ada3b5a7dcc6281fae59f84b5b",
+    "tools/c_recovery/clock.c": "4a845847e050d0d7ff1ebd641fb827602a6ab10fc8fecd643584612e73158439",
+    "tools/c_recovery/clock.h": "40d3d4b630dabed9b3f7f98d492fa60734b2a0a6d86d30e0a2961738d2df7284",
+    "tools/c_recovery/clock_fixture.h": "0a7812df9b5331f463acc5fe8f03ae11c5f3313843b6d7119eaf29ac8433167b",
+    "tools/c_recovery/display.c": "d5b95603d2563aafaa7b929b16f7b123896169f5e3d2d215ab19fa10da748058",
+    "tools/c_recovery/display.h": "ed30d7da89db5bb93b9e08ffceaddb01188701ab67721628d35425167488e254",
+    "tools/c_recovery/display_fixture.h": "d657ce4f18acbf31523d758959ae31d7907854c790a0582a5392a4abbc886d1f",
+    "tools/c_recovery/display_generated.inc": "6016cc7c871105bfca7a601dddbb09a413eff9dd209feb08d6327dc9805ebd63",
+    "tools/c_recovery/economy.c": "a8dfb96bc788326cc8641ffa78a64739d2544dfbf63ed7149dc334ef85f2ab8e",
+    "tools/c_recovery/economy.h": "57958375c3f3cf604e0dffb8a56e2d0b464c727702d1e076b6f303a3806e89ec",
+    "tools/c_recovery/economy_fixture.h": "8313a73e688631a8fe39db8ab12d66c979ed1f7e978ae9907e8910f24f91d0a8",
+    "tools/c_recovery/events.c": "69c7a72c1168a3943824ced273702ace069ca3e7e42e3789baf0621341ef32b0",
+    "tools/c_recovery/events.h": "0845440ca2f3685f899772dc6ff78afef012aa3fdb4374f2611f1ca9175a6373",
+    "tools/c_recovery/events_fixture.h": "fdde12c4e3239aa79fe826c8def65edb059d54380352b03462cba427f597a676",
+    "tools/c_recovery/glyph.c": "1e7695cca054da377a7327f1ca06414642d3a6367ac5b39fdac7c5bbc4cf34aa",
+    "tools/c_recovery/glyph.h": "5b0f1388ef6bd047af335162910082f748f1a4fce6ac98ea0fd5fd907a634f16",
+    "tools/c_recovery/glyph_fixture.h": "539d6f94de1c7203f77bb6cea0420b6771f213491eef2c25e9085b8cc5552879",
+    "tools/c_recovery/glyph_generated.inc": "a26058d041df1147c92b4f3fa6a296fe88739cf2a185e1d95e308e4a46a5f9fb",
+    "tools/c_recovery/hotspot.c": "805a2963363f151d01478d1eefd956ac482e2df22189d15638c7f79ea94dd5c1",
+    "tools/c_recovery/hotspot.h": "21f1dcb13ecbc301237487a12d6db80de4c944d816892a989a9a48711f496b20",
+    "tools/c_recovery/hotspot_fixture.h": "ed5a4f5b1b4ecdd5982689110d7b82c2372ead6abd83551a9a18357d06862411",
+    "tools/c_recovery/hourly.c": "dc115558ed470df49bd4438825b059d835a707e4f93262406ea8fb26c9536c04",
+    "tools/c_recovery/hourly.h": "1388fe3fe2c6bed876246e08fdfba0814ed948ec50e18ba236c0553626f3aff1",
+    "tools/c_recovery/hourly_fixture.h": "54864eeb3e0aeabcae321ffc537babe3e1abf8f53cb3f1d4e7cea1daebf36cb5",
+    "tools/c_recovery/modal.c": "37105677c93746e880ab89c7940eb02a1b318bfe18e76615b12870f17294da8e",
+    "tools/c_recovery/modal.h": "db3f1ea75cfd9d3026382fc1e803364b67c594c9874103f2de98090c3249f106",
+    "tools/c_recovery/modal_fixture.h": "427b17352aecd5e4d84522b1620cd41464cc3d571f52e77b5b565c6e9e71d072",
+    "tools/c_recovery/numbers.c": "776e38ff148e65d653d3d3a0588ef6ca12aa5dc526af30bc5e3b497b8ee9abc1",
+    "tools/c_recovery/numbers.h": "1ecf5806c4127f605280e6b6b913a80a1e671877420c4a27bd1264b0cac3c300",
+    "tools/c_recovery/numbers_fixture.h": "81bf5642e725802e4b891d31dd2a84785c8ca106109e13696a531e2d5057a1e0",
+    "tools/c_recovery/numbers_generated.inc": "40ced4a3a36aa88dc5e0e06dac3b4fb88806f1eb4dc8c35198ce5f877244c7a1",
+    "tools/c_recovery/numeric.c": "b68f2a4e4149c7cf5fff8aba2da0a6a437202c0626519ed7c6b7ccd73df00e5b",
+    "tools/c_recovery/numeric.h": "c0abfde294d876d1b7c49119f134bff56b0cdc9e76ac4ae5a23abe2cd6cea0f0",
+    "tools/c_recovery/numeric_fixture.h": "4780a1ff675bc17d77553035c0b2a2eeae790c607d1d613878a59d300267a2d5",
+    "tools/c_recovery/politics.c": "3b60a81cd5cc0979ca99f9bb03c5ce341f36b539ad318e70cced5ac516aa0eef",
+    "tools/c_recovery/politics.h": "291e2425b3056eac0c107b93da341f2ad5e4bd32b9d71275e0c007b4f95b9d8c",
+    "tools/c_recovery/politics_fixture.h": "1241042349ce6d9ea5b08355a53b9fdec54171a44f0501ccfd11b17d4b1f8171",
+    "tools/c_recovery/rect.c": "ef3eb0615c8ee516fa05e333a0d81e9fdb000d0701965db16918f8c2ce6517cc",
+    "tools/c_recovery/rect.h": "54fe2da129a0f2313010a5e3c2feb389daa0f0851e4aace64c29b4d882e1e183",
+    "tools/c_recovery/rect_fixture.h": "68aa98999228a3fa56f69c5f51af423764512a46f7b93b85fc00d7b720b166d4",
+    "tools/c_recovery/rng.c": "1e6500c692d652c07cd31b99afa5693275bdab91d0f2d2c9ce9c8ef1188cb0fd",
+    "tools/c_recovery/rng.h": "71d82996afa8df2387e9899f8a78872ad35d617ed1276b31aaf12c68dd66c0f0",
+    "tools/c_recovery/seed.c": "5310de9dcc0e40a374d168f73ffa8de2222de654378c7bfc6c50c4255e851cbb",
+    "tools/c_recovery/seed.h": "4f9e0c6e3026967450b6a29758bedd2e293010187a95e2fd98b0a1c438a0ffc9",
+    "tools/c_recovery/settlement.c": "c6573bbfef750ca81c847efe88b0b3d2b51ac1623a321e8925983bbd59a750a3",
+    "tools/c_recovery/settlement.h": "5714b35cff296141a05bd25428728dc78cc4f22773c6d4d8b4b229f741f6c0f7",
+    "tools/c_recovery/settlement_fixture.h": "af8305a0f0610de1301bf81349fe59f97f22920e7f6d6c91660efa2de3f7f345",
+    "tools/c_recovery/vga.c": "9c9c75270422a8950d9d09c1321d5093423d2eada6d5bde3e417c9d711ba9b5b",
+    "tools/c_recovery/vga.h": "40f9e9ee054830df5c95e5bbe0185f82f3b8d7d8e9e780510da29794b2ab7699",
+    "tools/c_recovery/vga_fixture.h": "97ab311f79b371c26b90d450466173e9ac90e70c55f6862a204bef40db569096",
+    "tools/c_recovery/world_update.c": "90ea41a06b727fc12074c1347e831f6fbac7fb0535265bfbfa7eac7795437602",
+    "tools/c_recovery/world_update.h": "9782b21c1397d277680b0165b27d697bf7191ad099b399dfc0a875af91f5f088",
+    "tools/c_recovery/world_update_fixture.h": "0d2866252dc0339d08d45431beac7359019b29fd80717e07219396cf418ab853",
+    "tools/c_recovery_glyph_platform.go": "a9a049cea6c6304614fc31a4088aa50b6b26f9adab9290169d168073e03108fb",
+    "tools/c_recovery_display_generate.py": "af149fc48d2eeafc89d9849c3a44ee386c4e2a52993a0a410f238cd93b0d56ac",
+    "tools/c_recovery_numbers_generate.py": "03b486e6d5d41dbdf184462938c50226253344b9d210af6002d6c0e80b652625",
+    "tools/c_recovery_numbers.go": "df8267a68e4cb011cbec3a4a9e793385abd0d97bf47ce4b5aa1c3b7dabc6a2fe",
+    "tools/c_recovery_vga_bus.go": "b842e1561a96da289bac5ed83f4756c2d6e77883681227651034aad3625d0c86"
+  },
+  "compiled_source_manifest_sha256": "3f7ded9a40f9acbd25c810ac3d75ac2fe74e69ee6595e07e80b771d1cb860a15",
+  "cases_per_optimization": 4881,
+  "groups": {
+    "number": 312,
+    "colors": 1280,
+    "digit": 2816,
+    "blank": 256,
+    "primitive-boundary": 192,
+    "date-caller": 4,
+    "parameter-caller": 21
+  },
+  "full_ram_plane_audits_per_optimization": 4881,
+  "indexed_content_audits_per_optimization": 4881,
+  "receipt_sha256": {
+    "O0": "e792f5a8d304c02e808038e3982a64a239894adbc991f430a2e8db532fbec20c",
+    "O2": "e792f5a8d304c02e808038e3982a64a239894adbc991f430a2e8db532fbec20c"
+  },
+  "entries_seen": {
+    "code_10984": 21,
+    "sub_1062F": 1625,
+    "sub_1069A": 8132,
+    "sub_106DE": 17338,
+    "sub_10CAC": 1625,
+    "sub_11E17": 4
+  },
+  "negative_controls_rejected": 8,
+  "mutants": {
+    "1": {
+      "group": "number",
+      "first_rejected": 25,
+      "receipt_sha256": "939a04f5796675188cb7bbd310ca4c27390fa76f9284b4bb58308d8f26ae2e38"
+    },
+    "2": {
+      "group": "number",
+      "first_rejected": 1,
+      "receipt_sha256": "031cf424728c76ac51f75f71df4c19328632fb327185d80c15e68028821e2245"
+    },
+    "3": {
+      "group": "number",
+      "first_rejected": 1,
+      "receipt_sha256": "8e2cee5b14b301c991efe6e6f77211943cce86b67bb2153e3f78e4c9d7b7523e"
+    },
+    "4": {
+      "group": "digit",
+      "first_rejected": 2,
+      "receipt_sha256": "53986a5ea14389155626f0be93ef6b2006d87cb10c1068e9d38f100502e9a574"
+    },
+    "5": {
+      "group": "digit",
+      "first_rejected": 1,
+      "receipt_sha256": "b0c0a9cbe7f2da106cf0c5ee5466ccacedc27a674f7da21ad9c0492945c085cf"
+    },
+    "6": {
+      "group": "primitive-boundary",
+      "first_rejected": 178,
+      "receipt_sha256": "09789cbc7e293f7df2059c658dd529cc8aa8604226e9695a78f93ccaa7f80256"
+    },
+    "7": {
+      "group": "digit",
+      "first_rejected": 1,
+      "receipt_sha256": "264b5695d097090c1fe8fe937f9f6c5f9e603025d653f1520a4ed05238f370cc"
+    },
+    "8": {
+      "group": "colors",
+      "first_rejected": 42,
+      "receipt_sha256": "b6120271051e33c4493f43eabf2ea393e83c34eb286c97fe4c60a10ac8093636"
+    }
+  },
+  "oracle_revision": "a9714ebdab2ad6b529f81225472680f2b11f2842",
+  "oracle_compiled_tree_sha256": "d37ffeb9be887541f89e9cff80ea5a159620b77b524d54527950ce3554a6f126",
+  "clean_regeneration": {
+    "exact_clean_regeneration": true,
+    "generated_source_sha256": "40ced4a3a36aa88dc5e0e06dac3b4fb88806f1eb4dc8c35198ce5f877244c7a1",
+    "ida_probe_sha256": "66d2a718c29b3f985e8d52830bf4263116dbea8f32a2ccc15efee35fb97fe20e"
+  },
+  "scope_backlinks": {
+    "docs/re/28-text-number-rendering.md": [
+      "後續 C 數字 raster",
+      "109-c-number-raster-restoration.md"
+    ],
+    "docs/re/102-c-numeric-editor-restoration.md": [
+      "後續 C 數字 raster",
+      "109-c-number-raster-restoration.md"
+    ],
+    "docs/spec/221-c-numeric-editor.md": [
+      "後續 C 數字 raster",
+      "229-c-number-raster.md"
+    ]
+  },
+  "scope": "Real ICONGRF segment3 digits; native C; independent VGA/RAM; IF/TF=0; legal DIV quotient; primitive DF/CH and two original callers; no normal-player or C machine-code claim",
+  "c_machine_code_match": false
+}

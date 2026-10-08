@@ -159,3 +159,10 @@ loop:
 | `sub_1F7A4` `[DOS/BIOS]` | 把 32 B 字模緩衝畫上 VRAM 的實際迴圈，未逐行讀。⚠ remake 要的是**畫什麼**（字模版面，已解），不是**怎麼寫 VRAM**——Ebiten 不碰 VGA 平面（同 [`29`](29-font-service-int15.md) §9）|
 | 屬性的其餘位元 | bit 2 是陰影已證實；`0x9001`／`0x9000` 的 bit 0 差在哪未讀 |
 | `word_10D4C` 那一組 | 來源已解——`sub_100DF` 開機把 `ICONGRF` 段 3 切五塊，`word_10D54` 是 `+0x0840` 的 11 格 × 16 列數字字模（[`../spec/52`](../spec/52-main-screen-camera-and-banner-date.md) §4）；緊接在後的 `+0x08F0` 另有一組 11 格，用途未解 |
+
+## 後續 C 數字 raster
+
+2026-10-09：[re/109](109-c-number-raster-restoration.md) 完成 `sub_1062F`／`sub_1069A`／`sub_106DE`、
+原日期 caller 的 C 還原與真實數字字庫比較。第一個 DIV 的 quotient 限制使絕對值上限為 655,359，
+不宣稱接受所有 signed 32-bit。O0/O2 各 4,881 組完整 RAM／VGA／ABI 相同，八個錯版拒絕。
+字形與 far 內部另由 [re/108](108-c-glyph-raster-restoration.md) 還原；本頁早期未讀紀錄保留為歷史邊界。

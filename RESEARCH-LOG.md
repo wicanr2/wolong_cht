@@ -1925,3 +1925,10 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - 固定KI.EXE與END_S13／S14輸入；IDA9.4 DB `bd9456d704fb5f1d7ec6fe544675cd106c434d53bcad8afdbc11c7b1e4c6e9d7`，原始near/far、SSbuffer與self operand證據見[re/108](docs/re/108-c-glyph-raster-restoration.md)。
 - O0/O2 252真實字型／全RAM／plane／ABI相同，740全形／150半形、缺字0，九突變拒絕。平台API／cache獨立，C無CPU.Step、不復製原結果。
 - 原字庫資料仍本機；新增21組語／59bytes已有GNU組譯byte一致證據，總24714指令／56197codebytes與整檔SHA相同。四named與兩code入口成為C證據，原TSR與自然操作界線保留。
+
+## 2026-10-09：原始數字字庫與兩個 caller
+
+- 固定 DOS/V KI.EXE 與 ICONGRF.DAT，IDA9.4 DB `07acecae5db3e134e1892c0c4b2618a4577fe214683101db5a933fb8ce657513`。輸入雜湊、原位址、函式邊界與無名稱入口見 [re/109](docs/re/109-c-number-raster-restoration.md)。
+- 四個 C 函式 245 bytes 與一個原始 code 入口 43 bytes，共 143 原始指令。保留 DX:AX 補數 carry、byte 欄寬、真實數字／負號／背景、DF／CH、SS 參數與日期欄位。第一個 DIV 的 AX quotient 限制記為明示範圍。
+- O0/O2 各 4,881 組完整 1 MB RAM／四 plane／ABI／port／內容區像素相同，八個錯版拒絕，生成 C 在乾淨容器重生相同。原版執行 guest，C 用 native 運算與獨立 VGA 裝置；不回填原版輸出。
+- 組語只增加分級註解，24,714 指令／56,197 code bytes 與完整 67,099-byte EXE 仍匹配。C 台帳增至 174 函式／20 code 入口；正式 Go、正常玩家流程與 C 機器碼完成聲明維持原範圍。

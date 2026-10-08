@@ -2680,413 +2680,413 @@ ret
 .org 0x82f
 sub_1062F:
 # IDA 0x1062f; file 0x82f; locator=proven; push    ds
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 push ds
 .org 0x830
 # IDA 0x10630; file 0x830; locator=proven; push    es
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 push es
 .org 0x831
 # IDA 0x10631; file 0x831; locator=proven; push    cx
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 push cx
 .org 0x832
 # IDA 0x10632; file 0x832; locator=proven; push    si
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 push si
 .org 0x833
 # IDA 0x10633; file 0x833; locator=proven; push    di
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 push di
 .org 0x834
 # IDA 0x10634; file 0x834; locator=proven; push    bp
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 push bp
 .org 0x835
 # IDA 0x10635; file 0x835; locator=proven; cld
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 cld
 .org 0x836
 # IDA 0x10636; file 0x836; locator=proven; mov     cx, 0A0C8h
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 mov cx, 0xa0c8
 .org 0x839
 # IDA 0x10639; file 0x839; locator=proven; mov     es, cx
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 mov es, cx
 .org 0x83b
 # IDA 0x1063b; file 0x83b; locator=proven; mov     ds, cs:word_10D54
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 cs; mov ds, word ptr [0xd54]
 .org 0x840
 # IDA 0x10640; file 0x840; locator=proven; mov     cl, bl
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 {load} mov cl, bl
 .org 0x842
 # IDA 0x10642; file 0x842; locator=proven; xor     ch, ch
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 {load} xor ch, ch
 .org 0x844
 # IDA 0x10644; file 0x844; locator=proven; dec     cx
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 dec cx
 .org 0x845
 # IDA 0x10645; file 0x845; locator=proven; add     di, cx
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 {load} add di, cx
 .org 0x847
 # IDA 0x10647; file 0x847; locator=proven; mov     bp, dx
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 {load} mov bp, dx
 .org 0x849
 # IDA 0x10649; file 0x849; locator=proven; cmp     dh, 80h
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 cmp dh, 0x80
 .org 0x84c
 # IDA 0x1064c; file 0x84c; locator=proven; jb      short loc_1065E
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 jb .+18
 .org 0x84e
 # IDA 0x1064e; file 0x84e; locator=proven; not     dx
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 not dx
 .org 0x850
 # IDA 0x10650; file 0x850; locator=proven; not     ax
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 not ax
 .org 0x852
 # IDA 0x10652; file 0x852; locator=proven; add     ax, 1
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 add ax, offset imm_at_10652
 .org 0x855
 # IDA 0x10655; file 0x855; locator=proven; adc     dx, 0
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 adc dx, 0x0
 .org 0x858
 # IDA 0x10658; file 0x858; locator=proven; dec     bl
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 dec bl
 .org 0x85a
 # IDA 0x1065a; file 0x85a; locator=proven; jnz     short loc_1065E
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 jnz .+4
 .org 0x85c
 # IDA 0x1065c; file 0x85c; locator=proven; mov     bl, 1
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 mov bl, 0x1
 .org 0x85e
 loc_1065E:
 # IDA 0x1065e; file 0x85e; locator=proven; call    sub_10CAC
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 call .+1614
 .org 0x861
 loc_10661:
 # IDA 0x10661; file 0x861; locator=proven; mov     cx, 0Ah
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 mov cx, 0xa
 .org 0x864
 # IDA 0x10664; file 0x864; locator=proven; div     cx
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 div cx
 .org 0x866
 # IDA 0x10666; file 0x866; locator=proven; call    sub_1069A
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 call .+52
 .org 0x869
 # IDA 0x10669; file 0x869; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 {load} xor dx, dx
 .org 0x86b
 # IDA 0x1066b; file 0x86b; locator=proven; dec     di
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 dec di
 .org 0x86c
 # IDA 0x1066c; file 0x86c; locator=proven; dec     bl
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 dec bl
 .org 0x86e
 # IDA 0x1066e; file 0x86e; locator=proven; jz      short loc_10688
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 jz .+26
 .org 0x870
 # IDA 0x10670; file 0x870; locator=proven; and     ax, ax
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 {load} and ax, ax
 .org 0x872
 # IDA 0x10672; file 0x872; locator=proven; jnz     short loc_10661
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 jnz .-17
 .org 0x874
 # IDA 0x10674; file 0x874; locator=proven; mov     dh, bh
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 {load} mov dh, bh
 .org 0x876
 # IDA 0x10676; file 0x876; locator=proven; shr     dh, 1
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 shr dh, 0x1
 .org 0x878
 # IDA 0x10678; file 0x878; locator=proven; shr     dh, 1
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 shr dh, 0x1
 .org 0x87a
 # IDA 0x1067a; file 0x87a; locator=proven; shr     dh, 1
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 shr dh, 0x1
 .org 0x87c
 # IDA 0x1067c; file 0x87c; locator=proven; shr     dh, 1
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 shr dh, 0x1
 .org 0x87e
 loc_1067E:
 # IDA 0x1067e; file 0x87e; locator=proven; mov     ah, dh
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 {load} mov ah, dh
 .org 0x880
 # IDA 0x10680; file 0x880; locator=proven; call    sub_106DE
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 call .+94
 .org 0x883
 # IDA 0x10683; file 0x883; locator=proven; dec     di
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 dec di
 .org 0x884
 # IDA 0x10684; file 0x884; locator=proven; dec     bl
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 dec bl
 .org 0x886
 # IDA 0x10686; file 0x886; locator=proven; jnz     short loc_1067E
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 jnz .-8
 .org 0x888
 loc_10688:
 # IDA 0x10688; file 0x888; locator=proven; cmp     bp, 0
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 cmp bp, 0x0
 .org 0x88b
 # IDA 0x1068b; file 0x88b; locator=proven; jge     short loc_10693
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 jge .+8
 .org 0x88d
 # IDA 0x1068d; file 0x88d; locator=proven; mov     dx, 0Ah
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 mov dx, 0xa
 .org 0x890
 # IDA 0x10690; file 0x890; locator=proven; call    sub_1069A
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 call .+10
 .org 0x893
 loc_10693:
 # IDA 0x10693; file 0x893; locator=proven; pop     bp
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 pop bp
 .org 0x894
 # IDA 0x10694; file 0x894; locator=proven; pop     di
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 pop di
 .org 0x895
 # IDA 0x10695; file 0x895; locator=proven; pop     si
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 pop si
 .org 0x896
 # IDA 0x10696; file 0x896; locator=proven; pop     cx
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 pop cx
 .org 0x897
 # IDA 0x10697; file 0x897; locator=proven; pop     es
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 pop es
 .org 0x898
 # IDA 0x10698; file 0x898; locator=proven; pop     ds
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 pop ds
 .org 0x899
 # IDA 0x10699; file 0x899; locator=proven; retn
-# ⚠ 函式 sub_1062F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1062F; [proven] 原始 DX:AX signed 數字欄、BL byte 寬度、BH 前景／背景與負號；限合法 DIV quotient; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 ret
 .org 0x89a
 sub_1069A:
 # IDA 0x1069a; file 0x89a; locator=proven; push    ax
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 push ax
 .org 0x89b
 # IDA 0x1069b; file 0x89b; locator=proven; mov     si, dx
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 {load} mov si, dx
 .org 0x89d
 # IDA 0x1069d; file 0x89d; locator=proven; shl     si, 1
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 shl si, 0x1
 .org 0x89f
 # IDA 0x1069f; file 0x89f; locator=proven; shl     si, 1
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 shl si, 0x1
 .org 0x8a1
 # IDA 0x106a1; file 0x8a1; locator=proven; shl     si, 1
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 shl si, 0x1
 .org 0x8a3
 # IDA 0x106a3; file 0x8a3; locator=proven; shl     si, 1
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 shl si, 0x1
 .org 0x8a5
 # IDA 0x106a5; file 0x8a5; locator=proven; mov     dx, 3CFh
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 mov dx, 0x3cf
 .org 0x8a8
 # IDA 0x106a8; file 0x8a8; locator=proven; mov     al, bh
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 {load} mov al, bh
 .org 0x8aa
 # IDA 0x106aa; file 0x8aa; locator=proven; and     al, 0Fh
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 and al, 0xf
 .org 0x8ac
 # IDA 0x106ac; file 0x8ac; locator=proven; out     dx, al
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 out dx, al
 .org 0x8ad
 # IDA 0x106ad; file 0x8ad; locator=proven; mov     cl, 10h
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 mov cl, 0x10
 .org 0x8af
 loc_106AF:
 # IDA 0x106af; file 0x8af; locator=proven; mov     al, es:[di]
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 es; mov al, byte ptr [di]
 .org 0x8b2
 # IDA 0x106b2; file 0x8b2; locator=proven; movsb
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 movsb
 .org 0x8b3
 # IDA 0x106b3; file 0x8b3; locator=proven; add     di, 4Fh
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 add di, 0x4f
 .org 0x8b6
 # IDA 0x106b6; file 0x8b6; locator=proven; loop    loc_106AF
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 loop .-7
 .org 0x8b8
 # IDA 0x106b8; file 0x8b8; locator=proven; sub     si, 10h
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 sub si, 0x10
 .org 0x8bb
 # IDA 0x106bb; file 0x8bb; locator=proven; sub     di, 500h
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 sub di, 0x500
 .org 0x8bf
 # IDA 0x106bf; file 0x8bf; locator=proven; mov     al, bh
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 {load} mov al, bh
 .org 0x8c1
 # IDA 0x106c1; file 0x8c1; locator=proven; shr     al, 1
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 shr al, 0x1
 .org 0x8c3
 # IDA 0x106c3; file 0x8c3; locator=proven; shr     al, 1
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 shr al, 0x1
 .org 0x8c5
 # IDA 0x106c5; file 0x8c5; locator=proven; shr     al, 1
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 shr al, 0x1
 .org 0x8c7
 # IDA 0x106c7; file 0x8c7; locator=proven; shr     al, 1
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 shr al, 0x1
 .org 0x8c9
 # IDA 0x106c9; file 0x8c9; locator=proven; out     dx, al
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 out dx, al
 .org 0x8ca
 # IDA 0x106ca; file 0x8ca; locator=proven; mov     cl, 10h
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 mov cl, 0x10
 .org 0x8cc
 loc_106CC:
 # IDA 0x106cc; file 0x8cc; locator=proven; mov     al, es:[di]
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 es; mov al, byte ptr [di]
 .org 0x8cf
 # IDA 0x106cf; file 0x8cf; locator=proven; lodsb
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 lodsb
 .org 0x8d0
 # IDA 0x106d0; file 0x8d0; locator=proven; not     al
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 not al
 .org 0x8d2
 # IDA 0x106d2; file 0x8d2; locator=proven; stosb
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 stosb
 .org 0x8d3
 # IDA 0x106d3; file 0x8d3; locator=proven; add     di, 4Fh
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 add di, 0x4f
 .org 0x8d6
 # IDA 0x106d6; file 0x8d6; locator=proven; loop    loc_106CC
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 loop .-10
 .org 0x8d8
 # IDA 0x106d8; file 0x8d8; locator=proven; sub     di, 500h
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 sub di, 0x500
 .org 0x8dc
 # IDA 0x106dc; file 0x8dc; locator=proven; pop     ax
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 pop ax
 .org 0x8dd
 # IDA 0x106dd; file 0x8dd; locator=proven; retn
-# ⚠ 函式 sub_1069A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1069A; [proven] 原始數字／負號 16 列字模的前景與補背景 VGA raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 ret
 .org 0x8de
 sub_106DE:
 # IDA 0x106de; file 0x8de; locator=proven; push    dx
-# ⚠ 函式 sub_106DE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_106DE; [proven] 原始 16 列背景填入、CX 高 byte 與 DF 副作用; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 push dx
 .org 0x8df
 # IDA 0x106df; file 0x8df; locator=proven; mov     dx, 3CFh
-# ⚠ 函式 sub_106DE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_106DE; [proven] 原始 16 列背景填入、CX 高 byte 與 DF 副作用; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 mov dx, 0x3cf
 .org 0x8e2
 # IDA 0x106e2; file 0x8e2; locator=proven; mov     al, ah
-# ⚠ 函式 sub_106DE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_106DE; [proven] 原始 16 列背景填入、CX 高 byte 與 DF 副作用; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 {load} mov al, ah
 .org 0x8e4
 # IDA 0x106e4; file 0x8e4; locator=proven; out     dx, al
-# ⚠ 函式 sub_106DE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_106DE; [proven] 原始 16 列背景填入、CX 高 byte 與 DF 副作用; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 out dx, al
 .org 0x8e5
 # IDA 0x106e5; file 0x8e5; locator=proven; mov     cl, 10h
-# ⚠ 函式 sub_106DE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_106DE; [proven] 原始 16 列背景填入、CX 高 byte 與 DF 副作用; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 mov cl, 0x10
 .org 0x8e7
 # IDA 0x106e7; file 0x8e7; locator=proven; mov     al, 0FFh
-# ⚠ 函式 sub_106DE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_106DE; [proven] 原始 16 列背景填入、CX 高 byte 與 DF 副作用; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 mov al, 0xff
 .org 0x8e9
 loc_106E9:
 # IDA 0x106e9; file 0x8e9; locator=proven; stosb
-# ⚠ 函式 sub_106DE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_106DE; [proven] 原始 16 列背景填入、CX 高 byte 與 DF 副作用; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 stosb
 .org 0x8ea
 # IDA 0x106ea; file 0x8ea; locator=proven; add     di, 4Fh
-# ⚠ 函式 sub_106DE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_106DE; [proven] 原始 16 列背景填入、CX 高 byte 與 DF 副作用; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 add di, 0x4f
 .org 0x8ed
 # IDA 0x106ed; file 0x8ed; locator=proven; loop    loc_106E9
-# ⚠ 函式 sub_106DE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_106DE; [proven] 原始 16 列背景填入、CX 高 byte 與 DF 副作用; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 loop .-4
 .org 0x8ef
 # IDA 0x106ef; file 0x8ef; locator=proven; sub     di, 500h
-# ⚠ 函式 sub_106DE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_106DE; [proven] 原始 16 列背景填入、CX 高 byte 與 DF 副作用; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 sub di, 0x500
 .org 0x8f3
 # IDA 0x106f3; file 0x8f3; locator=proven; pop     dx
-# ⚠ 函式 sub_106DE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_106DE; [proven] 原始 16 列背景填入、CX 高 byte 與 DF 副作用; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 pop dx
 .org 0x8f4
 # IDA 0x106f4; file 0x8f4; locator=proven; retn
-# ⚠ 函式 sub_106DE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_106DE; [proven] 原始 16 列背景填入、CX 高 byte 與 DF 副作用; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 ret
 .org 0x8f5
 sub_106F5:
@@ -8011,75 +8011,75 @@ ret
 .org 0x2017
 sub_11E17:
 # IDA 0x11e17; file 0x2017; locator=proven; mov     ax, ds:0CF6h
-# ⚠ 函式 sub_11E17; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E17; [proven] 讀原 DS 日期三欄位並呼叫三次數字 raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 mov ax, word ptr [0xcf6]
 .org 0x201a
 # IDA 0x11e1a; file 0x201a; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_11E17; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E17; [proven] 讀原 DS 日期三欄位並呼叫三次數字 raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 {load} xor dx, dx
 .org 0x201c
 # IDA 0x11e1c; file 0x201c; locator=proven; mov     bx, 903h
-# ⚠ 函式 sub_11E17; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E17; [proven] 讀原 DS 日期三欄位並呼叫三次數字 raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 mov bx, 0x903
 .org 0x201f
 # IDA 0x11e1f; file 0x201f; locator=proven; mov     di, 2BBh
-# ⚠ 函式 sub_11E17; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E17; [proven] 讀原 DS 日期三欄位並呼叫三次數字 raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 mov di, 0x2bb
 .org 0x2022
 # IDA 0x11e22; file 0x2022; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_11E17; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E17; [proven] 讀原 DS 日期三欄位並呼叫三次數字 raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 call .-6131
 .org 0x2025
 # IDA 0x11e25; file 0x2025; locator=proven; mov     al, ds:0CF4h
-# ⚠ 函式 sub_11E17; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E17; [proven] 讀原 DS 日期三欄位並呼叫三次數字 raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 mov al, byte ptr [0xcf4]
 .org 0x2028
 # IDA 0x11e28; file 0x2028; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_11E17; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E17; [proven] 讀原 DS 日期三欄位並呼叫三次數字 raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 {load} xor dx, dx
 .org 0x202a
 # IDA 0x11e2a; file 0x202a; locator=proven; mov     ah, dl
-# ⚠ 函式 sub_11E17; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E17; [proven] 讀原 DS 日期三欄位並呼叫三次數字 raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 {load} mov ah, dl
 .org 0x202c
 # IDA 0x11e2c; file 0x202c; locator=proven; mov     bx, 902h
-# ⚠ 函式 sub_11E17; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E17; [proven] 讀原 DS 日期三欄位並呼叫三次數字 raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 mov bx, 0x902
 .org 0x202f
 # IDA 0x11e2f; file 0x202f; locator=proven; mov     di, 2C0h
-# ⚠ 函式 sub_11E17; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E17; [proven] 讀原 DS 日期三欄位並呼叫三次數字 raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 mov di, 0x2c0
 .org 0x2032
 # IDA 0x11e32; file 0x2032; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_11E17; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E17; [proven] 讀原 DS 日期三欄位並呼叫三次數字 raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 call .-6147
 .org 0x2035
 # IDA 0x11e35; file 0x2035; locator=proven; mov     al, ds:0CF0h
-# ⚠ 函式 sub_11E17; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E17; [proven] 讀原 DS 日期三欄位並呼叫三次數字 raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 mov al, byte ptr [0xcf0]
 .org 0x2038
 # IDA 0x11e38; file 0x2038; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_11E17; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E17; [proven] 讀原 DS 日期三欄位並呼叫三次數字 raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 {load} xor dx, dx
 .org 0x203a
 # IDA 0x11e3a; file 0x203a; locator=proven; mov     ah, dl
-# ⚠ 函式 sub_11E17; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E17; [proven] 讀原 DS 日期三欄位並呼叫三次數字 raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 {load} mov ah, dl
 .org 0x203c
 # IDA 0x11e3c; file 0x203c; locator=proven; mov     bx, 902h
-# ⚠ 函式 sub_11E17; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E17; [proven] 讀原 DS 日期三欄位並呼叫三次數字 raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 mov bx, 0x902
 .org 0x203f
 # IDA 0x11e3f; file 0x203f; locator=proven; mov     di, 2C4h
-# ⚠ 函式 sub_11E17; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E17; [proven] 讀原 DS 日期三欄位並呼叫三次數字 raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 mov di, 0x2c4
 .org 0x2042
 # IDA 0x11e42; file 0x2042; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_11E17; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E17; [proven] 讀原 DS 日期三欄位並呼叫三次數字 raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 call .-6163
 .org 0x2045
 # IDA 0x11e45; file 0x2045; locator=proven; retn
-# ⚠ 函式 sub_11E17; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E17; [proven] 讀原 DS 日期三欄位並呼叫三次數字 raster; 出處: docs/re/109-c-number-raster-restoration.md, docs/spec/229-c-number-raster.md
 ret
 .org 0x2046
 sub_11E46:
