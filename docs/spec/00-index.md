@@ -250,6 +250,7 @@
 | 研究契約 | 規格 | 狀態 |
 |---|---|---|
 | C 亂數取數與近呼叫副作用 | [`201-c-rng-function.md`](201-c-rng-function.md) | CONFORMED，原版/C 263,680 組、Go 263,168 組對照，限固定輸入與局部常式 |
+| C 亂數播種與 RTC 回覆 | [`202-c-rng-seed.md`](202-c-rng-seed.md) | CONFORMED，原版/C 86,420 組、Go 86,408 組，限合法 BCD 與固定 RTC fixture |
 
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的

@@ -1799,3 +1799,11 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - 四種 C 突變均被拒絕。堆疊重疊的 POP 必須讀實際記憶體，不能無條件還原保存的本機變數。
 - 固定四張控制表與 c/s 後才執行，沒有測 RTC 播種或未受控亂數。IF/TF=0、偶數 SP 與原始 CS 是本輪界線，不外推一般玩家流程。
 - 指令身分、工具與輸入、雙側摘要、來源雜湊與重跑入口在 [`docs/re/91`](docs/re/91-c-rng-restoration.md)，C 契約在 [`docs/spec/201`](docs/spec/201-c-rng-function.md)。
+
+## 2026-10-08：sub_1EC82 的 C 播種還原
+
+- 指令身分：IDA 線性 0x1EC82–0x1ECE0，原始 94 bytes SHA-256 `420ac03341ea350b7ebb66a5e5d9210830a5dd18ccd4a5bc9dff123517271187`，輸入沿用松崗 KI.EXE 固定雜湊。
+- O0/O2 各 86,420 組原版/C 與 86,408 組 Go 狀態相同，完整 1 MB 記憶體各 85 次相同，三種 C 突變被拒絕。
+- RTC 為明示 fixture ISR 回覆，AL 保留為參數；原始程式與 INT／IRET 都實際執行。沒有把 dosgolem 缺少成功 RTC 的預設當成實機證據。
+- XOR AF 限於目前模型；非法 BCD、其他 CS、重疊堆疊、RTC 時序與玩家流程保持證據限制。
+- 出處與來源／工具身分在 [`docs/re/92`](docs/re/92-c-rng-seed-restoration.md)，研究契約在 [`docs/spec/202`](docs/spec/202-c-rng-seed.md)。

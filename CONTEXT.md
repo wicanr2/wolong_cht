@@ -23,6 +23,10 @@
 | 同上 | 來源獨立冷組譯通過；改指令、立即數常數或 MZ 重定位均被拒絕 | 原版工具鏈／語言仍未知，不阻塞已驗證的組語基準 | `assembly/build/report.json` 與 `assembly/source-only/` |
 | 同上；`function-ledger.json` | 739 筆原始 IDA 名稱、chunks、來源行與語意等級 | 組語基準的導航快照；C 狀態另查分級索引 | C 函式定位台帳與來源對映 |
 | 同上；`sub_1ECE0` 的 C 還原 | O0/O2 各原版/C 263,680 組、Go 263,168 組相同，四組 C 突變被拒絕 | C 局部語意對照通過；IF/TF=0、四張受控表，不宣稱 C 機器碼匹配或正常玩家路徑 | C 資料函式、介面適配層、spec/201 與局部收據 |
+| 同上；`sub_1EC82` 的 C 還原 | O0/O2 各原版/C 86,420 組、Go 86,408 組相同，三組突變被拒絕 | 播種局部語意通過；合法 BCD、固定 RTC、分離堆疊，不外推實機 RTC | spec/202、[re/92](docs/re/92-c-rng-seed-restoration.md) 與局部收據 |
+
+持續 Goal 為完成整個 matching decompilation；目前有整檔組語基準與兩個 C 函式，不能據此宣布完整 C 還原完成。
+使用者已授權每輪完成後 commit、push。基準里程碑 `1d21147` 已推到 origin/main。
 
 未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。
 

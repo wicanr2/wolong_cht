@@ -3,6 +3,21 @@
   "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
   "address_space": "IDA Pro 9.4 database linear",
   "functions": {
+    "sub_1EC82": {
+      "ida_linear": 126082,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/202-c-rng-seed.md",
+      "evidence": "docs/re/92-c-rng-seed-restoration.md",
+      "source": "tools/c_recovery/seed.c",
+      "header": "tools/c_recovery/seed.h",
+      "source_sha256": "5310de9dcc0e40a374d168f73ffa8de2222de654378c7bfc6c50c4255e851cbb",
+      "header_sha256": "4f9e0c6e3026967450b6a29758bedd2e293010187a95e2fd98b0a1c438a0ffc9",
+      "receipt": "workplace/matching-decompilation/c-seed/verification.json",
+      "oracle_cases_per_optimization": 86420,
+      "go_cases_per_optimization": 86408,
+      "c_machine_code_match": false,
+      "scope": "All legal BCD times with fixed successful RTC reply; nonzero AL and stack boundary samples; IF/TF=0; disjoint stack; XOR AF follows dosgolem model."
+    },
     "sub_1ECE0": {
       "ida_linear": 126176,
       "status": "semantic-conformed",

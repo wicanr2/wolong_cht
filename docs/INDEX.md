@@ -207,7 +207,7 @@
 | [`docs/re/39-remaining-unread.md`](re/39-remaining-unread.md) | 39 — 剩餘未讀函式的逐支歸屬 | 清單。 | 2026-08-14 |
 | [`docs/re/40-garrison-relief-request.md`](re/40-garrison-relief-request.md) | 40 — 據點求援與援軍派遣 | 整條鏈 confirmed（每一支都逐行讀過）。 sub_140C9 的距離算式裡有一處 | 2026-08-14 |
 | [`docs/re/42-leaf-functions.md`](re/42-leaf-functions.md) | 42 — 戰術以外的 47 支葉節點 | 47 支全部逐行讀過。四件事因此定案：INT 61h 是音源 TSR 的介面、 byte_198A6 的位元圖完整、… | 2026-08-14 |
-| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的證據索引） | 生成的證據索引，跑 tools/py.sh tools/re_open_questions.py 重出。 證據欄不下… | 2026-10-07 |
+| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的證據索引） | 生成的證據索引，跑 tools/py.sh tools/re_open_questions.py 重出。 證據欄不下… | 2026-10-08 |
 | [`docs/re/44-threat-and-reinforcement-ai.md`](re/44-threat-and-reinforcement-ai.md) | 44 — 威脅偵測與 AI 出兵：據點每 tick 掃一次 | 整條鏈逐行讀完。三件事定案：據點 +0x18 是佔用圖讀回來的軍團數、 +0x00 低 4 位是「哪幾個鄰居是敵方」… | 2026-08-14 |
 | [`docs/re/45-corps-command-mode.md`](re/45-corps-command-mode.md) | 45 — 軍團的三種指令模式：戰鬥指揮／委任／解體 | 軍團 +0x00 位元 2 定案 ＝ | 2026-08-14 |
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |
@@ -256,6 +256,7 @@
 | [`docs/re/89-matching-decompilation-pilot.md`](re/89-matching-decompilation-pilot.md) | 89：比對式反編譯試點：三個函式可以重組回原始機器碼嗎 | 局部組語重組與 C 編譯試驗完成。結論限於三個函式。 | 2026-10-08 |
 | [`docs/re/90-assembly-reconstruction.md`](re/90-assembly-reconstruction.md) | 90：組語基準：完整重建松崗版 KI.EXE | 整檔組語重建通過。指令來源、MZ 封裝與資料宣告可獨立產生相同 EXE。 | 2026-10-08 |
 | [`docs/re/91-c-rng-restoration.md`](re/91-c-rng-restoration.md) | 91：第一個 C 函式：sub_1ECE0 的語意還原與對照 | 局部語意對照通過。可讀 C 取數函式、呼叫介面適配層與 Go 資料規則均有收據。 | 2026-10-08 |
+| [`docs/re/92-c-rng-seed-restoration.md`](re/92-c-rng-seed-restoration.md) | 92：C 播種函式：固定 RTC 的原版與 Go 對照 | 局部播種對照通過。合法時分秒、明示 RTC AL 與堆疊邊界有原版/C/Go 收據。 | 2026-10-08 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-16 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -387,6 +388,7 @@
 | [`docs/spec/20-save-format.md`](spec/20-save-format.md) | 20 — remake 原生存檔格式 | CONFORMED。編解碼、路徑與遊戲接線都實作並驗過。 存檔一次寫兩份（原版格式 ＋ 原生檔），讀檔優先原生檔。 | 2026-08-14 |
 | [`docs/spec/200-opening-move-delay.md`](spec/200-opening-move-delay.md) | 200 — 開場的兵晚一拍才走 | CONFORMED。 | 2026-09-11 |
 | [`docs/spec/201-c-rng-function.md`](spec/201-c-rng-function.md) | 201：sub_1ECE0 的 C 還原契約 | CONFORMED。原版與 C 的局部介面對照、C 與 Go 的資料規則對照均通過。 | 2026-10-08 |
+| [`docs/spec/202-c-rng-seed.md`](spec/202-c-rng-seed.md) | 202：sub_1EC82 的 C 播種契約 | CONFORMED。固定 RTC 回覆下，完整播種介面及合法時間矩陣的原版/C/Go 對照通過。 | 2026-10-08 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |
 | [`docs/spec/23-city-info-window.md`](spec/23-city-info-window.md) | 23 — 據點情報視窗 | CONFORMED。版面已照原版實作並有契約測試。 | 2026-08-15 |
