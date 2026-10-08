@@ -12698,6 +12698,84 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "原始 C renderer 對照的證據界線，INT50／正常玩家與原作者工具鏈分開記錄，不代替現行 remake Issue 驗收。"
+    },
+    {
+      "file": "docs/re/111-c-input-mouse-restoration.md",
+      "item": "原版 timer producer 與 wall-clock",
+      "status": "本輪注入明示 counter 輸入，驗等待消費端，不換算牆上秒數",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-dc671e30a0403179ca54",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原始 input／cursor C 還原的局部證據界線；counter producer、正常派送與原作者工具鏈不由此收據代證。"
+    },
+    {
+      "file": "docs/re/111-c-input-mouse-restoration.md",
+      "item": "自然玩家與自動 callback 派送",
+      "status": "direct callback／固定 press 序列不代證正常玩家操作",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-c724de0503bd55c504ee",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原始 input／cursor C 還原的局部證據界線；counter producer、正常派送與原作者工具鏈不由此收據代證。"
+    },
+    {
+      "file": "docs/re/111-c-input-mouse-restoration.md",
+      "item": "原作者 C 工具鏈與機器碼",
+      "status": "仍需另驗",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-18ff2559e3dbe7992539",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原始 input／cursor C 還原的局部證據界線；counter producer、正常派送與原作者工具鏈不由此收據代證。"
+    },
+    {
+      "file": "docs/spec/231-c-input-mouse.md",
+      "item": "counter 的真實初始化／timer cadence",
+      "status": "只驗原 consumer，不推算硬體時間",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-3371906ccb9057bcd532",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原始 input／cursor C 還原的局部證據界線；counter producer、正常派送與原作者工具鏈不由此收據代證。"
+    },
+    {
+      "file": "docs/spec/231-c-input-mouse.md",
+      "item": "正常玩家 callback／訊息流程",
+      "status": "局部完整 device 對照仍有 direct-entry 界線",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-41a7945f92c4ca3ff48f",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原始 input／cursor C 還原的局部證據界線；counter producer、正常派送與原作者工具鏈不由此收據代證。"
+    },
+    {
+      "file": "docs/spec/231-c-input-mouse.md",
+      "item": "C 機器碼與原作者工具鏈",
+      "status": "尚未確認",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-e44140e3c525ebc19b54",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原始 input／cursor C 還原的局部證據界線；counter producer、正常派送與原作者工具鏈不由此收據代證。"
     }
   ]
 }

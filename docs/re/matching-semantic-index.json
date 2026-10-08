@@ -1338,6 +1338,174 @@
         "docs/re/110-c-talk-rendering-restoration.md",
         "docs/spec/230-c-talk-rendering.md"
       ]
+    },
+    "0x18810": {
+      "meaning": "原始訊息顯示、右鍵／counter 等待與擦除控制流",
+      "level": "proven",
+      "sources": [
+        "docs/re/111-c-input-mouse-restoration.md",
+        "docs/spec/231-c-input-mouse.md"
+      ]
+    },
+    "0x121E7": {
+      "meaning": "原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0",
+      "level": "proven",
+      "sources": [
+        "docs/re/111-c-input-mouse-restoration.md",
+        "docs/spec/231-c-input-mouse.md"
+      ]
+    },
+    "0x20000": {
+      "meaning": "原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/111-c-input-mouse-restoration.md",
+        "docs/spec/231-c-input-mouse.md"
+      ]
+    },
+    "0x2002E": {
+      "meaning": "原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/111-c-input-mouse-restoration.md",
+        "docs/spec/231-c-input-mouse.md"
+      ]
+    },
+    "0x2006F": {
+      "meaning": "原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/111-c-input-mouse-restoration.md",
+        "docs/spec/231-c-input-mouse.md"
+      ]
+    },
+    "0x20070": {
+      "meaning": "原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/111-c-input-mouse-restoration.md",
+        "docs/spec/231-c-input-mouse.md"
+      ]
+    },
+    "0x2009A": {
+      "meaning": "原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/111-c-input-mouse-restoration.md",
+        "docs/spec/231-c-input-mouse.md"
+      ]
+    },
+    "0x200BD": {
+      "meaning": "原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/111-c-input-mouse-restoration.md",
+        "docs/spec/231-c-input-mouse.md"
+      ]
+    },
+    "0x200C0": {
+      "meaning": "原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/111-c-input-mouse-restoration.md",
+        "docs/spec/231-c-input-mouse.md"
+      ]
+    },
+    "0x20137": {
+      "meaning": "原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/111-c-input-mouse-restoration.md",
+        "docs/spec/231-c-input-mouse.md"
+      ]
+    },
+    "0x2016B": {
+      "meaning": "原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/111-c-input-mouse-restoration.md",
+        "docs/spec/231-c-input-mouse.md"
+      ]
+    },
+    "0x2019D": {
+      "meaning": "原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/111-c-input-mouse-restoration.md",
+        "docs/spec/231-c-input-mouse.md"
+      ]
+    },
+    "0x201C6": {
+      "meaning": "原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/111-c-input-mouse-restoration.md",
+        "docs/spec/231-c-input-mouse.md"
+      ]
+    },
+    "0x201E4": {
+      "meaning": "原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/111-c-input-mouse-restoration.md",
+        "docs/spec/231-c-input-mouse.md"
+      ]
+    },
+    "0x2020C": {
+      "meaning": "原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/111-c-input-mouse-restoration.md",
+        "docs/spec/231-c-input-mouse.md"
+      ]
+    },
+    "0x20249": {
+      "meaning": "原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/111-c-input-mouse-restoration.md",
+        "docs/spec/231-c-input-mouse.md"
+      ]
+    },
+    "0x202A0": {
+      "meaning": "原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/111-c-input-mouse-restoration.md",
+        "docs/spec/231-c-input-mouse.md"
+      ]
+    },
+    "0x202BD": {
+      "meaning": "原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/111-c-input-mouse-restoration.md",
+        "docs/spec/231-c-input-mouse.md"
+      ]
+    },
+    "0x202FE": {
+      "meaning": "原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/111-c-input-mouse-restoration.md",
+        "docs/spec/231-c-input-mouse.md"
+      ]
+    },
+    "0x1222B": {
+      "meaning": "原始 live EB0F／NOP 輪詢分支、十 counter 間隔、清除與左鍵消費",
+      "level": "proven",
+      "sources": [
+        "docs/re/111-c-input-mouse-restoration.md",
+        "docs/spec/231-c-input-mouse.md"
+      ]
+    },
+    "0x20101": {
+      "meaning": "原始 mouse callback，保存／還原 FLAGS與GC／seq，移動時恢復舊游標並畫新游標",
+      "level": "proven",
+      "sources": [
+        "docs/re/111-c-input-mouse-restoration.md",
+        "docs/spec/231-c-input-mouse.md"
+      ]
     }
   },
   "operands": {

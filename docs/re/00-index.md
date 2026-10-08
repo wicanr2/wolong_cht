@@ -167,6 +167,7 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 | [`108`](108-c-glyph-raster-restoration.md) | 原始字型向量、真正 glyph raster 與三字 live operand |
 | [`109`](109-c-number-raster-restoration.md) | 數字字模／負號／背景，以及日期與 SS 參數 caller |
 | [`110`](110-c-talk-rendering-restoration.md) | TALK 七參數／八變體、肖像四格快取與原始 DOS 讀檔 |
+| [`111`](111-c-input-mouse-restoration.md) | 訊息等待、原 mouse far table、游標與 callback |
 | [`21`](21-function-census.md) | 全函式覆蓋普查；**§3.1 為什麼要排除目錄型文件** |
 | [`24`](24-unread-function-catalogue.md) | 未讀函式的證據與下手順序 |
 | [`39`](39-remaining-unread.md) | 未讀函式的逐支歸屬（生成的，可重跑）|

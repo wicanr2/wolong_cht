@@ -279,6 +279,7 @@
 | C 字型向量與 raster | [`228-c-glyph-raster.md`](228-c-glyph-raster.md) | CONFORMED，252真實glyph／全raster／九錯版拒絕 |
 | C 原始數字 raster | [`229-c-number-raster.md`](229-c-number-raster.md) | CONFORMED，四函式／4,881 組／八錯版拒絕 |
 | C TALK 與肖像快取 | [`230-c-talk-rendering.md`](230-c-talk-rendering.md) | CONFORMED，八函式／六 handler／1,277 組／十錯版拒絕 |
+| C 訊息等待與滑鼠 | [`231-c-input-mouse.md`](231-c-input-mouse.md) | CONFORMED，19 函式／210 組／三個還原／十二錯版拒絕 |
 
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的

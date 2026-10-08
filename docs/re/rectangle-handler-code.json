@@ -3,9 +3,9 @@
   "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
   "tool": "IDA Pro",
   "tool_version": "9.4",
-  "database_sha256": "bd9456d704fb5f1d7ec6fe544675cd106c434d53bcad8afdbc11c7b1e4c6e9d7",
+  "database_sha256": "7e307f175321bfde14d8f7cfc77fa1351be676f1ee3ca8b978cdee1a66ed530c",
   "image_id": "sha256:4ac62de83339c215bab10e455cee3a22d9c6efed9fd0d8ed0f068327b83a06ab",
-  "evidence": "docs/re/108-c-glyph-raster-restoration.md",
+  "evidence": "docs/re/111-c-input-mouse-restoration.md",
   "instructions": [
     {
       "ida_linear": 67358,
@@ -876,6 +876,948 @@
       "locator_level": "proven",
       "scope_sources": [
         "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 74297,
+      "file_start": 9273,
+      "file_end": 9275,
+      "kind": "instruction",
+      "original_name": "loc_12239",
+      "function_name": null,
+      "original_assembly": "jmp     short near ptr byte_12246+4",
+      "gas": "jmp .+17",
+      "bytes": "eb0f",
+      "ida_bytes": "eb0f",
+      "relocation_file_offsets": [],
+      "original_ida_data_line": "dw 0FEBh",
+      "ida_code_classified": false,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 8778,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "near ptr byte_12246+4",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/111-c-input-mouse-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 74299,
+      "file_start": 9275,
+      "file_end": 9278,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "mov     ax, 5",
+      "gas": "mov ax, 0x5",
+      "bytes": "b80500",
+      "ida_bytes": "b80500",
+      "relocation_file_offsets": [],
+      "original_ida_data_line": "db 0B8h, 5, 0, 0BBh, 2 dup(0), 9Ah, 2 dup(0)",
+      "ida_code_classified": false,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 5,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "5",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/111-c-input-mouse-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 74302,
+      "file_start": 9278,
+      "file_end": 9281,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "mov     bx, 0",
+      "gas": "mov bx, 0x0",
+      "bytes": "bb0000",
+      "ida_bytes": "bb0000",
+      "relocation_file_offsets": [],
+      "original_ida_data_line": "mov     bx, 0",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "0",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/111-c-input-mouse-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 74305,
+      "file_start": 9281,
+      "file_end": 9286,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "call    sub_20000",
+      "gas": "lcall 0x1000, 0x0",
+      "bytes": "9a00000010",
+      "ida_bytes": "9a00000020",
+      "relocation_file_offsets": [
+        9284
+      ],
+      "original_ida_data_line": "call    sub_20000",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 6,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "sub_20000",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/111-c-input-mouse-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 74310,
+      "file_start": 9286,
+      "file_end": 9288,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "and     bx, bx",
+      "gas": "{load} and bx, bx",
+      "bytes": "23db",
+      "ida_bytes": "23db",
+      "relocation_file_offsets": [],
+      "original_ida_data_line": "and     bx, bx",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/111-c-input-mouse-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 74312,
+      "file_start": 9288,
+      "file_end": 9290,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "jnz     short near ptr byte_12255+15h",
+      "gas": "jnz .+34",
+      "bytes": "7520",
+      "ida_bytes": "7520",
+      "relocation_file_offsets": [],
+      "original_ida_data_line": "jnz     short near ptr byte_12255+15h",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 8810,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "near ptr byte_12255+15h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/111-c-input-mouse-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 74314,
+      "file_start": 9290,
+      "file_end": 9293,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "mov     ax, 5",
+      "gas": "mov ax, 0x5",
+      "bytes": "b80500",
+      "ida_bytes": "b80500",
+      "relocation_file_offsets": [],
+      "original_ida_data_line": "mov     ax, 5",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 5,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "5",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/111-c-input-mouse-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 74317,
+      "file_start": 9293,
+      "file_end": 9296,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "mov     bx, 1",
+      "gas": "mov bx, 0x1",
+      "bytes": "bb0100",
+      "ida_bytes": "bb0100",
+      "relocation_file_offsets": [],
+      "original_ida_data_line": "mov     bx, 1",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/111-c-input-mouse-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 74320,
+      "file_start": 9296,
+      "file_end": 9301,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "call    sub_20000",
+      "gas": "lcall 0x1000, 0x0",
+      "bytes": "9a00000010",
+      "ida_bytes": "9a00000020",
+      "relocation_file_offsets": [
+        9299
+      ],
+      "original_ida_data_line": "call    sub_20000",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 6,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "sub_20000",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/111-c-input-mouse-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 74325,
+      "file_start": 9301,
+      "file_end": 9303,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "and     bx, bx",
+      "gas": "{load} and bx, bx",
+      "bytes": "23db",
+      "ida_bytes": "23db",
+      "relocation_file_offsets": [],
+      "original_ida_data_line": "and     bx, bx",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/111-c-input-mouse-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 74327,
+      "file_start": 9303,
+      "file_end": 9305,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "jnz     short near ptr unk_1226A",
+      "gas": "jnz .+19",
+      "bytes": "7511",
+      "ida_bytes": "7511",
+      "relocation_file_offsets": [],
+      "original_ida_data_line": "jnz     short near ptr unk_1226A",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 8810,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "near ptr unk_1226A",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/111-c-input-mouse-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 74329,
+      "file_start": 9305,
+      "file_end": 9311,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "cmp     cs:byte_10D2D, 0FFh",
+      "gas": "cs; cmp byte ptr [0xd2d], 0xff",
+      "bytes": "2e803e2d0dff",
+      "ida_bytes": "2e803e2d0dff",
+      "relocation_file_offsets": [],
+      "original_ida_data_line": "cmp     cs:byte_10D2D, 0FFh",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 2,
+          "addr": 3373,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 6,
+          "original": "cs:byte_10D2D",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 255,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "0FFh",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/111-c-input-mouse-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 74335,
+      "file_start": 9311,
+      "file_end": 9313,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "jb      short loc_12239",
+      "gas": "jb .-38",
+      "bytes": "72d8",
+      "ida_bytes": "72d8",
+      "relocation_file_offsets": [],
+      "original_ida_data_line": "jb      short loc_12239",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 8761,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "loc_12239",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/111-c-input-mouse-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 74337,
+      "file_start": 9313,
+      "file_end": 9319,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "mov     cs:byte_10D2D, 0",
+      "gas": "cs; mov byte ptr [0xd2d], 0x0",
+      "bytes": "2ec6062d0d00",
+      "ida_bytes": "2ec6062d0d00",
+      "relocation_file_offsets": [],
+      "original_ida_data_line": "mov     cs:byte_10D2D, 0",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 2,
+          "addr": 3373,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 6,
+          "original": "cs:byte_10D2D",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "0",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/111-c-input-mouse-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 74343,
+      "file_start": 9319,
+      "file_end": 9320,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "dec     si",
+      "gas": "dec si",
+      "bytes": "4e",
+      "ida_bytes": "4e",
+      "relocation_file_offsets": [],
+      "original_ida_data_line": "dec     si",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/111-c-input-mouse-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 74344,
+      "file_start": 9320,
+      "file_end": 9322,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "jnz     short loc_12239",
+      "gas": "jnz .-47",
+      "bytes": "75cf",
+      "ida_bytes": "75cf",
+      "relocation_file_offsets": [],
+      "original_ida_data_line": "jnz     short loc_12239",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 8761,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "loc_12239",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/111-c-input-mouse-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 74346,
+      "file_start": 9322,
+      "file_end": 9328,
+      "kind": "instruction",
+      "original_name": "loc_1226A",
+      "function_name": null,
+      "original_assembly": "mov     cs:byte_10D2D, 0",
+      "gas": "cs; mov byte ptr [0xd2d], 0x0",
+      "bytes": "2ec6062d0d00",
+      "ida_bytes": "2ec6062d0d00",
+      "relocation_file_offsets": [],
+      "original_ida_data_line": "mov     cs:byte_10D2D, 0",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 2,
+          "addr": 3373,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 6,
+          "original": "cs:byte_10D2D",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "0",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/111-c-input-mouse-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 74352,
+      "file_start": 9328,
+      "file_end": 9334,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "mov     cs:byte_10D2C, 0",
+      "gas": "cs; mov byte ptr [0xd2c], 0x0",
+      "bytes": "2ec6062c0d00",
+      "ida_bytes": "2ec6062c0d00",
+      "relocation_file_offsets": [],
+      "original_ida_data_line": "mov     cs:byte_10D2C, 0",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 2,
+          "addr": 3372,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 6,
+          "original": "cs:byte_10D2C",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "0",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/111-c-input-mouse-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 74358,
+      "file_start": 9334,
+      "file_end": 9337,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "mov     ax, 5",
+      "gas": "mov ax, 0x5",
+      "bytes": "b80500",
+      "ida_bytes": "b80500",
+      "relocation_file_offsets": [],
+      "original_ida_data_line": "mov     ax, 5",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 5,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "5",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/111-c-input-mouse-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 74361,
+      "file_start": 9337,
+      "file_end": 9339,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "xor     bx, bx",
+      "gas": "{load} xor bx, bx",
+      "bytes": "33db",
+      "ida_bytes": "33db",
+      "relocation_file_offsets": [],
+      "original_ida_data_line": "xor     bx, bx",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/111-c-input-mouse-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 74363,
+      "file_start": 9339,
+      "file_end": 9344,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "call    sub_20000",
+      "gas": "lcall 0x1000, 0x0",
+      "bytes": "9a00000010",
+      "ida_bytes": "9a00000020",
+      "relocation_file_offsets": [
+        9342
+      ],
+      "original_ida_data_line": "call    sub_20000",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 6,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "sub_20000",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/111-c-input-mouse-restoration.md"
       ]
     },
     {
@@ -14336,12 +15278,12 @@
   "assembler_trials": [
     {
       "hint": "",
-      "matched": 13,
-      "remaining": 8
+      "matched": 18,
+      "remaining": 3
     },
     {
       "hint": "{load} ",
-      "matched": 8,
+      "matched": 3,
       "remaining": 0
     }
   ]

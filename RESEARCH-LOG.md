@@ -1939,3 +1939,10 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - 376 原始指令為 native C；完整七個 live near table、SS 參數、原姓名／呼び名、八變體、字形、數字、背景與四格肖像快取接在同一條鏈。DOS ABI 用獨立平台 API，C 不執行 guest CPU。
 - O0/O2 各 1,277 全 RAM／四 plane／ABI／port／API／像素相同；1,022 槽實際 SI、150 肖像、15,287 全形／178 半形字模、無缺字與十個錯版通過。快取 hit 零 I/O，miss 四 API，低階不存在檔案保留原 CF 返回。
 - 初期以像素 X 當文字格，導致訊息 glyph 裁切而兩側仍相同。修正輸入後完整重生，加入字庫工作量下限與裁切形狀拒絕護欄。直接位址形式僅三個參數 handler，舊「五支」泛稱已回填；上游 producer 與 INT50 媒體介面維持原證據限制。
+
+## 2026-10-09：兩個 segment 的 input／cursor 原始 C
+
+- 固定 KI.EXE 與 IDA9.4 DB `7e307f175321bfde14d8f7cfc77fa1351be676f1ee3ca8b978cdee1a66ed530c`。19 個原函式 812 bytes 與兩 raw 入口 145 bytes 的定位／分段／MZ 證據見 [re/111](docs/re/111-c-input-mouse-restoration.md)。
+- 418 指令為 native C，保留 mouse far table、near／far／fall-through、CLI／STI、PUSHF／POPF、真正游標 mask／保存恢復、IN／OUT 與訊息等待擦除。兩側獨立成熟 DOS Mouse，C 不跑 guest CPU。
+- O0/O2 各 210 完整 RAM／四 plane／ABI／平台／mouse 狀態與像素相同；三個 show／move／hide 背景完整還原，十二錯版拒絕。原與 NOP patch 都有十個 counter 間隔的結束，差別是是否輪詢左鍵；舊不等說法已勘誤，未換算 wall-clock。
+- 等待區 21 指令／71 bytes 與三個 file／IDA 分列 far 重定位欄位已實際組譯匹配。總 24,735 指令／56,268 code bytes、整檔 67,099 bytes 仍相同，C 台帳 201 函式／28 code 入口。正常玩家／自動 callback／timer producer 與 C 機器碼保留原界線。

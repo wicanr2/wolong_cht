@@ -318,3 +318,15 @@
 - 較早三份訊息／快取文件回填可驗 backlink；直接位址 consumer 的「五支」改為三支，數字格式移出已解缺口，其餘 producer／屬性限制保留。976 列分流與嚴格問題索引通過，文件與工具 21／25 通過，四項既有缺檔／教訓問題維持基線。
 - 最新公開收據在驗完六個唯讀素材與 resolver 拒絕對照後重生，182 函式／26 入口的來源 binding、生成 C、編譯 flags、所有八個新入口與完整 RAM／plane 收據相符。研究 driver 預設 build 排除，所有輸出 UID/GID 1000:1000，既有 root-owned 路徑仍 27 筆。
 - 舊裁切工作已停止且刪除，最後全矩陣與每批工具容器皆已退出移除；依授權把還原來源、原始定位及驗證紀錄提交並推送 GitHub，完整 Goal 保持 active。
+
+## 2026-10-09：訊息等待與完整 mouse segment
+
+- 前輪 `52c2b09` 已推送，分類 progress，核對原始現況與逆向／IDA 路由後接訊息顯示／等待／擦除。19 named 函式與兩 raw 入口共 957 bytes／418 指令，spec/231 READY 後還原。
+- mouse 遠呼叫與 16 項原 table、cursor 保存／恢復／兩層繪圖、CLI／STI／FLAGS 及 callback 為真實 C。INT33 用獨立平台 API，C 不跑原 guest，timer 以明示 counter checkpoint 輸入，不外推硬體 cadence。
+- 原 `EB 0F` 跳過左鍵但問右鍵及 counter，NOP 模式加入左鍵，兩者均有十個 counter 間隔 timeout。spec/45、re/42、re/25 與 mechanics/15 回填分級勘誤，正式 Go 沒有猜改。
+- Driver 原先錯認 CPU 有 InHook；查實 Bus 接口後用只記錄 IN 的委派 bus，其他記憶體／OUT 契約不變。生成 C 的 NULL 尾端與 raw callback／patch 保留原邊界和實際 CS。
+- O0/O2 各 210 全 RAM／四 plane／IN／OUT／mouse 狀態／ABI 相同；三個背景還原、十九 named／兩 raw 入口與十二錯版通過，生成 C 乾淨重生。C 台帳 201 函式／28 raw 入口。
+- 組語新增21指令／71bytes與三個far重定位，比對 file bytes 與 IDA loader bytes。匯出器舊補充數量約束修正後重生，24,735指令／56,268codebytes與整檔相同，三組語錯版拒絕；舊glyph verifier只驗原338指令子集，保留歷史矩陣。
+- 收尾讀取 Issue #22 現況，仍為 OPEN，未以局部 C 換成正常玩家完成聲明。982 列分流、嚴格問題索引、生成 C／source flags 與所有來源 binding 通過；文件與工具 21／25，四項既有缺檔／教訓問題維持基線。
+- 六個唯讀資料／字庫身分重驗，201 函式／28 入口與公開／本機收據相同。舊 glyph verifier 在隔離暫存輸出通過，不覆寫其歷史收據；本輪所有輸出 UID/GID 1000:1000，既有 root-owned 路徑仍 27 筆。
+- 全矩陣與每批 Docker 容器皆已退出移除；依授權提交並推送來源、原始定位與驗證紀錄，完整 Goal 保持 active。

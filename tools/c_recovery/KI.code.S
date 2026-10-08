@@ -9434,93 +9434,93 @@ ret
 .org 0x23e7
 sub_121E7:
 # IDA 0x121e7; file 0x23e7; locator=proven; push    ax
-# ⚠ 函式 sub_121E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121E7; [proven] 原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push ax
 .org 0x23e8
 # IDA 0x121e8; file 0x23e8; locator=proven; push    bx
-# ⚠ 函式 sub_121E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121E7; [proven] 原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push bx
 .org 0x23e9
 loc_121E9:
 # IDA 0x121e9; file 0x23e9; locator=proven; mov     ax, 5
-# ⚠ 函式 sub_121E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121E7; [proven] 原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0x5
 .org 0x23ec
 # IDA 0x121ec; file 0x23ec; locator=proven; mov     bx, 1
-# ⚠ 函式 sub_121E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121E7; [proven] 原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov bx, 0x1
 .org 0x23ef
 # IDA 0x121ef; file 0x23ef; locator=proven; call    sub_20000
-# ⚠ 函式 sub_121E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121E7; [proven] 原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 lcall 0x1000, 0x0
 .org 0x23f4
 # IDA 0x121f4; file 0x23f4; locator=proven; and     bx, bx
-# ⚠ 函式 sub_121E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121E7; [proven] 原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} and bx, bx
 .org 0x23f6
 # IDA 0x121f6; file 0x23f6; locator=proven; jnz     short loc_12212
-# ⚠ 函式 sub_121E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121E7; [proven] 原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 jnz .+28
 .org 0x23f8
 # IDA 0x121f8; file 0x23f8; locator=proven; mov     ax, 5
-# ⚠ 函式 sub_121E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121E7; [proven] 原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0x5
 .org 0x23fb
 # IDA 0x121fb; file 0x23fb; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_121E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121E7; [proven] 原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} xor bx, bx
 .org 0x23fd
 # IDA 0x121fd; file 0x23fd; locator=proven; call    sub_20000
-# ⚠ 函式 sub_121E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121E7; [proven] 原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 lcall 0x1000, 0x0
 .org 0x2402
 # IDA 0x12202; file 0x2402; locator=proven; and     bx, bx
-# ⚠ 函式 sub_121E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121E7; [proven] 原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} and bx, bx
 .org 0x2404
 # IDA 0x12204; file 0x2404; locator=proven; jz      short loc_121E9
-# ⚠ 函式 sub_121E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121E7; [proven] 原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 jz .-27
 .org 0x2406
 # IDA 0x12206; file 0x2406; locator=proven; mov     ax, 3
-# ⚠ 函式 sub_121E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121E7; [proven] 原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0x3
 .org 0x2409
 # IDA 0x12209; file 0x2409; locator=proven; call    sub_20000
-# ⚠ 函式 sub_121E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121E7; [proven] 原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 lcall 0x1000, 0x0
 .org 0x240e
 # IDA 0x1220e; file 0x240e; locator=proven; clc
-# ⚠ 函式 sub_121E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121E7; [proven] 原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 clc
 .org 0x240f
 # IDA 0x1220f; file 0x240f; locator=proven; pop     bx
-# ⚠ 函式 sub_121E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121E7; [proven] 原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop bx
 .org 0x2410
 # IDA 0x12210; file 0x2410; locator=proven; pop     ax
-# ⚠ 函式 sub_121E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121E7; [proven] 原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop ax
 .org 0x2411
 # IDA 0x12211; file 0x2411; locator=proven; retn
-# ⚠ 函式 sub_121E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121E7; [proven] 原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 ret
 .org 0x2412
 loc_12212:
 # IDA 0x12212; file 0x2412; locator=proven; stc
-# ⚠ 函式 sub_121E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121E7; [proven] 原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 stc
 .org 0x2413
 # IDA 0x12213; file 0x2413; locator=proven; pop     bx
-# ⚠ 函式 sub_121E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121E7; [proven] 原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop bx
 .org 0x2414
 # IDA 0x12214; file 0x2414; locator=proven; pop     ax
-# ⚠ 函式 sub_121E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121E7; [proven] 原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop ax
 .org 0x2415
 # IDA 0x12215; file 0x2415; locator=proven; retn
-# ⚠ 函式 sub_121E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121E7; [proven] 原始滑鼠 press count，右鍵優先 CF=1，左鍵後讀目前座標 CF=0; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 ret
 .org 0x2416
 sub_12216:
@@ -9572,6 +9572,92 @@ cs; mov byte ptr [0xd2d], 0x0
 # IDA 0x12236; file 0x2436; locator=proven; mov     si, 0Ah
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
 mov si, 0xa
+.org 0x2439
+loc_12239:
+# IDA 0x12239; file 0x2439; locator=proven; jmp     short near ptr byte_12246+4
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jmp .+17
+.org 0x243b
+# IDA 0x1223b; file 0x243b; locator=proven; mov     ax, 5
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ax, 0x5
+.org 0x243e
+# IDA 0x1223e; file 0x243e; locator=proven; mov     bx, 0
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov bx, 0x0
+.org 0x2441
+# IDA 0x12241; file 0x2441; locator=proven; call    sub_20000
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+lcall 0x1000, 0x0
+.org 0x2446
+# IDA 0x12246; file 0x2446; locator=proven; and     bx, bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} and bx, bx
+.org 0x2448
+# IDA 0x12248; file 0x2448; locator=proven; jnz     short near ptr byte_12255+15h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnz .+34
+.org 0x244a
+# IDA 0x1224a; file 0x244a; locator=proven; mov     ax, 5
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ax, 0x5
+.org 0x244d
+# IDA 0x1224d; file 0x244d; locator=proven; mov     bx, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov bx, 0x1
+.org 0x2450
+# IDA 0x12250; file 0x2450; locator=proven; call    sub_20000
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+lcall 0x1000, 0x0
+.org 0x2455
+# IDA 0x12255; file 0x2455; locator=proven; and     bx, bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} and bx, bx
+.org 0x2457
+# IDA 0x12257; file 0x2457; locator=proven; jnz     short near ptr unk_1226A
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnz .+19
+.org 0x2459
+# IDA 0x12259; file 0x2459; locator=proven; cmp     cs:byte_10D2D, 0FFh
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; cmp byte ptr [0xd2d], 0xff
+.org 0x245f
+# IDA 0x1225f; file 0x245f; locator=proven; jb      short loc_12239
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jb .-38
+.org 0x2461
+# IDA 0x12261; file 0x2461; locator=proven; mov     cs:byte_10D2D, 0
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; mov byte ptr [0xd2d], 0x0
+.org 0x2467
+# IDA 0x12267; file 0x2467; locator=proven; dec     si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+dec si
+.org 0x2468
+# IDA 0x12268; file 0x2468; locator=proven; jnz     short loc_12239
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnz .-47
+.org 0x246a
+loc_1226A:
+# IDA 0x1226a; file 0x246a; locator=proven; mov     cs:byte_10D2D, 0
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; mov byte ptr [0xd2d], 0x0
+.org 0x2470
+# IDA 0x12270; file 0x2470; locator=proven; mov     cs:byte_10D2C, 0
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; mov byte ptr [0xd2c], 0x0
+.org 0x2476
+# IDA 0x12276; file 0x2476; locator=proven; mov     ax, 5
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ax, 0x5
+.org 0x2479
+# IDA 0x12279; file 0x2479; locator=proven; xor     bx, bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} xor bx, bx
+.org 0x247b
+# IDA 0x1227b; file 0x247b; locator=proven; call    sub_20000
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+lcall 0x1000, 0x0
 .org 0x2480
 # IDA 0x12280; file 0x2480; locator=proven; pop     si
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
@@ -53201,115 +53287,115 @@ ret
 .org 0x8a10
 sub_18810:
 # IDA 0x18810; file 0x8a10; locator=proven; push    bx
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push bx
 .org 0x8a11
 # IDA 0x18811; file 0x8a11; locator=proven; push    dx
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push dx
 .org 0x8a12
 # IDA 0x18812; file 0x8a12; locator=proven; push    ax
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push ax
 .org 0x8a13
 # IDA 0x18813; file 0x8a13; locator=proven; push    cx
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push cx
 .org 0x8a14
 # IDA 0x18814; file 0x8a14; locator=proven; mov     dx, 0Ah
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0xa
 .org 0x8a17
 # IDA 0x18817; file 0x8a17; locator=proven; mov     bx, 8
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov bx, 0x8
 .org 0x8a1a
 # IDA 0x1881a; file 0x8a1a; locator=proven; mov     al, 1Eh
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov al, 0x1e
 .org 0x8a1c
 # IDA 0x1881c; file 0x8a1c; locator=proven; mov     cx, 510h
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov cx, 0x510
 .org 0x8a1f
 # IDA 0x1881f; file 0x8a1f; locator=proven; call    sub_1895D
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+318
 .org 0x8a22
 # IDA 0x18822; file 0x8a22; locator=proven; pop     cx
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop cx
 .org 0x8a23
 # IDA 0x18823; file 0x8a23; locator=proven; pop     ax
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop ax
 .org 0x8a24
 # IDA 0x18824; file 0x8a24; locator=proven; call    sub_101B4
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+31120
 .org 0x8a27
 # IDA 0x18827; file 0x8a27; locator=proven; mov     dx, 0Ah
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0xa
 .org 0x8a2a
 # IDA 0x1882a; file 0x8a2a; locator=proven; mov     bx, 0Ah
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov bx, 0xa
 .org 0x8a2d
 # IDA 0x1882d; file 0x8a2d; locator=proven; call    sub_1075B
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+32558
 .org 0x8a30
 # IDA 0x18830; file 0x8a30; locator=proven; call    sub_101DB
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+31147
 .org 0x8a33
 # IDA 0x18833; file 0x8a33; locator=proven; call    loc_1222B
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .-26120
 .org 0x8a36
 # IDA 0x18836; file 0x8a36; locator=proven; call    sub_101B4
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+31102
 .org 0x8a39
 # IDA 0x18839; file 0x8a39; locator=proven; mov     dx, 0Ah
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0xa
 .org 0x8a3c
 # IDA 0x1883c; file 0x8a3c; locator=proven; mov     bx, 8
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov bx, 0x8
 .org 0x8a3f
 # IDA 0x1883f; file 0x8a3f; locator=proven; xor     al, al
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} xor al, al
 .org 0x8a41
 # IDA 0x18841; file 0x8a41; locator=proven; mov     cx, 510h
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov cx, 0x510
 .org 0x8a44
 # IDA 0x18844; file 0x8a44; locator=proven; call    sub_1895D
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+281
 .org 0x8a47
 # IDA 0x18847; file 0x8a47; locator=proven; mov     cs:byte_198A5, 8
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; mov byte ptr [0x98a5], 0x8
 .org 0x8a4d
 # IDA 0x1884d; file 0x8a4d; locator=proven; call    sub_101DB
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+31118
 .org 0x8a50
 # IDA 0x18850; file 0x8a50; locator=proven; pop     dx
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop dx
 .org 0x8a51
 # IDA 0x18851; file 0x8a51; locator=proven; pop     bx
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop bx
 .org 0x8a52
 # IDA 0x18852; file 0x8a52; locator=proven; retn
-# ⚠ 函式 sub_18810; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18810; [proven] 原始訊息顯示、右鍵／counter 等待與擦除控制流; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 ret
 .org 0x8a53
 sub_18853:
@@ -91459,352 +91545,352 @@ ret
 .org 0xec1f
 # IDA 0x1ea1f; file 0xec1f; locator=proven; mov     ah, [si+0Ah]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 1; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 1; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/111-c-input-mouse-restoration.md
 mov ah, byte ptr [si+0xa]
 .org 0xec22
 # IDA 0x1ea22; file 0xec22; locator=proven; call    near ptr byte_1ECFE+100h
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 1; 原 IDA 資料行: call    near ptr byte_1ECFE+100h; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 1; 原 IDA 資料行: call    near ptr byte_1ECFE+100h; 出處: docs/re/111-c-input-mouse-restoration.md
 call .+988
 .org 0xec25
 # IDA 0x1ea25; file 0xec25; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 1; 原 IDA 資料行: retn; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 1; 原 IDA 資料行: retn; 出處: docs/re/111-c-input-mouse-restoration.md
 ret
 .org 0xec26
 # IDA 0x1ea26; file 0xec26; locator=proven; mov     ah, [si+0Ah]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 2; 原 IDA 資料行: db  8Ah; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 2; 原 IDA 資料行: db  8Ah; 出處: docs/re/111-c-input-mouse-restoration.md
 mov ah, byte ptr [si+0xa]
 .org 0xec29
 # IDA 0x1ea29; file 0xec29; locator=proven; call    near ptr unk_1EAD0
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 2; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 2; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/111-c-input-mouse-restoration.md
 call .+167
 .org 0xec2c
 # IDA 0x1ea2c; file 0xec2c; locator=proven; call    sub_1F020
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 2; 原 IDA 資料行: call    sub_1F020; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 2; 原 IDA 資料行: call    sub_1F020; 出處: docs/re/111-c-input-mouse-restoration.md
 call .+1524
 .org 0xec2f
 # IDA 0x1ea2f; file 0xec2f; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 2; 原 IDA 資料行: retn; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 2; 原 IDA 資料行: retn; 出處: docs/re/111-c-input-mouse-restoration.md
 ret
 .org 0xec30
 # IDA 0x1ea30; file 0xec30; locator=proven; mov     ah, [si+0Ah]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 3; 原 IDA 資料行: db  8Ah; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 3; 原 IDA 資料行: db  8Ah; 出處: docs/re/111-c-input-mouse-restoration.md
 mov ah, byte ptr [si+0xa]
 .org 0xec33
 # IDA 0x1ea33; file 0xec33; locator=proven; call    near ptr unk_1EAD0
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 3; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 3; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/111-c-input-mouse-restoration.md
 call .+157
 .org 0xec36
 # IDA 0x1ea36; file 0xec36; locator=proven; call    sub_1F1A3
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 3; 原 IDA 資料行: call    sub_1F1A3; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 3; 原 IDA 資料行: call    sub_1F1A3; 出處: docs/re/111-c-input-mouse-restoration.md
 call .+1901
 .org 0xec39
 # IDA 0x1ea39; file 0xec39; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 3; 原 IDA 資料行: retn; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 3; 原 IDA 資料行: retn; 出處: docs/re/111-c-input-mouse-restoration.md
 ret
 .org 0xec3a
 # IDA 0x1ea3a; file 0xec3a; locator=proven; mov     ax, [si+0Ah]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 4; 原 IDA 資料行: db  8Bh; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 4; 原 IDA 資料行: db  8Bh; 出處: docs/re/111-c-input-mouse-restoration.md
 mov ax, word ptr [si+0xa]
 .org 0xec3d
 # IDA 0x1ea3d; file 0xec3d; locator=proven; call    near ptr unk_1EAD0
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 4; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 4; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/111-c-input-mouse-restoration.md
 call .+147
 .org 0xec40
 # IDA 0x1ea40; file 0xec40; locator=proven; call    loc_1F465
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 4; 原 IDA 資料行: call    loc_1F465; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 4; 原 IDA 資料行: call    loc_1F465; 出處: docs/re/111-c-input-mouse-restoration.md
 call .+2597
 .org 0xec43
 # IDA 0x1ea43; file 0xec43; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 4; 原 IDA 資料行: retn; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 4; 原 IDA 資料行: retn; 出處: docs/re/111-c-input-mouse-restoration.md
 ret
 .org 0xec44
 # IDA 0x1ea44; file 0xec44; locator=proven; mov     ah, [si+8]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: db  8Ah; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: db  8Ah; 出處: docs/re/111-c-input-mouse-restoration.md
 mov ah, byte ptr [si+0x8]
 .org 0xec47
 # IDA 0x1ea47; file 0xec47; locator=proven; mov     dx, [bp+0]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/111-c-input-mouse-restoration.md
 mov dx, word ptr [bp]
 .org 0xec4a
 # IDA 0x1ea4a; file 0xec4a; locator=proven; mov     bx, [bp+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/111-c-input-mouse-restoration.md
 mov bx, word ptr [bp+0x2]
 .org 0xec4d
 # IDA 0x1ea4d; file 0xec4d; locator=proven; add     dx, [si+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/111-c-input-mouse-restoration.md
 add dx, word ptr [si+0x2]
 .org 0xec50
 # IDA 0x1ea50; file 0xec50; locator=proven; add     bx, [si+4]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/111-c-input-mouse-restoration.md
 add bx, word ptr [si+0x4]
 .org 0xec53
 # IDA 0x1ea53; file 0xec53; locator=proven; mov     cx, [si+6]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: mov     cx, [si+6]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: mov     cx, [si+6]; 出處: docs/re/111-c-input-mouse-restoration.md
 mov cx, word ptr [si+0x6]
 .org 0xec56
 # IDA 0x1ea56; file 0xec56; locator=proven; call    sub_1FB29
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: call    sub_1FB29; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: call    sub_1FB29; 出處: docs/re/111-c-input-mouse-restoration.md
 call .+4307
 .org 0xec59
 # IDA 0x1ea59; file 0xec59; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: retn; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: retn; 出處: docs/re/111-c-input-mouse-restoration.md
 ret
 .org 0xec5a
 # IDA 0x1ea5a; file 0xec5a; locator=proven; mov     ah, [si+8]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: db  8Ah; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: db  8Ah; 出處: docs/re/111-c-input-mouse-restoration.md
 mov ah, byte ptr [si+0x8]
 .org 0xec5d
 # IDA 0x1ea5d; file 0xec5d; locator=proven; mov     dx, [bp+0]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/111-c-input-mouse-restoration.md
 mov dx, word ptr [bp]
 .org 0xec60
 # IDA 0x1ea60; file 0xec60; locator=proven; mov     bx, [bp+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/111-c-input-mouse-restoration.md
 mov bx, word ptr [bp+0x2]
 .org 0xec63
 # IDA 0x1ea63; file 0xec63; locator=proven; add     dx, [si+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/111-c-input-mouse-restoration.md
 add dx, word ptr [si+0x2]
 .org 0xec66
 # IDA 0x1ea66; file 0xec66; locator=proven; add     bx, [si+4]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/111-c-input-mouse-restoration.md
 add bx, word ptr [si+0x4]
 .org 0xec69
 # IDA 0x1ea69; file 0xec69; locator=proven; mov     cx, [si+6]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: mov     cx, [si+6]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: mov     cx, [si+6]; 出處: docs/re/111-c-input-mouse-restoration.md
 mov cx, word ptr [si+0x6]
 .org 0xec6c
 # IDA 0x1ea6c; file 0xec6c; locator=proven; call    sub_1FBA7
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: call    sub_1FBA7; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: call    sub_1FBA7; 出處: docs/re/111-c-input-mouse-restoration.md
 call .+4411
 .org 0xec6f
 # IDA 0x1ea6f; file 0xec6f; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: retn; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: retn; 出處: docs/re/111-c-input-mouse-restoration.md
 ret
 .org 0xec70
 # IDA 0x1ea70; file 0xec70; locator=proven; push    ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: db  1Eh; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: db  1Eh; 出處: docs/re/111-c-input-mouse-restoration.md
 push ds
 .org 0xec71
 # IDA 0x1ea71; file 0xec71; locator=proven; mov     bl, [si+0Ah]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: mov     bl, [si+0Ah]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: mov     bl, [si+0Ah]; 出處: docs/re/111-c-input-mouse-restoration.md
 mov bl, byte ptr [si+0xa]
 .org 0xec74
 # IDA 0x1ea74; file 0xec74; locator=proven; xor     bh, bh
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: xor     bh, bh; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: xor     bh, bh; 出處: docs/re/111-c-input-mouse-restoration.md
 {load} xor bh, bh
 .org 0xec76
 # IDA 0x1ea76; file 0xec76; locator=proven; shl     bx, 1
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/111-c-input-mouse-restoration.md
 shl bx, 0x1
 .org 0xec78
 # IDA 0x1ea78; file 0xec78; locator=proven; shl     bx, 1
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/111-c-input-mouse-restoration.md
 shl bx, 0x1
 .org 0xec7a
 # IDA 0x1ea7a; file 0xec7a; locator=proven; shl     bx, 1
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/111-c-input-mouse-restoration.md
 shl bx, 0x1
 .org 0xec7c
 # IDA 0x1ea7c; file 0xec7c; locator=proven; add     bx, 0EAF1h
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: add     bx, 0EAF1h; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: add     bx, 0EAF1h; 出處: docs/re/111-c-input-mouse-restoration.md
 add bx, 0xeaf1
 .org 0xec80
 # IDA 0x1ea80; file 0xec80; locator=proven; mov     ax, cs:[bx]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: mov     ax, cs:[bx]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: mov     ax, cs:[bx]; 出處: docs/re/111-c-input-mouse-restoration.md
 cs; mov ax, word ptr [bx]
 .org 0xec83
 # IDA 0x1ea83; file 0xec83; locator=proven; mov     cx, cs:[bx+4]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: mov     cx, cs:[bx+4]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: mov     cx, cs:[bx+4]; 出處: docs/re/111-c-input-mouse-restoration.md
 cs; mov cx, word ptr [bx+0x4]
 .org 0xec87
 # IDA 0x1ea87; file 0xec87; locator=proven; push    word ptr cs:[bx+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: push    word ptr cs:[bx+2]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: push    word ptr cs:[bx+2]; 出處: docs/re/111-c-input-mouse-restoration.md
 cs; push word ptr [bx+0x2]
 .org 0xec8b
 # IDA 0x1ea8b; file 0xec8b; locator=proven; push    cx
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: push    cx; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: push    cx; 出處: docs/re/111-c-input-mouse-restoration.md
 push cx
 .org 0xec8c
 # IDA 0x1ea8c; file 0xec8c; locator=proven; call    near ptr unk_1EAD0
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/111-c-input-mouse-restoration.md
 call .+68
 .org 0xec8f
 # IDA 0x1ea8f; file 0xec8f; locator=proven; pop     cx
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: pop     cx; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: pop     cx; 出處: docs/re/111-c-input-mouse-restoration.md
 pop cx
 .org 0xec90
 # IDA 0x1ea90; file 0xec90; locator=proven; pop     ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: pop     ds; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: pop     ds; 出處: docs/re/111-c-input-mouse-restoration.md
 pop ds
 .org 0xec91
 # IDA 0x1ea91; file 0xec91; locator=proven; call    loc_1F26E
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: call    loc_1F26E; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: call    loc_1F26E; 出處: docs/re/111-c-input-mouse-restoration.md
 call .+2013
 .org 0xec94
 # IDA 0x1ea94; file 0xec94; locator=proven; pop     ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: pop     ds; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: pop     ds; 出處: docs/re/111-c-input-mouse-restoration.md
 pop ds
 .org 0xec95
 # IDA 0x1ea95; file 0xec95; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: retn; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: retn; 出處: docs/re/111-c-input-mouse-restoration.md
 ret
 .org 0xec96
 # IDA 0x1ea96; file 0xec96; locator=proven; push    ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: db  1Eh; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: db  1Eh; 出處: docs/re/111-c-input-mouse-restoration.md
 push ds
 .org 0xec97
 # IDA 0x1ea97; file 0xec97; locator=proven; mov     dx, [bp+0]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/111-c-input-mouse-restoration.md
 mov dx, word ptr [bp]
 .org 0xec9a
 # IDA 0x1ea9a; file 0xec9a; locator=proven; mov     bx, [bp+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/111-c-input-mouse-restoration.md
 mov bx, word ptr [bp+0x2]
 .org 0xec9d
 # IDA 0x1ea9d; file 0xec9d; locator=proven; add     dx, [si+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/111-c-input-mouse-restoration.md
 add dx, word ptr [si+0x2]
 .org 0xeca0
 # IDA 0x1eaa0; file 0xeca0; locator=proven; add     bx, [si+4]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/111-c-input-mouse-restoration.md
 add bx, word ptr [si+0x4]
 .org 0xeca3
 # IDA 0x1eaa3; file 0xeca3; locator=proven; mov     ax, [si+8]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: mov     ax, [si+8]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: mov     ax, [si+8]; 出處: docs/re/111-c-input-mouse-restoration.md
 mov ax, word ptr [si+0x8]
 .org 0xeca6
 # IDA 0x1eaa6; file 0xeca6; locator=proven; mov     si, [si+6]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: mov     si, [si+6]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: mov     si, [si+6]; 出處: docs/re/111-c-input-mouse-restoration.md
 mov si, word ptr [si+0x6]
 .org 0xeca9
 # IDA 0x1eaa9; file 0xeca9; locator=proven; mov     ds, cs:word_1EAED
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: mov     ds, cs:word_1EAED; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: mov     ds, cs:word_1EAED; 出處: docs/re/111-c-input-mouse-restoration.md
 cs; mov ds, word ptr [0xeaed]
 .org 0xecae
 # IDA 0x1eaae; file 0xecae; locator=proven; call    sub_1F6DC
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: call    sub_1F6DC; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: call    sub_1F6DC; 出處: docs/re/111-c-input-mouse-restoration.md
 call .+3118
 .org 0xecb1
 # IDA 0x1eab1; file 0xecb1; locator=proven; pop     ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: pop     ds; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: pop     ds; 出處: docs/re/111-c-input-mouse-restoration.md
 pop ds
 .org 0xecb2
 # IDA 0x1eab2; file 0xecb2; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: retn; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: retn; 出處: docs/re/111-c-input-mouse-restoration.md
 ret
 .org 0xecb3
 # IDA 0x1eab3; file 0xecb3; locator=proven; push    ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: db  1Eh; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: db  1Eh; 出處: docs/re/111-c-input-mouse-restoration.md
 push ds
 .org 0xecb4
 # IDA 0x1eab4; file 0xecb4; locator=proven; mov     dx, [bp+0]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/111-c-input-mouse-restoration.md
 mov dx, word ptr [bp]
 .org 0xecb7
 # IDA 0x1eab7; file 0xecb7; locator=proven; mov     bx, [bp+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/111-c-input-mouse-restoration.md
 mov bx, word ptr [bp+0x2]
 .org 0xecba
 # IDA 0x1eaba; file 0xecba; locator=proven; add     dx, [si+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/111-c-input-mouse-restoration.md
 add dx, word ptr [si+0x2]
 .org 0xecbd
 # IDA 0x1eabd; file 0xecbd; locator=proven; add     bx, [si+4]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/111-c-input-mouse-restoration.md
 add bx, word ptr [si+0x4]
 .org 0xecc0
 # IDA 0x1eac0; file 0xecc0; locator=proven; mov     cx, [si+8]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: mov     cx, [si+8]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: mov     cx, [si+8]; 出處: docs/re/111-c-input-mouse-restoration.md
 mov cx, word ptr [si+0x8]
 .org 0xecc3
 # IDA 0x1eac3; file 0xecc3; locator=proven; mov     si, [si+6]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: mov     si, [si+6]; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: mov     si, [si+6]; 出處: docs/re/111-c-input-mouse-restoration.md
 mov si, word ptr [si+0x6]
 .org 0xecc6
 # IDA 0x1eac6; file 0xecc6; locator=proven; mov     ds, cs:word_1EAEF
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: mov     ds, cs:word_1EAEF; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: mov     ds, cs:word_1EAEF; 出處: docs/re/111-c-input-mouse-restoration.md
 cs; mov ds, word ptr [0xeaef]
 .org 0xeccb
 # IDA 0x1eacb; file 0xeccb; locator=proven; call    sub_1F888
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: call    sub_1F888; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: call    sub_1F888; 出處: docs/re/111-c-input-mouse-restoration.md
 call .+3517
 .org 0xecce
 # IDA 0x1eace; file 0xecce; locator=proven; pop     ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: pop     ds; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: pop     ds; 出處: docs/re/111-c-input-mouse-restoration.md
 pop ds
 .org 0xeccf
 # IDA 0x1eacf; file 0xeccf; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: retn; 出處: docs/re/108-c-glyph-raster-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: retn; 出處: docs/re/111-c-input-mouse-restoration.md
 ret
 .org 0xecd0
 loc_1EAD0:
@@ -100251,160 +100337,160 @@ ret
 .org 0x10200
 sub_20000:
 # IDA 0x20000; file 0x10200; locator=proven; cli
-# ⚠ 函式 sub_20000; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20000; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cli
 .org 0x10201
 # IDA 0x20001; file 0x10201; locator=proven; push    si
-# ⚠ 函式 sub_20000; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20000; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push si
 .org 0x10202
 # IDA 0x20002; file 0x10202; locator=proven; mov     si, ax
-# ⚠ 函式 sub_20000; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20000; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} mov si, ax
 .org 0x10204
 # IDA 0x20004; file 0x10204; locator=proven; shl     si, 1
-# ⚠ 函式 sub_20000; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20000; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 shl si, 0x1
 .org 0x10206
 # IDA 0x20006; file 0x10206; locator=proven; call    cs:funcs_20006[si]
-# ⚠ 函式 sub_20000; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20000; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; {disp16} call word ptr [si+0xe]
 .org 0x1020b
 # IDA 0x2000b; file 0x1020b; locator=proven; pop     si
-# ⚠ 函式 sub_20000; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20000; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop si
 .org 0x1020c
 # IDA 0x2000c; file 0x1020c; locator=proven; sti
-# ⚠ 函式 sub_20000; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20000; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 sti
 .org 0x1020d
 # IDA 0x2000d; file 0x1020d; locator=proven; retf
-# ⚠ 函式 sub_20000; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20000; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 retf
 .org 0x1022e
 sub_2002E:
 # IDA 0x2002e; file 0x1022e; locator=proven; xor     ax, ax
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} xor ax, ax
 .org 0x10230
 # IDA 0x20030; file 0x10230; locator=proven; int     33h
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 int 0x33
 .org 0x10232
 # IDA 0x20032; file 0x10232; locator=proven; and     ax, ax
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} and ax, ax
 .org 0x10234
 # IDA 0x20034; file 0x10234; locator=proven; jz      short nullsub_4
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 jz .+59
 .org 0x10236
 # IDA 0x20036; file 0x10236; locator=proven; push    es
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push es
 .org 0x10237
 # IDA 0x20037; file 0x10237; locator=proven; push    bx
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push bx
 .org 0x10238
 # IDA 0x20038; file 0x10238; locator=proven; push    cx
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push cx
 .org 0x10239
 # IDA 0x20039; file 0x10239; locator=proven; push    dx
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push dx
 .org 0x1023a
 # IDA 0x2003a; file 0x1023a; locator=proven; mov     ax, 7
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0x7
 .org 0x1023d
 # IDA 0x2003d; file 0x1023d; locator=proven; xor     cx, cx
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} xor cx, cx
 .org 0x1023f
 # IDA 0x2003f; file 0x1023f; locator=proven; mov     dx, 27Fh
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0x27f
 .org 0x10242
 # IDA 0x20042; file 0x10242; locator=proven; int     33h
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 int 0x33
 .org 0x10244
 # IDA 0x20044; file 0x10244; locator=proven; mov     ax, 8
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0x8
 .org 0x10247
 # IDA 0x20047; file 0x10247; locator=proven; xor     cx, cx
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} xor cx, cx
 .org 0x10249
 # IDA 0x20049; file 0x10249; locator=proven; mov     dx, 18Fh
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0x18f
 .org 0x1024c
 # IDA 0x2004c; file 0x1024c; locator=proven; int     33h
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 int 0x33
 .org 0x1024e
 # IDA 0x2004e; file 0x1024e; locator=proven; mov     ax, 0Fh
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0xf
 .org 0x10251
 # IDA 0x20051; file 0x10251; locator=proven; mov     cx, 8
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov cx, 0x8
 .org 0x10254
 # IDA 0x20054; file 0x10254; locator=proven; mov     dx, 8
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0x8
 .org 0x10257
 # IDA 0x20057; file 0x10257; locator=proven; int     33h
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 int 0x33
 .org 0x10259
 # IDA 0x20059; file 0x10259; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, cs
 .org 0x1025b
 # IDA 0x2005b; file 0x1025b; locator=proven; mov     es, ax
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov es, ax
 .org 0x1025d
 # IDA 0x2005d; file 0x1025d; locator=proven; mov     dx, 101h
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0x101
 .org 0x10260
 # IDA 0x20060; file 0x10260; locator=proven; mov     ax, 0Ch
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0xc
 .org 0x10263
 # IDA 0x20063; file 0x10263; locator=proven; mov     cx, 1
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov cx, 0x1
 .org 0x10266
 # IDA 0x20066; file 0x10266; locator=proven; int     33h
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 int 0x33
 .org 0x10268
 # IDA 0x20068; file 0x10268; locator=proven; mov     ax, 0FFFFh
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0xffff
 .org 0x1026b
 # IDA 0x2006b; file 0x1026b; locator=proven; pop     dx
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop dx
 .org 0x1026c
 # IDA 0x2006c; file 0x1026c; locator=proven; pop     cx
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop cx
 .org 0x1026d
 # IDA 0x2006d; file 0x1026d; locator=proven; pop     bx
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop bx
 .org 0x1026e
 # IDA 0x2006e; file 0x1026e; locator=proven; pop     es
-# ⚠ 函式 sub_2002E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2002E; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop es
 .org 0x1026f
 nullsub_4:
@@ -100414,223 +100500,223 @@ ret
 .org 0x10270
 sub_20070:
 # IDA 0x20070; file 0x10270; locator=proven; cmp     cs:byte_20100, 1
-# ⚠ 函式 sub_20070; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20070; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; cmp byte ptr [0x100], 0x1
 .org 0x10276
 # IDA 0x20076; file 0x10276; locator=proven; jz      short locret_20099
-# ⚠ 函式 sub_20070; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20070; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 jz .+35
 .org 0x10278
 # IDA 0x20078; file 0x10278; locator=proven; push    bx
-# ⚠ 函式 sub_20070; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20070; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push bx
 .org 0x10279
 # IDA 0x20079; file 0x10279; locator=proven; push    cx
-# ⚠ 函式 sub_20070; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20070; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push cx
 .org 0x1027a
 # IDA 0x2007a; file 0x1027a; locator=proven; push    dx
-# ⚠ 函式 sub_20070; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20070; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push dx
 .org 0x1027b
 # IDA 0x2007b; file 0x1027b; locator=proven; mov     ax, 3
-# ⚠ 函式 sub_20070; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20070; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0x3
 .org 0x1027e
 # IDA 0x2007e; file 0x1027e; locator=proven; int     33h
-# ⚠ 函式 sub_20070; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20070; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 int 0x33
 .org 0x10280
 # IDA 0x20080; file 0x10280; locator=proven; mov     cs:word_200FC, cx
-# ⚠ 函式 sub_20070; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20070; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; mov word ptr [0xfc], cx
 .org 0x10285
 # IDA 0x20085; file 0x10285; locator=proven; mov     cs:word_200FE, dx
-# ⚠ 函式 sub_20070; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20070; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; mov word ptr [0xfe], dx
 .org 0x1028a
 # IDA 0x2008a; file 0x1028a; locator=proven; mov     cs:byte_20100, 1
-# ⚠ 函式 sub_20070; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20070; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; mov byte ptr [0x100], 0x1
 .org 0x10290
 # IDA 0x20090; file 0x10290; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_20070; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20070; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov cx, 0xffff
 .org 0x10293
 # IDA 0x20093; file 0x10293; locator=proven; call    sub_20137
-# ⚠ 函式 sub_20070; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20070; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+164
 .org 0x10296
 # IDA 0x20096; file 0x10296; locator=proven; pop     dx
-# ⚠ 函式 sub_20070; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20070; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop dx
 .org 0x10297
 # IDA 0x20097; file 0x10297; locator=proven; pop     cx
-# ⚠ 函式 sub_20070; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20070; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop cx
 .org 0x10298
 # IDA 0x20098; file 0x10298; locator=proven; pop     bx
-# ⚠ 函式 sub_20070; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20070; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop bx
 .org 0x10299
 locret_20099:
 # IDA 0x20099; file 0x10299; locator=proven; retn
-# ⚠ 函式 sub_20070; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20070; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 ret
 .org 0x1029a
 sub_2009A:
 # IDA 0x2009a; file 0x1029a; locator=proven; push    cx
-# ⚠ 函式 sub_2009A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2009A; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push cx
 .org 0x1029b
 # IDA 0x2009b; file 0x1029b; locator=proven; xor     ax, ax
-# ⚠ 函式 sub_2009A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2009A; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} xor ax, ax
 .org 0x1029d
 # IDA 0x2009d; file 0x1029d; locator=proven; xchg    al, cs:byte_20100
-# ⚠ 函式 sub_2009A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2009A; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; xchg al, byte ptr [0x100]
 .org 0x102a2
 # IDA 0x200a2; file 0x102a2; locator=proven; dec     ax
-# ⚠ 函式 sub_2009A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2009A; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 dec ax
 .org 0x102a3
 # IDA 0x200a3; file 0x102a3; locator=proven; mov     cx, cs:word_200FC
-# ⚠ 函式 sub_2009A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2009A; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; mov cx, word ptr [0xfc]
 .org 0x102a8
 # IDA 0x200a8; file 0x102a8; locator=proven; mov     dx, cs:word_200FE
-# ⚠ 函式 sub_2009A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2009A; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; mov dx, word ptr [0xfe]
 .org 0x102ad
 # IDA 0x200ad; file 0x102ad; locator=proven; push    ax
-# ⚠ 函式 sub_2009A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2009A; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push ax
 .org 0x102ae
 # IDA 0x200ae; file 0x102ae; locator=proven; push    cx
-# ⚠ 函式 sub_2009A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2009A; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push cx
 .org 0x102af
 # IDA 0x200af; file 0x102af; locator=proven; push    dx
-# ⚠ 函式 sub_2009A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2009A; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push dx
 .org 0x102b0
 # IDA 0x200b0; file 0x102b0; locator=proven; cmp     ax, 0FFFFh
-# ⚠ 函式 sub_2009A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2009A; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cmp ax, 0xffff
 .org 0x102b3
 # IDA 0x200b3; file 0x102b3; locator=proven; jz      short loc_200B8
-# ⚠ 函式 sub_2009A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2009A; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 jz .+5
 .org 0x102b5
 # IDA 0x200b5; file 0x102b5; locator=proven; call    sub_20137
-# ⚠ 函式 sub_2009A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2009A; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+130
 .org 0x102b8
 loc_200B8:
 # IDA 0x200b8; file 0x102b8; locator=proven; pop     bx
-# ⚠ 函式 sub_2009A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2009A; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop bx
 .org 0x102b9
 # IDA 0x200b9; file 0x102b9; locator=proven; pop     dx
-# ⚠ 函式 sub_2009A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2009A; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop dx
 .org 0x102ba
 # IDA 0x200ba; file 0x102ba; locator=proven; pop     ax
-# ⚠ 函式 sub_2009A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2009A; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop ax
 .org 0x102bb
 # IDA 0x200bb; file 0x102bb; locator=proven; pop     cx
-# ⚠ 函式 sub_2009A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2009A; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop cx
 .org 0x102bc
 # IDA 0x200bc; file 0x102bc; locator=proven; retn
-# ⚠ 函式 sub_2009A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2009A; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 ret
 .org 0x102bd
 sub_200BD:
 # IDA 0x200bd; file 0x102bd; locator=proven; int     33h
-# ⚠ 函式 sub_200BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_200BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 int 0x33
 .org 0x102bf
 # IDA 0x200bf; file 0x102bf; locator=proven; retn
-# ⚠ 函式 sub_200BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_200BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 ret
 .org 0x102c0
 sub_200C0:
 # IDA 0x200c0; file 0x102c0; locator=proven; mov     al, 2
-# ⚠ 函式 sub_200C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_200C0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov al, 0x2
 .org 0x102c2
 # IDA 0x200c2; file 0x102c2; locator=proven; xchg    al, cs:byte_20100
-# ⚠ 函式 sub_200C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_200C0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; xchg al, byte ptr [0x100]
 .org 0x102c7
 # IDA 0x200c7; file 0x102c7; locator=proven; and     al, al
-# ⚠ 函式 sub_200C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_200C0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} and al, al
 .org 0x102c9
 # IDA 0x200c9; file 0x102c9; locator=proven; jnz     short loc_200D4
-# ⚠ 函式 sub_200C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_200C0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 jnz .+11
 .org 0x102cb
 # IDA 0x200cb; file 0x102cb; locator=proven; mov     cs:word_200FC, 0FFFFh
-# ⚠ 函式 sub_200C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_200C0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; mov word ptr [0xfc], 0xffff
 .org 0x102d2
 # IDA 0x200d2; file 0x102d2; locator=proven; jmp     short loc_200E2
-# ⚠ 函式 sub_200C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_200C0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 jmp .+16
 .org 0x102d4
 loc_200D4:
 # IDA 0x200d4; file 0x102d4; locator=proven; cmp     dx, cs:word_200FC
-# ⚠ 函式 sub_200C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_200C0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; cmp dx, word ptr [0xfc]
 .org 0x102d9
 # IDA 0x200d9; file 0x102d9; locator=proven; jnz     short loc_200E2
-# ⚠ 函式 sub_200C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_200C0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 jnz .+9
 .org 0x102db
 # IDA 0x200db; file 0x102db; locator=proven; cmp     bx, cs:word_200FE
-# ⚠ 函式 sub_200C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_200C0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; cmp bx, word ptr [0xfe]
 .org 0x102e0
 # IDA 0x200e0; file 0x102e0; locator=proven; jz      short locret_200F5
-# ⚠ 函式 sub_200C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_200C0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 jz .+21
 .org 0x102e2
 loc_200E2:
 # IDA 0x200e2; file 0x102e2; locator=proven; push    cx
-# ⚠ 函式 sub_200C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_200C0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push cx
 .org 0x102e3
 # IDA 0x200e3; file 0x102e3; locator=proven; xchg    dx, cs:word_200FC
-# ⚠ 函式 sub_200C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_200C0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; xchg dx, word ptr [0xfc]
 .org 0x102e8
 # IDA 0x200e8; file 0x102e8; locator=proven; xchg    bx, cs:word_200FE
-# ⚠ 函式 sub_200C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_200C0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; xchg bx, word ptr [0xfe]
 .org 0x102ed
 # IDA 0x200ed; file 0x102ed; locator=proven; mov     cx, dx
-# ⚠ 函式 sub_200C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_200C0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} mov cx, dx
 .org 0x102ef
 # IDA 0x200ef; file 0x102ef; locator=proven; mov     dx, bx
-# ⚠ 函式 sub_200C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_200C0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} mov dx, bx
 .org 0x102f1
 # IDA 0x200f1; file 0x102f1; locator=proven; call    sub_20137
-# ⚠ 函式 sub_200C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_200C0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+70
 .org 0x102f4
 # IDA 0x200f4; file 0x102f4; locator=proven; pop     cx
-# ⚠ 函式 sub_200C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_200C0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop cx
 .org 0x102f5
 locret_200F5:
 # IDA 0x200f5; file 0x102f5; locator=proven; retn
-# ⚠ 函式 sub_200C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_200C0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 ret
 .org 0x10301
 # IDA 0x20101; file 0x10301; locator=proven; pushf
@@ -100713,909 +100799,909 @@ retf
 .org 0x10337
 sub_20137:
 # IDA 0x20137; file 0x10337; locator=proven; push    ds
-# ⚠ 函式 sub_20137; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20137; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push ds
 .org 0x10338
 # IDA 0x20138; file 0x10338; locator=proven; push    si
-# ⚠ 函式 sub_20137; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20137; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push si
 .org 0x10339
 # IDA 0x20139; file 0x10339; locator=proven; push    di
-# ⚠ 函式 sub_20137; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20137; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push di
 .org 0x1033a
 # IDA 0x2013a; file 0x1033a; locator=proven; push    bp
-# ⚠ 函式 sub_20137; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20137; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push bp
 .org 0x1033b
 # IDA 0x2013b; file 0x1033b; locator=proven; mov     ax, 0A0C8h
-# ⚠ 函式 sub_20137; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20137; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0xa0c8
 .org 0x1033e
 # IDA 0x2013e; file 0x1033e; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_20137; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20137; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ds, ax
 .org 0x10340
 # IDA 0x20140; file 0x10340; locator=proven; cmp     cx, 0FFFFh
-# ⚠ 函式 sub_20137; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20137; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cmp cx, 0xffff
 .org 0x10343
 # IDA 0x20143; file 0x10343; locator=proven; jz      short loc_20153
-# ⚠ 函式 sub_20137; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20137; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 jz .+16
 .org 0x10345
 # IDA 0x20145; file 0x10345; locator=proven; call    sub_201C6
-# ⚠ 函式 sub_20137; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20137; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+129
 .org 0x10348
 # IDA 0x20148; file 0x10348; locator=proven; call    sub_20249
-# ⚠ 函式 sub_20137; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20137; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+257
 .org 0x1034b
 # IDA 0x2014b; file 0x1034b; locator=proven; cmp     cs:byte_20100, 0
-# ⚠ 函式 sub_20137; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20137; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; cmp byte ptr [0x100], 0x0
 .org 0x10351
 # IDA 0x20151; file 0x10351; locator=proven; jz      short loc_20166
-# ⚠ 函式 sub_20137; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20137; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 jz .+21
 .org 0x10353
 loc_20153:
 # IDA 0x20153; file 0x10353; locator=proven; mov     cx, cs:word_200FC
-# ⚠ 函式 sub_20137; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20137; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; mov cx, word ptr [0xfc]
 .org 0x10358
 # IDA 0x20158; file 0x10358; locator=proven; mov     dx, cs:word_200FE
-# ⚠ 函式 sub_20137; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20137; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; mov dx, word ptr [0xfe]
 .org 0x1035d
 # IDA 0x2015d; file 0x1035d; locator=proven; call    sub_201C6
-# ⚠ 函式 sub_20137; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20137; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+105
 .org 0x10360
 # IDA 0x20160; file 0x10360; locator=proven; call    sub_202BD
-# ⚠ 函式 sub_20137; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20137; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+349
 .org 0x10363
 # IDA 0x20163; file 0x10363; locator=proven; call    sub_201E4
-# ⚠ 函式 sub_20137; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20137; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+129
 .org 0x10366
 loc_20166:
 # IDA 0x20166; file 0x10366; locator=proven; pop     bp
-# ⚠ 函式 sub_20137; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20137; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop bp
 .org 0x10367
 # IDA 0x20167; file 0x10367; locator=proven; pop     di
-# ⚠ 函式 sub_20137; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20137; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop di
 .org 0x10368
 # IDA 0x20168; file 0x10368; locator=proven; pop     si
-# ⚠ 函式 sub_20137; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20137; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop si
 .org 0x10369
 # IDA 0x20169; file 0x10369; locator=proven; pop     ds
-# ⚠ 函式 sub_20137; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20137; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop ds
 .org 0x1036a
 # IDA 0x2016a; file 0x1036a; locator=proven; retn
-# ⚠ 函式 sub_20137; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20137; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 ret
 .org 0x1036b
 sub_2016B:
 # IDA 0x2016b; file 0x1036b; locator=proven; push    cx
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push cx
 .org 0x1036c
 # IDA 0x2016c; file 0x1036c; locator=proven; push    dx
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push dx
 .org 0x1036d
 # IDA 0x2016d; file 0x1036d; locator=proven; mov     bx, 0F6h
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov bx, 0xf6
 .org 0x10370
 # IDA 0x20170; file 0x10370; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0x3ce
 .org 0x10373
 # IDA 0x20173; file 0x10373; locator=proven; in      al, dx
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 in al, dx
 .org 0x10374
 # IDA 0x20174; file 0x10374; locator=proven; mov     [bp+6], al
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov byte ptr [bp+0x6], al
 .org 0x10377
 # IDA 0x20177; file 0x10377; locator=proven; mov     cx, 6
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov cx, 0x6
 .org 0x1037a
 # IDA 0x2017a; file 0x1037a; locator=proven; xor     si, si
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} xor si, si
 .org 0x1037c
 loc_2017C:
 # IDA 0x2017c; file 0x1037c; locator=proven; mov     al, cs:[bx+si]
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; mov al, byte ptr [bx+si]
 .org 0x1037f
 # IDA 0x2017f; file 0x1037f; locator=proven; out     dx, al
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, al
 .org 0x10380
 # IDA 0x20180; file 0x10380; locator=proven; inc     dx
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 inc dx
 .org 0x10381
 # IDA 0x20181; file 0x10381; locator=proven; in      al, dx
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 in al, dx
 .org 0x10382
 # IDA 0x20182; file 0x10382; locator=proven; mov     [bp+si], al
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov byte ptr [bp+si], al
 .org 0x10384
 # IDA 0x20184; file 0x10384; locator=proven; dec     dx
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 dec dx
 .org 0x10385
 # IDA 0x20185; file 0x10385; locator=proven; inc     si
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 inc si
 .org 0x10386
 # IDA 0x20186; file 0x10386; locator=proven; loop    loc_2017C
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 loop .-10
 .org 0x10388
 # IDA 0x20188; file 0x10388; locator=proven; mov     dx, 3C4h
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0x3c4
 .org 0x1038b
 # IDA 0x2018b; file 0x1038b; locator=proven; mov     al, 2
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov al, 0x2
 .org 0x1038d
 # IDA 0x2018d; file 0x1038d; locator=proven; out     dx, al
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, al
 .org 0x1038e
 # IDA 0x2018e; file 0x1038e; locator=proven; inc     dx
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 inc dx
 .org 0x1038f
 # IDA 0x2018f; file 0x1038f; locator=proven; in      al, dx
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 in al, dx
 .org 0x10390
 # IDA 0x20190; file 0x10390; locator=proven; mov     [bp+7], al
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov byte ptr [bp+0x7], al
 .org 0x10393
 # IDA 0x20193; file 0x10393; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0x3ce
 .org 0x10396
 # IDA 0x20196; file 0x10396; locator=proven; mov     ax, 0FF08h
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0xff08
 .org 0x10399
 # IDA 0x20199; file 0x10399; locator=proven; out     dx, ax
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, ax
 .org 0x1039a
 # IDA 0x2019a; file 0x1039a; locator=proven; pop     dx
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop dx
 .org 0x1039b
 # IDA 0x2019b; file 0x1039b; locator=proven; pop     cx
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop cx
 .org 0x1039c
 # IDA 0x2019c; file 0x1039c; locator=proven; retn
-# ⚠ 函式 sub_2016B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2016B; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 ret
 .org 0x1039d
 sub_2019D:
 # IDA 0x2019d; file 0x1039d; locator=proven; push    cx
-# ⚠ 函式 sub_2019D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2019D; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push cx
 .org 0x1039e
 # IDA 0x2019e; file 0x1039e; locator=proven; push    dx
-# ⚠ 函式 sub_2019D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2019D; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push dx
 .org 0x1039f
 # IDA 0x2019f; file 0x1039f; locator=proven; mov     bx, 0F6h
-# ⚠ 函式 sub_2019D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2019D; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov bx, 0xf6
 .org 0x103a2
 # IDA 0x201a2; file 0x103a2; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_2019D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2019D; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0x3ce
 .org 0x103a5
 # IDA 0x201a5; file 0x103a5; locator=proven; mov     cx, 6
-# ⚠ 函式 sub_2019D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2019D; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov cx, 0x6
 .org 0x103a8
 # IDA 0x201a8; file 0x103a8; locator=proven; xor     si, si
-# ⚠ 函式 sub_2019D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2019D; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} xor si, si
 .org 0x103aa
 loc_201AA:
 # IDA 0x201aa; file 0x103aa; locator=proven; mov     al, cs:[bx+si]
-# ⚠ 函式 sub_2019D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2019D; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; mov al, byte ptr [bx+si]
 .org 0x103ad
 # IDA 0x201ad; file 0x103ad; locator=proven; mov     ah, [bp+si]
-# ⚠ 函式 sub_2019D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2019D; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ah, byte ptr [bp+si]
 .org 0x103af
 # IDA 0x201af; file 0x103af; locator=proven; out     dx, ax
-# ⚠ 函式 sub_2019D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2019D; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, ax
 .org 0x103b0
 # IDA 0x201b0; file 0x103b0; locator=proven; inc     si
-# ⚠ 函式 sub_2019D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2019D; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 inc si
 .org 0x103b1
 # IDA 0x201b1; file 0x103b1; locator=proven; loop    loc_201AA
-# ⚠ 函式 sub_2019D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2019D; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 loop .-7
 .org 0x103b3
 # IDA 0x201b3; file 0x103b3; locator=proven; mov     dx, 3C4h
-# ⚠ 函式 sub_2019D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2019D; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0x3c4
 .org 0x103b6
 # IDA 0x201b6; file 0x103b6; locator=proven; mov     al, 2
-# ⚠ 函式 sub_2019D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2019D; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov al, 0x2
 .org 0x103b8
 # IDA 0x201b8; file 0x103b8; locator=proven; mov     ah, [bp+7]
-# ⚠ 函式 sub_2019D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2019D; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ah, byte ptr [bp+0x7]
 .org 0x103bb
 # IDA 0x201bb; file 0x103bb; locator=proven; out     dx, ax
-# ⚠ 函式 sub_2019D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2019D; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, ax
 .org 0x103bc
 # IDA 0x201bc; file 0x103bc; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_2019D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2019D; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0x3ce
 .org 0x103bf
 # IDA 0x201bf; file 0x103bf; locator=proven; mov     al, [bp+6]
-# ⚠ 函式 sub_2019D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2019D; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov al, byte ptr [bp+0x6]
 .org 0x103c2
 # IDA 0x201c2; file 0x103c2; locator=proven; out     dx, al
-# ⚠ 函式 sub_2019D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2019D; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, al
 .org 0x103c3
 # IDA 0x201c3; file 0x103c3; locator=proven; pop     dx
-# ⚠ 函式 sub_2019D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2019D; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop dx
 .org 0x103c4
 # IDA 0x201c4; file 0x103c4; locator=proven; pop     cx
-# ⚠ 函式 sub_2019D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2019D; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop cx
 .org 0x103c5
 # IDA 0x201c5; file 0x103c5; locator=proven; retn
-# ⚠ 函式 sub_2019D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2019D; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 ret
 .org 0x103c6
 sub_201C6:
 # IDA 0x201c6; file 0x103c6; locator=proven; mov     bx, cx
-# ⚠ 函式 sub_201C6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201C6; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} mov bx, cx
 .org 0x103c8
 # IDA 0x201c8; file 0x103c8; locator=proven; mov     di, cx
-# ⚠ 函式 sub_201C6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201C6; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} mov di, cx
 .org 0x103ca
 # IDA 0x201ca; file 0x103ca; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_201C6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201C6; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 shr bx, 0x1
 .org 0x103cc
 # IDA 0x201cc; file 0x103cc; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_201C6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201C6; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 shr bx, 0x1
 .org 0x103ce
 # IDA 0x201ce; file 0x103ce; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_201C6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201C6; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 shr bx, 0x1
 .org 0x103d0
 # IDA 0x201d0; file 0x103d0; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_201C6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201C6; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 shl dx, 0x1
 .org 0x103d2
 # IDA 0x201d2; file 0x103d2; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_201C6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201C6; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 shl dx, 0x1
 .org 0x103d4
 # IDA 0x201d4; file 0x103d4; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_201C6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201C6; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 shl dx, 0x1
 .org 0x103d6
 # IDA 0x201d6; file 0x103d6; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_201C6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201C6; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 shl dx, 0x1
 .org 0x103d8
 # IDA 0x201d8; file 0x103d8; locator=proven; add     bx, dx
-# ⚠ 函式 sub_201C6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201C6; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} add bx, dx
 .org 0x103da
 # IDA 0x201da; file 0x103da; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_201C6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201C6; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 shl dx, 0x1
 .org 0x103dc
 # IDA 0x201dc; file 0x103dc; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_201C6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201C6; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 shl dx, 0x1
 .org 0x103de
 # IDA 0x201de; file 0x103de; locator=proven; add     bx, dx
-# ⚠ 函式 sub_201C6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201C6; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} add bx, dx
 .org 0x103e0
 # IDA 0x201e0; file 0x103e0; locator=proven; and     cl, 7
-# ⚠ 函式 sub_201C6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201C6; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 and cl, 0x7
 .org 0x103e3
 # IDA 0x201e3; file 0x103e3; locator=proven; retn
-# ⚠ 函式 sub_201C6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201C6; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 ret
 .org 0x103e4
 sub_201E4:
 # IDA 0x201e4; file 0x103e4; locator=proven; mov     si, 31Bh
-# ⚠ 函式 sub_201E4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201E4; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov si, 0x31b
 .org 0x103e7
 # IDA 0x201e7; file 0x103e7; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_201E4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201E4; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0x3ce
 .org 0x103ea
 # IDA 0x201ea; file 0x103ea; locator=proven; mov     ax, 305h
-# ⚠ 函式 sub_201E4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201E4; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0x305
 .org 0x103ed
 # IDA 0x201ed; file 0x103ed; locator=proven; out     dx, ax
-# ⚠ 函式 sub_201E4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201E4; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, ax
 .org 0x103ee
 # IDA 0x201ee; file 0x103ee; locator=proven; mov     ax, 0FF08h
-# ⚠ 函式 sub_201E4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201E4; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0xff08
 .org 0x103f1
 # IDA 0x201f1; file 0x103f1; locator=proven; out     dx, ax
-# ⚠ 函式 sub_201E4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201E4; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, ax
 .org 0x103f2
 # IDA 0x201f2; file 0x103f2; locator=proven; mov     ax, 0F00h
-# ⚠ 函式 sub_201E4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201E4; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0xf00
 .org 0x103f5
 # IDA 0x201f5; file 0x103f5; locator=proven; out     dx, ax
-# ⚠ 函式 sub_201E4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201E4; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, ax
 .org 0x103f6
 # IDA 0x201f6; file 0x103f6; locator=proven; mov     ax, 3
-# ⚠ 函式 sub_201E4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201E4; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0x3
 .org 0x103f9
 # IDA 0x201f9; file 0x103f9; locator=proven; out     dx, ax
-# ⚠ 函式 sub_201E4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201E4; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, ax
 .org 0x103fa
 # IDA 0x201fa; file 0x103fa; locator=proven; call    sub_2020C
-# ⚠ 函式 sub_201E4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201E4; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+18
 .org 0x103fd
 # IDA 0x201fd; file 0x103fd; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_201E4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201E4; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0x3ce
 .org 0x10400
 # IDA 0x20200; file 0x10400; locator=proven; mov     ax, 0A00h
-# ⚠ 函式 sub_201E4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201E4; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0xa00
 .org 0x10403
 # IDA 0x20203; file 0x10403; locator=proven; out     dx, ax
-# ⚠ 函式 sub_201E4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201E4; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, ax
 .org 0x10404
 # IDA 0x20204; file 0x10404; locator=proven; mov     ax, 3
-# ⚠ 函式 sub_201E4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201E4; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0x3
 .org 0x10407
 # IDA 0x20207; file 0x10407; locator=proven; out     dx, ax
-# ⚠ 函式 sub_201E4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201E4; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, ax
 .org 0x10408
 # IDA 0x20208; file 0x10408; locator=proven; call    sub_2020C
-# ⚠ 函式 sub_201E4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201E4; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+4
 .org 0x1040b
 # IDA 0x2020b; file 0x1040b; locator=proven; retn
-# ⚠ 函式 sub_201E4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_201E4; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 ret
 .org 0x1040c
 sub_2020C:
 # IDA 0x2020c; file 0x1040c; locator=proven; mov     ch, 10h
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ch, 0x10
 .org 0x1040e
 loc_2020E:
 # IDA 0x2020e; file 0x1040e; locator=proven; cmp     bx, 7D00h
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cmp bx, 0x7d00
 .org 0x10412
 # IDA 0x20212; file 0x10412; locator=proven; jnb     short loc_2023B
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 jnb .+41
 .org 0x10414
 # IDA 0x20214; file 0x10414; locator=proven; mov     ax, cs:[si]
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; mov ax, word ptr [si]
 .org 0x10417
 # IDA 0x20217; file 0x10417; locator=proven; mov     dh, al
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} mov dh, al
 .org 0x10419
 # IDA 0x20219; file 0x10419; locator=proven; xor     dl, dl
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} xor dl, dl
 .org 0x1041b
 # IDA 0x2021b; file 0x1041b; locator=proven; shr     ax, cl
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 shr ax, cl
 .org 0x1041d
 # IDA 0x2021d; file 0x1041d; locator=proven; shr     dx, cl
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 shr dx, cl
 .org 0x1041f
 # IDA 0x2021f; file 0x1041f; locator=proven; mov     dh, [bx]
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dh, byte ptr [bx]
 .org 0x10421
 # IDA 0x20221; file 0x10421; locator=proven; mov     [bx], ah
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov byte ptr [bx], ah
 .org 0x10423
 # IDA 0x20223; file 0x10423; locator=proven; cmp     di, 278h
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cmp di, 0x278
 .org 0x10427
 # IDA 0x20227; file 0x10427; locator=proven; jnb     short loc_2023B
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 jnb .+20
 .org 0x10429
 # IDA 0x20229; file 0x10429; locator=proven; mov     dh, [bx+1]
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dh, byte ptr [bx+0x1]
 .org 0x1042c
 # IDA 0x2022c; file 0x1042c; locator=proven; mov     [bx+1], al
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov byte ptr [bx+0x1], al
 .org 0x1042f
 # IDA 0x2022f; file 0x1042f; locator=proven; cmp     di, 270h
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cmp di, 0x270
 .org 0x10433
 # IDA 0x20233; file 0x10433; locator=proven; jnb     short loc_2023B
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 jnb .+8
 .org 0x10435
 # IDA 0x20235; file 0x10435; locator=proven; mov     dh, [bx+2]
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dh, byte ptr [bx+0x2]
 .org 0x10438
 # IDA 0x20238; file 0x10438; locator=proven; mov     [bx+2], dl
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov byte ptr [bx+0x2], dl
 .org 0x1043b
 loc_2023B:
 # IDA 0x2023b; file 0x1043b; locator=proven; add     bx, 50h
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 add bx, 0x50
 .org 0x1043e
 # IDA 0x2023e; file 0x1043e; locator=proven; inc     si
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 inc si
 .org 0x1043f
 # IDA 0x2023f; file 0x1043f; locator=proven; inc     si
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 inc si
 .org 0x10440
 # IDA 0x20240; file 0x10440; locator=proven; dec     ch
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 dec ch
 .org 0x10442
 # IDA 0x20242; file 0x10442; locator=proven; jnz     short loc_2020E
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 jnz .-52
 .org 0x10444
 # IDA 0x20244; file 0x10444; locator=proven; sub     bx, 500h
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 sub bx, 0x500
 .org 0x10448
 # IDA 0x20248; file 0x10448; locator=proven; retn
-# ⚠ 函式 sub_2020C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_2020C; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 ret
 .org 0x10449
 sub_20249:
 # IDA 0x20249; file 0x10449; locator=proven; push    bx
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push bx
 .org 0x1044a
 # IDA 0x2024a; file 0x1044a; locator=proven; mov     ax, di
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} mov ax, di
 .org 0x1044c
 # IDA 0x2024c; file 0x1044c; locator=proven; sub     ax, 268h
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 sub ax, 0x268
 .org 0x1044f
 # IDA 0x2024f; file 0x1044f; locator=proven; jbe     short loc_20259
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 jbe .+10
 .org 0x10451
 # IDA 0x20251; file 0x10451; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 shr ax, 0x1
 .org 0x10453
 # IDA 0x20253; file 0x10453; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 shr ax, 0x1
 .org 0x10455
 # IDA 0x20255; file 0x10455; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 shr ax, 0x1
 .org 0x10457
 # IDA 0x20257; file 0x10457; locator=proven; sub     bx, ax
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} sub bx, ax
 .org 0x10459
 loc_20259:
 # IDA 0x20259; file 0x10459; locator=proven; mov     si, 35Bh
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov si, 0x35b
 .org 0x1045c
 # IDA 0x2025c; file 0x1045c; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0x3ce
 .org 0x1045f
 # IDA 0x2025f; file 0x1045f; locator=proven; mov     ax, 5
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0x5
 .org 0x10462
 # IDA 0x20262; file 0x10462; locator=proven; out     dx, ax
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, ax
 .org 0x10463
 # IDA 0x20263; file 0x10463; locator=proven; mov     ax, 1
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0x1
 .org 0x10466
 # IDA 0x20266; file 0x10466; locator=proven; out     dx, ax
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, ax
 .org 0x10467
 # IDA 0x20267; file 0x10467; locator=proven; mov     ax, 3
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0x3
 .org 0x1046a
 # IDA 0x2026a; file 0x1046a; locator=proven; out     dx, ax
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, ax
 .org 0x1046b
 # IDA 0x2026b; file 0x1046b; locator=proven; mov     ax, 0FF08h
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0xff08
 .org 0x1046e
 # IDA 0x2026e; file 0x1046e; locator=proven; out     dx, ax
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, ax
 .org 0x1046f
 # IDA 0x2026f; file 0x1046f; locator=proven; mov     dx, 3C4h
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0x3c4
 .org 0x10472
 # IDA 0x20272; file 0x10472; locator=proven; mov     ax, 102h
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0x102
 .org 0x10475
 # IDA 0x20275; file 0x10475; locator=proven; out     dx, ax
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, ax
 .org 0x10476
 # IDA 0x20276; file 0x10476; locator=proven; call    sub_202A0
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+42
 .org 0x10479
 # IDA 0x20279; file 0x10479; locator=proven; mov     dx, 3C4h
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0x3c4
 .org 0x1047c
 # IDA 0x2027c; file 0x1047c; locator=proven; mov     ax, 202h
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0x202
 .org 0x1047f
 # IDA 0x2027f; file 0x1047f; locator=proven; out     dx, ax
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, ax
 .org 0x10480
 # IDA 0x20280; file 0x10480; locator=proven; call    sub_202A0
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+32
 .org 0x10483
 # IDA 0x20283; file 0x10483; locator=proven; mov     dx, 3C4h
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0x3c4
 .org 0x10486
 # IDA 0x20286; file 0x10486; locator=proven; mov     ax, 402h
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0x402
 .org 0x10489
 # IDA 0x20289; file 0x10489; locator=proven; out     dx, ax
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, ax
 .org 0x1048a
 # IDA 0x2028a; file 0x1048a; locator=proven; call    sub_202A0
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+22
 .org 0x1048d
 # IDA 0x2028d; file 0x1048d; locator=proven; mov     dx, 3C4h
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0x3c4
 .org 0x10490
 # IDA 0x20290; file 0x10490; locator=proven; mov     ax, 802h
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0x802
 .org 0x10493
 # IDA 0x20293; file 0x10493; locator=proven; out     dx, ax
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, ax
 .org 0x10494
 # IDA 0x20294; file 0x10494; locator=proven; call    sub_202A0
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+12
 .org 0x10497
 # IDA 0x20297; file 0x10497; locator=proven; mov     dx, 3C4h
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0x3c4
 .org 0x1049a
 # IDA 0x2029a; file 0x1049a; locator=proven; mov     ax, 0F02h
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0xf02
 .org 0x1049d
 # IDA 0x2029d; file 0x1049d; locator=proven; out     dx, ax
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, ax
 .org 0x1049e
 # IDA 0x2029e; file 0x1049e; locator=proven; pop     bx
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop bx
 .org 0x1049f
 # IDA 0x2029f; file 0x1049f; locator=proven; retn
-# ⚠ 函式 sub_20249; [unknown] 未附加語意; 出處: 無
+# 函式 sub_20249; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 ret
 .org 0x104a0
 sub_202A0:
 # IDA 0x202a0; file 0x104a0; locator=proven; mov     ch, 10h
-# ⚠ 函式 sub_202A0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202A0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ch, 0x10
 .org 0x104a2
 loc_202A2:
 # IDA 0x202a2; file 0x104a2; locator=proven; mov     ax, cs:[si]
-# ⚠ 函式 sub_202A0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202A0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; mov ax, word ptr [si]
 .org 0x104a5
 # IDA 0x202a5; file 0x104a5; locator=proven; mov     dl, cs:[si+2]
-# ⚠ 函式 sub_202A0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202A0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; mov dl, byte ptr [si+0x2]
 .org 0x104a9
 # IDA 0x202a9; file 0x104a9; locator=proven; mov     [bx], ax
-# ⚠ 函式 sub_202A0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202A0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov word ptr [bx], ax
 .org 0x104ab
 # IDA 0x202ab; file 0x104ab; locator=proven; mov     [bx+2], dl
-# ⚠ 函式 sub_202A0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202A0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov byte ptr [bx+0x2], dl
 .org 0x104ae
 # IDA 0x202ae; file 0x104ae; locator=proven; add     si, 3
-# ⚠ 函式 sub_202A0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202A0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 add si, 0x3
 .org 0x104b1
 # IDA 0x202b1; file 0x104b1; locator=proven; add     bx, 50h
-# ⚠ 函式 sub_202A0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202A0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 add bx, 0x50
 .org 0x104b4
 # IDA 0x202b4; file 0x104b4; locator=proven; dec     ch
-# ⚠ 函式 sub_202A0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202A0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 dec ch
 .org 0x104b6
 # IDA 0x202b6; file 0x104b6; locator=proven; jnz     short loc_202A2
-# ⚠ 函式 sub_202A0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202A0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 jnz .-20
 .org 0x104b8
 # IDA 0x202b8; file 0x104b8; locator=proven; sub     bx, 500h
-# ⚠ 函式 sub_202A0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202A0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 sub bx, 0x500
 .org 0x104bc
 # IDA 0x202bc; file 0x104bc; locator=proven; retn
-# ⚠ 函式 sub_202A0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202A0; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 ret
 .org 0x104bd
 sub_202BD:
 # IDA 0x202bd; file 0x104bd; locator=proven; push    bx
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 push bx
 .org 0x104be
 # IDA 0x202be; file 0x104be; locator=proven; mov     ax, di
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} mov ax, di
 .org 0x104c0
 # IDA 0x202c0; file 0x104c0; locator=proven; sub     ax, 268h
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 sub ax, 0x268
 .org 0x104c3
 # IDA 0x202c3; file 0x104c3; locator=proven; jbe     short loc_202CD
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 jbe .+10
 .org 0x104c5
 # IDA 0x202c5; file 0x104c5; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 shr ax, 0x1
 .org 0x104c7
 # IDA 0x202c7; file 0x104c7; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 shr ax, 0x1
 .org 0x104c9
 # IDA 0x202c9; file 0x104c9; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 shr ax, 0x1
 .org 0x104cb
 # IDA 0x202cb; file 0x104cb; locator=proven; sub     bx, ax
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} sub bx, ax
 .org 0x104cd
 loc_202CD:
 # IDA 0x202cd; file 0x104cd; locator=proven; mov     si, 35Bh
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov si, 0x35b
 .org 0x104d0
 # IDA 0x202d0; file 0x104d0; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0x3ce
 .org 0x104d3
 # IDA 0x202d3; file 0x104d3; locator=proven; mov     ax, 5
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, 0x5
 .org 0x104d6
 # IDA 0x202d6; file 0x104d6; locator=proven; out     dx, ax
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, ax
 .org 0x104d7
 # IDA 0x202d7; file 0x104d7; locator=proven; mov     al, 4
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov al, 0x4
 .org 0x104d9
 # IDA 0x202d9; file 0x104d9; locator=proven; out     dx, al
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, al
 .org 0x104da
 # IDA 0x202da; file 0x104da; locator=proven; inc     dx
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 inc dx
 .org 0x104db
 # IDA 0x202db; file 0x104db; locator=proven; xor     al, al
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 {load} xor al, al
 .org 0x104dd
 # IDA 0x202dd; file 0x104dd; locator=proven; out     dx, al
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, al
 .org 0x104de
 # IDA 0x202de; file 0x104de; locator=proven; call    sub_202FE
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+32
 .org 0x104e1
 # IDA 0x202e1; file 0x104e1; locator=proven; mov     dx, 3CFh
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0x3cf
 .org 0x104e4
 # IDA 0x202e4; file 0x104e4; locator=proven; mov     al, 1
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov al, 0x1
 .org 0x104e6
 # IDA 0x202e6; file 0x104e6; locator=proven; out     dx, al
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, al
 .org 0x104e7
 # IDA 0x202e7; file 0x104e7; locator=proven; call    sub_202FE
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+23
 .org 0x104ea
 # IDA 0x202ea; file 0x104ea; locator=proven; mov     dx, 3CFh
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0x3cf
 .org 0x104ed
 # IDA 0x202ed; file 0x104ed; locator=proven; mov     al, 2
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov al, 0x2
 .org 0x104ef
 # IDA 0x202ef; file 0x104ef; locator=proven; out     dx, al
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, al
 .org 0x104f0
 # IDA 0x202f0; file 0x104f0; locator=proven; call    sub_202FE
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+14
 .org 0x104f3
 # IDA 0x202f3; file 0x104f3; locator=proven; mov     dx, 3CFh
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dx, 0x3cf
 .org 0x104f6
 # IDA 0x202f6; file 0x104f6; locator=proven; mov     al, 3
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov al, 0x3
 .org 0x104f8
 # IDA 0x202f8; file 0x104f8; locator=proven; out     dx, al
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 out dx, al
 .org 0x104f9
 # IDA 0x202f9; file 0x104f9; locator=proven; call    sub_202FE
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 call .+5
 .org 0x104fc
 # IDA 0x202fc; file 0x104fc; locator=proven; pop     bx
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 pop bx
 .org 0x104fd
 # IDA 0x202fd; file 0x104fd; locator=proven; retn
-# ⚠ 函式 sub_202BD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202BD; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 ret
 .org 0x104fe
 sub_202FE:
 # IDA 0x202fe; file 0x104fe; locator=proven; mov     ch, 10h
-# ⚠ 函式 sub_202FE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202FE; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ch, 0x10
 .org 0x10500
 loc_20300:
 # IDA 0x20300; file 0x10500; locator=proven; mov     ax, [bx]
-# ⚠ 函式 sub_202FE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202FE; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov ax, word ptr [bx]
 .org 0x10502
 # IDA 0x20302; file 0x10502; locator=proven; mov     dl, [bx+2]
-# ⚠ 函式 sub_202FE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202FE; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 mov dl, byte ptr [bx+0x2]
 .org 0x10505
 # IDA 0x20305; file 0x10505; locator=proven; mov     cs:[si], ax
-# ⚠ 函式 sub_202FE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202FE; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; mov word ptr [si], ax
 .org 0x10508
 # IDA 0x20308; file 0x10508; locator=proven; mov     cs:[si+2], dl
-# ⚠ 函式 sub_202FE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202FE; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 cs; mov byte ptr [si+0x2], dl
 .org 0x1050c
 # IDA 0x2030c; file 0x1050c; locator=proven; add     si, 3
-# ⚠ 函式 sub_202FE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202FE; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 add si, 0x3
 .org 0x1050f
 # IDA 0x2030f; file 0x1050f; locator=proven; add     bx, 50h
-# ⚠ 函式 sub_202FE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202FE; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 add bx, 0x50
 .org 0x10512
 # IDA 0x20312; file 0x10512; locator=proven; dec     ch
-# ⚠ 函式 sub_202FE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202FE; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 dec ch
 .org 0x10514
 # IDA 0x20314; file 0x10514; locator=proven; jnz     short loc_20300
-# ⚠ 函式 sub_202FE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202FE; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 jnz .-20
 .org 0x10516
 # IDA 0x20316; file 0x10516; locator=proven; sub     bx, 500h
-# ⚠ 函式 sub_202FE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202FE; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 sub bx, 0x500
 .org 0x1051a
 # IDA 0x2031a; file 0x1051a; locator=proven; retn
-# ⚠ 函式 sub_202FE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_202FE; [proven] 原始 mouse near／far 分派、游標或 VGA 控制；具體邊界見原始 C 收據; 出處: docs/re/111-c-input-mouse-restoration.md, docs/spec/231-c-input-mouse.md
 ret
 .org 0x1061b
