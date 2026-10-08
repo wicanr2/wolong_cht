@@ -4964,351 +4964,351 @@ ret
 .org 0xcaa
 sub_10AAA:
 # IDA 0x10aaa; file 0xcaa; locator=proven; push    ax
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push ax
 .org 0xcab
 # IDA 0x10aab; file 0xcab; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl bx, 0x1
 .org 0xcad
 # IDA 0x10aad; file 0xcad; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl bx, 0x1
 .org 0xcaf
 # IDA 0x10aaf; file 0xcaf; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl bx, 0x1
 .org 0xcb1
 # IDA 0x10ab1; file 0xcb1; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl bx, 0x1
 .org 0xcb3
 # IDA 0x10ab3; file 0xcb3; locator=proven; mov     ax, bx
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov ax, bx
 .org 0xcb5
 # IDA 0x10ab5; file 0xcb5; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl ax, 0x1
 .org 0xcb7
 # IDA 0x10ab7; file 0xcb7; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl ax, 0x1
 .org 0xcb9
 # IDA 0x10ab9; file 0xcb9; locator=proven; add     bx, ax
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} add bx, ax
 .org 0xcbb
 # IDA 0x10abb; file 0xcbb; locator=proven; pop     ax
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop ax
 .org 0xcbc
 # IDA 0x10abc; file 0xcbc; locator=proven; push    cx
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push cx
 .org 0xcbd
 # IDA 0x10abd; file 0xcbd; locator=proven; and     cl, cl
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} and cl, cl
 .org 0xcbf
 # IDA 0x10abf; file 0xcbf; locator=proven; jz      short loc_10AC6
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jz .+7
 .org 0xcc1
 # IDA 0x10ac1; file 0xcc1; locator=proven; mov     ch, 2
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ch, 0x2
 .org 0xcc3
 # IDA 0x10ac3; file 0xcc3; locator=proven; call    sub_10AD9
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .+22
 .org 0xcc6
 loc_10AC6:
 # IDA 0x10ac6; file 0xcc6; locator=proven; xor     ch, ch
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xor ch, ch
 .org 0xcc8
 # IDA 0x10ac8; file 0xcc8; locator=proven; add     dx, cx
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} add dx, cx
 .org 0xcca
 # IDA 0x10aca; file 0xcca; locator=proven; pop     cx
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop cx
 .org 0xccb
 # IDA 0x10acb; file 0xccb; locator=proven; sub     ch, cl
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} sub ch, cl
 .org 0xccd
 # IDA 0x10acd; file 0xccd; locator=proven; jz      short locret_10AD8
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jz .+11
 .org 0xccf
 # IDA 0x10acf; file 0xccf; locator=proven; mov     cl, ch
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov cl, ch
 .org 0xcd1
 # IDA 0x10ad1; file 0xcd1; locator=proven; mov     ch, 2
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ch, 0x2
 .org 0xcd3
 # IDA 0x10ad3; file 0xcd3; locator=proven; mov     ah, al
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov ah, al
 .org 0xcd5
 # IDA 0x10ad5; file 0xcd5; locator=proven; call    sub_10AD9
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .+4
 .org 0xcd8
 locret_10AD8:
 # IDA 0x10ad8; file 0xcd8; locator=proven; retn
-# ⚠ 函式 sub_10AAA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AAA; [proven] 彩色已填部分接黑色剩餘部分，兩列高; 出處: docs/re/106-c-rectangle-bars-restoration.md
 ret
 .org 0xcd9
 sub_10AD9:
 # IDA 0x10ad9; file 0xcd9; locator=proven; push    ds
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push ds
 .org 0xcda
 # IDA 0x10ada; file 0xcda; locator=proven; push    ax
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push ax
 .org 0xcdb
 # IDA 0x10adb; file 0xcdb; locator=proven; push    bx
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push bx
 .org 0xcdc
 # IDA 0x10adc; file 0xcdc; locator=proven; push    cx
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push cx
 .org 0xcdd
 # IDA 0x10add; file 0xcdd; locator=proven; push    dx
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push dx
 .org 0xcde
 # IDA 0x10ade; file 0xcde; locator=proven; push    si
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push si
 .org 0xcdf
 # IDA 0x10adf; file 0xcdf; locator=proven; push    dx
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push dx
 .org 0xce0
 # IDA 0x10ae0; file 0xce0; locator=proven; call    sub_10CAC
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .+460
 .org 0xce3
 # IDA 0x10ae3; file 0xce3; locator=proven; mov     dx, 3CFh
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov dx, 0x3cf
 .org 0xce6
 # IDA 0x10ae6; file 0xce6; locator=proven; mov     al, ah
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov al, ah
 .org 0xce8
 # IDA 0x10ae8; file 0xce8; locator=proven; out     dx, al
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, al
 .org 0xce9
 # IDA 0x10ae9; file 0xce9; locator=proven; pop     dx
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop dx
 .org 0xcea
 # IDA 0x10aea; file 0xcea; locator=proven; mov     al, dl
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov al, dl
 .org 0xcec
 # IDA 0x10aec; file 0xcec; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shr dx, 0x1
 .org 0xcee
 # IDA 0x10aee; file 0xcee; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shr dx, 0x1
 .org 0xcf0
 # IDA 0x10af0; file 0xcf0; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shr dx, 0x1
 .org 0xcf2
 # IDA 0x10af2; file 0xcf2; locator=proven; add     bx, dx
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} add bx, dx
 .org 0xcf4
 # IDA 0x10af4; file 0xcf4; locator=proven; and     al, 7
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 and al, 0x7
 .org 0xcf6
 # IDA 0x10af6; file 0xcf6; locator=proven; mov     dx, 0FFFFh
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov dx, 0xffff
 .org 0xcf9
 # IDA 0x10af9; file 0xcf9; locator=proven; mov     ah, al
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov ah, al
 .org 0xcfb
 # IDA 0x10afb; file 0xcfb; locator=proven; add     ah, cl
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} add ah, cl
 .org 0xcfd
 # IDA 0x10afd; file 0xcfd; locator=proven; mov     cl, al
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov cl, al
 .org 0xcff
 # IDA 0x10aff; file 0xcff; locator=proven; shr     dl, cl
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shr dl, cl
 .org 0xd01
 # IDA 0x10b01; file 0xd01; locator=proven; mov     cl, ah
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov cl, ah
 .org 0xd03
 # IDA 0x10b03; file 0xd03; locator=proven; and     cl, 7
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 and cl, 0x7
 .org 0xd06
 # IDA 0x10b06; file 0xd06; locator=proven; shr     dh, cl
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shr dh, cl
 .org 0xd08
 # IDA 0x10b08; file 0xd08; locator=proven; not     dh
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 not dh
 .org 0xd0a
 # IDA 0x10b0a; file 0xd0a; locator=proven; cmp     ah, 8
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp ah, 0x8
 .org 0xd0d
 # IDA 0x10b0d; file 0xd0d; locator=proven; jnb     short loc_10B11
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jnb .+4
 .org 0xd0f
 # IDA 0x10b0f; file 0xd0f; locator=proven; and     dl, dh
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} and dl, dh
 .org 0xd11
 loc_10B11:
 # IDA 0x10b11; file 0xd11; locator=proven; mov     cl, ah
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov cl, ah
 .org 0xd13
 # IDA 0x10b13; file 0xd13; locator=proven; mov     ax, 0A0C8h
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ax, 0xa0c8
 .org 0xd16
 # IDA 0x10b16; file 0xd16; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ds, ax
 .org 0xd18
 loc_10B18:
 # IDA 0x10b18; file 0xd18; locator=proven; mov     al, cl
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov al, cl
 .org 0xd1a
 # IDA 0x10b1a; file 0xd1a; locator=proven; mov     si, bx
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov si, bx
 .org 0xd1c
 # IDA 0x10b1c; file 0xd1c; locator=proven; mov     ah, [si]
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ah, byte ptr [si]
 .org 0xd1e
 # IDA 0x10b1e; file 0xd1e; locator=proven; mov     [si], dl
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov byte ptr [si], dl
 .org 0xd20
 # IDA 0x10b20; file 0xd20; locator=proven; sub     al, 8
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 sub al, 0x8
 .org 0xd22
 # IDA 0x10b22; file 0xd22; locator=proven; jb      short loc_10B38
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jb .+22
 .org 0xd24
 loc_10B24:
 # IDA 0x10b24; file 0xd24; locator=proven; mov     ah, 0FFh
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ah, 0xff
 .org 0xd26
 # IDA 0x10b26; file 0xd26; locator=proven; cmp     al, 8
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp al, 0x8
 .org 0xd28
 # IDA 0x10b28; file 0xd28; locator=proven; jb      short loc_10B33
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jb .+11
 .org 0xd2a
 # IDA 0x10b2a; file 0xd2a; locator=proven; inc     si
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc si
 .org 0xd2b
 # IDA 0x10b2b; file 0xd2b; locator=proven; mov     [si], ah
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov byte ptr [si], ah
 .org 0xd2d
 # IDA 0x10b2d; file 0xd2d; locator=proven; sub     al, 8
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 sub al, 0x8
 .org 0xd2f
 # IDA 0x10b2f; file 0xd2f; locator=proven; jnb     short loc_10B24
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jnb .-11
 .org 0xd31
 # IDA 0x10b31; file 0xd31; locator=proven; jmp     short loc_10B38
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jmp .+7
 .org 0xd33
 loc_10B33:
 # IDA 0x10b33; file 0xd33; locator=proven; inc     si
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc si
 .org 0xd34
 # IDA 0x10b34; file 0xd34; locator=proven; mov     ah, [si]
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ah, byte ptr [si]
 .org 0xd36
 # IDA 0x10b36; file 0xd36; locator=proven; mov     [si], dh
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov byte ptr [si], dh
 .org 0xd38
 loc_10B38:
 # IDA 0x10b38; file 0xd38; locator=proven; add     bx, 50h
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 add bx, 0x50
 .org 0xd3b
 # IDA 0x10b3b; file 0xd3b; locator=proven; dec     ch
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 dec ch
 .org 0xd3d
 # IDA 0x10b3d; file 0xd3d; locator=proven; jnz     short loc_10B18
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jnz .-37
 .org 0xd3f
 # IDA 0x10b3f; file 0xd3f; locator=proven; pop     si
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop si
 .org 0xd40
 # IDA 0x10b40; file 0xd40; locator=proven; pop     dx
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop dx
 .org 0xd41
 # IDA 0x10b41; file 0xd41; locator=proven; pop     cx
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop cx
 .org 0xd42
 # IDA 0x10b42; file 0xd42; locator=proven; pop     bx
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop bx
 .org 0xd43
 # IDA 0x10b43; file 0xd43; locator=proven; pop     ax
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop ax
 .org 0xd44
 # IDA 0x10b44; file 0xd44; locator=proven; pop     ds
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop ds
 .org 0xd45
 # IDA 0x10b45; file 0xd45; locator=proven; retn
-# ⚠ 函式 sub_10AD9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10AD9; [proven] 像素 X 與 byte row offset 的列寫入／左右 mask; 出處: docs/re/106-c-rectangle-bars-restoration.md
 ret
 .org 0xd46
 sub_10B46:
@@ -5627,159 +5627,159 @@ ret
 .org 0xdcd
 sub_10BCD:
 # IDA 0x10bcd; file 0xdcd; locator=proven; push    ax
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push ax
 .org 0xdce
 # IDA 0x10bce; file 0xdce; locator=proven; push    bx
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push bx
 .org 0xdcf
 # IDA 0x10bcf; file 0xdcf; locator=proven; push    cx
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push cx
 .org 0xdd0
 # IDA 0x10bd0; file 0xdd0; locator=proven; push    dx
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push dx
 .org 0xdd1
 # IDA 0x10bd1; file 0xdd1; locator=proven; push    si
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push si
 .org 0xdd2
 # IDA 0x10bd2; file 0xdd2; locator=proven; push    di
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push di
 .org 0xdd3
 # IDA 0x10bd3; file 0xdd3; locator=proven; call    sub_10C14
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .+65
 .org 0xdd6
 # IDA 0x10bd6; file 0xdd6; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl dx, 0x1
 .org 0xdd8
 # IDA 0x10bd8; file 0xdd8; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl dx, 0x1
 .org 0xdda
 # IDA 0x10bda; file 0xdda; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl dx, 0x1
 .org 0xddc
 # IDA 0x10bdc; file 0xddc; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl dx, 0x1
 .org 0xdde
 # IDA 0x10bde; file 0xdde; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl bx, 0x1
 .org 0xde0
 # IDA 0x10be0; file 0xde0; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl bx, 0x1
 .org 0xde2
 # IDA 0x10be2; file 0xde2; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl bx, 0x1
 .org 0xde4
 # IDA 0x10be4; file 0xde4; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl bx, 0x1
 .org 0xde6
 # IDA 0x10be6; file 0xde6; locator=proven; add     dx, 8
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 add dx, 0x8
 .org 0xde9
 # IDA 0x10be9; file 0xde9; locator=proven; add     bx, 8
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 add bx, 0x8
 .org 0xdec
 # IDA 0x10bec; file 0xdec; locator=proven; mov     al, cl
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov al, cl
 .org 0xdee
 # IDA 0x10bee; file 0xdee; locator=proven; mov     cl, 4
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov cl, 0x4
 .org 0xdf0
 # IDA 0x10bf0; file 0xdf0; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xor ah, ah
 .org 0xdf2
 # IDA 0x10bf2; file 0xdf2; locator=proven; shl     ax, cl
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl ax, cl
 .org 0xdf4
 # IDA 0x10bf4; file 0xdf4; locator=proven; sub     ax, 11h
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 sub ax, offset imm_at_10BF4
 .org 0xdf7
 # IDA 0x10bf7; file 0xdf7; locator=proven; mov     si, dx
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov si, dx
 .org 0xdf9
 # IDA 0x10bf9; file 0xdf9; locator=proven; add     si, ax
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} add si, ax
 .org 0xdfb
 # IDA 0x10bfb; file 0xdfb; locator=proven; mov     al, ch
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov al, ch
 .org 0xdfd
 # IDA 0x10bfd; file 0xdfd; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xor ah, ah
 .org 0xdff
 # IDA 0x10bff; file 0xdff; locator=proven; shl     ax, cl
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl ax, cl
 .org 0xe01
 # IDA 0x10c01; file 0xe01; locator=proven; sub     ax, 11h
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 sub ax, offset imm_at_10C01
 .org 0xe04
 # IDA 0x10c04; file 0xe04; locator=proven; mov     di, bx
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov di, bx
 .org 0xe06
 # IDA 0x10c06; file 0xe06; locator=proven; add     di, ax
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} add di, ax
 .org 0xe08
 # IDA 0x10c08; file 0xe08; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xor ah, ah
 .org 0xe0a
 # IDA 0x10c0a; file 0xe0a; locator=proven; call    sub_1F1A3
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .-6759
 .org 0xe0d
 # IDA 0x10c0d; file 0xe0d; locator=proven; pop     di
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop di
 .org 0xe0e
 # IDA 0x10c0e; file 0xe0e; locator=proven; pop     si
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop si
 .org 0xe0f
 # IDA 0x10c0f; file 0xe0f; locator=proven; pop     dx
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop dx
 .org 0xe10
 # IDA 0x10c10; file 0xe10; locator=proven; pop     cx
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop cx
 .org 0xe11
 # IDA 0x10c11; file 0xe11; locator=proven; pop     bx
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop bx
 .org 0xe12
 # IDA 0x10c12; file 0xe12; locator=proven; pop     ax
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop ax
 .org 0xe13
 # IDA 0x10c13; file 0xe13; locator=proven; retn
-# ⚠ 函式 sub_10BCD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10BCD; [proven] 真實外框 caller，內部矩形填黑; 出處: docs/re/106-c-rectangle-bars-restoration.md
 ret
 .org 0xe14
 sub_10C14:
@@ -6085,124 +6085,124 @@ ret
 .org 0xeac
 sub_10CAC:
 # IDA 0x10cac; file 0xeac; locator=proven; push    ax
-# ⚠ 函式 sub_10CAC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CAC; [proven] write mode 3／Data Rotate／Bit Mask 的原始 I/O; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push ax
 .org 0xead
 # IDA 0x10cad; file 0xead; locator=proven; push    dx
-# ⚠ 函式 sub_10CAC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CAC; [proven] write mode 3／Data Rotate／Bit Mask 的原始 I/O; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push dx
 .org 0xeae
 # IDA 0x10cae; file 0xeae; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_10CAC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CAC; [proven] write mode 3／Data Rotate／Bit Mask 的原始 I/O; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov dx, 0x3ce
 .org 0xeb1
 # IDA 0x10cb1; file 0xeb1; locator=proven; mov     ax, 305h
-# ⚠ 函式 sub_10CAC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CAC; [proven] write mode 3／Data Rotate／Bit Mask 的原始 I/O; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ax, 0x305
 .org 0xeb4
 # IDA 0x10cb4; file 0xeb4; locator=proven; out     dx, ax
-# ⚠ 函式 sub_10CAC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CAC; [proven] write mode 3／Data Rotate／Bit Mask 的原始 I/O; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, ax
 .org 0xeb5
 # IDA 0x10cb5; file 0xeb5; locator=proven; mov     ax, 3
-# ⚠ 函式 sub_10CAC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CAC; [proven] write mode 3／Data Rotate／Bit Mask 的原始 I/O; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ax, 0x3
 .org 0xeb8
 # IDA 0x10cb8; file 0xeb8; locator=proven; out     dx, ax
-# ⚠ 函式 sub_10CAC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CAC; [proven] write mode 3／Data Rotate／Bit Mask 的原始 I/O; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, ax
 .org 0xeb9
 # IDA 0x10cb9; file 0xeb9; locator=proven; mov     ax, 0FF08h
-# ⚠ 函式 sub_10CAC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CAC; [proven] write mode 3／Data Rotate／Bit Mask 的原始 I/O; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ax, 0xff08
 .org 0xebc
 # IDA 0x10cbc; file 0xebc; locator=proven; out     dx, ax
-# ⚠ 函式 sub_10CAC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CAC; [proven] write mode 3／Data Rotate／Bit Mask 的原始 I/O; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, ax
 .org 0xebd
 # IDA 0x10cbd; file 0xebd; locator=proven; xor     al, al
-# ⚠ 函式 sub_10CAC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CAC; [proven] write mode 3／Data Rotate／Bit Mask 的原始 I/O; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xor al, al
 .org 0xebf
 # IDA 0x10cbf; file 0xebf; locator=proven; out     dx, al
-# ⚠ 函式 sub_10CAC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CAC; [proven] write mode 3／Data Rotate／Bit Mask 的原始 I/O; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, al
 .org 0xec0
 # IDA 0x10cc0; file 0xec0; locator=proven; pop     dx
-# ⚠ 函式 sub_10CAC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CAC; [proven] write mode 3／Data Rotate／Bit Mask 的原始 I/O; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop dx
 .org 0xec1
 # IDA 0x10cc1; file 0xec1; locator=proven; pop     ax
-# ⚠ 函式 sub_10CAC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CAC; [proven] write mode 3／Data Rotate／Bit Mask 的原始 I/O; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop ax
 .org 0xec2
 # IDA 0x10cc2; file 0xec2; locator=proven; retn
-# ⚠ 函式 sub_10CAC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CAC; [proven] write mode 3／Data Rotate／Bit Mask 的原始 I/O; 出處: docs/re/106-c-rectangle-bars-restoration.md
 ret
 .org 0xec3
 sub_10CC3:
 # IDA 0x10cc3; file 0xec3; locator=proven; push    ax
-# ⚠ 函式 sub_10CC3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CC3; [proven] write mode 0 與 set/reset／mask 的原始恢復序列; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push ax
 .org 0xec4
 # IDA 0x10cc4; file 0xec4; locator=proven; push    dx
-# ⚠ 函式 sub_10CC3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CC3; [proven] write mode 0 與 set/reset／mask 的原始恢復序列; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push dx
 .org 0xec5
 # IDA 0x10cc5; file 0xec5; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_10CC3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CC3; [proven] write mode 0 與 set/reset／mask 的原始恢復序列; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov dx, 0x3ce
 .org 0xec8
 # IDA 0x10cc8; file 0xec8; locator=proven; mov     ax, 5
-# ⚠ 函式 sub_10CC3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CC3; [proven] write mode 0 與 set/reset／mask 的原始恢復序列; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ax, 0x5
 .org 0xecb
 # IDA 0x10ccb; file 0xecb; locator=proven; out     dx, ax
-# ⚠ 函式 sub_10CC3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CC3; [proven] write mode 0 與 set/reset／mask 的原始恢復序列; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, ax
 .org 0xecc
 # IDA 0x10ccc; file 0xecc; locator=proven; xor     ax, ax
-# ⚠ 函式 sub_10CC3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CC3; [proven] write mode 0 與 set/reset／mask 的原始恢復序列; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xor ax, ax
 .org 0xece
 # IDA 0x10cce; file 0xece; locator=proven; out     dx, ax
-# ⚠ 函式 sub_10CC3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CC3; [proven] write mode 0 與 set/reset／mask 的原始恢復序列; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, ax
 .org 0xecf
 # IDA 0x10ccf; file 0xecf; locator=proven; mov     ax, 1
-# ⚠ 函式 sub_10CC3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CC3; [proven] write mode 0 與 set/reset／mask 的原始恢復序列; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ax, 0x1
 .org 0xed2
 # IDA 0x10cd2; file 0xed2; locator=proven; out     dx, ax
-# ⚠ 函式 sub_10CC3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CC3; [proven] write mode 0 與 set/reset／mask 的原始恢復序列; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, ax
 .org 0xed3
 # IDA 0x10cd3; file 0xed3; locator=proven; mov     ax, 3
-# ⚠ 函式 sub_10CC3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CC3; [proven] write mode 0 與 set/reset／mask 的原始恢復序列; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ax, 0x3
 .org 0xed6
 # IDA 0x10cd6; file 0xed6; locator=proven; out     dx, ax
-# ⚠ 函式 sub_10CC3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CC3; [proven] write mode 0 與 set/reset／mask 的原始恢復序列; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, ax
 .org 0xed7
 # IDA 0x10cd7; file 0xed7; locator=proven; mov     ax, 0FF08h
-# ⚠ 函式 sub_10CC3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CC3; [proven] write mode 0 與 set/reset／mask 的原始恢復序列; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ax, 0xff08
 .org 0xeda
 # IDA 0x10cda; file 0xeda; locator=proven; out     dx, ax
-# ⚠ 函式 sub_10CC3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CC3; [proven] write mode 0 與 set/reset／mask 的原始恢復序列; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, ax
 .org 0xedb
 # IDA 0x10cdb; file 0xedb; locator=proven; pop     dx
-# ⚠ 函式 sub_10CC3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CC3; [proven] write mode 0 與 set/reset／mask 的原始恢復序列; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop dx
 .org 0xedc
 # IDA 0x10cdc; file 0xedc; locator=proven; pop     ax
-# ⚠ 函式 sub_10CC3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CC3; [proven] write mode 0 與 set/reset／mask 的原始恢復序列; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop ax
 .org 0xedd
 # IDA 0x10cdd; file 0xedd; locator=proven; retn
-# ⚠ 函式 sub_10CC3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CC3; [proven] write mode 0 與 set/reset／mask 的原始恢復序列; 出處: docs/re/106-c-rectangle-bars-restoration.md
 ret
 .org 0xede
 sub_10CDE:
@@ -79563,116 +79563,116 @@ mov cx, 0x3f
 .org 0xc81f
 sub_1C61F:
 # IDA 0x1c61f; file 0xc81f; locator=proven; push    bx
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push bx
 .org 0xc820
 # IDA 0x1c620; file 0xc820; locator=proven; push    dx
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push dx
 .org 0xc821
 # IDA 0x1c621; file 0xc821; locator=proven; push    si
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push si
 .org 0xc822
 # IDA 0x1c622; file 0xc822; locator=proven; push    di
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push di
 .org 0xc823
 # IDA 0x1c623; file 0xc823; locator=proven; mov     bx, 0F8h
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov bx, 0xf8
 .org 0xc826
 # IDA 0x1c626; file 0xc826; locator=proven; test    al, 8
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 test al, 0x8
 .org 0xc828
 # IDA 0x1c628; file 0xc828; locator=proven; jz      short loc_1C62D
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jz .+5
 .org 0xc82a
 # IDA 0x1c62a; file 0xc82a; locator=proven; add     bx, 10h
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 add bx, 0x10
 .org 0xc82d
 loc_1C62D:
 # IDA 0x1c62d; file 0xc82d; locator=proven; and     al, 7
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 and al, 0x7
 .org 0xc82f
 # IDA 0x1c62f; file 0xc82f; locator=proven; shl     al, 1
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl al, 0x1
 .org 0xc831
 # IDA 0x1c631; file 0xc831; locator=proven; shl     al, 1
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl al, 0x1
 .org 0xc833
 # IDA 0x1c633; file 0xc833; locator=proven; shl     al, 1
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl al, 0x1
 .org 0xc835
 # IDA 0x1c635; file 0xc835; locator=proven; shl     al, 1
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl al, 0x1
 .org 0xc837
 # IDA 0x1c637; file 0xc837; locator=proven; mov     dl, al
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov dl, al
 .org 0xc839
 # IDA 0x1c639; file 0xc839; locator=proven; xor     dh, dh
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xor dh, dh
 .org 0xc83b
 # IDA 0x1c63b; file 0xc83b; locator=proven; add     dx, 1F0h
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 add dx, 0x1f0
 .org 0xc83f
 # IDA 0x1c63f; file 0xc83f; locator=proven; inc     dx
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc dx
 .org 0xc840
 # IDA 0x1c640; file 0xc840; locator=proven; inc     bx
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc bx
 .org 0xc841
 # IDA 0x1c641; file 0xc841; locator=proven; mov     si, dx
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov si, dx
 .org 0xc843
 # IDA 0x1c643; file 0xc843; locator=proven; mov     di, bx
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov di, bx
 .org 0xc845
 # IDA 0x1c645; file 0xc845; locator=proven; add     si, 0Dh
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 add si, 0xd
 .org 0xc848
 # IDA 0x1c648; file 0xc848; locator=proven; add     di, 0Dh
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 add di, 0xd
 .org 0xc84b
 # IDA 0x1c64b; file 0xc84b; locator=proven; call    sub_1F020
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .+10709
 .org 0xc84e
 # IDA 0x1c64e; file 0xc84e; locator=proven; pop     di
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop di
 .org 0xc84f
 # IDA 0x1c64f; file 0xc84f; locator=proven; pop     si
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop si
 .org 0xc850
 # IDA 0x1c650; file 0xc850; locator=proven; pop     dx
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop dx
 .org 0xc851
 # IDA 0x1c651; file 0xc851; locator=proven; pop     bx
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop bx
 .org 0xc852
 # IDA 0x1c652; file 0xc852; locator=proven; retn
-# ⚠ 函式 sub_1C61F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C61F; [proven] 十六格選取的原始座標與 14×14 描框 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 ret
 .org 0xc853
 sub_1C653:
@@ -79848,491 +79848,491 @@ ret
 .org 0xc8ae
 sub_1C6AE:
 # IDA 0x1c6ae; file 0xc8ae; locator=proven; push    ax
-# ⚠ 函式 sub_1C6AE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6AE; [proven] 六隊選取框清除 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push ax
 .org 0xc8af
 # IDA 0x1c6af; file 0xc8af; locator=proven; push    cx
-# ⚠ 函式 sub_1C6AE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6AE; [proven] 六隊選取框清除 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push cx
 .org 0xc8b0
 # IDA 0x1c6b0; file 0xc8b0; locator=proven; xor     ax, ax
-# ⚠ 函式 sub_1C6AE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6AE; [proven] 六隊選取框清除 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xor ax, ax
 .org 0xc8b2
 # IDA 0x1c6b2; file 0xc8b2; locator=proven; mov     cx, 6
-# ⚠ 函式 sub_1C6AE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6AE; [proven] 六隊選取框清除 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov cx, 0x6
 .org 0xc8b5
 loc_1C6B5:
 # IDA 0x1c6b5; file 0xc8b5; locator=proven; call    sub_1C6BF
-# ⚠ 函式 sub_1C6AE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6AE; [proven] 六隊選取框清除 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .+10
 .org 0xc8b8
 # IDA 0x1c6b8; file 0xc8b8; locator=proven; inc     al
-# ⚠ 函式 sub_1C6AE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6AE; [proven] 六隊選取框清除 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc al
 .org 0xc8ba
 # IDA 0x1c6ba; file 0xc8ba; locator=proven; loop    loc_1C6B5
-# ⚠ 函式 sub_1C6AE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6AE; [proven] 六隊選取框清除 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 loop .-5
 .org 0xc8bc
 # IDA 0x1c6bc; file 0xc8bc; locator=proven; pop     cx
-# ⚠ 函式 sub_1C6AE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6AE; [proven] 六隊選取框清除 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop cx
 .org 0xc8bd
 # IDA 0x1c6bd; file 0xc8bd; locator=proven; pop     ax
-# ⚠ 函式 sub_1C6AE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6AE; [proven] 六隊選取框清除 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop ax
 .org 0xc8be
 # IDA 0x1c6be; file 0xc8be; locator=proven; retn
-# ⚠ 函式 sub_1C6AE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6AE; [proven] 六隊選取框清除 caller; 出處: docs/re/106-c-rectangle-bars-restoration.md
 ret
 .org 0xc8bf
 sub_1C6BF:
 # IDA 0x1c6bf; file 0xc8bf; locator=proven; push    ax
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push ax
 .org 0xc8c0
 # IDA 0x1c6c0; file 0xc8c0; locator=proven; push    bx
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push bx
 .org 0xc8c1
 # IDA 0x1c6c1; file 0xc8c1; locator=proven; push    dx
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push dx
 .org 0xc8c2
 # IDA 0x1c6c2; file 0xc8c2; locator=proven; push    si
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push si
 .org 0xc8c3
 # IDA 0x1c6c3; file 0xc8c3; locator=proven; push    di
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push di
 .org 0xc8c4
 # IDA 0x1c6c4; file 0xc8c4; locator=proven; mov     bl, al
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov bl, al
 .org 0xc8c6
 # IDA 0x1c6c6; file 0xc8c6; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xor bh, bh
 .org 0xc8c8
 # IDA 0x1c6c8; file 0xc8c8; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl bx, 0x1
 .org 0xc8ca
 # IDA 0x1c6ca; file 0xc8ca; locator=proven; mov     dx, cs:[bx-2D16h]
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cs; mov dx, word ptr [bx+0xd2ea]
 .org 0xc8cf
 # IDA 0x1c6cf; file 0xc8cf; locator=proven; mov     si, dx
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov si, dx
 .org 0xc8d1
 # IDA 0x1c6d1; file 0xc8d1; locator=proven; inc     dx
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc dx
 .org 0xc8d2
 # IDA 0x1c6d2; file 0xc8d2; locator=proven; inc     dx
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc dx
 .org 0xc8d3
 # IDA 0x1c6d3; file 0xc8d3; locator=proven; add     si, 4Dh
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 add si, 0x4d
 .org 0xc8d6
 # IDA 0x1c6d6; file 0xc8d6; locator=proven; mov     bx, 174h
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov bx, 0x174
 .org 0xc8d9
 # IDA 0x1c6d9; file 0xc8d9; locator=proven; mov     di, 188h
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov di, 0x188
 .org 0xc8dc
 # IDA 0x1c6dc; file 0xc8dc; locator=proven; push    ax
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push ax
 .org 0xc8dd
 # IDA 0x1c6dd; file 0xc8dd; locator=proven; push    bx
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push bx
 .org 0xc8de
 # IDA 0x1c6de; file 0xc8de; locator=proven; push    dx
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push dx
 .org 0xc8df
 # IDA 0x1c6df; file 0xc8df; locator=proven; push    si
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push si
 .org 0xc8e0
 # IDA 0x1c6e0; file 0xc8e0; locator=proven; push    di
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push di
 .org 0xc8e1
 # IDA 0x1c6e1; file 0xc8e1; locator=proven; call    sub_1F020
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .+10559
 .org 0xc8e4
 # IDA 0x1c6e4; file 0xc8e4; locator=proven; pop     di
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop di
 .org 0xc8e5
 # IDA 0x1c6e5; file 0xc8e5; locator=proven; pop     si
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop si
 .org 0xc8e6
 # IDA 0x1c6e6; file 0xc8e6; locator=proven; pop     dx
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop dx
 .org 0xc8e7
 # IDA 0x1c6e7; file 0xc8e7; locator=proven; pop     bx
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop bx
 .org 0xc8e8
 # IDA 0x1c6e8; file 0xc8e8; locator=proven; pop     ax
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop ax
 .org 0xc8e9
 # IDA 0x1c6e9; file 0xc8e9; locator=proven; inc     dx
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc dx
 .org 0xc8ea
 # IDA 0x1c6ea; file 0xc8ea; locator=proven; dec     si
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 dec si
 .org 0xc8eb
 # IDA 0x1c6eb; file 0xc8eb; locator=proven; inc     bx
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc bx
 .org 0xc8ec
 # IDA 0x1c6ec; file 0xc8ec; locator=proven; dec     di
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 dec di
 .org 0xc8ed
 # IDA 0x1c6ed; file 0xc8ed; locator=proven; call    sub_1F020
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .+10547
 .org 0xc8f0
 # IDA 0x1c6f0; file 0xc8f0; locator=proven; pop     di
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop di
 .org 0xc8f1
 # IDA 0x1c6f1; file 0xc8f1; locator=proven; pop     si
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop si
 .org 0xc8f2
 # IDA 0x1c6f2; file 0xc8f2; locator=proven; pop     dx
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop dx
 .org 0xc8f3
 # IDA 0x1c6f3; file 0xc8f3; locator=proven; pop     bx
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop bx
 .org 0xc8f4
 # IDA 0x1c6f4; file 0xc8f4; locator=proven; pop     ax
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop ax
 .org 0xc8f5
 # IDA 0x1c6f5; file 0xc8f5; locator=proven; retn
-# ⚠ 函式 sub_1C6BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6BF; [proven] 位置表選隊，外／內兩層選取框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 ret
 .org 0xc8f6
 sub_1C6F6:
 # IDA 0x1c6f6; file 0xc8f6; locator=proven; push    ds
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push ds
 .org 0xc8f7
 # IDA 0x1c6f7; file 0xc8f7; locator=proven; mov     ds, cs:word_1D30A
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cs; mov ds, word ptr [0xd30a]
 .org 0xc8fc
 # IDA 0x1c6fc; file 0xc8fc; locator=proven; mov     si, 9
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov si, 0x9
 .org 0xc8ff
 # IDA 0x1c6ff; file 0xc8ff; locator=proven; mov     ax, 3
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ax, 0x3
 .org 0xc902
 # IDA 0x1c702; file 0xc902; locator=proven; call    sub_20000
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 lcall 0x1000, 0x0
 .org 0xc907
 # IDA 0x1c707; file 0xc907; locator=proven; cmp     cx, 1E0h
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp cx, 0x1e0
 .org 0xc90b
 # IDA 0x1c70b; file 0xc90b; locator=proven; jnb     short loc_1C71E
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jnb .+19
 .org 0xc90d
 # IDA 0x1c70d; file 0xc90d; locator=proven; cmp     dx, 17Fh
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp dx, 0x17f
 .org 0xc911
 # IDA 0x1c711; file 0xc911; locator=proven; jb      short loc_1C71E
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jb .+13
 .org 0xc913
 # IDA 0x1c713; file 0xc913; locator=proven; call    sub_101B4
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .+15009
 .org 0xc916
 # IDA 0x1c716; file 0xc916; locator=proven; call    sub_1C74C
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .+54
 .org 0xc919
 # IDA 0x1c719; file 0xc919; locator=proven; call    sub_101DB
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .+15042
 .org 0xc91c
 # IDA 0x1c71c; file 0xc91c; locator=proven; jmp     short loc_1C721
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jmp .+5
 .org 0xc91e
 loc_1C71E:
 # IDA 0x1c71e; file 0xc91e; locator=proven; call    sub_1C74C
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .+46
 .org 0xc921
 loc_1C721:
 # IDA 0x1c721; file 0xc921; locator=proven; mov     ax, ds:4
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ax, word ptr [0x4]
 .org 0xc924
 # IDA 0x1c724; file 0xc924; locator=proven; mov     bx, 0D3h
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov bx, 0xd3
 .org 0xc927
 # IDA 0x1c727; file 0xc927; locator=proven; call    sub_1C775
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .+78
 .org 0xc92a
 # IDA 0x1c72a; file 0xc92a; locator=proven; mov     ax, ds:24h
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ax, word ptr [0x24]
 .org 0xc92d
 # IDA 0x1c72d; file 0xc92d; locator=proven; mov     bx, 48h
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov bx, 0x48
 .org 0xc930
 # IDA 0x1c730; file 0xc930; locator=proven; call    sub_1C775
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .+69
 .org 0xc933
 # IDA 0x1c733; file 0xc933; locator=proven; mov     ds, cs:word_1D30E
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cs; mov ds, word ptr [0xd30e]
 .org 0xc938
 # IDA 0x1c738; file 0xc938; locator=proven; mov     ax, ds:3
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ax, word ptr [0x3]
 .org 0xc93b
 # IDA 0x1c73b; file 0xc93b; locator=proven; mov     bx, 0D6h
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov bx, 0xd6
 .org 0xc93e
 # IDA 0x1c73e; file 0xc93e; locator=proven; call    sub_1C78E
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .+80
 .org 0xc941
 # IDA 0x1c741; file 0xc941; locator=proven; mov     ax, ds:603h
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ax, word ptr [0x603]
 .org 0xc944
 # IDA 0x1c744; file 0xc944; locator=proven; mov     bx, 4Bh
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov bx, 0x4b
 .org 0xc947
 # IDA 0x1c747; file 0xc947; locator=proven; call    sub_1C78E
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .+71
 .org 0xc94a
 # IDA 0x1c74a; file 0xc94a; locator=proven; pop     ds
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop ds
 .org 0xc94b
 # IDA 0x1c74b; file 0xc94b; locator=proven; retn
-# ⚠ 函式 sub_1C6F6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C6F6; [proven] 固定滑鼠查詢、六隊待機條與四條側欄計量條; 出處: docs/re/106-c-rectangle-bars-restoration.md
 ret
 .org 0xc94c
 sub_1C74C:
 # IDA 0x1c74c; file 0xc94c; locator=proven; xor     di, di
-# ⚠ 函式 sub_1C74C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C74C; [proven] 六個待機值，各以 byte 上限 76 前進來源; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xor di, di
 .org 0xc94e
 loc_1C74E:
 # IDA 0x1c74e; file 0xc94e; locator=proven; mov     dx, cs:[di-2D16h]
-# ⚠ 函式 sub_1C74C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C74C; [proven] 六個待機值，各以 byte 上限 76 前進來源; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cs; mov dx, word ptr [di+0xd2ea]
 .org 0xc953
 # IDA 0x1c753; file 0xc953; locator=proven; add     dx, 2
-# ⚠ 函式 sub_1C74C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C74C; [proven] 六個待機值，各以 byte 上限 76 前進來源; 出處: docs/re/106-c-rectangle-bars-restoration.md
 add dx, 0x2
 .org 0xc956
 # IDA 0x1c756; file 0xc956; locator=proven; mov     bx, 18Ch
-# ⚠ 函式 sub_1C74C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C74C; [proven] 六個待機值，各以 byte 上限 76 前進來源; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov bx, 0x18c
 .org 0xc959
 # IDA 0x1c759; file 0xc959; locator=proven; mov     cl, [si]
-# ⚠ 函式 sub_1C74C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C74C; [proven] 六個待機值，各以 byte 上限 76 前進來源; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov cl, byte ptr [si]
 .org 0xc95b
 # IDA 0x1c75b; file 0xc95b; locator=proven; mov     ch, 4Ch
-# ⚠ 函式 sub_1C74C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C74C; [proven] 六個待機值，各以 byte 上限 76 前進來源; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ch, 0x4c
 .org 0xc95d
 # IDA 0x1c75d; file 0xc95d; locator=proven; cmp     cl, ch
-# ⚠ 函式 sub_1C74C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C74C; [proven] 六個待機值，各以 byte 上限 76 前進來源; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} cmp cl, ch
 .org 0xc95f
 # IDA 0x1c75f; file 0xc95f; locator=proven; jbe     short loc_1C763
-# ⚠ 函式 sub_1C74C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C74C; [proven] 六個待機值，各以 byte 上限 76 前進來源; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jbe .+4
 .org 0xc961
 # IDA 0x1c761; file 0xc961; locator=proven; mov     cl, ch
-# ⚠ 函式 sub_1C74C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C74C; [proven] 六個待機值，各以 byte 上限 76 前進來源; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov cl, ch
 .org 0xc963
 loc_1C763:
 # IDA 0x1c763; file 0xc963; locator=proven; mov     ah, 0Ch
-# ⚠ 函式 sub_1C74C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C74C; [proven] 六個待機值，各以 byte 上限 76 前進來源; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ah, 0xc
 .org 0xc965
 # IDA 0x1c765; file 0xc965; locator=proven; mov     al, 0
-# ⚠ 函式 sub_1C74C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C74C; [proven] 六個待機值，各以 byte 上限 76 前進來源; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov al, 0x0
 .org 0xc967
 # IDA 0x1c767; file 0xc967; locator=proven; call    sub_10AAA
-# ⚠ 函式 sub_1C74C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C74C; [proven] 六個待機值，各以 byte 上限 76 前進來源; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .+17219
 .org 0xc96a
 # IDA 0x1c76a; file 0xc96a; locator=proven; add     si, 4
-# ⚠ 函式 sub_1C74C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C74C; [proven] 六個待機值，各以 byte 上限 76 前進來源; 出處: docs/re/106-c-rectangle-bars-restoration.md
 add si, 0x4
 .org 0xc96d
 # IDA 0x1c76d; file 0xc96d; locator=proven; inc     di
-# ⚠ 函式 sub_1C74C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C74C; [proven] 六個待機值，各以 byte 上限 76 前進來源; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc di
 .org 0xc96e
 # IDA 0x1c76e; file 0xc96e; locator=proven; inc     di
-# ⚠ 函式 sub_1C74C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C74C; [proven] 六個待機值，各以 byte 上限 76 前進來源; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc di
 .org 0xc96f
 # IDA 0x1c76f; file 0xc96f; locator=proven; cmp     di, 0Ch
-# ⚠ 函式 sub_1C74C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C74C; [proven] 六個待機值，各以 byte 上限 76 前進來源; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp di, 0xc
 .org 0xc972
 # IDA 0x1c772; file 0xc972; locator=proven; jb      short loc_1C74E
-# ⚠ 函式 sub_1C74C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C74C; [proven] 六個待機值，各以 byte 上限 76 前進來源; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jb .-36
 .org 0xc974
 # IDA 0x1c774; file 0xc974; locator=proven; retn
-# ⚠ 函式 sub_1C74C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C74C; [proven] 六個待機值，各以 byte 上限 76 前進來源; 出處: docs/re/106-c-rectangle-bars-restoration.md
 ret
 .org 0xc975
 sub_1C775:
 # IDA 0x1c775; file 0xc975; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1C775; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C775; [proven] 兵力 word 右移兩次，取 AL 後以 byte 上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shr ax, 0x1
 .org 0xc977
 # IDA 0x1c777; file 0xc977; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1C775; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C775; [proven] 兵力 word 右移兩次，取 AL 後以 byte 上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shr ax, 0x1
 .org 0xc979
 # IDA 0x1c779; file 0xc979; locator=proven; mov     cl, al
-# ⚠ 函式 sub_1C775; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C775; [proven] 兵力 word 右移兩次，取 AL 後以 byte 上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov cl, al
 .org 0xc97b
 # IDA 0x1c77b; file 0xc97b; locator=proven; mov     ch, 7Ch
-# ⚠ 函式 sub_1C775; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C775; [proven] 兵力 word 右移兩次，取 AL 後以 byte 上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ch, 0x7c
 .org 0xc97d
 # IDA 0x1c77d; file 0xc97d; locator=proven; cmp     cl, ch
-# ⚠ 函式 sub_1C775; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C775; [proven] 兵力 word 右移兩次，取 AL 後以 byte 上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} cmp cl, ch
 .org 0xc97f
 # IDA 0x1c77f; file 0xc97f; locator=proven; jbe     short loc_1C783
-# ⚠ 函式 sub_1C775; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C775; [proven] 兵力 word 右移兩次，取 AL 後以 byte 上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jbe .+4
 .org 0xc981
 # IDA 0x1c781; file 0xc981; locator=proven; mov     cl, ch
-# ⚠ 函式 sub_1C775; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C775; [proven] 兵力 word 右移兩次，取 AL 後以 byte 上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov cl, ch
 .org 0xc983
 loc_1C783:
 # IDA 0x1c783; file 0xc983; locator=proven; mov     ah, 0Ch
-# ⚠ 函式 sub_1C775; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C775; [proven] 兵力 word 右移兩次，取 AL 後以 byte 上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ah, 0xc
 .org 0xc985
 # IDA 0x1c785; file 0xc985; locator=proven; mov     al, 0
-# ⚠ 函式 sub_1C775; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C775; [proven] 兵力 word 右移兩次，取 AL 後以 byte 上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov al, 0x0
 .org 0xc987
 # IDA 0x1c787; file 0xc987; locator=proven; mov     dx, 1F2h
-# ⚠ 函式 sub_1C775; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C775; [proven] 兵力 word 右移兩次，取 AL 後以 byte 上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov dx, 0x1f2
 .org 0xc98a
 # IDA 0x1c78a; file 0xc98a; locator=proven; call    sub_10AAA
-# ⚠ 函式 sub_1C775; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C775; [proven] 兵力 word 右移兩次，取 AL 後以 byte 上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .+17184
 .org 0xc98d
 # IDA 0x1c78d; file 0xc98d; locator=proven; retn
-# ⚠ 函式 sub_1C775; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C775; [proven] 兵力 word 右移兩次，取 AL 後以 byte 上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 ret
 .org 0xc98e
 sub_1C78E:
 # IDA 0x1c78e; file 0xc98e; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1C78E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C78E; [proven] 體力先右移一次，再加第二次右移，取 CL 後上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shr ax, 0x1
 .org 0xc990
 # IDA 0x1c790; file 0xc990; locator=proven; mov     cx, ax
-# ⚠ 函式 sub_1C78E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C78E; [proven] 體力先右移一次，再加第二次右移，取 CL 後上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov cx, ax
 .org 0xc992
 # IDA 0x1c792; file 0xc992; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1C78E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C78E; [proven] 體力先右移一次，再加第二次右移，取 CL 後上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shr ax, 0x1
 .org 0xc994
 # IDA 0x1c794; file 0xc994; locator=proven; add     cx, ax
-# ⚠ 函式 sub_1C78E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C78E; [proven] 體力先右移一次，再加第二次右移，取 CL 後上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} add cx, ax
 .org 0xc996
 # IDA 0x1c796; file 0xc996; locator=proven; mov     ch, 7Ch
-# ⚠ 函式 sub_1C78E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C78E; [proven] 體力先右移一次，再加第二次右移，取 CL 後上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ch, 0x7c
 .org 0xc998
 # IDA 0x1c798; file 0xc998; locator=proven; cmp     cl, ch
-# ⚠ 函式 sub_1C78E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C78E; [proven] 體力先右移一次，再加第二次右移，取 CL 後上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} cmp cl, ch
 .org 0xc99a
 # IDA 0x1c79a; file 0xc99a; locator=proven; jbe     short loc_1C79E
-# ⚠ 函式 sub_1C78E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C78E; [proven] 體力先右移一次，再加第二次右移，取 CL 後上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jbe .+4
 .org 0xc99c
 # IDA 0x1c79c; file 0xc99c; locator=proven; mov     cl, ch
-# ⚠ 函式 sub_1C78E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C78E; [proven] 體力先右移一次，再加第二次右移，取 CL 後上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov cl, ch
 .org 0xc99e
 loc_1C79E:
 # IDA 0x1c79e; file 0xc99e; locator=proven; mov     ah, 0Bh
-# ⚠ 函式 sub_1C78E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C78E; [proven] 體力先右移一次，再加第二次右移，取 CL 後上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ah, 0xb
 .org 0xc9a0
 # IDA 0x1c7a0; file 0xc9a0; locator=proven; mov     al, 0
-# ⚠ 函式 sub_1C78E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C78E; [proven] 體力先右移一次，再加第二次右移，取 CL 後上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov al, 0x0
 .org 0xc9a2
 # IDA 0x1c7a2; file 0xc9a2; locator=proven; mov     dx, 1F2h
-# ⚠ 函式 sub_1C78E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C78E; [proven] 體力先右移一次，再加第二次右移，取 CL 後上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov dx, 0x1f2
 .org 0xc9a5
 # IDA 0x1c7a5; file 0xc9a5; locator=proven; call    sub_10AAA
-# ⚠ 函式 sub_1C78E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C78E; [proven] 體力先右移一次，再加第二次右移，取 CL 後上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .+17157
 .org 0xc9a8
 # IDA 0x1c7a8; file 0xc9a8; locator=proven; retn
-# ⚠ 函式 sub_1C78E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1C78E; [proven] 體力先右移一次，再加第二次右移，取 CL 後上限 124; 出處: docs/re/106-c-rectangle-bars-restoration.md
 ret
 .org 0xc9a9
 sub_1C7A9:
@@ -91380,6 +91380,46 @@ pop ds
 # IDA 0x1ea0c; file 0xec0c; locator=proven; retn
 # ⚠ 函式 sub_1E9C1; [unknown] 未附加語意; 出處: 無
 ret
+.org 0xec26
+# IDA 0x1ea26; file 0xec26; locator=proven; mov ah, byte ptr [si+0xa]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 2; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/106-c-rectangle-bars-restoration.md
+mov ah, byte ptr [si+0xa]
+.org 0xec29
+# IDA 0x1ea29; file 0xec29; locator=proven; call .+167
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 2; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/106-c-rectangle-bars-restoration.md
+call .+167
+.org 0xec2c
+# IDA 0x1ea2c; file 0xec2c; locator=proven; call .+1524
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 2; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/106-c-rectangle-bars-restoration.md
+call .+1524
+.org 0xec2f
+# IDA 0x1ea2f; file 0xec2f; locator=proven; ret
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 2; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/106-c-rectangle-bars-restoration.md
+ret
+.org 0xec30
+# IDA 0x1ea30; file 0xec30; locator=proven; mov ah, byte ptr [si+0xa]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 3; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/106-c-rectangle-bars-restoration.md
+mov ah, byte ptr [si+0xa]
+.org 0xec33
+# IDA 0x1ea33; file 0xec33; locator=proven; call .+157
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 3; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/106-c-rectangle-bars-restoration.md
+call .+157
+.org 0xec36
+# IDA 0x1ea36; file 0xec36; locator=proven; call .+1901
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 3; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/106-c-rectangle-bars-restoration.md
+call .+1901
+.org 0xec39
+# IDA 0x1ea39; file 0xec39; locator=proven; ret
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# [proven] opcode 3; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/106-c-rectangle-bars-restoration.md
+ret
 .org 0xed11
 sub_1EB11:
 # IDA 0x1eb11; file 0xed11; locator=proven; push    cx
@@ -92465,1171 +92505,1171 @@ ret
 .org 0xf220
 sub_1F020:
 # IDA 0x1f020; file 0xf220; locator=proven; push    ds
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push ds
 .org 0xf221
 # IDA 0x1f021; file 0xf221; locator=proven; push    es
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push es
 .org 0xf222
 # IDA 0x1f022; file 0xf222; locator=proven; push    cx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push cx
 .org 0xf223
 # IDA 0x1f023; file 0xf223; locator=proven; push    bp
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push bp
 .org 0xf224
 # IDA 0x1f024; file 0xf224; locator=proven; cld
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cld
 .org 0xf225
 # IDA 0x1f025; file 0xf225; locator=proven; mov     cs:byte_1F1A2, 0
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cs; mov byte ptr [0xf1a2], 0x0
 .org 0xf22b
 # IDA 0x1f02b; file 0xf22b; locator=proven; cmp     si, dx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} cmp si, dx
 .org 0xf22d
 # IDA 0x1f02d; file 0xf22d; locator=proven; jge     short loc_1F031
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jge .+4
 .org 0xf22f
 # IDA 0x1f02f; file 0xf22f; locator=proven; xchg    si, dx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xchg si, dx
 .org 0xf231
 loc_1F031:
 # IDA 0x1f031; file 0xf231; locator=proven; cmp     dx, 280h
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp dx, 0x280
 .org 0xf235
 # IDA 0x1f035; file 0xf235; locator=proven; jge     short loc_1F04D
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jge .+24
 .org 0xf237
 # IDA 0x1f037; file 0xf237; locator=proven; cmp     si, 0
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp si, 0x0
 .org 0xf23a
 # IDA 0x1f03a; file 0xf23a; locator=proven; jl      short loc_1F04D
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jl .+19
 .org 0xf23c
 # IDA 0x1f03c; file 0xf23c; locator=proven; cmp     di, bx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} cmp di, bx
 .org 0xf23e
 # IDA 0x1f03e; file 0xf23e; locator=proven; jge     short loc_1F042
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jge .+4
 .org 0xf240
 # IDA 0x1f040; file 0xf240; locator=proven; xchg    di, bx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xchg di, bx
 .org 0xf242
 loc_1F042:
 # IDA 0x1f042; file 0xf242; locator=proven; cmp     bx, 190h
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp bx, 0x190
 .org 0xf246
 # IDA 0x1f046; file 0xf246; locator=proven; jge     short loc_1F04D
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jge .+7
 .org 0xf248
 # IDA 0x1f048; file 0xf248; locator=proven; cmp     di, 0
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp di, 0x0
 .org 0xf24b
 # IDA 0x1f04b; file 0xf24b; locator=proven; jge     short loc_1F050
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jge .+5
 .org 0xf24d
 loc_1F04D:
 # IDA 0x1f04d; file 0xf24d; locator=proven; jmp     loc_1F13B
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {disp16} jmp .+238
 .org 0xf250
 loc_1F050:
 # IDA 0x1f050; file 0xf250; locator=proven; cmp     dx, 0
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp dx, 0x0
 .org 0xf253
 # IDA 0x1f053; file 0xf253; locator=proven; jge     short loc_1F05D
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jge .+10
 .org 0xf255
 # IDA 0x1f055; file 0xf255; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xor dx, dx
 .org 0xf257
 # IDA 0x1f057; file 0xf257; locator=proven; or      cs:byte_1F1A2, 1
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cs; or byte ptr [0xf1a2], 0x1
 .org 0xf25d
 loc_1F05D:
 # IDA 0x1f05d; file 0xf25d; locator=proven; cmp     si, 280h
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp si, 0x280
 .org 0xf261
 # IDA 0x1f061; file 0xf261; locator=proven; jb      short loc_1F06C
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jb .+11
 .org 0xf263
 # IDA 0x1f063; file 0xf263; locator=proven; mov     si, 27Fh
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov si, 0x27f
 .org 0xf266
 # IDA 0x1f066; file 0xf266; locator=proven; or      cs:byte_1F1A2, 2
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cs; or byte ptr [0xf1a2], 0x2
 .org 0xf26c
 loc_1F06C:
 # IDA 0x1f06c; file 0xf26c; locator=proven; sub     si, dx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} sub si, dx
 .org 0xf26e
 # IDA 0x1f06e; file 0xf26e; locator=proven; inc     si
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc si
 .org 0xf26f
 # IDA 0x1f06f; file 0xf26f; locator=proven; cmp     bx, 0
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp bx, 0x0
 .org 0xf272
 # IDA 0x1f072; file 0xf272; locator=proven; jge     short loc_1F07C
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jge .+10
 .org 0xf274
 # IDA 0x1f074; file 0xf274; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xor bx, bx
 .org 0xf276
 # IDA 0x1f076; file 0xf276; locator=proven; or      cs:byte_1F1A2, 4
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cs; or byte ptr [0xf1a2], 0x4
 .org 0xf27c
 loc_1F07C:
 # IDA 0x1f07c; file 0xf27c; locator=proven; cmp     di, 190h
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp di, 0x190
 .org 0xf280
 # IDA 0x1f080; file 0xf280; locator=proven; jb      short loc_1F08B
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jb .+11
 .org 0xf282
 # IDA 0x1f082; file 0xf282; locator=proven; mov     di, 18Fh
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov di, 0x18f
 .org 0xf285
 # IDA 0x1f085; file 0xf285; locator=proven; or      cs:byte_1F1A2, 8
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cs; or byte ptr [0xf1a2], 0x8
 .org 0xf28b
 loc_1F08B:
 # IDA 0x1f08b; file 0xf28b; locator=proven; sub     di, bx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} sub di, bx
 .org 0xf28d
 # IDA 0x1f08d; file 0xf28d; locator=proven; inc     di
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc di
 .org 0xf28e
 # IDA 0x1f08e; file 0xf28e; locator=proven; mov     bp, di
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov bp, di
 .org 0xf290
 # IDA 0x1f090; file 0xf290; locator=proven; shl     bx, 4
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl bx, 0x4
 .org 0xf293
 # IDA 0x1f093; file 0xf293; locator=proven; mov     di, bx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov di, bx
 .org 0xf295
 # IDA 0x1f095; file 0xf295; locator=proven; shl     bx, 2
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl bx, 0x2
 .org 0xf298
 # IDA 0x1f098; file 0xf298; locator=proven; add     di, bx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} add di, bx
 .org 0xf29a
 # IDA 0x1f09a; file 0xf29a; locator=proven; xor     ch, ch
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xor ch, ch
 .org 0xf29c
 # IDA 0x1f09c; file 0xf29c; locator=proven; mov     cl, dl
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov cl, dl
 .org 0xf29e
 # IDA 0x1f09e; file 0xf29e; locator=proven; shr     dx, 3
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shr dx, 0x3
 .org 0xf2a1
 # IDA 0x1f0a1; file 0xf2a1; locator=proven; add     di, dx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} add di, dx
 .org 0xf2a3
 # IDA 0x1f0a3; file 0xf2a3; locator=proven; and     cl, 7
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 and cl, 0x7
 .org 0xf2a6
 # IDA 0x1f0a6; file 0xf2a6; locator=proven; add     si, cx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} add si, cx
 .org 0xf2a8
 # IDA 0x1f0a8; file 0xf2a8; locator=proven; mov     dx, 0FFFFh
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov dx, 0xffff
 .org 0xf2ab
 # IDA 0x1f0ab; file 0xf2ab; locator=proven; mov     bx, 8080h
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov bx, 0x8080
 .org 0xf2ae
 # IDA 0x1f0ae; file 0xf2ae; locator=proven; shr     dl, cl
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shr dl, cl
 .org 0xf2b0
 # IDA 0x1f0b0; file 0xf2b0; locator=proven; shr     bl, cl
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shr bl, cl
 .org 0xf2b2
 # IDA 0x1f0b2; file 0xf2b2; locator=proven; mov     cx, si
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov cx, si
 .org 0xf2b4
 # IDA 0x1f0b4; file 0xf2b4; locator=proven; and     cl, 7
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 and cl, 0x7
 .org 0xf2b7
 # IDA 0x1f0b7; file 0xf2b7; locator=proven; jz      short loc_1F0BD
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jz .+6
 .org 0xf2b9
 # IDA 0x1f0b9; file 0xf2b9; locator=proven; shr     dh, cl
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shr dh, cl
 .org 0xf2bb
 # IDA 0x1f0bb; file 0xf2bb; locator=proven; not     dh
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 not dh
 .org 0xf2bd
 loc_1F0BD:
 # IDA 0x1f0bd; file 0xf2bd; locator=proven; dec     cl
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 dec cl
 .org 0xf2bf
 # IDA 0x1f0bf; file 0xf2bf; locator=proven; and     cl, 7
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 and cl, 0x7
 .org 0xf2c2
 # IDA 0x1f0c2; file 0xf2c2; locator=proven; shr     bh, cl
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shr bh, cl
 .org 0xf2c4
 # IDA 0x1f0c4; file 0xf2c4; locator=proven; cmp     si, 8
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp si, 0x8
 .org 0xf2c7
 # IDA 0x1f0c7; file 0xf2c7; locator=proven; ja      short loc_1F0D5
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 ja .+14
 .org 0xf2c9
 # IDA 0x1f0c9; file 0xf2c9; locator=proven; and     dl, dh
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} and dl, dh
 .org 0xf2cb
 # IDA 0x1f0cb; file 0xf2cb; locator=proven; test    cs:byte_1F1A2, 2
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cs; test byte ptr [0xf1a2], 0x2
 .org 0xf2d1
 # IDA 0x1f0d1; file 0xf2d1; locator=proven; jnz     short loc_1F0D5
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jnz .+4
 .org 0xf2d3
 # IDA 0x1f0d3; file 0xf2d3; locator=proven; or      bl, bh
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} or bl, bh
 .org 0xf2d5
 loc_1F0D5:
 # IDA 0x1f0d5; file 0xf2d5; locator=proven; mov     cx, dx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov cx, dx
 .org 0xf2d7
 # IDA 0x1f0d7; file 0xf2d7; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov dx, 0x3ce
 .org 0xf2da
 # IDA 0x1f0da; file 0xf2da; locator=proven; mov     al, 5
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov al, 0x5
 .org 0xf2dc
 # IDA 0x1f0dc; file 0xf2dc; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, al
 .org 0xf2dd
 # IDA 0x1f0dd; file 0xf2dd; locator=proven; inc     dx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc dx
 .org 0xf2de
 # IDA 0x1f0de; file 0xf2de; locator=proven; mov     al, 3
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov al, 0x3
 .org 0xf2e0
 # IDA 0x1f0e0; file 0xf2e0; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, al
 .org 0xf2e1
 # IDA 0x1f0e1; file 0xf2e1; locator=proven; dec     dx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 dec dx
 .org 0xf2e2
 # IDA 0x1f0e2; file 0xf2e2; locator=proven; xor     al, al
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xor al, al
 .org 0xf2e4
 # IDA 0x1f0e4; file 0xf2e4; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, al
 .org 0xf2e5
 # IDA 0x1f0e5; file 0xf2e5; locator=proven; inc     dx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc dx
 .org 0xf2e6
 # IDA 0x1f0e6; file 0xf2e6; locator=proven; mov     al, ah
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov al, ah
 .org 0xf2e8
 # IDA 0x1f0e8; file 0xf2e8; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, al
 .org 0xf2e9
 # IDA 0x1f0e9; file 0xf2e9; locator=proven; dec     dx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 dec dx
 .org 0xf2ea
 # IDA 0x1f0ea; file 0xf2ea; locator=proven; mov     al, 3
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov al, 0x3
 .org 0xf2ec
 # IDA 0x1f0ec; file 0xf2ec; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, al
 .org 0xf2ed
 # IDA 0x1f0ed; file 0xf2ed; locator=proven; inc     dx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc dx
 .org 0xf2ee
 # IDA 0x1f0ee; file 0xf2ee; locator=proven; xor     al, al
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xor al, al
 .org 0xf2f0
 # IDA 0x1f0f0; file 0xf2f0; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, al
 .org 0xf2f1
 # IDA 0x1f0f1; file 0xf2f1; locator=proven; dec     dx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 dec dx
 .org 0xf2f2
 # IDA 0x1f0f2; file 0xf2f2; locator=proven; mov     al, 8
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov al, 0x8
 .org 0xf2f4
 # IDA 0x1f0f4; file 0xf2f4; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, al
 .org 0xf2f5
 # IDA 0x1f0f5; file 0xf2f5; locator=proven; inc     dx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc dx
 .org 0xf2f6
 # IDA 0x1f0f6; file 0xf2f6; locator=proven; mov     al, 0FFh
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov al, 0xff
 .org 0xf2f8
 # IDA 0x1f0f8; file 0xf2f8; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, al
 .org 0xf2f9
 # IDA 0x1f0f9; file 0xf2f9; locator=proven; mov     dx, cx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov dx, cx
 .org 0xf2fb
 # IDA 0x1f0fb; file 0xf2fb; locator=proven; mov     ax, 0A0C8h
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ax, 0xa0c8
 .org 0xf2fe
 # IDA 0x1f0fe; file 0xf2fe; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ds, ax
 .org 0xf300
 # IDA 0x1f100; file 0xf300; locator=proven; mov     es, ax
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov es, ax
 .org 0xf302
 # IDA 0x1f102; file 0xf302; locator=proven; mov     ax, si
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov ax, si
 .org 0xf304
 # IDA 0x1f104; file 0xf304; locator=proven; shr     ax, 3
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shr ax, 0x3
 .org 0xf307
 # IDA 0x1f107; file 0xf307; locator=proven; mov     ah, cs:byte_1F1A2
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cs; mov ah, byte ptr [0xf1a2]
 .org 0xf30c
 # IDA 0x1f10c; file 0xf30c; locator=proven; test    ah, 4
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 test ah, 0x4
 .org 0xf30f
 # IDA 0x1f10f; file 0xf30f; locator=proven; jnz     short loc_1F11A
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jnz .+11
 .org 0xf311
 # IDA 0x1f111; file 0xf311; locator=proven; call    sub_1F17B
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .+106
 .org 0xf314
 # IDA 0x1f114; file 0xf314; locator=proven; add     di, 50h
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 add di, 0x50
 .org 0xf317
 # IDA 0x1f117; file 0xf317; locator=proven; dec     bp
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 dec bp
 .org 0xf318
 # IDA 0x1f118; file 0xf318; locator=proven; jz      short loc_1F13B
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jz .+35
 .org 0xf31a
 loc_1F11A:
 # IDA 0x1f11a; file 0xf31a; locator=proven; cmp     bp, 1
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp bp, 0x1
 .org 0xf31d
 # IDA 0x1f11d; file 0xf31d; locator=proven; jz      short loc_1F133
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jz .+22
 .org 0xf31f
 # IDA 0x1f11f; file 0xf31f; locator=proven; test    ah, 8
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 test ah, 0x8
 .org 0xf322
 # IDA 0x1f122; file 0xf322; locator=proven; jz      short loc_1F125
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jz .+3
 .org 0xf324
 # IDA 0x1f124; file 0xf324; locator=proven; inc     bp
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc bp
 .org 0xf325
 loc_1F125:
 # IDA 0x1f125; file 0xf325; locator=proven; call    sub_1F140
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .+27
 .org 0xf328
 # IDA 0x1f128; file 0xf328; locator=proven; dec     bp
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 dec bp
 .org 0xf329
 # IDA 0x1f129; file 0xf329; locator=proven; shl     bp, 4
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl bp, 0x4
 .org 0xf32c
 # IDA 0x1f12c; file 0xf32c; locator=proven; add     di, bp
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} add di, bp
 .org 0xf32e
 # IDA 0x1f12e; file 0xf32e; locator=proven; shl     bp, 2
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl bp, 0x2
 .org 0xf331
 # IDA 0x1f131; file 0xf331; locator=proven; add     di, bp
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} add di, bp
 .org 0xf333
 loc_1F133:
 # IDA 0x1f133; file 0xf333; locator=proven; test    ah, 8
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 test ah, 0x8
 .org 0xf336
 # IDA 0x1f136; file 0xf336; locator=proven; jnz     short loc_1F13B
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jnz .+5
 .org 0xf338
 # IDA 0x1f138; file 0xf338; locator=proven; call    sub_1F17B
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 call .+67
 .org 0xf33b
 loc_1F13B:
 # IDA 0x1f13b; file 0xf33b; locator=proven; pop     bp
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop bp
 .org 0xf33c
 # IDA 0x1f13c; file 0xf33c; locator=proven; pop     cx
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop cx
 .org 0xf33d
 # IDA 0x1f13d; file 0xf33d; locator=proven; pop     es
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop es
 .org 0xf33e
 # IDA 0x1f13e; file 0xf33e; locator=proven; pop     ds
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop ds
 .org 0xf33f
 # IDA 0x1f13f; file 0xf33f; locator=proven; retn
-# ⚠ 函式 sub_1F020; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F020; [proven] 有號端點排序、640×400 裁切、四個 clip bits 與矩形描框; 出處: docs/re/106-c-rectangle-bars-restoration.md
 ret
 .org 0xf340
 sub_1F140:
 # IDA 0x1f140; file 0xf340; locator=proven; push    dx
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push dx
 .org 0xf341
 # IDA 0x1f141; file 0xf341; locator=proven; test    ah, 1
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 test ah, 0x1
 .org 0xf344
 # IDA 0x1f144; file 0xf344; locator=proven; jnz     short loc_1F159
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jnz .+21
 .org 0xf346
 # IDA 0x1f146; file 0xf346; locator=proven; mov     cx, bp
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov cx, bp
 .org 0xf348
 # IDA 0x1f148; file 0xf348; locator=proven; dec     cx
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 dec cx
 .org 0xf349
 # IDA 0x1f149; file 0xf349; locator=proven; push    di
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push di
 .org 0xf34a
 loc_1F14A:
 # IDA 0x1f14a; file 0xf34a; locator=proven; mov     dl, [di]
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov dl, byte ptr [di]
 .org 0xf34c
 # IDA 0x1f14c; file 0xf34c; locator=proven; mov     [di], bl
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov byte ptr [di], bl
 .org 0xf34e
 # IDA 0x1f14e; file 0xf34e; locator=proven; add     di, 50h
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 add di, 0x50
 .org 0xf351
 # IDA 0x1f151; file 0xf351; locator=proven; loop    loc_1F14A
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 loop .-7
 .org 0xf353
 # IDA 0x1f153; file 0xf353; locator=proven; pop     di
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop di
 .org 0xf354
 # IDA 0x1f154; file 0xf354; locator=proven; cmp     si, 8
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp si, 0x8
 .org 0xf357
 # IDA 0x1f157; file 0xf357; locator=proven; jbe     short loc_1F179
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jbe .+34
 .org 0xf359
 loc_1F159:
 # IDA 0x1f159; file 0xf359; locator=proven; test    ah, 2
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 test ah, 0x2
 .org 0xf35c
 # IDA 0x1f15c; file 0xf35c; locator=proven; jnz     short loc_1F179
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jnz .+29
 .org 0xf35e
 # IDA 0x1f15e; file 0xf35e; locator=proven; push    di
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push di
 .org 0xf35f
 # IDA 0x1f15f; file 0xf35f; locator=proven; mov     cl, al
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov cl, al
 .org 0xf361
 # IDA 0x1f161; file 0xf361; locator=proven; xor     ch, ch
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xor ch, ch
 .org 0xf363
 # IDA 0x1f163; file 0xf363; locator=proven; test    si, 7
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 test si, 0x7
 .org 0xf367
 # IDA 0x1f167; file 0xf367; locator=proven; jnz     short loc_1F16A
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jnz .+3
 .org 0xf369
 # IDA 0x1f169; file 0xf369; locator=proven; dec     cx
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 dec cx
 .org 0xf36a
 loc_1F16A:
 # IDA 0x1f16a; file 0xf36a; locator=proven; add     di, cx
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} add di, cx
 .org 0xf36c
 # IDA 0x1f16c; file 0xf36c; locator=proven; mov     cx, bp
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov cx, bp
 .org 0xf36e
 # IDA 0x1f16e; file 0xf36e; locator=proven; dec     cx
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 dec cx
 .org 0xf36f
 loc_1F16F:
 # IDA 0x1f16f; file 0xf36f; locator=proven; mov     dl, [di]
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov dl, byte ptr [di]
 .org 0xf371
 # IDA 0x1f171; file 0xf371; locator=proven; mov     [di], bh
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov byte ptr [di], bh
 .org 0xf373
 # IDA 0x1f173; file 0xf373; locator=proven; add     di, 50h
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 add di, 0x50
 .org 0xf376
 # IDA 0x1f176; file 0xf376; locator=proven; loop    loc_1F16F
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 loop .-7
 .org 0xf378
 # IDA 0x1f178; file 0xf378; locator=proven; pop     di
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop di
 .org 0xf379
 loc_1F179:
 # IDA 0x1f179; file 0xf379; locator=proven; pop     dx
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop dx
 .org 0xf37a
 # IDA 0x1f17a; file 0xf37a; locator=proven; retn
-# ⚠ 函式 sub_1F140; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F140; [proven] 依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper; 出處: docs/re/106-c-rectangle-bars-restoration.md
 ret
 .org 0xf37b
 sub_1F17B:
 # IDA 0x1f17b; file 0xf37b; locator=proven; push    ax
-# ⚠ 函式 sub_1F17B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F17B; [proven] 首／中／尾 byte 的水平邊，REP STOSB 與 dummy latch read; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push ax
 .org 0xf37c
 # IDA 0x1f17c; file 0xf37c; locator=proven; push    di
-# ⚠ 函式 sub_1F17B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F17B; [proven] 首／中／尾 byte 的水平邊，REP STOSB 與 dummy latch read; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push di
 .org 0xf37d
 # IDA 0x1f17d; file 0xf37d; locator=proven; mov     cl, al
-# ⚠ 函式 sub_1F17B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F17B; [proven] 首／中／尾 byte 的水平邊，REP STOSB 與 dummy latch read; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov cl, al
 .org 0xf37f
 # IDA 0x1f17f; file 0xf37f; locator=proven; xor     ch, ch
-# ⚠ 函式 sub_1F17B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F17B; [proven] 首／中／尾 byte 的水平邊，REP STOSB 與 dummy latch read; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xor ch, ch
 .org 0xf381
 # IDA 0x1f181; file 0xf381; locator=proven; mov     al, [di]
-# ⚠ 函式 sub_1F17B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F17B; [proven] 首／中／尾 byte 的水平邊，REP STOSB 與 dummy latch read; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov al, byte ptr [di]
 .org 0xf383
 # IDA 0x1f183; file 0xf383; locator=proven; mov     [di], dl
-# ⚠ 函式 sub_1F17B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F17B; [proven] 首／中／尾 byte 的水平邊，REP STOSB 與 dummy latch read; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov byte ptr [di], dl
 .org 0xf385
 # IDA 0x1f185; file 0xf385; locator=proven; inc     di
-# ⚠ 函式 sub_1F17B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F17B; [proven] 首／中／尾 byte 的水平邊，REP STOSB 與 dummy latch read; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc di
 .org 0xf386
 # IDA 0x1f186; file 0xf386; locator=proven; dec     cx
-# ⚠ 函式 sub_1F17B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F17B; [proven] 首／中／尾 byte 的水平邊，REP STOSB 與 dummy latch read; 出處: docs/re/106-c-rectangle-bars-restoration.md
 dec cx
 .org 0xf387
 # IDA 0x1f187; file 0xf387; locator=proven; cmp     si, 8
-# ⚠ 函式 sub_1F17B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F17B; [proven] 首／中／尾 byte 的水平邊，REP STOSB 與 dummy latch read; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp si, 0x8
 .org 0xf38a
 # IDA 0x1f18a; file 0xf38a; locator=proven; jbe     short loc_1F19F
-# ⚠ 函式 sub_1F17B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F17B; [proven] 首／中／尾 byte 的水平邊，REP STOSB 與 dummy latch read; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jbe .+21
 .org 0xf38c
 # IDA 0x1f18c; file 0xf38c; locator=proven; cmp     si, 10h
-# ⚠ 函式 sub_1F17B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F17B; [proven] 首／中／尾 byte 的水平邊，REP STOSB 與 dummy latch read; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp si, 0x10
 .org 0xf38f
 # IDA 0x1f18f; file 0xf38f; locator=proven; jbe     short loc_1F19B
-# ⚠ 函式 sub_1F17B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F17B; [proven] 首／中／尾 byte 的水平邊，REP STOSB 與 dummy latch read; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jbe .+12
 .org 0xf391
 # IDA 0x1f191; file 0xf391; locator=proven; mov     al, 0FFh
-# ⚠ 函式 sub_1F17B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F17B; [proven] 首／中／尾 byte 的水平邊，REP STOSB 與 dummy latch read; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov al, 0xff
 .org 0xf393
 # IDA 0x1f193; file 0xf393; locator=proven; rep stosb
-# ⚠ 函式 sub_1F17B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F17B; [proven] 首／中／尾 byte 的水平邊，REP STOSB 與 dummy latch read; 出處: docs/re/106-c-rectangle-bars-restoration.md
 rep; stosb
 .org 0xf395
 # IDA 0x1f195; file 0xf395; locator=proven; test    si, 7
-# ⚠ 函式 sub_1F17B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F17B; [proven] 首／中／尾 byte 的水平邊，REP STOSB 與 dummy latch read; 出處: docs/re/106-c-rectangle-bars-restoration.md
 test si, 0x7
 .org 0xf399
 # IDA 0x1f199; file 0xf399; locator=proven; jz      short loc_1F19F
-# ⚠ 函式 sub_1F17B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F17B; [proven] 首／中／尾 byte 的水平邊，REP STOSB 與 dummy latch read; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jz .+6
 .org 0xf39b
 loc_1F19B:
 # IDA 0x1f19b; file 0xf39b; locator=proven; mov     al, [di]
-# ⚠ 函式 sub_1F17B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F17B; [proven] 首／中／尾 byte 的水平邊，REP STOSB 與 dummy latch read; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov al, byte ptr [di]
 .org 0xf39d
 # IDA 0x1f19d; file 0xf39d; locator=proven; mov     [di], dh
-# ⚠ 函式 sub_1F17B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F17B; [proven] 首／中／尾 byte 的水平邊，REP STOSB 與 dummy latch read; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov byte ptr [di], dh
 .org 0xf39f
 loc_1F19F:
 # IDA 0x1f19f; file 0xf39f; locator=proven; pop     di
-# ⚠ 函式 sub_1F17B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F17B; [proven] 首／中／尾 byte 的水平邊，REP STOSB 與 dummy latch read; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop di
 .org 0xf3a0
 # IDA 0x1f1a0; file 0xf3a0; locator=proven; pop     ax
-# ⚠ 函式 sub_1F17B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F17B; [proven] 首／中／尾 byte 的水平邊，REP STOSB 與 dummy latch read; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop ax
 .org 0xf3a1
 # IDA 0x1f1a1; file 0xf3a1; locator=proven; retn
-# ⚠ 函式 sub_1F17B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F17B; [proven] 首／中／尾 byte 的水平邊，REP STOSB 與 dummy latch read; 出處: docs/re/106-c-rectangle-bars-restoration.md
 ret
 .org 0xf3a3
 sub_1F1A3:
 # IDA 0x1f1a3; file 0xf3a3; locator=proven; cmp     dx, si
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} cmp dx, si
 .org 0xf3a5
 # IDA 0x1f1a5; file 0xf3a5; locator=proven; jle     short loc_1F1A9
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jle .+4
 .org 0xf3a7
 # IDA 0x1f1a7; file 0xf3a7; locator=proven; xchg    dx, si
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xchg dx, si
 .org 0xf3a9
 loc_1F1A9:
 # IDA 0x1f1a9; file 0xf3a9; locator=proven; cmp     bx, di
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} cmp bx, di
 .org 0xf3ab
 # IDA 0x1f1ab; file 0xf3ab; locator=proven; jle     short loc_1F1AF
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jle .+4
 .org 0xf3ad
 # IDA 0x1f1ad; file 0xf3ad; locator=proven; xchg    bx, di
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xchg bx, di
 .org 0xf3af
 loc_1F1AF:
 # IDA 0x1f1af; file 0xf3af; locator=proven; cmp     dx, 0
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp dx, 0x0
 .org 0xf3b2
 # IDA 0x1f1b2; file 0xf3b2; locator=proven; jge     short loc_1F1BB
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jge .+9
 .org 0xf3b4
 # IDA 0x1f1b4; file 0xf3b4; locator=proven; cmp     si, 0
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp si, 0x0
 .org 0xf3b7
 # IDA 0x1f1b7; file 0xf3b7; locator=proven; jl      short loc_1F1E7
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jl .+48
 .org 0xf3b9
 # IDA 0x1f1b9; file 0xf3b9; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xor dx, dx
 .org 0xf3bb
 loc_1F1BB:
 # IDA 0x1f1bb; file 0xf3bb; locator=proven; cmp     bx, 0
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp bx, 0x0
 .org 0xf3be
 # IDA 0x1f1be; file 0xf3be; locator=proven; jge     short loc_1F1C7
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jge .+9
 .org 0xf3c0
 # IDA 0x1f1c0; file 0xf3c0; locator=proven; cmp     di, 0
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp di, 0x0
 .org 0xf3c3
 # IDA 0x1f1c3; file 0xf3c3; locator=proven; jl      short loc_1F1E7
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jl .+36
 .org 0xf3c5
 # IDA 0x1f1c5; file 0xf3c5; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xor bx, bx
 .org 0xf3c7
 loc_1F1C7:
 # IDA 0x1f1c7; file 0xf3c7; locator=proven; cmp     si, 280h
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp si, 0x280
 .org 0xf3cb
 # IDA 0x1f1cb; file 0xf3cb; locator=proven; jl      short loc_1F1D6
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jl .+11
 .org 0xf3cd
 # IDA 0x1f1cd; file 0xf3cd; locator=proven; cmp     dx, 280h
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp dx, 0x280
 .org 0xf3d1
 # IDA 0x1f1d1; file 0xf3d1; locator=proven; jge     short loc_1F1E7
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jge .+22
 .org 0xf3d3
 # IDA 0x1f1d3; file 0xf3d3; locator=proven; mov     si, 27Fh
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov si, 0x27f
 .org 0xf3d6
 loc_1F1D6:
 # IDA 0x1f1d6; file 0xf3d6; locator=proven; cmp     di, 190h
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp di, 0x190
 .org 0xf3da
 # IDA 0x1f1da; file 0xf3da; locator=proven; jl      short loc_1F1EA
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jl .+16
 .org 0xf3dc
 # IDA 0x1f1dc; file 0xf3dc; locator=proven; cmp     bx, 190h
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp bx, 0x190
 .org 0xf3e0
 # IDA 0x1f1e0; file 0xf3e0; locator=proven; jge     short loc_1F1E7
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jge .+7
 .org 0xf3e2
 # IDA 0x1f1e2; file 0xf3e2; locator=proven; mov     di, 18Fh
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov di, 0x18f
 .org 0xf3e5
 # IDA 0x1f1e5; file 0xf3e5; locator=proven; jmp     short loc_1F1EA
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jmp .+5
 .org 0xf3e7
 loc_1F1E7:
 # IDA 0x1f1e7; file 0xf3e7; locator=proven; jmp     locret_1F26D
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {disp16} jmp .+134
 .org 0xf3ea
 loc_1F1EA:
 # IDA 0x1f1ea; file 0xf3ea; locator=proven; push    ds
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push ds
 .org 0xf3eb
 # IDA 0x1f1eb; file 0xf3eb; locator=proven; push    cx
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push cx
 .org 0xf3ec
 # IDA 0x1f1ec; file 0xf3ec; locator=proven; push    bp
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 push bp
 .org 0xf3ed
 # IDA 0x1f1ed; file 0xf3ed; locator=proven; mov     cx, dx
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov cx, dx
 .org 0xf3ef
 # IDA 0x1f1ef; file 0xf3ef; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov dx, 0x3ce
 .org 0xf3f2
 # IDA 0x1f1f2; file 0xf3f2; locator=proven; mov     al, 5
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov al, 0x5
 .org 0xf3f4
 # IDA 0x1f1f4; file 0xf3f4; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, al
 .org 0xf3f5
 # IDA 0x1f1f5; file 0xf3f5; locator=proven; inc     dx
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc dx
 .org 0xf3f6
 # IDA 0x1f1f6; file 0xf3f6; locator=proven; mov     al, 3
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov al, 0x3
 .org 0xf3f8
 # IDA 0x1f1f8; file 0xf3f8; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, al
 .org 0xf3f9
 # IDA 0x1f1f9; file 0xf3f9; locator=proven; dec     dx
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 dec dx
 .org 0xf3fa
 # IDA 0x1f1fa; file 0xf3fa; locator=proven; xor     al, al
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xor al, al
 .org 0xf3fc
 # IDA 0x1f1fc; file 0xf3fc; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, al
 .org 0xf3fd
 # IDA 0x1f1fd; file 0xf3fd; locator=proven; inc     dx
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc dx
 .org 0xf3fe
 # IDA 0x1f1fe; file 0xf3fe; locator=proven; mov     al, ah
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov al, ah
 .org 0xf400
 # IDA 0x1f200; file 0xf400; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, al
 .org 0xf401
 # IDA 0x1f201; file 0xf401; locator=proven; dec     dx
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 dec dx
 .org 0xf402
 # IDA 0x1f202; file 0xf402; locator=proven; mov     al, 3
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov al, 0x3
 .org 0xf404
 # IDA 0x1f204; file 0xf404; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, al
 .org 0xf405
 # IDA 0x1f205; file 0xf405; locator=proven; inc     dx
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc dx
 .org 0xf406
 # IDA 0x1f206; file 0xf406; locator=proven; xor     al, al
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} xor al, al
 .org 0xf408
 # IDA 0x1f208; file 0xf408; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, al
 .org 0xf409
 # IDA 0x1f209; file 0xf409; locator=proven; dec     dx
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 dec dx
 .org 0xf40a
 # IDA 0x1f20a; file 0xf40a; locator=proven; mov     al, 8
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov al, 0x8
 .org 0xf40c
 # IDA 0x1f20c; file 0xf40c; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, al
 .org 0xf40d
 # IDA 0x1f20d; file 0xf40d; locator=proven; inc     dx
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc dx
 .org 0xf40e
 # IDA 0x1f20e; file 0xf40e; locator=proven; mov     al, 0FFh
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov al, 0xff
 .org 0xf410
 # IDA 0x1f210; file 0xf410; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 out dx, al
 .org 0xf411
 # IDA 0x1f211; file 0xf411; locator=proven; mov     dx, cx
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov dx, cx
 .org 0xf413
 # IDA 0x1f213; file 0xf413; locator=proven; mov     ax, 0A0C8h
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ax, 0xa0c8
 .org 0xf416
 # IDA 0x1f216; file 0xf416; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ds, ax
 .org 0xf418
 # IDA 0x1f218; file 0xf418; locator=proven; sub     di, bx
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} sub di, bx
 .org 0xf41a
 # IDA 0x1f21a; file 0xf41a; locator=proven; mov     cx, dx
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov cx, dx
 .org 0xf41c
 # IDA 0x1f21c; file 0xf41c; locator=proven; and     cl, 7
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 and cl, 0x7
 .org 0xf41f
 # IDA 0x1f21f; file 0xf41f; locator=proven; mov     al, 0FFh
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov al, 0xff
 .org 0xf421
 # IDA 0x1f221; file 0xf421; locator=proven; shr     al, cl
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shr al, cl
 .org 0xf423
 # IDA 0x1f223; file 0xf423; locator=proven; mov     cx, si
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov cx, si
 .org 0xf425
 # IDA 0x1f225; file 0xf425; locator=proven; and     cl, 7
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 and cl, 0x7
 .org 0xf428
 # IDA 0x1f228; file 0xf428; locator=proven; mov     ah, 80h
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ah, 0x80
 .org 0xf42a
 # IDA 0x1f22a; file 0xf42a; locator=proven; sar     ah, cl
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 sar ah, cl
 .org 0xf42c
 # IDA 0x1f22c; file 0xf42c; locator=proven; mov     cl, 3
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov cl, 0x3
 .org 0xf42e
 # IDA 0x1f22e; file 0xf42e; locator=proven; shr     dx, cl
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shr dx, cl
 .org 0xf430
 # IDA 0x1f230; file 0xf430; locator=proven; shr     si, cl
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shr si, cl
 .org 0xf432
 # IDA 0x1f232; file 0xf432; locator=proven; sub     si, dx
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} sub si, dx
 .org 0xf434
 # IDA 0x1f234; file 0xf434; locator=proven; mov     cl, 4
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov cl, 0x4
 .org 0xf436
 # IDA 0x1f236; file 0xf436; locator=proven; shl     bx, cl
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl bx, cl
 .org 0xf438
 # IDA 0x1f238; file 0xf438; locator=proven; add     dx, bx
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} add dx, bx
 .org 0xf43a
 # IDA 0x1f23a; file 0xf43a; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl bx, 0x1
 .org 0xf43c
 # IDA 0x1f23c; file 0xf43c; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 shl bx, 0x1
 .org 0xf43e
 # IDA 0x1f23e; file 0xf43e; locator=proven; add     dx, bx
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} add dx, bx
 .org 0xf440
 # IDA 0x1f240; file 0xf440; locator=proven; inc     di
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc di
 .org 0xf441
 # IDA 0x1f241; file 0xf441; locator=proven; mov     bp, dx
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov bp, dx
 .org 0xf443
 loc_1F243:
 # IDA 0x1f243; file 0xf443; locator=proven; mov     bx, bp
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov bx, bp
 .org 0xf445
 # IDA 0x1f245; file 0xf445; locator=proven; mov     cx, si
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} mov cx, si
 .org 0xf447
 # IDA 0x1f247; file 0xf447; locator=proven; cmp     cl, 0
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 cmp cl, 0x0
 .org 0xf44a
 # IDA 0x1f24a; file 0xf44a; locator=proven; jnz     short loc_1F250
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jnz .+6
 .org 0xf44c
 # IDA 0x1f24c; file 0xf44c; locator=proven; and     ah, al
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 {load} and ah, al
 .org 0xf44e
 # IDA 0x1f24e; file 0xf44e; locator=proven; jmp     short loc_1F260
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jmp .+18
 .org 0xf450
 loc_1F250:
 # IDA 0x1f250; file 0xf450; locator=proven; mov     dl, [bx]
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov dl, byte ptr [bx]
 .org 0xf452
 # IDA 0x1f252; file 0xf452; locator=proven; mov     [bx], al
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov byte ptr [bx], al
 .org 0xf454
 # IDA 0x1f254; file 0xf454; locator=proven; inc     bx
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc bx
 .org 0xf455
 # IDA 0x1f255; file 0xf455; locator=proven; mov     ch, 0FFh
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov ch, 0xff
 .org 0xf457
 loc_1F257:
 # IDA 0x1f257; file 0xf457; locator=proven; dec     cl
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 dec cl
 .org 0xf459
 # IDA 0x1f259; file 0xf459; locator=proven; jz      short loc_1F260
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jz .+7
 .org 0xf45b
 # IDA 0x1f25b; file 0xf45b; locator=proven; mov     [bx], ch
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov byte ptr [bx], ch
 .org 0xf45d
 # IDA 0x1f25d; file 0xf45d; locator=proven; inc     bx
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 inc bx
 .org 0xf45e
 # IDA 0x1f25e; file 0xf45e; locator=proven; jmp     short loc_1F257
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jmp .-7
 .org 0xf460
 loc_1F260:
 # IDA 0x1f260; file 0xf460; locator=proven; mov     dl, [bx]
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov dl, byte ptr [bx]
 .org 0xf462
 # IDA 0x1f262; file 0xf462; locator=proven; mov     [bx], ah
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 mov byte ptr [bx], ah
 .org 0xf464
 # IDA 0x1f264; file 0xf464; locator=proven; add     bp, 50h
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 add bp, 0x50
 .org 0xf467
 # IDA 0x1f267; file 0xf467; locator=proven; dec     di
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 dec di
 .org 0xf468
 # IDA 0x1f268; file 0xf468; locator=proven; jnz     short loc_1F243
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 jnz .-37
 .org 0xf46a
 # IDA 0x1f26a; file 0xf46a; locator=proven; pop     bp
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop bp
 .org 0xf46b
 # IDA 0x1f26b; file 0xf46b; locator=proven; pop     cx
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop cx
 .org 0xf46c
 # IDA 0x1f26c; file 0xf46c; locator=proven; pop     ds
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 pop ds
 .org 0xf46d
 locret_1F26D:
 # IDA 0x1f26d; file 0xf46d; locator=proven; retn
-# ⚠ 函式 sub_1F1A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F1A3; [proven] 有號端點排序／裁切與包含端點的實心矩形; 出處: docs/re/106-c-rectangle-bars-restoration.md
 ret
 .org 0xf46e
 # IDA 0x1f26e; file 0xf46e; locator=proven; cld

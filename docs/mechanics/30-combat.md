@@ -323,6 +323,14 @@ remake 照抄（`cmd/wlgame/battle.go` 的 `battleFieldName`）。
 
 下完令選取就清空，六個框全部回到未選狀態。
 
+### 側欄計量的截斷與回繞
+
+原版 `sub_1C775` 的兵力先取 `byte(word >> 2)`；`sub_1C78E` 的大將體力取
+`byte((word >> 1) + (word >> 2))`，最後限制為 124 px。體力 3 的條長是 1，
+兵力 1024 的右移結果取 byte 後為 0。這是原始顯示結果，不改戰鬥規則或存檔。
+等級已證實，限固定 DOS/V raw word；原版／C／Go 各兩種全 word 與 framebuffer 證據見
+[re/106](../re/106-c-rectangle-bars-restoration.md)、[spec/226](../spec/226-sidebar-bar-widths.md)。
+
 ## 3.6 戰術參數（說明書 6.1，PDF p.27–28）
 
 | 參數 | 顯示 | 內容 |

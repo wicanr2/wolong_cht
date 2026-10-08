@@ -41,9 +41,10 @@
 | 2026-10-08；十個熱區／window memory C 函式 | O0/O2 各261,367組原版/C、80組Go數值相同，八個突變拒絕；全部640×400 query、每版2042次完整RAM與binary source-digest通過 | 真實map／query接回數值與財政pixel流；更正glyph導覽與word high-byte公式，VGA／自然UI仍未驗證 | spec/222、[re/103](docs/re/103-c-hotspot-restoration.md)、map／flags／pixel／編譯來源收據 |
 | 2026-10-08；八個VGA blit／保存C函式 | O0/O2各9,942例完整RAM／四plane／GC／seq／latch／I/O相同，八個突變拒絕；310次indexed pixels、八個實際asset與18條三步roundtrip通過 | 使用兩個獨立固定VGA裝置，C不呼叫原版guest算法；debug PNG僅留本機，正常玩家合成／實機時間仍未驗證 | spec/223、[re/104](docs/re/104-c-vga-blit-restoration.md)、完整裝置與source-digest收據 |
 | 2026-10-09；五個位元對齊／六按鈕 C 函式 | O0/O2 各 4,954 組完整 RAM／四 plane／I/O／ABI 相同；683 次內容區像素、36 次原始 hit 消費與十一個錯版拒絕 | 同段來源 word 回繞已修正，六 glyph／重畫／外框走真實 C；FAR 服務明示 fixture，正常戰術流程與 C 機器碼仍未驗證 | spec/224、[re/105](docs/re/105-c-aligned-blit-restoration.md)、來源／完整裝置／反例收據 |
+| 2026-10-09；十六矩形／選取／計量 C 函式；Go 顯示校訂 | O0/O2 各 134,958 全 RAM／plane／ABI 相同，131,072 原版／C／Go 長度、2,441 內容區與十二錯版通過；八條未分類 handler 指令合併後 24,384 條／整檔匹配 | 修正兩次右移／byte 回繞，補第 3 段正確 bank；完整 interpreter／正常玩家與 C 機器碼尚未驗證 | spec/225–226、[re/106](docs/re/106-c-rectangle-bars-restoration.md)、新來源／code 補充／完整收據 |
 
-持續 Goal 為完成整個 matching decompilation；目前有整檔組語基準與 141 個 C 函式，不能據此宣布完整 C 還原完成。
-使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b`、熱區 `a8605b5` 與版控組語／VGA `47e16c9` 已推到 origin/main。
+持續 Goal 為完成整個 matching decompilation；目前有整檔組語基準與 157 個 C 函式，不能據此宣布完整 C 還原完成。
+使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b`、熱區 `a8605b5` 、版控組語／VGA `47e16c9` 與對齊貼圖 `6139f9e` 已推到 origin/main。
 
 未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。
 

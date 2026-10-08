@@ -330,8 +330,8 @@ func battleSideCellLayoutFor(r battleRect, top bool) battleSideCellLayout {
 	}
 }
 
-// battleSideBarLengths 照抄 sub_1C6F6 的兩條算式：
-// 兵力 >> 2、大將體力 × 3 ÷ 4，各自上限 124。
+// battleSideBarLengths 保留 sub_1C775／sub_1C78E 的 word 位移與取 byte 次序。
+// 體力分兩次截斷再相加；byte 寬度最後才限制為 124。見 spec/226。
 func battleSideBarLengths(men, health int) (menLen, healthLen int) {
 	clamp := func(v int) int {
 		if v < 0 {
@@ -342,7 +342,14 @@ func battleSideBarLengths(men, health int) (menLen, healthLen int) {
 		}
 		return v
 	}
-	return clamp(men >> 2), clamp(health * 3 / 4)
+	if men < 0 {
+		men = 0
+	}
+	if health < 0 {
+		health = 0
+	}
+	menWord, healthWord := uint16(men), uint16(health)
+	return clamp(int(uint8(menWord >> 2))), clamp(int(uint8((healthWord >> 1) + (healthWord >> 2))))
 }
 
 const (

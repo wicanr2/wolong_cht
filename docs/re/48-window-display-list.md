@@ -248,12 +248,15 @@ word_10D50:X  ＝  ICONGRF 段 3 的 (X + 0x9A0)
 
 ## 7. 未解
 
+後續矩形證據見 [re/106](106-c-rectangle-bars-restoration.md)：原始分派表的 opcode 02／03
+兩個 handler 雖被 IDA 標成資料，直接解碼仍分別呼叫 `sub_1F020` 描框與 `sub_1F1A3` 填色。
+
 | 項目 | 現況 |
 |---|---|
 | `08` 的模式 byte | `03` 只畫字、`01` 連背景一起填，是**強推論**——兩個用例（系統選單的「 ＯＫ 」、注音聲母列）都只有這個讀法說得通，但 `sub_106F5` 沒逐行讀（[`55`](55-system-menu-window.md) §3）|
 | `sub_1E9A7(bl=0, ax=1800h, cx=2020h)` | **登記內容已解**（2026-09-02）：`sub_1030F` 在 `start` 裡做兩件事——① `sub_1E993(ax=0E16h, dx=cs, bx=cs, cx=word_10D50)` 把 far 指標 `cs:0E16`（顯示清單本身）寫進 `cs:dword_1EAE9`，另外兩個參數槽 `word_1EAED`／`word_1EAEF` 各收 `bx`／`cx`；② `sub_1E9A7` 把 **第 0 筆 ＝ {`ax`＝1800h, `dx`＝`word_10D50`, `cx`＝2020h}** 寫進 `cs:0EAF1h`。**那張表被誰讀仍未找到** |
 | `op 01` 的用法 | 它是直線（§2.2），但 handler 不展開座標而十個場景又沒用到它——**預期的呼叫方式無法驗證** |
-| `op 02` 與 `op 03` 的差別 | 兩支都畫矩形（`sub_1F020` 對 `cs:F1A3`），前者另有五個戰術區呼叫者。哪一支是實心、哪一支帶遮罩，沒有資料可分辨 |
+| `op 02` 與 `op 03` 的差別 | 已由 [re/106](106-c-rectangle-bars-restoration.md) 的原始 table／未分類 handler／C plane 收據確認：02 描框、03 實心。保留原始函式與較早 scope，完整顯示清單 interpreter 尚未還原 C |
 
 ## 8. 財政視窗（場景 1）的完整版面
 

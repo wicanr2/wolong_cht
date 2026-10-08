@@ -1,0 +1,265 @@
+{
+  "schema": "wolong-matching-code-supplement-v1",
+  "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "tool": "IDA Pro",
+  "tool_version": "9.4",
+  "database_sha256": "694de3641d45608da76408a083e42f5036edc5136c60906b83aa93e5609916b7",
+  "image_id": "sha256:4ac62de83339c215bab10e455cee3a22d9c6efed9fd0d8ed0f068327b83a06ab",
+  "evidence": "docs/re/106-c-rectangle-bars-restoration.md",
+  "instructions": [
+    {
+      "ida_linear": 125478,
+      "file_start": 60454,
+      "file_end": 60457,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "mov ah, byte ptr [si+0xa]",
+      "gas": "mov ah, byte ptr [si+0xa]",
+      "opcode": 2,
+      "bytes": "8a640a",
+      "original_ida_data_line": "db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh",
+      "ida_code_classified": false,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 20,
+          "original": "8Ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 4,
+          "addr": 10,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 4,
+          "original": "8Ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven"
+    },
+    {
+      "ida_linear": 125481,
+      "file_start": 60457,
+      "file_end": 60460,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "call .+167",
+      "gas": "call .+167",
+      "opcode": 2,
+      "bytes": "e8a400",
+      "original_ida_data_line": "db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh",
+      "ida_code_classified": false,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 60112,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "0E8h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven"
+    },
+    {
+      "ida_linear": 125484,
+      "file_start": 60460,
+      "file_end": 60463,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "call .+1524",
+      "gas": "call .+1524",
+      "opcode": 2,
+      "bytes": "e8f105",
+      "original_ida_data_line": "db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh",
+      "ida_code_classified": false,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 61472,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "0E8h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven"
+    },
+    {
+      "ida_linear": 125487,
+      "file_start": 60463,
+      "file_end": 60464,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "ret",
+      "gas": "ret",
+      "opcode": 2,
+      "bytes": "c3",
+      "original_ida_data_line": "db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh",
+      "ida_code_classified": false,
+      "operands": [],
+      "locator_level": "proven"
+    },
+    {
+      "ida_linear": 125488,
+      "file_start": 60464,
+      "file_end": 60467,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "mov ah, byte ptr [si+0xa]",
+      "gas": "mov ah, byte ptr [si+0xa]",
+      "opcode": 3,
+      "bytes": "8a640a",
+      "original_ida_data_line": "db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh",
+      "ida_code_classified": false,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 20,
+          "original": "8Ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 4,
+          "addr": 10,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 4,
+          "original": "8Ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven"
+    },
+    {
+      "ida_linear": 125491,
+      "file_start": 60467,
+      "file_end": 60470,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "call .+157",
+      "gas": "call .+157",
+      "opcode": 3,
+      "bytes": "e89a00",
+      "original_ida_data_line": "db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh",
+      "ida_code_classified": false,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 60112,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "0E8h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven"
+    },
+    {
+      "ida_linear": 125494,
+      "file_start": 60470,
+      "file_end": 60473,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "call .+1901",
+      "gas": "call .+1901",
+      "opcode": 3,
+      "bytes": "e86a07",
+      "original_ida_data_line": "db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh",
+      "ida_code_classified": false,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 61859,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "0E8h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven"
+    },
+    {
+      "ida_linear": 125497,
+      "file_start": 60473,
+      "file_end": 60474,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "ret",
+      "gas": "ret",
+      "opcode": 3,
+      "bytes": "c3",
+      "original_ida_data_line": "db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh",
+      "ida_code_classified": false,
+      "operands": [],
+      "locator_level": "proven"
+    }
+  ]
+}

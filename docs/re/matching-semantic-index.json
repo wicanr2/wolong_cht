@@ -983,6 +983,118 @@
       "sources": [
         "docs/re/105-c-aligned-blit-restoration.md"
       ]
+    },
+    "0x1F020": {
+      "meaning": "有號端點排序、640×400 裁切、四個 clip bits 與矩形描框",
+      "level": "proven",
+      "sources": [
+        "docs/re/106-c-rectangle-bars-restoration.md"
+      ]
+    },
+    "0x1F140": {
+      "meaning": "依左右 clip bits 寫兩條垂直邊，保留底端給水平 helper",
+      "level": "proven",
+      "sources": [
+        "docs/re/106-c-rectangle-bars-restoration.md"
+      ]
+    },
+    "0x1F17B": {
+      "meaning": "首／中／尾 byte 的水平邊，REP STOSB 與 dummy latch read",
+      "level": "proven",
+      "sources": [
+        "docs/re/106-c-rectangle-bars-restoration.md"
+      ]
+    },
+    "0x1F1A3": {
+      "meaning": "有號端點排序／裁切與包含端點的實心矩形",
+      "level": "proven",
+      "sources": [
+        "docs/re/106-c-rectangle-bars-restoration.md"
+      ]
+    },
+    "0x10AAA": {
+      "meaning": "彩色已填部分接黑色剩餘部分，兩列高",
+      "level": "proven",
+      "sources": [
+        "docs/re/106-c-rectangle-bars-restoration.md"
+      ]
+    },
+    "0x10AD9": {
+      "meaning": "像素 X 與 byte row offset 的列寫入／左右 mask",
+      "level": "proven",
+      "sources": [
+        "docs/re/106-c-rectangle-bars-restoration.md"
+      ]
+    },
+    "0x10CAC": {
+      "meaning": "write mode 3／Data Rotate／Bit Mask 的原始 I/O",
+      "level": "proven",
+      "sources": [
+        "docs/re/106-c-rectangle-bars-restoration.md"
+      ]
+    },
+    "0x10CC3": {
+      "meaning": "write mode 0 與 set/reset／mask 的原始恢復序列",
+      "level": "proven",
+      "sources": [
+        "docs/re/106-c-rectangle-bars-restoration.md"
+      ]
+    },
+    "0x1C61F": {
+      "meaning": "十六格選取的原始座標與 14×14 描框 caller",
+      "level": "proven",
+      "sources": [
+        "docs/re/106-c-rectangle-bars-restoration.md"
+      ]
+    },
+    "0x1C6BF": {
+      "meaning": "位置表選隊，外／內兩層選取框",
+      "level": "proven",
+      "sources": [
+        "docs/re/106-c-rectangle-bars-restoration.md"
+      ]
+    },
+    "0x1C6AE": {
+      "meaning": "六隊選取框清除 caller",
+      "level": "proven",
+      "sources": [
+        "docs/re/106-c-rectangle-bars-restoration.md"
+      ]
+    },
+    "0x1C6F6": {
+      "meaning": "固定滑鼠查詢、六隊待機條與四條側欄計量條",
+      "level": "proven",
+      "sources": [
+        "docs/re/106-c-rectangle-bars-restoration.md"
+      ]
+    },
+    "0x1C74C": {
+      "meaning": "六個待機值，各以 byte 上限 76 前進來源",
+      "level": "proven",
+      "sources": [
+        "docs/re/106-c-rectangle-bars-restoration.md"
+      ]
+    },
+    "0x1C775": {
+      "meaning": "兵力 word 右移兩次，取 AL 後以 byte 上限 124",
+      "level": "proven",
+      "sources": [
+        "docs/re/106-c-rectangle-bars-restoration.md"
+      ]
+    },
+    "0x1C78E": {
+      "meaning": "體力先右移一次，再加第二次右移，取 CL 後上限 124",
+      "level": "proven",
+      "sources": [
+        "docs/re/106-c-rectangle-bars-restoration.md"
+      ]
+    },
+    "0x10BCD": {
+      "meaning": "真實外框 caller，內部矩形填黑",
+      "level": "proven",
+      "sources": [
+        "docs/re/106-c-rectangle-bars-restoration.md"
+      ]
     }
   },
   "operands": {

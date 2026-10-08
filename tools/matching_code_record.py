@@ -10,10 +10,11 @@ import subprocess
 from pathlib import Path
 
 EXPECTED = "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868"
-SIZE, INSTRUCTIONS, CODE_BYTES = 67099, 24376, 55392
+SIZE, INSTRUCTIONS, CODE_BYTES = 67099, 24384, 55412
 SOURCE = "tools/c_recovery/KI.code.S"
 LINKER = "tools/c_recovery/KI.code.ld"
 MANIFEST = "docs/re/assembly-code-record.json"
+SUPPLEMENT = "docs/re/rectangle-handler-code.json"
 
 
 def digest(data: bytes) -> str:
@@ -58,14 +59,34 @@ def export(repo: Path) -> None:
         "# Original labels are navigation. Graded meanings: docs/re/matching-semantic-index.json.",
         ".intel_syntax noprefix", ".code16", '.section .image,"ax",@progbits',
     ]
-    ranges = []
-    count, cursor = 0, 0
+    instructions = []
+    cursor = 0
     for row in mapping:
         start, end = row["file_start"], row["file_end"]
         require(start == cursor and start < end <= SIZE, "baseline map hole or overlap")
         cursor = end
         if row["kind"] != "instruction":
             continue
+        instructions.append({**row, "gas": lines[row["assembly_line"] - 1]})
+    require(cursor == SIZE and len(instructions) == 24376, "baseline coverage differs")
+    require(sum(r["file_end"] - r["file_start"] for r in instructions) == 55392, "baseline code bytes differ")
+    supplement_raw = (repo / SUPPLEMENT).read_bytes()
+    supplement = json.loads(supplement_raw)
+    require(supplement["schema"] == "wolong-matching-code-supplement-v1" and supplement["input_sha256"] == EXPECTED, "supplement identity differs")
+    extra = supplement["instructions"]
+    require(len(extra) == 8 and sum(r["file_end"] - r["file_start"] for r in extra) == 20, "supplement coverage differs")
+    for row in extra:
+        start, end = row["file_start"], row["file_end"]
+        require(raw[start:end] == bytes.fromhex(row["bytes"]), "supplement bytes differ")
+        require(any(r["kind"] == "data-or-unknown" and r["file_start"] <= start < end <= r["file_end"] for r in mapping), "supplement overlaps baseline code")
+    instructions.extend(extra)
+    instructions.sort(key=lambda row: row["file_start"])
+    ranges = []
+    count, cursor = 0, 0
+    for row in instructions:
+        start, end = row["file_start"], row["file_end"]
+        require(cursor <= start < end <= SIZE, "instruction overlap or overflow")
+        cursor = end
         count += 1
         public.append(f".org {start:#x}")
         name = row["original_name"]
@@ -81,18 +102,20 @@ def export(repo: Path) -> None:
         sources = ", ".join(semantic["sources"]) if semantic else "無"
         public.append(f'# IDA {row["ida_linear"]:#x}; file {start:#x}; locator=proven; {original}')
         public.append(f"# {warning}函式 {function or '無'}; [{level}] {meaning}; 出處: {sources}")
+        if "opcode" in row:
+            public.append(f'# [proven] opcode {row["opcode"]}; 原 IDA 資料行: {row["original_ida_data_line"]}; 出處: {supplement["evidence"]}')
         for i, op in enumerate(row["operands"]):
             extra = semantics["operands"].get(f'0x{row["ida_linear"]:X}:{i}')
             if extra:
                 require(extra["original"] == op["original"], "graded operand locator differs")
                 warning = "" if extra["level"] == "proven" else "⚠ "
                 public.append(f'# {warning}operand {i} {op["original"]}; [{extra["level"]}] {extra["meaning"]}; 出處: {", ".join(extra["sources"])}')
-        public.append(lines[row["assembly_line"] - 1])
+        public.append(row["gas"])
         if ranges and ranges[-1][1] == start:
             ranges[-1][1] = end
         else:
             ranges.append([start, end])
-    require(cursor == SIZE and count == INSTRUCTIONS, "baseline coverage differs")
+    require(count == INSTRUCTIONS, "instruction coverage differs")
     require(sum(end - start for start, end in ranges) == CODE_BYTES, "instruction byte count differs")
     public.append(f".org {SIZE:#x}")
     out = ("\n".join(public) + "\n").encode("utf-8")
@@ -102,6 +125,9 @@ def export(repo: Path) -> None:
         "schema": "wolong-matching-code-record-v1",
         "input": "DOS/V KI.EXE", "input_sha256": EXPECTED, "input_size": SIZE,
         "instruction_count": count, "instruction_bytes": CODE_BYTES,
+        "baseline_instruction_count": 24376, "supplement_instruction_count": 8,
+        "supplement": SUPPLEMENT, "supplement_sha256": digest(supplement_raw),
+        "supplement_database_sha256": supplement["database_sha256"],
         "private_import_bytes": SIZE - CODE_BYTES,
         "address_space": "IDA database linear base 0x10000; file = linear - 0x10000 + 512",
         "ida_version": report["ida_version"], "ida_image_id": report["ida_image_id"],
@@ -155,6 +181,7 @@ def assemble(repo: Path, output: Path, image_id: str) -> None:
     manifest_path = repo / MANIFEST
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     check_manifest(manifest)
+    require(digest((repo / manifest["supplement"]).read_bytes()) == manifest["supplement_sha256"], "supplement source differs")
     require(digest(Path(__file__).read_bytes()) == manifest["record_tool_sha256"], "record tool source differs")
     require(image_id == manifest["build_image_id"], "build image differs from verified toolchain")
     source, linker = repo / SOURCE, repo / LINKER

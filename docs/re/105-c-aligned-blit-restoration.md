@@ -122,6 +122,10 @@ FAR stub 首次漏了 CS prefix，導致原版讀 DS 而 C 讀 CS；補原先宣
 
 ## 4. 未解範圍
 
+後續正確素材 bank 證據見 [re/106](106-c-rectangle-bars-restoration.md)：`word_10D48` 命令圖示
+改取 ICONGRF 第 3 段起點，`word_10D4A` 改取其段內 0x6C0。這份歷史矩陣使用第 1 段
+輸入，保留為 raw caller 比較；正確素材的 54 個重畫與 18 個外框收據在新矩陣。
+
 | 項目 | 邊界 |
 |---|---|
 | 正常玩家戰術流程 | 局部 caller 對照不代替自然戰鬥操作，Issue #22 保持原範圍 |

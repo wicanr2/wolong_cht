@@ -133,21 +133,21 @@ IDA image ID：`sha256:4ac62de83339c215bab10e455cee3a22d9c6efed9fd0d8ed0f068327b
 
 | 版控產物 | 用途 |
 |---|---|
-| [`KI.code.S`](../../tools/c_recovery/KI.code.S) | 全部 24,376 條已匹配指令，保留原始 IDA 名稱、線性位址、檔案偏移與運算元，自動合併分級語意、出處與未知警示 |
+| [`KI.code.S`](../../tools/c_recovery/KI.code.S) | 全部 24,384 條已匹配指令，保留原始 IDA 名稱、線性位址、檔案偏移與運算元，自動合併分級語意、出處與未知警示 |
 | [`KI.code.ld`](../../tools/c_recovery/KI.code.ld) | 66 個編碼所需的立即數常數與區段配置 |
-| [`assembly-code-record.json`](assembly-code-record.json) | 輸入、DB、來源與工具雜湊，76 個指令範圍與逐範圍雜湊 |
+| [`assembly-code-record.json`](assembly-code-record.json) | 輸入、DB、來源與工具雜湊，77 個指令範圍與逐範圍雜湊 |
 | [`assembly-code-verification.json`](assembly-code-verification.json) | 冷組譯、完整 EXE 比較與三個負對照的收據 |
 | [`matching_code_record.py`](../../tools/matching_code_record.py) | 從已驗證基準匯出指令來源，以及本機組譯與資料匯入 |
 | [`matching_code_record.sh`](../../tools/matching_code_record.sh) | 使用固定 GNU binutils 2.40 image 的 Docker 重跑入口 |
 
 組語來源不含 `.byte`、`.word`、`.incbin` 或字串資料宣告。非指令範圍使用 `.org`
-零值佔位。組譯後先比較全部 55,392 個指令 bytes 與逐範圍雜湊，再只從使用者自備的
-固定 SHA-256 原版匯入 11,707 bytes。匯入範圍包含 512-byte MZ 標頭與其餘非指令區，
+零值佔位。組譯後先比較全部 55,412 個指令 bytes 與逐範圍雜湊，再只從使用者自備的
+固定 SHA-256 原版匯入 11,687 bytes。匯入範圍包含 512-byte MZ 標頭與其餘非指令區，
 匯入的指令 bytes 為零。完整 67,099-byte EXE 與原版逐 byte 及 SHA-256 相同，等級為已證實。
 
 把 `clc` 改為 `stc`、改一個 linker 常數，都使實際組譯的指令範圍不同而被拒絕。
 改動私有輸入的標頭則被完整輸入雜湊拒絕。原版 EXE、資料區與重建 EXE 均留在本機。
-來源與 linker SHA-256 分別為 `6ff8a69389b74507d7fdbf4c9a7aa15e1f696b35b9b474bd06a9efe8d8ea1ed9`
+來源與 linker SHA-256 分別為 `f2c6d43e0eadf02a53a506be7c33a3204a2e8122f91825642955eacd1dab26da`
 與 `a301287e77bf1a79a717c206dc0754e2c0ccb3a75b3eae38815bfff0a1995ac7`。
 
 ```sh
@@ -162,3 +162,7 @@ tools/matching_code_record.sh
 指令 bytes 已匹配不會提升函式語意等級。語意仍查
 [`matching-semantic-index.json`](matching-semantic-index.json)，C 現況查
 [`c-recovery-status.json`](c-recovery-status.json)。C 來源同樣進版控，局部行為等價與 C 機器碼匹配分開記錄。
+
+2026-10-09 補充：原始分派表的二十 bytes 雖為 IDA 資料項，直接解碼已確認八條指令。
+[rectangle-handler-code.json](rectangle-handler-code.json) 與 [re/106](106-c-rectangle-bars-restoration.md)
+保存原資料分類、原始位置與工具身分；目前版控來源合併後為 24,384 條。§1–6 保留初建基準快照。

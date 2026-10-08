@@ -1905,3 +1905,10 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - O0/O2 各 4,954 組完整 RAM／四 plane／I/O／ABI 相同，683 次正確內容區像素與 36 次六按鈕 hit 消費相同。native C 不呼叫原版 guest 程式，裝置狀態獨立。
 - 十一錯版全部拒絕。SI=FFFFh 的來源 word 按 CPU 同段回繞，連續實體讀取的反例與來源仍保留；FAR stub 的 CS prefix 修正只處理驗證工具。
 - 五函式原始控制流與來源連續性標已證實，完整 C 台帳 141；固定裝置 fixture、正常玩家戰術與 C 機器碼界線保留，現行 Issue #22 維持 OPEN。
+
+## 2026-10-09：矩形與計量的完整 native C 閉包
+
+- KI.EXE／ICONGRF 身分固定，IDA9.4 DB `3f3a95793967805c9df4f87de5db577b6eadb0aa3a39d4837be8c9d43a8dc9a5`。16 函式、1,169 bytes 與完整定位見 [re/106](docs/re/106-c-rectangle-bars-restoration.md)。
+- 描框、實心、兩層選取、六待機與四側欄全接真實 C／VGA。O0/O2 134,958 原版/C、131,072 Go 長度與 2,441 內容區抽查相同，十二負對照拒絕。Source digest 綁定實際 flags 與正式 Go 來源。
+- 精確計量取 AL／CL 後限 124，體力兩次截斷；Go 原乘三除四與 word 不回繞有反例。正確第 3 段命令／框 bank 新收據補上，舊第 1 段 raw 輸入收據保留。
+- 原始 DS table 的 opcode 02／03 目標為 IDA 資料項；直接 insn 解碼與固定原 bytes 證實分別呼叫描框／實心。八條／20 bytes 併入組語後整檔仍匹配，不用原 bytes 作指令 fallback。完整 interpreter 尚未還原。

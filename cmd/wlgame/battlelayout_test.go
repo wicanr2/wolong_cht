@@ -187,13 +187,19 @@ func TestDOSVBattleSideCellLayoutMatchesRawCoordinates(t *testing.T) {
 	}
 }
 
-// sub_1C775 是 `值 >> 2`、sub_1C78E 是 `值 × 3 ÷ 4`，兩者上限都是 0x7C。
+// 原始右移後取 byte，體力分兩次截斷；相鄰邊界與 raw word 回繞見 spec/226。
 func TestDOSVBattleSideBarLengthsMatchRawFormulas(t *testing.T) {
 	for _, c := range []struct{ men, health, wantMen, wantHealth int }{
 		{0, 0, 0, 0},
 		{100, 100, 25, 75},
 		{400, 160, 100, 120},
-		{9999, 9999, 124, 124}, // 兩條都夾在 0x7C
+		{1, 1, 0, 0},
+		{3, 3, 0, 1},
+		{7, 7, 1, 4},
+		{497, 167, 124, 124},
+		{1023, 342, 124, 0},
+		{1024, 343, 0, 0},
+		{9999, 9999, 124, 74},
 		{-5, -5, 0, 0},
 	} {
 		gotMen, gotHealth := battleSideBarLengths(c.men, c.health)

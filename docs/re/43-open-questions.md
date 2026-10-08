@@ -7,7 +7,7 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-946 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+956 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
 - 日期：2026-10-08
 - 產生工具：`tools/re_open_questions.py`
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**940 列分布在 381 份文件，平均每份 2.5 列。**
+**950 列分布在 384 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -47,11 +47,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 252 | 245 | 6 | 1 |
+| 程式碼理解 | 256 | 249 | 6 | 1 |
 | 驗收 | 240 | 214 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 411 | 389 | 21 | 1 |
-| **合計** | **940** | 879 | 58 | 3 |
+| 其他 | 417 | 395 | 21 | 1 |
+| **合計** | **950** | 889 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,8 +59,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 368 |
-| `docs/re/` | 252 |
+| `docs/spec/` | 374 |
+| `docs/re/` | 256 |
 | `docs/playtest/` | 240 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
@@ -110,7 +110,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 | evidence-only | — |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 | evidence-only | — |
 
-## 2.3 程式碼理解（252 條）
+## 2.3 程式碼理解（256 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -166,6 +166,10 @@
 | [`re/105-c-aligned-blit-restoration.md`](../re/105-c-aligned-blit-restoration.md) | 裝置服務的自然輸入與時序 | FAR fixture 只固定本輪輸入，不外推真實滑鼠時序 | 靜態 | evidence-only | — |
 | [`re/105-c-aligned-blit-restoration.md`](../re/105-c-aligned-blit-restoration.md) | 完整文字／字型服務 | 本輪是位元對齊圖塊，不完成其他字型 blitter | 靜態 | evidence-only | — |
 | [`re/105-c-aligned-blit-restoration.md`](../re/105-c-aligned-blit-restoration.md) | C 機器碼匹配與原作者工具鏈 | 尚未驗證 | 靜態 | evidence-only | — |
+| [`re/106-c-rectangle-bars-restoration.md`](../re/106-c-rectangle-bars-restoration.md) | 正常玩家戰術／視窗操作 | 局部原始 caller 不代替自然流程 | 靜態 | evidence-only | — |
+| [`re/106-c-rectangle-bars-restoration.md`](../re/106-c-rectangle-bars-restoration.md) | 原始滑鼠時序與輸入裝置 | FAR fixture 只固定本輪回應 | 靜態 | evidence-only | — |
+| [`re/106-c-rectangle-bars-restoration.md`](../re/106-c-rectangle-bars-restoration.md) | 完整文字與其他繪圖路徑 | 本輪未涵蓋所有 renderer | 靜態 | evidence-only | — |
+| [`re/106-c-rectangle-bars-restoration.md`](../re/106-c-rectangle-bars-restoration.md) | C 機器碼匹配與原作者工具鏈 | 尚未驗證 | 靜態 | evidence-only | — |
 | [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `ds:0D2F8` | 4,096 / 未解（第二份戰場？） | 靜態 | evidence-only | — |
 | [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `ds:0D306` | 30,720 / 未解 | 靜態 | evidence-only | — |
 | [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | 兵士記錄剩下的欄位 | `ds:0D30E`，32 B／筆 / 目前具名的有 `+0x00`／`+0x01`／`+0x02`／`+0x03` 體力／`+0x04` 大將／`+0x05` 面向／`+0x14` 陣形座標／`+0x16`・`+0x17` 繞路游標／`+0x19` 疲勞／`+0x1A`・`+0x1B` 命令／`+0x1E` Z… | 靜態 | evidence-only | — |
@@ -220,7 +224,7 @@
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `08` 的模式 byte | `03` 只畫字、`01` 連背景一起填，是**強推論**——兩個用例（系統選單的「 ＯＫ 」、注音聲母列）都只有這個讀法說得通，但 `sub_106F5` 沒逐行讀（`55` §3） | 靜態 | evidence-only | — |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `sub_1E9A7(bl=0, ax=1800h, cx=2020h)` | **登記內容已解**（2026-09-02）：`sub_1030F` 在 `start` 裡做兩件事——① `sub_1E993(ax=0E16h, dx=cs, bx=cs, cx=word_10D50)` 把 far 指標 `cs:0E16`（顯示清單本身）寫進 `cs:dword_1EAE9`，另外兩個參數… | 靜態 | evidence-only | — |
 | [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `op 01` 的用法 | 它是直線（§2.2），但 handler 不展開座標而十個場景又沒用到它——**預期的呼叫方式無法驗證** | 靜態 | evidence-only | — |
-| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `op 02` 與 `op 03` 的差別 | 兩支都畫矩形（`sub_1F020` 對 `cs:F1A3`），前者另有五個戰術區呼叫者。哪一支是實心、哪一支帶遮罩，沒有資料可分辨 | 靜態 | evidence-only | — |
+| [`re/48-window-display-list.md`](../re/48-window-display-list.md) | `op 02` 與 `op 03` 的差別 | 已由 re/106 的原始 table／未分類 handler／C plane 收據確認：02 描框、03 實心。保留原始函式與較早 scope，完整顯示清單 interpreter 尚未還原 C | 靜態 | evidence-only | — |
 | [`re/49-corps-formation-window.md`](../re/49-corps-formation-window.md) | `sub_1F9B0` 的 `ax = 1003h` | 貼圖的樣式參數；`sub_10C14` 用 `0801h`（`46` §3）。位元編碼未逐位對過 | 靜態 | evidence-only | — |
 | [`re/51-corps-info-window.md`](../re/51-corps-info-window.md) | `or byte ptr [si], 2` | 位元 1 ＝「有指令」（`34`），這裡是它的其中一個寫入端 | 靜態 | evidence-only | — |
 | [`re/52-slot-select-window.md`](../re/52-slot-select-window.md) | 檔名 | `sub_18C20` 沒設 `dx`，靠 `sub_18B7C` 的 `push dx`／`pop dx` 從更上層傳進來 | 靜態 | evidence-only | — |
@@ -623,7 +627,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（411 條）
+## 2.6 其他（417 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -914,6 +918,12 @@
 | [`spec/224-c-aligned-blit.md`](../spec/224-c-aligned-blit.md) | 自然裝置輸入與實機 wall-clock | 固定 FAR fixture 與 VGA 模型 | 靜態 | evidence-only | — |
 | [`spec/224-c-aligned-blit.md`](../spec/224-c-aligned-blit.md) | 其他字型與文字 renderer | 本輪範圍外，尚未完成 | 靜態 | evidence-only | — |
 | [`spec/224-c-aligned-blit.md`](../spec/224-c-aligned-blit.md) | C 機器碼匹配 | 未驗證 | 靜態 | evidence-only | — |
+| [`spec/225-c-rectangle-bars.md`](../spec/225-c-rectangle-bars.md) | 正常玩家戰術／視窗 | caller 矩陣不代表自然操作完成 | 靜態 | evidence-only | — |
+| [`spec/225-c-rectangle-bars.md`](../spec/225-c-rectangle-bars.md) | 自然滑鼠與硬體時序 | 固定 FAR fixture 與平台模型 | 靜態 | evidence-only | — |
+| [`spec/225-c-rectangle-bars.md`](../spec/225-c-rectangle-bars.md) | 完整 C 還原 | 本輪只涵蓋十六函式閉包 | 靜態 | evidence-only | — |
+| [`spec/225-c-rectangle-bars.md`](../spec/225-c-rectangle-bars.md) | C 機器碼匹配 | 未驗證 | 靜態 | evidence-only | — |
+| [`spec/226-sidebar-bar-widths.md`](../spec/226-sidebar-bar-widths.md) | 正常玩家整體畫面 | 局部長度與 C plane 收據不足以代證 | 靜態 | evidence-only | — |
+| [`spec/226-sidebar-bar-widths.md`](../spec/226-sidebar-bar-widths.md) | 全場戰術／長流程 | 本輪未驗證 | 靜態 | evidence-only | — |
 | [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 反白列上換色的機制 | `38` §1.7.1：兩個色號各有一次量測，變換規則沒解 | 靜態 | evidence-only | — |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 空槽標記 | 原版用名稱欄第一個字 `0xD0A1`；remake 用「載得起來且玩家勢力有效」判定，兩者不等價 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 新遊戲共用 | remake 的啟動殼層是自己的畫面，還沒有換成這個四槽視窗 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |

@@ -189,6 +189,10 @@ si = (word_10D30 − 0x2240) >> 1      ; 對方
 
 ## 5. 每一格的兩條計量條（`sub_1C6F6`）
 
+後續 C 計量證據見 [re/106](106-c-rectangle-bars-restoration.md)：原始兩次右移、取 byte 後上限
+與全部 raw word 的原版／C／Go 收據。下表的「×3÷4」只保留舊摘要，精確式已由
+[spec/226](../spec/226-sidebar-bar-widths.md) 校訂；體力 3 的長度是 1，並且會取 byte 回繞。
+
 `sub_1C6F6` 由 `sub_19946` 與 `0x1A0AA`／`0x1A0BE` 呼叫，是**每幀更新**的那一支。
 四條都在 x ＝ 498、2 px 高、總長上限 124 px，未填的部分畫成色 0
 （`sub_10AAA` → `sub_10AD9`）。

@@ -321,7 +321,7 @@ call sub_189DE                          ; 這一支會寫熱區圖
 | `sub_1C673` | 59 | 1 | 繪圖狀態保存<br>位元對齊 blit<br>繪圖狀態復原 |
 | `sub_1C74C` | 41 | 2 | — |
 | `sub_1C775` | 25 | 2 | ✅ **已解**：計量條的長度換算 `值 >> 2`，上限 `CH=0x7C` ＝ 124（[`60`](60-tactical-sidebar.md) §5、[`../spec/31`](../spec/31-tactical-sidebar.md) §2.3）|
-| `sub_1C78E` | 27 | 2 | ✅ **已解**：計量條的長度換算 `值 × 3 ÷ 4`，上限同上（[`60`](60-tactical-sidebar.md) §5、[`../spec/31`](../spec/31-tactical-sidebar.md) §2.3）|
+| `sub_1C78E` | 27 | 2 | ✅ **已解**：原始兩次右移後相加、取 byte，再限 124；精確證據見 [re/106](106-c-rectangle-bars-restoration.md)（[`60`](60-tactical-sidebar.md) §5、[`../spec/31`](../spec/31-tactical-sidebar.md) §2.3）|
 | `sub_1C955` | 86 | 1 | 畫三個全形字（名稱欄） |
 | `sub_1C9AB` | 144 | 1 | 畫三個全形字（名稱欄） |
 | `sub_1CAB7` | 26 | 1 | — |
