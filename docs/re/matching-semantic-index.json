@@ -1,0 +1,15 @@
+{
+  "schema": "wolong-matching-semantic-index-v1",
+  "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "address_space": "IDA database linear",
+  "functions": {
+    "0x11D8E": {"meaning": "遊戲日期進位、月結與每時更新的呼叫順序，以及速度節流", "level": "proven", "sources": ["docs/re/06-game-clock.md"]},
+    "0x131AE": {"meaning": "節流後取出一筆事件，再依低位元組間接分派", "level": "proven", "sources": ["docs/re/15-event10-producer.md"]},
+    "0x1ECE0": {"meaning": "以置換表與兩個 byte 狀態取一個亂數", "level": "proven", "sources": ["docs/re/10-rng.md"]}
+  },
+  "operands": {
+    "0x11DCB:1": {"original": "[bx-6755h]", "meaning": "月份天數表的索引讀取；有效位址仍依 BX 與 DS 決定", "level": "proven", "sources": ["docs/re/06-game-clock.md"]},
+    "0x1ECED:1": {"original": "byte_1ECFC", "meaning": "亂數計數器 c", "level": "proven", "sources": ["docs/re/10-rng.md"]},
+    "0x1ECF1:0": {"original": "byte_1ECFC", "meaning": "亂數計數器 c", "level": "proven", "sources": ["docs/re/10-rng.md"]}
+  }
+}

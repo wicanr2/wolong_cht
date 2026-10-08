@@ -5,7 +5,26 @@
 >
 > 硬規則、目標、工作紀律在 [`CLAUDE.md`](./CLAUDE.md)。這份只管**狀態**。
 >
-> 最後更新：2026-09-10
+> 最後更新：2026-10-08
+
+## 比對式反編譯研究線：目前狀態
+
+使用者於 2026-10-08 決定先用組語建立原版基準，後續再由組語還原 C 函式。
+這條研究線用可重組來源審查原版控制流，與 Go remake 的既有驗收分開記錄。
+研究入口：[`docs/re/90`](docs/re/90-assembly-reconstruction.md)；C 還原：
+[`docs/re/91`](docs/re/91-c-rng-restoration.md) 與
+[`c-recovery-status.json`](docs/re/c-recovery-status.json)；先行試點：
+[`docs/re/89`](docs/re/89-matching-decompilation-pilot.md)；工作歷程：
+[`WORKLOG.md`](WORKLOG.md)。
+
+| 日期／目前程式 | 最近驗證 | 狀態／限制 | 交付物 |
+|---|---|---|---|
+| 2026-10-08；Go 基線 `e8aeb99`；`tools/assembly_rebuild.sh` | 24,376 條 IDA 指令、55,392 bytes 助憶碼匹配；完整 67,099 bytes 與原版 SHA-256 相同 | 整檔組語基準通過，沒有指令 bytes fallback | 本機組語、linker script、重建 EXE 與收據 |
+| 同上 | 來源獨立冷組譯通過；改指令、立即數常數或 MZ 重定位均被拒絕 | 原版工具鏈／語言仍未知，不阻塞已驗證的組語基準 | `assembly/build/report.json` 與 `assembly/source-only/` |
+| 同上；`function-ledger.json` | 739 筆原始 IDA 名稱、chunks、來源行與語意等級 | 組語基準的導航快照；C 狀態另查分級索引 | C 函式定位台帳與來源對映 |
+| 同上；`sub_1ECE0` 的 C 還原 | O0/O2 各原版/C 263,680 組、Go 263,168 組相同，四組 C 突變被拒絕 | C 局部語意對照通過；IF/TF=0、四張受控表，不宣稱 C 機器碼匹配或正常玩家路徑 | C 資料函式、介面適配層、spec/201 與局部收據 |
+
+未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。
 
 ## 0. 兩件每次接手都要先知道的事
 
@@ -23,8 +42,11 @@
 `World.QueueEvent10` 是受控的 raw fixture 注入口，**不得寫成原版自然 producer**。
 
 DOS/V `KI.EXE` SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`（**這個不會變**）。
-IDA `.i64` 現在是 `65736f11b0b28a5b3a6db9e1a3d205cc24f0eaebc82b508ee0d7d283f6240572`（739 支函式）；
-PC-98 那一份是 `6b89ddc239310153d594f3f617e129497dba905f1e66544c44edde2618b67324`（731 支）。
+歷史 IDA `.i64` checkpoint 是 `65736f11b0b28a5b3a6db9e1a3d205cc24f0eaebc82b508ee0d7d283f6240572`（739 支函式）；
+PC-98 checkpoint 是 `6b89ddc239310153d594f3f617e129497dba905f1e66544c44edde2618b67324`（731 支）。
+2026-10-08 本機沒有既有 `workplace/ida/` DB；本次一次性 DOS/V DB 位於
+`workplace/matching-decompilation/dosv/input.exe.i64`，先行試點範圍見 `docs/re/89`。
+本輪整檔 DB 分存 `workplace/matching-decompilation/assembly/dosv/input.exe.i64`，身分見 `docs/re/90`。
 ⚠ **`.i64` 的雜湊會漂**——重新分析就變一份新的（`docs/re/37`／`48`／`52` 那批記的是
 `7b7c1aa6…`，那是它們當時驗的那一份，**不要回頭改**）。要標身分請同時寫
 輸入檔雜湊與函式數。位址一律記 DOS/V 線性位址。

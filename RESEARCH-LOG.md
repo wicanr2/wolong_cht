@@ -1771,3 +1771,31 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 外推成真實硬體的密碼比較結論。沒有修改任何二進位檔，且密碼頁不會實作到 remake。
 可重查摘要、來源雜湊與座標契約見
 [`docs/playtest/18-dosv-password-verification.md`](docs/playtest/18-dosv-password-verification.md)。
+
+## 2026-10-08：比對式反編譯試點
+
+- 問題：能否從可重建的來源產生與松崗版 `KI.EXE` 相同的機器碼，供 Go remake 審查原版控制流。
+- 輸入 `KI.EXE` SHA-256：`fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`。
+- 工具與位址空間：IDA Pro 9.4 database linear address；GNU assembler／ld 2.40、GCC 12.2.0。段內位移與檔案偏移在收據分欄保存。
+- 已證實：`sub_11D8E`、`sub_131AE`、`sub_1ECE0` 的指令來源可重組回原始 233 bytes；比較沒有遮掉呼叫位址。
+- 已證實：三組位元組突變、錯誤呼叫目標與錯誤輸入雜湊均被拒絕；Borland 標記掃描以 `LOGO.EXE` 作正對照。
+- 已證實：所列三個 C 探針與四組 GCC 選項共 0／12 匹配。此結果只約束本次編碼試驗，不排除其他工具鏈與來源寫法。
+- 未知：原版編譯器、組譯器、連結器、來源語言與 translation-unit 邊界。沒有宣稱取回原作者原稿、高階 C matching、整檔匹配或 Go 行為一致。
+- 證據與重跑入口：[`docs/re/89-matching-decompilation-pilot.md`](docs/re/89-matching-decompilation-pilot.md)；本輪工作歷程：[`WORKLOG.md`](WORKLOG.md)。
+
+## 2026-10-08：整檔組語基準
+
+- 問題：能否從組語、MZ 欄位與資料宣告獨立重建松崗版 `KI.EXE`。
+- 原始檔與重建檔 SHA-256：`fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`。
+- 已證實：24,376 條 IDA 指令、55,392 bytes 全部助憶碼匹配；完整 67,099 bytes 相同，沒有指令 bytes fallback。
+- 已證實：來源獨立冷組譯相同；指令、連結常數與 MZ 重定位三組突變均使雜湊不同。
+- 邊界：程式碼／資料與函式邊界沿用 IDA 導航，語意不自動升級。C 函式還原、C matching 與 Go 行為對拍沒有通過聲明。
+- 工具與位址空間：IDA 9.4 線性位址；MZ 段值與檔案偏移分欄。完整輸入／DB／工具 image 身分、來源雜湊與收據見 [`docs/re/90`](docs/re/90-assembly-reconstruction.md)。
+
+## 2026-10-08：sub_1ECE0 的 C 語意還原
+
+- 原版身分沿用松崗 KI.EXE 固定 SHA-256；28-byte 範圍、13 條指令與分級欄位由既有 IDA 匯出核對。
+- 已證實的局部對照：O0/O2 各 263,680 組，完整 16-bit 暫存器／FLAGS、狀態與堆疊相同；263,168 組非重疊條件的 Go 回傳與 raw state 相同。
+- 四種 C 突變均被拒絕。堆疊重疊的 POP 必須讀實際記憶體，不能無條件還原保存的本機變數。
+- 固定四張控制表與 c/s 後才執行，沒有測 RTC 播種或未受控亂數。IF/TF=0、偶數 SP 與原始 CS 是本輪界線，不外推一般玩家流程。
+- 指令身分、工具與輸入、雙側摘要、來源雜湊與重跑入口在 [`docs/re/91`](docs/re/91-c-rng-restoration.md)，C 契約在 [`docs/spec/201`](docs/spec/201-c-rng-function.md)。

@@ -145,6 +145,9 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 
 | 筆記 | 回答什麼 |
 |---|---|
+| [`89`](89-matching-decompilation-pilot.md) | 比對式反編譯試點：三函式組語重組 233 bytes 相同；C 試驗與原版工具鏈的證據限制 |
+| [`90`](90-assembly-reconstruction.md) | 組語基準：24,376 條 IDA 指令全部匹配，完整 KI.EXE 逐位元組相同，附 C 函式定位台帳 |
+| [`91`](91-c-rng-restoration.md) | 第一個 C 函式：sub_1ECE0 原版/C 263,680 組、Go 263,168 組局部對照，含暫存器、旗標與堆疊邊界 |
 | [`21`](21-function-census.md) | 全函式覆蓋普查；**§3.1 為什麼要排除目錄型文件** |
 | [`24`](24-unread-function-catalogue.md) | 未讀函式的證據與下手順序 |
 | [`39`](39-remaining-unread.md) | 未讀函式的逐支歸屬（生成的，可重跑）|

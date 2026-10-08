@@ -7,9 +7,9 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-805 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+813 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
-- 日期：2026-09-14
+- 日期：2026-10-08
 - 產生工具：`tools/re_open_questions.py`
 - 來源：`docs/` 底下所有文件的未解小節、表格裡標未解的列，與收尾是「…未解」的散句
 
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**799 列分布在 341 份文件，平均每份 2.3 列。**
+**807 列分布在 344 份文件，平均每份 2.3 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -47,11 +47,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 180 | 173 | 6 | 1 |
+| 程式碼理解 | 188 | 181 | 6 | 1 |
 | 驗收 | 240 | 214 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
 | 其他 | 342 | 320 | 21 | 1 |
-| **合計** | **799** | 738 | 58 | 3 |
+| **合計** | **807** | 746 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -61,7 +61,7 @@
 |---|---:|
 | `docs/spec/` | 299 |
 | `docs/playtest/` | 240 |
-| `docs/re/` | 180 |
+| `docs/re/` | 188 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
@@ -110,7 +110,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 | evidence-only | — |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 | evidence-only | — |
 
-## 2.3 程式碼理解（180 條）
+## 2.3 程式碼理解（188 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -294,6 +294,14 @@
 | [`re/87-opening-deployment.md`](../re/87-opening-deployment.md) | 走進陣形的那一段 | 擺完之後誰把他們帶到陣形位置、走多快，沒查 | 靜態 | evidence-only | — |
 | [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 游標圖形資料 | 在 `sub_201E4` 附近，逐 byte 沒抓；remake 已經有量出來的 14×14 遮罩 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`re/88-mouse-cursor-visibility.md`](../re/88-mouse-cursor-visibility.md) | 54 個 hide／show 點對應到 remake 的哪一段 | 沒做；這是「remake 要不要同步游標」的前置 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`re/89-matching-decompilation-pilot.md`](../re/89-matching-decompilation-pilot.md) | 整份 `KI.EXE` | 尚未重建 / 未驗證 | 靜態 | evidence-only | — |
+| [`re/89-matching-decompilation-pilot.md`](../re/89-matching-decompilation-pilot.md) | Go remake | 已列出對照入口，本次沒有執行行為對拍 / 未驗證 | 靜態 | evidence-only | — |
+| [`re/89-matching-decompilation-pilot.md`](../re/89-matching-decompilation-pilot.md) | 整檔匹配 | 尚未處理 MZ 標頭、116 筆重定位、資料區、其他函式與外部模組 | 靜態 | evidence-only | — |
+| [`re/90-assembly-reconstruction.md`](../re/90-assembly-reconstruction.md) | C 還原與 C matching | 尚未開始；台帳提供入口，沒有 C 通過聲明 | 靜態 | evidence-only | — |
+| [`re/91-c-rng-restoration.md`](../re/91-c-rng-restoration.md) | C 機器碼匹配 | 本次沒有達成或聲稱；此為原生 C 的語意還原 | 靜態 | evidence-only | — |
+| [`re/91-c-rng-restoration.md`](../re/91-c-rng-restoration.md) | 輸入完整性 | 四張受控置換表，不是全部可能的表；其他 CS、奇數 SP、IF／TF 開啟不在本次範圍 | 靜態 | evidence-only | — |
+| [`re/91-c-rng-restoration.md`](../re/91-c-rng-restoration.md) | 原版播種與取數時機 | 沒有新增驗證；局部取數通過不證明整段亂數流同步 | 靜態 | evidence-only | — |
+| [`re/91-c-rng-restoration.md`](../re/91-c-rng-restoration.md) | GUI 與玩家流程 | 沒有本輪正常玩家路徑或時鐘對拍收據 | 靜態 | evidence-only | — |
 
 ## 2.4 驗收（240 條）
 

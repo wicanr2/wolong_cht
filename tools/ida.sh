@@ -4,6 +4,8 @@
 #   tools/ida.sh batch <版本> <執行檔>       產 .i64 + .asm
 #   tools/ida.sh raw   <版本> <idat 參數…>   直接下 idat 指令（會改寫 .i64）
 #   tools/ida.sh script <版本> <腳本.idc|.py>  對 .i64 的唯讀副本跑腳本
+#   tools/ida.sh probe <版本> <腳本.py> <輸出目錄> [執行檔]
+#       從唯讀 EXE 建一次性 DB；非 root、輸出目錄以外不可寫
 #
 # <版本> = dosv | pc98，對應 workplace/ida/<版本>/
 #
@@ -31,6 +33,62 @@ IMAGE=ida-pro-9.4-ver2
 # 預設改成 `~/.claude/knowledge-base/retro/ida-pro-9.4.md` 建議的 headless 版本。
 IMAGE_PY=${WOLONG_IDA_PY_IMAGE:-ida-pro-9.4-idapython:locked-v1}
 MODE="$1"; VER="$2"; shift 2
+if [[ "$VER" != dosv && "$VER" != pc98 ]]; then
+  echo "[ida.sh] 版本須為 dosv 或 pc98" >&2
+  exit 2
+fi
+
+# 新探針使用已驗證的 IDAPython image。舊 batch/raw/script 分支是歷史入口，
+# 不沿用它們的 root runtime 或遞迴 chown。
+if [[ "$MODE" == probe ]]; then
+  SCRIPT="${1:?需要 IDAPython 腳本}"; OUTPUT="${2:?需要輸出目錄}"
+  BIN="${3:-KI.EXE}"
+  [[ "$BIN" == "$(basename "$BIN")" ]] || exit 2
+  [[ "$SCRIPT" == *.py && -f "$ROOT/$SCRIPT" ]] || exit 2
+  [[ -f "$ROOT/workplace/orig/$VER/$BIN" && -d "$ROOT/tools" && -d "$ROOT/docs/re" ]] || exit 2
+  docker image inspect "$IMAGE_PY" >/dev/null 2>&1 || {
+    echo "[ida.sh] 找不到 $IMAGE_PY；恢復入口：/home/anr2/ida_94_official/backups/docker-images/MANIFEST.md" >&2
+    exit 3
+  }
+  [[ "$OUTPUT" == /* ]] || OUTPUT="$ROOT/$OUTPUT"
+  mkdir -p "$OUTPUT"
+  [[ -d "$OUTPUT" && -w "$OUTPUT" && -O "$OUTPUT" ]] || {
+    echo "[ida.sh] 輸出目錄必須可寫且屬於目前使用者：$OUTPUT" >&2
+    exit 3
+  }
+  SCRATCH="$(mktemp -d "$OUTPUT/.ida-XXXXXX")"
+  PROBE_CONTAINER="wolong-matching-ida-$VER-$$-$RANDOM"
+  cleanup_probe() {
+    docker rm -f "$PROBE_CONTAINER" >/dev/null 2>&1 || true
+    rmdir "$SCRATCH" 2>/dev/null || true
+  }
+  trap cleanup_probe EXIT
+  rm -f "$OUTPUT/ida-probe.json" "$OUTPUT/ida-probe-error.txt"
+  IDA_IMAGE_ID="$(docker image inspect "$IMAGE_PY" --format '{{.Id}}')"
+  timeout --kill-after=10 "${WOLONG_IDA_TIMEOUT:-180}" docker run --rm --init \
+    --name "$PROBE_CONTAINER" \
+    --label wolong.task=matching-decompilation \
+    --network none --memory 4g --cpus 2 --pids-limit 256 \
+    --user "$(id -u):$(id -g)" \
+    -e "WOLONG_IDA_IMAGE_ID=$IDA_IMAGE_ID" \
+    --mount "type=bind,src=$ROOT/workplace/orig/$VER,dst=/input,readonly" \
+    --mount "type=bind,src=$ROOT/tools,dst=/tools,readonly" \
+    --mount "type=bind,src=$ROOT/docs/re,dst=/evidence,readonly" \
+    --mount "type=bind,src=$OUTPUT,dst=/output" \
+    --mount "type=bind,src=$SCRATCH,dst=/work" \
+    --workdir /work --entrypoint /bin/bash "$IMAGE_PY" -c '
+      set -euo pipefail
+      cp "/input/$1" "/work/$1"
+      idat -A -L/output/ida.log "-S/tools/$2" "/work/$1"
+      test -s /output/ida-probe.json
+      test -s "/work/$1.i64"
+      cp "/work/$1.i64" /output/input.exe.i64
+      sha256sum /output/input.exe.i64 > /output/database.sha256
+      rm -f "/work/$1" "/work/$1.i64"
+    ' ida-probe "$BIN" "$(basename "$SCRIPT")"
+  exit 0
+fi
+
 WORK="$ROOT/workplace/ida/$VER"
 mkdir -p "$WORK"
 
