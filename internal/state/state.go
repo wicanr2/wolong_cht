@@ -65,17 +65,17 @@ const (
 	// 信賴度則是 cs:0D00h（IDA `byte_10D00`），所以是區塊內的 +0x10。
 	// Player 的原版 runtime 值是 cs:0CFFh（區塊 +0x0F）；前一個 word
 	// cs:0CFDh（區塊 +0x0D）保存同一勢力的記錄表位址 `faction×0x40`。
-	playerPtrOffset  = 0x0D
-	playerOffset     = 0x0F
-	trustOffset      = 0x10
+	playerPtrOffset = 0x0D
+	playerOffset    = 0x0F
+	trustOffset     = 0x10
 	// 財政視窗的月結快照（`cs:0D02h`／`0D05h`），各 24 位。
 	incomeSnapOffset  = 0x12
 	expenseSnapOffset = 0x15
 
 	// titleOffset 是劇本／存檔的標題字串（Big5，NUL 結尾）。
 	// 原版四槽選擇視窗的名稱欄畫的就是它（docs/re/52 §4）。
-	titleOffset = 0x40
-	titleMax    = 0x3B // 到區塊 +0x7B，之後是第 ② 塊的起點 +0x80
+	titleOffset      = 0x40
+	titleMax         = 0x3B // 到區塊 +0x7B，之後是第 ② 塊的起點 +0x80
 	taxOffset        = 0x18
 	recruitCapOffset = 0x1A
 	nextSettings     = 0x20 // 「來月」的同四項，月結時搬到上面兩處
@@ -83,15 +83,15 @@ const (
 	// 原版事件佇列位於區塊尾端；事件字的高 byte 可能是勢力／災害
 	// 變體，不能只保存低 byte。這裡先保存原始 256 × 4 B，處理時序與
 	// handler 效果仍由事件佇列的反組譯切片逐項接入。
-	eventQueueOffset    = 0x52C0
+	eventQueueOffset = 0x52C0
 	// 自定軍師（docs/formats/10 §4）：ds:5221h 的肖像編號與 ds:5222h 的六個
 	// Big5 字都在 ds:0D52h 段裡，段從區塊 +0x80 起原封不動存，所以就在這裡。
 	advisorPortraitOffset = factionBase + 0x5221 // 0x52A1
 	advisorNameOffset     = factionBase + 0x5222 // 0x52A2，12 B
 	advisorNameLen        = 12
-	eventQueueEntrySize = 4
-	eventQueueEntries   = 0x100
-	eventQueueDispatch  = 0x40 // sub_131AE 只處理前 64 筆（0x100 byte）
+	eventQueueEntrySize   = 4
+	eventQueueEntries     = 0x100
+	eventQueueDispatch    = 0x40 // sub_131AE 只處理前 64 筆（0x100 byte）
 )
 
 // Faction 是一個勢力的完整狀態。
@@ -308,6 +308,9 @@ type General struct {
 	// （`sub_129C3`）、釋放時清掉並通知舊主（`sub_150D7`）、
 	// 月結時判歸降（`sub_1585F`）。見 docs/re/09 §6。
 	Captor int
+
+	// MonthlyScore 保存原版 +0x1F 的月結評分 byte（spec/213）。
+	MonthlyScore uint8
 }
 
 // 職務值（記錄 +0x17），docs/spec/143 §1。原版拿它當 `cs:75A4h`
@@ -435,6 +438,7 @@ type World struct {
 	// runtime 物件；事件 12 的火災／暴動才會建立，清除事件會移除。
 	disasterObjects [disasterObjectSlots]disasterObject
 	stormArea       *economy.StormArea
+	stormGlobals    *[4]uint16
 
 	// eventCursor／eventDelay 是原版的 runtime 游標（`word_10D20`）與
 	// 節流計數（`byte_131AD`），不在存檔區塊內；載入新狀態與月結都重設。
@@ -585,7 +589,6 @@ type QueuedEvent struct {
 	Param uint16
 }
 
-
 func u16(b []byte, off int) int { return int(binary.LittleEndian.Uint16(b[off:])) }
 
 // i24 讀一個有號 24 位元的值。原版的資金就是這樣存的，
@@ -647,13 +650,13 @@ func loadBlock(b []byte) *World {
 		player = p
 	}
 	w := &World{
-		stage1DI:    -1,
-		Player:      player,
-		Title:       blockTitle(b),
-		Trust:       int(b[trustOffset]),
+		stage1DI:        -1,
+		Player:          player,
+		Title:           blockTitle(b),
+		Trust:           int(b[trustOffset]),
 		AdvisorPortrait: int(b[advisorPortraitOffset]),
-		raw:         append([]byte(nil), b...),
-		eventDelay:  7,
+		raw:             append([]byte(nil), b...),
+		eventDelay:      7,
 		// 事件 10 的原版 producer unknown；remake 預設使用明確標示的
 		// 近似 producer，仍可由 SetApproximateEvent10(false) 關閉。
 		approximateEvent10: true,
@@ -747,28 +750,28 @@ func loadBlock(b []byte) *World {
 	for i := range w.Cities {
 		r := b[cityBase+i*citySize:]
 		w.Cities[i] = City{
-			Name:          decodeName(r[0x02:0x08]),
-			Owner:         int(r[0x01]),
-			OwnerRecorded: int(r[0x1A]),
-			X:             u16(r, 0x08),
-			Y:             u16(r, 0x0A),
-			ProductionCap: u16(r, 0x0C),
-			Production:    u16(r, 0x0E),
-			Growth:        int(r[0x10]) - 100, // 存值帶 +100 偏移
-			Prevention:    int(r[0x11]),
-			GarrisonCap:   int(r[0x12]),
-			Garrison:      int(r[0x13]),
-			Governor:      int(r[0x19]),
-			Kind:          int(r[0x16]) & 0x0F,
-			KindHigh:      int(r[0x16]) >> 4,
-			Adjacency:     int(r[0x00]) & 0x0F,
-			Threatened:    r[0x00]&0x80 != 0,
-			Specific:      r[0x00]&0x40 != 0,
+			Name:            decodeName(r[0x02:0x08]),
+			Owner:           int(r[0x01]),
+			OwnerRecorded:   int(r[0x1A]),
+			X:               u16(r, 0x08),
+			Y:               u16(r, 0x0A),
+			ProductionCap:   u16(r, 0x0C),
+			Production:      u16(r, 0x0E),
+			Growth:          int(r[0x10]) - 100, // 存值帶 +100 偏移
+			Prevention:      int(r[0x11]),
+			GarrisonCap:     int(r[0x12]),
+			Garrison:        int(r[0x13]),
+			Governor:        int(r[0x19]),
+			Kind:            int(r[0x16]) & 0x0F,
+			KindHigh:        int(r[0x16]) >> 4,
+			Adjacency:       int(r[0x00]) & 0x0F,
+			Threatened:      r[0x00]&0x80 != 0,
+			Specific:        r[0x00]&0x40 != 0,
 			EnemyNeighbours: int(r[0x1B]),
 			Threat:          int(r[0x14]),
 			Occupancy:       int(r[0x18]),
 			ReliefCooldown:  int(r[0x17]),
-			Neighbours:    [4]int{int(r[0x1C]), int(r[0x1D]), int(r[0x1E]), int(r[0x1F])},
+			Neighbours:      [4]int{int(r[0x1C]), int(r[0x1D]), int(r[0x1E]), int(r[0x1F])},
 		}
 		// `+0x15` ＝ 天災強度（`sub_134B1`／`sub_1237E`）。它是執行期狀態，
 		// 從存檔起跑時要帶著走，否則沒跑到事件 12 的據點會一直是 0。
@@ -796,6 +799,7 @@ func loadBlock(b []byte) *World {
 			Budget:       int(r[0x1A]),
 			Faction:      int(r[0x1C]),
 			Captor:       int(r[0x1D]),
+			MonthlyScore: r[0x1F],
 
 			Affinity:             int(r[0x19]),
 			VanishIfAffinityGone: r[0x00]&0x20 != 0,
@@ -1141,6 +1145,16 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 	}
 	ev.Settled = true
 
+	w.monthlyRules(&ev, rng)
+
+	// ⑥ 月結跑完才輪到每「時」的世界更新（`sub_13E11`，見上面的說明）。
+	//    換月一定也換時，所以這裡不必再問一次 `ev.Clock.Hour`。
+	w.hourly(&ev, rng)
+	return ev
+}
+
+// monthlyRules 是原有 tick 月結區段；每時更新仍由 tick 在其後執行。
+func (w *World) monthlyRules(ev *Event, rng economy.Rand) {
 	// ① 各勢力的月結。
 	cities := w.economyCities()
 	for i := range w.Factions {
@@ -1149,13 +1163,13 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 			continue
 		}
 		ef := economy.Faction{
-			Funds:      f.Funds,
-			Reserves:   f.Reserves,
-			Capital:    cities[w.clampCity(f.Capital)],
-			TaxRate:    w.TaxRate,
-			RecruitCap: w.RecruitCap,
-			Expense:    f.Expense,
-			AI:         i != w.Player,
+			Funds:       f.Funds,
+			Reserves:    f.Reserves,
+			Capital:     cities[w.clampCity(f.Capital)],
+			TaxRate:     w.TaxRate,
+			RecruitCap:  w.RecruitCap,
+			Expense:     f.Expense,
+			AI:          i != w.Player,
 			CorpsWeight: w.aiCorpsWeight(i),
 		}
 		expense := f.Expense
@@ -1210,6 +1224,7 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 				TalkNotice{Index: freelanceJoinTalk, General: id})
 		}
 	}
+	w.refreshMonthlyGeneralScores()
 	w.compactEventQueue()
 
 	// ⭐ **政略排在撥款請求與災害之前**（原版 `sub_15358` 的
@@ -1238,6 +1253,7 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 	// sub_122DB：暴風雨。⭐ **槽位提示是算出來的，不是 0xFF**
 	//（`(亂數&7 ＋ 8) × 4`），所以 `queueEvent` 走 `bl × 4` 那一支、
 	// 內部不再取亂數；而且**入佇列失敗就不設範圍**（`jb loc_1237A`）。
+	w.stormArea = nil
 	ev.Storm = economy.RollStorm(cities, rng)
 	if ev.Storm != nil {
 		slot := byte((rng.Next()&7 + 8) * 4)
@@ -1249,6 +1265,7 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 	} else {
 		w.stormArea = nil
 	}
+	w.saveMonthlyStormGlobals()
 
 	// sub_12286：逐據點的火災／暴動。⭐ **骰子與入佇列是交錯的**——
 	// 每一座骰完就當場寫佇列，而 `queueEvent` 在 slotHint ＝ 0xFF 時
@@ -1295,10 +1312,6 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 		}
 	}
 
-	// ⑥ 月結跑完才輪到每「時」的世界更新（`sub_13E11`，見上面的說明）。
-	//    換月一定也換時，所以這裡不必再問一次 `ev.Clock.Hour`。
-	w.hourly(&ev, rng)
-	return ev
 }
 
 // hourly 跑原版 `sub_13E11`：**每「時」只處理一個勢力**，
@@ -1563,6 +1576,11 @@ func clampU8(v int) int {
 // 重建會把它們全部歸零，等於損毀存檔。
 func (w *World) Bytes() []byte {
 	b := append([]byte(nil), w.raw...)
+	if w.stormGlobals != nil {
+		for i, value := range w.stormGlobals {
+			putU16(b, 0x32+i*2, int(value))
+		}
+	}
 
 	// 遊戲時鐘。+0x01 的該月天數是快取值，原版在換月時一起寫，
 	// 這裡也一起寫回去，否則進位判斷會用到舊的天數。
@@ -1676,6 +1694,7 @@ func (w *World) Bytes() []byte {
 
 	for i, g := range w.Generals {
 		r := b[generalBase+i*generalSize:]
+		r[0x1F] = g.MonthlyScore
 		if g.Alive {
 			r[0x00] |= 0x80
 		} else {

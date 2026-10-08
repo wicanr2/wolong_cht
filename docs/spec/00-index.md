@@ -260,6 +260,12 @@
 | C 月結世界更新與事件 writer | [`209-c-monthly-world-update.md`](209-c-monthly-world-update.md) | CONFORMED，十一函式原版/C 142,864 組及四劇本接線，七個負對照拒絕 |
 | 生產力 low-word 乘積與 word 加法 | [`210-growth-word-parity.md`](210-growth-word-parity.md) | CONFORMED，Go 原版生產力 560 組、邊界冷測與狀態層冷測 |
 | C 月結政治、俘虜與 queue 初始化 | [`211-c-monthly-politics.md`](211-c-monthly-politics.md) | CONFORMED，21 函式原版/C 11,632 組與四劇本月結規則；UI 仍為 fixture |
+| 原版／C／Go 完整月結比較 | [`212-c-go-monthly-comparison.md`](212-c-go-monthly-comparison.md) | CONFORMED，36 固定向量完整原版區塊及 RNG 相同，限局部 rules |
+| 武將月度評分 +0x1F 的 typed data／寫回 | [`213-general-monthly-score.md`](213-general-monthly-score.md) | CONFORMED，byte wrap、停用／終止槽、載入保存與三方向量 |
+| 政治候選交換式選擇排序 | [`214-political-candidate-order.md`](214-political-candidate-order.md) | CONFORMED，同值尾端／FF 邊界與完整三方向量 |
+| 中立邊境的月度 raw 事件 1 | [`215-neutral-monthly-declaration.md`](215-neutral-monthly-declaration.md) | CONFORMED，門檻、邊境、既有目標與 FF18 queue／RNG |
+| 月度暴風雨 globals 保存 | [`216-monthly-storm-globals.md`](216-monthly-storm-globals.md) | CONFORMED，四 word、raw 錨點與 round-trip／三方向量 |
+| 玩家勢力月度宣戰 producer | [`217-player-monthly-declaration.md`](217-player-monthly-declaration.md) | CONFORMED，原版 Player gate 不存在、玩家事件與三方向量 |
 
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的

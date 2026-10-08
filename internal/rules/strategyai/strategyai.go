@@ -5,11 +5,7 @@
 // 交戰狀態與軍團資料；如此可用固定輸入直接測試機器碼規則。
 package strategyai
 
-import (
-	"sort"
-
-	"github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
-)
+import "github.com/wicanr2/wolong_cht/internal/rules/diplomacy"
 
 // NoTarget 是勢力記錄 +0x19 的無侵攻目標哨兵值。
 const NoTarget = 0xFF
@@ -34,17 +30,19 @@ type Candidate struct {
 }
 
 // SortCandidates 複製並按原版 sub_12C52 的交友度由低到高排序。
-// 同值時以勢力編號作穩定 tie-break；原版的選擇排序遇同值會保留掃描順序，
-// 而據點掃描本身就是編號順序，這裡把該結果明寫出來。
+// 原版遇嚴格更小的 raw byte 當場交換，同值不按勢力編號重排（spec/214）。
 func SortCandidates(in []Candidate) []Candidate {
 	out := append([]Candidate(nil), in...)
-	sort.SliceStable(out, func(i, j int) bool {
-		li, lj := out[i].Friendship.Raw(), out[j].Friendship.Raw()
-		if li != lj {
-			return li < lj
+	for i := 0; i+1 < len(out); i++ {
+		minimum := 0xFF
+		for j := i; j < len(out); j++ {
+			value := out[j].Friendship.Raw()
+			if value < minimum {
+				minimum = value
+				out[i], out[j] = out[j], out[i]
+			}
 		}
-		return out[i].Faction < out[j].Faction
-	})
+	}
 	return out
 }
 
@@ -93,7 +91,7 @@ func FriendshipLimit(aggression int) int {
 // ShouldDeclareWar 重現 sub_12EFB。成功條件全部採原版的嚴格比較：
 // 資金必須大於門檻、交友度不得大於門檻、己方國力至少是目標的四分之三。
 func ShouldDeclareWar(self, target Faction, candidate Candidate) bool {
-	if !self.Alive || !target.Alive || self.Player || self.InvasionTarget == candidate.Faction {
+	if !self.Alive || !target.Alive || self.InvasionTarget == candidate.Faction {
 		return false
 	}
 	if fundsWord(self.Funds) <= FundLimit(self.Cities) {

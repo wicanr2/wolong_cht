@@ -124,6 +124,7 @@ func (w *World) runStrategicAI(rng economy.Rand) ([]StrategyEvent, map[int]int) 
 func (w *World) queueDeclaration(rng economy.Rand, i int, ordered []strategyai.Candidate,
 	out *[]StrategyEvent) {
 	if len(ordered) == 0 {
+		w.queueNeutralDeclaration(rng, i, out)
 		return
 	}
 	first := ordered[0]
@@ -140,13 +141,11 @@ func (w *World) queueDeclaration(rng economy.Rand, i int, ordered []strategyai.C
 		}
 		return
 	}
-	if i == w.Player {
-		return
-	}
 	self, target := w.strategyFaction(i), w.strategyFaction(first.Faction)
 	if !strategyai.ShouldDeclareWar(self, target, strategyai.Candidate{
 		Faction: first.Faction, Friendship: fr,
 	}) {
+		w.queueNeutralDeclaration(rng, i, out)
 		return
 	}
 	// sub_12EFB 發的是事件 1；不要在月結邊界直接改寫 +0x19
@@ -155,6 +154,45 @@ func (w *World) queueDeclaration(rng economy.Rand, i int, ordered []strategyai.C
 		*out = append(*out, StrategyEvent{
 			Faction: i, Target: first.Faction, Corps: -1, Destination: -1})
 	}
+}
+
+// queueNeutralDeclaration 是 sub_12F71，僅在普通宣戰不成立後呼叫（spec/215）。
+func (w *World) queueNeutralDeclaration(rng economy.Rand, faction int, out *[]StrategyEvent) bool {
+	if faction < 0 || faction >= numFactions || !w.Factions[faction].Alive {
+		return false
+	}
+	f := &w.Factions[faction]
+	if f.InvasionTarget < 24 {
+		return false
+	}
+	border := false
+	for _, c := range w.Cities {
+		if c.Owner != faction {
+			continue
+		}
+		for direction, neighbour := range c.Neighbours {
+			if c.Adjacency&(1<<direction) != 0 && neighbour >= 0 && neighbour < numCities && w.Cities[neighbour].Owner == 24 {
+				border = true
+			}
+		}
+	}
+	threshold := f.Cities*16 + 96
+	if threshold > 1757 {
+		threshold = 1757
+	}
+	fundsHigh := int(int16(uint32(f.Funds) >> 8))
+	if !border || fundsHigh <= threshold {
+		f.InvasionTarget = diplomacy.NoTarget
+		return false
+	}
+	if f.InvasionTarget == 24 {
+		return false
+	}
+	if !w.queueEvent(rng, faction, 1, 0xFF18, 0xFF) {
+		return false
+	}
+	*out = append(*out, StrategyEvent{Faction: faction, Target: 24, Corps: -1, Destination: -1})
+	return true
 }
 
 // queueCooperationProposal 重現 sub_12E33 的事件 2 產生端。

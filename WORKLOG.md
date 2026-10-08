@@ -141,3 +141,18 @@
 - 本輪依授權完成後 commit、push；完整 matching decompilation Goal 保持 active，月結規則接線不代表整檔 C 或正常玩家 UI 完成。
 - 收尾文件與工具檢查 21／25 通過，860 列分流、嚴格研究索引、過期斷言、新工具語法、校訂、資產 deny-list 與全部正對照通過。四項既有缺檔／教訓檢查失敗保留，新文件沒有新增引用錯誤。
 - 四十六個 C 函式 source identity 與分級出處核對，原版 EXE／DAT 雜湊相同。輸出 UID/GID 為 1000:1000，既有 root-owned 路徑仍為 27 筆，本輪容器已退出移除。
+
+## 2026-10-08：完整月結原版／C／Go 36 向量比較
+
+- 前輪 `e2fe24f` 已推送，分類為 progress。核對現況、逆向／IDA／spec／文件職責路由，將已還原 C 呼叫鏈用來直接審查 remake。
+- 從正式 tick 純抽取 153 行原有月結規則至 private monthlyRules，正常 tick 的前置據點／軍團／時鐘與最後每時更新次序保留。MatchingMonthly 僅在 matching build tag 可見，沒有 production shortcut。
+- 同四個原版劇本、玩家 0／7／21、raw c=0／77／255 與 s=uint8(c×37)，原版/C 每向量全暫存器及 1 MB 相同。Go 在同一 rules 邊界比較全部 22,208 bytes 與 258-byte RNG，所有載入基準零差異，沒有 mask 或剔除 queue。
+- 最初 0／36 完全相同，general +0x1F 共 3429 bytes 差異。按 READY spec/213 接回 typed score、月結 byte 計算與保存，9／36 通過。
+- 原始交換式排序修正依 READY spec/214，12／36 通過；中立 FF18 producer 依 spec/215，20／36 通過；storm globals 與玩家宣戰 gate 依 spec/216、217，最終 36／36 完整區塊與最終 RNG 相同。
+- 各 before-score／after-score／after-order／after-neutral checkpoint 的 audit、vectors 與 source hashes 保留。本機原版區塊與 RNG binary 不進 Git。
+- Storm globals 使用 typed 更新欄位，Bytes 套到原版位置，RawBlock 原始錨點保持不變。新增原版格式 round-trip、停用／終止槽、byte wrap、同值尾端、FF 邊界、中立非 producer 與玩家規則冷測。
+- strategyai／state 正常與 matching tag 冷測、Go vet 通過；驗證器 globals／勢力／據點／武將／queue／RNG 六種單 byte 突變全部拒絕。
+- 首次排序實作以 byte 暫存 Raw() 的 int，型別檢查拒絕，改用正式 API 型別後同一向量重跑。沒有放寬原始比較或挑 seed。
+- spec/212–217 更新 CONFORMED，範圍限這 36 固定月結 rules 向量，不能當作任意後期世界、正常 GUI／音效／長程、完整 C 或 C 機器碼完成。Goal 保持 active，本輪依授權 commit、push。
+- 收尾文件與工具檢查 21／25 通過，885 列分流、嚴格研究索引、過期斷言、校訂、資產 deny-list 與全部正對照通過。四項既有缺檔／教訓檢查失敗保留，新文件與研究入口沒有新增引用錯誤。
+- 36 向量 source identity、原版 EXE／DAT 雜湊、46 個未修改 C 函式來源與產物擁有權核對。輸出 UID/GID 為 1000:1000，既有 root-owned 路徑仍為 27 筆，本輪容器已退出移除。

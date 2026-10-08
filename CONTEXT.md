@@ -29,9 +29,10 @@
 | 2026-10-08；五個據點結算 C 函式；Go 收入 carry／募兵 wrap 修正 | O0/O2 各原版/C 1,779,300 組、Go 1,385,882 組相同；四劇本經濟接線、五個突變與狀態層冷測通過 | C 據點收入／募兵已接入月結；尾端世界更新與 UI 仍未還原，不外推完整玩家月結 | spec/207、spec/208、[re/95](docs/re/95-c-city-settlement-restoration.md) 與局部收據 |
 | 2026-10-08；十一個 C 世界更新函式；Go 生產力寬度修正 | O0/O2 各原版/C 142,864 組、Go 生產力 560 組相同；七個突變拒絕，四劇本接線與狀態層冷測通過 | 七個月結尾端與真實 event writer 已接入；政治／俘虜、月度佇列初始化、UI 仍未還原 | spec/209、spec/210、[re/96](docs/re/96-c-monthly-world-update-restoration.md) 與局部收據 |
 | 2026-10-08；二十一個政治／俘虜 C 函式 | O0/O2 各原版/C 11,632 組相同，八個突變拒絕，四劇本完整 C 月結規則接線通過 | 九個月結尾端均有真實 C；僅 UI／音效／重畫仍為 fixture，不外推正常玩家流程或完整 Go 月結 parity | spec/211、[re/97](docs/re/97-c-monthly-politics-restoration.md) 與局部收據 |
+| 2026-10-08；完整月結原版／C／Go 同狀態比較 | 四劇本 × 三玩家 × 三個固定 raw RNG 初值，36／36 完整 22,208-byte 區塊與 258-byte RNG 相同；正常／matching state 冷測通過 | 已修評分、原始交換排序、中立事件、storm globals、玩家 producer；限明示 rules 邊界，UI／音效／重畫仍為 fixture | spec/212–217、[re/98](docs/re/98-c-go-monthly-comparison.md)、逐 byte／RNG 收據 |
 
 持續 Goal 為完成整個 matching decompilation；目前有整檔組語基準與四十六個 C 函式，不能據此宣布完整 C 還原完成。
-使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f` 與世界更新 `5402deb` 已推到 origin/main。
+使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb` 與政治 `e2fe24f` 已推到 origin/main。
 
 未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。
 
@@ -706,6 +707,14 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 > 台帳會一直長；教訓應該收斂。同一個模式犯第二次就記在同一條的
 > `occurrences` 裡，不要開新的一條。
 
+
+### 「同值候選按勢力編號；玩家月結不發宣戰」（2026-10-08）
+
+原版 `sub_12C52` 依據點／鄰接遇見次序，以交換式選擇排序處理 raw byte，同值不按勢力編號重排。
+舊 Go 的 tie-break 讓月結第一鄰居不同，relation 差兩格。`sub_12EFB` 也沒有 Player gate，
+舊 Go 丟棄玩家事件後使後續 queue／RNG 次序漂移。兩項已按 spec/214、217 修正。
+完整月結 audit 同時接回 +0x1F 評分、中立 FF18 事件與 storm globals，36 固定向量三方完全相同。
+原始 bytes／反例、各 checkpoint 與證據邊界在 [`docs/re/98`](docs/re/98-c-go-monthly-comparison.md)。
 
 ### 「生產力以普通整數加法、上昇值正負選分支」（2026-10-08）
 

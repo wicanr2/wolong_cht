@@ -62,8 +62,41 @@ func TestSortCandidates(t *testing.T) {
 		{Faction: 2, Friendship: diplomacy.Friendship(0xA9)},
 		{Faction: 1, Friendship: diplomacy.Friendship(0xA9)},
 	})
-	if got[0].Faction != 1 || got[1].Faction != 2 || got[2].Faction != 4 {
+	if got[0].Faction != 2 || got[1].Faction != 1 || got[2].Faction != 4 {
 		t.Fatalf("sorted candidates = %+v", got)
+	}
+}
+
+func TestSortCandidateSwapsPreserveOriginalTailOrder(t *testing.T) {
+	in := []Candidate{{Faction: 1, Friendship: 0x60}, {Faction: 2, Friendship: 0x60}, {Faction: 3, Friendship: 0x50}}
+	got := SortCandidates(in)
+	for i, want := range []int{3, 2, 1} {
+		if got[i].Faction != want {
+			t.Fatalf("candidate %d is %d, want %d", i, got[i].Faction, want)
+		}
+	}
+	if in[0].Faction != 1 {
+		t.Fatal("input mutated")
+	}
+}
+
+func TestSortCandidateRawByteBoundaries(t *testing.T) {
+	got := SortCandidates([]Candidate{{Faction: 3, Friendship: 0xFF}, {Faction: 2, Friendship: 0x80}, {Faction: 1, Friendship: 0x7F}, {Faction: 4, Friendship: 0xFF}})
+	for i, want := range []int{1, 2, 3, 4} {
+		if got[i].Faction != want {
+			t.Fatalf("raw candidate %d: got %d want %d", i, got[i].Faction, want)
+		}
+	}
+}
+
+func TestPlayerMonthlyDeclarationUsesSameRule(t *testing.T) {
+	self, target := testFaction(), testFaction()
+	target.Reserves = [3]int{40, 40, 40}
+	candidate := Candidate{Faction: 1, Friendship: 0x80}
+	before := ShouldDeclareWar(self, target, candidate)
+	self.Player = true
+	if !before || ShouldDeclareWar(self, target, candidate) != before {
+		t.Fatal("extra player gate in monthly declaration")
 	}
 }
 
