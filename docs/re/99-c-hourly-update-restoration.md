@@ -97,6 +97,9 @@ RNG 表固定 12:34:56，每案例 raw c/s 於執行前同時寫兩側，沒有�
 
 ## 5. 未解範圍
 
+後續 C handler 證據見 [`re/100`](100-c-event-handlers-restoration.md)。本輪舊收據的十一個
+handler RET 保留；re/100 的新收據覆蓋真實 handler 與依賴，UI／戰術／正常玩家邊界仍未驗證。
+
 | 項目 | 邊界 |
 |---|---|
 | 其他十一個 event handler 與完整 modal／UI／音效 | 未驗證，原始 table call 不替代 callee 完成 |

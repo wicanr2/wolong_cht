@@ -1855,3 +1855,10 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - KI.EXE SHA-256 同固定原版 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`；IDA 9.4 DB SHA-256 `d15aa9875f3821827d3a5d76edf4019c34ae2f599322523e26541406637b2c7b`，八函式原始定位與 source identity 見 [`docs/re/99`](docs/re/99-c-hourly-update-restoration.md)。
 - O0/O2 各 21,871 組原版/C、171 次完整記憶體核對相同；七個突變拒絕。每時財政、carry 維持費、外交雙向 relation、cadence 與原始 table call 保留完整 ABI。
 - 推論等級已證實，限合法矩陣與明示 fixture。其他 handler／UI／音效／退出、正常玩家日期流、完整 Go 每時 parity 與 C 機器碼仍未驗證。
+
+## 2026-10-08：十三碼事件的真實 C handler 與依賴
+
+- KI.EXE／SINARIO.DAT 身分同固定原版；IDA Pro 9.4 DB SHA-256 `67e6b4f56f2faa716b9f18afd61260a20329374146d29a41a4204317eff6eb97`。三十函式的原始名稱、完整 chunks、1919 bytes、operand、xref、source identity 見 [`docs/re/100`](docs/re/100-c-event-handlers-restoration.md)。
+- O0/O2 各 43,476 組原版/C、340 次完整 1 MB 核對相同；八個突變拒絕，三十函式都有實際入口收據。其餘十一 handler、event 8 落下尾端、政治／災害依賴接到原始十三碼 table，modal／戰術仍是明示 fixture。
+- `sub_135AB` 的 raw 0x24 比較與 `sub_13138` 的 `cmp ax, ax` 原樣保留。前者的高層玩家語意與 Issue #27 未定，本輪不改正式 Go、不猜補玩法。推論等級已證實只套用本輪 raw 控制流範圍。
+- spec/218 的「四劇本連續每時」更正為各自獨立一個每時入口，原收據與矩陣沒有變更。spec/218、re/99、spec/64 加後續 C 範圍 backlink，由新 verifier 自動核對。

@@ -176,6 +176,7 @@
 | [`docs/re/08-hourly-update.md`](re/08-hourly-update.md) | 08 — 每「時」的世界更新：sub_13E11 | 主結構已解。軍團編成、外交官效果、事件分派都在這裡。 | 2026-08-08 |
 | [`docs/re/09-combat.md`](re/09-combat.md) | 09 — 戰鬥：觸發、自動判定、傷亡與武將的下場 | 戰略層自動判定與政略↔戰術入口已解；戰術本體的核心規則已在 [docs/re/11](11-tactical-bat… | 2026-08-09 |
 | [`docs/re/10-rng.md`](re/10-rng.md) | 10 — 亂數產生器：sub_1ECE0 與 sub_1EC82 | 全解，已實作成 internal/rules/rng。 | 2026-08-08 |
+| [`docs/re/100-c-event-handlers-restoration.md`](re/100-c-event-handlers-restoration.md) | 100：C 事件 handler 與政治／災害依賴 | 三十函式 O0/O2 各 43,476 組原版/C 相同，八個負對照拒絕；限明示 modal／戰術／UI fixtu… | 2026-10-08 |
 | [`docs/re/11-tactical-battle.md`](re/11-tactical-battle.md) | 11 — 戰術戰鬥：模組結構與戰場資料模型 | 模組骨架、戰場資料模型、核心移動／命中／傷害規則已大致解出並接入測試； 正常玩家已可由遭遇選單進入攻城戰術畫面並送出… | 2026-08-09 |
 | [`docs/re/12-diplomacy-dialogue.md`](re/12-diplomacy-dialogue.md) | 12 — 停戰說服訊息索引：#190–#198 | 三變體槽位與停戰說服這條索引路徑已證實；事件 6／7 的次要呼叫已定位， 但 formatter 參數契約與完整可見… | 2026-08-09 |
 | [`docs/re/13-pc98-numeric-window.md`](re/13-pc98-numeric-window.md) | 13 — DOS/V 數字輸入視窗量測與 CJK 版面決策 | 以 DOS/V 為唯一畫面基準；原始座標、DOS/V 96×64 內框 blit、3×6 每格操作、 實際按鍵 gl… | 2026-08-10 |
@@ -413,6 +414,7 @@
 | [`docs/spec/216-monthly-storm-globals.md`](spec/216-monthly-storm-globals.md) | 216：月度暴風雨四個 globals word 保存 | CONFORMED。四個 storm globals 保存、原始 raw 錨點、round-trip 與 36 三方… | 2026-10-08 |
 | [`docs/spec/217-player-monthly-declaration.md`](spec/217-player-monthly-declaration.md) | 217：玩家勢力也執行月度宣戰 producer | CONFORMED。額外 Player gate 已移除，同規則玩家／AI 冷測與 36 三方向量通過。 | 2026-10-08 |
 | [`docs/spec/218-c-hourly-update.md`](spec/218-c-hourly-update.md) | 218：C 每時更新、維持費與事件分派核心 | CONFORMED。八函式 O0/O2 各 21,871 組原版/C 相同，七個負對照皆被拒絕。 | 2026-10-08 |
+| [`docs/spec/219-c-event-handlers.md`](spec/219-c-event-handlers.md) | 219：C 十三碼事件 handler 與原始依賴 | CONFORMED。三十函式 O0/O2 各 43,476 組原版/C 相同，八個負對照拒絕；限明示 callee … | 2026-10-08 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |
 | [`docs/spec/23-city-info-window.md`](spec/23-city-info-window.md) | 23 — 據點情報視窗 | CONFORMED。版面已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/24-corps-info-window.md`](spec/24-corps-info-window.md) | 24 — 軍團情報視窗 | CONFORMED。版面已照原版實作並有契約測試。 | 2026-08-15 |

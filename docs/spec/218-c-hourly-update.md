@@ -29,13 +29,16 @@ raw code.low 僅取 0–13，合法 cursor、段、勢力／官員索引，SS �
 O0/O2 比全暫存器／FLAGS、世界、globals、queue、RNG、cadence 與 stack。
 每 callee 入口記 raw 參數、關係／官員記錄、SS stack。涵蓋 cadence／空事件／13 碼分派、
 勢力 cursor、財政高位有號邊界、24-bit 維持費及 clamp、外交官 budget／relation／RNG、
-event 10／13 的控制流及四劇本連續每時規則。
+event 10／13 的控制流及四劇本各自獨立的一個每時入口。
 刻意錯的次序、cadence、cursor、carry、支出上限、外交 byte 閘與 trust borrow 需拒絕。
 
 七個次序、cadence、cursor、carry、支出上限、外交 byte 經費及 trust borrow 突變皆被拒絕；
 完整矩陣、callee 入口快照與 171 次全記憶體核對見 [`re/99`](../re/99-c-hourly-update-restoration.md)。
 
 ## 3. 未解範圍
+
+後續 C handler 證據見 [`spec/219`](219-c-event-handlers.md)。本規格的歷史收據仍對十一個
+handler 使用 RET；spec/219 的新收據改為真實 C handler，UI／戰術／正常玩家邊界仍未驗證。
 
 | 項目 | 邊界 |
 |---|---|

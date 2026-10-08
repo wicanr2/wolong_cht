@@ -169,3 +169,17 @@
 - 現行 C 台帳加入八函式，共五十四個；每筆 source／routine hash、原始位址與 proven／re/99 出處保留。Goal 保持 active，本輪依授權 commit、push。
 - 收尾文件與工具檢查 21／25 通過，893 列分流、嚴格研究索引、過期斷言、校訂、資產 deny-list 與全部正對照通過。四項既有缺檔／教訓檢查失敗保留，新文件沒有新增引用錯誤。
 - 五十四個 C 函式來源身分、分級語意、原版 EXE／DAT 雜湊與產物擁有權均核對。輸出 UID/GID 為 1000:1000，既有 root-owned 路徑仍為 27 筆，本輪容器已退出移除。
+
+## 2026-10-08：十三碼事件 handler 與政治／災害 C 閉包
+
+- 前輪 `9f5a843` 已推送，分類為 progress。開工核對乾淨工作樹、現行狀態、逆向／IDA／文件職責路由與 GitHub Issue #27。
+- 三十個原始函式共 1919 bytes，IDA 9.4 probe 保留名稱、linear address、operand、完整 chunks、xref 與 DB 身分。spec/219 READY 後實作 C 原始名稱入口。
+- 十一 handler、event 8 落入 `sub_133FD` 的原始尾端及十八個政治／災害依賴均真實接線。沒有為落下尾端插入 CALL／RET；modal、金額、戰鬥準備、UI 仍是明示 fixture。
+- O0/O2 各 43,476 組原版/C 相同，各版 340 次完整 1 MB 核對相同；三十函式都有實際入口次數，包含四劇本原始 dispatcher 與受控 queue／四種回應。
+- 門檻、關係 SHR、raw 0x24、災害容量／timer、軍團分支、原始 count 比較與協力上界八個突變全拒絕。補齊 C 原始名入口後，以最終來源完整重生收據。
+- 原版與 C 的狀態摘要分別讀各自記憶體，仍相同。正式 Go 本輪沒有改動，中立 byte 行為沒有升為玩家語意，Issue #27 保持 OPEN。
+- 更正 spec/218 的每時矩陣為四劇本獨立入口，原收據保留。較早 spec/218、re/99、spec/64 的範圍 backlink 由新 verifier 核對。
+- 現行 C 台帳加入三十函式，共八十四個；source／routine hash、位址、實際入口及 proven／re/100 出處保留。完整 Goal 保持 active，本輪依授權 commit、push。
+- 收尾檢查的 DB 雜湊少了明確檔案路徑，stale_scan 誤配到上一個 Markdown 連結；補上 DB 路徑後通過。兩個自我測試需要 workplace 暫存案例，改掛有界 tmpfs 後以同一工具鏈重跑通過，首次環境失敗 log 保留。
+- 收尾腳本用 basename 去比完整路徑，漏寫 docs/re/43；改為明確重生，並正查新兩份文件都已收錄。文件與工具檢查 21／25 通過、901 列分流與嚴格索引通過，四項既有缺檔／教訓失敗保留，本輪沒有新增引用錯誤。
+- 八十四個 C 函式來源身分、三十筆分級出處、原版 EXE／DAT、實際入口與 backlink 均核對。輸出 UID/GID 1000:1000，既有 root-owned 路徑仍為 27 筆，本輪容器已退出移除。

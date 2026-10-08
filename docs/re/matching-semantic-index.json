@@ -373,6 +373,216 @@
       "sources": [
         "docs/re/99-c-hourly-update-restoration.md"
       ]
+    },
+    "0x1320C": {
+      "meaning": "事件 1 勢力 gate、原始參數與目標更新",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x13220": {
+      "meaning": "事件 2 三方 gate、外交回傳與目標更新",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x13262": {
+      "meaning": "事件 3 外交回傳、清理、原始戰鬥 callee 與關係更新",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x132A9": {
+      "meaning": "事件 4 內政官 byte sentinel 與原始金額視窗參數",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x132E9": {
+      "meaning": "事件 5 外交官 byte sentinel 與原始金額視窗參數",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x13327": {
+      "meaning": "事件 6 外交官、對玩家 gate、選擇與關係更新",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x13388": {
+      "meaning": "事件 7 勢力／外交官 gate、選擇與目標更新",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x133EA": {
+      "meaning": "事件 8 勢力 gate、據點選取及原始落下尾端",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x133FD": {
+      "meaning": "遷都 raw 欄位、軍團 helper、兩種訊息的原始 formatter 參數",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x13485": {
+      "meaning": "事件 9 官員記錄取址與原始清理",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x134A6": {
+      "meaning": "事件 11 RNG、raw 24–39 storm 參數",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x134B1": {
+      "meaning": "事件 12 災害建立／清理、RNG、延遲 queue writer",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x1351A": {
+      "meaning": "以 AH 取勢力、byte 存在門檻與 CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x13526": {
+      "meaning": "原始目標 gate、通知參數與雙向關係更新",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x135AB": {
+      "meaning": "raw target 的 0x24 比較、間接 power 與 byte 寫入",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x135ED": {
+      "meaning": "依回傳做 24-bit 金額移轉與原始官員清理",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x13639": {
+      "meaning": "雙向關係 raw 最小值、清高位與 SHR",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x13669": {
+      "meaning": "雙向關係 raw 最小值與設高位",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x13697": {
+      "meaning": "保留原始 byte carry 的雙向 relation 取址",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x136C4": {
+      "meaning": "原始 byte 停戰條件、提案金額與保存暫存器",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x13712": {
+      "meaning": "原始 byte 協力條件、提案金額與保存暫存器",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x13771": {
+      "meaning": "外交官／官員取址、能力 gate、平手 RNG 與 byte score",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x137D8": {
+      "meaning": "雙向原始殘留記錄 helper 與 AH bit 組合",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x137F5": {
+      "meaning": "127 官員 raw owner／狀態／能力最大值選取及 CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x13138": {
+      "meaning": "127 官員 raw pair 計數與原始 cmp ax,ax／CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x14502": {
+      "meaning": "127 軍團 raw +0x20／+0x14 欄位比較及更新",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x16A3D": {
+      "meaning": "192 據點 raw owner、旗標／分類／生產力選取及 CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x123FF": {
+      "meaning": "十六災害槽 first-free、欄位寫入、保存與 CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x12438": {
+      "meaning": "同座標所有災害槽清理",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
+    },
+    "0x150D7": {
+      "meaning": "官員欄位、原始任官計數與通知參數",
+      "level": "proven",
+      "sources": [
+        "docs/re/100-c-event-handlers-restoration.md"
+      ]
     }
   },
   "operands": {

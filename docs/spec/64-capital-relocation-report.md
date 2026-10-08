@@ -102,6 +102,10 @@ remake 兩條路都接上了。
 
 ## 4. 驗證
 
+後續 C 控制流證據見 [`re/100`](../re/100-c-event-handlers-restoration.md)：DOS/V `sub_133EA`
+落入 `sub_133FD` 與 `sub_14502` 的 raw 欄位／callee 入口已複現。本規格的 Go 功能、
+訊息與小地圖驗收範圍不變；新 C 收據的 UI／重畫使用明示 fixture。
+
 | 方式 | 內容 |
 |---|---|
 | 單元測試 | `TestAIRelocationReportsOnlyWithEnvoy`（`internal/state`）：沒有外交官 → 零則通知；有外交官 → `#57` ＋ 組編號 `0x1A4`，帶勢力、新首都與外交官 |

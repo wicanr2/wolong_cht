@@ -31,9 +31,10 @@
 | 2026-10-08；二十一個政治／俘虜 C 函式 | O0/O2 各原版/C 11,632 組相同，八個突變拒絕，四劇本完整 C 月結規則接線通過 | 九個月結尾端均有真實 C；僅 UI／音效／重畫仍為 fixture，不外推正常玩家流程或完整 Go 月結 parity | spec/211、[re/97](docs/re/97-c-monthly-politics-restoration.md) 與局部收據 |
 | 2026-10-08；完整月結原版／C／Go 同狀態比較 | 四劇本 × 三玩家 × 三個固定 raw RNG 初值，36／36 完整 22,208-byte 區塊與 258-byte RNG 相同；正常／matching state 冷測通過 | 已修評分、原始交換排序、中立事件、storm globals、玩家 producer；限明示 rules 邊界，UI／音效／重畫仍為 fixture | spec/212–217、[re/98](docs/re/98-c-go-monthly-comparison.md)、逐 byte／RNG 收據 |
 | 2026-10-08；八個每時／dispatcher 核心 C 函式 | O0/O2 各原版/C 21,871 組相同，七個突變拒絕；四劇本 × 三玩家 × 22 cursor 的局部每時入口通過 | 財政、維持費、外交、cadence、原始 event table 與 event 10／13 已接入；其他 11 handler／UI 仍為 fixture | spec/218、[re/99](docs/re/99-c-hourly-update-restoration.md) 與來源收據 |
+| 2026-10-08；三十個事件 handler／依賴 C 函式 | O0/O2 各 43,476 組原版/C 相同，八個突變拒絕；每版 340 次完整 RAM、三十函式實際入口及四劇本 dispatcher 接線通過 | 十三碼 handler 均有真實 C，包含 event 8 落下尾端；modal／戰術／UI 仍為 fixture，中立 0x24 的玩家語意未定 | spec/219、[re/100](docs/re/100-c-event-handlers-restoration.md)、來源／入口／backlink 收據 |
 
-持續 Goal 為完成整個 matching decompilation；目前有整檔組語基準與五十四個 C 函式，不能據此宣布完整 C 還原完成。
-使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f` 與三方月結 `8251289` 已推到 origin/main。
+持續 Goal 為完成整個 matching decompilation；目前有整檔組語基準與八十四個 C 函式，不能據此宣布完整 C 還原完成。
+使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289` 與每時核心 `9f5a843` 已推到 origin/main。
 
 未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。
 
