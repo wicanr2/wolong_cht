@@ -65,6 +65,41 @@
       "sources": [
         "docs/re/94-c-monthly-economy-restoration.md"
       ]
+    },
+    "0x153C6": {
+      "meaning": "192 據點的收入與募兵累計、玩家／AI 分支及預備兵寫回",
+      "level": "proven",
+      "sources": [
+        "docs/re/95-c-city-settlement-restoration.md"
+      ]
+    },
+    "0x15456": {
+      "meaning": "AI 收入除二與 0x20 錯步進的軍團募兵節制",
+      "level": "proven",
+      "sources": [
+        "docs/re/95-c-city-settlement-restoration.md"
+      ]
+    },
+    "0x1548F": {
+      "meaning": "玩家兩段稅率乘除、未傳播的 word carry 與募兵設定上限",
+      "level": "proven",
+      "sources": [
+        "docs/re/95-c-city-settlement-restoration.md"
+      ]
+    },
+    "0x15538": {
+      "meaning": "生產力除距離除數後的 24-bit 收入累計",
+      "level": "proven",
+      "sources": [
+        "docs/re/95-c-city-settlement-restoration.md"
+      ]
+    },
+    "0x15547": {
+      "meaning": "分區移位募兵與三個 16-bit 累計",
+      "level": "proven",
+      "sources": [
+        "docs/re/95-c-city-settlement-restoration.md"
+      ]
     }
   },
   "operands": {

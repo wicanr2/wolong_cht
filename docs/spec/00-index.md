@@ -255,6 +255,8 @@
 | 原版年份 999→1000→999 | [`204-year-999-1000.md`](204-year-999-1000.md) | CONFORMED，Go 冷測與全部 65,536 個 16-bit 年份入口對照 |
 | 月結主流程與五個經濟 C 函式 | [`205-c-monthly-economy.md`](205-c-monthly-economy.md) | CONFORMED，原版/C 1,775,568 組、Go 1,326,175 組，限局部規則與明示 callee fixture |
 | 赤字扣兵的高位捨位方向 | [`206-deficit-high-word-rounding.md`](206-deficit-high-word-rounding.md) | CONFORMED，合法資金的固定 RNG 對照、經濟及狀態層冷測 |
+| 據點收入、募兵與 C 月結接線 | [`207-c-city-settlement.md`](207-c-city-settlement.md) | CONFORMED，原版/C 1,779,300 組、Go 1,385,882 組及四劇本接線 |
+| 玩家收入 word carry 與募兵累計 wrap | [`208-settlement-width-parity.md`](208-settlement-width-parity.md) | CONFORMED，原版反例、O0/O2／Go 矩陣及經濟、狀態層冷測 |
 
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的

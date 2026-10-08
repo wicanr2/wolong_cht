@@ -26,9 +26,10 @@
 | 同上；`sub_1EC82` 的 C 還原 | O0/O2 各原版/C 86,420 組、Go 86,408 組相同，三組突變被拒絕 | 播種局部語意通過；合法 BCD、固定 RTC、分離堆疊，不外推實機 RTC | spec/202、[re/92](docs/re/92-c-rng-seed-restoration.md) 與局部收據 |
 | 2026-10-08；`sub_11D8E` 的 C 還原；Go 年份修正 | O0/O2 各原版/C 292,297 組、Go 292,249 組相同；四組突變被拒絕 | 時鐘局部語意通過，callee 與等待為明示 fixture；不外推完整月結、硬體時序或玩家流程 | spec/203、spec/204、[re/93](docs/re/93-c-game-clock-restoration.md) 與局部收據 |
 | 2026-10-08；月結主流程與五個經濟 C 函式；Go 赤字修正 | O0/O2 各原版/C 1,775,568 組、Go 1,326,175 組相同；六個突變拒絕；經濟與狀態層冷測通過 | C 資金／赤字／RNG 已形成月結呼叫鏈；其他 callee 明示 fixture，不外推完整經濟、AI 或玩家流程 | spec/205、spec/206、[re/94](docs/re/94-c-monthly-economy-restoration.md) 與局部收據 |
+| 2026-10-08；五個據點結算 C 函式；Go 收入 carry／募兵 wrap 修正 | O0/O2 各原版/C 1,779,300 組、Go 1,385,882 組相同；四劇本經濟接線、五個突變與狀態層冷測通過 | C 據點收入／募兵已接入月結；尾端世界更新與 UI 仍未還原，不外推完整玩家月結 | spec/207、spec/208、[re/95](docs/re/95-c-city-settlement-restoration.md) 與局部收據 |
 
-持續 Goal 為完成整個 matching decompilation；目前有整檔組語基準與九個 C 函式，不能據此宣布完整 C 還原完成。
-使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881` 與時鐘 `228f30d` 已推到 origin/main。
+持續 Goal 為完成整個 matching decompilation；目前有整檔組語基準與十四個 C 函式，不能據此宣布完整 C 還原完成。
+使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d` 與經濟 `4e50f80` 已推到 origin/main。
 
 未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。
 
@@ -703,6 +704,15 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 > 台帳會一直長；教訓應該收斂。同一個模式犯第二次就記在同一條的
 > `occurrences` 裡，不要開新的一條。
 
+
+### 「玩家收入用普通乘除；募兵無寬度累計後再鉗制」（2026-10-08）
+
+原版 `sub_1548F` 的最後 ADD 只寫收入低 word，不把 carry 加到高 byte。
+gross=66303、tax=99 時，原版/C 為 103，舊 Go 普通乘除為 65639。
+`sub_15547` 的三個募兵累計是 word，每個據點加完會繞回，之後才套上限。
+192 個北方據點各 production=65535、除數 2 時，原版為 51584／5952／7808，
+舊 Go 為 65500／5952／65500。Go 已依 READY spec/208 修正，原版 O2 矩陣與冷測通過。
+原始指令、反例與證據邊界在 [`docs/re/95`](docs/re/95-c-city-settlement-restoration.md)。
 
 ### 「赤字扣兵先取欠款絕對值再右移」（2026-10-08）
 

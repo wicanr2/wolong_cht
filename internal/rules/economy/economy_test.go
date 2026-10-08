@@ -218,6 +218,41 @@ func TestDeficitPenalty(t *testing.T) {
 	}
 }
 
+func TestPlayerIncomeOriginalWordCarry(t *testing.T) {
+	for _, tc := range []struct{ gross, tax, income int }{
+		{66048, 99, 65387}, {66303, 99, 103}, {66303, 100, 66303}, {66303, 0, 0},
+	} {
+		var cities []City
+		remaining := tc.gross
+		for remaining > 0 {
+			n := remaining
+			if n > 32767 {
+				n = 32767
+			}
+			cities = append(cities, City{Owner: 0, Production: n * 2})
+			remaining -= n
+		}
+		f := Faction{TaxRate: tc.tax}
+		res := Settle(&f, cities, 0, zeroRand())
+		if res.Income != tc.income {
+			t.Fatalf("gross %d tax %d: income %d, want %d", tc.gross, tc.tax, res.Income, tc.income)
+		}
+	}
+}
+
+func TestRecruitAccumulatorWrapsBeforeCap(t *testing.T) {
+	cities := make([]City, 192)
+	for i := range cities {
+		cities[i] = City{Owner: 0, Production: 65535}
+	}
+	f := Faction{TaxRate: 100, RecruitCap: [NumTroopTypes]int{MaxReserve, MaxReserve, MaxReserve}}
+	res := Settle(&f, cities, 0, zeroRand())
+	want := [NumTroopTypes]int{51584, 5952, 7808}
+	if res.Recruited != want || f.Reserves != want {
+		t.Fatalf("recruits %v reserves %v, want %v", res.Recruited, f.Reserves, want)
+	}
+}
+
 func TestDeficitHighWordRounding(t *testing.T) {
 	for _, tc := range []struct{ funds, penalty int }{
 		{-1, 16}, {-255, 16}, {-256, 16}, {-257, 32}, {-16000, 1008}, {-655000, 40944},

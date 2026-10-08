@@ -259,6 +259,7 @@
 | [`docs/re/92-c-rng-seed-restoration.md`](re/92-c-rng-seed-restoration.md) | 92：C 播種函式：固定 RTC 的原版與 Go 對照 | 局部播種對照通過。合法時分秒、明示 RTC AL 與堆疊邊界有原版/C/Go 收據。 | 2026-10-08 |
 | [`docs/re/93-c-game-clock-restoration.md`](re/93-c-game-clock-restoration.md) | 93：C 時鐘還原與年份邊界對照 | 局部語意對照通過。第三個 C 函式可回查原版控制流，並修正 Go 年份邊界。 | 2026-10-08 |
 | [`docs/re/94-c-monthly-economy-restoration.md`](re/94-c-monthly-economy-restoration.md) | 94：月結呼叫鏈與五個經濟 C 函式 | 六個 C 函式局部對照通過。月結的資金、赤字與 RNG 已由 C 函式實際相接。 | 2026-10-08 |
+| [`docs/re/95-c-city-settlement-restoration.md`](re/95-c-city-settlement-restoration.md) | 95：據點收入、募兵與 C 經濟月結接線 | 五個 C 函式 O0/O2 與 Go 局部對照通過；據點結算已接入 C 經濟月結。 | 2026-10-08 |
 | [`docs/reference/01-jp-manual.md`](reference/01-jp-manual.md) | 01 — 日文原版說明書判讀紀錄 | 有實質機制的頁都讀完了，剩 p.6 啟動操作與 p.36–38 附錄。 | 2026-08-08 |
 | [`docs/reference/02-jp-cht-diff.md`](reference/02-jp-cht-diff.md) | 02 — 日中對照：TALK.DAT 第一批發現 | 全量 1,022 則的 | 2026-08-16 |
 | [`docs/reference/03-baked-japanese.md`](reference/03-baked-japanese.md) | 03 — 燒進美術裡的日文：松崗版沒重繪的部分 | 已確認的缺口：標題橫幅「臥竜伝」兩版相同（松崗沒重繪）。 | 2026-08-07 |
@@ -395,6 +396,8 @@
 | [`docs/spec/204-year-999-1000.md`](spec/204-year-999-1000.md) | 204：年份上界在 999 與 1000 間交替 | CONFORMED。Go 年份修正通過冷測與全部 65,536 個 16-bit 年份入口對照。 | 2026-10-08 |
 | [`docs/spec/205-c-monthly-economy.md`](spec/205-c-monthly-economy.md) | 205：月結主流程與五個經濟 C 函式 | CONFORMED。六個函式 O0/O2 各 1,775,568 組原版/C 相同；尚未還原的 callee 使用明… | 2026-10-08 |
 | [`docs/spec/206-deficit-high-word-rounding.md`](spec/206-deficit-high-word-rounding.md) | 206：赤字扣兵的高位取值與進位 | CONFORMED。Go 赤字捨位已修正，局部原版/C/Go 矩陣與經濟、狀態層冷測通過。 | 2026-10-08 |
+| [`docs/spec/207-c-city-settlement.md`](spec/207-c-city-settlement.md) | 207：據點收入、募兵與 C 月結接線 | CONFORMED。五函式 O0/O2 各 1,779,300 組原版/C 相同，Go 1,385,882 組相同。 | 2026-10-08 |
+| [`docs/spec/208-settlement-width-parity.md`](spec/208-settlement-width-parity.md) | 208：玩家收入與募兵累計的原始整數寬度 | CONFORMED。原版 word carry 與募兵 wrap 已對齊，局部矩陣、四劇本接線及狀態層冷測通過。 | 2026-10-08 |
 | [`docs/spec/21-corps-formation-reserves.md`](spec/21-corps-formation-reserves.md) | 21 — 編成時預備兵怎麼分配 | CONFORMED。已實作並有逐項單測。 | 2026-08-15 |
 | [`docs/spec/22-corps-formation-window.md`](spec/22-corps-formation-window.md) | 22 — 軍團編成視窗 | CONFORMED。版面、武將頭像與六個槽的滑鼠熱區都照原版實作， 並有契約測試。 | 2026-08-16 |
 | [`docs/spec/23-city-info-window.md`](spec/23-city-info-window.md) | 23 — 據點情報視窗 | CONFORMED。版面已照原版實作並有契約測試。 | 2026-08-15 |

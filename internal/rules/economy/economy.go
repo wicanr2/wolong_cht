@@ -186,9 +186,10 @@ func Settle(f *Faction, cities []City, owner int, rng Rand) Result {
 
 		// 募兵的基數再除以 32，然後依地域拆成三兵種。
 		cav, arc, inf := splitRecruits(base/32, c.Y)
-		recruit[Cavalry] += cav
-		recruit[Archer] += arc
-		recruit[Infantry] += inf
+		// 原版 SS locals 是三個 word，每次累計都以 16-bit 繞回（spec/208）。
+		recruit[Cavalry] = (recruit[Cavalry] + cav) & 0xFFFF
+		recruit[Archer] = (recruit[Archer] + arc) & 0xFFFF
+		recruit[Infantry] = (recruit[Infantry] + inf) & 0xFFFF
 	}
 	f.Cities = res.Cities
 
@@ -196,7 +197,7 @@ func Settle(f *Faction, cities []City, owner int, rng Rand) Result {
 		// 原版對非玩家勢力固定除以 2，不看稅率欄位。
 		res.Income = res.GrossBase / 2
 	} else {
-		res.Income = res.GrossBase * f.TaxRate / 100
+		res.Income = playerIncome(res.GrossBase, f.TaxRate)
 	}
 
 	// ⭐ **AI 的募兵是有節制的**（原版 `sub_15456` 的後半，docs/spec/181）：
@@ -242,6 +243,15 @@ func Settle(f *Faction, cities []City, owner int, rng Rand) Result {
 		}
 	}
 	return res
+}
+
+// playerIncome 保留 sub_1548F 的兩段乘除與 low-word ADD。
+// 最後 ADD 的 carry 沒進高 byte；不能改成一般 gross*tax/100（spec/208）。
+func playerIncome(gross, tax int) int {
+	highProduct := (gross >> 8) * tax
+	high, remainder := highProduct/100, highProduct%100
+	low := ((gross&0xFF)*tax + remainder*256) / 100
+	return ((high >> 8) << 16) | (((high&0xFF)<<8 + low) & 0xFFFF)
 }
 
 // recruitBlocked 是 `sub_15456` 的三行判斷：

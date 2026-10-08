@@ -7,7 +7,7 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-839 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+848 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
 - 日期：2026-10-08
 - 產生工具：`tools/re_open_questions.py`
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**833 列分布在 352 份文件，平均每份 2.4 列。**
+**842 列分布在 355 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -47,11 +47,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 199 | 192 | 6 | 1 |
+| 程式碼理解 | 203 | 196 | 6 | 1 |
 | 驗收 | 240 | 214 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 357 | 335 | 21 | 1 |
-| **合計** | **833** | 772 | 58 | 3 |
+| 其他 | 362 | 340 | 21 | 1 |
+| **合計** | **842** | 781 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,9 +59,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 314 |
+| `docs/spec/` | 319 |
 | `docs/playtest/` | 240 |
-| `docs/re/` | 199 |
+| `docs/re/` | 203 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
@@ -110,7 +110,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 | evidence-only | — |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 | evidence-only | — |
 
-## 2.3 程式碼理解（199 條）
+## 2.3 程式碼理解（203 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -313,6 +313,10 @@
 | [`re/94-c-monthly-economy-restoration.md`](../re/94-c-monthly-economy-restoration.md) | 據點完整結算與尾端 callee | 未驗證完整 AI、內政、外交與事件效果 | 靜態 | evidence-only | — |
 | [`re/94-c-monthly-economy-restoration.md`](../re/94-c-monthly-economy-restoration.md) | 月結正常玩家流程、UI 與完整存檔 | 未驗證，局部呼叫鏈不取代垂直鏈驗收 | 靜態 | evidence-only | — |
 | [`re/94-c-monthly-economy-restoration.md`](../re/94-c-monthly-economy-restoration.md) | C 機器碼匹配 | 未驗證，原版 C 工具鏈仍未知，整檔匹配仍由組語基準提供 | 靜態 | evidence-only | — |
+| [`re/95-c-city-settlement-restoration.md`](../re/95-c-city-settlement-restoration.md) | 尾端世界更新與重畫 | 未驗證完整內政、外交、天災及事件效果 | 靜態 | evidence-only | — |
+| [`re/95-c-city-settlement-restoration.md`](../re/95-c-city-settlement-restoration.md) | 正常玩家長程月結及完整 UI／存檔垂直鏈 | 未驗證，四劇本局部資料接線不替代正常玩家流程 | 靜態 | evidence-only | — |
+| [`re/95-c-city-settlement-restoration.md`](../re/95-c-city-settlement-restoration.md) | 非法資料、DIV fault 與硬體時序 | 未驗證，不從局部合法矩陣外推 | 靜態 | evidence-only | — |
+| [`re/95-c-city-settlement-restoration.md`](../re/95-c-city-settlement-restoration.md) | C 機器碼匹配 | 未驗證，原版工具鏈仍未知，整檔匹配仍由組語基準提供 | 靜態 | evidence-only | — |
 
 ## 2.4 驗收（240 條）
 
@@ -570,7 +574,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（357 條）
+## 2.6 其他（362 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -802,6 +806,11 @@
 | [`spec/205-c-monthly-economy.md`](../spec/205-c-monthly-economy.md) | C 機器碼匹配 | 未驗證，原版 C 工具鏈仍未知 | 靜態 | evidence-only | — |
 | [`spec/206-deficit-high-word-rounding.md`](../spec/206-deficit-high-word-rounding.md) | 完整玩家月結、UI 與長期存檔 | 未驗證，本輪修已證實局部扣兵規則 | 靜態 | evidence-only | — |
 | [`spec/206-deficit-high-word-rounding.md`](../spec/206-deficit-high-word-rounding.md) | 非法 Go 資金 | 未驗證，不擴張正式型別契約；C 仍保留原始 16-bit 運算 | 靜態 | evidence-only | — |
+| [`spec/207-c-city-settlement.md`](../spec/207-c-city-settlement.md) | 月結尾端世界更新、UI 與玩家存檔流程 | 未驗證，保留明示 fixture 的範圍 | 靜態 | evidence-only | — |
+| [`spec/207-c-city-settlement.md`](../spec/207-c-city-settlement.md) | 非法索引、稅率及除法 fault | 未驗證，不擴張正式規則契約 | 靜態 | evidence-only | — |
+| [`spec/207-c-city-settlement.md`](../spec/207-c-city-settlement.md) | C 機器碼匹配 | 未驗證，原版工具鏈仍未知 | 靜態 | evidence-only | — |
+| [`spec/208-settlement-width-parity.md`](../spec/208-settlement-width-parity.md) | 非法稅率、除法 fault 與異常記錄 | 未驗證，不用模數運算猜補原版例外路徑 | 靜態 | evidence-only | — |
+| [`spec/208-settlement-width-parity.md`](../spec/208-settlement-width-parity.md) | 正常玩家長程月結與完整世界更新 | 未驗證，保留尾端 callee 的明示 fixture 範圍 | 靜態 | evidence-only | — |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 池的上限 | `sub_155EC` 的 `0xFFDC` 只在退兵路徑上驗過；月結加兵是不是同一支未查。**remake 兩條路徑現在都夾**（`economy.ClampReserve`），但那是照著同一個常數做的，不是證明原版共用同一支 | 靜態 | evidence-only | — |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 頭像的邊框 | `sub_107D2` 只 blit 64×64 的圖塊，**框在哪裡畫的沒找到**——場景 5 的 op 清單裡沒有頭像那一格的框 | 靜態 | evidence-only | — |
