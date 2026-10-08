@@ -56,8 +56,9 @@ def verify(repo,out):
  for level in ['O0','O2']:assert '-DKI_DISPLAY_SOURCE_DIGEST=0x'+compiled[:16] in (out/'results'/f'buildinfo-{level}.txt').read_text()
  before=(out/'results/golem-source-before.sha256').read_bytes();assert before==(out/'results/golem-source-after.sha256').read_bytes()
  for path,(marker,link) in BACKLINKS.items():s=(repo/path).read_text();assert marker in s and link in s
- supplement=json.loads((repo/'docs/re/rectangle-handler-code.json').read_text());assert supplement['input_sha256']==EXPECTED and len(supplement['instructions'])==317
- assert sum(r['file_end']-r['file_start'] for r in supplement['instructions'])==746
+ supplement=json.loads((repo/'docs/re/rectangle-handler-code.json').read_text());assert supplement['input_sha256']==EXPECTED
+ original_display=[r for r in supplement['instructions'] if 0x1EA1F<=r['ida_linear']<0x1F4A2]
+ assert len(original_display)==317 and sum(r['file_end']-r['file_start'] for r in original_display)==746
  result={'schema':'wolong-c-display-verification-v1','status':'semantic-conformed','input_sha256':EXPECTED,'new_routine_sha256':new,
          'ida_database_sha256':sha(out/'ida/input.exe.i64'),'source_sha256':source,'compiled_source_manifest_sha256':compiled,'cases_per_optimization':382,'groups':GROUPS,
          'full_ram_plane_audits_per_optimization':382,'indexed_content_audits_per_optimization':382,'receipt_sha256':receipts,'negative_controls_rejected':10,'mutants':controls,

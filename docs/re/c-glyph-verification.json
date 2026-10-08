@@ -1,0 +1,202 @@
+{
+  "schema": "wolong-c-glyph-verification-v1",
+  "status": "semantic-conformed",
+  "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "fonts": {
+    "END_S13.DAT": [
+      404992,
+      "0ab4c43920787bf87c91bba5730078e451cb6125b878f201d3e70d648412569b"
+    ],
+    "END_S14.DAT": [
+      3840,
+      "1d0cf09d0a319a9e7039190688c6a905ba4370bd369fbfcfa43b2078480d6918"
+    ]
+  },
+  "new_routine_sha256": {
+    "sub_1F720": "e1448f69dd3c45f67791bcacf1f98b4739981452b12705ab78950acf08b26ff8",
+    "sub_1F7A4": "47b0d05870c726846047d9799a891244d316669c66ac9f7d45b632c363750d20",
+    "sub_106F5": "439e494527c516351c39db4ee5c2afffa58d81cc6721bcb6a457a757d6ae0b36",
+    "sub_106FD": "86fd6078afc78011440abdaec34c331e8e09c4f311228153964d2faeb45e7196"
+  },
+  "ida_database_sha256": "bd9456d704fb5f1d7ec6fe544675cd106c434d53bcad8afdbc11c7b1e4c6e9d7",
+  "source_sha256": {
+    "tools/c_recovery/aligned.c": "4e3e53bb951cd9692ffb8722b2efc6ef1549602300f7ff32ca0ced70f90de467",
+    "tools/c_recovery/aligned.h": "865e3c92435f848ea7d57f7e54d1a1c9976e86ce13938858503e8a2431111c7e",
+    "tools/c_recovery/aligned_fixture.h": "6d5d293961f3c0b2f4a8fd6551cb3ec4c31945ada3b5a7dcc6281fae59f84b5b",
+    "tools/c_recovery/clock.c": "4a845847e050d0d7ff1ebd641fb827602a6ab10fc8fecd643584612e73158439",
+    "tools/c_recovery/clock.h": "40d3d4b630dabed9b3f7f98d492fa60734b2a0a6d86d30e0a2961738d2df7284",
+    "tools/c_recovery/clock_fixture.h": "0a7812df9b5331f463acc5fe8f03ae11c5f3313843b6d7119eaf29ac8433167b",
+    "tools/c_recovery/display.c": "d5b95603d2563aafaa7b929b16f7b123896169f5e3d2d215ab19fa10da748058",
+    "tools/c_recovery/display.h": "ed30d7da89db5bb93b9e08ffceaddb01188701ab67721628d35425167488e254",
+    "tools/c_recovery/display_fixture.h": "d657ce4f18acbf31523d758959ae31d7907854c790a0582a5392a4abbc886d1f",
+    "tools/c_recovery/display_generated.inc": "6016cc7c871105bfca7a601dddbb09a413eff9dd209feb08d6327dc9805ebd63",
+    "tools/c_recovery/economy.c": "a8dfb96bc788326cc8641ffa78a64739d2544dfbf63ed7149dc334ef85f2ab8e",
+    "tools/c_recovery/economy.h": "57958375c3f3cf604e0dffb8a56e2d0b464c727702d1e076b6f303a3806e89ec",
+    "tools/c_recovery/economy_fixture.h": "8313a73e688631a8fe39db8ab12d66c979ed1f7e978ae9907e8910f24f91d0a8",
+    "tools/c_recovery/events.c": "69c7a72c1168a3943824ced273702ace069ca3e7e42e3789baf0621341ef32b0",
+    "tools/c_recovery/events.h": "0845440ca2f3685f899772dc6ff78afef012aa3fdb4374f2611f1ca9175a6373",
+    "tools/c_recovery/events_fixture.h": "fdde12c4e3239aa79fe826c8def65edb059d54380352b03462cba427f597a676",
+    "tools/c_recovery/glyph.c": "1e7695cca054da377a7327f1ca06414642d3a6367ac5b39fdac7c5bbc4cf34aa",
+    "tools/c_recovery/glyph.h": "5b0f1388ef6bd047af335162910082f748f1a4fce6ac98ea0fd5fd907a634f16",
+    "tools/c_recovery/glyph_fixture.h": "539d6f94de1c7203f77bb6cea0420b6771f213491eef2c25e9085b8cc5552879",
+    "tools/c_recovery/glyph_generated.inc": "a26058d041df1147c92b4f3fa6a296fe88739cf2a185e1d95e308e4a46a5f9fb",
+    "tools/c_recovery/hotspot.c": "805a2963363f151d01478d1eefd956ac482e2df22189d15638c7f79ea94dd5c1",
+    "tools/c_recovery/hotspot.h": "21f1dcb13ecbc301237487a12d6db80de4c944d816892a989a9a48711f496b20",
+    "tools/c_recovery/hotspot_fixture.h": "ed5a4f5b1b4ecdd5982689110d7b82c2372ead6abd83551a9a18357d06862411",
+    "tools/c_recovery/hourly.c": "dc115558ed470df49bd4438825b059d835a707e4f93262406ea8fb26c9536c04",
+    "tools/c_recovery/hourly.h": "1388fe3fe2c6bed876246e08fdfba0814ed948ec50e18ba236c0553626f3aff1",
+    "tools/c_recovery/hourly_fixture.h": "54864eeb3e0aeabcae321ffc537babe3e1abf8f53cb3f1d4e7cea1daebf36cb5",
+    "tools/c_recovery/modal.c": "37105677c93746e880ab89c7940eb02a1b318bfe18e76615b12870f17294da8e",
+    "tools/c_recovery/modal.h": "db3f1ea75cfd9d3026382fc1e803364b67c594c9874103f2de98090c3249f106",
+    "tools/c_recovery/modal_fixture.h": "427b17352aecd5e4d84522b1620cd41464cc3d571f52e77b5b565c6e9e71d072",
+    "tools/c_recovery/numeric.c": "b68f2a4e4149c7cf5fff8aba2da0a6a437202c0626519ed7c6b7ccd73df00e5b",
+    "tools/c_recovery/numeric.h": "c0abfde294d876d1b7c49119f134bff56b0cdc9e76ac4ae5a23abe2cd6cea0f0",
+    "tools/c_recovery/numeric_fixture.h": "4780a1ff675bc17d77553035c0b2a2eeae790c607d1d613878a59d300267a2d5",
+    "tools/c_recovery/politics.c": "3b60a81cd5cc0979ca99f9bb03c5ce341f36b539ad318e70cced5ac516aa0eef",
+    "tools/c_recovery/politics.h": "291e2425b3056eac0c107b93da341f2ad5e4bd32b9d71275e0c007b4f95b9d8c",
+    "tools/c_recovery/politics_fixture.h": "1241042349ce6d9ea5b08355a53b9fdec54171a44f0501ccfd11b17d4b1f8171",
+    "tools/c_recovery/rect.c": "ef3eb0615c8ee516fa05e333a0d81e9fdb000d0701965db16918f8c2ce6517cc",
+    "tools/c_recovery/rect.h": "54fe2da129a0f2313010a5e3c2feb389daa0f0851e4aace64c29b4d882e1e183",
+    "tools/c_recovery/rect_fixture.h": "68aa98999228a3fa56f69c5f51af423764512a46f7b93b85fc00d7b720b166d4",
+    "tools/c_recovery/rng.c": "1e6500c692d652c07cd31b99afa5693275bdab91d0f2d2c9ce9c8ef1188cb0fd",
+    "tools/c_recovery/rng.h": "71d82996afa8df2387e9899f8a78872ad35d617ed1276b31aaf12c68dd66c0f0",
+    "tools/c_recovery/seed.c": "5310de9dcc0e40a374d168f73ffa8de2222de654378c7bfc6c50c4255e851cbb",
+    "tools/c_recovery/seed.h": "4f9e0c6e3026967450b6a29758bedd2e293010187a95e2fd98b0a1c438a0ffc9",
+    "tools/c_recovery/settlement.c": "c6573bbfef750ca81c847efe88b0b3d2b51ac1623a321e8925983bbd59a750a3",
+    "tools/c_recovery/settlement.h": "5714b35cff296141a05bd25428728dc78cc4f22773c6d4d8b4b229f741f6c0f7",
+    "tools/c_recovery/settlement_fixture.h": "af8305a0f0610de1301bf81349fe59f97f22920e7f6d6c91660efa2de3f7f345",
+    "tools/c_recovery/vga.c": "9c9c75270422a8950d9d09c1321d5093423d2eada6d5bde3e417c9d711ba9b5b",
+    "tools/c_recovery/vga.h": "40f9e9ee054830df5c95e5bbe0185f82f3b8d7d8e9e780510da29794b2ab7699",
+    "tools/c_recovery/vga_fixture.h": "97ab311f79b371c26b90d450466173e9ac90e70c55f6862a204bef40db569096",
+    "tools/c_recovery/world_update.c": "90ea41a06b727fc12074c1347e831f6fbac7fb0535265bfbfa7eac7795437602",
+    "tools/c_recovery/world_update.h": "9782b21c1397d277680b0165b27d697bf7191ad099b399dfc0a875af91f5f088",
+    "tools/c_recovery/world_update_fixture.h": "0d2866252dc0339d08d45431beac7359019b29fd80717e07219396cf418ab853",
+    "tools/c_recovery_glyph_platform.go": "a9a049cea6c6304614fc31a4088aa50b6b26f9adab9290169d168073e03108fb",
+    "tools/c_recovery_display_generate.py": "af149fc48d2eeafc89d9849c3a44ee386c4e2a52993a0a410f238cd93b0d56ac",
+    "tools/c_recovery_glyph_generate.py": "9cf25f59bd30012f109a31769ffa6172fddb90043f6f32e17962ee4ce1e74ab1",
+    "tools/c_recovery_glyph.go": "990ba9bbf78740cce6ee7379bb8e031c0343b88b96a0ef6fbce702ec6e298246",
+    "tools/c_recovery_vga_bus.go": "b842e1561a96da289bac5ed83f4756c2d6e77883681227651034aad3625d0c86",
+    "cmd/wlgame/battlelayout.go": "b63ec8396212252e4c9bc1dd053ef1c3dfa6eeab623cd00e3a50cc226f92c61a"
+  },
+  "compiled_source_manifest_sha256": "e121f9359837bcf6494fea4cae7314108ec1820e40264ee8946f0c9c3c2356f1",
+  "cases_per_optimization": 252,
+  "groups": {
+    "vectors": 2,
+    "glyph": 140,
+    "alignment": 64,
+    "text-name": 16,
+    "scene": 30
+  },
+  "full_ram_plane_audits_per_optimization": 252,
+  "indexed_content_audits_per_optimization": 252,
+  "font_calls_per_optimization": [
+    740,
+    150
+  ],
+  "font_missing": 0,
+  "receipt_sha256": {
+    "O0": "6ac33b1d26e622f54f6f3e5fe0af1dd9c835840dc50945db049d8f14bfebcf05",
+    "O2": "6ac33b1d26e622f54f6f3e5fe0af1dd9c835840dc50945db049d8f14bfebcf05"
+  },
+  "negative_controls_rejected": 9,
+  "mutants": {
+    "1": {
+      "group": "glyph",
+      "first_rejected": 3,
+      "receipt_sha256": "2b381b443db4fcf5cf28a0bfae444074847281a84b158362a244a14b6068c853"
+    },
+    "2": {
+      "group": "glyph",
+      "first_rejected": 3,
+      "receipt_sha256": "2b381b443db4fcf5cf28a0bfae444074847281a84b158362a244a14b6068c853"
+    },
+    "3": {
+      "group": "glyph",
+      "first_rejected": 21,
+      "receipt_sha256": "b23d54dce8e90eb4ef04030181a9c645c12d81589d5081a9edbe903703d4af77"
+    },
+    "4": {
+      "group": "glyph",
+      "first_rejected": 21,
+      "receipt_sha256": "04b44c09e2178b9856ddbbb975c99d52e2b2a0d4510941267d4332f35f535825"
+    },
+    "5": {
+      "group": "glyph",
+      "first_rejected": 1,
+      "receipt_sha256": "f68de43912393f55089dcc1fc024e19e6ace95cf004758679160398cbc453e8a"
+    },
+    "6": {
+      "group": "glyph",
+      "first_rejected": 1,
+      "receipt_sha256": "5b94fc939689c1366bad0be1e93d7671175d733e32abb43ed9074b3dc8ad27ca"
+    },
+    "7": {
+      "group": "glyph",
+      "first_rejected": 6,
+      "receipt_sha256": "89d486172a969206c6453131915bab76d838de834cd73216ec85d87d89aff02d"
+    },
+    "8": {
+      "group": "text-name",
+      "first_rejected": 10,
+      "receipt_sha256": "a6f9599185d0d20ad5619afb123e8fe30a0e1503b868db71948ab8d6aa0636bf"
+    },
+    "9": {
+      "group": "text-name",
+      "first_rejected": 9,
+      "receipt_sha256": "f8f9a4ec17724b63ca649a128acd5559d2c7624bab38405e613aaf7c9c37e328"
+    }
+  },
+  "entries_seen": {
+    "dosv-font-full@0080:0410": 740,
+    "dosv-font-half@0080:0414": 150,
+    "sub_10337": 30,
+    "sub_106F5": 4,
+    "sub_106FD": 4,
+    "sub_10701": 8,
+    "sub_1E9C1": 30,
+    "sub_1EA30": 114,
+    "sub_1EA3A": 90,
+    "sub_1EA44": 12,
+    "sub_1EA5A": 15,
+    "sub_1EA70": 30,
+    "sub_1EA96": 225,
+    "sub_1EAB3": 45,
+    "sub_1EAD0": 234,
+    "sub_1F1A3": 114,
+    "sub_1F26E": 30,
+    "sub_1F3CF": 18532,
+    "sub_1F426": 30,
+    "sub_1F43B": 18532,
+    "sub_1F465": 90,
+    "sub_1F6DC": 233,
+    "sub_1F720": 2,
+    "sub_1F75E": 996,
+    "sub_1F7A4": 890,
+    "sub_1F878": 776,
+    "sub_1F888": 45,
+    "sub_1F938": 180,
+    "sub_1F999": 180,
+    "sub_1FB29": 192,
+    "sub_1FBA7": 195
+  },
+  "oracle_revision": "a9714ebdab2ad6b529f81225472680f2b11f2842",
+  "oracle_compiled_tree_sha256": "d37ffeb9be887541f89e9cff80ea5a159620b77b524d54527950ce3554a6f126",
+  "scope_backlinks": {
+    "docs/re/29-font-service-int15.md": [
+      "後續原始 C glyph",
+      "108-c-glyph-raster-restoration.md"
+    ],
+    "docs/re/107-c-display-interpreter-restoration.md": [
+      "後續真實 glyph",
+      "108-c-glyph-raster-restoration.md"
+    ],
+    "docs/spec/227-c-display-interpreter.md": [
+      "真正 glyph raster",
+      "228-c-glyph-raster.md"
+    ]
+  },
+  "glyph_raster_fixture": false,
+  "platform_contract": "Independent pinned DOS/V Font services/caches; C-side calls IntHook API without CPU.Step; actual local font bytes; no original TSR/I/O-time claim",
+  "supplement_source_sha256": "f249e4abc704145f341b5101bc8f27920e78ab79e3db36d33fb4a4a32ab94597",
+  "c_machine_code_match": false
+}

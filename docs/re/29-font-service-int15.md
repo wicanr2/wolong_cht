@@ -242,6 +242,9 @@ stdfont.15 尾端 68 B（2.3 格）未收進來
 
 ## 9. 未解
 
+後續原始 C glyph 證據見 [re/108](108-c-glyph-raster-restoration.md)：KI 的 patched far call、
+真正 VGA raster 與三字 operand 已用原字庫對照；標準字型平台 API 採成熟服務，STR 檔名考古仍保留原界線。
+
 > `END_S15.DAT` 不在這張表上：它是**軍師命名的注音序選字表**（2,621 個 Big5 字，沒有壓縮），格式在
 > [`../formats/10`](../formats/10-end-s15-namechars.md)、用法在 [`../spec/104`](../spec/104-advisor-naming-window.md)。
 > 這一份當時把它推成「疑似壓縮」，是**拿檔名連號去猜檔案內容**（`CLAUDE.md` §7 第 31 條）。
@@ -250,5 +253,5 @@ stdfont.15 尾端 68 B（2.3 格）未收進來
 |---|---|
 | `END_S10/S11` 與 `STR.EXE` 檔名不同步 | §6，要實跑裁決 |
 | `END_S13.DAT` 前 408 格的**來源** | 不是 `stdfont.15` 的任何一段，也不是 `usrfont.15m`（256 B）。⭐ **用途已定案**：那就是遊戲實際用的全形符號字型——全形逗號的字模與倚天 `SPCFONT.15` 差 (+3, −2) 個像素，對拍畫面上量得到（[`../spec/137`](../spec/137-builtin-symbol-font.md)）|
-| `sub_1F7A4` `[DOS/BIOS]` | 把 32 B 緩衝畫上 VRAM 的實際迴圈，未逐行讀。⚠ remake 要的是**畫什麼**（字模版面，已解），不是**怎麼寫 VRAM** |
+| `sub_1F7A4` `[DOS/BIOS]` | 原始 32 B buffer／mask／16列／前景背景／VGA 迴圈已由 [re/108](108-c-glyph-raster-restoration.md) 的真實字庫／C plane 收據確認；正常 UI 與實機時序不由本輪代證 |
 | `YNFONT.EXE` 怎麼顯示中文 `[DOS/BIOS]` | 它不走 INT 15h（0 次），密碼輸入畫面的中文是它自己畫的。⚠ 那是一支 DOS TSR，remake 沒有對應物；密碼頁本身也不擋任何事（`CLAUDE.md` §4.0）|

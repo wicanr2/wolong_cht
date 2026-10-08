@@ -12464,6 +12464,97 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "固定 native C 顯示分派證據界線；字型 callback、自然玩家、其他 code 与 C 機器碼不由本矩陣代證。"
+    },
+    {
+      "file": "docs/re/108-c-glyph-raster-restoration.md",
+      "item": "STR.EXE 與封裝檔名考古",
+      "status": "本輪使用已定案平台字型 API，不重新研究 TSR 安裝",
+      "section": "3. 驗證與未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-3906375604c90c28684a",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "固定原始 C glyph／平台字庫證據界線；原始 TSR／時序、自然 UI 與 C 機器碼不由本矩陣代證。"
+    },
+    {
+      "file": "docs/re/108-c-glyph-raster-restoration.md",
+      "item": "真實硬體 wall-clock",
+      "status": "固定平台模型不代證",
+      "section": "3. 驗證與未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-86f186c66a7e6d4a2472",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "固定原始 C glyph／平台字庫證據界線；原始 TSR／時序、自然 UI 與 C 機器碼不由本矩陣代證。"
+    },
+    {
+      "file": "docs/re/108-c-glyph-raster-restoration.md",
+      "item": "正常玩家完整 UI 操作",
+      "status": "glyph／場景矩陣不代證自然操作",
+      "section": "3. 驗證與未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-1cbd221d16ef3eec03de",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "固定原始 C glyph／平台字庫證據界線；原始 TSR／時序、自然 UI 與 C 機器碼不由本矩陣代證。"
+    },
+    {
+      "file": "docs/re/108-c-glyph-raster-restoration.md",
+      "item": "C 機器碼與完整 C",
+      "status": "本輪仍未完成",
+      "section": "3. 驗證與未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-ef80170b1bb351054609",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "固定原始 C glyph／平台字庫證據界線；原始 TSR／時序、自然 UI 與 C 機器碼不由本矩陣代證。"
+    },
+    {
+      "file": "docs/spec/228-c-glyph-raster.md",
+      "item": "原版 TSR／逐字磁碟時序",
+      "status": "採用成熟字型平台契約",
+      "section": "3. 未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-49aa73ef0538e2270ec0",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "固定原始 C glyph／平台字庫證據界線；原始 TSR／時序、自然 UI 與 C 機器碼不由本矩陣代證。"
+    },
+    {
+      "file": "docs/spec/228-c-glyph-raster.md",
+      "item": "實機／正常玩家操作",
+      "status": "局部 glyph／場景不足以代證",
+      "section": "3. 未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-5ab18ec57ba1d8f9c184",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "固定原始 C glyph／平台字庫證據界線；原始 TSR／時序、自然 UI 與 C 機器碼不由本矩陣代證。"
+    },
+    {
+      "file": "docs/spec/228-c-glyph-raster.md",
+      "item": "C 原作者工具鏈與機器碼",
+      "status": "尚未驗證",
+      "section": "3. 未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-7bd144869934cd0da079",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "固定原始 C glyph／平台字庫證據界線；原始 TSR／時序、自然 UI 與 C 機器碼不由本矩陣代證。"
     }
   ]
 }

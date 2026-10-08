@@ -23,6 +23,8 @@ codec／DS／原點／完整場景／source advance／signed 線段／除法合�
 
 ## 3. 產物與未解範圍
 
+真正 glyph raster 的後續契約見 [spec/228](228-c-glyph-raster.md)，新增實際字庫／原始向量／VGA。
+
 程式碼、原始定位、分級與收據進 GitHub；原版、DB、資產、記憶體與重建執行檔留本機
 `workplace/matching-decompilation/c-display/`。正常玩家、硬體時序與 C 機器碼未完成。
 

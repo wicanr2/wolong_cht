@@ -3,10 +3,881 @@
   "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
   "tool": "IDA Pro",
   "tool_version": "9.4",
-  "database_sha256": "135353e5c2ec69804fc6b7bb6a627a3008b0a0a55e78b7fa5feb331f6f6edc4c",
+  "database_sha256": "bd9456d704fb5f1d7ec6fe544675cd106c434d53bcad8afdbc11c7b1e4c6e9d7",
   "image_id": "sha256:4ac62de83339c215bab10e455cee3a22d9c6efed9fd0d8ed0f068327b83a06ab",
-  "evidence": "docs/re/107-c-display-interpreter-restoration.md",
+  "evidence": "docs/re/108-c-glyph-raster-restoration.md",
   "instructions": [
+    {
+      "ida_linear": 67358,
+      "file_start": 2334,
+      "file_end": 2337,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "mov     ax, 9001h",
+      "gas": "mov ax, 0x9001",
+      "bytes": "b80190",
+      "original_ida_data_line": "db 0B8h",
+      "ida_code_classified": false,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 18446744073709522945,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "9001h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 67361,
+      "file_start": 2337,
+      "file_end": 2340,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "call    loc_1F75E",
+      "gas": "call .-4035",
+      "bytes": "e83af0",
+      "original_ida_data_line": "call    loc_1F75E",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 63326,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "loc_1F75E",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 67364,
+      "file_start": 2340,
+      "file_end": 2342,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "mov     dx, di",
+      "gas": "{load} mov dx, di",
+      "bytes": "8bd7",
+      "original_ida_data_line": "mov     dx, di",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 67366,
+      "file_start": 2342,
+      "file_end": 2344,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "mov     bx, bp",
+      "gas": "{load} mov bx, bp",
+      "bytes": "8bdd",
+      "original_ida_data_line": "mov     bx, bp",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 5,
+          "original": "bp",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 67368,
+      "file_start": 2344,
+      "file_end": 2347,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "add     dx, 10h",
+      "gas": "add dx, 0x10",
+      "bytes": "83c210",
+      "original_ida_data_line": "add     dx, 10h",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 16,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "10h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 67371,
+      "file_start": 2347,
+      "file_end": 2350,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "mov     ax, [si+2]",
+      "gas": "mov ax, word ptr [si+0x2]",
+      "bytes": "8b4402",
+      "original_ida_data_line": "mov     ax, [si+2]",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 4,
+          "addr": 2,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 4,
+          "original": "[si+2]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 67374,
+      "file_start": 2350,
+      "file_end": 2352,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "xchg    al, ah",
+      "gas": "{load} xchg al, ah",
+      "bytes": "86c4",
+      "original_ida_data_line": "xchg    al, ah",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 16,
+          "original": "al",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 20,
+          "original": "ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 67376,
+      "file_start": 2352,
+      "file_end": 2355,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "call    sub_1F878",
+      "gas": "call .-3768",
+      "bytes": "e845f1",
+      "original_ida_data_line": "call    sub_1F878",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 63608,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "sub_1F878",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 67379,
+      "file_start": 2355,
+      "file_end": 2357,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "mov     cx, ax",
+      "gas": "{load} mov cx, ax",
+      "bytes": "8bc8",
+      "original_ida_data_line": "mov     cx, ax",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 1,
+          "original": "cx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 67381,
+      "file_start": 2357,
+      "file_end": 2360,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "mov     ax, 9001h",
+      "gas": "mov ax, 0x9001",
+      "bytes": "b80190",
+      "original_ida_data_line": "db 0B8h",
+      "ida_code_classified": false,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 18446744073709522945,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "9001h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 67384,
+      "file_start": 2360,
+      "file_end": 2363,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "call    loc_1F75E",
+      "gas": "call .-4058",
+      "bytes": "e823f0",
+      "original_ida_data_line": "call    loc_1F75E",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 63326,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "loc_1F75E",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 67387,
+      "file_start": 2363,
+      "file_end": 2365,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "mov     dx, di",
+      "gas": "{load} mov dx, di",
+      "bytes": "8bd7",
+      "original_ida_data_line": "mov     dx, di",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 67389,
+      "file_start": 2365,
+      "file_end": 2367,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "mov     bx, bp",
+      "gas": "{load} mov bx, bp",
+      "bytes": "8bdd",
+      "original_ida_data_line": "mov     bx, bp",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 5,
+          "original": "bp",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 67391,
+      "file_start": 2367,
+      "file_end": 2370,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "add     dx, 20h ; ' '",
+      "gas": "add dx, 0x20",
+      "bytes": "83c220",
+      "original_ida_data_line": "add     dx, 20h ; ' '",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 32,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "20h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 67394,
+      "file_start": 2370,
+      "file_end": 2373,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "mov     ax, [si+4]",
+      "gas": "mov ax, word ptr [si+0x4]",
+      "bytes": "8b4404",
+      "original_ida_data_line": "mov     ax, [si+4]",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 4,
+          "addr": 4,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 4,
+          "original": "[si+4]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 67397,
+      "file_start": 2373,
+      "file_end": 2375,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "xchg    al, ah",
+      "gas": "{load} xchg al, ah",
+      "bytes": "86c4",
+      "original_ida_data_line": "xchg    al, ah",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 16,
+          "original": "al",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 20,
+          "original": "ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 67399,
+      "file_start": 2375,
+      "file_end": 2378,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "call    sub_1F878",
+      "gas": "call .-3791",
+      "bytes": "e82ef1",
+      "original_ida_data_line": "call    sub_1F878",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 63608,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "sub_1F878",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 67402,
+      "file_start": 2378,
+      "file_end": 2380,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "mov     cx, ax",
+      "gas": "{load} mov cx, ax",
+      "bytes": "8bc8",
+      "original_ida_data_line": "mov     cx, ax",
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 1,
+          "original": "cx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 67404,
+      "file_start": 2380,
+      "file_end": 2383,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "mov     ax, 9001h",
+      "gas": "mov ax, 0x9001",
+      "bytes": "b80190",
+      "original_ida_data_line": "db 0B8h",
+      "ida_code_classified": false,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 18446744073709522945,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "9001h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
     {
       "ida_linear": 125471,
       "file_start": 60447,
@@ -13377,6 +14248,74 @@
       "scope_sources": [
         "docs/re/107-c-display-interpreter-restoration.md"
       ]
+    },
+    {
+      "ida_linear": 128905,
+      "file_start": 63881,
+      "file_end": 63886,
+      "kind": "instruction",
+      "original_name": null,
+      "function_name": null,
+      "original_assembly": "call    far ptr 0:0",
+      "gas": "lcall 0x0, 0x0",
+      "bytes": "9a00000000",
+      "original_ida_data_line": "db 9Ah",
+      "ida_code_classified": false,
+      "operands": [
+        {
+          "type": 6,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "far ptr 0:0",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 128912,
+      "file_start": 63888,
+      "file_end": 63893,
+      "kind": "instruction",
+      "original_name": "byte_1F790",
+      "function_name": null,
+      "original_assembly": "call    far ptr 0:0",
+      "gas": "lcall 0x0, 0x0",
+      "bytes": "9a00000000",
+      "original_ida_data_line": "db 9Ah",
+      "ida_code_classified": false,
+      "operands": [
+        {
+          "type": 6,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "far ptr 0:0",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
     }
   ],
   "preserved_inline_data": [
@@ -13387,18 +14326,22 @@
     {
       "ida_linear": 128091,
       "bytes": "00000000000000000000"
+    },
+    {
+      "ida_linear": 128929,
+      "bytes": "000000"
     }
   ],
   "assembler_image_id": "sha256:474f41ef91c354dd4754b08ef9302e965271e32417d6fba1772aecca0a5f9e2e",
   "assembler_trials": [
     {
       "hint": "",
-      "matched": 266,
-      "remaining": 51
+      "matched": 13,
+      "remaining": 8
     },
     {
       "hint": "{load} ",
-      "matched": 51,
+      "matched": 8,
       "remaining": 0
     }
   ]

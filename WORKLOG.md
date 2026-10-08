@@ -283,3 +283,16 @@
 - 生成 C 在乾淨容器從同一 IDA 證據逐 byte 重生相同。完整 C 來源摘要、166 named 函式／17 code 入口、317 補充指令與公開／本機收據核對；只保留 glyph raster 的明示邊界。
 - 收尾文件／工具 21／25 通過、958 列分流與嚴格索引通過，四項既有缺檔／教訓問題保留。舊 verifier 的補充範圍改為原兩個 handler 子集，修正縮排後全部 AST／語法通過，未改其原矩陣。
 - 研究 driver 以 matching_display 隔離，輸出 UID/GID 1000:1000，既有 root-owned 路徑仍 27 筆，容器已全部退出移除；依授權提交並推送原始來源與收據。
+
+## 2026-10-09：原始 C glyph raster 與三字名稱
+
+- 前輪 `4d31520`已推送，分類progress。核對現況、逆向／IDA／文件／字型平台路由與Issue #22，目標為移除 glyph raster no-op。
+- 原始C四named函式282bytes與兩入口157bytes由IDA9.4核對，三字caller最初遺漏尾端epilogue後補完整邊界。spec/228 READY後產生C，所有原位址、far與self operand保留。
+- 兩側各DOS／Machine／Font cache；C adapter只呼叫原平台IntHook，沒有CPU.Step。原始F720取得向量、32-byteSSbuffer、字庫讀取與真正VGAraster皆執行。未用import移除後同輸入乾淨重跑。
+- O0/O2各252組全RAM／四plane／latch／port／ABI相同，每組取內容區像素。兩側740全形／150半形、缺字0，八種對齊、上界、透明／背景、三字live字色與十場景覆蓋，九錯版全部拒絕。
+- 服務stub早先導覽名錯寫成sub_10410，改真正0080:0410／0414再重生所有最新收據，KI位址與平台位址不混用。固定生成C在乾淨容器逐byte再生一致。
+- 組語補充保留先前317指令，再追加21／59bytes全部實際組譯相同；總24714／56197與完整67099-byteEXE匹配，資料槽、字庫與原版不進Git。
+- C台帳170函式，19個原始code入口；glyph fixture已取消，正式Go未改，自然UI、原TSR硬體時序與C機器碼仍未完成。完整Goal保持active。
+- 最終公開摘要在所有錯版程序結束後重新綁定最新收據，四C來源／兩入口與真實字庫／compiled flags 逐項核對，生成C在乾淨容器重生相同。
+- 文件／工具21／25通過、965列分流與嚴格索引通過，四項既有缺檔／教訓問題保留。舊display verifier保留原317指令子集，新增glyph指令不破壞歷史檢查條件。
+- 170個C來源／19code入口、24714組語與整檔、原版／字庫、source摘要及擁有權核對；輸出UID/GID1000:1000，既有root-owned路徑仍27筆，本輪容器已全部退出移除，依授權提交與推送來源證據。

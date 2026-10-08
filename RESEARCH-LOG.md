@@ -1919,3 +1919,9 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - 九個原始 C 函式、17個原始 code 入口接原始 DS near table，十場景和每opcode同狀態比較；O0/O2各382全RAM／plane／ABI相同，十個突變拒絕。原點反例用不對称座標，沒有放寬判準。
 - 原始書寫資料槽1EE62、1F45B維持資料；新增317指令／746bytes以GNU實際組譯匹配，不用原bytes作指令fallback。整檔仍相同，C台帳166函式，另17無函式入口保留導覽界線。
 - 生成來源只含具體C運算與goto原位址，不執行opcode；glyph raster為明示邊界，原字串迴圈、CF碼寬、陰影與來源前進是真實C。正常玩家和C機器碼匹配仍未完成。
+
+## 2026-10-09：字庫、原 glyph far 與 raster 收據
+
+- 固定KI.EXE與END_S13／S14輸入；IDA9.4 DB `bd9456d704fb5f1d7ec6fe544675cd106c434d53bcad8afdbc11c7b1e4c6e9d7`，原始near/far、SSbuffer與self operand證據見[re/108](docs/re/108-c-glyph-raster-restoration.md)。
+- O0/O2 252真實字型／全RAM／plane／ABI相同，740全形／150半形、缺字0，九突變拒絕。平台API／cache獨立，C無CPU.Step、不復製原結果。
+- 原字庫資料仍本機；新增21組語／59bytes已有GNU組譯byte一致證據，總24714指令／56197codebytes與整檔SHA相同。四named與兩code入口成為C證據，原TSR與自然操作界線保留。

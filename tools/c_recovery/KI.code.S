@@ -3091,11 +3091,11 @@ ret
 .org 0x8f5
 sub_106F5:
 # IDA 0x106f5; file 0x8f5; locator=proven; call    sub_1F6DC
-# ⚠ 函式 sub_106F5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_106F5; [proven] 原始字串 caller 接真實 glyph; 出處: docs/re/108-c-glyph-raster-restoration.md
 call .-4121
 .org 0x8f8
 # IDA 0x106f8; file 0x8f8; locator=proven; retn
-# ⚠ 函式 sub_106F5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_106F5; [proven] 原始字串 caller 接真實 glyph; 出處: docs/re/108-c-glyph-raster-restoration.md
 ret
 .org 0x8f9
 sub_106F9:
@@ -3109,11 +3109,11 @@ ret
 .org 0x8fd
 sub_106FD:
 # IDA 0x106fd; file 0x8fd; locator=proven; call    loc_10701
-# ⚠ 函式 sub_106FD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_106FD; [proven] 原始固定三字 caller 接 live operand 與真實 glyph; 出處: docs/re/108-c-glyph-raster-restoration.md
 call .+4
 .org 0x900
 # IDA 0x10700; file 0x900; locator=proven; retn
-# ⚠ 函式 sub_106FD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_106FD; [proven] 原始固定三字 caller 接 live operand 與真實 glyph; 出處: docs/re/108-c-glyph-raster-restoration.md
 ret
 .org 0x901
 loc_10701:
@@ -3168,6 +3168,82 @@ call .-3745
 # IDA 0x1071c; file 0x91c; locator=proven; mov     cx, ax
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
 {load} mov cx, ax
+.org 0x91e
+# IDA 0x1071e; file 0x91e; locator=proven; mov     ax, 9001h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ax, 0x9001
+.org 0x921
+# IDA 0x10721; file 0x921; locator=proven; call    loc_1F75E
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .-4035
+.org 0x924
+# IDA 0x10724; file 0x924; locator=proven; mov     dx, di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov dx, di
+.org 0x926
+# IDA 0x10726; file 0x926; locator=proven; mov     bx, bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov bx, bp
+.org 0x928
+# IDA 0x10728; file 0x928; locator=proven; add     dx, 10h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add dx, 0x10
+.org 0x92b
+# IDA 0x1072b; file 0x92b; locator=proven; mov     ax, [si+2]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ax, word ptr [si+0x2]
+.org 0x92e
+# IDA 0x1072e; file 0x92e; locator=proven; xchg    al, ah
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} xchg al, ah
+.org 0x930
+# IDA 0x10730; file 0x930; locator=proven; call    sub_1F878
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .-3768
+.org 0x933
+# IDA 0x10733; file 0x933; locator=proven; mov     cx, ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov cx, ax
+.org 0x935
+# IDA 0x10735; file 0x935; locator=proven; mov     ax, 9001h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ax, 0x9001
+.org 0x938
+# IDA 0x10738; file 0x938; locator=proven; call    loc_1F75E
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .-4058
+.org 0x93b
+# IDA 0x1073b; file 0x93b; locator=proven; mov     dx, di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov dx, di
+.org 0x93d
+# IDA 0x1073d; file 0x93d; locator=proven; mov     bx, bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov bx, bp
+.org 0x93f
+# IDA 0x1073f; file 0x93f; locator=proven; add     dx, 20h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add dx, 0x20
+.org 0x942
+# IDA 0x10742; file 0x942; locator=proven; mov     ax, [si+4]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ax, word ptr [si+0x4]
+.org 0x945
+# IDA 0x10745; file 0x945; locator=proven; xchg    al, ah
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} xchg al, ah
+.org 0x947
+# IDA 0x10747; file 0x947; locator=proven; call    sub_1F878
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .-3791
+.org 0x94a
+# IDA 0x1074a; file 0x94a; locator=proven; mov     cx, ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov cx, ax
+.org 0x94c
+# IDA 0x1074c; file 0x94c; locator=proven; mov     ax, 9001h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ax, 0x9001
 .org 0x94f
 # IDA 0x1074f; file 0x94f; locator=proven; call    loc_1F75E
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
@@ -91383,352 +91459,352 @@ ret
 .org 0xec1f
 # IDA 0x1ea1f; file 0xec1f; locator=proven; mov     ah, [si+0Ah]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 1; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 1; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov ah, byte ptr [si+0xa]
 .org 0xec22
 # IDA 0x1ea22; file 0xec22; locator=proven; call    near ptr byte_1ECFE+100h
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 1; 原 IDA 資料行: call    near ptr byte_1ECFE+100h; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 1; 原 IDA 資料行: call    near ptr byte_1ECFE+100h; 出處: docs/re/108-c-glyph-raster-restoration.md
 call .+988
 .org 0xec25
 # IDA 0x1ea25; file 0xec25; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 1; 原 IDA 資料行: retn; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 1; 原 IDA 資料行: retn; 出處: docs/re/108-c-glyph-raster-restoration.md
 ret
 .org 0xec26
 # IDA 0x1ea26; file 0xec26; locator=proven; mov     ah, [si+0Ah]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 2; 原 IDA 資料行: db  8Ah; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 2; 原 IDA 資料行: db  8Ah; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov ah, byte ptr [si+0xa]
 .org 0xec29
 # IDA 0x1ea29; file 0xec29; locator=proven; call    near ptr unk_1EAD0
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 2; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 2; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/108-c-glyph-raster-restoration.md
 call .+167
 .org 0xec2c
 # IDA 0x1ea2c; file 0xec2c; locator=proven; call    sub_1F020
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 2; 原 IDA 資料行: call    sub_1F020; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 2; 原 IDA 資料行: call    sub_1F020; 出處: docs/re/108-c-glyph-raster-restoration.md
 call .+1524
 .org 0xec2f
 # IDA 0x1ea2f; file 0xec2f; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 2; 原 IDA 資料行: retn; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 2; 原 IDA 資料行: retn; 出處: docs/re/108-c-glyph-raster-restoration.md
 ret
 .org 0xec30
 # IDA 0x1ea30; file 0xec30; locator=proven; mov     ah, [si+0Ah]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 3; 原 IDA 資料行: db  8Ah; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 3; 原 IDA 資料行: db  8Ah; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov ah, byte ptr [si+0xa]
 .org 0xec33
 # IDA 0x1ea33; file 0xec33; locator=proven; call    near ptr unk_1EAD0
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 3; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 3; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/108-c-glyph-raster-restoration.md
 call .+157
 .org 0xec36
 # IDA 0x1ea36; file 0xec36; locator=proven; call    sub_1F1A3
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 3; 原 IDA 資料行: call    sub_1F1A3; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 3; 原 IDA 資料行: call    sub_1F1A3; 出處: docs/re/108-c-glyph-raster-restoration.md
 call .+1901
 .org 0xec39
 # IDA 0x1ea39; file 0xec39; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 3; 原 IDA 資料行: retn; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 3; 原 IDA 資料行: retn; 出處: docs/re/108-c-glyph-raster-restoration.md
 ret
 .org 0xec3a
 # IDA 0x1ea3a; file 0xec3a; locator=proven; mov     ax, [si+0Ah]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 4; 原 IDA 資料行: db  8Bh; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 4; 原 IDA 資料行: db  8Bh; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov ax, word ptr [si+0xa]
 .org 0xec3d
 # IDA 0x1ea3d; file 0xec3d; locator=proven; call    near ptr unk_1EAD0
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 4; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 4; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/108-c-glyph-raster-restoration.md
 call .+147
 .org 0xec40
 # IDA 0x1ea40; file 0xec40; locator=proven; call    loc_1F465
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 4; 原 IDA 資料行: call    loc_1F465; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 4; 原 IDA 資料行: call    loc_1F465; 出處: docs/re/108-c-glyph-raster-restoration.md
 call .+2597
 .org 0xec43
 # IDA 0x1ea43; file 0xec43; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 4; 原 IDA 資料行: retn; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 4; 原 IDA 資料行: retn; 出處: docs/re/108-c-glyph-raster-restoration.md
 ret
 .org 0xec44
 # IDA 0x1ea44; file 0xec44; locator=proven; mov     ah, [si+8]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: db  8Ah; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: db  8Ah; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov ah, byte ptr [si+0x8]
 .org 0xec47
 # IDA 0x1ea47; file 0xec47; locator=proven; mov     dx, [bp+0]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov dx, word ptr [bp]
 .org 0xec4a
 # IDA 0x1ea4a; file 0xec4a; locator=proven; mov     bx, [bp+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov bx, word ptr [bp+0x2]
 .org 0xec4d
 # IDA 0x1ea4d; file 0xec4d; locator=proven; add     dx, [si+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/108-c-glyph-raster-restoration.md
 add dx, word ptr [si+0x2]
 .org 0xec50
 # IDA 0x1ea50; file 0xec50; locator=proven; add     bx, [si+4]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/108-c-glyph-raster-restoration.md
 add bx, word ptr [si+0x4]
 .org 0xec53
 # IDA 0x1ea53; file 0xec53; locator=proven; mov     cx, [si+6]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: mov     cx, [si+6]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: mov     cx, [si+6]; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov cx, word ptr [si+0x6]
 .org 0xec56
 # IDA 0x1ea56; file 0xec56; locator=proven; call    sub_1FB29
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: call    sub_1FB29; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: call    sub_1FB29; 出處: docs/re/108-c-glyph-raster-restoration.md
 call .+4307
 .org 0xec59
 # IDA 0x1ea59; file 0xec59; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: retn; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: retn; 出處: docs/re/108-c-glyph-raster-restoration.md
 ret
 .org 0xec5a
 # IDA 0x1ea5a; file 0xec5a; locator=proven; mov     ah, [si+8]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: db  8Ah; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: db  8Ah; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov ah, byte ptr [si+0x8]
 .org 0xec5d
 # IDA 0x1ea5d; file 0xec5d; locator=proven; mov     dx, [bp+0]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov dx, word ptr [bp]
 .org 0xec60
 # IDA 0x1ea60; file 0xec60; locator=proven; mov     bx, [bp+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov bx, word ptr [bp+0x2]
 .org 0xec63
 # IDA 0x1ea63; file 0xec63; locator=proven; add     dx, [si+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/108-c-glyph-raster-restoration.md
 add dx, word ptr [si+0x2]
 .org 0xec66
 # IDA 0x1ea66; file 0xec66; locator=proven; add     bx, [si+4]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/108-c-glyph-raster-restoration.md
 add bx, word ptr [si+0x4]
 .org 0xec69
 # IDA 0x1ea69; file 0xec69; locator=proven; mov     cx, [si+6]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: mov     cx, [si+6]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: mov     cx, [si+6]; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov cx, word ptr [si+0x6]
 .org 0xec6c
 # IDA 0x1ea6c; file 0xec6c; locator=proven; call    sub_1FBA7
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: call    sub_1FBA7; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: call    sub_1FBA7; 出處: docs/re/108-c-glyph-raster-restoration.md
 call .+4411
 .org 0xec6f
 # IDA 0x1ea6f; file 0xec6f; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: retn; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: retn; 出處: docs/re/108-c-glyph-raster-restoration.md
 ret
 .org 0xec70
 # IDA 0x1ea70; file 0xec70; locator=proven; push    ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: db  1Eh; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: db  1Eh; 出處: docs/re/108-c-glyph-raster-restoration.md
 push ds
 .org 0xec71
 # IDA 0x1ea71; file 0xec71; locator=proven; mov     bl, [si+0Ah]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: mov     bl, [si+0Ah]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: mov     bl, [si+0Ah]; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov bl, byte ptr [si+0xa]
 .org 0xec74
 # IDA 0x1ea74; file 0xec74; locator=proven; xor     bh, bh
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: xor     bh, bh; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: xor     bh, bh; 出處: docs/re/108-c-glyph-raster-restoration.md
 {load} xor bh, bh
 .org 0xec76
 # IDA 0x1ea76; file 0xec76; locator=proven; shl     bx, 1
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/108-c-glyph-raster-restoration.md
 shl bx, 0x1
 .org 0xec78
 # IDA 0x1ea78; file 0xec78; locator=proven; shl     bx, 1
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/108-c-glyph-raster-restoration.md
 shl bx, 0x1
 .org 0xec7a
 # IDA 0x1ea7a; file 0xec7a; locator=proven; shl     bx, 1
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/108-c-glyph-raster-restoration.md
 shl bx, 0x1
 .org 0xec7c
 # IDA 0x1ea7c; file 0xec7c; locator=proven; add     bx, 0EAF1h
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: add     bx, 0EAF1h; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: add     bx, 0EAF1h; 出處: docs/re/108-c-glyph-raster-restoration.md
 add bx, 0xeaf1
 .org 0xec80
 # IDA 0x1ea80; file 0xec80; locator=proven; mov     ax, cs:[bx]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: mov     ax, cs:[bx]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: mov     ax, cs:[bx]; 出處: docs/re/108-c-glyph-raster-restoration.md
 cs; mov ax, word ptr [bx]
 .org 0xec83
 # IDA 0x1ea83; file 0xec83; locator=proven; mov     cx, cs:[bx+4]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: mov     cx, cs:[bx+4]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: mov     cx, cs:[bx+4]; 出處: docs/re/108-c-glyph-raster-restoration.md
 cs; mov cx, word ptr [bx+0x4]
 .org 0xec87
 # IDA 0x1ea87; file 0xec87; locator=proven; push    word ptr cs:[bx+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: push    word ptr cs:[bx+2]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: push    word ptr cs:[bx+2]; 出處: docs/re/108-c-glyph-raster-restoration.md
 cs; push word ptr [bx+0x2]
 .org 0xec8b
 # IDA 0x1ea8b; file 0xec8b; locator=proven; push    cx
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: push    cx; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: push    cx; 出處: docs/re/108-c-glyph-raster-restoration.md
 push cx
 .org 0xec8c
 # IDA 0x1ea8c; file 0xec8c; locator=proven; call    near ptr unk_1EAD0
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/108-c-glyph-raster-restoration.md
 call .+68
 .org 0xec8f
 # IDA 0x1ea8f; file 0xec8f; locator=proven; pop     cx
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: pop     cx; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: pop     cx; 出處: docs/re/108-c-glyph-raster-restoration.md
 pop cx
 .org 0xec90
 # IDA 0x1ea90; file 0xec90; locator=proven; pop     ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: pop     ds; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: pop     ds; 出處: docs/re/108-c-glyph-raster-restoration.md
 pop ds
 .org 0xec91
 # IDA 0x1ea91; file 0xec91; locator=proven; call    loc_1F26E
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: call    loc_1F26E; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: call    loc_1F26E; 出處: docs/re/108-c-glyph-raster-restoration.md
 call .+2013
 .org 0xec94
 # IDA 0x1ea94; file 0xec94; locator=proven; pop     ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: pop     ds; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: pop     ds; 出處: docs/re/108-c-glyph-raster-restoration.md
 pop ds
 .org 0xec95
 # IDA 0x1ea95; file 0xec95; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: retn; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: retn; 出處: docs/re/108-c-glyph-raster-restoration.md
 ret
 .org 0xec96
 # IDA 0x1ea96; file 0xec96; locator=proven; push    ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: db  1Eh; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: db  1Eh; 出處: docs/re/108-c-glyph-raster-restoration.md
 push ds
 .org 0xec97
 # IDA 0x1ea97; file 0xec97; locator=proven; mov     dx, [bp+0]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov dx, word ptr [bp]
 .org 0xec9a
 # IDA 0x1ea9a; file 0xec9a; locator=proven; mov     bx, [bp+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov bx, word ptr [bp+0x2]
 .org 0xec9d
 # IDA 0x1ea9d; file 0xec9d; locator=proven; add     dx, [si+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/108-c-glyph-raster-restoration.md
 add dx, word ptr [si+0x2]
 .org 0xeca0
 # IDA 0x1eaa0; file 0xeca0; locator=proven; add     bx, [si+4]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/108-c-glyph-raster-restoration.md
 add bx, word ptr [si+0x4]
 .org 0xeca3
 # IDA 0x1eaa3; file 0xeca3; locator=proven; mov     ax, [si+8]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: mov     ax, [si+8]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: mov     ax, [si+8]; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov ax, word ptr [si+0x8]
 .org 0xeca6
 # IDA 0x1eaa6; file 0xeca6; locator=proven; mov     si, [si+6]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: mov     si, [si+6]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: mov     si, [si+6]; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov si, word ptr [si+0x6]
 .org 0xeca9
 # IDA 0x1eaa9; file 0xeca9; locator=proven; mov     ds, cs:word_1EAED
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: mov     ds, cs:word_1EAED; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: mov     ds, cs:word_1EAED; 出處: docs/re/108-c-glyph-raster-restoration.md
 cs; mov ds, word ptr [0xeaed]
 .org 0xecae
 # IDA 0x1eaae; file 0xecae; locator=proven; call    sub_1F6DC
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: call    sub_1F6DC; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: call    sub_1F6DC; 出處: docs/re/108-c-glyph-raster-restoration.md
 call .+3118
 .org 0xecb1
 # IDA 0x1eab1; file 0xecb1; locator=proven; pop     ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: pop     ds; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: pop     ds; 出處: docs/re/108-c-glyph-raster-restoration.md
 pop ds
 .org 0xecb2
 # IDA 0x1eab2; file 0xecb2; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: retn; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: retn; 出處: docs/re/108-c-glyph-raster-restoration.md
 ret
 .org 0xecb3
 # IDA 0x1eab3; file 0xecb3; locator=proven; push    ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: db  1Eh; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: db  1Eh; 出處: docs/re/108-c-glyph-raster-restoration.md
 push ds
 .org 0xecb4
 # IDA 0x1eab4; file 0xecb4; locator=proven; mov     dx, [bp+0]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov dx, word ptr [bp]
 .org 0xecb7
 # IDA 0x1eab7; file 0xecb7; locator=proven; mov     bx, [bp+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov bx, word ptr [bp+0x2]
 .org 0xecba
 # IDA 0x1eaba; file 0xecba; locator=proven; add     dx, [si+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/108-c-glyph-raster-restoration.md
 add dx, word ptr [si+0x2]
 .org 0xecbd
 # IDA 0x1eabd; file 0xecbd; locator=proven; add     bx, [si+4]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/108-c-glyph-raster-restoration.md
 add bx, word ptr [si+0x4]
 .org 0xecc0
 # IDA 0x1eac0; file 0xecc0; locator=proven; mov     cx, [si+8]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: mov     cx, [si+8]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: mov     cx, [si+8]; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov cx, word ptr [si+0x8]
 .org 0xecc3
 # IDA 0x1eac3; file 0xecc3; locator=proven; mov     si, [si+6]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: mov     si, [si+6]; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: mov     si, [si+6]; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov si, word ptr [si+0x6]
 .org 0xecc6
 # IDA 0x1eac6; file 0xecc6; locator=proven; mov     ds, cs:word_1EAEF
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: mov     ds, cs:word_1EAEF; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: mov     ds, cs:word_1EAEF; 出處: docs/re/108-c-glyph-raster-restoration.md
 cs; mov ds, word ptr [0xeaef]
 .org 0xeccb
 # IDA 0x1eacb; file 0xeccb; locator=proven; call    sub_1F888
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: call    sub_1F888; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: call    sub_1F888; 出處: docs/re/108-c-glyph-raster-restoration.md
 call .+3517
 .org 0xecce
 # IDA 0x1eace; file 0xecce; locator=proven; pop     ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: pop     ds; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: pop     ds; 出處: docs/re/108-c-glyph-raster-restoration.md
 pop ds
 .org 0xeccf
 # IDA 0x1eacf; file 0xeccf; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: retn; 出處: docs/re/107-c-display-interpreter-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: retn; 出處: docs/re/108-c-glyph-raster-restoration.md
 ret
 .org 0xecd0
 loc_1EAD0:
@@ -97355,116 +97431,116 @@ ret
 .org 0xf920
 sub_1F720:
 # IDA 0x1f720; file 0xf920; locator=proven; push    es
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 push es
 .org 0xf921
 # IDA 0x1f721; file 0xf921; locator=proven; push    ax
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 push ax
 .org 0xf922
 # IDA 0x1f722; file 0xf922; locator=proven; push    bx
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 push bx
 .org 0xf923
 # IDA 0x1f723; file 0xf923; locator=proven; push    dx
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 push dx
 .org 0xf924
 # IDA 0x1f724; file 0xf924; locator=proven; push    bp
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 push bp
 .org 0xf925
 # IDA 0x1f725; file 0xf925; locator=proven; mov     ax, 5000h
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov ax, 0x5000
 .org 0xf928
 # IDA 0x1f728; file 0xf928; locator=proven; mov     bx, 0
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov bx, 0x0
 .org 0xf92b
 # IDA 0x1f72b; file 0xf92b; locator=proven; mov     dx, 810h
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov dx, 0x810
 .org 0xf92e
 # IDA 0x1f72e; file 0xf92e; locator=proven; xor     bp, bp
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 {load} xor bp, bp
 .org 0xf930
 # IDA 0x1f730; file 0xf930; locator=proven; int     15h
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 int 0x15
 .org 0xf932
 # IDA 0x1f732; file 0xf932; locator=proven; jb      short loc_1F758
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 jb .+38
 .org 0xf934
 # IDA 0x1f734; file 0xf934; locator=proven; mov     cs:word_1F791, bx
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 cs; mov word ptr [0xf791], bx
 .org 0xf939
 # IDA 0x1f739; file 0xf939; locator=proven; mov     cs:word_1F793, es
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 cs; mov word ptr [0xf793], es
 .org 0xf93e
 # IDA 0x1f73e; file 0xf93e; locator=proven; mov     ax, 5000h
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov ax, 0x5000
 .org 0xf941
 # IDA 0x1f741; file 0xf941; locator=proven; mov     bx, 100h
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov bx, 0x100
 .org 0xf944
 # IDA 0x1f744; file 0xf944; locator=proven; mov     dx, 1010h
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov dx, 0x1010
 .org 0xf947
 # IDA 0x1f747; file 0xf947; locator=proven; xor     bp, bp
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 {load} xor bp, bp
 .org 0xf949
 # IDA 0x1f749; file 0xf949; locator=proven; int     15h
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 int 0x15
 .org 0xf94b
 # IDA 0x1f74b; file 0xf94b; locator=proven; jb      short loc_1F758
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 jb .+13
 .org 0xf94d
 # IDA 0x1f74d; file 0xf94d; locator=proven; mov     cs:word_1F78A, bx
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 cs; mov word ptr [0xf78a], bx
 .org 0xf952
 # IDA 0x1f752; file 0xf952; locator=proven; mov     cs:word_1F78C, es
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 cs; mov word ptr [0xf78c], es
 .org 0xf957
 # IDA 0x1f757; file 0xf957; locator=proven; clc
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 clc
 .org 0xf958
 loc_1F758:
 # IDA 0x1f758; file 0xf958; locator=proven; pop     bp
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 pop bp
 .org 0xf959
 # IDA 0x1f759; file 0xf959; locator=proven; pop     dx
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 pop dx
 .org 0xf95a
 # IDA 0x1f75a; file 0xf95a; locator=proven; pop     bx
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 pop bx
 .org 0xf95b
 # IDA 0x1f75b; file 0xf95b; locator=proven; pop     ax
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 pop ax
 .org 0xf95c
 # IDA 0x1f75c; file 0xf95c; locator=proven; pop     es
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 pop es
 .org 0xf95d
 # IDA 0x1f75d; file 0xf95d; locator=proven; retn
-# ⚠ 函式 sub_1F720; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F720; [proven] 原始 DOS/V 字型初始化與兩個 far operand 設定; 出處: docs/re/108-c-glyph-raster-restoration.md
 ret
 .org 0xf95e
 loc_1F75E:
@@ -97543,10 +97619,19 @@ cs; mov byte ptr [0xf7a3], ch
 # IDA 0x1f787; file 0xf987; locator=proven; jz      short near ptr byte_1F790
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
 jz .+9
+.org 0xf989
+# IDA 0x1f789; file 0xf989; locator=proven; call    far ptr 0:0
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+lcall 0x0, 0x0
 .org 0xf98e
 # IDA 0x1f78e; file 0xf98e; locator=proven; jmp     short loc_1F795
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
 jmp .+7
+.org 0xf990
+byte_1F790:
+# IDA 0x1f790; file 0xf990; locator=proven; call    far ptr 0:0
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+lcall 0x0, 0x0
 .org 0xf995
 loc_1F795:
 # IDA 0x1f795; file 0xf995; locator=proven; call    sub_1F7A4
@@ -97584,433 +97669,433 @@ ret
 .org 0xf9a4
 sub_1F7A4:
 # IDA 0x1f7a4; file 0xf9a4; locator=proven; test    byte ptr cs:word_1F7A1, 1
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 cs; test byte ptr [0xf7a1], 0x1
 .org 0xf9aa
 # IDA 0x1f7aa; file 0xf9aa; locator=proven; jz      short $+2
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 jz .+2
 .org 0xf9ac
 loc_1F7AC:
 # IDA 0x1f7ac; file 0xf9ac; locator=proven; mov     ax, 0A0C8h
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov ax, 0xa0c8
 .org 0xf9af
 # IDA 0x1f7af; file 0xf9af; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov ds, ax
 .org 0xf9b1
 # IDA 0x1f7b1; file 0xf9b1; locator=proven; mov     al, dl
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 {load} mov al, dl
 .org 0xf9b3
 # IDA 0x1f7b3; file 0xf9b3; locator=proven; and     al, 7
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 and al, 0x7
 .org 0xf9b5
 # IDA 0x1f7b5; file 0xf9b5; locator=proven; mov     cl, 3
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov cl, 0x3
 .org 0xf9b7
 # IDA 0x1f7b7; file 0xf9b7; locator=proven; shr     dx, cl
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 shr dx, cl
 .org 0xf9b9
 # IDA 0x1f7b9; file 0xf9b9; locator=proven; inc     cl
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 inc cl
 .org 0xf9bb
 # IDA 0x1f7bb; file 0xf9bb; locator=proven; shl     bx, cl
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 shl bx, cl
 .org 0xf9bd
 # IDA 0x1f7bd; file 0xf9bd; locator=proven; add     dx, bx
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 {load} add dx, bx
 .org 0xf9bf
 # IDA 0x1f7bf; file 0xf9bf; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 shl bx, 0x1
 .org 0xf9c1
 # IDA 0x1f7c1; file 0xf9c1; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 shl bx, 0x1
 .org 0xf9c3
 # IDA 0x1f7c3; file 0xf9c3; locator=proven; add     bx, dx
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 {load} add bx, dx
 .org 0xf9c5
 # IDA 0x1f7c5; file 0xf9c5; locator=proven; mov     cl, al
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 {load} mov cl, al
 .org 0xf9c7
 # IDA 0x1f7c7; file 0xf9c7; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov dx, 0x3ce
 .org 0xf9ca
 # IDA 0x1f7ca; file 0xf9ca; locator=proven; mov     al, 5
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov al, 0x5
 .org 0xf9cc
 # IDA 0x1f7cc; file 0xf9cc; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 out dx, al
 .org 0xf9cd
 # IDA 0x1f7cd; file 0xf9cd; locator=proven; inc     dx
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 inc dx
 .org 0xf9ce
 # IDA 0x1f7ce; file 0xf9ce; locator=proven; mov     al, 3
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov al, 0x3
 .org 0xf9d0
 # IDA 0x1f7d0; file 0xf9d0; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 out dx, al
 .org 0xf9d1
 # IDA 0x1f7d1; file 0xf9d1; locator=proven; dec     dx
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 dec dx
 .org 0xf9d2
 # IDA 0x1f7d2; file 0xf9d2; locator=proven; mov     al, 3
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov al, 0x3
 .org 0xf9d4
 # IDA 0x1f7d4; file 0xf9d4; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 out dx, al
 .org 0xf9d5
 # IDA 0x1f7d5; file 0xf9d5; locator=proven; inc     dx
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 inc dx
 .org 0xf9d6
 # IDA 0x1f7d6; file 0xf9d6; locator=proven; xor     al, al
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 {load} xor al, al
 .org 0xf9d8
 # IDA 0x1f7d8; file 0xf9d8; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 out dx, al
 .org 0xf9d9
 # IDA 0x1f7d9; file 0xf9d9; locator=proven; dec     dx
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 dec dx
 .org 0xf9da
 # IDA 0x1f7da; file 0xf9da; locator=proven; mov     al, 8
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov al, 0x8
 .org 0xf9dc
 # IDA 0x1f7dc; file 0xf9dc; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 out dx, al
 .org 0xf9dd
 # IDA 0x1f7dd; file 0xf9dd; locator=proven; inc     dx
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 inc dx
 .org 0xf9de
 # IDA 0x1f7de; file 0xf9de; locator=proven; mov     al, 0FFh
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov al, 0xff
 .org 0xf9e0
 # IDA 0x1f7e0; file 0xf9e0; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 out dx, al
 .org 0xf9e1
 # IDA 0x1f7e1; file 0xf9e1; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov dx, 0x3ce
 .org 0xf9e4
 # IDA 0x1f7e4; file 0xf9e4; locator=proven; xor     al, al
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 {load} xor al, al
 .org 0xf9e6
 # IDA 0x1f7e6; file 0xf9e6; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 out dx, al
 .org 0xf9e7
 # IDA 0x1f7e7; file 0xf9e7; locator=proven; inc     dx
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 inc dx
 .org 0xf9e8
 # IDA 0x1f7e8; file 0xf9e8; locator=proven; mov     al, byte ptr cs:word_1F7A1+1
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 cs; mov al, byte ptr [0xf7a2]
 .org 0xf9ec
 # IDA 0x1f7ec; file 0xf9ec; locator=proven; and     al, 0Fh
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 and al, 0xf
 .org 0xf9ee
 # IDA 0x1f7ee; file 0xf9ee; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 out dx, al
 .org 0xf9ef
 # IDA 0x1f7ef; file 0xf9ef; locator=proven; mov     di, bx
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 {load} mov di, bx
 .org 0xf9f1
 # IDA 0x1f7f1; file 0xf9f1; locator=proven; mov     si, bp
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 {load} mov si, bp
 .org 0xf9f3
 # IDA 0x1f7f3; file 0xf9f3; locator=proven; mov     ch, 10h
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov ch, 0x10
 .org 0xf9f5
 loc_1F7F5:
 # IDA 0x1f7f5; file 0xf9f5; locator=proven; mov     ax, es:[si]
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 es; mov ax, word ptr [si]
 .org 0xf9f8
 # IDA 0x1f7f8; file 0xf9f8; locator=proven; xchg    al, ah
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 {load} xchg al, ah
 .org 0xf9fa
 # IDA 0x1f7fa; file 0xf9fa; locator=proven; cmp     cs:byte_1F7A3, 0
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 cs; cmp byte ptr [0xf7a3], 0x0
 .org 0xfa00
 # IDA 0x1f800; file 0xfa00; locator=proven; jnz     short loc_1F805
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 jnz .+5
 .org 0xfa02
 # IDA 0x1f802; file 0xfa02; locator=proven; xor     al, al
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 {load} xor al, al
 .org 0xfa04
 # IDA 0x1f804; file 0xfa04; locator=proven; dec     si
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 dec si
 .org 0xfa05
 loc_1F805:
 # IDA 0x1f805; file 0xfa05; locator=proven; mov     dh, al
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 {load} mov dh, al
 .org 0xfa07
 # IDA 0x1f807; file 0xfa07; locator=proven; xor     dl, dl
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 {load} xor dl, dl
 .org 0xfa09
 # IDA 0x1f809; file 0xfa09; locator=proven; shr     ax, cl
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 shr ax, cl
 .org 0xfa0b
 # IDA 0x1f80b; file 0xfa0b; locator=proven; shr     dx, cl
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 shr dx, cl
 .org 0xfa0d
 # IDA 0x1f80d; file 0xfa0d; locator=proven; mov     dh, [di]
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov dh, byte ptr [di]
 .org 0xfa0f
 # IDA 0x1f80f; file 0xfa0f; locator=proven; mov     [di], ah
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov byte ptr [di], ah
 .org 0xfa11
 # IDA 0x1f811; file 0xfa11; locator=proven; inc     di
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 inc di
 .org 0xfa12
 # IDA 0x1f812; file 0xfa12; locator=proven; mov     dh, [di]
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov dh, byte ptr [di]
 .org 0xfa14
 # IDA 0x1f814; file 0xfa14; locator=proven; mov     [di], al
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov byte ptr [di], al
 .org 0xfa16
 # IDA 0x1f816; file 0xfa16; locator=proven; inc     di
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 inc di
 .org 0xfa17
 # IDA 0x1f817; file 0xfa17; locator=proven; mov     dh, [di]
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov dh, byte ptr [di]
 .org 0xfa19
 # IDA 0x1f819; file 0xfa19; locator=proven; mov     [di], dl
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov byte ptr [di], dl
 .org 0xfa1b
 # IDA 0x1f81b; file 0xfa1b; locator=proven; add     di, 4Eh
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 add di, 0x4e
 .org 0xfa1e
 # IDA 0x1f81e; file 0xfa1e; locator=proven; inc     si
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 inc si
 .org 0xfa1f
 # IDA 0x1f81f; file 0xfa1f; locator=proven; inc     si
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 inc si
 .org 0xfa20
 # IDA 0x1f820; file 0xfa20; locator=proven; dec     ch
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 dec ch
 .org 0xfa22
 # IDA 0x1f822; file 0xfa22; locator=proven; jnz     short loc_1F7F5
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 jnz .-45
 .org 0xfa24
 # IDA 0x1f824; file 0xfa24; locator=proven; test    byte ptr cs:word_1F7A1, 2
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 cs; test byte ptr [0xf7a1], 0x2
 .org 0xfa2a
 # IDA 0x1f82a; file 0xfa2a; locator=proven; jnz     short locret_1F877
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 jnz .+77
 .org 0xfa2c
 # IDA 0x1f82c; file 0xfa2c; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov dx, 0x3ce
 .org 0xfa2f
 # IDA 0x1f82f; file 0xfa2f; locator=proven; xor     al, al
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 {load} xor al, al
 .org 0xfa31
 # IDA 0x1f831; file 0xfa31; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 out dx, al
 .org 0xfa32
 # IDA 0x1f832; file 0xfa32; locator=proven; inc     dx
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 inc dx
 .org 0xfa33
 # IDA 0x1f833; file 0xfa33; locator=proven; mov     al, byte ptr cs:word_1F7A1+1
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 cs; mov al, byte ptr [0xf7a2]
 .org 0xfa37
 # IDA 0x1f837; file 0xfa37; locator=proven; shr     al, 1
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 shr al, 0x1
 .org 0xfa39
 # IDA 0x1f839; file 0xfa39; locator=proven; shr     al, 1
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 shr al, 0x1
 .org 0xfa3b
 # IDA 0x1f83b; file 0xfa3b; locator=proven; shr     al, 1
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 shr al, 0x1
 .org 0xfa3d
 # IDA 0x1f83d; file 0xfa3d; locator=proven; shr     al, 1
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 shr al, 0x1
 .org 0xfa3f
 # IDA 0x1f83f; file 0xfa3f; locator=proven; out     dx, al
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 out dx, al
 .org 0xfa40
 # IDA 0x1f840; file 0xfa40; locator=proven; mov     di, bx
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 {load} mov di, bx
 .org 0xfa42
 # IDA 0x1f842; file 0xfa42; locator=proven; mov     si, bp
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 {load} mov si, bp
 .org 0xfa44
 # IDA 0x1f844; file 0xfa44; locator=proven; mov     ch, 10h
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov ch, 0x10
 .org 0xfa46
 loc_1F846:
 # IDA 0x1f846; file 0xfa46; locator=proven; mov     ax, es:[si]
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 es; mov ax, word ptr [si]
 .org 0xfa49
 # IDA 0x1f849; file 0xfa49; locator=proven; xchg    al, ah
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 {load} xchg al, ah
 .org 0xfa4b
 # IDA 0x1f84b; file 0xfa4b; locator=proven; not     ax
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 not ax
 .org 0xfa4d
 # IDA 0x1f84d; file 0xfa4d; locator=proven; cmp     cs:byte_1F7A3, 0
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 cs; cmp byte ptr [0xf7a3], 0x0
 .org 0xfa53
 # IDA 0x1f853; file 0xfa53; locator=proven; jnz     short loc_1F858
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 jnz .+5
 .org 0xfa55
 # IDA 0x1f855; file 0xfa55; locator=proven; xor     al, al
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 {load} xor al, al
 .org 0xfa57
 # IDA 0x1f857; file 0xfa57; locator=proven; dec     si
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 dec si
 .org 0xfa58
 loc_1F858:
 # IDA 0x1f858; file 0xfa58; locator=proven; mov     dh, al
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 {load} mov dh, al
 .org 0xfa5a
 # IDA 0x1f85a; file 0xfa5a; locator=proven; xor     dl, dl
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 {load} xor dl, dl
 .org 0xfa5c
 # IDA 0x1f85c; file 0xfa5c; locator=proven; shr     ax, cl
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 shr ax, cl
 .org 0xfa5e
 # IDA 0x1f85e; file 0xfa5e; locator=proven; shr     dx, cl
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 shr dx, cl
 .org 0xfa60
 # IDA 0x1f860; file 0xfa60; locator=proven; mov     dh, [di]
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov dh, byte ptr [di]
 .org 0xfa62
 # IDA 0x1f862; file 0xfa62; locator=proven; mov     [di], ah
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov byte ptr [di], ah
 .org 0xfa64
 # IDA 0x1f864; file 0xfa64; locator=proven; inc     di
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 inc di
 .org 0xfa65
 # IDA 0x1f865; file 0xfa65; locator=proven; mov     dh, [di]
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov dh, byte ptr [di]
 .org 0xfa67
 # IDA 0x1f867; file 0xfa67; locator=proven; mov     [di], al
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov byte ptr [di], al
 .org 0xfa69
 # IDA 0x1f869; file 0xfa69; locator=proven; inc     di
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 inc di
 .org 0xfa6a
 # IDA 0x1f86a; file 0xfa6a; locator=proven; mov     dh, [di]
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov dh, byte ptr [di]
 .org 0xfa6c
 # IDA 0x1f86c; file 0xfa6c; locator=proven; mov     [di], dl
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 mov byte ptr [di], dl
 .org 0xfa6e
 # IDA 0x1f86e; file 0xfa6e; locator=proven; add     di, 4Eh
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 add di, 0x4e
 .org 0xfa71
 # IDA 0x1f871; file 0xfa71; locator=proven; inc     si
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 inc si
 .org 0xfa72
 # IDA 0x1f872; file 0xfa72; locator=proven; inc     si
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 inc si
 .org 0xfa73
 # IDA 0x1f873; file 0xfa73; locator=proven; dec     ch
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 dec ch
 .org 0xfa75
 # IDA 0x1f875; file 0xfa75; locator=proven; jnz     short loc_1F846
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 jnz .-47
 .org 0xfa77
 locret_1F877:
 # IDA 0x1f877; file 0xfa77; locator=proven; retn
-# ⚠ 函式 sub_1F7A4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F7A4; [proven] 原字模對齊／前景背景／16列／latch 的真正 VGA raster; 出處: docs/re/108-c-glyph-raster-restoration.md
 ret
 .org 0xfa78
 sub_1F878:

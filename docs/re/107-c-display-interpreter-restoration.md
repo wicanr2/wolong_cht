@@ -40,6 +40,9 @@
 
 ## 3. 驗證與未解範圍
 
+後續真實 glyph 證據見 [re/108](108-c-glyph-raster-restoration.md)：原字庫／far 服務与 raster
+已接入真正 C，這份歷史 1F75E fixture 收據保留，原始分派程式未換成另一套規則。
+
 O0/O2 比原始登記、九 opcode、十個實際場景、signed／word 邊界、DS 分派、完整
 RAM／四平面／latch／port／register／FLAGS／call snapshot。原始圖庫與十個場景保留完整輸入。
 文字 glyph 的裝置 fixture 不代替完整字型服務或正常玩家 UI；除以零／商溢位由原始資料契約隔離。

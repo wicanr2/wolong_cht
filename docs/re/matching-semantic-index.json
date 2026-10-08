@@ -1158,6 +1158,34 @@
       "sources": [
         "docs/re/107-c-display-interpreter-restoration.md"
       ]
+    },
+    "0x1F720": {
+      "meaning": "原始 DOS/V 字型初始化與兩個 far operand 設定",
+      "level": "proven",
+      "sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    "0x1F7A4": {
+      "meaning": "原字模對齊／前景背景／16列／latch 的真正 VGA raster",
+      "level": "proven",
+      "sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    "0x106F5": {
+      "meaning": "原始字串 caller 接真實 glyph",
+      "level": "proven",
+      "sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
+    },
+    "0x106FD": {
+      "meaning": "原始固定三字 caller 接 live operand 與真實 glyph",
+      "level": "proven",
+      "sources": [
+        "docs/re/108-c-glyph-raster-restoration.md"
+      ]
     }
   },
   "operands": {
