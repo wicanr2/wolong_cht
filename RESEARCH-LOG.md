@@ -1869,3 +1869,10 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - 視窗 FAR／RETF、外交回應／RNG／信賴度、金額／扣款、CF 輪詢與取消重試、PUSHF／POPF、SS frame、中途 code patch／恢復由真實 C 執行。繪圖／輸入／裝置 leaf 仍是明示 fixture，不能外推完整 UI 或自然時序。
 - O0/O2 各 53,322 組原版/C、417 次完整 1 MB 相同，十個突變拒絕；實際入口覆蓋十七函式。原始 code word patch 在 callee 中途觀測，未初始化 stack 槽保留原樣。
 - 較早 spec/219、re/100 加範圍 backlink；另外十一份同位址玩家規格核對為不受影響。正式 Go 未改，Issue #22 保持 OPEN；32768／65535 等數值回應只是 raw word 邊界，沒有當作合法玩家輸入。
+
+## 2026-10-08：真實 C 數值輸入器與財政返回
+
+- KI.EXE／SINARIO.DAT 身分同固定原版；IDA Pro 9.4 DB SHA-256 `8a4d51f1057f192aba3f3e24369737121d9155cf28ed2329b3805e67a5e4f59e`，十七函式共 598 bytes，三筆 MZ／runtime 重定位、原始 table／十八格與完整 ABI 在 [`docs/re/102`](docs/re/102-c-numeric-editor-restoration.md)。
+- O0/O2 各原版/C 788,931 組、正式 Go `EditAmountValue` 787,839 組有效數值相同，各版 6164 次完整 1 MB 核對相同。六鍵、主迴圈、LAHF／SAHF、裝置／popup 保護與財政四 caller 真實接線，十個突變拒絕。
+- 跳表負對照先前越過宣告事件，改為明示末端取消後完整重生，最終只消費兩個事件，由機器核對 index／cancel。舊 driver／收據保留，沒有挑 seed 或放寬判準。
+- Go 比數值與 action-valid 範圍，沒有把 bool 當 CF。原版/C 仍量完整 raw u16／FLAGS／register／memory；圖形、自然 input 與完整 Go 財政 UI 不由 scalar 證據代替。正式 Go 未改，Issue #22 保持 OPEN。

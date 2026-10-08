@@ -196,3 +196,16 @@
 - 現行 C 台帳加入十七函式，共 101 個。完整 Goal 保持 active，本輪依授權完成後 commit、push；本輪不宣稱完整視窗／正常玩家／Go 三方或 C 機器碼完成。
 - 收尾文件與工具檢查 21／25 通過，909 列分流、嚴格研究索引、過期斷言、校訂、資產 deny-list 與全部正對照通過。四項既有缺檔／教訓失敗保留，新文件沒有新增引用錯誤。
 - 101 個 C 函式來源身分、十七筆分級出處、最終 driver／收據、原版 EXE／DAT、重定位與擁有權核對。輸出 UID/GID 1000:1000，既有 root-owned 路徑仍為 27 筆，本輪容器已退出移除。
+
+## 2026-10-08：數值輸入器與財政 caller 的真實 C
+
+- 前輪 `7bdafd3` 已推送，分類為 progress。開工核對乾淨工作樹、現行狀態、逆向／IDA／spec／文件職責路由及 GitHub Issue #22。
+- 十七函式共 598 bytes，IDA 9.4 probe 保留原始名稱、完整 chunks、operand、xref、file／IDA bytes、三筆重定位、CS:7D01 間接 table 與 CS:7D93 十八格。spec/221 READY 後實作 C。
+- 真實六鍵、主迴圈、LAHF／SAHF、word MUL／carry／cap、DIV model、CLD／LODSB、裝置保護／popup wrapper 與財政四 caller 接線。圖形／文字／輸入／popup leaf 為明示 primitive。
+- 新 driver 少一個 scenario 外層括號，補齊後編譯器又指明 goto 跨 plans 宣告；回查路由，將宣告移到所有跳躍前，用同一工具鏈重跑。FAR fixture 跳距多一 byte，誤入未覆寫的 code；按指令邊界修正，沒有把它當成 CPU 或產品缺陷。
+- 完整 O0/O2 各原版/C 788,931 組、Go 有效數值 787,839 組相同，每版 6164 次完整 1 MB 核對相同，十七函式都有實際入口。Go 使用既有正式 API，原版 CF 與 Go action-valid 不混稱。
+- 第一版跳表錯版忽略完成鍵，讀到第 513 筆非宣告事件才返回；加入明示尾端取消並完整重生，最終錯版由第二筆事件取消，verifier 正查 index=2／cancel=1。舊來源／收據留在 c-numeric 的 pre-terminal-cancel 檔案，正常矩陣與判準不變。
+- 十個 carry／乘百／除十／最大／FLAGS／glyph step／table／SAHF／取消寫回／徵兵單位突變全拒絕；六個原始 handler 都有真正 table 主路徑向量。正式 Go 原始碼未改，圖形／自然玩家／完整 Go transaction 與 C 機器碼仍未驗證。
+- spec/220、re/101 與 spec/78 的同版範圍 backlink 由 verifier 核對。現行 C 台帳累計 118 個，Go 欄只記每函式直接 scalar 比較；完整 Goal 保持 active，本輪依授權完成後 commit、push。
+- 收尾文件與工具檢查 21／25 通過，917 列分流、嚴格研究索引、過期斷言、校訂、資產 deny-list 與全部正對照通過。四項既有缺檔／教訓失敗保留，本輪沒有新增引用錯誤。
+- 118 個 C 函式來源身分、十七筆分級出處、最終原版/C/Go 收據、原版 EXE／DAT、重定位／終止輸入與擁有權核對。輸出 UID/GID 1000:1000，既有 root-owned 路徑仍為 27 筆，本輪容器已退出移除。

@@ -702,6 +702,125 @@
       "sources": [
         "docs/re/101-c-modal-restoration.md"
       ]
+    },
+    "0x17C6E": {
+      "meaning": "原始數值主迴圈、raw key table、完成／取消、SS frame 與 LAHF／SAHF",
+      "level": "proven",
+      "sources": [
+        "docs/re/102-c-numeric-editor-restoration.md"
+      ]
+    },
+    "0x17D0D": {
+      "meaning": "原始數值外框、word 座標運算與圖形 callee 參數",
+      "level": "proven",
+      "sources": [
+        "docs/re/102-c-numeric-editor-restoration.md"
+      ]
+    },
+    "0x17D47": {
+      "meaning": "原始數值外框恢復參數與保存",
+      "level": "proven",
+      "sources": [
+        "docs/re/102-c-numeric-editor-restoration.md"
+      ]
+    },
+    "0x17D5F": {
+      "meaning": "十八格 raw byte、CLD／LODSB、三列六欄位置與 glyph callee",
+      "level": "proven",
+      "sources": [
+        "docs/re/102-c-numeric-editor-restoration.md"
+      ]
+    },
+    "0x17DA5": {
+      "meaning": "word 乘十加 digit、carry／飽和、cap 及 CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/102-c-numeric-editor-restoration.md"
+      ]
+    },
+    "0x17DC3": {
+      "meaning": "word 乘百、高 word／飽和、cap 及 CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/102-c-numeric-editor-restoration.md"
+      ]
+    },
+    "0x17DDD": {
+      "meaning": "原始 word 除十、DIV FLAGS 模型與 CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/102-c-numeric-editor-restoration.md"
+      ]
+    },
+    "0x17DEA": {
+      "meaning": "原始完成動作只設 CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/102-c-numeric-editor-restoration.md"
+      ]
+    },
+    "0x17DEC": {
+      "meaning": "原始最大動作讀 SS cap 與 CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/102-c-numeric-editor-restoration.md"
+      ]
+    },
+    "0x17DF1": {
+      "meaning": "原始清零動作與 CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/102-c-numeric-editor-restoration.md"
+      ]
+    },
+    "0x101B4": {
+      "meaning": "原始 FAR 狀態／pointer 保存及 PUSHF／POPF／register",
+      "level": "proven",
+      "sources": [
+        "docs/re/102-c-numeric-editor-restoration.md"
+      ]
+    },
+    "0x101DB": {
+      "meaning": "原始有號狀態三分支、FAR 恢復及 FLAGS／register",
+      "level": "proven",
+      "sources": [
+        "docs/re/102-c-numeric-editor-restoration.md"
+      ]
+    },
+    "0x193E9": {
+      "meaning": "原始 DL／DH operand byte 交換、popup wrapper 與恢復",
+      "level": "proven",
+      "sources": [
+        "docs/re/102-c-numeric-editor-restoration.md"
+      ]
+    },
+    "0x167CD": {
+      "meaning": "原始財政上限 100、取消 gate 與 CS byte 寫回",
+      "level": "proven",
+      "sources": [
+        "docs/re/102-c-numeric-editor-restoration.md"
+      ]
+    },
+    "0x167E6": {
+      "meaning": "原始財政騎兵上限 10000、取消／除十與 CS word 寫回",
+      "level": "proven",
+      "sources": [
+        "docs/re/102-c-numeric-editor-restoration.md"
+      ]
+    },
+    "0x16806": {
+      "meaning": "原始財政弓兵上限 10000、取消／除十與 CS word 寫回",
+      "level": "proven",
+      "sources": [
+        "docs/re/102-c-numeric-editor-restoration.md"
+      ]
+    },
+    "0x16826": {
+      "meaning": "原始財政步兵上限 10000、取消／除十與 CS word 寫回",
+      "level": "proven",
+      "sources": [
+        "docs/re/102-c-numeric-editor-restoration.md"
+      ]
     }
   },
   "operands": {

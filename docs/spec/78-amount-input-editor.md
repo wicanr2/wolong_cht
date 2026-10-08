@@ -101,6 +101,11 @@ jb  → 玩家取消，不要寫回                ; CF ＝ 取消
 
 ## 4. 驗證
 
+後續 C 控制流證據見 [`re/102`](../re/102-c-numeric-editor-restoration.md)：DOS/V 原始
+0x17C6E／六鍵／財政 caller 的完整 ABI，以及有效狀態的 Go 數值核心另有直接比較。
+0x17D5F 的十八格／CLD／LODSB／位置／callee 參數已閉合，0x1E3D7 的實際 glyph primitive
+仍未由新收據驗證。本規格的玩家 UI／像素證據範圍保留。
+
 | 方式 | 證據 |
 |---|---|
 | 單元測試 | `TestAmountPanelGeometryFollowsAnchor`（`cmd/wlgame`）：兩個錨點各自算出來的存區、外框與格子 |

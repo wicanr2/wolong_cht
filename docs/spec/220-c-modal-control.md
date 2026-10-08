@@ -35,6 +35,9 @@ O0/O2 比全 register、FLAGS、callee 入口、stack、control fields、中途 
 
 ## 4. 未解範圍
 
+後續 C 數值輸入證據見 [`spec/221`](221-c-numeric-editor.md)。本規格的舊收據以固定值
+取代 0x17C6E；新收據執行真正數值主迴圈、六鍵與財政 caller，圖形／實際 input 仍為 primitive。
+
 | 項目 | 邊界 |
 |---|---|
 | 完整底層輸入／繪圖／音效與自然玩家視窗 | 本輪 primitive fixture 不作完成證據 |

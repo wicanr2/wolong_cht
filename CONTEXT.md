@@ -33,9 +33,10 @@
 | 2026-10-08；八個每時／dispatcher 核心 C 函式 | O0/O2 各原版/C 21,871 組相同，七個突變拒絕；四劇本 × 三玩家 × 22 cursor 的局部每時入口通過 | 財政、維持費、外交、cadence、原始 event table 與 event 10／13 已接入；其他 11 handler／UI 仍為 fixture | spec/218、[re/99](docs/re/99-c-hourly-update-restoration.md) 與來源收據 |
 | 2026-10-08；三十個事件 handler／依賴 C 函式 | O0/O2 各 43,476 組原版/C 相同，八個突變拒絕；每版 340 次完整 RAM、三十函式實際入口及四劇本 dispatcher 接線通過 | 十三碼 handler 均有真實 C，包含 event 8 落下尾端；modal／戰術／UI 仍為 fixture，中立 0x24 的玩家語意未定 | spec/219、[re/100](docs/re/100-c-event-handlers-restoration.md)、來源／入口／backlink 收據 |
 | 2026-10-08；十七個外交／金額視窗 C 函式 | O0/O2 各 53,322 組原版/C 相同，十個突變拒絕；每版 417 次完整 RAM、二十筆 MZ／runtime 重定位及十七函式入口通過 | 原始 FAR、CF 輪詢／取消重試、SS frame、金額／信賴度、code patch 已接入；底層 primitive、自然玩家 UI 與 Go 三方仍未驗證 | spec/220、[re/101](docs/re/101-c-modal-restoration.md)、逐位址／ABI／中途狀態收據 |
+| 2026-10-08；十七個數值／裝置保護／財政 C 函式 | O0/O2 各原版/C 788,931 組、有效 Go scalar 787,839 組相同；十個突變拒絕，每版 6164 次完整 RAM、十七函式入口及原始 key table 通過 | 原始六鍵、數值主迴圈、裝置／popup 保護、四財政 caller 已接入；輸入為有界固定事件，Go 只量數值核心，圖形／自然玩家流程仍未驗證 | spec/221、[re/102](docs/re/102-c-numeric-editor-restoration.md)、full-u16／input／Go scalar 收據 |
 
-持續 Goal 為完成整個 matching decompilation；目前有整檔組語基準與 101 個 C 函式，不能據此宣布完整 C 還原完成。
-使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843` 與事件 `b5ad756` 已推到 origin/main。
+持續 Goal 為完成整個 matching decompilation；目前有整檔組語基準與 118 個 C 函式，不能據此宣布完整 C 還原完成。
+使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756` 與視窗 `7bdafd3` 已推到 origin/main。
 
 未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。
 
