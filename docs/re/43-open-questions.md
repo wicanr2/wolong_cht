@@ -7,7 +7,7 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-891 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+899 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
 - 日期：2026-10-08
 - 產生工具：`tools/re_open_questions.py`
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**885 列分布在 367 份文件，平均每份 2.4 列。**
+**893 列分布在 369 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -47,11 +47,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 224 | 217 | 6 | 1 |
+| 程式碼理解 | 228 | 221 | 6 | 1 |
 | 驗收 | 240 | 214 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 384 | 362 | 21 | 1 |
-| **合計** | **885** | 824 | 58 | 3 |
+| 其他 | 388 | 366 | 21 | 1 |
+| **合計** | **893** | 832 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,9 +59,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 341 |
+| `docs/spec/` | 345 |
 | `docs/playtest/` | 240 |
-| `docs/re/` | 224 |
+| `docs/re/` | 228 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
@@ -110,7 +110,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 | evidence-only | — |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 | evidence-only | — |
 
-## 2.3 程式碼理解（224 條）
+## 2.3 程式碼理解（228 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -338,6 +338,10 @@
 | [`re/98-c-go-monthly-comparison.md`](../re/98-c-go-monthly-comparison.md) | 原版任意後期世界、俘虜／政治所有條件 | 未驗證，36 向量是完整矩陣的明示抽樣，不外推全部世界 | 靜態 | evidence-only | — |
 | [`re/98-c-go-monthly-comparison.md`](../re/98-c-go-monthly-comparison.md) | 正常玩家 UI／音效／長程與完整存檔垂直鏈 | 未驗證，rules 直接入口不取代正常玩家驗收 | 靜態 | evidence-only | — |
 | [`re/98-c-go-monthly-comparison.md`](../re/98-c-go-monthly-comparison.md) | C 全執行檔與機器碼匹配 | 未完成，C 仍為還原語意；整檔 byte match 仍由組語基準提供 | 靜態 | evidence-only | — |
+| [`re/99-c-hourly-update-restoration.md`](../re/99-c-hourly-update-restoration.md) | 其他十一個 event handler 與完整 modal／UI／音效 | 未驗證，原始 table call 不替代 callee 完成 | 靜態 | evidence-only | — |
+| [`re/99-c-hourly-update-restoration.md`](../re/99-c-hourly-update-restoration.md) | 完整 Go 每時規則與月結前後三方 | 未驗證，本輪收據只量原版/C 核心 | 靜態 | evidence-only | — |
+| [`re/99-c-hourly-update-restoration.md`](../re/99-c-hourly-update-restoration.md) | 正常玩家日期流、硬體等待與長程 | 未驗證，one-hour 直接入口不取代玩家垂直鏈 | 靜態 | evidence-only | — |
+| [`re/99-c-hourly-update-restoration.md`](../re/99-c-hourly-update-restoration.md) | C 機器碼匹配 | 未驗證，原版工具鏈仍未知，整檔 match 仍是組語基準 | 靜態 | evidence-only | — |
 
 ## 2.4 驗收（240 條）
 
@@ -595,7 +599,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（384 條）
+## 2.6 其他（388 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -856,6 +860,10 @@
 | [`spec/216-monthly-storm-globals.md`](../spec/216-monthly-storm-globals.md) | 冷測 storm／無 storm 的四 word、原版格式 round-trip；36 三方向量的 globals 差異需歸零。 | （未解小節內文） | 靜態 | evidence-only | — |
 | [`spec/216-monthly-storm-globals.md`](../spec/216-monthly-storm-globals.md) | 暴風雨正常 UI／音效與長程流程 | 未驗證，保存 word 的一致不替代玩家垂直鏈 | 靜態 | evidence-only | — |
 | [`spec/217-player-monthly-declaration.md`](../spec/217-player-monthly-declaration.md) | 玩家宣戰後正常 UI 與長程流程 | 未驗證，本輪驗局部月結 producer 與完整 raw 向量 | 靜態 | evidence-only | — |
+| [`spec/218-c-hourly-update.md`](../spec/218-c-hourly-update.md) | 其他 event handler 與 UI／音效／退出 | 未驗證，fixture 只量本輪 caller 與原始參數 | 靜態 | evidence-only | — |
+| [`spec/218-c-hourly-update.md`](../spec/218-c-hourly-update.md) | 正常玩家日期流與完整原版硬體等待 | 未驗證，局部每時入口不替代玩家流程 | 靜態 | evidence-only | — |
+| [`spec/218-c-hourly-update.md`](../spec/218-c-hourly-update.md) | 完整 Go 每時規則 parity | 未驗證，另按原版／C 範圍建立三方 audit | 靜態 | evidence-only | — |
+| [`spec/218-c-hourly-update.md`](../spec/218-c-hourly-update.md) | C 機器碼匹配 | 未驗證，原版工具鏈仍未知 | 靜態 | evidence-only | — |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 頭像的邊框 | `sub_107D2` 只 blit 64×64 的圖塊，**框在哪裡畫的沒找到**——場景 5 的 op 清單裡沒有頭像那一格的框 | 靜態 | evidence-only | — |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 兵種標籤 | 畫面用場景 5 的「主將」，規則層的 `army.Position` 第一個是「大將」（原版 TALK #62 也這樣說）。兩處用語不同是原版就有的，不要統一 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 反白列上換色的機制 | `38` §1.7.1：兩個色號各有一次量測，變換規則沒解 | 靜態 | evidence-only | — |

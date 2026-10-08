@@ -1849,3 +1849,9 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - 四劇本 × 三玩家 × 三 raw RNG 初值，載入基準一致，原版/C 完整 1 MB 相同；五個已定位 Go 缺口修正後，36／36 原版/C/Go 完整區塊與最終 RNG 相同。
 - 評分 byte、交換排序、中立 FF18、storm globals、玩家 producer 的原始位址、反例與各 checkpoint 在 [`docs/re/98`](docs/re/98-c-go-monthly-comparison.md)。沒有移除正式規則、剔除 raw 範圍或挑選通過 seed。
 - 推論等級已證實，限 36 局部月結向量及明示 UI fixture。任意後期世界、正常玩家長程與完整 C 機器碼仍未驗證。
+
+## 2026-10-08：每時更新與原始 dispatcher C 核心
+
+- KI.EXE SHA-256 同固定原版 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`；IDA 9.4 DB SHA-256 `d15aa9875f3821827d3a5d76edf4019c34ae2f599322523e26541406637b2c7b`，八函式原始定位與 source identity 見 [`docs/re/99`](docs/re/99-c-hourly-update-restoration.md)。
+- O0/O2 各 21,871 組原版/C、171 次完整記憶體核對相同；七個突變拒絕。每時財政、carry 維持費、外交雙向 relation、cadence 與原始 table call 保留完整 ABI。
+- 推論等級已證實，限合法矩陣與明示 fixture。其他 handler／UI／音效／退出、正常玩家日期流、完整 Go 每時 parity 與 C 機器碼仍未驗證。

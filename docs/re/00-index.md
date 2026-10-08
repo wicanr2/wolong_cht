@@ -155,6 +155,7 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 | [`96`](96-c-monthly-world-update-restoration.md) | 十一個世界更新 C 函式接入月結；142,864 組原版/C 相同，writer 真實寫入，Go 生產力 560 組相同 |
 | [`97`](97-c-monthly-politics-restoration.md) | 二十一個政治／俘虜函式補齊 C 月結規則；11,632 組原版/C 相同，佇列初始化、排序與真實 writer 已接入 |
 | [`98`](98-c-go-monthly-comparison.md) | 四劇本 36 固定月結向量，原版/C/Go 完整區塊與 RNG 相同；修正評分、排序、中立、storm globals 與玩家 producer |
+| [`99`](99-c-hourly-update-restoration.md) | 八個每時／dispatcher 核心 C 函式，21,871 組原版/C 相同；原始 cadence、維持費、外交、event 10／13 已接入 |
 | [`21`](21-function-census.md) | 全函式覆蓋普查；**§3.1 為什麼要排除目錄型文件** |
 | [`24`](24-unread-function-catalogue.md) | 未讀函式的證據與下手順序 |
 | [`39`](39-remaining-unread.md) | 未讀函式的逐支歸屬（生成的，可重跑）|

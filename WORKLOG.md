@@ -156,3 +156,16 @@
 - spec/212–217 更新 CONFORMED，範圍限這 36 固定月結 rules 向量，不能當作任意後期世界、正常 GUI／音效／長程、完整 C 或 C 機器碼完成。Goal 保持 active，本輪依授權 commit、push。
 - 收尾文件與工具檢查 21／25 通過，885 列分流、嚴格研究索引、過期斷言、校訂、資產 deny-list 與全部正對照通過。四項既有缺檔／教訓檢查失敗保留，新文件與研究入口沒有新增引用錯誤。
 - 36 向量 source identity、原版 EXE／DAT 雜湊、46 個未修改 C 函式來源與產物擁有權核對。輸出 UID/GID 為 1000:1000，既有 root-owned 路徑仍為 27 筆，本輪容器已退出移除。
+
+## 2026-10-08：八個每時更新與 dispatcher C 核心
+
+- 前輪 `8251289` 已推送，分類為 progress。開工核對乾淨工作樹與現況，命中逆向／IDA／文件職責路由，沿時鐘的每時下游續作。
+- 原始八函式共 445 bytes，IDA 9.4 probe 保留原始名稱、位址、operand、chunk、xref 與固定 DB。spec/218 READY 後以 C 接線財政、維持費、外交與原始 event table。
+- event 10／13 和 trust helper 為真實 C，其他 11 event handler 與 UI／音效／退出／重畫仍為明示 RET fixture，沒有額外 Alive gate 或更換表格。
+- O0/O2 各 21,871 組原版/C 相同，各版 171 次全 1 MB 記憶體核對相同，含全部 cadence byte、13 碼及空事件、四劇本每時入口、外交與支出／兵池邊界。
+- 初次 trace 的暫存器與資料已一致，根因是 event 10 位址重複登錄、sub_1310A 沒登錄。按位址去重並補正式依賴後，用同樣矩陣、原版與 source 重跑，沒有放寬 trace 判準。
+- cadence 突變被原始 comparator 拒絕，但失敗 JSON 沒保存真正不同的 globals／cadence 欄位；補齊 schema 並重生收據，validator 才能機器核對差異。
+- 支出上界、carry、cadence、cursor stride、trust borrow、次序與外交 byte 經費七個突變全拒絕。正式 Go 本輪沒有修改，完整 Go 每時對拍與其餘 handler 尚待後續。
+- 現行 C 台帳加入八函式，共五十四個；每筆 source／routine hash、原始位址與 proven／re/99 出處保留。Goal 保持 active，本輪依授權 commit、push。
+- 收尾文件與工具檢查 21／25 通過，893 列分流、嚴格研究索引、過期斷言、校訂、資產 deny-list 與全部正對照通過。四項既有缺檔／教訓檢查失敗保留，新文件沒有新增引用錯誤。
+- 五十四個 C 函式來源身分、分級語意、原版 EXE／DAT 雜湊與產物擁有權均核對。輸出 UID/GID 為 1000:1000，既有 root-owned 路徑仍為 27 筆，本輪容器已退出移除。

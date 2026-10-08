@@ -11,10 +11,10 @@
       ]
     },
     "0x131AE": {
-      "meaning": "節流後取出一筆事件，再依低位元組間接分派",
+      "meaning": "cadence 與四 byte 事件間接分派表",
       "level": "proven",
       "sources": [
-        "docs/re/15-event10-producer.md"
+        "docs/re/99-c-hourly-update-restoration.md"
       ]
     },
     "0x1ECE0": {
@@ -323,6 +323,55 @@
       "level": "proven",
       "sources": [
         "docs/re/97-c-monthly-politics-restoration.md"
+      ]
+    },
+    "0x13E11": {
+      "meaning": "每時 dispatch、財政、維持費、外交與 cursor 的原始次序",
+      "level": "proven",
+      "sources": [
+        "docs/re/99-c-hourly-update-restoration.md"
+      ]
+    },
+    "0x13E65": {
+      "meaning": "24-bit 兵池和右移五次累計維持費",
+      "level": "proven",
+      "sources": [
+        "docs/re/99-c-hourly-update-restoration.md"
+      ]
+    },
+    "0x13E8E": {
+      "meaning": "外交官原始 byte 經費與雙向 relation／RNG 閘",
+      "level": "proven",
+      "sources": [
+        "docs/re/99-c-hourly-update-restoration.md"
+      ]
+    },
+    "0x15673": {
+      "meaning": "24-bit 支出上界累加與 AX／DX 保存",
+      "level": "proven",
+      "sources": [
+        "docs/re/99-c-hourly-update-restoration.md"
+      ]
+    },
+    "0x13496": {
+      "meaning": "event 10 的 raw formatter／CX 與 SS stack",
+      "level": "proven",
+      "sources": [
+        "docs/re/99-c-hourly-update-restoration.md"
+      ]
+    },
+    "0x13507": {
+      "meaning": "event 13 通知後信賴度呼叫",
+      "level": "proven",
+      "sources": [
+        "docs/re/99-c-hourly-update-restoration.md"
+      ]
+    },
+    "0x13DC9": {
+      "meaning": "trust byte borrow 歸零及通知／退出順序",
+      "level": "proven",
+      "sources": [
+        "docs/re/99-c-hourly-update-restoration.md"
       ]
     }
   },
