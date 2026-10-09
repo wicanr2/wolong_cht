@@ -190,6 +190,7 @@
 | [`docs/re/110-c-talk-rendering-restoration.md`](re/110-c-talk-rendering-restoration.md) | 110：C TALK、參數標記與肖像讀檔 | 八個 C 函式／六個原始 handler 通過，O0/O2 各 1,277 全 RAM／VGA／ABI 相同，十錯版… | 2026-10-09 |
 | [`docs/re/111-c-input-mouse-restoration.md`](re/111-c-input-mouse-restoration.md) | 111：C 訊息等待、滑鼠分派與游標 | 19 個 C 函式／兩 raw 入口，O0/O2 各 210 全裝置／ABI 相同，三個背景還原與十二錯版通過。 | 2026-10-09 |
 | [`docs/re/112-c-choice-selector-restoration.md`](re/112-c-choice-selector-restoration.md) | 112：C 選單 selector、捲動與文字 callback | 14 named／兩 raw 入口通過；O0/O2 各 138 全裝置／ABI 相同，三個 XOR 還原與十二錯版通過。 | 2026-10-09 |
+| [`docs/re/113-c-resource-cue-restoration.md`](re/113-c-resource-cue-restoration.md) | 113：C 完整資源載入、BGM cue 與分段設定 | CONFORMED。6 支函式的局部原版／C 行為通過。 | 2026-10-09 |
 | [`docs/re/12-diplomacy-dialogue.md`](re/12-diplomacy-dialogue.md) | 12 — 停戰說服訊息索引：#190–#198 | 三變體槽位與停戰說服這條索引路徑已證實；事件 6／7 的次要呼叫已定位， 但 formatter 參數契約與完整可見… | 2026-08-09 |
 | [`docs/re/13-pc98-numeric-window.md`](re/13-pc98-numeric-window.md) | 13 — DOS/V 數字輸入視窗量測與 CJK 版面決策 | 以 DOS/V 為唯一畫面基準；原始座標、DOS/V 96×64 內框 blit、3×6 每格操作、 實際按鍵 gl… | 2026-08-10 |
 | [`docs/re/14-mmap-mch-objects.md`](re/14-mmap-mch-objects.md) | 14 — MMAP.MCH 戰略地圖物件 | 資產格式、事件 12 的火災／暴動圖形鏈與 typed 動畫／移動時序 confirmed； type 3 的事件語… | 2026-08-10 |
@@ -220,7 +221,7 @@
 | [`docs/re/39-remaining-unread.md`](re/39-remaining-unread.md) | 39 — 剩餘未讀函式的逐支歸屬 | 清單。 | 2026-08-14 |
 | [`docs/re/40-garrison-relief-request.md`](re/40-garrison-relief-request.md) | 40 — 據點求援與援軍派遣 | 整條鏈 confirmed（每一支都逐行讀過）。 sub_140C9 的距離算式裡有一處 | 2026-08-14 |
 | [`docs/re/42-leaf-functions.md`](re/42-leaf-functions.md) | 42 — 戰術以外的 47 支葉節點 | 47 支全部逐行讀過。四件事因此定案：INT 61h 是音源 TSR 的介面、 byte_198A6 的位元圖完整、… | 2026-08-14 |
-| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的證據索引） | 生成的證據索引，跑 tools/py.sh tools/re_open_questions.py 重出。 證據欄不下… | 2026-10-08 |
+| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的證據索引） | 生成的證據索引，跑 tools/py.sh tools/re_open_questions.py 重出。 證據欄不下… | 2026-10-09 |
 | [`docs/re/44-threat-and-reinforcement-ai.md`](re/44-threat-and-reinforcement-ai.md) | 44 — 威脅偵測與 AI 出兵：據點每 tick 掃一次 | 整條鏈逐行讀完。三件事定案：據點 +0x18 是佔用圖讀回來的軍團數、 +0x00 低 4 位是「哪幾個鄰居是敵方」… | 2026-08-14 |
 | [`docs/re/45-corps-command-mode.md`](re/45-corps-command-mode.md) | 45 — 軍團的三種指令模式：戰鬥指揮／委任／解體 | 軍團 +0x00 位元 2 定案 ＝ | 2026-08-14 |
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |
@@ -442,6 +443,7 @@
 | [`docs/spec/230-c-talk-rendering.md`](spec/230-c-talk-rendering.md) | 230：C 原始 TALK 與肖像快取 | CONFORMED。O0/O2 各 1,277 組全 RAM／VGA／ABI 相同，1,022 槽與十錯版通過。 | 2026-10-09 |
 | [`docs/spec/231-c-input-mouse.md`](spec/231-c-input-mouse.md) | 231：C 原始訊息等待與滑鼠游標 | CONFORMED。O0/O2 各 210 全裝置／ABI 相同，三個背景還原與十二錯版通過。 | 2026-10-09 |
 | [`docs/spec/232-c-choice-selector.md`](spec/232-c-choice-selector.md) | 232：C 原始選列、捲動與 popup caller | CONFORMED。O0/O2 各 138 全裝置／ABI 相同，三個 XOR 還原與十二錯版通過。 | 2026-10-09 |
+| [`docs/spec/233-c-resource-cue.md`](spec/233-c-resource-cue.md) | 233：C 完整檔案讀取與原始 cue | CONFORMED。O0／O2 各 93 組局部同狀態驗證與 12 個錯版通過。 | 2026-10-09 |
 | [`docs/spec/24-corps-info-window.md`](spec/24-corps-info-window.md) | 24 — 軍團情報視窗 | CONFORMED。版面已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/25-slot-select-window.md`](spec/25-slot-select-window.md) | 25 — 四槽選擇視窗（新遊戲／讀取／儲存） | CONFORMED。讀取／儲存已照原版版面實作； 新遊戲仍走 remake 自己的啟動殼層（§5）。 | 2026-08-15 |
 | [`docs/spec/26-yes-no-dialog.md`](spec/26-yes-no-dialog.md) | 26 — ＹＥＳ／ＮＯ 對話框 | CONFORMED。版面與命中算式已照原版實作並有契約測試。 | 2026-08-15 |

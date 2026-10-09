@@ -205,3 +205,8 @@ bit 7 的語意（攻守對調）在 [`09`](09-combat.md) §10 已記載：
 
 所以「`ENDBGM` 是結局、`OVERBGM` 是遊戲結束」不再只是檔名推論——
 **引用它的程式本身就是結局與遊戲結束**。
+
+## 後續原始 C 資源
+
+原始 cue gate、BGM header／body 載入、mute 與 stop 已接入 C。這份驗證不擴張場景選曲或 TSR 音色的證據，收據見
+[re/113](113-c-resource-cue-restoration.md)。錯誤介面、正常玩家流程與 C 機器碼仍依該文件的範圍判讀。

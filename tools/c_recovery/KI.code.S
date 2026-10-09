@@ -365,200 +365,200 @@ ret
 .org 0x2df
 sub_100DF:
 # IDA 0x100df; file 0x2df; locator=proven; push    ax
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 push ax
 .org 0x2e0
 # IDA 0x100e0; file 0x2e0; locator=proven; push    bx
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 push bx
 .org 0x2e1
 # IDA 0x100e1; file 0x2e1; locator=proven; mov     ah, 48h
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov ah, 0x48
 .org 0x2e3
 # IDA 0x100e3; file 0x2e3; locator=proven; mov     bx, 1D5Eh
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov bx, 0x1d5e
 .org 0x2e6
 # IDA 0x100e6; file 0x2e6; locator=proven; int     21h
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 int 0x21
 .org 0x2e8
 # IDA 0x100e8; file 0x2e8; locator=proven; jb      short loc_10146
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 jb .+94
 .org 0x2ea
 # IDA 0x100ea; file 0x2ea; locator=proven; mov     word_10D38, ax
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov word ptr [0xd38], ax
 .org 0x2ed
 # IDA 0x100ed; file 0x2ed; locator=proven; add     ax, 0D00h
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 add ax, 0xd00
 .org 0x2f0
 # IDA 0x100f0; file 0x2f0; locator=proven; mov     word_10D3A, ax
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov word ptr [0xd3a], ax
 .org 0x2f3
 # IDA 0x100f3; file 0x2f3; locator=proven; add     ax, 300h
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 add ax, 0x300
 .org 0x2f6
 # IDA 0x100f6; file 0x2f6; locator=proven; mov     word_10D3C, ax
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov word ptr [0xd3c], ax
 .org 0x2f9
 # IDA 0x100f9; file 0x2f9; locator=proven; add     ax, 1C0h
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 add ax, 0x1c0
 .org 0x2fc
 # IDA 0x100fc; file 0x2fc; locator=proven; mov     word_10D3E, ax
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov word ptr [0xd3e], ax
 .org 0x2ff
 # IDA 0x100ff; file 0x2ff; locator=proven; add     ax, 200h
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 add ax, 0x200
 .org 0x302
 # IDA 0x10102; file 0x302; locator=proven; mov     word_10D56, ax
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov word ptr [0xd56], ax
 .org 0x305
 # IDA 0x10105; file 0x305; locator=proven; add     ax, 40h
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 add ax, offset imm_at_10105
 .org 0x308
 # IDA 0x10108; file 0x308; locator=proven; mov     word_10D40, ax
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov word ptr [0xd40], ax
 .org 0x30b
 # IDA 0x1010b; file 0x30b; locator=proven; add     ax, 200h
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 add ax, 0x200
 .org 0x30e
 # IDA 0x1010e; file 0x30e; locator=proven; mov     word_10D52, ax
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov word ptr [0xd52], ax
 .org 0x311
 # IDA 0x10111; file 0x311; locator=proven; add     ax, 524h
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 add ax, 0x524
 .org 0x314
 # IDA 0x10114; file 0x314; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 {load} xor bx, bx
 .org 0x316
 # IDA 0x10116; file 0x316; locator=proven; mov     word_10D48, ax
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov word ptr [0xd48], ax
 .org 0x319
 # IDA 0x10119; file 0x319; locator=proven; add     ax, 6Ch
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 add ax, offset imm_at_10119
 .org 0x31c
 # IDA 0x1011c; file 0x31c; locator=proven; mov     word_10D4A, ax
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov word ptr [0xd4a], ax
 .org 0x31f
 # IDA 0x1011f; file 0x31f; locator=proven; add     ax, 18h
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 add ax, offset imm_at_1011F
 .org 0x322
 # IDA 0x10122; file 0x322; locator=proven; mov     word_10D54, ax
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov word ptr [0xd54], ax
 .org 0x325
 # IDA 0x10125; file 0x325; locator=proven; add     ax, 0Bh
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 add ax, offset imm_at_10125
 .org 0x328
 # IDA 0x10128; file 0x328; locator=proven; mov     word_10D4C, ax
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov word ptr [0xd4c], ax
 .org 0x32b
 # IDA 0x1012b; file 0x32b; locator=proven; add     ax, 0Bh
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 add ax, offset imm_at_1012B
 .org 0x32e
 # IDA 0x1012e; file 0x32e; locator=proven; mov     word_10D50, ax
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov word ptr [0xd50], ax
 .org 0x331
 # IDA 0x10131; file 0x331; locator=proven; add     ax, 1A0h
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 add ax, 0x1a0
 .org 0x334
 # IDA 0x10134; file 0x334; locator=proven; mov     ah, 48h
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov ah, 0x48
 .org 0x336
 # IDA 0x10136; file 0x336; locator=proven; mov     bx, 5356h
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov bx, 0x5356
 .org 0x339
 # IDA 0x10139; file 0x339; locator=proven; int     21h
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 int 0x21
 .org 0x33b
 # IDA 0x1013b; file 0x33b; locator=proven; jb      short loc_10146
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 jb .+11
 .org 0x33d
 # IDA 0x1013d; file 0x33d; locator=proven; mov     word_10D46, ax
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov word ptr [0xd46], ax
 .org 0x340
 # IDA 0x10140; file 0x340; locator=proven; mov     word_10D44, ax
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov word ptr [0xd44], ax
 .org 0x343
 # IDA 0x10143; file 0x343; locator=proven; pop     bx
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 pop bx
 .org 0x344
 # IDA 0x10144; file 0x344; locator=proven; pop     ax
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 pop ax
 .org 0x345
 # IDA 0x10145; file 0x345; locator=proven; retn
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 ret
 .org 0x346
 loc_10146:
 # IDA 0x10146; file 0x346; locator=proven; push    ax
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 push ax
 .org 0x347
 # IDA 0x10147; file 0x347; locator=proven; push    dx
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 push dx
 .org 0x348
 # IDA 0x10148; file 0x348; locator=proven; mov     dx, 1974h
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov dx, 0x1974
 .org 0x34b
 # IDA 0x1014b; file 0x34b; locator=proven; mov     ah, 9
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov ah, 0x9
 .org 0x34d
 # IDA 0x1014d; file 0x34d; locator=proven; int     21h
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 int 0x21
 .org 0x34f
 # IDA 0x1014f; file 0x34f; locator=proven; pop     dx
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 pop dx
 .org 0x350
 # IDA 0x10150; file 0x350; locator=proven; pop     ax
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 pop ax
 .org 0x351
 # IDA 0x10151; file 0x351; locator=proven; mov     ah, 4Ch
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov ah, 0x4c
 .org 0x353
 # IDA 0x10153; file 0x353; locator=proven; int     21h
-# ⚠ 函式 sub_100DF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_100DF; [proven] 兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 int 0x21
 .org 0x355
 sub_10155:
@@ -930,267 +930,267 @@ ret
 .org 0x441
 sub_10241:
 # IDA 0x10241; file 0x441; locator=proven; cmp     cs:byte_1020E, al
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 cs; cmp byte ptr [0x20e], al
 .org 0x446
 # IDA 0x10246; file 0x446; locator=proven; jz      short locret_102C1
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 jz .+123
 .org 0x448
 # IDA 0x10248; file 0x448; locator=proven; mov     cs:byte_1020E, al
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 cs; mov byte ptr [0x20e], al
 .org 0x44c
 # IDA 0x1024c; file 0x44c; locator=proven; push    ds
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 push ds
 .org 0x44d
 # IDA 0x1024d; file 0x44d; locator=proven; push    ax
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 push ax
 .org 0x44e
 # IDA 0x1024e; file 0x44e; locator=proven; push    bx
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 push bx
 .org 0x44f
 # IDA 0x1024f; file 0x44f; locator=proven; push    cx
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 push cx
 .org 0x450
 # IDA 0x10250; file 0x450; locator=proven; push    dx
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 push dx
 .org 0x451
 # IDA 0x10251; file 0x451; locator=proven; push    si
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 push si
 .org 0x452
 # IDA 0x10252; file 0x452; locator=proven; push    di
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 push di
 .org 0x453
 # IDA 0x10253; file 0x453; locator=proven; push    ax
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 push ax
 .org 0x454
 # IDA 0x10254; file 0x454; locator=proven; mov     ah, 8
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov ah, 0x8
 .org 0x456
 # IDA 0x10256; file 0x456; locator=proven; int     61h
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 int 0x61
 .org 0x458
 # IDA 0x10258; file 0x458; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov ax, cs
 .org 0x45a
 # IDA 0x1025a; file 0x45a; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov ds, ax
 .org 0x45c
 # IDA 0x1025c; file 0x45c; locator=proven; mov     dx, 0DF0h
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov dx, 0xdf0
 .org 0x45f
 # IDA 0x1025f; file 0x45f; locator=proven; mov     bx, cs:word_10D3C
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 cs; mov bx, word ptr [0xd3c]
 .org 0x464
 # IDA 0x10264; file 0x464; locator=proven; xor     si, si
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 {load} xor si, si
 .org 0x466
 # IDA 0x10266; file 0x466; locator=proven; xor     ax, ax
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 {load} xor ax, ax
 .org 0x468
 # IDA 0x10268; file 0x468; locator=proven; mov     cx, ax
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 {load} mov cx, ax
 .org 0x46a
 # IDA 0x1026a; file 0x46a; locator=proven; mov     di, 80h
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov di, 0x80
 .org 0x46d
 # IDA 0x1026d; file 0x46d; locator=proven; call    sub_1E38C
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 call .-7905
 .org 0x470
 # IDA 0x10270; file 0x470; locator=proven; pop     ax
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 pop ax
 .org 0x471
 # IDA 0x10271; file 0x471; locator=proven; push    ax
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 push ax
 .org 0x472
 # IDA 0x10272; file 0x472; locator=proven; mov     ds, cs:word_10D3C
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 cs; mov ds, word ptr [0xd3c]
 .org 0x477
 # IDA 0x10277; file 0x477; locator=proven; mov     bl, al
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 {load} mov bl, al
 .org 0x479
 # IDA 0x10279; file 0x479; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 {load} xor bh, bh
 .org 0x47b
 # IDA 0x1027b; file 0x47b; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 shl bx, 0x1
 .org 0x47d
 # IDA 0x1027d; file 0x47d; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 shl bx, 0x1
 .org 0x47f
 # IDA 0x1027f; file 0x47f; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 shl bx, 0x1
 .org 0x481
 # IDA 0x10281; file 0x481; locator=proven; mov     ax, [bx]
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov ax, word ptr [bx]
 .org 0x483
 # IDA 0x10283; file 0x483; locator=proven; mov     cx, [bx+2]
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov cx, word ptr [bx+0x2]
 .org 0x486
 # IDA 0x10286; file 0x486; locator=proven; mov     di, [bx+4]
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov di, word ptr [bx+0x4]
 .org 0x489
 # IDA 0x10289; file 0x489; locator=proven; mov     dx, cs
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov dx, cs
 .org 0x48b
 # IDA 0x1028b; file 0x48b; locator=proven; mov     ds, dx
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov ds, dx
 .org 0x48d
 # IDA 0x1028d; file 0x48d; locator=proven; mov     dx, 0DF0h
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov dx, 0xdf0
 .org 0x490
 # IDA 0x10290; file 0x490; locator=proven; mov     bx, cs:word_10D3C
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 cs; mov bx, word ptr [0xd3c]
 .org 0x495
 # IDA 0x10295; file 0x495; locator=proven; xor     si, si
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 {load} xor si, si
 .org 0x497
 # IDA 0x10297; file 0x497; locator=proven; call    sub_1E38C
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 call .-7947
 .org 0x49a
 # IDA 0x1029a; file 0x49a; locator=proven; pop     bx
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 pop bx
 .org 0x49b
 # IDA 0x1029b; file 0x49b; locator=proven; mov     ax, 606h
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov ax, 0x606
 .org 0x49e
 # IDA 0x1029e; file 0x49e; locator=proven; cmp     bl, 2
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 cmp bl, 0x2
 .org 0x4a1
 # IDA 0x102a1; file 0x4a1; locator=proven; jb      short loc_102A5
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 jb .+4
 .org 0x4a3
 # IDA 0x102a3; file 0x4a3; locator=proven; mov     al, 5
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov al, 0x5
 .org 0x4a5
 loc_102A5:
 # IDA 0x102a5; file 0x4a5; locator=proven; mov     ds, cs:word_10D3C
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 cs; mov ds, word ptr [0xd3c]
 .org 0x4aa
 # IDA 0x102aa; file 0x4aa; locator=proven; xor     si, si
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 {load} xor si, si
 .org 0x4ac
 # IDA 0x102ac; file 0x4ac; locator=proven; int     61h
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 int 0x61
 .org 0x4ae
 # IDA 0x102ae; file 0x4ae; locator=proven; cmp     cs:byte_10CF9, 0
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 cs; cmp byte ptr [0xcf9], 0x0
 .org 0x4b4
 # IDA 0x102b4; file 0x4b4; locator=proven; jz      short loc_102BA
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 jz .+6
 .org 0x4b6
 # IDA 0x102b6; file 0x4b6; locator=proven; mov     ah, 7
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov ah, 0x7
 .org 0x4b8
 # IDA 0x102b8; file 0x4b8; locator=proven; int     61h
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 int 0x61
 .org 0x4ba
 loc_102BA:
 # IDA 0x102ba; file 0x4ba; locator=proven; pop     di
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 pop di
 .org 0x4bb
 # IDA 0x102bb; file 0x4bb; locator=proven; pop     si
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 pop si
 .org 0x4bc
 # IDA 0x102bc; file 0x4bc; locator=proven; pop     dx
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 pop dx
 .org 0x4bd
 # IDA 0x102bd; file 0x4bd; locator=proven; pop     cx
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 pop cx
 .org 0x4be
 # IDA 0x102be; file 0x4be; locator=proven; pop     bx
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 pop bx
 .org 0x4bf
 # IDA 0x102bf; file 0x4bf; locator=proven; pop     ax
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 pop ax
 .org 0x4c0
 # IDA 0x102c0; file 0x4c0; locator=proven; pop     ds
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 pop ds
 .org 0x4c1
 locret_102C1:
 # IDA 0x102c1; file 0x4c1; locator=proven; retn
-# ⚠ 函式 sub_10241; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10241; [proven] 原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 ret
 .org 0x4c2
 sub_102C2:
 # IDA 0x102c2; file 0x4c2; locator=proven; push    ax
-# ⚠ 函式 sub_102C2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_102C2; [proven] 原始 cue=0xFF 與 INT61 AX=0x09F2；保存 AX; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 push ax
 .org 0x4c3
 # IDA 0x102c3; file 0x4c3; locator=proven; mov     cs:byte_1020E, 0FFh
-# ⚠ 函式 sub_102C2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_102C2; [proven] 原始 cue=0xFF 與 INT61 AX=0x09F2；保存 AX; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 cs; mov byte ptr [0x20e], 0xff
 .org 0x4c9
 # IDA 0x102c9; file 0x4c9; locator=proven; mov     ax, 9F2h
-# ⚠ 函式 sub_102C2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_102C2; [proven] 原始 cue=0xFF 與 INT61 AX=0x09F2；保存 AX; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov ax, 0x9f2
 .org 0x4cc
 # IDA 0x102cc; file 0x4cc; locator=proven; int     61h
-# ⚠ 函式 sub_102C2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_102C2; [proven] 原始 cue=0xFF 與 INT61 AX=0x09F2；保存 AX; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 int 0x61
 .org 0x4ce
 # IDA 0x102ce; file 0x4ce; locator=proven; pop     ax
-# ⚠ 函式 sub_102C2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_102C2; [proven] 原始 cue=0xFF 與 INT61 AX=0x09F2；保存 AX; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 pop ax
 .org 0x4cf
 # IDA 0x102cf; file 0x4cf; locator=proven; retn
-# ⚠ 函式 sub_102C2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_102C2; [proven] 原始 cue=0xFF 與 INT61 AX=0x09F2；保存 AX; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 ret
 .org 0x4d0
 sub_102D0:
@@ -53140,43 +53140,43 @@ ret
 .org 0x89af
 sub_187AF:
 # IDA 0x187af; file 0x89af; locator=proven; mov     dx, 0DB8h
-# ⚠ 函式 sub_187AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_187AF; [proven] 原始 MMAP.MDL／MCH 完整載入 caller；第二目標段 +0x800; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov dx, 0xdb8
 .org 0x89b2
 # IDA 0x187b2; file 0x89b2; locator=proven; mov     bx, ds:9876h
-# ⚠ 函式 sub_187AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_187AF; [proven] 原始 MMAP.MDL／MCH 完整載入 caller；第二目標段 +0x800; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov bx, word ptr [0x9876]
 .org 0x89b6
 # IDA 0x187b6; file 0x89b6; locator=proven; xor     si, si
-# ⚠ 函式 sub_187AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_187AF; [proven] 原始 MMAP.MDL／MCH 完整載入 caller；第二目標段 +0x800; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 {load} xor si, si
 .org 0x89b8
 # IDA 0x187b8; file 0x89b8; locator=proven; call    sub_1E378
-# ⚠ 函式 sub_187AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_187AF; [proven] 原始 MMAP.MDL／MCH 完整載入 caller；第二目標段 +0x800; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 call .+23488
 .org 0x89bb
 # IDA 0x187bb; file 0x89bb; locator=proven; mov     dx, 0DC1h
-# ⚠ 函式 sub_187AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_187AF; [proven] 原始 MMAP.MDL／MCH 完整載入 caller；第二目標段 +0x800; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov dx, 0xdc1
 .org 0x89be
 # IDA 0x187be; file 0x89be; locator=proven; mov     bx, ds:9876h
-# ⚠ 函式 sub_187AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_187AF; [proven] 原始 MMAP.MDL／MCH 完整載入 caller；第二目標段 +0x800; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov bx, word ptr [0x9876]
 .org 0x89c2
 # IDA 0x187c2; file 0x89c2; locator=proven; add     bx, 800h
-# ⚠ 函式 sub_187AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_187AF; [proven] 原始 MMAP.MDL／MCH 完整載入 caller；第二目標段 +0x800; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 add bx, 0x800
 .org 0x89c6
 # IDA 0x187c6; file 0x89c6; locator=proven; xor     si, si
-# ⚠ 函式 sub_187AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_187AF; [proven] 原始 MMAP.MDL／MCH 完整載入 caller；第二目標段 +0x800; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 {load} xor si, si
 .org 0x89c8
 # IDA 0x187c8; file 0x89c8; locator=proven; call    sub_1E378
-# ⚠ 函式 sub_187AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_187AF; [proven] 原始 MMAP.MDL／MCH 完整載入 caller；第二目標段 +0x800; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 call .+23472
 .org 0x89cb
 # IDA 0x187cb; file 0x89cb; locator=proven; retn
-# ⚠ 函式 sub_187AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_187AF; [proven] 原始 MMAP.MDL／MCH 完整載入 caller；第二目標段 +0x800; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 ret
 .org 0x89cc
 sub_187CC:
@@ -88536,60 +88536,60 @@ ret
 .org 0xe578
 sub_1E378:
 # IDA 0x1e378; file 0xe578; locator=proven; push    ds
-# ⚠ 函式 sub_1E378; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E378; [proven] 完整讀檔重試包裝，成功媒體局部驗證；INT50 介面尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 push ds
 .org 0xe579
 # IDA 0x1e379; file 0xe579; locator=proven; push    bx
-# ⚠ 函式 sub_1E378; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E378; [proven] 完整讀檔重試包裝，成功媒體局部驗證；INT50 介面尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 push bx
 .org 0xe57a
 # IDA 0x1e37a; file 0xe57a; locator=proven; push    dx
-# ⚠ 函式 sub_1E378; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E378; [proven] 完整讀檔重試包裝，成功媒體局部驗證；INT50 介面尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 push dx
 .org 0xe57b
 # IDA 0x1e37b; file 0xe57b; locator=proven; push    si
-# ⚠ 函式 sub_1E378; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E378; [proven] 完整讀檔重試包裝，成功媒體局部驗證；INT50 介面尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 push si
 .org 0xe57c
 # IDA 0x1e37c; file 0xe57c; locator=proven; call    sub_1F4A2
-# ⚠ 函式 sub_1E378; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E378; [proven] 完整讀檔重試包裝，成功媒體局部驗證；INT50 介面尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 call .+4390
 .org 0xe57f
 # IDA 0x1e37f; file 0xe57f; locator=proven; pop     si
-# ⚠ 函式 sub_1E378; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E378; [proven] 完整讀檔重試包裝，成功媒體局部驗證；INT50 介面尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 pop si
 .org 0xe580
 # IDA 0x1e380; file 0xe580; locator=proven; pop     dx
-# ⚠ 函式 sub_1E378; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E378; [proven] 完整讀檔重試包裝，成功媒體局部驗證；INT50 介面尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 pop dx
 .org 0xe581
 # IDA 0x1e381; file 0xe581; locator=proven; pop     bx
-# ⚠ 函式 sub_1E378; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E378; [proven] 完整讀檔重試包裝，成功媒體局部驗證；INT50 介面尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 pop bx
 .org 0xe582
 # IDA 0x1e382; file 0xe582; locator=proven; pop     ds
-# ⚠ 函式 sub_1E378; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E378; [proven] 完整讀檔重試包裝，成功媒體局部驗證；INT50 介面尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 pop ds
 .org 0xe583
 # IDA 0x1e383; file 0xe583; locator=proven; jnb     short locret_1E38B
-# ⚠ 函式 sub_1E378; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E378; [proven] 完整讀檔重試包裝，成功媒體局部驗證；INT50 介面尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 jnb .+8
 .org 0xe585
 # IDA 0x1e385; file 0xe585; locator=proven; mov     ah, 0
-# ⚠ 函式 sub_1E378; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E378; [proven] 完整讀檔重試包裝，成功媒體局部驗證；INT50 介面尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov ah, 0x0
 .org 0xe587
 # IDA 0x1e387; file 0xe587; locator=proven; int     50h
-# ⚠ 函式 sub_1E378; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E378; [proven] 完整讀檔重試包裝，成功媒體局部驗證；INT50 介面尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 int 0x50
 .org 0xe589
 # IDA 0x1e389; file 0xe589; locator=proven; jmp     short sub_1E378
-# ⚠ 函式 sub_1E378; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E378; [proven] 完整讀檔重試包裝，成功媒體局部驗證；INT50 介面尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 jmp .-17
 .org 0xe58b
 locret_1E38B:
 # IDA 0x1e38b; file 0xe58b; locator=proven; retn
-# ⚠ 函式 sub_1E378; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1E378; [proven] 完整讀檔重試包裝，成功媒體局部驗證；INT50 介面尚未驗證; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 ret
 .org 0xe58c
 sub_1E38C:
@@ -96231,114 +96231,114 @@ ret
 .org 0xf6a2
 sub_1F4A2:
 # IDA 0x1f4a2; file 0xf6a2; locator=proven; push    cx
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 push cx
 .org 0xf6a3
 # IDA 0x1f4a3; file 0xf6a3; locator=proven; mov     ax, 3D00h
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov ax, 0x3d00
 .org 0xf6a6
 # IDA 0x1f4a6; file 0xf6a6; locator=proven; int     21h
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 int 0x21
 .org 0xf6a8
 # IDA 0x1f4a8; file 0xf6a8; locator=proven; jb      short loc_1F4DB
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 jb .+51
 .org 0xf6aa
 # IDA 0x1f4aa; file 0xf6aa; locator=proven; mov     cs:word_1F4DD, ax
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 cs; mov word ptr [0xf4dd], ax
 .org 0xf6ae
 # IDA 0x1f4ae; file 0xf6ae; locator=proven; push    ds
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 push ds
 .org 0xf6af
 loc_1F4AF:
 # IDA 0x1f4af; file 0xf6af; locator=proven; mov     ah, 3Fh
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov ah, 0x3f
 .org 0xf6b1
 # IDA 0x1f4b1; file 0xf6b1; locator=proven; push    bx
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 push bx
 .org 0xf6b2
 # IDA 0x1f4b2; file 0xf6b2; locator=proven; push    si
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 push si
 .org 0xf6b3
 # IDA 0x1f4b3; file 0xf6b3; locator=proven; mov     ds, bx
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov ds, bx
 .org 0xf6b5
 # IDA 0x1f4b5; file 0xf6b5; locator=proven; mov     dx, si
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 {load} mov dx, si
 .org 0xf6b7
 # IDA 0x1f4b7; file 0xf6b7; locator=proven; mov     cx, 0F000h
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov cx, 0xf000
 .org 0xf6ba
 # IDA 0x1f4ba; file 0xf6ba; locator=proven; mov     bx, cs:word_1F4DD
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 cs; mov bx, word ptr [0xf4dd]
 .org 0xf6bf
 # IDA 0x1f4bf; file 0xf6bf; locator=proven; int     21h
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 int 0x21
 .org 0xf6c1
 # IDA 0x1f4c1; file 0xf6c1; locator=proven; pop     si
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 pop si
 .org 0xf6c2
 # IDA 0x1f4c2; file 0xf6c2; locator=proven; pop     bx
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 pop bx
 .org 0xf6c3
 # IDA 0x1f4c3; file 0xf6c3; locator=proven; cmp     ax, 0F000h
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 cmp ax, 0xf000
 .org 0xf6c6
 # IDA 0x1f4c6; file 0xf6c6; locator=proven; jb      short loc_1F4CE
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 jb .+8
 .org 0xf6c8
 # IDA 0x1f4c8; file 0xf6c8; locator=proven; add     bx, 0F00h
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 add bx, 0xf00
 .org 0xf6cc
 # IDA 0x1f4cc; file 0xf6cc; locator=proven; jmp     short loc_1F4AF
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 jmp .-29
 .org 0xf6ce
 loc_1F4CE:
 # IDA 0x1f4ce; file 0xf6ce; locator=proven; mov     ah, 3Eh
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov ah, 0x3e
 .org 0xf6d0
 # IDA 0x1f4d0; file 0xf6d0; locator=proven; mov     bx, cs:word_1F4DD
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 cs; mov bx, word ptr [0xf4dd]
 .org 0xf6d5
 # IDA 0x1f4d5; file 0xf6d5; locator=proven; int     21h
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 int 0x21
 .org 0xf6d7
 # IDA 0x1f4d7; file 0xf6d7; locator=proven; mov     ax, 0FFFFh
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 mov ax, 0xffff
 .org 0xf6da
 # IDA 0x1f4da; file 0xf6da; locator=proven; pop     ds
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 pop ds
 .org 0xf6db
 loc_1F4DB:
 # IDA 0x1f4db; file 0xf6db; locator=proven; pop     cx
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 pop cx
 .org 0xf6dc
 # IDA 0x1f4dc; file 0xf6dc; locator=proven; retn
-# ⚠ 函式 sub_1F4A2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1F4A2; [proven] DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI; 出處: docs/re/113-c-resource-cue-restoration.md, docs/spec/233-c-resource-cue.md
 ret
 .org 0xf6df
 sub_1F4DF:

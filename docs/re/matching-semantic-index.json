@@ -1634,6 +1634,54 @@
         "docs/re/112-c-choice-selector-restoration.md",
         "docs/spec/232-c-choice-selector.md"
       ]
+    },
+    "0x187AF": {
+      "meaning": "原始 MMAP.MDL／MCH 完整載入 caller；第二目標段 +0x800",
+      "level": "proven",
+      "sources": [
+        "docs/re/113-c-resource-cue-restoration.md",
+        "docs/spec/233-c-resource-cue.md"
+      ]
+    },
+    "0x1E378": {
+      "meaning": "完整讀檔重試包裝，成功媒體局部驗證；INT50 介面尚未驗證",
+      "level": "proven",
+      "sources": [
+        "docs/re/113-c-resource-cue-restoration.md",
+        "docs/spec/233-c-resource-cue.md"
+      ]
+    },
+    "0x1F4A2": {
+      "meaning": "DOS 完整 read／open／close；0xF000 分段、+0xF00 paragraphs 與原 ABI",
+      "level": "proven",
+      "sources": [
+        "docs/re/113-c-resource-cue-restoration.md",
+        "docs/spec/233-c-resource-cue.md"
+      ]
+    },
+    "0x10241": {
+      "meaning": "原始 BGM cue gate、header／body、stop／play／mute API 控制；非 TSR 音色證據",
+      "level": "proven",
+      "sources": [
+        "docs/re/113-c-resource-cue-restoration.md",
+        "docs/spec/233-c-resource-cue.md"
+      ]
+    },
+    "0x102C2": {
+      "meaning": "原始 cue=0xFF 與 INT61 AX=0x09F2；保存 AX",
+      "level": "proven",
+      "sources": [
+        "docs/re/113-c-resource-cue-restoration.md",
+        "docs/spec/233-c-resource-cue.md"
+      ]
+    },
+    "0x100DF": {
+      "meaning": "兩筆成功 allocation 與原始資料／字庫 segment 加法；失敗退出尚未驗證",
+      "level": "proven",
+      "sources": [
+        "docs/re/113-c-resource-cue-restoration.md",
+        "docs/spec/233-c-resource-cue.md"
+      ]
     }
   },
   "operands": {

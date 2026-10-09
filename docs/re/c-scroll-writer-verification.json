@@ -1,0 +1,93 @@
+{
+  "input_name": "KI.EXE",
+  "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "ida_input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "tool": "IDA Pro",
+  "tool_version": "9.4",
+  "python_version": "3.12.3",
+  "image_id": "sha256:4ac62de83339c215bab10e455cee3a22d9c6efed9fd0d8ed0f068327b83a06ab",
+  "address_space": "IDA database linear; file_offset stored separately",
+  "function_count": 739,
+  "schema": "wolong-scroll-writer-query-v1",
+  "ida_database_sha256": "a3d9c124166c380ef3d92f4d3f634e88303535e65f7b335db8cdb2ca66043f60",
+  "probe_source_sha256": "b8140e5fdedcf7d564a622ee1d670ab56aa834f7fa127ba130d715c8576955fd",
+  "xref_queries": [
+    {
+      "ida_linear": 67053,
+      "original_name": "nullsub_5",
+      "bytes": "c31e06",
+      "xrefs": [
+        {
+          "from": 66937,
+          "type": 17,
+          "assembly": "call    nullsub_5"
+        },
+        {
+          "from": 67019,
+          "type": 17,
+          "assembly": "call    nullsub_5"
+        }
+      ]
+    },
+    {
+      "ida_linear": 67054,
+      "original_name": "",
+      "bytes": "1e0651",
+      "xrefs": []
+    },
+    {
+      "ida_linear": 66413,
+      "original_name": "word_1036D",
+      "bytes": "000083",
+      "xrefs": [
+        {
+          "from": 66441,
+          "type": 2,
+          "assembly": "mov     cs:word_1036D, bx"
+        },
+        {
+          "from": 66561,
+          "type": 3,
+          "assembly": "call    cs:word_1036D"
+        },
+        {
+          "from": 66962,
+          "type": 3,
+          "assembly": "call    cs:word_1036D"
+        },
+        {
+          "from": 67044,
+          "type": 3,
+          "assembly": "call    cs:word_1036D"
+        }
+      ]
+    },
+    {
+      "ida_linear": 103525,
+      "original_name": "byte_19465",
+      "bytes": "0cbe34",
+      "xrefs": [
+        {
+          "from": 103475,
+          "type": 2,
+          "assembly": "mov     cs:byte_19465, al"
+        }
+      ]
+    },
+    {
+      "ida_linear": 103527,
+      "original_name": "word_19467",
+      "bytes": "3412f6",
+      "xrefs": [
+        {
+          "from": 103479,
+          "type": 2,
+          "assembly": "mov     cs:word_19467, si"
+        }
+      ]
+    }
+  ],
+  "segment_candidates": [],
+  "conclusion_level": "unknown",
+  "scope": "Direct xrefs and segment-wide immediate/memory/displacement candidates only; positive write controls at 0x1036D, 0x19465 and 0x19467. Indirect writes and runtime installation are not disproved."
+}

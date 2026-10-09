@@ -141,3 +141,8 @@ Go 1.26.7／GCC 12.2.0／IDA9.4；正式 UI 在既有 hr-go-ebiten SDK／Xvfb �
 WOLONG_IDA_PY_IMAGE=ida-pro-9.4-idapython:py312-v1 tools/ida.sh probe dosv tools/ida_rect_probe.py workplace/matching-decompilation/c-rect/ida KI.EXE
 tools/c_recovery_rect.sh
 ```
+
+## 後續原始 C 資源
+
+sub_100DF 的兩筆 allocation 與原始 segment 加法已接入 C，成功路徑的完整 ABI／RAM 驗證見
+[re/113](113-c-resource-cue-restoration.md)。錯誤介面、正常玩家流程與 C 機器碼仍依該文件的範圍判讀。

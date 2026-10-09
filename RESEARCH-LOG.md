@@ -1953,3 +1953,11 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - SS 24-byte frame、絕對／可見列、帶狀 Y、live row stride／string／坐標、XOR／cursor 還原與 map-pixel 保護接到真實 C。既有進言選單及 speaker／advisor caller 也重新接 native mouse／TALK／字庫。
 - O0/O2 138 完整 RAM／四 plane／ABI／平台／Mouse／像素相同，三 XOR 還原、2153全形／6半形無缺字，十二錯版拒絕。畫面保存段補上之後重生全部有效收據，沒有放寬等待 budget。
 - re/84 原 0x1074D／0x1079B 是 file offset 誤寫 IDA linear，原兩個回置 Y 值也反了，按原 branch／固定回播勘誤。新增十組語／19 bytes助憶碼匹配，24,745指令／56,287codebytes與67099-byteEXE相同；正常玩家、原 scroll helper 動態安裝、C 機器碼維持原範圍。
+
+## 2026-10-09：完整讀檔、cue 與 allocation 的原始 C
+
+- 固定 DOS/V KI.EXE、IDA Pro 9.4 與原始資源。6 支函式 369 bytes／165 指令的原位址、資料身分與 DB 雜湊見 [re/113](docs/re/113-c-resource-cue-restoration.md)。
+- 保留 0xF000 分段、短讀／EOF、原 CF／AX／stack、MMAP 兩檔 caller、16 cue gate／mute／stop 與成功 allocation 的原 segment 加法。C 不跑 guest CPU；平台 DOS／INT61 使用獨立固定服務。
+- O0／O2 各 93 組完整 RAM／VGA／ABI／API／sound 狀態相同，21 個完整 buffer 與尾端守衛、12 個錯版拒絕及乾淨來源重生通過。原版素材與 binary 留在本機。
+- scroll helper 的直接 xref／逐段候選查詢有三個已知 writer 正對照，未定位直接改寫端。這不排除間接寫入；收據 [c-scroll-writer-verification.json](docs/re/c-scroll-writer-verification.json) 保留查詢範圍。
+- C 台帳為 221 個函式／30 個 code 入口。INT50／allocation 失敗、正常玩家、原 TSR 音訊與 C 機器碼未由本輪代證。

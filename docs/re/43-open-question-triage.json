@@ -12841,6 +12841,97 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "原始 selector／callback C 局部證據界線；正常玩家、scroll helper 執行期安裝與工具鏈不由此 consumer 代證。"
+    },
+    {
+      "file": "docs/re/113-c-resource-cue-restoration.md",
+      "item": "原 INT50 媒體錯誤／完整退出流程",
+      "status": "保留原 branch，不以成功讀檔代證全部錯誤介面",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-2646ba9a6a1df4f95f05",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "完整資源／cue C 的局部證據界線；錯誤介面、TSR、間接改寫與原工具鏈不由成功路徑代證。"
+    },
+    {
+      "file": "docs/re/113-c-resource-cue-restoration.md",
+      "item": "聲音 TSR 與實際音訊",
+      "status": "本輪驗 cue／API／資料，不取代音訊解碼與人耳驗收",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-d0c9c39b51763b3cd722",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "完整資源／cue C 的局部證據界線；錯誤介面、TSR、間接改寫與原工具鏈不由成功路徑代證。"
+    },
+    {
+      "file": "docs/re/113-c-resource-cue-restoration.md",
+      "item": "scroll helper 間接改寫",
+      "status": "直接查詢的負證據不構成完整不存在證明",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-211b701aaec1531d1c8e",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "完整資源／cue C 的局部證據界線；錯誤介面、TSR、間接改寫與原工具鏈不由成功路徑代證。"
+    },
+    {
+      "file": "docs/re/113-c-resource-cue-restoration.md",
+      "item": "原作者 C 工具鏈／機器碼",
+      "status": "仍待確認",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-77f3c1c3e48a91d5036b",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "完整資源／cue C 的局部證據界線；錯誤介面、TSR、間接改寫與原工具鏈不由成功路徑代證。"
+    },
+    {
+      "file": "docs/spec/233-c-resource-cue.md",
+      "item": "INT50／完整退出情境",
+      "status": "原 branch 保留，平台成功路徑不代證錯誤 GUI",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-18e4a04695bd330eb182",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "完整資源／cue C 的局部證據界線；錯誤介面、TSR、間接改寫與原工具鏈不由成功路徑代證。"
+    },
+    {
+      "file": "docs/spec/233-c-resource-cue.md",
+      "item": "原作者 C compiler／machine code",
+      "status": "尚未確認",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-201d8221901487c9d242",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "完整資源／cue C 的局部證據界線；錯誤介面、TSR、間接改寫與原工具鏈不由成功路徑代證。"
+    },
+    {
+      "file": "docs/spec/233-c-resource-cue.md",
+      "item": "原 TSR／硬體聲音",
+      "status": "僅比 API／資料狀態；原 TSR 的輸出音色與硬體時序尚未驗證",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-c896ba64250852b28a2b",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原 TSR 音色與硬體時序尚未驗證；本輪 API 比對不代證。"
     }
   ]
 }

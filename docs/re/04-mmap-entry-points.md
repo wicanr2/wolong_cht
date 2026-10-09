@@ -113,3 +113,8 @@ mov ax,2                   : call sub_20000
 （[`09`](09-combat.md) §）——那三次呼叫在設**游標範圍**，
 `0x17FF × 0x101F` 就是 384×256 格換算成像素，
 [`../playtest/38`](../playtest/38-window-parity.md) §1 的座標換算靠的正是它。
+
+## 後續原始 C 資源
+
+完整 MMAP.MDL／MCH caller 與 0xF000 分段讀取已接入原始 C，同狀態驗證見
+[re/113](113-c-resource-cue-restoration.md)。錯誤介面、正常玩家流程與 C 機器碼仍依該文件的範圍判讀。
