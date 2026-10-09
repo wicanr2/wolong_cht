@@ -96,7 +96,9 @@ def verify(repo, out):
         generator.generate(root, out / 'ida/ida-probe.json')
         assert (root / 'tools/c_recovery/choice_generated.inc').read_bytes() == (repo / 'tools/c_recovery/choice_generated.inc').read_bytes()
     supplement = json.loads((repo / 'docs/re/rectangle-handler-code.json').read_text())
-    assert len(supplement['instructions']) == 369
+    # Preserve this historical closure while later research decodes another live immediate.
+    historical = [r for r in supplement['instructions'] if r['ida_linear'] != 0x1D5A9]
+    assert len(historical) == 369
     new_code = [r for r in supplement['instructions'] if 0x19440 <= r['ida_linear'] < 0x19444 or 0x1945a <= r['ida_linear'] < 0x19469]
     assert len(new_code) == 10 and sum(r['file_end'] - r['file_start'] for r in new_code) == 19
     for name, (marker, link) in BACKLINKS.items():

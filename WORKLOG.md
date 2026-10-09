@@ -365,3 +365,14 @@
 - 台帳更新後固定所有十個 probe 根，從新的唯讀原始輸入重建 IDA，避免已還原 helper 被 frontier 篩除；新 DB 下再次驗證來源／原函式 bytes 與 C 重生相同，沒有重跑無變更的 native 矩陣。
 - C 台帳 231 函式／30 code 入口與來源 binding 通過；組語 24,745 指令／56,287 code bytes 與 67,099-byte EXE 仍相同，三個錯版拒絕。文件／工具 21／25、同四個歷史缺檔／教訓問題，phantom 列表未新增。
 - 所有輸出 UID/GID 1000:1000，既有 root-owned 路徑仍 27 筆。依授權 commit／push 來源與證據；正常場景／上游 producer／原作者 C 機器碼未由本閉包代證，完整 Goal 保持 active。
+
+## 2026-10-09：軍團／物件 producer 與矩陣 C
+
+- 前輪 32ed4f0 已推送，分類 progress；重讀現況、逆向／IDA／文件職責路由與 Issue #22，接世界顯示格上游的軍團／物件。
+- 固定 IDA 證據定位六函式 461 bytes、raw handler 181 bytes、267 指令。矩陣 CMP 被標成資料，第一次 create_insn 遭既有 data item 阻擋；只在一次性 DB 清該項後解碼，保留原資料行和原名稱。
+- spec/235 READY 後接 native C 兩次軍團巡覽、單格／矩陣 producer、物件舊相位更新與原小地圖 VGA 點；live capacity 字元由入口 AH 改寫，軍團 3／物件 5，沒有改成單格上限 4。
+- 64 冒煙案例後加入獨立 MCH pattern 高層裁切／透明／保護／容量格子表比對，修正 corpus 的相機設定後重跑。曾誤輪詢已完成的 smoke session，依終止狀態不重啟該 session，直接執行新的完整矩陣。
+- O0／O2 各 14,622 完整 RAM／plane／ABI／FLAGS／I/O 相同，55 個真實 pattern 共 12,320 次 source 矩陣核對；四劇本原 producer 接完整 C renderer，12 個 O0 錯版全拒絕，C 乾淨重生相同。
+- 新 decoded CMP 80 FB 05 的三 bytes 以 GNU 組語匹配，總 24,746 指令／56,290 code bytes 與 67,099-byte 原 EXE 相同，三個組語錯版拒絕。歷史 supplement rows 保留，selector verifier 明確排除此新增指令，隔離輸出重驗通過，不改寫其原收據。
+- C 台帳 237 函式／31 raw 入口、所有來源 binding／公共與本機收據通過。文件／工具 21／25、同四個歷史缺檔／教訓問題，phantom 列表無新增；1002 列分流與嚴格索引通過。
+- 所有輸出 UID/GID 1000:1000，既有 root-owned 路徑仍 27 筆；本輪容器完成後移除。依授權 commit／push 原始定位、來源與證據；type 3 自然來源、正常場景與 C 機器碼不由局部閉包代證，完整 Goal 保持 active。

@@ -49,10 +49,11 @@
 | 2026-10-09；訊息等待與 mouse 19 C 函式／兩 raw 入口 | O0/O2 各 210 全裝置／ABI 相同，三個 cursor 背景還原與十二錯版通過；21 新指令後完整 EXE 匹配 | 原始 far table／游標／patch／counter 消費端接真實 C；正常玩家、timer producer 與 C 機器碼仍有界線 | spec/231、[re/111](docs/re/111-c-input-mouse-restoration.md)、IN／OUT／far／還原收據 |
 | 2026-10-09；selector 14 C 函式／兩 raw 入口 | O0/O2 各 138 全裝置／ABI 相同，三個 XOR 還原、原始選單／進言 caller 與十二錯版通過；十新指令後整檔匹配 | 原始選列／捲動／live callback／cursor 與 map-pixel 保護已接 C；正常玩家／scroll 安裝與 C 機器碼保留界線 | spec/232、[re/112](docs/re/112-c-choice-selector-restoration.md)、列／carry／還原收據 |
 | 2026-10-09；完整資源／cue／allocation 六 C 函式 | O0／O2 各 93 全裝置／ABI／DOS／sound 狀態相同，21 個完整 buffer 與十二錯版通過 | 原始成功讀檔、cue 與分段設定已接 C；INT50／失敗退出、正常玩家、TSR 音訊與 C 機器碼仍有界線 | spec/233、[re/113](docs/re/113-c-resource-cue-restoration.md)、原始來源／完整收據 |
-
 | 2026-10-09；世界顯示格十 C 函式 | O0／O2 各 2,622 全 RAM／plane／ABI 相同，768 次獨立素材比對與十二錯版通過 | 初始化、地圖取樣、裁切推入與髒格合成已接 C；原 DF 前提、正常玩家／上游 producer 與 C 機器碼保留界線 | spec/234、[re/114](docs/re/114-c-world-map-cells-restoration.md)、原始來源／完整收據 |
 
-持續 Goal 為完成整個 matching decompilation；目前有 24,745 條指令的整檔組語基準與 231 個 C 函式、三十個原始 code 入口，不能據此宣布完整 C 還原完成。
+| 2026-10-09；軍團／物件六 C 函式與 raw 矩陣 | O0／O2 各 14,622 全裝置／ABI 相同，12,320 來源矩陣與十二錯版通過；一新指令後整檔匹配 | 原 producer 接顯示格／renderer，保留 live 3／5 容量；正常玩家／type 3 自然來源與 C 機器碼未代證 | spec/235、[re/115](docs/re/115-c-world-overlay-restoration.md)、原始來源／收據 |
+
+持續 Goal 為完成整個 matching decompilation；目前有 24,746 條指令的整檔組語基準與 237 個 C 函式、三十一個原始 code 入口，不能據此宣布完整 C 還原完成。
 使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b`、熱區 `a8605b5` 、版控組語／VGA `47e16c9` 、對齊貼圖 `6139f9e` 、矩形／計量 `c7dc8df`、顯示分派 `4d31520`、字形 `85f06de` 與數字 `06fff77` 已推到 origin/main。
 
 未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。

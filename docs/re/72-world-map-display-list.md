@@ -142,3 +142,9 @@ mov     cs:word_1D84C, ax
 [re/114](114-c-world-map-cells-restoration.md) 以原始初始化、取圖、四張推入上限、
 快取／髒格與四 plane 合成完成局部 C 閉包。上游軍團／物件 producer、正常玩家與
 原作者 C 機器碼仍依該收據的界線判讀。
+
+## 後續原始 C producer
+
+[re/115](115-c-world-overlay-restoration.md) 保留原軍團／物件巡覽、舊相位取圖、
+透明 source、保護與 live 容量 3／5，接入既有顯示格及完整 renderer。
+四劇本與受控邊界已有局部收據，type 3 自然來源與正常玩家場景仍未代證。

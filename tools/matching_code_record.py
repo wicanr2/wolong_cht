@@ -10,7 +10,7 @@ import subprocess
 from pathlib import Path
 
 EXPECTED = "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868"
-SIZE, INSTRUCTIONS, CODE_BYTES = 67099, 24745, 56287
+SIZE, INSTRUCTIONS, CODE_BYTES = 67099, 24746, 56290
 SOURCE = "tools/c_recovery/KI.code.S"
 LINKER = "tools/c_recovery/KI.code.ld"
 MANIFEST = "docs/re/assembly-code-record.json"
@@ -74,7 +74,7 @@ def export(repo: Path) -> None:
     supplement = json.loads(supplement_raw)
     require(supplement["schema"] == "wolong-matching-code-supplement-v1" and supplement["input_sha256"] == EXPECTED, "supplement identity differs")
     extra = supplement["instructions"]
-    require(len(extra) == 369 and sum(r["file_end"] - r["file_start"] for r in extra) == 895, "supplement coverage differs")
+    require(len(extra) == 370 and sum(r["file_end"] - r["file_start"] for r in extra) == 898, "supplement coverage differs")
     for row in extra:
         start, end = row["file_start"], row["file_end"]
         require(raw[start:end] == bytes.fromhex(row["bytes"]), "supplement bytes differ")
@@ -125,7 +125,7 @@ def export(repo: Path) -> None:
         "schema": "wolong-matching-code-record-v1",
         "input": "DOS/V KI.EXE", "input_sha256": EXPECTED, "input_size": SIZE,
         "instruction_count": count, "instruction_bytes": CODE_BYTES,
-        "baseline_instruction_count": 24376, "supplement_instruction_count": 369,
+        "baseline_instruction_count": 24376, "supplement_instruction_count": 370,
         "supplement": SUPPLEMENT, "supplement_sha256": digest(supplement_raw),
         "supplement_database_sha256": supplement["database_sha256"],
         "private_import_bytes": SIZE - CODE_BYTES,

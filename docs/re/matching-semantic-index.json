@@ -1762,6 +1762,54 @@
         "docs/re/114-c-world-map-cells-restoration.md",
         "docs/spec/234-c-world-map-cells.md"
       ]
+    },
+    "0x11CC9": {
+      "meaning": "原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/115-c-world-overlay-restoration.md",
+        "docs/spec/235-c-world-overlay.md"
+      ]
+    },
+    "0x12533": {
+      "meaning": "原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/115-c-world-overlay-restoration.md",
+        "docs/spec/235-c-world-overlay.md"
+      ]
+    },
+    "0x12AF4": {
+      "meaning": "原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/115-c-world-overlay-restoration.md",
+        "docs/spec/235-c-world-overlay.md"
+      ]
+    },
+    "0x12B2A": {
+      "meaning": "原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/115-c-world-overlay-restoration.md",
+        "docs/spec/235-c-world-overlay.md"
+      ]
+    },
+    "0x12B3C": {
+      "meaning": "原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/115-c-world-overlay-restoration.md",
+        "docs/spec/235-c-world-overlay.md"
+      ]
+    },
+    "0x15D19": {
+      "meaning": "原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/115-c-world-overlay-restoration.md",
+        "docs/spec/235-c-world-overlay.md"
+      ]
     }
   },
   "operands": {
@@ -1787,6 +1835,15 @@
       "level": "proven",
       "sources": [
         "docs/re/10-rng.md"
+      ]
+    },
+    "0x1D5A9:1": {
+      "original": "5",
+      "meaning": "檔案初始容量 5；CS:0xD5AB 執行期由入口 AH 改寫，軍團 3／物件 5，C 讀 live byte",
+      "level": "proven",
+      "sources": [
+        "docs/re/115-c-world-overlay-restoration.md",
+        "docs/spec/235-c-world-overlay.md"
       ]
     }
   }

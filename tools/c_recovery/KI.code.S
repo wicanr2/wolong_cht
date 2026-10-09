@@ -7527,15 +7527,15 @@ ret
 .org 0x1ec9
 sub_11CC9:
 # IDA 0x11cc9; file 0x1ec9; locator=proven; call    sub_12AF4
-# ⚠ 函式 sub_11CC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11CC9; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 call .+3627
 .org 0x1ecc
 # IDA 0x11ccc; file 0x1ecc; locator=proven; call    sub_12533
-# ⚠ 函式 sub_11CC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11CC9; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 call .+2151
 .org 0x1ecf
 # IDA 0x11ccf; file 0x1ecf; locator=proven; retn
-# ⚠ 函式 sub_11CC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11CC9; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 ret
 .org 0x1ed0
 sub_11CD0:
@@ -10867,182 +10867,182 @@ ret
 .org 0x2733
 sub_12533:
 # IDA 0x12533; file 0x2733; locator=proven; mov     es, word_1987A
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov es, word ptr [0x987a]
 .org 0x2737
 # IDA 0x12537; file 0x2737; locator=proven; mov     ds, word_10D52
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ds, word ptr [0xd52]
 .org 0x273b
 # IDA 0x1253b; file 0x273b; locator=proven; mov     si, 2040h
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov si, 0x2040
 .org 0x273e
 # IDA 0x1253e; file 0x273e; locator=proven; mov     bp, 20h
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov bp, 0x20
 .org 0x2741
 loc_12541:
 # IDA 0x12541; file 0x2741; locator=proven; cmp     byte ptr [si], 80h
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 cmp byte ptr [si], 0x80
 .org 0x2744
 # IDA 0x12544; file 0x2744; locator=proven; jb      short loc_12598
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 jb .+84
 .org 0x2746
 # IDA 0x12546; file 0x2746; locator=proven; mov     bl, [si+0Eh]
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov bl, byte ptr [si+0xe]
 .org 0x2749
 # IDA 0x12549; file 0x2749; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 {load} xor bh, bh
 .org 0x274b
 # IDA 0x1254b; file 0x274b; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shl bx, 0x1
 .org 0x274d
 # IDA 0x1254d; file 0x274d; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shl bx, 0x1
 .org 0x274f
 # IDA 0x1254f; file 0x274f; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shl bx, 0x1
 .org 0x2751
 # IDA 0x12551; file 0x2751; locator=proven; mov     al, [si+0Fh]
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov al, byte ptr [si+0xf]
 .org 0x2754
 # IDA 0x12554; file 0x2754; locator=proven; add     bl, al
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 {load} add bl, al
 .org 0x2756
 # IDA 0x12556; file 0x2756; locator=proven; test    byte ptr [si], 1
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 test byte ptr [si], 0x1
 .org 0x2759
 # IDA 0x12559; file 0x2759; locator=proven; jz      short loc_12565
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 jz .+12
 .org 0x275b
 # IDA 0x1255b; file 0x275b; locator=proven; and     byte ptr [si], 0FEh
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 and byte ptr [si], 0xfe
 .org 0x275e
 # IDA 0x1255e; file 0x275e; locator=proven; inc     al
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 inc al
 .org 0x2760
 # IDA 0x12560; file 0x2760; locator=proven; and     al, 7
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 and al, 0x7
 .org 0x2762
 # IDA 0x12562; file 0x2762; locator=proven; mov     [si+0Fh], al
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov byte ptr [si+0xf], al
 .org 0x2765
 loc_12565:
 # IDA 0x12565; file 0x2765; locator=proven; mov     bl, cs:[bx-67A6h]
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 cs; mov bl, byte ptr [bx+0x985a]
 .org 0x276a
 # IDA 0x1256a; file 0x276a; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shl bx, 0x1
 .org 0x276c
 # IDA 0x1256c; file 0x276c; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shl bx, 0x1
 .org 0x276e
 # IDA 0x1256e; file 0x276e; locator=proven; xor     ch, ch
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 {load} xor ch, ch
 .org 0x2770
 # IDA 0x12570; file 0x2770; locator=proven; mov     cl, es:[bx]
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 es; mov cl, byte ptr [bx]
 .org 0x2773
 # IDA 0x12573; file 0x2773; locator=proven; mov     al, es:[bx+1]
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 es; mov al, byte ptr [bx+0x1]
 .org 0x2777
 # IDA 0x12577; file 0x2777; locator=proven; mov     di, es:[bx+2]
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 es; mov di, word ptr [bx+0x2]
 .org 0x277b
 # IDA 0x1257b; file 0x277b; locator=proven; add     di, 100h
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 add di, 0x100
 .org 0x277f
 # IDA 0x1257f; file 0x277f; locator=proven; mov     dx, cx
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 {load} mov dx, cx
 .org 0x2781
 # IDA 0x12581; file 0x2781; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shr dx, 0x1
 .org 0x2783
 # IDA 0x12583; file 0x2783; locator=proven; sub     dx, [si+2]
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 sub dx, word ptr [si+0x2]
 .org 0x2786
 # IDA 0x12586; file 0x2786; locator=proven; neg     dx
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 neg dx
 .org 0x2788
 # IDA 0x12588; file 0x2788; locator=proven; mov     bl, al
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 {load} mov bl, al
 .org 0x278a
 # IDA 0x1258a; file 0x278a; locator=proven; mov     bh, ch
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 {load} mov bh, ch
 .org 0x278c
 # IDA 0x1258c; file 0x278c; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shr bx, 0x1
 .org 0x278e
 # IDA 0x1258e; file 0x278e; locator=proven; sub     bx, [si+4]
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 sub bx, word ptr [si+0x4]
 .org 0x2791
 # IDA 0x12591; file 0x2791; locator=proven; neg     bx
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 neg bx
 .org 0x2793
 # IDA 0x12593; file 0x2793; locator=proven; mov     ah, 5
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ah, 0x5
 .org 0x2795
 # IDA 0x12595; file 0x2795; locator=proven; call    loc_1D51F
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 call .-20598
 .org 0x2798
 loc_12598:
 # IDA 0x12598; file 0x2798; locator=proven; add     si, 10h
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 add si, 0x10
 .org 0x279b
 # IDA 0x1259b; file 0x279b; locator=proven; dec     bp
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 dec bp
 .org 0x279c
 # IDA 0x1259c; file 0x279c; locator=proven; jnz     short loc_12541
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 jnz .-91
 .org 0x279e
 # IDA 0x1259e; file 0x279e; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ax, cs
 .org 0x27a0
 # IDA 0x125a0; file 0x27a0; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ds, ax
 .org 0x27a2
 # IDA 0x125a2; file 0x27a2; locator=proven; retn
-# ⚠ 函式 sub_12533; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12533; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 ret
 .org 0x27a3
 sub_125A3:
@@ -13360,287 +13360,287 @@ ret
 .org 0x2cf4
 sub_12AF4:
 # IDA 0x12af4; file 0x2cf4; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_12AF4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12AF4; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 cs; mov ds, word ptr [0xd52]
 .org 0x2cf9
 # IDA 0x12af9; file 0x2cf9; locator=proven; mov     es, cs:word_1987A
-# ⚠ 函式 sub_12AF4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12AF4; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 cs; mov es, word ptr [0x987a]
 .org 0x2cfe
 # IDA 0x12afe; file 0x2cfe; locator=proven; mov     si, 2240h
-# ⚠ 函式 sub_12AF4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12AF4; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov si, 0x2240
 .org 0x2d01
 # IDA 0x12b01; file 0x2d01; locator=proven; mov     bp, 7Fh
-# ⚠ 函式 sub_12AF4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12AF4; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov bp, 0x7f
 .org 0x2d04
 loc_12B04:
 # IDA 0x12b04; file 0x2d04; locator=proven; test    byte ptr [si], 20h
-# ⚠ 函式 sub_12AF4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12AF4; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 test byte ptr [si], 0x20
 .org 0x2d07
 # IDA 0x12b07; file 0x2d07; locator=proven; jz      short loc_12B0C
-# ⚠ 函式 sub_12AF4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12AF4; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 jz .+5
 .org 0x2d09
 # IDA 0x12b09; file 0x2d09; locator=proven; call    sub_12B3C
-# ⚠ 函式 sub_12AF4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12AF4; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 call .+51
 .org 0x2d0c
 loc_12B0C:
 # IDA 0x12b0c; file 0x2d0c; locator=proven; add     si, 40h
-# ⚠ 函式 sub_12AF4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12AF4; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 add si, 0x40
 .org 0x2d0f
 # IDA 0x12b0f; file 0x2d0f; locator=proven; dec     bp
-# ⚠ 函式 sub_12AF4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12AF4; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 dec bp
 .org 0x2d10
 # IDA 0x12b10; file 0x2d10; locator=proven; jnz     short loc_12B04
-# ⚠ 函式 sub_12AF4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12AF4; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 jnz .-12
 .org 0x2d12
 # IDA 0x12b12; file 0x2d12; locator=proven; mov     si, 2240h
-# ⚠ 函式 sub_12AF4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12AF4; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov si, 0x2240
 .org 0x2d15
 # IDA 0x12b15; file 0x2d15; locator=proven; mov     cx, 7Fh
-# ⚠ 函式 sub_12AF4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12AF4; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov cx, 0x7f
 .org 0x2d18
 loc_12B18:
 # IDA 0x12b18; file 0x2d18; locator=proven; cmp     byte ptr [si], 0C0h
-# ⚠ 函式 sub_12AF4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12AF4; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 cmp byte ptr [si], 0xc0
 .org 0x2d1b
 # IDA 0x12b1b; file 0x2d1b; locator=proven; jb      short loc_12B20
-# ⚠ 函式 sub_12AF4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12AF4; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 jb .+5
 .org 0x2d1d
 # IDA 0x12b1d; file 0x2d1d; locator=proven; call    sub_12B2A
-# ⚠ 函式 sub_12AF4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12AF4; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 call .+13
 .org 0x2d20
 loc_12B20:
 # IDA 0x12b20; file 0x2d20; locator=proven; add     si, 40h
-# ⚠ 函式 sub_12AF4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12AF4; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 add si, 0x40
 .org 0x2d23
 # IDA 0x12b23; file 0x2d23; locator=proven; loop    loc_12B18
-# ⚠ 函式 sub_12AF4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12AF4; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 loop .-11
 .org 0x2d25
 # IDA 0x12b25; file 0x2d25; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_12AF4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12AF4; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ax, cs
 .org 0x2d27
 # IDA 0x12b27; file 0x2d27; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_12AF4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12AF4; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ds, ax
 .org 0x2d29
 # IDA 0x12b29; file 0x2d29; locator=proven; retn
-# ⚠ 函式 sub_12AF4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12AF4; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 ret
 .org 0x2d2a
 sub_12B2A:
 # IDA 0x12b2a; file 0x2d2a; locator=proven; mov     dx, [si+10h]
-# ⚠ 函式 sub_12B2A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B2A; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov dx, word ptr [si+0x10]
 .org 0x2d2d
 # IDA 0x12b2d; file 0x2d2d; locator=proven; mov     bl, [si+12h]
-# ⚠ 函式 sub_12B2A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B2A; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov bl, byte ptr [si+0x12]
 .org 0x2d30
 # IDA 0x12b30; file 0x2d30; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_12B2A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B2A; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 {load} xor bh, bh
 .org 0x2d32
 # IDA 0x12b32; file 0x2d32; locator=proven; mov     al, [si+9]
-# ⚠ 函式 sub_12B2A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B2A; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov al, byte ptr [si+0x9]
 .org 0x2d35
 # IDA 0x12b35; file 0x2d35; locator=proven; add     al, [si+8]
-# ⚠ 函式 sub_12B2A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B2A; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 add al, byte ptr [si+0x8]
 .org 0x2d38
 # IDA 0x12b38; file 0x2d38; locator=proven; call    sub_1D4C7
-# ⚠ 函式 sub_12B2A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B2A; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 call .-22129
 .org 0x2d3b
 # IDA 0x12b3b; file 0x2d3b; locator=proven; retn
-# ⚠ 函式 sub_12B2A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B2A; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 ret
 .org 0x2d3c
 sub_12B3C:
 # IDA 0x12b3c; file 0x2d3c; locator=proven; or      byte ptr [si], 10h
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 or byte ptr [si], 0x10
 .org 0x2d3f
 # IDA 0x12b3f; file 0x2d3f; locator=proven; mov     bl, [si+3]
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov bl, byte ptr [si+0x3]
 .org 0x2d42
 # IDA 0x12b42; file 0x2d42; locator=proven; and     bl, 3
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 and bl, 0x3
 .org 0x2d45
 # IDA 0x12b45; file 0x2d45; locator=proven; mov     al, [si+21h]
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov al, byte ptr [si+0x21]
 .org 0x2d48
 # IDA 0x12b48; file 0x2d48; locator=proven; shl     al, 1
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shl al, 0x1
 .org 0x2d4a
 # IDA 0x12b4a; file 0x2d4a; locator=proven; shl     al, 1
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shl al, 0x1
 .org 0x2d4c
 # IDA 0x12b4c; file 0x2d4c; locator=proven; add     bl, al
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 {load} add bl, al
 .org 0x2d4e
 # IDA 0x12b4e; file 0x2d4e; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 {load} xor bh, bh
 .org 0x2d50
 # IDA 0x12b50; file 0x2d50; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shl bx, 0x1
 .org 0x2d52
 # IDA 0x12b52; file 0x2d52; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shl bx, 0x1
 .org 0x2d54
 # IDA 0x12b54; file 0x2d54; locator=proven; mov     cl, es:[bx]
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 es; mov cl, byte ptr [bx]
 .org 0x2d57
 # IDA 0x12b57; file 0x2d57; locator=proven; mov     al, es:[bx+1]
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 es; mov al, byte ptr [bx+0x1]
 .org 0x2d5b
 # IDA 0x12b5b; file 0x2d5b; locator=proven; mov     di, es:[bx+2]
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 es; mov di, word ptr [bx+0x2]
 .org 0x2d5f
 # IDA 0x12b5f; file 0x2d5f; locator=proven; add     di, 100h
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 add di, 0x100
 .org 0x2d63
 # IDA 0x12b63; file 0x2d63; locator=proven; mov     dl, cl
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 {load} mov dl, cl
 .org 0x2d65
 # IDA 0x12b65; file 0x2d65; locator=proven; shr     dl, 1
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shr dl, 0x1
 .org 0x2d67
 # IDA 0x12b67; file 0x2d67; locator=proven; mov     bl, al
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 {load} mov bl, al
 .org 0x2d69
 # IDA 0x12b69; file 0x2d69; locator=proven; shr     bl, 1
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shr bl, 0x1
 .org 0x2d6b
 # IDA 0x12b6b; file 0x2d6b; locator=proven; xor     dh, dh
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 {load} xor dh, dh
 .org 0x2d6d
 # IDA 0x12b6d; file 0x2d6d; locator=proven; mov     bh, dh
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 {load} mov bh, dh
 .org 0x2d6f
 # IDA 0x12b6f; file 0x2d6f; locator=proven; sub     dx, [si+10h]
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 sub dx, word ptr [si+0x10]
 .org 0x2d72
 # IDA 0x12b72; file 0x2d72; locator=proven; sub     bx, [si+12h]
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 sub bx, word ptr [si+0x12]
 .org 0x2d75
 # IDA 0x12b75; file 0x2d75; locator=proven; neg     dx
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 neg dx
 .org 0x2d77
 # IDA 0x12b77; file 0x2d77; locator=proven; neg     bx
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 neg bx
 .org 0x2d79
 # IDA 0x12b79; file 0x2d79; locator=proven; xor     ch, ch
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 {load} xor ch, ch
 .org 0x2d7b
 # IDA 0x12b7b; file 0x2d7b; locator=proven; mov     ah, 3
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ah, 0x3
 .org 0x2d7d
 # IDA 0x12b7d; file 0x2d7d; locator=proven; call    loc_1D51F
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 call .-22110
 .org 0x2d80
 # IDA 0x12b80; file 0x2d80; locator=proven; test    cs:byte_198A6, 4
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 cs; test byte ptr [0x98a6], 0x4
 .org 0x2d86
 # IDA 0x12b86; file 0x2d86; locator=proven; jz      short locret_12BA7
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 jz .+33
 .org 0x2d88
 # IDA 0x12b88; file 0x2d88; locator=proven; mov     dx, [si+10h]
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov dx, word ptr [si+0x10]
 .org 0x2d8b
 # IDA 0x12b8b; file 0x2d8b; locator=proven; mov     bx, [si+12h]
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov bx, word ptr [si+0x12]
 .org 0x2d8e
 # IDA 0x12b8e; file 0x2d8e; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shr dx, 0x1
 .org 0x2d90
 # IDA 0x12b90; file 0x2d90; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shr bx, 0x1
 .org 0x2d92
 # IDA 0x12b92; file 0x2d92; locator=proven; add     dx, 1B6h
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 add dx, 0x1b6
 .org 0x2d96
 # IDA 0x12b96; file 0x2d96; locator=proven; add     bx, 26h
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 add bx, 0x26
 .org 0x2d99
 # IDA 0x12b99; file 0x2d99; locator=proven; mov     ah, 3Fh
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ah, 0x3f
 .org 0x2d9b
 # IDA 0x12b9b; file 0x2d9b; locator=proven; mov     al, [si+3]
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov al, byte ptr [si+0x3]
 .org 0x2d9e
 # IDA 0x12b9e; file 0x2d9e; locator=proven; test    al, 1
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 test al, 0x1
 .org 0x2da0
 # IDA 0x12ba0; file 0x2da0; locator=proven; jz      short loc_12BA4
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 jz .+4
 .org 0x2da2
 # IDA 0x12ba2; file 0x2da2; locator=proven; mov     ah, 0FAh
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ah, 0xfa
 .org 0x2da4
 loc_12BA4:
 # IDA 0x12ba4; file 0x2da4; locator=proven; call    sub_15D19
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 call .+12661
 .org 0x2da7
 locret_12BA7:
 # IDA 0x12ba7; file 0x2da7; locator=proven; retn
-# ⚠ 函式 sub_12B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12B3C; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 ret
 .org 0x2da8
 sub_12BA8:
@@ -36216,267 +36216,267 @@ ret
 .org 0x5f19
 sub_15D19:
 # IDA 0x15d19; file 0x5f19; locator=proven; push    ds
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 push ds
 .org 0x5f1a
 # IDA 0x15d1a; file 0x5f1a; locator=proven; push    cx
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 push cx
 .org 0x5f1b
 # IDA 0x15d1b; file 0x5f1b; locator=proven; mov     cx, 0A0C8h
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov cx, 0xa0c8
 .org 0x5f1e
 # IDA 0x15d1e; file 0x5f1e; locator=proven; mov     ds, cx
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ds, cx
 .org 0x5f20
 # IDA 0x15d20; file 0x5f20; locator=proven; mov     cl, dl
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 {load} mov cl, dl
 .org 0x5f22
 # IDA 0x15d22; file 0x5f22; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shr dx, 0x1
 .org 0x5f24
 # IDA 0x15d24; file 0x5f24; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shr dx, 0x1
 .org 0x5f26
 # IDA 0x15d26; file 0x5f26; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shr dx, 0x1
 .org 0x5f28
 # IDA 0x15d28; file 0x5f28; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shl bx, 0x1
 .org 0x5f2a
 # IDA 0x15d2a; file 0x5f2a; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shl bx, 0x1
 .org 0x5f2c
 # IDA 0x15d2c; file 0x5f2c; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shl bx, 0x1
 .org 0x5f2e
 # IDA 0x15d2e; file 0x5f2e; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shl bx, 0x1
 .org 0x5f30
 # IDA 0x15d30; file 0x5f30; locator=proven; add     dx, bx
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 {load} add dx, bx
 .org 0x5f32
 # IDA 0x15d32; file 0x5f32; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shl bx, 0x1
 .org 0x5f34
 # IDA 0x15d34; file 0x5f34; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shl bx, 0x1
 .org 0x5f36
 # IDA 0x15d36; file 0x5f36; locator=proven; add     bx, dx
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 {load} add bx, dx
 .org 0x5f38
 # IDA 0x15d38; file 0x5f38; locator=proven; and     cl, 7
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 and cl, 0x7
 .org 0x5f3b
 # IDA 0x15d3b; file 0x5f3b; locator=proven; call    sub_10CAC
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 call .-20623
 .org 0x5f3e
 # IDA 0x15d3e; file 0x5f3e; locator=proven; mov     dx, 3CFh
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov dx, 0x3cf
 .org 0x5f41
 # IDA 0x15d41; file 0x5f41; locator=proven; mov     al, ah
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 {load} mov al, ah
 .org 0x5f43
 # IDA 0x15d43; file 0x5f43; locator=proven; out     dx, al
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 out dx, al
 .org 0x5f44
 # IDA 0x15d44; file 0x5f44; locator=proven; push    ax
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 push ax
 .org 0x5f45
 # IDA 0x15d45; file 0x5f45; locator=proven; xor     al, al
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 {load} xor al, al
 .org 0x5f47
 # IDA 0x15d47; file 0x5f47; locator=proven; mov     ah, 60h
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ah, 0x60
 .org 0x5f49
 # IDA 0x15d49; file 0x5f49; locator=proven; shr     ax, cl
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shr ax, cl
 .org 0x5f4b
 # IDA 0x15d4b; file 0x5f4b; locator=proven; mov     ch, [bx+50h]
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ch, byte ptr [bx+0x50]
 .org 0x5f4e
 # IDA 0x15d4e; file 0x5f4e; locator=proven; mov     [bx+50h], ah
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov byte ptr [bx+0x50], ah
 .org 0x5f51
 # IDA 0x15d51; file 0x5f51; locator=proven; mov     ch, [bx+51h]
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ch, byte ptr [bx+0x51]
 .org 0x5f54
 # IDA 0x15d54; file 0x5f54; locator=proven; mov     [bx+51h], al
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov byte ptr [bx+0x51], al
 .org 0x5f57
 # IDA 0x15d57; file 0x5f57; locator=proven; mov     ch, [bx+0A0h]
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ch, byte ptr [bx+0xa0]
 .org 0x5f5b
 # IDA 0x15d5b; file 0x5f5b; locator=proven; mov     [bx+0A0h], ah
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov byte ptr [bx+0xa0], ah
 .org 0x5f5f
 # IDA 0x15d5f; file 0x5f5f; locator=proven; mov     ch, [bx+0A1h]
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ch, byte ptr [bx+0xa1]
 .org 0x5f63
 # IDA 0x15d63; file 0x5f63; locator=proven; mov     [bx+0A1h], al
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov byte ptr [bx+0xa1], al
 .org 0x5f67
 # IDA 0x15d67; file 0x5f67; locator=proven; pop     ax
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 pop ax
 .org 0x5f68
 # IDA 0x15d68; file 0x5f68; locator=proven; mov     dx, 3CFh
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov dx, 0x3cf
 .org 0x5f6b
 # IDA 0x15d6b; file 0x5f6b; locator=proven; mov     al, ah
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 {load} mov al, ah
 .org 0x5f6d
 # IDA 0x15d6d; file 0x5f6d; locator=proven; shr     al, 1
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shr al, 0x1
 .org 0x5f6f
 # IDA 0x15d6f; file 0x5f6f; locator=proven; shr     al, 1
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shr al, 0x1
 .org 0x5f71
 # IDA 0x15d71; file 0x5f71; locator=proven; shr     al, 1
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shr al, 0x1
 .org 0x5f73
 # IDA 0x15d73; file 0x5f73; locator=proven; shr     al, 1
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shr al, 0x1
 .org 0x5f75
 # IDA 0x15d75; file 0x5f75; locator=proven; out     dx, al
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 out dx, al
 .org 0x5f76
 # IDA 0x15d76; file 0x5f76; locator=proven; xor     al, al
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 {load} xor al, al
 .org 0x5f78
 # IDA 0x15d78; file 0x5f78; locator=proven; mov     ah, 0F0h
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ah, 0xf0
 .org 0x5f7a
 # IDA 0x15d7a; file 0x5f7a; locator=proven; shr     ax, cl
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shr ax, cl
 .org 0x5f7c
 # IDA 0x15d7c; file 0x5f7c; locator=proven; mov     ch, [bx]
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ch, byte ptr [bx]
 .org 0x5f7e
 # IDA 0x15d7e; file 0x5f7e; locator=proven; mov     [bx], ah
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov byte ptr [bx], ah
 .org 0x5f80
 # IDA 0x15d80; file 0x5f80; locator=proven; mov     ch, [bx+1]
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ch, byte ptr [bx+0x1]
 .org 0x5f83
 # IDA 0x15d83; file 0x5f83; locator=proven; mov     [bx+1], al
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov byte ptr [bx+0x1], al
 .org 0x5f86
 # IDA 0x15d86; file 0x5f86; locator=proven; mov     ch, [bx+0F0h]
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ch, byte ptr [bx+0xf0]
 .org 0x5f8a
 # IDA 0x15d8a; file 0x5f8a; locator=proven; mov     [bx+0F0h], ah
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov byte ptr [bx+0xf0], ah
 .org 0x5f8e
 # IDA 0x15d8e; file 0x5f8e; locator=proven; mov     ch, [bx+0F1h]
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ch, byte ptr [bx+0xf1]
 .org 0x5f92
 # IDA 0x15d92; file 0x5f92; locator=proven; mov     [bx+0F1h], al
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov byte ptr [bx+0xf1], al
 .org 0x5f96
 # IDA 0x15d96; file 0x5f96; locator=proven; xor     al, al
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 {load} xor al, al
 .org 0x5f98
 # IDA 0x15d98; file 0x5f98; locator=proven; mov     ah, 90h
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ah, 0x90
 .org 0x5f9a
 # IDA 0x15d9a; file 0x5f9a; locator=proven; shr     ax, cl
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 shr ax, cl
 .org 0x5f9c
 # IDA 0x15d9c; file 0x5f9c; locator=proven; mov     ch, [bx+50h]
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ch, byte ptr [bx+0x50]
 .org 0x5f9f
 # IDA 0x15d9f; file 0x5f9f; locator=proven; mov     [bx+50h], ah
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov byte ptr [bx+0x50], ah
 .org 0x5fa2
 # IDA 0x15da2; file 0x5fa2; locator=proven; mov     ch, [bx+51h]
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ch, byte ptr [bx+0x51]
 .org 0x5fa5
 # IDA 0x15da5; file 0x5fa5; locator=proven; mov     [bx+51h], al
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov byte ptr [bx+0x51], al
 .org 0x5fa8
 # IDA 0x15da8; file 0x5fa8; locator=proven; mov     ch, [bx+0A0h]
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ch, byte ptr [bx+0xa0]
 .org 0x5fac
 # IDA 0x15dac; file 0x5fac; locator=proven; mov     [bx+0A0h], ah
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov byte ptr [bx+0xa0], ah
 .org 0x5fb0
 # IDA 0x15db0; file 0x5fb0; locator=proven; mov     ch, [bx+0A1h]
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov ch, byte ptr [bx+0xa1]
 .org 0x5fb4
 # IDA 0x15db4; file 0x5fb4; locator=proven; mov     [bx+0A1h], al
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 mov byte ptr [bx+0xa1], al
 .org 0x5fb8
 # IDA 0x15db8; file 0x5fb8; locator=proven; pop     cx
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 pop cx
 .org 0x5fb9
 # IDA 0x15db9; file 0x5fb9; locator=proven; pop     ds
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 pop ds
 .org 0x5fba
 # IDA 0x15dba; file 0x5fba; locator=proven; retn
-# ⚠ 函式 sub_15D19; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15D19; [proven] 原軍團／物件到顯示格與小地圖的 producer；舊相位、原始門檻與完整局部範圍見原 C 收據; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
 ret
 .org 0x5fbb
 sub_15DBB:
@@ -83400,6 +83400,11 @@ jnz .+27
 # IDA 0x1d5a7; file 0xd7a7; locator=proven; xor     bh, bh
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
 {load} xor bh, bh
+.org 0xd7a9
+# IDA 0x1d5a9; file 0xd7a9; locator=proven; cmp     bl, 5
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# operand 1 5; [proven] 檔案初始容量 5；CS:0xD5AB 執行期由入口 AH 改寫，軍團 3／物件 5，C 讀 live byte; 出處: docs/re/115-c-world-overlay-restoration.md, docs/spec/235-c-world-overlay.md
+cmp bl, 5
 .org 0xd7ac
 # IDA 0x1d5ac; file 0xd7ac; locator=proven; jnb     short loc_1D5BE
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
@@ -91585,352 +91590,352 @@ ret
 .org 0xec1f
 # IDA 0x1ea1f; file 0xec1f; locator=proven; mov     ah, [si+0Ah]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 1; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 1; 原 IDA 資料行: db 1Fh, 0EAh, 26h, 0EAh, 30h, 0EAh, 3Ah, 0EAh, 44h, 0EAh; 出處: docs/re/115-c-world-overlay-restoration.md
 mov ah, byte ptr [si+0xa]
 .org 0xec22
 # IDA 0x1ea22; file 0xec22; locator=proven; call    near ptr byte_1ECFE+100h
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 1; 原 IDA 資料行: call    near ptr byte_1ECFE+100h; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 1; 原 IDA 資料行: call    near ptr byte_1ECFE+100h; 出處: docs/re/115-c-world-overlay-restoration.md
 call .+988
 .org 0xec25
 # IDA 0x1ea25; file 0xec25; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 1; 原 IDA 資料行: retn; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 1; 原 IDA 資料行: retn; 出處: docs/re/115-c-world-overlay-restoration.md
 ret
 .org 0xec26
 # IDA 0x1ea26; file 0xec26; locator=proven; mov     ah, [si+0Ah]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 2; 原 IDA 資料行: db  8Ah; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 2; 原 IDA 資料行: db  8Ah; 出處: docs/re/115-c-world-overlay-restoration.md
 mov ah, byte ptr [si+0xa]
 .org 0xec29
 # IDA 0x1ea29; file 0xec29; locator=proven; call    near ptr unk_1EAD0
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 2; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 2; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/115-c-world-overlay-restoration.md
 call .+167
 .org 0xec2c
 # IDA 0x1ea2c; file 0xec2c; locator=proven; call    sub_1F020
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 2; 原 IDA 資料行: call    sub_1F020; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 2; 原 IDA 資料行: call    sub_1F020; 出處: docs/re/115-c-world-overlay-restoration.md
 call .+1524
 .org 0xec2f
 # IDA 0x1ea2f; file 0xec2f; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 2; 原 IDA 資料行: retn; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 2; 原 IDA 資料行: retn; 出處: docs/re/115-c-world-overlay-restoration.md
 ret
 .org 0xec30
 # IDA 0x1ea30; file 0xec30; locator=proven; mov     ah, [si+0Ah]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 3; 原 IDA 資料行: db  8Ah; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 3; 原 IDA 資料行: db  8Ah; 出處: docs/re/115-c-world-overlay-restoration.md
 mov ah, byte ptr [si+0xa]
 .org 0xec33
 # IDA 0x1ea33; file 0xec33; locator=proven; call    near ptr unk_1EAD0
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 3; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 3; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/115-c-world-overlay-restoration.md
 call .+157
 .org 0xec36
 # IDA 0x1ea36; file 0xec36; locator=proven; call    sub_1F1A3
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 3; 原 IDA 資料行: call    sub_1F1A3; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 3; 原 IDA 資料行: call    sub_1F1A3; 出處: docs/re/115-c-world-overlay-restoration.md
 call .+1901
 .org 0xec39
 # IDA 0x1ea39; file 0xec39; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 3; 原 IDA 資料行: retn; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 3; 原 IDA 資料行: retn; 出處: docs/re/115-c-world-overlay-restoration.md
 ret
 .org 0xec3a
 # IDA 0x1ea3a; file 0xec3a; locator=proven; mov     ax, [si+0Ah]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 4; 原 IDA 資料行: db  8Bh; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 4; 原 IDA 資料行: db  8Bh; 出處: docs/re/115-c-world-overlay-restoration.md
 mov ax, word ptr [si+0xa]
 .org 0xec3d
 # IDA 0x1ea3d; file 0xec3d; locator=proven; call    near ptr unk_1EAD0
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 4; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 4; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/115-c-world-overlay-restoration.md
 call .+147
 .org 0xec40
 # IDA 0x1ea40; file 0xec40; locator=proven; call    loc_1F465
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 4; 原 IDA 資料行: call    loc_1F465; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 4; 原 IDA 資料行: call    loc_1F465; 出處: docs/re/115-c-world-overlay-restoration.md
 call .+2597
 .org 0xec43
 # IDA 0x1ea43; file 0xec43; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 4; 原 IDA 資料行: retn; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 4; 原 IDA 資料行: retn; 出處: docs/re/115-c-world-overlay-restoration.md
 ret
 .org 0xec44
 # IDA 0x1ea44; file 0xec44; locator=proven; mov     ah, [si+8]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: db  8Ah; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: db  8Ah; 出處: docs/re/115-c-world-overlay-restoration.md
 mov ah, byte ptr [si+0x8]
 .org 0xec47
 # IDA 0x1ea47; file 0xec47; locator=proven; mov     dx, [bp+0]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/115-c-world-overlay-restoration.md
 mov dx, word ptr [bp]
 .org 0xec4a
 # IDA 0x1ea4a; file 0xec4a; locator=proven; mov     bx, [bp+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/115-c-world-overlay-restoration.md
 mov bx, word ptr [bp+0x2]
 .org 0xec4d
 # IDA 0x1ea4d; file 0xec4d; locator=proven; add     dx, [si+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/115-c-world-overlay-restoration.md
 add dx, word ptr [si+0x2]
 .org 0xec50
 # IDA 0x1ea50; file 0xec50; locator=proven; add     bx, [si+4]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/115-c-world-overlay-restoration.md
 add bx, word ptr [si+0x4]
 .org 0xec53
 # IDA 0x1ea53; file 0xec53; locator=proven; mov     cx, [si+6]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: mov     cx, [si+6]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: mov     cx, [si+6]; 出處: docs/re/115-c-world-overlay-restoration.md
 mov cx, word ptr [si+0x6]
 .org 0xec56
 # IDA 0x1ea56; file 0xec56; locator=proven; call    sub_1FB29
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: call    sub_1FB29; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: call    sub_1FB29; 出處: docs/re/115-c-world-overlay-restoration.md
 call .+4307
 .org 0xec59
 # IDA 0x1ea59; file 0xec59; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 5; 原 IDA 資料行: retn; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 5; 原 IDA 資料行: retn; 出處: docs/re/115-c-world-overlay-restoration.md
 ret
 .org 0xec5a
 # IDA 0x1ea5a; file 0xec5a; locator=proven; mov     ah, [si+8]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: db  8Ah; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: db  8Ah; 出處: docs/re/115-c-world-overlay-restoration.md
 mov ah, byte ptr [si+0x8]
 .org 0xec5d
 # IDA 0x1ea5d; file 0xec5d; locator=proven; mov     dx, [bp+0]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/115-c-world-overlay-restoration.md
 mov dx, word ptr [bp]
 .org 0xec60
 # IDA 0x1ea60; file 0xec60; locator=proven; mov     bx, [bp+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/115-c-world-overlay-restoration.md
 mov bx, word ptr [bp+0x2]
 .org 0xec63
 # IDA 0x1ea63; file 0xec63; locator=proven; add     dx, [si+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/115-c-world-overlay-restoration.md
 add dx, word ptr [si+0x2]
 .org 0xec66
 # IDA 0x1ea66; file 0xec66; locator=proven; add     bx, [si+4]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/115-c-world-overlay-restoration.md
 add bx, word ptr [si+0x4]
 .org 0xec69
 # IDA 0x1ea69; file 0xec69; locator=proven; mov     cx, [si+6]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: mov     cx, [si+6]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: mov     cx, [si+6]; 出處: docs/re/115-c-world-overlay-restoration.md
 mov cx, word ptr [si+0x6]
 .org 0xec6c
 # IDA 0x1ea6c; file 0xec6c; locator=proven; call    sub_1FBA7
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: call    sub_1FBA7; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: call    sub_1FBA7; 出處: docs/re/115-c-world-overlay-restoration.md
 call .+4411
 .org 0xec6f
 # IDA 0x1ea6f; file 0xec6f; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 6; 原 IDA 資料行: retn; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 6; 原 IDA 資料行: retn; 出處: docs/re/115-c-world-overlay-restoration.md
 ret
 .org 0xec70
 # IDA 0x1ea70; file 0xec70; locator=proven; push    ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: db  1Eh; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: db  1Eh; 出處: docs/re/115-c-world-overlay-restoration.md
 push ds
 .org 0xec71
 # IDA 0x1ea71; file 0xec71; locator=proven; mov     bl, [si+0Ah]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: mov     bl, [si+0Ah]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: mov     bl, [si+0Ah]; 出處: docs/re/115-c-world-overlay-restoration.md
 mov bl, byte ptr [si+0xa]
 .org 0xec74
 # IDA 0x1ea74; file 0xec74; locator=proven; xor     bh, bh
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: xor     bh, bh; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: xor     bh, bh; 出處: docs/re/115-c-world-overlay-restoration.md
 {load} xor bh, bh
 .org 0xec76
 # IDA 0x1ea76; file 0xec76; locator=proven; shl     bx, 1
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/115-c-world-overlay-restoration.md
 shl bx, 0x1
 .org 0xec78
 # IDA 0x1ea78; file 0xec78; locator=proven; shl     bx, 1
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/115-c-world-overlay-restoration.md
 shl bx, 0x1
 .org 0xec7a
 # IDA 0x1ea7a; file 0xec7a; locator=proven; shl     bx, 1
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: shl     bx, 1; 出處: docs/re/115-c-world-overlay-restoration.md
 shl bx, 0x1
 .org 0xec7c
 # IDA 0x1ea7c; file 0xec7c; locator=proven; add     bx, 0EAF1h
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: add     bx, 0EAF1h; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: add     bx, 0EAF1h; 出處: docs/re/115-c-world-overlay-restoration.md
 add bx, 0xeaf1
 .org 0xec80
 # IDA 0x1ea80; file 0xec80; locator=proven; mov     ax, cs:[bx]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: mov     ax, cs:[bx]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: mov     ax, cs:[bx]; 出處: docs/re/115-c-world-overlay-restoration.md
 cs; mov ax, word ptr [bx]
 .org 0xec83
 # IDA 0x1ea83; file 0xec83; locator=proven; mov     cx, cs:[bx+4]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: mov     cx, cs:[bx+4]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: mov     cx, cs:[bx+4]; 出處: docs/re/115-c-world-overlay-restoration.md
 cs; mov cx, word ptr [bx+0x4]
 .org 0xec87
 # IDA 0x1ea87; file 0xec87; locator=proven; push    word ptr cs:[bx+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: push    word ptr cs:[bx+2]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: push    word ptr cs:[bx+2]; 出處: docs/re/115-c-world-overlay-restoration.md
 cs; push word ptr [bx+0x2]
 .org 0xec8b
 # IDA 0x1ea8b; file 0xec8b; locator=proven; push    cx
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: push    cx; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: push    cx; 出處: docs/re/115-c-world-overlay-restoration.md
 push cx
 .org 0xec8c
 # IDA 0x1ea8c; file 0xec8c; locator=proven; call    near ptr unk_1EAD0
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: call    near ptr unk_1EAD0; 出處: docs/re/115-c-world-overlay-restoration.md
 call .+68
 .org 0xec8f
 # IDA 0x1ea8f; file 0xec8f; locator=proven; pop     cx
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: pop     cx; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: pop     cx; 出處: docs/re/115-c-world-overlay-restoration.md
 pop cx
 .org 0xec90
 # IDA 0x1ea90; file 0xec90; locator=proven; pop     ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: pop     ds; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: pop     ds; 出處: docs/re/115-c-world-overlay-restoration.md
 pop ds
 .org 0xec91
 # IDA 0x1ea91; file 0xec91; locator=proven; call    loc_1F26E
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: call    loc_1F26E; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: call    loc_1F26E; 出處: docs/re/115-c-world-overlay-restoration.md
 call .+2013
 .org 0xec94
 # IDA 0x1ea94; file 0xec94; locator=proven; pop     ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: pop     ds; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: pop     ds; 出處: docs/re/115-c-world-overlay-restoration.md
 pop ds
 .org 0xec95
 # IDA 0x1ea95; file 0xec95; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 7; 原 IDA 資料行: retn; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 7; 原 IDA 資料行: retn; 出處: docs/re/115-c-world-overlay-restoration.md
 ret
 .org 0xec96
 # IDA 0x1ea96; file 0xec96; locator=proven; push    ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: db  1Eh; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: db  1Eh; 出處: docs/re/115-c-world-overlay-restoration.md
 push ds
 .org 0xec97
 # IDA 0x1ea97; file 0xec97; locator=proven; mov     dx, [bp+0]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/115-c-world-overlay-restoration.md
 mov dx, word ptr [bp]
 .org 0xec9a
 # IDA 0x1ea9a; file 0xec9a; locator=proven; mov     bx, [bp+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/115-c-world-overlay-restoration.md
 mov bx, word ptr [bp+0x2]
 .org 0xec9d
 # IDA 0x1ea9d; file 0xec9d; locator=proven; add     dx, [si+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/115-c-world-overlay-restoration.md
 add dx, word ptr [si+0x2]
 .org 0xeca0
 # IDA 0x1eaa0; file 0xeca0; locator=proven; add     bx, [si+4]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/115-c-world-overlay-restoration.md
 add bx, word ptr [si+0x4]
 .org 0xeca3
 # IDA 0x1eaa3; file 0xeca3; locator=proven; mov     ax, [si+8]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: mov     ax, [si+8]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: mov     ax, [si+8]; 出處: docs/re/115-c-world-overlay-restoration.md
 mov ax, word ptr [si+0x8]
 .org 0xeca6
 # IDA 0x1eaa6; file 0xeca6; locator=proven; mov     si, [si+6]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: mov     si, [si+6]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: mov     si, [si+6]; 出處: docs/re/115-c-world-overlay-restoration.md
 mov si, word ptr [si+0x6]
 .org 0xeca9
 # IDA 0x1eaa9; file 0xeca9; locator=proven; mov     ds, cs:word_1EAED
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: mov     ds, cs:word_1EAED; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: mov     ds, cs:word_1EAED; 出處: docs/re/115-c-world-overlay-restoration.md
 cs; mov ds, word ptr [0xeaed]
 .org 0xecae
 # IDA 0x1eaae; file 0xecae; locator=proven; call    sub_1F6DC
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: call    sub_1F6DC; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: call    sub_1F6DC; 出處: docs/re/115-c-world-overlay-restoration.md
 call .+3118
 .org 0xecb1
 # IDA 0x1eab1; file 0xecb1; locator=proven; pop     ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: pop     ds; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: pop     ds; 出處: docs/re/115-c-world-overlay-restoration.md
 pop ds
 .org 0xecb2
 # IDA 0x1eab2; file 0xecb2; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 8; 原 IDA 資料行: retn; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 8; 原 IDA 資料行: retn; 出處: docs/re/115-c-world-overlay-restoration.md
 ret
 .org 0xecb3
 # IDA 0x1eab3; file 0xecb3; locator=proven; push    ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: db  1Eh; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: db  1Eh; 出處: docs/re/115-c-world-overlay-restoration.md
 push ds
 .org 0xecb4
 # IDA 0x1eab4; file 0xecb4; locator=proven; mov     dx, [bp+0]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: mov     dx, [bp+0]; 出處: docs/re/115-c-world-overlay-restoration.md
 mov dx, word ptr [bp]
 .org 0xecb7
 # IDA 0x1eab7; file 0xecb7; locator=proven; mov     bx, [bp+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: mov     bx, [bp+2]; 出處: docs/re/115-c-world-overlay-restoration.md
 mov bx, word ptr [bp+0x2]
 .org 0xecba
 # IDA 0x1eaba; file 0xecba; locator=proven; add     dx, [si+2]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: add     dx, [si+2]; 出處: docs/re/115-c-world-overlay-restoration.md
 add dx, word ptr [si+0x2]
 .org 0xecbd
 # IDA 0x1eabd; file 0xecbd; locator=proven; add     bx, [si+4]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: add     bx, [si+4]; 出處: docs/re/115-c-world-overlay-restoration.md
 add bx, word ptr [si+0x4]
 .org 0xecc0
 # IDA 0x1eac0; file 0xecc0; locator=proven; mov     cx, [si+8]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: mov     cx, [si+8]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: mov     cx, [si+8]; 出處: docs/re/115-c-world-overlay-restoration.md
 mov cx, word ptr [si+0x8]
 .org 0xecc3
 # IDA 0x1eac3; file 0xecc3; locator=proven; mov     si, [si+6]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: mov     si, [si+6]; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: mov     si, [si+6]; 出處: docs/re/115-c-world-overlay-restoration.md
 mov si, word ptr [si+0x6]
 .org 0xecc6
 # IDA 0x1eac6; file 0xecc6; locator=proven; mov     ds, cs:word_1EAEF
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: mov     ds, cs:word_1EAEF; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: mov     ds, cs:word_1EAEF; 出處: docs/re/115-c-world-overlay-restoration.md
 cs; mov ds, word ptr [0xeaef]
 .org 0xeccb
 # IDA 0x1eacb; file 0xeccb; locator=proven; call    sub_1F888
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: call    sub_1F888; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: call    sub_1F888; 出處: docs/re/115-c-world-overlay-restoration.md
 call .+3517
 .org 0xecce
 # IDA 0x1eace; file 0xecce; locator=proven; pop     ds
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: pop     ds; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: pop     ds; 出處: docs/re/115-c-world-overlay-restoration.md
 pop ds
 .org 0xeccf
 # IDA 0x1eacf; file 0xeccf; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-# [proven] opcode 9; 原 IDA 資料行: retn; 出處: docs/re/112-c-choice-selector-restoration.md
+# [proven] opcode 9; 原 IDA 資料行: retn; 出處: docs/re/115-c-world-overlay-restoration.md
 ret
 .org 0xecd0
 loc_1EAD0:

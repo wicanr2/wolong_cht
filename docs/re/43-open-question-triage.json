@@ -12984,6 +12984,58 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "世界顯示格 C 的局部界線；上游 producer、正常玩家與原 C 工具鏈不由本閉包代證。"
+    },
+    {
+      "file": "docs/re/115-c-world-overlay-restoration.md",
+      "item": "物件自然 producer 與完整場景",
+      "status": "本輪不代證 type 3 的自然來源或正常玩家完整場景",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-a301c21499ed78bda479",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原 overlay C 局部證據界線；正常玩家／type 3 自然 producer／原 C compiler 不由本閉包代證。"
+    },
+    {
+      "file": "docs/re/115-c-world-overlay-restoration.md",
+      "item": "原作者 C 工具鏈／機器碼",
+      "status": "尚未確認",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-6ad52a7e7a593e6e610e",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原 overlay C 局部證據界線；正常玩家／type 3 自然 producer／原 C compiler 不由本閉包代證。"
+    },
+    {
+      "file": "docs/spec/235-c-world-overlay.md",
+      "item": "正常玩家／完整場景與 type 3",
+      "status": "局部輸入不代證完整自然路徑",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-3be84774b6ce42c717b4",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原 overlay C 局部證據界線；正常玩家／type 3 自然 producer／原 C compiler 不由本閉包代證。"
+    },
+    {
+      "file": "docs/spec/235-c-world-overlay.md",
+      "item": "原作者 C compiler／machine code",
+      "status": "尚未確認",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-6770ce36b684a6739d7c",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原 overlay C 局部證據界線；正常玩家／type 3 自然 producer／原 C compiler 不由本閉包代證。"
     }
   ]
 }

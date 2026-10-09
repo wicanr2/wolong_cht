@@ -1969,3 +1969,10 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - O0／O2 各 2,622 完整狀態相同；256 圖塊 blit／512 遮罩合成獨立核對真實 MDL／MCH；12 個錯版拒絕與乾淨重生通過。
 - 單獨 DF=1 底圖拷貝覆蓋自身指令的失敗實驗保留；原 renderer 先 CLD。完整圖的指令上界與 trace 容量由原閉包大小導出，未調整原迴圈。
 - C 台帳 231 函式／30 code 入口；正常場景主入口、上游 producer 與 C 機器碼仍未由本輪代證。
+
+## 2026-10-09：原軍團／物件 producer C
+
+- 固定 KI.EXE、IDA DB、四劇本與 MMAP 資料。六函式 461 bytes、raw 矩陣 181 bytes、267 指令與完整 hash 見 [re/115](docs/re/115-c-world-overlay-restoration.md)。
+- 軍團兩次巡覽、單格推入、MCH 矩陣、物件舊相位與小地圖點接到原 C 顯示格／renderer。raw entry 容量立即數由 AH 改寫，原檔 5、軍團 3、物件 5；保持獨立於單格上限 4。
+- O0／O2 各 14,622 完整 RAM／plane／ABI／I/O 相同；55 個真實 pattern 共 12,320 次另核對 source 矩陣，12 個錯版拒絕與乾淨重生通過。
+- 80 FB 05 解碼成一條 cmp，加入組語來源後 24,746 指令／56,290 code bytes 與整檔匹配；原資料行與歷史 supplement rows 保留。C 台帳 237 函式／31 raw 入口，正常玩家／type 3 自然來源／C 機器碼仍有界線。
