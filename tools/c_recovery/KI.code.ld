@@ -1,3 +1,4 @@
+imm_at_17284 = 0xffff;
 imm_at_10105 = 0x40;
 imm_at_10119 = 0x6c;
 imm_at_1011F = 0x18;

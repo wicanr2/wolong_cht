@@ -44811,119 +44811,119 @@ ret
 .org 0x736d
 sub_1716D:
 # IDA 0x1716d; file 0x736d; locator=proven; push    ds
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 push ds
 .org 0x736e
 # IDA 0x1716e; file 0x736e; locator=proven; push    es
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 push es
 .org 0x736f
 # IDA 0x1716f; file 0x736f; locator=proven; push    ax
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 push ax
 .org 0x7370
 # IDA 0x17170; file 0x7370; locator=proven; push    cx
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 push cx
 .org 0x7371
 # IDA 0x17171; file 0x7371; locator=proven; push    dx
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 push dx
 .org 0x7372
 # IDA 0x17172; file 0x7372; locator=proven; push    si
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 push si
 .org 0x7373
 # IDA 0x17173; file 0x7373; locator=proven; push    di
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 push di
 .org 0x7374
 # IDA 0x17174; file 0x7374; locator=proven; push    bp
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 push bp
 .org 0x7375
 # IDA 0x17175; file 0x7375; locator=proven; mov     dx, 18h
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 mov dx, 0x18
 .org 0x7378
 # IDA 0x17178; file 0x7378; locator=proven; mov     bx, 58h
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 mov bx, 0x58
 .org 0x737b
 # IDA 0x1717b; file 0x737b; locator=proven; mov     cx, 0B18h
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 mov cx, 0xb18
 .org 0x737e
 # IDA 0x1717e; file 0x737e; locator=proven; call    sub_181C0
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 call .+4162
 .org 0x7381
 # IDA 0x17181; file 0x7381; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x7386
 # IDA 0x17186; file 0x7386; locator=proven; mov     ax, 71A8h
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, 0x71a8
 .org 0x7389
 # IDA 0x17189; file 0x7389; locator=proven; mov     bx, 724Dh
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 mov bx, 0x724d
 .org 0x738c
 # IDA 0x1718c; file 0x738c; locator=proven; mov     si, 70ECh
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 mov si, 0x70ec
 .org 0x738f
 # IDA 0x1718f; file 0x738f; locator=proven; mov     di, 713Dh
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 mov di, 0x713d
 .org 0x7392
 # IDA 0x17192; file 0x7392; locator=proven; mov     cl, byte ptr cs:word_198A8
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov cl, byte ptr [0x98a8]
 .org 0x7397
 # IDA 0x17197; file 0x7397; locator=proven; call    sub_1820E
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 call .+4215
 .org 0x739a
 # IDA 0x1719a; file 0x739a; locator=proven; mov     byte ptr cs:word_198A8, cl
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov byte ptr [0x98a8], cl
 .org 0x739f
 # IDA 0x1719f; file 0x739f; locator=proven; pop     bp
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 pop bp
 .org 0x73a0
 # IDA 0x171a0; file 0x73a0; locator=proven; pop     di
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 pop di
 .org 0x73a1
 # IDA 0x171a1; file 0x73a1; locator=proven; pop     si
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 pop si
 .org 0x73a2
 # IDA 0x171a2; file 0x73a2; locator=proven; pop     dx
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 pop dx
 .org 0x73a3
 # IDA 0x171a3; file 0x73a3; locator=proven; pop     cx
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 pop cx
 .org 0x73a4
 # IDA 0x171a4; file 0x73a4; locator=proven; pop     ax
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 pop ax
 .org 0x73a5
 # IDA 0x171a5; file 0x73a5; locator=proven; pop     es
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 pop es
 .org 0x73a6
 # IDA 0x171a6; file 0x73a6; locator=proven; pop     ds
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 pop ds
 .org 0x73a7
 # IDA 0x171a7; file 0x73a7; locator=proven; retn
-# ⚠ 函式 sub_1716D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1716D; [proven] 玩家勢力軍團清單入口與排序狀態保存; 出處: docs/re/119-c-list-families-restoration.md
 ret
 .org 0x73a8
 # IDA 0x171a8; file 0x73a8; locator=proven; push    dx
@@ -45018,127 +45018,789 @@ ret
 .org 0x73d3
 sub_171D3:
 # IDA 0x171d3; file 0x73d3; locator=proven; push    ds
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 push ds
 .org 0x73d4
 # IDA 0x171d4; file 0x73d4; locator=proven; push    es
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 push es
 .org 0x73d5
 # IDA 0x171d5; file 0x73d5; locator=proven; push    ax
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 push ax
 .org 0x73d6
 # IDA 0x171d6; file 0x73d6; locator=proven; push    cx
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 push cx
 .org 0x73d7
 # IDA 0x171d7; file 0x73d7; locator=proven; push    dx
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 push dx
 .org 0x73d8
 # IDA 0x171d8; file 0x73d8; locator=proven; push    si
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 push si
 .org 0x73d9
 # IDA 0x171d9; file 0x73d9; locator=proven; push    di
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 push di
 .org 0x73da
 # IDA 0x171da; file 0x73da; locator=proven; push    bp
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 push bp
 .org 0x73db
 # IDA 0x171db; file 0x73db; locator=proven; mov     cs:word_1722B, ax
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov word ptr [0x722b], ax
 .org 0x73df
 # IDA 0x171df; file 0x73df; locator=proven; mov     cs:word_17233, bx
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov word ptr [0x7233], bx
 .org 0x73e4
 # IDA 0x171e4; file 0x73e4; locator=proven; mov     dx, 18h
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 mov dx, 0x18
 .org 0x73e7
 # IDA 0x171e7; file 0x73e7; locator=proven; mov     bx, 58h
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 mov bx, 0x58
 .org 0x73ea
 # IDA 0x171ea; file 0x73ea; locator=proven; mov     cx, 0B18h
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 mov cx, 0xb18
 .org 0x73ed
 # IDA 0x171ed; file 0x73ed; locator=proven; call    sub_181C0
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 call .+4051
 .org 0x73f0
 # IDA 0x171f0; file 0x73f0; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x73f5
 # IDA 0x171f5; file 0x73f5; locator=proven; mov     ax, 7217h
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, 0x7217
 .org 0x73f8
 # IDA 0x171f8; file 0x73f8; locator=proven; mov     bx, 724Dh
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 mov bx, 0x724d
 .org 0x73fb
 # IDA 0x171fb; file 0x73fb; locator=proven; mov     si, 70ECh
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 mov si, 0x70ec
 .org 0x73fe
 # IDA 0x171fe; file 0x73fe; locator=proven; mov     di, 713Dh
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 mov di, 0x713d
 .org 0x7401
 # IDA 0x17201; file 0x7401; locator=proven; mov     cl, byte ptr cs:word_198A8
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov cl, byte ptr [0x98a8]
 .org 0x7406
 # IDA 0x17206; file 0x7406; locator=proven; call    sub_1820E
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 call .+4104
 .org 0x7409
 # IDA 0x17209; file 0x7409; locator=proven; mov     byte ptr cs:word_198A8, cl
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov byte ptr [0x98a8], cl
 .org 0x740e
 # IDA 0x1720e; file 0x740e; locator=proven; pop     bp
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 pop bp
 .org 0x740f
 # IDA 0x1720f; file 0x740f; locator=proven; pop     di
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 pop di
 .org 0x7410
 # IDA 0x17210; file 0x7410; locator=proven; pop     si
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 pop si
 .org 0x7411
 # IDA 0x17211; file 0x7411; locator=proven; pop     dx
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 pop dx
 .org 0x7412
 # IDA 0x17212; file 0x7412; locator=proven; pop     cx
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 pop cx
 .org 0x7413
 # IDA 0x17213; file 0x7413; locator=proven; pop     ax
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 pop ax
 .org 0x7414
 # IDA 0x17214; file 0x7414; locator=proven; pop     es
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 pop es
 .org 0x7415
 # IDA 0x17215; file 0x7415; locator=proven; pop     ds
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
 pop ds
 .org 0x7416
 # IDA 0x17216; file 0x7416; locator=proven; retn
-# ⚠ 函式 sub_171D3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_171D3; [proven] 精確 X/Y 軍團清單入口，寫入兩個原指令立即值; 出處: docs/re/119-c-list-families-restoration.md
+ret
+.org 0x7417
+# IDA 0x17217; file 0x7417; locator=proven; push    dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push dx
+.org 0x7418
+# IDA 0x17218; file 0x7418; locator=proven; push    si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push si
+.org 0x7419
+# IDA 0x17219; file 0x7419; locator=proven; push    di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push di
+.org 0x741a
+# IDA 0x1721a; file 0x741a; locator=proven; mov     si, 2240h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov si, 0x2240
+.org 0x741d
+# IDA 0x1721d; file 0x741d; locator=proven; xor     di, di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} xor di, di
+.org 0x741f
+# IDA 0x1721f; file 0x741f; locator=proven; xor     ah, ah
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} xor ah, ah
+.org 0x7421
+# IDA 0x17221; file 0x7421; locator=proven; mov     al, cs:byte_10CFF
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; mov al, byte ptr [0xcff]
+.org 0x7425
+# IDA 0x17225; file 0x7425; locator=proven; cmp     byte ptr [si], 80h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp byte ptr [si], 0x80
+.org 0x7428
+# IDA 0x17228; file 0x7428; locator=proven; jb      short near ptr byte_17235+0Bh
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jb .+24
+.org 0x742a
+# IDA 0x1722a; file 0x742a; locator=proven; mov     dx, 1234h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# operand 1 1234h; [proven] 初始佔位，CS:722B 由入口 AX 寫入座標 X，執行 MOV DX 時讀取; 出處: docs/re/119-c-list-families-restoration.md
+mov dx, 0x1234
+.org 0x742d
+# IDA 0x1722d; file 0x742d; locator=proven; cmp     dx, [si+10h]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp dx, word ptr [si+0x10]
+.org 0x7430
+# IDA 0x17230; file 0x7430; locator=proven; jnz     short near ptr byte_17235+0Bh
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnz .+16
+.org 0x7432
+# IDA 0x17232; file 0x7432; locator=proven; mov     dx, 1234h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# operand 1 1234h; [proven] 初始佔位，CS:7233 由入口 BX 寫入座標 Y，執行 MOV DX 時讀取; 出處: docs/re/119-c-list-families-restoration.md
+mov dx, 0x1234
+.org 0x7435
+# IDA 0x17235; file 0x7435; locator=proven; cmp     dx, [si+12h]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp dx, word ptr [si+0x12]
+.org 0x7438
+# IDA 0x17238; file 0x7438; locator=proven; jnz     short near ptr unk_17240
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnz .+8
+.org 0x743a
+# IDA 0x1723a; file 0x743a; locator=proven; mov     [bp+di], si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov word ptr [bp+di], si
+.org 0x743c
+# IDA 0x1723c; file 0x743c; locator=proven; inc     ah
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc ah
+.org 0x743e
+# IDA 0x1723e; file 0x743e; locator=proven; inc     di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc di
+.org 0x743f
+# IDA 0x1723f; file 0x743f; locator=proven; inc     di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc di
+.org 0x7440
+# IDA 0x17240; file 0x7440; locator=proven; add     si, 40h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add si, 0x40
+.org 0x7443
+# IDA 0x17243; file 0x7443; locator=proven; cmp     si, 41C0h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp si, 0x41c0
+.org 0x7447
+# IDA 0x17247; file 0x7447; locator=proven; jnz     short loc_17225
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnz .-34
+.org 0x7449
+# IDA 0x17249; file 0x7449; locator=proven; pop     di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop di
+.org 0x744a
+# IDA 0x1724a; file 0x744a; locator=proven; pop     si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop si
+.org 0x744b
+# IDA 0x1724b; file 0x744b; locator=proven; pop     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop dx
+.org 0x744c
+# IDA 0x1724c; file 0x744c; locator=proven; retn
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+ret
+.org 0x744d
+# IDA 0x1724d; file 0x744d; locator=proven; push    ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push ax
+.org 0x744e
+# IDA 0x1724e; file 0x744e; locator=proven; push    bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push bx
+.org 0x744f
+# IDA 0x1724f; file 0x744f; locator=proven; push    dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push dx
+.org 0x7450
+# IDA 0x17250; file 0x7450; locator=proven; push    si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push si
+.org 0x7451
+# IDA 0x17251; file 0x7451; locator=proven; call    sub_18607
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .+5046
+.org 0x7454
+# IDA 0x17254; file 0x7454; locator=proven; mov     dx, cs:word_181AE
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; mov dx, word ptr [0x81ae]
+.org 0x7459
+# IDA 0x17259; file 0x7459; locator=proven; add     dx, 18h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add dx, 0x18
+.org 0x745c
+# IDA 0x1725c; file 0x745c; locator=proven; mov     bx, cs:word_181B0
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; mov bx, word ptr [0x81b0]
+.org 0x7461
+# IDA 0x17261; file 0x7461; locator=proven; add     bx, 10h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add bx, 0x10
+.org 0x7464
+# IDA 0x17264; file 0x7464; locator=proven; xor     ah, ah
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} xor ah, ah
+.org 0x7466
+# IDA 0x17266; file 0x7466; locator=proven; shl     ax, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shl ax, 0x1
+.org 0x7468
+# IDA 0x17268; file 0x7468; locator=proven; mov     si, ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov si, ax
+.org 0x746a
+# IDA 0x1726a; file 0x746a; locator=proven; mov     ax, 0Ah
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ax, 0xa
+.org 0x746d
+# IDA 0x1726d; file 0x746d; locator=proven; call    near ptr unk_1727D
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .+16
+.org 0x7470
+# IDA 0x17270; file 0x7470; locator=proven; inc     si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc si
+.org 0x7471
+# IDA 0x17271; file 0x7471; locator=proven; inc     si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc si
+.org 0x7472
+# IDA 0x17272; file 0x7472; locator=proven; add     bx, 10h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add bx, 0x10
+.org 0x7475
+# IDA 0x17275; file 0x7475; locator=proven; dec     ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+dec ax
+.org 0x7476
+# IDA 0x17276; file 0x7476; locator=proven; jnz     short loc_1726D
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnz .-9
+.org 0x7478
+# IDA 0x17278; file 0x7478; locator=proven; pop     si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop si
+.org 0x7479
+# IDA 0x17279; file 0x7479; locator=proven; pop     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop dx
+.org 0x747a
+# IDA 0x1727a; file 0x747a; locator=proven; pop     bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop bx
+.org 0x747b
+# IDA 0x1727b; file 0x747b; locator=proven; pop     ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop ax
+.org 0x747c
+# IDA 0x1727c; file 0x747c; locator=proven; retn
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+ret
+.org 0x747d
+# IDA 0x1727d; file 0x747d; locator=proven; push    ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push ax
+.org 0x747e
+# IDA 0x1727e; file 0x747e; locator=proven; push    bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push bx
+.org 0x747f
+# IDA 0x1727f; file 0x747f; locator=proven; push    cx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push cx
+.org 0x7480
+# IDA 0x17280; file 0x7480; locator=proven; push    dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push dx
+.org 0x7481
+# IDA 0x17281; file 0x7481; locator=proven; push    si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push si
+.org 0x7482
+# IDA 0x17282; file 0x7482; locator=proven; push    di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push di
+.org 0x7483
+# IDA 0x17283; file 0x7483; locator=proven; push    bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push bp
+.org 0x7484
+# IDA 0x17284; file 0x7484; locator=proven; cmp     word ptr [bp+si], 0FFFFh
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp word ptr [bp+si], offset imm_at_17284
+.org 0x7488
+# IDA 0x17288; file 0x7488; locator=proven; jnz     short near ptr unk_1729C
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnz .+20
+.org 0x748a
+# IDA 0x1728a; file 0x748a; locator=proven; push    ds
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push ds
+.org 0x748b
+# IDA 0x1728b; file 0x748b; locator=proven; mov     ax, cs
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ax, cs
+.org 0x748d
+# IDA 0x1728d; file 0x748d; locator=proven; mov     ds, ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ds, ax
+.org 0x748f
+# IDA 0x1728f; file 0x748f; locator=proven; mov     si, 7115h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov si, 0x7115
+.org 0x7492
+# IDA 0x17292; file 0x7492; locator=proven; mov     ax, 9000h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ax, 0x9000
+.org 0x7495
+# IDA 0x17295; file 0x7495; locator=proven; call    sub_1F6DC
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .-31673
+.org 0x7498
+# IDA 0x17298; file 0x7498; locator=proven; pop     ds
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop ds
+.org 0x7499
+# IDA 0x17299; file 0x7499; locator=proven; jmp     near ptr unk_1736F
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{disp16} jmp .+214
+.org 0x749c
+# IDA 0x1729c; file 0x749c; locator=proven; push    dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push dx
+.org 0x749d
+# IDA 0x1729d; file 0x749d; locator=proven; mov     si, [bp+si]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov si, word ptr [bp+si]
+.org 0x749f
+# IDA 0x1729f; file 0x749f; locator=proven; mov     di, si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov di, si
+.org 0x74a1
+# IDA 0x172a1; file 0x74a1; locator=proven; mov     ah, [si+2]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ah, byte ptr [si+0x2]
+.org 0x74a4
+# IDA 0x172a4; file 0x74a4; locator=proven; xor     al, al
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} xor al, al
+.org 0x74a6
+# IDA 0x172a6; file 0x74a6; locator=proven; shr     ax, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shr ax, 0x1
+.org 0x74a8
+# IDA 0x172a8; file 0x74a8; locator=proven; shr     ax, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shr ax, 0x1
+.org 0x74aa
+# IDA 0x172aa; file 0x74aa; locator=proven; shr     ax, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shr ax, 0x1
+.org 0x74ac
+# IDA 0x172ac; file 0x74ac; locator=proven; add     ax, 4242h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add ax, 0x4242
+.org 0x74af
+# IDA 0x172af; file 0x74af; locator=proven; mov     si, ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov si, ax
+.org 0x74b1
+# IDA 0x172b1; file 0x74b1; locator=proven; mov     ax, 9001h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ax, 0x9001
+.org 0x74b4
+# IDA 0x172b4; file 0x74b4; locator=proven; call    loc_10701
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .-27571
+.org 0x74b7
+# IDA 0x172b7; file 0x74b7; locator=proven; add     dx, 0C0h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add dx, 0xc0
+.org 0x74bb
+# IDA 0x172bb; file 0x74bb; locator=proven; mov     si, [di+0Eh]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov si, word ptr [di+0xe]
+.org 0x74be
+# IDA 0x172be; file 0x74be; locator=proven; cmp     si, 800h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp si, 0x800
+.org 0x74c2
+# IDA 0x172c2; file 0x74c2; locator=proven; jnb     short near ptr unk_172D4
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+18
+.org 0x74c4
+# IDA 0x172c4; file 0x74c4; locator=proven; shl     si, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shl si, 0x1
+.org 0x74c6
+# IDA 0x172c6; file 0x74c6; locator=proven; shl     si, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shl si, 0x1
+.org 0x74c8
+# IDA 0x172c8; file 0x74c8; locator=proven; add     si, 842h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add si, 0x842
+.org 0x74cc
+# IDA 0x172cc; file 0x74cc; locator=proven; mov     ax, 9001h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ax, 0x9001
+.org 0x74cf
+# IDA 0x172cf; file 0x74cf; locator=proven; call    loc_10701
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .-27598
+.org 0x74d2
+# IDA 0x172d2; file 0x74d2; locator=proven; jmp     short near ptr unk_172E3
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jmp .+17
+.org 0x74d4
+# IDA 0x172d4; file 0x74d4; locator=proven; push    ds
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push ds
+.org 0x74d5
+# IDA 0x172d5; file 0x74d5; locator=proven; mov     si, 7167h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov si, 0x7167
+.org 0x74d8
+# IDA 0x172d8; file 0x74d8; locator=proven; mov     ax, cs
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ax, cs
+.org 0x74da
+# IDA 0x172da; file 0x74da; locator=proven; mov     ds, ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ds, ax
+.org 0x74dc
+# IDA 0x172dc; file 0x74dc; locator=proven; mov     ax, 9A01h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ax, 0x9a01
+.org 0x74df
+# IDA 0x172df; file 0x74df; locator=proven; call    loc_10701
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .-27614
+.org 0x74e2
+# IDA 0x172e2; file 0x74e2; locator=proven; pop     ds
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop ds
+.org 0x74e3
+# IDA 0x172e3; file 0x74e3; locator=proven; add     dx, 48h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add dx, 0x48
+.org 0x74e6
+# IDA 0x172e6; file 0x74e6; locator=proven; mov     ah, [di+20h]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ah, byte ptr [di+0x20]
+.org 0x74e9
+# IDA 0x172e9; file 0x74e9; locator=proven; xor     al, al
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} xor al, al
+.org 0x74eb
+# IDA 0x172eb; file 0x74eb; locator=proven; shr     ax, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shr ax, 0x1
+.org 0x74ed
+# IDA 0x172ed; file 0x74ed; locator=proven; shr     ax, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shr ax, 0x1
+.org 0x74ef
+# IDA 0x172ef; file 0x74ef; locator=proven; shr     ax, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shr ax, 0x1
+.org 0x74f1
+# IDA 0x172f1; file 0x74f1; locator=proven; add     ax, 842h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add ax, 0x842
+.org 0x74f4
+# IDA 0x172f4; file 0x74f4; locator=proven; mov     si, ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov si, ax
+.org 0x74f6
+# IDA 0x172f6; file 0x74f6; locator=proven; mov     ax, 9001h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ax, 0x9001
+.org 0x74f9
+# IDA 0x172f9; file 0x74f9; locator=proven; call    loc_10701
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .-27640
+.org 0x74fc
+# IDA 0x172fc; file 0x74fc; locator=proven; add     dx, 38h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add dx, 0x38
+.org 0x74ff
+# IDA 0x172ff; file 0x74ff; locator=proven; mov     cx, 0A965h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov cx, 0xa965
+.org 0x7502
+# IDA 0x17302; file 0x7502; locator=proven; mov     si, 0A5F4h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov si, 0xa5f4
+.org 0x7505
+# IDA 0x17305; file 0x7505; locator=proven; test    byte ptr [di], 4
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+test byte ptr [di], 0x4
+.org 0x7508
+# IDA 0x17308; file 0x7508; locator=proven; jnz     short near ptr unk_1730F
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnz .+7
+.org 0x750a
+# IDA 0x1730a; file 0x750a; locator=proven; mov     cx, 0A140h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov cx, 0xa140
+.org 0x750d
+# IDA 0x1730d; file 0x750d; locator=proven; mov     si, cx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov si, cx
+.org 0x750f
+# IDA 0x1730f; file 0x750f; locator=proven; push    bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push bx
+.org 0x7510
+# IDA 0x17310; file 0x7510; locator=proven; push    dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push dx
+.org 0x7511
+# IDA 0x17311; file 0x7511; locator=proven; mov     ax, 9A01h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ax, 0x9a01
+.org 0x7514
+# IDA 0x17314; file 0x7514; locator=proven; call    loc_1F75E
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .-31670
+.org 0x7517
+# IDA 0x17317; file 0x7517; locator=proven; pop     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop dx
+.org 0x7518
+# IDA 0x17318; file 0x7518; locator=proven; pop     bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop bx
+.org 0x7519
+# IDA 0x17319; file 0x7519; locator=proven; add     dx, 10h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add dx, 0x10
+.org 0x751c
+# IDA 0x1731c; file 0x751c; locator=proven; mov     cx, si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov cx, si
+.org 0x751e
+# IDA 0x1731e; file 0x751e; locator=proven; mov     ax, 9A01h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ax, 0x9a01
+.org 0x7521
+# IDA 0x17321; file 0x7521; locator=proven; push    bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push bx
+.org 0x7522
+# IDA 0x17322; file 0x7522; locator=proven; call    loc_1F75E
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .-31684
+.org 0x7525
+# IDA 0x17325; file 0x7525; locator=proven; pop     bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop bx
+.org 0x7526
+# IDA 0x17326; file 0x7526; locator=proven; pop     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop dx
+.org 0x7527
+# IDA 0x17327; file 0x7527; locator=proven; mov     si, di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov si, di
+.org 0x7529
+# IDA 0x17329; file 0x7529; locator=proven; shl     bx, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shl bx, 0x1
+.org 0x752b
+# IDA 0x1732b; file 0x752b; locator=proven; shl     bx, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shl bx, 0x1
+.org 0x752d
+# IDA 0x1732d; file 0x752d; locator=proven; shl     bx, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shl bx, 0x1
+.org 0x752f
+# IDA 0x1732f; file 0x752f; locator=proven; shl     bx, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shl bx, 0x1
+.org 0x7531
+# IDA 0x17331; file 0x7531; locator=proven; mov     di, bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov di, bx
+.org 0x7533
+# IDA 0x17333; file 0x7533; locator=proven; shl     bx, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shl bx, 0x1
+.org 0x7535
+# IDA 0x17335; file 0x7535; locator=proven; shl     bx, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shl bx, 0x1
+.org 0x7537
+# IDA 0x17337; file 0x7537; locator=proven; add     di, bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} add di, bx
+.org 0x7539
+# IDA 0x17339; file 0x7539; locator=proven; shr     dx, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shr dx, 0x1
+.org 0x753b
+# IDA 0x1733b; file 0x753b; locator=proven; shr     dx, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shr dx, 0x1
+.org 0x753d
+# IDA 0x1733d; file 0x753d; locator=proven; shr     dx, 1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+shr dx, 0x1
+.org 0x753f
+# IDA 0x1733f; file 0x753f; locator=proven; add     di, dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} add di, dx
+.org 0x7541
+# IDA 0x17341; file 0x7541; locator=proven; add     di, 9
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add di, 0x9
+.org 0x7544
+# IDA 0x17344; file 0x7544; locator=proven; mov     ax, [si+4]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ax, word ptr [si+0x4]
+.org 0x7547
+# IDA 0x17347; file 0x7547; locator=proven; mov     bx, 9004h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov bx, 0x9004
+.org 0x754a
+# IDA 0x1734a; file 0x754a; locator=proven; cmp     ax, 12Ch
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp ax, 0x12c
+.org 0x754d
+# IDA 0x1734d; file 0x754d; locator=proven; jnb     short near ptr unk_17351
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+4
+.org 0x754f
+# IDA 0x1734f; file 0x754f; locator=proven; mov     bh, 9Ah
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov bh, 0x9a
+.org 0x7551
+# IDA 0x17351; file 0x7551; locator=proven; mov     dx, 0Ah
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov dx, 0xa
+.org 0x7554
+# IDA 0x17354; file 0x7554; locator=proven; mul     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mul dx
+.org 0x7556
+# IDA 0x17356; file 0x7556; locator=proven; call    sub_1062F
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .-27943
+.org 0x7559
+# IDA 0x17359; file 0x7559; locator=proven; add     di, 8
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add di, 0x8
+.org 0x755c
+# IDA 0x1735c; file 0x755c; locator=proven; mov     al, [si+6]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov al, byte ptr [si+0x6]
+.org 0x755f
+# IDA 0x1735f; file 0x755f; locator=proven; xor     dx, dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} xor dx, dx
+.org 0x7561
+# IDA 0x17361; file 0x7561; locator=proven; mov     ah, dl
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov ah, dl
+.org 0x7563
+# IDA 0x17363; file 0x7563; locator=proven; mov     bx, 9003h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov bx, 0x9003
+.org 0x7566
+# IDA 0x17366; file 0x7566; locator=proven; cmp     al, 64h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp al, 0x64
+.org 0x7568
+# IDA 0x17368; file 0x7568; locator=proven; jnb     short near ptr unk_1736C
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+4
+.org 0x756a
+# IDA 0x1736a; file 0x756a; locator=proven; mov     bh, 9Ah
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov bh, 0x9a
+.org 0x756c
+# IDA 0x1736c; file 0x756c; locator=proven; call    sub_1062F
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .-27965
+.org 0x756f
+# IDA 0x1736f; file 0x756f; locator=proven; pop     bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop bp
+.org 0x7570
+# IDA 0x17370; file 0x7570; locator=proven; pop     di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop di
+.org 0x7571
+# IDA 0x17371; file 0x7571; locator=proven; pop     si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop si
+.org 0x7572
+# IDA 0x17372; file 0x7572; locator=proven; pop     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop dx
+.org 0x7573
+# IDA 0x17373; file 0x7573; locator=proven; pop     cx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop cx
+.org 0x7574
+# IDA 0x17374; file 0x7574; locator=proven; pop     bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop bx
+.org 0x7575
+# IDA 0x17375; file 0x7575; locator=proven; pop     ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop ax
+.org 0x7576
+# IDA 0x17376; file 0x7576; locator=proven; retn
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
 ret
 .org 0x7600
 sub_17400:
@@ -45793,128 +46455,149 @@ ret
 .org 0x77fa
 sub_175FA:
 # IDA 0x175fa; file 0x77fa; locator=proven; push    ds
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 push ds
 .org 0x77fb
 # IDA 0x175fb; file 0x77fb; locator=proven; push    es
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 push es
 .org 0x77fc
 # IDA 0x175fc; file 0x77fc; locator=proven; push    ax
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 push ax
 .org 0x77fd
 # IDA 0x175fd; file 0x77fd; locator=proven; push    cx
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 push cx
 .org 0x77fe
 # IDA 0x175fe; file 0x77fe; locator=proven; push    dx
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 push dx
 .org 0x77ff
 # IDA 0x175ff; file 0x77ff; locator=proven; push    si
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 push si
 .org 0x7800
 # IDA 0x17600; file 0x7800; locator=proven; push    di
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 push di
 .org 0x7801
 # IDA 0x17601; file 0x7801; locator=proven; push    bp
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 push bp
 .org 0x7802
 # IDA 0x17602; file 0x7802; locator=proven; mov     al, ds:0CFFh
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 mov al, byte ptr [0xcff]
 .org 0x7805
 # IDA 0x17605; file 0x7805; locator=proven; mov     cs:byte_17644, al
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov byte ptr [0x7644], al
 .org 0x7809
 # IDA 0x17609; file 0x7809; locator=proven; mov     dx, 18h
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 mov dx, 0x18
 .org 0x780c
 # IDA 0x1760c; file 0x780c; locator=proven; mov     bx, 58h
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 mov bx, 0x58
 .org 0x780f
 # IDA 0x1760f; file 0x780f; locator=proven; mov     cx, 0B18h
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 mov cx, 0xb18
 .org 0x7812
 # IDA 0x17612; file 0x7812; locator=proven; call    sub_181C0
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 call .+2990
 .org 0x7815
 # IDA 0x17615; file 0x7815; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x781a
 # IDA 0x1761a; file 0x781a; locator=proven; mov     ax, 763Ch
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, 0x763c
 .org 0x781d
 # IDA 0x1761d; file 0x781d; locator=proven; mov     bx, 76DCh
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 mov bx, 0x76dc
 .org 0x7820
 # IDA 0x17620; file 0x7820; locator=proven; mov     si, 7550h
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 mov si, 0x7550
 .org 0x7823
 # IDA 0x17623; file 0x7823; locator=proven; mov     di, 75C8h
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 mov di, 0x75c8
 .org 0x7826
 # IDA 0x17626; file 0x7826; locator=proven; mov     cl, byte ptr cs:word_198AA
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov cl, byte ptr [0x98aa]
 .org 0x782b
 # IDA 0x1762b; file 0x782b; locator=proven; call    sub_1820E
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 call .+3043
 .org 0x782e
 # IDA 0x1762e; file 0x782e; locator=proven; mov     byte ptr cs:word_198AA, cl
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov byte ptr [0x98aa], cl
 .org 0x7833
 # IDA 0x17633; file 0x7833; locator=proven; pop     bp
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 pop bp
 .org 0x7834
 # IDA 0x17634; file 0x7834; locator=proven; pop     di
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 pop di
 .org 0x7835
 # IDA 0x17635; file 0x7835; locator=proven; pop     si
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 pop si
 .org 0x7836
 # IDA 0x17636; file 0x7836; locator=proven; pop     dx
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 pop dx
 .org 0x7837
 # IDA 0x17637; file 0x7837; locator=proven; pop     cx
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 pop cx
 .org 0x7838
 # IDA 0x17638; file 0x7838; locator=proven; pop     ax
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 pop ax
 .org 0x7839
 # IDA 0x17639; file 0x7839; locator=proven; pop     es
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 pop es
 .org 0x783a
 # IDA 0x1763a; file 0x783a; locator=proven; pop     ds
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 pop ds
 .org 0x783b
 # IDA 0x1763b; file 0x783b; locator=proven; retn
-# ⚠ 函式 sub_175FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_175FA; [proven] 指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值; 出處: docs/re/119-c-list-families-restoration.md
 ret
+.org 0x783c
+# IDA 0x1763c; file 0x783c; locator=proven; push    si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push si
+.org 0x783d
+# IDA 0x1763d; file 0x783d; locator=proven; push    di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push di
+.org 0x783e
+# IDA 0x1763e; file 0x783e; locator=proven; mov     si, 4240h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov si, 0x4240
+.org 0x7841
+# IDA 0x17641; file 0x7841; locator=proven; xor     di, di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} xor di, di
+.org 0x7843
+# IDA 0x17643; file 0x7843; locator=proven; mov     al, 0
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# operand 1 0; [proven] 初始佔位，CS:7644 由入口 DS:CFF 寫入指定勢力; 出處: docs/re/119-c-list-families-restoration.md
+mov al, 0x0
 .org 0x7845
 # IDA 0x17645; file 0x7845; locator=proven; xor     ah, ah
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
@@ -45980,123 +46663,123 @@ ret
 .org 0x7863
 sub_17663:
 # IDA 0x17663; file 0x7863; locator=proven; push    ds
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 push ds
 .org 0x7864
 # IDA 0x17664; file 0x7864; locator=proven; push    es
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 push es
 .org 0x7865
 # IDA 0x17665; file 0x7865; locator=proven; push    ax
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 push ax
 .org 0x7866
 # IDA 0x17666; file 0x7866; locator=proven; push    cx
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 push cx
 .org 0x7867
 # IDA 0x17667; file 0x7867; locator=proven; push    dx
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 push dx
 .org 0x7868
 # IDA 0x17668; file 0x7868; locator=proven; push    si
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 push si
 .org 0x7869
 # IDA 0x17669; file 0x7869; locator=proven; push    di
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 push di
 .org 0x786a
 # IDA 0x1766a; file 0x786a; locator=proven; push    bp
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 push bp
 .org 0x786b
 # IDA 0x1766b; file 0x786b; locator=proven; mov     dx, 18h
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 mov dx, 0x18
 .org 0x786e
 # IDA 0x1766e; file 0x786e; locator=proven; mov     bx, 58h
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 mov bx, 0x58
 .org 0x7871
 # IDA 0x17671; file 0x7871; locator=proven; mov     cx, 0B18h
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 mov cx, 0xb18
 .org 0x7874
 # IDA 0x17674; file 0x7874; locator=proven; call    sub_181C0
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 call .+2892
 .org 0x7877
 # IDA 0x17677; file 0x7877; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x787c
 # IDA 0x1767c; file 0x787c; locator=proven; mov     ax, 76A0h
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, 0x76a0
 .org 0x787f
 # IDA 0x1767f; file 0x787f; locator=proven; mov     bx, 76DCh
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 mov bx, 0x76dc
 .org 0x7882
 # IDA 0x17682; file 0x7882; locator=proven; mov     si, 7550h
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 mov si, 0x7550
 .org 0x7885
 # IDA 0x17685; file 0x7885; locator=proven; mov     di, 75C8h
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 mov di, 0x75c8
 .org 0x7888
 # IDA 0x17688; file 0x7888; locator=proven; xor     cl, cl
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 {load} xor cl, cl
 .org 0x788a
 # IDA 0x1768a; file 0x788a; locator=proven; mov     cl, byte ptr cs:word_198AA
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov cl, byte ptr [0x98aa]
 .org 0x788f
 # IDA 0x1768f; file 0x788f; locator=proven; call    sub_1820E
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 call .+2943
 .org 0x7892
 # IDA 0x17692; file 0x7892; locator=proven; mov     byte ptr cs:word_198AA, cl
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov byte ptr [0x98aa], cl
 .org 0x7897
 # IDA 0x17697; file 0x7897; locator=proven; pop     bp
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 pop bp
 .org 0x7898
 # IDA 0x17698; file 0x7898; locator=proven; pop     di
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 pop di
 .org 0x7899
 # IDA 0x17699; file 0x7899; locator=proven; pop     si
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 pop si
 .org 0x789a
 # IDA 0x1769a; file 0x789a; locator=proven; pop     dx
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 pop dx
 .org 0x789b
 # IDA 0x1769b; file 0x789b; locator=proven; pop     cx
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 pop cx
 .org 0x789c
 # IDA 0x1769c; file 0x789c; locator=proven; pop     ax
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 pop ax
 .org 0x789d
 # IDA 0x1769d; file 0x789d; locator=proven; pop     es
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 pop es
 .org 0x789e
 # IDA 0x1769e; file 0x789e; locator=proven; pop     ds
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 pop ds
 .org 0x789f
 # IDA 0x1769f; file 0x789f; locator=proven; retn
-# ⚠ 函式 sub_17663; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17663; [proven] 可任命武將清單入口，沿用 CS:98AA 排序狀態; 出處: docs/re/119-c-list-families-restoration.md
 ret
 .org 0x78a0
 # IDA 0x176a0; file 0x78a0; locator=proven; push    si
@@ -46316,556 +46999,556 @@ ret
 .org 0x790c
 sub_1770C:
 # IDA 0x1770c; file 0x790c; locator=proven; push    ax
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 push ax
 .org 0x790d
 # IDA 0x1770d; file 0x790d; locator=proven; push    bx
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 push bx
 .org 0x790e
 # IDA 0x1770e; file 0x790e; locator=proven; push    cx
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 push cx
 .org 0x790f
 # IDA 0x1770f; file 0x790f; locator=proven; push    dx
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 push dx
 .org 0x7910
 # IDA 0x17710; file 0x7910; locator=proven; push    si
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 push si
 .org 0x7911
 # IDA 0x17711; file 0x7911; locator=proven; push    di
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 push di
 .org 0x7912
 # IDA 0x17712; file 0x7912; locator=proven; push    bp
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 push bp
 .org 0x7913
 # IDA 0x17713; file 0x7913; locator=proven; cmp     word ptr [bp+si], 0FFFFh
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 cmp word ptr [bp+si], offset imm_at_17713
 .org 0x7917
 # IDA 0x17717; file 0x7917; locator=proven; jnz     short loc_1772B
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 jnz .+20
 .org 0x7919
 # IDA 0x17719; file 0x7919; locator=proven; push    ds
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 push ds
 .org 0x791a
 # IDA 0x1771a; file 0x791a; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, cs
 .org 0x791c
 # IDA 0x1771c; file 0x791c; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 mov ds, ax
 .org 0x791e
 # IDA 0x1771e; file 0x791e; locator=proven; mov     si, 7579h
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 mov si, 0x7579
 .org 0x7921
 # IDA 0x17721; file 0x7921; locator=proven; mov     ax, 9000h
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, 0x9000
 .org 0x7924
 # IDA 0x17724; file 0x7924; locator=proven; call    sub_106F5
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 call .-28719
 .org 0x7927
 # IDA 0x17727; file 0x7927; locator=proven; pop     ds
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 pop ds
 .org 0x7928
 # IDA 0x17728; file 0x7928; locator=proven; jmp     loc_177E6
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 {disp16} jmp .+190
 .org 0x792b
 loc_1772B:
 # IDA 0x1772b; file 0x792b; locator=proven; mov     si, [bp+si]
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 mov si, word ptr [bp+si]
 .org 0x792d
 # IDA 0x1772d; file 0x792d; locator=proven; add     si, 2
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 add si, 0x2
 .org 0x7930
 # IDA 0x17730; file 0x7930; locator=proven; mov     ax, 9001h
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, 0x9001
 .org 0x7933
 # IDA 0x17733; file 0x7933; locator=proven; call    loc_10701
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 call .-28722
 .org 0x7936
 # IDA 0x17736; file 0x7936; locator=proven; sub     si, 2
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 sub si, 0x2
 .org 0x7939
 # IDA 0x17739; file 0x7939; locator=proven; push    si
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 push si
 .org 0x793a
 # IDA 0x1773a; file 0x793a; locator=proven; push    dx
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 push dx
 .org 0x793b
 # IDA 0x1773b; file 0x793b; locator=proven; mov     ah, [si+1Dh]
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 mov ah, byte ptr [si+0x1d]
 .org 0x793e
 # IDA 0x1773e; file 0x793e; locator=proven; cmp     ah, 0FFh
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 cmp ah, 0xff
 .org 0x7941
 # IDA 0x17741; file 0x7941; locator=proven; jnz     short loc_17746
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 jnz .+5
 .org 0x7943
 # IDA 0x17743; file 0x7943; locator=proven; mov     ah, [si+1Ch]
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 mov ah, byte ptr [si+0x1c]
 .org 0x7946
 loc_17746:
 # IDA 0x17746; file 0x7946; locator=proven; xor     al, al
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 {load} xor al, al
 .org 0x7948
 # IDA 0x17748; file 0x7948; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x794a
 # IDA 0x1774a; file 0x794a; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x794c
 # IDA 0x1774c; file 0x794c; locator=proven; mov     si, ax
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov si, ax
 .org 0x794e
 # IDA 0x1774e; file 0x794e; locator=proven; mov     ah, [si+1]
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 mov ah, byte ptr [si+0x1]
 .org 0x7951
 # IDA 0x17751; file 0x7951; locator=proven; xor     al, al
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 {load} xor al, al
 .org 0x7953
 # IDA 0x17753; file 0x7953; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7955
 # IDA 0x17755; file 0x7955; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7957
 # IDA 0x17757; file 0x7957; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7959
 # IDA 0x17759; file 0x7959; locator=proven; add     ax, 4242h
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 add ax, 0x4242
 .org 0x795c
 # IDA 0x1775c; file 0x795c; locator=proven; mov     si, ax
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov si, ax
 .org 0x795e
 # IDA 0x1775e; file 0x795e; locator=proven; add     dx, 0D0h
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 add dx, 0xd0
 .org 0x7962
 # IDA 0x17762; file 0x7962; locator=proven; mov     ax, 9001h
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, 0x9001
 .org 0x7965
 # IDA 0x17765; file 0x7965; locator=proven; call    loc_10701
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 call .-28772
 .org 0x7968
 # IDA 0x17768; file 0x7968; locator=proven; pop     dx
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 pop dx
 .org 0x7969
 # IDA 0x17769; file 0x7969; locator=proven; pop     si
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 pop si
 .org 0x796a
 # IDA 0x1776a; file 0x796a; locator=proven; push    ds
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 push ds
 .org 0x796b
 # IDA 0x1776b; file 0x796b; locator=proven; push    dx
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 push dx
 .org 0x796c
 # IDA 0x1776c; file 0x796c; locator=proven; push    si
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 push si
 .org 0x796d
 # IDA 0x1776d; file 0x796d; locator=proven; add     dx, 120h
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 add dx, 0x120
 .org 0x7971
 # IDA 0x17771; file 0x7971; locator=proven; mov     al, [si+17h]
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 mov al, byte ptr [si+0x17]
 .org 0x7974
 # IDA 0x17774; file 0x7974; locator=proven; and     al, al
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 {load} and al, al
 .org 0x7976
 # IDA 0x17776; file 0x7976; locator=proven; jnz     short loc_1777F
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 jnz .+9
 .org 0x7978
 # IDA 0x17778; file 0x7978; locator=proven; test    byte ptr [si], 40h
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 test byte ptr [si], 0x40
 .org 0x797b
 # IDA 0x1777b; file 0x797b; locator=proven; jz      short loc_1777F
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 jz .+4
 .org 0x797d
 # IDA 0x1777d; file 0x797d; locator=proven; mov     al, 5
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 mov al, 0x5
 .org 0x797f
 loc_1777F:
 # IDA 0x1777f; file 0x797f; locator=proven; mov     ah, al
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov ah, al
 .org 0x7981
 # IDA 0x17781; file 0x7981; locator=proven; shl     al, 1
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 shl al, 0x1
 .org 0x7983
 # IDA 0x17783; file 0x7983; locator=proven; add     al, ah
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 {load} add al, ah
 .org 0x7985
 # IDA 0x17785; file 0x7985; locator=proven; shl     al, 1
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 shl al, 0x1
 .org 0x7987
 # IDA 0x17787; file 0x7987; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 {load} xor ah, ah
 .org 0x7989
 # IDA 0x17789; file 0x7989; locator=proven; add     ax, 75A4h
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 add ax, 0x75a4
 .org 0x798c
 # IDA 0x1778c; file 0x798c; locator=proven; mov     si, ax
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov si, ax
 .org 0x798e
 # IDA 0x1778e; file 0x798e; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, cs
 .org 0x7990
 # IDA 0x17790; file 0x7990; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 mov ds, ax
 .org 0x7992
 # IDA 0x17792; file 0x7992; locator=proven; mov     ax, 9001h
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, 0x9001
 .org 0x7995
 # IDA 0x17795; file 0x7995; locator=proven; call    loc_10701
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 call .-28820
 .org 0x7998
 # IDA 0x17798; file 0x7998; locator=proven; pop     si
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 pop si
 .org 0x7999
 # IDA 0x17799; file 0x7999; locator=proven; pop     dx
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 pop dx
 .org 0x799a
 # IDA 0x1779a; file 0x799a; locator=proven; pop     ds
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 pop ds
 .org 0x799b
 # IDA 0x1779b; file 0x799b; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 shl bx, 0x1
 .org 0x799d
 # IDA 0x1779d; file 0x799d; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 shl bx, 0x1
 .org 0x799f
 # IDA 0x1779f; file 0x799f; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 shl bx, 0x1
 .org 0x79a1
 # IDA 0x177a1; file 0x79a1; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 shl bx, 0x1
 .org 0x79a3
 # IDA 0x177a3; file 0x79a3; locator=proven; mov     di, bx
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov di, bx
 .org 0x79a5
 # IDA 0x177a5; file 0x79a5; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 shl bx, 0x1
 .org 0x79a7
 # IDA 0x177a7; file 0x79a7; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 shl bx, 0x1
 .org 0x79a9
 # IDA 0x177a9; file 0x79a9; locator=proven; add     di, bx
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 {load} add di, bx
 .org 0x79ab
 # IDA 0x177ab; file 0x79ab; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 shr dx, 0x1
 .org 0x79ad
 # IDA 0x177ad; file 0x79ad; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 shr dx, 0x1
 .org 0x79af
 # IDA 0x177af; file 0x79af; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 shr dx, 0x1
 .org 0x79b1
 # IDA 0x177b1; file 0x79b1; locator=proven; add     di, dx
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 {load} add di, dx
 .org 0x79b3
 # IDA 0x177b3; file 0x79b3; locator=proven; add     di, 8
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 add di, 0x8
 .org 0x79b6
 # IDA 0x177b6; file 0x79b6; locator=proven; mov     al, [si+11h]
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 mov al, byte ptr [si+0x11]
 .org 0x79b9
 # IDA 0x177b9; file 0x79b9; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 {load} xor dx, dx
 .org 0x79bb
 # IDA 0x177bb; file 0x79bb; locator=proven; mov     ah, dl
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov ah, dl
 .org 0x79bd
 # IDA 0x177bd; file 0x79bd; locator=proven; mov     bx, 9002h
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 mov bx, 0x9002
 .org 0x79c0
 # IDA 0x177c0; file 0x79c0; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 call .-29073
 .org 0x79c3
 # IDA 0x177c3; file 0x79c3; locator=proven; add     di, 5
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 add di, 0x5
 .org 0x79c6
 # IDA 0x177c6; file 0x79c6; locator=proven; mov     al, [si+12h]
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 mov al, byte ptr [si+0x12]
 .org 0x79c9
 # IDA 0x177c9; file 0x79c9; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 {load} xor dx, dx
 .org 0x79cb
 # IDA 0x177cb; file 0x79cb; locator=proven; mov     ah, dl
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov ah, dl
 .org 0x79cd
 # IDA 0x177cd; file 0x79cd; locator=proven; mov     bx, 9002h
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 mov bx, 0x9002
 .org 0x79d0
 # IDA 0x177d0; file 0x79d0; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 call .-29089
 .org 0x79d3
 # IDA 0x177d3; file 0x79d3; locator=proven; add     di, 5
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 add di, 0x5
 .org 0x79d6
 # IDA 0x177d6; file 0x79d6; locator=proven; mov     al, [si+13h]
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 mov al, byte ptr [si+0x13]
 .org 0x79d9
 # IDA 0x177d9; file 0x79d9; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 {load} xor dx, dx
 .org 0x79db
 # IDA 0x177db; file 0x79db; locator=proven; mov     ah, dl
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov ah, dl
 .org 0x79dd
 # IDA 0x177dd; file 0x79dd; locator=proven; mov     bx, 9002h
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 mov bx, 0x9002
 .org 0x79e0
 # IDA 0x177e0; file 0x79e0; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 call .-29105
 .org 0x79e3
 # IDA 0x177e3; file 0x79e3; locator=proven; add     di, 7
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 add di, 0x7
 .org 0x79e6
 loc_177E6:
 # IDA 0x177e6; file 0x79e6; locator=proven; pop     bp
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 pop bp
 .org 0x79e7
 # IDA 0x177e7; file 0x79e7; locator=proven; pop     di
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 pop di
 .org 0x79e8
 # IDA 0x177e8; file 0x79e8; locator=proven; pop     si
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 pop si
 .org 0x79e9
 # IDA 0x177e9; file 0x79e9; locator=proven; pop     dx
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 pop dx
 .org 0x79ea
 # IDA 0x177ea; file 0x79ea; locator=proven; pop     cx
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 pop cx
 .org 0x79eb
 # IDA 0x177eb; file 0x79eb; locator=proven; pop     bx
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 pop bx
 .org 0x79ec
 # IDA 0x177ec; file 0x79ec; locator=proven; pop     ax
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 pop ax
 .org 0x79ed
 # IDA 0x177ed; file 0x79ed; locator=proven; retn
-# ⚠ 函式 sub_1770C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1770C; [proven] 武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列; 出處: docs/re/119-c-list-families-restoration.md
 ret
 .org 0x7aa7
 sub_178A7:
 # IDA 0x178a7; file 0x7aa7; locator=proven; push    ds
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 push ds
 .org 0x7aa8
 # IDA 0x178a8; file 0x7aa8; locator=proven; push    es
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 push es
 .org 0x7aa9
 # IDA 0x178a9; file 0x7aa9; locator=proven; push    ax
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 push ax
 .org 0x7aaa
 # IDA 0x178aa; file 0x7aaa; locator=proven; push    cx
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 push cx
 .org 0x7aab
 # IDA 0x178ab; file 0x7aab; locator=proven; push    dx
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 push dx
 .org 0x7aac
 # IDA 0x178ac; file 0x7aac; locator=proven; push    si
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 push si
 .org 0x7aad
 # IDA 0x178ad; file 0x7aad; locator=proven; push    di
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 push di
 .org 0x7aae
 # IDA 0x178ae; file 0x7aae; locator=proven; push    bp
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 push bp
 .org 0x7aaf
 # IDA 0x178af; file 0x7aaf; locator=proven; call    sub_17A7A
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 call .+459
 .org 0x7ab2
 # IDA 0x178b2; file 0x7ab2; locator=proven; mov     dx, 18h
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 mov dx, 0x18
 .org 0x7ab5
 # IDA 0x178b5; file 0x7ab5; locator=proven; mov     bx, 58h
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 mov bx, 0x58
 .org 0x7ab8
 # IDA 0x178b8; file 0x7ab8; locator=proven; mov     cx, 0B18h
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 mov cx, 0xb18
 .org 0x7abb
 # IDA 0x178bb; file 0x7abb; locator=proven; call    sub_181C0
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 call .+2309
 .org 0x7abe
 # IDA 0x178be; file 0x7abe; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x7ac3
 # IDA 0x178c3; file 0x7ac3; locator=proven; mov     ax, 78E5h
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, 0x78e5
 .org 0x7ac6
 # IDA 0x178c6; file 0x7ac6; locator=proven; mov     bx, 796Ch
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 mov bx, 0x796c
 .org 0x7ac9
 # IDA 0x178c9; file 0x7ac9; locator=proven; mov     si, 77EEh
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 mov si, 0x77ee
 .org 0x7acc
 # IDA 0x178cc; file 0x7acc; locator=proven; mov     di, 7875h
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 mov di, 0x7875
 .org 0x7acf
 # IDA 0x178cf; file 0x7acf; locator=proven; mov     cl, byte ptr cs:word_198AA+1
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov cl, byte ptr [0x98ab]
 .org 0x7ad4
 # IDA 0x178d4; file 0x7ad4; locator=proven; call    sub_1820E
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 call .+2362
 .org 0x7ad7
 # IDA 0x178d7; file 0x7ad7; locator=proven; mov     byte ptr cs:word_198AA+1, cl
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov byte ptr [0x98ab], cl
 .org 0x7adc
 # IDA 0x178dc; file 0x7adc; locator=proven; pop     bp
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 pop bp
 .org 0x7add
 # IDA 0x178dd; file 0x7add; locator=proven; pop     di
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 pop di
 .org 0x7ade
 # IDA 0x178de; file 0x7ade; locator=proven; pop     si
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 pop si
 .org 0x7adf
 # IDA 0x178df; file 0x7adf; locator=proven; pop     dx
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 pop dx
 .org 0x7ae0
 # IDA 0x178e0; file 0x7ae0; locator=proven; pop     cx
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 pop cx
 .org 0x7ae1
 # IDA 0x178e1; file 0x7ae1; locator=proven; pop     ax
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 pop ax
 .org 0x7ae2
 # IDA 0x178e2; file 0x7ae2; locator=proven; pop     es
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 pop es
 .org 0x7ae3
 # IDA 0x178e3; file 0x7ae3; locator=proven; pop     ds
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 pop ds
 .org 0x7ae4
 # IDA 0x178e4; file 0x7ae4; locator=proven; retn
-# ⚠ 函式 sub_178A7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_178A7; [proven] 完整勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 ret
 .org 0x7ae5
 # IDA 0x178e5; file 0x7ae5; locator=proven; push    dx
@@ -46948,123 +47631,123 @@ ret
 .org 0x7b06
 sub_17906:
 # IDA 0x17906; file 0x7b06; locator=proven; push    ds
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 push ds
 .org 0x7b07
 # IDA 0x17907; file 0x7b07; locator=proven; push    es
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 push es
 .org 0x7b08
 # IDA 0x17908; file 0x7b08; locator=proven; push    ax
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 push ax
 .org 0x7b09
 # IDA 0x17909; file 0x7b09; locator=proven; push    cx
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 push cx
 .org 0x7b0a
 # IDA 0x1790a; file 0x7b0a; locator=proven; push    dx
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 push dx
 .org 0x7b0b
 # IDA 0x1790b; file 0x7b0b; locator=proven; push    si
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 push si
 .org 0x7b0c
 # IDA 0x1790c; file 0x7b0c; locator=proven; push    di
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 push di
 .org 0x7b0d
 # IDA 0x1790d; file 0x7b0d; locator=proven; push    bp
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 push bp
 .org 0x7b0e
 # IDA 0x1790e; file 0x7b0e; locator=proven; call    sub_17A7A
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 call .+364
 .org 0x7b11
 # IDA 0x17911; file 0x7b11; locator=proven; mov     dx, 18h
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 mov dx, 0x18
 .org 0x7b14
 # IDA 0x17914; file 0x7b14; locator=proven; mov     bx, 58h
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 mov bx, 0x58
 .org 0x7b17
 # IDA 0x17917; file 0x7b17; locator=proven; mov     cx, 0B18h
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 mov cx, 0xb18
 .org 0x7b1a
 # IDA 0x1791a; file 0x7b1a; locator=proven; call    sub_181C0
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 call .+2214
 .org 0x7b1d
 # IDA 0x1791d; file 0x7b1d; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x7b22
 # IDA 0x17922; file 0x7b22; locator=proven; mov     ax, 7944h
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, 0x7944
 .org 0x7b25
 # IDA 0x17925; file 0x7b25; locator=proven; mov     bx, 796Ch
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 mov bx, 0x796c
 .org 0x7b28
 # IDA 0x17928; file 0x7b28; locator=proven; mov     si, 77EEh
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 mov si, 0x77ee
 .org 0x7b2b
 # IDA 0x1792b; file 0x7b2b; locator=proven; mov     di, 7875h
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 mov di, 0x7875
 .org 0x7b2e
 # IDA 0x1792e; file 0x7b2e; locator=proven; mov     cl, byte ptr cs:word_198AA+1
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov cl, byte ptr [0x98ab]
 .org 0x7b33
 # IDA 0x17933; file 0x7b33; locator=proven; call    sub_1820E
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 call .+2267
 .org 0x7b36
 # IDA 0x17936; file 0x7b36; locator=proven; mov     byte ptr cs:word_198AA+1, cl
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov byte ptr [0x98ab], cl
 .org 0x7b3b
 # IDA 0x1793b; file 0x7b3b; locator=proven; pop     bp
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 pop bp
 .org 0x7b3c
 # IDA 0x1793c; file 0x7b3c; locator=proven; pop     di
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 pop di
 .org 0x7b3d
 # IDA 0x1793d; file 0x7b3d; locator=proven; pop     si
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 pop si
 .org 0x7b3e
 # IDA 0x1793e; file 0x7b3e; locator=proven; pop     dx
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 pop dx
 .org 0x7b3f
 # IDA 0x1793f; file 0x7b3f; locator=proven; pop     cx
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 pop cx
 .org 0x7b40
 # IDA 0x17940; file 0x7b40; locator=proven; pop     ax
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 pop ax
 .org 0x7b41
 # IDA 0x17941; file 0x7b41; locator=proven; pop     es
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 pop es
 .org 0x7b42
 # IDA 0x17942; file 0x7b42; locator=proven; pop     ds
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 pop ds
 .org 0x7b43
 # IDA 0x17943; file 0x7b43; locator=proven; retn
-# ⚠ 函式 sub_17906; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17906; [proven] 外交候選勢力清單入口，先更新外交顯示 cache; 出處: docs/re/119-c-list-families-restoration.md
 ret
 .org 0x7b44
 # IDA 0x17944; file 0x7b44; locator=proven; push    dx
@@ -47252,561 +47935,561 @@ ret
 .org 0x7b9c
 sub_1799C:
 # IDA 0x1799c; file 0x7b9c; locator=proven; push    ax
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 push ax
 .org 0x7b9d
 # IDA 0x1799d; file 0x7b9d; locator=proven; push    bx
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 push bx
 .org 0x7b9e
 # IDA 0x1799e; file 0x7b9e; locator=proven; push    cx
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 push cx
 .org 0x7b9f
 # IDA 0x1799f; file 0x7b9f; locator=proven; push    dx
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 push dx
 .org 0x7ba0
 # IDA 0x179a0; file 0x7ba0; locator=proven; push    si
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 push si
 .org 0x7ba1
 # IDA 0x179a1; file 0x7ba1; locator=proven; push    di
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 push di
 .org 0x7ba2
 # IDA 0x179a2; file 0x7ba2; locator=proven; push    bp
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 push bp
 .org 0x7ba3
 # IDA 0x179a3; file 0x7ba3; locator=proven; cmp     word ptr [bp+si], 0FFFFh
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 cmp word ptr [bp+si], offset imm_at_179A3
 .org 0x7ba7
 # IDA 0x179a7; file 0x7ba7; locator=proven; jnz     short loc_179BB
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 jnz .+20
 .org 0x7ba9
 # IDA 0x179a9; file 0x7ba9; locator=proven; push    ds
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 push ds
 .org 0x7baa
 # IDA 0x179aa; file 0x7baa; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, cs
 .org 0x7bac
 # IDA 0x179ac; file 0x7bac; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ds, ax
 .org 0x7bae
 # IDA 0x179ae; file 0x7bae; locator=proven; mov     si, 7819h
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov si, 0x7819
 .org 0x7bb1
 # IDA 0x179b1; file 0x7bb1; locator=proven; mov     ax, 9000h
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, 0x9000
 .org 0x7bb4
 # IDA 0x179b4; file 0x7bb4; locator=proven; call    sub_1F6DC
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 call .+32040
 .org 0x7bb7
 # IDA 0x179b7; file 0x7bb7; locator=proven; pop     ds
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 pop ds
 .org 0x7bb8
 # IDA 0x179b8; file 0x7bb8; locator=proven; jmp     loc_17A72
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {disp16} jmp .+186
 .org 0x7bbb
 loc_179BB:
 # IDA 0x179bb; file 0x7bbb; locator=proven; push    dx
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 push dx
 .org 0x7bbc
 # IDA 0x179bc; file 0x7bbc; locator=proven; mov     si, [bp+si]
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov si, word ptr [bp+si]
 .org 0x7bbe
 # IDA 0x179be; file 0x7bbe; locator=proven; mov     di, si
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov di, si
 .org 0x7bc0
 # IDA 0x179c0; file 0x7bc0; locator=proven; mov     ah, [si+1]
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ah, byte ptr [si+0x1]
 .org 0x7bc3
 # IDA 0x179c3; file 0x7bc3; locator=proven; xor     al, al
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} xor al, al
 .org 0x7bc5
 # IDA 0x179c5; file 0x7bc5; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7bc7
 # IDA 0x179c7; file 0x7bc7; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7bc9
 # IDA 0x179c9; file 0x7bc9; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7bcb
 # IDA 0x179cb; file 0x7bcb; locator=proven; add     ax, 4242h
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 add ax, 0x4242
 .org 0x7bce
 # IDA 0x179ce; file 0x7bce; locator=proven; mov     si, ax
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov si, ax
 .org 0x7bd0
 # IDA 0x179d0; file 0x7bd0; locator=proven; mov     ax, 9001h
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, 0x9001
 .org 0x7bd3
 # IDA 0x179d3; file 0x7bd3; locator=proven; call    loc_10701
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 call .-29394
 .org 0x7bd6
 # IDA 0x179d6; file 0x7bd6; locator=proven; add     dx, 0A0h
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 add dx, 0xa0
 .org 0x7bda
 # IDA 0x179da; file 0x7bda; locator=proven; mov     ah, [di+3]
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ah, byte ptr [di+0x3]
 .org 0x7bdd
 # IDA 0x179dd; file 0x7bdd; locator=proven; xor     al, al
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} xor al, al
 .org 0x7bdf
 # IDA 0x179df; file 0x7bdf; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7be1
 # IDA 0x179e1; file 0x7be1; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7be3
 # IDA 0x179e3; file 0x7be3; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7be5
 # IDA 0x179e5; file 0x7be5; locator=proven; add     ax, 842h
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 add ax, 0x842
 .org 0x7be8
 # IDA 0x179e8; file 0x7be8; locator=proven; mov     si, ax
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov si, ax
 .org 0x7bea
 # IDA 0x179ea; file 0x7bea; locator=proven; mov     ax, 9001h
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, 0x9001
 .org 0x7bed
 # IDA 0x179ed; file 0x7bed; locator=proven; call    loc_10701
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 call .-29420
 .org 0x7bf0
 # IDA 0x179f0; file 0x7bf0; locator=proven; add     dx, 40h
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 add dx, 0x40
 .org 0x7bf3
 # IDA 0x179f3; file 0x7bf3; locator=proven; mov     al, [di+3Fh]
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov al, byte ptr [di+0x3f]
 .org 0x7bf6
 # IDA 0x179f6; file 0x7bf6; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} xor ah, ah
 .org 0x7bf8
 # IDA 0x179f8; file 0x7bf8; locator=proven; add     ax, 7844h
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 add ax, 0x7844
 .org 0x7bfb
 # IDA 0x179fb; file 0x7bfb; locator=proven; mov     si, ax
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov si, ax
 .org 0x7bfd
 # IDA 0x179fd; file 0x7bfd; locator=proven; push    ds
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 push ds
 .org 0x7bfe
 # IDA 0x179fe; file 0x7bfe; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, cs
 .org 0x7c00
 # IDA 0x17a00; file 0x7c00; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ds, ax
 .org 0x7c02
 # IDA 0x17a02; file 0x7c02; locator=proven; mov     ah, [si+6]
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ah, byte ptr [si+0x6]
 .org 0x7c05
 # IDA 0x17a05; file 0x7c05; locator=proven; or      ah, 90h
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 or ah, 0x90
 .org 0x7c08
 # IDA 0x17a08; file 0x7c08; locator=proven; mov     al, 1
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov al, 0x1
 .org 0x7c0a
 # IDA 0x17a0a; file 0x7c0a; locator=proven; call    loc_10701
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 call .-29449
 .org 0x7c0d
 # IDA 0x17a0d; file 0x7c0d; locator=proven; pop     ds
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 pop ds
 .org 0x7c0e
 # IDA 0x17a0e; file 0x7c0e; locator=proven; push    ds
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 push ds
 .org 0x7c0f
 # IDA 0x17a0f; file 0x7c0f; locator=proven; mov     ah, [di+2Ah]
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ah, byte ptr [di+0x2a]
 .org 0x7c12
 # IDA 0x17a12; file 0x7c12; locator=proven; cmp     ah, 0FFh
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 cmp ah, 0xff
 .org 0x7c15
 # IDA 0x17a15; file 0x7c15; locator=proven; jz      short loc_17A26
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 jz .+17
 .org 0x7c17
 # IDA 0x17a17; file 0x7c17; locator=proven; xor     al, al
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} xor al, al
 .org 0x7c19
 # IDA 0x17a19; file 0x7c19; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7c1b
 # IDA 0x17a1b; file 0x7c1b; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7c1d
 # IDA 0x17a1d; file 0x7c1d; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7c1f
 # IDA 0x17a1f; file 0x7c1f; locator=proven; add     ax, 4242h
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 add ax, 0x4242
 .org 0x7c22
 # IDA 0x17a22; file 0x7c22; locator=proven; mov     si, ax
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov si, ax
 .org 0x7c24
 # IDA 0x17a24; file 0x7c24; locator=proven; jmp     short loc_17A2D
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 jmp .+9
 .org 0x7c26
 loc_17A26:
 # IDA 0x17a26; file 0x7c26; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, cs
 .org 0x7c28
 # IDA 0x17a28; file 0x7c28; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ds, ax
 .org 0x7c2a
 # IDA 0x17a2a; file 0x7c2a; locator=proven; mov     si, 7819h
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov si, 0x7819
 .org 0x7c2d
 loc_17A2D:
 # IDA 0x17a2d; file 0x7c2d; locator=proven; mov     ax, 9001h
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, 0x9001
 .org 0x7c30
 # IDA 0x17a30; file 0x7c30; locator=proven; add     dx, 40h
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 add dx, 0x40
 .org 0x7c33
 # IDA 0x17a33; file 0x7c33; locator=proven; call    loc_10701
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 call .-29490
 .org 0x7c36
 # IDA 0x17a36; file 0x7c36; locator=proven; pop     ds
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 pop ds
 .org 0x7c37
 # IDA 0x17a37; file 0x7c37; locator=proven; pop     dx
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 pop dx
 .org 0x7c38
 # IDA 0x17a38; file 0x7c38; locator=proven; mov     si, di
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov si, di
 .org 0x7c3a
 # IDA 0x17a3a; file 0x7c3a; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shl bx, 0x1
 .org 0x7c3c
 # IDA 0x17a3c; file 0x7c3c; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shl bx, 0x1
 .org 0x7c3e
 # IDA 0x17a3e; file 0x7c3e; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shl bx, 0x1
 .org 0x7c40
 # IDA 0x17a40; file 0x7c40; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shl bx, 0x1
 .org 0x7c42
 # IDA 0x17a42; file 0x7c42; locator=proven; mov     di, bx
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov di, bx
 .org 0x7c44
 # IDA 0x17a44; file 0x7c44; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shl bx, 0x1
 .org 0x7c46
 # IDA 0x17a46; file 0x7c46; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shl bx, 0x1
 .org 0x7c48
 # IDA 0x17a48; file 0x7c48; locator=proven; add     di, bx
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} add di, bx
 .org 0x7c4a
 # IDA 0x17a4a; file 0x7c4a; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr dx, 0x1
 .org 0x7c4c
 # IDA 0x17a4c; file 0x7c4c; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr dx, 0x1
 .org 0x7c4e
 # IDA 0x17a4e; file 0x7c4e; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr dx, 0x1
 .org 0x7c50
 # IDA 0x17a50; file 0x7c50; locator=proven; add     di, dx
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} add di, dx
 .org 0x7c52
 # IDA 0x17a52; file 0x7c52; locator=proven; add     di, 8
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 add di, 0x8
 .org 0x7c55
 # IDA 0x17a55; file 0x7c55; locator=proven; mov     al, [si+18h]
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov al, byte ptr [si+0x18]
 .org 0x7c58
 # IDA 0x17a58; file 0x7c58; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} xor dx, dx
 .org 0x7c5a
 # IDA 0x17a5a; file 0x7c5a; locator=proven; mov     ah, dl
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov ah, dl
 .org 0x7c5c
 # IDA 0x17a5c; file 0x7c5c; locator=proven; mov     bx, 9003h
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov bx, 0x9003
 .org 0x7c5f
 # IDA 0x17a5f; file 0x7c5f; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 call .-29744
 .org 0x7c62
 # IDA 0x17a62; file 0x7c62; locator=proven; add     di, 6
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 add di, 0x6
 .org 0x7c65
 # IDA 0x17a65; file 0x7c65; locator=proven; mov     al, [si+23h]
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov al, byte ptr [si+0x23]
 .org 0x7c68
 # IDA 0x17a68; file 0x7c68; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} xor dx, dx
 .org 0x7c6a
 # IDA 0x17a6a; file 0x7c6a; locator=proven; mov     ah, dl
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov ah, dl
 .org 0x7c6c
 # IDA 0x17a6c; file 0x7c6c; locator=proven; mov     bx, 9003h
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov bx, 0x9003
 .org 0x7c6f
 # IDA 0x17a6f; file 0x7c6f; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 call .-29760
 .org 0x7c72
 loc_17A72:
 # IDA 0x17a72; file 0x7c72; locator=proven; pop     bp
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 pop bp
 .org 0x7c73
 # IDA 0x17a73; file 0x7c73; locator=proven; pop     di
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 pop di
 .org 0x7c74
 # IDA 0x17a74; file 0x7c74; locator=proven; pop     si
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 pop si
 .org 0x7c75
 # IDA 0x17a75; file 0x7c75; locator=proven; pop     dx
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 pop dx
 .org 0x7c76
 # IDA 0x17a76; file 0x7c76; locator=proven; pop     cx
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 pop cx
 .org 0x7c77
 # IDA 0x17a77; file 0x7c77; locator=proven; pop     bx
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 pop bx
 .org 0x7c78
 # IDA 0x17a78; file 0x7c78; locator=proven; pop     ax
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 pop ax
 .org 0x7c79
 locret_17A79:
 # IDA 0x17a79; file 0x7c79; locator=proven; retn
-# ⚠ 函式 sub_1799C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1799C; [proven] 勢力君主／首都／外交／外交官與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 ret
 .org 0x7c7a
 sub_17A7A:
 # IDA 0x17a7a; file 0x7c7a; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x7c7f
 loc_17A7F:
 # IDA 0x17a7f; file 0x7c7f; locator=proven; mov     si, cs:word_10CFD
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov si, word ptr [0xcfd]
 .org 0x7c84
 # IDA 0x17a84; file 0x7c84; locator=proven; mov     ax, si
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov ax, si
 .org 0x7c86
 # IDA 0x17a86; file 0x7c86; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7c88
 # IDA 0x17a88; file 0x7c88; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7c8a
 # IDA 0x17a8a; file 0x7c8a; locator=proven; mov     si, ax
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov si, ax
 .org 0x7c8c
 # IDA 0x17a8c; file 0x7c8c; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7c8e
 # IDA 0x17a8e; file 0x7c8e; locator=proven; add     si, ax
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 {load} add si, ax
 .org 0x7c90
 # IDA 0x17a90; file 0x7c90; locator=proven; add     si, 600h
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 add si, 0x600
 .org 0x7c94
 # IDA 0x17a94; file 0x7c94; locator=proven; mov     di, 3Fh
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 mov di, 0x3f
 .org 0x7c97
 # IDA 0x17a97; file 0x7c97; locator=proven; mov     cx, 16h
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 mov cx, 0x16
 .org 0x7c9a
 loc_17A9A:
 # IDA 0x17a9a; file 0x7c9a; locator=proven; xor     dl, dl
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 {load} xor dl, dl
 .org 0x7c9c
 # IDA 0x17a9c; file 0x7c9c; locator=proven; mov     al, [si]
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 mov al, byte ptr [si]
 .org 0x7c9e
 # IDA 0x17a9e; file 0x7c9e; locator=proven; cmp     al, 80h
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 cmp al, 0x80
 .org 0x7ca0
 # IDA 0x17aa0; file 0x7ca0; locator=proven; jb      short loc_17ABC
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 jb .+28
 .org 0x7ca2
 # IDA 0x17aa2; file 0x7ca2; locator=proven; and     al, 7Fh
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 and al, 0x7f
 .org 0x7ca4
 # IDA 0x17aa4; file 0x7ca4; locator=proven; mov     dl, 2Ah
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 mov dl, 0x2a
 .org 0x7ca6
 # IDA 0x17aa6; file 0x7ca6; locator=proven; cmp     al, 64h
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 cmp al, 0x64
 .org 0x7ca8
 # IDA 0x17aa8; file 0x7ca8; locator=proven; ja      short loc_17ABC
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 ja .+20
 .org 0x7caa
 # IDA 0x17aaa; file 0x7caa; locator=proven; jb      short loc_17AAE
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 jb .+4
 .org 0x7cac
 # IDA 0x17aac; file 0x7cac; locator=proven; dec     al
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 dec al
 .org 0x7cae
 loc_17AAE:
 # IDA 0x17aae; file 0x7cae; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 {load} xor ah, ah
 .org 0x7cb0
 # IDA 0x17ab0; file 0x7cb0; locator=proven; mov     dh, 14h
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 mov dh, 0x14
 .org 0x7cb2
 # IDA 0x17ab2; file 0x7cb2; locator=proven; div     dh
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 div dh
 .org 0x7cb4
 # IDA 0x17ab4; file 0x7cb4; locator=proven; inc     al
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 inc al
 .org 0x7cb6
 # IDA 0x17ab6; file 0x7cb6; locator=proven; mov     ah, 7
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 mov ah, 0x7
 .org 0x7cb8
 # IDA 0x17ab8; file 0x7cb8; locator=proven; mul     ah
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 mul ah
 .org 0x7cba
 # IDA 0x17aba; file 0x7cba; locator=proven; mov     dl, al
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov dl, al
 .org 0x7cbc
 loc_17ABC:
 # IDA 0x17abc; file 0x7cbc; locator=proven; mov     [di], dl
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 mov byte ptr [di], dl
 .org 0x7cbe
 # IDA 0x17abe; file 0x7cbe; locator=proven; inc     si
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 inc si
 .org 0x7cbf
 # IDA 0x17abf; file 0x7cbf; locator=proven; add     di, 40h
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 add di, 0x40
 .org 0x7cc2
 # IDA 0x17ac2; file 0x7cc2; locator=proven; loop    loc_17A9A
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 loop .-40
 .org 0x7cc4
 # IDA 0x17ac4; file 0x7cc4; locator=proven; retn
-# ⚠ 函式 sub_17A7A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17A7A; [proven] 22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界; 出處: docs/re/119-c-list-families-restoration.md
 ret
 .org 0x7cc6
 # IDA 0x17ac6; file 0x7cc6; locator=proven; mov     dh, 0D5h
@@ -48029,115 +48712,115 @@ jbe .+2
 .org 0x7d3c
 sub_17B3C:
 # IDA 0x17b3c; file 0x7d3c; locator=proven; push    ds
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 push ds
 .org 0x7d3d
 # IDA 0x17b3d; file 0x7d3d; locator=proven; push    es
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 push es
 .org 0x7d3e
 # IDA 0x17b3e; file 0x7d3e; locator=proven; push    ax
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 push ax
 .org 0x7d3f
 # IDA 0x17b3f; file 0x7d3f; locator=proven; push    cx
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 push cx
 .org 0x7d40
 # IDA 0x17b40; file 0x7d40; locator=proven; push    dx
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 push dx
 .org 0x7d41
 # IDA 0x17b41; file 0x7d41; locator=proven; push    si
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 push si
 .org 0x7d42
 # IDA 0x17b42; file 0x7d42; locator=proven; push    di
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 push di
 .org 0x7d43
 # IDA 0x17b43; file 0x7d43; locator=proven; push    bp
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 push bp
 .org 0x7d44
 # IDA 0x17b44; file 0x7d44; locator=proven; mov     dx, 88h
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 mov dx, 0x88
 .org 0x7d47
 # IDA 0x17b47; file 0x7d47; locator=proven; mov     bx, 68h
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 mov bx, 0x68
 .org 0x7d4a
 # IDA 0x17b4a; file 0x7d4a; locator=proven; mov     cx, 0B18h
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 mov cx, 0xb18
 .org 0x7d4d
 # IDA 0x17b4d; file 0x7d4d; locator=proven; call    sub_181C0
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 call .+1651
 .org 0x7d50
 # IDA 0x17b50; file 0x7d50; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x7d55
 # IDA 0x17b55; file 0x7d55; locator=proven; mov     ax, 7B6Fh
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, 0x7b6f
 .org 0x7d58
 # IDA 0x17b58; file 0x7d58; locator=proven; mov     bx, 7B90h
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 mov bx, 0x7b90
 .org 0x7d5b
 # IDA 0x17b5b; file 0x7d5b; locator=proven; mov     si, 7AC6h
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 mov si, 0x7ac6
 .org 0x7d5e
 # IDA 0x17b5e; file 0x7d5e; locator=proven; mov     di, 7B12h
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 mov di, 0x7b12
 .org 0x7d61
 # IDA 0x17b61; file 0x7d61; locator=proven; xor     cl, cl
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 {load} xor cl, cl
 .org 0x7d63
 # IDA 0x17b63; file 0x7d63; locator=proven; call    sub_1820E
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 call .+1707
 .org 0x7d66
 # IDA 0x17b66; file 0x7d66; locator=proven; pop     bp
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 pop bp
 .org 0x7d67
 # IDA 0x17b67; file 0x7d67; locator=proven; pop     di
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 pop di
 .org 0x7d68
 # IDA 0x17b68; file 0x7d68; locator=proven; pop     si
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 pop si
 .org 0x7d69
 # IDA 0x17b69; file 0x7d69; locator=proven; pop     dx
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 pop dx
 .org 0x7d6a
 # IDA 0x17b6a; file 0x7d6a; locator=proven; pop     cx
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 pop cx
 .org 0x7d6b
 # IDA 0x17b6b; file 0x7d6b; locator=proven; pop     ax
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 pop ax
 .org 0x7d6c
 # IDA 0x17b6c; file 0x7d6c; locator=proven; pop     es
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 pop es
 .org 0x7d6d
 # IDA 0x17b6d; file 0x7d6d; locator=proven; pop     ds
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 pop ds
 .org 0x7d6e
 # IDA 0x17b6e; file 0x7d6e; locator=proven; retn
-# ⚠ 函式 sub_17B3C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17B3C; [proven] 開局勢力清單，原點 136/104、初始排序狀態 0; 出處: docs/re/119-c-list-families-restoration.md
 ret
 .org 0x7d6f
 # IDA 0x17b6f; file 0x7d6f; locator=proven; push    dx
@@ -48317,333 +49000,333 @@ ret
 .org 0x7dc0
 sub_17BC0:
 # IDA 0x17bc0; file 0x7dc0; locator=proven; push    ax
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 push ax
 .org 0x7dc1
 # IDA 0x17bc1; file 0x7dc1; locator=proven; push    bx
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 push bx
 .org 0x7dc2
 # IDA 0x17bc2; file 0x7dc2; locator=proven; push    cx
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 push cx
 .org 0x7dc3
 # IDA 0x17bc3; file 0x7dc3; locator=proven; push    dx
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 push dx
 .org 0x7dc4
 # IDA 0x17bc4; file 0x7dc4; locator=proven; push    si
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 push si
 .org 0x7dc5
 # IDA 0x17bc5; file 0x7dc5; locator=proven; push    di
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 push di
 .org 0x7dc6
 # IDA 0x17bc6; file 0x7dc6; locator=proven; push    bp
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 push bp
 .org 0x7dc7
 # IDA 0x17bc7; file 0x7dc7; locator=proven; cmp     word ptr [bp+si], 0FFFFh
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 cmp word ptr [bp+si], offset imm_at_17BC7
 .org 0x7dcb
 # IDA 0x17bcb; file 0x7dcb; locator=proven; jnz     short loc_17BDF
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 jnz .+20
 .org 0x7dcd
 # IDA 0x17bcd; file 0x7dcd; locator=proven; push    ds
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 push ds
 .org 0x7dce
 # IDA 0x17bce; file 0x7dce; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, cs
 .org 0x7dd0
 # IDA 0x17bd0; file 0x7dd0; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ds, ax
 .org 0x7dd2
 # IDA 0x17bd2; file 0x7dd2; locator=proven; mov     si, 7AEBh
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov si, 0x7aeb
 .org 0x7dd5
 # IDA 0x17bd5; file 0x7dd5; locator=proven; mov     ax, 9000h
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, 0x9000
 .org 0x7dd8
 # IDA 0x17bd8; file 0x7dd8; locator=proven; call    sub_1F6DC
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 call .+31492
 .org 0x7ddb
 # IDA 0x17bdb; file 0x7ddb; locator=proven; pop     ds
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 pop ds
 .org 0x7ddc
 # IDA 0x17bdc; file 0x7ddc; locator=proven; jmp     loc_17C66
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {disp16} jmp .+138
 .org 0x7ddf
 loc_17BDF:
 # IDA 0x17bdf; file 0x7ddf; locator=proven; push    dx
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 push dx
 .org 0x7de0
 # IDA 0x17be0; file 0x7de0; locator=proven; mov     di, [bp+si]
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov di, word ptr [bp+si]
 .org 0x7de2
 # IDA 0x17be2; file 0x7de2; locator=proven; mov     ah, [di+1]
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ah, byte ptr [di+0x1]
 .org 0x7de5
 # IDA 0x17be5; file 0x7de5; locator=proven; xor     al, al
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} xor al, al
 .org 0x7de7
 # IDA 0x17be7; file 0x7de7; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7de9
 # IDA 0x17be9; file 0x7de9; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7deb
 # IDA 0x17beb; file 0x7deb; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7ded
 # IDA 0x17bed; file 0x7ded; locator=proven; add     ax, 4242h
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 add ax, 0x4242
 .org 0x7df0
 # IDA 0x17bf0; file 0x7df0; locator=proven; mov     si, ax
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov si, ax
 .org 0x7df2
 # IDA 0x17bf2; file 0x7df2; locator=proven; mov     ax, 9001h
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, 0x9001
 .org 0x7df5
 # IDA 0x17bf5; file 0x7df5; locator=proven; call    loc_10701
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 call .-29940
 .org 0x7df8
 # IDA 0x17bf8; file 0x7df8; locator=proven; add     dx, 40h
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 add dx, 0x40
 .org 0x7dfb
 # IDA 0x17bfb; file 0x7dfb; locator=proven; mov     ah, [di+2]
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ah, byte ptr [di+0x2]
 .org 0x7dfe
 # IDA 0x17bfe; file 0x7dfe; locator=proven; xor     al, al
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} xor al, al
 .org 0x7e00
 # IDA 0x17c00; file 0x7e00; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7e02
 # IDA 0x17c02; file 0x7e02; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7e04
 # IDA 0x17c04; file 0x7e04; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7e06
 # IDA 0x17c06; file 0x7e06; locator=proven; add     ax, 4242h
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 add ax, 0x4242
 .org 0x7e09
 # IDA 0x17c09; file 0x7e09; locator=proven; mov     si, ax
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov si, ax
 .org 0x7e0b
 # IDA 0x17c0b; file 0x7e0b; locator=proven; mov     ax, 9001h
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, 0x9001
 .org 0x7e0e
 # IDA 0x17c0e; file 0x7e0e; locator=proven; call    loc_10701
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 call .-29965
 .org 0x7e11
 # IDA 0x17c11; file 0x7e11; locator=proven; add     dx, 0C0h
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 add dx, 0xc0
 .org 0x7e15
 # IDA 0x17c15; file 0x7e15; locator=proven; mov     ah, [di+3]
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ah, byte ptr [di+0x3]
 .org 0x7e18
 # IDA 0x17c18; file 0x7e18; locator=proven; xor     al, al
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} xor al, al
 .org 0x7e1a
 # IDA 0x17c1a; file 0x7e1a; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7e1c
 # IDA 0x17c1c; file 0x7e1c; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7e1e
 # IDA 0x17c1e; file 0x7e1e; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr ax, 0x1
 .org 0x7e20
 # IDA 0x17c20; file 0x7e20; locator=proven; add     ax, 842h
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 add ax, 0x842
 .org 0x7e23
 # IDA 0x17c23; file 0x7e23; locator=proven; mov     si, ax
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov si, ax
 .org 0x7e25
 # IDA 0x17c25; file 0x7e25; locator=proven; mov     ax, 9001h
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov ax, 0x9001
 .org 0x7e28
 # IDA 0x17c28; file 0x7e28; locator=proven; call    loc_10701
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 call .-29991
 .org 0x7e2b
 # IDA 0x17c2b; file 0x7e2b; locator=proven; pop     dx
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 pop dx
 .org 0x7e2c
 # IDA 0x17c2c; file 0x7e2c; locator=proven; mov     si, di
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov si, di
 .org 0x7e2e
 # IDA 0x17c2e; file 0x7e2e; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shl bx, 0x1
 .org 0x7e30
 # IDA 0x17c30; file 0x7e30; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shl bx, 0x1
 .org 0x7e32
 # IDA 0x17c32; file 0x7e32; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shl bx, 0x1
 .org 0x7e34
 # IDA 0x17c34; file 0x7e34; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shl bx, 0x1
 .org 0x7e36
 # IDA 0x17c36; file 0x7e36; locator=proven; mov     di, bx
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov di, bx
 .org 0x7e38
 # IDA 0x17c38; file 0x7e38; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shl bx, 0x1
 .org 0x7e3a
 # IDA 0x17c3a; file 0x7e3a; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shl bx, 0x1
 .org 0x7e3c
 # IDA 0x17c3c; file 0x7e3c; locator=proven; add     di, bx
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} add di, bx
 .org 0x7e3e
 # IDA 0x17c3e; file 0x7e3e; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr dx, 0x1
 .org 0x7e40
 # IDA 0x17c40; file 0x7e40; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr dx, 0x1
 .org 0x7e42
 # IDA 0x17c42; file 0x7e42; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 shr dx, 0x1
 .org 0x7e44
 # IDA 0x17c44; file 0x7e44; locator=proven; add     di, dx
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} add di, dx
 .org 0x7e46
 # IDA 0x17c46; file 0x7e46; locator=proven; add     di, 12h
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 add di, 0x12
 .org 0x7e49
 # IDA 0x17c49; file 0x7e49; locator=proven; mov     al, [si+18h]
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov al, byte ptr [si+0x18]
 .org 0x7e4c
 # IDA 0x17c4c; file 0x7e4c; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} xor dx, dx
 .org 0x7e4e
 # IDA 0x17c4e; file 0x7e4e; locator=proven; mov     ah, dl
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov ah, dl
 .org 0x7e50
 # IDA 0x17c50; file 0x7e50; locator=proven; mov     bx, 9003h
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov bx, 0x9003
 .org 0x7e53
 # IDA 0x17c53; file 0x7e53; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 call .-30244
 .org 0x7e56
 # IDA 0x17c56; file 0x7e56; locator=proven; add     di, 6
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 add di, 0x6
 .org 0x7e59
 # IDA 0x17c59; file 0x7e59; locator=proven; mov     al, [si+23h]
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov al, byte ptr [si+0x23]
 .org 0x7e5c
 # IDA 0x17c5c; file 0x7e5c; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} xor dx, dx
 .org 0x7e5e
 # IDA 0x17c5e; file 0x7e5e; locator=proven; mov     ah, dl
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 {load} mov ah, dl
 .org 0x7e60
 # IDA 0x17c60; file 0x7e60; locator=proven; mov     bx, 9003h
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 mov bx, 0x9003
 .org 0x7e63
 # IDA 0x17c63; file 0x7e63; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 call .-30260
 .org 0x7e66
 loc_17C66:
 # IDA 0x17c66; file 0x7e66; locator=proven; pop     bp
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 pop bp
 .org 0x7e67
 # IDA 0x17c67; file 0x7e67; locator=proven; pop     di
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 pop di
 .org 0x7e68
 # IDA 0x17c68; file 0x7e68; locator=proven; pop     si
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 pop si
 .org 0x7e69
 # IDA 0x17c69; file 0x7e69; locator=proven; pop     dx
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 pop dx
 .org 0x7e6a
 # IDA 0x17c6a; file 0x7e6a; locator=proven; pop     cx
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 pop cx
 .org 0x7e6b
 # IDA 0x17c6b; file 0x7e6b; locator=proven; pop     bx
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 pop bx
 .org 0x7e6c
 # IDA 0x17c6c; file 0x7e6c; locator=proven; pop     ax
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 pop ax
 .org 0x7e6d
 # IDA 0x17c6d; file 0x7e6d; locator=proven; retn
-# ⚠ 函式 sub_17BC0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17BC0; [proven] 開局君主／軍師／首都與兩個三位數字欄; 出處: docs/re/119-c-list-families-restoration.md
 ret
 .org 0x7e6e
 sub_17C6E:

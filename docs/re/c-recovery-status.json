@@ -3264,6 +3264,14 @@
           "oracle_cases_per_optimization": 520,
           "entry_count": 8476,
           "scope": "Original city list callbacks and six descriptors (header 0 rebuilds, 1..5 sort), live byte/word/JBE/JNB sort, exact exchange order, 512-byte SS list, special return-address removal, full row/font/number/scrollbar rendering, select/cancel/drag, and four-scenario relocation accept/refuse/current-capital retry through real mouse input and original world/sidebar/scene writers. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/sound/VGA; IF/TF=0; isolated stack; FLAGS from pinned dosgolem. Natural player menus/long paths, other list families and original C machine code remain pending"
+        },
+        {
+          "evidence": "docs/re/119-c-list-families-restoration.md",
+          "spec": "docs/spec/239-c-list-families.md",
+          "receipt": "docs/re/c-catalog-verification.json",
+          "oracle_cases_per_optimization": 804,
+          "entry_count": 11843,
+          "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending"
         }
       ]
     },
@@ -5280,7 +5288,17 @@
       "source_sha256": "3ec817f0e7a1cbb3f29c46d101d6e0135c817fedcae357575df1b6af20395c1b",
       "header_sha256": "322d10432605bdbce73c87730aa97fbe1ff0bcacfe34461f530a58a37b9b4c43",
       "fixture_sha256": "7a508e8b4117963ffda9f6356ee1d357c1898c99d5a7517c8057a7a7777dd122",
-      "generated_source_sha256": "44db7e538a44f6ed9d0183e66feaf9a6e994ae7848c662a6861b0b20d2af8021"
+      "generated_source_sha256": "44db7e538a44f6ed9d0183e66feaf9a6e994ae7848c662a6861b0b20d2af8021",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/119-c-list-families-restoration.md",
+          "spec": "docs/spec/239-c-list-families.md",
+          "receipt": "docs/re/c-catalog-verification.json",
+          "oracle_cases_per_optimization": 804,
+          "entry_count": 364,
+          "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending"
+        }
+      ]
     },
     "sub_18412": {
       "ida_linear": 99346,
@@ -5301,7 +5319,17 @@
       "source_sha256": "3ec817f0e7a1cbb3f29c46d101d6e0135c817fedcae357575df1b6af20395c1b",
       "header_sha256": "322d10432605bdbce73c87730aa97fbe1ff0bcacfe34461f530a58a37b9b4c43",
       "fixture_sha256": "7a508e8b4117963ffda9f6356ee1d357c1898c99d5a7517c8057a7a7777dd122",
-      "generated_source_sha256": "44db7e538a44f6ed9d0183e66feaf9a6e994ae7848c662a6861b0b20d2af8021"
+      "generated_source_sha256": "44db7e538a44f6ed9d0183e66feaf9a6e994ae7848c662a6861b0b20d2af8021",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/119-c-list-families-restoration.md",
+          "spec": "docs/spec/239-c-list-families.md",
+          "receipt": "docs/re/c-catalog-verification.json",
+          "oracle_cases_per_optimization": 804,
+          "entry_count": 520,
+          "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending"
+        }
+      ]
     },
     "nullsub_2": {
       "ida_linear": 99416,
@@ -5343,7 +5371,17 @@
       "source_sha256": "3ec817f0e7a1cbb3f29c46d101d6e0135c817fedcae357575df1b6af20395c1b",
       "header_sha256": "322d10432605bdbce73c87730aa97fbe1ff0bcacfe34461f530a58a37b9b4c43",
       "fixture_sha256": "7a508e8b4117963ffda9f6356ee1d357c1898c99d5a7517c8057a7a7777dd122",
-      "generated_source_sha256": "44db7e538a44f6ed9d0183e66feaf9a6e994ae7848c662a6861b0b20d2af8021"
+      "generated_source_sha256": "44db7e538a44f6ed9d0183e66feaf9a6e994ae7848c662a6861b0b20d2af8021",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/119-c-list-families-restoration.md",
+          "spec": "docs/spec/239-c-list-families.md",
+          "receipt": "docs/re/c-catalog-verification.json",
+          "oracle_cases_per_optimization": 804,
+          "entry_count": 28,
+          "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending"
+        }
+      ]
     },
     "sub_184BC": {
       "ida_linear": 99516,
@@ -5448,7 +5486,17 @@
       "source_sha256": "3ec817f0e7a1cbb3f29c46d101d6e0135c817fedcae357575df1b6af20395c1b",
       "header_sha256": "322d10432605bdbce73c87730aa97fbe1ff0bcacfe34461f530a58a37b9b4c43",
       "fixture_sha256": "7a508e8b4117963ffda9f6356ee1d357c1898c99d5a7517c8057a7a7777dd122",
-      "generated_source_sha256": "44db7e538a44f6ed9d0183e66feaf9a6e994ae7848c662a6861b0b20d2af8021"
+      "generated_source_sha256": "44db7e538a44f6ed9d0183e66feaf9a6e994ae7848c662a6861b0b20d2af8021",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/119-c-list-families-restoration.md",
+          "spec": "docs/spec/239-c-list-families.md",
+          "receipt": "docs/re/c-catalog-verification.json",
+          "oracle_cases_per_optimization": 804,
+          "entry_count": 688,
+          "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending"
+        }
+      ]
     },
     "sub_18662": {
       "ida_linear": 99938,
@@ -5533,6 +5581,303 @@
       "header_sha256": "322d10432605bdbce73c87730aa97fbe1ff0bcacfe34461f530a58a37b9b4c43",
       "fixture_sha256": "7a508e8b4117963ffda9f6356ee1d357c1898c99d5a7517c8057a7a7777dd122",
       "generated_source_sha256": "44db7e538a44f6ed9d0183e66feaf9a6e994ae7848c662a6861b0b20d2af8021"
+    },
+    "sub_1716D": {
+      "ida_linear": 94573,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/239-c-list-families.md",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "source": "tools/c_recovery/catalog.c",
+      "header": "tools/c_recovery/catalog.h",
+      "fixture": "tools/c_recovery/catalog_fixture.h",
+      "generated_source": "tools/c_recovery/catalog_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "acdea3cfec526c6de08a90d1cbca6f97cafb7b64a65fe159c1232188e1eae844",
+      "oracle_cases_per_optimization": 804,
+      "oracle_entry_count_per_optimization": 48,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
+      "source_sha256": "79cbe68a4eb5e646fccd135e53e2d60d080d363332ec3c4c198de781ab919929",
+      "header_sha256": "67bb952d79ebfc82e507409f7c596139e0a684f97e5ab9fae9054ccd437d024b",
+      "fixture_sha256": "a68d40649438adc7e2a8eab0bdfc85260814bb9a208975e36b22132ae96e2f85",
+      "generated_source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95"
+    },
+    "sub_171D3": {
+      "ida_linear": 94675,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/239-c-list-families.md",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "source": "tools/c_recovery/catalog.c",
+      "header": "tools/c_recovery/catalog.h",
+      "fixture": "tools/c_recovery/catalog_fixture.h",
+      "generated_source": "tools/c_recovery/catalog_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "fc2625fea9175a50a962e806ff678f0fa920c1b7b1575e4fe5a0a7a58f7c3391",
+      "oracle_cases_per_optimization": 804,
+      "oracle_entry_count_per_optimization": 48,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
+      "source_sha256": "79cbe68a4eb5e646fccd135e53e2d60d080d363332ec3c4c198de781ab919929",
+      "header_sha256": "67bb952d79ebfc82e507409f7c596139e0a684f97e5ab9fae9054ccd437d024b",
+      "fixture_sha256": "a68d40649438adc7e2a8eab0bdfc85260814bb9a208975e36b22132ae96e2f85",
+      "generated_source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95"
+    },
+    "sub_175FA": {
+      "ida_linear": 95738,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/239-c-list-families.md",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "source": "tools/c_recovery/catalog.c",
+      "header": "tools/c_recovery/catalog.h",
+      "fixture": "tools/c_recovery/catalog_fixture.h",
+      "generated_source": "tools/c_recovery/catalog_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "0ebbf9a00ab4360ec79f336c269c09ae0bf5b10bf85bd1733859b30aea5b3f65",
+      "oracle_cases_per_optimization": 804,
+      "oracle_entry_count_per_optimization": 68,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
+      "source_sha256": "79cbe68a4eb5e646fccd135e53e2d60d080d363332ec3c4c198de781ab919929",
+      "header_sha256": "67bb952d79ebfc82e507409f7c596139e0a684f97e5ab9fae9054ccd437d024b",
+      "fixture_sha256": "a68d40649438adc7e2a8eab0bdfc85260814bb9a208975e36b22132ae96e2f85",
+      "generated_source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95"
+    },
+    "sub_17663": {
+      "ida_linear": 95843,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/239-c-list-families.md",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "source": "tools/c_recovery/catalog.c",
+      "header": "tools/c_recovery/catalog.h",
+      "fixture": "tools/c_recovery/catalog_fixture.h",
+      "generated_source": "tools/c_recovery/catalog_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "a389eea523a6b41142d5b66dfe46b7105de49b9f16914ca9f6916110aa7e886e",
+      "oracle_cases_per_optimization": 804,
+      "oracle_entry_count_per_optimization": 56,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
+      "source_sha256": "79cbe68a4eb5e646fccd135e53e2d60d080d363332ec3c4c198de781ab919929",
+      "header_sha256": "67bb952d79ebfc82e507409f7c596139e0a684f97e5ab9fae9054ccd437d024b",
+      "fixture_sha256": "a68d40649438adc7e2a8eab0bdfc85260814bb9a208975e36b22132ae96e2f85",
+      "generated_source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95",
+      "resolution_backlinks": [
+        {
+          "ida_linear": 95843,
+          "evidence_markers": [
+            "0x1768A"
+          ],
+          "older_document": "docs/re/26-list-window-engine.md",
+          "required_markers": [
+            "MOV CL,CS:98AA",
+            "119-c-list-families-restoration.md"
+          ],
+          "platform_module": "dosv/KI.EXE",
+          "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+          "level": "proven",
+          "evidence": "docs/re/119-c-list-families-restoration.md"
+        },
+        {
+          "ida_linear": 95843,
+          "evidence_markers": [
+            "0x1768A"
+          ],
+          "older_document": "docs/mechanics/10-strategy.md",
+          "required_markers": [
+            "選武將同樣沿用",
+            "119-c-list-families-restoration.md"
+          ],
+          "platform_module": "dosv/KI.EXE",
+          "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+          "level": "proven",
+          "evidence": "docs/re/119-c-list-families-restoration.md"
+        }
+      ]
+    },
+    "sub_1770C": {
+      "ida_linear": 96012,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/239-c-list-families.md",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "source": "tools/c_recovery/catalog.c",
+      "header": "tools/c_recovery/catalog.h",
+      "fixture": "tools/c_recovery/catalog_fixture.h",
+      "generated_source": "tools/c_recovery/catalog_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "59baa4e07ca750affea3863001f861d387ad99db2b31ae35ae7ae615ff2fb4d6",
+      "oracle_cases_per_optimization": 804,
+      "oracle_entry_count_per_optimization": 2224,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
+      "source_sha256": "79cbe68a4eb5e646fccd135e53e2d60d080d363332ec3c4c198de781ab919929",
+      "header_sha256": "67bb952d79ebfc82e507409f7c596139e0a684f97e5ab9fae9054ccd437d024b",
+      "fixture_sha256": "a68d40649438adc7e2a8eab0bdfc85260814bb9a208975e36b22132ae96e2f85",
+      "generated_source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95"
+    },
+    "sub_178A7": {
+      "ida_linear": 96423,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/239-c-list-families.md",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "source": "tools/c_recovery/catalog.c",
+      "header": "tools/c_recovery/catalog.h",
+      "fixture": "tools/c_recovery/catalog_fixture.h",
+      "generated_source": "tools/c_recovery/catalog_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "aef74b2a10341f1fa50147b19a5f87368bc95b76b3114bf258b86c2bc0dc3321",
+      "oracle_cases_per_optimization": 804,
+      "oracle_entry_count_per_optimization": 56,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
+      "source_sha256": "79cbe68a4eb5e646fccd135e53e2d60d080d363332ec3c4c198de781ab919929",
+      "header_sha256": "67bb952d79ebfc82e507409f7c596139e0a684f97e5ab9fae9054ccd437d024b",
+      "fixture_sha256": "a68d40649438adc7e2a8eab0bdfc85260814bb9a208975e36b22132ae96e2f85",
+      "generated_source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95"
+    },
+    "sub_17906": {
+      "ida_linear": 96518,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/239-c-list-families.md",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "source": "tools/c_recovery/catalog.c",
+      "header": "tools/c_recovery/catalog.h",
+      "fixture": "tools/c_recovery/catalog_fixture.h",
+      "generated_source": "tools/c_recovery/catalog_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "bf0cb7e051f70c9ab62897ad155a15088ec6f060e439a467b2c255d1fcf49099",
+      "oracle_cases_per_optimization": 804,
+      "oracle_entry_count_per_optimization": 56,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
+      "source_sha256": "79cbe68a4eb5e646fccd135e53e2d60d080d363332ec3c4c198de781ab919929",
+      "header_sha256": "67bb952d79ebfc82e507409f7c596139e0a684f97e5ab9fae9054ccd437d024b",
+      "fixture_sha256": "a68d40649438adc7e2a8eab0bdfc85260814bb9a208975e36b22132ae96e2f85",
+      "generated_source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95"
+    },
+    "sub_1799C": {
+      "ida_linear": 96668,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/239-c-list-families.md",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "source": "tools/c_recovery/catalog.c",
+      "header": "tools/c_recovery/catalog.h",
+      "fixture": "tools/c_recovery/catalog_fixture.h",
+      "generated_source": "tools/c_recovery/catalog_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "d3d511786b49c2b59eac62554525f2bb2f29b5b4da4e2f6d9f7cd1835a4b0fa1",
+      "oracle_cases_per_optimization": 804,
+      "oracle_entry_count_per_optimization": 2080,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
+      "source_sha256": "79cbe68a4eb5e646fccd135e53e2d60d080d363332ec3c4c198de781ab919929",
+      "header_sha256": "67bb952d79ebfc82e507409f7c596139e0a684f97e5ab9fae9054ccd437d024b",
+      "fixture_sha256": "a68d40649438adc7e2a8eab0bdfc85260814bb9a208975e36b22132ae96e2f85",
+      "generated_source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95",
+      "resolution_backlinks": [
+        {
+          "ida_linear": 96668,
+          "evidence_markers": [
+            "0x17A5C"
+          ],
+          "older_document": "docs/spec/38-list-windows.md",
+          "required_markers": [
+            "**3 位**／**3 位**",
+            "119-c-list-families-restoration.md"
+          ],
+          "platform_module": "dosv/KI.EXE",
+          "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+          "level": "proven",
+          "evidence": "docs/re/119-c-list-families-restoration.md"
+        }
+      ]
+    },
+    "sub_17A7A": {
+      "ida_linear": 96890,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/239-c-list-families.md",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "source": "tools/c_recovery/catalog.c",
+      "header": "tools/c_recovery/catalog.h",
+      "fixture": "tools/c_recovery/catalog_fixture.h",
+      "generated_source": "tools/c_recovery/catalog_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "35efd8337abe92aa818ab30d351640c8a8ef85daf51edf0a0b234a028dc4a01b",
+      "oracle_cases_per_optimization": 804,
+      "oracle_entry_count_per_optimization": 128,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
+      "source_sha256": "79cbe68a4eb5e646fccd135e53e2d60d080d363332ec3c4c198de781ab919929",
+      "header_sha256": "67bb952d79ebfc82e507409f7c596139e0a684f97e5ab9fae9054ccd437d024b",
+      "fixture_sha256": "a68d40649438adc7e2a8eab0bdfc85260814bb9a208975e36b22132ae96e2f85",
+      "generated_source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95"
+    },
+    "sub_17B3C": {
+      "ida_linear": 97084,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/239-c-list-families.md",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "source": "tools/c_recovery/catalog.c",
+      "header": "tools/c_recovery/catalog.h",
+      "fixture": "tools/c_recovery/catalog_fixture.h",
+      "generated_source": "tools/c_recovery/catalog_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "7a9fbce4cccab1c9d12f7bfe3e4f415d03090e15998215ff2a13ec0c081a8db4",
+      "oracle_cases_per_optimization": 804,
+      "oracle_entry_count_per_optimization": 32,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
+      "source_sha256": "79cbe68a4eb5e646fccd135e53e2d60d080d363332ec3c4c198de781ab919929",
+      "header_sha256": "67bb952d79ebfc82e507409f7c596139e0a684f97e5ab9fae9054ccd437d024b",
+      "fixture_sha256": "a68d40649438adc7e2a8eab0bdfc85260814bb9a208975e36b22132ae96e2f85",
+      "generated_source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95"
+    },
+    "sub_17BC0": {
+      "ida_linear": 97216,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/239-c-list-families.md",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "source": "tools/c_recovery/catalog.c",
+      "header": "tools/c_recovery/catalog.h",
+      "fixture": "tools/c_recovery/catalog_fixture.h",
+      "generated_source": "tools/c_recovery/catalog_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "e5a6ab63d6ec288ae1e1201b008140e5ed67c95856e465e38c2af40baca89fa5",
+      "oracle_cases_per_optimization": 804,
+      "oracle_entry_count_per_optimization": 760,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
+      "source_sha256": "79cbe68a4eb5e646fccd135e53e2d60d080d363332ec3c4c198de781ab919929",
+      "header_sha256": "67bb952d79ebfc82e507409f7c596139e0a684f97e5ab9fae9054ccd437d024b",
+      "fixture_sha256": "a68d40649438adc7e2a8eab0bdfc85260814bb9a208975e36b22132ae96e2f85",
+      "generated_source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95",
+      "resolution_backlinks": [
+        {
+          "ida_linear": 97216,
+          "evidence_markers": [
+            "sub_17BC0"
+          ],
+          "older_document": "docs/re/27-list-row-fields.md",
+          "required_markers": [
+            "~~開局選勢力的逐列",
+            "119-c-list-families-restoration.md"
+          ],
+          "platform_module": "dosv/KI.EXE",
+          "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+          "level": "proven",
+          "evidence": "docs/re/119-c-list-families-restoration.md"
+        }
+      ]
     }
   },
   "code_blocks": {
@@ -5958,6 +6303,191 @@
       "routine_sha256": "d07229ee3ee5550cefd4d453b75ed632f23d994166d5e6b0c95b836eebe75077",
       "oracle_entry_count_per_optimization": 200,
       "scope": "Original city list callbacks and six descriptors (header 0 rebuilds, 1..5 sort), live byte/word/JBE/JNB sort, exact exchange order, 512-byte SS list, special return-address removal, full row/font/number/scrollbar rendering, select/cancel/drag, and four-scenario relocation accept/refuse/current-capital retry through real mouse input and original world/sidebar/scene writers. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/sound/VGA; IF/TF=0; isolated stack; FLAGS from pinned dosgolem. Natural player menus/long paths, other list families and original C machine code remain pending",
+      "c_machine_code_match": false
+    },
+    "0x171A8": {
+      "ida_linear": 94632,
+      "original_name_before_analysis": "",
+      "status": "semantic-conformed",
+      "boundary_authority": "original caller entry and CFG, not recovered original C function boundaries",
+      "source": "tools/c_recovery/catalog_generated.inc",
+      "source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "9e59ea35676b7954e5897f78fac5da81471e091d2a4c67c18e39e537f8f8e293",
+      "oracle_entry_count_per_optimization": 108,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
+      "c_machine_code_match": false
+    },
+    "0x17217": {
+      "ida_linear": 94743,
+      "original_name_before_analysis": "",
+      "status": "semantic-conformed",
+      "boundary_authority": "original caller entry and CFG, not recovered original C function boundaries",
+      "source": "tools/c_recovery/catalog_generated.inc",
+      "source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "57498d75ad1a8e0c368c1a5fb4b3457ca8a3bc73696d5c2ab03925ff9914497f",
+      "oracle_entry_count_per_optimization": 108,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
+      "c_machine_code_match": false
+    },
+    "0x1724D": {
+      "ida_linear": 94797,
+      "original_name_before_analysis": "",
+      "status": "semantic-conformed",
+      "boundary_authority": "original caller entry and CFG, not recovered original C function boundaries",
+      "source": "tools/c_recovery/catalog_generated.inc",
+      "source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "a801a7b68b13ad9207266803eaa708c3a763779a0e9c56834d295189f9fe4292",
+      "oracle_entry_count_per_optimization": 184,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
+      "c_machine_code_match": false
+    },
+    "0x1727D": {
+      "ida_linear": 94845,
+      "original_name_before_analysis": "sub_1727D",
+      "status": "semantic-conformed",
+      "boundary_authority": "original caller entry and CFG, not recovered original C function boundaries",
+      "source": "tools/c_recovery/catalog_generated.inc",
+      "source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "81bc9741067f2d8a392a944ffd79df9ec05b13ddc99c59d3e1ffe29bbfaa7902",
+      "oracle_entry_count_per_optimization": 1904,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
+      "c_machine_code_match": false,
+      "resolution_backlinks": [
+        {
+          "ida_linear": 94845,
+          "evidence_markers": [
+            "0x1735C"
+          ],
+          "older_document": "docs/re/27-list-row-fields.md",
+          "required_markers": [
+            "`+0x06` u8",
+            "119-c-list-families-restoration.md"
+          ],
+          "platform_module": "dosv/KI.EXE",
+          "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+          "level": "proven",
+          "evidence": "docs/re/119-c-list-families-restoration.md"
+        }
+      ]
+    },
+    "0x1763C": {
+      "ida_linear": 95804,
+      "original_name_before_analysis": "",
+      "status": "semantic-conformed",
+      "boundary_authority": "original caller entry and CFG, not recovered original C function boundaries",
+      "source": "tools/c_recovery/catalog_generated.inc",
+      "source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "734f979e224037be19f7edae40531038128619379fbe2f8925a52cb0b098bb75",
+      "oracle_entry_count_per_optimization": 144,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
+      "c_machine_code_match": false
+    },
+    "0x176A0": {
+      "ida_linear": 95904,
+      "original_name_before_analysis": "",
+      "status": "semantic-conformed",
+      "boundary_authority": "original caller entry and CFG, not recovered original C function boundaries",
+      "source": "tools/c_recovery/catalog_generated.inc",
+      "source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "d6c420166069111aa4c39c3c625b6819caa29d51d14fc009e1e8acf581099de7",
+      "oracle_entry_count_per_optimization": 120,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
+      "c_machine_code_match": false
+    },
+    "0x176DC": {
+      "ida_linear": 95964,
+      "original_name_before_analysis": "",
+      "status": "semantic-conformed",
+      "boundary_authority": "original caller entry and CFG, not recovered original C function boundaries",
+      "source": "tools/c_recovery/catalog_generated.inc",
+      "source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "462ef5fdbfe21b38ccdb8785003f9143b7d2474a0bff5a66db2e0b1c27469588",
+      "oracle_entry_count_per_optimization": 220,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
+      "c_machine_code_match": false
+    },
+    "0x178E5": {
+      "ida_linear": 96485,
+      "original_name_before_analysis": "",
+      "status": "semantic-conformed",
+      "boundary_authority": "original caller entry and CFG, not recovered original C function boundaries",
+      "source": "tools/c_recovery/catalog_generated.inc",
+      "source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "80cc88bb67f08a4047b52b7d6ef004ea712261fc3cc3b1c26cf5996ae8872dce",
+      "oracle_entry_count_per_optimization": 120,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
+      "c_machine_code_match": false
+    },
+    "0x17944": {
+      "ida_linear": 96580,
+      "original_name_before_analysis": "",
+      "status": "semantic-conformed",
+      "boundary_authority": "original caller entry and CFG, not recovered original C function boundaries",
+      "source": "tools/c_recovery/catalog_generated.inc",
+      "source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "51ffc61b4a5632486517b1f2ccc7851dbd08e47c49f1d5aeef3e8dfe6824923c",
+      "oracle_entry_count_per_optimization": 120,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
+      "c_machine_code_match": false
+    },
+    "0x1796C": {
+      "ida_linear": 96620,
+      "original_name_before_analysis": "",
+      "status": "semantic-conformed",
+      "boundary_authority": "original caller entry and CFG, not recovered original C function boundaries",
+      "source": "tools/c_recovery/catalog_generated.inc",
+      "source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "ce6821bd3452abcc7111ff4d26fb66792001bb20d7b647d0885da9c5f9c20928",
+      "oracle_entry_count_per_optimization": 208,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
+      "c_machine_code_match": false
+    },
+    "0x17B6F": {
+      "ida_linear": 97135,
+      "original_name_before_analysis": "",
+      "status": "semantic-conformed",
+      "boundary_authority": "original caller entry and CFG, not recovered original C function boundaries",
+      "source": "tools/c_recovery/catalog_generated.inc",
+      "source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "80cc88bb67f08a4047b52b7d6ef004ea712261fc3cc3b1c26cf5996ae8872dce",
+      "oracle_entry_count_per_optimization": 92,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
+      "c_machine_code_match": false
+    },
+    "0x17B90": {
+      "ida_linear": 97168,
+      "original_name_before_analysis": "",
+      "status": "semantic-conformed",
+      "boundary_authority": "original caller entry and CFG, not recovered original C function boundaries",
+      "source": "tools/c_recovery/catalog_generated.inc",
+      "source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95",
+      "evidence": "docs/re/119-c-list-families-restoration.md",
+      "receipt": "workplace/matching-decompilation/c-catalog/verification.json",
+      "routine_sha256": "be7744c31a92fcdb1a98ed95ba5d67eb1dbbc762b6206de80970f3860aa92152",
+      "oracle_entry_count_per_optimization": 76,
+      "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
       "c_machine_code_match": false
     }
   },

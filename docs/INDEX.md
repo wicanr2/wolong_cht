@@ -196,6 +196,7 @@
 | [`docs/re/116-c-scene-resume-restoration.md`](re/116-c-scene-resume-restoration.md) | 116：場景主入口與鏡頭／小地圖退出重畫 C | CONFORMED。9 支新函式與既有世界退出常式的完整局部 C 呼叫鏈通過。 | 2026-10-09 |
 | [`docs/re/117-c-ruler-sortie-restoration.md`](re/117-c-ruler-sortie-restoration.md) | 117：C 君主出陣與自動編成 | CONFORMED。14 個 C 函式、501 條原始指令通過局部同狀態驗證。 | 2026-10-09 |
 | [`docs/re/118-c-city-list-restoration.md`](re/118-c-city-list-restoration.md) | 118：C 據點清單與遷都 | CONFORMED。18 函式與 5 個 raw 入口通過同狀態驗證。 | 2026-10-09 |
+| [`docs/re/119-c-list-families-restoration.md`](re/119-c-list-families-restoration.md) | 119：C 軍團、武將與勢力清單 | CONFORMED。11 函式／12 raw，O0／O2 各 804 組完整狀態一致。 | 2026-10-09 |
 | [`docs/re/12-diplomacy-dialogue.md`](re/12-diplomacy-dialogue.md) | 12 — 停戰說服訊息索引：#190–#198 | 三變體槽位與停戰說服這條索引路徑已證實；事件 6／7 的次要呼叫已定位， 但 formatter 參數契約與完整可見… | 2026-08-09 |
 | [`docs/re/13-pc98-numeric-window.md`](re/13-pc98-numeric-window.md) | 13 — DOS/V 數字輸入視窗量測與 CJK 版面決策 | 以 DOS/V 為唯一畫面基準；原始座標、DOS/V 96×64 內框 blit、3×6 每格操作、 實際按鍵 gl… | 2026-08-10 |
 | [`docs/re/14-mmap-mch-objects.md`](re/14-mmap-mch-objects.md) | 14 — MMAP.MCH 戰略地圖物件 | 資產格式、事件 12 的火災／暴動圖形鏈與 typed 動畫／移動時序 confirmed； type 3 的事件語… | 2026-08-10 |
@@ -454,6 +455,7 @@
 | [`docs/spec/236-c-scene-resume.md`](spec/236-c-scene-resume.md) | 236：C 場景主入口與退出重畫 | CONFORMED。O0／O2 各 171 完整場景／裝置案例與 12 個錯版通過。 | 2026-10-09 |
 | [`docs/spec/237-c-ruler-sortie.md`](spec/237-c-ruler-sortie.md) | 237：C 君主出陣與自動編成 | CONFORMED。O0／O2 各 451 組完整裝置案例與十個錯版通過。 | 2026-10-09 |
 | [`docs/spec/238-c-city-list.md`](spec/238-c-city-list.md) | 238：C 據點清單與遷都 | CONFORMED。O0／O2 各 520 完整裝置案例與十二錯版通過。 | 2026-10-09 |
+| [`docs/spec/239-c-list-families.md`](spec/239-c-list-families.md) | 239：C 四類清單與原始回呼 | CONFORMED。O0／O2 各 804 完整裝置與十三錯版通過。 | 2026-10-09 |
 | [`docs/spec/24-corps-info-window.md`](spec/24-corps-info-window.md) | 24 — 軍團情報視窗 | CONFORMED。版面已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/25-slot-select-window.md`](spec/25-slot-select-window.md) | 25 — 四槽選擇視窗（新遊戲／讀取／儲存） | CONFORMED。讀取／儲存已照原版版面實作； 新遊戲仍走 remake 自己的啟動殼層（§5）。 | 2026-08-15 |
 | [`docs/spec/26-yes-no-dialog.md`](spec/26-yes-no-dialog.md) | 26 — ＹＥＳ／ＮＯ 對話框 | CONFORMED。版面與命中算式已照原版實作並有契約測試。 | 2026-08-15 |

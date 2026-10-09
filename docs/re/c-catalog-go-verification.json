@@ -1,0 +1,36 @@
+{
+  "schema": "wolong-catalog-go-verification-v1",
+  "status": "passed",
+  "source_sha256": {
+    "tools/go.sh": "fa9dae64edb9b9d0a770e8af773fb79ddcaed807854f42f4c6fa222be6201416",
+    "tools/check.sh": "8564f12abd88e64d9d938b0cbe3ed9fc7578b739e4194c97335548efbf01d803",
+    "go.mod": "ffa0f9568f02beb7bdd8e11e6b5eb0f7692e314af6e1a5a5a3b73dfaae178c84",
+    "go.sum": "0e59bae9f1e5957bc62654b3808bfd699e897a32d50f8ab4ee2c6ef3d7b23acb",
+    "tools/py.sh": "d87d60fa5c66993edda6bf83ac82577769c43be9e6771dd33a5baf356e117cdd"
+  },
+  "image_id": "sha256:9b6b1a2a457eb6937aceac5aa0eea79de88227100e33163644e1f8f4e661949c",
+  "go_version": "go1.26.7 linux/amd64",
+  "cold_test_cache": true,
+  "vet_passed": true,
+  "test_passed": true,
+  "tested_packages": 39,
+  "log_sha256": "d52818f8d3a3a932d8941534c01b8229a244730467707bc72390a39ba0ab25ca",
+  "actual_mount_proof_sha256": "0dac76776089029e97302ae360ef6b6da7a3006f1224bae63a3f4738f7c1b2b5",
+  "original_assets_readonly": true,
+  "network": "none",
+  "memory_bytes": 2147483648,
+  "nano_cpus": 2000000000,
+  "pids_limit": 256,
+  "user": "1000:1000",
+  "cache_scope": "workplace/matching-decompilation/c-catalog/go-cache",
+  "dependency_input": "go.mod and go.sum; downloaded exact pinned versions through official Go proxy before offline vet/test",
+  "formal_check_all": {
+    "exit_status": 1,
+    "log_sha256": "b57e6533f31ed6d4bfb1d4c77fea0654f4c85295288c43896d57c491bec95113",
+    "known_document_failures": [
+      "two historical playtest/19 PNG links",
+      "277 historical phantom references; census symbol layer unavailable"
+    ],
+    "go_vet_test_passed": true
+  }
+}

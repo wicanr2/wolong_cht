@@ -10,12 +10,13 @@ import subprocess
 from pathlib import Path
 
 EXPECTED = "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868"
-SIZE, INSTRUCTIONS, CODE_BYTES = 67099, 24829, 56505
+SIZE, INSTRUCTIONS, CODE_BYTES = 67099, 24999, 56866
 SOURCE = "tools/c_recovery/KI.code.S"
 LINKER = "tools/c_recovery/KI.code.ld"
 MANIFEST = "docs/re/assembly-code-record.json"
 SUPPLEMENT = "docs/re/rectangle-handler-code.json"
 LIST_SUPPLEMENT = "docs/re/c-list-code.json"
+CATALOG_SUPPLEMENT = "docs/re/c-catalog-code.json"
 
 
 def digest(data: bytes) -> str:
@@ -44,6 +45,7 @@ def export(repo: Path) -> None:
     report = json.loads((local / "report.json").read_text(encoding="utf-8"))
     source = (local / "KI.reconstructed.S").read_bytes()
     linker = (local / "KI.ld").read_bytes()
+    baseline_linker = linker
     require(report["whole_file_exact"] and report["standalone_source_exact"], "baseline not exact")
     require(report["input_sha256"] == EXPECTED, "baseline input differs")
     require(report["source_sha256"] == digest(source), "baseline source differs")
@@ -83,6 +85,25 @@ def export(repo: Path) -> None:
     added = list_supplement["instructions"]
     require(len(added) == 83 and sum(r["file_end"] - r["file_start"] for r in added) == 215, "list supplement coverage differs")
     extra = extra + added
+    catalog_raw = (repo / CATALOG_SUPPLEMENT).read_bytes()
+    catalog = json.loads(catalog_raw)
+    require(catalog["schema"] == "wolong-matching-code-supplement-v1" and catalog["input_sha256"] == EXPECTED, "catalog supplement identity differs")
+    catalog_added = catalog["instructions"]
+    require(len(catalog_added) == 170 and sum(r["file_end"] - r["file_start"] for r in catalog_added) == 361, "catalog supplement coverage differs")
+    extra = extra + catalog_added
+    # Absolute symbols preserve original imm16 encodings without inserting instruction bytes.
+    linker_text = linker.decode("utf-8")
+    constants = []
+    for name, value in sorted(catalog["constant_symbols"].items()):
+        require(re.fullmatch(r"imm_at_[0-9A-F]+", name) is not None and isinstance(value, int) and 0 <= value <= 0xffff, "invalid catalog constant")
+        old = re.search(rf"^{re.escape(name)} = (0x[0-9a-f]+);$", linker_text, re.M)
+        if old:
+            require(int(old[1], 16) == value, "catalog constant conflicts with baseline")
+        else:
+            constants.append(f"{name} = {value:#x};")
+    if constants:
+        linker_text = "\n".join(constants) + "\n" + linker_text
+    linker = linker_text.encode("utf-8")
     for row in extra:
         start, end = row["file_start"], row["file_end"]
         require(raw[start:end] == bytes.fromhex(row["bytes"]), "supplement bytes differ")
@@ -133,13 +154,17 @@ def export(repo: Path) -> None:
         "schema": "wolong-matching-code-record-v1",
         "input": "DOS/V KI.EXE", "input_sha256": EXPECTED, "input_size": SIZE,
         "instruction_count": count, "instruction_bytes": CODE_BYTES,
-        "baseline_instruction_count": 24376, "supplement_instruction_count": 453,
+        "baseline_instruction_count": 24376, "supplement_instruction_count": 623,
         "historical_supplement_instruction_count": 370,
         "supplement": SUPPLEMENT, "supplement_sha256": digest(supplement_raw),
         "supplement_database_sha256": supplement["database_sha256"],
         "additional_supplements": [{"path": LIST_SUPPLEMENT, "sha256": digest(list_raw),
                                     "database_sha256": list_supplement["database_sha256"],
-                                    "instructions": 83, "bytes": 215}],
+                                    "instructions": 83, "bytes": 215},
+                                   {"path": CATALOG_SUPPLEMENT, "sha256": digest(catalog_raw),
+                                    "database_sha256": catalog["database_sha256"],
+                                    "instructions": 170, "bytes": 361,
+                                    "constant_symbols": catalog["constant_symbols"]}],
         "private_import_bytes": SIZE - CODE_BYTES,
         "address_space": "IDA database linear base 0x10000; file = linear - 0x10000 + 512",
         "ida_version": report["ida_version"], "ida_image_id": report["ida_image_id"],
@@ -149,7 +174,7 @@ def export(repo: Path) -> None:
         "semantic_index_sha256": digest(semantic_path.read_bytes()),
         "record_tool": "tools/matching_code_record.py",
         "record_tool_sha256": digest((repo / "tools/matching_code_record.py").read_bytes()),
-        "baseline_source_sha256": digest(source), "baseline_linker_sha256": digest(linker),
+        "baseline_source_sha256": digest(source), "baseline_linker_sha256": digest(baseline_linker),
         "source": SOURCE, "source_sha256": digest(out),
         "linker": LINKER, "linker_sha256": digest(linker),
         "build_image_id": report["build_image_id"], "assembler_version": report["assembler_version"],

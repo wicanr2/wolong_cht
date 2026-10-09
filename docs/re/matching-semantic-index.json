@@ -2141,6 +2141,167 @@
       "sources": [
         "docs/re/118-c-city-list-restoration.md"
       ]
+    },
+    "0x1716D": {
+      "meaning": "玩家勢力軍團清單入口與排序狀態保存",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x171D3": {
+      "meaning": "精確 X/Y 軍團清單入口，寫入兩個原指令立即值",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x171A8": {
+      "meaning": "掃 126 軍團，篩存在與玩家勢力，回傳 SS 記錄位移",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x17217": {
+      "meaning": "掃 126 軍團，篩存在及精確 X/Y，不限玩家勢力",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x1724D": {
+      "meaning": "軍團十列 renderer 與比例滑塊",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x1727D": {
+      "meaning": "軍團名稱、兵力×10、byte 士氣、位置／目標／委任與原換色",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x175FA": {
+      "meaning": "指定勢力武將清單，入口 DS:CFF 寫入 builder 立即值",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x17663": {
+      "meaning": "可任命武將清單入口，沿用 CS:98AA 排序狀態",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x1763C": {
+      "meaning": "掃 128 武將，存在與指定勢力，保留原自然順序",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x176A0": {
+      "meaning": "玩家無職武將候選，排除君主",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x176DC": {
+      "meaning": "武將十列 renderer 與比例滑塊",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x1770C": {
+      "meaning": "武將名、+1D/FF→+1C、職務優先、三個能力 byte 與空列",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x178A7": {
+      "meaning": "完整勢力清單入口，先更新外交顯示 cache",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x178E5": {
+      "meaning": "掃 22 勢力，篩存在並保留自然順序",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x17906": {
+      "meaning": "外交候選勢力清單入口，先更新外交顯示 cache",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x17944": {
+      "meaning": "掃 22 勢力，排除玩家並保留自然順序",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x1796C": {
+      "meaning": "勢力十列 renderer 與比例滑塊",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x1799C": {
+      "meaning": "勢力君主／首都／外交／外交官與兩個三位數字欄",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x17A7A": {
+      "meaning": "22 勢力外交顯示 cache，LOOP 每筆清 DL、和平位與 19/20/99/100/101 邊界",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x17B3C": {
+      "meaning": "開局勢力清單，原點 136/104、初始排序狀態 0",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x17B6F": {
+      "meaning": "掃 22 勢力的開局 builder",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x17B90": {
+      "meaning": "開局勢力十列 renderer 與比例滑塊",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x17BC0": {
+      "meaning": "開局君主／軍師／首都與兩個三位數字欄",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
     }
   },
   "operands": {
@@ -2231,6 +2392,30 @@
       "level": "proven",
       "sources": [
         "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x1722A:1": {
+      "original": "1234h",
+      "meaning": "初始佔位，CS:722B 由入口 AX 寫入座標 X，執行 MOV DX 時讀取",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x17232:1": {
+      "original": "1234h",
+      "meaning": "初始佔位，CS:7233 由入口 BX 寫入座標 Y，執行 MOV DX 時讀取",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x17643:1": {
+      "original": "0",
+      "meaning": "初始佔位，CS:7644 由入口 DS:CFF 寫入指定勢力",
+      "level": "proven",
+      "sources": [
+        "docs/re/119-c-list-families-restoration.md"
       ]
     }
   }

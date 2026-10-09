@@ -54,8 +54,9 @@
 | 2026-10-09；場景／鏡頭／小地圖九 C 函式 | O0／O2 各 171 全場景裝置／ABI 相同，816 全形 glyph、十二錯版與原 tail／far 通過 | 原三句、資源／Mouse／world renderer 閉包接通；自然事件／長程玩家與 C 機器碼未代證 | spec/236、[re/116](docs/re/116-c-scene-resume-restoration.md)、原始來源／收據 |
 | 2026-10-09；君主出陣與自動編成 14 個 C 函式 | O0／O2 各 451 組完整狀態一致，十個錯版拒絕；501 條原始指令乾淨重生一致 | 保留資金符號、carry、部分失敗、補兵餘數、佔用圖與側欄；遷都清單、正常玩家長程與 C 機器碼仍待驗證 | [re/117](docs/re/117-c-ruler-sortie-restoration.md)、[spec/237](docs/spec/237-c-ruler-sortie.md)、來源與版控收據 |
 | 2026-10-09；據點清單、排序與遷都 18 C 函式／5 raw | O0／O2 各 520 完整狀態一致，十二錯版拒絕；120 排序／36 builder／48 捲軸獨立核對 | 六表頭、特殊返回、四劇本接受／拒絕／原首都重選與側欄接回；正常玩家長程與 C 機器碼仍待驗證 | [re/118](docs/re/118-c-city-list-restoration.md)、[spec/238](docs/spec/238-c-city-list.md)、來源／新增指令／完整收據 |
+| 2026-10-09；軍團／武將／勢力／開局 11 C 函式／12 raw | O0／O2 各 804 完整狀態相同、十三錯版；168 builder／240 排序／16 cache 獨立核對，156 表頭與 28 選取 | 902 指令與四家族原回呼接共用引擎；289 C／48 raw，非法排序／自然長程與 C 機器碼仍未驗證 | [re/119](docs/re/119-c-list-families-restoration.md)、[spec/239](docs/spec/239-c-list-families.md)、原始定位／補充／收據 |
 
-持續 Goal 為完成整個 matching decompilation；目前有 24,829 條指令的整檔組語基準與 278 個 C 函式、三十六個原始 code 入口，不能據此宣布完整 C 還原完成。
+持續 Goal 為完成整個 matching decompilation；目前有 24,999 條指令的整檔組語基準與 289 個 C 函式、四十八個原始 code 入口，不能據此宣布完整 C 還原完成。
 使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b`、熱區 `a8605b5` 、版控組語／VGA `47e16c9` 、對齊貼圖 `6139f9e` 、矩形／計量 `c7dc8df`、顯示分派 `4d31520`、字形 `85f06de` 與數字 `06fff77` 已推到 origin/main。
 
 未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。
@@ -720,6 +721,13 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 ---
 
 ## 6. 已被推翻的斷言
+
+### 「選武將重設排序、軍團士氣為 word、勢力數字四位」（2026-10-09）
+
+原 `0x1768A` 覆寫 XOR CL，仍沿用 CS:98AA；`0x1735C` 只讀 byte 士氣；
+`0x17A5C` 的 BX=9003 指三位數字，四格欄寬與半格內縮仍保留。
+兩個勢力入口都呼叫 cache，開局 renderer 也已逐欄核對。
+固定 bytes、804 組原版／C 與五條回鏈護欄見 [re/119](docs/re/119-c-list-families-restoration.md)。
 
 ### 「word_183D3 沒有讀取端，寫了不用」（2026-10-09）
 

@@ -1,0 +1,7278 @@
+{
+  "schema": "wolong-matching-code-supplement-v1",
+  "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "tool": "IDA Pro",
+  "tool_version": "9.4",
+  "database_sha256": "63967f83d99ba47b84f6ce73d721f13e8f22b514bbf7212abfdd9f6fe3b0fec8",
+  "probe_sha256": "99d1317b600ab70adf4ee223df1f5c2dfdc324b5a7e12374e49263b53a984f58",
+  "evidence": "docs/re/119-c-list-families-restoration.md",
+  "constant_symbols": {
+    "imm_at_17284": 65535
+  },
+  "instructions": [
+    {
+      "ida_linear": 94743,
+      "file_start": 29719,
+      "file_end": 29720,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    dx",
+      "gas": "push dx",
+      "bytes": "52",
+      "original_ida_data_line": "db 52h, 56h, 57h, 0BEh, 40h, 22h, 33h, 0FFh, 32h, 0E4h",
+      "ida_code_classified": false,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94744,
+      "file_start": 29720,
+      "file_end": 29721,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    si",
+      "gas": "push si",
+      "bytes": "56",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94745,
+      "file_start": 29721,
+      "file_end": 29722,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    di",
+      "gas": "push di",
+      "bytes": "57",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94746,
+      "file_start": 29722,
+      "file_end": 29725,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     si, 2240h",
+      "gas": "mov si, 0x2240",
+      "bytes": "be4022",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 8768,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "2240h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94749,
+      "file_start": 29725,
+      "file_end": 29727,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "xor     di, di",
+      "gas": "{load} xor di, di",
+      "bytes": "33ff",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94751,
+      "file_start": 29727,
+      "file_end": 29729,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "xor     ah, ah",
+      "gas": "{load} xor ah, ah",
+      "bytes": "32e4",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 20,
+          "original": "ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 20,
+          "original": "ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94753,
+      "file_start": 29729,
+      "file_end": 29733,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     al, cs:byte_10CFF",
+      "gas": "cs; mov al, byte ptr [0xcff]",
+      "bytes": "2ea0ff0c",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 16,
+          "original": "al",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 2,
+          "addr": 3327,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "cs:byte_10CFF",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94757,
+      "file_start": 29733,
+      "file_end": 29736,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "cmp     byte ptr [si], 80h",
+      "gas": "cmp byte ptr [si], 0x80",
+      "bytes": "803c80",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 3,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 4,
+          "original": "byte ptr [si]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 128,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "80h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94760,
+      "file_start": 29736,
+      "file_end": 29738,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jb      short near ptr byte_17235+0Bh",
+      "gas": "jb .+24",
+      "bytes": "7216",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 29248,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "near ptr byte_17235+0Bh",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94762,
+      "file_start": 29738,
+      "file_end": 29741,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     dx, 1234h",
+      "gas": "mov dx, 0x1234",
+      "bytes": "ba3412",
+      "original_ida_data_line": "db 0BAh",
+      "ida_code_classified": false,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 4660,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "1234h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94765,
+      "file_start": 29741,
+      "file_end": 29744,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "cmp     dx, [si+10h]",
+      "gas": "cmp dx, word ptr [si+0x10]",
+      "bytes": "3b5410",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 4,
+          "addr": 16,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 4,
+          "original": "[si+10h]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94768,
+      "file_start": 29744,
+      "file_end": 29746,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jnz     short near ptr byte_17235+0Bh",
+      "gas": "jnz .+16",
+      "bytes": "750e",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 29248,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "near ptr byte_17235+0Bh",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94770,
+      "file_start": 29746,
+      "file_end": 29749,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     dx, 1234h",
+      "gas": "mov dx, 0x1234",
+      "bytes": "ba3412",
+      "original_ida_data_line": "db 0BAh",
+      "ida_code_classified": false,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 4660,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "1234h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94773,
+      "file_start": 29749,
+      "file_end": 29752,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "cmp     dx, [si+12h]",
+      "gas": "cmp dx, word ptr [si+0x12]",
+      "bytes": "3b5412",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 4,
+          "addr": 18,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 4,
+          "original": "[si+12h]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94776,
+      "file_start": 29752,
+      "file_end": 29754,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jnz     short near ptr unk_17240",
+      "gas": "jnz .+8",
+      "bytes": "7506",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 29248,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "near ptr unk_17240",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94778,
+      "file_start": 29754,
+      "file_end": 29756,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     [bp+di], si",
+      "gas": "mov word ptr [bp+di], si",
+      "bytes": "8933",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 3,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "[bp+di]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94780,
+      "file_start": 29756,
+      "file_end": 29758,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "inc     ah",
+      "gas": "inc ah",
+      "bytes": "fec4",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 20,
+          "original": "ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94782,
+      "file_start": 29758,
+      "file_end": 29759,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "inc     di",
+      "gas": "inc di",
+      "bytes": "47",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94783,
+      "file_start": 29759,
+      "file_end": 29760,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "inc     di",
+      "gas": "inc di",
+      "bytes": "47",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94784,
+      "file_start": 29760,
+      "file_end": 29763,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     si, 40h ; '@'",
+      "gas": "add si, 0x40",
+      "bytes": "83c640",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 64,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "40h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94787,
+      "file_start": 29763,
+      "file_end": 29767,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "cmp     si, 41C0h",
+      "gas": "cmp si, 0x41c0",
+      "bytes": "81fec041",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 16832,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "41C0h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94791,
+      "file_start": 29767,
+      "file_end": 29769,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jnz     short loc_17225",
+      "gas": "jnz .-34",
+      "bytes": "75dc",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 29221,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "loc_17225",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94793,
+      "file_start": 29769,
+      "file_end": 29770,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     di",
+      "gas": "pop di",
+      "bytes": "5f",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94794,
+      "file_start": 29770,
+      "file_end": 29771,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     si",
+      "gas": "pop si",
+      "bytes": "5e",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94795,
+      "file_start": 29771,
+      "file_end": 29772,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     dx",
+      "gas": "pop dx",
+      "bytes": "5a",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94796,
+      "file_start": 29772,
+      "file_end": 29773,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "retn",
+      "gas": "ret",
+      "bytes": "c3",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94797,
+      "file_start": 29773,
+      "file_end": 29774,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    ax",
+      "gas": "push ax",
+      "bytes": "50",
+      "original_ida_data_line": "db  50h ; P",
+      "ida_code_classified": false,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94798,
+      "file_start": 29774,
+      "file_end": 29775,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    bx",
+      "gas": "push bx",
+      "bytes": "53",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94799,
+      "file_start": 29775,
+      "file_end": 29776,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    dx",
+      "gas": "push dx",
+      "bytes": "52",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94800,
+      "file_start": 29776,
+      "file_end": 29777,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    si",
+      "gas": "push si",
+      "bytes": "56",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94801,
+      "file_start": 29777,
+      "file_end": 29780,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "call    sub_18607",
+      "gas": "call .+5046",
+      "bytes": "e8b313",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 34311,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "sub_18607",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94804,
+      "file_start": 29780,
+      "file_end": 29785,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     dx, cs:word_181AE",
+      "gas": "cs; mov dx, word ptr [0x81ae]",
+      "bytes": "2e8b16ae81",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 2,
+          "addr": 33198,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "cs:word_181AE",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94809,
+      "file_start": 29785,
+      "file_end": 29788,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     dx, 18h",
+      "gas": "add dx, 0x18",
+      "bytes": "83c218",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 24,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "18h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94812,
+      "file_start": 29788,
+      "file_end": 29793,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     bx, cs:word_181B0",
+      "gas": "cs; mov bx, word ptr [0x81b0]",
+      "bytes": "2e8b1eb081",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 2,
+          "addr": 33200,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "cs:word_181B0",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94817,
+      "file_start": 29793,
+      "file_end": 29796,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     bx, 10h",
+      "gas": "add bx, 0x10",
+      "bytes": "83c310",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 16,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "10h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94820,
+      "file_start": 29796,
+      "file_end": 29798,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "xor     ah, ah",
+      "gas": "{load} xor ah, ah",
+      "bytes": "32e4",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 20,
+          "original": "ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 20,
+          "original": "ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94822,
+      "file_start": 29798,
+      "file_end": 29800,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "shl     ax, 1",
+      "gas": "shl ax, 0x1",
+      "bytes": "d1e0",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94824,
+      "file_start": 29800,
+      "file_end": 29802,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     si, ax",
+      "gas": "{load} mov si, ax",
+      "bytes": "8bf0",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94826,
+      "file_start": 29802,
+      "file_end": 29805,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ax, 0Ah",
+      "gas": "mov ax, 0xa",
+      "bytes": "b80a00",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 10,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "0Ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94829,
+      "file_start": 29805,
+      "file_end": 29808,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "call    near ptr unk_1727D",
+      "gas": "call .+16",
+      "bytes": "e80d00",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 29309,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "near ptr unk_1727D",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94832,
+      "file_start": 29808,
+      "file_end": 29809,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "inc     si",
+      "gas": "inc si",
+      "bytes": "46",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94833,
+      "file_start": 29809,
+      "file_end": 29810,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "inc     si",
+      "gas": "inc si",
+      "bytes": "46",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94834,
+      "file_start": 29810,
+      "file_end": 29813,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     bx, 10h",
+      "gas": "add bx, 0x10",
+      "bytes": "83c310",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 16,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "10h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94837,
+      "file_start": 29813,
+      "file_end": 29814,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "dec     ax",
+      "gas": "dec ax",
+      "bytes": "48",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94838,
+      "file_start": 29814,
+      "file_end": 29816,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jnz     short loc_1726D",
+      "gas": "jnz .-9",
+      "bytes": "75f5",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 29293,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "loc_1726D",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94840,
+      "file_start": 29816,
+      "file_end": 29817,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     si",
+      "gas": "pop si",
+      "bytes": "5e",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94841,
+      "file_start": 29817,
+      "file_end": 29818,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     dx",
+      "gas": "pop dx",
+      "bytes": "5a",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94842,
+      "file_start": 29818,
+      "file_end": 29819,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     bx",
+      "gas": "pop bx",
+      "bytes": "5b",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94843,
+      "file_start": 29819,
+      "file_end": 29820,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     ax",
+      "gas": "pop ax",
+      "bytes": "58",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94844,
+      "file_start": 29820,
+      "file_end": 29821,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "retn",
+      "gas": "ret",
+      "bytes": "c3",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94845,
+      "file_start": 29821,
+      "file_end": 29822,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    ax",
+      "gas": "push ax",
+      "bytes": "50",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94846,
+      "file_start": 29822,
+      "file_end": 29823,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    bx",
+      "gas": "push bx",
+      "bytes": "53",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94847,
+      "file_start": 29823,
+      "file_end": 29824,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    cx",
+      "gas": "push cx",
+      "bytes": "51",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 1,
+          "original": "cx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94848,
+      "file_start": 29824,
+      "file_end": 29825,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    dx",
+      "gas": "push dx",
+      "bytes": "52",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94849,
+      "file_start": 29825,
+      "file_end": 29826,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    si",
+      "gas": "push si",
+      "bytes": "56",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94850,
+      "file_start": 29826,
+      "file_end": 29827,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    di",
+      "gas": "push di",
+      "bytes": "57",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94851,
+      "file_start": 29827,
+      "file_end": 29828,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    bp",
+      "gas": "push bp",
+      "bytes": "55",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 5,
+          "original": "bp",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94852,
+      "file_start": 29828,
+      "file_end": 29832,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "cmp     word ptr [bp+si], 0FFFFh",
+      "gas": "cmp word ptr [bp+si], offset imm_at_17284",
+      "bytes": "813affff",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 3,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "word ptr [bp+si]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 18446744073709551615,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "0FFFFh",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94856,
+      "file_start": 29832,
+      "file_end": 29834,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jnz     short near ptr unk_1729C",
+      "gas": "jnz .+20",
+      "bytes": "7512",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 29340,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "near ptr unk_1729C",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94858,
+      "file_start": 29834,
+      "file_end": 29835,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    ds",
+      "gas": "push ds",
+      "bytes": "1e",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 32,
+          "original": "ds",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94859,
+      "file_start": 29835,
+      "file_end": 29837,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ax, cs",
+      "gas": "mov ax, cs",
+      "bytes": "8cc8",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 30,
+          "original": "cs",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94861,
+      "file_start": 29837,
+      "file_end": 29839,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ds, ax",
+      "gas": "mov ds, ax",
+      "bytes": "8ed8",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 32,
+          "original": "ds",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94863,
+      "file_start": 29839,
+      "file_end": 29842,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     si, 7115h",
+      "gas": "mov si, 0x7115",
+      "bytes": "be1571",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 28949,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "7115h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94866,
+      "file_start": 29842,
+      "file_end": 29845,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ax, 9000h",
+      "gas": "mov ax, 0x9000",
+      "bytes": "b80090",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 18446744073709522944,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "9000h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94869,
+      "file_start": 29845,
+      "file_end": 29848,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "call    sub_1F6DC",
+      "gas": "call .-31673",
+      "bytes": "e84484",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 63196,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "sub_1F6DC",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94872,
+      "file_start": 29848,
+      "file_end": 29849,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     ds",
+      "gas": "pop ds",
+      "bytes": "1f",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 32,
+          "original": "ds",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94873,
+      "file_start": 29849,
+      "file_end": 29852,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jmp     near ptr unk_1736F",
+      "gas": "{disp16} jmp .+214",
+      "bytes": "e9d300",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 29551,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "near ptr unk_1736F",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94876,
+      "file_start": 29852,
+      "file_end": 29853,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    dx",
+      "gas": "push dx",
+      "bytes": "52",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94877,
+      "file_start": 29853,
+      "file_end": 29855,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     si, [bp+si]",
+      "gas": "mov si, word ptr [bp+si]",
+      "bytes": "8b32",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 3,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "[bp+si]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94879,
+      "file_start": 29855,
+      "file_end": 29857,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     di, si",
+      "gas": "{load} mov di, si",
+      "bytes": "8bfe",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94881,
+      "file_start": 29857,
+      "file_end": 29860,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ah, [si+2]",
+      "gas": "mov ah, byte ptr [si+0x2]",
+      "bytes": "8a6402",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 20,
+          "original": "ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 4,
+          "addr": 2,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 4,
+          "original": "[si+2]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94884,
+      "file_start": 29860,
+      "file_end": 29862,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "xor     al, al",
+      "gas": "{load} xor al, al",
+      "bytes": "32c0",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 16,
+          "original": "al",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 16,
+          "original": "al",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94886,
+      "file_start": 29862,
+      "file_end": 29864,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "shr     ax, 1",
+      "gas": "shr ax, 0x1",
+      "bytes": "d1e8",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94888,
+      "file_start": 29864,
+      "file_end": 29866,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "shr     ax, 1",
+      "gas": "shr ax, 0x1",
+      "bytes": "d1e8",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94890,
+      "file_start": 29866,
+      "file_end": 29868,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "shr     ax, 1",
+      "gas": "shr ax, 0x1",
+      "bytes": "d1e8",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94892,
+      "file_start": 29868,
+      "file_end": 29871,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     ax, 4242h",
+      "gas": "add ax, 0x4242",
+      "bytes": "054242",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 16962,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "4242h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94895,
+      "file_start": 29871,
+      "file_end": 29873,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     si, ax",
+      "gas": "{load} mov si, ax",
+      "bytes": "8bf0",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94897,
+      "file_start": 29873,
+      "file_end": 29876,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ax, 9001h",
+      "gas": "mov ax, 0x9001",
+      "bytes": "b80190",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 18446744073709522945,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "9001h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94900,
+      "file_start": 29876,
+      "file_end": 29879,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "call    loc_10701",
+      "gas": "call .-27571",
+      "bytes": "e84a94",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 1793,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "loc_10701",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94903,
+      "file_start": 29879,
+      "file_end": 29883,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     dx, 0C0h",
+      "gas": "add dx, 0xc0",
+      "bytes": "81c2c000",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 192,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "0C0h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94907,
+      "file_start": 29883,
+      "file_end": 29886,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     si, [di+0Eh]",
+      "gas": "mov si, word ptr [di+0xe]",
+      "bytes": "8b750e",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 4,
+          "addr": 14,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 5,
+          "original": "[di+0Eh]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94910,
+      "file_start": 29886,
+      "file_end": 29890,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "cmp     si, 800h",
+      "gas": "cmp si, 0x800",
+      "bytes": "81fe0008",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 2048,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "800h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94914,
+      "file_start": 29890,
+      "file_end": 29892,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jnb     short near ptr unk_172D4",
+      "gas": "jnb .+18",
+      "bytes": "7310",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 29396,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "near ptr unk_172D4",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94916,
+      "file_start": 29892,
+      "file_end": 29894,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "shl     si, 1",
+      "gas": "shl si, 0x1",
+      "bytes": "d1e6",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94918,
+      "file_start": 29894,
+      "file_end": 29896,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "shl     si, 1",
+      "gas": "shl si, 0x1",
+      "bytes": "d1e6",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94920,
+      "file_start": 29896,
+      "file_end": 29900,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     si, 842h",
+      "gas": "add si, 0x842",
+      "bytes": "81c64208",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 2114,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "842h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94924,
+      "file_start": 29900,
+      "file_end": 29903,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ax, 9001h",
+      "gas": "mov ax, 0x9001",
+      "bytes": "b80190",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 18446744073709522945,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "9001h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94927,
+      "file_start": 29903,
+      "file_end": 29906,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "call    loc_10701",
+      "gas": "call .-27598",
+      "bytes": "e82f94",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 1793,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "loc_10701",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94930,
+      "file_start": 29906,
+      "file_end": 29908,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jmp     short near ptr unk_172E3",
+      "gas": "jmp .+17",
+      "bytes": "eb0f",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 29411,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "near ptr unk_172E3",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94932,
+      "file_start": 29908,
+      "file_end": 29909,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    ds",
+      "gas": "push ds",
+      "bytes": "1e",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 32,
+          "original": "ds",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94933,
+      "file_start": 29909,
+      "file_end": 29912,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     si, 7167h",
+      "gas": "mov si, 0x7167",
+      "bytes": "be6771",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 29031,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "7167h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94936,
+      "file_start": 29912,
+      "file_end": 29914,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ax, cs",
+      "gas": "mov ax, cs",
+      "bytes": "8cc8",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 30,
+          "original": "cs",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94938,
+      "file_start": 29914,
+      "file_end": 29916,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ds, ax",
+      "gas": "mov ds, ax",
+      "bytes": "8ed8",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 32,
+          "original": "ds",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94940,
+      "file_start": 29916,
+      "file_end": 29919,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ax, 9A01h",
+      "gas": "mov ax, 0x9a01",
+      "bytes": "b8019a",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 18446744073709525505,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "9A01h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94943,
+      "file_start": 29919,
+      "file_end": 29922,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "call    loc_10701",
+      "gas": "call .-27614",
+      "bytes": "e81f94",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 1793,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "loc_10701",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94946,
+      "file_start": 29922,
+      "file_end": 29923,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     ds",
+      "gas": "pop ds",
+      "bytes": "1f",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 32,
+          "original": "ds",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94947,
+      "file_start": 29923,
+      "file_end": 29926,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     dx, 48h ; 'H'",
+      "gas": "add dx, 0x48",
+      "bytes": "83c248",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 72,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "48h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94950,
+      "file_start": 29926,
+      "file_end": 29929,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ah, [di+20h]",
+      "gas": "mov ah, byte ptr [di+0x20]",
+      "bytes": "8a6520",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 20,
+          "original": "ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 4,
+          "addr": 32,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 5,
+          "original": "[di+20h]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94953,
+      "file_start": 29929,
+      "file_end": 29931,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "xor     al, al",
+      "gas": "{load} xor al, al",
+      "bytes": "32c0",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 16,
+          "original": "al",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 16,
+          "original": "al",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94955,
+      "file_start": 29931,
+      "file_end": 29933,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "shr     ax, 1",
+      "gas": "shr ax, 0x1",
+      "bytes": "d1e8",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94957,
+      "file_start": 29933,
+      "file_end": 29935,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "shr     ax, 1",
+      "gas": "shr ax, 0x1",
+      "bytes": "d1e8",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94959,
+      "file_start": 29935,
+      "file_end": 29937,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "shr     ax, 1",
+      "gas": "shr ax, 0x1",
+      "bytes": "d1e8",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94961,
+      "file_start": 29937,
+      "file_end": 29940,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     ax, 842h",
+      "gas": "add ax, 0x842",
+      "bytes": "054208",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 2114,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "842h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94964,
+      "file_start": 29940,
+      "file_end": 29942,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     si, ax",
+      "gas": "{load} mov si, ax",
+      "bytes": "8bf0",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94966,
+      "file_start": 29942,
+      "file_end": 29945,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ax, 9001h",
+      "gas": "mov ax, 0x9001",
+      "bytes": "b80190",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 18446744073709522945,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "9001h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94969,
+      "file_start": 29945,
+      "file_end": 29948,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "call    loc_10701",
+      "gas": "call .-27640",
+      "bytes": "e80594",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 1793,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "loc_10701",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94972,
+      "file_start": 29948,
+      "file_end": 29951,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     dx, 38h ; '8'",
+      "gas": "add dx, 0x38",
+      "bytes": "83c238",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 56,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "38h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94975,
+      "file_start": 29951,
+      "file_end": 29954,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     cx, 0A965h",
+      "gas": "mov cx, 0xa965",
+      "bytes": "b965a9",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 1,
+          "original": "cx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 18446744073709529445,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "0A965h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94978,
+      "file_start": 29954,
+      "file_end": 29957,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     si, 0A5F4h",
+      "gas": "mov si, 0xa5f4",
+      "bytes": "bef4a5",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 18446744073709528564,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "0A5F4h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94981,
+      "file_start": 29957,
+      "file_end": 29960,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "test    byte ptr [di], 4",
+      "gas": "test byte ptr [di], 0x4",
+      "bytes": "f60504",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 3,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 5,
+          "original": "byte ptr [di]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 4,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "4",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94984,
+      "file_start": 29960,
+      "file_end": 29962,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jnz     short near ptr unk_1730F",
+      "gas": "jnz .+7",
+      "bytes": "7505",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 29455,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "near ptr unk_1730F",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94986,
+      "file_start": 29962,
+      "file_end": 29965,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     cx, 0A140h",
+      "gas": "mov cx, 0xa140",
+      "bytes": "b940a1",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 1,
+          "original": "cx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 18446744073709527360,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "0A140h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94989,
+      "file_start": 29965,
+      "file_end": 29967,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     si, cx",
+      "gas": "{load} mov si, cx",
+      "bytes": "8bf1",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 1,
+          "original": "cx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94991,
+      "file_start": 29967,
+      "file_end": 29968,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    bx",
+      "gas": "push bx",
+      "bytes": "53",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94992,
+      "file_start": 29968,
+      "file_end": 29969,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    dx",
+      "gas": "push dx",
+      "bytes": "52",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94993,
+      "file_start": 29969,
+      "file_end": 29972,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ax, 9A01h",
+      "gas": "mov ax, 0x9a01",
+      "bytes": "b8019a",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 18446744073709525505,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "9A01h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94996,
+      "file_start": 29972,
+      "file_end": 29975,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "call    loc_1F75E",
+      "gas": "call .-31670",
+      "bytes": "e84784",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 63326,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "loc_1F75E",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 94999,
+      "file_start": 29975,
+      "file_end": 29976,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     dx",
+      "gas": "pop dx",
+      "bytes": "5a",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95000,
+      "file_start": 29976,
+      "file_end": 29977,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     bx",
+      "gas": "pop bx",
+      "bytes": "5b",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95001,
+      "file_start": 29977,
+      "file_end": 29980,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     dx, 10h",
+      "gas": "add dx, 0x10",
+      "bytes": "83c210",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 16,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "10h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95004,
+      "file_start": 29980,
+      "file_end": 29982,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     cx, si",
+      "gas": "{load} mov cx, si",
+      "bytes": "8bce",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 1,
+          "original": "cx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95006,
+      "file_start": 29982,
+      "file_end": 29985,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ax, 9A01h",
+      "gas": "mov ax, 0x9a01",
+      "bytes": "b8019a",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 18446744073709525505,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "9A01h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95009,
+      "file_start": 29985,
+      "file_end": 29986,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    bx",
+      "gas": "push bx",
+      "bytes": "53",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95010,
+      "file_start": 29986,
+      "file_end": 29989,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "call    loc_1F75E",
+      "gas": "call .-31684",
+      "bytes": "e83984",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 63326,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "loc_1F75E",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95013,
+      "file_start": 29989,
+      "file_end": 29990,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     bx",
+      "gas": "pop bx",
+      "bytes": "5b",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95014,
+      "file_start": 29990,
+      "file_end": 29991,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     dx",
+      "gas": "pop dx",
+      "bytes": "5a",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95015,
+      "file_start": 29991,
+      "file_end": 29993,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     si, di",
+      "gas": "{load} mov si, di",
+      "bytes": "8bf7",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95017,
+      "file_start": 29993,
+      "file_end": 29995,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "shl     bx, 1",
+      "gas": "shl bx, 0x1",
+      "bytes": "d1e3",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95019,
+      "file_start": 29995,
+      "file_end": 29997,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "shl     bx, 1",
+      "gas": "shl bx, 0x1",
+      "bytes": "d1e3",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95021,
+      "file_start": 29997,
+      "file_end": 29999,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "shl     bx, 1",
+      "gas": "shl bx, 0x1",
+      "bytes": "d1e3",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95023,
+      "file_start": 29999,
+      "file_end": 30001,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "shl     bx, 1",
+      "gas": "shl bx, 0x1",
+      "bytes": "d1e3",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95025,
+      "file_start": 30001,
+      "file_end": 30003,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     di, bx",
+      "gas": "{load} mov di, bx",
+      "bytes": "8bfb",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95027,
+      "file_start": 30003,
+      "file_end": 30005,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "shl     bx, 1",
+      "gas": "shl bx, 0x1",
+      "bytes": "d1e3",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95029,
+      "file_start": 30005,
+      "file_end": 30007,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "shl     bx, 1",
+      "gas": "shl bx, 0x1",
+      "bytes": "d1e3",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95031,
+      "file_start": 30007,
+      "file_end": 30009,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     di, bx",
+      "gas": "{load} add di, bx",
+      "bytes": "03fb",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95033,
+      "file_start": 30009,
+      "file_end": 30011,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "shr     dx, 1",
+      "gas": "shr dx, 0x1",
+      "bytes": "d1ea",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95035,
+      "file_start": 30011,
+      "file_end": 30013,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "shr     dx, 1",
+      "gas": "shr dx, 0x1",
+      "bytes": "d1ea",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95037,
+      "file_start": 30013,
+      "file_end": 30015,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "shr     dx, 1",
+      "gas": "shr dx, 0x1",
+      "bytes": "d1ea",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95039,
+      "file_start": 30015,
+      "file_end": 30017,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     di, dx",
+      "gas": "{load} add di, dx",
+      "bytes": "03fa",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95041,
+      "file_start": 30017,
+      "file_end": 30020,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     di, 9",
+      "gas": "add di, 0x9",
+      "bytes": "83c709",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 9,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "9",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95044,
+      "file_start": 30020,
+      "file_end": 30023,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ax, [si+4]",
+      "gas": "mov ax, word ptr [si+0x4]",
+      "bytes": "8b4404",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 4,
+          "addr": 4,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 4,
+          "original": "[si+4]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95047,
+      "file_start": 30023,
+      "file_end": 30026,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     bx, 9004h",
+      "gas": "mov bx, 0x9004",
+      "bytes": "bb0490",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 18446744073709522948,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "9004h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95050,
+      "file_start": 30026,
+      "file_end": 30029,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "cmp     ax, 12Ch",
+      "gas": "cmp ax, 0x12c",
+      "bytes": "3d2c01",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 300,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "12Ch",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95053,
+      "file_start": 30029,
+      "file_end": 30031,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jnb     short near ptr unk_17351",
+      "gas": "jnb .+4",
+      "bytes": "7302",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 29521,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "near ptr unk_17351",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95055,
+      "file_start": 30031,
+      "file_end": 30033,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     bh, 9Ah",
+      "gas": "mov bh, 0x9a",
+      "bytes": "b79a",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 23,
+          "original": "bh",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 154,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "9Ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95057,
+      "file_start": 30033,
+      "file_end": 30036,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     dx, 0Ah",
+      "gas": "mov dx, 0xa",
+      "bytes": "ba0a00",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 10,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "0Ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95060,
+      "file_start": 30036,
+      "file_end": 30038,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mul     dx",
+      "gas": "mul dx",
+      "bytes": "f7e2",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95062,
+      "file_start": 30038,
+      "file_end": 30041,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "call    sub_1062F",
+      "gas": "call .-27943",
+      "bytes": "e8d692",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 1583,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "sub_1062F",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95065,
+      "file_start": 30041,
+      "file_end": 30044,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     di, 8",
+      "gas": "add di, 0x8",
+      "bytes": "83c708",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 8,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "8",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95068,
+      "file_start": 30044,
+      "file_end": 30047,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     al, [si+6]",
+      "gas": "mov al, byte ptr [si+0x6]",
+      "bytes": "8a4406",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 16,
+          "original": "al",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 4,
+          "addr": 6,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 4,
+          "original": "[si+6]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95071,
+      "file_start": 30047,
+      "file_end": 30049,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "xor     dx, dx",
+      "gas": "{load} xor dx, dx",
+      "bytes": "33d2",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95073,
+      "file_start": 30049,
+      "file_end": 30051,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ah, dl",
+      "gas": "{load} mov ah, dl",
+      "bytes": "8ae2",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 20,
+          "original": "ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 18,
+          "original": "dl",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95075,
+      "file_start": 30051,
+      "file_end": 30054,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     bx, 9003h",
+      "gas": "mov bx, 0x9003",
+      "bytes": "bb0390",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 18446744073709522947,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "9003h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95078,
+      "file_start": 30054,
+      "file_end": 30056,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "cmp     al, 64h ; 'd'",
+      "gas": "cmp al, 0x64",
+      "bytes": "3c64",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 16,
+          "original": "al",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 100,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "64h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95080,
+      "file_start": 30056,
+      "file_end": 30058,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jnb     short near ptr unk_1736C",
+      "gas": "jnb .+4",
+      "bytes": "7302",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 29548,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "near ptr unk_1736C",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95082,
+      "file_start": 30058,
+      "file_end": 30060,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     bh, 9Ah",
+      "gas": "mov bh, 0x9a",
+      "bytes": "b79a",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 23,
+          "original": "bh",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 154,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "9Ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95084,
+      "file_start": 30060,
+      "file_end": 30063,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "call    sub_1062F",
+      "gas": "call .-27965",
+      "bytes": "e8c092",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 7,
+          "addr": 1583,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "sub_1062F",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95087,
+      "file_start": 30063,
+      "file_end": 30064,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     bp",
+      "gas": "pop bp",
+      "bytes": "5d",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 5,
+          "original": "bp",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95088,
+      "file_start": 30064,
+      "file_end": 30065,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     di",
+      "gas": "pop di",
+      "bytes": "5f",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95089,
+      "file_start": 30065,
+      "file_end": 30066,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     si",
+      "gas": "pop si",
+      "bytes": "5e",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95090,
+      "file_start": 30066,
+      "file_end": 30067,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     dx",
+      "gas": "pop dx",
+      "bytes": "5a",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95091,
+      "file_start": 30067,
+      "file_end": 30068,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     cx",
+      "gas": "pop cx",
+      "bytes": "59",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 1,
+          "original": "cx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95092,
+      "file_start": 30068,
+      "file_end": 30069,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     bx",
+      "gas": "pop bx",
+      "bytes": "5b",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95093,
+      "file_start": 30069,
+      "file_end": 30070,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     ax",
+      "gas": "pop ax",
+      "bytes": "58",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95094,
+      "file_start": 30070,
+      "file_end": 30071,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "retn",
+      "gas": "ret",
+      "bytes": "c3",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95804,
+      "file_start": 30780,
+      "file_end": 30781,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    si",
+      "gas": "push si",
+      "bytes": "56",
+      "original_ida_data_line": "db 56h, 57h, 0BEh, 40h, 42h, 33h, 0FFh, 0B0h",
+      "ida_code_classified": false,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95805,
+      "file_start": 30781,
+      "file_end": 30782,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    di",
+      "gas": "push di",
+      "bytes": "57",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95806,
+      "file_start": 30782,
+      "file_end": 30785,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     si, 4240h",
+      "gas": "mov si, 0x4240",
+      "bytes": "be4042",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 16960,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "4240h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95809,
+      "file_start": 30785,
+      "file_end": 30787,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "xor     di, di",
+      "gas": "{load} xor di, di",
+      "bytes": "33ff",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 95811,
+      "file_start": 30787,
+      "file_end": 30789,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     al, 0",
+      "gas": "mov al, 0x0",
+      "bytes": "b000",
+      "original_ida_data_line": "db 0B0h",
+      "ida_code_classified": false,
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 16,
+          "original": "al",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "0",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/119-c-list-families-restoration.md"
+      ]
+    }
+  ],
+  "assembler_verification": {
+    "status": "byte-exact",
+    "instructions": 170,
+    "bytes": 361,
+    "input_instruction_rows": 902,
+    "unique_input_instructions": 902,
+    "covered_input_instructions": 732,
+    "coverage_source": "fixed original source-map instruction rows plus prior rectangle/list supplements",
+    "coverage_inputs": {
+      "workplace/matching-decompilation/assembly/build/source-map.json": {
+        "sha256": "153dbb34dfe8b716808b88cd97f4e8357d58d5a039cf9f3339fe6627e96aeffa",
+        "instruction_count": 24376
+      },
+      "docs/re/rectangle-handler-code.json": {
+        "sha256": "48669f564ee6907501ea5f6c1a9e527258cc1f3c9ce86f4ef6364b8e5a4a08c9",
+        "instruction_count": 370
+      },
+      "docs/re/c-list-code.json": {
+        "sha256": "f07fc59c566e194ef830fda2b505e0b699b107f92e1c7834944af7061234d8ec",
+        "instruction_count": 83
+      }
+    },
+    "source_sha256": "25b7e37856a9517b3f385988bd97c2471b91773b203fc737a912659646e00acb",
+    "linker_sha256": "6fff6d068ce1015740b6579640c26d2cc10543ef68f5ea34c9a3a59dd9cda6f8",
+    "binary_sha256": "6df7b7de44b953354df02943776cac39238c9f7d45895ce4c924fd4c2be3ce1d",
+    "image_id": "sha256:474f41ef91c354dd4754b08ef9302e965271e32417d6fba1772aecca0a5f9e2e",
+    "assembler": "GNU assembler (GNU Binutils for Debian) 2.40",
+    "linker": "GNU ld (GNU Binutils for Debian) 2.40",
+    "generator_sha256": "629fcb9d1035dc6085801b00e9fd5f02b851be8cdc84877b377a6045f4218d37",
+    "translator_sha256": "92af18f9901460224a02df0764512e8250b54128665cc5631b0ff3bbd7f1a654",
+    "instruction_byte_fallbacks": 0,
+    "constant_symbols": {
+      "imm_at_17284": 65535
+    },
+    "trials": [
+      {
+        "hint": "",
+        "matched": 151,
+        "remaining": 19
+      },
+      {
+        "hint": "{load} ",
+        "matched": 18,
+        "remaining": 1
+      },
+      {
+        "hint": "{store} ",
+        "matched": 0,
+        "remaining": 1
+      },
+      {
+        "hint": "{nooptimize} ",
+        "matched": 0,
+        "remaining": 1
+      },
+      {
+        "hint": "{load} {nooptimize} ",
+        "matched": 0,
+        "remaining": 1
+      },
+      {
+        "hint": "{store} {nooptimize} ",
+        "matched": 0,
+        "remaining": 1
+      },
+      {
+        "hint": "{disp16} ",
+        "matched": 0,
+        "remaining": 1
+      },
+      {
+        "hint": "{disp8} ",
+        "matched": 0,
+        "remaining": 1
+      },
+      {
+        "hint": "{disp16} {load} ",
+        "matched": 0,
+        "remaining": 1
+      },
+      {
+        "hint": "{disp16} {store} ",
+        "matched": 0,
+        "remaining": 1
+      },
+      {
+        "hint": "imm16-symbol",
+        "matched": 1,
+        "remaining": 0
+      }
+    ]
+  }
+}

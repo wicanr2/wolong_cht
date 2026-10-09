@@ -3,10 +3,10 @@
   "input": "DOS/V KI.EXE",
   "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
   "input_size": 67099,
-  "instruction_count": 24829,
-  "instruction_bytes": 56505,
+  "instruction_count": 24999,
+  "instruction_bytes": 56866,
   "baseline_instruction_count": 24376,
-  "supplement_instruction_count": 453,
+  "supplement_instruction_count": 623,
   "historical_supplement_instruction_count": 370,
   "supplement": "docs/re/rectangle-handler-code.json",
   "supplement_sha256": "48669f564ee6907501ea5f6c1a9e527258cc1f3c9ce86f4ef6364b8e5a4a08c9",
@@ -18,24 +18,34 @@
       "database_sha256": "a61cd29b9daae8a6446f91e9fbe5e82f29101ad0beaac327dcfc6314283ab712",
       "instructions": 83,
       "bytes": 215
+    },
+    {
+      "path": "docs/re/c-catalog-code.json",
+      "sha256": "1b751f0ed2eb7f42846d56f94773af67c3fc29c7c1510190269fec6e41a3eb05",
+      "database_sha256": "63967f83d99ba47b84f6ce73d721f13e8f22b514bbf7212abfdd9f6fe3b0fec8",
+      "instructions": 170,
+      "bytes": 361,
+      "constant_symbols": {
+        "imm_at_17284": 65535
+      }
     }
   ],
-  "private_import_bytes": 10594,
+  "private_import_bytes": 10233,
   "address_space": "IDA database linear base 0x10000; file = linear - 0x10000 + 512",
   "ida_version": "9.4",
   "ida_image_id": "sha256:4ac62de83339c215bab10e455cee3a22d9c6efed9fd0d8ed0f068327b83a06ab",
   "database_sha256": "e32713237d223145834531bffc8979146ed4bacaa98f73ec4bbf692b747c2c4f",
   "inventory_sha256": "15f5e2200e263c3700d778715fe60e40e48441cc2adbb0c8b57c8b8b2c8c5258",
   "semantic_index": "docs/re/matching-semantic-index.json",
-  "semantic_index_sha256": "a2c2f983388119d520c2b09740281fe941a1b3fe21cebacef5823f72d734959e",
+  "semantic_index_sha256": "3fd872ebea950781801905e1c2968f56a319701ba165cec2c2009388af6bc9da",
   "record_tool": "tools/matching_code_record.py",
-  "record_tool_sha256": "6542ce8f2f63988dad2aa448ac5d3fb1b2016c47f628be724c786424e9469024",
+  "record_tool_sha256": "3a3103a6cc4606e78c17380d86337753a2d7c304b5805f174741d7b5f462ce0a",
   "baseline_source_sha256": "47571181edc1a1fe7a2554f0e94fc1c9bcf87cc2e42e06c7fcc093c871fcae62",
   "baseline_linker_sha256": "a301287e77bf1a79a717c206dc0754e2c0ccb3a75b3eae38815bfff0a1995ac7",
   "source": "tools/c_recovery/KI.code.S",
-  "source_sha256": "2a5ba7bc10dc19d14368fb1eb08ec32a581ff09a83346e6332a3d97154cf3b38",
+  "source_sha256": "7061eb7322aae311977d9065c72f3e052f7f484d02d1ac4baf5fbf12cb0d215f",
   "linker": "tools/c_recovery/KI.code.ld",
-  "linker_sha256": "a301287e77bf1a79a717c206dc0754e2c0ccb3a75b3eae38815bfff0a1995ac7",
+  "linker_sha256": "c185523b302dbde42e7e4c9a9b639d33e9d9a8d9de7e9eb6930f0fc4f152e1c0",
   "build_image_id": "sha256:474f41ef91c354dd4754b08ef9302e965271e32417d6fba1772aecca0a5f9e2e",
   "assembler_version": "GNU assembler (GNU Binutils for Debian) 2.40",
   "evidence": "docs/re/90-assembly-reconstruction.md",
@@ -149,8 +159,8 @@
     },
     {
       "file_start": 29549,
-      "file_end": 29719,
-      "sha256": "56cf363aaf80eeb00b4f49a5c0536e09360784a907dc139f8fad587015e1cfd5"
+      "file_end": 30071,
+      "sha256": "7138b0f09aee3661a10183f538836fe529544ad718b7e16e3559cd5fb01db1f2"
     },
     {
       "file_start": 30208,
@@ -159,13 +169,8 @@
     },
     {
       "file_start": 30714,
-      "file_end": 30780,
-      "sha256": "0ebbf9a00ab4360ec79f336c269c09ae0bf5b10bf85bd1733859b30aea5b3f65"
-    },
-    {
-      "file_start": 30789,
       "file_end": 31214,
-      "sha256": "cbdd86f3ee32045a1c919b3dd553cfa0c9541eaa7d3539f8fadf2af2f56275c4"
+      "sha256": "3e557a90f43959b4690e7c28de9791de9fea0accaf00016d5b5024ffe8501633"
     },
     {
       "file_start": 31399,

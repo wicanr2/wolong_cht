@@ -412,3 +412,17 @@
 - 最終 1014 列分流與嚴格索引通過；文件／工具 21／25，同四項歷史資產／教訓缺口，phantom 無新增。三條不可變位址回鏈護欄通過，全部 835 條本輪指令已在完整組語範圍內。
 - 最終 24,829 指令／56,505 code bytes 與 67,099-byte 原 EXE 相同，三個組語錯版拒絕；278 C／36 raw 來源與公開／本機收據 binding 通過。產物 UID/GID 1000:1000，既有 root-owned 仍 27，無 .md 目錄。
 - 本輪一次性容器均已移除，沒有殘留執行中或停止的專案容器；原版資產、EXE 與研究 binary 只留本機。
+
+## 2026-10-09：四家族清單與回呼 C
+
+- 前輪 5fd5145 已推送。讀現況／路由／AGENTS 尾段與 Issue #22；依專案規則派唯讀代理核對契約、盤點 Go 工具鏈，再分工單一資料參照檔與獨立 ASM 補充，均未越界改檔或 Git 寫入。
+- spec/239 READY 後還原 11 函式／12 raw、1,870 bytes／902 指令，共用既有 list 引擎。保留 126／128／22 範圍、X/Y patch、DS:CFF、資格／職務／哨兵、byte 士氣、原三位數字與表頭。
+- 獨立 cache 參照起初誤把 XOR DL 當 loop 前序；原版參照抓出差異，實查 LOOP 回到 17A9A，改成每筆清0。原 C 生成控制流未修改；保留交錯邊界向量並以錯版驗跨項殘留。
+- O0／O2 各 804 全 RAM／plane／FLAGS／SS frame／IN／OUT／API 相同，168 builder／240 排序／16 cache 獨立核對、156 表頭、28 成功選取與十三錯版通過。字型缺字0，C 乾淨重生一致。
+- 170 指令／361 bytes 以固定 binutils 全數匹配，包含 imm_at_17284=FFFF linker 符號。補充取原 source-map、370 舊行與83 list行為固定覆蓋來源，兩次重跑同SHA；未改舊補充。
+- 預設 Go image／module volume 已不存在，沿用既有 eob Go1.26.7／Ebiten SDK。go.sh 加專用快取、原素材唯讀、有界 timeout／Xvfb trap；精確 go.mod/go.sum 依賴先由官方 proxy 取得，再離線冷跑 vet／test，39 套件通過。實際 Docker inspect 證明原素材RW=false、network none、UID1000與資源上限；不碰共享 cache volume。
+- 舊 re/26／27、mechanics/10、spec/38 的排序、士氣寬度、勢力數字位數與cache入口已勘誤；四格幾何保留，正式 Go 引擎無改。開局 renderer 舊未解列有新證據回鏈。
+- C 台帳 289 函式／48 raw；完整組語 24,999 指令／56,866 code bytes，私有匯入10,233 bytes。正常任命／外交／新遊戲長程、非法空清單排序與原 C 機器碼保持證據界線。來源與收據依授權 commit／push，完整 Goal 保持 active。
+- 正式 check.sh 完整執行，Go stages 通過，文件階段停在既有兩張playtest/19 PNG與277 phantom；逐項25檢查為21通過／4已知失敗，無新增引用。re/27原未解全解後補缺口無標記，嚴格索引與1018列分流通過。
+- 最後逐條證明本輪902指令均在編譯組語範圍；完整67,099-byte EXE相同、三組ASM錯版拒絕。289 C／48 raw、公私收據與五回鏈、39套件冷Go測試及實際唯讀掛載binding全通過；產物1000:1000，既有root-owned27、無.md目錄。
+- 代理已完成且沒有後續檔案寫入；本輪一次性容器均已移除。只提交還原來源、定位、工具與收據，原始資產／EXE／研究binary／module cache留本機。

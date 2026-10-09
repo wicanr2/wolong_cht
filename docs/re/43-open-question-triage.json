@@ -4406,19 +4406,6 @@
       "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
     },
     {
-      "file": "docs/re/27-list-row-fields.md",
-      "item": "開局選勢力的逐列 `sub_17BC0`",
-      "status": "未逐欄對照（欄位與勢力一覽重疊，但少了外交兩欄）",
-      "section": "6. 未解",
-      "domain": "程式碼理解",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-50a4930bd5b2a4f332ec",
-      "classification": "evidence-only",
-      "github_issue": null,
-      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
-    },
-    {
       "file": "docs/re/28-text-number-rendering.md",
       "item": "屬性的其餘位元",
       "status": "bit 2 是陰影已證實；`0x9001`／`0x9000` 的 bit 0 差在哪未讀",
@@ -13192,6 +13179,71 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "原據點清單與遷都局部 C 界線；其他清單、自然玩家長程及原 C 機器碼仍待驗證。"
+    },
+    {
+      "file": "docs/re/119-c-list-families-restoration.md",
+      "item": "空清單加非零排序狀態",
+      "status": "原 DEC CH 可能下溢；不加入推測性修正",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-498e73afe1d5ee1b17a6",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "四家族局部 C 界線；非法空清單非零排序、自然玩家長程及原 C 機器碼仍未驗證。"
+    },
+    {
+      "file": "docs/re/119-c-list-families-restoration.md",
+      "item": "正常玩家長程流程",
+      "status": "局部清單入口不代證任命、外交或完整新遊戲流程",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-0822bde6b60199cc7cb7",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "四家族局部 C 界線；非法空清單非零排序、自然玩家長程及原 C 機器碼仍未驗證。"
+    },
+    {
+      "file": "docs/re/119-c-list-families-restoration.md",
+      "item": "原作者 C 與工具鏈",
+      "status": "尚未確認 C 機器碼一致",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-c1fd2ac890f2710fcee3",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "四家族局部 C 界線；非法空清單非零排序、自然玩家長程及原 C 機器碼仍未驗證。"
+    },
+    {
+      "file": "docs/spec/239-c-list-families.md",
+      "item": "非法排序狀態與自然玩家長程",
+      "status": "不由合法局部案例代證",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-a07eaec5e5ad8098bd08",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "四家族局部 C 界線；非法空清單非零排序、自然玩家長程及原 C 機器碼仍未驗證。"
+    },
+    {
+      "file": "docs/spec/239-c-list-families.md",
+      "item": "原作者 C 機器碼",
+      "status": "尚未匹配",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-e6fa09e38fe7bb747e58",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "四家族局部 C 界線；非法空清單非零排序、自然玩家長程及原 C 機器碼仍未驗證。"
     }
   ]
 }
