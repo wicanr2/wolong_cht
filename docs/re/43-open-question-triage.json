@@ -13426,6 +13426,58 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "五函式與無RET初始化前段已由兩側各自raw輸入驗證；完整11BE0、自然玩家流程、非法座標及原C機器碼保留證據界線。"
+    },
+    {
+      "file": "docs/re/127-c-world-interaction-restoration.md",
+      "item": "完整主迴圈、更新排程與正常玩家長程",
+      "status": "本輪閉包不代證",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-2fe94fc1ddbbedbc8d59",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "八個原世界互動函式已做局部完整裝置比較；完整主迴圈／更新排程、非法索引、硬體時間與原C機器碼保留證據界線。"
+    },
+    {
+      "file": "docs/re/127-c-world-interaction-restoration.md",
+      "item": "原硬體時間與原C機器碼",
+      "status": "固定平台契約及局部比較不代證",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-ec84b9c007ffe19e994c",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "八個原世界互動函式已做局部完整裝置比較；完整主迴圈／更新排程、非法索引、硬體時間與原C機器碼保留證據界線。"
+    },
+    {
+      "file": "docs/spec/247-c-world-interaction.md",
+      "item": "完整主迴圈、更新排程與正常玩家長程",
+      "status": "本輪不代證",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-aff739bfbbfa00b1b760",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "八個原世界互動函式已做局部完整裝置比較；完整主迴圈／更新排程、非法索引、硬體時間與原C機器碼保留證據界線。"
+    },
+    {
+      "file": "docs/spec/247-c-world-interaction.md",
+      "item": "非法表索引、原硬體時間及原C機器碼",
+      "status": "不由局部原生C比較推廣",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-999855455da332004e5b",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "八個原世界互動函式已做局部完整裝置比較；完整主迴圈／更新排程、非法索引、硬體時間與原C機器碼保留證據界線。"
     }
   ]
 }

@@ -4539,169 +4539,169 @@ ret
 .org 0xbd0
 sub_109D0:
 # IDA 0x109d0; file 0xbd0; locator=proven; push    ax
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 push ax
 .org 0xbd1
 # IDA 0x109d1; file 0xbd1; locator=proven; push    bx
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 push bx
 .org 0xbd2
 # IDA 0x109d2; file 0xbd2; locator=proven; push    cx
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 push cx
 .org 0xbd3
 # IDA 0x109d3; file 0xbd3; locator=proven; push    dx
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 push dx
 .org 0xbd4
 # IDA 0x109d4; file 0xbd4; locator=proven; push    si
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 push si
 .org 0xbd5
 # IDA 0x109d5; file 0xbd5; locator=proven; mov     cl, 0
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 mov cl, 0x0
 .org 0xbd7
 loc_109D7:
 # IDA 0x109d7; file 0xbd7; locator=proven; mov     ch, 0
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 mov ch, 0x0
 .org 0xbd9
 # IDA 0x109d9; file 0xbd9; locator=proven; mov     si, 1964h
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 mov si, 0x1964
 .org 0xbdc
 # IDA 0x109dc; file 0xbdc; locator=proven; mov     dx, 3DAh
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 mov dx, 0x3da
 .org 0xbdf
 loc_109DF:
 # IDA 0x109df; file 0xbdf; locator=proven; in      al, dx
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 in al, dx
 .org 0xbe0
 # IDA 0x109e0; file 0xbe0; locator=proven; test    al, 8
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 test al, 0x8
 .org 0xbe2
 # IDA 0x109e2; file 0xbe2; locator=proven; jnz     short loc_109DF
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 jnz .-3
 .org 0xbe4
 loc_109E4:
 # IDA 0x109e4; file 0xbe4; locator=proven; in      al, dx
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 in al, dx
 .org 0xbe5
 # IDA 0x109e5; file 0xbe5; locator=proven; test    al, 8
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 test al, 0x8
 .org 0xbe7
 # IDA 0x109e7; file 0xbe7; locator=proven; jz      short loc_109E4
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 jz .-3
 .org 0xbe9
 loc_109E9:
 # IDA 0x109e9; file 0xbe9; locator=proven; in      al, dx
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 in al, dx
 .org 0xbea
 # IDA 0x109ea; file 0xbea; locator=proven; test    al, 8
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 test al, 0x8
 .org 0xbec
 # IDA 0x109ec; file 0xbec; locator=proven; jnz     short loc_109E9
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 jnz .-3
 .org 0xbee
 loc_109EE:
 # IDA 0x109ee; file 0xbee; locator=proven; in      al, dx
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 in al, dx
 .org 0xbef
 # IDA 0x109ef; file 0xbef; locator=proven; test    al, 8
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 test al, 0x8
 .org 0xbf1
 # IDA 0x109f1; file 0xbf1; locator=proven; jz      short loc_109EE
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 jz .-3
 .org 0xbf3
 loc_109F3:
 # IDA 0x109f3; file 0xbf3; locator=proven; mov     bh, cs:[si]
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 cs; mov bh, byte ptr [si]
 .org 0xbf6
 # IDA 0x109f6; file 0xbf6; locator=proven; mov     dl, cs:[si+1]
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 cs; mov dl, byte ptr [si+0x1]
 .org 0xbfa
 # IDA 0x109fa; file 0xbfa; locator=proven; mov     dh, cs:[si+2]
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 cs; mov dh, byte ptr [si+0x2]
 .org 0xbfe
 # IDA 0x109fe; file 0xbfe; locator=proven; mov     al, ch
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 {load} mov al, ch
 .org 0xc00
 # IDA 0x10a00; file 0xc00; locator=proven; mov     bl, cl
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 {load} mov bl, cl
 .org 0xc02
 # IDA 0x10a02; file 0xc02; locator=proven; call    sub_1EBDC
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 call .-7718
 .org 0xc05
 # IDA 0x10a05; file 0xc05; locator=proven; add     si, 3
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 add si, 0x3
 .org 0xc08
 # IDA 0x10a08; file 0xc08; locator=proven; inc     ch
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 inc ch
 .org 0xc0a
 # IDA 0x10a0a; file 0xc0a; locator=proven; cmp     ch, 10h
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 cmp ch, 0x10
 .org 0xc0d
 # IDA 0x10a0d; file 0xc0d; locator=proven; jb      short loc_109F3
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 jb .-26
 .org 0xc0f
 # IDA 0x10a0f; file 0xc0f; locator=proven; inc     cl
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 inc cl
 .org 0xc11
 # IDA 0x10a11; file 0xc11; locator=proven; cmp     cl, 10h
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 cmp cl, 0x10
 .org 0xc14
 # IDA 0x10a14; file 0xc14; locator=proven; jbe     short loc_109D7
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 jbe .-61
 .org 0xc16
 # IDA 0x10a16; file 0xc16; locator=proven; pop     si
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 pop si
 .org 0xc17
 # IDA 0x10a17; file 0xc17; locator=proven; pop     dx
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 pop dx
 .org 0xc18
 # IDA 0x10a18; file 0xc18; locator=proven; pop     cx
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 pop cx
 .org 0xc19
 # IDA 0x10a19; file 0xc19; locator=proven; pop     bx
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 pop bx
 .org 0xc1a
 # IDA 0x10a1a; file 0xc1a; locator=proven; pop     ax
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 pop ax
 .org 0xc1b
 # IDA 0x10a1b; file 0xc1b; locator=proven; retn
-# ⚠ 函式 sub_109D0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_109D0; [proven] 原16色淡入，強度0至16，每級等待兩次垂直回掃; 出處: docs/re/127-c-world-interaction-restoration.md
 ret
 .org 0xc1c
 sub_10A1C:
@@ -8088,362 +8088,367 @@ ret
 .org 0x2046
 sub_11E46:
 # IDA 0x11e46; file 0x2046; locator=proven; push    ds
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 push ds
 .org 0x2047
 # IDA 0x11e47; file 0x2047; locator=proven; push    es
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 push es
 .org 0x2048
 # IDA 0x11e48; file 0x2048; locator=proven; push    bp
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 push bp
 .org 0x2049
 # IDA 0x11e49; file 0x2049; locator=proven; call    sub_12078
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 call .+559
 .org 0x204c
 # IDA 0x11e4c; file 0x204c; locator=proven; sub     sp, 8
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 sub sp, 0x8
 .org 0x204f
 # IDA 0x11e4f; file 0x204f; locator=proven; mov     bp, sp
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 {load} mov bp, sp
 .org 0x2051
 # IDA 0x11e51; file 0x2051; locator=proven; mov     ax, cs:word_1989C
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 cs; mov ax, word ptr [0x989c]
 .org 0x2055
 # IDA 0x11e55; file 0x2055; locator=proven; mov     cx, ax
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 {load} mov cx, ax
 .org 0x2057
 # IDA 0x11e57; file 0x2057; locator=proven; shl     cx, 1
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 shl cx, 0x1
 .org 0x2059
 # IDA 0x11e59; file 0x2059; locator=proven; shl     cx, 1
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 shl cx, 0x1
 .org 0x205b
 # IDA 0x11e5b; file 0x205b; locator=proven; shl     cx, 1
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 shl cx, 0x1
 .org 0x205d
 # IDA 0x11e5d; file 0x205d; locator=proven; mov     dx, cx
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 {load} mov dx, cx
 .org 0x205f
 # IDA 0x11e5f; file 0x205f; locator=proven; shl     cx, 1
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 shl cx, 0x1
 .org 0x2061
 # IDA 0x11e61; file 0x2061; locator=proven; add     cx, dx
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 {load} add cx, dx
 .org 0x2063
 # IDA 0x11e63; file 0x2063; locator=proven; mov     bx, cs:word_1989A
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 cs; mov bx, word ptr [0x989a]
 .org 0x2068
 # IDA 0x11e68; file 0x2068; locator=proven; mov     dx, cx
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 {load} mov dx, cx
 .org 0x206a
 # IDA 0x11e6a; file 0x206a; locator=proven; mov     di, bp
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 {load} mov di, bp
 .org 0x206c
 # IDA 0x11e6c; file 0x206c; locator=proven; mov     word ptr [bp+0], 0FFFFh
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 mov word ptr [bp], 0xffff
 .org 0x2071
 # IDA 0x11e71; file 0x2071; locator=proven; mov     word ptr [bp+2], 0
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 mov word ptr [bp+0x2], 0x0
 .org 0x2076
 # IDA 0x11e76; file 0x2076; locator=proven; add     cx, cs:word_10D44
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 cs; add cx, word ptr [0xd44]
 .org 0x207b
 # IDA 0x11e7b; file 0x207b; locator=proven; mov     ds, cx
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 mov ds, cx
 .org 0x207d
 # IDA 0x11e7d; file 0x207d; locator=proven; mov     cl, [bx]
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 mov cl, byte ptr [bx]
 .org 0x207f
 # IDA 0x11e7f; file 0x207f; locator=proven; cmp     cl, 0CBh
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
+# operand 1 0CBh; [proven] 城市圖塊下界CB，搜尋不檢查城市存在flags; 出處: docs/re/127-c-world-interaction-restoration.md
 cmp cl, 0xcb
 .org 0x2082
 # IDA 0x11e82; file 0x2082; locator=proven; jb      short loc_11EA4
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 jb .+34
 .org 0x2084
 # IDA 0x11e84; file 0x2084; locator=proven; cmp     cl, 0D4h
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
+# operand 1 0D4h; [proven] 城市圖塊排他上界D4; 出處: docs/re/127-c-world-interaction-restoration.md
 cmp cl, 0xd4
 .org 0x2087
 # IDA 0x11e87; file 0x2087; locator=proven; jnb     short loc_11EA4
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 jnb .+29
 .org 0x2089
 # IDA 0x11e89; file 0x2089; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x208e
 # IDA 0x11e8e; file 0x208e; locator=proven; xor     si, si
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 {load} xor si, si
 .org 0x2090
 loc_11E90:
 # IDA 0x11e90; file 0x2090; locator=proven; cmp     [si+848h], bx
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 cmp word ptr [si+0x848], bx
 .org 0x2094
 # IDA 0x11e94; file 0x2094; locator=proven; jnz     short loc_11E9C
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 jnz .+8
 .org 0x2096
 # IDA 0x11e96; file 0x2096; locator=proven; cmp     [si+84Ah], ax
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 cmp word ptr [si+0x84a], ax
 .org 0x209a
 # IDA 0x11e9a; file 0x209a; locator=proven; jz      short loc_11EA1
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 jz .+7
 .org 0x209c
 loc_11E9C:
 # IDA 0x11e9c; file 0x209c; locator=proven; add     si, 20h
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 add si, 0x20
 .org 0x209f
 # IDA 0x11e9f; file 0x209f; locator=proven; jmp     short loc_11E90
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 jmp .-15
 .org 0x20a1
 loc_11EA1:
 # IDA 0x11ea1; file 0x20a1; locator=proven; mov     [bp+0], si
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 mov word ptr [bp], si
 .org 0x20a4
 loc_11EA4:
 # IDA 0x11ea4; file 0x20a4; locator=proven; add     dx, cs:word_19872
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 cs; add dx, word ptr [0x9872]
 .org 0x20a9
 # IDA 0x11ea9; file 0x20a9; locator=proven; mov     ds, dx
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 mov ds, dx
 .org 0x20ab
 # IDA 0x11eab; file 0x20ab; locator=proven; mov     bl, [bx]
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 mov bl, byte ptr [bx]
 .org 0x20ad
 # IDA 0x11ead; file 0x20ad; locator=proven; mov     [bp+2], bl
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 mov byte ptr [bp+0x2], bl
 .org 0x20b0
 # IDA 0x11eb0; file 0x20b0; locator=proven; cmp     word ptr [bp+0], 0FFFFh
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 cmp word ptr [bp], offset imm_at_11EB0
 .org 0x20b5
 # IDA 0x11eb5; file 0x20b5; locator=proven; jz      short loc_11ED3
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 jz .+30
 .org 0x20b7
 # IDA 0x11eb7; file 0x20b7; locator=proven; cmp     bl, 0
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 cmp bl, 0x0
 .org 0x20ba
 # IDA 0x11eba; file 0x20ba; locator=proven; jz      short loc_11EC5
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 jz .+11
 .org 0x20bc
 # IDA 0x11ebc; file 0x20bc; locator=proven; call    sub_11F0E
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 call .+82
 .org 0x20bf
 # IDA 0x11ebf; file 0x20bf; locator=proven; jb      short loc_11F04
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
+# operand 0 loc_11F04; [proven] 城市與軍團選單CF取消後直接離開; 出處: docs/re/127-c-world-interaction-restoration.md
 jb .+69
 .org 0x20c1
 # IDA 0x11ec1; file 0x20c1; locator=proven; cmp     al, 1
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 cmp al, 0x1
 .org 0x20c3
 # IDA 0x11ec3; file 0x20c3; locator=proven; jz      short loc_11ED3
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 jz .+16
 .org 0x20c5
 loc_11EC5:
 # IDA 0x11ec5; file 0x20c5; locator=proven; mov     si, [bp+0]
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 mov si, word ptr [bp]
 .org 0x20c8
 # IDA 0x11ec8; file 0x20c8; locator=proven; call    sub_101B4
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 call .-7444
 .org 0x20cb
 # IDA 0x11ecb; file 0x20cb; locator=proven; call    sub_17E1F
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 call .+24404
 .org 0x20ce
 # IDA 0x11ece; file 0x20ce; locator=proven; call    sub_101DB
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 call .-7411
 .org 0x20d1
 # IDA 0x11ed1; file 0x20d1; locator=proven; jmp     short loc_11F04
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 jmp .+51
 .org 0x20d3
 loc_11ED3:
 # IDA 0x11ed3; file 0x20d3; locator=proven; cmp     word ptr [bp+2], 1
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 cmp word ptr [bp+0x2], 0x1
 .org 0x20d7
 # IDA 0x11ed7; file 0x20d7; locator=proven; jb      short loc_11F04
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 jb .+45
 .org 0x20d9
 # IDA 0x11ed9; file 0x20d9; locator=proven; mov     ax, cs:word_1989A
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 cs; mov ax, word ptr [0x989a]
 .org 0x20dd
 # IDA 0x11edd; file 0x20dd; locator=proven; mov     bx, cs:word_1989C
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 cs; mov bx, word ptr [0x989c]
 .org 0x20e2
 # IDA 0x11ee2; file 0x20e2; locator=proven; mov     [bp+4], ax
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 mov word ptr [bp+0x4], ax
 .org 0x20e5
 # IDA 0x11ee5; file 0x20e5; locator=proven; mov     [bp+6], bx
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 mov word ptr [bp+0x6], bx
 .org 0x20e8
 loc_11EE8:
 # IDA 0x11ee8; file 0x20e8; locator=proven; call    sub_171D3
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 call .+21227
 .org 0x20eb
 # IDA 0x11eeb; file 0x20eb; locator=proven; jb      short loc_11F04
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 jb .+25
 .org 0x20ed
 # IDA 0x11eed; file 0x20ed; locator=proven; sub     bx, 2240h
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 sub bx, 0x2240
 .org 0x20f1
 # IDA 0x11ef1; file 0x20f1; locator=proven; mov     si, bx
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 {load} mov si, bx
 .org 0x20f3
 # IDA 0x11ef3; file 0x20f3; locator=proven; call    sub_120D6
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 call .+483
 .org 0x20f6
 # IDA 0x11ef6; file 0x20f6; locator=proven; call    sub_17F90
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 call .+24730
 .org 0x20f9
 # IDA 0x11ef9; file 0x20f9; locator=proven; call    sub_12078
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 call .+383
 .org 0x20fc
 # IDA 0x11efc; file 0x20fc; locator=proven; mov     ax, [bp+4]
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 mov ax, word ptr [bp+0x4]
 .org 0x20ff
 # IDA 0x11eff; file 0x20ff; locator=proven; mov     bx, [bp+6]
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 mov bx, word ptr [bp+0x6]
 .org 0x2102
 # IDA 0x11f02; file 0x2102; locator=proven; jmp     short loc_11EE8
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 jmp .-26
 .org 0x2104
 loc_11F04:
 # IDA 0x11f04; file 0x2104; locator=proven; add     sp, 8
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 add sp, 0x8
 .org 0x2107
 # IDA 0x11f07; file 0x2107; locator=proven; call    sub_120D6
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 call .+463
 .org 0x210a
 # IDA 0x11f0a; file 0x210a; locator=proven; pop     bp
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 pop bp
 .org 0x210b
 # IDA 0x11f0b; file 0x210b; locator=proven; pop     es
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 pop es
 .org 0x210c
 # IDA 0x11f0c; file 0x210c; locator=proven; pop     ds
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 pop ds
 .org 0x210d
 # IDA 0x11f0d; file 0x210d; locator=proven; retn
-# ⚠ 函式 sub_11E46; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11E46; [proven] 原地圖點選城市與同格軍團，八byte SS區域及取消重選; 出處: docs/re/127-c-world-interaction-restoration.md
 ret
 .org 0x210e
 sub_11F0E:
 # IDA 0x11f0e; file 0x210e; locator=proven; mov     ax, cs:word_19898
-# ⚠ 函式 sub_11F0E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F0E; [proven] 原城市與軍團兩項選單，僅限制座標低byte，Y22與X35; 出處: docs/re/127-c-world-interaction-restoration.md
 cs; mov ax, word ptr [0x9898]
 .org 0x2112
 # IDA 0x11f12; file 0x2112; locator=proven; cmp     al, 16h
-# ⚠ 函式 sub_11F0E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F0E; [proven] 原城市與軍團兩項選單，僅限制座標低byte，Y22與X35; 出處: docs/re/127-c-world-interaction-restoration.md
+# operand 1 16h; [proven] 只限制AL的Y上界22，原高byte不作座標; 出處: docs/re/127-c-world-interaction-restoration.md
 cmp al, 0x16
 .org 0x2114
 # IDA 0x11f14; file 0x2114; locator=proven; jbe     short loc_11F18
-# ⚠ 函式 sub_11F0E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F0E; [proven] 原城市與軍團兩項選單，僅限制座標低byte，Y22與X35; 出處: docs/re/127-c-world-interaction-restoration.md
 jbe .+4
 .org 0x2116
 # IDA 0x11f16; file 0x2116; locator=proven; mov     al, 16h
-# ⚠ 函式 sub_11F0E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F0E; [proven] 原城市與軍團兩項選單，僅限制座標低byte，Y22與X35; 出處: docs/re/127-c-world-interaction-restoration.md
 mov al, 0x16
 .org 0x2118
 loc_11F18:
 # IDA 0x11f18; file 0x2118; locator=proven; mov     dx, cs:word_19896
-# ⚠ 函式 sub_11F0E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F0E; [proven] 原城市與軍團兩項選單，僅限制座標低byte，Y22與X35; 出處: docs/re/127-c-world-interaction-restoration.md
 cs; mov dx, word ptr [0x9896]
 .org 0x211d
 # IDA 0x11f1d; file 0x211d; locator=proven; cmp     dl, 23h
-# ⚠ 函式 sub_11F0E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F0E; [proven] 原城市與軍團兩項選單，僅限制座標低byte，Y22與X35; 出處: docs/re/127-c-world-interaction-restoration.md
+# operand 1 23h; [proven] 只限制DL的X上界35; 出處: docs/re/127-c-world-interaction-restoration.md
 cmp dl, 0x23
 .org 0x2120
 # IDA 0x11f20; file 0x2120; locator=proven; jbe     short loc_11F24
-# ⚠ 函式 sub_11F0E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F0E; [proven] 原城市與軍團兩項選單，僅限制座標低byte，Y22與X35; 出處: docs/re/127-c-world-interaction-restoration.md
 jbe .+4
 .org 0x2122
 # IDA 0x11f22; file 0x2122; locator=proven; mov     dl, 23h
-# ⚠ 函式 sub_11F0E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F0E; [proven] 原城市與軍團兩項選單，僅限制座標低byte，Y22與X35; 出處: docs/re/127-c-world-interaction-restoration.md
 mov dl, 0x23
 .org 0x2124
 loc_11F24:
 # IDA 0x11f24; file 0x2124; locator=proven; mov     dh, al
-# ⚠ 函式 sub_11F0E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F0E; [proven] 原城市與軍團兩項選單，僅限制座標低byte，Y22與X35; 出處: docs/re/127-c-world-interaction-restoration.md
 {load} mov dh, al
 .org 0x2126
 # IDA 0x11f26; file 0x2126; locator=proven; mov     ax, 102h
-# ⚠ 函式 sub_11F0E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F0E; [proven] 原城市與軍團兩項選單，僅限制座標低byte，Y22與X35; 出處: docs/re/127-c-world-interaction-restoration.md
 mov ax, 0x102
 .org 0x2129
 # IDA 0x11f29; file 0x2129; locator=proven; mov     cx, 50h
-# ⚠ 函式 sub_11F0E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F0E; [proven] 原城市與軍團兩項選單，僅限制座標低byte，Y22與X35; 出處: docs/re/127-c-world-interaction-restoration.md
 mov cx, 0x50
 .org 0x212c
 # IDA 0x11f2c; file 0x212c; locator=proven; call    sub_193E9
-# ⚠ 函式 sub_11F0E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F0E; [proven] 原城市與軍團兩項選單，僅限制座標低byte，Y22與X35; 出處: docs/re/127-c-world-interaction-restoration.md
 call .+29885
 .org 0x212f
 # IDA 0x11f2f; file 0x212f; locator=proven; retn
-# ⚠ 函式 sub_11F0E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F0E; [proven] 原城市與軍團兩項選單，僅限制座標低byte，Y22與X35; 出處: docs/re/127-c-world-interaction-restoration.md
 ret
 .org 0x2130
 sub_11F30:
@@ -35060,44 +35065,45 @@ ret
 .org 0x5bb7
 sub_159B7:
 # IDA 0x159b7; file 0x5bb7; locator=proven; mov     bl, al
-# ⚠ 函式 sub_159B7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_159B7; [proven] 原AL索引的live DS右鍵表分派，重畫後DS/ES等於CS並落入159D0; 出處: docs/re/127-c-world-interaction-restoration.md
 {load} mov bl, al
 .org 0x5bb9
 # IDA 0x159b9; file 0x5bb9; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_159B7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_159B7; [proven] 原AL索引的live DS右鍵表分派，重畫後DS/ES等於CS並落入159D0; 出處: docs/re/127-c-world-interaction-restoration.md
 {load} xor bh, bh
 .org 0x5bbb
 # IDA 0x159bb; file 0x5bbb; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_159B7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_159B7; [proven] 原AL索引的live DS右鍵表分派，重畫後DS/ES等於CS並落入159D0; 出處: docs/re/127-c-world-interaction-restoration.md
 shl bx, 0x1
 .org 0x5bbd
 # IDA 0x159bd; file 0x5bbd; locator=proven; call    sub_101B4
-# ⚠ 函式 sub_159B7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_159B7; [proven] 原AL索引的live DS右鍵表分派，重畫後DS/ES等於CS並落入159D0; 出處: docs/re/127-c-world-interaction-restoration.md
 call .-22537
 .org 0x5bc0
 # IDA 0x159c0; file 0x5bc0; locator=proven; call    funcs_159C0[bx]
-# ⚠ 函式 sub_159B7; [unknown] 未附加語意; 出處: 無
-# operand 0 funcs_159C0[bx]; [proven] 原DS:[BX+5A06]，符號funcs_159C0後綴不是表址；主迴圈DS等於CS; 出處: docs/re/125-c-nonlocal-exit-restoration.md
+# 函式 sub_159B7; [proven] 原AL索引的live DS右鍵表分派，重畫後DS/ES等於CS並落入159D0; 出處: docs/re/127-c-world-interaction-restoration.md
+# operand 0 funcs_159C0[bx]; [proven] 原DS:[BX+5A06]，符號funcs_159C0後綴不是表址；主迴圈DS等於CS; 出處: docs/re/125-c-nonlocal-exit-restoration.md, docs/re/127-c-world-interaction-restoration.md
 call word ptr [bx+0x5a06]
 .org 0x5bc4
 # IDA 0x159c4; file 0x5bc4; locator=proven; call    sub_11C8D
-# ⚠ 函式 sub_159B7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_159B7; [proven] 原AL索引的live DS右鍵表分派，重畫後DS/ES等於CS並落入159D0; 出處: docs/re/127-c-world-interaction-restoration.md
 call .-15671
 .org 0x5bc7
 # IDA 0x159c7; file 0x5bc7; locator=proven; call    sub_101DB
-# ⚠ 函式 sub_159B7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_159B7; [proven] 原AL索引的live DS右鍵表分派，重畫後DS/ES等於CS並落入159D0; 出處: docs/re/127-c-world-interaction-restoration.md
 call .-22508
 .org 0x5bca
 # IDA 0x159ca; file 0x5bca; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_159B7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_159B7; [proven] 原AL索引的live DS右鍵表分派，重畫後DS/ES等於CS並落入159D0; 出處: docs/re/127-c-world-interaction-restoration.md
 mov ax, cs
 .org 0x5bcc
 # IDA 0x159cc; file 0x5bcc; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_159B7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_159B7; [proven] 原AL索引的live DS右鍵表分派，重畫後DS/ES等於CS並落入159D0; 出處: docs/re/127-c-world-interaction-restoration.md
 mov ds, ax
 .org 0x5bce
 # IDA 0x159ce; file 0x5bce; locator=proven; mov     es, ax
-# ⚠ 函式 sub_159B7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_159B7; [proven] 原AL索引的live DS右鍵表分派，重畫後DS/ES等於CS並落入159D0; 出處: docs/re/127-c-world-interaction-restoration.md
+# operand 0 es; [proven] 右鍵結尾ES等於CS，下一指令為獨立nullsub_1 RET; 出處: docs/re/127-c-world-interaction-restoration.md
 mov es, ax
 .org 0x5bd0
 nullsub_1:
@@ -35244,31 +35250,32 @@ ret
 .org 0x5ca2
 sub_15AA2:
 # IDA 0x15aa2; file 0x5ca2; locator=proven; xor     al, al
-# ⚠ 函式 sub_15AA2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15AA2; [proven] 原清除DS:98A6 bit2與指定顯示矩形; 出處: docs/re/127-c-world-interaction-restoration.md
 {load} xor al, al
 .org 0x5ca4
 # IDA 0x15aa4; file 0x5ca4; locator=proven; mov     dx, 1Bh
-# ⚠ 函式 sub_15AA2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15AA2; [proven] 原清除DS:98A6 bit2與指定顯示矩形; 出處: docs/re/127-c-world-interaction-restoration.md
 mov dx, 0x1b
 .org 0x5ca7
 # IDA 0x15aa7; file 0x5ca7; locator=proven; mov     bx, 0
-# ⚠ 函式 sub_15AA2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15AA2; [proven] 原清除DS:98A6 bit2與指定顯示矩形; 出處: docs/re/127-c-world-interaction-restoration.md
 mov bx, 0x0
 .org 0x5caa
 # IDA 0x15aaa; file 0x5caa; locator=proven; mov     cx, 0A0Dh
-# ⚠ 函式 sub_15AA2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15AA2; [proven] 原清除DS:98A6 bit2與指定顯示矩形; 出處: docs/re/127-c-world-interaction-restoration.md
 mov cx, 0xa0d
 .org 0x5cad
 # IDA 0x15aad; file 0x5cad; locator=proven; call    sub_1895D
-# ⚠ 函式 sub_15AA2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15AA2; [proven] 原清除DS:98A6 bit2與指定顯示矩形; 出處: docs/re/127-c-world-interaction-restoration.md
 call .+11952
 .org 0x5cb0
 # IDA 0x15ab0; file 0x5cb0; locator=proven; and     byte_198A6, 0FBh
-# ⚠ 函式 sub_15AA2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15AA2; [proven] 原清除DS:98A6 bit2與指定顯示矩形; 出處: docs/re/127-c-world-interaction-restoration.md
+# operand 1 0FBh; [proven] 清除DS:98A6 bit2，保留其餘bits; 出處: docs/re/127-c-world-interaction-restoration.md
 and byte ptr [0x98a6], 0xfb
 .org 0x5cb5
 # IDA 0x15ab5; file 0x5cb5; locator=proven; retn
-# ⚠ 函式 sub_15AA2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15AA2; [proven] 原清除DS:98A6 bit2與指定顯示矩形; 出處: docs/re/127-c-world-interaction-restoration.md
 ret
 .org 0x5cb6
 sub_15AB6:
@@ -36739,31 +36746,32 @@ ret
 .org 0x604c
 sub_15E4C:
 # IDA 0x15e4c; file 0x604c; locator=proven; and     byte ptr ds:98A6h, 0FDh
-# ⚠ 函式 sub_15E4C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E4C; [proven] 原清除DS:98A6 bit1與指定顯示矩形; 出處: docs/re/127-c-world-interaction-restoration.md
+# operand 1 0FDh; [proven] 清除DS:98A6 bit1，保留其餘bits; 出處: docs/re/127-c-world-interaction-restoration.md
 and byte ptr [0x98a6], 0xfd
 .org 0x6051
 # IDA 0x15e51; file 0x6051; locator=proven; xor     al, al
-# ⚠ 函式 sub_15E4C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E4C; [proven] 原清除DS:98A6 bit1與指定顯示矩形; 出處: docs/re/127-c-world-interaction-restoration.md
 {load} xor al, al
 .org 0x6053
 # IDA 0x15e53; file 0x6053; locator=proven; mov     dx, 1Bh
-# ⚠ 函式 sub_15E4C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E4C; [proven] 原清除DS:98A6 bit1與指定顯示矩形; 出處: docs/re/127-c-world-interaction-restoration.md
 mov dx, 0x1b
 .org 0x6056
 # IDA 0x15e56; file 0x6056; locator=proven; mov     bx, 0Ah
-# ⚠ 函式 sub_15E4C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E4C; [proven] 原清除DS:98A6 bit1與指定顯示矩形; 出處: docs/re/127-c-world-interaction-restoration.md
 mov bx, 0xa
 .org 0x6059
 # IDA 0x15e59; file 0x6059; locator=proven; mov     cx, 0D0Dh
-# ⚠ 函式 sub_15E4C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E4C; [proven] 原清除DS:98A6 bit1與指定顯示矩形; 出處: docs/re/127-c-world-interaction-restoration.md
 mov cx, 0xd0d
 .org 0x605c
 # IDA 0x15e5c; file 0x605c; locator=proven; call    sub_1895D
-# ⚠ 函式 sub_15E4C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E4C; [proven] 原清除DS:98A6 bit1與指定顯示矩形; 出處: docs/re/127-c-world-interaction-restoration.md
 call .+11009
 .org 0x605f
 # IDA 0x15e5f; file 0x605f; locator=proven; retn
-# ⚠ 函式 sub_15E4C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E4C; [proven] 原清除DS:98A6 bit1與指定顯示矩形; 出處: docs/re/127-c-world-interaction-restoration.md
 ret
 .org 0x6060
 sub_15E60:
@@ -38068,31 +38076,32 @@ ret
 .org 0x63b6
 sub_161B6:
 # IDA 0x161b6; file 0x63b6; locator=proven; and     byte ptr ds:98A6h, 0FEh
-# ⚠ 函式 sub_161B6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161B6; [proven] 原清除DS:98A6 bit0與指定顯示矩形; 出處: docs/re/127-c-world-interaction-restoration.md
+# operand 1 0FEh; [proven] 清除DS:98A6 bit0，保留其餘bits; 出處: docs/re/127-c-world-interaction-restoration.md
 and byte ptr [0x98a6], 0xfe
 .org 0x63bb
 # IDA 0x161bb; file 0x63bb; locator=proven; xor     al, al
-# ⚠ 函式 sub_161B6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161B6; [proven] 原清除DS:98A6 bit0與指定顯示矩形; 出處: docs/re/127-c-world-interaction-restoration.md
 {load} xor al, al
 .org 0x63bd
 # IDA 0x161bd; file 0x63bd; locator=proven; mov     dx, 0
-# ⚠ 函式 sub_161B6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161B6; [proven] 原清除DS:98A6 bit0與指定顯示矩形; 出處: docs/re/127-c-world-interaction-restoration.md
 mov dx, 0x0
 .org 0x63c0
 # IDA 0x161c0; file 0x63c0; locator=proven; mov     bx, 0
-# ⚠ 函式 sub_161B6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161B6; [proven] 原清除DS:98A6 bit0與指定顯示矩形; 出處: docs/re/127-c-world-interaction-restoration.md
 mov bx, 0x0
 .org 0x63c3
 # IDA 0x161c3; file 0x63c3; locator=proven; mov     cx, 21Bh
-# ⚠ 函式 sub_161B6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161B6; [proven] 原清除DS:98A6 bit0與指定顯示矩形; 出處: docs/re/127-c-world-interaction-restoration.md
 mov cx, 0x21b
 .org 0x63c6
 # IDA 0x161c6; file 0x63c6; locator=proven; call    sub_1895D
-# ⚠ 函式 sub_161B6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161B6; [proven] 原清除DS:98A6 bit0與指定顯示矩形; 出處: docs/re/127-c-world-interaction-restoration.md
 call .+10135
 .org 0x63c9
 # IDA 0x161c9; file 0x63c9; locator=proven; retn
-# ⚠ 函式 sub_161B6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161B6; [proven] 原清除DS:98A6 bit0與指定顯示矩形; 出處: docs/re/127-c-world-interaction-restoration.md
 ret
 .org 0x63ca
 sub_161CA:

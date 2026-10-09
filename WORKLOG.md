@@ -505,3 +505,12 @@
 - 本輪最終來源與收據重綁完成：Go vet／39套件冷測通過，cached0；最後完整check的39套件重用cache，兩次證據分列。25單項21通過／4既有失敗／新增0；phantom277正規化零增刪，lessons失敗與基線相同。完整check停於既有index兩缺圖及phantom，其後階段由25單項補足。
 - 最終native驗證確認147指令／339bytes、十錯版、375C／49raw與兩筆回鏈一致；公開C收據已綁定最終Go proof。新文件已列入專案索引，原版資產、RAM與圖片不入Git。
 - 本輪輸出UID/GID1000；root-owned維持27個既有路徑，沒有異常.md目錄。本輪容器已清理；依使用者授權commit與push，完整mainloop、正常玩家長程及原C機器碼仍未完成。
+
+## 2026-10-09：世界點選、右鍵取消與淡入 C
+
+- spec247 READY後還原八函式159指令396bytes；原DS表26索引與159B7落入nullsub_1只RET一次。
+- O0/O2各2148完整裝置狀態與十二實編譯錯版通過；128組DS≠CS、live表修改、完整低byte座標、城市圖塊與軍團重選由獨立模型先驗原版。
+- C來源與較早右鍵證據回鏈已登錄，383C/49raw；159指令已有組語覆蓋，完整EXE67099仍exact。更新排程11CD0、完整mainloop、自然玩家長程及原C機器碼仍待完成。
+- 世界互動本輪最終收據已重綁：正式Go vet與39套件冷測通過、cached0；最後完整check的39套件重用cache，兩者分列。25單項21通過／4既有失敗／新增0，phantom277正規化零增刪；完整check停在既有index兩缺圖及phantom，後續由25單項補足。
+- 發布程序初次誤用組語收據檔名，依實際code-record-verification.json修正後完成；原生對拍不需重跑。最終159指令／396bytes、十二錯版、383C／49raw及兩筆回鏈核對通過。
+- 本輪輸出UID/GID1000；root-owned維持27個既有路徑、沒有異常.md目錄，Docker容器已清理。依授權commit與push；原版資產與私有RAM／圖片不入Git，完整Goal保持active。

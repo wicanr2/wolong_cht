@@ -2048,3 +2048,9 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - 固定DOS/V KI.EXE及IDA9.4身分見 [re/126](docs/re/126-c-world-bootstrap-restoration.md)，5函式317bytes＋無RET前綴22bytes。
 - 獨立byte模型驗整份map/occupancy/descriptor/score；O0/O2各5008組/5416全狀態與十錯版、原生prefix接退出鏈通過。
 - 普通分派不把有限prefix當完整11BE0；375C/49raw不是完整C或C機器碼匹配聲明。
+
+## 2026-10-09：世界互動閉包與原右鍵表
+
+- 固定KI.EXE／IDA9.4／DB／probe身分見 [re/127](docs/re/127-c-world-interaction-restoration.md)。
+- 八函式159指令396bytes，O0/O2各2148完整RAM/VGA/DAC/ABI/I/O/API與十二錯版；原DS≠CS與原表修改為分辨性反例。
+- 新證據回鏈至re125/spec245，完整mainloop與原C機器碼尚未恢復。

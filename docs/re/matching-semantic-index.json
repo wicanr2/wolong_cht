@@ -2904,6 +2904,62 @@
       "sources": [
         "docs/re/126-c-world-bootstrap-restoration.md"
       ]
+    },
+    "0x109D0": {
+      "meaning": "原16色淡入，強度0至16，每級等待兩次垂直回掃",
+      "level": "proven",
+      "sources": [
+        "docs/re/127-c-world-interaction-restoration.md"
+      ]
+    },
+    "0x11E46": {
+      "meaning": "原地圖點選城市與同格軍團，八byte SS區域及取消重選",
+      "level": "proven",
+      "sources": [
+        "docs/re/127-c-world-interaction-restoration.md"
+      ]
+    },
+    "0x11F0E": {
+      "meaning": "原城市與軍團兩項選單，僅限制座標低byte，Y22與X35",
+      "level": "proven",
+      "sources": [
+        "docs/re/127-c-world-interaction-restoration.md"
+      ]
+    },
+    "0x159B7": {
+      "meaning": "原AL索引的live DS右鍵表分派，重畫後DS/ES等於CS並落入159D0",
+      "level": "proven",
+      "sources": [
+        "docs/re/127-c-world-interaction-restoration.md"
+      ]
+    },
+    "0x159D0": {
+      "meaning": "原nullsub_1單一RET，右鍵call目標及159B7落下返回",
+      "level": "proven",
+      "sources": [
+        "docs/re/127-c-world-interaction-restoration.md"
+      ]
+    },
+    "0x15AA2": {
+      "meaning": "原清除DS:98A6 bit2與指定顯示矩形",
+      "level": "proven",
+      "sources": [
+        "docs/re/127-c-world-interaction-restoration.md"
+      ]
+    },
+    "0x15E4C": {
+      "meaning": "原清除DS:98A6 bit1與指定顯示矩形",
+      "level": "proven",
+      "sources": [
+        "docs/re/127-c-world-interaction-restoration.md"
+      ]
+    },
+    "0x161B6": {
+      "meaning": "原清除DS:98A6 bit0與指定顯示矩形",
+      "level": "proven",
+      "sources": [
+        "docs/re/127-c-world-interaction-restoration.md"
+      ]
     }
   },
   "operands": {
@@ -3345,7 +3401,8 @@
       "meaning": "原DS:[BX+5A06]，符號funcs_159C0後綴不是表址；主迴圈DS等於CS",
       "level": "proven",
       "sources": [
-        "docs/re/125-c-nonlocal-exit-restoration.md"
+        "docs/re/125-c-nonlocal-exit-restoration.md",
+        "docs/re/127-c-world-interaction-restoration.md"
       ]
     },
     "0x189FB:1": {
@@ -3418,6 +3475,78 @@
       "level": "proven",
       "sources": [
         "docs/re/126-c-world-bootstrap-restoration.md"
+      ]
+    },
+    "0x159CE:0": {
+      "original": "es",
+      "meaning": "右鍵結尾ES等於CS，下一指令為獨立nullsub_1 RET",
+      "level": "proven",
+      "sources": [
+        "docs/re/127-c-world-interaction-restoration.md"
+      ]
+    },
+    "0x11E7F:1": {
+      "original": "0CBh",
+      "meaning": "城市圖塊下界CB，搜尋不檢查城市存在flags",
+      "level": "proven",
+      "sources": [
+        "docs/re/127-c-world-interaction-restoration.md"
+      ]
+    },
+    "0x11E84:1": {
+      "original": "0D4h",
+      "meaning": "城市圖塊排他上界D4",
+      "level": "proven",
+      "sources": [
+        "docs/re/127-c-world-interaction-restoration.md"
+      ]
+    },
+    "0x11EBF:0": {
+      "original": "loc_11F04",
+      "meaning": "城市與軍團選單CF取消後直接離開",
+      "level": "proven",
+      "sources": [
+        "docs/re/127-c-world-interaction-restoration.md"
+      ]
+    },
+    "0x11F12:1": {
+      "original": "16h",
+      "meaning": "只限制AL的Y上界22，原高byte不作座標",
+      "level": "proven",
+      "sources": [
+        "docs/re/127-c-world-interaction-restoration.md"
+      ]
+    },
+    "0x11F1D:1": {
+      "original": "23h",
+      "meaning": "只限制DL的X上界35",
+      "level": "proven",
+      "sources": [
+        "docs/re/127-c-world-interaction-restoration.md"
+      ]
+    },
+    "0x15AB0:1": {
+      "original": "0FBh",
+      "meaning": "清除DS:98A6 bit2，保留其餘bits",
+      "level": "proven",
+      "sources": [
+        "docs/re/127-c-world-interaction-restoration.md"
+      ]
+    },
+    "0x15E4C:1": {
+      "original": "0FDh",
+      "meaning": "清除DS:98A6 bit1，保留其餘bits",
+      "level": "proven",
+      "sources": [
+        "docs/re/127-c-world-interaction-restoration.md"
+      ]
+    },
+    "0x161B6:1": {
+      "original": "0FEh",
+      "meaning": "清除DS:98A6 bit0，保留其餘bits",
+      "level": "proven",
+      "sources": [
+        "docs/re/127-c-world-interaction-restoration.md"
       ]
     }
   }

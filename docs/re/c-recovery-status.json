@@ -2233,6 +2233,14 @@
           "oracle_cases_per_optimization": 3348,
           "entry_count": 176,
           "scope": "29 original strategy command-bar, upper-player-entry and proposal routines; four fixed scenarios, controlled mouse choices and INT61 status, complete original/C state comparison. Direct routine closure only; no complete natural player-path or C machine-code matching claim. Returning scenes only; trust-underflow nonlocal startup-stack restoration remains unverified. 13DC9 trust-underflow borrow and nonlocal 11CB1 startup SS/SP restoration remain unverified. Original TSR/hardware behavior, natural long player paths and original C machine-code matching remain unverified. Raw RNG state is identical on both sides without rerolls; RNG paths are not deliberately exercised."
+        },
+        {
+          "evidence": "docs/re/127-c-world-interaction-restoration.md",
+          "spec": "docs/spec/247-c-world-interaction.md",
+          "receipt": "docs/re/c-interaction-verification.json",
+          "oracle_cases_per_optimization": 2148,
+          "entry_count": 1216,
+          "scope": "Eight original world-interaction/fade-in functions, live DS dispatch table and original fallthrough RET. Whole main loop, update scheduler, natural player paths and C machine-code matching remain incomplete."
         }
       ]
     },
@@ -2405,7 +2413,17 @@
       "scope": "10 hotspot/map/query/window memory functions; true pixel input to numeric/finance; whole map/flags and ABI; VGA/drawing/popup/device leaves remain fixtures; IF/TF=0; original zero byte loops and word wrap",
       "source_sha256": "805a2963363f151d01478d1eefd956ac482e2df22189d15638c7f79ea94dd5c1",
       "header_sha256": "21f1dcb13ecbc301237487a12d6db80de4c944d816892a989a9a48711f496b20",
-      "fixture_sha256": "ed5a4f5b1b4ecdd5982689110d7b82c2372ead6abd83551a9a18357d06862411"
+      "fixture_sha256": "ed5a4f5b1b4ecdd5982689110d7b82c2372ead6abd83551a9a18357d06862411",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/127-c-world-interaction-restoration.md",
+          "spec": "docs/spec/247-c-world-interaction.md",
+          "receipt": "docs/re/c-interaction-verification.json",
+          "oracle_cases_per_optimization": 2148,
+          "entry_count": 1380,
+          "scope": "Eight original world-interaction/fade-in functions, live DS dispatch table and original fallthrough RET. Whole main loop, update scheduler, natural player paths and C machine-code matching remain incomplete."
+        }
+      ]
     },
     "sub_189DE": {
       "ida_linear": 100830,
@@ -5870,7 +5888,17 @@
       "source_sha256": "79cbe68a4eb5e646fccd135e53e2d60d080d363332ec3c4c198de781ab919929",
       "header_sha256": "67bb952d79ebfc82e507409f7c596139e0a684f97e5ab9fae9054ccd437d024b",
       "fixture_sha256": "a68d40649438adc7e2a8eab0bdfc85260814bb9a208975e36b22132ae96e2f85",
-      "generated_source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95"
+      "generated_source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/127-c-world-interaction-restoration.md",
+          "spec": "docs/spec/247-c-world-interaction.md",
+          "receipt": "docs/re/c-interaction-verification.json",
+          "oracle_cases_per_optimization": 2148,
+          "entry_count": 184,
+          "scope": "Eight original world-interaction/fade-in functions, live DS dispatch table and original fallthrough RET. Whole main loop, update scheduler, natural player paths and C machine-code matching remain incomplete."
+        }
+      ]
     },
     "sub_175FA": {
       "ida_linear": 95738,
@@ -6601,6 +6629,16 @@
           "level": "proven",
           "evidence": "docs/re/122-c-detail-panels-restoration.md"
         }
+      ],
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/127-c-world-interaction-restoration.md",
+          "spec": "docs/spec/247-c-world-interaction.md",
+          "receipt": "docs/re/c-interaction-verification.json",
+          "oracle_cases_per_optimization": 2148,
+          "entry_count": 260,
+          "scope": "Eight original world-interaction/fade-in functions, live DS dispatch table and original fallthrough RET. Whole main loop, update scheduler, natural player paths and C machine-code matching remain incomplete."
+        }
       ]
     },
     "sub_17E4A": {
@@ -6850,7 +6888,17 @@
       "source_sha256": "7e8aaacab485468b7bbbb2029398dd2511c5e338a2f99a9590ad57379beb4106",
       "header_sha256": "a6053642f089aba827359d031b98f1fef0d41c3e5b5c2aa724ca8db3d2421f0a",
       "fixture_sha256": "e8ca44e2b21229cabaf4d6e1955a0f76bf5e67e20ce1c2928ec115eb3a6731c6",
-      "generated_source_sha256": "93ced7003a727254d21816095d1de633959986d9f61cd2b69fd6847f512e8bb9"
+      "generated_source_sha256": "93ced7003a727254d21816095d1de633959986d9f61cd2b69fd6847f512e8bb9",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/127-c-world-interaction-restoration.md",
+          "spec": "docs/spec/247-c-world-interaction.md",
+          "receipt": "docs/re/c-interaction-verification.json",
+          "oracle_cases_per_optimization": 2148,
+          "entry_count": 488,
+          "scope": "Eight original world-interaction/fade-in functions, live DS dispatch table and original fallthrough RET. Whole main loop, update scheduler, natural player paths and C machine-code matching remain incomplete."
+        }
+      ]
     },
     "sub_11F7F": {
       "ida_linear": 73599,
@@ -7371,6 +7419,16 @@
           "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
           "level": "proven",
           "evidence": "docs/re/123-c-march-command-restoration.md"
+        }
+      ],
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/127-c-world-interaction-restoration.md",
+          "spec": "docs/spec/247-c-world-interaction.md",
+          "receipt": "docs/re/c-interaction-verification.json",
+          "oracle_cases_per_optimization": 2148,
+          "entry_count": 88,
+          "scope": "Eight original world-interaction/fade-in functions, live DS dispatch table and original fallthrough RET. Whole main loop, update scheduler, natural player paths and C machine-code matching remain incomplete."
         }
       ]
     },
@@ -8134,7 +8192,17 @@
       "source_sha256": "51f2b56ae72f65735787d9a2b47b39af400b3a01b3e0f56bec1e9842ea954e45",
       "header_sha256": "1ae3902707ff8590838c8cbc478c7883250152cb079bf3b336959df140c51d0d",
       "fixture_sha256": "1d7b4507c2446ee3a95b34500695b89ad4e2f0ad6deec04008e276db529ca706",
-      "generated_source_sha256": "bffe5c3e5cda82099b584e779ac6a3bb7cbe82a87a259858ade7acd7167a4b2e"
+      "generated_source_sha256": "bffe5c3e5cda82099b584e779ac6a3bb7cbe82a87a259858ade7acd7167a4b2e",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/127-c-world-interaction-restoration.md",
+          "spec": "docs/spec/247-c-world-interaction.md",
+          "receipt": "docs/re/c-interaction-verification.json",
+          "oracle_cases_per_optimization": 2148,
+          "entry_count": 3264,
+          "scope": "Eight original world-interaction/fade-in functions, live DS dispatch table and original fallthrough RET. Whole main loop, update scheduler, natural player paths and C machine-code matching remain incomplete."
+        }
+      ]
     },
     "sub_1533D": {
       "ida_linear": 86845,
@@ -8240,6 +8308,174 @@
       "header_sha256": "5f9beb7bac4d2d1d4764431f70e56d5aff4d1a9a62a1abdf3639215994f3967a",
       "fixture_sha256": "fcd187185b5870aba3cf28d042fbc6d4ab4f83f5c21cfa8da499e7507118266f",
       "generated_source_sha256": "99e945c8a7d12c46d2333ba966a031973d08585e0679e65d8fd20b4e1a9a6903"
+    },
+    "sub_109D0": {
+      "ida_linear": 68048,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/247-c-world-interaction.md",
+      "evidence": "docs/re/127-c-world-interaction-restoration.md",
+      "source": "tools/c_recovery/interaction.c",
+      "header": "tools/c_recovery/interaction.h",
+      "fixture": "tools/c_recovery/interaction_fixture.h",
+      "generated_source": "tools/c_recovery/interaction_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-loop/verification.json",
+      "routine_sha256": "1baea3672ee354d140cbbd0f3d44d8fb831e80c430d4c457f1b4b53363f4fc4a",
+      "oracle_cases_per_optimization": 2148,
+      "oracle_entry_count_per_optimization": 12,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Eight original world-interaction/fade-in functions, live DS dispatch table and original fallthrough RET. Whole main loop, update scheduler, natural player paths and C machine-code matching remain incomplete.",
+      "source_sha256": "a67db06f72c194b99f107d87fcd7ca220e16c4dddfcebe68997a8e641925b5fd",
+      "header_sha256": "edcb8d3a696137a6dbb14f827d91ea71f0b799df7646ee7c4b51f3ccfb1c480e",
+      "fixture_sha256": "b3094eaff854adcf4eac031c8c2bae2de6e14ed4ea88e67faa2a76c0933b2863",
+      "generated_source_sha256": "b1fd164e8adcd6a3cefe7bd716938f5b48f77d69578f5f48248d3e4cc1300002"
+    },
+    "sub_11E46": {
+      "ida_linear": 73286,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/247-c-world-interaction.md",
+      "evidence": "docs/re/127-c-world-interaction-restoration.md",
+      "source": "tools/c_recovery/interaction.c",
+      "header": "tools/c_recovery/interaction.h",
+      "fixture": "tools/c_recovery/interaction_fixture.h",
+      "generated_source": "tools/c_recovery/interaction_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-loop/verification.json",
+      "routine_sha256": "b08dc4991f2be8a53435dc751cf1e897bf72566f726e7067037add5679bbaedd",
+      "oracle_cases_per_optimization": 2148,
+      "oracle_entry_count_per_optimization": 396,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Eight original world-interaction/fade-in functions, live DS dispatch table and original fallthrough RET. Whole main loop, update scheduler, natural player paths and C machine-code matching remain incomplete.",
+      "source_sha256": "a67db06f72c194b99f107d87fcd7ca220e16c4dddfcebe68997a8e641925b5fd",
+      "header_sha256": "edcb8d3a696137a6dbb14f827d91ea71f0b799df7646ee7c4b51f3ccfb1c480e",
+      "fixture_sha256": "b3094eaff854adcf4eac031c8c2bae2de6e14ed4ea88e67faa2a76c0933b2863",
+      "generated_source_sha256": "b1fd164e8adcd6a3cefe7bd716938f5b48f77d69578f5f48248d3e4cc1300002"
+    },
+    "sub_159B7": {
+      "ida_linear": 88503,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/247-c-world-interaction.md",
+      "evidence": "docs/re/127-c-world-interaction-restoration.md",
+      "source": "tools/c_recovery/interaction.c",
+      "header": "tools/c_recovery/interaction.h",
+      "fixture": "tools/c_recovery/interaction_fixture.h",
+      "generated_source": "tools/c_recovery/interaction_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-loop/verification.json",
+      "routine_sha256": "a90a65b5ddf93de4a2cbbdb5938821f1db881fa55458fc1fe2f5a1e00ce982a9",
+      "oracle_cases_per_optimization": 2148,
+      "oracle_entry_count_per_optimization": 488,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Eight original world-interaction/fade-in functions, live DS dispatch table and original fallthrough RET. Whole main loop, update scheduler, natural player paths and C machine-code matching remain incomplete.",
+      "source_sha256": "a67db06f72c194b99f107d87fcd7ca220e16c4dddfcebe68997a8e641925b5fd",
+      "header_sha256": "edcb8d3a696137a6dbb14f827d91ea71f0b799df7646ee7c4b51f3ccfb1c480e",
+      "fixture_sha256": "b3094eaff854adcf4eac031c8c2bae2de6e14ed4ea88e67faa2a76c0933b2863",
+      "generated_source_sha256": "b1fd164e8adcd6a3cefe7bd716938f5b48f77d69578f5f48248d3e4cc1300002"
+    },
+    "sub_11F0E": {
+      "ida_linear": 73486,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/247-c-world-interaction.md",
+      "evidence": "docs/re/127-c-world-interaction-restoration.md",
+      "source": "tools/c_recovery/interaction.c",
+      "header": "tools/c_recovery/interaction.h",
+      "fixture": "tools/c_recovery/interaction_fixture.h",
+      "generated_source": "tools/c_recovery/interaction_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-loop/verification.json",
+      "routine_sha256": "7c3a678bfc0e9a80a05ae5d8dcc5e89638be4f0ec8af037c32add8ce328fca94",
+      "oracle_cases_per_optimization": 2148,
+      "oracle_entry_count_per_optimization": 1216,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Eight original world-interaction/fade-in functions, live DS dispatch table and original fallthrough RET. Whole main loop, update scheduler, natural player paths and C machine-code matching remain incomplete.",
+      "source_sha256": "a67db06f72c194b99f107d87fcd7ca220e16c4dddfcebe68997a8e641925b5fd",
+      "header_sha256": "edcb8d3a696137a6dbb14f827d91ea71f0b799df7646ee7c4b51f3ccfb1c480e",
+      "fixture_sha256": "b3094eaff854adcf4eac031c8c2bae2de6e14ed4ea88e67faa2a76c0933b2863",
+      "generated_source_sha256": "b1fd164e8adcd6a3cefe7bd716938f5b48f77d69578f5f48248d3e4cc1300002"
+    },
+    "nullsub_1": {
+      "ida_linear": 88528,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/247-c-world-interaction.md",
+      "evidence": "docs/re/127-c-world-interaction-restoration.md",
+      "source": "tools/c_recovery/interaction.c",
+      "header": "tools/c_recovery/interaction.h",
+      "fixture": "tools/c_recovery/interaction_fixture.h",
+      "generated_source": "tools/c_recovery/interaction_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-loop/verification.json",
+      "routine_sha256": "ae3f4619b0413d70d3004b9131c3752153074e45725be13b9a148978895e359e",
+      "oracle_cases_per_optimization": 2148,
+      "oracle_entry_count_per_optimization": 768,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Eight original world-interaction/fade-in functions, live DS dispatch table and original fallthrough RET. Whole main loop, update scheduler, natural player paths and C machine-code matching remain incomplete.",
+      "source_sha256": "a67db06f72c194b99f107d87fcd7ca220e16c4dddfcebe68997a8e641925b5fd",
+      "header_sha256": "edcb8d3a696137a6dbb14f827d91ea71f0b799df7646ee7c4b51f3ccfb1c480e",
+      "fixture_sha256": "b3094eaff854adcf4eac031c8c2bae2de6e14ed4ea88e67faa2a76c0933b2863",
+      "generated_source_sha256": "b1fd164e8adcd6a3cefe7bd716938f5b48f77d69578f5f48248d3e4cc1300002"
+    },
+    "sub_15AA2": {
+      "ida_linear": 88738,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/247-c-world-interaction.md",
+      "evidence": "docs/re/127-c-world-interaction-restoration.md",
+      "source": "tools/c_recovery/interaction.c",
+      "header": "tools/c_recovery/interaction.h",
+      "fixture": "tools/c_recovery/interaction_fixture.h",
+      "generated_source": "tools/c_recovery/interaction_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-loop/verification.json",
+      "routine_sha256": "40d4f2ee65bff60c71786a2b295ab5e6997f3f685b276b4b185c5f527067863c",
+      "oracle_cases_per_optimization": 2148,
+      "oracle_entry_count_per_optimization": 140,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Eight original world-interaction/fade-in functions, live DS dispatch table and original fallthrough RET. Whole main loop, update scheduler, natural player paths and C machine-code matching remain incomplete.",
+      "source_sha256": "a67db06f72c194b99f107d87fcd7ca220e16c4dddfcebe68997a8e641925b5fd",
+      "header_sha256": "edcb8d3a696137a6dbb14f827d91ea71f0b799df7646ee7c4b51f3ccfb1c480e",
+      "fixture_sha256": "b3094eaff854adcf4eac031c8c2bae2de6e14ed4ea88e67faa2a76c0933b2863",
+      "generated_source_sha256": "b1fd164e8adcd6a3cefe7bd716938f5b48f77d69578f5f48248d3e4cc1300002"
+    },
+    "sub_15E4C": {
+      "ida_linear": 89676,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/247-c-world-interaction.md",
+      "evidence": "docs/re/127-c-world-interaction-restoration.md",
+      "source": "tools/c_recovery/interaction.c",
+      "header": "tools/c_recovery/interaction.h",
+      "fixture": "tools/c_recovery/interaction_fixture.h",
+      "generated_source": "tools/c_recovery/interaction_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-loop/verification.json",
+      "routine_sha256": "e4e1f749e2b7c020e5844222dbc352508bf86f9273df6af3bf3a68dc77502e62",
+      "oracle_cases_per_optimization": 2148,
+      "oracle_entry_count_per_optimization": 80,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Eight original world-interaction/fade-in functions, live DS dispatch table and original fallthrough RET. Whole main loop, update scheduler, natural player paths and C machine-code matching remain incomplete.",
+      "source_sha256": "a67db06f72c194b99f107d87fcd7ca220e16c4dddfcebe68997a8e641925b5fd",
+      "header_sha256": "edcb8d3a696137a6dbb14f827d91ea71f0b799df7646ee7c4b51f3ccfb1c480e",
+      "fixture_sha256": "b3094eaff854adcf4eac031c8c2bae2de6e14ed4ea88e67faa2a76c0933b2863",
+      "generated_source_sha256": "b1fd164e8adcd6a3cefe7bd716938f5b48f77d69578f5f48248d3e4cc1300002"
+    },
+    "sub_161B6": {
+      "ida_linear": 90550,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/247-c-world-interaction.md",
+      "evidence": "docs/re/127-c-world-interaction-restoration.md",
+      "source": "tools/c_recovery/interaction.c",
+      "header": "tools/c_recovery/interaction.h",
+      "fixture": "tools/c_recovery/interaction_fixture.h",
+      "generated_source": "tools/c_recovery/interaction_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-loop/verification.json",
+      "routine_sha256": "14207293ce8228a1bbe602f414416bc8c1c01d4f2dabf8660403051c8980ba65",
+      "oracle_cases_per_optimization": 2148,
+      "oracle_entry_count_per_optimization": 96,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Eight original world-interaction/fade-in functions, live DS dispatch table and original fallthrough RET. Whole main loop, update scheduler, natural player paths and C machine-code matching remain incomplete.",
+      "source_sha256": "a67db06f72c194b99f107d87fcd7ca220e16c4dddfcebe68997a8e641925b5fd",
+      "header_sha256": "edcb8d3a696137a6dbb14f827d91ea71f0b799df7646ee7c4b51f3ccfb1c480e",
+      "fixture_sha256": "b3094eaff854adcf4eac031c8c2bae2de6e14ed4ea88e67faa2a76c0933b2863",
+      "generated_source_sha256": "b1fd164e8adcd6a3cefe7bd716938f5b48f77d69578f5f48248d3e4cc1300002"
     }
   },
   "code_blocks": {
@@ -9218,6 +9454,40 @@
       "evidence_markers": [
         "sub_189F0",
         "0x189F0"
+      ]
+    },
+    {
+      "ida_linear": 88503,
+      "function_ida_linear": 88503,
+      "older_document": "docs/re/125-c-nonlocal-exit-restoration.md",
+      "required_markers": [
+        "右鍵分派已由原生 C 驗證",
+        "127-c-world-interaction-restoration.md"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/127-c-world-interaction-restoration.md",
+      "evidence_markers": [
+        "sub_159B7",
+        "0x159B7"
+      ]
+    },
+    {
+      "ida_linear": 88503,
+      "function_ida_linear": 88503,
+      "older_document": "docs/spec/245-c-nonlocal-exit.md",
+      "required_markers": [
+        "右鍵分派已由原生 C 驗證",
+        "247-c-world-interaction.md"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/127-c-world-interaction-restoration.md",
+      "evidence_markers": [
+        "sub_159B7",
+        "0x159B7"
       ]
     }
   ]

@@ -64,3 +64,7 @@ CX 原為 FFFF 且恰好扣到零時可正常返回；CX 非 FFFF 且通知後�
 ## 初始化前綴的後續原生 C 驗證
 
 初始化前段已由原生 C 驗證。`sub_189F0` 的原始 `0x189F0` 城市／軍團處理及評分日期，現由兩側各自的 raw 初態產生，有限前綴停在11BF6而無RET；來源見 [re/126](126-c-world-bootstrap-restoration.md)。本頁原Snapshot實驗仍保留當時範圍，完整主迴圈未因此完成。
+
+## 右鍵分派的後續原生 C 驗證
+
+右鍵分派已由原生 C 驗證。`sub_159B7` 的原始 `0x159B7` 已接原DS間接表與三個清除動作，保留落入`nullsub_1`的單一RET；全部26索引、live表與DS≠CS反例見 [re/127](127-c-world-interaction-restoration.md)。完整主迴圈及其更新排程仍未完成。
