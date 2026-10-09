@@ -10,7 +10,7 @@ import subprocess
 from pathlib import Path
 
 EXPECTED = "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868"
-SIZE, INSTRUCTIONS, CODE_BYTES = 67099, 25078, 57045
+SIZE, INSTRUCTIONS, CODE_BYTES = 67099, 25097, 57101
 SOURCE = "tools/c_recovery/KI.code.S"
 LINKER = "tools/c_recovery/KI.code.ld"
 MANIFEST = "docs/re/assembly-code-record.json"
@@ -18,6 +18,7 @@ SUPPLEMENT = "docs/re/rectangle-handler-code.json"
 LIST_SUPPLEMENT = "docs/re/c-list-code.json"
 CATALOG_SUPPLEMENT = "docs/re/c-catalog-code.json"
 ROUTE_SUPPLEMENT = "docs/re/route-handler-code.json"
+ENGAGEMENT_SUPPLEMENT = "docs/re/c-engagement-code.json"
 
 
 def digest(data: bytes) -> str:
@@ -98,6 +99,28 @@ def export(repo: Path) -> None:
     route_added = route["instructions"]
     require(len(route_added) == 79 and sum(r["file_end"] - r["file_start"] for r in route_added) == 179, "route supplement coverage differs")
     extra = extra + route_added
+    engagement_raw = (repo / ENGAGEMENT_SUPPLEMENT).read_bytes()
+    engagement = json.loads(engagement_raw)
+    require(engagement["schema"] == "wolong-matching-code-supplement-v1" and engagement["input_sha256"] == EXPECTED, "engagement supplement identity differs")
+    require(engagement["probe_sha256"] == "32ebc39f59e53f16d18f2f4d5bb16ae8f6971ef2dd4e733976a93dd8f296a5d9", "engagement source probe differs")
+    engagement_added, retired = engagement["instructions"], engagement["retired_instructions"]
+    require(len(engagement_added) == 31 and sum(r["file_end"]-r["file_start"] for r in engagement_added) == 84, "engagement instruction coverage differs")
+    require(len(retired) == 12 and sum(r["file_end"]-r["file_start"] for r in retired) == 28, "retired instruction coverage differs")
+    baseline_by_start = {r["file_start"]: r for r in instructions}
+    retired_starts = set()
+    for old in retired:
+        start, end = old["file_start"], old["file_end"]
+        require(start not in retired_starts and start in baseline_by_start, "retired instruction is absent or repeated")
+        baseline = baseline_by_start[start]
+        require(baseline["file_end"] == end and raw[start:end].hex() == old["bytes"] and baseline["ida_linear"] == old["ida_linear"] and baseline["original_assembly"] == old["original_assembly"], "retirement differs from preserved baseline")
+        require(old["retirement_level"] == "proven" and old["retirement_reason"] and old["replacement_rows"], "retirement has no primary evidence")
+        retirement_source = repo / old["coverage_source"]
+        require(digest(retirement_source.read_bytes()) == old["coverage_source_sha256"], "retirement baseline source identity differs")
+        require(all(any(r["file_start"] <= at < r["file_end"] for r in engagement_added) for at in range(start,end)), "retired instruction bytes are not covered by replacement instructions")
+        retired_starts.add(start)
+    instructions = [r for r in instructions if r["file_start"] not in retired_starts]
+    extra = extra + engagement_added
+    engagement_starts = {r["file_start"] for r in engagement_added}
     # Absolute symbols preserve original imm16 encodings without inserting instruction bytes.
     linker_text = linker.decode("utf-8")
     constants = []
@@ -118,7 +141,10 @@ def export(repo: Path) -> None:
     for row in extra:
         start, end = row["file_start"], row["file_end"]
         require(raw[start:end] == bytes.fromhex(row["bytes"]), "supplement bytes differ")
-        require(any(r["kind"] == "data-or-unknown" and r["file_start"] <= start < end <= r["file_end"] for r in mapping), "supplement overlaps baseline code")
+        if start in engagement_starts:
+            require(not any(max(start,r["file_start"]) < min(end,r["file_end"]) for r in instructions), "engagement replacement overlaps retained code")
+        else:
+            require(any(r["kind"] == "data-or-unknown" and r["file_start"] <= start < end <= r["file_end"] for r in mapping), "supplement overlaps baseline code")
     instructions.extend(extra)
     instructions.sort(key=lambda row: row["file_start"])
     ranges = []
@@ -169,7 +195,8 @@ def export(repo: Path) -> None:
         "schema": "wolong-matching-code-record-v1",
         "input": "DOS/V KI.EXE", "input_sha256": EXPECTED, "input_size": SIZE,
         "instruction_count": count, "instruction_bytes": CODE_BYTES,
-        "baseline_instruction_count": 24376, "supplement_instruction_count": 702,
+        "baseline_instruction_count": 24376, "supplement_instruction_count": 733,
+        "retired_baseline_instruction_count": 12, "retired_baseline_instruction_bytes": 28,
         "historical_supplement_instruction_count": 370,
         "supplement": SUPPLEMENT, "supplement_sha256": digest(supplement_raw),
         "supplement_database_sha256": supplement["database_sha256"],
@@ -183,7 +210,12 @@ def export(repo: Path) -> None:
                                    {"path": ROUTE_SUPPLEMENT, "sha256": digest(route_raw),
                                     "database_sha256": route["database_sha256"],
                                     "instructions": 79, "bytes": 179,
-                                    "constant_symbols": route["constant_symbols"]}],
+                                    "constant_symbols": route["constant_symbols"]},
+                                   {"path": ENGAGEMENT_SUPPLEMENT, "sha256": digest(engagement_raw),
+                                    "database_sha256": engagement["database_sha256"],
+                                    "instructions": 31, "bytes": 84,
+                                    "retired_instructions": 12, "retired_bytes": 28,
+                                    "constant_symbols": engagement["constant_symbols"]}],
         "private_import_bytes": SIZE - CODE_BYTES,
         "address_space": "IDA database linear base 0x10000; file = linear - 0x10000 + 512",
         "ida_version": report["ida_version"], "ida_image_id": report["ida_image_id"],

@@ -6936,59 +6936,59 @@ ret
 .org 0x1d5a
 sub_11B5A:
 # IDA 0x11b5a; file 0x1d5a; locator=proven; push    ds
-# ⚠ 函式 sub_11B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11B5A; [proven] 原保存八個暫存器後初始化戰術並進入19FA0；原11B76落下尾段還原世界與原caller，不補假RET; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push ds
 .org 0x1d5b
 # IDA 0x11b5b; file 0x1d5b; locator=proven; push    es
-# ⚠ 函式 sub_11B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11B5A; [proven] 原保存八個暫存器後初始化戰術並進入19FA0；原11B76落下尾段還原世界與原caller，不補假RET; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push es
 .org 0x1d5c
 # IDA 0x11b5c; file 0x1d5c; locator=proven; push    bx
-# ⚠ 函式 sub_11B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11B5A; [proven] 原保存八個暫存器後初始化戰術並進入19FA0；原11B76落下尾段還原世界與原caller，不補假RET; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push bx
 .org 0x1d5d
 # IDA 0x11b5d; file 0x1d5d; locator=proven; push    cx
-# ⚠ 函式 sub_11B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11B5A; [proven] 原保存八個暫存器後初始化戰術並進入19FA0；原11B76落下尾段還原世界與原caller，不補假RET; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push cx
 .org 0x1d5e
 # IDA 0x11b5e; file 0x1d5e; locator=proven; push    dx
-# ⚠ 函式 sub_11B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11B5A; [proven] 原保存八個暫存器後初始化戰術並進入19FA0；原11B76落下尾段還原世界與原caller，不補假RET; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push dx
 .org 0x1d5f
 # IDA 0x11b5f; file 0x1d5f; locator=proven; push    si
-# ⚠ 函式 sub_11B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11B5A; [proven] 原保存八個暫存器後初始化戰術並進入19FA0；原11B76落下尾段還原世界與原caller，不補假RET; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push si
 .org 0x1d60
 # IDA 0x11b60; file 0x1d60; locator=proven; push    di
-# ⚠ 函式 sub_11B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11B5A; [proven] 原保存八個暫存器後初始化戰術並進入19FA0；原11B76落下尾段還原世界與原caller，不補假RET; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push di
 .org 0x1d61
 # IDA 0x11b61; file 0x1d61; locator=proven; push    bp
-# ⚠ 函式 sub_11B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11B5A; [proven] 原保存八個暫存器後初始化戰術並進入19FA0；原11B76落下尾段還原世界與原caller，不補假RET; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push bp
 .org 0x1d62
 # IDA 0x11b62; file 0x1d62; locator=proven; call    sub_12078
-# ⚠ 函式 sub_11B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11B5A; [proven] 原保存八個暫存器後初始化戰術並進入19FA0；原11B76落下尾段還原世界與原caller，不補假RET; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .+1302
 .org 0x1d65
 # IDA 0x11b65; file 0x1d65; locator=proven; mov     ax, 2
-# ⚠ 函式 sub_11B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11B5A; [proven] 原保存八個暫存器後初始化戰術並進入19FA0；原11B76落下尾段還原世界與原caller，不補假RET; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov ax, 0x2
 .org 0x1d68
 # IDA 0x11b68; file 0x1d68; locator=proven; call    sub_20000
-# ⚠ 函式 sub_11B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11B5A; [proven] 原保存八個暫存器後初始化戰術並進入19FA0；原11B76落下尾段還原世界與原caller，不補假RET; 出處: docs/re/131-c-engagement-tactical-restoration.md
 lcall 0x1000, 0x0
 .org 0x1d6d
 # IDA 0x11b6d; file 0x1d6d; locator=proven; call    sub_10A1C
-# ⚠ 函式 sub_11B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11B5A; [proven] 原保存八個暫存器後初始化戰術並進入19FA0；原11B76落下尾段還原世界與原caller，不補假RET; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .-4433
 .org 0x1d70
 # IDA 0x11b70; file 0x1d70; locator=proven; call    sub_19946
-# ⚠ 函式 sub_11B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11B5A; [proven] 原保存八個暫存器後初始化戰術並進入19FA0；原11B76落下尾段還原世界與原caller，不補假RET; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .+32214
 .org 0x1d73
 # IDA 0x11b73; file 0x1d73; locator=proven; call    sub_19FA0
-# ⚠ 函式 sub_11B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11B5A; [proven] 原保存八個暫存器後初始化戰術並進入19FA0；原11B76落下尾段還原世界與原caller，不補假RET; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .-31699
 .org 0x1d76
 # IDA 0x11b76; file 0x1d76; locator=proven; push    ax
@@ -28198,411 +28198,411 @@ ret
 .org 0x4c7b
 sub_14A7B:
 # IDA 0x14a7b; file 0x4c7b; locator=proven; push    ax
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push ax
 .org 0x4c7c
 # IDA 0x14a7c; file 0x4c7c; locator=proven; push    bx
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push bx
 .org 0x4c7d
 # IDA 0x14a7d; file 0x4c7d; locator=proven; push    cx
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push cx
 .org 0x4c7e
 # IDA 0x14a7e; file 0x4c7e; locator=proven; push    dx
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push dx
 .org 0x4c7f
 # IDA 0x14a7f; file 0x4c7f; locator=proven; push    si
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push si
 .org 0x4c80
 # IDA 0x14a80; file 0x4c80; locator=proven; push    bp
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push bp
 .org 0x4c81
 # IDA 0x14a81; file 0x4c81; locator=proven; sub     sp, 100h
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 sub sp, 0x100
 .org 0x4c85
 # IDA 0x14a85; file 0x4c85; locator=proven; mov     bp, sp
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} mov bp, sp
 .org 0x4c87
 # IDA 0x14a87; file 0x4c87; locator=proven; mov     cs:word_10D32, 0
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 cs; mov word ptr [0xd32], 0x0
 .org 0x4c8e
 # IDA 0x14a8e; file 0x4c8e; locator=proven; call    sub_14B63
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .+213
 .org 0x4c91
 # IDA 0x14a91; file 0x4c91; locator=proven; mov     cs:byte_10D35, ch
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 cs; mov byte ptr [0xd35], ch
 .org 0x4c96
 # IDA 0x14a96; file 0x4c96; locator=proven; mov     cs:byte_10D34, cl
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 cs; mov byte ptr [0xd34], cl
 .org 0x4c9b
 # IDA 0x14a9b; file 0x4c9b; locator=proven; mov     ch, [di+1]
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov ch, byte ptr [di+0x1]
 .org 0x4c9e
 # IDA 0x14a9e; file 0x4c9e; locator=proven; call    sub_14C72
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .+468
 .org 0x4ca1
 # IDA 0x14aa1; file 0x4ca1; locator=proven; jb      short loc_14AD3
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 jb .+50
 .org 0x4ca3
 # IDA 0x14aa3; file 0x4ca3; locator=proven; mov     di, bx
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} mov di, bx
 .org 0x4ca5
 # IDA 0x14aa5; file 0x4ca5; locator=proven; and     byte ptr [si], 0DFh
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 and byte ptr [si], 0xdf
 .org 0x4ca8
 # IDA 0x14aa8; file 0x4ca8; locator=proven; mov     byte ptr [si+3], 0
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov byte ptr [si+0x3], 0x0
 .org 0x4cac
 # IDA 0x14aac; file 0x4cac; locator=proven; and     byte ptr [di], 0DFh
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 and byte ptr [di], 0xdf
 .org 0x4caf
 # IDA 0x14aaf; file 0x4caf; locator=proven; mov     byte ptr [di+3], 0
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov byte ptr [di+0x3], 0x0
 .org 0x4cb3
 # IDA 0x14ab3; file 0x4cb3; locator=proven; call    sub_14E5C
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .+937
 .org 0x4cb6
 # IDA 0x14ab6; file 0x4cb6; locator=proven; and     ah, ah
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} and ah, ah
 .org 0x4cb8
 # IDA 0x14ab8; file 0x4cb8; locator=proven; jz      short loc_14AD3
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 jz .+27
 .org 0x4cba
 # IDA 0x14aba; file 0x4cba; locator=proven; cmp     ah, 2
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 cmp ah, 0x2
 .org 0x4cbd
 # IDA 0x14abd; file 0x4cbd; locator=proven; jb      short loc_14AC1
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 jb .+4
 .org 0x4cbf
 # IDA 0x14abf; file 0x4cbf; locator=proven; jz      short loc_14AC9
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 jz .+10
 .org 0x4cc1
 loc_14AC1:
 # IDA 0x14ac1; file 0x4cc1; locator=proven; mov     al, [di+1]
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov al, byte ptr [di+0x1]
 .org 0x4cc4
 # IDA 0x14ac4; file 0x4cc4; locator=proven; call    sub_1291A
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .-8618
 .org 0x4cc7
 # IDA 0x14ac7; file 0x4cc7; locator=proven; jmp     short loc_14AD3
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 jmp .+12
 .org 0x4cc9
 loc_14AC9:
 # IDA 0x14ac9; file 0x4cc9; locator=proven; xchg    si, di
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} xchg si, di
 .org 0x4ccb
 # IDA 0x14acb; file 0x4ccb; locator=proven; mov     al, [di+1]
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov al, byte ptr [di+0x1]
 .org 0x4cce
 # IDA 0x14ace; file 0x4cce; locator=proven; call    sub_1291A
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .-8628
 .org 0x4cd1
 # IDA 0x14ad1; file 0x4cd1; locator=proven; xchg    si, di
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} xchg si, di
 .org 0x4cd3
 loc_14AD3:
 # IDA 0x14ad3; file 0x4cd3; locator=proven; add     sp, 100h
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 add sp, 0x100
 .org 0x4cd7
 # IDA 0x14ad7; file 0x4cd7; locator=proven; pop     bp
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 pop bp
 .org 0x4cd8
 # IDA 0x14ad8; file 0x4cd8; locator=proven; pop     si
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 pop si
 .org 0x4cd9
 # IDA 0x14ad9; file 0x4cd9; locator=proven; pop     dx
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 pop dx
 .org 0x4cda
 # IDA 0x14ada; file 0x4cda; locator=proven; pop     cx
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 pop cx
 .org 0x4cdb
 # IDA 0x14adb; file 0x4cdb; locator=proven; pop     bx
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 pop bx
 .org 0x4cdc
 # IDA 0x14adc; file 0x4cdc; locator=proven; pop     ax
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 pop ax
 .org 0x4cdd
 # IDA 0x14add; file 0x4cdd; locator=proven; retn
-# ⚠ 函式 sub_14A7B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A7B; [proven] 原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee; 出處: docs/re/131-c-engagement-tactical-restoration.md
 ret
 .org 0x4cde
 sub_14ADE:
 # IDA 0x14ade; file 0x4cde; locator=proven; push    es
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push es
 .org 0x4cdf
 # IDA 0x14adf; file 0x4cdf; locator=proven; push    ax
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push ax
 .org 0x4ce0
 # IDA 0x14ae0; file 0x4ce0; locator=proven; push    bx
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push bx
 .org 0x4ce1
 # IDA 0x14ae1; file 0x4ce1; locator=proven; push    cx
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push cx
 .org 0x4ce2
 # IDA 0x14ae2; file 0x4ce2; locator=proven; push    dx
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push dx
 .org 0x4ce3
 # IDA 0x14ae3; file 0x4ce3; locator=proven; push    si
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push si
 .org 0x4ce4
 # IDA 0x14ae4; file 0x4ce4; locator=proven; push    bp
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push bp
 .org 0x4ce5
 # IDA 0x14ae5; file 0x4ce5; locator=proven; sub     sp, 100h
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 sub sp, 0x100
 .org 0x4ce9
 # IDA 0x14ae9; file 0x4ce9; locator=proven; mov     bp, sp
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} mov bp, sp
 .org 0x4ceb
 # IDA 0x14aeb; file 0x4ceb; locator=proven; push    di
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push di
 .org 0x4cec
 # IDA 0x14aec; file 0x4cec; locator=proven; and     byte ptr [si], 0DFh
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 and byte ptr [si], 0xdf
 .org 0x4cef
 # IDA 0x14aef; file 0x4cef; locator=proven; mov     byte ptr [si+3], 0
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov byte ptr [si+0x3], 0x0
 .org 0x4cf3
 # IDA 0x14af3; file 0x4cf3; locator=proven; mov     cs:word_10D32, di
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 cs; mov word ptr [0xd32], di
 .org 0x4cf8
 # IDA 0x14af8; file 0x4cf8; locator=proven; mov     ax, di
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} mov ax, di
 .org 0x4cfa
 # IDA 0x14afa; file 0x4cfa; locator=proven; sub     ax, 840h
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 sub ax, 0x840
 .org 0x4cfd
 # IDA 0x14afd; file 0x4cfd; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 shl ax, 0x1
 .org 0x4cff
 # IDA 0x14aff; file 0x4cff; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 shl ax, 0x1
 .org 0x4d01
 # IDA 0x14b01; file 0x4d01; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 shl ax, 0x1
 .org 0x4d03
 # IDA 0x14b03; file 0x4d03; locator=proven; mov     cs:byte_10D34, ah
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 cs; mov byte ptr [0xd34], ah
 .org 0x4d08
 # IDA 0x14b08; file 0x4d08; locator=proven; mov     cs:byte_10D35, 0
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 cs; mov byte ptr [0xd35], 0x0
 .org 0x4d0e
 # IDA 0x14b0e; file 0x4d0e; locator=proven; mov     dx, [di+8]
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov dx, word ptr [di+0x8]
 .org 0x4d11
 # IDA 0x14b11; file 0x4d11; locator=proven; mov     ax, [di+0Ah]
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov ax, word ptr [di+0xa]
 .org 0x4d14
 # IDA 0x14b14; file 0x4d14; locator=proven; mov     ch, [di+1]
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov ch, byte ptr [di+0x1]
 .org 0x4d17
 # IDA 0x14b17; file 0x4d17; locator=proven; call    sub_14C72
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .+347
 .org 0x4d1a
 # IDA 0x14b1a; file 0x4d1a; locator=proven; jb      short loc_14B34
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 jb .+26
 .org 0x4d1c
 # IDA 0x14b1c; file 0x4d1c; locator=proven; call    sub_14ED7
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .+955
 .org 0x4d1f
 # IDA 0x14b1f; file 0x4d1f; locator=proven; and     al, al
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} and al, al
 .org 0x4d21
 # IDA 0x14b21; file 0x4d21; locator=proven; jnz     short loc_14B4B
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 jnz .+42
 .org 0x4d23
 # IDA 0x14b23; file 0x4d23; locator=proven; test    ah, 2
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 test ah, 0x2
 .org 0x4d26
 # IDA 0x14b26; file 0x4d26; locator=proven; jz      short loc_14B41
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 jz .+27
 .org 0x4d28
 # IDA 0x14b28; file 0x4d28; locator=proven; mov     al, [si+1]
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov al, byte ptr [si+0x1]
 .org 0x4d2b
 # IDA 0x14b2b; file 0x4d2b; locator=proven; xchg    bx, si
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} xchg bx, si
 .org 0x4d2d
 # IDA 0x14b2d; file 0x4d2d; locator=proven; call    sub_1291A
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .-8723
 .org 0x4d30
 # IDA 0x14b30; file 0x4d30; locator=proven; xchg    bx, si
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} xchg bx, si
 .org 0x4d32
 # IDA 0x14b32; file 0x4d32; locator=proven; jmp     short loc_14B41
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 jmp .+15
 .org 0x4d34
 loc_14B34:
 # IDA 0x14b34; file 0x4d34; locator=proven; call    sub_14F8A
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .+1110
 .org 0x4d37
 # IDA 0x14b37; file 0x4d37; locator=proven; call    sub_14ED7
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .+928
 .org 0x4d3a
 # IDA 0x14b3a; file 0x4d3a; locator=proven; call    sub_14FC8
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .+1166
 .org 0x4d3d
 # IDA 0x14b3d; file 0x4d3d; locator=proven; and     al, al
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} and al, al
 .org 0x4d3f
 # IDA 0x14b3f; file 0x4d3f; locator=proven; jnz     short loc_14B4B
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 jnz .+12
 .org 0x4d41
 loc_14B41:
 # IDA 0x14b41; file 0x4d41; locator=proven; mov     al, [si+1]
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov al, byte ptr [si+0x1]
 .org 0x4d44
 # IDA 0x14b44; file 0x4d44; locator=proven; pop     si
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 pop si
 .org 0x4d45
 # IDA 0x14b45; file 0x4d45; locator=proven; push    si
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push si
 .org 0x4d46
 # IDA 0x14b46; file 0x4d46; locator=proven; call    sub_14CF3
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .+429
 .org 0x4d49
 # IDA 0x14b49; file 0x4d49; locator=proven; jmp     short loc_14B56
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 jmp .+13
 .org 0x4d4b
 loc_14B4B:
 # IDA 0x14b4b; file 0x4d4b; locator=proven; test    ah, 1
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 test ah, 0x1
 .org 0x4d4e
 # IDA 0x14b4e; file 0x4d4e; locator=proven; jz      short loc_14B56
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 jz .+8
 .org 0x4d50
 # IDA 0x14b50; file 0x4d50; locator=proven; mov     al, [di+1]
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov al, byte ptr [di+0x1]
 .org 0x4d53
 # IDA 0x14b53; file 0x4d53; locator=proven; call    sub_1291A
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .-8761
 .org 0x4d56
 loc_14B56:
 # IDA 0x14b56; file 0x4d56; locator=proven; pop     di
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 pop di
 .org 0x4d57
 # IDA 0x14b57; file 0x4d57; locator=proven; add     sp, 100h
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 add sp, 0x100
 .org 0x4d5b
 # IDA 0x14b5b; file 0x4d5b; locator=proven; pop     bp
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 pop bp
 .org 0x4d5c
 # IDA 0x14b5c; file 0x4d5c; locator=proven; pop     si
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 pop si
 .org 0x4d5d
 # IDA 0x14b5d; file 0x4d5d; locator=proven; pop     dx
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 pop dx
 .org 0x4d5e
 # IDA 0x14b5e; file 0x4d5e; locator=proven; pop     cx
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 pop cx
 .org 0x4d5f
 # IDA 0x14b5f; file 0x4d5f; locator=proven; pop     bx
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 pop bx
 .org 0x4d60
 # IDA 0x14b60; file 0x4d60; locator=proven; pop     ax
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 pop ax
 .org 0x4d61
 # IDA 0x14b61; file 0x4d61; locator=proven; pop     es
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 pop es
 .org 0x4d62
 # IDA 0x14b62; file 0x4d62; locator=proven; retn
-# ⚠ 函式 sub_14ADE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14ADE; [proven] 原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主; 出處: docs/re/131-c-engagement-tactical-restoration.md
 ret
 .org 0x4d63
 sub_14B63:
@@ -57219,324 +57219,324 @@ ret
 .org 0x8eff
 sub_18CFF:
 # IDA 0x18cff; file 0x8eff; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} xor ah, ah
 .org 0x8f01
 # IDA 0x18d01; file 0x8f01; locator=proven; mov     dx, 56C0h
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov dx, 0x56c0
 .org 0x8f04
 # IDA 0x18d04; file 0x8f04; locator=proven; mul     dx
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mul dx
 .org 0x8f06
 # IDA 0x18d06; file 0x8f06; locator=proven; mov     cx, dx
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} mov cx, dx
 .org 0x8f08
 # IDA 0x18d08; file 0x8f08; locator=proven; mov     dx, 0DA6h
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov dx, 0xda6
 .org 0x8f0b
 # IDA 0x18d0b; file 0x8f0b; locator=proven; mov     bx, cs
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov bx, cs
 .org 0x8f0d
 # IDA 0x18d0d; file 0x8f0d; locator=proven; mov     si, 0CF0h
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov si, 0xcf0
 .org 0x8f10
 # IDA 0x18d10; file 0x8f10; locator=proven; mov     di, 3Bh
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov di, 0x3b
 .org 0x8f13
 # IDA 0x18d13; file 0x8f13; locator=proven; call    sub_1E3A6
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .+22163
 .org 0x8f16
 # IDA 0x18d16; file 0x8f16; locator=proven; add     ax, 40h
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 add ax, offset imm_at_18D16
 .org 0x8f19
 # IDA 0x18d19; file 0x8f19; locator=proven; adc     cx, 0
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 adc cx, 0x0
 .org 0x8f1c
 # IDA 0x18d1c; file 0x8f1c; locator=proven; mov     bx, ds:987Ch
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov bx, word ptr [0x987c]
 .org 0x8f20
 # IDA 0x18d20; file 0x8f20; locator=proven; xor     si, si
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} xor si, si
 .org 0x8f22
 # IDA 0x18d22; file 0x8f22; locator=proven; mov     di, 20h
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov di, 0x20
 .org 0x8f25
 # IDA 0x18d25; file 0x8f25; locator=proven; call    sub_1E3A6
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .+22145
 .org 0x8f28
 # IDA 0x18d28; file 0x8f28; locator=proven; add     ax, 40h
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 add ax, offset imm_at_18D28
 .org 0x8f2b
 # IDA 0x18d2b; file 0x8f2b; locator=proven; adc     cx, 0
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 adc cx, 0x0
 .org 0x8f2e
 # IDA 0x18d2e; file 0x8f2e; locator=proven; mov     bx, ds:0D52h
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov bx, word ptr [0xd52]
 .org 0x8f32
 # IDA 0x18d32; file 0x8f32; locator=proven; xor     si, si
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} xor si, si
 .org 0x8f34
 # IDA 0x18d34; file 0x8f34; locator=proven; mov     di, 5240h
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov di, 0x5240
 .org 0x8f37
 # IDA 0x18d37; file 0x8f37; locator=proven; call    sub_1E3A6
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .+22127
 .org 0x8f3a
 # IDA 0x18d3a; file 0x8f3a; locator=proven; add     ax, 5240h
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 add ax, 0x5240
 .org 0x8f3d
 # IDA 0x18d3d; file 0x8f3d; locator=proven; adc     cx, 0
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 adc cx, 0x0
 .org 0x8f40
 # IDA 0x18d40; file 0x8f40; locator=proven; mov     bx, ds:0D56h
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov bx, word ptr [0xd56]
 .org 0x8f44
 # IDA 0x18d44; file 0x8f44; locator=proven; xor     si, si
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} xor si, si
 .org 0x8f46
 # IDA 0x18d46; file 0x8f46; locator=proven; mov     di, 400h
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov di, 0x400
 .org 0x8f49
 # IDA 0x18d49; file 0x8f49; locator=proven; call    sub_1E3A6
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .+22109
 .org 0x8f4c
 # IDA 0x18d4c; file 0x8f4c; locator=proven; retn
-# ⚠ 函式 sub_18CFF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18CFF; [proven] 原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙; 出處: docs/re/131-c-engagement-tactical-restoration.md
 ret
 .org 0x8f4d
 sub_18D4D:
 # IDA 0x18d4d; file 0x8f4d; locator=proven; push    ds
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push ds
 .org 0x8f4e
 # IDA 0x18d4e; file 0x8f4e; locator=proven; push    es
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push es
 .org 0x8f4f
 # IDA 0x18d4f; file 0x8f4f; locator=proven; push    ax
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 push ax
 .org 0x8f50
 # IDA 0x18d50; file 0x8f50; locator=proven; cld
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 cld
 .org 0x8f51
 # IDA 0x18d51; file 0x8f51; locator=proven; mov     al, cs:byte_10D01
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 cs; mov al, byte ptr [0xd01]
 .org 0x8f55
 # IDA 0x18d55; file 0x8f55; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} xor ah, ah
 .org 0x8f57
 # IDA 0x18d57; file 0x8f57; locator=proven; mov     dx, 56C0h
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov dx, 0x56c0
 .org 0x8f5a
 # IDA 0x18d5a; file 0x8f5a; locator=proven; mul     dx
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mul dx
 .org 0x8f5c
 # IDA 0x18d5c; file 0x8f5c; locator=proven; mov     cx, dx
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} mov cx, dx
 .org 0x8f5e
 # IDA 0x18d5e; file 0x8f5e; locator=proven; add     ax, 40h
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 add ax, offset imm_at_18D5E
 .org 0x8f61
 # IDA 0x18d61; file 0x8f61; locator=proven; adc     ax, 0
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 adc ax, offset imm_at_18D61
 .org 0x8f64
 # IDA 0x18d64; file 0x8f64; locator=proven; mov     dx, 0D9Ah
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov dx, 0xd9a
 .org 0x8f67
 # IDA 0x18d67; file 0x8f67; locator=proven; mov     bx, cs:word_1987C
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 cs; mov bx, word ptr [0x987c]
 .org 0x8f6c
 # IDA 0x18d6c; file 0x8f6c; locator=proven; xor     si, si
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} xor si, si
 .org 0x8f6e
 # IDA 0x18d6e; file 0x8f6e; locator=proven; mov     di, 20h
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov di, 0x20
 .org 0x8f71
 # IDA 0x18d71; file 0x8f71; locator=proven; call    sub_1E38C
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .+22043
 .org 0x8f74
 # IDA 0x18d74; file 0x8f74; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x8f79
 # IDA 0x18d79; file 0x8f79; locator=proven; mov     es, cs:word_1987C
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 cs; mov es, word ptr [0x987c]
 .org 0x8f7e
 # IDA 0x18d7e; file 0x8f7e; locator=proven; mov     di, 6
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov di, 0x6
 .org 0x8f81
 # IDA 0x18d81; file 0x8f81; locator=proven; mov     ax, 0D5B6h
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov ax, 0xd5b6
 .org 0x8f84
 # IDA 0x18d84; file 0x8f84; locator=proven; stosw
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 stosw
 .org 0x8f85
 # IDA 0x18d85; file 0x8f85; locator=proven; mov     ax, 4FA4h
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov ax, 0x4fa4
 .org 0x8f88
 # IDA 0x18d88; file 0x8f88; locator=proven; stosw
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 stosw
 .org 0x8f89
 # IDA 0x18d89; file 0x8f89; locator=proven; mov     ax, 47A1h
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov ax, 0x47a1
 .org 0x8f8c
 # IDA 0x18d8c; file 0x8f8c; locator=proven; stosw
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 stosw
 .org 0x8f8d
 # IDA 0x18d8d; file 0x8f8d; locator=proven; mov     cx, 3
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov cx, 0x3
 .org 0x8f90
 # IDA 0x18d90; file 0x8f90; locator=proven; mov     bx, cs:word_10CFD
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 cs; mov bx, word ptr [0xcfd]
 .org 0x8f95
 # IDA 0x18d95; file 0x8f95; locator=proven; mov     ah, [bx+1]
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov ah, byte ptr [bx+0x1]
 .org 0x8f98
 # IDA 0x18d98; file 0x8f98; locator=proven; xor     al, al
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} xor al, al
 .org 0x8f9a
 # IDA 0x18d9a; file 0x8f9a; locator=proven; shr     ax, cl
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 shr ax, cl
 .org 0x8f9c
 # IDA 0x18d9c; file 0x8f9c; locator=proven; add     ax, 4242h
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 add ax, 0x4242
 .org 0x8f9f
 # IDA 0x18d9f; file 0x8f9f; locator=proven; mov     si, ax
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} mov si, ax
 .org 0x8fa1
 # IDA 0x18da1; file 0x8fa1; locator=proven; rep movsw
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 rep; movsw
 .org 0x8fa3
 # IDA 0x18da3; file 0x8fa3; locator=proven; mov     ax, 40A1h
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov ax, 0x40a1
 .org 0x8fa6
 # IDA 0x18da6; file 0x8fa6; locator=proven; stosw
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 stosw
 .org 0x8fa7
 # IDA 0x18da7; file 0x8fa7; locator=proven; mov     ax, 78ADh
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov ax, 0x78ad
 .org 0x8faa
 # IDA 0x18daa; file 0x8faa; locator=proven; stosw
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 stosw
 .org 0x8fab
 # IDA 0x18dab; file 0x8fab; locator=proven; mov     ax, 76AEh
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov ax, 0x76ae
 .org 0x8fae
 # IDA 0x18dae; file 0x8fae; locator=proven; stosw
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 stosw
 .org 0x8faf
 # IDA 0x18daf; file 0x8faf; locator=proven; mov     ax, 47A1h
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov ax, 0x47a1
 .org 0x8fb2
 # IDA 0x18db2; file 0x8fb2; locator=proven; stosw
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 stosw
 .org 0x8fb3
 # IDA 0x18db3; file 0x8fb3; locator=proven; mov     cx, 3
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov cx, 0x3
 .org 0x8fb6
 # IDA 0x18db6; file 0x8fb6; locator=proven; mov     ah, [bx+2]
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov ah, byte ptr [bx+0x2]
 .org 0x8fb9
 # IDA 0x18db9; file 0x8fb9; locator=proven; xor     al, al
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} xor al, al
 .org 0x8fbb
 # IDA 0x18dbb; file 0x8fbb; locator=proven; shr     ax, cl
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 shr ax, cl
 .org 0x8fbd
 # IDA 0x18dbd; file 0x8fbd; locator=proven; add     ax, 4242h
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 add ax, 0x4242
 .org 0x8fc0
 # IDA 0x18dc0; file 0x8fc0; locator=proven; mov     si, ax
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} mov si, ax
 .org 0x8fc2
 # IDA 0x18dc2; file 0x8fc2; locator=proven; rep movsw
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 rep; movsw
 .org 0x8fc4
 # IDA 0x18dc4; file 0x8fc4; locator=proven; pop     ax
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 pop ax
 .org 0x8fc5
 # IDA 0x18dc5; file 0x8fc5; locator=proven; pop     es
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 pop es
 .org 0x8fc6
 # IDA 0x18dc6; file 0x8fc6; locator=proven; pop     ds
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 pop ds
 .org 0x8fc7
 # IDA 0x18dc7; file 0x8fc7; locator=proven; retn
-# ⚠ 函式 sub_18D4D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18D4D; [proven] 原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段; 出處: docs/re/131-c-engagement-tactical-restoration.md
 ret
 .org 0x8fc8
 sub_18DC8:
@@ -65058,158 +65058,158 @@ jmp .-31
 .org 0xa1dc
 sub_19FDC:
 # IDA 0x19fdc; file 0xa1dc; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov ax, cs
 .org 0xa1de
 # IDA 0x19fde; file 0xa1de; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov ds, ax
 .org 0xa1e0
 # IDA 0x19fe0; file 0xa1e0; locator=proven; mov     sp, cs:word_1D340
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 cs; mov sp, word ptr [0xd340]
 .org 0xa1e5
 # IDA 0x19fe5; file 0xa1e5; locator=proven; mov     ax, 2
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov ax, 0x2
 .org 0xa1e8
 # IDA 0x19fe8; file 0xa1e8; locator=proven; call    sub_20000
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 lcall 0x1000, 0x0
 .org 0xa1ed
 # IDA 0x19fed; file 0xa1ed; locator=proven; mov     bx, 32h
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov bx, 0x32
 .org 0xa1f0
 # IDA 0x19ff0; file 0xa1f0; locator=proven; cmp     cs:byte_1D34B, 0
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 cs; cmp byte ptr [0xd34b], 0x0
 .org 0xa1f6
 # IDA 0x19ff6; file 0xa1f6; locator=proven; jnz     short loc_1A037
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 jnz .+65
 .org 0xa1f8
 # IDA 0x19ff8; file 0xa1f8; locator=proven; call    sub_1A65D
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .+1637
 .org 0xa1fb
 # IDA 0x19ffb; file 0xa1fb; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} xor dx, dx
 .org 0xa1fd
 # IDA 0x19ffd; file 0xa1fd; locator=proven; mov     bx, 0Ah
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov bx, 0xa
 .org 0xa200
 # IDA 0x1a000; file 0xa200; locator=proven; div     bx
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 div bx
 .org 0xa202
 # IDA 0x1a002; file 0xa202; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0xa207
 # IDA 0x1a007; file 0xa207; locator=proven; mov     bx, cs:word_10D32
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 cs; mov bx, word ptr [0xd32]
 .org 0xa20c
 # IDA 0x1a00c; file 0xa20c; locator=proven; mov     dl, [bx+13h]
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov dl, byte ptr [bx+0x13]
 .org 0xa20f
 # IDA 0x1a00f; file 0xa20f; locator=proven; xor     dh, dh
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} xor dh, dh
 .org 0xa211
 # IDA 0x1a011; file 0xa211; locator=proven; add     dx, 32h
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 add dx, 0x32
 .org 0xa214
 # IDA 0x1a014; file 0xa214; locator=proven; sub     dx, ax
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 {load} sub dx, ax
 .org 0xa216
 # IDA 0x1a016; file 0xa216; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 shr dx, 0x1
 .org 0xa218
 # IDA 0x1a018; file 0xa218; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 shr dx, 0x1
 .org 0xa21a
 # IDA 0x1a01a; file 0xa21a; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 shr dx, 0x1
 .org 0xa21c
 # IDA 0x1a01c; file 0xa21c; locator=proven; sub     [bx+10h], dl
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 sub byte ptr [bx+0x10], dl
 .org 0xa21f
 # IDA 0x1a01f; file 0xa21f; locator=proven; jnb     short loc_1A025
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 jnb .+6
 .org 0xa221
 # IDA 0x1a021; file 0xa221; locator=proven; mov     byte ptr [bx+10h], 0
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov byte ptr [bx+0x10], 0x0
 .org 0xa225
 loc_1A025:
 # IDA 0x1a025; file 0xa225; locator=proven; sub     [bx+11h], dl
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 sub byte ptr [bx+0x11], dl
 .org 0xa228
 # IDA 0x1a028; file 0xa228; locator=proven; jnb     short loc_1A02E
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 jnb .+6
 .org 0xa22a
 # IDA 0x1a02a; file 0xa22a; locator=proven; mov     byte ptr [bx+11h], 0
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov byte ptr [bx+0x11], 0x0
 .org 0xa22e
 loc_1A02E:
 # IDA 0x1a02e; file 0xa22e; locator=proven; sub     [bx+13h], dl
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 sub byte ptr [bx+0x13], dl
 .org 0xa231
 # IDA 0x1a031; file 0xa231; locator=proven; jnb     short loc_1A037
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 jnb .+6
 .org 0xa233
 # IDA 0x1a033; file 0xa233; locator=proven; mov     byte ptr [bx+13h], 0
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov byte ptr [bx+0x13], 0x0
 .org 0xa237
 loc_1A037:
 # IDA 0x1a037; file 0xa237; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov ax, cs
 .org 0xa239
 # IDA 0x1a039; file 0xa239; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov ds, ax
 .org 0xa23b
 # IDA 0x1a03b; file 0xa23b; locator=proven; call    sub_102C2
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .+25223
 .org 0xa23e
 # IDA 0x1a03e; file 0xa23e; locator=proven; call    sub_19EBD
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .-385
 .org 0xa241
 # IDA 0x1a041; file 0xa241; locator=proven; call    sub_10A1C
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .+27099
 .org 0xa244
 # IDA 0x1a044; file 0xa244; locator=proven; call    sub_1CAD1
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 call .+10893
 .org 0xa247
 # IDA 0x1a047; file 0xa247; locator=proven; mov     al, byte_1D349
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 mov al, byte ptr [0xd349]
 .org 0xa24a
 # IDA 0x1a04a; file 0xa24a; locator=proven; retn
-# ⚠ 函式 sub_19FDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19FDC; [proven] 原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意; 出處: docs/re/131-c-engagement-tactical-restoration.md
 ret
 .org 0xa24b
 sub_1A04B:
@@ -65305,34 +65305,26 @@ loc_1A065:
 # IDA 0x1a065; file 0xa265; locator=proven; cmp     byte ptr ds:0D348h, 0
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
 cmp byte ptr [0xd348], 0x0
-.org 0xa26b
-# IDA 0x1a06b; file 0xa26b; locator=proven; adc     [bp+di+2816h], cl
+.org 0xa26a
+# IDA 0x1a06a; file 0xa26a; locator=proven; jz      short loc_1A07C
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-adc byte ptr [bp+di+0x2816], cl
-.org 0xa26f
-# IDA 0x1a06f; file 0xa26f; locator=proven; ror     word ptr [bp+di+2A1Eh], cl
+jz .+18
+.org 0xa26c
+# IDA 0x1a06c; file 0xa26c; locator=proven; mov     dx, ds:0D328h
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-ror word ptr [bp+di+0x2a1e], cl
-.org 0xa273
-# IDA 0x1a073; file 0xa273; locator=proven; shr     ax, cl
+mov dx, word ptr [0xd328]
+.org 0xa270
+# IDA 0x1a070; file 0xa270; locator=proven; mov     bx, ds:0D32Ah
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-shr ax, cl
-.org 0xa275
-# IDA 0x1a075; file 0xa275; locator=proven; cmp     al, 0C6h
+mov bx, word ptr [0xd32a]
+.org 0xa274
+# IDA 0x1a074; file 0xa274; locator=proven; call    sub_1DC9D
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-es; cmp al, 0xc6
-.org 0xa278
-# IDA 0x1a078; file 0xa278; locator=proven; push    es
+call .+15401
+.org 0xa277
+# IDA 0x1a077; file 0xa277; locator=proven; mov     byte ptr ds:0D348h, 0
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-push es
-.org 0xa279
-# IDA 0x1a079; file 0xa279; locator=proven; dec     ax
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-dec ax
-.org 0xa27a
-# IDA 0x1a07a; file 0xa27a; locator=proven; rol     word ptr [bx+si], cl
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-rol word ptr [bx+si], cl
+mov byte ptr [0xd348], 0x0
 .org 0xa27c
 # IDA 0x1a07c; file 0xa27c; locator=proven; call    sub_1A12A
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
@@ -69796,6 +69788,10 @@ loc_1AB4A:
 # IDA 0x1ab4c; file 0xad4c; locator=proven; jz      short locret_1AB7B
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
 jz .+47
+.org 0xad4e
+# IDA 0x1ab4e; file 0xad4e; locator=proven; mov     dl, 1Fh
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov dl, 0x1f
 .org 0xad50
 # IDA 0x1ab50; file 0xad50; locator=proven; mov     dh, [si+8]
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
@@ -74047,6 +74043,10 @@ cmp si, 0x600
 # IDA 0x1b55d; file 0xb75d; locator=proven; jb      short near ptr byte_1B567
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
 jb .+10
+.org 0xb75f
+# IDA 0x1b55f; file 0xb75f; locator=proven; cmp     di, 600h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp di, 0x600
 .org 0xb763
 # IDA 0x1b563; file 0xb763; locator=proven; jb      short loc_1B5A1
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
@@ -74055,6 +74055,10 @@ jb .+62
 # IDA 0x1b565; file 0xb765; locator=proven; jmp     short loc_1B56D
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
 jmp .+8
+.org 0xb767
+# IDA 0x1b567; file 0xb767; locator=proven; cmp     di, 600h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp di, 0x600
 .org 0xb76b
 # IDA 0x1b56b; file 0xb76b; locator=proven; jnb     short loc_1B5A1
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
@@ -77885,14 +77889,14 @@ loc_1BE31:
 # IDA 0x1be31; file 0xc031; locator=proven; test    al, 8
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
 test al, 0x8
-.org 0xc034
-# IDA 0x1be34; file 0xc034; locator=proven; add     bp, ax
+.org 0xc033
+# IDA 0x1be33; file 0xc033; locator=proven; jz      short loc_1BE38
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-{load} add bp, ax
-.org 0xc036
-# IDA 0x1be36; file 0xc036; locator=proven; xchg    ax, [bx+di]
+jz .+5
+.org 0xc035
+# IDA 0x1be35; file 0xc035; locator=proven; call    loc_1BFBF
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-xchg ax, word ptr [bx+di]
+call .+394
 .org 0xc038
 loc_1BE38:
 # IDA 0x1be38; file 0xc038; locator=proven; cmp     di, cx
@@ -78954,10 +78958,14 @@ mov es, ax
 # IDA 0x1c047; file 0xc247; locator=proven; retn
 # ⚠ 函式 sub_1C01D; [unknown] 未附加語意; 出處: 無
 ret
-.org 0xc2c8
-# IDA 0x1c0c8; file 0xc2c8; locator=proven; sub     al, 0D3h
+.org 0xc2c5
+# IDA 0x1c0c5; file 0xc2c5; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
-sub al, 0xd3
+ret
+.org 0xc2c6
+# IDA 0x1c0c6; file 0xc2c6; locator=proven; mov     dx, word_1D32C
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov dx, word ptr [0xd32c]
 .org 0xc2ca
 # IDA 0x1c0ca; file 0xc2ca; locator=proven; mov     bx, word_1D32E
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
@@ -79753,15 +79761,22 @@ call .+974
 # IDA 0x1c2f4; file 0xc4f4; locator=proven; retn
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
 ret
-.org 0xc500
-sub_1C300:
-# IDA 0x1c300; file 0xc500; locator=proven; adc     bl, dl
-# ⚠ 函式 sub_1C300; [unknown] 未附加語意; 出處: 無
-adc bl, dl
-.org 0xc502
-# IDA 0x1c302; file 0xc502; locator=proven; and     [di+2], dh
-# ⚠ 函式 sub_1C300; [unknown] 未附加語意; 出處: 無
-and byte ptr [di+0x2], dh
+.org 0xc4f5
+# IDA 0x1c2f5; file 0xc4f5; locator=proven; mov     ah, 0Ch
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ah, 0xc
+.org 0xc4f7
+# IDA 0x1c2f7; file 0xc4f7; locator=proven; xor     cs:byte_1D310, 20h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; xor byte ptr [0xd310], 0x20
+.org 0xc4fd
+# IDA 0x1c2fd; file 0xc4fd; locator=proven; test    cs:byte_1D310, 20h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; test byte ptr [0xd310], 0x20
+.org 0xc503
+# IDA 0x1c303; file 0xc503; locator=proven; jnz     short loc_1C307
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnz .+4
 .org 0xc505
 # IDA 0x1c305; file 0xc505; locator=proven; xor     ah, ah
 # ⚠ 函式 sub_1C300; [unknown] 未附加語意; 出處: 無
@@ -81210,6 +81225,66 @@ mov cx, 0x3f
 # IDA 0x1c5ff; file 0xc7ff; locator=proven; mov     bx, cx
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
 {load} mov bx, cx
+.org 0xc801
+# IDA 0x1c601; file 0xc801; locator=proven; cmp     cl, 0
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cmp cl, 0x0
+.org 0xc804
+# IDA 0x1c604; file 0xc804; locator=proven; jz      short near ptr unk_1C60B
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jz .+7
+.org 0xc806
+# IDA 0x1c606; file 0xc806; locator=proven; call    sub_1C4FA
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .-268
+.org 0xc809
+# IDA 0x1c609; file 0xc809; locator=proven; jmp     short near ptr unk_1C610
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jmp .+7
+.org 0xc80b
+# IDA 0x1c60b; file 0xc80b; locator=proven; mov     ah, 0
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ah, 0x0
+.org 0xc80d
+# IDA 0x1c60d; file 0xc80d; locator=proven; call    sub_1C51E
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .-239
+.org 0xc810
+# IDA 0x1c610; file 0xc810; locator=proven; dec     cx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+dec cx
+.org 0xc811
+# IDA 0x1c611; file 0xc811; locator=proven; jge     short loc_1C5FD
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jge .-20
+.org 0xc813
+# IDA 0x1c613; file 0xc813; locator=proven; mov     byte ptr cs:loc_1C604, 74h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+cs; mov byte ptr [0xc604], 0x74
+.org 0xc819
+# IDA 0x1c619; file 0xc819; locator=proven; pop     si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop si
+.org 0xc81a
+# IDA 0x1c61a; file 0xc81a; locator=proven; pop     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop dx
+.org 0xc81b
+# IDA 0x1c61b; file 0xc81b; locator=proven; pop     cx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop cx
+.org 0xc81c
+# IDA 0x1c61c; file 0xc81c; locator=proven; pop     bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop bx
+.org 0xc81d
+# IDA 0x1c61d; file 0xc81d; locator=proven; pop     ax
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop ax
+.org 0xc81e
+# IDA 0x1c61e; file 0xc81e; locator=proven; retn
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+ret
 .org 0xc81f
 sub_1C61F:
 # IDA 0x1c61f; file 0xc81f; locator=proven; push    bx

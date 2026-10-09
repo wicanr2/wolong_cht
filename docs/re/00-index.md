@@ -254,6 +254,8 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 
 自動戰鬥、退卻與據點易主的 C 見 [re/130](130-c-battle-outcome-restoration.md)，規格見 [spec/250](../spec/250-c-battle-outcome.md)。
 
+交戰入口與戰術引擎的 C 研究見 [re/131](131-c-engagement-tactical-restoration.md)，規格見 [spec/251](../spec/251-c-engagement-tactical.md)。
+
 ## 9. 怎麼加一份新筆記
 
 1. 編號流水，一個發現一份。標題寫「回答什麼問題」不是「讀了哪支函式」。

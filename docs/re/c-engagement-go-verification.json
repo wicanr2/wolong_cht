@@ -1,0 +1,99 @@
+{
+  "schema": "wolong-engagement-go-verification-v1",
+  "status": "cold-go-passed-remaining-checks-pending",
+  "verification_scope": "Existing cold formal Go vet/test receipt verified; individual and default full project checks remain pending",
+  "recorded_at_utc": "2026-10-09T21:05:26.170485+00:00",
+  "source_revision": "186e9c69145332a0445936938ce9355856da2e76",
+  "source_sha256": {
+    "tools/go.sh": "fa9dae64edb9b9d0a770e8af773fb79ddcaed807854f42f4c6fa222be6201416",
+    "tools/check.sh": "8564f12abd88e64d9d938b0cbe3ed9fc7578b739e4194c97335548efbf01d803",
+    "tools/py.sh": "d87d60fa5c66993edda6bf83ac82577769c43be9e6771dd33a5baf356e117cdd",
+    "go.mod": "ffa0f9568f02beb7bdd8e11e6b5eb0f7692e314af6e1a5a5a3b73dfaae178c84",
+    "go.sum": "0e59bae9f1e5957bc62654b3808bfd699e897a32d50f8ab4ee2c6ef3d7b23acb"
+  },
+  "formal_go_tree": {
+    "directories": [
+      "internal",
+      "cmd",
+      "mobile",
+      "translations"
+    ],
+    "files": 337,
+    "sha256": "f820e118eec6da0ccd3967a43af2be6094b30f89b9a8ab3fad64101ec387167c",
+    "revision_difference": "Read-only git diff against cold revision is empty for these directories, go.mod/go.sum and the three wrappers"
+  },
+  "image": "eob-remake-go:1.26.7-ebiten2.9.9-20261008-r2",
+  "image_id": "sha256:9b6b1a2a457eb6937aceac5aa0eea79de88227100e33163644e1f8f4e661949c",
+  "go_version": "go1.26.7 linux/amd64",
+  "cold_test_cache": true,
+  "vet_passed": true,
+  "test_passed": true,
+  "tested_packages": 39,
+  "cached_test_packages": 0,
+  "log_sha256": "a864d86b8f833c0f45055edf9caf8dabebf4931fdf95b2b1ae3ae4de942623c7",
+  "cold_log": "workplace/matching-decompilation/c-engagement/checks/engagement-cold-go.log",
+  "cold_receipt": "workplace/matching-decompilation/c-engagement/checks/engagement-cold-go.json",
+  "cold_receipt_sha256": "430b38d6573a2cac2b102fd1098f0520f80fe814268e91f171e2b06aeaf5c068",
+  "cold_go_command": "tools/check.sh --go",
+  "commands": [
+    {
+      "command": "tools/go.sh clean -testcache",
+      "exit_status": 0
+    },
+    {
+      "command": "tools/check.sh --go",
+      "exit_status": 0,
+      "log": "engagement-cold-go.log",
+      "log_sha256": "a864d86b8f833c0f45055edf9caf8dabebf4931fdf95b2b1ae3ae4de942623c7"
+    }
+  ],
+  "original_assets_readonly": true,
+  "network": "none",
+  "user": "1000:1000",
+  "mount_proof_reference": "Existing cold receipt flags plus unchanged tools/go.sh, tools/py.sh and tools/check.sh; no new execution is claimed",
+  "cache_scope": "workplace/matching-decompilation/c-catalog/go-cache",
+  "environment": {
+    "GOPROXY": "off",
+    "GOSUMDB": "off",
+    "GOTOOLCHAIN": "local",
+    "GOFLAGS": "-mod=readonly"
+  },
+  "formal_check_all": {
+    "status": "pending",
+    "command": "tools/check.sh",
+    "invocation_mode": "default full mode; no --all argument is supported",
+    "exit_status": null
+  },
+  "individual_checks": {
+    "status": "pending",
+    "commands": 25,
+    "passed": null,
+    "known_failures": null,
+    "new_failures": null,
+    "baseline_receipt": "workplace/matching-decompilation/checks/outcome-checks.json",
+    "baseline_sha256": "efee292d82e8774fdf89a300986bb66c69d1abc237676425f708ebb72f9ee8ca",
+    "expected_passed": 21,
+    "expected_known_failures": 4,
+    "known_failure_indices": [
+      2,
+      3,
+      7,
+      8
+    ],
+    "protected_selftest_indices": [
+      13,
+      14
+    ],
+    "expected_phantom_normalized_rows": 277,
+    "expected_phantom_added": 0,
+    "expected_phantom_removed": 0,
+    "helper": "/tmp/wolong-engagement-checks.py",
+    "helper_sha256": "39ff0b6275e3025056ee49ea4ffc1d49d5bc6ee6f6997303200e794c644e0158",
+    "prepared_commands": {
+      "normal": "python /helper.py --phase normal --repo /repo --baseline /baseline/outcome-checks.json --output /output",
+      "protected": "python /helper.py --phase protected --repo /repo --baseline /baseline/outcome-checks.json --output /output",
+      "finalize": "python /helper.py --phase finalize --repo /repo --baseline /baseline/outcome-checks.json --output /output"
+    }
+  },
+  "full_project_check_passed": null
+}

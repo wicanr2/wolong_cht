@@ -174,3 +174,5 @@ handler、直線、底紋與雙色框的固定 decoder／組譯證據。原始�
 包含原始兩 patched far call 與完整三字 code；資料字庫仍只作本機輸入。
 
 尋路自我修改區段的79條新增來源見[re/129](129-c-route-restoration.md)及[route-handler-code.json](route-handler-code.json)。現行版控組語為25,078指令／57,045bytes，整檔仍67,099bytes；來源與驗證入口沿用本頁，歷史checkpoint數字不改寫。
+
+2026-10-10，交戰與戰術來源審查以31條新／替換指令取代12條舊錯邊界，最新版控來源為25,097條指令／57,101指令bytes，完整67,099-byte EXE仍與原版相同。原始與退休指令的定位及雜湊保存在[補充收據](c-engagement-code.json)，研究入口為[re/131](131-c-engagement-tactical-restoration.md)。三個組譯負對照均被拒絕；此結果不代表C原生矩陣或C機器碼匹配已完成。

@@ -547,3 +547,16 @@
 - 最終native收據已綁431C／50raw、三筆回鏈與Go proof；39套件冷測cached0。25單項21通過／4既有失敗[2,3,7,8]／新增0，phantom277無增刪；完整check的39套件cached，停點保留既有文件缺口。
 - 首輪專案檢查新增1筆外部cpu.go相對引用，改成固定版本GitHub連結後用相同命令重跑通過基線；沒有放寬檢查。
 - 當輪輸出UID/GID1000，root-owned維持27個舊路徑，無異常.md目錄，驗證容器已清理；依授權commit與push，完整Goal保持active。
+
+## 2026-10-10：完整交戰入口 C 研究
+
+- 從已發布431C／50raw接續野戰與攻城入口；先以[IDA探針](tools/ida_engagement_probe.py)核對尚未還原的直接呼叫閉包。原版bytes與輸入保持唯讀，完整軍團與主排程仍待。
+- 原始直接與九張固定表閉包為234named／12raw／7817有效指令／18563碼bytes；C原型完整生成，原始guest stack與七個live patch保留，正常及20錯版語法檢查通過，尚待完整動態矩陣。
+- 12條舊IDA錯邊界由31條新／替換指令取代，source-map及舊補充不覆寫；25097／57101／67099整檔組語exact、三個錯版拒絕。匯出器整合時遇到來源欄位及變數遮蔽問題，依實際schema修正後用相同命令重跑通過，未改產品行為或放寬guard。
+- 原版道路建圖bounded已追到malloc讀buffer1154與手動arena1200重疊，壓縮檔10AC4偏移與RAM逐byte一致；以真AH4A保留到9B00後四劇本完整真退卻原版/C通過，城市座標假說已由primary否定。
+- 暖機分成戰術A156前與完整世界還原兩種，各側各自執行及比較，不cross-copy Snapshot。設定選單需world前置，保留全部六鍵案例後修正前提。
+- 目前擴充抽樣304例／604階段通過，194／234named與10／12raw已進入；完整444例與剩餘存檔／分支正繼續核對，未標全C或Goal完成。
+- 後續580例／1156階段原版與C全部相同，234個named均進入、12個raw有11個進入；存檔抽樣12筆與地圖還原兩側各222次通過。舊收據及來源清單另存smoke-580-pre-report-fix.json與smoke-580-c-source.sha256，不拿它代替最終完整矩陣。
+- 我在smoke執行中修改了外層wrapper，原生PASS後shell因讀取到修改後行段而報status未定義；此為編排錯誤，沒有原版/C差異。後續執行前凍結wrapper，O2／O0各用獨立有界輪次。
+- 報告曾無條件沿用actual_nonlocal_exit=true，但實際outer退出為0。改由outer計數衍生，戰術19FDC→11B76的SS/SP還原另以同案例真11B5A入口觀測計數；warmup暫停與真正返回另外揭露。
+- 垂直尋路初態誤寫D2FE，改為原1BE10實讀的D2FC後四劇本／八階段相同，raw1BFBF進入四次。凍結來源後啟動完整O2；本次先提交整檔組語exact及READY研究工作區的checkpoint，C台帳不升級，O0／O2最終矩陣、二十錯版與專案檢查仍待後續收據。

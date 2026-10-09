@@ -66,8 +66,9 @@
 | 2026-10-10；據點輪轉／增援／動畫物件18C函式 | O0／O2各8,144完整狀態與十六錯版，固定raw RNG與原提示IO | 401 C／49raw；據點與物件閉包接通，完整軍團／交戰／主排程及C機器碼未代證 | [re/128](docs/re/128-c-city-tick-restoration.md)、[spec/248](docs/spec/248-c-city-tick.md)、來源／覆蓋／收據 |
 | 2026-10-10；尋路／退卻／潰散九C函式及raw搜尋 | O0／O2各4,588完整狀態與十六錯版，live patch／原queue／固定raw RNG | 410 C／50raw；新增79組語指令後全EXE exact，原版全道路／完整軍團與戰鬥／C機器碼未代證 | [re/129](docs/re/129-c-route-restoration.md)、[spec/249](docs/spec/249-c-route.md)、來源／覆蓋／收據 |
 | 2026-10-10；自動戰鬥／退卻／易主21C函式 | O0／O2各8,364完整狀態與二十錯版，真實outer退出144組 | 431 C／50raw；原caller不續行，完整交戰／戰術／軍團與C機器碼未代證 | [re/130](docs/re/130-c-battle-outcome-restoration.md)、[spec/250](docs/spec/250-c-battle-outcome.md)、來源／覆蓋／收據 |
+| 2026-10-10；交戰／戰術研究原型 | 25,097條組語／57,101指令bytes、完整67,099-byte EXE exact；C抽樣580例／1,156階段相同 | spec251 READY，234個新named全進、12個raw有11個進；完整O0／O2與錯版尚待，C台帳維持431／50 | [re/131](docs/re/131-c-engagement-tactical-restoration.md)、[spec/251](docs/spec/251-c-engagement-tactical.md)、版控組語及本機抽樣收據 |
 
-持續 Goal 為完成整個 matching decompilation；目前有 25,078 條指令的整檔組語基準與 431 個 C 函式、五十個原始 code 入口，不能據此宣布完整 C 還原完成。
+持續 Goal 為完成整個 matching decompilation；目前有 25,097 條指令的整檔組語基準與 431 個已完成局部驗證的 C 函式、五十個原始 code 入口，不能據此宣布完整 C 還原完成。
 使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b`、熱區 `a8605b5` 、版控組語／VGA `47e16c9` 、對齊貼圖 `6139f9e` 、矩形／計量 `c7dc8df`、顯示分派 `4d31520`、字形 `85f06de` 與數字 `06fff77` 已推到 origin/main。
 
 未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。

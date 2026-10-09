@@ -3304,6 +3304,48 @@
       "sources": [
         "docs/re/130-c-battle-outcome-restoration.md"
       ]
+    },
+    "0x14A7B": {
+      "meaning": "原野戰入口先由地形選戰場並選同地軍團，清雙方bit5及+3，再依戰後AH處理潰散；玩家戰術分支沿原callee",
+      "level": "proven",
+      "sources": [
+        "docs/re/131-c-engagement-tactical-restoration.md"
+      ]
+    },
+    "0x14ADE": {
+      "meaning": "原攻城入口選同地守軍或建立臨時城兵，依原戰後結果處理潰散與據點易主",
+      "level": "proven",
+      "sources": [
+        "docs/re/131-c-engagement-tactical-restoration.md"
+      ]
+    },
+    "0x11B5A": {
+      "meaning": "原保存八個暫存器後初始化戰術並進入19FA0；原11B76落下尾段還原世界與原caller，不補假RET",
+      "level": "proven",
+      "sources": [
+        "docs/re/131-c-engagement-tactical-restoration.md"
+      ]
+    },
+    "0x19FDC": {
+      "meaning": "原由CS:D340恢復SP，結算城兵與世界軍團並在1A04A執行真RET至11B76；保留原SS與丟棄caller語意",
+      "level": "proven",
+      "sources": [
+        "docs/re/131-c-engagement-tactical-restoration.md"
+      ]
+    },
+    "0x18CFF": {
+      "meaning": "原SAVE.DAT四槽寫入入口，以槽號乘56C0定位，依序寫3B-byte日期設定、20-byte標籤、5240-byte世界與400-byte資料，保留原間隙",
+      "level": "proven",
+      "sources": [
+        "docs/re/131-c-engagement-tactical-restoration.md"
+      ]
+    },
+    "0x18D4D": {
+      "meaning": "原存檔標籤建置：先讀SINARIO.DAT指定劇本的20-byte標籤，再依玩家勢力記錄插入兩個三字名稱與固定Big5片段",
+      "level": "proven",
+      "sources": [
+        "docs/re/131-c-engagement-tactical-restoration.md"
+      ]
     }
   },
   "operands": {
