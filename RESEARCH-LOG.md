@@ -1983,3 +1983,10 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - 原人物 DS 與兩個呼叫端 TALK 基址下，三句／等待／音樂／IVENT→MMAP／Mouse／world renderer 成為局部完整 native C 閉包。既有 sub_11D46 沿用唯一實作。
 - O0／O2 各 171 完整裝置、RAM／plane／ABI／IN／OUT／API 相同；816 全形 glyph、無缺字、十二錯版拒絕與乾淨重生通過。原文第一行 432 glyph 下限與原三句入口計數防止空工作量。
 - 測試素材段重疊與世界 DS 配置問題按 RAM／trace 證據修正，沒有調高原 budget。C 台帳 246 函式／31 raw；原版未知 compiler、自然事件與長程玩家仍有獨立界線。
+
+## 2026-10-09：君主出陣與自動編成 C
+
+- 原 KI.EXE、IDA 9.4 DB 與 14 函式 1,056 bytes／501 指令的雜湊見 [re/117](docs/re/117-c-ruler-sortie-restoration.md)。保留原名、IDA linear 與運算元，未改寫 IDA 命名。
+- 原資金符號分支直接跳過不足判斷；補回 mechanics/70 國庫公式的適用前提。選兵中途失敗保留已寫槽，LAHF／SAHF 恢復 CF；補兵保留餘數加入、上限及原佔用圖更新。
+- O0／O2 各 451 組完整 RAM／plane／暫存器／FLAGS／堆疊／API 相同，十個錯版拒絕與乾淨來源重生通過。C 不執行 guest CPU；受控輸入不代證自然選單或硬體時間。
+- 遷都清單、正常玩家長程與原作者 C 機器碼仍為後續範圍；C 台帳 260 函式／31 raw。

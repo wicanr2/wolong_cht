@@ -13088,6 +13088,71 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "原場景局部 C 界線；自然事件／長程玩家與原 C 工具鏈不由本主入口代證。"
+    },
+    {
+      "file": "docs/re/117-c-ruler-sortie-restoration.md",
+      "item": "原作者 C 與工具鏈",
+      "status": "原始語言及 compiler 未確認，尚未證明 C 機器碼一致",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-edab196317749e26705e",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "君主出陣局部 C 界線；遷都清單、自然玩家長程與原 C 工具鏈仍為後續工作。"
+    },
+    {
+      "file": "docs/re/117-c-ruler-sortie-restoration.md",
+      "item": "遷都清單",
+      "status": "`sub_16909` 的清單、排序與間接 callback 尚待另輪還原",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-bc65f63da126c5d21187",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "君主出陣局部 C 界線；遷都清單、自然玩家長程與原 C 工具鏈仍為後續工作。"
+    },
+    {
+      "file": "docs/re/117-c-ruler-sortie-restoration.md",
+      "item": "正常玩家長程路徑",
+      "status": "本輪局部主入口驗證不代證自然選單與通關",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-223f626dc9e96530e98c",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "君主出陣局部 C 界線；遷都清單、自然玩家長程與原 C 工具鏈仍為後續工作。"
+    },
+    {
+      "file": "docs/spec/237-c-ruler-sortie.md",
+      "item": "正常玩家長程路徑與 C 機器碼",
+      "status": "本輪不據局部通過宣稱完成",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-735ba1deb9fbe6066758",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "君主出陣局部 C 界線；遷都清單、自然玩家長程與原 C 工具鏈仍為後續工作。"
+    },
+    {
+      "file": "docs/spec/237-c-ruler-sortie.md",
+      "item": "遷都清單",
+      "status": "後續獨立呼叫閉包",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-3758f7e396bc6ce37901",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "君主出陣局部 C 界線；遷都清單、自然玩家長程與原 C 工具鏈仍為後續工作。"
     }
   ]
 }

@@ -220,6 +220,9 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 **數字是 2026-08-18 的快照，要現況一律重跑**
 （`tools/py.sh tools/re_coverage.py workplace/ida/dosv/census/census.tsv`）。
 
+君主出陣與自動編成的 C 還原見 [re/117](117-c-ruler-sortie-restoration.md)，
+規格與驗證範圍見 [spec/237](../spec/237-c-ruler-sortie.md)。
+
 ## 9. 怎麼加一份新筆記
 
 1. 編號流水，一個發現一份。標題寫「回答什麼問題」不是「讀了哪支函式」。

@@ -51,8 +51,8 @@
 | 2026-10-09；完整資源／cue／allocation 六 C 函式 | O0／O2 各 93 全裝置／ABI／DOS／sound 狀態相同，21 個完整 buffer 與十二錯版通過 | 原始成功讀檔、cue 與分段設定已接 C；INT50／失敗退出、正常玩家、TSR 音訊與 C 機器碼仍有界線 | spec/233、[re/113](docs/re/113-c-resource-cue-restoration.md)、原始來源／完整收據 |
 | 2026-10-09；世界顯示格十 C 函式 | O0／O2 各 2,622 全 RAM／plane／ABI 相同，768 次獨立素材比對與十二錯版通過 | 初始化、地圖取樣、裁切推入與髒格合成已接 C；原 DF 前提、正常玩家／上游 producer 與 C 機器碼保留界線 | spec/234、[re/114](docs/re/114-c-world-map-cells-restoration.md)、原始來源／完整收據 |
 | 2026-10-09；軍團／物件六 C 函式與 raw 矩陣 | O0／O2 各 14,622 全裝置／ABI 相同，12,320 來源矩陣與十二錯版通過；一新指令後整檔匹配 | 原 producer 接顯示格／renderer，保留 live 3／5 容量；正常玩家／type 3 自然來源與 C 機器碼未代證 | spec/235、[re/115](docs/re/115-c-world-overlay-restoration.md)、原始來源／收據 |
-
 | 2026-10-09；場景／鏡頭／小地圖九 C 函式 | O0／O2 各 171 全場景裝置／ABI 相同，816 全形 glyph、十二錯版與原 tail／far 通過 | 原三句、資源／Mouse／world renderer 閉包接通；自然事件／長程玩家與 C 機器碼未代證 | spec/236、[re/116](docs/re/116-c-scene-resume-restoration.md)、原始來源／收據 |
+| 2026-10-09；君主出陣與自動編成 14 個 C 函式 | O0／O2 各 451 組完整狀態一致，十個錯版拒絕；501 條原始指令乾淨重生一致 | 保留資金符號、carry、部分失敗、補兵餘數、佔用圖與側欄；遷都清單、正常玩家長程與 C 機器碼仍待驗證 | [re/117](docs/re/117-c-ruler-sortie-restoration.md)、[spec/237](docs/spec/237-c-ruler-sortie.md)、來源與版控收據 |
 
 持續 Goal 為完成整個 matching decompilation；目前有 24,746 條指令的整檔組語基準與 246 個 C 函式、三十一個原始 code 入口，不能據此宣布完整 C 還原完成。
 使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b`、熱區 `a8605b5` 、版控組語／VGA `47e16c9` 、對齊貼圖 `6139f9e` 、矩形／計量 `c7dc8df`、顯示分派 `4d31520`、字形 `85f06de` 與數字 `06fff77` 已推到 origin/main。

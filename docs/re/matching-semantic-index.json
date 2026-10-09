@@ -1882,6 +1882,104 @@
         "docs/re/116-c-scene-resume-restoration.md",
         "docs/spec/236-c-scene-resume.md"
       ]
+    },
+    "0x1461D": {
+      "meaning": "六槽舊兵退回與預備兵重新分配的入口",
+      "level": "proven",
+      "sources": [
+        "docs/re/117-c-ruler-sortie-restoration.md"
+      ]
+    },
+    "0x14698": {
+      "meaning": "六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限",
+      "level": "proven",
+      "sources": [
+        "docs/re/117-c-ruler-sortie-restoration.md"
+      ]
+    },
+    "0x14717": {
+      "meaning": "六槽兵力退回對應預備兵，沿用 carry／65500 上界",
+      "level": "proven",
+      "sources": [
+        "docs/re/117-c-ruler-sortie-restoration.md"
+      ]
+    },
+    "0x15E80": {
+      "meaning": "側欄開關與四個 bit 的原始重畫分派",
+      "level": "proven",
+      "sources": [
+        "docs/re/117-c-ruler-sortie-restoration.md"
+      ]
+    },
+    "0x15EB7": {
+      "meaning": "側欄君主頭像、君主／首都／軍師原名",
+      "level": "proven",
+      "sources": [
+        "docs/re/117-c-ruler-sortie-restoration.md"
+      ]
+    },
+    "0x15F27": {
+      "meaning": "信賴度計量原乘除與 raster",
+      "level": "proven",
+      "sources": [
+        "docs/re/117-c-ruler-sortie-restoration.md"
+      ]
+    },
+    "0x15F5D": {
+      "meaning": "24-bit 國庫值符號擴張與數字色",
+      "level": "proven",
+      "sources": [
+        "docs/re/117-c-ruler-sortie-restoration.md"
+      ]
+    },
+    "0x15F7F": {
+      "meaning": "三類預備兵乘十後的側欄數字",
+      "level": "proven",
+      "sources": [
+        "docs/re/117-c-ruler-sortie-restoration.md"
+      ]
+    },
+    "0x1699E": {
+      "meaning": "君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出",
+      "level": "proven",
+      "sources": [
+        "docs/re/117-c-ruler-sortie-restoration.md"
+      ]
+    },
+    "0x16E8F": {
+      "meaning": "武將到對應軍團的六槽自動編成入口",
+      "level": "proven",
+      "sources": [
+        "docs/re/117-c-ruler-sortie-restoration.md"
+      ]
+    },
+    "0x16EC9": {
+      "meaning": "原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存",
+      "level": "proven",
+      "sources": [
+        "docs/re/117-c-ruler-sortie-restoration.md"
+      ]
+    },
+    "0x16F26": {
+      "meaning": "軍團建立、主將任職、首都、士氣與旗標",
+      "level": "proven",
+      "sources": [
+        "docs/re/117-c-ruler-sortie-restoration.md"
+      ]
+    },
+    "0x16F86": {
+      "meaning": "軍團首都座標與節點寫回、佔用圖加一",
+      "level": "proven",
+      "sources": [
+        "docs/re/117-c-ruler-sortie-restoration.md"
+      ]
+    },
+    "0x16FD2": {
+      "meaning": "六槽總兵力與混編、原 BX 比較、旗色與更新旗標",
+      "level": "proven",
+      "sources": [
+        "docs/re/117-c-ruler-sortie-restoration.md"
+      ]
     }
   },
   "operands": {

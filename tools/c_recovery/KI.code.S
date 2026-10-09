@@ -26088,79 +26088,79 @@ ret
 .org 0x481d
 sub_1461D:
 # IDA 0x1461d; file 0x481d; locator=proven; push    es
-# ⚠ 函式 sub_1461D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1461D; [proven] 六槽舊兵退回與預備兵重新分配的入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push es
 .org 0x481e
 # IDA 0x1461e; file 0x481e; locator=proven; push    ax
-# ⚠ 函式 sub_1461D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1461D; [proven] 六槽舊兵退回與預備兵重新分配的入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push ax
 .org 0x481f
 # IDA 0x1461f; file 0x481f; locator=proven; push    bx
-# ⚠ 函式 sub_1461D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1461D; [proven] 六槽舊兵退回與預備兵重新分配的入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push bx
 .org 0x4820
 # IDA 0x14620; file 0x4820; locator=proven; push    di
-# ⚠ 函式 sub_1461D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1461D; [proven] 六槽舊兵退回與預備兵重新分配的入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push di
 .org 0x4821
 # IDA 0x14621; file 0x4821; locator=proven; mov     ax, ds
-# ⚠ 函式 sub_1461D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1461D; [proven] 六槽舊兵退回與預備兵重新分配的入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov ax, ds
 .org 0x4823
 # IDA 0x14623; file 0x4823; locator=proven; mov     es, ax
-# ⚠ 函式 sub_1461D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1461D; [proven] 六槽舊兵退回與預備兵重新分配的入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov es, ax
 .org 0x4825
 # IDA 0x14625; file 0x4825; locator=proven; mov     ah, [si+1]
-# ⚠ 函式 sub_1461D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1461D; [proven] 六槽舊兵退回與預備兵重新分配的入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov ah, byte ptr [si+0x1]
 .org 0x4828
 # IDA 0x14628; file 0x4828; locator=proven; xor     al, al
-# ⚠ 函式 sub_1461D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1461D; [proven] 六槽舊兵退回與預備兵重新分配的入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} xor al, al
 .org 0x482a
 # IDA 0x1462a; file 0x482a; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1461D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1461D; [proven] 六槽舊兵退回與預備兵重新分配的入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr ax, 0x1
 .org 0x482c
 # IDA 0x1462c; file 0x482c; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1461D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1461D; [proven] 六槽舊兵退回與預備兵重新分配的入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr ax, 0x1
 .org 0x482e
 # IDA 0x1462e; file 0x482e; locator=proven; add     ax, 4
-# ⚠ 函式 sub_1461D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1461D; [proven] 六槽舊兵退回與預備兵重新分配的入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add ax, offset imm_at_1462E
 .org 0x4831
 # IDA 0x14631; file 0x4831; locator=proven; mov     di, ax
-# ⚠ 函式 sub_1461D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1461D; [proven] 六槽舊兵退回與預備兵重新分配的入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov di, ax
 .org 0x4833
 # IDA 0x14633; file 0x4833; locator=proven; call    sub_14717
-# ⚠ 函式 sub_1461D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1461D; [proven] 六槽舊兵退回與預備兵重新分配的入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .+228
 .org 0x4836
 # IDA 0x14636; file 0x4836; locator=proven; call    sub_14698
-# ⚠ 函式 sub_1461D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1461D; [proven] 六槽舊兵退回與預備兵重新分配的入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .+98
 .org 0x4839
 # IDA 0x14639; file 0x4839; locator=proven; pop     di
-# ⚠ 函式 sub_1461D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1461D; [proven] 六槽舊兵退回與預備兵重新分配的入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop di
 .org 0x483a
 # IDA 0x1463a; file 0x483a; locator=proven; pop     bx
-# ⚠ 函式 sub_1461D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1461D; [proven] 六槽舊兵退回與預備兵重新分配的入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop bx
 .org 0x483b
 # IDA 0x1463b; file 0x483b; locator=proven; pop     ax
-# ⚠ 函式 sub_1461D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1461D; [proven] 六槽舊兵退回與預備兵重新分配的入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop ax
 .org 0x483c
 # IDA 0x1463c; file 0x483c; locator=proven; pop     es
-# ⚠ 函式 sub_1461D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1461D; [proven] 六槽舊兵退回與預備兵重新分配的入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop es
 .org 0x483d
 # IDA 0x1463d; file 0x483d; locator=proven; retn
-# ⚠ 函式 sub_1461D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1461D; [proven] 六槽舊兵退回與預備兵重新分配的入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 ret
 .org 0x483e
 sub_1463E:
@@ -26329,367 +26329,367 @@ ret
 .org 0x4898
 sub_14698:
 # IDA 0x14698; file 0x4898; locator=proven; push    ax
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push ax
 .org 0x4899
 # IDA 0x14699; file 0x4899; locator=proven; push    bx
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push bx
 .org 0x489a
 # IDA 0x1469a; file 0x489a; locator=proven; push    cx
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push cx
 .org 0x489b
 # IDA 0x1469b; file 0x489b; locator=proven; push    dx
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push dx
 .org 0x489c
 # IDA 0x1469c; file 0x489c; locator=proven; push    si
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push si
 .org 0x489d
 # IDA 0x1469d; file 0x489d; locator=proven; push    bp
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push bp
 .org 0x489e
 # IDA 0x1469e; file 0x489e; locator=proven; add     si, 28h
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add si, 0x28
 .org 0x48a1
 # IDA 0x146a1; file 0x48a1; locator=proven; sub     sp, 8
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 sub sp, 0x8
 .org 0x48a4
 # IDA 0x146a4; file 0x48a4; locator=proven; mov     bp, sp
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov bp, sp
 .org 0x48a6
 # IDA 0x146a6; file 0x48a6; locator=proven; xor     ax, ax
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} xor ax, ax
 .org 0x48a8
 # IDA 0x146a8; file 0x48a8; locator=proven; mov     [bp+0], ax
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov word ptr [bp], ax
 .org 0x48ab
 # IDA 0x146ab; file 0x48ab; locator=proven; mov     [bp+2], ax
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov word ptr [bp+0x2], ax
 .org 0x48ae
 # IDA 0x146ae; file 0x48ae; locator=proven; mov     [bp+4], ax
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov word ptr [bp+0x4], ax
 .org 0x48b1
 # IDA 0x146b1; file 0x48b1; locator=proven; mov     [bp+6], ax
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov word ptr [bp+0x6], ax
 .org 0x48b4
 # IDA 0x146b4; file 0x48b4; locator=proven; push    si
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push si
 .org 0x48b5
 # IDA 0x146b5; file 0x48b5; locator=proven; mov     cx, 6
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov cx, 0x6
 .org 0x48b8
 loc_146B8:
 # IDA 0x146b8; file 0x48b8; locator=proven; mov     bl, [si+2]
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov bl, byte ptr [si+0x2]
 .org 0x48bb
 # IDA 0x146bb; file 0x48bb; locator=proven; cmp     bl, 4
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 cmp bl, 0x4
 .org 0x48be
 # IDA 0x146be; file 0x48be; locator=proven; jz      short loc_146CA
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jz .+12
 .org 0x48c0
 # IDA 0x146c0; file 0x48c0; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} xor bh, bh
 .org 0x48c2
 # IDA 0x146c2; file 0x48c2; locator=proven; dec     bx
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 dec bx
 .org 0x48c3
 # IDA 0x146c3; file 0x48c3; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl bx, 0x1
 .org 0x48c5
 # IDA 0x146c5; file 0x48c5; locator=proven; add     bx, bp
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} add bx, bp
 .org 0x48c7
 # IDA 0x146c7; file 0x48c7; locator=proven; inc     word ptr ss:[bx]
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 ss; inc word ptr [bx]
 .org 0x48ca
 loc_146CA:
 # IDA 0x146ca; file 0x48ca; locator=proven; add     si, 4
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add si, 0x4
 .org 0x48cd
 # IDA 0x146cd; file 0x48cd; locator=proven; loop    loc_146B8
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 loop .-21
 .org 0x48cf
 # IDA 0x146cf; file 0x48cf; locator=proven; pop     si
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop si
 .org 0x48d0
 # IDA 0x146d0; file 0x48d0; locator=proven; mov     cx, 6
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov cx, 0x6
 .org 0x48d3
 loc_146D3:
 # IDA 0x146d3; file 0x48d3; locator=proven; push    bp
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push bp
 .org 0x48d4
 # IDA 0x146d4; file 0x48d4; locator=proven; mov     bl, [si+2]
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov bl, byte ptr [si+0x2]
 .org 0x48d7
 # IDA 0x146d7; file 0x48d7; locator=proven; cmp     bl, 4
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 cmp bl, 0x4
 .org 0x48da
 # IDA 0x146da; file 0x48da; locator=proven; jz      short loc_14702
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jz .+40
 .org 0x48dc
 # IDA 0x146dc; file 0x48dc; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} xor bh, bh
 .org 0x48de
 # IDA 0x146de; file 0x48de; locator=proven; dec     bx
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 dec bx
 .org 0x48df
 # IDA 0x146df; file 0x48df; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl bx, 0x1
 .org 0x48e1
 # IDA 0x146e1; file 0x48e1; locator=proven; add     bp, bx
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} add bp, bx
 .org 0x48e3
 # IDA 0x146e3; file 0x48e3; locator=proven; add     bx, di
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} add bx, di
 .org 0x48e5
 # IDA 0x146e5; file 0x48e5; locator=proven; mov     ax, es:[bx]
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 es; mov ax, word ptr [bx]
 .org 0x48e8
 # IDA 0x146e8; file 0x48e8; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} xor dx, dx
 .org 0x48ea
 # IDA 0x146ea; file 0x48ea; locator=proven; div     word ptr [bp+0]
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 div word ptr [bp]
 .org 0x48ed
 # IDA 0x146ed; file 0x48ed; locator=proven; dec     word ptr [bp+0]
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 dec word ptr [bp]
 .org 0x48f0
 # IDA 0x146f0; file 0x48f0; locator=proven; add     ax, dx
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} add ax, dx
 .org 0x48f2
 # IDA 0x146f2; file 0x48f2; locator=proven; cmp     ax, 64h
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 cmp ax, offset imm_at_146F2
 .org 0x48f5
 # IDA 0x146f5; file 0x48f5; locator=proven; jbe     short loc_146FC
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jbe .+7
 .org 0x48f7
 # IDA 0x146f7; file 0x48f7; locator=proven; mov     ax, 64h
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov ax, 0x64
 .org 0x48fa
 # IDA 0x146fa; file 0x48fa; locator=proven; inc     ch
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 inc ch
 .org 0x48fc
 loc_146FC:
 # IDA 0x146fc; file 0x48fc; locator=proven; sub     es:[bx], ax
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 es; sub word ptr [bx], ax
 .org 0x48ff
 # IDA 0x146ff; file 0x48ff; locator=proven; mov     [si+1], al
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov byte ptr [si+0x1], al
 .org 0x4902
 loc_14702:
 # IDA 0x14702; file 0x4902; locator=proven; pop     bp
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop bp
 .org 0x4903
 # IDA 0x14703; file 0x4903; locator=proven; add     si, 4
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add si, 0x4
 .org 0x4906
 # IDA 0x14706; file 0x4906; locator=proven; dec     cl
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 dec cl
 .org 0x4908
 # IDA 0x14708; file 0x4908; locator=proven; jnz     short loc_146D3
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jnz .-53
 .org 0x490a
 # IDA 0x1470a; file 0x490a; locator=proven; add     sp, 8
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add sp, 0x8
 .org 0x490d
 # IDA 0x1470d; file 0x490d; locator=proven; cmp     ch, 6
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 cmp ch, 0x6
 .org 0x4910
 # IDA 0x14710; file 0x4910; locator=proven; pop     bp
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop bp
 .org 0x4911
 # IDA 0x14711; file 0x4911; locator=proven; pop     si
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop si
 .org 0x4912
 # IDA 0x14712; file 0x4912; locator=proven; pop     dx
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop dx
 .org 0x4913
 # IDA 0x14713; file 0x4913; locator=proven; pop     cx
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop cx
 .org 0x4914
 # IDA 0x14714; file 0x4914; locator=proven; pop     bx
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop bx
 .org 0x4915
 # IDA 0x14715; file 0x4915; locator=proven; pop     ax
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop ax
 .org 0x4916
 # IDA 0x14716; file 0x4916; locator=proven; retn
-# ⚠ 函式 sub_14698; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14698; [proven] 六槽按兵種分配預備兵，保留整數除法餘數加入及每槽 100 上限; 出處: docs/re/117-c-ruler-sortie-restoration.md
 ret
 .org 0x4917
 sub_14717:
 # IDA 0x14717; file 0x4917; locator=proven; push    ax
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push ax
 .org 0x4918
 # IDA 0x14718; file 0x4918; locator=proven; push    bx
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push bx
 .org 0x4919
 # IDA 0x14719; file 0x4919; locator=proven; push    cx
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push cx
 .org 0x491a
 # IDA 0x1471a; file 0x491a; locator=proven; push    dx
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push dx
 .org 0x491b
 # IDA 0x1471b; file 0x491b; locator=proven; push    si
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push si
 .org 0x491c
 # IDA 0x1471c; file 0x491c; locator=proven; push    di
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push di
 .org 0x491d
 # IDA 0x1471d; file 0x491d; locator=proven; mov     cx, 6
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov cx, 0x6
 .org 0x4920
 # IDA 0x14720; file 0x4920; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} xor bh, bh
 .org 0x4922
 # IDA 0x14722; file 0x4922; locator=proven; add     si, 28h
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add si, 0x28
 .org 0x4925
 loc_14725:
 # IDA 0x14725; file 0x4925; locator=proven; mov     bl, [si+2]
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov bl, byte ptr [si+0x2]
 .org 0x4928
 # IDA 0x14728; file 0x4928; locator=proven; cmp     bl, 4
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 cmp bl, 0x4
 .org 0x492b
 # IDA 0x1472b; file 0x492b; locator=proven; jz      short loc_1473E
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jz .+19
 .org 0x492d
 # IDA 0x1472d; file 0x492d; locator=proven; dec     bx
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 dec bx
 .org 0x492e
 # IDA 0x1472e; file 0x492e; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl bx, 0x1
 .org 0x4930
 # IDA 0x14730; file 0x4930; locator=proven; xor     ax, ax
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} xor ax, ax
 .org 0x4932
 # IDA 0x14732; file 0x4932; locator=proven; xchg    al, [si+1]
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 xchg al, byte ptr [si+0x1]
 .org 0x4935
 # IDA 0x14735; file 0x4935; locator=proven; mov     dx, es:[bx+di]
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 es; mov dx, word ptr [bx+di]
 .org 0x4938
 # IDA 0x14738; file 0x4938; locator=proven; call    sub_155EC
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .+3764
 .org 0x493b
 # IDA 0x1473b; file 0x493b; locator=proven; mov     es:[bx+di], ax
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 es; mov word ptr [bx+di], ax
 .org 0x493e
 loc_1473E:
 # IDA 0x1473e; file 0x493e; locator=proven; add     si, 4
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add si, 0x4
 .org 0x4941
 # IDA 0x14741; file 0x4941; locator=proven; loop    loc_14725
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 loop .-28
 .org 0x4943
 # IDA 0x14743; file 0x4943; locator=proven; pop     di
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop di
 .org 0x4944
 # IDA 0x14744; file 0x4944; locator=proven; pop     si
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop si
 .org 0x4945
 # IDA 0x14745; file 0x4945; locator=proven; pop     dx
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop dx
 .org 0x4946
 # IDA 0x14746; file 0x4946; locator=proven; pop     cx
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop cx
 .org 0x4947
 # IDA 0x14747; file 0x4947; locator=proven; pop     bx
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop bx
 .org 0x4948
 # IDA 0x14748; file 0x4948; locator=proven; pop     ax
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop ax
 .org 0x4949
 # IDA 0x14749; file 0x4949; locator=proven; retn
-# ⚠ 函式 sub_14717; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14717; [proven] 六槽兵力退回對應預備兵，沿用 carry／65500 上界; 出處: docs/re/117-c-ruler-sortie-restoration.md
 ret
 .org 0x494a
 sub_1474A:
@@ -36822,606 +36822,606 @@ ret
 .org 0x6080
 sub_15E80:
 # IDA 0x15e80; file 0x6080; locator=proven; test    cs:byte_198A6, 2
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 cs; test byte ptr [0x98a6], 0x2
 .org 0x6086
 # IDA 0x15e86; file 0x6086; locator=proven; jnz     short loc_15E89
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jnz .+3
 .org 0x6088
 # IDA 0x15e88; file 0x6088; locator=proven; retn
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 ret
 .org 0x6089
 loc_15E89:
 # IDA 0x15e89; file 0x6089; locator=proven; push    ds
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push ds
 .org 0x608a
 # IDA 0x15e8a; file 0x608a; locator=proven; push    si
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push si
 .org 0x608b
 # IDA 0x15e8b; file 0x608b; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x6090
 # IDA 0x15e90; file 0x6090; locator=proven; mov     si, cs:word_10CFD
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 cs; mov si, word ptr [0xcfd]
 .org 0x6095
 # IDA 0x15e95; file 0x6095; locator=proven; add     si, 0
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add si, 0x0
 .org 0x6098
 # IDA 0x15e98; file 0x6098; locator=proven; shr     al, 1
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr al, 0x1
 .org 0x609a
 # IDA 0x15e9a; file 0x609a; locator=proven; jnb     short loc_15E9F
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jnb .+5
 .org 0x609c
 # IDA 0x15e9c; file 0x609c; locator=proven; call    sub_15EB7
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .+27
 .org 0x609f
 loc_15E9F:
 # IDA 0x15e9f; file 0x609f; locator=proven; shr     al, 1
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr al, 0x1
 .org 0x60a1
 # IDA 0x15ea1; file 0x60a1; locator=proven; jnb     short loc_15EA6
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jnb .+5
 .org 0x60a3
 # IDA 0x15ea3; file 0x60a3; locator=proven; call    sub_15F27
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .+132
 .org 0x60a6
 loc_15EA6:
 # IDA 0x15ea6; file 0x60a6; locator=proven; shr     al, 1
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr al, 0x1
 .org 0x60a8
 # IDA 0x15ea8; file 0x60a8; locator=proven; jnb     short loc_15EAD
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jnb .+5
 .org 0x60aa
 # IDA 0x15eaa; file 0x60aa; locator=proven; call    sub_15F5D
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .+179
 .org 0x60ad
 loc_15EAD:
 # IDA 0x15ead; file 0x60ad; locator=proven; shr     al, 1
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr al, 0x1
 .org 0x60af
 # IDA 0x15eaf; file 0x60af; locator=proven; jnb     short loc_15EB4
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jnb .+5
 .org 0x60b1
 # IDA 0x15eb1; file 0x60b1; locator=proven; call    sub_15F7F
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .+206
 .org 0x60b4
 loc_15EB4:
 # IDA 0x15eb4; file 0x60b4; locator=proven; pop     si
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop si
 .org 0x60b5
 # IDA 0x15eb5; file 0x60b5; locator=proven; pop     ds
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop ds
 .org 0x60b6
 # IDA 0x15eb6; file 0x60b6; locator=proven; retn
-# ⚠ 函式 sub_15E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E80; [proven] 側欄開關與四個 bit 的原始重畫分派; 出處: docs/re/117-c-ruler-sortie-restoration.md
 ret
 .org 0x60b7
 sub_15EB7:
 # IDA 0x15eb7; file 0x60b7; locator=proven; push    ax
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push ax
 .org 0x60b8
 # IDA 0x15eb8; file 0x60b8; locator=proven; push    bx
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push bx
 .org 0x60b9
 # IDA 0x15eb9; file 0x60b9; locator=proven; push    dx
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push dx
 .org 0x60ba
 # IDA 0x15eba; file 0x60ba; locator=proven; push    ds
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push ds
 .org 0x60bb
 # IDA 0x15ebb; file 0x60bb; locator=proven; push    si
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push si
 .org 0x60bc
 # IDA 0x15ebc; file 0x60bc; locator=proven; mov     ah, [si+1]
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov ah, byte ptr [si+0x1]
 .org 0x60bf
 # IDA 0x15ebf; file 0x60bf; locator=proven; xor     al, al
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} xor al, al
 .org 0x60c1
 # IDA 0x15ec1; file 0x60c1; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr ax, 0x1
 .org 0x60c3
 # IDA 0x15ec3; file 0x60c3; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr ax, 0x1
 .org 0x60c5
 # IDA 0x15ec5; file 0x60c5; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr ax, 0x1
 .org 0x60c7
 # IDA 0x15ec7; file 0x60c7; locator=proven; mov     si, ax
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov si, ax
 .org 0x60c9
 # IDA 0x15ec9; file 0x60c9; locator=proven; mov     al, [si+4241h]
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov al, byte ptr [si+0x4241]
 .org 0x60cd
 # IDA 0x15ecd; file 0x60cd; locator=proven; mov     bx, 3EB7h
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov bx, 0x3eb7
 .org 0x60d0
 # IDA 0x15ed0; file 0x60d0; locator=proven; call    sub_107D2
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .-22270
 .org 0x60d3
 # IDA 0x15ed3; file 0x60d3; locator=proven; add     si, 4242h
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add si, 0x4242
 .org 0x60d7
 # IDA 0x15ed7; file 0x60d7; locator=proven; mov     ax, 0F03h
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov ax, 0xf03
 .org 0x60da
 # IDA 0x15eda; file 0x60da; locator=proven; mov     dx, 240h
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov dx, 0x240
 .org 0x60dd
 # IDA 0x15edd; file 0x60dd; locator=proven; mov     bx, 0D0h
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov bx, 0xd0
 .org 0x60e0
 # IDA 0x15ee0; file 0x60e0; locator=proven; call    sub_106FD
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .-22499
 .org 0x60e3
 # IDA 0x15ee3; file 0x60e3; locator=proven; pop     si
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop si
 .org 0x60e4
 # IDA 0x15ee4; file 0x60e4; locator=proven; pop     ds
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop ds
 .org 0x60e5
 # IDA 0x15ee5; file 0x60e5; locator=proven; push    ds
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push ds
 .org 0x60e6
 # IDA 0x15ee6; file 0x60e6; locator=proven; push    si
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push si
 .org 0x60e7
 # IDA 0x15ee7; file 0x60e7; locator=proven; mov     ah, [si+3]
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov ah, byte ptr [si+0x3]
 .org 0x60ea
 # IDA 0x15eea; file 0x60ea; locator=proven; xor     al, al
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} xor al, al
 .org 0x60ec
 # IDA 0x15eec; file 0x60ec; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr ax, 0x1
 .org 0x60ee
 # IDA 0x15eee; file 0x60ee; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr ax, 0x1
 .org 0x60f0
 # IDA 0x15ef0; file 0x60f0; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr ax, 0x1
 .org 0x60f2
 # IDA 0x15ef2; file 0x60f2; locator=proven; add     ax, 842h
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add ax, 0x842
 .org 0x60f5
 # IDA 0x15ef5; file 0x60f5; locator=proven; mov     si, ax
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov si, ax
 .org 0x60f7
 # IDA 0x15ef7; file 0x60f7; locator=proven; mov     ax, 0F03h
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov ax, 0xf03
 .org 0x60fa
 # IDA 0x15efa; file 0x60fa; locator=proven; mov     dx, 240h
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov dx, 0x240
 .org 0x60fd
 # IDA 0x15efd; file 0x60fd; locator=proven; mov     bx, 0E0h
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov bx, 0xe0
 .org 0x6100
 # IDA 0x15f00; file 0x6100; locator=proven; call    sub_106FD
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .-22531
 .org 0x6103
 # IDA 0x15f03; file 0x6103; locator=proven; pop     si
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop si
 .org 0x6104
 # IDA 0x15f04; file 0x6104; locator=proven; pop     ds
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop ds
 .org 0x6105
 # IDA 0x15f05; file 0x6105; locator=proven; push    si
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push si
 .org 0x6106
 # IDA 0x15f06; file 0x6106; locator=proven; mov     ah, [si+2]
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov ah, byte ptr [si+0x2]
 .org 0x6109
 # IDA 0x15f09; file 0x6109; locator=proven; xor     al, al
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} xor al, al
 .org 0x610b
 # IDA 0x15f0b; file 0x610b; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr ax, 0x1
 .org 0x610d
 # IDA 0x15f0d; file 0x610d; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr ax, 0x1
 .org 0x610f
 # IDA 0x15f0f; file 0x610f; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr ax, 0x1
 .org 0x6111
 # IDA 0x15f11; file 0x6111; locator=proven; add     ax, 4242h
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add ax, 0x4242
 .org 0x6114
 # IDA 0x15f14; file 0x6114; locator=proven; mov     si, ax
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov si, ax
 .org 0x6116
 # IDA 0x15f16; file 0x6116; locator=proven; mov     ax, 0F03h
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov ax, 0xf03
 .org 0x6119
 # IDA 0x15f19; file 0x6119; locator=proven; mov     dx, 240h
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov dx, 0x240
 .org 0x611c
 # IDA 0x15f1c; file 0x611c; locator=proven; mov     bx, 0F0h
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov bx, 0xf0
 .org 0x611f
 # IDA 0x15f1f; file 0x611f; locator=proven; call    sub_106FD
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .-22562
 .org 0x6122
 # IDA 0x15f22; file 0x6122; locator=proven; pop     si
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop si
 .org 0x6123
 # IDA 0x15f23; file 0x6123; locator=proven; pop     dx
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop dx
 .org 0x6124
 # IDA 0x15f24; file 0x6124; locator=proven; pop     bx
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop bx
 .org 0x6125
 # IDA 0x15f25; file 0x6125; locator=proven; pop     ax
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop ax
 .org 0x6126
 # IDA 0x15f26; file 0x6126; locator=proven; retn
-# ⚠ 函式 sub_15EB7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15EB7; [proven] 側欄君主頭像、君主／首都／軍師原名; 出處: docs/re/117-c-ruler-sortie-restoration.md
 ret
 .org 0x6127
 sub_15F27:
 # IDA 0x15f27; file 0x6127; locator=proven; push    ax
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push ax
 .org 0x6128
 # IDA 0x15f28; file 0x6128; locator=proven; push    bx
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push bx
 .org 0x6129
 # IDA 0x15f29; file 0x6129; locator=proven; push    cx
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push cx
 .org 0x612a
 # IDA 0x15f2a; file 0x612a; locator=proven; push    dx
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push dx
 .org 0x612b
 # IDA 0x15f2b; file 0x612b; locator=proven; mov     al, cs:byte_10D00
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 cs; mov al, byte ptr [0xd00]
 .org 0x612f
 # IDA 0x15f2f; file 0x612f; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} xor ah, ah
 .org 0x6131
 # IDA 0x15f31; file 0x6131; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl ax, 0x1
 .org 0x6133
 # IDA 0x15f33; file 0x6133; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl ax, 0x1
 .org 0x6135
 # IDA 0x15f35; file 0x6135; locator=proven; mov     cx, ax
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov cx, ax
 .org 0x6137
 # IDA 0x15f37; file 0x6137; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl ax, 0x1
 .org 0x6139
 # IDA 0x15f39; file 0x6139; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl ax, 0x1
 .org 0x613b
 # IDA 0x15f3b; file 0x613b; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl ax, 0x1
 .org 0x613d
 # IDA 0x15f3d; file 0x613d; locator=proven; add     cx, ax
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} add cx, ax
 .org 0x613f
 # IDA 0x15f3f; file 0x613f; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl ax, 0x1
 .org 0x6141
 # IDA 0x15f41; file 0x6141; locator=proven; add     ax, cx
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} add ax, cx
 .org 0x6143
 # IDA 0x15f43; file 0x6143; locator=proven; add     ax, 9Fh
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add ax, 0x9f
 .org 0x6146
 # IDA 0x15f46; file 0x6146; locator=proven; mov     ch, 0A0h
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov ch, 0xa0
 .org 0x6148
 # IDA 0x15f48; file 0x6148; locator=proven; div     ch
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 div ch
 .org 0x614a
 # IDA 0x15f4a; file 0x614a; locator=proven; mov     cl, al
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov cl, al
 .org 0x614c
 # IDA 0x15f4c; file 0x614c; locator=proven; mov     dx, 1C8h
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov dx, 0x1c8
 .org 0x614f
 # IDA 0x15f4f; file 0x614f; locator=proven; mov     bx, 124h
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov bx, 0x124
 .org 0x6152
 # IDA 0x15f52; file 0x6152; locator=proven; mov     ax, 0A00h
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov ax, 0xa00
 .org 0x6155
 # IDA 0x15f55; file 0x6155; locator=proven; call    sub_10AAA
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .-21675
 .org 0x6158
 # IDA 0x15f58; file 0x6158; locator=proven; pop     dx
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop dx
 .org 0x6159
 # IDA 0x15f59; file 0x6159; locator=proven; pop     cx
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop cx
 .org 0x615a
 # IDA 0x15f5a; file 0x615a; locator=proven; pop     bx
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop bx
 .org 0x615b
 # IDA 0x15f5b; file 0x615b; locator=proven; pop     ax
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop ax
 .org 0x615c
 # IDA 0x15f5c; file 0x615c; locator=proven; retn
-# ⚠ 函式 sub_15F27; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F27; [proven] 信賴度計量原乘除與 raster; 出處: docs/re/117-c-ruler-sortie-restoration.md
 ret
 .org 0x615d
 sub_15F5D:
 # IDA 0x15f5d; file 0x615d; locator=proven; push    ax
-# ⚠ 函式 sub_15F5D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F5D; [proven] 24-bit 國庫值符號擴張與數字色; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push ax
 .org 0x615e
 # IDA 0x15f5e; file 0x615e; locator=proven; push    bx
-# ⚠ 函式 sub_15F5D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F5D; [proven] 24-bit 國庫值符號擴張與數字色; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push bx
 .org 0x615f
 # IDA 0x15f5f; file 0x615f; locator=proven; push    dx
-# ⚠ 函式 sub_15F5D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F5D; [proven] 24-bit 國庫值符號擴張與數字色; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push dx
 .org 0x6160
 # IDA 0x15f60; file 0x6160; locator=proven; push    di
-# ⚠ 函式 sub_15F5D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F5D; [proven] 24-bit 國庫值符號擴張與數字色; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push di
 .org 0x6161
 # IDA 0x15f61; file 0x6161; locator=proven; mov     al, [si+22h]
-# ⚠ 函式 sub_15F5D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F5D; [proven] 24-bit 國庫值符號擴張與數字色; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov al, byte ptr [si+0x22]
 .org 0x6164
 # IDA 0x15f64; file 0x6164; locator=proven; cbw
-# ⚠ 函式 sub_15F5D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F5D; [proven] 24-bit 國庫值符號擴張與數字色; 出處: docs/re/117-c-ruler-sortie-restoration.md
 cbw
 .org 0x6165
 # IDA 0x15f65; file 0x6165; locator=proven; mov     dx, ax
-# ⚠ 函式 sub_15F5D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F5D; [proven] 24-bit 國庫值符號擴張與數字色; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov dx, ax
 .org 0x6167
 # IDA 0x15f67; file 0x6167; locator=proven; mov     ax, [si+20h]
-# ⚠ 函式 sub_15F5D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F5D; [proven] 24-bit 國庫值符號擴張與數字色; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov ax, word ptr [si+0x20]
 .org 0x616a
 # IDA 0x15f6a; file 0x616a; locator=proven; mov     di, 61C6h
-# ⚠ 函式 sub_15F5D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F5D; [proven] 24-bit 國庫值符號擴張與數字色; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov di, 0x61c6
 .org 0x616d
 # IDA 0x15f6d; file 0x616d; locator=proven; mov     bx, 0F07h
-# ⚠ 函式 sub_15F5D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F5D; [proven] 24-bit 國庫值符號擴張與數字色; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov bx, 0xf07
 .org 0x6170
 # IDA 0x15f70; file 0x6170; locator=proven; cmp     dh, 80h
-# ⚠ 函式 sub_15F5D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F5D; [proven] 24-bit 國庫值符號擴張與數字色; 出處: docs/re/117-c-ruler-sortie-restoration.md
 cmp dh, 0x80
 .org 0x6173
 # IDA 0x15f73; file 0x6173; locator=proven; jb      short loc_15F77
-# ⚠ 函式 sub_15F5D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F5D; [proven] 24-bit 國庫值符號擴張與數字色; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jb .+4
 .org 0x6175
 # IDA 0x15f75; file 0x6175; locator=proven; mov     bh, 0Ah
-# ⚠ 函式 sub_15F5D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F5D; [proven] 24-bit 國庫值符號擴張與數字色; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov bh, 0xa
 .org 0x6177
 loc_15F77:
 # IDA 0x15f77; file 0x6177; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_15F5D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F5D; [proven] 24-bit 國庫值符號擴張與數字色; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .-22856
 .org 0x617a
 # IDA 0x15f7a; file 0x617a; locator=proven; pop     di
-# ⚠ 函式 sub_15F5D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F5D; [proven] 24-bit 國庫值符號擴張與數字色; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop di
 .org 0x617b
 # IDA 0x15f7b; file 0x617b; locator=proven; pop     dx
-# ⚠ 函式 sub_15F5D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F5D; [proven] 24-bit 國庫值符號擴張與數字色; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop dx
 .org 0x617c
 # IDA 0x15f7c; file 0x617c; locator=proven; pop     bx
-# ⚠ 函式 sub_15F5D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F5D; [proven] 24-bit 國庫值符號擴張與數字色; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop bx
 .org 0x617d
 # IDA 0x15f7d; file 0x617d; locator=proven; pop     ax
-# ⚠ 函式 sub_15F5D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F5D; [proven] 24-bit 國庫值符號擴張與數字色; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop ax
 .org 0x617e
 # IDA 0x15f7e; file 0x617e; locator=proven; retn
-# ⚠ 函式 sub_15F5D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F5D; [proven] 24-bit 國庫值符號擴張與數字色; 出處: docs/re/117-c-ruler-sortie-restoration.md
 ret
 .org 0x617f
 sub_15F7F:
 # IDA 0x15f7f; file 0x617f; locator=proven; push    ax
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push ax
 .org 0x6180
 # IDA 0x15f80; file 0x6180; locator=proven; push    bx
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push bx
 .org 0x6181
 # IDA 0x15f81; file 0x6181; locator=proven; push    cx
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push cx
 .org 0x6182
 # IDA 0x15f82; file 0x6182; locator=proven; push    dx
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push dx
 .org 0x6183
 # IDA 0x15f83; file 0x6183; locator=proven; push    si
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push si
 .org 0x6184
 # IDA 0x15f84; file 0x6184; locator=proven; push    di
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push di
 .org 0x6185
 # IDA 0x15f85; file 0x6185; locator=proven; add     si, 4
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add si, 0x4
 .org 0x6188
 # IDA 0x15f88; file 0x6188; locator=proven; mov     cx, 3
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov cx, 0x3
 .org 0x618b
 # IDA 0x15f8b; file 0x618b; locator=proven; mov     di, 66C7h
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov di, 0x66c7
 .org 0x618e
 loc_15F8E:
 # IDA 0x15f8e; file 0x618e; locator=proven; mov     ax, [si]
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov ax, word ptr [si]
 .org 0x6190
 # IDA 0x15f90; file 0x6190; locator=proven; mov     dx, 0Ah
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov dx, 0xa
 .org 0x6193
 # IDA 0x15f93; file 0x6193; locator=proven; mul     dx
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mul dx
 .org 0x6195
 # IDA 0x15f95; file 0x6195; locator=proven; mov     bx, 0F06h
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov bx, 0xf06
 .org 0x6198
 # IDA 0x15f98; file 0x6198; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .-22889
 .org 0x619b
 # IDA 0x15f9b; file 0x619b; locator=proven; inc     si
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 inc si
 .org 0x619c
 # IDA 0x15f9c; file 0x619c; locator=proven; inc     si
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 inc si
 .org 0x619d
 # IDA 0x15f9d; file 0x619d; locator=proven; add     di, 500h
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add di, 0x500
 .org 0x61a1
 # IDA 0x15fa1; file 0x61a1; locator=proven; loop    loc_15F8E
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 loop .-19
 .org 0x61a3
 # IDA 0x15fa3; file 0x61a3; locator=proven; pop     di
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop di
 .org 0x61a4
 # IDA 0x15fa4; file 0x61a4; locator=proven; pop     si
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop si
 .org 0x61a5
 # IDA 0x15fa5; file 0x61a5; locator=proven; pop     dx
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop dx
 .org 0x61a6
 # IDA 0x15fa6; file 0x61a6; locator=proven; pop     cx
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop cx
 .org 0x61a7
 # IDA 0x15fa7; file 0x61a7; locator=proven; pop     bx
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop bx
 .org 0x61a8
 # IDA 0x15fa8; file 0x61a8; locator=proven; pop     ax
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop ax
 .org 0x61a9
 # IDA 0x15fa9; file 0x61a9; locator=proven; retn
-# ⚠ 函式 sub_15F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15F7F; [proven] 三類預備兵乘十後的側欄數字; 出處: docs/re/117-c-ruler-sortie-restoration.md
 ret
 .org 0x61aa
 sub_15FAA:
@@ -41414,214 +41414,214 @@ ret
 .org 0x6b9e
 sub_1699E:
 # IDA 0x1699e; file 0x6b9e; locator=proven; push    ds
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push ds
 .org 0x6b9f
 # IDA 0x1699f; file 0x6b9f; locator=proven; call    sub_12078
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .-18727
 .org 0x6ba2
 # IDA 0x169a2; file 0x6ba2; locator=proven; mov     ax, 2
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov ax, 0x2
 .org 0x6ba5
 # IDA 0x169a5; file 0x6ba5; locator=proven; call    sub_20000
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 lcall 0x1000, 0x0
 .org 0x6baa
 # IDA 0x169aa; file 0x6baa; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x6baf
 # IDA 0x169af; file 0x6baf; locator=proven; mov     si, cs:word_10CFD
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 cs; mov si, word ptr [0xcfd]
 .org 0x6bb4
 # IDA 0x169b4; file 0x6bb4; locator=proven; xor     dl, dl
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} xor dl, dl
 .org 0x6bb6
 # IDA 0x169b6; file 0x6bb6; locator=proven; mov     al, 0Fh
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov al, 0xf
 .org 0x6bb8
 # IDA 0x169b8; file 0x6bb8; locator=proven; sub     al, [si+28h]
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 sub al, byte ptr [si+0x28]
 .org 0x6bbb
 # IDA 0x169bb; file 0x6bbb; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} xor ah, ah
 .org 0x6bbd
 # IDA 0x169bd; file 0x6bbd; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl ax, 0x1
 .org 0x6bbf
 # IDA 0x169bf; file 0x6bbf; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl ax, 0x1
 .org 0x6bc1
 # IDA 0x169c1; file 0x6bc1; locator=proven; mov     bx, [si+21h]
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov bx, word ptr [si+0x21]
 .org 0x6bc4
 # IDA 0x169c4; file 0x6bc4; locator=proven; cmp     bh, 80h
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 cmp bh, 0x80
 .org 0x6bc7
 # IDA 0x169c7; file 0x6bc7; locator=proven; jnb     short loc_169D2
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jnb .+11
 .org 0x6bc9
 # IDA 0x169c9; file 0x6bc9; locator=proven; and     bh, 7Fh
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 and bh, 0x7f
 .org 0x6bcc
 # IDA 0x169cc; file 0x6bcc; locator=proven; cmp     bx, ax
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} cmp bx, ax
 .org 0x6bce
 # IDA 0x169ce; file 0x6bce; locator=proven; jnb     short loc_169D2
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jnb .+4
 .org 0x6bd0
 # IDA 0x169d0; file 0x6bd0; locator=proven; mov     dl, 1
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov dl, 0x1
 .org 0x6bd2
 loc_169D2:
 # IDA 0x169d2; file 0x6bd2; locator=proven; mov     ax, [si+4]
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov ax, word ptr [si+0x4]
 .org 0x6bd5
 # IDA 0x169d5; file 0x6bd5; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} xor bx, bx
 .org 0x6bd7
 # IDA 0x169d7; file 0x6bd7; locator=proven; add     ax, [si+6]
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add ax, word ptr [si+0x6]
 .org 0x6bda
 # IDA 0x169da; file 0x6bda; locator=proven; adc     bx, 0
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 adc bx, 0x0
 .org 0x6bdd
 # IDA 0x169dd; file 0x6bdd; locator=proven; add     ax, [si+8]
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add ax, word ptr [si+0x8]
 .org 0x6be0
 # IDA 0x169e0; file 0x6be0; locator=proven; adc     bx, 0
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 adc bx, 0x0
 .org 0x6be3
 # IDA 0x169e3; file 0x6be3; locator=proven; and     bx, bx
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} and bx, bx
 .org 0x6be5
 # IDA 0x169e5; file 0x6be5; locator=proven; jnz     short loc_169EE
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jnz .+9
 .org 0x6be7
 # IDA 0x169e7; file 0x6be7; locator=proven; cmp     ax, 258h
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 cmp ax, 0x258
 .org 0x6bea
 # IDA 0x169ea; file 0x6bea; locator=proven; jnb     short loc_169EE
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jnb .+4
 .org 0x6bec
 # IDA 0x169ec; file 0x6bec; locator=proven; mov     dl, 1
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov dl, 0x1
 .org 0x6bee
 loc_169EE:
 # IDA 0x169ee; file 0x6bee; locator=proven; mov     al, dl
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov al, dl
 .org 0x6bf0
 # IDA 0x169f0; file 0x6bf0; locator=proven; call    sub_187FF
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .+7695
 .org 0x6bf3
 # IDA 0x169f3; file 0x6bf3; locator=proven; add     bx, 4240h
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add bx, 0x4240
 .org 0x6bf7
 # IDA 0x169f7; file 0x6bf7; locator=proven; mov     si, bx
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov si, bx
 .org 0x6bf9
 # IDA 0x169f9; file 0x6bf9; locator=proven; mov     cx, 18Ch
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov cx, 0x18c
 .org 0x6bfc
 # IDA 0x169fc; file 0x6bfc; locator=proven; call    sub_13B08
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .-12020
 .org 0x6bff
 # IDA 0x169ff; file 0x6bff; locator=proven; and     dl, dl
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} and dl, dl
 .org 0x6c01
 # IDA 0x16a01; file 0x6c01; locator=proven; jnz     short loc_16A10
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jnz .+15
 .org 0x6c03
 # IDA 0x16a03; file 0x6c03; locator=proven; call    sub_16E8F
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .+1164
 .org 0x6c06
 # IDA 0x16a06; file 0x6c06; locator=proven; jb      short loc_16A10
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jb .+10
 .org 0x6c08
 # IDA 0x16a08; file 0x6c08; locator=proven; and     byte ptr [di], 0FBh
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 and byte ptr [di], 0xfb
 .org 0x6c0b
 # IDA 0x16a0b; file 0x6c0b; locator=proven; mov     al, 8
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov al, 0x8
 .org 0x6c0d
 # IDA 0x16a0d; file 0x6c0d; locator=proven; call    sub_15E80
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .-2957
 .org 0x6c10
 loc_16A10:
 # IDA 0x16a10; file 0x6c10; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov cx, 0xffff
 .org 0x6c13
 # IDA 0x16a13; file 0x6c13; locator=proven; call    sub_18853
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .+7744
 .org 0x6c16
 # IDA 0x16a16; file 0x6c16; locator=proven; call    sub_11D46
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .-19664
 .org 0x6c19
 # IDA 0x16a19; file 0x6c19; locator=proven; mov     ax, 1
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov ax, 0x1
 .org 0x6c1c
 # IDA 0x16a1c; file 0x6c1c; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} xor bx, bx
 .org 0x6c1e
 # IDA 0x16a1e; file 0x6c1e; locator=proven; call    sub_20000
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 lcall 0x1000, 0x0
 .org 0x6c23
 # IDA 0x16a23; file 0x6c23; locator=proven; call    sub_120D6
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .-18765
 .org 0x6c26
 # IDA 0x16a26; file 0x6c26; locator=proven; pop     ds
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop ds
 .org 0x6c27
 # IDA 0x16a27; file 0x6c27; locator=proven; retn
-# ⚠ 函式 sub_1699E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1699E; [proven] 君主出陣資金符號／600 點／carry 分支、三句對話與完整編成退出; 出處: docs/re/117-c-ruler-sortie-restoration.md
 ret
 .org 0x6c28
 sub_16A28:
@@ -43614,790 +43614,790 @@ ret
 .org 0x708f
 sub_16E8F:
 # IDA 0x16e8f; file 0x708f; locator=proven; push    ax
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push ax
 .org 0x7090
 # IDA 0x16e90; file 0x7090; locator=proven; push    bx
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push bx
 .org 0x7091
 # IDA 0x16e91; file 0x7091; locator=proven; push    si
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push si
 .org 0x7092
 # IDA 0x16e92; file 0x7092; locator=proven; mov     di, si
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov di, si
 .org 0x7094
 # IDA 0x16e94; file 0x7094; locator=proven; sub     si, 4240h
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 sub si, 0x4240
 .org 0x7098
 # IDA 0x16e98; file 0x7098; locator=proven; shl     si, 1
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl si, 0x1
 .org 0x709a
 # IDA 0x16e9a; file 0x709a; locator=proven; mov     bx, si
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov bx, si
 .org 0x709c
 # IDA 0x16e9c; file 0x709c; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl bx, 0x1
 .org 0x709e
 # IDA 0x16e9e; file 0x709e; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl bx, 0x1
 .org 0x70a0
 # IDA 0x16ea0; file 0x70a0; locator=proven; mov     [si+2242h], bh
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov byte ptr [si+0x2242], bh
 .org 0x70a4
 # IDA 0x16ea4; file 0x70a4; locator=proven; mov     bh, [di+1Ch]
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov bh, byte ptr [di+0x1c]
 .org 0x70a7
 # IDA 0x16ea7; file 0x70a7; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} xor bl, bl
 .org 0x70a9
 # IDA 0x16ea9; file 0x70a9; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr bx, 0x1
 .org 0x70ab
 # IDA 0x16eab; file 0x70ab; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr bx, 0x1
 .org 0x70ad
 # IDA 0x16ead; file 0x70ad; locator=proven; add     si, 2240h
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add si, 0x2240
 .org 0x70b1
 # IDA 0x16eb1; file 0x70b1; locator=proven; call    sub_16EC9
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .+24
 .org 0x70b4
 # IDA 0x16eb4; file 0x70b4; locator=proven; jb      short loc_16EC5
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jb .+17
 .org 0x70b6
 # IDA 0x16eb6; file 0x70b6; locator=proven; call    sub_16F26
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .+112
 .org 0x70b9
 # IDA 0x16eb9; file 0x70b9; locator=proven; call    sub_1461D
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .-10396
 .org 0x70bc
 # IDA 0x16ebc; file 0x70bc; locator=proven; call    sub_16FD2
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .+278
 .org 0x70bf
 # IDA 0x16ebf; file 0x70bf; locator=proven; mov     di, si
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov di, si
 .org 0x70c1
 # IDA 0x16ec1; file 0x70c1; locator=proven; or      byte ptr [si], 4
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 or byte ptr [si], 0x4
 .org 0x70c4
 # IDA 0x16ec4; file 0x70c4; locator=proven; clc
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 clc
 .org 0x70c5
 loc_16EC5:
 # IDA 0x16ec5; file 0x70c5; locator=proven; pop     si
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop si
 .org 0x70c6
 # IDA 0x16ec6; file 0x70c6; locator=proven; pop     bx
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop bx
 .org 0x70c7
 # IDA 0x16ec7; file 0x70c7; locator=proven; pop     ax
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop ax
 .org 0x70c8
 # IDA 0x16ec8; file 0x70c8; locator=proven; retn
-# ⚠ 函式 sub_16E8F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E8F; [proven] 武將到對應軍團的六槽自動編成入口; 出處: docs/re/117-c-ruler-sortie-restoration.md
 ret
 .org 0x70c9
 sub_16EC9:
 # IDA 0x16ec9; file 0x70c9; locator=proven; push    ax
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push ax
 .org 0x70ca
 # IDA 0x16eca; file 0x70ca; locator=proven; push    cx
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push cx
 .org 0x70cb
 # IDA 0x16ecb; file 0x70cb; locator=proven; push    dx
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push dx
 .org 0x70cc
 # IDA 0x16ecc; file 0x70cc; locator=proven; push    si
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push si
 .org 0x70cd
 # IDA 0x16ecd; file 0x70cd; locator=proven; push    di
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push di
 .org 0x70ce
 # IDA 0x16ece; file 0x70ce; locator=proven; push    bp
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push bp
 .org 0x70cf
 # IDA 0x16ecf; file 0x70cf; locator=proven; sub     sp, 6
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 sub sp, 0x6
 .org 0x70d2
 # IDA 0x16ed2; file 0x70d2; locator=proven; mov     bp, sp
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov bp, sp
 .org 0x70d4
 # IDA 0x16ed4; file 0x70d4; locator=proven; mov     cx, 3
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov cx, 0x3
 .org 0x70d7
 loc_16ED7:
 # IDA 0x16ed7; file 0x70d7; locator=proven; mov     ax, [bx+4]
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov ax, word ptr [bx+0x4]
 .org 0x70da
 # IDA 0x16eda; file 0x70da; locator=proven; mov     [bp+0], ax
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov word ptr [bp], ax
 .org 0x70dd
 # IDA 0x16edd; file 0x70dd; locator=proven; inc     bx
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 inc bx
 .org 0x70de
 # IDA 0x16ede; file 0x70de; locator=proven; inc     bx
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 inc bx
 .org 0x70df
 # IDA 0x16edf; file 0x70df; locator=proven; inc     bp
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 inc bp
 .org 0x70e0
 # IDA 0x16ee0; file 0x70e0; locator=proven; inc     bp
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 inc bp
 .org 0x70e1
 # IDA 0x16ee1; file 0x70e1; locator=proven; loop    loc_16ED7
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 loop .-10
 .org 0x70e3
 # IDA 0x16ee3; file 0x70e3; locator=proven; mov     bp, sp
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov bp, sp
 .org 0x70e5
 # IDA 0x16ee5; file 0x70e5; locator=proven; mov     dx, 6C4Ch
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov dx, 0x6c4c
 .org 0x70e8
 # IDA 0x16ee8; file 0x70e8; locator=proven; add     si, 2Ah
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add si, 0x2a
 .org 0x70eb
 # IDA 0x16eeb; file 0x70eb; locator=proven; mov     cl, 6
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov cl, 0x6
 .org 0x70ed
 loc_16EED:
 # IDA 0x16eed; file 0x70ed; locator=proven; mov     bx, dx
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov bx, dx
 .org 0x70ef
 # IDA 0x16eef; file 0x70ef; locator=proven; mov     ch, 3
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov ch, 0x3
 .org 0x70f1
 loc_16EF1:
 # IDA 0x16ef1; file 0x70f1; locator=proven; mov     al, cs:[bx]
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 cs; mov al, byte ptr [bx]
 .org 0x70f4
 # IDA 0x16ef4; file 0x70f4; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} xor ah, ah
 .org 0x70f6
 # IDA 0x16ef6; file 0x70f6; locator=proven; mov     di, ax
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov di, ax
 .org 0x70f8
 # IDA 0x16ef8; file 0x70f8; locator=proven; dec     di
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 dec di
 .org 0x70f9
 # IDA 0x16ef9; file 0x70f9; locator=proven; shl     di, 1
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl di, 0x1
 .org 0x70fb
 # IDA 0x16efb; file 0x70fb; locator=proven; cmp     word ptr [bp+di], 32h
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 cmp word ptr [bp+di], 0x32
 .org 0x70fe
 # IDA 0x16efe; file 0x70fe; locator=proven; jnb     short loc_16F07
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jnb .+9
 .org 0x7100
 # IDA 0x16f00; file 0x7100; locator=proven; inc     bx
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 inc bx
 .org 0x7101
 # IDA 0x16f01; file 0x7101; locator=proven; dec     ch
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 dec ch
 .org 0x7103
 # IDA 0x16f03; file 0x7103; locator=proven; jnz     short loc_16EF1
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jnz .-18
 .org 0x7105
 # IDA 0x16f05; file 0x7105; locator=proven; jmp     short loc_16F19
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jmp .+20
 .org 0x7107
 loc_16F07:
 # IDA 0x16f07; file 0x7107; locator=proven; sub     word ptr [bp+di], 32h
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 sub word ptr [bp+di], 0x32
 .org 0x710a
 # IDA 0x16f0a; file 0x710a; locator=proven; mov     [si], al
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov byte ptr [si], al
 .org 0x710c
 # IDA 0x16f0c; file 0x710c; locator=proven; add     si, 4
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add si, 0x4
 .org 0x710f
 # IDA 0x16f0f; file 0x710f; locator=proven; add     dx, 3
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add dx, 0x3
 .org 0x7112
 # IDA 0x16f12; file 0x7112; locator=proven; dec     cl
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 dec cl
 .org 0x7114
 # IDA 0x16f14; file 0x7114; locator=proven; jnz     short loc_16EED
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jnz .-39
 .org 0x7116
 # IDA 0x16f16; file 0x7116; locator=proven; clc
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 clc
 .org 0x7117
 # IDA 0x16f17; file 0x7117; locator=proven; jmp     short loc_16F1A
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jmp .+3
 .org 0x7119
 loc_16F19:
 # IDA 0x16f19; file 0x7119; locator=proven; stc
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 stc
 .org 0x711a
 loc_16F1A:
 # IDA 0x16f1a; file 0x711a; locator=proven; lahf
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 lahf
 .org 0x711b
 # IDA 0x16f1b; file 0x711b; locator=proven; add     sp, 6
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add sp, 0x6
 .org 0x711e
 # IDA 0x16f1e; file 0x711e; locator=proven; sahf
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 sahf
 .org 0x711f
 # IDA 0x16f1f; file 0x711f; locator=proven; pop     bp
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop bp
 .org 0x7120
 # IDA 0x16f20; file 0x7120; locator=proven; pop     di
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop di
 .org 0x7121
 # IDA 0x16f21; file 0x7121; locator=proven; pop     si
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop si
 .org 0x7122
 # IDA 0x16f22; file 0x7122; locator=proven; pop     dx
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop dx
 .org 0x7123
 # IDA 0x16f23; file 0x7123; locator=proven; pop     cx
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop cx
 .org 0x7124
 # IDA 0x16f24; file 0x7124; locator=proven; pop     ax
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop ax
 .org 0x7125
 # IDA 0x16f25; file 0x7125; locator=proven; retn
-# ⚠ 函式 sub_16EC9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16EC9; [proven] 原候選兵種表與每槽 50 點選取、部分失敗及 CF 保存; 出處: docs/re/117-c-ruler-sortie-restoration.md
 ret
 .org 0x7126
 sub_16F26:
 # IDA 0x16f26; file 0x7126; locator=proven; push    ds
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push ds
 .org 0x7127
 # IDA 0x16f27; file 0x7127; locator=proven; push    es
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push es
 .org 0x7128
 # IDA 0x16f28; file 0x7128; locator=proven; push    si
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push si
 .org 0x7129
 # IDA 0x16f29; file 0x7129; locator=proven; push    di
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push di
 .org 0x712a
 # IDA 0x16f2a; file 0x712a; locator=proven; mov     bx, si
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov bx, si
 .org 0x712c
 # IDA 0x16f2c; file 0x712c; locator=proven; sub     bx, 2240h
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 sub bx, 0x2240
 .org 0x7130
 # IDA 0x16f30; file 0x7130; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl bx, 0x1
 .org 0x7132
 # IDA 0x16f32; file 0x7132; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl bx, 0x1
 .org 0x7134
 # IDA 0x16f34; file 0x7134; locator=proven; mov     [si+2], bh
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov byte ptr [si+0x2], bh
 .org 0x7137
 # IDA 0x16f37; file 0x7137; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr bx, 0x1
 .org 0x7139
 # IDA 0x16f39; file 0x7139; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr bx, 0x1
 .org 0x713b
 # IDA 0x16f3b; file 0x713b; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr bx, 0x1
 .org 0x713d
 # IDA 0x16f3d; file 0x713d; locator=proven; mov     di, bx
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov di, bx
 .org 0x713f
 # IDA 0x16f3f; file 0x713f; locator=proven; mov     byte ptr [di+4257h], 1
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov byte ptr [di+0x4257], 0x1
 .org 0x7144
 # IDA 0x16f44; file 0x7144; locator=proven; mov     bh, [di+425Ch]
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov bh, byte ptr [di+0x425c]
 .org 0x7148
 # IDA 0x16f48; file 0x7148; locator=proven; mov     [si+1], bh
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov byte ptr [si+0x1], bh
 .org 0x714b
 # IDA 0x16f4b; file 0x714b; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} xor bl, bl
 .org 0x714d
 # IDA 0x16f4d; file 0x714d; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr bx, 0x1
 .org 0x714f
 # IDA 0x16f4f; file 0x714f; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr bx, 0x1
 .org 0x7151
 # IDA 0x16f51; file 0x7151; locator=proven; mov     ah, [bx+3]
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov ah, byte ptr [bx+0x3]
 .org 0x7154
 # IDA 0x16f54; file 0x7154; locator=proven; mov     [si+20h], ah
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov byte ptr [si+0x20], ah
 .org 0x7157
 # IDA 0x16f57; file 0x7157; locator=proven; cmp     byte ptr [si], 80h
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 cmp byte ptr [si], 0x80
 .org 0x715a
 # IDA 0x16f5a; file 0x715a; locator=proven; jnb     short loc_16F5F
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jnb .+5
 .org 0x715c
 # IDA 0x16f5c; file 0x715c; locator=proven; inc     byte ptr [bx+14h]
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 inc byte ptr [bx+0x14]
 .org 0x715f
 loc_16F5F:
 # IDA 0x16f5f; file 0x715f; locator=proven; mov     byte ptr [si], 0C0h
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov byte ptr [si], 0xc0
 .org 0x7162
 # IDA 0x16f62; file 0x7162; locator=proven; mov     byte ptr [si+8], 4
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov byte ptr [si+0x8], 0x4
 .org 0x7166
 # IDA 0x16f66; file 0x7166; locator=proven; xor     al, al
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} xor al, al
 .org 0x7168
 # IDA 0x16f68; file 0x7168; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr ax, 0x1
 .org 0x716a
 # IDA 0x16f6a; file 0x716a; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr ax, 0x1
 .org 0x716c
 # IDA 0x16f6c; file 0x716c; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr ax, 0x1
 .org 0x716e
 # IDA 0x16f6e; file 0x716e; locator=proven; mov     di, ax
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov di, ax
 .org 0x7170
 # IDA 0x16f70; file 0x7170; locator=proven; add     di, 840h
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add di, 0x840
 .org 0x7174
 # IDA 0x16f74; file 0x7174; locator=proven; call    sub_16F86
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 call .+18
 .org 0x7177
 # IDA 0x16f77; file 0x7177; locator=proven; mov     al, [bx+1Dh]
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov al, byte ptr [bx+0x1d]
 .org 0x717a
 # IDA 0x16f7a; file 0x717a; locator=proven; mov     [si+6], al
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov byte ptr [si+0x6], al
 .org 0x717d
 # IDA 0x16f7d; file 0x717d; locator=proven; mov     byte ptr [si+23h], 1
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov byte ptr [si+0x23], 0x1
 .org 0x7181
 # IDA 0x16f81; file 0x7181; locator=proven; pop     di
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop di
 .org 0x7182
 # IDA 0x16f82; file 0x7182; locator=proven; pop     si
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop si
 .org 0x7183
 # IDA 0x16f83; file 0x7183; locator=proven; pop     es
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop es
 .org 0x7184
 # IDA 0x16f84; file 0x7184; locator=proven; pop     ds
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop ds
 .org 0x7185
 # IDA 0x16f85; file 0x7185; locator=proven; retn
-# ⚠ 函式 sub_16F26; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F26; [proven] 軍團建立、主將任職、首都、士氣與旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 ret
 .org 0x7186
 sub_16F86:
 # IDA 0x16f86; file 0x7186; locator=proven; push    ax
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push ax
 .org 0x7187
 # IDA 0x16f87; file 0x7187; locator=proven; push    bx
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push bx
 .org 0x7188
 # IDA 0x16f88; file 0x7188; locator=proven; push    cx
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push cx
 .org 0x7189
 # IDA 0x16f89; file 0x7189; locator=proven; mov     ax, [di+8]
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov ax, word ptr [di+0x8]
 .org 0x718c
 # IDA 0x16f8c; file 0x718c; locator=proven; mov     bx, [di+0Ah]
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov bx, word ptr [di+0xa]
 .org 0x718f
 # IDA 0x16f8f; file 0x718f; locator=proven; mov     cx, di
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov cx, di
 .org 0x7191
 # IDA 0x16f91; file 0x7191; locator=proven; sub     cx, 840h
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 sub cx, 0x840
 .org 0x7195
 # IDA 0x16f95; file 0x7195; locator=proven; shr     cx, 1
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr cx, 0x1
 .org 0x7197
 # IDA 0x16f97; file 0x7197; locator=proven; shr     cx, 1
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr cx, 0x1
 .org 0x7199
 # IDA 0x16f99; file 0x7199; locator=proven; mov     [si+0Eh], cx
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov word ptr [si+0xe], cx
 .org 0x719c
 # IDA 0x16f9c; file 0x719c; locator=proven; mov     [si+14h], cx
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov word ptr [si+0x14], cx
 .org 0x719f
 # IDA 0x16f9f; file 0x719f; locator=proven; mov     [si+10h], ax
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov word ptr [si+0x10], ax
 .org 0x71a2
 # IDA 0x16fa2; file 0x71a2; locator=proven; mov     [si+16h], ax
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov word ptr [si+0x16], ax
 .org 0x71a5
 # IDA 0x16fa5; file 0x71a5; locator=proven; mov     [si+12h], bx
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov word ptr [si+0x12], bx
 .org 0x71a8
 # IDA 0x16fa8; file 0x71a8; locator=proven; mov     [si+18h], bx
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov word ptr [si+0x18], bx
 .org 0x71ab
 # IDA 0x16fab; file 0x71ab; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} xor bh, bh
 .org 0x71ad
 # IDA 0x16fad; file 0x71ad; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl bx, 0x1
 .org 0x71af
 # IDA 0x16faf; file 0x71af; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl bx, 0x1
 .org 0x71b1
 # IDA 0x16fb1; file 0x71b1; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl bx, 0x1
 .org 0x71b3
 # IDA 0x16fb3; file 0x71b3; locator=proven; mov     cx, bx
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov cx, bx
 .org 0x71b5
 # IDA 0x16fb5; file 0x71b5; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl bx, 0x1
 .org 0x71b7
 # IDA 0x16fb7; file 0x71b7; locator=proven; add     bx, cx
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} add bx, cx
 .org 0x71b9
 # IDA 0x16fb9; file 0x71b9; locator=proven; add     bx, cs:word_19872
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 cs; add bx, word ptr [0x9872]
 .org 0x71be
 # IDA 0x16fbe; file 0x71be; locator=proven; mov     [si+1Ah], ax
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov word ptr [si+0x1a], ax
 .org 0x71c1
 # IDA 0x16fc1; file 0x71c1; locator=proven; mov     [si+1Ch], bx
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov word ptr [si+0x1c], bx
 .org 0x71c4
 # IDA 0x16fc4; file 0x71c4; locator=proven; mov     cx, ds
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov cx, ds
 .org 0x71c6
 # IDA 0x16fc6; file 0x71c6; locator=proven; mov     ds, bx
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov ds, bx
 .org 0x71c8
 # IDA 0x16fc8; file 0x71c8; locator=proven; mov     bx, ax
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov bx, ax
 .org 0x71ca
 # IDA 0x16fca; file 0x71ca; locator=proven; inc     byte ptr [bx]
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 inc byte ptr [bx]
 .org 0x71cc
 # IDA 0x16fcc; file 0x71cc; locator=proven; mov     ds, cx
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov ds, cx
 .org 0x71ce
 # IDA 0x16fce; file 0x71ce; locator=proven; pop     cx
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop cx
 .org 0x71cf
 # IDA 0x16fcf; file 0x71cf; locator=proven; pop     bx
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop bx
 .org 0x71d0
 # IDA 0x16fd0; file 0x71d0; locator=proven; pop     ax
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop ax
 .org 0x71d1
 # IDA 0x16fd1; file 0x71d1; locator=proven; retn
-# ⚠ 函式 sub_16F86; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16F86; [proven] 軍團首都座標與節點寫回、佔用圖加一; 出處: docs/re/117-c-ruler-sortie-restoration.md
 ret
 .org 0x71d2
 sub_16FD2:
 # IDA 0x16fd2; file 0x71d2; locator=proven; push    ax
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push ax
 .org 0x71d3
 # IDA 0x16fd3; file 0x71d3; locator=proven; push    bx
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push bx
 .org 0x71d4
 # IDA 0x16fd4; file 0x71d4; locator=proven; push    cx
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push cx
 .org 0x71d5
 # IDA 0x16fd5; file 0x71d5; locator=proven; push    dx
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 push dx
 .org 0x71d6
 # IDA 0x16fd6; file 0x71d6; locator=proven; mov     bx, si
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov bx, si
 .org 0x71d8
 # IDA 0x16fd8; file 0x71d8; locator=proven; add     bx, 28h
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add bx, 0x28
 .org 0x71db
 # IDA 0x16fdb; file 0x71db; locator=proven; xor     ax, ax
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} xor ax, ax
 .org 0x71dd
 # IDA 0x16fdd; file 0x71dd; locator=proven; mov     cx, 6
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov cx, 0x6
 .org 0x71e0
 loc_16FE0:
 # IDA 0x16fe0; file 0x71e0; locator=proven; cmp     byte ptr [bx+2], 1
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 cmp byte ptr [bx+0x2], 0x1
 .org 0x71e4
 # IDA 0x16fe4; file 0x71e4; locator=proven; jz      short loc_16FE9
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jz .+5
 .org 0x71e6
 # IDA 0x16fe6; file 0x71e6; locator=proven; or      ch, 1
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 or ch, 0x1
 .org 0x71e9
 loc_16FE9:
 # IDA 0x16fe9; file 0x71e9; locator=proven; add     al, [bx+1]
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add al, byte ptr [bx+0x1]
 .org 0x71ec
 # IDA 0x16fec; file 0x71ec; locator=proven; adc     ah, 0
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 adc ah, 0x0
 .org 0x71ef
 # IDA 0x16fef; file 0x71ef; locator=proven; add     bx, 4
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 add bx, 0x4
 .org 0x71f2
 # IDA 0x16ff2; file 0x71f2; locator=proven; dec     cl
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 dec cl
 .org 0x71f4
 # IDA 0x16ff4; file 0x71f4; locator=proven; jnz     short loc_16FE0
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jnz .-20
 .org 0x71f6
 # IDA 0x16ff6; file 0x71f6; locator=proven; mov     [si+4], ax
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov word ptr [si+0x4], ax
 .org 0x71f9
 # IDA 0x16ff9; file 0x71f9; locator=proven; inc     ch
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 inc ch
 .org 0x71fb
 # IDA 0x16ffb; file 0x71fb; locator=proven; cmp     bx, 12Ch
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 cmp bx, 0x12c
 .org 0x71ff
 # IDA 0x16fff; file 0x71ff; locator=proven; jbe     short loc_17003
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 jbe .+4
 .org 0x7201
 # IDA 0x17001; file 0x7201; locator=proven; inc     ch
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 inc ch
 .org 0x7203
 loc_17003:
 # IDA 0x17003; file 0x7203; locator=proven; mov     [si+1Eh], ch
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov byte ptr [si+0x1e], ch
 .org 0x7206
 # IDA 0x17006; file 0x7206; locator=proven; mov     bh, [si+1]
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov bh, byte ptr [si+0x1]
 .org 0x7209
 # IDA 0x17009; file 0x7209; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} xor bl, bl
 .org 0x720b
 # IDA 0x1700b; file 0x720b; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr bx, 0x1
 .org 0x720d
 # IDA 0x1700d; file 0x720d; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shr bx, 0x1
 .org 0x720f
 # IDA 0x1700f; file 0x720f; locator=proven; mov     al, [bx+3Eh]
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov al, byte ptr [bx+0x3e]
 .org 0x7212
 # IDA 0x17012; file 0x7212; locator=proven; mov     ah, al
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov ah, al
 .org 0x7214
 # IDA 0x17014; file 0x7214; locator=proven; shl     al, 1
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl al, 0x1
 .org 0x7216
 # IDA 0x17016; file 0x7216; locator=proven; shl     al, 1
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 shl al, 0x1
 .org 0x7218
 # IDA 0x17018; file 0x7218; locator=proven; add     al, ah
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} add al, ah
 .org 0x721a
 # IDA 0x1701a; file 0x721a; locator=proven; mov     [si+9], al
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov byte ptr [si+0x9], al
 .org 0x721d
 # IDA 0x1701d; file 0x721d; locator=proven; mov     byte ptr [si+0Bh], 1
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 mov byte ptr [si+0xb], 0x1
 .org 0x7221
 # IDA 0x17021; file 0x7221; locator=proven; mov     ax, dx
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 {load} mov ax, dx
 .org 0x7223
 # IDA 0x17023; file 0x7223; locator=proven; pop     dx
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop dx
 .org 0x7224
 # IDA 0x17024; file 0x7224; locator=proven; pop     cx
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop cx
 .org 0x7225
 # IDA 0x17025; file 0x7225; locator=proven; pop     bx
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop bx
 .org 0x7226
 # IDA 0x17026; file 0x7226; locator=proven; pop     ax
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 pop ax
 .org 0x7227
 # IDA 0x17027; file 0x7227; locator=proven; retn
-# ⚠ 函式 sub_16FD2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16FD2; [proven] 六槽總兵力與混編、原 BX 比較、旗色與更新旗標; 出處: docs/re/117-c-ruler-sortie-restoration.md
 ret
 .org 0x7228
 sub_17028:
