@@ -2848,6 +2848,27 @@
       "sources": [
         "docs/re/124-c-strategy-command-restoration.md"
       ]
+    },
+    "0x11CB1": {
+      "meaning": "恢復主迴圈保存SS/SP、隱藏滑鼠與原17級淡出，再由RET返回外層caller",
+      "level": "proven",
+      "sources": [
+        "docs/re/125-c-nonlocal-exit-restoration.md"
+      ]
+    },
+    "0x10A1C": {
+      "meaning": "原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢",
+      "level": "proven",
+      "sources": [
+        "docs/re/125-c-nonlocal-exit-restoration.md"
+      ]
+    },
+    "0x1EBDC": {
+      "meaning": "原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC",
+      "level": "proven",
+      "sources": [
+        "docs/re/125-c-nonlocal-exit-restoration.md"
+      ]
     }
   },
   "operands": {
@@ -3242,6 +3263,54 @@
       "level": "proven",
       "sources": [
         "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x11CB1:1": {
+      "original": "cs:word_19903",
+      "meaning": "主迴圈11BEC保存的原SS，退出時真正恢復",
+      "level": "proven",
+      "sources": [
+        "docs/re/125-c-nonlocal-exit-restoration.md"
+      ]
+    },
+    "0x11CB6:1": {
+      "original": "cs:word_19901",
+      "meaning": "主迴圈11BF1保存的原SP，RET將消費其外層返回word",
+      "level": "proven",
+      "sources": [
+        "docs/re/125-c-nonlocal-exit-restoration.md"
+      ]
+    },
+    "0x10A21:1": {
+      "original": "10h",
+      "meaning": "原初始強度16，含16與0共17級",
+      "level": "proven",
+      "sources": [
+        "docs/re/125-c-nonlocal-exit-restoration.md"
+      ]
+    },
+    "0x1EBF2:1": {
+      "original": "80h",
+      "meaning": "低nibble乘法後加128，保留原byte輸出捨入",
+      "level": "proven",
+      "sources": [
+        "docs/re/125-c-nonlocal-exit-restoration.md"
+      ]
+    },
+    "0x1EC25:1": {
+      "original": "al",
+      "meaning": "第一個DACdata寫入的是原DLcomponent計算值",
+      "level": "proven",
+      "sources": [
+        "docs/re/125-c-nonlocal-exit-restoration.md"
+      ]
+    },
+    "0x159C0:0": {
+      "original": "funcs_159C0[bx]",
+      "meaning": "原DS:[BX+5A06]，符號funcs_159C0後綴不是表址；主迴圈DS等於CS",
+      "level": "proven",
+      "sources": [
+        "docs/re/125-c-nonlocal-exit-restoration.md"
       ]
     }
   }

@@ -4757,19 +4757,6 @@
       "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
     },
     {
-      "file": "docs/re/47-main-screen-window-registry.md",
-      "item": "右鍵表 `funcs_159C0` 的真實表長",
-      "status": "已 dump（[`71`](71-strategy-hotspot-dispatch.md) §2.1）：它與左鍵表 `off_159D2` **只差 9 個 word 且內容重疊**，前九筆沒有一筆是函式起點。是「表只有 9 筆」還是「兩張刻意重疊」，靜態分不出來",
-      "section": "5. 未解",
-      "domain": "程式碼理解",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-44c7e851b98b0602e795",
-      "classification": "evidence-only",
-      "github_issue": null,
-      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
-    },
-    {
       "file": "docs/re/48-window-display-list.md",
       "item": "`08` 的模式 byte",
       "status": "`03` 只畫字、`01` 連背景一起填，是**強推論**——兩個用例（系統選單的「 ＯＫ 」、注音聲母列）都只有這個讀法說得通，但 `sub_106F5` 沒逐行讀（[`55`](55-system-menu-window.md) §3）",
@@ -5506,32 +5493,6 @@
       "verdict": "靜態",
       "occurrence": 0,
       "id": "oq-e68f3b74f40f3c8257b1",
-      "classification": "evidence-only",
-      "github_issue": null,
-      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
-    },
-    {
-      "file": "docs/re/71-strategy-hotspot-dispatch.md",
-      "item": "右鍵表的真實表長",
-      "status": "§2.1。兩種讀法都說得通，靜態影像分不出來，要動態取樣哪些碼會配右鍵",
-      "section": "5. 未解",
-      "domain": "程式碼理解",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-8d5c335b4dd9e058ba3e",
-      "classification": "evidence-only",
-      "github_issue": null,
-      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
-    },
-    {
-      "file": "docs/re/71-strategy-hotspot-dispatch.md",
-      "item": "`funcs_159C0[0x00]`–`[0x08]` 那九筆",
-      "status": "都不是函式起點。是別的資料還是真的 handler，沒查",
-      "section": "5. 未解",
-      "domain": "程式碼理解",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-2c618a30165c700dca7b",
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
@@ -13337,19 +13298,6 @@
       "reason": "局部政略C閉包與受控INT61狀態已驗；自然長程、原TSR音效與原C機器碼保留證據界線。"
     },
     {
-      "file": "docs/re/124-c-strategy-command-restoration.md",
-      "item": "信賴度扣減借位後的非區域跳出",
-      "status": "`sub_11CB1` 恢復啟動堆疊，另需完整 caller 與退出狀態驗證",
-      "section": "未解範圍",
-      "domain": "程式碼理解",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-6264f4ef07dababad02d",
-      "classification": "evidence-only",
-      "github_issue": null,
-      "reason": "局部政略C閉包與受控INT61狀態已驗；自然長程、原TSR音效與原C機器碼保留證據界線。"
-    },
-    {
       "file": "docs/spec/124-menu-highlight-xor.md",
       "item": "武將／勢力兩格的反白時機",
       "status": "**八格都接了**（§3.5）；原版已有 `sub_175FA`／`sub_178A7` 清單，舊流程差異解釋已撤回。本頁仍不把其餘六格的截圖外推為這兩格的逐像素證據，原始控制流見 [re/124](../re/124-c-strategy-command-restoration.md)",
@@ -13376,17 +13324,56 @@
       "reason": "局部政略C閉包與受控INT61狀態已驗；自然長程、原TSR音效與原C機器碼保留證據界線。"
     },
     {
-      "file": "docs/spec/244-c-strategy-command.md",
-      "item": "信賴度借位後非區域跳出",
-      "status": "另需原啟動堆疊與完整退出狀態",
+      "file": "docs/re/125-c-nonlocal-exit-restoration.md",
+      "item": "完整 11BE0 主迴圈與其他退出分支",
+      "status": "本輪只驗原始 frame 準備及信賴度 caller 的退出閉包",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-fb79bfcecfa26887ed38",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "三函式非區域退出與DAC完整C閉包已驗；完整mainloop、其他退出、自然玩家路徑與實機時間／原C機器碼保留證據界線。"
+    },
+    {
+      "file": "docs/re/125-c-nonlocal-exit-restoration.md",
+      "item": "原 TSR、實機淡出時間與原 C 機器碼",
+      "status": "固定平台 I/O 與原生 C 比較不代證",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-ca0f498c95276130fa82",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "三函式非區域退出與DAC完整C閉包已驗；完整mainloop、其他退出、自然玩家路徑與實機時間／原C機器碼保留證據界線。"
+    },
+    {
+      "file": "docs/spec/245-c-nonlocal-exit.md",
+      "item": "完整主迴圈、其他退出與自然玩家路徑",
+      "status": "本輪閉包不代證",
       "section": "未解範圍",
       "domain": "其他",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-c0f98147513d5a85b59a",
+      "id": "oq-5d1ba2734f4439f82576",
       "classification": "evidence-only",
       "github_issue": null,
-      "reason": "局部政略C閉包與受控INT61狀態已驗；自然長程、原TSR音效與原C機器碼保留證據界線。"
+      "reason": "三函式非區域退出與DAC完整C閉包已驗；完整mainloop、其他退出、自然玩家路徑與實機時間／原C機器碼保留證據界線。"
+    },
+    {
+      "file": "docs/spec/245-c-nonlocal-exit.md",
+      "item": "原 TSR、實機時間及原 C 機器碼",
+      "status": "固定模擬器平台與 C 行為比較不代證",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-2a5e04ad4ced5c90206e",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "三函式非區域退出與DAC完整C閉包已驗；完整mainloop、其他退出、自然玩家路徑與實機時間／原C機器碼保留證據界線。"
     }
   ]
 }

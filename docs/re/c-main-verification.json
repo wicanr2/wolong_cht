@@ -1,0 +1,877 @@
+{
+  "schema": "wolong-c-main-verification-v1",
+  "status": "semantic-conformed",
+  "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "ida_database_sha256": "5166d55917adb9e528eabf7e4325b002455b802e348209daa9f1c6dc488e5740",
+  "ida_probe_sha256": "9ae600545d4fa8bdf99dcb96ba2987f44bc94b29e7aebf0b5ecc98ed0892c743",
+  "new_routine_sha256": {
+    "sub_10A1C": "680775baf03fe54709d7ebf213ba4fe7966148af0931576f98dd7d704e2dc24b",
+    "sub_11CB1": "4b9b07ed900cf3b1f71f43a4bc87e7c9cd9723c44f834d0d87fb86ddeff39f6d",
+    "sub_1EBDC": "b4b397c372caa833376aa1948c91f1745a1a17831a8d1c546f75aab7fe29e9c7"
+  },
+  "original_instruction_count": 89,
+  "original_instruction_bytes": 179,
+  "source_sha256": {
+    "tools/c_recovery/aligned.c": "4e3e53bb951cd9692ffb8722b2efc6ef1549602300f7ff32ca0ced70f90de467",
+    "tools/c_recovery/aligned.h": "865e3c92435f848ea7d57f7e54d1a1c9976e86ce13938858503e8a2431111c7e",
+    "tools/c_recovery/aligned_fixture.h": "6d5d293961f3c0b2f4a8fd6551cb3ec4c31945ada3b5a7dcc6281fae59f84b5b",
+    "tools/c_recovery/catalog.c": "79cbe68a4eb5e646fccd135e53e2d60d080d363332ec3c4c198de781ab919929",
+    "tools/c_recovery/catalog.h": "67bb952d79ebfc82e507409f7c596139e0a684f97e5ab9fae9054ccd437d024b",
+    "tools/c_recovery/catalog_fixture.h": "a68d40649438adc7e2a8eab0bdfc85260814bb9a208975e36b22132ae96e2f85",
+    "tools/c_recovery/catalog_generated.inc": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95",
+    "tools/c_recovery/choice.c": "aeb5eed07b685572de49a912d967124626c747b45bc623f032577d8793880b89",
+    "tools/c_recovery/choice.h": "bcdf8a7e824ed9ff43abb32558b9c16373b6c9ed8cf9f7f77ab59338a36a2f46",
+    "tools/c_recovery/choice_fixture.h": "e45da13f459bbeb7536e5e58d58034b2ba9e9508d8def74ecbe279613d7d99ce",
+    "tools/c_recovery/choice_generated.inc": "7008762d34b091c12a91106a699297cf4eafbcb096723275f5fdee8dfc6bb0b2",
+    "tools/c_recovery/clock.c": "4a845847e050d0d7ff1ebd641fb827602a6ab10fc8fecd643584612e73158439",
+    "tools/c_recovery/clock.h": "40d3d4b630dabed9b3f7f98d492fa60734b2a0a6d86d30e0a2961738d2df7284",
+    "tools/c_recovery/clock_fixture.h": "0a7812df9b5331f463acc5fe8f03ae11c5f3313843b6d7119eaf29ac8433167b",
+    "tools/c_recovery/details.c": "0abc80b4f35ae7d51c8e1c4f915967ee735584d0857ee712934c3c489bad9901",
+    "tools/c_recovery/details.h": "fbcbeac3e901699a610873558164246489f29dcc26a2eec93b1ee34a30629e28",
+    "tools/c_recovery/details_fixture.h": "0478bbdc149d886a947e0be95891f903a00ec61db5b3d13e265cf0a9acd81d0a",
+    "tools/c_recovery/details_generated.inc": "55e43c53bff47012e0583c5aa795f5f93752b17d093e86e14711fdc615f72cc8",
+    "tools/c_recovery/display.c": "d5b95603d2563aafaa7b929b16f7b123896169f5e3d2d215ab19fa10da748058",
+    "tools/c_recovery/display.h": "ed30d7da89db5bb93b9e08ffceaddb01188701ab67721628d35425167488e254",
+    "tools/c_recovery/display_fixture.h": "d657ce4f18acbf31523d758959ae31d7907854c790a0582a5392a4abbc886d1f",
+    "tools/c_recovery/display_generated.inc": "6016cc7c871105bfca7a601dddbb09a413eff9dd209feb08d6327dc9805ebd63",
+    "tools/c_recovery/economy.c": "a8dfb96bc788326cc8641ffa78a64739d2544dfbf63ed7149dc334ef85f2ab8e",
+    "tools/c_recovery/economy.h": "57958375c3f3cf604e0dffb8a56e2d0b464c727702d1e076b6f303a3806e89ec",
+    "tools/c_recovery/economy_fixture.h": "8313a73e688631a8fe39db8ab12d66c979ed1f7e978ae9907e8910f24f91d0a8",
+    "tools/c_recovery/events.c": "69c7a72c1168a3943824ced273702ace069ca3e7e42e3789baf0621341ef32b0",
+    "tools/c_recovery/events.h": "0845440ca2f3685f899772dc6ff78afef012aa3fdb4374f2611f1ca9175a6373",
+    "tools/c_recovery/events_fixture.h": "fdde12c4e3239aa79fe826c8def65edb059d54380352b03462cba427f597a676",
+    "tools/c_recovery/formation.c": "8be6995d2b01b007a4bdca2ca1a3cd949d47fcbc77248ad02ae4fd0009ff8216",
+    "tools/c_recovery/formation.h": "23404d8a877d6db1376daf4143b0d2c4d31fa881cd70d5f968ef7b88a75ad6bb",
+    "tools/c_recovery/formation_fixture.h": "4d784e3ebe91bbab51a5b7c11395e8ae74939fa30d966df4006c4fe56cddee3c",
+    "tools/c_recovery/formation_generated.inc": "185c11477f1e27af2cf66e86358f8fc758c1832de3a9e14d362b3d8e8c4c8336",
+    "tools/c_recovery/glyph.c": "1e7695cca054da377a7327f1ca06414642d3a6367ac5b39fdac7c5bbc4cf34aa",
+    "tools/c_recovery/glyph.h": "5b0f1388ef6bd047af335162910082f748f1a4fce6ac98ea0fd5fd907a634f16",
+    "tools/c_recovery/glyph_fixture.h": "539d6f94de1c7203f77bb6cea0420b6771f213491eef2c25e9085b8cc5552879",
+    "tools/c_recovery/glyph_generated.inc": "a26058d041df1147c92b4f3fa6a296fe88739cf2a185e1d95e308e4a46a5f9fb",
+    "tools/c_recovery/hotspot.c": "805a2963363f151d01478d1eefd956ac482e2df22189d15638c7f79ea94dd5c1",
+    "tools/c_recovery/hotspot.h": "21f1dcb13ecbc301237487a12d6db80de4c944d816892a989a9a48711f496b20",
+    "tools/c_recovery/hotspot_fixture.h": "ed5a4f5b1b4ecdd5982689110d7b82c2372ead6abd83551a9a18357d06862411",
+    "tools/c_recovery/hourly.c": "dc115558ed470df49bd4438825b059d835a707e4f93262406ea8fb26c9536c04",
+    "tools/c_recovery/hourly.h": "1388fe3fe2c6bed876246e08fdfba0814ed948ec50e18ba236c0553626f3aff1",
+    "tools/c_recovery/hourly_fixture.h": "54864eeb3e0aeabcae321ffc537babe3e1abf8f53cb3f1d4e7cea1daebf36cb5",
+    "tools/c_recovery/input.c": "9e34cdde96fb568a302a4d8179a0085c339752b6a1e52551107d0118e0c4a9d0",
+    "tools/c_recovery/input.h": "a81ffd66132ee9fe732ec0c132ea4548f4bcffe568b542fe2fcd552e1ffea81e",
+    "tools/c_recovery/input_fixture.h": "456cc98d6209f4f399c6281d17c52b8ef416c1e49f09280c0bd585c06d632153",
+    "tools/c_recovery/input_generated.inc": "f67262370c5db64608d985227e9b87dd8795f5aefcfb07f2ab8df01e7c80b8de",
+    "tools/c_recovery/list.c": "3ec817f0e7a1cbb3f29c46d101d6e0135c817fedcae357575df1b6af20395c1b",
+    "tools/c_recovery/list.h": "322d10432605bdbce73c87730aa97fbe1ff0bcacfe34461f530a58a37b9b4c43",
+    "tools/c_recovery/list_fixture.h": "7a508e8b4117963ffda9f6356ee1d357c1898c99d5a7517c8057a7a7777dd122",
+    "tools/c_recovery/list_generated.inc": "44db7e538a44f6ed9d0183e66feaf9a6e994ae7848c662a6861b0b20d2af8021",
+    "tools/c_recovery/main.c": "51f2b56ae72f65735787d9a2b47b39af400b3a01b3e0f56bec1e9842ea954e45",
+    "tools/c_recovery/main.h": "1ae3902707ff8590838c8cbc478c7883250152cb079bf3b336959df140c51d0d",
+    "tools/c_recovery/main_fixture.h": "1d7b4507c2446ee3a95b34500695b89ad4e2f0ad6deec04008e276db529ca706",
+    "tools/c_recovery/main_generated.inc": "bffe5c3e5cda82099b584e779ac6a3bb7cbe82a87a259858ade7acd7167a4b2e",
+    "tools/c_recovery/mapcells.c": "f87b3c6df8ab5b07c1c7226ca329e4f55669a627d4a6dd3b4c5e55932ee6a15f",
+    "tools/c_recovery/mapcells.h": "4b3aa59015f90f1bbfa6704d4785cb15af910985a15f69d9e87ed3a16d5a4a6e",
+    "tools/c_recovery/mapcells_fixture.h": "ba2813e78795196ddef96230a652d8a8463e66c65e0bf46afc286787ebf6b005",
+    "tools/c_recovery/mapcells_generated.inc": "4a726277f8bb03a7ed645c05c35fe61bb4e6cfd9c142856960aa693e220bd835",
+    "tools/c_recovery/march.c": "7e8aaacab485468b7bbbb2029398dd2511c5e338a2f99a9590ad57379beb4106",
+    "tools/c_recovery/march.h": "a6053642f089aba827359d031b98f1fef0d41c3e5b5c2aa724ca8db3d2421f0a",
+    "tools/c_recovery/march_fixture.h": "e8ca44e2b21229cabaf4d6e1955a0f76bf5e67e20ce1c2928ec115eb3a6731c6",
+    "tools/c_recovery/march_generated.inc": "93ced7003a727254d21816095d1de633959986d9f61cd2b69fd6847f512e8bb9",
+    "tools/c_recovery/modal.c": "37105677c93746e880ab89c7940eb02a1b318bfe18e76615b12870f17294da8e",
+    "tools/c_recovery/modal.h": "db3f1ea75cfd9d3026382fc1e803364b67c594c9874103f2de98090c3249f106",
+    "tools/c_recovery/modal_fixture.h": "427b17352aecd5e4d84522b1620cd41464cc3d571f52e77b5b565c6e9e71d072",
+    "tools/c_recovery/numbers.c": "776e38ff148e65d653d3d3a0588ef6ca12aa5dc526af30bc5e3b497b8ee9abc1",
+    "tools/c_recovery/numbers.h": "1ecf5806c4127f605280e6b6b913a80a1e671877420c4a27bd1264b0cac3c300",
+    "tools/c_recovery/numbers_fixture.h": "81bf5642e725802e4b891d31dd2a84785c8ca106109e13696a531e2d5057a1e0",
+    "tools/c_recovery/numbers_generated.inc": "40ced4a3a36aa88dc5e0e06dac3b4fb88806f1eb4dc8c35198ce5f877244c7a1",
+    "tools/c_recovery/numeric.c": "b68f2a4e4149c7cf5fff8aba2da0a6a437202c0626519ed7c6b7ccd73df00e5b",
+    "tools/c_recovery/numeric.h": "c0abfde294d876d1b7c49119f134bff56b0cdc9e76ac4ae5a23abe2cd6cea0f0",
+    "tools/c_recovery/numeric_fixture.h": "4780a1ff675bc17d77553035c0b2a2eeae790c607d1d613878a59d300267a2d5",
+    "tools/c_recovery/overlay.c": "f8af93ee9c549ebedddf861316b87fbf2323aaa1c0aa2e10e852c95998006d0d",
+    "tools/c_recovery/overlay.h": "d95c627f750b314425dfa7a7fa376fe61606d6dddf8faae9b1f3429a716efa9f",
+    "tools/c_recovery/overlay_fixture.h": "f8d211caf614420d094d1b9cde99cd4dcf43cb68eb4b8f22ad09adf4fa10ca1b",
+    "tools/c_recovery/overlay_generated.inc": "a6e77d9b3e641448acccf9ef4dc0bb4073d9488f00752f97d282e67df76084b4",
+    "tools/c_recovery/personnel.c": "61fc2a1e26618e2c0b4a6a5d2129bfe06004df487b97ac63e778efb9a31cce5b",
+    "tools/c_recovery/personnel.h": "6f06ab4163fbbf3013378bce49cb86338513a9522bc331446d0827bfc085a838",
+    "tools/c_recovery/personnel_fixture.h": "c4cd974ad3d4a69946764533ed48181344c2b67de82d625752707daacafb4b44",
+    "tools/c_recovery/personnel_generated.inc": "bcc149ce2885aeabe62fe74cd7902e77a1a3e07b9f181bf3ba54bfd7fc2b4e29",
+    "tools/c_recovery/politics.c": "3b60a81cd5cc0979ca99f9bb03c5ce341f36b539ad318e70cced5ac516aa0eef",
+    "tools/c_recovery/politics.h": "291e2425b3056eac0c107b93da341f2ad5e4bd32b9d71275e0c007b4f95b9d8c",
+    "tools/c_recovery/politics_fixture.h": "1241042349ce6d9ea5b08355a53b9fdec54171a44f0501ccfd11b17d4b1f8171",
+    "tools/c_recovery/rect.c": "ef3eb0615c8ee516fa05e333a0d81e9fdb000d0701965db16918f8c2ce6517cc",
+    "tools/c_recovery/rect.h": "54fe2da129a0f2313010a5e3c2feb389daa0f0851e4aace64c29b4d882e1e183",
+    "tools/c_recovery/rect_fixture.h": "68aa98999228a3fa56f69c5f51af423764512a46f7b93b85fc00d7b720b166d4",
+    "tools/c_recovery/resource.c": "7e508c48be0e25aa59f27c2364a0d3abb8ee877637d418cd7fa4ac23544db2a8",
+    "tools/c_recovery/resource.h": "d6e2ac7996674979961e3c26d2b0bb3ff90089f0cedd2f917c00e9ac6cfd2ed9",
+    "tools/c_recovery/resource_fixture.h": "8bdabd1c5d9cb34014444a6dc8e7d31602dae46527866f146d63d6e156e97ce8",
+    "tools/c_recovery/resource_generated.inc": "22019cc1fc912915a36bc0689260b1c11bb937ef8a6f5f6362c62abb0699346b",
+    "tools/c_recovery/resume.c": "1ff447e7af99332db2dd427d1ebb7396e28a7e90972527faf3849ec7c5f396d6",
+    "tools/c_recovery/resume.h": "96e62253e3ea5f230f08ee3b2717654d4a0c07cd2f8c05f1828f45acdba7d113",
+    "tools/c_recovery/resume_fixture.h": "73f56fa4f70a88807db5b35ca43afa329915039d76f2223f610f415ff3d5c82c",
+    "tools/c_recovery/resume_generated.inc": "ec374bfc1b317815b0623eb83a0fe812858256f9f20f830149e7445fca189348",
+    "tools/c_recovery/rng.c": "1e6500c692d652c07cd31b99afa5693275bdab91d0f2d2c9ce9c8ef1188cb0fd",
+    "tools/c_recovery/rng.h": "71d82996afa8df2387e9899f8a78872ad35d617ed1276b31aaf12c68dd66c0f0",
+    "tools/c_recovery/seed.c": "5310de9dcc0e40a374d168f73ffa8de2222de654378c7bfc6c50c4255e851cbb",
+    "tools/c_recovery/seed.h": "4f9e0c6e3026967450b6a29758bedd2e293010187a95e2fd98b0a1c438a0ffc9",
+    "tools/c_recovery/settlement.c": "c6573bbfef750ca81c847efe88b0b3d2b51ac1623a321e8925983bbd59a750a3",
+    "tools/c_recovery/settlement.h": "5714b35cff296141a05bd25428728dc78cc4f22773c6d4d8b4b229f741f6c0f7",
+    "tools/c_recovery/settlement_fixture.h": "af8305a0f0610de1301bf81349fe59f97f22920e7f6d6c91660efa2de3f7f345",
+    "tools/c_recovery/strategy.c": "2e1aa2616dc7fec7be61002221b1f9f7425ae92317e5d2a3d6398eaf2825079d",
+    "tools/c_recovery/strategy.h": "f2e5d7c326075773fc47bb9feb6d87cabd332e2a88ed106c9757b88b39f03387",
+    "tools/c_recovery/strategy_fixture.h": "34df46ffbd1fa25d56f425d90c22802ee5a345340d3ec6c176aeea8327f24d04",
+    "tools/c_recovery/strategy_generated.inc": "1702187efb6f19ad1dbaa2e4bf3c00f107bf75cf3f9f75ee67b5721d0f48153d",
+    "tools/c_recovery/talk.c": "c11731280c6493edc62fa942cf83882fe943d7d22708e84c1a36e6df772fd05b",
+    "tools/c_recovery/talk.h": "c99ee60ca8735c90e40c207da8c6dc999f9e3818320d6a1488d4490867082fd7",
+    "tools/c_recovery/talk_fixture.h": "35595eef47e05639587095e85af84a28f3e290cfacf488214a9c84ccfc695127",
+    "tools/c_recovery/talk_generated.inc": "874483d09b8a18bbbecd9f5e5a26561eee91f1cbe6b620f78bb5f401a2f72b6c",
+    "tools/c_recovery/verdict.c": "f68e52718003c565c9c07d23d013573fc422f21df13751768a9fce17d5c9e1dd",
+    "tools/c_recovery/verdict.h": "cdfc8a9b2a10ef687e40f0eb53b13fc290bf9ed0aab6c717cd4642a874f6d64b",
+    "tools/c_recovery/verdict_fixture.h": "02ceafb74b3a96facbd51a4bfe55d86b10ce1133e727342caf93b808387d1522",
+    "tools/c_recovery/verdict_generated.inc": "6758c08e3563efa046f95de42b7740becf75602173b5d79b51ed60cbf1c49562",
+    "tools/c_recovery/vga.c": "9c9c75270422a8950d9d09c1321d5093423d2eada6d5bde3e417c9d711ba9b5b",
+    "tools/c_recovery/vga.h": "40f9e9ee054830df5c95e5bbe0185f82f3b8d7d8e9e780510da29794b2ab7699",
+    "tools/c_recovery/vga_fixture.h": "97ab311f79b371c26b90d450466173e9ac90e70c55f6862a204bef40db569096",
+    "tools/c_recovery/world_update.c": "90ea41a06b727fc12074c1347e831f6fbac7fb0535265bfbfa7eac7795437602",
+    "tools/c_recovery/world_update.h": "9782b21c1397d277680b0165b27d697bf7191ad099b399dfc0a875af91f5f088",
+    "tools/c_recovery/world_update_fixture.h": "0d2866252dc0339d08d45431beac7359019b29fd80717e07219396cf418ab853",
+    "tools/c_recovery_glyph_platform.go": "a9a049cea6c6304614fc31a4088aa50b6b26f9adab9290169d168073e03108fb",
+    "tools/c_recovery_display_generate.py": "af149fc48d2eeafc89d9849c3a44ee386c4e2a52993a0a410f238cd93b0d56ac",
+    "tools/c_recovery_main_generate.py": "07684f56378e54c0e5e9b8b4d7c1a5c29721501fad36e7a47c2871f3decf8c1c",
+    "tools/c_recovery_main.go": "a121b25677a4139025ebbca93c7c33038737bc07e97f49243ea2901ffa6b4799",
+    "tools/c_recovery_main_data.go": "314435bee1ebd77155e718be062f9d6d7cbde4224e784d5c4d70e8388ee36d14",
+    "tools/c_recovery_strategy_data.go": "e7b2c45fd854f9a73d3ae973ed08e86c12d91614e69b414d0208c28f4af6e000",
+    "tools/c_recovery_main_platform.go": "14993e394356ec522670c76b3d18c738cf256e9e615179e8b84d02e436616e23",
+    "tools/c_recovery_vga_bus.go": "b842e1561a96da289bac5ed83f4756c2d6e77883681227651034aad3625d0c86",
+    "tools/c_recovery_input_platform.go": "c3f0fda2e8d2993f851e0811241c7021aea5c33f4626fcc6f7943694c11f29de"
+  },
+  "compiled_source_manifest_sha256": "51ee79cecf13c5c923ad356f44d8514e765705d038c391f4e339fdcd31b326d0",
+  "verification_tools_sha256": {
+    "tools/c_recovery_main.sh": "0d741910decaa7eb7ba2f89c13eed72221786db7040c4d01f128c81263366644",
+    "tools/c_recovery_main_verify.py": "c82f6b7395753bad900e70b0a63ae6eeb0544a2bf82c0a037de75cf32180f472",
+    "tools/ida_main_probe.py": "c7c2e676905030a4d41a7ea376f22ccfdafb55d3713857f90ead146bc7a057a6",
+    "tools/c_recovery_mapcells_prepare.py": "3b673179a255381366985cfb033ef20b9fa40bde4d9149628e31b5918a1b8ec2",
+    "tools/rle.py": "2aa22684bc2d19450e347ebb17014b062d59a3f9e5212eb87dcbdb9a7aa94cd9",
+    "tools/c_recovery_talk_verify.py": "ff5bfc387167c5baf48b5739071a0e397ae04cfdb8c8bbcc1cde3163c40bfefb",
+    "tools/main_code_supplement.py": "62a27e8037b79060fc32ef40fb703e73a93f7e5b51581158f1ad86afe1d52efd"
+  },
+  "cases_per_optimization": 2520,
+  "groups": {
+    "palette": 960,
+    "fade": 16,
+    "escape": 96,
+    "trust": 160,
+    "scene": 248,
+    "reason": 960,
+    "reason-loop": 80
+  },
+  "receipt_sha256": {
+    "O0": "d84c1c34cc9011fae981d4dedf7ffedbe1c6bd276f1ff33c9d37767056db39e4",
+    "O2": "d84c1c34cc9011fae981d4dedf7ffedbe1c6bd276f1ff33c9d37767056db39e4"
+  },
+  "negative_controls_rejected": 8,
+  "mutants": {
+    "1": {
+      "group": "escape",
+      "name": "saved-stack-segment",
+      "rejection_kind": "state-mismatch",
+      "exit_status": 1,
+      "first_rejected": 1,
+      "receipt_sha256": "42cf94d62dd4d044204a241c4337534df3b97aca03d88cacc0c2d899b8079de4",
+      "log_sha256": "deb6136b4d8da8512f10b258d65ce45bc2afe0189a0e4dbbb76a60ed3eb052c7",
+      "c_binary_sha256": "a21797b5c0a4a3df7fa5d38028a6a9e5fb1825d74b52770185ff41791455fcb3",
+      "buildinfo_sha256": "b112ba51e7a928220b54216da55685c63ff470e461ff5e6ce2c80b37e6bc5a22",
+      "go_version": "go1.26.7",
+      "cgo_flags": [
+        "-O0",
+        "-std=c11",
+        "-Werror=implicit-function-declaration",
+        "-D_GNU_SOURCE",
+        "-DKI_MAIN_SOURCE_DIGEST=0x51ee79cecf13c5c9",
+        "-DKI_MAIN_MUTATION=1"
+      ]
+    },
+    "2": {
+      "group": "escape",
+      "name": "saved-stack-pointer",
+      "rejection_kind": "state-mismatch",
+      "exit_status": 1,
+      "first_rejected": 1,
+      "receipt_sha256": "fbad5802f614e11365f5f0eabe983f94693385256b6d8945975e64700d6478ef",
+      "log_sha256": "deb6136b4d8da8512f10b258d65ce45bc2afe0189a0e4dbbb76a60ed3eb052c7",
+      "c_binary_sha256": "c407cca057e138653e9ebbae52bb7bfdb5351c5bbf09a93ba593d61f7ad5a05c",
+      "buildinfo_sha256": "a286ae20e0d6a867ce4e99d5cdbad4c15073b206ecd15aeaa1d25f3fef61dd2d",
+      "go_version": "go1.26.7",
+      "cgo_flags": [
+        "-O0",
+        "-std=c11",
+        "-Werror=implicit-function-declaration",
+        "-D_GNU_SOURCE",
+        "-DKI_MAIN_SOURCE_DIGEST=0x51ee79cecf13c5c9",
+        "-DKI_MAIN_MUTATION=2"
+      ]
+    },
+    "3": {
+      "group": "escape",
+      "name": "exit-ax-push",
+      "rejection_kind": "state-mismatch",
+      "exit_status": 1,
+      "first_rejected": 1,
+      "receipt_sha256": "57d250287a07d12a91083a889565ffb70afbca81e64dd9e6c5c53dece249dea8",
+      "log_sha256": "deb6136b4d8da8512f10b258d65ce45bc2afe0189a0e4dbbb76a60ed3eb052c7",
+      "c_binary_sha256": "c8fe53d6dc7fa252eed693048629f95b1d6bc2eabce13cca955ed36ef3b3ce17",
+      "buildinfo_sha256": "2422f7a1c58750c8927b184c4054d116759f24c4b7e09ecd4567dcf7225b18bd",
+      "go_version": "go1.26.7",
+      "cgo_flags": [
+        "-O0",
+        "-std=c11",
+        "-Werror=implicit-function-declaration",
+        "-D_GNU_SOURCE",
+        "-DKI_MAIN_SOURCE_DIGEST=0x51ee79cecf13c5c9",
+        "-DKI_MAIN_MUTATION=3"
+      ]
+    },
+    "4": {
+      "group": "escape",
+      "name": "exit-ax-restore",
+      "rejection_kind": "state-mismatch",
+      "exit_status": 1,
+      "first_rejected": 1,
+      "receipt_sha256": "14addae86db19d9cb378939cedbf4ddb56ad0d3e1ebbde72caa89207bd704868",
+      "log_sha256": "deb6136b4d8da8512f10b258d65ce45bc2afe0189a0e4dbbb76a60ed3eb052c7",
+      "c_binary_sha256": "f3ccb589fab569644eb04b762bb1ffa15acf3f4503719a96f7fd87b35d524081",
+      "buildinfo_sha256": "d396ac2e2cb4266ae9d523716c9bda68b06ae215f40ff8f6da93bdfe22b79f63",
+      "go_version": "go1.26.7",
+      "cgo_flags": [
+        "-O0",
+        "-std=c11",
+        "-Werror=implicit-function-declaration",
+        "-D_GNU_SOURCE",
+        "-DKI_MAIN_SOURCE_DIGEST=0x51ee79cecf13c5c9",
+        "-DKI_MAIN_MUTATION=4"
+      ]
+    },
+    "5": {
+      "group": "fade",
+      "name": "fade-first-level",
+      "rejection_kind": "state-mismatch",
+      "exit_status": 1,
+      "first_rejected": 1,
+      "receipt_sha256": "d30d38e9cf8a130a6845a0b115b0f18572d9d0e6cc1fd4cc8314dfada84b54b1",
+      "log_sha256": "deb6136b4d8da8512f10b258d65ce45bc2afe0189a0e4dbbb76a60ed3eb052c7",
+      "c_binary_sha256": "2670e280640a7765a767bcffa97cb2890cea23a426575902ec621a63e5ac1d7c",
+      "buildinfo_sha256": "7947deafb36298204966e57d27e59c4fbd07e0b4231cb9af9d9f232444271fa4",
+      "go_version": "go1.26.7",
+      "cgo_flags": [
+        "-O0",
+        "-std=c11",
+        "-Werror=implicit-function-declaration",
+        "-D_GNU_SOURCE",
+        "-DKI_MAIN_SOURCE_DIGEST=0x51ee79cecf13c5c9",
+        "-DKI_MAIN_MUTATION=5"
+      ]
+    },
+    "6": {
+      "group": "palette",
+      "name": "dac-rounding",
+      "rejection_kind": "state-mismatch",
+      "exit_status": 1,
+      "first_rejected": 7,
+      "receipt_sha256": "611087536b279e27e5e9ad395599c8e9f55fa4c0ea15aef7cdddf714e73b8a1f",
+      "log_sha256": "554b5df6a0338b40d19171cc22a7a280dd75cb0f7bb1b5069a9c6befdeddc8d1",
+      "c_binary_sha256": "5ec5213952787af8d67dd555fbbce3eb42ccf7a6307d104765da561a057186e4",
+      "buildinfo_sha256": "dd047bff6db03f0ff2e8c43172063f92901b15486a22656fc7dcaf4d22fa5485",
+      "go_version": "go1.26.7",
+      "cgo_flags": [
+        "-O0",
+        "-std=c11",
+        "-Werror=implicit-function-declaration",
+        "-D_GNU_SOURCE",
+        "-DKI_MAIN_SOURCE_DIGEST=0x51ee79cecf13c5c9",
+        "-DKI_MAIN_MUTATION=6"
+      ]
+    },
+    "7": {
+      "group": "palette",
+      "name": "dac-channel-order",
+      "rejection_kind": "state-mismatch",
+      "exit_status": 1,
+      "first_rejected": 9,
+      "receipt_sha256": "9b9a476459cf38b5c80122692757f943e8a492fe5f539b4daa83f5244a9d8996",
+      "log_sha256": "abd855ae646523e7a9c6a244735088ac0fc4bc694c3a048a6612792857c13b4f",
+      "c_binary_sha256": "4e55bb71fb731383923443b08500cc587c886f737f4fc7c8fd8e2d6bde9cfc24",
+      "buildinfo_sha256": "0f6bca673a2b9c3eaffca797331394fa728724155ce815aa6661c85be8b33049",
+      "go_version": "go1.26.7",
+      "cgo_flags": [
+        "-O0",
+        "-std=c11",
+        "-Werror=implicit-function-declaration",
+        "-D_GNU_SOURCE",
+        "-DKI_MAIN_SOURCE_DIGEST=0x51ee79cecf13c5c9",
+        "-DKI_MAIN_MUTATION=7"
+      ]
+    },
+    "8": {
+      "group": "trust",
+      "name": "nonlocal-unwind",
+      "rejection_kind": "state-mismatch",
+      "exit_status": 1,
+      "first_rejected": 2,
+      "receipt_sha256": "512d291c02d4ccfc142444f54ed809dbc82c6a8d641fd0d4b666ac854292db48",
+      "log_sha256": "3dd1318abc1fe82e186e7614b503d4478562350e1121f47d9b8163dcc942a34e",
+      "c_binary_sha256": "3adffbe0c769401e094a2fc87041fda70a82e78cf3a8fe602dec86f01555f0ec",
+      "buildinfo_sha256": "08c099a1dbbfecbc54e6e8c56b3d58db9c184c779c593de3438ad0cd291a8b50",
+      "go_version": "go1.26.7",
+      "cgo_flags": [
+        "-O0",
+        "-std=c11",
+        "-Werror=implicit-function-declaration",
+        "-D_GNU_SOURCE",
+        "-DKI_MAIN_SOURCE_DIGEST=0x51ee79cecf13c5c9",
+        "-DKI_MAIN_MUTATION=8"
+      ]
+    }
+  },
+  "state_mismatch_controls_rejected": 8,
+  "native_builds": {
+    "O0": {
+      "c_binary_sha256": "dbd8abe62d57d4a58fc32c49149ea3c4ab5b7d781608dd4d1af4b397fd4aa43e",
+      "buildinfo_sha256": "5c20b64dc40d99dc09491c11a396f6cc34d2de8edd8b1340cbb6e566916fd9a7",
+      "go_version": "go1.26.7",
+      "cgo_flags": [
+        "-O0",
+        "-std=c11",
+        "-Werror=implicit-function-declaration",
+        "-D_GNU_SOURCE",
+        "-DKI_MAIN_SOURCE_DIGEST=0x51ee79cecf13c5c9"
+      ]
+    },
+    "O2": {
+      "c_binary_sha256": "5fcad5df2a61e81091270c5325a6fd41e545fd72e74275dabe90eb25feecf119",
+      "buildinfo_sha256": "1fc1f418d8bdd4b64f75f44a9d3a38d7995041e59d7591b5e39bb9f51e686fed",
+      "go_version": "go1.26.7",
+      "cgo_flags": [
+        "-O2",
+        "-std=c11",
+        "-Werror=implicit-function-declaration",
+        "-D_GNU_SOURCE",
+        "-DKI_MAIN_SOURCE_DIGEST=0x51ee79cecf13c5c9"
+      ]
+    },
+    "mutant-1": {
+      "c_binary_sha256": "a21797b5c0a4a3df7fa5d38028a6a9e5fb1825d74b52770185ff41791455fcb3",
+      "buildinfo_sha256": "b112ba51e7a928220b54216da55685c63ff470e461ff5e6ce2c80b37e6bc5a22",
+      "go_version": "go1.26.7",
+      "cgo_flags": [
+        "-O0",
+        "-std=c11",
+        "-Werror=implicit-function-declaration",
+        "-D_GNU_SOURCE",
+        "-DKI_MAIN_SOURCE_DIGEST=0x51ee79cecf13c5c9",
+        "-DKI_MAIN_MUTATION=1"
+      ]
+    },
+    "mutant-2": {
+      "c_binary_sha256": "c407cca057e138653e9ebbae52bb7bfdb5351c5bbf09a93ba593d61f7ad5a05c",
+      "buildinfo_sha256": "a286ae20e0d6a867ce4e99d5cdbad4c15073b206ecd15aeaa1d25f3fef61dd2d",
+      "go_version": "go1.26.7",
+      "cgo_flags": [
+        "-O0",
+        "-std=c11",
+        "-Werror=implicit-function-declaration",
+        "-D_GNU_SOURCE",
+        "-DKI_MAIN_SOURCE_DIGEST=0x51ee79cecf13c5c9",
+        "-DKI_MAIN_MUTATION=2"
+      ]
+    },
+    "mutant-3": {
+      "c_binary_sha256": "c8fe53d6dc7fa252eed693048629f95b1d6bc2eabce13cca955ed36ef3b3ce17",
+      "buildinfo_sha256": "2422f7a1c58750c8927b184c4054d116759f24c4b7e09ecd4567dcf7225b18bd",
+      "go_version": "go1.26.7",
+      "cgo_flags": [
+        "-O0",
+        "-std=c11",
+        "-Werror=implicit-function-declaration",
+        "-D_GNU_SOURCE",
+        "-DKI_MAIN_SOURCE_DIGEST=0x51ee79cecf13c5c9",
+        "-DKI_MAIN_MUTATION=3"
+      ]
+    },
+    "mutant-4": {
+      "c_binary_sha256": "f3ccb589fab569644eb04b762bb1ffa15acf3f4503719a96f7fd87b35d524081",
+      "buildinfo_sha256": "d396ac2e2cb4266ae9d523716c9bda68b06ae215f40ff8f6da93bdfe22b79f63",
+      "go_version": "go1.26.7",
+      "cgo_flags": [
+        "-O0",
+        "-std=c11",
+        "-Werror=implicit-function-declaration",
+        "-D_GNU_SOURCE",
+        "-DKI_MAIN_SOURCE_DIGEST=0x51ee79cecf13c5c9",
+        "-DKI_MAIN_MUTATION=4"
+      ]
+    },
+    "mutant-5": {
+      "c_binary_sha256": "2670e280640a7765a767bcffa97cb2890cea23a426575902ec621a63e5ac1d7c",
+      "buildinfo_sha256": "7947deafb36298204966e57d27e59c4fbd07e0b4231cb9af9d9f232444271fa4",
+      "go_version": "go1.26.7",
+      "cgo_flags": [
+        "-O0",
+        "-std=c11",
+        "-Werror=implicit-function-declaration",
+        "-D_GNU_SOURCE",
+        "-DKI_MAIN_SOURCE_DIGEST=0x51ee79cecf13c5c9",
+        "-DKI_MAIN_MUTATION=5"
+      ]
+    },
+    "mutant-6": {
+      "c_binary_sha256": "5ec5213952787af8d67dd555fbbce3eb42ccf7a6307d104765da561a057186e4",
+      "buildinfo_sha256": "dd047bff6db03f0ff2e8c43172063f92901b15486a22656fc7dcaf4d22fa5485",
+      "go_version": "go1.26.7",
+      "cgo_flags": [
+        "-O0",
+        "-std=c11",
+        "-Werror=implicit-function-declaration",
+        "-D_GNU_SOURCE",
+        "-DKI_MAIN_SOURCE_DIGEST=0x51ee79cecf13c5c9",
+        "-DKI_MAIN_MUTATION=6"
+      ]
+    },
+    "mutant-7": {
+      "c_binary_sha256": "4e55bb71fb731383923443b08500cc587c886f737f4fc7c8fd8e2d6bde9cfc24",
+      "buildinfo_sha256": "0f6bca673a2b9c3eaffca797331394fa728724155ce815aa6661c85be8b33049",
+      "go_version": "go1.26.7",
+      "cgo_flags": [
+        "-O0",
+        "-std=c11",
+        "-Werror=implicit-function-declaration",
+        "-D_GNU_SOURCE",
+        "-DKI_MAIN_SOURCE_DIGEST=0x51ee79cecf13c5c9",
+        "-DKI_MAIN_MUTATION=7"
+      ]
+    },
+    "mutant-8": {
+      "c_binary_sha256": "3adffbe0c769401e094a2fc87041fda70a82e78cf3a8fe602dec86f01555f0ec",
+      "buildinfo_sha256": "08c099a1dbbfecbc54e6e8c56b3d58db9c184c779c593de3438ad0cd291a8b50",
+      "go_version": "go1.26.7",
+      "cgo_flags": [
+        "-O0",
+        "-std=c11",
+        "-Werror=implicit-function-declaration",
+        "-D_GNU_SOURCE",
+        "-DKI_MAIN_SOURCE_DIGEST=0x51ee79cecf13c5c9",
+        "-DKI_MAIN_MUTATION=8"
+      ]
+    }
+  },
+  "entries_seen": {
+    "checkpoint_12259": 25280,
+    "code_10701": 1027,
+    "code_10904": 372,
+    "code_10939": 655,
+    "code_1222B": 2528,
+    "code_19409": 396,
+    "code_1945A": 1980,
+    "code_1D51F": 3008,
+    "code_1F75E": 56638,
+    "font@0080:0410": 56638,
+    "sub_101B4": 1076,
+    "sub_101DB": 1076,
+    "sub_10241": 436,
+    "sub_102C2": 436,
+    "sub_102F5": 784,
+    "sub_1036F": 396,
+    "sub_103E6": 396,
+    "sub_10414": 396,
+    "sub_104B5": 396,
+    "sub_104FF": 396,
+    "sub_1059B": 512,
+    "sub_1061F": 1420,
+    "sub_106F9": 2528,
+    "sub_1075B": 2528,
+    "sub_107D2": 2528,
+    "sub_1084A": 2528,
+    "sub_10A1C": 452,
+    "sub_10AD9": 2528,
+    "sub_10B46": 1420,
+    "sub_10BAF": 22720,
+    "sub_10BCD": 2924,
+    "sub_10C14": 3512,
+    "sub_10C60": 7024,
+    "sub_10C77": 7024,
+    "sub_10CAC": 3948,
+    "sub_11CB1": 436,
+    "sub_11CC9": 188,
+    "sub_11D46": 188,
+    "sub_11F30": 188,
+    "sub_11F5A": 188,
+    "sub_12216": 2188,
+    "sub_12533": 188,
+    "sub_12AF4": 188,
+    "sub_13830": 248,
+    "sub_13B5A": 192,
+    "sub_13B7E": 380,
+    "sub_13BA9": 1340,
+    "sub_13C1E": 248,
+    "sub_13C99": 1560,
+    "sub_13CDC": 628,
+    "sub_13D09": 248,
+    "sub_13D45": 188,
+    "sub_13D68": 248,
+    "sub_13D91": 84,
+    "sub_13DC9": 700,
+    "sub_15E80": 444,
+    "sub_187AF": 188,
+    "sub_187FF": 340,
+    "sub_18810": 340,
+    "sub_1895D": 680,
+    "sub_189A4": 436,
+    "sub_189DE": 1116,
+    "sub_19321": 188,
+    "sub_193E9": 396,
+    "sub_19479": 396,
+    "sub_19796": 380,
+    "sub_197C3": 380,
+    "sub_1D5D4": 1908,
+    "sub_1D615": 188,
+    "sub_1D66A": 188,
+    "sub_1D76B": 20304,
+    "sub_1D782": 152656,
+    "sub_1D796": 172960,
+    "sub_1D7E7": 20304,
+    "sub_1D804": 20304,
+    "sub_1E378": 376,
+    "sub_1E38C": 2845,
+    "sub_1E3D7": 1116,
+    "sub_1E453": 188,
+    "sub_1EBDC": 123904,
+    "sub_1F1A3": 2924,
+    "sub_1F4A2": 376,
+    "sub_1F4DF": 2845,
+    "sub_1F6DC": 1980,
+    "sub_1F7A4": 56638,
+    "sub_1F878": 56638,
+    "sub_1F9B0": 278208,
+    "sub_1FA1B": 1112832,
+    "sub_1FA37": 3156,
+    "sub_1FAA2": 12624,
+    "sub_1FAC2": 380,
+    "sub_1FB11": 1520,
+    "sub_20000": 56372,
+    "sub_2009A": 1908,
+    "sub_200BD": 54276,
+    "sub_200C0": 188,
+    "sub_20137": 188,
+    "sub_201C6": 188,
+    "sub_201E4": 188,
+    "sub_2020C": 376,
+    "sub_202BD": 188,
+    "sub_202FE": 752
+  },
+  "font_calls_per_optimization": [
+    56638,
+    0
+  ],
+  "missing_fonts": 0,
+  "independent_main_audits": 770928,
+  "input_assets": {
+    "TALK.DAT": [
+      34182,
+      "08a22e09791d0a6ec2968e87d8655e12c91b45e00fae460b28593b35ff85e384"
+    ],
+    "SINARIO.DAT": [
+      88832,
+      "21acf8a8c4d406b4deb3a184ec0a95f3670d3e0bfff02df63d5d218f46f0754c"
+    ],
+    "KAOGRF.DAT": [
+      307200,
+      "b9c7745e3ed9b32f0c12003fe81f82756136f738427dc421ec96f6c4ed5c4ac8"
+    ],
+    "ICONGRF.DAT": [
+      47776,
+      "2154782c045b898aa5fafa74a4ff0c3745771ec85799b7882e1c4c009b3f1c1d"
+    ],
+    "END_S13.DAT": [
+      404992,
+      "0ab4c43920787bf87c91bba5730078e451cb6125b878f201d3e70d648412569b"
+    ],
+    "END_S14.DAT": [
+      3840,
+      "1d0cf09d0a319a9e7039190688c6a905ba4370bd369fbfcfa43b2078480d6918"
+    ],
+    "GAMEPAL.BRG": [
+      384,
+      "1f0119c75ea5cd333bd3ac75ef92030f93924f011728edc9b1f727c483263708"
+    ],
+    "KYOGRF.DAT": [
+      69120,
+      "e086f526bdada5baf751c41d2f73a78a0ba70002f282f63a9f33114542ed933f"
+    ],
+    "MMAP.MAP": [
+      80716,
+      "51b6fcaa390c80bd8a358dcacbf7d8dbb6dfeb0e048d8c3bdd86329df3401bcf"
+    ],
+    "MMAP.MDL": [
+      32768,
+      "2fa1dd1b1ec7c426cf22583334a62dc61bdb1f1cefc59cbe8e9827480d118d1d"
+    ],
+    "MMAP.MCH": [
+      43058,
+      "b10a5b64bbffa672c1fb5cb37703ac4c14b18bf1166cc47c4e802c19aae9f8f7"
+    ]
+  },
+  "tool_versions": "go version go1.26.7 linux/amd64\ngcc (Debian 12.2.0-14+deb12u1) 12.2.0\nCopyright (C) 2022 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "exact_clean_regeneration": true,
+  "oracle_revision": "a9714ebdab2ad6b529f81225472680f2b11f2842",
+  "oracle_compiled_tree_sha256": "d37ffeb9be887541f89e9cff80ea5a159620b77b524d54527950ce3554a6f126",
+  "scope": "Three original saved-stack exit/fade/palette routines with original CALL10067 prefix; four scenarios, independent deep snapshots, real nonlocal transfer and normal returns, complete RAM/VGA/palette/DAC/ports/state comparison. Direct routine closure; no wall-clock or complete natural player-path claim. Original prefixes are supplied as common initial snapshots; navigation routines, complete startup/main-loop execution, TSR/hardware timing and original C machine-code matching are outside this recovery claim.",
+  "source_scope": "Three original saved-stack exit/fade/palette routines with original CALL10067 prefix; four scenarios, independent deep snapshots, real nonlocal transfer and normal returns, complete RAM/VGA/palette/DAC/ports/state comparison. Direct routine closure; no wall-clock or complete natural player-path claim.",
+  "nonlocal_scope": "Original CALL10067 prefix establishes CS9901/9903 and outer return006A. Trust, scene and reason underflow restore that saved stack and leave old callers through the live C runner; normal CF paths return to their independent entry frames.",
+  "platform": "Independent pinned DOS/font/VGA services; native C saved-stack exit and palette control; mature Machine.In8 3DA samples; IF/TF=0; pinned CPU-model undefined flags; explicit DAC and INT61 status fixtures; no wall-clock or TSR hardware claim",
+  "controlled_sound_status_fixture": true,
+  "c_machine_code_match": false,
+  "mz_far_call_normalization": [
+    {
+      "ida_linear": 72895,
+      "file_start": 7871,
+      "file_end": 7876,
+      "original_function_name": "sub_11CB1",
+      "original_assembly": "call    sub_20000",
+      "original_operands": [
+        {
+          "type": 6,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "sub_20000",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "ida_loaded_bytes": "9a00000020",
+      "file_bytes": "9a00000010",
+      "loader_relocations": [
+        {
+          "file_offset": 7874,
+          "original_word": 4096,
+          "ida_word": 8192
+        }
+      ],
+      "normalization": "verify forward MZ loading, then restore file_bytes in a copied instruction row",
+      "locator_level": "proven"
+    }
+  ],
+  "recovery_targets": [
+    68124,
+    72881,
+    125916
+  ],
+  "navigation_only_targets": [
+    72672,
+    86845,
+    88503,
+    100848
+  ],
+  "palette_dac_audits": 2520,
+  "prefix_instructions": {
+    "0:F000:7FFE": 25751,
+    "0:F000:9FFE": 25751,
+    "0:F100:6FFE": 25751,
+    "1:F000:7FFE": 25227,
+    "1:F000:9FFE": 25227,
+    "1:F100:6FFE": 25227,
+    "2:F000:7FFE": 24635,
+    "2:F000:9FFE": 24635,
+    "2:F100:6FFE": 24635,
+    "3:F000:7FFE": 23093,
+    "3:F000:9FFE": 23093,
+    "3:F100:6FFE": 23093
+  },
+  "outer_prefix_snapshots": 12,
+  "prefix_map_sha256": {
+    "0:F000:7FFE": "51daebff50e31bfc3acb4f5b8735e7a60e0b070c99e23d7858081663661a45ce",
+    "0:F000:9FFE": "51daebff50e31bfc3acb4f5b8735e7a60e0b070c99e23d7858081663661a45ce",
+    "0:F100:6FFE": "51daebff50e31bfc3acb4f5b8735e7a60e0b070c99e23d7858081663661a45ce",
+    "1:F000:7FFE": "10a4be4d2e630bd58242d517c6602fe4a1659a5c8b39c7bad86c541096b90ed3",
+    "1:F000:9FFE": "10a4be4d2e630bd58242d517c6602fe4a1659a5c8b39c7bad86c541096b90ed3",
+    "1:F100:6FFE": "10a4be4d2e630bd58242d517c6602fe4a1659a5c8b39c7bad86c541096b90ed3",
+    "2:F000:7FFE": "b3b04766894b95987c7ae23cd186ec0f62a59bec9172bda27a0ac8d007e6c9c4",
+    "2:F000:9FFE": "b3b04766894b95987c7ae23cd186ec0f62a59bec9172bda27a0ac8d007e6c9c4",
+    "2:F100:6FFE": "b3b04766894b95987c7ae23cd186ec0f62a59bec9172bda27a0ac8d007e6c9c4",
+    "3:F000:7FFE": "e445787934f9724aee1b7b927166c25439029a60c4fe8c81bf03404b02dd66a4",
+    "3:F000:9FFE": "e445787934f9724aee1b7b927166c25439029a60c4fe8c81bf03404b02dd66a4",
+    "3:F100:6FFE": "e445787934f9724aee1b7b927166c25439029a60c4fe8c81bf03404b02dd66a4"
+  },
+  "prefix_map_changed_bytes": {
+    "0:F000:7FFE": 180,
+    "0:F000:9FFE": 180,
+    "0:F100:6FFE": 180,
+    "1:F000:7FFE": 450,
+    "1:F000:9FFE": 450,
+    "1:F100:6FFE": 450,
+    "2:F000:7FFE": 538,
+    "2:F000:9FFE": 538,
+    "2:F100:6FFE": 538,
+    "3:F000:7FFE": 584,
+    "3:F000:9FFE": 584,
+    "3:F100:6FFE": 584
+  },
+  "raw_map_verified_before_prefix": true,
+  "prefix_selected_player": 0,
+  "nonlocal_exit_cases": 436,
+  "normal_return_cases": 2084,
+  "dac_initialization": "Explicit fixture: DAC[index]=byte(index*13+seed*7)&63 before the deep snapshot; mainBeforeDAC preserves the full 768-byte input",
+  "palette_profiles": [
+    "GAMEPAL.BRG[48:96]",
+    "zero",
+    "all nibble15",
+    "nibble ramp byte(i*7+3)&15"
+  ],
+  "game_palette_sha256": "1f0119c75ea5cd333bd3ac75ef92030f93924f011728edc9b1f727c483263708",
+  "game_palette_size": 384,
+  "independent_prefix_map_expectation": {
+    "0": {
+      "changed_bytes": 180,
+      "sha256": "51daebff50e31bfc3acb4f5b8735e7a60e0b070c99e23d7858081663661a45ce"
+    },
+    "1": {
+      "changed_bytes": 450,
+      "sha256": "10a4be4d2e630bd58242d517c6602fe4a1659a5c8b39c7bad86c541096b90ed3"
+    },
+    "2": {
+      "changed_bytes": 538,
+      "sha256": "b3b04766894b95987c7ae23cd186ec0f62a59bec9172bda27a0ac8d007e6c9c4"
+    },
+    "3": {
+      "changed_bytes": 584,
+      "sha256": "e445787934f9724aee1b7b927166c25439029a60c4fe8c81bf03404b02dd66a4"
+    }
+  },
+  "working_palette_offset": 48,
+  "working_palette_size": 48,
+  "working_palette_sha256": "f2c42f4712d3553f11d9278b66c758d90400dce26077d470ed737c724c102cd1",
+  "mutant_names_sha256": "61465fe55f1320b2f48a3e5881a47471b8695ecc4bf683f4593249f8c80a62fb",
+  "rng_calls_per_optimization": 0,
+  "game_clock_calls_per_optimization": 0,
+  "rng_setup": "Raw RNG state is preserved from the fixed original KI.EXE image and scenario header for both original/native; no additional seed injection, no rerolls and no deliberately exercised RNG path. Actual RNG and game-clock entries are reported without a nonzero-call requirement.",
+  "assembly_coverage_receipt_sha256": "21daa9da5f3718ae664f2f440d9f80e2f94a8381a66289275fa3205ff2d81df7",
+  "go_verification_sha256": "64e9e9881fa57bf28de4166b48814b9571bd132974356b4d09f43a8b13eab837",
+  "resolution_backlinks": [
+    {
+      "ida_linear": 72881,
+      "function_ida_linear": 72881,
+      "older_document": "docs/re/124-c-strategy-command-restoration.md",
+      "required_markers": [
+        "非區域返回已由三函式閉包驗證",
+        "125-c-nonlocal-exit-restoration.md"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/125-c-nonlocal-exit-restoration.md",
+      "evidence_markers": [
+        "sub_11CB1",
+        "0x11CB1"
+      ]
+    },
+    {
+      "ida_linear": 72881,
+      "function_ida_linear": 72881,
+      "older_document": "docs/spec/244-c-strategy-command.md",
+      "required_markers": [
+        "非區域返回已由三函式閉包驗證",
+        "245-c-nonlocal-exit.md"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/125-c-nonlocal-exit-restoration.md",
+      "evidence_markers": [
+        "sub_11CB1",
+        "0x11CB1"
+      ]
+    },
+    {
+      "ida_linear": 88512,
+      "function_ida_linear": 88503,
+      "older_document": "docs/re/71-strategy-hotspot-dispatch.md",
+      "required_markers": [
+        "2026-10-09 勘誤（re/125，已證實）",
+        "125-c-nonlocal-exit-restoration.md",
+        "FF 97 06 5A",
+        "0x15A06",
+        "26 個 word",
+        "0x159D0 RET"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/125-c-nonlocal-exit-restoration.md",
+      "evidence_markers": [
+        "sub_159B7",
+        "0x159C0"
+      ]
+    },
+    {
+      "ida_linear": 88512,
+      "function_ida_linear": 88503,
+      "older_document": "docs/re/47-main-screen-window-registry.md",
+      "required_markers": [
+        "2026-10-09 勘誤（re/125，已證實）",
+        "125-c-nonlocal-exit-restoration.md",
+        "FF 97 06 5A",
+        "0x15A06",
+        "26 個 word"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/125-c-nonlocal-exit-restoration.md",
+      "evidence_markers": [
+        "sub_159B7",
+        "0x159C0"
+      ]
+    },
+    {
+      "ida_linear": 88512,
+      "function_ida_linear": 88503,
+      "older_document": "CONTEXT.md",
+      "required_markers": [
+        "2026-10-09 勘誤（re/125，已證實）",
+        "125-c-nonlocal-exit-restoration.md",
+        "右鍵表基址與落下返回勘誤",
+        "FF 97 06 5A",
+        "0x15A06"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/125-c-nonlocal-exit-restoration.md",
+      "evidence_markers": [
+        "sub_159B7",
+        "0x159C0"
+      ]
+    },
+    {
+      "ida_linear": 88526,
+      "function_ida_linear": 88503,
+      "older_document": "docs/mechanics/10-strategy.md",
+      "required_markers": [
+        "2026-10-09 勘誤（re/125，已證實）",
+        "125-c-nonlocal-exit-restoration.md",
+        "0x159CE",
+        "0x159D0 RET"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/125-c-nonlocal-exit-restoration.md",
+      "evidence_markers": [
+        "sub_159B7",
+        "0x159CE"
+      ]
+    }
+  ],
+  "backlink_status": "verified"
+}

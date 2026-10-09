@@ -294,6 +294,7 @@
 | C 據點資訊與軍團面板 | [`242-c-detail-panels.md`](242-c-detail-panels.md) | CONFORMED，十函式／700完整裝置／十二錯版 |
 | C 軍團行軍選點與分派 | [`243-c-march-command.md`](243-c-march-command.md) | CONFORMED，25函式／1,320完整裝置／十六錯版 |
 | C 政略指令與進言理由 | [`244-c-strategy-command.md`](244-c-strategy-command.md) | CONFORMED，29 函式／3,348 完整裝置／十六錯版 |
+| C 非區域退出與 DAC 淡出 | [`245-c-nonlocal-exit.md`](245-c-nonlocal-exit.md) | CONFORMED，三函式／2,520完整裝置／八個錯版 |
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的
    現況反寫規格，那只會把既有的偏差固定下來。

@@ -484,3 +484,14 @@
 - 六筆MZ反向重定位與獨立組譯通過；整檔67,099bytes仍exact，367 C／48raw；正式Go未改。
 - 依使用者授權提交與推送。原TSR音效、自然長程、原C機器碼與完整Goal仍待完成。
 - 最終正式Go vet／39套件冷測通過，cached0；完整tools/check.sh停於既有index兩缺圖與phantom277，後續檢查由先行25單項覆蓋。Go與C最終收據已重綁；容器已清理，依授權提交推送。
+
+## 2026-10-09：信賴度非區域退出與原調色盤淡出 C
+
+- spec245 READY後還原3函式89指令179bytes；KiMachine16與共用hooks header不變，原SS/SP與RET完成後由活著的C runner轉移，舊caller不續行。
+- prefix前缺D44時城市資料寫入程式，city2把10676的D0改成CF IRET，造成原版跳02C0；補完整地圖指標、數字字模與已選玩家。rawmap先驗，prefix城市tile／評分視為原版runtime資料。
+- 正常scene locals在釋放後被19321覆寫，修正獨立模型只在仍存活的frame驗attempt/budget；其餘用信賴度／CF／原決策軌跡。
+- O0/O2各2520完整RAM/planes/DAC/registers/FLAGS/stack/IN/OUT/API、12原frame快照、四獨立maphash與八錯版通過。370C/48raw，正式Go未改，完整Goal保持active。
+- 右鍵表原DS5A06與159D0落下已勘誤，撤回三條由錯誤地址產生的未解；此導航證據不代證右鍵actions或完整mainloop C。
+- 本輪Go冷vet／39套件通過，cached0；最後完整check的39套件可重用cache，兩者收據分列。25單項21pass／4既有fail／新增0，完整check停既有index兩缺圖／phantom277；來源掃描前後穩定，13/14隔離自測通過。
+- C與Go最終收據重綁，source／89指令／1筆MZ及6筆回鏈一致。依授權提交推送；原版資產與私有RAM／圖片不入Git。
+- 本輪輸出UID/GID1000；root-owned基線維持27、無異常.md目錄，Docker容器已清理。

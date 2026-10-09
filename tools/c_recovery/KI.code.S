@@ -4706,165 +4706,166 @@ ret
 .org 0xc1c
 sub_10A1C:
 # IDA 0x10a1c; file 0xc1c; locator=proven; push    ax
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 push ax
 .org 0xc1d
 # IDA 0x10a1d; file 0xc1d; locator=proven; push    bx
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 push bx
 .org 0xc1e
 # IDA 0x10a1e; file 0xc1e; locator=proven; push    cx
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 push cx
 .org 0xc1f
 # IDA 0x10a1f; file 0xc1f; locator=proven; push    dx
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 push dx
 .org 0xc20
 # IDA 0x10a20; file 0xc20; locator=proven; push    si
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 push si
 .org 0xc21
 # IDA 0x10a21; file 0xc21; locator=proven; mov     cl, 10h
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
+# operand 1 10h; [proven] 原初始強度16，含16與0共17級; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 mov cl, 0x10
 .org 0xc23
 loc_10A23:
 # IDA 0x10a23; file 0xc23; locator=proven; mov     ch, 0
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 mov ch, 0x0
 .org 0xc25
 # IDA 0x10a25; file 0xc25; locator=proven; mov     si, 1964h
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 mov si, 0x1964
 .org 0xc28
 # IDA 0x10a28; file 0xc28; locator=proven; mov     dx, 3DAh
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 mov dx, 0x3da
 .org 0xc2b
 loc_10A2B:
 # IDA 0x10a2b; file 0xc2b; locator=proven; in      al, dx
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 in al, dx
 .org 0xc2c
 # IDA 0x10a2c; file 0xc2c; locator=proven; test    al, 8
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 test al, 0x8
 .org 0xc2e
 # IDA 0x10a2e; file 0xc2e; locator=proven; jnz     short loc_10A2B
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 jnz .-3
 .org 0xc30
 loc_10A30:
 # IDA 0x10a30; file 0xc30; locator=proven; in      al, dx
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 in al, dx
 .org 0xc31
 # IDA 0x10a31; file 0xc31; locator=proven; test    al, 8
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 test al, 0x8
 .org 0xc33
 # IDA 0x10a33; file 0xc33; locator=proven; jz      short loc_10A30
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 jz .-3
 .org 0xc35
 loc_10A35:
 # IDA 0x10a35; file 0xc35; locator=proven; in      al, dx
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 in al, dx
 .org 0xc36
 # IDA 0x10a36; file 0xc36; locator=proven; test    al, 8
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 test al, 0x8
 .org 0xc38
 # IDA 0x10a38; file 0xc38; locator=proven; jnz     short loc_10A35
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 jnz .-3
 .org 0xc3a
 loc_10A3A:
 # IDA 0x10a3a; file 0xc3a; locator=proven; in      al, dx
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 in al, dx
 .org 0xc3b
 # IDA 0x10a3b; file 0xc3b; locator=proven; test    al, 8
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 test al, 0x8
 .org 0xc3d
 # IDA 0x10a3d; file 0xc3d; locator=proven; jz      short loc_10A3A
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 jz .-3
 .org 0xc3f
 loc_10A3F:
 # IDA 0x10a3f; file 0xc3f; locator=proven; mov     bh, cs:[si]
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 cs; mov bh, byte ptr [si]
 .org 0xc42
 # IDA 0x10a42; file 0xc42; locator=proven; mov     dl, cs:[si+1]
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 cs; mov dl, byte ptr [si+0x1]
 .org 0xc46
 # IDA 0x10a46; file 0xc46; locator=proven; mov     dh, cs:[si+2]
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 cs; mov dh, byte ptr [si+0x2]
 .org 0xc4a
 # IDA 0x10a4a; file 0xc4a; locator=proven; mov     al, ch
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 {load} mov al, ch
 .org 0xc4c
 # IDA 0x10a4c; file 0xc4c; locator=proven; mov     bl, cl
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 {load} mov bl, cl
 .org 0xc4e
 # IDA 0x10a4e; file 0xc4e; locator=proven; call    sub_1EBDC
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 call .-7794
 .org 0xc51
 # IDA 0x10a51; file 0xc51; locator=proven; add     si, 3
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 add si, 0x3
 .org 0xc54
 # IDA 0x10a54; file 0xc54; locator=proven; inc     ch
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 inc ch
 .org 0xc56
 # IDA 0x10a56; file 0xc56; locator=proven; cmp     ch, 10h
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 cmp ch, 0x10
 .org 0xc59
 # IDA 0x10a59; file 0xc59; locator=proven; jb      short loc_10A3F
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 jb .-26
 .org 0xc5b
 # IDA 0x10a5b; file 0xc5b; locator=proven; dec     cl
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 dec cl
 .org 0xc5d
 # IDA 0x10a5d; file 0xc5d; locator=proven; jge     short loc_10A23
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 jge .-58
 .org 0xc5f
 # IDA 0x10a5f; file 0xc5f; locator=proven; pop     si
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 pop si
 .org 0xc60
 # IDA 0x10a60; file 0xc60; locator=proven; pop     dx
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 pop dx
 .org 0xc61
 # IDA 0x10a61; file 0xc61; locator=proven; pop     cx
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 pop cx
 .org 0xc62
 # IDA 0x10a62; file 0xc62; locator=proven; pop     bx
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 pop bx
 .org 0xc63
 # IDA 0x10a63; file 0xc63; locator=proven; pop     ax
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 pop ax
 .org 0xc64
 # IDA 0x10a64; file 0xc64; locator=proven; retn
-# ⚠ 函式 sub_10A1C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10A1C; [proven] 原16色色盤強度16至0共17級，272次DAC writer與兩組3DA低高輪詢; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 ret
 .org 0xc65
 sub_10A65:
@@ -7494,35 +7495,37 @@ ret
 .org 0x1eb1
 sub_11CB1:
 # IDA 0x11cb1; file 0x1eb1; locator=proven; mov     ss, cs:word_19903
-# ⚠ 函式 sub_11CB1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11CB1; [proven] 恢復主迴圈保存SS/SP、隱藏滑鼠與原17級淡出，再由RET返回外層caller; 出處: docs/re/125-c-nonlocal-exit-restoration.md
+# operand 1 cs:word_19903; [proven] 主迴圈11BEC保存的原SS，退出時真正恢復; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 cs; mov ss, word ptr [0x9903]
 .org 0x1eb6
 # IDA 0x11cb6; file 0x1eb6; locator=proven; mov     sp, cs:word_19901
-# ⚠ 函式 sub_11CB1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11CB1; [proven] 恢復主迴圈保存SS/SP、隱藏滑鼠與原17級淡出，再由RET返回外層caller; 出處: docs/re/125-c-nonlocal-exit-restoration.md
+# operand 1 cs:word_19901; [proven] 主迴圈11BF1保存的原SP，RET將消費其外層返回word; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 cs; mov sp, word ptr [0x9901]
 .org 0x1ebb
 # IDA 0x11cbb; file 0x1ebb; locator=proven; push    ax
-# ⚠ 函式 sub_11CB1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11CB1; [proven] 恢復主迴圈保存SS/SP、隱藏滑鼠與原17級淡出，再由RET返回外層caller; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 push ax
 .org 0x1ebc
 # IDA 0x11cbc; file 0x1ebc; locator=proven; mov     ax, 2
-# ⚠ 函式 sub_11CB1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11CB1; [proven] 恢復主迴圈保存SS/SP、隱藏滑鼠與原17級淡出，再由RET返回外層caller; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 mov ax, 0x2
 .org 0x1ebf
 # IDA 0x11cbf; file 0x1ebf; locator=proven; call    sub_20000
-# ⚠ 函式 sub_11CB1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11CB1; [proven] 恢復主迴圈保存SS/SP、隱藏滑鼠與原17級淡出，再由RET返回外層caller; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 lcall 0x1000, 0x0
 .org 0x1ec4
 # IDA 0x11cc4; file 0x1ec4; locator=proven; call    sub_10A1C
-# ⚠ 函式 sub_11CB1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11CB1; [proven] 恢復主迴圈保存SS/SP、隱藏滑鼠與原17級淡出，再由RET返回外層caller; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 call .-4776
 .org 0x1ec7
 # IDA 0x11cc7; file 0x1ec7; locator=proven; pop     ax
-# ⚠ 函式 sub_11CB1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11CB1; [proven] 恢復主迴圈保存SS/SP、隱藏滑鼠與原17級淡出，再由RET返回外層caller; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 pop ax
 .org 0x1ec8
 # IDA 0x11cc8; file 0x1ec8; locator=proven; retn
-# ⚠ 函式 sub_11CB1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11CB1; [proven] 恢復主迴圈保存SS/SP、隱藏滑鼠與原17級淡出，再由RET返回外層caller; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 ret
 .org 0x1ec9
 sub_11CC9:
@@ -35072,6 +35075,7 @@ call .-22537
 .org 0x5bc0
 # IDA 0x159c0; file 0x5bc0; locator=proven; call    funcs_159C0[bx]
 # ⚠ 函式 sub_159B7; [unknown] 未附加語意; 出處: 無
+# operand 0 funcs_159C0[bx]; [proven] 原DS:[BX+5A06]，符號funcs_159C0後綴不是表址；主迴圈DS等於CS; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 call word ptr [bx+0x5a06]
 .org 0x5bc4
 # IDA 0x159c4; file 0x5bc4; locator=proven; call    sub_11C8D
@@ -93511,171 +93515,173 @@ ret
 .org 0xeddc
 sub_1EBDC:
 # IDA 0x1ebdc; file 0xeddc; locator=proven; push    cx
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 push cx
 .org 0xeddd
 # IDA 0x1ebdd; file 0xeddd; locator=proven; mov     cx, dx
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 {load} mov cx, dx
 .org 0xeddf
 # IDA 0x1ebdf; file 0xeddf; locator=proven; mov     dx, 3C8h
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 mov dx, 0x3c8
 .org 0xede2
 # IDA 0x1ebe2; file 0xede2; locator=proven; out     dx, al
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 out dx, al
 .org 0xede3
 # IDA 0x1ebe3; file 0xede3; locator=proven; mov     dx, 3C9h
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 mov dx, 0x3c9
 .org 0xede6
 # IDA 0x1ebe6; file 0xede6; locator=proven; mov     al, bh
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 {load} mov al, bh
 .org 0xede8
 # IDA 0x1ebe8; file 0xede8; locator=proven; shl     al, 1
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 shl al, 0x1
 .org 0xedea
 # IDA 0x1ebea; file 0xedea; locator=proven; shl     al, 1
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 shl al, 0x1
 .org 0xedec
 # IDA 0x1ebec; file 0xedec; locator=proven; shl     al, 1
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 shl al, 0x1
 .org 0xedee
 # IDA 0x1ebee; file 0xedee; locator=proven; shl     al, 1
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 shl al, 0x1
 .org 0xedf0
 # IDA 0x1ebf0; file 0xedf0; locator=proven; mul     bl
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 mul bl
 .org 0xedf2
 # IDA 0x1ebf2; file 0xedf2; locator=proven; add     ax, 80h
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
+# operand 1 80h; [proven] 低nibble乘法後加128，保留原byte輸出捨入; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 add ax, 0x80
 .org 0xedf5
 # IDA 0x1ebf5; file 0xedf5; locator=proven; shl     ah, 1
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 shl ah, 0x1
 .org 0xedf7
 # IDA 0x1ebf7; file 0xedf7; locator=proven; shl     ah, 1
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 shl ah, 0x1
 .org 0xedf9
 # IDA 0x1ebf9; file 0xedf9; locator=proven; mov     bh, ah
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 {load} mov bh, ah
 .org 0xedfb
 # IDA 0x1ebfb; file 0xedfb; locator=proven; mov     al, ch
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 {load} mov al, ch
 .org 0xedfd
 # IDA 0x1ebfd; file 0xedfd; locator=proven; shl     al, 1
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 shl al, 0x1
 .org 0xedff
 # IDA 0x1ebff; file 0xedff; locator=proven; shl     al, 1
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 shl al, 0x1
 .org 0xee01
 # IDA 0x1ec01; file 0xee01; locator=proven; shl     al, 1
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 shl al, 0x1
 .org 0xee03
 # IDA 0x1ec03; file 0xee03; locator=proven; shl     al, 1
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 shl al, 0x1
 .org 0xee05
 # IDA 0x1ec05; file 0xee05; locator=proven; mul     bl
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 mul bl
 .org 0xee07
 # IDA 0x1ec07; file 0xee07; locator=proven; add     ax, 80h
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 add ax, 0x80
 .org 0xee0a
 # IDA 0x1ec0a; file 0xee0a; locator=proven; shl     ah, 1
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 shl ah, 0x1
 .org 0xee0c
 # IDA 0x1ec0c; file 0xee0c; locator=proven; shl     ah, 1
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 shl ah, 0x1
 .org 0xee0e
 # IDA 0x1ec0e; file 0xee0e; locator=proven; mov     ch, ah
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 {load} mov ch, ah
 .org 0xee10
 # IDA 0x1ec10; file 0xee10; locator=proven; mov     al, cl
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 {load} mov al, cl
 .org 0xee12
 # IDA 0x1ec12; file 0xee12; locator=proven; shl     al, 1
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 shl al, 0x1
 .org 0xee14
 # IDA 0x1ec14; file 0xee14; locator=proven; shl     al, 1
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 shl al, 0x1
 .org 0xee16
 # IDA 0x1ec16; file 0xee16; locator=proven; shl     al, 1
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 shl al, 0x1
 .org 0xee18
 # IDA 0x1ec18; file 0xee18; locator=proven; shl     al, 1
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 shl al, 0x1
 .org 0xee1a
 # IDA 0x1ec1a; file 0xee1a; locator=proven; mul     bl
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 mul bl
 .org 0xee1c
 # IDA 0x1ec1c; file 0xee1c; locator=proven; add     ax, 80h
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 add ax, 0x80
 .org 0xee1f
 # IDA 0x1ec1f; file 0xee1f; locator=proven; shl     ah, 1
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 shl ah, 0x1
 .org 0xee21
 # IDA 0x1ec21; file 0xee21; locator=proven; shl     ah, 1
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 shl ah, 0x1
 .org 0xee23
 # IDA 0x1ec23; file 0xee23; locator=proven; mov     al, ah
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 {load} mov al, ah
 .org 0xee25
 # IDA 0x1ec25; file 0xee25; locator=proven; out     dx, al
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
+# operand 1 al; [proven] 第一個DACdata寫入的是原DLcomponent計算值; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 out dx, al
 .org 0xee26
 # IDA 0x1ec26; file 0xee26; locator=proven; mov     al, ch
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 {load} mov al, ch
 .org 0xee28
 # IDA 0x1ec28; file 0xee28; locator=proven; out     dx, al
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 out dx, al
 .org 0xee29
 # IDA 0x1ec29; file 0xee29; locator=proven; mov     al, bh
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 {load} mov al, bh
 .org 0xee2b
 # IDA 0x1ec2b; file 0xee2b; locator=proven; out     dx, al
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 out dx, al
 .org 0xee2c
 # IDA 0x1ec2c; file 0xee2c; locator=proven; pop     cx
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 pop cx
 .org 0xee2d
 # IDA 0x1ec2d; file 0xee2d; locator=proven; retn
-# ⚠ 函式 sub_1EBDC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EBDC; [proven] 原低nibble乘BL加128捨入、byte回繞，第二／第三／第一component依序寫DAC; 出處: docs/re/125-c-nonlocal-exit-restoration.md
 ret
 .org 0xee2e
 sub_1EC2E:

@@ -1005,6 +1005,14 @@
           "oracle_cases_per_optimization": 3348,
           "entry_count": 216,
           "scope": "29 original strategy command-bar, upper-player-entry and proposal routines; four fixed scenarios, controlled mouse choices and INT61 status, complete original/C state comparison. Direct routine closure only; no complete natural player-path or C machine-code matching claim. Returning scenes only; trust-underflow nonlocal startup-stack restoration remains unverified. 13DC9 trust-underflow borrow and nonlocal 11CB1 startup SS/SP restoration remain unverified. Original TSR/hardware behavior, natural long player paths and original C machine-code matching remain unverified. Raw RNG state is identical on both sides without rerolls; RNG paths are not deliberately exercised."
+        },
+        {
+          "evidence": "docs/re/125-c-nonlocal-exit-restoration.md",
+          "spec": "docs/spec/245-c-nonlocal-exit.md",
+          "receipt": "docs/re/c-main-verification.json",
+          "oracle_cases_per_optimization": 2520,
+          "entry_count": 700,
+          "scope": "Three original saved-stack exit/fade/palette routines with original CALL10067 prefix; four scenarios, independent deep snapshots, real nonlocal transfer and normal returns, complete RAM/VGA/palette/DAC/ports/state comparison. Direct routine closure; no wall-clock or complete natural player-path claim. Original prefixes are supplied as common initial snapshots; navigation routines, complete startup/main-loop execution, TSR/hardware timing and original C machine-code matching are outside this recovery claim."
         }
       ]
     },
@@ -7462,7 +7470,17 @@
       "source_sha256": "2e1aa2616dc7fec7be61002221b1f9f7425ae92317e5d2a3d6398eaf2825079d",
       "header_sha256": "f2e5d7c326075773fc47bb9feb6d87cabd332e2a88ed106c9757b88b39f03387",
       "fixture_sha256": "34df46ffbd1fa25d56f425d90c22802ee5a345340d3ec6c176aeea8327f24d04",
-      "generated_source_sha256": "1702187efb6f19ad1dbaa2e4bf3c00f107bf75cf3f9f75ee67b5721d0f48153d"
+      "generated_source_sha256": "1702187efb6f19ad1dbaa2e4bf3c00f107bf75cf3f9f75ee67b5721d0f48153d",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/125-c-nonlocal-exit-restoration.md",
+          "spec": "docs/spec/245-c-nonlocal-exit.md",
+          "receipt": "docs/re/c-main-verification.json",
+          "oracle_cases_per_optimization": 2520,
+          "entry_count": 248,
+          "scope": "Three original saved-stack exit/fade/palette routines with original CALL10067 prefix; four scenarios, independent deep snapshots, real nonlocal transfer and normal returns, complete RAM/VGA/palette/DAC/ports/state comparison. Direct routine closure; no wall-clock or complete natural player-path claim. Original prefixes are supplied as common initial snapshots; navigation routines, complete startup/main-loop execution, TSR/hardware timing and original C machine-code matching are outside this recovery claim."
+        }
+      ]
     },
     "sub_13B5A": {
       "ida_linear": 80730,
@@ -7483,7 +7501,17 @@
       "source_sha256": "2e1aa2616dc7fec7be61002221b1f9f7425ae92317e5d2a3d6398eaf2825079d",
       "header_sha256": "f2e5d7c326075773fc47bb9feb6d87cabd332e2a88ed106c9757b88b39f03387",
       "fixture_sha256": "34df46ffbd1fa25d56f425d90c22802ee5a345340d3ec6c176aeea8327f24d04",
-      "generated_source_sha256": "1702187efb6f19ad1dbaa2e4bf3c00f107bf75cf3f9f75ee67b5721d0f48153d"
+      "generated_source_sha256": "1702187efb6f19ad1dbaa2e4bf3c00f107bf75cf3f9f75ee67b5721d0f48153d",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/125-c-nonlocal-exit-restoration.md",
+          "spec": "docs/spec/245-c-nonlocal-exit.md",
+          "receipt": "docs/re/c-main-verification.json",
+          "oracle_cases_per_optimization": 2520,
+          "entry_count": 192,
+          "scope": "Three original saved-stack exit/fade/palette routines with original CALL10067 prefix; four scenarios, independent deep snapshots, real nonlocal transfer and normal returns, complete RAM/VGA/palette/DAC/ports/state comparison. Direct routine closure; no wall-clock or complete natural player-path claim. Original prefixes are supplied as common initial snapshots; navigation routines, complete startup/main-loop execution, TSR/hardware timing and original C machine-code matching are outside this recovery claim."
+        }
+      ]
     },
     "sub_13BA9": {
       "ida_linear": 80809,
@@ -7504,7 +7532,17 @@
       "source_sha256": "2e1aa2616dc7fec7be61002221b1f9f7425ae92317e5d2a3d6398eaf2825079d",
       "header_sha256": "f2e5d7c326075773fc47bb9feb6d87cabd332e2a88ed106c9757b88b39f03387",
       "fixture_sha256": "34df46ffbd1fa25d56f425d90c22802ee5a345340d3ec6c176aeea8327f24d04",
-      "generated_source_sha256": "1702187efb6f19ad1dbaa2e4bf3c00f107bf75cf3f9f75ee67b5721d0f48153d"
+      "generated_source_sha256": "1702187efb6f19ad1dbaa2e4bf3c00f107bf75cf3f9f75ee67b5721d0f48153d",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/125-c-nonlocal-exit-restoration.md",
+          "spec": "docs/spec/245-c-nonlocal-exit.md",
+          "receipt": "docs/re/c-main-verification.json",
+          "oracle_cases_per_optimization": 2520,
+          "entry_count": 1340,
+          "scope": "Three original saved-stack exit/fade/palette routines with original CALL10067 prefix; four scenarios, independent deep snapshots, real nonlocal transfer and normal returns, complete RAM/VGA/palette/DAC/ports/state comparison. Direct routine closure; no wall-clock or complete natural player-path claim. Original prefixes are supplied as common initial snapshots; navigation routines, complete startup/main-loop execution, TSR/hardware timing and original C machine-code matching are outside this recovery claim."
+        }
+      ]
     },
     "sub_13C1E": {
       "ida_linear": 80926,
@@ -7988,6 +8026,69 @@
       "header_sha256": "f2e5d7c326075773fc47bb9feb6d87cabd332e2a88ed106c9757b88b39f03387",
       "fixture_sha256": "34df46ffbd1fa25d56f425d90c22802ee5a345340d3ec6c176aeea8327f24d04",
       "generated_source_sha256": "1702187efb6f19ad1dbaa2e4bf3c00f107bf75cf3f9f75ee67b5721d0f48153d"
+    },
+    "sub_10A1C": {
+      "ida_linear": 68124,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/245-c-nonlocal-exit.md",
+      "evidence": "docs/re/125-c-nonlocal-exit-restoration.md",
+      "source": "tools/c_recovery/main.c",
+      "header": "tools/c_recovery/main.h",
+      "fixture": "tools/c_recovery/main_fixture.h",
+      "generated_source": "tools/c_recovery/main_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-main/verification.json",
+      "routine_sha256": "680775baf03fe54709d7ebf213ba4fe7966148af0931576f98dd7d704e2dc24b",
+      "oracle_cases_per_optimization": 2520,
+      "oracle_entry_count_per_optimization": 452,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Three original saved-stack exit/fade/palette routines with original CALL10067 prefix; four scenarios, independent deep snapshots, real nonlocal transfer and normal returns, complete RAM/VGA/palette/DAC/ports/state comparison. Direct routine closure; no wall-clock or complete natural player-path claim. Original prefixes are supplied as common initial snapshots; navigation routines, complete startup/main-loop execution, TSR/hardware timing and original C machine-code matching are outside this recovery claim.",
+      "source_sha256": "51f2b56ae72f65735787d9a2b47b39af400b3a01b3e0f56bec1e9842ea954e45",
+      "header_sha256": "1ae3902707ff8590838c8cbc478c7883250152cb079bf3b336959df140c51d0d",
+      "fixture_sha256": "1d7b4507c2446ee3a95b34500695b89ad4e2f0ad6deec04008e276db529ca706",
+      "generated_source_sha256": "bffe5c3e5cda82099b584e779ac6a3bb7cbe82a87a259858ade7acd7167a4b2e"
+    },
+    "sub_11CB1": {
+      "ida_linear": 72881,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/245-c-nonlocal-exit.md",
+      "evidence": "docs/re/125-c-nonlocal-exit-restoration.md",
+      "source": "tools/c_recovery/main.c",
+      "header": "tools/c_recovery/main.h",
+      "fixture": "tools/c_recovery/main_fixture.h",
+      "generated_source": "tools/c_recovery/main_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-main/verification.json",
+      "routine_sha256": "4b9b07ed900cf3b1f71f43a4bc87e7c9cd9723c44f834d0d87fb86ddeff39f6d",
+      "oracle_cases_per_optimization": 2520,
+      "oracle_entry_count_per_optimization": 436,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Three original saved-stack exit/fade/palette routines with original CALL10067 prefix; four scenarios, independent deep snapshots, real nonlocal transfer and normal returns, complete RAM/VGA/palette/DAC/ports/state comparison. Direct routine closure; no wall-clock or complete natural player-path claim. Original prefixes are supplied as common initial snapshots; navigation routines, complete startup/main-loop execution, TSR/hardware timing and original C machine-code matching are outside this recovery claim.",
+      "source_sha256": "51f2b56ae72f65735787d9a2b47b39af400b3a01b3e0f56bec1e9842ea954e45",
+      "header_sha256": "1ae3902707ff8590838c8cbc478c7883250152cb079bf3b336959df140c51d0d",
+      "fixture_sha256": "1d7b4507c2446ee3a95b34500695b89ad4e2f0ad6deec04008e276db529ca706",
+      "generated_source_sha256": "bffe5c3e5cda82099b584e779ac6a3bb7cbe82a87a259858ade7acd7167a4b2e"
+    },
+    "sub_1EBDC": {
+      "ida_linear": 125916,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/245-c-nonlocal-exit.md",
+      "evidence": "docs/re/125-c-nonlocal-exit-restoration.md",
+      "source": "tools/c_recovery/main.c",
+      "header": "tools/c_recovery/main.h",
+      "fixture": "tools/c_recovery/main_fixture.h",
+      "generated_source": "tools/c_recovery/main_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-main/verification.json",
+      "routine_sha256": "b4b397c372caa833376aa1948c91f1745a1a17831a8d1c546f75aab7fe29e9c7",
+      "oracle_cases_per_optimization": 2520,
+      "oracle_entry_count_per_optimization": 123904,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Three original saved-stack exit/fade/palette routines with original CALL10067 prefix; four scenarios, independent deep snapshots, real nonlocal transfer and normal returns, complete RAM/VGA/palette/DAC/ports/state comparison. Direct routine closure; no wall-clock or complete natural player-path claim. Original prefixes are supplied as common initial snapshots; navigation routines, complete startup/main-loop execution, TSR/hardware timing and original C machine-code matching are outside this recovery claim.",
+      "source_sha256": "51f2b56ae72f65735787d9a2b47b39af400b3a01b3e0f56bec1e9842ea954e45",
+      "header_sha256": "1ae3902707ff8590838c8cbc478c7883250152cb079bf3b336959df140c51d0d",
+      "fixture_sha256": "1d7b4507c2446ee3a95b34500695b89ad4e2f0ad6deec04008e276db529ca706",
+      "generated_source_sha256": "bffe5c3e5cda82099b584e779ac6a3bb7cbe82a87a259858ade7acd7167a4b2e"
     }
   },
   "code_blocks": {
@@ -8800,6 +8901,120 @@
         "戰略入口舊斷言勘誤",
         "0x1622E",
         "124-c-strategy-command-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 72881,
+      "function_ida_linear": 72881,
+      "older_document": "docs/re/124-c-strategy-command-restoration.md",
+      "required_markers": [
+        "非區域返回已由三函式閉包驗證",
+        "125-c-nonlocal-exit-restoration.md"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/125-c-nonlocal-exit-restoration.md",
+      "evidence_markers": [
+        "sub_11CB1",
+        "0x11CB1"
+      ]
+    },
+    {
+      "ida_linear": 72881,
+      "function_ida_linear": 72881,
+      "older_document": "docs/spec/244-c-strategy-command.md",
+      "required_markers": [
+        "非區域返回已由三函式閉包驗證",
+        "245-c-nonlocal-exit.md"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/125-c-nonlocal-exit-restoration.md",
+      "evidence_markers": [
+        "sub_11CB1",
+        "0x11CB1"
+      ]
+    },
+    {
+      "ida_linear": 88512,
+      "function_ida_linear": 88503,
+      "older_document": "docs/re/71-strategy-hotspot-dispatch.md",
+      "required_markers": [
+        "2026-10-09 勘誤（re/125，已證實）",
+        "125-c-nonlocal-exit-restoration.md",
+        "FF 97 06 5A",
+        "0x15A06",
+        "26 個 word",
+        "0x159D0 RET"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/125-c-nonlocal-exit-restoration.md",
+      "evidence_markers": [
+        "sub_159B7",
+        "0x159C0"
+      ]
+    },
+    {
+      "ida_linear": 88512,
+      "function_ida_linear": 88503,
+      "older_document": "docs/re/47-main-screen-window-registry.md",
+      "required_markers": [
+        "2026-10-09 勘誤（re/125，已證實）",
+        "125-c-nonlocal-exit-restoration.md",
+        "FF 97 06 5A",
+        "0x15A06",
+        "26 個 word"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/125-c-nonlocal-exit-restoration.md",
+      "evidence_markers": [
+        "sub_159B7",
+        "0x159C0"
+      ]
+    },
+    {
+      "ida_linear": 88512,
+      "function_ida_linear": 88503,
+      "older_document": "CONTEXT.md",
+      "required_markers": [
+        "2026-10-09 勘誤（re/125，已證實）",
+        "125-c-nonlocal-exit-restoration.md",
+        "右鍵表基址與落下返回勘誤",
+        "FF 97 06 5A",
+        "0x15A06"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/125-c-nonlocal-exit-restoration.md",
+      "evidence_markers": [
+        "sub_159B7",
+        "0x159C0"
+      ]
+    },
+    {
+      "ida_linear": 88526,
+      "function_ida_linear": 88503,
+      "older_document": "docs/mechanics/10-strategy.md",
+      "required_markers": [
+        "2026-10-09 勘誤（re/125，已證實）",
+        "125-c-nonlocal-exit-restoration.md",
+        "0x159CE",
+        "0x159D0 RET"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/125-c-nonlocal-exit-restoration.md",
+      "evidence_markers": [
+        "sub_159B7",
+        "0x159CE"
       ]
     }
   ]

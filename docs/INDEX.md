@@ -203,6 +203,7 @@
 | [`docs/re/122-c-detail-panels-restoration.md`](re/122-c-detail-panels-restoration.md) | 122：據點資訊與軍團面板的原始 C | CONFORMED。十函式，O0／O2各700完整裝置與十二錯版通過。 | 2026-10-09 |
 | [`docs/re/123-c-march-command-restoration.md`](re/123-c-march-command-restoration.md) | 123：軍團行軍指令、選點與狀態分派的 C | CONFORMED。25函式，O0／O2各1,320完整裝置與十六錯版通過。 | 2026-10-09 |
 | [`docs/re/124-c-strategy-command-restoration.md`](re/124-c-strategy-command-restoration.md) | 124：政略指令列、進言判斷與理由選單的 C | CONFORMED。29 函式，O0／O2 各 3,348 完整裝置與十六錯版通過。 | 2026-10-09 |
+| [`docs/re/125-c-nonlocal-exit-restoration.md`](re/125-c-nonlocal-exit-restoration.md) | 125：信賴度退出、原堆疊返回與調色盤淡出的 C | CONFORMED。三函式，O0／O2各2,520完整裝置與八個錯版通過。 | 2026-10-09 |
 | [`docs/re/13-pc98-numeric-window.md`](re/13-pc98-numeric-window.md) | 13 — DOS/V 數字輸入視窗量測與 CJK 版面決策 | 以 DOS/V 為唯一畫面基準；原始座標、DOS/V 96×64 內框 blit、3×6 每格操作、 實際按鍵 gl… | 2026-08-10 |
 | [`docs/re/14-mmap-mch-objects.md`](re/14-mmap-mch-objects.md) | 14 — MMAP.MCH 戰略地圖物件 | 資產格式、事件 12 的火災／暴動圖形鏈與 typed 動畫／移動時序 confirmed； type 3 的事件語… | 2026-08-10 |
 | [`docs/re/15-event10-producer.md`](re/15-event10-producer.md) | 15 — 事件 10 producer 深度逆向 | 事件 10 dispatcher／consumer／queue writer 已證實；原版自然 producer 仍… | 2026-08-11 |
@@ -260,7 +261,7 @@
 | [`docs/re/68-t3-frontier-functions.md`](re/68-t3-frontier-functions.md) | 68 — T3 那九支：只在狀態檔與程式碼裡出現過的函式 | 九支全部讀完。 | 2026-08-18 |
 | [`docs/re/69-t2-cross-reference.md`](re/69-t2-cross-reference.md) | 69 — T2 那 18 支：逐支讀過，各自歸位 | 完成。 | 2026-08-18 |
 | [`docs/re/70-d7end-ending-player.md`](re/70-d7end-ending-player.md) | 70 — D7END.EXE：結局播放器與結局全文 | 播放順序、版面、結尾文字與過場圖的格式都解出來了。 | 2026-08-18 |
-| [`docs/re/71-strategy-hotspot-dispatch.md`](re/71-strategy-hotspot-dispatch.md) | 71 — 戰略層的兩張熱區分派表，以及點縮小地圖會發生什麼 | 左鍵表 off_159D2 的 32 筆全部攤開，索引就是熱區碼。⭐ 熱區 0x16 （點縮小地圖）＝ 把大地圖鏡頭… | 2026-08-22 |
+| [`docs/re/71-strategy-hotspot-dispatch.md`](re/71-strategy-hotspot-dispatch.md) | 71 — 戰略層的兩張熱區分派表，以及點縮小地圖會發生什麼 | 左鍵表 off_159D2 的 26 筆與右鍵表的 26 筆已定位，索引就是熱區碼。⭐ 熱區 0x16 （點縮小地圖… | 2026-08-22 |
 | [`docs/re/72-world-map-display-list.md`](re/72-world-map-display-list.md) | 72 — 大地圖的顯示表：地形一層 ＋ 最多四層疊圖 | 已解。 | 2026-08-23 |
 | [`docs/re/73-new-game-faction-list.md`](re/73-new-game-faction-list.md) | 73 — 新遊戲怎麼選君主：先一張清單，再一張卡 | 整條流程解出來了。⭐ 君主卡上沒有「換勢力」的熱區—— 換勢力是退回上一層的 | 2026-08-24 |
 | [`docs/re/74-battle-opening-duel.md`](re/74-battle-opening-duel.md) | 74 — 開戰喊話是單挑狀態機的開頭：挑戰、拒戰、對打互嗆、決著 | 全段解出並實作（2026-08-25）——挑戰／拒戰／應戰、回合互嗆、 對打段與決著都在 internal/rule… | 2026-08-25 |
@@ -467,6 +468,7 @@
 | [`docs/spec/242-c-detail-panels.md`](spec/242-c-detail-panels.md) | 242：C 據點資訊與軍團面板 | CONFORMED。O0／O2各700完整裝置與十二錯版通過。 | 2026-10-09 |
 | [`docs/spec/243-c-march-command.md`](spec/243-c-march-command.md) | 243：C 軍團行軍選點與命令分派 | CONFORMED。O0／O2各1,320完整裝置與十六錯版通過。 | 2026-10-09 |
 | [`docs/spec/244-c-strategy-command.md`](spec/244-c-strategy-command.md) | 244：C 政略指令與進言理由 | CONFORMED。29 函式，O0／O2 各 3,348 完整裝置與十六錯版通過。 | 2026-10-09 |
+| [`docs/spec/245-c-nonlocal-exit.md`](spec/245-c-nonlocal-exit.md) | 245：C 非區域退出與 DAC 淡出 | CONFORMED。O0／O2各2,520完整裝置與八個錯版通過。 | 2026-10-09 |
 | [`docs/spec/25-slot-select-window.md`](spec/25-slot-select-window.md) | 25 — 四槽選擇視窗（新遊戲／讀取／儲存） | CONFORMED。讀取／儲存已照原版版面實作； 新遊戲仍走 remake 自己的啟動殼層（§5）。 | 2026-08-15 |
 | [`docs/spec/26-yes-no-dialog.md`](spec/26-yes-no-dialog.md) | 26 — ＹＥＳ／ＮＯ 對話框 | CONFORMED。版面與命中算式已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 輸入照原版收斂成兩個熱區（§2.1）。「自定」開命名視窗（[10… | 2026-08-15 |

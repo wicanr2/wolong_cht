@@ -1,0 +1,1671 @@
+{
+  "schema": "wolong-matching-code-supplement-v1",
+  "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "tool": "IDA Pro",
+  "tool_version": "9.4",
+  "database_sha256": "5166d55917adb9e528eabf7e4325b002455b802e348209daa9f1c6dc488e5740",
+  "probe_sha256": "9ae600545d4fa8bdf99dcb96ba2987f44bc94b29e7aebf0b5ecc98ed0892c743",
+  "evidence": "docs/re/125-c-nonlocal-exit-restoration.md",
+  "constant_symbols": {},
+  "instructions": [],
+  "instruction_coverage": [
+    {
+      "ida_linear": 68124,
+      "file_start": 3100,
+      "file_end": 3101,
+      "bytes": "50",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "push    ax",
+      "gas": "push ax",
+      "ida_loaded_bytes": "50",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68125,
+      "file_start": 3101,
+      "file_end": 3102,
+      "bytes": "53",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "push    bx",
+      "gas": "push bx",
+      "ida_loaded_bytes": "53",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68126,
+      "file_start": 3102,
+      "file_end": 3103,
+      "bytes": "51",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "push    cx",
+      "gas": "push cx",
+      "ida_loaded_bytes": "51",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68127,
+      "file_start": 3103,
+      "file_end": 3104,
+      "bytes": "52",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "push    dx",
+      "gas": "push dx",
+      "ida_loaded_bytes": "52",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68128,
+      "file_start": 3104,
+      "file_end": 3105,
+      "bytes": "56",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "push    si",
+      "gas": "push si",
+      "ida_loaded_bytes": "56",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68129,
+      "file_start": 3105,
+      "file_end": 3107,
+      "bytes": "b110",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     cl, 10h",
+      "gas": "mov cl, 0x10",
+      "ida_loaded_bytes": "b110",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68131,
+      "file_start": 3107,
+      "file_end": 3109,
+      "bytes": "b500",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     ch, 0",
+      "gas": "mov ch, 0x0",
+      "ida_loaded_bytes": "b500",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68133,
+      "file_start": 3109,
+      "file_end": 3112,
+      "bytes": "be6419",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     si, 1964h",
+      "gas": "mov si, 0x1964",
+      "ida_loaded_bytes": "be6419",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68136,
+      "file_start": 3112,
+      "file_end": 3115,
+      "bytes": "bada03",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     dx, 3DAh",
+      "gas": "mov dx, 0x3da",
+      "ida_loaded_bytes": "bada03",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68139,
+      "file_start": 3115,
+      "file_end": 3116,
+      "bytes": "ec",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "in      al, dx; Video status bits:",
+      "gas": "in al, dx",
+      "ida_loaded_bytes": "ec",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68140,
+      "file_start": 3116,
+      "file_end": 3118,
+      "bytes": "a808",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "test    al, 8",
+      "gas": "test al, 0x8",
+      "ida_loaded_bytes": "a808",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68142,
+      "file_start": 3118,
+      "file_end": 3120,
+      "bytes": "75fb",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "jnz     short loc_10A2B",
+      "gas": "jnz .-3",
+      "ida_loaded_bytes": "75fb",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68144,
+      "file_start": 3120,
+      "file_end": 3121,
+      "bytes": "ec",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "in      al, dx; Video status bits:",
+      "gas": "in al, dx",
+      "ida_loaded_bytes": "ec",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68145,
+      "file_start": 3121,
+      "file_end": 3123,
+      "bytes": "a808",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "test    al, 8",
+      "gas": "test al, 0x8",
+      "ida_loaded_bytes": "a808",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68147,
+      "file_start": 3123,
+      "file_end": 3125,
+      "bytes": "74fb",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "jz      short loc_10A30",
+      "gas": "jz .-3",
+      "ida_loaded_bytes": "74fb",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68149,
+      "file_start": 3125,
+      "file_end": 3126,
+      "bytes": "ec",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "in      al, dx; Video status bits:",
+      "gas": "in al, dx",
+      "ida_loaded_bytes": "ec",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68150,
+      "file_start": 3126,
+      "file_end": 3128,
+      "bytes": "a808",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "test    al, 8",
+      "gas": "test al, 0x8",
+      "ida_loaded_bytes": "a808",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68152,
+      "file_start": 3128,
+      "file_end": 3130,
+      "bytes": "75fb",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "jnz     short loc_10A35",
+      "gas": "jnz .-3",
+      "ida_loaded_bytes": "75fb",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68154,
+      "file_start": 3130,
+      "file_end": 3131,
+      "bytes": "ec",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "in      al, dx; Video status bits:",
+      "gas": "in al, dx",
+      "ida_loaded_bytes": "ec",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68155,
+      "file_start": 3131,
+      "file_end": 3133,
+      "bytes": "a808",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "test    al, 8",
+      "gas": "test al, 0x8",
+      "ida_loaded_bytes": "a808",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68157,
+      "file_start": 3133,
+      "file_end": 3135,
+      "bytes": "74fb",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "jz      short loc_10A3A",
+      "gas": "jz .-3",
+      "ida_loaded_bytes": "74fb",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68159,
+      "file_start": 3135,
+      "file_end": 3138,
+      "bytes": "2e8a3c",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     bh, cs:[si]",
+      "gas": "cs; mov bh, byte ptr [si]",
+      "ida_loaded_bytes": "2e8a3c",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68162,
+      "file_start": 3138,
+      "file_end": 3142,
+      "bytes": "2e8a5401",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     dl, cs:[si+1]",
+      "gas": "cs; mov dl, byte ptr [si+0x1]",
+      "ida_loaded_bytes": "2e8a5401",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68166,
+      "file_start": 3142,
+      "file_end": 3146,
+      "bytes": "2e8a7402",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     dh, cs:[si+2]",
+      "gas": "cs; mov dh, byte ptr [si+0x2]",
+      "ida_loaded_bytes": "2e8a7402",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68170,
+      "file_start": 3146,
+      "file_end": 3148,
+      "bytes": "8ac5",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     al, ch",
+      "gas": "{load} mov al, ch",
+      "ida_loaded_bytes": "8ac5",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68172,
+      "file_start": 3148,
+      "file_end": 3150,
+      "bytes": "8ad9",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     bl, cl",
+      "gas": "{load} mov bl, cl",
+      "ida_loaded_bytes": "8ad9",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68174,
+      "file_start": 3150,
+      "file_end": 3153,
+      "bytes": "e88be1",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "call    sub_1EBDC",
+      "gas": "call .-7794",
+      "ida_loaded_bytes": "e88be1",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68177,
+      "file_start": 3153,
+      "file_end": 3156,
+      "bytes": "83c603",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "add     si, 3",
+      "gas": "add si, 0x3",
+      "ida_loaded_bytes": "83c603",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68180,
+      "file_start": 3156,
+      "file_end": 3158,
+      "bytes": "fec5",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "inc     ch",
+      "gas": "inc ch",
+      "ida_loaded_bytes": "fec5",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68182,
+      "file_start": 3158,
+      "file_end": 3161,
+      "bytes": "80fd10",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "cmp     ch, 10h",
+      "gas": "cmp ch, 0x10",
+      "ida_loaded_bytes": "80fd10",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68185,
+      "file_start": 3161,
+      "file_end": 3163,
+      "bytes": "72e4",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "jb      short loc_10A3F",
+      "gas": "jb .-26",
+      "ida_loaded_bytes": "72e4",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68187,
+      "file_start": 3163,
+      "file_end": 3165,
+      "bytes": "fec9",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "dec     cl",
+      "gas": "dec cl",
+      "ida_loaded_bytes": "fec9",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68189,
+      "file_start": 3165,
+      "file_end": 3167,
+      "bytes": "7dc4",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "jge     short loc_10A23",
+      "gas": "jge .-58",
+      "ida_loaded_bytes": "7dc4",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68191,
+      "file_start": 3167,
+      "file_end": 3168,
+      "bytes": "5e",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "pop     si",
+      "gas": "pop si",
+      "ida_loaded_bytes": "5e",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68192,
+      "file_start": 3168,
+      "file_end": 3169,
+      "bytes": "5a",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "pop     dx",
+      "gas": "pop dx",
+      "ida_loaded_bytes": "5a",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68193,
+      "file_start": 3169,
+      "file_end": 3170,
+      "bytes": "59",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "pop     cx",
+      "gas": "pop cx",
+      "ida_loaded_bytes": "59",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68194,
+      "file_start": 3170,
+      "file_end": 3171,
+      "bytes": "5b",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "pop     bx",
+      "gas": "pop bx",
+      "ida_loaded_bytes": "5b",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68195,
+      "file_start": 3171,
+      "file_end": 3172,
+      "bytes": "58",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "pop     ax",
+      "gas": "pop ax",
+      "ida_loaded_bytes": "58",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 68196,
+      "file_start": 3172,
+      "file_end": 3173,
+      "bytes": "c3",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 2634,
+        "file_end": 3824,
+        "sha256": "8b6a0d67a63ce454fa8d74ead92cb0781389e8e0bce17f2b26c312fe37d54a3d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "retn",
+      "gas": "ret",
+      "ida_loaded_bytes": "c3",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 72881,
+      "file_start": 7857,
+      "file_end": 7862,
+      "bytes": "2e8e160399",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 7114,
+        "file_end": 11033,
+        "sha256": "b8485aea1bca06f609154ba5319b3ed8a4ecc77b64113dfef4c45b84019a0f2d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     ss, cs:word_19903",
+      "gas": "cs; mov ss, word ptr [0x9903]",
+      "ida_loaded_bytes": "2e8e160399",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 72886,
+      "file_start": 7862,
+      "file_end": 7867,
+      "bytes": "2e8b260199",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 7114,
+        "file_end": 11033,
+        "sha256": "b8485aea1bca06f609154ba5319b3ed8a4ecc77b64113dfef4c45b84019a0f2d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     sp, cs:word_19901",
+      "gas": "cs; mov sp, word ptr [0x9901]",
+      "ida_loaded_bytes": "2e8b260199",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 72891,
+      "file_start": 7867,
+      "file_end": 7868,
+      "bytes": "50",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 7114,
+        "file_end": 11033,
+        "sha256": "b8485aea1bca06f609154ba5319b3ed8a4ecc77b64113dfef4c45b84019a0f2d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "push    ax",
+      "gas": "push ax",
+      "ida_loaded_bytes": "50",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 72892,
+      "file_start": 7868,
+      "file_end": 7871,
+      "bytes": "b80200",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 7114,
+        "file_end": 11033,
+        "sha256": "b8485aea1bca06f609154ba5319b3ed8a4ecc77b64113dfef4c45b84019a0f2d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     ax, 2",
+      "gas": "mov ax, 0x2",
+      "ida_loaded_bytes": "b80200",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 72895,
+      "file_start": 7871,
+      "file_end": 7876,
+      "bytes": "9a00000010",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 7114,
+        "file_end": 11033,
+        "sha256": "b8485aea1bca06f609154ba5319b3ed8a4ecc77b64113dfef4c45b84019a0f2d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "call    sub_20000",
+      "gas": "lcall 0x1000, 0x0",
+      "ida_loaded_bytes": "9a00000020",
+      "loader_relocations": [
+        {
+          "file_offset": 7874,
+          "original_word": 4096,
+          "ida_word": 8192
+        }
+      ]
+    },
+    {
+      "ida_linear": 72900,
+      "file_start": 7876,
+      "file_end": 7879,
+      "bytes": "e855ed",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 7114,
+        "file_end": 11033,
+        "sha256": "b8485aea1bca06f609154ba5319b3ed8a4ecc77b64113dfef4c45b84019a0f2d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "call    sub_10A1C",
+      "gas": "call .-4776",
+      "ida_loaded_bytes": "e855ed",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 72903,
+      "file_start": 7879,
+      "file_end": 7880,
+      "bytes": "58",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 7114,
+        "file_end": 11033,
+        "sha256": "b8485aea1bca06f609154ba5319b3ed8a4ecc77b64113dfef4c45b84019a0f2d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "pop     ax",
+      "gas": "pop ax",
+      "ida_loaded_bytes": "58",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 72904,
+      "file_start": 7880,
+      "file_end": 7881,
+      "bytes": "c3",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 7114,
+        "file_end": 11033,
+        "sha256": "b8485aea1bca06f609154ba5319b3ed8a4ecc77b64113dfef4c45b84019a0f2d"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "retn",
+      "gas": "ret",
+      "ida_loaded_bytes": "c3",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125916,
+      "file_start": 60892,
+      "file_end": 60893,
+      "bytes": "51",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "push    cx",
+      "gas": "push cx",
+      "ida_loaded_bytes": "51",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125917,
+      "file_start": 60893,
+      "file_end": 60895,
+      "bytes": "8bca",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     cx, dx",
+      "gas": "{load} mov cx, dx",
+      "ida_loaded_bytes": "8bca",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125919,
+      "file_start": 60895,
+      "file_end": 60898,
+      "bytes": "bac803",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     dx, 3C8h",
+      "gas": "mov dx, 0x3c8",
+      "ida_loaded_bytes": "bac803",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125922,
+      "file_start": 60898,
+      "file_end": 60899,
+      "bytes": "ee",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "out     dx, al",
+      "gas": "out dx, al",
+      "ida_loaded_bytes": "ee",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125923,
+      "file_start": 60899,
+      "file_end": 60902,
+      "bytes": "bac903",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     dx, 3C9h",
+      "gas": "mov dx, 0x3c9",
+      "ida_loaded_bytes": "bac903",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125926,
+      "file_start": 60902,
+      "file_end": 60904,
+      "bytes": "8ac7",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     al, bh",
+      "gas": "{load} mov al, bh",
+      "ida_loaded_bytes": "8ac7",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125928,
+      "file_start": 60904,
+      "file_end": 60906,
+      "bytes": "d0e0",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "shl     al, 1",
+      "gas": "shl al, 0x1",
+      "ida_loaded_bytes": "d0e0",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125930,
+      "file_start": 60906,
+      "file_end": 60908,
+      "bytes": "d0e0",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "shl     al, 1",
+      "gas": "shl al, 0x1",
+      "ida_loaded_bytes": "d0e0",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125932,
+      "file_start": 60908,
+      "file_end": 60910,
+      "bytes": "d0e0",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "shl     al, 1",
+      "gas": "shl al, 0x1",
+      "ida_loaded_bytes": "d0e0",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125934,
+      "file_start": 60910,
+      "file_end": 60912,
+      "bytes": "d0e0",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "shl     al, 1",
+      "gas": "shl al, 0x1",
+      "ida_loaded_bytes": "d0e0",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125936,
+      "file_start": 60912,
+      "file_end": 60914,
+      "bytes": "f6e3",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mul     bl",
+      "gas": "mul bl",
+      "ida_loaded_bytes": "f6e3",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125938,
+      "file_start": 60914,
+      "file_end": 60917,
+      "bytes": "058000",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "add     ax, 80h",
+      "gas": "add ax, 0x80",
+      "ida_loaded_bytes": "058000",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125941,
+      "file_start": 60917,
+      "file_end": 60919,
+      "bytes": "d0e4",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "shl     ah, 1",
+      "gas": "shl ah, 0x1",
+      "ida_loaded_bytes": "d0e4",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125943,
+      "file_start": 60919,
+      "file_end": 60921,
+      "bytes": "d0e4",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "shl     ah, 1",
+      "gas": "shl ah, 0x1",
+      "ida_loaded_bytes": "d0e4",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125945,
+      "file_start": 60921,
+      "file_end": 60923,
+      "bytes": "8afc",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     bh, ah",
+      "gas": "{load} mov bh, ah",
+      "ida_loaded_bytes": "8afc",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125947,
+      "file_start": 60923,
+      "file_end": 60925,
+      "bytes": "8ac5",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     al, ch",
+      "gas": "{load} mov al, ch",
+      "ida_loaded_bytes": "8ac5",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125949,
+      "file_start": 60925,
+      "file_end": 60927,
+      "bytes": "d0e0",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "shl     al, 1",
+      "gas": "shl al, 0x1",
+      "ida_loaded_bytes": "d0e0",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125951,
+      "file_start": 60927,
+      "file_end": 60929,
+      "bytes": "d0e0",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "shl     al, 1",
+      "gas": "shl al, 0x1",
+      "ida_loaded_bytes": "d0e0",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125953,
+      "file_start": 60929,
+      "file_end": 60931,
+      "bytes": "d0e0",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "shl     al, 1",
+      "gas": "shl al, 0x1",
+      "ida_loaded_bytes": "d0e0",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125955,
+      "file_start": 60931,
+      "file_end": 60933,
+      "bytes": "d0e0",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "shl     al, 1",
+      "gas": "shl al, 0x1",
+      "ida_loaded_bytes": "d0e0",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125957,
+      "file_start": 60933,
+      "file_end": 60935,
+      "bytes": "f6e3",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mul     bl",
+      "gas": "mul bl",
+      "ida_loaded_bytes": "f6e3",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125959,
+      "file_start": 60935,
+      "file_end": 60938,
+      "bytes": "058000",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "add     ax, 80h",
+      "gas": "add ax, 0x80",
+      "ida_loaded_bytes": "058000",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125962,
+      "file_start": 60938,
+      "file_end": 60940,
+      "bytes": "d0e4",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "shl     ah, 1",
+      "gas": "shl ah, 0x1",
+      "ida_loaded_bytes": "d0e4",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125964,
+      "file_start": 60940,
+      "file_end": 60942,
+      "bytes": "d0e4",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "shl     ah, 1",
+      "gas": "shl ah, 0x1",
+      "ida_loaded_bytes": "d0e4",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125966,
+      "file_start": 60942,
+      "file_end": 60944,
+      "bytes": "8aec",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     ch, ah",
+      "gas": "{load} mov ch, ah",
+      "ida_loaded_bytes": "8aec",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125968,
+      "file_start": 60944,
+      "file_end": 60946,
+      "bytes": "8ac1",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     al, cl",
+      "gas": "{load} mov al, cl",
+      "ida_loaded_bytes": "8ac1",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125970,
+      "file_start": 60946,
+      "file_end": 60948,
+      "bytes": "d0e0",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "shl     al, 1",
+      "gas": "shl al, 0x1",
+      "ida_loaded_bytes": "d0e0",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125972,
+      "file_start": 60948,
+      "file_end": 60950,
+      "bytes": "d0e0",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "shl     al, 1",
+      "gas": "shl al, 0x1",
+      "ida_loaded_bytes": "d0e0",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125974,
+      "file_start": 60950,
+      "file_end": 60952,
+      "bytes": "d0e0",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "shl     al, 1",
+      "gas": "shl al, 0x1",
+      "ida_loaded_bytes": "d0e0",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125976,
+      "file_start": 60952,
+      "file_end": 60954,
+      "bytes": "d0e0",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "shl     al, 1",
+      "gas": "shl al, 0x1",
+      "ida_loaded_bytes": "d0e0",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125978,
+      "file_start": 60954,
+      "file_end": 60956,
+      "bytes": "f6e3",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mul     bl",
+      "gas": "mul bl",
+      "ida_loaded_bytes": "f6e3",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125980,
+      "file_start": 60956,
+      "file_end": 60959,
+      "bytes": "058000",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "add     ax, 80h",
+      "gas": "add ax, 0x80",
+      "ida_loaded_bytes": "058000",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125983,
+      "file_start": 60959,
+      "file_end": 60961,
+      "bytes": "d0e4",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "shl     ah, 1",
+      "gas": "shl ah, 0x1",
+      "ida_loaded_bytes": "d0e4",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125985,
+      "file_start": 60961,
+      "file_end": 60963,
+      "bytes": "d0e4",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "shl     ah, 1",
+      "gas": "shl ah, 0x1",
+      "ida_loaded_bytes": "d0e4",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125987,
+      "file_start": 60963,
+      "file_end": 60965,
+      "bytes": "8ac4",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     al, ah",
+      "gas": "{load} mov al, ah",
+      "ida_loaded_bytes": "8ac4",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125989,
+      "file_start": 60965,
+      "file_end": 60966,
+      "bytes": "ee",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "out     dx, al",
+      "gas": "out dx, al",
+      "ida_loaded_bytes": "ee",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125990,
+      "file_start": 60966,
+      "file_end": 60968,
+      "bytes": "8ac5",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     al, ch",
+      "gas": "{load} mov al, ch",
+      "ida_loaded_bytes": "8ac5",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125992,
+      "file_start": 60968,
+      "file_end": 60969,
+      "bytes": "ee",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "out     dx, al",
+      "gas": "out dx, al",
+      "ida_loaded_bytes": "ee",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125993,
+      "file_start": 60969,
+      "file_end": 60971,
+      "bytes": "8ac7",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "mov     al, bh",
+      "gas": "{load} mov al, bh",
+      "ida_loaded_bytes": "8ac7",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125995,
+      "file_start": 60971,
+      "file_end": 60972,
+      "bytes": "ee",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "out     dx, al",
+      "gas": "out dx, al",
+      "ida_loaded_bytes": "ee",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125996,
+      "file_start": 60972,
+      "file_end": 60973,
+      "bytes": "59",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "pop     cx",
+      "gas": "pop cx",
+      "ida_loaded_bytes": "59",
+      "loader_relocations": []
+    },
+    {
+      "ida_linear": 125997,
+      "file_start": 60973,
+      "file_end": 60974,
+      "bytes": "c3",
+      "fixed_prior_coverage": true,
+      "published_code_range": {
+        "file_start": 60689,
+        "file_end": 61180,
+        "sha256": "d393396537b91e6c8bd080d23a9af399798e2ae9bf07872a90d55d4a822ecbfd"
+      },
+      "independent_native_assembly_match": true,
+      "original_assembly": "retn",
+      "gas": "ret",
+      "ida_loaded_bytes": "c3",
+      "loader_relocations": []
+    }
+  ],
+  "assembler_verification": {
+    "status": "byte-exact",
+    "instructions": 0,
+    "bytes": 0,
+    "input_instruction_rows": 89,
+    "unique_input_instructions": 89,
+    "covered_input_instructions": 89,
+    "coverage_source": "fixed original 24376 instruction rows plus rectangle370/list83/catalog170",
+    "coverage_inputs": {
+      "workplace/matching-decompilation/assembly/build/source-map.json": {
+        "sha256": "153dbb34dfe8b716808b88cd97f4e8357d58d5a039cf9f3339fe6627e96aeffa",
+        "instruction_count": 24376,
+        "instruction_bytes": 55392
+      },
+      "docs/re/rectangle-handler-code.json": {
+        "sha256": "48669f564ee6907501ea5f6c1a9e527258cc1f3c9ce86f4ef6364b8e5a4a08c9",
+        "instruction_count": 370,
+        "instruction_bytes": 898
+      },
+      "docs/re/c-list-code.json": {
+        "sha256": "f07fc59c566e194ef830fda2b505e0b699b107f92e1c7834944af7061234d8ec",
+        "instruction_count": 83,
+        "instruction_bytes": 215
+      },
+      "docs/re/c-catalog-code.json": {
+        "sha256": "1b751f0ed2eb7f42846d56f94773af67c3fc29c7c1510190269fec6e41a3eb05",
+        "instruction_count": 170,
+        "instruction_bytes": 361
+      }
+    },
+    "instruction_byte_fallbacks": 0,
+    "fixed_prior_instruction_count": 24999,
+    "fixed_prior_instruction_bytes": 56866,
+    "target_filter": "probe.recovery_targets only; navigation functions excluded",
+    "published_manifest": "docs/re/assembly-code-record.json",
+    "published_manifest_sha256": "747b52bf5eb23819e00deab11a673fb5fb06e8e2121ccfe7c5226e4d35dd1d7a",
+    "published_code_source": "tools/c_recovery/KI.code.S",
+    "published_code_source_sha256": "ba58d69492f822c0cc314a755852047d99244f482886baed805f1459f0bec1ef",
+    "independent_reassembly": {
+      "status": "byte-exact",
+      "instructions": 89,
+      "bytes": 179,
+      "source_sha256": "9f29673c10e614470fb0b650a5c68e5a32919732ee36fde6ba747e134d7a0148",
+      "linker_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "binary_sha256": "be10d2be727ddd9bfae5b6c046e06c8ee48bba1d0b48c699bf6fc0ec3dc080ce",
+      "constant_symbols": {},
+      "trials": [
+        {
+          "hint": "",
+          "matched": 78,
+          "remaining": 11
+        },
+        {
+          "hint": "{load} ",
+          "matched": 11,
+          "remaining": 0
+        }
+      ]
+    },
+    "image_id": "sha256:474f41ef91c354dd4754b08ef9302e965271e32417d6fba1772aecca0a5f9e2e",
+    "assembler": "GNU assembler (GNU Binutils for Debian) 2.40",
+    "linker": "GNU ld (GNU Binutils for Debian) 2.40",
+    "generator_sha256": "62a27e8037b79060fc32ef40fb703e73a93f7e5b51581158f1ad86afe1d52efd",
+    "translator_sha256": "92af18f9901460224a02df0764512e8250b54128665cc5631b0ff3bbd7f1a654",
+    "constant_symbols": {}
+  },
+  "loader_relocation_normalization": [
+    {
+      "ida_linear": 72895,
+      "file_start": 7871,
+      "file_end": 7876,
+      "original_function_name": "sub_11CB1",
+      "original_assembly": "call    sub_20000",
+      "original_operands": [
+        {
+          "type": 6,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "sub_20000",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "ida_loaded_bytes": "9a00000020",
+      "file_bytes": "9a00000010",
+      "loader_relocations": [
+        {
+          "file_offset": 7874,
+          "original_word": 4096,
+          "ida_word": 8192
+        }
+      ],
+      "normalization": "verify forward MZ loading, then restore file_bytes in a copied instruction row",
+      "locator_level": "proven"
+    }
+  ],
+  "recovery_targets": [
+    68124,
+    72881,
+    125916
+  ],
+  "navigation_only_targets": [
+    72672,
+    86845,
+    88503,
+    100848
+  ],
+  "original_functions": [
+    {
+      "name": "sub_10A1C",
+      "ida_linear": 68124,
+      "direct_callees": [
+        125916
+      ],
+      "file_sha256": "680775baf03fe54709d7ebf213ba4fe7966148af0931576f98dd7d704e2dc24b"
+    },
+    {
+      "name": "sub_11CB1",
+      "ida_linear": 72881,
+      "direct_callees": [
+        68124,
+        131072
+      ],
+      "file_sha256": "4b9b07ed900cf3b1f71f43a4bc87e7c9cd9723c44f834d0d87fb86ddeff39f6d"
+    },
+    {
+      "name": "sub_1EBDC",
+      "ida_linear": 125916,
+      "direct_callees": [],
+      "file_sha256": "b4b397c372caa833376aa1948c91f1745a1a17831a8d1c546f75aab7fe29e9c7"
+    }
+  ]
+}

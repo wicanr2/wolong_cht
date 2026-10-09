@@ -60,8 +60,9 @@
 | 2026-10-09；據點資訊／軍團面板十C函式 | O0／O2各700完整裝置與十二錯版；獨立原參數／KYOGRF／ABI核對 | 313 C／48raw；310指令已有覆蓋，軍團指令上游／自然長程／C機器碼未代證 | [re/122](docs/re/122-c-detail-panels-restoration.md)、[spec/242](docs/spec/242-c-detail-panels.md)、來源／覆蓋／收據 |
 | 2026-10-09；軍團行軍選點與狀態分派25C函式 | O0／O2各1,320完整裝置與十六錯版；固定raw RNG、原版分派前snapshot與五筆MZ驗證 | 338 C／48raw；取消仍分派、日期停而動畫可更新；自然長程／非法資料／C機器碼未代證 | [re/123](docs/re/123-c-march-command-restoration.md)、[spec/243](docs/spec/243-c-march-command.md)、來源／覆蓋／收據 |
 | 2026-10-09；政略指令與進言理由29C函式 | O0／O2各3,348完整裝置、十六錯版與六筆MZ驗證 | 367 C／48raw；原版先經獨立模型；原TSR／自然長程／C機器碼未代證 | [re/124](docs/re/124-c-strategy-command-restoration.md)、[spec/244](docs/spec/244-c-strategy-command.md)、來源／覆蓋／收據 |
+| 2026-10-09；非區域退出與DAC淡出3C函式 | O0／O2各2,520完整裝置、八錯版、十二原版frame快照與獨立地圖hash | 370 C／48raw；信賴度借位真返回outer006A；完整mainloop／實機時間／C機器碼未代證 | [re/125](docs/re/125-c-nonlocal-exit-restoration.md)、[spec/245](docs/spec/245-c-nonlocal-exit.md)、來源／覆蓋／收據 |
 
-持續 Goal 為完成整個 matching decompilation；目前有 24,999 條指令的整檔組語基準與 367 個 C 函式、四十八個原始 code 入口，不能據此宣布完整 C 還原完成。
+持續 Goal 為完成整個 matching decompilation；目前有 24,999 條指令的整檔組語基準與 370 個 C 函式、四十八個原始 code 入口，不能據此宣布完整 C 還原完成。
 使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b`、熱區 `a8605b5` 、版控組語／VGA `47e16c9` 、對齊貼圖 `6139f9e` 、矩形／計量 `c7dc8df`、顯示分派 `4d31520`、字形 `85f06de` 與數字 `06fff77` 已推到 origin/main。
 
 未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。
@@ -726,6 +727,15 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 ---
 
 ## 6. 已被推翻的斷言
+
+### 2026-10-09：右鍵表基址與落下返回勘誤
+
+**2026-10-09 勘誤（re/125，已證實）**：只校正原版定位，尚不宣稱右鍵動作或完整主迴圈 C 驗收。
+
+| 舊斷言 | 原始定位與推翻原因 | 證據 |
+|---|---|---|
+| re/71、re/47 以 `funcs_159C0` 後綴作為表基址，衍生表重疊與前九筆異常的推測 | `0x159C0` 原 bytes `FF 97 06 5A` 的解碼位移為 `5A06`；真正右表是 `0x15A06` 的 26 個 word，舊取樣誤讀指令 bytes | [re/125](docs/re/125-c-nonlocal-exit-restoration.md) |
+| `sub_159B7` 函式邊界內沒有 RET，返回方式未明 | `0x159CE MOV ES,AX` 後落入 `0x159D0 RET`；保留原函式邊界與 return stub，不能僅依單一函式匯出判斷 | [re/125](docs/re/125-c-nonlocal-exit-restoration.md) |
 
 ### 2026-10-09：戰略入口舊斷言勘誤
 

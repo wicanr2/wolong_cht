@@ -2036,3 +2036,9 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - 固定DOS/V KI.EXE與IDA9.4線性位址身分見[re/124](docs/re/124-c-strategy-command-restoration.md)。
 - 原版任務閘門、武將自述DS／完整byte、隊列DL比較、理由budget／mask／CF與有號財政數字保留原碼。
 - O0／O2各3,348完整裝置及十六錯版；六筆MZ與934指令獨立組譯通過。原TSR音效／自然長程／C機器碼不代證。
+
+## 2026-10-09：非區域退出三函式原生 C
+
+- 固定DOS/V KI.EXE與IDA9.4身分見 [re/125](docs/re/125-c-nonlocal-exit-restoration.md)；11CB1／10A1C／1EBDC共89指令179bytes。
+- 原CALL10067→11BF6建立真outerframe，完整VGA/RAM snapshot兩側獨立；SS/SP恢復、17級/272色writer、原RET至006A與C ABI unwind通過2520組／八錯版。
+- D44缺漏的opcode破壞及retired scene frame兩類準備／模型錯誤均已按原bytes修正；正確右鍵表15A06與落下159D0另保留回鏈。
