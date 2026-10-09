@@ -240,6 +240,8 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 
 軍團行軍選點與分派的 C 見[re/123](123-c-march-command-restoration.md)，規格見[spec/243](../spec/243-c-march-command.md)。
 
+政略指令與進言理由的 C 見 [re/124](124-c-strategy-command-restoration.md)，規格見 [spec/244](../spec/244-c-strategy-command.md)。
+
 ## 9. 怎麼加一份新筆記
 
 1. 編號流水，一個發現一份。標題寫「回答什麼問題」不是「讀了哪支函式」。

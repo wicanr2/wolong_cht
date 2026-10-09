@@ -29,6 +29,7 @@ sub_16366:
     mov  cx, 0FFFFh / call sub_18853     ; ★ 右鍵才走這裡：清狀態列 → retn
     retn
 loc_16380:
+    push ds                             ; 保留入口 DS
     mov  ds, cs:word_10D52
     mov  cx, 1A8h
     cmp  byte ptr [bx+1Dh], 0FFh         ; 是俘虜嗎（+0x1D ≠ 0xFF）
@@ -44,8 +45,14 @@ loc_16380:
 loc_163B3:
     mov  ah, [bx+1Eh] / mov al, [bx+1]   ; 變體 ＋ 肖像
     call sub_18810
+    pop  ds                             ; 以原入口 DS 重開清單
     jmp  short sub_16366                 ; ★ 回開頭（連狀態列都重設一次）
 ```
+
+**2026-10-09 勘誤（re/124，已證實）**：`sub_16366` 的 `0x16380`／`0x163BC`
+保存並恢復 DS，舊節錄漏掉這兩條。原版已有 `sub_175FA` 武將清單與
+`sub_178A7` 勢力清單；武將自陳組為 `1A8`–`1AB`，不是直接索引 #424／#425。
+原始 ABI 與分支見 [re/124](../re/124-c-strategy-command-restoration.md)。
 
 四組台詞（`0x196 + (組−0x196)×8`，[`../re/25`](../re/25-message-variants-and-personnel.md) §1）：
 

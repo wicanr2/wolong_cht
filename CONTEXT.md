@@ -59,8 +59,9 @@
 | 2026-10-09；人事選單與任免七 C 函式 | O0／O2各2,332完整裝置與十二錯版；全合法索引／非零經費／16次live table修改 | 303 C／48 raw；185指令已有組語覆蓋，自然撥款長程與C機器碼仍未驗證 | [re/121](docs/re/121-c-personnel-restoration.md)、[spec/241](docs/spec/241-c-personnel.md)、來源／指令覆蓋／收據 |
 | 2026-10-09；據點資訊／軍團面板十C函式 | O0／O2各700完整裝置與十二錯版；獨立原參數／KYOGRF／ABI核對 | 313 C／48raw；310指令已有覆蓋，軍團指令上游／自然長程／C機器碼未代證 | [re/122](docs/re/122-c-detail-panels-restoration.md)、[spec/242](docs/spec/242-c-detail-panels.md)、來源／覆蓋／收據 |
 | 2026-10-09；軍團行軍選點與狀態分派25C函式 | O0／O2各1,320完整裝置與十六錯版；固定raw RNG、原版分派前snapshot與五筆MZ驗證 | 338 C／48raw；取消仍分派、日期停而動畫可更新；自然長程／非法資料／C機器碼未代證 | [re/123](docs/re/123-c-march-command-restoration.md)、[spec/243](docs/spec/243-c-march-command.md)、來源／覆蓋／收據 |
+| 2026-10-09；政略指令與進言理由29C函式 | O0／O2各3,348完整裝置、十六錯版與六筆MZ驗證 | 367 C／48raw；原版先經獨立模型；原TSR／自然長程／C機器碼未代證 | [re/124](docs/re/124-c-strategy-command-restoration.md)、[spec/244](docs/spec/244-c-strategy-command.md)、來源／覆蓋／收據 |
 
-持續 Goal 為完成整個 matching decompilation；目前有 24,999 條指令的整檔組語基準與 338 個 C 函式、四十八個原始 code 入口，不能據此宣布完整 C 還原完成。
+持續 Goal 為完成整個 matching decompilation；目前有 24,999 條指令的整檔組語基準與 367 個 C 函式、四十八個原始 code 入口，不能據此宣布完整 C 還原完成。
 使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b`、熱區 `a8605b5` 、版控組語／VGA `47e16c9` 、對齊貼圖 `6139f9e` 、矩形／計量 `c7dc8df`、顯示分派 `4d31520`、字形 `85f06de` 與數字 `06fff77` 已推到 origin/main。
 
 未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。
@@ -725,6 +726,18 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 ---
 
 ## 6. 已被推翻的斷言
+
+### 2026-10-09：戰略入口舊斷言勘誤
+
+**2026-10-09 勘誤（re/124，已證實）**：以下依固定 IDA 原始指令訂正；
+本輪正常返回 C 閉包已依 spec/244 驗收；不以舊 CONFORMED 記錄代證正式 Go 或非區域跳出。
+
+| 舊斷言 | 原始定位與更正 | 證據 |
+|---|---|---|
+| spec/111 把整個進言阻擋稱為 remake 新增規則，並把閘門放在 `sub_16EC9` | `sub_16224`／`0x1622E` 已比較君主 `+0x17` 與 0，任意非零值都顯示 #64 並不開選單；`sub_16EC9` 是預備兵試算 | [re/124](docs/re/124-c-strategy-command-restoration.md) |
+| spec/124 認為原版武將／勢力只有地圖游標；re/22 把武將台詞讀成 #424／#425 | `sub_16366` 呼叫 `sub_175FA`，訊息組為 `1A8`–`1AB`，`0x16380`／`0x163BC` 保存恢復 DS；`sub_163BF` 呼叫 `sub_178A7` | [re/124](docs/re/124-c-strategy-command-restoration.md) |
+| spec/126 把「據點一覽鏡頭不動」延伸到接受據點之後 | `sub_162FB` 的 `0x1633C`–`0x1635C` 是兩分支共用的移鏡頭、重畫及情報卡尾段；等待清單的殘影只適用當時時點 | [re/124](docs/re/124-c-strategy-command-restoration.md) |
+| spec/124 以兩次 XOR 宣稱畫面回到原狀 | `sub_161CA` 的 `0x1620A` 先呼叫 `sub_11C8D`，才再次 XOR；矩形參數受保存，不代表完整畫面或 world RAM 復原 | [re/124](docs/re/124-c-strategy-command-restoration.md) |
 
 ### 2026-10-09：行軍取消、游標與解散的語意界線
 

@@ -7020,19 +7020,6 @@
     },
     {
       "file": "docs/spec/124-menu-highlight-xor.md",
-      "item": "武將／勢力兩格的反白時機",
-      "status": "**八格都接了**（§3.5），但這兩格**沒有原版擷取**：原版走狀態列提示 ＋ 地圖游標，remake 開的是一覽表，流程本身不同。其餘六格各有一張原版擷取對過 0 px",
-      "section": "5. 未解",
-      "domain": "其他",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-c677a01b6c1b0ed3cd73",
-      "classification": "evidence-only",
-      "github_issue": null,
-      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
-    },
-    {
-      "file": "docs/spec/124-menu-highlight-xor.md",
       "item": "`sub_10B46` 的暫存器序列",
       "status": "只確認了它寫 `0Ch` 給繪圖控制器、而結果逐點等於 XOR 12。**中間那幾個 port 寫入沒有逐行讀**",
       "section": "5. 未解",
@@ -13335,6 +13322,71 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "行軍原C局部閉包及固定raw RNG已驗；自然長程、非法資料與原C機器碼保留證據界線。"
+    },
+    {
+      "file": "docs/re/124-c-strategy-command-restoration.md",
+      "item": "自然長程、原 TSR 音效與原 C 機器碼",
+      "status": "局部函式矩陣不代證",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-232ec7f429b8fd97c812",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "局部政略C閉包與受控INT61狀態已驗；自然長程、原TSR音效與原C機器碼保留證據界線。"
+    },
+    {
+      "file": "docs/re/124-c-strategy-command-restoration.md",
+      "item": "信賴度扣減借位後的非區域跳出",
+      "status": "`sub_11CB1` 恢復啟動堆疊，另需完整 caller 與退出狀態驗證",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-6264f4ef07dababad02d",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "局部政略C閉包與受控INT61狀態已驗；自然長程、原TSR音效與原C機器碼保留證據界線。"
+    },
+    {
+      "file": "docs/spec/124-menu-highlight-xor.md",
+      "item": "武將／勢力兩格的反白時機",
+      "status": "**八格都接了**（§3.5）；原版已有 `sub_175FA`／`sub_178A7` 清單，舊流程差異解釋已撤回。本頁仍不把其餘六格的截圖外推為這兩格的逐像素證據，原始控制流見 [re/124](../re/124-c-strategy-command-restoration.md)",
+      "section": "5. 未解",
+      "domain": "其他",
+      "verdict": "實測",
+      "occurrence": 0,
+      "id": "oq-a065a7f089e422135f2c",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "取代舊指紋oq-c677a01b6c1b0ed3cd73。re124原指令證實武將／勢力已有清單，撤回舊流程差異解釋；原版反白畫面取樣界線仍保留。"
+    },
+    {
+      "file": "docs/spec/244-c-strategy-command.md",
+      "item": "自然長程、原 TSR 音效與原 C 機器碼",
+      "status": "本輪不代證",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-c7df2ff91665a585b6a2",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "局部政略C閉包與受控INT61狀態已驗；自然長程、原TSR音效與原C機器碼保留證據界線。"
+    },
+    {
+      "file": "docs/spec/244-c-strategy-command.md",
+      "item": "信賴度借位後非區域跳出",
+      "status": "另需原啟動堆疊與完整退出狀態",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-c0f98147513d5a85b59a",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "局部政略C閉包與受控INT61狀態已驗；自然長程、原TSR音效與原C機器碼保留證據界線。"
     }
   ]
 }

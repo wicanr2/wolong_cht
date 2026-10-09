@@ -1271,53 +1271,53 @@ ret
 .org 0x4f5
 sub_102F5:
 # IDA 0x102f5; file 0x4f5; locator=proven; cmp     cs:byte_1020F, al
-# ⚠ 函式 sub_102F5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_102F5; [proven] 原音效優先度與INT61狀態bit2閘門，硬體回覆另列受控條件; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; cmp byte ptr [0x20f], al
 .org 0x4fa
 # IDA 0x102fa; file 0x4fa; locator=proven; jnb     short loc_10306
-# ⚠ 函式 sub_102F5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_102F5; [proven] 原音效優先度與INT61狀態bit2閘門，硬體回覆另列受控條件; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+12
 .org 0x4fc
 # IDA 0x102fc; file 0x4fc; locator=proven; push    ax
-# ⚠ 函式 sub_102F5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_102F5; [proven] 原音效優先度與INT61狀態bit2閘門，硬體回覆另列受控條件; 出處: docs/re/124-c-strategy-command-restoration.md
 push ax
 .org 0x4fd
 # IDA 0x102fd; file 0x4fd; locator=proven; mov     ah, 0Ah
-# ⚠ 函式 sub_102F5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_102F5; [proven] 原音效優先度與INT61狀態bit2閘門，硬體回覆另列受控條件; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ah, 0xa
 .org 0x4ff
 # IDA 0x102ff; file 0x4ff; locator=proven; int     61h
-# ⚠ 函式 sub_102F5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_102F5; [proven] 原音效優先度與INT61狀態bit2閘門，硬體回覆另列受控條件; 出處: docs/re/124-c-strategy-command-restoration.md
 int 0x61
 .org 0x501
 # IDA 0x10301; file 0x501; locator=proven; test    al, 4
-# ⚠ 函式 sub_102F5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_102F5; [proven] 原音效優先度與INT61狀態bit2閘門，硬體回覆另列受控條件; 出處: docs/re/124-c-strategy-command-restoration.md
 test al, 0x4
 .org 0x503
 # IDA 0x10303; file 0x503; locator=proven; pop     ax
-# ⚠ 函式 sub_102F5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_102F5; [proven] 原音效優先度與INT61狀態bit2閘門，硬體回覆另列受控條件; 出處: docs/re/124-c-strategy-command-restoration.md
 pop ax
 .org 0x504
 # IDA 0x10304; file 0x504; locator=proven; jnz     short locret_1030E
-# ⚠ 函式 sub_102F5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_102F5; [proven] 原音效優先度與INT61狀態bit2閘門，硬體回覆另列受控條件; 出處: docs/re/124-c-strategy-command-restoration.md
 jnz .+10
 .org 0x506
 loc_10306:
 # IDA 0x10306; file 0x506; locator=proven; mov     cs:byte_1020F, al
-# ⚠ 函式 sub_102F5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_102F5; [proven] 原音效優先度與INT61狀態bit2閘門，硬體回覆另列受控條件; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov byte ptr [0x20f], al
 .org 0x50a
 # IDA 0x1030a; file 0x50a; locator=proven; mov     ah, 5
-# ⚠ 函式 sub_102F5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_102F5; [proven] 原音效優先度與INT61狀態bit2閘門，硬體回覆另列受控條件; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ah, 0x5
 .org 0x50c
 # IDA 0x1030c; file 0x50c; locator=proven; int     61h
-# ⚠ 函式 sub_102F5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_102F5; [proven] 原音效優先度與INT61狀態bit2閘門，硬體回覆另列受控條件; 出處: docs/re/124-c-strategy-command-restoration.md
 int 0x61
 .org 0x50e
 locret_1030E:
 # IDA 0x1030e; file 0x50e; locator=proven; retn
-# ⚠ 函式 sub_102F5; [unknown] 未附加語意; 出處: 無
+# 函式 sub_102F5; [proven] 原音效優先度與INT61狀態bit2閘門，硬體回覆另列受控條件; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x50f
 sub_1030F:
@@ -15793,35 +15793,35 @@ ret
 .org 0x320e
 sub_1300E:
 # IDA 0x1300e; file 0x320e; locator=proven; push    cx
-# ⚠ 函式 sub_1300E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1300E; [proven] 以SI勢力offset寫AH，委派既有四byte隊列writer; 出處: docs/re/124-c-strategy-command-restoration.md
 push cx
 .org 0x320f
 # IDA 0x1300f; file 0x320f; locator=proven; mov     cx, si
-# ⚠ 函式 sub_1300E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1300E; [proven] 以SI勢力offset寫AH，委派既有四byte隊列writer; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov cx, si
 .org 0x3211
 # IDA 0x13011; file 0x3211; locator=proven; shl     cx, 1
-# ⚠ 函式 sub_1300E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1300E; [proven] 以SI勢力offset寫AH，委派既有四byte隊列writer; 出處: docs/re/124-c-strategy-command-restoration.md
 shl cx, 0x1
 .org 0x3213
 # IDA 0x13013; file 0x3213; locator=proven; shl     cx, 1
-# ⚠ 函式 sub_1300E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1300E; [proven] 以SI勢力offset寫AH，委派既有四byte隊列writer; 出處: docs/re/124-c-strategy-command-restoration.md
 shl cx, 0x1
 .org 0x3215
 # IDA 0x13015; file 0x3215; locator=proven; mov     ah, ch
-# ⚠ 函式 sub_1300E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1300E; [proven] 以SI勢力offset寫AH，委派既有四byte隊列writer; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov ah, ch
 .org 0x3217
 # IDA 0x13017; file 0x3217; locator=proven; call    sub_1301C
-# ⚠ 函式 sub_1300E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1300E; [proven] 以SI勢力offset寫AH，委派既有四byte隊列writer; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+5
 .org 0x321a
 # IDA 0x1301a; file 0x321a; locator=proven; pop     cx
-# ⚠ 函式 sub_1300E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1300E; [proven] 以SI勢力offset寫AH，委派既有四byte隊列writer; 出處: docs/re/124-c-strategy-command-restoration.md
 pop cx
 .org 0x321b
 # IDA 0x1301b; file 0x321b; locator=proven; retn
-# ⚠ 函式 sub_1300E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1300E; [proven] 以SI勢力offset寫AH，委派既有四byte隊列writer; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x321c
 sub_1301C:
@@ -15930,141 +15930,142 @@ ret
 .org 0x324e
 sub_1304E:
 # IDA 0x1304e; file 0x324e; locator=proven; push    ds
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 push ds
 .org 0x324f
 # IDA 0x1304f; file 0x324f; locator=proven; push    ax
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 push ax
 .org 0x3250
 # IDA 0x13050; file 0x3250; locator=proven; push    bx
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 push bx
 .org 0x3251
 # IDA 0x13051; file 0x3251; locator=proven; mov     bx, si
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov bx, si
 .org 0x3253
 # IDA 0x13053; file 0x3253; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 shl bx, 0x1
 .org 0x3255
 # IDA 0x13055; file 0x3255; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 shl bx, 0x1
 .org 0x3257
 # IDA 0x13057; file 0x3257; locator=proven; mov     ah, bh
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov ah, bh
 .org 0x3259
 # IDA 0x13059; file 0x3259; locator=proven; jmp     short loc_1305E
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .+5
 .org 0x325b
 # IDA 0x1305b; file 0x325b; locator=proven; push    ds
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 push ds
 .org 0x325c
 # IDA 0x1305c; file 0x325c; locator=proven; push    ax
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 push ax
 .org 0x325d
 # IDA 0x1305d; file 0x325d; locator=proven; push    bx
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 push bx
 .org 0x325e
 loc_1305E:
 # IDA 0x1305e; file 0x325e; locator=proven; mov     ds, cs:word_10D56
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov ds, word ptr [0xd56]
 .org 0x3263
 # IDA 0x13063; file 0x3263; locator=proven; mov     bx, cs:word_10D20
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov bx, word ptr [0xd20]
 .org 0x3268
 loc_13068:
 # IDA 0x13068; file 0x3268; locator=proven; cmp     [bx], ax
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp word ptr [bx], ax
 .org 0x326a
 # IDA 0x1306a; file 0x326a; locator=proven; jnz     short loc_13080
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 jnz .+22
 .org 0x326c
 # IDA 0x1306c; file 0x326c; locator=proven; cmp     dl, 0FFh
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp dl, 0xff
 .org 0x326f
 # IDA 0x1306f; file 0x326f; locator=proven; jz      short loc_13076
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 jz .+7
 .org 0x3271
 # IDA 0x13071; file 0x3271; locator=proven; cmp     [bx+2], dl
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp byte ptr [bx+0x2], dl
 .org 0x3274
 # IDA 0x13074; file 0x3274; locator=proven; jnz     short loc_13080
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 jnz .+12
 .org 0x3276
 loc_13076:
 # IDA 0x13076; file 0x3276; locator=proven; cmp     dh, 0FFh
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp dh, 0xff
 .org 0x3279
 # IDA 0x13079; file 0x3279; locator=proven; jz      short loc_1308C
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 jz .+19
 .org 0x327b
 # IDA 0x1307b; file 0x327b; locator=proven; cmp     [bx+3], dl
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
+# operand 1 dl; [proven] 原操作數DL，DH只決定是否略過此比較; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp byte ptr [bx+0x3], dl
 .org 0x327e
 # IDA 0x1307e; file 0x327e; locator=proven; jz      short loc_1308C
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 jz .+14
 .org 0x3280
 loc_13080:
 # IDA 0x13080; file 0x3280; locator=proven; add     bx, 4
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 add bx, 0x4
 .org 0x3283
 # IDA 0x13083; file 0x3283; locator=proven; cmp     bx, 400h
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp bx, 0x400
 .org 0x3287
 # IDA 0x13087; file 0x3287; locator=proven; jb      short loc_13068
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .-31
 .org 0x3289
 # IDA 0x13089; file 0x3289; locator=proven; stc
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 stc
 .org 0x328a
 # IDA 0x1308a; file 0x328a; locator=proven; jmp     short loc_1308D
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .+3
 .org 0x328c
 loc_1308C:
 # IDA 0x1308c; file 0x328c; locator=proven; clc
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 clc
 .org 0x328d
 loc_1308D:
 # IDA 0x1308d; file 0x328d; locator=proven; pop     bx
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 pop bx
 .org 0x328e
 # IDA 0x1308e; file 0x328e; locator=proven; pop     ax
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 pop ax
 .org 0x328f
 # IDA 0x1308f; file 0x328f; locator=proven; pop     ds
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 pop ds
 .org 0x3290
 # IDA 0x13090; file 0x3290; locator=proven; retn
-# ⚠ 函式 sub_1304E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1304E; [proven] 原256項隊列搜尋，DH非FF時仍以DL比較記錄+3; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x3291
 sub_13091:
@@ -19736,277 +19737,277 @@ ret
 .org 0x3a30
 sub_13830:
 # IDA 0x13830; file 0x3a30; locator=proven; push    ds
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 push ds
 .org 0x3a31
 # IDA 0x13831; file 0x3a31; locator=proven; push    es
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 push es
 .org 0x3a32
 # IDA 0x13832; file 0x3a32; locator=proven; push    bp
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 push bp
 .org 0x3a33
 # IDA 0x13833; file 0x3a33; locator=proven; call    sub_102C2
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-13681
 .org 0x3a36
 # IDA 0x13836; file 0x3a36; locator=proven; call    sub_13C1E
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+1000
 .org 0x3a39
 # IDA 0x13839; file 0x3a39; locator=proven; sub     sp, 6
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 sub sp, 0x6
 .org 0x3a3c
 # IDA 0x1383c; file 0x3a3c; locator=proven; mov     bp, sp
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov bp, sp
 .org 0x3a3e
 # IDA 0x1383e; file 0x3a3e; locator=proven; mov     [bp+0], cx
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 mov word ptr [bp], cx
 .org 0x3a41
 # IDA 0x13841; file 0x3a41; locator=proven; mov     [bp+2], ax
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 mov word ptr [bp+0x2], ax
 .org 0x3a44
 # IDA 0x13844; file 0x3a44; locator=proven; mov     [bp+4], dl
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 mov byte ptr [bp+0x4], dl
 .org 0x3a47
 # IDA 0x13847; file 0x3a47; locator=proven; mov     al, 0
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x0
 .org 0x3a49
 # IDA 0x13849; file 0x3a49; locator=proven; call    sub_13D09
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+1216
 .org 0x3a4c
 # IDA 0x1384c; file 0x3a4c; locator=proven; mov     al, 6
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x6
 .org 0x3a4e
 # IDA 0x1384e; file 0x3a4e; locator=proven; call    sub_10241
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-13837
 .org 0x3a51
 # IDA 0x13851; file 0x3a51; locator=proven; mov     cx, [bp+0]
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, word ptr [bp]
 .org 0x3a54
 # IDA 0x13854; file 0x3a54; locator=proven; call    sub_13C99
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+1093
 .org 0x3a57
 # IDA 0x13857; file 0x3a57; locator=proven; mov     cx, [bp+0]
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, word ptr [bp]
 .org 0x3a5a
 # IDA 0x1385a; file 0x3a5a; locator=proven; add     cx, 3
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 add cx, 0x3
 .org 0x3a5d
 # IDA 0x1385d; file 0x3a5d; locator=proven; call    sub_13CDC
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+1151
 .org 0x3a60
 # IDA 0x13860; file 0x3a60; locator=proven; mov     al, [bp+2]
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, byte ptr [bp+0x2]
 .org 0x3a63
 # IDA 0x13863; file 0x3a63; locator=proven; mov     cl, al
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov cl, al
 .org 0x3a65
 # IDA 0x13865; file 0x3a65; locator=proven; shl     cl, 1
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 shl cl, 0x1
 .org 0x3a67
 # IDA 0x13867; file 0x3a67; locator=proven; add     cl, al
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} add cl, al
 .org 0x3a69
 # IDA 0x13869; file 0x3a69; locator=proven; xor     ch, ch
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} xor ch, ch
 .org 0x3a6b
 # IDA 0x1386b; file 0x3a6b; locator=proven; add     cx, [bp+0]
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 add cx, word ptr [bp]
 .org 0x3a6e
 # IDA 0x1386e; file 0x3a6e; locator=proven; add     cx, 4
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 add cx, 0x4
 .org 0x3a71
 # IDA 0x13871; file 0x3a71; locator=proven; cmp     al, 3
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp al, 0x3
 .org 0x3a73
 # IDA 0x13873; file 0x3a73; locator=proven; jb      short loc_1387C
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+9
 .org 0x3a75
 # IDA 0x13875; file 0x3a75; locator=proven; jz      short loc_13894
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 jz .+31
 .org 0x3a77
 # IDA 0x13877; file 0x3a77; locator=proven; mov     cx, 53h
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x53
 .org 0x3a7a
 # IDA 0x1387a; file 0x3a7a; locator=proven; jmp     short loc_1389E
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .+36
 .org 0x3a7c
 loc_1387C:
 # IDA 0x1387c; file 0x3a7c; locator=proven; cmp     al, 1
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp al, 0x1
 .org 0x3a7e
 # IDA 0x1387e; file 0x3a7e; locator=proven; jb      short loc_13894
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+22
 .org 0x3a80
 # IDA 0x13880; file 0x3a80; locator=proven; jz      short loc_138A4
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 jz .+36
 .org 0x3a82
 # IDA 0x13882; file 0x3a82; locator=proven; call    sub_13C99
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+1047
 .org 0x3a85
 # IDA 0x13885; file 0x3a85; locator=proven; add     word ptr [bp+0], 10h
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 add word ptr [bp], 0x10
 .org 0x3a89
 # IDA 0x13889; file 0x3a89; locator=proven; call    sub_13B5A
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+721
 .org 0x3a8c
 # IDA 0x1388c; file 0x3a8c; locator=proven; jb      short loc_138B2
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+38
 .org 0x3a8e
 # IDA 0x1388e; file 0x3a8e; locator=proven; mov     al, 14h
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x14
 .org 0x3a90
 # IDA 0x13890; file 0x3a90; locator=proven; shr     al, 1
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 shr al, 0x1
 .org 0x3a92
 # IDA 0x13892; file 0x3a92; locator=proven; jmp     short loc_138A9
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .+23
 .org 0x3a94
 loc_13894:
 # IDA 0x13894; file 0x3a94; locator=proven; mov     al, 14h
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x14
 .org 0x3a96
 # IDA 0x13896; file 0x3a96; locator=proven; push    cx
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 push cx
 .org 0x3a97
 # IDA 0x13897; file 0x3a97; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0xffff
 .org 0x3a9a
 # IDA 0x1389a; file 0x3a9a; locator=proven; call    sub_13DC9
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+1327
 .org 0x3a9d
 # IDA 0x1389d; file 0x3a9d; locator=proven; pop     cx
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 pop cx
 .org 0x3a9e
 loc_1389E:
 # IDA 0x1389e; file 0x3a9e; locator=proven; call    sub_13C99
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+1019
 .org 0x3aa1
 # IDA 0x138a1; file 0x3aa1; locator=proven; stc
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 stc
 .org 0x3aa2
 # IDA 0x138a2; file 0x3aa2; locator=proven; jmp     short loc_138B2
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .+16
 .org 0x3aa4
 loc_138A4:
 # IDA 0x138a4; file 0x3aa4; locator=proven; call    sub_13C99
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+1013
 .org 0x3aa7
 # IDA 0x138a7; file 0x3aa7; locator=proven; mov     al, 14h
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x14
 .org 0x3aa9
 loc_138A9:
 # IDA 0x138a9; file 0x3aa9; locator=proven; push    cx
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 push cx
 .org 0x3aaa
 # IDA 0x138aa; file 0x3aaa; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0xffff
 .org 0x3aad
 # IDA 0x138ad; file 0x3aad; locator=proven; call    sub_13D91
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+1252
 .org 0x3ab0
 # IDA 0x138b0; file 0x3ab0; locator=proven; pop     cx
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 pop cx
 .org 0x3ab1
 # IDA 0x138b1; file 0x3ab1; locator=proven; clc
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 clc
 .org 0x3ab2
 loc_138B2:
 # IDA 0x138b2; file 0x3ab2; locator=proven; lahf
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 lahf
 .org 0x3ab3
 # IDA 0x138b3; file 0x3ab3; locator=proven; call    sub_102C2
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-13809
 .org 0x3ab6
 # IDA 0x138b6; file 0x3ab6; locator=proven; call    sub_13D45
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+1167
 .org 0x3ab9
 # IDA 0x138b9; file 0x3ab9; locator=proven; call    sub_11D46
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-7027
 .org 0x3abc
 # IDA 0x138bc; file 0x3abc; locator=proven; add     sp, 6
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 add sp, 0x6
 .org 0x3abf
 # IDA 0x138bf; file 0x3abf; locator=proven; call    sub_19321
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+23138
 .org 0x3ac2
 # IDA 0x138c2; file 0x3ac2; locator=proven; sahf
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 sahf
 .org 0x3ac3
 # IDA 0x138c3; file 0x3ac3; locator=proven; pop     bp
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 pop bp
 .org 0x3ac4
 # IDA 0x138c4; file 0x3ac4; locator=proven; pop     es
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 pop es
 .org 0x3ac5
 # IDA 0x138c5; file 0x3ac5; locator=proven; pop     ds
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 pop ds
 .org 0x3ac6
 # IDA 0x138c6; file 0x3ac6; locator=proven; retn
-# ⚠ 函式 sub_13830; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13830; [proven] 原君主進言場景，結果與理由控制信賴度及CF; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x3ac7
 sub_138C7:
@@ -21121,77 +21122,77 @@ ret
 .org 0x3d5a
 sub_13B5A:
 # IDA 0x13b5a; file 0x3d5a; locator=proven; mov     byte ptr [bp+5], 0
-# ⚠ 函式 sub_13B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B5A; [proven] 原五項理由選單循環，清已嘗試mask並以AH1判成功; 出處: docs/re/124-c-strategy-command-restoration.md
 mov byte ptr [bp+0x5], 0x0
 .org 0x3d5e
 loc_13B5E:
 # IDA 0x13b5e; file 0x3d5e; locator=proven; mov     al, 5
-# ⚠ 函式 sub_13B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B5A; [proven] 原五項理由選單循環，清已嘗試mask並以AH1判成功; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x5
 .org 0x3d60
 # IDA 0x13b60; file 0x3d60; locator=proven; call    sub_13B7E
-# ⚠ 函式 sub_13B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B5A; [proven] 原五項理由選單循環，清已嘗試mask並以AH1判成功; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+30
 .org 0x3d63
 # IDA 0x13b63; file 0x3d63; locator=proven; push    ax
-# ⚠ 函式 sub_13B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B5A; [proven] 原五項理由選單循環，清已嘗試mask並以AH1判成功; 出處: docs/re/124-c-strategy-command-restoration.md
 push ax
 .org 0x3d64
 # IDA 0x13b64; file 0x3d64; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_13B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B5A; [proven] 原五項理由選單循環，清已嘗試mask並以AH1判成功; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} xor ah, ah
 .org 0x3d66
 # IDA 0x13b66; file 0x3d66; locator=proven; add     ax, [bp+0]
-# ⚠ 函式 sub_13B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B5A; [proven] 原五項理由選單循環，清已嘗試mask並以AH1判成功; 出處: docs/re/124-c-strategy-command-restoration.md
 add ax, word ptr [bp]
 .org 0x3d69
 # IDA 0x13b69; file 0x3d69; locator=proven; inc     ax
-# ⚠ 函式 sub_13B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B5A; [proven] 原五項理由選單循環，清已嘗試mask並以AH1判成功; 出處: docs/re/124-c-strategy-command-restoration.md
 inc ax
 .org 0x3d6a
 # IDA 0x13b6a; file 0x3d6a; locator=proven; mov     cx, ax
-# ⚠ 函式 sub_13B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B5A; [proven] 原五項理由選單循環，清已嘗試mask並以AH1判成功; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov cx, ax
 .org 0x3d6c
 # IDA 0x13b6c; file 0x3d6c; locator=proven; call    sub_13CDC
-# ⚠ 函式 sub_13B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B5A; [proven] 原五項理由選單循環，清已嘗試mask並以AH1判成功; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+368
 .org 0x3d6f
 # IDA 0x13b6f; file 0x3d6f; locator=proven; pop     ax
-# ⚠ 函式 sub_13B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B5A; [proven] 原五項理由選單循環，清已嘗試mask並以AH1判成功; 出處: docs/re/124-c-strategy-command-restoration.md
 pop ax
 .org 0x3d70
 # IDA 0x13b70; file 0x3d70; locator=proven; call    sub_13BA9
-# ⚠ 函式 sub_13B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B5A; [proven] 原五項理由選單循環，清已嘗試mask並以AH1判成功; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+57
 .org 0x3d73
 # IDA 0x13b73; file 0x3d73; locator=proven; jnb     short loc_13B5E
-# ⚠ 函式 sub_13B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B5A; [proven] 原五項理由選單循環，清已嘗試mask並以AH1判成功; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .-21
 .org 0x3d75
 # IDA 0x13b75; file 0x3d75; locator=proven; cmp     ah, 1
-# ⚠ 函式 sub_13B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B5A; [proven] 原五項理由選單循環，清已嘗試mask並以AH1判成功; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp ah, 0x1
 .org 0x3d78
 # IDA 0x13b78; file 0x3d78; locator=proven; jz      short loc_13B7C
-# ⚠ 函式 sub_13B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B5A; [proven] 原五項理由選單循環，清已嘗試mask並以AH1判成功; 出處: docs/re/124-c-strategy-command-restoration.md
 jz .+4
 .org 0x3d7a
 # IDA 0x13b7a; file 0x3d7a; locator=proven; stc
-# ⚠ 函式 sub_13B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B5A; [proven] 原五項理由選單循環，清已嘗試mask並以AH1判成功; 出處: docs/re/124-c-strategy-command-restoration.md
 stc
 .org 0x3d7b
 # IDA 0x13b7b; file 0x3d7b; locator=proven; retn
-# ⚠ 函式 sub_13B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B5A; [proven] 原五項理由選單循環，清已嘗試mask並以AH1判成功; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x3d7c
 loc_13B7C:
 # IDA 0x13b7c; file 0x3d7c; locator=proven; clc
-# ⚠ 函式 sub_13B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B5A; [proven] 原五項理由選單循環，清已嘗試mask並以AH1判成功; 出處: docs/re/124-c-strategy-command-restoration.md
 clc
 .org 0x3d7d
 # IDA 0x13b7d; file 0x3d7d; locator=proven; retn
-# ⚠ 函式 sub_13B5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B5A; [proven] 原五項理由選單循環，清已嘗試mask並以AH1判成功; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x3d7e
 sub_13B7E:
@@ -21266,304 +21267,305 @@ ret
 .org 0x3da9
 sub_13BA9:
 # IDA 0x13ba9; file 0x3da9; locator=proven; mov     cl, al
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov cl, al
 .org 0x3dab
 # IDA 0x13bab; file 0x3dab; locator=proven; inc     cl
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 inc cl
 .org 0x3dad
 # IDA 0x13bad; file 0x3dad; locator=proven; cmp     al, 4
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp al, 0x4
 .org 0x3daf
 # IDA 0x13baf; file 0x3daf; locator=proven; jnz     short loc_13BB9
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 jnz .+10
 .org 0x3db1
 # IDA 0x13bb1; file 0x3db1; locator=proven; mov     ah, 4
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ah, 0x4
 .org 0x3db3
 # IDA 0x13bb3; file 0x3db3; locator=proven; mov     bx, 2Ah
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 mov bx, 0x2a
 .org 0x3db6
 # IDA 0x13bb6; file 0x3db6; locator=proven; stc
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 stc
 .org 0x3db7
 # IDA 0x13bb7; file 0x3db7; locator=proven; jmp     short loc_13C13
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .+92
 .org 0x3db9
 loc_13BB9:
 # IDA 0x13bb9; file 0x3db9; locator=proven; mov     ch, [bp+5]
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ch, byte ptr [bp+0x5]
 .org 0x3dbc
 # IDA 0x13bbc; file 0x3dbc; locator=proven; shr     ch, cl
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 shr ch, cl
 .org 0x3dbe
 # IDA 0x13bbe; file 0x3dbe; locator=proven; jnb     short loc_13BC5
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+7
 .org 0x3dc0
 # IDA 0x13bc0; file 0x3dc0; locator=proven; mov     ah, 3
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ah, 0x3
 .org 0x3dc2
 # IDA 0x13bc2; file 0x3dc2; locator=proven; clc
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 clc
 .org 0x3dc3
 # IDA 0x13bc3; file 0x3dc3; locator=proven; jmp     short loc_13BF1
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .+46
 .org 0x3dc5
 loc_13BC5:
 # IDA 0x13bc5; file 0x3dc5; locator=proven; mov     ah, 80h
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ah, 0x80
 .org 0x3dc7
 # IDA 0x13bc7; file 0x3dc7; locator=proven; rol     ah, cl
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 rol ah, cl
 .org 0x3dc9
 # IDA 0x13bc9; file 0x3dc9; locator=proven; or      [bp+5], ah
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 or byte ptr [bp+0x5], ah
 .org 0x3dcc
 # IDA 0x13bcc; file 0x3dcc; locator=proven; mov     ch, [bp+4]
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ch, byte ptr [bp+0x4]
 .org 0x3dcf
 # IDA 0x13bcf; file 0x3dcf; locator=proven; shr     ch, cl
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 shr ch, cl
 .org 0x3dd1
 # IDA 0x13bd1; file 0x3dd1; locator=proven; jb      short loc_13BE4
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+19
 .org 0x3dd3
 # IDA 0x13bd3; file 0x3dd3; locator=proven; push    ax
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 push ax
 .org 0x3dd4
 # IDA 0x13bd4; file 0x3dd4; locator=proven; push    cx
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 push cx
 .org 0x3dd5
 # IDA 0x13bd5; file 0x3dd5; locator=proven; mov     al, 14h
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x14
 .org 0x3dd7
 # IDA 0x13bd7; file 0x3dd7; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0xffff
 .org 0x3dda
 # IDA 0x13bda; file 0x3dda; locator=proven; call    sub_13DC9
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+495
 .org 0x3ddd
 # IDA 0x13bdd; file 0x3ddd; locator=proven; pop     cx
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 pop cx
 .org 0x3dde
 # IDA 0x13bde; file 0x3dde; locator=proven; pop     ax
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 pop ax
 .org 0x3ddf
 # IDA 0x13bdf; file 0x3ddf; locator=proven; mov     ah, 0
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ah, 0x0
 .org 0x3de1
 # IDA 0x13be1; file 0x3de1; locator=proven; stc
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 stc
 .org 0x3de2
 # IDA 0x13be2; file 0x3de2; locator=proven; jmp     short loc_13BF1
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .+15
 .org 0x3de4
 loc_13BE4:
 # IDA 0x13be4; file 0x3de4; locator=proven; dec     byte ptr [bp+3]
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
+# operand 0 byte ptr [bp+3]; [proven] 原理由budget byte遞減，可回繞；原CF另由後續設定; 出處: docs/re/124-c-strategy-command-restoration.md
 dec byte ptr [bp+0x3]
 .org 0x3de7
 # IDA 0x13be7; file 0x3de7; locator=proven; jz      short loc_13BEE
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 jz .+7
 .org 0x3de9
 # IDA 0x13be9; file 0x3de9; locator=proven; mov     ah, 2
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ah, 0x2
 .org 0x3deb
 # IDA 0x13beb; file 0x3deb; locator=proven; clc
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 clc
 .org 0x3dec
 # IDA 0x13bec; file 0x3dec; locator=proven; jmp     short loc_13BF1
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .+5
 .org 0x3dee
 loc_13BEE:
 # IDA 0x13bee; file 0x3dee; locator=proven; mov     ah, 1
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ah, 0x1
 .org 0x3df0
 # IDA 0x13bf0; file 0x3df0; locator=proven; stc
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 stc
 .org 0x3df1
 loc_13BF1:
 # IDA 0x13bf1; file 0x3df1; locator=proven; pushf
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 pushf
 .org 0x3df2
 # IDA 0x13bf2; file 0x3df2; locator=proven; mov     bx, 2Dh
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 mov bx, 0x2d
 .org 0x3df5
 # IDA 0x13bf5; file 0x3df5; locator=proven; cmp     ah, 3
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp ah, 0x3
 .org 0x3df8
 # IDA 0x13bf8; file 0x3df8; locator=proven; jnb     short loc_13C14
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+28
 .org 0x3dfa
 # IDA 0x13bfa; file 0x3dfa; locator=proven; mov     bl, al
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov bl, al
 .org 0x3dfc
 # IDA 0x13bfc; file 0x3dfc; locator=proven; shl     bl, 1
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 shl bl, 0x1
 .org 0x3dfe
 # IDA 0x13bfe; file 0x3dfe; locator=proven; shl     bl, 1
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 shl bl, 0x1
 .org 0x3e00
 # IDA 0x13c00; file 0x3e00; locator=proven; shl     bl, 1
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 shl bl, 0x1
 .org 0x3e02
 # IDA 0x13c02; file 0x3e02; locator=proven; add     bl, al
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} add bl, al
 .org 0x3e04
 # IDA 0x13c04; file 0x3e04; locator=proven; mov     bh, ah
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov bh, ah
 .org 0x3e06
 # IDA 0x13c06; file 0x3e06; locator=proven; shl     bh, 1
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 shl bh, 0x1
 .org 0x3e08
 # IDA 0x13c08; file 0x3e08; locator=proven; add     bh, ah
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} add bh, ah
 .org 0x3e0a
 # IDA 0x13c0a; file 0x3e0a; locator=proven; add     bl, bh
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} add bl, bh
 .org 0x3e0c
 # IDA 0x13c0c; file 0x3e0c; locator=proven; add     bl, 6
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 add bl, 0x6
 .org 0x3e0f
 # IDA 0x13c0f; file 0x3e0f; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} xor bh, bh
 .org 0x3e11
 # IDA 0x13c11; file 0x3e11; locator=proven; jmp     short loc_13C14
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .+3
 .org 0x3e13
 loc_13C13:
 # IDA 0x13c13; file 0x3e13; locator=proven; pushf
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 pushf
 .org 0x3e14
 loc_13C14:
 # IDA 0x13c14; file 0x3e14; locator=proven; mov     cx, bx
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov cx, bx
 .org 0x3e16
 # IDA 0x13c16; file 0x3e16; locator=proven; add     cx, [bp+0]
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 add cx, word ptr [bp]
 .org 0x3e19
 # IDA 0x13c19; file 0x3e19; locator=proven; call    sub_13C99
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+128
 .org 0x3e1c
 # IDA 0x13c1c; file 0x3e1c; locator=proven; popf
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 popf
 .org 0x3e1d
 # IDA 0x13c1d; file 0x3e1d; locator=proven; retn
-# ⚠ 函式 sub_13BA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13BA9; [proven] 原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x3e1e
 sub_13C1E:
 # IDA 0x13c1e; file 0x3e1e; locator=proven; push    dx
-# ⚠ 函式 sub_13C1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13C1E; [proven] 信賴度E0／90／20門檻回AH1／2／3／4; 出處: docs/re/124-c-strategy-command-restoration.md
 push dx
 .org 0x3e1f
 # IDA 0x13c1f; file 0x3e1f; locator=proven; mov     dl, cs:byte_10D00
-# ⚠ 函式 sub_13C1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13C1E; [proven] 信賴度E0／90／20門檻回AH1／2／3／4; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov dl, byte ptr [0xd00]
 .org 0x3e24
 # IDA 0x13c24; file 0x3e24; locator=proven; mov     ah, 1
-# ⚠ 函式 sub_13C1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13C1E; [proven] 信賴度E0／90／20門檻回AH1／2／3／4; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ah, 0x1
 .org 0x3e26
 # IDA 0x13c26; file 0x3e26; locator=proven; cmp     dl, 0E0h
-# ⚠ 函式 sub_13C1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13C1E; [proven] 信賴度E0／90／20門檻回AH1／2／3／4; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp dl, 0xe0
 .org 0x3e29
 # IDA 0x13c29; file 0x3e29; locator=proven; jnb     short loc_13C3B
-# ⚠ 函式 sub_13C1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13C1E; [proven] 信賴度E0／90／20門檻回AH1／2／3／4; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+18
 .org 0x3e2b
 # IDA 0x13c2b; file 0x3e2b; locator=proven; mov     ah, 2
-# ⚠ 函式 sub_13C1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13C1E; [proven] 信賴度E0／90／20門檻回AH1／2／3／4; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ah, 0x2
 .org 0x3e2d
 # IDA 0x13c2d; file 0x3e2d; locator=proven; cmp     dl, 90h
-# ⚠ 函式 sub_13C1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13C1E; [proven] 信賴度E0／90／20門檻回AH1／2／3／4; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp dl, 0x90
 .org 0x3e30
 # IDA 0x13c30; file 0x3e30; locator=proven; jnb     short loc_13C3B
-# ⚠ 函式 sub_13C1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13C1E; [proven] 信賴度E0／90／20門檻回AH1／2／3／4; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+11
 .org 0x3e32
 # IDA 0x13c32; file 0x3e32; locator=proven; mov     ah, 3
-# ⚠ 函式 sub_13C1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13C1E; [proven] 信賴度E0／90／20門檻回AH1／2／3／4; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ah, 0x3
 .org 0x3e34
 # IDA 0x13c34; file 0x3e34; locator=proven; cmp     dl, 20h
-# ⚠ 函式 sub_13C1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13C1E; [proven] 信賴度E0／90／20門檻回AH1／2／3／4; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp dl, 0x20
 .org 0x3e37
 # IDA 0x13c37; file 0x3e37; locator=proven; jnb     short loc_13C3B
-# ⚠ 函式 sub_13C1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13C1E; [proven] 信賴度E0／90／20門檻回AH1／2／3／4; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+4
 .org 0x3e39
 # IDA 0x13c39; file 0x3e39; locator=proven; mov     ah, 4
-# ⚠ 函式 sub_13C1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13C1E; [proven] 信賴度E0／90／20門檻回AH1／2／3／4; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ah, 0x4
 .org 0x3e3b
 loc_13C3B:
 # IDA 0x13c3b; file 0x3e3b; locator=proven; pop     dx
-# ⚠ 函式 sub_13C1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13C1E; [proven] 信賴度E0／90／20門檻回AH1／2／3／4; 出處: docs/re/124-c-strategy-command-restoration.md
 pop dx
 .org 0x3e3c
 # IDA 0x13c3c; file 0x3e3c; locator=proven; retn
-# ⚠ 函式 sub_13C1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13C1E; [proven] 信賴度E0／90／20門檻回AH1／2／3／4; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x3e3d
 sub_13C3D:
@@ -22335,97 +22337,97 @@ ret
 .org 0x3f91
 sub_13D91:
 # IDA 0x13d91; file 0x3f91; locator=proven; push    ds
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 push ds
 .org 0x3f92
 # IDA 0x13d92; file 0x3f92; locator=proven; push    ax
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 push ax
 .org 0x3f93
 # IDA 0x13d93; file 0x3f93; locator=proven; push    bx
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 push bx
 .org 0x3f94
 # IDA 0x13d94; file 0x3f94; locator=proven; push    cx
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 push cx
 .org 0x3f95
 # IDA 0x13d95; file 0x3f95; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x3f9a
 # IDA 0x13d9a; file 0x3f9a; locator=proven; add     cs:byte_10D00, al
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; add byte ptr [0xd00], al
 .org 0x3f9f
 # IDA 0x13d9f; file 0x3f9f; locator=proven; jnb     short loc_13DA7
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+8
 .org 0x3fa1
 # IDA 0x13da1; file 0x3fa1; locator=proven; mov     cs:byte_10D00, 0FFh
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov byte ptr [0xd00], 0xff
 .org 0x3fa7
 loc_13DA7:
 # IDA 0x13da7; file 0x3fa7; locator=proven; mov     al, 1
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x1
 .org 0x3fa9
 # IDA 0x13da9; file 0x3fa9; locator=proven; call    sub_102F5
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-15028
 .org 0x3fac
 # IDA 0x13dac; file 0x3fac; locator=proven; cmp     cx, 0FFFFh
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp cx, 0xffff
 .org 0x3faf
 # IDA 0x13daf; file 0x3faf; locator=proven; jz      short loc_13DBF
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 jz .+16
 .org 0x3fb1
 # IDA 0x13db1; file 0x3fb1; locator=proven; call    sub_187FF
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+19022
 .org 0x3fb4
 # IDA 0x13db4; file 0x3fb4; locator=proven; mov     ah, [bx+425Eh]
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ah, byte ptr [bx+0x425e]
 .org 0x3fb8
 # IDA 0x13db8; file 0x3fb8; locator=proven; mov     al, [bx+4241h]
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, byte ptr [bx+0x4241]
 .org 0x3fbc
 # IDA 0x13dbc; file 0x3fbc; locator=proven; call    sub_18810
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+19028
 .org 0x3fbf
 loc_13DBF:
 # IDA 0x13dbf; file 0x3fbf; locator=proven; mov     al, 2
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x2
 .org 0x3fc1
 # IDA 0x13dc1; file 0x3fc1; locator=proven; call    sub_15E80
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+8383
 .org 0x3fc4
 # IDA 0x13dc4; file 0x3fc4; locator=proven; pop     cx
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 pop cx
 .org 0x3fc5
 # IDA 0x13dc5; file 0x3fc5; locator=proven; pop     bx
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 pop bx
 .org 0x3fc6
 # IDA 0x13dc6; file 0x3fc6; locator=proven; pop     ax
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 pop ax
 .org 0x3fc7
 # IDA 0x13dc7; file 0x3fc7; locator=proven; pop     ds
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 pop ds
 .org 0x3fc8
 # IDA 0x13dc8; file 0x3fc8; locator=proven; retn
-# ⚠ 函式 sub_13D91; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13D91; [proven] 原信賴度飽和增加與提示刷新; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x3fc9
 sub_13DC9:
@@ -38089,223 +38091,224 @@ ret
 .org 0x63ca
 sub_161CA:
 # IDA 0x161ca; file 0x63ca; locator=proven; mov     ax, cx
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov ax, cx
 .org 0x63cc
 # IDA 0x161cc; file 0x63cc; locator=proven; sub     ax, 18h
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 sub ax, offset imm_at_161CC
 .org 0x63cf
 # IDA 0x161cf; file 0x63cf; locator=proven; jb      short locret_16213
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+68
 .org 0x63d1
 # IDA 0x161d1; file 0x63d1; locator=proven; cmp     ax, 180h
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp ax, 0x180
 .org 0x63d4
 # IDA 0x161d4; file 0x63d4; locator=proven; jnb     short locret_16213
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+63
 .org 0x63d6
 # IDA 0x161d6; file 0x63d6; locator=proven; mov     cl, 30h
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cl, 0x30
 .org 0x63d8
 # IDA 0x161d8; file 0x63d8; locator=proven; div     cl
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 div cl
 .org 0x63da
 # IDA 0x161da; file 0x63da; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} xor ah, ah
 .org 0x63dc
 # IDA 0x161dc; file 0x63dc; locator=proven; mov     dx, ax
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov dx, ax
 .org 0x63de
 # IDA 0x161de; file 0x63de; locator=proven; mul     cl
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 mul cl
 .org 0x63e0
 # IDA 0x161e0; file 0x63e0; locator=proven; xchg    ax, dx
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 xchg ax, dx
 .org 0x63e1
 # IDA 0x161e1; file 0x63e1; locator=proven; add     dx, 18h
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 add dx, 0x18
 .org 0x63e4
 # IDA 0x161e4; file 0x63e4; locator=proven; mov     bx, 28h
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 mov bx, 0x28
 .org 0x63e7
 # IDA 0x161e7; file 0x63e7; locator=proven; mov     si, 30h
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 mov si, 0x30
 .org 0x63ea
 # IDA 0x161ea; file 0x63ea; locator=proven; mov     di, 10h
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 mov di, 0x10
 .org 0x63ed
 # IDA 0x161ed; file 0x63ed; locator=proven; push    dx
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 push dx
 .org 0x63ee
 # IDA 0x161ee; file 0x63ee; locator=proven; push    bx
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 push bx
 .org 0x63ef
 # IDA 0x161ef; file 0x63ef; locator=proven; push    si
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 push si
 .org 0x63f0
 # IDA 0x161f0; file 0x63f0; locator=proven; push    di
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 push di
 .org 0x63f1
 # IDA 0x161f1; file 0x63f1; locator=proven; call    sub_101B4
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-24637
 .org 0x63f4
 # IDA 0x161f4; file 0x63f4; locator=proven; call    sub_10B46
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-22190
 .org 0x63f7
 # IDA 0x161f7; file 0x63f7; locator=proven; call    sub_101DB
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-24604
 .org 0x63fa
 # IDA 0x161fa; file 0x63fa; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 shl ax, 0x1
 .org 0x63fc
 # IDA 0x161fc; file 0x63fc; locator=proven; mov     bx, ax
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov bx, ax
 .org 0x63fe
 # IDA 0x161fe; file 0x63fe; locator=proven; call    cs:funcs_161FE[bx]
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; call word ptr [bx+0x6214]
 .org 0x6403
 # IDA 0x16203; file 0x6403; locator=proven; pop     di
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 pop di
 .org 0x6404
 # IDA 0x16204; file 0x6404; locator=proven; pop     si
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 pop si
 .org 0x6405
 # IDA 0x16205; file 0x6405; locator=proven; pop     bx
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 pop bx
 .org 0x6406
 # IDA 0x16206; file 0x6406; locator=proven; pop     dx
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 pop dx
 .org 0x6407
 # IDA 0x16207; file 0x6407; locator=proven; call    sub_101B4
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-24659
 .org 0x640a
 # IDA 0x1620a; file 0x640a; locator=proven; call    sub_11C8D
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-17789
 .org 0x640d
 # IDA 0x1620d; file 0x640d; locator=proven; call    sub_10B46
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-22215
 .org 0x6410
 # IDA 0x16210; file 0x6410; locator=proven; call    sub_101DB
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-24629
 .org 0x6413
 locret_16213:
 # IDA 0x16213; file 0x6413; locator=proven; retn
-# ⚠ 函式 sub_161CA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_161CA; [proven] 原八項政略指令列CX24至407，48像素欄與XOR前後重畫; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x6424
 sub_16224:
 # IDA 0x16224; file 0x6424; locator=proven; mov     ax, ds
-# ⚠ 函式 sub_16224; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16224; [proven] 君主記錄+17任意非零阻擋全部進言，空閒才開五項選單; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ax, ds
 .org 0x6426
 # IDA 0x16226; file 0x6426; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_16224; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16224; [proven] 君主記錄+17任意非零阻擋全部進言，空閒才開五項選單; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x642b
 # IDA 0x1622b; file 0x642b; locator=proven; call    sub_187FF
-# ⚠ 函式 sub_16224; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16224; [proven] 君主記錄+17任意非零阻擋全部進言，空閒才開五項選單; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+9684
 .org 0x642e
 # IDA 0x1622e; file 0x642e; locator=proven; cmp     byte ptr [bx+4257h], 0
-# ⚠ 函式 sub_16224; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16224; [proven] 君主記錄+17任意非零阻擋全部進言，空閒才開五項選單; 出處: docs/re/124-c-strategy-command-restoration.md
+# operand 0 byte ptr [bx+4257h]; [proven] 君主原記錄+17任意非零值阻擋整個進言選單; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp byte ptr [bx+0x4257], 0x0
 .org 0x6433
 # IDA 0x16233; file 0x6433; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_16224; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16224; [proven] 君主記錄+17任意非零阻擋全部進言，空閒才開五項選單; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ds, ax
 .org 0x6435
 # IDA 0x16235; file 0x6435; locator=proven; jz      short loc_16241
-# ⚠ 函式 sub_16224; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16224; [proven] 君主記錄+17任意非零阻擋全部進言，空閒才開五項選單; 出處: docs/re/124-c-strategy-command-restoration.md
 jz .+12
 .org 0x6437
 # IDA 0x16237; file 0x6437; locator=proven; mov     al, 93h
-# ⚠ 函式 sub_16224; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16224; [proven] 君主記錄+17任意非零阻擋全部進言，空閒才開五項選單; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x93
 .org 0x6439
 # IDA 0x16239; file 0x6439; locator=proven; mov     cx, 40h
-# ⚠ 函式 sub_16224; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16224; [proven] 君主記錄+17任意非零阻擋全部進言，空閒才開五項選單; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x40
 .org 0x643c
 # IDA 0x1623c; file 0x643c; locator=proven; call    sub_18810
-# ⚠ 函式 sub_16224; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16224; [proven] 君主記錄+17任意非零阻擋全部進言，空閒才開五項選單; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+9684
 .org 0x643f
 # IDA 0x1623f; file 0x643f; locator=proven; jmp     short locret_1625A
-# ⚠ 函式 sub_16224; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16224; [proven] 君主記錄+17任意非零阻擋全部進言，空閒才開五項選單; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .+27
 .org 0x6441
 loc_16241:
 # IDA 0x16241; file 0x6441; locator=proven; mov     ax, 5
-# ⚠ 函式 sub_16224; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16224; [proven] 君主記錄+17任意非零阻擋全部進言，空閒才開五項選單; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ax, 0x5
 .org 0x6444
 # IDA 0x16244; file 0x6444; locator=proven; mov     cx, 4Dh
-# ⚠ 函式 sub_16224; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16224; [proven] 君主記錄+17任意非零阻擋全部進言，空閒才開五項選單; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x4d
 .org 0x6447
 # IDA 0x16247; file 0x6447; locator=proven; mov     dx, 400h
-# ⚠ 函式 sub_16224; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16224; [proven] 君主記錄+17任意非零阻擋全部進言，空閒才開五項選單; 出處: docs/re/124-c-strategy-command-restoration.md
 mov dx, 0x400
 .org 0x644a
 # IDA 0x1624a; file 0x644a; locator=proven; call    sub_193E9
-# ⚠ 函式 sub_16224; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16224; [proven] 君主記錄+17任意非零阻擋全部進言，空閒才開五項選單; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+12703
 .org 0x644d
 # IDA 0x1624d; file 0x644d; locator=proven; jb      short locret_1625A
-# ⚠ 函式 sub_16224; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16224; [proven] 君主記錄+17任意非零阻擋全部進言，空閒才開五項選單; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+13
 .org 0x644f
 # IDA 0x1624f; file 0x644f; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_16224; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16224; [proven] 君主記錄+17任意非零阻擋全部進言，空閒才開五項選單; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} xor ah, ah
 .org 0x6451
 # IDA 0x16251; file 0x6451; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_16224; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16224; [proven] 君主記錄+17任意非零阻擋全部進言，空閒才開五項選單; 出處: docs/re/124-c-strategy-command-restoration.md
 shl ax, 0x1
 .org 0x6453
 # IDA 0x16253; file 0x6453; locator=proven; mov     bx, ax
-# ⚠ 函式 sub_16224; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16224; [proven] 君主記錄+17任意非零阻擋全部進言，空閒才開五項選單; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov bx, ax
 .org 0x6455
 # IDA 0x16255; file 0x6455; locator=proven; call    cs:funcs_16255[bx]
-# ⚠ 函式 sub_16224; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16224; [proven] 君主記錄+17任意非零阻擋全部進言，空閒才開五項選單; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; call word ptr [bx+0x625b]
 .org 0x645a
 locret_1625A:
 # IDA 0x1625a; file 0x645a; locator=proven; retn
-# ⚠ 函式 sub_16224; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16224; [proven] 君主記錄+17任意非零阻擋全部進言，空閒才開五項選單; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x6465
 sub_16265:
@@ -38356,2319 +38359,2322 @@ ret
 .org 0x6488
 sub_16288:
 # IDA 0x16288; file 0x6488; locator=proven; mov     cx, 1
-# ⚠ 函式 sub_16288; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16288; [proven] 原玩家編成入口，CX1委派既有編成控制器; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x1
 .org 0x648b
 # IDA 0x1628b; file 0x648b; locator=proven; call    sub_16C5E
-# ⚠ 函式 sub_16288; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16288; [proven] 原玩家編成入口，CX1委派既有編成控制器; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+2515
 .org 0x648e
 # IDA 0x1628e; file 0x648e; locator=proven; retn
-# ⚠ 函式 sub_16288; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16288; [proven] 原玩家編成入口，CX1委派既有編成控制器; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x648f
 sub_1628F:
 # IDA 0x1628f; file 0x648f; locator=proven; mov     ax, 2
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ax, 0x2
 .org 0x6492
 # IDA 0x16292; file 0x6492; locator=proven; mov     cx, 4Fh
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x4f
 .org 0x6495
 # IDA 0x16295; file 0x6495; locator=proven; mov     dx, 40Ch
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 mov dx, 0x40c
 .org 0x6498
 # IDA 0x16298; file 0x6498; locator=proven; call    sub_193E9
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+12625
 .org 0x649b
 # IDA 0x1629b; file 0x649b; locator=proven; jnb     short loc_1629E
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+3
 .org 0x649d
 # IDA 0x1629d; file 0x649d; locator=proven; retn
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x649e
 loc_1629E:
 # IDA 0x1629e; file 0x649e; locator=proven; and     al, al
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} and al, al
 .org 0x64a0
 # IDA 0x162a0; file 0x64a0; locator=proven; jz      short loc_162A4
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 jz .+4
 .org 0x64a2
 # IDA 0x162a2; file 0x64a2; locator=proven; jmp     short loc_162D2
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .+48
 .org 0x64a4
 loc_162A4:
 # IDA 0x162a4; file 0x64a4; locator=proven; call    sub_12078
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-16940
 .org 0x64a7
 # IDA 0x162a7; file 0x64a7; locator=proven; mov     cx, 16h
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x16
 .org 0x64aa
 # IDA 0x162aa; file 0x64aa; locator=proven; call    sub_18853
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+9641
 .org 0x64ad
 # IDA 0x162ad; file 0x64ad; locator=proven; call    sub_1716D
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+3776
 .org 0x64b0
 # IDA 0x162b0; file 0x64b0; locator=proven; pushf
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 pushf
 .org 0x64b1
 # IDA 0x162b1; file 0x64b1; locator=proven; call    sub_120D6
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-16859
 .org 0x64b4
 # IDA 0x162b4; file 0x64b4; locator=proven; popf
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 popf
 .org 0x64b5
 # IDA 0x162b5; file 0x64b5; locator=proven; jb      short loc_162CB
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+22
 .org 0x64b7
 # IDA 0x162b7; file 0x64b7; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x64bc
 # IDA 0x162bc; file 0x64bc; locator=proven; mov     dx, [bx+10h]
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 mov dx, word ptr [bx+0x10]
 .org 0x64bf
 # IDA 0x162bf; file 0x64bf; locator=proven; mov     bx, [bx+12h]
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 mov bx, word ptr [bx+0x12]
 .org 0x64c2
 # IDA 0x162c2; file 0x64c2; locator=proven; mov     ax, 14h
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ax, 0x14
 .org 0x64c5
 # IDA 0x162c5; file 0x64c5; locator=proven; mov     cx, 0Ch
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0xc
 .org 0x64c8
 # IDA 0x162c8; file 0x64c8; locator=proven; call    sub_12151
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-16759
 .org 0x64cb
 loc_162CB:
 # IDA 0x162cb; file 0x64cb; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0xffff
 .org 0x64ce
 # IDA 0x162ce; file 0x64ce; locator=proven; call    sub_18853
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+9605
 .org 0x64d1
 # IDA 0x162d1; file 0x64d1; locator=proven; retn
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x64d2
 loc_162D2:
 # IDA 0x162d2; file 0x64d2; locator=proven; call    sub_12078
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-16986
 .org 0x64d5
 loc_162D5:
 # IDA 0x162d5; file 0x64d5; locator=proven; mov     cx, 2
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x2
 .org 0x64d8
 # IDA 0x162d8; file 0x64d8; locator=proven; call    sub_18853
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+9595
 .org 0x64db
 # IDA 0x162db; file 0x64db; locator=proven; call    sub_1716D
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+3730
 .org 0x64de
 # IDA 0x162de; file 0x64de; locator=proven; jb      short loc_162F1
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+19
 .org 0x64e0
 # IDA 0x162e0; file 0x64e0; locator=proven; mov     si, bx
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov si, bx
 .org 0x64e2
 # IDA 0x162e2; file 0x64e2; locator=proven; sub     si, 2240h
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 sub si, 0x2240
 .org 0x64e6
 # IDA 0x162e6; file 0x64e6; locator=proven; call    sub_120D6
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-16912
 .org 0x64e9
 # IDA 0x162e9; file 0x64e9; locator=proven; call    sub_17F90
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+7335
 .org 0x64ec
 # IDA 0x162ec; file 0x64ec; locator=proven; call    sub_12078
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-17012
 .org 0x64ef
 # IDA 0x162ef; file 0x64ef; locator=proven; jmp     short loc_162D5
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .-26
 .org 0x64f1
 loc_162F1:
 # IDA 0x162f1; file 0x64f1; locator=proven; call    sub_120D6
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-16923
 .org 0x64f4
 # IDA 0x162f4; file 0x64f4; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0xffff
 .org 0x64f7
 # IDA 0x162f7; file 0x64f7; locator=proven; call    sub_18853
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+9564
 .org 0x64fa
 # IDA 0x162fa; file 0x64fa; locator=proven; retn
-# ⚠ 函式 sub_1628F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1628F; [proven] 原軍團位置與行軍兩項入口，位置一次、行軍可重選; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x64fb
 sub_162FB:
 # IDA 0x162fb; file 0x64fb; locator=proven; mov     ax, 2
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ax, 0x2
 .org 0x64fe
 # IDA 0x162fe; file 0x64fe; locator=proven; mov     cx, 52h
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x52
 .org 0x6501
 # IDA 0x16301; file 0x6501; locator=proven; mov     dx, 40Fh
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 mov dx, 0x40f
 .org 0x6504
 # IDA 0x16304; file 0x6504; locator=proven; call    sub_193E9
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+12517
 .org 0x6507
 # IDA 0x16307; file 0x6507; locator=proven; jnb     short loc_1630A
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+3
 .org 0x6509
 # IDA 0x16309; file 0x6509; locator=proven; retn
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x650a
 loc_1630A:
 # IDA 0x1630a; file 0x650a; locator=proven; and     al, al
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} and al, al
 .org 0x650c
 # IDA 0x1630c; file 0x650c; locator=proven; jnz     short loc_16329
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 jnz .+29
 .org 0x650e
 # IDA 0x1630e; file 0x650e; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x6513
 # IDA 0x16313; file 0x6513; locator=proven; mov     bx, cs:word_10CFD
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov bx, word ptr [0xcfd]
 .org 0x6518
 # IDA 0x16318; file 0x6518; locator=proven; mov     bh, [bx+3]
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 mov bh, byte ptr [bx+0x3]
 .org 0x651b
 # IDA 0x1631b; file 0x651b; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} xor bl, bl
 .org 0x651d
 # IDA 0x1631d; file 0x651d; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 shr bx, 0x1
 .org 0x651f
 # IDA 0x1631f; file 0x651f; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 shr bx, 0x1
 .org 0x6521
 # IDA 0x16321; file 0x6521; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 shr bx, 0x1
 .org 0x6523
 # IDA 0x16323; file 0x6523; locator=proven; add     bx, 840h
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 add bx, 0x840
 .org 0x6527
 # IDA 0x16327; file 0x6527; locator=proven; jmp     short loc_1633C
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .+21
 .org 0x6529
 loc_16329:
 # IDA 0x16329; file 0x6529; locator=proven; call    sub_12078
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-17073
 .org 0x652c
 # IDA 0x1632c; file 0x652c; locator=proven; mov     cx, 17h
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x17
 .org 0x652f
 # IDA 0x1632f; file 0x652f; locator=proven; call    sub_18853
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+9508
 .org 0x6532
 # IDA 0x16332; file 0x6532; locator=proven; call    sub_17400
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+4302
 .org 0x6535
 # IDA 0x16335; file 0x6535; locator=proven; pushf
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 pushf
 .org 0x6536
 # IDA 0x16336; file 0x6536; locator=proven; call    sub_120D6
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-16992
 .org 0x6539
 # IDA 0x16339; file 0x6539; locator=proven; popf
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 popf
 .org 0x653a
 # IDA 0x1633a; file 0x653a; locator=proven; jb      short loc_1635F
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+37
 .org 0x653c
 loc_1633C:
 # IDA 0x1633c; file 0x653c; locator=proven; mov     si, bx
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov si, bx
 .org 0x653e
 # IDA 0x1633e; file 0x653e; locator=proven; sub     si, 840h
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 sub si, 0x840
 .org 0x6542
 # IDA 0x16342; file 0x6542; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x6547
 # IDA 0x16347; file 0x6547; locator=proven; mov     dx, [bx+8]
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 mov dx, word ptr [bx+0x8]
 .org 0x654a
 # IDA 0x1634a; file 0x654a; locator=proven; mov     bx, [bx+0Ah]
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 mov bx, word ptr [bx+0xa]
 .org 0x654d
 # IDA 0x1634d; file 0x654d; locator=proven; mov     ax, 14h
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ax, 0x14
 .org 0x6550
 # IDA 0x16350; file 0x6550; locator=proven; mov     cx, 0Ch
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0xc
 .org 0x6553
 # IDA 0x16353; file 0x6553; locator=proven; call    sub_12151
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-16898
 .org 0x6556
 # IDA 0x16356; file 0x6556; locator=proven; call    sub_11F7F
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-17367
 .org 0x6559
 # IDA 0x16359; file 0x6559; locator=proven; call    sub_11D46
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-17939
 .org 0x655c
 # IDA 0x1635c; file 0x655c; locator=proven; call    sub_17E1F
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+6851
 .org 0x655f
 loc_1635F:
 # IDA 0x1635f; file 0x655f; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0xffff
 .org 0x6562
 # IDA 0x16362; file 0x6562; locator=proven; call    sub_18853
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+9457
 .org 0x6565
 # IDA 0x16365; file 0x6565; locator=proven; retn
-# ⚠ 函式 sub_162FB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_162FB; [proven] 原自方首都或據點清單入口，移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x6566
 sub_16366:
 # IDA 0x16366; file 0x6566; locator=proven; call    sub_12078
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-17134
 .org 0x6569
 # IDA 0x16369; file 0x6569; locator=proven; mov     cx, 18h
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x18
 .org 0x656c
 # IDA 0x1636c; file 0x656c; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+9447
 .org 0x656f
 # IDA 0x1636f; file 0x656f; locator=proven; call    sub_175FA
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+4747
 .org 0x6572
 # IDA 0x16372; file 0x6572; locator=proven; pushf
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 pushf
 .org 0x6573
 # IDA 0x16373; file 0x6573; locator=proven; call    sub_120D6
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-17053
 .org 0x6576
 # IDA 0x16376; file 0x6576; locator=proven; popf
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 popf
 .org 0x6577
 # IDA 0x16377; file 0x6577; locator=proven; jnb     short loc_16380
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+9
 .org 0x6579
 # IDA 0x16379; file 0x6579; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0xffff
 .org 0x657c
 # IDA 0x1637c; file 0x657c; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+9431
 .org 0x657f
 # IDA 0x1637f; file 0x657f; locator=proven; retn
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x6580
 loc_16380:
 # IDA 0x16380; file 0x6580; locator=proven; push    ds
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 push ds
 .org 0x6581
 # IDA 0x16381; file 0x6581; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x6586
 # IDA 0x16386; file 0x6586; locator=proven; mov     cx, 1A8h
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x1a8
 .org 0x6589
 # IDA 0x16389; file 0x6589; locator=proven; cmp     byte ptr [bx+1Dh], 0FFh
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
+# operand 0 byte ptr [bx+1Dh]; [proven] 俘虜欄與FF哨兵決定是否以適性自述; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp byte ptr [bx+0x1d], 0xff
 .org 0x658d
 # IDA 0x1638d; file 0x658d; locator=proven; jnz     short loc_163B3
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 jnz .+38
 .org 0x658f
 # IDA 0x1638f; file 0x658f; locator=proven; mov     al, [bx+0Eh]
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
+# operand 1 [bx+0Eh]; [proven] 完整攻擊適性byte，不套Go欄位解碼遮罩; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, byte ptr [bx+0xe]
 .org 0x6592
 # IDA 0x16392; file 0x6592; locator=proven; mov     ah, [bx+0Fh]
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ah, byte ptr [bx+0xf]
 .org 0x6595
 # IDA 0x16395; file 0x6595; locator=proven; mov     cl, [bx+10h]
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cl, byte ptr [bx+0x10]
 .org 0x6598
 # IDA 0x16398; file 0x6598; locator=proven; cmp     al, ah
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} cmp al, ah
 .org 0x659a
 # IDA 0x1639a; file 0x659a; locator=proven; jnb     short loc_1639E
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+4
 .org 0x659c
 # IDA 0x1639c; file 0x659c; locator=proven; mov     al, ah
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov al, ah
 .org 0x659e
 loc_1639E:
 # IDA 0x1639e; file 0x659e; locator=proven; cmp     al, cl
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} cmp al, cl
 .org 0x65a0
 # IDA 0x163a0; file 0x65a0; locator=proven; jnb     short loc_163A4
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+4
 .org 0x65a2
 # IDA 0x163a2; file 0x65a2; locator=proven; mov     al, cl
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov al, cl
 .org 0x65a4
 loc_163A4:
 # IDA 0x163a4; file 0x65a4; locator=proven; mov     cx, 1A9h
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x1a9
 .org 0x65a7
 # IDA 0x163a7; file 0x65a7; locator=proven; cmp     al, [bx+0Eh]
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp al, byte ptr [bx+0xe]
 .org 0x65aa
 # IDA 0x163aa; file 0x65aa; locator=proven; jz      short loc_163B3
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 jz .+9
 .org 0x65ac
 # IDA 0x163ac; file 0x65ac; locator=proven; inc     cx
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 inc cx
 .org 0x65ad
 # IDA 0x163ad; file 0x65ad; locator=proven; cmp     al, [bx+0Fh]
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp al, byte ptr [bx+0xf]
 .org 0x65b0
 # IDA 0x163b0; file 0x65b0; locator=proven; jz      short loc_163B3
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 jz .+3
 .org 0x65b2
 # IDA 0x163b2; file 0x65b2; locator=proven; inc     cx
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 inc cx
 .org 0x65b3
 loc_163B3:
 # IDA 0x163b3; file 0x65b3; locator=proven; mov     ah, [bx+1Eh]
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ah, byte ptr [bx+0x1e]
 .org 0x65b6
 # IDA 0x163b6; file 0x65b6; locator=proven; mov     al, [bx+1]
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, byte ptr [bx+0x1]
 .org 0x65b9
 # IDA 0x163b9; file 0x65b9; locator=proven; call    sub_18810
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+9303
 .org 0x65bc
 # IDA 0x163bc; file 0x65bc; locator=proven; pop     ds
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
+# operand 0 ds; [proven] 自述後恢復入口DS，再跳回武將清單; 出處: docs/re/124-c-strategy-command-restoration.md
 pop ds
 .org 0x65bd
 # IDA 0x163bd; file 0x65bd; locator=proven; jmp     short sub_16366
-# ⚠ 函式 sub_16366; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16366; [proven] 原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .-87
 .org 0x65bf
 sub_163BF:
 # IDA 0x163bf; file 0x65bf; locator=proven; call    sub_12078
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-17223
 .org 0x65c2
 # IDA 0x163c2; file 0x65c2; locator=proven; mov     cx, 19h
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x19
 .org 0x65c5
 # IDA 0x163c5; file 0x65c5; locator=proven; call    sub_18853
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+9358
 .org 0x65c8
 # IDA 0x163c8; file 0x65c8; locator=proven; call    sub_178A7
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+5343
 .org 0x65cb
 # IDA 0x163cb; file 0x65cb; locator=proven; pushf
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 pushf
 .org 0x65cc
 # IDA 0x163cc; file 0x65cc; locator=proven; call    sub_120D6
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-17142
 .org 0x65cf
 # IDA 0x163cf; file 0x65cf; locator=proven; popf
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 popf
 .org 0x65d0
 # IDA 0x163d0; file 0x65d0; locator=proven; jb      short loc_163FE
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+46
 .org 0x65d2
 # IDA 0x163d2; file 0x65d2; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x65d7
 # IDA 0x163d7; file 0x65d7; locator=proven; mov     bh, [bx+3]
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 mov bh, byte ptr [bx+0x3]
 .org 0x65da
 # IDA 0x163da; file 0x65da; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} xor bl, bl
 .org 0x65dc
 # IDA 0x163dc; file 0x65dc; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 shr bx, 0x1
 .org 0x65de
 # IDA 0x163de; file 0x65de; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 shr bx, 0x1
 .org 0x65e0
 # IDA 0x163e0; file 0x65e0; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 shr bx, 0x1
 .org 0x65e2
 # IDA 0x163e2; file 0x65e2; locator=proven; mov     si, bx
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov si, bx
 .org 0x65e4
 # IDA 0x163e4; file 0x65e4; locator=proven; mov     dx, [bx+848h]
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 mov dx, word ptr [bx+0x848]
 .org 0x65e8
 # IDA 0x163e8; file 0x65e8; locator=proven; mov     bx, [bx+84Ah]
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 mov bx, word ptr [bx+0x84a]
 .org 0x65ec
 # IDA 0x163ec; file 0x65ec; locator=proven; mov     ax, 14h
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ax, 0x14
 .org 0x65ef
 # IDA 0x163ef; file 0x65ef; locator=proven; mov     cx, 0Ch
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0xc
 .org 0x65f2
 # IDA 0x163f2; file 0x65f2; locator=proven; call    sub_12151
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-17057
 .org 0x65f5
 # IDA 0x163f5; file 0x65f5; locator=proven; call    sub_11F7F
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-17526
 .org 0x65f8
 # IDA 0x163f8; file 0x65f8; locator=proven; call    sub_11D46
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-18098
 .org 0x65fb
 # IDA 0x163fb; file 0x65fb; locator=proven; call    sub_17E1F
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+6692
 .org 0x65fe
 loc_163FE:
 # IDA 0x163fe; file 0x65fe; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0xffff
 .org 0x6601
 # IDA 0x16401; file 0x6601; locator=proven; call    sub_18853
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+9298
 .org 0x6604
 # IDA 0x16404; file 0x6604; locator=proven; retn
-# ⚠ 函式 sub_163BF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_163BF; [proven] 原勢力清單入口，選取其首都後移鏡頭與開情報卡; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x6605
 sub_16405:
 # IDA 0x16405; file 0x6605; locator=proven; push    ds
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 push ds
 .org 0x6606
 # IDA 0x16406; file 0x6606; locator=proven; call    sub_12078
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-17294
 .org 0x6609
 # IDA 0x16409; file 0x6609; locator=proven; call    sub_101B4
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-25173
 .org 0x660c
 # IDA 0x1640c; file 0x660c; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x6611
 # IDA 0x16411; file 0x6611; locator=proven; mov     cx, 5
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x5
 .org 0x6614
 # IDA 0x16414; file 0x6614; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+9279
 .org 0x6617
 # IDA 0x16417; file 0x6617; locator=proven; call    sub_101DB
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-25148
 .org 0x661a
 # IDA 0x1641a; file 0x661a; locator=proven; call    sub_17906
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+5356
 .org 0x661d
 # IDA 0x1641d; file 0x661d; locator=proven; jb      short loc_16460
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+67
 .org 0x661f
 # IDA 0x1641f; file 0x661f; locator=proven; push    ax
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 push ax
 .org 0x6620
 # IDA 0x16420; file 0x6620; locator=proven; push    bx
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 push bx
 .org 0x6621
 # IDA 0x16421; file 0x6621; locator=proven; push    dx
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 push dx
 .org 0x6622
 # IDA 0x16422; file 0x6622; locator=proven; mov     ax, 2
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ax, 0x2
 .org 0x6625
 # IDA 0x16425; file 0x6625; locator=proven; call    sub_20000
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 lcall 0x1000, 0x0
 .org 0x662a
 # IDA 0x1642a; file 0x662a; locator=proven; pop     dx
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 pop dx
 .org 0x662b
 # IDA 0x1642b; file 0x662b; locator=proven; pop     bx
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 pop bx
 .org 0x662c
 # IDA 0x1642c; file 0x662c; locator=proven; pop     ax
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 pop ax
 .org 0x662d
 # IDA 0x1642d; file 0x662d; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0xffff
 .org 0x6630
 # IDA 0x16430; file 0x6630; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+9251
 .org 0x6633
 # IDA 0x16433; file 0x6633; locator=proven; call    sub_11D46
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-18157
 .org 0x6636
 # IDA 0x16436; file 0x6636; locator=proven; mov     cx, bx
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov cx, bx
 .org 0x6638
 # IDA 0x16438; file 0x6638; locator=proven; call    sub_187FF
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+9159
 .org 0x663b
 # IDA 0x1643b; file 0x663b; locator=proven; mov     si, bx
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov si, bx
 .org 0x663d
 # IDA 0x1643d; file 0x663d; locator=proven; add     si, 4240h
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 add si, 0x4240
 .org 0x6641
 # IDA 0x16441; file 0x6641; locator=proven; mov     bx, cx
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov bx, cx
 .org 0x6643
 # IDA 0x16443; file 0x6643; locator=proven; call    sub_16475
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+50
 .org 0x6646
 # IDA 0x16446; file 0x6646; locator=proven; push    bx
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 push bx
 .org 0x6647
 # IDA 0x16447; file 0x6647; locator=proven; mov     di, sp
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov di, sp
 .org 0x6649
 # IDA 0x16449; file 0x6649; locator=proven; mov     cx, 56h
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x56
 .org 0x664c
 # IDA 0x1644c; file 0x664c; locator=proven; call    sub_13830
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-11292
 .org 0x664f
 # IDA 0x1644f; file 0x664f; locator=proven; pop     bx
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 pop bx
 .org 0x6650
 # IDA 0x16450; file 0x6650; locator=proven; jb      short loc_16460
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+16
 .org 0x6652
 # IDA 0x16452; file 0x6652; locator=proven; mov     si, cs:word_10CFD
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov si, word ptr [0xcfd]
 .org 0x6657
 # IDA 0x16457; file 0x6657; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 shl bx, 0x1
 .org 0x6659
 # IDA 0x16459; file 0x6659; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 shl bx, 0x1
 .org 0x665b
 # IDA 0x1645b; file 0x665b; locator=proven; mov     dl, bh
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov dl, bh
 .org 0x665d
 # IDA 0x1645d; file 0x665d; locator=proven; call    sub_13526
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-12087
 .org 0x6660
 loc_16460:
 # IDA 0x16460; file 0x6660; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0xffff
 .org 0x6663
 # IDA 0x16463; file 0x6663; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+9200
 .org 0x6666
 # IDA 0x16466; file 0x6666; locator=proven; mov     ax, 1
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ax, 0x1
 .org 0x6669
 # IDA 0x16469; file 0x6669; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} xor bx, bx
 .org 0x666b
 # IDA 0x1646b; file 0x666b; locator=proven; call    sub_20000
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 lcall 0x1000, 0x0
 .org 0x6670
 # IDA 0x16470; file 0x6670; locator=proven; call    sub_120D6
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-17306
 .org 0x6673
 # IDA 0x16473; file 0x6673; locator=proven; pop     ds
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 pop ds
 .org 0x6674
 # IDA 0x16474; file 0x6674; locator=proven; retn
-# ⚠ 函式 sub_16405; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16405; [proven] 原敵對進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x6675
 sub_16475:
 # IDA 0x16475; file 0x6675; locator=proven; push    bx
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 push bx
 .org 0x6676
 # IDA 0x16476; file 0x6676; locator=proven; push    cx
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 push cx
 .org 0x6677
 # IDA 0x16477; file 0x6677; locator=proven; push    si
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 push si
 .org 0x6678
 # IDA 0x16478; file 0x6678; locator=proven; push    di
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 push di
 .org 0x6679
 # IDA 0x16479; file 0x6679; locator=proven; mov     si, cs:word_10CFD
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov si, word ptr [0xcfd]
 .org 0x667e
 # IDA 0x1647e; file 0x667e; locator=proven; mov     di, bx
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov di, bx
 .org 0x6680
 # IDA 0x16480; file 0x6680; locator=proven; mov     al, 1
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x1
 .org 0x6682
 # IDA 0x16482; file 0x6682; locator=proven; mov     dx, di
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov dx, di
 .org 0x6684
 # IDA 0x16484; file 0x6684; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 shl dx, 0x1
 .org 0x6686
 # IDA 0x16486; file 0x6686; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 shl dx, 0x1
 .org 0x6688
 # IDA 0x16488; file 0x6688; locator=proven; mov     dl, dh
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov dl, dh
 .org 0x668a
 # IDA 0x1648a; file 0x668a; locator=proven; mov     dh, 0FFh
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov dh, 0xff
 .org 0x668c
 # IDA 0x1648c; file 0x668c; locator=proven; call    sub_1304E
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-13374
 .org 0x668f
 # IDA 0x1648f; file 0x668f; locator=proven; jb      short loc_16495
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+6
 .org 0x6691
 # IDA 0x16491; file 0x6691; locator=proven; mov     al, 1
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x1
 .org 0x6693
 # IDA 0x16493; file 0x6693; locator=proven; jmp     short loc_164EC
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .+89
 .org 0x6695
 loc_16495:
 # IDA 0x16495; file 0x6695; locator=proven; call    sub_130CB
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-13258
 .org 0x6698
 # IDA 0x16498; file 0x6698; locator=proven; sub     al, 80h
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 sub al, 0x80
 .org 0x669a
 # IDA 0x1649a; file 0x669a; locator=proven; jnb     short loc_164A0
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+6
 .org 0x669c
 # IDA 0x1649c; file 0x669c; locator=proven; mov     al, 3
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x3
 .org 0x669e
 # IDA 0x1649e; file 0x669e; locator=proven; jmp     short loc_164EC
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .+78
 .org 0x66a0
 loc_164A0:
 # IDA 0x164a0; file 0x66a0; locator=proven; mov     ah, [si+28h]
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ah, byte ptr [si+0x28]
 .org 0x66a3
 # IDA 0x164a3; file 0x66a3; locator=proven; shl     ah, 1
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 shl ah, 0x1
 .org 0x66a5
 # IDA 0x164a5; file 0x66a5; locator=proven; add     ah, 14h
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 add ah, 0x14
 .org 0x66a8
 # IDA 0x164a8; file 0x66a8; locator=proven; cmp     al, ah
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} cmp al, ah
 .org 0x66aa
 # IDA 0x164aa; file 0x66aa; locator=proven; jb      short loc_164B0
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+6
 .org 0x66ac
 # IDA 0x164ac; file 0x66ac; locator=proven; xor     al, al
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} xor al, al
 .org 0x66ae
 # IDA 0x164ae; file 0x66ae; locator=proven; jmp     short loc_164EC
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .+62
 .org 0x66b0
 loc_164B0:
 # IDA 0x164b0; file 0x66b0; locator=proven; xor     dl, dl
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} xor dl, dl
 .org 0x66b2
 # IDA 0x164b2; file 0x66b2; locator=proven; shr     ah, 1
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 shr ah, 0x1
 .org 0x66b4
 # IDA 0x164b4; file 0x66b4; locator=proven; add     ah, 5
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 add ah, 0x5
 .org 0x66b7
 # IDA 0x164b7; file 0x66b7; locator=proven; cmp     al, ah
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} cmp al, ah
 .org 0x66b9
 # IDA 0x164b9; file 0x66b9; locator=proven; jnb     short loc_164BE
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+5
 .org 0x66bb
 # IDA 0x164bb; file 0x66bb; locator=proven; or      dl, 10h
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 or dl, 0x10
 .org 0x66be
 loc_164BE:
 # IDA 0x164be; file 0x66be; locator=proven; shr     dl, 1
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 shr dl, 0x1
 .org 0x66c0
 # IDA 0x164c0; file 0x66c0; locator=proven; call    sub_16A28
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+1384
 .org 0x66c3
 # IDA 0x164c3; file 0x66c3; locator=proven; cmp     ax, cx
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} cmp ax, cx
 .org 0x66c5
 # IDA 0x164c5; file 0x66c5; locator=proven; jbe     short loc_164CA
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 jbe .+5
 .org 0x66c7
 # IDA 0x164c7; file 0x66c7; locator=proven; or      dl, 10h
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 or dl, 0x10
 .org 0x66ca
 loc_164CA:
 # IDA 0x164ca; file 0x66ca; locator=proven; shr     dl, 1
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 shr dl, 0x1
 .org 0x66cc
 # IDA 0x164cc; file 0x66cc; locator=proven; mov     al, [di+19h]
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, byte ptr [di+0x19]
 .org 0x66cf
 # IDA 0x164cf; file 0x66cf; locator=proven; cmp     al, 0FFh
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp al, 0xff
 .org 0x66d1
 # IDA 0x164d1; file 0x66d1; locator=proven; jz      short loc_164DD
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 jz .+12
 .org 0x66d3
 # IDA 0x164d3; file 0x66d3; locator=proven; cmp     al, cs:byte_10CFF
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; cmp al, byte ptr [0xcff]
 .org 0x66d8
 # IDA 0x164d8; file 0x66d8; locator=proven; jz      short loc_164DD
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 jz .+5
 .org 0x66da
 # IDA 0x164da; file 0x66da; locator=proven; or      dl, 10h
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 or dl, 0x10
 .org 0x66dd
 loc_164DD:
 # IDA 0x164dd; file 0x66dd; locator=proven; shr     dl, 1
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 shr dl, 0x1
 .org 0x66df
 # IDA 0x164df; file 0x66df; locator=proven; cmp     word ptr [di+21h], 0
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp word ptr [di+0x21], 0x0
 .org 0x66e3
 # IDA 0x164e3; file 0x66e3; locator=proven; jge     short loc_164E8
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 jge .+5
 .org 0x66e5
 # IDA 0x164e5; file 0x66e5; locator=proven; or      dl, 10h
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 or dl, 0x10
 .org 0x66e8
 loc_164E8:
 # IDA 0x164e8; file 0x66e8; locator=proven; shr     dl, 1
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 shr dl, 0x1
 .org 0x66ea
 # IDA 0x164ea; file 0x66ea; locator=proven; mov     al, 2
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x2
 .org 0x66ec
 loc_164EC:
 # IDA 0x164ec; file 0x66ec; locator=proven; pop     di
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 pop di
 .org 0x66ed
 # IDA 0x164ed; file 0x66ed; locator=proven; pop     si
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 pop si
 .org 0x66ee
 # IDA 0x164ee; file 0x66ee; locator=proven; pop     cx
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 pop cx
 .org 0x66ef
 # IDA 0x164ef; file 0x66ef; locator=proven; pop     bx
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 pop bx
 .org 0x66f0
 # IDA 0x164f0; file 0x66f0; locator=proven; retn
-# ⚠ 函式 sub_16475; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16475; [proven] 原敵對進言AL結果與DL四理由遮罩，先查未決隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x66f1
 sub_164F1:
 # IDA 0x164f1; file 0x66f1; locator=proven; push    ds
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 push ds
 .org 0x66f2
 # IDA 0x164f2; file 0x66f2; locator=proven; call    sub_12078
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-17530
 .org 0x66f5
 # IDA 0x164f5; file 0x66f5; locator=proven; call    sub_101B4
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-25409
 .org 0x66f8
 # IDA 0x164f8; file 0x66f8; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x66fd
 # IDA 0x164fd; file 0x66fd; locator=proven; mov     cx, 6
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x6
 .org 0x6700
 # IDA 0x16500; file 0x6700; locator=proven; call    sub_18853
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+9043
 .org 0x6703
 # IDA 0x16503; file 0x6703; locator=proven; call    sub_101DB
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-25384
 .org 0x6706
 loc_16506:
 # IDA 0x16506; file 0x6706; locator=proven; call    sub_17906
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+5120
 .org 0x6709
 # IDA 0x16509; file 0x6709; locator=proven; jb      short loc_16562
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+89
 .org 0x670b
 # IDA 0x1650b; file 0x670b; locator=proven; call    sub_165EF
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+228
 .org 0x670e
 # IDA 0x1650e; file 0x670e; locator=proven; jb      short loc_16506
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .-8
 .org 0x6710
 # IDA 0x16510; file 0x6710; locator=proven; call    sub_16605
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+245
 .org 0x6713
 # IDA 0x16513; file 0x6713; locator=proven; jb      short loc_16506
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .-13
 .org 0x6715
 # IDA 0x16515; file 0x6715; locator=proven; push    ax
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 push ax
 .org 0x6716
 # IDA 0x16516; file 0x6716; locator=proven; push    bx
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 push bx
 .org 0x6717
 # IDA 0x16517; file 0x6717; locator=proven; push    dx
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 push dx
 .org 0x6718
 # IDA 0x16518; file 0x6718; locator=proven; mov     ax, 2
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ax, 0x2
 .org 0x671b
 # IDA 0x1651b; file 0x671b; locator=proven; call    sub_20000
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 lcall 0x1000, 0x0
 .org 0x6720
 # IDA 0x16520; file 0x6720; locator=proven; pop     dx
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 pop dx
 .org 0x6721
 # IDA 0x16521; file 0x6721; locator=proven; pop     bx
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 pop bx
 .org 0x6722
 # IDA 0x16522; file 0x6722; locator=proven; pop     ax
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 pop ax
 .org 0x6723
 # IDA 0x16523; file 0x6723; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0xffff
 .org 0x6726
 # IDA 0x16526; file 0x6726; locator=proven; call    sub_18853
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+9005
 .org 0x6729
 # IDA 0x16529; file 0x6729; locator=proven; call    sub_11D46
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-18403
 .org 0x672c
 # IDA 0x1652c; file 0x672c; locator=proven; mov     cx, bx
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov cx, bx
 .org 0x672e
 # IDA 0x1652e; file 0x672e; locator=proven; call    sub_187FF
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+8913
 .org 0x6731
 # IDA 0x16531; file 0x6731; locator=proven; mov     si, bx
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov si, bx
 .org 0x6733
 # IDA 0x16533; file 0x6733; locator=proven; add     si, 4240h
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 add si, 0x4240
 .org 0x6737
 # IDA 0x16537; file 0x6737; locator=proven; mov     bx, cx
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov bx, cx
 .org 0x6739
 # IDA 0x16539; file 0x6739; locator=proven; call    sub_16577
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+62
 .org 0x673c
 # IDA 0x1653c; file 0x673c; locator=proven; push    bx
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 push bx
 .org 0x673d
 # IDA 0x1653d; file 0x673d; locator=proven; mov     di, sp
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov di, sp
 .org 0x673f
 # IDA 0x1653f; file 0x673f; locator=proven; mov     cx, 96h
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x96
 .org 0x6742
 # IDA 0x16542; file 0x6742; locator=proven; call    sub_13830
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-11538
 .org 0x6745
 # IDA 0x16545; file 0x6745; locator=proven; pop     si
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 pop si
 .org 0x6746
 # IDA 0x16546; file 0x6746; locator=proven; jb      short loc_16562
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+28
 .org 0x6748
 # IDA 0x16548; file 0x6748; locator=proven; mov     al, 6
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x6
 .org 0x674a
 # IDA 0x1654a; file 0x674a; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} xor dx, dx
 .org 0x674c
 # IDA 0x1654c; file 0x674c; locator=proven; mov     bl, 14h
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov bl, 0x14
 .org 0x674e
 # IDA 0x1654e; file 0x674e; locator=proven; call    sub_1300E
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-13632
 .org 0x6751
 # IDA 0x16551; file 0x6751; locator=proven; mov     al, [si+2Ah]
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, byte ptr [si+0x2a]
 .org 0x6754
 # IDA 0x16554; file 0x6754; locator=proven; mov     ah, 0FFh
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ah, 0xff
 .org 0x6756
 # IDA 0x16556; file 0x6756; locator=proven; push    ax
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 push ax
 .org 0x6757
 # IDA 0x16557; file 0x6757; locator=proven; mov     di, sp
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov di, sp
 .org 0x6759
 # IDA 0x16559; file 0x6759; locator=proven; mov     al, 93h
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x93
 .org 0x675b
 # IDA 0x1655b; file 0x675b; locator=proven; mov     cx, 3Bh
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x3b
 .org 0x675e
 # IDA 0x1655e; file 0x675e; locator=proven; call    sub_18810
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+8882
 .org 0x6761
 # IDA 0x16561; file 0x6761; locator=proven; pop     ax
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 pop ax
 .org 0x6762
 loc_16562:
 # IDA 0x16562; file 0x6762; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0xffff
 .org 0x6765
 # IDA 0x16565; file 0x6765; locator=proven; call    sub_18853
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+8942
 .org 0x6768
 # IDA 0x16568; file 0x6768; locator=proven; mov     ax, 1
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ax, 0x1
 .org 0x676b
 # IDA 0x1656b; file 0x676b; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} xor bx, bx
 .org 0x676d
 # IDA 0x1656d; file 0x676d; locator=proven; call    sub_20000
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 lcall 0x1000, 0x0
 .org 0x6772
 # IDA 0x16572; file 0x6772; locator=proven; call    sub_120D6
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-17564
 .org 0x6775
 # IDA 0x16575; file 0x6775; locator=proven; pop     ds
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 pop ds
 .org 0x6776
 # IDA 0x16576; file 0x6776; locator=proven; retn
-# ⚠ 函式 sub_164F1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_164F1; [proven] 原停戰進言caller，選擇勢力、判斷並接君主場景／隊列; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x6777
 sub_16577:
 # IDA 0x16577; file 0x6777; locator=proven; push    bx
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 push bx
 .org 0x6778
 # IDA 0x16578; file 0x6778; locator=proven; push    cx
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 push cx
 .org 0x6779
 # IDA 0x16579; file 0x6779; locator=proven; push    si
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 push si
 .org 0x677a
 # IDA 0x1657a; file 0x677a; locator=proven; push    di
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 push di
 .org 0x677b
 # IDA 0x1657b; file 0x677b; locator=proven; mov     si, cs:word_10CFD
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov si, word ptr [0xcfd]
 .org 0x6780
 # IDA 0x16580; file 0x6780; locator=proven; mov     di, bx
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov di, bx
 .org 0x6782
 # IDA 0x16582; file 0x6782; locator=proven; call    sub_130CB
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-13495
 .org 0x6785
 # IDA 0x16585; file 0x6785; locator=proven; cmp     al, 80h
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp al, 0x80
 .org 0x6787
 # IDA 0x16587; file 0x6787; locator=proven; jb      short loc_1658D
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+6
 .org 0x6789
 # IDA 0x16589; file 0x6789; locator=proven; mov     al, 3
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x3
 .org 0x678b
 # IDA 0x1658b; file 0x678b; locator=proven; jmp     short loc_165EA
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .+95
 .org 0x678d
 loc_1658D:
 # IDA 0x1658d; file 0x678d; locator=proven; mov     ah, [si+28h]
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ah, byte ptr [si+0x28]
 .org 0x6790
 # IDA 0x16590; file 0x6790; locator=proven; shr     ah, 1
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 shr ah, 0x1
 .org 0x6792
 # IDA 0x16592; file 0x6792; locator=proven; cmp     al, ah
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} cmp al, ah
 .org 0x6794
 # IDA 0x16594; file 0x6794; locator=proven; jnb     short loc_1659A
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+6
 .org 0x6796
 # IDA 0x16596; file 0x6796; locator=proven; xor     al, al
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} xor al, al
 .org 0x6798
 # IDA 0x16598; file 0x6798; locator=proven; jmp     short loc_165EA
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .+82
 .org 0x679a
 loc_1659A:
 # IDA 0x1659a; file 0x679a; locator=proven; xor     dl, dl
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} xor dl, dl
 .org 0x679c
 # IDA 0x1659c; file 0x679c; locator=proven; call    sub_16A28
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+1164
 .org 0x679f
 # IDA 0x1659f; file 0x679f; locator=proven; cmp     ax, cx
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} cmp ax, cx
 .org 0x67a1
 # IDA 0x165a1; file 0x67a1; locator=proven; jnb     short loc_165A6
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+5
 .org 0x67a3
 # IDA 0x165a3; file 0x67a3; locator=proven; or      dl, 10h
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 or dl, 0x10
 .org 0x67a6
 loc_165A6:
 # IDA 0x165a6; file 0x67a6; locator=proven; shr     dl, 1
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 shr dl, 0x1
 .org 0x67a8
 # IDA 0x165a8; file 0x67a8; locator=proven; mov     bx, 0
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 mov bx, 0x0
 .org 0x67ab
 # IDA 0x165ab; file 0x67ab; locator=proven; mov     al, cs:byte_10CFF
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov al, byte ptr [0xcff]
 .org 0x67af
 # IDA 0x165af; file 0x67af; locator=proven; mov     cx, 16h
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x16
 .org 0x67b2
 loc_165B2:
 # IDA 0x165b2; file 0x67b2; locator=proven; cmp     byte ptr [bx], 80h
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp byte ptr [bx], 0x80
 .org 0x67b5
 # IDA 0x165b5; file 0x67b5; locator=proven; jb      short loc_165C3
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+14
 .org 0x67b7
 # IDA 0x165b7; file 0x67b7; locator=proven; cmp     bx, di
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} cmp bx, di
 .org 0x67b9
 # IDA 0x165b9; file 0x67b9; locator=proven; jz      short loc_165C3
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 jz .+10
 .org 0x67bb
 # IDA 0x165bb; file 0x67bb; locator=proven; cmp     al, [bx+19h]
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp al, byte ptr [bx+0x19]
 .org 0x67be
 # IDA 0x165be; file 0x67be; locator=proven; jnz     short loc_165C3
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 jnz .+5
 .org 0x67c0
 # IDA 0x165c0; file 0x67c0; locator=proven; or      dl, 10h
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 or dl, 0x10
 .org 0x67c3
 loc_165C3:
 # IDA 0x165c3; file 0x67c3; locator=proven; add     bx, 40h
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 add bx, 0x40
 .org 0x67c6
 # IDA 0x165c6; file 0x67c6; locator=proven; loop    loc_165B2
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 loop .-20
 .org 0x67c8
 # IDA 0x165c8; file 0x67c8; locator=proven; shr     dl, 1
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 shr dl, 0x1
 .org 0x67ca
 # IDA 0x165ca; file 0x67ca; locator=proven; mov     al, [di+19h]
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, byte ptr [di+0x19]
 .org 0x67cd
 # IDA 0x165cd; file 0x67cd; locator=proven; cmp     al, 0FFh
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp al, 0xff
 .org 0x67cf
 # IDA 0x165cf; file 0x67cf; locator=proven; jz      short loc_165DB
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 jz .+12
 .org 0x67d1
 # IDA 0x165d1; file 0x67d1; locator=proven; cmp     al, cs:byte_10CFF
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; cmp al, byte ptr [0xcff]
 .org 0x67d6
 # IDA 0x165d6; file 0x67d6; locator=proven; jz      short loc_165DB
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 jz .+5
 .org 0x67d8
 # IDA 0x165d8; file 0x67d8; locator=proven; or      dl, 10h
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 or dl, 0x10
 .org 0x67db
 loc_165DB:
 # IDA 0x165db; file 0x67db; locator=proven; shr     dl, 1
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 shr dl, 0x1
 .org 0x67dd
 # IDA 0x165dd; file 0x67dd; locator=proven; cmp     word ptr [si+21h], 0
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp word ptr [si+0x21], 0x0
 .org 0x67e1
 # IDA 0x165e1; file 0x67e1; locator=proven; jge     short loc_165E6
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 jge .+5
 .org 0x67e3
 # IDA 0x165e3; file 0x67e3; locator=proven; or      dl, 10h
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 or dl, 0x10
 .org 0x67e6
 loc_165E6:
 # IDA 0x165e6; file 0x67e6; locator=proven; shr     dl, 1
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 shr dl, 0x1
 .org 0x67e8
 # IDA 0x165e8; file 0x67e8; locator=proven; mov     al, 2
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x2
 .org 0x67ea
 loc_165EA:
 # IDA 0x165ea; file 0x67ea; locator=proven; pop     di
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 pop di
 .org 0x67eb
 # IDA 0x165eb; file 0x67eb; locator=proven; pop     si
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 pop si
 .org 0x67ec
 # IDA 0x165ec; file 0x67ec; locator=proven; pop     cx
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 pop cx
 .org 0x67ed
 # IDA 0x165ed; file 0x67ed; locator=proven; pop     bx
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 pop bx
 .org 0x67ee
 # IDA 0x165ee; file 0x67ee; locator=proven; retn
-# ⚠ 函式 sub_16577; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16577; [proven] 原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x67ef
 sub_165EF:
 # IDA 0x165ef; file 0x67ef; locator=proven; cmp     byte ptr [bx+2Ah], 0FFh
-# ⚠ 函式 sub_165EF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_165EF; [proven] 原外交進言訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp byte ptr [bx+0x2a], 0xff
 .org 0x67f3
 # IDA 0x165f3; file 0x67f3; locator=proven; jz      short loc_165F7
-# ⚠ 函式 sub_165EF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_165EF; [proven] 原外交進言訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 jz .+4
 .org 0x67f5
 # IDA 0x165f5; file 0x67f5; locator=proven; clc
-# ⚠ 函式 sub_165EF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_165EF; [proven] 原外交進言訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 clc
 .org 0x67f6
 # IDA 0x165f6; file 0x67f6; locator=proven; retn
-# ⚠ 函式 sub_165EF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_165EF; [proven] 原外交進言訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x67f7
 loc_165F7:
 # IDA 0x165f7; file 0x67f7; locator=proven; push    bx
-# ⚠ 函式 sub_165EF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_165EF; [proven] 原外交進言訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 push bx
 .org 0x67f8
 # IDA 0x165f8; file 0x67f8; locator=proven; mov     di, sp
-# ⚠ 函式 sub_165EF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_165EF; [proven] 原外交進言訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov di, sp
 .org 0x67fa
 # IDA 0x165fa; file 0x67fa; locator=proven; mov     al, 93h
-# ⚠ 函式 sub_165EF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_165EF; [proven] 原外交進言訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x93
 .org 0x67fc
 # IDA 0x165fc; file 0x67fc; locator=proven; mov     cx, 37h
-# ⚠ 函式 sub_165EF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_165EF; [proven] 原外交進言訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x37
 .org 0x67ff
 # IDA 0x165ff; file 0x67ff; locator=proven; call    sub_18810
-# ⚠ 函式 sub_165EF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_165EF; [proven] 原外交進言訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+8721
 .org 0x6802
 # IDA 0x16602; file 0x6802; locator=proven; pop     bx
-# ⚠ 函式 sub_165EF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_165EF; [proven] 原外交進言訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 pop bx
 .org 0x6803
 # IDA 0x16603; file 0x6803; locator=proven; stc
-# ⚠ 函式 sub_165EF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_165EF; [proven] 原外交進言訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 stc
 .org 0x6804
 # IDA 0x16604; file 0x6804; locator=proven; retn
-# ⚠ 函式 sub_165EF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_165EF; [proven] 原外交進言訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x6805
 sub_16605:
 # IDA 0x16605; file 0x6805; locator=proven; push    si
-# ⚠ 函式 sub_16605; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16605; [proven] 原交戰隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 push si
 .org 0x6806
 # IDA 0x16606; file 0x6806; locator=proven; mov     si, bx
-# ⚠ 函式 sub_16605; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16605; [proven] 原交戰隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov si, bx
 .org 0x6808
 # IDA 0x16608; file 0x6808; locator=proven; mov     al, 6
-# ⚠ 函式 sub_16605; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16605; [proven] 原交戰隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x6
 .org 0x680a
 # IDA 0x1660a; file 0x680a; locator=proven; mov     dx, 0FFFFh
-# ⚠ 函式 sub_16605; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16605; [proven] 原交戰隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 mov dx, 0xffff
 .org 0x680d
 # IDA 0x1660d; file 0x680d; locator=proven; call    sub_1304E
-# ⚠ 函式 sub_16605; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16605; [proven] 原交戰隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-13759
 .org 0x6810
 # IDA 0x16610; file 0x6810; locator=proven; pop     si
-# ⚠ 函式 sub_16605; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16605; [proven] 原交戰隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 pop si
 .org 0x6811
 # IDA 0x16611; file 0x6811; locator=proven; jnb     short loc_16615
-# ⚠ 函式 sub_16605; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16605; [proven] 原交戰隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+4
 .org 0x6813
 # IDA 0x16613; file 0x6813; locator=proven; clc
-# ⚠ 函式 sub_16605; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16605; [proven] 原交戰隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 clc
 .org 0x6814
 # IDA 0x16614; file 0x6814; locator=proven; retn
-# ⚠ 函式 sub_16605; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16605; [proven] 原交戰隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x6815
 loc_16615:
 # IDA 0x16615; file 0x6815; locator=proven; push    bx
-# ⚠ 函式 sub_16605; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16605; [proven] 原交戰隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 push bx
 .org 0x6816
 # IDA 0x16616; file 0x6816; locator=proven; mov     di, sp
-# ⚠ 函式 sub_16605; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16605; [proven] 原交戰隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov di, sp
 .org 0x6818
 # IDA 0x16618; file 0x6818; locator=proven; mov     al, 93h
-# ⚠ 函式 sub_16605; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16605; [proven] 原交戰隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x93
 .org 0x681a
 # IDA 0x1661a; file 0x681a; locator=proven; mov     cx, 49h
-# ⚠ 函式 sub_16605; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16605; [proven] 原交戰隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x49
 .org 0x681d
 # IDA 0x1661d; file 0x681d; locator=proven; call    sub_18810
-# ⚠ 函式 sub_16605; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16605; [proven] 原交戰隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+8691
 .org 0x6820
 # IDA 0x16620; file 0x6820; locator=proven; pop     bx
-# ⚠ 函式 sub_16605; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16605; [proven] 原交戰隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 pop bx
 .org 0x6821
 # IDA 0x16621; file 0x6821; locator=proven; stc
-# ⚠ 函式 sub_16605; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16605; [proven] 原交戰隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 stc
 .org 0x6822
 # IDA 0x16622; file 0x6822; locator=proven; retn
-# ⚠ 函式 sub_16605; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16605; [proven] 原交戰隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x6823
 sub_16623:
 # IDA 0x16623; file 0x6823; locator=proven; push    ds
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 push ds
 .org 0x6824
 # IDA 0x16624; file 0x6824; locator=proven; push    bp
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 push bp
 .org 0x6825
 # IDA 0x16625; file 0x6825; locator=proven; sub     sp, 4
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 sub sp, 0x4
 .org 0x6828
 # IDA 0x16628; file 0x6828; locator=proven; mov     bp, sp
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov bp, sp
 .org 0x682a
 # IDA 0x1662a; file 0x682a; locator=proven; call    sub_12078
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-17842
 .org 0x682d
 # IDA 0x1662d; file 0x682d; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x6832
 # IDA 0x16632; file 0x6832; locator=proven; call    sub_101B4
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-25726
 .org 0x6835
 # IDA 0x16635; file 0x6835; locator=proven; mov     cx, 8
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x8
 .org 0x6838
 # IDA 0x16638; file 0x6838; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+8731
 .org 0x683b
 # IDA 0x1663b; file 0x683b; locator=proven; call    sub_101DB
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-25696
 .org 0x683e
 loc_1663E:
 # IDA 0x1663e; file 0x683e; locator=proven; call    sub_17906
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+4808
 .org 0x6841
 # IDA 0x16641; file 0x6841; locator=proven; jb      short loc_166C0
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+127
 .org 0x6843
 # IDA 0x16643; file 0x6843; locator=proven; call    sub_165EF
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-84
 .org 0x6846
 # IDA 0x16646; file 0x6846; locator=proven; jb      short loc_1663E
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .-8
 .org 0x6848
 # IDA 0x16648; file 0x6848; locator=proven; call    sub_1676F
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+295
 .org 0x684b
 # IDA 0x1664b; file 0x684b; locator=proven; jb      short loc_1663E
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .-13
 .org 0x684d
 # IDA 0x1664d; file 0x684d; locator=proven; mov     [bp+0], bx
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 mov word ptr [bp], bx
 .org 0x6850
 # IDA 0x16650; file 0x6850; locator=proven; call    sub_101B4
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-25756
 .org 0x6853
 # IDA 0x16653; file 0x6853; locator=proven; mov     cx, 7
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x7
 .org 0x6856
 # IDA 0x16656; file 0x6856; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+8701
 .org 0x6859
 # IDA 0x16659; file 0x6859; locator=proven; call    sub_101DB
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-25726
 .org 0x685c
 # IDA 0x1665c; file 0x685c; locator=proven; call    sub_17906
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+4778
 .org 0x685f
 # IDA 0x1665f; file 0x685f; locator=proven; jb      short loc_166C0
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+97
 .org 0x6861
 # IDA 0x16661; file 0x6861; locator=proven; mov     [bp+2], bx
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 mov word ptr [bp+0x2], bx
 .org 0x6864
 # IDA 0x16664; file 0x6864; locator=proven; push    ax
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 push ax
 .org 0x6865
 # IDA 0x16665; file 0x6865; locator=proven; push    bx
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 push bx
 .org 0x6866
 # IDA 0x16666; file 0x6866; locator=proven; push    dx
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 push dx
 .org 0x6867
 # IDA 0x16667; file 0x6867; locator=proven; mov     ax, 2
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ax, 0x2
 .org 0x686a
 # IDA 0x1666a; file 0x686a; locator=proven; call    sub_20000
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 lcall 0x1000, 0x0
 .org 0x686f
 # IDA 0x1666f; file 0x686f; locator=proven; pop     dx
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 pop dx
 .org 0x6870
 # IDA 0x16670; file 0x6870; locator=proven; pop     bx
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 pop bx
 .org 0x6871
 # IDA 0x16671; file 0x6871; locator=proven; pop     ax
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 pop ax
 .org 0x6872
 # IDA 0x16672; file 0x6872; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0xffff
 .org 0x6875
 # IDA 0x16675; file 0x6875; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+8670
 .org 0x6878
 # IDA 0x16678; file 0x6878; locator=proven; call    sub_11D46
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-18738
 .org 0x687b
 # IDA 0x1667b; file 0x687b; locator=proven; mov     cx, bx
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov cx, bx
 .org 0x687d
 # IDA 0x1667d; file 0x687d; locator=proven; call    sub_187FF
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+8578
 .org 0x6880
 # IDA 0x16680; file 0x6880; locator=proven; mov     si, bx
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov si, bx
 .org 0x6882
 # IDA 0x16682; file 0x6882; locator=proven; add     si, 4240h
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 add si, 0x4240
 .org 0x6886
 # IDA 0x16686; file 0x6886; locator=proven; mov     bx, cx
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov bx, cx
 .org 0x6888
 # IDA 0x16688; file 0x6888; locator=proven; call    sub_166D9
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+81
 .org 0x688b
 # IDA 0x1668b; file 0x688b; locator=proven; mov     di, bp
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov di, bp
 .org 0x688d
 # IDA 0x1668d; file 0x688d; locator=proven; mov     cx, 0D6h
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0xd6
 .org 0x6890
 # IDA 0x16690; file 0x6890; locator=proven; call    sub_13830
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-11872
 .org 0x6893
 # IDA 0x16693; file 0x6893; locator=proven; jb      short loc_166C0
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+45
 .org 0x6895
 # IDA 0x16695; file 0x6895; locator=proven; mov     ax, [bp+0]
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ax, word ptr [bp]
 .org 0x6898
 # IDA 0x16698; file 0x6898; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 shl ax, 0x1
 .org 0x689a
 # IDA 0x1669a; file 0x689a; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 shl ax, 0x1
 .org 0x689c
 # IDA 0x1669c; file 0x689c; locator=proven; mov     al, 7
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x7
 .org 0x689e
 # IDA 0x1669e; file 0x689e; locator=proven; mov     dx, [bp+2]
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 mov dx, word ptr [bp+0x2]
 .org 0x68a1
 # IDA 0x166a1; file 0x68a1; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 shl dx, 0x1
 .org 0x68a3
 # IDA 0x166a3; file 0x68a3; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 shl dx, 0x1
 .org 0x68a5
 # IDA 0x166a5; file 0x68a5; locator=proven; mov     dl, dh
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov dl, dh
 .org 0x68a7
 # IDA 0x166a7; file 0x68a7; locator=proven; mov     bl, 14h
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 mov bl, 0x14
 .org 0x68a9
 # IDA 0x166a9; file 0x68a9; locator=proven; call    sub_1301C
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-13965
 .org 0x68ac
 # IDA 0x166ac; file 0x68ac; locator=proven; mov     bx, [bp+0]
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 mov bx, word ptr [bp]
 .org 0x68af
 # IDA 0x166af; file 0x68af; locator=proven; mov     al, [bx+2Ah]
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, byte ptr [bx+0x2a]
 .org 0x68b2
 # IDA 0x166b2; file 0x68b2; locator=proven; mov     ah, 0FFh
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ah, 0xff
 .org 0x68b4
 # IDA 0x166b4; file 0x68b4; locator=proven; push    ax
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 push ax
 .org 0x68b5
 # IDA 0x166b5; file 0x68b5; locator=proven; mov     di, sp
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov di, sp
 .org 0x68b7
 # IDA 0x166b7; file 0x68b7; locator=proven; mov     al, 93h
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x93
 .org 0x68b9
 # IDA 0x166b9; file 0x68b9; locator=proven; mov     cx, 3Ch
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x3c
 .org 0x68bc
 # IDA 0x166bc; file 0x68bc; locator=proven; call    sub_18810
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+8532
 .org 0x68bf
 # IDA 0x166bf; file 0x68bf; locator=proven; pop     ax
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 pop ax
 .org 0x68c0
 loc_166C0:
 # IDA 0x166c0; file 0x68c0; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0xffff
 .org 0x68c3
 # IDA 0x166c3; file 0x68c3; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+8592
 .org 0x68c6
 # IDA 0x166c6; file 0x68c6; locator=proven; mov     ax, 1
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ax, 0x1
 .org 0x68c9
 # IDA 0x166c9; file 0x68c9; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} xor bx, bx
 .org 0x68cb
 # IDA 0x166cb; file 0x68cb; locator=proven; call    sub_20000
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 lcall 0x1000, 0x0
 .org 0x68d0
 # IDA 0x166d0; file 0x68d0; locator=proven; call    sub_120D6
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-17914
 .org 0x68d3
 # IDA 0x166d3; file 0x68d3; locator=proven; add     sp, 4
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 add sp, 0x4
 .org 0x68d6
 # IDA 0x166d6; file 0x68d6; locator=proven; pop     bp
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 pop bp
 .org 0x68d7
 # IDA 0x166d7; file 0x68d7; locator=proven; pop     ds
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 pop ds
 .org 0x68d8
 # IDA 0x166d8; file 0x68d8; locator=proven; retn
-# ⚠ 函式 sub_16623; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16623; [proven] 原協同進言caller，兩勢力選擇與SSframe參數; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x68d9
 sub_166D9:
 # IDA 0x166d9; file 0x68d9; locator=proven; push    bx
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 push bx
 .org 0x68da
 # IDA 0x166da; file 0x68da; locator=proven; push    cx
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 push cx
 .org 0x68db
 # IDA 0x166db; file 0x68db; locator=proven; push    si
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 push si
 .org 0x68dc
 # IDA 0x166dc; file 0x68dc; locator=proven; push    di
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 push di
 .org 0x68dd
 # IDA 0x166dd; file 0x68dd; locator=proven; mov     si, cs:word_10CFD
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov si, word ptr [0xcfd]
 .org 0x68e2
 # IDA 0x166e2; file 0x68e2; locator=proven; mov     di, [bp+0]
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 mov di, word ptr [bp]
 .org 0x68e5
 # IDA 0x166e5; file 0x68e5; locator=proven; cmp     di, [bp+2]
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp di, word ptr [bp+0x2]
 .org 0x68e8
 # IDA 0x166e8; file 0x68e8; locator=proven; jnz     short loc_166EE
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 jnz .+6
 .org 0x68ea
 # IDA 0x166ea; file 0x68ea; locator=proven; mov     al, 4
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x4
 .org 0x68ec
 # IDA 0x166ec; file 0x68ec; locator=proven; jmp     short loc_1676A
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .+126
 .org 0x68ee
 loc_166EE:
 # IDA 0x166ee; file 0x68ee; locator=proven; call    sub_130CB
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-13859
 .org 0x68f1
 # IDA 0x166f1; file 0x68f1; locator=proven; mov     bh, [si+28h]
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 mov bh, byte ptr [si+0x28]
 .org 0x68f4
 # IDA 0x166f4; file 0x68f4; locator=proven; shl     bh, 1
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 shl bh, 0x1
 .org 0x68f6
 # IDA 0x166f6; file 0x68f6; locator=proven; shl     bh, 1
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 shl bh, 0x1
 .org 0x68f8
 # IDA 0x166f8; file 0x68f8; locator=proven; add     bh, 1Eh
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 add bh, 0x1e
 .org 0x68fb
 # IDA 0x166fb; file 0x68fb; locator=proven; or      bh, 80h
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 or bh, 0x80
 .org 0x68fe
 # IDA 0x166fe; file 0x68fe; locator=proven; cmp     al, bh
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} cmp al, bh
 .org 0x6900
 # IDA 0x16700; file 0x6900; locator=proven; jnb     short loc_16706
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+6
 .org 0x6902
 # IDA 0x16702; file 0x6902; locator=proven; xor     al, al
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} xor al, al
 .org 0x6904
 # IDA 0x16704; file 0x6904; locator=proven; jmp     short loc_1676A
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .+102
 .org 0x6906
 loc_16706:
 # IDA 0x16706; file 0x6906; locator=proven; mov     bl, al
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov bl, al
 .org 0x6908
 # IDA 0x16708; file 0x6908; locator=proven; mov     di, [bp+2]
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 mov di, word ptr [bp+0x2]
 .org 0x690b
 # IDA 0x1670b; file 0x690b; locator=proven; call    sub_130CB
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-13888
 .org 0x690e
 # IDA 0x1670e; file 0x690e; locator=proven; cmp     al, 80h
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp al, 0x80
 .org 0x6910
 # IDA 0x16710; file 0x6910; locator=proven; jb      short loc_16716
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+6
 .org 0x6912
 # IDA 0x16712; file 0x6912; locator=proven; mov     al, 3
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x3
 .org 0x6914
 # IDA 0x16714; file 0x6914; locator=proven; jmp     short loc_1676A
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .+86
 .org 0x6916
 loc_16716:
 # IDA 0x16716; file 0x6916; locator=proven; mov     al, [di+19h]
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, byte ptr [di+0x19]
 .org 0x6919
 # IDA 0x16719; file 0x6919; locator=proven; cmp     al, cs:byte_10CFF
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; cmp al, byte ptr [0xcff]
 .org 0x691e
 # IDA 0x1671e; file 0x691e; locator=proven; jnz     short loc_1672D
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 jnz .+15
 .org 0x6920
 # IDA 0x16720; file 0x6920; locator=proven; call    sub_16A28
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+776
 .org 0x6923
 # IDA 0x16723; file 0x6923; locator=proven; shr     cx, 1
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 shr cx, 0x1
 .org 0x6925
 # IDA 0x16725; file 0x6925; locator=proven; cmp     ax, cx
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} cmp ax, cx
 .org 0x6927
 # IDA 0x16727; file 0x6927; locator=proven; jnb     short loc_1672D
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+6
 .org 0x6929
 # IDA 0x16729; file 0x6929; locator=proven; mov     al, 1
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x1
 .org 0x692b
 # IDA 0x1672b; file 0x692b; locator=proven; jmp     short loc_1676A
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .+63
 .org 0x692d
 loc_1672D:
 # IDA 0x1672d; file 0x692d; locator=proven; xor     dl, dl
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} xor dl, dl
 .org 0x692f
 # IDA 0x1672f; file 0x692f; locator=proven; add     bh, 1Eh
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 add bh, 0x1e
 .org 0x6932
 # IDA 0x16732; file 0x6932; locator=proven; cmp     bl, bh
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} cmp bl, bh
 .org 0x6934
 # IDA 0x16734; file 0x6934; locator=proven; jb      short loc_16739
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+5
 .org 0x6936
 # IDA 0x16736; file 0x6936; locator=proven; or      dl, 10h
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 or dl, 0x10
 .org 0x6939
 loc_16739:
 # IDA 0x16739; file 0x6939; locator=proven; shr     dl, 1
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 shr dl, 0x1
 .org 0x693b
 # IDA 0x1673b; file 0x693b; locator=proven; mov     di, [bp+0]
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 mov di, word ptr [bp]
 .org 0x693e
 # IDA 0x1673e; file 0x693e; locator=proven; call    sub_16A28
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+746
 .org 0x6941
 # IDA 0x16741; file 0x6941; locator=proven; cmp     ax, cx
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} cmp ax, cx
 .org 0x6943
 # IDA 0x16743; file 0x6943; locator=proven; jnb     short loc_16748
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+5
 .org 0x6945
 # IDA 0x16745; file 0x6945; locator=proven; or      dl, 10h
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 or dl, 0x10
 .org 0x6948
 loc_16748:
 # IDA 0x16748; file 0x6948; locator=proven; shr     dl, 1
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 shr dl, 0x1
 .org 0x694a
 # IDA 0x1674a; file 0x694a; locator=proven; mov     di, [bp+2]
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 mov di, word ptr [bp+0x2]
 .org 0x694d
 # IDA 0x1674d; file 0x694d; locator=proven; call    sub_16A28
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+731
 .org 0x6950
 # IDA 0x16750; file 0x6950; locator=proven; cmp     ax, cx
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} cmp ax, cx
 .org 0x6952
 # IDA 0x16752; file 0x6952; locator=proven; jnb     short loc_16757
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+5
 .org 0x6954
 # IDA 0x16754; file 0x6954; locator=proven; or      dl, 10h
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 or dl, 0x10
 .org 0x6957
 loc_16757:
 # IDA 0x16757; file 0x6957; locator=proven; shr     dl, 1
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 shr dl, 0x1
 .org 0x6959
 # IDA 0x16759; file 0x6959; locator=proven; mov     al, [di+19h]
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, byte ptr [di+0x19]
 .org 0x695c
 # IDA 0x1675c; file 0x695c; locator=proven; cmp     al, cs:byte_10CFF
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; cmp al, byte ptr [0xcff]
 .org 0x6961
 # IDA 0x16761; file 0x6961; locator=proven; jnz     short loc_16766
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 jnz .+5
 .org 0x6963
 # IDA 0x16763; file 0x6963; locator=proven; or      dl, 10h
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 or dl, 0x10
 .org 0x6966
 loc_16766:
 # IDA 0x16766; file 0x6966; locator=proven; shr     dl, 1
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 shr dl, 0x1
 .org 0x6968
 # IDA 0x16768; file 0x6968; locator=proven; mov     al, 2
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x2
 .org 0x696a
 loc_1676A:
 # IDA 0x1676a; file 0x696a; locator=proven; pop     di
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 pop di
 .org 0x696b
 # IDA 0x1676b; file 0x696b; locator=proven; pop     si
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 pop si
 .org 0x696c
 # IDA 0x1676c; file 0x696c; locator=proven; pop     cx
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 pop cx
 .org 0x696d
 # IDA 0x1676d; file 0x696d; locator=proven; pop     bx
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 pop bx
 .org 0x696e
 # IDA 0x1676e; file 0x696e; locator=proven; retn
-# ⚠ 函式 sub_166D9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_166D9; [proven] 原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x696f
 sub_1676F:
 # IDA 0x1676f; file 0x696f; locator=proven; push    si
-# ⚠ 函式 sub_1676F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1676F; [proven] 原協同隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 push si
 .org 0x6970
 # IDA 0x16770; file 0x6970; locator=proven; mov     si, bx
-# ⚠ 函式 sub_1676F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1676F; [proven] 原協同隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov si, bx
 .org 0x6972
 # IDA 0x16772; file 0x6972; locator=proven; mov     al, 7
-# ⚠ 函式 sub_1676F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1676F; [proven] 原協同隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x7
 .org 0x6974
 # IDA 0x16774; file 0x6974; locator=proven; mov     dx, 0FFFFh
-# ⚠ 函式 sub_1676F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1676F; [proven] 原協同隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 mov dx, 0xffff
 .org 0x6977
 # IDA 0x16777; file 0x6977; locator=proven; call    sub_1304E
-# ⚠ 函式 sub_1676F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1676F; [proven] 原協同隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-14121
 .org 0x697a
 # IDA 0x1677a; file 0x697a; locator=proven; pop     si
-# ⚠ 函式 sub_1676F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1676F; [proven] 原協同隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 pop si
 .org 0x697b
 # IDA 0x1677b; file 0x697b; locator=proven; jnb     short loc_1677F
-# ⚠ 函式 sub_1676F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1676F; [proven] 原協同隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 jnb .+4
 .org 0x697d
 # IDA 0x1677d; file 0x697d; locator=proven; clc
-# ⚠ 函式 sub_1676F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1676F; [proven] 原協同隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 clc
 .org 0x697e
 # IDA 0x1677e; file 0x697e; locator=proven; retn
-# ⚠ 函式 sub_1676F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1676F; [proven] 原協同隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x697f
 loc_1677F:
 # IDA 0x1677f; file 0x697f; locator=proven; push    bx
-# ⚠ 函式 sub_1676F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1676F; [proven] 原協同隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 push bx
 .org 0x6980
 # IDA 0x16780; file 0x6980; locator=proven; mov     di, sp
-# ⚠ 函式 sub_1676F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1676F; [proven] 原協同隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov di, sp
 .org 0x6982
 # IDA 0x16782; file 0x6982; locator=proven; mov     al, 93h
-# ⚠ 函式 sub_1676F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1676F; [proven] 原協同隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x93
 .org 0x6984
 # IDA 0x16784; file 0x6984; locator=proven; mov     cx, 4Ah
-# ⚠ 函式 sub_1676F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1676F; [proven] 原協同隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x4a
 .org 0x6987
 # IDA 0x16787; file 0x6987; locator=proven; call    sub_18810
-# ⚠ 函式 sub_1676F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1676F; [proven] 原協同隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+8329
 .org 0x698a
 # IDA 0x1678a; file 0x698a; locator=proven; pop     bx
-# ⚠ 函式 sub_1676F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1676F; [proven] 原協同隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 pop bx
 .org 0x698b
 # IDA 0x1678b; file 0x698b; locator=proven; stc
-# ⚠ 函式 sub_1676F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1676F; [proven] 原協同隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 stc
 .org 0x698c
 # IDA 0x1678c; file 0x698c; locator=proven; retn
-# ⚠ 函式 sub_1676F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1676F; [proven] 原協同隊列檢查與訊息入口; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x698d
 sub_1678D:
 # IDA 0x1678d; file 0x698d; locator=proven; call    sub_168C3
-# ⚠ 函式 sub_1678D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1678D; [proven] 原財政視窗控制器，四熱區編輯後重畫再等待; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+310
 .org 0x6990
 # IDA 0x16790; file 0x6990; locator=proven; call    sub_16846
-# ⚠ 函式 sub_1678D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1678D; [proven] 原財政視窗控制器，四熱區編輯後重畫再等待; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+182
 .org 0x6993
 # IDA 0x16793; file 0x6993; locator=proven; call    sub_12078
-# ⚠ 函式 sub_1678D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1678D; [proven] 原財政視窗控制器，四熱區編輯後重畫再等待; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-18203
 .org 0x6996
 loc_16796:
 # IDA 0x16796; file 0x6996; locator=proven; mov     cx, 10h
-# ⚠ 函式 sub_1678D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1678D; [proven] 原財政視窗控制器，四熱區編輯後重畫再等待; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x10
 .org 0x6999
 # IDA 0x16799; file 0x6999; locator=proven; call    sub_18853
-# ⚠ 函式 sub_1678D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1678D; [proven] 原財政視窗控制器，四熱區編輯後重畫再等待; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+8378
 .org 0x699c
 # IDA 0x1679c; file 0x699c; locator=proven; call    sub_121E7
-# ⚠ 函式 sub_1678D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1678D; [proven] 原財政視窗控制器，四熱區編輯後重畫再等待; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-17845
 .org 0x699f
 # IDA 0x1679f; file 0x699f; locator=proven; jb      short loc_167B8
-# ⚠ 函式 sub_1678D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1678D; [proven] 原財政視窗控制器，四熱區編輯後重畫再等待; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+25
 .org 0x69a1
 # IDA 0x167a1; file 0x69a1; locator=proven; call    sub_1E453
-# ⚠ 函式 sub_1678D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1678D; [proven] 原財政視窗控制器，四熱區編輯後重畫再等待; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+31922
 .org 0x69a4
 # IDA 0x167a4; file 0x69a4; locator=proven; sub     al, 20h
-# ⚠ 函式 sub_1678D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1678D; [proven] 原財政視窗控制器，四熱區編輯後重畫再等待; 出處: docs/re/124-c-strategy-command-restoration.md
 sub al, 0x20
 .org 0x69a6
 # IDA 0x167a6; file 0x69a6; locator=proven; jb      short loc_16796
-# ⚠ 函式 sub_1678D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1678D; [proven] 原財政視窗控制器，四熱區編輯後重畫再等待; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .-16
 .org 0x69a8
 # IDA 0x167a8; file 0x69a8; locator=proven; mov     bl, al
-# ⚠ 函式 sub_1678D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1678D; [proven] 原財政視窗控制器，四熱區編輯後重畫再等待; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov bl, al
 .org 0x69aa
 # IDA 0x167aa; file 0x69aa; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_1678D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1678D; [proven] 原財政視窗控制器，四熱區編輯後重畫再等待; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} xor bh, bh
 .org 0x69ac
 # IDA 0x167ac; file 0x69ac; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1678D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1678D; [proven] 原財政視窗控制器，四熱區編輯後重畫再等待; 出處: docs/re/124-c-strategy-command-restoration.md
 shl bx, 0x1
 .org 0x69ae
 # IDA 0x167ae; file 0x69ae; locator=proven; call    cs:funcs_167AE[bx]
-# ⚠ 函式 sub_1678D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1678D; [proven] 原財政視窗控制器，四熱區編輯後重畫再等待; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; call word ptr [bx+0x67c5]
 .org 0x69b3
 # IDA 0x167b3; file 0x69b3; locator=proven; call    sub_16846
-# ⚠ 函式 sub_1678D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1678D; [proven] 原財政視窗控制器，四熱區編輯後重畫再等待; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+147
 .org 0x69b6
 # IDA 0x167b6; file 0x69b6; locator=proven; jmp     short loc_16796
-# ⚠ 函式 sub_1678D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1678D; [proven] 原財政視窗控制器，四熱區編輯後重畫再等待; 出處: docs/re/124-c-strategy-command-restoration.md
 jmp .-32
 .org 0x69b8
 loc_167B8:
 # IDA 0x167b8; file 0x69b8; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_1678D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1678D; [proven] 原財政視窗控制器，四熱區編輯後重畫再等待; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0xffff
 .org 0x69bb
 # IDA 0x167bb; file 0x69bb; locator=proven; call    sub_18853
-# ⚠ 函式 sub_1678D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1678D; [proven] 原財政視窗控制器，四熱區編輯後重畫再等待; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+8344
 .org 0x69be
 # IDA 0x167be; file 0x69be; locator=proven; call    sub_120D6
-# ⚠ 函式 sub_1678D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1678D; [proven] 原財政視窗控制器，四熱區編輯後重畫再等待; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-18152
 .org 0x69c1
 # IDA 0x167c1; file 0x69c1; locator=proven; call    sub_168FA
-# ⚠ 函式 sub_1678D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1678D; [proven] 原財政視窗控制器，四熱區編輯後重畫再等待; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+313
 .org 0x69c4
 # IDA 0x167c4; file 0x69c4; locator=proven; retn
-# ⚠ 函式 sub_1678D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1678D; [proven] 原財政視窗控制器，四熱區編輯後重畫再等待; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x69cd
 sub_167CD:
@@ -40861,306 +40867,307 @@ ret
 .org 0x6a46
 sub_16846:
 # IDA 0x16846; file 0x6a46; locator=proven; push    ds
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 push ds
 .org 0x6a47
 # IDA 0x16847; file 0x6a47; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x6a4c
 # IDA 0x1684c; file 0x6a4c; locator=proven; mov     si, cs:word_10CFD
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov si, word ptr [0xcfd]
 .org 0x6a51
 # IDA 0x16851; file 0x6a51; locator=proven; mov     al, [si+22h]
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, byte ptr [si+0x22]
 .org 0x6a54
 # IDA 0x16854; file 0x6a54; locator=proven; cbw
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
+# operand 0 ; [proven] 有號資金高byte擴充為AX，之後複製到DX; 出處: docs/re/124-c-strategy-command-restoration.md
 cbw
 .org 0x6a55
 # IDA 0x16855; file 0x6a55; locator=proven; mov     dx, ax
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov dx, ax
 .org 0x6a57
 # IDA 0x16857; file 0x6a57; locator=proven; mov     ax, [si+20h]
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ax, word ptr [si+0x20]
 .org 0x6a5a
 # IDA 0x1685a; file 0x6a5a; locator=proven; pop     ds
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 pop ds
 .org 0x6a5b
 # IDA 0x1685b; file 0x6a5b; locator=proven; mov     bx, 907h
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 mov bx, 0x907
 .org 0x6a5e
 # IDA 0x1685e; file 0x6a5e; locator=proven; cmp     dh, 50h
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp dh, 0x50
 .org 0x6a61
 # IDA 0x16861; file 0x6a61; locator=proven; jb      short loc_16866
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 jb .+5
 .org 0x6a63
 # IDA 0x16863; file 0x6a63; locator=proven; mov     bx, 0A07h
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 mov bx, 0xa07
 .org 0x6a66
 loc_16866:
 # IDA 0x16866; file 0x6a66; locator=proven; mov     di, 230Dh
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 mov di, 0x230d
 .org 0x6a69
 # IDA 0x16869; file 0x6a69; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-25146
 .org 0x6a6c
 # IDA 0x1686c; file 0x6a6c; locator=proven; mov     ax, cs:word_10D02
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov ax, word ptr [0xd02]
 .org 0x6a70
 # IDA 0x16870; file 0x6a70; locator=proven; mov     dl, cs:byte_10D04
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov dl, byte ptr [0xd04]
 .org 0x6a75
 # IDA 0x16875; file 0x6a75; locator=proven; xor     dh, dh
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} xor dh, dh
 .org 0x6a77
 # IDA 0x16877; file 0x6a77; locator=proven; mov     bx, 906h
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 mov bx, 0x906
 .org 0x6a7a
 # IDA 0x1687a; file 0x6a7a; locator=proven; mov     di, 1E24h
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 mov di, 0x1e24
 .org 0x6a7d
 # IDA 0x1687d; file 0x6a7d; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-25166
 .org 0x6a80
 # IDA 0x16880; file 0x6a80; locator=proven; mov     ax, cs:word_10D05
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov ax, word ptr [0xd05]
 .org 0x6a84
 # IDA 0x16884; file 0x6a84; locator=proven; mov     dl, cs:byte_10D07
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov dl, byte ptr [0xd07]
 .org 0x6a89
 # IDA 0x16889; file 0x6a89; locator=proven; xor     dh, dh
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} xor dh, dh
 .org 0x6a8b
 # IDA 0x1688b; file 0x6a8b; locator=proven; mov     bx, 906h
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 mov bx, 0x906
 .org 0x6a8e
 # IDA 0x1688e; file 0x6a8e; locator=proven; mov     di, 2324h
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 mov di, 0x2324
 .org 0x6a91
 # IDA 0x16891; file 0x6a91; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-25186
 .org 0x6a94
 # IDA 0x16894; file 0x6a94; locator=proven; mov     si, 0D08h
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 mov si, 0xd08
 .org 0x6a97
 # IDA 0x16897; file 0x6a97; locator=proven; mov     di, 320Fh
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 mov di, 0x320f
 .org 0x6a9a
 # IDA 0x1689a; file 0x6a9a; locator=proven; mov     cx, 8
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x8
 .org 0x6a9d
 loc_1689D:
 # IDA 0x1689d; file 0x6a9d; locator=proven; mov     ax, cs:[si]
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 cs; mov ax, word ptr [si]
 .org 0x6aa0
 # IDA 0x168a0; file 0x6aa0; locator=proven; test    cl, 3
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 test cl, 0x3
 .org 0x6aa3
 # IDA 0x168a3; file 0x6aa3; locator=proven; jz      short loc_168AA
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 jz .+7
 .org 0x6aa5
 # IDA 0x168a5; file 0x6aa5; locator=proven; mov     dx, 0Ah
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 mov dx, 0xa
 .org 0x6aa8
 # IDA 0x168a8; file 0x6aa8; locator=proven; mul     dx
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 mul dx
 .org 0x6aaa
 loc_168AA:
 # IDA 0x168aa; file 0x6aaa; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} xor dx, dx
 .org 0x6aac
 # IDA 0x168ac; file 0x6aac; locator=proven; mov     bx, 905h
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 mov bx, 0x905
 .org 0x6aaf
 # IDA 0x168af; file 0x6aaf; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-25216
 .org 0x6ab2
 # IDA 0x168b2; file 0x6ab2; locator=proven; add     di, 500h
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 add di, 0x500
 .org 0x6ab6
 # IDA 0x168b6; file 0x6ab6; locator=proven; cmp     cx, 5
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 cmp cx, 0x5
 .org 0x6ab9
 # IDA 0x168b9; file 0x6ab9; locator=proven; jnz     short loc_168BE
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 jnz .+5
 .org 0x6abb
 # IDA 0x168bb; file 0x6abb; locator=proven; mov     di, 3223h
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 mov di, 0x3223
 .org 0x6abe
 loc_168BE:
 # IDA 0x168be; file 0x6abe; locator=proven; inc     si
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 inc si
 .org 0x6abf
 # IDA 0x168bf; file 0x6abf; locator=proven; inc     si
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 inc si
 .org 0x6ac0
 # IDA 0x168c0; file 0x6ac0; locator=proven; loop    loc_1689D
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 loop .-35
 .org 0x6ac2
 # IDA 0x168c2; file 0x6ac2; locator=proven; retn
-# ⚠ 函式 sub_16846; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16846; [proven] 原財政十一數字，有號24bit資金及八財政欄低word乘十; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x6ac3
 sub_168C3:
 # IDA 0x168c3; file 0x6ac3; locator=proven; mov     al, 1Fh
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x1f
 .org 0x6ac5
 # IDA 0x168c5; file 0x6ac5; locator=proven; mov     dx, 1
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 mov dx, 0x1
 .org 0x6ac8
 # IDA 0x168c8; file 0x6ac8; locator=proven; mov     bx, 3
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 mov bx, 0x3
 .org 0x6acb
 # IDA 0x168cb; file 0x6acb; locator=proven; mov     cx, 0A15h
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0xa15
 .org 0x6ace
 # IDA 0x168ce; file 0x6ace; locator=proven; call    sub_1895D
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+8335
 .org 0x6ad1
 # IDA 0x168d1; file 0x6ad1; locator=proven; mov     al, 1
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x1
 .org 0x6ad3
 # IDA 0x168d3; file 0x6ad3; locator=proven; mov     dx, 18h
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 mov dx, 0x18
 .org 0x6ad6
 # IDA 0x168d6; file 0x6ad6; locator=proven; mov     bx, 58h
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 mov bx, 0x58
 .org 0x6ad9
 # IDA 0x168d9; file 0x6ad9; locator=proven; call    sub_10337
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 call .-26018
 .org 0x6adc
 # IDA 0x168dc; file 0x6adc; locator=proven; mov     al, 20h
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, 0x20
 .org 0x6ade
 # IDA 0x168de; file 0x6ade; locator=proven; mov     si, 0A0h
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 mov si, 0xa0
 .org 0x6ae1
 # IDA 0x168e1; file 0x6ae1; locator=proven; mov     di, 4
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 mov di, 0x4
 .org 0x6ae4
 loc_168E4:
 # IDA 0x168e4; file 0x6ae4; locator=proven; push    ax
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 push ax
 .org 0x6ae5
 # IDA 0x168e5; file 0x6ae5; locator=proven; mov     bx, si
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov bx, si
 .org 0x6ae7
 # IDA 0x168e7; file 0x6ae7; locator=proven; mov     dx, 100h
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 mov dx, 0x100
 .org 0x6aea
 # IDA 0x168ea; file 0x6aea; locator=proven; mov     cx, 203h
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0x203
 .org 0x6aed
 # IDA 0x168ed; file 0x6aed; locator=proven; call    sub_1E3D7
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+31466
 .org 0x6af0
 # IDA 0x168f0; file 0x6af0; locator=proven; pop     ax
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 pop ax
 .org 0x6af1
 # IDA 0x168f1; file 0x6af1; locator=proven; inc     al
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 inc al
 .org 0x6af3
 # IDA 0x168f3; file 0x6af3; locator=proven; add     si, 10h
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 add si, 0x10
 .org 0x6af6
 # IDA 0x168f6; file 0x6af6; locator=proven; dec     di
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 dec di
 .org 0x6af7
 # IDA 0x168f7; file 0x6af7; locator=proven; jnz     short loc_168E4
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 jnz .-19
 .org 0x6af9
 # IDA 0x168f9; file 0x6af9; locator=proven; retn
-# ⚠ 函式 sub_168C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168C3; [proven] 原財政視窗開始與熱區登記; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x6afa
 sub_168FA:
 # IDA 0x168fa; file 0x6afa; locator=proven; xor     al, al
-# ⚠ 函式 sub_168FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168FA; [proven] 原財政視窗關閉; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} xor al, al
 .org 0x6afc
 # IDA 0x168fc; file 0x6afc; locator=proven; mov     dx, 1
-# ⚠ 函式 sub_168FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168FA; [proven] 原財政視窗關閉; 出處: docs/re/124-c-strategy-command-restoration.md
 mov dx, 0x1
 .org 0x6aff
 # IDA 0x168ff; file 0x6aff; locator=proven; mov     bx, 3
-# ⚠ 函式 sub_168FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168FA; [proven] 原財政視窗關閉; 出處: docs/re/124-c-strategy-command-restoration.md
 mov bx, 0x3
 .org 0x6b02
 # IDA 0x16902; file 0x6b02; locator=proven; mov     cx, 0A15h
-# ⚠ 函式 sub_168FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168FA; [proven] 原財政視窗關閉; 出處: docs/re/124-c-strategy-command-restoration.md
 mov cx, 0xa15
 .org 0x6b05
 # IDA 0x16905; file 0x6b05; locator=proven; call    sub_1895D
-# ⚠ 函式 sub_168FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168FA; [proven] 原財政視窗關閉; 出處: docs/re/124-c-strategy-command-restoration.md
 call .+8280
 .org 0x6b08
 # IDA 0x16908; file 0x6b08; locator=proven; retn
-# ⚠ 函式 sub_168FA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_168FA; [proven] 原財政視窗關閉; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x6b09
 sub_16909:
@@ -41630,39 +41637,40 @@ ret
 .org 0x6c28
 sub_16A28:
 # IDA 0x16a28; file 0x6c28; locator=proven; mov     al, [di+23h]
-# ⚠ 函式 sub_16A28; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A28; [proven] 原兩勢力城市數能力，對方乘25、自方乘byte攻擊加20; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, byte ptr [di+0x23]
 .org 0x6c2b
 # IDA 0x16a2b; file 0x6c2b; locator=proven; mov     ah, 19h
-# ⚠ 函式 sub_16A28; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A28; [proven] 原兩勢力城市數能力，對方乘25、自方乘byte攻擊加20; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ah, 0x19
 .org 0x6c2d
 # IDA 0x16a2d; file 0x6c2d; locator=proven; mul     ah
-# ⚠ 函式 sub_16A28; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A28; [proven] 原兩勢力城市數能力，對方乘25、自方乘byte攻擊加20; 出處: docs/re/124-c-strategy-command-restoration.md
 mul ah
 .org 0x6c2f
 # IDA 0x16a2f; file 0x6c2f; locator=proven; mov     cx, ax
-# ⚠ 函式 sub_16A28; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A28; [proven] 原兩勢力城市數能力，對方乘25、自方乘byte攻擊加20; 出處: docs/re/124-c-strategy-command-restoration.md
 {load} mov cx, ax
 .org 0x6c31
 # IDA 0x16a31; file 0x6c31; locator=proven; mov     al, [si+23h]
-# ⚠ 函式 sub_16A28; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A28; [proven] 原兩勢力城市數能力，對方乘25、自方乘byte攻擊加20; 出處: docs/re/124-c-strategy-command-restoration.md
 mov al, byte ptr [si+0x23]
 .org 0x6c34
 # IDA 0x16a34; file 0x6c34; locator=proven; mov     ah, [si+28h]
-# ⚠ 函式 sub_16A28; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A28; [proven] 原兩勢力城市數能力，對方乘25、自方乘byte攻擊加20; 出處: docs/re/124-c-strategy-command-restoration.md
 mov ah, byte ptr [si+0x28]
 .org 0x6c37
 # IDA 0x16a37; file 0x6c37; locator=proven; add     ah, 14h
-# ⚠ 函式 sub_16A28; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A28; [proven] 原兩勢力城市數能力，對方乘25、自方乘byte攻擊加20; 出處: docs/re/124-c-strategy-command-restoration.md
+# operand 1 14h; [proven] 攻擊byte加20後以byte回繞，再與城市數相乘; 出處: docs/re/124-c-strategy-command-restoration.md
 add ah, 0x14
 .org 0x6c3a
 # IDA 0x16a3a; file 0x6c3a; locator=proven; mul     ah
-# ⚠ 函式 sub_16A28; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A28; [proven] 原兩勢力城市數能力，對方乘25、自方乘byte攻擊加20; 出處: docs/re/124-c-strategy-command-restoration.md
 mul ah
 .org 0x6c3c
 # IDA 0x16a3c; file 0x6c3c; locator=proven; retn
-# ⚠ 函式 sub_16A28; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A28; [proven] 原兩勢力城市數能力，對方乘25、自方乘byte攻擊加20; 出處: docs/re/124-c-strategy-command-restoration.md
 ret
 .org 0x6c3d
 sub_16A3D:

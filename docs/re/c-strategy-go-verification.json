@@ -1,0 +1,107 @@
+{
+  "schema": "wolong-strategy-go-verification-v1",
+  "status": "passed",
+  "verification_scope": "formal Go vet and cold Go tests; full project check executed and stopped at existing document failures; 25 individual checks audited separately",
+  "recorded_at_utc": "2026-10-09T12:17:03.576096+00:00",
+  "source_sha256": {
+    "tools/go.sh": "fa9dae64edb9b9d0a770e8af773fb79ddcaed807854f42f4c6fa222be6201416",
+    "tools/check.sh": "8564f12abd88e64d9d938b0cbe3ed9fc7578b739e4194c97335548efbf01d803",
+    "tools/py.sh": "d87d60fa5c66993edda6bf83ac82577769c43be9e6771dd33a5baf356e117cdd",
+    "go.mod": "ffa0f9568f02beb7bdd8e11e6b5eb0f7692e314af6e1a5a5a3b73dfaae178c84",
+    "go.sum": "0e59bae9f1e5957bc62654b3808bfd699e897a32d50f8ab4ee2c6ef3d7b23acb"
+  },
+  "image_id": "sha256:9b6b1a2a457eb6937aceac5aa0eea79de88227100e33163644e1f8f4e661949c",
+  "go_version": "go1.26.7 linux/amd64",
+  "cold_test_cache": true,
+  "vet_passed": true,
+  "test_passed": true,
+  "tested_packages": 39,
+  "cached_test_packages": 0,
+  "log_sha256": "7c1ad79987d36bd105ff28e4aeb568a75d37a0badf54e04366361cab3cbca5a2",
+  "commands": [
+    {
+      "command": "tools/go.sh clean -testcache",
+      "exit_status": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": "tools/check.sh",
+      "exit_status": 1,
+      "log_sha256": "7c1ad79987d36bd105ff28e4aeb568a75d37a0badf54e04366361cab3cbca5a2"
+    }
+  ],
+  "actual_mount_proof_sha256": "0dac76776089029e97302ae360ef6b6da7a3006f1224bae63a3f4738f7c1b2b5",
+  "mount_proof_reference": "docs/re/c-catalog-go-verification.json and docs/re/c-march-go-verification.json; go.sh, py.sh and check.sh hashes unchanged",
+  "original_assets_readonly": true,
+  "network": "none",
+  "memory_bytes": 2147483648,
+  "nano_cpus": 2000000000,
+  "pids_limit": 256,
+  "user": "1000:1000",
+  "cache_scope": "workplace/matching-decompilation/c-catalog/go-cache",
+  "environment": {
+    "WOLONG_GO_IMAGE": "eob-remake-go:1.26.7-ebiten2.9.9-20261008-r2",
+    "WOLONG_GO_TASK": "matching-decompilation",
+    "WOLONG_GO_TIMEOUT": "1200",
+    "WOLONG_GO_NETWORK": "none",
+    "GOPROXY": "off",
+    "GOSUMDB": "off",
+    "GOTOOLCHAIN": "local",
+    "GOFLAGS": "-mod=readonly",
+    "WOLONG_PY_TIMEOUT": "600"
+  },
+  "dependency_input": "Existing exact versions pinned by go.mod and go.sum; no dependency download or network access in this round",
+  "formal_check_all": {
+    "status": "known_baseline_document_failures",
+    "command": "tools/check.sh",
+    "invocation_mode": "default full mode; check.sh accepts --docs, --go or no argument; --all is not supported",
+    "exit_status": 1,
+    "log_sha256": "7c1ad79987d36bd105ff28e4aeb568a75d37a0badf54e04366361cab3cbca5a2",
+    "known_document_failures": [
+      "two historical playtest/19 PNG links",
+      "277 historical phantom references; census symbol layer unavailable"
+    ],
+    "index_missing_links": 2,
+    "phantom_references": 277,
+    "phantom_missing_paths": 275,
+    "phantom_missing_links": 2,
+    "strict_questions_passed": true,
+    "go_vet_test_passed": true,
+    "cold_test_cache": true,
+    "tested_packages": 39,
+    "cached_test_packages": 0,
+    "stopped_at": "phantom_scan exit 1",
+    "remaining_check_stages": "not reached after phantom_scan exit 1; stale_scan, worklist, lessons and later stages are covered only by the separately recorded 25 individual checks"
+  },
+  "cold_go_command": "tools/check.sh",
+  "full_project_check_passed": false,
+  "individual_checks": {
+    "receipt": "workplace/matching-decompilation/checks/strategy-checks.json",
+    "receipt_sha256": "f1c3ba3b404fe0b575cfee0a851761347906c4b7ef40c21b5af0164d01c79995",
+    "commands": 25,
+    "passed": 21,
+    "known_failures": 4,
+    "new_failures": 0,
+    "known_failure_indices": [
+      2,
+      3,
+      7,
+      8
+    ],
+    "protected_selftest_indices": [
+      13,
+      14
+    ],
+    "phantom_normalized_rows": 277,
+    "phantom_added": 0,
+    "phantom_removed": 0,
+    "phantom_source_before": {
+      "sha256": "6987546472f521b798679424d4281cddc777840a41a57ca58bf96248969acf52",
+      "files": 1331
+    },
+    "phantom_source_after": {
+      "sha256": "6987546472f521b798679424d4281cddc777840a41a57ca58bf96248969acf52",
+      "files": 1331
+    }
+  }
+}

@@ -471,3 +471,16 @@
 - 613指令已有覆蓋，五筆MZ反向重定位與獨立重組相同；組語註記重生後67,099bytes整檔仍匹配。338 C/48raw，完整Goal保持active，依授權提交推送。
 - 正式Go冷vet／39套件通過，無cached；25單項先完成21pass/4舊fail、新0，phantom前後來源SHA穩定、277零增刪，13/14隔離自測通過。之後才跑完整check，停於既有index兩缺圖／phantom，避免並行生成docs43。四條回鏈、5筆MZ、raw RNG每版16次／clock0均通過。檢查收據workplace/matching-decompilation/checks/march-checks.json，SHA-256 `8506b746b4ac5c1a727359cac3f37777b66647afdde2b7c799aecb1d21badc79`。
 - 338 C/48raw全部來源雜湊與原組語整檔收據一致；擁有權基線27、無.md目錄，本輪輸出UID1000、容器清理完成，未建立image。
+
+## 2026-10-09：政略指令與進言理由 C
+
+- 抽樣先修共用政治／世界 helper 路由，並依 OR10h 後四次 SHR 訂正獨立模型的理由位元順序。正式 Go 未改。
+- 原版借位扣信賴度會經11CB1恢復主循環保存的SS/SP；孤立場景缺外層堆疊，不能當作繪字破壞或正常RET。矩陣保留無借位恰好扣到零，非區域退出另列界線。
+- 依 spec244 READY 還原29函式934指令2184bytes，保留原定位、byte溢位、DS／CF與尾跳。
+- O0／O2各3,348組、十六實編譯錯版拒絕。原版先驗獨立模型，再比完整裝置狀態；INT61回覆明示為受控條件。
+- 十五個錯版由狀態比較拒絕；第九個錯版另由原生DIV保護中止，以固定退出碼2、精確assertion／SIGABRT與編譯來源核對。兩種拒絕分開記錄。
+- 25單項為21通過、4既有失敗：index兩個歷史PNG、phantom277筆、lessons render／verify。沒有新增失敗；phantom正規化零增刪，lessons失敗日誌與前輪逐字相同。
+- 輸出UID/GID1000；擁有權衛生掃描維持27個既有root-owned路徑，沒有新增或異常md目錄。原生矩陣與單項檢查容器已清理。
+- 六筆MZ反向重定位與獨立組譯通過；整檔67,099bytes仍exact，367 C／48raw；正式Go未改。
+- 依使用者授權提交與推送。原TSR音效、自然長程、原C機器碼與完整Goal仍待完成。
+- 最終正式Go vet／39套件冷測通過，cached0；完整tools/check.sh停於既有index兩缺圖與phantom277，後續檢查由先行25單項覆蓋。Go與C最終收據已重綁；容器已清理，依授權提交推送。

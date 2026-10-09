@@ -2645,6 +2645,209 @@
       "sources": [
         "docs/re/123-c-march-command-restoration.md"
       ]
+    },
+    "0x102F5": {
+      "meaning": "原音效優先度與INT61狀態bit2閘門，硬體回覆另列受控條件",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x1300E": {
+      "meaning": "以SI勢力offset寫AH，委派既有四byte隊列writer",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x1304E": {
+      "meaning": "原256項隊列搜尋，DH非FF時仍以DL比較記錄+3",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x13830": {
+      "meaning": "原君主進言場景，結果與理由控制信賴度及CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x13B5A": {
+      "meaning": "原五項理由選單循環，清已嘗試mask並以AH1判成功",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x13BA9": {
+      "meaning": "原理由單步，重複不扣budget、錯誤扣信賴度20、理由4撤回",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x13C1E": {
+      "meaning": "信賴度E0／90／20門檻回AH1／2／3／4",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x13D91": {
+      "meaning": "原信賴度飽和增加與提示刷新",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x161CA": {
+      "meaning": "原八項政略指令列CX24至407，48像素欄與XOR前後重畫",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x16224": {
+      "meaning": "君主記錄+17任意非零阻擋全部進言，空閒才開五項選單",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x16288": {
+      "meaning": "原玩家編成入口，CX1委派既有編成控制器",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x1628F": {
+      "meaning": "原軍團位置與行軍兩項入口，位置一次、行軍可重選",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x162FB": {
+      "meaning": "原自方首都或據點清單入口，移鏡頭與開情報卡",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x16366": {
+      "meaning": "原武將清單自述，完整byte適性最大值與攻擊優先平手，保存DS再尾跳重選",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x163BF": {
+      "meaning": "原勢力清單入口，選取其首都後移鏡頭與開情報卡",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x16405": {
+      "meaning": "原敵對進言caller，選擇勢力、判斷並接君主場景／隊列",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x16475": {
+      "meaning": "原敵對進言AL結果與DL四理由遮罩，先查未決隊列",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x164F1": {
+      "meaning": "原停戰進言caller，選擇勢力、判斷並接君主場景／隊列",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x16577": {
+      "meaning": "原停戰進言AL結果與DL四理由遮罩，保留byte門檻溢位",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x165EF": {
+      "meaning": "原外交進言訊息入口",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x16605": {
+      "meaning": "原交戰隊列檢查與訊息入口",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x16623": {
+      "meaning": "原協同進言caller，兩勢力選擇與SSframe參數",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x166D9": {
+      "meaning": "原協同進言AL結果與DL遮罩，以SSBP兩勢力offset判定",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x1676F": {
+      "meaning": "原協同隊列檢查與訊息入口",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x1678D": {
+      "meaning": "原財政視窗控制器，四熱區編輯後重畫再等待",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x16846": {
+      "meaning": "原財政十一數字，有號24bit資金及八財政欄低word乘十",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x168C3": {
+      "meaning": "原財政視窗開始與熱區登記",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x168FA": {
+      "meaning": "原財政視窗關閉",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x16A28": {
+      "meaning": "原兩勢力城市數能力，對方乘25、自方乘byte攻擊加20",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
     }
   },
   "operands": {
@@ -2975,6 +3178,70 @@
       "level": "proven",
       "sources": [
         "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x1622E:0": {
+      "original": "byte ptr [bx+4257h]",
+      "meaning": "君主原記錄+17任意非零值阻擋整個進言選單",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x1307B:1": {
+      "original": "dl",
+      "meaning": "原操作數DL，DH只決定是否略過此比較",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x16389:0": {
+      "original": "byte ptr [bx+1Dh]",
+      "meaning": "俘虜欄與FF哨兵決定是否以適性自述",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x1638F:1": {
+      "original": "[bx+0Eh]",
+      "meaning": "完整攻擊適性byte，不套Go欄位解碼遮罩",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x163BC:0": {
+      "original": "ds",
+      "meaning": "自述後恢復入口DS，再跳回武將清單",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x16854:0": {
+      "original": "",
+      "meaning": "有號資金高byte擴充為AX，之後複製到DX",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x13BE4:0": {
+      "original": "byte ptr [bp+3]",
+      "meaning": "原理由budget byte遞減，可回繞；原CF另由後續設定",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
+      ]
+    },
+    "0x16A37:1": {
+      "original": "14h",
+      "meaning": "攻擊byte加20後以byte回繞，再與城市數相乘",
+      "level": "proven",
+      "sources": [
+        "docs/re/124-c-strategy-command-restoration.md"
       ]
     }
   }

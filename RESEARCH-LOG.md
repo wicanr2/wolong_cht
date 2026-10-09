@@ -2030,3 +2030,9 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - 固定DOS/V KI.EXE、IDA9.4 linear與五筆MZ身分見[re/123](docs/re/123-c-march-command-restoration.md)，25函式613指令1477bytes。
 - O0/O2各1,320完整裝置／16錯版、原版snapshot獨立模型與固定raw RNG；取消後外層仍分派OR2，解散不清整筆，DI讀取不猜補。
 - 熱區優先、非據點重試、小地圖間接閉包及日期／動畫界線已分開驗證；原指令全覆蓋且獨立重組，338 C/48raw，自然長程與原C機器碼仍未代證。
+
+## 2026-10-09：政略指令與進言理由29C函式
+
+- 固定DOS/V KI.EXE與IDA9.4線性位址身分見[re/124](docs/re/124-c-strategy-command-restoration.md)。
+- 原版任務閘門、武將自述DS／完整byte、隊列DL比較、理由budget／mask／CF與有號財政數字保留原碼。
+- O0／O2各3,348完整裝置及十六錯版；六筆MZ與934指令獨立組譯通過。原TSR音效／自然長程／C機器碼不代證。
