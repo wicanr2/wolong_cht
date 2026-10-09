@@ -27,13 +27,17 @@ type engagementVector struct {
 }
 
 // FFFF selects this side's CS; FFFE selects its own initialized tactical
-// unit segment. Neither sentinel reads the other execution's RAM.
+// unit segment. FFFD selects its own CS:D2FC movement-link bank, loaded
+// into ES at original IDA1BD84 and read at IDA1BE10. No sentinel reads
+// the other execution's RAM.
 func engagementResolveSegment(mem []byte, cs, segment uint16) uint16 {
 	switch segment {
 	case 0xFFFF:
 		return cs
 	case 0xFFFE:
 		return strategyWord(mem, int(cs)*16+0xD30E)
+	case 0xFFFD:
+		return strategyWord(mem, int(cs)*16+0xD2FC)
 	default:
 		return segment
 	}

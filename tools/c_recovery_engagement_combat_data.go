@@ -261,9 +261,9 @@ func engagementCombatCases(bases []resumeCase) []resumeCase {
 		wordPatch(&c, units, c.si+0x14, 0x0A0B)
 		wordPatch(&c, units, c.si+0x1A, 0x0505)
 		// IDA1BD84 loads ES from CS:D2FC; IDA1BE10 reads ES:[BX].
-		// The real initializer maps D2FC to arena+700, not D2FE=arena+900.
+		// FFFD resolves that bank separately from each initialized machine.
 		for _, cell := range []uint16{0x28A, 0x28B, 0x128A, 0x128B} {
-			bytePatch(&c, 0x1200+0x700, cell, 0xF8)
+			bytePatch(&c, 0xFFFD, cell, 0xF8)
 		}
 		cases = append(cases, c)
 	}

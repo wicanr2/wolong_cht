@@ -560,3 +560,9 @@
 - 我在smoke執行中修改了外層wrapper，原生PASS後shell因讀取到修改後行段而報status未定義；此為編排錯誤，沒有原版/C差異。後續執行前凍結wrapper，O2／O0各用獨立有界輪次。
 - 報告曾無條件沿用actual_nonlocal_exit=true，但實際outer退出為0。改由outer計數衍生，戰術19FDC→11B76的SS/SP還原另以同案例真11B5A入口觀測計數；warmup暫停與真正返回另外揭露。
 - 垂直尋路初態誤寫D2FE，改為原1BE10實讀的D2FC後四劇本／八階段相同，raw1BFBF進入四次。凍結來源後啟動完整O2；本次先提交整檔組語exact及READY研究工作區的checkpoint，C台帳不升級，O0／O2最終矩陣、二十錯版與專案檢查仍待後續收據。
+- checkpoint `4ac06c1` 已推送。其後O2在654例／1302個已接受階段時中止，未產生完整O2.json。host session退出143，Docker事件記錄容器執行1772秒後遭signal9、退出137並移除；沒有OOM事件，尚未達原2400秒期限。外層程序提前終止的上游原因未知，不能把進度檔當完整通過收據。
+- O0與前14個錯版已預編譯，尚未執行完整驗證。改用容器內有界期限及持久退出紀錄的長工作入口，避免host等待程序結束時刪除尚未完成的原生矩陣；原C、Go、seed、矩陣與50M原版指令上限維持相同。
+- 新入口的背景grid四例／八階段通過，job退出碼0且容器自行移除。原樣supervisor尾段的兩個獨立探針分別得到正常0與期限124，收據為`workplace/matching-decompilation/c-engagement/checks/supervisor-probes-1791584303468.json`，SHA-256 `e39b66fce4b83cd4b13d1af839302237c415d82b73d84d52f74c994a1628b31b`；探針只替換payload，不代證遊戲矩陣。
+- 六項語意索引更新後，補充收據仍記舊SEM來源雜湊，嚴格source-only因此拒絕。重新執行原pinned工具的7817指令獨立組譯，再匯出、綁定及冷重建後source-only通過；未直接改歷史hash，舊收據另存私有code-proof，163份編譯來源仍為同一digest。
+- 第一批錯版1–9由狀態比較拒絕；第10個在28例／56階段仍通過，證實原負例未觸發BE33差異。其三筆旗標同樣誤寫D2FE。四個matching_engagement Go驗證檔集中改由各側真初始化的CS:D2FC解析FFFD，runner共用既有patch入口；C演算法、錯版定義、seed及案例數不變，正式Go引擎不變。舊十組收據與bc37來源清單另存before-d2fc-fix前綴，新的二十錯版與兩級完整矩陣均須重跑。
+- 新來源清單SHA-256 `05ce526895dcda6d13ae9b2ccd842e6922410c1601ac2a8fa282de4f6a5fd6e8`的正常vertical-route四例／八階段通過。二十個O0實編譯錯版全由狀態差異拒絕，逐ELF/buildinfo、macro id、source digest、退出1與原版／C前置digest核對通過，無panic、unsupported或SIG；收據`workplace/matching-decompilation/c-engagement/checks/engagement-controls-05ce526895dcda6d-999116.json`，SHA-256 `191cb676bcffb648741f96c31935636f7195cf65fa86cc1dc7cce29fdc5e7db8`。開始以持久背景工作重跑O2，O0與C台帳升級仍待完整收據。

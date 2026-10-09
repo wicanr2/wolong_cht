@@ -79,6 +79,26 @@
 收據在`workplace/matching-decompilation/c-engagement/results/probe-vertical-route.json`。
 目前來源正在執行完整O2矩陣，O0及二十個錯版仍待；此窄結果不提升整個閉包狀態。
 
+### 2026-10-10：第十個反例的輸入勘誤
+
+第十個`path-live-opcode`反例曾以28案例／56階段回傳PASS。
+該結果只代表舊輸入沒有觸發差異，不能當作錯版已拒絕。
+已證實，`control_data.go`的三筆尋路輸入仍寫到`D2FE=arena+0x900`；原`0x1BE10`讀取的是`0x1BD84`載入的`CS:D2FC`。
+原`0x1BD47`將CL寫入`0x1BE33`；案例CL為`EB`時，正常版無條件跳過垂直邊，錯版固定JZ則會在`F8`的bit8設立時進入`0x1BFBF`。
+
+測試段位址標記`FFFD`改由各側自己的`CS:D2FC`解析。
+runner共用既有`engagementApplyPatches`，兩側各自讀取初始化後的指標，不交叉複製記憶體。
+三筆反例輸入及四筆垂直路由輸入均改用此標記；暫存器、種子、格位、資料bytes與案例數不變。
+原C、錯版定義與比較器維持原狀；來源雜湊改變後，二十個錯版與O0／O2均須重新執行。
+舊28／56及580組收據保留，不由這次輸入修正提升驗證狀態。
+
+## 原生驗證執行入口
+
+
+[包裝器](../../tools/c_recovery_engagement.sh)啟動[容器工作腳本](../../tools/c_recovery_engagement_container.sh)。設定 `WOLONG_ENGAGEMENT_DETACHED=1` 可在背景執行；容器內的 `timeout` 管理工作期限，包裝器印出唯一的 `job.log` 與 `job.exit` 路徑。
+
+各模式共用來源清單，`mutants`、`normal-o2`、`normal-o0` 須依序執行。`job.exit` 記錄原生工作退出碼；背景 `full` 或 `controls` 結束後仍須執行驗證器。前景 `full` 與 `controls` 保留自動驗證。此執行方式不提升 C 驗證狀態。
+
 ## 未解範圍
 
 

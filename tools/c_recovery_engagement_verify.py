@@ -534,7 +534,7 @@ def verify(repo, out, source_only=False):
         'separate_save_scratch': True, 'save_input_sha256': reports['O2']['save_input_sha256'],
         'mmap_restore_audits': reports['O2']['mmap_restore_audits'],
         'verification_tools_sha256': {name: sha(repo / name) for name in (
-            'tools/c_recovery_engagement.sh', 'tools/c_recovery_engagement_verify.py',
+            'tools/c_recovery_engagement.sh', 'tools/c_recovery_engagement_container.sh', 'tools/c_recovery_engagement_verify.py',
             'tools/c_recovery_engagement_generate.py', 'tools/ida_engagement_probe.py', 'tools/engagement_code_supplement.py')},
     }
     go = repo / 'docs/re/c-engagement-go-verification.json'

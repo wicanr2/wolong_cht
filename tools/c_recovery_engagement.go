@@ -1181,17 +1181,7 @@ func main() {
 			progress("original")
 			if sc.engagement.warmup {
 				for _, mem := range [][]byte{original.Mem, cMemory} {
-					for _, patch := range sc.engagement.postPatches {
-						seg := patch.segment
-						if seg == 0xffff {
-							seg = cs
-						} else if seg == 0xfffe {
-							seg = strategyWord(mem, int(cs)*16+0xd30e)
-						}
-						for i, value := range patch.bytes {
-							mem[mainPhysical(seg, patch.offset+uint16(i))] = value
-						}
-					}
+					engagementApplyPatches(mem, cs, sc.engagement.postPatches)
 				}
 			}
 			before := append([]byte(nil), original.Mem...)

@@ -136,9 +136,9 @@ func engagementControlCases(bases []resumeCase) []resumeCase {
 		c.si, c.ax, c.dx, c.bx, c.cx, c.bp = 0, 0x0A0A, 0x0A0B, 0x1800, 0x00EB, 1
 		moveRecord(&c, 0, 10, 10)
 		wordPatch(&c, units, 0x14, 0x0A0B)
-		bytePatch(&c, 0x1200+0x900, 0x28A, 0xF0)
-		bytePatch(&c, 0x1200+0x900, 0x28B, 0xF8)
-		bytePatch(&c, 0x1200+0x900, 0x128B, 0xF1)
+		bytePatch(&c, 0xFFFD, 0x28A, 0xF0)
+		bytePatch(&c, 0xFFFD, 0x28B, 0xF8)
+		bytePatch(&c, 0xFFFD, 0x128B, 0xF1)
 		cases = append(cases, c)
 
 		// A426 masks the command to five bits and its high three bits are
