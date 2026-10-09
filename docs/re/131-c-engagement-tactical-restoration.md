@@ -99,6 +99,16 @@ runner共用既有`engagementApplyPatches`，兩側各自讀取初始化後的�
 
 各模式共用來源清單，`mutants`、`normal-o2`、`normal-o0` 須依序執行。`job.exit` 記錄原生工作退出碼；背景 `full` 或 `controls` 結束後仍須執行驗證器。前景 `full` 與 `controls` 保留自動驗證。此執行方式不提升 C 驗證狀態。
 
+## 新來源05ce的後續驗證
+
+來源清單SHA-256為`05ce526895dcda6d13ae9b2ccd842e6922410c1601ac2a8fa282de4f6a5fd6e8`。
+O2完整748例／1492階段通過，234個named與12個raw皆有實際入口；16組完整SAVE及兩側各256次MMAP還原通過。
+256次戰術frame還原與outer退出0分列。1492個未發生outer轉移的階段包含508個warmup暫停，真正返回caller的階段為984個。
+O2收據位於`workplace/matching-decompilation/c-engagement/results/O2.json`，SHA-256為`3e3f7fdc1c50b839795d20e4122ce1e351a53532c80fd8ddf04ada17408d4eb1`。
+同來源二十個實編譯錯版都由狀態差異拒絕，沒有panic、unsupported或SIG代替比較。
+O0完整矩陣仍在背景執行；驗證器要求它與O2收據SHA-256相同，完成前維持READY，不回填665／62台帳。
+前述580例、錯段位址及當輪待驗狀態保留為歷史紀錄。
+
 ## 未解範圍
 
 

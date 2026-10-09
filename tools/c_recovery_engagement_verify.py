@@ -16,11 +16,20 @@ PROBE_SHA = '32ebc39f59e53f16d18f2f4d5bb16ae8f6971ef2dd4e733976a93dd8f296a5d9'
 DATABASE_SHA = 'cc4bf0da038a769fc7c12f8dcc47e884c1eb25ce959ceed0f86c3fb44182308f'
 EVIDENCE = 'docs/re/131-c-engagement-tactical-restoration.md'
 SPEC = 'docs/spec/251-c-engagement-tactical.md'
-# Publication stays closed until the final input matrix is explicitly reviewed.
-GROUPS = None
-STAGES = None
-RETURNS = None
-TACTICAL_FRAME_AUDITS = None
+# 案例工廠已核對：4本體＋240控制＋48介面＋152交戰＋36存檔／世界介面＋268戰鬥。
+GROUPS = {
+    'combat-dispatch': 16, 'direction': 20, 'duel': 12, 'engagement': 4,
+    'field': 16, 'front-helper': 40, 'grid': 4, 'melee': 16, 'patch': 28,
+    'projectile': 36, 'projectile-render': 8, 'projectile-spawn': 24,
+    'projection': 8, 'ranged': 24, 'save': 16, 'script': 96, 'settings': 28,
+    'siege': 20, 'structure-collapse': 8, 'structure-ui': 12, 'terrain': 76,
+    'tile-render': 12, 'ui-archive': 24, 'unit': 80, 'unit-render': 8,
+    'unit-reposition': 32, 'unit-status': 16, 'unit-swap': 8,
+    'vertical-move': 32, 'vertical-route': 4, 'world-ui': 20,
+}
+STAGES = {'engagement': 748, 'warmup-pause': 508, 'world-warmup': 236}
+RETURNS = {'normal': 1492, 'nonlocal': 0}
+TACTICAL_FRAME_AUDITS = 256
 BACKLINKS = [
     (0x14A7B, 'docs/spec/105-encounter-goes-straight-to-battle.md', ('C交戰／戰術補證', 're/131', 'spec/251')),
     (0x14A7B, 'docs/spec/187-only-the-loser-is-judged.md', ('C交戰／戰術補證', 're/131', 'spec/251')),
