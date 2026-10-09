@@ -1,0 +1,4090 @@
+{
+  "schema": "wolong-matching-code-supplement-v1",
+  "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "tool": "IDA Pro",
+  "tool_version": "9.4",
+  "database_sha256": "a61cd29b9daae8a6446f91e9fbe5e82f29101ad0beaac327dcfc6314283ab712",
+  "probe_sha256": "69fc89d150471e64f0678dc391aa48af6bf04b0faf15a1f6b5aa2ff77be10891",
+  "evidence": "docs/re/118-c-city-list-restoration.md",
+  "instructions": [
+    {
+      "ida_linear": 99103,
+      "file_start": 34079,
+      "file_end": 34082,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     si, 1234h",
+      "gas": "mov si, 0x1234",
+      "bytes": "be3412",
+      "original_ida_data_line": "db 0BEh",
+      "ida_code_classified": false,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 4660,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "1234h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99106,
+      "file_start": 34082,
+      "file_end": 34084,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     cx, [si]",
+      "gas": "mov cx, word ptr [si]",
+      "bytes": "8b0c",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 1,
+          "original": "cx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 3,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 4,
+          "original": "[si]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99108,
+      "file_start": 34084,
+      "file_end": 34085,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "inc     si",
+      "gas": "inc si",
+      "bytes": "46",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99109,
+      "file_start": 34085,
+      "file_end": 34086,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "inc     si",
+      "gas": "inc si",
+      "bytes": "46",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99110,
+      "file_start": 34086,
+      "file_end": 34087,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    cx",
+      "gas": "push cx",
+      "bytes": "51",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 1,
+          "original": "cx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99111,
+      "file_start": 34087,
+      "file_end": 34089,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     dx, [si]",
+      "gas": "mov dx, word ptr [si]",
+      "bytes": "8b14",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 3,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 4,
+          "original": "[si]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99113,
+      "file_start": 34089,
+      "file_end": 34093,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     dx, word_181AE",
+      "gas": "add dx, word ptr [0x81ae]",
+      "bytes": "0316ae81",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 2,
+          "addr": 33198,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "word_181AE",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99117,
+      "file_start": 34093,
+      "file_end": 34097,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     bx, word_181B0",
+      "gas": "mov bx, word ptr [0x81b0]",
+      "bytes": "8b1eb081",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 2,
+          "addr": 33200,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "word_181B0",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99121,
+      "file_start": 34097,
+      "file_end": 34100,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     cx, [si+2]",
+      "gas": "mov cx, word ptr [si+0x2]",
+      "bytes": "8b4c02",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 1,
+          "original": "cx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 4,
+          "addr": 2,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 4,
+          "original": "[si+2]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99124,
+      "file_start": 34100,
+      "file_end": 34102,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "inc     al",
+      "gas": "inc al",
+      "bytes": "fec0",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 16,
+          "original": "al",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99126,
+      "file_start": 34102,
+      "file_end": 34105,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "call    sub_1E3D7",
+      "gas": "call .+24737",
+      "bytes": "e89e60",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 7,
+          "addr": 58327,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "sub_1E3D7",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99129,
+      "file_start": 34105,
+      "file_end": 34108,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     si, 8",
+      "gas": "add si, 0x8",
+      "bytes": "83c608",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 8,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "8",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99132,
+      "file_start": 34108,
+      "file_end": 34109,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     cx",
+      "gas": "pop cx",
+      "bytes": "59",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 1,
+          "original": "cx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99133,
+      "file_start": 34109,
+      "file_end": 34111,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "loop    loc_18326",
+      "gas": "loop .-23",
+      "bytes": "e2e7",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 7,
+          "addr": 33574,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "loc_18326",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 1,
+          "original": "",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99135,
+      "file_start": 34111,
+      "file_end": 34113,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ax, di",
+      "gas": "{load} mov ax, di",
+      "bytes": "8bc7",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99137,
+      "file_start": 34113,
+      "file_end": 34116,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     al, byte ptr word_181B6+1",
+      "gas": "mov al, byte ptr [0x81b7]",
+      "bytes": "a0b781",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 16,
+          "original": "al",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 2,
+          "addr": 33207,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "byte ptr word_181B6+1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99140,
+      "file_start": 34116,
+      "file_end": 34118,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "dec     al",
+      "gas": "dec al",
+      "bytes": "fec8",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 16,
+          "original": "al",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99142,
+      "file_start": 34118,
+      "file_end": 34120,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "cmp     ah, al",
+      "gas": "{load} cmp ah, al",
+      "bytes": "3ae0",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 20,
+          "original": "ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 16,
+          "original": "al",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99144,
+      "file_start": 34120,
+      "file_end": 34122,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jnb     short near ptr unk_1834C",
+      "gas": "jnb .+4",
+      "bytes": "7302",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 7,
+          "addr": 33612,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "near ptr unk_1834C",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99146,
+      "file_start": 34122,
+      "file_end": 34124,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ah, al",
+      "gas": "{load} mov ah, al",
+      "bytes": "8ae0",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 20,
+          "original": "ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 16,
+          "original": "al",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99148,
+      "file_start": 34124,
+      "file_end": 34128,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     byte_181BE, ah",
+      "gas": "mov byte ptr [0x81be], ah",
+      "bytes": "8826be81",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 2,
+          "addr": 33214,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 6,
+          "original": "byte_181BE",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 20,
+          "original": "ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99152,
+      "file_start": 34128,
+      "file_end": 34130,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     bl, ah",
+      "gas": "{load} mov bl, ah",
+      "bytes": "8adc",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 19,
+          "original": "bl",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 20,
+          "original": "ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99154,
+      "file_start": 34130,
+      "file_end": 34134,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     dx, word_181B4",
+      "gas": "mov dx, word ptr [0x81b4]",
+      "bytes": "8b16b481",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 2,
+          "addr": 33204,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "word_181B4",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99158,
+      "file_start": 34134,
+      "file_end": 34137,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "sub     dx, 30h ; '0'",
+      "gas": "sub dx, 0x30",
+      "bytes": "83ea30",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 48,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "30h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99161,
+      "file_start": 34137,
+      "file_end": 34139,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "xor     ah, ah",
+      "gas": "{load} xor ah, ah",
+      "bytes": "32e4",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 20,
+          "original": "ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 20,
+          "original": "ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99163,
+      "file_start": 34139,
+      "file_end": 34141,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mul     dx",
+      "gas": "mul dx",
+      "bytes": "f7e2",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99165,
+      "file_start": 34141,
+      "file_end": 34143,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "div     bl",
+      "gas": "div bl",
+      "bytes": "f6f3",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 16,
+          "original": "",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 19,
+          "original": "bl",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99167,
+      "file_start": 34143,
+      "file_end": 34146,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     byte_181BF, al",
+      "gas": "mov byte ptr [0x81bf], al",
+      "bytes": "a2bf81",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 2,
+          "addr": 33215,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "byte_181BF",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 16,
+          "original": "al",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99170,
+      "file_start": 34146,
+      "file_end": 34152,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     word_181A4, 0FFFFh",
+      "gas": "mov word ptr [0x81a4], 0xffff",
+      "bytes": "c706a481ffff",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 2,
+          "addr": 33188,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "word_181A4",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 18446744073709551615,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "0FFFFh",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99176,
+      "file_start": 34152,
+      "file_end": 34156,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     dx, word_181AE",
+      "gas": "mov dx, word ptr [0x81ae]",
+      "bytes": "8b16ae81",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 2,
+          "addr": 33198,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "word_181AE",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99180,
+      "file_start": 34156,
+      "file_end": 34160,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     bx, word_181B0",
+      "gas": "mov bx, word ptr [0x81b0]",
+      "bytes": "8b1eb081",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 2,
+          "addr": 33200,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "word_181B0",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99184,
+      "file_start": 34160,
+      "file_end": 34162,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     si, dx",
+      "gas": "{load} mov si, dx",
+      "bytes": "8bf2",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99186,
+      "file_start": 34162,
+      "file_end": 34164,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     di, bx",
+      "gas": "{load} mov di, bx",
+      "bytes": "8bfb",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99188,
+      "file_start": 34164,
+      "file_end": 34165,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "dec     si",
+      "gas": "dec si",
+      "bytes": "4e",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99189,
+      "file_start": 34165,
+      "file_end": 34168,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     di, 0Fh",
+      "gas": "add di, 0xf",
+      "bytes": "83c70f",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 15,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "0Fh",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99192,
+      "file_start": 34168,
+      "file_end": 34172,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     si, word_181B2",
+      "gas": "add si, word ptr [0x81b2]",
+      "bytes": "0336b281",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 2,
+          "addr": 33202,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "word_181B2",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99196,
+      "file_start": 34172,
+      "file_end": 34174,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ah, 0",
+      "gas": "mov ah, 0x0",
+      "bytes": "b400",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 20,
+          "original": "ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "0",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99198,
+      "file_start": 34174,
+      "file_end": 34177,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "call    sub_1F1A3",
+      "gas": "call .+28197",
+      "bytes": "e8226e",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 7,
+          "addr": 61859,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "sub_1F1A3",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99201,
+      "file_start": 34177,
+      "file_end": 34181,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     dx, word_181AE",
+      "gas": "mov dx, word ptr [0x81ae]",
+      "bytes": "8b16ae81",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 2,
+          "addr": 33198,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "word_181AE",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99205,
+      "file_start": 34181,
+      "file_end": 34185,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     bx, word_181B0",
+      "gas": "mov bx, word ptr [0x81b0]",
+      "bytes": "8b1eb081",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 2,
+          "addr": 33200,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "word_181B0",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99209,
+      "file_start": 34185,
+      "file_end": 34188,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     bx, 10h",
+      "gas": "add bx, 0x10",
+      "bytes": "83c310",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 16,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "10h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99212,
+      "file_start": 34188,
+      "file_end": 34190,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     si, dx",
+      "gas": "{load} mov si, dx",
+      "bytes": "8bf2",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99214,
+      "file_start": 34190,
+      "file_end": 34192,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     di, bx",
+      "gas": "{load} mov di, bx",
+      "bytes": "8bfb",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99216,
+      "file_start": 34192,
+      "file_end": 34195,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     si, 0Fh",
+      "gas": "add si, 0xf",
+      "bytes": "83c60f",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 15,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "0Fh",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99219,
+      "file_start": 34195,
+      "file_end": 34199,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     di, word_181B4",
+      "gas": "add di, word ptr [0x81b4]",
+      "bytes": "033eb481",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 2,
+          "addr": 33204,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "word_181B4",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99223,
+      "file_start": 34199,
+      "file_end": 34202,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "sub     di, 11h",
+      "gas": "sub di, 0x11",
+      "bytes": "83ef11",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 17,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "11h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99226,
+      "file_start": 34202,
+      "file_end": 34204,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ah, 0",
+      "gas": "mov ah, 0x0",
+      "bytes": "b400",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 20,
+          "original": "ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "0",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99228,
+      "file_start": 34204,
+      "file_end": 34207,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "call    sub_1F1A3",
+      "gas": "call .+28167",
+      "bytes": "e8046e",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 7,
+          "addr": 61859,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "sub_1F1A3",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99231,
+      "file_start": 34207,
+      "file_end": 34211,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     dx, word_181AE",
+      "gas": "mov dx, word ptr [0x81ae]",
+      "bytes": "8b16ae81",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 2,
+          "addr": 33198,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "word_181AE",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99235,
+      "file_start": 34211,
+      "file_end": 34215,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     bx, word_181B0",
+      "gas": "mov bx, word ptr [0x81b0]",
+      "bytes": "8b1eb081",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 2,
+          "addr": 33200,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "word_181B0",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99239,
+      "file_start": 34215,
+      "file_end": 34218,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     dx, 10h",
+      "gas": "add dx, 0x10",
+      "bytes": "83c210",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 16,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "10h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99242,
+      "file_start": 34218,
+      "file_end": 34221,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     bx, 10h",
+      "gas": "add bx, 0x10",
+      "bytes": "83c310",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 16,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "10h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99245,
+      "file_start": 34221,
+      "file_end": 34223,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     si, dx",
+      "gas": "{load} mov si, dx",
+      "bytes": "8bf2",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99247,
+      "file_start": 34223,
+      "file_end": 34225,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     di, bx",
+      "gas": "{load} mov di, bx",
+      "bytes": "8bfb",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99249,
+      "file_start": 34225,
+      "file_end": 34229,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     si, word_181B2",
+      "gas": "add si, word ptr [0x81b2]",
+      "bytes": "0336b281",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 2,
+          "addr": 33202,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "word_181B2",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99253,
+      "file_start": 34229,
+      "file_end": 34233,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     di, word_181B4",
+      "gas": "add di, word ptr [0x81b4]",
+      "bytes": "033eb481",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 2,
+          "addr": 33204,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "word_181B4",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99257,
+      "file_start": 34233,
+      "file_end": 34236,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "sub     si, 11h",
+      "gas": "sub si, 0x11",
+      "bytes": "83ee11",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 17,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "11h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99260,
+      "file_start": 34236,
+      "file_end": 34239,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "sub     di, 11h",
+      "gas": "sub di, 0x11",
+      "bytes": "83ef11",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 17,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "11h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99263,
+      "file_start": 34239,
+      "file_end": 34241,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ah, 9",
+      "gas": "mov ah, 0x9",
+      "bytes": "b409",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 20,
+          "original": "ah",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 9,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "9",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99265,
+      "file_start": 34241,
+      "file_end": 34244,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "call    sub_1F1A3",
+      "gas": "call .+28130",
+      "bytes": "e8df6d",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 7,
+          "addr": 61859,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "sub_1F1A3",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99268,
+      "file_start": 34244,
+      "file_end": 34247,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ax, 0F03h",
+      "gas": "mov ax, 0xf03",
+      "bytes": "b8030f",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 3843,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "0F03h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99271,
+      "file_start": 34247,
+      "file_end": 34251,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     dx, word_181AE",
+      "gas": "mov dx, word ptr [0x81ae]",
+      "bytes": "8b16ae81",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 2,
+          "addr": 33198,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "word_181AE",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99275,
+      "file_start": 34251,
+      "file_end": 34254,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     dx, 18h",
+      "gas": "add dx, 0x18",
+      "bytes": "83c218",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 24,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "18h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99278,
+      "file_start": 34254,
+      "file_end": 34258,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     bx, word_181B0",
+      "gas": "mov bx, word ptr [0x81b0]",
+      "bytes": "8b1eb081",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 2,
+          "addr": 33200,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "word_181B0",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99282,
+      "file_start": 34258,
+      "file_end": 34261,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     si, 1234h",
+      "gas": "mov si, 0x1234",
+      "bytes": "be3412",
+      "original_ida_data_line": "db 0BEh",
+      "ida_code_classified": false,
+      "baseline_unknown_span": [
+        34079,
+        34261
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 4660,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "1234h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99727,
+      "file_start": 34703,
+      "file_end": 34707,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     bx, 1234h",
+      "gas": "add bx, 0x1234",
+      "bytes": "81c33412",
+      "original_ida_data_line": "db 81h, 0C3h",
+      "ida_code_classified": false,
+      "baseline_unknown_span": [
+        34703,
+        34707
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 4660,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "1234h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99816,
+      "file_start": 34792,
+      "file_end": 34794,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ax, [bx+si]",
+      "gas": "mov ax, word ptr [bx+si]",
+      "bytes": "8b00",
+      "original_ida_data_line": "db 8Bh",
+      "ida_code_classified": false,
+      "baseline_unknown_span": [
+        34792,
+        34821
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 3,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "[bx+si]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99818,
+      "file_start": 34794,
+      "file_end": 34795,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "inc     bp",
+      "gas": "inc bp",
+      "bytes": "45",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34792,
+        34821
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 5,
+          "original": "bp",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99819,
+      "file_start": 34795,
+      "file_end": 34796,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "inc     bp",
+      "gas": "inc bp",
+      "bytes": "45",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34792,
+        34821
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 5,
+          "original": "bp",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99820,
+      "file_start": 34796,
+      "file_end": 34799,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     bx, [bp+0]",
+      "gas": "mov bx, word ptr [bp]",
+      "bytes": "8b5e00",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34792,
+        34821
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 4,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "[bp+0]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99823,
+      "file_start": 34799,
+      "file_end": 34801,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "cmp     ax, [bx+si]",
+      "gas": "cmp ax, word ptr [bx+si]",
+      "bytes": "3b00",
+      "original_ida_data_line": "db 3Bh",
+      "ida_code_classified": false,
+      "baseline_unknown_span": [
+        34792,
+        34821
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 3,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "[bx+si]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99825,
+      "file_start": 34801,
+      "file_end": 34803,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jbe     short near ptr byte_185F4+4",
+      "gas": "jbe .+7",
+      "bytes": "7605",
+      "original_ida_data_line": "db 76h",
+      "ida_code_classified": false,
+      "baseline_unknown_span": [
+        34792,
+        34821
+      ],
+      "operands": [
+        {
+          "type": 7,
+          "addr": 34296,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "near ptr byte_185F4+4",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99827,
+      "file_start": 34803,
+      "file_end": 34805,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ax, [bx+si]",
+      "gas": "mov ax, word ptr [bx+si]",
+      "bytes": "8b00",
+      "original_ida_data_line": "db 8Bh",
+      "ida_code_classified": false,
+      "baseline_unknown_span": [
+        34792,
+        34821
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 3,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "[bx+si]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99829,
+      "file_start": 34805,
+      "file_end": 34808,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "xchg    dx, [bp+0]",
+      "gas": "xchg dx, word ptr [bp]",
+      "bytes": "875600",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34792,
+        34821
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 4,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "[bp+0]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99832,
+      "file_start": 34808,
+      "file_end": 34809,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "inc     bp",
+      "gas": "inc bp",
+      "bytes": "45",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34792,
+        34821
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 5,
+          "original": "bp",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99833,
+      "file_start": 34809,
+      "file_end": 34810,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "inc     bp",
+      "gas": "inc bp",
+      "bytes": "45",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34792,
+        34821
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 5,
+          "original": "bp",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99834,
+      "file_start": 34810,
+      "file_end": 34812,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "dec     cl",
+      "gas": "dec cl",
+      "bytes": "fec9",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34792,
+        34821
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 17,
+          "original": "cl",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99836,
+      "file_start": 34812,
+      "file_end": 34814,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jnz     short loc_185EC",
+      "gas": "jnz .-16",
+      "bytes": "75ee",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34792,
+        34821
+      ],
+      "operands": [
+        {
+          "type": 7,
+          "addr": 34284,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "loc_185EC",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99838,
+      "file_start": 34814,
+      "file_end": 34815,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     bp",
+      "gas": "pop bp",
+      "bytes": "5d",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34792,
+        34821
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 5,
+          "original": "bp",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99839,
+      "file_start": 34815,
+      "file_end": 34817,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     [bp+di], dx",
+      "gas": "mov word ptr [bp+di], dx",
+      "bytes": "8913",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34792,
+        34821
+      ],
+      "operands": [
+        {
+          "type": 3,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "[bp+di]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99841,
+      "file_start": 34817,
+      "file_end": 34818,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "inc     di",
+      "gas": "inc di",
+      "bytes": "47",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34792,
+        34821
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99842,
+      "file_start": 34818,
+      "file_end": 34819,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "inc     di",
+      "gas": "inc di",
+      "bytes": "47",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34792,
+        34821
+      ],
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 99843,
+      "file_start": 34819,
+      "file_end": 34821,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jmp     short loc_185DA",
+      "gas": "jmp .-41",
+      "bytes": "ebd5",
+      "original_ida_data_line": null,
+      "ida_code_classified": true,
+      "baseline_unknown_span": [
+        34792,
+        34821
+      ],
+      "operands": [
+        {
+          "type": 7,
+          "addr": 34266,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "loc_185DA",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    }
+  ],
+  "assembler_verification": {
+    "status": "byte-exact",
+    "instructions": 83,
+    "bytes": 215,
+    "patch_points": 7,
+    "source_sha256": "b6e1260b4e3b2807e5f4707ebb3427ad9889478355d13bf8b20fb59c4c6c49e5",
+    "binary_sha256": "197675293570a934c5a7a10fb7aa810482111fb0b72a832e99abbffa9aa5ac23",
+    "image_id": "sha256:474f41ef91c354dd4754b08ef9302e965271e32417d6fba1772aecca0a5f9e2e",
+    "assembler": "GNU assembler (GNU Binutils for Debian) 2.40",
+    "generator_sha256": "f92b2fc3d8d21a2f1ce21e3ce6deaa96136638bc26f88e7b8ecfca962b3242b1",
+    "translator_sha256": "92af18f9901460224a02df0764512e8250b54128665cc5631b0ff3bbd7f1a654",
+    "historical_supplement_sha256": "48669f564ee6907501ea5f6c1a9e527258cc1f3c9ce86f4ef6364b8e5a4a08c9",
+    "trials": [
+      {
+        "hint": "",
+        "matched": 72,
+        "remaining": 11
+      },
+      {
+        "hint": "{load} ",
+        "matched": 11,
+        "remaining": 0
+      }
+    ]
+  }
+}

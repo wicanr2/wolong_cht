@@ -3,27 +3,37 @@
   "input": "DOS/V KI.EXE",
   "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
   "input_size": 67099,
-  "instruction_count": 24746,
-  "instruction_bytes": 56290,
+  "instruction_count": 24829,
+  "instruction_bytes": 56505,
   "baseline_instruction_count": 24376,
-  "supplement_instruction_count": 370,
+  "supplement_instruction_count": 453,
+  "historical_supplement_instruction_count": 370,
   "supplement": "docs/re/rectangle-handler-code.json",
   "supplement_sha256": "48669f564ee6907501ea5f6c1a9e527258cc1f3c9ce86f4ef6364b8e5a4a08c9",
   "supplement_database_sha256": "0eaddc302d905f7522730d63dd6822f6aa366bd8c34e413c60fa174c2993152d",
-  "private_import_bytes": 10809,
+  "additional_supplements": [
+    {
+      "path": "docs/re/c-list-code.json",
+      "sha256": "f07fc59c566e194ef830fda2b505e0b699b107f92e1c7834944af7061234d8ec",
+      "database_sha256": "a61cd29b9daae8a6446f91e9fbe5e82f29101ad0beaac327dcfc6314283ab712",
+      "instructions": 83,
+      "bytes": 215
+    }
+  ],
+  "private_import_bytes": 10594,
   "address_space": "IDA database linear base 0x10000; file = linear - 0x10000 + 512",
   "ida_version": "9.4",
   "ida_image_id": "sha256:4ac62de83339c215bab10e455cee3a22d9c6efed9fd0d8ed0f068327b83a06ab",
   "database_sha256": "e32713237d223145834531bffc8979146ed4bacaa98f73ec4bbf692b747c2c4f",
   "inventory_sha256": "15f5e2200e263c3700d778715fe60e40e48441cc2adbb0c8b57c8b8b2c8c5258",
   "semantic_index": "docs/re/matching-semantic-index.json",
-  "semantic_index_sha256": "1ab41ab75bdb9b2524b689957e7051eb64a8eef83dc21636a30343627b306e73",
+  "semantic_index_sha256": "a2c2f983388119d520c2b09740281fe941a1b3fe21cebacef5823f72d734959e",
   "record_tool": "tools/matching_code_record.py",
-  "record_tool_sha256": "58291fa0546e78beab9c33546dd7540f85b763bf0ba9fe90d5396de41ed159b5",
+  "record_tool_sha256": "6542ce8f2f63988dad2aa448ac5d3fb1b2016c47f628be724c786424e9469024",
   "baseline_source_sha256": "47571181edc1a1fe7a2554f0e94fc1c9bcf87cc2e42e06c7fcc093c871fcae62",
   "baseline_linker_sha256": "a301287e77bf1a79a717c206dc0754e2c0ccb3a75b3eae38815bfff0a1995ac7",
   "source": "tools/c_recovery/KI.code.S",
-  "source_sha256": "f5d0684607f3da1d8081ad4f5d07b795b4d819540f85d3cdb33e9b3ca4acfbd3",
+  "source_sha256": "2a5ba7bc10dc19d14368fb1eb08ec32a581ff09a83346e6332a3d97154cf3b38",
   "linker": "tools/c_recovery/KI.code.ld",
   "linker_sha256": "a301287e77bf1a79a717c206dc0754e2c0ccb3a75b3eae38815bfff0a1995ac7",
   "build_image_id": "sha256:474f41ef91c354dd4754b08ef9302e965271e32417d6fba1772aecca0a5f9e2e",
@@ -179,28 +189,13 @@
     },
     {
       "file_start": 33728,
-      "file_end": 34079,
-      "sha256": "25d3dcb94905cabe4cfb523d6c5d5960bff4ab216a4dc8b52fba8bd7029375a1"
-    },
-    {
-      "file_start": 34261,
       "file_end": 34393,
-      "sha256": "e71f74b5a358a5a0c55922bcfc0134a0471b2bc4f0c62a657e4d940f97d47cf1"
+      "sha256": "d19dd1f30bff8f8b21803f63e27d83437620b0f4c2d4da4c8c02f312ce07106f"
     },
     {
       "file_start": 34403,
-      "file_end": 34703,
-      "sha256": "c83c0c4f87f43ff1151a459816fb941a8a854f6e3b7b8fc564c0afd696b8f26b"
-    },
-    {
-      "file_start": 34707,
-      "file_end": 34792,
-      "sha256": "ed6025057167cddcbf79810eed7bf728582719cdd14be73a18d2a9f2c15c0baa"
-    },
-    {
-      "file_start": 34821,
       "file_end": 35067,
-      "sha256": "40aae67fe3d4d74f39b5ae41247e84cbf3c8a1d3f3a7a57fe1d372f0178a84c9"
+      "sha256": "7fda9cd1fb5777af183174e8768ab3460dae2db297185ccc4c08ea67a119dac2"
     },
     {
       "file_start": 35091,

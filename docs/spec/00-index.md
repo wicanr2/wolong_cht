@@ -286,6 +286,7 @@
 | C 世界軍團／物件顯示 | [`235-c-world-overlay.md`](235-c-world-overlay.md) | CONFORMED，六函式／一 raw／14,622 組／十二錯版 |
 | C 場景入口與退出重畫 | [`236-c-scene-resume.md`](236-c-scene-resume.md) | CONFORMED，九函式／171 全場景裝置／十二錯版 |
 | C 君主出陣與自動編成 | [`237-c-ruler-sortie.md`](237-c-ruler-sortie.md) | CONFORMED，14 函式／451 完整裝置／十錯版 |
+| C 據點清單與遷都 | [`238-c-city-list.md`](238-c-city-list.md) | CONFORMED，18 函式／5 raw／520 完整裝置／十二錯版 |
 
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的

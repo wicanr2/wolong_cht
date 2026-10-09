@@ -10,11 +10,12 @@ import subprocess
 from pathlib import Path
 
 EXPECTED = "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868"
-SIZE, INSTRUCTIONS, CODE_BYTES = 67099, 24746, 56290
+SIZE, INSTRUCTIONS, CODE_BYTES = 67099, 24829, 56505
 SOURCE = "tools/c_recovery/KI.code.S"
 LINKER = "tools/c_recovery/KI.code.ld"
 MANIFEST = "docs/re/assembly-code-record.json"
 SUPPLEMENT = "docs/re/rectangle-handler-code.json"
+LIST_SUPPLEMENT = "docs/re/c-list-code.json"
 
 
 def digest(data: bytes) -> str:
@@ -75,6 +76,13 @@ def export(repo: Path) -> None:
     require(supplement["schema"] == "wolong-matching-code-supplement-v1" and supplement["input_sha256"] == EXPECTED, "supplement identity differs")
     extra = supplement["instructions"]
     require(len(extra) == 370 and sum(r["file_end"] - r["file_start"] for r in extra) == 898, "supplement coverage differs")
+    # Keep the historical supplement immutable; later scopes have their own input identity.
+    list_raw = (repo / LIST_SUPPLEMENT).read_bytes()
+    list_supplement = json.loads(list_raw)
+    require(list_supplement["schema"] == "wolong-matching-code-supplement-v1" and list_supplement["input_sha256"] == EXPECTED, "list supplement identity differs")
+    added = list_supplement["instructions"]
+    require(len(added) == 83 and sum(r["file_end"] - r["file_start"] for r in added) == 215, "list supplement coverage differs")
+    extra = extra + added
     for row in extra:
         start, end = row["file_start"], row["file_end"]
         require(raw[start:end] == bytes.fromhex(row["bytes"]), "supplement bytes differ")
@@ -125,9 +133,13 @@ def export(repo: Path) -> None:
         "schema": "wolong-matching-code-record-v1",
         "input": "DOS/V KI.EXE", "input_sha256": EXPECTED, "input_size": SIZE,
         "instruction_count": count, "instruction_bytes": CODE_BYTES,
-        "baseline_instruction_count": 24376, "supplement_instruction_count": 370,
+        "baseline_instruction_count": 24376, "supplement_instruction_count": 453,
+        "historical_supplement_instruction_count": 370,
         "supplement": SUPPLEMENT, "supplement_sha256": digest(supplement_raw),
         "supplement_database_sha256": supplement["database_sha256"],
+        "additional_supplements": [{"path": LIST_SUPPLEMENT, "sha256": digest(list_raw),
+                                    "database_sha256": list_supplement["database_sha256"],
+                                    "instructions": 83, "bytes": 215}],
         "private_import_bytes": SIZE - CODE_BYTES,
         "address_space": "IDA database linear base 0x10000; file = linear - 0x10000 + 512",
         "ida_version": report["ida_version"], "ida_image_id": report["ida_image_id"],
@@ -182,6 +194,8 @@ def assemble(repo: Path, output: Path, image_id: str) -> None:
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     check_manifest(manifest)
     require(digest((repo / manifest["supplement"]).read_bytes()) == manifest["supplement_sha256"], "supplement source differs")
+    for extra in manifest.get("additional_supplements", []):
+        require(digest((repo / extra["path"]).read_bytes()) == extra["sha256"], "additional supplement source differs")
     require(digest(Path(__file__).read_bytes()) == manifest["record_tool_sha256"], "record tool source differs")
     require(image_id == manifest["build_image_id"], "build image differs from verified toolchain")
     source, linker = repo / SOURCE, repo / LINKER

@@ -53,8 +53,9 @@
 | 2026-10-09；軍團／物件六 C 函式與 raw 矩陣 | O0／O2 各 14,622 全裝置／ABI 相同，12,320 來源矩陣與十二錯版通過；一新指令後整檔匹配 | 原 producer 接顯示格／renderer，保留 live 3／5 容量；正常玩家／type 3 自然來源與 C 機器碼未代證 | spec/235、[re/115](docs/re/115-c-world-overlay-restoration.md)、原始來源／收據 |
 | 2026-10-09；場景／鏡頭／小地圖九 C 函式 | O0／O2 各 171 全場景裝置／ABI 相同，816 全形 glyph、十二錯版與原 tail／far 通過 | 原三句、資源／Mouse／world renderer 閉包接通；自然事件／長程玩家與 C 機器碼未代證 | spec/236、[re/116](docs/re/116-c-scene-resume-restoration.md)、原始來源／收據 |
 | 2026-10-09；君主出陣與自動編成 14 個 C 函式 | O0／O2 各 451 組完整狀態一致，十個錯版拒絕；501 條原始指令乾淨重生一致 | 保留資金符號、carry、部分失敗、補兵餘數、佔用圖與側欄；遷都清單、正常玩家長程與 C 機器碼仍待驗證 | [re/117](docs/re/117-c-ruler-sortie-restoration.md)、[spec/237](docs/spec/237-c-ruler-sortie.md)、來源與版控收據 |
+| 2026-10-09；據點清單、排序與遷都 18 C 函式／5 raw | O0／O2 各 520 完整狀態一致，十二錯版拒絕；120 排序／36 builder／48 捲軸獨立核對 | 六表頭、特殊返回、四劇本接受／拒絕／原首都重選與側欄接回；正常玩家長程與 C 機器碼仍待驗證 | [re/118](docs/re/118-c-city-list-restoration.md)、[spec/238](docs/spec/238-c-city-list.md)、來源／新增指令／完整收據 |
 
-持續 Goal 為完成整個 matching decompilation；目前有 24,746 條指令的整檔組語基準與 246 個 C 函式、三十一個原始 code 入口，不能據此宣布完整 C 還原完成。
+持續 Goal 為完成整個 matching decompilation；目前有 24,829 條指令的整檔組語基準與 278 個 C 函式、三十六個原始 code 入口，不能據此宣布完整 C 還原完成。
 使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b`、熱區 `a8605b5` 、版控組語／VGA `47e16c9` 、對齊貼圖 `6139f9e` 、矩形／計量 `c7dc8df`、顯示分派 `4d31520`、字形 `85f06de` 與數字 `06fff77` 已推到 origin/main。
 
 未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。
@@ -719,6 +720,14 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 ---
 
 ## 6. 已被推翻的斷言
+
+### 「word_183D3 沒有讀取端，寫了不用」（2026-10-09）
+
+原 2026-09-02 re/26 依攤平組語只見寫入與資料定義而下此結論。
+固定 bytes 證明 `0x183D2` 是 MOV SI,imm16，立即值即 `CS:83D3`；
+`0x1821E` 寫入標題，執行該 MOV 即消費。完整 renderer、live patch 與錯版證據
+見 [re/118](docs/re/118-c-city-list-restoration.md)。舊地址文字搜尋漏掉自我修改的指令運算元。
+
 
 > ⭐ **這一節是事件台帳**（哪一天、哪一條斷言、被什麼推翻）。
 > 去重之後的**教訓**在 [`docs/lessons.json`](docs/lessons.json)，

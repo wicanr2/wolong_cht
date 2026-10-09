@@ -7,7 +7,7 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-1017 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+1020 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
 - 日期：2026-10-09
 - 產生工具：`tools/re_open_questions.py`
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**1011 列分布在 405 份文件，平均每份 2.5 列。**
+**1014 列分布在 407 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -47,11 +47,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 287 | 280 | 6 | 1 |
+| 程式碼理解 | 289 | 282 | 6 | 1 |
 | 驗收 | 240 | 214 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 447 | 425 | 21 | 1 |
-| **合計** | **1011** | 950 | 58 | 3 |
+| 其他 | 448 | 426 | 21 | 1 |
+| **合計** | **1014** | 953 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,8 +59,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 404 |
-| `docs/re/` | 287 |
+| `docs/spec/` | 405 |
+| `docs/re/` | 289 |
 | `docs/playtest/` | 240 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
@@ -110,7 +110,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 | evidence-only | — |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 | evidence-only | — |
 
-## 2.3 程式碼理解（287 條）
+## 2.3 程式碼理解（289 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -206,8 +206,10 @@
 | [`re/116-c-scene-resume-restoration.md`](../re/116-c-scene-resume-restoration.md) | 自然事件／長程玩家路徑 | 局部場景主入口不代證完整自然事件與通關 | 靜態 | evidence-only | — |
 | [`re/116-c-scene-resume-restoration.md`](../re/116-c-scene-resume-restoration.md) | 原作者 C 工具鏈／機器碼 | 尚未確認 | 靜態 | evidence-only | — |
 | [`re/117-c-ruler-sortie-restoration.md`](../re/117-c-ruler-sortie-restoration.md) | 原作者 C 與工具鏈 | 原始語言及 compiler 未確認，尚未證明 C 機器碼一致 | 靜態 | evidence-only | — |
-| [`re/117-c-ruler-sortie-restoration.md`](../re/117-c-ruler-sortie-restoration.md) | 遷都清單 | `sub_16909` 的清單、排序與間接 callback 尚待另輪還原 | 靜態 | evidence-only | — |
 | [`re/117-c-ruler-sortie-restoration.md`](../re/117-c-ruler-sortie-restoration.md) | 正常玩家長程路徑 | 本輪局部主入口驗證不代證自然選單與通關 | 靜態 | evidence-only | — |
+| [`re/118-c-city-list-restoration.md`](../re/118-c-city-list-restoration.md) | 其他清單家族 | 本輪據點描述子的結果不代證武將、軍團或勢力的完整 caller | 靜態 | evidence-only | — |
+| [`re/118-c-city-list-restoration.md`](../re/118-c-city-list-restoration.md) | 自然玩家長程路徑 | 局部遷都入口不代證自然選單或通關 | 靜態 | evidence-only | — |
+| [`re/118-c-city-list-restoration.md`](../re/118-c-city-list-restoration.md) | 原作者 C 與工具鏈 | 尚未確認 C 機器碼一致 | 靜態 | evidence-only | — |
 | [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | `AH` 的完整欄位名稱 | 語意由日中原文並列確認，欄位名本身未定（§3） | 靜態 | evidence-only | — |
 | [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | #367–#372／#380–#385 的 AH／信賴度次要回覆 | 未解，不可當成完整的原版對話流程（§8） | 靜態 | evidence-only | — |
 | [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | #73／#77 | 未定位，不得拿來補接事件 6／7（§9） | 靜態 | actionable | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
@@ -658,7 +660,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（447 條）
+## 2.6 其他（448 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -984,7 +986,8 @@
 | [`spec/236-c-scene-resume.md`](../spec/236-c-scene-resume.md) | 正常玩家長程路徑 | 局部主入口不代證自然事件與通關 | 靜態 | evidence-only | — |
 | [`spec/236-c-scene-resume.md`](../spec/236-c-scene-resume.md) | 原作者 C compiler／machine code | 尚未確認 | 靜態 | evidence-only | — |
 | [`spec/237-c-ruler-sortie.md`](../spec/237-c-ruler-sortie.md) | 正常玩家長程路徑與 C 機器碼 | 本輪不據局部通過宣稱完成 | 靜態 | evidence-only | — |
-| [`spec/237-c-ruler-sortie.md`](../spec/237-c-ruler-sortie.md) | 遷都清單 | 後續獨立呼叫閉包 | 靜態 | evidence-only | — |
+| [`spec/238-c-city-list.md`](../spec/238-c-city-list.md) | 正常玩家長程與其他清單 | 本輪局部 caller 不代證 | 靜態 | evidence-only | — |
+| [`spec/238-c-city-list.md`](../spec/238-c-city-list.md) | 原作者 C 機器碼 | 尚未匹配 | 靜態 | evidence-only | — |
 | [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 反白列上換色的機制 | `38` §1.7.1：兩個色號各有一次量測，變換規則沒解 | 靜態 | evidence-only | — |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 空槽標記 | 原版用名稱欄第一個字 `0xD0A1`；remake 用「載得起來且玩家勢力有效」判定，兩者不等價 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 新遊戲共用 | remake 的啟動殼層是自己的畫面，還沒有換成這個四槽視窗 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |

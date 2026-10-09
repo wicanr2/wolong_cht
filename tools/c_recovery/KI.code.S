@@ -36756,68 +36756,68 @@ ret
 .org 0x6060
 sub_15E60:
 # IDA 0x15e60; file 0x6060; locator=proven; test    cs:byte_198A6, 2
-# ⚠ 函式 sub_15E60; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E60; [proven] 側欄原始場景 0、四個欄位 bit 與遷都成功後的完整更新; 出處: docs/re/118-c-city-list-restoration.md
 cs; test byte ptr [0x98a6], 0x2
 .org 0x6066
 # IDA 0x15e66; file 0x6066; locator=proven; jnz     short loc_15E69
-# ⚠ 函式 sub_15E60; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E60; [proven] 側欄原始場景 0、四個欄位 bit 與遷都成功後的完整更新; 出處: docs/re/118-c-city-list-restoration.md
 jnz .+3
 .org 0x6068
 # IDA 0x15e68; file 0x6068; locator=proven; retn
-# ⚠ 函式 sub_15E60; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E60; [proven] 側欄原始場景 0、四個欄位 bit 與遷都成功後的完整更新; 出處: docs/re/118-c-city-list-restoration.md
 ret
 .org 0x6069
 loc_15E69:
 # IDA 0x15e69; file 0x6069; locator=proven; push    ax
-# ⚠ 函式 sub_15E60; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E60; [proven] 側欄原始場景 0、四個欄位 bit 與遷都成功後的完整更新; 出處: docs/re/118-c-city-list-restoration.md
 push ax
 .org 0x606a
 # IDA 0x15e6a; file 0x606a; locator=proven; push    bx
-# ⚠ 函式 sub_15E60; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E60; [proven] 側欄原始場景 0、四個欄位 bit 與遷都成功後的完整更新; 出處: docs/re/118-c-city-list-restoration.md
 push bx
 .org 0x606b
 # IDA 0x15e6b; file 0x606b; locator=proven; push    dx
-# ⚠ 函式 sub_15E60; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E60; [proven] 側欄原始場景 0、四個欄位 bit 與遷都成功後的完整更新; 出處: docs/re/118-c-city-list-restoration.md
 push dx
 .org 0x606c
 # IDA 0x15e6c; file 0x606c; locator=proven; mov     al, 0
-# ⚠ 函式 sub_15E60; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E60; [proven] 側欄原始場景 0、四個欄位 bit 與遷都成功後的完整更新; 出處: docs/re/118-c-city-list-restoration.md
 mov al, 0x0
 .org 0x606e
 # IDA 0x15e6e; file 0x606e; locator=proven; mov     dx, 1B8h
-# ⚠ 函式 sub_15E60; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E60; [proven] 側欄原始場景 0、四個欄位 bit 與遷都成功後的完整更新; 出處: docs/re/118-c-city-list-restoration.md
 mov dx, 0x1b8
 .org 0x6071
 # IDA 0x15e71; file 0x6071; locator=proven; mov     bx, 0C8h
-# ⚠ 函式 sub_15E60; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E60; [proven] 側欄原始場景 0、四個欄位 bit 與遷都成功後的完整更新; 出處: docs/re/118-c-city-list-restoration.md
 mov bx, 0xc8
 .org 0x6074
 # IDA 0x15e74; file 0x6074; locator=proven; call    sub_10337
-# ⚠ 函式 sub_15E60; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E60; [proven] 側欄原始場景 0、四個欄位 bit 與遷都成功後的完整更新; 出處: docs/re/118-c-city-list-restoration.md
 call .-23357
 .org 0x6077
 # IDA 0x15e77; file 0x6077; locator=proven; mov     al, 0Fh
-# ⚠ 函式 sub_15E60; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E60; [proven] 側欄原始場景 0、四個欄位 bit 與遷都成功後的完整更新; 出處: docs/re/118-c-city-list-restoration.md
 mov al, 0xf
 .org 0x6079
 # IDA 0x15e79; file 0x6079; locator=proven; call    sub_15E80
-# ⚠ 函式 sub_15E60; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E60; [proven] 側欄原始場景 0、四個欄位 bit 與遷都成功後的完整更新; 出處: docs/re/118-c-city-list-restoration.md
 call .+7
 .org 0x607c
 # IDA 0x15e7c; file 0x607c; locator=proven; pop     dx
-# ⚠ 函式 sub_15E60; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E60; [proven] 側欄原始場景 0、四個欄位 bit 與遷都成功後的完整更新; 出處: docs/re/118-c-city-list-restoration.md
 pop dx
 .org 0x607d
 # IDA 0x15e7d; file 0x607d; locator=proven; pop     bx
-# ⚠ 函式 sub_15E60; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E60; [proven] 側欄原始場景 0、四個欄位 bit 與遷都成功後的完整更新; 出處: docs/re/118-c-city-list-restoration.md
 pop bx
 .org 0x607e
 # IDA 0x15e7e; file 0x607e; locator=proven; pop     ax
-# ⚠ 函式 sub_15E60; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E60; [proven] 側欄原始場景 0、四個欄位 bit 與遷都成功後的完整更新; 出處: docs/re/118-c-city-list-restoration.md
 pop ax
 .org 0x607f
 # IDA 0x15e7f; file 0x607f; locator=proven; retn
-# ⚠ 函式 sub_15E60; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E60; [proven] 側欄原始場景 0、四個欄位 bit 與遷都成功後的完整更新; 出處: docs/re/118-c-city-list-restoration.md
 ret
 .org 0x6080
 sub_15E80:
@@ -41161,255 +41161,255 @@ ret
 .org 0x6b09
 sub_16909:
 # IDA 0x16909; file 0x6b09; locator=proven; push    ds
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 push ds
 .org 0x6b0a
 # IDA 0x1690a; file 0x6b0a; locator=proven; call    sub_12078
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 call .-18578
 .org 0x6b0d
 # IDA 0x1690d; file 0x6b0d; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x6b12
 # IDA 0x16912; file 0x6b12; locator=proven; mov     si, cs:word_10CFD
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov si, word ptr [0xcfd]
 .org 0x6b17
 # IDA 0x16917; file 0x6b17; locator=proven; mov     ah, [si+3]
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 mov ah, byte ptr [si+0x3]
 .org 0x6b1a
 # IDA 0x1691a; file 0x6b1a; locator=proven; xor     al, al
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor al, al
 .org 0x6b1c
 # IDA 0x1691c; file 0x6b1c; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 shr ax, 0x1
 .org 0x6b1e
 # IDA 0x1691e; file 0x6b1e; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 shr ax, 0x1
 .org 0x6b20
 # IDA 0x16920; file 0x6b20; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 shr ax, 0x1
 .org 0x6b22
 # IDA 0x16922; file 0x6b22; locator=proven; add     ax, 840h
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 add ax, 0x840
 .org 0x6b25
 # IDA 0x16925; file 0x6b25; locator=proven; mov     cx, 0Fh
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 mov cx, 0xf
 .org 0x6b28
 # IDA 0x16928; file 0x6b28; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 call .+7979
 .org 0x6b2b
 loc_1692B:
 # IDA 0x1692b; file 0x6b2b; locator=proven; call    sub_17400
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 call .+2773
 .org 0x6b2e
 # IDA 0x1692e; file 0x6b2e; locator=proven; jb      short loc_16990
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 jb .+98
 .org 0x6b30
 # IDA 0x16930; file 0x6b30; locator=proven; cmp     ax, bx
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 {load} cmp ax, bx
 .org 0x6b32
 # IDA 0x16932; file 0x6b32; locator=proven; jnz     short loc_16944
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 jnz .+18
 .org 0x6b34
 # IDA 0x16934; file 0x6b34; locator=proven; push    ax
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 push ax
 .org 0x6b35
 # IDA 0x16935; file 0x6b35; locator=proven; push    bx
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 push bx
 .org 0x6b36
 # IDA 0x16936; file 0x6b36; locator=proven; mov     di, sp
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov di, sp
 .org 0x6b38
 # IDA 0x16938; file 0x6b38; locator=proven; mov     al, 93h
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 mov al, 0x93
 .org 0x6b3a
 # IDA 0x1693a; file 0x6b3a; locator=proven; mov     cx, 3Dh
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 mov cx, 0x3d
 .org 0x6b3d
 # IDA 0x1693d; file 0x6b3d; locator=proven; call    sub_18810
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 call .+7891
 .org 0x6b40
 # IDA 0x16940; file 0x6b40; locator=proven; pop     bx
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 pop bx
 .org 0x6b41
 # IDA 0x16941; file 0x6b41; locator=proven; pop     ax
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 pop ax
 .org 0x6b42
 # IDA 0x16942; file 0x6b42; locator=proven; jmp     short loc_1692B
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 jmp .-23
 .org 0x6b44
 loc_16944:
 # IDA 0x16944; file 0x6b44; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 mov cx, 0xffff
 .org 0x6b47
 # IDA 0x16947; file 0x6b47; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 call .+7948
 .org 0x6b4a
 # IDA 0x1694a; file 0x6b4a; locator=proven; call    sub_11D46
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 call .-19460
 .org 0x6b4d
 # IDA 0x1694d; file 0x6b4d; locator=proven; mov     di, ax
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov di, ax
 .org 0x6b4f
 # IDA 0x1694f; file 0x6b4f; locator=proven; mov     al, 1
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 mov al, 0x1
 .org 0x6b51
 # IDA 0x16951; file 0x6b51; locator=proven; mov     dl, [di+16h]
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 mov dl, byte ptr [di+0x16]
 .org 0x6b54
 # IDA 0x16954; file 0x6b54; locator=proven; mov     dh, [bx+16h]
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 mov dh, byte ptr [bx+0x16]
 .org 0x6b57
 # IDA 0x16957; file 0x6b57; locator=proven; and     dx, 0F0Fh
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 and dx, 0xf0f
 .org 0x6b5b
 # IDA 0x1695b; file 0x6b5b; locator=proven; cmp     dl, dh
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 {load} cmp dl, dh
 .org 0x6b5d
 # IDA 0x1695d; file 0x6b5d; locator=proven; jb      short loc_16969
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 jb .+12
 .org 0x6b5f
 # IDA 0x1695f; file 0x6b5f; locator=proven; mov     dx, [di+0Eh]
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 mov dx, word ptr [di+0xe]
 .org 0x6b62
 # IDA 0x16962; file 0x6b62; locator=proven; cmp     dx, [bx+0Eh]
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 cmp dx, word ptr [bx+0xe]
 .org 0x6b65
 # IDA 0x16965; file 0x6b65; locator=proven; jnb     short loc_16969
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 jnb .+4
 .org 0x6b67
 # IDA 0x16967; file 0x6b67; locator=proven; xor     al, al
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor al, al
 .org 0x6b69
 loc_16969:
 # IDA 0x16969; file 0x6b69; locator=proven; mov     cx, 182h
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 mov cx, 0x182
 .org 0x6b6c
 # IDA 0x1696c; file 0x6b6c; locator=proven; mov     di, bx
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov di, bx
 .org 0x6b6e
 # IDA 0x1696e; file 0x6b6e; locator=proven; mov     bh, [si+1]
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 mov bh, byte ptr [si+0x1]
 .org 0x6b71
 # IDA 0x16971; file 0x6b71; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor bl, bl
 .org 0x6b73
 # IDA 0x16973; file 0x6b73; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 shr bx, 0x1
 .org 0x6b75
 # IDA 0x16975; file 0x6b75; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 shr bx, 0x1
 .org 0x6b77
 # IDA 0x16977; file 0x6b77; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 shr bx, 0x1
 .org 0x6b79
 # IDA 0x16979; file 0x6b79; locator=proven; add     bx, 4240h
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 add bx, 0x4240
 .org 0x6b7d
 # IDA 0x1697d; file 0x6b7d; locator=proven; push    si
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 push si
 .org 0x6b7e
 # IDA 0x1697e; file 0x6b7e; locator=proven; mov     si, bx
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov si, bx
 .org 0x6b80
 # IDA 0x16980; file 0x6b80; locator=proven; mov     cx, 182h
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 mov cx, 0x182
 .org 0x6b83
 # IDA 0x16983; file 0x6b83; locator=proven; call    sub_13B08
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 call .-11899
 .org 0x6b86
 # IDA 0x16986; file 0x6b86; locator=proven; pop     si
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 pop si
 .org 0x6b87
 # IDA 0x16987; file 0x6b87; locator=proven; cmp     al, 1
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 cmp al, 0x1
 .org 0x6b89
 # IDA 0x16989; file 0x6b89; locator=proven; jz      short loc_16990
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 jz .+7
 .org 0x6b8b
 # IDA 0x1698b; file 0x6b8b; locator=proven; mov     ax, di
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov ax, di
 .org 0x6b8d
 # IDA 0x1698d; file 0x6b8d; locator=proven; call    sub_133FD
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 call .-13712
 .org 0x6b90
 loc_16990:
 # IDA 0x16990; file 0x6b90; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 mov cx, 0xffff
 .org 0x6b93
 # IDA 0x16993; file 0x6b93; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 call .+7872
 .org 0x6b96
 # IDA 0x16996; file 0x6b96; locator=proven; call    sub_11D46
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 call .-19536
 .org 0x6b99
 # IDA 0x16999; file 0x6b99; locator=proven; call    sub_120D6
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 call .-18627
 .org 0x6b9c
 # IDA 0x1699c; file 0x6b9c; locator=proven; pop     ds
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 pop ds
 .org 0x6b9d
 # IDA 0x1699d; file 0x6b9d; locator=proven; retn
-# ⚠ 函式 sub_16909; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16909; [proven] 遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer; 出處: docs/re/118-c-city-list-restoration.md
 ret
 .org 0x6b9e
 sub_1699E:
@@ -45143,119 +45143,119 @@ ret
 .org 0x7600
 sub_17400:
 # IDA 0x17400; file 0x7600; locator=proven; push    ds
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 push ds
 .org 0x7601
 # IDA 0x17401; file 0x7601; locator=proven; push    es
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 push es
 .org 0x7602
 # IDA 0x17402; file 0x7602; locator=proven; push    ax
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 push ax
 .org 0x7603
 # IDA 0x17403; file 0x7603; locator=proven; push    cx
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 push cx
 .org 0x7604
 # IDA 0x17404; file 0x7604; locator=proven; push    dx
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 push dx
 .org 0x7605
 # IDA 0x17405; file 0x7605; locator=proven; push    si
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 push si
 .org 0x7606
 # IDA 0x17406; file 0x7606; locator=proven; push    di
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 push di
 .org 0x7607
 # IDA 0x17407; file 0x7607; locator=proven; push    bp
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 push bp
 .org 0x7608
 # IDA 0x17408; file 0x7608; locator=proven; mov     dx, 18h
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 mov dx, 0x18
 .org 0x760b
 # IDA 0x1740b; file 0x760b; locator=proven; mov     bx, 58h
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 mov bx, 0x58
 .org 0x760e
 # IDA 0x1740e; file 0x760e; locator=proven; mov     cx, 0B18h
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 mov cx, 0xb18
 .org 0x7611
 # IDA 0x17411; file 0x7611; locator=proven; call    sub_181C0
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 call .+3503
 .org 0x7614
 # IDA 0x17414; file 0x7614; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x7619
 # IDA 0x17419; file 0x7619; locator=proven; mov     ax, 743Bh
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, 0x743b
 .org 0x761c
 # IDA 0x1741c; file 0x761c; locator=proven; mov     bx, 745Fh
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 mov bx, 0x745f
 .org 0x761f
 # IDA 0x1741f; file 0x761f; locator=proven; mov     si, 7378h
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 mov si, 0x7378
 .org 0x7622
 # IDA 0x17422; file 0x7622; locator=proven; mov     di, 73CEh
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 mov di, 0x73ce
 .org 0x7625
 # IDA 0x17425; file 0x7625; locator=proven; mov     cl, byte ptr cs:word_198A8+1
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov cl, byte ptr [0x98a9]
 .org 0x762a
 # IDA 0x1742a; file 0x762a; locator=proven; call    sub_1820E
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 call .+3556
 .org 0x762d
 # IDA 0x1742d; file 0x762d; locator=proven; mov     byte ptr cs:word_198A8+1, cl
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov byte ptr [0x98a9], cl
 .org 0x7632
 # IDA 0x17432; file 0x7632; locator=proven; pop     bp
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 pop bp
 .org 0x7633
 # IDA 0x17433; file 0x7633; locator=proven; pop     di
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 pop di
 .org 0x7634
 # IDA 0x17434; file 0x7634; locator=proven; pop     si
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 pop si
 .org 0x7635
 # IDA 0x17435; file 0x7635; locator=proven; pop     dx
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 pop dx
 .org 0x7636
 # IDA 0x17436; file 0x7636; locator=proven; pop     cx
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 pop cx
 .org 0x7637
 # IDA 0x17437; file 0x7637; locator=proven; pop     ax
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 pop ax
 .org 0x7638
 # IDA 0x17438; file 0x7638; locator=proven; pop     es
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 pop es
 .org 0x7639
 # IDA 0x17439; file 0x7639; locator=proven; pop     ds
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 pop ds
 .org 0x763a
 # IDA 0x1743a; file 0x763a; locator=proven; retn
-# ⚠ 函式 sub_17400; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17400; [proven] 據點清單入口、固定幾何／描述子／callback 與持久排序狀態; 出處: docs/re/118-c-city-list-restoration.md
 ret
 .org 0x763b
 # IDA 0x1743b; file 0x763b; locator=proven; push    si
@@ -45431,364 +45431,364 @@ ret
 .org 0x768f
 sub_1748F:
 # IDA 0x1748f; file 0x768f; locator=proven; push    ax
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 push ax
 .org 0x7690
 # IDA 0x17490; file 0x7690; locator=proven; push    bx
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 push bx
 .org 0x7691
 # IDA 0x17491; file 0x7691; locator=proven; push    cx
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 push cx
 .org 0x7692
 # IDA 0x17492; file 0x7692; locator=proven; push    dx
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 push dx
 .org 0x7693
 # IDA 0x17493; file 0x7693; locator=proven; push    si
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 push si
 .org 0x7694
 # IDA 0x17494; file 0x7694; locator=proven; push    di
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 push di
 .org 0x7695
 # IDA 0x17495; file 0x7695; locator=proven; push    bp
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 push bp
 .org 0x7696
 # IDA 0x17496; file 0x7696; locator=proven; cmp     word ptr [bp+si], 0FFFFh
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 cmp word ptr [bp+si], offset imm_at_17496
 .org 0x769a
 # IDA 0x1749a; file 0x769a; locator=proven; jnz     short loc_174AE
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 jnz .+20
 .org 0x769c
 # IDA 0x1749c; file 0x769c; locator=proven; push    ds
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 push ds
 .org 0x769d
 # IDA 0x1749d; file 0x769d; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, cs
 .org 0x769f
 # IDA 0x1749f; file 0x769f; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov ds, ax
 .org 0x76a1
 # IDA 0x174a1; file 0x76a1; locator=proven; mov     si, 73A3h
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov si, 0x73a3
 .org 0x76a4
 # IDA 0x174a4; file 0x76a4; locator=proven; mov     ax, 9000h
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, 0x9000
 .org 0x76a7
 # IDA 0x174a7; file 0x76a7; locator=proven; call    sub_1F6DC
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 call .-32203
 .org 0x76aa
 # IDA 0x174aa; file 0x76aa; locator=proven; pop     ds
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 pop ds
 .org 0x76ab
 # IDA 0x174ab; file 0x76ab; locator=proven; jmp     loc_17548
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 {disp16} jmp .+157
 .org 0x76ae
 loc_174AE:
 # IDA 0x174ae; file 0x76ae; locator=proven; mov     si, [bp+si]
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov si, word ptr [bp+si]
 .org 0x76b0
 # IDA 0x174b0; file 0x76b0; locator=proven; add     si, 2
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 add si, 0x2
 .org 0x76b3
 # IDA 0x174b3; file 0x76b3; locator=proven; mov     ax, 9001h
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, 0x9001
 .org 0x76b6
 # IDA 0x174b6; file 0x76b6; locator=proven; call    loc_10701
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 call .-28085
 .org 0x76b9
 # IDA 0x174b9; file 0x76b9; locator=proven; sub     si, 2
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 sub si, 0x2
 .org 0x76bc
 # IDA 0x174bc; file 0x76bc; locator=proven; push    ds
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 push ds
 .org 0x76bd
 # IDA 0x174bd; file 0x76bd; locator=proven; push    si
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 push si
 .org 0x76be
 # IDA 0x174be; file 0x76be; locator=proven; mov     ah, [si+19h]
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov ah, byte ptr [si+0x19]
 .org 0x76c1
 # IDA 0x174c1; file 0x76c1; locator=proven; cmp     ah, 0FFh
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 cmp ah, 0xff
 .org 0x76c4
 # IDA 0x174c4; file 0x76c4; locator=proven; jz      short loc_174D5
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 jz .+17
 .org 0x76c6
 # IDA 0x174c6; file 0x76c6; locator=proven; xor     al, al
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor al, al
 .org 0x76c8
 # IDA 0x174c8; file 0x76c8; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 shr ax, 0x1
 .org 0x76ca
 # IDA 0x174ca; file 0x76ca; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 shr ax, 0x1
 .org 0x76cc
 # IDA 0x174cc; file 0x76cc; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 shr ax, 0x1
 .org 0x76ce
 # IDA 0x174ce; file 0x76ce; locator=proven; add     ax, 4242h
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 add ax, 0x4242
 .org 0x76d1
 # IDA 0x174d1; file 0x76d1; locator=proven; mov     si, ax
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov si, ax
 .org 0x76d3
 # IDA 0x174d3; file 0x76d3; locator=proven; jmp     short loc_174DC
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 jmp .+9
 .org 0x76d5
 loc_174D5:
 # IDA 0x174d5; file 0x76d5; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, cs
 .org 0x76d7
 # IDA 0x174d7; file 0x76d7; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov ds, ax
 .org 0x76d9
 # IDA 0x174d9; file 0x76d9; locator=proven; mov     si, 73A3h
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov si, 0x73a3
 .org 0x76dc
 loc_174DC:
 # IDA 0x174dc; file 0x76dc; locator=proven; mov     ax, 9001h
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, 0x9001
 .org 0x76df
 # IDA 0x174df; file 0x76df; locator=proven; add     dx, 120h
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 add dx, 0x120
 .org 0x76e3
 # IDA 0x174e3; file 0x76e3; locator=proven; call    loc_10701
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 call .-28130
 .org 0x76e6
 # IDA 0x174e6; file 0x76e6; locator=proven; sub     dx, 120h
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 sub dx, 0x120
 .org 0x76ea
 # IDA 0x174ea; file 0x76ea; locator=proven; pop     si
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 pop si
 .org 0x76eb
 # IDA 0x174eb; file 0x76eb; locator=proven; pop     ds
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 pop ds
 .org 0x76ec
 # IDA 0x174ec; file 0x76ec; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 shl bx, 0x1
 .org 0x76ee
 # IDA 0x174ee; file 0x76ee; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 shl bx, 0x1
 .org 0x76f0
 # IDA 0x174f0; file 0x76f0; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 shl bx, 0x1
 .org 0x76f2
 # IDA 0x174f2; file 0x76f2; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 shl bx, 0x1
 .org 0x76f4
 # IDA 0x174f4; file 0x76f4; locator=proven; mov     di, bx
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov di, bx
 .org 0x76f6
 # IDA 0x174f6; file 0x76f6; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 shl bx, 0x1
 .org 0x76f8
 # IDA 0x174f8; file 0x76f8; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 shl bx, 0x1
 .org 0x76fa
 # IDA 0x174fa; file 0x76fa; locator=proven; add     di, bx
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 {load} add di, bx
 .org 0x76fc
 # IDA 0x174fc; file 0x76fc; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 shr dx, 0x1
 .org 0x76fe
 # IDA 0x174fe; file 0x76fe; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 shr dx, 0x1
 .org 0x7700
 # IDA 0x17500; file 0x7700; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 shr dx, 0x1
 .org 0x7702
 # IDA 0x17502; file 0x7702; locator=proven; add     di, dx
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 {load} add di, dx
 .org 0x7704
 # IDA 0x17504; file 0x7704; locator=proven; add     di, 8
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 add di, 0x8
 .org 0x7707
 # IDA 0x17507; file 0x7707; locator=proven; mov     ax, [si+0Eh]
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, word ptr [si+0xe]
 .org 0x770a
 # IDA 0x1750a; file 0x770a; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor dx, dx
 .org 0x770c
 # IDA 0x1750c; file 0x770c; locator=proven; mov     bx, 9005h
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov bx, 0x9005
 .org 0x770f
 # IDA 0x1750f; file 0x770f; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 call .-28384
 .org 0x7712
 # IDA 0x17512; file 0x7712; locator=proven; add     di, 9
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 add di, 0x9
 .org 0x7715
 # IDA 0x17515; file 0x7715; locator=proven; mov     al, [si+10h]
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov al, byte ptr [si+0x10]
 .org 0x7718
 # IDA 0x17518; file 0x7718; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor ah, ah
 .org 0x771a
 # IDA 0x1751a; file 0x771a; locator=proven; mov     bx, 9004h
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov bx, 0x9004
 .org 0x771d
 # IDA 0x1751d; file 0x771d; locator=proven; sub     ax, 64h
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 sub ax, offset imm_at_1751D
 .org 0x7720
 # IDA 0x17520; file 0x7720; locator=proven; ja      short loc_17524
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 ja .+4
 .org 0x7722
 # IDA 0x17522; file 0x7722; locator=proven; mov     bh, 9Ah
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov bh, 0x9a
 .org 0x7724
 loc_17524:
 # IDA 0x17524; file 0x7724; locator=proven; cwd
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 cwd
 .org 0x7725
 # IDA 0x17525; file 0x7725; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 call .-28406
 .org 0x7728
 # IDA 0x17528; file 0x7728; locator=proven; add     di, 7
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 add di, 0x7
 .org 0x772b
 # IDA 0x1752b; file 0x772b; locator=proven; mov     al, [si+11h]
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov al, byte ptr [si+0x11]
 .org 0x772e
 # IDA 0x1752e; file 0x772e; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor ah, ah
 .org 0x7730
 # IDA 0x17530; file 0x7730; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor dx, dx
 .org 0x7732
 # IDA 0x17532; file 0x7732; locator=proven; mov     bx, 9003h
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov bx, 0x9003
 .org 0x7735
 # IDA 0x17535; file 0x7735; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 call .-28422
 .org 0x7738
 # IDA 0x17538; file 0x7738; locator=proven; add     di, 6
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 add di, 0x6
 .org 0x773b
 # IDA 0x1753b; file 0x773b; locator=proven; mov     al, 0Ah
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov al, 0xa
 .org 0x773d
 # IDA 0x1753d; file 0x773d; locator=proven; mul     byte ptr [si+13h]
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 mul byte ptr [si+0x13]
 .org 0x7740
 # IDA 0x17540; file 0x7740; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor dx, dx
 .org 0x7742
 # IDA 0x17542; file 0x7742; locator=proven; mov     bx, 9004h
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov bx, 0x9004
 .org 0x7745
 # IDA 0x17545; file 0x7745; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 call .-28438
 .org 0x7748
 loc_17548:
 # IDA 0x17548; file 0x7748; locator=proven; pop     bp
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 pop bp
 .org 0x7749
 # IDA 0x17549; file 0x7749; locator=proven; pop     di
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 pop di
 .org 0x774a
 # IDA 0x1754a; file 0x774a; locator=proven; pop     si
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 pop si
 .org 0x774b
 # IDA 0x1754b; file 0x774b; locator=proven; pop     dx
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 pop dx
 .org 0x774c
 # IDA 0x1754c; file 0x774c; locator=proven; pop     cx
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 pop cx
 .org 0x774d
 # IDA 0x1754d; file 0x774d; locator=proven; pop     bx
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 pop bx
 .org 0x774e
 # IDA 0x1754e; file 0x774e; locator=proven; pop     ax
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 pop ax
 .org 0x774f
 # IDA 0x1754f; file 0x774f; locator=proven; retn
-# ⚠ 函式 sub_1748F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1748F; [proven] 據點名、內政官、五個原始數字與空列 raster; 出處: docs/re/118-c-city-list-restoration.md
 ret
 .org 0x77fa
 sub_175FA:
@@ -51046,329 +51046,329 @@ ret
 .org 0x83c0
 sub_181C0:
 # IDA 0x181c0; file 0x83c0; locator=proven; push    ds
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 push ds
 .org 0x83c1
 # IDA 0x181c1; file 0x83c1; locator=proven; push    ax
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 push ax
 .org 0x83c2
 # IDA 0x181c2; file 0x83c2; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, cs
 .org 0x83c4
 # IDA 0x181c4; file 0x83c4; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 mov ds, ax
 .org 0x83c6
 # IDA 0x181c6; file 0x83c6; locator=proven; mov     word_181B6, cx
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 mov word ptr [0x81b6], cx
 .org 0x83ca
 # IDA 0x181ca; file 0x83ca; locator=proven; mov     ax, 4
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, 0x4
 .org 0x83cd
 # IDA 0x181cd; file 0x83cd; locator=proven; xchg    al, cl
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 {load} xchg al, cl
 .org 0x83cf
 # IDA 0x181cf; file 0x83cf; locator=proven; shl     ax, cl
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 shl ax, cl
 .org 0x83d1
 # IDA 0x181d1; file 0x83d1; locator=proven; mov     word_181B2, ax
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 mov word ptr [0x81b2], ax
 .org 0x83d4
 # IDA 0x181d4; file 0x83d4; locator=proven; xor     ax, ax
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor ax, ax
 .org 0x83d6
 # IDA 0x181d6; file 0x83d6; locator=proven; mov     al, ch
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov al, ch
 .org 0x83d8
 # IDA 0x181d8; file 0x83d8; locator=proven; shl     ax, cl
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 shl ax, cl
 .org 0x83da
 # IDA 0x181da; file 0x83da; locator=proven; mov     word_181B4, ax
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 mov word ptr [0x81b4], ax
 .org 0x83dd
 # IDA 0x181dd; file 0x83dd; locator=proven; push    dx
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 push dx
 .org 0x83de
 # IDA 0x181de; file 0x83de; locator=proven; push    bx
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 push bx
 .org 0x83df
 # IDA 0x181df; file 0x83df; locator=proven; mov     word_181AE, dx
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 mov word ptr [0x81ae], dx
 .org 0x83e3
 # IDA 0x181e3; file 0x83e3; locator=proven; mov     word_181B0, bx
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 mov word ptr [0x81b0], bx
 .org 0x83e7
 # IDA 0x181e7; file 0x83e7; locator=proven; sub     dx, 8
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 sub dx, 0x8
 .org 0x83ea
 # IDA 0x181ea; file 0x83ea; locator=proven; sub     bx, 8
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 sub bx, 0x8
 .org 0x83ed
 # IDA 0x181ed; file 0x83ed; locator=proven; shr     dx, cl
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 shr dx, cl
 .org 0x83ef
 # IDA 0x181ef; file 0x83ef; locator=proven; shr     bx, cl
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 shr bx, cl
 .org 0x83f1
 # IDA 0x181f1; file 0x83f1; locator=proven; mov     word_181AA, dx
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 mov word ptr [0x81aa], dx
 .org 0x83f5
 # IDA 0x181f5; file 0x83f5; locator=proven; mov     word_181AC, bx
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 mov word ptr [0x81ac], bx
 .org 0x83f9
 # IDA 0x181f9; file 0x83f9; locator=proven; pop     ax
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 pop ax
 .org 0x83fa
 # IDA 0x181fa; file 0x83fa; locator=proven; pop     cx
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 pop cx
 .org 0x83fb
 # IDA 0x181fb; file 0x83fb; locator=proven; mov     dx, 50h
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 mov dx, 0x50
 .org 0x83fe
 # IDA 0x181fe; file 0x83fe; locator=proven; mul     dx
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 mul dx
 .org 0x8400
 # IDA 0x18200; file 0x8400; locator=proven; shr     cx, 1
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 shr cx, 0x1
 .org 0x8402
 # IDA 0x18202; file 0x8402; locator=proven; shr     cx, 1
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 shr cx, 0x1
 .org 0x8404
 # IDA 0x18204; file 0x8404; locator=proven; shr     cx, 1
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 shr cx, 0x1
 .org 0x8406
 # IDA 0x18206; file 0x8406; locator=proven; add     ax, cx
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 {load} add ax, cx
 .org 0x8408
 # IDA 0x18208; file 0x8408; locator=proven; mov     word_181B8, ax
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 mov word ptr [0x81b8], ax
 .org 0x840b
 # IDA 0x1820b; file 0x840b; locator=proven; pop     ax
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 pop ax
 .org 0x840c
 # IDA 0x1820c; file 0x840c; locator=proven; pop     ds
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 pop ds
 .org 0x840d
 # IDA 0x1820d; file 0x840d; locator=proven; retn
-# ⚠ 函式 sub_181C0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_181C0; [proven] 清單視窗粗格、像素與 VRAM 座標拆分; 出處: docs/re/118-c-city-list-restoration.md
 ret
 .org 0x840e
 sub_1820E:
 # IDA 0x1820e; file 0x840e; locator=proven; push    bp
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 push bp
 .org 0x840f
 # IDA 0x1820f; file 0x840f; locator=proven; sub     sp, 200h
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 sub sp, 0x200
 .org 0x8413
 # IDA 0x18213; file 0x8413; locator=proven; mov     bp, sp
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov bp, sp
 .org 0x8415
 # IDA 0x18215; file 0x8415; locator=proven; mov     cs:word_181A8, ax
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov word ptr [0x81a8], ax
 .org 0x8419
 # IDA 0x18219; file 0x8419; locator=proven; mov     cs:word_181A6, bx
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov word ptr [0x81a6], bx
 .org 0x841e
 # IDA 0x1821e; file 0x841e; locator=proven; mov     cs:word_183D3, si
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov word ptr [0x83d3], si
 .org 0x8423
 # IDA 0x18223; file 0x8423; locator=proven; mov     cs:word_18320, di
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov word ptr [0x8320], di
 .org 0x8428
 # IDA 0x18228; file 0x8428; locator=proven; mov     cs:word_18591, di
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov word ptr [0x8591], di
 .org 0x842d
 # IDA 0x1822d; file 0x842d; locator=proven; mov     cs:byte_181BC, 0
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov byte ptr [0x81bc], 0x0
 .org 0x8433
 # IDA 0x18233; file 0x8433; locator=proven; xor     ch, ch
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor ch, ch
 .org 0x8435
 # IDA 0x18235; file 0x8435; locator=proven; shl     cx, 1
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 shl cx, 0x1
 .org 0x8437
 # IDA 0x18237; file 0x8437; locator=proven; mov     cs:word_181BA, cx
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov word ptr [0x81ba], cx
 .org 0x843c
 # IDA 0x1823c; file 0x843c; locator=proven; cld
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 cld
 .org 0x843d
 # IDA 0x1823d; file 0x843d; locator=proven; mov     ax, ss
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, ss
 .org 0x843f
 # IDA 0x1823f; file 0x843f; locator=proven; mov     es, ax
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 mov es, ax
 .org 0x8441
 # IDA 0x18241; file 0x8441; locator=proven; mov     di, bp
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov di, bp
 .org 0x8443
 # IDA 0x18243; file 0x8443; locator=proven; mov     cx, 100h
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 mov cx, 0x100
 .org 0x8446
 # IDA 0x18246; file 0x8446; locator=proven; mov     ax, 0FFFFh
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, 0xffff
 .org 0x8449
 # IDA 0x18249; file 0x8449; locator=proven; rep stosw
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 rep; stosw
 .org 0x844b
 # IDA 0x1824b; file 0x844b; locator=proven; call    sub_101B4
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 call .+32617
 .org 0x844e
 # IDA 0x1824e; file 0x844e; locator=proven; call    cs:word_181A8
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 cs; call word ptr [0x81a8]
 .org 0x8453
 # IDA 0x18253; file 0x8453; locator=proven; mov     cs:byte_181BD, ah
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov byte ptr [0x81bd], ah
 .org 0x8458
 # IDA 0x18258; file 0x8458; locator=proven; mov     al, 3Dh
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 mov al, 0x3d
 .org 0x845a
 # IDA 0x1825a; file 0x845a; locator=proven; call    loc_1828F
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 call .+53
 .org 0x845d
 # IDA 0x1825d; file 0x845d; locator=proven; mov     bx, cs:word_181BA
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov bx, word ptr [0x81ba]
 .org 0x8462
 # IDA 0x18262; file 0x8462; locator=proven; call    loc_1857F
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 call .+797
 .org 0x8465
 # IDA 0x18265; file 0x8465; locator=proven; call    sub_101DB
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 call .+32630
 .org 0x8468
 # IDA 0x18268; file 0x8468; locator=proven; call    sub_18412
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 call .+426
 .org 0x846b
 # IDA 0x1826b; file 0x846b; locator=proven; jb      short loc_18279
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 jb .+14
 .org 0x846d
 # IDA 0x1826d; file 0x846d; locator=proven; mov     bl, al
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov bl, al
 .org 0x846f
 # IDA 0x1826f; file 0x846f; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor bh, bh
 .org 0x8471
 # IDA 0x18271; file 0x8471; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 shl bx, 0x1
 .org 0x8473
 # IDA 0x18273; file 0x8473; locator=proven; add     bp, bx
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 {load} add bp, bx
 .org 0x8475
 # IDA 0x18275; file 0x8475; locator=proven; mov     bx, [bp+0]
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 mov bx, word ptr [bp]
 .org 0x8478
 # IDA 0x18278; file 0x8478; locator=proven; clc
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 clc
 .org 0x8479
 loc_18279:
 # IDA 0x18279; file 0x8479; locator=proven; pushf
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 pushf
 .org 0x847a
 # IDA 0x1827a; file 0x847a; locator=proven; xor     ax, ax
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor ax, ax
 .org 0x847c
 # IDA 0x1827c; file 0x847c; locator=proven; call    loc_1828F
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 call .+19
 .org 0x847f
 # IDA 0x1827f; file 0x847f; locator=proven; mov     cx, cs:word_181BA
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov cx, word ptr [0x81ba]
 .org 0x8484
 # IDA 0x18284; file 0x8484; locator=proven; shr     cx, 1
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 shr cx, 0x1
 .org 0x8486
 # IDA 0x18286; file 0x8486; locator=proven; popf
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 popf
 .org 0x8487
 # IDA 0x18287; file 0x8487; locator=proven; lahf
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 lahf
 .org 0x8488
 # IDA 0x18288; file 0x8488; locator=proven; add     sp, 200h
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 add sp, 0x200
 .org 0x848c
 # IDA 0x1828c; file 0x848c; locator=proven; sahf
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 sahf
 .org 0x848d
 # IDA 0x1828d; file 0x848d; locator=proven; pop     bp
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 pop bp
 .org 0x848e
 # IDA 0x1828e; file 0x848e; locator=proven; retn
-# ⚠ 函式 sub_1820E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1820E; [proven] 512-byte SS 清單、live 描述子／callback、選取與 CF 返回; 出處: docs/re/118-c-city-list-restoration.md
 ret
 .org 0x848f
 loc_1828F:
@@ -51584,6 +51584,268 @@ inc al
 # IDA 0x1831c; file 0x851c; locator=proven; call    sub_1E3D7
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
 call .+24763
+.org 0x851f
+# IDA 0x1831f; file 0x851f; locator=proven; mov     si, 1234h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# operand 1 1234h; [proven] 初始佔位；sub_1820E 將據點欄位描述子寫入 CS:8320，執行本 MOV 時讀取; 出處: docs/re/118-c-city-list-restoration.md
+mov si, 0x1234
+.org 0x8522
+# IDA 0x18322; file 0x8522; locator=proven; mov     cx, [si]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov cx, word ptr [si]
+.org 0x8524
+# IDA 0x18324; file 0x8524; locator=proven; inc     si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc si
+.org 0x8525
+# IDA 0x18325; file 0x8525; locator=proven; inc     si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc si
+.org 0x8526
+# IDA 0x18326; file 0x8526; locator=proven; push    cx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+push cx
+.org 0x8527
+# IDA 0x18327; file 0x8527; locator=proven; mov     dx, [si]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov dx, word ptr [si]
+.org 0x8529
+# IDA 0x18329; file 0x8529; locator=proven; add     dx, word_181AE
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add dx, word ptr [0x81ae]
+.org 0x852d
+# IDA 0x1832d; file 0x852d; locator=proven; mov     bx, word_181B0
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov bx, word ptr [0x81b0]
+.org 0x8531
+# IDA 0x18331; file 0x8531; locator=proven; mov     cx, [si+2]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov cx, word ptr [si+0x2]
+.org 0x8534
+# IDA 0x18334; file 0x8534; locator=proven; inc     al
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc al
+.org 0x8536
+# IDA 0x18336; file 0x8536; locator=proven; call    sub_1E3D7
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .+24737
+.org 0x8539
+# IDA 0x18339; file 0x8539; locator=proven; add     si, 8
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add si, 0x8
+.org 0x853c
+# IDA 0x1833c; file 0x853c; locator=proven; pop     cx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop cx
+.org 0x853d
+# IDA 0x1833d; file 0x853d; locator=proven; loop    loc_18326
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+loop .-23
+.org 0x853f
+# IDA 0x1833f; file 0x853f; locator=proven; mov     ax, di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov ax, di
+.org 0x8541
+# IDA 0x18341; file 0x8541; locator=proven; mov     al, byte ptr word_181B6+1
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov al, byte ptr [0x81b7]
+.org 0x8544
+# IDA 0x18344; file 0x8544; locator=proven; dec     al
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+dec al
+.org 0x8546
+# IDA 0x18346; file 0x8546; locator=proven; cmp     ah, al
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} cmp ah, al
+.org 0x8548
+# IDA 0x18348; file 0x8548; locator=proven; jnb     short near ptr unk_1834C
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnb .+4
+.org 0x854a
+# IDA 0x1834a; file 0x854a; locator=proven; mov     ah, al
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov ah, al
+.org 0x854c
+# IDA 0x1834c; file 0x854c; locator=proven; mov     byte_181BE, ah
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov byte ptr [0x81be], ah
+.org 0x8550
+# IDA 0x18350; file 0x8550; locator=proven; mov     bl, ah
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov bl, ah
+.org 0x8552
+# IDA 0x18352; file 0x8552; locator=proven; mov     dx, word_181B4
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov dx, word ptr [0x81b4]
+.org 0x8556
+# IDA 0x18356; file 0x8556; locator=proven; sub     dx, 30h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+sub dx, 0x30
+.org 0x8559
+# IDA 0x18359; file 0x8559; locator=proven; xor     ah, ah
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} xor ah, ah
+.org 0x855b
+# IDA 0x1835b; file 0x855b; locator=proven; mul     dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mul dx
+.org 0x855d
+# IDA 0x1835d; file 0x855d; locator=proven; div     bl
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+div bl
+.org 0x855f
+# IDA 0x1835f; file 0x855f; locator=proven; mov     byte_181BF, al
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov byte ptr [0x81bf], al
+.org 0x8562
+# IDA 0x18362; file 0x8562; locator=proven; mov     word_181A4, 0FFFFh
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov word ptr [0x81a4], 0xffff
+.org 0x8568
+# IDA 0x18368; file 0x8568; locator=proven; mov     dx, word_181AE
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov dx, word ptr [0x81ae]
+.org 0x856c
+# IDA 0x1836c; file 0x856c; locator=proven; mov     bx, word_181B0
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov bx, word ptr [0x81b0]
+.org 0x8570
+# IDA 0x18370; file 0x8570; locator=proven; mov     si, dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov si, dx
+.org 0x8572
+# IDA 0x18372; file 0x8572; locator=proven; mov     di, bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov di, bx
+.org 0x8574
+# IDA 0x18374; file 0x8574; locator=proven; dec     si
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+dec si
+.org 0x8575
+# IDA 0x18375; file 0x8575; locator=proven; add     di, 0Fh
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add di, 0xf
+.org 0x8578
+# IDA 0x18378; file 0x8578; locator=proven; add     si, word_181B2
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add si, word ptr [0x81b2]
+.org 0x857c
+# IDA 0x1837c; file 0x857c; locator=proven; mov     ah, 0
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ah, 0x0
+.org 0x857e
+# IDA 0x1837e; file 0x857e; locator=proven; call    sub_1F1A3
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .+28197
+.org 0x8581
+# IDA 0x18381; file 0x8581; locator=proven; mov     dx, word_181AE
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov dx, word ptr [0x81ae]
+.org 0x8585
+# IDA 0x18385; file 0x8585; locator=proven; mov     bx, word_181B0
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov bx, word ptr [0x81b0]
+.org 0x8589
+# IDA 0x18389; file 0x8589; locator=proven; add     bx, 10h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add bx, 0x10
+.org 0x858c
+# IDA 0x1838c; file 0x858c; locator=proven; mov     si, dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov si, dx
+.org 0x858e
+# IDA 0x1838e; file 0x858e; locator=proven; mov     di, bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov di, bx
+.org 0x8590
+# IDA 0x18390; file 0x8590; locator=proven; add     si, 0Fh
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add si, 0xf
+.org 0x8593
+# IDA 0x18393; file 0x8593; locator=proven; add     di, word_181B4
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add di, word ptr [0x81b4]
+.org 0x8597
+# IDA 0x18397; file 0x8597; locator=proven; sub     di, 11h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+sub di, 0x11
+.org 0x859a
+# IDA 0x1839a; file 0x859a; locator=proven; mov     ah, 0
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ah, 0x0
+.org 0x859c
+# IDA 0x1839c; file 0x859c; locator=proven; call    sub_1F1A3
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .+28167
+.org 0x859f
+# IDA 0x1839f; file 0x859f; locator=proven; mov     dx, word_181AE
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov dx, word ptr [0x81ae]
+.org 0x85a3
+# IDA 0x183a3; file 0x85a3; locator=proven; mov     bx, word_181B0
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov bx, word ptr [0x81b0]
+.org 0x85a7
+# IDA 0x183a7; file 0x85a7; locator=proven; add     dx, 10h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add dx, 0x10
+.org 0x85aa
+# IDA 0x183aa; file 0x85aa; locator=proven; add     bx, 10h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add bx, 0x10
+.org 0x85ad
+# IDA 0x183ad; file 0x85ad; locator=proven; mov     si, dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov si, dx
+.org 0x85af
+# IDA 0x183af; file 0x85af; locator=proven; mov     di, bx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+{load} mov di, bx
+.org 0x85b1
+# IDA 0x183b1; file 0x85b1; locator=proven; add     si, word_181B2
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add si, word ptr [0x81b2]
+.org 0x85b5
+# IDA 0x183b5; file 0x85b5; locator=proven; add     di, word_181B4
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add di, word ptr [0x81b4]
+.org 0x85b9
+# IDA 0x183b9; file 0x85b9; locator=proven; sub     si, 11h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+sub si, 0x11
+.org 0x85bc
+# IDA 0x183bc; file 0x85bc; locator=proven; sub     di, 11h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+sub di, 0x11
+.org 0x85bf
+# IDA 0x183bf; file 0x85bf; locator=proven; mov     ah, 9
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ah, 0x9
+.org 0x85c1
+# IDA 0x183c1; file 0x85c1; locator=proven; call    sub_1F1A3
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+call .+28130
+.org 0x85c4
+# IDA 0x183c4; file 0x85c4; locator=proven; mov     ax, 0F03h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov ax, 0xf03
+.org 0x85c7
+# IDA 0x183c7; file 0x85c7; locator=proven; mov     dx, word_181AE
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov dx, word ptr [0x81ae]
+.org 0x85cb
+# IDA 0x183cb; file 0x85cb; locator=proven; add     dx, 18h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+add dx, 0x18
+.org 0x85ce
+# IDA 0x183ce; file 0x85ce; locator=proven; mov     bx, word_181B0
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov bx, word ptr [0x81b0]
+.org 0x85d2
+# IDA 0x183d2; file 0x85d2; locator=proven; mov     si, 1234h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# operand 1 1234h; [proven] 初始佔位；sub_1820E 將標題寫入 CS:83D3，執行本 MOV 時讀取，並非寫了不用; 出處: docs/re/118-c-city-list-restoration.md
+mov si, 0x1234
 .org 0x85d5
 # IDA 0x183d5; file 0x85d5; locator=proven; call    sub_106F5
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
@@ -51683,114 +51945,114 @@ ret
 .org 0x8612
 sub_18412:
 # IDA 0x18412; file 0x8612; locator=proven; mov     ax, 2
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, 0x2
 .org 0x8615
 # IDA 0x18415; file 0x8615; locator=proven; call    sub_20000
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 lcall 0x1000, 0x0
 .org 0x861a
 # IDA 0x1841a; file 0x861a; locator=proven; mov     al, cs:byte_181BC
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov al, byte ptr [0x81bc]
 .org 0x861e
 # IDA 0x1841e; file 0x861e; locator=proven; call    cs:word_181A6
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 cs; call word ptr [0x81a6]
 .org 0x8623
 # IDA 0x18423; file 0x8623; locator=proven; mov     ax, 1
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, 0x1
 .org 0x8626
 # IDA 0x18426; file 0x8626; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor bx, bx
 .org 0x8628
 # IDA 0x18428; file 0x8628; locator=proven; call    sub_20000
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 lcall 0x1000, 0x0
 .org 0x862d
 # IDA 0x1842d; file 0x862d; locator=proven; call    sub_121E7
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 call .-25158
 .org 0x8630
 # IDA 0x18430; file 0x8630; locator=proven; jb      short loc_18457
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 jb .+39
 .org 0x8632
 # IDA 0x18432; file 0x8632; locator=proven; push    cx
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 push cx
 .org 0x8633
 # IDA 0x18433; file 0x8633; locator=proven; push    dx
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 push dx
 .org 0x8634
 # IDA 0x18434; file 0x8634; locator=proven; call    sub_1E453
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 call .+24607
 .org 0x8637
 # IDA 0x18437; file 0x8637; locator=proven; pop     dx
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 pop dx
 .org 0x8638
 # IDA 0x18438; file 0x8638; locator=proven; pop     cx
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 pop cx
 .org 0x8639
 # IDA 0x18439; file 0x8639; locator=proven; sub     al, 3Dh
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 sub al, 0x3d
 .org 0x863b
 # IDA 0x1843b; file 0x863b; locator=proven; jb      short loc_18455
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 jb .+26
 .org 0x863d
 # IDA 0x1843d; file 0x863d; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor ah, ah
 .org 0x863f
 # IDA 0x1843f; file 0x863f; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 shl ax, 0x1
 .org 0x8641
 # IDA 0x18441; file 0x8641; locator=proven; mov     bx, ax
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov bx, ax
 .org 0x8643
 # IDA 0x18443; file 0x8643; locator=proven; cmp     bx, 0Ah
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 cmp bx, 0xa
 .org 0x8646
 # IDA 0x18446; file 0x8646; locator=proven; jb      short loc_18450
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 jb .+10
 .org 0x8648
 # IDA 0x18448; file 0x8648; locator=proven; sub     bx, 0Ah
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 sub bx, 0xa
 .org 0x864b
 # IDA 0x1844b; file 0x864b; locator=proven; call    loc_1857F
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 call .+308
 .org 0x864e
 # IDA 0x1844e; file 0x864e; locator=proven; jmp     short loc_18455
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 jmp .+7
 .org 0x8650
 loc_18450:
 # IDA 0x18450; file 0x8650; locator=proven; call    cs:funcs_18450[bx]
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 cs; call word ptr [bx+0x8459]
 .org 0x8655
 loc_18455:
 # IDA 0x18455; file 0x8655; locator=proven; jmp     short sub_18412
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 jmp .-67
 .org 0x8657
 loc_18457:
 # IDA 0x18457; file 0x8657; locator=proven; stc
-# ⚠ 函式 sub_18412; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18412; [proven] 清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2; 出處: docs/re/118-c-city-list-restoration.md
 stc
 .org 0x8658
 nullsub_2:
@@ -51800,445 +52062,445 @@ ret
 .org 0x8663
 sub_18463:
 # IDA 0x18463; file 0x8663; locator=proven; mov     di, dx
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov di, dx
 .org 0x8665
 # IDA 0x18465; file 0x8665; locator=proven; sub     dx, cs:word_181B0
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 cs; sub dx, word ptr [0x81b0]
 .org 0x866a
 # IDA 0x1846a; file 0x866a; locator=proven; sub     dx, 10h
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 sub dx, 0x10
 .org 0x866d
 # IDA 0x1846d; file 0x866d; locator=proven; mov     cl, 4
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 mov cl, 0x4
 .org 0x866f
 # IDA 0x1846f; file 0x866f; locator=proven; shr     dx, cl
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 shr dx, cl
 .org 0x8671
 # IDA 0x18471; file 0x8671; locator=proven; add     dl, cs:byte_181BC
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 cs; add dl, byte ptr [0x81bc]
 .org 0x8676
 # IDA 0x18476; file 0x8676; locator=proven; cmp     dl, cs:byte_181BD
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 cs; cmp dl, byte ptr [0x81bd]
 .org 0x867b
 # IDA 0x1847b; file 0x867b; locator=proven; jb      short loc_1848C
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 jb .+17
 .org 0x867d
 # IDA 0x1847d; file 0x867d; locator=proven; retn
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 ret
 .org 0x867e
 loc_1847E:
 # IDA 0x1847e; file 0x867e; locator=proven; call    sub_184BC
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 call .+62
 .org 0x8681
 # IDA 0x18481; file 0x8681; locator=proven; mov     ax, 1
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, 0x1
 .org 0x8684
 # IDA 0x18484; file 0x8684; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor bx, bx
 .org 0x8686
 # IDA 0x18486; file 0x8686; locator=proven; call    sub_20000
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 lcall 0x1000, 0x0
 .org 0x868b
 # IDA 0x1848b; file 0x868b; locator=proven; retn
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 ret
 .org 0x868c
 loc_1848C:
 # IDA 0x1848c; file 0x868c; locator=proven; push    ax
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 push ax
 .org 0x868d
 # IDA 0x1848d; file 0x868d; locator=proven; push    bx
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 push bx
 .org 0x868e
 # IDA 0x1848e; file 0x868e; locator=proven; push    dx
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 push dx
 .org 0x868f
 # IDA 0x1848f; file 0x868f; locator=proven; mov     ax, 2
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, 0x2
 .org 0x8692
 # IDA 0x18492; file 0x8692; locator=proven; call    sub_20000
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 lcall 0x1000, 0x0
 .org 0x8697
 # IDA 0x18497; file 0x8697; locator=proven; pop     dx
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 pop dx
 .org 0x8698
 # IDA 0x18498; file 0x8698; locator=proven; pop     bx
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 pop bx
 .org 0x8699
 # IDA 0x18499; file 0x8699; locator=proven; pop     ax
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 pop ax
 .org 0x869a
 # IDA 0x1849a; file 0x869a; locator=proven; sub     di, 8
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 sub di, 0x8
 .org 0x869d
 # IDA 0x1849d; file 0x869d; locator=proven; and     di, 0FFF0h
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 and di, 0xfff0
 .org 0x86a0
 # IDA 0x184a0; file 0x86a0; locator=proven; add     di, 8
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 add di, 0x8
 .org 0x86a3
 # IDA 0x184a3; file 0x86a3; locator=proven; call    sub_184BC
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 call .+25
 .org 0x86a6
 # IDA 0x184a6; file 0x86a6; locator=proven; mov     si, dx
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov si, dx
 .org 0x86a8
 # IDA 0x184a8; file 0x86a8; locator=proven; call    sub_121E7
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 call .-25281
 .org 0x86ab
 # IDA 0x184ab; file 0x86ab; locator=proven; jb      short loc_1847E
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 jb .-45
 .org 0x86ad
 # IDA 0x184ad; file 0x86ad; locator=proven; mov     ax, 1
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, 0x1
 .org 0x86b0
 # IDA 0x184b0; file 0x86b0; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor bx, bx
 .org 0x86b2
 # IDA 0x184b2; file 0x86b2; locator=proven; call    sub_20000
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 lcall 0x1000, 0x0
 .org 0x86b7
 # IDA 0x184b7; file 0x86b7; locator=proven; pop     ax
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 pop ax
 .org 0x86b8
 # IDA 0x184b8; file 0x86b8; locator=proven; mov     ax, si
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov ax, si
 .org 0x86ba
 # IDA 0x184ba; file 0x86ba; locator=proven; clc
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 clc
 .org 0x86bb
 # IDA 0x184bb; file 0x86bb; locator=proven; retn
-# ⚠ 函式 sub_18463; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18463; [proven] 列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑; 出處: docs/re/118-c-city-list-restoration.md
 ret
 .org 0x86bc
 sub_184BC:
 # IDA 0x184bc; file 0x86bc; locator=proven; push    bx
-# ⚠ 函式 sub_184BC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184BC; [proven] 清單列反白的 XOR 區域; 出處: docs/re/118-c-city-list-restoration.md
 push bx
 .org 0x86bd
 # IDA 0x184bd; file 0x86bd; locator=proven; push    dx
-# ⚠ 函式 sub_184BC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184BC; [proven] 清單列反白的 XOR 區域; 出處: docs/re/118-c-city-list-restoration.md
 push dx
 .org 0x86be
 # IDA 0x184be; file 0x86be; locator=proven; push    si
-# ⚠ 函式 sub_184BC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184BC; [proven] 清單列反白的 XOR 區域; 出處: docs/re/118-c-city-list-restoration.md
 push si
 .org 0x86bf
 # IDA 0x184bf; file 0x86bf; locator=proven; push    di
-# ⚠ 函式 sub_184BC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184BC; [proven] 清單列反白的 XOR 區域; 出處: docs/re/118-c-city-list-restoration.md
 push di
 .org 0x86c0
 # IDA 0x184c0; file 0x86c0; locator=proven; mov     bx, di
-# ⚠ 函式 sub_184BC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184BC; [proven] 清單列反白的 XOR 區域; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov bx, di
 .org 0x86c2
 # IDA 0x184c2; file 0x86c2; locator=proven; mov     dx, cs:word_181AE
-# ⚠ 函式 sub_184BC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184BC; [proven] 清單列反白的 XOR 區域; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov dx, word ptr [0x81ae]
 .org 0x86c7
 # IDA 0x184c7; file 0x86c7; locator=proven; add     dx, 10h
-# ⚠ 函式 sub_184BC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184BC; [proven] 清單列反白的 XOR 區域; 出處: docs/re/118-c-city-list-restoration.md
 add dx, 0x10
 .org 0x86ca
 # IDA 0x184ca; file 0x86ca; locator=proven; mov     si, cs:word_181B2
-# ⚠ 函式 sub_184BC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184BC; [proven] 清單列反白的 XOR 區域; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov si, word ptr [0x81b2]
 .org 0x86cf
 # IDA 0x184cf; file 0x86cf; locator=proven; sub     si, 10h
-# ⚠ 函式 sub_184BC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184BC; [proven] 清單列反白的 XOR 區域; 出處: docs/re/118-c-city-list-restoration.md
 sub si, 0x10
 .org 0x86d2
 # IDA 0x184d2; file 0x86d2; locator=proven; mov     di, 10h
-# ⚠ 函式 sub_184BC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184BC; [proven] 清單列反白的 XOR 區域; 出處: docs/re/118-c-city-list-restoration.md
 mov di, 0x10
 .org 0x86d5
 # IDA 0x184d5; file 0x86d5; locator=proven; call    sub_10B46
-# ⚠ 函式 sub_184BC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184BC; [proven] 清單列反白的 XOR 區域; 出處: docs/re/118-c-city-list-restoration.md
 call .-31119
 .org 0x86d8
 # IDA 0x184d8; file 0x86d8; locator=proven; pop     di
-# ⚠ 函式 sub_184BC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184BC; [proven] 清單列反白的 XOR 區域; 出處: docs/re/118-c-city-list-restoration.md
 pop di
 .org 0x86d9
 # IDA 0x184d9; file 0x86d9; locator=proven; pop     si
-# ⚠ 函式 sub_184BC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184BC; [proven] 清單列反白的 XOR 區域; 出處: docs/re/118-c-city-list-restoration.md
 pop si
 .org 0x86da
 # IDA 0x184da; file 0x86da; locator=proven; pop     dx
-# ⚠ 函式 sub_184BC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184BC; [proven] 清單列反白的 XOR 區域; 出處: docs/re/118-c-city-list-restoration.md
 pop dx
 .org 0x86db
 # IDA 0x184db; file 0x86db; locator=proven; pop     bx
-# ⚠ 函式 sub_184BC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184BC; [proven] 清單列反白的 XOR 區域; 出處: docs/re/118-c-city-list-restoration.md
 pop bx
 .org 0x86dc
 # IDA 0x184dc; file 0x86dc; locator=proven; retn
-# ⚠ 函式 sub_184BC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184BC; [proven] 清單列反白的 XOR 區域; 出處: docs/re/118-c-city-list-restoration.md
 ret
 .org 0x86dd
 sub_184DD:
 # IDA 0x184dd; file 0x86dd; locator=proven; push    si
-# ⚠ 函式 sub_184DD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184DD; [proven] 滑塊拖動、mouse position 與頁首寫回; 出處: docs/re/118-c-city-list-restoration.md
 push si
 .org 0x86de
 # IDA 0x184de; file 0x86de; locator=proven; mov     si, 0FFFFh
-# ⚠ 函式 sub_184DD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184DD; [proven] 滑塊拖動、mouse position 與頁首寫回; 出處: docs/re/118-c-city-list-restoration.md
 mov si, 0xffff
 .org 0x86e1
 # IDA 0x184e1; file 0x86e1; locator=proven; mov     ax, 2
-# ⚠ 函式 sub_184DD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184DD; [proven] 滑塊拖動、mouse position 與頁首寫回; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, 0x2
 .org 0x86e4
 # IDA 0x184e4; file 0x86e4; locator=proven; call    sub_20000
-# ⚠ 函式 sub_184DD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184DD; [proven] 滑塊拖動、mouse position 與頁首寫回; 出處: docs/re/118-c-city-list-restoration.md
 lcall 0x1000, 0x0
 .org 0x86e9
 loc_184E9:
 # IDA 0x184e9; file 0x86e9; locator=proven; mov     ax, 3
-# ⚠ 函式 sub_184DD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184DD; [proven] 滑塊拖動、mouse position 與頁首寫回; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, 0x3
 .org 0x86ec
 # IDA 0x184ec; file 0x86ec; locator=proven; call    sub_20000
-# ⚠ 函式 sub_184DD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184DD; [proven] 滑塊拖動、mouse position 與頁首寫回; 出處: docs/re/118-c-city-list-restoration.md
 lcall 0x1000, 0x0
 .org 0x86f1
 # IDA 0x184f1; file 0x86f1; locator=proven; mov     ax, dx
-# ⚠ 函式 sub_184DD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184DD; [proven] 滑塊拖動、mouse position 與頁首寫回; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov ax, dx
 .org 0x86f3
 # IDA 0x184f3; file 0x86f3; locator=proven; call    sub_18713
-# ⚠ 函式 sub_184DD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184DD; [proven] 滑塊拖動、mouse position 與頁首寫回; 出處: docs/re/118-c-city-list-restoration.md
 call .+544
 .org 0x86f6
 # IDA 0x184f6; file 0x86f6; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_184DD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184DD; [proven] 滑塊拖動、mouse position 與頁首寫回; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor ah, ah
 .org 0x86f8
 # IDA 0x184f8; file 0x86f8; locator=proven; cmp     ax, si
-# ⚠ 函式 sub_184DD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184DD; [proven] 滑塊拖動、mouse position 與頁首寫回; 出處: docs/re/118-c-city-list-restoration.md
 {load} cmp ax, si
 .org 0x86fa
 # IDA 0x184fa; file 0x86fa; locator=proven; jz      short loc_18503
-# ⚠ 函式 sub_184DD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184DD; [proven] 滑塊拖動、mouse position 與頁首寫回; 出處: docs/re/118-c-city-list-restoration.md
 jz .+9
 .org 0x86fc
 # IDA 0x184fc; file 0x86fc; locator=proven; mov     si, ax
-# ⚠ 函式 sub_184DD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184DD; [proven] 滑塊拖動、mouse position 與頁首寫回; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov si, ax
 .org 0x86fe
 # IDA 0x184fe; file 0x86fe; locator=proven; call    cs:word_181A6
-# ⚠ 函式 sub_184DD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184DD; [proven] 滑塊拖動、mouse position 與頁首寫回; 出處: docs/re/118-c-city-list-restoration.md
 cs; call word ptr [0x81a6]
 .org 0x8703
 loc_18503:
 # IDA 0x18503; file 0x8703; locator=proven; and     bx, bx
-# ⚠ 函式 sub_184DD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184DD; [proven] 滑塊拖動、mouse position 與頁首寫回; 出處: docs/re/118-c-city-list-restoration.md
 {load} and bx, bx
 .org 0x8705
 # IDA 0x18505; file 0x8705; locator=proven; jnz     short loc_184E9
-# ⚠ 函式 sub_184DD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184DD; [proven] 滑塊拖動、mouse position 與頁首寫回; 出處: docs/re/118-c-city-list-restoration.md
 jnz .-28
 .org 0x8707
 # IDA 0x18507; file 0x8707; locator=proven; mov     dl, al
-# ⚠ 函式 sub_184DD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184DD; [proven] 滑塊拖動、mouse position 與頁首寫回; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov dl, al
 .org 0x8709
 # IDA 0x18509; file 0x8709; locator=proven; mov     ax, 1
-# ⚠ 函式 sub_184DD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184DD; [proven] 滑塊拖動、mouse position 與頁首寫回; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, 0x1
 .org 0x870c
 # IDA 0x1850c; file 0x870c; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_184DD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184DD; [proven] 滑塊拖動、mouse position 與頁首寫回; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor bx, bx
 .org 0x870e
 # IDA 0x1850e; file 0x870e; locator=proven; call    sub_20000
-# ⚠ 函式 sub_184DD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184DD; [proven] 滑塊拖動、mouse position 與頁首寫回; 出處: docs/re/118-c-city-list-restoration.md
 lcall 0x1000, 0x0
 .org 0x8713
 # IDA 0x18513; file 0x8713; locator=proven; mov     cs:byte_181BC, dl
-# ⚠ 函式 sub_184DD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184DD; [proven] 滑塊拖動、mouse position 與頁首寫回; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov byte ptr [0x81bc], dl
 .org 0x8718
 # IDA 0x18518; file 0x8718; locator=proven; pop     si
-# ⚠ 函式 sub_184DD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184DD; [proven] 滑塊拖動、mouse position 與頁首寫回; 出處: docs/re/118-c-city-list-restoration.md
 pop si
 .org 0x8719
 # IDA 0x18519; file 0x8719; locator=proven; retn
-# ⚠ 函式 sub_184DD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_184DD; [proven] 滑塊拖動、mouse position 與頁首寫回; 出處: docs/re/118-c-city-list-restoration.md
 ret
 .org 0x871a
 sub_1851A:
 # IDA 0x1851a; file 0x871a; locator=proven; mov     dl, cs:byte_181BC
-# ⚠ 函式 sub_1851A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1851A; [proven] 清單上一列、0 下界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov dl, byte ptr [0x81bc]
 .org 0x871f
 # IDA 0x1851f; file 0x871f; locator=proven; push    dx
-# ⚠ 函式 sub_1851A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1851A; [proven] 清單上一列、0 下界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 push dx
 .org 0x8720
 # IDA 0x18520; file 0x8720; locator=proven; mov     ax, 2
-# ⚠ 函式 sub_1851A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1851A; [proven] 清單上一列、0 下界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, 0x2
 .org 0x8723
 # IDA 0x18523; file 0x8723; locator=proven; call    sub_20000
-# ⚠ 函式 sub_1851A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1851A; [proven] 清單上一列、0 下界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 lcall 0x1000, 0x0
 .org 0x8728
 # IDA 0x18528; file 0x8728; locator=proven; pop     dx
-# ⚠ 函式 sub_1851A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1851A; [proven] 清單上一列、0 下界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 pop dx
 .org 0x8729
 # IDA 0x18529; file 0x8729; locator=proven; and     dl, dl
-# ⚠ 函式 sub_1851A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1851A; [proven] 清單上一列、0 下界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 {load} and dl, dl
 .org 0x872b
 # IDA 0x1852b; file 0x872b; locator=proven; jz      short loc_1852F
-# ⚠ 函式 sub_1851A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1851A; [proven] 清單上一列、0 下界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 jz .+4
 .org 0x872d
 # IDA 0x1852d; file 0x872d; locator=proven; dec     dl
-# ⚠ 函式 sub_1851A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1851A; [proven] 清單上一列、0 下界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 dec dl
 .org 0x872f
 loc_1852F:
 # IDA 0x1852f; file 0x872f; locator=proven; mov     al, dl
-# ⚠ 函式 sub_1851A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1851A; [proven] 清單上一列、0 下界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov al, dl
 .org 0x8731
 # IDA 0x18531; file 0x8731; locator=proven; call    cs:word_181A6
-# ⚠ 函式 sub_1851A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1851A; [proven] 清單上一列、0 下界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 cs; call word ptr [0x81a6]
 .org 0x8736
 # IDA 0x18536; file 0x8736; locator=proven; mov     ax, 1
-# ⚠ 函式 sub_1851A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1851A; [proven] 清單上一列、0 下界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, 0x1
 .org 0x8739
 # IDA 0x18539; file 0x8739; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_1851A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1851A; [proven] 清單上一列、0 下界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor bx, bx
 .org 0x873b
 # IDA 0x1853b; file 0x873b; locator=proven; call    sub_20000
-# ⚠ 函式 sub_1851A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1851A; [proven] 清單上一列、0 下界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 lcall 0x1000, 0x0
 .org 0x8740
 # IDA 0x18540; file 0x8740; locator=proven; mov     cs:byte_181BC, dl
-# ⚠ 函式 sub_1851A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1851A; [proven] 清單上一列、0 下界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov byte ptr [0x81bc], dl
 .org 0x8745
 # IDA 0x18545; file 0x8745; locator=proven; retn
-# ⚠ 函式 sub_1851A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1851A; [proven] 清單上一列、0 下界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 ret
 .org 0x8746
 sub_18546:
 # IDA 0x18546; file 0x8746; locator=proven; mov     dl, cs:byte_181BC
-# ⚠ 函式 sub_18546; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18546; [proven] 清單下一列、筆數減頁高上界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov dl, byte ptr [0x81bc]
 .org 0x874b
 # IDA 0x1854b; file 0x874b; locator=proven; push    dx
-# ⚠ 函式 sub_18546; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18546; [proven] 清單下一列、筆數減頁高上界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 push dx
 .org 0x874c
 # IDA 0x1854c; file 0x874c; locator=proven; mov     ax, 2
-# ⚠ 函式 sub_18546; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18546; [proven] 清單下一列、筆數減頁高上界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, 0x2
 .org 0x874f
 # IDA 0x1854f; file 0x874f; locator=proven; call    sub_20000
-# ⚠ 函式 sub_18546; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18546; [proven] 清單下一列、筆數減頁高上界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 lcall 0x1000, 0x0
 .org 0x8754
 # IDA 0x18554; file 0x8754; locator=proven; pop     dx
-# ⚠ 函式 sub_18546; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18546; [proven] 清單下一列、筆數減頁高上界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 pop dx
 .org 0x8755
 # IDA 0x18555; file 0x8755; locator=proven; mov     al, byte ptr cs:word_181B6+1
-# ⚠ 函式 sub_18546; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18546; [proven] 清單下一列、筆數減頁高上界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov al, byte ptr [0x81b7]
 .org 0x8759
 # IDA 0x18559; file 0x8759; locator=proven; dec     al
-# ⚠ 函式 sub_18546; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18546; [proven] 清單下一列、筆數減頁高上界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 dec al
 .org 0x875b
 # IDA 0x1855b; file 0x875b; locator=proven; mov     dh, cs:byte_181BE
-# ⚠ 函式 sub_18546; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18546; [proven] 清單下一列、筆數減頁高上界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov dh, byte ptr [0x81be]
 .org 0x8760
 # IDA 0x18560; file 0x8760; locator=proven; sub     dh, al
-# ⚠ 函式 sub_18546; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18546; [proven] 清單下一列、筆數減頁高上界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 {load} sub dh, al
 .org 0x8762
 # IDA 0x18562; file 0x8762; locator=proven; cmp     dl, dh
-# ⚠ 函式 sub_18546; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18546; [proven] 清單下一列、筆數減頁高上界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 {load} cmp dl, dh
 .org 0x8764
 # IDA 0x18564; file 0x8764; locator=proven; jnb     short loc_18568
-# ⚠ 函式 sub_18546; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18546; [proven] 清單下一列、筆數減頁高上界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 jnb .+4
 .org 0x8766
 # IDA 0x18566; file 0x8766; locator=proven; inc     dl
-# ⚠ 函式 sub_18546; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18546; [proven] 清單下一列、筆數減頁高上界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 inc dl
 .org 0x8768
 loc_18568:
 # IDA 0x18568; file 0x8768; locator=proven; mov     al, dl
-# ⚠ 函式 sub_18546; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18546; [proven] 清單下一列、筆數減頁高上界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov al, dl
 .org 0x876a
 # IDA 0x1856a; file 0x876a; locator=proven; call    cs:word_181A6
-# ⚠ 函式 sub_18546; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18546; [proven] 清單下一列、筆數減頁高上界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 cs; call word ptr [0x81a6]
 .org 0x876f
 # IDA 0x1856f; file 0x876f; locator=proven; mov     ax, 1
-# ⚠ 函式 sub_18546; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18546; [proven] 清單下一列、筆數減頁高上界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, 0x1
 .org 0x8772
 # IDA 0x18572; file 0x8772; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_18546; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18546; [proven] 清單下一列、筆數減頁高上界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor bx, bx
 .org 0x8774
 # IDA 0x18574; file 0x8774; locator=proven; call    sub_20000
-# ⚠ 函式 sub_18546; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18546; [proven] 清單下一列、筆數減頁高上界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 lcall 0x1000, 0x0
 .org 0x8779
 # IDA 0x18579; file 0x8779; locator=proven; mov     cs:byte_181BC, dl
-# ⚠ 函式 sub_18546; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18546; [proven] 清單下一列、筆數減頁高上界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov byte ptr [0x81bc], dl
 .org 0x877e
 # IDA 0x1857e; file 0x877e; locator=proven; retn
-# ⚠ 函式 sub_18546; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18546; [proven] 清單下一列、筆數減頁高上界與重畫; 出處: docs/re/118-c-city-list-restoration.md
 ret
 .org 0x877f
 loc_1857F:
@@ -52265,6 +52527,11 @@ shl bx, 0x1
 # IDA 0x1858d; file 0x878d; locator=proven; shl     bx, 1
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
 shl bx, 0x1
+.org 0x878f
+# IDA 0x1858f; file 0x878f; locator=proven; add     bx, 1234h
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# operand 1 1234h; [proven] 初始佔位；sub_1820E 寫入排序描述子，C 讀 CS:8591; 出處: docs/re/118-c-city-list-restoration.md
+add bx, 0x1234
 .org 0x8793
 # IDA 0x18593; file 0x8793; locator=proven; inc     bx
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
@@ -52375,6 +52642,78 @@ mov bx, word ptr [bp]
 # IDA 0x185e6; file 0x87e6; locator=proven; mov     dx, bx
 # ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
 {load} mov dx, bx
+.org 0x87e8
+# IDA 0x185e8; file 0x87e8; locator=proven; mov     ax, [bx+si]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# operand 0 ax; [proven] opcode bit 0 經原描述子改寫，決定 AL 或 AX 的載入寬度; 出處: docs/re/118-c-city-list-restoration.md
+mov ax, word ptr [bx+si]
+.org 0x87ea
+# IDA 0x185ea; file 0x87ea; locator=proven; inc     bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc bp
+.org 0x87eb
+# IDA 0x185eb; file 0x87eb; locator=proven; inc     bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc bp
+.org 0x87ec
+# IDA 0x185ec; file 0x87ec; locator=proven; mov     bx, [bp+0]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov bx, word ptr [bp]
+.org 0x87ef
+# IDA 0x185ef; file 0x87ef; locator=proven; cmp     ax, [bx+si]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# operand 0 ax; [proven] opcode bit 0 經原描述子改寫，決定 AL 或 AX 的比較寬度; 出處: docs/re/118-c-city-list-restoration.md
+cmp ax, word ptr [bx+si]
+.org 0x87f1
+# IDA 0x185f1; file 0x87f1; locator=proven; jbe     short near ptr byte_185F4+4
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# operand 0 near ptr byte_185F4+4; [proven] 條件 opcode 經原描述子改寫，據點欄位使用 JBE 或 JNB; 出處: docs/re/118-c-city-list-restoration.md
+jbe .+7
+.org 0x87f3
+# IDA 0x185f3; file 0x87f3; locator=proven; mov     ax, [bx+si]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# operand 0 ax; [proven] opcode bit 0 經原描述子改寫，決定替換鍵的 AL 或 AX 載入寬度; 出處: docs/re/118-c-city-list-restoration.md
+mov ax, word ptr [bx+si]
+.org 0x87f5
+# IDA 0x185f5; file 0x87f5; locator=proven; xchg    dx, [bp+0]
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+xchg dx, word ptr [bp]
+.org 0x87f8
+# IDA 0x185f8; file 0x87f8; locator=proven; inc     bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc bp
+.org 0x87f9
+# IDA 0x185f9; file 0x87f9; locator=proven; inc     bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc bp
+.org 0x87fa
+# IDA 0x185fa; file 0x87fa; locator=proven; dec     cl
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+dec cl
+.org 0x87fc
+# IDA 0x185fc; file 0x87fc; locator=proven; jnz     short loc_185EC
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jnz .-16
+.org 0x87fe
+# IDA 0x185fe; file 0x87fe; locator=proven; pop     bp
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+pop bp
+.org 0x87ff
+# IDA 0x185ff; file 0x87ff; locator=proven; mov     [bp+di], dx
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+mov word ptr [bp+di], dx
+.org 0x8801
+# IDA 0x18601; file 0x8801; locator=proven; inc     di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc di
+.org 0x8802
+# IDA 0x18602; file 0x8802; locator=proven; inc     di
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+inc di
+.org 0x8803
+# IDA 0x18603; file 0x8803; locator=proven; jmp     short loc_185DA
+# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+jmp .-41
 .org 0x8805
 loc_18605:
 # IDA 0x18605; file 0x8805; locator=proven; pop     di
@@ -52387,755 +52726,755 @@ ret
 .org 0x8807
 sub_18607:
 # IDA 0x18607; file 0x8807; locator=proven; push    ax
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 push ax
 .org 0x8808
 # IDA 0x18608; file 0x8808; locator=proven; push    bx
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 push bx
 .org 0x8809
 # IDA 0x18609; file 0x8809; locator=proven; push    dx
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 push dx
 .org 0x880a
 # IDA 0x1860a; file 0x880a; locator=proven; push    si
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 push si
 .org 0x880b
 # IDA 0x1860b; file 0x880b; locator=proven; push    di
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 push di
 .org 0x880c
 # IDA 0x1860c; file 0x880c; locator=proven; mov     di, cs:word_181B0
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov di, word ptr [0x81b0]
 .org 0x8811
 # IDA 0x18611; file 0x8811; locator=proven; add     di, 20h
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 add di, 0x20
 .org 0x8814
 # IDA 0x18614; file 0x8814; locator=proven; add     di, cs:word_181A4
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 cs; add di, word ptr [0x81a4]
 .org 0x8819
 # IDA 0x18619; file 0x8819; locator=proven; jb      short loc_18639
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 jb .+32
 .org 0x881b
 # IDA 0x1861b; file 0x881b; locator=proven; push    ax
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 push ax
 .org 0x881c
 # IDA 0x1861c; file 0x881c; locator=proven; mov     bl, cs:byte_181BF
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov bl, byte ptr [0x81bf]
 .org 0x8821
 # IDA 0x18621; file 0x8821; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor bh, bh
 .org 0x8823
 # IDA 0x18623; file 0x8823; locator=proven; dec     bx
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 dec bx
 .org 0x8824
 # IDA 0x18624; file 0x8824; locator=proven; add     bx, di
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 {load} add bx, di
 .org 0x8826
 # IDA 0x18626; file 0x8826; locator=proven; mov     dx, cs:word_181AE
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov dx, word ptr [0x81ae]
 .org 0x882b
 # IDA 0x1862b; file 0x882b; locator=proven; mov     si, cs:word_181AE
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov si, word ptr [0x81ae]
 .org 0x8830
 # IDA 0x18630; file 0x8830; locator=proven; add     si, 0Fh
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 add si, 0xf
 .org 0x8833
 # IDA 0x18633; file 0x8833; locator=proven; mov     ah, 0
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 mov ah, 0x0
 .org 0x8835
 # IDA 0x18635; file 0x8835; locator=proven; call    sub_1F1A3
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 call .+27502
 .org 0x8838
 # IDA 0x18638; file 0x8838; locator=proven; pop     ax
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 pop ax
 .org 0x8839
 loc_18639:
 # IDA 0x18639; file 0x8839; locator=proven; mov     dx, cs:word_181B4
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov dx, word ptr [0x81b4]
 .org 0x883e
 # IDA 0x1863e; file 0x883e; locator=proven; sub     dx, 30h
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 sub dx, 0x30
 .org 0x8841
 # IDA 0x18641; file 0x8841; locator=proven; mul     dl
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 mul dl
 .org 0x8843
 # IDA 0x18643; file 0x8843; locator=proven; div     cs:byte_181BE
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 cs; div byte ptr [0x81be]
 .org 0x8848
 # IDA 0x18648; file 0x8848; locator=proven; and     ah, ah
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 {load} and ah, ah
 .org 0x884a
 # IDA 0x1864a; file 0x884a; locator=proven; jz      short loc_1864E
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 jz .+4
 .org 0x884c
 # IDA 0x1864c; file 0x884c; locator=proven; inc     al
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 inc al
 .org 0x884e
 loc_1864E:
 # IDA 0x1864e; file 0x884e; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor ah, ah
 .org 0x8850
 # IDA 0x18650; file 0x8850; locator=proven; mov     cs:word_181A4, ax
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov word ptr [0x81a4], ax
 .org 0x8854
 # IDA 0x18654; file 0x8854; locator=proven; mov     cl, cs:byte_181BF
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov cl, byte ptr [0x81bf]
 .org 0x8859
 # IDA 0x18659; file 0x8859; locator=proven; call    sub_18662
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 call .+9
 .org 0x885c
 # IDA 0x1865c; file 0x885c; locator=proven; pop     di
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 pop di
 .org 0x885d
 # IDA 0x1865d; file 0x885d; locator=proven; pop     si
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 pop si
 .org 0x885e
 # IDA 0x1865e; file 0x885e; locator=proven; pop     dx
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 pop dx
 .org 0x885f
 # IDA 0x1865f; file 0x885f; locator=proven; pop     bx
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 pop bx
 .org 0x8860
 # IDA 0x18660; file 0x8860; locator=proven; pop     ax
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 pop ax
 .org 0x8861
 # IDA 0x18661; file 0x8861; locator=proven; retn
-# ⚠ 函式 sub_18607; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18607; [proven] 舊滑塊擦除、新位置與比例整數除法; 出處: docs/re/118-c-city-list-restoration.md
 ret
 .org 0x8862
 sub_18662:
 # IDA 0x18662; file 0x8862; locator=proven; push    ds
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 push ds
 .org 0x8863
 # IDA 0x18663; file 0x8863; locator=proven; push    es
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 push es
 .org 0x8864
 # IDA 0x18664; file 0x8864; locator=proven; push    ax
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 push ax
 .org 0x8865
 # IDA 0x18665; file 0x8865; locator=proven; push    bx
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 push bx
 .org 0x8866
 # IDA 0x18666; file 0x8866; locator=proven; push    cx
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 push cx
 .org 0x8867
 # IDA 0x18667; file 0x8867; locator=proven; push    dx
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 push dx
 .org 0x8868
 # IDA 0x18668; file 0x8868; locator=proven; push    si
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 push si
 .org 0x8869
 # IDA 0x18669; file 0x8869; locator=proven; push    di
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 push di
 .org 0x886a
 # IDA 0x1866a; file 0x886a; locator=proven; cld
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 cld
 .org 0x886b
 # IDA 0x1866b; file 0x886b; locator=proven; add     ax, cs:word_181B0
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 cs; add ax, word ptr [0x81b0]
 .org 0x8870
 # IDA 0x18670; file 0x8870; locator=proven; add     ax, 20h
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 add ax, offset imm_at_18670
 .org 0x8873
 # IDA 0x18673; file 0x8873; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 shl ax, 0x1
 .org 0x8875
 # IDA 0x18675; file 0x8875; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 shl ax, 0x1
 .org 0x8877
 # IDA 0x18677; file 0x8877; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 shl ax, 0x1
 .org 0x8879
 # IDA 0x18679; file 0x8879; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 shl ax, 0x1
 .org 0x887b
 # IDA 0x1867b; file 0x887b; locator=proven; mov     bx, ax
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov bx, ax
 .org 0x887d
 # IDA 0x1867d; file 0x887d; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 shl ax, 0x1
 .org 0x887f
 # IDA 0x1867f; file 0x887f; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 shl ax, 0x1
 .org 0x8881
 # IDA 0x18681; file 0x8881; locator=proven; add     bx, ax
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 {load} add bx, ax
 .org 0x8883
 # IDA 0x18683; file 0x8883; locator=proven; mov     ax, cs:word_181AA
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov ax, word ptr [0x81aa]
 .org 0x8887
 # IDA 0x18687; file 0x8887; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 shl ax, 0x1
 .org 0x8889
 # IDA 0x18689; file 0x8889; locator=proven; inc     ax
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 inc ax
 .org 0x888a
 # IDA 0x1868a; file 0x888a; locator=proven; add     bx, ax
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 {load} add bx, ax
 .org 0x888c
 # IDA 0x1868c; file 0x888c; locator=proven; mov     si, 86FBh
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov si, 0x86fb
 .org 0x888f
 # IDA 0x1868f; file 0x888f; locator=proven; sub     cl, 2
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 sub cl, 0x2
 .org 0x8892
 # IDA 0x18692; file 0x8892; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, cs
 .org 0x8894
 # IDA 0x18694; file 0x8894; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov ds, ax
 .org 0x8896
 # IDA 0x18696; file 0x8896; locator=proven; mov     ax, 0A0C8h
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, 0xa0c8
 .org 0x8899
 # IDA 0x18699; file 0x8899; locator=proven; mov     es, ax
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov es, ax
 .org 0x889b
 # IDA 0x1869b; file 0x889b; locator=proven; call    sub_10CAC
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 call .-31215
 .org 0x889e
 # IDA 0x1869e; file 0x889e; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov dx, 0x3ce
 .org 0x88a1
 # IDA 0x186a1; file 0x88a1; locator=proven; mov     al, 3
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov al, 0x3
 .org 0x88a3
 # IDA 0x186a3; file 0x88a3; locator=proven; out     dx, al
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 out dx, al
 .org 0x88a4
 # IDA 0x186a4; file 0x88a4; locator=proven; inc     dx
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 inc dx
 .org 0x88a5
 # IDA 0x186a5; file 0x88a5; locator=proven; mov     al, 10h
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov al, 0x10
 .org 0x88a7
 # IDA 0x186a7; file 0x88a7; locator=proven; out     dx, al
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 out dx, al
 .org 0x88a8
 # IDA 0x186a8; file 0x88a8; locator=proven; dec     dx
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 dec dx
 .org 0x88a9
 # IDA 0x186a9; file 0x88a9; locator=proven; xor     al, al
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor al, al
 .org 0x88ab
 # IDA 0x186ab; file 0x88ab; locator=proven; out     dx, al
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 out dx, al
 .org 0x88ac
 # IDA 0x186ac; file 0x88ac; locator=proven; mov     al, 1
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov al, 0x1
 .org 0x88ae
 # IDA 0x186ae; file 0x88ae; locator=proven; call    sub_186C9
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 call .+27
 .org 0x88b1
 # IDA 0x186b1; file 0x88b1; locator=proven; mov     al, 2
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov al, 0x2
 .org 0x88b3
 # IDA 0x186b3; file 0x88b3; locator=proven; call    sub_186C9
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 call .+22
 .org 0x88b6
 # IDA 0x186b6; file 0x88b6; locator=proven; mov     al, 4
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov al, 0x4
 .org 0x88b8
 # IDA 0x186b8; file 0x88b8; locator=proven; call    sub_186C9
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 call .+17
 .org 0x88bb
 # IDA 0x186bb; file 0x88bb; locator=proven; mov     al, 8
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 mov al, 0x8
 .org 0x88bd
 # IDA 0x186bd; file 0x88bd; locator=proven; call    sub_186C9
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 call .+12
 .org 0x88c0
 # IDA 0x186c0; file 0x88c0; locator=proven; pop     di
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 pop di
 .org 0x88c1
 # IDA 0x186c1; file 0x88c1; locator=proven; pop     si
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 pop si
 .org 0x88c2
 # IDA 0x186c2; file 0x88c2; locator=proven; pop     dx
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 pop dx
 .org 0x88c3
 # IDA 0x186c3; file 0x88c3; locator=proven; pop     cx
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 pop cx
 .org 0x88c4
 # IDA 0x186c4; file 0x88c4; locator=proven; pop     bx
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 pop bx
 .org 0x88c5
 # IDA 0x186c5; file 0x88c5; locator=proven; pop     ax
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 pop ax
 .org 0x88c6
 # IDA 0x186c6; file 0x88c6; locator=proven; pop     es
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 pop es
 .org 0x88c7
 # IDA 0x186c7; file 0x88c7; locator=proven; pop     ds
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 pop ds
 .org 0x88c8
 # IDA 0x186c8; file 0x88c8; locator=proven; retn
-# ⚠ 函式 sub_18662; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18662; [proven] 滑塊邊框及四 plane 原 raster; 出處: docs/re/118-c-city-list-restoration.md
 ret
 .org 0x88c9
 sub_186C9:
 # IDA 0x186c9; file 0x88c9; locator=proven; mov     dx, 3CFh
-# ⚠ 函式 sub_186C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_186C9; [proven] 單一 plane 的滑塊字節／word 迴圈; 出處: docs/re/118-c-city-list-restoration.md
 mov dx, 0x3cf
 .org 0x88cc
 # IDA 0x186cc; file 0x88cc; locator=proven; out     dx, al
-# ⚠ 函式 sub_186C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_186C9; [proven] 單一 plane 的滑塊字節／word 迴圈; 出處: docs/re/118-c-city-list-restoration.md
 out dx, al
 .org 0x88cd
 # IDA 0x186cd; file 0x88cd; locator=proven; mov     ch, cl
-# ⚠ 函式 sub_186C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_186C9; [proven] 單一 plane 的滑塊字節／word 迴圈; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov ch, cl
 .org 0x88cf
 # IDA 0x186cf; file 0x88cf; locator=proven; mov     di, bx
-# ⚠ 函式 sub_186C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_186C9; [proven] 單一 plane 的滑塊字節／word 迴圈; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov di, bx
 .org 0x88d1
 # IDA 0x186d1; file 0x88d1; locator=proven; mov     al, es:[di]
-# ⚠ 函式 sub_186C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_186C9; [proven] 單一 plane 的滑塊字節／word 迴圈; 出處: docs/re/118-c-city-list-restoration.md
 es; mov al, byte ptr [di]
 .org 0x88d4
 # IDA 0x186d4; file 0x88d4; locator=proven; movsb
-# ⚠ 函式 sub_186C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_186C9; [proven] 單一 plane 的滑塊字節／word 迴圈; 出處: docs/re/118-c-city-list-restoration.md
 movsb
 .org 0x88d5
 # IDA 0x186d5; file 0x88d5; locator=proven; mov     al, es:[di]
-# ⚠ 函式 sub_186C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_186C9; [proven] 單一 plane 的滑塊字節／word 迴圈; 出處: docs/re/118-c-city-list-restoration.md
 es; mov al, byte ptr [di]
 .org 0x88d8
 # IDA 0x186d8; file 0x88d8; locator=proven; movsb
-# ⚠ 函式 sub_186C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_186C9; [proven] 單一 plane 的滑塊字節／word 迴圈; 出處: docs/re/118-c-city-list-restoration.md
 movsb
 .org 0x88d9
 # IDA 0x186d9; file 0x88d9; locator=proven; add     di, 4Eh
-# ⚠ 函式 sub_186C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_186C9; [proven] 單一 plane 的滑塊字節／word 迴圈; 出處: docs/re/118-c-city-list-restoration.md
 add di, 0x4e
 .org 0x88dc
 # IDA 0x186dc; file 0x88dc; locator=proven; lodsw
-# ⚠ 函式 sub_186C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_186C9; [proven] 單一 plane 的滑塊字節／word 迴圈; 出處: docs/re/118-c-city-list-restoration.md
 lodsw
 .org 0x88dd
 loc_186DD:
 # IDA 0x186dd; file 0x88dd; locator=proven; mov     dl, es:[di]
-# ⚠ 函式 sub_186C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_186C9; [proven] 單一 plane 的滑塊字節／word 迴圈; 出處: docs/re/118-c-city-list-restoration.md
 es; mov dl, byte ptr [di]
 .org 0x88e0
 # IDA 0x186e0; file 0x88e0; locator=proven; mov     es:[di], al
-# ⚠ 函式 sub_186C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_186C9; [proven] 單一 plane 的滑塊字節／word 迴圈; 出處: docs/re/118-c-city-list-restoration.md
 es; mov byte ptr [di], al
 .org 0x88e3
 # IDA 0x186e3; file 0x88e3; locator=proven; mov     dl, es:[di+1]
-# ⚠ 函式 sub_186C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_186C9; [proven] 單一 plane 的滑塊字節／word 迴圈; 出處: docs/re/118-c-city-list-restoration.md
 es; mov dl, byte ptr [di+0x1]
 .org 0x88e7
 # IDA 0x186e7; file 0x88e7; locator=proven; mov     es:[di+1], ah
-# ⚠ 函式 sub_186C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_186C9; [proven] 單一 plane 的滑塊字節／word 迴圈; 出處: docs/re/118-c-city-list-restoration.md
 es; mov byte ptr [di+0x1], ah
 .org 0x88eb
 # IDA 0x186eb; file 0x88eb; locator=proven; add     di, 50h
-# ⚠ 函式 sub_186C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_186C9; [proven] 單一 plane 的滑塊字節／word 迴圈; 出處: docs/re/118-c-city-list-restoration.md
 add di, 0x50
 .org 0x88ee
 # IDA 0x186ee; file 0x88ee; locator=proven; dec     ch
-# ⚠ 函式 sub_186C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_186C9; [proven] 單一 plane 的滑塊字節／word 迴圈; 出處: docs/re/118-c-city-list-restoration.md
 dec ch
 .org 0x88f0
 # IDA 0x186f0; file 0x88f0; locator=proven; jnz     short loc_186DD
-# ⚠ 函式 sub_186C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_186C9; [proven] 單一 plane 的滑塊字節／word 迴圈; 出處: docs/re/118-c-city-list-restoration.md
 jnz .-19
 .org 0x88f2
 # IDA 0x186f2; file 0x88f2; locator=proven; mov     al, es:[di]
-# ⚠ 函式 sub_186C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_186C9; [proven] 單一 plane 的滑塊字節／word 迴圈; 出處: docs/re/118-c-city-list-restoration.md
 es; mov al, byte ptr [di]
 .org 0x88f5
 # IDA 0x186f5; file 0x88f5; locator=proven; movsb
-# ⚠ 函式 sub_186C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_186C9; [proven] 單一 plane 的滑塊字節／word 迴圈; 出處: docs/re/118-c-city-list-restoration.md
 movsb
 .org 0x88f6
 # IDA 0x186f6; file 0x88f6; locator=proven; mov     al, es:[di]
-# ⚠ 函式 sub_186C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_186C9; [proven] 單一 plane 的滑塊字節／word 迴圈; 出處: docs/re/118-c-city-list-restoration.md
 es; mov al, byte ptr [di]
 .org 0x88f9
 # IDA 0x186f9; file 0x88f9; locator=proven; movsb
-# ⚠ 函式 sub_186C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_186C9; [proven] 單一 plane 的滑塊字節／word 迴圈; 出處: docs/re/118-c-city-list-restoration.md
 movsb
 .org 0x88fa
 # IDA 0x186fa; file 0x88fa; locator=proven; retn
-# ⚠ 函式 sub_186C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_186C9; [proven] 單一 plane 的滑塊字節／word 迴圈; 出處: docs/re/118-c-city-list-restoration.md
 ret
 .org 0x8913
 sub_18713:
 # IDA 0x18713; file 0x8913; locator=proven; mov     dx, cs:word_181B0
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov dx, word ptr [0x81b0]
 .org 0x8918
 # IDA 0x18718; file 0x8918; locator=proven; add     dx, 20h
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 add dx, 0x20
 .org 0x891b
 # IDA 0x1871b; file 0x891b; locator=proven; sub     ax, dx
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 {load} sub ax, dx
 .org 0x891d
 # IDA 0x1871d; file 0x891d; locator=proven; jnb     short loc_18721
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 jnb .+4
 .org 0x891f
 # IDA 0x1871f; file 0x891f; locator=proven; xor     ax, ax
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor ax, ax
 .org 0x8921
 loc_18721:
 # IDA 0x18721; file 0x8921; locator=proven; mov     dx, cs:word_181B4
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov dx, word ptr [0x81b4]
 .org 0x8926
 # IDA 0x18726; file 0x8926; locator=proven; sub     dx, 30h
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 sub dx, 0x30
 .org 0x8929
 # IDA 0x18729; file 0x8929; locator=proven; cmp     ax, dx
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 {load} cmp ax, dx
 .org 0x892b
 # IDA 0x1872b; file 0x892b; locator=proven; jb      short loc_1872F
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 jb .+4
 .org 0x892d
 # IDA 0x1872d; file 0x892d; locator=proven; mov     ax, dx
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov ax, dx
 .org 0x892f
 loc_1872F:
 # IDA 0x1872f; file 0x892f; locator=proven; mul     cs:byte_181BE
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 cs; mul byte ptr [0x81be]
 .org 0x8934
 # IDA 0x18734; file 0x8934; locator=proven; div     dl
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 div dl
 .org 0x8936
 # IDA 0x18736; file 0x8936; locator=proven; mov     dl, byte ptr cs:word_181B6+1
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov dl, byte ptr [0x81b7]
 .org 0x893b
 # IDA 0x1873b; file 0x893b; locator=proven; dec     dl
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 dec dl
 .org 0x893d
 # IDA 0x1873d; file 0x893d; locator=proven; mov     dh, dl
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov dh, dl
 .org 0x893f
 # IDA 0x1873f; file 0x893f; locator=proven; shr     dl, 1
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 shr dl, 0x1
 .org 0x8941
 # IDA 0x18741; file 0x8941; locator=proven; sub     al, dl
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 {load} sub al, dl
 .org 0x8943
 # IDA 0x18743; file 0x8943; locator=proven; jnb     short loc_18747
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 jnb .+4
 .org 0x8945
 # IDA 0x18745; file 0x8945; locator=proven; xor     al, al
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor al, al
 .org 0x8947
 loc_18747:
 # IDA 0x18747; file 0x8947; locator=proven; mov     ah, cs:byte_181BE
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov ah, byte ptr [0x81be]
 .org 0x894c
 # IDA 0x1874c; file 0x894c; locator=proven; sub     ah, dh
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 {load} sub ah, dh
 .org 0x894e
 # IDA 0x1874e; file 0x894e; locator=proven; cmp     al, ah
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 {load} cmp al, ah
 .org 0x8950
 # IDA 0x18750; file 0x8950; locator=proven; jbe     short locret_18754
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 jbe .+4
 .org 0x8952
 # IDA 0x18752; file 0x8952; locator=proven; mov     al, ah
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov al, ah
 .org 0x8954
 locret_18754:
 # IDA 0x18754; file 0x8954; locator=proven; retn
-# ⚠ 函式 sub_18713; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18713; [proven] mouse Y 到頁首的原比例換算、半頁與上下界; 出處: docs/re/118-c-city-list-restoration.md
 ret
 .org 0x8955
 sub_18755:
 # IDA 0x18755; file 0x8955; locator=proven; push    ds
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 push ds
 .org 0x8956
 # IDA 0x18756; file 0x8956; locator=proven; push    ax
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 push ax
 .org 0x8957
 # IDA 0x18757; file 0x8957; locator=proven; push    bx
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 push bx
 .org 0x8958
 # IDA 0x18758; file 0x8958; locator=proven; push    cx
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 push cx
 .org 0x8959
 # IDA 0x18759; file 0x8959; locator=proven; push    si
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 push si
 .org 0x895a
 # IDA 0x1875a; file 0x895a; locator=proven; push    di
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 push di
 .org 0x895b
 # IDA 0x1875b; file 0x895b; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, cs
 .org 0x895d
 # IDA 0x1875d; file 0x895d; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 mov ds, ax
 .org 0x895f
 # IDA 0x1875f; file 0x895f; locator=proven; mov     dx, 0D6Dh
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 mov dx, 0xd6d
 .org 0x8962
 # IDA 0x18762; file 0x8962; locator=proven; mov     bx, word_1987C
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 mov bx, word ptr [0x987c]
 .org 0x8966
 # IDA 0x18766; file 0x8966; locator=proven; xor     si, si
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor si, si
 .org 0x8968
 # IDA 0x18768; file 0x8968; locator=proven; xor     cx, cx
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor cx, cx
 .org 0x896a
 # IDA 0x1876a; file 0x896a; locator=proven; mov     ax, cx
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov ax, cx
 .org 0x896c
 # IDA 0x1876c; file 0x896c; locator=proven; mov     di, 2800h
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 mov di, 0x2800
 .org 0x896f
 # IDA 0x1876f; file 0x896f; locator=proven; call    sub_1E38C
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 call .+23581
 .org 0x8972
 # IDA 0x18772; file 0x8972; locator=proven; mov     ds, cs:word_1987C
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 cs; mov ds, word ptr [0x987c]
 .org 0x8977
 # IDA 0x18777; file 0x8977; locator=proven; xor     si, si
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor si, si
 .org 0x8979
 # IDA 0x18779; file 0x8979; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor bx, bx
 .org 0x897b
 # IDA 0x1877b; file 0x897b; locator=proven; mov     ax, 2028h
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 mov ax, 0x2028
 .org 0x897e
 # IDA 0x1877e; file 0x897e; locator=proven; call    sub_1FA37
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 call .+29369
 .org 0x8981
 # IDA 0x18781; file 0x8981; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor dx, dx
 .org 0x8983
 # IDA 0x18783; file 0x8983; locator=proven; mov     bx, dx
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 {load} mov bx, dx
 .org 0x8985
 # IDA 0x18785; file 0x8985; locator=proven; mov     cx, 450h
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 mov cx, 0x450
 .org 0x8988
 # IDA 0x18788; file 0x8988; locator=proven; mov     al, 6
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 mov al, 0x6
 .org 0x898a
 # IDA 0x1878a; file 0x898a; locator=proven; call    sub_1E3D7
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 call .+23629
 .org 0x898d
 # IDA 0x1878d; file 0x898d; locator=proven; mov     cx, 5
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 mov cx, 0x5
 .org 0x8990
 # IDA 0x18790; file 0x8990; locator=proven; mov     dx, 150h
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 mov dx, 0x150
 .org 0x8993
 # IDA 0x18793; file 0x8993; locator=proven; mov     al, 1
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 mov al, 0x1
 .org 0x8995
 loc_18795:
 # IDA 0x18795; file 0x8995; locator=proven; push    cx
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 push cx
 .org 0x8996
 # IDA 0x18796; file 0x8996; locator=proven; push    dx
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 push dx
 .org 0x8997
 # IDA 0x18797; file 0x8997; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 {load} xor bx, bx
 .org 0x8999
 # IDA 0x18799; file 0x8999; locator=proven; mov     cx, 404h
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 mov cx, 0x404
 .org 0x899c
 # IDA 0x1879c; file 0x899c; locator=proven; call    sub_1E3D7
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 call .+23611
 .org 0x899f
 # IDA 0x1879f; file 0x899f; locator=proven; inc     al
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 inc al
 .org 0x89a1
 # IDA 0x187a1; file 0x89a1; locator=proven; pop     dx
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 pop dx
 .org 0x89a2
 # IDA 0x187a2; file 0x89a2; locator=proven; pop     cx
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 pop cx
 .org 0x89a3
 # IDA 0x187a3; file 0x89a3; locator=proven; add     dx, 20h
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 add dx, 0x20
 .org 0x89a6
 # IDA 0x187a6; file 0x89a6; locator=proven; loop    loc_18795
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 loop .-17
 .org 0x89a8
 # IDA 0x187a8; file 0x89a8; locator=proven; pop     di
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 pop di
 .org 0x89a9
 # IDA 0x187a9; file 0x89a9; locator=proven; pop     si
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 pop si
 .org 0x89aa
 # IDA 0x187aa; file 0x89aa; locator=proven; pop     cx
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 pop cx
 .org 0x89ab
 # IDA 0x187ab; file 0x89ab; locator=proven; pop     bx
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 pop bx
 .org 0x89ac
 # IDA 0x187ac; file 0x89ac; locator=proven; pop     ax
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 pop ax
 .org 0x89ad
 # IDA 0x187ad; file 0x89ad; locator=proven; pop     ds
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 pop ds
 .org 0x89ae
 # IDA 0x187ae; file 0x89ae; locator=proven; retn
-# ⚠ 函式 sub_18755; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18755; [proven] 原上方介面背景還原與熱區重建; 出處: docs/re/118-c-city-list-restoration.md
 ret
 .org 0x89af
 sub_187AF:

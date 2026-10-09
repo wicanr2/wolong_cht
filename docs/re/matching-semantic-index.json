@@ -1980,6 +1980,167 @@
       "sources": [
         "docs/re/117-c-ruler-sortie-restoration.md"
       ]
+    },
+    "0x15E60": {
+      "meaning": "側欄原始場景 0、四個欄位 bit 與遷都成功後的完整更新",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x16909": {
+      "meaning": "遷都清單、原首都重試、兩個拒絕條件、三句場景與實際首都 writer",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x17400": {
+      "meaning": "據點清單入口、固定幾何／描述子／callback 與持久排序狀態",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x1743B": {
+      "meaning": "按所屬勢力掃 192 城，SS 清單保存記錄位址",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x1745F": {
+      "meaning": "每頁十列的據點 renderer callback 與比例滑塊",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x1748F": {
+      "meaning": "據點名、內政官、五個原始數字與空列 raster",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x181C0": {
+      "meaning": "清單視窗粗格、像素與 VRAM 座標拆分",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x1820E": {
+      "meaning": "512-byte SS 清單、live 描述子／callback、選取與 CF 返回",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x1828F": {
+      "meaning": "原清單框、六表頭、四熱區、比例滑塊及字串 renderer",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x18412": {
+      "meaning": "清單 mouse 迴圈、直接分派與表頭排序；取消落入 nullsub_2",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x18458": {
+      "meaning": "清單取消路徑落下的原始 RET",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x18463": {
+      "meaning": "列命中、反白、第二次點擊與丟掉一層返回位址的選中路徑",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x184BC": {
+      "meaning": "清單列反白的 XOR 區域",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x184DD": {
+      "meaning": "滑塊拖動、mouse position 與頁首寫回",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x1851A": {
+      "meaning": "清單上一列、0 下界與重畫",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x18546": {
+      "meaning": "清單下一列、筆數減頁高上界與重畫",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x1857F": {
+      "meaning": "首欄重建、其餘五欄依原描述子排序",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x185B2": {
+      "meaning": "原交換排序、live byte／word 與 JBE／JNB 指令欄位",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x18607": {
+      "meaning": "舊滑塊擦除、新位置與比例整數除法",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x18662": {
+      "meaning": "滑塊邊框及四 plane 原 raster",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x186C9": {
+      "meaning": "單一 plane 的滑塊字節／word 迴圈",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x18713": {
+      "meaning": "mouse Y 到頁首的原比例換算、半頁與上下界",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x18755": {
+      "meaning": "原上方介面背景還原與熱區重建",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
     }
   },
   "operands": {
@@ -2014,6 +2175,62 @@
       "sources": [
         "docs/re/115-c-world-overlay-restoration.md",
         "docs/spec/235-c-world-overlay.md"
+      ]
+    },
+    "0x1831F:1": {
+      "original": "1234h",
+      "meaning": "初始佔位；sub_1820E 將據點欄位描述子寫入 CS:8320，執行本 MOV 時讀取",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x183D2:1": {
+      "original": "1234h",
+      "meaning": "初始佔位；sub_1820E 將標題寫入 CS:83D3，執行本 MOV 時讀取，並非寫了不用",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x1858F:1": {
+      "original": "1234h",
+      "meaning": "初始佔位；sub_1820E 寫入排序描述子，C 讀 CS:8591",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x185E8:0": {
+      "original": "ax",
+      "meaning": "opcode bit 0 經原描述子改寫，決定 AL 或 AX 的載入寬度",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x185EF:0": {
+      "original": "ax",
+      "meaning": "opcode bit 0 經原描述子改寫，決定 AL 或 AX 的比較寬度",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x185F1:0": {
+      "original": "near ptr byte_185F4+4",
+      "meaning": "條件 opcode 經原描述子改寫，據點欄位使用 JBE 或 JNB",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
+      ]
+    },
+    "0x185F3:0": {
+      "original": "ax",
+      "meaning": "opcode bit 0 經原描述子改寫，決定替換鍵的 AL 或 AX 載入寬度",
+      "level": "proven",
+      "sources": [
+        "docs/re/118-c-city-list-restoration.md"
       ]
     }
   }

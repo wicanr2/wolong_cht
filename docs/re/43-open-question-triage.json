@@ -13104,19 +13104,6 @@
     },
     {
       "file": "docs/re/117-c-ruler-sortie-restoration.md",
-      "item": "遷都清單",
-      "status": "`sub_16909` 的清單、排序與間接 callback 尚待另輪還原",
-      "section": "未解範圍",
-      "domain": "程式碼理解",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-bc65f63da126c5d21187",
-      "classification": "evidence-only",
-      "github_issue": null,
-      "reason": "君主出陣局部 C 界線；遷都清單、自然玩家長程與原 C 工具鏈仍為後續工作。"
-    },
-    {
-      "file": "docs/re/117-c-ruler-sortie-restoration.md",
       "item": "正常玩家長程路徑",
       "status": "本輪局部主入口驗證不代證自然選單與通關",
       "section": "未解範圍",
@@ -13142,17 +13129,69 @@
       "reason": "君主出陣局部 C 界線；遷都清單、自然玩家長程與原 C 工具鏈仍為後續工作。"
     },
     {
-      "file": "docs/spec/237-c-ruler-sortie.md",
-      "item": "遷都清單",
-      "status": "後續獨立呼叫閉包",
+      "file": "docs/re/118-c-city-list-restoration.md",
+      "item": "其他清單家族",
+      "status": "本輪據點描述子的結果不代證武將、軍團或勢力的完整 caller",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-60e1807cbd045877769b",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原據點清單與遷都局部 C 界線；其他清單、自然玩家長程及原 C 機器碼仍待驗證。"
+    },
+    {
+      "file": "docs/re/118-c-city-list-restoration.md",
+      "item": "自然玩家長程路徑",
+      "status": "局部遷都入口不代證自然選單或通關",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-c374b041a3560b77686e",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原據點清單與遷都局部 C 界線；其他清單、自然玩家長程及原 C 機器碼仍待驗證。"
+    },
+    {
+      "file": "docs/re/118-c-city-list-restoration.md",
+      "item": "原作者 C 與工具鏈",
+      "status": "尚未確認 C 機器碼一致",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-56913644b7dd40d14ac9",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原據點清單與遷都局部 C 界線；其他清單、自然玩家長程及原 C 機器碼仍待驗證。"
+    },
+    {
+      "file": "docs/spec/238-c-city-list.md",
+      "item": "正常玩家長程與其他清單",
+      "status": "本輪局部 caller 不代證",
       "section": "未解範圍",
       "domain": "其他",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-3758f7e396bc6ce37901",
+      "id": "oq-9bf94453d23845152eb3",
       "classification": "evidence-only",
       "github_issue": null,
-      "reason": "君主出陣局部 C 界線；遷都清單、自然玩家長程與原 C 工具鏈仍為後續工作。"
+      "reason": "原據點清單與遷都局部 C 界線；其他清單、自然玩家長程及原 C 機器碼仍待驗證。"
+    },
+    {
+      "file": "docs/spec/238-c-city-list.md",
+      "item": "原作者 C 機器碼",
+      "status": "尚未匹配",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-77927280847ba65ea042",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原據點清單與遷都局部 C 界線；其他清單、自然玩家長程及原 C 機器碼仍待驗證。"
     }
   ]
 }
