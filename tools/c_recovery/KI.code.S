@@ -6284,23 +6284,23 @@ ret
 .org 0xede
 sub_10CDE:
 # IDA 0x10cde; file 0xede; locator=proven; push    ax
-# ⚠ 函式 sub_10CDE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CDE; [proven] 原AX=0101提示包裝並保存呼叫者AX; 出處: docs/re/128-c-city-tick-restoration.md
 push ax
 .org 0xedf
 # IDA 0x10cdf; file 0xedf; locator=proven; mov     ax, 101h
-# ⚠ 函式 sub_10CDE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CDE; [proven] 原AX=0101提示包裝並保存呼叫者AX; 出處: docs/re/128-c-city-tick-restoration.md
 mov ax, 0x101
 .org 0xee2
 # IDA 0x10ce2; file 0xee2; locator=proven; call    sub_1EB11
-# ⚠ 函式 sub_10CDE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CDE; [proven] 原AX=0101提示包裝並保存呼叫者AX; 出處: docs/re/128-c-city-tick-restoration.md
 call .-8657
 .org 0xee5
 # IDA 0x10ce5; file 0xee5; locator=proven; pop     ax
-# ⚠ 函式 sub_10CDE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CDE; [proven] 原AX=0101提示包裝並保存呼叫者AX; 出處: docs/re/128-c-city-tick-restoration.md
 pop ax
 .org 0xee6
 # IDA 0x10ce6; file 0xee6; locator=proven; retn
-# ⚠ 函式 sub_10CDE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CDE; [proven] 原AX=0101提示包裝並保存呼叫者AX; 出處: docs/re/128-c-city-tick-restoration.md
 ret
 .org 0xee7
 sub_10CE7:
@@ -10518,360 +10518,366 @@ ret
 .org 0x2659
 sub_12459:
 # IDA 0x12459; file 0x2659; locator=proven; mov     ds, word ptr ds:0D52h
-# ⚠ 函式 sub_12459; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12459; [proven] 原32個動畫物件倒數與dirty更新，後16槽移動; 出處: docs/re/128-c-city-tick-restoration.md
 mov ds, word ptr [0xd52]
 .org 0x265d
 # IDA 0x1245d; file 0x265d; locator=proven; mov     si, 2040h
-# ⚠ 函式 sub_12459; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12459; [proven] 原32個動畫物件倒數與dirty更新，後16槽移動; 出處: docs/re/128-c-city-tick-restoration.md
 mov si, 0x2040
 .org 0x2660
 # IDA 0x12460; file 0x2660; locator=proven; mov     bp, 20h
-# ⚠ 函式 sub_12459; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12459; [proven] 原32個動畫物件倒數與dirty更新，後16槽移動; 出處: docs/re/128-c-city-tick-restoration.md
+# operand 1 20h; [proven] 動畫物件總數20h即32槽; 出處: docs/re/128-c-city-tick-restoration.md
 mov bp, 0x20
 .org 0x2663
 loc_12463:
 # IDA 0x12463; file 0x2663; locator=proven; cmp     byte ptr [si], 80h
-# ⚠ 函式 sub_12459; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12459; [proven] 原32個動畫物件倒數與dirty更新，後16槽移動; 出處: docs/re/128-c-city-tick-restoration.md
+# operand 1 80h; [proven] 物件存在門檻80h，使用unsigned比較; 出處: docs/re/128-c-city-tick-restoration.md
 cmp byte ptr [si], 0x80
 .org 0x2666
 # IDA 0x12466; file 0x2666; locator=proven; jb      short loc_1247F
-# ⚠ 函式 sub_12459; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12459; [proven] 原32個動畫物件倒數與dirty更新，後16槽移動; 出處: docs/re/128-c-city-tick-restoration.md
 jb .+25
 .org 0x2668
 # IDA 0x12468; file 0x2668; locator=proven; dec     byte ptr [si+0Ch]
-# ⚠ 函式 sub_12459; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12459; [proven] 原32個動畫物件倒數與dirty更新，後16槽移動; 出處: docs/re/128-c-city-tick-restoration.md
 dec byte ptr [si+0xc]
 .org 0x266b
 # IDA 0x1246b; file 0x266b; locator=proven; jnz     short loc_1247F
-# ⚠ 函式 sub_12459; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12459; [proven] 原32個動畫物件倒數與dirty更新，後16槽移動; 出處: docs/re/128-c-city-tick-restoration.md
 jnz .+20
 .org 0x266d
 # IDA 0x1246d; file 0x266d; locator=proven; mov     al, [si+0Dh]
-# ⚠ 函式 sub_12459; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12459; [proven] 原32個動畫物件倒數與dirty更新，後16槽移動; 出處: docs/re/128-c-city-tick-restoration.md
 mov al, byte ptr [si+0xd]
 .org 0x2670
 # IDA 0x12470; file 0x2670; locator=proven; mov     [si+0Ch], al
-# ⚠ 函式 sub_12459; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12459; [proven] 原32個動畫物件倒數與dirty更新，後16槽移動; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [si+0xc], al
 .org 0x2673
 # IDA 0x12473; file 0x2673; locator=proven; or      byte ptr [si], 1
-# ⚠ 函式 sub_12459; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12459; [proven] 原32個動畫物件倒數與dirty更新，後16槽移動; 出處: docs/re/128-c-city-tick-restoration.md
 or byte ptr [si], 0x1
 .org 0x2676
 # IDA 0x12476; file 0x2676; locator=proven; cmp     si, 2140h
-# ⚠ 函式 sub_12459; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12459; [proven] 原32個動畫物件倒數與dirty更新，後16槽移動; 出處: docs/re/128-c-city-tick-restoration.md
+# operand 1 2140h; [proven] SI達2140h才進移動helper，即後16槽; 出處: docs/re/128-c-city-tick-restoration.md
 cmp si, 0x2140
 .org 0x267a
 # IDA 0x1247a; file 0x267a; locator=proven; jb      short loc_1247F
-# ⚠ 函式 sub_12459; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12459; [proven] 原32個動畫物件倒數與dirty更新，後16槽移動; 出處: docs/re/128-c-city-tick-restoration.md
 jb .+5
 .org 0x267c
 # IDA 0x1247c; file 0x267c; locator=proven; call    sub_1248A
-# ⚠ 函式 sub_12459; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12459; [proven] 原32個動畫物件倒數與dirty更新，後16槽移動; 出處: docs/re/128-c-city-tick-restoration.md
 call .+14
 .org 0x267f
 loc_1247F:
 # IDA 0x1247f; file 0x267f; locator=proven; add     si, 10h
-# ⚠ 函式 sub_12459; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12459; [proven] 原32個動畫物件倒數與dirty更新，後16槽移動; 出處: docs/re/128-c-city-tick-restoration.md
 add si, 0x10
 .org 0x2682
 # IDA 0x12482; file 0x2682; locator=proven; dec     bp
-# ⚠ 函式 sub_12459; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12459; [proven] 原32個動畫物件倒數與dirty更新，後16槽移動; 出處: docs/re/128-c-city-tick-restoration.md
 dec bp
 .org 0x2683
 # IDA 0x12483; file 0x2683; locator=proven; jnz     short loc_12463
-# ⚠ 函式 sub_12459; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12459; [proven] 原32個動畫物件倒數與dirty更新，後16槽移動; 出處: docs/re/128-c-city-tick-restoration.md
 jnz .-32
 .org 0x2685
 # IDA 0x12485; file 0x2685; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_12459; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12459; [proven] 原32個動畫物件倒數與dirty更新，後16槽移動; 出處: docs/re/128-c-city-tick-restoration.md
 mov ax, cs
 .org 0x2687
 # IDA 0x12487; file 0x2687; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_12459; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12459; [proven] 原32個動畫物件倒數與dirty更新，後16槽移動; 出處: docs/re/128-c-city-tick-restoration.md
 mov ds, ax
 .org 0x2689
 # IDA 0x12489; file 0x2689; locator=proven; retn
-# ⚠ 函式 sub_12459; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12459; [proven] 原32個動畫物件倒數與dirty更新，後16槽移動; 出處: docs/re/128-c-city-tick-restoration.md
 ret
 .org 0x268a
 sub_1248A:
 # IDA 0x1248a; file 0x268a; locator=proven; mov     dx, [si+8]
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 mov dx, word ptr [si+0x8]
 .org 0x268d
 # IDA 0x1248d; file 0x268d; locator=proven; call    sub_124FF
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 call .+114
 .org 0x2690
 # IDA 0x12490; file 0x2690; locator=proven; mov     [si+8], dx
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 mov word ptr [si+0x8], dx
 .org 0x2693
 # IDA 0x12493; file 0x2693; locator=proven; add     [si+2], ax
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 add word ptr [si+0x2], ax
 .org 0x2696
 # IDA 0x12496; file 0x2696; locator=proven; mov     dx, [si+0Ah]
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 mov dx, word ptr [si+0xa]
 .org 0x2699
 # IDA 0x12499; file 0x2699; locator=proven; call    sub_124FF
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 call .+102
 .org 0x269c
 # IDA 0x1249c; file 0x269c; locator=proven; mov     [si+0Ah], dx
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 mov word ptr [si+0xa], dx
 .org 0x269f
 # IDA 0x1249f; file 0x269f; locator=proven; add     [si+4], ax
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 add word ptr [si+0x4], ax
 .org 0x26a2
 # IDA 0x124a2; file 0x26a2; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 {load} xor dx, dx
 .org 0x26a4
 # IDA 0x124a4; file 0x26a4; locator=proven; mov     ax, [si+2]
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 mov ax, word ptr [si+0x2]
 .org 0x26a7
 # IDA 0x124a7; file 0x26a7; locator=proven; cmp     ax, cs:word_10D22
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 cs; cmp ax, word ptr [0xd22]
 .org 0x26ac
 # IDA 0x124ac; file 0x26ac; locator=proven; jge     short loc_124B0
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 jge .+4
 .org 0x26ae
 # IDA 0x124ae; file 0x26ae; locator=proven; mov     dl, 1
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 mov dl, 0x1
 .org 0x26b0
 loc_124B0:
 # IDA 0x124b0; file 0x26b0; locator=proven; cmp     ax, cs:word_10D26
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 cs; cmp ax, word ptr [0xd26]
 .org 0x26b5
 # IDA 0x124b5; file 0x26b5; locator=proven; jle     short loc_124B9
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 jle .+4
 .org 0x26b7
 # IDA 0x124b7; file 0x26b7; locator=proven; mov     dl, 0FFh
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 mov dl, 0xff
 .org 0x26b9
 loc_124B9:
 # IDA 0x124b9; file 0x26b9; locator=proven; cmp     ax, 0FFF0h
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 cmp ax, offset imm_at_124B9
 .org 0x26bc
 # IDA 0x124bc; file 0x26bc; locator=proven; jge     short loc_124C3
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 jge .+7
 .org 0x26be
 # IDA 0x124be; file 0x26be; locator=proven; mov     ax, 190h
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 mov ax, 0x190
 .org 0x26c1
 # IDA 0x124c1; file 0x26c1; locator=proven; jmp     short loc_124CB
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 jmp .+10
 .org 0x26c3
 loc_124C3:
 # IDA 0x124c3; file 0x26c3; locator=proven; cmp     ax, 190h
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 cmp ax, 0x190
 .org 0x26c6
 # IDA 0x124c6; file 0x26c6; locator=proven; jle     short loc_124CB
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 jle .+5
 .org 0x26c8
 # IDA 0x124c8; file 0x26c8; locator=proven; mov     ax, 0FFF0h
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 mov ax, 0xfff0
 .org 0x26cb
 loc_124CB:
 # IDA 0x124cb; file 0x26cb; locator=proven; mov     [si+2], ax
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 mov word ptr [si+0x2], ax
 .org 0x26ce
 # IDA 0x124ce; file 0x26ce; locator=proven; mov     ax, [si+4]
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 mov ax, word ptr [si+0x4]
 .org 0x26d1
 # IDA 0x124d1; file 0x26d1; locator=proven; cmp     ax, cs:word_10D24
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 cs; cmp ax, word ptr [0xd24]
 .org 0x26d6
 # IDA 0x124d6; file 0x26d6; locator=proven; jge     short loc_124DA
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 jge .+4
 .org 0x26d8
 # IDA 0x124d8; file 0x26d8; locator=proven; mov     dh, 1
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 mov dh, 0x1
 .org 0x26da
 loc_124DA:
 # IDA 0x124da; file 0x26da; locator=proven; cmp     ax, cs:word_10D28
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 cs; cmp ax, word ptr [0xd28]
 .org 0x26df
 # IDA 0x124df; file 0x26df; locator=proven; jle     short loc_124E3
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 jle .+4
 .org 0x26e1
 # IDA 0x124e1; file 0x26e1; locator=proven; mov     dh, 0FFh
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 mov dh, 0xff
 .org 0x26e3
 loc_124E3:
 # IDA 0x124e3; file 0x26e3; locator=proven; cmp     ax, 0FFF0h
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 cmp ax, offset imm_at_124E3
 .org 0x26e6
 # IDA 0x124e6; file 0x26e6; locator=proven; jge     short loc_124ED
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 jge .+7
 .org 0x26e8
 # IDA 0x124e8; file 0x26e8; locator=proven; mov     ax, 110h
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 mov ax, 0x110
 .org 0x26eb
 # IDA 0x124eb; file 0x26eb; locator=proven; jmp     short loc_124F5
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 jmp .+10
 .org 0x26ed
 loc_124ED:
 # IDA 0x124ed; file 0x26ed; locator=proven; cmp     ax, 110h
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 cmp ax, 0x110
 .org 0x26f0
 # IDA 0x124f0; file 0x26f0; locator=proven; jle     short loc_124F5
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 jle .+5
 .org 0x26f2
 # IDA 0x124f2; file 0x26f2; locator=proven; mov     ax, 0FFF0h
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 mov ax, 0xfff0
 .org 0x26f5
 loc_124F5:
 # IDA 0x124f5; file 0x26f5; locator=proven; mov     [si+4], ax
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 mov word ptr [si+0x4], ax
 .org 0x26f8
 # IDA 0x124f8; file 0x26f8; locator=proven; add     [si+9], dl
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 add byte ptr [si+0x9], dl
 .org 0x26fb
 # IDA 0x124fb; file 0x26fb; locator=proven; add     [si+0Bh], dh
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 add byte ptr [si+0xb], dh
 .org 0x26fe
 # IDA 0x124fe; file 0x26fe; locator=proven; retn
-# ⚠ 函式 sub_1248A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1248A; [proven] 原動畫物件座標及速度更新，保留signed界限與回繞; 出處: docs/re/128-c-city-tick-restoration.md
 ret
 .org 0x26ff
 sub_124FF:
 # IDA 0x124ff; file 0x26ff; locator=proven; call    sub_1ECE0
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
 call .-14367
 .org 0x2702
 # IDA 0x12502; file 0x2702; locator=proven; and     al, 7
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
+# operand 1 7; [proven] 亂數低3bits，0至2才調整速度; 出處: docs/re/128-c-city-tick-restoration.md
 and al, 0x7
 .org 0x2704
 # IDA 0x12504; file 0x2704; locator=proven; cmp     al, 2
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
 cmp al, 0x2
 .org 0x2706
 # IDA 0x12506; file 0x2706; locator=proven; ja      short loc_1250C
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
 ja .+6
 .org 0x2708
 # IDA 0x12508; file 0x2708; locator=proven; dec     al
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
 dec al
 .org 0x270a
 # IDA 0x1250a; file 0x270a; locator=proven; add     dh, al
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
 {load} add dh, al
 .org 0x270c
 loc_1250C:
 # IDA 0x1250c; file 0x270c; locator=proven; cmp     dh, 0F1h
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
+# operand 1 0F1h; [proven] signed byte速度下界F1h即負15; 出處: docs/re/128-c-city-tick-restoration.md
 cmp dh, 0xf1
 .org 0x270f
 # IDA 0x1250f; file 0x270f; locator=proven; jge     short loc_12513
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
 jge .+4
 .org 0x2711
 # IDA 0x12511; file 0x2711; locator=proven; mov     dh, 0F1h
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
 mov dh, 0xf1
 .org 0x2713
 loc_12513:
 # IDA 0x12513; file 0x2713; locator=proven; cmp     dh, 0Fh
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
 cmp dh, 0xf
 .org 0x2716
 # IDA 0x12516; file 0x2716; locator=proven; jle     short loc_1251A
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
 jle .+4
 .org 0x2718
 # IDA 0x12518; file 0x2718; locator=proven; mov     dh, 0Fh
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
 mov dh, 0xf
 .org 0x271a
 loc_1251A:
 # IDA 0x1251a; file 0x271a; locator=proven; add     dl, dh
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
 {load} add dl, dh
 .org 0x271c
 # IDA 0x1251c; file 0x271c; locator=proven; xor     ax, ax
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
 {load} xor ax, ax
 .org 0x271e
 # IDA 0x1251e; file 0x271e; locator=proven; cmp     dl, 0Fh
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
+# operand 1 0Fh; [proven] 固定點低byte達signed15時產生正一步; 出處: docs/re/128-c-city-tick-restoration.md
 cmp dl, 0xf
 .org 0x2721
 # IDA 0x12521; file 0x2721; locator=proven; jl      short loc_12529
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
 jl .+8
 .org 0x2723
 # IDA 0x12523; file 0x2723; locator=proven; sub     dl, 0Fh
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
 sub dl, 0xf
 .org 0x2726
 # IDA 0x12526; file 0x2726; locator=proven; inc     ax
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
 inc ax
 .org 0x2727
 # IDA 0x12527; file 0x2727; locator=proven; jmp     short locret_12532
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
 jmp .+11
 .org 0x2729
 loc_12529:
 # IDA 0x12529; file 0x2729; locator=proven; cmp     dl, 0F1h
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
 cmp dl, 0xf1
 .org 0x272c
 # IDA 0x1252c; file 0x272c; locator=proven; jg      short locret_12532
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
 jg .+6
 .org 0x272e
 # IDA 0x1252e; file 0x272e; locator=proven; add     dl, 0Fh
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
 add dl, 0xf
 .org 0x2731
 # IDA 0x12531; file 0x2731; locator=proven; dec     ax
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
 dec ax
 .org 0x2732
 locret_12532:
 # IDA 0x12532; file 0x2732; locator=proven; retn
-# ⚠ 函式 sub_124FF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_124FF; [proven] 原byte固定點速度累加與亂數偏移; 出處: docs/re/128-c-city-tick-restoration.md
 ret
 .org 0x2733
 sub_12533:
@@ -22937,1393 +22943,1402 @@ ret
 .org 0x40fd
 sub_13EFD:
 # IDA 0x13efd; file 0x40fd; locator=proven; mov     si, word_10D1E
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 mov si, word ptr [0xd1e]
 .org 0x4101
 # IDA 0x13f01; file 0x4101; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x4106
 # IDA 0x13f06; file 0x4106; locator=proven; cmp     byte ptr [si+857h], 0
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 cmp byte ptr [si+0x857], 0x0
 .org 0x410b
 # IDA 0x13f0b; file 0x410b; locator=proven; jz      short loc_13F11
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 jz .+6
 .org 0x410d
 # IDA 0x13f0d; file 0x410d; locator=proven; dec     byte ptr [si+857h]
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 dec byte ptr [si+0x857]
 .org 0x4111
 loc_13F11:
 # IDA 0x13f11; file 0x4111; locator=proven; mov     bh, [si+85Ah]
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 mov bh, byte ptr [si+0x85a]
 .org 0x4115
 # IDA 0x13f15; file 0x4115; locator=proven; cmp     bh, [si+841h]
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 cmp bh, byte ptr [si+0x841]
 .org 0x4119
 # IDA 0x13f19; file 0x4119; locator=proven; jz      short loc_13F2C
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 jz .+19
 .org 0x411b
 # IDA 0x13f1b; file 0x411b; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 {load} xor bl, bl
 .org 0x411d
 # IDA 0x13f1d; file 0x411d; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 shr bx, 0x1
 .org 0x411f
 # IDA 0x13f1f; file 0x411f; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 shr bx, 0x1
 .org 0x4121
 # IDA 0x13f21; file 0x4121; locator=proven; mov     ax, si
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov ax, si
 .org 0x4123
 # IDA 0x13f23; file 0x4123; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 shl ax, 0x1
 .org 0x4125
 # IDA 0x13f25; file 0x4125; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 shl ax, 0x1
 .org 0x4127
 # IDA 0x13f27; file 0x4127; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 shl ax, 0x1
 .org 0x4129
 # IDA 0x13f29; file 0x4129; locator=proven; mov     [bx+17h], ah
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
+# operand 0 [bx+17h]; [proven] 當+85A異於+841，寫入原先勢力記錄+17; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [bx+0x17], ah
 .org 0x412c
 loc_13F2C:
 # IDA 0x13f2c; file 0x412c; locator=proven; mov     ax, [si+84Ah]
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 mov ax, word ptr [si+0x84a]
 .org 0x4130
 # IDA 0x13f30; file 0x4130; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 shl ax, 0x1
 .org 0x4132
 # IDA 0x13f32; file 0x4132; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 shl ax, 0x1
 .org 0x4134
 # IDA 0x13f34; file 0x4134; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 shl ax, 0x1
 .org 0x4136
 # IDA 0x13f36; file 0x4136; locator=proven; mov     bx, ax
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov bx, ax
 .org 0x4138
 # IDA 0x13f38; file 0x4138; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 shl ax, 0x1
 .org 0x413a
 # IDA 0x13f3a; file 0x413a; locator=proven; add     ax, bx
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 {load} add ax, bx
 .org 0x413c
 # IDA 0x13f3c; file 0x413c; locator=proven; add     ax, cs:word_19872
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 cs; add ax, word ptr [0x9872]
 .org 0x4141
 # IDA 0x13f41; file 0x4141; locator=proven; mov     es, ax
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 mov es, ax
 .org 0x4143
 # IDA 0x13f43; file 0x4143; locator=proven; mov     bx, [si+848h]
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 mov bx, word ptr [si+0x848]
 .org 0x4147
 # IDA 0x13f47; file 0x4147; locator=proven; mov     al, es:[bx]
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 es; mov al, byte ptr [bx]
 .org 0x414a
 # IDA 0x13f4a; file 0x414a; locator=proven; and     al, 7Fh
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 and al, 0x7f
 .org 0x414c
 # IDA 0x13f4c; file 0x414c; locator=proven; mov     [si+858h], al
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [si+0x858], al
 .org 0x4150
 # IDA 0x13f50; file 0x4150; locator=proven; cmp     byte ptr [si+841h], 18h
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
+# operand 1 18h; [proven] 據點owner18h即中立24，跳過威脅AI; 出處: docs/re/128-c-city-tick-restoration.md
 cmp byte ptr [si+0x841], 0x18
 .org 0x4155
 # IDA 0x13f55; file 0x4155; locator=proven; jz      short loc_13F5A
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 jz .+5
 .org 0x4157
 # IDA 0x13f57; file 0x4157; locator=proven; call    sub_13F74
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 call .+29
 .org 0x415a
 loc_13F5A:
 # IDA 0x13f5a; file 0x415a; locator=proven; call    sub_14194
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 call .+570
 .org 0x415d
 # IDA 0x13f5d; file 0x415d; locator=proven; call    sub_14269
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 call .+780
 .org 0x4160
 # IDA 0x13f60; file 0x4160; locator=proven; add     si, 20h
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 add si, 0x20
 .org 0x4163
 # IDA 0x13f63; file 0x4163; locator=proven; cmp     si, 1800h
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
+# operand 1 1800h; [proven] 據點巡迴結束1800h，共192槽乘20h; 出處: docs/re/128-c-city-tick-restoration.md
 cmp si, 0x1800
 .org 0x4167
 # IDA 0x13f67; file 0x4167; locator=proven; jb      short loc_13F6B
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 jb .+4
 .org 0x4169
 # IDA 0x13f69; file 0x4169; locator=proven; xor     si, si
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 {load} xor si, si
 .org 0x416b
 loc_13F6B:
 # IDA 0x13f6b; file 0x416b; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 mov ax, cs
 .org 0x416d
 # IDA 0x13f6d; file 0x416d; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 mov ds, ax
 .org 0x416f
 # IDA 0x13f6f; file 0x416f; locator=proven; mov     word_10D1E, si
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 mov word ptr [0xd1e], si
 .org 0x4173
 # IDA 0x13f73; file 0x4173; locator=proven; retn
-# ⚠ 函式 sub_13EFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13EFD; [proven] 原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序; 出處: docs/re/128-c-city-tick-restoration.md
 ret
 .org 0x4174
 sub_13F74:
 # IDA 0x13f74; file 0x4174; locator=proven; push    es
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 push es
 .org 0x4175
 # IDA 0x13f75; file 0x4175; locator=proven; push    ax
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 push ax
 .org 0x4176
 # IDA 0x13f76; file 0x4176; locator=proven; push    bx
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 push bx
 .org 0x4177
 # IDA 0x13f77; file 0x4177; locator=proven; push    cx
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 push cx
 .org 0x4178
 # IDA 0x13f78; file 0x4178; locator=proven; push    dx
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 push dx
 .org 0x4179
 # IDA 0x13f79; file 0x4179; locator=proven; push    di
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 push di
 .org 0x417a
 # IDA 0x13f7a; file 0x417a; locator=proven; push    bp
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 push bp
 .org 0x417b
 # IDA 0x13f7b; file 0x417b; locator=proven; sub     sp, 10h
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 sub sp, 0x10
 .org 0x417e
 # IDA 0x13f7e; file 0x417e; locator=proven; mov     bp, sp
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov bp, sp
 .org 0x4180
 # IDA 0x13f80; file 0x4180; locator=proven; mov     ax, ss
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 mov ax, ss
 .org 0x4182
 # IDA 0x13f82; file 0x4182; locator=proven; mov     es, ax
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 mov es, ax
 .org 0x4184
 # IDA 0x13f84; file 0x4184; locator=proven; mov     di, bp
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov di, bp
 .org 0x4186
 # IDA 0x13f86; file 0x4186; locator=proven; mov     cx, 8
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 mov cx, 0x8
 .org 0x4189
 # IDA 0x13f89; file 0x4189; locator=proven; mov     ax, 0FFFFh
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 mov ax, 0xffff
 .org 0x418c
 # IDA 0x13f8c; file 0x418c; locator=proven; cld
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 cld
 .org 0x418d
 # IDA 0x13f8d; file 0x418d; locator=proven; rep stosw
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 rep; stosw
 .org 0x418f
 # IDA 0x13f8f; file 0x418f; locator=proven; call    sub_13FA9
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 call .+26
 .org 0x4192
 # IDA 0x13f92; file 0x4192; locator=proven; mov     [si+854h], ch
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [si+0x854], ch
 .org 0x4196
 # IDA 0x13f96; file 0x4196; locator=proven; call    sub_14028
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 call .+146
 .org 0x4199
 # IDA 0x13f99; file 0x4199; locator=proven; jnb     short loc_13F9E
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 jnb .+5
 .org 0x419b
 # IDA 0x13f9b; file 0x419b; locator=proven; call    sub_14057
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 call .+188
 .org 0x419e
 loc_13F9E:
 # IDA 0x13f9e; file 0x419e; locator=proven; add     sp, 10h
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 add sp, 0x10
 .org 0x41a1
 # IDA 0x13fa1; file 0x41a1; locator=proven; pop     bp
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 pop bp
 .org 0x41a2
 # IDA 0x13fa2; file 0x41a2; locator=proven; pop     di
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 pop di
 .org 0x41a3
 # IDA 0x13fa3; file 0x41a3; locator=proven; pop     dx
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 pop dx
 .org 0x41a4
 # IDA 0x13fa4; file 0x41a4; locator=proven; pop     cx
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 pop cx
 .org 0x41a5
 # IDA 0x13fa5; file 0x41a5; locator=proven; pop     bx
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 pop bx
 .org 0x41a6
 # IDA 0x13fa6; file 0x41a6; locator=proven; pop     ax
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 pop ax
 .org 0x41a7
 # IDA 0x13fa7; file 0x41a7; locator=proven; pop     es
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 pop es
 .org 0x41a8
 # IDA 0x13fa8; file 0x41a8; locator=proven; retn
-# ⚠ 函式 sub_13F74; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13F74; [proven] 原16byte SS候選初始化與威脅／求援閉包; 出處: docs/re/128-c-city-tick-restoration.md
 ret
 .org 0x41a9
 sub_13FA9:
 # IDA 0x13fa9; file 0x41a9; locator=proven; xor     ch, ch
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 {load} xor ch, ch
 .org 0x41ab
 # IDA 0x13fab; file 0x41ab; locator=proven; cmp     byte ptr [si+85Bh], 0
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 cmp byte ptr [si+0x85b], 0x0
 .org 0x41b0
 # IDA 0x13fb0; file 0x41b0; locator=proven; jnz     short loc_13FB3
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 jnz .+3
 .org 0x41b2
 # IDA 0x13fb2; file 0x41b2; locator=proven; retn
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 ret
 .org 0x41b3
 loc_13FB3:
 # IDA 0x13fb3; file 0x41b3; locator=proven; mov     dl, [si+841h]
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 mov dl, byte ptr [si+0x841]
 .org 0x41b7
 # IDA 0x13fb7; file 0x41b7; locator=proven; mov     bh, dl
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov bh, dl
 .org 0x41b9
 # IDA 0x13fb9; file 0x41b9; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 {load} xor bl, bl
 .org 0x41bb
 # IDA 0x13fbb; file 0x41bb; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 shr bx, 0x1
 .org 0x41bd
 # IDA 0x13fbd; file 0x41bd; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 shr bx, 0x1
 .org 0x41bf
 # IDA 0x13fbf; file 0x41bf; locator=proven; mov     dh, [bx+19h]
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 mov dh, byte ptr [bx+0x19]
 .org 0x41c2
 # IDA 0x13fc2; file 0x41c2; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 shr bx, 0x1
 .org 0x41c4
 # IDA 0x13fc4; file 0x41c4; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 shr bx, 0x1
 .org 0x41c6
 # IDA 0x13fc6; file 0x41c6; locator=proven; mov     di, bx
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov di, bx
 .org 0x41c8
 # IDA 0x13fc8; file 0x41c8; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 shr bx, 0x1
 .org 0x41ca
 # IDA 0x13fca; file 0x41ca; locator=proven; add     di, bx
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 {load} add di, bx
 .org 0x41cc
 # IDA 0x13fcc; file 0x41cc; locator=proven; push    si
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 push si
 .org 0x41cd
 # IDA 0x13fcd; file 0x41cd; locator=proven; push    bp
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 push bp
 .org 0x41ce
 # IDA 0x13fce; file 0x41ce; locator=proven; add     si, 85Ch
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 add si, 0x85c
 .org 0x41d2
 # IDA 0x13fd2; file 0x41d2; locator=proven; mov     cl, 4
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 mov cl, 0x4
 .org 0x41d4
 loc_13FD4:
 # IDA 0x13fd4; file 0x41d4; locator=proven; mov     bh, [si]
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 mov bh, byte ptr [si]
 .org 0x41d6
 # IDA 0x13fd6; file 0x41d6; locator=proven; cmp     bh, 0FFh
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 cmp bh, 0xff
 .org 0x41d9
 # IDA 0x13fd9; file 0x41d9; locator=proven; jz      short loc_14025
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 jz .+76
 .org 0x41db
 # IDA 0x13fdb; file 0x41db; locator=proven; push    di
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 push di
 .org 0x41dc
 # IDA 0x13fdc; file 0x41dc; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 {load} xor bl, bl
 .org 0x41de
 # IDA 0x13fde; file 0x41de; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 shr bx, 0x1
 .org 0x41e0
 # IDA 0x13fe0; file 0x41e0; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 shr bx, 0x1
 .org 0x41e2
 # IDA 0x13fe2; file 0x41e2; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 shr bx, 0x1
 .org 0x41e4
 # IDA 0x13fe4; file 0x41e4; locator=proven; mov     al, [bx+841h]
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 mov al, byte ptr [bx+0x841]
 .org 0x41e8
 # IDA 0x13fe8; file 0x41e8; locator=proven; cmp     dl, al
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 {load} cmp dl, al
 .org 0x41ea
 # IDA 0x13fea; file 0x41ea; locator=proven; jz      short loc_1401F
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 jz .+53
 .org 0x41ec
 # IDA 0x13fec; file 0x41ec; locator=proven; cmp     al, 18h
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
+# operand 1 18h; [proven] 鄰城owner18h走原中立候選分支; 出處: docs/re/128-c-city-tick-restoration.md
 cmp al, 0x18
 .org 0x41ee
 # IDA 0x13fee; file 0x41ee; locator=proven; jz      short loc_14003
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 jz .+21
 .org 0x41f0
 # IDA 0x13ff0; file 0x41f0; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 {load} xor ah, ah
 .org 0x41f2
 # IDA 0x13ff2; file 0x41f2; locator=proven; add     di, ax
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 {load} add di, ax
 .org 0x41f4
 # IDA 0x13ff4; file 0x41f4; locator=proven; cmp     byte ptr [di+600h], 80h
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
+# operand 1 80h; [proven] 外交關係80h以上排除敵方候選; 出處: docs/re/128-c-city-tick-restoration.md
 cmp byte ptr [di+0x600], 0x80
 .org 0x41f9
 # IDA 0x13ff9; file 0x41f9; locator=proven; jnb     short loc_1401F
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 jnb .+38
 .org 0x41fb
 # IDA 0x13ffb; file 0x41fb; locator=proven; mov     byte ptr [bp+0], 0FEh
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [bp], 0xfe
 .org 0x41ff
 # IDA 0x13fff; file 0x41ff; locator=proven; add     ch, [bx+858h]
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 add ch, byte ptr [bx+0x858]
 .org 0x4203
 loc_14003:
 # IDA 0x14003; file 0x4203; locator=proven; cmp     dh, al
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 {load} cmp dh, al
 .org 0x4205
 # IDA 0x14005; file 0x4205; locator=proven; jnz     short loc_1401F
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 jnz .+26
 .org 0x4207
 # IDA 0x14007; file 0x4207; locator=proven; mov     al, [si]
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 mov al, byte ptr [si]
 .org 0x4209
 # IDA 0x14009; file 0x4209; locator=proven; mov     [bp+0], al
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [bp], al
 .org 0x420c
 # IDA 0x1400c; file 0x420c; locator=proven; mov     al, [bx+841h]
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 mov al, byte ptr [bx+0x841]
 .org 0x4210
 # IDA 0x14010; file 0x4210; locator=proven; mov     [bp+1], al
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [bp+0x1], al
 .org 0x4213
 # IDA 0x14013; file 0x4213; locator=proven; mov     al, [bx+858h]
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 mov al, byte ptr [bx+0x858]
 .org 0x4217
 # IDA 0x14017; file 0x4217; locator=proven; inc     al
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 inc al
 .org 0x4219
 # IDA 0x14019; file 0x4219; locator=proven; mov     [bp+2], al
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [bp+0x2], al
 .org 0x421c
 # IDA 0x1401c; file 0x421c; locator=proven; add     bp, 4
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 add bp, 0x4
 .org 0x421f
 loc_1401F:
 # IDA 0x1401f; file 0x421f; locator=proven; pop     di
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 pop di
 .org 0x4220
 # IDA 0x14020; file 0x4220; locator=proven; inc     si
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 inc si
 .org 0x4221
 # IDA 0x14021; file 0x4221; locator=proven; dec     cl
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 dec cl
 .org 0x4223
 # IDA 0x14023; file 0x4223; locator=proven; jnz     short loc_13FD4
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 jnz .-79
 .org 0x4225
 loc_14025:
 # IDA 0x14025; file 0x4225; locator=proven; pop     bp
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 pop bp
 .org 0x4226
 # IDA 0x14026; file 0x4226; locator=proven; pop     si
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 pop si
 .org 0x4227
 # IDA 0x14027; file 0x4227; locator=proven; retn
-# ⚠ 函式 sub_13FA9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13FA9; [proven] 原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總; 出處: docs/re/128-c-city-tick-restoration.md
 ret
 .org 0x4228
 sub_14028:
 # IDA 0x14028; file 0x4228; locator=proven; and     byte ptr [si+840h], 3Fh
-# ⚠ 函式 sub_14028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14028; [proven] 原據點旗標與無軍團時的求援門檻，CF傳遞後續分派; 出處: docs/re/128-c-city-tick-restoration.md
+# operand 1 3Fh; [proven] 保留據點低6bits，重建80h與40h旗標; 出處: docs/re/128-c-city-tick-restoration.md
 and byte ptr [si+0x840], 0x3f
 .org 0x422d
 # IDA 0x1402d; file 0x422d; locator=proven; mov     al, 80h
-# ⚠ 函式 sub_14028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14028; [proven] 原據點旗標與無軍團時的求援門檻，CF傳遞後續分派; 出處: docs/re/128-c-city-tick-restoration.md
 mov al, 0x80
 .org 0x422f
 # IDA 0x1402f; file 0x422f; locator=proven; cmp     byte ptr [bp+0], 0FEh
-# ⚠ 函式 sub_14028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14028; [proven] 原據點旗標與無軍團時的求援門檻，CF傳遞後續分派; 出處: docs/re/128-c-city-tick-restoration.md
 cmp byte ptr [bp], 0xfe
 .org 0x4233
 # IDA 0x14033; file 0x4233; locator=proven; jb      short loc_1403E
-# ⚠ 函式 sub_14028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14028; [proven] 原據點旗標與無軍團時的求援門檻，CF傳遞後續分派; 出處: docs/re/128-c-city-tick-restoration.md
 jb .+11
 .org 0x4235
 # IDA 0x14035; file 0x4235; locator=proven; jz      short loc_14040
-# ⚠ 函式 sub_14028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14028; [proven] 原據點旗標與無軍團時的求援門檻，CF傳遞後續分派; 出處: docs/re/128-c-city-tick-restoration.md
 jz .+11
 .org 0x4237
 # IDA 0x14037; file 0x4237; locator=proven; mov     byte ptr [si+857h], 0
-# ⚠ 函式 sub_14028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14028; [proven] 原據點旗標與無軍團時的求援門檻，CF傳遞後續分派; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [si+0x857], 0x0
 .org 0x423c
 # IDA 0x1403c; file 0x423c; locator=proven; jmp     short loc_14053
-# ⚠ 函式 sub_14028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14028; [proven] 原據點旗標與無軍團時的求援門檻，CF傳遞後續分派; 出處: docs/re/128-c-city-tick-restoration.md
 jmp .+23
 .org 0x423e
 loc_1403E:
 # IDA 0x1403e; file 0x423e; locator=proven; or      al, 40h
-# ⚠ 函式 sub_14028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14028; [proven] 原據點旗標與無軍團時的求援門檻，CF傳遞後續分派; 出處: docs/re/128-c-city-tick-restoration.md
 or al, 0x40
 .org 0x4240
 loc_14040:
 # IDA 0x14040; file 0x4240; locator=proven; or      [si+840h], al
-# ⚠ 函式 sub_14028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14028; [proven] 原據點旗標與無軍團時的求援門檻，CF傳遞後續分派; 出處: docs/re/128-c-city-tick-restoration.md
 or byte ptr [si+0x840], al
 .org 0x4244
 # IDA 0x14044; file 0x4244; locator=proven; cmp     byte ptr [si+858h], 1
-# ⚠ 函式 sub_14028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14028; [proven] 原據點旗標與無軍團時的求援門檻，CF傳遞後續分派; 出處: docs/re/128-c-city-tick-restoration.md
 cmp byte ptr [si+0x858], 0x1
 .org 0x4249
 # IDA 0x14049; file 0x4249; locator=proven; jnb     short loc_14055
-# ⚠ 函式 sub_14028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14028; [proven] 原據點旗標與無軍團時的求援門檻，CF傳遞後續分派; 出處: docs/re/128-c-city-tick-restoration.md
 jnb .+12
 .org 0x424b
 # IDA 0x1404b; file 0x424b; locator=proven; mov     al, 1
-# ⚠ 函式 sub_14028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14028; [proven] 原據點旗標與無軍團時的求援門檻，CF傳遞後續分派; 出處: docs/re/128-c-city-tick-restoration.md
 mov al, 0x1
 .org 0x424d
 # IDA 0x1404d; file 0x424d; locator=proven; call    sub_140C9
-# ⚠ 函式 sub_14028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14028; [proven] 原據點旗標與無軍團時的求援門檻，CF傳遞後續分派; 出處: docs/re/128-c-city-tick-restoration.md
 call .+124
 .org 0x4250
 # IDA 0x14050; file 0x4250; locator=proven; call    sub_140B3
-# ⚠ 函式 sub_14028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14028; [proven] 原據點旗標與無軍團時的求援門檻，CF傳遞後續分派; 出處: docs/re/128-c-city-tick-restoration.md
 call .+99
 .org 0x4253
 loc_14053:
 # IDA 0x14053; file 0x4253; locator=proven; clc
-# ⚠ 函式 sub_14028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14028; [proven] 原據點旗標與無軍團時的求援門檻，CF傳遞後續分派; 出處: docs/re/128-c-city-tick-restoration.md
 clc
 .org 0x4254
 # IDA 0x14054; file 0x4254; locator=proven; retn
-# ⚠ 函式 sub_14028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14028; [proven] 原據點旗標與無軍團時的求援門檻，CF傳遞後續分派; 出處: docs/re/128-c-city-tick-restoration.md
 ret
 .org 0x4255
 loc_14055:
 # IDA 0x14055; file 0x4255; locator=proven; stc
-# ⚠ 函式 sub_14028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14028; [proven] 原據點旗標與無軍團時的求援門檻，CF傳遞後續分派; 出處: docs/re/128-c-city-tick-restoration.md
 stc
 .org 0x4256
 # IDA 0x14056; file 0x4256; locator=proven; retn
-# ⚠ 函式 sub_14028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14028; [proven] 原據點旗標與無軍團時的求援門檻，CF傳遞後續分派; 出處: docs/re/128-c-city-tick-restoration.md
 ret
 .org 0x4257
 sub_14057:
 # IDA 0x14057; file 0x4257; locator=proven; cmp     byte ptr [bp+0], 0FEh
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 cmp byte ptr [bp], 0xfe
 .org 0x425b
 # IDA 0x1405b; file 0x425b; locator=proven; jnb     short locret_140B2
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 jnb .+87
 .org 0x425d
 # IDA 0x1405d; file 0x425d; locator=proven; call    sub_1ECE0
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 call .-21373
 .org 0x4260
 # IDA 0x14060; file 0x4260; locator=proven; and     al, 3
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 and al, 0x3
 .org 0x4262
 loc_14062:
 # IDA 0x14062; file 0x4262; locator=proven; mov     di, bp
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov di, bp
 .org 0x4264
 loc_14064:
 # IDA 0x14064; file 0x4264; locator=proven; cmp     byte ptr ss:[di], 0FEh
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 ss; cmp byte ptr [di], 0xfe
 .org 0x4268
 # IDA 0x14068; file 0x4268; locator=proven; jnb     short loc_14062
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 jnb .-6
 .org 0x426a
 # IDA 0x1406a; file 0x426a; locator=proven; dec     al
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 dec al
 .org 0x426c
 # IDA 0x1406c; file 0x426c; locator=proven; jz      short loc_14073
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 jz .+7
 .org 0x426e
 # IDA 0x1406e; file 0x426e; locator=proven; add     di, 4
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 add di, 0x4
 .org 0x4271
 # IDA 0x14071; file 0x4271; locator=proven; jmp     short loc_14064
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 jmp .-13
 .org 0x4273
 loc_14073:
 # IDA 0x14073; file 0x4273; locator=proven; cmp     byte ptr [si+858h], 1
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 cmp byte ptr [si+0x858], 0x1
 .org 0x4278
 # IDA 0x14078; file 0x4278; locator=proven; ja      short loc_14099
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 ja .+33
 .org 0x427a
 # IDA 0x1407a; file 0x427a; locator=proven; mov     al, [si+854h]
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 mov al, byte ptr [si+0x854]
 .org 0x427e
 # IDA 0x1407e; file 0x427e; locator=proven; add     al, 2
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 add al, 0x2
 .org 0x4280
 # IDA 0x14080; file 0x4280; locator=proven; sub     al, [si+858h]
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 sub al, byte ptr [si+0x858]
 .org 0x4284
 # IDA 0x14084; file 0x4284; locator=proven; jbe     short locret_140B2
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 jbe .+46
 .org 0x4286
 # IDA 0x14086; file 0x4286; locator=proven; mov     cl, cs:byte_10CFF
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 cs; mov cl, byte ptr [0xcff]
 .org 0x428b
 # IDA 0x1408b; file 0x428b; locator=proven; cmp     cl, [si+841h]
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 cmp cl, byte ptr [si+0x841]
 .org 0x428f
 # IDA 0x1408f; file 0x428f; locator=proven; jz      short locret_140B2
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 jz .+35
 .org 0x4291
 # IDA 0x14091; file 0x4291; locator=proven; call    sub_140C9
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 call .+56
 .org 0x4294
 # IDA 0x14094; file 0x4294; locator=proven; call    sub_140B3
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 call .+31
 .org 0x4297
 # IDA 0x14097; file 0x4297; locator=proven; jmp     short locret_140B2
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 jmp .+27
 .org 0x4299
 loc_14099:
 # IDA 0x14099; file 0x4299; locator=proven; and     al, al
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 {load} and al, al
 .org 0x429b
 # IDA 0x1409b; file 0x429b; locator=proven; jnz     short loc_1409F
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 jnz .+4
 .org 0x429d
 # IDA 0x1409d; file 0x429d; locator=proven; mov     al, 1
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 mov al, 0x1
 .org 0x429f
 loc_1409F:
 # IDA 0x1409f; file 0x429f; locator=proven; mov     cl, ss:[di]
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 ss; mov cl, byte ptr [di]
 .org 0x42a2
 # IDA 0x140a2; file 0x42a2; locator=proven; mov     ch, 0
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 mov ch, 0x0
 .org 0x42a4
 # IDA 0x140a4; file 0x42a4; locator=proven; mov     dl, al
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov dl, al
 .org 0x42a6
 # IDA 0x140a6; file 0x42a6; locator=proven; mov     dh, [si+858h]
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 mov dh, byte ptr [si+0x858]
 .org 0x42aa
 # IDA 0x140aa; file 0x42aa; locator=proven; call    sub_14155
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 call .+171
 .org 0x42ad
 # IDA 0x140ad; file 0x42ad; locator=proven; mov     byte ptr [si+857h], 0
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [si+0x857], 0x0
 .org 0x42b2
 locret_140B2:
 # IDA 0x140b2; file 0x42b2; locator=proven; retn
-# ⚠ 函式 sub_14057; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14057; [proven] 原候選選取與軍團分派，保留byte亂數選取及玩家門檻; 出處: docs/re/128-c-city-tick-restoration.md
 ret
 .org 0x42b3
 sub_140B3:
 # IDA 0x140b3; file 0x42b3; locator=proven; mov     bh, [si+841h]
-# ⚠ 函式 sub_140B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140B3; [proven] 原寫入所屬勢力+16的求援據點編號; 出處: docs/re/128-c-city-tick-restoration.md
 mov bh, byte ptr [si+0x841]
 .org 0x42b7
 # IDA 0x140b7; file 0x42b7; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_140B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140B3; [proven] 原寫入所屬勢力+16的求援據點編號; 出處: docs/re/128-c-city-tick-restoration.md
 {load} xor bl, bl
 .org 0x42b9
 # IDA 0x140b9; file 0x42b9; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_140B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140B3; [proven] 原寫入所屬勢力+16的求援據點編號; 出處: docs/re/128-c-city-tick-restoration.md
 shr bx, 0x1
 .org 0x42bb
 # IDA 0x140bb; file 0x42bb; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_140B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140B3; [proven] 原寫入所屬勢力+16的求援據點編號; 出處: docs/re/128-c-city-tick-restoration.md
 shr bx, 0x1
 .org 0x42bd
 # IDA 0x140bd; file 0x42bd; locator=proven; mov     ax, si
-# ⚠ 函式 sub_140B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140B3; [proven] 原寫入所屬勢力+16的求援據點編號; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov ax, si
 .org 0x42bf
 # IDA 0x140bf; file 0x42bf; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_140B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140B3; [proven] 原寫入所屬勢力+16的求援據點編號; 出處: docs/re/128-c-city-tick-restoration.md
 shl ax, 0x1
 .org 0x42c1
 # IDA 0x140c1; file 0x42c1; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_140B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140B3; [proven] 原寫入所屬勢力+16的求援據點編號; 出處: docs/re/128-c-city-tick-restoration.md
 shl ax, 0x1
 .org 0x42c3
 # IDA 0x140c3; file 0x42c3; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_140B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140B3; [proven] 原寫入所屬勢力+16的求援據點編號; 出處: docs/re/128-c-city-tick-restoration.md
 shl ax, 0x1
 .org 0x42c5
 # IDA 0x140c5; file 0x42c5; locator=proven; mov     [bx+16h], ah
-# ⚠ 函式 sub_140B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140B3; [proven] 原寫入所屬勢力+16的求援據點編號; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [bx+0x16], ah
 .org 0x42c8
 # IDA 0x140c8; file 0x42c8; locator=proven; retn
-# ⚠ 函式 sub_140B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140B3; [proven] 原寫入所屬勢力+16的求援據點編號; 出處: docs/re/128-c-city-tick-restoration.md
 ret
 .org 0x42c9
 sub_140C9:
 # IDA 0x140c9; file 0x42c9; locator=proven; cmp     byte ptr [si+857h], 0
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 cmp byte ptr [si+0x857], 0x0
 .org 0x42ce
 # IDA 0x140ce; file 0x42ce; locator=proven; jz      short loc_140D1
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 jz .+3
 .org 0x42d0
 # IDA 0x140d0; file 0x42d0; locator=proven; retn
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 ret
 .org 0x42d1
 loc_140D1:
 # IDA 0x140d1; file 0x42d1; locator=proven; push    si
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 push si
 .org 0x42d2
 # IDA 0x140d2; file 0x42d2; locator=proven; mov     cl, cs:byte_10CFF
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 cs; mov cl, byte ptr [0xcff]
 .org 0x42d7
 # IDA 0x140d7; file 0x42d7; locator=proven; cmp     cl, [si+841h]
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 cmp cl, byte ptr [si+0x841]
 .org 0x42db
 # IDA 0x140db; file 0x42db; locator=proven; jnz     short loc_140FF
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 jnz .+36
 .org 0x42dd
 # IDA 0x140dd; file 0x42dd; locator=proven; mov     di, si
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov di, si
 .org 0x42df
 # IDA 0x140df; file 0x42df; locator=proven; add     di, 840h
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 add di, 0x840
 .org 0x42e3
 # IDA 0x140e3; file 0x42e3; locator=proven; push    di
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 push di
 .org 0x42e4
 # IDA 0x140e4; file 0x42e4; locator=proven; mov     di, sp
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov di, sp
 .org 0x42e6
 # IDA 0x140e6; file 0x42e6; locator=proven; call    sub_10CDE
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 call .-13320
 .org 0x42e9
 # IDA 0x140e9; file 0x42e9; locator=proven; mov     cx, 26h
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 mov cx, 0x26
 .org 0x42ec
 # IDA 0x140ec; file 0x42ec; locator=proven; mov     al, 93h
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 mov al, 0x93
 .org 0x42ee
 # IDA 0x140ee; file 0x42ee; locator=proven; call    sub_18810
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 call .+18210
 .org 0x42f1
 # IDA 0x140f1; file 0x42f1; locator=proven; add     sp, 2
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 add sp, 0x2
 .org 0x42f4
 # IDA 0x140f4; file 0x42f4; locator=proven; mov     di, si
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov di, si
 .org 0x42f6
 # IDA 0x140f6; file 0x42f6; locator=proven; call    sub_1ECE0
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 call .-21526
 .org 0x42f9
 # IDA 0x140f9; file 0x42f9; locator=proven; and     al, 0Fh
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 and al, 0xf
 .org 0x42fb
 # IDA 0x140fb; file 0x42fb; locator=proven; add     al, 18h
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 add al, 0x18
 .org 0x42fd
 # IDA 0x140fd; file 0x42fd; locator=proven; jmp     short loc_1414F
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 jmp .+82
 .org 0x42ff
 loc_140FF:
 # IDA 0x140ff; file 0x42ff; locator=proven; mov     di, si
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov di, si
 .org 0x4301
 # IDA 0x14101; file 0x4301; locator=proven; mov     cx, si
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov cx, si
 .org 0x4303
 # IDA 0x14103; file 0x4303; locator=proven; shl     cx, 1
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 shl cx, 0x1
 .org 0x4305
 # IDA 0x14105; file 0x4305; locator=proven; shl     cx, 1
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 shl cx, 0x1
 .org 0x4307
 # IDA 0x14107; file 0x4307; locator=proven; shl     cx, 1
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 shl cx, 0x1
 .org 0x4309
 # IDA 0x14109; file 0x4309; locator=proven; mov     cl, al
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov cl, al
 .org 0x430b
 # IDA 0x1410b; file 0x430b; locator=proven; mov     bh, [si+841h]
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 mov bh, byte ptr [si+0x841]
 .org 0x430f
 # IDA 0x1410f; file 0x430f; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 {load} xor bl, bl
 .org 0x4311
 # IDA 0x14111; file 0x4311; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 shr bx, 0x1
 .org 0x4313
 # IDA 0x14113; file 0x4313; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 shr bx, 0x1
 .org 0x4315
 # IDA 0x14115; file 0x4315; locator=proven; mov     si, bx
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov si, bx
 .org 0x4317
 # IDA 0x14117; file 0x4317; locator=proven; call    sub_14575
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 call .+1118
 .org 0x431a
 # IDA 0x1411a; file 0x431a; locator=proven; jb      short loc_14153
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 jb .+57
 .org 0x431c
 # IDA 0x1411c; file 0x431c; locator=proven; mov     bh, [si+3]
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 mov bh, byte ptr [si+0x3]
 .org 0x431f
 # IDA 0x1411f; file 0x431f; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 {load} xor bl, bl
 .org 0x4321
 # IDA 0x14121; file 0x4321; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 shr bx, 0x1
 .org 0x4323
 # IDA 0x14123; file 0x4323; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 shr bx, 0x1
 .org 0x4325
 # IDA 0x14125; file 0x4325; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 shr bx, 0x1
 .org 0x4327
 # IDA 0x14127; file 0x4327; locator=proven; mov     ax, [di+848h]
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 mov ax, word ptr [di+0x848]
 .org 0x432b
 # IDA 0x1412b; file 0x432b; locator=proven; sub     ax, [bx+848h]
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 sub ax, word ptr [bx+0x848]
 .org 0x432f
 # IDA 0x1412f; file 0x432f; locator=proven; jnb     short loc_14133
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 jnb .+4
 .org 0x4331
 # IDA 0x14131; file 0x4331; locator=proven; neg     ax
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 neg ax
 .org 0x4333
 loc_14133:
 # IDA 0x14133; file 0x4333; locator=proven; mov     dx, [di+84Ah]
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 mov dx, word ptr [di+0x84a]
 .org 0x4337
 # IDA 0x14137; file 0x4337; locator=proven; sub     dx, [bx+848h]
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
+# operand 1 [bx+848h]; [proven] 原程式讀取首都據點的848欄位，未改成84A; 出處: docs/re/128-c-city-tick-restoration.md
 sub dx, word ptr [bx+0x848]
 .org 0x433b
 # IDA 0x1413b; file 0x433b; locator=proven; jnb     short loc_1413F
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 jnb .+4
 .org 0x433d
 # IDA 0x1413d; file 0x433d; locator=proven; neg     dx
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 neg dx
 .org 0x433f
 loc_1413F:
 # IDA 0x1413f; file 0x433f; locator=proven; add     ax, dx
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 {load} add ax, dx
 .org 0x4341
 # IDA 0x14141; file 0x4341; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 shr ax, 0x1
 .org 0x4343
 # IDA 0x14143; file 0x4343; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 shr ax, 0x1
 .org 0x4345
 # IDA 0x14145; file 0x4345; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 shr ax, 0x1
 .org 0x4347
 # IDA 0x14147; file 0x4347; locator=proven; cmp     ax, 1Eh
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 cmp ax, offset imm_at_14147
 .org 0x434a
 # IDA 0x1414a; file 0x434a; locator=proven; jbe     short loc_1414F
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 jbe .+5
 .org 0x434c
 # IDA 0x1414c; file 0x434c; locator=proven; mov     ax, 1Eh
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 mov ax, 0x1e
 .org 0x434f
 loc_1414F:
 # IDA 0x1414f; file 0x434f; locator=proven; mov     [di+857h], al
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [di+0x857], al
 .org 0x4353
 loc_14153:
 # IDA 0x14153; file 0x4353; locator=proven; pop     si
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 pop si
 .org 0x4354
 # IDA 0x14154; file 0x4354; locator=proven; retn
-# ⚠ 函式 sub_140C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_140C9; [proven] 原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式; 出處: docs/re/128-c-city-tick-restoration.md
 ret
 .org 0x4355
 sub_14155:
 # IDA 0x14155; file 0x4355; locator=proven; sub     dh, dl
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 {load} sub dh, dl
 .org 0x4357
 # IDA 0x14157; file 0x4357; locator=proven; mov     di, 2240h
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 mov di, 0x2240
 .org 0x435a
 # IDA 0x1415a; file 0x435a; locator=proven; mov     bx, si
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov bx, si
 .org 0x435c
 # IDA 0x1415c; file 0x435c; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 shr bx, 0x1
 .org 0x435e
 # IDA 0x1415e; file 0x435e; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 shr bx, 0x1
 .org 0x4360
 loc_14160:
 # IDA 0x14160; file 0x4360; locator=proven; cmp     bx, [di+0Eh]
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 cmp bx, word ptr [di+0xe]
 .org 0x4363
 # IDA 0x14163; file 0x4363; locator=proven; jnz     short loc_1418E
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 jnz .+43
 .org 0x4365
 # IDA 0x14165; file 0x4365; locator=proven; cmp     byte ptr [di], 80h
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 cmp byte ptr [di], 0x80
 .org 0x4368
 # IDA 0x14168; file 0x4368; locator=proven; jb      short loc_1418E
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 jb .+38
 .org 0x436a
 # IDA 0x1416a; file 0x436a; locator=proven; and     dh, dh
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 {load} and dh, dh
 .org 0x436c
 # IDA 0x1416c; file 0x436c; locator=proven; jz      short loc_14179
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 jz .+13
 .org 0x436e
 # IDA 0x1416e; file 0x436e; locator=proven; call    sub_1ECE0
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 call .-21646
 .org 0x4371
 # IDA 0x14171; file 0x4371; locator=proven; cmp     al, 40h
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 cmp al, 0x40
 .org 0x4373
 # IDA 0x14173; file 0x4373; locator=proven; jnb     short loc_14179
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 jnb .+6
 .org 0x4375
 # IDA 0x14175; file 0x4375; locator=proven; dec     dh
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 dec dh
 .org 0x4377
 # IDA 0x14177; file 0x4377; locator=proven; jmp     short loc_1418E
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 jmp .+23
 .org 0x4379
 loc_14179:
 # IDA 0x14179; file 0x4379; locator=proven; test    byte ptr [di], 4
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 test byte ptr [di], 0x4
 .org 0x437c
 # IDA 0x1417c; file 0x437c; locator=proven; jz      short loc_1418A
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 jz .+14
 .org 0x437e
 # IDA 0x1417e; file 0x437e; locator=proven; cmp     byte ptr [di+23h], 8
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 cmp byte ptr [di+0x23], 0x8
 .org 0x4382
 # IDA 0x14182; file 0x4382; locator=proven; jnb     short loc_1418A
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 jnb .+8
 .org 0x4384
 # IDA 0x14184; file 0x4384; locator=proven; mov     [di+20h], cl
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [di+0x20], cl
 .org 0x4387
 # IDA 0x14187; file 0x4387; locator=proven; mov     [di+23h], ch
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [di+0x23], ch
 .org 0x438a
 loc_1418A:
 # IDA 0x1418a; file 0x438a; locator=proven; dec     dl
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 dec dl
 .org 0x438c
 # IDA 0x1418c; file 0x438c; locator=proven; jz      short locret_14193
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 jz .+7
 .org 0x438e
 loc_1418E:
 # IDA 0x1418e; file 0x438e; locator=proven; add     di, 40h
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 add di, 0x40
 .org 0x4391
 # IDA 0x14191; file 0x4391; locator=proven; jmp     short loc_14160
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 jmp .-49
 .org 0x4393
 locret_14193:
 # IDA 0x14193; file 0x4393; locator=proven; retn
-# ⚠ 函式 sub_14155; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14155; [proven] 原同節點軍團選取與目標／stage分派，保留隨機跳過; 出處: docs/re/128-c-city-tick-restoration.md
 ret
 .org 0x4394
 sub_14194:
 # IDA 0x14194; file 0x4394; locator=proven; mov     cl, 8
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
+# operand 1 8; [proven] 非玩家據點預設整備CL=8; 出處: docs/re/128-c-city-tick-restoration.md
 mov cl, 0x8
 .org 0x4396
 # IDA 0x14196; file 0x4396; locator=proven; mov     dl, 4
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 mov dl, 0x4
 .org 0x4398
 # IDA 0x14198; file 0x4398; locator=proven; mov     al, cs:byte_10CFF
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 cs; mov al, byte ptr [0xcff]
 .org 0x439c
 # IDA 0x1419c; file 0x439c; locator=proven; cmp     al, [si+841h]
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 cmp al, byte ptr [si+0x841]
 .org 0x43a0
 # IDA 0x141a0; file 0x43a0; locator=proven; jnz     short loc_141CC
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 jnz .+44
 .org 0x43a2
 # IDA 0x141a2; file 0x43a2; locator=proven; mov     cl, 5
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 mov cl, 0x5
 .org 0x43a4
 # IDA 0x141a4; file 0x43a4; locator=proven; mov     dl, 1
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 mov dl, 0x1
 .org 0x43a6
 # IDA 0x141a6; file 0x43a6; locator=proven; mov     bh, [si+859h]
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 mov bh, byte ptr [si+0x859]
 .org 0x43aa
 # IDA 0x141aa; file 0x43aa; locator=proven; cmp     bh, 0FFh
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 cmp bh, 0xff
 .org 0x43ad
 # IDA 0x141ad; file 0x43ad; locator=proven; jz      short loc_141CC
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 jz .+31
 .org 0x43af
 # IDA 0x141af; file 0x43af; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 {load} xor bl, bl
 .org 0x43b1
 # IDA 0x141b1; file 0x43b1; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 shr bx, 0x1
 .org 0x43b3
 # IDA 0x141b3; file 0x43b3; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 shr bx, 0x1
 .org 0x43b5
 # IDA 0x141b5; file 0x43b5; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 shr bx, 0x1
 .org 0x43b7
 # IDA 0x141b7; file 0x43b7; locator=proven; cmp     byte ptr [bx+425Ah], 0
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 cmp byte ptr [bx+0x425a], 0x0
 .org 0x43bc
 # IDA 0x141bc; file 0x43bc; locator=proven; jz      short loc_141CC
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 jz .+16
 .org 0x43be
 # IDA 0x141be; file 0x43be; locator=proven; dec     byte ptr [bx+425Ah]
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 dec byte ptr [bx+0x425a]
 .org 0x43c2
 # IDA 0x141c2; file 0x43c2; locator=proven; add     cl, [bx+4253h]
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 add cl, byte ptr [bx+0x4253]
 .org 0x43c6
 # IDA 0x141c6; file 0x43c6; locator=proven; add     dl, [bx+4251h]
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 add dl, byte ptr [bx+0x4251]
 .org 0x43ca
 # IDA 0x141ca; file 0x43ca; locator=proven; shr     dl, 1
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 shr dl, 0x1
 .org 0x43cc
 loc_141CC:
 # IDA 0x141cc; file 0x43cc; locator=proven; mov     ch, cl
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov ch, cl
 .org 0x43ce
 # IDA 0x141ce; file 0x43ce; locator=proven; sub     ch, 0Fh
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 sub ch, 0xf
 .org 0x43d1
 # IDA 0x141d1; file 0x43d1; locator=proven; ja      short loc_141D5
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 ja .+4
 .org 0x43d3
 # IDA 0x141d3; file 0x43d3; locator=proven; mov     ch, 1
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 mov ch, 0x1
 .org 0x43d5
 loc_141D5:
 # IDA 0x141d5; file 0x43d5; locator=proven; call    sub_1ECE0
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 call .-21749
 .org 0x43d8
 # IDA 0x141d8; file 0x43d8; locator=proven; and     al, 0Fh
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 and al, 0xf
 .org 0x43da
 # IDA 0x141da; file 0x43da; locator=proven; cmp     cl, al
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 {load} cmp cl, al
 .org 0x43dc
 # IDA 0x141dc; file 0x43dc; locator=proven; jb      short loc_141EE
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 jb .+18
 .org 0x43de
 # IDA 0x141de; file 0x43de; locator=proven; mov     al, [si+850h]
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 mov al, byte ptr [si+0x850]
 .org 0x43e2
 # IDA 0x141e2; file 0x43e2; locator=proven; add     al, ch
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 {load} add al, ch
 .org 0x43e4
 # IDA 0x141e4; file 0x43e4; locator=proven; cmp     al, 0C8h
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
+# operand 1 0C8h; [proven] 原byte加總後與C8h比較，上限200但保留先行byte回繞; 出處: docs/re/128-c-city-tick-restoration.md
 cmp al, 0xc8
 .org 0x43e6
 # IDA 0x141e6; file 0x43e6; locator=proven; jbe     short loc_141EA
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 jbe .+4
 .org 0x43e8
 # IDA 0x141e8; file 0x43e8; locator=proven; mov     al, 0C8h
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 mov al, 0xc8
 .org 0x43ea
 loc_141EA:
 # IDA 0x141ea; file 0x43ea; locator=proven; mov     [si+850h], al
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [si+0x850], al
 .org 0x43ee
 loc_141EE:
 # IDA 0x141ee; file 0x43ee; locator=proven; call    sub_1ECE0
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 call .-21774
 .org 0x43f1
 # IDA 0x141f1; file 0x43f1; locator=proven; and     al, 0Fh
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 and al, 0xf
 .org 0x43f3
 # IDA 0x141f3; file 0x43f3; locator=proven; cmp     cl, al
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 {load} cmp cl, al
 .org 0x43f5
 # IDA 0x141f5; file 0x43f5; locator=proven; jb      short loc_1420B
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 jb .+22
 .org 0x43f7
 # IDA 0x141f7; file 0x43f7; locator=proven; mov     al, [si+851h]
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 mov al, byte ptr [si+0x851]
 .org 0x43fb
 # IDA 0x141fb; file 0x43fb; locator=proven; shr     ch, 1
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 shr ch, 0x1
 .org 0x43fd
 # IDA 0x141fd; file 0x43fd; locator=proven; inc     ch
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 inc ch
 .org 0x43ff
 # IDA 0x141ff; file 0x43ff; locator=proven; add     al, ch
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 {load} add al, ch
 .org 0x4401
 # IDA 0x14201; file 0x4401; locator=proven; cmp     al, 0C8h
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 cmp al, 0xc8
 .org 0x4403
 # IDA 0x14203; file 0x4403; locator=proven; jbe     short loc_14207
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 jbe .+4
 .org 0x4405
 # IDA 0x14205; file 0x4405; locator=proven; mov     al, 0C8h
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 mov al, 0xc8
 .org 0x4407
 loc_14207:
 # IDA 0x14207; file 0x4407; locator=proven; mov     [si+851h], al
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [si+0x851], al
 .org 0x440b
 loc_1420B:
 # IDA 0x1420b; file 0x440b; locator=proven; mov     cx, [si+852h]
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 mov cx, word ptr [si+0x852]
 .org 0x440f
 # IDA 0x1420f; file 0x440f; locator=proven; cmp     ch, cl
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 {load} cmp ch, cl
 .org 0x4411
 # IDA 0x14211; file 0x4411; locator=proven; jnb     short loc_1422F
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 jnb .+30
 .org 0x4413
 # IDA 0x14213; file 0x4413; locator=proven; call    sub_1ECE0
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 call .-21811
 .org 0x4416
 # IDA 0x14216; file 0x4416; locator=proven; cmp     al, 18h
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 cmp al, 0x18
 .org 0x4418
 # IDA 0x14218; file 0x4418; locator=proven; jnb     short locret_14235
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 jnb .+29
 .org 0x441a
 # IDA 0x1421a; file 0x441a; locator=proven; sub     [si+850h], dl
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 sub byte ptr [si+0x850], dl
 .org 0x441e
 # IDA 0x1421e; file 0x441e; locator=proven; jnb     short loc_14225
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 jnb .+7
 .org 0x4420
 # IDA 0x14220; file 0x4420; locator=proven; mov     byte ptr [si+850h], 0
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [si+0x850], 0x0
 .org 0x4425
 loc_14225:
 # IDA 0x14225; file 0x4425; locator=proven; add     ch, dl
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 {load} add ch, dl
 .org 0x4427
 # IDA 0x14227; file 0x4427; locator=proven; jnb     short loc_1422B
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 jnb .+4
 .org 0x4429
 # IDA 0x14229; file 0x4429; locator=proven; mov     ch, 0FFh
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 mov ch, 0xff
 .org 0x442b
 loc_1422B:
 # IDA 0x1422b; file 0x442b; locator=proven; cmp     ch, cl
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 {load} cmp ch, cl
 .org 0x442d
 # IDA 0x1422d; file 0x442d; locator=proven; jbe     short loc_14231
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 jbe .+4
 .org 0x442f
 loc_1422F:
 # IDA 0x1422f; file 0x442f; locator=proven; mov     ch, cl
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov ch, cl
 .org 0x4431
 loc_14231:
 # IDA 0x14231; file 0x4431; locator=proven; mov     [si+853h], ch
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [si+0x853], ch
 .org 0x4435
 locret_14235:
 # IDA 0x14235; file 0x4435; locator=proven; retn
-# ⚠ 函式 sub_14194; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14194; [proven] 原據點整備與內政官係數、亂數及byte界限; 出處: docs/re/128-c-city-tick-restoration.md
 ret
 .org 0x4436
 sub_14236:
@@ -24425,102 +24440,104 @@ ret
 .org 0x4469
 sub_14269:
 # IDA 0x14269; file 0x4469; locator=proven; push    ax
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
 push ax
 .org 0x446a
 # IDA 0x1426a; file 0x446a; locator=proven; mov     ah, [si+855h]
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
 mov ah, byte ptr [si+0x855]
 .org 0x446e
 # IDA 0x1426e; file 0x446e; locator=proven; mov     al, [si+851h]
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
 mov al, byte ptr [si+0x851]
 .org 0x4472
 # IDA 0x14272; file 0x4472; locator=proven; sub     al, ah
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
 {load} sub al, ah
 .org 0x4474
 # IDA 0x14274; file 0x4474; locator=proven; jb      short loc_1427C
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
 jb .+8
 .org 0x4476
 # IDA 0x14276; file 0x4476; locator=proven; mov     [si+851h], al
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [si+0x851], al
 .org 0x447a
 # IDA 0x1427a; file 0x447a; locator=proven; jmp     short loc_142A9
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
 jmp .+47
 .org 0x447c
 loc_1427C:
 # IDA 0x1427c; file 0x447c; locator=proven; mov     byte ptr [si+851h], 0
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [si+0x851], 0x0
 .org 0x4481
 # IDA 0x14281; file 0x4481; locator=proven; neg     al
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
 neg al
 .org 0x4483
 # IDA 0x14283; file 0x4483; locator=proven; push    ax
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
 push ax
 .org 0x4484
 # IDA 0x14284; file 0x4484; locator=proven; sub     [si+850h], al
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
 sub byte ptr [si+0x850], al
 .org 0x4488
 # IDA 0x14288; file 0x4488; locator=proven; jnb     short loc_1428F
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
 jnb .+7
 .org 0x448a
 # IDA 0x1428a; file 0x448a; locator=proven; mov     byte ptr [si+850h], 0
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [si+0x850], 0x0
 .org 0x448f
 loc_1428F:
 # IDA 0x1428f; file 0x448f; locator=proven; mul     byte ptr [si+84Fh]
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
+# operand 0 ; [proven] 原災害倍率取生產力word的高byte，損失floor(D*(P>>8)/4)不超過P; 出處: docs/re/128-c-city-tick-restoration.md
 mul byte ptr [si+0x84f]
 .org 0x4493
 # IDA 0x14293; file 0x4493; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
 shr ax, 0x1
 .org 0x4495
 # IDA 0x14295; file 0x4495; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
 shr ax, 0x1
 .org 0x4497
 # IDA 0x14297; file 0x4497; locator=proven; sub     [si+84Eh], ax
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
+# operand 0 [si+84Eh]; [proven] 原16-bit生產力減法；倍率取生產力高byte，合法據點值不會借位; 出處: docs/re/128-c-city-tick-restoration.md
 sub word ptr [si+0x84e], ax
 .org 0x449b
 # IDA 0x1429b; file 0x449b; locator=proven; pop     ax
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
 pop ax
 .org 0x449c
 # IDA 0x1429c; file 0x449c; locator=proven; shr     al, 1
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
 shr al, 0x1
 .org 0x449e
 # IDA 0x1429e; file 0x449e; locator=proven; sub     [si+853h], al
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
 sub byte ptr [si+0x853], al
 .org 0x44a2
 # IDA 0x142a2; file 0x44a2; locator=proven; jnb     short loc_142A9
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
 jnb .+7
 .org 0x44a4
 # IDA 0x142a4; file 0x44a4; locator=proven; mov     byte ptr [si+853h], 0
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [si+0x853], 0x0
 .org 0x44a9
 loc_142A9:
 # IDA 0x142a9; file 0x44a9; locator=proven; pop     ax
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
 pop ax
 .org 0x44aa
 # IDA 0x142aa; file 0x44aa; locator=proven; retn
-# ⚠ 函式 sub_14269; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14269; [proven] 原災害marker對防災／上昇／生產力／城兵的byte及word運算; 出處: docs/re/128-c-city-tick-restoration.md
 ret
 .org 0x44ab
 sub_142AB:
@@ -25745,287 +25762,287 @@ ret
 .org 0x4775
 sub_14575:
 # IDA 0x14575; file 0x4775; locator=proven; push    ax
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 push ax
 .org 0x4776
 # IDA 0x14576; file 0x4776; locator=proven; push    bx
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 push bx
 .org 0x4777
 # IDA 0x14577; file 0x4777; locator=proven; mov     bl, 5
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 mov bl, 0x5
 .org 0x4779
 # IDA 0x14579; file 0x4779; locator=proven; mov     ax, [si+21h]
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 mov ax, word ptr [si+0x21]
 .org 0x477c
 # IDA 0x1457c; file 0x477c; locator=proven; cmp     ax, 0A0h
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 cmp ax, 0xa0
 .org 0x477f
 # IDA 0x1457f; file 0x477f; locator=proven; jle     short loc_1458C
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 jle .+13
 .org 0x4781
 # IDA 0x14581; file 0x4781; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 shl ax, 0x1
 .org 0x4783
 # IDA 0x14583; file 0x4783; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 shl ax, 0x1
 .org 0x4785
 # IDA 0x14585; file 0x4785; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 shl ax, 0x1
 .org 0x4787
 # IDA 0x14587; file 0x4787; locator=proven; add     bl, 2
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 add bl, 0x2
 .org 0x478a
 # IDA 0x1458a; file 0x478a; locator=proven; mov     bl, ah
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov bl, ah
 .org 0x478c
 loc_1458C:
 # IDA 0x1458c; file 0x478c; locator=proven; sub     bl, [si+14h]
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 sub bl, byte ptr [si+0x14]
 .org 0x478f
 # IDA 0x1458f; file 0x478f; locator=proven; ja      short loc_14594
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 ja .+5
 .org 0x4791
 # IDA 0x14591; file 0x4791; locator=proven; stc
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 stc
 .org 0x4792
 # IDA 0x14592; file 0x4792; locator=proven; jmp     short loc_145BE
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 jmp .+44
 .org 0x4794
 loc_14594:
 # IDA 0x14594; file 0x4794; locator=proven; cmp     cl, bl
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 {load} cmp cl, bl
 .org 0x4796
 # IDA 0x14596; file 0x4796; locator=proven; jbe     short loc_1459A
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 jbe .+4
 .org 0x4798
 # IDA 0x14598; file 0x4798; locator=proven; mov     cl, bl
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov cl, bl
 .org 0x479a
 loc_1459A:
 # IDA 0x1459a; file 0x479a; locator=proven; push    di
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 push di
 .org 0x479b
 # IDA 0x1459b; file 0x479b; locator=proven; mov     ax, si
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov ax, si
 .org 0x479d
 # IDA 0x1459d; file 0x479d; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 shl ax, 0x1
 .org 0x479f
 # IDA 0x1459f; file 0x479f; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 shl ax, 0x1
 .org 0x47a1
 # IDA 0x145a1; file 0x47a1; locator=proven; mov     al, ah
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov al, ah
 .org 0x47a3
 # IDA 0x145a3; file 0x47a3; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 {load} xor ah, ah
 .org 0x47a5
 loc_145A5:
 # IDA 0x145a5; file 0x47a5; locator=proven; call    sub_145C1
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 call .+28
 .org 0x47a8
 # IDA 0x145a8; file 0x47a8; locator=proven; jb      short loc_145B7
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 jb .+15
 .org 0x47aa
 # IDA 0x145aa; file 0x47aa; locator=proven; inc     ah
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 inc ah
 .org 0x47ac
 # IDA 0x145ac; file 0x47ac; locator=proven; mov     [di+20h], ch
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [di+0x20], ch
 .org 0x47af
 # IDA 0x145af; file 0x47af; locator=proven; mov     byte ptr [di+23h], 0
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 mov byte ptr [di+0x23], 0x0
 .org 0x47b3
 # IDA 0x145b3; file 0x47b3; locator=proven; dec     cl
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 dec cl
 .org 0x47b5
 # IDA 0x145b5; file 0x47b5; locator=proven; jnz     short loc_145A5
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 jnz .-16
 .org 0x47b7
 loc_145B7:
 # IDA 0x145b7; file 0x47b7; locator=proven; clc
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 clc
 .org 0x47b8
 # IDA 0x145b8; file 0x47b8; locator=proven; and     ah, ah
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 {load} and ah, ah
 .org 0x47ba
 # IDA 0x145ba; file 0x47ba; locator=proven; jnz     short loc_145BD
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 jnz .+3
 .org 0x47bc
 # IDA 0x145bc; file 0x47bc; locator=proven; stc
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 stc
 .org 0x47bd
 loc_145BD:
 # IDA 0x145bd; file 0x47bd; locator=proven; pop     di
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 pop di
 .org 0x47be
 loc_145BE:
 # IDA 0x145be; file 0x47be; locator=proven; pop     bx
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 pop bx
 .org 0x47bf
 # IDA 0x145bf; file 0x47bf; locator=proven; pop     ax
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 pop ax
 .org 0x47c0
 # IDA 0x145c0; file 0x47c0; locator=proven; retn
-# ⚠ 函式 sub_14575; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14575; [proven] 原資金高word與軍團數容量，增援部分成功以CF回傳; 出處: docs/re/128-c-city-tick-restoration.md
 ret
 .org 0x47c1
 sub_145C1:
 # IDA 0x145c1; file 0x47c1; locator=proven; push    ax
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 push ax
 .org 0x47c2
 # IDA 0x145c2; file 0x47c2; locator=proven; push    bx
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 push bx
 .org 0x47c3
 # IDA 0x145c3; file 0x47c3; locator=proven; push    cx
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 push cx
 .org 0x47c4
 # IDA 0x145c4; file 0x47c4; locator=proven; push    dx
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 push dx
 .org 0x47c5
 # IDA 0x145c5; file 0x47c5; locator=proven; push    si
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 push si
 .org 0x47c6
 # IDA 0x145c6; file 0x47c6; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 {load} xor ah, ah
 .org 0x47c8
 # IDA 0x145c8; file 0x47c8; locator=proven; mov     di, 4240h
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 mov di, 0x4240
 .org 0x47cb
 # IDA 0x145cb; file 0x47cb; locator=proven; mov     cx, 7Fh
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 mov cx, 0x7f
 .org 0x47ce
 loc_145CE:
 # IDA 0x145ce; file 0x47ce; locator=proven; cmp     al, [di+1Ch]
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 cmp al, byte ptr [di+0x1c]
 .org 0x47d1
 # IDA 0x145d1; file 0x47d1; locator=proven; jnz     short loc_145E3
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 jnz .+18
 .org 0x47d3
 # IDA 0x145d3; file 0x47d3; locator=proven; cmp     byte ptr [di+17h], 0
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 cmp byte ptr [di+0x17], 0x0
 .org 0x47d7
 # IDA 0x145d7; file 0x47d7; locator=proven; jnz     short loc_145E3
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 jnz .+12
 .org 0x47d9
 # IDA 0x145d9; file 0x47d9; locator=proven; cmp     ah, [di+11h]
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 cmp ah, byte ptr [di+0x11]
 .org 0x47dc
 # IDA 0x145dc; file 0x47dc; locator=proven; jnb     short loc_145E3
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 jnb .+7
 .org 0x47de
 # IDA 0x145de; file 0x47de; locator=proven; mov     ah, [di+11h]
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 mov ah, byte ptr [di+0x11]
 .org 0x47e1
 # IDA 0x145e1; file 0x47e1; locator=proven; mov     si, di
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov si, di
 .org 0x47e3
 loc_145E3:
 # IDA 0x145e3; file 0x47e3; locator=proven; add     di, 20h
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 add di, 0x20
 .org 0x47e6
 # IDA 0x145e6; file 0x47e6; locator=proven; loop    loc_145CE
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 loop .-24
 .org 0x47e8
 # IDA 0x145e8; file 0x47e8; locator=proven; and     ah, ah
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 {load} and ah, ah
 .org 0x47ea
 # IDA 0x145ea; file 0x47ea; locator=proven; jz      short loc_145F1
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 jz .+7
 .org 0x47ec
 # IDA 0x145ec; file 0x47ec; locator=proven; call    sub_16E8F
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 call .+10403
 .org 0x47ef
 # IDA 0x145ef; file 0x47ef; locator=proven; jmp     short loc_145F2
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 jmp .+3
 .org 0x47f1
 loc_145F1:
 # IDA 0x145f1; file 0x47f1; locator=proven; stc
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 stc
 .org 0x47f2
 loc_145F2:
 # IDA 0x145f2; file 0x47f2; locator=proven; pop     si
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 pop si
 .org 0x47f3
 # IDA 0x145f3; file 0x47f3; locator=proven; pop     dx
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 pop dx
 .org 0x47f4
 # IDA 0x145f4; file 0x47f4; locator=proven; pop     cx
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 pop cx
 .org 0x47f5
 # IDA 0x145f5; file 0x47f5; locator=proven; pop     bx
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 pop bx
 .org 0x47f6
 # IDA 0x145f6; file 0x47f6; locator=proven; pop     ax
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 pop ax
 .org 0x47f7
 # IDA 0x145f7; file 0x47f7; locator=proven; retn
-# ⚠ 函式 sub_145C1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_145C1; [proven] 原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成; 出處: docs/re/128-c-city-tick-restoration.md
 ret
 .org 0x47f8
 sub_145F8:
@@ -93060,196 +93077,197 @@ ret
 .org 0xed11
 sub_1EB11:
 # IDA 0x1eb11; file 0xed11; locator=proven; push    cx
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 push cx
 .org 0xed12
 # IDA 0x1eb12; file 0xed12; locator=proven; mov     cx, ax
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov cx, ax
 .org 0xed14
 loc_1EB14:
 # IDA 0x1eb14; file 0xed14; locator=proven; mov     ah, ch
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 {load} mov ah, ch
 .org 0xed16
 loc_1EB16:
 # IDA 0x1eb16; file 0xed16; locator=proven; call    sub_1EB5E
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 call .+72
 .org 0xed19
 # IDA 0x1eb19; file 0xed19; locator=proven; jnb     short loc_1EB16
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 jnb .-3
 .org 0xed1b
 # IDA 0x1eb1b; file 0xed1b; locator=proven; in      al, 61h
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 in al, 0x61
 .org 0xed1d
 # IDA 0x1eb1d; file 0xed1d; locator=proven; or      al, 3
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
+# operand 1 3; [proven] 提示開啟61h低兩bits，保留輸入其他bits; 出處: docs/re/128-c-city-tick-restoration.md
 or al, 0x3
 .org 0xed1f
 # IDA 0x1eb1f; file 0xed1f; locator=proven; out     61h, al
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 out 0x61, al
 .org 0xed21
 loc_1EB21:
 # IDA 0x1eb21; file 0xed21; locator=proven; call    sub_1EB5E
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 call .+61
 .org 0xed24
 # IDA 0x1eb24; file 0xed24; locator=proven; jb      short loc_1EB21
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 jb .-3
 .org 0xed26
 loc_1EB26:
 # IDA 0x1eb26; file 0xed26; locator=proven; call    sub_1EB5E
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 call .+56
 .org 0xed29
 # IDA 0x1eb29; file 0xed29; locator=proven; jnb     short loc_1EB26
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 jnb .-3
 .org 0xed2b
 loc_1EB2B:
 # IDA 0x1eb2b; file 0xed2b; locator=proven; call    sub_1EB5E
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 call .+51
 .org 0xed2e
 # IDA 0x1eb2e; file 0xed2e; locator=proven; jb      short loc_1EB2B
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 jb .-3
 .org 0xed30
 loc_1EB30:
 # IDA 0x1eb30; file 0xed30; locator=proven; call    sub_1EB5E
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 call .+46
 .org 0xed33
 # IDA 0x1eb33; file 0xed33; locator=proven; jnb     short loc_1EB30
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 jnb .-3
 .org 0xed35
 # IDA 0x1eb35; file 0xed35; locator=proven; in      al, 61h
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 in al, 0x61
 .org 0xed37
 # IDA 0x1eb37; file 0xed37; locator=proven; and     al, 0FCh
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 and al, 0xfc
 .org 0xed39
 # IDA 0x1eb39; file 0xed39; locator=proven; out     61h, al
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 out 0x61, al
 .org 0xed3b
 # IDA 0x1eb3b; file 0xed3b; locator=proven; cmp     cl, 1
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 cmp cl, 0x1
 .org 0xed3e
 # IDA 0x1eb3e; file 0xed3e; locator=proven; jz      short loc_1EB5C
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 jz .+30
 .org 0xed40
 loc_1EB40:
 # IDA 0x1eb40; file 0xed40; locator=proven; call    sub_1EB5E
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 call .+30
 .org 0xed43
 # IDA 0x1eb43; file 0xed43; locator=proven; jb      short loc_1EB40
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 jb .-3
 .org 0xed45
 loc_1EB45:
 # IDA 0x1eb45; file 0xed45; locator=proven; call    sub_1EB5E
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 call .+25
 .org 0xed48
 # IDA 0x1eb48; file 0xed48; locator=proven; jnb     short loc_1EB45
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 jnb .-3
 .org 0xed4a
 loc_1EB4A:
 # IDA 0x1eb4a; file 0xed4a; locator=proven; call    sub_1EB5E
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 call .+20
 .org 0xed4d
 # IDA 0x1eb4d; file 0xed4d; locator=proven; jb      short loc_1EB4A
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 jb .-3
 .org 0xed4f
 loc_1EB4F:
 # IDA 0x1eb4f; file 0xed4f; locator=proven; call    sub_1EB5E
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 call .+15
 .org 0xed52
 # IDA 0x1eb52; file 0xed52; locator=proven; jnb     short loc_1EB4F
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 jnb .-3
 .org 0xed54
 # IDA 0x1eb54; file 0xed54; locator=proven; dec     ah
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 dec ah
 .org 0xed56
 # IDA 0x1eb56; file 0xed56; locator=proven; jnz     short loc_1EB40
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 jnz .-22
 .org 0xed58
 # IDA 0x1eb58; file 0xed58; locator=proven; dec     cl
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 dec cl
 .org 0xed5a
 # IDA 0x1eb5a; file 0xed5a; locator=proven; jnz     short loc_1EB14
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 jnz .-70
 .org 0xed5c
 loc_1EB5C:
 # IDA 0x1eb5c; file 0xed5c; locator=proven; pop     cx
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 pop cx
 .org 0xed5d
 # IDA 0x1eb5d; file 0xed5d; locator=proven; retn
-# ⚠ 函式 sub_1EB11; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB11; [proven] 原提示的61h及3DAh控制序列，只驗固定平台I/O契約; 出處: docs/re/128-c-city-tick-restoration.md
 ret
 .org 0xed5e
 sub_1EB5E:
 # IDA 0x1eb5e; file 0xed5e; locator=proven; push    dx
-# ⚠ 函式 sub_1EB5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB5E; [proven] 原讀3DAh bit3轉CF並保存DX; 出處: docs/re/128-c-city-tick-restoration.md
 push dx
 .org 0xed5f
 # IDA 0x1eb5f; file 0xed5f; locator=proven; mov     dx, 3DAh
-# ⚠ 函式 sub_1EB5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB5E; [proven] 原讀3DAh bit3轉CF並保存DX; 出處: docs/re/128-c-city-tick-restoration.md
 mov dx, 0x3da
 .org 0xed62
 # IDA 0x1eb62; file 0xed62; locator=proven; in      al, dx
-# ⚠ 函式 sub_1EB5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB5E; [proven] 原讀3DAh bit3轉CF並保存DX; 出處: docs/re/128-c-city-tick-restoration.md
 in al, dx
 .org 0xed63
 # IDA 0x1eb63; file 0xed63; locator=proven; pop     dx
-# ⚠ 函式 sub_1EB5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB5E; [proven] 原讀3DAh bit3轉CF並保存DX; 出處: docs/re/128-c-city-tick-restoration.md
 pop dx
 .org 0xed64
 # IDA 0x1eb64; file 0xed64; locator=proven; test    al, 8
-# ⚠ 函式 sub_1EB5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB5E; [proven] 原讀3DAh bit3轉CF並保存DX; 出處: docs/re/128-c-city-tick-restoration.md
 test al, 0x8
 .org 0xed66
 # IDA 0x1eb66; file 0xed66; locator=proven; jz      short loc_1EB6A
-# ⚠ 函式 sub_1EB5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB5E; [proven] 原讀3DAh bit3轉CF並保存DX; 出處: docs/re/128-c-city-tick-restoration.md
 jz .+4
 .org 0xed68
 # IDA 0x1eb68; file 0xed68; locator=proven; stc
-# ⚠ 函式 sub_1EB5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB5E; [proven] 原讀3DAh bit3轉CF並保存DX; 出處: docs/re/128-c-city-tick-restoration.md
 stc
 .org 0xed69
 # IDA 0x1eb69; file 0xed69; locator=proven; retn
-# ⚠ 函式 sub_1EB5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB5E; [proven] 原讀3DAh bit3轉CF並保存DX; 出處: docs/re/128-c-city-tick-restoration.md
 ret
 .org 0xed6a
 loc_1EB6A:
 # IDA 0x1eb6a; file 0xed6a; locator=proven; clc
-# ⚠ 函式 sub_1EB5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB5E; [proven] 原讀3DAh bit3轉CF並保存DX; 出處: docs/re/128-c-city-tick-restoration.md
 clc
 .org 0xed6b
 # IDA 0x1eb6b; file 0xed6b; locator=proven; retn
-# ⚠ 函式 sub_1EB5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1EB5E; [proven] 原讀3DAh bit3轉CF並保存DX; 出處: docs/re/128-c-city-tick-restoration.md
 ret
 .org 0xed6c
 sub_1EB6C:

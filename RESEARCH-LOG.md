@@ -2054,3 +2054,9 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - 固定KI.EXE／IDA9.4／DB／probe身分見 [re/127](docs/re/127-c-world-interaction-restoration.md)。
 - 八函式159指令396bytes，O0/O2各2148完整RAM/VGA/DAC/ABI/I/O/API與十二錯版；原DS≠CS與原表修改為分辨性反例。
 - 新證據回鏈至re125/spec245，完整mainloop與原C機器碼尚未恢復。
+
+## 2026-10-10：據點與動畫更新的原始閉包
+
+- 固定KI.EXE／IDA9.4／DB／probe與較大直接呼叫普查身分見 [re/128](docs/re/128-c-city-tick-restoration.md)。
+- 18函式562指令1340bytes，O0/O2各8144完整裝置／固定raw RNG與十六錯版；保留14137原848讀取與byte／word回繞。
+- 新證據回鏈至re100/spec219；本輪物件更新不代證完整事件畫面或正常玩家長程。

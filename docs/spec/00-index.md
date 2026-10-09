@@ -297,6 +297,7 @@
 | C 非區域退出與 DAC 淡出 | [`245-c-nonlocal-exit.md`](245-c-nonlocal-exit.md) | CONFORMED，三函式／2,520完整裝置／八個錯版 |
 | C 城市與軍團初始化 | [`246-c-world-bootstrap.md`](246-c-world-bootstrap.md) | CONFORMED，五函式／七指令前綴／5,008組／十錯版 |
 | C 世界點選、右鍵分派與淡入 | [`247-c-world-interaction.md`](247-c-world-interaction.md) | CONFORMED，八函式／2,148完整狀態／十二錯版 |
+| C 據點輪轉與動畫物件更新 | [`248-c-city-tick.md`](248-c-city-tick.md) | CONFORMED，18函式／8,144完整狀態／十六錯版 |
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的
    現況反寫規格，那只會把既有的偏差固定下來。

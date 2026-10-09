@@ -2960,6 +2960,132 @@
       "sources": [
         "docs/re/127-c-world-interaction-restoration.md"
       ]
+    },
+    "0x10CDE": {
+      "meaning": "原AX=0101提示包裝並保存呼叫者AX",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x12459": {
+      "meaning": "原32個動畫物件倒數與dirty更新，後16槽移動",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x1248A": {
+      "meaning": "原動畫物件座標及速度更新，保留signed界限與回繞",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x124FF": {
+      "meaning": "原byte固定點速度累加與亂數偏移",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x13EFD": {
+      "meaning": "原據點巡迴更新，保存原先勢力記錄、佔用低7bits、威脅、整備及災害順序",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x13F74": {
+      "meaning": "原16byte SS候選初始化與威脅／求援閉包",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x13FA9": {
+      "meaning": "原四鄰據點外交篩選、FE/FF哨兵與威脅byte加總",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x14028": {
+      "meaning": "原據點旗標與無軍團時的求援門檻，CF傳遞後續分派",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x14057": {
+      "meaning": "原候選選取與軍團分派，保留byte亂數選取及玩家門檻",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x140B3": {
+      "meaning": "原寫入所屬勢力+16的求援據點編號",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x140C9": {
+      "meaning": "原求援冷卻、玩家通知與AI增援，保留14137原讀取848的距離式",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x14155": {
+      "meaning": "原同節點軍團選取與目標／stage分派，保留隨機跳過",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x14194": {
+      "meaning": "原據點整備與內政官係數、亂數及byte界限",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x14269": {
+      "meaning": "原災害marker對防災／上昇／生產力／城兵的byte及word運算",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x14575": {
+      "meaning": "原資金高word與軍團數容量，增援部分成功以CF回傳",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x145C1": {
+      "meaning": "原127槽武將掃描，取未出陣且+11最高的首筆候選並接既有編成",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x1EB11": {
+      "meaning": "原提示的61h及3DAh控制序列，只驗固定平台I/O契約",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x1EB5E": {
+      "meaning": "原讀3DAh bit3轉CF並保存DX",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
     }
   },
   "operands": {
@@ -3547,6 +3673,150 @@
       "level": "proven",
       "sources": [
         "docs/re/127-c-world-interaction-restoration.md"
+      ]
+    },
+    "0x12463:1": {
+      "original": "80h",
+      "meaning": "物件存在門檻80h，使用unsigned比較",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x12460:1": {
+      "original": "20h",
+      "meaning": "動畫物件總數20h即32槽",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x12476:1": {
+      "original": "2140h",
+      "meaning": "SI達2140h才進移動helper，即後16槽",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x12502:1": {
+      "original": "7",
+      "meaning": "亂數低3bits，0至2才調整速度",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x1250C:1": {
+      "original": "0F1h",
+      "meaning": "signed byte速度下界F1h即負15",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x1251E:1": {
+      "original": "0Fh",
+      "meaning": "固定點低byte達signed15時產生正一步",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x13F63:1": {
+      "original": "1800h",
+      "meaning": "據點巡迴結束1800h，共192槽乘20h",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x13F29:0": {
+      "original": "[bx+17h]",
+      "meaning": "當+85A異於+841，寫入原先勢力記錄+17",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x13F50:1": {
+      "original": "18h",
+      "meaning": "據點owner18h即中立24，跳過威脅AI",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x13FEC:1": {
+      "original": "18h",
+      "meaning": "鄰城owner18h走原中立候選分支",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x13FF4:1": {
+      "original": "80h",
+      "meaning": "外交關係80h以上排除敵方候選",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x14028:1": {
+      "original": "3Fh",
+      "meaning": "保留據點低6bits，重建80h與40h旗標",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x14194:1": {
+      "original": "8",
+      "meaning": "非玩家據點預設整備CL=8",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x141E4:1": {
+      "original": "0C8h",
+      "meaning": "原byte加總後與C8h比較，上限200但保留先行byte回繞",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x14297:0": {
+      "original": "[si+84Eh]",
+      "meaning": "原16-bit生產力減法；倍率取生產力高byte，合法據點值不會借位",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x14137:1": {
+      "original": "[bx+848h]",
+      "meaning": "原程式讀取首都據點的848欄位，未改成84A",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x1EB1D:1": {
+      "original": "3",
+      "meaning": "提示開啟61h低兩bits，保留輸入其他bits",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x1428F:0": {
+      "original": "",
+      "meaning": "原災害倍率取生產力word的高byte，損失floor(D*(P>>8)/4)不超過P",
+      "level": "proven",
+      "sources": [
+        "docs/re/128-c-city-tick-restoration.md"
       ]
     }
   }

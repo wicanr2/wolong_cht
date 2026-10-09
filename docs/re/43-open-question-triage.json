@@ -13478,6 +13478,58 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "八個原世界互動函式已做局部完整裝置比較；完整主迴圈／更新排程、非法索引、硬體時間與原C機器碼保留證據界線。"
+    },
+    {
+      "file": "docs/re/128-c-city-tick-restoration.md",
+      "item": "軍團更新、交戰／戰術閉包、完整主排程與自然玩家長程",
+      "status": "後續還原，不能由本輪局部對拍代證",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-77e31fa8531f81d8af02",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "據點與動畫更新18原C函式已有局部完整狀態及固定raw RNG證據；完整軍團／交戰／主排程／自然玩家流程與原C機器碼保留界線。"
+    },
+    {
+      "file": "docs/re/128-c-city-tick-restoration.md",
+      "item": "原硬體時間及原C機器碼",
+      "status": "固定平台I/O與原生語意比較不代證",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-c9dcb0b0645291ae8bcc",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "據點與動畫更新18原C函式已有局部完整狀態及固定raw RNG證據；完整軍團／交戰／主排程／自然玩家流程與原C機器碼保留界線。"
+    },
+    {
+      "file": "docs/spec/248-c-city-tick.md",
+      "item": "完整軍團更新、主排程、主迴圈及自然玩家長程",
+      "status": "本輪不代證",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-06152296ca13cbbebdcd",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "據點與動畫更新18原C函式已有局部完整狀態及固定raw RNG證據；完整軍團／交戰／主排程／自然玩家流程與原C機器碼保留界線。"
+    },
+    {
+      "file": "docs/spec/248-c-city-tick.md",
+      "item": "非法記錄／原硬體時間與原C機器碼",
+      "status": "不由局部比較推廣",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-9e3d33a0b9daec42b744",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "據點與動畫更新18原C函式已有局部完整狀態及固定raw RNG證據；完整軍團／交戰／主排程／自然玩家流程與原C機器碼保留界線。"
     }
   ]
 }

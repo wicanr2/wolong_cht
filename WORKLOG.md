@@ -514,3 +514,13 @@
 - 世界互動本輪最終收據已重綁：正式Go vet與39套件冷測通過、cached0；最後完整check的39套件重用cache，兩者分列。25單項21通過／4既有失敗／新增0，phantom277正規化零增刪；完整check停在既有index兩缺圖及phantom，後續由25單項補足。
 - 發布程序初次誤用組語收據檔名，依實際code-record-verification.json修正後完成；原生對拍不需重跑。最終159指令／396bytes、十二錯版、383C／49raw及兩筆回鏈核對通過。
 - 本輪輸出UID/GID1000；root-owned維持27個既有路徑、沒有異常.md目錄，Docker容器已清理。依授權commit與push；原版資產與私有RAM／圖片不入Git，完整Goal保持active。
+
+## 2026-10-10：據點輪轉、增援與動畫更新 C
+
+- spec248 READY後還原18函式562指令1340bytes；較大主排程普查180函式及7筆未封閉邊界另存私有census，不當已還原。
+- O0/O2各8144完整狀態與十六錯版；固定raw258-byte RNG、據點192游標、原距離欄位、內政官／災害與32物件邊界均保留原式。
+- 原增援成功／部分成功、武將選取及提示訊息接既有真實C；401C/49raw，完整軍團／交戰／戰術／主排程及C機器碼仍未完成。
+- 原第14錯版將生產力借位夾零，因倍率取生產力高byte而在合法輸入域等價。舊8144收據、來源與binary保存在c-tick/equivalent-control-review；核對全部65536個P的最大D界線後，改用錯讀倍率lowbyte，正常演算法不變。新來源hash的O0/O2與十六錯版全部重跑通過。
+- 機制補註另設原生C小節，避免生成索引把已證實內容當未解；triage保留1040筆，沒有移除舊列。雲的速度／回繞舊斷言已在兩份舊文件及CONTEXT勘誤，現有Go未改。
+- 據點輪轉本輪最終收據已重綁：Go vet／39套件冷測通過、cached0；最後完整check的39套件重用cache，兩次證據分列。25單項21通過／4既有失敗／新增0，phantom277正規化零增刪；完整check停既有index兩缺圖及phantom，後續由25單項補足。
+- 最終562指令／1340bytes、十六state-mismatch、401C／49raw及四筆回鏈通過。輸出UID/GID1000，root-owned維持27個既有路徑、沒有異常.md目錄，Docker容器已清理；依授權commit與push，完整Goal保持active。
