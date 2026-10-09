@@ -13374,6 +13374,58 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "三函式非區域退出與DAC完整C閉包已驗；完整mainloop、其他退出、自然玩家路徑與實機時間／原C機器碼保留證據界線。"
+    },
+    {
+      "file": "docs/re/126-c-world-bootstrap-restoration.md",
+      "item": "11BF6 之後的完整主迴圈與自然玩家路徑",
+      "status": "七指令切片不代證",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-8d431eb953cff84145b3",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "五函式與無RET初始化前段已由兩側各自raw輸入驗證；完整11BE0、自然玩家流程、非法座標及原C機器碼保留證據界線。"
+    },
+    {
+      "file": "docs/re/126-c-world-bootstrap-restoration.md",
+      "item": "非法座標、原硬體時間與原 C 機器碼",
+      "status": "本輪不推廣其驗收聲明",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-c35a5e8cf532d633f7e2",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "五函式與無RET初始化前段已由兩側各自raw輸入驗證；完整11BE0、自然玩家流程、非法座標及原C機器碼保留證據界線。"
+    },
+    {
+      "file": "docs/spec/246-c-world-bootstrap.md",
+      "item": "完整主迴圈與正常玩家路徑",
+      "status": "本輪不代證",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-31ca3a7fc26422bee18b",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "五函式與無RET初始化前段已由兩側各自raw輸入驗證；完整11BE0、自然玩家流程、非法座標及原C機器碼保留證據界線。"
+    },
+    {
+      "file": "docs/spec/246-c-world-bootstrap.md",
+      "item": "非法座標、原硬體時間及原 C 機器碼",
+      "status": "不由局部原生 C 比較推廣",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-ae4c61145e3c4f28a678",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "五函式與無RET初始化前段已由兩側各自raw輸入驗證；完整11BE0、自然玩家流程、非法座標及原C機器碼保留證據界線。"
     }
   ]
 }

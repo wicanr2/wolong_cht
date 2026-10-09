@@ -204,6 +204,7 @@
 | [`docs/re/123-c-march-command-restoration.md`](re/123-c-march-command-restoration.md) | 123：軍團行軍指令、選點與狀態分派的 C | CONFORMED。25函式，O0／O2各1,320完整裝置與十六錯版通過。 | 2026-10-09 |
 | [`docs/re/124-c-strategy-command-restoration.md`](re/124-c-strategy-command-restoration.md) | 124：政略指令列、進言判斷與理由選單的 C | CONFORMED。29 函式，O0／O2 各 3,348 完整裝置與十六錯版通過。 | 2026-10-09 |
 | [`docs/re/125-c-nonlocal-exit-restoration.md`](re/125-c-nonlocal-exit-restoration.md) | 125：信賴度退出、原堆疊返回與調色盤淡出的 C | CONFORMED。三函式，O0／O2各2,520完整裝置與八個錯版通過。 | 2026-10-09 |
+| [`docs/re/126-c-world-bootstrap-restoration.md`](re/126-c-world-bootstrap-restoration.md) | 126：城市標記、軍團佔用與主迴圈初始化的 C | CONFORMED。五函式及有限前綴，O0／O2各5,008組、5,416次全狀態與十錯版通過。 | 2026-10-09 |
 | [`docs/re/13-pc98-numeric-window.md`](re/13-pc98-numeric-window.md) | 13 — DOS/V 數字輸入視窗量測與 CJK 版面決策 | 以 DOS/V 為唯一畫面基準；原始座標、DOS/V 96×64 內框 blit、3×6 每格操作、 實際按鍵 gl… | 2026-08-10 |
 | [`docs/re/14-mmap-mch-objects.md`](re/14-mmap-mch-objects.md) | 14 — MMAP.MCH 戰略地圖物件 | 資產格式、事件 12 的火災／暴動圖形鏈與 typed 動畫／移動時序 confirmed； type 3 的事件語… | 2026-08-10 |
 | [`docs/re/15-event10-producer.md`](re/15-event10-producer.md) | 15 — 事件 10 producer 深度逆向 | 事件 10 dispatcher／consumer／queue writer 已證實；原版自然 producer 仍… | 2026-08-11 |
@@ -469,6 +470,7 @@
 | [`docs/spec/243-c-march-command.md`](spec/243-c-march-command.md) | 243：C 軍團行軍選點與命令分派 | CONFORMED。O0／O2各1,320完整裝置與十六錯版通過。 | 2026-10-09 |
 | [`docs/spec/244-c-strategy-command.md`](spec/244-c-strategy-command.md) | 244：C 政略指令與進言理由 | CONFORMED。29 函式，O0／O2 各 3,348 完整裝置與十六錯版通過。 | 2026-10-09 |
 | [`docs/spec/245-c-nonlocal-exit.md`](spec/245-c-nonlocal-exit.md) | 245：C 非區域退出與 DAC 淡出 | CONFORMED。O0／O2各2,520完整裝置與八個錯版通過。 | 2026-10-09 |
+| [`docs/spec/246-c-world-bootstrap.md`](spec/246-c-world-bootstrap.md) | 246：C 城市與軍團初始化 | CONFORMED。O0／O2各5,008組、5,416次全狀態與十錯版通過。 | 2026-10-09 |
 | [`docs/spec/25-slot-select-window.md`](spec/25-slot-select-window.md) | 25 — 四槽選擇視窗（新遊戲／讀取／儲存） | CONFORMED。讀取／儲存已照原版版面實作； 新遊戲仍走 remake 自己的啟動殼層（§5）。 | 2026-08-15 |
 | [`docs/spec/26-yes-no-dialog.md`](spec/26-yes-no-dialog.md) | 26 — ＹＥＳ／ＮＯ 對話框 | CONFORMED。版面與命中算式已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 輸入照原版收斂成兩個熱區（§2.1）。「自定」開命名視窗（[10… | 2026-08-15 |

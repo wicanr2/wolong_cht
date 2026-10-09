@@ -292,7 +292,17 @@
       "scope": "Direct local matrix and linked world monthly path on four scenarios; real writer and RNG; sub_1585F/sub_12BD9 and UI/sound/redraw have RET fixtures; legal inputs; IF/TF=0.",
       "source_sha256": "90ea41a06b727fc12074c1347e831f6fbac7fb0535265bfbfa7eac7795437602",
       "header_sha256": "9782b21c1397d277680b0165b27d697bf7191ad099b399dfc0a875af91f5f088",
-      "fixture_sha256": "0d2866252dc0339d08d45431beac7359019b29fd80717e07219396cf418ab853"
+      "fixture_sha256": "0d2866252dc0339d08d45431beac7359019b29fd80717e07219396cf418ab853",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/126-c-world-bootstrap-restoration.md",
+          "spec": "docs/spec/246-c-world-bootstrap.md",
+          "receipt": "docs/re/c-bootstrap-verification.json",
+          "oracle_cases_per_optimization": 5008,
+          "entry_count": 884,
+          "scope": "Five original city/army map and scoring/date routines plus the finite seven-instruction 11BE0..11BF6 prefix. Both sides independently initialize raw runtime state; native C computes its own map, score, date and saved stack. Chain cases separately audit prefix and existing normal/nonlocal child closures. Whole main loop and C machine-code matching remain outside this slice. Independent common raw input is shared before execution, and no original-prefix snapshot initializes native C. The raw fragment is not the complete named sub_11BE0; startup/main-loop continuation, TSR/hardware timing and original C machine-code matching remain outside this proof."
+        }
+      ]
     },
     "sub_12FBF": {
       "ida_linear": 77759,
@@ -1013,6 +1023,14 @@
           "oracle_cases_per_optimization": 2520,
           "entry_count": 700,
           "scope": "Three original saved-stack exit/fade/palette routines with original CALL10067 prefix; four scenarios, independent deep snapshots, real nonlocal transfer and normal returns, complete RAM/VGA/palette/DAC/ports/state comparison. Direct routine closure; no wall-clock or complete natural player-path claim. Original prefixes are supplied as common initial snapshots; navigation routines, complete startup/main-loop execution, TSR/hardware timing and original C machine-code matching are outside this recovery claim."
+        },
+        {
+          "evidence": "docs/re/126-c-world-bootstrap-restoration.md",
+          "spec": "docs/spec/246-c-world-bootstrap.md",
+          "receipt": "docs/re/c-bootstrap-verification.json",
+          "oracle_cases_per_optimization": 5008,
+          "entry_count": 264,
+          "scope": "Five original city/army map and scoring/date routines plus the finite seven-instruction 11BE0..11BF6 prefix. Both sides independently initialize raw runtime state; native C computes its own map, score, date and saved stack. Chain cases separately audit prefix and existing normal/nonlocal child closures. Whole main loop and C machine-code matching remain outside this slice. Independent common raw input is shared before execution, and no original-prefix snapshot initializes native C. The raw fragment is not the complete named sub_11BE0; startup/main-loop continuation, TSR/hardware timing and original C machine-code matching remain outside this proof."
         }
       ]
     },
@@ -3472,7 +3490,17 @@
       "source_sha256": "776e38ff148e65d653d3d3a0588ef6ca12aa5dc526af30bc5e3b497b8ee9abc1",
       "header_sha256": "1ecf5806c4127f605280e6b6b913a80a1e671877420c4a27bd1264b0cac3c300",
       "fixture_sha256": "81bf5642e725802e4b891d31dd2a84785c8ca106109e13696a531e2d5057a1e0",
-      "generated_source_sha256": "40ced4a3a36aa88dc5e0e06dac3b4fb88806f1eb4dc8c35198ce5f877244c7a1"
+      "generated_source_sha256": "40ced4a3a36aa88dc5e0e06dac3b4fb88806f1eb4dc8c35198ce5f877244c7a1",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/126-c-world-bootstrap-restoration.md",
+          "spec": "docs/spec/246-c-world-bootstrap.md",
+          "receipt": "docs/re/c-bootstrap-verification.json",
+          "oracle_cases_per_optimization": 5008,
+          "entry_count": 884,
+          "scope": "Five original city/army map and scoring/date routines plus the finite seven-instruction 11BE0..11BF6 prefix. Both sides independently initialize raw runtime state; native C computes its own map, score, date and saved stack. Chain cases separately audit prefix and existing normal/nonlocal child closures. Whole main loop and C machine-code matching remain outside this slice. Independent common raw input is shared before execution, and no original-prefix snapshot initializes native C. The raw fragment is not the complete named sub_11BE0; startup/main-loop continuation, TSR/hardware timing and original C machine-code matching remain outside this proof."
+        }
+      ]
     },
     "sub_106F9": {
       "ida_linear": 67321,
@@ -7479,6 +7507,14 @@
           "oracle_cases_per_optimization": 2520,
           "entry_count": 248,
           "scope": "Three original saved-stack exit/fade/palette routines with original CALL10067 prefix; four scenarios, independent deep snapshots, real nonlocal transfer and normal returns, complete RAM/VGA/palette/DAC/ports/state comparison. Direct routine closure; no wall-clock or complete natural player-path claim. Original prefixes are supplied as common initial snapshots; navigation routines, complete startup/main-loop execution, TSR/hardware timing and original C machine-code matching are outside this recovery claim."
+        },
+        {
+          "evidence": "docs/re/126-c-world-bootstrap-restoration.md",
+          "spec": "docs/spec/246-c-world-bootstrap.md",
+          "receipt": "docs/re/c-bootstrap-verification.json",
+          "oracle_cases_per_optimization": 5008,
+          "entry_count": 144,
+          "scope": "Five original city/army map and scoring/date routines plus the finite seven-instruction 11BE0..11BF6 prefix. Both sides independently initialize raw runtime state; native C computes its own map, score, date and saved stack. Chain cases separately audit prefix and existing normal/nonlocal child closures. Whole main loop and C machine-code matching remain outside this slice. Independent common raw input is shared before execution, and no original-prefix snapshot initializes native C. The raw fragment is not the complete named sub_11BE0; startup/main-loop continuation, TSR/hardware timing and original C machine-code matching remain outside this proof."
         }
       ]
     },
@@ -8067,7 +8103,17 @@
       "source_sha256": "51f2b56ae72f65735787d9a2b47b39af400b3a01b3e0f56bec1e9842ea954e45",
       "header_sha256": "1ae3902707ff8590838c8cbc478c7883250152cb079bf3b336959df140c51d0d",
       "fixture_sha256": "1d7b4507c2446ee3a95b34500695b89ad4e2f0ad6deec04008e276db529ca706",
-      "generated_source_sha256": "bffe5c3e5cda82099b584e779ac6a3bb7cbe82a87a259858ade7acd7167a4b2e"
+      "generated_source_sha256": "bffe5c3e5cda82099b584e779ac6a3bb7cbe82a87a259858ade7acd7167a4b2e",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/126-c-world-bootstrap-restoration.md",
+          "spec": "docs/spec/246-c-world-bootstrap.md",
+          "receipt": "docs/re/c-bootstrap-verification.json",
+          "oracle_cases_per_optimization": 5008,
+          "entry_count": 144,
+          "scope": "Five original city/army map and scoring/date routines plus the finite seven-instruction 11BE0..11BF6 prefix. Both sides independently initialize raw runtime state; native C computes its own map, score, date and saved stack. Chain cases separately audit prefix and existing normal/nonlocal child closures. Whole main loop and C machine-code matching remain outside this slice. Independent common raw input is shared before execution, and no original-prefix snapshot initializes native C. The raw fragment is not the complete named sub_11BE0; startup/main-loop continuation, TSR/hardware timing and original C machine-code matching remain outside this proof."
+        }
+      ]
     },
     "sub_1EBDC": {
       "ida_linear": 125916,
@@ -8089,6 +8135,111 @@
       "header_sha256": "1ae3902707ff8590838c8cbc478c7883250152cb079bf3b336959df140c51d0d",
       "fixture_sha256": "1d7b4507c2446ee3a95b34500695b89ad4e2f0ad6deec04008e276db529ca706",
       "generated_source_sha256": "bffe5c3e5cda82099b584e779ac6a3bb7cbe82a87a259858ade7acd7167a4b2e"
+    },
+    "sub_1533D": {
+      "ida_linear": 86845,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/246-c-world-bootstrap.md",
+      "evidence": "docs/re/126-c-world-bootstrap-restoration.md",
+      "source": "tools/c_recovery/bootstrap.c",
+      "header": "tools/c_recovery/bootstrap.h",
+      "fixture": "tools/c_recovery/bootstrap_fixture.h",
+      "generated_source": "tools/c_recovery/bootstrap_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-bootstrap/verification.json",
+      "routine_sha256": "bb05a8dd71d134377f3f5203562e7c2b636638bb3fa6e7503595f607219a8919",
+      "oracle_cases_per_optimization": 5008,
+      "oracle_entry_count_per_optimization": 884,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Five original city/army map and scoring/date routines plus the finite seven-instruction 11BE0..11BF6 prefix. Both sides independently initialize raw runtime state; native C computes its own map, score, date and saved stack. Chain cases separately audit prefix and existing normal/nonlocal child closures. Whole main loop and C machine-code matching remain outside this slice. Independent common raw input is shared before execution, and no original-prefix snapshot initializes native C. The raw fragment is not the complete named sub_11BE0; startup/main-loop continuation, TSR/hardware timing and original C machine-code matching remain outside this proof.",
+      "source_sha256": "1b215e4121e8dd59eb2a9e42a80c094d3cec832e3774ccda4fafe2b232b756f4",
+      "header_sha256": "5f9beb7bac4d2d1d4764431f70e56d5aff4d1a9a62a1abdf3639215994f3967a",
+      "fixture_sha256": "fcd187185b5870aba3cf28d042fbc6d4ab4f83f5c21cfa8da499e7507118266f",
+      "generated_source_sha256": "99e945c8a7d12c46d2333ba966a031973d08585e0679e65d8fd20b4e1a9a6903"
+    },
+    "sub_189F0": {
+      "ida_linear": 100848,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/246-c-world-bootstrap.md",
+      "evidence": "docs/re/126-c-world-bootstrap-restoration.md",
+      "source": "tools/c_recovery/bootstrap.c",
+      "header": "tools/c_recovery/bootstrap.h",
+      "fixture": "tools/c_recovery/bootstrap_fixture.h",
+      "generated_source": "tools/c_recovery/bootstrap_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-bootstrap/verification.json",
+      "routine_sha256": "37f411c7ed9709d63f4df103a774fb821cd9a8a24db9911e90acb80199898499",
+      "oracle_cases_per_optimization": 5008,
+      "oracle_entry_count_per_optimization": 536,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Five original city/army map and scoring/date routines plus the finite seven-instruction 11BE0..11BF6 prefix. Both sides independently initialize raw runtime state; native C computes its own map, score, date and saved stack. Chain cases separately audit prefix and existing normal/nonlocal child closures. Whole main loop and C machine-code matching remain outside this slice. Independent common raw input is shared before execution, and no original-prefix snapshot initializes native C. The raw fragment is not the complete named sub_11BE0; startup/main-loop continuation, TSR/hardware timing and original C machine-code matching remain outside this proof.",
+      "source_sha256": "1b215e4121e8dd59eb2a9e42a80c094d3cec832e3774ccda4fafe2b232b756f4",
+      "header_sha256": "5f9beb7bac4d2d1d4764431f70e56d5aff4d1a9a62a1abdf3639215994f3967a",
+      "fixture_sha256": "fcd187185b5870aba3cf28d042fbc6d4ab4f83f5c21cfa8da499e7507118266f",
+      "generated_source_sha256": "99e945c8a7d12c46d2333ba966a031973d08585e0679e65d8fd20b4e1a9a6903"
+    },
+    "sub_18A1E": {
+      "ida_linear": 100894,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/246-c-world-bootstrap.md",
+      "evidence": "docs/re/126-c-world-bootstrap-restoration.md",
+      "source": "tools/c_recovery/bootstrap.c",
+      "header": "tools/c_recovery/bootstrap.h",
+      "fixture": "tools/c_recovery/bootstrap_fixture.h",
+      "generated_source": "tools/c_recovery/bootstrap_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-bootstrap/verification.json",
+      "routine_sha256": "dd9a882756cab4a64b6e3cdc0715b06cdeb06eab6893eddaf993467899274fab",
+      "oracle_cases_per_optimization": 5008,
+      "oracle_entry_count_per_optimization": 103876,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Five original city/army map and scoring/date routines plus the finite seven-instruction 11BE0..11BF6 prefix. Both sides independently initialize raw runtime state; native C computes its own map, score, date and saved stack. Chain cases separately audit prefix and existing normal/nonlocal child closures. Whole main loop and C machine-code matching remain outside this slice. Independent common raw input is shared before execution, and no original-prefix snapshot initializes native C. The raw fragment is not the complete named sub_11BE0; startup/main-loop continuation, TSR/hardware timing and original C machine-code matching remain outside this proof.",
+      "source_sha256": "1b215e4121e8dd59eb2a9e42a80c094d3cec832e3774ccda4fafe2b232b756f4",
+      "header_sha256": "5f9beb7bac4d2d1d4764431f70e56d5aff4d1a9a62a1abdf3639215994f3967a",
+      "fixture_sha256": "fcd187185b5870aba3cf28d042fbc6d4ab4f83f5c21cfa8da499e7507118266f",
+      "generated_source_sha256": "99e945c8a7d12c46d2333ba966a031973d08585e0679e65d8fd20b4e1a9a6903"
+    },
+    "sub_18AD1": {
+      "ida_linear": 101073,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/246-c-world-bootstrap.md",
+      "evidence": "docs/re/126-c-world-bootstrap-restoration.md",
+      "source": "tools/c_recovery/bootstrap.c",
+      "header": "tools/c_recovery/bootstrap.h",
+      "fixture": "tools/c_recovery/bootstrap_fixture.h",
+      "generated_source": "tools/c_recovery/bootstrap_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-bootstrap/verification.json",
+      "routine_sha256": "0e3172415101c627384a2e23dbd8c2dcc7942d567c7bd1d59e2453ed52597c71",
+      "oracle_cases_per_optimization": 5008,
+      "oracle_entry_count_per_optimization": 417552,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Five original city/army map and scoring/date routines plus the finite seven-instruction 11BE0..11BF6 prefix. Both sides independently initialize raw runtime state; native C computes its own map, score, date and saved stack. Chain cases separately audit prefix and existing normal/nonlocal child closures. Whole main loop and C machine-code matching remain outside this slice. Independent common raw input is shared before execution, and no original-prefix snapshot initializes native C. The raw fragment is not the complete named sub_11BE0; startup/main-loop continuation, TSR/hardware timing and original C machine-code matching remain outside this proof.",
+      "source_sha256": "1b215e4121e8dd59eb2a9e42a80c094d3cec832e3774ccda4fafe2b232b756f4",
+      "header_sha256": "5f9beb7bac4d2d1d4764431f70e56d5aff4d1a9a62a1abdf3639215994f3967a",
+      "fixture_sha256": "fcd187185b5870aba3cf28d042fbc6d4ab4f83f5c21cfa8da499e7507118266f",
+      "generated_source_sha256": "99e945c8a7d12c46d2333ba966a031973d08585e0679e65d8fd20b4e1a9a6903"
+    },
+    "sub_18AEA": {
+      "ida_linear": 101098,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/246-c-world-bootstrap.md",
+      "evidence": "docs/re/126-c-world-bootstrap-restoration.md",
+      "source": "tools/c_recovery/bootstrap.c",
+      "header": "tools/c_recovery/bootstrap.h",
+      "fixture": "tools/c_recovery/bootstrap_fixture.h",
+      "generated_source": "tools/c_recovery/bootstrap_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-bootstrap/verification.json",
+      "routine_sha256": "d1c3f9f714e7ee991ad2ee08df6f5d1cf56ec51b3ec61350a337d942e2afb948",
+      "oracle_cases_per_optimization": 5008,
+      "oracle_entry_count_per_optimization": 69124,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Five original city/army map and scoring/date routines plus the finite seven-instruction 11BE0..11BF6 prefix. Both sides independently initialize raw runtime state; native C computes its own map, score, date and saved stack. Chain cases separately audit prefix and existing normal/nonlocal child closures. Whole main loop and C machine-code matching remain outside this slice. Independent common raw input is shared before execution, and no original-prefix snapshot initializes native C. The raw fragment is not the complete named sub_11BE0; startup/main-loop continuation, TSR/hardware timing and original C machine-code matching remain outside this proof.",
+      "source_sha256": "1b215e4121e8dd59eb2a9e42a80c094d3cec832e3774ccda4fafe2b232b756f4",
+      "header_sha256": "5f9beb7bac4d2d1d4764431f70e56d5aff4d1a9a62a1abdf3639215994f3967a",
+      "fixture_sha256": "fcd187185b5870aba3cf28d042fbc6d4ab4f83f5c21cfa8da499e7507118266f",
+      "generated_source_sha256": "99e945c8a7d12c46d2333ba966a031973d08585e0679e65d8fd20b4e1a9a6903"
     }
   },
   "code_blocks": {
@@ -8700,6 +8851,24 @@
       "oracle_entry_count_per_optimization": 76,
       "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending",
       "c_machine_code_match": false
+    },
+    "0x11BE0": {
+      "ida_linear": 72672,
+      "end_ida_linear": 72694,
+      "original_name_before_analysis": "sub_11BE0",
+      "boundary_authority": "bounded initialization prefix of original named function; excludes entire main loop; no RET",
+      "source_entry": "raw_entry_11BE0_prefix",
+      "file_sha256": "0c5138467de03c907f023374d58d25b2f72aec8cb487581777966c1f39d2d07e",
+      "status": "semantic-conformed",
+      "source": "tools/c_recovery/bootstrap_generated.inc",
+      "source_sha256": "99e945c8a7d12c46d2333ba966a031973d08585e0679e65d8fd20b4e1a9a6903",
+      "evidence": "docs/re/126-c-world-bootstrap-restoration.md",
+      "spec": "docs/spec/246-c-world-bootstrap.md",
+      "receipt": "workplace/matching-decompilation/c-bootstrap/verification.json",
+      "routine_sha256": "0c5138467de03c907f023374d58d25b2f72aec8cb487581777966c1f39d2d07e",
+      "oracle_entry_count_per_optimization": 420,
+      "scope": "Five original city/army map and scoring/date routines plus the finite seven-instruction 11BE0..11BF6 prefix. Both sides independently initialize raw runtime state; native C computes its own map, score, date and saved stack. Chain cases separately audit prefix and existing normal/nonlocal child closures. Whole main loop and C machine-code matching remain outside this slice. Independent common raw input is shared before execution, and no original-prefix snapshot initializes native C. The raw fragment is not the complete named sub_11BE0; startup/main-loop continuation, TSR/hardware timing and original C machine-code matching remain outside this proof. Only the original initialization prefix [11BE0,11BF6), not the complete named function.",
+      "c_machine_code_match": false
     }
   },
   "resolution_backlinks": [
@@ -9015,6 +9184,40 @@
       "evidence_markers": [
         "sub_159B7",
         "0x159CE"
+      ]
+    },
+    {
+      "ida_linear": 100848,
+      "function_ida_linear": 100848,
+      "older_document": "docs/re/125-c-nonlocal-exit-restoration.md",
+      "required_markers": [
+        "初始化前段已由原生 C 驗證",
+        "126-c-world-bootstrap-restoration.md"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/126-c-world-bootstrap-restoration.md",
+      "evidence_markers": [
+        "sub_189F0",
+        "0x189F0"
+      ]
+    },
+    {
+      "ida_linear": 100848,
+      "function_ida_linear": 100848,
+      "older_document": "docs/spec/245-c-nonlocal-exit.md",
+      "required_markers": [
+        "初始化前段已由原生 C 驗證",
+        "246-c-world-bootstrap.md"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/126-c-world-bootstrap-restoration.md",
+      "evidence_markers": [
+        "sub_189F0",
+        "0x189F0"
       ]
     }
   ]

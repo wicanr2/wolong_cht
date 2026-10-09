@@ -7193,6 +7193,7 @@ cs; mov word ptr [0x9903], ss
 .org 0x1df1
 # IDA 0x11bf1; file 0x1df1; locator=proven; mov     cs:word_19901, sp
 # ⚠ 函式 sub_11BE0; [unknown] 未附加語意; 出處: 無
+# operand 0 cs:word_19901; [proven] 原保存CALL之後SP，有限前綴在下一IP1BF6停止而沒有RET; 出處: docs/re/126-c-world-bootstrap-restoration.md
 cs; mov word ptr [0x9901], sp
 .org 0x1df6
 # IDA 0x11bf6; file 0x1df6; locator=proven; call    sub_11F7F
@@ -31968,75 +31969,76 @@ ret
 .org 0x553d
 sub_1533D:
 # IDA 0x1533d; file 0x553d; locator=proven; push    ax
-# ⚠ 函式 sub_1533D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1533D; [proven] 原武將評分與日期wrapper，入口DS:D52、出口DS等於CS; 出處: docs/re/126-c-world-bootstrap-restoration.md
 push ax
 .org 0x553e
 # IDA 0x1533e; file 0x553e; locator=proven; push    bx
-# ⚠ 函式 sub_1533D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1533D; [proven] 原武將評分與日期wrapper，入口DS:D52、出口DS等於CS; 出處: docs/re/126-c-world-bootstrap-restoration.md
 push bx
 .org 0x553f
 # IDA 0x1533f; file 0x553f; locator=proven; push    cx
-# ⚠ 函式 sub_1533D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1533D; [proven] 原武將評分與日期wrapper，入口DS:D52、出口DS等於CS; 出處: docs/re/126-c-world-bootstrap-restoration.md
 push cx
 .org 0x5540
 # IDA 0x15340; file 0x5540; locator=proven; push    dx
-# ⚠ 函式 sub_1533D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1533D; [proven] 原武將評分與日期wrapper，入口DS:D52、出口DS等於CS; 出處: docs/re/126-c-world-bootstrap-restoration.md
 push dx
 .org 0x5541
 # IDA 0x15341; file 0x5541; locator=proven; push    si
-# ⚠ 函式 sub_1533D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1533D; [proven] 原武將評分與日期wrapper，入口DS:D52、出口DS等於CS; 出處: docs/re/126-c-world-bootstrap-restoration.md
 push si
 .org 0x5542
 # IDA 0x15342; file 0x5542; locator=proven; push    di
-# ⚠ 函式 sub_1533D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1533D; [proven] 原武將評分與日期wrapper，入口DS:D52、出口DS等於CS; 出處: docs/re/126-c-world-bootstrap-restoration.md
 push di
 .org 0x5543
 # IDA 0x15343; file 0x5543; locator=proven; mov     ds, word ptr ds:0D52h
-# ⚠ 函式 sub_1533D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1533D; [proven] 原武將評分與日期wrapper，入口DS:D52、出口DS等於CS; 出處: docs/re/126-c-world-bootstrap-restoration.md
 mov ds, word ptr [0xd52]
 .org 0x5547
 # IDA 0x15347; file 0x5547; locator=proven; call    sub_155A6
-# ⚠ 函式 sub_1533D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1533D; [proven] 原武將評分與日期wrapper，入口DS:D52、出口DS等於CS; 出處: docs/re/126-c-world-bootstrap-restoration.md
 call .+607
 .org 0x554a
 # IDA 0x1534a; file 0x554a; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_1533D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1533D; [proven] 原武將評分與日期wrapper，入口DS:D52、出口DS等於CS; 出處: docs/re/126-c-world-bootstrap-restoration.md
 mov ax, cs
 .org 0x554c
 # IDA 0x1534c; file 0x554c; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_1533D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1533D; [proven] 原武將評分與日期wrapper，入口DS:D52、出口DS等於CS; 出處: docs/re/126-c-world-bootstrap-restoration.md
+# operand 0 ds; [proven] 日期wrapper出口DS等於CS，不恢復入口DS; 出處: docs/re/126-c-world-bootstrap-restoration.md
 mov ds, ax
 .org 0x554e
 # IDA 0x1534e; file 0x554e; locator=proven; call    sub_11E17
-# ⚠ 函式 sub_1533D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1533D; [proven] 原武將評分與日期wrapper，入口DS:D52、出口DS等於CS; 出處: docs/re/126-c-world-bootstrap-restoration.md
 call .-13623
 .org 0x5551
 # IDA 0x15351; file 0x5551; locator=proven; pop     di
-# ⚠ 函式 sub_1533D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1533D; [proven] 原武將評分與日期wrapper，入口DS:D52、出口DS等於CS; 出處: docs/re/126-c-world-bootstrap-restoration.md
 pop di
 .org 0x5552
 # IDA 0x15352; file 0x5552; locator=proven; pop     si
-# ⚠ 函式 sub_1533D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1533D; [proven] 原武將評分與日期wrapper，入口DS:D52、出口DS等於CS; 出處: docs/re/126-c-world-bootstrap-restoration.md
 pop si
 .org 0x5553
 # IDA 0x15353; file 0x5553; locator=proven; pop     dx
-# ⚠ 函式 sub_1533D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1533D; [proven] 原武將評分與日期wrapper，入口DS:D52、出口DS等於CS; 出處: docs/re/126-c-world-bootstrap-restoration.md
 pop dx
 .org 0x5554
 # IDA 0x15354; file 0x5554; locator=proven; pop     cx
-# ⚠ 函式 sub_1533D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1533D; [proven] 原武將評分與日期wrapper，入口DS:D52、出口DS等於CS; 出處: docs/re/126-c-world-bootstrap-restoration.md
 pop cx
 .org 0x5555
 # IDA 0x15355; file 0x5555; locator=proven; pop     bx
-# ⚠ 函式 sub_1533D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1533D; [proven] 原武將評分與日期wrapper，入口DS:D52、出口DS等於CS; 出處: docs/re/126-c-world-bootstrap-restoration.md
 pop bx
 .org 0x5556
 # IDA 0x15356; file 0x5556; locator=proven; pop     ax
-# ⚠ 函式 sub_1533D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1533D; [proven] 原武將評分與日期wrapper，入口DS:D52、出口DS等於CS; 出處: docs/re/126-c-world-bootstrap-restoration.md
 pop ax
 .org 0x5557
 # IDA 0x15357; file 0x5557; locator=proven; retn
-# ⚠ 函式 sub_1533D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1533D; [proven] 原武將評分與日期wrapper，入口DS:D52、出口DS等於CS; 出處: docs/re/126-c-world-bootstrap-restoration.md
 ret
 .org 0x5558
 sub_15358:
@@ -55357,505 +55359,512 @@ ret
 .org 0x8bf0
 sub_189F0:
 # IDA 0x189f0; file 0x8bf0; locator=proven; push    ds
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 push ds
 .org 0x8bf1
 # IDA 0x189f1; file 0x8bf1; locator=proven; push    es
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 push es
 .org 0x8bf2
 # IDA 0x189f2; file 0x8bf2; locator=proven; push    ax
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 push ax
 .org 0x8bf3
 # IDA 0x189f3; file 0x8bf3; locator=proven; push    bx
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 push bx
 .org 0x8bf4
 # IDA 0x189f4; file 0x8bf4; locator=proven; push    cx
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 push cx
 .org 0x8bf5
 # IDA 0x189f5; file 0x8bf5; locator=proven; push    si
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 push si
 .org 0x8bf6
 # IDA 0x189f6; file 0x8bf6; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x8bfb
 # IDA 0x189fb; file 0x8bfb; locator=proven; mov     cx, 0C0h
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
+# operand 1 0C0h; [proven] 固定192城市，不查存在flag; 出處: docs/re/126-c-world-bootstrap-restoration.md
 mov cx, 0xc0
 .org 0x8bfe
 # IDA 0x189fe; file 0x8bfe; locator=proven; mov     si, 840h
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 mov si, 0x840
 .org 0x8c01
 loc_18A01:
 # IDA 0x18a01; file 0x8c01; locator=proven; call    sub_18A1E
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 call .+29
 .org 0x8c04
 # IDA 0x18a04; file 0x8c04; locator=proven; add     si, 20h
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 add si, 0x20
 .org 0x8c07
 # IDA 0x18a07; file 0x8c07; locator=proven; loop    loc_18A01
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 loop .-6
 .org 0x8c09
 # IDA 0x18a09; file 0x8c09; locator=proven; mov     cx, 7Fh
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
+# operand 1 7Fh; [proven] 固定127槽，最後處理126而不處理127; 出處: docs/re/126-c-world-bootstrap-restoration.md
 mov cx, 0x7f
 .org 0x8c0c
 # IDA 0x18a0c; file 0x8c0c; locator=proven; mov     si, 2240h
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 mov si, 0x2240
 .org 0x8c0f
 loc_18A0F:
 # IDA 0x18a0f; file 0x8c0f; locator=proven; call    sub_18AEA
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 call .+219
 .org 0x8c12
 # IDA 0x18a12; file 0x8c12; locator=proven; add     si, 40h
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 add si, 0x40
 .org 0x8c15
 # IDA 0x18a15; file 0x8c15; locator=proven; loop    loc_18A0F
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 loop .-6
 .org 0x8c17
 # IDA 0x18a17; file 0x8c17; locator=proven; pop     si
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 pop si
 .org 0x8c18
 # IDA 0x18a18; file 0x8c18; locator=proven; pop     cx
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 pop cx
 .org 0x8c19
 # IDA 0x18a19; file 0x8c19; locator=proven; pop     bx
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 pop bx
 .org 0x8c1a
 # IDA 0x18a1a; file 0x8c1a; locator=proven; pop     ax
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 pop ax
 .org 0x8c1b
 # IDA 0x18a1b; file 0x8c1b; locator=proven; pop     es
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 pop es
 .org 0x8c1c
 # IDA 0x18a1c; file 0x8c1c; locator=proven; pop     ds
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 pop ds
 .org 0x8c1d
 # IDA 0x18a1d; file 0x8c1d; locator=proven; retn
-# ⚠ 函式 sub_189F0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_189F0; [proven] 原初始化順序192城與127軍團槽0至126，不清occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 ret
 .org 0x8c1e
 sub_18A1E:
 # IDA 0x18a1e; file 0x8c1e; locator=proven; push    cx
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 push cx
 .org 0x8c1f
 # IDA 0x18a1f; file 0x8c1f; locator=proven; mov     ax, [si+0Ah]
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 mov ax, word ptr [si+0xa]
 .org 0x8c22
 # IDA 0x18a22; file 0x8c22; locator=proven; sub     ax, 2
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 sub ax, offset imm_at_18A22
 .org 0x8c25
 # IDA 0x18a25; file 0x8c25; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 shl ax, 0x1
 .org 0x8c27
 # IDA 0x18a27; file 0x8c27; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 shl ax, 0x1
 .org 0x8c29
 # IDA 0x18a29; file 0x8c29; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 shl ax, 0x1
 .org 0x8c2b
 # IDA 0x18a2b; file 0x8c2b; locator=proven; mov     bx, ax
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 {load} mov bx, ax
 .org 0x8c2d
 # IDA 0x18a2d; file 0x8c2d; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 shl ax, 0x1
 .org 0x8c2f
 # IDA 0x18a2f; file 0x8c2f; locator=proven; add     ax, bx
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 {load} add ax, bx
 .org 0x8c31
 # IDA 0x18a31; file 0x8c31; locator=proven; add     ax, cs:word_10D44
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
+# operand 1 cs:word_10D44; [proven] CS:D44才是本寫入端地圖基址；D850不能代替; 出處: docs/re/126-c-world-bootstrap-restoration.md
 cs; add ax, word ptr [0xd44]
 .org 0x8c36
 # IDA 0x18a36; file 0x8c36; locator=proven; mov     es, ax
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 mov es, ax
 .org 0x8c38
 # IDA 0x18a38; file 0x8c38; locator=proven; mov     bx, [si+8]
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 mov bx, word ptr [si+0x8]
 .org 0x8c3b
 # IDA 0x18a3b; file 0x8c3b; locator=proven; add     bx, 300h
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 add bx, 0x300
 .org 0x8c3f
 # IDA 0x18a3f; file 0x8c3f; locator=proven; mov     al, es:[bx]
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 es; mov al, byte ptr [bx]
 .org 0x8c42
 # IDA 0x18a42; file 0x8c42; locator=proven; sub     al, 0CBh
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 sub al, 0xcb
 .org 0x8c44
 # IDA 0x18a44; file 0x8c44; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 {load} xor ah, ah
 .org 0x8c46
 # IDA 0x18a46; file 0x8c46; locator=proven; mov     cl, 3
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 mov cl, 0x3
 .org 0x8c48
 # IDA 0x18a48; file 0x8c48; locator=proven; div     cl
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 div cl
 .org 0x8c4a
 # IDA 0x18a4a; file 0x8c4a; locator=proven; mul     cl
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 mul cl
 .org 0x8c4c
 # IDA 0x18a4c; file 0x8c4c; locator=proven; add     al, 0CBh
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 add al, 0xcb
 .org 0x8c4e
 # IDA 0x18a4e; file 0x8c4e; locator=proven; mov     ah, [si+1]
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 mov ah, byte ptr [si+0x1]
 .org 0x8c51
 # IDA 0x18a51; file 0x8c51; locator=proven; cmp     ah, 18h
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 cmp ah, 0x18
 .org 0x8c54
 # IDA 0x18a54; file 0x8c54; locator=proven; jnz     short loc_18A5A
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 jnz .+6
 .org 0x8c56
 # IDA 0x18a56; file 0x8c56; locator=proven; add     al, 2
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 add al, 0x2
 .org 0x8c58
 # IDA 0x18a58; file 0x8c58; locator=proven; jmp     short loc_18A63
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 jmp .+11
 .org 0x8c5a
 loc_18A5A:
 # IDA 0x18a5a; file 0x8c5a; locator=proven; cmp     ah, cs:byte_10CFF
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 cs; cmp ah, byte ptr [0xcff]
 .org 0x8c5f
 # IDA 0x18a5f; file 0x8c5f; locator=proven; jz      short loc_18A63
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 jz .+4
 .org 0x8c61
 # IDA 0x18a61; file 0x8c61; locator=proven; add     al, 1
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 add al, 0x1
 .org 0x8c63
 loc_18A63:
 # IDA 0x18a63; file 0x8c63; locator=proven; mov     es:[bx], al
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 es; mov byte ptr [bx], al
 .org 0x8c66
 # IDA 0x18a66; file 0x8c66; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 {load} xor ah, ah
 .org 0x8c68
 # IDA 0x18a68; file 0x8c68; locator=proven; mov     al, [si+1]
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 mov al, byte ptr [si+0x1]
 .org 0x8c6b
 # IDA 0x18a6b; file 0x8c6b; locator=proven; cmp     al, cs:byte_10CFF
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 cs; cmp al, byte ptr [0xcff]
 .org 0x8c70
 # IDA 0x18a70; file 0x8c70; locator=proven; jnz     short loc_18A74
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 jnz .+4
 .org 0x8c72
 # IDA 0x18a72; file 0x8c72; locator=proven; mov     ah, 0Ah
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 mov ah, 0xa
 .org 0x8c74
 loc_18A74:
 # IDA 0x18a74; file 0x8c74; locator=proven; mov     al, [si+16h]
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
+# operand 1 [si+16h]; [proven] 城市+16h的低nibble控制四鄰配置，不是中心tile型態; 出處: docs/re/126-c-world-bootstrap-restoration.md
 mov al, byte ptr [si+0x16]
 .org 0x8c77
 # IDA 0x18a77; file 0x8c77; locator=proven; and     al, 0Fh
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 and al, 0xf
 .org 0x8c79
 # IDA 0x18a79; file 0x8c79; locator=proven; jz      short loc_18A99
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 jz .+32
 .org 0x8c7b
 # IDA 0x18a7b; file 0x8c7b; locator=proven; cmp     al, 3
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 cmp al, 0x3
 .org 0x8c7d
 # IDA 0x18a7d; file 0x8c7d; locator=proven; jz      short loc_18AB5
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 jz .+56
 .org 0x8c7f
 # IDA 0x18a7f; file 0x8c7f; locator=proven; sub     bx, 181h
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 sub bx, 0x181
 .org 0x8c83
 # IDA 0x18a83; file 0x8c83; locator=proven; call    sub_18AD1
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 call .+78
 .org 0x8c86
 # IDA 0x18a86; file 0x8c86; locator=proven; inc     bx
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 inc bx
 .org 0x8c87
 # IDA 0x18a87; file 0x8c87; locator=proven; inc     bx
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 inc bx
 .org 0x8c88
 # IDA 0x18a88; file 0x8c88; locator=proven; call    sub_18AD1
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 call .+73
 .org 0x8c8b
 # IDA 0x18a8b; file 0x8c8b; locator=proven; add     bx, 300h
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 add bx, 0x300
 .org 0x8c8f
 # IDA 0x18a8f; file 0x8c8f; locator=proven; call    sub_18AD1
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 call .+66
 .org 0x8c92
 # IDA 0x18a92; file 0x8c92; locator=proven; dec     bx
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 dec bx
 .org 0x8c93
 # IDA 0x18a93; file 0x8c93; locator=proven; dec     bx
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 dec bx
 .org 0x8c94
 # IDA 0x18a94; file 0x8c94; locator=proven; call    sub_18AD1
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 call .+61
 .org 0x8c97
 # IDA 0x18a97; file 0x8c97; locator=proven; jmp     short loc_18ACF
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 jmp .+56
 .org 0x8c99
 loc_18A99:
 # IDA 0x18a99; file 0x8c99; locator=proven; sub     bx, 302h
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 sub bx, 0x302
 .org 0x8c9d
 # IDA 0x18a9d; file 0x8c9d; locator=proven; call    sub_18AD1
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 call .+52
 .org 0x8ca0
 # IDA 0x18aa0; file 0x8ca0; locator=proven; add     bx, 4
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 add bx, 0x4
 .org 0x8ca3
 # IDA 0x18aa3; file 0x8ca3; locator=proven; call    sub_18AD1
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 call .+46
 .org 0x8ca6
 # IDA 0x18aa6; file 0x8ca6; locator=proven; add     bx, 600h
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 add bx, 0x600
 .org 0x8caa
 # IDA 0x18aaa; file 0x8caa; locator=proven; call    sub_18AD1
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 call .+39
 .org 0x8cad
 # IDA 0x18aad; file 0x8cad; locator=proven; sub     bx, 4
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 sub bx, 0x4
 .org 0x8cb0
 # IDA 0x18ab0; file 0x8cb0; locator=proven; call    sub_18AD1
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 call .+33
 .org 0x8cb3
 # IDA 0x18ab3; file 0x8cb3; locator=proven; jmp     short loc_18ACF
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 jmp .+28
 .org 0x8cb5
 loc_18AB5:
 # IDA 0x18ab5; file 0x8cb5; locator=proven; sub     bx, 180h
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 sub bx, 0x180
 .org 0x8cb9
 # IDA 0x18ab9; file 0x8cb9; locator=proven; call    sub_18AD1
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 call .+24
 .org 0x8cbc
 # IDA 0x18abc; file 0x8cbc; locator=proven; add     bx, 17Fh
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 add bx, 0x17f
 .org 0x8cc0
 # IDA 0x18ac0; file 0x8cc0; locator=proven; call    sub_18AD1
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 call .+17
 .org 0x8cc3
 # IDA 0x18ac3; file 0x8cc3; locator=proven; inc     bx
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 inc bx
 .org 0x8cc4
 # IDA 0x18ac4; file 0x8cc4; locator=proven; inc     bx
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 inc bx
 .org 0x8cc5
 # IDA 0x18ac5; file 0x8cc5; locator=proven; call    sub_18AD1
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 call .+12
 .org 0x8cc8
 # IDA 0x18ac8; file 0x8cc8; locator=proven; add     bx, 17Fh
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 add bx, 0x17f
 .org 0x8ccc
 # IDA 0x18acc; file 0x8ccc; locator=proven; call    sub_18AD1
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 call .+5
 .org 0x8ccf
 loc_18ACF:
 # IDA 0x18acf; file 0x8ccf; locator=proven; pop     cx
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 pop cx
 .org 0x8cd0
 # IDA 0x18ad0; file 0x8cd0; locator=proven; retn
-# ⚠ 函式 sub_18A1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18A1E; [proven] 原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址; 出處: docs/re/126-c-world-bootstrap-restoration.md
 ret
 .org 0x8cd1
 sub_18AD1:
 # IDA 0x18ad1; file 0x8cd1; locator=proven; mov     al, es:[bx]
-# ⚠ 函式 sub_18AD1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AD1; [proven] 原DE至F1鄰格折回十項基色，依AH加玩家高亮; 出處: docs/re/126-c-world-bootstrap-restoration.md
 es; mov al, byte ptr [bx]
 .org 0x8cd4
 # IDA 0x18ad4; file 0x8cd4; locator=proven; sub     al, 0DEh
-# ⚠ 函式 sub_18AD1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AD1; [proven] 原DE至F1鄰格折回十項基色，依AH加玩家高亮; 出處: docs/re/126-c-world-bootstrap-restoration.md
 sub al, 0xde
 .org 0x8cd6
 # IDA 0x18ad6; file 0x8cd6; locator=proven; jb      short locret_18AE9
-# ⚠ 函式 sub_18AD1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AD1; [proven] 原DE至F1鄰格折回十項基色，依AH加玩家高亮; 出處: docs/re/126-c-world-bootstrap-restoration.md
 jb .+19
 .org 0x8cd8
 # IDA 0x18ad8; file 0x8cd8; locator=proven; cmp     al, 14h
-# ⚠ 函式 sub_18AD1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AD1; [proven] 原DE至F1鄰格折回十項基色，依AH加玩家高亮; 出處: docs/re/126-c-world-bootstrap-restoration.md
 cmp al, 0x14
 .org 0x8cda
 # IDA 0x18ada; file 0x8cda; locator=proven; jnb     short locret_18AE9
-# ⚠ 函式 sub_18AD1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AD1; [proven] 原DE至F1鄰格折回十項基色，依AH加玩家高亮; 出處: docs/re/126-c-world-bootstrap-restoration.md
 jnb .+15
 .org 0x8cdc
 # IDA 0x18adc; file 0x8cdc; locator=proven; cmp     al, 0Ah
-# ⚠ 函式 sub_18AD1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AD1; [proven] 原DE至F1鄰格折回十項基色，依AH加玩家高亮; 出處: docs/re/126-c-world-bootstrap-restoration.md
 cmp al, 0xa
 .org 0x8cde
 # IDA 0x18ade; file 0x8cde; locator=proven; jb      short loc_18AE2
-# ⚠ 函式 sub_18AD1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AD1; [proven] 原DE至F1鄰格折回十項基色，依AH加玩家高亮; 出處: docs/re/126-c-world-bootstrap-restoration.md
 jb .+4
 .org 0x8ce0
 # IDA 0x18ae0; file 0x8ce0; locator=proven; sub     al, 0Ah
-# ⚠ 函式 sub_18AD1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AD1; [proven] 原DE至F1鄰格折回十項基色，依AH加玩家高亮; 出處: docs/re/126-c-world-bootstrap-restoration.md
 sub al, 0xa
 .org 0x8ce2
 loc_18AE2:
 # IDA 0x18ae2; file 0x8ce2; locator=proven; add     al, 0DEh
-# ⚠ 函式 sub_18AD1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AD1; [proven] 原DE至F1鄰格折回十項基色，依AH加玩家高亮; 出處: docs/re/126-c-world-bootstrap-restoration.md
 add al, 0xde
 .org 0x8ce4
 # IDA 0x18ae4; file 0x8ce4; locator=proven; add     al, ah
-# ⚠ 函式 sub_18AD1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AD1; [proven] 原DE至F1鄰格折回十項基色，依AH加玩家高亮; 出處: docs/re/126-c-world-bootstrap-restoration.md
 {load} add al, ah
 .org 0x8ce6
 # IDA 0x18ae6; file 0x8ce6; locator=proven; mov     es:[bx], al
-# ⚠ 函式 sub_18AD1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AD1; [proven] 原DE至F1鄰格折回十項基色，依AH加玩家高亮; 出處: docs/re/126-c-world-bootstrap-restoration.md
 es; mov byte ptr [bx], al
 .org 0x8ce9
 locret_18AE9:
 # IDA 0x18ae9; file 0x8ce9; locator=proven; retn
-# ⚠ 函式 sub_18AD1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AD1; [proven] 原DE至F1鄰格折回十項基色，依AH加玩家高亮; 出處: docs/re/126-c-world-bootstrap-restoration.md
 ret
 .org 0x8cea
 sub_18AEA:
 # IDA 0x18aea; file 0x8cea; locator=proven; cmp     byte ptr [si], 80h
-# ⚠ 函式 sub_18AEA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AEA; [proven] 原active>=80軍團座標轉segment/offset，更新+1A/+1C與byte占用計數; 出處: docs/re/126-c-world-bootstrap-restoration.md
+# operand 1 80h; [proven] flags>=80才更新descriptor與occupancy; 出處: docs/re/126-c-world-bootstrap-restoration.md
 cmp byte ptr [si], 0x80
 .org 0x8ced
 # IDA 0x18aed; file 0x8ced; locator=proven; jb      short locret_18B11
-# ⚠ 函式 sub_18AEA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AEA; [proven] 原active>=80軍團座標轉segment/offset，更新+1A/+1C與byte占用計數; 出處: docs/re/126-c-world-bootstrap-restoration.md
 jb .+36
 .org 0x8cef
 # IDA 0x18aef; file 0x8cef; locator=proven; mov     ax, [si+12h]
-# ⚠ 函式 sub_18AEA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AEA; [proven] 原active>=80軍團座標轉segment/offset，更新+1A/+1C與byte占用計數; 出處: docs/re/126-c-world-bootstrap-restoration.md
 mov ax, word ptr [si+0x12]
 .org 0x8cf2
 # IDA 0x18af2; file 0x8cf2; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_18AEA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AEA; [proven] 原active>=80軍團座標轉segment/offset，更新+1A/+1C與byte占用計數; 出處: docs/re/126-c-world-bootstrap-restoration.md
 shl ax, 0x1
 .org 0x8cf4
 # IDA 0x18af4; file 0x8cf4; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_18AEA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AEA; [proven] 原active>=80軍團座標轉segment/offset，更新+1A/+1C與byte占用計數; 出處: docs/re/126-c-world-bootstrap-restoration.md
 shl ax, 0x1
 .org 0x8cf6
 # IDA 0x18af6; file 0x8cf6; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_18AEA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AEA; [proven] 原active>=80軍團座標轉segment/offset，更新+1A/+1C與byte占用計數; 出處: docs/re/126-c-world-bootstrap-restoration.md
 shl ax, 0x1
 .org 0x8cf8
 # IDA 0x18af8; file 0x8cf8; locator=proven; mov     bx, ax
-# ⚠ 函式 sub_18AEA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AEA; [proven] 原active>=80軍團座標轉segment/offset，更新+1A/+1C與byte占用計數; 出處: docs/re/126-c-world-bootstrap-restoration.md
 {load} mov bx, ax
 .org 0x8cfa
 # IDA 0x18afa; file 0x8cfa; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_18AEA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AEA; [proven] 原active>=80軍團座標轉segment/offset，更新+1A/+1C與byte占用計數; 出處: docs/re/126-c-world-bootstrap-restoration.md
 shl ax, 0x1
 .org 0x8cfc
 # IDA 0x18afc; file 0x8cfc; locator=proven; add     ax, bx
-# ⚠ 函式 sub_18AEA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AEA; [proven] 原active>=80軍團座標轉segment/offset，更新+1A/+1C與byte占用計數; 出處: docs/re/126-c-world-bootstrap-restoration.md
 {load} add ax, bx
 .org 0x8cfe
 # IDA 0x18afe; file 0x8cfe; locator=proven; add     ax, cs:word_19872
-# ⚠ 函式 sub_18AEA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AEA; [proven] 原active>=80軍團座標轉segment/offset，更新+1A/+1C與byte占用計數; 出處: docs/re/126-c-world-bootstrap-restoration.md
 cs; add ax, word ptr [0x9872]
 .org 0x8d03
 # IDA 0x18b03; file 0x8d03; locator=proven; mov     es, ax
-# ⚠ 函式 sub_18AEA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AEA; [proven] 原active>=80軍團座標轉segment/offset，更新+1A/+1C與byte占用計數; 出處: docs/re/126-c-world-bootstrap-restoration.md
 mov es, ax
 .org 0x8d05
 # IDA 0x18b05; file 0x8d05; locator=proven; mov     bx, [si+10h]
-# ⚠ 函式 sub_18AEA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AEA; [proven] 原active>=80軍團座標轉segment/offset，更新+1A/+1C與byte占用計數; 出處: docs/re/126-c-world-bootstrap-restoration.md
 mov bx, word ptr [si+0x10]
 .org 0x8d08
 # IDA 0x18b08; file 0x8d08; locator=proven; mov     [si+1Ch], ax
-# ⚠ 函式 sub_18AEA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AEA; [proven] 原active>=80軍團座標轉segment/offset，更新+1A/+1C與byte占用計數; 出處: docs/re/126-c-world-bootstrap-restoration.md
+# operand 0 [si+1Ch]; [proven] 軍團+1C寫目前座標計算的ES segment word; 出處: docs/re/126-c-world-bootstrap-restoration.md
 mov word ptr [si+0x1c], ax
 .org 0x8d0b
 # IDA 0x18b0b; file 0x8d0b; locator=proven; mov     [si+1Ah], bx
-# ⚠ 函式 sub_18AEA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AEA; [proven] 原active>=80軍團座標轉segment/offset，更新+1A/+1C與byte占用計數; 出處: docs/re/126-c-world-bootstrap-restoration.md
 mov word ptr [si+0x1a], bx
 .org 0x8d0e
 # IDA 0x18b0e; file 0x8d0e; locator=proven; inc     byte ptr es:[bx]
-# ⚠ 函式 sub_18AEA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AEA; [proven] 原active>=80軍團座標轉segment/offset，更新+1A/+1C與byte占用計數; 出處: docs/re/126-c-world-bootstrap-restoration.md
+# operand 0 byte ptr es:[bx]; [proven] 原byte計數增一並回繞，不清零也不設為1; 出處: docs/re/126-c-world-bootstrap-restoration.md
 es; inc byte ptr [bx]
 .org 0x8d11
 locret_18B11:
 # IDA 0x18b11; file 0x8d11; locator=proven; retn
-# ⚠ 函式 sub_18AEA; [unknown] 未附加語意; 出處: 無
+# 函式 sub_18AEA; [proven] 原active>=80軍團座標轉segment/offset，更新+1A/+1C與byte占用計數; 出處: docs/re/126-c-world-bootstrap-restoration.md
 ret
 .org 0x8d12
 sub_18B12:

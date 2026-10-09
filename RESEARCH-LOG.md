@@ -2042,3 +2042,9 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - 固定DOS/V KI.EXE與IDA9.4身分見 [re/125](docs/re/125-c-nonlocal-exit-restoration.md)；11CB1／10A1C／1EBDC共89指令179bytes。
 - 原CALL10067→11BF6建立真outerframe，完整VGA/RAM snapshot兩側獨立；SS/SP恢復、17級/272色writer、原RET至006A與C ABI unwind通過2520組／八錯版。
 - D44缺漏的opcode破壞及retired scene frame兩類準備／模型錯誤均已按原bytes修正；正確右鍵表15A06與落下159D0另保留回鏈。
+
+## 2026-10-09：原城市／軍團初始化與有限前綴
+
+- 固定DOS/V KI.EXE及IDA9.4身分見 [re/126](docs/re/126-c-world-bootstrap-restoration.md)，5函式317bytes＋無RET前綴22bytes。
+- 獨立byte模型驗整份map/occupancy/descriptor/score；O0/O2各5008組/5416全狀態與十錯版、原生prefix接退出鏈通過。
+- 普通分派不把有限prefix當完整11BE0；375C/49raw不是完整C或C機器碼匹配聲明。

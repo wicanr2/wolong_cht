@@ -244,6 +244,8 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 
 主迴圈堆疊與信賴度非區域退出的 C 見 [re/125](125-c-nonlocal-exit-restoration.md)，規格見 [spec/245](../spec/245-c-nonlocal-exit.md)。
 
+城市與軍團初始化的 C 見 [re/126](126-c-world-bootstrap-restoration.md)，規格見 [spec/246](../spec/246-c-world-bootstrap.md)。
+
 ## 9. 怎麼加一份新筆記
 
 1. 編號流水，一個發現一份。標題寫「回答什麼問題」不是「讀了哪支函式」。

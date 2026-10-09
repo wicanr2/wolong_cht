@@ -2869,6 +2869,41 @@
       "sources": [
         "docs/re/125-c-nonlocal-exit-restoration.md"
       ]
+    },
+    "0x189F0": {
+      "meaning": "原初始化順序192城與127軍團槽0至126，不清occupancy",
+      "level": "proven",
+      "sources": [
+        "docs/re/126-c-world-bootstrap-restoration.md"
+      ]
+    },
+    "0x18A1E": {
+      "meaning": "原城市中心色碼與型態低nibble控制四鄰格，使用CS:D44地圖基址",
+      "level": "proven",
+      "sources": [
+        "docs/re/126-c-world-bootstrap-restoration.md"
+      ]
+    },
+    "0x18AD1": {
+      "meaning": "原DE至F1鄰格折回十項基色，依AH加玩家高亮",
+      "level": "proven",
+      "sources": [
+        "docs/re/126-c-world-bootstrap-restoration.md"
+      ]
+    },
+    "0x18AEA": {
+      "meaning": "原active>=80軍團座標轉segment/offset，更新+1A/+1C與byte占用計數",
+      "level": "proven",
+      "sources": [
+        "docs/re/126-c-world-bootstrap-restoration.md"
+      ]
+    },
+    "0x1533D": {
+      "meaning": "原武將評分與日期wrapper，入口DS:D52、出口DS等於CS",
+      "level": "proven",
+      "sources": [
+        "docs/re/126-c-world-bootstrap-restoration.md"
+      ]
     }
   },
   "operands": {
@@ -3311,6 +3346,78 @@
       "level": "proven",
       "sources": [
         "docs/re/125-c-nonlocal-exit-restoration.md"
+      ]
+    },
+    "0x189FB:1": {
+      "original": "0C0h",
+      "meaning": "固定192城市，不查存在flag",
+      "level": "proven",
+      "sources": [
+        "docs/re/126-c-world-bootstrap-restoration.md"
+      ]
+    },
+    "0x18A09:1": {
+      "original": "7Fh",
+      "meaning": "固定127槽，最後處理126而不處理127",
+      "level": "proven",
+      "sources": [
+        "docs/re/126-c-world-bootstrap-restoration.md"
+      ]
+    },
+    "0x18A31:1": {
+      "original": "cs:word_10D44",
+      "meaning": "CS:D44才是本寫入端地圖基址；D850不能代替",
+      "level": "proven",
+      "sources": [
+        "docs/re/126-c-world-bootstrap-restoration.md"
+      ]
+    },
+    "0x18A74:1": {
+      "original": "[si+16h]",
+      "meaning": "城市+16h的低nibble控制四鄰配置，不是中心tile型態",
+      "level": "proven",
+      "sources": [
+        "docs/re/126-c-world-bootstrap-restoration.md"
+      ]
+    },
+    "0x18AEA:1": {
+      "original": "80h",
+      "meaning": "flags>=80才更新descriptor與occupancy",
+      "level": "proven",
+      "sources": [
+        "docs/re/126-c-world-bootstrap-restoration.md"
+      ]
+    },
+    "0x18B08:0": {
+      "original": "[si+1Ch]",
+      "meaning": "軍團+1C寫目前座標計算的ES segment word",
+      "level": "proven",
+      "sources": [
+        "docs/re/126-c-world-bootstrap-restoration.md"
+      ]
+    },
+    "0x18B0E:0": {
+      "original": "byte ptr es:[bx]",
+      "meaning": "原byte計數增一並回繞，不清零也不設為1",
+      "level": "proven",
+      "sources": [
+        "docs/re/126-c-world-bootstrap-restoration.md"
+      ]
+    },
+    "0x1534C:0": {
+      "original": "ds",
+      "meaning": "日期wrapper出口DS等於CS，不恢復入口DS",
+      "level": "proven",
+      "sources": [
+        "docs/re/126-c-world-bootstrap-restoration.md"
+      ]
+    },
+    "0x11BF1:0": {
+      "original": "cs:word_19901",
+      "meaning": "原保存CALL之後SP，有限前綴在下一IP1BF6停止而沒有RET",
+      "level": "proven",
+      "sources": [
+        "docs/re/126-c-world-bootstrap-restoration.md"
       ]
     }
   }

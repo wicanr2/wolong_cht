@@ -495,3 +495,13 @@
 - 本輪Go冷vet／39套件通過，cached0；最後完整check的39套件可重用cache，兩者收據分列。25單項21pass／4既有fail／新增0，完整check停既有index兩缺圖／phantom277；來源掃描前後穩定，13/14隔離自測通過。
 - C與Go最終收據重綁，source／89指令／1筆MZ及6筆回鏈一致。依授權提交推送；原版資產與私有RAM／圖片不入Git。
 - 本輪輸出UID/GID1000；root-owned基線維持27、無異常.md目錄，Docker容器已清理。
+
+## 2026-10-09：城市與軍團原生初始化 C
+
+- spec246 READY後還原五函式140指令317bytes，另列11BE0七指令22bytes無RET前段，不註冊完整mainloop。
+- 兩側從各自raw RAM/VGA開始；原生prefix不再借原版執行後Snapshot。192城、127army槽、active80、descriptor、occupancy byte累加／回繞及score/date原DS契約逐項驗。
+- O0/O2各5008組、5416分階段全狀態，10實編譯錯版全拒絕；D44/D850分離與C000 occupancy反例、slot126/127、poison欄位及重複bulk均涵蓋。
+- 五完整函式與一有限prefix分開記為375C/49raw。147指令339bytes全有舊組語覆蓋，獨立重組exact、無新MZ，原EXE67099仍exact。正式Go未改，完整Goal保持active。
+- 本輪最終來源與收據重綁完成：Go vet／39套件冷測通過，cached0；最後完整check的39套件重用cache，兩次證據分列。25單項21通過／4既有失敗／新增0；phantom277正規化零增刪，lessons失敗與基線相同。完整check停於既有index兩缺圖及phantom，其後階段由25單項補足。
+- 最終native驗證確認147指令／339bytes、十錯版、375C／49raw與兩筆回鏈一致；公開C收據已綁定最終Go proof。新文件已列入專案索引，原版資產、RAM與圖片不入Git。
+- 本輪輸出UID/GID1000；root-owned維持27個既有路徑，沒有異常.md目錄。本輪容器已清理；依使用者授權commit與push，完整mainloop、正常玩家長程及原C機器碼仍未完成。
