@@ -17,7 +17,7 @@ remake 的 `march.Graph.Route` 用 Dijkstra，權重只有 `Edge.Steps`（格數
   SHA-256 `6deb8e9c…e5dd62`）`loc_1491B`（IDA 線性 0001491B–00014A0E，
   **IDA 認不出函式，要用 `tools/ida_range.py` ＋ `ida_dump_bytes.idc`
   交叉解碼**）、`sub_14A0F`（00014A0F–00014A7A）、
-  `sub_147BB`（000147BB，唯一的呼叫端）
+  `sub_147BB`（000147BB）與`sub_1487B`（0001487B）兩個呼叫者；實際四個call site見re/129
 - 推論等級：confirmed（逐條解碼 ＋ 對拍歸零）
 - 實測：[`../playtest/119`](../playtest/119-rng-pace-comparison.md) §47.5
 - 相關：[`43`](43-rout-on-blocked-return.md)（`0xA6` 與 bit 15 的消費端）、
@@ -93,6 +93,10 @@ bit 15 的消費端在 `sub_147BB`：`cmp cx, 8000h / jnb` ⇒ 成本帶著那�
 軍團 37（據點 82 → 64）原本第一步往東西、原版往南北。改成原版的成本
 模型之後，`tools/parity_ck.sh 196/5/16 196/5/17 196/5/18 196/5/20`
 的軍團表**只剩 `corps-move-timer-phase` 那 1 個 byte**，六張表其餘全 0。
+
+## 尋路原始碼的後續驗證
+
+尋路核心已由原生 C 驗證。`loc_1491B`的原始`0x1491B`已逐條解碼，三個live code patch、port visited、最低成本bucket與環形佇列由獨立模型及完整原版／C比較核對，見 [re/129](../re/129-c-route-restoration.md)。這解除原指令尚未逐條讀的限制；Go同成本／等距端點與正常玩家長程仍沿本頁原有完成條件，不因局部C證據升格。
 
 ## 6. 未解
 

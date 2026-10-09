@@ -2060,3 +2060,9 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - 固定KI.EXE／IDA9.4／DB／probe與較大直接呼叫普查身分見 [re/128](docs/re/128-c-city-tick-restoration.md)。
 - 18函式562指令1340bytes，O0/O2各8144完整裝置／固定raw RNG與十六錯版；保留14137原848讀取與byte／word回繞。
 - 新證據回鏈至re100/spec219；本輪物件更新不代證完整事件畫面或正常玩家長程。
+
+## 2026-10-10：raw尋路107指令與其caller閉包
+
+- 固定KI.EXE／IDA9.4／DB／probe身分見 [re/129](docs/re/129-c-route-restoration.md)。
+- 九named+raw全543指令1260bytes，O0/O2各4588完整裝置與十六錯版；原live code patch、訪問port及環形最低bucket保留。
+- 新增79原指令來源，公開整檔組語重建一致；原版全roadtable及Go同成本／等距對拍仍待後續。

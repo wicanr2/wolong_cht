@@ -10,13 +10,14 @@ import subprocess
 from pathlib import Path
 
 EXPECTED = "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868"
-SIZE, INSTRUCTIONS, CODE_BYTES = 67099, 24999, 56866
+SIZE, INSTRUCTIONS, CODE_BYTES = 67099, 25078, 57045
 SOURCE = "tools/c_recovery/KI.code.S"
 LINKER = "tools/c_recovery/KI.code.ld"
 MANIFEST = "docs/re/assembly-code-record.json"
 SUPPLEMENT = "docs/re/rectangle-handler-code.json"
 LIST_SUPPLEMENT = "docs/re/c-list-code.json"
 CATALOG_SUPPLEMENT = "docs/re/c-catalog-code.json"
+ROUTE_SUPPLEMENT = "docs/re/route-handler-code.json"
 
 
 def digest(data: bytes) -> str:
@@ -91,14 +92,24 @@ def export(repo: Path) -> None:
     catalog_added = catalog["instructions"]
     require(len(catalog_added) == 170 and sum(r["file_end"] - r["file_start"] for r in catalog_added) == 361, "catalog supplement coverage differs")
     extra = extra + catalog_added
+    route_raw = (repo / ROUTE_SUPPLEMENT).read_bytes()
+    route = json.loads(route_raw)
+    require(route["schema"] == "wolong-matching-code-supplement-v1" and route["input_sha256"] == EXPECTED, "route supplement identity differs")
+    route_added = route["instructions"]
+    require(len(route_added) == 79 and sum(r["file_end"] - r["file_start"] for r in route_added) == 179, "route supplement coverage differs")
+    extra = extra + route_added
     # Absolute symbols preserve original imm16 encodings without inserting instruction bytes.
     linker_text = linker.decode("utf-8")
     constants = []
-    for name, value in sorted(catalog["constant_symbols"].items()):
-        require(re.fullmatch(r"imm_at_[0-9A-F]+", name) is not None and isinstance(value, int) and 0 <= value <= 0xffff, "invalid catalog constant")
+    merged_constants = dict(catalog["constant_symbols"])
+    for name, value in route["constant_symbols"].items():
+        require(name not in merged_constants or merged_constants[name] == value, "route constant conflicts with catalog")
+        merged_constants[name] = value
+    for name, value in sorted(merged_constants.items()):
+        require(re.fullmatch(r"imm_at_[0-9A-F]+", name) is not None and isinstance(value, int) and 0 <= value <= 0xffff, "invalid supplement constant")
         old = re.search(rf"^{re.escape(name)} = (0x[0-9a-f]+);$", linker_text, re.M)
         if old:
-            require(int(old[1], 16) == value, "catalog constant conflicts with baseline")
+            require(int(old[1], 16) == value, "supplement constant conflicts with baseline")
         else:
             constants.append(f"{name} = {value:#x};")
     if constants:
@@ -123,14 +134,18 @@ def export(repo: Path) -> None:
             public.append(name + ":")
         original = row["original_assembly"].split(";", 1)[0].strip()
         function = row["function_name"]
-        match = re.fullmatch(r"sub_([0-9A-Fa-f]+)", function or "")
+        if not function and 0x1491B <= row["ida_linear"] < 0x14A0F:
+            # re/129 proves this raw entry through RET without creating an IDA function.
+            function = "loc_1491B"
+        match = re.fullmatch(r"(?:sub|loc)_([0-9A-Fa-f]+)", function or "")
         semantic = semantics["functions"].get(f"0x{int(match[1], 16):X}") if match else None
         warning = "" if semantic and semantic["level"] == "proven" else "⚠ "
         level = semantic["level"] if semantic else "unknown"
         meaning = semantic["meaning"] if semantic else "未附加語意"
         sources = ", ".join(semantic["sources"]) if semantic else "無"
         public.append(f'# IDA {row["ida_linear"]:#x}; file {start:#x}; locator=proven; {original}')
-        public.append(f"# {warning}函式 {function or '無'}; [{level}] {meaning}; 出處: {sources}")
+        scope_kind = "raw 區段" if function and function.startswith("loc_") else "函式"
+        public.append(f"# {warning}{scope_kind} {function or '無'}; [{level}] {meaning}; 出處: {sources}")
         if "opcode" in row:
             public.append(f'# [proven] opcode {row["opcode"]}; 原 IDA 資料行: {row["original_ida_data_line"]}; 出處: {supplement["evidence"]}')
         for i, op in enumerate(row["operands"]):
@@ -154,7 +169,7 @@ def export(repo: Path) -> None:
         "schema": "wolong-matching-code-record-v1",
         "input": "DOS/V KI.EXE", "input_sha256": EXPECTED, "input_size": SIZE,
         "instruction_count": count, "instruction_bytes": CODE_BYTES,
-        "baseline_instruction_count": 24376, "supplement_instruction_count": 623,
+        "baseline_instruction_count": 24376, "supplement_instruction_count": 702,
         "historical_supplement_instruction_count": 370,
         "supplement": SUPPLEMENT, "supplement_sha256": digest(supplement_raw),
         "supplement_database_sha256": supplement["database_sha256"],
@@ -164,7 +179,11 @@ def export(repo: Path) -> None:
                                    {"path": CATALOG_SUPPLEMENT, "sha256": digest(catalog_raw),
                                     "database_sha256": catalog["database_sha256"],
                                     "instructions": 170, "bytes": 361,
-                                    "constant_symbols": catalog["constant_symbols"]}],
+                                    "constant_symbols": catalog["constant_symbols"]},
+                                   {"path": ROUTE_SUPPLEMENT, "sha256": digest(route_raw),
+                                    "database_sha256": route["database_sha256"],
+                                    "instructions": 79, "bytes": 179,
+                                    "constant_symbols": route["constant_symbols"]}],
         "private_import_bytes": SIZE - CODE_BYTES,
         "address_space": "IDA database linear base 0x10000; file = linear - 0x10000 + 512",
         "ida_version": report["ida_version"], "ida_image_id": report["ida_image_id"],

@@ -524,3 +524,14 @@
 - 機制補註另設原生C小節，避免生成索引把已證實內容當未解；triage保留1040筆，沒有移除舊列。雲的速度／回繞舊斷言已在兩份舊文件及CONTEXT勘誤，現有Go未改。
 - 據點輪轉本輪最終收據已重綁：Go vet／39套件冷測通過、cached0；最後完整check的39套件重用cache，兩次證據分列。25單項21通過／4既有失敗／新增0，phantom277正規化零增刪；完整check停既有index兩缺圖及phantom，後續由25單項補足。
 - 最終562指令／1340bytes、十六state-mismatch、401C／49raw及四筆回鏈通過。輸出UID/GID1000，root-owned維持27個既有路徑、沒有異常.md目錄，Docker容器已清理；依授權commit與push，完整Goal保持active。
+
+## 2026-10-10：自我修改尋路與軍團潰散 C
+
+- spec249 READY後還原九函式436指令1016bytes與完整raw搜尋107指令244bytes；三個CS即時operand與原queue/visited保留。
+- O0/O2各4588完整狀態與十六state-mismatch；使用可重生synthetic圖表，原版全道路與正常玩家長程不在此證據範圍。
+- 新增79指令179bytes；25078/57045/67099整檔exact與3組譯錯版拒絕，source-only supplement與coverage分離且維持whole-file SHA。410C/50raw。
+- 舊成本未逐條讀列oq-2ef4b20c0b00482c0266已由新來源取代，原merge-target/Issue3對照與舊內容見Git4324137；Go等距端點與遠端Issue狀態不變。
+- 最終來源覆蓋核對明分464條舊覆蓋、79條新增及543條已發布；最初驗證器把兩個scope等同，依實際收據契約修正後通過，原生結果未重跑或替換。
+- 尋路本輪最終收據已重綁：正式Go vet／39套件冷測通過、cached0；最後完整check的39套件重用cache，兩次收據分列。25單項21通過／4既有失敗／新增0；phantom277正規化零增刪，完整check停既有index兩缺圖及phantom，後續由25單項補足。
+- 最終410C／50raw、4588完整狀態、十六錯版、三筆回鏈與25078/57045/67099整檔重建核對通過；原版全roadtable及Go等距／正常玩家仍未代證。
+- 本輪輸出UID/GID1000，root-owned維持27個既有路徑、沒有異常.md目錄，Docker容器已清理；依授權commit與push，完整Goal保持active。

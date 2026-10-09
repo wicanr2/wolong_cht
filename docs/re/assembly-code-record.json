@@ -3,10 +3,10 @@
   "input": "DOS/V KI.EXE",
   "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
   "input_size": 67099,
-  "instruction_count": 24999,
-  "instruction_bytes": 56866,
+  "instruction_count": 25078,
+  "instruction_bytes": 57045,
   "baseline_instruction_count": 24376,
-  "supplement_instruction_count": 623,
+  "supplement_instruction_count": 702,
   "historical_supplement_instruction_count": 370,
   "supplement": "docs/re/rectangle-handler-code.json",
   "supplement_sha256": "48669f564ee6907501ea5f6c1a9e527258cc1f3c9ce86f4ef6364b8e5a4a08c9",
@@ -28,22 +28,30 @@
       "constant_symbols": {
         "imm_at_17284": 65535
       }
+    },
+    {
+      "path": "docs/re/route-handler-code.json",
+      "sha256": "50bb158913b850aaa439b28c9e3379c26886e4af76e989c7f2862e6f4572e67d",
+      "database_sha256": "31091a8a266e73ba1e903c5bca69409dca513179fd3114e1ec7074af1d17546d",
+      "instructions": 79,
+      "bytes": 179,
+      "constant_symbols": {}
     }
   ],
-  "private_import_bytes": 10233,
+  "private_import_bytes": 10054,
   "address_space": "IDA database linear base 0x10000; file = linear - 0x10000 + 512",
   "ida_version": "9.4",
   "ida_image_id": "sha256:4ac62de83339c215bab10e455cee3a22d9c6efed9fd0d8ed0f068327b83a06ab",
   "database_sha256": "e32713237d223145834531bffc8979146ed4bacaa98f73ec4bbf692b747c2c4f",
   "inventory_sha256": "15f5e2200e263c3700d778715fe60e40e48441cc2adbb0c8b57c8b8b2c8c5258",
   "semantic_index": "docs/re/matching-semantic-index.json",
-  "semantic_index_sha256": "c0bd7c43ac1ee4e8b4dc02b3024fe8e8ca6dc50c9fbab98ba69ba7e99ab26cb0",
+  "semantic_index_sha256": "e7cd82ca13f38ca36ee00ed93308d9bd8c8f6f01e38d8ddfb212d66956c0560a",
   "record_tool": "tools/matching_code_record.py",
-  "record_tool_sha256": "3a3103a6cc4606e78c17380d86337753a2d7c304b5805f174741d7b5f462ce0a",
+  "record_tool_sha256": "c4d976c576a65e1312155f4e75314c37032b28e00a3eb350eedb510edb971eb1",
   "baseline_source_sha256": "47571181edc1a1fe7a2554f0e94fc1c9bcf87cc2e42e06c7fcc093c871fcae62",
   "baseline_linker_sha256": "a301287e77bf1a79a717c206dc0754e2c0ccb3a75b3eae38815bfff0a1995ac7",
   "source": "tools/c_recovery/KI.code.S",
-  "source_sha256": "a282ed6156042d238da876d10bbd30b215838ee7f680949f8442c47928f3179f",
+  "source_sha256": "2eb6ce1855c80400933cd87e9b95bde87aa9888df4f17674914472ab0962f938",
   "linker": "tools/c_recovery/KI.code.ld",
   "linker_sha256": "c185523b302dbde42e7e4c9a9b639d33e9d9a8d9de7e9eb6930f0fc4f152e1c0",
   "build_image_id": "sha256:474f41ef91c354dd4754b08ef9302e965271e32417d6fba1772aecca0a5f9e2e",
@@ -104,13 +112,8 @@
     },
     {
       "file_start": 17776,
-      "file_end": 19292,
-      "sha256": "7f92f5528665fd10ec08d4ccd86dd42ffa31c9d8383b62f53e326defc4e9871b"
-    },
-    {
-      "file_start": 19471,
       "file_end": 22322,
-      "sha256": "50040f296efc9f98fcc2bc9c302168471a42127ed357b1ca3cf22bea6cc76abf"
+      "sha256": "06d36e7030cc1ab4e689f5edd02b2b0bbe7126ac4cc9e4c18edd7b8db7030b66"
     },
     {
       "file_start": 22328,

@@ -5239,19 +5239,6 @@
     },
     {
       "file": "docs/re/65-ai-march-decision-chain.md",
-      "item": "`loc_1491B` 的完整成本模型",
-      "status": "只解出「穿過非己方據點 ＋0xA6 並設高位元」（§8.1）。廣度優先搜尋本身的佇列結構與其他成本項沒逐條讀",
-      "section": "9. 未解",
-      "domain": "程式碼理解",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-2ef4b20c0b00482c0266",
-      "classification": "merge-target",
-      "github_issue": 3,
-      "reason": "退卻等距端點與 BFS tie-break，併入 Issue #3。"
-    },
-    {
-      "file": "docs/re/65-ai-march-decision-chain.md",
       "item": "remake 的對應",
       "status": "§8 已實作（[`../spec/43`](../spec/43-rout-on-blocked-return.md)）；**§8.4 的「逐站前進」沒有移植**，remake 一次算完整條路",
       "section": "9. 未解",
@@ -13530,6 +13517,58 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "據點與動畫更新18原C函式已有局部完整狀態及固定raw RNG證據；完整軍團／交戰／主排程／自然玩家流程與原C機器碼保留界線。"
+    },
+    {
+      "file": "docs/re/129-c-route-restoration.md",
+      "item": "完整軍團更新、交戰／戰術、主排程與自然玩家長程",
+      "status": "本輪閉包不代證",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-495d6b7dc598050f77a0",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "九named與raw尋路已有局部完整狀態證據；全原版roadtable、Go等距、完整軍團／戰鬥／主排程與C機器碼保留界線。"
+    },
+    {
+      "file": "docs/re/129-c-route-restoration.md",
+      "item": "非法圖表、原硬體時間與原C機器碼",
+      "status": "不由局部比較推廣",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-b07b2d87d8ec1d0a64fe",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "九named與raw尋路已有局部完整狀態證據；全原版roadtable、Go等距、完整軍團／戰鬥／主排程與C機器碼保留界線。"
+    },
+    {
+      "file": "docs/spec/249-c-route.md",
+      "item": "完整軍團更新、交戰／戰術、主排程與自然玩家長程",
+      "status": "本輪不代證",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-9eed98dca41526c888f2",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "九named與raw尋路已有局部完整狀態證據；全原版roadtable、Go等距、完整軍團／戰鬥／主排程與C機器碼保留界線。"
+    },
+    {
+      "file": "docs/spec/249-c-route.md",
+      "item": "非法圖表／原硬體時間與原C機器碼",
+      "status": "不由局部原生C比較推廣",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-e6f57974b77bc1a7348b",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "九named與raw尋路已有局部完整狀態證據；全原版roadtable、Go等距、完整軍團／戰鬥／主排程與C機器碼保留界線。"
     }
   ]
 }

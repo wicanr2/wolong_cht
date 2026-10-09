@@ -12557,621 +12557,623 @@ ret
 .org 0x2b1a
 sub_1291A:
 # IDA 0x1291a; file 0x2b1a; locator=proven; cmp     byte ptr [si], 80h
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 cmp byte ptr [si], 0x80
 .org 0x2b1d
 # IDA 0x1291d; file 0x2b1d; locator=proven; jnb     short loc_12920
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 jnb .+3
 .org 0x2b1f
 # IDA 0x1291f; file 0x2b1f; locator=proven; retn
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 ret
 .org 0x2b20
 loc_12920:
 # IDA 0x12920; file 0x2b20; locator=proven; push    ax
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 push ax
 .org 0x2b21
 # IDA 0x12921; file 0x2b21; locator=proven; push    bx
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 push bx
 .org 0x2b22
 # IDA 0x12922; file 0x2b22; locator=proven; mov     cs:byte_12919, al
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 cs; mov byte ptr [0x2919], al
 .org 0x2b26
 # IDA 0x12926; file 0x2b26; locator=proven; call    sub_12BA8
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 call .+642
 .org 0x2b29
 # IDA 0x12929; file 0x2b29; locator=proven; mov     bh, [si+1]
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 mov bh, byte ptr [si+0x1]
 .org 0x2b2c
 # IDA 0x1292c; file 0x2b2c; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 {load} xor bl, bl
 .org 0x2b2e
 # IDA 0x1292e; file 0x2b2e; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 shr bx, 0x1
 .org 0x2b30
 # IDA 0x12930; file 0x2b30; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 shr bx, 0x1
 .org 0x2b32
 # IDA 0x12932; file 0x2b32; locator=proven; mov     al, [bx+1]
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 mov al, byte ptr [bx+0x1]
 .org 0x2b35
 # IDA 0x12935; file 0x2b35; locator=proven; mov     ah, [bx+3]
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 mov ah, byte ptr [bx+0x3]
 .org 0x2b38
 # IDA 0x12938; file 0x2b38; locator=proven; mov     bx, si
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 {load} mov bx, si
 .org 0x2b3a
 # IDA 0x1293a; file 0x2b3a; locator=proven; sub     bx, 2240h
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 sub bx, 0x2240
 .org 0x2b3e
 # IDA 0x1293e; file 0x2b3e; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 shr bx, 0x1
 .org 0x2b40
 # IDA 0x12940; file 0x2b40; locator=proven; add     bx, 4240h
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 add bx, 0x4240
 .org 0x2b44
 # IDA 0x12944; file 0x2b44; locator=proven; cmp     ah, 0FFh
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 cmp ah, 0xff
 .org 0x2b47
 # IDA 0x12947; file 0x2b47; locator=proven; jz      short loc_12971
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 jz .+42
 .org 0x2b49
 # IDA 0x12949; file 0x2b49; locator=proven; cmp     al, [si+2]
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 cmp al, byte ptr [si+0x2]
 .org 0x2b4c
 # IDA 0x1294c; file 0x2b4c; locator=proven; jz      short loc_1296C
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 jz .+32
 .org 0x2b4e
 # IDA 0x1294e; file 0x2b4e; locator=proven; mov     al, cs:byte_12919
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 cs; mov al, byte ptr [0x2919]
 .org 0x2b52
 # IDA 0x12952; file 0x2b52; locator=proven; cmp     al, [si+1]
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 cmp al, byte ptr [si+0x1]
 .org 0x2b55
 # IDA 0x12955; file 0x2b55; locator=proven; jz      short loc_1296C
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 jz .+23
 .org 0x2b57
 # IDA 0x12957; file 0x2b57; locator=proven; cmp     al, 18h
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 cmp al, 0x18
 .org 0x2b59
 # IDA 0x12959; file 0x2b59; locator=proven; jz      short loc_1296C
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 jz .+19
 .org 0x2b5b
 # IDA 0x1295b; file 0x2b5b; locator=proven; call    sub_1ECE0
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 call .-15483
 .org 0x2b5e
 # IDA 0x1295e; file 0x2b5e; locator=proven; and     al, 7Fh
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 and al, 0x7f
 .org 0x2b60
 # IDA 0x12960; file 0x2b60; locator=proven; mov     ah, [bx+1Fh]
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 mov ah, byte ptr [bx+0x1f]
 .org 0x2b63
 # IDA 0x12963; file 0x2b63; locator=proven; shr     ah, 1
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 shr ah, 0x1
 .org 0x2b65
 # IDA 0x12965; file 0x2b65; locator=proven; add     ah, 28h
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
+# operand 1 28h; [proven] 俘虜門檻為評分右移一次再加28h，保留byte加法; 出處: docs/re/129-c-route-restoration.md
 add ah, 0x28
 .org 0x2b68
 # IDA 0x12968; file 0x2b68; locator=proven; cmp     al, ah
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 {load} cmp al, ah
 .org 0x2b6a
 # IDA 0x1296a; file 0x2b6a; locator=proven; ja      short loc_12971
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 ja .+7
 .org 0x2b6c
 loc_1296C:
 # IDA 0x1296c; file 0x2b6c; locator=proven; call    sub_12977
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 call .+11
 .org 0x2b6f
 # IDA 0x1296f; file 0x2b6f; locator=proven; jmp     short loc_12974
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 jmp .+5
 .org 0x2b71
 loc_12971:
 # IDA 0x12971; file 0x2b71; locator=proven; call    sub_129C3
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 call .+82
 .org 0x2b74
 loc_12974:
 # IDA 0x12974; file 0x2b74; locator=proven; pop     bx
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 pop bx
 .org 0x2b75
 # IDA 0x12975; file 0x2b75; locator=proven; pop     ax
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 pop ax
 .org 0x2b76
 # IDA 0x12976; file 0x2b76; locator=proven; retn
-# ⚠ 函式 sub_1291A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1291A; [proven] 原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支; 出處: docs/re/129-c-route-restoration.md
 ret
 .org 0x2b77
 sub_12977:
 # IDA 0x12977; file 0x2b77; locator=proven; push    ax
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 push ax
 .org 0x2b78
 # IDA 0x12978; file 0x2b78; locator=proven; push    cx
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 push cx
 .org 0x2b79
 # IDA 0x12979; file 0x2b79; locator=proven; push    si
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 push si
 .org 0x2b7a
 # IDA 0x1297a; file 0x2b7a; locator=proven; push    di
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 push di
 .org 0x2b7b
 # IDA 0x1297b; file 0x2b7b; locator=proven; mov     si, bx
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 {load} mov si, bx
 .org 0x2b7d
 # IDA 0x1297d; file 0x2b7d; locator=proven; sub     si, 4240h
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 sub si, 0x4240
 .org 0x2b81
 # IDA 0x12981; file 0x2b81; locator=proven; shl     si, 1
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 shl si, 0x1
 .org 0x2b83
 # IDA 0x12983; file 0x2b83; locator=proven; add     si, 2240h
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 add si, 0x2240
 .org 0x2b87
 # IDA 0x12987; file 0x2b87; locator=proven; mov     cx, ds
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 mov cx, ds
 .org 0x2b89
 # IDA 0x12989; file 0x2b89; locator=proven; lds     di, [si+1Ah]
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 lds di, dword ptr [si+0x1a]
 .org 0x2b8c
 # IDA 0x1298c; file 0x2b8c; locator=proven; dec     byte ptr [di]
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
+# operand 0 byte ptr [di]; [proven] 原俘虜入口占用byte減一，保留0到FF回繞; 出處: docs/re/129-c-route-restoration.md
 dec byte ptr [di]
 .org 0x2b8e
 # IDA 0x1298e; file 0x2b8e; locator=proven; mov     ds, cx
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 mov ds, cx
 .org 0x2b90
 # IDA 0x12990; file 0x2b90; locator=proven; mov     byte ptr [si], 8
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 mov byte ptr [si], 0x8
 .org 0x2b93
 # IDA 0x12993; file 0x2b93; locator=proven; mov     byte ptr [si+3], 30h
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 mov byte ptr [si+0x3], 0x30
 .org 0x2b97
 # IDA 0x12997; file 0x2b97; locator=proven; call    sub_14689
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 call .+7410
 .org 0x2b9a
 # IDA 0x1299a; file 0x2b9a; locator=proven; mov     cx, 1Fh
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 mov cx, 0x1f
 .org 0x2b9d
 # IDA 0x1299d; file 0x2b9d; locator=proven; mov     al, cs:byte_10CFF
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 cs; mov al, byte ptr [0xcff]
 .org 0x2ba1
 # IDA 0x129a1; file 0x2ba1; locator=proven; cmp     al, [si+1]
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 cmp al, byte ptr [si+0x1]
 .org 0x2ba4
 # IDA 0x129a4; file 0x2ba4; locator=proven; jz      short loc_129AE
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 jz .+10
 .org 0x2ba6
 # IDA 0x129a6; file 0x2ba6; locator=proven; cmp     al, cs:byte_12919
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 cs; cmp al, byte ptr [0x2919]
 .org 0x2bab
 # IDA 0x129ab; file 0x2bab; locator=proven; jnz     short loc_129BE
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 jnz .+19
 .org 0x2bad
 # IDA 0x129ad; file 0x2bad; locator=proven; inc     cx
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 inc cx
 .org 0x2bae
 loc_129AE:
 # IDA 0x129ae; file 0x2bae; locator=proven; mov     al, [si+2]
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 mov al, byte ptr [si+0x2]
 .org 0x2bb1
 # IDA 0x129b1; file 0x2bb1; locator=proven; mov     ah, 0FFh
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 mov ah, 0xff
 .org 0x2bb3
 # IDA 0x129b3; file 0x2bb3; locator=proven; push    ax
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 push ax
 .org 0x2bb4
 # IDA 0x129b4; file 0x2bb4; locator=proven; mov     di, sp
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 {load} mov di, sp
 .org 0x2bb6
 # IDA 0x129b6; file 0x2bb6; locator=proven; mov     al, 93h
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 mov al, 0x93
 .org 0x2bb8
 # IDA 0x129b8; file 0x2bb8; locator=proven; call    sub_18810
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 call .+24152
 .org 0x2bbb
 # IDA 0x129bb; file 0x2bbb; locator=proven; add     sp, 2
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 add sp, 0x2
 .org 0x2bbe
 loc_129BE:
 # IDA 0x129be; file 0x2bbe; locator=proven; pop     di
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 pop di
 .org 0x2bbf
 # IDA 0x129bf; file 0x2bbf; locator=proven; pop     si
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 pop si
 .org 0x2bc0
 # IDA 0x129c0; file 0x2bc0; locator=proven; pop     cx
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 pop cx
 .org 0x2bc1
 # IDA 0x129c1; file 0x2bc1; locator=proven; pop     ax
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 pop ax
 .org 0x2bc2
 # IDA 0x129c2; file 0x2bc2; locator=proven; retn
-# ⚠ 函式 sub_12977; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12977; [proven] 原俘虜後占用減一、army旗標8與延遲30h及通知; 出處: docs/re/129-c-route-restoration.md
 ret
 .org 0x2bc3
 sub_129C3:
 # IDA 0x129c3; file 0x2bc3; locator=proven; push    ax
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 push ax
 .org 0x2bc4
 # IDA 0x129c4; file 0x2bc4; locator=proven; push    cx
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 push cx
 .org 0x2bc5
 # IDA 0x129c5; file 0x2bc5; locator=proven; push    dx
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 push dx
 .org 0x2bc6
 # IDA 0x129c6; file 0x2bc6; locator=proven; push    si
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 push si
 .org 0x2bc7
 # IDA 0x129c7; file 0x2bc7; locator=proven; push    di
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 push di
 .org 0x2bc8
 # IDA 0x129c8; file 0x2bc8; locator=proven; mov     si, bx
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 {load} mov si, bx
 .org 0x2bca
 # IDA 0x129ca; file 0x2bca; locator=proven; sub     si, 4240h
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 sub si, 0x4240
 .org 0x2bce
 # IDA 0x129ce; file 0x2bce; locator=proven; shl     si, 1
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 shl si, 0x1
 .org 0x2bd0
 # IDA 0x129d0; file 0x2bd0; locator=proven; add     si, 2240h
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 add si, 0x2240
 .org 0x2bd4
 # IDA 0x129d4; file 0x2bd4; locator=proven; cmp     byte ptr [si], 80h
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 cmp byte ptr [si], 0x80
 .org 0x2bd7
 # IDA 0x129d7; file 0x2bd7; locator=proven; jb      short loc_129E5
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 jb .+14
 .org 0x2bd9
 # IDA 0x129d9; file 0x2bd9; locator=proven; mov     cx, ds
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 mov cx, ds
 .org 0x2bdb
 # IDA 0x129db; file 0x2bdb; locator=proven; lds     di, [si+1Ah]
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 lds di, dword ptr [si+0x1a]
 .org 0x2bde
 # IDA 0x129de; file 0x2bde; locator=proven; dec     byte ptr [di]
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 dec byte ptr [di]
 .org 0x2be0
 # IDA 0x129e0; file 0x2be0; locator=proven; mov     ds, cx
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 mov ds, cx
 .org 0x2be2
 # IDA 0x129e2; file 0x2be2; locator=proven; call    sub_14689
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 call .+7335
 .org 0x2be5
 loc_129E5:
 # IDA 0x129e5; file 0x2be5; locator=proven; mov     al, 0FFh
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 mov al, 0xff
 .org 0x2be7
 # IDA 0x129e7; file 0x2be7; locator=proven; mov     ah, [bx+1Ch]
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 mov ah, byte ptr [bx+0x1c]
 .org 0x2bea
 # IDA 0x129ea; file 0x2bea; locator=proven; call    sub_12AD2
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 call .+232
 .org 0x2bed
 # IDA 0x129ed; file 0x2bed; locator=proven; mov     byte ptr [si], 0
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 mov byte ptr [si], 0x0
 .org 0x2bf0
 # IDA 0x129f0; file 0x2bf0; locator=proven; mov     byte ptr [bx+17h], 4
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 mov byte ptr [bx+0x17], 0x4
 .org 0x2bf4
 # IDA 0x129f4; file 0x2bf4; locator=proven; mov     al, cs:byte_12919
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 cs; mov al, byte ptr [0x2919]
 .org 0x2bf8
 # IDA 0x129f8; file 0x2bf8; locator=proven; xchg    al, [bx+1Ch]
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 xchg al, byte ptr [bx+0x1c]
 .org 0x2bfb
 # IDA 0x129fb; file 0x2bfb; locator=proven; mov     [bx+1Dh], al
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 mov byte ptr [bx+0x1d], al
 .org 0x2bfe
 # IDA 0x129fe; file 0x2bfe; locator=proven; mov     ah, al
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 {load} mov ah, al
 .org 0x2c00
 # IDA 0x12a00; file 0x2c00; locator=proven; xor     al, al
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 {load} xor al, al
 .org 0x2c02
 # IDA 0x12a02; file 0x2c02; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 shr ax, 0x1
 .org 0x2c04
 # IDA 0x12a04; file 0x2c04; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 shr ax, 0x1
 .org 0x2c06
 # IDA 0x12a06; file 0x2c06; locator=proven; mov     di, ax
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 {load} mov di, ax
 .org 0x2c08
 # IDA 0x12a08; file 0x2c08; locator=proven; cmp     byte ptr [di], 80h
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 cmp byte ptr [di], 0x80
 .org 0x2c0b
 # IDA 0x12a0b; file 0x2c0b; locator=proven; jnb     short loc_12A12
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 jnb .+7
 .org 0x2c0d
 # IDA 0x12a0d; file 0x2c0d; locator=proven; test    byte ptr [bx], 10h
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 test byte ptr [bx], 0x10
 .org 0x2c10
 # IDA 0x12a10; file 0x2c10; locator=proven; jnz     short loc_12A57
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 jnz .+71
 .org 0x2c12
 loc_12A12:
 # IDA 0x12a12; file 0x2c12; locator=proven; test    byte ptr [bx], 40h
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 test byte ptr [bx], 0x40
 .org 0x2c15
 # IDA 0x12a15; file 0x2c15; locator=proven; jz      short loc_12A1E
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 jz .+9
 .org 0x2c17
 # IDA 0x12a17; file 0x2c17; locator=proven; and     byte ptr [bx], 0BFh
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 and byte ptr [bx], 0xbf
 .org 0x2c1a
 # IDA 0x12a1a; file 0x2c1a; locator=proven; add     byte ptr [bx+1Eh], 3
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 add byte ptr [bx+0x1e], 0x3
 .org 0x2c1e
 loc_12A1E:
 # IDA 0x12a1e; file 0x2c1e; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 {load} xor dx, dx
 .org 0x2c20
 # IDA 0x12a20; file 0x2c20; locator=proven; mov     al, cs:byte_10CFF
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 cs; mov al, byte ptr [0xcff]
 .org 0x2c24
 # IDA 0x12a24; file 0x2c24; locator=proven; cmp     al, [bx+1Dh]
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 cmp al, byte ptr [bx+0x1d]
 .org 0x2c27
 # IDA 0x12a27; file 0x2c27; locator=proven; jz      short loc_12A31
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 jz .+10
 .org 0x2c29
 # IDA 0x12a29; file 0x2c29; locator=proven; cmp     al, cs:byte_12919
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 cs; cmp al, byte ptr [0x2919]
 .org 0x2c2e
 # IDA 0x12a2e; file 0x2c2e; locator=proven; jnz     short loc_12A78
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 jnz .+74
 .org 0x2c30
 # IDA 0x12a30; file 0x2c30; locator=proven; inc     dx
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 inc dx
 .org 0x2c31
 loc_12A31:
 # IDA 0x12a31; file 0x2c31; locator=proven; push    bx
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 push bx
 .org 0x2c32
 # IDA 0x12a32; file 0x2c32; locator=proven; mov     di, sp
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 {load} mov di, sp
 .org 0x2c34
 # IDA 0x12a34; file 0x2c34; locator=proven; mov     al, 93h
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 mov al, 0x93
 .org 0x2c36
 # IDA 0x12a36; file 0x2c36; locator=proven; mov     cx, 21h
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 mov cx, 0x21
 .org 0x2c39
 # IDA 0x12a39; file 0x2c39; locator=proven; add     cx, dx
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 {load} add cx, dx
 .org 0x2c3b
 # IDA 0x12a3b; file 0x2c3b; locator=proven; call    sub_18810
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 call .+24021
 .org 0x2c3e
 # IDA 0x12a3e; file 0x2c3e; locator=proven; add     sp, 2
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 add sp, 0x2
 .org 0x2c41
 # IDA 0x12a41; file 0x2c41; locator=proven; and     dx, dx
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 {load} and dx, dx
 .org 0x2c43
 # IDA 0x12a43; file 0x2c43; locator=proven; jz      short loc_12A78
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 jz .+53
 .org 0x2c45
 # IDA 0x12a45; file 0x2c45; locator=proven; push    bx
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 push bx
 .org 0x2c46
 # IDA 0x12a46; file 0x2c46; locator=proven; mov     di, sp
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 {load} mov di, sp
 .org 0x2c48
 # IDA 0x12a48; file 0x2c48; locator=proven; mov     ah, [bx+1Eh]
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 mov ah, byte ptr [bx+0x1e]
 .org 0x2c4b
 # IDA 0x12a4b; file 0x2c4b; locator=proven; mov     al, [bx+1]
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 mov al, byte ptr [bx+0x1]
 .org 0x2c4e
 # IDA 0x12a4e; file 0x2c4e; locator=proven; mov     cx, 19Ah
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 mov cx, 0x19a
 .org 0x2c51
 # IDA 0x12a51; file 0x2c51; locator=proven; call    sub_18810
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 call .+23999
 .org 0x2c54
 # IDA 0x12a54; file 0x2c54; locator=proven; pop     bx
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 pop bx
 .org 0x2c55
 # IDA 0x12a55; file 0x2c55; locator=proven; jmp     short loc_12A78
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 jmp .+35
 .org 0x2c57
 loc_12A57:
 # IDA 0x12a57; file 0x2c57; locator=proven; mov     byte ptr [bx], 0
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 mov byte ptr [bx], 0x0
 .org 0x2c5a
 # IDA 0x12a5a; file 0x2c5a; locator=proven; mov     word ptr [bx+1Ch], 0FFFFh
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 mov word ptr [bx+0x1c], 0xffff
 .org 0x2c5f
 # IDA 0x12a5f; file 0x2c5f; locator=proven; mov     al, cs:byte_10CFF
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 cs; mov al, byte ptr [0xcff]
 .org 0x2c63
 # IDA 0x12a63; file 0x2c63; locator=proven; cmp     al, cs:byte_12919
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 cs; cmp al, byte ptr [0x2919]
 .org 0x2c68
 # IDA 0x12a68; file 0x2c68; locator=proven; jnz     short loc_12A78
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 jnz .+16
 .org 0x2c6a
 # IDA 0x12a6a; file 0x2c6a; locator=proven; push    bx
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 push bx
 .org 0x2c6b
 # IDA 0x12a6b; file 0x2c6b; locator=proven; mov     di, sp
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 {load} mov di, sp
 .org 0x2c6d
 # IDA 0x12a6d; file 0x2c6d; locator=proven; mov     al, 93h
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 mov al, 0x93
 .org 0x2c6f
 # IDA 0x12a6f; file 0x2c6f; locator=proven; mov     cx, 43h
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 mov cx, 0x43
 .org 0x2c72
 # IDA 0x12a72; file 0x2c72; locator=proven; call    sub_18810
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 call .+23966
 .org 0x2c75
 # IDA 0x12a75; file 0x2c75; locator=proven; add     sp, 2
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 add sp, 0x2
 .org 0x2c78
 loc_12A78:
 # IDA 0x12a78; file 0x2c78; locator=proven; pop     di
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 pop di
 .org 0x2c79
 # IDA 0x12a79; file 0x2c79; locator=proven; pop     si
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 pop si
 .org 0x2c7a
 # IDA 0x12a7a; file 0x2c7a; locator=proven; pop     dx
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 pop dx
 .org 0x2c7b
 # IDA 0x12a7b; file 0x2c7b; locator=proven; pop     cx
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 pop cx
 .org 0x2c7c
 # IDA 0x12a7c; file 0x2c7c; locator=proven; pop     ax
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 pop ax
 .org 0x2c7d
 # IDA 0x12a7d; file 0x2c7d; locator=proven; retn
-# ⚠ 函式 sub_129C3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_129C3; [proven] 原解散／轉屬／永久刪除與duty、owner、通知收尾; 出處: docs/re/129-c-route-restoration.md
 ret
 .org 0x2c7e
 sub_12A7E:
@@ -13660,76 +13662,77 @@ ret
 .org 0x2da8
 sub_12BA8:
 # IDA 0x12ba8; file 0x2da8; locator=proven; and     byte ptr [si], 0EFh
-# ⚠ 函式 sub_12BA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12BA8; [proven] 原清除army bit4，面板bit2啟用時還原小地圖; 出處: docs/re/129-c-route-restoration.md
+# operand 1 0EFh; [proven] 只清除軍團bit4，保留其他flags; 出處: docs/re/129-c-route-restoration.md
 and byte ptr [si], 0xef
 .org 0x2dab
 # IDA 0x12bab; file 0x2dab; locator=proven; test    cs:byte_198A6, 4
-# ⚠ 函式 sub_12BA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12BA8; [proven] 原清除army bit4，面板bit2啟用時還原小地圖; 出處: docs/re/129-c-route-restoration.md
 cs; test byte ptr [0x98a6], 0x4
 .org 0x2db1
 # IDA 0x12bb1; file 0x2db1; locator=proven; jz      short locret_12BD8
-# ⚠ 函式 sub_12BA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12BA8; [proven] 原清除army bit4，面板bit2啟用時還原小地圖; 出處: docs/re/129-c-route-restoration.md
 jz .+39
 .org 0x2db3
 # IDA 0x12bb3; file 0x2db3; locator=proven; push    bx
-# ⚠ 函式 sub_12BA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12BA8; [proven] 原清除army bit4，面板bit2啟用時還原小地圖; 出處: docs/re/129-c-route-restoration.md
 push bx
 .org 0x2db4
 # IDA 0x12bb4; file 0x2db4; locator=proven; push    dx
-# ⚠ 函式 sub_12BA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12BA8; [proven] 原清除army bit4，面板bit2啟用時還原小地圖; 出處: docs/re/129-c-route-restoration.md
 push dx
 .org 0x2db5
 # IDA 0x12bb5; file 0x2db5; locator=proven; mov     dx, [si+10h]
-# ⚠ 函式 sub_12BA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12BA8; [proven] 原清除army bit4，面板bit2啟用時還原小地圖; 出處: docs/re/129-c-route-restoration.md
 mov dx, word ptr [si+0x10]
 .org 0x2db8
 # IDA 0x12bb8; file 0x2db8; locator=proven; mov     bx, [si+12h]
-# ⚠ 函式 sub_12BA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12BA8; [proven] 原清除army bit4，面板bit2啟用時還原小地圖; 出處: docs/re/129-c-route-restoration.md
 mov bx, word ptr [si+0x12]
 .org 0x2dbb
 # IDA 0x12bbb; file 0x2dbb; locator=proven; call    sub_19656
-# ⚠ 函式 sub_12BA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12BA8; [proven] 原清除army bit4，面板bit2啟用時還原小地圖; 出處: docs/re/129-c-route-restoration.md
 call .+27291
 .org 0x2dbe
 # IDA 0x12bbe; file 0x2dbe; locator=proven; mov     dx, cs:word_1988E
-# ⚠ 函式 sub_12BA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12BA8; [proven] 原清除army bit4，面板bit2啟用時還原小地圖; 出處: docs/re/129-c-route-restoration.md
 cs; mov dx, word ptr [0x988e]
 .org 0x2dc3
 # IDA 0x12bc3; file 0x2dc3; locator=proven; mov     bx, cs:word_19890
-# ⚠ 函式 sub_12BA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12BA8; [proven] 原清除army bit4，面板bit2啟用時還原小地圖; 出處: docs/re/129-c-route-restoration.md
 cs; mov bx, word ptr [0x9890]
 .org 0x2dc8
 # IDA 0x12bc8; file 0x2dc8; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_12BA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12BA8; [proven] 原清除army bit4，面板bit2啟用時還原小地圖; 出處: docs/re/129-c-route-restoration.md
 shr dx, 0x1
 .org 0x2dca
 # IDA 0x12bca; file 0x2dca; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_12BA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12BA8; [proven] 原清除army bit4，面板bit2啟用時還原小地圖; 出處: docs/re/129-c-route-restoration.md
 shr bx, 0x1
 .org 0x2dcc
 # IDA 0x12bcc; file 0x2dcc; locator=proven; add     dx, 1B8h
-# ⚠ 函式 sub_12BA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12BA8; [proven] 原清除army bit4，面板bit2啟用時還原小地圖; 出處: docs/re/129-c-route-restoration.md
 add dx, 0x1b8
 .org 0x2dd0
 # IDA 0x12bd0; file 0x2dd0; locator=proven; add     bx, 28h
-# ⚠ 函式 sub_12BA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12BA8; [proven] 原清除army bit4，面板bit2啟用時還原小地圖; 出處: docs/re/129-c-route-restoration.md
 add bx, 0x28
 .org 0x2dd3
 # IDA 0x12bd3; file 0x2dd3; locator=proven; call    sub_196ED
-# ⚠ 函式 sub_12BA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12BA8; [proven] 原清除army bit4，面板bit2啟用時還原小地圖; 出處: docs/re/129-c-route-restoration.md
 call .+27418
 .org 0x2dd6
 # IDA 0x12bd6; file 0x2dd6; locator=proven; pop     dx
-# ⚠ 函式 sub_12BA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12BA8; [proven] 原清除army bit4，面板bit2啟用時還原小地圖; 出處: docs/re/129-c-route-restoration.md
 pop dx
 .org 0x2dd7
 # IDA 0x12bd7; file 0x2dd7; locator=proven; pop     bx
-# ⚠ 函式 sub_12BA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12BA8; [proven] 原清除army bit4，面板bit2啟用時還原小地圖; 出處: docs/re/129-c-route-restoration.md
 pop bx
 .org 0x2dd8
 locret_12BD8:
 # IDA 0x12bd8; file 0x2dd8; locator=proven; retn
-# ⚠ 函式 sub_12BA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12BA8; [proven] 原清除army bit4，面板bit2啟用時還原小地圖; 出處: docs/re/129-c-route-restoration.md
 ret
 .org 0x2dd9
 sub_12BD9:
@@ -26943,923 +26946,1251 @@ ret
 .org 0x49bb
 sub_147BB:
 # IDA 0x147bb; file 0x49bb; locator=proven; push    es
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 push es
 .org 0x49bc
 # IDA 0x147bc; file 0x49bc; locator=proven; push    si
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 push si
 .org 0x49bd
 # IDA 0x147bd; file 0x49bd; locator=proven; push    di
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 push di
 .org 0x49be
 # IDA 0x147be; file 0x49be; locator=proven; push    bp
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 push bp
 .org 0x49bf
 # IDA 0x147bf; file 0x49bf; locator=proven; mov     ax, [si+14h]
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 mov ax, word ptr [si+0x14]
 .org 0x49c2
 # IDA 0x147c2; file 0x49c2; locator=proven; mov     bx, [si+0Eh]
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 mov bx, word ptr [si+0xe]
 .org 0x49c5
 # IDA 0x147c5; file 0x49c5; locator=proven; mov     dl, [si+1]
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 mov dl, byte ptr [si+0x1]
 .org 0x49c8
 # IDA 0x147c8; file 0x49c8; locator=proven; mov     es, cs:word_19874
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 cs; mov es, word ptr [0x9874]
 .org 0x49cd
 # IDA 0x147cd; file 0x49cd; locator=proven; cmp     bx, 800h
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 cmp bx, 0x800
 .org 0x49d1
 # IDA 0x147d1; file 0x49d1; locator=proven; jb      short loc_1482F
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 jb .+94
 .org 0x49d3
 # IDA 0x147d3; file 0x49d3; locator=proven; mov     cx, es:[bx+6]
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 es; mov cx, word ptr [bx+0x6]
 .org 0x49d7
 # IDA 0x147d7; file 0x49d7; locator=proven; mov     bx, es:[bx+8]
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 es; mov bx, word ptr [bx+0x8]
 .org 0x49db
 # IDA 0x147db; file 0x49db; locator=proven; cmp     ax, bx
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 {load} cmp ax, bx
 .org 0x49dd
 # IDA 0x147dd; file 0x49dd; locator=proven; jz      short loc_14821
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 jz .+68
 .org 0x49df
 # IDA 0x147df; file 0x49df; locator=proven; cmp     ax, cx
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 {load} cmp ax, cx
 .org 0x49e1
 # IDA 0x147e1; file 0x49e1; locator=proven; jz      short loc_14828
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 jz .+71
 .org 0x49e3
 # IDA 0x147e3; file 0x49e3; locator=proven; mov     bp, bx
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 {load} mov bp, bx
 .org 0x49e5
 # IDA 0x147e5; file 0x49e5; locator=proven; mov     ds, cs:word_19874
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 cs; mov ds, word ptr [0x9874]
 .org 0x49ea
 # IDA 0x147ea; file 0x49ea; locator=proven; call    loc_1491B
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 call .+305
 .org 0x49ed
 # IDA 0x147ed; file 0x49ed; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x49f2
 # IDA 0x147f2; file 0x49f2; locator=proven; cmp     cx, 8000h
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 cmp cx, 0x8000
 .org 0x49f6
 # IDA 0x147f6; file 0x49f6; locator=proven; jb      short loc_14806
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 jb .+16
 .org 0x49f8
 # IDA 0x147f8; file 0x49f8; locator=proven; cmp     byte ptr [si+23h], 0Ah
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 cmp byte ptr [si+0x23], 0xa
 .org 0x49fc
 # IDA 0x147fc; file 0x49fc; locator=proven; jb      short loc_14806
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 jb .+10
 .org 0x49fe
 # IDA 0x147fe; file 0x49fe; locator=proven; mov     al, [si+1]
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 mov al, byte ptr [si+0x1]
 .org 0x4a01
 # IDA 0x14801; file 0x4a01; locator=proven; call    sub_1291A
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 call .-7911
 .org 0x4a04
 # IDA 0x14804; file 0x4a04; locator=proven; jmp     short loc_14875
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 jmp .+113
 .org 0x4a06
 loc_14806:
 # IDA 0x14806; file 0x4a06; locator=proven; cmp     al, 4
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 cmp al, 0x4
 .org 0x4a08
 # IDA 0x14808; file 0x4a08; locator=proven; jnz     short loc_14810
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 jnz .+8
 .org 0x4a0a
 # IDA 0x1480a; file 0x4a0a; locator=proven; mov     dx, es:[bx+6]
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 es; mov dx, word ptr [bx+0x6]
 .org 0x4a0e
 # IDA 0x1480e; file 0x4a0e; locator=proven; jmp     short loc_14814
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 jmp .+6
 .org 0x4a10
 loc_14810:
 # IDA 0x14810; file 0x4a10; locator=proven; mov     dx, es:[bx+8]
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 es; mov dx, word ptr [bx+0x8]
 .org 0x4a14
 loc_14814:
 # IDA 0x14814; file 0x4a14; locator=proven; mov     al, 4
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 mov al, 0x4
 .org 0x4a16
 # IDA 0x14816; file 0x4a16; locator=proven; or      byte ptr [si], 1
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 or byte ptr [si], 0x1
 .org 0x4a19
 # IDA 0x14819; file 0x4a19; locator=proven; cmp     dx, bp
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 {load} cmp dx, bp
 .org 0x4a1b
 # IDA 0x1481b; file 0x4a1b; locator=proven; jz      short loc_1486C
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 jz .+81
 .org 0x4a1d
 # IDA 0x1481d; file 0x4a1d; locator=proven; neg     al
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 neg al
 .org 0x4a1f
 # IDA 0x1481f; file 0x4a1f; locator=proven; jmp     short loc_1486C
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 jmp .+77
 .org 0x4a21
 loc_14821:
 # IDA 0x14821; file 0x4a21; locator=proven; mov     al, 4
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 mov al, 0x4
 .org 0x4a23
 # IDA 0x14823; file 0x4a23; locator=proven; or      byte ptr [si], 1
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 or byte ptr [si], 0x1
 .org 0x4a26
 # IDA 0x14826; file 0x4a26; locator=proven; jmp     short loc_1486C
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 jmp .+70
 .org 0x4a28
 loc_14828:
 # IDA 0x14828; file 0x4a28; locator=proven; mov     al, 0FCh
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 mov al, 0xfc
 .org 0x4a2a
 # IDA 0x1482a; file 0x4a2a; locator=proven; or      byte ptr [si], 1
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 or byte ptr [si], 0x1
 .org 0x4a2d
 # IDA 0x1482d; file 0x4a2d; locator=proven; jmp     short loc_1486C
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 jmp .+63
 .org 0x4a2f
 loc_1482F:
 # IDA 0x1482f; file 0x4a2f; locator=proven; cmp     ax, bx
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 {load} cmp ax, bx
 .org 0x4a31
 # IDA 0x14831; file 0x4a31; locator=proven; jz      short loc_1486F
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 jz .+62
 .org 0x4a33
 # IDA 0x14833; file 0x4a33; locator=proven; mov     cx, bx
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 {load} mov cx, bx
 .org 0x4a35
 # IDA 0x14835; file 0x4a35; locator=proven; mov     ds, cs:word_19874
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 cs; mov ds, word ptr [0x9874]
 .org 0x4a3a
 # IDA 0x1483a; file 0x4a3a; locator=proven; call    loc_1491B
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 call .+225
 .org 0x4a3d
 # IDA 0x1483d; file 0x4a3d; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x4a42
 # IDA 0x14842; file 0x4a42; locator=proven; cmp     cx, 8000h
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 cmp cx, 0x8000
 .org 0x4a46
 # IDA 0x14846; file 0x4a46; locator=proven; jb      short loc_14856
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 jb .+16
 .org 0x4a48
 # IDA 0x14848; file 0x4a48; locator=proven; cmp     byte ptr [si+23h], 0Ah
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 cmp byte ptr [si+0x23], 0xa
 .org 0x4a4c
 # IDA 0x1484c; file 0x4a4c; locator=proven; jb      short loc_14856
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 jb .+10
 .org 0x4a4e
 # IDA 0x1484e; file 0x4a4e; locator=proven; mov     al, [si+1]
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 mov al, byte ptr [si+0x1]
 .org 0x4a51
 # IDA 0x14851; file 0x4a51; locator=proven; call    sub_1291A
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 call .-7991
 .org 0x4a54
 # IDA 0x14854; file 0x4a54; locator=proven; jmp     short loc_14875
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 jmp .+33
 .org 0x4a56
 loc_14856:
 # IDA 0x14856; file 0x4a56; locator=proven; cmp     al, 4
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 cmp al, 0x4
 .org 0x4a58
 # IDA 0x14858; file 0x4a58; locator=proven; jnz     short loc_1485F
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 jnz .+7
 .org 0x4a5a
 # IDA 0x1485a; file 0x4a5a; locator=proven; mov     dx, es:[bx]
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 es; mov dx, word ptr [bx]
 .org 0x4a5d
 # IDA 0x1485d; file 0x4a5d; locator=proven; jmp     short loc_14863
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 jmp .+6
 .org 0x4a5f
 loc_1485F:
 # IDA 0x1485f; file 0x4a5f; locator=proven; mov     dx, es:[bx+2]
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 es; mov dx, word ptr [bx+0x2]
 .org 0x4a63
 loc_14863:
 # IDA 0x14863; file 0x4a63; locator=proven; mov     [si+0Ch], dx
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 mov word ptr [si+0xc], dx
 .org 0x4a66
 # IDA 0x14866; file 0x4a66; locator=proven; mov     [si+0Eh], bx
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 mov word ptr [si+0xe], bx
 .org 0x4a69
 # IDA 0x14869; file 0x4a69; locator=proven; and     byte ptr [si], 0FEh
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 and byte ptr [si], 0xfe
 .org 0x4a6c
 loc_1486C:
 # IDA 0x1486c; file 0x4a6c; locator=proven; mov     [si+0Ah], al
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 mov byte ptr [si+0xa], al
 .org 0x4a6f
 loc_1486F:
 # IDA 0x1486f; file 0x4a6f; locator=proven; pop     bp
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 pop bp
 .org 0x4a70
 # IDA 0x14870; file 0x4a70; locator=proven; pop     di
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 pop di
 .org 0x4a71
 # IDA 0x14871; file 0x4a71; locator=proven; pop     si
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 pop si
 .org 0x4a72
 # IDA 0x14872; file 0x4a72; locator=proven; pop     es
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 pop es
 .org 0x4a73
 # IDA 0x14873; file 0x4a73; locator=proven; clc
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 clc
 .org 0x4a74
 # IDA 0x14874; file 0x4a74; locator=proven; retn
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 ret
 .org 0x4a75
 loc_14875:
 # IDA 0x14875; file 0x4a75; locator=proven; pop     bp
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 pop bp
 .org 0x4a76
 # IDA 0x14876; file 0x4a76; locator=proven; pop     di
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 pop di
 .org 0x4a77
 # IDA 0x14877; file 0x4a77; locator=proven; pop     si
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 pop si
 .org 0x4a78
 # IDA 0x14878; file 0x4a78; locator=proven; pop     es
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 pop es
 .org 0x4a79
 # IDA 0x14879; file 0x4a79; locator=proven; stc
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 stc
 .org 0x4a7a
 # IDA 0x1487a; file 0x4a7a; locator=proven; retn
-# ⚠ 函式 sub_147BB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_147BB; [proven] 原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻; 出處: docs/re/129-c-route-restoration.md
 ret
 .org 0x4a7b
 sub_1487B:
 # IDA 0x1487b; file 0x4a7b; locator=proven; mov     bh, [si+1]
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 mov bh, byte ptr [si+0x1]
 .org 0x4a7e
 # IDA 0x1487e; file 0x4a7e; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 {load} xor bl, bl
 .org 0x4a80
 # IDA 0x14880; file 0x4a80; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 shr bx, 0x1
 .org 0x4a82
 # IDA 0x14882; file 0x4a82; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 shr bx, 0x1
 .org 0x4a84
 # IDA 0x14884; file 0x4a84; locator=proven; mov     al, [bx+3]
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 mov al, byte ptr [bx+0x3]
 .org 0x4a87
 # IDA 0x14887; file 0x4a87; locator=proven; cmp     al, 0FFh
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 cmp al, 0xff
 .org 0x4a89
 # IDA 0x14889; file 0x4a89; locator=proven; jnz     short loc_1488D
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 jnz .+4
 .org 0x4a8b
 # IDA 0x1488b; file 0x4a8b; locator=proven; stc
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 stc
 .org 0x4a8c
 # IDA 0x1488c; file 0x4a8c; locator=proven; retn
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 ret
 .org 0x4a8d
 loc_1488D:
 # IDA 0x1488d; file 0x4a8d; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 {load} xor ah, ah
 .org 0x4a8f
 # IDA 0x1488f; file 0x4a8f; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 shl ax, 0x1
 .org 0x4a91
 # IDA 0x14891; file 0x4a91; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 shl ax, 0x1
 .org 0x4a93
 # IDA 0x14893; file 0x4a93; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 shl ax, 0x1
 .org 0x4a95
 # IDA 0x14895; file 0x4a95; locator=proven; push    es
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 push es
 .org 0x4a96
 # IDA 0x14896; file 0x4a96; locator=proven; push    di
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 push di
 .org 0x4a97
 # IDA 0x14897; file 0x4a97; locator=proven; mov     dl, [si+1]
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 mov dl, byte ptr [si+0x1]
 .org 0x4a9a
 # IDA 0x1489a; file 0x4a9a; locator=proven; mov     bx, [si+0Eh]
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 mov bx, word ptr [si+0xe]
 .org 0x4a9d
 # IDA 0x1489d; file 0x4a9d; locator=proven; mov     cx, bx
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 {load} mov cx, bx
 .org 0x4a9f
 # IDA 0x1489f; file 0x4a9f; locator=proven; mov     ds, cs:word_19874
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 cs; mov ds, word ptr [0x9874]
 .org 0x4aa4
 # IDA 0x148a4; file 0x4aa4; locator=proven; cmp     bx, 800h
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 cmp bx, 0x800
 .org 0x4aa8
 # IDA 0x148a8; file 0x4aa8; locator=proven; jb      short loc_148E5
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 jb .+61
 .org 0x4aaa
 # IDA 0x148aa; file 0x4aaa; locator=proven; mov     es, cs:word_10D52
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 cs; mov es, word ptr [0xd52]
 .org 0x4aaf
 # IDA 0x148af; file 0x4aaf; locator=proven; mov     cx, [bx+6]
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 mov cx, word ptr [bx+0x6]
 .org 0x4ab2
 # IDA 0x148b2; file 0x4ab2; locator=proven; mov     bx, [bx+8]
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 mov bx, word ptr [bx+0x8]
 .org 0x4ab5
 # IDA 0x148b5; file 0x4ab5; locator=proven; mov     di, cx
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 {load} mov di, cx
 .org 0x4ab7
 # IDA 0x148b7; file 0x4ab7; locator=proven; shl     di, 1
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 shl di, 0x1
 .org 0x4ab9
 # IDA 0x148b9; file 0x4ab9; locator=proven; shl     di, 1
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 shl di, 0x1
 .org 0x4abb
 # IDA 0x148bb; file 0x4abb; locator=proven; cmp     dl, es:[di+841h]
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 es; cmp dl, byte ptr [di+0x841]
 .org 0x4ac0
 # IDA 0x148c0; file 0x4ac0; locator=proven; jz      short loc_148C4
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 jz .+4
 .org 0x4ac2
 # IDA 0x148c2; file 0x4ac2; locator=proven; mov     cx, bx
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 {load} mov cx, bx
 .org 0x4ac4
 loc_148C4:
 # IDA 0x148c4; file 0x4ac4; locator=proven; mov     di, bx
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 {load} mov di, bx
 .org 0x4ac6
 # IDA 0x148c6; file 0x4ac6; locator=proven; shl     di, 1
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 shl di, 0x1
 .org 0x4ac8
 # IDA 0x148c8; file 0x4ac8; locator=proven; shl     di, 1
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 shl di, 0x1
 .org 0x4aca
 # IDA 0x148ca; file 0x4aca; locator=proven; cmp     dl, es:[di+841h]
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 es; cmp dl, byte ptr [di+0x841]
 .org 0x4acf
 # IDA 0x148cf; file 0x4acf; locator=proven; jz      short loc_148D7
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 jz .+8
 .org 0x4ad1
 # IDA 0x148d1; file 0x4ad1; locator=proven; cmp     bx, cx
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 {load} cmp bx, cx
 .org 0x4ad3
 # IDA 0x148d3; file 0x4ad3; locator=proven; jz      short loc_14903
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 jz .+48
 .org 0x4ad5
 # IDA 0x148d5; file 0x4ad5; locator=proven; mov     bx, cx
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 {load} mov bx, cx
 .org 0x4ad7
 loc_148D7:
 # IDA 0x148d7; file 0x4ad7; locator=proven; call    loc_1491B
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 call .+68
 .org 0x4ada
 # IDA 0x148da; file 0x4ada; locator=proven; jb      short loc_1490C
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 jb .+50
 .org 0x4adc
 # IDA 0x148dc; file 0x4adc; locator=proven; cmp     ax, 0FFFCh
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 cmp ax, offset imm_at_148DC
 .org 0x4adf
 # IDA 0x148df; file 0x4adf; locator=proven; jnz     short loc_148F1
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 jnz .+18
 .org 0x4ae1
 # IDA 0x148e1; file 0x4ae1; locator=proven; inc     bx
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 inc bx
 .org 0x4ae2
 # IDA 0x148e2; file 0x4ae2; locator=proven; inc     bx
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 inc bx
 .org 0x4ae3
 # IDA 0x148e3; file 0x4ae3; locator=proven; jmp     short loc_148F1
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 jmp .+14
 .org 0x4ae5
 loc_148E5:
 # IDA 0x148e5; file 0x4ae5; locator=proven; call    loc_1491B
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 call .+54
 .org 0x4ae8
 # IDA 0x148e8; file 0x4ae8; locator=proven; jb      short loc_1490C
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 jb .+36
 .org 0x4aea
 # IDA 0x148ea; file 0x4aea; locator=proven; cmp     ax, 4
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 cmp ax, offset imm_at_148EA
 .org 0x4aed
 # IDA 0x148ed; file 0x4aed; locator=proven; jnz     short loc_148F1
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 jnz .+4
 .org 0x4aef
 # IDA 0x148ef; file 0x4aef; locator=proven; inc     bx
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 inc bx
 .org 0x4af0
 # IDA 0x148f0; file 0x4af0; locator=proven; inc     bx
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 inc bx
 .org 0x4af1
 loc_148F1:
 # IDA 0x148f1; file 0x4af1; locator=proven; mov     bx, [bx+6]
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 mov bx, word ptr [bx+0x6]
 .org 0x4af4
 # IDA 0x148f4; file 0x4af4; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x4af9
 # IDA 0x148f9; file 0x4af9; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 shl bx, 0x1
 .org 0x4afb
 # IDA 0x148fb; file 0x4afb; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 shl bx, 0x1
 .org 0x4afd
 # IDA 0x148fd; file 0x4afd; locator=proven; cmp     dl, [bx+841h]
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 cmp dl, byte ptr [bx+0x841]
 .org 0x4b01
 # IDA 0x14901; file 0x4b01; locator=proven; jz      short loc_14917
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 jz .+22
 .org 0x4b03
 loc_14903:
 # IDA 0x14903; file 0x4b03; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x4b08
 # IDA 0x14908; file 0x4b08; locator=proven; stc
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 stc
 .org 0x4b09
 # IDA 0x14909; file 0x4b09; locator=proven; pop     di
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 pop di
 .org 0x4b0a
 # IDA 0x1490a; file 0x4b0a; locator=proven; pop     es
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 pop es
 .org 0x4b0b
 # IDA 0x1490b; file 0x4b0b; locator=proven; retn
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 ret
 .org 0x4b0c
 loc_1490C:
 # IDA 0x1490c; file 0x4b0c; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x4b11
 # IDA 0x14911; file 0x4b11; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 shl ax, 0x1
 .org 0x4b13
 # IDA 0x14913; file 0x4b13; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 shl ax, 0x1
 .org 0x4b15
 # IDA 0x14915; file 0x4b15; locator=proven; mov     bx, ax
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 {load} mov bx, ax
 .org 0x4b17
 loc_14917:
 # IDA 0x14917; file 0x4b17; locator=proven; clc
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 clc
 .org 0x4b18
 # IDA 0x14918; file 0x4b18; locator=proven; pop     di
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 pop di
 .org 0x4b19
 # IDA 0x14919; file 0x4b19; locator=proven; pop     es
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 pop es
 .org 0x4b1a
 # IDA 0x1491a; file 0x4b1a; locator=proven; retn
-# ⚠ 函式 sub_1487B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1487B; [proven] 原依首都方向尋找下一個己方據點的退卻包裝; 出處: docs/re/129-c-route-restoration.md
 ret
 .org 0x4b1b
 loc_1491B:
 # IDA 0x1491b; file 0x4b1b; locator=proven; cmp     ax, bx
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 {load} cmp ax, bx
 .org 0x4b1d
 # IDA 0x1491d; file 0x4b1d; locator=proven; jz      short loc_14923
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 jz .+6
 .org 0x4b1f
 # IDA 0x1491f; file 0x4b1f; locator=proven; cmp     ax, cx
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 {load} cmp ax, cx
 .org 0x4b21
 # IDA 0x14921; file 0x4b21; locator=proven; jnz     short loc_14925
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 jnz .+4
 .org 0x4b23
 loc_14923:
 # IDA 0x14923; file 0x4b23; locator=proven; stc
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 stc
 .org 0x4b24
 # IDA 0x14924; file 0x4b24; locator=proven; retn
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 ret
 .org 0x4b25
 loc_14925:
 # IDA 0x14925; file 0x4b25; locator=proven; push    es
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 push es
 .org 0x4b26
 # IDA 0x14926; file 0x4b26; locator=proven; push    dx
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 push dx
 .org 0x4b27
 # IDA 0x14927; file 0x4b27; locator=proven; push    si
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 push si
 .org 0x4b28
 # IDA 0x14928; file 0x4b28; locator=proven; push    di
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 push di
 .org 0x4b29
 # IDA 0x14929; file 0x4b29; locator=proven; push    bp
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 push bp
 .org 0x4b2a
 # IDA 0x1492a; file 0x4b2a; locator=proven; cld
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 cld
 .org 0x4b2b
 # IDA 0x1492b; file 0x4b2b; locator=proven; mov     si, ax
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 {load} mov si, ax
 .org 0x4b2d
 # IDA 0x1492d; file 0x4b2d; locator=proven; mov     ax, ds
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 mov ax, ds
 .org 0x4b2f
 # IDA 0x1492f; file 0x4b2f; locator=proven; mov     es, ax
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 mov es, ax
 .org 0x4b31
 # IDA 0x14931; file 0x4b31; locator=proven; mov     cs:word_149B8, bx
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+# operand 0 cs:word_149B8; [proven] 原code patch終止節點A；CS49B8由149B6即時消費; 出處: docs/re/129-c-route-restoration.md
 cs; mov word ptr [0x49b8], bx
 .org 0x4b36
 # IDA 0x14936; file 0x4b36; locator=proven; mov     cs:word_149BE, cx
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+# operand 0 cs:word_149BE; [proven] 原code patch終止節點B；CS49BE由149BC即時消費; 出處: docs/re/129-c-route-restoration.md
 cs; mov word ptr [0x49be], cx
 .org 0x4b3b
 # IDA 0x1493b; file 0x4b3b; locator=proven; mov     cs:byte_149D2, dl
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+# operand 0 cs:byte_149D2; [proven] 原code patch所屬勢力；CS49D2由149CD即時消費; 出處: docs/re/129-c-route-restoration.md
 cs; mov byte ptr [0x49d2], dl
 .org 0x4b40
 # IDA 0x14940; file 0x4b40; locator=proven; mov     di, 8000h
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+# operand 1 8000h; [proven] 原visited起點8000h，共清400h個word; 出處: docs/re/129-c-route-restoration.md
 mov di, 0x8000
 .org 0x4b43
 # IDA 0x14943; file 0x4b43; locator=proven; mov     cx, 400h
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 mov cx, 0x400
 .org 0x4b46
 # IDA 0x14946; file 0x4b46; locator=proven; xor     ax, ax
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 {load} xor ax, ax
 .org 0x4b48
 # IDA 0x14948; file 0x4b48; locator=proven; rep stosw
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 rep; stosw
 .org 0x4b4a
 # IDA 0x1494a; file 0x4b4a; locator=proven; mov     es, cs:word_10D52
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 cs; mov es, word ptr [0xd52]
 .org 0x4b4f
 # IDA 0x1494f; file 0x4b4f; locator=proven; xor     dx, dx
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 {load} xor dx, dx
 .org 0x4b51
 # IDA 0x14951; file 0x4b51; locator=proven; mov     bx, 8800h
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+# operand 1 8800h; [proven] 原環形queue起點8800h，8-byte記錄; 出處: docs/re/129-c-route-restoration.md
 mov bx, 0x8800
 .org 0x4b54
 # IDA 0x14954; file 0x4b54; locator=proven; mov     di, 87F8h
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 mov di, 0x87f8
 .org 0x4b57
 # IDA 0x14957; file 0x4b57; locator=proven; mov     cx, 1
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 mov cx, 0x1
 .org 0x4b5a
 # IDA 0x1495a; file 0x4b5a; locator=proven; jmp     short near ptr byte_149B6
-# ⚠ 函式 無; [unknown] 未附加語意; 出處: 無
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
 jmp .+92
+.org 0x4b5c
+# IDA 0x1495c; file 0x4b5c; locator=proven; mov     ax, 0FFFFh
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+mov ax, 0xffff
+.org 0x4b5f
+# IDA 0x1495f; file 0x4b5f; locator=proven; mov     cl, ch
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+{load} mov cl, ch
+.org 0x4b61
+# IDA 0x14961; file 0x4b61; locator=proven; xchg    bx, di
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+{load} xchg bx, di
+.org 0x4b63
+# IDA 0x14963; file 0x4b63; locator=proven; mov     dx, bx
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+{load} mov dx, bx
+.org 0x4b65
+# IDA 0x14965; file 0x4b65; locator=proven; add     bl, 2
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+add bl, 0x2
+.org 0x4b68
+# IDA 0x14968; file 0x4b68; locator=proven; cmp     ax, [bx]
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+cmp ax, word ptr [bx]
+.org 0x4b6a
+# IDA 0x1496a; file 0x4b6a; locator=proven; jbe     short near ptr unk_1496E
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+jbe .+4
+.org 0x4b6c
+# IDA 0x1496c; file 0x4b6c; locator=proven; mov     ax, [bx]
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+mov ax, word ptr [bx]
+.org 0x4b6e
+# IDA 0x1496e; file 0x4b6e; locator=proven; add     bx, 8
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+add bx, 0x8
+.org 0x4b71
+# IDA 0x14971; file 0x4b71; locator=proven; and     bh, 0FBh
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+and bh, 0xfb
+.org 0x4b74
+# IDA 0x14974; file 0x4b74; locator=proven; dec     cl
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+dec cl
+.org 0x4b76
+# IDA 0x14976; file 0x4b76; locator=proven; jnz     short loc_14968
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+jnz .-14
+.org 0x4b78
+# IDA 0x14978; file 0x4b78; locator=proven; mov     bx, di
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+{load} mov bx, di
+.org 0x4b7a
+# IDA 0x1497a; file 0x4b7a; locator=proven; mov     di, dx
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+{load} mov di, dx
+.org 0x4b7c
+# IDA 0x1497c; file 0x4b7c; locator=proven; xchg    cl, ch
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+{load} xchg cl, ch
+.org 0x4b7e
+# IDA 0x1497e; file 0x4b7e; locator=proven; mov     si, [di]
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+mov si, word ptr [di]
+.org 0x4b80
+# IDA 0x14980; file 0x4b80; locator=proven; mov     dx, [di+2]
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+mov dx, word ptr [di+0x2]
+.org 0x4b83
+# IDA 0x14983; file 0x4b83; locator=proven; cmp     ax, dx
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+{load} cmp ax, dx
+.org 0x4b85
+# IDA 0x14985; file 0x4b85; locator=proven; jz      short near ptr byte_149B6
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+jz .+49
+.org 0x4b87
+# IDA 0x14987; file 0x4b87; locator=proven; mov     [bx], si
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+mov word ptr [bx], si
+.org 0x4b89
+# IDA 0x14989; file 0x4b89; locator=proven; mov     [bx+2], dx
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+mov word ptr [bx+0x2], dx
+.org 0x4b8c
+# IDA 0x1498c; file 0x4b8c; locator=proven; mov     dx, [di+4]
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+mov dx, word ptr [di+0x4]
+.org 0x4b8f
+# IDA 0x1498f; file 0x4b8f; locator=proven; mov     [bx+4], dx
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+mov word ptr [bx+0x4], dx
+.org 0x4b92
+# IDA 0x14992; file 0x4b92; locator=proven; mov     dx, [di+6]
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+mov dx, word ptr [di+0x6]
+.org 0x4b95
+# IDA 0x14995; file 0x4b95; locator=proven; mov     [bx+6], dx
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+mov word ptr [bx+0x6], dx
+.org 0x4b98
+# IDA 0x14998; file 0x4b98; locator=proven; add     bx, 8
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+add bx, 0x8
+.org 0x4b9b
+# IDA 0x1499b; file 0x4b9b; locator=proven; and     bh, 0FBh
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+and bh, 0xfb
+.org 0x4b9e
+# IDA 0x1499e; file 0x4b9e; locator=proven; inc     ch
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+inc ch
+.org 0x4ba0
+# IDA 0x149a0; file 0x4ba0; locator=proven; add     di, 8
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+add di, 0x8
+.org 0x4ba3
+# IDA 0x149a3; file 0x4ba3; locator=proven; and     di, 0FBFFh
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+and di, 0xfbff
+.org 0x4ba7
+# IDA 0x149a7; file 0x4ba7; locator=proven; dec     cl
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+dec cl
+.org 0x4ba9
+# IDA 0x149a9; file 0x4ba9; locator=proven; jnz     short loc_1497E
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+jnz .-43
+.org 0x4bab
+# IDA 0x149ab; file 0x4bab; locator=proven; cmp     ch, 0
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+cmp ch, 0x0
+.org 0x4bae
+# IDA 0x149ae; file 0x4bae; locator=proven; jnz     short loc_1495C
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+jnz .-82
+.org 0x4bb0
+# IDA 0x149b0; file 0x4bb0; locator=proven; mov     bx, 800h
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+mov bx, 0x800
+.org 0x4bb3
+# IDA 0x149b3; file 0x4bb3; locator=proven; stc
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+stc
+.org 0x4bb4
+# IDA 0x149b4; file 0x4bb4; locator=proven; jmp     short near ptr byte_149D3+36h
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+jmp .+85
+.org 0x4bb6
+# IDA 0x149b6; file 0x4bb6; locator=proven; cmp     si, 1234h
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+# operand 1 1234h; [proven] 靜態1234h是可修改立即值，C讀CS49B8的live word; 出處: docs/re/129-c-route-restoration.md
+cmp si, 0x1234
+.org 0x4bba
+# IDA 0x149ba; file 0x4bba; locator=proven; jz      short near ptr byte_149D3+2Dh
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+jz .+70
+.org 0x4bbc
+# IDA 0x149bc; file 0x4bbc; locator=proven; cmp     si, 1234h
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+# operand 1 1234h; [proven] 靜態1234h是可修改立即值，C讀CS49BE的live word; 出處: docs/re/129-c-route-restoration.md
+cmp si, 0x1234
+.org 0x4bc0
+# IDA 0x149c0; file 0x4bc0; locator=proven; jz      short near ptr byte_149D3+2Dh
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+jz .+64
+.org 0x4bc2
+# IDA 0x149c2; file 0x4bc2; locator=proven; push    ax
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+push ax
+.org 0x4bc3
+# IDA 0x149c3; file 0x4bc3; locator=proven; cmp     si, 600h
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+cmp si, 0x600
+.org 0x4bc7
+# IDA 0x149c7; file 0x4bc7; locator=proven; jnb     short near ptr byte_149D3+10h
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+jnb .+28
+.org 0x4bc9
+# IDA 0x149c9; file 0x4bc9; locator=proven; shl     si, 1
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+shl si, 0x1
+.org 0x4bcb
+# IDA 0x149cb; file 0x4bcb; locator=proven; shl     si, 1
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+shl si, 0x1
+.org 0x4bcd
+# IDA 0x149cd; file 0x4bcd; locator=proven; cmp     byte ptr es:[si+841h], 12h
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+# operand 1 12h; [proven] 靜態12h是可修改立即值，C讀CS49D2的live byte; 出處: docs/re/129-c-route-restoration.md
+es; cmp byte ptr [si+0x841], 0x12
+.org 0x4bd3
+# IDA 0x149d3; file 0x4bd3; locator=proven; jz      short near ptr unk_149DC
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+jz .+9
+.org 0x4bd5
+# IDA 0x149d5; file 0x4bd5; locator=proven; add     dx, 0A6h
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+# operand 1 0A6h; [proven] 非己方據點成本加A6h，另由下一OR設高位元; 出處: docs/re/129-c-route-restoration.md
+add dx, 0xa6
+.org 0x4bd9
+# IDA 0x149d9; file 0x4bd9; locator=proven; or      dh, 80h
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+# operand 1 80h; [proven] 將成本word的bit15設為1; 出處: docs/re/129-c-route-restoration.md
+or dh, 0x80
+.org 0x4bdc
+# IDA 0x149dc; file 0x4bdc; locator=proven; add     dx, 4
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+add dx, 0x4
+.org 0x4bdf
+# IDA 0x149df; file 0x4bdf; locator=proven; shr     si, 1
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+shr si, 0x1
+.org 0x4be1
+# IDA 0x149e1; file 0x4be1; locator=proven; shr     si, 1
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+shr si, 0x1
+.org 0x4be3
+# IDA 0x149e3; file 0x4be3; locator=proven; mov     ax, [si]
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+mov ax, word ptr [si]
+.org 0x4be5
+# IDA 0x149e5; file 0x4be5; locator=proven; call    sub_14A0F
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+call .+42
+.org 0x4be8
+# IDA 0x149e8; file 0x4be8; locator=proven; inc     si
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+inc si
+.org 0x4be9
+# IDA 0x149e9; file 0x4be9; locator=proven; inc     si
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+inc si
+.org 0x4bea
+# IDA 0x149ea; file 0x4bea; locator=proven; mov     ax, [si]
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+mov ax, word ptr [si]
+.org 0x4bec
+# IDA 0x149ec; file 0x4bec; locator=proven; call    sub_14A0F
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+call .+35
+.org 0x4bef
+# IDA 0x149ef; file 0x4bef; locator=proven; inc     si
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+inc si
+.org 0x4bf0
+# IDA 0x149f0; file 0x4bf0; locator=proven; inc     si
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+inc si
+.org 0x4bf1
+# IDA 0x149f1; file 0x4bf1; locator=proven; mov     ax, [si]
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+mov ax, word ptr [si]
+.org 0x4bf3
+# IDA 0x149f3; file 0x4bf3; locator=proven; call    sub_14A0F
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+call .+28
+.org 0x4bf6
+# IDA 0x149f6; file 0x4bf6; locator=proven; inc     si
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+inc si
+.org 0x4bf7
+# IDA 0x149f7; file 0x4bf7; locator=proven; inc     si
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+inc si
+.org 0x4bf8
+# IDA 0x149f8; file 0x4bf8; locator=proven; mov     ax, [si]
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+mov ax, word ptr [si]
+.org 0x4bfa
+# IDA 0x149fa; file 0x4bfa; locator=proven; call    sub_14A0F
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+call .+21
+.org 0x4bfd
+# IDA 0x149fd; file 0x4bfd; locator=proven; pop     ax
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+pop ax
+.org 0x4bfe
+# IDA 0x149fe; file 0x4bfe; locator=proven; jmp     short loc_149A0
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+jmp .-94
+.org 0x4c00
+# IDA 0x14a00; file 0x4c00; locator=proven; mov     ax, [di+4]
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+mov ax, word ptr [di+0x4]
+.org 0x4c03
+# IDA 0x14a03; file 0x4c03; locator=proven; mov     bx, [di+6]
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+mov bx, word ptr [di+0x6]
+.org 0x4c06
+# IDA 0x14a06; file 0x4c06; locator=proven; mov     cx, dx
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+{load} mov cx, dx
+.org 0x4c08
+# IDA 0x14a08; file 0x4c08; locator=proven; clc
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+clc
+.org 0x4c09
+# IDA 0x14a09; file 0x4c09; locator=proven; pop     bp
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+pop bp
+.org 0x4c0a
+# IDA 0x14a0a; file 0x4c0a; locator=proven; pop     di
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+pop di
+.org 0x4c0b
+# IDA 0x14a0b; file 0x4c0b; locator=proven; pop     si
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+pop si
+.org 0x4c0c
+# IDA 0x14a0c; file 0x4c0c; locator=proven; pop     dx
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+pop dx
+.org 0x4c0d
+# IDA 0x14a0d; file 0x4c0d; locator=proven; pop     es
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+pop es
+.org 0x4c0e
+# IDA 0x14a0e; file 0x4c0e; locator=proven; retn
+# raw 區段 loc_1491B; [proven] 原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket; 出處: docs/re/129-c-route-restoration.md
+ret
 .org 0x4c0f
 sub_14A0F:
 # IDA 0x14a0f; file 0x4c0f; locator=proven; cmp     byte ptr [si-8000h], 0
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
+# operand 0 byte ptr [si-8000h]; [proven] 原port visited，SI減8000h以16-bit offset回繞讀取; 出處: docs/re/129-c-route-restoration.md
 cmp byte ptr [si+0x8000], 0x0
 .org 0x4c14
 # IDA 0x14a14; file 0x4c14; locator=proven; jnz     short loc_14A79
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 jnz .+101
 .org 0x4c16
 # IDA 0x14a16; file 0x4c16; locator=proven; push    ax
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 push ax
 .org 0x4c17
 # IDA 0x14a17; file 0x4c17; locator=proven; push    dx
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 push dx
 .org 0x4c18
 # IDA 0x14a18; file 0x4c18; locator=proven; push    di
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 push di
 .org 0x4c19
 # IDA 0x14a19; file 0x4c19; locator=proven; push    bx
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 push bx
 .org 0x4c1a
 # IDA 0x14a1a; file 0x4c1a; locator=proven; mov     byte ptr [si-8000h], 1
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 mov byte ptr [si+0x8000], 0x1
 .org 0x4c1f
 # IDA 0x14a1f; file 0x4c1f; locator=proven; mov     bx, ax
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 {load} mov bx, ax
 .org 0x4c21
 # IDA 0x14a21; file 0x4c21; locator=proven; and     bx, 3FFFh
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 and bx, 0x3fff
 .org 0x4c25
 # IDA 0x14a25; file 0x4c25; locator=proven; and     ah, 0C0h
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 and ah, 0xc0
 .org 0x4c28
 # IDA 0x14a28; file 0x4c28; locator=proven; cmp     ah, 40h
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 cmp ah, 0x40
 .org 0x4c2b
 # IDA 0x14a2b; file 0x4c2b; locator=proven; jb      short loc_14A75
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 jb .+74
 .org 0x4c2d
 # IDA 0x14a2d; file 0x4c2d; locator=proven; ja      short loc_14A37
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 ja .+10
 .org 0x4c2f
 # IDA 0x14a2f; file 0x4c2f; locator=proven; mov     di, [bx+8]
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 mov di, word ptr [bx+0x8]
 .org 0x4c32
 # IDA 0x14a32; file 0x4c32; locator=proven; mov     bp, 0FFFCh
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 mov bp, 0xfffc
 .org 0x4c35
 # IDA 0x14a35; file 0x4c35; locator=proven; jmp     short loc_14A3D
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 jmp .+8
 .org 0x4c37
 loc_14A37:
 # IDA 0x14a37; file 0x4c37; locator=proven; mov     di, [bx+6]
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 mov di, word ptr [bx+0x6]
 .org 0x4c3a
 # IDA 0x14a3a; file 0x4c3a; locator=proven; mov     bp, 4
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 mov bp, 0x4
 .org 0x4c3d
 loc_14A3D:
 # IDA 0x14a3d; file 0x4c3d; locator=proven; add     dl, [bx+4]
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
+# operand 1 [bx+4]; [proven] 原連結+4的byte長度，以ADD低byte／ADC高byte累加; 出處: docs/re/129-c-route-restoration.md
 add dl, byte ptr [bx+0x4]
 .org 0x4c40
 # IDA 0x14a40; file 0x4c40; locator=proven; adc     dh, 0
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 adc dh, 0x0
 .org 0x4c43
 loc_14A43:
 # IDA 0x14a43; file 0x4c43; locator=proven; mov     ax, [di]
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 mov ax, word ptr [di]
 .org 0x4c45
 # IDA 0x14a45; file 0x4c45; locator=proven; and     ah, 3Fh
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 and ah, 0x3f
 .org 0x4c48
 # IDA 0x14a48; file 0x4c48; locator=proven; cmp     ax, bx
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 {load} cmp ax, bx
 .org 0x4c4a
 # IDA 0x14a4a; file 0x4c4a; locator=proven; jz      short loc_14A50
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 jz .+6
 .org 0x4c4c
 # IDA 0x14a4c; file 0x4c4c; locator=proven; inc     di
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 inc di
 .org 0x4c4d
 # IDA 0x14a4d; file 0x4c4d; locator=proven; inc     di
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 inc di
 .org 0x4c4e
 # IDA 0x14a4e; file 0x4c4e; locator=proven; jmp     short loc_14A43
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 jmp .-11
 .org 0x4c50
 loc_14A50:
 # IDA 0x14a50; file 0x4c50; locator=proven; cmp     byte ptr [di-8000h], 0
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 cmp byte ptr [di+0x8000], 0x0
 .org 0x4c55
 # IDA 0x14a55; file 0x4c55; locator=proven; jnz     short loc_14A75
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 jnz .+32
 .org 0x4c57
 # IDA 0x14a57; file 0x4c57; locator=proven; mov     byte ptr [di-8000h], 1
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 mov byte ptr [di+0x8000], 0x1
 .org 0x4c5c
 # IDA 0x14a5c; file 0x4c5c; locator=proven; pop     bx
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 pop bx
 .org 0x4c5d
 # IDA 0x14a5d; file 0x4c5d; locator=proven; and     di, 0FFF8h
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 and di, 0xfff8
 .org 0x4c60
 # IDA 0x14a60; file 0x4c60; locator=proven; mov     [bx], di
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 mov word ptr [bx], di
 .org 0x4c62
 # IDA 0x14a62; file 0x4c62; locator=proven; mov     [bx+2], dx
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 mov word ptr [bx+0x2], dx
 .org 0x4c65
 # IDA 0x14a65; file 0x4c65; locator=proven; mov     [bx+4], bp
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 mov word ptr [bx+0x4], bp
 .org 0x4c68
 # IDA 0x14a68; file 0x4c68; locator=proven; mov     [bx+6], ax
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 mov word ptr [bx+0x6], ax
 .org 0x4c6b
 # IDA 0x14a6b; file 0x4c6b; locator=proven; add     bx, 8
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 add bx, 0x8
 .org 0x4c6e
 # IDA 0x14a6e; file 0x4c6e; locator=proven; and     bh, 0FBh
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 and bh, 0xfb
 .org 0x4c71
 # IDA 0x14a71; file 0x4c71; locator=proven; inc     ch
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 inc ch
 .org 0x4c73
 # IDA 0x14a73; file 0x4c73; locator=proven; jmp     short loc_14A76
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 jmp .+3
 .org 0x4c75
 loc_14A75:
 # IDA 0x14a75; file 0x4c75; locator=proven; pop     bx
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 pop bx
 .org 0x4c76
 loc_14A76:
 # IDA 0x14a76; file 0x4c76; locator=proven; pop     di
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 pop di
 .org 0x4c77
 # IDA 0x14a77; file 0x4c77; locator=proven; pop     dx
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 pop dx
 .org 0x4c78
 # IDA 0x14a78; file 0x4c78; locator=proven; pop     ax
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 pop ax
 .org 0x4c79
 loc_14A79:
 # IDA 0x14a79; file 0x4c79; locator=proven; clc
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 clc
 .org 0x4c7a
 # IDA 0x14a7a; file 0x4c7a; locator=proven; retn
-# ⚠ 函式 sub_14A0F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14A0F; [proven] 原連結方向、port visited、邊長與環形queue推入helper; 出處: docs/re/129-c-route-restoration.md
 ret
 .org 0x4c7b
 sub_14A7B:
@@ -61132,298 +61463,298 @@ ret
 .org 0x9856
 sub_19656:
 # IDA 0x19656; file 0x9856; locator=proven; push    ds
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 push ds
 .org 0x9857
 # IDA 0x19657; file 0x9857; locator=proven; push    es
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 push es
 .org 0x9858
 # IDA 0x19658; file 0x9858; locator=proven; push    ax
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 push ax
 .org 0x9859
 # IDA 0x19659; file 0x9859; locator=proven; push    bx
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 push bx
 .org 0x985a
 # IDA 0x1965a; file 0x985a; locator=proven; push    cx
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 push cx
 .org 0x985b
 # IDA 0x1965b; file 0x985b; locator=proven; push    dx
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 push dx
 .org 0x985c
 # IDA 0x1965c; file 0x985c; locator=proven; push    si
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 push si
 .org 0x985d
 # IDA 0x1965d; file 0x985d; locator=proven; push    di
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 push di
 .org 0x985e
 # IDA 0x1965e; file 0x985e; locator=proven; cld
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 cld
 .org 0x985f
 # IDA 0x1965f; file 0x985f; locator=proven; mov     ds, cs:word_10D3A
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 cs; mov ds, word ptr [0xd3a]
 .org 0x9864
 # IDA 0x19664; file 0x9864; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 shr dx, 0x1
 .org 0x9866
 # IDA 0x19666; file 0x9866; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 shr bx, 0x1
 .org 0x9868
 # IDA 0x19668; file 0x9868; locator=proven; cmp     dx, 0B2h
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 cmp dx, 0xb2
 .org 0x986c
 # IDA 0x1966c; file 0x986c; locator=proven; jbe     short loc_19671
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 jbe .+5
 .org 0x986e
 # IDA 0x1966e; file 0x986e; locator=proven; mov     dx, 0B2h
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 mov dx, 0xb2
 .org 0x9871
 loc_19671:
 # IDA 0x19671; file 0x9871; locator=proven; add     dx, 1B6h
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 add dx, 0x1b6
 .org 0x9875
 # IDA 0x19675; file 0x9875; locator=proven; add     bx, 26h
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 add bx, 0x26
 .org 0x9878
 # IDA 0x19678; file 0x9878; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 shr dx, 0x1
 .org 0x987a
 # IDA 0x1967a; file 0x987a; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 shr dx, 0x1
 .org 0x987c
 # IDA 0x1967c; file 0x987c; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 shr dx, 0x1
 .org 0x987e
 # IDA 0x1967e; file 0x987e; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 shl bx, 0x1
 .org 0x9880
 # IDA 0x19680; file 0x9880; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 shl bx, 0x1
 .org 0x9882
 # IDA 0x19682; file 0x9882; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 shl bx, 0x1
 .org 0x9884
 # IDA 0x19684; file 0x9884; locator=proven; mov     si, bx
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 {load} mov si, bx
 .org 0x9886
 # IDA 0x19686; file 0x9886; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 shl bx, 0x1
 .org 0x9888
 # IDA 0x19688; file 0x9888; locator=proven; add     si, bx
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 {load} add si, bx
 .org 0x988a
 # IDA 0x1968a; file 0x988a; locator=proven; mov     ax, bx
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 {load} mov ax, bx
 .org 0x988c
 # IDA 0x1968c; file 0x988c; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 shl bx, 0x1
 .org 0x988e
 # IDA 0x1968e; file 0x988e; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 shl bx, 0x1
 .org 0x9890
 # IDA 0x19690; file 0x9890; locator=proven; add     bx, ax
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 {load} add bx, ax
 .org 0x9892
 # IDA 0x19692; file 0x9892; locator=proven; add     bx, dx
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 {load} add bx, dx
 .org 0x9894
 # IDA 0x19694; file 0x9894; locator=proven; sub     dx, 37h
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 sub dx, 0x37
 .org 0x9897
 # IDA 0x19697; file 0x9897; locator=proven; sub     si, 3C0h
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 sub si, 0x3c0
 .org 0x989b
 # IDA 0x1969b; file 0x989b; locator=proven; add     si, dx
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 {load} add si, dx
 .org 0x989d
 # IDA 0x1969d; file 0x989d; locator=proven; mov     ax, 0A0C8h
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 mov ax, 0xa0c8
 .org 0x98a0
 # IDA 0x196a0; file 0x98a0; locator=proven; mov     es, ax
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 mov es, ax
 .org 0x98a2
 # IDA 0x196a2; file 0x98a2; locator=proven; call    sub_10CC3
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 call .+30241
 .org 0x98a5
 # IDA 0x196a5; file 0x98a5; locator=proven; mov     dx, 3C4h
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 mov dx, 0x3c4
 .org 0x98a8
 # IDA 0x196a8; file 0x98a8; locator=proven; mov     al, 2
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 mov al, 0x2
 .org 0x98aa
 # IDA 0x196aa; file 0x98aa; locator=proven; out     dx, al
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 out dx, al
 .org 0x98ab
 # IDA 0x196ab; file 0x98ab; locator=proven; mov     al, 1
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 mov al, 0x1
 .org 0x98ad
 # IDA 0x196ad; file 0x98ad; locator=proven; call    sub_196CF
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 call .+34
 .org 0x98b0
 # IDA 0x196b0; file 0x98b0; locator=proven; mov     al, 2
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 mov al, 0x2
 .org 0x98b2
 # IDA 0x196b2; file 0x98b2; locator=proven; call    sub_196CF
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 call .+29
 .org 0x98b5
 # IDA 0x196b5; file 0x98b5; locator=proven; mov     al, 4
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 mov al, 0x4
 .org 0x98b7
 # IDA 0x196b7; file 0x98b7; locator=proven; call    sub_196CF
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 call .+24
 .org 0x98ba
 # IDA 0x196ba; file 0x98ba; locator=proven; mov     al, 8
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 mov al, 0x8
 .org 0x98bc
 # IDA 0x196bc; file 0x98bc; locator=proven; call    sub_196CF
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 call .+19
 .org 0x98bf
 # IDA 0x196bf; file 0x98bf; locator=proven; mov     dx, 3C4h
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 mov dx, 0x3c4
 .org 0x98c2
 # IDA 0x196c2; file 0x98c2; locator=proven; mov     ax, 0F02h
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 mov ax, 0xf02
 .org 0x98c5
 # IDA 0x196c5; file 0x98c5; locator=proven; out     dx, ax
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 out dx, ax
 .org 0x98c6
 # IDA 0x196c6; file 0x98c6; locator=proven; pop     di
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 pop di
 .org 0x98c7
 # IDA 0x196c7; file 0x98c7; locator=proven; pop     si
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 pop si
 .org 0x98c8
 # IDA 0x196c8; file 0x98c8; locator=proven; pop     dx
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 pop dx
 .org 0x98c9
 # IDA 0x196c9; file 0x98c9; locator=proven; pop     cx
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 pop cx
 .org 0x98ca
 # IDA 0x196ca; file 0x98ca; locator=proven; pop     bx
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 pop bx
 .org 0x98cb
 # IDA 0x196cb; file 0x98cb; locator=proven; pop     ax
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 pop ax
 .org 0x98cc
 # IDA 0x196cc; file 0x98cc; locator=proven; pop     es
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 pop es
 .org 0x98cd
 # IDA 0x196cd; file 0x98cd; locator=proven; pop     ds
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 pop ds
 .org 0x98ce
 # IDA 0x196ce; file 0x98ce; locator=proven; retn
-# ⚠ 函式 sub_19656; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19656; [proven] 原小地圖區域四plane還原，保留座標及VGA暫存器契約; 出處: docs/re/129-c-route-restoration.md
 ret
 .org 0x98cf
 sub_196CF:
 # IDA 0x196cf; file 0x98cf; locator=proven; mov     dx, 3C5h
-# ⚠ 函式 sub_196CF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
 mov dx, 0x3c5
 .org 0x98d2
 # IDA 0x196d2; file 0x98d2; locator=proven; out     dx, al
-# ⚠ 函式 sub_196CF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
 out dx, al
 .org 0x98d3
 # IDA 0x196d3; file 0x98d3; locator=proven; mov     di, bx
-# ⚠ 函式 sub_196CF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
 {load} mov di, bx
 .org 0x98d5
 # IDA 0x196d5; file 0x98d5; locator=proven; mov     cx, 4
-# ⚠ 函式 sub_196CF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
 mov cx, 0x4
 .org 0x98d8
 loc_196D8:
 # IDA 0x196d8; file 0x98d8; locator=proven; mov     al, es:[di]
-# ⚠ 函式 sub_196CF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
 es; mov al, byte ptr [di]
 .org 0x98db
 # IDA 0x196db; file 0x98db; locator=proven; movsb
-# ⚠ 函式 sub_196CF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
 movsb
 .org 0x98dc
 # IDA 0x196dc; file 0x98dc; locator=proven; mov     al, es:[di]
-# ⚠ 函式 sub_196CF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
 es; mov al, byte ptr [di]
 .org 0x98df
 # IDA 0x196df; file 0x98df; locator=proven; movsb
-# ⚠ 函式 sub_196CF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
 movsb
 .org 0x98e0
 # IDA 0x196e0; file 0x98e0; locator=proven; add     di, 4Eh
-# ⚠ 函式 sub_196CF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
 add di, 0x4e
 .org 0x98e3
 # IDA 0x196e3; file 0x98e3; locator=proven; add     si, 16h
-# ⚠ 函式 sub_196CF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
 add si, 0x16
 .org 0x98e6
 # IDA 0x196e6; file 0x98e6; locator=proven; loop    loc_196D8
-# ⚠ 函式 sub_196CF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
 loop .-14
 .org 0x98e8
 # IDA 0x196e8; file 0x98e8; locator=proven; add     si, 0BA0h
-# ⚠ 函式 sub_196CF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
 add si, 0xba0
 .org 0x98ec
 # IDA 0x196ec; file 0x98ec; locator=proven; retn
-# ⚠ 函式 sub_196CF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
 ret
 .org 0x98ed
 sub_196ED:

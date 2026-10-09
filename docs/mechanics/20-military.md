@@ -345,3 +345,7 @@ remake 已照這條接上（[`../spec/132`](../spec/132-march-turnback-at-peace.
 解散由14651只清軍團+00、清主將職務、退兵、減軍團數及occupancy；其餘原始欄位保留。
 門檻、隊列、補兵、DI殘留與受控RND的原位址及1,320組證據見[re/123](../re/123-c-march-command-restoration.md)。
 這是原版規則證據，正式Go對應路徑未在本輪改動或重新宣稱長程parity。
+
+## 原生 C 尋路證據
+
+原自我修改搜尋、行軍重算、退卻與潰散的來源及固定狀態驗證見[re/129](../re/129-c-route-restoration.md)。本輪C保留原bucket與環形queue；Go同成本／等距端點及正常玩家的完成條件維持原範圍。

@@ -172,3 +172,5 @@ handler、直線、底紋與雙色框的固定 decoder／組譯證據。原始�
 
 原始 glyph 的 21 條／59 bytes 補充見 [re/108](108-c-glyph-raster-restoration.md)，
 包含原始兩 patched far call 與完整三字 code；資料字庫仍只作本機輸入。
+
+尋路自我修改區段的79條新增來源見[re/129](129-c-route-restoration.md)及[route-handler-code.json](route-handler-code.json)。現行版控組語為25,078指令／57,045bytes，整檔仍67,099bytes；來源與驗證入口沿用本頁，歷史checkpoint數字不改寫。

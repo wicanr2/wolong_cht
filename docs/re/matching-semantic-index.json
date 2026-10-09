@@ -3086,6 +3086,76 @@
       "sources": [
         "docs/re/128-c-city-tick-restoration.md"
       ]
+    },
+    "0x1491B": {
+      "meaning": "原raw尋路入口，從AX目標搜尋BX/CX兩終止節點，live code patch與環形最低成本bucket",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x14A0F": {
+      "meaning": "原連結方向、port visited、邊長與環形queue推入helper",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x147BB": {
+      "meaning": "原城節點與連結上的行軍重算，保留步進與退卻成本高位元門檻",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x1487B": {
+      "meaning": "原依首都方向尋找下一個己方據點的退卻包裝",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x1291A": {
+      "meaning": "原軍團潰散入口、captor紀錄、亂數俘虜或轉屬分支",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x12977": {
+      "meaning": "原俘虜後占用減一、army旗標8與延遲30h及通知",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x129C3": {
+      "meaning": "原解散／轉屬／永久刪除與duty、owner、通知收尾",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x12BA8": {
+      "meaning": "原清除army bit4，面板bit2啟用時還原小地圖",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x19656": {
+      "meaning": "原小地圖區域四plane還原，保留座標及VGA暫存器契約",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x196CF": {
+      "meaning": "原指定plane的四列雙byte VRAM至minimap資料回填",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
     }
   },
   "operands": {
@@ -3817,6 +3887,126 @@
       "level": "proven",
       "sources": [
         "docs/re/128-c-city-tick-restoration.md"
+      ]
+    },
+    "0x14931:0": {
+      "original": "cs:word_149B8",
+      "meaning": "原code patch終止節點A；CS49B8由149B6即時消費",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x14936:0": {
+      "original": "cs:word_149BE",
+      "meaning": "原code patch終止節點B；CS49BE由149BC即時消費",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x1493B:0": {
+      "original": "cs:byte_149D2",
+      "meaning": "原code patch所屬勢力；CS49D2由149CD即時消費",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x149B6:1": {
+      "original": "1234h",
+      "meaning": "靜態1234h是可修改立即值，C讀CS49B8的live word",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x149BC:1": {
+      "original": "1234h",
+      "meaning": "靜態1234h是可修改立即值，C讀CS49BE的live word",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x149CD:1": {
+      "original": "12h",
+      "meaning": "靜態12h是可修改立即值，C讀CS49D2的live byte",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x14940:1": {
+      "original": "8000h",
+      "meaning": "原visited起點8000h，共清400h個word",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x14951:1": {
+      "original": "8800h",
+      "meaning": "原環形queue起點8800h，8-byte記錄",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x149D5:1": {
+      "original": "0A6h",
+      "meaning": "非己方據點成本加A6h，另由下一OR設高位元",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x149D9:1": {
+      "original": "80h",
+      "meaning": "將成本word的bit15設為1",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x14A3D:1": {
+      "original": "[bx+4]",
+      "meaning": "原連結+4的byte長度，以ADD低byte／ADC高byte累加",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x14A0F:0": {
+      "original": "byte ptr [si-8000h]",
+      "meaning": "原port visited，SI減8000h以16-bit offset回繞讀取",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x12965:1": {
+      "original": "28h",
+      "meaning": "俘虜門檻為評分右移一次再加28h，保留byte加法",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x1298C:0": {
+      "original": "byte ptr [di]",
+      "meaning": "原俘虜入口占用byte減一，保留0到FF回繞",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x12BA8:1": {
+      "original": "0EFh",
+      "meaning": "只清除軍團bit4，保留其他flags",
+      "level": "proven",
+      "sources": [
+        "docs/re/129-c-route-restoration.md"
       ]
     }
   }

@@ -64,8 +64,9 @@
 | 2026-10-09；城市／軍團初始化五C函式與入場前段 | O0／O2各5,008組、5,416次全狀態、十錯版與兩側各自raw初始化 | 375 C／49raw；含11BE0七指令前段，完整mainloop與C機器碼未代證 | [re/126](docs/re/126-c-world-bootstrap-restoration.md)、[spec/246](docs/spec/246-c-world-bootstrap.md)、來源／覆蓋／收據 |
 | 2026-10-09；世界點選／右鍵分派／淡入八C函式 | O0／O2各2,148完整狀態與十二錯版，128組DS≠CS及全部26索引 | 383 C／49raw；原表與落下RET接通，更新排程／完整mainloop／C機器碼未代證 | [re/127](docs/re/127-c-world-interaction-restoration.md)、[spec/247](docs/spec/247-c-world-interaction.md)、來源／覆蓋／收據 |
 | 2026-10-10；據點輪轉／增援／動畫物件18C函式 | O0／O2各8,144完整狀態與十六錯版，固定raw RNG與原提示IO | 401 C／49raw；據點與物件閉包接通，完整軍團／交戰／主排程及C機器碼未代證 | [re/128](docs/re/128-c-city-tick-restoration.md)、[spec/248](docs/spec/248-c-city-tick.md)、來源／覆蓋／收據 |
+| 2026-10-10；尋路／退卻／潰散九C函式及raw搜尋 | O0／O2各4,588完整狀態與十六錯版，live patch／原queue／固定raw RNG | 410 C／50raw；新增79組語指令後全EXE exact，原版全道路／完整軍團與戰鬥／C機器碼未代證 | [re/129](docs/re/129-c-route-restoration.md)、[spec/249](docs/spec/249-c-route.md)、來源／覆蓋／收據 |
 
-持續 Goal 為完成整個 matching decompilation；目前有 24,999 條指令的整檔組語基準與 401 個 C 函式、四十九個原始 code 入口，不能據此宣布完整 C 還原完成。
+持續 Goal 為完成整個 matching decompilation；目前有 25,078 條指令的整檔組語基準與 410 個 C 函式、五十個原始 code 入口，不能據此宣布完整 C 還原完成。
 使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b`、熱區 `a8605b5` 、版控組語／VGA `47e16c9` 、對齊貼圖 `6139f9e` 、矩形／計量 `c7dc8df`、顯示分派 `4d31520`、字形 `85f06de` 與數字 `06fff77` 已推到 origin/main。
 
 未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。
@@ -730,6 +731,12 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 ---
 
 ## 6. 已被推翻的斷言
+
+### 2026-10-10：尋路核心的呼叫者
+
+| 舊斷言 | 原始定位與推翻原因 | 證據 |
+|---|---|---|
+| spec/192稱`sub_147BB`是`loc_1491B`唯一呼叫者 | 原IDA call site為147EA／1483A及148D7／148E5，分屬`sub_147BB`與`sub_1487B`；每個包裝內兩個site互斥 | [re/129](docs/re/129-c-route-restoration.md) |
 
 ### 2026-10-10：雲的速度調整與座標回繞
 

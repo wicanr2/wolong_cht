@@ -1,0 +1,3165 @@
+{
+  "schema": "wolong-matching-code-supplement-v1",
+  "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "database_sha256": "31091a8a266e73ba1e903c5bca69409dca513179fd3114e1ec7074af1d17546d",
+  "probe_sha256": "ff99cfbd72b7211d14ac5d7544ad7ffa5af9fa8ac8c421d2f1d4311a438d1a66",
+  "evidence": "docs/re/129-c-route-restoration.md",
+  "constant_symbols": {},
+  "instructions": [
+    {
+      "ida_linear": 84316,
+      "file_start": 19292,
+      "file_end": 19295,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ax, 0FFFFh",
+      "gas": "mov ax, 0xffff",
+      "bytes": "b8ffff",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 18446744073709551615,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "0FFFFh",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84319,
+      "file_start": 19295,
+      "file_end": 19297,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     cl, ch",
+      "gas": "{load} mov cl, ch",
+      "bytes": "8acd",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 17,
+          "original": "cl",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 21,
+          "original": "ch",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84321,
+      "file_start": 19297,
+      "file_end": 19299,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "xchg    bx, di",
+      "gas": "{load} xchg bx, di",
+      "bytes": "87df",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84323,
+      "file_start": 19299,
+      "file_end": 19301,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     dx, bx",
+      "gas": "{load} mov dx, bx",
+      "bytes": "8bd3",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84325,
+      "file_start": 19301,
+      "file_end": 19304,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     bl, 2",
+      "gas": "add bl, 0x2",
+      "bytes": "80c302",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 19,
+          "original": "bl",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 2,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "2",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84328,
+      "file_start": 19304,
+      "file_end": 19306,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "cmp     ax, [bx]",
+      "gas": "cmp ax, word ptr [bx]",
+      "bytes": "3b07",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 3,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "[bx]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84330,
+      "file_start": 19306,
+      "file_end": 19308,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jbe     short near ptr unk_1496E",
+      "gas": "jbe .+4",
+      "bytes": "7602",
+      "operands": [
+        {
+          "type": 7,
+          "addr": 18798,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "near ptr unk_1496E",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84332,
+      "file_start": 19308,
+      "file_end": 19310,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ax, [bx]",
+      "gas": "mov ax, word ptr [bx]",
+      "bytes": "8b07",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 3,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "[bx]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84334,
+      "file_start": 19310,
+      "file_end": 19313,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     bx, 8",
+      "gas": "add bx, 0x8",
+      "bytes": "83c308",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 8,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "8",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84337,
+      "file_start": 19313,
+      "file_end": 19316,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "and     bh, 0FBh",
+      "gas": "and bh, 0xfb",
+      "bytes": "80e7fb",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 23,
+          "original": "bh",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 251,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "0FBh",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84340,
+      "file_start": 19316,
+      "file_end": 19318,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "dec     cl",
+      "gas": "dec cl",
+      "bytes": "fec9",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 17,
+          "original": "cl",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84342,
+      "file_start": 19318,
+      "file_end": 19320,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jnz     short loc_14968",
+      "gas": "jnz .-14",
+      "bytes": "75f0",
+      "operands": [
+        {
+          "type": 7,
+          "addr": 18792,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "loc_14968",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84344,
+      "file_start": 19320,
+      "file_end": 19322,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     bx, di",
+      "gas": "{load} mov bx, di",
+      "bytes": "8bdf",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84346,
+      "file_start": 19322,
+      "file_end": 19324,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     di, dx",
+      "gas": "{load} mov di, dx",
+      "bytes": "8bfa",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84348,
+      "file_start": 19324,
+      "file_end": 19326,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "xchg    cl, ch",
+      "gas": "{load} xchg cl, ch",
+      "bytes": "86cd",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 17,
+          "original": "cl",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 21,
+          "original": "ch",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84350,
+      "file_start": 19326,
+      "file_end": 19328,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     si, [di]",
+      "gas": "mov si, word ptr [di]",
+      "bytes": "8b35",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 3,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 5,
+          "original": "[di]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84352,
+      "file_start": 19328,
+      "file_end": 19331,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     dx, [di+2]",
+      "gas": "mov dx, word ptr [di+0x2]",
+      "bytes": "8b5502",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 4,
+          "addr": 2,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 5,
+          "original": "[di+2]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84355,
+      "file_start": 19331,
+      "file_end": 19333,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "cmp     ax, dx",
+      "gas": "{load} cmp ax, dx",
+      "bytes": "3bc2",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84357,
+      "file_start": 19333,
+      "file_end": 19335,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jz      short near ptr byte_149B6",
+      "gas": "jz .+49",
+      "bytes": "742f",
+      "operands": [
+        {
+          "type": 7,
+          "addr": 18870,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "near ptr byte_149B6",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84359,
+      "file_start": 19335,
+      "file_end": 19337,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     [bx], si",
+      "gas": "mov word ptr [bx], si",
+      "bytes": "8937",
+      "operands": [
+        {
+          "type": 3,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "[bx]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84361,
+      "file_start": 19337,
+      "file_end": 19340,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     [bx+2], dx",
+      "gas": "mov word ptr [bx+0x2], dx",
+      "bytes": "895702",
+      "operands": [
+        {
+          "type": 4,
+          "addr": 2,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "[bx+2]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84364,
+      "file_start": 19340,
+      "file_end": 19343,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     dx, [di+4]",
+      "gas": "mov dx, word ptr [di+0x4]",
+      "bytes": "8b5504",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 4,
+          "addr": 4,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 5,
+          "original": "[di+4]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84367,
+      "file_start": 19343,
+      "file_end": 19346,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     [bx+4], dx",
+      "gas": "mov word ptr [bx+0x4], dx",
+      "bytes": "895704",
+      "operands": [
+        {
+          "type": 4,
+          "addr": 4,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "[bx+4]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84370,
+      "file_start": 19346,
+      "file_end": 19349,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     dx, [di+6]",
+      "gas": "mov dx, word ptr [di+0x6]",
+      "bytes": "8b5506",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 4,
+          "addr": 6,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 5,
+          "original": "[di+6]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84373,
+      "file_start": 19349,
+      "file_end": 19352,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     [bx+6], dx",
+      "gas": "mov word ptr [bx+0x6], dx",
+      "bytes": "895706",
+      "operands": [
+        {
+          "type": 4,
+          "addr": 6,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "[bx+6]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84376,
+      "file_start": 19352,
+      "file_end": 19355,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     bx, 8",
+      "gas": "add bx, 0x8",
+      "bytes": "83c308",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 8,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "8",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84379,
+      "file_start": 19355,
+      "file_end": 19358,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "and     bh, 0FBh",
+      "gas": "and bh, 0xfb",
+      "bytes": "80e7fb",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 23,
+          "original": "bh",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 251,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "0FBh",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84382,
+      "file_start": 19358,
+      "file_end": 19360,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "inc     ch",
+      "gas": "inc ch",
+      "bytes": "fec5",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 21,
+          "original": "ch",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84384,
+      "file_start": 19360,
+      "file_end": 19363,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     di, 8",
+      "gas": "add di, 0x8",
+      "bytes": "83c708",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 8,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "8",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84387,
+      "file_start": 19363,
+      "file_end": 19367,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "and     di, 0FBFFh",
+      "gas": "and di, 0xfbff",
+      "bytes": "81e7fffb",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 18446744073709550591,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "0FBFFh",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84391,
+      "file_start": 19367,
+      "file_end": 19369,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "dec     cl",
+      "gas": "dec cl",
+      "bytes": "fec9",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 17,
+          "original": "cl",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84393,
+      "file_start": 19369,
+      "file_end": 19371,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jnz     short loc_1497E",
+      "gas": "jnz .-43",
+      "bytes": "75d3",
+      "operands": [
+        {
+          "type": 7,
+          "addr": 18814,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "loc_1497E",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84395,
+      "file_start": 19371,
+      "file_end": 19374,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "cmp     ch, 0",
+      "gas": "cmp ch, 0x0",
+      "bytes": "80fd00",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 21,
+          "original": "ch",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "0",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84398,
+      "file_start": 19374,
+      "file_end": 19376,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jnz     short loc_1495C",
+      "gas": "jnz .-82",
+      "bytes": "75ac",
+      "operands": [
+        {
+          "type": 7,
+          "addr": 18780,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "loc_1495C",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84400,
+      "file_start": 19376,
+      "file_end": 19379,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     bx, 800h",
+      "gas": "mov bx, 0x800",
+      "bytes": "bb0008",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 2048,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "800h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84403,
+      "file_start": 19379,
+      "file_end": 19380,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "stc",
+      "gas": "stc",
+      "bytes": "f9",
+      "operands": [],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84404,
+      "file_start": 19380,
+      "file_end": 19382,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jmp     short near ptr byte_149D3+36h",
+      "gas": "jmp .+85",
+      "bytes": "eb53",
+      "operands": [
+        {
+          "type": 7,
+          "addr": 18953,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "near ptr byte_149D3+36h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84406,
+      "file_start": 19382,
+      "file_end": 19386,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "cmp     si, 1234h",
+      "gas": "cmp si, 0x1234",
+      "bytes": "81fe3412",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 4660,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "1234h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84410,
+      "file_start": 19386,
+      "file_end": 19388,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jz      short near ptr byte_149D3+2Dh",
+      "gas": "jz .+70",
+      "bytes": "7444",
+      "operands": [
+        {
+          "type": 7,
+          "addr": 18944,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "near ptr byte_149D3+2Dh",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84412,
+      "file_start": 19388,
+      "file_end": 19392,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "cmp     si, 1234h",
+      "gas": "cmp si, 0x1234",
+      "bytes": "81fe3412",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 4660,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "1234h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84416,
+      "file_start": 19392,
+      "file_end": 19394,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jz      short near ptr byte_149D3+2Dh",
+      "gas": "jz .+64",
+      "bytes": "743e",
+      "operands": [
+        {
+          "type": 7,
+          "addr": 18944,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "near ptr byte_149D3+2Dh",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84418,
+      "file_start": 19394,
+      "file_end": 19395,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "push    ax",
+      "gas": "push ax",
+      "bytes": "50",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84419,
+      "file_start": 19395,
+      "file_end": 19399,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "cmp     si, 600h",
+      "gas": "cmp si, 0x600",
+      "bytes": "81fe0006",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1536,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "600h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84423,
+      "file_start": 19399,
+      "file_end": 19401,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jnb     short near ptr byte_149D3+10h",
+      "gas": "jnb .+28",
+      "bytes": "731a",
+      "operands": [
+        {
+          "type": 7,
+          "addr": 18915,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "near ptr byte_149D3+10h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84425,
+      "file_start": 19401,
+      "file_end": 19403,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "shl     si, 1",
+      "gas": "shl si, 0x1",
+      "bytes": "d1e6",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84427,
+      "file_start": 19403,
+      "file_end": 19405,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "shl     si, 1",
+      "gas": "shl si, 0x1",
+      "bytes": "d1e6",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84429,
+      "file_start": 19405,
+      "file_end": 19411,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "cmp     byte ptr es:[si+841h], 12h",
+      "gas": "es; cmp byte ptr [si+0x841], 0x12",
+      "bytes": "2680bc410812",
+      "operands": [
+        {
+          "type": 4,
+          "addr": 2113,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 4,
+          "original": "byte ptr es:[si+841h]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 18,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "12h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84435,
+      "file_start": 19411,
+      "file_end": 19413,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jz      short near ptr unk_149DC",
+      "gas": "jz .+9",
+      "bytes": "7407",
+      "operands": [
+        {
+          "type": 7,
+          "addr": 18908,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "near ptr unk_149DC",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84437,
+      "file_start": 19413,
+      "file_end": 19417,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     dx, 0A6h",
+      "gas": "add dx, 0xa6",
+      "bytes": "81c2a600",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 166,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "0A6h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84441,
+      "file_start": 19417,
+      "file_end": 19420,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "or      dh, 80h",
+      "gas": "or dh, 0x80",
+      "bytes": "80ce80",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 22,
+          "original": "dh",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 128,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "80h",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84444,
+      "file_start": 19420,
+      "file_end": 19423,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "add     dx, 4",
+      "gas": "add dx, 0x4",
+      "bytes": "83c204",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 4,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "4",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84447,
+      "file_start": 19423,
+      "file_end": 19425,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "shr     si, 1",
+      "gas": "shr si, 0x1",
+      "bytes": "d1ee",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84449,
+      "file_start": 19425,
+      "file_end": 19427,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "shr     si, 1",
+      "gas": "shr si, 0x1",
+      "bytes": "d1ee",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 5,
+          "addr": 0,
+          "value": 1,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "1",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84451,
+      "file_start": 19427,
+      "file_end": 19429,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ax, [si]",
+      "gas": "mov ax, word ptr [si]",
+      "bytes": "8b04",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 3,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 4,
+          "original": "[si]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84453,
+      "file_start": 19429,
+      "file_end": 19432,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "call    sub_14A0F",
+      "gas": "call .+42",
+      "bytes": "e82700",
+      "operands": [
+        {
+          "type": 7,
+          "addr": 18959,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "sub_14A0F",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84456,
+      "file_start": 19432,
+      "file_end": 19433,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "inc     si",
+      "gas": "inc si",
+      "bytes": "46",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84457,
+      "file_start": 19433,
+      "file_end": 19434,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "inc     si",
+      "gas": "inc si",
+      "bytes": "46",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84458,
+      "file_start": 19434,
+      "file_end": 19436,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ax, [si]",
+      "gas": "mov ax, word ptr [si]",
+      "bytes": "8b04",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 3,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 4,
+          "original": "[si]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84460,
+      "file_start": 19436,
+      "file_end": 19439,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "call    sub_14A0F",
+      "gas": "call .+35",
+      "bytes": "e82000",
+      "operands": [
+        {
+          "type": 7,
+          "addr": 18959,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "sub_14A0F",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84463,
+      "file_start": 19439,
+      "file_end": 19440,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "inc     si",
+      "gas": "inc si",
+      "bytes": "46",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84464,
+      "file_start": 19440,
+      "file_end": 19441,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "inc     si",
+      "gas": "inc si",
+      "bytes": "46",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84465,
+      "file_start": 19441,
+      "file_end": 19443,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ax, [si]",
+      "gas": "mov ax, word ptr [si]",
+      "bytes": "8b04",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 3,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 4,
+          "original": "[si]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84467,
+      "file_start": 19443,
+      "file_end": 19446,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "call    sub_14A0F",
+      "gas": "call .+28",
+      "bytes": "e81900",
+      "operands": [
+        {
+          "type": 7,
+          "addr": 18959,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "sub_14A0F",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84470,
+      "file_start": 19446,
+      "file_end": 19447,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "inc     si",
+      "gas": "inc si",
+      "bytes": "46",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84471,
+      "file_start": 19447,
+      "file_end": 19448,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "inc     si",
+      "gas": "inc si",
+      "bytes": "46",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84472,
+      "file_start": 19448,
+      "file_end": 19450,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ax, [si]",
+      "gas": "mov ax, word ptr [si]",
+      "bytes": "8b04",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 3,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 4,
+          "original": "[si]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84474,
+      "file_start": 19450,
+      "file_end": 19453,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "call    sub_14A0F",
+      "gas": "call .+21",
+      "bytes": "e81200",
+      "operands": [
+        {
+          "type": 7,
+          "addr": 18959,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "sub_14A0F",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84477,
+      "file_start": 19453,
+      "file_end": 19454,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     ax",
+      "gas": "pop ax",
+      "bytes": "58",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84478,
+      "file_start": 19454,
+      "file_end": 19456,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "jmp     short loc_149A0",
+      "gas": "jmp .-94",
+      "bytes": "eba0",
+      "operands": [
+        {
+          "type": 7,
+          "addr": 18848,
+          "value": 0,
+          "dtype": 0,
+          "dtype_size": 1,
+          "reg": 0,
+          "original": "loc_149A0",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84480,
+      "file_start": 19456,
+      "file_end": 19459,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     ax, [di+4]",
+      "gas": "mov ax, word ptr [di+0x4]",
+      "bytes": "8b4504",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 0,
+          "original": "ax",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 4,
+          "addr": 4,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 5,
+          "original": "[di+4]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84483,
+      "file_start": 19459,
+      "file_end": 19462,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     bx, [di+6]",
+      "gas": "mov bx, word ptr [di+0x6]",
+      "bytes": "8b5d06",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 3,
+          "original": "bx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 4,
+          "addr": 6,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 5,
+          "original": "[di+6]",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84486,
+      "file_start": 19462,
+      "file_end": 19464,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "mov     cx, dx",
+      "gas": "{load} mov cx, dx",
+      "bytes": "8bca",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 1,
+          "original": "cx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        },
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84488,
+      "file_start": 19464,
+      "file_end": 19465,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "clc",
+      "gas": "clc",
+      "bytes": "f8",
+      "operands": [],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84489,
+      "file_start": 19465,
+      "file_end": 19466,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     bp",
+      "gas": "pop bp",
+      "bytes": "5d",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 5,
+          "original": "bp",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84490,
+      "file_start": 19466,
+      "file_end": 19467,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     di",
+      "gas": "pop di",
+      "bytes": "5f",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 7,
+          "original": "di",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84491,
+      "file_start": 19467,
+      "file_end": 19468,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     si",
+      "gas": "pop si",
+      "bytes": "5e",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 6,
+          "original": "si",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84492,
+      "file_start": 19468,
+      "file_end": 19469,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     dx",
+      "gas": "pop dx",
+      "bytes": "5a",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 2,
+          "original": "dx",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84493,
+      "file_start": 19469,
+      "file_end": 19470,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "pop     es",
+      "gas": "pop es",
+      "bytes": "07",
+      "operands": [
+        {
+          "type": 1,
+          "addr": 0,
+          "value": 0,
+          "dtype": 1,
+          "dtype_size": 2,
+          "reg": 29,
+          "original": "es",
+          "semantic": {
+            "meaning": null,
+            "level": "unknown",
+            "sources": [],
+            "warning": "⚠ 語意尚未證實"
+          }
+        }
+      ],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    {
+      "ida_linear": 84494,
+      "file_start": 19470,
+      "file_end": 19471,
+      "kind": "instruction",
+      "original_name": "",
+      "function_name": null,
+      "original_assembly": "retn",
+      "gas": "ret",
+      "bytes": "c3",
+      "operands": [],
+      "locator_level": "proven",
+      "scope_sources": [
+        "docs/re/129-c-route-restoration.md"
+      ]
+    }
+  ]
+}

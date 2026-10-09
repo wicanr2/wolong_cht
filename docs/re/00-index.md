@@ -250,6 +250,8 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 
 據點輪轉與動畫物件更新的 C 見 [re/128](128-c-city-tick-restoration.md)，規格見 [spec/248](../spec/248-c-city-tick.md)。
 
+自我修改尋路、退卻與軍團潰散的 C 見 [re/129](129-c-route-restoration.md)，規格見 [spec/249](../spec/249-c-route.md)。
+
 ## 9. 怎麼加一份新筆記
 
 1. 編號流水，一個發現一份。標題寫「回答什麼問題」不是「讀了哪支函式」。

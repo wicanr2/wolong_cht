@@ -554,7 +554,17 @@
       "scope": "Local legal-input matrices and full C monthly rules on four scenarios; only UI/sound/redraw use RET fixtures; valid frontier rows, at least one faction, IF/TF=0; no full Go monthly claim.",
       "source_sha256": "3b60a81cd5cc0979ca99f9bb03c5ce341f36b539ad318e70cced5ac516aa0eef",
       "header_sha256": "291e2425b3056eac0c107b93da341f2ad5e4bd32b9d71275e0c007b4f95b9d8c",
-      "fixture_sha256": "1241042349ce6d9ea5b08355a53b9fdec54171a44f0501ccfd11b17d4b1f8171"
+      "fixture_sha256": "1241042349ce6d9ea5b08355a53b9fdec54171a44f0501ccfd11b17d4b1f8171",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/129-c-route-restoration.md",
+          "spec": "docs/spec/249-c-route.md",
+          "receipt": "docs/re/c-route-verification.json",
+          "oracle_cases_per_optimization": 4588,
+          "entry_count": 1088,
+          "scope": "Nine original route/collapse functions and the complete raw self-modifying loc_1491B search. Live code operands, packed graph, visited/ring queue and original caller effects are compared. Full army tick, battle outcomes, main loop and C machine-code matching remain incomplete."
+        }
+      ]
     },
     "sub_15990": {
       "ida_linear": 88464,
@@ -3734,6 +3744,14 @@
           "oracle_cases_per_optimization": 8144,
           "entry_count": 28,
           "scope": "Eighteen original city and animation-object update functions, fixed raw RNG state and original alert IO control. Full army update, battles, scheduler/main loop, natural player paths and C machine-code matching remain incomplete."
+        },
+        {
+          "evidence": "docs/re/129-c-route-restoration.md",
+          "spec": "docs/spec/249-c-route.md",
+          "receipt": "docs/re/c-route-verification.json",
+          "oracle_cases_per_optimization": 4588,
+          "entry_count": 2172,
+          "scope": "Nine original route/collapse functions and the complete raw self-modifying loc_1491B search. Live code operands, packed graph, visited/ring queue and original caller effects are compared. Full army tick, battle outcomes, main loop and C machine-code matching remain incomplete."
         }
       ]
     },
@@ -7313,7 +7331,17 @@
       "source_sha256": "7e8aaacab485468b7bbbb2029398dd2511c5e338a2f99a9590ad57379beb4106",
       "header_sha256": "a6053642f089aba827359d031b98f1fef0d41c3e5b5c2aa724ca8db3d2421f0a",
       "fixture_sha256": "e8ca44e2b21229cabaf4d6e1955a0f76bf5e67e20ce1c2928ec115eb3a6731c6",
-      "generated_source_sha256": "93ced7003a727254d21816095d1de633959986d9f61cd2b69fd6847f512e8bb9"
+      "generated_source_sha256": "93ced7003a727254d21816095d1de633959986d9f61cd2b69fd6847f512e8bb9",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/129-c-route-restoration.md",
+          "spec": "docs/spec/249-c-route.md",
+          "receipt": "docs/re/c-route-verification.json",
+          "oracle_cases_per_optimization": 4588,
+          "entry_count": 1564,
+          "scope": "Nine original route/collapse functions and the complete raw self-modifying loc_1491B search. Live code operands, packed graph, visited/ring queue and original caller effects are compared. Full army tick, battle outcomes, main loop and C machine-code matching remain incomplete."
+        }
+      ]
     },
     "sub_159A6": {
       "ida_linear": 88486,
@@ -8882,6 +8910,195 @@
       "header_sha256": "d74b1b31b9fee4bd6070b38615dc79394e4f5bca853d08abeb35a96104f4443d",
       "fixture_sha256": "0d4e25b96c8b347a8bb97fd4b0fd2873cdc2f0983c28caf8a8023b0d073c60fa",
       "generated_source_sha256": "2ce71741ef89faae927a5f9360150e1d960fd4765412491f14d69d63156a7f67"
+    },
+    "sub_1291A": {
+      "ida_linear": 76058,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/249-c-route.md",
+      "evidence": "docs/re/129-c-route-restoration.md",
+      "source": "tools/c_recovery/route.c",
+      "header": "tools/c_recovery/route.h",
+      "fixture": "tools/c_recovery/route_fixture.h",
+      "generated_source": "tools/c_recovery/route_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-route/verification.json",
+      "routine_sha256": "e8649cec5e2e669c07a223af35b841a53d5a6eabe3ef8fdd74619fdf82482868",
+      "oracle_cases_per_optimization": 4588,
+      "oracle_entry_count_per_optimization": 1188,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Nine original route/collapse functions and the complete raw self-modifying loc_1491B search. Live code operands, packed graph, visited/ring queue and original caller effects are compared. Full army tick, battle outcomes, main loop and C machine-code matching remain incomplete.",
+      "source_sha256": "c890e439247d17615686c66f27bd27847bec44e77e9eb2c0de08dcd8838bc7fa",
+      "header_sha256": "866937a6421ed0db00e6ee9dd6c8748ddc2aabb96787adc6520229631e688421",
+      "fixture_sha256": "4076726f953dcb1f5ea251815acbc3d3e96781da871b0a4e1dd1e5f3db148d66",
+      "generated_source_sha256": "3ed992651d2f84e7bd5889f92ac138deb0f52eef0983f22c7a9f7bcdbe70b4a3"
+    },
+    "sub_12977": {
+      "ida_linear": 76151,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/249-c-route.md",
+      "evidence": "docs/re/129-c-route-restoration.md",
+      "source": "tools/c_recovery/route.c",
+      "header": "tools/c_recovery/route.h",
+      "fixture": "tools/c_recovery/route_fixture.h",
+      "generated_source": "tools/c_recovery/route_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-route/verification.json",
+      "routine_sha256": "ec511006a18884a90e083a5f2f2acb188328123b7f04d001d917496b43247e80",
+      "oracle_cases_per_optimization": 4588,
+      "oracle_entry_count_per_optimization": 668,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Nine original route/collapse functions and the complete raw self-modifying loc_1491B search. Live code operands, packed graph, visited/ring queue and original caller effects are compared. Full army tick, battle outcomes, main loop and C machine-code matching remain incomplete.",
+      "source_sha256": "c890e439247d17615686c66f27bd27847bec44e77e9eb2c0de08dcd8838bc7fa",
+      "header_sha256": "866937a6421ed0db00e6ee9dd6c8748ddc2aabb96787adc6520229631e688421",
+      "fixture_sha256": "4076726f953dcb1f5ea251815acbc3d3e96781da871b0a4e1dd1e5f3db148d66",
+      "generated_source_sha256": "3ed992651d2f84e7bd5889f92ac138deb0f52eef0983f22c7a9f7bcdbe70b4a3"
+    },
+    "sub_129C3": {
+      "ida_linear": 76227,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/249-c-route.md",
+      "evidence": "docs/re/129-c-route-restoration.md",
+      "source": "tools/c_recovery/route.c",
+      "header": "tools/c_recovery/route.h",
+      "fixture": "tools/c_recovery/route_fixture.h",
+      "generated_source": "tools/c_recovery/route_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-route/verification.json",
+      "routine_sha256": "8078871932be47e14f26d8e2d5a380cb8bfb5a93f59362431bf3bf4c872c5a93",
+      "oracle_cases_per_optimization": 4588,
+      "oracle_entry_count_per_optimization": 1088,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Nine original route/collapse functions and the complete raw self-modifying loc_1491B search. Live code operands, packed graph, visited/ring queue and original caller effects are compared. Full army tick, battle outcomes, main loop and C machine-code matching remain incomplete.",
+      "source_sha256": "c890e439247d17615686c66f27bd27847bec44e77e9eb2c0de08dcd8838bc7fa",
+      "header_sha256": "866937a6421ed0db00e6ee9dd6c8748ddc2aabb96787adc6520229631e688421",
+      "fixture_sha256": "4076726f953dcb1f5ea251815acbc3d3e96781da871b0a4e1dd1e5f3db148d66",
+      "generated_source_sha256": "3ed992651d2f84e7bd5889f92ac138deb0f52eef0983f22c7a9f7bcdbe70b4a3"
+    },
+    "sub_12BA8": {
+      "ida_linear": 76712,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/249-c-route.md",
+      "evidence": "docs/re/129-c-route-restoration.md",
+      "source": "tools/c_recovery/route.c",
+      "header": "tools/c_recovery/route.h",
+      "fixture": "tools/c_recovery/route_fixture.h",
+      "generated_source": "tools/c_recovery/route_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-route/verification.json",
+      "routine_sha256": "19264a7fc5105bf6fd26787008442a1173de8c46b753c7cb37e42a683c42f3b2",
+      "oracle_cases_per_optimization": 4588,
+      "oracle_entry_count_per_optimization": 1244,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Nine original route/collapse functions and the complete raw self-modifying loc_1491B search. Live code operands, packed graph, visited/ring queue and original caller effects are compared. Full army tick, battle outcomes, main loop and C machine-code matching remain incomplete.",
+      "source_sha256": "c890e439247d17615686c66f27bd27847bec44e77e9eb2c0de08dcd8838bc7fa",
+      "header_sha256": "866937a6421ed0db00e6ee9dd6c8748ddc2aabb96787adc6520229631e688421",
+      "fixture_sha256": "4076726f953dcb1f5ea251815acbc3d3e96781da871b0a4e1dd1e5f3db148d66",
+      "generated_source_sha256": "3ed992651d2f84e7bd5889f92ac138deb0f52eef0983f22c7a9f7bcdbe70b4a3"
+    },
+    "sub_147BB": {
+      "ida_linear": 83899,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/249-c-route.md",
+      "evidence": "docs/re/129-c-route-restoration.md",
+      "source": "tools/c_recovery/route.c",
+      "header": "tools/c_recovery/route.h",
+      "fixture": "tools/c_recovery/route_fixture.h",
+      "generated_source": "tools/c_recovery/route_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-route/verification.json",
+      "routine_sha256": "ea4bc330ab019a92b359b78c79b8bf346c9fac4cc095d45a1c32ec2f6035ead0",
+      "oracle_cases_per_optimization": 4588,
+      "oracle_entry_count_per_optimization": 576,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Nine original route/collapse functions and the complete raw self-modifying loc_1491B search. Live code operands, packed graph, visited/ring queue and original caller effects are compared. Full army tick, battle outcomes, main loop and C machine-code matching remain incomplete.",
+      "source_sha256": "c890e439247d17615686c66f27bd27847bec44e77e9eb2c0de08dcd8838bc7fa",
+      "header_sha256": "866937a6421ed0db00e6ee9dd6c8748ddc2aabb96787adc6520229631e688421",
+      "fixture_sha256": "4076726f953dcb1f5ea251815acbc3d3e96781da871b0a4e1dd1e5f3db148d66",
+      "generated_source_sha256": "3ed992651d2f84e7bd5889f92ac138deb0f52eef0983f22c7a9f7bcdbe70b4a3"
+    },
+    "sub_1487B": {
+      "ida_linear": 84091,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/249-c-route.md",
+      "evidence": "docs/re/129-c-route-restoration.md",
+      "source": "tools/c_recovery/route.c",
+      "header": "tools/c_recovery/route.h",
+      "fixture": "tools/c_recovery/route_fixture.h",
+      "generated_source": "tools/c_recovery/route_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-route/verification.json",
+      "routine_sha256": "69d36b1879958c62f100428e8e2748b9e3557ff3562961b8e048f4884c75a0dd",
+      "oracle_cases_per_optimization": 4588,
+      "oracle_entry_count_per_optimization": 256,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Nine original route/collapse functions and the complete raw self-modifying loc_1491B search. Live code operands, packed graph, visited/ring queue and original caller effects are compared. Full army tick, battle outcomes, main loop and C machine-code matching remain incomplete.",
+      "source_sha256": "c890e439247d17615686c66f27bd27847bec44e77e9eb2c0de08dcd8838bc7fa",
+      "header_sha256": "866937a6421ed0db00e6ee9dd6c8748ddc2aabb96787adc6520229631e688421",
+      "fixture_sha256": "4076726f953dcb1f5ea251815acbc3d3e96781da871b0a4e1dd1e5f3db148d66",
+      "generated_source_sha256": "3ed992651d2f84e7bd5889f92ac138deb0f52eef0983f22c7a9f7bcdbe70b4a3"
+    },
+    "sub_14A0F": {
+      "ida_linear": 84495,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/249-c-route.md",
+      "evidence": "docs/re/129-c-route-restoration.md",
+      "source": "tools/c_recovery/route.c",
+      "header": "tools/c_recovery/route.h",
+      "fixture": "tools/c_recovery/route_fixture.h",
+      "generated_source": "tools/c_recovery/route_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-route/verification.json",
+      "routine_sha256": "9ee65e3b30807d5ac2bfa30f1abb1e0c69f87938c5617aeec99ec5cd23f7c180",
+      "oracle_cases_per_optimization": 4588,
+      "oracle_entry_count_per_optimization": 45464,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Nine original route/collapse functions and the complete raw self-modifying loc_1491B search. Live code operands, packed graph, visited/ring queue and original caller effects are compared. Full army tick, battle outcomes, main loop and C machine-code matching remain incomplete.",
+      "source_sha256": "c890e439247d17615686c66f27bd27847bec44e77e9eb2c0de08dcd8838bc7fa",
+      "header_sha256": "866937a6421ed0db00e6ee9dd6c8748ddc2aabb96787adc6520229631e688421",
+      "fixture_sha256": "4076726f953dcb1f5ea251815acbc3d3e96781da871b0a4e1dd1e5f3db148d66",
+      "generated_source_sha256": "3ed992651d2f84e7bd5889f92ac138deb0f52eef0983f22c7a9f7bcdbe70b4a3"
+    },
+    "sub_19656": {
+      "ida_linear": 104022,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/249-c-route.md",
+      "evidence": "docs/re/129-c-route-restoration.md",
+      "source": "tools/c_recovery/route.c",
+      "header": "tools/c_recovery/route.h",
+      "fixture": "tools/c_recovery/route_fixture.h",
+      "generated_source": "tools/c_recovery/route_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-route/verification.json",
+      "routine_sha256": "eeb38f822f1730530c04fa6217ea35fa7382c509cde031d71511ba8703ddb19e",
+      "oracle_cases_per_optimization": 4588,
+      "oracle_entry_count_per_optimization": 244,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Nine original route/collapse functions and the complete raw self-modifying loc_1491B search. Live code operands, packed graph, visited/ring queue and original caller effects are compared. Full army tick, battle outcomes, main loop and C machine-code matching remain incomplete.",
+      "source_sha256": "c890e439247d17615686c66f27bd27847bec44e77e9eb2c0de08dcd8838bc7fa",
+      "header_sha256": "866937a6421ed0db00e6ee9dd6c8748ddc2aabb96787adc6520229631e688421",
+      "fixture_sha256": "4076726f953dcb1f5ea251815acbc3d3e96781da871b0a4e1dd1e5f3db148d66",
+      "generated_source_sha256": "3ed992651d2f84e7bd5889f92ac138deb0f52eef0983f22c7a9f7bcdbe70b4a3"
+    },
+    "sub_196CF": {
+      "ida_linear": 104143,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/249-c-route.md",
+      "evidence": "docs/re/129-c-route-restoration.md",
+      "source": "tools/c_recovery/route.c",
+      "header": "tools/c_recovery/route.h",
+      "fixture": "tools/c_recovery/route_fixture.h",
+      "generated_source": "tools/c_recovery/route_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-route/verification.json",
+      "routine_sha256": "6e55ed2b63e5015af1accd9a701413b5153db7acae3c45ad468ed14f6037ea33",
+      "oracle_cases_per_optimization": 4588,
+      "oracle_entry_count_per_optimization": 1072,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Nine original route/collapse functions and the complete raw self-modifying loc_1491B search. Live code operands, packed graph, visited/ring queue and original caller effects are compared. Full army tick, battle outcomes, main loop and C machine-code matching remain incomplete.",
+      "source_sha256": "c890e439247d17615686c66f27bd27847bec44e77e9eb2c0de08dcd8838bc7fa",
+      "header_sha256": "866937a6421ed0db00e6ee9dd6c8748ddc2aabb96787adc6520229631e688421",
+      "fixture_sha256": "4076726f953dcb1f5ea251815acbc3d3e96781da871b0a4e1dd1e5f3db148d66",
+      "generated_source_sha256": "3ed992651d2f84e7bd5889f92ac138deb0f52eef0983f22c7a9f7bcdbe70b4a3"
     }
   },
   "code_blocks": {
@@ -9511,6 +9728,24 @@
       "oracle_entry_count_per_optimization": 420,
       "scope": "Five original city/army map and scoring/date routines plus the finite seven-instruction 11BE0..11BF6 prefix. Both sides independently initialize raw runtime state; native C computes its own map, score, date and saved stack. Chain cases separately audit prefix and existing normal/nonlocal child closures. Whole main loop and C machine-code matching remain outside this slice. Independent common raw input is shared before execution, and no original-prefix snapshot initializes native C. The raw fragment is not the complete named sub_11BE0; startup/main-loop continuation, TSR/hardware timing and original C machine-code matching remain outside this proof. Only the original initialization prefix [11BE0,11BF6), not the complete named function.",
       "c_machine_code_match": false
+    },
+    "0x1491B": {
+      "ida_linear": 84251,
+      "end_ida_linear": 84495,
+      "original_name_before_analysis": "loc_1491B",
+      "boundary_authority": "explicit raw decode through original RET and next named-function boundary; original IDA name preserved",
+      "file_sha256": "beaa3cc04dbc47e5de38fff064e9299e240c1f31af0b54cab795a0ccc1001133",
+      "source_entry": "raw_entry_1491B",
+      "status": "semantic-conformed",
+      "source": "tools/c_recovery/route_generated.inc",
+      "source_sha256": "3ed992651d2f84e7bd5889f92ac138deb0f52eef0983f22c7a9f7bcdbe70b4a3",
+      "evidence": "docs/re/129-c-route-restoration.md",
+      "spec": "docs/spec/249-c-route.md",
+      "receipt": "workplace/matching-decompilation/c-route/verification.json",
+      "routine_sha256": "beaa3cc04dbc47e5de38fff064e9299e240c1f31af0b54cab795a0ccc1001133",
+      "oracle_entry_count_per_optimization": 1656,
+      "scope": "Nine original route/collapse functions and the complete raw self-modifying loc_1491B search. Live code operands, packed graph, visited/ring queue and original caller effects are compared. Full army tick, battle outcomes, main loop and C machine-code matching remain incomplete.",
+      "c_machine_code_match": false
     }
   },
   "resolution_backlinks": [
@@ -9962,6 +10197,63 @@
       "evidence_markers": [
         "sub_1248A",
         "0x1248A"
+      ]
+    },
+    {
+      "ida_linear": 84251,
+      "function_ida_linear": null,
+      "entry_kind": "raw-code-entry",
+      "original_name_before_analysis": "loc_1491B",
+      "older_document": "docs/re/65-ai-march-decision-chain.md",
+      "required_markers": [
+        "尋路核心已由原生 C 驗證",
+        "129-c-route-restoration.md"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/129-c-route-restoration.md",
+      "evidence_markers": [
+        "loc_1491B",
+        "0x1491B"
+      ]
+    },
+    {
+      "ida_linear": 84251,
+      "function_ida_linear": null,
+      "entry_kind": "raw-code-entry",
+      "original_name_before_analysis": "loc_1491B",
+      "older_document": "docs/spec/192-route-cost-model.md",
+      "required_markers": [
+        "尋路核心已由原生 C 驗證",
+        "129-c-route-restoration.md"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/129-c-route-restoration.md",
+      "evidence_markers": [
+        "loc_1491B",
+        "0x1491B"
+      ]
+    },
+    {
+      "ida_linear": 84251,
+      "function_ida_linear": null,
+      "entry_kind": "raw-code-entry",
+      "original_name_before_analysis": "loc_1491B",
+      "older_document": "docs/spec/46-post-battle-retreat.md",
+      "required_markers": [
+        "尋路核心已由原生 C 驗證",
+        "129-c-route-restoration.md"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/129-c-route-restoration.md",
+      "evidence_markers": [
+        "loc_1491B",
+        "0x1491B"
       ]
     }
   ]
