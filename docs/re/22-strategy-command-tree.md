@@ -168,7 +168,7 @@ mov ax, 4 / mov cx, 4Eh / mov dx, 403h / call sub_193E9
 
 TALK #78 的四項對應 `funcs_16279`（`00016280`）：
 `sub_16A9B` 內政官任命、`sub_16B08` 內政官解任、
-`sub_16B71` 外交官任命、`sub_16BE3` 外交官解任。四支全部未觸及。
+`sub_16B71` 外交官任命、`sub_16BE3` 外交官解任。四支原始控制流見 [re/25](25-message-variants-and-personnel.md)，完整局部 C 驗證見 [re/121](121-c-personnel-restoration.md)。
 
 ### 3.3 軍團（#4）
 

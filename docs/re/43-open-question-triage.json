@@ -7565,19 +7565,6 @@
       "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
     },
     {
-      "file": "docs/spec/143-general-duty-field.md",
-      "item": "**解任把 `+0x1A` 歸零沒有實跑正對照**",
-      "status": "機器碼確定（`mov byte [bx+1Ah], 0`），但實跑那一輪官員的經費本來就是 0，等於沒比。要先撥款再解任才驗得到",
-      "section": "8. 未解",
-      "domain": "其他",
-      "verdict": "實測",
-      "occurrence": 0,
-      "id": "oq-d7f950997b011c810327",
-      "classification": "evidence-only",
-      "github_issue": null,
-      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
-    },
-    {
       "file": "docs/spec/144-advisor-leaves-general-table.md",
       "item": "自定軍師時原版那個越界寫",
       "status": "位置在武將表尾端後一個 byte，寫進去的是什麼欄位沒查；remake 不照抄",
@@ -7706,19 +7693,6 @@
       "classification": "merge-target",
       "github_issue": 12,
       "reason": "畫面對拍 gate、群組覆蓋或 32 組門檻，併入 Issue #12。"
-    },
-    {
-      "file": "docs/spec/148-shared-candidate-filter.md",
-      "item": "`sub_17663` 的 `xor cl, cl`",
-      "status": "比 `sub_175FA` 多一行，把清單游標歸零。remake 每次開清單本來就從 0 開始，行為相同；**但那代表原版的兩張清單共用同一個游標記憶體 `word_198AA`**，切換時的殘留還沒對過",
-      "section": "4. 未解",
-      "domain": "其他",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-96224f8a9c6b55c2202c",
-      "classification": "evidence-only",
-      "github_issue": null,
-      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
     },
     {
       "file": "docs/spec/149-march-target-map-picker.md",
@@ -13270,6 +13244,45 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "玩家編成局部C已驗證；正常長程、非法熱區與原C機器碼保持證據界線。"
+    },
+    {
+      "file": "docs/re/121-c-personnel-restoration.md",
+      "item": "自然玩家長程、非法分派與原作者 C 機器碼",
+      "status": "不由局部 C 語意代證",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-4884060f0dd5c015935f",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "人事局部C及非零經費已驗；自然撥款／玩家長程、非法分派與原C機器碼保留證據界線。"
+    },
+    {
+      "file": "docs/spec/143-general-duty-field.md",
+      "item": "自然撥款後解任的玩家長程",
+      "status": "受控非零經費正對照已完成，尚不由此代證自然撥款路徑",
+      "section": "8. 未解",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-4d0d82907c6f9b7f4595",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "人事局部C及非零經費已驗；自然撥款／玩家長程、非法分派與原C機器碼保留證據界線。"
+    },
+    {
+      "file": "docs/spec/241-c-personnel.md",
+      "item": "正常長程與原作者 C 機器碼",
+      "status": "本輪不代證",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-ec85c190e40a83e14bd3",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "人事局部C及非零經費已驗；自然撥款／玩家長程、非法分派與原C機器碼保留證據界線。"
     }
   ]
 }

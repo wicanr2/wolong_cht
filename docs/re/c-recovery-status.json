@@ -1867,6 +1867,14 @@
           "oracle_cases_per_optimization": 520,
           "entry_count": 48,
           "scope": "Original city list callbacks and six descriptors (header 0 rebuilds, 1..5 sort), live byte/word/JBE/JNB sort, exact exchange order, 512-byte SS list, special return-address removal, full row/font/number/scrollbar rendering, select/cancel/drag, and four-scenario relocation accept/refuse/current-capital retry through real mouse input and original world/sidebar/scene writers. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/sound/VGA; IF/TF=0; isolated stack; FLAGS from pinned dosgolem. Natural player menus/long paths, other list families and original C machine code remain pending"
+        },
+        {
+          "evidence": "docs/re/121-c-personnel-restoration.md",
+          "spec": "docs/spec/241-c-personnel.md",
+          "receipt": "docs/re/c-personnel-verification.json",
+          "oracle_cases_per_optimization": 2332,
+          "entry_count": 264,
+          "scope": "Seven original personnel functions: real four-option menu and live dispatch table, appointment/dismissal loops, target and eligible-general selection, canceled second level, occupied/empty retry and success/repeat. Four original scenarios, legal officer indices0..127 plus FF, budget0/1/255, separate original-independent field and CF/BX audit, full RAM/planes/registers/FLAGS/stack/IN/OUT/API. Original assignment preserves budget, dismissal clears it. Separate pinned DOS/font/mouse/VGA, IF/TF=0, pinned dosgolem flags; controlled checkpoint inputs, personnel list sort initially zero; shared sorting retains the separately verified catalog implementation. Natural long player paths, invalid tables and original C machine code remain pending."
         }
       ]
     },
@@ -2134,7 +2142,17 @@
       "scope": "17 numeric/editor/finance functions; real raw key table, actions, input loop, guards and finance writes; finite predefined key/cancel events and popup/device/graphics leaves; Go scalar only with current<=cap; IF/TF=0; undefined DIV FLAGS follow dosgolem model",
       "source_sha256": "b68f2a4e4149c7cf5fff8aba2da0a6a437202c0626519ed7c6b7ccd73df00e5b",
       "header_sha256": "c0abfde294d876d1b7c49119f134bff56b0cdc9e76ac4ae5a23abe2cd6cea0f0",
-      "fixture_sha256": "4780a1ff675bc17d77553035c0b2a2eeae790c607d1d613878a59d300267a2d5"
+      "fixture_sha256": "4780a1ff675bc17d77553035c0b2a2eeae790c607d1d613878a59d300267a2d5",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/121-c-personnel-restoration.md",
+          "spec": "docs/spec/241-c-personnel.md",
+          "receipt": "docs/re/c-personnel-verification.json",
+          "oracle_cases_per_optimization": 2332,
+          "entry_count": 52,
+          "scope": "Seven original personnel functions: real four-option menu and live dispatch table, appointment/dismissal loops, target and eligible-general selection, canceled second level, occupied/empty retry and success/repeat. Four original scenarios, legal officer indices0..127 plus FF, budget0/1/255, separate original-independent field and CF/BX audit, full RAM/planes/registers/FLAGS/stack/IN/OUT/API. Original assignment preserves budget, dismissal clears it. Separate pinned DOS/font/mouse/VGA, IF/TF=0, pinned dosgolem flags; controlled checkpoint inputs, personnel list sort initially zero; shared sorting retains the separately verified catalog implementation. Natural long player paths, invalid tables and original C machine code remain pending."
+        }
+      ]
     },
     "sub_167CD": {
       "ida_linear": 92109,
@@ -5273,7 +5291,17 @@
       "source_sha256": "3ec817f0e7a1cbb3f29c46d101d6e0135c817fedcae357575df1b6af20395c1b",
       "header_sha256": "322d10432605bdbce73c87730aa97fbe1ff0bcacfe34461f530a58a37b9b4c43",
       "fixture_sha256": "7a508e8b4117963ffda9f6356ee1d357c1898c99d5a7517c8057a7a7777dd122",
-      "generated_source_sha256": "44db7e538a44f6ed9d0183e66feaf9a6e994ae7848c662a6861b0b20d2af8021"
+      "generated_source_sha256": "44db7e538a44f6ed9d0183e66feaf9a6e994ae7848c662a6861b0b20d2af8021",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/121-c-personnel-restoration.md",
+          "spec": "docs/spec/241-c-personnel.md",
+          "receipt": "docs/re/c-personnel-verification.json",
+          "oracle_cases_per_optimization": 2332,
+          "entry_count": 268,
+          "scope": "Seven original personnel functions: real four-option menu and live dispatch table, appointment/dismissal loops, target and eligible-general selection, canceled second level, occupied/empty retry and success/repeat. Four original scenarios, legal officer indices0..127 plus FF, budget0/1/255, separate original-independent field and CF/BX audit, full RAM/planes/registers/FLAGS/stack/IN/OUT/API. Original assignment preserves budget, dismissal clears it. Separate pinned DOS/font/mouse/VGA, IF/TF=0, pinned dosgolem flags; controlled checkpoint inputs, personnel list sort initially zero; shared sorting retains the separately verified catalog implementation. Natural long player paths, invalid tables and original C machine code remain pending."
+        }
+      ]
     },
     "sub_1748F": {
       "ida_linear": 95375,
@@ -5743,6 +5771,19 @@
           "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
           "level": "proven",
           "evidence": "docs/re/119-c-list-families-restoration.md"
+        },
+        {
+          "ida_linear": 95882,
+          "function_ida_linear": 95843,
+          "older_document": "docs/spec/148-shared-candidate-filter.md",
+          "required_markers": [
+            "覆寫 XOR CL,CL",
+            "121-c-personnel-restoration.md"
+          ],
+          "platform_module": "dosv/KI.EXE",
+          "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+          "level": "proven",
+          "evidence": "docs/re/121-c-personnel-restoration.md"
         }
       ],
       "additional_verifications": [
@@ -5753,6 +5794,14 @@
           "oracle_cases_per_optimization": 200,
           "entry_count": 24,
           "scope": "Seven original player formation routines and complete transitive C render/input/list/TALK closure. Four scenarios, six-slot cycling, original quotient/remainder/cap distribution, initialize-only types, cancellation stale total, empty-leader refusal, confirmation and outer select/form/reselect/cancel. Controlled input checkpoints and legal unassigned generals; separate pinned DOS/font/mouse/VGA, complete RAM/planes/registers/FLAGS/stack/IN/OUT/API. IF/TF=0, pinned dosgolem flags; original TSR/wall-clock, natural long player paths, invalid hotspots and original C machine code remain pending."
+        },
+        {
+          "evidence": "docs/re/121-c-personnel-restoration.md",
+          "spec": "docs/spec/241-c-personnel.md",
+          "receipt": "docs/re/c-personnel-verification.json",
+          "oracle_cases_per_optimization": 2332,
+          "entry_count": 88,
+          "scope": "Seven original personnel functions: real four-option menu and live dispatch table, appointment/dismissal loops, target and eligible-general selection, canceled second level, occupied/empty retry and success/repeat. Four original scenarios, legal officer indices0..127 plus FF, budget0/1/255, separate original-independent field and CF/BX audit, full RAM/planes/registers/FLAGS/stack/IN/OUT/API. Original assignment preserves budget, dismissal clears it. Separate pinned DOS/font/mouse/VGA, IF/TF=0, pinned dosgolem flags; controlled checkpoint inputs, personnel list sort initially zero; shared sorting retains the separately verified catalog implementation. Natural long player paths, invalid tables and original C machine code remain pending."
         }
       ]
     },
@@ -5817,7 +5866,17 @@
       "source_sha256": "79cbe68a4eb5e646fccd135e53e2d60d080d363332ec3c4c198de781ab919929",
       "header_sha256": "67bb952d79ebfc82e507409f7c596139e0a684f97e5ab9fae9054ccd437d024b",
       "fixture_sha256": "a68d40649438adc7e2a8eab0bdfc85260814bb9a208975e36b22132ae96e2f85",
-      "generated_source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95"
+      "generated_source_sha256": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/121-c-personnel-restoration.md",
+          "spec": "docs/spec/241-c-personnel.md",
+          "receipt": "docs/re/c-personnel-verification.json",
+          "oracle_cases_per_optimization": 2332,
+          "entry_count": 268,
+          "scope": "Seven original personnel functions: real four-option menu and live dispatch table, appointment/dismissal loops, target and eligible-general selection, canceled second level, occupied/empty retry and success/repeat. Four original scenarios, legal officer indices0..127 plus FF, budget0/1/255, separate original-independent field and CF/BX audit, full RAM/planes/registers/FLAGS/stack/IN/OUT/API. Original assignment preserves budget, dismissal clears it. Separate pinned DOS/font/mouse/VGA, IF/TF=0, pinned dosgolem flags; controlled checkpoint inputs, personnel list sort initially zero; shared sorting retains the separately verified catalog implementation. Natural long player paths, invalid tables and original C machine code remain pending."
+        }
+      ]
     },
     "sub_1799C": {
       "ida_linear": 96668,
@@ -6083,6 +6142,183 @@
       "header_sha256": "23404d8a877d6db1376daf4143b0d2c4d31fa881cd70d5f968ef7b88a75ad6bb",
       "fixture_sha256": "4d784e3ebe91bbab51a5b7c11395e8ae74939fa30d966df4006c4fe56cddee3c",
       "generated_source_sha256": "185c11477f1e27af2cf66e86358f8fc758c1832de3a9e14d362b3d8e8c4c8336"
+    },
+    "sub_16265": {
+      "ida_linear": 90725,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/241-c-personnel.md",
+      "evidence": "docs/re/121-c-personnel-restoration.md",
+      "source": "tools/c_recovery/personnel.c",
+      "header": "tools/c_recovery/personnel.h",
+      "fixture": "tools/c_recovery/personnel_fixture.h",
+      "generated_source": "tools/c_recovery/personnel_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-personnel/verification.json",
+      "routine_sha256": "ae434bba287b54282e08bc77b60ae1151feae10aa68beb300d530ac17f0c842b",
+      "oracle_cases_per_optimization": 2332,
+      "oracle_entry_count_per_optimization": 52,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original personnel functions: real four-option menu and live dispatch table, appointment/dismissal loops, target and eligible-general selection, canceled second level, occupied/empty retry and success/repeat. Four original scenarios, legal officer indices0..127 plus FF, budget0/1/255, separate original-independent field and CF/BX audit, full RAM/planes/registers/FLAGS/stack/IN/OUT/API. Original assignment preserves budget, dismissal clears it. Separate pinned DOS/font/mouse/VGA, IF/TF=0, pinned dosgolem flags; controlled checkpoint inputs, personnel list sort initially zero; shared sorting retains the separately verified catalog implementation. Natural long player paths, invalid tables and original C machine code remain pending.",
+      "source_sha256": "61fc2a1e26618e2c0b4a6a5d2129bfe06004df487b97ac63e778efb9a31cce5b",
+      "header_sha256": "6f06ab4163fbbf3013378bce49cb86338513a9522bc331446d0827bfc085a838",
+      "fixture_sha256": "c4cd974ad3d4a69946764533ed48181344c2b67de82d625752707daacafb4b44",
+      "generated_source_sha256": "bcc149ce2885aeabe62fe74cd7902e77a1a3e07b9f181bf3ba54bfd7fc2b4e29"
+    },
+    "sub_16A9B": {
+      "ida_linear": 92827,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/241-c-personnel.md",
+      "evidence": "docs/re/121-c-personnel-restoration.md",
+      "source": "tools/c_recovery/personnel.c",
+      "header": "tools/c_recovery/personnel.h",
+      "fixture": "tools/c_recovery/personnel_fixture.h",
+      "generated_source": "tools/c_recovery/personnel_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-personnel/verification.json",
+      "routine_sha256": "a1e79342c36f288f69217f9f57a2ee7308924dc807ee0cfbf6bc4c987e140275",
+      "oracle_cases_per_optimization": 2332,
+      "oracle_entry_count_per_optimization": 72,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original personnel functions: real four-option menu and live dispatch table, appointment/dismissal loops, target and eligible-general selection, canceled second level, occupied/empty retry and success/repeat. Four original scenarios, legal officer indices0..127 plus FF, budget0/1/255, separate original-independent field and CF/BX audit, full RAM/planes/registers/FLAGS/stack/IN/OUT/API. Original assignment preserves budget, dismissal clears it. Separate pinned DOS/font/mouse/VGA, IF/TF=0, pinned dosgolem flags; controlled checkpoint inputs, personnel list sort initially zero; shared sorting retains the separately verified catalog implementation. Natural long player paths, invalid tables and original C machine code remain pending.",
+      "source_sha256": "61fc2a1e26618e2c0b4a6a5d2129bfe06004df487b97ac63e778efb9a31cce5b",
+      "header_sha256": "6f06ab4163fbbf3013378bce49cb86338513a9522bc331446d0827bfc085a838",
+      "fixture_sha256": "c4cd974ad3d4a69946764533ed48181344c2b67de82d625752707daacafb4b44",
+      "generated_source_sha256": "bcc149ce2885aeabe62fe74cd7902e77a1a3e07b9f181bf3ba54bfd7fc2b4e29"
+    },
+    "sub_16B08": {
+      "ida_linear": 92936,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/241-c-personnel.md",
+      "evidence": "docs/re/121-c-personnel-restoration.md",
+      "source": "tools/c_recovery/personnel.c",
+      "header": "tools/c_recovery/personnel.h",
+      "fixture": "tools/c_recovery/personnel_fixture.h",
+      "generated_source": "tools/c_recovery/personnel_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-personnel/verification.json",
+      "routine_sha256": "4fa73ddc90e7cae05b815d700547dc2bc3ae3f8a38b318695571df606aa4d024",
+      "oracle_cases_per_optimization": 2332,
+      "oracle_entry_count_per_optimization": 60,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original personnel functions: real four-option menu and live dispatch table, appointment/dismissal loops, target and eligible-general selection, canceled second level, occupied/empty retry and success/repeat. Four original scenarios, legal officer indices0..127 plus FF, budget0/1/255, separate original-independent field and CF/BX audit, full RAM/planes/registers/FLAGS/stack/IN/OUT/API. Original assignment preserves budget, dismissal clears it. Separate pinned DOS/font/mouse/VGA, IF/TF=0, pinned dosgolem flags; controlled checkpoint inputs, personnel list sort initially zero; shared sorting retains the separately verified catalog implementation. Natural long player paths, invalid tables and original C machine code remain pending.",
+      "source_sha256": "61fc2a1e26618e2c0b4a6a5d2129bfe06004df487b97ac63e778efb9a31cce5b",
+      "header_sha256": "6f06ab4163fbbf3013378bce49cb86338513a9522bc331446d0827bfc085a838",
+      "fixture_sha256": "c4cd974ad3d4a69946764533ed48181344c2b67de82d625752707daacafb4b44",
+      "generated_source_sha256": "bcc149ce2885aeabe62fe74cd7902e77a1a3e07b9f181bf3ba54bfd7fc2b4e29"
+    },
+    "sub_16B4F": {
+      "ida_linear": 93007,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/241-c-personnel.md",
+      "evidence": "docs/re/121-c-personnel-restoration.md",
+      "source": "tools/c_recovery/personnel.c",
+      "header": "tools/c_recovery/personnel.h",
+      "fixture": "tools/c_recovery/personnel_fixture.h",
+      "generated_source": "tools/c_recovery/personnel_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-personnel/verification.json",
+      "routine_sha256": "fce713d036a5d4dd28caaa1068258c64b755a03cb9ccb2e344eeb75096aec877",
+      "oracle_cases_per_optimization": 2332,
+      "oracle_entry_count_per_optimization": 1088,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original personnel functions: real four-option menu and live dispatch table, appointment/dismissal loops, target and eligible-general selection, canceled second level, occupied/empty retry and success/repeat. Four original scenarios, legal officer indices0..127 plus FF, budget0/1/255, separate original-independent field and CF/BX audit, full RAM/planes/registers/FLAGS/stack/IN/OUT/API. Original assignment preserves budget, dismissal clears it. Separate pinned DOS/font/mouse/VGA, IF/TF=0, pinned dosgolem flags; controlled checkpoint inputs, personnel list sort initially zero; shared sorting retains the separately verified catalog implementation. Natural long player paths, invalid tables and original C machine code remain pending.",
+      "source_sha256": "61fc2a1e26618e2c0b4a6a5d2129bfe06004df487b97ac63e778efb9a31cce5b",
+      "header_sha256": "6f06ab4163fbbf3013378bce49cb86338513a9522bc331446d0827bfc085a838",
+      "fixture_sha256": "c4cd974ad3d4a69946764533ed48181344c2b67de82d625752707daacafb4b44",
+      "generated_source_sha256": "bcc149ce2885aeabe62fe74cd7902e77a1a3e07b9f181bf3ba54bfd7fc2b4e29",
+      "resolution_backlinks": [
+        {
+          "ida_linear": 93031,
+          "function_ida_linear": 93007,
+          "older_document": "docs/spec/143-general-duty-field.md",
+          "required_markers": [
+            "非零經費的原版正對照",
+            "121-c-personnel-restoration.md"
+          ],
+          "platform_module": "dosv/KI.EXE",
+          "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+          "level": "proven",
+          "evidence": "docs/re/121-c-personnel-restoration.md"
+        }
+      ]
+    },
+    "sub_16B71": {
+      "ida_linear": 93041,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/241-c-personnel.md",
+      "evidence": "docs/re/121-c-personnel-restoration.md",
+      "source": "tools/c_recovery/personnel.c",
+      "header": "tools/c_recovery/personnel.h",
+      "fixture": "tools/c_recovery/personnel_fixture.h",
+      "generated_source": "tools/c_recovery/personnel_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-personnel/verification.json",
+      "routine_sha256": "29234ee7d4d3de98366dd9cebbcd46bf8ca233f5ce1af82fc2748855602fa847",
+      "oracle_cases_per_optimization": 2332,
+      "oracle_entry_count_per_optimization": 72,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original personnel functions: real four-option menu and live dispatch table, appointment/dismissal loops, target and eligible-general selection, canceled second level, occupied/empty retry and success/repeat. Four original scenarios, legal officer indices0..127 plus FF, budget0/1/255, separate original-independent field and CF/BX audit, full RAM/planes/registers/FLAGS/stack/IN/OUT/API. Original assignment preserves budget, dismissal clears it. Separate pinned DOS/font/mouse/VGA, IF/TF=0, pinned dosgolem flags; controlled checkpoint inputs, personnel list sort initially zero; shared sorting retains the separately verified catalog implementation. Natural long player paths, invalid tables and original C machine code remain pending.",
+      "source_sha256": "61fc2a1e26618e2c0b4a6a5d2129bfe06004df487b97ac63e778efb9a31cce5b",
+      "header_sha256": "6f06ab4163fbbf3013378bce49cb86338513a9522bc331446d0827bfc085a838",
+      "fixture_sha256": "c4cd974ad3d4a69946764533ed48181344c2b67de82d625752707daacafb4b44",
+      "generated_source_sha256": "bcc149ce2885aeabe62fe74cd7902e77a1a3e07b9f181bf3ba54bfd7fc2b4e29"
+    },
+    "sub_16BE3": {
+      "ida_linear": 93155,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/241-c-personnel.md",
+      "evidence": "docs/re/121-c-personnel-restoration.md",
+      "source": "tools/c_recovery/personnel.c",
+      "header": "tools/c_recovery/personnel.h",
+      "fixture": "tools/c_recovery/personnel_fixture.h",
+      "generated_source": "tools/c_recovery/personnel_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-personnel/verification.json",
+      "routine_sha256": "a55e572f5ca154bb8a9cb91d960cd33828f294f9f191b7c0b5f6d0e6b0a6ae07",
+      "oracle_cases_per_optimization": 2332,
+      "oracle_entry_count_per_optimization": 60,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original personnel functions: real four-option menu and live dispatch table, appointment/dismissal loops, target and eligible-general selection, canceled second level, occupied/empty retry and success/repeat. Four original scenarios, legal officer indices0..127 plus FF, budget0/1/255, separate original-independent field and CF/BX audit, full RAM/planes/registers/FLAGS/stack/IN/OUT/API. Original assignment preserves budget, dismissal clears it. Separate pinned DOS/font/mouse/VGA, IF/TF=0, pinned dosgolem flags; controlled checkpoint inputs, personnel list sort initially zero; shared sorting retains the separately verified catalog implementation. Natural long player paths, invalid tables and original C machine code remain pending.",
+      "source_sha256": "61fc2a1e26618e2c0b4a6a5d2129bfe06004df487b97ac63e778efb9a31cce5b",
+      "header_sha256": "6f06ab4163fbbf3013378bce49cb86338513a9522bc331446d0827bfc085a838",
+      "fixture_sha256": "c4cd974ad3d4a69946764533ed48181344c2b67de82d625752707daacafb4b44",
+      "generated_source_sha256": "bcc149ce2885aeabe62fe74cd7902e77a1a3e07b9f181bf3ba54bfd7fc2b4e29"
+    },
+    "sub_16C2A": {
+      "ida_linear": 93226,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/241-c-personnel.md",
+      "evidence": "docs/re/121-c-personnel-restoration.md",
+      "source": "tools/c_recovery/personnel.c",
+      "header": "tools/c_recovery/personnel.h",
+      "fixture": "tools/c_recovery/personnel_fixture.h",
+      "generated_source": "tools/c_recovery/personnel_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-personnel/verification.json",
+      "routine_sha256": "a6c851ae6b93bcafb846bd052acecf0d4525dcc72a50a3f600f14d87069430be",
+      "oracle_cases_per_optimization": 2332,
+      "oracle_entry_count_per_optimization": 1088,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original personnel functions: real four-option menu and live dispatch table, appointment/dismissal loops, target and eligible-general selection, canceled second level, occupied/empty retry and success/repeat. Four original scenarios, legal officer indices0..127 plus FF, budget0/1/255, separate original-independent field and CF/BX audit, full RAM/planes/registers/FLAGS/stack/IN/OUT/API. Original assignment preserves budget, dismissal clears it. Separate pinned DOS/font/mouse/VGA, IF/TF=0, pinned dosgolem flags; controlled checkpoint inputs, personnel list sort initially zero; shared sorting retains the separately verified catalog implementation. Natural long player paths, invalid tables and original C machine code remain pending.",
+      "source_sha256": "61fc2a1e26618e2c0b4a6a5d2129bfe06004df487b97ac63e778efb9a31cce5b",
+      "header_sha256": "6f06ab4163fbbf3013378bce49cb86338513a9522bc331446d0827bfc085a838",
+      "fixture_sha256": "c4cd974ad3d4a69946764533ed48181344c2b67de82d625752707daacafb4b44",
+      "generated_source_sha256": "bcc149ce2885aeabe62fe74cd7902e77a1a3e07b9f181bf3ba54bfd7fc2b4e29",
+      "resolution_backlinks": [
+        {
+          "ida_linear": 93250,
+          "function_ida_linear": 93226,
+          "older_document": "docs/spec/143-general-duty-field.md",
+          "required_markers": [
+            "非零經費的原版正對照",
+            "121-c-personnel-restoration.md"
+          ],
+          "platform_module": "dosv/KI.EXE",
+          "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+          "level": "proven",
+          "evidence": "docs/re/121-c-personnel-restoration.md"
+        }
+      ]
     }
   },
   "code_blocks": {

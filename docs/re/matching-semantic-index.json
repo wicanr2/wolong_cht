@@ -2351,6 +2351,55 @@
       "sources": [
         "docs/re/120-c-player-formation-restoration.md"
       ]
+    },
+    "0x16265": {
+      "meaning": "原人事四項彈出選單與live CS跳表分派",
+      "level": "proven",
+      "sources": [
+        "docs/re/121-c-personnel-restoration.md"
+      ]
+    },
+    "0x16A9B": {
+      "meaning": "內政官任命，據點與無職非君主武將兩層清單；保留經費",
+      "level": "proven",
+      "sources": [
+        "docs/re/121-c-personnel-restoration.md"
+      ]
+    },
+    "0x16B08": {
+      "meaning": "內政官解任，空缺提示或清職務經費，直到目標清單取消",
+      "level": "proven",
+      "sources": [
+        "docs/re/121-c-personnel-restoration.md"
+      ]
+    },
+    "0x16B4F": {
+      "meaning": "據點+19先XCHG為FF，非空官員清職務經費並回傳BX/CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/121-c-personnel-restoration.md"
+      ]
+    },
+    "0x16B71": {
+      "meaning": "外交官任命，他勢力與eligible武將兩層清單；保留經費",
+      "level": "proven",
+      "sources": [
+        "docs/re/121-c-personnel-restoration.md"
+      ]
+    },
+    "0x16BE3": {
+      "meaning": "外交官解任，空缺提示或清職務經費，直到目標清單取消",
+      "level": "proven",
+      "sources": [
+        "docs/re/121-c-personnel-restoration.md"
+      ]
+    },
+    "0x16C2A": {
+      "meaning": "勢力+2A先XCHG為FF，非空官員清職務經費並回傳BX/CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/121-c-personnel-restoration.md"
+      ]
     }
   },
   "operands": {
@@ -2505,6 +2554,54 @@
       "level": "proven",
       "sources": [
         "docs/re/120-c-player-formation-restoration.md"
+      ]
+    },
+    "0x16AD8:0": {
+      "original": "byte ptr [bx+17h]",
+      "meaning": "所選武將+17職務寫2，內政官",
+      "level": "proven",
+      "sources": [
+        "docs/re/121-c-personnel-restoration.md"
+      ]
+    },
+    "0x16AE7:0": {
+      "original": "[si+19h]",
+      "meaning": "所選據點+19官員索引",
+      "level": "proven",
+      "sources": [
+        "docs/re/121-c-personnel-restoration.md"
+      ]
+    },
+    "0x16BB3:0": {
+      "original": "byte ptr [bx+17h]",
+      "meaning": "所選武將+17職務寫3，外交官",
+      "level": "proven",
+      "sources": [
+        "docs/re/121-c-personnel-restoration.md"
+      ]
+    },
+    "0x16BC2:0": {
+      "original": "[si+2Ah]",
+      "meaning": "所選勢力+2A外交官索引",
+      "level": "proven",
+      "sources": [
+        "docs/re/121-c-personnel-restoration.md"
+      ]
+    },
+    "0x16B67:0": {
+      "original": "byte ptr [bx+1Ah]",
+      "meaning": "解任內政官清武將+1A經費",
+      "level": "proven",
+      "sources": [
+        "docs/re/121-c-personnel-restoration.md"
+      ]
+    },
+    "0x16C42:0": {
+      "original": "byte ptr [bx+1Ah]",
+      "meaning": "解任外交官清武將+1A經費",
+      "level": "proven",
+      "sources": [
+        "docs/re/121-c-personnel-restoration.md"
       ]
     }
   }

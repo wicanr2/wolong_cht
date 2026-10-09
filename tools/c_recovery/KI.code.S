@@ -38306,44 +38306,44 @@ ret
 .org 0x6465
 sub_16265:
 # IDA 0x16265; file 0x6465; locator=proven; mov     ax, 4
-# ⚠ 函式 sub_16265; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16265; [proven] 原人事四項彈出選單與live CS跳表分派; 出處: docs/re/121-c-personnel-restoration.md
 mov ax, 0x4
 .org 0x6468
 # IDA 0x16268; file 0x6468; locator=proven; mov     cx, 4Eh
-# ⚠ 函式 sub_16265; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16265; [proven] 原人事四項彈出選單與live CS跳表分派; 出處: docs/re/121-c-personnel-restoration.md
 mov cx, 0x4e
 .org 0x646b
 # IDA 0x1626b; file 0x646b; locator=proven; mov     dx, 403h
-# ⚠ 函式 sub_16265; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16265; [proven] 原人事四項彈出選單與live CS跳表分派; 出處: docs/re/121-c-personnel-restoration.md
 mov dx, 0x403
 .org 0x646e
 # IDA 0x1626e; file 0x646e; locator=proven; call    sub_193E9
-# ⚠ 函式 sub_16265; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16265; [proven] 原人事四項彈出選單與live CS跳表分派; 出處: docs/re/121-c-personnel-restoration.md
 call .+12667
 .org 0x6471
 # IDA 0x16271; file 0x6471; locator=proven; jb      short locret_1627E
-# ⚠ 函式 sub_16265; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16265; [proven] 原人事四項彈出選單與live CS跳表分派; 出處: docs/re/121-c-personnel-restoration.md
 jb .+13
 .org 0x6473
 # IDA 0x16273; file 0x6473; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_16265; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16265; [proven] 原人事四項彈出選單與live CS跳表分派; 出處: docs/re/121-c-personnel-restoration.md
 {load} xor ah, ah
 .org 0x6475
 # IDA 0x16275; file 0x6475; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_16265; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16265; [proven] 原人事四項彈出選單與live CS跳表分派; 出處: docs/re/121-c-personnel-restoration.md
 shl ax, 0x1
 .org 0x6477
 # IDA 0x16277; file 0x6477; locator=proven; mov     bx, ax
-# ⚠ 函式 sub_16265; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16265; [proven] 原人事四項彈出選單與live CS跳表分派; 出處: docs/re/121-c-personnel-restoration.md
 {load} mov bx, ax
 .org 0x6479
 # IDA 0x16279; file 0x6479; locator=proven; call    cs:funcs_16279[bx]
-# ⚠ 函式 sub_16265; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16265; [proven] 原人事四項彈出選單與live CS跳表分派; 出處: docs/re/121-c-personnel-restoration.md
 cs; call word ptr [bx+0x6280]
 .org 0x647e
 locret_1627E:
 # IDA 0x1627e; file 0x647e; locator=proven; retn
-# ⚠ 函式 sub_16265; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16265; [proven] 原人事四項彈出選單與live CS跳表分派; 出處: docs/re/121-c-personnel-restoration.md
 ret
 .org 0x647f
 # IDA 0x1627f; file 0x647f; locator=proven; retn
@@ -41849,722 +41849,728 @@ ret
 .org 0x6c9b
 sub_16A9B:
 # IDA 0x16a9b; file 0x6c9b; locator=proven; push    ds
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 push ds
 .org 0x6c9c
 # IDA 0x16a9c; file 0x6c9c; locator=proven; call    sub_12078
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 call .-18980
 .org 0x6c9f
 # IDA 0x16a9f; file 0x6c9f; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x6ca4
 loc_16AA4:
 # IDA 0x16aa4; file 0x6ca4; locator=proven; mov     cx, 0Bh
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 mov cx, 0xb
 .org 0x6ca7
 # IDA 0x16aa7; file 0x6ca7; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 call .+7596
 .org 0x6caa
 # IDA 0x16aaa; file 0x6caa; locator=proven; call    sub_17400
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 call .+2390
 .org 0x6cad
 # IDA 0x16aad; file 0x6cad; locator=proven; jb      short loc_16AFA
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 jb .+77
 .org 0x6caf
 # IDA 0x16aaf; file 0x6caf; locator=proven; cmp     byte ptr [bx+19h], 0FFh
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 cmp byte ptr [bx+0x19], 0xff
 .org 0x6cb3
 # IDA 0x16ab3; file 0x6cb3; locator=proven; jz      short loc_16ACB
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 jz .+24
 .org 0x6cb5
 # IDA 0x16ab5; file 0x6cb5; locator=proven; mov     al, [bx+19h]
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 mov al, byte ptr [bx+0x19]
 .org 0x6cb8
 # IDA 0x16ab8; file 0x6cb8; locator=proven; mov     ah, 0FFh
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 mov ah, 0xff
 .org 0x6cba
 # IDA 0x16aba; file 0x6cba; locator=proven; push    ax
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 push ax
 .org 0x6cbb
 # IDA 0x16abb; file 0x6cbb; locator=proven; push    bx
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 push bx
 .org 0x6cbc
 # IDA 0x16abc; file 0x6cbc; locator=proven; mov     di, sp
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 {load} mov di, sp
 .org 0x6cbe
 # IDA 0x16abe; file 0x6cbe; locator=proven; mov     al, 93h
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 mov al, 0x93
 .org 0x6cc0
 # IDA 0x16ac0; file 0x6cc0; locator=proven; mov     cx, 34h
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 mov cx, 0x34
 .org 0x6cc3
 # IDA 0x16ac3; file 0x6cc3; locator=proven; call    sub_18810
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 call .+7501
 .org 0x6cc6
 # IDA 0x16ac6; file 0x6cc6; locator=proven; add     sp, 4
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 add sp, 0x4
 .org 0x6cc9
 # IDA 0x16ac9; file 0x6cc9; locator=proven; jmp     short loc_16AA4
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 jmp .-37
 .org 0x6ccb
 loc_16ACB:
 # IDA 0x16acb; file 0x6ccb; locator=proven; mov     si, bx
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 {load} mov si, bx
 .org 0x6ccd
 # IDA 0x16acd; file 0x6ccd; locator=proven; mov     cx, 9
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 mov cx, 0x9
 .org 0x6cd0
 # IDA 0x16ad0; file 0x6cd0; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 call .+7555
 .org 0x6cd3
 # IDA 0x16ad3; file 0x6cd3; locator=proven; call    sub_17663
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 call .+2960
 .org 0x6cd6
 # IDA 0x16ad6; file 0x6cd6; locator=proven; jb      short loc_16AA4
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 jb .-50
 .org 0x6cd8
 # IDA 0x16ad8; file 0x6cd8; locator=proven; mov     byte ptr [bx+17h], 2
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
+# operand 0 byte ptr [bx+17h]; [proven] 所選武將+17職務寫2，內政官; 出處: docs/re/121-c-personnel-restoration.md
 mov byte ptr [bx+0x17], 0x2
 .org 0x6cdc
 # IDA 0x16adc; file 0x6cdc; locator=proven; mov     ax, bx
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 {load} mov ax, bx
 .org 0x6cde
 # IDA 0x16ade; file 0x6cde; locator=proven; sub     ax, 4240h
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 sub ax, 0x4240
 .org 0x6ce1
 # IDA 0x16ae1; file 0x6ce1; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 shl ax, 0x1
 .org 0x6ce3
 # IDA 0x16ae3; file 0x6ce3; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 shl ax, 0x1
 .org 0x6ce5
 # IDA 0x16ae5; file 0x6ce5; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 shl ax, 0x1
 .org 0x6ce7
 # IDA 0x16ae7; file 0x6ce7; locator=proven; mov     [si+19h], ah
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
+# operand 0 [si+19h]; [proven] 所選據點+19官員索引; 出處: docs/re/121-c-personnel-restoration.md
 mov byte ptr [si+0x19], ah
 .org 0x6cea
 # IDA 0x16aea; file 0x6cea; locator=proven; mov     cx, 19Ch
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 mov cx, 0x19c
 .org 0x6ced
 # IDA 0x16aed; file 0x6ced; locator=proven; mov     di, sp
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 {load} mov di, sp
 .org 0x6cef
 # IDA 0x16aef; file 0x6cef; locator=proven; mov     ah, [bx+1Eh]
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 mov ah, byte ptr [bx+0x1e]
 .org 0x6cf2
 # IDA 0x16af2; file 0x6cf2; locator=proven; mov     al, [bx+1]
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 mov al, byte ptr [bx+0x1]
 .org 0x6cf5
 # IDA 0x16af5; file 0x6cf5; locator=proven; call    sub_18810
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 call .+7451
 .org 0x6cf8
 # IDA 0x16af8; file 0x6cf8; locator=proven; jmp     short loc_16AA4
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 jmp .-84
 .org 0x6cfa
 loc_16AFA:
 # IDA 0x16afa; file 0x6cfa; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 mov cx, 0xffff
 .org 0x6cfd
 # IDA 0x16afd; file 0x6cfd; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 call .+7510
 .org 0x6d00
 # IDA 0x16b00; file 0x6d00; locator=proven; call    sub_11D46
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 call .-19898
 .org 0x6d03
 # IDA 0x16b03; file 0x6d03; locator=proven; call    sub_120D6
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 call .-18989
 .org 0x6d06
 # IDA 0x16b06; file 0x6d06; locator=proven; pop     ds
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 pop ds
 .org 0x6d07
 # IDA 0x16b07; file 0x6d07; locator=proven; retn
-# ⚠ 函式 sub_16A9B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16A9B; [proven] 內政官任命，據點與無職非君主武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 ret
 .org 0x6d08
 sub_16B08:
 # IDA 0x16b08; file 0x6d08; locator=proven; push    ds
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 push ds
 .org 0x6d09
 # IDA 0x16b09; file 0x6d09; locator=proven; call    sub_12078
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 call .-19089
 .org 0x6d0c
 # IDA 0x16b0c; file 0x6d0c; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x6d11
 loc_16B11:
 # IDA 0x16b11; file 0x6d11; locator=proven; mov     cx, 0Dh
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 mov cx, 0xd
 .org 0x6d14
 # IDA 0x16b14; file 0x6d14; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 call .+7487
 .org 0x6d17
 # IDA 0x16b17; file 0x6d17; locator=proven; call    sub_17400
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 call .+2281
 .org 0x6d1a
 # IDA 0x16b1a; file 0x6d1a; locator=proven; jb      short loc_16B41
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 jb .+39
 .org 0x6d1c
 # IDA 0x16b1c; file 0x6d1c; locator=proven; mov     si, bx
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 {load} mov si, bx
 .org 0x6d1e
 # IDA 0x16b1e; file 0x6d1e; locator=proven; call    sub_16B4F
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 call .+49
 .org 0x6d21
 # IDA 0x16b21; file 0x6d21; locator=proven; jnb     short loc_16B31
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 jnb .+16
 .org 0x6d23
 # IDA 0x16b23; file 0x6d23; locator=proven; push    si
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 push si
 .org 0x6d24
 # IDA 0x16b24; file 0x6d24; locator=proven; mov     di, sp
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 {load} mov di, sp
 .org 0x6d26
 # IDA 0x16b26; file 0x6d26; locator=proven; mov     al, 93h
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 mov al, 0x93
 .org 0x6d28
 # IDA 0x16b28; file 0x6d28; locator=proven; mov     cx, 36h
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 mov cx, 0x36
 .org 0x6d2b
 # IDA 0x16b2b; file 0x6d2b; locator=proven; call    sub_18810
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 call .+7397
 .org 0x6d2e
 # IDA 0x16b2e; file 0x6d2e; locator=proven; pop     bx
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 pop bx
 .org 0x6d2f
 # IDA 0x16b2f; file 0x6d2f; locator=proven; jmp     short loc_16B11
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 jmp .-30
 .org 0x6d31
 loc_16B31:
 # IDA 0x16b31; file 0x6d31; locator=proven; mov     cx, 1A2h
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 mov cx, 0x1a2
 .org 0x6d34
 # IDA 0x16b34; file 0x6d34; locator=proven; mov     di, sp
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 {load} mov di, sp
 .org 0x6d36
 # IDA 0x16b36; file 0x6d36; locator=proven; mov     ah, [bx+1Eh]
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 mov ah, byte ptr [bx+0x1e]
 .org 0x6d39
 # IDA 0x16b39; file 0x6d39; locator=proven; mov     al, [bx+1]
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 mov al, byte ptr [bx+0x1]
 .org 0x6d3c
 # IDA 0x16b3c; file 0x6d3c; locator=proven; call    sub_18810
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 call .+7380
 .org 0x6d3f
 # IDA 0x16b3f; file 0x6d3f; locator=proven; jmp     short loc_16B11
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 jmp .-46
 .org 0x6d41
 loc_16B41:
 # IDA 0x16b41; file 0x6d41; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 mov cx, 0xffff
 .org 0x6d44
 # IDA 0x16b44; file 0x6d44; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 call .+7439
 .org 0x6d47
 # IDA 0x16b47; file 0x6d47; locator=proven; call    sub_11D46
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 call .-19969
 .org 0x6d4a
 # IDA 0x16b4a; file 0x6d4a; locator=proven; call    sub_120D6
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 call .-19060
 .org 0x6d4d
 # IDA 0x16b4d; file 0x6d4d; locator=proven; pop     ds
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 pop ds
 .org 0x6d4e
 # IDA 0x16b4e; file 0x6d4e; locator=proven; retn
-# ⚠ 函式 sub_16B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B08; [proven] 內政官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 ret
 .org 0x6d4f
 sub_16B4F:
 # IDA 0x16b4f; file 0x6d4f; locator=proven; mov     bh, 0FFh
-# ⚠ 函式 sub_16B4F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B4F; [proven] 據點+19先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 mov bh, 0xff
 .org 0x6d51
 # IDA 0x16b51; file 0x6d51; locator=proven; xchg    bh, [si+19h]
-# ⚠ 函式 sub_16B4F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B4F; [proven] 據點+19先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 xchg bh, byte ptr [si+0x19]
 .org 0x6d54
 # IDA 0x16b54; file 0x6d54; locator=proven; cmp     bh, 0FFh
-# ⚠ 函式 sub_16B4F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B4F; [proven] 據點+19先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 cmp bh, 0xff
 .org 0x6d57
 # IDA 0x16b57; file 0x6d57; locator=proven; jnz     short loc_16B5B
-# ⚠ 函式 sub_16B4F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B4F; [proven] 據點+19先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 jnz .+4
 .org 0x6d59
 # IDA 0x16b59; file 0x6d59; locator=proven; stc
-# ⚠ 函式 sub_16B4F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B4F; [proven] 據點+19先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 stc
 .org 0x6d5a
 # IDA 0x16b5a; file 0x6d5a; locator=proven; retn
-# ⚠ 函式 sub_16B4F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B4F; [proven] 據點+19先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 ret
 .org 0x6d5b
 loc_16B5B:
 # IDA 0x16b5b; file 0x6d5b; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_16B4F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B4F; [proven] 據點+19先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 {load} xor bl, bl
 .org 0x6d5d
 # IDA 0x16b5d; file 0x6d5d; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_16B4F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B4F; [proven] 據點+19先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 shr bx, 0x1
 .org 0x6d5f
 # IDA 0x16b5f; file 0x6d5f; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_16B4F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B4F; [proven] 據點+19先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 shr bx, 0x1
 .org 0x6d61
 # IDA 0x16b61; file 0x6d61; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_16B4F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B4F; [proven] 據點+19先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 shr bx, 0x1
 .org 0x6d63
 # IDA 0x16b63; file 0x6d63; locator=proven; add     bx, 4240h
-# ⚠ 函式 sub_16B4F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B4F; [proven] 據點+19先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 add bx, 0x4240
 .org 0x6d67
 # IDA 0x16b67; file 0x6d67; locator=proven; mov     byte ptr [bx+1Ah], 0
-# ⚠ 函式 sub_16B4F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B4F; [proven] 據點+19先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
+# operand 0 byte ptr [bx+1Ah]; [proven] 解任內政官清武將+1A經費; 出處: docs/re/121-c-personnel-restoration.md
 mov byte ptr [bx+0x1a], 0x0
 .org 0x6d6b
 # IDA 0x16b6b; file 0x6d6b; locator=proven; mov     byte ptr [bx+17h], 0
-# ⚠ 函式 sub_16B4F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B4F; [proven] 據點+19先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 mov byte ptr [bx+0x17], 0x0
 .org 0x6d6f
 # IDA 0x16b6f; file 0x6d6f; locator=proven; clc
-# ⚠ 函式 sub_16B4F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B4F; [proven] 據點+19先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 clc
 .org 0x6d70
 # IDA 0x16b70; file 0x6d70; locator=proven; retn
-# ⚠ 函式 sub_16B4F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B4F; [proven] 據點+19先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 ret
 .org 0x6d71
 sub_16B71:
 # IDA 0x16b71; file 0x6d71; locator=proven; push    ds
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 push ds
 .org 0x6d72
 # IDA 0x16b72; file 0x6d72; locator=proven; call    sub_12078
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 call .-19194
 .org 0x6d75
 # IDA 0x16b75; file 0x6d75; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x6d7a
 loc_16B7A:
 # IDA 0x16b7a; file 0x6d7a; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x6d7f
 # IDA 0x16b7f; file 0x6d7f; locator=proven; mov     cx, 0Ch
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 mov cx, 0xc
 .org 0x6d82
 # IDA 0x16b82; file 0x6d82; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 call .+7377
 .org 0x6d85
 # IDA 0x16b85; file 0x6d85; locator=proven; call    sub_17906
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 call .+3457
 .org 0x6d88
 # IDA 0x16b88; file 0x6d88; locator=proven; jb      short loc_16BD5
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 jb .+77
 .org 0x6d8a
 # IDA 0x16b8a; file 0x6d8a; locator=proven; cmp     byte ptr [bx+2Ah], 0FFh
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 cmp byte ptr [bx+0x2a], 0xff
 .org 0x6d8e
 # IDA 0x16b8e; file 0x6d8e; locator=proven; jz      short loc_16BA6
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 jz .+24
 .org 0x6d90
 # IDA 0x16b90; file 0x6d90; locator=proven; mov     al, [bx+2Ah]
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 mov al, byte ptr [bx+0x2a]
 .org 0x6d93
 # IDA 0x16b93; file 0x6d93; locator=proven; mov     ah, 0FFh
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 mov ah, 0xff
 .org 0x6d95
 # IDA 0x16b95; file 0x6d95; locator=proven; push    ax
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 push ax
 .org 0x6d96
 # IDA 0x16b96; file 0x6d96; locator=proven; push    bx
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 push bx
 .org 0x6d97
 # IDA 0x16b97; file 0x6d97; locator=proven; mov     di, sp
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 {load} mov di, sp
 .org 0x6d99
 # IDA 0x16b99; file 0x6d99; locator=proven; mov     al, 93h
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 mov al, 0x93
 .org 0x6d9b
 # IDA 0x16b9b; file 0x6d9b; locator=proven; mov     cx, 35h
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 mov cx, 0x35
 .org 0x6d9e
 # IDA 0x16b9e; file 0x6d9e; locator=proven; call    sub_18810
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 call .+7282
 .org 0x6da1
 # IDA 0x16ba1; file 0x6da1; locator=proven; add     sp, 4
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 add sp, 0x4
 .org 0x6da4
 # IDA 0x16ba4; file 0x6da4; locator=proven; jmp     short loc_16B7A
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 jmp .-42
 .org 0x6da6
 loc_16BA6:
 # IDA 0x16ba6; file 0x6da6; locator=proven; mov     si, bx
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 {load} mov si, bx
 .org 0x6da8
 # IDA 0x16ba8; file 0x6da8; locator=proven; mov     cx, 9
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 mov cx, 0x9
 .org 0x6dab
 # IDA 0x16bab; file 0x6dab; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 call .+7336
 .org 0x6dae
 # IDA 0x16bae; file 0x6dae; locator=proven; call    sub_17663
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 call .+2741
 .org 0x6db1
 # IDA 0x16bb1; file 0x6db1; locator=proven; jb      short loc_16B7A
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 jb .-55
 .org 0x6db3
 # IDA 0x16bb3; file 0x6db3; locator=proven; mov     byte ptr [bx+17h], 3
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
+# operand 0 byte ptr [bx+17h]; [proven] 所選武將+17職務寫3，外交官; 出處: docs/re/121-c-personnel-restoration.md
 mov byte ptr [bx+0x17], 0x3
 .org 0x6db7
 # IDA 0x16bb7; file 0x6db7; locator=proven; mov     ax, bx
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 {load} mov ax, bx
 .org 0x6db9
 # IDA 0x16bb9; file 0x6db9; locator=proven; sub     ax, 4240h
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 sub ax, 0x4240
 .org 0x6dbc
 # IDA 0x16bbc; file 0x6dbc; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 shl ax, 0x1
 .org 0x6dbe
 # IDA 0x16bbe; file 0x6dbe; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 shl ax, 0x1
 .org 0x6dc0
 # IDA 0x16bc0; file 0x6dc0; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 shl ax, 0x1
 .org 0x6dc2
 # IDA 0x16bc2; file 0x6dc2; locator=proven; mov     [si+2Ah], ah
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
+# operand 0 [si+2Ah]; [proven] 所選勢力+2A外交官索引; 出處: docs/re/121-c-personnel-restoration.md
 mov byte ptr [si+0x2a], ah
 .org 0x6dc5
 # IDA 0x16bc5; file 0x6dc5; locator=proven; mov     cx, 19Dh
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 mov cx, 0x19d
 .org 0x6dc8
 # IDA 0x16bc8; file 0x6dc8; locator=proven; mov     di, sp
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 {load} mov di, sp
 .org 0x6dca
 # IDA 0x16bca; file 0x6dca; locator=proven; mov     ah, [bx+1Eh]
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 mov ah, byte ptr [bx+0x1e]
 .org 0x6dcd
 # IDA 0x16bcd; file 0x6dcd; locator=proven; mov     al, [bx+1]
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 mov al, byte ptr [bx+0x1]
 .org 0x6dd0
 # IDA 0x16bd0; file 0x6dd0; locator=proven; call    sub_18810
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 call .+7232
 .org 0x6dd3
 # IDA 0x16bd3; file 0x6dd3; locator=proven; jmp     short loc_16B7A
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 jmp .-89
 .org 0x6dd5
 loc_16BD5:
 # IDA 0x16bd5; file 0x6dd5; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 mov cx, 0xffff
 .org 0x6dd8
 # IDA 0x16bd8; file 0x6dd8; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 call .+7291
 .org 0x6ddb
 # IDA 0x16bdb; file 0x6ddb; locator=proven; call    sub_11D46
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 call .-20117
 .org 0x6dde
 # IDA 0x16bde; file 0x6dde; locator=proven; call    sub_120D6
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 call .-19208
 .org 0x6de1
 # IDA 0x16be1; file 0x6de1; locator=proven; pop     ds
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 pop ds
 .org 0x6de2
 # IDA 0x16be2; file 0x6de2; locator=proven; retn
-# ⚠ 函式 sub_16B71; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16B71; [proven] 外交官任命，他勢力與eligible武將兩層清單；保留經費; 出處: docs/re/121-c-personnel-restoration.md
 ret
 .org 0x6de3
 sub_16BE3:
 # IDA 0x16be3; file 0x6de3; locator=proven; push    ds
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 push ds
 .org 0x6de4
 # IDA 0x16be4; file 0x6de4; locator=proven; call    sub_12078
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 call .-19308
 .org 0x6de7
 # IDA 0x16be7; file 0x6de7; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x6dec
 loc_16BEC:
 # IDA 0x16bec; file 0x6dec; locator=proven; mov     cx, 0Eh
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 mov cx, 0xe
 .org 0x6def
 # IDA 0x16bef; file 0x6def; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 call .+7268
 .org 0x6df2
 # IDA 0x16bf2; file 0x6df2; locator=proven; call    sub_17906
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 call .+3348
 .org 0x6df5
 # IDA 0x16bf5; file 0x6df5; locator=proven; jb      short loc_16C1C
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 jb .+39
 .org 0x6df7
 # IDA 0x16bf7; file 0x6df7; locator=proven; mov     si, bx
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 {load} mov si, bx
 .org 0x6df9
 # IDA 0x16bf9; file 0x6df9; locator=proven; call    sub_16C2A
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 call .+49
 .org 0x6dfc
 # IDA 0x16bfc; file 0x6dfc; locator=proven; jnb     short loc_16C0C
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 jnb .+16
 .org 0x6dfe
 # IDA 0x16bfe; file 0x6dfe; locator=proven; push    si
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 push si
 .org 0x6dff
 # IDA 0x16bff; file 0x6dff; locator=proven; mov     di, sp
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 {load} mov di, sp
 .org 0x6e01
 # IDA 0x16c01; file 0x6e01; locator=proven; mov     al, 93h
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 mov al, 0x93
 .org 0x6e03
 # IDA 0x16c03; file 0x6e03; locator=proven; mov     cx, 37h
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 mov cx, 0x37
 .org 0x6e06
 # IDA 0x16c06; file 0x6e06; locator=proven; call    sub_18810
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 call .+7178
 .org 0x6e09
 # IDA 0x16c09; file 0x6e09; locator=proven; pop     si
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 pop si
 .org 0x6e0a
 # IDA 0x16c0a; file 0x6e0a; locator=proven; jmp     short loc_16BEC
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 jmp .-30
 .org 0x6e0c
 loc_16C0C:
 # IDA 0x16c0c; file 0x6e0c; locator=proven; mov     cx, 1A3h
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 mov cx, 0x1a3
 .org 0x6e0f
 # IDA 0x16c0f; file 0x6e0f; locator=proven; mov     di, sp
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 {load} mov di, sp
 .org 0x6e11
 # IDA 0x16c11; file 0x6e11; locator=proven; mov     ah, [bx+1Eh]
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 mov ah, byte ptr [bx+0x1e]
 .org 0x6e14
 # IDA 0x16c14; file 0x6e14; locator=proven; mov     al, [bx+1]
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 mov al, byte ptr [bx+0x1]
 .org 0x6e17
 # IDA 0x16c17; file 0x6e17; locator=proven; call    sub_18810
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 call .+7161
 .org 0x6e1a
 # IDA 0x16c1a; file 0x6e1a; locator=proven; jmp     short loc_16BEC
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 jmp .-46
 .org 0x6e1c
 loc_16C1C:
 # IDA 0x16c1c; file 0x6e1c; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 mov cx, 0xffff
 .org 0x6e1f
 # IDA 0x16c1f; file 0x6e1f; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 call .+7220
 .org 0x6e22
 # IDA 0x16c22; file 0x6e22; locator=proven; call    sub_11D46
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 call .-20188
 .org 0x6e25
 # IDA 0x16c25; file 0x6e25; locator=proven; call    sub_120D6
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 call .-19279
 .org 0x6e28
 # IDA 0x16c28; file 0x6e28; locator=proven; pop     ds
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 pop ds
 .org 0x6e29
 # IDA 0x16c29; file 0x6e29; locator=proven; retn
-# ⚠ 函式 sub_16BE3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16BE3; [proven] 外交官解任，空缺提示或清職務經費，直到目標清單取消; 出處: docs/re/121-c-personnel-restoration.md
 ret
 .org 0x6e2a
 sub_16C2A:
 # IDA 0x16c2a; file 0x6e2a; locator=proven; mov     bh, 0FFh
-# ⚠ 函式 sub_16C2A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C2A; [proven] 勢力+2A先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 mov bh, 0xff
 .org 0x6e2c
 # IDA 0x16c2c; file 0x6e2c; locator=proven; xchg    bh, [si+2Ah]
-# ⚠ 函式 sub_16C2A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C2A; [proven] 勢力+2A先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 xchg bh, byte ptr [si+0x2a]
 .org 0x6e2f
 # IDA 0x16c2f; file 0x6e2f; locator=proven; cmp     bh, 0FFh
-# ⚠ 函式 sub_16C2A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C2A; [proven] 勢力+2A先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 cmp bh, 0xff
 .org 0x6e32
 # IDA 0x16c32; file 0x6e32; locator=proven; jnz     short loc_16C36
-# ⚠ 函式 sub_16C2A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C2A; [proven] 勢力+2A先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 jnz .+4
 .org 0x6e34
 # IDA 0x16c34; file 0x6e34; locator=proven; stc
-# ⚠ 函式 sub_16C2A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C2A; [proven] 勢力+2A先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 stc
 .org 0x6e35
 # IDA 0x16c35; file 0x6e35; locator=proven; retn
-# ⚠ 函式 sub_16C2A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C2A; [proven] 勢力+2A先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 ret
 .org 0x6e36
 loc_16C36:
 # IDA 0x16c36; file 0x6e36; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_16C2A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C2A; [proven] 勢力+2A先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 {load} xor bl, bl
 .org 0x6e38
 # IDA 0x16c38; file 0x6e38; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_16C2A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C2A; [proven] 勢力+2A先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 shr bx, 0x1
 .org 0x6e3a
 # IDA 0x16c3a; file 0x6e3a; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_16C2A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C2A; [proven] 勢力+2A先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 shr bx, 0x1
 .org 0x6e3c
 # IDA 0x16c3c; file 0x6e3c; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_16C2A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C2A; [proven] 勢力+2A先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 shr bx, 0x1
 .org 0x6e3e
 # IDA 0x16c3e; file 0x6e3e; locator=proven; add     bx, 4240h
-# ⚠ 函式 sub_16C2A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C2A; [proven] 勢力+2A先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 add bx, 0x4240
 .org 0x6e42
 # IDA 0x16c42; file 0x6e42; locator=proven; mov     byte ptr [bx+1Ah], 0
-# ⚠ 函式 sub_16C2A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C2A; [proven] 勢力+2A先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
+# operand 0 byte ptr [bx+1Ah]; [proven] 解任外交官清武將+1A經費; 出處: docs/re/121-c-personnel-restoration.md
 mov byte ptr [bx+0x1a], 0x0
 .org 0x6e46
 # IDA 0x16c46; file 0x6e46; locator=proven; mov     byte ptr [bx+17h], 0
-# ⚠ 函式 sub_16C2A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C2A; [proven] 勢力+2A先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 mov byte ptr [bx+0x17], 0x0
 .org 0x6e4a
 # IDA 0x16c4a; file 0x6e4a; locator=proven; clc
-# ⚠ 函式 sub_16C2A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C2A; [proven] 勢力+2A先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 clc
 .org 0x6e4b
 # IDA 0x16c4b; file 0x6e4b; locator=proven; retn
-# ⚠ 函式 sub_16C2A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C2A; [proven] 勢力+2A先XCHG為FF，非空官員清職務經費並回傳BX/CF; 出處: docs/re/121-c-personnel-restoration.md
 ret
 .org 0x6e4c
 # IDA 0x16c4c; file 0x6e4c; locator=proven; add     [bp+di], ax

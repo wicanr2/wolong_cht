@@ -2012,3 +2012,9 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - 固定 DOS/V KI.EXE 與 IDA 9.4 database linear；七函式／247指令／561bytes，輸入／資料庫／probe雜湊見[re/120](docs/re/120-c-player-formation-restoration.md)。
 - 六槽切換先全退再分；主將0拒絕。初始化不清men，取消保留退兵前derived total；不是完整軍團記錄的rollback。
 - O0／O2各200完整裝置相同、十錯版、獨立分兵與成功writer核對；全部原指令既有覆蓋且獨立重組相同。296 C／48raw；自然長程、非法熱區與原C機器碼未代證。
+
+## 2026-10-09：人事任免七函式 C
+
+- 固定DOS/V KI.EXE、IDA9.4 database linear，七函式185指令459bytes，身分與原始定位見[re/121](docs/re/121-c-personnel-restoration.md)。
+- O0／O2各2,332完整裝置、十二錯版、獨立欄位與CF/BX核對；任命不清經費，解任XCHG FF後清職務經費。保留第二層取消返回、空缺POP BX/SI差異及原資格條件。
+- 非零經費正對照補足舊spec/143盲點，原排序狀態勘誤回鏈至spec/148；全185指令既有覆蓋且獨立重組相同。303 C／48raw，自然長程及原C機器碼仍未驗證。

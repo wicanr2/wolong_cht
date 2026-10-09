@@ -1,0 +1,77 @@
+{
+  "schema": "wolong-personnel-go-verification-v1",
+  "status": "passed",
+  "verification_scope": "formal Go vet and cold Go tests; full project check executed and stopped at existing document failures",
+  "recorded_at_utc": "2026-10-09T08:39:50.269500+00:00",
+  "source_sha256": {
+    "tools/go.sh": "fa9dae64edb9b9d0a770e8af773fb79ddcaed807854f42f4c6fa222be6201416",
+    "tools/check.sh": "8564f12abd88e64d9d938b0cbe3ed9fc7578b739e4194c97335548efbf01d803",
+    "tools/py.sh": "d87d60fa5c66993edda6bf83ac82577769c43be9e6771dd33a5baf356e117cdd",
+    "go.mod": "ffa0f9568f02beb7bdd8e11e6b5eb0f7692e314af6e1a5a5a3b73dfaae178c84",
+    "go.sum": "0e59bae9f1e5957bc62654b3808bfd699e897a32d50f8ab4ee2c6ef3d7b23acb"
+  },
+  "image_id": "sha256:9b6b1a2a457eb6937aceac5aa0eea79de88227100e33163644e1f8f4e661949c",
+  "go_version": "go1.26.7 linux/amd64",
+  "cold_test_cache": true,
+  "vet_passed": true,
+  "test_passed": true,
+  "tested_packages": 39,
+  "cached_test_packages": 0,
+  "log_sha256": "b3518316f4113567ee2bbb59d78b16ed5efe191476603a5187cc79fa24e7eb6b",
+  "commands": [
+    {
+      "command": "tools/go.sh clean -testcache",
+      "exit_status": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": "tools/check.sh --go",
+      "exit_status": 0,
+      "log_sha256": "b3518316f4113567ee2bbb59d78b16ed5efe191476603a5187cc79fa24e7eb6b"
+    },
+    {
+      "command": "tools/check.sh",
+      "exit_status": 1,
+      "log_sha256": "f7ae58399f2ddb610ccc70fbf68d90d6c71c281df64e7a4da0aef1ab66ac27cd"
+    }
+  ],
+  "actual_mount_proof_sha256": "0dac76776089029e97302ae360ef6b6da7a3006f1224bae63a3f4738f7c1b2b5",
+  "mount_proof_reference": "docs/re/c-catalog-go-verification.json and docs/re/c-formation-go-verification.json; go.sh, py.sh and check.sh hashes unchanged",
+  "original_assets_readonly": true,
+  "network": "none",
+  "memory_bytes": 2147483648,
+  "nano_cpus": 2000000000,
+  "pids_limit": 256,
+  "user": "1000:1000",
+  "cache_scope": "workplace/matching-decompilation/c-catalog/go-cache",
+  "environment": {
+    "WOLONG_GO_IMAGE": "eob-remake-go:1.26.7-ebiten2.9.9-20261008-r2",
+    "WOLONG_GO_TASK": "matching-decompilation",
+    "WOLONG_GO_TIMEOUT": "1200",
+    "WOLONG_GO_NETWORK": "none",
+    "GOPROXY": "off",
+    "GOSUMDB": "off",
+    "GOTOOLCHAIN": "local",
+    "GOFLAGS": "-mod=readonly"
+  },
+  "dependency_input": "Existing exact versions pinned by go.mod and go.sum; no dependency download or network access in this round",
+  "formal_check_all": {
+    "status": "known_baseline_document_failures",
+    "command": "tools/check.sh",
+    "exit_status": 1,
+    "log_sha256": "f7ae58399f2ddb610ccc70fbf68d90d6c71c281df64e7a4da0aef1ab66ac27cd",
+    "known_document_failures": [
+      "two historical playtest/19 PNG links",
+      "277 historical phantom references; census symbol layer unavailable"
+    ],
+    "index_missing_links": 2,
+    "phantom_references": 277,
+    "phantom_missing_paths": 275,
+    "phantom_missing_links": 2,
+    "strict_questions_passed": true,
+    "go_vet_test_passed": true,
+    "tested_packages": 39,
+    "cached_test_packages": 39,
+    "remaining_check_stages": "not reached after phantom_scan exit 1; no new result claimed for stale_scan, worklist, lessons or later stages"
+  }
+}

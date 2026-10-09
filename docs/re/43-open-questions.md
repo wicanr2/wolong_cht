@@ -7,7 +7,7 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-1026 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+1027 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
 - 日期：2026-10-09
 - 產生工具：`tools/re_open_questions.py`
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**1020 列分布在 410 份文件，平均每份 2.5 列。**
+**1021 列分布在 411 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -47,11 +47,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 292 | 285 | 6 | 1 |
+| 程式碼理解 | 293 | 286 | 6 | 1 |
 | 驗收 | 240 | 214 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 451 | 429 | 21 | 1 |
-| **合計** | **1020** | 959 | 58 | 3 |
+| 其他 | 451 | 430 | 20 | 1 |
+| **合計** | **1021** | 961 | 57 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -60,7 +60,7 @@
 | 來源目錄 | 列數 |
 |---|---:|
 | `docs/spec/` | 408 |
-| `docs/re/` | 292 |
+| `docs/re/` | 293 |
 | `docs/playtest/` | 240 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
@@ -110,7 +110,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 | evidence-only | — |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 | evidence-only | — |
 
-## 2.3 程式碼理解（292 條）
+## 2.3 程式碼理解（293 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -218,6 +218,7 @@
 | [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | #73／#77 | 未定位，不得拿來補接事件 6／7（§9） | 靜態 | actionable | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
 | [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | 事件 6／7 次要 TALK 的 formatter 參數契約 | 缺參數且語意未知，維持 fail-closed（§10） | 靜態 | actionable | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
 | [`re/120-c-player-formation-restoration.md`](../re/120-c-player-formation-restoration.md) | 正常玩家長程與原作者 C 機器碼 | 不由局部控制流與 C 語意代證 | 靜態 | evidence-only | — |
+| [`re/121-c-personnel-restoration.md`](../re/121-c-personnel-restoration.md) | 自然玩家長程、非法分派與原作者 C 機器碼 | 不由局部 C 語意代證 | 靜態 | evidence-only | — |
 | [`re/15-event10-producer.md`](../re/15-event10-producer.md) | 以下來源沒有證據，不能補成事實：未被 IDA 建成函式的 far code、以暫存器或指標 | （未解小節內文） | 靜態 | evidence-only | — |
 | [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | `0x330` 的用途 | MPU-401 的標準埠，沒找到讀它的地方 | 靜態 | evidence-only | — |
 | [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | 效果碼 ↔ 聽起來像什麼 | `SOUND.DAT` 的記錄結構已解（`57` §6），但哪一號對應哪個動作只有 §3 的三個 | 靜態 | evidence-only | — |
@@ -796,7 +797,7 @@
 | [`spec/142-personnel-dismiss-flow.md`](../spec/142-personnel-dismiss-flow.md) | 任命的「已經有人」訊息參數 | 原版 `push ax`（`ah = 0FFh`、`al` ＝ 武將編號）＋ `push bx`（**據點記錄位址**，直接位址式）。remake 直接代名字字串，**沒有走 formatter 的位址式**（`../re/79` §2） | 靜態 | merge-target | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
 | [`spec/143-general-duty-field.md`](../spec/143-general-duty-field.md) | `sub_13771` 讀 `+0x17` 的那個分支 | 只知道是每小時處理裡的一支，判斷後 `sub_137F5` 挑人；分支語意未解 | 靜態 | evidence-only | — |
 | [`spec/143-general-duty-field.md`](../spec/143-general-duty-field.md) | `+0x17` 有沒有第六個值 | 字串表只有 6 項而第 6 項要靠 bit 6 算出來，所以存得下的上限是 4；沒有反證 | 靜態 | evidence-only | — |
-| [`spec/143-general-duty-field.md`](../spec/143-general-duty-field.md) | **解任把 `+0x1A` 歸零沒有實跑正對照** | 機器碼確定（`mov byte [bx+1Ah], 0`），但實跑那一輪官員的經費本來就是 0，等於沒比。要先撥款再解任才驗得到 | 實測 | evidence-only | — |
+| [`spec/143-general-duty-field.md`](../spec/143-general-duty-field.md) | 自然撥款後解任的玩家長程 | 受控非零經費正對照已完成，尚不由此代證自然撥款路徑 | 靜態 | evidence-only | — |
 | [`spec/144-advisor-leaves-general-table.md`](../spec/144-advisor-leaves-general-table.md) | 自定軍師時原版那個越界寫 | 位置在武將表尾端後一個 byte，寫進去的是什麼欄位沒查；remake 不照抄 | 靜態 | evidence-only | — |
 | [`spec/144-advisor-leaves-general-table.md`](../spec/144-advisor-leaves-general-table.md) | 軍師退場時（如果有）會不會放回表上 | 沒找到反向的寫入端 | 靜態 | evidence-only | — |
 | [`spec/145-general-and-faction-cells.md`](../spec/145-general-and-faction-cells.md) | `sub_175FA`／`sub_178A7` 的清單是不是只列本勢力 | 武將那張只有本勢力、勢力那張列全部活著的，兩張都拍過了（`../playtest/86`） | 靜態 | evidence-only | — |
@@ -807,7 +808,6 @@
 | [`spec/147-controlled-parity-save.md`](../spec/147-controlled-parity-save.md) | **原版的地圖游標框** | 白色空心 16×16，貼著游標所在的格。remake 沒有畫；要接得先讀出它的顏色、線寬與更新時機（`sub_11F7F` 每圈算游標所在格） | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`spec/147-controlled-parity-save.md`](../spec/147-controlled-parity-save.md) | 還能關掉什麼 | 目前只有 `--no-clouds`。天災、AI 出兵、募兵都吃亂數，各自需要自己的「關掉」欄位 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`spec/147-controlled-parity-save.md`](../spec/147-controlled-parity-save.md) | 兩邊的**消費順序**能不能對齊 | 狀態可以搬（§5），順序還沒逐拍比過 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
-| [`spec/148-shared-candidate-filter.md`](../spec/148-shared-candidate-filter.md) | `sub_17663` 的 `xor cl, cl` | 比 `sub_175FA` 多一行，把清單游標歸零。remake 每次開清單本來就從 0 開始，行為相同；**但那代表原版的兩張清單共用同一個游標記憶體 `word_198AA`**，切換時的殘留還沒對過 | 靜態 | evidence-only | — |
 | [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | 游標推到畫面邊緣時鏡頭跟過去 | 原版的滑鼠座標是**世界座標**（大地圖上驅動範圍 0–6143 × 0–4127），推到視野外鏡頭會捲（`../re/84` §2）。remake 的滑鼠被視窗框住，還沒接這個行為 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | ⭐ **原版的鏡頭是像素級的** | 邊緣捲動之後量到的捲動原點是 `(2657,1457)`——**不是 16 的倍數**。remake 的 `camX`／`camY` 是**格**，所以只對得上 16 的倍數那些位置。開局與 `sub_12151` 移鏡頭都是格對齊的，所以現有的對拍全部落在對得上的那一半；**要拍邊緣捲動之後的畫面就得先把鏡頭改… | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`spec/149-march-target-map-picker.md`](../spec/149-march-target-map-picker.md) | 熱區會吃掉點擊 | ⚠ 實測踩到 `../re/85` §3 記的坑：把滑鼠移到據點的世界座標時，鏡頭捲到底、**游標釘在畫面右下角**，那裡是軍團情報視窗的熱區 `#31`，於是那一圈根本不問據點。要先把鏡頭帶過去、再讓游標落在畫面中間 | 實測 | merge-target | [#30](https://github.com/wicanr2/wolong_cht/issues/30) |
@@ -995,6 +995,7 @@
 | [`spec/239-c-list-families.md`](../spec/239-c-list-families.md) | 原作者 C 機器碼 | 尚未匹配 | 靜態 | evidence-only | — |
 | [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 反白列上換色的機制 | `38` §1.7.1：兩個色號各有一次量測，變換規則沒解 | 靜態 | evidence-only | — |
 | [`spec/240-c-player-formation.md`](../spec/240-c-player-formation.md) | 自然玩家長程／原作者 C 機器碼 | 本輪不代證 | 靜態 | evidence-only | — |
+| [`spec/241-c-personnel.md`](../spec/241-c-personnel.md) | 正常長程與原作者 C 機器碼 | 本輪不代證 | 靜態 | evidence-only | — |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 空槽標記 | 原版用名稱欄第一個字 `0xD0A1`；remake 用「載得起來且玩家勢力有效」判定，兩者不等價 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 新遊戲共用 | remake 的啟動殼層是自己的畫面，還沒有換成這個四槽視窗 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/26-yes-no-dialog.md`](../spec/26-yes-no-dialog.md) | 原版的使用者 | `sub_18DC8` 只有一個呼叫端 `sub_11AC3`（新遊戲流程），問題文字由那裡給，內容未讀 | 靜態 | evidence-only | — |

@@ -91,8 +91,16 @@ next:
 | 單元測試 | `TestPersonnelCandidatesAlwaysExcludeLord`：`lordCorps` 開著也不影響人事 |
 | 突變測試 | 把 ④ 從 `freeGenerals` 拿掉，`TestPersonnelCandidatesAlwaysExcludeLord` 要變紅 |
 
-## 4. 未解
+## 4. 原始排序狀態勘誤
+
+`0x1768A` 隨後的 MOV CL,CS:98AA 覆寫 XOR CL,CL，原版沿用排序欄。
+前序 XOR 不能作為清單游標重設證據。[re/119](../re/119-c-list-families-restoration.md)已驗此原始指令；
+人事四條流程沿用同一 C 清單，見[re/121](../re/121-c-personnel-restoration.md)。
+
+## 5. 未解
 
 | 項目 | 現況 |
 |---|---|
-| `sub_17663` 的 `xor cl, cl` | 比 `sub_175FA` 多一行，把清單游標歸零。remake 每次開清單本來就從 0 開始，行為相同；**但那代表原版的兩張清單共用同一個游標記憶體 `word_198AA`**，切換時的殘留還沒對過 |
+
+
+<!-- 缺口：無 -->

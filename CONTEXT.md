@@ -56,8 +56,9 @@
 | 2026-10-09；據點清單、排序與遷都 18 C 函式／5 raw | O0／O2 各 520 完整狀態一致，十二錯版拒絕；120 排序／36 builder／48 捲軸獨立核對 | 六表頭、特殊返回、四劇本接受／拒絕／原首都重選與側欄接回；正常玩家長程與 C 機器碼仍待驗證 | [re/118](docs/re/118-c-city-list-restoration.md)、[spec/238](docs/spec/238-c-city-list.md)、來源／新增指令／完整收據 |
 | 2026-10-09；軍團／武將／勢力／開局 11 C 函式／12 raw | O0／O2 各 804 完整狀態相同、十三錯版；168 builder／240 排序／16 cache 獨立核對，156 表頭與 28 選取 | 902 指令與四家族原回呼接共用引擎；289 C／48 raw，非法排序／自然長程與 C 機器碼仍未驗證 | [re/119](docs/re/119-c-list-families-restoration.md)、[spec/239](docs/spec/239-c-list-families.md)、原始定位／補充／收據 |
 | 2026-10-09；玩家軍團編成七 C 函式 | O0／O2 各 200 完整裝置與十錯版通過；六槽循環、取消舊總量、空主將拒絕及外層重選 | 296 C／48 raw；247 指令已在組語基準，正常長程與 C 機器碼仍未驗證 | [re/120](docs/re/120-c-player-formation-restoration.md)、[spec/240](docs/spec/240-c-player-formation.md)、來源／指令覆蓋／收據 |
+| 2026-10-09；人事選單與任免七 C 函式 | O0／O2各2,332完整裝置與十二錯版；全合法索引／非零經費／16次live table修改 | 303 C／48 raw；185指令已有組語覆蓋，自然撥款長程與C機器碼仍未驗證 | [re/121](docs/re/121-c-personnel-restoration.md)、[spec/241](docs/spec/241-c-personnel.md)、來源／指令覆蓋／收據 |
 
-持續 Goal 為完成整個 matching decompilation；目前有 24,999 條指令的整檔組語基準與 296 個 C 函式、四十八個原始 code 入口，不能據此宣布完整 C 還原完成。
+持續 Goal 為完成整個 matching decompilation；目前有 24,999 條指令的整檔組語基準與 303 個 C 函式、四十八個原始 code 入口，不能據此宣布完整 C 還原完成。
 使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b`、熱區 `a8605b5` 、版控組語／VGA `47e16c9` 、對齊貼圖 `6139f9e` 、矩形／計量 `c7dc8df`、顯示分派 `4d31520`、字形 `85f06de` 與數字 `06fff77` 已推到 origin/main。
 
 未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。

@@ -437,3 +437,15 @@
 - 正式Go冷vet與39套件通過；C台帳296函式／48raw，正常玩家長程與原C機器碼仍未驗。來源與收據依使用者授權commit／push，完整Goal保持active。
 - 提交前25項檢查21通過，4個既有失敗不變：歷史playtest19兩張缺圖、277筆phantom引用、lessons render過期、舊guard文字缺失。完整check已跑並停於既有phantom，個別後續檢查另跑；新失敗0，正規化phantom增刪均0。檢查收據為workplace/matching-decompilation/checks/formation-checks.json，SHA-256 `2b6481cbea1e4cb99ae7549f6e4759abd57ee8c55f576af1aadbfeba2400c17a`。
 - root-owned維持27個既有路徑，沒有.md目錄或本輪root-owned輸出；本輪容器已收尾，沒有新增image。
+
+## 2026-10-09：原人事選單與任免 C
+
+- 前輪34e3b1f已推送。路由與現況／Issue22查核後，按AGENTS§10分工唯讀契約、單一資料模型、獨立指令覆蓋與Go冷測，未越界修改。
+- spec/241 READY後還原七函式／185指令／459bytes，保留原四項live table、兩層任命、拒絕重試、解任XCHG、原POP BX/SI差異與唯一共用清單／UI。
+- 初編譯的pn_call與既有politics.c同名，改為psn前綴後同命令smoke112組通過。矩陣編輯曾多插入非選單重複案例，確認執行handle後停止自己的容器，修正後同容器同命令乾淨重跑，未把兩項工具問題記成產品缺陷。
+- O0／O2各2,332完整裝置相同，十二錯版拒絕；2,064 helper覆蓋全部合法官員索引與FF，120任命／96解任／52選單，含16次live table修改。獨立欄位與CF/BX模型先驗原版；缺字0，來源乾淨重生一致。
+- 原版任命保留非零經費、解任清零已實跑正對照；正常自然撥款玩家長程保持證據界線。更正re/22舊未讀說法、spec/148前序XOR解讀，spec/143收斂至自然撥款長程限制，mechanics/60同步。
+- 185指令全已有覆蓋，binutils獨立重組459bytes完全相同；組語註記重生後整檔67,099bytes仍匹配，三反例拒絕。303 C／48raw，完整Goal保持active，來源與收據依授權提交推送。
+- 錯版包裝器曾沿用編成group而產生0案例，被exit guard拒絕；第7錯版曾使用不存在的byte setter，編譯失敗未當成錯版拒絕。修正後加入未宣告函式編譯護欄，13種正常／錯版語法審查全通過，並以最終來源重跑O0/O2各2,332組與十二個實編譯錯版。
+- 正式Go冷vet／39套件通過，無cached；完整check已跑並停於既有缺圖／phantom，25個單項另跑21通過、4舊失敗不變，新失敗0。phantom正規化277無增刪，lessons舊日誌相同；三條resolution backlink護欄通過。檢查收據workplace/matching-decompilation/checks/personnel-checks.json，SHA-256 `af6fdd61d5e19247ffa302b2499699e4d0f5fc227c037b0180b797c9c9bbc3e0`。
+- 檔案擁有權維持27個既有root-owned路徑，無新root-owned輸出或.md目錄；本輪容器清理完成，未建立image。
