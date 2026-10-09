@@ -1682,6 +1682,86 @@
         "docs/re/113-c-resource-cue-restoration.md",
         "docs/spec/233-c-resource-cue.md"
       ]
+    },
+    "0x1D46A": {
+      "meaning": "原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/114-c-world-map-cells-restoration.md",
+        "docs/spec/234-c-world-map-cells.md"
+      ]
+    },
+    "0x1D483": {
+      "meaning": "原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/114-c-world-map-cells-restoration.md",
+        "docs/spec/234-c-world-map-cells.md"
+      ]
+    },
+    "0x1D4C7": {
+      "meaning": "原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/114-c-world-map-cells-restoration.md",
+        "docs/spec/234-c-world-map-cells.md"
+      ]
+    },
+    "0x1D615": {
+      "meaning": "原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/114-c-world-map-cells-restoration.md",
+        "docs/spec/234-c-world-map-cells.md"
+      ]
+    },
+    "0x1D66A": {
+      "meaning": "原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/114-c-world-map-cells-restoration.md",
+        "docs/spec/234-c-world-map-cells.md"
+      ]
+    },
+    "0x1D76B": {
+      "meaning": "原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/114-c-world-map-cells-restoration.md",
+        "docs/spec/234-c-world-map-cells.md"
+      ]
+    },
+    "0x1D782": {
+      "meaning": "原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/114-c-world-map-cells-restoration.md",
+        "docs/spec/234-c-world-map-cells.md"
+      ]
+    },
+    "0x1D796": {
+      "meaning": "原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/114-c-world-map-cells-restoration.md",
+        "docs/spec/234-c-world-map-cells.md"
+      ]
+    },
+    "0x1D7E7": {
+      "meaning": "原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/114-c-world-map-cells-restoration.md",
+        "docs/spec/234-c-world-map-cells.md"
+      ]
+    },
+    "0x1D804": {
+      "meaning": "原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/114-c-world-map-cells-restoration.md",
+        "docs/spec/234-c-world-map-cells.md"
+      ]
     }
   },
   "operands": {

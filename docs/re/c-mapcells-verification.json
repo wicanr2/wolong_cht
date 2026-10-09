@@ -1,0 +1,237 @@
+{
+  "schema": "wolong-c-mapcells-verification-v1",
+  "status": "semantic-conformed",
+  "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "ida_database_sha256": "3e018b73e908af3f2da654dffd2fd050f063654442819fb153340941f736c40c",
+  "ida_probe_sha256": "9ec72dde166508f27e03e46a43e726f02ab734711e0b04e5f673a3c2665982be",
+  "input_assets": {
+    "MMAP.MAP": [
+      80716,
+      "51b6fcaa390c80bd8a358dcacbf7d8dbb6dfeb0e048d8c3bdd86329df3401bcf"
+    ],
+    "MMAP.MDL": [
+      32768,
+      "2fa1dd1b1ec7c426cf22583334a62dc61bdb1f1cefc59cbe8e9827480d118d1d"
+    ],
+    "MMAP.MCH": [
+      43058,
+      "b10a5b64bbffa672c1fb5cb37703ac4c14b18bf1166cc47c4e802c19aae9f8f7"
+    ]
+  },
+  "decoded_map_sha256": "740708c27a89db0a7f82865be623b5732099ec97aabf399e7dbde1450c87c861",
+  "decoded_map_bytes": 98304,
+  "new_routine_sha256": {
+    "sub_1D46A": "c8848395a510f05a3628358d29ffe10dd2a3c40a594000b7335bd45fdb7f5005",
+    "sub_1D483": "60e3cceea28528beaa23753bffcb3a09c78ca6002b4512b0033f9de92a2add21",
+    "sub_1D4C7": "333c409b34c35f7bef5f71a2249e27d53021b03ae0ae1eaf8fa5ca76e4d940f6",
+    "sub_1D615": "96604b2111d2c6089d2fe7bd95cbf3f59ea8413f5f68873ee4d96a7b4d660a77",
+    "sub_1D66A": "5bee98fca5ce2629f11c8e9034fc2d0e017ab297188c9a44097e3050d8d47715",
+    "sub_1D76B": "57ef11d3bd1dbb3f8a1e938e4aef4288cad002b7745064b880310a32ceba4c00",
+    "sub_1D782": "66224d3ca1dd02bcd9862f3217ff28217d78207e77044667adb4533d91aa77dc",
+    "sub_1D796": "2bdf292d5c55e0c3d44ee1933a848beae969d54bdbdc192f063db9ef33024eb2",
+    "sub_1D7E7": "08c57be42841c1a068df6ac3c7ce0c59145d9b9570182f1f5428459b15025ab0",
+    "sub_1D804": "5828e53b17a57f1365c41d4e3a7ff5db6cee19d5df40a8bc8fbbce9c92130293"
+  },
+  "original_instruction_count": 328,
+  "source_sha256": {
+    "tools/c_recovery/aligned.c": "4e3e53bb951cd9692ffb8722b2efc6ef1549602300f7ff32ca0ced70f90de467",
+    "tools/c_recovery/aligned.h": "865e3c92435f848ea7d57f7e54d1a1c9976e86ce13938858503e8a2431111c7e",
+    "tools/c_recovery/aligned_fixture.h": "6d5d293961f3c0b2f4a8fd6551cb3ec4c31945ada3b5a7dcc6281fae59f84b5b",
+    "tools/c_recovery/choice.c": "aeb5eed07b685572de49a912d967124626c747b45bc623f032577d8793880b89",
+    "tools/c_recovery/choice.h": "bcdf8a7e824ed9ff43abb32558b9c16373b6c9ed8cf9f7f77ab59338a36a2f46",
+    "tools/c_recovery/choice_fixture.h": "e45da13f459bbeb7536e5e58d58034b2ba9e9508d8def74ecbe279613d7d99ce",
+    "tools/c_recovery/choice_generated.inc": "7008762d34b091c12a91106a699297cf4eafbcb096723275f5fdee8dfc6bb0b2",
+    "tools/c_recovery/clock.c": "4a845847e050d0d7ff1ebd641fb827602a6ab10fc8fecd643584612e73158439",
+    "tools/c_recovery/clock.h": "40d3d4b630dabed9b3f7f98d492fa60734b2a0a6d86d30e0a2961738d2df7284",
+    "tools/c_recovery/clock_fixture.h": "0a7812df9b5331f463acc5fe8f03ae11c5f3313843b6d7119eaf29ac8433167b",
+    "tools/c_recovery/display.c": "d5b95603d2563aafaa7b929b16f7b123896169f5e3d2d215ab19fa10da748058",
+    "tools/c_recovery/display.h": "ed30d7da89db5bb93b9e08ffceaddb01188701ab67721628d35425167488e254",
+    "tools/c_recovery/display_fixture.h": "d657ce4f18acbf31523d758959ae31d7907854c790a0582a5392a4abbc886d1f",
+    "tools/c_recovery/display_generated.inc": "6016cc7c871105bfca7a601dddbb09a413eff9dd209feb08d6327dc9805ebd63",
+    "tools/c_recovery/economy.c": "a8dfb96bc788326cc8641ffa78a64739d2544dfbf63ed7149dc334ef85f2ab8e",
+    "tools/c_recovery/economy.h": "57958375c3f3cf604e0dffb8a56e2d0b464c727702d1e076b6f303a3806e89ec",
+    "tools/c_recovery/economy_fixture.h": "8313a73e688631a8fe39db8ab12d66c979ed1f7e978ae9907e8910f24f91d0a8",
+    "tools/c_recovery/events.c": "69c7a72c1168a3943824ced273702ace069ca3e7e42e3789baf0621341ef32b0",
+    "tools/c_recovery/events.h": "0845440ca2f3685f899772dc6ff78afef012aa3fdb4374f2611f1ca9175a6373",
+    "tools/c_recovery/events_fixture.h": "fdde12c4e3239aa79fe826c8def65edb059d54380352b03462cba427f597a676",
+    "tools/c_recovery/glyph.c": "1e7695cca054da377a7327f1ca06414642d3a6367ac5b39fdac7c5bbc4cf34aa",
+    "tools/c_recovery/glyph.h": "5b0f1388ef6bd047af335162910082f748f1a4fce6ac98ea0fd5fd907a634f16",
+    "tools/c_recovery/glyph_fixture.h": "539d6f94de1c7203f77bb6cea0420b6771f213491eef2c25e9085b8cc5552879",
+    "tools/c_recovery/glyph_generated.inc": "a26058d041df1147c92b4f3fa6a296fe88739cf2a185e1d95e308e4a46a5f9fb",
+    "tools/c_recovery/hotspot.c": "805a2963363f151d01478d1eefd956ac482e2df22189d15638c7f79ea94dd5c1",
+    "tools/c_recovery/hotspot.h": "21f1dcb13ecbc301237487a12d6db80de4c944d816892a989a9a48711f496b20",
+    "tools/c_recovery/hotspot_fixture.h": "ed5a4f5b1b4ecdd5982689110d7b82c2372ead6abd83551a9a18357d06862411",
+    "tools/c_recovery/hourly.c": "dc115558ed470df49bd4438825b059d835a707e4f93262406ea8fb26c9536c04",
+    "tools/c_recovery/hourly.h": "1388fe3fe2c6bed876246e08fdfba0814ed948ec50e18ba236c0553626f3aff1",
+    "tools/c_recovery/hourly_fixture.h": "54864eeb3e0aeabcae321ffc537babe3e1abf8f53cb3f1d4e7cea1daebf36cb5",
+    "tools/c_recovery/input.c": "9e34cdde96fb568a302a4d8179a0085c339752b6a1e52551107d0118e0c4a9d0",
+    "tools/c_recovery/input.h": "a81ffd66132ee9fe732ec0c132ea4548f4bcffe568b542fe2fcd552e1ffea81e",
+    "tools/c_recovery/input_fixture.h": "456cc98d6209f4f399c6281d17c52b8ef416c1e49f09280c0bd585c06d632153",
+    "tools/c_recovery/input_generated.inc": "f67262370c5db64608d985227e9b87dd8795f5aefcfb07f2ab8df01e7c80b8de",
+    "tools/c_recovery/mapcells.c": "f87b3c6df8ab5b07c1c7226ca329e4f55669a627d4a6dd3b4c5e55932ee6a15f",
+    "tools/c_recovery/mapcells.h": "4b3aa59015f90f1bbfa6704d4785cb15af910985a15f69d9e87ed3a16d5a4a6e",
+    "tools/c_recovery/mapcells_fixture.h": "ba2813e78795196ddef96230a652d8a8463e66c65e0bf46afc286787ebf6b005",
+    "tools/c_recovery/mapcells_generated.inc": "4a726277f8bb03a7ed645c05c35fe61bb4e6cfd9c142856960aa693e220bd835",
+    "tools/c_recovery/modal.c": "37105677c93746e880ab89c7940eb02a1b318bfe18e76615b12870f17294da8e",
+    "tools/c_recovery/modal.h": "db3f1ea75cfd9d3026382fc1e803364b67c594c9874103f2de98090c3249f106",
+    "tools/c_recovery/modal_fixture.h": "427b17352aecd5e4d84522b1620cd41464cc3d571f52e77b5b565c6e9e71d072",
+    "tools/c_recovery/numbers.c": "776e38ff148e65d653d3d3a0588ef6ca12aa5dc526af30bc5e3b497b8ee9abc1",
+    "tools/c_recovery/numbers.h": "1ecf5806c4127f605280e6b6b913a80a1e671877420c4a27bd1264b0cac3c300",
+    "tools/c_recovery/numbers_fixture.h": "81bf5642e725802e4b891d31dd2a84785c8ca106109e13696a531e2d5057a1e0",
+    "tools/c_recovery/numbers_generated.inc": "40ced4a3a36aa88dc5e0e06dac3b4fb88806f1eb4dc8c35198ce5f877244c7a1",
+    "tools/c_recovery/numeric.c": "b68f2a4e4149c7cf5fff8aba2da0a6a437202c0626519ed7c6b7ccd73df00e5b",
+    "tools/c_recovery/numeric.h": "c0abfde294d876d1b7c49119f134bff56b0cdc9e76ac4ae5a23abe2cd6cea0f0",
+    "tools/c_recovery/numeric_fixture.h": "4780a1ff675bc17d77553035c0b2a2eeae790c607d1d613878a59d300267a2d5",
+    "tools/c_recovery/politics.c": "3b60a81cd5cc0979ca99f9bb03c5ce341f36b539ad318e70cced5ac516aa0eef",
+    "tools/c_recovery/politics.h": "291e2425b3056eac0c107b93da341f2ad5e4bd32b9d71275e0c007b4f95b9d8c",
+    "tools/c_recovery/politics_fixture.h": "1241042349ce6d9ea5b08355a53b9fdec54171a44f0501ccfd11b17d4b1f8171",
+    "tools/c_recovery/rect.c": "ef3eb0615c8ee516fa05e333a0d81e9fdb000d0701965db16918f8c2ce6517cc",
+    "tools/c_recovery/rect.h": "54fe2da129a0f2313010a5e3c2feb389daa0f0851e4aace64c29b4d882e1e183",
+    "tools/c_recovery/rect_fixture.h": "68aa98999228a3fa56f69c5f51af423764512a46f7b93b85fc00d7b720b166d4",
+    "tools/c_recovery/resource.c": "7e508c48be0e25aa59f27c2364a0d3abb8ee877637d418cd7fa4ac23544db2a8",
+    "tools/c_recovery/resource.h": "d6e2ac7996674979961e3c26d2b0bb3ff90089f0cedd2f917c00e9ac6cfd2ed9",
+    "tools/c_recovery/resource_fixture.h": "8bdabd1c5d9cb34014444a6dc8e7d31602dae46527866f146d63d6e156e97ce8",
+    "tools/c_recovery/resource_generated.inc": "22019cc1fc912915a36bc0689260b1c11bb937ef8a6f5f6362c62abb0699346b",
+    "tools/c_recovery/rng.c": "1e6500c692d652c07cd31b99afa5693275bdab91d0f2d2c9ce9c8ef1188cb0fd",
+    "tools/c_recovery/rng.h": "71d82996afa8df2387e9899f8a78872ad35d617ed1276b31aaf12c68dd66c0f0",
+    "tools/c_recovery/seed.c": "5310de9dcc0e40a374d168f73ffa8de2222de654378c7bfc6c50c4255e851cbb",
+    "tools/c_recovery/seed.h": "4f9e0c6e3026967450b6a29758bedd2e293010187a95e2fd98b0a1c438a0ffc9",
+    "tools/c_recovery/settlement.c": "c6573bbfef750ca81c847efe88b0b3d2b51ac1623a321e8925983bbd59a750a3",
+    "tools/c_recovery/settlement.h": "5714b35cff296141a05bd25428728dc78cc4f22773c6d4d8b4b229f741f6c0f7",
+    "tools/c_recovery/settlement_fixture.h": "af8305a0f0610de1301bf81349fe59f97f22920e7f6d6c91660efa2de3f7f345",
+    "tools/c_recovery/talk.c": "c11731280c6493edc62fa942cf83882fe943d7d22708e84c1a36e6df772fd05b",
+    "tools/c_recovery/talk.h": "c99ee60ca8735c90e40c207da8c6dc999f9e3818320d6a1488d4490867082fd7",
+    "tools/c_recovery/talk_fixture.h": "35595eef47e05639587095e85af84a28f3e290cfacf488214a9c84ccfc695127",
+    "tools/c_recovery/talk_generated.inc": "874483d09b8a18bbbecd9f5e5a26561eee91f1cbe6b620f78bb5f401a2f72b6c",
+    "tools/c_recovery/vga.c": "9c9c75270422a8950d9d09c1321d5093423d2eada6d5bde3e417c9d711ba9b5b",
+    "tools/c_recovery/vga.h": "40f9e9ee054830df5c95e5bbe0185f82f3b8d7d8e9e780510da29794b2ab7699",
+    "tools/c_recovery/vga_fixture.h": "97ab311f79b371c26b90d450466173e9ac90e70c55f6862a204bef40db569096",
+    "tools/c_recovery/world_update.c": "90ea41a06b727fc12074c1347e831f6fbac7fb0535265bfbfa7eac7795437602",
+    "tools/c_recovery/world_update.h": "9782b21c1397d277680b0165b27d697bf7191ad099b399dfc0a875af91f5f088",
+    "tools/c_recovery/world_update_fixture.h": "0d2866252dc0339d08d45431beac7359019b29fd80717e07219396cf418ab853",
+    "tools/c_recovery_mapcells.go": "6f5086060e71350ac714271ccf839774f4a7fe93bf2b6d9fa058d4e1f3aac189",
+    "tools/c_recovery_vga_bus.go": "b842e1561a96da289bac5ed83f4756c2d6e77883681227651034aad3625d0c86",
+    "tools/c_recovery_mapcells_generate.py": "aca709bf2cfb514ac41ac051ec6403493305bb264062c1b6a3955720c0db90fe",
+    "tools/c_recovery_display_generate.py": "af149fc48d2eeafc89d9849c3a44ee386c4e2a52993a0a410f238cd93b0d56ac"
+  },
+  "compiled_source_manifest_sha256": "bc1f51bf9365d7fd62e5d2175209f9bdbedcdee6838aabd292a472c5a8de45dc",
+  "verification_tools_sha256": {
+    "tools/c_recovery_mapcells.sh": "3f1e97085a4e62a231a97c4b8ece77c98af078fa0d2a058331db823edbabe59f",
+    "tools/c_recovery_mapcells_verify.py": "46eb7c4afbe68cc2746d3483b001527cf8fccb26e23b1a8471cb1acb2bba2d87",
+    "tools/c_recovery_mapcells_prepare.py": "3b673179a255381366985cfb033ef20b9fa40bde4d9149628e31b5918a1b8ec2",
+    "tools/ida_scene_probe.py": "e3ca54f91ba61531a0604546cdfd89a684d4cb5f2a9f7e329c86eeb9469f596d",
+    "tools/rle.py": "2aa22684bc2d19450e347ebb17014b062d59a3f9e5212eb87dcbdb9a7aa94cd9"
+  },
+  "cases_per_optimization": 2622,
+  "groups": {
+    "init": 12,
+    "copy": 10,
+    "background": 768,
+    "overlay": 512,
+    "flush": 16,
+    "flags": 1024,
+    "push": 256,
+    "render": 8,
+    "pipeline": 16
+  },
+  "source_composite_audits": 512,
+  "tile_blit_audits": 256,
+  "max_original_steps": {
+    "background": 232,
+    "copy": 8397,
+    "flags": 13456,
+    "flush": 234,
+    "init": 6460,
+    "overlay": 485,
+    "pipeline": 238005,
+    "push": 39,
+    "render": 2969875
+  },
+  "original_step_bound": 4000000,
+  "helper_preconditions": "sub_1D7E7 requires DF=0 as established by original renderer CLD; DF=1 overwrites its own executing code. Other safe DF branches remain sampled.",
+  "receipt_sha256": {
+    "O0": "1a11353db805b980738769100c57886e1e4fec4568509b8647f99b554a2e62b8",
+    "O2": "1a11353db805b980738769100c57886e1e4fec4568509b8647f99b554a2e62b8"
+  },
+  "negative_controls_rejected": 12,
+  "mutants": {
+    "1": {
+      "group": "copy",
+      "first_rejected": 1,
+      "receipt_sha256": "60bfe643f16ea1144afb92b06c7dbe9924c6b541d0c310414f026ddf602ff0d9"
+    },
+    "2": {
+      "group": "copy",
+      "first_rejected": 1,
+      "receipt_sha256": "5ff980674b72fe1eb12bfd727b3801b517988d33e2fd126b5f17d6ea04c6c01b"
+    },
+    "3": {
+      "group": "flags",
+      "first_rejected": 66,
+      "receipt_sha256": "100cd399ca0587c95fb53b1d347d8ae5bea7c2d9d3c59de645692cdd3f4bb6ea"
+    },
+    "4": {
+      "group": "flush",
+      "first_rejected": 1,
+      "receipt_sha256": "ebae25db981cb25e61f943b669171064c442b9216365e46996c23d6a7e2b19ef"
+    },
+    "5": {
+      "group": "background",
+      "first_rejected": 3,
+      "receipt_sha256": "f21c92a8f82f7d585b95c819092aa0a1bcee7ac3c7eafdafa93a4e7f36963055"
+    },
+    "6": {
+      "group": "overlay",
+      "first_rejected": 1,
+      "receipt_sha256": "cf5c9a40c91d3b629ed6ea9d41f949ca490c2bf23a0452f98642298490c9c642"
+    },
+    "7": {
+      "group": "overlay",
+      "first_rejected": 1,
+      "receipt_sha256": "f1379b42a6067463914e8cde491406a88a91eb44e970d9fc5da874e40561111c"
+    },
+    "8": {
+      "group": "flush",
+      "first_rejected": 1,
+      "receipt_sha256": "7ae9050367bf2e0972fd29781327cda93a2f5a9cc51009d6e21cd99502af93b6"
+    },
+    "9": {
+      "group": "flags",
+      "first_rejected": 3,
+      "receipt_sha256": "d390c8d4ef5863085ab10ffb3049618cd2b0d1237233f8f6c1dfe047b0ad9e63"
+    },
+    "10": {
+      "group": "flags",
+      "first_rejected": 514,
+      "receipt_sha256": "ab070920779d6c2c083249a2323f604e99eaf0b026d68b78ef220b8ffdfcece1"
+    },
+    "11": {
+      "group": "push",
+      "first_rejected": 81,
+      "receipt_sha256": "0432252483c057be4f732a0d8e9a1ff6dbbae1440f01d3a3d73e09e139d1c853"
+    },
+    "12": {
+      "group": "push",
+      "first_rejected": 69,
+      "receipt_sha256": "a9ad6674b19381ae36da9d13fe5f84f4033f6c5001dac90247cc553c611398b4"
+    }
+  },
+  "entries_seen": {
+    "sub_1D46A": 10,
+    "sub_1D483": 16,
+    "sub_1D4C7": 260,
+    "sub_1D615": 14,
+    "sub_1D66A": 1036,
+    "sub_1D76B": 7776,
+    "sub_1D782": 4220,
+    "sub_1D796": 12004,
+    "sub_1D7E7": 8024,
+    "sub_1D804": 27734
+  },
+  "exact_clean_regeneration": true,
+  "tool_versions": "go version go1.26.7 linux/amd64\ngcc (Debian 12.2.0-14+deb12u1) 12.2.0\nCopyright (C) 2022 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "oracle_revision": "a9714ebdab2ad6b529f81225472680f2b11f2842",
+  "oracle_compiled_tree_sha256": "d37ffeb9be887541f89e9cff80ea5a159620b77b524d54527950ce3554a6f126",
+  "scope": "Original 40x23 display records: segment init, map sampling, clipped four-overlay producer, all 256 flag values and tile IDs, cached/direct/background/masked/capital paths, four-plane blit and linked source/init/copy/push/render. Independent MMAP decoder/source composites and VGA buses; full RAM/planes/ABI/I/O. Normal player scene, army/object producer chains and original C machine code remain outside evidence",
+  "c_machine_code_match": false
+}

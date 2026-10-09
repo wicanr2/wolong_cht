@@ -334,3 +334,9 @@ sub_120D6:
 原始 `and dl,0F8h`／`and bl,0F8h` 只改 low byte，high byte 保留。完整 word 等價
 遮罩為 FFF8h，先前公式的 F8h 少了 high byte；Y≥256 的直接原版/C 矩陣見
 [`re/103`](103-c-hotspot-restoration.md)。原始運算元與歷史 DB 身分不變。
+
+## 後續原始 C 顯示格
+
+[re/114](114-c-world-map-cells-restoration.md) 以原始初始化、取圖、四張推入上限、
+快取／髒格與四 plane 合成完成局部 C 閉包。上游軍團／物件 producer、正常玩家與
+原作者 C 機器碼仍依該收據的界線判讀。

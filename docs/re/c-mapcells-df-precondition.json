@@ -1,0 +1,74 @@
+{
+  "schema": "wolong-mapcells-df-precondition-v1",
+  "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "receipt_sha256": "275c0b4e2fd58cef30dbecafb51842835469a6021e67d9a51bbf8b0186f12920",
+  "original_function": "sub_1D7E7",
+  "ida_linear": 120807,
+  "address_space": "IDA database linear; runtime CS/offset stored separately",
+  "runtime_input": {
+    "AX": 113,
+    "BX": 170,
+    "CX": 0,
+    "DX": 98,
+    "SI": 0,
+    "DI": 2560,
+    "BP": 26505,
+    "SP": 32768,
+    "DS": 12288,
+    "ES": 41160,
+    "SS": 36864,
+    "CS": 272,
+    "IP": 55271,
+    "Flags": 1026
+  },
+  "original_final": {
+    "AX": 0,
+    "BX": 170,
+    "CX": 256,
+    "DX": 0,
+    "SI": 0,
+    "DI": 2560,
+    "BP": 26505,
+    "SP": 32778,
+    "DS": 0,
+    "ES": 0,
+    "SS": 36864,
+    "CS": 272,
+    "IP": 256,
+    "Flags": 130
+  },
+  "c_final": {
+    "AX": 41160,
+    "BX": 170,
+    "CX": 0,
+    "DX": 98,
+    "SI": 0,
+    "DI": 2560,
+    "BP": 26505,
+    "SP": 32770,
+    "DS": 12288,
+    "ES": 41160,
+    "SS": 36864,
+    "CS": 272,
+    "IP": 256,
+    "Flags": 1094
+  },
+  "original_ram_sha256": "be1435d2b00e5a130902a6ebb1e80270d196ccfe7814bab47d2aba723bfb8958",
+  "c_ram_sha256": "779c80a25d69cd24615165b007ef4c39053691c1eb3015fd1a81889a754de911",
+  "compiled_source_manifest_sha256": "d701aca94a3754d50ce668903a9631d6e21bfba51dba8850c3462c4b31692753",
+  "write_offset_range": [
+    55258,
+    55386
+  ],
+  "function_offset_range": [
+    55271,
+    55300
+  ],
+  "level": "proven",
+  "scope": "DF=1 reverse REP MOVSW writes over its own original code. Original renderer clears DF. This damaged-code input is excluded from native helper parity; safe DF inputs remain sampled.",
+  "sources": [
+    "tools/ida_scene_probe.py",
+    "docs/re/114-c-world-map-cells-restoration.md",
+    "docs/spec/234-c-world-map-cells.md"
+  ]
+}

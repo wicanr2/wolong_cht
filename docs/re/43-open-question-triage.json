@@ -12932,6 +12932,58 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "原 TSR 音色與硬體時序尚未驗證；本輪 API 比對不代證。"
+    },
+    {
+      "file": "docs/re/114-c-world-map-cells-restoration.md",
+      "item": "完整場景退出與 producer",
+      "status": "小地圖、軍團／物件推入端及正常玩家流程仍需後續接線",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-32c18f6ab04b8f4b35a8",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "世界顯示格 C 的局部界線；上游 producer、正常玩家與原 C 工具鏈不由本閉包代證。"
+    },
+    {
+      "file": "docs/re/114-c-world-map-cells-restoration.md",
+      "item": "原作者 C 工具鏈／機器碼",
+      "status": "尚未確認",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-1106c7573b58f56a997e",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "世界顯示格 C 的局部界線；上游 producer、正常玩家與原 C 工具鏈不由本閉包代證。"
+    },
+    {
+      "file": "docs/spec/234-c-world-map-cells.md",
+      "item": "正常玩家與上游 producer",
+      "status": "本閉包不代證完整場景退出與軍團／物件更新",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-b7066d85c7660984b7fa",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "世界顯示格 C 的局部界線；上游 producer、正常玩家與原 C 工具鏈不由本閉包代證。"
+    },
+    {
+      "file": "docs/spec/234-c-world-map-cells.md",
+      "item": "原作者 C compiler／machine code",
+      "status": "尚未確認",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-b53f3a119f789e66fd7b",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "世界顯示格 C 的局部界線；上游 producer、正常玩家與原 C 工具鏈不由本閉包代證。"
     }
   ]
 }

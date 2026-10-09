@@ -282,6 +282,7 @@
 | C 訊息等待與滑鼠 | [`231-c-input-mouse.md`](231-c-input-mouse.md) | CONFORMED，19 函式／210 組／三個還原／十二錯版拒絕 |
 | C selector 與 popup | [`232-c-choice-selector.md`](232-c-choice-selector.md) | CONFORMED，14 函式／138 組／三個 XOR 還原／十二錯版 |
 | C resource 與 cue | [`233-c-resource-cue.md`](233-c-resource-cue.md) | CONFORMED，六函式／93 組／21 個 buffer／十二錯版 |
+| C 世界顯示格 | [`234-c-world-map-cells.md`](234-c-world-map-cells.md) | CONFORMED，10 函式／2,622 組／768 次素材比對／十二錯版 |
 
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的

@@ -82798,113 +82798,113 @@ int 0x3
 .org 0xd66a
 sub_1D46A:
 # IDA 0x1d46a; file 0xd66a; locator=proven; mov     cs:word_1D84A, ax
-# ⚠ 函式 sub_1D46A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D46A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cs; mov word ptr [0xd84a], ax
 .org 0xd66e
 # IDA 0x1d46e; file 0xd66e; locator=proven; add     ax, 800h
-# ⚠ 函式 sub_1D46A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D46A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 add ax, 0x800
 .org 0xd671
 # IDA 0x1d471; file 0xd671; locator=proven; mov     cs:word_1D84C, ax
-# ⚠ 函式 sub_1D46A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D46A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cs; mov word ptr [0xd84c], ax
 .org 0xd675
 # IDA 0x1d475; file 0xd675; locator=proven; mov     cs:word_1D84E, bx
-# ⚠ 函式 sub_1D46A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D46A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cs; mov word ptr [0xd84e], bx
 .org 0xd67a
 # IDA 0x1d47a; file 0xd67a; locator=proven; mov     cs:word_1D850, cx
-# ⚠ 函式 sub_1D46A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D46A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cs; mov word ptr [0xd850], cx
 .org 0xd67f
 # IDA 0x1d47f; file 0xd67f; locator=proven; call    sub_1D483
-# ⚠ 函式 sub_1D46A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D46A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 call .+4
 .org 0xd682
 # IDA 0x1d482; file 0xd682; locator=proven; retn
-# ⚠ 函式 sub_1D46A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D46A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 ret
 .org 0xd683
 sub_1D483:
 # IDA 0x1d483; file 0xd683; locator=proven; push    es
-# ⚠ 函式 sub_1D483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D483; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push es
 .org 0xd684
 # IDA 0x1d484; file 0xd684; locator=proven; push    ax
-# ⚠ 函式 sub_1D483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D483; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push ax
 .org 0xd685
 # IDA 0x1d485; file 0xd685; locator=proven; push    cx
-# ⚠ 函式 sub_1D483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D483; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push cx
 .org 0xd686
 # IDA 0x1d486; file 0xd686; locator=proven; push    di
-# ⚠ 函式 sub_1D483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D483; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push di
 .org 0xd687
 # IDA 0x1d487; file 0xd687; locator=proven; mov     es, cs:word_1D84E
-# ⚠ 函式 sub_1D483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D483; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cs; mov es, word ptr [0xd84e]
 .org 0xd68c
 # IDA 0x1d48c; file 0xd68c; locator=proven; xor     di, di
-# ⚠ 函式 sub_1D483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D483; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} xor di, di
 .org 0xd68e
 # IDA 0x1d48e; file 0xd68e; locator=proven; mov     cx, 398h
-# ⚠ 函式 sub_1D483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D483; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov cx, 0x398
 .org 0xd691
 # IDA 0x1d491; file 0xd691; locator=proven; cld
-# ⚠ 函式 sub_1D483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D483; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cld
 .org 0xd692
 loc_1D492:
 # IDA 0x1d492; file 0xd692; locator=proven; mov     ax, 40h
-# ⚠ 函式 sub_1D483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D483; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ax, 0x40
 .org 0xd695
 # IDA 0x1d495; file 0xd695; locator=proven; stosw
-# ⚠ 函式 sub_1D483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D483; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 stosw
 .org 0xd696
 # IDA 0x1d496; file 0xd696; locator=proven; mov     ax, 0FFFFh
-# ⚠ 函式 sub_1D483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D483; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ax, 0xffff
 .org 0xd699
 # IDA 0x1d499; file 0xd699; locator=proven; stosw
-# ⚠ 函式 sub_1D483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D483; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 stosw
 .org 0xd69a
 # IDA 0x1d49a; file 0xd69a; locator=proven; stosw
-# ⚠ 函式 sub_1D483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D483; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 stosw
 .org 0xd69b
 # IDA 0x1d49b; file 0xd69b; locator=proven; stosw
-# ⚠ 函式 sub_1D483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D483; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 stosw
 .org 0xd69c
 # IDA 0x1d49c; file 0xd69c; locator=proven; loop    loc_1D492
-# ⚠ 函式 sub_1D483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D483; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 loop .-10
 .org 0xd69e
 # IDA 0x1d49e; file 0xd69e; locator=proven; pop     di
-# ⚠ 函式 sub_1D483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D483; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop di
 .org 0xd69f
 # IDA 0x1d49f; file 0xd69f; locator=proven; pop     cx
-# ⚠ 函式 sub_1D483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D483; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop cx
 .org 0xd6a0
 # IDA 0x1d4a0; file 0xd6a0; locator=proven; pop     ax
-# ⚠ 函式 sub_1D483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D483; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop ax
 .org 0xd6a1
 # IDA 0x1d4a1; file 0xd6a1; locator=proven; pop     es
-# ⚠ 函式 sub_1D483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D483; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop es
 .org 0xd6a2
 # IDA 0x1d4a2; file 0xd6a2; locator=proven; retn
-# ⚠ 函式 sub_1D483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D483; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 ret
 .org 0xd6a3
 sub_1D4A3:
@@ -82979,161 +82979,161 @@ ret
 .org 0xd6c7
 sub_1D4C7:
 # IDA 0x1d4c7; file 0xd6c7; locator=proven; sub     bx, cs:word_1D856
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cs; sub bx, word ptr [0xd856]
 .org 0xd6cc
 # IDA 0x1d4cc; file 0xd6cc; locator=proven; jb      short locret_1D51E
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jb .+82
 .org 0xd6ce
 # IDA 0x1d4ce; file 0xd6ce; locator=proven; cmp     bx, 17h
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cmp bx, 0x17
 .org 0xd6d1
 # IDA 0x1d4d1; file 0xd6d1; locator=proven; jnb     short locret_1D51E
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jnb .+77
 .org 0xd6d3
 # IDA 0x1d4d3; file 0xd6d3; locator=proven; sub     dx, cs:word_1D854
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cs; sub dx, word ptr [0xd854]
 .org 0xd6d8
 # IDA 0x1d4d8; file 0xd6d8; locator=proven; jb      short locret_1D51E
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jb .+70
 .org 0xd6da
 # IDA 0x1d4da; file 0xd6da; locator=proven; cmp     dx, 28h
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cmp dx, 0x28
 .org 0xd6dd
 # IDA 0x1d4dd; file 0xd6dd; locator=proven; jnb     short locret_1D51E
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jnb .+65
 .org 0xd6df
 # IDA 0x1d4df; file 0xd6df; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 shl bx, 0x1
 .org 0xd6e1
 # IDA 0x1d4e1; file 0xd6e1; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 shl bx, 0x1
 .org 0xd6e3
 # IDA 0x1d4e3; file 0xd6e3; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 shl bx, 0x1
 .org 0xd6e5
 # IDA 0x1d4e5; file 0xd6e5; locator=proven; add     dx, bx
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} add dx, bx
 .org 0xd6e7
 # IDA 0x1d4e7; file 0xd6e7; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 shl bx, 0x1
 .org 0xd6e9
 # IDA 0x1d4e9; file 0xd6e9; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 shl bx, 0x1
 .org 0xd6eb
 # IDA 0x1d4eb; file 0xd6eb; locator=proven; add     bx, dx
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} add bx, dx
 .org 0xd6ed
 # IDA 0x1d4ed; file 0xd6ed; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 shl bx, 0x1
 .org 0xd6ef
 # IDA 0x1d4ef; file 0xd6ef; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 shl bx, 0x1
 .org 0xd6f1
 # IDA 0x1d4f1; file 0xd6f1; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 shl bx, 0x1
 .org 0xd6f3
 # IDA 0x1d4f3; file 0xd6f3; locator=proven; push    ds
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push ds
 .org 0xd6f4
 # IDA 0x1d4f4; file 0xd6f4; locator=proven; push    si
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push si
 .org 0xd6f5
 # IDA 0x1d4f5; file 0xd6f5; locator=proven; mov     si, bx
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} mov si, bx
 .org 0xd6f7
 # IDA 0x1d4f7; file 0xd6f7; locator=proven; mov     ds, cs:word_1D84E
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cs; mov ds, word ptr [0xd84e]
 .org 0xd6fc
 # IDA 0x1d4fc; file 0xd6fc; locator=proven; mov     bx, [si]
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov bx, word ptr [si]
 .org 0xd6fe
 # IDA 0x1d4fe; file 0xd6fe; locator=proven; test    bl, 10h
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 test bl, 0x10
 .org 0xd701
 # IDA 0x1d501; file 0xd701; locator=proven; jnz     short loc_1D51C
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jnz .+27
 .org 0xd703
 # IDA 0x1d503; file 0xd703; locator=proven; mov     bl, bh
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} mov bl, bh
 .org 0xd705
 # IDA 0x1d505; file 0xd705; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} xor bh, bh
 .org 0xd707
 # IDA 0x1d507; file 0xd707; locator=proven; cmp     bl, 4
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cmp bl, 0x4
 .org 0xd70a
 # IDA 0x1d50a; file 0xd70a; locator=proven; jnb     short loc_1D51C
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jnb .+18
 .org 0xd70c
 # IDA 0x1d50c; file 0xd70c; locator=proven; mov     ah, al
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} mov ah, al
 .org 0xd70e
 # IDA 0x1d50e; file 0xd70e; locator=proven; xchg    al, [bx+si+3]
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 xchg al, byte ptr [bx+si+0x3]
 .org 0xd711
 # IDA 0x1d511; file 0xd711; locator=proven; inc     bx
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 inc bx
 .org 0xd712
 # IDA 0x1d512; file 0xd712; locator=proven; mov     [si+1], bl
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov byte ptr [si+0x1], bl
 .org 0xd715
 # IDA 0x1d515; file 0xd715; locator=proven; cmp     al, ah
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} cmp al, ah
 .org 0xd717
 # IDA 0x1d517; file 0xd717; locator=proven; jz      short loc_1D51C
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jz .+5
 .org 0xd719
 # IDA 0x1d519; file 0xd719; locator=proven; or      byte ptr [si], 20h
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 or byte ptr [si], 0x20
 .org 0xd71c
 loc_1D51C:
 # IDA 0x1d51c; file 0xd71c; locator=proven; pop     si
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop si
 .org 0xd71d
 # IDA 0x1d51d; file 0xd71d; locator=proven; pop     ds
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop ds
 .org 0xd71e
 locret_1D51E:
 # IDA 0x1d51e; file 0xd71e; locator=proven; retn
-# ⚠ 函式 sub_1D4C7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4C7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 ret
 .org 0xd71f
 loc_1D51F:
@@ -83606,1081 +83606,1081 @@ ret
 .org 0xd815
 sub_1D615:
 # IDA 0x1d615; file 0xd815; locator=proven; push    ds
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push ds
 .org 0xd816
 # IDA 0x1d616; file 0xd816; locator=proven; push    es
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push es
 .org 0xd817
 # IDA 0x1d617; file 0xd817; locator=proven; push    si
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push si
 .org 0xd818
 # IDA 0x1d618; file 0xd818; locator=proven; push    di
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push di
 .org 0xd819
 # IDA 0x1d619; file 0xd819; locator=proven; mov     cs:word_1D854, dx
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cs; mov word ptr [0xd854], dx
 .org 0xd81e
 # IDA 0x1d61e; file 0xd81e; locator=proven; mov     cs:word_1D856, bx
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cs; mov word ptr [0xd856], bx
 .org 0xd823
 # IDA 0x1d623; file 0xd823; locator=proven; mov     di, dx
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} mov di, dx
 .org 0xd825
 # IDA 0x1d625; file 0xd825; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} xor bh, bh
 .org 0xd827
 # IDA 0x1d627; file 0xd827; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 shl bx, 0x1
 .org 0xd829
 # IDA 0x1d629; file 0xd829; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 shl bx, 0x1
 .org 0xd82b
 # IDA 0x1d62b; file 0xd82b; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 shl bx, 0x1
 .org 0xd82d
 # IDA 0x1d62d; file 0xd82d; locator=proven; mov     ax, bx
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} mov ax, bx
 .org 0xd82f
 # IDA 0x1d62f; file 0xd82f; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 shl bx, 0x1
 .org 0xd831
 # IDA 0x1d631; file 0xd831; locator=proven; add     ax, bx
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} add ax, bx
 .org 0xd833
 # IDA 0x1d633; file 0xd833; locator=proven; add     ax, cs:word_1D850
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cs; add ax, word ptr [0xd850]
 .org 0xd838
 # IDA 0x1d638; file 0xd838; locator=proven; mov     es, ax
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov es, ax
 .org 0xd83a
 # IDA 0x1d63a; file 0xd83a; locator=proven; mov     ds, cs:word_1D84E
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cs; mov ds, word ptr [0xd84e]
 .org 0xd83f
 # IDA 0x1d63f; file 0xd83f; locator=proven; xor     si, si
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} xor si, si
 .org 0xd841
 # IDA 0x1d641; file 0xd841; locator=proven; mov     bx, 2
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov bx, 0x2
 .org 0xd844
 # IDA 0x1d644; file 0xd844; locator=proven; mov     dx, 17h
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov dx, 0x17
 .org 0xd847
 loc_1D647:
 # IDA 0x1d647; file 0xd847; locator=proven; mov     cx, 28h
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov cx, 0x28
 .org 0xd84a
 loc_1D64A:
 # IDA 0x1d64a; file 0xd84a; locator=proven; mov     al, es:[di]
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 es; mov al, byte ptr [di]
 .org 0xd84d
 # IDA 0x1d64d; file 0xd84d; locator=proven; mov     ah, al
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} mov ah, al
 .org 0xd84f
 # IDA 0x1d64f; file 0xd84f; locator=proven; xchg    al, [bx+si]
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 xchg al, byte ptr [bx+si]
 .org 0xd851
 # IDA 0x1d651; file 0xd851; locator=proven; cmp     al, ah
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} cmp al, ah
 .org 0xd853
 # IDA 0x1d653; file 0xd853; locator=proven; jz      short loc_1D658
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jz .+5
 .org 0xd855
 # IDA 0x1d655; file 0xd855; locator=proven; or      byte ptr [si], 60h
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 or byte ptr [si], 0x60
 .org 0xd858
 loc_1D658:
 # IDA 0x1d658; file 0xd858; locator=proven; add     si, 8
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 add si, 0x8
 .org 0xd85b
 # IDA 0x1d65b; file 0xd85b; locator=proven; inc     di
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 inc di
 .org 0xd85c
 # IDA 0x1d65c; file 0xd85c; locator=proven; loop    loc_1D64A
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 loop .-18
 .org 0xd85e
 # IDA 0x1d65e; file 0xd85e; locator=proven; add     di, 158h
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 add di, 0x158
 .org 0xd862
 # IDA 0x1d662; file 0xd862; locator=proven; dec     dx
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 dec dx
 .org 0xd863
 # IDA 0x1d663; file 0xd863; locator=proven; jnz     short loc_1D647
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jnz .-28
 .org 0xd865
 # IDA 0x1d665; file 0xd865; locator=proven; pop     di
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop di
 .org 0xd866
 # IDA 0x1d666; file 0xd866; locator=proven; pop     si
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop si
 .org 0xd867
 # IDA 0x1d667; file 0xd867; locator=proven; pop     es
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop es
 .org 0xd868
 # IDA 0x1d668; file 0xd868; locator=proven; pop     ds
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop ds
 .org 0xd869
 # IDA 0x1d669; file 0xd869; locator=proven; retn
-# ⚠ 函式 sub_1D615; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D615; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 ret
 .org 0xd86a
 sub_1D66A:
 # IDA 0x1d66a; file 0xd86a; locator=proven; push    ds
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push ds
 .org 0xd86b
 # IDA 0x1d66b; file 0xd86b; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov dx, 0x3ce
 .org 0xd86e
 # IDA 0x1d66e; file 0xd86e; locator=proven; mov     ax, 5
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ax, 0x5
 .org 0xd871
 # IDA 0x1d671; file 0xd871; locator=proven; out     dx, ax
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 out dx, ax
 .org 0xd872
 # IDA 0x1d672; file 0xd872; locator=proven; mov     ax, 1
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ax, 0x1
 .org 0xd875
 # IDA 0x1d675; file 0xd875; locator=proven; out     dx, ax
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 out dx, ax
 .org 0xd876
 # IDA 0x1d676; file 0xd876; locator=proven; mov     ax, 3
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ax, 0x3
 .org 0xd879
 # IDA 0x1d679; file 0xd879; locator=proven; out     dx, ax
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 out dx, ax
 .org 0xd87a
 # IDA 0x1d67a; file 0xd87a; locator=proven; mov     ax, 0FF08h
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ax, 0xff08
 .org 0xd87d
 # IDA 0x1d67d; file 0xd87d; locator=proven; out     dx, ax
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 out dx, ax
 .org 0xd87e
 # IDA 0x1d67e; file 0xd87e; locator=proven; cld
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cld
 .org 0xd87f
 # IDA 0x1d67f; file 0xd87f; locator=proven; mov     ax, 0A0C8h
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ax, 0xa0c8
 .org 0xd882
 # IDA 0x1d682; file 0xd882; locator=proven; mov     es, ax
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov es, ax
 .org 0xd884
 # IDA 0x1d684; file 0xd884; locator=proven; mov     bp, cs:word_1D84E
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cs; mov bp, word ptr [0xd84e]
 .org 0xd889
 # IDA 0x1d689; file 0xd889; locator=proven; mov     ds, bp
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ds, bp
 .org 0xd88b
 # IDA 0x1d68b; file 0xd88b; locator=proven; xor     si, si
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} xor si, si
 .org 0xd88d
 # IDA 0x1d68d; file 0xd88d; locator=proven; mov     di, 0A00h
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov di, 0xa00
 .org 0xd890
 # IDA 0x1d690; file 0xd890; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} xor bh, bh
 .org 0xd892
 # IDA 0x1d692; file 0xd892; locator=proven; mov     ch, 17h
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ch, 0x17
 .org 0xd894
 loc_1D694:
 # IDA 0x1d694; file 0xd894; locator=proven; mov     cl, 28h
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov cl, 0x28
 .org 0xd896
 loc_1D696:
 # IDA 0x1d696; file 0xd896; locator=proven; mov     dx, [si]
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov dx, word ptr [si]
 .org 0xd898
 # IDA 0x1d698; file 0xd898; locator=proven; test    dl, 10h
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 test dl, 0x10
 .org 0xd89b
 # IDA 0x1d69b; file 0xd89b; locator=proven; jz      short loc_1D6A0
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jz .+5
 .org 0xd89d
 # IDA 0x1d69d; file 0xd89d; locator=proven; jmp     loc_1D747
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {disp16} jmp .+170
 .org 0xd8a0
 loc_1D6A0:
 # IDA 0x1d6a0; file 0xd8a0; locator=proven; and     dh, dh
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} and dh, dh
 .org 0xd8a2
 # IDA 0x1d6a2; file 0xd8a2; locator=proven; jz      short loc_1D6B4
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jz .+18
 .org 0xd8a4
 # IDA 0x1d6a4; file 0xd8a4; locator=proven; test    dl, 20h
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 test dl, 0x20
 .org 0xd8a7
 # IDA 0x1d6a7; file 0xd8a7; locator=proven; jnz     short loc_1D6DF
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jnz .+56
 .org 0xd8a9
 # IDA 0x1d6a9; file 0xd8a9; locator=proven; mov     al, dl
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} mov al, dl
 .org 0xd8ab
 # IDA 0x1d6ab; file 0xd8ab; locator=proven; and     al, 0Fh
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 and al, 0xf
 .org 0xd8ad
 # IDA 0x1d6ad; file 0xd8ad; locator=proven; cmp     al, dh
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} cmp al, dh
 .org 0xd8af
 # IDA 0x1d6af; file 0xd8af; locator=proven; jnz     short loc_1D6DF
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jnz .+48
 .org 0xd8b1
 # IDA 0x1d6b1; file 0xd8b1; locator=proven; jmp     loc_1D747
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {disp16} jmp .+150
 .org 0xd8b4
 loc_1D6B4:
 # IDA 0x1d6b4; file 0xd8b4; locator=proven; test    dl, 40h
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 test dl, 0x40
 .org 0xd8b7
 # IDA 0x1d6b7; file 0xd8b7; locator=proven; jnz     short loc_1D6BC
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jnz .+5
 .org 0xd8b9
 # IDA 0x1d6b9; file 0xd8b9; locator=proven; jmp     loc_1D747
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {disp16} jmp .+142
 .org 0xd8bc
 loc_1D6BC:
 # IDA 0x1d6bc; file 0xd8bc; locator=proven; cmp     dl, 80h
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cmp dl, 0x80
 .org 0xd8bf
 # IDA 0x1d6bf; file 0xd8bf; locator=proven; jnb     short loc_1D71B
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jnb .+92
 .org 0xd8c1
 # IDA 0x1d6c1; file 0xd8c1; locator=proven; mov     byte ptr [si], 0
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov byte ptr [si], 0x0
 .org 0xd8c4
 # IDA 0x1d6c4; file 0xd8c4; locator=proven; mov     ah, [si+2]
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ah, byte ptr [si+0x2]
 .org 0xd8c7
 # IDA 0x1d6c7; file 0xd8c7; locator=proven; mov     ds, cs:word_1D84A
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cs; mov ds, word ptr [0xd84a]
 .org 0xd8cc
 # IDA 0x1d6cc; file 0xd8cc; locator=proven; call    sub_1D782
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 call .+182
 .org 0xd8cf
 # IDA 0x1d6cf; file 0xd8cf; locator=proven; mov     ds, bp
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ds, bp
 .org 0xd8d1
 # IDA 0x1d6d1; file 0xd8d1; locator=proven; mov     ax, 0FFFFh
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ax, 0xffff
 .org 0xd8d4
 # IDA 0x1d6d4; file 0xd8d4; locator=proven; mov     [si+3], al
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov byte ptr [si+0x3], al
 .org 0xd8d7
 # IDA 0x1d6d7; file 0xd8d7; locator=proven; mov     [si+4], ax
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov word ptr [si+0x4], ax
 .org 0xd8da
 # IDA 0x1d6da; file 0xd8da; locator=proven; mov     [si+6], ax
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov word ptr [si+0x6], ax
 .org 0xd8dd
 # IDA 0x1d6dd; file 0xd8dd; locator=proven; jmp     short loc_1D747
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jmp .+106
 .org 0xd8df
 loc_1D6DF:
 # IDA 0x1d6df; file 0xd8df; locator=proven; mov     al, dh
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} mov al, dh
 .org 0xd8e1
 # IDA 0x1d6e1; file 0xd8e1; locator=proven; or      al, 40h
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 or al, 0x40
 .org 0xd8e3
 # IDA 0x1d6e3; file 0xd8e3; locator=proven; mov     [si], al
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov byte ptr [si], al
 .org 0xd8e5
 # IDA 0x1d6e5; file 0xd8e5; locator=proven; mov     ah, [si+2]
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ah, byte ptr [si+0x2]
 .org 0xd8e8
 # IDA 0x1d6e8; file 0xd8e8; locator=proven; mov     ds, cs:word_1D84A
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cs; mov ds, word ptr [0xd84a]
 .org 0xd8ed
 # IDA 0x1d6ed; file 0xd8ed; locator=proven; call    sub_1D7E7
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 call .+250
 .org 0xd8f0
 # IDA 0x1d6f0; file 0xd8f0; locator=proven; mov     ds, bp
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ds, bp
 .org 0xd8f2
 # IDA 0x1d6f2; file 0xd8f2; locator=proven; mov     bl, 3
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov bl, 0x3
 .org 0xd8f4
 loc_1D6F4:
 # IDA 0x1d6f4; file 0xd8f4; locator=proven; mov     ah, [bx+si]
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ah, byte ptr [bx+si]
 .org 0xd8f6
 # IDA 0x1d6f6; file 0xd8f6; locator=proven; mov     ds, cs:word_1D84C
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cs; mov ds, word ptr [0xd84c]
 .org 0xd8fb
 # IDA 0x1d6fb; file 0xd8fb; locator=proven; call    sub_1D804
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 call .+265
 .org 0xd8fe
 # IDA 0x1d6fe; file 0xd8fe; locator=proven; mov     ds, bp
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ds, bp
 .org 0xd900
 # IDA 0x1d700; file 0xd900; locator=proven; inc     bx
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 inc bx
 .org 0xd901
 # IDA 0x1d701; file 0xd901; locator=proven; dec     dh
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 dec dh
 .org 0xd903
 # IDA 0x1d703; file 0xd903; locator=proven; jnz     short loc_1D6F4
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jnz .-15
 .org 0xd905
 # IDA 0x1d705; file 0xd905; locator=proven; cmp     bl, 8
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cmp bl, 0x8
 .org 0xd908
 # IDA 0x1d708; file 0xd908; locator=proven; jnb     short loc_1D714
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jnb .+12
 .org 0xd90a
 # IDA 0x1d70a; file 0xd90a; locator=proven; mov     al, 0FFh
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov al, 0xff
 .org 0xd90c
 loc_1D70C:
 # IDA 0x1d70c; file 0xd90c; locator=proven; mov     [bx+si], al
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov byte ptr [bx+si], al
 .org 0xd90e
 # IDA 0x1d70e; file 0xd90e; locator=proven; inc     bx
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 inc bx
 .org 0xd90f
 # IDA 0x1d70f; file 0xd90f; locator=proven; cmp     bl, 8
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cmp bl, 0x8
 .org 0xd912
 # IDA 0x1d712; file 0xd912; locator=proven; jb      short loc_1D70C
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jb .-6
 .org 0xd914
 loc_1D714:
 # IDA 0x1d714; file 0xd914; locator=proven; cmp     dl, 80h
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cmp dl, 0x80
 .org 0xd917
 # IDA 0x1d717; file 0xd917; locator=proven; jnb     short loc_1D735
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jnb .+30
 .org 0xd919
 # IDA 0x1d719; file 0xd919; locator=proven; jmp     short loc_1D744
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jmp .+43
 .org 0xd91b
 loc_1D71B:
 # IDA 0x1d71b; file 0xd91b; locator=proven; mov     byte ptr [si], 40h
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov byte ptr [si], 0x40
 .org 0xd91e
 # IDA 0x1d71e; file 0xd91e; locator=proven; mov     ah, [si+2]
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ah, byte ptr [si+0x2]
 .org 0xd921
 # IDA 0x1d721; file 0xd921; locator=proven; mov     dx, 0FFFFh
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov dx, 0xffff
 .org 0xd924
 # IDA 0x1d724; file 0xd924; locator=proven; mov     [si+3], dl
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov byte ptr [si+0x3], dl
 .org 0xd927
 # IDA 0x1d727; file 0xd927; locator=proven; mov     [si+4], dx
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov word ptr [si+0x4], dx
 .org 0xd92a
 # IDA 0x1d72a; file 0xd92a; locator=proven; mov     [si+6], dx
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov word ptr [si+0x6], dx
 .org 0xd92d
 # IDA 0x1d72d; file 0xd92d; locator=proven; mov     ds, cs:word_1D84A
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cs; mov ds, word ptr [0xd84a]
 .org 0xd932
 # IDA 0x1d732; file 0xd932; locator=proven; call    sub_1D7E7
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 call .+181
 .org 0xd935
 loc_1D735:
 # IDA 0x1d735; file 0xd935; locator=proven; mov     ah, 0FFh
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ah, 0xff
 .org 0xd937
 # IDA 0x1d737; file 0xd937; locator=proven; mov     ds, cs:word_1D84C
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 cs; mov ds, word ptr [0xd84c]
 .org 0xd93c
 # IDA 0x1d73c; file 0xd93c; locator=proven; call    sub_1D804
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 call .+200
 .org 0xd93f
 # IDA 0x1d73f; file 0xd93f; locator=proven; mov     ds, bp
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ds, bp
 .org 0xd941
 # IDA 0x1d741; file 0xd941; locator=proven; or      byte ptr [si], 60h
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 or byte ptr [si], 0x60
 .org 0xd944
 loc_1D744:
 # IDA 0x1d744; file 0xd944; locator=proven; call    sub_1D76B
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 call .+39
 .org 0xd947
 loc_1D747:
 # IDA 0x1d747; file 0xd947; locator=proven; mov     byte ptr [si+1], 0
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov byte ptr [si+0x1], 0x0
 .org 0xd94b
 # IDA 0x1d74b; file 0xd94b; locator=proven; add     si, 8
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 add si, 0x8
 .org 0xd94e
 # IDA 0x1d74e; file 0xd94e; locator=proven; inc     di
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 inc di
 .org 0xd94f
 # IDA 0x1d74f; file 0xd94f; locator=proven; inc     di
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 inc di
 .org 0xd950
 # IDA 0x1d750; file 0xd950; locator=proven; dec     cl
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 dec cl
 .org 0xd952
 # IDA 0x1d752; file 0xd952; locator=proven; jz      short loc_1D757
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jz .+5
 .org 0xd954
 # IDA 0x1d754; file 0xd954; locator=proven; jmp     loc_1D696
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {disp16} jmp .-190
 .org 0xd957
 loc_1D757:
 # IDA 0x1d757; file 0xd957; locator=proven; add     di, 4B0h
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 add di, 0x4b0
 .org 0xd95b
 # IDA 0x1d75b; file 0xd95b; locator=proven; dec     ch
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 dec ch
 .org 0xd95d
 # IDA 0x1d75d; file 0xd95d; locator=proven; jz      short loc_1D762
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 jz .+5
 .org 0xd95f
 # IDA 0x1d75f; file 0xd95f; locator=proven; jmp     loc_1D694
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {disp16} jmp .-203
 .org 0xd962
 loc_1D762:
 # IDA 0x1d762; file 0xd962; locator=proven; mov     dx, 3C4h
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov dx, 0x3c4
 .org 0xd965
 # IDA 0x1d765; file 0xd965; locator=proven; mov     ax, 0F02h
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ax, 0xf02
 .org 0xd968
 # IDA 0x1d768; file 0xd968; locator=proven; out     dx, ax
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 out dx, ax
 .org 0xd969
 # IDA 0x1d769; file 0xd969; locator=proven; pop     ds
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop ds
 .org 0xd96a
 # IDA 0x1d76a; file 0xd96a; locator=proven; retn
-# ⚠ 函式 sub_1D66A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D66A; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 ret
 .org 0xd96b
 sub_1D76B:
 # IDA 0x1d76b; file 0xd96b; locator=proven; push    ds
-# ⚠ 函式 sub_1D76B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D76B; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push ds
 .org 0xd96c
 # IDA 0x1d76c; file 0xd96c; locator=proven; push    bx
-# ⚠ 函式 sub_1D76B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D76B; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push bx
 .org 0xd96d
 # IDA 0x1d76d; file 0xd96d; locator=proven; push    cx
-# ⚠ 函式 sub_1D76B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D76B; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push cx
 .org 0xd96e
 # IDA 0x1d76e; file 0xd96e; locator=proven; push    dx
-# ⚠ 函式 sub_1D76B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D76B; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push dx
 .org 0xd96f
 # IDA 0x1d76f; file 0xd96f; locator=proven; push    si
-# ⚠ 函式 sub_1D76B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D76B; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push si
 .org 0xd970
 # IDA 0x1d770; file 0xd970; locator=proven; push    di
-# ⚠ 函式 sub_1D76B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D76B; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push di
 .org 0xd971
 # IDA 0x1d771; file 0xd971; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_1D76B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D76B; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ax, cs
 .org 0xd973
 # IDA 0x1d773; file 0xd973; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_1D76B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D76B; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ds, ax
 .org 0xd975
 # IDA 0x1d775; file 0xd975; locator=proven; mov     si, 0D858h
-# ⚠ 函式 sub_1D76B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D76B; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov si, 0xd858
 .org 0xd978
 # IDA 0x1d778; file 0xd978; locator=proven; call    sub_1D796
-# ⚠ 函式 sub_1D76B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D76B; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 call .+30
 .org 0xd97b
 # IDA 0x1d77b; file 0xd97b; locator=proven; pop     di
-# ⚠ 函式 sub_1D76B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D76B; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop di
 .org 0xd97c
 # IDA 0x1d77c; file 0xd97c; locator=proven; pop     si
-# ⚠ 函式 sub_1D76B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D76B; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop si
 .org 0xd97d
 # IDA 0x1d77d; file 0xd97d; locator=proven; pop     dx
-# ⚠ 函式 sub_1D76B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D76B; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop dx
 .org 0xd97e
 # IDA 0x1d77e; file 0xd97e; locator=proven; pop     cx
-# ⚠ 函式 sub_1D76B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D76B; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop cx
 .org 0xd97f
 # IDA 0x1d77f; file 0xd97f; locator=proven; pop     bx
-# ⚠ 函式 sub_1D76B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D76B; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop bx
 .org 0xd980
 # IDA 0x1d780; file 0xd980; locator=proven; pop     ds
-# ⚠ 函式 sub_1D76B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D76B; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop ds
 .org 0xd981
 # IDA 0x1d781; file 0xd981; locator=proven; retn
-# ⚠ 函式 sub_1D76B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D76B; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 ret
 .org 0xd982
 sub_1D782:
 # IDA 0x1d782; file 0xd982; locator=proven; push    bx
-# ⚠ 函式 sub_1D782; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D782; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push bx
 .org 0xd983
 # IDA 0x1d783; file 0xd983; locator=proven; push    cx
-# ⚠ 函式 sub_1D782; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D782; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push cx
 .org 0xd984
 # IDA 0x1d784; file 0xd984; locator=proven; push    dx
-# ⚠ 函式 sub_1D782; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D782; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push dx
 .org 0xd985
 # IDA 0x1d785; file 0xd985; locator=proven; push    si
-# ⚠ 函式 sub_1D782; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D782; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push si
 .org 0xd986
 # IDA 0x1d786; file 0xd986; locator=proven; push    di
-# ⚠ 函式 sub_1D782; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D782; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push di
 .org 0xd987
 # IDA 0x1d787; file 0xd987; locator=proven; xor     al, al
-# ⚠ 函式 sub_1D782; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D782; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} xor al, al
 .org 0xd989
 # IDA 0x1d789; file 0xd989; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1D782; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D782; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 shr ax, 0x1
 .org 0xd98b
 # IDA 0x1d78b; file 0xd98b; locator=proven; mov     si, ax
-# ⚠ 函式 sub_1D782; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D782; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} mov si, ax
 .org 0xd98d
 # IDA 0x1d78d; file 0xd98d; locator=proven; call    sub_1D796
-# ⚠ 函式 sub_1D782; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D782; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 call .+9
 .org 0xd990
 # IDA 0x1d790; file 0xd990; locator=proven; pop     di
-# ⚠ 函式 sub_1D782; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D782; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop di
 .org 0xd991
 # IDA 0x1d791; file 0xd991; locator=proven; pop     si
-# ⚠ 函式 sub_1D782; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D782; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop si
 .org 0xd992
 # IDA 0x1d792; file 0xd992; locator=proven; pop     dx
-# ⚠ 函式 sub_1D782; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D782; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop dx
 .org 0xd993
 # IDA 0x1d793; file 0xd993; locator=proven; pop     cx
-# ⚠ 函式 sub_1D782; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D782; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop cx
 .org 0xd994
 # IDA 0x1d794; file 0xd994; locator=proven; pop     bx
-# ⚠ 函式 sub_1D782; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D782; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop bx
 .org 0xd995
 # IDA 0x1d795; file 0xd995; locator=proven; retn
-# ⚠ 函式 sub_1D782; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D782; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 ret
 .org 0xd996
 sub_1D796:
 # IDA 0x1d796; file 0xd996; locator=proven; mov     dx, 3C4h
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov dx, 0x3c4
 .org 0xd999
 # IDA 0x1d799; file 0xd999; locator=proven; mov     ax, 102h
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ax, 0x102
 .org 0xd99c
 # IDA 0x1d79c; file 0xd99c; locator=proven; out     dx, ax
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 out dx, ax
 .org 0xd99d
 # IDA 0x1d79d; file 0xd99d; locator=proven; mov     dx, di
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} mov dx, di
 .org 0xd99f
 # IDA 0x1d79f; file 0xd99f; locator=proven; mov     cx, 10h
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov cx, 0x10
 .org 0xd9a2
 loc_1D7A2:
 # IDA 0x1d7a2; file 0xd9a2; locator=proven; movsw
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 movsw
 .org 0xd9a3
 # IDA 0x1d7a3; file 0xd9a3; locator=proven; add     di, 4Eh
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 add di, 0x4e
 .org 0xd9a6
 # IDA 0x1d7a6; file 0xd9a6; locator=proven; loop    loc_1D7A2
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 loop .-4
 .org 0xd9a8
 # IDA 0x1d7a8; file 0xd9a8; locator=proven; mov     di, dx
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} mov di, dx
 .org 0xd9aa
 # IDA 0x1d7aa; file 0xd9aa; locator=proven; mov     dx, 3C4h
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov dx, 0x3c4
 .org 0xd9ad
 # IDA 0x1d7ad; file 0xd9ad; locator=proven; mov     ax, 202h
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ax, 0x202
 .org 0xd9b0
 # IDA 0x1d7b0; file 0xd9b0; locator=proven; out     dx, ax
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 out dx, ax
 .org 0xd9b1
 # IDA 0x1d7b1; file 0xd9b1; locator=proven; mov     dx, di
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} mov dx, di
 .org 0xd9b3
 # IDA 0x1d7b3; file 0xd9b3; locator=proven; mov     cx, 10h
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov cx, 0x10
 .org 0xd9b6
 loc_1D7B6:
 # IDA 0x1d7b6; file 0xd9b6; locator=proven; movsw
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 movsw
 .org 0xd9b7
 # IDA 0x1d7b7; file 0xd9b7; locator=proven; add     di, 4Eh
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 add di, 0x4e
 .org 0xd9ba
 # IDA 0x1d7ba; file 0xd9ba; locator=proven; loop    loc_1D7B6
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 loop .-4
 .org 0xd9bc
 # IDA 0x1d7bc; file 0xd9bc; locator=proven; mov     di, dx
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} mov di, dx
 .org 0xd9be
 # IDA 0x1d7be; file 0xd9be; locator=proven; mov     dx, 3C4h
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov dx, 0x3c4
 .org 0xd9c1
 # IDA 0x1d7c1; file 0xd9c1; locator=proven; mov     ax, 402h
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ax, 0x402
 .org 0xd9c4
 # IDA 0x1d7c4; file 0xd9c4; locator=proven; out     dx, ax
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 out dx, ax
 .org 0xd9c5
 # IDA 0x1d7c5; file 0xd9c5; locator=proven; mov     dx, di
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} mov dx, di
 .org 0xd9c7
 # IDA 0x1d7c7; file 0xd9c7; locator=proven; mov     cx, 10h
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov cx, 0x10
 .org 0xd9ca
 loc_1D7CA:
 # IDA 0x1d7ca; file 0xd9ca; locator=proven; movsw
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 movsw
 .org 0xd9cb
 # IDA 0x1d7cb; file 0xd9cb; locator=proven; add     di, 4Eh
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 add di, 0x4e
 .org 0xd9ce
 # IDA 0x1d7ce; file 0xd9ce; locator=proven; loop    loc_1D7CA
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 loop .-4
 .org 0xd9d0
 # IDA 0x1d7d0; file 0xd9d0; locator=proven; mov     di, dx
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} mov di, dx
 .org 0xd9d2
 # IDA 0x1d7d2; file 0xd9d2; locator=proven; mov     dx, 3C4h
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov dx, 0x3c4
 .org 0xd9d5
 # IDA 0x1d7d5; file 0xd9d5; locator=proven; mov     ax, 802h
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ax, 0x802
 .org 0xd9d8
 # IDA 0x1d7d8; file 0xd9d8; locator=proven; out     dx, ax
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 out dx, ax
 .org 0xd9d9
 # IDA 0x1d7d9; file 0xd9d9; locator=proven; mov     dx, di
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} mov dx, di
 .org 0xd9db
 # IDA 0x1d7db; file 0xd9db; locator=proven; mov     cx, 10h
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov cx, 0x10
 .org 0xd9de
 loc_1D7DE:
 # IDA 0x1d7de; file 0xd9de; locator=proven; movsw
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 movsw
 .org 0xd9df
 # IDA 0x1d7df; file 0xd9df; locator=proven; add     di, 4Eh
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 add di, 0x4e
 .org 0xd9e2
 # IDA 0x1d7e2; file 0xd9e2; locator=proven; loop    loc_1D7DE
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 loop .-4
 .org 0xd9e4
 # IDA 0x1d7e4; file 0xd9e4; locator=proven; mov     di, dx
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} mov di, dx
 .org 0xd9e6
 # IDA 0x1d7e6; file 0xd9e6; locator=proven; retn
-# ⚠ 函式 sub_1D796; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D796; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 ret
 .org 0xd9e7
 sub_1D7E7:
 # IDA 0x1d7e7; file 0xd9e7; locator=proven; push    cx
-# ⚠ 函式 sub_1D7E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D7E7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push cx
 .org 0xd9e8
 # IDA 0x1d7e8; file 0xd9e8; locator=proven; push    si
-# ⚠ 函式 sub_1D7E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D7E7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push si
 .org 0xd9e9
 # IDA 0x1d7e9; file 0xd9e9; locator=proven; push    di
-# ⚠ 函式 sub_1D7E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D7E7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push di
 .org 0xd9ea
 # IDA 0x1d7ea; file 0xd9ea; locator=proven; xor     al, al
-# ⚠ 函式 sub_1D7E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D7E7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} xor al, al
 .org 0xd9ec
 # IDA 0x1d7ec; file 0xd9ec; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1D7E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D7E7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 shr ax, 0x1
 .org 0xd9ee
 # IDA 0x1d7ee; file 0xd9ee; locator=proven; mov     si, ax
-# ⚠ 函式 sub_1D7E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D7E7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} mov si, ax
 .org 0xd9f0
 # IDA 0x1d7f0; file 0xd9f0; locator=proven; mov     ax, es
-# ⚠ 函式 sub_1D7E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D7E7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ax, es
 .org 0xd9f2
 # IDA 0x1d7f2; file 0xd9f2; locator=proven; mov     di, cs
-# ⚠ 函式 sub_1D7E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D7E7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov di, cs
 .org 0xd9f4
 # IDA 0x1d7f4; file 0xd9f4; locator=proven; mov     es, di
-# ⚠ 函式 sub_1D7E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D7E7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov es, di
 .org 0xd9f6
 # IDA 0x1d7f6; file 0xd9f6; locator=proven; mov     di, 0D858h
-# ⚠ 函式 sub_1D7E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D7E7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov di, 0xd858
 .org 0xd9f9
 # IDA 0x1d7f9; file 0xd9f9; locator=proven; mov     cx, 40h
-# ⚠ 函式 sub_1D7E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D7E7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov cx, 0x40
 .org 0xd9fc
 # IDA 0x1d7fc; file 0xd9fc; locator=proven; rep movsw
-# ⚠ 函式 sub_1D7E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D7E7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 rep; movsw
 .org 0xd9fe
 # IDA 0x1d7fe; file 0xd9fe; locator=proven; mov     es, ax
-# ⚠ 函式 sub_1D7E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D7E7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov es, ax
 .org 0xda00
 # IDA 0x1d800; file 0xda00; locator=proven; pop     di
-# ⚠ 函式 sub_1D7E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D7E7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop di
 .org 0xda01
 # IDA 0x1d801; file 0xda01; locator=proven; pop     si
-# ⚠ 函式 sub_1D7E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D7E7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop si
 .org 0xda02
 # IDA 0x1d802; file 0xda02; locator=proven; pop     cx
-# ⚠ 函式 sub_1D7E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D7E7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop cx
 .org 0xda03
 # IDA 0x1d803; file 0xda03; locator=proven; retn
-# ⚠ 函式 sub_1D7E7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D7E7; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 ret
 .org 0xda04
 sub_1D804:
 # IDA 0x1d804; file 0xda04; locator=proven; push    cx
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push cx
 .org 0xda05
 # IDA 0x1d805; file 0xda05; locator=proven; push    si
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push si
 .org 0xda06
 # IDA 0x1d806; file 0xda06; locator=proven; push    di
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 push di
 .org 0xda07
 # IDA 0x1d807; file 0xda07; locator=proven; xor     al, al
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} xor al, al
 .org 0xda09
 # IDA 0x1d809; file 0xda09; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 shr ax, 0x1
 .org 0xda0b
 # IDA 0x1d80b; file 0xda0b; locator=proven; mov     si, ax
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} mov si, ax
 .org 0xda0d
 # IDA 0x1d80d; file 0xda0d; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 shr ax, 0x1
 .org 0xda0f
 # IDA 0x1d80f; file 0xda0f; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 shr ax, 0x1
 .org 0xda11
 # IDA 0x1d811; file 0xda11; locator=proven; add     si, ax
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 {load} add si, ax
 .org 0xda13
 # IDA 0x1d813; file 0xda13; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ax, cs
 .org 0xda15
 # IDA 0x1d815; file 0xda15; locator=proven; mov     es, ax
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov es, ax
 .org 0xda17
 # IDA 0x1d817; file 0xda17; locator=proven; mov     di, 0D858h
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov di, 0xd858
 .org 0xda1a
 # IDA 0x1d81a; file 0xda1a; locator=proven; mov     cx, 10h
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov cx, 0x10
 .org 0xda1d
 loc_1D81D:
 # IDA 0x1d81d; file 0xda1d; locator=proven; lodsw
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 lodsw
 .org 0xda1e
 # IDA 0x1d81e; file 0xda1e; locator=proven; not     ax
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 not ax
 .org 0xda20
 # IDA 0x1d820; file 0xda20; locator=proven; and     es:[di], ax
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 es; and word ptr [di], ax
 .org 0xda23
 # IDA 0x1d823; file 0xda23; locator=proven; and     es:[di+20h], ax
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 es; and word ptr [di+0x20], ax
 .org 0xda27
 # IDA 0x1d827; file 0xda27; locator=proven; and     es:[di+40h], ax
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 es; and word ptr [di+0x40], ax
 .org 0xda2b
 # IDA 0x1d82b; file 0xda2b; locator=proven; and     es:[di+60h], ax
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 es; and word ptr [di+0x60], ax
 .org 0xda2f
 # IDA 0x1d82f; file 0xda2f; locator=proven; inc     di
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 inc di
 .org 0xda30
 # IDA 0x1d830; file 0xda30; locator=proven; inc     di
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 inc di
 .org 0xda31
 # IDA 0x1d831; file 0xda31; locator=proven; loop    loc_1D81D
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 loop .-20
 .org 0xda33
 # IDA 0x1d833; file 0xda33; locator=proven; mov     di, 0D858h
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov di, 0xd858
 .org 0xda36
 # IDA 0x1d836; file 0xda36; locator=proven; mov     cx, 40h
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov cx, 0x40
 .org 0xda39
 loc_1D839:
 # IDA 0x1d839; file 0xda39; locator=proven; lodsw
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 lodsw
 .org 0xda3a
 # IDA 0x1d83a; file 0xda3a; locator=proven; or      es:[di], ax
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 es; or word ptr [di], ax
 .org 0xda3d
 # IDA 0x1d83d; file 0xda3d; locator=proven; inc     di
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 inc di
 .org 0xda3e
 # IDA 0x1d83e; file 0xda3e; locator=proven; inc     di
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 inc di
 .org 0xda3f
 # IDA 0x1d83f; file 0xda3f; locator=proven; loop    loc_1D839
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 loop .-6
 .org 0xda41
 # IDA 0x1d841; file 0xda41; locator=proven; mov     ax, 0A0C8h
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov ax, 0xa0c8
 .org 0xda44
 # IDA 0x1d844; file 0xda44; locator=proven; mov     es, ax
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 mov es, ax
 .org 0xda46
 # IDA 0x1d846; file 0xda46; locator=proven; pop     di
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop di
 .org 0xda47
 # IDA 0x1d847; file 0xda47; locator=proven; pop     si
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop si
 .org 0xda48
 # IDA 0x1d848; file 0xda48; locator=proven; pop     cx
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 pop cx
 .org 0xda49
 # IDA 0x1d849; file 0xda49; locator=proven; retn
-# ⚠ 函式 sub_1D804; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D804; [proven] 原始世界顯示格初始化／取樣／四張推入／底圖／遮罩／四 plane 閉包；具體輸入與 DF 前提見原始 C 收據; 出處: docs/re/114-c-world-map-cells-restoration.md, docs/spec/234-c-world-map-cells.md
 ret
 .org 0xdb58
 sub_1D958:

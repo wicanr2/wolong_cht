@@ -170,6 +170,7 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 | [`111`](111-c-input-mouse-restoration.md) | 訊息等待、原 mouse far table、游標與 callback |
 | [`112`](112-c-choice-selector-restoration.md) | 選單 selector、可見／絕對列、live callback 與 popup caller |
 | [`113`](113-c-resource-cue-restoration.md) | 完整資源讀檔、BGM cue、分段設定與 scroll 負證據 |
+| [`114`](114-c-world-map-cells-restoration.md) | 原始世界顯示格初始化、推入、底圖與覆蓋合成 C |
 | [`21`](21-function-census.md) | 全函式覆蓋普查；**§3.1 為什麼要排除目錄型文件** |
 | [`24`](24-unread-function-catalogue.md) | 未讀函式的證據與下手順序 |
 | [`39`](39-remaining-unread.md) | 未讀函式的逐支歸屬（生成的，可重跑）|

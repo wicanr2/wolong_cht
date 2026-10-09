@@ -1961,3 +1961,11 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - O0／O2 各 93 組完整 RAM／VGA／ABI／API／sound 狀態相同，21 個完整 buffer 與尾端守衛、12 個錯版拒絕及乾淨來源重生通過。原版素材與 binary 留在本機。
 - scroll helper 的直接 xref／逐段候選查詢有三個已知 writer 正對照，未定位直接改寫端。這不排除間接寫入；收據 [c-scroll-writer-verification.json](docs/re/c-scroll-writer-verification.json) 保留查詢範圍。
 - C 台帳為 221 個函式／30 個 code 入口。INT50／allocation 失敗、正常玩家、原 TSR 音訊與 C 機器碼未由本輪代證。
+
+## 2026-10-09：原始世界顯示格 C
+
+- 由原場景退出鏈定位十函式 710 bytes／328 指令，固定 KI.EXE、IDA DB 與素材身分見 [re/114](docs/re/114-c-world-map-cells-restoration.md)。
+- 原始 40×23 記錄的初始化、鏡頭取樣、四張推入上限、髒格／快取、底圖／mask／color 與四 plane 為 native C。原始名稱、位址與運算元保留。
+- O0／O2 各 2,622 完整狀態相同；256 圖塊 blit／512 遮罩合成獨立核對真實 MDL／MCH；12 個錯版拒絕與乾淨重生通過。
+- 單獨 DF=1 底圖拷貝覆蓋自身指令的失敗實驗保留；原 renderer 先 CLD。完整圖的指令上界與 trace 容量由原閉包大小導出，未調整原迴圈。
+- C 台帳 231 函式／30 code 入口；正常場景主入口、上游 producer 與 C 機器碼仍未由本輪代證。
