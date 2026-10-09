@@ -460,3 +460,14 @@
 - 310指令全已有覆蓋；固定binutils獨立重組711bytes相同。組語語意索引重生後整檔67,099bytes仍匹配，三反例拒絕。313 C／48raw，完整Goal保持active，依授權提交推送來源與收據。
 - 正式Go冷vet／39套件通過，無cached；完整check已跑並停於既有index兩缺圖／phantom，後續25單項另驗21pass/4舊fail，新failure0。phantom初次275與當前來源矛盾，只重跑第3項；docs43前後SHA穩定時為277並與基線逐列相同，不宣稱移除舊問題，原因未證實。13/14隔離自測的審查deadline逾時後依工具指示重試成功，未改權限範圍。
 - 六條resolution backlink通過。檢查收據workplace/matching-decompilation/checks/details-checks.json，SHA-256 `a58a64fcfc845a0524b737b69e118ce60267e2116c3e6643353df0e4d9011db5`；完整組語、313 C/48raw來源雜湊與公開/私有收據一致。擁有權檢查維持27個既有root-owned，無.md目錄；本輪容器清理完成，未建立image。
+
+## 2026-10-09：軍團行軍選點與狀態分派 C
+
+- 前輪b4c2cb4已推送。查現況／路由／Issue30，依AGENTS§10分工原契約、單檔獨立模型、MZ重組／17版語法預檢及Go冷測。
+- spec243 READY後還原25函式613指令1477bytes，補原熱區表159D2[22]的15AB6與兩個鏡頭callee；五個farcall用runtime operand，原檔段1000／IDA載入2000分開核對。
+- 初smoke缺既有RNG ABI路由，接sub_1ECE0_abi後同命令352組通過；1,308全矩陣與16錯版通過後，為明示熱區優先／重畫新增12個必要循環案例，最終來源356抽樣與O0/O2各1,320、16實編譯錯版通過。
+- 原版先經狀態模型；controller捕原版獨有分派前snapshot，固定raw RNG/table/C/S，不重擲。全部12stage/9handler、隊列、DI residual、補兵／解散、兩鍵mask、模式取消重選、小地圖及日期停止均驗。
+- 回填spec39/149、re47/85與mechanics20：取消仍分派/OR2、解散只清byte00、移動仍回mask、搜尋完整性前提、日期停不等於動畫RAM不變。正式Go未改。
+- 613指令已有覆蓋，五筆MZ反向重定位與獨立重組相同；組語註記重生後67,099bytes整檔仍匹配。338 C/48raw，完整Goal保持active，依授權提交推送。
+- 正式Go冷vet／39套件通過，無cached；25單項先完成21pass/4舊fail、新0，phantom前後來源SHA穩定、277零增刪，13/14隔離自測通過。之後才跑完整check，停於既有index兩缺圖／phantom，避免並行生成docs43。四條回鏈、5筆MZ、raw RNG每版16次／clock0均通過。檢查收據workplace/matching-decompilation/checks/march-checks.json，SHA-256 `8506b746b4ac5c1a727359cac3f37777b66647afdde2b7c799aecb1d21badc79`。
+- 338 C/48raw全部來源雜湊與原組語整檔收據一致；擁有權基線27、無.md目錄，本輪輸出UID1000、容器清理完成，未建立image。

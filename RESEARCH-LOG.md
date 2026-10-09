@@ -2024,3 +2024,9 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - 固定DOS/V KI.EXE、IDA9.4 linear與KYOGRF身分見[re/122](docs/re/122-c-detail-panels-restoration.md)。10函式310指令711bytes。
 - 原版先經獨立數字／字串／blit／seek參數、圖buffer與世界保存模型；O0/O2各700完整裝置與十二錯版通過。
 - 中立仍讀0603判首都，景觀15回繞0E00；type0下溢D200；軍團morale byte/0F屬性；02恢復自勢力情報。軍團指令上游、自然長程與原C機器碼仍未代證。
+
+## 2026-10-09：原軍團行軍閉包25C函式
+
+- 固定DOS/V KI.EXE、IDA9.4 linear與五筆MZ身分見[re/123](docs/re/123-c-march-command-restoration.md)，25函式613指令1477bytes。
+- O0/O2各1,320完整裝置／16錯版、原版snapshot獨立模型與固定raw RNG；取消後外層仍分派OR2，解散不清整筆，DI讀取不猜補。
+- 熱區優先、非據點重試、小地圖間接閉包及日期／動畫界線已分開驗證；原指令全覆蓋且獨立重組，338 C/48raw，自然長程與原C機器碼仍未代證。

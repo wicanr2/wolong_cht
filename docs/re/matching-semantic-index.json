@@ -2470,6 +2470,181 @@
       "sources": [
         "docs/re/122-c-detail-panels-restoration.md"
       ]
+    },
+    "0x11C8D": {
+      "meaning": "依目前鏡頭重建世界顯示格並合成",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x11F7F": {
+      "meaning": "取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x12151": {
+      "meaning": "原指定世界格與像素鏡頭夾制，mouse far定位",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x121B2": {
+      "meaning": "以20/12視野中心調鏡頭並恢復游標像素",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x14325": {
+      "meaning": "十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x14370": {
+      "meaning": "玩家路線目的地更新，已在首都且兵力少於600轉9",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x1439D": {
+      "meaning": "原非玩家表項4路線與據點40h旗標分支",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x143AF": {
+      "meaning": "原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x1440F": {
+      "meaning": "原表項6據點威脅與勢力16/17佇列消費、重新指派",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x14466": {
+      "meaning": "六槽兵數30門檻，stage8或11",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x14483": {
+      "meaning": "軍團士氣達勢力基準時轉stage1",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x14499": {
+      "meaning": "原退兵重分與派生重算，stage3並刷新側欄",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x144A9": {
+      "meaning": "目標校正為首都，已到轉stage9",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x144D6": {
+      "meaning": "目標校正為首都，已到即原解散",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x14548": {
+      "meaning": "依據點記錄寫路線目標三word，以目前node/XY回CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x1463E": {
+      "meaning": "解散並依玩家勢力條件刷新側欄",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x14651": {
+      "meaning": "退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x14689": {
+      "meaning": "所屬勢力軍團數byte遞減",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x159A6": {
+      "meaning": "原DS59D2熱區word表間接呼叫，picker只傳AL16h",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x15AB6": {
+      "meaning": "小地圖螢幕點扣440/40夾0、乘2再走鏡頭定位",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x1703C": {
+      "meaning": "熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x1709E": {
+      "meaning": "CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x17F90": {
+      "meaning": "軍團資訊與玩家命令控制器，取消後仍分派並OR2",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x17FDB": {
+      "meaning": "原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x1804E": {
+      "meaning": "依原游標格夾制二/三項popup位置，以SAHF恢復CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
     }
   },
   "operands": {
@@ -2736,6 +2911,70 @@
       "level": "proven",
       "sources": [
         "docs/re/122-c-detail-panels-restoration.md"
+      ]
+    },
+    "0x1434F:0": {
+      "original": "cs:funcs_1434F[bx]",
+      "meaning": "原十二表項依stage/owner選取，入口DI不在dispatcher設定",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x143D3:0": {
+      "original": "byte ptr [di+18h]",
+      "meaning": "保留原[DI+18h]殘值讀取，不能補成BX目標城",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x1466F:0": {
+      "original": "byte ptr [si]",
+      "meaning": "只清軍團+00 byte，其他記錄欄位保留",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x17052:1": {
+      "original": "2",
+      "meaning": "只有BX等於2取消；3不是此條件",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x170B3:1": {
+      "original": "cs:word_10D44",
+      "meaning": "原世界地圖段基址，列距24paragraph",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x18028:0": {
+      "original": "byte ptr [si]",
+      "meaning": "軍團+00清委任bit2",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x18032:0": {
+      "original": "byte ptr [si+23h]",
+      "meaning": "軍團+23寫解體stage11，不清委任bit",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
+      ]
+    },
+    "0x17FB7:0": {
+      "original": "byte ptr [si]",
+      "meaning": "玩家分支即使取消仍設軍團bit1",
+      "level": "proven",
+      "sources": [
+        "docs/re/123-c-march-command-restoration.md"
       ]
     }
   }

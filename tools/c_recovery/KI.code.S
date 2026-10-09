@@ -7405,91 +7405,91 @@ jmp .-108
 .org 0x1e8d
 sub_11C8D:
 # IDA 0x11c8d; file 0x1e8d; locator=proven; push    ds
-# ⚠ 函式 sub_11C8D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11C8D; [proven] 依目前鏡頭重建世界顯示格並合成; 出處: docs/re/123-c-march-command-restoration.md
 push ds
 .org 0x1e8e
 # IDA 0x11c8e; file 0x1e8e; locator=proven; push    es
-# ⚠ 函式 sub_11C8D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11C8D; [proven] 依目前鏡頭重建世界顯示格並合成; 出處: docs/re/123-c-march-command-restoration.md
 push es
 .org 0x1e8f
 # IDA 0x11c8f; file 0x1e8f; locator=proven; push    ax
-# ⚠ 函式 sub_11C8D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11C8D; [proven] 依目前鏡頭重建世界顯示格並合成; 出處: docs/re/123-c-march-command-restoration.md
 push ax
 .org 0x1e90
 # IDA 0x11c90; file 0x1e90; locator=proven; push    bx
-# ⚠ 函式 sub_11C8D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11C8D; [proven] 依目前鏡頭重建世界顯示格並合成; 出處: docs/re/123-c-march-command-restoration.md
 push bx
 .org 0x1e91
 # IDA 0x11c91; file 0x1e91; locator=proven; push    cx
-# ⚠ 函式 sub_11C8D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11C8D; [proven] 依目前鏡頭重建世界顯示格並合成; 出處: docs/re/123-c-march-command-restoration.md
 push cx
 .org 0x1e92
 # IDA 0x11c92; file 0x1e92; locator=proven; push    dx
-# ⚠ 函式 sub_11C8D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11C8D; [proven] 依目前鏡頭重建世界顯示格並合成; 出處: docs/re/123-c-march-command-restoration.md
 push dx
 .org 0x1e93
 # IDA 0x11c93; file 0x1e93; locator=proven; push    si
-# ⚠ 函式 sub_11C8D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11C8D; [proven] 依目前鏡頭重建世界顯示格並合成; 出處: docs/re/123-c-march-command-restoration.md
 push si
 .org 0x1e94
 # IDA 0x11c94; file 0x1e94; locator=proven; push    di
-# ⚠ 函式 sub_11C8D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11C8D; [proven] 依目前鏡頭重建世界顯示格並合成; 出處: docs/re/123-c-march-command-restoration.md
 push di
 .org 0x1e95
 # IDA 0x11c95; file 0x1e95; locator=proven; mov     dx, cs:word_1988E
-# ⚠ 函式 sub_11C8D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11C8D; [proven] 依目前鏡頭重建世界顯示格並合成; 出處: docs/re/123-c-march-command-restoration.md
 cs; mov dx, word ptr [0x988e]
 .org 0x1e9a
 # IDA 0x11c9a; file 0x1e9a; locator=proven; mov     bx, cs:word_19890
-# ⚠ 函式 sub_11C8D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11C8D; [proven] 依目前鏡頭重建世界顯示格並合成; 出處: docs/re/123-c-march-command-restoration.md
 cs; mov bx, word ptr [0x9890]
 .org 0x1e9f
 # IDA 0x11c9f; file 0x1e9f; locator=proven; call    sub_1D615
-# ⚠ 函式 sub_11C8D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11C8D; [proven] 依目前鏡頭重建世界顯示格並合成; 出處: docs/re/123-c-march-command-restoration.md
 call .-18058
 .org 0x1ea2
 # IDA 0x11ca2; file 0x1ea2; locator=proven; call    sub_11CC9
-# ⚠ 函式 sub_11C8D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11C8D; [proven] 依目前鏡頭重建世界顯示格並合成; 出處: docs/re/123-c-march-command-restoration.md
 call .+39
 .org 0x1ea5
 # IDA 0x11ca5; file 0x1ea5; locator=proven; call    sub_1D66A
-# ⚠ 函式 sub_11C8D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11C8D; [proven] 依目前鏡頭重建世界顯示格並合成; 出處: docs/re/123-c-march-command-restoration.md
 call .-17979
 .org 0x1ea8
 # IDA 0x11ca8; file 0x1ea8; locator=proven; pop     di
-# ⚠ 函式 sub_11C8D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11C8D; [proven] 依目前鏡頭重建世界顯示格並合成; 出處: docs/re/123-c-march-command-restoration.md
 pop di
 .org 0x1ea9
 # IDA 0x11ca9; file 0x1ea9; locator=proven; pop     si
-# ⚠ 函式 sub_11C8D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11C8D; [proven] 依目前鏡頭重建世界顯示格並合成; 出處: docs/re/123-c-march-command-restoration.md
 pop si
 .org 0x1eaa
 # IDA 0x11caa; file 0x1eaa; locator=proven; pop     dx
-# ⚠ 函式 sub_11C8D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11C8D; [proven] 依目前鏡頭重建世界顯示格並合成; 出處: docs/re/123-c-march-command-restoration.md
 pop dx
 .org 0x1eab
 # IDA 0x11cab; file 0x1eab; locator=proven; pop     cx
-# ⚠ 函式 sub_11C8D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11C8D; [proven] 依目前鏡頭重建世界顯示格並合成; 出處: docs/re/123-c-march-command-restoration.md
 pop cx
 .org 0x1eac
 # IDA 0x11cac; file 0x1eac; locator=proven; pop     bx
-# ⚠ 函式 sub_11C8D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11C8D; [proven] 依目前鏡頭重建世界顯示格並合成; 出處: docs/re/123-c-march-command-restoration.md
 pop bx
 .org 0x1ead
 # IDA 0x11cad; file 0x1ead; locator=proven; pop     ax
-# ⚠ 函式 sub_11C8D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11C8D; [proven] 依目前鏡頭重建世界顯示格並合成; 出處: docs/re/123-c-march-command-restoration.md
 pop ax
 .org 0x1eae
 # IDA 0x11cae; file 0x1eae; locator=proven; pop     es
-# ⚠ 函式 sub_11C8D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11C8D; [proven] 依目前鏡頭重建世界顯示格並合成; 出處: docs/re/123-c-march-command-restoration.md
 pop es
 .org 0x1eaf
 # IDA 0x11caf; file 0x1eaf; locator=proven; pop     ds
-# ⚠ 函式 sub_11C8D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11C8D; [proven] 依目前鏡頭重建世界顯示格並合成; 出處: docs/re/123-c-march-command-restoration.md
 pop ds
 .org 0x1eb0
 # IDA 0x11cb0; file 0x1eb0; locator=proven; retn
-# ⚠ 函式 sub_11C8D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11C8D; [proven] 依目前鏡頭重建世界顯示格並合成; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x1eb1
 sub_11CB1:
@@ -8541,375 +8541,375 @@ ret
 .org 0x217f
 sub_11F7F:
 # IDA 0x11f7f; file 0x217f; locator=proven; push    ds
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 push ds
 .org 0x2180
 # IDA 0x11f80; file 0x2180; locator=proven; push    bp
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 push bp
 .org 0x2181
 # IDA 0x11f81; file 0x2181; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov ax, cs
 .org 0x2183
 # IDA 0x11f83; file 0x2183; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov ds, ax
 .org 0x2185
 # IDA 0x11f85; file 0x2185; locator=proven; xor     bp, bp
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor bp, bp
 .org 0x2187
 # IDA 0x11f87; file 0x2187; locator=proven; mov     ax, 5
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov ax, 0x5
 .org 0x218a
 # IDA 0x11f8a; file 0x218a; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor bx, bx
 .org 0x218c
 # IDA 0x11f8c; file 0x218c; locator=proven; call    sub_20000
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 lcall 0x1000, 0x0
 .org 0x2191
 # IDA 0x11f91; file 0x2191; locator=proven; and     bx, bx
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 {load} and bx, bx
 .org 0x2193
 # IDA 0x11f93; file 0x2193; locator=proven; jz      short loc_11F98
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 jz .+5
 .org 0x2195
 # IDA 0x11f95; file 0x2195; locator=proven; mov     bp, 1
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov bp, 0x1
 .org 0x2198
 loc_11F98:
 # IDA 0x11f98; file 0x2198; locator=proven; mov     ax, 5
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov ax, 0x5
 .org 0x219b
 # IDA 0x11f9b; file 0x219b; locator=proven; mov     bx, 1
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov bx, 0x1
 .org 0x219e
 # IDA 0x11f9e; file 0x219e; locator=proven; call    sub_20000
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 lcall 0x1000, 0x0
 .org 0x21a3
 # IDA 0x11fa3; file 0x21a3; locator=proven; and     bx, bx
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 {load} and bx, bx
 .org 0x21a5
 # IDA 0x11fa5; file 0x21a5; locator=proven; jz      short loc_11FAA
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 jz .+5
 .org 0x21a7
 # IDA 0x11fa7; file 0x21a7; locator=proven; or      bp, 2
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 or bp, 0x2
 .org 0x21aa
 loc_11FAA:
 # IDA 0x11faa; file 0x21aa; locator=proven; mov     ax, 3
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov ax, 0x3
 .org 0x21ad
 # IDA 0x11fad; file 0x21ad; locator=proven; call    sub_20000
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 lcall 0x1000, 0x0
 .org 0x21b2
 # IDA 0x11fb2; file 0x21b2; locator=proven; cmp     cx, word_1987E
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 cmp cx, word ptr [0x987e]
 .org 0x21b6
 # IDA 0x11fb6; file 0x21b6; locator=proven; jnz     short loc_11FD0
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 jnz .+26
 .org 0x21b8
 # IDA 0x11fb8; file 0x21b8; locator=proven; cmp     dx, word_19880
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 cmp dx, word ptr [0x9880]
 .org 0x21bc
 # IDA 0x11fbc; file 0x21bc; locator=proven; jnz     short loc_11FD0
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 jnz .+20
 .org 0x21be
 # IDA 0x11fbe; file 0x21be; locator=proven; mov     cx, word_19886
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov cx, word ptr [0x9886]
 .org 0x21c2
 # IDA 0x11fc2; file 0x21c2; locator=proven; mov     dx, word_19888
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov dx, word ptr [0x9888]
 .org 0x21c6
 # IDA 0x11fc6; file 0x21c6; locator=proven; mov     bx, bp
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov bx, bp
 .org 0x21c8
 # IDA 0x11fc8; file 0x21c8; locator=proven; or      byte_198A3, 80h
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 or byte ptr [0x98a3], 0x80
 .org 0x21cd
 # IDA 0x11fcd; file 0x21cd; locator=proven; pop     bp
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 pop bp
 .org 0x21ce
 # IDA 0x11fce; file 0x21ce; locator=proven; pop     ds
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 pop ds
 .org 0x21cf
 # IDA 0x11fcf; file 0x21cf; locator=proven; retn
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x21d0
 loc_11FD0:
 # IDA 0x11fd0; file 0x21d0; locator=proven; mov     ds:987Eh, cx
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov word ptr [0x987e], cx
 .org 0x21d4
 # IDA 0x11fd4; file 0x21d4; locator=proven; mov     ds:9880h, dx
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov word ptr [0x9880], dx
 .org 0x21d8
 # IDA 0x11fd8; file 0x21d8; locator=proven; mov     byte ptr ds:98A5h, 0Ch
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [0x98a5], 0xc
 .org 0x21dd
 # IDA 0x11fdd; file 0x21dd; locator=proven; and     byte ptr ds:98A3h, 7Fh
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 and byte ptr [0x98a3], 0x7f
 .org 0x21e2
 # IDA 0x11fe2; file 0x21e2; locator=proven; sub     cx, ds:9882h
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 sub cx, word ptr [0x9882]
 .org 0x21e6
 # IDA 0x11fe6; file 0x21e6; locator=proven; jb      short loc_11FFB
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 jb .+21
 .org 0x21e8
 # IDA 0x11fe8; file 0x21e8; locator=proven; cmp     cx, 27Fh
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 cmp cx, 0x27f
 .org 0x21ec
 # IDA 0x11fec; file 0x21ec; locator=proven; jb      short loc_12001
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 jb .+21
 .org 0x21ee
 # IDA 0x11fee; file 0x21ee; locator=proven; sub     cx, 27Fh
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 sub cx, 0x27f
 .org 0x21f2
 # IDA 0x11ff2; file 0x21f2; locator=proven; add     ds:9882h, cx
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 add word ptr [0x9882], cx
 .org 0x21f6
 # IDA 0x11ff6; file 0x21f6; locator=proven; mov     cx, 27Fh
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov cx, 0x27f
 .org 0x21f9
 # IDA 0x11ff9; file 0x21f9; locator=proven; jmp     short loc_12001
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 jmp .+8
 .org 0x21fb
 loc_11FFB:
 # IDA 0x11ffb; file 0x21fb; locator=proven; add     ds:9882h, cx
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 add word ptr [0x9882], cx
 .org 0x21ff
 # IDA 0x11fff; file 0x21ff; locator=proven; xor     cx, cx
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor cx, cx
 .org 0x2201
 loc_12001:
 # IDA 0x12001; file 0x2201; locator=proven; sub     dx, ds:9884h
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 sub dx, word ptr [0x9884]
 .org 0x2205
 # IDA 0x12005; file 0x2205; locator=proven; jb      short loc_1201A
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 jb .+21
 .org 0x2207
 # IDA 0x12007; file 0x2207; locator=proven; cmp     dx, 18Fh
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 cmp dx, 0x18f
 .org 0x220b
 # IDA 0x1200b; file 0x220b; locator=proven; jb      short loc_12020
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 jb .+21
 .org 0x220d
 # IDA 0x1200d; file 0x220d; locator=proven; sub     dx, 18Fh
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 sub dx, 0x18f
 .org 0x2211
 # IDA 0x12011; file 0x2211; locator=proven; add     ds:9884h, dx
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 add word ptr [0x9884], dx
 .org 0x2215
 # IDA 0x12015; file 0x2215; locator=proven; mov     dx, 18Fh
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov dx, 0x18f
 .org 0x2218
 # IDA 0x12018; file 0x2218; locator=proven; jmp     short loc_12020
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 jmp .+8
 .org 0x221a
 loc_1201A:
 # IDA 0x1201a; file 0x221a; locator=proven; add     ds:9884h, dx
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 add word ptr [0x9884], dx
 .org 0x221e
 # IDA 0x1201e; file 0x221e; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor dx, dx
 .org 0x2220
 loc_12020:
 # IDA 0x12020; file 0x2220; locator=proven; mov     ds:9886h, cx
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov word ptr [0x9886], cx
 .org 0x2224
 # IDA 0x12024; file 0x2224; locator=proven; mov     ds:9888h, dx
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov word ptr [0x9888], dx
 .org 0x2228
 # IDA 0x12028; file 0x2228; locator=proven; mov     ax, cx
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov ax, cx
 .org 0x222a
 # IDA 0x1202a; file 0x222a; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x222c
 # IDA 0x1202c; file 0x222c; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x222e
 # IDA 0x1202e; file 0x222e; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x2230
 # IDA 0x12030; file 0x2230; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x2232
 # IDA 0x12032; file 0x2232; locator=proven; mov     ds:9896h, ax
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov word ptr [0x9896], ax
 .org 0x2235
 # IDA 0x12035; file 0x2235; locator=proven; mov     ax, dx
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov ax, dx
 .org 0x2237
 # IDA 0x12037; file 0x2237; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x2239
 # IDA 0x12039; file 0x2239; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x223b
 # IDA 0x1203b; file 0x223b; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x223d
 # IDA 0x1203d; file 0x223d; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x223f
 # IDA 0x1203f; file 0x223f; locator=proven; mov     ds:9898h, ax
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov word ptr [0x9898], ax
 .org 0x2242
 # IDA 0x12042; file 0x2242; locator=proven; mov     ax, ds:9882h
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov ax, word ptr [0x9882]
 .org 0x2245
 # IDA 0x12045; file 0x2245; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x2247
 # IDA 0x12047; file 0x2247; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x2249
 # IDA 0x12049; file 0x2249; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x224b
 # IDA 0x1204b; file 0x224b; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x224d
 # IDA 0x1204d; file 0x224d; locator=proven; mov     ds:988Eh, ax
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov word ptr [0x988e], ax
 .org 0x2250
 # IDA 0x12050; file 0x2250; locator=proven; add     ax, ds:9896h
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 add ax, word ptr [0x9896]
 .org 0x2254
 # IDA 0x12054; file 0x2254; locator=proven; mov     ds:989Ah, ax
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov word ptr [0x989a], ax
 .org 0x2257
 # IDA 0x12057; file 0x2257; locator=proven; mov     ax, ds:9884h
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov ax, word ptr [0x9884]
 .org 0x225a
 # IDA 0x1205a; file 0x225a; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x225c
 # IDA 0x1205c; file 0x225c; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x225e
 # IDA 0x1205e; file 0x225e; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x2260
 # IDA 0x12060; file 0x2260; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x2262
 # IDA 0x12062; file 0x2262; locator=proven; mov     ds:9890h, ax
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov word ptr [0x9890], ax
 .org 0x2265
 # IDA 0x12065; file 0x2265; locator=proven; add     ax, ds:9898h
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 add ax, word ptr [0x9898]
 .org 0x2269
 # IDA 0x12069; file 0x2269; locator=proven; sub     ax, 2
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 sub ax, offset imm_at_12069
 .org 0x226c
 # IDA 0x1206c; file 0x226c; locator=proven; jnb     short loc_12070
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 jnb .+4
 .org 0x226e
 # IDA 0x1206e; file 0x226e; locator=proven; xor     ax, ax
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor ax, ax
 .org 0x2270
 loc_12070:
 # IDA 0x12070; file 0x2270; locator=proven; mov     ds:989Ch, ax
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 mov word ptr [0x989c], ax
 .org 0x2273
 # IDA 0x12073; file 0x2273; locator=proven; mov     bx, bp
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov bx, bp
 .org 0x2275
 # IDA 0x12075; file 0x2275; locator=proven; pop     bp
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 pop bp
 .org 0x2276
 # IDA 0x12076; file 0x2276; locator=proven; pop     ds
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 pop ds
 .org 0x2277
 # IDA 0x12077; file 0x2277; locator=proven; retn
-# ⚠ 函式 sub_11F7F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F7F; [proven] 取左右按下遮罩、世界像素與像素鏡頭夾制，保留雙floor及座標快取分支; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x2278
 sub_12078:
@@ -9196,240 +9196,240 @@ ret
 .org 0x2351
 sub_12151:
 # IDA 0x12151; file 0x2351; locator=proven; mov     cs:word_19882, ax
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 cs; mov word ptr [0x9882], ax
 .org 0x2355
 # IDA 0x12155; file 0x2355; locator=proven; mov     cs:word_19884, cx
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 cs; mov word ptr [0x9884], cx
 .org 0x235a
 # IDA 0x1215a; file 0x235a; locator=proven; push    dx
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 push dx
 .org 0x235b
 # IDA 0x1215b; file 0x235b; locator=proven; push    bx
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 push bx
 .org 0x235c
 # IDA 0x1215c; file 0x235c; locator=proven; mov     cl, 4
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 mov cl, 0x4
 .org 0x235e
 # IDA 0x1215e; file 0x235e; locator=proven; shl     bx, cl
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 shl bx, cl
 .org 0x2360
 # IDA 0x12160; file 0x2360; locator=proven; shl     dx, cl
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 shl dx, cl
 .org 0x2362
 # IDA 0x12162; file 0x2362; locator=proven; add     bx, 20h
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 add bx, 0x20
 .org 0x2365
 # IDA 0x12165; file 0x2365; locator=proven; mov     cx, dx
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov cx, dx
 .org 0x2367
 # IDA 0x12167; file 0x2367; locator=proven; mov     dx, bx
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov dx, bx
 .org 0x2369
 # IDA 0x12169; file 0x2369; locator=proven; mov     ax, 4
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 mov ax, 0x4
 .org 0x236c
 # IDA 0x1216c; file 0x236c; locator=proven; call    sub_20000
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 lcall 0x1000, 0x0
 .org 0x2371
 # IDA 0x12171; file 0x2371; locator=proven; pop     bx
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 pop bx
 .org 0x2372
 # IDA 0x12172; file 0x2372; locator=proven; pop     dx
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 pop dx
 .org 0x2373
 # IDA 0x12173; file 0x2373; locator=proven; mov     ax, dx
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov ax, dx
 .org 0x2375
 # IDA 0x12175; file 0x2375; locator=proven; sub     ax, cs:word_19882
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 cs; sub ax, word ptr [0x9882]
 .org 0x237a
 # IDA 0x1217a; file 0x237a; locator=proven; jnb     short loc_1217E
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 jnb .+4
 .org 0x237c
 # IDA 0x1217c; file 0x237c; locator=proven; xor     ax, ax
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor ax, ax
 .org 0x237e
 loc_1217E:
 # IDA 0x1217e; file 0x237e; locator=proven; cmp     ax, 158h
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 cmp ax, 0x158
 .org 0x2381
 # IDA 0x12181; file 0x2381; locator=proven; jbe     short loc_12186
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 jbe .+5
 .org 0x2383
 # IDA 0x12183; file 0x2383; locator=proven; mov     ax, 158h
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 mov ax, 0x158
 .org 0x2386
 loc_12186:
 # IDA 0x12186; file 0x2386; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 shl ax, 0x1
 .org 0x2388
 # IDA 0x12188; file 0x2388; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 shl ax, 0x1
 .org 0x238a
 # IDA 0x1218a; file 0x238a; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 shl ax, 0x1
 .org 0x238c
 # IDA 0x1218c; file 0x238c; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 shl ax, 0x1
 .org 0x238e
 # IDA 0x1218e; file 0x238e; locator=proven; mov     cs:word_19882, ax
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 cs; mov word ptr [0x9882], ax
 .org 0x2392
 # IDA 0x12192; file 0x2392; locator=proven; mov     ax, bx
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov ax, bx
 .org 0x2394
 # IDA 0x12194; file 0x2394; locator=proven; sub     ax, cs:word_19884
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 cs; sub ax, word ptr [0x9884]
 .org 0x2399
 # IDA 0x12199; file 0x2399; locator=proven; jnb     short loc_1219D
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 jnb .+4
 .org 0x239b
 # IDA 0x1219b; file 0x239b; locator=proven; xor     ax, ax
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor ax, ax
 .org 0x239d
 loc_1219D:
 # IDA 0x1219d; file 0x239d; locator=proven; cmp     ax, 0E9h
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 cmp ax, 0xe9
 .org 0x23a0
 # IDA 0x121a0; file 0x23a0; locator=proven; jbe     short loc_121A5
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 jbe .+5
 .org 0x23a2
 # IDA 0x121a2; file 0x23a2; locator=proven; mov     ax, 0E9h
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 mov ax, 0xe9
 .org 0x23a5
 loc_121A5:
 # IDA 0x121a5; file 0x23a5; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 shl ax, 0x1
 .org 0x23a7
 # IDA 0x121a7; file 0x23a7; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 shl ax, 0x1
 .org 0x23a9
 # IDA 0x121a9; file 0x23a9; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 shl ax, 0x1
 .org 0x23ab
 # IDA 0x121ab; file 0x23ab; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 shl ax, 0x1
 .org 0x23ad
 # IDA 0x121ad; file 0x23ad; locator=proven; mov     cs:word_19884, ax
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 cs; mov word ptr [0x9884], ax
 .org 0x23b1
 # IDA 0x121b1; file 0x23b1; locator=proven; retn
-# ⚠ 函式 sub_12151; [unknown] 未附加語意; 出處: 無
+# 函式 sub_12151; [proven] 原指定世界格與像素鏡頭夾制，mouse far定位; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x23b2
 sub_121B2:
 # IDA 0x121b2; file 0x23b2; locator=proven; push    ax
-# ⚠ 函式 sub_121B2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121B2; [proven] 以20/12視野中心調鏡頭並恢復游標像素; 出處: docs/re/123-c-march-command-restoration.md
 push ax
 .org 0x23b3
 # IDA 0x121b3; file 0x23b3; locator=proven; push    cx
-# ⚠ 函式 sub_121B2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121B2; [proven] 以20/12視野中心調鏡頭並恢復游標像素; 出處: docs/re/123-c-march-command-restoration.md
 push cx
 .org 0x23b4
 # IDA 0x121b4; file 0x23b4; locator=proven; mov     ax, 14h
-# ⚠ 函式 sub_121B2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121B2; [proven] 以20/12視野中心調鏡頭並恢復游標像素; 出處: docs/re/123-c-march-command-restoration.md
 mov ax, 0x14
 .org 0x23b7
 # IDA 0x121b7; file 0x23b7; locator=proven; mov     cx, 0Ch
-# ⚠ 函式 sub_121B2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121B2; [proven] 以20/12視野中心調鏡頭並恢復游標像素; 出處: docs/re/123-c-march-command-restoration.md
 mov cx, 0xc
 .org 0x23ba
 # IDA 0x121ba; file 0x23ba; locator=proven; call    sub_12151
-# ⚠ 函式 sub_121B2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121B2; [proven] 以20/12視野中心調鏡頭並恢復游標像素; 出處: docs/re/123-c-march-command-restoration.md
 call .-105
 .org 0x23bd
 # IDA 0x121bd; file 0x23bd; locator=proven; push    dx
-# ⚠ 函式 sub_121B2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121B2; [proven] 以20/12視野中心調鏡頭並恢復游標像素; 出處: docs/re/123-c-march-command-restoration.md
 push dx
 .org 0x23be
 # IDA 0x121be; file 0x23be; locator=proven; mov     ax, cs:word_19882
-# ⚠ 函式 sub_121B2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121B2; [proven] 以20/12視野中心調鏡頭並恢復游標像素; 出處: docs/re/123-c-march-command-restoration.md
 cs; mov ax, word ptr [0x9882]
 .org 0x23c2
 # IDA 0x121c2; file 0x23c2; locator=proven; add     ax, cs:word_19886
-# ⚠ 函式 sub_121B2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121B2; [proven] 以20/12視野中心調鏡頭並恢復游標像素; 出處: docs/re/123-c-march-command-restoration.md
 cs; add ax, word ptr [0x9886]
 .org 0x23c7
 # IDA 0x121c7; file 0x23c7; locator=proven; mov     cx, ax
-# ⚠ 函式 sub_121B2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121B2; [proven] 以20/12視野中心調鏡頭並恢復游標像素; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov cx, ax
 .org 0x23c9
 # IDA 0x121c9; file 0x23c9; locator=proven; mov     ax, cs:word_19884
-# ⚠ 函式 sub_121B2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121B2; [proven] 以20/12視野中心調鏡頭並恢復游標像素; 出處: docs/re/123-c-march-command-restoration.md
 cs; mov ax, word ptr [0x9884]
 .org 0x23cd
 # IDA 0x121cd; file 0x23cd; locator=proven; add     ax, cs:word_19888
-# ⚠ 函式 sub_121B2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121B2; [proven] 以20/12視野中心調鏡頭並恢復游標像素; 出處: docs/re/123-c-march-command-restoration.md
 cs; add ax, word ptr [0x9888]
 .org 0x23d2
 # IDA 0x121d2; file 0x23d2; locator=proven; mov     dx, ax
-# ⚠ 函式 sub_121B2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121B2; [proven] 以20/12視野中心調鏡頭並恢復游標像素; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov dx, ax
 .org 0x23d4
 # IDA 0x121d4; file 0x23d4; locator=proven; mov     ax, 4
-# ⚠ 函式 sub_121B2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121B2; [proven] 以20/12視野中心調鏡頭並恢復游標像素; 出處: docs/re/123-c-march-command-restoration.md
 mov ax, 0x4
 .org 0x23d7
 # IDA 0x121d7; file 0x23d7; locator=proven; call    sub_20000
-# ⚠ 函式 sub_121B2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121B2; [proven] 以20/12視野中心調鏡頭並恢復游標像素; 出處: docs/re/123-c-march-command-restoration.md
 lcall 0x1000, 0x0
 .org 0x23dc
 # IDA 0x121dc; file 0x23dc; locator=proven; mov     cs:word_1988A, 0FFFFh
-# ⚠ 函式 sub_121B2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121B2; [proven] 以20/12視野中心調鏡頭並恢復游標像素; 出處: docs/re/123-c-march-command-restoration.md
 cs; mov word ptr [0x988a], 0xffff
 .org 0x23e3
 # IDA 0x121e3; file 0x23e3; locator=proven; pop     dx
-# ⚠ 函式 sub_121B2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121B2; [proven] 以20/12視野中心調鏡頭並恢復游標像素; 出處: docs/re/123-c-march-command-restoration.md
 pop dx
 .org 0x23e4
 # IDA 0x121e4; file 0x23e4; locator=proven; pop     cx
-# ⚠ 函式 sub_121B2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121B2; [proven] 以20/12視野中心調鏡頭並恢復游標像素; 出處: docs/re/123-c-march-command-restoration.md
 pop cx
 .org 0x23e5
 # IDA 0x121e5; file 0x23e5; locator=proven; pop     ax
-# ⚠ 函式 sub_121B2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121B2; [proven] 以20/12視野中心調鏡頭並恢復游標像素; 出處: docs/re/123-c-march-command-restoration.md
 pop ax
 .org 0x23e6
 # IDA 0x121e6; file 0x23e6; locator=proven; retn
-# ⚠ 函式 sub_121B2; [unknown] 未附加語意; 出處: 無
+# 函式 sub_121B2; [proven] 以20/12視野中心調鏡頭並恢復游標像素; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x23e7
 sub_121E7:
@@ -24739,769 +24739,771 @@ ret
 .org 0x4525
 sub_14325:
 # IDA 0x14325; file 0x4525; locator=proven; push    ds
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
 push ds
 .org 0x4526
 # IDA 0x14326; file 0x4526; locator=proven; push    es
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
 push es
 .org 0x4527
 # IDA 0x14327; file 0x4527; locator=proven; push    si
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
 push si
 .org 0x4528
 # IDA 0x14328; file 0x4528; locator=proven; mov     ah, [si+20h]
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
 mov ah, byte ptr [si+0x20]
 .org 0x452b
 # IDA 0x1432b; file 0x452b; locator=proven; xor     al, al
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor al, al
 .org 0x452d
 # IDA 0x1432d; file 0x452d; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x452f
 # IDA 0x1432f; file 0x452f; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x4531
 # IDA 0x14331; file 0x4531; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x4533
 # IDA 0x14333; file 0x4533; locator=proven; add     ax, 840h
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
 add ax, 0x840
 .org 0x4536
 # IDA 0x14336; file 0x4536; locator=proven; mov     bl, [si+23h]
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
 mov bl, byte ptr [si+0x23]
 .org 0x4539
 # IDA 0x14339; file 0x4539; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor bh, bh
 .org 0x453b
 # IDA 0x1433b; file 0x453b; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
 shl bx, 0x1
 .org 0x453d
 # IDA 0x1433d; file 0x453d; locator=proven; cmp     bx, 10h
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
 cmp bx, 0x10
 .org 0x4540
 # IDA 0x14340; file 0x4540; locator=proven; jnb     short loc_1434F
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
 jnb .+15
 .org 0x4542
 # IDA 0x14342; file 0x4542; locator=proven; mov     cl, cs:byte_10CFF
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
 cs; mov cl, byte ptr [0xcff]
 .org 0x4547
 # IDA 0x14347; file 0x4547; locator=proven; cmp     cl, [si+1]
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
 cmp cl, byte ptr [si+0x1]
 .org 0x454a
 # IDA 0x1434a; file 0x454a; locator=proven; jz      short loc_1434F
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
 jz .+5
 .org 0x454c
 # IDA 0x1434c; file 0x454c; locator=proven; add     bx, 8
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
 add bx, 0x8
 .org 0x454f
 loc_1434F:
 # IDA 0x1434f; file 0x454f; locator=proven; call    cs:funcs_1434F[bx]
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
+# operand 0 cs:funcs_1434F[bx]; [proven] 原十二表項依stage/owner選取，入口DI不在dispatcher設定; 出處: docs/re/123-c-march-command-restoration.md
 cs; call word ptr [bx+0x4358]
 .org 0x4554
 # IDA 0x14354; file 0x4554; locator=proven; pop     si
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
 pop si
 .org 0x4555
 # IDA 0x14355; file 0x4555; locator=proven; pop     es
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
 pop es
 .org 0x4556
 # IDA 0x14356; file 0x4556; locator=proven; pop     ds
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
 pop ds
 .org 0x4557
 # IDA 0x14357; file 0x4557; locator=proven; retn
-# ⚠ 函式 sub_14325; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14325; [proven] 十二項原stage表，非玩家且stage小於8時索引加4，入口DI保留; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x4570
 sub_14370:
 # IDA 0x14370; file 0x4570; locator=proven; mov     byte ptr [si+23h], 0
-# ⚠ 函式 sub_14370; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14370; [proven] 玩家路線目的地更新，已在首都且兵力少於600轉9; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0x23], 0x0
 .org 0x4574
 # IDA 0x14374; file 0x4574; locator=proven; mov     bx, ax
-# ⚠ 函式 sub_14370; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14370; [proven] 玩家路線目的地更新，已在首都且兵力少於600轉9; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov bx, ax
 .org 0x4576
 # IDA 0x14376; file 0x4576; locator=proven; call    sub_14548
-# ⚠ 函式 sub_14370; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14370; [proven] 玩家路線目的地更新，已在首都且兵力少於600轉9; 出處: docs/re/123-c-march-command-restoration.md
 call .+466
 .org 0x4579
 # IDA 0x14379; file 0x4579; locator=proven; jb      short loc_1437C
-# ⚠ 函式 sub_14370; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14370; [proven] 玩家路線目的地更新，已在首都且兵力少於600轉9; 出處: docs/re/123-c-march-command-restoration.md
 jb .+3
 .org 0x457b
 # IDA 0x1437b; file 0x457b; locator=proven; retn
-# ⚠ 函式 sub_14370; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14370; [proven] 玩家路線目的地更新，已在首都且兵力少於600轉9; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x457c
 loc_1437C:
 # IDA 0x1437c; file 0x457c; locator=proven; cmp     word ptr [si+4], 258h
-# ⚠ 函式 sub_14370; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14370; [proven] 玩家路線目的地更新，已在首都且兵力少於600轉9; 出處: docs/re/123-c-march-command-restoration.md
 cmp word ptr [si+0x4], 0x258
 .org 0x4581
 # IDA 0x14381; file 0x4581; locator=proven; jnb     short locret_1439C
-# ⚠ 函式 sub_14370; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14370; [proven] 玩家路線目的地更新，已在首都且兵力少於600轉9; 出處: docs/re/123-c-march-command-restoration.md
 jnb .+27
 .org 0x4583
 # IDA 0x14383; file 0x4583; locator=proven; mov     ax, bx
-# ⚠ 函式 sub_14370; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14370; [proven] 玩家路線目的地更新，已在首都且兵力少於600轉9; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov ax, bx
 .org 0x4585
 # IDA 0x14385; file 0x4585; locator=proven; sub     ax, 840h
-# ⚠ 函式 sub_14370; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14370; [proven] 玩家路線目的地更新，已在首都且兵力少於600轉9; 出處: docs/re/123-c-march-command-restoration.md
 sub ax, 0x840
 .org 0x4588
 # IDA 0x14388; file 0x4588; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_14370; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14370; [proven] 玩家路線目的地更新，已在首都且兵力少於600轉9; 出處: docs/re/123-c-march-command-restoration.md
 shl ax, 0x1
 .org 0x458a
 # IDA 0x1438a; file 0x458a; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_14370; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14370; [proven] 玩家路線目的地更新，已在首都且兵力少於600轉9; 出處: docs/re/123-c-march-command-restoration.md
 shl ax, 0x1
 .org 0x458c
 # IDA 0x1438c; file 0x458c; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_14370; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14370; [proven] 玩家路線目的地更新，已在首都且兵力少於600轉9; 出處: docs/re/123-c-march-command-restoration.md
 shl ax, 0x1
 .org 0x458e
 # IDA 0x1438e; file 0x458e; locator=proven; mov     bx, cs:word_10CFD
-# ⚠ 函式 sub_14370; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14370; [proven] 玩家路線目的地更新，已在首都且兵力少於600轉9; 出處: docs/re/123-c-march-command-restoration.md
 cs; mov bx, word ptr [0xcfd]
 .org 0x4593
 # IDA 0x14393; file 0x4593; locator=proven; cmp     ah, [bx+3]
-# ⚠ 函式 sub_14370; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14370; [proven] 玩家路線目的地更新，已在首都且兵力少於600轉9; 出處: docs/re/123-c-march-command-restoration.md
 cmp ah, byte ptr [bx+0x3]
 .org 0x4596
 # IDA 0x14396; file 0x4596; locator=proven; jnz     short locret_1439C
-# ⚠ 函式 sub_14370; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14370; [proven] 玩家路線目的地更新，已在首都且兵力少於600轉9; 出處: docs/re/123-c-march-command-restoration.md
 jnz .+6
 .org 0x4598
 # IDA 0x14398; file 0x4598; locator=proven; mov     byte ptr [si+23h], 9
-# ⚠ 函式 sub_14370; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14370; [proven] 玩家路線目的地更新，已在首都且兵力少於600轉9; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0x23], 0x9
 .org 0x459c
 locret_1439C:
 # IDA 0x1439c; file 0x459c; locator=proven; retn
-# ⚠ 函式 sub_14370; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14370; [proven] 玩家路線目的地更新，已在首都且兵力少於600轉9; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x459d
 sub_1439D:
 # IDA 0x1439d; file 0x459d; locator=proven; mov     bx, ax
-# ⚠ 函式 sub_1439D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1439D; [proven] 原非玩家表項4路線與據點40h旗標分支; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov bx, ax
 .org 0x459f
 # IDA 0x1439f; file 0x459f; locator=proven; call    sub_14548
-# ⚠ 函式 sub_1439D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1439D; [proven] 原非玩家表項4路線與據點40h旗標分支; 出處: docs/re/123-c-march-command-restoration.md
 call .+425
 .org 0x45a2
 # IDA 0x143a2; file 0x45a2; locator=proven; jb      short loc_143A5
-# ⚠ 函式 sub_1439D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1439D; [proven] 原非玩家表項4路線與據點40h旗標分支; 出處: docs/re/123-c-march-command-restoration.md
 jb .+3
 .org 0x45a4
 # IDA 0x143a4; file 0x45a4; locator=proven; retn
-# ⚠ 函式 sub_1439D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1439D; [proven] 原非玩家表項4路線與據點40h旗標分支; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x45a5
 loc_143A5:
 # IDA 0x143a5; file 0x45a5; locator=proven; test    byte ptr [bx], 40h
-# ⚠ 函式 sub_1439D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1439D; [proven] 原非玩家表項4路線與據點40h旗標分支; 出處: docs/re/123-c-march-command-restoration.md
 test byte ptr [bx], 0x40
 .org 0x45a8
 # IDA 0x143a8; file 0x45a8; locator=proven; jnz     short locret_143AE
-# ⚠ 函式 sub_1439D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1439D; [proven] 原非玩家表項4路線與據點40h旗標分支; 出處: docs/re/123-c-march-command-restoration.md
 jnz .+6
 .org 0x45aa
 # IDA 0x143aa; file 0x45aa; locator=proven; mov     byte ptr [si+23h], 1
-# ⚠ 函式 sub_1439D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1439D; [proven] 原非玩家表項4路線與據點40h旗標分支; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0x23], 0x1
 .org 0x45ae
 locret_143AE:
 # IDA 0x143ae; file 0x45ae; locator=proven; retn
-# ⚠ 函式 sub_1439D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1439D; [proven] 原非玩家表項4路線與據點40h旗標分支; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x45af
 sub_143AF:
 # IDA 0x143af; file 0x45af; locator=proven; cmp     word ptr [si+0Eh], 800h
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 cmp word ptr [si+0xe], 0x800
 .org 0x45b4
 # IDA 0x143b4; file 0x45b4; locator=proven; jb      short loc_143BB
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 jb .+7
 .org 0x45b6
 loc_143B6:
 # IDA 0x143b6; file 0x45b6; locator=proven; mov     byte ptr [si+23h], 0
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0x23], 0x0
 .org 0x45ba
 # IDA 0x143ba; file 0x45ba; locator=proven; retn
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x45bb
 loc_143BB:
 # IDA 0x143bb; file 0x45bb; locator=proven; cmp     word ptr [si+4], 12Ch
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 cmp word ptr [si+0x4], 0x12c
 .org 0x45c0
 # IDA 0x143c0; file 0x45c0; locator=proven; ja      short loc_143C7
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 ja .+7
 .org 0x45c2
 # IDA 0x143c2; file 0x45c2; locator=proven; mov     byte ptr [si+23h], 0Ah
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0x23], 0xa
 .org 0x45c6
 # IDA 0x143c6; file 0x45c6; locator=proven; retn
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x45c7
 loc_143C7:
 # IDA 0x143c7; file 0x45c7; locator=proven; mov     bx, ax
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov bx, ax
 .org 0x45c9
 # IDA 0x143c9; file 0x45c9; locator=proven; test    byte ptr [bx], 40h
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 test byte ptr [bx], 0x40
 .org 0x45cc
 # IDA 0x143cc; file 0x45cc; locator=proven; jnz     short loc_143B6
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 jnz .-22
 .org 0x45ce
 # IDA 0x143ce; file 0x45ce; locator=proven; cmp     byte ptr [bx], 80h
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 cmp byte ptr [bx], 0x80
 .org 0x45d1
 # IDA 0x143d1; file 0x45d1; locator=proven; jb      short loc_143D9
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 jb .+8
 .org 0x45d3
 # IDA 0x143d3; file 0x45d3; locator=proven; cmp     byte ptr [di+18h], 2
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
+# operand 0 byte ptr [di+18h]; [proven] 保留原[DI+18h]殘值讀取，不能補成BX目標城; 出處: docs/re/123-c-march-command-restoration.md
 cmp byte ptr [di+0x18], 0x2
 .org 0x45d7
 # IDA 0x143d7; file 0x45d7; locator=proven; jbe     short loc_143E8
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 jbe .+17
 .org 0x45d9
 loc_143D9:
 # IDA 0x143d9; file 0x45d9; locator=proven; call    sub_1ECE0
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 call .-22265
 .org 0x45dc
 # IDA 0x143dc; file 0x45dc; locator=proven; and     al, 7
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 and al, 0x7
 .org 0x45de
 # IDA 0x143de; file 0x45de; locator=proven; inc     al
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 inc al
 .org 0x45e0
 # IDA 0x143e0; file 0x45e0; locator=proven; mov     [si+0Bh], al
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0xb], al
 .org 0x45e3
 # IDA 0x143e3; file 0x45e3; locator=proven; mov     byte ptr [si+23h], 2
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0x23], 0x2
 .org 0x45e7
 # IDA 0x143e7; file 0x45e7; locator=proven; retn
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x45e8
 loc_143E8:
 # IDA 0x143e8; file 0x45e8; locator=proven; cmp     word ptr [si+4], 258h
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 cmp word ptr [si+0x4], 0x258
 .org 0x45ed
 # IDA 0x143ed; file 0x45ed; locator=proven; jnb     short locret_1440E
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 jnb .+33
 .org 0x45ef
 # IDA 0x143ef; file 0x45ef; locator=proven; mov     ah, [si+1]
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 mov ah, byte ptr [si+0x1]
 .org 0x45f2
 # IDA 0x143f2; file 0x45f2; locator=proven; xor     al, al
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor al, al
 .org 0x45f4
 # IDA 0x143f4; file 0x45f4; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x45f6
 # IDA 0x143f6; file 0x45f6; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x45f8
 # IDA 0x143f8; file 0x45f8; locator=proven; mov     di, ax
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov di, ax
 .org 0x45fa
 # IDA 0x143fa; file 0x45fa; locator=proven; mov     ax, bx
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov ax, bx
 .org 0x45fc
 # IDA 0x143fc; file 0x45fc; locator=proven; sub     ax, 840h
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 sub ax, 0x840
 .org 0x45ff
 # IDA 0x143ff; file 0x45ff; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 shl ax, 0x1
 .org 0x4601
 # IDA 0x14401; file 0x4601; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 shl ax, 0x1
 .org 0x4603
 # IDA 0x14403; file 0x4603; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 shl ax, 0x1
 .org 0x4605
 # IDA 0x14405; file 0x4605; locator=proven; cmp     ah, [di+3]
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 cmp ah, byte ptr [di+0x3]
 .org 0x4608
 # IDA 0x14408; file 0x4608; locator=proven; jnz     short locret_1440E
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 jnz .+6
 .org 0x460a
 # IDA 0x1440a; file 0x460a; locator=proven; mov     byte ptr [si+23h], 9
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0x23], 0x9
 .org 0x460e
 locret_1440E:
 # IDA 0x1440e; file 0x460e; locator=proven; retn
-# ⚠ 函式 sub_143AF; [unknown] 未附加語意; 出處: 無
+# 函式 sub_143AF; [proven] 原表項5兵力/位置/據點及DI殘值門檻，受控RND設定timer; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x460f
 sub_1440F:
 # IDA 0x1440f; file 0x460f; locator=proven; mov     di, ax
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov di, ax
 .org 0x4611
 # IDA 0x14411; file 0x4611; locator=proven; test    byte ptr [di], 40h
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 test byte ptr [di], 0x40
 .org 0x4614
 # IDA 0x14414; file 0x4614; locator=proven; jnz     short loc_14421
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 jnz .+13
 .org 0x4616
 # IDA 0x14416; file 0x4616; locator=proven; cmp     byte ptr [di], 80h
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 cmp byte ptr [di], 0x80
 .org 0x4619
 # IDA 0x14419; file 0x4619; locator=proven; jb      short loc_14426
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 jb .+13
 .org 0x461b
 # IDA 0x1441b; file 0x461b; locator=proven; cmp     byte ptr [di+18h], 1
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 cmp byte ptr [di+0x18], 0x1
 .org 0x461f
 # IDA 0x1441f; file 0x461f; locator=proven; ja      short loc_14426
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 ja .+7
 .org 0x4621
 loc_14421:
 # IDA 0x14421; file 0x4621; locator=proven; mov     byte ptr [si+23h], 1
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0x23], 0x1
 .org 0x4625
 # IDA 0x14425; file 0x4625; locator=proven; retn
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x4626
 loc_14426:
 # IDA 0x14426; file 0x4626; locator=proven; mov     bh, [si+1]
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 mov bh, byte ptr [si+0x1]
 .org 0x4629
 # IDA 0x14429; file 0x4629; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor bl, bl
 .org 0x462b
 # IDA 0x1442b; file 0x462b; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 shr bx, 0x1
 .org 0x462d
 # IDA 0x1442d; file 0x462d; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 shr bx, 0x1
 .org 0x462f
 # IDA 0x1442f; file 0x462f; locator=proven; test    byte ptr [bx], 40h
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 test byte ptr [bx], 0x40
 .org 0x4632
 # IDA 0x14432; file 0x4632; locator=proven; jnz     short loc_1443D
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 jnz .+11
 .org 0x4634
 # IDA 0x14434; file 0x4634; locator=proven; mov     al, 0FFh
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 mov al, 0xff
 .org 0x4636
 # IDA 0x14436; file 0x4636; locator=proven; xchg    al, [bx+17h]
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 xchg al, byte ptr [bx+0x17]
 .org 0x4639
 # IDA 0x14439; file 0x4639; locator=proven; cmp     al, 0FFh
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 cmp al, 0xff
 .org 0x463b
 # IDA 0x1443b; file 0x463b; locator=proven; jnz     short loc_14446
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 jnz .+11
 .org 0x463d
 loc_1443D:
 # IDA 0x1443d; file 0x463d; locator=proven; mov     al, 0FFh
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 mov al, 0xff
 .org 0x463f
 # IDA 0x1443f; file 0x463f; locator=proven; xchg    al, [bx+16h]
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 xchg al, byte ptr [bx+0x16]
 .org 0x4642
 # IDA 0x14442; file 0x4642; locator=proven; cmp     al, 0FFh
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 cmp al, 0xff
 .org 0x4644
 # IDA 0x14444; file 0x4644; locator=proven; jz      short loc_14459
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 jz .+21
 .org 0x4646
 loc_14446:
 # IDA 0x14446; file 0x4646; locator=proven; cmp     [si+20h], al
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 cmp byte ptr [si+0x20], al
 .org 0x4649
 # IDA 0x14449; file 0x4649; locator=proven; jz      short loc_14451
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 jz .+8
 .org 0x464b
 # IDA 0x1444b; file 0x464b; locator=proven; mov     [si+20h], al
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0x20], al
 .org 0x464e
 # IDA 0x1444e; file 0x464e; locator=proven; or      byte ptr [si], 2
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 or byte ptr [si], 0x2
 .org 0x4651
 loc_14451:
 # IDA 0x14451; file 0x4651; locator=proven; mov     byte ptr [si+23h], 0
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0x23], 0x0
 .org 0x4655
 # IDA 0x14455; file 0x4655; locator=proven; dec     byte ptr [di+18h]
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 dec byte ptr [di+0x18]
 .org 0x4658
 # IDA 0x14458; file 0x4658; locator=proven; retn
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x4659
 loc_14459:
 # IDA 0x14459; file 0x4659; locator=proven; cmp     byte ptr [di], 80h
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 cmp byte ptr [di], 0x80
 .org 0x465c
 # IDA 0x1445c; file 0x465c; locator=proven; jnb     short locret_14465
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 jnb .+9
 .org 0x465e
 # IDA 0x1445e; file 0x465e; locator=proven; mov     byte ptr [si+23h], 0Bh
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0x23], 0xb
 .org 0x4662
 # IDA 0x14462; file 0x4662; locator=proven; dec     byte ptr [di+18h]
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 dec byte ptr [di+0x18]
 .org 0x4665
 locret_14465:
 # IDA 0x14465; file 0x4665; locator=proven; retn
-# ⚠ 函式 sub_1440F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1440F; [proven] 原表項6據點威脅與勢力16/17佇列消費、重新指派; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x4666
 sub_14466:
 # IDA 0x14466; file 0x4666; locator=proven; mov     al, 1Eh
-# ⚠ 函式 sub_14466; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14466; [proven] 六槽兵數30門檻，stage8或11; 出處: docs/re/123-c-march-command-restoration.md
 mov al, 0x1e
 .org 0x4668
 # IDA 0x14468; file 0x4668; locator=proven; mov     cx, 6
-# ⚠ 函式 sub_14466; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14466; [proven] 六槽兵數30門檻，stage8或11; 出處: docs/re/123-c-march-command-restoration.md
 mov cx, 0x6
 .org 0x466b
 # IDA 0x1446b; file 0x466b; locator=proven; mov     bx, si
-# ⚠ 函式 sub_14466; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14466; [proven] 六槽兵數30門檻，stage8或11; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov bx, si
 .org 0x466d
 # IDA 0x1446d; file 0x466d; locator=proven; add     bx, 29h
-# ⚠ 函式 sub_14466; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14466; [proven] 六槽兵數30門檻，stage8或11; 出處: docs/re/123-c-march-command-restoration.md
 add bx, 0x29
 .org 0x4670
 loc_14470:
 # IDA 0x14470; file 0x4670; locator=proven; cmp     al, [bx]
-# ⚠ 函式 sub_14466; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14466; [proven] 六槽兵數30門檻，stage8或11; 出處: docs/re/123-c-march-command-restoration.md
 cmp al, byte ptr [bx]
 .org 0x4672
 # IDA 0x14472; file 0x4672; locator=proven; ja      short loc_1447E
-# ⚠ 函式 sub_14466; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14466; [proven] 六槽兵數30門檻，stage8或11; 出處: docs/re/123-c-march-command-restoration.md
 ja .+12
 .org 0x4674
 # IDA 0x14474; file 0x4674; locator=proven; add     bx, 4
-# ⚠ 函式 sub_14466; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14466; [proven] 六槽兵數30門檻，stage8或11; 出處: docs/re/123-c-march-command-restoration.md
 add bx, 0x4
 .org 0x4677
 # IDA 0x14477; file 0x4677; locator=proven; loop    loc_14470
-# ⚠ 函式 sub_14466; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14466; [proven] 六槽兵數30門檻，stage8或11; 出處: docs/re/123-c-march-command-restoration.md
 loop .-7
 .org 0x4679
 # IDA 0x14479; file 0x4679; locator=proven; mov     byte ptr [si+23h], 8
-# ⚠ 函式 sub_14466; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14466; [proven] 六槽兵數30門檻，stage8或11; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0x23], 0x8
 .org 0x467d
 # IDA 0x1447d; file 0x467d; locator=proven; retn
-# ⚠ 函式 sub_14466; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14466; [proven] 六槽兵數30門檻，stage8或11; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x467e
 loc_1447E:
 # IDA 0x1447e; file 0x467e; locator=proven; mov     byte ptr [si+23h], 0Bh
-# ⚠ 函式 sub_14466; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14466; [proven] 六槽兵數30門檻，stage8或11; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0x23], 0xb
 .org 0x4682
 # IDA 0x14482; file 0x4682; locator=proven; retn
-# ⚠ 函式 sub_14466; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14466; [proven] 六槽兵數30門檻，stage8或11; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x4683
 sub_14483:
 # IDA 0x14483; file 0x4683; locator=proven; mov     bh, [si+1]
-# ⚠ 函式 sub_14483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14483; [proven] 軍團士氣達勢力基準時轉stage1; 出處: docs/re/123-c-march-command-restoration.md
 mov bh, byte ptr [si+0x1]
 .org 0x4686
 # IDA 0x14486; file 0x4686; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_14483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14483; [proven] 軍團士氣達勢力基準時轉stage1; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor bl, bl
 .org 0x4688
 # IDA 0x14488; file 0x4688; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14483; [proven] 軍團士氣達勢力基準時轉stage1; 出處: docs/re/123-c-march-command-restoration.md
 shr bx, 0x1
 .org 0x468a
 # IDA 0x1448a; file 0x468a; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14483; [proven] 軍團士氣達勢力基準時轉stage1; 出處: docs/re/123-c-march-command-restoration.md
 shr bx, 0x1
 .org 0x468c
 # IDA 0x1448c; file 0x468c; locator=proven; mov     al, [bx+1Dh]
-# ⚠ 函式 sub_14483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14483; [proven] 軍團士氣達勢力基準時轉stage1; 出處: docs/re/123-c-march-command-restoration.md
 mov al, byte ptr [bx+0x1d]
 .org 0x468f
 # IDA 0x1448f; file 0x468f; locator=proven; cmp     [si+6], al
-# ⚠ 函式 sub_14483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14483; [proven] 軍團士氣達勢力基準時轉stage1; 出處: docs/re/123-c-march-command-restoration.md
 cmp byte ptr [si+0x6], al
 .org 0x4692
 # IDA 0x14492; file 0x4692; locator=proven; jb      short locret_14498
-# ⚠ 函式 sub_14483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14483; [proven] 軍團士氣達勢力基準時轉stage1; 出處: docs/re/123-c-march-command-restoration.md
 jb .+6
 .org 0x4694
 # IDA 0x14494; file 0x4694; locator=proven; mov     byte ptr [si+23h], 1
-# ⚠ 函式 sub_14483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14483; [proven] 軍團士氣達勢力基準時轉stage1; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0x23], 0x1
 .org 0x4698
 locret_14498:
 # IDA 0x14498; file 0x4698; locator=proven; retn
-# ⚠ 函式 sub_14483; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14483; [proven] 軍團士氣達勢力基準時轉stage1; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x4699
 sub_14499:
 # IDA 0x14499; file 0x4699; locator=proven; call    sub_1461D
-# ⚠ 函式 sub_14499; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14499; [proven] 原退兵重分與派生重算，stage3並刷新側欄; 出處: docs/re/123-c-march-command-restoration.md
 call .+388
 .org 0x469c
 # IDA 0x1449c; file 0x469c; locator=proven; call    sub_16FD2
-# ⚠ 函式 sub_14499; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14499; [proven] 原退兵重分與派生重算，stage3並刷新側欄; 出處: docs/re/123-c-march-command-restoration.md
 call .+11062
 .org 0x469f
 # IDA 0x1449f; file 0x469f; locator=proven; mov     byte ptr [si+23h], 3
-# ⚠ 函式 sub_14499; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14499; [proven] 原退兵重分與派生重算，stage3並刷新側欄; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0x23], 0x3
 .org 0x46a3
 # IDA 0x144a3; file 0x46a3; locator=proven; mov     al, 8
-# ⚠ 函式 sub_14499; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14499; [proven] 原退兵重分與派生重算，stage3並刷新側欄; 出處: docs/re/123-c-march-command-restoration.md
 mov al, 0x8
 .org 0x46a5
 # IDA 0x144a5; file 0x46a5; locator=proven; call    sub_15E80
-# ⚠ 函式 sub_14499; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14499; [proven] 原退兵重分與派生重算，stage3並刷新側欄; 出處: docs/re/123-c-march-command-restoration.md
 call .+6619
 .org 0x46a8
 # IDA 0x144a8; file 0x46a8; locator=proven; retn
-# ⚠ 函式 sub_14499; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14499; [proven] 原退兵重分與派生重算，stage3並刷新側欄; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x46a9
 sub_144A9:
 # IDA 0x144a9; file 0x46a9; locator=proven; mov     bh, [si+1]
-# ⚠ 函式 sub_144A9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144A9; [proven] 目標校正為首都，已到轉stage9; 出處: docs/re/123-c-march-command-restoration.md
 mov bh, byte ptr [si+0x1]
 .org 0x46ac
 # IDA 0x144ac; file 0x46ac; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_144A9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144A9; [proven] 目標校正為首都，已到轉stage9; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor bl, bl
 .org 0x46ae
 # IDA 0x144ae; file 0x46ae; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_144A9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144A9; [proven] 目標校正為首都，已到轉stage9; 出處: docs/re/123-c-march-command-restoration.md
 shr bx, 0x1
 .org 0x46b0
 # IDA 0x144b0; file 0x46b0; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_144A9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144A9; [proven] 目標校正為首都，已到轉stage9; 出處: docs/re/123-c-march-command-restoration.md
 shr bx, 0x1
 .org 0x46b2
 # IDA 0x144b2; file 0x46b2; locator=proven; mov     bh, [bx+3]
-# ⚠ 函式 sub_144A9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144A9; [proven] 目標校正為首都，已到轉stage9; 出處: docs/re/123-c-march-command-restoration.md
 mov bh, byte ptr [bx+0x3]
 .org 0x46b5
 # IDA 0x144b5; file 0x46b5; locator=proven; cmp     [si+20h], bh
-# ⚠ 函式 sub_144A9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144A9; [proven] 目標校正為首都，已到轉stage9; 出處: docs/re/123-c-march-command-restoration.md
 cmp byte ptr [si+0x20], bh
 .org 0x46b8
 # IDA 0x144b8; file 0x46b8; locator=proven; jz      short loc_144C0
-# ⚠ 函式 sub_144A9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144A9; [proven] 目標校正為首都，已到轉stage9; 出處: docs/re/123-c-march-command-restoration.md
 jz .+8
 .org 0x46ba
 # IDA 0x144ba; file 0x46ba; locator=proven; mov     [si+20h], bh
-# ⚠ 函式 sub_144A9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144A9; [proven] 目標校正為首都，已到轉stage9; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0x20], bh
 .org 0x46bd
 # IDA 0x144bd; file 0x46bd; locator=proven; or      byte ptr [si], 2
-# ⚠ 函式 sub_144A9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144A9; [proven] 目標校正為首都，已到轉stage9; 出處: docs/re/123-c-march-command-restoration.md
 or byte ptr [si], 0x2
 .org 0x46c0
 loc_144C0:
 # IDA 0x144c0; file 0x46c0; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_144A9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144A9; [proven] 目標校正為首都，已到轉stage9; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor bl, bl
 .org 0x46c2
 # IDA 0x144c2; file 0x46c2; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_144A9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144A9; [proven] 目標校正為首都，已到轉stage9; 出處: docs/re/123-c-march-command-restoration.md
 shr bx, 0x1
 .org 0x46c4
 # IDA 0x144c4; file 0x46c4; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_144A9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144A9; [proven] 目標校正為首都，已到轉stage9; 出處: docs/re/123-c-march-command-restoration.md
 shr bx, 0x1
 .org 0x46c6
 # IDA 0x144c6; file 0x46c6; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_144A9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144A9; [proven] 目標校正為首都，已到轉stage9; 出處: docs/re/123-c-march-command-restoration.md
 shr bx, 0x1
 .org 0x46c8
 # IDA 0x144c8; file 0x46c8; locator=proven; add     bx, 840h
-# ⚠ 函式 sub_144A9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144A9; [proven] 目標校正為首都，已到轉stage9; 出處: docs/re/123-c-march-command-restoration.md
 add bx, 0x840
 .org 0x46cc
 # IDA 0x144cc; file 0x46cc; locator=proven; call    sub_14548
-# ⚠ 函式 sub_144A9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144A9; [proven] 目標校正為首都，已到轉stage9; 出處: docs/re/123-c-march-command-restoration.md
 call .+124
 .org 0x46cf
 # IDA 0x144cf; file 0x46cf; locator=proven; jnb     short locret_144D5
-# ⚠ 函式 sub_144A9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144A9; [proven] 目標校正為首都，已到轉stage9; 出處: docs/re/123-c-march-command-restoration.md
 jnb .+6
 .org 0x46d1
 # IDA 0x144d1; file 0x46d1; locator=proven; mov     byte ptr [si+23h], 9
-# ⚠ 函式 sub_144A9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144A9; [proven] 目標校正為首都，已到轉stage9; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0x23], 0x9
 .org 0x46d5
 locret_144D5:
 # IDA 0x144d5; file 0x46d5; locator=proven; retn
-# ⚠ 函式 sub_144A9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144A9; [proven] 目標校正為首都，已到轉stage9; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x46d6
 sub_144D6:
 # IDA 0x144d6; file 0x46d6; locator=proven; mov     bh, [si+1]
-# ⚠ 函式 sub_144D6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144D6; [proven] 目標校正為首都，已到即原解散; 出處: docs/re/123-c-march-command-restoration.md
 mov bh, byte ptr [si+0x1]
 .org 0x46d9
 # IDA 0x144d9; file 0x46d9; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_144D6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144D6; [proven] 目標校正為首都，已到即原解散; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor bl, bl
 .org 0x46db
 # IDA 0x144db; file 0x46db; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_144D6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144D6; [proven] 目標校正為首都，已到即原解散; 出處: docs/re/123-c-march-command-restoration.md
 shr bx, 0x1
 .org 0x46dd
 # IDA 0x144dd; file 0x46dd; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_144D6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144D6; [proven] 目標校正為首都，已到即原解散; 出處: docs/re/123-c-march-command-restoration.md
 shr bx, 0x1
 .org 0x46df
 # IDA 0x144df; file 0x46df; locator=proven; mov     bh, [bx+3]
-# ⚠ 函式 sub_144D6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144D6; [proven] 目標校正為首都，已到即原解散; 出處: docs/re/123-c-march-command-restoration.md
 mov bh, byte ptr [bx+0x3]
 .org 0x46e2
 # IDA 0x144e2; file 0x46e2; locator=proven; cmp     [si+20h], bh
-# ⚠ 函式 sub_144D6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144D6; [proven] 目標校正為首都，已到即原解散; 出處: docs/re/123-c-march-command-restoration.md
 cmp byte ptr [si+0x20], bh
 .org 0x46e5
 # IDA 0x144e5; file 0x46e5; locator=proven; jz      short loc_144ED
-# ⚠ 函式 sub_144D6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144D6; [proven] 目標校正為首都，已到即原解散; 出處: docs/re/123-c-march-command-restoration.md
 jz .+8
 .org 0x46e7
 # IDA 0x144e7; file 0x46e7; locator=proven; mov     [si+20h], bh
-# ⚠ 函式 sub_144D6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144D6; [proven] 目標校正為首都，已到即原解散; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0x20], bh
 .org 0x46ea
 # IDA 0x144ea; file 0x46ea; locator=proven; or      byte ptr [si], 2
-# ⚠ 函式 sub_144D6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144D6; [proven] 目標校正為首都，已到即原解散; 出處: docs/re/123-c-march-command-restoration.md
 or byte ptr [si], 0x2
 .org 0x46ed
 loc_144ED:
 # IDA 0x144ed; file 0x46ed; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_144D6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144D6; [proven] 目標校正為首都，已到即原解散; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor bl, bl
 .org 0x46ef
 # IDA 0x144ef; file 0x46ef; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_144D6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144D6; [proven] 目標校正為首都，已到即原解散; 出處: docs/re/123-c-march-command-restoration.md
 shr bx, 0x1
 .org 0x46f1
 # IDA 0x144f1; file 0x46f1; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_144D6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144D6; [proven] 目標校正為首都，已到即原解散; 出處: docs/re/123-c-march-command-restoration.md
 shr bx, 0x1
 .org 0x46f3
 # IDA 0x144f3; file 0x46f3; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_144D6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144D6; [proven] 目標校正為首都，已到即原解散; 出處: docs/re/123-c-march-command-restoration.md
 shr bx, 0x1
 .org 0x46f5
 # IDA 0x144f5; file 0x46f5; locator=proven; add     bx, 840h
-# ⚠ 函式 sub_144D6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144D6; [proven] 目標校正為首都，已到即原解散; 出處: docs/re/123-c-march-command-restoration.md
 add bx, 0x840
 .org 0x46f9
 # IDA 0x144f9; file 0x46f9; locator=proven; call    sub_14548
-# ⚠ 函式 sub_144D6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144D6; [proven] 目標校正為首都，已到即原解散; 出處: docs/re/123-c-march-command-restoration.md
 call .+79
 .org 0x46fc
 # IDA 0x144fc; file 0x46fc; locator=proven; jnb     short locret_14501
-# ⚠ 函式 sub_144D6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144D6; [proven] 目標校正為首都，已到即原解散; 出處: docs/re/123-c-march-command-restoration.md
 jnb .+5
 .org 0x46fe
 # IDA 0x144fe; file 0x46fe; locator=proven; call    sub_1463E
-# ⚠ 函式 sub_144D6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144D6; [proven] 目標校正為首都，已到即原解散; 出處: docs/re/123-c-march-command-restoration.md
 call .+320
 .org 0x4701
 locret_14501:
 # IDA 0x14501; file 0x4701; locator=proven; retn
-# ⚠ 函式 sub_144D6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_144D6; [proven] 目標校正為首都，已到即原解散; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x4702
 sub_14502:
@@ -25649,85 +25651,85 @@ ret
 .org 0x4748
 sub_14548:
 # IDA 0x14548; file 0x4748; locator=proven; push    bx
-# ⚠ 函式 sub_14548; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14548; [proven] 依據點記錄寫路線目標三word，以目前node/XY回CF; 出處: docs/re/123-c-march-command-restoration.md
 push bx
 .org 0x4749
 # IDA 0x14549; file 0x4749; locator=proven; mov     ax, [bx+8]
-# ⚠ 函式 sub_14548; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14548; [proven] 依據點記錄寫路線目標三word，以目前node/XY回CF; 出處: docs/re/123-c-march-command-restoration.md
 mov ax, word ptr [bx+0x8]
 .org 0x474c
 # IDA 0x1454c; file 0x474c; locator=proven; mov     dx, [bx+0Ah]
-# ⚠ 函式 sub_14548; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14548; [proven] 依據點記錄寫路線目標三word，以目前node/XY回CF; 出處: docs/re/123-c-march-command-restoration.md
 mov dx, word ptr [bx+0xa]
 .org 0x474f
 # IDA 0x1454f; file 0x474f; locator=proven; sub     bx, 840h
-# ⚠ 函式 sub_14548; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14548; [proven] 依據點記錄寫路線目標三word，以目前node/XY回CF; 出處: docs/re/123-c-march-command-restoration.md
 sub bx, 0x840
 .org 0x4753
 # IDA 0x14553; file 0x4753; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14548; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14548; [proven] 依據點記錄寫路線目標三word，以目前node/XY回CF; 出處: docs/re/123-c-march-command-restoration.md
 shr bx, 0x1
 .org 0x4755
 # IDA 0x14555; file 0x4755; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14548; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14548; [proven] 依據點記錄寫路線目標三word，以目前node/XY回CF; 出處: docs/re/123-c-march-command-restoration.md
 shr bx, 0x1
 .org 0x4757
 # IDA 0x14557; file 0x4757; locator=proven; cmp     [si+10h], ax
-# ⚠ 函式 sub_14548; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14548; [proven] 依據點記錄寫路線目標三word，以目前node/XY回CF; 出處: docs/re/123-c-march-command-restoration.md
 cmp word ptr [si+0x10], ax
 .org 0x475a
 # IDA 0x1455a; file 0x475a; locator=proven; jnz     short loc_14569
-# ⚠ 函式 sub_14548; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14548; [proven] 依據點記錄寫路線目標三word，以目前node/XY回CF; 出處: docs/re/123-c-march-command-restoration.md
 jnz .+15
 .org 0x475c
 # IDA 0x1455c; file 0x475c; locator=proven; cmp     [si+12h], dx
-# ⚠ 函式 sub_14548; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14548; [proven] 依據點記錄寫路線目標三word，以目前node/XY回CF; 出處: docs/re/123-c-march-command-restoration.md
 cmp word ptr [si+0x12], dx
 .org 0x475f
 # IDA 0x1455f; file 0x475f; locator=proven; jnz     short loc_14569
-# ⚠ 函式 sub_14548; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14548; [proven] 依據點記錄寫路線目標三word，以目前node/XY回CF; 出處: docs/re/123-c-march-command-restoration.md
 jnz .+10
 .org 0x4761
 # IDA 0x14561; file 0x4761; locator=proven; cmp     [si+0Eh], bx
-# ⚠ 函式 sub_14548; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14548; [proven] 依據點記錄寫路線目標三word，以目前node/XY回CF; 出處: docs/re/123-c-march-command-restoration.md
 cmp word ptr [si+0xe], bx
 .org 0x4764
 # IDA 0x14564; file 0x4764; locator=proven; jnz     short loc_14569
-# ⚠ 函式 sub_14548; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14548; [proven] 依據點記錄寫路線目標三word，以目前node/XY回CF; 出處: docs/re/123-c-march-command-restoration.md
 jnz .+5
 .org 0x4766
 # IDA 0x14566; file 0x4766; locator=proven; stc
-# ⚠ 函式 sub_14548; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14548; [proven] 依據點記錄寫路線目標三word，以目前node/XY回CF; 出處: docs/re/123-c-march-command-restoration.md
 stc
 .org 0x4767
 # IDA 0x14567; file 0x4767; locator=proven; jmp     short loc_1456A
-# ⚠ 函式 sub_14548; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14548; [proven] 依據點記錄寫路線目標三word，以目前node/XY回CF; 出處: docs/re/123-c-march-command-restoration.md
 jmp .+3
 .org 0x4769
 loc_14569:
 # IDA 0x14569; file 0x4769; locator=proven; clc
-# ⚠ 函式 sub_14548; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14548; [proven] 依據點記錄寫路線目標三word，以目前node/XY回CF; 出處: docs/re/123-c-march-command-restoration.md
 clc
 .org 0x476a
 loc_1456A:
 # IDA 0x1456a; file 0x476a; locator=proven; mov     [si+16h], ax
-# ⚠ 函式 sub_14548; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14548; [proven] 依據點記錄寫路線目標三word，以目前node/XY回CF; 出處: docs/re/123-c-march-command-restoration.md
 mov word ptr [si+0x16], ax
 .org 0x476d
 # IDA 0x1456d; file 0x476d; locator=proven; mov     [si+18h], dx
-# ⚠ 函式 sub_14548; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14548; [proven] 依據點記錄寫路線目標三word，以目前node/XY回CF; 出處: docs/re/123-c-march-command-restoration.md
 mov word ptr [si+0x18], dx
 .org 0x4770
 # IDA 0x14570; file 0x4770; locator=proven; mov     [si+14h], bx
-# ⚠ 函式 sub_14548; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14548; [proven] 依據點記錄寫路線目標三word，以目前node/XY回CF; 出處: docs/re/123-c-march-command-restoration.md
 mov word ptr [si+0x14], bx
 .org 0x4773
 # IDA 0x14573; file 0x4773; locator=proven; pop     bx
-# ⚠ 函式 sub_14548; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14548; [proven] 依據點記錄寫路線目標三word，以目前node/XY回CF; 出處: docs/re/123-c-march-command-restoration.md
 pop bx
 .org 0x4774
 # IDA 0x14574; file 0x4774; locator=proven; retn
-# ⚠ 函式 sub_14548; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14548; [proven] 依據點記錄寫路線目標三word，以目前node/XY回CF; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x4775
 sub_14575:
@@ -26165,166 +26167,167 @@ ret
 .org 0x483e
 sub_1463E:
 # IDA 0x1463e; file 0x483e; locator=proven; call    sub_14651
-# ⚠ 函式 sub_1463E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1463E; [proven] 解散並依玩家勢力條件刷新側欄; 出處: docs/re/123-c-march-command-restoration.md
 call .+19
 .org 0x4841
 # IDA 0x14641; file 0x4841; locator=proven; mov     al, [si+1]
-# ⚠ 函式 sub_1463E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1463E; [proven] 解散並依玩家勢力條件刷新側欄; 出處: docs/re/123-c-march-command-restoration.md
 mov al, byte ptr [si+0x1]
 .org 0x4844
 # IDA 0x14644; file 0x4844; locator=proven; cmp     al, cs:byte_10CFF
-# ⚠ 函式 sub_1463E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1463E; [proven] 解散並依玩家勢力條件刷新側欄; 出處: docs/re/123-c-march-command-restoration.md
 cs; cmp al, byte ptr [0xcff]
 .org 0x4849
 # IDA 0x14649; file 0x4849; locator=proven; jnz     short locret_14650
-# ⚠ 函式 sub_1463E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1463E; [proven] 解散並依玩家勢力條件刷新側欄; 出處: docs/re/123-c-march-command-restoration.md
 jnz .+7
 .org 0x484b
 # IDA 0x1464b; file 0x484b; locator=proven; mov     al, 8
-# ⚠ 函式 sub_1463E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1463E; [proven] 解散並依玩家勢力條件刷新側欄; 出處: docs/re/123-c-march-command-restoration.md
 mov al, 0x8
 .org 0x484d
 # IDA 0x1464d; file 0x484d; locator=proven; call    sub_15E80
-# ⚠ 函式 sub_1463E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1463E; [proven] 解散並依玩家勢力條件刷新側欄; 出處: docs/re/123-c-march-command-restoration.md
 call .+6195
 .org 0x4850
 locret_14650:
 # IDA 0x14650; file 0x4850; locator=proven; retn
-# ⚠ 函式 sub_1463E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1463E; [proven] 解散並依玩家勢力條件刷新側欄; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x4851
 sub_14651:
 # IDA 0x14651; file 0x4851; locator=proven; push    es
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 push es
 .org 0x4852
 # IDA 0x14652; file 0x4852; locator=proven; push    ax
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 push ax
 .org 0x4853
 # IDA 0x14653; file 0x4853; locator=proven; push    di
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 push di
 .org 0x4854
 # IDA 0x14654; file 0x4854; locator=proven; mov     ax, ds
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 mov ax, ds
 .org 0x4856
 # IDA 0x14656; file 0x4856; locator=proven; mov     es, ax
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 mov es, ax
 .org 0x4858
 # IDA 0x14658; file 0x4858; locator=proven; call    sub_14689
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 call .+49
 .org 0x485b
 # IDA 0x1465b; file 0x485b; locator=proven; mov     ah, [si+1]
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 mov ah, byte ptr [si+0x1]
 .org 0x485e
 # IDA 0x1465e; file 0x485e; locator=proven; xor     al, al
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor al, al
 .org 0x4860
 # IDA 0x14660; file 0x4860; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x4862
 # IDA 0x14662; file 0x4862; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 shr ax, 0x1
 .org 0x4864
 # IDA 0x14664; file 0x4864; locator=proven; mov     di, ax
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov di, ax
 .org 0x4866
 # IDA 0x14666; file 0x4866; locator=proven; add     ax, 4
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 add ax, offset imm_at_14666
 .org 0x4869
 # IDA 0x14669; file 0x4869; locator=proven; add     di, 4
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 add di, 0x4
 .org 0x486c
 # IDA 0x1466c; file 0x486c; locator=proven; call    sub_14717
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 call .+171
 .org 0x486f
 # IDA 0x1466f; file 0x486f; locator=proven; mov     byte ptr [si], 0
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
+# operand 0 byte ptr [si]; [proven] 只清軍團+00 byte，其他記錄欄位保留; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si], 0x0
 .org 0x4872
 # IDA 0x14672; file 0x4872; locator=proven; mov     di, si
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov di, si
 .org 0x4874
 # IDA 0x14674; file 0x4874; locator=proven; sub     di, 2240h
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 sub di, 0x2240
 .org 0x4878
 # IDA 0x14678; file 0x4878; locator=proven; shr     di, 1
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 shr di, 0x1
 .org 0x487a
 # IDA 0x1467a; file 0x487a; locator=proven; mov     byte ptr [di+4257h], 0
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [di+0x4257], 0x0
 .org 0x487f
 # IDA 0x1467f; file 0x487f; locator=proven; les     di, [si+1Ah]
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 les di, dword ptr [si+0x1a]
 .org 0x4882
 # IDA 0x14682; file 0x4882; locator=proven; dec     byte ptr es:[di]
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 es; dec byte ptr [di]
 .org 0x4885
 # IDA 0x14685; file 0x4885; locator=proven; pop     di
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 pop di
 .org 0x4886
 # IDA 0x14686; file 0x4886; locator=proven; pop     ax
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 pop ax
 .org 0x4887
 # IDA 0x14687; file 0x4887; locator=proven; pop     es
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 pop es
 .org 0x4888
 # IDA 0x14688; file 0x4888; locator=proven; retn
-# ⚠ 函式 sub_14651; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14651; [proven] 退兵、軍團00清0、主將duty清0、軍團數與occupancy各減1; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x4889
 sub_14689:
 # IDA 0x14689; file 0x4889; locator=proven; push    bx
-# ⚠ 函式 sub_14689; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14689; [proven] 所屬勢力軍團數byte遞減; 出處: docs/re/123-c-march-command-restoration.md
 push bx
 .org 0x488a
 # IDA 0x1468a; file 0x488a; locator=proven; mov     bh, [si+1]
-# ⚠ 函式 sub_14689; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14689; [proven] 所屬勢力軍團數byte遞減; 出處: docs/re/123-c-march-command-restoration.md
 mov bh, byte ptr [si+0x1]
 .org 0x488d
 # IDA 0x1468d; file 0x488d; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_14689; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14689; [proven] 所屬勢力軍團數byte遞減; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor bl, bl
 .org 0x488f
 # IDA 0x1468f; file 0x488f; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14689; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14689; [proven] 所屬勢力軍團數byte遞減; 出處: docs/re/123-c-march-command-restoration.md
 shr bx, 0x1
 .org 0x4891
 # IDA 0x14691; file 0x4891; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14689; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14689; [proven] 所屬勢力軍團數byte遞減; 出處: docs/re/123-c-march-command-restoration.md
 shr bx, 0x1
 .org 0x4893
 # IDA 0x14693; file 0x4893; locator=proven; dec     byte ptr [bx+14h]
-# ⚠ 函式 sub_14689; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14689; [proven] 所屬勢力軍團數byte遞減; 出處: docs/re/123-c-march-command-restoration.md
 dec byte ptr [bx+0x14]
 .org 0x4896
 # IDA 0x14696; file 0x4896; locator=proven; pop     bx
-# ⚠ 函式 sub_14689; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14689; [proven] 所屬勢力軍團數byte遞減; 出處: docs/re/123-c-march-command-restoration.md
 pop bx
 .org 0x4897
 # IDA 0x14697; file 0x4897; locator=proven; retn
-# ⚠ 函式 sub_14689; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14689; [proven] 所屬勢力軍團數byte遞減; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x4898
 sub_14698:
@@ -35017,35 +35020,35 @@ ret
 .org 0x5ba6
 sub_159A6:
 # IDA 0x159a6; file 0x5ba6; locator=proven; mov     bl, al
-# ⚠ 函式 sub_159A6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_159A6; [proven] 原DS59D2熱區word表間接呼叫，picker只傳AL16h; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov bl, al
 .org 0x5ba8
 # IDA 0x159a8; file 0x5ba8; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_159A6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_159A6; [proven] 原DS59D2熱區word表間接呼叫，picker只傳AL16h; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor bh, bh
 .org 0x5baa
 # IDA 0x159aa; file 0x5baa; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_159A6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_159A6; [proven] 原DS59D2熱區word表間接呼叫，picker只傳AL16h; 出處: docs/re/123-c-march-command-restoration.md
 shl bx, 0x1
 .org 0x5bac
 # IDA 0x159ac; file 0x5bac; locator=proven; call    word ptr [bx+59D2h]
-# ⚠ 函式 sub_159A6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_159A6; [proven] 原DS59D2熱區word表間接呼叫，picker只傳AL16h; 出處: docs/re/123-c-march-command-restoration.md
 call word ptr [bx+0x59d2]
 .org 0x5bb0
 # IDA 0x159b0; file 0x5bb0; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_159A6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_159A6; [proven] 原DS59D2熱區word表間接呼叫，picker只傳AL16h; 出處: docs/re/123-c-march-command-restoration.md
 mov ax, cs
 .org 0x5bb2
 # IDA 0x159b2; file 0x5bb2; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_159A6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_159A6; [proven] 原DS59D2熱區word表間接呼叫，picker只傳AL16h; 出處: docs/re/123-c-march-command-restoration.md
 mov ds, ax
 .org 0x5bb4
 # IDA 0x159b4; file 0x5bb4; locator=proven; mov     es, ax
-# ⚠ 函式 sub_159A6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_159A6; [proven] 原DS59D2熱區word表間接呼叫，picker只傳AL16h; 出處: docs/re/123-c-march-command-restoration.md
 mov es, ax
 .org 0x5bb6
 # IDA 0x159b6; file 0x5bb6; locator=proven; retn
-# ⚠ 函式 sub_159A6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_159A6; [proven] 原DS59D2熱區word表間接呼叫，picker只傳AL16h; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x5bb7
 sub_159B7:
@@ -35262,53 +35265,53 @@ ret
 .org 0x5cb6
 sub_15AB6:
 # IDA 0x15ab6; file 0x5cb6; locator=proven; sub     cx, 1B8h
-# ⚠ 函式 sub_15AB6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15AB6; [proven] 小地圖螢幕點扣440/40夾0、乘2再走鏡頭定位; 出處: docs/re/123-c-march-command-restoration.md
 sub cx, 0x1b8
 .org 0x5cba
 # IDA 0x15aba; file 0x5cba; locator=proven; jnb     short loc_15ABE
-# ⚠ 函式 sub_15AB6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15AB6; [proven] 小地圖螢幕點扣440/40夾0、乘2再走鏡頭定位; 出處: docs/re/123-c-march-command-restoration.md
 jnb .+4
 .org 0x5cbc
 # IDA 0x15abc; file 0x5cbc; locator=proven; xor     cx, cx
-# ⚠ 函式 sub_15AB6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15AB6; [proven] 小地圖螢幕點扣440/40夾0、乘2再走鏡頭定位; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor cx, cx
 .org 0x5cbe
 loc_15ABE:
 # IDA 0x15abe; file 0x5cbe; locator=proven; sub     dx, 28h
-# ⚠ 函式 sub_15AB6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15AB6; [proven] 小地圖螢幕點扣440/40夾0、乘2再走鏡頭定位; 出處: docs/re/123-c-march-command-restoration.md
 sub dx, 0x28
 .org 0x5cc1
 # IDA 0x15ac1; file 0x5cc1; locator=proven; jnb     short loc_15AC5
-# ⚠ 函式 sub_15AB6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15AB6; [proven] 小地圖螢幕點扣440/40夾0、乘2再走鏡頭定位; 出處: docs/re/123-c-march-command-restoration.md
 jnb .+4
 .org 0x5cc3
 # IDA 0x15ac3; file 0x5cc3; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_15AB6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15AB6; [proven] 小地圖螢幕點扣440/40夾0、乘2再走鏡頭定位; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor dx, dx
 .org 0x5cc5
 loc_15AC5:
 # IDA 0x15ac5; file 0x5cc5; locator=proven; shl     cx, 1
-# ⚠ 函式 sub_15AB6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15AB6; [proven] 小地圖螢幕點扣440/40夾0、乘2再走鏡頭定位; 出處: docs/re/123-c-march-command-restoration.md
 shl cx, 0x1
 .org 0x5cc7
 # IDA 0x15ac7; file 0x5cc7; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_15AB6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15AB6; [proven] 小地圖螢幕點扣440/40夾0、乘2再走鏡頭定位; 出處: docs/re/123-c-march-command-restoration.md
 shl dx, 0x1
 .org 0x5cc9
 # IDA 0x15ac9; file 0x5cc9; locator=proven; mov     bx, dx
-# ⚠ 函式 sub_15AB6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15AB6; [proven] 小地圖螢幕點扣440/40夾0、乘2再走鏡頭定位; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov bx, dx
 .org 0x5ccb
 # IDA 0x15acb; file 0x5ccb; locator=proven; mov     dx, cx
-# ⚠ 函式 sub_15AB6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15AB6; [proven] 小地圖螢幕點扣440/40夾0、乘2再走鏡頭定位; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov dx, cx
 .org 0x5ccd
 # IDA 0x15acd; file 0x5ccd; locator=proven; call    sub_121B2
-# ⚠ 函式 sub_15AB6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15AB6; [proven] 小地圖螢幕點扣440/40夾0、乘2再走鏡頭定位; 出處: docs/re/123-c-march-command-restoration.md
 call .-14619
 .org 0x5cd0
 # IDA 0x15ad0; file 0x5cd0; locator=proven; retn
-# ⚠ 函式 sub_15AB6; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15AB6; [proven] 小地圖螢幕點扣440/40夾0、乘2再走鏡頭定位; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x5cd1
 sub_15AD1:
@@ -44468,357 +44471,359 @@ ret
 .org 0x723c
 sub_1703C:
 # IDA 0x1703c; file 0x723c; locator=proven; push    ds
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 push ds
 .org 0x723d
 # IDA 0x1703d; file 0x723d; locator=proven; push    es
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 push es
 .org 0x723e
 # IDA 0x1703e; file 0x723e; locator=proven; push    ax
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 push ax
 .org 0x723f
 # IDA 0x1703f; file 0x723f; locator=proven; push    cx
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 push cx
 .org 0x7240
 # IDA 0x17040; file 0x7240; locator=proven; push    dx
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 push dx
 .org 0x7241
 # IDA 0x17041; file 0x7241; locator=proven; push    si
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 push si
 .org 0x7242
 # IDA 0x17042; file 0x7242; locator=proven; push    di
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 push di
 .org 0x7243
 # IDA 0x17043; file 0x7243; locator=proven; push    bp
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 push bp
 .org 0x7244
 # IDA 0x17044; file 0x7244; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 mov ax, cs
 .org 0x7246
 # IDA 0x17046; file 0x7246; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 mov ds, ax
 .org 0x7248
 loc_17048:
 # IDA 0x17048; file 0x7248; locator=proven; call    sub_11F7F
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 call .-20681
 .org 0x724b
 # IDA 0x1704b; file 0x724b; locator=proven; push    cx
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 push cx
 .org 0x724c
 # IDA 0x1704c; file 0x724c; locator=proven; push    dx
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 push dx
 .org 0x724d
 # IDA 0x1704d; file 0x724d; locator=proven; call    sub_1E453
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 call .+29702
 .org 0x7250
 # IDA 0x17050; file 0x7250; locator=proven; pop     dx
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 pop dx
 .org 0x7251
 # IDA 0x17051; file 0x7251; locator=proven; pop     cx
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 pop cx
 .org 0x7252
 # IDA 0x17052; file 0x7252; locator=proven; cmp     bx, 2
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
+# operand 1 2; [proven] 只有BX等於2取消；3不是此條件; 出處: docs/re/123-c-march-command-restoration.md
 cmp bx, 0x2
 .org 0x7255
 # IDA 0x17055; file 0x7255; locator=proven; jz      short loc_17094
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 jz .+63
 .org 0x7257
 # IDA 0x17057; file 0x7257; locator=proven; and     al, al
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 {load} and al, al
 .org 0x7259
 # IDA 0x17059; file 0x7259; locator=proven; jz      short loc_1706F
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 jz .+22
 .org 0x725b
 # IDA 0x1705b; file 0x725b; locator=proven; cmp     al, 16h
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 cmp al, 0x16
 .org 0x725d
 # IDA 0x1705d; file 0x725d; locator=proven; jnz     short loc_17067
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 jnz .+10
 .org 0x725f
 # IDA 0x1705f; file 0x725f; locator=proven; cmp     bx, 1
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 cmp bx, 0x1
 .org 0x7262
 # IDA 0x17062; file 0x7262; locator=proven; jnz     short loc_17067
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 jnz .+5
 .org 0x7264
 # IDA 0x17064; file 0x7264; locator=proven; call    sub_159A6
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 call .-5822
 .org 0x7267
 loc_17067:
 # IDA 0x17067; file 0x7267; locator=proven; mov     cs:byte_198A2, 1
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 cs; mov byte ptr [0x98a2], 0x1
 .org 0x726d
 # IDA 0x1706d; file 0x726d; locator=proven; jmp     short loc_1707B
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 jmp .+14
 .org 0x726f
 loc_1706F:
 # IDA 0x1706f; file 0x726f; locator=proven; and     bx, bx
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 {load} and bx, bx
 .org 0x7271
 # IDA 0x17071; file 0x7271; locator=proven; jz      short loc_17078
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 jz .+7
 .org 0x7273
 # IDA 0x17073; file 0x7273; locator=proven; call    sub_1709E
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 call .+43
 .org 0x7276
 # IDA 0x17076; file 0x7276; locator=proven; jnb     short loc_17095
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 jnb .+31
 .org 0x7278
 loc_17078:
 # IDA 0x17078; file 0x7278; locator=proven; call    sub_11F30
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 call .-20808
 .org 0x727b
 loc_1707B:
 # IDA 0x1707b; file 0x727b; locator=proven; test    byte_198A6, 4
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 test byte ptr [0x98a6], 0x4
 .org 0x7280
 # IDA 0x17080; file 0x7280; locator=proven; jz      short loc_17085
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 jz .+5
 .org 0x7282
 # IDA 0x17082; file 0x7282; locator=proven; call    sub_15C58
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 call .-5162
 .org 0x7285
 loc_17085:
 # IDA 0x17085; file 0x7285; locator=proven; call    sub_11C8D
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 call .-21496
 .org 0x7288
 # IDA 0x17088; file 0x7288; locator=proven; cmp     byte_198A2, 0
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 cmp byte ptr [0x98a2], 0x0
 .org 0x728d
 # IDA 0x1708d; file 0x728d; locator=proven; jz      short loc_17048
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 jz .-69
 .org 0x728f
 # IDA 0x1708f; file 0x728f; locator=proven; call    sub_11F5A
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 call .-20789
 .org 0x7292
 # IDA 0x17092; file 0x7292; locator=proven; jmp     short loc_17048
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 jmp .-74
 .org 0x7294
 loc_17094:
 # IDA 0x17094; file 0x7294; locator=proven; stc
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 stc
 .org 0x7295
 loc_17095:
 # IDA 0x17095; file 0x7295; locator=proven; pop     bp
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 pop bp
 .org 0x7296
 # IDA 0x17096; file 0x7296; locator=proven; pop     di
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 pop di
 .org 0x7297
 # IDA 0x17097; file 0x7297; locator=proven; pop     si
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 pop si
 .org 0x7298
 # IDA 0x17098; file 0x7298; locator=proven; pop     dx
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 pop dx
 .org 0x7299
 # IDA 0x17099; file 0x7299; locator=proven; pop     cx
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 pop cx
 .org 0x729a
 # IDA 0x1709a; file 0x729a; locator=proven; pop     ax
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 pop ax
 .org 0x729b
 # IDA 0x1709b; file 0x729b; locator=proven; pop     es
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 pop es
 .org 0x729c
 # IDA 0x1709c; file 0x729c; locator=proven; pop     ds
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 pop ds
 .org 0x729d
 # IDA 0x1709d; file 0x729d; locator=proven; retn
-# ⚠ 函式 sub_1703C; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1703C; [proven] 熱區優先的原選點迴圈，BX2取消、BX3可選，日期不推進; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x729e
 sub_1709E:
 # IDA 0x1709e; file 0x729e; locator=proven; push    ds
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 push ds
 .org 0x729f
 # IDA 0x1709f; file 0x729f; locator=proven; push    ax
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 push ax
 .org 0x72a0
 # IDA 0x170a0; file 0x72a0; locator=proven; push    cx
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 push cx
 .org 0x72a1
 # IDA 0x170a1; file 0x72a1; locator=proven; mov     ax, cs:word_1989C
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 cs; mov ax, word ptr [0x989c]
 .org 0x72a5
 # IDA 0x170a5; file 0x72a5; locator=proven; mov     cx, ax
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov cx, ax
 .org 0x72a7
 # IDA 0x170a7; file 0x72a7; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 shl ax, 0x1
 .org 0x72a9
 # IDA 0x170a9; file 0x72a9; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 shl ax, 0x1
 .org 0x72ab
 # IDA 0x170ab; file 0x72ab; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 shl ax, 0x1
 .org 0x72ad
 # IDA 0x170ad; file 0x72ad; locator=proven; mov     bx, ax
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov bx, ax
 .org 0x72af
 # IDA 0x170af; file 0x72af; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 shl ax, 0x1
 .org 0x72b1
 # IDA 0x170b1; file 0x72b1; locator=proven; add     ax, bx
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 {load} add ax, bx
 .org 0x72b3
 # IDA 0x170b3; file 0x72b3; locator=proven; add     ax, cs:word_10D44
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
+# operand 1 cs:word_10D44; [proven] 原世界地圖段基址，列距24paragraph; 出處: docs/re/123-c-march-command-restoration.md
 cs; add ax, word ptr [0xd44]
 .org 0x72b8
 # IDA 0x170b8; file 0x72b8; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 mov ds, ax
 .org 0x72ba
 # IDA 0x170ba; file 0x72ba; locator=proven; mov     bx, cs:word_1989A
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 cs; mov bx, word ptr [0x989a]
 .org 0x72bf
 # IDA 0x170bf; file 0x72bf; locator=proven; mov     al, [bx]
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 mov al, byte ptr [bx]
 .org 0x72c1
 # IDA 0x170c1; file 0x72c1; locator=proven; cmp     al, 0CBh
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 cmp al, 0xcb
 .org 0x72c3
 # IDA 0x170c3; file 0x72c3; locator=proven; jb      short loc_170E6
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 jb .+35
 .org 0x72c5
 # IDA 0x170c5; file 0x72c5; locator=proven; cmp     al, 0D4h
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 cmp al, 0xd4
 .org 0x72c7
 # IDA 0x170c7; file 0x72c7; locator=proven; jnb     short loc_170E6
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 jnb .+31
 .org 0x72c9
 # IDA 0x170c9; file 0x72c9; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x72ce
 # IDA 0x170ce; file 0x72ce; locator=proven; mov     ax, bx
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov ax, bx
 .org 0x72d0
 # IDA 0x170d0; file 0x72d0; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor bx, bx
 .org 0x72d2
 loc_170D2:
 # IDA 0x170d2; file 0x72d2; locator=proven; cmp     [bx+848h], ax
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 cmp word ptr [bx+0x848], ax
 .org 0x72d6
 # IDA 0x170d6; file 0x72d6; locator=proven; jnz     short loc_170DE
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 jnz .+8
 .org 0x72d8
 # IDA 0x170d8; file 0x72d8; locator=proven; cmp     [bx+84Ah], cx
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 cmp word ptr [bx+0x84a], cx
 .org 0x72dc
 # IDA 0x170dc; file 0x72dc; locator=proven; jz      short loc_170E3
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 jz .+7
 .org 0x72de
 loc_170DE:
 # IDA 0x170de; file 0x72de; locator=proven; add     bx, 20h
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 add bx, 0x20
 .org 0x72e1
 # IDA 0x170e1; file 0x72e1; locator=proven; jmp     short loc_170D2
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 jmp .-15
 .org 0x72e3
 loc_170E3:
 # IDA 0x170e3; file 0x72e3; locator=proven; clc
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 clc
 .org 0x72e4
 # IDA 0x170e4; file 0x72e4; locator=proven; jmp     short loc_170E7
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 jmp .+3
 .org 0x72e6
 loc_170E6:
 # IDA 0x170e6; file 0x72e6; locator=proven; stc
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 stc
 .org 0x72e7
 loc_170E7:
 # IDA 0x170e7; file 0x72e7; locator=proven; pop     cx
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 pop cx
 .org 0x72e8
 # IDA 0x170e8; file 0x72e8; locator=proven; pop     ax
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 pop ax
 .org 0x72e9
 # IDA 0x170e9; file 0x72e9; locator=proven; pop     ds
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 pop ds
 .org 0x72ea
 # IDA 0x170ea; file 0x72ea; locator=proven; retn
-# ⚠ 函式 sub_1709E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1709E; [proven] CB..D3圖塊閘與無界登記XY搜尋，回BX=city index*32/CF; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x736d
 sub_1716D:
@@ -50845,393 +50850,396 @@ ret
 .org 0x8190
 sub_17F90:
 # IDA 0x17f90; file 0x8190; locator=proven; call    sub_12078
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 call .-24344
 .org 0x8193
 # IDA 0x17f93; file 0x8193; locator=proven; call    sub_101B4
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 call .-32223
 .org 0x8196
 # IDA 0x17f96; file 0x8196; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x819b
 # IDA 0x17f9b; file 0x819b; locator=proven; add     si, 2240h
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 add si, 0x2240
 .org 0x819f
 # IDA 0x17f9f; file 0x819f; locator=proven; call    sub_1807B
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 call .+220
 .org 0x81a2
 # IDA 0x17fa2; file 0x81a2; locator=proven; call    sub_1812A
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 call .+392
 .org 0x81a5
 # IDA 0x17fa5; file 0x81a5; locator=proven; mov     al, cs:byte_10CFF
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 cs; mov al, byte ptr [0xcff]
 .org 0x81a9
 # IDA 0x17fa9; file 0x81a9; locator=proven; cmp     al, [si+1]
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 cmp al, byte ptr [si+0x1]
 .org 0x81ac
 # IDA 0x17fac; file 0x81ac; locator=proven; jnz     short loc_17FBC
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 jnz .+16
 .org 0x81ae
 # IDA 0x17fae; file 0x81ae; locator=proven; call    sub_101DB
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 call .-32211
 .org 0x81b1
 # IDA 0x17fb1; file 0x81b1; locator=proven; call    sub_17FDB
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 call .+42
 .org 0x81b4
 # IDA 0x17fb4; file 0x81b4; locator=proven; call    sub_14325
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 call .-15503
 .org 0x81b7
 # IDA 0x17fb7; file 0x81b7; locator=proven; or      byte ptr [si], 2
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
+# operand 0 byte ptr [si]; [proven] 玩家分支即使取消仍設軍團bit1; 出處: docs/re/123-c-march-command-restoration.md
 or byte ptr [si], 0x2
 .org 0x81ba
 # IDA 0x17fba; file 0x81ba; locator=proven; jmp     short loc_17FC8
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 jmp .+14
 .org 0x81bc
 loc_17FBC:
 # IDA 0x17fbc; file 0x81bc; locator=proven; mov     cx, 4
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 mov cx, 0x4
 .org 0x81bf
 # IDA 0x17fbf; file 0x81bf; locator=proven; call    sub_18853
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 call .+2196
 .org 0x81c2
 # IDA 0x17fc2; file 0x81c2; locator=proven; call    sub_101DB
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 call .-32231
 .org 0x81c5
 # IDA 0x17fc5; file 0x81c5; locator=proven; call    sub_121E7
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 call .-24030
 .org 0x81c8
 loc_17FC8:
 # IDA 0x17fc8; file 0x81c8; locator=proven; call    sub_101B4
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 call .-32276
 .org 0x81cb
 # IDA 0x17fcb; file 0x81cb; locator=proven; call    sub_1817D
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 call .+434
 .org 0x81ce
 # IDA 0x17fce; file 0x81ce; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 mov cx, 0xffff
 .org 0x81d1
 # IDA 0x17fd1; file 0x81d1; locator=proven; call    sub_18853
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 call .+2178
 .org 0x81d4
 # IDA 0x17fd4; file 0x81d4; locator=proven; call    sub_101DB
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 call .-32249
 .org 0x81d7
 # IDA 0x17fd7; file 0x81d7; locator=proven; call    sub_120D6
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 call .-24321
 .org 0x81da
 # IDA 0x17fda; file 0x81da; locator=proven; retn
-# ⚠ 函式 sub_17F90; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F90; [proven] 軍團資訊與玩家命令控制器，取消後仍分派並OR2; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x81db
 sub_17FDB:
 # IDA 0x17fdb; file 0x81db; locator=proven; push    bp
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 push bp
 .org 0x81dc
 # IDA 0x17fdc; file 0x81dc; locator=proven; sub     sp, 2
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 sub sp, 0x2
 .org 0x81df
 # IDA 0x17fdf; file 0x81df; locator=proven; mov     bp, sp
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov bp, sp
 .org 0x81e1
 # IDA 0x17fe1; file 0x81e1; locator=proven; call    sub_120D6
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 call .-24331
 .org 0x81e4
 loc_17FE4:
 # IDA 0x17fe4; file 0x81e4; locator=proven; mov     cx, 3
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 mov cx, 0x3
 .org 0x81e7
 # IDA 0x17fe7; file 0x81e7; locator=proven; call    sub_18853
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 call .+2156
 .org 0x81ea
 # IDA 0x17fea; file 0x81ea; locator=proven; call    sub_1703C
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 call .-4014
 .org 0x81ed
 # IDA 0x17fed; file 0x81ed; locator=proven; jb      short loc_18046
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 jb .+89
 .org 0x81ef
 # IDA 0x17fef; file 0x81ef; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 shl bx, 0x1
 .org 0x81f1
 # IDA 0x17ff1; file 0x81f1; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 shl bx, 0x1
 .org 0x81f3
 # IDA 0x17ff3; file 0x81f3; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 shl bx, 0x1
 .org 0x81f5
 # IDA 0x17ff5; file 0x81f5; locator=proven; mov     [bp+0], bh
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [bp], bh
 .org 0x81f8
 # IDA 0x17ff8; file 0x81f8; locator=proven; mov     al, bh
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov al, bh
 .org 0x81fa
 # IDA 0x17ffa; file 0x81fa; locator=proven; mov     ah, 0FFh
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 mov ah, 0xff
 .org 0x81fc
 # IDA 0x17ffc; file 0x81fc; locator=proven; push    di
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 push di
 .org 0x81fd
 # IDA 0x17ffd; file 0x81fd; locator=proven; push    ax
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 push ax
 .org 0x81fe
 # IDA 0x17ffe; file 0x81fe; locator=proven; mov     di, sp
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov di, sp
 .org 0x8200
 # IDA 0x18000; file 0x8200; locator=proven; mov     cx, 15h
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 mov cx, 0x15
 .org 0x8203
 # IDA 0x18003; file 0x8203; locator=proven; call    sub_18853
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 call .+2128
 .org 0x8206
 # IDA 0x18006; file 0x8206; locator=proven; pop     ax
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 pop ax
 .org 0x8207
 # IDA 0x18007; file 0x8207; locator=proven; pop     di
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 pop di
 .org 0x8208
 # IDA 0x18008; file 0x8208; locator=proven; mov     bh, [si+1]
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 mov bh, byte ptr [si+0x1]
 .org 0x820b
 # IDA 0x1800b; file 0x820b; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 {load} xor bl, bl
 .org 0x820d
 # IDA 0x1800d; file 0x820d; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 shr bx, 0x1
 .org 0x820f
 # IDA 0x1800f; file 0x820f; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 shr bx, 0x1
 .org 0x8211
 # IDA 0x18011; file 0x8211; locator=proven; mov     bl, [bx+3]
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 mov bl, byte ptr [bx+0x3]
 .org 0x8214
 # IDA 0x18014; file 0x8214; locator=proven; mov     al, 2
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 mov al, 0x2
 .org 0x8216
 # IDA 0x18016; file 0x8216; locator=proven; cmp     bl, [bp+0]
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 cmp bl, byte ptr [bp]
 .org 0x8219
 # IDA 0x18019; file 0x8219; locator=proven; jnz     short loc_1801D
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 jnz .+4
 .org 0x821b
 # IDA 0x1801b; file 0x821b; locator=proven; mov     al, 3
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 mov al, 0x3
 .org 0x821d
 loc_1801D:
 # IDA 0x1801d; file 0x821d; locator=proven; call    sub_1804E
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 call .+49
 .org 0x8220
 # IDA 0x18020; file 0x8220; locator=proven; jb      short loc_17FE4
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 jb .-60
 .org 0x8222
 # IDA 0x18022; file 0x8222; locator=proven; cmp     al, 1
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 cmp al, 0x1
 .org 0x8224
 # IDA 0x18024; file 0x8224; locator=proven; jz      short loc_1802D
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 jz .+9
 .org 0x8226
 # IDA 0x18026; file 0x8226; locator=proven; ja      short loc_18032
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 ja .+12
 .org 0x8228
 # IDA 0x18028; file 0x8228; locator=proven; and     byte ptr [si], 0FBh
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
+# operand 0 byte ptr [si]; [proven] 軍團+00清委任bit2; 出處: docs/re/123-c-march-command-restoration.md
 and byte ptr [si], 0xfb
 .org 0x822b
 # IDA 0x1802b; file 0x822b; locator=proven; jmp     short loc_18038
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 jmp .+13
 .org 0x822d
 loc_1802D:
 # IDA 0x1802d; file 0x822d; locator=proven; or      byte ptr [si], 4
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 or byte ptr [si], 0x4
 .org 0x8230
 # IDA 0x18030; file 0x8230; locator=proven; jmp     short loc_18038
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 jmp .+8
 .org 0x8232
 loc_18032:
 # IDA 0x18032; file 0x8232; locator=proven; mov     byte ptr [si+23h], 0Bh
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
+# operand 0 byte ptr [si+23h]; [proven] 軍團+23寫解體stage11，不清委任bit; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0x23], 0xb
 .org 0x8236
 # IDA 0x18036; file 0x8236; locator=proven; jmp     short loc_1803C
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 jmp .+6
 .org 0x8238
 loc_18038:
 # IDA 0x18038; file 0x8238; locator=proven; mov     byte ptr [si+23h], 0
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0x23], 0x0
 .org 0x823c
 loc_1803C:
 # IDA 0x1803c; file 0x823c; locator=proven; mov     byte ptr [si+0Bh], 1
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0xb], 0x1
 .org 0x8240
 # IDA 0x18040; file 0x8240; locator=proven; mov     al, [bp+0]
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 mov al, byte ptr [bp]
 .org 0x8243
 # IDA 0x18043; file 0x8243; locator=proven; mov     [si+20h], al
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 mov byte ptr [si+0x20], al
 .org 0x8246
 loc_18046:
 # IDA 0x18046; file 0x8246; locator=proven; call    sub_12078
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 call .-24526
 .org 0x8249
 # IDA 0x18049; file 0x8249; locator=proven; add     sp, 2
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 add sp, 0x2
 .org 0x824c
 # IDA 0x1804c; file 0x824c; locator=proven; pop     bp
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 pop bp
 .org 0x824d
 # IDA 0x1804d; file 0x824d; locator=proven; retn
-# ⚠ 函式 sub_17FDB; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17FDB; [proven] 原地圖目標與戰鬥指揮/委任/解體選單，取消選單回選點; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x824e
 sub_1804E:
 # IDA 0x1804e; file 0x824e; locator=proven; push    ax
-# ⚠ 函式 sub_1804E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1804E; [proven] 依原游標格夾制二/三項popup位置，以SAHF恢復CF; 出處: docs/re/123-c-march-command-restoration.md
 push ax
 .org 0x824f
 # IDA 0x1804f; file 0x824f; locator=proven; mov     ah, 18h
-# ⚠ 函式 sub_1804E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1804E; [proven] 依原游標格夾制二/三項popup位置，以SAHF恢復CF; 出處: docs/re/123-c-march-command-restoration.md
 mov ah, 0x18
 .org 0x8251
 # IDA 0x18051; file 0x8251; locator=proven; sub     ah, al
-# ⚠ 函式 sub_1804E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1804E; [proven] 依原游標格夾制二/三項popup位置，以SAHF恢復CF; 出處: docs/re/123-c-march-command-restoration.md
 {load} sub ah, al
 .org 0x8253
 # IDA 0x18053; file 0x8253; locator=proven; mov     bx, cs:word_19898
-# ⚠ 函式 sub_1804E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1804E; [proven] 依原游標格夾制二/三項popup位置，以SAHF恢復CF; 出處: docs/re/123-c-march-command-restoration.md
 cs; mov bx, word ptr [0x9898]
 .org 0x8258
 # IDA 0x18058; file 0x8258; locator=proven; cmp     bl, ah
-# ⚠ 函式 sub_1804E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1804E; [proven] 依原游標格夾制二/三項popup位置，以SAHF恢復CF; 出處: docs/re/123-c-march-command-restoration.md
 {load} cmp bl, ah
 .org 0x825a
 # IDA 0x1805a; file 0x825a; locator=proven; jbe     short loc_1805E
-# ⚠ 函式 sub_1804E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1804E; [proven] 依原游標格夾制二/三項popup位置，以SAHF恢復CF; 出處: docs/re/123-c-march-command-restoration.md
 jbe .+4
 .org 0x825c
 # IDA 0x1805c; file 0x825c; locator=proven; mov     bl, ah
-# ⚠ 函式 sub_1804E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1804E; [proven] 依原游標格夾制二/三項popup位置，以SAHF恢復CF; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov bl, ah
 .org 0x825e
 loc_1805E:
 # IDA 0x1805e; file 0x825e; locator=proven; mov     dx, cs:word_19896
-# ⚠ 函式 sub_1804E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1804E; [proven] 依原游標格夾制二/三項popup位置，以SAHF恢復CF; 出處: docs/re/123-c-march-command-restoration.md
 cs; mov dx, word ptr [0x9896]
 .org 0x8263
 # IDA 0x18063; file 0x8263; locator=proven; cmp     dl, 21h
-# ⚠ 函式 sub_1804E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1804E; [proven] 依原游標格夾制二/三項popup位置，以SAHF恢復CF; 出處: docs/re/123-c-march-command-restoration.md
 cmp dl, 0x21
 .org 0x8266
 # IDA 0x18066; file 0x8266; locator=proven; jbe     short loc_1806A
-# ⚠ 函式 sub_1804E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1804E; [proven] 依原游標格夾制二/三項popup位置，以SAHF恢復CF; 出處: docs/re/123-c-march-command-restoration.md
 jbe .+4
 .org 0x8268
 # IDA 0x18068; file 0x8268; locator=proven; mov     dl, 21h
-# ⚠ 函式 sub_1804E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1804E; [proven] 依原游標格夾制二/三項popup位置，以SAHF恢復CF; 出處: docs/re/123-c-march-command-restoration.md
 mov dl, 0x21
 .org 0x826a
 loc_1806A:
 # IDA 0x1806a; file 0x826a; locator=proven; mov     dh, bl
-# ⚠ 函式 sub_1804E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1804E; [proven] 依原游標格夾制二/三項popup位置，以SAHF恢復CF; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov dh, bl
 .org 0x826c
 # IDA 0x1806c; file 0x826c; locator=proven; mov     cx, 4Ch
-# ⚠ 函式 sub_1804E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1804E; [proven] 依原游標格夾制二/三項popup位置，以SAHF恢復CF; 出處: docs/re/123-c-march-command-restoration.md
 mov cx, 0x4c
 .org 0x826f
 # IDA 0x1806f; file 0x826f; locator=proven; mov     ah, 1
-# ⚠ 函式 sub_1804E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1804E; [proven] 依原游標格夾制二/三項popup位置，以SAHF恢復CF; 出處: docs/re/123-c-march-command-restoration.md
 mov ah, 0x1
 .org 0x8271
 # IDA 0x18071; file 0x8271; locator=proven; call    sub_193E9
-# ⚠ 函式 sub_1804E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1804E; [proven] 依原游標格夾制二/三項popup位置，以SAHF恢復CF; 出處: docs/re/123-c-march-command-restoration.md
 call .+4984
 .org 0x8274
 # IDA 0x18074; file 0x8274; locator=proven; pop     bx
-# ⚠ 函式 sub_1804E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1804E; [proven] 依原游標格夾制二/三項popup位置，以SAHF恢復CF; 出處: docs/re/123-c-march-command-restoration.md
 pop bx
 .org 0x8275
 # IDA 0x18075; file 0x8275; locator=proven; sahf
-# ⚠ 函式 sub_1804E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1804E; [proven] 依原游標格夾制二/三項popup位置，以SAHF恢復CF; 出處: docs/re/123-c-march-command-restoration.md
 sahf
 .org 0x8276
 # IDA 0x18076; file 0x8276; locator=proven; jnb     short locret_1807A
-# ⚠ 函式 sub_1804E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1804E; [proven] 依原游標格夾制二/三項popup位置，以SAHF恢復CF; 出處: docs/re/123-c-march-command-restoration.md
 jnb .+4
 .org 0x8278
 # IDA 0x18078; file 0x8278; locator=proven; mov     al, bl
-# ⚠ 函式 sub_1804E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1804E; [proven] 依原游標格夾制二/三項popup位置，以SAHF恢復CF; 出處: docs/re/123-c-march-command-restoration.md
 {load} mov al, bl
 .org 0x827a
 locret_1807A:
 # IDA 0x1807a; file 0x827a; locator=proven; retn
-# ⚠ 函式 sub_1804E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1804E; [proven] 依原游標格夾制二/三項popup位置，以SAHF恢復CF; 出處: docs/re/123-c-march-command-restoration.md
 ret
 .org 0x827b
 sub_1807B:

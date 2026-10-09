@@ -58,8 +58,9 @@
 | 2026-10-09；玩家軍團編成七 C 函式 | O0／O2 各 200 完整裝置與十錯版通過；六槽循環、取消舊總量、空主將拒絕及外層重選 | 296 C／48 raw；247 指令已在組語基準，正常長程與 C 機器碼仍未驗證 | [re/120](docs/re/120-c-player-formation-restoration.md)、[spec/240](docs/spec/240-c-player-formation.md)、來源／指令覆蓋／收據 |
 | 2026-10-09；人事選單與任免七 C 函式 | O0／O2各2,332完整裝置與十二錯版；全合法索引／非零經費／16次live table修改 | 303 C／48 raw；185指令已有組語覆蓋，自然撥款長程與C機器碼仍未驗證 | [re/121](docs/re/121-c-personnel-restoration.md)、[spec/241](docs/spec/241-c-personnel.md)、來源／指令覆蓋／收據 |
 | 2026-10-09；據點資訊／軍團面板十C函式 | O0／O2各700完整裝置與十二錯版；獨立原參數／KYOGRF／ABI核對 | 313 C／48raw；310指令已有覆蓋，軍團指令上游／自然長程／C機器碼未代證 | [re/122](docs/re/122-c-detail-panels-restoration.md)、[spec/242](docs/spec/242-c-detail-panels.md)、來源／覆蓋／收據 |
+| 2026-10-09；軍團行軍選點與狀態分派25C函式 | O0／O2各1,320完整裝置與十六錯版；固定raw RNG、原版分派前snapshot與五筆MZ驗證 | 338 C／48raw；取消仍分派、日期停而動畫可更新；自然長程／非法資料／C機器碼未代證 | [re/123](docs/re/123-c-march-command-restoration.md)、[spec/243](docs/spec/243-c-march-command.md)、來源／覆蓋／收據 |
 
-持續 Goal 為完成整個 matching decompilation；目前有 24,999 條指令的整檔組語基準與 313 個 C 函式、四十八個原始 code 入口，不能據此宣布完整 C 還原完成。
+持續 Goal 為完成整個 matching decompilation；目前有 24,999 條指令的整檔組語基準與 338 個 C 函式、四十八個原始 code 入口，不能據此宣布完整 C 還原完成。
 使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b`、熱區 `a8605b5` 、版控組語／VGA `47e16c9` 、對齊貼圖 `6139f9e` 、矩形／計量 `c7dc8df`、顯示分派 `4d31520`、字形 `85f06de` 與數字 `06fff77` 已推到 origin/main。
 
 未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。
@@ -724,6 +725,13 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 ---
 
 ## 6. 已被推翻的斷言
+
+### 2026-10-09：行軍取消、游標與解散的語意界線
+
+取消選點後17F90仍呼叫14325並OR2；解散只清軍團+00，不清整筆。
+11F7F兩個座標分支都回按鍵遮罩，picker不套主畫面98A3bit7條件。
+日期停止不代表重畫不改動畫RAM；有效據點圖塊與登記表一致是資料完整性前提，無界搜尋本身不驗證。
+固定原指令與1,320組局部C證據見[re/123](docs/re/123-c-march-command-restoration.md)。
 
 ### 2026-10-09：資訊面板的舊註記勘誤
 

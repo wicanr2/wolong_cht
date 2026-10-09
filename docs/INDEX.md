@@ -201,6 +201,7 @@
 | [`docs/re/120-c-player-formation-restoration.md`](re/120-c-player-formation-restoration.md) | 120：玩家軍團編成的 C 還原 | CONFORMED。七函式，O0／O2 各 200 完整裝置案例與十錯版通過。 | 2026-10-09 |
 | [`docs/re/121-c-personnel-restoration.md`](re/121-c-personnel-restoration.md) | 121：原人事選單與內政官、外交官任免的 C | CONFORMED。七函式，O0／O2 各 2,332 完整裝置與十二錯版通過。 | 2026-10-09 |
 | [`docs/re/122-c-detail-panels-restoration.md`](re/122-c-detail-panels-restoration.md) | 122：據點資訊與軍團面板的原始 C | CONFORMED。十函式，O0／O2各700完整裝置與十二錯版通過。 | 2026-10-09 |
+| [`docs/re/123-c-march-command-restoration.md`](re/123-c-march-command-restoration.md) | 123：軍團行軍指令、選點與狀態分派的 C | CONFORMED。25函式，O0／O2各1,320完整裝置與十六錯版通過。 | 2026-10-09 |
 | [`docs/re/13-pc98-numeric-window.md`](re/13-pc98-numeric-window.md) | 13 — DOS/V 數字輸入視窗量測與 CJK 版面決策 | 以 DOS/V 為唯一畫面基準；原始座標、DOS/V 96×64 內框 blit、3×6 每格操作、 實際按鍵 gl… | 2026-08-10 |
 | [`docs/re/14-mmap-mch-objects.md`](re/14-mmap-mch-objects.md) | 14 — MMAP.MCH 戰略地圖物件 | 資產格式、事件 12 的火災／暴動圖形鏈與 typed 動畫／移動時序 confirmed； type 3 的事件語… | 2026-08-10 |
 | [`docs/re/15-event10-producer.md`](re/15-event10-producer.md) | 15 — 事件 10 producer 深度逆向 | 事件 10 dispatcher／consumer／queue writer 已證實；原版自然 producer 仍… | 2026-08-11 |
@@ -463,6 +464,7 @@
 | [`docs/spec/240-c-player-formation.md`](spec/240-c-player-formation.md) | 240：C 玩家軍團編成介面 | CONFORMED。O0／O2 各 200 完整裝置案例與十錯版通過。 | 2026-10-09 |
 | [`docs/spec/241-c-personnel.md`](spec/241-c-personnel.md) | 241：C 人事選單與任免流程 | CONFORMED。O0／O2各2,332完整裝置與十二錯版通過。 | 2026-10-09 |
 | [`docs/spec/242-c-detail-panels.md`](spec/242-c-detail-panels.md) | 242：C 據點資訊與軍團面板 | CONFORMED。O0／O2各700完整裝置與十二錯版通過。 | 2026-10-09 |
+| [`docs/spec/243-c-march-command.md`](spec/243-c-march-command.md) | 243：C 軍團行軍選點與命令分派 | CONFORMED。O0／O2各1,320完整裝置與十六錯版通過。 | 2026-10-09 |
 | [`docs/spec/25-slot-select-window.md`](spec/25-slot-select-window.md) | 25 — 四槽選擇視窗（新遊戲／讀取／儲存） | CONFORMED。讀取／儲存已照原版版面實作； 新遊戲仍走 remake 自己的啟動殼層（§5）。 | 2026-08-15 |
 | [`docs/spec/26-yes-no-dialog.md`](spec/26-yes-no-dialog.md) | 26 — ＹＥＳ／ＮＯ 對話框 | CONFORMED。版面與命中算式已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 輸入照原版收斂成兩個熱區（§2.1）。「自定」開命名視窗（[10… | 2026-08-15 |

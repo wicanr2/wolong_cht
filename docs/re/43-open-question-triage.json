@@ -13309,6 +13309,32 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "資訊介面局部C已驗；軍團行軍指令上游、自然長程與原C機器碼保留證據界線。"
+    },
+    {
+      "file": "docs/re/123-c-march-command-restoration.md",
+      "item": "自然長程、非法stage／資料損毀與原C機器碼",
+      "status": "不由局部閉包代證",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-b61acb2c1f2838c21840",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "行軍原C局部閉包及固定raw RNG已驗；自然長程、非法資料與原C機器碼保留證據界線。"
+    },
+    {
+      "file": "docs/spec/243-c-march-command.md",
+      "item": "自然長程／非法資料／原C機器碼",
+      "status": "本輪不代證",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-ae003c84afd8c91275fa",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "行軍原C局部閉包及固定raw RNG已驗；自然長程、非法資料與原C機器碼保留證據界線。"
     }
   ]
 }
