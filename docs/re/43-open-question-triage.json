@@ -13283,6 +13283,32 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "人事局部C及非零經費已驗；自然撥款／玩家長程、非法分派與原C機器碼保留證據界線。"
+    },
+    {
+      "file": "docs/re/122-c-detail-panels-restoration.md",
+      "item": "軍團行軍指令上游、自然長程與原作者C機器碼",
+      "status": "不由資訊繪製代證",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-4ff5a326ab9793ac7dd2",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "資訊介面局部C已驗；軍團行軍指令上游、自然長程與原C機器碼保留證據界線。"
+    },
+    {
+      "file": "docs/spec/242-c-detail-panels.md",
+      "item": "軍團指令上游／自然長程／原C機器碼",
+      "status": "本輪不代證",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-824aa814f8987acefed1",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "資訊介面局部C已驗；軍團行軍指令上游、自然長程與原C機器碼保留證據界線。"
     }
   ]
 }

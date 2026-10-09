@@ -57,8 +57,9 @@
 | 2026-10-09；軍團／武將／勢力／開局 11 C 函式／12 raw | O0／O2 各 804 完整狀態相同、十三錯版；168 builder／240 排序／16 cache 獨立核對，156 表頭與 28 選取 | 902 指令與四家族原回呼接共用引擎；289 C／48 raw，非法排序／自然長程與 C 機器碼仍未驗證 | [re/119](docs/re/119-c-list-families-restoration.md)、[spec/239](docs/spec/239-c-list-families.md)、原始定位／補充／收據 |
 | 2026-10-09；玩家軍團編成七 C 函式 | O0／O2 各 200 完整裝置與十錯版通過；六槽循環、取消舊總量、空主將拒絕及外層重選 | 296 C／48 raw；247 指令已在組語基準，正常長程與 C 機器碼仍未驗證 | [re/120](docs/re/120-c-player-formation-restoration.md)、[spec/240](docs/spec/240-c-player-formation.md)、來源／指令覆蓋／收據 |
 | 2026-10-09；人事選單與任免七 C 函式 | O0／O2各2,332完整裝置與十二錯版；全合法索引／非零經費／16次live table修改 | 303 C／48 raw；185指令已有組語覆蓋，自然撥款長程與C機器碼仍未驗證 | [re/121](docs/re/121-c-personnel-restoration.md)、[spec/241](docs/spec/241-c-personnel.md)、來源／指令覆蓋／收據 |
+| 2026-10-09；據點資訊／軍團面板十C函式 | O0／O2各700完整裝置與十二錯版；獨立原參數／KYOGRF／ABI核對 | 313 C／48raw；310指令已有覆蓋，軍團指令上游／自然長程／C機器碼未代證 | [re/122](docs/re/122-c-detail-panels-restoration.md)、[spec/242](docs/spec/242-c-detail-panels.md)、來源／覆蓋／收據 |
 
-持續 Goal 為完成整個 matching decompilation；目前有 24,999 條指令的整檔組語基準與 303 個 C 函式、四十八個原始 code 入口，不能據此宣布完整 C 還原完成。
+持續 Goal 為完成整個 matching decompilation；目前有 24,999 條指令的整檔組語基準與 313 個 C 函式、四十八個原始 code 入口，不能據此宣布完整 C 還原完成。
 使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b`、熱區 `a8605b5` 、版控組語／VGA `47e16c9` 、對齊貼圖 `6139f9e` 、矩形／計量 `c7dc8df`、顯示分派 `4d31520`、字形 `85f06de` 與數字 `06fff77` 已推到 origin/main。
 
 未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。
@@ -723,6 +724,12 @@ DOSBox-X 那條路**不刪**：它是這一條的正對照，而且 PC-98 版只
 ---
 
 ## 6. 已被推翻的斷言
+
+### 2026-10-09：資訊面板的舊註記勘誤
+
+`1817D` 的bit02恢復自勢力情報，並非小地圖bit04；軍團數字屬性為0F，首都比較是左移後的DH。
+type0使圖庫位移下溢至D200，不能稱騎馬空隊；據點入口SI為索引×32，且入口不只地圖。
+固定原指令與700組局部原版／C證據見[re/122](docs/re/122-c-detail-panels-restoration.md)。
 
 ### 「選武將重設排序、軍團士氣為 word、勢力數字四位」（2026-10-09）
 

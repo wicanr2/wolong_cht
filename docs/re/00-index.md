@@ -235,6 +235,9 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 原人事選單與任免的 C 還原見 [re/121](121-c-personnel-restoration.md)，
 規格見 [spec/241](../spec/241-c-personnel.md)。
 
+據點資訊與軍團面板的 C 見 [re/122](122-c-detail-panels-restoration.md)，
+規格見 [spec/242](../spec/242-c-detail-panels.md)。
+
 ## 9. 怎麼加一份新筆記
 
 1. 編號流水，一個發現一份。標題寫「回答什麼問題」不是「讀了哪支函式」。

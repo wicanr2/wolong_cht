@@ -2475,7 +2475,17 @@
       "scope": "Two independent pinned dosgolem Machine/VGA instances; original guest CPU and C native algorithm share only mature platform contract; IF/TF=0; no wall-clock claim",
       "source_sha256": "9c9c75270422a8950d9d09c1321d5093423d2eada6d5bde3e417c9d711ba9b5b",
       "header_sha256": "40f9e9ee054830df5c95e5bbe0185f82f3b8d7d8e9e780510da29794b2ab7699",
-      "fixture_sha256": "97ab311f79b371c26b90d450466173e9ac90e70c55f6862a204bef40db569096"
+      "fixture_sha256": "97ab311f79b371c26b90d450466173e9ac90e70c55f6862a204bef40db569096",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/122-c-detail-panels-restoration.md",
+          "spec": "docs/spec/242-c-detail-panels.md",
+          "receipt": "docs/re/c-details-verification.json",
+          "oracle_cases_per_optimization": 700,
+          "entry_count": 17096,
+          "scope": "Ten original city-information controller, city/corps renderers and own-faction restoration functions. Four scenarios, controlled fields, neutral/capital comparison, signed growth, all16 picture nibbles with seek truncation, raw type0 separated from legal1..4, byte morale and total high word. Original-first independent argument/buffer/world and ABI audits; complete RAM/planes/registers/FLAGS/stack/IN/OUT/API, separate pinned DOS/font/mouse/VGA, IF/TF=0 and pinned dosgolem flags. Upstream military commands, natural long player paths and original C machine code remain pending."
+        }
+      ]
     },
     "sub_1FA1B": {
       "ida_linear": 129563,
@@ -2513,7 +2523,17 @@
       "scope": "Two independent pinned dosgolem Machine/VGA instances; original guest CPU and C native algorithm share only mature platform contract; IF/TF=0; no wall-clock claim",
       "source_sha256": "9c9c75270422a8950d9d09c1321d5093423d2eada6d5bde3e417c9d711ba9b5b",
       "header_sha256": "40f9e9ee054830df5c95e5bbe0185f82f3b8d7d8e9e780510da29794b2ab7699",
-      "fixture_sha256": "97ab311f79b371c26b90d450466173e9ac90e70c55f6862a204bef40db569096"
+      "fixture_sha256": "97ab311f79b371c26b90d450466173e9ac90e70c55f6862a204bef40db569096",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/122-c-detail-panels-restoration.md",
+          "spec": "docs/spec/242-c-detail-panels.md",
+          "receipt": "docs/re/c-details-verification.json",
+          "oracle_cases_per_optimization": 700,
+          "entry_count": 216,
+          "scope": "Ten original city-information controller, city/corps renderers and own-faction restoration functions. Four scenarios, controlled fields, neutral/capital comparison, signed growth, all16 picture nibbles with seek truncation, raw type0 separated from legal1..4, byte morale and total high word. Original-first independent argument/buffer/world and ABI audits; complete RAM/planes/registers/FLAGS/stack/IN/OUT/API, separate pinned DOS/font/mouse/VGA, IF/TF=0 and pinned dosgolem flags. Upstream military commands, natural long player paths and original C machine code remain pending."
+        }
+      ]
     },
     "sub_1FAA2": {
       "ida_linear": 129698,
@@ -3020,6 +3040,14 @@
           "oracle_cases_per_optimization": 520,
           "entry_count": 8,
           "scope": "Original city list callbacks and six descriptors (header 0 rebuilds, 1..5 sort), live byte/word/JBE/JNB sort, exact exchange order, 512-byte SS list, special return-address removal, full row/font/number/scrollbar rendering, select/cancel/drag, and four-scenario relocation accept/refuse/current-capital retry through real mouse input and original world/sidebar/scene writers. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/sound/VGA; IF/TF=0; isolated stack; FLAGS from pinned dosgolem. Natural player menus/long paths, other list families and original C machine code remain pending"
+        },
+        {
+          "evidence": "docs/re/122-c-detail-panels-restoration.md",
+          "spec": "docs/spec/242-c-detail-panels.md",
+          "receipt": "docs/re/c-details-verification.json",
+          "oracle_cases_per_optimization": 700,
+          "entry_count": 172,
+          "scope": "Ten original city-information controller, city/corps renderers and own-faction restoration functions. Four scenarios, controlled fields, neutral/capital comparison, signed growth, all16 picture nibbles with seek truncation, raw type0 separated from legal1..4, byte morale and total high word. Original-first independent argument/buffer/world and ABI audits; complete RAM/planes/registers/FLAGS/stack/IN/OUT/API, separate pinned DOS/font/mouse/VGA, IF/TF=0 and pinned dosgolem flags. Upstream military commands, natural long player paths and original C machine code remain pending."
         }
       ]
     },
@@ -3252,7 +3280,17 @@
       "source_sha256": "1e7695cca054da377a7327f1ca06414642d3a6367ac5b39fdac7c5bbc4cf34aa",
       "header_sha256": "5b0f1388ef6bd047af335162910082f748f1a4fce6ac98ea0fd5fd907a634f16",
       "fixture_sha256": "539d6f94de1c7203f77bb6cea0420b6771f213491eef2c25e9085b8cc5552879",
-      "generated_source_sha256": "a26058d041df1147c92b4f3fa6a296fe88739cf2a185e1d95e308e4a46a5f9fb"
+      "generated_source_sha256": "a26058d041df1147c92b4f3fa6a296fe88739cf2a185e1d95e308e4a46a5f9fb",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/122-c-detail-panels-restoration.md",
+          "spec": "docs/spec/242-c-detail-panels.md",
+          "receipt": "docs/re/c-details-verification.json",
+          "oracle_cases_per_optimization": 700,
+          "entry_count": 1656,
+          "scope": "Ten original city-information controller, city/corps renderers and own-faction restoration functions. Four scenarios, controlled fields, neutral/capital comparison, signed growth, all16 picture nibbles with seek truncation, raw type0 separated from legal1..4, byte morale and total high word. Original-first independent argument/buffer/world and ABI audits; complete RAM/planes/registers/FLAGS/stack/IN/OUT/API, separate pinned DOS/font/mouse/VGA, IF/TF=0 and pinned dosgolem flags. Upstream military commands, natural long player paths and original C machine code remain pending."
+        }
+      ]
     },
     "sub_1062F": {
       "ida_linear": 67119,
@@ -3298,6 +3336,14 @@
           "oracle_cases_per_optimization": 200,
           "entry_count": 4084,
           "scope": "Seven original player formation routines and complete transitive C render/input/list/TALK closure. Four scenarios, six-slot cycling, original quotient/remainder/cap distribution, initialize-only types, cancellation stale total, empty-leader refusal, confirmation and outer select/form/reselect/cancel. Controlled input checkpoints and legal unassigned generals; separate pinned DOS/font/mouse/VGA, complete RAM/planes/registers/FLAGS/stack/IN/OUT/API. IF/TF=0, pinned dosgolem flags; original TSR/wall-clock, natural long player paths, invalid hotspots and original C machine code remain pending."
+        },
+        {
+          "evidence": "docs/re/122-c-detail-panels-restoration.md",
+          "spec": "docs/spec/242-c-detail-panels.md",
+          "receipt": "docs/re/c-details-verification.json",
+          "oracle_cases_per_optimization": 700,
+          "entry_count": 2360,
+          "scope": "Ten original city-information controller, city/corps renderers and own-faction restoration functions. Four scenarios, controlled fields, neutral/capital comparison, signed growth, all16 picture nibbles with seek truncation, raw type0 separated from legal1..4, byte morale and total high word. Original-first independent argument/buffer/world and ABI audits; complete RAM/planes/registers/FLAGS/stack/IN/OUT/API, separate pinned DOS/font/mouse/VGA, IF/TF=0 and pinned dosgolem flags. Upstream military commands, natural long player paths and original C machine code remain pending."
         }
       ]
     },
@@ -3509,7 +3555,17 @@
       "source_sha256": "c11731280c6493edc62fa942cf83882fe943d7d22708e84c1a36e6df772fd05b",
       "header_sha256": "c99ee60ca8735c90e40c207da8c6dc999f9e3818320d6a1488d4490867082fd7",
       "fixture_sha256": "35595eef47e05639587095e85af84a28f3e290cfacf488214a9c84ccfc695127",
-      "generated_source_sha256": "874483d09b8a18bbbecd9f5e5a26561eee91f1cbe6b620f78bb5f401a2f72b6c"
+      "generated_source_sha256": "874483d09b8a18bbbecd9f5e5a26561eee91f1cbe6b620f78bb5f401a2f72b6c",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/122-c-detail-panels-restoration.md",
+          "spec": "docs/spec/242-c-detail-panels.md",
+          "receipt": "docs/re/c-details-verification.json",
+          "oracle_cases_per_optimization": 700,
+          "entry_count": 216,
+          "scope": "Ten original city-information controller, city/corps renderers and own-faction restoration functions. Four scenarios, controlled fields, neutral/capital comparison, signed growth, all16 picture nibbles with seek truncation, raw type0 separated from legal1..4, byte morale and total high word. Original-first independent argument/buffer/world and ABI audits; complete RAM/planes/registers/FLAGS/stack/IN/OUT/API, separate pinned DOS/font/mouse/VGA, IF/TF=0 and pinned dosgolem flags. Upstream military commands, natural long player paths and original C machine code remain pending."
+        }
+      ]
     },
     "sub_1F4DF": {
       "ida_linear": 128223,
@@ -6317,6 +6373,305 @@
           "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
           "level": "proven",
           "evidence": "docs/re/121-c-personnel-restoration.md"
+        }
+      ]
+    },
+    "sub_15E1E": {
+      "ida_linear": 89630,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/242-c-detail-panels.md",
+      "evidence": "docs/re/122-c-detail-panels-restoration.md",
+      "source": "tools/c_recovery/details.c",
+      "header": "tools/c_recovery/details.h",
+      "fixture": "tools/c_recovery/details_fixture.h",
+      "generated_source": "tools/c_recovery/details_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-details/verification.json",
+      "routine_sha256": "c90fe39f4a1c4f83941c604bfb660cc1c1e49951e8a2a24f21b97a55abd03815",
+      "oracle_cases_per_optimization": 700,
+      "oracle_entry_count_per_optimization": 24,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Ten original city-information controller, city/corps renderers and own-faction restoration functions. Four scenarios, controlled fields, neutral/capital comparison, signed growth, all16 picture nibbles with seek truncation, raw type0 separated from legal1..4, byte morale and total high word. Original-first independent argument/buffer/world and ABI audits; complete RAM/planes/registers/FLAGS/stack/IN/OUT/API, separate pinned DOS/font/mouse/VGA, IF/TF=0 and pinned dosgolem flags. Upstream military commands, natural long player paths and original C machine code remain pending.",
+      "source_sha256": "0abc80b4f35ae7d51c8e1c4f915967ee735584d0857ee712934c3c489bad9901",
+      "header_sha256": "fbcbeac3e901699a610873558164246489f29dcc26a2eec93b1ee34a30629e28",
+      "fixture_sha256": "0478bbdc149d886a947e0be95891f903a00ec61db5b3d13e265cf0a9acd81d0a",
+      "generated_source_sha256": "55e43c53bff47012e0583c5aa795f5f93752b17d093e86e14711fdc615f72cc8"
+    },
+    "sub_15E2D": {
+      "ida_linear": 89645,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/242-c-detail-panels.md",
+      "evidence": "docs/re/122-c-detail-panels-restoration.md",
+      "source": "tools/c_recovery/details.c",
+      "header": "tools/c_recovery/details.h",
+      "fixture": "tools/c_recovery/details_fixture.h",
+      "generated_source": "tools/c_recovery/details_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-details/verification.json",
+      "routine_sha256": "eb0a724bc1b12d169e907c9daf649203cad2d4999d52ad2b72dc3e2d4b60cb0e",
+      "oracle_cases_per_optimization": 700,
+      "oracle_entry_count_per_optimization": 40,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Ten original city-information controller, city/corps renderers and own-faction restoration functions. Four scenarios, controlled fields, neutral/capital comparison, signed growth, all16 picture nibbles with seek truncation, raw type0 separated from legal1..4, byte morale and total high word. Original-first independent argument/buffer/world and ABI audits; complete RAM/planes/registers/FLAGS/stack/IN/OUT/API, separate pinned DOS/font/mouse/VGA, IF/TF=0 and pinned dosgolem flags. Upstream military commands, natural long player paths and original C machine code remain pending.",
+      "source_sha256": "0abc80b4f35ae7d51c8e1c4f915967ee735584d0857ee712934c3c489bad9901",
+      "header_sha256": "fbcbeac3e901699a610873558164246489f29dcc26a2eec93b1ee34a30629e28",
+      "fixture_sha256": "0478bbdc149d886a947e0be95891f903a00ec61db5b3d13e265cf0a9acd81d0a",
+      "generated_source_sha256": "55e43c53bff47012e0583c5aa795f5f93752b17d093e86e14711fdc615f72cc8"
+    },
+    "sub_17E1F": {
+      "ida_linear": 97823,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/242-c-detail-panels.md",
+      "evidence": "docs/re/122-c-detail-panels-restoration.md",
+      "source": "tools/c_recovery/details.c",
+      "header": "tools/c_recovery/details.h",
+      "fixture": "tools/c_recovery/details_fixture.h",
+      "generated_source": "tools/c_recovery/details_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-details/verification.json",
+      "routine_sha256": "a8f62287f38a7625164cdb9592278a0321a92c2091b7a5e911db0f2aaacdc453",
+      "oracle_cases_per_optimization": 700,
+      "oracle_entry_count_per_optimization": 48,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Ten original city-information controller, city/corps renderers and own-faction restoration functions. Four scenarios, controlled fields, neutral/capital comparison, signed growth, all16 picture nibbles with seek truncation, raw type0 separated from legal1..4, byte morale and total high word. Original-first independent argument/buffer/world and ABI audits; complete RAM/planes/registers/FLAGS/stack/IN/OUT/API, separate pinned DOS/font/mouse/VGA, IF/TF=0 and pinned dosgolem flags. Upstream military commands, natural long player paths and original C machine code remain pending.",
+      "source_sha256": "0abc80b4f35ae7d51c8e1c4f915967ee735584d0857ee712934c3c489bad9901",
+      "header_sha256": "fbcbeac3e901699a610873558164246489f29dcc26a2eec93b1ee34a30629e28",
+      "fixture_sha256": "0478bbdc149d886a947e0be95891f903a00ec61db5b3d13e265cf0a9acd81d0a",
+      "generated_source_sha256": "55e43c53bff47012e0583c5aa795f5f93752b17d093e86e14711fdc615f72cc8",
+      "resolution_backlinks": [
+        {
+          "ida_linear": 97836,
+          "function_ida_linear": 97823,
+          "older_document": "docs/re/50-city-info-window.md",
+          "required_markers": [
+            "索引×32",
+            "122-c-detail-panels-restoration.md"
+          ],
+          "platform_module": "dosv/KI.EXE",
+          "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+          "level": "proven",
+          "evidence": "docs/re/122-c-detail-panels-restoration.md"
+        },
+        {
+          "ida_linear": 97836,
+          "function_ida_linear": 97823,
+          "older_document": "docs/spec/23-city-info-window.md",
+          "required_markers": [
+            "入口不只地圖",
+            "122-c-detail-panels-restoration.md"
+          ],
+          "platform_module": "dosv/KI.EXE",
+          "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+          "level": "proven",
+          "evidence": "docs/re/122-c-detail-panels-restoration.md"
+        }
+      ]
+    },
+    "sub_17E4A": {
+      "ida_linear": 97866,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/242-c-detail-panels.md",
+      "evidence": "docs/re/122-c-detail-panels-restoration.md",
+      "source": "tools/c_recovery/details.c",
+      "header": "tools/c_recovery/details.h",
+      "fixture": "tools/c_recovery/details_fixture.h",
+      "generated_source": "tools/c_recovery/details_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-details/verification.json",
+      "routine_sha256": "ae439b5f77615993414b7f04df0a5eaa72decfb7ba705f21ddc01d66d1468c0a",
+      "oracle_cases_per_optimization": 700,
+      "oracle_entry_count_per_optimization": 448,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Ten original city-information controller, city/corps renderers and own-faction restoration functions. Four scenarios, controlled fields, neutral/capital comparison, signed growth, all16 picture nibbles with seek truncation, raw type0 separated from legal1..4, byte morale and total high word. Original-first independent argument/buffer/world and ABI audits; complete RAM/planes/registers/FLAGS/stack/IN/OUT/API, separate pinned DOS/font/mouse/VGA, IF/TF=0 and pinned dosgolem flags. Upstream military commands, natural long player paths and original C machine code remain pending.",
+      "source_sha256": "0abc80b4f35ae7d51c8e1c4f915967ee735584d0857ee712934c3c489bad9901",
+      "header_sha256": "fbcbeac3e901699a610873558164246489f29dcc26a2eec93b1ee34a30629e28",
+      "fixture_sha256": "0478bbdc149d886a947e0be95891f903a00ec61db5b3d13e265cf0a9acd81d0a",
+      "generated_source_sha256": "55e43c53bff47012e0583c5aa795f5f93752b17d093e86e14711fdc615f72cc8",
+      "resolution_backlinks": [
+        {
+          "ida_linear": 98035,
+          "function_ida_linear": 97866,
+          "older_document": "docs/re/32-strategy-detail-panels.md",
+          "required_markers": [
+            "左移",
+            "122-c-detail-panels-restoration.md"
+          ],
+          "platform_module": "dosv/KI.EXE",
+          "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+          "level": "proven",
+          "evidence": "docs/re/122-c-detail-panels-restoration.md"
+        }
+      ]
+    },
+    "sub_17F1A": {
+      "ida_linear": 98074,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/242-c-detail-panels.md",
+      "evidence": "docs/re/122-c-detail-panels-restoration.md",
+      "source": "tools/c_recovery/details.c",
+      "header": "tools/c_recovery/details.h",
+      "fixture": "tools/c_recovery/details_fixture.h",
+      "generated_source": "tools/c_recovery/details_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-details/verification.json",
+      "routine_sha256": "14bb469e50fee7235aefc92c80cb0816000e5999456a11e0b3671e874a34b21e",
+      "oracle_cases_per_optimization": 700,
+      "oracle_entry_count_per_optimization": 112,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Ten original city-information controller, city/corps renderers and own-faction restoration functions. Four scenarios, controlled fields, neutral/capital comparison, signed growth, all16 picture nibbles with seek truncation, raw type0 separated from legal1..4, byte morale and total high word. Original-first independent argument/buffer/world and ABI audits; complete RAM/planes/registers/FLAGS/stack/IN/OUT/API, separate pinned DOS/font/mouse/VGA, IF/TF=0 and pinned dosgolem flags. Upstream military commands, natural long player paths and original C machine code remain pending.",
+      "source_sha256": "0abc80b4f35ae7d51c8e1c4f915967ee735584d0857ee712934c3c489bad9901",
+      "header_sha256": "fbcbeac3e901699a610873558164246489f29dcc26a2eec93b1ee34a30629e28",
+      "fixture_sha256": "0478bbdc149d886a947e0be95891f903a00ec61db5b3d13e265cf0a9acd81d0a",
+      "generated_source_sha256": "55e43c53bff47012e0583c5aa795f5f93752b17d093e86e14711fdc615f72cc8"
+    },
+    "sub_17F61": {
+      "ida_linear": 98145,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/242-c-detail-panels.md",
+      "evidence": "docs/re/122-c-detail-panels-restoration.md",
+      "source": "tools/c_recovery/details.c",
+      "header": "tools/c_recovery/details.h",
+      "fixture": "tools/c_recovery/details_fixture.h",
+      "generated_source": "tools/c_recovery/details_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-details/verification.json",
+      "routine_sha256": "15ee8c079707e0950da08a402d7fc606e8fe9780c9d7d60f6e67dd1ec02863b0",
+      "oracle_cases_per_optimization": 700,
+      "oracle_entry_count_per_optimization": 52,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Ten original city-information controller, city/corps renderers and own-faction restoration functions. Four scenarios, controlled fields, neutral/capital comparison, signed growth, all16 picture nibbles with seek truncation, raw type0 separated from legal1..4, byte morale and total high word. Original-first independent argument/buffer/world and ABI audits; complete RAM/planes/registers/FLAGS/stack/IN/OUT/API, separate pinned DOS/font/mouse/VGA, IF/TF=0 and pinned dosgolem flags. Upstream military commands, natural long player paths and original C machine code remain pending.",
+      "source_sha256": "0abc80b4f35ae7d51c8e1c4f915967ee735584d0857ee712934c3c489bad9901",
+      "header_sha256": "fbcbeac3e901699a610873558164246489f29dcc26a2eec93b1ee34a30629e28",
+      "fixture_sha256": "0478bbdc149d886a947e0be95891f903a00ec61db5b3d13e265cf0a9acd81d0a",
+      "generated_source_sha256": "55e43c53bff47012e0583c5aa795f5f93752b17d093e86e14711fdc615f72cc8"
+    },
+    "sub_17F81": {
+      "ida_linear": 98177,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/242-c-detail-panels.md",
+      "evidence": "docs/re/122-c-detail-panels-restoration.md",
+      "source": "tools/c_recovery/details.c",
+      "header": "tools/c_recovery/details.h",
+      "fixture": "tools/c_recovery/details_fixture.h",
+      "generated_source": "tools/c_recovery/details_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-details/verification.json",
+      "routine_sha256": "1f921d8e7442fcd28a22990b1b20b3eeaa80cc640ed44d22e36ec9f548f43cac",
+      "oracle_cases_per_optimization": 700,
+      "oracle_entry_count_per_optimization": 52,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Ten original city-information controller, city/corps renderers and own-faction restoration functions. Four scenarios, controlled fields, neutral/capital comparison, signed growth, all16 picture nibbles with seek truncation, raw type0 separated from legal1..4, byte morale and total high word. Original-first independent argument/buffer/world and ABI audits; complete RAM/planes/registers/FLAGS/stack/IN/OUT/API, separate pinned DOS/font/mouse/VGA, IF/TF=0 and pinned dosgolem flags. Upstream military commands, natural long player paths and original C machine code remain pending.",
+      "source_sha256": "0abc80b4f35ae7d51c8e1c4f915967ee735584d0857ee712934c3c489bad9901",
+      "header_sha256": "fbcbeac3e901699a610873558164246489f29dcc26a2eec93b1ee34a30629e28",
+      "fixture_sha256": "0478bbdc149d886a947e0be95891f903a00ec61db5b3d13e265cf0a9acd81d0a",
+      "generated_source_sha256": "55e43c53bff47012e0583c5aa795f5f93752b17d093e86e14711fdc615f72cc8"
+    },
+    "sub_1807B": {
+      "ida_linear": 98427,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/242-c-detail-panels.md",
+      "evidence": "docs/re/122-c-detail-panels-restoration.md",
+      "source": "tools/c_recovery/details.c",
+      "header": "tools/c_recovery/details.h",
+      "fixture": "tools/c_recovery/details_fixture.h",
+      "generated_source": "tools/c_recovery/details_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-details/verification.json",
+      "routine_sha256": "0477bdc722e15a383a2e657f0f1ca2ff678081c4885a05eab3d43a826de6f4b1",
+      "oracle_cases_per_optimization": 700,
+      "oracle_entry_count_per_optimization": 80,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Ten original city-information controller, city/corps renderers and own-faction restoration functions. Four scenarios, controlled fields, neutral/capital comparison, signed growth, all16 picture nibbles with seek truncation, raw type0 separated from legal1..4, byte morale and total high word. Original-first independent argument/buffer/world and ABI audits; complete RAM/planes/registers/FLAGS/stack/IN/OUT/API, separate pinned DOS/font/mouse/VGA, IF/TF=0 and pinned dosgolem flags. Upstream military commands, natural long player paths and original C machine code remain pending.",
+      "source_sha256": "0abc80b4f35ae7d51c8e1c4f915967ee735584d0857ee712934c3c489bad9901",
+      "header_sha256": "fbcbeac3e901699a610873558164246489f29dcc26a2eec93b1ee34a30629e28",
+      "fixture_sha256": "0478bbdc149d886a947e0be95891f903a00ec61db5b3d13e265cf0a9acd81d0a",
+      "generated_source_sha256": "55e43c53bff47012e0583c5aa795f5f93752b17d093e86e14711fdc615f72cc8",
+      "resolution_backlinks": [
+        {
+          "ida_linear": 98582,
+          "function_ida_linear": 98427,
+          "older_document": "docs/re/32-strategy-detail-panels.md",
+          "required_markers": [
+            "0F04",
+            "0F03",
+            "122-c-detail-panels-restoration.md"
+          ],
+          "platform_module": "dosv/KI.EXE",
+          "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+          "level": "proven",
+          "evidence": "docs/re/122-c-detail-panels-restoration.md"
+        }
+      ]
+    },
+    "sub_1812A": {
+      "ida_linear": 98602,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/242-c-detail-panels.md",
+      "evidence": "docs/re/122-c-detail-panels-restoration.md",
+      "source": "tools/c_recovery/details.c",
+      "header": "tools/c_recovery/details.h",
+      "fixture": "tools/c_recovery/details_fixture.h",
+      "generated_source": "tools/c_recovery/details_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-details/verification.json",
+      "routine_sha256": "b87b8ae0a1fa2ac3642e91333234b6df576739352c5ca826901e4c11fc79f8f2",
+      "oracle_cases_per_optimization": 700,
+      "oracle_entry_count_per_optimization": 52,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Ten original city-information controller, city/corps renderers and own-faction restoration functions. Four scenarios, controlled fields, neutral/capital comparison, signed growth, all16 picture nibbles with seek truncation, raw type0 separated from legal1..4, byte morale and total high word. Original-first independent argument/buffer/world and ABI audits; complete RAM/planes/registers/FLAGS/stack/IN/OUT/API, separate pinned DOS/font/mouse/VGA, IF/TF=0 and pinned dosgolem flags. Upstream military commands, natural long player paths and original C machine code remain pending.",
+      "source_sha256": "0abc80b4f35ae7d51c8e1c4f915967ee735584d0857ee712934c3c489bad9901",
+      "header_sha256": "fbcbeac3e901699a610873558164246489f29dcc26a2eec93b1ee34a30629e28",
+      "fixture_sha256": "0478bbdc149d886a947e0be95891f903a00ec61db5b3d13e265cf0a9acd81d0a",
+      "generated_source_sha256": "55e43c53bff47012e0583c5aa795f5f93752b17d093e86e14711fdc615f72cc8",
+      "resolution_backlinks": [
+        {
+          "ida_linear": 98640,
+          "function_ida_linear": 98602,
+          "older_document": "docs/spec/24-corps-info-window.md",
+          "required_markers": [
+            "D200",
+            "122-c-detail-panels-restoration.md"
+          ],
+          "platform_module": "dosv/KI.EXE",
+          "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+          "level": "proven",
+          "evidence": "docs/re/122-c-detail-panels-restoration.md"
+        }
+      ]
+    },
+    "sub_1817D": {
+      "ida_linear": 98685,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/242-c-detail-panels.md",
+      "evidence": "docs/re/122-c-detail-panels-restoration.md",
+      "source": "tools/c_recovery/details.c",
+      "header": "tools/c_recovery/details.h",
+      "fixture": "tools/c_recovery/details_fixture.h",
+      "generated_source": "tools/c_recovery/details_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-details/verification.json",
+      "routine_sha256": "2c306cde7ed4c127ea526c348376bfe5c6a561ef1b56df9419b4b45210a4cf1e",
+      "oracle_cases_per_optimization": 700,
+      "oracle_entry_count_per_optimization": 16,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Ten original city-information controller, city/corps renderers and own-faction restoration functions. Four scenarios, controlled fields, neutral/capital comparison, signed growth, all16 picture nibbles with seek truncation, raw type0 separated from legal1..4, byte morale and total high word. Original-first independent argument/buffer/world and ABI audits; complete RAM/planes/registers/FLAGS/stack/IN/OUT/API, separate pinned DOS/font/mouse/VGA, IF/TF=0 and pinned dosgolem flags. Upstream military commands, natural long player paths and original C machine code remain pending.",
+      "source_sha256": "0abc80b4f35ae7d51c8e1c4f915967ee735584d0857ee712934c3c489bad9901",
+      "header_sha256": "fbcbeac3e901699a610873558164246489f29dcc26a2eec93b1ee34a30629e28",
+      "fixture_sha256": "0478bbdc149d886a947e0be95891f903a00ec61db5b3d13e265cf0a9acd81d0a",
+      "generated_source_sha256": "55e43c53bff47012e0583c5aa795f5f93752b17d093e86e14711fdc615f72cc8",
+      "resolution_backlinks": [
+        {
+          "ida_linear": 98699,
+          "function_ida_linear": 98685,
+          "older_document": "docs/re/32-strategy-detail-panels.md",
+          "required_markers": [
+            "恢復自勢力情報",
+            "122-c-detail-panels-restoration.md"
+          ],
+          "platform_module": "dosv/KI.EXE",
+          "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+          "level": "proven",
+          "evidence": "docs/re/122-c-detail-panels-restoration.md"
         }
       ]
     }

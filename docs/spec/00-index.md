@@ -291,6 +291,7 @@
 
 | C 玩家軍團編成介面 | [`240-c-player-formation.md`](240-c-player-formation.md) | CONFORMED，七函式／200 完整裝置／十錯版 |
 | C 人事選單與任免 | [`241-c-personnel.md`](241-c-personnel.md) | CONFORMED，七函式／2,332完整裝置／十二錯版 |
+| C 據點資訊與軍團面板 | [`242-c-detail-panels.md`](242-c-detail-panels.md) | CONFORMED，十函式／700完整裝置／十二錯版 |
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的
    現況反寫規格，那只會把既有的偏差固定下來。

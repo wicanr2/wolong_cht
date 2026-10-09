@@ -449,3 +449,14 @@
 - 錯版包裝器曾沿用編成group而產生0案例，被exit guard拒絕；第7錯版曾使用不存在的byte setter，編譯失敗未當成錯版拒絕。修正後加入未宣告函式編譯護欄，13種正常／錯版語法審查全通過，並以最終來源重跑O0/O2各2,332組與十二個實編譯錯版。
 - 正式Go冷vet／39套件通過，無cached；完整check已跑並停於既有缺圖／phantom，25個單項另跑21通過、4舊失敗不變，新失敗0。phantom正規化277無增刪，lessons舊日誌相同；三條resolution backlink護欄通過。檢查收據workplace/matching-decompilation/checks/personnel-checks.json，SHA-256 `af6fdd61d5e19247ffa302b2499699e4d0f5fc227c037b0180b797c9c9bbc3e0`。
 - 檔案擁有權維持27個既有root-owned路徑，無新root-owned輸出或.md目錄；本輪容器清理完成，未建立image。
+
+## 2026-10-09：據點資訊與軍團面板 C
+
+- 前輪74e50b6已推送。查現況／路由／Issue22與原RE後，依AGENTS§10分工契約、單檔獨立模型、指令覆蓋、13版語法預檢及Go冷測。
+- spec242 READY後還原10函式310指令711bytes，據點完整局部視窗、景觀讀取、軍團三名／數值／六槽／退出與自勢力恢復，共用原C服務。軍團行軍指令上游未代證。
+- 初probe因範本替換把具名roots誤列raw，修正為10個明確roots與空RAW_ROOTS後由IDA乾淨重匯出。smoke136通過；完整矩陣兩種最佳化700通過後，唯讀審查指出範本註記殘留，停止已確認自己的容器，更正說明並以最終來源同命令重跑。
+- O0/O2各700完整裝置、十二實編譯錯版、獨立參數／KYOGRF buffer／世界保存／ABI通過；字型缺字0，C乾淨重生一致。
+- 回填re32/50、spec23/24：SI是索引×32，首都比較左移，軍團數字0F、byte士氣、type0下溢D200、bit02恢復自勢力情報，原版據點入口不只地圖。正式Go未改。
+- 310指令全已有覆蓋；固定binutils獨立重組711bytes相同。組語語意索引重生後整檔67,099bytes仍匹配，三反例拒絕。313 C／48raw，完整Goal保持active，依授權提交推送來源與收據。
+- 正式Go冷vet／39套件通過，無cached；完整check已跑並停於既有index兩缺圖／phantom，後續25單項另驗21pass/4舊fail，新failure0。phantom初次275與當前來源矛盾，只重跑第3項；docs43前後SHA穩定時為277並與基線逐列相同，不宣稱移除舊問題，原因未證實。13/14隔離自測的審查deadline逾時後依工具指示重試成功，未改權限範圍。
+- 六條resolution backlink通過。檢查收據workplace/matching-decompilation/checks/details-checks.json，SHA-256 `a58a64fcfc845a0524b737b69e118ce60267e2116c3e6643353df0e4d9011db5`；完整組語、313 C/48raw來源雜湊與公開/私有收據一致。擁有權檢查維持27個既有root-owned，無.md目錄；本輪容器清理完成，未建立image。

@@ -1,0 +1,436 @@
+{
+  "schema": "wolong-c-details-verification-v1",
+  "status": "semantic-conformed",
+  "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "ida_database_sha256": "4c02d01d142286b9ba9ece847b292ddfbf85cff9901abf3db91d3e30aa0443b1",
+  "ida_probe_sha256": "d4b28311a9c26af5c7cacc19f696603cebfe3666e7d823f5b3c02c5276c9945d",
+  "new_routine_sha256": {
+    "sub_15E1E": "c90fe39f4a1c4f83941c604bfb660cc1c1e49951e8a2a24f21b97a55abd03815",
+    "sub_15E2D": "eb0a724bc1b12d169e907c9daf649203cad2d4999d52ad2b72dc3e2d4b60cb0e",
+    "sub_17E1F": "a8f62287f38a7625164cdb9592278a0321a92c2091b7a5e911db0f2aaacdc453",
+    "sub_17E4A": "ae439b5f77615993414b7f04df0a5eaa72decfb7ba705f21ddc01d66d1468c0a",
+    "sub_17F1A": "14bb469e50fee7235aefc92c80cb0816000e5999456a11e0b3671e874a34b21e",
+    "sub_17F61": "15ee8c079707e0950da08a402d7fc606e8fe9780c9d7d60f6e67dd1ec02863b0",
+    "sub_17F81": "1f921d8e7442fcd28a22990b1b20b3eeaa80cc640ed44d22e36ec9f548f43cac",
+    "sub_1807B": "0477bdc722e15a383a2e657f0f1ca2ff678081c4885a05eab3d43a826de6f4b1",
+    "sub_1812A": "b87b8ae0a1fa2ac3642e91333234b6df576739352c5ca826901e4c11fc79f8f2",
+    "sub_1817D": "2c306cde7ed4c127ea526c348376bfe5c6a561ef1b56df9419b4b45210a4cf1e"
+  },
+  "original_instruction_count": 310,
+  "original_instruction_bytes": 711,
+  "source_sha256": {
+    "tools/c_recovery/aligned.c": "4e3e53bb951cd9692ffb8722b2efc6ef1549602300f7ff32ca0ced70f90de467",
+    "tools/c_recovery/aligned.h": "865e3c92435f848ea7d57f7e54d1a1c9976e86ce13938858503e8a2431111c7e",
+    "tools/c_recovery/aligned_fixture.h": "6d5d293961f3c0b2f4a8fd6551cb3ec4c31945ada3b5a7dcc6281fae59f84b5b",
+    "tools/c_recovery/catalog.c": "79cbe68a4eb5e646fccd135e53e2d60d080d363332ec3c4c198de781ab919929",
+    "tools/c_recovery/catalog.h": "67bb952d79ebfc82e507409f7c596139e0a684f97e5ab9fae9054ccd437d024b",
+    "tools/c_recovery/catalog_fixture.h": "a68d40649438adc7e2a8eab0bdfc85260814bb9a208975e36b22132ae96e2f85",
+    "tools/c_recovery/catalog_generated.inc": "805b5f2ee1e6c17be97a7e12111336e7525dbbd04bb1cf40b9c0c8813a466f95",
+    "tools/c_recovery/choice.c": "aeb5eed07b685572de49a912d967124626c747b45bc623f032577d8793880b89",
+    "tools/c_recovery/choice.h": "bcdf8a7e824ed9ff43abb32558b9c16373b6c9ed8cf9f7f77ab59338a36a2f46",
+    "tools/c_recovery/choice_fixture.h": "e45da13f459bbeb7536e5e58d58034b2ba9e9508d8def74ecbe279613d7d99ce",
+    "tools/c_recovery/choice_generated.inc": "7008762d34b091c12a91106a699297cf4eafbcb096723275f5fdee8dfc6bb0b2",
+    "tools/c_recovery/clock.c": "4a845847e050d0d7ff1ebd641fb827602a6ab10fc8fecd643584612e73158439",
+    "tools/c_recovery/clock.h": "40d3d4b630dabed9b3f7f98d492fa60734b2a0a6d86d30e0a2961738d2df7284",
+    "tools/c_recovery/clock_fixture.h": "0a7812df9b5331f463acc5fe8f03ae11c5f3313843b6d7119eaf29ac8433167b",
+    "tools/c_recovery/details.c": "0abc80b4f35ae7d51c8e1c4f915967ee735584d0857ee712934c3c489bad9901",
+    "tools/c_recovery/details.h": "fbcbeac3e901699a610873558164246489f29dcc26a2eec93b1ee34a30629e28",
+    "tools/c_recovery/details_fixture.h": "0478bbdc149d886a947e0be95891f903a00ec61db5b3d13e265cf0a9acd81d0a",
+    "tools/c_recovery/details_generated.inc": "55e43c53bff47012e0583c5aa795f5f93752b17d093e86e14711fdc615f72cc8",
+    "tools/c_recovery/display.c": "d5b95603d2563aafaa7b929b16f7b123896169f5e3d2d215ab19fa10da748058",
+    "tools/c_recovery/display.h": "ed30d7da89db5bb93b9e08ffceaddb01188701ab67721628d35425167488e254",
+    "tools/c_recovery/display_fixture.h": "d657ce4f18acbf31523d758959ae31d7907854c790a0582a5392a4abbc886d1f",
+    "tools/c_recovery/display_generated.inc": "6016cc7c871105bfca7a601dddbb09a413eff9dd209feb08d6327dc9805ebd63",
+    "tools/c_recovery/economy.c": "a8dfb96bc788326cc8641ffa78a64739d2544dfbf63ed7149dc334ef85f2ab8e",
+    "tools/c_recovery/economy.h": "57958375c3f3cf604e0dffb8a56e2d0b464c727702d1e076b6f303a3806e89ec",
+    "tools/c_recovery/economy_fixture.h": "8313a73e688631a8fe39db8ab12d66c979ed1f7e978ae9907e8910f24f91d0a8",
+    "tools/c_recovery/events.c": "69c7a72c1168a3943824ced273702ace069ca3e7e42e3789baf0621341ef32b0",
+    "tools/c_recovery/events.h": "0845440ca2f3685f899772dc6ff78afef012aa3fdb4374f2611f1ca9175a6373",
+    "tools/c_recovery/events_fixture.h": "fdde12c4e3239aa79fe826c8def65edb059d54380352b03462cba427f597a676",
+    "tools/c_recovery/formation.c": "8be6995d2b01b007a4bdca2ca1a3cd949d47fcbc77248ad02ae4fd0009ff8216",
+    "tools/c_recovery/formation.h": "23404d8a877d6db1376daf4143b0d2c4d31fa881cd70d5f968ef7b88a75ad6bb",
+    "tools/c_recovery/formation_fixture.h": "4d784e3ebe91bbab51a5b7c11395e8ae74939fa30d966df4006c4fe56cddee3c",
+    "tools/c_recovery/formation_generated.inc": "185c11477f1e27af2cf66e86358f8fc758c1832de3a9e14d362b3d8e8c4c8336",
+    "tools/c_recovery/glyph.c": "1e7695cca054da377a7327f1ca06414642d3a6367ac5b39fdac7c5bbc4cf34aa",
+    "tools/c_recovery/glyph.h": "5b0f1388ef6bd047af335162910082f748f1a4fce6ac98ea0fd5fd907a634f16",
+    "tools/c_recovery/glyph_fixture.h": "539d6f94de1c7203f77bb6cea0420b6771f213491eef2c25e9085b8cc5552879",
+    "tools/c_recovery/glyph_generated.inc": "a26058d041df1147c92b4f3fa6a296fe88739cf2a185e1d95e308e4a46a5f9fb",
+    "tools/c_recovery/hotspot.c": "805a2963363f151d01478d1eefd956ac482e2df22189d15638c7f79ea94dd5c1",
+    "tools/c_recovery/hotspot.h": "21f1dcb13ecbc301237487a12d6db80de4c944d816892a989a9a48711f496b20",
+    "tools/c_recovery/hotspot_fixture.h": "ed5a4f5b1b4ecdd5982689110d7b82c2372ead6abd83551a9a18357d06862411",
+    "tools/c_recovery/hourly.c": "dc115558ed470df49bd4438825b059d835a707e4f93262406ea8fb26c9536c04",
+    "tools/c_recovery/hourly.h": "1388fe3fe2c6bed876246e08fdfba0814ed948ec50e18ba236c0553626f3aff1",
+    "tools/c_recovery/hourly_fixture.h": "54864eeb3e0aeabcae321ffc537babe3e1abf8f53cb3f1d4e7cea1daebf36cb5",
+    "tools/c_recovery/input.c": "9e34cdde96fb568a302a4d8179a0085c339752b6a1e52551107d0118e0c4a9d0",
+    "tools/c_recovery/input.h": "a81ffd66132ee9fe732ec0c132ea4548f4bcffe568b542fe2fcd552e1ffea81e",
+    "tools/c_recovery/input_fixture.h": "456cc98d6209f4f399c6281d17c52b8ef416c1e49f09280c0bd585c06d632153",
+    "tools/c_recovery/input_generated.inc": "f67262370c5db64608d985227e9b87dd8795f5aefcfb07f2ab8df01e7c80b8de",
+    "tools/c_recovery/list.c": "3ec817f0e7a1cbb3f29c46d101d6e0135c817fedcae357575df1b6af20395c1b",
+    "tools/c_recovery/list.h": "322d10432605bdbce73c87730aa97fbe1ff0bcacfe34461f530a58a37b9b4c43",
+    "tools/c_recovery/list_fixture.h": "7a508e8b4117963ffda9f6356ee1d357c1898c99d5a7517c8057a7a7777dd122",
+    "tools/c_recovery/list_generated.inc": "44db7e538a44f6ed9d0183e66feaf9a6e994ae7848c662a6861b0b20d2af8021",
+    "tools/c_recovery/mapcells.c": "f87b3c6df8ab5b07c1c7226ca329e4f55669a627d4a6dd3b4c5e55932ee6a15f",
+    "tools/c_recovery/mapcells.h": "4b3aa59015f90f1bbfa6704d4785cb15af910985a15f69d9e87ed3a16d5a4a6e",
+    "tools/c_recovery/mapcells_fixture.h": "ba2813e78795196ddef96230a652d8a8463e66c65e0bf46afc286787ebf6b005",
+    "tools/c_recovery/mapcells_generated.inc": "4a726277f8bb03a7ed645c05c35fe61bb4e6cfd9c142856960aa693e220bd835",
+    "tools/c_recovery/modal.c": "37105677c93746e880ab89c7940eb02a1b318bfe18e76615b12870f17294da8e",
+    "tools/c_recovery/modal.h": "db3f1ea75cfd9d3026382fc1e803364b67c594c9874103f2de98090c3249f106",
+    "tools/c_recovery/modal_fixture.h": "427b17352aecd5e4d84522b1620cd41464cc3d571f52e77b5b565c6e9e71d072",
+    "tools/c_recovery/numbers.c": "776e38ff148e65d653d3d3a0588ef6ca12aa5dc526af30bc5e3b497b8ee9abc1",
+    "tools/c_recovery/numbers.h": "1ecf5806c4127f605280e6b6b913a80a1e671877420c4a27bd1264b0cac3c300",
+    "tools/c_recovery/numbers_fixture.h": "81bf5642e725802e4b891d31dd2a84785c8ca106109e13696a531e2d5057a1e0",
+    "tools/c_recovery/numbers_generated.inc": "40ced4a3a36aa88dc5e0e06dac3b4fb88806f1eb4dc8c35198ce5f877244c7a1",
+    "tools/c_recovery/numeric.c": "b68f2a4e4149c7cf5fff8aba2da0a6a437202c0626519ed7c6b7ccd73df00e5b",
+    "tools/c_recovery/numeric.h": "c0abfde294d876d1b7c49119f134bff56b0cdc9e76ac4ae5a23abe2cd6cea0f0",
+    "tools/c_recovery/numeric_fixture.h": "4780a1ff675bc17d77553035c0b2a2eeae790c607d1d613878a59d300267a2d5",
+    "tools/c_recovery/overlay.c": "f8af93ee9c549ebedddf861316b87fbf2323aaa1c0aa2e10e852c95998006d0d",
+    "tools/c_recovery/overlay.h": "d95c627f750b314425dfa7a7fa376fe61606d6dddf8faae9b1f3429a716efa9f",
+    "tools/c_recovery/overlay_fixture.h": "f8d211caf614420d094d1b9cde99cd4dcf43cb68eb4b8f22ad09adf4fa10ca1b",
+    "tools/c_recovery/overlay_generated.inc": "a6e77d9b3e641448acccf9ef4dc0bb4073d9488f00752f97d282e67df76084b4",
+    "tools/c_recovery/personnel.c": "61fc2a1e26618e2c0b4a6a5d2129bfe06004df487b97ac63e778efb9a31cce5b",
+    "tools/c_recovery/personnel.h": "6f06ab4163fbbf3013378bce49cb86338513a9522bc331446d0827bfc085a838",
+    "tools/c_recovery/personnel_fixture.h": "c4cd974ad3d4a69946764533ed48181344c2b67de82d625752707daacafb4b44",
+    "tools/c_recovery/personnel_generated.inc": "bcc149ce2885aeabe62fe74cd7902e77a1a3e07b9f181bf3ba54bfd7fc2b4e29",
+    "tools/c_recovery/politics.c": "3b60a81cd5cc0979ca99f9bb03c5ce341f36b539ad318e70cced5ac516aa0eef",
+    "tools/c_recovery/politics.h": "291e2425b3056eac0c107b93da341f2ad5e4bd32b9d71275e0c007b4f95b9d8c",
+    "tools/c_recovery/politics_fixture.h": "1241042349ce6d9ea5b08355a53b9fdec54171a44f0501ccfd11b17d4b1f8171",
+    "tools/c_recovery/rect.c": "ef3eb0615c8ee516fa05e333a0d81e9fdb000d0701965db16918f8c2ce6517cc",
+    "tools/c_recovery/rect.h": "54fe2da129a0f2313010a5e3c2feb389daa0f0851e4aace64c29b4d882e1e183",
+    "tools/c_recovery/rect_fixture.h": "68aa98999228a3fa56f69c5f51af423764512a46f7b93b85fc00d7b720b166d4",
+    "tools/c_recovery/resource.c": "7e508c48be0e25aa59f27c2364a0d3abb8ee877637d418cd7fa4ac23544db2a8",
+    "tools/c_recovery/resource.h": "d6e2ac7996674979961e3c26d2b0bb3ff90089f0cedd2f917c00e9ac6cfd2ed9",
+    "tools/c_recovery/resource_fixture.h": "8bdabd1c5d9cb34014444a6dc8e7d31602dae46527866f146d63d6e156e97ce8",
+    "tools/c_recovery/resource_generated.inc": "22019cc1fc912915a36bc0689260b1c11bb937ef8a6f5f6362c62abb0699346b",
+    "tools/c_recovery/resume.c": "1ff447e7af99332db2dd427d1ebb7396e28a7e90972527faf3849ec7c5f396d6",
+    "tools/c_recovery/resume.h": "96e62253e3ea5f230f08ee3b2717654d4a0c07cd2f8c05f1828f45acdba7d113",
+    "tools/c_recovery/resume_fixture.h": "73f56fa4f70a88807db5b35ca43afa329915039d76f2223f610f415ff3d5c82c",
+    "tools/c_recovery/resume_generated.inc": "ec374bfc1b317815b0623eb83a0fe812858256f9f20f830149e7445fca189348",
+    "tools/c_recovery/rng.c": "1e6500c692d652c07cd31b99afa5693275bdab91d0f2d2c9ce9c8ef1188cb0fd",
+    "tools/c_recovery/rng.h": "71d82996afa8df2387e9899f8a78872ad35d617ed1276b31aaf12c68dd66c0f0",
+    "tools/c_recovery/seed.c": "5310de9dcc0e40a374d168f73ffa8de2222de654378c7bfc6c50c4255e851cbb",
+    "tools/c_recovery/seed.h": "4f9e0c6e3026967450b6a29758bedd2e293010187a95e2fd98b0a1c438a0ffc9",
+    "tools/c_recovery/settlement.c": "c6573bbfef750ca81c847efe88b0b3d2b51ac1623a321e8925983bbd59a750a3",
+    "tools/c_recovery/settlement.h": "5714b35cff296141a05bd25428728dc78cc4f22773c6d4d8b4b229f741f6c0f7",
+    "tools/c_recovery/settlement_fixture.h": "af8305a0f0610de1301bf81349fe59f97f22920e7f6d6c91660efa2de3f7f345",
+    "tools/c_recovery/talk.c": "c11731280c6493edc62fa942cf83882fe943d7d22708e84c1a36e6df772fd05b",
+    "tools/c_recovery/talk.h": "c99ee60ca8735c90e40c207da8c6dc999f9e3818320d6a1488d4490867082fd7",
+    "tools/c_recovery/talk_fixture.h": "35595eef47e05639587095e85af84a28f3e290cfacf488214a9c84ccfc695127",
+    "tools/c_recovery/talk_generated.inc": "874483d09b8a18bbbecd9f5e5a26561eee91f1cbe6b620f78bb5f401a2f72b6c",
+    "tools/c_recovery/verdict.c": "f68e52718003c565c9c07d23d013573fc422f21df13751768a9fce17d5c9e1dd",
+    "tools/c_recovery/verdict.h": "cdfc8a9b2a10ef687e40f0eb53b13fc290bf9ed0aab6c717cd4642a874f6d64b",
+    "tools/c_recovery/verdict_fixture.h": "02ceafb74b3a96facbd51a4bfe55d86b10ce1133e727342caf93b808387d1522",
+    "tools/c_recovery/verdict_generated.inc": "6758c08e3563efa046f95de42b7740becf75602173b5d79b51ed60cbf1c49562",
+    "tools/c_recovery/vga.c": "9c9c75270422a8950d9d09c1321d5093423d2eada6d5bde3e417c9d711ba9b5b",
+    "tools/c_recovery/vga.h": "40f9e9ee054830df5c95e5bbe0185f82f3b8d7d8e9e780510da29794b2ab7699",
+    "tools/c_recovery/vga_fixture.h": "97ab311f79b371c26b90d450466173e9ac90e70c55f6862a204bef40db569096",
+    "tools/c_recovery/world_update.c": "90ea41a06b727fc12074c1347e831f6fbac7fb0535265bfbfa7eac7795437602",
+    "tools/c_recovery/world_update.h": "9782b21c1397d277680b0165b27d697bf7191ad099b399dfc0a875af91f5f088",
+    "tools/c_recovery/world_update_fixture.h": "0d2866252dc0339d08d45431beac7359019b29fd80717e07219396cf418ab853",
+    "tools/c_recovery_glyph_platform.go": "a9a049cea6c6304614fc31a4088aa50b6b26f9adab9290169d168073e03108fb",
+    "tools/c_recovery_display_generate.py": "af149fc48d2eeafc89d9849c3a44ee386c4e2a52993a0a410f238cd93b0d56ac",
+    "tools/c_recovery_details_generate.py": "c13ab0b223ac1aead4be4496e2cc5f3bdddf7ae6ad90ab90d6616e39e771eab5",
+    "tools/c_recovery_details.go": "1f2397a4af63b01507de472efe85fa6d28022f72b6e4cbc2f67b5f34d33741b6",
+    "tools/c_recovery_details_data.go": "2781712f1e07593583077e999a5e6c0bf741207140eef6367ed1058c16836007",
+    "tools/c_recovery_details_platform.go": "adae7db61553771618ccde9443bada92945a480d9e863794bb4ce190a7afef28",
+    "tools/c_recovery_vga_bus.go": "b842e1561a96da289bac5ed83f4756c2d6e77883681227651034aad3625d0c86",
+    "tools/c_recovery_input_platform.go": "c3f0fda2e8d2993f851e0811241c7021aea5c33f4626fcc6f7943694c11f29de"
+  },
+  "compiled_source_manifest_sha256": "31e3949ce8de64aaa809ccf96f90a916846c124886751f8c078f5019bf5c12f7",
+  "verification_tools_sha256": {
+    "tools/c_recovery_details.sh": "6a3f273dd2f39662a979597b0b60d99f83a2ca359dd259c6b7e5544e75dc9bee",
+    "tools/c_recovery_details_verify.py": "a6c98783e35dad4210ce1b9c2698bb4dcdf0994f631f8240fa017d6cfc6fee48",
+    "tools/ida_details_probe.py": "6d864af9ec41f1b0315b6c05f96705067e88958ad313ee1d392c3e1a891353bd",
+    "tools/c_recovery_mapcells_prepare.py": "3b673179a255381366985cfb033ef20b9fa40bde4d9149628e31b5918a1b8ec2",
+    "tools/rle.py": "2aa22684bc2d19450e347ebb17014b062d59a3f9e5212eb87dcbdb9a7aa94cd9",
+    "tools/c_recovery_talk_verify.py": "ff5bfc387167c5baf48b5739071a0e397ae04cfdb8c8bbcc1cde3163c40bfefb",
+    "tools/details_code_supplement.py": "d5d8e47497851b29fe23b845d6a8f221bbc972ac46c526fc3118eb99febeb55c"
+  },
+  "cases_per_optimization": 700,
+  "groups": {
+    "city-values": 400,
+    "city-image": 64,
+    "city-window": 48,
+    "city-frame": 4,
+    "city-close": 4,
+    "army-values": 80,
+    "army-slots": 48,
+    "army-raw": 4,
+    "army-close": 16,
+    "own-panel": 16,
+    "own-frame": 16
+  },
+  "receipt_sha256": {
+    "O0": "a8e9a8c4ffb373717ff21e05bb0b0d9edb7fc1ea1e58a44d6f5ead260b604b3b",
+    "O2": "a8e9a8c4ffb373717ff21e05bb0b0d9edb7fc1ea1e58a44d6f5ead260b604b3b"
+  },
+  "negative_controls_rejected": 12,
+  "mutants": {
+    "1": {
+      "group": "city-values",
+      "first_rejected": 51,
+      "receipt_sha256": "8ee2c112748119f2bfe240d34ccf3d0bec50f0bfe2bd03d37e3397b27c23ccb8",
+      "buildinfo_sha256": "2e5a275722cc48b9ec3b9c9000f9a837fce165fe0f81457aa82c849864534681"
+    },
+    "2": {
+      "group": "city-values",
+      "first_rejected": 2,
+      "receipt_sha256": "87cc6e28e79d3278cc1be1cd781d4fc87633a67c183d41dc543b9be2c4a129c6",
+      "buildinfo_sha256": "1281aadff0e89599e82a0aafd3cf01b8c54aab4e2f802e1bc85065704a6ded55"
+    },
+    "3": {
+      "group": "city-values",
+      "first_rejected": 1,
+      "receipt_sha256": "13492307544b173a62443342a768addcdd0ab813f237188feaedc543c7fc4adf",
+      "buildinfo_sha256": "dcc51d9fc0a8fefbd1358fbffd7b92ae4f0418d761da77c2b9505363c853cc2b"
+    },
+    "4": {
+      "group": "city-values",
+      "first_rejected": 6,
+      "receipt_sha256": "2aa538ac49ef861da0abff2e16a50db22b3b10aaa0a87fe19b32fb2b52d8446c",
+      "buildinfo_sha256": "26383c7b23bf4926d72dce190fe5dd3adbc8b113f6529a5b56bb65abe1c88f10"
+    },
+    "5": {
+      "group": "city-image",
+      "first_rejected": 1,
+      "receipt_sha256": "af0555efb523d31d004c205ab278f082f2a26e239929be077f8565430457c822",
+      "buildinfo_sha256": "e0a1bfd26d1ba9d610fbb39cb8297f083ae46455dd3dd9df04d1c8c0b12d5e42"
+    },
+    "6": {
+      "group": "army-values",
+      "first_rejected": 1,
+      "receipt_sha256": "fd25f350aa8a8da2f61b52e8c42f1b8a511b697b81befe6cc839a90ca482ad0e",
+      "buildinfo_sha256": "64c533d8c93197fdc0352cd078e2413dc8e0339744b520042b9befeca36c5c70"
+    },
+    "7": {
+      "group": "army-values",
+      "first_rejected": 1,
+      "receipt_sha256": "e8fc0f1d4d6463df0897ef172ad9309b5125552960c405dd30ddfd64ed675cdd",
+      "buildinfo_sha256": "8b5de5d4cad35f8719bfa96008fa0a49743cf5cb97b73604b7f0cc18a32d41cd"
+    },
+    "8": {
+      "group": "army-slots",
+      "first_rejected": 1,
+      "receipt_sha256": "c0172a7a15de2ddfc3da09a9f837086b12cd8f0d64c243549037b99db6381740",
+      "buildinfo_sha256": "9e96cd24249ea6809ff93e34a991b0014186884c1eb6b314aebc96ef794b9fa0"
+    },
+    "9": {
+      "group": "army-slots",
+      "first_rejected": 1,
+      "receipt_sha256": "106cb4bab0f0348ebd0f3141450dfcc83f97b50f39003c0aefa858f0e606bf67",
+      "buildinfo_sha256": "089553aff76068afe710da6fa9543238cfe11b41404f82f23e19489a446ec28a"
+    },
+    "10": {
+      "group": "army-close",
+      "first_rejected": 2,
+      "receipt_sha256": "659612b46e0c051e016f171d9548edd845988fc65be0fad4ca61b138edf7065a",
+      "buildinfo_sha256": "273cc01fa9dffbb26dab5939b94cc62b4d6757e50706954942136bb41495c487"
+    },
+    "11": {
+      "group": "own-frame",
+      "first_rejected": 1,
+      "receipt_sha256": "b7d379bae3bb0fbebe811953cdcd1f157ac7b9ca14d9936fab535db904a771c3",
+      "buildinfo_sha256": "c418f00f9f6e97d4dd14339b84b123feeff2d4ead8ecc115010b45436daed661"
+    },
+    "12": {
+      "group": "city-window",
+      "first_rejected": 1,
+      "receipt_sha256": "56d0677125d92dcce4eedef49d35210744e352c27953d5e4f374e0c930cced0e",
+      "buildinfo_sha256": "fc45421a0c3f0bb769cadcf4af74a4b6095d3a2c23409775d012be53f677b728"
+    }
+  },
+  "entries_seen": {
+    "code_10701": 1656,
+    "code_1F75E": 7912,
+    "font@0080:0410": 7912,
+    "sub_101B4": 24,
+    "sub_101DB": 24,
+    "sub_10337": 172,
+    "sub_1062F": 2360,
+    "sub_1069A": 6474,
+    "sub_106DE": 3550,
+    "sub_106FD": 1656,
+    "sub_107D2": 104,
+    "sub_10AAA": 24,
+    "sub_10AD9": 24,
+    "sub_10C14": 172,
+    "sub_10C60": 344,
+    "sub_10C77": 344,
+    "sub_10CAC": 2384,
+    "sub_121E7": 96,
+    "sub_15E1E": 24,
+    "sub_15E2D": 40,
+    "sub_15E80": 24,
+    "sub_15EB7": 24,
+    "sub_15F27": 24,
+    "sub_15F5D": 24,
+    "sub_15F7F": 24,
+    "sub_17E1F": 48,
+    "sub_17E4A": 448,
+    "sub_17F1A": 112,
+    "sub_17F61": 52,
+    "sub_17F81": 52,
+    "sub_1807B": 80,
+    "sub_1812A": 52,
+    "sub_1817D": 16,
+    "sub_1895D": 240,
+    "sub_189DE": 240,
+    "sub_1D5D4": 240,
+    "sub_1E38C": 216,
+    "sub_1E3D7": 240,
+    "sub_1E9C1": 172,
+    "sub_1F1A3": 212,
+    "sub_1F4DF": 216,
+    "sub_1F6DC": 1328,
+    "sub_1F7A4": 7912,
+    "sub_1F878": 7912,
+    "sub_1F888": 160,
+    "sub_1F938": 640,
+    "sub_1F999": 640,
+    "sub_1F9B0": 17096,
+    "sub_1FA1B": 68384,
+    "sub_1FA37": 216,
+    "sub_1FAA2": 864,
+    "sub_1FBA7": 120,
+    "sub_20000": 216,
+    "sub_2009A": 24,
+    "sub_200BD": 192
+  },
+  "font_calls_per_optimization": [
+    7912,
+    0
+  ],
+  "missing_fonts": 0,
+  "independent_details_audits": 7324,
+  "input_assets": {
+    "TALK.DAT": [
+      34182,
+      "08a22e09791d0a6ec2968e87d8655e12c91b45e00fae460b28593b35ff85e384"
+    ],
+    "SINARIO.DAT": [
+      88832,
+      "21acf8a8c4d406b4deb3a184ec0a95f3670d3e0bfff02df63d5d218f46f0754c"
+    ],
+    "KAOGRF.DAT": [
+      307200,
+      "b9c7745e3ed9b32f0c12003fe81f82756136f738427dc421ec96f6c4ed5c4ac8"
+    ],
+    "ICONGRF.DAT": [
+      47776,
+      "2154782c045b898aa5fafa74a4ff0c3745771ec85799b7882e1c4c009b3f1c1d"
+    ],
+    "END_S13.DAT": [
+      404992,
+      "0ab4c43920787bf87c91bba5730078e451cb6125b878f201d3e70d648412569b"
+    ],
+    "END_S14.DAT": [
+      3840,
+      "1d0cf09d0a319a9e7039190688c6a905ba4370bd369fbfcfa43b2078480d6918"
+    ],
+    "KYOGRF.DAT": [
+      69120,
+      "e086f526bdada5baf751c41d2f73a78a0ba70002f282f63a9f33114542ed933f"
+    ],
+    "MMAP.MAP": [
+      80716,
+      "51b6fcaa390c80bd8a358dcacbf7d8dbb6dfeb0e048d8c3bdd86329df3401bcf"
+    ],
+    "MMAP.MDL": [
+      32768,
+      "2fa1dd1b1ec7c426cf22583334a62dc61bdb1f1cefc59cbe8e9827480d118d1d"
+    ],
+    "MMAP.MCH": [
+      43058,
+      "b10a5b64bbffa672c1fb5cb37703ac4c14b18bf1166cc47c4e802c19aae9f8f7"
+    ]
+  },
+  "tool_versions": "go version go1.26.7 linux/amd64\ngcc (Debian 12.2.0-14+deb12u1) 12.2.0\nCopyright (C) 2022 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "exact_clean_regeneration": true,
+  "oracle_revision": "a9714ebdab2ad6b529f81225472680f2b11f2842",
+  "oracle_compiled_tree_sha256": "d37ffeb9be887541f89e9cff80ea5a159620b77b524d54527950ce3554a6f126",
+  "scope": "Ten original city-information controller, city/corps renderers and own-faction restoration functions. Four scenarios, controlled fields, neutral/capital comparison, signed growth, all16 picture nibbles with seek truncation, raw type0 separated from legal1..4, byte morale and total high word. Original-first independent argument/buffer/world and ABI audits; complete RAM/planes/registers/FLAGS/stack/IN/OUT/API, separate pinned DOS/font/mouse/VGA, IF/TF=0 and pinned dosgolem flags. Upstream military commands, natural long player paths and original C machine code remain pending.",
+  "c_machine_code_match": false,
+  "assembly_coverage_receipt_sha256": "420704311159ba5ec4de913b28674033e9e94b1fc4ceeba0fcab55b3c8111e38",
+  "go_verification_sha256": "e0e8ffcefed75205fa86237495e605d01c52d38de259ee2e1785a5944603fb4e",
+  "resolution_backlinks": [
+    {
+      "ida_linear": 97836,
+      "function_ida_linear": 97823,
+      "older_document": "docs/re/50-city-info-window.md",
+      "required_markers": [
+        "索引×32",
+        "122-c-detail-panels-restoration.md"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/122-c-detail-panels-restoration.md"
+    },
+    {
+      "ida_linear": 98035,
+      "function_ida_linear": 97866,
+      "older_document": "docs/re/32-strategy-detail-panels.md",
+      "required_markers": [
+        "左移",
+        "122-c-detail-panels-restoration.md"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/122-c-detail-panels-restoration.md"
+    },
+    {
+      "ida_linear": 98582,
+      "function_ida_linear": 98427,
+      "older_document": "docs/re/32-strategy-detail-panels.md",
+      "required_markers": [
+        "0F04",
+        "0F03",
+        "122-c-detail-panels-restoration.md"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/122-c-detail-panels-restoration.md"
+    },
+    {
+      "ida_linear": 98699,
+      "function_ida_linear": 98685,
+      "older_document": "docs/re/32-strategy-detail-panels.md",
+      "required_markers": [
+        "恢復自勢力情報",
+        "122-c-detail-panels-restoration.md"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/122-c-detail-panels-restoration.md"
+    },
+    {
+      "ida_linear": 98640,
+      "function_ida_linear": 98602,
+      "older_document": "docs/spec/24-corps-info-window.md",
+      "required_markers": [
+        "D200",
+        "122-c-detail-panels-restoration.md"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/122-c-detail-panels-restoration.md"
+    },
+    {
+      "ida_linear": 97836,
+      "function_ida_linear": 97823,
+      "older_document": "docs/spec/23-city-info-window.md",
+      "required_markers": [
+        "入口不只地圖",
+        "122-c-detail-panels-restoration.md"
+      ],
+      "platform_module": "dosv/KI.EXE",
+      "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+      "level": "proven",
+      "evidence": "docs/re/122-c-detail-panels-restoration.md"
+    }
+  ],
+  "backlink_status": "verified"
+}

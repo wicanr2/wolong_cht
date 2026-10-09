@@ -2018,3 +2018,9 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - 固定DOS/V KI.EXE、IDA9.4 database linear，七函式185指令459bytes，身分與原始定位見[re/121](docs/re/121-c-personnel-restoration.md)。
 - O0／O2各2,332完整裝置、十二錯版、獨立欄位與CF/BX核對；任命不清經費，解任XCHG FF後清職務經費。保留第二層取消返回、空缺POP BX/SI差異及原資格條件。
 - 非零經費正對照補足舊spec/143盲點，原排序狀態勘誤回鏈至spec/148；全185指令既有覆蓋且獨立重組相同。303 C／48raw，自然長程及原C機器碼仍未驗證。
+
+## 2026-10-09：據點資訊與軍團面板十C函式
+
+- 固定DOS/V KI.EXE、IDA9.4 linear與KYOGRF身分見[re/122](docs/re/122-c-detail-panels-restoration.md)。10函式310指令711bytes。
+- 原版先經獨立數字／字串／blit／seek參數、圖buffer與世界保存模型；O0/O2各700完整裝置與十二錯版通過。
+- 中立仍讀0603判首都，景觀15回繞0E00；type0下溢D200；軍團morale byte/0F屬性；02恢復自勢力情報。軍團指令上游、自然長程與原C機器碼仍未代證。

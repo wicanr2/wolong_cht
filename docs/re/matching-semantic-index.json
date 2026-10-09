@@ -2400,6 +2400,76 @@
       "sources": [
         "docs/re/121-c-personnel-restoration.md"
       ]
+    },
+    "0x15E1E": {
+      "meaning": "恢復自勢力情報框、場景0與原動態層",
+      "level": "proven",
+      "sources": [
+        "docs/re/122-c-detail-panels-restoration.md"
+      ]
+    },
+    "0x15E2D": {
+      "meaning": "入口DS=CS，自勢力旗標OR2並畫右下場景0",
+      "level": "proven",
+      "sources": [
+        "docs/re/122-c-detail-panels-restoration.md"
+      ]
+    },
+    "0x17E1F": {
+      "meaning": "據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果",
+      "level": "proven",
+      "sources": [
+        "docs/re/122-c-detail-panels-restoration.md"
+      ]
+    },
+    "0x17E4A": {
+      "meaning": "據點四數值與名稱／城主／規模，保留中立首都比較與成長符號",
+      "level": "proven",
+      "sources": [
+        "docs/re/122-c-detail-panels-restoration.md"
+      ]
+    },
+    "0x17F1A": {
+      "meaning": "據點高nibble選KYOGRF圖，seek只保留16位offset",
+      "level": "proven",
+      "sources": [
+        "docs/re/122-c-detail-panels-restoration.md"
+      ]
+    },
+    "0x17F61": {
+      "meaning": "據點資訊框與原場景3",
+      "level": "proven",
+      "sources": [
+        "docs/re/122-c-detail-panels-restoration.md"
+      ]
+    },
+    "0x17F81": {
+      "meaning": "關閉據點資訊框",
+      "level": "proven",
+      "sources": [
+        "docs/re/122-c-detail-panels-restoration.md"
+      ]
+    },
+    "0x1807B": {
+      "meaning": "軍團框／場景4、肖像、三名、總兵力與byte士氣",
+      "level": "proven",
+      "sources": [
+        "docs/re/122-c-detail-panels-restoration.md"
+      ]
+    },
+    "0x1812A": {
+      "meaning": "軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約",
+      "level": "proven",
+      "sources": [
+        "docs/re/122-c-detail-panels-restoration.md"
+      ]
+    },
+    "0x1817D": {
+      "meaning": "關軍團框，bit02時恢復自勢力情報",
+      "level": "proven",
+      "sources": [
+        "docs/re/122-c-detail-panels-restoration.md"
+      ]
     }
   },
   "operands": {
@@ -2602,6 +2672,70 @@
       "level": "proven",
       "sources": [
         "docs/re/121-c-personnel-restoration.md"
+      ]
+    },
+    "0x15E2D:0": {
+      "original": "byte ptr ds:98A6h",
+      "meaning": "自勢力情報顯示旗標，入口DS須符合CS契約",
+      "level": "proven",
+      "sources": [
+        "docs/re/122-c-detail-panels-restoration.md"
+      ]
+    },
+    "0x17E94:1": {
+      "original": "0Ah",
+      "meaning": "據點城兵byte換算為畫面人數的×10係數",
+      "level": "proven",
+      "sources": [
+        "docs/re/122-c-detail-panels-restoration.md"
+      ]
+    },
+    "0x17EB2:1": {
+      "original": "[si+10h]",
+      "meaning": "據點成長值以byte保存，顯示時減100",
+      "level": "proven",
+      "sources": [
+        "docs/re/122-c-detail-panels-restoration.md"
+      ]
+    },
+    "0x17EE4:1": {
+      "original": "[si+1]",
+      "meaning": "據點owner；24中立仍參與後續首都比較",
+      "level": "proven",
+      "sources": [
+        "docs/re/122-c-detail-panels-restoration.md"
+      ]
+    },
+    "0x17F21:1": {
+      "original": "[si+16h]",
+      "meaning": "據點+16高nibble為景觀張號，低nibble為類型",
+      "level": "proven",
+      "sources": [
+        "docs/re/122-c-detail-panels-restoration.md"
+      ]
+    },
+    "0x18116:1": {
+      "original": "[si+6]",
+      "meaning": "軍團士氣只讀+6 byte",
+      "level": "proven",
+      "sources": [
+        "docs/re/122-c-detail-panels-restoration.md"
+      ]
+    },
+    "0x18150:1": {
+      "original": "12C0h",
+      "meaning": "軍團圖示原紅組基底，空槽4越到綠色天秤",
+      "level": "proven",
+      "sources": [
+        "docs/re/122-c-detail-panels-restoration.md"
+      ]
+    },
+    "0x1818B:0": {
+      "original": "cs:byte_198A6",
+      "meaning": "自勢力情報bit02；小地圖是bit04",
+      "level": "proven",
+      "sources": [
+        "docs/re/122-c-detail-panels-restoration.md"
       ]
     }
   }

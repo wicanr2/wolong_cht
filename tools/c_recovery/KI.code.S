@@ -36657,72 +36657,73 @@ ret
 .org 0x601e
 sub_15E1E:
 # IDA 0x15e1e; file 0x601e; locator=proven; call    sub_101B4
-# ⚠ 函式 sub_15E1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E1E; [proven] 恢復自勢力情報框、場景0與原動態層; 出處: docs/re/122-c-detail-panels-restoration.md
 call .-23658
 .org 0x6021
 # IDA 0x15e21; file 0x6021; locator=proven; call    sub_15E2D
-# ⚠ 函式 sub_15E1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E1E; [proven] 恢復自勢力情報框、場景0與原動態層; 出處: docs/re/122-c-detail-panels-restoration.md
 call .+12
 .org 0x6024
 # IDA 0x15e24; file 0x6024; locator=proven; mov     al, 0Fh
-# ⚠ 函式 sub_15E1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E1E; [proven] 恢復自勢力情報框、場景0與原動態層; 出處: docs/re/122-c-detail-panels-restoration.md
 mov al, 0xf
 .org 0x6026
 # IDA 0x15e26; file 0x6026; locator=proven; call    sub_15E80
-# ⚠ 函式 sub_15E1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E1E; [proven] 恢復自勢力情報框、場景0與原動態層; 出處: docs/re/122-c-detail-panels-restoration.md
 call .+90
 .org 0x6029
 # IDA 0x15e29; file 0x6029; locator=proven; call    sub_101DB
-# ⚠ 函式 sub_15E1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E1E; [proven] 恢復自勢力情報框、場景0與原動態層; 出處: docs/re/122-c-detail-panels-restoration.md
 call .-23630
 .org 0x602c
 # IDA 0x15e2c; file 0x602c; locator=proven; retn
-# ⚠ 函式 sub_15E1E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E1E; [proven] 恢復自勢力情報框、場景0與原動態層; 出處: docs/re/122-c-detail-panels-restoration.md
 ret
 .org 0x602d
 sub_15E2D:
 # IDA 0x15e2d; file 0x602d; locator=proven; or      byte ptr ds:98A6h, 2
-# ⚠ 函式 sub_15E2D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E2D; [proven] 入口DS=CS，自勢力旗標OR2並畫右下場景0; 出處: docs/re/122-c-detail-panels-restoration.md
+# operand 0 byte ptr ds:98A6h; [proven] 自勢力情報顯示旗標，入口DS須符合CS契約; 出處: docs/re/122-c-detail-panels-restoration.md
 or byte ptr [0x98a6], 0x2
 .org 0x6032
 # IDA 0x15e32; file 0x6032; locator=proven; mov     al, 10h
-# ⚠ 函式 sub_15E2D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E2D; [proven] 入口DS=CS，自勢力旗標OR2並畫右下場景0; 出處: docs/re/122-c-detail-panels-restoration.md
 mov al, 0x10
 .org 0x6034
 # IDA 0x15e34; file 0x6034; locator=proven; mov     dx, 1Bh
-# ⚠ 函式 sub_15E2D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E2D; [proven] 入口DS=CS，自勢力旗標OR2並畫右下場景0; 出處: docs/re/122-c-detail-panels-restoration.md
 mov dx, 0x1b
 .org 0x6037
 # IDA 0x15e37; file 0x6037; locator=proven; mov     bx, 0Ah
-# ⚠ 函式 sub_15E2D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E2D; [proven] 入口DS=CS，自勢力旗標OR2並畫右下場景0; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0xa
 .org 0x603a
 # IDA 0x15e3a; file 0x603a; locator=proven; mov     cx, 0D0Dh
-# ⚠ 函式 sub_15E2D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E2D; [proven] 入口DS=CS，自勢力旗標OR2並畫右下場景0; 出處: docs/re/122-c-detail-panels-restoration.md
 mov cx, 0xd0d
 .org 0x603d
 # IDA 0x15e3d; file 0x603d; locator=proven; call    sub_1895D
-# ⚠ 函式 sub_15E2D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E2D; [proven] 入口DS=CS，自勢力旗標OR2並畫右下場景0; 出處: docs/re/122-c-detail-panels-restoration.md
 call .+11040
 .org 0x6040
 # IDA 0x15e40; file 0x6040; locator=proven; mov     al, 0
-# ⚠ 函式 sub_15E2D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E2D; [proven] 入口DS=CS，自勢力旗標OR2並畫右下場景0; 出處: docs/re/122-c-detail-panels-restoration.md
 mov al, 0x0
 .org 0x6042
 # IDA 0x15e42; file 0x6042; locator=proven; mov     dx, 1B8h
-# ⚠ 函式 sub_15E2D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E2D; [proven] 入口DS=CS，自勢力旗標OR2並畫右下場景0; 出處: docs/re/122-c-detail-panels-restoration.md
 mov dx, 0x1b8
 .org 0x6045
 # IDA 0x15e45; file 0x6045; locator=proven; mov     bx, 0C8h
-# ⚠ 函式 sub_15E2D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E2D; [proven] 入口DS=CS，自勢力旗標OR2並畫右下場景0; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0xc8
 .org 0x6048
 # IDA 0x15e48; file 0x6048; locator=proven; call    sub_10337
-# ⚠ 函式 sub_15E2D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E2D; [proven] 入口DS=CS，自勢力旗標OR2並畫右下場景0; 出處: docs/re/122-c-detail-panels-restoration.md
 call .-23313
 .org 0x604b
 # IDA 0x15e4b; file 0x604b; locator=proven; retn
-# ⚠ 函式 sub_15E2D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15E2D; [proven] 入口DS=CS，自勢力旗標OR2並畫右下場景0; 出處: docs/re/122-c-detail-panels-restoration.md
 ret
 .org 0x604c
 sub_15E4C:
@@ -50162,680 +50163,684 @@ ret
 .org 0x801f
 sub_17E1F:
 # IDA 0x17e1f; file 0x801f; locator=proven; push    ds
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 push ds
 .org 0x8020
 # IDA 0x17e20; file 0x8020; locator=proven; push    es
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 push es
 .org 0x8021
 # IDA 0x17e21; file 0x8021; locator=proven; push    ax
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 push ax
 .org 0x8022
 # IDA 0x17e22; file 0x8022; locator=proven; push    bx
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 push bx
 .org 0x8023
 # IDA 0x17e23; file 0x8023; locator=proven; push    cx
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 push cx
 .org 0x8024
 # IDA 0x17e24; file 0x8024; locator=proven; push    dx
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 push dx
 .org 0x8025
 # IDA 0x17e25; file 0x8025; locator=proven; push    di
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 push di
 .org 0x8026
 # IDA 0x17e26; file 0x8026; locator=proven; push    bp
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 push bp
 .org 0x8027
 # IDA 0x17e27; file 0x8027; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x802c
 # IDA 0x17e2c; file 0x802c; locator=proven; add     si, 840h
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 add si, 0x840
 .org 0x8030
 # IDA 0x17e30; file 0x8030; locator=proven; call    sub_17F61
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 call .+305
 .org 0x8033
 # IDA 0x17e33; file 0x8033; locator=proven; call    sub_17E4A
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 call .+23
 .org 0x8036
 # IDA 0x17e36; file 0x8036; locator=proven; call    sub_17F1A
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 call .+228
 .org 0x8039
 loc_17E39:
 # IDA 0x17e39; file 0x8039; locator=proven; call    sub_121E7
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 call .-23634
 .org 0x803c
 # IDA 0x17e3c; file 0x803c; locator=proven; jnb     short loc_17E39
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 jnb .-3
 .org 0x803e
 # IDA 0x17e3e; file 0x803e; locator=proven; call    sub_17F81
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 call .+323
 .org 0x8041
 # IDA 0x17e41; file 0x8041; locator=proven; pop     bp
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 pop bp
 .org 0x8042
 # IDA 0x17e42; file 0x8042; locator=proven; pop     di
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 pop di
 .org 0x8043
 # IDA 0x17e43; file 0x8043; locator=proven; pop     dx
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 pop dx
 .org 0x8044
 # IDA 0x17e44; file 0x8044; locator=proven; pop     cx
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 pop cx
 .org 0x8045
 # IDA 0x17e45; file 0x8045; locator=proven; pop     bx
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 pop bx
 .org 0x8046
 # IDA 0x17e46; file 0x8046; locator=proven; pop     ax
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 pop ax
 .org 0x8047
 # IDA 0x17e47; file 0x8047; locator=proven; pop     es
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 pop es
 .org 0x8048
 # IDA 0x17e48; file 0x8048; locator=proven; pop     ds
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 pop ds
 .org 0x8049
 # IDA 0x17e49; file 0x8049; locator=proven; retn
-# ⚠ 函式 sub_17E1F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E1F; [proven] 據點資訊完整局部控制器，入口SI為索引×32，返回保留加840結果; 出處: docs/re/122-c-detail-panels-restoration.md
 ret
 .org 0x804a
 sub_17E4A:
 # IDA 0x17e4a; file 0x804a; locator=proven; push    ds
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 push ds
 .org 0x804b
 # IDA 0x17e4b; file 0x804b; locator=proven; push    si
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 push si
 .org 0x804c
 # IDA 0x17e4c; file 0x804c; locator=proven; mov     di, si
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} mov di, si
 .org 0x804e
 # IDA 0x17e4e; file 0x804e; locator=proven; add     si, 2
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 add si, 0x2
 .org 0x8051
 # IDA 0x17e51; file 0x8051; locator=proven; mov     ax, 0F03h
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ax, 0xf03
 .org 0x8054
 # IDA 0x17e54; file 0x8054; locator=proven; mov     dx, 80h
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov dx, 0x80
 .org 0x8057
 # IDA 0x17e57; file 0x8057; locator=proven; mov     bx, 120h
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0x120
 .org 0x805a
 # IDA 0x17e5a; file 0x805a; locator=proven; call    sub_106FD
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 call .-30557
 .org 0x805d
 # IDA 0x17e5d; file 0x805d; locator=proven; push    ds
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 push ds
 .org 0x805e
 # IDA 0x17e5e; file 0x805e; locator=proven; mov     bh, [di+1]
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bh, byte ptr [di+0x1]
 .org 0x8061
 # IDA 0x17e61; file 0x8061; locator=proven; cmp     bh, 18h
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 cmp bh, 0x18
 .org 0x8064
 # IDA 0x17e64; file 0x8064; locator=proven; jz      short loc_17E7E
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 jz .+26
 .org 0x8066
 # IDA 0x17e66; file 0x8066; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} xor bl, bl
 .org 0x8068
 # IDA 0x17e68; file 0x8068; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 shr bx, 0x1
 .org 0x806a
 # IDA 0x17e6a; file 0x806a; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 shr bx, 0x1
 .org 0x806c
 # IDA 0x17e6c; file 0x806c; locator=proven; mov     ah, [bx+1]
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ah, byte ptr [bx+0x1]
 .org 0x806f
 # IDA 0x17e6f; file 0x806f; locator=proven; xor     al, al
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} xor al, al
 .org 0x8071
 # IDA 0x17e71; file 0x8071; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 shr ax, 0x1
 .org 0x8073
 # IDA 0x17e73; file 0x8073; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 shr ax, 0x1
 .org 0x8075
 # IDA 0x17e75; file 0x8075; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 shr ax, 0x1
 .org 0x8077
 # IDA 0x17e77; file 0x8077; locator=proven; add     ax, 4242h
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 add ax, 0x4242
 .org 0x807a
 # IDA 0x17e7a; file 0x807a; locator=proven; mov     si, ax
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} mov si, ax
 .org 0x807c
 # IDA 0x17e7c; file 0x807c; locator=proven; jmp     short loc_17E85
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 jmp .+9
 .org 0x807e
 loc_17E7E:
 # IDA 0x17e7e; file 0x807e; locator=proven; mov     si, 7E19h
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov si, 0x7e19
 .org 0x8081
 # IDA 0x17e81; file 0x8081; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ax, cs
 .org 0x8083
 # IDA 0x17e83; file 0x8083; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ds, ax
 .org 0x8085
 loc_17E85:
 # IDA 0x17e85; file 0x8085; locator=proven; mov     ax, 0F03h
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ax, 0xf03
 .org 0x8088
 # IDA 0x17e88; file 0x8088; locator=proven; mov     dx, 0C0h
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov dx, 0xc0
 .org 0x808b
 # IDA 0x17e8b; file 0x808b; locator=proven; mov     bx, 130h
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0x130
 .org 0x808e
 # IDA 0x17e8e; file 0x808e; locator=proven; call    sub_106FD
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 call .-30609
 .org 0x8091
 # IDA 0x17e91; file 0x8091; locator=proven; mov     si, di
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} mov si, di
 .org 0x8093
 # IDA 0x17e93; file 0x8093; locator=proven; pop     ds
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 pop ds
 .org 0x8094
 # IDA 0x17e94; file 0x8094; locator=proven; mov     al, 0Ah
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
+# operand 1 0Ah; [proven] 據點城兵byte換算為畫面人數的×10係數; 出處: docs/re/122-c-detail-panels-restoration.md
 mov al, 0xa
 .org 0x8096
 # IDA 0x17e96; file 0x8096; locator=proven; mul     byte ptr [si+13h]
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mul byte ptr [si+0x13]
 .org 0x8099
 # IDA 0x17e99; file 0x8099; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} xor dx, dx
 .org 0x809b
 # IDA 0x17e9b; file 0x809b; locator=proven; mov     bx, 904h
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0x904
 .org 0x809e
 # IDA 0x17e9e; file 0x809e; locator=proven; mov     di, 641Ah
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov di, 0x641a
 .org 0x80a1
 # IDA 0x17ea1; file 0x80a1; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 call .-30834
 .org 0x80a4
 # IDA 0x17ea4; file 0x80a4; locator=proven; mov     ax, [si+0Eh]
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ax, word ptr [si+0xe]
 .org 0x80a7
 # IDA 0x17ea7; file 0x80a7; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} xor dx, dx
 .org 0x80a9
 # IDA 0x17ea9; file 0x80a9; locator=proven; mov     bx, 906h
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0x906
 .org 0x80ac
 # IDA 0x17eac; file 0x80ac; locator=proven; mov     di, 6918h
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov di, 0x6918
 .org 0x80af
 # IDA 0x17eaf; file 0x80af; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 call .-30848
 .org 0x80b2
 # IDA 0x17eb2; file 0x80b2; locator=proven; mov     al, [si+10h]
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
+# operand 1 [si+10h]; [proven] 據點成長值以byte保存，顯示時減100; 出處: docs/re/122-c-detail-panels-restoration.md
 mov al, byte ptr [si+0x10]
 .org 0x80b5
 # IDA 0x17eb5; file 0x80b5; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} xor ah, ah
 .org 0x80b7
 # IDA 0x17eb7; file 0x80b7; locator=proven; sub     ax, 64h
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 sub ax, offset imm_at_17EB7
 .org 0x80ba
 # IDA 0x17eba; file 0x80ba; locator=proven; cwd
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 cwd
 .org 0x80bb
 # IDA 0x17ebb; file 0x80bb; locator=proven; mov     bx, 904h
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0x904
 .org 0x80be
 # IDA 0x17ebe; file 0x80be; locator=proven; cmp     dh, 80h
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 cmp dh, 0x80
 .org 0x80c1
 # IDA 0x17ec1; file 0x80c1; locator=proven; jb      short loc_17EC5
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 jb .+4
 .org 0x80c3
 # IDA 0x17ec3; file 0x80c3; locator=proven; mov     bh, 0Ah
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bh, 0xa
 .org 0x80c5
 loc_17EC5:
 # IDA 0x17ec5; file 0x80c5; locator=proven; mov     di, 6E1Ah
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov di, 0x6e1a
 .org 0x80c8
 # IDA 0x17ec8; file 0x80c8; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 call .-30873
 .org 0x80cb
 # IDA 0x17ecb; file 0x80cb; locator=proven; mov     al, [si+11h]
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov al, byte ptr [si+0x11]
 .org 0x80ce
 # IDA 0x17ece; file 0x80ce; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} xor ah, ah
 .org 0x80d0
 # IDA 0x17ed0; file 0x80d0; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} xor dx, dx
 .org 0x80d2
 # IDA 0x17ed2; file 0x80d2; locator=proven; mov     bx, 903h
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0x903
 .org 0x80d5
 # IDA 0x17ed5; file 0x80d5; locator=proven; mov     di, 731Bh
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov di, 0x731b
 .org 0x80d8
 # IDA 0x17ed8; file 0x80d8; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 call .-30889
 .org 0x80db
 # IDA 0x17edb; file 0x80db; locator=proven; mov     al, [si+16h]
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov al, byte ptr [si+0x16]
 .org 0x80de
 # IDA 0x17ede; file 0x80de; locator=proven; and     al, 0Fh
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 and al, 0xf
 .org 0x80e0
 # IDA 0x17ee0; file 0x80e0; locator=proven; mov     ah, 6
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ah, 0x6
 .org 0x80e2
 # IDA 0x17ee2; file 0x80e2; locator=proven; mul     ah
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mul ah
 .org 0x80e4
 # IDA 0x17ee4; file 0x80e4; locator=proven; mov     bh, [si+1]
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
+# operand 1 [si+1]; [proven] 據點owner；24中立仍參與後續首都比較; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bh, byte ptr [si+0x1]
 .org 0x80e7
 # IDA 0x17ee7; file 0x80e7; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} xor bl, bl
 .org 0x80e9
 # IDA 0x17ee9; file 0x80e9; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 shr bx, 0x1
 .org 0x80eb
 # IDA 0x17eeb; file 0x80eb; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 shr bx, 0x1
 .org 0x80ed
 # IDA 0x17eed; file 0x80ed; locator=proven; mov     dx, si
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} mov dx, si
 .org 0x80ef
 # IDA 0x17eef; file 0x80ef; locator=proven; sub     dx, 840h
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 sub dx, 0x840
 .org 0x80f3
 # IDA 0x17ef3; file 0x80f3; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 shl dx, 0x1
 .org 0x80f5
 # IDA 0x17ef5; file 0x80f5; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 shl dx, 0x1
 .org 0x80f7
 # IDA 0x17ef7; file 0x80f7; locator=proven; shl     dx, 1
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 shl dx, 0x1
 .org 0x80f9
 # IDA 0x17ef9; file 0x80f9; locator=proven; cmp     dh, [bx+3]
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 cmp dh, byte ptr [bx+0x3]
 .org 0x80fc
 # IDA 0x17efc; file 0x80fc; locator=proven; jnz     short loc_17F01
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 jnz .+5
 .org 0x80fe
 # IDA 0x17efe; file 0x80fe; locator=proven; mov     ax, 1Eh
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ax, 0x1e
 .org 0x8101
 loc_17F01:
 # IDA 0x17f01; file 0x8101; locator=proven; mov     si, cs
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov si, cs
 .org 0x8103
 # IDA 0x17f03; file 0x8103; locator=proven; mov     ds, si
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ds, si
 .org 0x8105
 # IDA 0x17f05; file 0x8105; locator=proven; mov     si, ax
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} mov si, ax
 .org 0x8107
 # IDA 0x17f07; file 0x8107; locator=proven; add     si, 7DF5h
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 add si, 0x7df5
 .org 0x810b
 # IDA 0x17f0b; file 0x810b; locator=proven; mov     dx, 0C0h
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov dx, 0xc0
 .org 0x810e
 # IDA 0x17f0e; file 0x810e; locator=proven; mov     bx, 120h
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0x120
 .org 0x8111
 # IDA 0x17f11; file 0x8111; locator=proven; mov     ax, 0F03h
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ax, 0xf03
 .org 0x8114
 # IDA 0x17f14; file 0x8114; locator=proven; call    sub_106FD
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 call .-30743
 .org 0x8117
 # IDA 0x17f17; file 0x8117; locator=proven; pop     si
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 pop si
 .org 0x8118
 # IDA 0x17f18; file 0x8118; locator=proven; pop     ds
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 pop ds
 .org 0x8119
 # IDA 0x17f19; file 0x8119; locator=proven; retn
-# ⚠ 函式 sub_17E4A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17E4A; [proven] 據點四數值與名稱／城主／規模，保留中立首都比較與成長符號; 出處: docs/re/122-c-detail-panels-restoration.md
 ret
 .org 0x811a
 sub_17F1A:
 # IDA 0x17f1a; file 0x811a; locator=proven; push    ds
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 push ds
 .org 0x811b
 # IDA 0x17f1b; file 0x811b; locator=proven; push    ax
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 push ax
 .org 0x811c
 # IDA 0x17f1c; file 0x811c; locator=proven; push    bx
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 push bx
 .org 0x811d
 # IDA 0x17f1d; file 0x811d; locator=proven; push    cx
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 push cx
 .org 0x811e
 # IDA 0x17f1e; file 0x811e; locator=proven; push    dx
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 push dx
 .org 0x811f
 # IDA 0x17f1f; file 0x811f; locator=proven; push    si
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 push si
 .org 0x8120
 # IDA 0x17f20; file 0x8120; locator=proven; push    di
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 push di
 .org 0x8121
 # IDA 0x17f21; file 0x8121; locator=proven; mov     al, [si+16h]
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
+# operand 1 [si+16h]; [proven] 據點+16高nibble為景觀張號，低nibble為類型; 出處: docs/re/122-c-detail-panels-restoration.md
 mov al, byte ptr [si+0x16]
 .org 0x8124
 # IDA 0x17f24; file 0x8124; locator=proven; shr     al, 1
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 shr al, 0x1
 .org 0x8126
 # IDA 0x17f26; file 0x8126; locator=proven; shr     al, 1
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 shr al, 0x1
 .org 0x8128
 # IDA 0x17f28; file 0x8128; locator=proven; shr     al, 1
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 shr al, 0x1
 .org 0x812a
 # IDA 0x17f2a; file 0x812a; locator=proven; shr     al, 1
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 shr al, 0x1
 .org 0x812c
 # IDA 0x17f2c; file 0x812c; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} xor ah, ah
 .org 0x812e
 # IDA 0x17f2e; file 0x812e; locator=proven; mov     dx, 1200h
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 mov dx, 0x1200
 .org 0x8131
 # IDA 0x17f31; file 0x8131; locator=proven; mul     dx
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 mul dx
 .org 0x8133
 # IDA 0x17f33; file 0x8133; locator=proven; xor     cx, cx
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} xor cx, cx
 .org 0x8135
 # IDA 0x17f35; file 0x8135; locator=proven; mov     dx, cs
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 mov dx, cs
 .org 0x8137
 # IDA 0x17f37; file 0x8137; locator=proven; mov     ds, dx
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ds, dx
 .org 0x8139
 # IDA 0x17f39; file 0x8139; locator=proven; mov     dx, 0DFAh
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 mov dx, 0xdfa
 .org 0x813c
 # IDA 0x17f3c; file 0x813c; locator=proven; mov     bx, cs:word_1987C
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 cs; mov bx, word ptr [0x987c]
 .org 0x8141
 # IDA 0x17f41; file 0x8141; locator=proven; xor     si, si
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} xor si, si
 .org 0x8143
 # IDA 0x17f43; file 0x8143; locator=proven; mov     di, 1200h
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 mov di, 0x1200
 .org 0x8146
 # IDA 0x17f46; file 0x8146; locator=proven; call    sub_1E38C
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 call .+25670
 .org 0x8149
 # IDA 0x17f49; file 0x8149; locator=proven; mov     ds, cs:word_1987C
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 cs; mov ds, word ptr [0x987c]
 .org 0x814e
 # IDA 0x17f4e; file 0x814e; locator=proven; xor     si, si
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} xor si, si
 .org 0x8150
 # IDA 0x17f50; file 0x8150; locator=proven; mov     ax, 6006h
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ax, 0x6006
 .org 0x8153
 # IDA 0x17f53; file 0x8153; locator=proven; mov     bx, 5A02h
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0x5a02
 .org 0x8156
 # IDA 0x17f56; file 0x8156; locator=proven; call    sub_1FA37
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 call .+31457
 .org 0x8159
 # IDA 0x17f59; file 0x8159; locator=proven; pop     di
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 pop di
 .org 0x815a
 # IDA 0x17f5a; file 0x815a; locator=proven; pop     si
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 pop si
 .org 0x815b
 # IDA 0x17f5b; file 0x815b; locator=proven; pop     dx
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 pop dx
 .org 0x815c
 # IDA 0x17f5c; file 0x815c; locator=proven; pop     cx
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 pop cx
 .org 0x815d
 # IDA 0x17f5d; file 0x815d; locator=proven; pop     bx
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 pop bx
 .org 0x815e
 # IDA 0x17f5e; file 0x815e; locator=proven; pop     ax
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 pop ax
 .org 0x815f
 # IDA 0x17f5f; file 0x815f; locator=proven; pop     ds
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 pop ds
 .org 0x8160
 # IDA 0x17f60; file 0x8160; locator=proven; retn
-# ⚠ 函式 sub_17F1A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F1A; [proven] 據點高nibble選KYOGRF圖，seek只保留16位offset; 出處: docs/re/122-c-detail-panels-restoration.md
 ret
 .org 0x8161
 sub_17F61:
 # IDA 0x17f61; file 0x8161; locator=proven; push    ds
-# ⚠ 函式 sub_17F61; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F61; [proven] 據點資訊框與原場景3; 出處: docs/re/122-c-detail-panels-restoration.md
 push ds
 .org 0x8162
 # IDA 0x17f62; file 0x8162; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_17F61; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F61; [proven] 據點資訊框與原場景3; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ax, cs
 .org 0x8164
 # IDA 0x17f64; file 0x8164; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_17F61; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F61; [proven] 據點資訊框與原場景3; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ds, ax
 .org 0x8166
 # IDA 0x17f66; file 0x8166; locator=proven; mov     al, 3Dh
-# ⚠ 函式 sub_17F61; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F61; [proven] 據點資訊框與原場景3; 出處: docs/re/122-c-detail-panels-restoration.md
 mov al, 0x3d
 .org 0x8168
 # IDA 0x17f68; file 0x8168; locator=proven; mov     dx, 0
-# ⚠ 函式 sub_17F61; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F61; [proven] 據點資訊框與原場景3; 出處: docs/re/122-c-detail-panels-restoration.md
 mov dx, 0x0
 .org 0x816b
 # IDA 0x17f6b; file 0x816b; locator=proven; mov     bx, 0Fh
-# ⚠ 函式 sub_17F61; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F61; [proven] 據點資訊框與原場景3; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0xf
 .org 0x816e
 # IDA 0x17f6e; file 0x816e; locator=proven; mov     cx, 810h
-# ⚠ 函式 sub_17F61; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F61; [proven] 據點資訊框與原場景3; 出處: docs/re/122-c-detail-panels-restoration.md
 mov cx, 0x810
 .org 0x8171
 # IDA 0x17f71; file 0x8171; locator=proven; call    sub_1895D
-# ⚠ 函式 sub_17F61; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F61; [proven] 據點資訊框與原場景3; 出處: docs/re/122-c-detail-panels-restoration.md
 call .+2540
 .org 0x8174
 # IDA 0x17f74; file 0x8174; locator=proven; mov     al, 3
-# ⚠ 函式 sub_17F61; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F61; [proven] 據點資訊框與原場景3; 出處: docs/re/122-c-detail-panels-restoration.md
 mov al, 0x3
 .org 0x8176
 # IDA 0x17f76; file 0x8176; locator=proven; mov     dx, 8
-# ⚠ 函式 sub_17F61; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F61; [proven] 據點資訊框與原場景3; 出處: docs/re/122-c-detail-panels-restoration.md
 mov dx, 0x8
 .org 0x8179
 # IDA 0x17f79; file 0x8179; locator=proven; mov     bx, 118h
-# ⚠ 函式 sub_17F61; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F61; [proven] 據點資訊框與原場景3; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0x118
 .org 0x817c
 # IDA 0x17f7c; file 0x817c; locator=proven; call    sub_10337
-# ⚠ 函式 sub_17F61; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F61; [proven] 據點資訊框與原場景3; 出處: docs/re/122-c-detail-panels-restoration.md
 call .-31813
 .org 0x817f
 # IDA 0x17f7f; file 0x817f; locator=proven; pop     ds
-# ⚠ 函式 sub_17F61; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F61; [proven] 據點資訊框與原場景3; 出處: docs/re/122-c-detail-panels-restoration.md
 pop ds
 .org 0x8180
 # IDA 0x17f80; file 0x8180; locator=proven; retn
-# ⚠ 函式 sub_17F61; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F61; [proven] 據點資訊框與原場景3; 出處: docs/re/122-c-detail-panels-restoration.md
 ret
 .org 0x8181
 sub_17F81:
 # IDA 0x17f81; file 0x8181; locator=proven; xor     al, al
-# ⚠ 函式 sub_17F81; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F81; [proven] 關閉據點資訊框; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} xor al, al
 .org 0x8183
 # IDA 0x17f83; file 0x8183; locator=proven; mov     dx, 0
-# ⚠ 函式 sub_17F81; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F81; [proven] 關閉據點資訊框; 出處: docs/re/122-c-detail-panels-restoration.md
 mov dx, 0x0
 .org 0x8186
 # IDA 0x17f86; file 0x8186; locator=proven; mov     bx, 0Fh
-# ⚠ 函式 sub_17F81; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F81; [proven] 關閉據點資訊框; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0xf
 .org 0x8189
 # IDA 0x17f89; file 0x8189; locator=proven; mov     cx, 810h
-# ⚠ 函式 sub_17F81; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F81; [proven] 關閉據點資訊框; 出處: docs/re/122-c-detail-panels-restoration.md
 mov cx, 0x810
 .org 0x818c
 # IDA 0x17f8c; file 0x818c; locator=proven; call    sub_1895D
-# ⚠ 函式 sub_17F81; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F81; [proven] 關閉據點資訊框; 出處: docs/re/122-c-detail-panels-restoration.md
 call .+2513
 .org 0x818f
 # IDA 0x17f8f; file 0x818f; locator=proven; retn
-# ⚠ 函式 sub_17F81; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17F81; [proven] 關閉據點資訊框; 出處: docs/re/122-c-detail-panels-restoration.md
 ret
 .org 0x8190
 sub_17F90:
@@ -51231,511 +51236,514 @@ ret
 .org 0x827b
 sub_1807B:
 # IDA 0x1807b; file 0x827b; locator=proven; push    ds
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 push ds
 .org 0x827c
 # IDA 0x1807c; file 0x827c; locator=proven; push    si
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 push si
 .org 0x827d
 # IDA 0x1807d; file 0x827d; locator=proven; push    di
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 push di
 .org 0x827e
 # IDA 0x1807e; file 0x827e; locator=proven; mov     di, si
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} mov di, si
 .org 0x8280
 # IDA 0x18080; file 0x8280; locator=proven; mov     al, 1Fh
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov al, 0x1f
 .org 0x8282
 # IDA 0x18082; file 0x8282; locator=proven; mov     dx, 1Bh
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov dx, 0x1b
 .org 0x8285
 # IDA 0x18085; file 0x8285; locator=proven; mov     bx, 0Ah
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0xa
 .org 0x8288
 # IDA 0x18088; file 0x8288; locator=proven; mov     cx, 0D0Dh
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov cx, 0xd0d
 .org 0x828b
 # IDA 0x1808b; file 0x828b; locator=proven; call    sub_1895D
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 call .+2258
 .org 0x828e
 # IDA 0x1808e; file 0x828e; locator=proven; mov     al, 4
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov al, 0x4
 .org 0x8290
 # IDA 0x18090; file 0x8290; locator=proven; mov     dx, 1B8h
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov dx, 0x1b8
 .org 0x8293
 # IDA 0x18093; file 0x8293; locator=proven; mov     bx, 0C8h
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0xc8
 .org 0x8296
 # IDA 0x18096; file 0x8296; locator=proven; call    sub_10337
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 call .-32095
 .org 0x8299
 # IDA 0x18099; file 0x8299; locator=proven; mov     ah, [si+2]
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ah, byte ptr [si+0x2]
 .org 0x829c
 # IDA 0x1809c; file 0x829c; locator=proven; xor     al, al
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} xor al, al
 .org 0x829e
 # IDA 0x1809e; file 0x829e; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 shr ax, 0x1
 .org 0x82a0
 # IDA 0x180a0; file 0x82a0; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 shr ax, 0x1
 .org 0x82a2
 # IDA 0x180a2; file 0x82a2; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 shr ax, 0x1
 .org 0x82a4
 # IDA 0x180a4; file 0x82a4; locator=proven; mov     si, ax
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} mov si, ax
 .org 0x82a6
 # IDA 0x180a6; file 0x82a6; locator=proven; mov     al, [si+4241h]
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov al, byte ptr [si+0x4241]
 .org 0x82aa
 # IDA 0x180aa; file 0x82aa; locator=proven; mov     bx, 3EB7h
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0x3eb7
 .org 0x82ad
 # IDA 0x180ad; file 0x82ad; locator=proven; call    sub_107D2
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 call .-30939
 .org 0x82b0
 # IDA 0x180b0; file 0x82b0; locator=proven; mov     dx, 240h
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov dx, 0x240
 .org 0x82b3
 # IDA 0x180b3; file 0x82b3; locator=proven; mov     bx, 0D0h
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0xd0
 .org 0x82b6
 # IDA 0x180b6; file 0x82b6; locator=proven; mov     ax, 0F03h
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ax, 0xf03
 .org 0x82b9
 # IDA 0x180b9; file 0x82b9; locator=proven; add     si, 4242h
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 add si, 0x4242
 .org 0x82bd
 # IDA 0x180bd; file 0x82bd; locator=proven; call    sub_106FD
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 call .-31168
 .org 0x82c0
 # IDA 0x180c0; file 0x82c0; locator=proven; mov     bh, [di+1]
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bh, byte ptr [di+0x1]
 .org 0x82c3
 # IDA 0x180c3; file 0x82c3; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} xor bl, bl
 .org 0x82c5
 # IDA 0x180c5; file 0x82c5; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 shr bx, 0x1
 .org 0x82c7
 # IDA 0x180c7; file 0x82c7; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 shr bx, 0x1
 .org 0x82c9
 # IDA 0x180c9; file 0x82c9; locator=proven; mov     ah, [bx+1]
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ah, byte ptr [bx+0x1]
 .org 0x82cc
 # IDA 0x180cc; file 0x82cc; locator=proven; push    bx
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 push bx
 .org 0x82cd
 # IDA 0x180cd; file 0x82cd; locator=proven; xor     al, al
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} xor al, al
 .org 0x82cf
 # IDA 0x180cf; file 0x82cf; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 shr ax, 0x1
 .org 0x82d1
 # IDA 0x180d1; file 0x82d1; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 shr ax, 0x1
 .org 0x82d3
 # IDA 0x180d3; file 0x82d3; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 shr ax, 0x1
 .org 0x82d5
 # IDA 0x180d5; file 0x82d5; locator=proven; add     ax, 4242h
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 add ax, 0x4242
 .org 0x82d8
 # IDA 0x180d8; file 0x82d8; locator=proven; mov     si, ax
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} mov si, ax
 .org 0x82da
 # IDA 0x180da; file 0x82da; locator=proven; mov     dx, 240h
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov dx, 0x240
 .org 0x82dd
 # IDA 0x180dd; file 0x82dd; locator=proven; mov     bx, 0E0h
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0xe0
 .org 0x82e0
 # IDA 0x180e0; file 0x82e0; locator=proven; mov     ax, 0F03h
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ax, 0xf03
 .org 0x82e3
 # IDA 0x180e3; file 0x82e3; locator=proven; call    sub_106FD
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 call .-31206
 .org 0x82e6
 # IDA 0x180e6; file 0x82e6; locator=proven; pop     bx
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 pop bx
 .org 0x82e7
 # IDA 0x180e7; file 0x82e7; locator=proven; mov     ah, [bx+3]
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ah, byte ptr [bx+0x3]
 .org 0x82ea
 # IDA 0x180ea; file 0x82ea; locator=proven; xor     al, al
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} xor al, al
 .org 0x82ec
 # IDA 0x180ec; file 0x82ec; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 shr ax, 0x1
 .org 0x82ee
 # IDA 0x180ee; file 0x82ee; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 shr ax, 0x1
 .org 0x82f0
 # IDA 0x180f0; file 0x82f0; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 shr ax, 0x1
 .org 0x82f2
 # IDA 0x180f2; file 0x82f2; locator=proven; add     ax, 842h
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 add ax, 0x842
 .org 0x82f5
 # IDA 0x180f5; file 0x82f5; locator=proven; mov     si, ax
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} mov si, ax
 .org 0x82f7
 # IDA 0x180f7; file 0x82f7; locator=proven; mov     dx, 240h
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov dx, 0x240
 .org 0x82fa
 # IDA 0x180fa; file 0x82fa; locator=proven; mov     bx, 0F0h
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0xf0
 .org 0x82fd
 # IDA 0x180fd; file 0x82fd; locator=proven; mov     ax, 0F03h
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ax, 0xf03
 .org 0x8300
 # IDA 0x18100; file 0x8300; locator=proven; call    sub_106FD
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 call .-31235
 .org 0x8303
 # IDA 0x18103; file 0x8303; locator=proven; mov     si, di
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} mov si, di
 .org 0x8305
 # IDA 0x18105; file 0x8305; locator=proven; mov     ax, [si+4]
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ax, word ptr [si+0x4]
 .org 0x8308
 # IDA 0x18108; file 0x8308; locator=proven; mov     dx, 0Ah
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov dx, 0xa
 .org 0x830b
 # IDA 0x1810b; file 0x830b; locator=proven; mul     dx
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mul dx
 .org 0x830d
 # IDA 0x1810d; file 0x830d; locator=proven; mov     bx, 0F04h
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0xf04
 .org 0x8310
 # IDA 0x18110; file 0x8310; locator=proven; mov     di, 5543h
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov di, 0x5543
 .org 0x8313
 # IDA 0x18113; file 0x8313; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 call .-31460
 .org 0x8316
 # IDA 0x18116; file 0x8316; locator=proven; mov     al, [si+6]
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
+# operand 1 [si+6]; [proven] 軍團士氣只讀+6 byte; 出處: docs/re/122-c-detail-panels-restoration.md
 mov al, byte ptr [si+0x6]
 .org 0x8319
 # IDA 0x18119; file 0x8319; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} xor dx, dx
 .org 0x831b
 # IDA 0x1811b; file 0x831b; locator=proven; mov     ah, dl
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} mov ah, dl
 .org 0x831d
 # IDA 0x1811d; file 0x831d; locator=proven; mov     bx, 0F03h
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0xf03
 .org 0x8320
 # IDA 0x18120; file 0x8320; locator=proven; mov     di, 5549h
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 mov di, 0x5549
 .org 0x8323
 # IDA 0x18123; file 0x8323; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 call .-31476
 .org 0x8326
 # IDA 0x18126; file 0x8326; locator=proven; pop     di
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 pop di
 .org 0x8327
 # IDA 0x18127; file 0x8327; locator=proven; pop     si
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 pop si
 .org 0x8328
 # IDA 0x18128; file 0x8328; locator=proven; pop     ds
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 pop ds
 .org 0x8329
 # IDA 0x18129; file 0x8329; locator=proven; retn
-# ⚠ 函式 sub_1807B; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1807B; [proven] 軍團框／場景4、肖像、三名、總兵力與byte士氣; 出處: docs/re/122-c-detail-panels-restoration.md
 ret
 .org 0x832a
 sub_1812A:
 # IDA 0x1812a; file 0x832a; locator=proven; push    bp
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 push bp
 .org 0x832b
 # IDA 0x1812b; file 0x832b; locator=proven; push    ds
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 push ds
 .org 0x832c
 # IDA 0x1812c; file 0x832c; locator=proven; push    si
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 push si
 .org 0x832d
 # IDA 0x1812d; file 0x832d; locator=proven; add     si, 28h
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 add si, 0x28
 .org 0x8330
 # IDA 0x18130; file 0x8330; locator=proven; mov     di, 5A48h
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 mov di, 0x5a48
 .org 0x8333
 # IDA 0x18133; file 0x8333; locator=proven; mov     ax, ds
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ax, ds
 .org 0x8335
 # IDA 0x18135; file 0x8335; locator=proven; mov     es, ax
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 mov es, ax
 .org 0x8337
 # IDA 0x18137; file 0x8337; locator=proven; mov     ds, cs:word_10D50
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 cs; mov ds, word ptr [0xd50]
 .org 0x833c
 # IDA 0x1813c; file 0x833c; locator=proven; mov     cx, 6
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 mov cx, 0x6
 .org 0x833f
 loc_1813F:
 # IDA 0x1813f; file 0x833f; locator=proven; push    si
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 push si
 .org 0x8340
 # IDA 0x18140; file 0x8340; locator=proven; mov     ah, es:[si+2]
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 es; mov ah, byte ptr [si+0x2]
 .org 0x8344
 # IDA 0x18144; file 0x8344; locator=proven; xor     al, al
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} xor al, al
 .org 0x8346
 # IDA 0x18146; file 0x8346; locator=proven; dec     ah
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 dec ah
 .org 0x8348
 # IDA 0x18148; file 0x8348; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 shr ax, 0x1
 .org 0x834a
 # IDA 0x1814a; file 0x834a; locator=proven; mov     si, ax
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} mov si, ax
 .org 0x834c
 # IDA 0x1814c; file 0x834c; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 shr ax, 0x1
 .org 0x834e
 # IDA 0x1814e; file 0x834e; locator=proven; add     si, ax
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} add si, ax
 .org 0x8350
 # IDA 0x18150; file 0x8350; locator=proven; add     si, 12C0h
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
+# operand 1 12C0h; [proven] 軍團圖示原紅組基底，空槽4越到綠色天秤; 出處: docs/re/122-c-detail-panels-restoration.md
 add si, 0x12c0
 .org 0x8354
 # IDA 0x18154; file 0x8354; locator=proven; mov     bx, di
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} mov bx, di
 .org 0x8356
 # IDA 0x18156; file 0x8356; locator=proven; sub     bx, 7
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 sub bx, 0x7
 .org 0x8359
 # IDA 0x18159; file 0x8359; locator=proven; mov     ax, 1003h
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ax, 0x1003
 .org 0x835c
 # IDA 0x1815c; file 0x835c; locator=proven; call    sub_1F9B0
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 call .+30804
 .org 0x835f
 # IDA 0x1815f; file 0x835f; locator=proven; pop     si
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 pop si
 .org 0x8360
 # IDA 0x18160; file 0x8360; locator=proven; mov     al, es:[si+1]
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 es; mov al, byte ptr [si+0x1]
 .org 0x8364
 # IDA 0x18164; file 0x8364; locator=proven; mov     ah, 0Ah
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ah, 0xa
 .org 0x8366
 # IDA 0x18166; file 0x8366; locator=proven; mul     ah
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 mul ah
 .org 0x8368
 # IDA 0x18168; file 0x8368; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} xor dx, dx
 .org 0x836a
 # IDA 0x1816a; file 0x836a; locator=proven; mov     bx, 904h
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0x904
 .org 0x836d
 # IDA 0x1816d; file 0x836d; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 call .-31550
 .org 0x8370
 # IDA 0x18170; file 0x8370; locator=proven; add     si, 4
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 add si, 0x4
 .org 0x8373
 # IDA 0x18173; file 0x8373; locator=proven; add     di, 500h
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 add di, 0x500
 .org 0x8377
 # IDA 0x18177; file 0x8377; locator=proven; loop    loc_1813F
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 loop .-56
 .org 0x8379
 # IDA 0x18179; file 0x8379; locator=proven; pop     si
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 pop si
 .org 0x837a
 # IDA 0x1817a; file 0x837a; locator=proven; pop     ds
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 pop ds
 .org 0x837b
 # IDA 0x1817b; file 0x837b; locator=proven; pop     bp
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 pop bp
 .org 0x837c
 # IDA 0x1817c; file 0x837c; locator=proven; retn
-# ⚠ 函式 sub_1812A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1812A; [proven] 軍團六槽圖示／兵力，原紅組基底與ES/DI返回契約; 出處: docs/re/122-c-detail-panels-restoration.md
 ret
 .org 0x837d
 sub_1817D:
 # IDA 0x1817d; file 0x837d; locator=proven; xor     al, al
-# ⚠ 函式 sub_1817D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1817D; [proven] 關軍團框，bit02時恢復自勢力情報; 出處: docs/re/122-c-detail-panels-restoration.md
 {load} xor al, al
 .org 0x837f
 # IDA 0x1817f; file 0x837f; locator=proven; mov     dx, 1Bh
-# ⚠ 函式 sub_1817D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1817D; [proven] 關軍團框，bit02時恢復自勢力情報; 出處: docs/re/122-c-detail-panels-restoration.md
 mov dx, 0x1b
 .org 0x8382
 # IDA 0x18182; file 0x8382; locator=proven; mov     bx, 0Ah
-# ⚠ 函式 sub_1817D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1817D; [proven] 關軍團框，bit02時恢復自勢力情報; 出處: docs/re/122-c-detail-panels-restoration.md
 mov bx, 0xa
 .org 0x8385
 # IDA 0x18185; file 0x8385; locator=proven; mov     cx, 0D0Dh
-# ⚠ 函式 sub_1817D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1817D; [proven] 關軍團框，bit02時恢復自勢力情報; 出處: docs/re/122-c-detail-panels-restoration.md
 mov cx, 0xd0d
 .org 0x8388
 # IDA 0x18188; file 0x8388; locator=proven; call    sub_1895D
-# ⚠ 函式 sub_1817D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1817D; [proven] 關軍團框，bit02時恢復自勢力情報; 出處: docs/re/122-c-detail-panels-restoration.md
 call .+2005
 .org 0x838b
 # IDA 0x1818b; file 0x838b; locator=proven; test    cs:byte_198A6, 2
-# ⚠ 函式 sub_1817D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1817D; [proven] 關軍團框，bit02時恢復自勢力情報; 出處: docs/re/122-c-detail-panels-restoration.md
+# operand 0 cs:byte_198A6; [proven] 自勢力情報bit02；小地圖是bit04; 出處: docs/re/122-c-detail-panels-restoration.md
 cs; test byte ptr [0x98a6], 0x2
 .org 0x8391
 # IDA 0x18191; file 0x8391; locator=proven; jz      short locret_181A2
-# ⚠ 函式 sub_1817D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1817D; [proven] 關軍團框，bit02時恢復自勢力情報; 出處: docs/re/122-c-detail-panels-restoration.md
 jz .+17
 .org 0x8393
 # IDA 0x18193; file 0x8393; locator=proven; push    ds
-# ⚠ 函式 sub_1817D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1817D; [proven] 關軍團框，bit02時恢復自勢力情報; 出處: docs/re/122-c-detail-panels-restoration.md
 push ds
 .org 0x8394
 # IDA 0x18194; file 0x8394; locator=proven; push    es
-# ⚠ 函式 sub_1817D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1817D; [proven] 關軍團框，bit02時恢復自勢力情報; 出處: docs/re/122-c-detail-panels-restoration.md
 push es
 .org 0x8395
 # IDA 0x18195; file 0x8395; locator=proven; push    si
-# ⚠ 函式 sub_1817D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1817D; [proven] 關軍團框，bit02時恢復自勢力情報; 出處: docs/re/122-c-detail-panels-restoration.md
 push si
 .org 0x8396
 # IDA 0x18196; file 0x8396; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_1817D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1817D; [proven] 關軍團框，bit02時恢復自勢力情報; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ax, cs
 .org 0x8398
 # IDA 0x18198; file 0x8398; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_1817D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1817D; [proven] 關軍團框，bit02時恢復自勢力情報; 出處: docs/re/122-c-detail-panels-restoration.md
 mov ds, ax
 .org 0x839a
 # IDA 0x1819a; file 0x839a; locator=proven; mov     es, ax
-# ⚠ 函式 sub_1817D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1817D; [proven] 關軍團框，bit02時恢復自勢力情報; 出處: docs/re/122-c-detail-panels-restoration.md
 mov es, ax
 .org 0x839c
 # IDA 0x1819c; file 0x839c; locator=proven; call    sub_15E1E
-# ⚠ 函式 sub_1817D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1817D; [proven] 關軍團框，bit02時恢復自勢力情報; 出處: docs/re/122-c-detail-panels-restoration.md
 call .-9086
 .org 0x839f
 # IDA 0x1819f; file 0x839f; locator=proven; pop     si
-# ⚠ 函式 sub_1817D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1817D; [proven] 關軍團框，bit02時恢復自勢力情報; 出處: docs/re/122-c-detail-panels-restoration.md
 pop si
 .org 0x83a0
 # IDA 0x181a0; file 0x83a0; locator=proven; pop     es
-# ⚠ 函式 sub_1817D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1817D; [proven] 關軍團框，bit02時恢復自勢力情報; 出處: docs/re/122-c-detail-panels-restoration.md
 pop es
 .org 0x83a1
 # IDA 0x181a1; file 0x83a1; locator=proven; pop     ds
-# ⚠ 函式 sub_1817D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1817D; [proven] 關軍團框，bit02時恢復自勢力情報; 出處: docs/re/122-c-detail-panels-restoration.md
 pop ds
 .org 0x83a2
 locret_181A2:
 # IDA 0x181a2; file 0x83a2; locator=proven; retn
-# ⚠ 函式 sub_1817D; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1817D; [proven] 關軍團框，bit02時恢復自勢力情報; 出處: docs/re/122-c-detail-panels-restoration.md
 ret
 .org 0x83c0
 sub_181C0:
