@@ -13244,6 +13244,32 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "四家族局部 C 界線；非法空清單非零排序、自然玩家長程及原 C 機器碼仍未驗證。"
+    },
+    {
+      "file": "docs/re/120-c-player-formation-restoration.md",
+      "item": "正常玩家長程與原作者 C 機器碼",
+      "status": "不由局部控制流與 C 語意代證",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-1d72a60a261509f4f6f5",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "玩家編成局部C已驗證；正常長程、非法熱區與原C機器碼保持證據界線。"
+    },
+    {
+      "file": "docs/spec/240-c-player-formation.md",
+      "item": "自然玩家長程／原作者 C 機器碼",
+      "status": "本輪不代證",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-1e89a1857ff3d5e0d3ea",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "玩家編成局部C已驗證；正常長程、非法熱區與原C機器碼保持證據界線。"
     }
   ]
 }

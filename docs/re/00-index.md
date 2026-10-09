@@ -229,6 +229,9 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 軍團、武將、勢力及開局清單的 C 還原見 [re/119](119-c-list-families-restoration.md)，
 規格與驗證範圍見 [spec/239](../spec/239-c-list-families.md)。
 
+玩家軍團編成的 C 還原見 [re/120](120-c-player-formation-restoration.md)，
+規格與驗證範圍見 [spec/240](../spec/240-c-player-formation.md)。
+
 ## 9. 怎麼加一份新筆記
 
 1. 編號流水，一個發現一份。標題寫「回答什麼問題」不是「讀了哪支函式」。

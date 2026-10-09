@@ -2302,6 +2302,55 @@
       "sources": [
         "docs/re/119-c-list-families-restoration.md"
       ]
+    },
+    "0x16C5E": {
+      "meaning": "玩家編成外層：選未編成武將、進編成、重畫側欄並再選",
+      "level": "proven",
+      "sources": [
+        "docs/re/120-c-player-formation-restoration.md"
+      ]
+    },
+    "0x16C92": {
+      "meaning": "玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消",
+      "level": "proven",
+      "sources": [
+        "docs/re/120-c-player-formation-restoration.md"
+      ]
+    },
+    "0x16D56": {
+      "meaning": "僅初始化六槽兵種為1,1,3,3,2,2，不清其他欄位",
+      "level": "proven",
+      "sources": [
+        "docs/re/120-c-player-formation-restoration.md"
+      ]
+    },
+    "0x16D6F": {
+      "meaning": "三個預備兵池與軍團總兵力乘10的原數字顯示",
+      "level": "proven",
+      "sources": [
+        "docs/re/120-c-player-formation-restoration.md"
+      ]
+    },
+    "0x16DA8": {
+      "meaning": "六槽原兵種圖塊與兵數顯示，圖庫與世界段切換",
+      "level": "proven",
+      "sources": [
+        "docs/re/120-c-player-formation-restoration.md"
+      ]
+    },
+    "0x16DFD": {
+      "meaning": "編成框、場景5、武將肖像姓名、勢力士氣及七個熱區",
+      "level": "proven",
+      "sources": [
+        "docs/re/120-c-player-formation-restoration.md"
+      ]
+    },
+    "0x16E80": {
+      "meaning": "關閉原始編成框",
+      "level": "proven",
+      "sources": [
+        "docs/re/120-c-player-formation-restoration.md"
+      ]
     }
   },
   "operands": {
@@ -2416,6 +2465,46 @@
       "level": "proven",
       "sources": [
         "docs/re/119-c-list-families-restoration.md"
+      ]
+    },
+    "0x16CC4:0": {
+      "original": "[si+1]",
+      "meaning": "軍團+1勢力，由所選武將+1C寫入",
+      "level": "proven",
+      "sources": [
+        "docs/re/120-c-player-formation-restoration.md"
+      ]
+    },
+    "0x16D01:1": {
+      "original": "[bx+si+2Ah]",
+      "meaning": "所選槽type；六槽步長4，軍團+2A起",
+      "level": "proven",
+      "sources": [
+        "docs/re/120-c-player-formation-restoration.md"
+      ]
+    },
+    "0x16D14:0": {
+      "original": "byte ptr [si+29h]",
+      "meaning": "軍團+29主將槽兵數，確定只檢查此byte非0",
+      "level": "proven",
+      "sources": [
+        "docs/re/120-c-player-formation-restoration.md"
+      ]
+    },
+    "0x16D92:1": {
+      "original": "[si+4]",
+      "meaning": "軍團+4總兵力，顯示前乘10",
+      "level": "proven",
+      "sources": [
+        "docs/re/120-c-player-formation-restoration.md"
+      ]
+    },
+    "0x16E3F:1": {
+      "original": "[di+19h]",
+      "meaning": "DI=勢力+4，故[DI+19h]為勢力+1Dh士氣",
+      "level": "proven",
+      "sources": [
+        "docs/re/120-c-player-formation-restoration.md"
       ]
     }
   }

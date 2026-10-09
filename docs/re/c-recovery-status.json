@@ -3272,6 +3272,14 @@
           "oracle_cases_per_optimization": 804,
           "entry_count": 11843,
           "scope": "Seven original corps/general/faction/new-game list callers and exact builders/renderers, 126/128/22 record domains, patched X/Y, entry DS:CFF, byte morale, affiliation/duty/sentinels, all original descriptor sorts and real headers, select/cancel and relation cache loop reset. Controlled runtime corps and prisoner data are explicit fixtures on four original scenarios. Complete RAM/planes/registers/FLAGS/stack/IN/OUT/API; independent pinned DOS/font/mouse/VGA; IF/TF=0; pinned dosgolem flags model. Invalid empty nonzero sort, natural appointment/diplomacy/new-game long paths and original C machine code remain pending"
+        },
+        {
+          "evidence": "docs/re/120-c-player-formation-restoration.md",
+          "spec": "docs/spec/240-c-player-formation.md",
+          "receipt": "docs/re/c-formation-verification.json",
+          "oracle_cases_per_optimization": 200,
+          "entry_count": 4084,
+          "scope": "Seven original player formation routines and complete transitive C render/input/list/TALK closure. Four scenarios, six-slot cycling, original quotient/remainder/cap distribution, initialize-only types, cancellation stale total, empty-leader refusal, confirmation and outer select/form/reselect/cancel. Controlled input checkpoints and legal unassigned generals; separate pinned DOS/font/mouse/VGA, complete RAM/planes/registers/FLAGS/stack/IN/OUT/API. IF/TF=0, pinned dosgolem flags; original TSR/wall-clock, natural long player paths, invalid hotspots and original C machine code remain pending."
         }
       ]
     },
@@ -4900,7 +4908,17 @@
       "source_sha256": "f68e52718003c565c9c07d23d013573fc422f21df13751768a9fce17d5c9e1dd",
       "header_sha256": "cdfc8a9b2a10ef687e40f0eb53b13fc290bf9ed0aab6c717cd4642a874f6d64b",
       "fixture_sha256": "02ceafb74b3a96facbd51a4bfe55d86b10ce1133e727342caf93b808387d1522",
-      "generated_source_sha256": "6758c08e3563efa046f95de42b7740becf75602173b5d79b51ed60cbf1c49562"
+      "generated_source_sha256": "6758c08e3563efa046f95de42b7740becf75602173b5d79b51ed60cbf1c49562",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/120-c-player-formation-restoration.md",
+          "spec": "docs/spec/240-c-player-formation.md",
+          "receipt": "docs/re/c-formation-verification.json",
+          "oracle_cases_per_optimization": 200,
+          "entry_count": 288,
+          "scope": "Seven original player formation routines and complete transitive C render/input/list/TALK closure. Four scenarios, six-slot cycling, original quotient/remainder/cap distribution, initialize-only types, cancellation stale total, empty-leader refusal, confirmation and outer select/form/reselect/cancel. Controlled input checkpoints and legal unassigned generals; separate pinned DOS/font/mouse/VGA, complete RAM/planes/registers/FLAGS/stack/IN/OUT/API. IF/TF=0, pinned dosgolem flags; original TSR/wall-clock, natural long player paths, invalid hotspots and original C machine code remain pending."
+        }
+      ]
     },
     "sub_14717": {
       "ida_linear": 83735,
@@ -4921,7 +4939,17 @@
       "source_sha256": "f68e52718003c565c9c07d23d013573fc422f21df13751768a9fce17d5c9e1dd",
       "header_sha256": "cdfc8a9b2a10ef687e40f0eb53b13fc290bf9ed0aab6c717cd4642a874f6d64b",
       "fixture_sha256": "02ceafb74b3a96facbd51a4bfe55d86b10ce1133e727342caf93b808387d1522",
-      "generated_source_sha256": "6758c08e3563efa046f95de42b7740becf75602173b5d79b51ed60cbf1c49562"
+      "generated_source_sha256": "6758c08e3563efa046f95de42b7740becf75602173b5d79b51ed60cbf1c49562",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/120-c-player-formation-restoration.md",
+          "spec": "docs/spec/240-c-player-formation.md",
+          "receipt": "docs/re/c-formation-verification.json",
+          "oracle_cases_per_optimization": 200,
+          "entry_count": 260,
+          "scope": "Seven original player formation routines and complete transitive C render/input/list/TALK closure. Four scenarios, six-slot cycling, original quotient/remainder/cap distribution, initialize-only types, cancellation stale total, empty-leader refusal, confirmation and outer select/form/reselect/cancel. Controlled input checkpoints and legal unassigned generals; separate pinned DOS/font/mouse/VGA, complete RAM/planes/registers/FLAGS/stack/IN/OUT/API. IF/TF=0, pinned dosgolem flags; original TSR/wall-clock, natural long player paths, invalid hotspots and original C machine code remain pending."
+        }
+      ]
     },
     "sub_15E80": {
       "ida_linear": 89728,
@@ -5120,7 +5148,17 @@
       "source_sha256": "f68e52718003c565c9c07d23d013573fc422f21df13751768a9fce17d5c9e1dd",
       "header_sha256": "cdfc8a9b2a10ef687e40f0eb53b13fc290bf9ed0aab6c717cd4642a874f6d64b",
       "fixture_sha256": "02ceafb74b3a96facbd51a4bfe55d86b10ce1133e727342caf93b808387d1522",
-      "generated_source_sha256": "6758c08e3563efa046f95de42b7740becf75602173b5d79b51ed60cbf1c49562"
+      "generated_source_sha256": "6758c08e3563efa046f95de42b7740becf75602173b5d79b51ed60cbf1c49562",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/120-c-player-formation-restoration.md",
+          "spec": "docs/spec/240-c-player-formation.md",
+          "receipt": "docs/re/c-formation-verification.json",
+          "oracle_cases_per_optimization": 200,
+          "entry_count": 28,
+          "scope": "Seven original player formation routines and complete transitive C render/input/list/TALK closure. Four scenarios, six-slot cycling, original quotient/remainder/cap distribution, initialize-only types, cancellation stale total, empty-leader refusal, confirmation and outer select/form/reselect/cancel. Controlled input checkpoints and legal unassigned generals; separate pinned DOS/font/mouse/VGA, complete RAM/planes/registers/FLAGS/stack/IN/OUT/API. IF/TF=0, pinned dosgolem flags; original TSR/wall-clock, natural long player paths, invalid hotspots and original C machine code remain pending."
+        }
+      ]
     },
     "sub_16F86": {
       "ida_linear": 94086,
@@ -5162,7 +5200,17 @@
       "source_sha256": "f68e52718003c565c9c07d23d013573fc422f21df13751768a9fce17d5c9e1dd",
       "header_sha256": "cdfc8a9b2a10ef687e40f0eb53b13fc290bf9ed0aab6c717cd4642a874f6d64b",
       "fixture_sha256": "02ceafb74b3a96facbd51a4bfe55d86b10ce1133e727342caf93b808387d1522",
-      "generated_source_sha256": "6758c08e3563efa046f95de42b7740becf75602173b5d79b51ed60cbf1c49562"
+      "generated_source_sha256": "6758c08e3563efa046f95de42b7740becf75602173b5d79b51ed60cbf1c49562",
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/120-c-player-formation-restoration.md",
+          "spec": "docs/spec/240-c-player-formation.md",
+          "receipt": "docs/re/c-formation-verification.json",
+          "oracle_cases_per_optimization": 200,
+          "entry_count": 300,
+          "scope": "Seven original player formation routines and complete transitive C render/input/list/TALK closure. Four scenarios, six-slot cycling, original quotient/remainder/cap distribution, initialize-only types, cancellation stale total, empty-leader refusal, confirmation and outer select/form/reselect/cancel. Controlled input checkpoints and legal unassigned generals; separate pinned DOS/font/mouse/VGA, complete RAM/planes/registers/FLAGS/stack/IN/OUT/API. IF/TF=0, pinned dosgolem flags; original TSR/wall-clock, natural long player paths, invalid hotspots and original C machine code remain pending."
+        }
+      ]
     },
     "sub_15E60": {
       "ida_linear": 89696,
@@ -5696,6 +5744,16 @@
           "level": "proven",
           "evidence": "docs/re/119-c-list-families-restoration.md"
         }
+      ],
+      "additional_verifications": [
+        {
+          "evidence": "docs/re/120-c-player-formation-restoration.md",
+          "spec": "docs/spec/240-c-player-formation.md",
+          "receipt": "docs/re/c-formation-verification.json",
+          "oracle_cases_per_optimization": 200,
+          "entry_count": 24,
+          "scope": "Seven original player formation routines and complete transitive C render/input/list/TALK closure. Four scenarios, six-slot cycling, original quotient/remainder/cap distribution, initialize-only types, cancellation stale total, empty-leader refusal, confirmation and outer select/form/reselect/cancel. Controlled input checkpoints and legal unassigned generals; separate pinned DOS/font/mouse/VGA, complete RAM/planes/registers/FLAGS/stack/IN/OUT/API. IF/TF=0, pinned dosgolem flags; original TSR/wall-clock, natural long player paths, invalid hotspots and original C machine code remain pending."
+        }
       ]
     },
     "sub_1770C": {
@@ -5878,6 +5936,153 @@
           "evidence": "docs/re/119-c-list-families-restoration.md"
         }
       ]
+    },
+    "sub_16C5E": {
+      "ida_linear": 93278,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/240-c-player-formation.md",
+      "evidence": "docs/re/120-c-player-formation-restoration.md",
+      "source": "tools/c_recovery/formation.c",
+      "header": "tools/c_recovery/formation.h",
+      "fixture": "tools/c_recovery/formation_fixture.h",
+      "generated_source": "tools/c_recovery/formation_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-formation/verification.json",
+      "routine_sha256": "3ec0a6f5dd0078ad11f3bf724555dec07dc6e350c5faac9b5a6807df17cc2370",
+      "oracle_cases_per_optimization": 200,
+      "oracle_entry_count_per_optimization": 12,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original player formation routines and complete transitive C render/input/list/TALK closure. Four scenarios, six-slot cycling, original quotient/remainder/cap distribution, initialize-only types, cancellation stale total, empty-leader refusal, confirmation and outer select/form/reselect/cancel. Controlled input checkpoints and legal unassigned generals; separate pinned DOS/font/mouse/VGA, complete RAM/planes/registers/FLAGS/stack/IN/OUT/API. IF/TF=0, pinned dosgolem flags; original TSR/wall-clock, natural long player paths, invalid hotspots and original C machine code remain pending.",
+      "source_sha256": "8be6995d2b01b007a4bdca2ca1a3cd949d47fcbc77248ad02ae4fd0009ff8216",
+      "header_sha256": "23404d8a877d6db1376daf4143b0d2c4d31fa881cd70d5f968ef7b88a75ad6bb",
+      "fixture_sha256": "4d784e3ebe91bbab51a5b7c11395e8ae74939fa30d966df4006c4fe56cddee3c",
+      "generated_source_sha256": "185c11477f1e27af2cf66e86358f8fc758c1832de3a9e14d362b3d8e8c4c8336"
+    },
+    "sub_16C92": {
+      "ida_linear": 93330,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/240-c-player-formation.md",
+      "evidence": "docs/re/120-c-player-formation-restoration.md",
+      "source": "tools/c_recovery/formation.c",
+      "header": "tools/c_recovery/formation.h",
+      "fixture": "tools/c_recovery/formation_fixture.h",
+      "generated_source": "tools/c_recovery/formation_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-formation/verification.json",
+      "routine_sha256": "635347bb643e808acf97760f40aec2e9f5ae6e2b7bfd1da4b921b00eb3e285c8",
+      "oracle_cases_per_optimization": 200,
+      "oracle_entry_count_per_optimization": 144,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original player formation routines and complete transitive C render/input/list/TALK closure. Four scenarios, six-slot cycling, original quotient/remainder/cap distribution, initialize-only types, cancellation stale total, empty-leader refusal, confirmation and outer select/form/reselect/cancel. Controlled input checkpoints and legal unassigned generals; separate pinned DOS/font/mouse/VGA, complete RAM/planes/registers/FLAGS/stack/IN/OUT/API. IF/TF=0, pinned dosgolem flags; original TSR/wall-clock, natural long player paths, invalid hotspots and original C machine code remain pending.",
+      "source_sha256": "8be6995d2b01b007a4bdca2ca1a3cd949d47fcbc77248ad02ae4fd0009ff8216",
+      "header_sha256": "23404d8a877d6db1376daf4143b0d2c4d31fa881cd70d5f968ef7b88a75ad6bb",
+      "fixture_sha256": "4d784e3ebe91bbab51a5b7c11395e8ae74939fa30d966df4006c4fe56cddee3c",
+      "generated_source_sha256": "185c11477f1e27af2cf66e86358f8fc758c1832de3a9e14d362b3d8e8c4c8336"
+    },
+    "sub_16D56": {
+      "ida_linear": 93526,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/240-c-player-formation.md",
+      "evidence": "docs/re/120-c-player-formation-restoration.md",
+      "source": "tools/c_recovery/formation.c",
+      "header": "tools/c_recovery/formation.h",
+      "fixture": "tools/c_recovery/formation_fixture.h",
+      "generated_source": "tools/c_recovery/formation_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-formation/verification.json",
+      "routine_sha256": "c73bd7216d7bdd79f77f99f91796fd9628ff4d2346a31962ba4812dead41a3ab",
+      "oracle_cases_per_optimization": 200,
+      "oracle_entry_count_per_optimization": 148,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original player formation routines and complete transitive C render/input/list/TALK closure. Four scenarios, six-slot cycling, original quotient/remainder/cap distribution, initialize-only types, cancellation stale total, empty-leader refusal, confirmation and outer select/form/reselect/cancel. Controlled input checkpoints and legal unassigned generals; separate pinned DOS/font/mouse/VGA, complete RAM/planes/registers/FLAGS/stack/IN/OUT/API. IF/TF=0, pinned dosgolem flags; original TSR/wall-clock, natural long player paths, invalid hotspots and original C machine code remain pending.",
+      "source_sha256": "8be6995d2b01b007a4bdca2ca1a3cd949d47fcbc77248ad02ae4fd0009ff8216",
+      "header_sha256": "23404d8a877d6db1376daf4143b0d2c4d31fa881cd70d5f968ef7b88a75ad6bb",
+      "fixture_sha256": "4d784e3ebe91bbab51a5b7c11395e8ae74939fa30d966df4006c4fe56cddee3c",
+      "generated_source_sha256": "185c11477f1e27af2cf66e86358f8fc758c1832de3a9e14d362b3d8e8c4c8336"
+    },
+    "sub_16D6F": {
+      "ida_linear": 93551,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/240-c-player-formation.md",
+      "evidence": "docs/re/120-c-player-formation-restoration.md",
+      "source": "tools/c_recovery/formation.c",
+      "header": "tools/c_recovery/formation.h",
+      "fixture": "tools/c_recovery/formation_fixture.h",
+      "generated_source": "tools/c_recovery/formation_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-formation/verification.json",
+      "routine_sha256": "954806f6ca0ffc411c76f27f41f85584ced73c1cf3e8bc7709cca2bc439d119e",
+      "oracle_cases_per_optimization": 200,
+      "oracle_entry_count_per_optimization": 328,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original player formation routines and complete transitive C render/input/list/TALK closure. Four scenarios, six-slot cycling, original quotient/remainder/cap distribution, initialize-only types, cancellation stale total, empty-leader refusal, confirmation and outer select/form/reselect/cancel. Controlled input checkpoints and legal unassigned generals; separate pinned DOS/font/mouse/VGA, complete RAM/planes/registers/FLAGS/stack/IN/OUT/API. IF/TF=0, pinned dosgolem flags; original TSR/wall-clock, natural long player paths, invalid hotspots and original C machine code remain pending.",
+      "source_sha256": "8be6995d2b01b007a4bdca2ca1a3cd949d47fcbc77248ad02ae4fd0009ff8216",
+      "header_sha256": "23404d8a877d6db1376daf4143b0d2c4d31fa881cd70d5f968ef7b88a75ad6bb",
+      "fixture_sha256": "4d784e3ebe91bbab51a5b7c11395e8ae74939fa30d966df4006c4fe56cddee3c",
+      "generated_source_sha256": "185c11477f1e27af2cf66e86358f8fc758c1832de3a9e14d362b3d8e8c4c8336"
+    },
+    "sub_16DA8": {
+      "ida_linear": 93608,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/240-c-player-formation.md",
+      "evidence": "docs/re/120-c-player-formation-restoration.md",
+      "source": "tools/c_recovery/formation.c",
+      "header": "tools/c_recovery/formation.h",
+      "fixture": "tools/c_recovery/formation_fixture.h",
+      "generated_source": "tools/c_recovery/formation_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-formation/verification.json",
+      "routine_sha256": "385229706598f56993f6ec0dc5f7df747fe23d1d70a7c2fd875c98826ad14778",
+      "oracle_cases_per_optimization": 200,
+      "oracle_entry_count_per_optimization": 316,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original player formation routines and complete transitive C render/input/list/TALK closure. Four scenarios, six-slot cycling, original quotient/remainder/cap distribution, initialize-only types, cancellation stale total, empty-leader refusal, confirmation and outer select/form/reselect/cancel. Controlled input checkpoints and legal unassigned generals; separate pinned DOS/font/mouse/VGA, complete RAM/planes/registers/FLAGS/stack/IN/OUT/API. IF/TF=0, pinned dosgolem flags; original TSR/wall-clock, natural long player paths, invalid hotspots and original C machine code remain pending.",
+      "source_sha256": "8be6995d2b01b007a4bdca2ca1a3cd949d47fcbc77248ad02ae4fd0009ff8216",
+      "header_sha256": "23404d8a877d6db1376daf4143b0d2c4d31fa881cd70d5f968ef7b88a75ad6bb",
+      "fixture_sha256": "4d784e3ebe91bbab51a5b7c11395e8ae74939fa30d966df4006c4fe56cddee3c",
+      "generated_source_sha256": "185c11477f1e27af2cf66e86358f8fc758c1832de3a9e14d362b3d8e8c4c8336"
+    },
+    "sub_16DFD": {
+      "ida_linear": 93693,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/240-c-player-formation.md",
+      "evidence": "docs/re/120-c-player-formation-restoration.md",
+      "source": "tools/c_recovery/formation.c",
+      "header": "tools/c_recovery/formation.h",
+      "fixture": "tools/c_recovery/formation_fixture.h",
+      "generated_source": "tools/c_recovery/formation_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-formation/verification.json",
+      "routine_sha256": "1b76932987ecba618c814211ff6c5ef69710f111676068c4e24c9c26f275da24",
+      "oracle_cases_per_optimization": 200,
+      "oracle_entry_count_per_optimization": 156,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original player formation routines and complete transitive C render/input/list/TALK closure. Four scenarios, six-slot cycling, original quotient/remainder/cap distribution, initialize-only types, cancellation stale total, empty-leader refusal, confirmation and outer select/form/reselect/cancel. Controlled input checkpoints and legal unassigned generals; separate pinned DOS/font/mouse/VGA, complete RAM/planes/registers/FLAGS/stack/IN/OUT/API. IF/TF=0, pinned dosgolem flags; original TSR/wall-clock, natural long player paths, invalid hotspots and original C machine code remain pending.",
+      "source_sha256": "8be6995d2b01b007a4bdca2ca1a3cd949d47fcbc77248ad02ae4fd0009ff8216",
+      "header_sha256": "23404d8a877d6db1376daf4143b0d2c4d31fa881cd70d5f968ef7b88a75ad6bb",
+      "fixture_sha256": "4d784e3ebe91bbab51a5b7c11395e8ae74939fa30d966df4006c4fe56cddee3c",
+      "generated_source_sha256": "185c11477f1e27af2cf66e86358f8fc758c1832de3a9e14d362b3d8e8c4c8336"
+    },
+    "sub_16E80": {
+      "ida_linear": 93824,
+      "status": "semantic-conformed",
+      "spec": "docs/spec/240-c-player-formation.md",
+      "evidence": "docs/re/120-c-player-formation-restoration.md",
+      "source": "tools/c_recovery/formation.c",
+      "header": "tools/c_recovery/formation.h",
+      "fixture": "tools/c_recovery/formation_fixture.h",
+      "generated_source": "tools/c_recovery/formation_generated.inc",
+      "receipt": "workplace/matching-decompilation/c-formation/verification.json",
+      "routine_sha256": "2b4e93a92c39cc3a6ddce747894c861d472bfee41aa25677b0f2f14dfcfeff0a",
+      "oracle_cases_per_optimization": 200,
+      "oracle_entry_count_per_optimization": 148,
+      "go_cases_per_optimization": 0,
+      "c_machine_code_match": false,
+      "scope": "Seven original player formation routines and complete transitive C render/input/list/TALK closure. Four scenarios, six-slot cycling, original quotient/remainder/cap distribution, initialize-only types, cancellation stale total, empty-leader refusal, confirmation and outer select/form/reselect/cancel. Controlled input checkpoints and legal unassigned generals; separate pinned DOS/font/mouse/VGA, complete RAM/planes/registers/FLAGS/stack/IN/OUT/API. IF/TF=0, pinned dosgolem flags; original TSR/wall-clock, natural long player paths, invalid hotspots and original C machine code remain pending.",
+      "source_sha256": "8be6995d2b01b007a4bdca2ca1a3cd949d47fcbc77248ad02ae4fd0009ff8216",
+      "header_sha256": "23404d8a877d6db1376daf4143b0d2c4d31fa881cd70d5f968ef7b88a75ad6bb",
+      "fixture_sha256": "4d784e3ebe91bbab51a5b7c11395e8ae74939fa30d966df4006c4fe56cddee3c",
+      "generated_source_sha256": "185c11477f1e27af2cf66e86358f8fc758c1832de3a9e14d362b3d8e8c4c8336"
     }
   },
   "code_blocks": {

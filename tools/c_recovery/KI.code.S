@@ -42605,1011 +42605,1016 @@ add ax, word ptr [bx+di]
 .org 0x6e5e
 sub_16C5E:
 # IDA 0x16c5e; file 0x6e5e; locator=proven; push    ds
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 push ds
 .org 0x6e5f
 # IDA 0x16c5f; file 0x6e5f; locator=proven; push    es
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 push es
 .org 0x6e60
 # IDA 0x16c60; file 0x6e60; locator=proven; push    ax
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 push ax
 .org 0x6e61
 # IDA 0x16c61; file 0x6e61; locator=proven; push    bx
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 push bx
 .org 0x6e62
 # IDA 0x16c62; file 0x6e62; locator=proven; push    cx
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 push cx
 .org 0x6e63
 # IDA 0x16c63; file 0x6e63; locator=proven; push    si
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 push si
 .org 0x6e64
 # IDA 0x16c64; file 0x6e64; locator=proven; push    di
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 push di
 .org 0x6e65
 # IDA 0x16c65; file 0x6e65; locator=proven; call    sub_12078
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 call .-19437
 .org 0x6e68
 loc_16C68:
 # IDA 0x16c68; file 0x6e68; locator=proven; mov     cx, 0
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 mov cx, 0x0
 .org 0x6e6b
 # IDA 0x16c6b; file 0x6e6b; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 call .+7144
 .org 0x6e6e
 # IDA 0x16c6e; file 0x6e6e; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 mov ax, cs
 .org 0x6e70
 # IDA 0x16c70; file 0x6e70; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 mov ds, ax
 .org 0x6e72
 # IDA 0x16c72; file 0x6e72; locator=proven; call    sub_17663
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 call .+2545
 .org 0x6e75
 # IDA 0x16c75; file 0x6e75; locator=proven; jb      short loc_16C81
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 jb .+12
 .org 0x6e77
 # IDA 0x16c77; file 0x6e77; locator=proven; call    sub_16C92
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 call .+27
 .org 0x6e7a
 # IDA 0x16c7a; file 0x6e7a; locator=proven; mov     al, 8
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 mov al, 0x8
 .org 0x6e7c
 # IDA 0x16c7c; file 0x6e7c; locator=proven; call    sub_15E80
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 call .-3580
 .org 0x6e7f
 # IDA 0x16c7f; file 0x6e7f; locator=proven; jmp     short loc_16C68
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 jmp .-23
 .org 0x6e81
 loc_16C81:
 # IDA 0x16c81; file 0x6e81; locator=proven; call    sub_120D6
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 call .-19371
 .org 0x6e84
 # IDA 0x16c84; file 0x6e84; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 mov cx, 0xffff
 .org 0x6e87
 # IDA 0x16c87; file 0x6e87; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 call .+7116
 .org 0x6e8a
 # IDA 0x16c8a; file 0x6e8a; locator=proven; pop     di
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 pop di
 .org 0x6e8b
 # IDA 0x16c8b; file 0x6e8b; locator=proven; pop     si
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 pop si
 .org 0x6e8c
 # IDA 0x16c8c; file 0x6e8c; locator=proven; pop     cx
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 pop cx
 .org 0x6e8d
 # IDA 0x16c8d; file 0x6e8d; locator=proven; pop     bx
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 pop bx
 .org 0x6e8e
 # IDA 0x16c8e; file 0x6e8e; locator=proven; pop     ax
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 pop ax
 .org 0x6e8f
 # IDA 0x16c8f; file 0x6e8f; locator=proven; pop     es
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 pop es
 .org 0x6e90
 # IDA 0x16c90; file 0x6e90; locator=proven; pop     ds
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 pop ds
 .org 0x6e91
 # IDA 0x16c91; file 0x6e91; locator=proven; retn
-# ⚠ 函式 sub_16C5E; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C5E; [proven] 玩家編成外層：選未編成武將、進編成、重畫側欄並再選; 出處: docs/re/120-c-player-formation-restoration.md
 ret
 .org 0x6e92
 sub_16C92:
 # IDA 0x16c92; file 0x6e92; locator=proven; push    ds
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 push ds
 .org 0x6e93
 # IDA 0x16c93; file 0x6e93; locator=proven; push    es
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 push es
 .org 0x6e94
 # IDA 0x16c94; file 0x6e94; locator=proven; push    si
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 push si
 .org 0x6e95
 # IDA 0x16c95; file 0x6e95; locator=proven; push    di
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 push di
 .org 0x6e96
 # IDA 0x16c96; file 0x6e96; locator=proven; call    sub_101B4
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 call .-27362
 .org 0x6e99
 # IDA 0x16c99; file 0x6e99; locator=proven; mov     cx, 1
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 mov cx, 0x1
 .org 0x6e9c
 # IDA 0x16c9c; file 0x6e9c; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 call .+7095
 .org 0x6e9f
 # IDA 0x16c9f; file 0x6e9f; locator=proven; mov     ax, cs:word_10D52
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 cs; mov ax, word ptr [0xd52]
 .org 0x6ea3
 # IDA 0x16ca3; file 0x6ea3; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 mov ds, ax
 .org 0x6ea5
 # IDA 0x16ca5; file 0x6ea5; locator=proven; mov     es, ax
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 mov es, ax
 .org 0x6ea7
 # IDA 0x16ca7; file 0x6ea7; locator=proven; mov     ah, [bx+1Ch]
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 mov ah, byte ptr [bx+0x1c]
 .org 0x6eaa
 # IDA 0x16caa; file 0x6eaa; locator=proven; xor     al, al
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 {load} xor al, al
 .org 0x6eac
 # IDA 0x16cac; file 0x6eac; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 shr ax, 0x1
 .org 0x6eae
 # IDA 0x16cae; file 0x6eae; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 shr ax, 0x1
 .org 0x6eb0
 # IDA 0x16cb0; file 0x6eb0; locator=proven; add     ax, 4
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 add ax, offset imm_at_16CB0
 .org 0x6eb3
 # IDA 0x16cb3; file 0x6eb3; locator=proven; mov     di, ax
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 {load} mov di, ax
 .org 0x6eb5
 # IDA 0x16cb5; file 0x6eb5; locator=proven; mov     si, bx
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 {load} mov si, bx
 .org 0x6eb7
 # IDA 0x16cb7; file 0x6eb7; locator=proven; sub     si, 4240h
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 sub si, 0x4240
 .org 0x6ebb
 # IDA 0x16cbb; file 0x6ebb; locator=proven; shl     si, 1
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 shl si, 0x1
 .org 0x6ebd
 # IDA 0x16cbd; file 0x6ebd; locator=proven; add     si, 2240h
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 add si, 0x2240
 .org 0x6ec1
 # IDA 0x16cc1; file 0x6ec1; locator=proven; mov     al, [bx+1Ch]
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 mov al, byte ptr [bx+0x1c]
 .org 0x6ec4
 # IDA 0x16cc4; file 0x6ec4; locator=proven; mov     [si+1], al
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
+# operand 0 [si+1]; [proven] 軍團+1勢力，由所選武將+1C寫入; 出處: docs/re/120-c-player-formation-restoration.md
 mov byte ptr [si+0x1], al
 .org 0x6ec7
 # IDA 0x16cc7; file 0x6ec7; locator=proven; call    sub_16D56
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 call .+143
 .org 0x6eca
 # IDA 0x16cca; file 0x6eca; locator=proven; call    sub_14698
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 call .-9778
 .org 0x6ecd
 # IDA 0x16ccd; file 0x6ecd; locator=proven; jmp     short loc_16CD2
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 jmp .+5
 .org 0x6ecf
 loc_16CCF:
 # IDA 0x16ccf; file 0x6ecf; locator=proven; call    sub_101B4
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 call .-27419
 .org 0x6ed2
 loc_16CD2:
 # IDA 0x16cd2; file 0x6ed2; locator=proven; call    sub_16DFD
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 call .+299
 .org 0x6ed5
 # IDA 0x16cd5; file 0x6ed5; locator=proven; jmp     short loc_16CDA
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 jmp .+5
 .org 0x6ed7
 loc_16CD7:
 # IDA 0x16cd7; file 0x6ed7; locator=proven; call    sub_101B4
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 call .-27427
 .org 0x6eda
 loc_16CDA:
 # IDA 0x16cda; file 0x6eda; locator=proven; call    sub_16FD2
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 call .+760
 .org 0x6edd
 # IDA 0x16cdd; file 0x6edd; locator=proven; call    sub_16D6F
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 call .+146
 .org 0x6ee0
 # IDA 0x16ce0; file 0x6ee0; locator=proven; call    sub_16DA8
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 call .+200
 .org 0x6ee3
 # IDA 0x16ce3; file 0x6ee3; locator=proven; call    sub_101DB
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 call .-27400
 .org 0x6ee6
 # IDA 0x16ce6; file 0x6ee6; locator=proven; call    sub_121E7
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 call .-19199
 .org 0x6ee9
 # IDA 0x16ce9; file 0x6ee9; locator=proven; jb      short loc_16D42
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 jb .+89
 .org 0x6eeb
 # IDA 0x16ceb; file 0x6eeb; locator=proven; call    sub_1E453
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 call .+30568
 .org 0x6eee
 # IDA 0x16cee; file 0x6eee; locator=proven; sub     al, 3Eh
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 sub al, 0x3e
 .org 0x6ef0
 # IDA 0x16cf0; file 0x6ef0; locator=proven; jb      short loc_16CD7
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 jb .-25
 .org 0x6ef2
 # IDA 0x16cf2; file 0x6ef2; locator=proven; cmp     al, 6
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 cmp al, 0x6
 .org 0x6ef4
 # IDA 0x16cf4; file 0x6ef4; locator=proven; jz      short loc_16D14
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 jz .+32
 .org 0x6ef6
 # IDA 0x16cf6; file 0x6ef6; locator=proven; call    sub_14717
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 call .-9695
 .org 0x6ef9
 # IDA 0x16cf9; file 0x6ef9; locator=proven; mov     bl, al
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 {load} mov bl, al
 .org 0x6efb
 # IDA 0x16cfb; file 0x6efb; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 {load} xor bh, bh
 .org 0x6efd
 # IDA 0x16cfd; file 0x6efd; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 shl bx, 0x1
 .org 0x6eff
 # IDA 0x16cff; file 0x6eff; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 shl bx, 0x1
 .org 0x6f01
 # IDA 0x16d01; file 0x6f01; locator=proven; mov     al, [bx+si+2Ah]
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
+# operand 1 [bx+si+2Ah]; [proven] 所選槽type；六槽步長4，軍團+2A起; 出處: docs/re/120-c-player-formation-restoration.md
 mov al, byte ptr [bx+si+0x2a]
 .org 0x6f04
 # IDA 0x16d04; file 0x6f04; locator=proven; inc     al
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 inc al
 .org 0x6f06
 # IDA 0x16d06; file 0x6f06; locator=proven; cmp     al, 4
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 cmp al, 0x4
 .org 0x6f08
 # IDA 0x16d08; file 0x6f08; locator=proven; jb      short loc_16D0C
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 jb .+4
 .org 0x6f0a
 # IDA 0x16d0a; file 0x6f0a; locator=proven; mov     al, 1
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 mov al, 0x1
 .org 0x6f0c
 loc_16D0C:
 # IDA 0x16d0c; file 0x6f0c; locator=proven; mov     [bx+si+2Ah], al
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 mov byte ptr [bx+si+0x2a], al
 .org 0x6f0f
 # IDA 0x16d0f; file 0x6f0f; locator=proven; call    sub_14698
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 call .-9847
 .org 0x6f12
 # IDA 0x16d12; file 0x6f12; locator=proven; jmp     short loc_16CD7
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 jmp .-59
 .org 0x6f14
 loc_16D14:
 # IDA 0x16d14; file 0x6f14; locator=proven; cmp     byte ptr [si+29h], 0
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
+# operand 0 byte ptr [si+29h]; [proven] 軍團+29主將槽兵數，確定只檢查此byte非0; 出處: docs/re/120-c-player-formation-restoration.md
 cmp byte ptr [si+0x29], 0x0
 .org 0x6f18
 # IDA 0x16d18; file 0x6f18; locator=proven; jnz     short loc_16D24
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 jnz .+12
 .org 0x6f1a
 # IDA 0x16d1a; file 0x6f1a; locator=proven; mov     al, 93h
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 mov al, 0x93
 .org 0x6f1c
 # IDA 0x16d1c; file 0x6f1c; locator=proven; mov     cx, 3Eh
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 mov cx, 0x3e
 .org 0x6f1f
 # IDA 0x16d1f; file 0x6f1f; locator=proven; call    sub_18810
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 call .+6897
 .org 0x6f22
 # IDA 0x16d22; file 0x6f22; locator=proven; jmp     short loc_16CCF
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 jmp .-83
 .org 0x6f24
 loc_16D24:
 # IDA 0x16d24; file 0x6f24; locator=proven; call    sub_16F26
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 call .+514
 .org 0x6f27
 # IDA 0x16d27; file 0x6f27; locator=proven; sub     di, 4
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 sub di, 0x4
 .org 0x6f2a
 # IDA 0x16d2a; file 0x6f2a; locator=proven; mov     bx, si
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 {load} mov bx, si
 .org 0x6f2c
 # IDA 0x16d2c; file 0x6f2c; locator=proven; sub     bx, 2240h
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 sub bx, 0x2240
 .org 0x6f30
 # IDA 0x16d30; file 0x6f30; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 shr bx, 0x1
 .org 0x6f32
 # IDA 0x16d32; file 0x6f32; locator=proven; mov     cx, 19Bh
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 mov cx, 0x19b
 .org 0x6f35
 # IDA 0x16d35; file 0x6f35; locator=proven; mov     ah, [bx+425Eh]
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 mov ah, byte ptr [bx+0x425e]
 .org 0x6f39
 # IDA 0x16d39; file 0x6f39; locator=proven; mov     al, [bx+4241h]
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 mov al, byte ptr [bx+0x4241]
 .org 0x6f3d
 # IDA 0x16d3d; file 0x6f3d; locator=proven; call    sub_18810
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 call .+6867
 .org 0x6f40
 # IDA 0x16d40; file 0x6f40; locator=proven; jmp     short loc_16D48
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 jmp .+8
 .org 0x6f42
 loc_16D42:
 # IDA 0x16d42; file 0x6f42; locator=proven; call    sub_14717
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 call .-9771
 .org 0x6f45
 # IDA 0x16d45; file 0x6f45; locator=proven; sub     di, 4
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 sub di, 0x4
 .org 0x6f48
 loc_16D48:
 # IDA 0x16d48; file 0x6f48; locator=proven; call    sub_16E80
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 call .+312
 .org 0x6f4b
 # IDA 0x16d4b; file 0x6f4b; locator=proven; mov     cx, 0FFFFh
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 mov cx, 0xffff
 .org 0x6f4e
 # IDA 0x16d4e; file 0x6f4e; locator=proven; call    sub_18853
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 call .+6917
 .org 0x6f51
 # IDA 0x16d51; file 0x6f51; locator=proven; pop     di
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 pop di
 .org 0x6f52
 # IDA 0x16d52; file 0x6f52; locator=proven; pop     si
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 pop si
 .org 0x6f53
 # IDA 0x16d53; file 0x6f53; locator=proven; pop     es
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 pop es
 .org 0x6f54
 # IDA 0x16d54; file 0x6f54; locator=proven; pop     ds
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 pop ds
 .org 0x6f55
 # IDA 0x16d55; file 0x6f55; locator=proven; retn
-# ⚠ 函式 sub_16C92; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16C92; [proven] 玩家六槽編成：初始化分兵、切兵種、拒絕空主將、確定或取消; 出處: docs/re/120-c-player-formation-restoration.md
 ret
 .org 0x6f56
 sub_16D56:
 # IDA 0x16d56; file 0x6f56; locator=proven; mov     byte ptr [si+2Ah], 1
-# ⚠ 函式 sub_16D56; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D56; [proven] 僅初始化六槽兵種為1,1,3,3,2,2，不清其他欄位; 出處: docs/re/120-c-player-formation-restoration.md
 mov byte ptr [si+0x2a], 0x1
 .org 0x6f5a
 # IDA 0x16d5a; file 0x6f5a; locator=proven; mov     byte ptr [si+2Eh], 1
-# ⚠ 函式 sub_16D56; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D56; [proven] 僅初始化六槽兵種為1,1,3,3,2,2，不清其他欄位; 出處: docs/re/120-c-player-formation-restoration.md
 mov byte ptr [si+0x2e], 0x1
 .org 0x6f5e
 # IDA 0x16d5e; file 0x6f5e; locator=proven; mov     byte ptr [si+32h], 3
-# ⚠ 函式 sub_16D56; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D56; [proven] 僅初始化六槽兵種為1,1,3,3,2,2，不清其他欄位; 出處: docs/re/120-c-player-formation-restoration.md
 mov byte ptr [si+0x32], 0x3
 .org 0x6f62
 # IDA 0x16d62; file 0x6f62; locator=proven; mov     byte ptr [si+36h], 3
-# ⚠ 函式 sub_16D56; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D56; [proven] 僅初始化六槽兵種為1,1,3,3,2,2，不清其他欄位; 出處: docs/re/120-c-player-formation-restoration.md
 mov byte ptr [si+0x36], 0x3
 .org 0x6f66
 # IDA 0x16d66; file 0x6f66; locator=proven; mov     byte ptr [si+3Ah], 2
-# ⚠ 函式 sub_16D56; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D56; [proven] 僅初始化六槽兵種為1,1,3,3,2,2，不清其他欄位; 出處: docs/re/120-c-player-formation-restoration.md
 mov byte ptr [si+0x3a], 0x2
 .org 0x6f6a
 # IDA 0x16d6a; file 0x6f6a; locator=proven; mov     byte ptr [si+3Eh], 2
-# ⚠ 函式 sub_16D56; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D56; [proven] 僅初始化六槽兵種為1,1,3,3,2,2，不清其他欄位; 出處: docs/re/120-c-player-formation-restoration.md
 mov byte ptr [si+0x3e], 0x2
 .org 0x6f6e
 # IDA 0x16d6e; file 0x6f6e; locator=proven; retn
-# ⚠ 函式 sub_16D56; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D56; [proven] 僅初始化六槽兵種為1,1,3,3,2,2，不清其他欄位; 出處: docs/re/120-c-player-formation-restoration.md
 ret
 .org 0x6f6f
 sub_16D6F:
 # IDA 0x16d6f; file 0x6f6f; locator=proven; push    ds
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 push ds
 .org 0x6f70
 # IDA 0x16d70; file 0x6f70; locator=proven; push    es
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 push es
 .org 0x6f71
 # IDA 0x16d71; file 0x6f71; locator=proven; push    si
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 push si
 .org 0x6f72
 # IDA 0x16d72; file 0x6f72; locator=proven; push    di
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 push di
 .org 0x6f73
 # IDA 0x16d73; file 0x6f73; locator=proven; push    si
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 push si
 .org 0x6f74
 # IDA 0x16d74; file 0x6f74; locator=proven; mov     si, di
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 {load} mov si, di
 .org 0x6f76
 # IDA 0x16d76; file 0x6f76; locator=proven; mov     cx, 3
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 mov cx, 0x3
 .org 0x6f79
 # IDA 0x16d79; file 0x6f79; locator=proven; mov     di, 43A7h
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 mov di, 0x43a7
 .org 0x6f7c
 loc_16D7C:
 # IDA 0x16d7c; file 0x6f7c; locator=proven; mov     ax, [si]
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 mov ax, word ptr [si]
 .org 0x6f7e
 # IDA 0x16d7e; file 0x6f7e; locator=proven; mov     dx, 0Ah
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 mov dx, 0xa
 .org 0x6f81
 # IDA 0x16d81; file 0x6f81; locator=proven; mul     dx
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 mul dx
 .org 0x6f83
 # IDA 0x16d83; file 0x6f83; locator=proven; mov     bx, 906h
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 mov bx, 0x906
 .org 0x6f86
 # IDA 0x16d86; file 0x6f86; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 call .-26455
 .org 0x6f89
 # IDA 0x16d89; file 0x6f89; locator=proven; inc     si
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 inc si
 .org 0x6f8a
 # IDA 0x16d8a; file 0x6f8a; locator=proven; inc     si
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 inc si
 .org 0x6f8b
 # IDA 0x16d8b; file 0x6f8b; locator=proven; add     di, 500h
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 add di, 0x500
 .org 0x6f8f
 # IDA 0x16d8f; file 0x6f8f; locator=proven; loop    loc_16D7C
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 loop .-19
 .org 0x6f91
 # IDA 0x16d91; file 0x6f91; locator=proven; pop     si
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 pop si
 .org 0x6f92
 # IDA 0x16d92; file 0x6f92; locator=proven; mov     ax, [si+4]
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
+# operand 1 [si+4]; [proven] 軍團+4總兵力，顯示前乘10; 出處: docs/re/120-c-player-formation-restoration.md
 mov ax, word ptr [si+0x4]
 .org 0x6f95
 # IDA 0x16d95; file 0x6f95; locator=proven; mov     dx, 0Ah
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 mov dx, 0xa
 .org 0x6f98
 # IDA 0x16d98; file 0x6f98; locator=proven; mul     dx
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 mul dx
 .org 0x6f9a
 # IDA 0x16d9a; file 0x6f9a; locator=proven; mov     bx, 0F04h
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 mov bx, 0xf04
 .org 0x6f9d
 # IDA 0x16d9d; file 0x6f9d; locator=proven; mov     di, 2FA7h
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 mov di, 0x2fa7
 .org 0x6fa0
 # IDA 0x16da0; file 0x6fa0; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 call .-26481
 .org 0x6fa3
 # IDA 0x16da3; file 0x6fa3; locator=proven; pop     di
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 pop di
 .org 0x6fa4
 # IDA 0x16da4; file 0x6fa4; locator=proven; pop     si
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 pop si
 .org 0x6fa5
 # IDA 0x16da5; file 0x6fa5; locator=proven; pop     es
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 pop es
 .org 0x6fa6
 # IDA 0x16da6; file 0x6fa6; locator=proven; pop     ds
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 pop ds
 .org 0x6fa7
 # IDA 0x16da7; file 0x6fa7; locator=proven; retn
-# ⚠ 函式 sub_16D6F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16D6F; [proven] 三個預備兵池與軍團總兵力乘10的原數字顯示; 出處: docs/re/120-c-player-formation-restoration.md
 ret
 .org 0x6fa8
 sub_16DA8:
 # IDA 0x16da8; file 0x6fa8; locator=proven; push    ds
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 push ds
 .org 0x6fa9
 # IDA 0x16da9; file 0x6fa9; locator=proven; push    es
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 push es
 .org 0x6faa
 # IDA 0x16daa; file 0x6faa; locator=proven; push    si
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 push si
 .org 0x6fab
 # IDA 0x16dab; file 0x6fab; locator=proven; push    di
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 push di
 .org 0x6fac
 # IDA 0x16dac; file 0x6fac; locator=proven; add     si, 28h
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 add si, 0x28
 .org 0x6faf
 # IDA 0x16daf; file 0x6faf; locator=proven; mov     di, 3C1Dh
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 mov di, 0x3c1d
 .org 0x6fb2
 # IDA 0x16db2; file 0x6fb2; locator=proven; mov     ax, ds
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 mov ax, ds
 .org 0x6fb4
 # IDA 0x16db4; file 0x6fb4; locator=proven; mov     es, ax
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 mov es, ax
 .org 0x6fb6
 # IDA 0x16db6; file 0x6fb6; locator=proven; mov     ds, cs:word_10D50
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 cs; mov ds, word ptr [0xd50]
 .org 0x6fbb
 # IDA 0x16dbb; file 0x6fbb; locator=proven; mov     cx, 6
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 mov cx, 0x6
 .org 0x6fbe
 loc_16DBE:
 # IDA 0x16dbe; file 0x6fbe; locator=proven; push    si
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 push si
 .org 0x6fbf
 # IDA 0x16dbf; file 0x6fbf; locator=proven; mov     ah, es:[si+2]
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 es; mov ah, byte ptr [si+0x2]
 .org 0x6fc3
 # IDA 0x16dc3; file 0x6fc3; locator=proven; xor     al, al
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 {load} xor al, al
 .org 0x6fc5
 # IDA 0x16dc5; file 0x6fc5; locator=proven; dec     ah
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 dec ah
 .org 0x6fc7
 # IDA 0x16dc7; file 0x6fc7; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 shr ax, 0x1
 .org 0x6fc9
 # IDA 0x16dc9; file 0x6fc9; locator=proven; mov     si, ax
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 {load} mov si, ax
 .org 0x6fcb
 # IDA 0x16dcb; file 0x6fcb; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 shr ax, 0x1
 .org 0x6fcd
 # IDA 0x16dcd; file 0x6fcd; locator=proven; add     si, ax
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 {load} add si, ax
 .org 0x6fcf
 # IDA 0x16dcf; file 0x6fcf; locator=proven; add     si, 15C0h
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 add si, 0x15c0
 .org 0x6fd3
 # IDA 0x16dd3; file 0x6fd3; locator=proven; mov     bx, di
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 {load} mov bx, di
 .org 0x6fd5
 # IDA 0x16dd5; file 0x6fd5; locator=proven; sub     bx, 4
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 sub bx, 0x4
 .org 0x6fd8
 # IDA 0x16dd8; file 0x6fd8; locator=proven; mov     ax, 1003h
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 mov ax, 0x1003
 .org 0x6fdb
 # IDA 0x16ddb; file 0x6fdb; locator=proven; call    sub_1F9B0
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 call .-29739
 .org 0x6fde
 # IDA 0x16dde; file 0x6fde; locator=proven; pop     si
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 pop si
 .org 0x6fdf
 # IDA 0x16ddf; file 0x6fdf; locator=proven; mov     al, es:[si+1]
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 es; mov al, byte ptr [si+0x1]
 .org 0x6fe3
 # IDA 0x16de3; file 0x6fe3; locator=proven; mov     ah, 0Ah
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 mov ah, 0xa
 .org 0x6fe5
 # IDA 0x16de5; file 0x6fe5; locator=proven; mul     ah
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 mul ah
 .org 0x6fe7
 # IDA 0x16de7; file 0x6fe7; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 {load} xor dx, dx
 .org 0x6fe9
 # IDA 0x16de9; file 0x6fe9; locator=proven; mov     bx, 904h
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 mov bx, 0x904
 .org 0x6fec
 # IDA 0x16dec; file 0x6fec; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 call .-26557
 .org 0x6fef
 # IDA 0x16def; file 0x6fef; locator=proven; add     si, 4
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 add si, 0x4
 .org 0x6ff2
 # IDA 0x16df2; file 0x6ff2; locator=proven; add     di, 500h
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 add di, 0x500
 .org 0x6ff6
 # IDA 0x16df6; file 0x6ff6; locator=proven; loop    loc_16DBE
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 loop .-56
 .org 0x6ff8
 # IDA 0x16df8; file 0x6ff8; locator=proven; pop     di
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 pop di
 .org 0x6ff9
 # IDA 0x16df9; file 0x6ff9; locator=proven; pop     si
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 pop si
 .org 0x6ffa
 # IDA 0x16dfa; file 0x6ffa; locator=proven; pop     es
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 pop es
 .org 0x6ffb
 # IDA 0x16dfb; file 0x6ffb; locator=proven; pop     ds
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 pop ds
 .org 0x6ffc
 # IDA 0x16dfc; file 0x6ffc; locator=proven; retn
-# ⚠ 函式 sub_16DA8; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DA8; [proven] 六槽原兵種圖塊與兵數顯示，圖庫與世界段切換; 出處: docs/re/120-c-player-formation-restoration.md
 ret
 .org 0x6ffd
 sub_16DFD:
 # IDA 0x16dfd; file 0x6ffd; locator=proven; push    ax
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 push ax
 .org 0x6ffe
 # IDA 0x16dfe; file 0x6ffe; locator=proven; push    bx
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 push bx
 .org 0x6fff
 # IDA 0x16dff; file 0x6fff; locator=proven; push    cx
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 push cx
 .org 0x7000
 # IDA 0x16e00; file 0x7000; locator=proven; push    dx
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 push dx
 .org 0x7001
 # IDA 0x16e01; file 0x7001; locator=proven; push    si
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 push si
 .org 0x7002
 # IDA 0x16e02; file 0x7002; locator=proven; push    di
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 push di
 .org 0x7003
 # IDA 0x16e03; file 0x7003; locator=proven; mov     al, 3Dh
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 mov al, 0x3d
 .org 0x7005
 # IDA 0x16e05; file 0x7005; locator=proven; mov     dx, 9
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 mov dx, 0x9
 .org 0x7008
 # IDA 0x16e08; file 0x7008; locator=proven; mov     bx, 5
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 mov bx, 0x5
 .org 0x700b
 # IDA 0x16e0b; file 0x700b; locator=proven; mov     cx, 0C0Fh
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 mov cx, 0xc0f
 .org 0x700e
 # IDA 0x16e0e; file 0x700e; locator=proven; call    sub_1895D
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 call .+6991
 .org 0x7011
 # IDA 0x16e11; file 0x7011; locator=proven; mov     al, 5
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 mov al, 0x5
 .org 0x7013
 # IDA 0x16e13; file 0x7013; locator=proven; mov     dx, 98h
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 mov dx, 0x98
 .org 0x7016
 # IDA 0x16e16; file 0x7016; locator=proven; mov     bx, 78h
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 mov bx, 0x78
 .org 0x7019
 # IDA 0x16e19; file 0x7019; locator=proven; call    sub_10337
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 call .-27362
 .org 0x701c
 # IDA 0x16e1c; file 0x701c; locator=proven; mov     ax, si
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 {load} mov ax, si
 .org 0x701e
 # IDA 0x16e1e; file 0x701e; locator=proven; sub     ax, 2240h
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 sub ax, 0x2240
 .org 0x7021
 # IDA 0x16e21; file 0x7021; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 shr ax, 0x1
 .org 0x7023
 # IDA 0x16e23; file 0x7023; locator=proven; mov     si, ax
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 {load} mov si, ax
 .org 0x7025
 # IDA 0x16e25; file 0x7025; locator=proven; mov     al, [si+4241h]
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 mov al, byte ptr [si+0x4241]
 .org 0x7029
 # IDA 0x16e29; file 0x7029; locator=proven; mov     bx, 2593h
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 mov bx, 0x2593
 .org 0x702c
 # IDA 0x16e2c; file 0x702c; locator=proven; call    sub_107D2
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 call .-26202
 .org 0x702f
 # IDA 0x16e2f; file 0x702f; locator=proven; mov     dx, 128h
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 mov dx, 0x128
 .org 0x7032
 # IDA 0x16e32; file 0x7032; locator=proven; mov     bx, 80h
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 mov bx, 0x80
 .org 0x7035
 # IDA 0x16e35; file 0x7035; locator=proven; mov     ax, 0F03h
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 mov ax, 0xf03
 .org 0x7038
 # IDA 0x16e38; file 0x7038; locator=proven; add     si, 4242h
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 add si, 0x4242
 .org 0x703c
 # IDA 0x16e3c; file 0x703c; locator=proven; call    sub_106FD
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 call .-26431
 .org 0x703f
 # IDA 0x16e3f; file 0x703f; locator=proven; mov     al, [di+19h]
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
+# operand 1 [di+19h]; [proven] DI=勢力+4，故[DI+19h]為勢力+1Dh士氣; 出處: docs/re/120-c-player-formation-restoration.md
 mov al, byte ptr [di+0x19]
 .org 0x7042
 # IDA 0x16e42; file 0x7042; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 {load} xor dx, dx
 .org 0x7044
 # IDA 0x16e44; file 0x7044; locator=proven; mov     ah, dl
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 {load} mov ah, dl
 .org 0x7046
 # IDA 0x16e46; file 0x7046; locator=proven; mov     bx, 0F03h
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 mov bx, 0xf03
 .org 0x7049
 # IDA 0x16e49; file 0x7049; locator=proven; mov     di, 34A8h
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 mov di, 0x34a8
 .org 0x704c
 # IDA 0x16e4c; file 0x704c; locator=proven; call    sub_1062F
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 call .-26653
 .org 0x704f
 # IDA 0x16e4f; file 0x704f; locator=proven; mov     al, 3Eh
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 mov al, 0x3e
 .org 0x7051
 # IDA 0x16e51; file 0x7051; locator=proven; mov     bx, 0C0h
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 mov bx, 0xc0
 .org 0x7054
 # IDA 0x16e54; file 0x7054; locator=proven; mov     cx, 6
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 mov cx, 0x6
 .org 0x7057
 loc_16E57:
 # IDA 0x16e57; file 0x7057; locator=proven; push    ax
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 push ax
 .org 0x7058
 # IDA 0x16e58; file 0x7058; locator=proven; push    bx
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 push bx
 .org 0x7059
 # IDA 0x16e59; file 0x7059; locator=proven; push    cx
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 push cx
 .org 0x705a
 # IDA 0x16e5a; file 0x705a; locator=proven; mov     dx, 0C8h
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 mov dx, 0xc8
 .org 0x705d
 # IDA 0x16e5d; file 0x705d; locator=proven; mov     cx, 203h
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 mov cx, 0x203
 .org 0x7060
 # IDA 0x16e60; file 0x7060; locator=proven; call    sub_1E3D7
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 call .+30071
 .org 0x7063
 # IDA 0x16e63; file 0x7063; locator=proven; pop     cx
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 pop cx
 .org 0x7064
 # IDA 0x16e64; file 0x7064; locator=proven; pop     bx
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 pop bx
 .org 0x7065
 # IDA 0x16e65; file 0x7065; locator=proven; pop     ax
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 pop ax
 .org 0x7066
 # IDA 0x16e66; file 0x7066; locator=proven; inc     al
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 inc al
 .org 0x7068
 # IDA 0x16e68; file 0x7068; locator=proven; add     bx, 10h
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 add bx, 0x10
 .org 0x706b
 # IDA 0x16e6b; file 0x706b; locator=proven; loop    loc_16E57
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 loop .-20
 .org 0x706d
 # IDA 0x16e6d; file 0x706d; locator=proven; mov     dx, 118h
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 mov dx, 0x118
 .org 0x7070
 # IDA 0x16e70; file 0x7070; locator=proven; mov     bx, 110h
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 mov bx, 0x110
 .org 0x7073
 # IDA 0x16e73; file 0x7073; locator=proven; mov     cx, 20Bh
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 mov cx, 0x20b
 .org 0x7076
 # IDA 0x16e76; file 0x7076; locator=proven; call    sub_1E3D7
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 call .+30049
 .org 0x7079
 # IDA 0x16e79; file 0x7079; locator=proven; pop     di
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 pop di
 .org 0x707a
 # IDA 0x16e7a; file 0x707a; locator=proven; pop     si
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 pop si
 .org 0x707b
 # IDA 0x16e7b; file 0x707b; locator=proven; pop     dx
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 pop dx
 .org 0x707c
 # IDA 0x16e7c; file 0x707c; locator=proven; pop     cx
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 pop cx
 .org 0x707d
 # IDA 0x16e7d; file 0x707d; locator=proven; pop     bx
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 pop bx
 .org 0x707e
 # IDA 0x16e7e; file 0x707e; locator=proven; pop     ax
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 pop ax
 .org 0x707f
 # IDA 0x16e7f; file 0x707f; locator=proven; retn
-# ⚠ 函式 sub_16DFD; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16DFD; [proven] 編成框、場景5、武將肖像姓名、勢力士氣及七個熱區; 出處: docs/re/120-c-player-formation-restoration.md
 ret
 .org 0x7080
 sub_16E80:
 # IDA 0x16e80; file 0x7080; locator=proven; xor     al, al
-# ⚠ 函式 sub_16E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E80; [proven] 關閉原始編成框; 出處: docs/re/120-c-player-formation-restoration.md
 {load} xor al, al
 .org 0x7082
 # IDA 0x16e82; file 0x7082; locator=proven; mov     dx, 9
-# ⚠ 函式 sub_16E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E80; [proven] 關閉原始編成框; 出處: docs/re/120-c-player-formation-restoration.md
 mov dx, 0x9
 .org 0x7085
 # IDA 0x16e85; file 0x7085; locator=proven; mov     bx, 5
-# ⚠ 函式 sub_16E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E80; [proven] 關閉原始編成框; 出處: docs/re/120-c-player-formation-restoration.md
 mov bx, 0x5
 .org 0x7088
 # IDA 0x16e88; file 0x7088; locator=proven; mov     cx, 0C0Fh
-# ⚠ 函式 sub_16E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E80; [proven] 關閉原始編成框; 出處: docs/re/120-c-player-formation-restoration.md
 mov cx, 0xc0f
 .org 0x708b
 # IDA 0x16e8b; file 0x708b; locator=proven; call    sub_1895D
-# ⚠ 函式 sub_16E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E80; [proven] 關閉原始編成框; 出處: docs/re/120-c-player-formation-restoration.md
 call .+6866
 .org 0x708e
 # IDA 0x16e8e; file 0x708e; locator=proven; retn
-# ⚠ 函式 sub_16E80; [unknown] 未附加語意; 出處: 無
+# 函式 sub_16E80; [proven] 關閉原始編成框; 出處: docs/re/120-c-player-formation-restoration.md
 ret
 .org 0x708f
 sub_16E8F:

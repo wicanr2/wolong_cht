@@ -426,3 +426,14 @@
 - 正式 check.sh 完整執行，Go stages 通過，文件階段停在既有兩張playtest/19 PNG與277 phantom；逐項25檢查為21通過／4已知失敗，無新增引用。re/27原未解全解後補缺口無標記，嚴格索引與1018列分流通過。
 - 最後逐條證明本輪902指令均在編譯組語範圍；完整67,099-byte EXE相同、三組ASM錯版拒絕。289 C／48 raw、公私收據與五回鏈、39套件冷Go測試及實際唯讀掛載binding全通過；產物1000:1000，既有root-owned27、無.md目錄。
 - 代理已完成且沒有後續檔案寫入；本輪一次性容器均已移除。只提交還原來源、定位、工具與收據，原始資產／EXE／研究binary／module cache留本機。
+
+## 2026-10-09：玩家軍團編成 C
+
+- 前輪 ad020ad 已推送。沿用復古逆向／IDA 路由與現有工具；依 AGENTS §10 分派唯讀契約審查、單一獨立資料模型、指令覆蓋及正式 Go 冷測，均按限定檔案交付。
+- spec/240 READY 後還原七函式／247 指令／561 bytes，選將、六槽圖示／數字、兵種切換、確定／取消接回既有唯一 C 規則、清單、TALK、滑鼠及 VGA。
+- O0／O2 各 200 完整狀態相同，十個編譯錯版拒絕；獨立分兵模型先驗原版，字型缺字 0。保留僅初始化 type、不清 men、取消不重算總兵力與原熱區邊界。
+- 初次 smoke 的資料模型未涵蓋 switch/offpanel 群組，屬 harness 分支缺項；補齊後同一工具乾淨重跑72組與完整200組通過，原 C 邏輯未改。
+- 全部247指令已存在前輪組語，新增0；固定binutils另獨立重組561bytes相同，外部語意索引附加原始定位，整檔基準重新冷組譯。
+- 正式Go冷vet與39套件通過；C台帳296函式／48raw，正常玩家長程與原C機器碼仍未驗。來源與收據依使用者授權commit／push，完整Goal保持active。
+- 提交前25項檢查21通過，4個既有失敗不變：歷史playtest19兩張缺圖、277筆phantom引用、lessons render過期、舊guard文字缺失。完整check已跑並停於既有phantom，個別後續檢查另跑；新失敗0，正規化phantom增刪均0。檢查收據為workplace/matching-decompilation/checks/formation-checks.json，SHA-256 `2b6481cbea1e4cb99ae7549f6e4759abd57ee8c55f576af1aadbfeba2400c17a`。
+- root-owned維持27個既有路徑，沒有.md目錄或本輪root-owned輸出；本輪容器已收尾，沒有新增image。
