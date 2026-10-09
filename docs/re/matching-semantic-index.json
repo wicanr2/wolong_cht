@@ -3151,10 +3151,158 @@
       ]
     },
     "0x196CF": {
-      "meaning": "原指定plane的四列雙byte VRAM至minimap資料回填",
+      "meaning": "原指定plane四列雙byte由minimap資料還原至VRAM，讀ES只供latch",
       "level": "proven",
       "sources": [
-        "docs/re/129-c-route-restoration.md"
+        "docs/re/129-c-route-restoration.md",
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x10CE7": {
+      "meaning": "原AX=0202提示包裝並保存AX，只驗平台I/O契約",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x14236": {
+      "meaning": "原192據點owner pair符合時將+1A同步目前owner",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x1474A": {
+      "meaning": "原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x14CF3": {
+      "meaning": "原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x14D63": {
+      "meaning": "原據點內政官卸任與兩段原訊息",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x14DA4": {
+      "meaning": "原SS軍團列表依新首都方向重導或潰散",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x14DF0": {
+      "meaning": "原失去首都後選新首都，失敗時flags清80h並以CF通知",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x14FCE": {
+      "meaning": "原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x15074": {
+      "meaning": "原外交官卸任與兩段原訊息",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x150B4": {
+      "meaning": "原有duty武將退隊及owner設FF",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x15130": {
+      "meaning": "原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x151B3": {
+      "meaning": "原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x15285": {
+      "meaning": "原六槽兵種係數表與士氣/8，保留低word乘法",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x152D7": {
+      "meaning": "原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x15CA4": {
+      "meaning": "原舊小地圖標記擦除並將9892設FFFF",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x15CE0": {
+      "meaning": "原據點所屬色碼與小地圖標記",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x17028": {
+      "meaning": "原清除軍團flags，原bit3未設時占用byte減一",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x188CC": {
+      "meaning": "原四鄰city adjacency快照，FF槽保留原DL步進",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x1890A": {
+      "meaning": "原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x195C9": {
+      "meaning": "原四plane VRAM至minimap資料保存",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x1963F": {
+      "meaning": "原指定讀取plane，四列MOVSW由VRAM存入minimap",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
       ]
     }
   },
@@ -4007,6 +4155,174 @@
       "level": "proven",
       "sources": [
         "docs/re/129-c-route-restoration.md"
+      ]
+    },
+    "0x1513F:1": {
+      "original": "3",
+      "meaning": "第一方AL=0時使用係數列3，其餘列不改",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x152CA:0": {
+      "original": "al",
+      "meaning": "第三次SHR後士氣除8，保留byte運算",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x1530D:0": {
+      "original": "",
+      "meaning": "XLAT只讀DS:BX+AL並改AL，AH與flags不變",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x1530E:1": {
+      "original": "4",
+      "meaning": "原能力高nibble位移4",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x152F6:1": {
+      "original": "3",
+      "meaning": "原武將條件的RNG低2bits",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x15155:1": {
+      "original": "8",
+      "meaning": "第一方戰力word加8，保留原word回繞",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x15173:1": {
+      "original": "64h",
+      "meaning": "原戰力比值上限100",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x15223:1": {
+      "original": "8",
+      "meaning": "敗方傷亡基數8，加原餘數",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x1520E:1": {
+      "original": "1",
+      "meaning": "原第一槽至少1，其他槽可歸零",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x1478F:1": {
+      "original": "12Ch",
+      "meaning": "退卻後兵力word門檻300",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x14775:0": {
+      "original": "loc_147AB",
+      "meaning": "目前在己方據點上則停留，不呼叫退路搜尋",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x14D0A:0": {
+      "original": "byte ptr [bx+23h]",
+      "meaning": "舊勢力據點數byte減一",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x14D2A:0": {
+      "original": "byte ptr [bx+23h]",
+      "meaning": "新勢力據點數byte加一，玩家nonlocal退出時不續至此",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x14D7E:0": {
+      "original": "byte ptr [bx+17h]",
+      "meaning": "卸任原內政官duty設0",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x14E54:1": {
+      "original": "7Fh",
+      "meaning": "沒有新首都時只清faction bit7",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x14D18:0": {
+      "original": "sub_14DA4",
+      "meaning": "先依新的首都重導舊軍團，原PUSHF/POPF保留遷都CF",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x1892B:0": {
+      "original": "byte ptr [bx+85Bh]",
+      "meaning": "新敵鄰時增加該neighbor的+1B，與bits同步",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x14FE8:0": {
+      "original": "cs:byte_10D2A",
+      "meaning": "非玩家勢力消失後存活勢力數byte減一",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x15091:0": {
+      "original": "byte ptr [bx+17h]",
+      "meaning": "卸任原外交官duty設0",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x1425B:0": {
+      "original": "[si+1Ah]",
+      "meaning": "owner pair符合時同步city+1A歷史欄位",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
+      ]
+    },
+    "0x17036:0": {
+      "original": "byte ptr [si]",
+      "meaning": "沒有原flags bit3時減占用，保留byte回繞",
+      "level": "proven",
+      "sources": [
+        "docs/re/130-c-battle-outcome-restoration.md"
       ]
     }
   }

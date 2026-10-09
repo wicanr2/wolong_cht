@@ -13569,6 +13569,58 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "九named與raw尋路已有局部完整狀態證據；全原版roadtable、Go等距、完整軍團／戰鬥／主排程與C機器碼保留界線。"
+    },
+    {
+      "file": "docs/re/130-c-battle-outcome-restoration.md",
+      "item": "完整交戰caller、戰術／軍團更新、主排程與正常玩家長程",
+      "status": "本輪閉包不代證",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-7fb7900a4e4ce121b008",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "21原C函式與真正outer-frame退出已做局部完整狀態比較；完整交戰／戰術／軍團／主排程、正常玩家及C機器碼保留界線。"
+    },
+    {
+      "file": "docs/re/130-c-battle-outcome-restoration.md",
+      "item": "非法DIV／記錄、原硬體時間與原C機器碼",
+      "status": "不由局部比較推廣",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-4bb0ed4e94f343e77362",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "21原C函式與真正outer-frame退出已做局部完整狀態比較；完整交戰／戰術／軍團／主排程、正常玩家及C機器碼保留界線。"
+    },
+    {
+      "file": "docs/spec/250-c-battle-outcome.md",
+      "item": "完整交戰／戰術／軍團／主排程與正常玩家長程",
+      "status": "本輪不代證",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-eeaa9273a27214256f2d",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "21原C函式與真正outer-frame退出已做局部完整狀態比較；完整交戰／戰術／軍團／主排程、正常玩家及C機器碼保留界線。"
+    },
+    {
+      "file": "docs/spec/250-c-battle-outcome.md",
+      "item": "非法DIV／記錄、原硬體時間與原C機器碼",
+      "status": "不由局部原生C比較推廣",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-61c1c41661ee3e410cd4",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "21原C函式與真正outer-frame退出已做局部完整狀態比較；完整交戰／戰術／軍團／主排程、正常玩家及C機器碼保留界線。"
     }
   ]
 }

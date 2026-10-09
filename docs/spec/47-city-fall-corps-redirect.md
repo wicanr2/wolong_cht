@@ -125,6 +125,10 @@ loc_14DDC:
 | 單元測試 | `TestRedirectListComparesCoordinatesNotNode`：站在城上的守軍調頭、**走在半路上的不調頭**。兩個 subtest 是一組正／負對照——少了前半，「名單永遠是空的」也會通過（§4.1）|
 | 長跑 | `cmd/wlsim` 5 年 60 個月，不變量不違反 |
 
+## 戰後閉包的後續原生 C 證據
+
+戰後閉包已由原生 C 驗證。`sub_14CF3`的原始`0x14CF3`與自動判定、易主或小地圖依賴已由固定raw狀態與原版／C完整比較核對，見[re/130](../re/130-c-battle-outcome-restoration.md)。含玩家勢力滅亡的原SS／SP恢復及caller不續行；這不代證Go完整交戰、正常玩家長程或原C機器碼。較早收據保留原範圍。
+
 ## 6. 未解
 
 | 項目 | 現況 |

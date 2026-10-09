@@ -209,6 +209,7 @@
 | [`docs/re/128-c-city-tick-restoration.md`](re/128-c-city-tick-restoration.md) | 128：據點輪轉與動畫物件更新的 C | CONFORMED。18函式，O0／O2各8,144組完整狀態與十六錯版通過。 | 2026-10-10 |
 | [`docs/re/129-c-route-restoration.md`](re/129-c-route-restoration.md) | 129：自我修改尋路、退卻與軍團潰散的 C | CONFORMED。九函式與一raw入口，O0／O2各4,588組完整狀態與十六錯版通過。 | 2026-10-10 |
 | [`docs/re/13-pc98-numeric-window.md`](re/13-pc98-numeric-window.md) | 13 — DOS/V 數字輸入視窗量測與 CJK 版面決策 | 以 DOS/V 為唯一畫面基準；原始座標、DOS/V 96×64 內框 blit、3×6 每格操作、 實際按鍵 gl… | 2026-08-10 |
+| [`docs/re/130-c-battle-outcome-restoration.md`](re/130-c-battle-outcome-restoration.md) | 130：自動戰鬥、退卻與據點易主的 C | CONFORMED。21函式，O0／O2各8,364組完整狀態與二十錯版通過。 | 2026-10-10 |
 | [`docs/re/14-mmap-mch-objects.md`](re/14-mmap-mch-objects.md) | 14 — MMAP.MCH 戰略地圖物件 | 資產格式、事件 12 的火災／暴動圖形鏈與 typed 動畫／移動時序 confirmed； type 3 的事件語… | 2026-08-10 |
 | [`docs/re/15-event10-producer.md`](re/15-event10-producer.md) | 15 — 事件 10 producer 深度逆向 | 事件 10 dispatcher／consumer／queue writer 已證實；原版自然 producer 仍… | 2026-08-11 |
 | [`docs/re/16-idle-clock-event10.md`](re/16-idle-clock-event10.md) | 16 — DOS/V 無輸入自動時鐘與事件 10 關係 | 無輸入時的自動時鐘／軍團行軍已由 IDA .i64 證實；事件 10 是該路徑 中的受節流 queue consum… | 2026-08-11 |
@@ -478,6 +479,7 @@
 | [`docs/spec/248-c-city-tick.md`](spec/248-c-city-tick.md) | 248：C 據點輪轉與動畫物件更新 | CONFORMED。O0／O2各8,144組完整狀態與十六錯版通過。 | 2026-10-10 |
 | [`docs/spec/249-c-route.md`](spec/249-c-route.md) | 249：C 尋路、退卻與軍團潰散 | CONFORMED。O0／O2各4,588組完整狀態與十六錯版通過。 | 2026-10-10 |
 | [`docs/spec/25-slot-select-window.md`](spec/25-slot-select-window.md) | 25 — 四槽選擇視窗（新遊戲／讀取／儲存） | CONFORMED。讀取／儲存已照原版版面實作； 新遊戲仍走 remake 自己的啟動殼層（§5）。 | 2026-08-15 |
+| [`docs/spec/250-c-battle-outcome.md`](spec/250-c-battle-outcome.md) | 250：C 自動戰鬥與據點易主 | CONFORMED。O0／O2各8,364組完整狀態與二十錯版通過。 | 2026-10-10 |
 | [`docs/spec/26-yes-no-dialog.md`](spec/26-yes-no-dialog.md) | 26 — ＹＥＳ／ＮＯ 對話框 | CONFORMED。版面與命中算式已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 輸入照原版收斂成兩個熱區（§2.1）。「自定」開命名視窗（[10… | 2026-08-15 |
 | [`docs/spec/28-scenario-json.md`](spec/28-scenario-json.md) | 28 — 劇本的 JSON 匯出與匯入 | CONFORMED。四個區塊 round-trip 全過。 | 2026-08-15 |

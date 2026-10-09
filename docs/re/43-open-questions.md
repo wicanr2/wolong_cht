@@ -7,7 +7,7 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-1049 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+1053 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
 - 日期：2026-10-10
 - 產生工具：`tools/re_open_questions.py`
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**1043 列分布在 427 份文件，平均每份 2.4 列。**
+**1047 列分布在 429 份文件，平均每份 2.4 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -47,11 +47,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 302 | 295 | 6 | 1 |
+| 程式碼理解 | 304 | 297 | 6 | 1 |
 | 驗收 | 240 | 214 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 464 | 442 | 21 | 1 |
-| **合計** | **1043** | 982 | 58 | 3 |
+| 其他 | 466 | 444 | 21 | 1 |
+| **合計** | **1047** | 986 | 58 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,8 +59,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 421 |
-| `docs/re/` | 302 |
+| `docs/spec/` | 423 |
+| `docs/re/` | 304 |
 | `docs/playtest/` | 240 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
@@ -110,7 +110,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 | evidence-only | — |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 | evidence-only | — |
 
-## 2.3 程式碼理解（302 條）
+## 2.3 程式碼理解（304 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -232,6 +232,8 @@
 | [`re/128-c-city-tick-restoration.md`](../re/128-c-city-tick-restoration.md) | 原硬體時間及原C機器碼 | 固定平台I/O與原生語意比較不代證 | 靜態 | evidence-only | — |
 | [`re/129-c-route-restoration.md`](../re/129-c-route-restoration.md) | 完整軍團更新、交戰／戰術、主排程與自然玩家長程 | 本輪閉包不代證 | 靜態 | evidence-only | — |
 | [`re/129-c-route-restoration.md`](../re/129-c-route-restoration.md) | 非法圖表、原硬體時間與原C機器碼 | 不由局部比較推廣 | 靜態 | evidence-only | — |
+| [`re/130-c-battle-outcome-restoration.md`](../re/130-c-battle-outcome-restoration.md) | 完整交戰caller、戰術／軍團更新、主排程與正常玩家長程 | 本輪閉包不代證 | 靜態 | evidence-only | — |
+| [`re/130-c-battle-outcome-restoration.md`](../re/130-c-battle-outcome-restoration.md) | 非法DIV／記錄、原硬體時間與原C機器碼 | 不由局部比較推廣 | 靜態 | evidence-only | — |
 | [`re/15-event10-producer.md`](../re/15-event10-producer.md) | 以下來源沒有證據，不能補成事實：未被 IDA 建成函式的 far code、以暫存器或指標 | （未解小節內文） | 靜態 | evidence-only | — |
 | [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | `0x330` 的用途 | MPU-401 的標準埠，沒找到讀它的地方 | 靜態 | evidence-only | — |
 | [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | 效果碼 ↔ 聽起來像什麼 | `SOUND.DAT` 的記錄結構已解（`57` §6），但哪一號對應哪個動作只有 §3 的三個 | 靜態 | evidence-only | — |
@@ -673,7 +675,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（464 條）
+## 2.6 其他（466 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -1020,6 +1022,8 @@
 | [`spec/249-c-route.md`](../spec/249-c-route.md) | 非法圖表／原硬體時間與原C機器碼 | 不由局部原生C比較推廣 | 靜態 | evidence-only | — |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 空槽標記 | 原版用名稱欄第一個字 `0xD0A1`；remake 用「載得起來且玩家勢力有效」判定，兩者不等價 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 新遊戲共用 | remake 的啟動殼層是自己的畫面，還沒有換成這個四槽視窗 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/250-c-battle-outcome.md`](../spec/250-c-battle-outcome.md) | 完整交戰／戰術／軍團／主排程與正常玩家長程 | 本輪不代證 | 靜態 | evidence-only | — |
+| [`spec/250-c-battle-outcome.md`](../spec/250-c-battle-outcome.md) | 非法DIV／記錄、原硬體時間與原C機器碼 | 不由局部原生C比較推廣 | 靜態 | evidence-only | — |
 | [`spec/26-yes-no-dialog.md`](../spec/26-yes-no-dialog.md) | 原版的使用者 | `sub_18DC8` 只有一個呼叫端 `sub_11AC3`（新遊戲流程），問題文字由那裡給，內容未讀 | 靜態 | evidence-only | — |
 | [`spec/26-yes-no-dialog.md`](../spec/26-yes-no-dialog.md) | `cx = 600Dh` 的尺寸編碼 | `sub_19796`／`sub_197C3` 是**保存／還原被蓋住的畫面**，`dx`／`bx` 是像素座標、換算成 VRAM 位址（`45` §2 逐行解過）。這個呼叫端的 `cx` 高低位元組怎麼對到寬高沒逐位對過 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 頭像尺寸 | 軍師頭像的下緣照原版座標會略微超出那個 208×104 的底框；沒有 oracle 可比，先照機器碼畫 | 實測 | evidence-only | — |

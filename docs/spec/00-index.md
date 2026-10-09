@@ -299,6 +299,7 @@
 | C 世界點選、右鍵分派與淡入 | [`247-c-world-interaction.md`](247-c-world-interaction.md) | CONFORMED，八函式／2,148完整狀態／十二錯版 |
 | C 據點輪轉與動畫物件更新 | [`248-c-city-tick.md`](248-c-city-tick.md) | CONFORMED，18函式／8,144完整狀態／十六錯版 |
 | C 自我修改尋路與軍團潰散 | [`249-c-route.md`](249-c-route.md) | CONFORMED，九函式／一raw／4,588完整狀態／十六錯版 |
+| C 自動戰鬥與據點易主 | [`250-c-battle-outcome.md`](250-c-battle-outcome.md) | CONFORMED，21函式／8,364完整狀態／二十錯版 |
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的
    現況反寫規格，那只會把既有的偏差固定下來。

@@ -51,6 +51,10 @@
 - 新增79指令／179bytes後，整檔25,078指令／57,045bytes來源重建67,099-byte EXE完全相同；來源與收據分開，所有supplement維持完整檔案SHA-256驗證。
 - 已回填[re/65](65-ai-march-decision-chain.md)、[spec/192](../spec/192-route-cost-model.md)及[spec/46](../spec/46-post-battle-retreat.md)。舊成本模型列`oq-2ef4b20c0b00482c0266`原為merge-target／Issue#3，舊說明「佇列結構與其他成本項沒逐條讀」已由本輪來源取代；原列完整內容仍可由Git基準4324137回查。Issue#3的Go等距／tie-break問題與遠端Issue狀態未改。
 
+## 戰後閉包的後續原生 C 證據
+
+戰後閉包已由原生 C 驗證。`sub_196CF`的原始`0x196CF`與自動判定、易主或小地圖依賴已由固定raw狀態與原版／C完整比較核對，見[re/130](130-c-battle-outcome-restoration.md)。含玩家勢力滅亡的原SS／SP恢復及caller不續行；這不代證Go完整交戰、正常玩家長程或原C機器碼。較早收據保留原範圍。
+
 ## 未解範圍
 
 | 項目 | 限制 |

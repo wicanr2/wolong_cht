@@ -29,7 +29,7 @@ Android 不在這次桌面修正版範圍。
 比對式反編譯的來源與證據也保存在本 repo：
 
 - [完整組語指令來源](tools/c_recovery/KI.code.S)與 [linker script](tools/c_recovery/KI.code.ld)：25,078 條指令逐 byte 匹配。非指令資料由本機原版匯入，重建入口為 [`tools/matching_code_record.sh`](tools/matching_code_record.sh)，驗證紀錄見 [re/90](docs/re/90-assembly-reconstruction.md#7-版控程式碼與冷重建紀錄)。
-- [C 來源](tools/c_recovery/)與 [函式台帳](docs/re/c-recovery-status.json)：410 個函式通過各自記錄的局部行為比較。C 機器碼匹配與完整玩家流程仍待驗證。
+- [C 來源](tools/c_recovery/)與 [函式台帳](docs/re/c-recovery-status.json)：431 個函式通過各自記錄的局部行為比較。C 機器碼匹配與完整玩家流程仍待驗證。
 
 ⭐ **靜態反組譯收斂**：739 支函式每一支都有 `docs/re/` 筆記
 （[`docs/re/21`](docs/re/21-function-census.md)）。那代表「每一支都有人寫過」，
@@ -102,7 +102,7 @@ Android 不在這次桌面修正版範圍。
 | ⭐ **狀態層**（原版記憶體 vs remake 解出來的存檔）| 四張表全部逐欄比過：軍團表八支的每一欄，以及**勢力 22 × 13 ＋ 據點 192 × 17 ＋ 武將 122 × 16 ＝ 5,502 個欄位一個都不差**——含兩個 remake 自己算出來的衍生值（武將評價、旗標 byte）。畫面相同只證明畫得一樣，這一份證明**讀得一樣** | [`playtest/71`](docs/playtest/71-corps-table-parity.md)、[`playtest/77`](docs/playtest/77-state-table-parity.md) |
 | ⭐ **AI 決策軌跡**（原版執行期 vs remake 規則層）| 攔原版所有事件的共用出口（`sub_12FBF`），拿到「誰在哪一天決定了什麼」：**事件種類、參數形狀與每月量級一致**，都在月結觸發。原版 196 年 5 月 1 日**曹操對呂布宣戰**，劇本一的主線 | [`playtest/78`](docs/playtest/78-ai-decision-trace.md) |
 | 音訊 | 會出聲、場景對應已解、與原版錄音比對過；**音色的諧波結構沒量化比對** | [`spec/29`](docs/spec/29-audio.md) |
-| 規則規格 | **235 份**（不含索引與 `TEMPLATE.md`，含研究用 C 契約）：**230 CONFORMED**／4 READY／1 DRAFT | [`spec/00`](docs/spec/00-index.md) |
+| 規則規格 | **236 份**（不含索引與 `TEMPLATE.md`，含研究用 C 契約）：**231 CONFORMED**／4 READY／1 DRAFT | [`spec/00`](docs/spec/00-index.md) |
 | 反組譯 | 739/739 支有筆記；`docs/re/43` 目前主表有 **799 列**，另列 6 筆 DOS／BIOS 平台層 | [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
 | 全專案的未解 | **805 列**（主表 799 列，另有 6 列 DOS／BIOS 平台層不計入主表）。⚠ **這個數字比較接近「文件有多少份」**——主表分布在 341 份文件、平均每份 2.3 列，而每寫一份新文件就可能帶進自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
 

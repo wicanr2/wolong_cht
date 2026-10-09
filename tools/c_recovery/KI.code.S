@@ -6305,23 +6305,23 @@ ret
 .org 0xee7
 sub_10CE7:
 # IDA 0x10ce7; file 0xee7; locator=proven; push    ax
-# ⚠ 函式 sub_10CE7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CE7; [proven] 原AX=0202提示包裝並保存AX，只驗平台I/O契約; 出處: docs/re/130-c-battle-outcome-restoration.md
 push ax
 .org 0xee8
 # IDA 0x10ce8; file 0xee8; locator=proven; mov     ax, 202h
-# ⚠ 函式 sub_10CE7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CE7; [proven] 原AX=0202提示包裝並保存AX，只驗平台I/O契約; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ax, 0x202
 .org 0xeeb
 # IDA 0x10ceb; file 0xeeb; locator=proven; call    sub_1EB11
-# ⚠ 函式 sub_10CE7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CE7; [proven] 原AX=0202提示包裝並保存AX，只驗平台I/O契約; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .-8666
 .org 0xeee
 # IDA 0x10cee; file 0xeee; locator=proven; pop     ax
-# ⚠ 函式 sub_10CE7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CE7; [proven] 原AX=0202提示包裝並保存AX，只驗平台I/O契約; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop ax
 .org 0xeef
 # IDA 0x10cef; file 0xeef; locator=proven; retn
-# ⚠ 函式 sub_10CE7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_10CE7; [proven] 原AX=0202提示包裝並保存AX，只驗平台I/O契約; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x188b
 loc_1168B:
@@ -24346,99 +24346,100 @@ ret
 .org 0x4436
 sub_14236:
 # IDA 0x14236; file 0x4436; locator=proven; push    ds
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
 push ds
 .org 0x4437
 # IDA 0x14237; file 0x4437; locator=proven; push    cx
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
 push cx
 .org 0x4438
 # IDA 0x14238; file 0x4438; locator=proven; push    si
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
 push si
 .org 0x4439
 # IDA 0x14239; file 0x4439; locator=proven; mov     ds, cs:word_10D52
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
 cs; mov ds, word ptr [0xd52]
 .org 0x443e
 # IDA 0x1423e; file 0x443e; locator=proven; mov     si, 840h
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov si, 0x840
 .org 0x4441
 # IDA 0x14241; file 0x4441; locator=proven; mov     cx, 0C0h
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov cx, 0xc0
 .org 0x4444
 loc_14244:
 # IDA 0x14244; file 0x4444; locator=proven; cmp     al, [si+1]
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp al, byte ptr [si+0x1]
 .org 0x4447
 # IDA 0x14247; file 0x4447; locator=proven; jz      short loc_1424E
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+7
 .org 0x4449
 # IDA 0x14249; file 0x4449; locator=proven; cmp     ah, [si+1]
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp ah, byte ptr [si+0x1]
 .org 0x444c
 # IDA 0x1424c; file 0x444c; locator=proven; jnz     short loc_1425E
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnz .+18
 .org 0x444e
 loc_1424E:
 # IDA 0x1424e; file 0x444e; locator=proven; cmp     al, [si+1Ah]
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp al, byte ptr [si+0x1a]
 .org 0x4451
 # IDA 0x14251; file 0x4451; locator=proven; jz      short loc_14258
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+7
 .org 0x4453
 # IDA 0x14253; file 0x4453; locator=proven; cmp     ah, [si+1Ah]
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp ah, byte ptr [si+0x1a]
 .org 0x4456
 # IDA 0x14256; file 0x4456; locator=proven; jnz     short loc_1425E
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnz .+8
 .org 0x4458
 loc_14258:
 # IDA 0x14258; file 0x4458; locator=proven; mov     ch, [si+1]
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ch, byte ptr [si+0x1]
 .org 0x445b
 # IDA 0x1425b; file 0x445b; locator=proven; mov     [si+1Ah], ch
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
+# operand 0 [si+1Ah]; [proven] owner pair符合時同步city+1A歷史欄位; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov byte ptr [si+0x1a], ch
 .org 0x445e
 loc_1425E:
 # IDA 0x1425e; file 0x445e; locator=proven; add     si, 20h
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
 add si, 0x20
 .org 0x4461
 # IDA 0x14261; file 0x4461; locator=proven; dec     cl
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
 dec cl
 .org 0x4463
 # IDA 0x14263; file 0x4463; locator=proven; jnz     short loc_14244
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnz .-31
 .org 0x4465
 # IDA 0x14265; file 0x4465; locator=proven; pop     si
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop si
 .org 0x4466
 # IDA 0x14266; file 0x4466; locator=proven; pop     cx
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop cx
 .org 0x4467
 # IDA 0x14267; file 0x4467; locator=proven; pop     ds
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop ds
 .org 0x4468
 # IDA 0x14268; file 0x4468; locator=proven; retn
-# ⚠ 函式 sub_14236; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14236; [proven] 原192據點owner pair符合時將+1A同步目前owner; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x4469
 sub_14269:
@@ -26728,220 +26729,222 @@ ret
 .org 0x494a
 sub_1474A:
 # IDA 0x1474a; file 0x494a; locator=proven; push    ax
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 push ax
 .org 0x494b
 # IDA 0x1474b; file 0x494b; locator=proven; push    bx
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 push bx
 .org 0x494c
 # IDA 0x1474c; file 0x494c; locator=proven; push    cx
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 push cx
 .org 0x494d
 # IDA 0x1474d; file 0x494d; locator=proven; push    dx
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 push dx
 .org 0x494e
 # IDA 0x1474e; file 0x494e; locator=proven; call    sub_16FD2
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+10372
 .org 0x4951
 # IDA 0x14751; file 0x4951; locator=proven; cmp     byte ptr [si+6], 0
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp byte ptr [si+0x6], 0x0
 .org 0x4955
 # IDA 0x14755; file 0x4955; locator=proven; jz      short loc_147B5
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+96
 .org 0x4957
 # IDA 0x14757; file 0x4957; locator=proven; cmp     byte ptr [si+29h], 0
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp byte ptr [si+0x29], 0x0
 .org 0x495b
 # IDA 0x1475b; file 0x495b; locator=proven; jz      short loc_147B5
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+90
 .org 0x495d
 # IDA 0x1475d; file 0x495d; locator=proven; and     cl, cl
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} and cl, cl
 .org 0x495f
 # IDA 0x1475f; file 0x495f; locator=proven; jz      short loc_147AB
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+76
 .org 0x4961
 # IDA 0x14761; file 0x4961; locator=proven; mov     bx, [si+0Eh]
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov bx, word ptr [si+0xe]
 .org 0x4964
 # IDA 0x14764; file 0x4964; locator=proven; cmp     bx, 600h
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp bx, 0x600
 .org 0x4968
 # IDA 0x14768; file 0x4968; locator=proven; jnb     short loc_14777
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnb .+15
 .org 0x496a
 # IDA 0x1476a; file 0x496a; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl bx, 0x1
 .org 0x496c
 # IDA 0x1476c; file 0x496c; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl bx, 0x1
 .org 0x496e
 # IDA 0x1476e; file 0x496e; locator=proven; mov     al, [bx+841h]
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, byte ptr [bx+0x841]
 .org 0x4972
 # IDA 0x14772; file 0x4972; locator=proven; cmp     al, [si+1]
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp al, byte ptr [si+0x1]
 .org 0x4975
 # IDA 0x14775; file 0x4975; locator=proven; jz      short loc_147AB
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
+# operand 0 loc_147AB; [proven] 目前在己方據點上則停留，不呼叫退路搜尋; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+54
 .org 0x4977
 loc_14777:
 # IDA 0x14777; file 0x4977; locator=proven; call    sub_1487B
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+260
 .org 0x497a
 # IDA 0x1477a; file 0x497a; locator=proven; jb      short loc_147B5
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 jb .+59
 .org 0x497c
 # IDA 0x1477c; file 0x497c; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x497e
 # IDA 0x1477e; file 0x497e; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x4980
 # IDA 0x14780; file 0x4980; locator=proven; mov     [si+14h], bx
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov word ptr [si+0x14], bx
 .org 0x4983
 # IDA 0x14783; file 0x4983; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x4985
 # IDA 0x14785; file 0x4985; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x4987
 # IDA 0x14787; file 0x4987; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x4989
 # IDA 0x14789; file 0x4989; locator=proven; mov     [si+20h], bl
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov byte ptr [si+0x20], bl
 .org 0x498c
 # IDA 0x1478c; file 0x498c; locator=proven; or      byte ptr [si], 2
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 or byte ptr [si], 0x2
 .org 0x498f
 # IDA 0x1478f; file 0x498f; locator=proven; cmp     word ptr [si+4], 12Ch
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
+# operand 1 12Ch; [proven] 退卻後兵力word門檻300; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp word ptr [si+0x4], 0x12c
 .org 0x4994
 # IDA 0x14794; file 0x4994; locator=proven; jbe     short loc_147A5
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 jbe .+17
 .org 0x4996
 # IDA 0x14796; file 0x4996; locator=proven; mov     ah, [si+1]
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ah, byte ptr [si+0x1]
 .org 0x4999
 # IDA 0x14799; file 0x4999; locator=proven; xor     al, al
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor al, al
 .org 0x499b
 # IDA 0x1479b; file 0x499b; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr ax, 0x1
 .org 0x499d
 # IDA 0x1479d; file 0x499d; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr ax, 0x1
 .org 0x499f
 # IDA 0x1479f; file 0x499f; locator=proven; xchg    ax, bx
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 xchg ax, bx
 .org 0x49a0
 # IDA 0x147a0; file 0x49a0; locator=proven; cmp     al, [bx+3]
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp al, byte ptr [bx+0x3]
 .org 0x49a3
 # IDA 0x147a3; file 0x49a3; locator=proven; jnz     short loc_147AB
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnz .+8
 .org 0x49a5
 loc_147A5:
 # IDA 0x147a5; file 0x49a5; locator=proven; mov     byte ptr [si+23h], 0Ah
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov byte ptr [si+0x23], 0xa
 .org 0x49a9
 # IDA 0x147a9; file 0x49a9; locator=proven; jmp     short loc_147AF
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 jmp .+6
 .org 0x49ab
 loc_147AB:
 # IDA 0x147ab; file 0x49ab; locator=proven; mov     byte ptr [si+23h], 8
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov byte ptr [si+0x23], 0x8
 .org 0x49af
 loc_147AF:
 # IDA 0x147af; file 0x49af; locator=proven; clc
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 clc
 .org 0x49b0
 # IDA 0x147b0; file 0x49b0; locator=proven; pop     dx
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop dx
 .org 0x49b1
 # IDA 0x147b1; file 0x49b1; locator=proven; pop     cx
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop cx
 .org 0x49b2
 # IDA 0x147b2; file 0x49b2; locator=proven; pop     bx
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop bx
 .org 0x49b3
 # IDA 0x147b3; file 0x49b3; locator=proven; pop     ax
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop ax
 .org 0x49b4
 # IDA 0x147b4; file 0x49b4; locator=proven; retn
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x49b5
 loc_147B5:
 # IDA 0x147b5; file 0x49b5; locator=proven; stc
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 stc
 .org 0x49b6
 # IDA 0x147b6; file 0x49b6; locator=proven; pop     dx
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop dx
 .org 0x49b7
 # IDA 0x147b7; file 0x49b7; locator=proven; pop     cx
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop cx
 .org 0x49b8
 # IDA 0x147b8; file 0x49b8; locator=proven; pop     bx
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop bx
 .org 0x49b9
 # IDA 0x147b9; file 0x49b9; locator=proven; pop     ax
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop ax
 .org 0x49ba
 # IDA 0x147ba; file 0x49ba; locator=proven; retn
-# ⚠ 函式 sub_1474A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1474A; [proven] 原戰後重算、零士氣/大將CF、己方據點停留及退卻300/首都門檻; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x49bb
 sub_147BB:
@@ -29362,680 +29365,685 @@ ret
 .org 0x4ef3
 sub_14CF3:
 # IDA 0x14cf3; file 0x4ef3; locator=proven; mov     bh, al
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov bh, al
 .org 0x4ef5
 # IDA 0x14cf5; file 0x4ef5; locator=proven; xchg    bh, [si+1]
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 xchg bh, byte ptr [si+0x1]
 .org 0x4ef8
 # IDA 0x14cf8; file 0x4ef8; locator=proven; mov     [si+1Ah], bh
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov byte ptr [si+0x1a], bh
 .org 0x4efb
 # IDA 0x14cfb; file 0x4efb; locator=proven; push    ax
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 push ax
 .org 0x4efc
 # IDA 0x14cfc; file 0x4efc; locator=proven; cmp     bh, 18h
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp bh, 0x18
 .org 0x4eff
 # IDA 0x14cff; file 0x4eff; locator=proven; jz      short loc_14D21
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+34
 .org 0x4f01
 # IDA 0x14d01; file 0x4f01; locator=proven; call    sub_14D63
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+98
 .org 0x4f04
 # IDA 0x14d04; file 0x4f04; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor bl, bl
 .org 0x4f06
 # IDA 0x14d06; file 0x4f06; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x4f08
 # IDA 0x14d08; file 0x4f08; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x4f0a
 # IDA 0x14d0a; file 0x4f0a; locator=proven; dec     byte ptr [bx+23h]
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
+# operand 0 byte ptr [bx+23h]; [proven] 舊勢力據點數byte減一; 出處: docs/re/130-c-battle-outcome-restoration.md
 dec byte ptr [bx+0x23]
 .org 0x4f0d
 # IDA 0x14d0d; file 0x4f0d; locator=proven; call    sub_14DF0
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+227
 .org 0x4f10
 # IDA 0x14d10; file 0x4f10; locator=proven; pushf
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 pushf
 .org 0x4f11
 # IDA 0x14d11; file 0x4f11; locator=proven; cmp     byte ptr [bp+0FEh], 0
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp byte ptr [bp+0xfe], 0x0
 .org 0x4f16
 # IDA 0x14d16; file 0x4f16; locator=proven; jz      short loc_14D1B
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+5
 .org 0x4f18
 # IDA 0x14d18; file 0x4f18; locator=proven; call    sub_14DA4
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
+# operand 0 sub_14DA4; [proven] 先依新的首都重導舊軍團，原PUSHF/POPF保留遷都CF; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+140
 .org 0x4f1b
 loc_14D1B:
 # IDA 0x14d1b; file 0x4f1b; locator=proven; popf
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 popf
 .org 0x4f1c
 # IDA 0x14d1c; file 0x4f1c; locator=proven; jnb     short loc_14D21
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnb .+5
 .org 0x4f1e
 # IDA 0x14d1e; file 0x4f1e; locator=proven; call    sub_14FCE
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+688
 .org 0x4f21
 loc_14D21:
 # IDA 0x14d21; file 0x4f21; locator=proven; pop     ax
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop ax
 .org 0x4f22
 # IDA 0x14d22; file 0x4f22; locator=proven; mov     bh, al
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov bh, al
 .org 0x4f24
 # IDA 0x14d24; file 0x4f24; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor bl, bl
 .org 0x4f26
 # IDA 0x14d26; file 0x4f26; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x4f28
 # IDA 0x14d28; file 0x4f28; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x4f2a
 # IDA 0x14d2a; file 0x4f2a; locator=proven; inc     byte ptr [bx+23h]
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
+# operand 0 byte ptr [bx+23h]; [proven] 新勢力據點數byte加一，玩家nonlocal退出時不續至此; 出處: docs/re/130-c-battle-outcome-restoration.md
 inc byte ptr [bx+0x23]
 .org 0x4f2d
 # IDA 0x14d2d; file 0x4f2d; locator=proven; call    sub_18A1E
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+15601
 .org 0x4f30
 # IDA 0x14d30; file 0x4f30; locator=proven; call    sub_188CC
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+15260
 .org 0x4f33
 # IDA 0x14d33; file 0x4f33; locator=proven; test    cs:byte_198A6, 4
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 cs; test byte ptr [0x98a6], 0x4
 .org 0x4f39
 # IDA 0x14d39; file 0x4f39; locator=proven; jz      short locret_14D62
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+41
 .org 0x4f3b
 # IDA 0x14d3b; file 0x4f3b; locator=proven; mov     cx, ds
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov cx, ds
 .org 0x4f3d
 # IDA 0x14d3d; file 0x4f3d; locator=proven; mov     ax, cs
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ax, cs
 .org 0x4f3f
 # IDA 0x14d3f; file 0x4f3f; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ds, ax
 .org 0x4f41
 # IDA 0x14d41; file 0x4f41; locator=proven; call    sub_15CA4
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+3939
 .org 0x4f44
 # IDA 0x14d44; file 0x4f44; locator=proven; mov     ds, cx
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ds, cx
 .org 0x4f46
 # IDA 0x14d46; file 0x4f46; locator=proven; mov     dx, [si+8]
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov dx, word ptr [si+0x8]
 .org 0x4f49
 # IDA 0x14d49; file 0x4f49; locator=proven; mov     bx, [si+0Ah]
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov bx, word ptr [si+0xa]
 .org 0x4f4c
 # IDA 0x14d4c; file 0x4f4c; locator=proven; call    sub_19656
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+18698
 .org 0x4f4f
 # IDA 0x14d4f; file 0x4f4f; locator=proven; call    sub_15CE0
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+3985
 .org 0x4f52
 # IDA 0x14d52; file 0x4f52; locator=proven; mov     dx, [si+8]
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov dx, word ptr [si+0x8]
 .org 0x4f55
 # IDA 0x14d55; file 0x4f55; locator=proven; mov     bx, [si+0Ah]
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov bx, word ptr [si+0xa]
 .org 0x4f58
 # IDA 0x14d58; file 0x4f58; locator=proven; call    sub_195C9
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+18545
 .org 0x4f5b
 # IDA 0x14d5b; file 0x4f5b; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ds, ax
 .org 0x4f5d
 # IDA 0x14d5d; file 0x4f5d; locator=proven; call    sub_15C58
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+3835
 .org 0x4f60
 # IDA 0x14d60; file 0x4f60; locator=proven; mov     ds, cx
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ds, cx
 .org 0x4f62
 locret_14D62:
 # IDA 0x14d62; file 0x4f62; locator=proven; retn
-# ⚠ 函式 sub_14CF3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14CF3; [proven] 原據點易主、卸官、兩方據點數、遷都、軍團轉向及小地圖閉包; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x4f63
 sub_14D63:
 # IDA 0x14d63; file 0x4f63; locator=proven; cmp     byte ptr [si+19h], 0FFh
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp byte ptr [si+0x19], 0xff
 .org 0x4f67
 # IDA 0x14d67; file 0x4f67; locator=proven; jz      short locret_14DA3
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+60
 .org 0x4f69
 # IDA 0x14d69; file 0x4f69; locator=proven; push    ax
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 push ax
 .org 0x4f6a
 # IDA 0x14d6a; file 0x4f6a; locator=proven; push    bx
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 push bx
 .org 0x4f6b
 # IDA 0x14d6b; file 0x4f6b; locator=proven; push    cx
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 push cx
 .org 0x4f6c
 # IDA 0x14d6c; file 0x4f6c; locator=proven; push    di
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 push di
 .org 0x4f6d
 # IDA 0x14d6d; file 0x4f6d; locator=proven; mov     bh, 0FFh
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov bh, 0xff
 .org 0x4f6f
 # IDA 0x14d6f; file 0x4f6f; locator=proven; xchg    bh, [si+19h]
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 xchg bh, byte ptr [si+0x19]
 .org 0x4f72
 # IDA 0x14d72; file 0x4f72; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor bl, bl
 .org 0x4f74
 # IDA 0x14d74; file 0x4f74; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x4f76
 # IDA 0x14d76; file 0x4f76; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x4f78
 # IDA 0x14d78; file 0x4f78; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x4f7a
 # IDA 0x14d7a; file 0x4f7a; locator=proven; add     bx, 4240h
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 add bx, 0x4240
 .org 0x4f7e
 # IDA 0x14d7e; file 0x4f7e; locator=proven; mov     byte ptr [bx+17h], 0
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
+# operand 0 byte ptr [bx+17h]; [proven] 卸任原內政官duty設0; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov byte ptr [bx+0x17], 0x0
 .org 0x4f82
 # IDA 0x14d82; file 0x4f82; locator=proven; push    bx
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 push bx
 .org 0x4f83
 # IDA 0x14d83; file 0x4f83; locator=proven; push    si
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 push si
 .org 0x4f84
 # IDA 0x14d84; file 0x4f84; locator=proven; mov     di, sp
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov di, sp
 .org 0x4f86
 # IDA 0x14d86; file 0x4f86; locator=proven; call    sub_10CE7
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .-16543
 .org 0x4f89
 # IDA 0x14d89; file 0x4f89; locator=proven; mov     cx, 44h
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov cx, 0x44
 .org 0x4f8c
 # IDA 0x14d8c; file 0x4f8c; locator=proven; mov     al, 93h
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, 0x93
 .org 0x4f8e
 # IDA 0x14d8e; file 0x4f8e; locator=proven; call    sub_18810
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+14978
 .org 0x4f91
 # IDA 0x14d91; file 0x4f91; locator=proven; pop     si
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop si
 .org 0x4f92
 # IDA 0x14d92; file 0x4f92; locator=proven; pop     bx
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop bx
 .org 0x4f93
 # IDA 0x14d93; file 0x4f93; locator=proven; mov     cx, 1A6h
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov cx, 0x1a6
 .org 0x4f96
 # IDA 0x14d96; file 0x4f96; locator=proven; mov     ah, [bx+1Eh]
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ah, byte ptr [bx+0x1e]
 .org 0x4f99
 # IDA 0x14d99; file 0x4f99; locator=proven; mov     al, [bx+1]
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, byte ptr [bx+0x1]
 .org 0x4f9c
 # IDA 0x14d9c; file 0x4f9c; locator=proven; call    sub_18810
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+14964
 .org 0x4f9f
 # IDA 0x14d9f; file 0x4f9f; locator=proven; pop     di
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop di
 .org 0x4fa0
 # IDA 0x14da0; file 0x4fa0; locator=proven; pop     cx
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop cx
 .org 0x4fa1
 # IDA 0x14da1; file 0x4fa1; locator=proven; pop     bx
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop bx
 .org 0x4fa2
 # IDA 0x14da2; file 0x4fa2; locator=proven; pop     ax
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop ax
 .org 0x4fa3
 locret_14DA3:
 # IDA 0x14da3; file 0x4fa3; locator=proven; retn
-# ⚠ 函式 sub_14D63; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14D63; [proven] 原據點內政官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x4fa4
 sub_14DA4:
 # IDA 0x14da4; file 0x4fa4; locator=proven; push    bx
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 push bx
 .org 0x4fa5
 # IDA 0x14da5; file 0x4fa5; locator=proven; push    si
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 push si
 .org 0x4fa6
 # IDA 0x14da6; file 0x4fa6; locator=proven; push    bp
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 push bp
 .org 0x4fa7
 # IDA 0x14da7; file 0x4fa7; locator=proven; mov     al, [si+1]
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, byte ptr [si+0x1]
 .org 0x4faa
 # IDA 0x14daa; file 0x4faa; locator=proven; mov     si, [bp+0]
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov si, word ptr [bp]
 .org 0x4fad
 # IDA 0x14dad; file 0x4fad; locator=proven; push    ax
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 push ax
 .org 0x4fae
 # IDA 0x14dae; file 0x4fae; locator=proven; call    sub_1487B
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .-1331
 .org 0x4fb1
 # IDA 0x14db1; file 0x4fb1; locator=proven; pop     ax
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop ax
 .org 0x4fb2
 # IDA 0x14db2; file 0x4fb2; locator=proven; jb      short loc_14DDC
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 jb .+42
 .org 0x4fb4
 # IDA 0x14db4; file 0x4fb4; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x4fb6
 # IDA 0x14db6; file 0x4fb6; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x4fb8
 # IDA 0x14db8; file 0x4fb8; locator=proven; mov     dx, bx
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov dx, bx
 .org 0x4fba
 # IDA 0x14dba; file 0x4fba; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x4fbc
 # IDA 0x14dbc; file 0x4fbc; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x4fbe
 # IDA 0x14dbe; file 0x4fbe; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x4fc0
 # IDA 0x14dc0; file 0x4fc0; locator=proven; mov     cl, [bp+0FEh]
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov cl, byte ptr [bp+0xfe]
 .org 0x4fc4
 # IDA 0x14dc4; file 0x4fc4; locator=proven; xor     ch, ch
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor ch, ch
 .org 0x4fc6
 loc_14DC6:
 # IDA 0x14dc6; file 0x4fc6; locator=proven; mov     si, [bp+0]
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov si, word ptr [bp]
 .org 0x4fc9
 # IDA 0x14dc9; file 0x4fc9; locator=proven; mov     [si+20h], bl
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov byte ptr [si+0x20], bl
 .org 0x4fcc
 # IDA 0x14dcc; file 0x4fcc; locator=proven; mov     [si+14h], dx
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov word ptr [si+0x14], dx
 .org 0x4fcf
 # IDA 0x14dcf; file 0x4fcf; locator=proven; mov     byte ptr [si+0Bh], 1
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov byte ptr [si+0xb], 0x1
 .org 0x4fd3
 # IDA 0x14dd3; file 0x4fd3; locator=proven; or      byte ptr [si], 2
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 or byte ptr [si], 0x2
 .org 0x4fd6
 # IDA 0x14dd6; file 0x4fd6; locator=proven; inc     bp
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 inc bp
 .org 0x4fd7
 # IDA 0x14dd7; file 0x4fd7; locator=proven; inc     bp
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 inc bp
 .org 0x4fd8
 # IDA 0x14dd8; file 0x4fd8; locator=proven; loop    loc_14DC6
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 loop .-18
 .org 0x4fda
 # IDA 0x14dda; file 0x4fda; locator=proven; jmp     short loc_14DEC
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 jmp .+18
 .org 0x4fdc
 loc_14DDC:
 # IDA 0x14ddc; file 0x4fdc; locator=proven; mov     cl, [bp+0FEh]
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov cl, byte ptr [bp+0xfe]
 .org 0x4fe0
 # IDA 0x14de0; file 0x4fe0; locator=proven; xor     ch, ch
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor ch, ch
 .org 0x4fe2
 loc_14DE2:
 # IDA 0x14de2; file 0x4fe2; locator=proven; mov     si, [bp+0]
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov si, word ptr [bp]
 .org 0x4fe5
 # IDA 0x14de5; file 0x4fe5; locator=proven; call    sub_1291A
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .-9419
 .org 0x4fe8
 # IDA 0x14de8; file 0x4fe8; locator=proven; inc     bp
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 inc bp
 .org 0x4fe9
 # IDA 0x14de9; file 0x4fe9; locator=proven; inc     bp
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 inc bp
 .org 0x4fea
 # IDA 0x14dea; file 0x4fea; locator=proven; loop    loc_14DE2
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 loop .-8
 .org 0x4fec
 loc_14DEC:
 # IDA 0x14dec; file 0x4fec; locator=proven; pop     bp
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop bp
 .org 0x4fed
 # IDA 0x14ded; file 0x4fed; locator=proven; pop     si
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop si
 .org 0x4fee
 # IDA 0x14dee; file 0x4fee; locator=proven; pop     bx
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop bx
 .org 0x4fef
 # IDA 0x14def; file 0x4fef; locator=proven; retn
-# ⚠ 函式 sub_14DA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DA4; [proven] 原SS軍團列表依新首都方向重導或潰散; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x4ff0
 sub_14DF0:
 # IDA 0x14df0; file 0x4ff0; locator=proven; push    bx
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 push bx
 .org 0x4ff1
 # IDA 0x14df1; file 0x4ff1; locator=proven; push    cx
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 push cx
 .org 0x4ff2
 # IDA 0x14df2; file 0x4ff2; locator=proven; push    di
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 push di
 .org 0x4ff3
 # IDA 0x14df3; file 0x4ff3; locator=proven; mov     ax, si
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov ax, si
 .org 0x4ff5
 # IDA 0x14df5; file 0x4ff5; locator=proven; sub     ax, 840h
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 sub ax, 0x840
 .org 0x4ff8
 # IDA 0x14df8; file 0x4ff8; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl ax, 0x1
 .org 0x4ffa
 # IDA 0x14dfa; file 0x4ffa; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl ax, 0x1
 .org 0x4ffc
 # IDA 0x14dfc; file 0x4ffc; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl ax, 0x1
 .org 0x4ffe
 # IDA 0x14dfe; file 0x4ffe; locator=proven; cmp     ah, [bx+3]
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp ah, byte ptr [bx+0x3]
 .org 0x5001
 # IDA 0x14e01; file 0x5001; locator=proven; jnz     short loc_14E4B
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnz .+74
 .org 0x5003
 # IDA 0x14e03; file 0x5003; locator=proven; mov     ax, bx
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov ax, bx
 .org 0x5005
 # IDA 0x14e05; file 0x5005; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl ax, 0x1
 .org 0x5007
 # IDA 0x14e07; file 0x5007; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl ax, 0x1
 .org 0x5009
 # IDA 0x14e09; file 0x5009; locator=proven; mov     al, ah
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov al, ah
 .org 0x500b
 # IDA 0x14e0b; file 0x500b; locator=proven; call    sub_16A3D
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+7218
 .org 0x500e
 # IDA 0x14e0e; file 0x500e; locator=proven; jb      short loc_14E50
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 jb .+66
 .org 0x5010
 # IDA 0x14e10; file 0x5010; locator=proven; sub     ax, 840h
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 sub ax, 0x840
 .org 0x5013
 # IDA 0x14e13; file 0x5013; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl ax, 0x1
 .org 0x5015
 # IDA 0x14e15; file 0x5015; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl ax, 0x1
 .org 0x5017
 # IDA 0x14e17; file 0x5017; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl ax, 0x1
 .org 0x5019
 # IDA 0x14e19; file 0x5019; locator=proven; mov     al, ah
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov al, ah
 .org 0x501b
 # IDA 0x14e1b; file 0x501b; locator=proven; xchg    ah, [bx+3]
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 xchg ah, byte ptr [bx+0x3]
 .org 0x501e
 # IDA 0x14e1e; file 0x501e; locator=proven; mov     cx, bx
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov cx, bx
 .org 0x5020
 # IDA 0x14e20; file 0x5020; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl bx, 0x1
 .org 0x5022
 # IDA 0x14e22; file 0x5022; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl bx, 0x1
 .org 0x5024
 # IDA 0x14e24; file 0x5024; locator=proven; mov     bl, bh
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov bl, bh
 .org 0x5026
 # IDA 0x14e26; file 0x5026; locator=proven; call    sub_14502
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .-2340
 .org 0x5029
 # IDA 0x14e29; file 0x5029; locator=proven; mov     bx, cx
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov bx, cx
 .org 0x502b
 # IDA 0x14e2b; file 0x502b; locator=proven; cmp     bx, cs:word_10CFD
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 cs; cmp bx, word ptr [0xcfd]
 .org 0x5030
 # IDA 0x14e30; file 0x5030; locator=proven; jnz     short loc_14E4B
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnz .+27
 .org 0x5032
 # IDA 0x14e32; file 0x5032; locator=proven; mov     al, [bx+3]
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, byte ptr [bx+0x3]
 .org 0x5035
 # IDA 0x14e35; file 0x5035; locator=proven; mov     ah, 0FFh
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ah, 0xff
 .org 0x5037
 # IDA 0x14e37; file 0x5037; locator=proven; push    ax
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 push ax
 .org 0x5038
 # IDA 0x14e38; file 0x5038; locator=proven; mov     di, sp
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov di, sp
 .org 0x503a
 # IDA 0x14e3a; file 0x503a; locator=proven; call    sub_10CE7
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .-16723
 .org 0x503d
 # IDA 0x14e3d; file 0x503d; locator=proven; mov     al, 93h
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, 0x93
 .org 0x503f
 # IDA 0x14e3f; file 0x503f; locator=proven; mov     cx, 1Eh
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov cx, 0x1e
 .org 0x5042
 # IDA 0x14e42; file 0x5042; locator=proven; call    sub_18810
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+14798
 .org 0x5045
 # IDA 0x14e45; file 0x5045; locator=proven; add     sp, 2
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 add sp, 0x2
 .org 0x5048
 # IDA 0x14e48; file 0x5048; locator=proven; call    sub_15E60
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+4120
 .org 0x504b
 loc_14E4B:
 # IDA 0x14e4b; file 0x504b; locator=proven; clc
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 clc
 .org 0x504c
 # IDA 0x14e4c; file 0x504c; locator=proven; pop     di
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop di
 .org 0x504d
 # IDA 0x14e4d; file 0x504d; locator=proven; pop     cx
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop cx
 .org 0x504e
 # IDA 0x14e4e; file 0x504e; locator=proven; pop     bx
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop bx
 .org 0x504f
 # IDA 0x14e4f; file 0x504f; locator=proven; retn
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x5050
 loc_14E50:
 # IDA 0x14e50; file 0x5050; locator=proven; mov     byte ptr [bx+3], 0FFh
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov byte ptr [bx+0x3], 0xff
 .org 0x5054
 # IDA 0x14e54; file 0x5054; locator=proven; and     byte ptr [bx], 7Fh
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
+# operand 1 7Fh; [proven] 沒有新首都時只清faction bit7; 出處: docs/re/130-c-battle-outcome-restoration.md
 and byte ptr [bx], 0x7f
 .org 0x5057
 # IDA 0x14e57; file 0x5057; locator=proven; stc
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 stc
 .org 0x5058
 # IDA 0x14e58; file 0x5058; locator=proven; pop     di
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop di
 .org 0x5059
 # IDA 0x14e59; file 0x5059; locator=proven; pop     cx
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop cx
 .org 0x505a
 # IDA 0x14e5a; file 0x505a; locator=proven; pop     bx
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop bx
 .org 0x505b
 # IDA 0x14e5b; file 0x505b; locator=proven; retn
-# ⚠ 函式 sub_14DF0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14DF0; [proven] 原失去首都後選新首都，失敗時flags清80h並以CF通知; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x505c
 sub_14E5C:
@@ -30683,470 +30691,472 @@ ret
 .org 0x51ce
 sub_14FCE:
 # IDA 0x14fce; file 0x51ce; locator=proven; push    ax
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 push ax
 .org 0x51cf
 # IDA 0x14fcf; file 0x51cf; locator=proven; push    bx
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 push bx
 .org 0x51d0
 # IDA 0x14fd0; file 0x51d0; locator=proven; push    cx
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 push cx
 .org 0x51d1
 # IDA 0x14fd1; file 0x51d1; locator=proven; push    di
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 push di
 .org 0x51d2
 # IDA 0x14fd2; file 0x51d2; locator=proven; mov     al, [si+1]
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, byte ptr [si+0x1]
 .org 0x51d5
 # IDA 0x14fd5; file 0x51d5; locator=proven; mov     cs:byte_12919, al
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 cs; mov byte ptr [0x2919], al
 .org 0x51d9
 # IDA 0x14fd9; file 0x51d9; locator=proven; and     byte ptr [bx], 7Fh
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 and byte ptr [bx], 0x7f
 .org 0x51dc
 # IDA 0x14fdc; file 0x51dc; locator=proven; cmp     bx, cs:word_10CFD
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 cs; cmp bx, word ptr [0xcfd]
 .org 0x51e1
 # IDA 0x14fe1; file 0x51e1; locator=proven; jnz     short loc_14FE8
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnz .+7
 .org 0x51e3
 # IDA 0x14fe3; file 0x51e3; locator=proven; mov     al, 1
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, 0x1
 .org 0x51e5
 # IDA 0x14fe5; file 0x51e5; locator=proven; call    sub_11CB1
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .-13108
 .org 0x51e8
 loc_14FE8:
 # IDA 0x14fe8; file 0x51e8; locator=proven; dec     cs:byte_10D2A
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
+# operand 0 cs:byte_10D2A; [proven] 非玩家勢力消失後存活勢力數byte減一; 出處: docs/re/130-c-battle-outcome-restoration.md
 cs; dec byte ptr [0xd2a]
 .org 0x51ed
 # IDA 0x14fed; file 0x51ed; locator=proven; call    sub_15074
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+135
 .org 0x51f0
 # IDA 0x14ff0; file 0x51f0; locator=proven; mov     ax, bx
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov ax, bx
 .org 0x51f2
 # IDA 0x14ff2; file 0x51f2; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl ax, 0x1
 .org 0x51f4
 # IDA 0x14ff4; file 0x51f4; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl ax, 0x1
 .org 0x51f6
 # IDA 0x14ff6; file 0x51f6; locator=proven; mov     al, ah
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov al, ah
 .org 0x51f8
 # IDA 0x14ff8; file 0x51f8; locator=proven; mov     ah, cs:byte_12919
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 cs; mov ah, byte ptr [0x2919]
 .org 0x51fd
 # IDA 0x14ffd; file 0x51fd; locator=proven; call    sub_14236
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .-3527
 .org 0x5200
 # IDA 0x15000; file 0x5200; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor ah, ah
 .org 0x5202
 # IDA 0x15002; file 0x5202; locator=proven; mov     di, 4240h
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov di, 0x4240
 .org 0x5205
 # IDA 0x15005; file 0x5205; locator=proven; mov     ch, [bx+1]
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ch, byte ptr [bx+0x1]
 .org 0x5208
 # IDA 0x15008; file 0x5208; locator=proven; xor     cl, cl
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor cl, cl
 .org 0x520a
 loc_1500A:
 # IDA 0x1500a; file 0x520a; locator=proven; cmp     byte ptr [di], 80h
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp byte ptr [di], 0x80
 .org 0x520d
 # IDA 0x1500d; file 0x520d; locator=proven; jb      short loc_15033
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 jb .+38
 .org 0x520f
 # IDA 0x1500f; file 0x520f; locator=proven; cmp     al, [di+1Ch]
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp al, byte ptr [di+0x1c]
 .org 0x5212
 # IDA 0x15012; file 0x5212; locator=proven; jnz     short loc_15033
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnz .+33
 .org 0x5214
 # IDA 0x15014; file 0x5214; locator=proven; cmp     byte ptr [di+1Dh], 0FFh
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp byte ptr [di+0x1d], 0xff
 .org 0x5218
 # IDA 0x15018; file 0x5218; locator=proven; jz      short loc_1501F
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+7
 .org 0x521a
 # IDA 0x1501a; file 0x521a; locator=proven; call    sub_150D7
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+189
 .org 0x521d
 # IDA 0x1501d; file 0x521d; locator=proven; jmp     short loc_15033
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 jmp .+22
 .org 0x521f
 loc_1501F:
 # IDA 0x1501f; file 0x521f; locator=proven; cmp     ch, cl
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} cmp ch, cl
 .org 0x5221
 # IDA 0x15021; file 0x5221; locator=proven; jz      short loc_1502E
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+13
 .org 0x5223
 # IDA 0x15023; file 0x5223; locator=proven; cmp     byte ptr [di+17h], 0
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp byte ptr [di+0x17], 0x0
 .org 0x5227
 # IDA 0x15027; file 0x5227; locator=proven; jz      short loc_1502E
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+7
 .org 0x5229
 # IDA 0x15029; file 0x5229; locator=proven; call    sub_150B4
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+139
 .org 0x522c
 # IDA 0x1502c; file 0x522c; locator=proven; jmp     short loc_15033
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 jmp .+7
 .org 0x522e
 loc_1502E:
 # IDA 0x1502e; file 0x522e; locator=proven; mov     bx, di
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov bx, di
 .org 0x5230
 # IDA 0x15030; file 0x5230; locator=proven; call    sub_129C3
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .-9837
 .org 0x5233
 loc_15033:
 # IDA 0x15033; file 0x5233; locator=proven; add     di, 20h
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 add di, 0x20
 .org 0x5236
 # IDA 0x15036; file 0x5236; locator=proven; inc     cl
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 inc cl
 .org 0x5238
 # IDA 0x15038; file 0x5238; locator=proven; cmp     cl, 7Fh
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp cl, 0x7f
 .org 0x523b
 # IDA 0x1503b; file 0x523b; locator=proven; jb      short loc_1500A
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 jb .-49
 .org 0x523d
 # IDA 0x1503d; file 0x523d; locator=proven; mov     ah, 0FFh
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ah, 0xff
 .org 0x523f
 # IDA 0x1503f; file 0x523f; locator=proven; push    ax
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 push ax
 .org 0x5240
 # IDA 0x15040; file 0x5240; locator=proven; mov     di, sp
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov di, sp
 .org 0x5242
 # IDA 0x15042; file 0x5242; locator=proven; call    sub_10CDE
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .-17252
 .org 0x5245
 # IDA 0x15045; file 0x5245; locator=proven; mov     al, 93h
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, 0x93
 .org 0x5247
 # IDA 0x15047; file 0x5247; locator=proven; mov     cx, 24h
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov cx, 0x24
 .org 0x524a
 # IDA 0x1504a; file 0x524a; locator=proven; call    sub_18810
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+14278
 .org 0x524d
 # IDA 0x1504d; file 0x524d; locator=proven; pop     ax
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop ax
 .org 0x524e
 # IDA 0x1504e; file 0x524e; locator=proven; mov     di, 0
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov di, 0x0
 .org 0x5251
 # IDA 0x15051; file 0x5251; locator=proven; mov     ch, al
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov ch, al
 .org 0x5253
 # IDA 0x15053; file 0x5253; locator=proven; xor     ax, ax
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor ax, ax
 .org 0x5255
 loc_15055:
 # IDA 0x15055; file 0x5255; locator=proven; cmp     byte ptr [di], 80h
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp byte ptr [di], 0x80
 .org 0x5258
 # IDA 0x15058; file 0x5258; locator=proven; jb      short loc_15066
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 jb .+14
 .org 0x525a
 # IDA 0x1505a; file 0x525a; locator=proven; cmp     ch, [di+19h]
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp ch, byte ptr [di+0x19]
 .org 0x525d
 # IDA 0x1505d; file 0x525d; locator=proven; jnz     short loc_15066
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnz .+9
 .org 0x525f
 # IDA 0x1505f; file 0x525f; locator=proven; mov     byte ptr [di+19h], 0FFh
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov byte ptr [di+0x19], 0xff
 .org 0x5263
 # IDA 0x15063; file 0x5263; locator=proven; call    sub_13669
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .-6650
 .org 0x5266
 loc_15066:
 # IDA 0x15066; file 0x5266; locator=proven; add     di, 40h
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 add di, 0x40
 .org 0x5269
 # IDA 0x15069; file 0x5269; locator=proven; inc     al
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 inc al
 .org 0x526b
 # IDA 0x1506b; file 0x526b; locator=proven; cmp     al, 16h
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp al, 0x16
 .org 0x526d
 # IDA 0x1506d; file 0x526d; locator=proven; jb      short loc_15055
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 jb .-24
 .org 0x526f
 # IDA 0x1506f; file 0x526f; locator=proven; pop     di
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop di
 .org 0x5270
 # IDA 0x15070; file 0x5270; locator=proven; pop     cx
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop cx
 .org 0x5271
 # IDA 0x15071; file 0x5271; locator=proven; pop     bx
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop bx
 .org 0x5272
 # IDA 0x15072; file 0x5272; locator=proven; pop     ax
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop ax
 .org 0x5273
 # IDA 0x15073; file 0x5273; locator=proven; retn
-# ⚠ 函式 sub_14FCE; [unknown] 未附加語意; 出處: 無
+# 函式 sub_14FCE; [proven] 原勢力滅亡；玩家立即恢復outer frame退出，其他勢力收回官員與協同狀態; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x5274
 sub_15074:
 # IDA 0x15074; file 0x5274; locator=proven; cmp     byte ptr [bx+2Ah], 0FFh
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp byte ptr [bx+0x2a], 0xff
 .org 0x5278
 # IDA 0x15078; file 0x5278; locator=proven; jz      short locret_150B3
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+59
 .org 0x527a
 # IDA 0x1507a; file 0x527a; locator=proven; push    ax
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 push ax
 .org 0x527b
 # IDA 0x1507b; file 0x527b; locator=proven; push    bx
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 push bx
 .org 0x527c
 # IDA 0x1507c; file 0x527c; locator=proven; push    cx
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 push cx
 .org 0x527d
 # IDA 0x1507d; file 0x527d; locator=proven; push    di
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 push di
 .org 0x527e
 # IDA 0x1507e; file 0x527e; locator=proven; mov     di, bx
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov di, bx
 .org 0x5280
 # IDA 0x15080; file 0x5280; locator=proven; mov     bh, 0FFh
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov bh, 0xff
 .org 0x5282
 # IDA 0x15082; file 0x5282; locator=proven; xchg    bh, [di+2Ah]
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 xchg bh, byte ptr [di+0x2a]
 .org 0x5285
 # IDA 0x15085; file 0x5285; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor bl, bl
 .org 0x5287
 # IDA 0x15087; file 0x5287; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x5289
 # IDA 0x15089; file 0x5289; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x528b
 # IDA 0x1508b; file 0x528b; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x528d
 # IDA 0x1508d; file 0x528d; locator=proven; add     bx, 4240h
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 add bx, 0x4240
 .org 0x5291
 # IDA 0x15091; file 0x5291; locator=proven; mov     byte ptr [bx+17h], 0
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
+# operand 0 byte ptr [bx+17h]; [proven] 卸任原外交官duty設0; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov byte ptr [bx+0x17], 0x0
 .org 0x5295
 # IDA 0x15095; file 0x5295; locator=proven; push    bx
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 push bx
 .org 0x5296
 # IDA 0x15096; file 0x5296; locator=proven; push    di
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 push di
 .org 0x5297
 # IDA 0x15097; file 0x5297; locator=proven; mov     di, sp
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov di, sp
 .org 0x5299
 # IDA 0x15099; file 0x5299; locator=proven; mov     cx, 45h
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov cx, 0x45
 .org 0x529c
 # IDA 0x1509c; file 0x529c; locator=proven; mov     al, 93h
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, 0x93
 .org 0x529e
 # IDA 0x1509e; file 0x529e; locator=proven; call    sub_18810
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+14194
 .org 0x52a1
 # IDA 0x150a1; file 0x52a1; locator=proven; pop     di
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop di
 .org 0x52a2
 # IDA 0x150a2; file 0x52a2; locator=proven; pop     bx
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop bx
 .org 0x52a3
 # IDA 0x150a3; file 0x52a3; locator=proven; mov     cx, 1A7h
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov cx, 0x1a7
 .org 0x52a6
 # IDA 0x150a6; file 0x52a6; locator=proven; mov     ah, [bx+1Eh]
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ah, byte ptr [bx+0x1e]
 .org 0x52a9
 # IDA 0x150a9; file 0x52a9; locator=proven; mov     al, [bx+1]
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, byte ptr [bx+0x1]
 .org 0x52ac
 # IDA 0x150ac; file 0x52ac; locator=proven; call    sub_18810
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+14180
 .org 0x52af
 # IDA 0x150af; file 0x52af; locator=proven; pop     di
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop di
 .org 0x52b0
 # IDA 0x150b0; file 0x52b0; locator=proven; pop     cx
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop cx
 .org 0x52b1
 # IDA 0x150b1; file 0x52b1; locator=proven; pop     bx
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop bx
 .org 0x52b2
 # IDA 0x150b2; file 0x52b2; locator=proven; pop     ax
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop ax
 .org 0x52b3
 locret_150B3:
 # IDA 0x150b3; file 0x52b3; locator=proven; retn
-# ⚠ 函式 sub_15074; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15074; [proven] 原外交官卸任與兩段原訊息; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x52b4
 sub_150B4:
 # IDA 0x150b4; file 0x52b4; locator=proven; push    si
-# ⚠ 函式 sub_150B4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_150B4; [proven] 原有duty武將退隊及owner設FF; 出處: docs/re/130-c-battle-outcome-restoration.md
 push si
 .org 0x52b5
 # IDA 0x150b5; file 0x52b5; locator=proven; cmp     byte ptr [di+17h], 0
-# ⚠ 函式 sub_150B4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_150B4; [proven] 原有duty武將退隊及owner設FF; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp byte ptr [di+0x17], 0x0
 .org 0x52b9
 # IDA 0x150b9; file 0x52b9; locator=proven; jz      short loc_150D1
-# ⚠ 函式 sub_150B4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_150B4; [proven] 原有duty武將退隊及owner設FF; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+24
 .org 0x52bb
 # IDA 0x150bb; file 0x52bb; locator=proven; mov     si, di
-# ⚠ 函式 sub_150B4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_150B4; [proven] 原有duty武將退隊及owner設FF; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov si, di
 .org 0x52bd
 # IDA 0x150bd; file 0x52bd; locator=proven; sub     si, 4240h
-# ⚠ 函式 sub_150B4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_150B4; [proven] 原有duty武將退隊及owner設FF; 出處: docs/re/130-c-battle-outcome-restoration.md
 sub si, 0x4240
 .org 0x52c1
 # IDA 0x150c1; file 0x52c1; locator=proven; shl     si, 1
-# ⚠ 函式 sub_150B4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_150B4; [proven] 原有duty武將退隊及owner設FF; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl si, 0x1
 .org 0x52c3
 # IDA 0x150c3; file 0x52c3; locator=proven; add     si, 2240h
-# ⚠ 函式 sub_150B4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_150B4; [proven] 原有duty武將退隊及owner設FF; 出處: docs/re/130-c-battle-outcome-restoration.md
 add si, 0x2240
 .org 0x52c7
 # IDA 0x150c7; file 0x52c7; locator=proven; call    sub_12BA8
-# ⚠ 函式 sub_150B4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_150B4; [proven] 原有duty武將退隊及owner設FF; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .-9503
 .org 0x52ca
 # IDA 0x150ca; file 0x52ca; locator=proven; call    sub_17028
-# ⚠ 函式 sub_150B4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_150B4; [proven] 原有duty武將退隊及owner設FF; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+8030
 .org 0x52cd
 # IDA 0x150cd; file 0x52cd; locator=proven; mov     byte ptr [di+17h], 0
-# ⚠ 函式 sub_150B4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_150B4; [proven] 原有duty武將退隊及owner設FF; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov byte ptr [di+0x17], 0x0
 .org 0x52d1
 loc_150D1:
 # IDA 0x150d1; file 0x52d1; locator=proven; mov     byte ptr [di+1Ch], 0FFh
-# ⚠ 函式 sub_150B4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_150B4; [proven] 原有duty武將退隊及owner設FF; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov byte ptr [di+0x1c], 0xff
 .org 0x52d5
 # IDA 0x150d5; file 0x52d5; locator=proven; pop     si
-# ⚠ 函式 sub_150B4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_150B4; [proven] 原有duty武將退隊及owner設FF; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop si
 .org 0x52d6
 # IDA 0x150d6; file 0x52d6; locator=proven; retn
-# ⚠ 函式 sub_150B4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_150B4; [proven] 原有duty武將退隊及owner設FF; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x52d7
 sub_150D7:
@@ -31318,1006 +31328,1015 @@ add al, byte ptr [bx+si]
 .org 0x5330
 sub_15130:
 # IDA 0x15130; file 0x5330; locator=proven; push    bx
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 push bx
 .org 0x5331
 # IDA 0x15131; file 0x5331; locator=proven; push    cx
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 push cx
 .org 0x5332
 # IDA 0x15132; file 0x5332; locator=proven; push    dx
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 push dx
 .org 0x5333
 # IDA 0x15133; file 0x5333; locator=proven; push    bp
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 push bp
 .org 0x5334
 # IDA 0x15134; file 0x5334; locator=proven; sub     sp, 10h
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 sub sp, 0x10
 .org 0x5337
 # IDA 0x15137; file 0x5337; locator=proven; mov     bp, sp
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov bp, sp
 .org 0x5339
 # IDA 0x15139; file 0x5339; locator=proven; mov     ah, al
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov ah, al
 .org 0x533b
 # IDA 0x1513b; file 0x533b; locator=proven; and     al, al
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} and al, al
 .org 0x533d
 # IDA 0x1513d; file 0x533d; locator=proven; jnz     short loc_15141
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnz .+4
 .org 0x533f
 # IDA 0x1513f; file 0x533f; locator=proven; mov     al, 3
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
+# operand 1 3; [proven] 第一方AL=0時使用係數列3，其餘列不改; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, 0x3
 .org 0x5341
 loc_15141:
 # IDA 0x15141; file 0x5341; locator=proven; call    sub_15285
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+324
 .org 0x5344
 # IDA 0x15144; file 0x5344; locator=proven; mov     al, ah
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov al, ah
 .org 0x5346
 # IDA 0x15146; file 0x5346; locator=proven; call    sub_152D7
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+401
 .org 0x5349
 # IDA 0x15149; file 0x5349; locator=proven; mov     cx, dx
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov cx, dx
 .org 0x534b
 # IDA 0x1514b; file 0x534b; locator=proven; xchg    si, di
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xchg si, di
 .org 0x534d
 # IDA 0x1514d; file 0x534d; locator=proven; call    sub_15285
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+312
 .org 0x5350
 # IDA 0x15150; file 0x5350; locator=proven; call    sub_152D7
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+391
 .org 0x5353
 # IDA 0x15153; file 0x5353; locator=proven; xchg    si, di
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xchg si, di
 .org 0x5355
 # IDA 0x15155; file 0x5355; locator=proven; add     cx, 8
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
+# operand 1 8; [proven] 第一方戰力word加8，保留原word回繞; 出處: docs/re/130-c-battle-outcome-restoration.md
 add cx, 0x8
 .org 0x5358
 # IDA 0x15158; file 0x5358; locator=proven; add     dx, 8
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 add dx, 0x8
 .org 0x535b
 # IDA 0x1515b; file 0x535b; locator=proven; cmp     cx, dx
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} cmp cx, dx
 .org 0x535d
 # IDA 0x1515d; file 0x535d; locator=proven; pushf
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 pushf
 .org 0x535e
 # IDA 0x1515e; file 0x535e; locator=proven; jnb     short loc_15162
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnb .+4
 .org 0x5360
 # IDA 0x15160; file 0x5360; locator=proven; xchg    dx, cx
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xchg dx, cx
 .org 0x5362
 loc_15162:
 # IDA 0x15162; file 0x5362; locator=proven; mov     ax, cx
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov ax, cx
 .org 0x5364
 # IDA 0x15164; file 0x5364; locator=proven; mov     bx, dx
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov bx, dx
 .org 0x5366
 # IDA 0x15166; file 0x5366; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor dx, dx
 .org 0x5368
 # IDA 0x15168; file 0x5368; locator=proven; mov     cx, 3
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov cx, 0x3
 .org 0x536b
 loc_1516B:
 # IDA 0x1516b; file 0x536b; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl ax, 0x1
 .org 0x536d
 # IDA 0x1516d; file 0x536d; locator=proven; rcl     dx, 1
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 rcl dx, 0x1
 .org 0x536f
 # IDA 0x1516f; file 0x536f; locator=proven; loop    loc_1516B
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 loop .-4
 .org 0x5371
 # IDA 0x15171; file 0x5371; locator=proven; div     bx
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 div bx
 .org 0x5373
 # IDA 0x15173; file 0x5373; locator=proven; cmp     ax, 64h
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
+# operand 1 64h; [proven] 原戰力比值上限100; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp ax, offset imm_at_15173
 .org 0x5376
 # IDA 0x15176; file 0x5376; locator=proven; jb      short loc_1517B
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 jb .+5
 .org 0x5378
 # IDA 0x15178; file 0x5378; locator=proven; mov     ax, 64h
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ax, 0x64
 .org 0x537b
 loc_1517B:
 # IDA 0x1517b; file 0x537b; locator=proven; popf
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 popf
 .org 0x537c
 # IDA 0x1517c; file 0x537c; locator=proven; jnb     short loc_15189
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnb .+13
 .org 0x537e
 # IDA 0x1517e; file 0x537e; locator=proven; xchg    si, di
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xchg si, di
 .org 0x5380
 # IDA 0x15180; file 0x5380; locator=proven; call    sub_151B3
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+51
 .org 0x5383
 # IDA 0x15183; file 0x5383; locator=proven; xchg    si, di
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xchg si, di
 .org 0x5385
 # IDA 0x15185; file 0x5385; locator=proven; mov     al, 1
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, 0x1
 .org 0x5387
 # IDA 0x15187; file 0x5387; locator=proven; jmp     short loc_1518E
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 jmp .+7
 .org 0x5389
 loc_15189:
 # IDA 0x15189; file 0x5389; locator=proven; call    sub_151B3
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+42
 .org 0x538c
 # IDA 0x1518c; file 0x538c; locator=proven; xor     al, al
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor al, al
 .org 0x538e
 loc_1518E:
 # IDA 0x1518e; file 0x538e; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor ah, ah
 .org 0x5390
 # IDA 0x15190; file 0x5390; locator=proven; mov     cl, al
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov cl, al
 .org 0x5392
 # IDA 0x15192; file 0x5392; locator=proven; call    sub_1474A
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .-2632
 .org 0x5395
 # IDA 0x15195; file 0x5395; locator=proven; jnb     short loc_1519A
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnb .+5
 .org 0x5397
 # IDA 0x15197; file 0x5397; locator=proven; or      ah, 1
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 or ah, 0x1
 .org 0x539a
 loc_1519A:
 # IDA 0x1519a; file 0x539a; locator=proven; xchg    si, di
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xchg si, di
 .org 0x539c
 # IDA 0x1519c; file 0x539c; locator=proven; mov     cl, al
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov cl, al
 .org 0x539e
 # IDA 0x1519e; file 0x539e; locator=proven; xor     cl, 1
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 xor cl, 0x1
 .org 0x53a1
 # IDA 0x151a1; file 0x53a1; locator=proven; call    sub_1474A
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .-2647
 .org 0x53a4
 # IDA 0x151a4; file 0x53a4; locator=proven; jnb     short loc_151A9
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnb .+5
 .org 0x53a6
 # IDA 0x151a6; file 0x53a6; locator=proven; or      ah, 2
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 or ah, 0x2
 .org 0x53a9
 loc_151A9:
 # IDA 0x151a9; file 0x53a9; locator=proven; xchg    si, di
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xchg si, di
 .org 0x53ab
 # IDA 0x151ab; file 0x53ab; locator=proven; add     sp, 10h
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 add sp, 0x10
 .org 0x53ae
 # IDA 0x151ae; file 0x53ae; locator=proven; pop     bp
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop bp
 .org 0x53af
 # IDA 0x151af; file 0x53af; locator=proven; pop     dx
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop dx
 .org 0x53b0
 # IDA 0x151b0; file 0x53b0; locator=proven; pop     cx
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop cx
 .org 0x53b1
 # IDA 0x151b1; file 0x53b1; locator=proven; pop     bx
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop bx
 .org 0x53b2
 # IDA 0x151b2; file 0x53b2; locator=proven; retn
-# ⚠ 函式 sub_15130; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15130; [proven] 原自動戰鬥戰力/比例/傷亡/兩方退卻，回傳AL與AH壞滅bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x53b3
 sub_151B3:
 # IDA 0x151b3; file 0x53b3; locator=proven; push    ax
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 push ax
 .org 0x53b4
 # IDA 0x151b4; file 0x53b4; locator=proven; push    bx
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 push bx
 .org 0x53b5
 # IDA 0x151b5; file 0x53b5; locator=proven; push    cx
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 push cx
 .org 0x53b6
 # IDA 0x151b6; file 0x53b6; locator=proven; push    dx
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 push dx
 .org 0x53b7
 # IDA 0x151b7; file 0x53b7; locator=proven; push    si
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 push si
 .org 0x53b8
 # IDA 0x151b8; file 0x53b8; locator=proven; push    di
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 push di
 .org 0x53b9
 # IDA 0x151b9; file 0x53b9; locator=proven; mov     dl, cs:byte_10D34
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 cs; mov dl, byte ptr [0xd34]
 .org 0x53be
 # IDA 0x151be; file 0x53be; locator=proven; cmp     dl, 0C0h
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp dl, 0xc0
 .org 0x53c1
 # IDA 0x151c1; file 0x53c1; locator=proven; jnb     short loc_151EB
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnb .+42
 .org 0x53c3
 # IDA 0x151c3; file 0x53c3; locator=proven; mov     ah, 3Fh
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ah, 0x3f
 .org 0x53c5
 # IDA 0x151c5; file 0x53c5; locator=proven; sub     ah, al
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} sub ah, al
 .org 0x53c7
 # IDA 0x151c7; file 0x53c7; locator=proven; shr     ah, 1
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr ah, 0x1
 .org 0x53c9
 # IDA 0x151c9; file 0x53c9; locator=proven; shr     ah, 1
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr ah, 0x1
 .org 0x53cb
 # IDA 0x151cb; file 0x53cb; locator=proven; mov     bx, cs:word_10D32
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 cs; mov bx, word ptr [0xd32]
 .org 0x53d0
 # IDA 0x151d0; file 0x53d0; locator=proven; sub     [bx+13h], ah
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 sub byte ptr [bx+0x13], ah
 .org 0x53d3
 # IDA 0x151d3; file 0x53d3; locator=proven; jnb     short loc_151D9
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnb .+6
 .org 0x53d5
 # IDA 0x151d5; file 0x53d5; locator=proven; mov     byte ptr [bx+13h], 0
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov byte ptr [bx+0x13], 0x0
 .org 0x53d9
 loc_151D9:
 # IDA 0x151d9; file 0x53d9; locator=proven; sub     [bx+10h], ah
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 sub byte ptr [bx+0x10], ah
 .org 0x53dc
 # IDA 0x151dc; file 0x53dc; locator=proven; jnb     short loc_151E2
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnb .+6
 .org 0x53de
 # IDA 0x151de; file 0x53de; locator=proven; mov     byte ptr [bx+10h], 0
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov byte ptr [bx+0x10], 0x0
 .org 0x53e2
 loc_151E2:
 # IDA 0x151e2; file 0x53e2; locator=proven; sub     [bx+11h], ah
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 sub byte ptr [bx+0x11], ah
 .org 0x53e5
 # IDA 0x151e5; file 0x53e5; locator=proven; jnb     short loc_151EB
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnb .+6
 .org 0x53e7
 # IDA 0x151e7; file 0x53e7; locator=proven; mov     byte ptr [bx+11h], 0
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov byte ptr [bx+0x11], 0x0
 .org 0x53eb
 loc_151EB:
 # IDA 0x151eb; file 0x53eb; locator=proven; add     si, 28h
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 add si, 0x28
 .org 0x53ee
 # IDA 0x151ee; file 0x53ee; locator=proven; add     di, 28h
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 add di, 0x28
 .org 0x53f1
 # IDA 0x151f1; file 0x53f1; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor bx, bx
 .org 0x53f3
 # IDA 0x151f3; file 0x53f3; locator=proven; mov     dx, bx
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov dx, bx
 .org 0x53f5
 # IDA 0x151f5; file 0x53f5; locator=proven; mov     ch, al
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov ch, al
 .org 0x53f7
 # IDA 0x151f7; file 0x53f7; locator=proven; mov     cl, 6
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov cl, 0x6
 .org 0x53f9
 loc_151F9:
 # IDA 0x151f9; file 0x53f9; locator=proven; call    sub_1ECE0
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .-25881
 .org 0x53fc
 # IDA 0x151fc; file 0x53fc; locator=proven; and     al, 7
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 and al, 0x7
 .org 0x53fe
 # IDA 0x151fe; file 0x53fe; locator=proven; add     al, 2
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 add al, 0x2
 .org 0x5400
 # IDA 0x15200; file 0x5400; locator=proven; mov     ah, [si+1]
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ah, byte ptr [si+0x1]
 .org 0x5403
 # IDA 0x15203; file 0x5403; locator=proven; sub     ah, al
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} sub ah, al
 .org 0x5405
 # IDA 0x15205; file 0x5405; locator=proven; ja      short loc_15210
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 ja .+11
 .org 0x5407
 # IDA 0x15207; file 0x5407; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor ah, ah
 .org 0x5409
 # IDA 0x15209; file 0x5409; locator=proven; cmp     cl, 6
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp cl, 0x6
 .org 0x540c
 # IDA 0x1520c; file 0x540c; locator=proven; jnz     short loc_15210
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnz .+4
 .org 0x540e
 # IDA 0x1520e; file 0x540e; locator=proven; mov     ah, 1
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
+# operand 1 1; [proven] 原第一槽至少1，其他槽可歸零; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ah, 0x1
 .org 0x5410
 loc_15210:
 # IDA 0x15210; file 0x5410; locator=proven; add     bl, ah
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} add bl, ah
 .org 0x5412
 # IDA 0x15212; file 0x5412; locator=proven; adc     bh, 0
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 adc bh, 0x0
 .org 0x5415
 # IDA 0x15215; file 0x5415; locator=proven; mov     [si+1], ah
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov byte ptr [si+0x1], ah
 .org 0x5418
 # IDA 0x15218; file 0x5418; locator=proven; call    sub_1ECE0
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .-25912
 .org 0x541b
 # IDA 0x1521b; file 0x541b; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor ah, ah
 .org 0x541d
 # IDA 0x1521d; file 0x541d; locator=proven; inc     ch
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 inc ch
 .org 0x541f
 # IDA 0x1521f; file 0x541f; locator=proven; div     ch
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 div ch
 .org 0x5421
 # IDA 0x15221; file 0x5421; locator=proven; mov     al, ah
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov al, ah
 .org 0x5423
 # IDA 0x15223; file 0x5423; locator=proven; add     al, 8
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
+# operand 1 8; [proven] 敗方傷亡基數8，加原餘數; 出處: docs/re/130-c-battle-outcome-restoration.md
 add al, 0x8
 .org 0x5425
 # IDA 0x15225; file 0x5425; locator=proven; mov     ah, [di+1]
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ah, byte ptr [di+0x1]
 .org 0x5428
 # IDA 0x15228; file 0x5428; locator=proven; sub     ah, al
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} sub ah, al
 .org 0x542a
 # IDA 0x1522a; file 0x542a; locator=proven; ja      short loc_15235
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 ja .+11
 .org 0x542c
 # IDA 0x1522c; file 0x542c; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor ah, ah
 .org 0x542e
 # IDA 0x1522e; file 0x542e; locator=proven; cmp     cl, 6
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp cl, 0x6
 .org 0x5431
 # IDA 0x15231; file 0x5431; locator=proven; jnz     short loc_15235
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnz .+4
 .org 0x5433
 # IDA 0x15233; file 0x5433; locator=proven; mov     ah, 1
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ah, 0x1
 .org 0x5435
 loc_15235:
 # IDA 0x15235; file 0x5435; locator=proven; add     dl, ah
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} add dl, ah
 .org 0x5437
 # IDA 0x15237; file 0x5437; locator=proven; adc     dh, 0
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 adc dh, 0x0
 .org 0x543a
 # IDA 0x1523a; file 0x543a; locator=proven; mov     [di+1], ah
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov byte ptr [di+0x1], ah
 .org 0x543d
 # IDA 0x1523d; file 0x543d; locator=proven; add     si, 4
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 add si, 0x4
 .org 0x5440
 # IDA 0x15240; file 0x5440; locator=proven; add     di, 4
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 add di, 0x4
 .org 0x5443
 # IDA 0x15243; file 0x5443; locator=proven; dec     cl
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 dec cl
 .org 0x5445
 # IDA 0x15245; file 0x5445; locator=proven; jnz     short loc_151F9
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnz .-76
 .org 0x5447
 # IDA 0x15247; file 0x5447; locator=proven; pop     di
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop di
 .org 0x5448
 # IDA 0x15248; file 0x5448; locator=proven; pop     si
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop si
 .org 0x5449
 # IDA 0x15249; file 0x5449; locator=proven; xchg    bx, [si+4]
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 xchg bx, word ptr [si+0x4]
 .org 0x544c
 # IDA 0x1524c; file 0x544c; locator=proven; xchg    dx, [di+4]
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 xchg dx, word ptr [di+0x4]
 .org 0x544f
 # IDA 0x1524f; file 0x544f; locator=proven; mov     cx, dx
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov cx, dx
 .org 0x5451
 # IDA 0x15251; file 0x5451; locator=proven; xor     ax, ax
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor ax, ax
 .org 0x5453
 # IDA 0x15253; file 0x5453; locator=proven; and     bx, bx
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} and bx, bx
 .org 0x5455
 # IDA 0x15255; file 0x5455; locator=proven; jz      short loc_15265
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+16
 .org 0x5457
 # IDA 0x15257; file 0x5457; locator=proven; cmp     byte ptr [si+6], 64h
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp byte ptr [si+0x6], 0x64
 .org 0x545b
 # IDA 0x1525b; file 0x545b; locator=proven; jb      short loc_15265
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 jb .+10
 .org 0x545d
 # IDA 0x1525d; file 0x545d; locator=proven; mov     al, [si+6]
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, byte ptr [si+0x6]
 .org 0x5460
 # IDA 0x15260; file 0x5460; locator=proven; mul     word ptr [si+4]
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 mul word ptr [si+0x4]
 .org 0x5463
 # IDA 0x15263; file 0x5463; locator=proven; div     bx
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 div bx
 .org 0x5465
 loc_15265:
 # IDA 0x15265; file 0x5465; locator=proven; mov     [si+6], al
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov byte ptr [si+0x6], al
 .org 0x5468
 # IDA 0x15268; file 0x5468; locator=proven; xor     ax, ax
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor ax, ax
 .org 0x546a
 # IDA 0x1526a; file 0x546a; locator=proven; and     cx, cx
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} and cx, cx
 .org 0x546c
 # IDA 0x1526c; file 0x546c; locator=proven; jz      short loc_1527D
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+17
 .org 0x546e
 # IDA 0x1526e; file 0x546e; locator=proven; cmp     byte ptr [di+6], 64h
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp byte ptr [di+0x6], 0x64
 .org 0x5472
 # IDA 0x15272; file 0x5472; locator=proven; jb      short loc_1527D
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 jb .+11
 .org 0x5474
 # IDA 0x15274; file 0x5474; locator=proven; mov     al, 64h
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, 0x64
 .org 0x5476
 # IDA 0x15276; file 0x5476; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor ah, ah
 .org 0x5478
 # IDA 0x15278; file 0x5478; locator=proven; mul     word ptr [di+4]
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 mul word ptr [di+0x4]
 .org 0x547b
 # IDA 0x1527b; file 0x547b; locator=proven; div     cx
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 div cx
 .org 0x547d
 loc_1527D:
 # IDA 0x1527d; file 0x547d; locator=proven; mov     [di+6], al
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov byte ptr [di+0x6], al
 .org 0x5480
 # IDA 0x15280; file 0x5480; locator=proven; pop     dx
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop dx
 .org 0x5481
 # IDA 0x15281; file 0x5481; locator=proven; pop     cx
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop cx
 .org 0x5482
 # IDA 0x15282; file 0x5482; locator=proven; pop     bx
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop bx
 .org 0x5483
 # IDA 0x15283; file 0x5483; locator=proven; pop     ax
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop ax
 .org 0x5484
 # IDA 0x15284; file 0x5484; locator=proven; retn
-# ⚠ 函式 sub_151B3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_151B3; [proven] 原六槽亂數傷亡、最低大將1、總兵力與兩種士氣換算; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x5485
 sub_15285:
 # IDA 0x15285; file 0x5485; locator=proven; push    ax
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 push ax
 .org 0x5486
 # IDA 0x15286; file 0x5486; locator=proven; push    bx
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 push bx
 .org 0x5487
 # IDA 0x15287; file 0x5487; locator=proven; push    cx
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 push cx
 .org 0x5488
 # IDA 0x15288; file 0x5488; locator=proven; push    di
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 push di
 .org 0x5489
 # IDA 0x15289; file 0x5489; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor ah, ah
 .org 0x548b
 # IDA 0x1528b; file 0x548b; locator=proven; push    ax
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 push ax
 .org 0x548c
 # IDA 0x1528c; file 0x548c; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl ax, 0x1
 .org 0x548e
 # IDA 0x1528e; file 0x548e; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl ax, 0x1
 .org 0x5490
 # IDA 0x15290; file 0x5490; locator=proven; mov     di, ax
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov di, ax
 .org 0x5492
 # IDA 0x15292; file 0x5492; locator=proven; add     si, 28h
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 add si, 0x28
 .org 0x5495
 # IDA 0x15295; file 0x5495; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor dx, dx
 .org 0x5497
 # IDA 0x15297; file 0x5497; locator=proven; mov     cx, 6
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov cx, 0x6
 .org 0x549a
 loc_1529A:
 # IDA 0x1529a; file 0x549a; locator=proven; mov     bl, [si+2]
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov bl, byte ptr [si+0x2]
 .org 0x549d
 # IDA 0x1529d; file 0x549d; locator=proven; dec     bl
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 dec bl
 .org 0x549f
 # IDA 0x1529f; file 0x549f; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor bh, bh
 .org 0x54a1
 # IDA 0x152a1; file 0x54a1; locator=proven; mov     al, [si+1]
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, byte ptr [si+0x1]
 .org 0x54a4
 # IDA 0x152a4; file 0x54a4; locator=proven; mul     byte ptr cs:[bx+di+5120h]
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 cs; mul byte ptr [bx+di+0x5120]
 .org 0x54a9
 # IDA 0x152a9; file 0x54a9; locator=proven; add     dx, ax
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} add dx, ax
 .org 0x54ab
 # IDA 0x152ab; file 0x54ab; locator=proven; add     si, 4
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 add si, 0x4
 .org 0x54ae
 # IDA 0x152ae; file 0x54ae; locator=proven; loop    loc_1529A
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 loop .-20
 .org 0x54b0
 # IDA 0x152b0; file 0x54b0; locator=proven; pop     ax
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop ax
 .org 0x54b1
 # IDA 0x152b1; file 0x54b1; locator=proven; and     al, al
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} and al, al
 .org 0x54b3
 # IDA 0x152b3; file 0x54b3; locator=proven; jnz     short loc_152C0
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnz .+13
 .org 0x54b5
 # IDA 0x152b5; file 0x54b5; locator=proven; mov     bx, cs:word_10D32
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 cs; mov bx, word ptr [0xd32]
 .org 0x54ba
 # IDA 0x152ba; file 0x54ba; locator=proven; add     dl, [bx+13h]
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 add dl, byte ptr [bx+0x13]
 .org 0x54bd
 # IDA 0x152bd; file 0x54bd; locator=proven; adc     dh, 0
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 adc dh, 0x0
 .org 0x54c0
 loc_152C0:
 # IDA 0x152c0; file 0x54c0; locator=proven; sub     si, 40h
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 sub si, 0x40
 .org 0x54c3
 # IDA 0x152c3; file 0x54c3; locator=proven; mov     al, [si+6]
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, byte ptr [si+0x6]
 .org 0x54c6
 # IDA 0x152c6; file 0x54c6; locator=proven; shr     al, 1
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr al, 0x1
 .org 0x54c8
 # IDA 0x152c8; file 0x54c8; locator=proven; shr     al, 1
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr al, 0x1
 .org 0x54ca
 # IDA 0x152ca; file 0x54ca; locator=proven; shr     al, 1
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
+# operand 0 al; [proven] 第三次SHR後士氣除8，保留byte運算; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr al, 0x1
 .org 0x54cc
 # IDA 0x152cc; file 0x54cc; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor ah, ah
 .org 0x54ce
 # IDA 0x152ce; file 0x54ce; locator=proven; mul     dx
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 mul dx
 .org 0x54d0
 # IDA 0x152d0; file 0x54d0; locator=proven; mov     dx, ax
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov dx, ax
 .org 0x54d2
 # IDA 0x152d2; file 0x54d2; locator=proven; pop     di
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop di
 .org 0x54d3
 # IDA 0x152d3; file 0x54d3; locator=proven; pop     cx
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop cx
 .org 0x54d4
 # IDA 0x152d4; file 0x54d4; locator=proven; pop     bx
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop bx
 .org 0x54d5
 # IDA 0x152d5; file 0x54d5; locator=proven; pop     ax
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop ax
 .org 0x54d6
 # IDA 0x152d6; file 0x54d6; locator=proven; retn
-# ⚠ 函式 sub_15285; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15285; [proven] 原六槽兵種係數表與士氣/8，保留低word乘法; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x54d7
 sub_152D7:
 # IDA 0x152d7; file 0x54d7; locator=proven; push    ax
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 push ax
 .org 0x54d8
 # IDA 0x152d8; file 0x54d8; locator=proven; push    bx
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 push bx
 .org 0x54d9
 # IDA 0x152d9; file 0x54d9; locator=proven; push    cx
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 push cx
 .org 0x54da
 # IDA 0x152da; file 0x54da; locator=proven; push    dx
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 push dx
 .org 0x54db
 # IDA 0x152db; file 0x54db; locator=proven; mov     bh, [si+2]
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov bh, byte ptr [si+0x2]
 .org 0x54de
 # IDA 0x152de; file 0x54de; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor bl, bl
 .org 0x54e0
 # IDA 0x152e0; file 0x54e0; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x54e2
 # IDA 0x152e2; file 0x54e2; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x54e4
 # IDA 0x152e4; file 0x54e4; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x54e6
 # IDA 0x152e6; file 0x54e6; locator=proven; push    ax
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 push ax
 .org 0x54e7
 # IDA 0x152e7; file 0x54e7; locator=proven; mov     dx, [bx+4251h]
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov dx, word ptr [bx+0x4251]
 .org 0x54eb
 # IDA 0x152eb; file 0x54eb; locator=proven; mov     ch, dl
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov ch, dl
 .org 0x54ed
 # IDA 0x152ed; file 0x54ed; locator=proven; shl     ch, 1
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl ch, 0x1
 .org 0x54ef
 # IDA 0x152ef; file 0x54ef; locator=proven; cmp     dl, dh
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} cmp dl, dh
 .org 0x54f1
 # IDA 0x152f1; file 0x54f1; locator=proven; jb      short loc_152FC
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 jb .+11
 .org 0x54f3
 # IDA 0x152f3; file 0x54f3; locator=proven; call    sub_1ECE0
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .-26131
 .org 0x54f6
 # IDA 0x152f6; file 0x54f6; locator=proven; and     al, 3
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
+# operand 1 3; [proven] 原武將條件的RNG低2bits; 出處: docs/re/130-c-battle-outcome-restoration.md
 and al, 0x3
 .org 0x54f8
 # IDA 0x152f8; file 0x54f8; locator=proven; jnz     short loc_15308
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnz .+16
 .org 0x54fa
 # IDA 0x152fa; file 0x54fa; locator=proven; mov     dh, dl
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov dh, dl
 .org 0x54fc
 loc_152FC:
 # IDA 0x152fc; file 0x54fc; locator=proven; mov     ch, dh
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov ch, dh
 .org 0x54fe
 # IDA 0x152fe; file 0x54fe; locator=proven; shr     dh, 1
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr dh, 0x1
 .org 0x5500
 # IDA 0x15300; file 0x5500; locator=proven; shr     dh, 1
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr dh, 0x1
 .org 0x5502
 # IDA 0x15302; file 0x5502; locator=proven; sub     ch, dh
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} sub ch, dh
 .org 0x5504
 # IDA 0x15304; file 0x5504; locator=proven; add     ch, [bx+4252h]
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 add ch, byte ptr [bx+0x4252]
 .org 0x5508
 loc_15308:
 # IDA 0x15308; file 0x5508; locator=proven; pop     ax
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop ax
 .org 0x5509
 # IDA 0x15309; file 0x5509; locator=proven; add     bx, 424Eh
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 add bx, 0x424e
 .org 0x550d
 # IDA 0x1530d; file 0x550d; locator=proven; xlat
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
+# operand 0 ; [proven] XLAT只讀DS:BX+AL並改AL，AH與flags不變; 出處: docs/re/130-c-battle-outcome-restoration.md
 xlatb
 .org 0x550e
 # IDA 0x1530e; file 0x550e; locator=proven; mov     cl, 4
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
+# operand 1 4; [proven] 原能力高nibble位移4; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov cl, 0x4
 .org 0x5510
 # IDA 0x15310; file 0x5510; locator=proven; shr     al, cl
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr al, cl
 .org 0x5512
 # IDA 0x15312; file 0x5512; locator=proven; xor     bh, bh
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor bh, bh
 .org 0x5514
 # IDA 0x15314; file 0x5514; locator=proven; mov     bl, 10h
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov bl, 0x10
 .org 0x5516
 # IDA 0x15316; file 0x5516; locator=proven; sub     bl, al
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} sub bl, al
 .org 0x5518
 # IDA 0x15318; file 0x5518; locator=proven; mov     al, ch
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov al, ch
 .org 0x551a
 # IDA 0x1531a; file 0x551a; locator=proven; mov     ah, bh
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov ah, bh
 .org 0x551c
 # IDA 0x1531c; file 0x551c; locator=proven; shl     ax, cl
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl ax, cl
 .org 0x551e
 # IDA 0x1531e; file 0x551e; locator=proven; xor     dx, dx
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor dx, dx
 .org 0x5520
 # IDA 0x15320; file 0x5520; locator=proven; div     bx
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 div bx
 .org 0x5522
 # IDA 0x15322; file 0x5522; locator=proven; mov     bx, ax
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov bx, ax
 .org 0x5524
 # IDA 0x15324; file 0x5524; locator=proven; pop     dx
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop dx
 .org 0x5525
 # IDA 0x15325; file 0x5525; locator=proven; mul     dx
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 mul dx
 .org 0x5527
 # IDA 0x15327; file 0x5527; locator=proven; mov     al, ah
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov al, ah
 .org 0x5529
 # IDA 0x15329; file 0x5529; locator=proven; mov     ah, dl
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov ah, dl
 .org 0x552b
 # IDA 0x1532b; file 0x552b; locator=proven; mov     dl, dh
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov dl, dh
 .org 0x552d
 # IDA 0x1532d; file 0x552d; locator=proven; xor     dh, dh
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor dh, dh
 .org 0x552f
 # IDA 0x1532f; file 0x552f; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr dx, 0x1
 .org 0x5531
 # IDA 0x15331; file 0x5531; locator=proven; rcr     ax, 1
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 rcr ax, 0x1
 .org 0x5533
 # IDA 0x15333; file 0x5533; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr dx, 0x1
 .org 0x5535
 # IDA 0x15335; file 0x5535; locator=proven; rcr     ax, 1
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 rcr ax, 0x1
 .org 0x5537
 # IDA 0x15337; file 0x5537; locator=proven; mov     dx, ax
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov dx, ax
 .org 0x5539
 # IDA 0x15339; file 0x5539; locator=proven; pop     cx
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop cx
 .org 0x553a
 # IDA 0x1533a; file 0x553a; locator=proven; pop     bx
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop bx
 .org 0x553b
 # IDA 0x1533b; file 0x553b; locator=proven; pop     ax
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop ax
 .org 0x553c
 # IDA 0x1533c; file 0x553c; locator=proven; retn
-# ⚠ 函式 sub_152D7; [unknown] 未附加語意; 出處: 無
+# 函式 sub_152D7; [proven] 原war/lead RNG與XLAT能力高nibble、32-bit乘法及右移截斷; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x553d
 sub_1533D:
@@ -36380,48 +36399,48 @@ ret
 .org 0x5ea4
 sub_15CA4:
 # IDA 0x15ca4; file 0x5ea4; locator=proven; mov     dx, ds:9892h
-# ⚠ 函式 sub_15CA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CA4; [proven] 原舊小地圖標記擦除並將9892設FFFF; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov dx, word ptr [0x9892]
 .org 0x5ea8
 # IDA 0x15ca8; file 0x5ea8; locator=proven; mov     bx, ds:9894h
-# ⚠ 函式 sub_15CA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CA4; [proven] 原舊小地圖標記擦除並將9892設FFFF; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov bx, word ptr [0x9894]
 .org 0x5eac
 # IDA 0x15cac; file 0x5eac; locator=proven; cmp     dx, 0FFFFh
-# ⚠ 函式 sub_15CA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CA4; [proven] 原舊小地圖標記擦除並將9892設FFFF; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp dx, 0xffff
 .org 0x5eaf
 # IDA 0x15caf; file 0x5eaf; locator=proven; jz      short locret_15CC5
-# ⚠ 函式 sub_15CA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CA4; [proven] 原舊小地圖標記擦除並將9892設FFFF; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+22
 .org 0x5eb1
 # IDA 0x15cb1; file 0x5eb1; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_15CA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CA4; [proven] 原舊小地圖標記擦除並將9892設FFFF; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr dx, 0x1
 .org 0x5eb3
 # IDA 0x15cb3; file 0x5eb3; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_15CA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CA4; [proven] 原舊小地圖標記擦除並將9892設FFFF; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x5eb5
 # IDA 0x15cb5; file 0x5eb5; locator=proven; add     dx, 1B8h
-# ⚠ 函式 sub_15CA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CA4; [proven] 原舊小地圖標記擦除並將9892設FFFF; 出處: docs/re/130-c-battle-outcome-restoration.md
 add dx, 0x1b8
 .org 0x5eb9
 # IDA 0x15cb9; file 0x5eb9; locator=proven; add     bx, 28h
-# ⚠ 函式 sub_15CA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CA4; [proven] 原舊小地圖標記擦除並將9892設FFFF; 出處: docs/re/130-c-battle-outcome-restoration.md
 add bx, 0x28
 .org 0x5ebc
 # IDA 0x15cbc; file 0x5ebc; locator=proven; call    sub_19541
-# ⚠ 函式 sub_15CA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CA4; [proven] 原舊小地圖標記擦除並將9892設FFFF; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+14469
 .org 0x5ebf
 # IDA 0x15cbf; file 0x5ebf; locator=proven; mov     word ptr ds:9892h, 0FFFFh
-# ⚠ 函式 sub_15CA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CA4; [proven] 原舊小地圖標記擦除並將9892設FFFF; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov word ptr [0x9892], 0xffff
 .org 0x5ec5
 locret_15CC5:
 # IDA 0x15cc5; file 0x5ec5; locator=proven; retn
-# ⚠ 函式 sub_15CA4; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CA4; [proven] 原舊小地圖標記擦除並將9892設FFFF; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x5ec6
 sub_15CC6:
@@ -36480,104 +36499,104 @@ ret
 .org 0x5ee0
 sub_15CE0:
 # IDA 0x15ce0; file 0x5ee0; locator=proven; push    ax
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 push ax
 .org 0x5ee1
 # IDA 0x15ce1; file 0x5ee1; locator=proven; push    bx
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 push bx
 .org 0x5ee2
 # IDA 0x15ce2; file 0x5ee2; locator=proven; push    dx
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 push dx
 .org 0x5ee3
 # IDA 0x15ce3; file 0x5ee3; locator=proven; mov     bl, [si+1]
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov bl, byte ptr [si+0x1]
 .org 0x5ee6
 # IDA 0x15ce6; file 0x5ee6; locator=proven; mov     ah, 0Fh
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ah, 0xf
 .org 0x5ee8
 # IDA 0x15ce8; file 0x5ee8; locator=proven; cmp     bl, 18h
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp bl, 0x18
 .org 0x5eeb
 # IDA 0x15ceb; file 0x5eeb; locator=proven; jz      short loc_15D01
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+22
 .org 0x5eed
 # IDA 0x15ced; file 0x5eed; locator=proven; mov     ah, 0ACh
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ah, 0xac
 .org 0x5eef
 # IDA 0x15cef; file 0x5eef; locator=proven; cmp     bl, cs:byte_10CFF
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 cs; cmp bl, byte ptr [0xcff]
 .org 0x5ef4
 # IDA 0x15cf4; file 0x5ef4; locator=proven; jz      short loc_15D01
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+13
 .org 0x5ef6
 # IDA 0x15cf6; file 0x5ef6; locator=proven; mov     ah, 0F3h
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ah, 0xf3
 .org 0x5ef8
 # IDA 0x15cf8; file 0x5ef8; locator=proven; cmp     bl, cs:byte_198A7
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 cs; cmp bl, byte ptr [0x98a7]
 .org 0x5efd
 # IDA 0x15cfd; file 0x5efd; locator=proven; jz      short loc_15D01
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+4
 .org 0x5eff
 # IDA 0x15cff; file 0x5eff; locator=proven; mov     ah, 83h
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ah, 0x83
 .org 0x5f01
 loc_15D01:
 # IDA 0x15d01; file 0x5f01; locator=proven; mov     dx, [si+8]
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov dx, word ptr [si+0x8]
 .org 0x5f04
 # IDA 0x15d04; file 0x5f04; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr dx, 0x1
 .org 0x5f06
 # IDA 0x15d06; file 0x5f06; locator=proven; add     dx, 1B6h
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 add dx, 0x1b6
 .org 0x5f0a
 # IDA 0x15d0a; file 0x5f0a; locator=proven; mov     bx, [si+0Ah]
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov bx, word ptr [si+0xa]
 .org 0x5f0d
 # IDA 0x15d0d; file 0x5f0d; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x5f0f
 # IDA 0x15d0f; file 0x5f0f; locator=proven; add     bx, 26h
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 add bx, 0x26
 .org 0x5f12
 # IDA 0x15d12; file 0x5f12; locator=proven; call    sub_15D19
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+7
 .org 0x5f15
 # IDA 0x15d15; file 0x5f15; locator=proven; pop     dx
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop dx
 .org 0x5f16
 # IDA 0x15d16; file 0x5f16; locator=proven; pop     bx
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop bx
 .org 0x5f17
 # IDA 0x15d17; file 0x5f17; locator=proven; pop     ax
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop ax
 .org 0x5f18
 # IDA 0x15d18; file 0x5f18; locator=proven; retn
-# ⚠ 函式 sub_15CE0; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15CE0; [proven] 原據點所屬色碼與小地圖標記; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x5f19
 sub_15D19:
@@ -44788,56 +44807,57 @@ ret
 .org 0x7228
 sub_17028:
 # IDA 0x17028; file 0x7228; locator=proven; push    ds
-# ⚠ 函式 sub_17028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17028; [proven] 原清除軍團flags，原bit3未設時占用byte減一; 出處: docs/re/130-c-battle-outcome-restoration.md
 push ds
 .org 0x7229
 # IDA 0x17029; file 0x7229; locator=proven; push    ax
-# ⚠ 函式 sub_17028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17028; [proven] 原清除軍團flags，原bit3未設時占用byte減一; 出處: docs/re/130-c-battle-outcome-restoration.md
 push ax
 .org 0x722a
 # IDA 0x1702a; file 0x722a; locator=proven; push    si
-# ⚠ 函式 sub_17028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17028; [proven] 原清除軍團flags，原bit3未設時占用byte減一; 出處: docs/re/130-c-battle-outcome-restoration.md
 push si
 .org 0x722b
 # IDA 0x1702b; file 0x722b; locator=proven; xor     al, al
-# ⚠ 函式 sub_17028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17028; [proven] 原清除軍團flags，原bit3未設時占用byte減一; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor al, al
 .org 0x722d
 # IDA 0x1702d; file 0x722d; locator=proven; xchg    al, [si]
-# ⚠ 函式 sub_17028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17028; [proven] 原清除軍團flags，原bit3未設時占用byte減一; 出處: docs/re/130-c-battle-outcome-restoration.md
 xchg al, byte ptr [si]
 .org 0x722f
 # IDA 0x1702f; file 0x722f; locator=proven; test    al, 8
-# ⚠ 函式 sub_17028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17028; [proven] 原清除軍團flags，原bit3未設時占用byte減一; 出處: docs/re/130-c-battle-outcome-restoration.md
 test al, 0x8
 .org 0x7231
 # IDA 0x17031; file 0x7231; locator=proven; jnz     short loc_17038
-# ⚠ 函式 sub_17028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17028; [proven] 原清除軍團flags，原bit3未設時占用byte減一; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnz .+7
 .org 0x7233
 # IDA 0x17033; file 0x7233; locator=proven; lds     si, [si+1Ah]
-# ⚠ 函式 sub_17028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17028; [proven] 原清除軍團flags，原bit3未設時占用byte減一; 出處: docs/re/130-c-battle-outcome-restoration.md
 lds si, dword ptr [si+0x1a]
 .org 0x7236
 # IDA 0x17036; file 0x7236; locator=proven; dec     byte ptr [si]
-# ⚠ 函式 sub_17028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17028; [proven] 原清除軍團flags，原bit3未設時占用byte減一; 出處: docs/re/130-c-battle-outcome-restoration.md
+# operand 0 byte ptr [si]; [proven] 沒有原flags bit3時減占用，保留byte回繞; 出處: docs/re/130-c-battle-outcome-restoration.md
 dec byte ptr [si]
 .org 0x7238
 loc_17038:
 # IDA 0x17038; file 0x7238; locator=proven; pop     si
-# ⚠ 函式 sub_17028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17028; [proven] 原清除軍團flags，原bit3未設時占用byte減一; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop si
 .org 0x7239
 # IDA 0x17039; file 0x7239; locator=proven; pop     ax
-# ⚠ 函式 sub_17028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17028; [proven] 原清除軍團flags，原bit3未設時占用byte減一; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop ax
 .org 0x723a
 # IDA 0x1703a; file 0x723a; locator=proven; pop     ds
-# ⚠ 函式 sub_17028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17028; [proven] 原清除軍團flags，原bit3未設時占用byte減一; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop ds
 .org 0x723b
 # IDA 0x1703b; file 0x723b; locator=proven; retn
-# ⚠ 函式 sub_17028; [unknown] 未附加語意; 出處: 無
+# 函式 sub_17028; [proven] 原清除軍團flags，原bit3未設時占用byte減一; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x723c
 sub_1703C:
@@ -55069,293 +55089,294 @@ ret
 .org 0x8acc
 sub_188CC:
 # IDA 0x188cc; file 0x8acc; locator=proven; push    ax
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 push ax
 .org 0x8acd
 # IDA 0x188cd; file 0x8acd; locator=proven; push    bx
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 push bx
 .org 0x8ace
 # IDA 0x188ce; file 0x8ace; locator=proven; push    cx
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 push cx
 .org 0x8acf
 # IDA 0x188cf; file 0x8acf; locator=proven; push    dx
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 push dx
 .org 0x8ad0
 # IDA 0x188d0; file 0x8ad0; locator=proven; push    di
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 push di
 .org 0x8ad1
 # IDA 0x188d1; file 0x8ad1; locator=proven; mov     dl, 1
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov dl, 0x1
 .org 0x8ad3
 # IDA 0x188d3; file 0x8ad3; locator=proven; mov     ax, si
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov ax, si
 .org 0x8ad5
 # IDA 0x188d5; file 0x8ad5; locator=proven; mov     di, ax
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov di, ax
 .org 0x8ad7
 # IDA 0x188d7; file 0x8ad7; locator=proven; sub     ax, 840h
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 sub ax, 0x840
 .org 0x8ada
 # IDA 0x188da; file 0x8ada; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl ax, 0x1
 .org 0x8adc
 # IDA 0x188dc; file 0x8adc; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl ax, 0x1
 .org 0x8ade
 # IDA 0x188de; file 0x8ade; locator=proven; shl     ax, 1
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl ax, 0x1
 .org 0x8ae0
 # IDA 0x188e0; file 0x8ae0; locator=proven; mov     al, [si+1]
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, byte ptr [si+0x1]
 .org 0x8ae3
 # IDA 0x188e3; file 0x8ae3; locator=proven; add     di, 1Ch
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 add di, 0x1c
 .org 0x8ae6
 # IDA 0x188e6; file 0x8ae6; locator=proven; mov     cx, 4
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov cx, 0x4
 .org 0x8ae9
 loc_188E9:
 # IDA 0x188e9; file 0x8ae9; locator=proven; push    cx
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 push cx
 .org 0x8aea
 # IDA 0x188ea; file 0x8aea; locator=proven; push    di
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 push di
 .org 0x8aeb
 # IDA 0x188eb; file 0x8aeb; locator=proven; mov     bh, [di]
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov bh, byte ptr [di]
 .org 0x8aed
 # IDA 0x188ed; file 0x8aed; locator=proven; cmp     bh, 0FFh
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp bh, 0xff
 .org 0x8af0
 # IDA 0x188f0; file 0x8af0; locator=proven; jz      short loc_188FF
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+15
 .org 0x8af2
 # IDA 0x188f2; file 0x8af2; locator=proven; xor     bl, bl
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor bl, bl
 .org 0x8af4
 # IDA 0x188f4; file 0x8af4; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x8af6
 # IDA 0x188f6; file 0x8af6; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x8af8
 # IDA 0x188f8; file 0x8af8; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x8afa
 # IDA 0x188fa; file 0x8afa; locator=proven; call    sub_1890A
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+16
 .org 0x8afd
 # IDA 0x188fd; file 0x8afd; locator=proven; shl     dl, 1
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl dl, 0x1
 .org 0x8aff
 loc_188FF:
 # IDA 0x188ff; file 0x8aff; locator=proven; pop     di
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop di
 .org 0x8b00
 # IDA 0x18900; file 0x8b00; locator=proven; pop     cx
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop cx
 .org 0x8b01
 # IDA 0x18901; file 0x8b01; locator=proven; inc     di
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 inc di
 .org 0x8b02
 # IDA 0x18902; file 0x8b02; locator=proven; loop    loc_188E9
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 loop .-25
 .org 0x8b04
 # IDA 0x18904; file 0x8b04; locator=proven; pop     di
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop di
 .org 0x8b05
 # IDA 0x18905; file 0x8b05; locator=proven; pop     dx
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop dx
 .org 0x8b06
 # IDA 0x18906; file 0x8b06; locator=proven; pop     cx
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop cx
 .org 0x8b07
 # IDA 0x18907; file 0x8b07; locator=proven; pop     bx
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop bx
 .org 0x8b08
 # IDA 0x18908; file 0x8b08; locator=proven; pop     ax
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop ax
 .org 0x8b09
 # IDA 0x18909; file 0x8b09; locator=proven; retn
-# ⚠ 函式 sub_188CC; [unknown] 未附加語意; 出處: 無
+# 函式 sub_188CC; [proven] 原四鄰city adjacency快照，FF槽保留原DL步進; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x8b0a
 sub_1890A:
 # IDA 0x1890a; file 0x8b0a; locator=proven; mov     di, bx
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov di, bx
 .org 0x8b0c
 # IDA 0x1890c; file 0x8b0c; locator=proven; add     di, 85Ch
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 add di, 0x85c
 .org 0x8b10
 # IDA 0x18910; file 0x8b10; locator=proven; mov     dh, 1
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov dh, 0x1
 .org 0x8b12
 # IDA 0x18912; file 0x8b12; locator=proven; mov     cx, 4
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov cx, 0x4
 .org 0x8b15
 loc_18915:
 # IDA 0x18915; file 0x8b15; locator=proven; cmp     ah, [di]
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp ah, byte ptr [di]
 .org 0x8b17
 # IDA 0x18917; file 0x8b17; locator=proven; jz      short loc_1891F
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+8
 .org 0x8b19
 # IDA 0x18919; file 0x8b19; locator=proven; shl     dh, 1
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl dh, 0x1
 .org 0x8b1b
 # IDA 0x1891b; file 0x8b1b; locator=proven; inc     di
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 inc di
 .org 0x8b1c
 # IDA 0x1891c; file 0x8b1c; locator=proven; loop    loc_18915
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 loop .-7
 .org 0x8b1e
 # IDA 0x1891e; file 0x8b1e; locator=proven; retn
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x8b1f
 loc_1891F:
 # IDA 0x1891f; file 0x8b1f; locator=proven; cmp     al, [bx+841h]
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp al, byte ptr [bx+0x841]
 .org 0x8b23
 # IDA 0x18923; file 0x8b23; locator=proven; jz      short loc_1893D
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+26
 .org 0x8b25
 # IDA 0x18925; file 0x8b25; locator=proven; test    [bx+840h], dh
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 test byte ptr [bx+0x840], dh
 .org 0x8b29
 # IDA 0x18929; file 0x8b29; locator=proven; jnz     short loc_18933
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnz .+10
 .org 0x8b2b
 # IDA 0x1892b; file 0x8b2b; locator=proven; inc     byte ptr [bx+85Bh]
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
+# operand 0 byte ptr [bx+85Bh]; [proven] 新敵鄰時增加該neighbor的+1B，與bits同步; 出處: docs/re/130-c-battle-outcome-restoration.md
 inc byte ptr [bx+0x85b]
 .org 0x8b2f
 # IDA 0x1892f; file 0x8b2f; locator=proven; or      [bx+840h], dh
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 or byte ptr [bx+0x840], dh
 .org 0x8b33
 loc_18933:
 # IDA 0x18933; file 0x8b33; locator=proven; test    [si], dl
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 test byte ptr [si], dl
 .org 0x8b35
 # IDA 0x18935; file 0x8b35; locator=proven; jnz     short locret_1893C
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 jnz .+7
 .org 0x8b37
 # IDA 0x18937; file 0x8b37; locator=proven; inc     byte ptr [si+1Bh]
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 inc byte ptr [si+0x1b]
 .org 0x8b3a
 # IDA 0x1893a; file 0x8b3a; locator=proven; or      [si], dl
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 or byte ptr [si], dl
 .org 0x8b3c
 locret_1893C:
 # IDA 0x1893c; file 0x8b3c; locator=proven; retn
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x8b3d
 loc_1893D:
 # IDA 0x1893d; file 0x8b3d; locator=proven; test    [bx+840h], dh
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 test byte ptr [bx+0x840], dh
 .org 0x8b41
 # IDA 0x18941; file 0x8b41; locator=proven; jz      short loc_1894F
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+14
 .org 0x8b43
 # IDA 0x18943; file 0x8b43; locator=proven; dec     byte ptr [bx+85Bh]
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 dec byte ptr [bx+0x85b]
 .org 0x8b47
 # IDA 0x18947; file 0x8b47; locator=proven; not     dh
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 not dh
 .org 0x8b49
 # IDA 0x18949; file 0x8b49; locator=proven; and     [bx+840h], dh
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 and byte ptr [bx+0x840], dh
 .org 0x8b4d
 # IDA 0x1894d; file 0x8b4d; locator=proven; not     dh
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 not dh
 .org 0x8b4f
 loc_1894F:
 # IDA 0x1894f; file 0x8b4f; locator=proven; test    [si], dl
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 test byte ptr [si], dl
 .org 0x8b51
 # IDA 0x18951; file 0x8b51; locator=proven; jz      short locret_1895C
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 jz .+11
 .org 0x8b53
 # IDA 0x18953; file 0x8b53; locator=proven; dec     byte ptr [si+1Bh]
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 dec byte ptr [si+0x1b]
 .org 0x8b56
 # IDA 0x18956; file 0x8b56; locator=proven; not     dl
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 not dl
 .org 0x8b58
 # IDA 0x18958; file 0x8b58; locator=proven; and     [si], dl
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 and byte ptr [si], dl
 .org 0x8b5a
 # IDA 0x1895a; file 0x8b5a; locator=proven; not     dl
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 not dl
 .org 0x8b5c
 locret_1895C:
 # IDA 0x1895c; file 0x8b5c; locator=proven; retn
-# ⚠ 函式 sub_1890A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1890A; [proven] 原雙邊鄰接bits與neighbor count更新，保留無回鄰時早退; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x8b5d
 sub_1895D:
@@ -61175,290 +61196,290 @@ ret
 .org 0x97c9
 sub_195C9:
 # IDA 0x195c9; file 0x97c9; locator=proven; push    ds
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 push ds
 .org 0x97ca
 # IDA 0x195ca; file 0x97ca; locator=proven; push    es
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 push es
 .org 0x97cb
 # IDA 0x195cb; file 0x97cb; locator=proven; push    ax
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 push ax
 .org 0x97cc
 # IDA 0x195cc; file 0x97cc; locator=proven; push    bx
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 push bx
 .org 0x97cd
 # IDA 0x195cd; file 0x97cd; locator=proven; push    cx
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 push cx
 .org 0x97ce
 # IDA 0x195ce; file 0x97ce; locator=proven; push    dx
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 push dx
 .org 0x97cf
 # IDA 0x195cf; file 0x97cf; locator=proven; push    si
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 push si
 .org 0x97d0
 # IDA 0x195d0; file 0x97d0; locator=proven; push    di
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 push di
 .org 0x97d1
 # IDA 0x195d1; file 0x97d1; locator=proven; cld
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 cld
 .org 0x97d2
 # IDA 0x195d2; file 0x97d2; locator=proven; mov     es, cs:word_10D3A
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 cs; mov es, word ptr [0xd3a]
 .org 0x97d7
 # IDA 0x195d7; file 0x97d7; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr dx, 0x1
 .org 0x97d9
 # IDA 0x195d9; file 0x97d9; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr bx, 0x1
 .org 0x97db
 # IDA 0x195db; file 0x97db; locator=proven; cmp     dx, 0B2h
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 cmp dx, 0xb2
 .org 0x97df
 # IDA 0x195df; file 0x97df; locator=proven; jbe     short loc_195E4
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 jbe .+5
 .org 0x97e1
 # IDA 0x195e1; file 0x97e1; locator=proven; mov     dx, 0B2h
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov dx, 0xb2
 .org 0x97e4
 loc_195E4:
 # IDA 0x195e4; file 0x97e4; locator=proven; add     dx, 1B6h
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 add dx, 0x1b6
 .org 0x97e8
 # IDA 0x195e8; file 0x97e8; locator=proven; add     bx, 26h
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 add bx, 0x26
 .org 0x97eb
 # IDA 0x195eb; file 0x97eb; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr dx, 0x1
 .org 0x97ed
 # IDA 0x195ed; file 0x97ed; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr dx, 0x1
 .org 0x97ef
 # IDA 0x195ef; file 0x97ef; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 shr dx, 0x1
 .org 0x97f1
 # IDA 0x195f1; file 0x97f1; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl bx, 0x1
 .org 0x97f3
 # IDA 0x195f3; file 0x97f3; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl bx, 0x1
 .org 0x97f5
 # IDA 0x195f5; file 0x97f5; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl bx, 0x1
 .org 0x97f7
 # IDA 0x195f7; file 0x97f7; locator=proven; mov     di, bx
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov di, bx
 .org 0x97f9
 # IDA 0x195f9; file 0x97f9; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl bx, 0x1
 .org 0x97fb
 # IDA 0x195fb; file 0x97fb; locator=proven; add     di, bx
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} add di, bx
 .org 0x97fd
 # IDA 0x195fd; file 0x97fd; locator=proven; mov     ax, bx
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov ax, bx
 .org 0x97ff
 # IDA 0x195ff; file 0x97ff; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl bx, 0x1
 .org 0x9801
 # IDA 0x19601; file 0x9801; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 shl bx, 0x1
 .org 0x9803
 # IDA 0x19603; file 0x9803; locator=proven; add     bx, ax
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} add bx, ax
 .org 0x9805
 # IDA 0x19605; file 0x9805; locator=proven; add     bx, dx
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} add bx, dx
 .org 0x9807
 # IDA 0x19607; file 0x9807; locator=proven; sub     dx, 37h
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 sub dx, 0x37
 .org 0x980a
 # IDA 0x1960a; file 0x980a; locator=proven; sub     di, 3C0h
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 sub di, 0x3c0
 .org 0x980e
 # IDA 0x1960e; file 0x980e; locator=proven; add     di, dx
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} add di, dx
 .org 0x9810
 # IDA 0x19610; file 0x9810; locator=proven; mov     ax, 0A0C8h
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ax, 0xa0c8
 .org 0x9813
 # IDA 0x19613; file 0x9813; locator=proven; mov     ds, ax
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov ds, ax
 .org 0x9815
 # IDA 0x19615; file 0x9815; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov dx, 0x3ce
 .org 0x9818
 # IDA 0x19618; file 0x9818; locator=proven; mov     al, 5
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, 0x5
 .org 0x981a
 # IDA 0x1961a; file 0x981a; locator=proven; out     dx, al
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 out dx, al
 .org 0x981b
 # IDA 0x1961b; file 0x981b; locator=proven; inc     dx
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 inc dx
 .org 0x981c
 # IDA 0x1961c; file 0x981c; locator=proven; xor     al, al
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} xor al, al
 .org 0x981e
 # IDA 0x1961e; file 0x981e; locator=proven; dec     dx
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 dec dx
 .org 0x981f
 # IDA 0x1961f; file 0x981f; locator=proven; mov     al, 4
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, 0x4
 .org 0x9821
 # IDA 0x19621; file 0x9821; locator=proven; out     dx, al
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 out dx, al
 .org 0x9822
 # IDA 0x19622; file 0x9822; locator=proven; mov     al, 0
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, 0x0
 .org 0x9824
 # IDA 0x19624; file 0x9824; locator=proven; call    sub_1963F
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+27
 .org 0x9827
 # IDA 0x19627; file 0x9827; locator=proven; mov     al, 1
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, 0x1
 .org 0x9829
 # IDA 0x19629; file 0x9829; locator=proven; call    sub_1963F
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+22
 .org 0x982c
 # IDA 0x1962c; file 0x982c; locator=proven; mov     al, 2
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, 0x2
 .org 0x982e
 # IDA 0x1962e; file 0x982e; locator=proven; call    sub_1963F
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+17
 .org 0x9831
 # IDA 0x19631; file 0x9831; locator=proven; mov     al, 3
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov al, 0x3
 .org 0x9833
 # IDA 0x19633; file 0x9833; locator=proven; call    sub_1963F
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 call .+12
 .org 0x9836
 # IDA 0x19636; file 0x9836; locator=proven; pop     di
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop di
 .org 0x9837
 # IDA 0x19637; file 0x9837; locator=proven; pop     si
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop si
 .org 0x9838
 # IDA 0x19638; file 0x9838; locator=proven; pop     dx
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop dx
 .org 0x9839
 # IDA 0x19639; file 0x9839; locator=proven; pop     cx
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop cx
 .org 0x983a
 # IDA 0x1963a; file 0x983a; locator=proven; pop     bx
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop bx
 .org 0x983b
 # IDA 0x1963b; file 0x983b; locator=proven; pop     ax
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop ax
 .org 0x983c
 # IDA 0x1963c; file 0x983c; locator=proven; pop     es
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop es
 .org 0x983d
 # IDA 0x1963d; file 0x983d; locator=proven; pop     ds
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 pop ds
 .org 0x983e
 # IDA 0x1963e; file 0x983e; locator=proven; retn
-# ⚠ 函式 sub_195C9; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195C9; [proven] 原四plane VRAM至minimap資料保存; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x983f
 sub_1963F:
 # IDA 0x1963f; file 0x983f; locator=proven; mov     dx, 3CFh
-# ⚠ 函式 sub_1963F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1963F; [proven] 原指定讀取plane，四列MOVSW由VRAM存入minimap; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov dx, 0x3cf
 .org 0x9842
 # IDA 0x19642; file 0x9842; locator=proven; out     dx, al
-# ⚠ 函式 sub_1963F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1963F; [proven] 原指定讀取plane，四列MOVSW由VRAM存入minimap; 出處: docs/re/130-c-battle-outcome-restoration.md
 out dx, al
 .org 0x9843
 # IDA 0x19643; file 0x9843; locator=proven; mov     si, bx
-# ⚠ 函式 sub_1963F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1963F; [proven] 原指定讀取plane，四列MOVSW由VRAM存入minimap; 出處: docs/re/130-c-battle-outcome-restoration.md
 {load} mov si, bx
 .org 0x9845
 # IDA 0x19645; file 0x9845; locator=proven; mov     cx, 4
-# ⚠ 函式 sub_1963F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1963F; [proven] 原指定讀取plane，四列MOVSW由VRAM存入minimap; 出處: docs/re/130-c-battle-outcome-restoration.md
 mov cx, 0x4
 .org 0x9848
 loc_19648:
 # IDA 0x19648; file 0x9848; locator=proven; movsw
-# ⚠ 函式 sub_1963F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1963F; [proven] 原指定讀取plane，四列MOVSW由VRAM存入minimap; 出處: docs/re/130-c-battle-outcome-restoration.md
 movsw
 .org 0x9849
 # IDA 0x19649; file 0x9849; locator=proven; add     si, 4Eh
-# ⚠ 函式 sub_1963F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1963F; [proven] 原指定讀取plane，四列MOVSW由VRAM存入minimap; 出處: docs/re/130-c-battle-outcome-restoration.md
 add si, 0x4e
 .org 0x984c
 # IDA 0x1964c; file 0x984c; locator=proven; add     di, 16h
-# ⚠ 函式 sub_1963F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1963F; [proven] 原指定讀取plane，四列MOVSW由VRAM存入minimap; 出處: docs/re/130-c-battle-outcome-restoration.md
 add di, 0x16
 .org 0x984f
 # IDA 0x1964f; file 0x984f; locator=proven; loop    loc_19648
-# ⚠ 函式 sub_1963F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1963F; [proven] 原指定讀取plane，四列MOVSW由VRAM存入minimap; 出處: docs/re/130-c-battle-outcome-restoration.md
 loop .-7
 .org 0x9851
 # IDA 0x19651; file 0x9851; locator=proven; add     di, 0BA0h
-# ⚠ 函式 sub_1963F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1963F; [proven] 原指定讀取plane，四列MOVSW由VRAM存入minimap; 出處: docs/re/130-c-battle-outcome-restoration.md
 add di, 0xba0
 .org 0x9855
 # IDA 0x19655; file 0x9855; locator=proven; retn
-# ⚠ 函式 sub_1963F; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1963F; [proven] 原指定讀取plane，四列MOVSW由VRAM存入minimap; 出處: docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x9856
 sub_19656:
@@ -61705,56 +61726,56 @@ ret
 .org 0x98cf
 sub_196CF:
 # IDA 0x196cf; file 0x98cf; locator=proven; mov     dx, 3C5h
-# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
+# 函式 sub_196CF; [proven] 原指定plane四列雙byte由minimap資料還原至VRAM，讀ES只供latch; 出處: docs/re/129-c-route-restoration.md, docs/re/130-c-battle-outcome-restoration.md
 mov dx, 0x3c5
 .org 0x98d2
 # IDA 0x196d2; file 0x98d2; locator=proven; out     dx, al
-# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
+# 函式 sub_196CF; [proven] 原指定plane四列雙byte由minimap資料還原至VRAM，讀ES只供latch; 出處: docs/re/129-c-route-restoration.md, docs/re/130-c-battle-outcome-restoration.md
 out dx, al
 .org 0x98d3
 # IDA 0x196d3; file 0x98d3; locator=proven; mov     di, bx
-# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
+# 函式 sub_196CF; [proven] 原指定plane四列雙byte由minimap資料還原至VRAM，讀ES只供latch; 出處: docs/re/129-c-route-restoration.md, docs/re/130-c-battle-outcome-restoration.md
 {load} mov di, bx
 .org 0x98d5
 # IDA 0x196d5; file 0x98d5; locator=proven; mov     cx, 4
-# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
+# 函式 sub_196CF; [proven] 原指定plane四列雙byte由minimap資料還原至VRAM，讀ES只供latch; 出處: docs/re/129-c-route-restoration.md, docs/re/130-c-battle-outcome-restoration.md
 mov cx, 0x4
 .org 0x98d8
 loc_196D8:
 # IDA 0x196d8; file 0x98d8; locator=proven; mov     al, es:[di]
-# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
+# 函式 sub_196CF; [proven] 原指定plane四列雙byte由minimap資料還原至VRAM，讀ES只供latch; 出處: docs/re/129-c-route-restoration.md, docs/re/130-c-battle-outcome-restoration.md
 es; mov al, byte ptr [di]
 .org 0x98db
 # IDA 0x196db; file 0x98db; locator=proven; movsb
-# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
+# 函式 sub_196CF; [proven] 原指定plane四列雙byte由minimap資料還原至VRAM，讀ES只供latch; 出處: docs/re/129-c-route-restoration.md, docs/re/130-c-battle-outcome-restoration.md
 movsb
 .org 0x98dc
 # IDA 0x196dc; file 0x98dc; locator=proven; mov     al, es:[di]
-# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
+# 函式 sub_196CF; [proven] 原指定plane四列雙byte由minimap資料還原至VRAM，讀ES只供latch; 出處: docs/re/129-c-route-restoration.md, docs/re/130-c-battle-outcome-restoration.md
 es; mov al, byte ptr [di]
 .org 0x98df
 # IDA 0x196df; file 0x98df; locator=proven; movsb
-# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
+# 函式 sub_196CF; [proven] 原指定plane四列雙byte由minimap資料還原至VRAM，讀ES只供latch; 出處: docs/re/129-c-route-restoration.md, docs/re/130-c-battle-outcome-restoration.md
 movsb
 .org 0x98e0
 # IDA 0x196e0; file 0x98e0; locator=proven; add     di, 4Eh
-# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
+# 函式 sub_196CF; [proven] 原指定plane四列雙byte由minimap資料還原至VRAM，讀ES只供latch; 出處: docs/re/129-c-route-restoration.md, docs/re/130-c-battle-outcome-restoration.md
 add di, 0x4e
 .org 0x98e3
 # IDA 0x196e3; file 0x98e3; locator=proven; add     si, 16h
-# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
+# 函式 sub_196CF; [proven] 原指定plane四列雙byte由minimap資料還原至VRAM，讀ES只供latch; 出處: docs/re/129-c-route-restoration.md, docs/re/130-c-battle-outcome-restoration.md
 add si, 0x16
 .org 0x98e6
 # IDA 0x196e6; file 0x98e6; locator=proven; loop    loc_196D8
-# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
+# 函式 sub_196CF; [proven] 原指定plane四列雙byte由minimap資料還原至VRAM，讀ES只供latch; 出處: docs/re/129-c-route-restoration.md, docs/re/130-c-battle-outcome-restoration.md
 loop .-14
 .org 0x98e8
 # IDA 0x196e8; file 0x98e8; locator=proven; add     si, 0BA0h
-# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
+# 函式 sub_196CF; [proven] 原指定plane四列雙byte由minimap資料還原至VRAM，讀ES只供latch; 出處: docs/re/129-c-route-restoration.md, docs/re/130-c-battle-outcome-restoration.md
 add si, 0xba0
 .org 0x98ec
 # IDA 0x196ec; file 0x98ec; locator=proven; retn
-# 函式 sub_196CF; [proven] 原指定plane的四列雙byte VRAM至minimap資料回填; 出處: docs/re/129-c-route-restoration.md
+# 函式 sub_196CF; [proven] 原指定plane四列雙byte由minimap資料還原至VRAM，讀ES只供latch; 出處: docs/re/129-c-route-restoration.md, docs/re/130-c-battle-outcome-restoration.md
 ret
 .org 0x98ed
 sub_196ED:
