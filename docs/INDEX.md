@@ -193,6 +193,7 @@
 | [`docs/re/113-c-resource-cue-restoration.md`](re/113-c-resource-cue-restoration.md) | 113：C 完整資源載入、BGM cue 與分段設定 | CONFORMED。6 支函式的局部原版／C 行為通過。 | 2026-10-09 |
 | [`docs/re/114-c-world-map-cells-restoration.md`](re/114-c-world-map-cells-restoration.md) | 114：原始大地圖顯示格與圖塊合成 C | CONFORMED。10 支函式的局部原版／C 行為通過。 | 2026-10-09 |
 | [`docs/re/115-c-world-overlay-restoration.md`](re/115-c-world-overlay-restoration.md) | 115：原軍團／物件到世界顯示格的 C | CONFORMED。6 支函式與原始矩陣 handler 的局部 C 行為通過。 | 2026-10-09 |
+| [`docs/re/116-c-scene-resume-restoration.md`](re/116-c-scene-resume-restoration.md) | 116：場景主入口與鏡頭／小地圖退出重畫 C | CONFORMED。9 支新函式與既有世界退出常式的完整局部 C 呼叫鏈通過。 | 2026-10-09 |
 | [`docs/re/12-diplomacy-dialogue.md`](re/12-diplomacy-dialogue.md) | 12 — 停戰說服訊息索引：#190–#198 | 三變體槽位與停戰說服這條索引路徑已證實；事件 6／7 的次要呼叫已定位， 但 formatter 參數契約與完整可見… | 2026-08-09 |
 | [`docs/re/13-pc98-numeric-window.md`](re/13-pc98-numeric-window.md) | 13 — DOS/V 數字輸入視窗量測與 CJK 版面決策 | 以 DOS/V 為唯一畫面基準；原始座標、DOS/V 96×64 內框 blit、3×6 每格操作、 實際按鍵 gl… | 2026-08-10 |
 | [`docs/re/14-mmap-mch-objects.md`](re/14-mmap-mch-objects.md) | 14 — MMAP.MCH 戰略地圖物件 | 資產格式、事件 12 的火災／暴動圖形鏈與 typed 動畫／移動時序 confirmed； type 3 的事件語… | 2026-08-10 |
@@ -448,6 +449,7 @@
 | [`docs/spec/233-c-resource-cue.md`](spec/233-c-resource-cue.md) | 233：C 完整檔案讀取與原始 cue | CONFORMED。O0／O2 各 93 組局部同狀態驗證與 12 個錯版通過。 | 2026-10-09 |
 | [`docs/spec/234-c-world-map-cells.md`](spec/234-c-world-map-cells.md) | 234：C 原始大地圖顯示格閉包 | CONFORMED。O0／O2 各 2,622 組與 12 個錯版通過。 | 2026-10-09 |
 | [`docs/spec/235-c-world-overlay.md`](spec/235-c-world-overlay.md) | 235：C 原始軍團／物件顯示 producer | CONFORMED。O0／O2 各 14,622 組、12,320 次 source 矩陣與 12 個錯版通過。 | 2026-10-09 |
+| [`docs/spec/236-c-scene-resume.md`](spec/236-c-scene-resume.md) | 236：C 場景主入口與退出重畫 | CONFORMED。O0／O2 各 171 完整場景／裝置案例與 12 個錯版通過。 | 2026-10-09 |
 | [`docs/spec/24-corps-info-window.md`](spec/24-corps-info-window.md) | 24 — 軍團情報視窗 | CONFORMED。版面已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/25-slot-select-window.md`](spec/25-slot-select-window.md) | 25 — 四槽選擇視窗（新遊戲／讀取／儲存） | CONFORMED。讀取／儲存已照原版版面實作； 新遊戲仍走 remake 自己的啟動殼層（§5）。 | 2026-08-15 |
 | [`docs/spec/26-yes-no-dialog.md`](spec/26-yes-no-dialog.md) | 26 — ＹＥＳ／ＮＯ 對話框 | CONFORMED。版面與命中算式已照原版實作並有契約測試。 | 2026-08-15 |

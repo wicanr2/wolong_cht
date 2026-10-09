@@ -13036,6 +13036,58 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "原 overlay C 局部證據界線；正常玩家／type 3 自然 producer／原 C compiler 不由本閉包代證。"
+    },
+    {
+      "file": "docs/re/116-c-scene-resume-restoration.md",
+      "item": "自然事件／長程玩家路徑",
+      "status": "局部場景主入口不代證完整自然事件與通關",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-c16b1f1a5ff7a5e559cc",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原場景局部 C 界線；自然事件／長程玩家與原 C 工具鏈不由本主入口代證。"
+    },
+    {
+      "file": "docs/re/116-c-scene-resume-restoration.md",
+      "item": "原作者 C 工具鏈／機器碼",
+      "status": "尚未確認",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-1c13fff8ec12f5953bfc",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原場景局部 C 界線；自然事件／長程玩家與原 C 工具鏈不由本主入口代證。"
+    },
+    {
+      "file": "docs/spec/236-c-scene-resume.md",
+      "item": "正常玩家長程路徑",
+      "status": "局部主入口不代證自然事件與通關",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-27fd7c0bfb6ac10a0439",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原場景局部 C 界線；自然事件／長程玩家與原 C 工具鏈不由本主入口代證。"
+    },
+    {
+      "file": "docs/spec/236-c-scene-resume.md",
+      "item": "原作者 C compiler／machine code",
+      "status": "尚未確認",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-7ffd12ca37893193fce7",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "原場景局部 C 界線；自然事件／長程玩家與原 C 工具鏈不由本主入口代證。"
     }
   ]
 }

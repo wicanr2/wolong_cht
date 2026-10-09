@@ -58,3 +58,9 @@ O0／O2 各 2,622 組完整 RAM／四 plane／ABI／FLAGS／I/O／入口 snapsho
 |---|---|
 | 完整場景退出與 producer | 小地圖、軍團／物件推入端及正常玩家流程仍需後續接線 |
 | 原作者 C 工具鏈／機器碼 | 尚未確認 |
+
+## 後續原始 C 場景退出
+
+[re/116](116-c-scene-resume-restoration.md) 以真實原主入口接完整局部
+world／小地圖／Mouse／TALK／resource，保留既有唯一 C world resume。
+自然事件與長程玩家路徑仍按該收據界線判讀。

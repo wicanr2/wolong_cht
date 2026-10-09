@@ -284,6 +284,7 @@
 | C resource 與 cue | [`233-c-resource-cue.md`](233-c-resource-cue.md) | CONFORMED，六函式／93 組／21 個 buffer／十二錯版 |
 | C 世界顯示格 | [`234-c-world-map-cells.md`](234-c-world-map-cells.md) | CONFORMED，10 函式／2,622 組／768 次素材比對／十二錯版 |
 | C 世界軍團／物件顯示 | [`235-c-world-overlay.md`](235-c-world-overlay.md) | CONFORMED，六函式／一 raw／14,622 組／十二錯版 |
+| C 場景入口與退出重畫 | [`236-c-scene-resume.md`](236-c-scene-resume.md) | CONFORMED，九函式／171 全場景裝置／十二錯版 |
 
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的

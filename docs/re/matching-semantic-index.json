@@ -1810,6 +1810,78 @@
         "docs/re/115-c-world-overlay-restoration.md",
         "docs/spec/235-c-world-overlay.md"
       ]
+    },
+    "0x11F30": {
+      "meaning": "原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/116-c-scene-resume-restoration.md",
+        "docs/spec/236-c-scene-resume.md"
+      ]
+    },
+    "0x11F5A": {
+      "meaning": "原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/116-c-scene-resume-restoration.md",
+        "docs/spec/236-c-scene-resume.md"
+      ]
+    },
+    "0x13B08": {
+      "meaning": "原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/116-c-scene-resume-restoration.md",
+        "docs/spec/236-c-scene-resume.md"
+      ]
+    },
+    "0x15C58": {
+      "meaning": "原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/116-c-scene-resume-restoration.md",
+        "docs/spec/236-c-scene-resume.md"
+      ]
+    },
+    "0x19541": {
+      "meaning": "原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/116-c-scene-resume-restoration.md",
+        "docs/spec/236-c-scene-resume.md"
+      ]
+    },
+    "0x195B1": {
+      "meaning": "原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/116-c-scene-resume-restoration.md",
+        "docs/spec/236-c-scene-resume.md"
+      ]
+    },
+    "0x196ED": {
+      "meaning": "原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/116-c-scene-resume-restoration.md",
+        "docs/spec/236-c-scene-resume.md"
+      ]
+    },
+    "0x19752": {
+      "meaning": "原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/116-c-scene-resume-restoration.md",
+        "docs/spec/236-c-scene-resume.md"
+      ]
+    },
+    "0x1D4A3": {
+      "meaning": "原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據",
+      "level": "proven",
+      "sources": [
+        "docs/re/116-c-scene-resume-restoration.md",
+        "docs/spec/236-c-scene-resume.md"
+      ]
     }
   },
   "operands": {

@@ -8444,99 +8444,99 @@ ret
 .org 0x2130
 sub_11F30:
 # IDA 0x11f30; file 0x2130; locator=proven; mov     dx, ds:9896h
-# ⚠ 函式 sub_11F30; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F30; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov dx, word ptr [0x9896]
 .org 0x2134
 # IDA 0x11f34; file 0x2134; locator=proven; mov     bx, ds:9898h
-# ⚠ 函式 sub_11F30; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F30; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov bx, word ptr [0x9898]
 .org 0x2138
 # IDA 0x11f38; file 0x2138; locator=proven; sub     bx, 2
-# ⚠ 函式 sub_11F30; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F30; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 sub bx, 0x2
 .org 0x213b
 # IDA 0x11f3b; file 0x213b; locator=proven; jb      short sub_11F5A
-# ⚠ 函式 sub_11F30; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F30; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 jb .+31
 .org 0x213d
 # IDA 0x11f3d; file 0x213d; locator=proven; call    sub_1D4A3
-# ⚠ 函式 sub_11F30; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F30; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .-19098
 .org 0x2140
 # IDA 0x11f40; file 0x2140; locator=proven; cmp     byte ptr ds:98A2h, 0
-# ⚠ 函式 sub_11F30; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F30; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 cmp byte ptr [0x98a2], 0x0
 .org 0x2145
 # IDA 0x11f45; file 0x2145; locator=proven; jz      short locret_11F59
-# ⚠ 函式 sub_11F30; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F30; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 jz .+20
 .org 0x2147
 # IDA 0x11f47; file 0x2147; locator=proven; mov     ax, 2
-# ⚠ 函式 sub_11F30; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F30; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov ax, 0x2
 .org 0x214a
 # IDA 0x11f4a; file 0x214a; locator=proven; mov     ds:98A2h, ah
-# ⚠ 函式 sub_11F30; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F30; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov byte ptr [0x98a2], ah
 .org 0x214e
 # IDA 0x11f4e; file 0x214e; locator=proven; call    sub_20000
-# ⚠ 函式 sub_11F30; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F30; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 lcall 0x1000, 0x0
 .org 0x2153
 # IDA 0x11f53; file 0x2153; locator=proven; mov     word ptr ds:988Ah, 0FFFFh
-# ⚠ 函式 sub_11F30; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F30; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov word ptr [0x988a], 0xffff
 .org 0x2159
 locret_11F59:
 # IDA 0x11f59; file 0x2159; locator=proven; retn
-# ⚠ 函式 sub_11F30; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F30; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 ret
 .org 0x215a
 sub_11F5A:
 # IDA 0x11f5a; file 0x215a; locator=proven; mov     dx, ds:9886h
-# ⚠ 函式 sub_11F5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F5A; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov dx, word ptr [0x9886]
 .org 0x215e
 # IDA 0x11f5e; file 0x215e; locator=proven; mov     bx, ds:9888h
-# ⚠ 函式 sub_11F5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F5A; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov bx, word ptr [0x9888]
 .org 0x2162
 # IDA 0x11f62; file 0x2162; locator=proven; cmp     dx, ds:988Ah
-# ⚠ 函式 sub_11F5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F5A; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 cmp dx, word ptr [0x988a]
 .org 0x2166
 # IDA 0x11f66; file 0x2166; locator=proven; jnz     short loc_11F6E
-# ⚠ 函式 sub_11F5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F5A; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 jnz .+8
 .org 0x2168
 # IDA 0x11f68; file 0x2168; locator=proven; cmp     bx, ds:988Ch
-# ⚠ 函式 sub_11F5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F5A; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 cmp bx, word ptr [0x988c]
 .org 0x216c
 # IDA 0x11f6c; file 0x216c; locator=proven; jz      short locret_11F7E
-# ⚠ 函式 sub_11F5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F5A; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 jz .+18
 .org 0x216e
 loc_11F6E:
 # IDA 0x11f6e; file 0x216e; locator=proven; mov     ax, 9
-# ⚠ 函式 sub_11F5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F5A; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov ax, 0x9
 .org 0x2171
 # IDA 0x11f71; file 0x2171; locator=proven; mov     ds:988Ah, dx
-# ⚠ 函式 sub_11F5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F5A; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov word ptr [0x988a], dx
 .org 0x2175
 # IDA 0x11f75; file 0x2175; locator=proven; mov     ds:988Ch, bx
-# ⚠ 函式 sub_11F5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F5A; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov word ptr [0x988c], bx
 .org 0x2179
 # IDA 0x11f79; file 0x2179; locator=proven; call    sub_20000
-# ⚠ 函式 sub_11F5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F5A; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 lcall 0x1000, 0x0
 .org 0x217e
 locret_11F7E:
 # IDA 0x11f7e; file 0x217e; locator=proven; retn
-# ⚠ 函式 sub_11F5A; [unknown] 未附加語意; 出處: 無
+# 函式 sub_11F5A; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 ret
 .org 0x217f
 sub_11F7F:
@@ -20967,156 +20967,156 @@ ret
 .org 0x3d08
 sub_13B08:
 # IDA 0x13b08; file 0x3d08; locator=proven; push    ax
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push ax
 .org 0x3d09
 # IDA 0x13b09; file 0x3d09; locator=proven; push    bx
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push bx
 .org 0x3d0a
 # IDA 0x13b0a; file 0x3d0a; locator=proven; push    cx
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push cx
 .org 0x3d0b
 # IDA 0x13b0b; file 0x3d0b; locator=proven; push    dx
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push dx
 .org 0x3d0c
 # IDA 0x13b0c; file 0x3d0c; locator=proven; push    bp
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push bp
 .org 0x3d0d
 # IDA 0x13b0d; file 0x3d0d; locator=proven; push    di
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push di
 .org 0x3d0e
 # IDA 0x13b0e; file 0x3d0e; locator=proven; call    sub_102C2
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .-14412
 .org 0x3d11
 # IDA 0x13b11; file 0x3d11; locator=proven; mov     di, sp
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} mov di, sp
 .org 0x3d13
 # IDA 0x13b13; file 0x3d13; locator=proven; xor     ah, ah
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} xor ah, ah
 .org 0x3d15
 # IDA 0x13b15; file 0x3d15; locator=proven; mov     bp, ax
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} mov bp, ax
 .org 0x3d17
 # IDA 0x13b17; file 0x3d17; locator=proven; mov     ax, 2
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov ax, 0x2
 .org 0x3d1a
 # IDA 0x13b1a; file 0x3d1a; locator=proven; call    sub_20000
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 lcall 0x1000, 0x0
 .org 0x3d1f
 # IDA 0x13b1f; file 0x3d1f; locator=proven; mov     al, 0
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov al, 0x0
 .org 0x3d21
 # IDA 0x13b21; file 0x3d21; locator=proven; call    sub_13D09
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .+488
 .org 0x3d24
 # IDA 0x13b24; file 0x3d24; locator=proven; mov     al, 6
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov al, 0x6
 .org 0x3d26
 # IDA 0x13b26; file 0x3d26; locator=proven; call    sub_10241
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .-14565
 .org 0x3d29
 # IDA 0x13b29; file 0x3d29; locator=proven; call    sub_13C99
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .+368
 .org 0x3d2c
 # IDA 0x13b2c; file 0x3d2c; locator=proven; add     cx, 3
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 add cx, 0x3
 .org 0x3d2f
 # IDA 0x13b2f; file 0x3d2f; locator=proven; call    sub_13CDC
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .+429
 .org 0x3d32
 # IDA 0x13b32; file 0x3d32; locator=proven; inc     cx
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 inc cx
 .org 0x3d33
 # IDA 0x13b33; file 0x3d33; locator=proven; and     bp, bp
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} and bp, bp
 .org 0x3d35
 # IDA 0x13b35; file 0x3d35; locator=proven; jz      short loc_13B3A
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 jz .+5
 .org 0x3d37
 # IDA 0x13b37; file 0x3d37; locator=proven; add     cx, 3
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 add cx, 0x3
 .org 0x3d3a
 loc_13B3A:
 # IDA 0x13b3a; file 0x3d3a; locator=proven; call    sub_13C99
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .+351
 .org 0x3d3d
 # IDA 0x13b3d; file 0x3d3d; locator=proven; call    sub_102C2
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .-14459
 .org 0x3d40
 # IDA 0x13b40; file 0x3d40; locator=proven; call    sub_13D45
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .+517
 .org 0x3d43
 # IDA 0x13b43; file 0x3d43; locator=proven; call    sub_11D46
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .-7677
 .org 0x3d46
 # IDA 0x13b46; file 0x3d46; locator=proven; mov     ax, 1
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov ax, 0x1
 .org 0x3d49
 # IDA 0x13b49; file 0x3d49; locator=proven; xor     bx, bx
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} xor bx, bx
 .org 0x3d4b
 # IDA 0x13b4b; file 0x3d4b; locator=proven; call    sub_20000
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 lcall 0x1000, 0x0
 .org 0x3d50
 # IDA 0x13b50; file 0x3d50; locator=proven; call    sub_19321
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .+22481
 .org 0x3d53
 # IDA 0x13b53; file 0x3d53; locator=proven; pop     di
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop di
 .org 0x3d54
 # IDA 0x13b54; file 0x3d54; locator=proven; pop     bp
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop bp
 .org 0x3d55
 # IDA 0x13b55; file 0x3d55; locator=proven; pop     dx
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop dx
 .org 0x3d56
 # IDA 0x13b56; file 0x3d56; locator=proven; pop     cx
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop cx
 .org 0x3d57
 # IDA 0x13b57; file 0x3d57; locator=proven; pop     bx
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop bx
 .org 0x3d58
 # IDA 0x13b58; file 0x3d58; locator=proven; pop     ax
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop ax
 .org 0x3d59
 # IDA 0x13b59; file 0x3d59; locator=proven; retn
-# ⚠ 函式 sub_13B08; [unknown] 未附加語意; 出處: 無
+# 函式 sub_13B08; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 ret
 .org 0x3d5a
 sub_13B5A:
@@ -35910,106 +35910,106 @@ ret
 .org 0x5e58
 sub_15C58:
 # IDA 0x15c58; file 0x5e58; locator=proven; mov     dx, ds:9892h
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov dx, word ptr [0x9892]
 .org 0x5e5c
 # IDA 0x15c5c; file 0x5e5c; locator=proven; mov     bx, ds:9894h
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov bx, word ptr [0x9894]
 .org 0x5e60
 # IDA 0x15c60; file 0x5e60; locator=proven; cmp     dx, ds:988Eh
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 cmp dx, word ptr [0x988e]
 .org 0x5e64
 # IDA 0x15c64; file 0x5e64; locator=proven; jnz     short loc_15C6C
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 jnz .+8
 .org 0x5e66
 # IDA 0x15c66; file 0x5e66; locator=proven; cmp     bx, ds:9890h
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 cmp bx, word ptr [0x9890]
 .org 0x5e6a
 # IDA 0x15c6a; file 0x5e6a; locator=proven; jz      short locret_15CA3
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 jz .+57
 .org 0x5e6c
 loc_15C6C:
 # IDA 0x15c6c; file 0x5e6c; locator=proven; call    sub_101B4
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .-23224
 .org 0x5e6f
 # IDA 0x15c6f; file 0x5e6f; locator=proven; cmp     dx, 0FFFFh
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 cmp dx, 0xffff
 .org 0x5e72
 # IDA 0x15c72; file 0x5e72; locator=proven; jz      short loc_15C82
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 jz .+16
 .org 0x5e74
 # IDA 0x15c74; file 0x5e74; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shr dx, 0x1
 .org 0x5e76
 # IDA 0x15c76; file 0x5e76; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shr bx, 0x1
 .org 0x5e78
 # IDA 0x15c78; file 0x5e78; locator=proven; add     dx, 1B8h
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 add dx, 0x1b8
 .org 0x5e7c
 # IDA 0x15c7c; file 0x5e7c; locator=proven; add     bx, 28h
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 add bx, 0x28
 .org 0x5e7f
 # IDA 0x15c7f; file 0x5e7f; locator=proven; call    sub_19541
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .+14530
 .org 0x5e82
 loc_15C82:
 # IDA 0x15c82; file 0x5e82; locator=proven; mov     dx, ds:988Eh
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov dx, word ptr [0x988e]
 .org 0x5e86
 # IDA 0x15c86; file 0x5e86; locator=proven; mov     bx, ds:9890h
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov bx, word ptr [0x9890]
 .org 0x5e8a
 # IDA 0x15c8a; file 0x5e8a; locator=proven; mov     ds:9892h, dx
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov word ptr [0x9892], dx
 .org 0x5e8e
 # IDA 0x15c8e; file 0x5e8e; locator=proven; mov     ds:9894h, bx
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov word ptr [0x9894], bx
 .org 0x5e92
 # IDA 0x15c92; file 0x5e92; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shr dx, 0x1
 .org 0x5e94
 # IDA 0x15c94; file 0x5e94; locator=proven; shr     bx, 1
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shr bx, 0x1
 .org 0x5e96
 # IDA 0x15c96; file 0x5e96; locator=proven; add     dx, 1B8h
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 add dx, 0x1b8
 .org 0x5e9a
 # IDA 0x15c9a; file 0x5e9a; locator=proven; add     bx, 28h
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 add bx, 0x28
 .org 0x5e9d
 # IDA 0x15c9d; file 0x5e9d; locator=proven; call    sub_196ED
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .+14928
 .org 0x5ea0
 # IDA 0x15ca0; file 0x5ea0; locator=proven; call    sub_101DB
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .-23237
 .org 0x5ea3
 locret_15CA3:
 # IDA 0x15ca3; file 0x5ea3; locator=proven; retn
-# ⚠ 函式 sub_15C58; [unknown] 未附加語意; 出處: 無
+# 函式 sub_15C58; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 ret
 .org 0x5ea4
 sub_15CA4:
@@ -59476,274 +59476,274 @@ ret
 .org 0x9741
 sub_19541:
 # IDA 0x19541; file 0x9741; locator=proven; push    ds
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push ds
 .org 0x9742
 # IDA 0x19542; file 0x9742; locator=proven; push    es
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push es
 .org 0x9743
 # IDA 0x19543; file 0x9743; locator=proven; push    ax
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push ax
 .org 0x9744
 # IDA 0x19544; file 0x9744; locator=proven; push    bx
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push bx
 .org 0x9745
 # IDA 0x19545; file 0x9745; locator=proven; push    cx
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push cx
 .org 0x9746
 # IDA 0x19546; file 0x9746; locator=proven; push    dx
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push dx
 .org 0x9747
 # IDA 0x19547; file 0x9747; locator=proven; push    si
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push si
 .org 0x9748
 # IDA 0x19548; file 0x9748; locator=proven; push    di
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push di
 .org 0x9749
 # IDA 0x19549; file 0x9749; locator=proven; cld
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 cld
 .org 0x974a
 # IDA 0x1954a; file 0x974a; locator=proven; mov     ds, cs:word_10D3A
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 cs; mov ds, word ptr [0xd3a]
 .org 0x974f
 # IDA 0x1954f; file 0x974f; locator=proven; cmp     dx, 260h
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 cmp dx, 0x260
 .org 0x9753
 # IDA 0x19553; file 0x9753; locator=proven; jb      short loc_19558
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 jb .+5
 .org 0x9755
 # IDA 0x19555; file 0x9755; locator=proven; mov     dx, 25Fh
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov dx, 0x25f
 .org 0x9758
 loc_19558:
 # IDA 0x19558; file 0x9758; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shr dx, 0x1
 .org 0x975a
 # IDA 0x1955a; file 0x975a; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shr dx, 0x1
 .org 0x975c
 # IDA 0x1955c; file 0x975c; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shr dx, 0x1
 .org 0x975e
 # IDA 0x1955e; file 0x975e; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shl bx, 0x1
 .org 0x9760
 # IDA 0x19560; file 0x9760; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shl bx, 0x1
 .org 0x9762
 # IDA 0x19562; file 0x9762; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shl bx, 0x1
 .org 0x9764
 # IDA 0x19564; file 0x9764; locator=proven; mov     si, bx
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} mov si, bx
 .org 0x9766
 # IDA 0x19566; file 0x9766; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shl bx, 0x1
 .org 0x9768
 # IDA 0x19568; file 0x9768; locator=proven; add     si, bx
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} add si, bx
 .org 0x976a
 # IDA 0x1956a; file 0x976a; locator=proven; mov     ax, bx
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} mov ax, bx
 .org 0x976c
 # IDA 0x1956c; file 0x976c; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shl bx, 0x1
 .org 0x976e
 # IDA 0x1956e; file 0x976e; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shl bx, 0x1
 .org 0x9770
 # IDA 0x19570; file 0x9770; locator=proven; add     bx, ax
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} add bx, ax
 .org 0x9772
 # IDA 0x19572; file 0x9772; locator=proven; add     bx, dx
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} add bx, dx
 .org 0x9774
 # IDA 0x19574; file 0x9774; locator=proven; sub     dx, 37h
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 sub dx, 0x37
 .org 0x9777
 # IDA 0x19577; file 0x9777; locator=proven; sub     si, 3C0h
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 sub si, 0x3c0
 .org 0x977b
 # IDA 0x1957b; file 0x977b; locator=proven; add     si, dx
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} add si, dx
 .org 0x977d
 # IDA 0x1957d; file 0x977d; locator=proven; mov     ax, 0A0C8h
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov ax, 0xa0c8
 .org 0x9780
 # IDA 0x19580; file 0x9780; locator=proven; mov     es, ax
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov es, ax
 .org 0x9782
 # IDA 0x19582; file 0x9782; locator=proven; call    sub_10CC3
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .+30529
 .org 0x9785
 # IDA 0x19585; file 0x9785; locator=proven; mov     dx, 3C4h
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov dx, 0x3c4
 .org 0x9788
 # IDA 0x19588; file 0x9788; locator=proven; mov     al, 2
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov al, 0x2
 .org 0x978a
 # IDA 0x1958a; file 0x978a; locator=proven; out     dx, al
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 out dx, al
 .org 0x978b
 # IDA 0x1958b; file 0x978b; locator=proven; mov     al, 1
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov al, 0x1
 .org 0x978d
 # IDA 0x1958d; file 0x978d; locator=proven; call    sub_195B1
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .+36
 .org 0x9790
 # IDA 0x19590; file 0x9790; locator=proven; mov     al, 2
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov al, 0x2
 .org 0x9792
 # IDA 0x19592; file 0x9792; locator=proven; call    sub_195B1
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .+31
 .org 0x9795
 # IDA 0x19595; file 0x9795; locator=proven; mov     ax, 4
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov ax, 0x4
 .org 0x9798
 # IDA 0x19598; file 0x9798; locator=proven; call    sub_195B1
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .+25
 .org 0x979b
 # IDA 0x1959b; file 0x979b; locator=proven; mov     ax, 8
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov ax, 0x8
 .org 0x979e
 # IDA 0x1959e; file 0x979e; locator=proven; call    sub_195B1
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .+19
 .org 0x97a1
 # IDA 0x195a1; file 0x97a1; locator=proven; mov     dx, 3C4h
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov dx, 0x3c4
 .org 0x97a4
 # IDA 0x195a4; file 0x97a4; locator=proven; mov     ax, 0F02h
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov ax, 0xf02
 .org 0x97a7
 # IDA 0x195a7; file 0x97a7; locator=proven; out     dx, ax
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 out dx, ax
 .org 0x97a8
 # IDA 0x195a8; file 0x97a8; locator=proven; pop     di
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop di
 .org 0x97a9
 # IDA 0x195a9; file 0x97a9; locator=proven; pop     si
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop si
 .org 0x97aa
 # IDA 0x195aa; file 0x97aa; locator=proven; pop     dx
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop dx
 .org 0x97ab
 # IDA 0x195ab; file 0x97ab; locator=proven; pop     cx
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop cx
 .org 0x97ac
 # IDA 0x195ac; file 0x97ac; locator=proven; pop     bx
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop bx
 .org 0x97ad
 # IDA 0x195ad; file 0x97ad; locator=proven; pop     ax
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop ax
 .org 0x97ae
 # IDA 0x195ae; file 0x97ae; locator=proven; pop     es
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop es
 .org 0x97af
 # IDA 0x195af; file 0x97af; locator=proven; pop     ds
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop ds
 .org 0x97b0
 # IDA 0x195b0; file 0x97b0; locator=proven; retn
-# ⚠ 函式 sub_19541; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19541; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 ret
 .org 0x97b1
 sub_195B1:
 # IDA 0x195b1; file 0x97b1; locator=proven; mov     dx, 3C5h
-# ⚠ 函式 sub_195B1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195B1; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov dx, 0x3c5
 .org 0x97b4
 # IDA 0x195b4; file 0x97b4; locator=proven; out     dx, al
-# ⚠ 函式 sub_195B1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195B1; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 out dx, al
 .org 0x97b5
 # IDA 0x195b5; file 0x97b5; locator=proven; mov     di, bx
-# ⚠ 函式 sub_195B1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195B1; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} mov di, bx
 .org 0x97b7
 # IDA 0x195b7; file 0x97b7; locator=proven; mov     cx, 0Bh
-# ⚠ 函式 sub_195B1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195B1; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov cx, 0xb
 .org 0x97ba
 loc_195BA:
 # IDA 0x195ba; file 0x97ba; locator=proven; movsw
-# ⚠ 函式 sub_195B1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195B1; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 movsw
 .org 0x97bb
 # IDA 0x195bb; file 0x97bb; locator=proven; movsw
-# ⚠ 函式 sub_195B1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195B1; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 movsw
 .org 0x97bc
 # IDA 0x195bc; file 0x97bc; locator=proven; add     di, 4Ch
-# ⚠ 函式 sub_195B1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195B1; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 add di, 0x4c
 .org 0x97bf
 # IDA 0x195bf; file 0x97bf; locator=proven; add     si, 14h
-# ⚠ 函式 sub_195B1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195B1; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 add si, 0x14
 .org 0x97c2
 # IDA 0x195c2; file 0x97c2; locator=proven; loop    loc_195BA
-# ⚠ 函式 sub_195B1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195B1; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 loop .-8
 .org 0x97c4
 # IDA 0x195c4; file 0x97c4; locator=proven; add     si, 0AF8h
-# ⚠ 函式 sub_195B1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195B1; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 add si, 0xaf8
 .org 0x97c8
 # IDA 0x195c8; file 0x97c8; locator=proven; retn
-# ⚠ 函式 sub_195B1; [unknown] 未附加語意; 出處: 無
+# 函式 sub_195B1; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 ret
 .org 0x97c9
 sub_195C9:
@@ -60332,347 +60332,347 @@ ret
 .org 0x98ed
 sub_196ED:
 # IDA 0x196ed; file 0x98ed; locator=proven; push    ds
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push ds
 .org 0x98ee
 # IDA 0x196ee; file 0x98ee; locator=proven; push    es
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push es
 .org 0x98ef
 # IDA 0x196ef; file 0x98ef; locator=proven; push    ax
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push ax
 .org 0x98f0
 # IDA 0x196f0; file 0x98f0; locator=proven; push    bx
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push bx
 .org 0x98f1
 # IDA 0x196f1; file 0x98f1; locator=proven; push    cx
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push cx
 .org 0x98f2
 # IDA 0x196f2; file 0x98f2; locator=proven; push    dx
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push dx
 .org 0x98f3
 # IDA 0x196f3; file 0x98f3; locator=proven; push    si
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push si
 .org 0x98f4
 # IDA 0x196f4; file 0x98f4; locator=proven; push    di
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push di
 .org 0x98f5
 # IDA 0x196f5; file 0x98f5; locator=proven; push    bp
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push bp
 .org 0x98f6
 # IDA 0x196f6; file 0x98f6; locator=proven; cld
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 cld
 .org 0x98f7
 # IDA 0x196f7; file 0x98f7; locator=proven; mov     ch, dl
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} mov ch, dl
 .org 0x98f9
 # IDA 0x196f9; file 0x98f9; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shr dx, 0x1
 .org 0x98fb
 # IDA 0x196fb; file 0x98fb; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shr dx, 0x1
 .org 0x98fd
 # IDA 0x196fd; file 0x98fd; locator=proven; shr     dx, 1
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shr dx, 0x1
 .org 0x98ff
 # IDA 0x196ff; file 0x98ff; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shl bx, 0x1
 .org 0x9901
 # IDA 0x19701; file 0x9901; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shl bx, 0x1
 .org 0x9903
 # IDA 0x19703; file 0x9903; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shl bx, 0x1
 .org 0x9905
 # IDA 0x19705; file 0x9905; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shl bx, 0x1
 .org 0x9907
 # IDA 0x19707; file 0x9907; locator=proven; add     dx, bx
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} add dx, bx
 .org 0x9909
 # IDA 0x19709; file 0x9909; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shl bx, 0x1
 .org 0x990b
 # IDA 0x1970b; file 0x990b; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shl bx, 0x1
 .org 0x990d
 # IDA 0x1970d; file 0x990d; locator=proven; add     bx, dx
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} add bx, dx
 .org 0x990f
 # IDA 0x1970f; file 0x990f; locator=proven; and     ch, 7
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 and ch, 0x7
 .org 0x9912
 # IDA 0x19712; file 0x9912; locator=proven; mov     ds, cs:word_10D4C
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 cs; mov ds, word ptr [0xd4c]
 .org 0x9917
 # IDA 0x19717; file 0x9917; locator=proven; xor     si, si
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} xor si, si
 .org 0x9919
 # IDA 0x19719; file 0x9919; locator=proven; mov     ax, 0A0C8h
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov ax, 0xa0c8
 .org 0x991c
 # IDA 0x1971c; file 0x991c; locator=proven; mov     es, ax
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov es, ax
 .org 0x991e
 # IDA 0x1971e; file 0x991e; locator=proven; call    sub_10CAC
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .+30094
 .org 0x9921
 # IDA 0x19721; file 0x9921; locator=proven; xor     al, al
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} xor al, al
 .org 0x9923
 # IDA 0x19723; file 0x9923; locator=proven; call    sub_19752
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .+47
 .org 0x9926
 # IDA 0x19726; file 0x9926; locator=proven; mov     dx, 3CEh
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov dx, 0x3ce
 .org 0x9929
 # IDA 0x19729; file 0x9929; locator=proven; mov     al, 3
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov al, 0x3
 .org 0x992b
 # IDA 0x1972b; file 0x992b; locator=proven; out     dx, al
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 out dx, al
 .org 0x992c
 # IDA 0x1972c; file 0x992c; locator=proven; inc     dx
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 inc dx
 .org 0x992d
 # IDA 0x1972d; file 0x992d; locator=proven; mov     al, 10h
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov al, 0x10
 .org 0x992f
 # IDA 0x1972f; file 0x992f; locator=proven; out     dx, al
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 out dx, al
 .org 0x9930
 # IDA 0x19730; file 0x9930; locator=proven; dec     dx
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 dec dx
 .org 0x9931
 # IDA 0x19731; file 0x9931; locator=proven; xor     al, al
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} xor al, al
 .org 0x9933
 # IDA 0x19733; file 0x9933; locator=proven; out     dx, al
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 out dx, al
 .org 0x9934
 # IDA 0x19734; file 0x9934; locator=proven; mov     al, 1
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov al, 0x1
 .org 0x9936
 # IDA 0x19736; file 0x9936; locator=proven; call    sub_19752
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .+28
 .org 0x9939
 # IDA 0x19739; file 0x9939; locator=proven; mov     al, 2
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov al, 0x2
 .org 0x993b
 # IDA 0x1973b; file 0x993b; locator=proven; call    sub_19752
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .+23
 .org 0x993e
 # IDA 0x1973e; file 0x993e; locator=proven; mov     al, 4
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov al, 0x4
 .org 0x9940
 # IDA 0x19740; file 0x9940; locator=proven; call    sub_19752
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .+18
 .org 0x9943
 # IDA 0x19743; file 0x9943; locator=proven; mov     al, 8
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov al, 0x8
 .org 0x9945
 # IDA 0x19745; file 0x9945; locator=proven; call    sub_19752
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 call .+13
 .org 0x9948
 # IDA 0x19748; file 0x9948; locator=proven; pop     bp
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop bp
 .org 0x9949
 # IDA 0x19749; file 0x9949; locator=proven; pop     di
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop di
 .org 0x994a
 # IDA 0x1974a; file 0x994a; locator=proven; pop     si
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop si
 .org 0x994b
 # IDA 0x1974b; file 0x994b; locator=proven; pop     dx
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop dx
 .org 0x994c
 # IDA 0x1974c; file 0x994c; locator=proven; pop     cx
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop cx
 .org 0x994d
 # IDA 0x1974d; file 0x994d; locator=proven; pop     bx
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop bx
 .org 0x994e
 # IDA 0x1974e; file 0x994e; locator=proven; pop     ax
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop ax
 .org 0x994f
 # IDA 0x1974f; file 0x994f; locator=proven; pop     es
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop es
 .org 0x9950
 # IDA 0x19750; file 0x9950; locator=proven; pop     ds
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop ds
 .org 0x9951
 # IDA 0x19751; file 0x9951; locator=proven; retn
-# ⚠ 函式 sub_196ED; [unknown] 未附加語意; 出處: 無
+# 函式 sub_196ED; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 ret
 .org 0x9952
 sub_19752:
 # IDA 0x19752; file 0x9952; locator=proven; mov     dx, 3CFh
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov dx, 0x3cf
 .org 0x9955
 # IDA 0x19755; file 0x9955; locator=proven; out     dx, al
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 out dx, al
 .org 0x9956
 # IDA 0x19756; file 0x9956; locator=proven; mov     di, bx
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} mov di, bx
 .org 0x9958
 # IDA 0x19758; file 0x9958; locator=proven; mov     bp, 0Bh
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov bp, 0xb
 .org 0x995b
 loc_1975B:
 # IDA 0x1975b; file 0x995b; locator=proven; lodsw
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 lodsw
 .org 0x995c
 # IDA 0x1975c; file 0x995c; locator=proven; mov     dh, [si]
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 mov dh, byte ptr [si]
 .org 0x995e
 # IDA 0x1975e; file 0x995e; locator=proven; xor     dl, dl
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} xor dl, dl
 .org 0x9960
 # IDA 0x19760; file 0x9960; locator=proven; inc     si
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 inc si
 .org 0x9961
 # IDA 0x19761; file 0x9961; locator=proven; xchg    al, ah
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} xchg al, ah
 .org 0x9963
 # IDA 0x19763; file 0x9963; locator=proven; and     ch, ch
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} and ch, ch
 .org 0x9965
 # IDA 0x19765; file 0x9965; locator=proven; jz      short loc_19771
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 jz .+12
 .org 0x9967
 # IDA 0x19767; file 0x9967; locator=proven; mov     cl, ch
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} mov cl, ch
 .org 0x9969
 loc_19769:
 # IDA 0x19769; file 0x9969; locator=proven; shr     ax, 1
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shr ax, 0x1
 .org 0x996b
 # IDA 0x1976b; file 0x996b; locator=proven; rcr     dx, 1
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 rcr dx, 0x1
 .org 0x996d
 # IDA 0x1976d; file 0x996d; locator=proven; dec     cl
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 dec cl
 .org 0x996f
 # IDA 0x1976f; file 0x996f; locator=proven; jnz     short loc_19769
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 jnz .-6
 .org 0x9971
 loc_19771:
 # IDA 0x19771; file 0x9971; locator=proven; mov     cl, es:[di]
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 es; mov cl, byte ptr [di]
 .org 0x9974
 # IDA 0x19774; file 0x9974; locator=proven; mov     es:[di], ah
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 es; mov byte ptr [di], ah
 .org 0x9977
 # IDA 0x19777; file 0x9977; locator=proven; mov     cl, es:[di+1]
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 es; mov cl, byte ptr [di+0x1]
 .org 0x997b
 # IDA 0x1977b; file 0x997b; locator=proven; mov     es:[di+1], al
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 es; mov byte ptr [di+0x1], al
 .org 0x997f
 # IDA 0x1977f; file 0x997f; locator=proven; mov     cl, es:[di+2]
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 es; mov cl, byte ptr [di+0x2]
 .org 0x9983
 # IDA 0x19783; file 0x9983; locator=proven; mov     es:[di+2], dh
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 es; mov byte ptr [di+0x2], dh
 .org 0x9987
 # IDA 0x19787; file 0x9987; locator=proven; mov     cl, es:[di+3]
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 es; mov cl, byte ptr [di+0x3]
 .org 0x998b
 # IDA 0x1978b; file 0x998b; locator=proven; mov     es:[di+3], dl
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 es; mov byte ptr [di+0x3], dl
 .org 0x998f
 # IDA 0x1978f; file 0x998f; locator=proven; add     di, 50h
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 add di, 0x50
 .org 0x9992
 # IDA 0x19792; file 0x9992; locator=proven; dec     bp
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 dec bp
 .org 0x9993
 # IDA 0x19793; file 0x9993; locator=proven; jnz     short loc_1975B
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 jnz .-56
 .org 0x9995
 # IDA 0x19795; file 0x9995; locator=proven; retn
-# ⚠ 函式 sub_19752; [unknown] 未附加語意; 出處: 無
+# 函式 sub_19752; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 ret
 .org 0x9996
 sub_19796:
@@ -82909,72 +82909,72 @@ ret
 .org 0xd6a3
 sub_1D4A3:
 # IDA 0x1d4a3; file 0xd6a3; locator=proven; push    ds
-# ⚠ 函式 sub_1D4A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4A3; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 push ds
 .org 0xd6a4
 # IDA 0x1d4a4; file 0xd6a4; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1D4A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4A3; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shl bx, 0x1
 .org 0xd6a6
 # IDA 0x1d4a6; file 0xd6a6; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1D4A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4A3; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shl bx, 0x1
 .org 0xd6a8
 # IDA 0x1d4a8; file 0xd6a8; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1D4A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4A3; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shl bx, 0x1
 .org 0xd6aa
 # IDA 0x1d4aa; file 0xd6aa; locator=proven; add     dx, bx
-# ⚠ 函式 sub_1D4A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4A3; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} add dx, bx
 .org 0xd6ac
 # IDA 0x1d4ac; file 0xd6ac; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1D4A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4A3; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shl bx, 0x1
 .org 0xd6ae
 # IDA 0x1d4ae; file 0xd6ae; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1D4A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4A3; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shl bx, 0x1
 .org 0xd6b0
 # IDA 0x1d4b0; file 0xd6b0; locator=proven; add     bx, dx
-# ⚠ 函式 sub_1D4A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4A3; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 {load} add bx, dx
 .org 0xd6b2
 # IDA 0x1d4b2; file 0xd6b2; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1D4A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4A3; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shl bx, 0x1
 .org 0xd6b4
 # IDA 0x1d4b4; file 0xd6b4; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1D4A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4A3; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shl bx, 0x1
 .org 0xd6b6
 # IDA 0x1d4b6; file 0xd6b6; locator=proven; shl     bx, 1
-# ⚠ 函式 sub_1D4A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4A3; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 shl bx, 0x1
 .org 0xd6b8
 # IDA 0x1d4b8; file 0xd6b8; locator=proven; mov     ds, cs:word_1D84E
-# ⚠ 函式 sub_1D4A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4A3; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 cs; mov ds, word ptr [0xd84e]
 .org 0xd6bd
 # IDA 0x1d4bd; file 0xd6bd; locator=proven; test    byte ptr [bx], 10h
-# ⚠ 函式 sub_1D4A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4A3; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 test byte ptr [bx], 0x10
 .org 0xd6c0
 # IDA 0x1d4c0; file 0xd6c0; locator=proven; jnz     short loc_1D4C5
-# ⚠ 函式 sub_1D4A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4A3; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 jnz .+5
 .org 0xd6c2
 # IDA 0x1d4c2; file 0xd6c2; locator=proven; or      byte ptr [bx], 0E0h
-# ⚠ 函式 sub_1D4A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4A3; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 or byte ptr [bx], 0xe0
 .org 0xd6c5
 loc_1D4C5:
 # IDA 0x1d4c5; file 0xd6c5; locator=proven; pop     ds
-# ⚠ 函式 sub_1D4A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4A3; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 pop ds
 .org 0xd6c6
 # IDA 0x1d4c6; file 0xd6c6; locator=proven; retn
-# ⚠ 函式 sub_1D4A3; [unknown] 未附加語意; 出處: 無
+# 函式 sub_1D4A3; [proven] 原場景主入口／鏡頭 tail／小地圖背景與位元對齊框；完整局部原 C 範圍見收據; 出處: docs/re/116-c-scene-resume-restoration.md, docs/spec/236-c-scene-resume.md
 ret
 .org 0xd6c7
 sub_1D4C7:

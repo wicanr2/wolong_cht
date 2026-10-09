@@ -252,3 +252,9 @@ remake 的欄位規格在 [`../spec/143`](../spec/143-general-duty-field.md)。
 2026-10-09：[re/111](111-c-input-mouse-restoration.md) 讓 `sub_18810` 的原始顯示／等待／擦除
 及滑鼠 far 分派接入真實 C／VGA。一般通知使用原 `EB 0F` 模式，略過左鍵但仍問右鍵與 counter；
 進言 caller patch 後才加入左鍵。這份局部收據不代證正常玩家操作，也不推算 timer wall-clock。
+
+## 後續原始 C 場景退出
+
+[re/116](116-c-scene-resume-restoration.md) 以真實原主入口接完整局部
+world／小地圖／Mouse／TALK／resource，保留既有唯一 C world resume。
+自然事件與長程玩家路徑仍按該收據界線判讀。

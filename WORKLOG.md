@@ -376,3 +376,13 @@
 - 新 decoded CMP 80 FB 05 的三 bytes 以 GNU 組語匹配，總 24,746 指令／56,290 code bytes 與 67,099-byte 原 EXE 相同，三個組語錯版拒絕。歷史 supplement rows 保留，selector verifier 明確排除此新增指令，隔離輸出重驗通過，不改寫其原收據。
 - C 台帳 237 函式／31 raw 入口、所有來源 binding／公共與本機收據通過。文件／工具 21／25、同四個歷史缺檔／教訓問題，phantom 列表無新增；1002 列分流與嚴格索引通過。
 - 所有輸出 UID/GID 1000:1000，既有 root-owned 路徑仍 27 筆；本輪容器完成後移除。依授權 commit／push 原始定位、來源與證據；type 3 自然來源、正常場景與 C 機器碼不由局部閉包代證，完整 Goal 保持 active。
+
+## 2026-10-09：原場景主入口與鏡頭／小地圖退出 C
+
+- 前輪 b8ea729 已推送，分類 progress；重讀現況、逆向／IDA 路由與 Issue #22。查原主入口與依賴，固定九個新函式及既有 sub_11D46，578 bytes／255 指令。
+- spec/236 READY 後接 tail／far、鏡頭 dirty、小地圖四 plane 背景及 carry 位元對齊框、三句 TALK／等待、停播曲、IVENT→MMAP 恢復與完整 world producer／renderer，沿用原唯一 C sub_11D46。
+- 第一版資產準備把 TALK 壓到 MDL、BGM／hotspot 落入解壓 MAP。移至獨立段並加入每次 actual source-bank bytes 核對。第二個分支的 original budget failure 以 trace／RAM 查證：無原 code bytes 變動，世界 DS 誤設程式 DS，性格及 TALK index 讀錯；依原呼叫契約修正後同 budget 重跑。
+- O0／O2 各 171 完整 RAM／plane／ABI／IN／OUT／API／Mouse／sound 狀態相同；16 主場景三句／資源／還原完整通過，12 個 O0 錯版全拒絕。驗證器曾 guessed font >1000，改由原文第一行 432 glyph 保守下限及原三句 48 框入口驗收；每版 816 全形 glyph、缺字 0。
+- 新 root 固定兩支小地圖 helper，台帳更新後再從唯讀原檔建立一次性 IDA；C 重生、來源／原函式 bytes／新 DB 身分一致，不重跑未變更的 native 矩陣。
+- C 台帳 246 函式／31 raw 與來源 binding／公私收據通過；組語 24,746 指令／56,290 code bytes 與 67,099-byte EXE 相同，三個錯版拒絕。文件／工具 21／25、同四個歷史缺檔／教訓問題，無新增 phantom；1006 列分流與嚴格索引通過。
+- 所有產物 UID/GID 1000:1000，既有 root-owned 路徑仍 27；容器完成後移除。依授權 commit／push 原始定位、C 來源與證據；自然事件／長程玩家／原 C compiler machine code 仍是獨立界線，完整 Goal 保持 active。

@@ -315,3 +315,9 @@ word_181B8 = Y × 80 + X ÷ 8     ; VRAM 位移
 兩處一致。
 
 <!-- 缺口：無 -->
+
+## 後續原始 C 場景退出
+
+[re/116](116-c-scene-resume-restoration.md) 以真實原主入口接完整局部
+world／小地圖／Mouse／TALK／resource，保留既有唯一 C world resume。
+自然事件與長程玩家路徑仍按該收據界線判讀。

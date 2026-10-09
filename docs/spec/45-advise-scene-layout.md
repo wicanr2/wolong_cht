@@ -222,3 +222,8 @@ dh = 0Bh ⇒ y = 11 × 16 = 176
 [spec/232](232-c-choice-selector.md) 將 `sub_13B7E`／`sub_193E9` 的原 popup frame、
 `sub_1036F` 選列與 callback、游標與 CF 恢復接到真實 C。原 speaker／advisor caller
 也用原字庫與 patch 等待重跑，固定按鍵／counter 不代證正常玩家的完整進言操作。
+
+## 後續原始 C 場景主入口
+
+[spec/236](236-c-scene-resume.md) 用原呼叫端兩個 TALK 基址與世界 DS，
+完成三句、等待、音樂／插圖／地圖／滑鼠的局部原版／C 闉包；自然事件另驗。

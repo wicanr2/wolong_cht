@@ -172,6 +172,7 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 | [`113`](113-c-resource-cue-restoration.md) | 完整資源讀檔、BGM cue、分段設定與 scroll 負證據 |
 | [`114`](114-c-world-map-cells-restoration.md) | 原始世界顯示格初始化、推入、底圖與覆蓋合成 C |
 | [`115`](115-c-world-overlay-restoration.md) | 軍團／物件 producer、live 矩陣容量與小地圖原始 C |
+| [`116`](116-c-scene-resume-restoration.md) | 場景主入口、鏡頭尾跳與小地圖退出重畫 C |
 | [`21`](21-function-census.md) | 全函式覆蓋普查；**§3.1 為什麼要排除目錄型文件** |
 | [`24`](24-unread-function-catalogue.md) | 未讀函式的證據與下手順序 |
 | [`39`](39-remaining-unread.md) | 未讀函式的逐支歸屬（生成的，可重跑）|

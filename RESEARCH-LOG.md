@@ -1976,3 +1976,10 @@ H.264 對照片，並保留自然畫面並排／差異 PNG。
 - 軍團兩次巡覽、單格推入、MCH 矩陣、物件舊相位與小地圖點接到原 C 顯示格／renderer。raw entry 容量立即數由 AH 改寫，原檔 5、軍團 3、物件 5；保持獨立於單格上限 4。
 - O0／O2 各 14,622 完整 RAM／plane／ABI／I/O 相同；55 個真實 pattern 共 12,320 次另核對 source 矩陣，12 個錯版拒絕與乾淨重生通過。
 - 80 FB 05 解碼成一條 cmp，加入組語來源後 24,746 指令／56,290 code bytes 與整檔匹配；原資料行與歷史 supplement rows 保留。C 台帳 237 函式／31 raw 入口，正常玩家／type 3 自然來源／C 機器碼仍有界線。
+
+## 2026-10-09：原場景入口與鏡頭／小地圖退出 C
+
+- 九函式 578 bytes／255 指令、固定 KI.EXE／IDA DB／素材 hash 見 [re/116](docs/re/116-c-scene-resume-restoration.md)。原跨函式尾跳保留單一 stack frame，far call 讀 live 重定位欄位。
+- 原人物 DS 與兩個呼叫端 TALK 基址下，三句／等待／音樂／IVENT→MMAP／Mouse／world renderer 成為局部完整 native C 閉包。既有 sub_11D46 沿用唯一實作。
+- O0／O2 各 171 完整裝置、RAM／plane／ABI／IN／OUT／API 相同；816 全形 glyph、無缺字、十二錯版拒絕與乾淨重生通過。原文第一行 432 glyph 下限與原三句入口計數防止空工作量。
+- 測試素材段重疊與世界 DS 配置問題按 RAM／trace 證據修正，沒有調高原 budget。C 台帳 246 函式／31 raw；原版未知 compiler、自然事件與長程玩家仍有獨立界線。
