@@ -142,6 +142,10 @@ loc_14AC9: xchg si, di / mov al, [di+1] / call sub_1291A / xchg si, di
 ⚠ **`al` 傳的是勝方勢力**（`sub_1291A` 的第四個例外「勝方 ＝ 敗方勢力」
 要靠它），所以 `loc_14AC9` 先 `xchg` 再取 `[di+1]`。
 
+## C交戰／戰術補證
+
+`sub_14A7B`的原始`0x14A7B`已納入交戰／戰術C閉包。O0／O2各748組完整狀態、全部原始入口及二十個實編譯錯版已核對，見[re/131](../re/131-c-engagement-tactical-restoration.md)與[spec/251](251-c-engagement-tactical.md)。較早證據保留其原範圍；完整軍團／主排程、正常玩家長程與C機器碼匹配仍未完成。
+
 ## 4. 未解
 
 - 野戰在 `ah` ＝ 3 時為什麼只判攻方，還沒有解釋。

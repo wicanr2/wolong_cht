@@ -13621,6 +13621,58 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "21原C函式與真正outer-frame退出已做局部完整狀態比較；完整交戰／戰術／軍團／主排程、正常玩家及C機器碼保留界線。"
+    },
+    {
+      "file": "docs/re/131-c-engagement-tactical-restoration.md",
+      "item": "完整軍團／主排程與正常玩家長程",
+      "status": "本輪交戰與戰術的固定狀態閉包不代證。",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-2c5808da7d9bc33e9343",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "本輪交戰與戰術C僅驗證固定狀態閉包；完整軍團／主排程、正常玩家長程、原C機器碼及實機硬體時間不由此代證。"
+    },
+    {
+      "file": "docs/re/131-c-engagement-tactical-restoration.md",
+      "item": "原C機器碼與實機硬體時間",
+      "status": "本輪原生語意比較不代證。",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-0fe7d26b1cf3b67989bb",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "本輪交戰與戰術C僅驗證固定狀態閉包；完整軍團／主排程、正常玩家長程、原C機器碼及實機硬體時間不由此代證。"
+    },
+    {
+      "file": "docs/spec/251-c-engagement-tactical.md",
+      "item": "完整軍團／主排程與正常玩家長程",
+      "status": "本輪不代證。",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-1d4921db0331779de65f",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "本輪交戰與戰術C僅驗證固定狀態閉包；完整軍團／主排程、正常玩家長程、原C機器碼及實機硬體時間不由此代證。"
+    },
+    {
+      "file": "docs/spec/251-c-engagement-tactical.md",
+      "item": "原C機器碼與實機硬體時間",
+      "status": "不能由原生語意比較推廣。",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-dab61399b7e5e40b60ad",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "本輪交戰與戰術C僅驗證固定狀態閉包；完整軍團／主排程、正常玩家長程、原C機器碼及實機硬體時間不由此代證。"
     }
   ]
 }

@@ -88,6 +88,10 @@ remake：`state.encounterNotice` 產生 `TalkNotice`，掛在 `CorpsEvent.TalkNo
 不是 `resolveCorpsBattle`（後者的守方索引恆 ≥ 0）。
 測試 `TestEmptyCityFallReportsTalk26` 兩個方向都驗（玩家守方有訊息、玩家攻方沒有）。
 
+## C交戰／戰術補證
+
+`sub_14A7B`的原始`0x14A7B`已納入交戰／戰術C閉包。O0／O2各748組完整狀態、全部原始入口及二十個實編譯錯版已核對，見[re/131](../re/131-c-engagement-tactical-restoration.md)與[spec/251](251-c-engagement-tactical.md)。較早證據保留其原範圍；完整軍團／主排程、正常玩家長程與C機器碼匹配仍未完成。
+
 ## 5. 未解
 
 | 項目 | 現況 |

@@ -89,3 +89,6 @@ func leaderValue(l Leader, rng Rand) int {
 `tools/parity_ck.sh 196/5/18 196/5/20` 的據點表歸零。
 
 <!-- 缺口：無 -->
+## C交戰／戰術補證
+
+`sub_14F8A`的原始`0x14F8A`已納入交戰／戰術C閉包。O0／O2各748組完整狀態、全部原始入口及二十個實編譯錯版已核對，見[re/131](../re/131-c-engagement-tactical-restoration.md)與[spec/251](251-c-engagement-tactical.md)。較早證據保留其原範圍；完整軍團／主排程、正常玩家長程與C機器碼匹配仍未完成。

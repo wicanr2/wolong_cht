@@ -1,14 +1,14 @@
 # 131：交戰入口與戰術引擎的 C
 
-**狀態：原始來源已核對，spec251 READY；原生C驗證尚未完成。**
+**狀態：CONFORMED。O0／O2各748例／1492階段及二十個狀態差異反例通過，234個命名入口與12個原始區段均已實際進入。**
 
 - 日期：2026-10-10。
 - 輸入：松崗DOS/V KI.EXE；SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`。
 - 工具：IDA Pro 9.4，既有py312-v1映像；位址為IDA database linear，段基址10000。
 - 探針：[ida_engagement_probe.py](../../tools/ida_engagement_probe.py)；規格：[spec/251](../spec/251-c-engagement-tactical.md)。
 - 探索閉包：179個命名函式5863指令／13967bytes，另有7個raw區段。這是來源普查，尚非C完成率。
-- 探索Probe SHA-256：`191942cf78cdab19431b876ee82376dac6551ed25d6cf2f0bbe9198abe2832b6`。
-- 探索Database SHA-256：`8646b160fb9bdb85085cf36d13f0f4309a8342eb0d9eabcf87ce43f1dccbe5d8`。
+- 當時的探索Probe：`workplace/matching-decompilation/c-engagement/ida-closed-v3/ida-probe.json`；SHA-256 `191942cf78cdab19431b876ee82376dac6551ed25d6cf2f0bbe9198abe2832b6`。
+- 當時的探索Database：`workplace/matching-decompilation/c-engagement/ida-closed-v3/input.exe.i64`；SHA-256 `8646b160fb9bdb85085cf36d13f0f4309a8342eb0d9eabcf87ce43f1dccbe5d8`。
 
 ## 原始流程與定位
 
@@ -18,7 +18,7 @@
 | `sub_14ADE`，0x14ADE | 已證實攻城入口區分已有守軍與臨時城兵，接入結果及據點易主。 |
 | `sub_14B63`／`sub_14C72` | 已證實戰場取樣、名單與最高評分代表；保留原始運算元，語意沿用較新spec。 |
 | `sub_11B5A`，0x11B5A | 已證實玩家未委任的戰術入口；0x11B76–0x11BDF為原落下尾端，不能補假RET。 |
-| `sub_14F8A`，0x14F8A | 原城兵臨時軍團建立入口，納入本輪C來源；城兵主將127的既有證據見spec/191，C執行結果仍待完整矩陣。 |
+| `sub_14F8A`，0x14F8A | 原城兵臨時軍團建立入口，C來源與固定狀態執行均已核對；城兵主將127的既有證據見spec/191。 |
 | `loc_1A065`，0x1A065 | 已證實原始呼叫目標，IDA原分析混有資料；在一次性DB解碼原bytes，不修改原版。 |
 | 0x1C0C5–0x1C30C | 已證實兩張原回呼表的raw handler與共享尾段；0x1C300位於0x1C2FD之TEST運算元內，不能把該候選當有效函式入口。 |
 
@@ -45,18 +45,18 @@
 ## 原生C與重組來源
 
 [C來源](../../tools/c_recovery/engagement.c)、[介面](../../tools/c_recovery/engagement.h)與[產生器](../../tools/c_recovery_engagement_generate.py)保留全部原始指令及入口。
-[原版/C runner](../../tools/c_recovery_engagement.go)、[平台橋接](../../tools/c_recovery_engagement_platform.go)及[fixture](../../tools/c_recovery/engagement_fixture.h)比較完整裝置狀態，尚未完成原生矩陣。
-[隔離執行入口](../../tools/c_recovery_engagement.sh)及[驗證器](../../tools/c_recovery_engagement_verify.py)在完整矩陣與入口覆蓋核對前不發布CONFORMED。
+[原版/C runner](../../tools/c_recovery_engagement.go)、[平台橋接](../../tools/c_recovery_engagement_platform.go)及[fixture](../../tools/c_recovery/engagement_fixture.h)比較完整裝置狀態。
+[隔離執行入口](../../tools/c_recovery_engagement.sh)及[驗證器](../../tools/c_recovery_engagement_verify.py)已核對完整矩陣、入口覆蓋與二十個錯版，收據見[原生C驗證紀錄](c-engagement-verification.json)。
 [資料與流程審查](../../tools/c_recovery_engagement_data.go)、[邊界案例](../../tools/c_recovery_engagement_control_data.go)及[UI案例](../../tools/c_recovery_engagement_ui_data.go)保留固定原始初態。局部函式由兩側各自真初始化到首次A156入口後執行，不交叉複製執行後Snapshot。
 [交戰前端案例與模型](../../tools/c_recovery_engagement_front_data.go)另審查地形、選軍、委任、自動結果及真正內層戰術返回。需要世界畫面的函式先真跑完退卻及世界還原，再從各側自有狀態執行。
-[存檔與世界UI補充案例](../../tools/c_recovery_engagement_extra_data.go)、[戰鬥補充案例](../../tools/c_recovery_engagement_combat_data.go)及[獨立存檔模型](../../tools/c_recovery_engagement_save.go)補足實際入口與文件副作用；新增案例在實跑前維持未驗證。
+[存檔與世界UI補充案例](../../tools/c_recovery_engagement_extra_data.go)、[戰鬥補充案例](../../tools/c_recovery_engagement_combat_data.go)及[獨立存檔模型](../../tools/c_recovery_engagement_save.go)補足實際入口與檔案副作用。
 [指令重組工具](../../tools/engagement_code_supplement.py)與[來源收據](c-engagement-code.json)記錄全部7817條指令的獨立重組，以及31條新增／替換指令和12條舊錯邊界。
 [Go驗證紀錄](c-engagement-go-verification.json)保存既有正式Go的39套件冷測；C原生矩陣與專案檢查各自記錄，不互相替代。
 
 ## 已驗證範圍與fixture勘誤
 
 - 四劇本各一例完整`sub_11B5A`真退卻、`sub_19FDC`恢復SP、`0x11B76`世界還原及真正RET，原版／C完整RAM、VGA、DAC、FLAGS、SS及API一致。
-- 擴充抽樣304例／604階段通過；234個命名入口已有194個實際進入，12個raw入口已有10個。剩餘入口與錯版仍待驗，不由此提升為全閉包CONFORMED。
+- 歷史抽樣304例／604階段通過；當時234個命名入口有194個實際進入，12個raw入口有10個。此紀錄保留當時範圍，最終完整結果見後文。
 - 組語更新為25097指令／57101指令bytes；完整67099-byte EXE與原版相同，三個錯版拒絕。舊12條解碼及其來源保存在補充收據，不覆寫歷史source-map。
 
 初次完整退卻後，原版停在`sub_1E81C`道路建圖。已證實根因是fixture沒有向DOS預留手動arena，並非城市座標或RNG。
@@ -102,11 +102,11 @@ runner共用既有`engagementApplyPatches`，兩側各自讀取初始化後的�
 ## 新來源05ce的後續驗證
 
 來源清單SHA-256為`05ce526895dcda6d13ae9b2ccd842e6922410c1601ac2a8fa282de4f6a5fd6e8`。
-O2完整748例／1492階段通過，234個named與12個raw皆有實際入口；16組完整SAVE及兩側各256次MMAP還原通過。
+O0／O2各748例／1492階段通過，234個named與12個raw皆有實際入口；每級16組完整SAVE及兩側各256次MMAP還原通過。
 256次戰術frame還原與outer退出0分列。1492個未發生outer轉移的階段包含508個warmup暫停，真正返回caller的階段為984個。
 O2收據位於`workplace/matching-decompilation/c-engagement/results/O2.json`，SHA-256為`3e3f7fdc1c50b839795d20e4122ce1e351a53532c80fd8ddf04ada17408d4eb1`。
 同來源二十個實編譯錯版都由狀態差異拒絕，沒有panic、unsupported或SIG代替比較。
-O0完整矩陣仍在背景執行；驗證器要求它與O2收據SHA-256相同，完成前維持READY，不回填665／62台帳。
+O0收據與O2逐byte相同，SHA-256同上。二十個錯版的ELF、編譯旗標、來源清單、實際差異及退出碼均已核對；台帳新增234個命名函式與12個原始區段，合計665／62。
 前述580例、錯段位址及當輪待驗狀態保留為歷史紀錄。
 
 ## 未解範圍
@@ -114,6 +114,5 @@ O0完整矩陣仍在背景執行；驗證器要求它與O2收據SHA-256相同，
 
 | 項目 | 狀態 |
 |---|---|
-| code patch與原生C完整執行 | 原始直接寫入已定位；仍需實作及動態比較。 |
-| 完整原生C、固定狀態矩陣及錯版拒絕 | 尚未完成。 |
-| 完整軍團／主排程、正常玩家長程及原C機器碼 | 本輪局部閉包不代證。 |
+| 完整軍團／主排程與正常玩家長程 | 本輪交戰與戰術的固定狀態閉包不代證。 |
+| 原C機器碼與實機硬體時間 | 本輪原生語意比較不代證。 |

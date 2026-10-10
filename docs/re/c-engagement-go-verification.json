@@ -1,8 +1,8 @@
 {
   "schema": "wolong-engagement-go-verification-v1",
-  "status": "cold-go-passed-remaining-checks-pending",
-  "verification_scope": "Existing cold formal Go vet/test receipt verified; individual and default full project checks remain pending",
-  "recorded_at_utc": "2026-10-09T21:05:26.170485+00:00",
+  "status": "passed",
+  "verification_scope": "Formal Go cold vet/test evidence preserved;25 individual checks meet unchanged21-pass/four-existing-failure baseline; default full check stops at existing document failures",
+  "recorded_at_utc": "2026-10-10T00:00:15.139606+00:00",
   "source_revision": "186e9c69145332a0445936938ce9355856da2e76",
   "source_sha256": {
     "tools/go.sh": "fa9dae64edb9b9d0a770e8af773fb79ddcaed807854f42f4c6fa222be6201416",
@@ -45,6 +45,13 @@
       "exit_status": 0,
       "log": "engagement-cold-go.log",
       "log_sha256": "a864d86b8f833c0f45055edf9caf8dabebf4931fdf95b2b1ae3ae4de942623c7"
+    },
+    {
+      "command": "tools/check.sh",
+      "host_invocation": "timeout --kill-after=10 2400 env WOLONG_GO_IMAGE=eob-remake-go:1.26.7-ebiten2.9.9-20261008-r2 WOLONG_GO_CACHE_ROOT=/home/anr2/cht/dragon/workplace/matching-decompilation/c-catalog/go-cache WOLONG_GO_TASK=matching-decompilation WOLONG_GO_TIMEOUT=1200 WOLONG_GO_NETWORK=none WOLONG_PY_TIMEOUT=600 GOPROXY=off GOSUMDB=off GOTOOLCHAIN=local GOFLAGS=-mod=readonly tools/check.sh",
+      "exit_status": 1,
+      "log": "engagement-full-check.log",
+      "log_sha256": "1e9a7a3dc7e4289cce58825c7d1400fa8f28140061197880a3809712acbf437d"
     }
   ],
   "original_assets_readonly": true,
@@ -59,21 +66,60 @@
     "GOFLAGS": "-mod=readonly"
   },
   "formal_check_all": {
-    "status": "pending",
+    "status": "known_baseline_document_failures",
     "command": "tools/check.sh",
+    "host_invocation": "timeout --kill-after=10 2400 env WOLONG_GO_IMAGE=eob-remake-go:1.26.7-ebiten2.9.9-20261008-r2 WOLONG_GO_CACHE_ROOT=/home/anr2/cht/dragon/workplace/matching-decompilation/c-catalog/go-cache WOLONG_GO_TASK=matching-decompilation WOLONG_GO_TIMEOUT=1200 WOLONG_GO_NETWORK=none WOLONG_PY_TIMEOUT=600 GOPROXY=off GOSUMDB=off GOTOOLCHAIN=local GOFLAGS=-mod=readonly tools/check.sh",
     "invocation_mode": "default full mode; no --all argument is supported",
-    "exit_status": null
+    "exit_status": 1,
+    "log": "workplace/matching-decompilation/c-engagement/checks/engagement-full-check.log",
+    "log_sha256": "1e9a7a3dc7e4289cce58825c7d1400fa8f28140061197880a3809712acbf437d",
+    "known_document_failures": [
+      "two historical playtest/19 PNG links",
+      "277 historical phantom references; census symbol layer unavailable"
+    ],
+    "index_missing_links": 2,
+    "phantom_references": 277,
+    "phantom_missing_paths": 275,
+    "phantom_missing_links": 2,
+    "strict_questions_passed": true,
+    "go_vet_test_passed": true,
+    "cold_test_cache": false,
+    "tested_packages": 39,
+    "cached_test_packages": 39,
+    "cold_test_reference": "workplace/matching-decompilation/c-engagement/checks/engagement-cold-go.json",
+    "stopped_at": "phantom_scan exit1",
+    "remaining_check_stages": "Not reached after phantom_scan; stale/worklist/lessons and later stages are covered by the separately audited25 individual checks",
+    "environment": {
+      "WOLONG_GO_IMAGE": "eob-remake-go:1.26.7-ebiten2.9.9-20261008-r2",
+      "WOLONG_GO_CACHE_ROOT": "/home/anr2/cht/dragon/workplace/matching-decompilation/c-catalog/go-cache",
+      "WOLONG_GO_TASK": "matching-decompilation",
+      "WOLONG_GO_TIMEOUT": "1200",
+      "WOLONG_GO_NETWORK": "none",
+      "WOLONG_PY_TIMEOUT": "600",
+      "GOPROXY": "off",
+      "GOSUMDB": "off",
+      "GOTOOLCHAIN": "local",
+      "GOFLAGS": "-mod=readonly"
+    },
+    "go_resources": {
+      "memory_bytes": 2147483648,
+      "cpus": 2,
+      "pids_limit": 256
+    },
+    "python_resources": {
+      "memory_bytes": 805306368,
+      "cpus": 1,
+      "pids_limit": 96
+    }
   },
   "individual_checks": {
-    "status": "pending",
+    "status": "passed-against-existing-baseline",
+    "receipt": "workplace/matching-decompilation/c-engagement/checks/engagement-checks.json",
+    "receipt_sha256": "6e7d5f53ec3870bffbaee204e65fcb7ec1be876ca826eace6dfd9add7fe3ab8c",
     "commands": 25,
-    "passed": null,
-    "known_failures": null,
-    "new_failures": null,
-    "baseline_receipt": "workplace/matching-decompilation/checks/outcome-checks.json",
-    "baseline_sha256": "efee292d82e8774fdf89a300986bb66c69d1abc237676425f708ebb72f9ee8ca",
-    "expected_passed": 21,
-    "expected_known_failures": 4,
+    "passed": 21,
+    "known_failures": 4,
+    "new_failures": 0,
     "known_failure_indices": [
       2,
       3,
@@ -84,16 +130,82 @@
       13,
       14
     ],
-    "expected_phantom_normalized_rows": 277,
-    "expected_phantom_added": 0,
-    "expected_phantom_removed": 0,
+    "baseline_receipt": "workplace/matching-decompilation/checks/outcome-checks.json",
+    "baseline_sha256": "efee292d82e8774fdf89a300986bb66c69d1abc237676425f708ebb72f9ee8ca",
+    "phase_receipts": {
+      "normal": {
+        "path": "workplace/matching-decompilation/c-engagement/checks/engagement-checks-normal.json",
+        "sha256": "6b87fbab8347c5945aaec7e55f8a7695755bb89010798653e17f42077e4418e8",
+        "repo_mount_flags": [
+          "relatime",
+          "rw"
+        ],
+        "original_mount_flags": [
+          "relatime",
+          "ro"
+        ]
+      },
+      "protected": {
+        "path": "workplace/matching-decompilation/c-engagement/checks/engagement-checks-protected.json",
+        "sha256": "1c46c886a40c0d2ee8a5acfc6afc2a36f28280add8e374373585446e840e2325",
+        "repo_mount_flags": [
+          "relatime",
+          "ro"
+        ],
+        "original_mount_flags": [
+          "relatime",
+          "ro"
+        ]
+      }
+    },
     "helper": "/tmp/wolong-engagement-checks.py",
-    "helper_sha256": "39ff0b6275e3025056ee49ea4ffc1d49d5bc6ee6f6997303200e794c644e0158",
-    "prepared_commands": {
-      "normal": "python /helper.py --phase normal --repo /repo --baseline /baseline/outcome-checks.json --output /output",
-      "protected": "python /helper.py --phase protected --repo /repo --baseline /baseline/outcome-checks.json --output /output",
-      "finalize": "python /helper.py --phase finalize --repo /repo --baseline /baseline/outcome-checks.json --output /output"
-    }
+    "helper_sha256": "7926232e3f6ba43aabfe842f5e473239ad58041cb8e984ff40a7ef41a8523baa",
+    "syntax_checked_sources": {
+      "tools/c_recovery_engagement.sh": "a0aa063010905e78498c149d1843a41b64a6a46379de37e2b859913cecce0750",
+      "tools/c_recovery_engagement_container.sh": "a15dd5427b22aa7a0d7437d5743e4a341d7ba4ebe94c61def4e5dc0b72594686"
+    },
+    "syntax_check_command": [
+      "bash",
+      "-c",
+      "bash -n tools/c_recovery_engagement.sh && bash -n tools/c_recovery_engagement_container.sh"
+    ],
+    "syntax_check_status": 0,
+    "phantom_normalized_rows": 277,
+    "phantom_added": 0,
+    "phantom_removed": 0,
+    "phantom_source_before": {
+      "sha256": "8c5b7231c8d3ac41f5d4e4b1447c88a99018f73c2fb1ecc613dbc9326c72636c",
+      "files": 1436
+    },
+    "phantom_source_after": {
+      "sha256": "8c5b7231c8d3ac41f5d4e4b1447c88a99018f73c2fb1ecc613dbc9326c72636c",
+      "files": 1436
+    },
+    "normal_resources": {
+      "memory_bytes": 1073741824,
+      "cpus": 2,
+      "pids_limit": 128
+    },
+    "protected_workplace": "tmpfs512m with explicit original-assets readonly bind",
+    "network": "none",
+    "user": "1000:1000"
   },
-  "full_project_check_passed": null
+  "full_project_check_passed": false,
+  "verification_notes": [
+    {
+      "initial_normal_receipt": "engagement-checks-normal-initial-stale.json",
+      "initial_normal_receipt_sha256": "a480955356e9bd0e75bfbd9605cd0c34ea37778715ef23ae5b8c5fe8546a9ee4",
+      "initial_stale_log": "engagement-check-05-initial-stale.log",
+      "initial_stale_log_sha256": "6e05507660acf2abdce2263aa1d7e0a1ca1885d6095ed1316bc3eb2ea6dc0255",
+      "re131_before_sha256": "3431ce6878a4320e923d5c7991d793c123fc3b291f9d3b7e48a5e7f2d678fa90",
+      "source_files": {
+        "workplace/matching-decompilation/c-engagement/ida-closed-v3/ida-probe.json": "191942cf78cdab19431b876ee82376dac6551ed25d6cf2f0bbe9198abe2832b6",
+        "workplace/matching-decompilation/c-engagement/ida-closed-v3/input.exe.i64": "8646b160fb9bdb85085cf36d13f0f4309a8342eb0d9eabcf87ce43f1dccbe5d8"
+      },
+      "cause": "Historical exploration hashes lacked explicit source paths, so stale_scan associated them with the preceding current spec251 link",
+      "resolution": "Add actual v3 paths and an explicit historical qualifier to re131 only; preserve hashes and all check baselines",
+      "initial_attempt": "Normal23 completed with an unexpected stale_scan index5 failure; protected/finalize/full were held",
+      "retry": "The identical normal invocation then matched its baseline, followed serially by protected, finalize and default full check"
+    }
+  ]
 }

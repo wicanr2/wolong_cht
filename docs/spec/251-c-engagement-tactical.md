@@ -1,9 +1,10 @@
 # 251：C 交戰入口與戰術引擎
 
-**狀態：READY。原始控制流與九張固定分派表已核對，原生C驗證尚未完成。**
+**狀態：CONFORMED。O0／O2各748例／1492階段、全部234個命名入口與12個原始區段，以及二十個錯版均已核對。**
 
 - 日期：2026-10-10。
 - 證據：[re/131](../re/131-c-engagement-tactical-restoration.md)。
+- 收據：[原生C驗證](../re/c-engagement-verification.json)；[既有正式Go冷測](../re/c-engagement-go-verification.json)。
 - KI.EXE SHA-256：`fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`。
 
 ## 原始來源與有效輸入
@@ -33,6 +34,5 @@
 
 | 項目 | 限制 |
 |---|---|
-| 原生C及完整狀態收據 | 驗證完成前不提升為CONFORMED。 |
 | 完整軍團／主排程與正常玩家長程 | 本輪不代證。 |
 | 原C機器碼與實機硬體時間 | 不能由原生語意比較推廣。 |
