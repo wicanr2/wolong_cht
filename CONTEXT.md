@@ -67,6 +67,7 @@
 | 2026-10-10；尋路／退卻／潰散九C函式及raw搜尋 | O0／O2各4,588完整狀態與十六錯版，live patch／原queue／固定raw RNG | 410 C／50raw；新增79組語指令後全EXE exact，原版全道路／完整軍團與戰鬥／C機器碼未代證 | [re/129](docs/re/129-c-route-restoration.md)、[spec/249](docs/spec/249-c-route.md)、來源／覆蓋／收據 |
 | 2026-10-10；自動戰鬥／退卻／易主21C函式 | O0／O2各8,364完整狀態與二十錯版，真實outer退出144組 | 431 C／50raw；原caller不續行，完整交戰／戰術／軍團與C機器碼未代證 | [re/130](docs/re/130-c-battle-outcome-restoration.md)、[spec/250](docs/spec/250-c-battle-outcome.md)、來源／覆蓋／收據 |
 | 2026-10-10；交戰入口與戰術引擎C | 同來源O0／O2各748例／1492階段通過，234個named及12個raw均進入；每級16存檔／256戰術frame，二十錯版拒絕；整檔組語仍exact | spec251 CONFORMED，C台帳665／62；完整軍團／主排程、正常玩家長程與原C機器碼仍未完成 | [re/131](docs/re/131-c-engagement-tactical-restoration.md)、[spec/251](docs/spec/251-c-engagement-tactical.md)、[原生收據](docs/re/c-engagement-verification.json) |
+| 2026-10-10；軍團輪轉與行軍C研究 | 17函式434指令／1068bytes獨立組譯及乾淨重生通過，正常與十二錯版可編譯；軍費／士氣32組原版first及全狀態相同 | spec252 READY，完整動態矩陣尚未通過，C台帳維持665／62；主排程、正常玩家及原C機器碼不代證 | [re/132](docs/re/132-c-army-update-restoration.md)、[spec/252](docs/spec/252-c-army-update.md)、[組語收據](docs/re/c-army-code.json) |
 
 持續 Goal 為完成整個 matching decompilation；目前有 25,097 條指令的整檔組語基準與 665 個已完成局部驗證的 C 函式、62個原始 code 入口，不能據此宣布完整 C 還原完成。
 使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b`、熱區 `a8605b5` 、版控組語／VGA `47e16c9` 、對齊貼圖 `6139f9e` 、矩形／計量 `c7dc8df`、顯示分派 `4d31520`、字形 `85f06de` 與數字 `06fff77` 已推到 origin/main。

@@ -572,3 +572,17 @@
 - 25項檢查21通過、4既有失敗[2,3,7,8]，phantom277正規化零增刪；完整check的Go vet及39套件通過並使用cache，停於既有文件問題。原39套件冷測cache0另存，沒有把暖測當冷測。檢查收據SHA-256 `6e7d5f53ec3870bffbaee204e65fcb7ec1be876ca826eace6dfd9add7fe3ab8c`。初次新增兩筆歷史hash缺路徑，核真v3檔後補路徑並同命令重跑，未改checker或基準。
 - 分流舊1047筆分類完整保留，新增四筆局部C不代證的邊界後為1051；strict與索引已重生。README現況數字同步生成索引，沒有用未解列數當完成率。原版資產、RAM、ELF及完整EXE仍留本機。
 - 本輪輸出UID/GID1000，root-owned維持27個既有路徑，無異常.md目錄；原生與檢查容器均已清理。依授權提交推送本輪CONFORMED來源與證據，完整軍團／主排程、正常玩家長程及原C機器碼仍未完成，整體Goal保持active。
+
+## 2026-10-10：軍團輪轉 C 研究
+
+- 從已推送7969082的665C／62raw接續軍團更新。沿用固定c-tick/census原始IDA證據，17函式434指令／1068bytes、兩個內部落下邊、十個已CONFORMED外部callee均核對，沒有新間接CALL／JMP或MZ重定位。
+- 新建並索引re132與spec252 DRAFT。保留16格一批、尾批4200、軍費兩次右移各自截斷、士氣byte回繞及原順序碰撞，不把Go的127常駐軍團模型套回原始C。
+- 尚待初態／獨立模型審查與原生C驗證；C台帳不提升，正式Go引擎不改。
+- 窄契約審查後spec252升READY，17函式靜態C及十二錯版已產生；固定來源、兩份獨立組語切片、乾淨重生與十三種編譯變體通過，尚不等於動態驗收。
+- 新Go/C回呼最初放在含完整C定義的preamble旁，造成cgo重複符號；移用既有平台回呼後，同命令重跑。其後補接原先未涵蓋的真`sub_1563B`扣款callee及唯一RET適配，軍費／士氣窄矩陣32例全狀態通過。
+- 第一批完整直接入口矩陣停在停戰helper的原版first模型。fixture誤把道路點4004放進BX，原`0x142AD/0x142B9`要求道路link800。修正caller ABI及模型顯式輸入，不改原C、seed或停戰門檻。未完成收據不當作通過。
+- 補正spec178及機制40的軍費截斷、路段判準與士氣byte回繞；原碼契約與正式Go排程／新C驗收分列。
+- 提交前25項檢查21通過、4既有失敗[2,3,7,8]，phantom277正規化零增刪。完整`tools/check.sh`的Go vet與39套件通過，39套件使用cache；其後停在既有文件缺口，完整log SHA-256 `f1a31f020f6e240bc3a7a05d4ea265faf5aeca4898e3abaefcb0720f323d7019`，位於`workplace/matching-decompilation/c-army/checks/army-full-check.log`。
+- 分流保留原1051筆內容及順序，只追加四筆新研究限制，主表1055／平台6／總數1061。索引已重生，README規格238份為232CONFORMED／5READY／1DRAFT。
+- 軍費32例、舊來源manifest／ELF／buildinfo與停戰首差紀錄封存於本機`before-five-links`前綴；它們只作歷史範圍，不代替後續工廠收據。
+- 五個根更新／移動／到站接點補入後凍結研究來源，O2有界工作`wolong-c-army-normal-o2-1320903-2151`已啟動；本次提交保存READY原型與來源證據，不把進行中矩陣或單一最佳化當作完整C驗收。O0、十二錯版及真戰鬥／outer接線仍待，C台帳維持665／62，整體Goal保持active。

@@ -1,0 +1,12 @@
+1	batch	batch-count
+2	batch	timer-reload
+3	upkeep	upkeep-road-branch
+4	upkeep	upkeep-quarter-shift
+5	upkeep	morale-increment
+6	direction	signed-direction
+7	movement	occupancy-decrement
+8	encounter	collision-last-slot
+9	encounter	standoff-countdown
+10	peace	peace-boundary
+11	cleanup	collapse-duty
+12	arrival	ai-city-gate

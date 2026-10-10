@@ -13673,6 +13673,58 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "本輪交戰與戰術C僅驗證固定狀態閉包；完整軍團／主排程、正常玩家長程、原C機器碼及實機硬體時間不由此代證。"
+    },
+    {
+      "file": "docs/re/132-c-army-update-restoration.md",
+      "item": "原生C與完整同狀態矩陣",
+      "status": "C原型已產生；完整動態矩陣尚未完成。",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-eb82623142bdbe29ab8a",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "本輪局部C還原的驗收與原版證據邊界；不代證完整主排程、正常玩家路徑或原C機器碼，不更動既有remake Issue。"
+    },
+    {
+      "file": "docs/re/132-c-army-update-restoration.md",
+      "item": "完整主排程、正常玩家長程及原C機器碼",
+      "status": "本輪局部軍團切片不代證。",
+      "section": "未解範圍",
+      "domain": "程式碼理解",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-0f3d130e55efba112c17",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "本輪局部C還原的驗收與原版證據邊界；不代證完整主排程、正常玩家路徑或原C機器碼，不更動既有remake Issue。"
+    },
+    {
+      "file": "docs/spec/252-c-army-update.md",
+      "item": "原生C與完整矩陣",
+      "status": "初態與模型契約已審查；通過原生驗收前不提升CONFORMED。",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-fe3781188c917e4397c9",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "本輪局部C還原的驗收與原版證據邊界；不代證完整主排程、正常玩家路徑或原C機器碼，不更動既有remake Issue。"
+    },
+    {
+      "file": "docs/spec/252-c-army-update.md",
+      "item": "完整主排程、正常玩家長程及原C機器碼",
+      "status": "本輪局部契約不代證。",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-ce89fb660127fab35126",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "本輪局部C還原的驗收與原版證據邊界；不代證完整主排程、正常玩家路徑或原C機器碼，不更動既有remake Issue。"
     }
   ]
 }
