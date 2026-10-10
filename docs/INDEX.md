@@ -211,7 +211,7 @@
 | [`docs/re/13-pc98-numeric-window.md`](re/13-pc98-numeric-window.md) | 13 — DOS/V 數字輸入視窗量測與 CJK 版面決策 | 以 DOS/V 為唯一畫面基準；原始座標、DOS/V 96×64 內框 blit、3×6 每格操作、 實際按鍵 gl… | 2026-08-10 |
 | [`docs/re/130-c-battle-outcome-restoration.md`](re/130-c-battle-outcome-restoration.md) | 130：自動戰鬥、退卻與據點易主的 C | CONFORMED。21函式，O0／O2各8,364組完整狀態與二十錯版通過。 | 2026-10-10 |
 | [`docs/re/131-c-engagement-tactical-restoration.md`](re/131-c-engagement-tactical-restoration.md) | 131：交戰入口與戰術引擎的 C | CONFORMED。O0／O2各748例／1492階段及二十個狀態差異反例通過，234個命名入口與12個原始區段均已… | 2026-10-10 |
-| [`docs/re/132-c-army-update-restoration.md`](re/132-c-army-update-restoration.md) | 132：軍團輪轉與行軍更新的 C | 原始來源、直接控制流與窄驗證契約已核對；spec252 READY，原生C尚未驗收。 | 2026-10-10 |
+| [`docs/re/132-c-army-update-restoration.md`](re/132-c-army-update-restoration.md) | 132：軍團輪轉與行軍更新的 C | CONFORMED。17函式的O0／O2各581例630階段與十二錯版均通過嚴格驗收。 | 2026-10-10 |
 | [`docs/re/14-mmap-mch-objects.md`](re/14-mmap-mch-objects.md) | 14 — MMAP.MCH 戰略地圖物件 | 資產格式、事件 12 的火災／暴動圖形鏈與 typed 動畫／移動時序 confirmed； type 3 的事件語… | 2026-08-10 |
 | [`docs/re/15-event10-producer.md`](re/15-event10-producer.md) | 15 — 事件 10 producer 深度逆向 | 事件 10 dispatcher／consumer／queue writer 已證實；原版自然 producer 仍… | 2026-08-11 |
 | [`docs/re/16-idle-clock-event10.md`](re/16-idle-clock-event10.md) | 16 — DOS/V 無輸入自動時鐘與事件 10 關係 | 無輸入時的自動時鐘／軍團行軍已由 IDA .i64 證實；事件 10 是該路徑 中的受節流 queue consum… | 2026-08-11 |
@@ -483,7 +483,7 @@
 | [`docs/spec/25-slot-select-window.md`](spec/25-slot-select-window.md) | 25 — 四槽選擇視窗（新遊戲／讀取／儲存） | CONFORMED。讀取／儲存已照原版版面實作； 新遊戲仍走 remake 自己的啟動殼層（§5）。 | 2026-08-15 |
 | [`docs/spec/250-c-battle-outcome.md`](spec/250-c-battle-outcome.md) | 250：C 自動戰鬥與據點易主 | CONFORMED。O0／O2各8,364組完整狀態與二十錯版通過。 | 2026-10-10 |
 | [`docs/spec/251-c-engagement-tactical.md`](spec/251-c-engagement-tactical.md) | 251：C 交戰入口與戰術引擎 | CONFORMED。O0／O2各748例／1492階段、全部234個命名入口與12個原始區段，以及二十個錯版均已核對。 | 2026-10-10 |
-| [`docs/spec/252-c-army-update.md`](spec/252-c-army-update.md) | 252：C 軍團輪轉與行軍更新 | READY。17函式閉包與窄驗證契約已審查，原生C驗收尚未完成。 | 2026-10-10 |
+| [`docs/spec/252-c-army-update.md`](spec/252-c-army-update.md) | 252：C 軍團輪轉與行軍更新 | CONFORMED。O0／O2各581例630階段、17入口與十二錯版通過。 | 2026-10-10 |
 | [`docs/spec/26-yes-no-dialog.md`](spec/26-yes-no-dialog.md) | 26 — ＹＥＳ／ＮＯ 對話框 | CONFORMED。版面與命中算式已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 輸入照原版收斂成兩個熱區（§2.1）。「自定」開命名視窗（[10… | 2026-08-15 |
 | [`docs/spec/28-scenario-json.md`](spec/28-scenario-json.md) | 28 — 劇本的 JSON 匯出與匯入 | CONFORMED。四個區塊 round-trip 全過。 | 2026-08-15 |
@@ -561,7 +561,7 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 129 條。**要查「這件事解了沒」先看這裡**，
+共 128 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（77 條）
@@ -646,11 +646,10 @@
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x1E | `docs/re/08-hourly-update.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x20 | `docs/re/08-hourly-update.md` |
 
-### READY（2 條）
+### READY（1 條）
 
 | 鍵 | 出處 |
 |---|---|
-| 怎麼加一份 ▸ C 軍團輪轉與行軍更新 | `docs/spec/00-index.md` |
 | 索引 ▸ 戰術命令批次與移動體力順序 | `docs/spec/00-index.md` |
 
 ### 強證據（22 條）

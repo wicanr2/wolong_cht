@@ -3,6 +3,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 
 	"github.com/wicanr2/dosgolem/internal/cpu"
@@ -23,12 +24,17 @@ type armyVector struct {
 	hour    byte
 	records []armyRecord
 	patches []engagementPatch
+	front   uint32
+	outer   *resumeCase
 }
 
 func armyResetStage()                                                  {}
 func armyCheckpoint(device *machine.Machine, t uint16, regs registers) {}
 
 func armyPrepare(mem []byte, cs uint16, c resumeCase) {
+	if c.army.front != 0 {
+		return // The known tactical prefix owns its raw world and graph banks.
+	}
 	code := int(cs) * 16
 	graph := c.route.graphSegment
 	if graph != 0x8400 && graph != 0x8500 {
@@ -102,6 +108,96 @@ func armyPrepare(mem []byte, cs uint16, c resumeCase) {
 		for i, value := range p.bytes {
 			mem[mainPhysical(segment, p.offset+uint16(i))] = value
 		}
+	}
+}
+
+// Patch only typed caller input after each side completed its own world prefix.
+// FFFC names that side's restored graph, never the other side's executed RAM.
+func armyPostPrepare(mem []byte, cs uint16, c resumeCase) {
+	if c.army.front == 0 {
+		return
+	}
+	if c.army.outer != nil {
+		armyOuterPrepare(mem, cs, *c.army.outer)
+	}
+	for _, p := range c.army.patches {
+		segment := p.segment
+		if segment == 0xFFFC {
+			segment = strategyWord(mem, int(cs)*16+0x9874)
+		} else if segment == 0xFFFF {
+			segment = cs
+		}
+		for i, value := range p.bytes {
+			mem[mainPhysical(segment, p.offset+uint16(i))] = value
+		}
+	}
+	if c.target == 0x125A3 {
+		code := int(cs) * 16
+		occupancy, graph, tiles := strategyWord(mem, code+0x9872), strategyWord(mem, code+0x9874), strategyWord(mem, code+0xD44)
+		strategyPutWord(mem, code+0xD18, 0x1C00)
+		mem[code+0xCF3] = 1
+		mem[mainPhysical(occupancy+100*24, 100)] = 0
+		mem[mainPhysical(occupancy+100*24, 101)] = 1
+		mem[mainPhysical(tiles+100*24, 100)] = 0xCE
+		for _, point := range []struct{ offset, x uint16 }{{0x4000, 100}, {0x4004, 101}} {
+			a := mainPhysical(graph, point.offset)
+			strategyPutWord(mem, a, point.x)
+			mem[a+2], mem[a+3] = 100, 0
+		}
+		//142AB sees the opposite owner but does not reverse this legal path.
+		mem[routeWorld+0x600+int(byte(c.owner))*24+int(c.player)] = 0
+	}
+}
+
+// The existing capture fixture supplies typed raw records. Its route initializer
+// runs only in a fresh private buffer: copying its graph or CS pointers into the
+// real world would destroy the independently executed tactical prefix.
+func armyOuterPrepare(mem []byte, cs uint16, raw resumeCase) {
+	scratch := make([]byte, 1<<20)
+	outcomePrepare(scratch, cs, raw)
+	copyFields := func(at int, fields [][2]int) {
+		for _, field := range fields {
+			copy(mem[at+field[0]:at+field[1]], scratch[at+field[0]:at+field[1]])
+		}
+	}
+	for city := 0; city < 192; city++ {
+		a := routeWorld + 0x840 + city*32
+		mem[a+1], mem[a+0x1A], mem[a+0x19], mem[a+0x1B] = 24, 24, 255, 0
+		for i := 0; i < 4; i++ {
+			mem[a+0x1C+i] = 255
+		}
+	}
+	for slot := 0; slot < 128; slot++ {
+		mem[routeWorld+0x2240+slot*64] = 0
+		mem[routeWorld+0x4240+slot*32] = 0
+	}
+	for _, f := range raw.outcome.factions {
+		copyFields(routeWorld+f.index*64, [][2]int{{0, 2}, {3, 4}, {0x19, 0x1A}, {0x23, 0x24}, {0x2A, 0x2B}})
+	}
+	for _, city := range raw.outcome.cities {
+		copyFields(routeWorld+0x840+city.index*32, [][2]int{{0, 2}, {8, 12}, {14, 18}, {0x13, 0x14}, {0x16, 0x17}, {0x19, 0x20}})
+	}
+	for _, general := range raw.outcome.generals {
+		copyFields(routeWorld+0x4240+general.index*32, [][2]int{{0, 1}, {0xE, 0x13}, {0x17, 0x18}, {0x1A, 0x20}})
+	}
+	occupancy := strategyWord(mem, int(cs)*16+0x9872)
+	clear(mem[int(occupancy)*16 : int(occupancy)*16+routeGridSize])
+	for _, army := range raw.outcome.armies {
+		a := routeWorld + 0x2240 + army.slot*64
+		copyFields(a, [][2]int{{0, 3}, {4, 7}, {0xE, 0x16}, {0x20, 0x21}, {0x23, 0x24}, {0x29, 0x40}})
+		x, y := strategyWord(mem, a+0x10), strategyWord(mem, a+0x12)
+		strategyPutWord(mem, a+0x1A, x)
+		strategyPutWord(mem, a+0x1C, occupancy+y*24)
+		if mem[a] >= 0x80 {
+			mem[mainPhysical(occupancy+y*24, x)]++
+		}
+	}
+	code := int(cs) * 16
+	for _, field := range [][2]int{{0x98A6, 0x98A8}, {0xD2A, 0xD2B}, {0x9892, 0x9896}, {0xECFC, 0xEDFE}} {
+		copy(mem[code+field[0]:code+field[1]], scratch[code+field[0]:code+field[1]])
+	}
+	if strategyWord(mem, code+0x9901) != raw.savedSP || strategyWord(mem, code+0x9903) != raw.savedSS || strategyWord(mem, mainPhysical(raw.savedSS, raw.savedSP)) != raw.returnIP {
+		panic("army outer lost the existing raw006A frame")
 	}
 }
 
@@ -310,7 +406,13 @@ func (m *armyModel) peace(a int, link uint16) {
 	if owner == self || owner == 24 || m.mem[routeWorld+0x600+int(self)*24+int(owner)] < 0x80 {
 		return
 	}
-	off ^= 2
+	// Original DI is0/2 and is XORed before adding6. Here off already
+	// includes6, so reversing the selected endpoint exchanges6 and8.
+	if off == 6 {
+		off = 8
+	} else {
+		off = 6
+	}
 	node = m.get(m.road(link + off))
 	m.word(a+0x14, node)
 	m.byte(a+0x20, byte(node>>3))
@@ -378,6 +480,9 @@ func (m *armyModel) move(a int) {
 }
 
 func armyAudit(before, after []byte, cs uint16, c resumeCase, observed []registers, device *machine.Machine) int {
+	if c.army.front != 0 {
+		return armyBattleAudit(before, after, cs, c, observed, device)
+	}
 	m := &armyModel{mem: append([]byte(nil), before...), cs: cs, graph: strategyWord(before, int(cs)*16+0x9874), touched: map[int]bool{}, calls: map[uint16]int{}}
 	a := routeWorld + int(c.si)
 	switch c.target {
@@ -764,5 +869,216 @@ func armyCases(base func(string, uint32, int) resumeCase) []resumeCase {
 			}
 		}
 	}
+	battles := armyBattleCases(base)
+	return append(append(cases, battles...), armyOuterCases(templates, battles)...)
+}
+
+func armyOuterCases(templates, battles []resumeCase) []resumeCase {
+	var cases []resumeCase
+	var found [4]bool
+	for _, template := range templates {
+		o := template.outcome
+		if found[template.scenario] || template.target != 0x14CF3 || template.group != "capture" || !o.escape || o.oldOwner != template.player || o.newOwner != byte(template.owner) || o.panel != 0 || len(o.redirectSlots) != 0 || o.cities[0].governor != 255 {
+			continue
+		}
+		var oldFaction, newFaction outcomeFaction
+		for _, faction := range o.factions {
+			if faction.index == int(o.oldOwner) {
+				oldFaction = faction
+			}
+			if faction.index == int(o.newOwner) {
+				newFaction = faction
+			}
+		}
+		if oldFaction.cityCount != 1 || newFaction.cityCount != 1 || oldFaction.capital != 0 || o.cities[0].owner != o.oldOwner || o.cities[1].owner != o.newOwner || o.cities[2].owner != o.newOwner {
+			continue
+		}
+		raw := engagementClone(template)
+		raw.outcome.armies[0].flags = 8 // Existing broken army; not an active defender.
+		raw.outcome.armies[1].owner, raw.outcome.armies[1].flags = o.newOwner, 0xF4
+		raw.outcome.generals[1].owner = o.newOwner
+		raw.outcome.cities[0].garrison = 0
+		for i := range raw.outcome.factions {
+			if raw.outcome.factions[i].index == int(o.newOwner) {
+				raw.outcome.factions[i].ruler = 1
+			}
+		}
+		for _, battle := range battles {
+			if battle.scenario != template.scenario || battle.profile != 1 || battle.target != 0x12880 {
+				continue
+			}
+			c := engagementClone(battle)
+			c.group, c.si, c.outcome.escape = "outer", 0x2280, true
+			c.army.outer = &raw
+			c.army.patches = []engagementPatch{
+				{0x7000, 0x2243, []byte{48}},
+				{0x7000, 0x2283, []byte{1}},
+				{0x7000, 0x228A, []byte{0xFC}},
+				{0x7000, 0x228E, []byte{0, 8}},
+				{0x7000, 0x2294, []byte{0, 0}},
+				{0xFFFC, 0x806, []byte{0, 0}},
+			}
+			cases = append(cases, c)
+			found[template.scenario] = true
+			break
+		}
+	}
+	if len(cases) != 4 {
+		panic(fmt.Sprintf("army outer fixture selection=%d want4", len(cases)))
+	}
+	// One actual root caller proves125D2/125F6 cannot resume after capture.
+	root := engagementClone(cases[0])
+	raw := engagementClone(*root.army.outer)
+	raw.outcome.armies[1].slot, raw.outcome.armies[1].flags = 126, 0xC1
+	root.group, root.target, root.si = "outer-root", 0x125A3, 0x41C0
+	root.army.outer = &raw
+	root.army.patches = []engagementPatch{
+		{0x7000, 0x2243, []byte{48}},
+		{0x7000, 0x41C2, []byte{1, 1}}, // General1 remains distinct from corps slot126.
+		{0x7000, 0x41CA, []byte{0xFC, 1, 4, 0x40, 0, 8}},
+		{0x7000, 0x41D0, []byte{101, 0, 100, 0, 0, 0}},
+		{0x7000, 0x41DA, []byte{101, 0}},
+		{0x7000, 0x41DE, []byte{3}},
+		{0xFFFC, 0x806, []byte{0, 0}},
+	}
+	return append(cases, root)
+}
+
+func armyBattleCases(base func(string, uint32, int) resumeCase) []resumeCase {
+	var cases []resumeCase
+	for _, source := range engagementCases(base) {
+		if (source.group != "field" || source.target != 0x14A7B) && (source.group != "siege" || source.target != 0x14ADE) || (source.profile != 1 && source.profile != 2) {
+			continue
+		}
+		placeholder := false
+		for _, p := range source.engagement.postPatches {
+			if p.segment == 0x7000 && p.offset == 0x2280 && len(p.bytes) == 1 && p.bytes[0] == 0x7F {
+				placeholder = true
+			}
+		}
+		if placeholder {
+			continue
+		}
+		c := engagementClone(source)
+		c.group = "battle"
+		c.army = armyVector{active: true, steps: 1, front: source.target}
+		// Resolve the restored world/graph from each machine's own globals.
+		c.engagement.ds, c.engagement.es = 0, 0
+		c.target, c.si = 0x12831, 0x2280
+		if source.target == 0x14ADE {
+			c.target, c.si = 0x12880, 0x2240
+			c.army.patches = append(c.army.patches,
+				engagementPatch{0x7000, c.si + 0xE, []byte{0, 8}},
+				engagementPatch{0x7000, c.si + 0xA, []byte{4}},
+				engagementPatch{0xFFFC, 0x808, []byte{0, 0}})
+		}
+		c.army.patches = append(c.army.patches, engagementPatch{0x7000, c.si + 3, []byte{1}})
+		cases = append(cases, c)
+	}
+	if len(cases) != 16 {
+		panic(fmt.Sprintf("army battle fixture selection=%d want16", len(cases)))
+	}
 	return cases
+}
+
+// This composes the previously verified automatic model. Tactical arithmetic
+// remains covered by complete original/C state; its actual decision and guest
+// frame recovery are independently checked from the original entry snapshots.
+func armyBattleAudit(before, after []byte, cs uint16, c resumeCase, observed []registers, device *machine.Machine) int {
+	checks := 0
+	check := func(ok bool, detail string) {
+		checks++
+		if !ok {
+			panic(fmt.Sprintf("army battle original-first scenario=%d profile=%d gate=%X: %s", c.scenario, c.profile, c.target, detail))
+		}
+	}
+	code, actor := int(cs)*16, routeWorld+int(c.si)
+	check(c.engagement.warmup && c.engagement.worldWarmup, "own true world prefix")
+	check(before[actor+3] == 1, "true battle countdown boundary")
+	callee := c
+	callee.target, callee.entrySP = c.army.front, c.entrySP-8
+	callee.engagement.ds = 0x7000
+	frontBefore := before
+	gateIP, gateSP := uint16(c.target), c.entrySP
+	if c.target == 0x125A3 {
+		gateIP, gateSP, callee.entrySP = 0x2880, c.entrySP-8, c.entrySP-16
+		check(strategyWord(before, code+0xD18) == 0x1C00 && before[actor+0xB] == 1 && before[actor+0x1E] == 3 && before[actor+2] == 1, "tail batch slot126 uses general1 and expires its real timer")
+		check(before[actor]&0x10 == 0 && before[actor]&1 != 0, "root legal road caller bypasses unrelated AI request")
+		for _, entry := range []struct{ ip, sp uint16 }{{0x25A3, c.entrySP}, {0x2662, c.entrySP - 4}, {0x2708, c.entrySP - 6}} {
+			actual := strategyObserved(observed, entry.ip)
+			check(len(actual) == 1 && actual[0].SI == c.si && actual[0].SS == c.entrySS && actual[0].SP == entry.sp, fmt.Sprintf("true root call%04X/frame", entry.ip))
+		}
+		frontBefore = append([]byte(nil), before...)
+		frontBefore[actor+0xB] = before[actor+0x1E]
+		frontBefore[actor] = (before[actor] &^ 0x20) | 0x20
+		old := mainPhysical(strategyWord(before, actor+0x1C), strategyWord(before, actor+0x1A))
+		check(before[old] == 1, "root old occupancy starts at1")
+		frontBefore[old]--
+		check(strategyWord(after, code+0xD18) == 0x1C00 && len(strategyObserved(observed, 0x2600)) == 0 && len(strategyObserved(observed, 0x264A)) == 0, "capture discards125D2 upkeep/countdown and125F6 cursor store")
+		funds := routeWorld + int(byte(c.owner))*64 + 0x20
+		check(bytes.Equal(before[funds:funds+3], after[funds:funds+3]), "hour1 army funds remain untouched after root transfer")
+	}
+	if c.target == 0x12831 {
+		callee.di = 0
+		for slot := 0; slot < 127; slot++ {
+			a := routeWorld + 0x2240 + slot*64
+			if before[a] >= 0x80 && strategyWord(before, a+0x10) == c.dx && strategyWord(before, a+0x12) == c.ax {
+				callee.di = uint16(0x2240 + slot*64)
+				break
+			}
+		}
+		check(callee.di == 0x2240 && before[routeWorld+int(callee.di)+1] != before[actor+1], "first matching slot is the enemy")
+	} else {
+		graph := strategyWord(before, code+0x9874)
+		offset := uint16(6)
+		if before[actor+0xA] == 4 {
+			offset = 8
+		}
+		endpoint := strategyWord(before, mainPhysical(graph, strategyWord(before, actor+0xE)+offset))
+		callee.di = 0x840 + endpoint*4
+		check(callee.di == 0x840 && before[routeWorld+int(callee.di)+1] != before[actor+1], "own graph selects enemy city0")
+	}
+	gate := strategyObserved(observed, gateIP)
+	front := strategyObserved(observed, uint16(callee.target))
+	check(len(gate) == 1 && len(front) == 1, "one real army gate and front callee")
+	check(gate[0].SI == c.si && gate[0].SS == c.entrySS && gate[0].SP == gateSP, "real gate frame from its caller chain")
+	check(front[0].SI == c.si && front[0].DI == callee.di && front[0].SS == c.entrySS && front[0].SP == callee.entrySP, "three pushed words and true CALL frame")
+	m := engagementFrontExpected(frontBefore, cs, callee)
+	if m.compareWorld {
+		for offset := 0; offset < outcomeWorldSize; offset++ {
+			if after[routeWorld+offset] != m.mem[routeWorld+offset] {
+				check(false, fmt.Sprintf("world%04X want%02X got%02X", offset, m.mem[routeWorld+offset], after[routeWorld+offset]))
+			}
+		}
+		check(true, "independent complete automatic world")
+	}
+	if c.outcome.escape {
+		check(m.escape && len(strategyObserved(observed, 0x4CF3)) == 1 && len(strategyObserved(observed, 0x4FCE)) == 1 && len(strategyObserved(observed, 0x1CB1)) == 1, "true army battle captures final player city")
+		check(device.CPU.Seg[cpu.CS] == cs && device.CPU.Seg[cpu.SS] == c.savedSS && device.CPU.R[cpu.SP] == c.savedSP+2 && device.CPU.IP == c.returnIP, "army and battle callers discarded by raw outer006A frame")
+	} else {
+		check(!m.escape && len(strategyObserved(observed, 0x1CB1)) == 0, "normal battle retains outer caller")
+		check(device.CPU.Seg[cpu.CS] == cs && device.CPU.Seg[cpu.SS] == c.entrySS && device.CPU.R[cpu.SP] == c.entrySP+2 && device.CPU.IP == 0xF000, "army gate returns to caller")
+		check(device.CPU.Flags&cpu.CF == 0, "battle blocks movement with CFclear")
+	}
+	tactical := 0
+	if m.tactical {
+		tactical = 1
+	}
+	check(len(strategyObserved(observed, 0x1B5A)) == tactical && len(strategyObserved(observed, 0x5130)) == 1-tactical, "actual delegation decision")
+	check(after[code+0xD34] == m.field && after[code+0xD35] == m.flags, "actual battlefield and rotation")
+	if m.tactical {
+		inner := strategyObserved(observed, 0x1B5A)[0]
+		loop, restore := strategyObserved(observed, 0x9FA0), strategyObserved(observed, 0x1B76)
+		check(len(loop) == 1 && len(restore) == 1 && len(strategyObserved(observed, 0x9FDC)) == 1, "true tactical frame recovery")
+		check(loop[0].SS == inner.SS && loop[0].SP == inner.SP-18 && strategyWord(after, code+0xD340) == inner.SP-18, "saved frame derives from actual inner entry")
+		check(restore[0].SS == inner.SS && restore[0].SP == inner.SP-16, "actual11B76 consumes saved return")
+		rng := &routeModel{mem: append([]byte(nil), before...), cs: cs, calls: map[uint16]int{}}
+		for range strategyObserved(observed, 0xECE0) {
+			rng.random()
+		}
+		check(bytes.Equal(after[code+0xECFC:code+0xEDFE], rng.mem[code+0xECFC:code+0xEDFE]), "tactical observed RNG recurrence")
+	} else {
+		check(bytes.Equal(after[code+0xECFC:code+0xEDFE], m.mem[code+0xECFC:code+0xEDFE]) && len(strategyObserved(observed, 0xECE0)) == m.calls[0xECE0], "automatic independent RNG recurrence/count")
+	}
+	return checks
 }

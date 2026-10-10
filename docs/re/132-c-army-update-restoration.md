@@ -1,6 +1,6 @@
 # 132：軍團輪轉與行軍更新的 C
 
-**狀態：原始來源、直接控制流與窄驗證契約已核對；spec252 READY，原生C尚未驗收。**
+**狀態：CONFORMED。17函式的O0／O2各581例630階段與十二錯版均通過嚴格驗收。**
 
 - 日期：2026-10-10。
 - 輸入：松崗DOS/V `KI.EXE`，SHA-256 `fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868`。
@@ -17,7 +17,7 @@
 
 17支原始函式為`sub_125A3`、`sub_12600`、`sub_1264A`、`sub_12662`、`sub_126FF`、`sub_12708`、`sub_127A2`、`sub_127F6`、`sub_12804`、`sub_12808`、`sub_12831`、`sub_12880`、`sub_128F4`、`sub_12A7E`、`sub_142AB`、`sub_14300`及`sub_1562B`。
 
-已證實，434條指令／1068指令bytes均與固定KI原始檔逐chunk一致；本範圍沒有MZ重定位或間接CALL／JMP。`0x142E2`的XLAT是資料讀取，不當作間接呼叫。十個外部callee皆已在665函式／62原始區段的CONFORMED台帳內，包含[交戰與戰術](131-c-engagement-tactical-restoration.md)。
+已證實，434條指令／1068指令bytes均與固定KI原始檔逐chunk一致；本範圍沒有MZ重定位或間接CALL／JMP。`0x142E2`的XLAT是資料讀取，不當作間接呼叫。十個外部callee皆在先前665函式／62原始區段的CONFORMED台帳內，包含[交戰與戰術](131-c-engagement-tactical-restoration.md)。
 
 已證實，`0x126FF→0x12708`與`0x12804→0x12808`是原始落下邊，不補RET。原`0x12620/0x1262E`呼叫`sub_1562B`；其`0x15636`呼叫已還原的`sub_1563B`。
 
@@ -38,20 +38,29 @@ CS:D18從存檔槽`+0x28`載入的間接鏈已有[spec/168](../spec/168-corps-an
 
 ## 驗證與實作界線
 
-原生工作由[容器入口](../../tools/c_recovery_army.sh)及[有界執行腳本](../../tools/c_recovery_army_container.sh)執行；[驗證工具](../../tools/c_recovery_army_verify.py)核對固定來源、乾淨重生、實際編譯旗標與同狀態收據。工具存在不代表原生驗收已通過。
-容器工作結束後仍須另行執行`python tools/c_recovery_army_verify.py --repo /repo --output /output`，使用相同唯讀repo及可寫c-army掛載；payload退出0只代表該模式執行完成。
+原生工作由[容器入口](../../tools/c_recovery_army.sh)及[有界執行腳本](../../tools/c_recovery_army_container.sh)執行；[驗證工具](../../tools/c_recovery_army_verify.py)已核對固定來源、乾淨重生、實際編譯旗標、七筆回鏈與[公開驗收收據](c-army-verification.json)。
+容器工作結束後仍須另行執行`WOLONG_ARMY_MODE=verify tools/c_recovery_army.sh`。此模式以唯讀repo及dosgolem、可寫c-army掛載執行嚴格驗證器；payload退出0只代表該模式執行完成。
+每次工作在編譯前核對暫存Go副本與來源清單，另存私有`<job-id>.sources.tar.gz`及SHA-256。封存只含受測來源與module設定，不含原版資產；後續改檔不覆寫歷史收據的來源文字。
 
-[C來源](../../tools/c_recovery/army.c)、[介面](../../tools/c_recovery/army.h)與[產生檔](../../tools/c_recovery/army_generated.inc)由[固定控制流產生器](../../tools/c_recovery_army_generate.py)重生。[十二個錯版定義](../../tools/c_recovery_army_mutants.tsv)對應批量、timer、軍費、士氣、方向、佔用格、碰撞、停戰、潰散及到達條件。17函式434指令的乾淨重生已通過；此項只證明來源一致，尚未證明同狀態行為。
+[C來源](../../tools/c_recovery/army.c)、[介面](../../tools/c_recovery/army.h)與[產生檔](../../tools/c_recovery/army_generated.inc)由[固定控制流產生器](../../tools/c_recovery_army_generate.py)重生。[十二個錯版定義](../../tools/c_recovery_army_mutants.tsv)對應批量、timer、軍費、士氣、方向、佔用格、碰撞、停戰、潰散及到達條件。17函式434指令的乾淨重生與原生比較均通過。
 
-[原生比較程式](../../tools/c_recovery_army.go)、[raw初態與獨立模型](../../tools/c_recovery_army_data.go)及[C呼叫適配](../../tools/c_recovery/army_fixture.h)為本輪研究來源。軍費／士氣窄矩陣32例已通過原版first與全狀態比較；完整工廠仍在核對，O0／O2與十二個錯版收據未齊前，維持READY，不提升C台帳。
+[原生比較程式](../../tools/c_recovery_army.go)、[raw初態與獨立模型](../../tools/c_recovery_army_data.go)及[C呼叫適配](../../tools/c_recovery/army_fixture.h)涵蓋八批輪轉、軍費／士氣、道路與佔用、碰撞、到站及真正的戰鬥接線。兩側各自由唯讀原版與明示raw狀態初始化，DS／ES及LDS指標各自解析；原版先經獨立模型，再比較C。固定亂數在執行前設定，不複製原版執行後Snapshot，不以原版CPU指令替代C。
 
-後續C須保留原始名稱、chunks、位址與運算元，並與既有真C callee接線。兩側各自由唯讀原版與明示raw狀態初始化，固定亂數條件在執行前設定，不複製原版執行後Snapshot，不以原版CPU指令替代C。
+| 驗收項 | O0／O2各自的實際結果 |
+|---|---|
+| 完整矩陣 | 581例／630階段；17個原始入口全部進入。 |
+| 完整狀態 | RAM、VGA、DAC、暫存器、FLAGS、SS／SP、IN／OUT、API與callee軌跡相同，兩份收據逐byte相同。 |
+| 原始呼叫鏈 | 16個軍團野戰／攻城接點；4個末城退出及1個從`sub_125A3`開始的根退出。 |
+| 返回與堆疊 | 625個真返回階段、5個非區域退出；29次戰術frame還原含21個完整前置與8個內層真戰術。沒有暖機暫停混入返回計數。 |
+| 地圖與來源 | 兩側各29次MMAP還原；167份編譯來源與封存文字一致，14個ELF的實際建置資訊吻合。 |
+| 錯版 | 十二個O0錯版均由實際狀態差異拒絕，沒有panic或unsupported充當拒絕。 |
 
-驗證應覆蓋批首及末批、timer回繞、軍費與士氣字寬、道路節點與佔用格、野戰／攻城、暫存器／FLAGS／SS堆疊與原始落下邊。原Go規則與正常玩家驗收範圍不因這個C切片提升。
+根退出實跑`sub_125A3→sub_12662→sub_12708→sub_12880→sub_14ADE→sub_11CB1`，退出後沒有續收軍費、維護倒數或寫回cursor。零城兵的必勝分支來自原碼，沒有改seed挑結果。詳細指令位址、各入口次數、來源與收據雜湊在公開JSON。
+
+全域C台帳增至682函式／62原始區段。原Go規則、`CS:CF3`自然排程等價、完整讀檔及正常玩家驗收範圍維持原限制。
 
 ## 未解範圍
 
 | 項目 | 狀態 |
 |---|---|
-| 原生C與完整同狀態矩陣 | C原型已產生；完整動態矩陣尚未完成。 |
 | 完整主排程、正常玩家長程及原C機器碼 | 本輪局部軍團切片不代證。 |

@@ -7,6 +7,7 @@ import json
 import re
 import shlex
 import struct
+import tarfile
 import tempfile
 from pathlib import Path
 
@@ -22,11 +23,22 @@ SHARED_GO = ('engagement_data', 'engagement_control_data', 'engagement_ui_data',
              'engagement_save', 'outcome_data', 'route_data', 'interaction_data',
              'main_data', 'strategy_data', 'engagement_platform', 'vga_bus',
              'glyph_platform', 'input_platform')
-# 在工廠與完整原版first矩陣凍結後填入實際審查值；未定不得發布CONFORMED。
-GROUPS = None
-STAGES = None
-RETURNS = None
-INDEPENDENT_AUDITS = None
+# 凍結工廠與完整原版first O2收據已逐組核對；O0及十二錯版仍各自必須通過。
+GROUPS = {'arrival': 40, 'batch': 44, 'battle': 16, 'cleanup': 24,
+          'direction': 36, 'encounter': 84, 'movement': 44, 'outer': 4,
+          'outer-root': 1, 'peace': 32, 'upkeep': 256}
+STAGES = {'army': 609, 'world-warmup': 21}
+RETURNS = (625, 5)
+INDEPENDENT_AUDITS = 3781065
+BACKLINKS = (
+    (0x125A3, 'docs/re/128-c-city-tick-restoration.md'),
+    (0x12662, 'docs/re/129-c-route-restoration.md'),
+    (0x12831, 'docs/re/130-c-battle-outcome-restoration.md'),
+    (0x12880, 'docs/re/131-c-engagement-tactical-restoration.md'),
+    (0x125A3, 'docs/spec/168-corps-and-hour-cursors.md'),
+    (0x12600, 'docs/spec/178-upkeep-and-morale-gate-is-on-leg.md'),
+    (0x12831, 'docs/spec/186-standoff-corps-before-city.md'),
+)
 
 
 def sha(path):
@@ -115,6 +127,62 @@ def source_manifest(repo, out):
     compiled = sha(manifest)
     assert (out / 'results/compiled-source-digest.txt').read_text().strip() == compiled
     return records, compiled
+
+
+def source_snapshots(out, records, compiled):
+    verified = []
+    manifest = (out / 'results/c-source.sha256').read_bytes()
+    for path in sorted((out / 'results').glob('*.sources.tar.gz')):
+        sidecar = path.with_name(path.name + '.sha256')
+        if not sidecar.exists():
+            continue  # Interrupted archives cannot establish source provenance.
+        try:
+            archive = tarfile.open(path, 'r:gz')
+        except (tarfile.TarError, EOFError):
+            continue
+        with archive:
+            members = {member.name.removeprefix('./'): member for member in archive.getmembers()}
+            entry = members.get('manifest.sha256')
+            if entry is None or not entry.isfile():
+                continue
+            content = archive.extractfile(entry).read()
+            if hashlib.sha256(content).hexdigest() != compiled:
+                continue
+            assert content == manifest
+            assert sha(path) == sidecar.read_text().split()[0]
+            for name, digest in records.items():
+                member = members[name]
+                assert member.isfile()
+                assert hashlib.sha256(archive.extractfile(member).read()).hexdigest() == digest, name
+            module = members['module-go.mod']
+            assert module.isfile()
+            expected_module = ('module github.com/wicanr2/dosgolem/wolongcarmy\n\n'
+                               'go 1.26.7\nrequire github.com/wicanr2/dosgolem v0.0.0\n'
+                               'replace github.com/wicanr2/dosgolem => /golem\n').encode()
+            assert archive.extractfile(module).read() == expected_module
+            verified.append({'path': 'workplace/matching-decompilation/c-army/results/' + path.name,
+                             'sha256': sha(path), 'compiled_source_manifest_sha256': compiled,
+                             'source_files_verified': len(records)})
+    assert verified, 'No complete source snapshot matches the compiled manifest'
+    return verified
+
+
+def backlinks(repo, routines):
+    markers = ('軍團輪轉與行軍C補證', '132-c-army-update-restoration.md', '252-c-army-update.md')
+    evidence = 'docs/re/132-c-army-update-restoration.md'
+    evidence_text = (repo / evidence).read_text(encoding='utf-8')
+    checked = []
+    for address, name in BACKLINKS:
+        original = f'sub_{address:X}'
+        assert original in routines and original in evidence_text
+        text = (repo / name).read_text(encoding='utf-8')
+        assert original in text and all(marker in text for marker in markers), name
+        checked.append({'platform_module': 'dosv/KI.EXE', 'input_sha256': INPUT_SHA,
+                        'ida_linear': address, 'function_ida_linear': address, 'level': 'proven',
+                        'evidence': evidence, 'evidence_markers': [original],
+                        'older_document': name, 'required_markers': list(markers),
+                        'scope': '固定raw狀態的局部C補證；保留原推論等級與未驗證邊界。'})
+    return checked
 
 
 def primary(repo, out):
@@ -209,8 +277,16 @@ def verify(repo, out, source_only=False):
     assert report['cases'] == sum(GROUPS.values())
     assert report['full_ram_plane_audits'] == sum(STAGES.values())
     assert report['palette_dac_audits'] == report['full_ram_plane_audits']
+    assert report['indexed_content_audits'] == report['full_ram_plane_audits']
     assert (report['normal_return_cases'], report['nonlocal_exit_cases']) == RETURNS
+    assert sum(RETURNS) == report['full_ram_plane_audits']
     assert report['army_independent_audits'] == INDEPENDENT_AUDITS
+    assert report['actual_nonlocal_exit'] and report['actual_tactical_frame_restore']
+    assert report['tactical_frame_restore_audits'] == 29
+    assert report['root_outer_transfer_audits'] == 1
+    assert report['mmap_restore_audits'] == {'original': 29, 'c': 29}
+    assert report['original_font_misses'] == report['c_font_misses'] == {}
+    assert report['original_missing_fonts'] == report['c_missing_fonts'] == 0
     assert sum(report['groups'].values()) == report['cases']
     assert sum(report['stage_audits'].values()) == report['full_ram_plane_audits']
     assert report['original_state_sha256'] == report['c_state_sha256']
@@ -246,6 +322,7 @@ def verify(repo, out, source_only=False):
         digest, name = line.split(None, 1)
         assert sha(Path(name)) == digest
     assert source_manifest(repo, out) == (records, compiled)
+    snapshots = source_snapshots(out, records, compiled)
     result = {
         'schema': 'wolong-c-army-verification-v1', 'status': 'semantic-conformed',
         'input_sha256': INPUT_SHA, 'ida_database_sha256': DB_SHA, 'parent_probe_sha256': PARENT_SHA,
@@ -260,15 +337,23 @@ def verify(repo, out, source_only=False):
         'assembly_coverage_receipt_sha256': sha(repo / 'docs/re/c-army-code.json'),
         'exact_clean_regeneration': True, 'clean_regenerated_files': generated,
         'compiled_sources_unchanged_after_execution': True,
+        'compiled_source_snapshots': snapshots,
         'oracle_revision': (out / 'results/golem-revision.txt').read_text().strip(),
         'oracle_compiled_tree_sha256': hashlib.sha256(before).hexdigest(),
         'tool_versions': (out / 'results/tool-versions.txt').read_text(),
         'normal_return_cases': report['normal_return_cases'], 'nonlocal_exit_cases': report['nonlocal_exit_cases'],
+        'returned_to_caller_stages': report['normal_return_cases'], 'paused_stages': 0,
+        'return_count_scope': '21個前置階段皆完成世界還原及返回；本矩陣沒有warmup-pause階段。',
+        'tactical_frame_restore_audits': 29, 'root_outer_transfer_audits': 1,
+        'mmap_restore_audits': report['mmap_restore_audits'],
+        'independent_audits': INDEPENDENT_AUDITS,
+        'independent_audit_scope': '計數包含軍團數值、欄位及呼叫模型、既有尋路／戰後／前端模型與地圖逐byte檢查，同一規則可產生多筆檢查。',
         'rng_initial_state_sha256': report['rng_initial_state_sha256'], 'rng_initialization': report['rng_initialization'],
         'scope': report['scope'], 'platform': report['platform'], 'c_machine_code_match': False,
         'verification_tools_sha256': {name: sha(repo / name) for name in (
             'tools/c_recovery_army.sh', 'tools/c_recovery_army_container.sh', 'tools/c_recovery_army_verify.py',
             'tools/c_recovery_army_prepare.py', 'tools/c_recovery_army_generate.py', 'tools/c_recovery_army_mutants.tsv')},
+        'backlink_status': backlinks(repo, routines),
     }
     (out / 'verification.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print(f'17 named / {report["cases"]} cases / {len(mutants)} state mismatches: PASS')

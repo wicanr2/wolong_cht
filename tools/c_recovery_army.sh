@@ -9,10 +9,18 @@ test -f "$AR_ROOT/workplace/orig/dosv/KI.EXE"
 test -f "$AR_ROOT/tools/c_recovery_army_container.sh"
 test -d "$AR_OUT/results";test -O "$AR_OUT";test -O "$AR_OUT/results"
 AR_MODE="${WOLONG_ARMY_MODE:-full}"
-case "$AR_MODE" in full|smoke|mutants|normal-o2|normal-o0) ;; *) exit 2 ;; esac
+case "$AR_MODE" in full|smoke|mutants|normal-o2|normal-o0|verify) ;; *) exit 2 ;; esac
 case "${WOLONG_ARMY_DETACHED:-0}" in 0|1) ;; *) exit 2 ;; esac
 AR_GROUP="${WOLONG_ARMY_GROUP:-}"
 [[ -z "$AR_GROUP" || "$AR_GROUP" =~ ^[a-z-]+$ ]] || exit 2
+if [[ "$AR_MODE" == verify ]]; then
+ timeout --kill-after=10 120 docker run --rm --init --network none --memory 768m --cpus 1 --pids-limit 64 \
+  --user "$(id -u):$(id -g)" --label wolong.task=matching-decompilation \
+  --mount "type=bind,src=$AR_ROOT,dst=/repo,readonly" --mount "type=bind,src=$AR_GOLEM,dst=/golem,readonly" \
+  --mount "type=bind,src=$AR_OUT,dst=/output" python:3.13-bookworm \
+  python /repo/tools/c_recovery_army_verify.py --repo /repo --output /output
+ exit 0
+fi
 AR_TIMEOUT=3600
 [[ "$AR_MODE" != full ]] || AR_TIMEOUT=9600
 AR_IMAGE="$(docker image inspect golang:1.26.7-bookworm --format '{{.Id}}')"

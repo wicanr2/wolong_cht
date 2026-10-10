@@ -26,6 +26,20 @@ army_payload() {
  for source in engagement_data engagement_control_data engagement_ui_data engagement_front_data engagement_extra_data engagement_combat_data engagement_save outcome_data route_data interaction_data main_data strategy_data engagement_platform vga_bus glyph_platform input_platform; do
   cmp "/repo/tools/c_recovery_$source.go" "/tmp/army-build/$source.go"
  done
+ # 保留實際編譯來源；後續研究改檔時，歷史收據仍可回查原始文字。
+ AR_SNAPSHOT="/output/results/$AR_JOB_ID.sources.tar.gz"
+ test ! -e "$AR_SNAPSHOT"
+ mkdir -p /tmp/army-source-snapshot
+ awk '{sub("^/repo/", "", $2);print $2}' /output/results/c-source.sha256 > /tmp/army-source-files.txt
+ tar -C /repo -cf - -T /tmp/army-source-files.txt | tar -C /tmp/army-source-snapshot -xf -
+ (
+  cd /tmp/army-source-snapshot
+  sed 's#  /repo/#  #' /output/results/c-source.sha256 | sha256sum -c --quiet
+ )
+ cp /output/results/c-source.sha256 /tmp/army-source-snapshot/manifest.sha256
+ cp /tmp/army-build/go.mod /tmp/army-source-snapshot/module-go.mod
+ tar -C /tmp/army-source-snapshot -czf "$AR_SNAPSHOT" .
+ sha256sum "$AR_SNAPSHOT" > "$AR_SNAPSHOT.sha256"
  AR_DIGEST="$(sha256sum /output/results/c-source.sha256)";AR_DIGEST="${AR_DIGEST%% *}"
  printf '%s\n' "$AR_DIGEST" > /output/results/compiled-source-digest.txt
  AR_DEFINE="-DKI_ARMY_SOURCE_DIGEST=0x${AR_DIGEST:0:16}"

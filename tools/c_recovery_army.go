@@ -1056,6 +1056,7 @@ func main() {
 	rngInputs := map[string]string{}
 	nonlocalCases, normalCases := 0, 0
 	tacticalFrameAudits := 0
+	rootOuterAudits := 0
 	originalDigest, cDigest := sha256.New(), sha256.New()
 	var mismatch map[string]any
 	resetCounters := func(c resumeCase) {
@@ -1200,6 +1201,8 @@ func main() {
 		}
 		if c.engagement.warmup || c.engagement.worldWarmup {
 			prefix := engagementClone(c)
+			prefix.army = armyVector{}
+			prefix.outcome.escape = false
 			prefix.target = 0x11B5A
 			prefix.engagement.phase = "warmup-pause"
 			prefix.engagement.warmup = false
@@ -1241,6 +1244,7 @@ func main() {
 			if sc.engagement.warmup {
 				for _, mem := range [][]byte{original.Mem, cMemory} {
 					engagementApplyPatches(mem, cs, sc.engagement.postPatches)
+					armyPostPrepare(mem, cs, sc)
 				}
 			}
 			before := append([]byte(nil), original.Mem...)
@@ -1284,11 +1288,13 @@ func main() {
 					return value
 				}
 			}
+			rC := r
 			if sc.army.active {
 				r.DS = strategyWord(original.Mem, int(cs)*16+0xD52)
 				r.ES = strategyWord(original.Mem, int(cs)*16+0x9874)
+				rC.DS = strategyWord(cMemory, int(cs)*16+0xD52)
+				rC.ES = strategyWord(cMemory, int(cs)*16+0x9874)
 			}
-			rC := r
 			r.DS = resolveSegment(sc.engagement.ds, original.Mem, r.DS)
 			r.ES = resolveSegment(sc.engagement.es, original.Mem, r.ES)
 			rC.DS = resolveSegment(sc.engagement.ds, cMemory, rC.DS)
@@ -1465,6 +1471,9 @@ func main() {
 			}
 			if wholeFixture.transferred == 1 {
 				nonlocalCases++
+				if sc.target == 0x125A3 && sc.army.outer != nil {
+					rootOuterAudits++
+				}
 			} else {
 				normalCases++
 			}
@@ -1515,6 +1524,7 @@ func main() {
 		"independent_raw_initialization": true, "cross_machine_snapshot_initialization": false, "fixed_raw_rng_state": true, "actual_nonlocal_exit": nonlocalCases > 0,
 		"nonlocal_exit_cases": nonlocalCases, "normal_return_cases": normalCases,
 		"tactical_frame_restore_audits": tacticalFrameAudits,
+		"root_outer_transfer_audits":    rootOuterAudits,
 		"actual_tactical_frame_restore": tacticalFrameAudits > 0,
 		"rng_initial_state_sha256":      rngInputs,
 		"save_file_audits":              engagementSaveReceipts,

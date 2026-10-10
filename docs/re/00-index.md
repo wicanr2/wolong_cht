@@ -256,7 +256,7 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 
 交戰入口與戰術引擎的 C 研究見 [re/131](131-c-engagement-tactical-restoration.md)，規格見 [spec/251](../spec/251-c-engagement-tactical.md)：O0／O2各748例／1492階段與二十錯版通過，局部閉包CONFORMED。
 
-軍團輪轉與行軍更新的下一切片見[re/132](132-c-army-update-restoration.md)與[spec/252](../spec/252-c-army-update.md)，17函式原始閉包已核對，尚未宣稱C完成。
+軍團輪轉與行軍更新的C見[re/132](132-c-army-update-restoration.md)與[spec/252](../spec/252-c-army-update.md)：17函式的O0／O2各581例630階段、十二錯版及七筆回鏈通過，局部閉包CONFORMED。
 
 ## 9. 怎麼加一份新筆記
 

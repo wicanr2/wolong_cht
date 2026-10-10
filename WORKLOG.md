@@ -582,7 +582,16 @@
 - 新Go/C回呼最初放在含完整C定義的preamble旁，造成cgo重複符號；移用既有平台回呼後，同命令重跑。其後補接原先未涵蓋的真`sub_1563B`扣款callee及唯一RET適配，軍費／士氣窄矩陣32例全狀態通過。
 - 第一批完整直接入口矩陣停在停戰helper的原版first模型。fixture誤把道路點4004放進BX，原`0x142AD/0x142B9`要求道路link800。修正caller ABI及模型顯式輸入，不改原C、seed或停戰門檻。未完成收據不當作通過。
 - 補正spec178及機制40的軍費截斷、路段判準與士氣byte回繞；原碼契約與正式Go排程／新C驗收分列。
-- 提交前25項檢查21通過、4既有失敗[2,3,7,8]，phantom277正規化零增刪。完整`tools/check.sh`的Go vet與39套件通過，39套件使用cache；其後停在既有文件缺口，完整log SHA-256 `f1a31f020f6e240bc3a7a05d4ea265faf5aeca4898e3abaefcb0720f323d7019`，位於`workplace/matching-decompilation/c-army/checks/army-full-check.log`。
+- READY提交前25項檢查21通過、4既有失敗[2,3,7,8]，phantom277正規化零增刪。完整`tools/check.sh`的Go vet與39套件通過，39套件使用cache；其後停在既有文件缺口，完整log SHA-256 `f1a31f020f6e240bc3a7a05d4ea265faf5aeca4898e3abaefcb0720f323d7019`，已保存在`workplace/matching-decompilation/c-army/checks/ready-checkpoint-army-full-check.log`。
 - 分流保留原1051筆內容及順序，只追加四筆新研究限制，主表1055／平台6／總數1061。索引已重生，README規格238份為232CONFORMED／5READY／1DRAFT。
 - 軍費32例、舊來源manifest／ELF／buildinfo與停戰首差紀錄封存於本機`before-five-links`前綴；它們只作歷史範圍，不代替後續工廠收據。
 - 五個根更新／移動／到站接點補入後凍結研究來源，O2有界工作`wolong-c-army-normal-o2-1320903-2151`已啟動；本次提交保存READY原型與來源證據，不把進行中矩陣或單一最佳化當作完整C驗收。O0、十二錯版及真戰鬥／outer接線仍待，C台帳維持665／62，整體Goal保持active。
+- `1320903-2151`退出2，停在停戰獨立模型。根因為模型把端點絕對偏移6／8做XOR2，8變成10；原`0x142E7/0x142EA`是DI0／2先XOR2再加6。只修模型順序後，工作`wolong-c-army-normal-o2-1328798-32638`退出0，560例／588階段全狀態一致，全部17原始入口均進入，14108個獨立檢查通過。原C、門檻、seed與工廠未為此改動。
+- 560例收據`workplace/matching-decompilation/c-army/results/direct-560-pass-O2.json`的SHA-256為`30e0c0fe68a1bcc66484198acc9ccc99adacbf664fcd4bc0be02b29a65b09858`，完整167份來源文字、ELF、buildinfo亦已封存；索引`workplace/matching-decompilation/c-army/results/direct-560-pass-archive.json`的SHA-256為`8b4a9ff8d8ee3c32032f6d7534ad2b16b9a8f8794ffc907b4b139a1a9e096bbd`，來源`workplace/matching-decompilation/c-army/results/direct-560-pass-sources.tar.gz`的SHA-256為`ae1bfbdf69b6beaa0c9faf93af50d11b2bc1fa600e9155c130a5765205297446`。此成功範圍尚不含真戰鬥或outer退出，不能代替最終驗收。
+- 原生入口新增獨立verify模式及每job編譯來源文字封存。暫存Go副本先與manifest核對，再保存來源tar與SHA，最終驗證器逐檔核對封存內容；避免後續改檔讓舊收據只剩雜湊而無法重現。
+- 野戰／攻城16例32階段通過，含16次前置及8次內層真戰術frame還原；四劇本真末城退出4例8階段通過。額外的`125A3→12662→12708→12880→14ADE→11CB1`根退出1例2階段通過，沒有續收軍費、倒數或寫回cursor。零城兵必勝分支由原碼證實，沿用固定seed3，沒有重擲挑結果。
+- 最終凍結來源manifest為`workplace/matching-decompilation/c-army/results/c-source.sha256`，SHA-256 `ddd23c55db576cd820c73549fbe72e9122600b10b35b74730562dd6788d186d4`。完整工作`wolong-c-army-full-1398126-31183`的O0／O2各581例630階段均通過，兩份`workplace/matching-decompilation/c-army/results/O0.json`與`workplace/matching-decompilation/c-army/results/O2.json`逐byte相同，SHA-256均為`d2fd454ef87cbef9d71b0d5f66b5f7a9be869fed50fc839f77356e3979d7b851`；十二錯版尚在同一工作序列核對，未因此提前提升台帳。
+- 完整工作最終退出0，十二錯版全部由實際狀態差異拒絕。嚴格驗證器核對14個ELF、167份封存來源、七回鏈及完整矩陣通過；`docs/re/c-army-verification.json`與本機收據逐byte相同，SHA-256 `6a609c92de9d420ed7036eb619504b76798e17c3a2304397133f4d7d07137624`。spec252升CONFORMED，台帳682C／62raw的2667筆來源綁定全部吻合。
+- 最終25項檢查仍為21通過／4既有失敗[2,3,7,8]，phantom277正規化零增刪；`workplace/matching-decompilation/c-army/checks/army-checks.json`的SHA-256為`a2a02f501ca2d6ad6c6b91b568810b5675e66c88be81757e55c562367a06bcf4`。完整`tools/check.sh`的Go vet與39套件通過、cached39，後續停在既有文件缺口；`workplace/matching-decompilation/c-army/checks/army-full-check.log`的SHA-256為`78d7b56e6333fed80e98e069153ee33d1278204ae1cf00d41c45f5ad68770350`。
+- 只移除已驗收的兩筆C矩陣未解列，其他1053筆分類與順序保留，另有6筆平台層；規格238份為233CONFORMED／4READY／1DRAFT。台帳提升後重跑原pinned GNU工具，434指令／1068bytes仍exact、來源ed6d與組語收據e399皆不變，沒有新增指令或改全域組語。
+- 本輪輸出皆1000:1000，沒有新root-owned檔案或偽.md目錄，原生與檢查容器已清理。依授權commit與push本輪CONFORMED來源及證據；完整主排程、讀檔、新遊戲、正常玩家長程與原C機器碼仍待，整體Goal保持active。
