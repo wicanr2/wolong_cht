@@ -306,6 +306,7 @@
 | C 殘部群（勢力一覽／季節／戰術／地圖／外交／側欄） | [`254-c-residual-faction-season.md`](254-c-residual-faction-season.md) | CONFORMED，10函式1raw／89案O0／O2全同／十錯版，census全覆蓋 |
 | C 機器碼匹配可行性判定 | [`255-c-machine-code-feasibility.md`](255-c-machine-code-feasibility.md) | CONFORMED，手寫組語、匹配不可行 |
 | matching 長程驗證（重建實跑＋C 回放設計） | [`256-matching-longpath-verification.md`](256-matching-longpath-verification.md) | CONFORMED，8 截圖全同／跑到 4/8 |
+| C 軌跡回放 B-1（數字函式真實輸入） | [`257-c-trace-replay-b1.md`](257-c-trace-replay-b1.md) | READY，待實作 |
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的
    現況反寫規格，那只會把既有的偏差固定下來。

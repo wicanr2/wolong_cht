@@ -14024,6 +14024,45 @@
       "classification": "merge-target",
       "github_issue": 10,
       "reason": "政略90日對拍屬 remake 側，併入 Issue #10。"
+    },
+    {
+      "file": "docs/spec/257-c-trace-replay-b1.md",
+      "item": "WATCH 無離開狀態",
+      "status": "靠 harness 內雙跑補，不改 dosgolem。",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-4499d5193f12fd6739a3",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
+    },
+    {
+      "file": "docs/spec/257-c-trace-replay-b1.md",
+      "item": "其他 slice 的軌跡回放",
+      "status": "B-1 只做數字函式；下一 slice 另開 spec。",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-59447d9e66799dafbf76",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
+    },
+    {
+      "file": "docs/spec/257-c-trace-replay-b1.md",
+      "item": "互動函式（選單／等待）",
+      "status": "輸入是硬體事件，不在 B-1。",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-63dae90f6b46d97bd265",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
     }
   ]
 }

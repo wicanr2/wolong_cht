@@ -493,6 +493,7 @@
 | [`docs/spec/254-c-residual-faction-season.md`](spec/254-c-residual-faction-season.md) | 254：C 殘部群（勢力一覽／季節／戰術／地圖／外交／側欄） | CONFORMED。10 支 247 指令＋1 raw 尾跳，89 案 O0／O2 全同，10 突變全拒；censu… | 2026-10-12 |
 | [`docs/spec/255-c-machine-code-feasibility.md`](spec/255-c-machine-code-feasibility.md) | 255：C 機器碼匹配可行性判定 | CONFORMED。判定完成：KI.EXE 為手寫 16-bit 組語（[re/135](../re/135-too… | 2026-10-12 |
 | [`docs/spec/256-matching-longpath-verification.md`](spec/256-matching-longpath-verification.md) | 256：matching decomp 玩家長程驗證 | CONFORMED。Slice A 全綠：重建 EXE 從零跑到 196/4/8，8 截圖＋時鐘＋130,849,3… | 2026-10-12 |
+| [`docs/spec/257-c-trace-replay-b1.md`](spec/257-c-trace-replay-b1.md) | 257：C 軌跡回放 B-1（數字函式吃真實開局輸入） | READY。第一個吃真實遊玩輸入的 C 回放：spec/229 數字函式， 輸入來自 slice A 開局時間軸的 … | 2026-10-12 |
 | [`docs/spec/26-yes-no-dialog.md`](spec/26-yes-no-dialog.md) | 26 — ＹＥＳ／ＮＯ 對話框 | CONFORMED。版面與命中算式已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 輸入照原版收斂成兩個熱區（§2.1）。「自定」開命名視窗（[10… | 2026-08-15 |
 | [`docs/spec/28-scenario-json.md`](spec/28-scenario-json.md) | 28 — 劇本的 JSON 匯出與匯入 | CONFORMED。四個區塊 round-trip 全過。 | 2026-08-15 |
@@ -570,7 +571,7 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 135 條。**要查「這件事解了沒」先看這裡**，
+共 136 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（84 條）
@@ -662,10 +663,11 @@
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x1E | `docs/re/08-hourly-update.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x20 | `docs/re/08-hourly-update.md` |
 
-### READY（1 條）
+### READY（2 條）
 
 | 鍵 | 出處 |
 |---|---|
+| 怎麼加一份 ▸ C 軌跡回放 B-1（數字函式真實輸入） | `docs/spec/00-index.md` |
 | 索引 ▸ 戰術命令批次與移動體力順序 | `docs/spec/00-index.md` |
 
 ### 強證據（22 條）
