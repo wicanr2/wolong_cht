@@ -71,6 +71,7 @@
 | 2026-10-12；開機、主排程與命名UI C | O0／O2各217例217階段逐byte同收據，42入口＋3 raw與十三錯版通過；九案開機導覽、四案轉移、818獨立稽核已核 | spec253 CONFORMED，C台帳724／65；完整玩家長程及原C機器碼仍待 | [re/133](docs/re/133-c-startup-restoration.md)、[spec/253](docs/spec/253-c-startup-main-loop.md)、[原生收據](docs/re/c-startup-verification.json) |
 | 2026-10-12；殘部群（勢力一覽／季節／戰術／地圖／外交／側欄）C | O0／O2各89例89階段逐byte同收據，10入口＋1 raw尾跳與十錯版通過；左右欄選列、CF兩態、578獨立稽核已核 | spec254 CONFORMED，C台帳734／66，census 739／739全覆蓋；完整玩家長程及原C機器碼仍待 | [re/134](docs/re/134-c-residual-restoration.md)、[spec/254](docs/spec/254-c-residual-faction-season.md)、[原生收據](docs/re/c-residual-verification.json) |
 | 2026-10-12；工具鏈指紋判定 | `tc_fingerprint.py` 全綠：739起點普查、68處int、自裝50h鉤、單一int3、零堆疊參數、零32位元GPR；證否線七項定位 | spec255 CONFORMED：KI.EXE判手寫組語，C機器碼匹配不可行；結論只限KI.EXE | [re/135](docs/re/135-toolchain-fingerprint.md)、[spec/255](docs/spec/255-c-machine-code-feasibility.md) |
+| 2026-10-12；IDA 9.4 編譯器覆核 | FLIRT：KI零命中／LOGO正對照39函式庫；cc_id 129為loader預設非偵測；MZ linker四欄不同；Ghidra本環境無未跑 | 手寫判定維持，signature面確認；結論仍只限KI.EXE | [re/135 §7](docs/re/135-toolchain-fingerprint.md)、`tools/ida_toolchain.py` |
 
 持續 Goal 為完成整個 matching decompilation；目前有 25,097 條指令的整檔組語基準與 734 個已完成局部驗證的 C 函式、66個原始 code 入口，census 739／739 全覆蓋。工具鏈判定：KI.EXE 為手寫組語，C 機器碼匹配不可行（spec255 CONFORMED）。完整玩家長程驗證仍待，不能據此宣布那項完成。
 使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b`、熱區 `a8605b5` 、版控組語／VGA `47e16c9` 、對齊貼圖 `6139f9e` 、矩形／計量 `c7dc8df`、顯示分派 `4d31520`、字形 `85f06de` 與數字 `06fff77` 已推到 origin/main。

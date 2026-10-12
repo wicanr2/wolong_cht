@@ -1,6 +1,6 @@
 # 255：C 機器碼匹配可行性判定
 
-**狀態：CONFORMED。判定完成：`KI.EXE` 為手寫 16-bit 組語（[`re/135`](../re/135-toolchain-fingerprint.md)），C 機器碼匹配不可行，`c_machine_code_match` 維持關閉。**
+**狀態：CONFORMED。判定完成：`KI.EXE` 為手寫 16-bit 組語（[`re/135`](../re/135-toolchain-fingerprint.md)），C 機器碼匹配不可行，`c_machine_code_match` 維持關閉。同日 IDA 9.4 以 FLIRT＋正對照覆核確認（`re/135` §7）；Ghidra 本環境無，未跑。**
 
 - 日期：2026-10-12。
 - 出處：試點 [`re/89`](../re/89-matching-decompilation-pilot.md)（工具鏈未知、GCC `-m16` 0／12）、[`reference/04`](../reference/04-first-survey.md) §2.2（三支 Borland、一支不確定，不外推）、本輪 prologue 普查（見下）。

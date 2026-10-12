@@ -1,6 +1,6 @@
 # 135：KI.EXE 工具鏈指紋（機器碼匹配前置判定）
 
-**狀態：READY。2026-10-12。判定 `KI.EXE` 為手寫 16-bit 組語，非 C 編譯器產物；結論只限 `KI.EXE`。**
+**狀態：READY。2026-10-12。判定 `KI.EXE` 為手寫 16-bit 組語，非 C 編譯器產物；結論只限 `KI.EXE`。同日 IDA 9.4 從 signature 面覆核確認（§7）。**
 
 - 日期：2026-10-12。
 - 出處：spec [`255`](../spec/255-c-machine-code-feasibility.md)、試點 [`re/89`](89-matching-decompilation-pilot.md)（GCC `-m16` 0／12）、本輪 `tools/tc_fingerprint.py` 全綠輸出（見 §6）。
@@ -112,7 +112,39 @@ rep string ops: 27 in 19 funcs
 toolchain fingerprint: PASS (hand-written 16-bit assembly shape)
 ```
 
-## 7. 未解與邊界
+## 7. IDA 9.4 確認（2026-10-12 追記）
+
+以 `tools/ida.sh probe` 從唯讀原檔建一次性 DB（image
+`ida-pro-9.4-idapython:py312-v1`，非 root），探針 `tools/ida_toolchain.py`，
+輸出收據留 `/tmp`（`tc-probe3`、`tc-logo`），不入版控。
+
+| 項目 | KI.EXE | LOGO.EXE（同隊已知 Borland C++ 1991，正對照） |
+|---|---|---|
+| probe（函式數／SHA） | 739／`fffeba98…3868` 相符 | 103／`2d36530b…aeef` |
+| FLIRT：`FUNC_LIB` | **0** | 39（`_main`、`_malloc`、`_exit`、`_atexit`…） |
+| 非 `sub_` 命名 | 僅 `start`＋7 個 `nullsub_N` | `start`＋33 個 runtime 名 |
+| `cc_id`（IDA 自帶欄位） | 129 → API 渲染 `Visual C++` | 2 → `Borland C++` |
+| imports | 0 | （同為 MZ，直接 INT） |
+
+判讀（每條帶等級）：
+
+- **FLIRT 零命中是 signature 面的答案**（confirmed）。同一支探針、同一顆 image
+  在 LOGO 上看到 39 個函式庫函式，探針不是瞎的；KI 的 739 支裡 IDA 認不出任何
+  runtime／library——Borland、MSC、Watcom 的 DOS signature 全數落空。
+- **`cc_id=129／Visual C++` 是 loader 預設值，不是偵測結果**（強證據）。
+  LOGO 的 `cc_id=2` 是 Borland signature 命中後由匹配寫入的；
+  KI 沒有任何命中能寫入它，欄位停在 DOS MZ 預設。**不可讀成「KI 是 MSVC 編的」**——
+  MSVC DOS 產物必帶自家 startup 與 `N_`／`F_` helper signature，此處零命中。
+- **linker 也不同**（confirmed，只讀 MZ 標頭交叉比對）：
+  三支 Borland 檔 `reloff=0x3E`（`0x1E` 起是 TLINK stub 區，LOGO 首 bytes
+  `fb506a72…`）、`maxpara=65535`、`checksum=0`；
+  KI `reloff=0x1E`（重定位緊接標頭）、`maxpara=1`、`minpara=0`、
+  `checksum=0x764a`（非零，有人算過）。語言不同，linker 也不同。
+- **Ghidra 交叉驗證未做**：本環境無 Ghidra（無 image、無 binary）。
+  上面三條（FLIRT＋正對照、cc 欄位、linker）已各自獨立指向同一結論，
+  Ghidra 若日後可跑，只做覆核，不預期翻案。
+
+## 8. 未解與邊界
 
 - 6 支 frame 函式的「手寫區域變數」是結構推定（暫存器傳參＋零堆疊參數）；
   若有人主張其中混了 C，需逐支體審查反駁，不影響全庫判定。
