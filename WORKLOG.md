@@ -595,3 +595,13 @@
 - 最終25項檢查仍為21通過／4既有失敗[2,3,7,8]，phantom277正規化零增刪；`workplace/matching-decompilation/c-army/checks/army-checks.json`的SHA-256為`a2a02f501ca2d6ad6c6b91b568810b5675e66c88be81757e55c562367a06bcf4`。完整`tools/check.sh`的Go vet與39套件通過、cached39，後續停在既有文件缺口；`workplace/matching-decompilation/c-army/checks/army-full-check.log`的SHA-256為`78d7b56e6333fed80e98e069153ee33d1278204ae1cf00d41c45f5ad68770350`。
 - 只移除已驗收的兩筆C矩陣未解列，其他1053筆分類與順序保留，另有6筆平台層；規格238份為233CONFORMED／4READY／1DRAFT。台帳提升後重跑原pinned GNU工具，434指令／1068bytes仍exact、來源ed6d與組語收據e399皆不變，沒有新增指令或改全域組語。
 - 本輪輸出皆1000:1000，沒有新root-owned檔案或偽.md目錄，原生與檢查容器已清理。依授權commit與push本輪CONFORMED來源及證據；完整主排程、讀檔、新遊戲、正常玩家長程與原C機器碼仍待，整體Goal保持active。
+
+## 2026-10-12：開機、主排程與命名UI C 研究
+
+- 42函式＋3 raw片段、1041指令2520 bytes，O0／O2各217例217階段逐byte同收據，十三錯版全由實際狀態差異拒絕。
+- 九案開機導覽：解出18DC8二選框幾何、18B7C／18E5A／18FC9槽位選單塗漆座標、18412處理器選單右鍵取消鏈；0x1005B直接進入因fixture與真實呼叫點差約300位元組退役，改劇本多樣性。
+- transfer群以pollFeed把0x222B raw等待做成檢查點餵食（右鍵直通INT33 AX=5讀後清零，兩則訊息需兩次右鍵）。
+- mainloop的a5=1／d2d≥A0h與transfer的d2d<FFh因子需IRQ0改測就緒邊界；12216補丁路徑無呼叫端。
+- 工具鏈：-O0補function-sections＋gc-sections修未定義引用；稽核流分叉改走mismatch exit 1（保留非確定性panic護欄）；verify fallthrough放寬已知入口；報表補new_routine_sha256鍵。
+- 三筆突變重設計為值變（m1離場碼、m2訊息位址、m12視訊模式）；C台帳724／65。
+- spec253 CONFORMED；公開收據docs/re/c-startup-verification.json。

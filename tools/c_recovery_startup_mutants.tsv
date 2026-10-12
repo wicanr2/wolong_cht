@@ -1,0 +1,13 @@
+1	entry	exit-code-plus-one
+2	entry	msgaddr-plus-one
+3	bootchain	int61-ah
+4	video	palette-index
+5	bootchain	int61-register
+6	naming-integ	dispatch-base
+7	naming-standalone	clamp-high
+8	naming-standalone	cycle-wrap
+9	tick	saturation
+10	mainloop	idle-gate
+11	boot	anchor-save
+12	exit	video-mode
+13	bootchain	patch-value

@@ -1,0 +1,53 @@
+#ifndef WOLONG_C_STARTUP_H
+#define WOLONG_C_STARTUP_H
+#include "army.h"
+uint8_t wolong_startup_in8(uint16_t);
+_Noreturn void wolong_startup_exit(KiMachine16 *,uint8_t,void *);
+int ki_startup_body(KiMachine16 *,uint16_t,const KiEconomyHooks *);
+void ki_startup_invoke(KiMachine16 *,uint16_t,const KiEconomyHooks *);
+void start(KiMachine16 *,const KiEconomyHooks *);
+void sub_1005B(KiMachine16 *,const KiEconomyHooks *);
+void sub_1006B(KiMachine16 *,const KiEconomyHooks *);
+void sub_10155(KiMachine16 *,const KiEconomyHooks *);
+void sub_10210(KiMachine16 *,const KiEconomyHooks *);
+void sub_10236(KiMachine16 *,const KiEconomyHooks *);
+void sub_1033B(KiMachine16 *,const KiEconomyHooks *);
+void sub_1034E(KiMachine16 *,const KiEconomyHooks *);
+void sub_10612(KiMachine16 *,const KiEconomyHooks *);
+void sub_11A6E(KiMachine16 *,const KiEconomyHooks *);
+void sub_11AAE(KiMachine16 *,const KiEconomyHooks *);
+void sub_11AC3(KiMachine16 *,const KiEconomyHooks *);
+void sub_11BE0(KiMachine16 *,const KiEconomyHooks *);
+void sub_11CD0(KiMachine16 *,const KiEconomyHooks *);
+void sub_18B12(KiMachine16 *,const KiEconomyHooks *);
+void sub_18B40(KiMachine16 *,const KiEconomyHooks *);
+void sub_18CAE(KiMachine16 *,const KiEconomyHooks *);
+void sub_18DC8(KiMachine16 *,const KiEconomyHooks *);
+void sub_18E5A(KiMachine16 *,const KiEconomyHooks *);
+void sub_18EA0(KiMachine16 *,const KiEconomyHooks *);
+void sub_18F37(KiMachine16 *,const KiEconomyHooks *);
+void sub_18F6D(KiMachine16 *,const KiEconomyHooks *);
+void sub_18F7C(KiMachine16 *,const KiEconomyHooks *);
+void sub_18FC9(KiMachine16 *,const KiEconomyHooks *);
+void sub_1905E(KiMachine16 *,const KiEconomyHooks *);
+void sub_1906E(KiMachine16 *,const KiEconomyHooks *);
+void sub_1907F(KiMachine16 *,const KiEconomyHooks *);
+void sub_1908D(KiMachine16 *,const KiEconomyHooks *);
+void sub_190A3(KiMachine16 *,const KiEconomyHooks *);
+void sub_190C0(KiMachine16 *,const KiEconomyHooks *);
+void sub_1912D(KiMachine16 *,const KiEconomyHooks *);
+void sub_19144(KiMachine16 *,const KiEconomyHooks *);
+void sub_1915B(KiMachine16 *,const KiEconomyHooks *);
+void sub_1917C(KiMachine16 *,const KiEconomyHooks *);
+void sub_19214(KiMachine16 *,const KiEconomyHooks *);
+void sub_19223(KiMachine16 *,const KiEconomyHooks *);
+void sub_1928A(KiMachine16 *,const KiEconomyHooks *);
+void sub_192E3(KiMachine16 *,const KiEconomyHooks *);
+void sub_192EE(KiMachine16 *,const KiEconomyHooks *);
+void sub_192F5(KiMachine16 *,const KiEconomyHooks *);
+void sub_1EB6C(KiMachine16 *,const KiEconomyHooks *);
+void sub_1EB93(KiMachine16 *,const KiEconomyHooks *);
+void raw_entry_10043(KiMachine16 *,const KiEconomyHooks *);
+void raw_entry_1006A(KiMachine16 *,const KiEconomyHooks *);
+void raw_entry_10356(KiMachine16 *,const KiEconomyHooks *);
+#endif

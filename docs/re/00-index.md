@@ -258,6 +258,8 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 
 軍團輪轉與行軍更新的C見[re/132](132-c-army-update-restoration.md)與[spec/252](../spec/252-c-army-update.md)：17函式的O0／O2各581例630階段、十二錯版及七筆回鏈通過，局部閉包CONFORMED。
 
+開機、主排程與命名UI的C見[re/133](133-c-startup-restoration.md)與[spec/253](../spec/253-c-startup-main-loop.md)：42函式／3raw／1021指令，CONFORMED（217案O0／O2全同，13突變全拒）。
+
 ## 9. 怎麼加一份新筆記
 
 1. 編號流水，一個發現一份。標題寫「回答什麼問題」不是「讀了哪支函式」。

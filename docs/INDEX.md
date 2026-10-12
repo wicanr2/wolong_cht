@@ -212,6 +212,7 @@
 | [`docs/re/130-c-battle-outcome-restoration.md`](re/130-c-battle-outcome-restoration.md) | 130：自動戰鬥、退卻與據點易主的 C | CONFORMED。21函式，O0／O2各8,364組完整狀態與二十錯版通過。 | 2026-10-10 |
 | [`docs/re/131-c-engagement-tactical-restoration.md`](re/131-c-engagement-tactical-restoration.md) | 131：交戰入口與戰術引擎的 C | CONFORMED。O0／O2各748例／1492階段及二十個狀態差異反例通過，234個命名入口與12個原始區段均已… | 2026-10-10 |
 | [`docs/re/132-c-army-update-restoration.md`](re/132-c-army-update-restoration.md) | 132：軍團輪轉與行軍更新的 C | CONFORMED。17函式的O0／O2各581例630階段與十二錯版均通過嚴格驗收。 | 2026-10-10 |
+| [`docs/re/133-c-startup-restoration.md`](re/133-c-startup-restoration.md) | 133：C 開機、主排程與命名 UI 還原 | CONFORMED。42 函式＋3 raw 片段，217 案 O0／O2 全同，13 突變全拒。 | 2026-10-11 |
 | [`docs/re/14-mmap-mch-objects.md`](re/14-mmap-mch-objects.md) | 14 — MMAP.MCH 戰略地圖物件 | 資產格式、事件 12 的火災／暴動圖形鏈與 typed 動畫／移動時序 confirmed； type 3 的事件語… | 2026-08-10 |
 | [`docs/re/15-event10-producer.md`](re/15-event10-producer.md) | 15 — 事件 10 producer 深度逆向 | 事件 10 dispatcher／consumer／queue writer 已證實；原版自然 producer 仍… | 2026-08-11 |
 | [`docs/re/16-idle-clock-event10.md`](re/16-idle-clock-event10.md) | 16 — DOS/V 無輸入自動時鐘與事件 10 關係 | 無輸入時的自動時鐘／軍團行軍已由 IDA .i64 證實；事件 10 是該路徑 中的受節流 queue consum… | 2026-08-11 |
@@ -240,7 +241,7 @@
 | [`docs/re/39-remaining-unread.md`](re/39-remaining-unread.md) | 39 — 剩餘未讀函式的逐支歸屬 | 清單。 | 2026-08-14 |
 | [`docs/re/40-garrison-relief-request.md`](re/40-garrison-relief-request.md) | 40 — 據點求援與援軍派遣 | 整條鏈 confirmed（每一支都逐行讀過）。 sub_140C9 的距離算式裡有一處 | 2026-08-14 |
 | [`docs/re/42-leaf-functions.md`](re/42-leaf-functions.md) | 42 — 戰術以外的 47 支葉節點 | 47 支全部逐行讀過。四件事因此定案：INT 61h 是音源 TSR 的介面、 byte_198A6 的位元圖完整、… | 2026-08-14 |
-| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的證據索引） | 生成的證據索引，跑 tools/py.sh tools/re_open_questions.py 重出。 證據欄不下… | 2026-10-10 |
+| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的證據索引） | 生成的證據索引，跑 tools/py.sh tools/re_open_questions.py 重出。 證據欄不下… | 2026-10-12 |
 | [`docs/re/44-threat-and-reinforcement-ai.md`](re/44-threat-and-reinforcement-ai.md) | 44 — 威脅偵測與 AI 出兵：據點每 tick 掃一次 | 整條鏈逐行讀完。三件事定案：據點 +0x18 是佔用圖讀回來的軍團數、 +0x00 低 4 位是「哪幾個鄰居是敵方」… | 2026-08-14 |
 | [`docs/re/45-corps-command-mode.md`](re/45-corps-command-mode.md) | 45 — 軍團的三種指令模式：戰鬥指揮／委任／解體 | 軍團 +0x00 位元 2 定案 ＝ | 2026-08-14 |
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |
@@ -484,6 +485,7 @@
 | [`docs/spec/250-c-battle-outcome.md`](spec/250-c-battle-outcome.md) | 250：C 自動戰鬥與據點易主 | CONFORMED。O0／O2各8,364組完整狀態與二十錯版通過。 | 2026-10-10 |
 | [`docs/spec/251-c-engagement-tactical.md`](spec/251-c-engagement-tactical.md) | 251：C 交戰入口與戰術引擎 | CONFORMED。O0／O2各748例／1492階段、全部234個命名入口與12個原始區段，以及二十個錯版均已核對。 | 2026-10-10 |
 | [`docs/spec/252-c-army-update.md`](spec/252-c-army-update.md) | 252：C 軍團輪轉與行軍更新 | CONFORMED。O0／O2各581例630階段、17入口與十二錯版通過。 | 2026-10-10 |
+| [`docs/spec/253-c-startup-main-loop.md`](spec/253-c-startup-main-loop.md) | 253：C 開機、主排程與命名 UI | CONFORMED。42 函式＋3 raw 片段，217 案 O0／O2 全同，13 突變全拒。公開收據見 [c-s… | 2026-10-11 |
 | [`docs/spec/26-yes-no-dialog.md`](spec/26-yes-no-dialog.md) | 26 — ＹＥＳ／ＮＯ 對話框 | CONFORMED。版面與命中算式已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 輸入照原版收斂成兩個熱區（§2.1）。「自定」開命名視窗（[10… | 2026-08-15 |
 | [`docs/spec/28-scenario-json.md`](spec/28-scenario-json.md) | 28 — 劇本的 JSON 匯出與匯入 | CONFORMED。四個區塊 round-trip 全過。 | 2026-08-15 |
