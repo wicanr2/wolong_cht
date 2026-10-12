@@ -1,7 +1,7 @@
 # 257：C 軌跡回放 B-1（數字函式吃真實開局輸入）
 
-**狀態：READY。第一個吃真實遊玩輸入的 C 回放：spec/229 數字函式，
-輸入來自 slice A 開局時間軸的 dosgolem 軌跡，不再是生成 fixture。**
+**狀態：CONFORMED。522 次呼叫去重 233 組 × CF 兩態＝466 案，
+O2／O0 雙跑全同、原版／C 終態雜湊全同（[`c-numbers-trace-verification.json`](../re/c-numbers-trace-verification.json)）。**
 
 - 日期：2026-10-12。
 - 出處：[`spec/256`](256-matching-longpath-verification.md) slice B 設計；
@@ -16,14 +16,18 @@
 ## 做法
 
 1. 錄軌跡：slice A 時間軸（開機→4/8）加 `WOLONG_DOSGOLEM_WATCH` 盯
-   spec/229 四函式入口，記每一次呼叫的暫存器＋步數。
-2. 取入口記憶體：對每支函式另跑一次 `runto:<入口>` 停在首次到達，
-   `ipeek` 取該 slice 讀集合（harness 的 read addrs 即清單）。
-3. 回放：把（暫存器，記憶體）灌進數字 harness 的 dual-run
-   （在 harness 內同時跑原版 bytes 模擬與還原 C），比離開狀態。
-   不需要 dosgolem 錄離開狀態——harness 內雙跑即是比對。
-4. 驗收：軌跡上所有呼叫全綠；任一 mismatch 即停，先查「輸入沒灌全」
-   （讀集合漏了），再查 C 語意。
+   三函式入口，記每一次呼叫的暫存器。實測：1062F 522 次、
+   1069A 862 次（全來自 10669，內部呼叫）、106DE 372 次。
+2. 只回放頂層 1062F（內部呼叫在 dual-run 內兩側同跑，不必單獨錄）。
+   輸入完備性證明（`numbers_generated.inc` 靜讀）：入口 BP 只存不讀、
+   CX 進門即覆寫、DS／ES 進門即覆寫、零 stack／日期 RAM 讀取；
+   CF 用 seed 2／3 掃（既有矩陣已證其餘 flags-in 無關）。
+   **不必 `runto`＋`ipeek`，不必動 dosgolem。**
+3. 回放：WATCH 的六個 GPR 去重後灌進數字 harness dual-run
+   （`--trace` 模式，`c_recovery_numbers.go`），CF 各掃 0／1，
+   device 初態兩側同構。比離開暫存器＋RAM＋plane＋device＋port＋trace。
+4. 驗收：去重呼叫 × CF 兩態全綠；任一 mismatch 即停，先查輸入完備性
+   證明，再查 C 語意。
 
 ## 實作與驗收
 

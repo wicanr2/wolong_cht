@@ -25,6 +25,7 @@ package main
 */
 import "C"
 import (
+	"bufio"
 	"bytes"
 	"crypto/sha256"
 	"encoding/binary"
@@ -36,6 +37,9 @@ import (
 	"github.com/wicanr2/dosgolem/internal/dos"
 	"github.com/wicanr2/dosgolem/internal/machine"
 	"os"
+	"regexp"
+	"strconv"
+	"strings"
 	"unsafe"
 )
 
@@ -131,6 +135,7 @@ func main() {
 	output := flag.String("out", "/output/results/O2.json", "receipt")
 	only := flag.String("group", "", "group")
 	smoke := flag.Bool("smoke", false, "bounded matrix")
+	trace := flag.String("trace", "", "dosgolem WATCH log; 1062F entries become group-trace cases")
 	flag.Parse()
 	raw, err := os.ReadFile("/orig/KI.EXE")
 	if err != nil {
@@ -457,12 +462,65 @@ func main() {
 			add(c)
 		}
 	}
+	// Trace mode (spec 257 B-1): real 1062F entry registers from a dosgolem
+	// WATCH log become replay cases. Soundness: 1062F never reads entry BP
+	// (push/overwrite/pop only), CX (overwritten), DS/ES/SP (overwritten or
+	// untouched), or date RAM; entry CF is swept via seed 2/3 (existing
+	// matrix already proves other flags-in irrelevant). Device init stays
+	// harness-constructed on both sides, so agreement still proves C ==
+	// original bytes on real-game params.
+	traceCalls, traceUnique := 0, 0
+	traceHash := ""
+	if *trace != "" {
+		raw, err := os.ReadFile(*trace)
+		if err != nil {
+			panic(err)
+		}
+		sum := sha256.Sum256(raw)
+		traceHash = hex.EncodeToString(sum[:])
+		re := regexp.MustCompile(`呼叫 1062F AX=([0-9A-F]{4}) BX=([0-9A-F]{4}) CX=([0-9A-F]{4}) DX=([0-9A-F]{4}) SI=([0-9A-F]{4}) DI=([0-9A-F]{4})`)
+		seen := map[[6]uint16]bool{}
+		sc := bufio.NewScanner(bytes.NewReader(raw))
+		sc.Buffer(make([]byte, 1024*1024), 1024*1024)
+		for sc.Scan() {
+			m := re.FindStringSubmatch(sc.Text())
+			if m == nil {
+				continue
+			}
+			traceCalls++
+			var r [6]uint16
+			for i := 0; i < 6; i++ {
+				v, err := strconv.ParseUint(strings.TrimSpace(m[i+1]), 16, 16)
+				if err != nil {
+					panic(err)
+				}
+				r[i] = uint16(v)
+			}
+			if seen[r] {
+				continue
+			}
+			seen[r] = true
+			traceUnique++
+			for _, seed := range []byte{2, 3} {
+				c := base("trace", 0x62f)
+				c.ax, c.bx, c.cx, c.dx, c.si, c.di = r[0], r[1], r[2], r[3], r[4], r[5]
+				c.seed = seed
+				add(c)
+			}
+		}
+		if err := sc.Err(); err != nil {
+			panic(err)
+		}
+		if traceCalls == 0 {
+			panic("trace log has no 1062F entries")
+		}
+	}
 	for _, c := range all {
 		if !check(c) {
 			break
 		}
 	}
-	report := map[string]any{"schema": "wolong-c-numbers-parity-v1", "input_sha256": inputHash, "icon_sha256": assetHash, "routine_sha256": routineHashes, "cases": cases, "groups": groups, "full_ram_plane_audits": audits, "indexed_content_audits": pixelAudits, "content_top": 40, "content_height": 400, "entries_seen": entries, "passed": mismatch == nil, "mismatch": mismatch, "original_state_sha256": hex.EncodeToString(originalDigest.Sum(nil)), "c_state_sha256": hex.EncodeToString(cDigest.Sum(nil)), "trace_entry_size": 90, "platform": "Independent pinned dosgolem VGA devices; native C numbers; IF/TF=0; CPU-model undefined flags; legal DIV quotient; no wall-clock claim", "asset_banks": "ICONGRF segment3 at 2200; digits at 2284", "original_font_calls": originalDOS.Font.Calls, "c_font_calls": activeDOS.Font.Calls, "original_missing_fonts": originalDOS.Font.Missing, "c_missing_fonts": activeDOS.Font.Missing, "c_machine_code_match": false}
+	report := map[string]any{"schema": "wolong-c-numbers-parity-v1", "input_sha256": inputHash, "icon_sha256": assetHash, "routine_sha256": routineHashes, "cases": cases, "groups": groups, "full_ram_plane_audits": audits, "indexed_content_audits": pixelAudits, "content_top": 40, "content_height": 400, "entries_seen": entries, "passed": mismatch == nil, "mismatch": mismatch, "original_state_sha256": hex.EncodeToString(originalDigest.Sum(nil)), "c_state_sha256": hex.EncodeToString(cDigest.Sum(nil)), "trace_entry_size": 90, "platform": "Independent pinned dosgolem VGA devices; native C numbers; IF/TF=0; CPU-model undefined flags; legal DIV quotient; no wall-clock claim", "asset_banks": "ICONGRF segment3 at 2200; digits at 2284", "original_font_calls": originalDOS.Font.Calls, "c_font_calls": activeDOS.Font.Calls, "original_missing_fonts": originalDOS.Font.Missing, "c_missing_fonts": activeDOS.Font.Missing, "c_machine_code_match": false, "trace_calls": traceCalls, "trace_unique": traceUnique, "trace_log_sha256": traceHash}
 	b, _ := json.MarshalIndent(report, "", "  ")
 	b = append(b, '\n')
 	if e := os.WriteFile(*output, b, 0644); e != nil {

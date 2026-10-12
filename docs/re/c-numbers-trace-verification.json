@@ -1,0 +1,29 @@
+{
+  "schema": "wolong-c-numbers-trace-v1",
+  "status": "trace-replay-pass",
+  "spec": "docs/spec/257-c-trace-replay-b1.md",
+  "timeline": "docs/playtest/122-rebuilt-longpath-smoke.md",
+  "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "trace_log_sha256": "3dbe4cff77ec0172cecd7f5b1fbee743e6dd26a9bb7849fda365ee1c2ab2c221",
+  "trace_calls": 522,
+  "trace_unique": 233,
+  "target": "sub_1062F@0x62f",
+  "cf_sweep": [
+    0,
+    1
+  ],
+  "O2": {
+    "cases": 466,
+    "passed": true,
+    "original_state_sha256": "b2e4927c6ff7db59a58d588a8f1a85dd30b76df2b5579e1cf77b80d5f3ea08ee",
+    "c_state_sha256": "b2e4927c6ff7db59a58d588a8f1a85dd30b76df2b5579e1cf77b80d5f3ea08ee"
+  },
+  "O0": {
+    "cases": 466,
+    "passed": true,
+    "original_state_sha256": "b2e4927c6ff7db59a58d588a8f1a85dd30b76df2b5579e1cf77b80d5f3ea08ee",
+    "c_state_sha256": "b2e4927c6ff7db59a58d588a8f1a85dd30b76df2b5579e1cf77b80d5f3ea08ee"
+  },
+  "mismatch": null,
+  "note": "BP/CX/DS/ES/SP/date unread-or-overwritten at entry (numbers_generated.inc); CF swept; device init identical both sides."
+}

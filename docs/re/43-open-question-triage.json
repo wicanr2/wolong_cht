@@ -12455,28 +12455,28 @@
     {
       "file": "docs/spec/229-c-number-raster.md",
       "item": "原作者編譯器與 C 機器碼",
-      "status": "尚未確認",
+      "status": "spec/255 已判手寫組語，C 機器碼匹配不可行",
       "section": "未解範圍",
       "domain": "其他",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-8b59e2ab92e2d83cd889",
+      "id": "oq-15604fa8d158a8fd065c",
       "classification": "evidence-only",
       "github_issue": null,
-      "reason": "matching C 局部數字對照的證據限制，保留原版工具鏈／正常玩家／DIV 例外邊界，不代替現行 remake Issue 驗收。"
+      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
     },
     {
       "file": "docs/spec/229-c-number-raster.md",
       "item": "正常玩家 UI／訊息參數 producer",
-      "status": "此局部驗證不代證",
+      "status": "數字 slice 已由 spec/257 軌跡回放覆蓋（522 呼叫真實參數）；其餘 slice 不代證",
       "section": "未解範圍",
       "domain": "其他",
       "verdict": "靜態",
       "occurrence": 0,
-      "id": "oq-35d4ce5c45e5c2f0a06e",
+      "id": "oq-54ed0d501b662ad248fb",
       "classification": "evidence-only",
       "github_issue": null,
-      "reason": "matching C 局部數字對照的證據限制，保留原版工具鏈／正常玩家／DIV 例外邊界，不代替現行 remake Issue 驗收。"
+      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
     },
     {
       "file": "docs/spec/229-c-number-raster.md",

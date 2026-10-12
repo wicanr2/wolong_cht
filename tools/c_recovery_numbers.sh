@@ -36,6 +36,12 @@ timeout --kill-after=10 2400 docker run --rm --init --name "$NUMBERS_CONTAINER" 
     if [[ "$NUMBERS_MODE" == smoke ]]; then
       CGO_CFLAGS="-O2 -std=c11 -D_GNU_SOURCE $NUMBERS_DEFINE" go build -tags matching_numbers,matching_glyph,matching_vga -p 2 -o /output/numbers-smoke .
       /output/numbers-smoke -smoke -out /output/results/smoke.json
+    elif [[ "$NUMBERS_MODE" == trace ]]; then
+      test -s /output/trace/watch.log
+      for optimize in O2 O0; do
+        CGO_CFLAGS="-$optimize -std=c11 -D_GNU_SOURCE $NUMBERS_DEFINE" go build -tags matching_numbers,matching_glyph,matching_vga -p 2 -o "/output/numbers-trace-$optimize" .
+        "/output/numbers-trace-$optimize" -group trace --trace /output/trace/watch.log -out "/output/results/trace-$optimize.json"
+      done
     else
       for optimize in O2 O0; do
         CGO_CFLAGS="-$optimize -std=c11 -D_GNU_SOURCE $NUMBERS_DEFINE" go build -tags matching_numbers,matching_glyph,matching_vga -p 2 -o "/output/numbers-$optimize" .

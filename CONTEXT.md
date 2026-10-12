@@ -75,6 +75,7 @@
 | 2026-10-12；README登載ASM判定＋asm基線冷重建 | README登載KI手寫組語、C機器碼不可行；冷重建25,097條／57,101 bytes全同、整檔67,099 bytes SHA同、3正對照拒絕，與版控收據零漂移 | asm matching基線綠且穩定；c_machine_code_match=false 維持 | README.md、[版控收據](docs/re/assembly-code-verification.json) |
 | 2026-10-12；其餘七支工具鏈判定 | 八支IDA探針全綠：LOGO/YNFONT/INSTALL為Borland C++ 1991（banner＋FLIRT 39/63/114＋cc=2）；STR單函式ASM（TLINK鏈）；D7三支零reloc手寫ASM | 八支全判完；spec255範圍維持只限KI.EXE | [re/136](docs/re/136-other-binaries-toolchain.md) |
 | 2026-10-12；重建EXE長程實跑 | 從零開局到196/4/8：8截圖、時鐘、130,849,387道指令數雙側全同；until鏈式、對話框須先關 | spec256 CONFORMED（slice A）；C軌跡回放維持設計 | [playtest/122](docs/playtest/122-rebuilt-longpath-smoke.md)、[spec/256](docs/spec/256-matching-longpath-verification.md) |
+| 2026-10-12；C軌跡回放B-1 | WATCH錄1062F共522呼叫去重233組，CF兩態466案O2/O0雙跑全同、原版/C終態雜湊全同；WATCH無段暫存器但1062F不讀BP/CX/DS/ES/SP故完備 | spec257 CONFORMED；spec229兩列過期狀態已更新 | [spec/257](docs/spec/257-c-trace-replay-b1.md)、[收據](docs/re/c-numbers-trace-verification.json) |
 
 持續 Goal 為完成整個 matching decompilation；目前有 25,097 條指令的整檔組語基準與 734 個已完成局部驗證的 C 函式、66個原始 code 入口，census 739／739 全覆蓋。工具鏈判定：KI.EXE 為手寫組語，C 機器碼匹配不可行（spec255 CONFORMED）。完整玩家長程驗證仍待，不能據此宣布那項完成。
 使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b`、熱區 `a8605b5` 、版控組語／VGA `47e16c9` 、對齊貼圖 `6139f9e` 、矩形／計量 `c7dc8df`、顯示分派 `4d31520`、字形 `85f06de` 與數字 `06fff77` 已推到 origin/main。
