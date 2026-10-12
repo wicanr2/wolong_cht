@@ -605,3 +605,12 @@
 - 工具鏈：-O0補function-sections＋gc-sections修未定義引用；稽核流分叉改走mismatch exit 1（保留非確定性panic護欄）；verify fallthrough放寬已知入口；報表補new_routine_sha256鍵。
 - 三筆突變重設計為值變（m1離場碼、m2訊息位址、m12視訊模式）；C台帳724／65。
 - spec253 CONFORMED；公開收據docs/re/c-startup-verification.json。
+
+## 2026-10-12：殘部群 C 研究（census 收工）
+
+- 位址差集最後 10 支＋raw 尾跳 1AB48（247＋1 指令 621 bytes），O0／O2各89案逐byte同收據，十錯版全由實際狀態差異拒絕。
+- 名子差集誤報：nullsub×2 與 VGA×3 已在帳上是 code_blocks；位址差集為準。
+- picker 熱區座標全十六進（208h／240h）；15B51 以 cs:0D52 蓋 DS，entry-DS 另給 0x8300 段；prePress 不足，pollFeed 一律開。
+- 15E1E→15F5D→1062F 金額列印 16 位元首除，值 ≥655360 即 #DE；15AD1 案只收右鍵離開，選列由 15AFC 直入案覆蓋。
+- m7 只改比較是語意空操作，改突變存值才拒絕；C台帳734／66，census 739／739 全覆蓋。
+- spec254 CONFORMED；公開收據docs/re/c-residual-verification.json。

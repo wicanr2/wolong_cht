@@ -1,0 +1,10 @@
+1	diplomacy	clear-value
+2	picker-entry	talk-index
+3	picker-loop	row-count
+4	picker-row	column-split
+5	season	month-march
+6	season	play-gate
+7	tactical-cap	attack-cap
+8	sidebar	report-kind
+9	map-node	counter-select
+10	draw-queue	counter-select

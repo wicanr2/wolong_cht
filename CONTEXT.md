@@ -69,8 +69,9 @@
 | 2026-10-10；交戰入口與戰術引擎C | 同來源O0／O2各748例／1492階段通過，234個named及12個raw均進入；每級16存檔／256戰術frame，二十錯版拒絕；整檔組語仍exact | spec251 CONFORMED，C台帳665／62；完整軍團／主排程、正常玩家長程與原C機器碼仍未完成 | [re/131](docs/re/131-c-engagement-tactical-restoration.md)、[spec/251](docs/spec/251-c-engagement-tactical.md)、[原生收據](docs/re/c-engagement-verification.json) |
 | 2026-10-10；軍團輪轉與行軍C | O0／O2各581例630階段逐byte同收據，17入口與十二錯版通過；16接戰／5真outer／29戰術frame，167份來源封存及七回鏈已核 | spec252 CONFORMED，C台帳682／62；完整主排程、讀檔、新遊戲、正常玩家及原C機器碼仍待 | [re/132](docs/re/132-c-army-update-restoration.md)、[spec/252](docs/spec/252-c-army-update.md)、[原生收據](docs/re/c-army-verification.json) |
 | 2026-10-12；開機、主排程與命名UI C | O0／O2各217例217階段逐byte同收據，42入口＋3 raw與十三錯版通過；九案開機導覽、四案轉移、818獨立稽核已核 | spec253 CONFORMED，C台帳724／65；完整玩家長程及原C機器碼仍待 | [re/133](docs/re/133-c-startup-restoration.md)、[spec/253](docs/spec/253-c-startup-main-loop.md)、[原生收據](docs/re/c-startup-verification.json) |
+| 2026-10-12；殘部群（勢力一覽／季節／戰術／地圖／外交／側欄）C | O0／O2各89例89階段逐byte同收據，10入口＋1 raw尾跳與十錯版通過；左右欄選列、CF兩態、578獨立稽核已核 | spec254 CONFORMED，C台帳734／66，census 739／739全覆蓋；完整玩家長程及原C機器碼仍待 | [re/134](docs/re/134-c-residual-restoration.md)、[spec/254](docs/spec/254-c-residual-faction-season.md)、[原生收據](docs/re/c-residual-verification.json) |
 
-持續 Goal 為完成整個 matching decompilation；目前有 25,097 條指令的整檔組語基準與 724 個已完成局部驗證的 C 函式、65個原始 code 入口，不能據此宣布完整 C 還原完成。
+持續 Goal 為完成整個 matching decompilation；目前有 25,097 條指令的整檔組語基準與 734 個已完成局部驗證的 C 函式、66個原始 code 入口，census 739／739 全覆蓋。完整 C 機器碼匹配與完整玩家長程驗證仍待，不能據此宣布那兩項完成。
 使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b`、熱區 `a8605b5` 、版控組語／VGA `47e16c9` 、對齊貼圖 `6139f9e` 、矩形／計量 `c7dc8df`、顯示分派 `4d31520`、字形 `85f06de` 與數字 `06fff77` 已推到 origin/main。
 
 未知工具鏈不新增 remake 發行閘門。現行工作仍查 [GitHub Issues](https://github.com/wicanr2/wolong_cht/issues)。
