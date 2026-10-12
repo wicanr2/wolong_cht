@@ -264,6 +264,8 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 
 工具鏈指紋判定見[re/135](135-toolchain-fingerprint.md)與[spec/255](../spec/255-c-machine-code-feasibility.md)：`KI.EXE` 為手寫 16-bit 組語，非編譯器產物，C 機器碼匹配不可行（`tc_fingerprint.py` 全綠、證否線七項、試點差距 `re/89`）。
 
+其餘七支的工具鏈見[re/136](136-other-binaries-toolchain.md)：三支 Borland C++ 1991（LOGO／YNFONT／INSTALL，banner＋FLIRT＋`cc_id=2` 三重一致），四支手寫 ASM（STR 單函式 TLINK 鏈接、D7 三支零 reloc 家族）。八支全判完。
+
 ## 9. 怎麼加一份新筆記
 
 1. 編號流水，一個發現一份。標題寫「回答什麼問題」不是「讀了哪支函式」。
