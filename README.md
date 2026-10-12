@@ -29,7 +29,8 @@ Android 不在這次桌面修正版範圍。
 比對式反編譯的來源與證據也保存在本 repo：
 
 - [完整組語指令來源](tools/c_recovery/KI.code.S)與 [linker script](tools/c_recovery/KI.code.ld)：25,097 條指令逐 byte 匹配。非指令資料由本機原版匯入，重建入口為 [`tools/matching_code_record.sh`](tools/matching_code_record.sh)，驗證紀錄見 [re/90](docs/re/90-assembly-reconstruction.md#7-版控程式碼與冷重建紀錄)。
-- [C 來源](tools/c_recovery/)與 [函式台帳](docs/re/c-recovery-status.json)：734 個函式與 66 個原始程式區段通過各自記錄的局部行為比較（census 739／739 全覆蓋）。C 機器碼匹配與完整玩家流程仍待驗證。
+- ⭐ **原版語言已確認：`KI.EXE` 是手寫 16-bit 組語**，不是 C 編譯器產物——全庫暫存器呼叫慣例、無堆疊參數、無執行期函式庫、IDA 9.4 FLIRT 零命中（同隊 Borland 檔正對照 39 個函式庫函式）。matching decompilation 的匹配目標就是這份組語。證據見 [re/135](docs/re/135-toolchain-fingerprint.md) 與 [spec/255](docs/spec/255-c-machine-code-feasibility.md)。
+- [C 來源](tools/c_recovery/)與 [函式台帳](docs/re/c-recovery-status.json)：734 個函式與 66 個原始程式區段通過各自記錄的局部行為比較（census 739／739 全覆蓋）。C 機器碼匹配已判定不可行（手寫組語沒有編譯器可匹配）；完整玩家流程仍待驗證。
 - [軍團更新 C 證據](docs/re/132-c-army-update-restoration.md)：17 函式通過 O0／O2 各581例630階段與十二個錯版檢查，含真正的戰鬥與外層退出接線；詳見[驗收收據](docs/re/c-army-verification.json)。
 - [開機主排程 C 證據](docs/re/133-c-startup-restoration.md)：42 函式＋3 raw 片段通過 O0／O2 各217例217階段與十三個錯版檢查，含九案開機導覽與轉移接線；詳見[驗收收據](docs/re/c-startup-verification.json)。
 
