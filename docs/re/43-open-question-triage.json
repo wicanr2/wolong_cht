@@ -13985,6 +13985,45 @@
       "classification": "merge-target",
       "github_issue": 25,
       "reason": "存檔、載入、序列化或事件狀態保存，併入 Issue #25。"
+    },
+    {
+      "file": "docs/spec/256-matching-longpath-verification.md",
+      "item": "PC-98 重建實跑",
+      "status": "matching 基線只含 DOS/V，不含 PC-98。",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "實測",
+      "occurrence": 0,
+      "id": "oq-3cace77d8aabb8cf0932",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
+    },
+    {
+      "file": "docs/spec/256-matching-longpath-verification.md",
+      "item": "C 軌跡回放實作",
+      "status": "只留 Slice B 設計，實作另開 spec。",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-b9fc09a93d9f2b3bfb66",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
+    },
+    {
+      "file": "docs/spec/256-matching-longpath-verification.md",
+      "item": "AI 長程／90 日對拍",
+      "status": "remake 側 Issue #10 的範圍，不在 matching 線。",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-ca0030e311136eeabc87",
+      "classification": "merge-target",
+      "github_issue": 10,
+      "reason": "政略90日對拍屬 remake 側，併入 Issue #10。"
     }
   ]
 }

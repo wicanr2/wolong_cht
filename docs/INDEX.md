@@ -68,6 +68,7 @@
 | [`docs/playtest/12-event3-same-state-parity.md`](playtest/12-event3-same-state-parity.md) | event3 同狀態對拍（2026-08-10） | 同狀態事件接線、原版式 composite、3×6 實際格位選取、TALK 五行分頁、 DOS/V 內框／按鍵 gl… | 2026-08-10 |
 | [`docs/playtest/120-screen-parity-retest-20260911.md`](playtest/120-screen-parity-retest-20260911.md) | 120 — 打包前重量畫面對拍：三組都不是全 PASS，而且都不是這一輪造成的 | 主畫面已修回全 PASS；野戰剩一區、攻城仍重跑不出來。 | 2026-09-11 |
 | [`docs/playtest/121-screen-parity-gate.md`](playtest/121-screen-parity-gate.md) | 121 — 十七組畫面逐區重量：十四組符合預期，缺口剩三個 | 通過（帶三個已登記的缺口）。 | 2026-09-11 |
+| [`docs/playtest/122-rebuilt-longpath-smoke.md`](playtest/122-rebuilt-longpath-smoke.md) | 122：重建 EXE 從零開局長程實跑（matching slice A） | 通過。 | 2026-10-12 |
 | [`docs/playtest/13-dosv-natural-and-target-gui.md`](playtest/13-dosv-natural-and-target-gui.md) | DOS/V 自然畫面與目標平台 GUI 驗收 | 歷史驗收紀錄（2026-08-11，影片 oracle）。 | 2026-08-11 |
 | [`docs/playtest/14-m7-review.md`](playtest/14-m7-review.md) | M7 校訂文字人工審查報告 | 60 筆定案校訂已完成逐筆語意、marker、硬換行、寬度與代表畫面抽樣。 | 2026-08-11 |
 | [`docs/playtest/15-event2-5-talk-sampling.md`](playtest/15-event2-5-talk-sampling.md) | 事件 2–5 TALK 完整分支抽樣 | 36 個 raw TALK 頁面、18 組雙頁回應的分支、marker、硬換行、字寬與五列版面 抽樣通過；不宣稱完整… | 2026-08-11 |
@@ -214,6 +215,8 @@
 | [`docs/re/132-c-army-update-restoration.md`](re/132-c-army-update-restoration.md) | 132：軍團輪轉與行軍更新的 C | CONFORMED。17函式的O0／O2各581例630階段與十二錯版均通過嚴格驗收。 | 2026-10-10 |
 | [`docs/re/133-c-startup-restoration.md`](re/133-c-startup-restoration.md) | 133：C 開機、主排程與命名 UI 還原 | CONFORMED。42 函式＋3 raw 片段，217 案 O0／O2 全同，13 突變全拒。 | 2026-10-11 |
 | [`docs/re/134-c-residual-restoration.md`](re/134-c-residual-restoration.md) | 134：C 殘部群還原 | CONFORMED。10 函式＋1 raw 尾跳，89 案 O0／O2 全同，10 突變全拒。 | 2026-10-12 |
+| [`docs/re/135-toolchain-fingerprint.md`](re/135-toolchain-fingerprint.md) | 135：KI.EXE 工具鏈指紋（機器碼匹配前置判定） | READY。2026-10-12。判定 KI.EXE 為手寫 16-bit 組語，非 C 編譯器產物；結論只限 KI… | 2026-10-12 |
+| [`docs/re/136-other-binaries-toolchain.md`](re/136-other-binaries-toolchain.md) | 136：其餘七支執行檔的工具鏈判定 | READY。2026-10-12。八支全判完：3 支 Borland C++ 1991，5 支手寫組語。 | 2026-10-12 |
 | [`docs/re/14-mmap-mch-objects.md`](re/14-mmap-mch-objects.md) | 14 — MMAP.MCH 戰略地圖物件 | 資產格式、事件 12 的火災／暴動圖形鏈與 typed 動畫／移動時序 confirmed； type 3 的事件語… | 2026-08-10 |
 | [`docs/re/15-event10-producer.md`](re/15-event10-producer.md) | 15 — 事件 10 producer 深度逆向 | 事件 10 dispatcher／consumer／queue writer 已證實；原版自然 producer 仍… | 2026-08-11 |
 | [`docs/re/16-idle-clock-event10.md`](re/16-idle-clock-event10.md) | 16 — DOS/V 無輸入自動時鐘與事件 10 關係 | 無輸入時的自動時鐘／軍團行軍已由 IDA .i64 證實；事件 10 是該路徑 中的受節流 queue consum… | 2026-08-11 |
@@ -488,6 +491,8 @@
 | [`docs/spec/252-c-army-update.md`](spec/252-c-army-update.md) | 252：C 軍團輪轉與行軍更新 | CONFORMED。O0／O2各581例630階段、17入口與十二錯版通過。 | 2026-10-10 |
 | [`docs/spec/253-c-startup-main-loop.md`](spec/253-c-startup-main-loop.md) | 253：C 開機、主排程與命名 UI | CONFORMED。42 函式＋3 raw 片段，217 案 O0／O2 全同，13 突變全拒。公開收據見 [c-s… | 2026-10-11 |
 | [`docs/spec/254-c-residual-faction-season.md`](spec/254-c-residual-faction-season.md) | 254：C 殘部群（勢力一覽／季節／戰術／地圖／外交／側欄） | CONFORMED。10 支 247 指令＋1 raw 尾跳，89 案 O0／O2 全同，10 突變全拒；censu… | 2026-10-12 |
+| [`docs/spec/255-c-machine-code-feasibility.md`](spec/255-c-machine-code-feasibility.md) | 255：C 機器碼匹配可行性判定 | CONFORMED。判定完成：KI.EXE 為手寫 16-bit 組語（[re/135](../re/135-too… | 2026-10-12 |
+| [`docs/spec/256-matching-longpath-verification.md`](spec/256-matching-longpath-verification.md) | 256：matching decomp 玩家長程驗證 | CONFORMED。Slice A 全綠：重建 EXE 從零跑到 196/4/8，8 截圖＋時鐘＋130,849,3… | 2026-10-12 |
 | [`docs/spec/26-yes-no-dialog.md`](spec/26-yes-no-dialog.md) | 26 — ＹＥＳ／ＮＯ 對話框 | CONFORMED。版面與命中算式已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 輸入照原版收斂成兩個熱區（§2.1）。「自定」開命名視窗（[10… | 2026-08-15 |
 | [`docs/spec/28-scenario-json.md`](spec/28-scenario-json.md) | 28 — 劇本的 JSON 匯出與匯入 | CONFORMED。四個區塊 round-trip 全過。 | 2026-08-15 |
@@ -565,10 +570,10 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 128 條。**要查「這件事解了沒」先看這裡**，
+共 135 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
-### confirmed（77 條）
+### confirmed（84 條）
 
 | 鍵 | 出處 |
 |---|---|
@@ -623,6 +628,13 @@
 | 3. 武將記錄（32 byte） ▸ +8 | `docs/formats/08-sinario-save.md` |
 | 3. 軍團記錄的欄位（部分） ▸ +0x1A | `docs/re/05-battle-selection.md` |
 | 3. 軍團記錄的欄位（部分） ▸ +0x1C | `docs/re/05-battle-selection.md` |
+| 5. 證否線（C 編譯器不會產生的結構，逐項定位） ▸ 1 | `docs/re/135-toolchain-fingerprint.md` |
+| 5. 證否線（C 編譯器不會產生的結構，逐項定位） ▸ 2 | `docs/re/135-toolchain-fingerprint.md` |
+| 5. 證否線（C 編譯器不會產生的結構，逐項定位） ▸ 3 | `docs/re/135-toolchain-fingerprint.md` |
+| 5. 證否線（C 編譯器不會產生的結構，逐項定位） ▸ 4 | `docs/re/135-toolchain-fingerprint.md` |
+| 5. 證否線（C 編譯器不會產生的結構，逐項定位） ▸ 5 | `docs/re/135-toolchain-fingerprint.md` |
+| 5. 證否線（C 編譯器不會產生的結構，逐項定位） ▸ 6 | `docs/re/135-toolchain-fingerprint.md` |
+| 5. 證否線（C 編譯器不會產生的結構，逐項定位） ▸ 7 | `docs/re/135-toolchain-fingerprint.md` |
 | 5.8l 兵士記錄（32 B）目前解出來的欄位 ▸ +0x1E | `docs/re/11-tactical-battle.md` |
 | 已接入的原版資料流 ▸ sub_12C52／sub_12CDF | `docs/mechanics/70-ai.md` |
 | 已接入的原版資料流 ▸ sub_12DB8 | `docs/mechanics/70-ai.md` |
