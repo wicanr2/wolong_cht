@@ -262,6 +262,8 @@ ds:4200h  城兵臨時軍團 1 × 64 B     ds:4240h  武將表  128 × 32 B
 
 殘部群（勢力一覽／季節／戰術／地圖／外交／側欄）的C見[re/134](134-c-residual-restoration.md)與[spec/254](../spec/254-c-residual-faction-season.md)：10函式／1raw／248指令，CONFORMED（89案O0／O2全同，10突變全拒）。census 739／739 全覆蓋，matching decompilation 收工。
 
+工具鏈指紋判定見[re/135](135-toolchain-fingerprint.md)與[spec/255](../spec/255-c-machine-code-feasibility.md)：`KI.EXE` 為手寫 16-bit 組語，非編譯器產物，C 機器碼匹配不可行（`tc_fingerprint.py` 全綠、證否線七項、試點差距 `re/89`）。
+
 ## 9. 怎麼加一份新筆記
 
 1. 編號流水，一個發現一份。標題寫「回答什麼問題」不是「讀了哪支函式」。

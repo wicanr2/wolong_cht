@@ -304,6 +304,7 @@
 | C 軍團輪轉與行軍更新 | [`252-c-army-update.md`](252-c-army-update.md) | CONFORMED，17函式／581例／630階段／十二錯版 |
 | C 開機、主排程與命名 UI | [`253-c-startup-main-loop.md`](253-c-startup-main-loop.md) | CONFORMED，217案O0／O2全同，13突變全拒 |
 | C 殘部群（勢力一覽／季節／戰術／地圖／外交／側欄） | [`254-c-residual-faction-season.md`](254-c-residual-faction-season.md) | CONFORMED，10函式1raw／89案O0／O2全同／十錯版，census全覆蓋 |
+| C 機器碼匹配可行性判定 | [`255-c-machine-code-feasibility.md`](255-c-machine-code-feasibility.md) | CONFORMED，手寫組語、匹配不可行 |
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的
    現況反寫規格，那只會把既有的偏差固定下來。
