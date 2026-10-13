@@ -22,6 +22,7 @@ package main
 */
 import "C"
 import (
+	"bufio"
 	"bytes"
 	"crypto/sha256"
 	"encoding/binary"
@@ -32,11 +33,14 @@ import (
 	"github.com/wicanr2/dosgolem/internal/cpu"
 	"github.com/wicanr2/dosgolem/internal/machine"
 	"os"
+	"regexp"
+	"strconv"
+	"strings"
 	"unsafe"
 )
 
 var activeDevice *machine.Machine
-var functions = map[uint16]int{0x1b4: 33, 0x1db: 51, 0xaaa: 47, 0xad9: 109, 0xbcd: 71, 0xc14: 76, 0xc60: 23, 0xc77: 53, 0xcac: 23, 0xcc3: 27, 0x895d: 71, 0x89de: 18, 0xc61f: 52, 0xc673: 59, 0xc6ae: 17, 0xc6bf: 55, 0xc6f6: 86, 0xc74c: 41, 0xc775: 25, 0xc78e: 27, 0xc7f4: 74, 0xd5d4: 65, 0xe3d7: 68, 0xe453: 38, 0xf020: 288, 0xf140: 59, 0xf17b: 39, 0xf1a3: 203, 0xf888: 176, 0xf938: 97, 0xf999: 23, 0xf9b0: 107, 0xfa1b: 28, 0xfa37: 107, 0xfaa2: 32}
+var functions = map[uint16]int{0x1b4: 33, 0x1db: 51, 0xaaa: 47, 0xad9: 109, 0xbcd: 71, 0xc14: 76, 0xc60: 23, 0xc77: 53, 0xcac: 23, 0xcc3: 27, 0x895d: 71, 0x89de: 18, 0xc61f: 52, 0xc673: 59, 0xc6ae: 17, 0xc6bf: 55, 0xc6f6: 86, 0xc74c: 41, 0xc775: 25, 0xc78e: 27, 0xc7f4: 74, 0xd5d4: 65, 0xe3c0: 23, 0xe3d7: 68, 0xe453: 38, 0xf020: 288, 0xf140: 59, 0xf17b: 39, 0xf1a3: 203, 0xf888: 176, 0xf938: 97, 0xf999: 23, 0xf9b0: 107, 0xfa1b: 28, 0xfa37: 107, 0xfaa2: 32}
 
 type registers struct{ AX, BX, CX, DX, SI, DI, BP, SP, DS, ES, SS, CS, IP, Flags uint16 }
 
@@ -114,12 +118,15 @@ type rectCase struct {
 	values                             [10]uint16
 	mask, readMap, seed                byte
 	df, realAsset, keep, compareBar    bool
+	traceFull                          bool
+	regs                               registers
 }
 
 func main() {
 	output := flag.String("out", "/output/results/O2.json", "receipt")
 	only := flag.String("group", "", "group")
 	smoke := flag.Bool("smoke", false, "bounded matrix")
+	trace := flag.String("trace", "", "dosgolem WATCH log; hotspot/rect entries become group-trace cases (spec/263)")
 	flag.Parse()
 	raw, err := os.ReadFile("/orig/KI.EXE")
 	if err != nil {
@@ -271,6 +278,19 @@ func main() {
 		}
 		if c.target == 0xc7f4 {
 			r.DS = 0x3000
+		}
+		if c.traceFull {
+			// spec/263: traced registers/FLAGS as-is; runtime CS mapped
+			// onto harness CS, other segments keep traced values on both
+			// sides. 1E3C0 init gets the harness map segment instead of
+			// the traced caller segment (documented staging swap).
+			r = c.regs
+			r.CS = cs
+			r.IP = c.target
+			if c.target == 0xe3c0 {
+				r.ES = 0x6000
+				r.DI = 0
+			}
 		}
 		original.CPU.R = [8]uint16{r.AX, r.CX, r.DX, r.BX, r.SP, r.BP, r.SI, r.DI}
 		original.CPU.Seg = [4]uint16{r.ES, r.CS, r.SS, r.DS}
@@ -525,12 +545,68 @@ func main() {
 		c.realAsset = true
 		add(c)
 	}
+	// Trace mode (spec/263 B-6): real entry registers from a dosgolem
+	// WATCH log on the interactive longpath become replay cases.
+	// Read sets per entry are registers plus harness-fixed CS data words
+	// (E479/E47B map pointer, D84E tile segment, 0D4A border segment),
+	// the pattern map/planes and real ICONGRF banks, all identical on
+	// both sides; FLAGS replayed as traced (no sweep).
+	traceCalls, traceUnique := 0, 0
+	traceHash := ""
+	if *trace != "" {
+		rawTrace, err := os.ReadFile(*trace)
+		if err != nil {
+			panic(err)
+		}
+		sum := sha256.Sum256(rawTrace)
+		traceHash = hex.EncodeToString(sum[:])
+		targets := map[string]uint16{"1E453": 0xe453, "10CAC": 0xcac, "1E3D7": 0xe3d7, "1F1A3": 0xf1a3, "10C60": 0xc60, "10C77": 0xc77, "1D5D4": 0xd5d4, "189DE": 0x89de, "1895D": 0x895d, "10C14": 0xc14, "1E3C0": 0xe3c0, "10BCD": 0xbcd, "10AD9": 0xad9}
+		re := regexp.MustCompile(`呼叫 ([0-9A-F]+) AX=([0-9A-F]{4}) BX=([0-9A-F]{4}) CX=([0-9A-F]{4}) DX=([0-9A-F]{4}) SI=([0-9A-F]{4}) DI=([0-9A-F]{4}) BP=([0-9A-F]{4}) SP=([0-9A-F]{4}) DS=([0-9A-F]{4}) ES=([0-9A-F]{4}) SS=([0-9A-F]{4}) FLAGS=([0-9A-F]{4})`)
+		seen := map[string]bool{}
+		sc := bufio.NewScanner(bytes.NewReader(rawTrace))
+		sc.Buffer(make([]byte, 1024*1024), 1024*1024)
+		for sc.Scan() {
+			m := re.FindStringSubmatch(sc.Text())
+			if m == nil {
+				continue
+			}
+			t, ok := targets[strings.TrimSpace(m[1])]
+			if !ok {
+				continue
+			}
+			traceCalls++
+			key := strings.Join(m[1:], "|")
+			if seen[key] {
+				continue
+			}
+			seen[key] = true
+			traceUnique++
+			parse := func(s string) uint16 {
+				v, err := strconv.ParseUint(s, 16, 16)
+				if err != nil {
+					panic(err)
+				}
+				return uint16(v)
+			}
+			c := base("trace", t)
+			c.traceFull = true
+			c.realAsset = true
+			c.regs = registers{AX: parse(m[2]), BX: parse(m[3]), CX: parse(m[4]), DX: parse(m[5]), SI: parse(m[6]), DI: parse(m[7]), BP: parse(m[8]), SP: parse(m[9]), DS: parse(m[10]), ES: parse(m[11]), SS: parse(m[12]), Flags: parse(m[13])}
+			add(c)
+		}
+		if err := sc.Err(); err != nil {
+			panic(err)
+		}
+		if traceCalls == 0 {
+			panic("trace log has no replayable entries")
+		}
+	}
 	for _, c := range all {
 		if !check(c) {
 			break
 		}
 	}
-	report := map[string]any{"schema": "wolong-c-rect-parity-v1", "input_sha256": inputHash, "icon_sha256": assetHash, "routine_sha256": routineHashes, "cases": cases, "groups": groups, "full_ram_plane_audits": audits, "indexed_content_audits": pixelAudits, "go_bar_cases": goCases, "content_top": 40, "content_height": 400, "entries_seen": entries, "passed": mismatch == nil, "mismatch": mismatch, "original_state_sha256": hex.EncodeToString(originalDigest.Sum(nil)), "c_state_sha256": hex.EncodeToString(cDigest.Sum(nil)), "trace_entry_size": 90, "platform": "Independent pinned dosgolem devices; native C renderer; fixed FAR controls; IF/TF=0; CPU-model undefined flags; no wall-clock claim", "asset_banks": "ICONGRF segment1 at 3000; whole segment3 at 2200; command 2200, border 226c", "c_machine_code_match": false}
+	report := map[string]any{"schema": "wolong-c-rect-parity-v1", "input_sha256": inputHash, "icon_sha256": assetHash, "routine_sha256": routineHashes, "cases": cases, "groups": groups, "full_ram_plane_audits": audits, "indexed_content_audits": pixelAudits, "go_bar_cases": goCases, "content_top": 40, "content_height": 400, "entries_seen": entries, "passed": mismatch == nil, "mismatch": mismatch, "original_state_sha256": hex.EncodeToString(originalDigest.Sum(nil)), "c_state_sha256": hex.EncodeToString(cDigest.Sum(nil)), "trace_entry_size": 90, "platform": "Independent pinned dosgolem devices; native C renderer; fixed FAR controls; IF/TF=0; CPU-model undefined flags; no wall-clock claim", "asset_banks": "ICONGRF segment1 at 3000; whole segment3 at 2200; command 2200, border 226c", "c_machine_code_match": false, "trace_calls": traceCalls, "trace_unique": traceUnique, "trace_log_sha256": traceHash}
 	b, _ := json.MarshalIndent(report, "", "  ")
 	b = append(b, '\n')
 	if e := os.WriteFile(*output, b, 0644); e != nil {

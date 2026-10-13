@@ -246,7 +246,7 @@
 | [`docs/re/39-remaining-unread.md`](re/39-remaining-unread.md) | 39 — 剩餘未讀函式的逐支歸屬 | 清單。 | 2026-08-14 |
 | [`docs/re/40-garrison-relief-request.md`](re/40-garrison-relief-request.md) | 40 — 據點求援與援軍派遣 | 整條鏈 confirmed（每一支都逐行讀過）。 sub_140C9 的距離算式裡有一處 | 2026-08-14 |
 | [`docs/re/42-leaf-functions.md`](re/42-leaf-functions.md) | 42 — 戰術以外的 47 支葉節點 | 47 支全部逐行讀過。四件事因此定案：INT 61h 是音源 TSR 的介面、 byte_198A6 的位元圖完整、… | 2026-08-14 |
-| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的證據索引） | 生成的證據索引，跑 tools/py.sh tools/re_open_questions.py 重出。 證據欄不下… | 2026-10-12 |
+| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的證據索引） | 生成的證據索引，跑 tools/py.sh tools/re_open_questions.py 重出。 證據欄不下… | 2026-10-13 |
 | [`docs/re/44-threat-and-reinforcement-ai.md`](re/44-threat-and-reinforcement-ai.md) | 44 — 威脅偵測與 AI 出兵：據點每 tick 掃一次 | 整條鏈逐行讀完。三件事定案：據點 +0x18 是佔用圖讀回來的軍團數、 +0x00 低 4 位是「哪幾個鄰居是敵方」… | 2026-08-14 |
 | [`docs/re/45-corps-command-mode.md`](re/45-corps-command-mode.md) | 45 — 軍團的三種指令模式：戰鬥指揮／委任／解體 | 軍團 +0x00 位元 2 定案 ＝ | 2026-08-14 |
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |
@@ -501,6 +501,7 @@
 | [`docs/spec/260-c-trace-replay-b4.md`](spec/260-c-trace-replay-b4.md) | 260：C 軌跡回放 B-4（1084A／1F4DF 吃真實開局輸入） | CONFORMED。26 次呼叫去重 26 組，與 B-2 的 58 案同跑共 84 案， O2／O0 雙跑全同、原… | 2026-10-13 |
 | [`docs/spec/261-c-trace-replay-b5.md`](spec/261-c-trace-replay-b5.md) | 261：C 軌跡回放 B-5（18853／189A4 吃真實指令流程輸入） | CONFORMED。指令流程（財政）錄得 18853×1、189A4×1，去重 2 案 O2／O0 雙跑全同、原版／… | 2026-10-13 |
 | [`docs/spec/262-matching-interactive-longpath.md`](spec/262-matching-interactive-longpath.md) | 262：matching 互動長程驗證（重建 EXE 走玩家路徑） | CONFORMED。五張截圖、時鐘（4 月 20 日 1 時）與累計指令數 （191,906,561）雙側全同（[p… | 2026-10-13 |
+| [`docs/spec/263-c-trace-replay-b6.md`](spec/263-c-trace-replay-b6.md) | 263：C 軌跡回放 B-6（熱區／外框／填色函式吃真實互動輸入） | CONFORMED。13 個目標共 3,723 次呼叫去重 552 案，O2／O0 雙跑 全同、原版／C 終態雜湊全… | 2026-10-13 |
 | [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 輸入照原版收斂成兩個熱區（§2.1）。「自定」開命名視窗（[10… | 2026-08-15 |
 | [`docs/spec/28-scenario-json.md`](spec/28-scenario-json.md) | 28 — 劇本的 JSON 匯出與匯入 | CONFORMED。四個區塊 round-trip 全過。 | 2026-08-15 |
 | [`docs/spec/29-audio.md`](spec/29-audio.md) | 29 — 音樂與音效 | CONFORMED。音樂與音效都會出聲、與原版錄音比對過， ⭐ | 2026-08-15 |

@@ -7,9 +7,9 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-1078 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+1108 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
-- 日期：2026-10-12
+- 日期：2026-10-13
 - 產生工具：`tools/re_open_questions.py`
 - 來源：`docs/` 底下所有文件的未解小節、表格裡標未解的列，與收尾是「…未解」的散句
 
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**1072 列分布在 437 份文件，平均每份 2.5 列。**
+**1102 列分布在 447 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -47,11 +47,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 317 | 310 | 6 | 1 |
+| 程式碼理解 | 321 | 314 | 6 | 1 |
 | 驗收 | 240 | 214 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 478 | 456 | 21 | 1 |
-| **合計** | **1072** | 1011 | 58 | 3 |
+| 其他 | 504 | 480 | 23 | 1 |
+| **合計** | **1102** | 1039 | 60 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,8 +59,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 435 |
-| `docs/re/` | 317 |
+| `docs/spec/` | 461 |
+| `docs/re/` | 321 |
 | `docs/playtest/` | 240 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
@@ -110,7 +110,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 | evidence-only | — |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 | evidence-only | — |
 
-## 2.3 程式碼理解（317 條）
+## 2.3 程式碼理解（321 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -144,41 +144,41 @@
 | [`re/09-combat.md`](../re/09-combat.md) | `[si+3]` 的 0／1／≥2 是誰設的 | 決定哪一支軍團會進戰鬥畫面 | 靜態 | evidence-only | — |
 | [`re/100-c-event-handlers-restoration.md`](../re/100-c-event-handlers-restoration.md) | 完整 UI／選擇／戰鬥／金額 callee | 本輪量 caller 與受控回傳，不能宣稱正常玩家 parity | 靜態 | evidence-only | — |
 | [`re/100-c-event-handlers-restoration.md`](../re/100-c-event-handlers-restoration.md) | 完整 Go 每時與事件三方 | 尚未驗證 | 靜態 | evidence-only | — |
-| [`re/100-c-event-handlers-restoration.md`](../re/100-c-event-handlers-restoration.md) | 中立 0x24 的玩家規則 | 原始 byte 行為與玩法語意分開，Issue #27 維持 OPEN | 靜態 | merge-target | [#27](https://github.com/wicanr2/wolong_cht/issues/27) |
-| [`re/100-c-event-handlers-restoration.md`](../re/100-c-event-handlers-restoration.md) | C 機器碼匹配與原作者工具鏈 | 尚未驗證，組語整檔基準仍是 binary match | 靜態 | evidence-only | — |
+| [`re/100-c-event-handlers-restoration.md`](../re/100-c-event-handlers-restoration.md) | 中立 0x24 的玩家規則 | 原始 byte 行為與玩法語意分開，Issue #27 維持 OPEN | 靜態 | actionable | [#27](https://github.com/wicanr2/wolong_cht/issues/27) |
+| [`re/100-c-event-handlers-restoration.md`](../re/100-c-event-handlers-restoration.md) | C 機器碼匹配與原作者工具鏈 | spec/255 已判手寫組語，C 機器碼匹配不可行；整檔匹配仍由組語基準提供 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/101-c-modal-restoration.md`](../re/101-c-modal-restoration.md) | 完整底層繪圖／輸入／音效及自然玩家視窗 | primitive fixture 不取代正常玩家或像素證據，Issue #22 保持 OPEN | 靜態 | evidence-only | — |
 | [`re/101-c-modal-restoration.md`](../re/101-c-modal-restoration.md) | 完整 Go 視窗及每時三方 | 尚未驗證 | 靜態 | evidence-only | — |
 | [`re/101-c-modal-restoration.md`](../re/101-c-modal-restoration.md) | 硬體 wall-clock／自然輸入時序 | 尚未驗證，CF 控制流不外推實機時間 | 靜態 | evidence-only | — |
-| [`re/101-c-modal-restoration.md`](../re/101-c-modal-restoration.md) | C 機器碼與原作者工具鏈 | 尚未驗證，整檔 binary match 仍是組語基準 | 靜態 | evidence-only | — |
+| [`re/101-c-modal-restoration.md`](../re/101-c-modal-restoration.md) | C 機器碼與原作者工具鏈 | spec/255 已判手寫組語，C 機器碼匹配不可行；整檔匹配仍由組語基準提供 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/102-c-numeric-editor-restoration.md`](../re/102-c-numeric-editor-restoration.md) | 真實圖形／實際 input polling 與 popup leaf | primitive fixture 不取代 UI／像素／正常玩家證據 | 靜態 | evidence-only | — |
 | [`re/102-c-numeric-editor-restoration.md`](../re/102-c-numeric-editor-restoration.md) | 完整 Go 財政／視窗垂直鏈 | 局部數值核心不能外推完整玩家流程 | 靜態 | evidence-only | — |
 | [`re/102-c-numeric-editor-restoration.md`](../re/102-c-numeric-editor-restoration.md) | 硬體 wall-clock／自然輸入時間 | 未驗證 | 靜態 | evidence-only | — |
-| [`re/102-c-numeric-editor-restoration.md`](../re/102-c-numeric-editor-restoration.md) | C 機器碼與原作者工具鏈 | 未驗證，整檔 binary match 仍是組語基準 | 靜態 | evidence-only | — |
+| [`re/102-c-numeric-editor-restoration.md`](../re/102-c-numeric-editor-restoration.md) | C 機器碼與原作者工具鏈 | spec/255 已判手寫組語，C 機器碼匹配不可行；整檔匹配仍由組語基準提供 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/103-c-hotspot-restoration.md`](../re/103-c-hotspot-restoration.md) | VGA plane／blit／畫面保存 | primitive 不代證真實 memory device 或像素 | 靜態 | evidence-only | — |
 | [`re/103-c-hotspot-restoration.md`](../re/103-c-hotspot-restoration.md) | 真實滑鼠polling與正常玩家視窗 | 固定pixel只量控制流／map，Issue #22保持OPEN | 靜態 | evidence-only | — |
 | [`re/103-c-hotspot-restoration.md`](../re/103-c-hotspot-restoration.md) | 完整Go視窗／財政 | 局部map／scalar不外推完整玩家路徑 | 靜態 | evidence-only | — |
-| [`re/103-c-hotspot-restoration.md`](../re/103-c-hotspot-restoration.md) | C機器碼與原作者工具鏈 | 未驗證，整檔binary match仍是組語基準 | 靜態 | evidence-only | — |
+| [`re/103-c-hotspot-restoration.md`](../re/103-c-hotspot-restoration.md) | C機器碼與原作者工具鏈 | spec/255 已判手寫組語，C 機器碼匹配不可行；整檔匹配仍由組語基準提供 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/104-c-vga-blit-restoration.md`](../re/104-c-vga-blit-restoration.md) | 完整normal-player畫面／視窗合成 | 局部primitive與debug PNG不代證正常玩家路徑，Issue #22保持OPEN | 靜態 | evidence-only | — |
 | [`re/104-c-vga-blit-restoration.md`](../re/104-c-vga-blit-restoration.md) | 實機VGA逐週期／wall-clock | 固定成熟平台模型的局部對拍，不稱同硬體時間 | 靜態 | evidence-only | — |
 | [`re/104-c-vga-blit-restoration.md`](../re/104-c-vga-blit-restoration.md) | 完整Go圖形三方 | 未驗證 | 靜態 | evidence-only | — |
-| [`re/104-c-vga-blit-restoration.md`](../re/104-c-vga-blit-restoration.md) | C機器碼與原作者工具鏈 | 未驗證，整檔binary match仍是組語基準 | 靜態 | evidence-only | — |
+| [`re/104-c-vga-blit-restoration.md`](../re/104-c-vga-blit-restoration.md) | C機器碼與原作者工具鏈 | spec/255 已判手寫組語，C 機器碼匹配不可行；整檔匹配仍由組語基準提供 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/105-c-aligned-blit-restoration.md`](../re/105-c-aligned-blit-restoration.md) | 正常玩家戰術流程 | 局部 caller 對照不代替自然戰鬥操作，Issue #22 保持原範圍 | 靜態 | evidence-only | — |
 | [`re/105-c-aligned-blit-restoration.md`](../re/105-c-aligned-blit-restoration.md) | 裝置服務的自然輸入與時序 | FAR fixture 只固定本輪輸入，不外推真實滑鼠時序 | 靜態 | evidence-only | — |
 | [`re/105-c-aligned-blit-restoration.md`](../re/105-c-aligned-blit-restoration.md) | 完整文字／字型服務 | 本輪是位元對齊圖塊，不完成其他字型 blitter | 靜態 | evidence-only | — |
-| [`re/105-c-aligned-blit-restoration.md`](../re/105-c-aligned-blit-restoration.md) | C 機器碼匹配與原作者工具鏈 | 尚未驗證 | 靜態 | evidence-only | — |
+| [`re/105-c-aligned-blit-restoration.md`](../re/105-c-aligned-blit-restoration.md) | C 機器碼匹配與原作者工具鏈 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/106-c-rectangle-bars-restoration.md`](../re/106-c-rectangle-bars-restoration.md) | 正常玩家戰術／視窗操作 | 局部原始 caller 不代替自然流程 | 靜態 | evidence-only | — |
 | [`re/106-c-rectangle-bars-restoration.md`](../re/106-c-rectangle-bars-restoration.md) | 原始滑鼠時序與輸入裝置 | FAR fixture 只固定本輪回應 | 靜態 | evidence-only | — |
 | [`re/106-c-rectangle-bars-restoration.md`](../re/106-c-rectangle-bars-restoration.md) | 完整文字與其他繪圖路徑 | 本輪未涵蓋所有 renderer | 靜態 | evidence-only | — |
-| [`re/106-c-rectangle-bars-restoration.md`](../re/106-c-rectangle-bars-restoration.md) | C 機器碼匹配與原作者工具鏈 | 尚未驗證 | 靜態 | evidence-only | — |
+| [`re/106-c-rectangle-bars-restoration.md`](../re/106-c-rectangle-bars-restoration.md) | C 機器碼匹配與原作者工具鏈 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/107-c-display-interpreter-restoration.md`](../re/107-c-display-interpreter-restoration.md) | 完整字型 callback | 本輪維持明示 fixture，不稱完整字形對拍 | 靜態 | evidence-only | — |
 | [`re/107-c-display-interpreter-restoration.md`](../re/107-c-display-interpreter-restoration.md) | 正常玩家操作與自然時序 | 局部場景與 caller 矩陣不足以完成 | 靜態 | evidence-only | — |
 | [`re/107-c-display-interpreter-restoration.md`](../re/107-c-display-interpreter-restoration.md) | 其他未分類區段與完整 C | 本輪只增加本閉包 | 靜態 | evidence-only | — |
-| [`re/107-c-display-interpreter-restoration.md`](../re/107-c-display-interpreter-restoration.md) | C 機器碼匹配與原作者工具鏈 | 尚未驗證 | 靜態 | evidence-only | — |
+| [`re/107-c-display-interpreter-restoration.md`](../re/107-c-display-interpreter-restoration.md) | C 機器碼匹配與原作者工具鏈 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/108-c-glyph-raster-restoration.md`](../re/108-c-glyph-raster-restoration.md) | STR.EXE 與封裝檔名考古 | 本輪使用已定案平台字型 API，不重新研究 TSR 安裝 | 靜態 | evidence-only | — |
 | [`re/108-c-glyph-raster-restoration.md`](../re/108-c-glyph-raster-restoration.md) | 真實硬體 wall-clock | 固定平台模型不代證 | 靜態 | evidence-only | — |
 | [`re/108-c-glyph-raster-restoration.md`](../re/108-c-glyph-raster-restoration.md) | 正常玩家完整 UI 操作 | glyph／場景矩陣不代證自然操作 | 靜態 | evidence-only | — |
-| [`re/108-c-glyph-raster-restoration.md`](../re/108-c-glyph-raster-restoration.md) | C 機器碼與完整 C | 本輪仍未完成 | 靜態 | evidence-only | — |
-| [`re/109-c-number-raster-restoration.md`](../re/109-c-number-raster-restoration.md) | 原作者 C 工具鏈與機器碼 | native C 語意測試不證明編譯匹配 | 靜態 | evidence-only | — |
+| [`re/108-c-glyph-raster-restoration.md`](../re/108-c-glyph-raster-restoration.md) | 完整 C | 本輪仍未完成 | 靜態 | evidence-only | — |
+| [`re/109-c-number-raster-restoration.md`](../re/109-c-number-raster-restoration.md) | 原作者 C 工具鏈與機器碼 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/109-c-number-raster-restoration.md`](../re/109-c-number-raster-restoration.md) | 自然玩家日期／訊息流程 | 局部入口不證明完整 UI 操作 | 靜態 | evidence-only | — |
 | [`re/109-c-number-raster-restoration.md`](../re/109-c-number-raster-restoration.md) | 超出 DIV quotient 範圍 | 原版可能產生除法例外，本輪不替原版猜補 | 靜態 | evidence-only | — |
 | [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `ds:0D2F8` | 4,096 / 未解（第二份戰場？） | 靜態 | evidence-only | — |
@@ -188,65 +188,69 @@
 | [`re/11-tactical-battle.md`](../re/11-tactical-battle.md) | `loc_1A065` 的自我修改碼 | `▶▶` 列切換的機制 confirmed（`byte_1A06A` 在 `0xEB`／`0x74` 間切），**擋掉的是什麼**沒逐行讀（`60` §） | 靜態 | actionable | [#6](https://github.com/wicanr2/wolong_cht/issues/6) |
 | [`re/110-c-talk-rendering-restoration.md`](../re/110-c-talk-rendering-restoration.md) | 原版 INT 50h 媒體錯誤介面 | 保留呼叫與重試分支；自然錯誤介面另有原始初始化依賴 | 靜態 | evidence-only | — |
 | [`re/110-c-talk-rendering-restoration.md`](../re/110-c-talk-rendering-restoration.md) | 自然玩家完整事件 UI | 此 renderer／caller 對照不代證完整輸入流程 | 靜態 | evidence-only | — |
-| [`re/110-c-talk-rendering-restoration.md`](../re/110-c-talk-rendering-restoration.md) | 原作者工具鏈與 C 機器碼 | 語意對照不證明 C 機器碼匹配 | 靜態 | evidence-only | — |
+| [`re/110-c-talk-rendering-restoration.md`](../re/110-c-talk-rendering-restoration.md) | 原作者工具鏈與 C 機器碼 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/111-c-input-mouse-restoration.md`](../re/111-c-input-mouse-restoration.md) | 原版 timer producer 與 wall-clock | 本輪注入明示 counter 輸入，驗等待消費端，不換算牆上秒數 | 靜態 | evidence-only | — |
 | [`re/111-c-input-mouse-restoration.md`](../re/111-c-input-mouse-restoration.md) | 自然玩家與自動 callback 派送 | direct callback／固定 press 序列不代證正常玩家操作 | 靜態 | evidence-only | — |
-| [`re/111-c-input-mouse-restoration.md`](../re/111-c-input-mouse-restoration.md) | 原作者 C 工具鏈與機器碼 | 仍需另驗 | 靜態 | evidence-only | — |
+| [`re/111-c-input-mouse-restoration.md`](../re/111-c-input-mouse-restoration.md) | 原作者 C 工具鏈與機器碼 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/112-c-choice-selector-restoration.md`](../re/112-c-choice-selector-restoration.md) | 自然玩家完整進言流程 | 固定 pointer／按鍵序列的局部 caller 不代證正常玩家入口 | 靜態 | evidence-only | — |
 | [`re/112-c-choice-selector-restoration.md`](../re/112-c-choice-selector-restoration.md) | 原版動態安裝 scroll helper | 原 `nullsub_5` 的已載入狀態另留證據界線 | 靜態 | evidence-only | — |
-| [`re/112-c-choice-selector-restoration.md`](../re/112-c-choice-selector-restoration.md) | 原作者工具鏈／C 機器碼 | 仍待確認 | 靜態 | evidence-only | — |
-| [`re/113-c-resource-cue-restoration.md`](../re/113-c-resource-cue-restoration.md) | 原 INT50 媒體錯誤／完整退出流程 | 保留原 branch，不以成功讀檔代證全部錯誤介面 | 靜態 | evidence-only | — |
+| [`re/112-c-choice-selector-restoration.md`](../re/112-c-choice-selector-restoration.md) | 原作者工具鏈／C 機器碼 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`re/113-c-resource-cue-restoration.md`](../re/113-c-resource-cue-restoration.md) | 原 INT50 媒體錯誤／完整退出流程 | 保留原 branch，不以成功讀檔代證全部錯誤介面 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/113-c-resource-cue-restoration.md`](../re/113-c-resource-cue-restoration.md) | 聲音 TSR 與實際音訊 | 本輪驗 cue／API／資料，不取代音訊解碼與人耳驗收 | 靜態 | evidence-only | — |
 | [`re/113-c-resource-cue-restoration.md`](../re/113-c-resource-cue-restoration.md) | scroll helper 間接改寫 | 直接查詢的負證據不構成完整不存在證明 | 靜態 | evidence-only | — |
-| [`re/113-c-resource-cue-restoration.md`](../re/113-c-resource-cue-restoration.md) | 原作者 C 工具鏈／機器碼 | 仍待確認 | 靜態 | evidence-only | — |
+| [`re/113-c-resource-cue-restoration.md`](../re/113-c-resource-cue-restoration.md) | 原作者 C 工具鏈／機器碼 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/114-c-world-map-cells-restoration.md`](../re/114-c-world-map-cells-restoration.md) | 完整場景退出與 producer | 小地圖、軍團／物件推入端及正常玩家流程仍需後續接線 | 靜態 | evidence-only | — |
-| [`re/114-c-world-map-cells-restoration.md`](../re/114-c-world-map-cells-restoration.md) | 原作者 C 工具鏈／機器碼 | 尚未確認 | 靜態 | evidence-only | — |
+| [`re/114-c-world-map-cells-restoration.md`](../re/114-c-world-map-cells-restoration.md) | 原作者 C 工具鏈／機器碼 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/115-c-world-overlay-restoration.md`](../re/115-c-world-overlay-restoration.md) | 物件自然 producer 與完整場景 | 本輪不代證 type 3 的自然來源或正常玩家完整場景 | 靜態 | evidence-only | — |
-| [`re/115-c-world-overlay-restoration.md`](../re/115-c-world-overlay-restoration.md) | 原作者 C 工具鏈／機器碼 | 尚未確認 | 靜態 | evidence-only | — |
+| [`re/115-c-world-overlay-restoration.md`](../re/115-c-world-overlay-restoration.md) | 原作者 C 工具鏈／機器碼 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/116-c-scene-resume-restoration.md`](../re/116-c-scene-resume-restoration.md) | 自然事件／長程玩家路徑 | 局部場景主入口不代證完整自然事件與通關 | 靜態 | evidence-only | — |
-| [`re/116-c-scene-resume-restoration.md`](../re/116-c-scene-resume-restoration.md) | 原作者 C 工具鏈／機器碼 | 尚未確認 | 靜態 | evidence-only | — |
-| [`re/117-c-ruler-sortie-restoration.md`](../re/117-c-ruler-sortie-restoration.md) | 原作者 C 與工具鏈 | 原始語言及 compiler 未確認，尚未證明 C 機器碼一致 | 靜態 | evidence-only | — |
+| [`re/116-c-scene-resume-restoration.md`](../re/116-c-scene-resume-restoration.md) | 原作者 C 工具鏈／機器碼 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`re/117-c-ruler-sortie-restoration.md`](../re/117-c-ruler-sortie-restoration.md) | 原作者 C 與工具鏈 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/117-c-ruler-sortie-restoration.md`](../re/117-c-ruler-sortie-restoration.md) | 正常玩家長程路徑 | 本輪局部主入口驗證不代證自然選單與通關 | 靜態 | evidence-only | — |
 | [`re/118-c-city-list-restoration.md`](../re/118-c-city-list-restoration.md) | 其他清單家族 | 本輪據點描述子的結果不代證武將、軍團或勢力的完整 caller | 靜態 | evidence-only | — |
 | [`re/118-c-city-list-restoration.md`](../re/118-c-city-list-restoration.md) | 自然玩家長程路徑 | 局部遷都入口不代證自然選單或通關 | 靜態 | evidence-only | — |
-| [`re/118-c-city-list-restoration.md`](../re/118-c-city-list-restoration.md) | 原作者 C 與工具鏈 | 尚未確認 C 機器碼一致 | 靜態 | evidence-only | — |
+| [`re/118-c-city-list-restoration.md`](../re/118-c-city-list-restoration.md) | 原作者 C 與工具鏈 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/119-c-list-families-restoration.md`](../re/119-c-list-families-restoration.md) | 空清單加非零排序狀態 | 原 DEC CH 可能下溢；不加入推測性修正 | 靜態 | evidence-only | — |
 | [`re/119-c-list-families-restoration.md`](../re/119-c-list-families-restoration.md) | 正常玩家長程流程 | 局部清單入口不代證任命、外交或完整新遊戲流程 | 靜態 | evidence-only | — |
-| [`re/119-c-list-families-restoration.md`](../re/119-c-list-families-restoration.md) | 原作者 C 與工具鏈 | 尚未確認 C 機器碼一致 | 靜態 | evidence-only | — |
+| [`re/119-c-list-families-restoration.md`](../re/119-c-list-families-restoration.md) | 原作者 C 與工具鏈 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | `AH` 的完整欄位名稱 | 語意由日中原文並列確認，欄位名本身未定（§3） | 靜態 | evidence-only | — |
 | [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | #367–#372／#380–#385 的 AH／信賴度次要回覆 | 未解，不可當成完整的原版對話流程（§8） | 靜態 | evidence-only | — |
 | [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | #73／#77 | 未定位，不得拿來補接事件 6／7（§9） | 靜態 | actionable | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
 | [`re/12-diplomacy-dialogue.md`](../re/12-diplomacy-dialogue.md) | 事件 6／7 次要 TALK 的 formatter 參數契約 | 缺參數且語意未知，維持 fail-closed（§10） | 靜態 | actionable | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
-| [`re/120-c-player-formation-restoration.md`](../re/120-c-player-formation-restoration.md) | 正常玩家長程與原作者 C 機器碼 | 不由局部控制流與 C 語意代證 | 靜態 | evidence-only | — |
-| [`re/121-c-personnel-restoration.md`](../re/121-c-personnel-restoration.md) | 自然玩家長程、非法分派與原作者 C 機器碼 | 不由局部 C 語意代證 | 靜態 | evidence-only | — |
-| [`re/122-c-detail-panels-restoration.md`](../re/122-c-detail-panels-restoration.md) | 軍團行軍指令上游、自然長程與原作者C機器碼 | 不由資訊繪製代證 | 靜態 | evidence-only | — |
-| [`re/123-c-march-command-restoration.md`](../re/123-c-march-command-restoration.md) | 自然長程、非法stage／資料損毀與原C機器碼 | 不由局部閉包代證 | 靜態 | evidence-only | — |
-| [`re/124-c-strategy-command-restoration.md`](../re/124-c-strategy-command-restoration.md) | 自然長程、原 TSR 音效與原 C 機器碼 | 局部函式矩陣不代證 | 靜態 | evidence-only | — |
+| [`re/120-c-player-formation-restoration.md`](../re/120-c-player-formation-restoration.md) | 正常玩家長程 | 不由局部控制流與 C 語意代證 | 靜態 | evidence-only | — |
+| [`re/121-c-personnel-restoration.md`](../re/121-c-personnel-restoration.md) | 自然玩家長程、非法分派 | 不由局部 C 語意代證 | 靜態 | evidence-only | — |
+| [`re/122-c-detail-panels-restoration.md`](../re/122-c-detail-panels-restoration.md) | 軍團行軍指令上游、自然長程 | 不由資訊繪製代證 | 靜態 | evidence-only | — |
+| [`re/123-c-march-command-restoration.md`](../re/123-c-march-command-restoration.md) | 自然長程、非法stage／資料損毀 | 不由局部閉包代證 | 靜態 | evidence-only | — |
+| [`re/124-c-strategy-command-restoration.md`](../re/124-c-strategy-command-restoration.md) | 自然長程、原 TSR 音效 | 局部函式矩陣不代證 | 靜態 | evidence-only | — |
 | [`re/125-c-nonlocal-exit-restoration.md`](../re/125-c-nonlocal-exit-restoration.md) | 完整 11BE0 主迴圈與其他退出分支 | 本輪只驗原始 frame 準備及信賴度 caller 的退出閉包 | 靜態 | evidence-only | — |
-| [`re/125-c-nonlocal-exit-restoration.md`](../re/125-c-nonlocal-exit-restoration.md) | 原 TSR、實機淡出時間與原 C 機器碼 | 固定平台 I/O 與原生 C 比較不代證 | 靜態 | evidence-only | — |
+| [`re/125-c-nonlocal-exit-restoration.md`](../re/125-c-nonlocal-exit-restoration.md) | 原 TSR、實機淡出時間 | 固定平台 I/O 與原生 C 比較不代證 | 靜態 | evidence-only | — |
 | [`re/126-c-world-bootstrap-restoration.md`](../re/126-c-world-bootstrap-restoration.md) | 11BF6 之後的完整主迴圈與自然玩家路徑 | 七指令切片不代證 | 靜態 | evidence-only | — |
-| [`re/126-c-world-bootstrap-restoration.md`](../re/126-c-world-bootstrap-restoration.md) | 非法座標、原硬體時間與原 C 機器碼 | 本輪不推廣其驗收聲明 | 靜態 | evidence-only | — |
+| [`re/126-c-world-bootstrap-restoration.md`](../re/126-c-world-bootstrap-restoration.md) | 非法座標、原硬體時間 | 本輪不推廣其驗收聲明 | 靜態 | evidence-only | — |
 | [`re/127-c-world-interaction-restoration.md`](../re/127-c-world-interaction-restoration.md) | 完整主迴圈、更新排程與正常玩家長程 | 本輪閉包不代證 | 靜態 | evidence-only | — |
-| [`re/127-c-world-interaction-restoration.md`](../re/127-c-world-interaction-restoration.md) | 原硬體時間與原C機器碼 | 固定平台契約及局部比較不代證 | 靜態 | evidence-only | — |
+| [`re/127-c-world-interaction-restoration.md`](../re/127-c-world-interaction-restoration.md) | 原硬體時間 | 固定平台契約及局部比較不代證 | 靜態 | evidence-only | — |
 | [`re/128-c-city-tick-restoration.md`](../re/128-c-city-tick-restoration.md) | 軍團更新、交戰／戰術閉包、完整主排程與自然玩家長程 | 後續還原，不能由本輪局部對拍代證 | 靜態 | evidence-only | — |
-| [`re/128-c-city-tick-restoration.md`](../re/128-c-city-tick-restoration.md) | 原硬體時間及原C機器碼 | 固定平台I/O與原生語意比較不代證 | 靜態 | evidence-only | — |
+| [`re/128-c-city-tick-restoration.md`](../re/128-c-city-tick-restoration.md) | 原硬體時間 | 固定平台I/O與原生語意比較不代證 | 靜態 | evidence-only | — |
 | [`re/129-c-route-restoration.md`](../re/129-c-route-restoration.md) | 完整軍團更新、交戰／戰術、主排程與自然玩家長程 | 本輪閉包不代證 | 靜態 | evidence-only | — |
-| [`re/129-c-route-restoration.md`](../re/129-c-route-restoration.md) | 非法圖表、原硬體時間與原C機器碼 | 不由局部比較推廣 | 靜態 | evidence-only | — |
+| [`re/129-c-route-restoration.md`](../re/129-c-route-restoration.md) | 非法圖表、原硬體時間 | 不由局部比較推廣 | 靜態 | evidence-only | — |
 | [`re/130-c-battle-outcome-restoration.md`](../re/130-c-battle-outcome-restoration.md) | 完整交戰caller、戰術／軍團更新、主排程與正常玩家長程 | 本輪閉包不代證 | 靜態 | evidence-only | — |
-| [`re/130-c-battle-outcome-restoration.md`](../re/130-c-battle-outcome-restoration.md) | 非法DIV／記錄、原硬體時間與原C機器碼 | 不由局部比較推廣 | 靜態 | evidence-only | — |
+| [`re/130-c-battle-outcome-restoration.md`](../re/130-c-battle-outcome-restoration.md) | 非法DIV／記錄、原硬體時間 | 不由局部比較推廣 | 靜態 | evidence-only | — |
 | [`re/131-c-engagement-tactical-restoration.md`](../re/131-c-engagement-tactical-restoration.md) | 完整軍團／主排程與正常玩家長程 | 本輪交戰與戰術的固定狀態閉包不代證。 | 靜態 | evidence-only | — |
-| [`re/131-c-engagement-tactical-restoration.md`](../re/131-c-engagement-tactical-restoration.md) | 原C機器碼與實機硬體時間 | 本輪原生語意比較不代證。 | 靜態 | evidence-only | — |
-| [`re/132-c-army-update-restoration.md`](../re/132-c-army-update-restoration.md) | 完整主排程、正常玩家長程及原C機器碼 | 本輪局部軍團切片不代證。 | 靜態 | evidence-only | — |
-| [`re/133-c-startup-restoration.md`](../re/133-c-startup-restoration.md) | 完整讀檔長鏈、正常玩家長程及原C機器碼 | 本輪局部契約不代證。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`re/131-c-engagement-tactical-restoration.md`](../re/131-c-engagement-tactical-restoration.md) | 實機硬體時間 | 本輪原生語意比較不代證。 | 靜態 | evidence-only | — |
+| [`re/132-c-army-update-restoration.md`](../re/132-c-army-update-restoration.md) | 完整主排程、正常玩家長程 | 本輪局部軍團切片不代證。 | 靜態 | evidence-only | — |
+| [`re/133-c-startup-restoration.md`](../re/133-c-startup-restoration.md) | 完整讀檔長鏈、正常玩家長程 | 本輪局部契約不代證。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/133-c-startup-restoration.md`](../re/133-c-startup-restoration.md) | 未註冊熱區碼的自然可達性 | 只有位元組證據，無執行收據。 | 靜態 | evidence-only | — |
 | [`re/133-c-startup-restoration.md`](../re/133-c-startup-restoration.md) | INT61聲音驅動的真實硬體行為 | 以dosgolem聲音模型為界，不外推實機。 | 靜態 | evidence-only | — |
 | [`re/133-c-startup-restoration.md`](../re/133-c-startup-restoration.md) | 需IRQ0的等待路徑 | `11D8E`的tick分支與`1222B`的`D2D`飽和分支只測就緒／邊界，不在矩陣內觸發tick。 | 靜態 | evidence-only | — |
 | [`re/133-c-startup-restoration.md`](../re/133-c-startup-restoration.md) | `sub_12216`補丁路徑 | 矩陣內無呼叫端，未覆蓋。 | 靜態 | evidence-only | — |
 | [`re/134-c-residual-restoration.md`](../re/134-c-residual-restoration.md) | `15AD1` 選列後接尾段、`15E1E` 金額列印 | `15CA4` 按劇本建記錄的輸入未完整建模；部分（劇本，列）格金額超界。選列由 `15AFC` 直入案覆蓋。 | 靜態 | merge-target | [#11](https://github.com/wicanr2/wolong_cht/issues/11) |
 | [`re/134-c-residual-restoration.md`](../re/134-c-residual-restoration.md) | `funcs_1A827` 表內 `1AB7C` 槽位 | 取址存在已證實（`0x1A82E` 起連續 `AB9C／AB7C／…`），精確槽位未定；不擋 C 語意。 | 靜態 | merge-target | [#11](https://github.com/wicanr2/wolong_cht/issues/11) |
-| [`re/134-c-residual-restoration.md`](../re/134-c-residual-restoration.md) | 完整讀檔長鏈、正常玩家長程及原 C 機器碼 | 本輪局部契約不代證。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`re/134-c-residual-restoration.md`](../re/134-c-residual-restoration.md) | 完整讀檔長鏈、正常玩家長程 | 本輪局部契約不代證。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/134-c-residual-restoration.md`](../re/134-c-residual-restoration.md) | INT61聲音驅動的真實硬體行為 | 以dosgolem聲音模型為界，不外推實機。 | 靜態 | merge-target | [#11](https://github.com/wicanr2/wolong_cht/issues/11) |
 | [`re/134-c-residual-restoration.md`](../re/134-c-residual-restoration.md) | 需IRQ0的等待路徑 | 只測就緒／邊界，不在矩陣內觸發tick。 | 靜態 | merge-target | [#11](https://github.com/wicanr2/wolong_cht/issues/11) |
+| [`re/135-toolchain-fingerprint.md`](../re/135-toolchain-fingerprint.md) | 6 支 frame 函式的「手寫區域變數」 | 結構推定（暫存器傳參＋零堆疊參數）；若有人主張其中混了 C，需逐支體審查反駁，不影響全庫判定 | 靜態 | evidence-only | — |
+| [`re/135-toolchain-fingerprint.md`](../re/135-toolchain-fingerprint.md) | `0x66／0x67` 98 bytes | 只驗了「零 32-bit GPR 引用」，未逐 byte 解碼；不影響判定（即使有 386 指令，手寫仍成立） | 靜態 | evidence-only | — |
+| [`re/135-toolchain-fingerprint.md`](../re/135-toolchain-fingerprint.md) | 判定範圍 | 結論只限 DOS/V `KI.EXE`；PC-98 版與其他七支執行檔不在本判定範圍 | 靜態 | evidence-only | — |
+| [`re/135-toolchain-fingerprint.md`](../re/135-toolchain-fingerprint.md) | 候選編譯器（Borland／MSC／Watcom） | 因判定為手寫而**不需取得**；若未來有人翻案，需先推翻 §5 證否線 | 靜態 | evidence-only | — |
 | [`re/15-event10-producer.md`](../re/15-event10-producer.md) | 以下來源沒有證據，不能補成事實：未被 IDA 建成函式的 far code、以暫存器或指標 | （未解小節內文） | 靜態 | evidence-only | — |
 | [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | `0x330` 的用途 | MPU-401 的標準埠，沒找到讀它的地方 | 靜態 | evidence-only | — |
 | [`re/17-dosv-audio-tsr.md`](../re/17-dosv-audio-tsr.md) | 效果碼 ↔ 聽起來像什麼 | `SOUND.DAT` 的記錄結構已解（`57` §6），但哪一號對應哪個動作只有 §3 的三個 | 靜態 | evidence-only | — |
@@ -387,33 +391,33 @@
 | [`re/89-matching-decompilation-pilot.md`](../re/89-matching-decompilation-pilot.md) | Go remake | 已列出對照入口，本次沒有執行行為對拍 / 未驗證 | 靜態 | evidence-only | — |
 | [`re/89-matching-decompilation-pilot.md`](../re/89-matching-decompilation-pilot.md) | 整檔匹配 | 尚未處理 MZ 標頭、116 筆重定位、資料區、其他函式與外部模組 | 靜態 | evidence-only | — |
 | [`re/90-assembly-reconstruction.md`](../re/90-assembly-reconstruction.md) | C 還原與 C matching | 尚未開始；台帳提供入口，沒有 C 通過聲明 | 靜態 | evidence-only | — |
-| [`re/91-c-rng-restoration.md`](../re/91-c-rng-restoration.md) | C 機器碼匹配 | 本次沒有達成或聲稱；此為原生 C 的語意還原 | 靜態 | evidence-only | — |
+| [`re/91-c-rng-restoration.md`](../re/91-c-rng-restoration.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/91-c-rng-restoration.md`](../re/91-c-rng-restoration.md) | 輸入完整性 | 四張受控置換表，不是全部可能的表；其他 CS、奇數 SP、IF／TF 開啟不在本次範圍 | 靜態 | evidence-only | — |
 | [`re/91-c-rng-restoration.md`](../re/91-c-rng-restoration.md) | 原版播種與取數時機 | 沒有新增驗證；局部取數通過不證明整段亂數流同步 | 靜態 | evidence-only | — |
 | [`re/91-c-rng-restoration.md`](../re/91-c-rng-restoration.md) | GUI 與玩家流程 | 沒有本輪正常玩家路徑或時鐘對拍收據 | 靜態 | evidence-only | — |
 | [`re/92-c-rng-seed-restoration.md`](../re/92-c-rng-seed-restoration.md) | 真實 RTC 與保留值 | 本輪只有受控回覆，沒有實機 RTC 證據 | 靜態 | evidence-only | — |
 | [`re/92-c-rng-seed-restoration.md`](../re/92-c-rng-seed-restoration.md) | 非法 BCD、其他 CS、堆疊重疊 | 未驗證，不能外推 | 靜態 | evidence-only | — |
-| [`re/92-c-rng-seed-restoration.md`](../re/92-c-rng-seed-restoration.md) | C 機器碼匹配與玩家流程 | 未驗證，不宣稱整個 matching decompilation 完成 | 靜態 | evidence-only | — |
+| [`re/92-c-rng-seed-restoration.md`](../re/92-c-rng-seed-restoration.md) | 玩家流程 | 未驗證，不宣稱整個 matching decompilation 完成 | 靜態 | evidence-only | — |
 | [`re/92-c-rng-seed-restoration.md`](../re/92-c-rng-seed-restoration.md) | XOR 的 AF | 本輪按工具模型比對，不聲稱硬體定義 | 靜態 | evidence-only | — |
 | [`re/93-c-game-clock-restoration.md`](../re/93-c-game-clock-restoration.md) | 月結、季節、世界更新與繪圖 | 未驗證完整 callee，fixture 只驗呼叫者如何接收其作用 | 靜態 | evidence-only | — |
 | [`re/93-c-game-clock-restoration.md`](../re/93-c-game-clock-restoration.md) | 等待 wall-clock | 未驗證 PIT 與硬體時序，不外推速度的實際秒數 | 靜態 | evidence-only | — |
-| [`re/93-c-game-clock-restoration.md`](../re/93-c-game-clock-restoration.md) | 原版 1000 年 UI 與長期玩家流程 | 未驗證，不從日期 bytes 外推畫面或存檔垂直鏈完成 | 靜態 | evidence-only | — |
-| [`re/93-c-game-clock-restoration.md`](../re/93-c-game-clock-restoration.md) | C 機器碼匹配 | 未驗證，原版 C 工具鏈尚未知；整檔匹配成果仍是組語基準 | 靜態 | evidence-only | — |
+| [`re/93-c-game-clock-restoration.md`](../re/93-c-game-clock-restoration.md) | 原版 1000 年 UI 與長期玩家流程 | 未驗證，不從日期 bytes 外推畫面或存檔垂直鏈完成 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`re/93-c-game-clock-restoration.md`](../re/93-c-game-clock-restoration.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行；整檔匹配仍由組語基準提供 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/94-c-monthly-economy-restoration.md`](../re/94-c-monthly-economy-restoration.md) | 據點完整結算與尾端 callee | 未驗證完整 AI、內政、外交與事件效果 | 靜態 | evidence-only | — |
-| [`re/94-c-monthly-economy-restoration.md`](../re/94-c-monthly-economy-restoration.md) | 月結正常玩家流程、UI 與完整存檔 | 未驗證，局部呼叫鏈不取代垂直鏈驗收 | 靜態 | evidence-only | — |
-| [`re/94-c-monthly-economy-restoration.md`](../re/94-c-monthly-economy-restoration.md) | C 機器碼匹配 | 未驗證，原版 C 工具鏈仍未知，整檔匹配仍由組語基準提供 | 靜態 | evidence-only | — |
+| [`re/94-c-monthly-economy-restoration.md`](../re/94-c-monthly-economy-restoration.md) | 月結正常玩家流程、UI 與完整存檔 | 未驗證，局部呼叫鏈不取代垂直鏈驗收 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`re/94-c-monthly-economy-restoration.md`](../re/94-c-monthly-economy-restoration.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行；整檔匹配仍由組語基準提供 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/95-c-city-settlement-restoration.md`](../re/95-c-city-settlement-restoration.md) | 尾端世界更新與重畫 | 未驗證完整內政、外交、天災及事件效果 | 靜態 | evidence-only | — |
-| [`re/95-c-city-settlement-restoration.md`](../re/95-c-city-settlement-restoration.md) | 正常玩家長程月結及完整 UI／存檔垂直鏈 | 未驗證，四劇本局部資料接線不替代正常玩家流程 | 靜態 | evidence-only | — |
+| [`re/95-c-city-settlement-restoration.md`](../re/95-c-city-settlement-restoration.md) | 正常玩家長程月結及完整 UI／存檔垂直鏈 | 未驗證，四劇本局部資料接線不替代正常玩家流程 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/95-c-city-settlement-restoration.md`](../re/95-c-city-settlement-restoration.md) | 非法資料、DIV fault 與硬體時序 | 未驗證，不從局部合法矩陣外推 | 靜態 | evidence-only | — |
-| [`re/95-c-city-settlement-restoration.md`](../re/95-c-city-settlement-restoration.md) | C 機器碼匹配 | 未驗證，原版工具鏈仍未知，整檔匹配仍由組語基準提供 | 靜態 | evidence-only | — |
+| [`re/95-c-city-settlement-restoration.md`](../re/95-c-city-settlement-restoration.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行；整檔匹配仍由組語基準提供 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/96-c-monthly-world-update-restoration.md`](../re/96-c-monthly-world-update-restoration.md) | 剩餘政治／俘虜及月度佇列初始化 | 未驗證，`sub_1585F`、`sub_12BD9` 保留明示 fixture | 靜態 | evidence-only | — |
 | [`re/96-c-monthly-world-update-restoration.md`](../re/96-c-monthly-world-update-restoration.md) | 完整 Go 事件 producer、UI、音效及正常長程玩家流程 | 未驗證，局部 C 接線不取代垂直鏈 | 靜態 | evidence-only | — |
 | [`re/96-c-monthly-world-update-restoration.md`](../re/96-c-monthly-world-update-restoration.md) | 非法指標與資料、硬體時序 | 未驗證，不從合法向量外推 | 靜態 | evidence-only | — |
-| [`re/96-c-monthly-world-update-restoration.md`](../re/96-c-monthly-world-update-restoration.md) | C 機器碼匹配 | 未驗證，原版工具鏈仍未知，整檔匹配仍由組語基準提供 | 靜態 | evidence-only | — |
+| [`re/96-c-monthly-world-update-restoration.md`](../re/96-c-monthly-world-update-restoration.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行；整檔匹配仍由組語基準提供 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/97-c-monthly-politics-restoration.md`](../re/97-c-monthly-politics-restoration.md) | UI、音效、重畫及正常玩家長程 | 未驗證，完整月結規則接線不等於正常玩家垂直鏈 | 靜態 | evidence-only | — |
 | [`re/97-c-monthly-politics-restoration.md`](../re/97-c-monthly-politics-restoration.md) | 完整 Go 政治／俘虜同狀態比較 | 未驗證，本輪原版/C 收據不外推 Go parity | 靜態 | evidence-only | — |
 | [`re/97-c-monthly-politics-restoration.md`](../re/97-c-monthly-politics-restoration.md) | 非法記錄、無勢力、索引／段重疊 | 未驗證，不用無限尋找的 prototype 猜補終止條件 | 靜態 | evidence-only | — |
-| [`re/97-c-monthly-politics-restoration.md`](../re/97-c-monthly-politics-restoration.md) | C 機器碼匹配 | 未驗證，原版工具鏈仍未知，整檔匹配仍由組語基準提供 | 靜態 | evidence-only | — |
+| [`re/97-c-monthly-politics-restoration.md`](../re/97-c-monthly-politics-restoration.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行；整檔匹配仍由組語基準提供 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`re/98-c-go-monthly-comparison.md`](../re/98-c-go-monthly-comparison.md) | 所有存在武將 +0x1F 評分沒有寫回 | `sub_155A6`；新增 typed byte、載入／保存及月結更新，見 `213` | 靜態 | evidence-only | — |
 | [`re/98-c-go-monthly-comparison.md`](../re/98-c-go-monthly-comparison.md) | 同值候選用勢力編號重排 | `sub_12C52`；改原始交換式選擇排序，尾端相對順序也一致，見 `214` | 靜態 | evidence-only | — |
 | [`re/98-c-go-monthly-comparison.md`](../re/98-c-go-monthly-comparison.md) | 中立邊境 FF18 宣戰事件漏接 | `sub_12F71`；合法前提及有號資金高位、真實 writer，見 `215` | 靜態 | evidence-only | — |
@@ -425,12 +429,12 @@
 | [`re/98-c-go-monthly-comparison.md`](../re/98-c-go-monthly-comparison.md) | after-neutral | 20／36 | 靜態 | evidence-only | — |
 | [`re/98-c-go-monthly-comparison.md`](../re/98-c-go-monthly-comparison.md) | 評分／排序／中立／globals／玩家 producer 完成後 | **36／36** | 靜態 | evidence-only | — |
 | [`re/98-c-go-monthly-comparison.md`](../re/98-c-go-monthly-comparison.md) | 原版任意後期世界、俘虜／政治所有條件 | 未驗證，36 向量是完整矩陣的明示抽樣，不外推全部世界 | 靜態 | evidence-only | — |
-| [`re/98-c-go-monthly-comparison.md`](../re/98-c-go-monthly-comparison.md) | 正常玩家 UI／音效／長程與完整存檔垂直鏈 | 未驗證，rules 直接入口不取代正常玩家驗收 | 靜態 | evidence-only | — |
-| [`re/98-c-go-monthly-comparison.md`](../re/98-c-go-monthly-comparison.md) | C 全執行檔與機器碼匹配 | 未完成，C 仍為還原語意；整檔 byte match 仍由組語基準提供 | 靜態 | evidence-only | — |
+| [`re/98-c-go-monthly-comparison.md`](../re/98-c-go-monthly-comparison.md) | 正常玩家 UI／音效／長程與完整存檔垂直鏈 | 未驗證，rules 直接入口不取代正常玩家驗收 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`re/98-c-go-monthly-comparison.md`](../re/98-c-go-monthly-comparison.md) | C 全執行檔 | 未完成，C 仍為還原語意；整檔 byte match 仍由組語基準提供 | 靜態 | evidence-only | — |
 | [`re/99-c-hourly-update-restoration.md`](../re/99-c-hourly-update-restoration.md) | 其他十一個 event handler 與完整 modal／UI／音效 | 未驗證，原始 table call 不替代 callee 完成 | 靜態 | evidence-only | — |
 | [`re/99-c-hourly-update-restoration.md`](../re/99-c-hourly-update-restoration.md) | 完整 Go 每時規則與月結前後三方 | 未驗證，本輪收據只量原版/C 核心 | 靜態 | evidence-only | — |
 | [`re/99-c-hourly-update-restoration.md`](../re/99-c-hourly-update-restoration.md) | 正常玩家日期流、硬體等待與長程 | 未驗證，one-hour 直接入口不取代玩家垂直鏈 | 靜態 | evidence-only | — |
-| [`re/99-c-hourly-update-restoration.md`](../re/99-c-hourly-update-restoration.md) | C 機器碼匹配 | 未驗證，原版工具鏈仍未知，整檔 match 仍是組語基準 | 靜態 | evidence-only | — |
+| [`re/99-c-hourly-update-restoration.md`](../re/99-c-hourly-update-restoration.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行；整檔匹配仍由組語基準提供 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 
 ## 2.4 驗收（240 條）
 
@@ -688,7 +692,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（478 條）
+## 2.6 其他（504 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -906,151 +910,177 @@
 | [`spec/200-opening-move-delay.md`](../spec/200-opening-move-delay.md) | 0001 9DB1`（`280h`）與 `0001 9E35`（`3C0h`）那兩種物件是什麼，還沒對。 | （未解小節內文） | 靜態 | actionable | [#13](https://github.com/wicanr2/wolong_cht/issues/13) |
 | [`spec/202-c-rng-seed.md`](../spec/202-c-rng-seed.md) | RTC 的未指定暫存器 | 本輪固定回覆，不外推真實 BIOS 保留哪些值 | 靜態 | evidence-only | — |
 | [`spec/202-c-rng-seed.md`](../spec/202-c-rng-seed.md) | 非法 BCD 與堆疊重疊 | 未驗證，不能從合法資料層推定 | 靜態 | evidence-only | — |
-| [`spec/202-c-rng-seed.md`](../spec/202-c-rng-seed.md) | C 機器碼匹配 | 未驗證，這是 C 語意還原 | 靜態 | evidence-only | — |
+| [`spec/202-c-rng-seed.md`](../spec/202-c-rng-seed.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/202-c-rng-seed.md`](../spec/202-c-rng-seed.md) | 玩家流程與 RTC 時序 | 未驗證，不作硬體時序考古 | 靜態 | evidence-only | — |
 | [`spec/203-c-game-clock.md`](../spec/203-c-game-clock.md) | `0x15358` | 月結；月已換，日仍為 0，小時／子刻尚未重設 | 靜態 | evidence-only | — |
 | [`spec/203-c-game-clock.md`](../spec/203-c-game-clock.md) | callee 完整作用 | 未驗證，fixture 不替代其原版語意 | 靜態 | evidence-only | — |
 | [`spec/203-c-game-clock.md`](../spec/203-c-game-clock.md) | 等待 wall-clock | 未驗證，不作 PIT driver 時序逆向 | 靜態 | evidence-only | — |
-| [`spec/203-c-game-clock.md`](../spec/203-c-game-clock.md) | C 機器碼與正常玩家流程 | 未驗證，保留局部語意對照的範圍 | 靜態 | evidence-only | — |
-| [`spec/204-year-999-1000.md`](../spec/204-year-999-1000.md) | 原版的 1000 年畫面格式 | 未驗證，原版 formatter 與正常 UI 另驗，不從日期 bytes 外推 | 靜態 | evidence-only | — |
+| [`spec/203-c-game-clock.md`](../spec/203-c-game-clock.md) | 正常玩家流程 | 未驗證，保留局部語意對照的範圍 | 靜態 | evidence-only | — |
+| [`spec/204-year-999-1000.md`](../spec/204-year-999-1000.md) | 原版的 1000 年畫面格式 | 未驗證，原版 formatter 與正常 UI 另驗，不從日期 bytes 外推 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`spec/204-year-999-1000.md`](../spec/204-year-999-1000.md) | 長期玩家流程 | 未驗證，本輪只修已證實的日期轉移 | 靜態 | evidence-only | — |
 | [`spec/205-c-monthly-economy.md`](../spec/205-c-monthly-economy.md) | 據點結算及九個尾端 callee | 未驗證完整原版語意，fixture 只量呼叫者契約 | 靜態 | evidence-only | — |
-| [`spec/205-c-monthly-economy.md`](../spec/205-c-monthly-economy.md) | 正常 UI、完整存檔與長期月結 | 未驗證，不從局部控制流宣稱玩家垂直鏈完成 | 靜態 | evidence-only | — |
-| [`spec/205-c-monthly-economy.md`](../spec/205-c-monthly-economy.md) | C 機器碼匹配 | 未驗證，原版 C 工具鏈仍未知 | 靜態 | evidence-only | — |
-| [`spec/206-deficit-high-word-rounding.md`](../spec/206-deficit-high-word-rounding.md) | 完整玩家月結、UI 與長期存檔 | 未驗證，本輪修已證實局部扣兵規則 | 靜態 | evidence-only | — |
+| [`spec/205-c-monthly-economy.md`](../spec/205-c-monthly-economy.md) | 正常 UI、完整存檔與長期月結 | 未驗證，不從局部控制流宣稱玩家垂直鏈完成 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/205-c-monthly-economy.md`](../spec/205-c-monthly-economy.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/206-deficit-high-word-rounding.md`](../spec/206-deficit-high-word-rounding.md) | 完整玩家月結、UI 與長期存檔 | 未驗證，本輪修已證實局部扣兵規則 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/206-deficit-high-word-rounding.md`](../spec/206-deficit-high-word-rounding.md) | 非法 Go 資金 | 未驗證，不擴張正式型別契約；C 仍保留原始 16-bit 運算 | 靜態 | evidence-only | — |
-| [`spec/207-c-city-settlement.md`](../spec/207-c-city-settlement.md) | 月結尾端世界更新、UI 與玩家存檔流程 | 未驗證，保留明示 fixture 的範圍 | 靜態 | evidence-only | — |
+| [`spec/207-c-city-settlement.md`](../spec/207-c-city-settlement.md) | 月結尾端世界更新、UI 與玩家存檔流程 | 未驗證，保留明示 fixture 的範圍 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/207-c-city-settlement.md`](../spec/207-c-city-settlement.md) | 非法索引、稅率及除法 fault | 未驗證，不擴張正式規則契約 | 靜態 | evidence-only | — |
-| [`spec/207-c-city-settlement.md`](../spec/207-c-city-settlement.md) | C 機器碼匹配 | 未驗證，原版工具鏈仍未知 | 靜態 | evidence-only | — |
+| [`spec/207-c-city-settlement.md`](../spec/207-c-city-settlement.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/208-settlement-width-parity.md`](../spec/208-settlement-width-parity.md) | 非法稅率、除法 fault 與異常記錄 | 未驗證，不用模數運算猜補原版例外路徑 | 靜態 | evidence-only | — |
 | [`spec/208-settlement-width-parity.md`](../spec/208-settlement-width-parity.md) | 正常玩家長程月結與完整世界更新 | 未驗證，保留尾端 callee 的明示 fixture 範圍 | 靜態 | evidence-only | — |
 | [`spec/209-c-monthly-world-update.md`](../spec/209-c-monthly-world-update.md) | `sub_1585F` 與 `sub_12BD9` 完整政治效果 | 未驗證，本輪仍為明示 RET fixture | 靜態 | evidence-only | — |
 | [`spec/209-c-monthly-world-update.md`](../spec/209-c-monthly-world-update.md) | 通知、音效、重畫及正常玩家流程 | 未驗證，原始呼叫參數與堆疊快照不替代完整 UI | 靜態 | evidence-only | — |
 | [`spec/209-c-monthly-world-update.md`](../spec/209-c-monthly-world-update.md) | 非法資料與硬體時序 | 未驗證，不擴張本輪合法資料契約 | 靜態 | evidence-only | — |
-| [`spec/209-c-monthly-world-update.md`](../spec/209-c-monthly-world-update.md) | C 機器碼匹配 | 未驗證，原版工具鏈仍未知 | 靜態 | evidence-only | — |
+| [`spec/209-c-monthly-world-update.md`](../spec/209-c-monthly-world-update.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 編成畫面的兵種切換 | remake 由呼叫端直接給 `kinds`，沒有原版那個「點一下 +1 → 全退回池 → 重跑分配」的迴圈（`sub_16C92`）。這是 UI 層的差異，不影響分配式 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`spec/21-corps-formation-reserves.md`](../spec/21-corps-formation-reserves.md) | 池的上限 | `sub_155EC` 的 `0xFFDC` 只在退兵路徑上驗過；月結加兵是不是同一支未查。**remake 兩條路徑現在都夾**（`economy.ClampReserve`），但那是照著同一個常數做的，不是證明原版共用同一支 | 靜態 | evidence-only | — |
 | [`spec/210-growth-word-parity.md`](../spec/210-growth-word-parity.md) | 非法生產力／上限與稅率 | 未驗證，不擴張正式資料契約 | 靜態 | evidence-only | — |
-| [`spec/210-growth-word-parity.md`](../spec/210-growth-word-parity.md) | 長程玩家內政、存檔與畫面 | 未驗證，局部成長對照不取代玩家垂直鏈 | 靜態 | evidence-only | — |
+| [`spec/210-growth-word-parity.md`](../spec/210-growth-word-parity.md) | 長程玩家內政、存檔與畫面 | 未驗證，局部成長對照不取代玩家垂直鏈 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/211-c-monthly-politics.md`](../spec/211-c-monthly-politics.md) | 通知、音效、重畫與正常玩家流程 | 未驗證，fixture 只驗原始參數與堆疊，沒有 UI 完成聲明 | 靜態 | evidence-only | — |
 | [`spec/211-c-monthly-politics.md`](../spec/211-c-monthly-politics.md) | 非法索引、無勢力、段重疊與資料錯誤 | 未驗證，不擴張正常記錄契約 | 靜態 | evidence-only | — |
 | [`spec/211-c-monthly-politics.md`](../spec/211-c-monthly-politics.md) | 完整 Go 月結規則同狀態比較 | 未驗證，本輪新政治依賴以原版/C 為主 | 靜態 | evidence-only | — |
-| [`spec/211-c-monthly-politics.md`](../spec/211-c-monthly-politics.md) | C 機器碼匹配 | 未驗證，原版工具鏈仍未知 | 靜態 | evidence-only | — |
+| [`spec/211-c-monthly-politics.md`](../spec/211-c-monthly-politics.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/212-c-go-monthly-comparison.md`](../spec/212-c-go-monthly-comparison.md) | 其他後期狀態與全部政治條件 | 未驗證，36 固定原版向量不外推任意世界 | 靜態 | evidence-only | — |
-| [`spec/212-c-go-monthly-comparison.md`](../spec/212-c-go-monthly-comparison.md) | 正常 UI、音效、存檔及長程流程 | 未驗證，純規則比較不取代正常玩家驗收 | 靜態 | evidence-only | — |
-| [`spec/212-c-go-monthly-comparison.md`](../spec/212-c-go-monthly-comparison.md) | C 機器碼匹配 | 未驗證，整檔逐位元組匹配仍為組語基準 | 靜態 | evidence-only | — |
+| [`spec/212-c-go-monthly-comparison.md`](../spec/212-c-go-monthly-comparison.md) | 正常 UI、音效、存檔及長程流程 | 未驗證，純規則比較不取代正常玩家驗收 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/212-c-go-monthly-comparison.md`](../spec/212-c-go-monthly-comparison.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行；整檔匹配仍由組語基準提供 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/213-general-monthly-score.md`](../spec/213-general-monthly-score.md) | 評分的高階 UI／AI 用途 | 未驗證，本輪只接已證實計算與原版欄位 | 靜態 | evidence-only | — |
 | [`spec/213-general-monthly-score.md`](../spec/213-general-monthly-score.md) | 其餘 Go 月結、queue 與 RNG 差異 | 未驗證，另按三方 audit 定位 | 靜態 | evidence-only | — |
 | [`spec/214-political-candidate-order.md`](../spec/214-political-candidate-order.md) | 其餘政治 producer、queue 與 RNG | 未驗證，排序修正不能宣稱整段月結 parity | 靜態 | evidence-only | — |
 | [`spec/214-political-candidate-order.md`](../spec/214-political-candidate-order.md) | 正常玩家 UI 與長程流程 | 未驗證，本輪只修已證實候選順序 | 靜態 | evidence-only | — |
 | [`spec/215-neutral-monthly-declaration.md`](../spec/215-neutral-monthly-declaration.md) | 其餘普通政治分支與 RNG 漂移 | 未驗證，中立補線不代表完整月結 parity | 靜態 | evidence-only | — |
-| [`spec/215-neutral-monthly-declaration.md`](../spec/215-neutral-monthly-declaration.md) | 正常玩家 UI、長程與存檔垂直鏈 | 未驗證，本輪驗局部原版 producer | 靜態 | evidence-only | — |
-| [`spec/216-monthly-storm-globals.md`](../spec/216-monthly-storm-globals.md) | 冷測 storm／無 storm 的四 word、原版格式 round-trip；36 三方向量的 globals 差異需歸零。 | （未解小節內文） | 靜態 | evidence-only | — |
+| [`spec/215-neutral-monthly-declaration.md`](../spec/215-neutral-monthly-declaration.md) | 正常玩家 UI、長程與存檔垂直鏈 | 未驗證，本輪驗局部原版 producer | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/216-monthly-storm-globals.md`](../spec/216-monthly-storm-globals.md) | 冷測 storm／無 storm 的四 word、原版格式 round-trip；36 三方向量的 globals 差異需歸零。 | （未解小節內文） | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/216-monthly-storm-globals.md`](../spec/216-monthly-storm-globals.md) | 暴風雨正常 UI／音效與長程流程 | 未驗證，保存 word 的一致不替代玩家垂直鏈 | 靜態 | evidence-only | — |
 | [`spec/217-player-monthly-declaration.md`](../spec/217-player-monthly-declaration.md) | 玩家宣戰後正常 UI 與長程流程 | 未驗證，本輪驗局部月結 producer 與完整 raw 向量 | 靜態 | evidence-only | — |
 | [`spec/218-c-hourly-update.md`](../spec/218-c-hourly-update.md) | 其他 event handler 與 UI／音效／退出 | 未驗證，fixture 只量本輪 caller 與原始參數 | 靜態 | evidence-only | — |
 | [`spec/218-c-hourly-update.md`](../spec/218-c-hourly-update.md) | 正常玩家日期流與完整原版硬體等待 | 未驗證，局部每時入口不替代玩家流程 | 靜態 | evidence-only | — |
 | [`spec/218-c-hourly-update.md`](../spec/218-c-hourly-update.md) | 完整 Go 每時規則 parity | 未驗證，另按原版／C 範圍建立三方 audit | 靜態 | evidence-only | — |
-| [`spec/218-c-hourly-update.md`](../spec/218-c-hourly-update.md) | C 機器碼匹配 | 未驗證，原版工具鏈仍未知 | 靜態 | evidence-only | — |
+| [`spec/218-c-hourly-update.md`](../spec/218-c-hourly-update.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/219-c-event-handlers.md`](../spec/219-c-event-handlers.md) | 正常玩家事件 modal 與戰術 | 未驗證，fixture 不作完成證據 | 靜態 | evidence-only | — |
 | [`spec/219-c-event-handlers.md`](../spec/219-c-event-handlers.md) | Go 每時與事件三方 | 未驗證 | 靜態 | evidence-only | — |
 | [`spec/219-c-event-handlers.md`](../spec/219-c-event-handlers.md) | 中立 0x24 的玩家語意 | 未驗證，本輪只還原原始控制流 | 靜態 | merge-target | [#27](https://github.com/wicanr2/wolong_cht/issues/27) |
-| [`spec/219-c-event-handlers.md`](../spec/219-c-event-handlers.md) | C 機器碼、原作 compiler | 未驗證 | 靜態 | evidence-only | — |
+| [`spec/219-c-event-handlers.md`](../spec/219-c-event-handlers.md) | C 機器碼、原作 compiler | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 頭像的邊框 | `sub_107D2` 只 blit 64×64 的圖塊，**框在哪裡畫的沒找到**——場景 5 的 op 清單裡沒有頭像那一格的框 | 靜態 | evidence-only | — |
 | [`spec/22-corps-formation-window.md`](../spec/22-corps-formation-window.md) | 兵種標籤 | 畫面用場景 5 的「主將」，規則層的 `army.Position` 第一個是「大將」（原版 TALK #62 也這樣說）。兩處用語不同是原版就有的，不要統一 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`spec/220-c-modal-control.md`](../spec/220-c-modal-control.md) | 完整底層輸入／繪圖／音效與自然玩家視窗 | 本輪 primitive fixture 不作完成證據 | 靜態 | evidence-only | — |
 | [`spec/220-c-modal-control.md`](../spec/220-c-modal-control.md) | Go 每時／事件／視窗三方 | 尚未驗證 | 靜態 | evidence-only | — |
 | [`spec/220-c-modal-control.md`](../spec/220-c-modal-control.md) | 自然執行時序與硬體 | 尚未驗證 | 靜態 | evidence-only | — |
-| [`spec/220-c-modal-control.md`](../spec/220-c-modal-control.md) | C 機器碼匹配 | 尚未驗證 | 靜態 | evidence-only | — |
+| [`spec/220-c-modal-control.md`](../spec/220-c-modal-control.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/221-c-numeric-editor.md`](../spec/221-c-numeric-editor.md) | 真實圖形／input／popup 與自然玩家數值視窗 | primitive fixture 不取代 UI／像素證據 | 靜態 | evidence-only | — |
 | [`spec/221-c-numeric-editor.md`](../spec/221-c-numeric-editor.md) | 完整 Go 財政／視窗三方 | 局部數值核心不作完整玩家證據 | 靜態 | evidence-only | — |
 | [`spec/221-c-numeric-editor.md`](../spec/221-c-numeric-editor.md) | 自然執行時間與硬體 | 未驗證 | 靜態 | evidence-only | — |
-| [`spec/221-c-numeric-editor.md`](../spec/221-c-numeric-editor.md) | C 機器碼匹配 | 未驗證 | 靜態 | evidence-only | — |
+| [`spec/221-c-numeric-editor.md`](../spec/221-c-numeric-editor.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/222-c-hotspot-map.md`](../spec/222-c-hotspot-map.md) | 真實 VGA plane／blit／保存像素 | primitive 不代證實際 memory device | 靜態 | evidence-only | — |
 | [`spec/222-c-hotspot-map.md`](../spec/222-c-hotspot-map.md) | 自然滑鼠與玩家視窗 | 固定 pixel fixture 不作正常玩家證據 | 靜態 | evidence-only | — |
 | [`spec/222-c-hotspot-map.md`](../spec/222-c-hotspot-map.md) | 完整 Go 視窗三方 | 未驗證 | 靜態 | evidence-only | — |
-| [`spec/222-c-hotspot-map.md`](../spec/222-c-hotspot-map.md) | C 機器碼匹配 | 未驗證 | 靜態 | evidence-only | — |
-| [`spec/223-c-vga-blit.md`](../spec/223-c-vga-blit.md) | 正常玩家完整畫面／視窗 | 局部blit不代表production route | 靜態 | evidence-only | — |
+| [`spec/222-c-hotspot-map.md`](../spec/222-c-hotspot-map.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/223-c-vga-blit.md`](../spec/223-c-vga-blit.md) | 正常玩家完整畫面／視窗 | 局部blit不代表production route | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`spec/223-c-vga-blit.md`](../spec/223-c-vga-blit.md) | 實機時序／wall-clock | 只使用固定VGA模型 | 靜態 | evidence-only | — |
 | [`spec/223-c-vga-blit.md`](../spec/223-c-vga-blit.md) | 完整Go圖形三方 | 未驗證 | 靜態 | evidence-only | — |
-| [`spec/223-c-vga-blit.md`](../spec/223-c-vga-blit.md) | C機器碼匹配 | 未驗證 | 靜態 | evidence-only | — |
-| [`spec/224-c-aligned-blit.md`](../spec/224-c-aligned-blit.md) | 正常玩家戰術畫面 | caller／primitive 收據不足以完成正常路徑 | 靜態 | evidence-only | — |
+| [`spec/223-c-vga-blit.md`](../spec/223-c-vga-blit.md) | C機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/224-c-aligned-blit.md`](../spec/224-c-aligned-blit.md) | 正常玩家戰術畫面 | caller／primitive 收據不足以完成正常路徑 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`spec/224-c-aligned-blit.md`](../spec/224-c-aligned-blit.md) | 自然裝置輸入與實機 wall-clock | 固定 FAR fixture 與 VGA 模型 | 靜態 | evidence-only | — |
 | [`spec/224-c-aligned-blit.md`](../spec/224-c-aligned-blit.md) | 其他字型與文字 renderer | 本輪範圍外，尚未完成 | 靜態 | evidence-only | — |
-| [`spec/224-c-aligned-blit.md`](../spec/224-c-aligned-blit.md) | C 機器碼匹配 | 未驗證 | 靜態 | evidence-only | — |
+| [`spec/224-c-aligned-blit.md`](../spec/224-c-aligned-blit.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/225-c-rectangle-bars.md`](../spec/225-c-rectangle-bars.md) | 正常玩家戰術／視窗 | caller 矩陣不代表自然操作完成 | 靜態 | evidence-only | — |
 | [`spec/225-c-rectangle-bars.md`](../spec/225-c-rectangle-bars.md) | 自然滑鼠與硬體時序 | 固定 FAR fixture 與平台模型 | 靜態 | evidence-only | — |
 | [`spec/225-c-rectangle-bars.md`](../spec/225-c-rectangle-bars.md) | 完整 C 還原 | 本輪只涵蓋十六函式閉包 | 靜態 | evidence-only | — |
-| [`spec/225-c-rectangle-bars.md`](../spec/225-c-rectangle-bars.md) | C 機器碼匹配 | 未驗證 | 靜態 | evidence-only | — |
-| [`spec/226-sidebar-bar-widths.md`](../spec/226-sidebar-bar-widths.md) | 正常玩家整體畫面 | 局部長度與 C plane 收據不足以代證 | 靜態 | evidence-only | — |
-| [`spec/226-sidebar-bar-widths.md`](../spec/226-sidebar-bar-widths.md) | 全場戰術／長流程 | 本輪未驗證 | 靜態 | evidence-only | — |
+| [`spec/225-c-rectangle-bars.md`](../spec/225-c-rectangle-bars.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/226-sidebar-bar-widths.md`](../spec/226-sidebar-bar-widths.md) | 正常玩家整體畫面 | 局部長度與 C plane 收據不足以代證 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/226-sidebar-bar-widths.md`](../spec/226-sidebar-bar-widths.md) | 全場戰術／長流程 | 本輪未驗證 | 靜態 | merge-target | [#15](https://github.com/wicanr2/wolong_cht/issues/15) |
 | [`spec/227-c-display-interpreter.md`](../spec/227-c-display-interpreter.md) | 真正字型服務與全 UI | callback fixture 不代證 | 靜態 | evidence-only | — |
 | [`spec/227-c-display-interpreter.md`](../spec/227-c-display-interpreter.md) | 正常玩家場景操作 | 直接入口矩陣不代證 | 靜態 | evidence-only | — |
 | [`spec/227-c-display-interpreter.md`](../spec/227-c-display-interpreter.md) | 完整 C 與其他資料／code 區 | 本輪未完成 | 靜態 | evidence-only | — |
-| [`spec/227-c-display-interpreter.md`](../spec/227-c-display-interpreter.md) | C 機器碼匹配 | 未驗證 | 靜態 | evidence-only | — |
+| [`spec/227-c-display-interpreter.md`](../spec/227-c-display-interpreter.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/228-c-glyph-raster.md`](../spec/228-c-glyph-raster.md) | 原版 TSR／逐字磁碟時序 | 採用成熟字型平台契約 | 靜態 | evidence-only | — |
 | [`spec/228-c-glyph-raster.md`](../spec/228-c-glyph-raster.md) | 實機／正常玩家操作 | 局部 glyph／場景不足以代證 | 靜態 | evidence-only | — |
-| [`spec/228-c-glyph-raster.md`](../spec/228-c-glyph-raster.md) | C 原作者工具鏈與機器碼 | 尚未驗證 | 靜態 | evidence-only | — |
-| [`spec/229-c-number-raster.md`](../spec/229-c-number-raster.md) | 原作者編譯器與 C 機器碼 | 尚未確認 | 靜態 | evidence-only | — |
-| [`spec/229-c-number-raster.md`](../spec/229-c-number-raster.md) | 正常玩家 UI／訊息參數 producer | 此局部驗證不代證 | 靜態 | evidence-only | — |
+| [`spec/228-c-glyph-raster.md`](../spec/228-c-glyph-raster.md) | C 原作者工具鏈與機器碼 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/229-c-number-raster.md`](../spec/229-c-number-raster.md) | 原作者編譯器與 C 機器碼 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/229-c-number-raster.md`](../spec/229-c-number-raster.md) | 正常玩家 UI／訊息參數 producer | 數字 slice 已由 spec/257 軌跡回放覆蓋（522 呼叫真實參數）；其餘 slice 不代證 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/229-c-number-raster.md`](../spec/229-c-number-raster.md) | DIV 例外 | 只驗證可執行數值範圍，不宣稱原版接受任意 signed 32-bit | 靜態 | evidence-only | — |
 | [`spec/230-c-talk-rendering.md`](../spec/230-c-talk-rendering.md) | INT 50h 與實機磁碟時序 | 保留原始呼叫，不以平台 API 代證原媒體錯誤 UI 或 wall-clock | 靜態 | evidence-only | — |
 | [`spec/230-c-talk-rendering.md`](../spec/230-c-talk-rendering.md) | 正常玩家事件流程 | renderer 接線不取代自然輸入驗收 | 靜態 | evidence-only | — |
-| [`spec/230-c-talk-rendering.md`](../spec/230-c-talk-rendering.md) | 原作者 C 工具鏈與機器碼 | 尚未確認 | 靜態 | evidence-only | — |
+| [`spec/230-c-talk-rendering.md`](../spec/230-c-talk-rendering.md) | 原作者 C 工具鏈與機器碼 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/231-c-input-mouse.md`](../spec/231-c-input-mouse.md) | counter 的真實初始化／timer cadence | 只驗原 consumer，不推算硬體時間 | 靜態 | evidence-only | — |
 | [`spec/231-c-input-mouse.md`](../spec/231-c-input-mouse.md) | 正常玩家 callback／訊息流程 | 局部完整 device 對照仍有 direct-entry 界線 | 靜態 | evidence-only | — |
-| [`spec/231-c-input-mouse.md`](../spec/231-c-input-mouse.md) | C 機器碼與原作者工具鏈 | 尚未確認 | 靜態 | evidence-only | — |
+| [`spec/231-c-input-mouse.md`](../spec/231-c-input-mouse.md) | C 機器碼與原作者工具鏈 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/232-c-choice-selector.md`](../spec/232-c-choice-selector.md) | 自然玩家／進言 producer | 局部 consumer 與固定序列不代證 | 靜態 | evidence-only | — |
 | [`spec/232-c-choice-selector.md`](../spec/232-c-choice-selector.md) | scroll helper 的執行期改寫 | 本輪依目前原始 image bytes，是否被改寫另追來源 | 靜態 | evidence-only | — |
-| [`spec/232-c-choice-selector.md`](../spec/232-c-choice-selector.md) | 原作者 C 工具鏈與機器碼 | 尚未確認 | 靜態 | evidence-only | — |
+| [`spec/232-c-choice-selector.md`](../spec/232-c-choice-selector.md) | 原作者 C 工具鏈與機器碼 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/233-c-resource-cue.md`](../spec/233-c-resource-cue.md) | INT50／完整退出情境 | 原 branch 保留，平台成功路徑不代證錯誤 GUI | 靜態 | evidence-only | — |
-| [`spec/233-c-resource-cue.md`](../spec/233-c-resource-cue.md) | 原 TSR／硬體聲音 | 僅比 API／資料狀態；原 TSR 的輸出音色與硬體時序尚未驗證 | 靜態 | evidence-only | — |
-| [`spec/233-c-resource-cue.md`](../spec/233-c-resource-cue.md) | 原作者 C compiler／machine code | 尚未確認 | 靜態 | evidence-only | — |
+| [`spec/233-c-resource-cue.md`](../spec/233-c-resource-cue.md) | 原 TSR／硬體聲音 | 僅比 API／資料狀態；原 TSR 的輸出音色與硬體時序尚未驗證 | 靜態 | merge-target | [#8](https://github.com/wicanr2/wolong_cht/issues/8) |
+| [`spec/233-c-resource-cue.md`](../spec/233-c-resource-cue.md) | 原作者 C compiler／machine code | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/234-c-world-map-cells.md`](../spec/234-c-world-map-cells.md) | 正常玩家與上游 producer | 本閉包不代證完整場景退出與軍團／物件更新 | 靜態 | evidence-only | — |
-| [`spec/234-c-world-map-cells.md`](../spec/234-c-world-map-cells.md) | 原作者 C compiler／machine code | 尚未確認 | 靜態 | evidence-only | — |
+| [`spec/234-c-world-map-cells.md`](../spec/234-c-world-map-cells.md) | 原作者 C compiler／machine code | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/235-c-world-overlay.md`](../spec/235-c-world-overlay.md) | 正常玩家／完整場景與 type 3 | 局部輸入不代證完整自然路徑 | 靜態 | evidence-only | — |
-| [`spec/235-c-world-overlay.md`](../spec/235-c-world-overlay.md) | 原作者 C compiler／machine code | 尚未確認 | 靜態 | evidence-only | — |
+| [`spec/235-c-world-overlay.md`](../spec/235-c-world-overlay.md) | 原作者 C compiler／machine code | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/236-c-scene-resume.md`](../spec/236-c-scene-resume.md) | 正常玩家長程路徑 | 局部主入口不代證自然事件與通關 | 靜態 | evidence-only | — |
-| [`spec/236-c-scene-resume.md`](../spec/236-c-scene-resume.md) | 原作者 C compiler／machine code | 尚未確認 | 靜態 | evidence-only | — |
-| [`spec/237-c-ruler-sortie.md`](../spec/237-c-ruler-sortie.md) | 正常玩家長程路徑與 C 機器碼 | 本輪不據局部通過宣稱完成 | 靜態 | evidence-only | — |
+| [`spec/236-c-scene-resume.md`](../spec/236-c-scene-resume.md) | 原作者 C compiler／machine code | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/237-c-ruler-sortie.md`](../spec/237-c-ruler-sortie.md) | 正常玩家長程路徑 | 本輪不據局部通過宣稱完成 | 靜態 | evidence-only | — |
 | [`spec/238-c-city-list.md`](../spec/238-c-city-list.md) | 正常玩家長程與其他清單 | 本輪局部 caller 不代證 | 靜態 | evidence-only | — |
-| [`spec/238-c-city-list.md`](../spec/238-c-city-list.md) | 原作者 C 機器碼 | 尚未匹配 | 靜態 | evidence-only | — |
+| [`spec/238-c-city-list.md`](../spec/238-c-city-list.md) | 原作者 C 機器碼 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/239-c-list-families.md`](../spec/239-c-list-families.md) | 非法排序狀態與自然玩家長程 | 不由合法局部案例代證 | 靜態 | evidence-only | — |
-| [`spec/239-c-list-families.md`](../spec/239-c-list-families.md) | 原作者 C 機器碼 | 尚未匹配 | 靜態 | evidence-only | — |
+| [`spec/239-c-list-families.md`](../spec/239-c-list-families.md) | 原作者 C 機器碼 | spec/255 已判手寫組語，C 機器碼匹配不可行 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/24-corps-info-window.md`](../spec/24-corps-info-window.md) | 反白列上換色的機制 | `38` §1.7.1：兩個色號各有一次量測，變換規則沒解 | 靜態 | evidence-only | — |
-| [`spec/240-c-player-formation.md`](../spec/240-c-player-formation.md) | 自然玩家長程／原作者 C 機器碼 | 本輪不代證 | 靜態 | evidence-only | — |
-| [`spec/241-c-personnel.md`](../spec/241-c-personnel.md) | 正常長程與原作者 C 機器碼 | 本輪不代證 | 靜態 | evidence-only | — |
-| [`spec/242-c-detail-panels.md`](../spec/242-c-detail-panels.md) | 軍團指令上游／自然長程／原C機器碼 | 本輪不代證 | 靜態 | evidence-only | — |
-| [`spec/243-c-march-command.md`](../spec/243-c-march-command.md) | 自然長程／非法資料／原C機器碼 | 本輪不代證 | 靜態 | evidence-only | — |
-| [`spec/244-c-strategy-command.md`](../spec/244-c-strategy-command.md) | 自然長程、原 TSR 音效與原 C 機器碼 | 本輪不代證 | 靜態 | evidence-only | — |
+| [`spec/240-c-player-formation.md`](../spec/240-c-player-formation.md) | 自然玩家長程 | 本輪不代證 | 靜態 | evidence-only | — |
+| [`spec/241-c-personnel.md`](../spec/241-c-personnel.md) | 正常長程 | 本輪不代證 | 靜態 | evidence-only | — |
+| [`spec/242-c-detail-panels.md`](../spec/242-c-detail-panels.md) | 軍團指令上游／自然長程 | 本輪不代證 | 靜態 | evidence-only | — |
+| [`spec/243-c-march-command.md`](../spec/243-c-march-command.md) | 自然長程／非法資料 | 本輪不代證 | 靜態 | evidence-only | — |
+| [`spec/244-c-strategy-command.md`](../spec/244-c-strategy-command.md) | 自然長程、原 TSR 音效 | 本輪不代證 | 靜態 | evidence-only | — |
 | [`spec/245-c-nonlocal-exit.md`](../spec/245-c-nonlocal-exit.md) | 完整主迴圈、其他退出與自然玩家路徑 | 本輪閉包不代證 | 靜態 | evidence-only | — |
-| [`spec/245-c-nonlocal-exit.md`](../spec/245-c-nonlocal-exit.md) | 原 TSR、實機時間及原 C 機器碼 | 固定模擬器平台與 C 行為比較不代證 | 靜態 | evidence-only | — |
+| [`spec/245-c-nonlocal-exit.md`](../spec/245-c-nonlocal-exit.md) | 原 TSR、實機時間 | 固定模擬器平台與 C 行為比較不代證 | 靜態 | evidence-only | — |
 | [`spec/246-c-world-bootstrap.md`](../spec/246-c-world-bootstrap.md) | 完整主迴圈與正常玩家路徑 | 本輪不代證 | 靜態 | evidence-only | — |
-| [`spec/246-c-world-bootstrap.md`](../spec/246-c-world-bootstrap.md) | 非法座標、原硬體時間及原 C 機器碼 | 不由局部原生 C 比較推廣 | 靜態 | evidence-only | — |
+| [`spec/246-c-world-bootstrap.md`](../spec/246-c-world-bootstrap.md) | 非法座標、原硬體時間 | 不由局部原生 C 比較推廣 | 靜態 | evidence-only | — |
 | [`spec/247-c-world-interaction.md`](../spec/247-c-world-interaction.md) | 完整主迴圈、更新排程與正常玩家長程 | 本輪不代證 | 靜態 | evidence-only | — |
-| [`spec/247-c-world-interaction.md`](../spec/247-c-world-interaction.md) | 非法表索引、原硬體時間及原C機器碼 | 不由局部原生C比較推廣 | 靜態 | evidence-only | — |
+| [`spec/247-c-world-interaction.md`](../spec/247-c-world-interaction.md) | 非法表索引、原硬體時間 | 不由局部原生C比較推廣 | 靜態 | evidence-only | — |
 | [`spec/248-c-city-tick.md`](../spec/248-c-city-tick.md) | 完整軍團更新、主排程、主迴圈及自然玩家長程 | 本輪不代證 | 靜態 | evidence-only | — |
-| [`spec/248-c-city-tick.md`](../spec/248-c-city-tick.md) | 非法記錄／原硬體時間與原C機器碼 | 不由局部比較推廣 | 靜態 | evidence-only | — |
+| [`spec/248-c-city-tick.md`](../spec/248-c-city-tick.md) | 非法記錄／原硬體時間 | 不由局部比較推廣 | 靜態 | evidence-only | — |
 | [`spec/249-c-route.md`](../spec/249-c-route.md) | 完整軍團更新、交戰／戰術、主排程與自然玩家長程 | 本輪不代證 | 靜態 | evidence-only | — |
-| [`spec/249-c-route.md`](../spec/249-c-route.md) | 非法圖表／原硬體時間與原C機器碼 | 不由局部原生C比較推廣 | 靜態 | evidence-only | — |
+| [`spec/249-c-route.md`](../spec/249-c-route.md) | 非法圖表／原硬體時間 | 不由局部原生C比較推廣 | 靜態 | evidence-only | — |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 空槽標記 | 原版用名稱欄第一個字 `0xD0A1`；remake 用「載得起來且玩家勢力有效」判定，兩者不等價 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/25-slot-select-window.md`](../spec/25-slot-select-window.md) | 新遊戲共用 | remake 的啟動殼層是自己的畫面，還沒有換成這個四槽視窗 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
-| [`spec/250-c-battle-outcome.md`](../spec/250-c-battle-outcome.md) | 完整交戰／戰術／軍團／主排程與正常玩家長程 | 本輪不代證 | 靜態 | evidence-only | — |
-| [`spec/250-c-battle-outcome.md`](../spec/250-c-battle-outcome.md) | 非法DIV／記錄、原硬體時間與原C機器碼 | 不由局部原生C比較推廣 | 靜態 | evidence-only | — |
-| [`spec/251-c-engagement-tactical.md`](../spec/251-c-engagement-tactical.md) | 完整軍團／主排程與正常玩家長程 | 本輪不代證。 | 靜態 | evidence-only | — |
-| [`spec/251-c-engagement-tactical.md`](../spec/251-c-engagement-tactical.md) | 原C機器碼與實機硬體時間 | 不能由原生語意比較推廣。 | 靜態 | evidence-only | — |
-| [`spec/252-c-army-update.md`](../spec/252-c-army-update.md) | 完整主排程、正常玩家長程及原C機器碼 | 本輪局部契約不代證。 | 靜態 | evidence-only | — |
-| [`spec/253-c-startup-main-loop.md`](../spec/253-c-startup-main-loop.md) | 完整讀檔長鏈、正常玩家長程及原C機器碼 | 本輪局部契約不代證。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/250-c-battle-outcome.md`](../spec/250-c-battle-outcome.md) | 完整交戰／戰術／軍團／主排程與正常玩家長程 | 本輪不代證 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/250-c-battle-outcome.md`](../spec/250-c-battle-outcome.md) | 非法DIV／記錄、原硬體時間 | 不由局部原生C比較推廣 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/251-c-engagement-tactical.md`](../spec/251-c-engagement-tactical.md) | 完整軍團／主排程與正常玩家長程 | 本輪不代證。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/251-c-engagement-tactical.md`](../spec/251-c-engagement-tactical.md) | 實機硬體時間 | 不能由原生語意比較推廣。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/252-c-army-update.md`](../spec/252-c-army-update.md) | 完整主排程、正常玩家長程 | 本輪局部契約不代證。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/253-c-startup-main-loop.md`](../spec/253-c-startup-main-loop.md) | 完整讀檔長鏈、正常玩家長程 | 本輪局部契約不代證。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/253-c-startup-main-loop.md`](../spec/253-c-startup-main-loop.md) | 未註冊熱區碼的自然可達性 | 只有位元組證據，無執行收據。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/253-c-startup-main-loop.md`](../spec/253-c-startup-main-loop.md) | INT61聲音驅動的真實硬體行為 | 以dosgolem聲音模型為界，不外推實機。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/253-c-startup-main-loop.md`](../spec/253-c-startup-main-loop.md) | 需IRQ0的等待路徑 | 只測就緒／邊界，不在矩陣內觸發tick；`12216`補丁路徑無呼叫端。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/254-c-residual-faction-season.md`](../spec/254-c-residual-faction-season.md) | `15AD1` 選列後接尾段、`15E1E` 金額列印 | `15E1E→15F5D→1062F` 印記錄 `[si+20h]` 起 24 位元金額；`1062F` 首除是 16 位元，值 ≥655360 即 `#DE`。prologue（`15CA4`）按劇本建記錄，劇本 2＋ 的部分（劇本，列）格金額超界，真機值小不觸發；矩陣只收右鍵離開案，選列由 `15AFC` 直… | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
-| [`spec/254-c-residual-faction-season.md`](../spec/254-c-residual-faction-season.md) | 完整讀檔長鏈、正常玩家長程及原 C 機器碼 | 本輪局部契約不代證。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/254-c-residual-faction-season.md`](../spec/254-c-residual-faction-season.md) | 完整讀檔長鏈、正常玩家長程 | 本輪局部契約不代證。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/254-c-residual-faction-season.md`](../spec/254-c-residual-faction-season.md) | `funcs_1A827` 表內 `1AB7C` 槽位 | 取址存在已證實，精確槽位未定；不擋 C 語意。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/254-c-residual-faction-season.md`](../spec/254-c-residual-faction-season.md) | INT61 聲音驅動的真實硬體行為 | 以 dosgolem 聲音模型為界，不外推實機。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/254-c-residual-faction-season.md`](../spec/254-c-residual-faction-season.md) | 需 IRQ0 的等待路徑 | 只測就緒／邊界，不在矩陣內觸發 tick。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/255-c-machine-code-feasibility.md`](../spec/255-c-machine-code-feasibility.md) | 其他七支執行檔的工具鏈 | 本輪只判 `KI.EXE`。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/255-c-machine-code-feasibility.md`](../spec/255-c-machine-code-feasibility.md) | 原作者語言（若手寫） | 組語來源無法取回命名與切分；判定止於「非編譯器產物」。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/255-c-machine-code-feasibility.md`](../spec/255-c-machine-code-feasibility.md) | 完整匹配 | 判定通過才開下一輪；本 spec 不承諾匹配。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/256-matching-longpath-verification.md`](../spec/256-matching-longpath-verification.md) | C 軌跡回放實作 | 只留 Slice B 設計，實作另開 spec。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/256-matching-longpath-verification.md`](../spec/256-matching-longpath-verification.md) | AI 長程／90 日對拍 | remake 側 Issue #10 的範圍，不在 matching 線。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/256-matching-longpath-verification.md`](../spec/256-matching-longpath-verification.md) | PC-98 重建實跑 | matching 基線只含 DOS/V，不含 PC-98。 | 實測 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/257-c-trace-replay-b1.md`](../spec/257-c-trace-replay-b1.md) | 其他 slice 的軌跡回放 | B-1 只做數字函式；下一 slice 另開 spec。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/257-c-trace-replay-b1.md`](../spec/257-c-trace-replay-b1.md) | WATCH 無離開狀態 | 靠 harness 內雙跑補，不改 dosgolem。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/257-c-trace-replay-b1.md`](../spec/257-c-trace-replay-b1.md) | 互動函式（選單／等待） | 輸入是硬體事件，不在 B-1。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/258-c-trace-replay-b2.md`](../spec/258-c-trace-replay-b2.md) | 1084A／1F4DF／glyph 1F7A4 回放 | 需入口 BP／ES／段暫存器，待 dosgolem `regs` 動詞（跨 repo）。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/258-c-trace-replay-b2.md`](../spec/258-c-trace-replay-b2.md) | 18853／189A4 | 本 timeline 零呼叫；需單挑等特殊路徑軌跡。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/258-c-trace-replay-b2.md`](../spec/258-c-trace-replay-b2.md) | 其他 slice | 下一片另開 spec。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/259-c-trace-replay-b3.md`](../spec/259-c-trace-replay-b3.md) | dosgolem `regs` 動詞 | 已落地（dosgolem `apps/wolong/cmd/shot`，含 `formatRegs`／`parseWatchMem` 單元測試）；本專案 `tools/dosgolem.sh` 以 `WOLONG_DOSGOLEM_WATCHMEM` 透傳。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/259-c-trace-replay-b3.md`](../spec/259-c-trace-replay-b3.md) | 字模窗長度 | 64B 已足：451 去重案全綠，未加長。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/259-c-trace-replay-b3.md`](../spec/259-c-trace-replay-b3.md) | glyph 全量 verify | `c_recovery_glyph_verify.py` 卡在無關的 rectangle 補充檔計數（實得 339／808，期望 338／805，HEAD 既有），矩陣 252 案本身通過；待另案修。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
+| [`spec/259-c-trace-replay-b3.md`](../spec/259-c-trace-replay-b3.md) | 其他 slice | 下一片另開 spec。 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/26-yes-no-dialog.md`](../spec/26-yes-no-dialog.md) | 原版的使用者 | `sub_18DC8` 只有一個呼叫端 `sub_11AC3`（新遊戲流程），問題文字由那裡給，內容未讀 | 靜態 | evidence-only | — |
 | [`spec/26-yes-no-dialog.md`](../spec/26-yes-no-dialog.md) | `cx = 600Dh` 的尺寸編碼 | `sub_19796`／`sub_197C3` 是**保存／還原被蓋住的畫面**，`dx`／`bx` 是像素座標、換算成 VRAM 位址（`45` §2 逐行解過）。這個呼叫端的 `cx` 高低位元組怎麼對到寬高沒逐位對過 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/260-c-trace-replay-b4.md`](../spec/260-c-trace-replay-b4.md) | 18853／189A4 | 本 timeline 零呼叫；需單挑等特殊路徑軌跡，另開 spec。 | 靜態 | merge-target | [#17](https://github.com/wicanr2/wolong_cht/issues/17) |
+| [`spec/260-c-trace-replay-b4.md`](../spec/260-c-trace-replay-b4.md) | 其他 slice | 下一片另開 spec。 | 靜態 | evidence-only | — |
+| [`spec/261-c-trace-replay-b5.md`](../spec/261-c-trace-replay-b5.md) | 18853 的 CX=FFFF 分支 | 本流程未觸發；矩陣案已覆蓋，軌跡回放未覆蓋。 | 靜態 | evidence-only | — |
+| [`spec/261-c-trace-replay-b5.md`](../spec/261-c-trace-replay-b5.md) | 其他 slice | 下一片另開 spec。 | 靜態 | evidence-only | — |
+| [`spec/262-matching-interactive-longpath.md`](../spec/262-matching-interactive-longpath.md) | 戰術／攻城長程 | 本片止於政略互動；戰場路徑另開 spec。 | 靜態 | evidence-only | — |
+| [`spec/262-matching-interactive-longpath.md`](../spec/262-matching-interactive-longpath.md) | PC-98 重建實跑 | matching 基線只含 DOS/V。 | 實測 | evidence-only | — |
+| [`spec/262-matching-interactive-longpath.md`](../spec/262-matching-interactive-longpath.md) | remake 側長程對拍 | Issue #10 的範圍，不在 matching 線。 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/263-c-trace-replay-b6.md`](../spec/263-c-trace-replay-b6.md) | 零呼叫的 11 個同族入口 | 本時間軸未觸發；僅 spec/222／225 矩陣覆蓋，另開時間軸才處理 | 靜態 | evidence-only | — |
+| [`spec/263-c-trace-replay-b6.md`](../spec/263-c-trace-replay-b6.md) | map／plane 內容 | harness 模式內容＋真實 ICONGRF，非原版該時刻的畫面內容；宣稱只到「真實暫存器輸入下原版/C 一致」 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`spec/263-c-trace-replay-b6.md`](../spec/263-c-trace-replay-b6.md) | 其他 slice | 下一片另開 spec | 靜態 | evidence-only | — |
 | [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 頭像尺寸 | 軍師頭像的下緣照原版座標會略微超出那個 208×104 的底框；沒有 oracle 可比，先照機器碼畫 | 實測 | evidence-only | — |
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 事件佇列 | 這一輪不進 JSON。編輯器要動它得先有 UI 語意 | 靜態 | evidence-only | — |
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 未解區域 | `+0x1EC0` 那 7 KB 仍是黑盒，只能靠改寫保留 | 靜態 | evidence-only | — |

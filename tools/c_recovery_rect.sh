@@ -43,6 +43,12 @@ timeout --kill-after=10 2400 docker run --rm --init --name "$RECT_CONTAINER" \
     if [[ "$RECT_MODE" == smoke ]]; then
       CGO_CFLAGS="-O2 -std=c11 -D_GNU_SOURCE $RECT_DEFINE" go build -tags matching_rect,matching_vga -p 2 -o /output/rect-smoke .
       /output/rect-smoke -smoke -out /output/results/smoke.json
+    elif [[ "$RECT_MODE" == trace ]]; then
+      test -s /output/trace/watch.log
+      for optimize in O2 O0; do
+        CGO_CFLAGS="-$optimize -std=c11 -D_GNU_SOURCE $RECT_DEFINE" go build -tags matching_rect,matching_vga -p 2 -o "/output/rect-trace-$optimize" .
+        "/output/rect-trace-$optimize" -group trace --trace /output/trace/watch.log -out "/output/results/trace-$optimize.json"
+      done
     else
       for optimize in O2 O0; do
         CGO_CFLAGS="-$optimize -std=c11 -D_GNU_SOURCE $RECT_DEFINE" go build -tags matching_rect,matching_vga -p 2 -o "/output/rect-$optimize" .

@@ -1,0 +1,41 @@
+{
+  "schema": "wolong-c-rect-trace-v1",
+  "status": "trace-replay-pass",
+  "spec": "docs/spec/263-c-trace-replay-b6.md",
+  "timeline": "spec/262 interactive longpath: opening to 196/4/8, advisor event dismissed with right-press x4, command bar, finance panel, personnel list (dosgolem WATCH, full registers)",
+  "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "trace_log_sha256": "afafc21bd2dbd3855e89be00fec8babe6688b55cba1af6970ae1b319d7d4de8c",
+  "trace_calls": 3723,
+  "trace_unique": 552,
+  "targets": [
+    "sub_1E453@0x1e453",
+    "sub_10CAC@0x10cac",
+    "sub_1E3D7@0x1e3d7",
+    "sub_1F1A3@0x1f1a3",
+    "sub_10C60@0x10c60",
+    "sub_10C77@0x10c77",
+    "sub_1D5D4@0x1d5d4",
+    "sub_189DE@0x189de",
+    "sub_1895D@0x1895d",
+    "sub_10C14@0x10c14",
+    "sub_1E3C0@0x1e3c0",
+    "sub_10BCD@0x10bcd",
+    "sub_10AD9@0x10ad9"
+  ],
+  "capture": "dosgolem WATCH full-register lines (AX-DI, BP, SP, DS, ES, SS, FLAGS) on the interactive timeline; per-target calls 1E453x2763, 10CACx775, 1E3D7x52, 1F1A3x35, 10C60x20, 10C77x20, 1D5D4x14, 189DEx14, 1895Dx14, 10C14x10, 1E3C0x2, 10BCDx2, 10AD9x2; zero calls for 1F020/1F140/1F17B/1E41B/1C61F/1C6BF/1C6AE/1C6F6/1C74C/1C775/1C78E on this timeline",
+  "staging": "Traced registers and FLAGS replayed as-is; runtime CS mapped onto harness CS, other traced segments keep their values on both sides; CS data words (E479/E47B map pointer 6000:0, D84E tile segment, 0D4A border segment), pattern map/planes identical on both sides, real ICONGRF staged at 22000/30000 (realAsset); 1E3C0 init staged with harness ES:DI=6000:0 instead of the traced caller segment (documented swap, cf. spec/259 far pointers); return sentinel word at traced SS:SP on both sides",
+  "O2": {
+    "cases": 552,
+    "passed": true,
+    "original_state_sha256": "ed7f427a0a50a259d53ce0dd8022c7fc89b62488a30bec88e3bf561c4bd9ee70",
+    "c_state_sha256": "ed7f427a0a50a259d53ce0dd8022c7fc89b62488a30bec88e3bf561c4bd9ee70"
+  },
+  "O0": {
+    "cases": 552,
+    "passed": true,
+    "original_state_sha256": "ed7f427a0a50a259d53ce0dd8022c7fc89b62488a30bec88e3bf561c4bd9ee70",
+    "c_state_sha256": "ed7f427a0a50a259d53ce0dd8022c7fc89b62488a30bec88e3bf561c4bd9ee70"
+  },
+  "mismatch": null,
+  "note": "Rect matrix smoke mode re-run passes after the harness extension (239 cases). Map/plane contents are harness pattern plus real ICONGRF, not the original screen contents at capture time; the claim is original/C parity under real register inputs. No C machine-code or full natural-player-path claim."
+}

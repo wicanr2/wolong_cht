@@ -105,9 +105,9 @@ Android 不在這次桌面修正版範圍。
 | ⭐ **狀態層**（原版記憶體 vs remake 解出來的存檔）| 四張表全部逐欄比過：軍團表八支的每一欄，以及**勢力 22 × 13 ＋ 據點 192 × 17 ＋ 武將 122 × 16 ＝ 5,502 個欄位一個都不差**——含兩個 remake 自己算出來的衍生值（武將評價、旗標 byte）。畫面相同只證明畫得一樣，這一份證明**讀得一樣** | [`playtest/71`](docs/playtest/71-corps-table-parity.md)、[`playtest/77`](docs/playtest/77-state-table-parity.md) |
 | ⭐ **AI 決策軌跡**（原版執行期 vs remake 規則層）| 攔原版所有事件的共用出口（`sub_12FBF`），拿到「誰在哪一天決定了什麼」：**事件種類、參數形狀與每月量級一致**，都在月結觸發。原版 196 年 5 月 1 日**曹操對呂布宣戰**，劇本一的主線 | [`playtest/78`](docs/playtest/78-ai-decision-trace.md) |
 | 音訊 | 會出聲、場景對應已解、與原版錄音比對過；**音色的諧波結構沒量化比對** | [`spec/29`](docs/spec/29-audio.md) |
-| 規則規格 | **248 份**（不含索引與 `TEMPLATE.md`，含研究用 C 契約）：**243 CONFORMED**／4 READY／1 DRAFT | [`spec/00`](docs/spec/00-index.md) |
-| 反組譯 | 739/739 支有筆記；`docs/re/43` 目前主表有 **1053 列**，另列 6 筆 DOS／BIOS 平台層 | [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
-| 全專案的未解 | **1059 列**（主表 1053 列，另有 6 列 DOS／BIOS 平台層不計入主表）。⚠ **這個數字比較接近「文件有多少份」**——主表分布在 433 份文件、平均每份 2.4 列，而每寫一份新文件就可能帶進自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
+| 規則規格 | **249 份**（不含索引與 `TEMPLATE.md`，含研究用 C 契約）：**244 CONFORMED**／4 READY／1 DRAFT | [`spec/00`](docs/spec/00-index.md) |
+| 反組譯 | 739/739 支有筆記；`docs/re/43` 目前主表有 **1102 列**，另列 6 筆 DOS／BIOS 平台層 | [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
+| 全專案的未解 | **1108 列**（主表 1102 列，另有 6 列 DOS／BIOS 平台層不計入主表）。⚠ **這個數字比較接近「文件有多少份」**——主表分布在 447 份文件、平均每份 2.5 列，而每寫一份新文件就可能帶進自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
 
 #### 那些未解項對 remake 代表什麼
 
@@ -162,7 +162,7 @@ Android 與長程全局通關不在本輪範圍。未解研究列數不作發行
 
 目前不再在 README 維護待辦清單；請看 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues)。
 目前已登記的規則、對拍、平台、發行與證據分流工作見 Issues #1–#32（#28 已完成）；
-[`docs/re/43`](docs/re/43-open-questions.md) 只是生成的證據索引，不是 1059 個獨立工作。
+[`docs/re/43`](docs/re/43-open-questions.md) 只是生成的證據索引，不是 1108 個獨立工作。
 本節其餘內容是已驗收結果或刻意的 remake 差異，不作工作狀態來源。
 
 #### 刻意不一樣的（remake 差異）
