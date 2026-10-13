@@ -86,6 +86,7 @@ OUT_ABS="$(cd "$OUT" && pwd)"
 ARGS=(-exe "/orig/$GAMEDIR/KI.EXE" -root "/orig/$GAMEDIR" -dir /out -script "$TIMELINE")
 [[ "$YMODE" == "dosbox" ]] && ARGS+=(-dosbox-y)
 [[ -n "${WOLONG_DOSGOLEM_WATCH:-}" ]] && ARGS+=(-watch "$WOLONG_DOSGOLEM_WATCH")
+[[ -n "${WOLONG_DOSGOLEM_WATCHMEM:-}" ]] && ARGS+=(-watchmem "$WOLONG_DOSGOLEM_WATCHMEM")
 [[ -n "${WOLONG_DOSGOLEM_BUDGET:-}" ]] && ARGS+=(-budget "$WOLONG_DOSGOLEM_BUDGET")
 
 # 原版素材唯讀掛載；輸出目錄可寫。**本專案與 dosgolem 都不含原版檔案。**

@@ -44,6 +44,12 @@ timeout --kill-after=10 2400 docker run --rm --init --name "$GLYPH_CONTAINER" \
     if [[ "$GLYPH_MODE" == smoke ]]; then
       CGO_CFLAGS="-O2 -std=c11 -D_GNU_SOURCE $GLYPH_DEFINE" go build -tags matching_glyph,matching_vga -p 2 -o /output/glyph-smoke .
       /output/glyph-smoke -smoke -out /output/results/smoke.json
+    elif [[ "$GLYPH_MODE" == trace ]]; then
+      test -s /output/trace/watch.log
+      for optimize in O2 O0; do
+        CGO_CFLAGS="-$optimize -std=c11 -D_GNU_SOURCE $GLYPH_DEFINE" go build -tags matching_glyph,matching_vga -p 2 -o "/output/glyph-trace-$optimize" .
+        "/output/glyph-trace-$optimize" -group trace --trace /output/trace/watch.log -out "/output/results/trace-$optimize.json"
+      done
     else
       for optimize in O2 O0; do
         CGO_CFLAGS="-$optimize -std=c11 -D_GNU_SOURCE $GLYPH_DEFINE" go build -tags matching_glyph,matching_vga -p 2 -o "/output/glyph-$optimize" .

@@ -1,0 +1,33 @@
+{
+  "schema": "wolong-c-glyph-trace-v1",
+  "status": "trace-replay-pass",
+  "spec": "docs/spec/259-c-trace-replay-b3.md",
+  "timeline": "docs/playtest/122-rebuilt-longpath-smoke.md",
+  "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "trace_log_sha256": "79b6df82b73bd072dd17fe7a87f9a443b0cc18d3f176bfbddd807c9f82e2edc6",
+  "trace_calls": 468,
+  "trace_unique": 451,
+  "targets": [
+    "sub_1F7A4@0xf7a4",
+    "sub_106F5@0x6f5",
+    "sub_106FD@0x6fd",
+    "sub_1F720@0xf720"
+  ],
+  "capture": "dosgolem WATCH extended line (full registers incl. BP/SP/DS/ES/SS/FLAGS) plus -watchmem ES:BP:64,CS:#F780:48,DS:SI:64 on the slice-A timeline; final clock 196/4/8, 130849387 instructions, call counts 1F7A4x452/106F5x7/106FDx8/1F720x1",
+  "staging": "Glyph window staged at traced ES:BP (64B); string window staged at traced DS:SI (64B); only CS F7A1..F7A3 (mode word + narrow flag) staged from the CS window - the neighbouring font far-pointers F78A-F793 stay harness-patched to the 0080:0410/0414 stub; runtime CS segment mapped onto harness CS, other traced segments keep their values on both sides",
+  "flags": "traced FLAGS replayed as-is (no CF sweep; B-1/B-2 swept CF only because the old WATCH line had no FLAGS)",
+  "O2": {
+    "cases": 451,
+    "passed": true,
+    "original_state_sha256": "bb5bf37cce7ecb459ce00c4b1b33cfcfc09d36d90be471077e37cca717e1420a",
+    "c_state_sha256": "bb5bf37cce7ecb459ce00c4b1b33cfcfc09d36d90be471077e37cca717e1420a"
+  },
+  "O0": {
+    "cases": 451,
+    "passed": true,
+    "original_state_sha256": "bb5bf37cce7ecb459ce00c4b1b33cfcfc09d36d90be471077e37cca717e1420a",
+    "c_state_sha256": "bb5bf37cce7ecb459ce00c4b1b33cfcfc09d36d90be471077e37cca717e1420a"
+  },
+  "mismatch": null,
+  "note": "Full RAM/plane/device/port/trace comparison per case; entries seen include internal sub_1F75Ex124, sub_1F7A4x559, sub_1F878x124 and dosv-font-fullx124. No C machine-code or natural-player-path claim."
+}

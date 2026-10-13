@@ -24,6 +24,7 @@ package main
 */
 import "C"
 import (
+	"bufio"
 	"bytes"
 	"crypto/sha256"
 	"encoding/binary"
@@ -35,6 +36,9 @@ import (
 	"github.com/wicanr2/dosgolem/internal/dos"
 	"github.com/wicanr2/dosgolem/internal/machine"
 	"os"
+	"regexp"
+	"strconv"
+	"strings"
 	"unsafe"
 )
 
@@ -121,12 +125,20 @@ type glyphCase struct {
 	values                             [10]uint16
 	mask, readMap, seed                byte
 	df, realAsset, keep, compareBar    bool
+
+	trace     bool
+	regs      registers
+	runtimeCS uint16
+	glyphMem  []byte
+	csMem     []byte
+	strMem    []byte
 }
 
 func main() {
 	output := flag.String("out", "/output/results/O2.json", "receipt")
 	only := flag.String("group", "", "group")
 	smoke := flag.Bool("smoke", false, "bounded matrix")
+	trace := flag.String("trace", "", "dosgolem WATCH log; 1F7A4/106F5/106FD/1F720 entries become group-trace cases")
 	flag.Parse()
 	raw, err := os.ReadFile("/orig/KI.EXE")
 	if err != nil {
@@ -333,6 +345,31 @@ func main() {
 		if c.target == 0xc7f4 {
 			r.DS = 0x3000
 		}
+		if c.trace {
+			// Real-run entry state (spec/259): full registers from the
+			// extended WATCH line; the runtime CS segment maps onto the
+			// harness CS, other segments keep their traced values so
+			// both sides address identical flat RAM.
+			r.AX, r.BX, r.CX, r.DX, r.SI, r.DI, r.BP, r.SP = c.regs.AX, c.regs.BX, c.regs.CX, c.regs.DX, c.regs.SI, c.regs.DI, c.regs.BP, c.regs.SP
+			mapSeg := func(s uint16) uint16 {
+				if s == c.runtimeCS {
+					return cs
+				}
+				return s
+			}
+			r.DS, r.ES, r.SS = mapSeg(c.regs.DS), mapSeg(c.regs.ES), mapSeg(c.regs.SS)
+			r.CS, r.IP, r.Flags = cs, c.target, c.regs.Flags
+			for _, mem := range [][]byte{original.Mem, cMemory} {
+				copy(mem[int(r.ES)*16+int(r.BP):], c.glyphMem)
+				// Only the mode word 1F7A1 and narrow flag 1F7A3 are
+				// data inputs. The neighbouring font far-pointers at
+				// F78A-F793 are call operands the harness patches to
+				// its stub; staging the real ones would send the
+				// original CPU to the real TSR address.
+				copy(mem[int(cs)*16+0xf7a1:], c.csMem[0x21:0x24])
+				copy(mem[int(r.DS)*16+int(r.SI):], c.strMem)
+			}
+		}
 		original.CPU.R = [8]uint16{r.AX, r.CX, r.DX, r.BX, r.SP, r.BP, r.SI, r.DI}
 		original.CPU.Seg = [4]uint16{r.ES, r.CS, r.SS, r.DS}
 		original.CPU.IP = r.IP
@@ -486,12 +523,81 @@ func main() {
 			add(c)
 		}
 	}
+	// Trace replay (spec/259): real slice-A entries for the four glyph
+	// functions. Dedup on the full entry state: registers, the 64-byte
+	// glyph window at ES:BP and the 48-byte CS window at F780 (font
+	// pointers, mode word 1F7A1 and narrow flag 1F7A3).
+	traceCalls, traceUnique := 0, 0
+	traceHash := ""
+	if *trace != "" {
+		raw, err := os.ReadFile(*trace)
+		if err != nil {
+			panic(err)
+		}
+		sum := sha256.Sum256(raw)
+		traceHash = hex.EncodeToString(sum[:])
+		targets := map[string]uint16{"1F7A4": 0xf7a4, "106F5": 0x6f5, "106FD": 0x6fd, "1F720": 0xf720}
+		re := regexp.MustCompile(`呼叫 ([0-9A-F]+) AX=([0-9A-F]{4}) BX=([0-9A-F]{4}) CX=([0-9A-F]{4}) DX=([0-9A-F]{4}) SI=([0-9A-F]{4}) DI=([0-9A-F]{4}) BP=([0-9A-F]{4}) SP=([0-9A-F]{4}) DS=([0-9A-F]{4}) ES=([0-9A-F]{4}) SS=([0-9A-F]{4}) FLAGS=([0-9A-F]{4}) MEM=([0-9A-F]{4}):([0-9A-F]{4}):([0-9A-F]+) MEM=([0-9A-F]{4}):([0-9A-F]{4}):([0-9A-F]+) MEM=([0-9A-F]{4}):([0-9A-F]{4}):([0-9A-F]+)`)
+		seen := map[string]bool{}
+		sc := bufio.NewScanner(bytes.NewReader(raw))
+		sc.Buffer(make([]byte, 1024*1024), 1024*1024)
+		for sc.Scan() {
+			m := re.FindStringSubmatch(sc.Text())
+			if m == nil {
+				continue
+			}
+			t, ok := targets[strings.TrimSpace(m[1])]
+			if !ok {
+				continue
+			}
+			traceCalls++
+			key := strings.Join(m[1:], "|")
+			if seen[key] {
+				continue
+			}
+			seen[key] = true
+			traceUnique++
+			parse := func(s string) uint16 {
+				v, err := strconv.ParseUint(s, 16, 16)
+				if err != nil {
+					panic(err)
+				}
+				return uint16(v)
+			}
+			glyphMem, err := hex.DecodeString(m[16])
+			if err != nil {
+				panic(err)
+			}
+			csMem, err := hex.DecodeString(m[19])
+			if err != nil {
+				panic(err)
+			}
+			strMem, err := hex.DecodeString(m[22])
+			if err != nil {
+				panic(err)
+			}
+			c := base("trace", t)
+			c.trace = true
+			c.regs = registers{AX: parse(m[2]), BX: parse(m[3]), CX: parse(m[4]), DX: parse(m[5]), SI: parse(m[6]), DI: parse(m[7]), BP: parse(m[8]), SP: parse(m[9]), DS: parse(m[10]), ES: parse(m[11]), SS: parse(m[12]), Flags: parse(m[13])}
+			c.runtimeCS = parse(m[17])
+			c.glyphMem = glyphMem
+			c.csMem = csMem
+			c.strMem = strMem
+			add(c)
+		}
+		if err := sc.Err(); err != nil {
+			panic(err)
+		}
+		if traceCalls == 0 {
+			panic("trace log has no replayable entries")
+		}
+	}
 	for _, c := range all {
 		if !check(c) {
 			break
 		}
 	}
-	report := map[string]any{"schema": "wolong-c-glyph-parity-v1", "input_sha256": inputHash, "icon_sha256": assetHash, "routine_sha256": routineHashes, "cases": cases, "groups": groups, "full_ram_plane_audits": audits, "indexed_content_audits": pixelAudits, "go_bar_cases": goCases, "content_top": 40, "content_height": 400, "entries_seen": entries, "passed": mismatch == nil, "mismatch": mismatch, "original_state_sha256": hex.EncodeToString(originalDigest.Sum(nil)), "c_state_sha256": hex.EncodeToString(cDigest.Sum(nil)), "trace_entry_size": 90, "platform": "Independent pinned dosgolem devices; native C renderer; fixed FAR controls; IF/TF=0; CPU-model undefined flags; no wall-clock claim", "asset_banks": "ICONGRF segment1 at 3000; whole segment3 at 2200; command 2200, border 226c", "original_font_calls": originalDOS.Font.Calls, "c_font_calls": activeDOS.Font.Calls, "original_missing_fonts": originalDOS.Font.Missing, "c_missing_fonts": activeDOS.Font.Missing, "c_machine_code_match": false}
+	report := map[string]any{"schema": "wolong-c-glyph-parity-v1", "input_sha256": inputHash, "icon_sha256": assetHash, "routine_sha256": routineHashes, "cases": cases, "groups": groups, "full_ram_plane_audits": audits, "indexed_content_audits": pixelAudits, "go_bar_cases": goCases, "content_top": 40, "content_height": 400, "entries_seen": entries, "passed": mismatch == nil, "mismatch": mismatch, "original_state_sha256": hex.EncodeToString(originalDigest.Sum(nil)), "c_state_sha256": hex.EncodeToString(cDigest.Sum(nil)), "trace_entry_size": 90, "platform": "Independent pinned dosgolem devices; native C renderer; fixed FAR controls; IF/TF=0; CPU-model undefined flags; no wall-clock claim", "asset_banks": "ICONGRF segment1 at 3000; whole segment3 at 2200; command 2200, border 226c", "original_font_calls": originalDOS.Font.Calls, "c_font_calls": activeDOS.Font.Calls, "original_missing_fonts": originalDOS.Font.Missing, "c_missing_fonts": activeDOS.Font.Missing, "c_machine_code_match": false, "trace_calls": traceCalls, "trace_unique": traceUnique, "trace_log_sha256": traceHash}
 	b, _ := json.MarshalIndent(report, "", "  ")
 	b = append(b, '\n')
 	if e := os.WriteFile(*output, b, 0644); e != nil {
