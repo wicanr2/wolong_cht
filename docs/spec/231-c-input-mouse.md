@@ -30,4 +30,4 @@ callback 明示 far 輸入，不使用 C-side CPU.Step；原版 timer wall-clock
 |---|---|
 | counter 的真實初始化／timer cadence | 只驗原 consumer，不推算硬體時間 |
 | 正常玩家 callback／訊息流程 | 局部完整 device 對照仍有 direct-entry 界線 |
-| C 機器碼與原作者工具鏈 | 尚未確認 |
+| C 機器碼與原作者工具鏈 | spec/255 已判手寫組語，C 機器碼匹配不可行 |

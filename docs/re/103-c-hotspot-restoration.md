@@ -150,4 +150,4 @@ RNG表固定12:34:56、raw c/s執行前同寫兩側，沒有重擲；IF/TF=0，S
 | VGA plane／blit／畫面保存 | primitive 不代證真實 memory device 或像素 |
 | 真實滑鼠polling與正常玩家視窗 | 固定pixel只量控制流／map，Issue #22保持OPEN |
 | 完整Go視窗／財政 | 局部map／scalar不外推完整玩家路徑 |
-| C機器碼與原作者工具鏈 | 未驗證，整檔binary match仍是組語基準 |
+| C機器碼與原作者工具鏈 | spec/255 已判手寫組語，C 機器碼匹配不可行；整檔匹配仍由組語基準提供 |

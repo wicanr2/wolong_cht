@@ -84,7 +84,7 @@ Go workspace 只在容器內建立。dosgolem 被 import 的來源在執行前�
 |---|---|
 | 真實 RTC 與保留值 | 本輪只有受控回覆，沒有實機 RTC 證據 |
 | 非法 BCD、其他 CS、堆疊重疊 | 未驗證，不能外推 |
-| C 機器碼匹配與玩家流程 | 未驗證，不宣稱整個 matching decompilation 完成 |
+| 玩家流程 | 未驗證，不宣稱整個 matching decompilation 完成 |
 | XOR 的 AF | 本輪按工具模型比對，不聲稱硬體定義 |
 
 C 完成狀態查 [`c-recovery-status.json`](c-recovery-status.json)。原始組語基準與先前收據保留。

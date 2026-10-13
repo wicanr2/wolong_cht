@@ -25,7 +25,7 @@ patch 成 `90 90` 才同時問左／右鍵。兩者都可能由右鍵或 counter
 |---|---|
 | 原版 timer producer 與 wall-clock | 本輪注入明示 counter 輸入，驗等待消費端，不換算牆上秒數 |
 | 自然玩家與自動 callback 派送 | direct callback／固定 press 序列不代證正常玩家操作 |
-| 原作者 C 工具鏈與機器碼 | 仍需另驗 |
+| 原作者 C 工具鏈與機器碼 | spec/255 已判手寫組語，C 機器碼匹配不可行 |
 
 ## 原始分段與可回查定位
 

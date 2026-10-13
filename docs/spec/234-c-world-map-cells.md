@@ -41,4 +41,4 @@ O0／O2 比完整 RAM、四 plane、暫存器、FLAGS、SS frame、函式入口�
 | 項目 | 限制 |
 |---|---|
 | 正常玩家與上游 producer | 本閉包不代證完整場景退出與軍團／物件更新 |
-| 原作者 C compiler／machine code | 尚未確認 |
+| 原作者 C compiler／machine code | spec/255 已判手寫組語，C 機器碼匹配不可行 |

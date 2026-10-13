@@ -32,4 +32,4 @@ far／tail、原始 renderer 與 816 glyph，重跑 `tools/c_recovery_resume.sh`
 | 項目 | 限制 |
 |---|---|
 | 正常玩家長程路徑 | 局部主入口不代證自然事件與通關 |
-| 原作者 C compiler／machine code | 尚未確認 |
+| 原作者 C compiler／machine code | spec/255 已判手寫組語，C 機器碼匹配不可行 |

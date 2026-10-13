@@ -38,4 +38,4 @@ BL／DL low-byte F8h 對完整 word 等價 FFF8h，不能丟 high byte。
 | 真實 VGA plane／blit／保存像素 | primitive 不代證實際 memory device |
 | 自然滑鼠與玩家視窗 | 固定 pixel fixture 不作正常玩家證據 |
 | 完整 Go 視窗三方 | 未驗證 |
-| C 機器碼匹配 | 未驗證 |
+| C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行 |

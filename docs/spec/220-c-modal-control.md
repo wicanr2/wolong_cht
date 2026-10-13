@@ -43,4 +43,4 @@ O0/O2 比全 register、FLAGS、callee 入口、stack、control fields、中途 
 | 完整底層輸入／繪圖／音效與自然玩家視窗 | 本輪 primitive fixture 不作完成證據 |
 | Go 每時／事件／視窗三方 | 尚未驗證 |
 | 自然執行時序與硬體 | 尚未驗證 |
-| C 機器碼匹配 | 尚未驗證 |
+| C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行 |

@@ -39,7 +39,7 @@ O0/O2 全 register、FLAGS、SS、callee trace、控制欄位與完整 RAM 抽�
 | 真實圖形／input／popup 與自然玩家數值視窗 | primitive fixture 不取代 UI／像素證據 |
 | 完整 Go 財政／視窗三方 | 局部數值核心不作完整玩家證據 |
 | 自然執行時間與硬體 | 未驗證 |
-| C 機器碼匹配 | 未驗證 |
+| C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行 |
 
 ## 熱區 callee 後續證據
 

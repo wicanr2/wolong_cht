@@ -157,7 +157,7 @@ shift／logic／DIV 未定義 FLAGS 沿用固定 dosgolem 模型，不外推實�
 | 真實圖形／實際 input polling 與 popup leaf | primitive fixture 不取代 UI／像素／正常玩家證據 |
 | 完整 Go 財政／視窗垂直鏈 | 局部數值核心不能外推完整玩家流程 |
 | 硬體 wall-clock／自然輸入時間 | 未驗證 |
-| C 機器碼與原作者工具鏈 | 未驗證，整檔 binary match 仍是組語基準 |
+| C 機器碼與原作者工具鏈 | spec/255 已判手寫組語，C 機器碼匹配不可行；整檔匹配仍由組語基準提供 |
 
 ## 熱區 callee 勘誤（2026-10-08）
 

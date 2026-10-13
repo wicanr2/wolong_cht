@@ -33,4 +33,4 @@ codec／DS／原點／完整場景／source advance／signed 線段／除法合�
 | 真正字型服務與全 UI | callback fixture 不代證 |
 | 正常玩家場景操作 | 直接入口矩陣不代證 |
 | 完整 C 與其他資料／code 區 | 本輪未完成 |
-| C 機器碼匹配 | 未驗證 |
+| C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行 |

@@ -33,4 +33,4 @@ O0／O2 比完整 RAM、四 plane、FLAGS／暫存器／SS frame、函式入口�
 | 項目 | 限制 |
 |---|---|
 | 正常玩家／完整場景與 type 3 | 局部輸入不代證完整自然路徑 |
-| 原作者 C compiler／machine code | 尚未確認 |
+| 原作者 C compiler／machine code | spec/255 已判手寫組語，C 機器碼匹配不可行 |

@@ -35,4 +35,4 @@ GC／seq／latch／index、port 順序與入口 stack 快照。內容區像素�
 | 正常玩家戰術畫面 | caller／primitive 收據不足以完成正常路徑 |
 | 自然裝置輸入與實機 wall-clock | 固定 FAR fixture 與 VGA 模型 |
 | 其他字型與文字 renderer | 本輪範圍外，尚未完成 |
-| C 機器碼匹配 | 未驗證 |
+| C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行 |

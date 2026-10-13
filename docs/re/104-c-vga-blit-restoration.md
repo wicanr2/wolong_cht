@@ -135,4 +135,4 @@ IF/TF=0、獨立SS／來源／保存buffer。未定義FLAGS依固定CPU模型，
 | 完整normal-player畫面／視窗合成 | 局部primitive與debug PNG不代證正常玩家路徑，Issue #22保持OPEN |
 | 實機VGA逐週期／wall-clock | 固定成熟平台模型的局部對拍，不稱同硬體時間 |
 | 完整Go圖形三方 | 未驗證 |
-| C機器碼與原作者工具鏈 | 未驗證，整檔binary match仍是組語基準 |
+| C機器碼與原作者工具鏈 | spec/255 已判手寫組語，C 機器碼匹配不可行；整檔匹配仍由組語基準提供 |

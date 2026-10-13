@@ -36,4 +36,4 @@ caller 與第 40 列起的內容區抽查；原先完整 plane／ABI 收據仍�
 | 正常玩家完整畫面／視窗 | 局部blit不代表production route |
 | 實機時序／wall-clock | 只使用固定VGA模型 |
 | 完整Go圖形三方 | 未驗證 |
-| C機器碼匹配 | 未驗證 |
+| C機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行 |

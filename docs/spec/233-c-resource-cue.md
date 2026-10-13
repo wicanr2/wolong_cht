@@ -36,4 +36,4 @@ cue／重複 cue／mute／stop／allocation 分段必須覆蓋，錯版須拒絕
 |---|---|
 | INT50／完整退出情境 | 原 branch 保留，平台成功路徑不代證錯誤 GUI |
 | 原 TSR／硬體聲音 | 僅比 API／資料狀態；原 TSR 的輸出音色與硬體時序尚未驗證 |
-| 原作者 C compiler／machine code | 尚未確認 |
+| 原作者 C compiler／machine code | spec/255 已判手寫組語，C 機器碼匹配不可行 |

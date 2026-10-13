@@ -27,4 +27,4 @@ near／far／API／SS frame。覆蓋 accept／cancel、可見與頁邊界、live
 |---|---|
 | 自然玩家／進言 producer | 局部 consumer 與固定序列不代證 |
 | scroll helper 的執行期改寫 | 本輪依目前原始 image bytes，是否被改寫另追來源 |
-| 原作者 C 工具鏈與機器碼 | 尚未確認 |
+| 原作者 C 工具鏈與機器碼 | spec/255 已判手寫組語，C 機器碼匹配不可行 |
