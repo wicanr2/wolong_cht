@@ -1,0 +1,30 @@
+{
+  "schema": "wolong-c-talk2-trace-v1",
+  "status": "trace-replay-pass",
+  "spec": "docs/spec/260-c-trace-replay-b4.md",
+  "timeline": "docs/playtest/122-rebuilt-longpath-smoke.md",
+  "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "trace_log_sha256": "81dea5c50026b4b6f3047e723e9e0d2900232e3e8d52f56678752267d1c490be",
+  "trace_calls": 26,
+  "trace_unique": 26,
+  "targets": [
+    "sub_1084A@0x84a",
+    "sub_1F4DF@0xf4df"
+  ],
+  "capture": "dosgolem WATCH extended line (full registers) plus -watchmem DS:SI:256,DS:DX:64,CS:#F780:16 on the slice-A timeline; call counts 1084Ax2/1F4DFx24, 18853/189A4 still zero; B-2 targets in the same log replay unchanged (35 calls/29 unique/58 cases)",
+  "staging": "String window staged at traced DS:SI (256B), filename window at traced DS:DX (64B); runtime CS (from the CS dump segment) mapped onto harness CS, other traced segments keep their values on both sides; FLAGS replayed as traced, no CF sweep (entry FLAGS provably unread in both functions)",
+  "O2": {
+    "cases": 84,
+    "passed": true,
+    "original_state_sha256": "4b2d1c2c55b544b095294c2600dd94a9e8eb185449d58767287b3d61fdea1bc1",
+    "c_state_sha256": "4b2d1c2c55b544b095294c2600dd94a9e8eb185449d58767287b3d61fdea1bc1"
+  },
+  "O0": {
+    "cases": 84,
+    "passed": true,
+    "original_state_sha256": "4b2d1c2c55b544b095294c2600dd94a9e8eb185449d58767287b3d61fdea1bc1",
+    "c_state_sha256": "4b2d1c2c55b544b095294c2600dd94a9e8eb185449d58767287b3d61fdea1bc1"
+  },
+  "mismatch": null,
+  "note": "Cases = B-2 replay 58 + B-4 replay 26 in one trace run; DOS API counts INT21 3D/3E/3F/42 x78 each, identical both sides. Talk full matrix (1277 cases, 10 mutants) re-run green after the harness extension. No C machine-code or natural-player-path claim."
+}

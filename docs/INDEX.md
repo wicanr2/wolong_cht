@@ -497,6 +497,7 @@
 | [`docs/spec/258-c-trace-replay-b2.md`](spec/258-c-trace-replay-b2.md) | 258：C 軌跡回放 B-2（TALK 函式吃真實開局輸入） | CONFORMED。35 次呼叫去重 29 組 × CF 兩態＝58 案， O2／O0 雙跑全同、原版／C 終態雜湊… | 2026-10-12 |
 | [`docs/spec/259-c-trace-replay-b3.md`](spec/259-c-trace-replay-b3.md) | 259：C 軌跡回放 B-3（glyph 函式吃真實開局輸入） | CONFORMED。468 次呼叫去重 451 組，O2／O0 雙跑全同、原版／C 終態雜湊全同（[c-glyph-… | 2026-10-12 |
 | [`docs/spec/26-yes-no-dialog.md`](spec/26-yes-no-dialog.md) | 26 — ＹＥＳ／ＮＯ 對話框 | CONFORMED。版面與命中算式已照原版實作並有契約測試。 | 2026-08-15 |
+| [`docs/spec/260-c-trace-replay-b4.md`](spec/260-c-trace-replay-b4.md) | 260：C 軌跡回放 B-4（1084A／1F4DF 吃真實開局輸入） | CONFORMED。26 次呼叫去重 26 組，與 B-2 的 58 案同跑共 84 案， O2／O0 雙跑全同、原… | 2026-10-13 |
 | [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 輸入照原版收斂成兩個熱區（§2.1）。「自定」開命名視窗（[10… | 2026-08-15 |
 | [`docs/spec/28-scenario-json.md`](spec/28-scenario-json.md) | 28 — 劇本的 JSON 匯出與匯入 | CONFORMED。四個區塊 round-trip 全過。 | 2026-08-15 |
 | [`docs/spec/29-audio.md`](spec/29-audio.md) | 29 — 音樂與音效 | CONFORMED。音樂與音效都會出聲、與原版錄音比對過， ⭐ | 2026-08-15 |

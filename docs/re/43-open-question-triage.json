@@ -12609,6 +12609,32 @@
       "reason": "畫面對拍 gate、群組覆蓋或 32 組門檻，併入 Issue #12。"
     },
     {
+      "file": "docs/spec/260-c-trace-replay-b4.md",
+      "item": "18853／189A4",
+      "status": "本 timeline 零呼叫；需單挑等特殊路徑軌跡，另開 spec。",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-d88bc21e5e0b99cab457",
+      "classification": "merge-target",
+      "github_issue": 17,
+      "reason": "單挑角色方向與開場可操作 tick，併入 Issue #17。"
+    },
+    {
+      "file": "docs/spec/260-c-trace-replay-b4.md",
+      "item": "其他 slice",
+      "status": "下一片另開 spec。",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-dca57e630d4baac8f6fa",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
+    },
+    {
       "file": "docs/spec/27-lord-select-window.md",
       "item": "頭像尺寸",
       "status": "軍師頭像的下緣照原版座標會略微超出那個 208×104 的底框；沒有 oracle 可比，先照機器碼畫",

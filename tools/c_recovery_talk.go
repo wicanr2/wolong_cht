@@ -133,6 +133,12 @@ type talkCase struct {
 	parameters                         []uint16
 	swapTable, keep, df, badFile       bool
 	mask, readMap, seed                byte
+
+	traceFull bool
+	regs      registers
+	runtimeCS uint16
+	strMem    []byte
+	nameMem   []byte
 }
 
 func main() {
@@ -369,6 +375,25 @@ func main() {
 			r.DS = 0x3500
 			if c.group != "trace" {
 				r.SI = 0x9000
+			}
+		}
+		if c.traceFull {
+			// Real-run entry state (spec/260): full registers from the
+			// extended WATCH line; the runtime CS segment maps onto the
+			// harness CS, other segments keep their traced values so
+			// both sides address identical flat RAM.
+			r.AX, r.BX, r.CX, r.DX, r.SI, r.DI, r.BP, r.SP = c.regs.AX, c.regs.BX, c.regs.CX, c.regs.DX, c.regs.SI, c.regs.DI, c.regs.BP, c.regs.SP
+			mapSeg := func(s uint16) uint16 {
+				if s == c.runtimeCS {
+					return cs
+				}
+				return s
+			}
+			r.DS, r.ES, r.SS = mapSeg(c.regs.DS), mapSeg(c.regs.ES), mapSeg(c.regs.SS)
+			r.CS, r.IP, r.Flags = cs, c.target, c.regs.Flags
+			for _, mem := range [][]byte{original.Mem, cMemory} {
+				copy(mem[int(r.DS)*16+int(r.SI):], c.strMem)
+				copy(mem[int(r.DS)*16+int(r.DX):], c.nameMem)
 			}
 		}
 		original.CPU.R = [8]uint16{r.AX, r.CX, r.DX, r.BX, r.SP, r.BP, r.SI, r.DI}
@@ -622,6 +647,7 @@ func main() {
 	// entry BP/SP/SS/ES/DF or date RAM. Device init stays
 	// harness-constructed on both sides.
 	traceCalls, traceUnique := 0, 0
+	trace2Calls, trace2Unique := 0, 0
 	traceHash := ""
 	if *trace != "" {
 		raw, err := os.ReadFile(*trace)
@@ -691,13 +717,64 @@ func main() {
 		if traceCalls == 0 {
 			panic("trace log has no replayable entries")
 		}
+		// Full-register targets (spec/260): 1084A and 1F4DF need entry
+		// BP/SP/segments plus DS:SI / DS:DX windows, which the extended
+		// WATCH line carries. FLAGS replayed as traced (no CF sweep).
+		// The third dump is CS-based; its segment is the runtime CS.
+		fullRe := regexp.MustCompile(`呼叫 ([0-9A-F]+) AX=([0-9A-F]{4}) BX=([0-9A-F]{4}) CX=([0-9A-F]{4}) DX=([0-9A-F]{4}) SI=([0-9A-F]{4}) DI=([0-9A-F]{4}) BP=([0-9A-F]{4}) SP=([0-9A-F]{4}) DS=([0-9A-F]{4}) ES=([0-9A-F]{4}) SS=([0-9A-F]{4}) FLAGS=([0-9A-F]{4}) MEM=([0-9A-F]{4}):([0-9A-F]{4}):([0-9A-F]+) MEM=([0-9A-F]{4}):([0-9A-F]{4}):([0-9A-F]+) MEM=([0-9A-F]{4}):([0-9A-F]{4}):([0-9A-F]+)`)
+		fullTargets := map[string]uint16{"1084A": 0x84a, "1F4DF": 0xf4df}
+		seenFull := map[string]bool{}
+		sc2 := bufio.NewScanner(bytes.NewReader(raw))
+		sc2.Buffer(make([]byte, 1024*1024), 1024*1024)
+		for sc2.Scan() {
+			m := fullRe.FindStringSubmatch(sc2.Text())
+			if m == nil {
+				continue
+			}
+			t, ok := fullTargets[strings.TrimSpace(m[1])]
+			if !ok {
+				continue
+			}
+			trace2Calls++
+			key := strings.Join(m[1:], "|")
+			if seenFull[key] {
+				continue
+			}
+			seenFull[key] = true
+			trace2Unique++
+			parse := func(s string) uint16 {
+				v, err := strconv.ParseUint(s, 16, 16)
+				if err != nil {
+					panic(err)
+				}
+				return uint16(v)
+			}
+			strMem, err := hex.DecodeString(m[16])
+			if err != nil {
+				panic(err)
+			}
+			nameMem, err := hex.DecodeString(m[19])
+			if err != nil {
+				panic(err)
+			}
+			c := base("trace", t)
+			c.traceFull = true
+			c.regs = registers{AX: parse(m[2]), BX: parse(m[3]), CX: parse(m[4]), DX: parse(m[5]), SI: parse(m[6]), DI: parse(m[7]), BP: parse(m[8]), SP: parse(m[9]), DS: parse(m[10]), ES: parse(m[11]), SS: parse(m[12]), Flags: parse(m[13])}
+			c.runtimeCS = parse(m[20])
+			c.strMem = strMem
+			c.nameMem = nameMem
+			add(c)
+		}
+		if err := sc2.Err(); err != nil {
+			panic(err)
+		}
 	}
 	for _, c := range all {
 		if !check(c) {
 			break
 		}
 	}
-	report := map[string]any{"schema": "wolong-c-talk-parity-v1", "input_sha256": inputHash, "icon_sha256": assetHash, "routine_sha256": routineHashes, "cases": cases, "groups": groups, "full_ram_plane_audits": audits, "indexed_content_audits": pixelAudits, "content_top": 40, "content_height": 400, "entries_seen": entries, "corpus_slots_seen": corpusSlots, "dos_api_calls": dosAPICalls, "cache_sequence_api_counts": cacheReads, "passed": mismatch == nil, "mismatch": mismatch, "original_state_sha256": hex.EncodeToString(originalDigest.Sum(nil)), "c_state_sha256": hex.EncodeToString(cDigest.Sum(nil)), "trace_entry_size": 90, "platform": "Independent pinned DOS/font/VGA services; native C TALK/number/portrait control; IF/TF=0; CPU-model undefined flags; no original INT50 UI or wall-clock claim", "asset_banks": "TALK at 3500; SINARIO at 5000; portraits at 6000; UI map at 6800; ICONGRF at 2200/3000", "additional_assets": identities, "original_font_calls": originalDOS.Font.Calls, "c_font_calls": activeDOS.Font.Calls, "original_missing_fonts": originalDOS.Font.Missing, "c_missing_fonts": activeDOS.Font.Missing, "c_machine_code_match": false, "trace_calls": traceCalls, "trace_unique": traceUnique, "trace_log_sha256": traceHash}
+	report := map[string]any{"schema": "wolong-c-talk-parity-v1", "input_sha256": inputHash, "icon_sha256": assetHash, "routine_sha256": routineHashes, "cases": cases, "groups": groups, "full_ram_plane_audits": audits, "indexed_content_audits": pixelAudits, "content_top": 40, "content_height": 400, "entries_seen": entries, "corpus_slots_seen": corpusSlots, "dos_api_calls": dosAPICalls, "cache_sequence_api_counts": cacheReads, "passed": mismatch == nil, "mismatch": mismatch, "original_state_sha256": hex.EncodeToString(originalDigest.Sum(nil)), "c_state_sha256": hex.EncodeToString(cDigest.Sum(nil)), "trace_entry_size": 90, "platform": "Independent pinned DOS/font/VGA services; native C TALK/number/portrait control; IF/TF=0; CPU-model undefined flags; no original INT50 UI or wall-clock claim", "asset_banks": "TALK at 3500; SINARIO at 5000; portraits at 6000; UI map at 6800; ICONGRF at 2200/3000", "additional_assets": identities, "original_font_calls": originalDOS.Font.Calls, "c_font_calls": activeDOS.Font.Calls, "original_missing_fonts": originalDOS.Font.Missing, "c_missing_fonts": activeDOS.Font.Missing, "c_machine_code_match": false, "trace_calls": traceCalls, "trace_unique": traceUnique, "trace_log_sha256": traceHash, "trace2_calls": trace2Calls, "trace2_unique": trace2Unique}
 	b, _ := json.MarshalIndent(report, "", "  ")
 	b = append(b, '\n')
 	if e := os.WriteFile(*output, b, 0644); e != nil {
