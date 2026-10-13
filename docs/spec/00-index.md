@@ -308,6 +308,7 @@
 | matching 長程驗證（重建實跑＋C 回放設計） | [`256-matching-longpath-verification.md`](256-matching-longpath-verification.md) | CONFORMED，8 截圖全同／跑到 4/8 |
 | C 軌跡回放 B-1（數字函式真實輸入） | [`257-c-trace-replay-b1.md`](257-c-trace-replay-b1.md) | CONFORMED，522呼叫去重233／466案全同 |
 | C 軌跡回放 B-2（TALK 真實輸入） | [`258-c-trace-replay-b2.md`](258-c-trace-replay-b2.md) | CONFORMED，35呼叫去重29／58案全同 |
+| C 軌跡回放 B-3（glyph 真實輸入） | [`259-c-trace-replay-b3.md`](259-c-trace-replay-b3.md) | READY，待 regs 動詞 |
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的
    現況反寫規格，那只會把既有的偏差固定下來。

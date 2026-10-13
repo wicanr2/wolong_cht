@@ -495,6 +495,7 @@
 | [`docs/spec/256-matching-longpath-verification.md`](spec/256-matching-longpath-verification.md) | 256：matching decomp 玩家長程驗證 | CONFORMED。Slice A 全綠：重建 EXE 從零跑到 196/4/8，8 截圖＋時鐘＋130,849,3… | 2026-10-12 |
 | [`docs/spec/257-c-trace-replay-b1.md`](spec/257-c-trace-replay-b1.md) | 257：C 軌跡回放 B-1（數字函式吃真實開局輸入） | CONFORMED。522 次呼叫去重 233 組 × CF 兩態＝466 案， O2／O0 雙跑全同、原版／C 終… | 2026-10-12 |
 | [`docs/spec/258-c-trace-replay-b2.md`](spec/258-c-trace-replay-b2.md) | 258：C 軌跡回放 B-2（TALK 函式吃真實開局輸入） | CONFORMED。35 次呼叫去重 29 組 × CF 兩態＝58 案， O2／O0 雙跑全同、原版／C 終態雜湊… | 2026-10-12 |
+| [`docs/spec/259-c-trace-replay-b3.md`](spec/259-c-trace-replay-b3.md) | 259：C 軌跡回放 B-3（glyph 函式吃真實開局輸入） | READY。B-1／B-2 方法套到 glyph slice：1F7A4／106F5／106FD／1F720。 實作… | 2026-10-12 |
 | [`docs/spec/26-yes-no-dialog.md`](spec/26-yes-no-dialog.md) | 26 — ＹＥＳ／ＮＯ 對話框 | CONFORMED。版面與命中算式已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 輸入照原版收斂成兩個熱區（§2.1）。「自定」開命名視窗（[10… | 2026-08-15 |
 | [`docs/spec/28-scenario-json.md`](spec/28-scenario-json.md) | 28 — 劇本的 JSON 匯出與匯入 | CONFORMED。四個區塊 round-trip 全過。 | 2026-08-15 |
@@ -572,7 +573,7 @@
 
 ## 斷言（欄位／常數 → 推論等級 → 出處）
 
-共 135 條。**要查「這件事解了沒」先看這裡**，
+共 136 條。**要查「這件事解了沒」先看這裡**，
 不要重讀整份文件，更不要重推一次。
 
 ### confirmed（84 條）
@@ -664,10 +665,11 @@
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x1E | `docs/re/08-hourly-update.md` |
 | 軍團記錄（64 B，段內 2240h，127 筆） ▸ +0x20 | `docs/re/08-hourly-update.md` |
 
-### READY（1 條）
+### READY（2 條）
 
 | 鍵 | 出處 |
 |---|---|
+| 怎麼加一份 ▸ C 軌跡回放 B-3（glyph 真實輸入） | `docs/spec/00-index.md` |
 | 索引 ▸ 戰術命令批次與移動體力順序 | `docs/spec/00-index.md` |
 
 ### 強證據（22 條）
