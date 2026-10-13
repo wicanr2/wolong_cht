@@ -69,6 +69,7 @@
 | [`docs/playtest/120-screen-parity-retest-20260911.md`](playtest/120-screen-parity-retest-20260911.md) | 120 — 打包前重量畫面對拍：三組都不是全 PASS，而且都不是這一輪造成的 | 主畫面已修回全 PASS；野戰剩一區、攻城仍重跑不出來。 | 2026-09-11 |
 | [`docs/playtest/121-screen-parity-gate.md`](playtest/121-screen-parity-gate.md) | 121 — 十七組畫面逐區重量：十四組符合預期，缺口剩三個 | 通過（帶三個已登記的缺口）。 | 2026-09-11 |
 | [`docs/playtest/122-rebuilt-longpath-smoke.md`](playtest/122-rebuilt-longpath-smoke.md) | 122：重建 EXE 從零開局長程實跑（matching slice A） | 通過。 | 2026-10-12 |
+| [`docs/playtest/123-rebuilt-interactive-longpath.md`](playtest/123-rebuilt-interactive-longpath.md) | 123：重建 EXE 互動長程實跑（matching spec/262） | 通過。 | 2026-10-13 |
 | [`docs/playtest/13-dosv-natural-and-target-gui.md`](playtest/13-dosv-natural-and-target-gui.md) | DOS/V 自然畫面與目標平台 GUI 驗收 | 歷史驗收紀錄（2026-08-11，影片 oracle）。 | 2026-08-11 |
 | [`docs/playtest/14-m7-review.md`](playtest/14-m7-review.md) | M7 校訂文字人工審查報告 | 60 筆定案校訂已完成逐筆語意、marker、硬換行、寬度與代表畫面抽樣。 | 2026-08-11 |
 | [`docs/playtest/15-event2-5-talk-sampling.md`](playtest/15-event2-5-talk-sampling.md) | 事件 2–5 TALK 完整分支抽樣 | 36 個 raw TALK 頁面、18 組雙頁回應的分支、marker、硬換行、字寬與五列版面 抽樣通過；不宣稱完整… | 2026-08-11 |
@@ -499,6 +500,7 @@
 | [`docs/spec/26-yes-no-dialog.md`](spec/26-yes-no-dialog.md) | 26 — ＹＥＳ／ＮＯ 對話框 | CONFORMED。版面與命中算式已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/260-c-trace-replay-b4.md`](spec/260-c-trace-replay-b4.md) | 260：C 軌跡回放 B-4（1084A／1F4DF 吃真實開局輸入） | CONFORMED。26 次呼叫去重 26 組，與 B-2 的 58 案同跑共 84 案， O2／O0 雙跑全同、原… | 2026-10-13 |
 | [`docs/spec/261-c-trace-replay-b5.md`](spec/261-c-trace-replay-b5.md) | 261：C 軌跡回放 B-5（18853／189A4 吃真實指令流程輸入） | CONFORMED。指令流程（財政）錄得 18853×1、189A4×1，去重 2 案 O2／O0 雙跑全同、原版／… | 2026-10-13 |
+| [`docs/spec/262-matching-interactive-longpath.md`](spec/262-matching-interactive-longpath.md) | 262：matching 互動長程驗證（重建 EXE 走玩家路徑） | CONFORMED。五張截圖、時鐘（4 月 20 日 1 時）與累計指令數 （191,906,561）雙側全同（[p… | 2026-10-13 |
 | [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 輸入照原版收斂成兩個熱區（§2.1）。「自定」開命名視窗（[10… | 2026-08-15 |
 | [`docs/spec/28-scenario-json.md`](spec/28-scenario-json.md) | 28 — 劇本的 JSON 匯出與匯入 | CONFORMED。四個區塊 round-trip 全過。 | 2026-08-15 |
 | [`docs/spec/29-audio.md`](spec/29-audio.md) | 29 — 音樂與音效 | CONFORMED。音樂與音效都會出聲、與原版錄音比對過， ⭐ | 2026-08-15 |

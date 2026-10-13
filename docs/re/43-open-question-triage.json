@@ -12661,6 +12661,45 @@
       "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
     },
     {
+      "file": "docs/spec/262-matching-interactive-longpath.md",
+      "item": "戰術／攻城長程",
+      "status": "本片止於政略互動；戰場路徑另開 spec。",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-cf92d0a21f36b9811620",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
+    },
+    {
+      "file": "docs/spec/262-matching-interactive-longpath.md",
+      "item": "PC-98 重建實跑",
+      "status": "matching 基線只含 DOS/V。",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "實測",
+      "occurrence": 0,
+      "id": "oq-11bd16fd86482daac773",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
+    },
+    {
+      "file": "docs/spec/262-matching-interactive-longpath.md",
+      "item": "remake 側長程對拍",
+      "status": "Issue #10 的範圍，不在 matching 線。",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-5b2e9050e6f9f0874420",
+      "classification": "merge-target",
+      "github_issue": 12,
+      "reason": "畫面對拍 gate、群組覆蓋或 32 組門檻，併入 Issue #12。"
+    },
+    {
       "file": "docs/spec/27-lord-select-window.md",
       "item": "頭像尺寸",
       "status": "軍師頭像的下緣照原版座標會略微超出那個 208×104 的底框；沒有 oracle 可比，先照機器碼畫",
