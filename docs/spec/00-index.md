@@ -310,6 +310,7 @@
 | C 軌跡回放 B-2（TALK 真實輸入） | [`258-c-trace-replay-b2.md`](258-c-trace-replay-b2.md) | CONFORMED，35呼叫去重29／58案全同 |
 | C 軌跡回放 B-3（glyph 真實輸入） | [`259-c-trace-replay-b3.md`](259-c-trace-replay-b3.md) | CONFORMED，468 呼叫去重 451 案全綠 |
 | C 軌跡回放 B-4（1084A／1F4DF 真實輸入） | [`260-c-trace-replay-b4.md`](260-c-trace-replay-b4.md) | CONFORMED，26 呼叫去重 26 案全綠（與 B-2 同跑 84 案） |
+| C 軌跡回放 B-5（18853／189A4 真實輸入） | [`261-c-trace-replay-b5.md`](261-c-trace-replay-b5.md) | CONFORMED，財政流程 2 呼叫去重 2 案全綠 |
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的
    現況反寫規格，那只會把既有的偏差固定下來。

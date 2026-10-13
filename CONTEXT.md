@@ -80,6 +80,7 @@
 | 2026-10-12；C軌跡回放B-2 | TALK四函式35呼叫去重29組，CF兩態58案O2/O0雙跑全同；106F9兩呼叫佈置DS:SI真實256B（實機DS＝CS）；glyph 1F7A4需BP/ES待regs動詞 | spec258 CONFORMED | [spec/258](docs/spec/258-c-trace-replay-b2.md)、[收據](docs/re/c-talk-trace-verification.json) |
 | 2026-10-13；C軌跡回放B-3 | dosgolem補regs動詞＋WATCH全暫存器＋watchmem三視窗；glyph四函式468呼叫去重451組O2/O0雙跑全同；CS視窗只佈置F7A1..F7A3（far指標是harness patch的操作元） | spec259 CONFORMED；glyph全量verify另卡rectangle補充檔計數（既有） | [spec/259](docs/spec/259-c-trace-replay-b3.md)、[收據](docs/re/c-glyph-trace-verification.json) |
 | 2026-10-13；C軌跡回放B-4 | 1084A／1F4DF以全暫存器＋DS:SI／DS:DX視窗回放26呼叫去重26組，與B-2同跑84案O2/O0全同；18853／189A4仍零呼叫 | spec260 CONFORMED；talk全量1277案重跑通過 | [spec/260](docs/spec/260-c-trace-replay-b4.md)、[收據](docs/re/c-talk2-trace-verification.json) |
+| 2026-10-13；C軌跡回放B-5 | slice A對18853／189A4零呼叫（實測），改走指令列財政流程錄得各1呼叫，去重2案O2/O0全同 | spec261 CONFORMED；CX=FFFF分支僅矩陣覆蓋 | [spec/261](docs/spec/261-c-trace-replay-b5.md)、[收據](docs/re/c-talk3-trace-verification.json) |
 
 持續 Goal 為完成整個 matching decompilation；目前有 25,097 條指令的整檔組語基準與 734 個已完成局部驗證的 C 函式、66個原始 code 入口，census 739／739 全覆蓋。工具鏈判定：KI.EXE 為手寫組語，C 機器碼匹配不可行（spec255 CONFORMED）。完整玩家長程驗證仍待，不能據此宣布那項完成。
 使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b`、熱區 `a8605b5` 、版控組語／VGA `47e16c9` 、對齊貼圖 `6139f9e` 、矩形／計量 `c7dc8df`、顯示分派 `4d31520`、字形 `85f06de` 與數字 `06fff77` 已推到 origin/main。

@@ -1,0 +1,30 @@
+{
+  "schema": "wolong-c-talk3-trace-v1",
+  "status": "trace-replay-pass",
+  "spec": "docs/spec/261-c-trace-replay-b5.md",
+  "timeline": "docs/playtest/122-rebuilt-longpath-smoke.md plus command-menu finance flow (advisor event dismissed with right-press x4, command bar, finance)",
+  "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "trace_log_sha256": "4f4fefecb7ad70e03f183a1b96fd0455f944b3bf81631235c996cd4a0138c20c",
+  "trace_calls": 2,
+  "trace_unique": 2,
+  "targets": [
+    "sub_18853@0x8853",
+    "sub_189A4@0x89a4"
+  ],
+  "capture": "dosgolem WATCH extended line (full registers) plus -watchmem DS:SI:64,DS:DX:64,CS:#F780:16 on a real command flow; slice-A timeline gives zero calls for both targets (verified), finance flow gives 18853x1 (CX=0010, second-message branch) and 189A4x1",
+  "staging": "Parameter window staged at traced DS:SI (64B); runtime CS (from the CS dump segment) mapped onto harness CS, other traced segments keep their values on both sides; FLAGS replayed as traced (entry FLAGS provably unread in both functions)",
+  "O2": {
+    "cases": 2,
+    "passed": true,
+    "original_state_sha256": "41b283f5a8514193a6ff6900472f614a1c903c31ff05da136be2b160f7740393",
+    "c_state_sha256": "41b283f5a8514193a6ff6900472f614a1c903c31ff05da136be2b160f7740393"
+  },
+  "O0": {
+    "cases": 2,
+    "passed": true,
+    "original_state_sha256": "41b283f5a8514193a6ff6900472f614a1c903c31ff05da136be2b160f7740393",
+    "c_state_sha256": "41b283f5a8514193a6ff6900472f614a1c903c31ff05da136be2b160f7740393"
+  },
+  "mismatch": null,
+  "note": "B-2 (58 cases) and B-4 (84 cases) trace modes re-run unchanged after the harness extension. 18853 CX=FFFF branch covered by matrix cases only, not by this trace. No C machine-code or full natural-player-path claim."
+}

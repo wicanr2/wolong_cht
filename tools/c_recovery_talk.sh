@@ -43,6 +43,12 @@ timeout --kill-after=10 2400 docker run --rm --init --name "$TALK_CONTAINER" \
         CGO_CFLAGS="-$optimize -std=c11 -D_GNU_SOURCE $TALK_DEFINE" go build -tags matching_talk,matching_glyph,matching_vga -p 2 -o "/output/talk-trace-$optimize" .
         "/output/talk-trace-$optimize" -group trace --trace /output/trace/watch.log --trace-msg /output/trace/messages.json -out "/output/results/trace-$optimize.json"
       done
+    elif [[ "$TALK_MODE" == trace3 ]]; then
+      test -s /output/trace3/watch.log
+      for optimize in O2 O0; do
+        CGO_CFLAGS="-$optimize -std=c11 -D_GNU_SOURCE $TALK_DEFINE" go build -tags matching_talk,matching_glyph,matching_vga -p 2 -o "/output/talk-trace3-$optimize" .
+        "/output/talk-trace3-$optimize" -group trace --trace /output/trace3/watch.log -out "/output/results/trace3-$optimize.json"
+      done
     elif [[ "$TALK_MODE" == trace2 ]]; then
       test -s /output/trace2/watch.log
       test -s /output/trace2/messages.json

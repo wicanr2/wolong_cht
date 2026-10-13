@@ -714,15 +714,14 @@ func main() {
 		if err := sc.Err(); err != nil {
 			panic(err)
 		}
-		if traceCalls == 0 {
-			panic("trace log has no replayable entries")
-		}
+		// A log may carry only full-register targets (spec/261);
+		// the zero check runs after the full parse below.
 		// Full-register targets (spec/260): 1084A and 1F4DF need entry
 		// BP/SP/segments plus DS:SI / DS:DX windows, which the extended
 		// WATCH line carries. FLAGS replayed as traced (no CF sweep).
 		// The third dump is CS-based; its segment is the runtime CS.
 		fullRe := regexp.MustCompile(`呼叫 ([0-9A-F]+) AX=([0-9A-F]{4}) BX=([0-9A-F]{4}) CX=([0-9A-F]{4}) DX=([0-9A-F]{4}) SI=([0-9A-F]{4}) DI=([0-9A-F]{4}) BP=([0-9A-F]{4}) SP=([0-9A-F]{4}) DS=([0-9A-F]{4}) ES=([0-9A-F]{4}) SS=([0-9A-F]{4}) FLAGS=([0-9A-F]{4}) MEM=([0-9A-F]{4}):([0-9A-F]{4}):([0-9A-F]+) MEM=([0-9A-F]{4}):([0-9A-F]{4}):([0-9A-F]+) MEM=([0-9A-F]{4}):([0-9A-F]{4}):([0-9A-F]+)`)
-		fullTargets := map[string]uint16{"1084A": 0x84a, "1F4DF": 0xf4df}
+		fullTargets := map[string]uint16{"1084A": 0x84a, "1F4DF": 0xf4df, "18853": 0x8853, "189A4": 0x89a4}
 		seenFull := map[string]bool{}
 		sc2 := bufio.NewScanner(bytes.NewReader(raw))
 		sc2.Buffer(make([]byte, 1024*1024), 1024*1024)
@@ -767,6 +766,9 @@ func main() {
 		}
 		if err := sc2.Err(); err != nil {
 			panic(err)
+		}
+		if traceCalls == 0 && trace2Calls == 0 {
+			panic("trace log has no replayable entries")
 		}
 	}
 	for _, c := range all {
