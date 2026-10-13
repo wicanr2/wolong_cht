@@ -36,6 +36,13 @@ timeout --kill-after=10 2400 docker run --rm --init --name "$TALK_CONTAINER" \
     if [[ "$TALK_MODE" == smoke ]]; then
       CGO_CFLAGS="-O2 -std=c11 -D_GNU_SOURCE $TALK_DEFINE" go build -tags matching_talk,matching_glyph,matching_vga -p 2 -o /output/talk-smoke .
       /output/talk-smoke -smoke -out /output/results/smoke.json
+    elif [[ "$TALK_MODE" == trace ]]; then
+      test -s /output/trace/watch.log
+      test -s /output/trace/messages.json
+      for optimize in O2 O0; do
+        CGO_CFLAGS="-$optimize -std=c11 -D_GNU_SOURCE $TALK_DEFINE" go build -tags matching_talk,matching_glyph,matching_vga -p 2 -o "/output/talk-trace-$optimize" .
+        "/output/talk-trace-$optimize" -group trace --trace /output/trace/watch.log --trace-msg /output/trace/messages.json -out "/output/results/trace-$optimize.json"
+      done
     else
       for optimize in O2 O0; do
         CGO_CFLAGS="-$optimize -std=c11 -D_GNU_SOURCE $TALK_DEFINE" go build -tags matching_talk,matching_glyph,matching_vga -p 2 -o "/output/talk-$optimize" .

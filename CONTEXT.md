@@ -77,6 +77,7 @@
 | 2026-10-12；重建EXE長程實跑 | 從零開局到196/4/8：8截圖、時鐘、130,849,387道指令數雙側全同；until鏈式、對話框須先關 | spec256 CONFORMED（slice A）；C軌跡回放維持設計 | [playtest/122](docs/playtest/122-rebuilt-longpath-smoke.md)、[spec/256](docs/spec/256-matching-longpath-verification.md) |
 | 2026-10-12；C軌跡回放B-1 | WATCH錄1062F共522呼叫去重233組，CF兩態466案O2/O0雙跑全同、原版/C終態雜湊全同；WATCH無段暫存器但1062F不讀BP/CX/DS/ES/SP故完備 | spec257 CONFORMED；spec229兩列過期狀態已更新 | [spec/257](docs/spec/257-c-trace-replay-b1.md)、[收據](docs/re/c-numbers-trace-verification.json) |
 | 2026-10-12；過期列清掃 | re/91–134＋spec/202–254共86列「工具鏈未知／C機器碼未驗證」更新為spec/255既判（46純列改狀態，40混列去機器碼子句）；triage原位換86列，分類沿用 | 機器碼證據類列（19列）非過期未動；re/43維持1081列 | triage通過 |
+| 2026-10-12；C軌跡回放B-2 | TALK四函式35呼叫去重29組，CF兩態58案O2/O0雙跑全同；106F9兩呼叫佈置DS:SI真實256B（實機DS＝CS）；glyph 1F7A4需BP/ES待regs動詞 | spec258 CONFORMED | [spec/258](docs/spec/258-c-trace-replay-b2.md)、[收據](docs/re/c-talk-trace-verification.json) |
 
 持續 Goal 為完成整個 matching decompilation；目前有 25,097 條指令的整檔組語基準與 734 個已完成局部驗證的 C 函式、66個原始 code 入口，census 739／739 全覆蓋。工具鏈判定：KI.EXE 為手寫組語，C 機器碼匹配不可行（spec255 CONFORMED）。完整玩家長程驗證仍待，不能據此宣布那項完成。
 使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b`、熱區 `a8605b5` 、版控組語／VGA `47e16c9` 、對齊貼圖 `6139f9e` 、矩形／計量 `c7dc8df`、顯示分派 `4d31520`、字形 `85f06de` 與數字 `06fff77` 已推到 origin/main。

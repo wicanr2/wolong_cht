@@ -494,6 +494,7 @@
 | [`docs/spec/255-c-machine-code-feasibility.md`](spec/255-c-machine-code-feasibility.md) | 255：C 機器碼匹配可行性判定 | CONFORMED。判定完成：KI.EXE 為手寫 16-bit 組語（[re/135](../re/135-too… | 2026-10-12 |
 | [`docs/spec/256-matching-longpath-verification.md`](spec/256-matching-longpath-verification.md) | 256：matching decomp 玩家長程驗證 | CONFORMED。Slice A 全綠：重建 EXE 從零跑到 196/4/8，8 截圖＋時鐘＋130,849,3… | 2026-10-12 |
 | [`docs/spec/257-c-trace-replay-b1.md`](spec/257-c-trace-replay-b1.md) | 257：C 軌跡回放 B-1（數字函式吃真實開局輸入） | CONFORMED。522 次呼叫去重 233 組 × CF 兩態＝466 案， O2／O0 雙跑全同、原版／C 終… | 2026-10-12 |
+| [`docs/spec/258-c-trace-replay-b2.md`](spec/258-c-trace-replay-b2.md) | 258：C 軌跡回放 B-2（TALK 函式吃真實開局輸入） | CONFORMED。35 次呼叫去重 29 組 × CF 兩態＝58 案， O2／O0 雙跑全同、原版／C 終態雜湊… | 2026-10-12 |
 | [`docs/spec/26-yes-no-dialog.md`](spec/26-yes-no-dialog.md) | 26 — ＹＥＳ／ＮＯ 對話框 | CONFORMED。版面與命中算式已照原版實作並有契約測試。 | 2026-08-15 |
 | [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 輸入照原版收斂成兩個熱區（§2.1）。「自定」開命名視窗（[10… | 2026-08-15 |
 | [`docs/spec/28-scenario-json.md`](spec/28-scenario-json.md) | 28 — 劇本的 JSON 匯出與匯入 | CONFORMED。四個區塊 round-trip 全過。 | 2026-08-15 |

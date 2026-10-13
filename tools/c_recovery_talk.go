@@ -26,6 +26,7 @@ package main
 */
 import "C"
 import (
+	"bufio"
 	"bytes"
 	"crypto/sha256"
 	"encoding/binary"
@@ -37,6 +38,9 @@ import (
 	"github.com/wicanr2/dosgolem/internal/dos"
 	"github.com/wicanr2/dosgolem/internal/machine"
 	"os"
+	"regexp"
+	"strconv"
+	"strings"
 	"unsafe"
 )
 
@@ -135,6 +139,8 @@ func main() {
 	output := flag.String("out", "/output/results/O2.json", "receipt")
 	only := flag.String("group", "", "group")
 	smoke := flag.Bool("smoke", false, "bounded matrix")
+	trace := flag.String("trace", "", "dosgolem WATCH log; 106F9/1075B/107D2/1E38C entries become group-trace cases")
+	traceMsg := flag.String("trace-msg", "", "JSON map TARGET:AX,BX,CX,DX,SI,DI -> hex message bytes, staged at DS:SI")
 	flag.Parse()
 	raw, err := os.ReadFile("/orig/KI.EXE")
 	if err != nil {
@@ -331,7 +337,11 @@ func main() {
 				putWord(mem, 0x4000, uint16(0x9000+i*2), v)
 			}
 			if c.message != nil {
-				copy(mem[0x35000+0x9000:], append(append([]byte{}, c.message...), 0, 0))
+				at := 0x9000
+				if c.group == "trace" {
+					at = int(c.si)
+				}
+				copy(mem[0x35000+at:], append(append([]byte{}, c.message...), 0, 0))
 			}
 			if c.swapTable {
 				a := binary.LittleEndian.Uint16(mem[int(cs)*16+0x8a4:])
@@ -357,7 +367,9 @@ func main() {
 		}
 		if c.target == 0x84a || c.target == 0x6f9 {
 			r.DS = 0x3500
-			r.SI = 0x9000
+			if c.group != "trace" {
+				r.SI = 0x9000
+			}
 		}
 		original.CPU.R = [8]uint16{r.AX, r.CX, r.DX, r.BX, r.SP, r.BP, r.SI, r.DI}
 		original.CPU.Seg = [4]uint16{r.ES, r.CS, r.SS, r.DS}
@@ -602,12 +614,90 @@ func main() {
 	c.si = 0x200
 	c.di = 2048
 	add(c)
+	// Trace mode (spec 258 B-2): real entry registers from a dosgolem
+	// WATCH log become replay cases. Soundness per entry (talk_generated.inc):
+	// 106F9 no state reads; 1075B DS saved+overwritten, CF reads dominated
+	// by cmp/math; 107D2 DS from entry BX, flag reads dominated; 1E38C DS
+	// saved/restored only, live entry CF swept via seed 2/3. None reads
+	// entry BP/SP/SS/ES/DF or date RAM. Device init stays
+	// harness-constructed on both sides.
+	traceCalls, traceUnique := 0, 0
+	traceHash := ""
+	if *trace != "" {
+		raw, err := os.ReadFile(*trace)
+		if err != nil {
+			panic(err)
+		}
+		sum := sha256.Sum256(raw)
+		traceHash = hex.EncodeToString(sum[:])
+		targets := map[string]uint16{"106F9": 0x6f9, "1075B": 0x75b, "107D2": 0x7d2, "1E38C": 0xe38c}
+		revTargets := map[uint16]string{0x6f9: "106F9", 0x75b: "1075B", 0x7d2: "107D2", 0xe38c: "1E38C"}
+		msgMap := map[string]string{}
+		if *traceMsg != "" {
+			mraw, err := os.ReadFile(*traceMsg)
+			if err != nil {
+				panic(err)
+			}
+			if err := json.Unmarshal(mraw, &msgMap); err != nil {
+				panic(err)
+			}
+		}
+		re := regexp.MustCompile(`呼叫 ([0-9A-F]+) AX=([0-9A-F]{4}) BX=([0-9A-F]{4}) CX=([0-9A-F]{4}) DX=([0-9A-F]{4}) SI=([0-9A-F]{4}) DI=([0-9A-F]{4})`)
+		seen := map[[7]uint16]bool{}
+		sc := bufio.NewScanner(bytes.NewReader(raw))
+		sc.Buffer(make([]byte, 1024*1024), 1024*1024)
+		for sc.Scan() {
+			m := re.FindStringSubmatch(sc.Text())
+			if m == nil {
+				continue
+			}
+			t, ok := targets[strings.TrimSpace(m[1])]
+			if !ok {
+				continue
+			}
+			traceCalls++
+			var r [7]uint16
+			r[0] = t
+			for i := 0; i < 6; i++ {
+				v, err := strconv.ParseUint(strings.TrimSpace(m[i+2]), 16, 16)
+				if err != nil {
+					panic(err)
+				}
+				r[i+1] = uint16(v)
+			}
+			if seen[r] {
+				continue
+			}
+			seen[r] = true
+			traceUnique++
+			key := fmt.Sprintf("%s:%04X,%04X,%04X,%04X,%04X,%04X", revTargets[t], r[1], r[2], r[3], r[4], r[5], r[6])
+			for _, seed := range []byte{2, 3} {
+				c := base("trace", t)
+				c.ax, c.bx, c.cx, c.dx, c.si, c.di = r[1], r[2], r[3], r[4], r[5], r[6]
+				c.seed = seed
+				if hx, ok := msgMap[key]; ok {
+					mb, err := hex.DecodeString(hx)
+					if err != nil {
+						panic(err)
+					}
+					c.message = mb
+				}
+				add(c)
+			}
+		}
+		if err := sc.Err(); err != nil {
+			panic(err)
+		}
+		if traceCalls == 0 {
+			panic("trace log has no replayable entries")
+		}
+	}
 	for _, c := range all {
 		if !check(c) {
 			break
 		}
 	}
-	report := map[string]any{"schema": "wolong-c-talk-parity-v1", "input_sha256": inputHash, "icon_sha256": assetHash, "routine_sha256": routineHashes, "cases": cases, "groups": groups, "full_ram_plane_audits": audits, "indexed_content_audits": pixelAudits, "content_top": 40, "content_height": 400, "entries_seen": entries, "corpus_slots_seen": corpusSlots, "dos_api_calls": dosAPICalls, "cache_sequence_api_counts": cacheReads, "passed": mismatch == nil, "mismatch": mismatch, "original_state_sha256": hex.EncodeToString(originalDigest.Sum(nil)), "c_state_sha256": hex.EncodeToString(cDigest.Sum(nil)), "trace_entry_size": 90, "platform": "Independent pinned DOS/font/VGA services; native C TALK/number/portrait control; IF/TF=0; CPU-model undefined flags; no original INT50 UI or wall-clock claim", "asset_banks": "TALK at 3500; SINARIO at 5000; portraits at 6000; UI map at 6800; ICONGRF at 2200/3000", "additional_assets": identities, "original_font_calls": originalDOS.Font.Calls, "c_font_calls": activeDOS.Font.Calls, "original_missing_fonts": originalDOS.Font.Missing, "c_missing_fonts": activeDOS.Font.Missing, "c_machine_code_match": false}
+	report := map[string]any{"schema": "wolong-c-talk-parity-v1", "input_sha256": inputHash, "icon_sha256": assetHash, "routine_sha256": routineHashes, "cases": cases, "groups": groups, "full_ram_plane_audits": audits, "indexed_content_audits": pixelAudits, "content_top": 40, "content_height": 400, "entries_seen": entries, "corpus_slots_seen": corpusSlots, "dos_api_calls": dosAPICalls, "cache_sequence_api_counts": cacheReads, "passed": mismatch == nil, "mismatch": mismatch, "original_state_sha256": hex.EncodeToString(originalDigest.Sum(nil)), "c_state_sha256": hex.EncodeToString(cDigest.Sum(nil)), "trace_entry_size": 90, "platform": "Independent pinned DOS/font/VGA services; native C TALK/number/portrait control; IF/TF=0; CPU-model undefined flags; no original INT50 UI or wall-clock claim", "asset_banks": "TALK at 3500; SINARIO at 5000; portraits at 6000; UI map at 6800; ICONGRF at 2200/3000", "additional_assets": identities, "original_font_calls": originalDOS.Font.Calls, "c_font_calls": activeDOS.Font.Calls, "original_missing_fonts": originalDOS.Font.Missing, "c_missing_fonts": activeDOS.Font.Missing, "c_machine_code_match": false, "trace_calls": traceCalls, "trace_unique": traceUnique, "trace_log_sha256": traceHash}
 	b, _ := json.MarshalIndent(report, "", "  ")
 	b = append(b, '\n')
 	if e := os.WriteFile(*output, b, 0644); e != nil {

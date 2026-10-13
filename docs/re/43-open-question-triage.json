@@ -14063,6 +14063,45 @@
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
+    },
+    {
+      "file": "docs/spec/258-c-trace-replay-b2.md",
+      "item": "18853／189A4",
+      "status": "本 timeline 零呼叫；需單挑等特殊路徑軌跡。",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-3b37cae7da0dca2ec198",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
+    },
+    {
+      "file": "docs/spec/258-c-trace-replay-b2.md",
+      "item": "1084A／1F4DF／glyph 1F7A4 回放",
+      "status": "需入口 BP／ES／段暫存器，待 dosgolem `regs` 動詞（跨 repo）。",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-a8492f0042c53dd4839a",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
+    },
+    {
+      "file": "docs/spec/258-c-trace-replay-b2.md",
+      "item": "其他 slice",
+      "status": "下一片另開 spec。",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-f25cf5a3acd51e121065",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
     }
   ]
 }
