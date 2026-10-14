@@ -70,6 +70,7 @@
 | [`docs/playtest/121-screen-parity-gate.md`](playtest/121-screen-parity-gate.md) | 121 — 十七組畫面逐區重量：十四組符合預期，缺口剩三個 | 通過（帶三個已登記的缺口）。 | 2026-09-11 |
 | [`docs/playtest/122-rebuilt-longpath-smoke.md`](playtest/122-rebuilt-longpath-smoke.md) | 122：重建 EXE 從零開局長程實跑（matching slice A） | 通過。 | 2026-10-12 |
 | [`docs/playtest/123-rebuilt-interactive-longpath.md`](playtest/123-rebuilt-interactive-longpath.md) | 123：重建 EXE 互動長程實跑（matching spec/262） | 通過。 | 2026-10-13 |
+| [`docs/playtest/124-rebuilt-siege-longpath.md`](playtest/124-rebuilt-siege-longpath.md) | 124：重建 EXE 攻城長程實跑（matching spec/264） | 通過。 | 2026-10-14 |
 | [`docs/playtest/13-dosv-natural-and-target-gui.md`](playtest/13-dosv-natural-and-target-gui.md) | DOS/V 自然畫面與目標平台 GUI 驗收 | 歷史驗收紀錄（2026-08-11，影片 oracle）。 | 2026-08-11 |
 | [`docs/playtest/14-m7-review.md`](playtest/14-m7-review.md) | M7 校訂文字人工審查報告 | 60 筆定案校訂已完成逐筆語意、marker、硬換行、寬度與代表畫面抽樣。 | 2026-08-11 |
 | [`docs/playtest/15-event2-5-talk-sampling.md`](playtest/15-event2-5-talk-sampling.md) | 事件 2–5 TALK 完整分支抽樣 | 36 個 raw TALK 頁面、18 組雙頁回應的分支、marker、硬換行、字寬與五列版面 抽樣通過；不宣稱完整… | 2026-08-11 |
@@ -246,7 +247,7 @@
 | [`docs/re/39-remaining-unread.md`](re/39-remaining-unread.md) | 39 — 剩餘未讀函式的逐支歸屬 | 清單。 | 2026-08-14 |
 | [`docs/re/40-garrison-relief-request.md`](re/40-garrison-relief-request.md) | 40 — 據點求援與援軍派遣 | 整條鏈 confirmed（每一支都逐行讀過）。 sub_140C9 的距離算式裡有一處 | 2026-08-14 |
 | [`docs/re/42-leaf-functions.md`](re/42-leaf-functions.md) | 42 — 戰術以外的 47 支葉節點 | 47 支全部逐行讀過。四件事因此定案：INT 61h 是音源 TSR 的介面、 byte_198A6 的位元圖完整、… | 2026-08-14 |
-| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的證據索引） | 生成的證據索引，跑 tools/py.sh tools/re_open_questions.py 重出。 證據欄不下… | 2026-10-13 |
+| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的證據索引） | 生成的證據索引，跑 tools/py.sh tools/re_open_questions.py 重出。 證據欄不下… | 2026-10-14 |
 | [`docs/re/44-threat-and-reinforcement-ai.md`](re/44-threat-and-reinforcement-ai.md) | 44 — 威脅偵測與 AI 出兵：據點每 tick 掃一次 | 整條鏈逐行讀完。三件事定案：據點 +0x18 是佔用圖讀回來的軍團數、 +0x00 低 4 位是「哪幾個鄰居是敵方」… | 2026-08-14 |
 | [`docs/re/45-corps-command-mode.md`](re/45-corps-command-mode.md) | 45 — 軍團的三種指令模式：戰鬥指揮／委任／解體 | 軍團 +0x00 位元 2 定案 ＝ | 2026-08-14 |
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |
@@ -502,6 +503,7 @@
 | [`docs/spec/261-c-trace-replay-b5.md`](spec/261-c-trace-replay-b5.md) | 261：C 軌跡回放 B-5（18853／189A4 吃真實指令流程輸入） | CONFORMED。指令流程（財政）錄得 18853×1、189A4×1，去重 2 案 O2／O0 雙跑全同、原版／… | 2026-10-13 |
 | [`docs/spec/262-matching-interactive-longpath.md`](spec/262-matching-interactive-longpath.md) | 262：matching 互動長程驗證（重建 EXE 走玩家路徑） | CONFORMED。五張截圖、時鐘（4 月 20 日 1 時）與累計指令數 （191,906,561）雙側全同（[p… | 2026-10-13 |
 | [`docs/spec/263-c-trace-replay-b6.md`](spec/263-c-trace-replay-b6.md) | 263：C 軌跡回放 B-6（熱區／外框／填色函式吃真實互動輸入） | CONFORMED。13 個目標共 3,723 次呼叫去重 552 案，O2／O0 雙跑 全同、原版／C 終態雜湊全… | 2026-10-13 |
+| [`docs/spec/264-matching-siege-longpath.md`](spec/264-matching-siege-longpath.md) | 264：matching 攻城長程驗證（重建 EXE 走進戰術畫面） | CONFORMED。雙側同時間軸全同：九張截圖、units、clock （4 月 13 日 7 時）與累計 243,… | 2026-10-14 |
 | [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 輸入照原版收斂成兩個熱區（§2.1）。「自定」開命名視窗（[10… | 2026-08-15 |
 | [`docs/spec/28-scenario-json.md`](spec/28-scenario-json.md) | 28 — 劇本的 JSON 匯出與匯入 | CONFORMED。四個區塊 round-trip 全過。 | 2026-08-15 |
 | [`docs/spec/29-audio.md`](spec/29-audio.md) | 29 — 音樂與音效 | CONFORMED。音樂與音效都會出聲、與原版錄音比對過， ⭐ | 2026-08-15 |

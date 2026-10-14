@@ -7,9 +7,9 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-1108 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+1111 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
-- 日期：2026-10-13
+- 日期：2026-10-14
 - 產生工具：`tools/re_open_questions.py`
 - 來源：`docs/` 底下所有文件的未解小節、表格裡標未解的列，與收尾是「…未解」的散句
 
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**1102 列分布在 447 份文件，平均每份 2.5 列。**
+**1105 列分布在 448 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -50,8 +50,8 @@
 | 程式碼理解 | 321 | 314 | 6 | 1 |
 | 驗收 | 240 | 214 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 504 | 480 | 23 | 1 |
-| **合計** | **1102** | 1039 | 60 | 3 |
+| 其他 | 507 | 482 | 24 | 1 |
+| **合計** | **1105** | 1041 | 61 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,7 +59,7 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 461 |
+| `docs/spec/` | 464 |
 | `docs/re/` | 321 |
 | `docs/playtest/` | 240 |
 | `docs/release/` | 26 |
@@ -692,7 +692,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（504 條）
+## 2.6 其他（507 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -1081,6 +1081,9 @@
 | [`spec/263-c-trace-replay-b6.md`](../spec/263-c-trace-replay-b6.md) | 零呼叫的 11 個同族入口 | 本時間軸未觸發；僅 spec/222／225 矩陣覆蓋，另開時間軸才處理 | 靜態 | evidence-only | — |
 | [`spec/263-c-trace-replay-b6.md`](../spec/263-c-trace-replay-b6.md) | map／plane 內容 | harness 模式內容＋真實 ICONGRF，非原版該時刻的畫面內容；宣稱只到「真實暫存器輸入下原版/C 一致」 | 靜態 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`spec/263-c-trace-replay-b6.md`](../spec/263-c-trace-replay-b6.md) | 其他 slice | 下一片另開 spec | 靜態 | evidence-only | — |
+| [`spec/264-matching-siege-longpath.md`](../spec/264-matching-siege-longpath.md) | 戰術打完一整場 | 本片止於進戰場＋推進 600 萬道指令；打到結算另開 | 靜態 | evidence-only | — |
+| [`spec/264-matching-siege-longpath.md`](../spec/264-matching-siege-longpath.md) | 野戰（非攻城）長程 | 另開時間軸才處理 | 靜態 | evidence-only | — |
+| [`spec/264-matching-siege-longpath.md`](../spec/264-matching-siege-longpath.md) | PC-98 重建實跑 | matching 基線只含 DOS/V | 實測 | evidence-only | — |
 | [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 頭像尺寸 | 軍師頭像的下緣照原版座標會略微超出那個 208×104 的底框；沒有 oracle 可比，先照機器碼畫 | 實測 | evidence-only | — |
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 事件佇列 | 這一輪不進 JSON。編輯器要動它得先有 UI 語意 | 靜態 | evidence-only | — |
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 未解區域 | `+0x1EC0` 那 7 KB 仍是黑盒，只能靠改寫保留 | 靜態 | evidence-only | — |

@@ -1,7 +1,7 @@
 {
   "schema": "wolong-re-open-question-triage/1",
   "generated_by": "tools/re_triage.py",
-  "generated_on": "2026-10-13",
+  "generated_on": "2026-10-14",
   "source": "tools/re_open_questions.py",
   "source_note": "每列以來源檔、章節、內容、狀態與 occurrence 固定指紋；內容變動必須重新稽核。",
   "classification_policy": {
@@ -12786,6 +12786,45 @@
       "verdict": "靜態",
       "occurrence": 0,
       "id": "oq-f6ec4729188450aa39e9",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
+    },
+    {
+      "file": "docs/spec/264-matching-siege-longpath.md",
+      "item": "戰術打完一整場",
+      "status": "本片止於進戰場＋推進 600 萬道指令；打到結算另開",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-3817b3da099c6c8157ee",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
+    },
+    {
+      "file": "docs/spec/264-matching-siege-longpath.md",
+      "item": "野戰（非攻城）長程",
+      "status": "另開時間軸才處理",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-7beba2c66ed20c6ae8b2",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
+    },
+    {
+      "file": "docs/spec/264-matching-siege-longpath.md",
+      "item": "PC-98 重建實跑",
+      "status": "matching 基線只含 DOS/V",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "實測",
+      "occurrence": 0,
+      "id": "oq-202b881fca2ab846c78e",
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
