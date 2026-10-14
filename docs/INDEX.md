@@ -504,6 +504,7 @@
 | [`docs/spec/262-matching-interactive-longpath.md`](spec/262-matching-interactive-longpath.md) | 262：matching 互動長程驗證（重建 EXE 走玩家路徑） | CONFORMED。五張截圖、時鐘（4 月 20 日 1 時）與累計指令數 （191,906,561）雙側全同（[p… | 2026-10-13 |
 | [`docs/spec/263-c-trace-replay-b6.md`](spec/263-c-trace-replay-b6.md) | 263：C 軌跡回放 B-6（熱區／外框／填色函式吃真實互動輸入） | CONFORMED。13 個目標共 3,723 次呼叫去重 552 案，O2／O0 雙跑 全同、原版／C 終態雜湊全… | 2026-10-13 |
 | [`docs/spec/264-matching-siege-longpath.md`](spec/264-matching-siege-longpath.md) | 264：matching 攻城長程驗證（重建 EXE 走進戰術畫面） | CONFORMED。雙側同時間軸全同：九張截圖、units、clock （4 月 13 日 7 時）與累計 243,… | 2026-10-14 |
+| [`docs/spec/265-c-trace-replay-b7.md`](spec/265-c-trace-replay-b7.md) | 265：C 軌跡回放 B-7（世界顯示格函式吃真實攻城長程輸入） | CONFORMED。38,055 次呼叫去重 12,525 案，O2／O0 雙跑全同、 原版／C 終態雜湊全同（[c… | 2026-10-14 |
 | [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 輸入照原版收斂成兩個熱區（§2.1）。「自定」開命名視窗（[10… | 2026-08-15 |
 | [`docs/spec/28-scenario-json.md`](spec/28-scenario-json.md) | 28 — 劇本的 JSON 匯出與匯入 | CONFORMED。四個區塊 round-trip 全過。 | 2026-08-15 |
 | [`docs/spec/29-audio.md`](spec/29-audio.md) | 29 — 音樂與音效 | CONFORMED。音樂與音效都會出聲、與原版錄音比對過， ⭐ | 2026-08-15 |

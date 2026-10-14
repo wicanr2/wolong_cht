@@ -1,0 +1,38 @@
+{
+  "schema": "wolong-c-mapcells-trace-v1",
+  "status": "trace-replay-pass",
+  "spec": "docs/spec/265-c-trace-replay-b7.md",
+  "timeline": "spec/264 siege longpath: Cao Cao opening, finance/personnel, formation of corps 37, siege:37,76 into the tactical screen, steps:6000000 (dosgolem WATCH, full registers)",
+  "input_sha256": "fffeba985231cda4d636e93d10f598470b1f691d00275e4aa38e285893d43868",
+  "trace_log_sha256": "71e9f8daf5b4de33b9072322f887bbb14c893500fb3b6e88462c3466c0a0fa47",
+  "trace_calls": 38055,
+  "trace_unique": 12525,
+  "targets": [
+    "sub_1D46A@0x1d46a",
+    "sub_1D483@0x1d483",
+    "sub_1D4C7@0x1d4c7",
+    "sub_1D615@0x1d615",
+    "sub_1D66A@0x1d66a",
+    "sub_1D76B@0x1d76b",
+    "sub_1D782@0x1d782",
+    "sub_1D796@0x1d796",
+    "sub_1D7E7@0x1d7e7",
+    "sub_1D804@0x1d804"
+  ],
+  "capture": "dosgolem WATCH full-register lines on the siege timeline; per-target calls 1D4C7x9586, 1D796x7848, 1D782x5036, 1D615x3571, 1D66Ax3571, 1D804x2813, 1D7E7x2813, 1D76Bx2813, 1D46Ax2, 1D483x2; siege chain 14ADE/14C72/11B5A once each (engagement-harness scope, not replayed here)",
+  "staging": "Traced registers and FLAGS replayed as-is; runtime CS mapped onto harness CS, other traced segments keep their values on both sides; real MMAP.MDL/MMCH/world tables at harness-fixed segments (CS words D84A-D856 identical on both sides); flags table at segment 2500 uses the harness structured staging (same shape as matrix flags/render groups - raw pattern content makes the 1D66A dirty-cell loop diverge, measured at the 4M-step bound); return sentinel word at traced SS:SP on both sides; all 2813 traced 1D7E7 calls have FLAGS=7006 (DF=0, the spec/234 precondition)",
+  "O2": {
+    "cases": 12525,
+    "passed": true,
+    "original_state_sha256": "664e8e37ddaf0809ddf7e76d3c1edf8039342e8da356f5018a4e5aebbb44423c",
+    "c_state_sha256": "664e8e37ddaf0809ddf7e76d3c1edf8039342e8da356f5018a4e5aebbb44423c"
+  },
+  "O0": {
+    "cases": 12525,
+    "passed": true,
+    "original_state_sha256": "664e8e37ddaf0809ddf7e76d3c1edf8039342e8da356f5018a4e5aebbb44423c",
+    "c_state_sha256": "664e8e37ddaf0809ddf7e76d3c1edf8039342e8da356f5018a4e5aebbb44423c"
+  },
+  "mismatch": null,
+  "note": "Mapcells matrix smoke mode re-run passes after the harness extension (72 cases). Table contents are real MMAP assets plus the harness structured flags table, not the original display state at capture time; the claim is original/C parity under real register inputs. No C machine-code or full natural-player-path claim."
+}

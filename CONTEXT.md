@@ -84,6 +84,7 @@
 | 2026-10-13；重建EXE互動長程 | 開局→關事件訊息→指令列→財政→人事清單→推進到4/20，五截圖／時鐘／191,906,561道指令雙側全同 | spec262 CONFORMED；止於政略互動，戰術／攻城另開 | [spec/262](docs/spec/262-matching-interactive-longpath.md)、[playtest/123](docs/playtest/123-rebuilt-interactive-longpath.md) |
 | 2026-10-13；C軌跡回放B-6 | 互動長程WATCH十三個熱區／外框／填色入口3,723呼叫去重552案O2/O0全同；1E3C0的ES/DI改佈置harness map段 | spec263 CONFORMED；同族11入口本時間軸零呼叫僅矩陣覆蓋，map/plane為harness內容 | [spec/263](docs/spec/263-c-trace-replay-b6.md)、[收據](docs/re/c-rect-trace-verification.json) |
 | 2026-10-14；重建EXE攻城長程 | 曹操開局→編成軍團37→攻據點76進戰術畫面，九截圖／時鐘／243,931,975道指令與run log雙側全同 | spec264 CONFORMED；玩家軍團靠編成、城兵守城不開戰術均實測；止於進戰場加600萬道 | [spec/264](docs/spec/264-matching-siege-longpath.md)、[playtest/124](docs/playtest/124-rebuilt-siege-longpath.md) |
+| 2026-10-14；C軌跡回放B-7 | 攻城長程WATCH十個世界顯示格入口38,055呼叫去重12,525案O2/O0全同；旗標表用harness結構化佈置（pattern會讓1D66A迴圈發散） | spec265 CONFORMED；攻城鏈14ADE/14C72/11B5A各1呼叫屬engagement範圍另開 | [spec/265](docs/spec/265-c-trace-replay-b7.md)、[收據](docs/re/c-mapcells-trace-verification.json) |
 
 持續 Goal 為完成整個 matching decompilation；目前有 25,097 條指令的整檔組語基準與 734 個已完成局部驗證的 C 函式、66個原始 code 入口，census 739／739 全覆蓋。工具鏈判定：KI.EXE 為手寫組語，C 機器碼匹配不可行（spec255 CONFORMED）。完整玩家長程驗證仍待，不能據此宣布那項完成。
 使用者已授權每輪完成後 commit、push。基準 `1d21147`、C 播種 `f688881`、時鐘 `228f30d`、經濟 `4e50f80`、據點 `259df4f`、世界更新 `5402deb`、政治 `e2fe24f`、三方月結 `8251289`、每時核心 `9f5a843`、事件 `b5ad756`、視窗 `7bdafd3`、數值 `99d914b`、熱區 `a8605b5` 、版控組語／VGA `47e16c9` 、對齊貼圖 `6139f9e` 、矩形／計量 `c7dc8df`、顯示分派 `4d31520`、字形 `85f06de` 與數字 `06fff77` 已推到 origin/main。

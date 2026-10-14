@@ -12830,6 +12830,45 @@
       "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
     },
     {
+      "file": "docs/spec/265-c-trace-replay-b7.md",
+      "item": "攻城鏈（14ADE／14C72／11B5A）軌跡回放",
+      "status": "engagement 整場 harness 的範圍，另開 spec",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-598b330568b4def3aa1a",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
+    },
+    {
+      "file": "docs/spec/265-c-trace-replay-b7.md",
+      "item": "素材內容",
+      "status": "harness 固定段的真實 MMAP 素材；相機位置與髒格狀態由暫存器輸入帶入，非原版該時刻的完整顯示狀態",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-f9127650a67d9900cd9c",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
+    },
+    {
+      "file": "docs/spec/265-c-trace-replay-b7.md",
+      "item": "其他 slice",
+      "status": "下一片另開 spec",
+      "section": "未解範圍",
+      "domain": "其他",
+      "verdict": "靜態",
+      "occurrence": 0,
+      "id": "oq-9e0d92f902d18566188d",
+      "classification": "evidence-only",
+      "github_issue": null,
+      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
+    },
+    {
       "file": "docs/spec/27-lord-select-window.md",
       "item": "頭像尺寸",
       "status": "軍師頭像的下緣照原版座標會略微超出那個 208×104 的底框；沒有 oracle 可比，先照機器碼畫",

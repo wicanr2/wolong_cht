@@ -41,6 +41,12 @@ timeout --kill-after=10 2400 docker run --rm --init --name "$MAPCELLS_CONTAINER"
     if [[ "$MAPCELLS_MODE" == smoke ]]; then
       CGO_CFLAGS="-O2 -std=c11 -D_GNU_SOURCE $MAPCELLS_DEFINE" go build -tags matching_mapcells,matching_vga -p 2 -o /output/mapcells-smoke .
       /output/mapcells-smoke -smoke -out /output/results/smoke.json
+    elif [[ "$MAPCELLS_MODE" == trace ]]; then
+      test -s /output/trace/watch.log
+      for optimize in O2 O0; do
+        CGO_CFLAGS="-$optimize -std=c11 -D_GNU_SOURCE $MAPCELLS_DEFINE" go build -tags matching_mapcells,matching_vga -p 2 -o "/output/mapcells-trace-$optimize" .
+        "/output/mapcells-trace-$optimize" -group trace --trace /output/trace/watch.log -out "/output/results/trace-$optimize.json"
+      done
     else
       for optimize in O2 O0; do
         CGO_CFLAGS="-$optimize -std=c11 -D_GNU_SOURCE $MAPCELLS_DEFINE" go build -tags matching_mapcells,matching_vga -p 2 -o "/output/mapcells-$optimize" .

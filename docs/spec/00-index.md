@@ -314,6 +314,7 @@
 | matching 互動長程驗證（重建 EXE 玩家路徑） | [`262-matching-interactive-longpath.md`](262-matching-interactive-longpath.md) | CONFORMED，五截圖／時鐘／指令數雙側全同 |
 | C 軌跡回放 B-6（熱區／外框／填色真實輸入） | [`263-c-trace-replay-b6.md`](263-c-trace-replay-b6.md) | CONFORMED，3,723 呼叫去重 552 案全綠 |
 | matching 攻城長程驗證（重建 EXE 戰術路徑） | [`264-matching-siege-longpath.md`](264-matching-siege-longpath.md) | CONFORMED，九截圖／時鐘／指令數雙側全同 |
+| C 軌跡回放 B-7（世界顯示格真實輸入） | [`265-c-trace-replay-b7.md`](265-c-trace-replay-b7.md) | CONFORMED，38,055 呼叫去重 12,525 案全綠 |
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的
    現況反寫規格，那只會把既有的偏差固定下來。

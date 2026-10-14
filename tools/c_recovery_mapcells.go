@@ -24,6 +24,7 @@ package main
 */
 import "C"
 import (
+	"bufio"
 	"bytes"
 	"crypto/sha256"
 	"encoding/binary"
@@ -34,6 +35,9 @@ import (
 	"github.com/wicanr2/dosgolem/internal/cpu"
 	"github.com/wicanr2/dosgolem/internal/machine"
 	"os"
+	"regexp"
+	"strconv"
+	"strings"
 	"unsafe"
 )
 
@@ -115,12 +119,15 @@ type cellsCase struct {
 	flags, layers, seed            byte
 	df, keep, full                 bool
 	audit                          string
+	traceFull                      bool
+	regs                           registers
 }
 
 func main() {
 	output := flag.String("out", "/output/results/O2.json", "receipt")
 	only := flag.String("group", "", "case group")
 	smoke := flag.Bool("smoke", false, "small matrix")
+	trace := flag.String("trace", "", "dosgolem WATCH log; map-cell entries become group-trace cases (spec/265)")
 	flag.Parse()
 	read := func(path string) []byte {
 		b, e := os.ReadFile(path)
@@ -211,7 +218,7 @@ func main() {
 					d.Out8(0x3cf, q[1])
 				}
 			}
-			if c.group == "flags" || c.group == "render" {
+			if c.group == "flags" || c.group == "render" || c.traceFull {
 				for _, b := range [][]byte{original.Mem, memory} {
 					for i := 0; i < 920; i++ {
 						at := 0x25000 + i*8
@@ -258,11 +265,19 @@ func main() {
 			r.BX = 0x2500
 			r.CX = 0x5000
 		}
+		if c.traceFull {
+			// spec/265: traced registers/FLAGS as-is; runtime CS mapped
+			// onto harness CS, other segments keep traced values on both
+			// sides. Asset tables stay at the harness-fixed segments.
+			r = c.regs
+			r.CS = cs
+			r.IP = c.target
+		}
 		var expected []byte
 		if c.audit == "background" && !c.df {
 			expected = append([]byte(nil), mdl[int(c.ax>>8)*128:int(c.ax>>8)*128+128]...)
 		}
-		if c.target == 0xd804 && !c.keep {
+		if c.target == 0xd804 && !c.keep && !c.traceFull {
 			at := int(cs)*16 + 0xd858
 			base := ((int(c.ax>>8)*53 + 7) & 255) * 128
 			copy(original.Mem[at:at+128], mdl[base:base+128])
@@ -338,7 +353,7 @@ func main() {
 			return false
 		}
 		audits++
-		if c.target == 0xd782 && !c.df {
+		if c.target == 0xd782 && !c.df && !c.traceFull {
 			tile := mdl[int(c.ax>>8)*128 : int(c.ax>>8)*128+128]
 			for plane := 0; plane < 4; plane++ {
 				for row := 0; row < 16; row++ {
@@ -475,12 +490,71 @@ func main() {
 		c.keep = true
 		add(c)
 	}
+	// Trace mode (spec/265 B-7): real entry registers from a dosgolem
+	// WATCH log on the siege longpath become replay cases. Read sets are
+	// registers plus the real MMAP tables at harness-fixed segments
+	// (CS words D84A-D856 identical on both sides); FLAGS replayed as
+	// traced. 1D7E7 requires DF=0 (spec/234); the capture has FLAGS
+	// 7006 throughout, and a traced DF=1 call would be excluded here.
+	traceCalls, traceUnique := 0, 0
+	traceHash := ""
+	if *trace != "" {
+		rawTrace, e := os.ReadFile(*trace)
+		if e != nil {
+			panic(e)
+		}
+		sum := sha256.Sum256(rawTrace)
+		traceHash = hex.EncodeToString(sum[:])
+		targets := map[string]uint16{"1D46A": 0xd46a, "1D483": 0xd483, "1D4C7": 0xd4c7, "1D615": 0xd615, "1D66A": 0xd66a, "1D76B": 0xd76b, "1D782": 0xd782, "1D796": 0xd796, "1D7E7": 0xd7e7, "1D804": 0xd804}
+		re := regexp.MustCompile(`呼叫 ([0-9A-F]+) AX=([0-9A-F]{4}) BX=([0-9A-F]{4}) CX=([0-9A-F]{4}) DX=([0-9A-F]{4}) SI=([0-9A-F]{4}) DI=([0-9A-F]{4}) BP=([0-9A-F]{4}) SP=([0-9A-F]{4}) DS=([0-9A-F]{4}) ES=([0-9A-F]{4}) SS=([0-9A-F]{4}) FLAGS=([0-9A-F]{4})`)
+		seen := map[string]bool{}
+		sc := bufio.NewScanner(bytes.NewReader(rawTrace))
+		sc.Buffer(make([]byte, 1024*1024), 1024*1024)
+		for sc.Scan() {
+			m := re.FindStringSubmatch(sc.Text())
+			if m == nil {
+				continue
+			}
+			t, ok := targets[strings.TrimSpace(m[1])]
+			if !ok {
+				continue
+			}
+			traceCalls++
+			key := strings.Join(m[1:], "|")
+			if seen[key] {
+				continue
+			}
+			seen[key] = true
+			parse := func(s string) uint16 {
+				v, e := strconv.ParseUint(s, 16, 16)
+				if e != nil {
+					panic(e)
+				}
+				return uint16(v)
+			}
+			regs := registers{AX: parse(m[2]), BX: parse(m[3]), CX: parse(m[4]), DX: parse(m[5]), SI: parse(m[6]), DI: parse(m[7]), BP: parse(m[8]), SP: parse(m[9]), DS: parse(m[10]), ES: parse(m[11]), SS: parse(m[12]), Flags: parse(m[13])}
+			if t == 0xd7e7 && regs.Flags&0x400 != 0 {
+				continue
+			}
+			traceUnique++
+			c := base("trace", t)
+			c.traceFull = true
+			c.regs = regs
+			add(c)
+		}
+		if e := sc.Err(); e != nil {
+			panic(e)
+		}
+		if traceCalls == 0 {
+			panic("trace log has no replayable entries")
+		}
+	}
 	for _, c := range all {
 		if !check(c) {
 			break
 		}
 	}
-	report := map[string]any{"schema": "wolong-c-mapcells-parity-v1", "input_sha256": inputHash, "routine_sha256": hashes, "groups": groups, "cases": cases, "full_ram_plane_audits": audits, "source_composite_audits": sourceAudits, "tile_blit_audits": tileAudits, "max_original_steps": maxSteps, "original_step_bound": 4000000, "entries_seen": entries, "passed": mismatch == nil, "mismatch": mismatch, "original_state_sha256": hex.EncodeToString(originalDigest.Sum(nil)), "c_state_sha256": hex.EncodeToString(cDigest.Sum(nil)), "asset_sha256": map[string]string{"MMAP.MDL": fmt.Sprintf("%x", sha256.Sum256(mdl)), "MMAP.MCH": fmt.Sprintf("%x", sha256.Sum256(mch)), "MMAP.raw": fmt.Sprintf("%x", sha256.Sum256(world))}, "c_machine_code_match": false}
+	report := map[string]any{"schema": "wolong-c-mapcells-parity-v1", "input_sha256": inputHash, "routine_sha256": hashes, "groups": groups, "cases": cases, "full_ram_plane_audits": audits, "source_composite_audits": sourceAudits, "tile_blit_audits": tileAudits, "max_original_steps": maxSteps, "original_step_bound": 4000000, "entries_seen": entries, "passed": mismatch == nil, "mismatch": mismatch, "original_state_sha256": hex.EncodeToString(originalDigest.Sum(nil)), "c_state_sha256": hex.EncodeToString(cDigest.Sum(nil)), "asset_sha256": map[string]string{"MMAP.MDL": fmt.Sprintf("%x", sha256.Sum256(mdl)), "MMAP.MCH": fmt.Sprintf("%x", sha256.Sum256(mch)), "MMAP.raw": fmt.Sprintf("%x", sha256.Sum256(world))}, "c_machine_code_match": false, "trace_calls": traceCalls, "trace_unique": traceUnique, "trace_log_sha256": traceHash}
 	b, e := json.MarshalIndent(report, "", "  ")
 	if e != nil {
 		panic(e)
