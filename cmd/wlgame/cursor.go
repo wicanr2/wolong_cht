@@ -12,11 +12,13 @@ package main
 import (
 	"fmt"
 	"image"
+	"image/color"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/vector"
 
 	"github.com/wicanr2/wolong_cht/internal/ui/chrome"
+	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
 )
 
 // arrowCursor 是 14×14 的箭頭：`W` ＝ 色 15 描邊、`#` ＝ 色 10 填色。
@@ -50,6 +52,17 @@ func (g *game) drawMouseCursor(screen *ebiten.Image) {
 		return
 	}
 	at := g.cursorAt
+	if at == nil && g.listScrollOwnsInput() {
+		return
+	}
+	if at == nil && g.choiceBand.owner != nil {
+		return
+	}
+	if at == nil && g.list != nil && g.list.Phase() == listwin.Selected &&
+		!g.form.active && !g.marchMode.active && !g.mapPickActive() &&
+		!g.messageActive() && !g.cityInfo.active && !g.corpsInfo.active && !g.adviseTalking() {
+		return // sub_18463 的第二段等待隱藏游標；覆蓋在列表上的子視窗另有自己的游標。
+	}
 	// ⛔ **截圖對拍不畫虛擬游標。** `-shot` 是對拍用的路徑，畫面上多一個
 	// 14×14 的箭頭就會讓那一格對不上——主畫面的 `map` 區因此從 0 px
 	// 變成 101 px（docs/playtest/120 §1.1）。要在對拍裡放游標請用
@@ -69,6 +82,10 @@ func (g *game) drawMouseCursor(screen *ebiten.Image) {
 	}
 	edge := g.paletteInk(arrowCursorEdge, chrome.Paper)
 	fill := g.paletteInk(arrowCursorFill, listWarnInk)
+	drawArrowCursor(screen, *at, edge, fill)
+}
+
+func drawArrowCursor(screen *ebiten.Image, at image.Point, edge, fill color.RGBA) {
 	for dy, row := range arrowCursor {
 		for dx, c := range row {
 			var col = edge

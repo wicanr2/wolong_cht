@@ -88,7 +88,7 @@ func (g *game) updateFinance() {
 		g.beginFinanceAmount(row)
 		return
 	}
-	if pressed(ebiten.KeyEnter) || pressed(ebiten.KeySpace) {
+	if g.confirmed() {
 		f.keyboard = true
 		g.beginFinanceAmount(f.row)
 	}
@@ -164,7 +164,7 @@ func (g *game) updateFinanceAmount() {
 		edit = state.AmountClear
 	case pressed(ebiten.KeyHome):
 		edit = state.AmountSetMax
-	case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
+	case g.confirmed():
 		g.setAmountCursorAction(state.AmountFinishInput, 0)
 		g.commitFinanceAmount()
 		return
@@ -364,7 +364,7 @@ func (g *game) drawFinance(screen *ebiten.Image) {
 		g.chrome.Window(screen, financeWinX, financeHintY, financeWinW,
 			financeHintH, chrome.Menu)
 		g.td.Draw(screen, "設定值於次月末生效", financeWinX+8, financeHintY+8, labelInk)
-		g.td.Draw(screen, "↑↓ 選欄　Enter 輸入　ESC 關閉",
+		g.td.Draw(screen, mouseHint(mouseSelect),
 			financeWinX+8, financeHintY+8+textdraw.GlyphH+2, labelInk)
 	}
 
@@ -386,7 +386,7 @@ func (g *game) openCityList() {
 		return
 	}
 	g.setStatusTalk(cityListStatusTalk, nil)
-	g.cityList(rows, "↑↓ 移動　Enter 選取／決定　1-5 排序　ESC 取消",
+	g.cityList(rows, mouseHint(mouseSelect),
 		func(city int) bool {
 			// 說明書：「選了游標移過去」。這裡把鏡頭移到該據點，
 			// 並開原版的據點情報視窗（docs/spec/23）。
@@ -449,7 +449,7 @@ func (g *game) openFactionList() {
 			rows = append(rows, i)
 		}
 	}
-	g.factionList(rows, "↑↓ 移動　Enter 選取／決定　1-4 排序　ESC 取消",
+	g.factionList(rows, mouseHint(mouseSelect),
 		func(f int) bool {
 			g.lastEvent = big5(g.world.LordName(f)) + " 軍"
 			if c := g.world.Factions[f].Capital; c >= 0 && c < len(g.world.Cities) {

@@ -105,9 +105,9 @@ func main() {
 	w.Corps[35].Node = before
 	b := w.PendingBattle().Battle
 	// 正式 newBattleView 同樣以共享 RNG 初始化實際戰場旗幟，不可任意跳過固定次數。
-	fieldNumber := provider.FieldNumber(w.PendingBattle().Node, !*field)
+	fieldNumber := w.PendingBattle().FieldNumber
 	tiles := provider.Library().Tiles(fieldNumber)
-	if provider.Rotate() {
+	if w.PendingBattle().FieldRotate {
 		tiles = battle.Rotate180(tiles)
 	}
 	write("banners", provider.Library().BannersFor(fieldNumber, tiles, r.Next))

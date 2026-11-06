@@ -78,7 +78,7 @@ func (g *game) openCityInfo(city int) {
 }
 
 func (g *game) updateCityInfo() {
-	if g.cancelled() || pressed(ebiten.KeyEnter) {
+	if g.cancelled() || g.confirmed() {
 		g.cityInfo.active = false
 	}
 }
@@ -139,5 +139,5 @@ func (g *game) drawCityInfo(screen *ebiten.Image) {
 
 	// ↓ remake 差異：原版按右鍵關掉，沒有這行字。
 	g.chrome.Window(screen, cityHintX, cityWinY, cityHintW, cityHintH, chrome.Menu)
-	g.td.Draw(screen, "ESC 關閉", cityHintX+8, cityWinY+(cityHintH-textdraw.GlyphH)/2, labelInk)
+	g.td.Draw(screen, mouseHint(mouseClose), cityHintX+8, cityWinY+(cityHintH-textdraw.GlyphH)/2, labelInk)
 }

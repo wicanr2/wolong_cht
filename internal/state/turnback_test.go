@@ -128,3 +128,83 @@ func TestMarchPassesIntoNeutral(t *testing.T) {
 		t.Fatal("中立據點也掉頭了")
 	}
 }
+
+// 由正常原版行軍取樣：spec269，196/4/3 5時、軍團37、IDA 142EE → 126FE。
+func originalTurnbackGate(t *testing.T) *World {
+	t.Helper()
+	w := scenarioWithRoads(t)
+	w.Player = 0
+	w.Corps[37] = Corps{
+		Alive: true, Faction: 0, Men: 600, Morale: 200,
+		Node: 87, X: 190, Y: 119, Heading: 0,
+		LinkAddr: 0x0F90, PathPtr: 0x45CC, Direction: 4,
+		TargetNode: 90, TargetX: 181, TargetY: 127, Ordered: 90,
+		Timer: 1, Interval: 3,
+	}
+	w.SetRoads(w.roads)
+	w.rebuildOccupancy()
+	if w.UnresolvedMarches() != 0 || w.Corps[37].Node != 87 || !w.borderIsClosed(0, 90) {
+		t.Fatal("original border snapshot could not be restored from real road data")
+	}
+	return w
+}
+
+func TestPeacefulTurnbackMovesOnOriginalGateTick(t *testing.T) {
+	w := originalTurnbackGate(t)
+	c := &w.Corps[37]
+	ev := w.tickOneCorps(37, 2, fixedRand{})
+	if c.X != 191 || c.Y != 119 || c.Node != 87 || c.LinkAddr != 0 ||
+		c.TargetNode != 87 || c.Ordered != 87 || c.Heading != HeadingStill {
+		t.Fatalf("original gate tick ends at Wuyang87, got %+v", *c)
+	}
+	if c.Direction != 0xFC || c.PathPtr != 0x45CC || c.TargetX != 181 || c.TargetY != 127 ||
+		c.Replan || !c.OnPath || c.Timer != 3 {
+		t.Fatalf("original direction/path/target fields disagree: %+v", *c)
+	}
+	if ev == nil || !ev.Moved || w.occupancyAt(190, 119) != 0 || w.occupancyAt(191, 119) != 1 {
+		t.Fatal("turnback tick did not move its occupancy exactly once")
+	}
+}
+
+func TestPeacefulTurnbackRestoresRemainingRoadCells(t *testing.T) {
+	w := originalTurnbackGate(t)
+	c := &w.Corps[37]
+	owner := w.Cities[90].Owner
+	// 受控局部樣本：先在交戰條件走到路中，再只切換和平位元。
+	w.Friendship[0][owner] = w.Friendship[0][owner].WithWar(true)
+	for k := 0; k < 3; k++ {
+		c.Timer = 1
+		w.tickOneCorps(37, 2, fixedRand{})
+	}
+	if c.LinkAddr == 0 {
+		t.Fatal("controlled sample did not reach the interior of the road")
+	}
+	w.Friendship[0][owner] = w.Friendship[0][owner].WithWar(false)
+	before, ptr, direction := [2]int{c.X, c.Y}, c.PathPtr, c.Direction
+	c.Timer = 1
+	w.tickOneCorps(37, 2, fixedRand{})
+	if [2]int{c.X, c.Y} == before || c.Direction != byteStep(-int8Step(direction)) ||
+		c.PathPtr != ptr+int8Step(c.Direction) || c.TargetX != 181 || c.TargetY != 127 {
+		t.Fatalf("interior turnback must reverse and move in the same tick: %+v", *c)
+	}
+	if c.LinkAddr == 0 || len(w.routes[37]) == 0 {
+		t.Fatal("sample arrived before save/load could exercise a reversed road")
+	}
+	restored := loadBlock(w.Bytes())
+	roadsFor(t, restored)
+	if restored.UnresolvedMarches() != 0 || len(restored.routes[37]) != len(w.routes[37]) {
+		t.Fatal("reversed direction/path pointer did not restore the same remaining road")
+	}
+	for k, cell := range w.routes[37] {
+		if restored.routes[37][k] != cell {
+			t.Fatalf("saved reverse route differs at cell %d: %v != %v", k, restored.routes[37][k], cell)
+		}
+	}
+	c.Timer, restored.Corps[37].Timer = 1, 1
+	w.tickOneCorps(37, 2, fixedRand{})
+	restored.tickOneCorps(37, 2, fixedRand{})
+	d := restored.Corps[37]
+	if c.X != d.X || c.Y != d.Y || c.PathPtr != d.PathPtr || c.Direction != d.Direction {
+		t.Fatalf("next movement diverges after reload: live=%+v restored=%+v", *c, d)
+	}
+}

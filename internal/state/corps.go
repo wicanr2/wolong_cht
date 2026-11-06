@@ -2,6 +2,7 @@ package state
 
 import (
 	"fmt"
+	"slices"
 
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/rules/battlefield"
@@ -192,14 +193,14 @@ func (w *World) loadCorps(b []byte) {
 			TargetX:    u16(r, 0x16),
 			TargetY:    u16(r, 0x18),
 			Interval:   int(r[0x1E]),
-			Ordered:   int(r[0x20]),
-			PathPtr:   u16(r, 0x0C),
-			OnPath:    r[0x00]&0x01 != 0,
-			Replan:    r[0x00]&0x02 != 0,
-			Delegated: r[0x00]&0x04 != 0,
-			Stage:     int(r[0x23]),
+			Ordered:    int(r[0x20]),
+			PathPtr:    u16(r, 0x0C),
+			OnPath:     r[0x00]&0x01 != 0,
+			Replan:     r[0x00]&0x02 != 0,
+			Delegated:  r[0x00]&0x04 != 0,
+			Stage:      int(r[0x23]),
 			// 旗標 8 而且不到 0x80 ＝ 敗走中（docs/spec/43）。
-			Routing:   r[0x00] < aliveFlag && r[0x00]&0x08 != 0,
+			Routing: r[0x00] < aliveFlag && r[0x00]&0x08 != 0,
 			// ⭐ 對峙只在**活著**的軍團身上成立；敗走的旗標是 `08h`，
 			// 位元 5 本來就不會設（`sub_12977` 整個 byte 寫 8）。
 			Standoff:  r[0x00] >= aliveFlag && r[0x00]&standoffBit != 0,
@@ -655,37 +656,47 @@ type CorpsEvent struct {
 
 // tickCorps 跑一輪軍團更新，回傳這個 tick 發生的事。
 func (w *World) tickCorps(hour int, rng combat.Rand) []CorpsEvent {
+	if w.pending != nil {
+		return nil
+	}
+	local := corpsBatch{start: w.corpsCursor, tail: -1, hour: hour}
+	batch := &local
+	if w.tickResume != nil {
+		batch = &w.tickResume.corps
+	}
 	var out []CorpsEvent
-	for n := 0; n < corpsPerTick; n++ {
-		i := w.corpsCursor
-		// ⭐ **一圈是 128 格不是 127。** 原版 `sub_125A3` 在 16 次
-		// `add si, 40h` 之後才 `cmp si, 1FC0h`，所以檢查點上的 si 只會是
-		// 0x400 的倍數，一圈實際走過 si = 0…0x1FC0 ＝ 128 格、8 拍。
-		// 軍團表本身也是 128 格（`0x22C0`–`0x42C0` ＝ 0x2000 ÷ 64）；
-		// remake 只建模前 127 格（跟著武將數），第 128 格空轉一拍
-		// ——用 127 取模會每 8 拍就比原版多轉一格（docs/spec/168 §2.1）。
-		w.corpsCursor = (w.corpsCursor + 1) % corpsSlots
+	if batch.tail >= 0 {
+		// 戰鬥返回後才執行125D2軍費、125D5倒數，不重扣移動timer。
+		w.finishCorpsVisit(batch.tail, batch.hour)
+		w.tickStandoff(batch.tail)
+		batch.tail = -1
+	}
+	for batch.next < corpsPerTick {
+		i := (batch.start + batch.next) % corpsSlots
+		batch.next++
 		if i >= numCorps {
 			continue
 		}
 		if !w.Corps[i].Alive {
-			// 敗走中的軍團不算活著，但還有一個倒數要跑
-			// （原版 `sub_125A3` 的 `test byte [si+2240h], 8`）。
 			if w.Corps[i].Routing && w.tickRout(i) {
 				out = append(out, CorpsEvent{Corps: i, Enemy: -1, Captured: -1,
-					Relocated: capital.None, GovernorReturned: noGovernor,
-					RoutEnded: true})
+					Relocated: capital.None, GovernorReturned: noGovernor, RoutEnded: true})
 			}
 			continue
 		}
-		if ev := w.tickOneCorps(i, hour, rng); ev != nil {
+		if ev := w.tickOneCorps(i, batch.hour, rng); ev != nil {
 			out = append(out, *ev)
 		}
-		// ⭐ `sub_1264A` 由 `sub_125A3` 在**每次巡到**時呼叫，
-		// 不論這一拍有沒有輪到移動——倒數因此是「每 8 拍減 1」，
-		// 不是「每 24 拍減 1」（docs/spec/175 §1.3）。
+		if w.outcome != InProgress {
+			return out
+		}
+		if w.pending != nil {
+			batch.tail = i
+			return out
+		}
 		w.tickStandoff(i)
 	}
+	w.corpsCursor = (batch.start + corpsPerTick) % corpsSlots
 	return out
 }
 
@@ -753,7 +764,7 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 	// `SetRoads` 之前 `Node` 只是暫時擺著目標，這時候跑一步會被判成抵達，
 	// 連帶在錯的地方觸發攻城（docs/spec/172 §4.5）。
 	// 不動比走錯好——不動看得出來，走錯看不出來。
-	if c.LinkAddr != 0 && len(w.routes[i]) == 0 {
+	if w.routeUnresolved[i] || c.LinkAddr != 0 && len(w.routes[i]) == 0 {
 		// ⚠ **倒數仍然要跑。** 原版 `sub_125A3` 的 `dec byte ptr [si+0Bh]`
 		// 是無條件的（只要 `+0x00 ≥ 80h`），減到 0 才重設成 `+0x1E`
 		// 並呼叫 `sub_12662`。這條退場路徑是 remake 自己的保護
@@ -787,6 +798,11 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 		// **先問還在不在路段上**——`LinkAddr` 只在走完整條路線時歸零
 		// （docs/spec/179 §2）。
 		if w.atTargetNode(i) {
+			// sub_128F4 在分派前留下 node×32，沒有加據點表基址。
+			// 目前只還原自軍據點的直接返回分支（spec271）。
+			if validCity(c.Node) && w.Cities[c.Node].Owner == c.Faction {
+				w.stage1DI = c.Node * citySize
+			}
 			w.arriveCorps(i, rng)
 			if !c.Alive {
 				ev.Disbanded, ev.Routed = !c.Routing, c.Routing
@@ -807,6 +823,10 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 				return &ev
 			}
 		} else {
+			// sub_12662 在重算及碰撞判定前先問和平邊界；折返後當拍繼續走。
+			if w.roads != nil {
+				w.turnBackAtBorder(i)
+			}
 			// ⭐ 位元 1 ＝「下一步要重算」：`sub_12662` 在 `0x126A5`
 			// 清掉它並呼叫 `sub_147BB`，**然後照樣走一格**（沒有出口）。
 			// 位元 1 沒設而且走在邊上時，方向根本不重算——就照現有的
@@ -844,25 +864,8 @@ func (w *World) tickOneCorps(i, hour int, rng combat.Rand) *CorpsEvent {
 		}
 	}
 
-	// ② 軍費與士氣。每天「一時」那個小時才收。
-	// 這一步壞滅的軍團不收——它已經不在了。
-	//
-	// ⭐ **軍費是當場從資金扣的**（原版 `sub_12600` → `sub_1562B`），
-	// 不進「本月支出」那個累加器——那一格只有預備兵維持費在寫
-	// （`sub_13E65`，docs/spec/50）。總額一個月下來一樣，
-	// 差在月中：出兵中的勢力資金會即時往下掉，而每小時的侵攻財政閘
-	// 讀的正是資金。
-	if hour == upkeepHour && c.Alive {
-		// ⚠ 判準是 `cmp word ptr [si+0Eh], 800h` ＝ **有沒有走在路段上**，
-		// 不是節點的種類（docs/spec/178）。`Corps.Node` 在行軍中留著
-		// 出發那一站，拿它去問「在不在野外」永遠答「在城裡」——
-		// 於是行軍中的軍團收便宜的軍費、而且每小時回 10 點士氣。
-		onLeg := c.LinkAddr != 0
-		f := &w.Factions[c.Faction]
-		f.Funds = economy.ClampFunds(f.Funds - combat.Upkeep(c.Men, onLeg))
-		cc := combat.Corps{Morale: c.Morale}
-		combat.Recover(&cc, f.MoraleBase, onLeg)
-		c.Morale = cc.Morale
+	if w.pending == nil && w.outcome == InProgress {
+		w.finishCorpsVisit(i, hour)
 	}
 
 	if !ev.Moved && ev.Battle == nil {
@@ -925,7 +928,9 @@ func (w *World) step(i int) bool {
 
 	// ⓪ 邊界掉頭：前方那一端的據點屬於**和平**的別勢力就折返
 	//    （`docs/spec/132`）。原版每一步都問一次，而且只在野外問。
-	if w.turnBackAtBorder(i) {
+	// 正式道路圖的折返已在 tickOneCorps 的原版呼叫位置處理。
+	// 無素材時保留既有直線降級，不能把它當作原版離散路徑。
+	if w.roads == nil && w.turnBackAtBorder(i) {
 		return true
 	}
 
@@ -1050,8 +1055,9 @@ func (w *World) turnBackAtBorder(i int) bool {
 	if c.Node < 0 || c.Node >= len(w.Cities) {
 		return false
 	}
-	// 站在據點上不問——原版 `sub_12662` 的 `cmp bx, 800h` 那一條。
-	if c.X == w.Cities[c.Node].X && c.Y == w.Cities[c.Node].Y {
+	// 正式路徑以原始 +0x0E 是否為連結判斷；無素材分支才用座標近似。
+	if w.roads != nil && c.LinkAddr == 0 || w.roads == nil &&
+		c.X == w.Cities[c.Node].X && c.Y == w.Cities[c.Node].Y {
 		return false
 	}
 	next := w.nextCityOnRoute(i)
@@ -1061,21 +1067,17 @@ func (w *World) turnBackAtBorder(i int) bool {
 	if !w.borderIsClosed(c.Faction, next) {
 		return false
 	}
-	// 掉頭：目標換成路的另一端 ＝ 剛離開的據點，路線用反向那一段。
+	// sub_142AB 只寫目標節點、意圖及重算旗標，不寫 +0x16／+0x18。
 	back := c.Node
 	c.TargetNode, c.Ordered = back, back
-	c.TargetX, c.TargetY = w.Cities[back].X, w.Cities[back].Y
-	// ⚠ 掉頭走的是自己算的反向段，不是道路表的 leg，所以沒有標記可對。
-	// 清掉，讓 `+0x0C`／`+0x0E` 留在掉頭前的值——原版 `sub_142AB` 也是
-	// 直接改 `+0x14`／`+0x0E`，不重排路徑點。
-	cells, atGate := w.reverseLeg(next, back, c.X, c.Y)
-	w.routes[i], w.routeMarks[i] = cells, nil
-	if atGate {
-		// 同 `replanOnLeg`：起點在城門格時剩下的一步是跨節點，
-		// 原版不動 `+0x0C`，先補回來抵消 `step` 無條件加的那一次。
-		c.PathPtr -= int8Step(c.Direction)
+	if w.roads != nil {
+		c.Replan = true
+	} else {
+		// remake 無道路素材的既有降級：直線目標必須同步改成折返座標。
+		c.TargetX, c.TargetY = w.Cities[back].X, w.Cities[back].Y
+		w.routes[i], w.routeMarks[i] = nil, nil
+		c.Heading = headingTo(c.X, c.Y, c.TargetX, c.TargetY)
 	}
-	c.Heading = headingTo(c.X, c.Y, c.TargetX, c.TargetY)
 	return true
 }
 
@@ -1466,7 +1468,7 @@ func (w *World) siegeAt(i, node int, ev *CorpsEvent, rng combat.Rand) {
 	if j := w.pickDefender(i, city.Owner, func(d *Corps) bool {
 		return d.X == cx && d.Y == cy
 	}); j >= 0 {
-		w.fight(i, j, node, ev, combat.Siege, city.Garrison, rng)
+		w.fight(i, j, node, ev, combat.Siege, city.Garrison, rng, w.siegeSelection(node, j))
 		return
 	}
 	w.fightGarrison(i, node, ev, rng)
@@ -1476,23 +1478,20 @@ func (w *World) siegeAt(i, node int, ev *CorpsEvent, rng combat.Rand) {
 // `call sub_14A7B`）。撞到的那一支由 `blockerAt` 指定；同一格上疊了
 // 好幾支時照 `sub_14C72` 計分挑應戰者（docs/spec/82）。
 //
-// 戰場沿用攻方的 `Node`——原版的野戰戰場是 `sub_14B63` 從**守方那一格
-// 周圍的五格地形**算出來的，remake 這一層還是近似（docs/re/78）。
+// 戰略Node保留攻方的據點；戰場另以最初接觸守軍的位置選一次（spec273）。
 func (w *World) fieldAt(i, enemy int, ev *CorpsEvent, rng combat.Rand) {
 	if enemy < 0 || enemy >= len(w.Corps) {
 		return
 	}
+	// 14A8E先選場，14A9E才挑代表守軍，朝向不能改讀代表軍團。
+	field := w.selectBattlefield(i, enemy, rng)
 	x, y, f := w.Corps[enemy].X, w.Corps[enemy].Y, w.Corps[enemy].Faction
 	if k := w.pickDefender(i, f, func(d *Corps) bool {
 		return d.X == x && d.Y == y
 	}); k >= 0 {
 		enemy = k
 	}
-	// ⭐ **開打之前先決定戰場**（`sub_14A7B` 的第一行 `call sub_14B63`，
-	// docs/spec/196）：水域那一格會擲一次骰，少了它之後每一場戰鬥的
-	// 傷亡都換一組亂數。
-	w.rollBattlefield(enemy, rng)
-	w.fight(i, enemy, w.Corps[i].Node, ev, combat.Field, 0, rng)
+	w.fight(i, enemy, w.Corps[i].Node, ev, combat.Field, 0, rng, field)
 }
 
 // pickDefender 是 `sub_14C72` 的挑選：faction 勢力裡通過 at 條件
@@ -1521,13 +1520,13 @@ func (w *World) pickDefender(attacker, faction int, at func(*Corps) bool) int {
 	return best
 }
 
-func (w *World) fight(att, def, node int, ev *CorpsEvent, m combat.Mode, garrison int, rng combat.Rand) {
+func (w *World) fight(att, def, node int, ev *CorpsEvent, m combat.Mode, garrison int, rng combat.Rand, field battleSelection) {
 	// ⭐ 玩家的勢力捲進去而且那一方**沒有委任**，就直接開戰術畫面
 	// （原版 `sub_14E5C`／`sub_14ED7`：`sub_14EB9` → `sub_11B5A`，**中間沒有選單**，
 	// 實機 docs/playtest/55）。「戰鬥指揮／委任」是行軍指示時就決定的
 	// （docs/spec/39），遭遇當下只看委任位元。其餘自動判定。
 	ev.Mode = m
-	if w.wantsTactical(att, def) && w.beginTactical(att, def, node, m, garrison) {
+	if w.wantsTactical(att, def) && w.beginTactical(att, def, node, m, garrison, field) {
 		// 原版進戰術畫面前先跳一則訊息（`sub_14EB9`／`sub_14F58`，docs/spec/105）。
 		ev.TalkNotices = append(ev.TalkNotices, w.encounterNotice(att, def, m))
 		return
@@ -1971,6 +1970,7 @@ func (w *World) March(corps, node int) error {
 	c.Ordered = node
 	c.TargetX, c.TargetY = w.Cities[node].X, w.Cities[node].Y
 	w.routes[corps], w.routeMarks[corps] = nil, nil
+	w.routeUnresolved[corps] = false
 	if w.roads == nil || node == c.Node {
 		return nil
 	}
@@ -2007,23 +2007,26 @@ func (w *World) routePenalty(faction int) func(int) int {
 }
 
 // SetTerrain 掛上大地圖圖塊查詢。野戰開打前要照 `sub_14B63` 取樣
-// **守方**腳下與下方四格的地形決定戰場，而正下方是水域（類型 8）時
+// **守方**腳下及上下左右的地形決定戰場，而中心是水域（類型 8）時
 // `sub_14C1A` 會**擲一次骰**（docs/spec/196）。沒掛就不擲——
 // 降級跑得動，但與原版不一致。
 func (w *World) SetTerrain(at func(x, y int) byte) { w.terrain = at }
 
-// rollBattlefield 是 `sub_14B63`：野戰開打前決定戰場。
-//
-// 這裡只需要它的**副作用**——正下方那一格是水域時 `sub_14C1A` 取一次
-// 亂數（`0D1h + 亂數 & 3`）。戰場編號本身由呈現層的
-// `internal/battlesetup` 算（同一組 `battlefield` 規則），自動判定用不到。
-//
-// ⚠ 取樣的座標是**守方**的（原版 `mov bx, [di+1Ah]`，di ＝ 守方），
-// 不是攻方也不是據點。
-func (w *World) rollBattlefield(defender int, rng combat.Rand) {
-	if w.terrain == nil || rng == nil ||
-		defender < 0 || defender >= len(w.Corps) {
-		return
+type battleSelection struct {
+	number int
+	rotate bool
+}
+
+func (w *World) siegeSelection(node, defender int) battleSelection {
+	return battleSelection{node, defender >= 0 && defender < len(w.Corps) &&
+		w.Corps[defender].Faction == w.Player}
+}
+
+// selectBattlefield 重現14B63的取樣與單次抽骰；結果沿用到戰術及UI。
+// AI雙方的入口AL、類型9翻轉仍維持明示近似，見spec273。
+func (w *World) selectBattlefield(attacker, defender int, rng combat.Rand) battleSelection {
+	if w.terrain == nil || defender < 0 || defender >= len(w.Corps) {
+		return battleSelection{battlefield.FieldBase + 6, false}
 	}
 	d := &w.Corps[defender]
 	at := func(dx, dy int) int { return battlefield.Terrain(w.terrain(d.X+dx, d.Y+dy)) }
@@ -2034,9 +2037,19 @@ func (w *World) rollBattlefield(defender int, rng combat.Rand) {
 		Centre: at(0, 0),
 		Down:   at(0, 1),
 	}
-	if battlefield.NeedsWaterRoll(n) {
-		rng.Next()
+	dir := HeadingStill
+	if attacker >= 0 && attacker < len(w.Corps) && w.Corps[attacker].Faction == w.Player {
+		dir = w.Corps[attacker].Heading
 	}
+	if d.Faction == w.Player {
+		dir = d.Heading
+	}
+	roll := 0
+	if battlefield.NeedsWaterRoll(n) && rng != nil {
+		roll = rng.Next()
+	}
+	number, rotate := battlefield.SelectWith(dir, n, roll)
+	return battleSelection{number, rotate}
 }
 
 // SetRoads 掛上道路圖。**規則層不讀檔案**，所以圖由呼叫端
@@ -2060,6 +2073,7 @@ func (w *World) ClearMarchRoute(i int) {
 		return
 	}
 	w.routes[i], w.routeMarks[i] = nil, nil
+	w.routeUnresolved[i] = false
 	w.Corps[i].LinkAddr, w.Corps[i].PathPtr = 0, 0
 }
 
@@ -2086,13 +2100,41 @@ func (w *World) RestoredMarches() int { return w.restoredMarches }
 // ⚠ 道路圖是呼叫端注入的，所以這件事只能掛在 `SetRoads` 上，不能放在
 // `loadCorps` 裡——那時還沒有圖。
 func (w *World) restoreMarchRoutes() (restored, unresolved int) {
+	w.routeUnresolved = [numCorps]bool{}
 	if w.roads == nil {
 		return 0, 0
 	}
 	for i := range w.Corps {
 		c := &w.Corps[i]
-		if !c.Alive || len(w.routes[i]) > 0 {
+		if !c.Alive || len(w.routes[i]) > 0 && len(w.routeMarks[i]) == len(w.routes[i]) {
 			continue
+		}
+		// 原生存檔只有格子快取，仍須補齊標記及真正的出發節點。
+		// 只接受逐格吻合的候選，避免讀檔時改變已存路線（spec269）。
+		saved := w.routes[i]
+		recoverFrom := func(from int, onLeg bool) ([][2]int, []march.CellMark, bool) {
+			penalties := []func(int) int{nil}
+			if len(saved) > 0 {
+				penalties = append(penalties, w.routePenalty(c.Faction))
+			}
+			for _, penalty := range penalties {
+				cells, marks := w.roads.CellRouteMarkedCost(from, c.TargetNode, penalty)
+				if len(cells) == 0 || len(cells) != len(marks) {
+					continue
+				}
+				if onLeg {
+					k := alignRoute(cells, marks, c.PathPtr, c.X, c.Y)
+					if k < 0 {
+						continue
+					}
+					cells, marks = cells[k+1:], marks[k+1:]
+				}
+				if len(saved) > 0 && !slices.Equal(saved, cells) {
+					continue
+				}
+				return cells, marks, true
+			}
+			return nil, nil, false
 		}
 		switch {
 		case c.LinkAddr != 0:
@@ -2100,6 +2142,7 @@ func (w *World) restoreMarchRoutes() (restored, unresolved int) {
 			//    `+0x0C` 說走到第幾格。
 			a, b, ok := w.roads.EdgeByLink(c.LinkAddr)
 			if !ok {
+				w.routeUnresolved[i] = true
 				unresolved++
 				continue
 			}
@@ -2116,26 +2159,34 @@ func (w *World) restoreMarchRoutes() (restored, unresolved int) {
 			}
 			done := false
 			for _, from := range cands {
-				cells, marks := w.roads.CellRouteMarked(from, c.TargetNode)
-				k := alignRoute(cells, marks, c.PathPtr, c.X, c.Y)
-				if k < 0 {
+				cells, marks, ok := recoverFrom(from, true)
+				if !ok {
 					continue
 				}
 				c.Node = from
-				w.routes[i], w.routeMarks[i] = cells[k+1:], marks[k+1:]
+				w.routes[i], w.routeMarks[i] = cells, marks
 				done = true
 				break
 			}
 			if done {
 				restored++
 			} else {
+				w.routeUnresolved[i] = true
 				unresolved++
 			}
 		case c.Node != c.TargetNode:
 			// ② 目標已經定了但還沒踏出去（原版是下一拍 `sub_147BB` 才選路）。
 			//    整條重算就好，軍團還站在出發據點上。
-			w.routes[i], w.routeMarks[i] = w.roads.CellRouteMarked(c.Node, c.TargetNode)
-			restored++
+			if cells, marks, ok := recoverFrom(c.Node, false); ok {
+				w.routes[i], w.routeMarks[i] = cells, marks
+				restored++
+			} else {
+				w.routeUnresolved[i] = true
+				unresolved++
+			}
+		case len(saved) > 0:
+			w.routeUnresolved[i] = true
+			unresolved++
 		}
 	}
 	return restored, unresolved
@@ -2173,3 +2224,29 @@ func (w *World) AliveCorps() []int {
 
 // byteStep 把 ±4 的步進量換成記錄裡的 byte（`4` 與 `0xFC`）。
 func byteStep(step int) int { return int(byte(int8(step))) }
+
+// finishCorpsVisit對應sub_125A3在移動返回後呼叫的sub_12600。
+func (w *World) finishCorpsVisit(i, hour int) {
+	c := &w.Corps[i]
+	// ② 軍費與士氣。每天「一時」那個小時才收。
+	// 這一步壞滅的軍團不收——它已經不在了。
+	//
+	// ⭐ **軍費是當場從資金扣的**（原版 `sub_12600` → `sub_1562B`），
+	// 不進「本月支出」那個累加器——那一格只有預備兵維持費在寫
+	// （`sub_13E65`，docs/spec/50）。總額一個月下來一樣，
+	// 差在月中：出兵中的勢力資金會即時往下掉，而每小時的侵攻財政閘
+	// 讀的正是資金。
+	if hour == upkeepHour && c.Alive {
+		// ⚠ 判準是 `cmp word ptr [si+0Eh], 800h` ＝ **有沒有走在路段上**，
+		// 不是節點的種類（docs/spec/178）。`Corps.Node` 在行軍中留著
+		// 出發那一站，拿它去問「在不在野外」永遠答「在城裡」——
+		// 於是行軍中的軍團收便宜的軍費、而且每小時回 10 點士氣。
+		onLeg := c.LinkAddr != 0
+		f := &w.Factions[c.Faction]
+		f.Funds = economy.ClampFunds(f.Funds - combat.Upkeep(c.Men, onLeg))
+		cc := combat.Corps{Morale: c.Morale}
+		combat.Recover(&cc, f.MoraleBase, onLeg)
+		c.Morale = cc.Morale
+	}
+
+}

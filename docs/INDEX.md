@@ -71,6 +71,11 @@
 | [`docs/playtest/122-rebuilt-longpath-smoke.md`](playtest/122-rebuilt-longpath-smoke.md) | 122：重建 EXE 從零開局長程實跑（matching slice A） | 通過。 | 2026-10-12 |
 | [`docs/playtest/123-rebuilt-interactive-longpath.md`](playtest/123-rebuilt-interactive-longpath.md) | 123：重建 EXE 互動長程實跑（matching spec/262） | 通過。 | 2026-10-13 |
 | [`docs/playtest/124-rebuilt-siege-longpath.md`](playtest/124-rebuilt-siege-longpath.md) | 124：重建 EXE 攻城長程實跑（matching spec/264） | 通過。 | 2026-10-14 |
+| [`docs/playtest/125-mouse-attacker-march.md`](playtest/125-mouse-attacker-march.md) | 125：正常滑鼠出兵、城兵攻陷與玩家攻方戰術 | remake正常玩家路徑抽驗通過。 | 2026-11-03 |
+| [`docs/playtest/126-player-march-collision-snapshot.md`](playtest/126-player-march-collision-snapshot.md) | 126：玩家行軍的原版快照與碰撞逐拍比較 | 玩家首次城門碰撞的局部抽驗通過。 | 2026-11-03 |
+| [`docs/playtest/127-player-defender-collision.md`](playtest/127-player-defender-collision.md) | 127：正常玩家守城的城門碰撞與待戰入口 | 歷史收據。當時守方碰撞等待的95個檢查點與68項正常滑鼠路徑通過，入戰排程仍有一個子刻差異。 | 2026-11-03 |
+| [`docs/playtest/128-player-field-collision.md`](playtest/128-player-field-collision.md) | 128：正常行軍在道路相遇的野戰碰撞 | 兩軍96個等待檢查點、野戰入場比對及50項正常滑鼠檢查通過。 | 2026-11-03 |
+| [`docs/playtest/129-normal-water-field-battle.md`](playtest/129-normal-water-field-battle.md) | 129 — 正常開局的CA水域野戰與海戰適性 | 本場抽驗通過。 | 2026-11-04 |
 | [`docs/playtest/13-dosv-natural-and-target-gui.md`](playtest/13-dosv-natural-and-target-gui.md) | DOS/V 自然畫面與目標平台 GUI 驗收 | 歷史驗收紀錄（2026-08-11，影片 oracle）。 | 2026-08-11 |
 | [`docs/playtest/14-m7-review.md`](playtest/14-m7-review.md) | M7 校訂文字人工審查報告 | 60 筆定案校訂已完成逐筆語意、marker、硬換行、寬度與代表畫面抽樣。 | 2026-08-11 |
 | [`docs/playtest/15-event2-5-talk-sampling.md`](playtest/15-event2-5-talk-sampling.md) | 事件 2–5 TALK 完整分支抽樣 | 36 個 raw TALK 頁面、18 組雙頁回應的分支、marker、硬換行、字寬與五列版面 抽樣通過；不宣稱完整… | 2026-08-11 |
@@ -247,7 +252,7 @@
 | [`docs/re/39-remaining-unread.md`](re/39-remaining-unread.md) | 39 — 剩餘未讀函式的逐支歸屬 | 清單。 | 2026-08-14 |
 | [`docs/re/40-garrison-relief-request.md`](re/40-garrison-relief-request.md) | 40 — 據點求援與援軍派遣 | 整條鏈 confirmed（每一支都逐行讀過）。 sub_140C9 的距離算式裡有一處 | 2026-08-14 |
 | [`docs/re/42-leaf-functions.md`](re/42-leaf-functions.md) | 42 — 戰術以外的 47 支葉節點 | 47 支全部逐行讀過。四件事因此定案：INT 61h 是音源 TSR 的介面、 byte_198A6 的位元圖完整、… | 2026-08-14 |
-| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的證據索引） | 生成的證據索引，跑 tools/py.sh tools/re_open_questions.py 重出。 證據欄不下… | 2026-10-14 |
+| [`docs/re/43-open-questions.md`](re/43-open-questions.md) | 43 — 未解缺口總表（生成的證據索引） | 生成的證據索引，跑 tools/py.sh tools/re_open_questions.py 重出。 證據欄不下… | 2026-11-06 |
 | [`docs/re/44-threat-and-reinforcement-ai.md`](re/44-threat-and-reinforcement-ai.md) | 44 — 威脅偵測與 AI 出兵：據點每 tick 掃一次 | 整條鏈逐行讀完。三件事定案：據點 +0x18 是佔用圖讀回來的軍團數、 +0x00 低 4 位是「哪幾個鄰居是敵方」… | 2026-08-14 |
 | [`docs/re/45-corps-command-mode.md`](re/45-corps-command-mode.md) | 45 — 軍團的三種指令模式：戰鬥指揮／委任／解體 | 軍團 +0x00 位元 2 定案 ＝ | 2026-08-14 |
 | [`docs/re/46-strategy-chrome-cell-layer.md`](re/46-strategy-chrome-cell-layer.md) | 46 — 主畫面的指令列沒有按鈕圖，外框取自 ICONGRF 段 3 | 指令列的繪製路徑逐支讀完。指令列 | 2026-08-15 |
@@ -505,7 +510,17 @@
 | [`docs/spec/263-c-trace-replay-b6.md`](spec/263-c-trace-replay-b6.md) | 263：C 軌跡回放 B-6（熱區／外框／填色函式吃真實互動輸入） | CONFORMED。13 個目標共 3,723 次呼叫去重 552 案，O2／O0 雙跑 全同、原版／C 終態雜湊全… | 2026-10-13 |
 | [`docs/spec/264-matching-siege-longpath.md`](spec/264-matching-siege-longpath.md) | 264：matching 攻城長程驗證（重建 EXE 走進戰術畫面） | CONFORMED。雙側同時間軸全同：九張截圖、units、clock （4 月 13 日 7 時）與累計 243,… | 2026-10-14 |
 | [`docs/spec/265-c-trace-replay-b7.md`](spec/265-c-trace-replay-b7.md) | 265：C 軌跡回放 B-7（世界顯示格函式吃真實攻城長程輸入） | CONFORMED。38,055 次呼叫去重 12,525 案，O2／O0 雙跑全同、 原版／C 終態雜湊全同（[c… | 2026-10-14 |
+| [`docs/spec/266-mouse-only-desktop-toolbar.md`](spec/266-mouse-only-desktop-toolbar.md) | 266：桌面全滑鼠操作與外部工具列 | CONFORMED。桌面工具列與一條正常編成／行軍路徑通過；不代表完整 remake 驗收。 | 2026-11-02 |
+| [`docs/spec/267-original-choice-band.md`](spec/267-original-choice-band.md) | 267：還原文字彈出選單的上下推動反白 | CONFORMED。2026-11-03 使用者選定原版操作；列帶邊界與一條正常滑鼠行軍路徑通過。 | 2026-11-03 |
+| [`docs/spec/268-advise-mouse-lists.md`](spec/268-advise-mouse-lists.md) | 268：進言清單與共用表格的滑鼠操作 | CONFORMED。進言 45 項正常滑鼠檢查、編成／行軍 41 項回歸及正式範圍冷測通過。 | 2026-11-03 |
+| [`docs/spec/269-peaceful-turnback-step.md`](spec/269-peaceful-turnback-step.md) | 269：和平邊界折返的同拍移動與存檔步進量 | CONFORMED。限和平折返同拍語意、原生行軍存檔恢復及正常滑鼠流程抽驗。 | 2026-11-03 |
 | [`docs/spec/27-lord-select-window.md`](spec/27-lord-select-window.md) | 27 — 君主選擇視窗 | CONFORMED。版面已照原版實作並有契約測試； 輸入照原版收斂成兩個熱區（§2.1）。「自定」開命名視窗（[10… | 2026-08-15 |
+| [`docs/spec/270-tactical-hit-boundaries.md`](spec/270-tactical-hit-boundaries.md) | 270：戰術命令與選隊的完整點擊邊界 | CONFORMED。原版熱區表與remake在全畫布256,000個座標一致，舊內縮實作被拒絕；44項正常戰術GUI… | 2026-11-03 |
+| [`docs/spec/271-arrival-ai-context.md`](spec/271-arrival-ai-context.md) | 271：抵達分派前的 AI 上下文 | CONFORMED。正式實作通過81點比較、錯版拒絕、冷測與67項正常攻方滑鼠驗收。 | 2026-11-03 |
+| [`docs/spec/272-world-tick-battle-resume.md`](spec/272-world-tick-battle-resume.md) | 272：戰術戰鬥中斷世界更新，戰後續完同一拍 | CONFORMED。入戰暫停、戰後續跑及存檔保護已實作；正式冷測與正常攻守滑鼠流程通過。 | 2026-11-03 |
+| [`docs/spec/273-encounter-battlefield-context.md`](spec/273-encounter-battlefield-context.md) | 273 — 在接戰位置選場一次，供戰術與畫面共用 | CONFORMED。 | 2026-11-04 |
+| [`docs/spec/274-original-list-scrollbar-drag.md`](spec/274-original-list-scrollbar-drag.md) | 274 — 清單捲軸按住預覽，放開提交 | CONFORMED。 | 2026-11-04 |
+| [`docs/spec/275-hd-toolbar-portraits-and-tools.md`](spec/275-hd-toolbar-portraits-and-tools.md) | 275：HD城池地圖重繪、工具列、頭像、戰術AI輔助與武將編輯 | DRAFT。 | 2026-11-04 |
 | [`docs/spec/28-scenario-json.md`](spec/28-scenario-json.md) | 28 — 劇本的 JSON 匯出與匯入 | CONFORMED。四個區塊 round-trip 全過。 | 2026-08-15 |
 | [`docs/spec/29-audio.md`](spec/29-audio.md) | 29 — 音樂與音效 | CONFORMED。音樂與音效都會出聲、與原版錄音比對過， ⭐ | 2026-08-15 |
 | [`docs/spec/30-victory.md`](spec/30-victory.md) | 30 — 結局：存活勢力數歸一 | CONFORMED。⭐ 觸發條件在機器碼裡是 | 2026-08-16 |

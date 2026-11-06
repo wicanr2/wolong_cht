@@ -133,7 +133,7 @@ func (g *game) updatePopupMenu() bool {
 	}
 	m := g.cmdMenu.menu
 	labels := g.popupMenuLabels(m)
-	if row, ok := g.talkChoiceClick(m.x, m.y, labels); ok {
+	if row, ok := g.talkChoiceInput(&g.cmdMenu.row, len(labels)); ok {
 		g.dispatchPopupMenu(row)
 		return true
 	}
@@ -142,7 +142,7 @@ func (g *game) updatePopupMenu() bool {
 		g.cmdMenu.row = (g.cmdMenu.row + len(labels) - 1) % len(labels)
 	case pressed(ebiten.KeyArrowDown):
 		g.cmdMenu.row = (g.cmdMenu.row + 1) % len(labels)
-	case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
+	case g.confirmed():
 		g.dispatchPopupMenu(g.cmdMenu.row)
 	case g.cancelled():
 		g.closePopupMenu()

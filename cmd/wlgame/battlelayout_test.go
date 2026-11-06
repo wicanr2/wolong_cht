@@ -257,40 +257,26 @@ func TestBattleFormationStripIndexMatchesRawHitMath(t *testing.T) {
 	}
 }
 
-func TestBattleCommandHitTestsRespectGlyphEdgesAndGaps(t *testing.T) {
+func TestBattleCommandHitTestsMatchOriginalFullHotspots(t *testing.T) {
 	l := dosvBattleLayoutFor(dosvBattleScreenW, dosvBattleScreenH)
-	bottom := splitBattleCommandCells(l.BottomCommands)
-	for i, cell := range bottom {
-		hit, ok := battleHitRect(cell)
-		if !ok {
-			t.Fatalf("底列第 %d 格沒有可命中內框", i+1)
+	// re60／原版執行期熱區圖：尺寸含框線，分界直接切到下一格。
+	for y := -1; y <= 400; y++ {
+		for x := -1; x <= 640; x++ {
+			bottom, bottomOK := 0, x >= 0 && x < 480 && y >= 368 && y < 400
+			if bottomOK {
+				bottom = x / 80
+			}
+			if got, ok := splitBattleCommandIndexAt(l.BottomCommands, x, y); ok != bottomOK || ok && got != bottom {
+				t.Fatalf("底列 (%d,%d) = %d,%v，要 %d,%v", x, y, got, ok, bottom, bottomOK)
+			}
+			side, sideOK := 0, x >= 496 && x < 544 && y >= 280 && y < 376
+			if sideOK {
+				side = (y - 280) / 16
+			}
+			if got, ok := battleSideCommandIndexAt(l.SideCommands, x, y); ok != sideOK || ok && got != side {
+				t.Fatalf("側欄 (%d,%d) = %d,%v，要 %d,%v", x, y, got, ok, side, sideOK)
+			}
 		}
-		if got, ok := splitBattleCommandIndexAt(l.BottomCommands, hit.X+hit.W/2, hit.Y+hit.H/2); !ok || got != i {
-			t.Fatalf("底列第 %d 格中心命中 = %d, %v", i+1, got, ok)
-		}
-		if _, ok := splitBattleCommandIndexAt(l.BottomCommands, cell.X+1, cell.Y+cell.H/2); ok {
-			t.Fatalf("底列第 %d 格外框不應命中", i+1)
-		}
-		if _, ok := splitBattleCommandIndexAt(l.BottomCommands, cell.right()-1, cell.Y+cell.H/2); ok {
-			t.Fatalf("底列第 %d 格右側邊界不應命中", i+1)
-		}
-	}
-	if _, ok := splitBattleCommandIndexAt(l.BottomCommands, -1, l.BottomCommands.Y+1); ok {
-		t.Fatal("畫面外不應命中底列命令")
-	}
-
-	side := battleSideCommandCells(l.SideCommands)
-	for i, cell := range side {
-		hit, ok := battleHitRect(cell)
-		if !ok {
-			t.Fatalf("右欄第 %d 格沒有可命中內框", i+1)
-		}
-		if got, ok := battleSideCommandIndexAt(l.SideCommands, hit.X+hit.W/2, hit.Y+hit.H/2); !ok || got != i {
-			t.Fatalf("右欄第 %d 格中心命中 = %d, %v", i+1, got, ok)
-		}
-	}
-	if _, ok := battleSideCommandIndexAt(l.SideCommands, l.SideCommands.X+1, l.SideCommands.Y+1); ok {
-		t.Fatal("右欄命令外框不應命中")
 	}
 }
 

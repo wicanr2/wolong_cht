@@ -1,6 +1,8 @@
 package state
 
 import (
+	"slices"
+	"strconv"
 	"testing"
 
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
@@ -8,6 +10,80 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/rules/march"
 )
+
+func TestNativeSnapshotRestoresMarchMetadata(t *testing.T) {
+	for _, steps := range []int{0, 2, 5, 20, 25} {
+		t.Run(strconv.Itoa(steps), func(t *testing.T) {
+			w := scenarioWithRoads(t)
+			corps := formOneCorps(t, w)
+			if err := w.March(corps, 90); err != nil {
+				t.Fatal(err)
+			}
+			for k := 0; k < steps; k++ {
+				w.step(corps)
+			}
+			saved := w.TakeSnapshot()
+			loaded := loadBlock(w.Bytes())
+			if err := loaded.Restore(saved); err != nil {
+				t.Fatal(err)
+			}
+			roadsFor(t, loaded)
+			if loaded.UnresolvedMarches() != 0 || loaded.RestoredMarches() == 0 {
+				t.Fatalf("restored=%d unresolved=%d", loaded.RestoredMarches(), loaded.UnresolvedMarches())
+			}
+			if got, want := loaded.Corps[corps].Node, w.Corps[corps].Node; got != want {
+				t.Fatalf("出發節點=%d，要 %d", got, want)
+			}
+			if !slices.Equal(loaded.routes[corps], w.routes[corps]) || !slices.Equal(loaded.routeMarks[corps], w.routeMarks[corps]) {
+				t.Fatal("原生存檔沒有逐格恢復路線及路徑標記")
+			}
+			// 跨過中繼城並抵達和平邊界，連續比對每一拍，不能只比最後城市。
+			for k := 0; k < 80; k++ {
+				w.Corps[corps].Timer, loaded.Corps[corps].Timer = 1, 1
+				w.tickOneCorps(corps, 2, fixedRand{})
+				loaded.tickOneCorps(corps, 2, fixedRand{})
+				if loaded.Corps[corps] != w.Corps[corps] || !slices.Equal(loaded.routes[corps], w.routes[corps]) || !slices.Equal(loaded.routeMarks[corps], w.routeMarks[corps]) {
+					t.Fatalf("載入後第 %d 拍與未讀檔分歧", k)
+				}
+				if w.Corps[corps].TargetNode == 87 && w.atTargetNode(corps) {
+					return
+				}
+			}
+			t.Fatal("未在和平邊界舞陽87停下")
+		})
+	}
+}
+
+func TestNativeSnapshotRejectsUnmatchedMarchCells(t *testing.T) {
+	for _, steps := range []int{0, 2} {
+		t.Run(strconv.Itoa(steps), func(t *testing.T) {
+			w := scenarioWithRoads(t)
+			corps := formOneCorps(t, w)
+			if err := w.March(corps, 90); err != nil {
+				t.Fatal(err)
+			}
+			for k := 0; k < steps; k++ {
+				w.step(corps)
+			}
+			saved := w.TakeSnapshot()
+			saved.Routes[corps][0][0]++
+			// 在已有路徑標記的世界上 Restore，舊標記也必須清除。
+			if err := w.Restore(saved); err != nil {
+				t.Fatal(err)
+			}
+			roadsFor(t, w)
+			if w.UnresolvedMarches() != 1 || len(w.routeMarks[corps]) != 0 {
+				t.Fatalf("不吻合路線沒有被拒絕：unresolved=%d marks=%d", w.UnresolvedMarches(), len(w.routeMarks[corps]))
+			}
+			before := [2]int{w.Corps[corps].X, w.Corps[corps].Y}
+			w.Corps[corps].Timer = 1
+			w.tickOneCorps(corps, 2, fixedRand{})
+			if got := [2]int{w.Corps[corps].X, w.Corps[corps].Y}; got != before {
+				t.Fatalf("無法還原時仍移動：%v → %v", before, got)
+			}
+		})
+	}
+}
 
 // roadsFor 建這個世界的道路圖並注入——**正式路徑的最小版本**。
 //

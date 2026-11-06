@@ -1,9 +1,7 @@
 package phone
 
 import (
-	"github.com/wicanr2/wolong_cht/internal/rules/battlefield"
 	"github.com/wicanr2/wolong_cht/internal/rules/bgm"
-	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/sound"
 )
@@ -23,10 +21,7 @@ func (s *Session) MusicScene() bgm.Scene {
 		Month:    s.world.Clock.Month,
 	}
 	if p := s.world.PendingBattle(); p != nil {
-		b := bgm.Battle{Field: battlefield.FieldBase}
-		if s.setup != nil {
-			b.Field = s.setup.FieldNumber(p.Node, p.Mode == combat.Siege)
-		}
+		b := bgm.Battle{Field: p.FieldNumber}
 		b.PlayerAttacks = p.Attacker >= 0 && p.Attacker < len(s.world.Corps) &&
 			s.world.Corps[p.Attacker].Faction == s.world.Player
 		scene.Battle = &b

@@ -195,6 +195,9 @@ func (g *game) drawFactionList(screen *ebiten.Image) {
 	g.td.Draw(screen, factionListTitle, factionListRowX(), factionListWinY, ink)
 
 	top := l.factionListTop()
+	if g.listScrollOwnsInput() && g.listDrag.launcher == l {
+		top = g.listDrag.top
+	}
 	for i := 0; i < factionListRowsPerPage; i++ {
 		n := top + i
 		y := factionListRowFirstY() + i*factionListRowH
@@ -296,6 +299,10 @@ func (g *game) drawFactionListScrollbar(screen *ebiten.Image, top, total int, in
 // 兩個獨立狀態）。滾輪本身是 remake 加的，原版只有 ▲▼。
 func (g *game) updateFactionListPointer() (bool, error) {
 	l := g.launcher
+	_, y := cursorPosition()
+	if g.updateListScrollDrag(y, listScrollButtons()) {
+		return true, nil
+	}
 	if _, dy := ebiten.Wheel(); dy != 0 {
 		step := 1
 		if dy > 0 {
@@ -306,6 +313,9 @@ func (g *game) updateFactionListPointer() (bool, error) {
 	if !inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		return false, nil
 	}
+	if l.factionSelected {
+		return true, g.applyLauncherResult(l.confirm())
+	}
 	x, y := cursorPosition()
 	p := image.Pt(x, y)
 	switch {
@@ -314,6 +324,10 @@ func (g *game) updateFactionListPointer() (bool, error) {
 		return true, nil
 	case p.In(factionListScrollDownRect()):
 		l.factionTop = clampFactionTop(l.factionListTop()+1, len(l.players))
+		return true, nil
+	case p.In(factionListScrollTrackRect()):
+		g.listDrag = listScrollDrag{launcher: l}
+		g.updateListScrollDrag(y, listScrollButtons())
 		return true, nil
 	}
 	if n, ok := l.factionListSelectAt(x, y); ok {

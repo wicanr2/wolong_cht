@@ -149,7 +149,7 @@ func (g *game) updateFactionPicker() bool {
 	if !g.factionPicker {
 		return false
 	}
-	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) || pressed(ebiten.KeyEscape) {
+	if g.cancelled() {
 		g.closeFactionPicker()
 		return true
 	}

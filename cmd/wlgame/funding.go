@@ -46,7 +46,7 @@ func (g *game) updateFunding() {
 			keyboardEdit = state.AmountClear
 		case pressed(ebiten.KeyHome):
 			keyboardEdit = state.AmountSetMax
-		case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
+		case g.confirmed():
 			g.setAmountCursorAction(state.AmountFinishInput, 0)
 			g.fundingEditingAmount = false
 			g.resolveFunding(*c, state.FundingSetAmount)
@@ -58,8 +58,7 @@ func (g *game) updateFunding() {
 		}
 		return
 	}
-	if row, ok := g.talkChoiceClick(talkChoiceX, talkChoiceY,
-		g.fundingChoiceLines(*c)); ok {
+	if row, ok := g.talkChoiceInput(&g.fundingRow, len(g.fundingChoiceLines(*c))); ok {
 		g.fundingRow = row
 		if row == int(state.FundingSetAmount) {
 			g.fundingEditingAmount = true
@@ -83,7 +82,7 @@ func (g *game) updateFunding() {
 	if g.cancelled() {
 		g.fundingRow = int(state.FundingReject)
 	}
-	if !pressed(ebiten.KeyEnter) && !pressed(ebiten.KeySpace) &&
+	if !g.confirmed() &&
 		!g.cancelled() && !pressed(ebiten.Key1) &&
 		!pressed(ebiten.Key2) && !pressed(ebiten.Key3) {
 		return
@@ -91,7 +90,7 @@ func (g *game) updateFunding() {
 
 	option := state.FundingOption(g.fundingRow)
 	if option == state.FundingSetAmount &&
-		(pressed(ebiten.KeyEnter) || pressed(ebiten.KeySpace)) {
+		(g.confirmed()) {
 		g.fundingEditingAmount = true
 		g.beginAmountEditor(amountCursorFunding, amountAnchorEventX, amountAnchorEventY)
 		return

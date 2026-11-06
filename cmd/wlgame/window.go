@@ -67,9 +67,6 @@ const (
 	listActionSort
 	// listActionScroll 是 ▲／▼：捲一列（原版 sub_1851A／sub_18546）。
 	listActionScroll
-	// listActionScrollTo 是點捲軸槽：把游標 Y 換算成新的 top
-	// （原版 sub_184DD 按住不放時每輪做一次，remake 只在按下時做）。
-	listActionScrollTo
 )
 
 type listUIAction struct {
@@ -93,15 +90,16 @@ func (g *game) dispatchListAction(action listUIAction) {
 	case listActionPage:
 		g.list.Page(action.value)
 	case listActionClickRow:
-		wasSelected := g.list.Phase() == listwin.Selected && g.list.Cursor == action.value
+		// sub_18463：反白後只等左／右鍵，左鍵直接確認原列，不重新命中座標。
+		if g.list.Phase() == listwin.Selected {
+			g.confirmListSelection()
+			return
+		}
 		if !g.list.Select(action.value) {
 			return
 		}
-		if !wasSelected {
-			g.list.Confirm()
-			return
-		}
-		g.confirmListSelection()
+		g.list.Confirm()
+		return
 	case listActionConfirm:
 		g.confirmListSelection()
 	case listActionCancel:
@@ -117,13 +115,6 @@ func (g *game) dispatchListAction(action listUIAction) {
 		g.list.SortBy(action.value)
 	case listActionScroll:
 		g.scrollListTo(g.list.Top + action.value)
-	case listActionScrollTo:
-		track := listScrollTrackRect()
-		span := len(g.list.Rows) - listRowsPerPage
-		if span <= 0 || track.Dy() <= 0 {
-			return
-		}
-		g.scrollListTo((action.value - track.Min.Y) * span / track.Dy())
 	}
 }
 
@@ -178,14 +169,22 @@ func (g *game) confirmListSelection() {
 }
 
 func (g *game) updateListUI() {
+	_, y := cursorPosition()
+	if g.updateListScrollDrag(y, listScrollButtons()) {
+		return
+	}
 	if g.list == nil {
 		return
 	}
-	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) {
+	if g.cancelled() {
 		g.dispatchListAction(listUIAction{kind: listActionCancel})
 		return
 	}
 	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+		if g.list.Phase() == listwin.Selected {
+			g.dispatchListAction(listUIAction{kind: listActionConfirm})
+			return
+		}
 		x, y := cursorPosition()
 		if row, ok := listRowAt(g.list, x, y); ok {
 			g.dispatchListAction(listUIAction{kind: listActionClickRow, value: row})
@@ -202,7 +201,9 @@ func (g *game) updateListUI() {
 			return
 		}
 		if p.In(listScrollTrackRect()) {
-			g.dispatchListAction(listUIAction{kind: listActionScrollTo, value: y})
+			g.listSnapshot = nil
+			g.listDrag = listScrollDrag{list: g.list}
+			g.updateListScrollDrag(y, listScrollButtons())
 			return
 		}
 		for col := range g.list.Columns {
@@ -222,9 +223,9 @@ func (g *game) updateListUI() {
 		g.dispatchListAction(listUIAction{kind: listActionPage, value: -1})
 	case pressed(ebiten.KeyPageDown):
 		g.dispatchListAction(listUIAction{kind: listActionPage, value: 1})
-	case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
+	case g.confirmed():
 		g.dispatchListAction(listUIAction{kind: listActionConfirm})
-	case pressed(ebiten.KeyEscape):
+	case g.cancelled():
 		g.dispatchListAction(listUIAction{kind: listActionCancel})
 	default:
 		for i, k := range []ebiten.Key{ebiten.Key1, ebiten.Key2, ebiten.Key3,

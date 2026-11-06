@@ -105,7 +105,7 @@ func (g *game) beginForm() {
 		g.lastEvent = "沒有可以帶兵的武將"
 		return
 	}
-	g.openGeneralPicker(rows, "選帶兵的武將　Enter 選取／決定　1-6 排序　ESC 取消", nil)
+	g.openGeneralPicker(rows, mouseHint(mouseSelect), nil)
 	// 原版 `sub_16288` → `sub_16C5E` 先掛狀態列 TALK #0
 	// 「進行軍隊編組。請選擇武將。」（docs/spec/140）。
 	g.setStatusTalk(formStatusTalk, nil)
@@ -165,7 +165,7 @@ func (f *formState) cycleKind(k int) {
 // 鍵盤是 remake 加的。
 func (g *game) updateForm() {
 	f := &g.form
-	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) {
+	if g.cancelled() {
 		f.active = false // 原版 sub_121E7 回 CF=1 ＝ 右鍵取消
 		return
 	}
@@ -184,7 +184,7 @@ func (g *game) updateForm() {
 		return
 	}
 	switch {
-	case pressed(ebiten.KeyEscape):
+	case g.cancelled():
 		f.active = false
 	case pressed(ebiten.KeyArrowUp):
 		f.keyboard = true
@@ -204,7 +204,7 @@ func (g *game) updateForm() {
 	case pressed(ebiten.Key3):
 		f.keyboard = true
 		f.kinds[f.slot], f.manned[f.slot] = army.Infantry, true
-	case pressed(ebiten.KeyEnter):
+	case g.confirmed():
 		f.keyboard = true
 		g.commitForm()
 	}
@@ -433,7 +433,7 @@ func (g *game) beginMarch() {
 		g.lastEvent = "沒有軍團可以行軍"
 		return
 	}
-	g.openCorpsListWith(rows, "選擇行軍的軍團　Enter 選取／決定　ESC 取消",
+	g.openCorpsListWith(rows, mouseHint(mouseSelect),
 		func(i int) bool {
 			// ⭐ 原版選完軍團先開**軍團情報面板**（`sub_17F90` 的
 			// `sub_1807B`／`sub_1812A`），面板留著的同時在地圖上選目標
@@ -501,7 +501,7 @@ func (g *game) openCorpsList() {
 		g.lastEvent = "還沒有軍團"
 		return
 	}
-	g.openCorpsListWith(rows, "↑↓ 移動　Enter 選取／決定　1-5 排序　ESC 取消",
+	g.openCorpsListWith(rows, mouseHint(mouseSelect),
 		func(corps int) bool {
 			g.openCorpsInfo(corps) // 原版的軍團情報視窗（docs/spec/24）
 			return true
@@ -879,7 +879,7 @@ func (g *game) beginLocateCorps() {
 		g.lastEvent = "還沒有軍團"
 		return
 	}
-	g.openCorpsListWith(rows, "↑↓ 移動　Enter 選取／決定　1-5 排序　ESC 取消",
+	g.openCorpsListWith(rows, mouseHint(mouseSelect),
 		func(corps int) bool {
 			g.focusCorps(corps)
 			g.openCorpsInfo(corps) // 原版的軍團情報視窗（docs/spec/24）

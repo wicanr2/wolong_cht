@@ -14,7 +14,6 @@ package main
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/inpututil"
 
 	"github.com/wicanr2/wolong_cht/internal/ui/talkmenu"
 )
@@ -55,28 +54,11 @@ func quitMenuLeaves(row int) bool { return row == 0 }
 // updateQuitMenu 回 true 表示要結束遊戲。
 func (g *game) updateQuitMenu() bool {
 	m := &g.quitMenu
-	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) ||
-		pressed(ebiten.KeyEscape) {
+	if row, ok := g.talkChoiceInput(&m.row, len(g.quitMenuRows())); ok {
 		m.active = false
-		return false
+		return quitMenuLeaves(row)
 	}
-	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
-		if row, ok := g.talkChoiceClick(quitMenuX, quitMenuY, g.quitMenuRows()); ok {
-			m.active = false
-			return quitMenuLeaves(row)
-		}
-		return false
-	}
-	switch {
-	case pressed(ebiten.KeyArrowUp), pressed(ebiten.KeyArrowDown):
-		m.row = 1 - m.row
-	case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
-		m.active = false
-		return quitMenuLeaves(m.row)
-	case pressed(ebiten.Key1):
-		m.active = false
-		return true
-	case pressed(ebiten.Key2):
+	if g.cancelled() {
 		m.active = false
 	}
 	return false

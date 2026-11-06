@@ -16,7 +16,7 @@ const isoScale = 1
 
 // newBattleView 準備一張戰場的繪圖資源。缺素材就回 nil，
 // 呼叫端會退回沒有美術的畫法。
-func (g *game) newBattleView(field int) *isoview.View {
+func (g *game) newBattleView(field int, rotate bool) *isoview.View {
 	if g.battleLib == nil || g.lib == nil || g.lib.Palette == nil {
 		return nil
 	}
@@ -26,7 +26,7 @@ func (g *game) newBattleView(field int) *isoview.View {
 	}
 	opt := isoview.Options{
 		Lib: g.battleLib, Palette: bank, Sprites: g.battleSprites,
-		Field: field, Rotate: g.battle.Rotate(), Rand: g.rng.Next,
+		Field: field, Rotate: rotate, Rand: g.rng.Next,
 	}
 	if g.battleCamAt != nil {
 		at := [2]int{g.battleCamAt[0], g.battleCamAt[1]}

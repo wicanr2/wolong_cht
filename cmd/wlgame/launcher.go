@@ -353,7 +353,6 @@ const (
 	launcherLoadRowH  = 32
 	launcherNoticeY   = 288
 	launcherHintY     = 312
-	launcherHint      = "↑↓ 選擇　Enter 決定　ESC 返回"
 )
 
 // launcherTextSafeRect 是外框內、供字與反白列使用的共同安全區。
@@ -586,8 +585,11 @@ func (g *game) updateLauncher() error {
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 			g.naming.click(cursorPosition())
 		}
-		if pressed(ebiten.KeyEscape) || g.cancelled() {
+		if g.cancelled() {
 			g.naming.cancel = true
+		}
+		if g.confirmed() {
+			g.naming.done = true
 		}
 		g.settleNaming()
 		return nil
@@ -629,9 +631,9 @@ func (g *game) updateLauncher() error {
 		action = launcherMoveUp
 	case pressed(ebiten.KeyArrowDown):
 		action = launcherMoveDown
-	case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
+	case g.confirmed():
 		action = launcherConfirm
-	case pressed(ebiten.KeyEscape):
+	case g.cancelled():
 		action = launcherCancel
 	}
 	// 右鍵在原版就是「退回上一層」（`sub_121E7` 回 CF=1）。
@@ -764,7 +766,7 @@ func (g *game) drawLauncher(screen *ebiten.Image) {
 	// 所以畫面交給同一支 `drawSaveUI`，不再另外畫一份。
 	if (l.phase == launcherLoad || l.phase == launcherScenario) && g.saveUI.active {
 		g.drawSaveUI(screen)
-		g.drawLauncherCaption(screen, "↑↓ 選擇　Enter 決定　ESC 返回",
+		g.drawLauncherCaption(screen, mouseHint(mouseSelect),
 			savePanelX, savePanelY+savePanelH+8, dim)
 		noticeY := savePanelY + savePanelH + 8 + textdraw.GlyphH + 2
 		noticeW := screenW - savePanelX - 8
@@ -798,7 +800,7 @@ func (g *game) drawLauncher(screen *ebiten.Image) {
 		}
 		g.drawLauncherCaption(screen, g.launcherScenarioName(l.scenario),
 			lordCardX, lordCardY-textdraw.GlyphH-8, amber)
-		g.drawLauncherCaption(screen, fmt.Sprintf("↑↓ 換君主（%d／%d）　Enter 決定　ESC 回清單",
+		g.drawLauncherCaption(screen, fmt.Sprintf(mouseHint(mouseChooseRuler),
 			l.cursor+1, len(l.players)), lordCardX-88, lordCardY+lordCardH+8, dim)
 		g.drawLauncherCaption(screen, l.notice, lordCardX-88,
 			lordCardY+lordCardH+8+textdraw.GlyphH+2,
@@ -866,5 +868,5 @@ func (g *game) drawLauncher(screen *ebiten.Image) {
 	if l.notice != "" {
 		g.td.Draw(screen, l.notice, launcherListX, launcherNoticeY, color.RGBA{255, 180, 180, 255})
 	}
-	g.td.Draw(screen, launcherHint, launcherListX, launcherHintY, dim)
+	g.td.Draw(screen, mouseHint(mouseSelect), launcherListX, launcherHintY, dim)
 }

@@ -18,13 +18,21 @@
 
 ## 現在做到哪裡
 
-核心規則與可玩垂直切片已接通。目前桌面修正版為
+核心規則與可玩垂直切片已接通。已封裝的桌面版本為
 [`dist-all/`](dist-all/README.md)（v.1.0.18-20260908），包含 AppImage、Windows 與 macOS 封包，
 完整版只限本機使用。選章、兩段確認及君主卡直接開局已由 AppImage 正常操作驗證，
 行軍中重啟及返回流程見 [驗證紀錄](docs/playtest/110-desktop-march-restart.md)；Windows／macOS 原生 GUI 仍待實機驗收。
 Android 不在這次桌面修正版範圍。
 現行工作與狀態統一管理在 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues)；
 本地 [`docs/worklist.json`](docs/worklist.json) 與 `tools/worklist.py verify` 只作輔助。
+
+開發中的桌面操作採[全滑鼠工具列](docs/spec/266-mouse-only-desktop-toolbar.md)，
+清單[按住拖曳與放開提交](docs/spec/274-original-list-scrollbar-drag.md)已完成正常流程抽驗。
+[HD規劃](docs/spec/275-hd-toolbar-portraits-and-tools.md)包含工具列模式切換、HD頭像、
+可選戰術AI加成與武將能力編輯，目前仍在設計階段。現行程式與證據以[CONTEXT](CONTEXT.md)為準。
+HD美術方向已確認，以原版造型、視角、配置與強化原色為基準，樣本見[本機原版與HD重繪對照](workplace/hd-redraw-local-20261104/faithful/index.html)，直接雙擊HTML即可離線開啟。
+另有[大地圖HD本機預覽](workplace/hd-redraw-local-20261104/faithful/world/index.html)，三十五區試繪已覆蓋原版全圖，可切換區域、縮放與平移；局部美術與正式引擎接線仍待完成。
+頭像已有[原版與HD本機對照](workplace/hd-redraw-local-20261104/faithful/portraits/index.html)，可檢視81張原圖參考重繪小樣，支援並排、拉桿、縮放與拖曳，尚未定稿或接入遊戲。
 
 比對式反編譯的來源與證據也保存在本 repo：
 
@@ -105,9 +113,9 @@ Android 不在這次桌面修正版範圍。
 | ⭐ **狀態層**（原版記憶體 vs remake 解出來的存檔）| 四張表全部逐欄比過：軍團表八支的每一欄，以及**勢力 22 × 13 ＋ 據點 192 × 17 ＋ 武將 122 × 16 ＝ 5,502 個欄位一個都不差**——含兩個 remake 自己算出來的衍生值（武將評價、旗標 byte）。畫面相同只證明畫得一樣，這一份證明**讀得一樣** | [`playtest/71`](docs/playtest/71-corps-table-parity.md)、[`playtest/77`](docs/playtest/77-state-table-parity.md) |
 | ⭐ **AI 決策軌跡**（原版執行期 vs remake 規則層）| 攔原版所有事件的共用出口（`sub_12FBF`），拿到「誰在哪一天決定了什麼」：**事件種類、參數形狀與每月量級一致**，都在月結觸發。原版 196 年 5 月 1 日**曹操對呂布宣戰**，劇本一的主線 | [`playtest/78`](docs/playtest/78-ai-decision-trace.md) |
 | 音訊 | 會出聲、場景對應已解、與原版錄音比對過；**音色的諧波結構沒量化比對** | [`spec/29`](docs/spec/29-audio.md) |
-| 規則規格 | **251 份**（不含索引與 `TEMPLATE.md`，含研究用 C 契約）：**246 CONFORMED**／4 READY／1 DRAFT | [`spec/00`](docs/spec/00-index.md) |
-| 反組譯 | 739/739 支有筆記；`docs/re/43` 目前主表有 **1108 列**，另列 6 筆 DOS／BIOS 平台層 | [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
-| 全專案的未解 | **1114 列**（主表 1108 列，另有 6 列 DOS／BIOS 平台層不計入主表）。⚠ **這個數字比較接近「文件有多少份」**——主表分布在 449 份文件、平均每份 2.5 列，而每寫一份新文件就可能帶進自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
+| 規則規格 | **261 份**（不含索引與 `TEMPLATE.md`，含研究用 C 契約）：**255 CONFORMED**／4 READY／2 DRAFT | [`spec/00`](docs/spec/00-index.md) |
+| 反組譯 | 739/739 支有筆記；`docs/re/43` 目前主表有 **1144 列**，另列 6 筆 DOS／BIOS 平台層 | [`re/21`](docs/re/21-function-census.md)、[`re/43`](docs/re/43-open-questions.md) |
+| 全專案的未解 | **1150 列**（主表 1144 列，另有 6 列 DOS／BIOS 平台層不計入主表）。⚠ **這個數字比較接近「文件有多少份」**——主表分布在 463 份文件、平均每份 2.5 列，而每寫一份新文件就可能帶進自己的未解 | [`re/43`](docs/re/43-open-questions.md) §0 |
 
 #### 那些未解項對 remake 代表什麼
 
@@ -172,7 +180,7 @@ Android 與長程全局通關不在本輪範圍。未解研究列數不作發行
 | 差異 | 為什麼 |
 |---|---|
 | 固定時間基準 | 原版沒有固定 tick rate，速度上限跟著機器跑（說明書 3.5）；照抄會得到一個在現代機器上快到不能玩的遊戲（[`spec/34`](docs/spec/34-speed-steps.md)）|
-| 鍵盤操作 | 原版是純滑鼠；remake 保留滑鼠熱區，另外加鍵盤（[`spec/26`](docs/spec/26-yes-no-dialog.md)、[`27`](docs/spec/27-lord-select-window.md)）|
+| 桌面操作外殼 | 全程滑鼠，僅保留姓名等文字輸入；原版畫面外增加工具列，遊戲快捷鍵已停用（[`spec/266`](docs/spec/266-mouse-only-desktop-toolbar.md)）。 |
 | 戰後結果頁 | 使用者選擇保留為可選摘要，預設關閉；開啟可設定秒數自動返回（[`spec/89`](docs/spec/89-siege-damage-report-toggle.md)）。原版沒有這張頁面。 |
 | 桌面設定記憶 | 系統偏好與語言保存到使用者設定目錄，下次啟動還原；原版與原生遊戲存檔不變（[`spec/156`](docs/spec/156-desktop-preferences.md)）。 |
 | 存檔多幾個欄位 | 原版沒有的欄位另外存，**未解區域一個 byte 都不動**（[`spec/20`](docs/spec/20-save-format.md)）|
@@ -244,7 +252,7 @@ DOS/V 畫面參考；視窗外框仍是原版美術（`ICONGRF` 段 3；數值�
 ＹＥＳ／ＮＯ → 劇本 → 勢力清單 → 君主卡
 ```
 
-**每一層右鍵／ESC 退回上一層**（原版 `sub_11AC3` 的四個 `jb`，
+**每一層右鍵退回上一層**。桌面也可點畫面上方工具列的「返回」（原版 `sub_11AC3` 的四個 `jb`，
 [`docs/re/73`](docs/re/73-new-game-faction-list.md)）。
 勢力清單是原版的一覽表引擎，五欄——君主／軍師／武將數／據點數／首都——
 視窗與欄位 X 都照機器碼（[`docs/spec/79`](docs/spec/79-new-game-faction-list.md)）。
@@ -316,7 +324,7 @@ DOS/V 畫面參考；視窗外框仍是原版美術（`ICONGRF` 段 3；數值�
 
 敵方政略 AI 也已接到這條正常路徑：`sub_12C52` 的原始鄰接槽、
 `sub_12EFB` 的宣戰三閘、`CS:6C4C` 六槽編成表與道路行軍都會在真實劇本中生效。
-使用 `-seed 17` 只固定驗收亂數，正常按鍵即可重播「呂布 對 曹操／攻城／戰鬥指揮／委任」；
+使用 `-seed 17` 固定驗收亂數，已重播「呂布 對 曹操／攻城／戰鬥指揮／委任」；
 證據見 [`docs/playtest/08`](docs/playtest/08-wlgame-normal-strategy-path.md) 與
 [`wlgame-ai-normal-encounter.png`](docs/images/wlgame-ai-normal-encounter.png)。
 
@@ -480,8 +488,12 @@ DOS/V 畫面參考；視窗外框仍是原版美術（`ICONGRF` 段 3；數值�
 |---|---|
 | ![日本語](docs/images/lang-ja.png) | ![English](docs/images/lang-en.png) |
 
-**遊戲中隨時切**：桌面按 `F9` 循環，或在啟動殼層選；手機在系統面板的
-「語言」那一頁點一下（[`docs/spec/86`](docs/spec/86-runtime-language-switch.md)）。
+**切換語言**：桌面點上方工具列的「語言」，或在啟動殼層選擇；模態流程與戰鬥期間停用工具列的語言切換。
+手機在系統面板的「語言」頁選擇（[`docs/spec/86`](docs/spec/86-runtime-language-switch.md)）。
+桌面採全滑鼠操作。工具列另有設定、存檔、讀檔、返回、確認與離開，遊戲快捷鍵已停用；原版畫面維持 640×400（[`docs/spec/266`](docs/spec/266-mouse-only-desktop-toolbar.md)）。
+文字彈出選單依原版上下推動滑鼠切換反白，左鍵確認，右鍵取消。選單期間隱藏游標並停用工具列，離開後還原（[`docs/spec/267`](docs/spec/267-original-choice-band.md)）。
+一覽表先點選一列反白，再以左鍵確認；要改選先按右鍵解除反白。進言清單與對話均可用滑鼠完成（[`docs/spec/268`](docs/spec/268-advise-mouse-lists.md)）。
+戰術側欄命令與底列選隊格可點擊完整矩形，包含格子邊線；原版熱區表比較及驗證範圍見 [`docs/spec/270`](docs/spec/270-tactical-hit-boundaries.md)。
 語系包內嵌在執行檔裡，不必另外放檔案。
 
 | 桌面的啟動殼層 | 手機的系統面板 |

@@ -8,6 +8,7 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
 	"github.com/wicanr2/wolong_cht/internal/rules/persuasion"
 	"github.com/wicanr2/wolong_cht/internal/state"
+	"github.com/wicanr2/wolong_cht/internal/ui/listwin"
 	"github.com/wicanr2/wolong_cht/internal/ui/textdraw"
 )
 
@@ -526,5 +527,95 @@ func TestAdviseAllyGateShowsTalk(t *testing.T) {
 	}
 	if len(g.messages) != 0 {
 		t.Errorf("通過時不該有訊息，卻有 %d 則", len(g.messages))
+	}
+}
+
+func newAdviseInputGame(t *testing.T) *game {
+	t.Helper()
+	g := newTalkTestGame(t)
+	w, err := state.LoadScenario("../../workplace/orig/dosv/SINARIO.DAT", 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	w.Player = 0
+	g.world = w
+	return g
+}
+
+func TestAdviseCapitalMouseSelectionAndCancellation(t *testing.T) {
+	g := newAdviseInputGame(t)
+	capital := g.world.Factions[g.world.Player].Capital
+	g.openCapitalList()
+	want := g.list.Rows[1]
+	g.dispatchListAction(listUIAction{kind: listActionClickRow, value: 1})
+	if g.list.Phase() != listwin.Selected || g.list.Cursor != 1 || g.world.Factions[0].Capital != capital {
+		t.Fatal("first city click must only highlight the requested row")
+	}
+	g.cancelFn = func() bool { return true }
+	g.updateAdvise()
+	if g.list == nil || g.list.Phase() != listwin.Browsing || g.advise != advisePickCapital {
+		t.Fatal("first right click must clear highlight and retain relocation list")
+	}
+	g.updateAdvise()
+	if g.list != nil || g.adviseActive() || g.world.Factions[0].Capital != capital {
+		t.Fatal("second right click must return to map without relocating")
+	}
+	g.cancelFn = nil
+	g.openCapitalList()
+	g.dispatchListAction(listUIAction{kind: listActionClickRow, value: 1})
+	g.dispatchListAction(listUIAction{kind: listActionClickRow, value: 2})
+	if g.list != nil || g.advise != adviseVerdict || g.adviseNode != want {
+		t.Fatalf("city callback received wrong selection: stage=%d node=%d want=%d", g.advise, g.adviseNode, want)
+	}
+}
+
+func TestAdviseTargetMouseUsesSortedDataID(t *testing.T) {
+	g := newAdviseInputGame(t)
+	g.advise, g.adviseCmd = advisePickTarget, persuasion.Hostility
+	g.openTargetList()
+	g.dispatchListAction(listUIAction{kind: listActionSort, value: 1})
+	want := g.list.Rows[3]
+	g.dispatchListAction(listUIAction{kind: listActionClickRow, value: 3})
+	if g.list == nil || g.advise != advisePickTarget {
+		t.Fatal("first faction click started proposal before confirmation")
+	}
+	g.dispatchListAction(listUIAction{kind: listActionConfirm})
+	if g.list != nil || g.advise != advisePersuade || g.target != want {
+		t.Fatalf("proposal uses row number instead of sorted ID: stage=%d target=%d want=%d", g.advise, g.target, want)
+	}
+}
+
+func TestAdviseAllyMouseGateAndChildList(t *testing.T) {
+	g := newAdviseInputGame(t)
+	g.advise, g.adviseCmd, g.ally = advisePickAlly, persuasion.Cooperate, -1
+	g.openTargetList()
+	before, ally := g.list, g.list.Rows[0]
+	g.world.Factions[ally].Diplomat = NoOfficial
+	g.dispatchListAction(listUIAction{kind: listActionClickRow, value: 0})
+	g.dispatchListAction(listUIAction{kind: listActionConfirm})
+	if g.list != before || g.list.Phase() != listwin.Selected || g.ally != -1 || len(g.messages) != 1 {
+		t.Fatal("failed envoy gate must retain selected list and report the original message")
+	}
+	g.messages = nil
+	g.world.Factions[ally].Diplomat = 5
+	g.dispatchListAction(listUIAction{kind: listActionConfirm})
+	if g.list == nil || g.list == before || g.list.Phase() != listwin.Browsing ||
+		g.advise != advisePickTarget || g.ally != ally {
+		t.Fatal("accepted ally must open a fresh unselected target list")
+	}
+}
+
+func TestAdviseProposalRightClickAdvancesOnlyDialogue(t *testing.T) {
+	g := newAdviseInputGame(t)
+	g.adviseCmd, g.target = persuasion.Hostility, 1
+	g.beginPersuasion()
+	queued := len(g.adviseQueue)
+	if queued == 0 {
+		t.Fatal("real proposal did not queue dialogue")
+	}
+	g.cancelFn = func() bool { return true }
+	g.updateAdvise()
+	if g.advise != advisePersuade || len(g.adviseQueue) != queued-1 {
+		t.Fatal("right click must advance one sentence without cancelling the proposal")
 	}
 }

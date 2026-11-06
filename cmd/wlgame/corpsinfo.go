@@ -92,7 +92,7 @@ func (g *game) showCorpsPanel(corps int) bool {
 }
 
 func (g *game) updateCorpsInfo() {
-	if g.cancelled() || pressed(ebiten.KeyEnter) {
+	if g.cancelled() || g.confirmed() {
 		g.corpsInfo.active = false
 	}
 }
@@ -167,7 +167,7 @@ func (g *game) drawCorpsInfo(screen *ebiten.Image) {
 	// 這行字會說謊（docs/spec/149 §1.3）。
 	if !g.mapPickActive() && !g.marchMode.active && g.marchReturn == nil {
 		g.chrome.Window(screen, corpsHintX, corpsHintY, corpsHintW, corpsHintH, chrome.Menu)
-		g.td.Draw(screen, "ESC 關閉", corpsHintX+8,
+		g.td.Draw(screen, mouseHint(mouseClose), corpsHintX+8,
 			corpsHintY+(corpsHintH-textdraw.GlyphH)/2, labelInk)
 	}
 }

@@ -56,6 +56,8 @@
 
 | 主題 | 規格 | 狀態 |
 |---|---|---|
+| HD城池地圖重繪、工具列、頭像、AI輔助與武將編輯 | [275](275-hd-toolbar-portraits-and-tools.md) | DRAFT；五城十張已同意，全圖三十五區192據點及屋頂細修；81張頭像小樣，局部美術與正式接線待完成 |
+| 清單捲軸按住預覽、放開提交 | [274](274-original-list-scrollbar-drag.md) | CONFORMED；正常滑鼠與像素抽驗通過 |
 | 據點整備一拍之內的處理順序 | [`163-city-tick-order.md`](163-city-tick-order.md) | CONFORMED；已重排，逐子刻不一致 910 → 863 |
 | 求援的三道閘（立刻求援的條件、求援記錄、冷卻寫入） | [`164-relief-request-gates.md`](164-relief-request-gates.md) | CONFORMED |
 | 上昇值的上下限套在存值上 | [`165-growth-bounds-are-on-stored-value.md`](165-growth-bounds-are-on-stored-value.md) | CONFORMED；據點表五個檢查點逐 byte 相同 |
@@ -315,6 +317,14 @@
 | C 軌跡回放 B-6（熱區／外框／填色真實輸入） | [`263-c-trace-replay-b6.md`](263-c-trace-replay-b6.md) | CONFORMED，3,723 呼叫去重 552 案全綠 |
 | matching 攻城長程驗證（重建 EXE 戰術路徑） | [`264-matching-siege-longpath.md`](264-matching-siege-longpath.md) | CONFORMED，九截圖／時鐘／指令數雙側全同 |
 | C 軌跡回放 B-7（世界顯示格真實輸入） | [`265-c-trace-replay-b7.md`](265-c-trace-replay-b7.md) | CONFORMED，38,055 呼叫去重 12,525 案全綠 |
+| 桌面全滑鼠工具列 | [`266-mouse-only-desktop-toolbar.md`](266-mouse-only-desktop-toolbar.md) | CONFORMED，30 項正常 GUI；完整 remake 另驗 |
+| 原版文字選單上下推動反白 | [`267-original-choice-band.md`](267-original-choice-band.md) | CONFORMED，41 項正常 GUI；軍團選單兩列各 6,272 pixels 相同 |
+| 進言清單與共用表格滑鼠操作 | [`268-advise-mouse-lists.md`](268-advise-mouse-lists.md) | CONFORMED，45 項進言 GUI、41 項編成／行軍回歸及冷測通過 |
+| 和平邊界折返的同拍移動 | [`269-peaceful-turnback-step.md`](269-peaceful-turnback-step.md) | CONFORMED，同拍欄位、原生存檔恢復及51項正常滑鼠抽驗 |
+| 戰術命令與選隊完整點擊邊界 | [`270-tactical-hit-boundaries.md`](270-tactical-hit-boundaries.md) | CONFORMED，新原版熱區表256,000座標全同；44項戰術GUI、51項行軍回歸及舊內縮反例通過 |
+| 抵達分派前的AI上下文 | [`271-arrival-ai-context.md`](271-arrival-ai-context.md) | CONFORMED，正式81點含完整RNG、真錯版拒絕、39套件冷測與67項攻方GUI通過 |
+| 戰術中斷世界更新及戰後續跑 | [`272-world-tick-battle-resume.md`](272-world-tick-battle-resume.md) | CONFORMED，入戰時計／游標、39套件冷測與67項攻方／68項守方GUI通過 |
+| 接戰位置與單次選場共用結果 | [`273-encounter-battlefield-context.md`](273-encounter-battlefield-context.md) | CONFORMED，40套件冷測、兩錯版拒絕、96點道路回歸及50／67／68項正常GUI通過 |
 
 1. 先確認 `docs/re/` 有出處。**沒有 RE 就沒有規格**——不要從 remake 的
    現況反寫規格，那只會把既有的偏差固定下來。

@@ -1,9 +1,6 @@
 // Package battlesetup 把戰場資產接到規則層的戰術入口。
 //
-// **桌面版與手機版共用這一份。** 選哪一張戰場、要不要翻轉、腳本從哪一段取，
-// 三件事各有幾個容易錯的細節（野戰的翻轉來自地形配對、攻城的來自
-// 「玩家守城」、腳本段編號 ＝ tactic × 4 ＋ 戰場類別）。
-// 兩個 UI 各寫一份的話，其中一邊會在特定局面開出不同的戰場。
+// 桌面與手機共用這份資產來源；規則層先決定戰場編號及翻轉，這裡只載入結果。
 package battlesetup
 
 import (
@@ -12,37 +9,23 @@ import (
 
 	"github.com/wicanr2/wolong_cht/internal/assets/battle"
 	"github.com/wicanr2/wolong_cht/internal/assets/world"
-	"github.com/wicanr2/wolong_cht/internal/rules/battlefield"
 	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
 	"github.com/wicanr2/wolong_cht/internal/state"
 )
 
-// Provider 是一個世界的戰場來源。
+// Provider 是不依賴目前世界的戰場資產來源。
 type Provider struct {
-	lib   *battle.Library
-	sp    *battle.Sprites
-	world *state.World
-	wmap  *world.Map
+	lib *battle.Library
+	sp  *battle.Sprites
 
-	// rotate 是**最後一次建場**用的翻轉旗標。繪圖端要用同一個值，
-	// 否則旗與地形會對不上（docs/playtest/40 §11）。
-	rotate bool
-
-	// 這一場的戰場編號。⭐ **原版在遭遇時算一次就存進 `byte_10D34`**，
-	// 之後畫面、腳本、適性都讀同一個值——而類型 8 那一支帶亂數
-	// （`sub_14C1A`），每次重算會挑到不同的戰場（docs/spec/121）。
-	fieldNode  int
-	fieldSiege bool
-	fieldNum   int
-	fieldOK    bool
 }
 
 // Options 是 Load 要的東西。
 type Options struct {
 	// Dir 是原版素材目錄。
 	Dir string
-	// World 是規則層的世界；戰場的選擇要看據點座標與軍團朝向。
+	// World 是要掛上地形查詢的目前世界，Provider不保留它。
 	World *state.World
 	// Map 是大地圖，野戰靠它取樣地形。缺席時野戰一律用預設那一張。
 	Map *world.Map
@@ -56,6 +39,7 @@ type Options struct {
 // 陣形表載不到就回錯誤——**沒有它玩家的戰鬥只能自動判定**，
 // 那是一個要讓呼叫端知道的降級，不是可以靜靜吞掉的細節。
 func Load(opt Options) (*Provider, *state.TacticalSetup, error) {
+	AttachTerrain(opt.World, opt.Map)
 	warn := opt.Warn
 	if warn == nil {
 		warn = func(string) {}
@@ -64,7 +48,7 @@ func Load(opt Options) (*Provider, *state.TacticalSetup, error) {
 	if err != nil {
 		return nil, nil, fmt.Errorf("載不到陣形表：%w", err)
 	}
-	p := &Provider{world: opt.World, wmap: opt.Map}
+	p := &Provider{}
 	p.lib = loadLibrary(opt.Dir, warn)
 	if raw, err := os.ReadFile(opt.Dir + "/BATTLE.SCH"); err == nil {
 		if sp, err := battle.ParseSprites(raw); err == nil {
@@ -80,14 +64,14 @@ func Load(opt Options) (*Provider, *state.TacticalSetup, error) {
 		Field: p.BuildField,
 		// 戰場類別 ＝ `battle.Category(戰場編號)`，與腳本段選擇同一個來源。
 		// ⛔ 不可以拿大地圖圖塊代替（`state.TacticalSetup.Category` 的說明）。
-		Category: func(node int, siege bool) int {
-			return battle.Category(p.FieldNumber(node, siege))
+		Category: func(field int, siege bool) int {
+			return battle.Category(field)
 		},
-		Script: func(node int, siege bool, tactic int) []byte {
+		Script: func(field int, siege bool, tactic int) []byte {
 			if p.lib == nil {
 				return nil
 			}
-			return p.lib.Script(tactic, battle.Category(p.FieldNumber(node, siege)))
+			return p.lib.Script(tactic, battle.Category(field))
 		},
 	}
 	return p, setup, nil
@@ -99,8 +83,17 @@ func (p *Provider) Library() *battle.Library { return p.lib }
 // Sprites 是人物圖形，載不到就是 nil（兵畫成色點）。
 func (p *Provider) Sprites() *battle.Sprites { return p.sp }
 
-// Rotate 是最後一次建場的翻轉旗標。
-func (p *Provider) Rotate() bool { return p.rotate }
+// AttachTerrain 把已解碼地圖掛到目前世界，也供讀檔及自動戰鬥使用。
+func AttachTerrain(w *state.World, m *world.Map) {
+	if w == nil {
+		return
+	}
+	if m == nil {
+		w.SetTerrain(nil)
+		return
+	}
+	w.SetTerrain(func(x, y int) byte { tile, _ := m.Tile(x, y); return tile })
+}
 
 func loadLibrary(dir string, warn func(string)) *battle.Library {
 	read := func(name string) []byte {
@@ -124,22 +117,11 @@ func loadLibrary(dir string, warn func(string)) *battle.Library {
 	return lib
 }
 
-// BuildField 取一張戰場。
-//
-//   - **攻城戰**：戰場編號就是據點編號（`docs/re/05`）
-//   - **野戰**：從大地圖上即時算（`internal/rules/battlefield`）——
-//     取軍團所在格與下方四格的地形類型去配一張 21 筆的表
-func (p *Provider) BuildField(node int, siege, rotate bool) *tactical.Field {
-	n := p.FieldNumber(node, siege)
+// BuildField 載入規則層已選定的戰場，不重新選場或消費亂數（spec273）。
+func (p *Provider) BuildField(n int, siege, rotate bool) *tactical.Field {
 	if p.lib == nil || n < 0 || n >= battle.NumFields {
 		return SyntheticField(siege)
 	}
-	// 野戰的翻轉來自地形配對（`sub_14BDD` 換順序才配上），
-	// 攻城的來自「玩家守城」（`sub_14ED7`）——兩條路合成同一個旗標。
-	if !siege {
-		rotate = p.FieldRotates(node)
-	}
-	p.rotate = rotate
 	// 用原始圖塊值建，不只用堆疊高度——城壁與門是從圖塊值認出來的，
 	// 而且打壞時要換圖塊再重算高度（docs/re/11 §5.9）。
 	// 再加上七層子圖塊表：兩個平面的地面圖與登城都靠它算（docs/spec/36）。
@@ -149,102 +131,6 @@ func (p *Provider) BuildField(node int, siege, rotate bool) *tactical.Field {
 	}
 	return tactical.NewFieldFromTileLayers(
 		tiles, p.lib.Heights(n), p.lib.TileLayers(n), gate)
-}
-
-// FieldNumber 回傳這一場用第幾張戰場：攻城就是據點編號，野戰現算。
-//
-// ⭐ **同一場只算一次**：類型 8 的四選一帶亂數，重算會換一張戰場，
-// 而畫面、腳本與適性都要讀到同一個值（docs/spec/121）。
-func (p *Provider) FieldNumber(node int, siege bool) int {
-	if siege {
-		return node
-	}
-	if p.fieldOK && p.fieldNode == node && p.fieldSiege == siege {
-		return p.fieldNum
-	}
-	p.fieldNode, p.fieldSiege = node, siege
-	p.fieldNum, p.fieldOK = p.fieldForNode(node), true
-	return p.fieldNum
-}
-
-// fieldForNode 依大地圖的地形算出野戰要用哪一張戰場。
-//
-// 取樣的五格與 `sub_14B63` 一致（中心、下、左下、右下、兩格下方），
-// 取樣方向用**玩家那一側軍團的朝向**（軍團記錄 `+0x08`）——原版是
-// `cmp ah, [si+1] / mov al, [si+8]`，只在勢力等於玩家時才取。
-func (p *Provider) fieldForNode(node int) int {
-	n, ok := p.neighbours(node)
-	if !ok {
-		return battlefield.FieldBase + 6
-	}
-	f, _ := battlefield.SelectWith(p.playerHeading(), n, p.waterRoll(n))
-	return f
-}
-
-// waterRoll 抽類型 8 的四選一（`sub_14C1A` 的 `sub_1ECE0`）。
-// **只有類型 8 抽**——多抽會讓亂數流錯位。
-func (p *Provider) waterRoll(n battlefield.Neighbours) int {
-	if !battlefield.NeedsWaterRoll(n) || p.world == nil {
-		return 0
-	}
-	if r := p.world.TacticalRand(); r != nil {
-		return r.Next()
-	}
-	return 0
-}
-
-// FieldRotates 回報這一張野戰要不要翻轉。
-func (p *Provider) FieldRotates(node int) bool {
-	n, ok := p.neighbours(node)
-	if !ok {
-		return false
-	}
-	_, rot := battlefield.Select(p.playerHeading(), n)
-	return rot
-}
-
-// neighbours 取據點所在格與下方四格的地形類型。
-//
-// ⚠ **野外的節點沒有座標**，只有據點有；取不到就讓呼叫端走預設。
-func (p *Provider) neighbours(node int) (battlefield.Neighbours, bool) {
-	if p.wmap == nil || p.world == nil || node < 0 || node >= len(p.world.Cities) {
-		return battlefield.Neighbours{}, false
-	}
-	cx, cy := p.world.Cities[node].X, p.world.Cities[node].Y
-	at := func(dx, dy int) int {
-		t, err := p.wmap.Tile(cx+dx, cy+dy)
-		if err != nil {
-			return 0
-		}
-		return battlefield.Terrain(t)
-	}
-	// ⭐ 五格是**以那一格為中心的十字**（docs/spec/196 §1）：
-	// `sub_14B63` 的 `sub dx, 18h` 讓整組往上位移一列。
-	return battlefield.Neighbours{
-		Up:     at(0, -1),
-		Left:   at(-1, 0),
-		Right:  at(1, 0),
-		Centre: at(0, 0),
-		Down:   at(0, 1),
-	}, true
-}
-
-// playerHeading 回傳玩家目前在動的那一支軍團的朝向。
-//
-// 原版只在「軍團的勢力 ＝ 玩家的勢力」時才拿 `+0x08`（`sub_14B63` 開頭那兩個
-// `cmp ah, [si+1]`），所以戰場的取樣方向是**從玩家的視角**定的。
-// 玩家沒有在移動的軍團時退回靜止（4），配對表會走預設那一支。
-func (p *Provider) playerHeading() int {
-	if p.world == nil {
-		return state.HeadingStill
-	}
-	for i := range p.world.Corps {
-		c := &p.world.Corps[i]
-		if c.Alive && c.Faction == p.world.Player && c.Heading != state.HeadingStill {
-			return c.Heading
-		}
-	}
-	return state.HeadingStill
 }
 
 // SyntheticField 是沒有原版戰場資料時的替代品。幾何同尺寸，內容是自己生的。

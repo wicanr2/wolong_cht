@@ -133,7 +133,7 @@ func (g *game) openCorpsOnTile(rows []int) {
 		return
 	}
 	g.marchReturn = func() { g.openCorpsOnTile(rows) }
-	g.openCorpsListWith(rows, "選擇要看的軍團　Enter 選取／決定　ESC 取消",
+	g.openCorpsListWith(rows, mouseHint(mouseSelect),
 		func(i int) bool {
 			g.enterCorpsFromMap(i)
 			return false
@@ -168,29 +168,13 @@ func (g *game) mapChoiceRows() []string {
 
 func (g *game) updateMapChoice() {
 	m := &g.mapChoice
-	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) ||
-		pressed(ebiten.KeyEscape) {
+	if row, ok := g.talkChoiceInput(&m.row, len(g.mapChoiceRows())); ok {
+		m.row = row
+		g.commitMapChoice()
+		return
+	}
+	if g.cancelled() {
 		m.active = false
-		return
-	}
-	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
-		if row, ok := g.talkChoiceClick(m.x, m.y, g.mapChoiceRows()); ok {
-			m.row = row
-			g.commitMapChoice()
-		}
-		return
-	}
-	switch {
-	case pressed(ebiten.KeyArrowUp), pressed(ebiten.KeyArrowDown):
-		m.row = 1 - m.row
-	case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
-		g.commitMapChoice()
-	case pressed(ebiten.Key1):
-		m.row = 0
-		g.commitMapChoice()
-	case pressed(ebiten.Key2):
-		m.row = 1
-		g.commitMapChoice()
 	}
 }
 

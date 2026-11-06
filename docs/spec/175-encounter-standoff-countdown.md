@@ -18,6 +18,10 @@ remake 的軍團 50 停在 `(302,158)`——與原版停的那一格相同——
 - 相關：[`43`](43-rout-on-blocked-return.md)（`+0x03` 的另一個用途）、
   [`174`](174-relief-dispatch-does-not-move-marching-corps.md)
 
+2026-11-03：正常玩家守方的城門等待新收據見 [playtest127](../playtest/127-player-defender-collision.md)。
+從首次碰撞的完整tick後起算，到自然攻城入口相隔95個遊戲tick；
+本規格的96拍從碰撞前的軍團訪問點起算。兩軍等待記錄一致，入戰排程另有一子刻差異。
+
 ## 1. 原版做什麼
 
 ### 1.1 下一格有人就不走
@@ -75,7 +79,7 @@ loc_12876:
 
 ### 1.3 倒數在軍團巡迴裡減
 
-`sub_125A3` 每次巡到一支軍團就先走 `sub_1264A`：
+`sub_125A3` 每次巡到一支軍團，在移動與軍費處理後走 `sub_1264A`：
 
 ```asm
 sub_1264A:
@@ -94,6 +98,11 @@ loc_12658:
 （[`168`](168-corps-and-hour-cursors.md)），所以倒數 12 次 ＝ **96 拍**。
 實測完全吻合：原版軍團 19 在拍 2,024 停住（旗標 `C5` → `F5`），
 一直到拍 2,120 才開打（[`../playtest/119`](../playtest/119-rng-pace-comparison.md) §32）。
+
+2026-11-03新取樣補正先後順序：原版 `0x125CF` 呼叫移動、`0x125D2` 呼叫軍費，
+`0x125D5` 才呼叫倒數。首次碰撞設12後，同一訪問即減為11。
+正常玩家37的12次訪問及96-tick自然攻城入口見
+[playtest126](../playtest/126-player-march-collision-snapshot.md)；Go既有呼叫順序已一致，未修改規則。
 
 ### 1.35 據點那一條走 `sub_12880`，同一套倒數
 
@@ -181,7 +190,7 @@ sub_14A7B:
 |---|---|
 | 狀態層 | `internal/state/corps.go`：`Corps.Standoff` ← `+0x00` 位元 5，進 `modelledCorpsBits` |
 | 狀態層 | `internal/state/corps.go`：`RoutTimer` 改名 `Countdown`，一個欄位對一個 byte |
-| 狀態層 | `internal/state/corps.go`：軍團巡迴每次先跑 `tickStandoff`（＝ `sub_1264A`）|
+| 狀態層 | `internal/state/corps.go`：每次軍團訪問的移動與軍費後跑 `tickStandoff`（＝ `sub_1264A`）|
 | 狀態層 | `internal/state/corps.go`：`saveCorps` 對**活著的**軍團也寫 `+0x03` |
 
 ⭐ **一個 byte 就用一個欄位。** 拆成 `RoutTimer` 與 `StandoffTimer` 兩個

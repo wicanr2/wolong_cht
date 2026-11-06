@@ -18,6 +18,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/hajimehoshi/ebiten/v2/vector"
 
+	"github.com/wicanr2/wolong_cht/internal/battlesetup"
 	"github.com/wicanr2/wolong_cht/internal/savefile"
 	"github.com/wicanr2/wolong_cht/internal/savepath"
 	"github.com/wicanr2/wolong_cht/internal/state"
@@ -172,7 +173,7 @@ func saveFooterRect(confirm bool) image.Rectangle {
 }
 
 func (g *game) updateSaveUI() {
-	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) {
+	if g.cancelled() {
 		g.dispatchSaveUI(saveUIAction{kind: saveActionCancel})
 		return
 	}
@@ -200,9 +201,9 @@ func (g *game) updateSaveUI() {
 		g.dispatchSaveUI(saveUIAction{kind: saveActionPrev})
 	case pressed(ebiten.KeyArrowDown):
 		g.dispatchSaveUI(saveUIAction{kind: saveActionNext})
-	case pressed(ebiten.KeyEscape):
+	case g.cancelled():
 		g.dispatchSaveUI(saveUIAction{kind: saveActionCancel})
-	case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
+	case g.confirmed():
 		g.dispatchSaveUI(saveUIAction{kind: saveActionConfirm})
 	default:
 		for i, k := range []ebiten.Key{ebiten.Key1, ebiten.Key2, ebiten.Key3, ebiten.Key4} {
@@ -230,6 +231,9 @@ func (g *game) clickSaveSlot(slot int) {
 // writeSave 以暫存檔加同目錄改名完成一次儲存，避免中途停止留下半個
 // SAVE.DAT。SaveInto 本身仍負責只覆寫已解欄位，其餘位元組照原檔保留。
 func (g *game) writeSave(slot int) error {
+	if g.world.HasIncompleteTick() {
+		return state.ErrIncompleteTick
+	}
 	if g.saveFile == "" {
 		return fmt.Errorf("未指定 -save-file，儲存已停用")
 	}
@@ -324,6 +328,7 @@ func (g *game) readSave(slot int) error {
 	}
 	w.SetRoads(g.roads)
 	w.SetTactical(g.tactical)
+	battlesetup.AttachTerrain(w, worldMapOf(g.lib))
 	g.world = w
 	g.view = nil
 	g.saveBase = g.saveFile

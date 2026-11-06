@@ -65,7 +65,7 @@ func (g *game) updateBattle() {
 	g.startBattleTalk(p)
 	l := dosvBattleLayoutFor(screenW, screenH)
 	if g.view == nil {
-		g.view = g.newBattleView(g.battle.FieldNumber(p.Node, p.Mode == combat.Siege))
+		g.view = g.newBattleView(p.FieldNumber, p.FieldRotate)
 	}
 
 	// ＋／− 調**戰術速度**。原版的戰術速度是獨立設定（系統選單第 5 列），
@@ -84,7 +84,7 @@ func (g *game) updateBattle() {
 		g.startBattleTalk(p)
 		// 右鍵先過熱區表（docs/spec/32 §2.1）。放在對白推進之前，
 		// 因為原版的右鍵分派（0x1C01D）不看對白狀態。
-		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) {
+		if g.cancelled() {
 			if x, y := cursorPosition(); handleBattleRightClick(b, x, y) {
 				return
 			}
@@ -165,7 +165,7 @@ func (g *game) updateBattle() {
 	clicked := inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) ||
 		inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) ||
 		inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonMiddle)
-	if g.battleResult.ready(b, g.battleResultSeconds, time.Now(), pressed(ebiten.KeyEnter) || pressed(ebiten.KeySpace) || clicked) {
+	if g.battleResult.ready(b, g.battleResultSeconds, time.Now(), g.confirmed() || clicked) {
 		if ev := g.world.ResolvePending(g.rng); ev != nil {
 			g.setEvent(battleLine(g, *ev))
 		}
@@ -808,7 +808,7 @@ func (g *game) battleFieldName(p *state.Pending) string {
 		return ""
 	}
 	siege := p.Mode == combat.Siege
-	field := g.battle.FieldNumber(p.Node, siege)
+	field := p.FieldNumber
 	if siege {
 		if field >= 0 && field < len(g.world.Cities) {
 			return big5(g.world.Cities[field].Name)
@@ -1038,7 +1038,7 @@ func (g *game) drawBattleKeys(screen *ebiten.Image, b *tactical.Battle, r battle
 		}
 	}
 	if b.Done {
-		g.td.Draw(screen, "Enter 回戰略", r.X+r.W-112, r.Y+5, amber)
+		g.td.Draw(screen, mouseHint(mouseReturnMap), r.X+r.W-112, r.Y+5, amber)
 	}
 }
 

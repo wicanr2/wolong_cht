@@ -7,9 +7,9 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-1114 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+1150 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
-- 日期：2026-10-14
+- 日期：2026-11-06
 - 產生工具：`tools/re_open_questions.py`
 - 來源：`docs/` 底下所有文件的未解小節、表格裡標未解的列，與收尾是「…未解」的散句
 
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**1108 列分布在 449 份文件，平均每份 2.5 列。**
+**1144 列分布在 463 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -48,10 +48,10 @@
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
 | 程式碼理解 | 321 | 314 | 6 | 1 |
-| 驗收 | 240 | 214 | 26 | 0 |
+| 驗收 | 246 | 220 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 510 | 485 | 24 | 1 |
-| **合計** | **1108** | 1044 | 61 | 3 |
+| 其他 | 540 | 516 | 23 | 1 |
+| **合計** | **1144** | 1081 | 60 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,9 +59,9 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 467 |
+| `docs/spec/` | 497 |
 | `docs/re/` | 321 |
-| `docs/playtest/` | 240 |
+| `docs/playtest/` | 246 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
 | `docs/mechanics/` | 11 |
@@ -436,7 +436,7 @@
 | [`re/99-c-hourly-update-restoration.md`](../re/99-c-hourly-update-restoration.md) | 正常玩家日期流、硬體等待與長程 | 未驗證，one-hour 直接入口不取代玩家垂直鏈 | 靜態 | evidence-only | — |
 | [`re/99-c-hourly-update-restoration.md`](../re/99-c-hourly-update-restoration.md) | C 機器碼匹配 | spec/255 已判手寫組語，C 機器碼匹配不可行；整檔匹配仍由組語基準提供 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 
-## 2.4 驗收（240 條）
+## 2.4 驗收（246 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -490,6 +490,12 @@
 | [`playtest/121-screen-parity-gate.md`](../playtest/121-screen-parity-gate.md) | 「Enter 繼續」提示要不要登記成 remake 差異 | 目前只在 `cmd/wlgame/advise.go:678` 與 `104` §1，沒有 spec | 靜態 | actionable | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`playtest/121-screen-parity-gate.md`](../playtest/121-screen-parity-gate.md) | 插圖框的填色 | 中間被插圖全蓋住，這個畫面量不到（`../spec/198` §5） | 靜態 | actionable | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`playtest/121-screen-parity-gate.md`](../playtest/121-screen-parity-gate.md) | 閘還沒收進去的組 | `38`／`39`／`42`／`83`／`84`／`92`／`94`／`96`／`98`／`99`／`105`／`106` 等；`37` 的孫策第二樣本與 `40` 的攻城第二輪原版側不是同狀態 | 靜態 | actionable | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
+| [`playtest/125-mouse-attacker-march.md`](../playtest/125-mouse-attacker-march.md) | 本次沒有原版相同存檔、raw RNG、游標、佔用圖與逐拍碰撞的新對拍收據。 | （未解小節內文） | 靜態 | merge-target | [#30](https://github.com/wicanr2/wolong_cht/issues/30) |
+| [`playtest/125-mouse-attacker-march.md`](../playtest/125-mouse-attacker-march.md) | 不涵蓋完整戰役、其他劇本、全部戰術命令或平台打包，也不重驗音訊及整幅像素一致性。 | （未解小節內文） | 靜態 | evidence-only | — |
+| [`playtest/126-player-march-collision-snapshot.md`](../playtest/126-player-march-collision-snapshot.md) | 本機根目錄：`workplace/shots/collision-same-state-20261103/`。 | （未解小節內文） | 靜態 | evidence-only | — |
+| [`playtest/126-player-march-collision-snapshot.md`](../playtest/126-player-march-collision-snapshot.md) | IDA `0x125BD`、SI=`0x0940` | 即將訪問軍團37，尚未加軍團表基址或減移動計時 | 靜態 | evidence-only | — |
+| [`playtest/127-player-defender-collision.md`](../playtest/127-player-defender-collision.md) | 原版在軍團更新的中途進入 `0x14ADE/0x11B5A`，時鐘停在子刻5。 | （未解小節內文） | 靜態 | history | — |
+| [`playtest/128-player-field-collision.md`](../playtest/128-player-field-collision.md) | 完整戰鬥結果、不同地形／水域、野戰玩家攻方的原版矩陣、MCH動畫及完整戰役不由本片代證。 | （未解小節內文） | 靜態 | merge-target | [#31](https://github.com/wicanr2/wolong_cht/issues/31) |
 | [`playtest/17-expert-dosbox-remake.md`](../playtest/17-expert-dosbox-remake.md) | 松崗 DOS/V 原版 | **PASS（啟動至開場）** / 2026-08-12 證實空白確認／`0000`／`1234` 均越過密碼頁；完整自然長程驗證尚未執行 | 靜態 | evidence-only | — |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 據點換手之後遮罩會不會跟著變 | `sub_1890A` 的行為，靜態讀得出來，動態沒驗——要打下一座城才看得到 | 靜態 | evidence-only | — |
 | [`playtest/21-dosboxx-bridge-sampling.md`](../playtest/21-dosboxx-bridge-sampling.md) | 松崗 DOS/V 側 | 這套 bridge 還沒在 DOS/V 上跑過。**密碼頁不構成阻礙**（四格留白按「確定」即可通過，`18`）——是還沒做 | 靜態 | evidence-only | — |
@@ -692,7 +698,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（510 條）
+## 2.6 其他（540 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -762,8 +768,8 @@
 | [`spec/112-cursor-idle-resume-delay.md`](../spec/112-cursor-idle-resume-delay.md) | 訊息框那一路的 `8` 與游標的 `0Ch` 為什麼不同 | 兩個立即值都是 confirmed，但差別的用意沒有證據；remake 兩邊都用同一個延遲 | 靜態 | merge-target | [#14](https://github.com/wicanr2/wolong_cht/issues/14) |
 | [`spec/113-rle-length-header.md`](../spec/113-rle-length-header.md) | `BATTLE.MAP`／`MMAP.MCH`／`BATTLE.MDL` 走哪一支載入器 | 沒查（`../formats/06` §6）。它們的前 4 byte 不是長度，所以**至少不是這一族** | 靜態 | evidence-only | — |
 | [`spec/114-general-affinity.md`](../spec/114-general-affinity.md) | 旗標 bit 5 之外的退場條件 | `sub_15899` 只在「心向的勢力已滅」時看 bit 5；bit 5 沒設的武將會留在原地等下一輪，這一點沒有實機驗證 | 靜態 | evidence-only | — |
-| [`spec/115-soldier-power.md`](../spec/115-soldier-power.md) | 海戰適性實際被取到過沒有 | 算式與接線都對了，但**沒有跑過一場橋上的野戰**。要驗得讓兩支軍團在圖塊 `0xCA` 那一格遭遇 | 靜態 | actionable | [#31](https://github.com/wicanr2/wolong_cht/issues/31) |
 | [`spec/115-soldier-power.md`](../spec/115-soldier-power.md) | 地形類型 3–7 各是什麼地形 | `cs:982Fh` 的範圍已攤開（`../re/05`），但「類型 3 ＝ 山地／丘陵」那一欄的標籤是從圖塊外觀推的，沒有機器碼出處 | 靜態 | actionable | [#31](https://github.com/wicanr2/wolong_cht/issues/31) |
+| [`spec/115-soldier-power.md`](../spec/115-soldier-power.md) | 這些值能區分陸戰適性，HP本身不能。現行接線依spec273從Pending取選場結果， 完整海戰結算仍待驗。 | （散句） | 靜態 | actionable | [#31](https://github.com/wicanr2/wolong_cht/issues/31) |
 | [`spec/116-retreat-cannot-leave-the-city.md`](../spec/116-retreat-cannot-leave-the-city.md) | 還有誰在用 `NewFieldFromTiles` 配真戰場資料 | `internal/rules/tactical/tactical_test.go` 有一處。它驗的是圖塊解碼不是連通性，但同一個陷阱在那裡也成立 | 靜態 | evidence-only | — |
 | [`spec/116-retreat-cannot-leave-the-city.md`](../spec/116-retreat-cannot-leave-the-city.md) | 退路要不要留 | 合成戰場（`NewField`）確實只有堆疊高度。**能不能在圖塊 ≥ `0xF0` 時不用堆疊高度**，是另一個問題 | 靜態 | evidence-only | — |
 | [`spec/117-fixture-arms-duel-before-stepping.md`](../spec/117-fixture-arms-duel-before-stepping.md) | 野戰 `field` 的殘差 | 修好之後還剩多少，量在 `../playtest/58` | 靜態 | actionable | [#17](https://github.com/wicanr2/wolong_cht/issues/17) |
@@ -778,8 +784,8 @@
 | [`spec/120-pathfind-request-queue.md`](../spec/120-pathfind-request-queue.md) | `sub_1ACA4` | 排隊之後緊接著呼叫，內容沒讀（`../re/80` §5） | 靜態 | evidence-only | — |
 | [`spec/120-pathfind-request-queue.md`](../spec/120-pathfind-request-queue.md) | 碰撞尾段那一處的前提 | 哪幾條分支會走到 `loc_1B612` 沒有逐條追 | 靜態 | evidence-only | — |
 | [`spec/120-pathfind-request-queue.md`](../spec/120-pathfind-request-queue.md) | 佇列順序對戰局的影響 | FIFO 與無序在同一場攻城裡差多少，沒有量化 | 靜態 | evidence-only | — |
-| [`spec/121-water-battlefield-selection.md`](../spec/121-water-battlefield-selection.md) | 類型 9 的另一條分支 | `loc_14C2C` 還會看鄰格是不是 `0xCA` 並設 `ch = 0x40`（翻轉旗標），remake 固定回 213、不翻轉。那一段沒逐行讀 | 靜態 | actionable | [#31](https://github.com/wicanr2/wolong_cht/issues/31) |
-| [`spec/121-water-battlefield-selection.md`](../spec/121-water-battlefield-selection.md) | 實跑一場碼頭野戰 | 沒有。要讓兩支軍團在圖塊 `0xCA` 上遭遇 | 實測 | actionable | [#31](https://github.com/wicanr2/wolong_cht/issues/31) |
+| [`spec/121-water-battlefield-selection.md`](../spec/121-water-battlefield-selection.md) | 類型 9 的另一條分支 | 213編號已證實，remake維持不翻轉近似。`14C33`的LDS切換DS，`14C36`讀攻方佔用圖byte，`14C41`仍讀該DS的`[si+1]`；完整語意未知，不能解釋為鄰格或攻方勢力 | 靜態 | actionable | [#31](https://github.com/wicanr2/wolong_cht/issues/31) |
+| [`spec/121-water-battlefield-selection.md`](../spec/121-water-battlefield-selection.md) | 其餘海戰分支與結算 | playtest129只補類型8的戰場212，未代證其餘編號、類型9或完整自動／戰術結算 | 靜態 | actionable | [#31](https://github.com/wicanr2/wolong_cht/issues/31) |
 | [`spec/122-sound-type-levels.md`](../spec/122-sound-type-levels.md) | 四段的實際音量差 | 沒有錄下原版四個 TYPE 的波形量過。算式來自機器碼，聽感沒驗 | 靜態 | merge-target | [#8](https://github.com/wicanr2/wolong_cht/issues/8) |
 | [`spec/122-sound-type-levels.md`](../spec/122-sound-type-levels.md) | `AH=0Bh` 只重算三個聲部 | 原版那個迴圈是 `ah = 0、1、2`（`../re/81` §5）。remake 的主增益對所有聲部一致，這一點**沒有照抄** | 靜態 | merge-target | [#8](https://github.com/wicanr2/wolong_cht/issues/8) |
 | [`spec/123-captive-talk-messages.md`](../spec/123-captive-talk-messages.md) | 城兵那一側 | `sub_14FCE` 也呼叫 `sub_129C3`（守城武將被擒）。remake 的城兵路徑有沒有走到同一則沒驗 | 靜態 | merge-target | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
@@ -1087,7 +1093,37 @@
 | [`spec/265-c-trace-replay-b7.md`](../spec/265-c-trace-replay-b7.md) | 攻城鏈（14ADE／14C72／11B5A）軌跡回放 | engagement 整場 harness 的範圍，另開 spec | 靜態 | evidence-only | — |
 | [`spec/265-c-trace-replay-b7.md`](../spec/265-c-trace-replay-b7.md) | 素材內容 | harness 固定段的真實 MMAP 素材；相機位置與髒格狀態由暫存器輸入帶入，非原版該時刻的完整顯示狀態 | 靜態 | evidence-only | — |
 | [`spec/265-c-trace-replay-b7.md`](../spec/265-c-trace-replay-b7.md) | 其他 slice | 下一片另開 spec | 靜態 | evidence-only | — |
+| [`spec/266-mouse-only-desktop-toolbar.md`](../spec/266-mouse-only-desktop-toolbar.md) | 原版彈出選單手感 | 2026-11-03 使用者選定原版上下推動反白，實作與限定驗收已由 spec/267 接續完成；上方 30 項是修改前的歷史收據 | 靜態 | history | — |
+| [`spec/266-mouse-only-desktop-toolbar.md`](../spec/266-mouse-only-desktop-toolbar.md) | 戰術、完整戰役與原生平台 | 此次正常 GUI 抽驗不代證完整戰鬥、Windows／macOS 實機或整體 remake 完成 | 靜態 | merge-target | [#2](https://github.com/wicanr2/wolong_cht/issues/2) |
+| [`spec/266-mouse-only-desktop-toolbar.md`](../spec/266-mouse-only-desktop-toolbar.md) | HD／手機 | 使用者指定 remake 完成後依序製作；本輪沒有進行這兩條分支 | 靜態 | history | — |
+| [`spec/267-original-choice-band.md`](../spec/267-original-choice-band.md) | 實體滑鼠與 DOS 取樣頻率 | 只對齊 640×400 邏輯位移的選列語意，不宣稱同硬體牆鐘或 OS 加速一致 | 靜態 | evidence-only | — |
+| [`spec/267-original-choice-band.md`](../spec/267-original-choice-band.md) | 完整戰役／全部事件 | 以分支抽驗記錄，不由一條正常 GUI 流程宣稱完整 remake 完成 | 靜態 | evidence-only | — |
+| [`spec/268-advise-mouse-lists.md`](../spec/268-advise-mouse-lists.md) | 完整事件與長程戰役 | 本片接回輸入，不代證 Issue #22 的全部事件分支或整體 remake 完成 | 靜態 | merge-target | [#22](https://github.com/wicanr2/wolong_cht/issues/22) |
+| [`spec/268-advise-mouse-lists.md`](../spec/268-advise-mouse-lists.md) | 所有表格與取消出口的逐像素對拍 | 正常路徑抽測與原版遷都收據分開標記，不從一張列表外推全部場景 | 靜態 | evidence-only | — |
+| [`spec/268-advise-mouse-lists.md`](../spec/268-advise-mouse-lists.md) | 進言全畫面 parity | 兩側背景、部分城市數值與 remake 操作提示未對齊，本片不宣稱全畫面同狀態比較 | 靜態 | evidence-only | — |
+| [`spec/268-advise-mouse-lists.md`](../spec/268-advise-mouse-lists.md) | 對話自動等待與硬體時序 | 只驗輸入推進，不宣稱同牆鐘或完整原版 timer producer | 靜態 | evidence-only | — |
+| [`spec/269-peaceful-turnback-step.md`](../spec/269-peaceful-turnback-step.md) | 完整移動拍／規則矩陣 | 本片限和平折返及存檔恢復，不外推所有 Stage 與戰鬥分派 | 靜態 | merge-target | [#30](https://github.com/wicanr2/wolong_cht/issues/30) |
+| [`spec/269-peaceful-turnback-step.md`](../spec/269-peaceful-turnback-step.md) | 完整行軍與戰鬥 | 原版和平折返不能當作故障；玩家攻方、守方、碰撞、完整戰役仍由 Issue #30 管理 | 靜態 | merge-target | [#30](https://github.com/wicanr2/wolong_cht/issues/30) |
+| [`spec/269-peaceful-turnback-step.md`](../spec/269-peaceful-turnback-step.md) | 全畫面與時間 | 正常兩側開局操作時間、世界與鏡頭不同；原版圖未必在108道指令內重畫，不作整幅像素或 wall-clock parity | 靜態 | evidence-only | — |
+| [`spec/269-peaceful-turnback-step.md`](../spec/269-peaceful-turnback-step.md) | 舊快取與路況改變 | 目前只接受既有兩種成本規劃能逐格核對的路線；無法核對時停止並記錄，不以新路線替換存檔 | 靜態 | merge-target | [#25](https://github.com/wicanr2/wolong_cht/issues/25) |
 | [`spec/27-lord-select-window.md`](../spec/27-lord-select-window.md) | 頭像尺寸 | 軍師頭像的下緣照原版座標會略微超出那個 208×104 的底框；沒有 oracle 可比，先照機器碼畫 | 實測 | evidence-only | — |
+| [`spec/270-tactical-hit-boundaries.md`](../spec/270-tactical-hit-boundaries.md) | Issue #30 完整攻守行軍 | 本片只修戰術控制邊界；正常守軍遭遇不代證玩家攻方與逐拍碰撞矩陣 | 靜態 | merge-target | [#30](https://github.com/wicanr2/wolong_cht/issues/30) |
+| [`spec/270-tactical-hit-boundaries.md`](../spec/270-tactical-hit-boundaries.md) | 戰鬥規則與畫面 | 不改陣形、單挑、結算或戰場動畫，不宣稱整幅同狀態 parity | 靜態 | evidence-only | — |
+| [`spec/271-arrival-ai-context.md`](../spec/271-arrival-ai-context.md) | 完整 DI 生命週期、敵方據點副作用、守方碰撞矩陣、完整戰鬥及戰役不由此片代證。 | （未解小節內文） | 靜態 | merge-target | [#11](https://github.com/wicanr2/wolong_cht/issues/11) |
+| [`spec/272-world-tick-battle-resume.md`](../spec/272-world-tick-battle-resume.md) | 完整戰鬥亂數／軍損／像素、MCH動畫、全部事件排程與完整戰役仍各自維持原界線。 | （未解小節內文） | 靜態 | evidence-only | — |
+| [`spec/273-encounter-battlefield-context.md`](../spec/273-encounter-battlefield-context.md) | 非玩家雙方的入口AL | 未知 / 否，保留已標示近似，不影響類型8抽骰次數 | 靜態 | evidence-only | — |
+| [`spec/273-encounter-battlefield-context.md`](../spec/273-encounter-battlefield-context.md) | 類型9完整翻轉語意 | 未知 / 否，維持既有限制；Issue #31仍開啟 | 靜態 | merge-target | [#31](https://github.com/wicanr2/wolong_cht/issues/31) |
+| [`spec/273-encounter-battlefield-context.md`](../spec/273-encounter-battlefield-context.md) | 正常非平原／海戰的完整同狀態可見結果 | 類型8選場及能力已由playtest129抽驗；完整畫面／結算待驗 / 否，完成聲明限接線與已列抽驗 | 靜態 | merge-target | [#31](https://github.com/wicanr2/wolong_cht/issues/31) |
+| [`spec/274-original-list-scrollbar-drag.md`](../spec/274-original-list-scrollbar-drag.md) | 全部清單及編成完整像素一致 | 未知 / 否，依使用者要求抽驗，聲明限本片 | 靜態 | evidence-only | — |
+| [`spec/274-original-list-scrollbar-drag.md`](../spec/274-original-list-scrollbar-drag.md) | 起始曹操武將數原版12／Go11 | 已觀測差異、原因未知 / 否，僅該數字48 pixels不同；不以這兩份起始畫面聲稱完整同狀態 | 靜態 | evidence-only | — |
+| [`spec/274-original-list-scrollbar-drag.md`](../spec/274-original-list-scrollbar-drag.md) | HD素材、比例與外觀選擇 | 未決 / 否，原版修正後另行共同規劃 | 靜態 | history | — |
+| [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | 概念頁允許即時切換；正式遊戲的開關時機仍未定案。 | （散句） | 靜態 | history | — |
+| [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | AI切換時機及移動／架梯接線 | 待設計／證據審查；曲線已選雙方1–2倍 / 是，先查現有計時與做prototype | 靜態 | evidence-only | — |
+| [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | 新入口分組及窄視窗安排 | 未決 / 是，不能直接縮小已選A | 靜態 | evidence-only | — |
+| [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | HD正式素材產製與接線 | 五城十張已獲同意；三十五區試繪覆蓋原圖全部面積與192據點，孤立屋頂已修；81張頭像小樣未宣稱逐張接受 / 畫風不阻塞；局部配色／水紋／邊線、其餘頭像、資產映射與正式接線仍待完成 | 靜態 | evidence-only | — |
+| [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | HD世界鏡頭與固定介面 | 本機原型可依世界座標切換全圖／已繪範圍／本區、滑鼠縮放與平移，工具列固定 / 是，正式Ebiten視野、焦點、邊界及命中座標仍待接線與驗證 | 靜態 | evidence-only | — |
+| [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | 編輯套用時機、取消及存檔衍生欄位 | 待設計／證據審查 / 是，先做單人垂直鏈草稿 | 靜態 | evidence-only | — |
+| [`spec/275-hd-toolbar-portraits-and-tools.md`](../spec/275-hd-toolbar-portraits-and-tools.md) | 建議原版規則與可選AI輔助分開驗證；開關預設及切換時機尚未定案。 | （散句） | 靜態 | evidence-only | — |
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 事件佇列 | 這一輪不進 JSON。編輯器要動它得先有 UI 語意 | 靜態 | evidence-only | — |
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 未解區域 | `+0x1EC0` 那 7 KB 仍是黑盒，只能靠改寫保留 | 靜態 | evidence-only | — |
 | [`spec/28-scenario-json.md`](../spec/28-scenario-json.md) | 編輯器 | 這一份只做資料層。UI 是另一份規格 | 靜態 | evidence-only | — |

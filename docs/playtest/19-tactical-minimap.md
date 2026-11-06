@@ -78,8 +78,10 @@ wlgame 內建 `-shot` 擷取第 30 幀：
 - [wlgame-tactical-minimap-siege.png](../images/wlgame-tactical-minimap-siege.png)
 - 解析度：640×400
 - SHA-256：`9ad40f4d6042355a1283367ee4c0d930cb001e9968459ec34f1853c84bba7438`
-- 原版視覺參照：[original-320s.png](../../workplace/promo-live/review/original-320s.png)、
-  [original-400s.png](../../workplace/promo-live/review/original-400s.png)
+- 原版視覺參照的歷史位置：`workplace/promo-live/review/original-320s.png`、
+  `workplace/promo-live/review/original-400s.png`。
+
+2026-11-02 補註：這兩個歷史檔案目前缺檔。保留位置供追溯，當前驗收不引用這兩張圖。
 
 這是 `-open-siege` 受控 tactical fixture，不能升格為完整自然流程或同狀態逐像素
 parity。原版參照影片畫面與 remake fixture 的戰場狀態不同；本輪只驗證縮圖的 raw

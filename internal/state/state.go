@@ -397,15 +397,10 @@ type World struct {
 	Cities   [numCities]City
 	Generals [numGenerals]General
 
-	// stage1DI 重現原版殘留在 `di` 的**位址**（docs/spec/195 §2）。
-	// `sub_143AF` 的第三個條件 `cmp byte ptr [di+18h], 2` 讀它，而 `di`
-	// 沒有被 `sub_14325` 設過——兩個來源都會留下值：
-	//
-	//	`sub_1440F` 第一行 `mov di, ax`  ⇒ **意圖據點**的記錄（`0x840 + 城×32`）
-	//	`sub_143AF` 的留守分支 `mov di, ax` ⇒ **勢力**的記錄（`勢力×64`）
-	//
-	// 實測 181 次呼叫裡 172 次是據點記錄、4 次是勢力記錄，其餘零星。
-	// −1 ＝ 還沒有人設過（第一次呼叫前的值來自更早的呼叫鏈，讀不出來）。
+	// stage1DI 保存 sub_143AF 讀取的 DI 位址（spec195、spec271）。
+	// 目標相同、自軍據點分支先由 sub_128F4 寫 node×32；Stage 2
+	// 與留守補兵分支另寫意圖據點、勢力的記錄位址。
+	// −1 表示尚無已建模的上游值；途中留守等路徑仍有證據限制。
 	stage1DI int
 
 	// terrain 是大地圖圖塊查詢。**規則層不讀檔案**，所以由呼叫端注入
@@ -453,6 +448,8 @@ type World struct {
 	cityBias [numFactions]int
 	// pending 是一場等著被跑完的戰術戰鬥。它還在的時候世界不前進。
 	pending *Pending
+	// tickResume保存戰術中斷的當次更新；完成前禁止地圖操作與存檔。
+	tickResume *tickContinuation
 	// 它和 pending 一樣會凍結戰略時間，但還沒有建立戰術戰場。
 	// diplomacy 是事件 2／3 的玩家互動；它是 runtime 狀態，不進存檔。
 	diplomacy *DiplomacyChoice
@@ -461,7 +458,7 @@ type World struct {
 	// rng 是給戰術層用的亂數源，開戰時記下來。
 	rng combat.Rand
 
-	// corpsCursor 是下一支要更新的軍團（原版 cs:0D18h）。
+	// corpsCursor 是下一批軍團的起點（原版 cs:0D18h），整批完成才前移。
 	// 每 tick 只推進 16 支，所以掃完一輪要 8 個 tick。
 	corpsCursor int
 
@@ -475,6 +472,8 @@ type World struct {
 	routes [numCorps][][2]int
 	// routeMarks 與 routes 逐格對應，指回原版道路表（docs/spec/172）。
 	routeMarks [numCorps][]march.CellMark
+	// routeUnresolved 標記讀檔後無法核對的路線，防止沿損壞快取移動。
+	routeUnresolved [numCorps]bool
 
 	// occupancy 是原版那張單位佔用圖（`cs:word_19872`，384 × 256 的計數器）
 	// 的建模：**座標 → 停在那一格的軍團數**。
@@ -1096,6 +1095,7 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 	// sub_11CB1 離開主遊戲循環後，remake 的 state 不再讓 Tick／AI／時鐘
 	// 產生任何副作用；已經排入的訊息仍可由呈現層讀取。
 	if w.outcome != InProgress {
+		w.tickResume = nil
 		return Event{HourFaction: -1}
 	}
 	// 有戰術戰鬥、玩家尚未選擇的遭遇、外交提案或撥款請求，世界都停在那裡。
@@ -1107,12 +1107,17 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 	w.rng = rng
 	ev := Event{HourFaction: -1}
 
-	// ① 據點整備：**每 tick 一個**，游標輪轉（原版 `sub_13EFD` 的
-	// `mov si, word_10D1E` … `add si, 20h`）。192 個據點輪一圈，
-	// 而一天是 207 tick，所以每個據點大約每天一次。
-	cityStrategy, cityNotices := w.tickCity(rng)
-	ev.Strategy = append(ev.Strategy, cityStrategy...)
-	ev.TalkNotices = append(ev.TalkNotices, cityNotices...)
+	if w.tickResume == nil {
+		w.tickResume = &tickContinuation{includeMapObjects: includeMapObjects,
+			corps: corpsBatch{start: w.corpsCursor, tail: -1, hour: w.Clock.Hour}}
+		cityStrategy, cityNotices := w.tickCity(rng)
+		ev.Strategy = append(ev.Strategy, cityStrategy...)
+		ev.TalkNotices = append(ev.TalkNotices, cityNotices...)
+		if w.outcome != InProgress {
+			w.tickResume = nil
+			return ev
+		}
+	}
 
 	// ② 軍團在時鐘進位前更新，使用尚未 Advance 的小時。
 	ev.Corps = w.tickCorps(w.Clock.Hour, rng)
@@ -1121,6 +1126,16 @@ func (w *World) tick(rng economy.Rand, includeMapObjects bool) Event {
 	for i := range ev.Corps {
 		ev.TalkNotices = append(ev.TalkNotices, ev.Corps[i].TalkNotices...)
 	}
+
+	if w.outcome != InProgress {
+		w.tickResume = nil
+		return ev
+	}
+	if w.pending != nil {
+		return ev
+	}
+	includeMapObjects = w.tickResume.includeMapObjects
+	w.tickResume = nil
 
 	// ③ 完整 map-loop 才更新一次 MCH 物件；額外的 speed tick 跳過這裡。
 	if includeMapObjects {
@@ -1733,6 +1748,9 @@ func (w *World) Bytes() []byte {
 // ⚠ 原版資產是唯讀的（CLAUDE.md §10）。這個函式**只寫呼叫端指定的
 // 輸出路徑**，不會就地改原始檔——要覆寫原版存檔是呼叫端的決定。
 func (w *World) SaveInto(srcPath, dstPath string, index int) error {
+	if w.HasIncompleteTick() {
+		return ErrIncompleteTick
+	}
 	raw, err := os.ReadFile(srcPath)
 	if err != nil {
 		return err

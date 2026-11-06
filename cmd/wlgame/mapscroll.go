@@ -19,7 +19,8 @@ func cursorPosition() (int, int) {
 	if desktopPointer.active {
 		return desktopPointer.x, desktopPointer.y
 	}
-	return ebiten.CursorPosition()
+	x, y := ebiten.CursorPosition()
+	return x, y - desktopGameOffset
 }
 
 func pushPointer(pos, delta, limit int) (next, overflow int) {
@@ -38,16 +39,19 @@ func (g *game) updateDesktopPointer() (int, int) {
 		g.world != nil && g.launcher == nil && ebiten.IsFocused()
 	p := &desktopPointer
 	if !enabled {
-		if p.active {
-			ebiten.SetCursorMode(ebiten.CursorModeVisible)
-			p.active = false
+		mode := ebiten.CursorModeVisible
+		if g.listScrollOwnsInput() && ebiten.IsFocused() {
+			mode = ebiten.CursorModeHidden
 		}
+		ebiten.SetCursorMode(mode)
+		p.active = false
 		return 0, 0
 	}
 	x, y := ebiten.CursorPosition()
 	if !p.active {
 		p.x, _ = pushPointer(0, x, screenW)
-		p.y, _ = pushPointer(0, y, screenH)
+		p.y, _ = pushPointer(0, y, screenH+desktopGameOffset)
+		p.y -= desktopGameOffset
 		ebiten.SetCursorMode(ebiten.CursorModeCaptured)
 		p.active = true
 		p.rawX, p.rawY = x, y
@@ -70,7 +74,8 @@ func consumeDesktopPointer(x, y int) (int, int) {
 	p.rawX, p.rawY = x, y
 	var ox, oy int
 	p.x, ox = pushPointer(p.x, dx, screenW)
-	p.y, oy = pushPointer(p.y, dy, screenH)
+	p.y, oy = pushPointer(p.y+desktopGameOffset, dy, screenH+desktopGameOffset)
+	p.y -= desktopGameOffset
 	return ox, oy
 }
 

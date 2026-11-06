@@ -60,6 +60,10 @@ func Encode(w *state.World, origin Origin) ([]byte, error) {
 	if w == nil {
 		return nil, fmt.Errorf("世界是 nil")
 	}
+	if w.HasIncompleteTick() {
+		return nil, state.ErrIncompleteTick
+	}
+
 	raw := w.Bytes()
 	sum := sha256.Sum256(raw)
 	origin.BlockSHA256 = hex.EncodeToString(sum[:])

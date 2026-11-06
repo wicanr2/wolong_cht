@@ -89,6 +89,20 @@ func TestListMouseDispatcherUsesTwoStageConfirm(t *testing.T) {
 	}
 }
 
+// sub_18463 在第二段只問按鍵，不重新用點擊座標換列。
+func TestListSecondClickConfirmsOriginallySelectedRow(t *testing.T) {
+	chosen := -1
+	g := &game{list: testInputList(), listPick: func(id int) bool {
+		chosen = id
+		return true
+	}}
+	g.dispatchListAction(listUIAction{kind: listActionClickRow, value: 1})
+	g.dispatchListAction(listUIAction{kind: listActionClickRow, value: 4})
+	if g.list != nil || chosen != 11 {
+		t.Fatalf("second click changed original selection: list=%v chosen=%d", g.list, chosen)
+	}
+}
+
 func TestListPageAndFooterCancelAreSharedActions(t *testing.T) {
 	g := &game{list: testInputList()}
 	g.dispatchListAction(listUIAction{kind: listActionPage, value: 1})

@@ -3,9 +3,6 @@ package main
 import (
 	"strings"
 
-	"github.com/hajimehoshi/ebiten/v2"
-
-	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
 	"github.com/wicanr2/wolong_cht/internal/state"
 )
@@ -162,7 +159,7 @@ func (g *game) startBattleTalk(p *state.Pending) {
 		// 閘是戰場編號 0xC0–0xD0（`sub_19A33` 的 `byte_1D34B == 1`），
 		// 挑戰／拒戰／應戰、回合互嗆與決著全在 `tactical.stepDuel` 裡。
 		in := tactical.DuelInput{
-			FieldNumber: g.battle.FieldNumber(p.Node, p.Mode == combat.Siege),
+			FieldNumber: p.FieldNumber,
 		}
 		for side := 0; side < 2; side++ {
 			if c := g.battleCommander(p, side); c >= 0 && c < len(g.world.Generals) {
@@ -246,7 +243,7 @@ func (g *game) advanceBattleTalkInput() bool {
 	}
 	// 戰術喊話不阻擋左鍵選隊／下令（docs/spec/155）；原版喊話仍在時
 	// 同一下點擊就執行熱區，不能先把它吃成額外的訊息確認。
-	if !pressed(ebiten.KeyEnter) && !pressed(ebiten.KeySpace) {
+	if !g.confirmed() {
 		return false
 	}
 	return s.queue.clearAll()

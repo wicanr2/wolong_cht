@@ -240,15 +240,9 @@ func battleSideCommandCells(r battleRect) []battleRect {
 	return out
 }
 
-// battleHitRect 是可點擊的 glyph 內框。面板外框與每格之間的安全邊界
-// 不屬於命中區，避免點到 chrome 邊線或分隔空隙時誤下令。
+// battleHitRect 使用原版註冊的完整熱區，含每格邊線（re60、spec270）。
 func battleHitRect(r battleRect) (battleRect, bool) {
-	const inset = 2
-	if r.W <= 2*inset || r.H <= 2*inset {
-		return battleRect{}, false
-	}
-	return battleRect{X: r.X + inset, Y: r.Y + inset,
-		W: r.W - 2*inset, H: r.H - 2*inset}, true
+	return r, r.W > 0 && r.H > 0
 }
 
 func (r battleRect) containsPoint(x, y int) bool {
@@ -271,8 +265,8 @@ func splitBattleCommandIndexAt(r battleRect, x, y int) (int, bool) {
 	return battleCommandIndexAt(splitBattleCommandCells(r), x, y)
 }
 
-// battleSideCommandIndexAt 是右欄 2×3 命令格的純 hit-test；面板外框與
-// 內縮空白不命中，命令索引仍固定為 0..5、逐列由左至右排列。
+// battleSideCommandIndexAt 是右欄單欄六列的純 hit-test。
+// 完整48×16矩形皆命中，右側陣線與下方快轉各走自己的熱區。
 func battleSideCommandIndexAt(r battleRect, x, y int) (int, bool) {
 	return battleCommandIndexAt(battleSideCommandCells(r), x, y)
 }

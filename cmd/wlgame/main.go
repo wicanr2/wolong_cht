@@ -52,7 +52,6 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/rules/battlefield"
 	"github.com/wicanr2/wolong_cht/internal/rules/bgm"
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
-	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/economy"
 	"github.com/wicanr2/wolong_cht/internal/rules/march"
 	"github.com/wicanr2/wolong_cht/internal/rules/persuasion"
@@ -263,7 +262,9 @@ type game struct {
 	// quitMenu 是系統選單「遊戲結束」那一列的兩項確認（docs/spec/153）。
 	quitMenu quitMenuState
 	// cursorAt 是對拍用的滑鼠游標位置（docs/spec/154）。**nil ＝ 不畫**。
-	cursorAt *image.Point
+	cursorAt      *image.Point
+	pointerAction desktopAction
+	choiceBand    choiceBand
 
 	// hud 是主畫面四個常駐視窗的開關集合，對應原版 `byte_198A6` 的
 	// bit 0–3（docs/spec/13）。**初值四個全開是 remake 差異**——
@@ -297,8 +298,9 @@ type game struct {
 	view          *isoview.View
 	battleSprites *battle.Sprites
 
-	list    *listwin.List
-	sortMem listwin.Memory
+	list     *listwin.List
+	sortMem  listwin.Memory
+	listDrag listScrollDrag
 
 	// listRow 把一列資料格式化成**逐欄**的字串，欄數與該家族的欄位定義
 	// 相同（docs/spec/38）。一覽表本身只管狀態機（listwin），
@@ -505,7 +507,7 @@ func (g *game) openGeneralList() {
 			rows = append(rows, i)
 		}
 	}
-	g.openGeneralPicker(rows, "↑↓ 移動　Enter 選取／決定　1-6 排序　ESC 取消",
+	g.openGeneralPicker(rows, mouseHint(mouseSelect),
 		func(i int) bool {
 			g.officialSays(g.generalAptitudeTalk(i), i)
 			return false // ★ 回清單（原版 `jmp short sub_16366`）
@@ -624,6 +626,11 @@ func (g *game) freezeList() {
 
 func (g *game) drawList(screen *ebiten.Image) {
 	l := g.list
+	if g.listScrollOwnsInput() && g.listDrag.list == l {
+		preview := *l
+		preview.Top = g.listDrag.top
+		l = &preview
+	}
 	fields := listFieldsFor(l)
 	// 外框畫在客戶區**外面**：原版的 (24,88,384,176) 是內容區，
 	// 16（標題）＋ 10 × 16 剛好填滿（docs/spec/38 §1.1）。
@@ -666,7 +673,7 @@ func (g *game) drawList(screen *ebiten.Image) {
 		y := listRowY(i)
 		rowInk := ink
 		selected := false
-		if first+i == l.Cursor &&
+		if !g.listScrollOwnsInput() && first+i == l.Cursor &&
 			(g.listTouched || l.Phase() == listwin.Selected) {
 			hl := color.RGBA{200, 210, 170, 255}
 			if l.Phase() == listwin.Selected {
@@ -763,15 +770,7 @@ func (g *game) drawScrollbarAt(screen *ebiten.Image,
 	// 槽：純黑、左右黑邊之間放**比例式滑塊**（orig-w3-target 逐像素）。
 	white := hi
 	fill(track, black)
-	slotH := track.Dy()
-	thumbY, thumbH := track.Min.Y, slotH
-	if total > page && page > 0 {
-		thumbH = slotH * page / total
-		thumbY = track.Min.Y + slotH*top/total
-		if thumbY+thumbH > track.Max.Y {
-			thumbY = track.Max.Y - thumbH
-		}
-	}
+	thumbY, thumbH := listScrollThumb(track, top, total, page)
 	// 滑塊的 3D：白頂列＋白左欄、色 1 右欄＋底列、面綠（色 13）。
 	fill(image.Rect(track.Min.X+1, thumbY, track.Max.X-2, thumbY+thumbH), face)
 	fill(image.Rect(track.Min.X+1, thumbY, track.Min.X+2, thumbY+thumbH), white)
@@ -910,7 +909,8 @@ func registerLatinListTitles() {
 	}
 }
 
-func pressed(k ebiten.Key) bool { return inpututil.IsKeyJustPressed(k) }
+// 功能鍵與導覽鍵已依使用者裁定停用（spec/266）。文字欄位自行接收文字。
+func pressed(_ ebiten.Key) bool { return false }
 
 // 大地圖的四季配樂：月 → 曲號。原版的表在 `cs:9309h`，
 // 由 `sub_19321` 以「月 − 1」查（docs/re/58 §2）。
@@ -934,7 +934,7 @@ func (g *game) musicTrack() string {
 	if g.battleActive() {
 		b := bgm.Battle{Field: battlefield.FieldBase}
 		if p := g.world.PendingBattle(); p != nil {
-			b.Field = g.battle.FieldNumber(p.Node, p.Mode == combat.Siege)
+			b.Field = p.FieldNumber
 			b.PlayerAttacks = p.Attacker >= 0 && p.Attacker < len(g.world.Corps) &&
 				g.world.Corps[p.Attacker].Faction == g.world.Player
 		}
@@ -961,10 +961,18 @@ func (g *game) applyFixtureIfReady() {
 
 func (g *game) Update() error {
 	pushX, pushY := g.updateDesktopPointer()
+	return g.updateWithPointer(pushX, pushY)
+}
+
+func (g *game) updateWithPointer(pushX, pushY int) error {
 	if g.focusManaged && !ebiten.IsFocused() {
 		return nil
 	}
 	g.frame++
+	if !g.listScrollOwnsInput() {
+		g.listDrag = listScrollDrag{}
+	}
+	defer g.syncChoiceBand()
 	// 條件成立才擺的驗收 fixture（docs/spec/118 §2.3）。**只擺一次。**
 	//
 	// ⛔ **要在這一幀的世界推進完之後才檢查**，所以用 defer 而不是寫在
@@ -1002,7 +1010,7 @@ func (g *game) Update() error {
 		}
 		return nil
 	}
-	// [HARD] ESC 只取消／關視窗，F10 才離開（CLAUDE.md §10）。
+	// 工具列的離開確認優先處理；取消後回到先前的輸入擁有者（spec/266）。
 	if g.quitting {
 		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 			px, py := cursorPosition()
@@ -1019,7 +1027,7 @@ func (g *game) Update() error {
 			g.quitYes = !g.quitYes
 		case pressed(ebiten.KeyY):
 			return ebiten.Termination
-		case pressed(ebiten.KeyEnter):
+		case g.confirmed():
 			if g.quitYes {
 				return ebiten.Termination
 			}
@@ -1030,18 +1038,6 @@ func (g *game) Update() error {
 		case pressed(ebiten.KeyN), g.cancelled():
 			g.quitting = false
 		}
-		return nil
-	}
-	// F9 循環切語言（remake 差異，docs/spec/86 §4）。原版沒有這個鍵，
-	// 而系統選單是逐像素對過的，不能加第五列。
-	if pressed(ebiten.KeyF9) {
-		if err := g.setLanguage(langpack.Next(uiLang.Lang())); err != nil {
-			log.Printf("切換語言失敗：%v", err)
-		}
-		return nil
-	}
-	if pressed(ebiten.KeyF10) {
-		g.quitting, g.quitYes = true, false // 預設停在 ＮＯ
 		return nil
 	}
 	g.updateMusic()
@@ -1086,6 +1082,11 @@ func (g *game) Update() error {
 		g.updateFunding()
 		return nil
 	}
+	if g.world.HasIncompleteTick() {
+		g.processWorldEvent(g.world.ResumeTick(g.rng))
+		return nil
+	}
+
 	// 勢力選擇視窗是模態的（原版 sub_15AFC 自己跑一個等待迴圈，
 	// 只認自己的熱區 0x20 與右鍵，docs/spec/35 §2.5.2）。
 	if g.updateFactionPicker() {
@@ -1153,7 +1154,7 @@ func (g *game) Update() error {
 	}
 	// 自然策略頂端八格只在沒有 active modal／戰鬥／啟動器時接收滑鼠。
 	// 系統是模態視窗：右鍵先關閉，不得穿透至設定或其他開關（docs/spec/155）。
-	if g.hudOpen(hudSystem) && inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) {
+	if g.hudOpen(hudSystem) && g.cancelled() {
 		g.hudSet(hudSystem, false)
 		return nil
 	}
@@ -1264,26 +1265,6 @@ func (g *game) Update() error {
 	// 寫入端，只擋這一 frame。
 	scrolling := pushX != 0 || pushY != 0
 	g.scrollMapPixels(pushX, pushY)
-	step := 1
-	if ebiten.IsKeyPressed(ebiten.KeyShift) {
-		step = 8
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyArrowRight) {
-		scrolling = true
-		g.camX += step
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyArrowLeft) {
-		scrolling = true
-		g.camX -= step
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyArrowDown) {
-		scrolling = true
-		g.camY += step
-	}
-	if ebiten.IsKeyPressed(ebiten.KeyArrowUp) {
-		scrolling = true
-		g.camY -= step
-	}
 	g.clampCam()
 
 	if !g.timeRuns() {
@@ -1318,21 +1299,7 @@ func (g *game) Update() error {
 		} else {
 			ev = g.world.Tick(g.rng)
 		}
-		if ev.Settled {
-			g.lastEvent = "月結"
-			if n := len(ev.Disaster); n > 0 {
-				g.lastEvent += fmt.Sprintf("　災害%d", n)
-			}
-			if ev.Storm != nil {
-				g.lastEvent += "　暴風雨"
-			}
-		}
-		for _, i := range ev.Eliminated {
-			g.lastEvent = big5(g.world.LordName(i)) + " 滅亡"
-		}
-		g.reportCorps(ev)
-		g.reportStrategy(ev)
-		g.enqueueEventMessages(ev)
+		g.processWorldEvent(ev)
 		if g.world.Outcome() != state.InProgress {
 			break
 		}
@@ -1497,7 +1464,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 
 	if g.quitting {
 		// 原版版面的 ＹＥＳ／ＮＯ 對話框（docs/spec/26），居中。
-		// ⚠ 這是 **F10** 那條路（remake 差異，CLAUDE.md §9）；
+		// 工具列的離開確認是 remake 外殼（spec/266）；
 		// 系統選單那一列走的是原版的兩項選單（docs/spec/153）。
 		g.drawYesNo(screen, quitDialogX, quitDialogY, "確定離開？", g.quitYes)
 	}
@@ -2260,7 +2227,12 @@ func main() {
 	// 失焦時仍讓輸入接縫釋放捕捉；Update 在其後立即返回，世界維持暫停。
 	g.focusManaged = true
 	ebiten.SetRunnableOnUnfocused(true)
-	if err := ebiten.RunGame(g); err != nil && err != ebiten.Termination {
+	var app ebiten.Game = g
+	if g.shotPath == "" && g.rec == nil {
+		app = newDesktopGame(g)
+		ebiten.SetWindowSize(screenW*2, (screenH+desktopBarHeight)*2)
+	}
+	if err := ebiten.RunGame(app); err != nil && err != ebiten.Termination {
 		log.Fatal(err)
 	}
 }
@@ -2877,4 +2849,22 @@ func configureDirectFixtures(g *game, openWin int, openList bool, listPickRow in
 		}
 		g.mapPick.tile = &image.Point{X: col, Y: row}
 	}
+}
+
+func (g *game) processWorldEvent(ev state.Event) {
+	if ev.Settled {
+		g.lastEvent = "月結"
+		if n := len(ev.Disaster); n > 0 {
+			g.lastEvent += fmt.Sprintf("　災害%d", n)
+		}
+		if ev.Storm != nil {
+			g.lastEvent += "　暴風雨"
+		}
+	}
+	for _, i := range ev.Eliminated {
+		g.lastEvent = big5(g.world.LordName(i)) + " 滅亡"
+	}
+	g.reportCorps(ev)
+	g.reportStrategy(ev)
+	g.enqueueEventMessages(ev)
 }

@@ -11,7 +11,6 @@ import (
 	"github.com/wicanr2/wolong_cht/internal/assets/battle"
 	"github.com/wicanr2/wolong_cht/internal/battlesetup"
 	"github.com/wicanr2/wolong_cht/internal/rules/army"
-	"github.com/wicanr2/wolong_cht/internal/rules/combat"
 	"github.com/wicanr2/wolong_cht/internal/rules/speed"
 	"github.com/wicanr2/wolong_cht/internal/rules/tactical"
 	"github.com/wicanr2/wolong_cht/internal/ui/isoview"
@@ -31,7 +30,7 @@ func battleCommandRow(i int) tactical.Command {
 }
 
 // squadSlot 是底列第 i 格對應哪一個編成位置。原版底列是**空間排列**
-//（左翼 左備 主將 前鋒 右備 右翼），不是記錄順序。
+// （左翼 左備 主將 前鋒 右備 右翼），不是記錄順序。
 func squadSlot(i int) int { return battle.BottomSlotSquad[i] }
 
 // battleState 是手機端的一場戰術戰鬥。
@@ -103,10 +102,10 @@ func (s *Session) newBattleView() *isoview.View {
 		Lib:     s.setup.Library(),
 		Palette: bank,
 		Sprites: s.setup.Sprites(),
-		Field:   s.setup.FieldNumber(p.Node, p.Mode == combat.Siege),
+		Field:   p.FieldNumber,
 		// 翻轉要用**建場當時**那個值，不能重算——重算會在玩家守城時
 		// 得到相反的答案，旗與地形就對不上（docs/playtest/40 §11）。
-		Rotate: s.setup.Rotate(),
+		Rotate: p.FieldRotate,
 		Rand:   s.rand.Next,
 	})
 }

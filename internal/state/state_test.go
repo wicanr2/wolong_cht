@@ -2172,7 +2172,7 @@ func TestPlayerBattleCanBeDelegated(t *testing.T) {
 	r := rng.NewFixed(5)
 	// 玩家那一方沒委任：直接開戰術畫面，沒有選單（docs/spec/105）。
 	queued := &CorpsEvent{}
-	w.fight(la, lb, w.Corps[la].Node, queued, combat.Field, 0, r)
+	w.fight(la, lb, w.Corps[la].Node, queued, combat.Field, 0, r, w.selectBattlefield(la, lb, r))
 	if w.PendingBattle() == nil {
 		t.Fatal("玩家遭遇沒有直接進戰場")
 	}
@@ -2185,7 +2185,7 @@ func TestPlayerBattleCanBeDelegated(t *testing.T) {
 	// 委任中：自動判定，回傳戰果，不開戰場。
 	w.Corps[la].Delegated = true
 	ev := &CorpsEvent{}
-	w.fight(la, lb, w.Corps[la].Node, ev, combat.Field, 0, r)
+	w.fight(la, lb, w.Corps[la].Node, ev, combat.Field, 0, r, w.selectBattlefield(la, lb, r))
 	if ev.Battle == nil {
 		t.Fatal("委任沒有回傳自動判定結果")
 	}

@@ -4,7 +4,6 @@ import (
 	"image/color"
 
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/hajimehoshi/ebiten/v2/vector"
 
 	"github.com/wicanr2/wolong_cht/internal/assets/gfx"
@@ -268,23 +267,6 @@ func (g *game) drawLegacyChoiceBox(screen *ebiten.Image, x, y int,
 }
 
 // talkChoiceClick 回報滑鼠點到第幾列。命中範圍與畫出來的框同一個算式。
-func (g *game) talkChoiceClick(x0, y0 int, lines []string) (int, bool) {
-	if len(lines) == 0 {
-		return 0, false
-	}
-	bx, by, w, h := legacyChoiceRect(x0, y0, lines)
-	x, y := cursorPosition()
-	if !inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) ||
-		x < bx+chrome.Tile || x >= bx+w-chrome.Tile ||
-		y < by+chrome.Tile || y >= by+h-chrome.Tile {
-		return 0, false
-	}
-	row := (y - (by + chrome.Tile)) / talkLinePitch
-	if row < 0 || row >= len(lines) {
-		return 0, false
-	}
-	return row, true
-}
 
 func (g *game) drawLegacyHint(screen *ebiten.Image, s string, y int) {
 	if s == "" {

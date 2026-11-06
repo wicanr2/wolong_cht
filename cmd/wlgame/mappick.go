@@ -81,7 +81,7 @@ func (g *game) updateMapPick() bool {
 	if !g.mapPickActive() {
 		return false
 	}
-	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) {
+	if g.cancelled() {
 		cancel := g.mapPick.cancel
 		g.endMapPick()
 		if cancel != nil {

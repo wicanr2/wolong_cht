@@ -235,7 +235,7 @@ func (g *game) updateEnding() error {
 	if !done {
 		return nil
 	}
-	if pressed(ebiten.KeyEnter) || pressed(ebiten.KeySpace) || pressed(ebiten.KeyEscape) ||
+	if g.confirmed() || pressed(ebiten.KeyEscape) ||
 		inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		g.ending = nil
 	}

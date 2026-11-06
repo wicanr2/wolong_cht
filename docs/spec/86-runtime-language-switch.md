@@ -116,3 +116,7 @@ func (p *Pack) Apply(d *textdraw.Drawer)
 | Android 實機／模擬器還沒實地切過語言 | 面板與 `syncLanguage` 都有單測，但手機版的畫面沒拍過；下一次 Android 打包驗收時補 |
 | 語言不進存檔 | 原版存檔格式沒有這一欄，塞進去會破壞 round-trip。要記住偏好得另存 remake 自己的設定檔 |
 | F9 是 remake 自創的鍵 | 原版沒有這個鍵；`docs/spec/13` 的按鍵表要同步記一筆 |
+
+## 桌面輸入入口更新
+
+2026-11-02：使用者確認全程滑鼠操作後，桌面 F9 已由外部工具列取代，見 [spec/266](266-mouse-only-desktop-toolbar.md)。本檔的語系載入與切換規則沿用，F9 的歷史紀錄不再代表現行桌面入口。

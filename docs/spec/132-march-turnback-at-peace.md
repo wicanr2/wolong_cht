@@ -42,11 +42,15 @@ remake 要照抄這個行為，**不要改成下令時拒絕**：那會讓玩家
 
 | 項目 | 位置 |
 |---|---|
-| 掉頭判定 | `internal/state/corps.go` 的 `turnBackAtBorder`，由 `step` 在移動前呼叫 |
+| 掉頭判定 | `internal/state/corps.go` 的 `turnBackAtBorder`，正式道路圖由 `tickOneCorps` 在重算及碰撞前呼叫 |
 | 三個放行條件 | 同一支的 `borderIsClosed` |
 | 前方端點 | 同一支的 `nextCityOnRoute`（路線序列裡第一個踩到據點座標的格）|
-| 折返路線 | 同一支的 `reverseLeg`（反向那一段路的格子序列，從目前這一格切開）|
-| 差異 | 無 |
+| 折返路線 | `replanOnLeg` 消費重算旗標，透過 `reverseLeg` 反向並在同拍繼續走 |
+| 差異 | 無道路素材時保留直線降級，不作原版離散路徑對拍 |
+
+2026-11-03 勘誤：本規格早期驗收只比較最後折返城市，沒有釘住同拍位置、
+步進量與目標座標。原版正常取樣及逐欄修正見 [spec269](269-peaceful-turnback-step.md)；
+舊逐日追蹤仍支持和平規則，不足以證明整個移動拍相同。
 
 ⚠ **既有的六支測試因此要先宣戰。** `TestCorpsMeetAndFight`、
 `TestPlayerBattleGoesTactical`、`TestNormalScenarioMarchIntoGarrison`、

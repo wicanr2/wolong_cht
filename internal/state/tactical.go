@@ -76,6 +76,10 @@ type Pending struct {
 	Mode     combat.Mode
 	Garrison int
 
+	// 選場只做一次；Node仍是戰略據點，不能拿來重算野戰。
+	FieldNumber int
+	FieldRotate bool
+
 	// CityWall 是開打時守方據點的城兵數，攻城結算要用它算損害。
 	CityWall int
 }
@@ -112,12 +116,10 @@ func (w *World) wantsTactical(att, def int) bool {
 }
 
 // beginTactical 準備一場戰術戰鬥。回傳 false 表示開不成，呼叫端該自動判定。
-func (w *World) beginTactical(att, def, node int, m combat.Mode, garrison int) bool {
+func (w *World) beginTactical(att, def, node int, m combat.Mode, garrison int, field battleSelection) bool {
 	// ⭐ **玩家守城 → 戰場轉 180 度**（docs/spec/56 §1）。判準是「玩家在哪一邊」，
 	// 不是誰攻誰守：原版兩個位元一起設，側欄換邊與戰場翻轉是同一件事的兩面。
-	rotate := m == combat.Siege && def >= 0 && def < len(w.Corps) &&
-		w.Corps[def].Faction == w.Player
-	f := w.tactical.Field(node, m == combat.Siege, rotate)
+	f := w.tactical.Field(field.number, m == combat.Siege, field.rotate)
 	if f == nil {
 		return false
 	}
@@ -141,7 +143,7 @@ func (w *World) beginTactical(att, def, node int, m combat.Mode, garrison int) b
 		// docs/re/78、docs/spec/115）。適性欄由**戰場類別**選，
 		// 而戰場類別來自戰場編號不是地圖圖塊（見 `TacticalSetup.Category`）。
 		squads, lp, lhp := w.squadPowers(corps,
-			w.battleCategory(node, m == combat.Siege))
+			w.battleCategory(field.number, m == combat.Siege))
 		b.Sides[side].SquadPower = squads
 		b.Sides[side].LeaderPower = lp
 		b.Sides[side].LeaderHP = lhp
@@ -171,7 +173,7 @@ func (w *World) beginTactical(att, def, node int, m combat.Mode, garrison int) b
 	for side := range b.Sides {
 		var code []byte
 		if w.Corps[corpsOf[side]].Faction != w.Player && w.tactical.Script != nil {
-			code = w.tactical.Script(node, m == combat.Siege,
+			code = w.tactical.Script(field.number, m == combat.Siege,
 				w.Generals[w.Leader(corpsOf[side])].Tactic)
 		}
 		if code == nil {
@@ -195,7 +197,8 @@ func (w *World) beginTactical(att, def, node int, m combat.Mode, garrison int) b
 	}
 
 	w.pending = &Pending{Battle: b, Attacker: att, Defender: def,
-		Node: node, Mode: m, Garrison: garrison, CityWall: cityWall}
+		Node: node, Mode: m, Garrison: garrison, CityWall: cityWall,
+		FieldNumber: field.number, FieldRotate: field.rotate}
 	return true
 }
 
@@ -217,7 +220,11 @@ func (w *World) StageBattle(att, def int, m combat.Mode, rng combat.Rand) error 
 		}
 	}
 	node := w.clampCity(w.Corps[att].Node)
-	if !w.beginTactical(att, def, node, m, w.Cities[node].Garrison) {
+	field := w.siegeSelection(node, def)
+	if m == combat.Field {
+		field = w.selectBattlefield(att, def, rng)
+	}
+	if !w.beginTactical(att, def, node, m, w.Cities[node].Garrison, field) {
 		return fmt.Errorf("state: 擺不出戰場（據點 %d）", w.Corps[att].Node)
 	}
 	return nil
@@ -325,6 +332,10 @@ func (w *World) ResolvePending(rng combat.Rand) *CorpsEvent {
 	if o.AttackerWins && p.Mode == combat.Siege && !attDead {
 		w.capture(p.Attacker, p.Node, ev, rng)
 	}
+	if w.outcome != InProgress {
+		w.tickResume = nil
+	}
+
 	return ev
 }
 

@@ -132,7 +132,7 @@ func TestFieldBattleTerminates(t *testing.T) {
 	if err != nil {
 		t.Skipf("讀不到原版素材：%v", err)
 	}
-	provider, setup, err := battlesetup.Load(battlesetup.Options{
+	_, setup, err := battlesetup.Load(battlesetup.Options{
 		Dir: "../../workplace/orig/dosv", World: w, Map: lib.World,
 	})
 	if err != nil {
@@ -190,7 +190,7 @@ func TestFieldBattleTerminates(t *testing.T) {
 	// ⚠ 原版的野戰單挑是**依武將個性自動觸發**的（武將 `+0x16` ＝ `Tactic`，
 	// 同一個值也選 `BATTLE.DAT` 的腳本段）。remake 還沒解那個觸發判定，
 	// 所以這裡是無條件武裝——它是 fixture 的簡化，不是原版行為。
-	duel := tactical.DuelInput{FieldNumber: provider.FieldNumber(pb.Node, false)}
+	duel := tactical.DuelInput{FieldNumber: pb.FieldNumber}
 	for side, corps := range [2]int{pb.Attacker, pb.Defender} {
 		g := w.Generals[w.Leader(corps)]
 		duel.Martial[side], duel.CommandStat[side] = g.Martial, g.Command

@@ -107,6 +107,8 @@ func (w *World) Restore(s Snapshot) error {
 	w.approximateEvent10 = s.ApproximateEvent10
 	for i := range w.routes {
 		w.routes[i] = nil
+		w.routeMarks[i] = nil
+		w.routeUnresolved[i] = false
 	}
 	for i, r := range s.Routes {
 		w.routes[i] = append([][2]int(nil), r...)

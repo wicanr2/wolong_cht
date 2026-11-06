@@ -27,6 +27,9 @@ func (s *Session) Tap(lx, ly float64) bool {
 			return true
 		}
 	}
+	if s.world.HasIncompleteTick() {
+		return true
+	}
 	if i, ok := commandAt(lx, ly); ok {
 		s.OpenSheet(Command(i))
 		return true

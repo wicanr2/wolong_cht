@@ -29,6 +29,9 @@ func cancelPressed() bool {
 // **測起來永遠通過**——那正是這一輪要修的那種安靜失敗。
 // 所以留一個可注入的欄位，讓測試驗的是行為不是「有沒有寫這一行」。
 func (g *game) cancelled() bool {
+	if g.pointerAction == desktopBack {
+		return true
+	}
 	if g.cancelFn != nil {
 		return g.cancelFn()
 	}

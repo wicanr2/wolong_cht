@@ -128,7 +128,7 @@ func (g *game) pickCityForGovernor() {
 	// ⭐ **選完回到據點清單**（原版 `sub_16A9B` 的 `jmp loc_16AA4`，
 	// docs/spec/142）：不論成功、那裡已經有人、還是選武將時取消，
 	// 都回到這一張清單，**右鍵才離開**。
-	g.cityList(rows, "選要派內政官的據點　Enter 決定　ESC 取消", func(city int) bool {
+	g.cityList(rows, mouseHint(mouseSelect), func(city int) bool {
 		c := &g.world.Cities[city]
 		if c.Governor != NoOfficial {
 			g.enqueueTalk(cityStaffedTalk, map[byte]string{
@@ -144,7 +144,7 @@ func (g *game) pickCityForGovernor() {
 		}
 		name := big5(c.Name)
 		g.setStatusTalk(pickOfficialTalk, nil)
-		g.generalList(free, "選要派去 "+name+" 的武將　Enter 決定", func(who int) bool {
+		g.generalList(free, "選要派去 "+name+mouseHint(mouseSelect), func(who int) bool {
 			// 職務（武將 +0x17 ＝ 2）與據點 +0x19 是同一步寫的，
 			// 收在規則層（docs/spec/143 §2）。
 			g.world.AssignGovernor(city, who)
@@ -172,7 +172,7 @@ func (g *game) removeGovernor() {
 		g.list = nil
 		return
 	}
-	g.cityList(rows, "選要解任的據點　Enter 決定　ESC 取消", func(city int) bool {
+	g.cityList(rows, mouseHint(mouseSelect), func(city int) bool {
 		c := &g.world.Cities[city]
 		// 原版 `sub_16B4F`：先寫 0xFF、再看舊值是不是 0xFF；
 		// 有人的話連職務與經費餘額一起清（docs/spec/143 §2）。
@@ -202,7 +202,7 @@ func (g *game) pickFactionForDiplomat() {
 		return
 	}
 	// 與內政官任命同形（原版 `sub_16B71` 的 `jmp loc_16B7A`，docs/spec/142）。
-	g.factionList(rows, "選要派外交官的勢力　Enter 決定　ESC 取消", func(f int) bool {
+	g.factionList(rows, mouseHint(mouseSelect), func(f int) bool {
 		fa := &g.world.Factions[f]
 		name := big5(g.world.LordName(f))
 		if fa.Diplomat != NoOfficial {
@@ -218,7 +218,7 @@ func (g *game) pickFactionForDiplomat() {
 			return false
 		}
 		g.setStatusTalk(pickOfficialTalk, nil)
-		g.generalList(free, "選要派去 "+name+" 的武將　Enter 決定", func(who int) bool {
+		g.generalList(free, "選要派去 "+name+mouseHint(mouseSelect), func(who int) bool {
 			g.world.AssignDiplomat(f, who)
 			g.officialSays(diplomatAssignedTalk, who)
 			// ★ 回到勢力清單——同樣等那一句被按掉（docs/spec/142 §3.1）。
@@ -245,7 +245,7 @@ func (g *game) removeDiplomat() {
 		g.list = nil
 		return
 	}
-	g.factionList(rows, "選要召回外交官的勢力　Enter 決定　ESC 取消", func(f int) bool {
+	g.factionList(rows, mouseHint(mouseSelect), func(f int) bool {
 		// 原版 `sub_16C2A`：先寫 0xFF、再看舊值；有人的話連職務與
 		// 經費餘額一起清（docs/spec/143 §2）。
 		old := g.world.DismissDiplomat(f)

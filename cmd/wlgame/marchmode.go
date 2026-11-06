@@ -10,7 +10,6 @@ import (
 	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/inpututil"
 
 	"github.com/wicanr2/wolong_cht/internal/state"
 	"github.com/wicanr2/wolong_cht/internal/ui/talkmenu"
@@ -116,40 +115,16 @@ func (g *game) marchModeRows() []string {
 
 func (g *game) updateMarchMode() {
 	m := &g.marchMode
-	cancel := func() {
-		// 原版右鍵是**回去重選據點**，不是整條流程取消。
+	if row, ok := g.talkChoiceInput(&m.row, len(g.marchModeRows())); ok {
+		m.row = row
+		g.commitMarchMode()
+		return
+	}
+	if g.cancelled() {
+		// 原版取消回到據點選取。
 		m.active = false
 		g.clearStatusTalk()
 		g.pickDestination(m.corps)
-	}
-	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) {
-		cancel()
-		return
-	}
-	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
-		if row, ok := g.talkChoiceClick(m.x, m.y, g.marchModeRows()); ok {
-			m.row = row
-			g.commitMarchMode()
-		}
-		return
-	}
-	switch {
-	case pressed(ebiten.KeyEscape):
-		cancel()
-	case pressed(ebiten.KeyArrowUp):
-		m.row = (m.row + m.rows - 1) % m.rows
-	case pressed(ebiten.KeyArrowDown):
-		m.row = (m.row + 1) % m.rows
-	case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
-		g.commitMarchMode()
-	default:
-		for i, k := range []ebiten.Key{ebiten.Key1, ebiten.Key2, ebiten.Key3} {
-			if i < m.rows && pressed(k) {
-				m.row = i
-				g.commitMarchMode()
-				return
-			}
-		}
 	}
 }
 

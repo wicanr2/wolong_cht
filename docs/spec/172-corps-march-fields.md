@@ -115,6 +115,12 @@ cells, marks := w.roads.CellRouteMarked(from, c.TargetNode)
 ⚠ 道路圖是呼叫端注入的，所以這件事只能掛在 `SetRoads` 上——
 `loadCorps` 執行時還沒有圖。
 
+2026-11-03 補充：原生 `Snapshot.Routes` 已有剩餘格子時，也必須恢復出發節點及
+`routeMarks`。舊程式跳過這一步，跨過中繼城後便失去連結位址，和平折返不再觸發。
+目前由既有兩種成本規劃產生候選，逐格與已存路線核對後才接回標記；不吻合則計入
+`UnresolvedMarches` 並停止該軍團。`Restore` 清除舊標記，存檔格式不變。
+回歸、正常 GUI 及限制見 [spec269](269-peaceful-turnback-step.md)。
+
 ## 4.6 手動擺位要把路徑一起丟掉
 
 驗收捷徑（`internal/battlesetup` 的 `StageEncounter`）會**把軍團直接擺到

@@ -5,8 +5,8 @@ import (
 
 	"github.com/wicanr2/wolong_cht/internal/assets/library"
 	"github.com/wicanr2/wolong_cht/internal/assets/text"
-	"github.com/wicanr2/wolong_cht/internal/battlesetup"
 	"github.com/wicanr2/wolong_cht/internal/assets/world"
+	"github.com/wicanr2/wolong_cht/internal/battlesetup"
 	"github.com/wicanr2/wolong_cht/internal/rules/clock"
 	"github.com/wicanr2/wolong_cht/internal/rules/march"
 	"github.com/wicanr2/wolong_cht/internal/rules/rng"
@@ -88,7 +88,7 @@ type Session struct {
 }
 
 // LanguageChoices 是系統面板列出的語言——與桌面啟動殼層同一份
-//（`langpack.Choices`），兩端不會列出不同的語言。
+// （`langpack.Choices`），兩端不會列出不同的語言。
 var LanguageChoices = langpack.Choices
 
 // Options 是開一局要的東西。字型缺席不是錯誤，中文會顯示成方框
@@ -184,9 +184,12 @@ func (s *Session) Localise(raw string) string {
 // attachBattlefield 掛上戰場來源。
 //
 // ⚠ 載不到就維持 nil：**玩家的戰鬥會走自動判定**，遊戲照樣跑得起來
-//（`internal/battlesetup`）。這是刻意的降級——手機上使用者匯入的資料
+// （`internal/battlesetup`）。這是刻意的降級——手機上使用者匯入的資料
 // 可能不齊，為此開不了遊戲比少一個畫面糟得多。
 func (s *Session) attachBattlefield() {
+	if s.world == nil || s.lib == nil {
+		return
+	}
 	p, setup, err := battlesetup.Load(battlesetup.Options{
 		Dir: s.origDir, World: s.world, Map: s.lib.World,
 	})
@@ -251,6 +254,13 @@ func (s *Session) Tick() {
 		return
 	}
 	if s.paused {
+		return
+	}
+	if s.world.HasIncompleteTick() {
+		s.tickNotices()
+		if len(s.Notice()) == 0 {
+			s.pushNotices(s.world.ResumeTick(s.rand))
+		}
 		return
 	}
 	s.tickNotices()
@@ -352,7 +362,7 @@ func (s *Session) SelectAt(lx, ly float64) bool {
 // cityHalf 是據點在地圖上的命中半徑（世界格）。
 //
 // ⭐ 據點的圖形不是同一個尺寸：大城 5×5 格、小城 3×3 格
-//（`world.applyDecor` 的裝飾磚 222–225 對 5×5、226–229 對 3×3）。
+// （`world.applyDecor` 的裝飾磚 222–225 對 5×5、226–229 對 3×3）。
 // 半徑取 2 讓最大的城整塊都可以點，小城則多出一格餘裕——
 // 手指的落點比滑鼠散，寧可寬一格（docs/mobile/android-ux.md §1）。
 const cityHalf = 2

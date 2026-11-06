@@ -54,7 +54,8 @@ fi
 # 踩過：拿這個當「Ebiten 可以交叉編譯」的證據，證的其實是本機建置成功。
 CROSS_ENV=()
 # WOLONG_DUMP_DIR 讓測試把圖寫出來供肉眼複驗（容器內路徑）。
-for v in GOOS GOARCH CGO_ENABLED GOARM GOAMD64 WOLONG_DUMP_DIR GOPROXY GOSUMDB GOTOOLCHAIN GOFLAGS; do
+# WOLONG_TACTICAL_HOTMAP 傳入原版熱區表路徑，用法與收據見 docs/spec/270-tactical-hit-boundaries.md。
+for v in GOOS GOARCH CGO_ENABLED GOARM GOAMD64 WOLONG_DUMP_DIR WOLONG_TACTICAL_HOTMAP GOPROXY GOSUMDB GOTOOLCHAIN GOFLAGS; do
     if [ -n "${!v:-}" ]; then CROSS_ENV+=(-e "$v=${!v}"); fi
 done
 

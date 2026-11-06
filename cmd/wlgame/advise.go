@@ -154,7 +154,7 @@ func (g *game) updateAdvise() bool {
 	switch g.advise {
 	case advisePickCommand:
 		labels := g.adviseCommandLabels()
-		if row, ok := g.talkChoiceClick(adviseMenuX, adviseMenuY, labels); ok {
+		if row, ok := g.talkChoiceInput(&g.adviseCmdRow, len(labels)); ok {
 			g.adviseCmdRow = row
 			g.pickAdviseCommand(row)
 			return true
@@ -164,7 +164,7 @@ func (g *game) updateAdvise() bool {
 			g.adviseCmdRow = (g.adviseCmdRow + len(labels) - 1) % len(labels)
 		case pressed(ebiten.KeyArrowDown):
 			g.adviseCmdRow = (g.adviseCmdRow + 1) % len(labels)
-		case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
+		case g.confirmed():
 			g.pickAdviseCommand(g.adviseCmdRow)
 		case g.cancelled():
 			g.closeAdvise()
@@ -183,26 +183,18 @@ func (g *game) updateAdvise() bool {
 			g.closeAdvise()
 			return true
 		}
-		switch {
-		case pressed(ebiten.KeyArrowUp):
-			g.list.Move(-1)
-		case pressed(ebiten.KeyArrowDown):
-			g.list.Move(1)
-		case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
-			if node, ok := g.list.Confirm(); ok {
-				g.list = nil
-				g.beginRelocate(node)
-			}
-		case g.cancelled():
+		if g.cancelled() {
 			if g.list.Cancel() {
 				g.list = nil
-				g.advise = advisePickCommand
+				g.closeAdvise()
 			}
+			return true
 		}
+		g.updateListUI()
 
 	case adviseVerdict:
-		if g.cancelled() || pressed(ebiten.KeyEnter) ||
-			pressed(ebiten.KeySpace) {
+		if g.cancelled() || g.confirmed() ||
+			false {
 			if !g.adviseAdvance() {
 				g.closeAdvise()
 			}
@@ -214,14 +206,7 @@ func (g *game) updateAdvise() bool {
 			g.closeAdvise()
 			return true
 		}
-		switch {
-		case pressed(ebiten.KeyArrowUp):
-			g.list.Move(-1)
-		case pressed(ebiten.KeyArrowDown):
-			g.list.Move(1)
-		case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
-			g.confirmAdviseSelection()
-		case g.cancelled():
+		if g.cancelled() {
 			if g.list.Cancel() {
 				g.list = nil
 				if g.advise == advisePickTarget && g.adviseCmd == persuasion.Cooperate {
@@ -232,25 +217,29 @@ func (g *game) updateAdvise() bool {
 					g.advise, g.adviseMenuStale = advisePickCommand, false
 				}
 			}
+			return true
 		}
+		g.updateListUI()
 
 	case advisePersuade:
 		if g.adviseTalking() {
-			if pressed(ebiten.KeyEnter) || pressed(ebiten.KeySpace) ||
-				pressed(ebiten.KeyEscape) {
+			if g.confirmed() || g.cancelled() {
 				g.adviseAdvance()
 			}
 			return true
 		}
 		opts := persuasion.Options(g.adviseCmd)
-		switch {
-		case pressed(ebiten.KeyArrowUp):
-			g.sessCur = (g.sessCur + len(opts) - 1) % len(opts)
-		case pressed(ebiten.KeyArrowDown):
-			g.sessCur = (g.sessCur + 1) % len(opts)
-		case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
-			g.offerReason(opts[g.sessCur])
-		case g.cancelled():
+		if g.sess == nil {
+			if g.confirmed() || g.cancelled() {
+				g.closeAdvise()
+			}
+			return true
+		}
+		if row, ok := g.talkChoiceInput(&g.sessCur, len(opts)); ok {
+			g.offerReason(opts[row])
+			return true
+		}
+		if g.cancelled() {
 			g.closeAdvise()
 		}
 	}
@@ -264,7 +253,7 @@ func (g *game) openTargetList() {
 			rows = append(rows, i)
 		}
 	}
-	g.openFactionPicker(rows, "↑↓ 移動　Enter 選取／決定　1-6 排序　ESC 取消", nil)
+	g.openFactionPicker(rows, mouseHint(mouseSelect), g.acceptAdviseSelection)
 }
 
 // 進言四條出口各自的狀態列（docs/spec/140 §1.1）。
@@ -289,20 +278,18 @@ const (
 // ⭐ 抽成一支是為了讓驗收 fixture（`-advise-list-row`）走**同一條路**，
 // 而不是自己再實作一次。
 func (g *game) confirmAdviseSelection() {
-	if g.list == nil {
-		return
-	}
-	id, ok := g.list.Confirm()
-	if !ok {
-		return
-	}
+	g.confirmListSelection()
+}
+
+// acceptAdviseSelection 收到的是共用表格確認後的資料 ID，不再做第二次 Confirm。
+func (g *game) acceptAdviseSelection(id int) bool {
 	// 停戰與請求協助的兩道前置閘（docs/spec/150）：
 	// 不通過就跳訊息並**留在這張清單上**，不往下走。
 	gate := g.adviseCmd == persuasion.CeaseFire ||
 		(g.adviseCmd == persuasion.Cooperate && g.advise == advisePickAlly)
 	if gate && !g.adviseFactionGate(id) {
 		g.list.KeepSelected()
-		return
+		return false
 	}
 	g.list = nil
 	if g.advise == advisePickAlly {
@@ -310,10 +297,11 @@ func (g *game) confirmAdviseSelection() {
 		g.openTargetList()
 		g.advise = advisePickTarget
 		g.setAdviseStatus()
-		return
+		return false
 	}
 	g.target = id
 	g.beginPersuasion()
+	return true
 }
 
 // pickAdviseListRow 是驗收用的「把游標移到第 N 列再決定」，走真實的兩段式。
@@ -410,7 +398,10 @@ func (g *game) openCapitalList() {
 	if len(rows) == 0 {
 		return
 	}
-	g.openCityPicker(rows, "↑↓ 移動　Enter 選取／決定　ESC 取消", nil)
+	g.openCityPicker(rows, mouseHint(mouseSelect), func(node int) bool {
+		g.beginRelocate(node)
+		return true
+	})
 	g.advise = advisePickCapital
 	g.setStatusTalk(adviseRelocateTalk, nil)
 }
@@ -677,9 +668,9 @@ func (g *game) drawAdvise(screen *ebiten.Image) {
 		// 第四、五項沒有說服迴圈，畫面就是 `sub_13B08` 的三句。
 		g.drawIventScene(screen, 0)
 		g.drawAdviseBoxes(screen)
-		hint := "Enter／ESC 關閉"
+		hint := mouseHint(mouseClose)
 		if g.adviseTalking() {
-			hint = "Enter 繼續"
+			hint = mouseHint(mouseContinue)
 		}
 		g.drawLegacyHint(screen, hint, talkUpperBoxY-4*chrome.Tile)
 
@@ -692,15 +683,15 @@ func (g *game) drawAdvise(screen *ebiten.Image) {
 		// 提示放在橫幅與上框之間，不要壓到畫面底部的事件視窗。
 		hintY := talkUpperBoxY - 4*chrome.Tile
 		if g.adviseTalking() {
-			g.drawLegacyHint(screen, "Enter 繼續", hintY)
+			g.drawLegacyHint(screen, mouseHint(mouseContinue), hintY)
 			return
 		}
 		if g.sess == nil {
-			g.drawLegacyHint(screen, "ESC 關閉", hintY)
+			g.drawLegacyHint(screen, mouseHint(mouseClose), hintY)
 			return
 		}
 		g.drawLegacyChoiceBox(screen, talkChoiceX, talkChoiceY,
 			g.adviseReasonLabels(g.adviseCmd), g.sessCur)
-		g.drawLegacyHint(screen, "↑↓ 選擇　Enter 提出　ESC 放棄", hintY)
+		g.drawLegacyHint(screen, mouseHint(mouseSelect), hintY)
 	}
 }

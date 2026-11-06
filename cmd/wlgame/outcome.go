@@ -65,7 +65,7 @@ func (g *game) updateOutcome() error {
 	if g == nil || g.world == nil || g.world.Outcome() == state.InProgress {
 		return nil
 	}
-	if pressed(ebiten.KeyEnter) || pressed(ebiten.KeySpace) {
+	if g.confirmed() {
 		return g.returnToLauncher()
 	}
 	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
@@ -132,6 +132,6 @@ func (g *game) drawOutcome(screen *ebiten.Image) {
 	vector.DrawFilledRect(screen, float32(outcomeConfirmRect().Min.X),
 		float32(outcomeConfirmRect().Min.Y), float32(outcomeConfirmRect().Dx()),
 		float32(outcomeConfirmRect().Dy()), chrome.Select, false)
-	g.td.Draw(screen, "Enter／滑鼠左鍵：回到啟動畫面",
+	g.td.Draw(screen, mouseHint(mouseReturnTitle),
 		outcomeConfirmRect().Min.X+16, outcomeConfirmRect().Min.Y+8, white)
 }

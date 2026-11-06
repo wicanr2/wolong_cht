@@ -47,7 +47,7 @@ func (g *game) updateDiplomacy() {
 			keyboardEdit = state.AmountClear
 		case pressed(ebiten.KeyHome):
 			keyboardEdit = state.AmountSetMax
-		case pressed(ebiten.KeyEnter), pressed(ebiten.KeySpace):
+		case g.confirmed():
 			g.setAmountCursorAction(state.AmountFinishInput, 0)
 			g.diplomacyEditingAmount = false
 			g.resolveDiplomacy(*c, state.DiplomacyOfferFunds)
@@ -59,8 +59,7 @@ func (g *game) updateDiplomacy() {
 		}
 		return
 	}
-	if row, ok := g.talkChoiceClick(talkChoiceX, talkChoiceY,
-		g.diplomacyChoiceLines(*c)); ok {
+	if row, ok := g.talkChoiceInput(&g.diplomacyRow, len(g.diplomacyChoiceLines(*c))); ok {
 		g.diplomacyRow = row
 		if row == int(state.DiplomacyOfferFunds) {
 			g.diplomacyEditingAmount = true
@@ -84,7 +83,7 @@ func (g *game) updateDiplomacy() {
 	if g.cancelled() {
 		g.diplomacyRow = int(state.DiplomacyReject)
 	}
-	if !pressed(ebiten.KeyEnter) && !pressed(ebiten.KeySpace) &&
+	if !g.confirmed() &&
 		!g.cancelled() &&
 		!pressed(ebiten.Key1) && !pressed(ebiten.Key2) && !pressed(ebiten.Key3) {
 		return
@@ -92,7 +91,7 @@ func (g *game) updateDiplomacy() {
 
 	option := state.DiplomacyOption(g.diplomacyRow)
 	if option == state.DiplomacyOfferFunds &&
-		(pressed(ebiten.KeyEnter) || pressed(ebiten.KeySpace)) {
+		(g.confirmed()) {
 		g.diplomacyEditingAmount = true
 		g.beginAmountEditor(amountCursorDiplomacy, amountAnchorEventX, amountAnchorEventY)
 		return

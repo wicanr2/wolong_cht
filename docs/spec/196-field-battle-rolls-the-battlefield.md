@@ -1,8 +1,8 @@
 # 196 — 野戰開打前要先決定戰場，而水域那一格**要擲骰**
 
 **狀態：CONFORMED。** `sub_14A7B`（野戰的自動判定）**第一件事**是
-`call sub_14B63`——取樣守方腳下與下方四格的地形、決定用哪一張戰場。
-正下方那一格的地形類型是 8（水上木構造）時走 `sub_14C1A`，
+`call sub_14B63`——取樣以守方位置為中心的十字五格地形、決定用哪一張戰場。
+中心格的地形類型是 8（水上木構造）時走 `sub_14C1A`，
 而那一支會 **`call sub_1ECE0`**：
 
 ```asm
@@ -36,19 +36,25 @@ sub_14C1A:                      ; bl ＝ 正下方那一格的地形類型
 ```asm
 mov dx, [di+1Ch] / mov bx, [di+1Ah]     ; ★ **守方**的佔用圖位址 ＝ 座標
 …
-mov al, [bx+17Fh] / call sub_14C4C      ; 左下
-mov al, [bx+181h] / call sub_14C4C      ; 右下
-mov al, [bx]      / call sub_14C4C      ; 中心
-mov al, [bx+300h] / call sub_14C4C      ; 兩格下
-mov al, [bx+180h] / call sub_14C4C      ; ★ 正下方 → bl
+sub dx, 18h                           ; 讀取基址先上移一列
+…
+mov al, [bx+17Fh] / call sub_14C4C      ; 左
+mov al, [bx+181h] / call sub_14C4C      ; 右
+mov al, [bx]      / call sub_14C4C      ; 上
+mov al, [bx+300h] / call sub_14C4C      ; 下
+mov al, [bx+180h] / call sub_14C4C      ; ★ 中心 → bl
 and bl, bl        / jz  → sub_14BDD     ; 平原：查配對表，不擲骰
 cmp bl, 8         / jnb → sub_14C1A     ; 水域：可能擲骰
 （1–7）           →  戰場 ＝ 0CEh + bl
 ```
 
-一列是 `0x180` byte，所以 `+0x180` 是正下方、`+0x17F`／`+0x181` 是左右下、
-`+0x300` 是兩格下——與 `internal/battlesetup` 既有的
-`at(0,0)/at(0,1)/at(-1,1)/at(1,1)/at(0,2)` 一致。
+一列是 `0x180` byte，但 `sub dx,18h` 已把基址上移一列，
+所以 `+0x180` 是中心、`+0x17F`／`+0x181` 是左右，`+0x300` 是下。
+對應 `at(0,-1)/at(-1,0)/at(1,0)/at(0,0)/at(0,1)`。
+
+2026-11-03：以上訂正漏算基址上移的舊散文，沿用 [re05](../re/05-battle-selection.md) §2
+與既有battlefield程式的解釋，未更改規則。正常道路野戰的新收據及Provider取樣座標限制見
+[playtest128](../playtest/128-player-field-collision.md)。
 
 ⚠ **座標取的是守方的**（`di`），不是攻方，也不是據點。
 
@@ -84,3 +90,10 @@ w.SetTerrain(func(x, y int) byte { t, _ := lib.World.Tile(x, y); return t })
 → **全 0**。
 
 <!-- 缺口：無 -->
+
+## 2026-11-04 接線補正
+
+[spec273](273-encounter-battlefield-context.md) 接續本規格：正常桌面與手機入口原先沒有掛地形，
+只有部分取樣工具注入；而Provider仍按據點重選。現由接戰規則層選場並抽一次，
+Pending供後續建場、適性、腳本與UI共用。正常入口及讀檔補上地形注入。
+舊規格的抽骰規則不變，但過去局部取樣通過不能證明所有正式入口已接上。
