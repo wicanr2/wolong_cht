@@ -21,7 +21,17 @@
 
 ## 2026-11-13：登城首拍與高層讀取
 
-最新程式`wlgame-cao-route-r1`修正登城繞路時的目標列漂移，契約見[spec36繞路續片](../spec/36-ground-planes-and-climbing.md)。
+最新程式`wlgame-cao-impact-r1`修正水平撞牆後仍試其他軸及面向寫入太晚，並保留尋路請求，契約見[spec159本片](../spec/159-tactical-command-movement-order.md)。
+[正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-impact-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複同步。
+正常曹操開局、宣戰呂布、編夏侯淵、停手行軍及途中存讀檔，自然在椎陽入戰，改線後實際點登城令。
+第200→206拍指標固定，主將X18→24，Goal保持(42,32,4)，之後突擊、主動退卻返回。
+[登城畫面](../../workplace/scratch/ui-windows-20261104/cao-impact-remake-scale-wall.png)已目視核對單兵、城牆及底列指令。
+[受控規則收據](../../workplace/scratch/ui-windows-20261104/cao-impact-evidence.json)前149拍96槽27欄位、RNG與腳本狀態吻合；
+第146拍96兵移動後六欄亦吻合，第150拍槽54的路徑中繼點仍不同。
+不由正常流程抽樣代證許昌留守、整場原版同拍畫面、架梯、投射物或手機GUI。
+[來源收據](../../workplace/scratch/ui-windows-20261104/cao-impact-integration.json)保存受測程式及限制；以下為前輪紀錄。
+
+前輪程式`wlgame-cao-route-r1`修正登城繞路時的目標列漂移，契約見[spec36繞路續片](../spec/36-ground-planes-and-climbing.md)。
 [正常滑鼠](../../workplace/scratch/ui-windows-20261104/cao-route-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複工具列同步。
 在正常曹操對呂布流程點側欄登城，停手六拍目標保持(42,32,4)、主將X11→17，之後突擊與主動退卻返回。
 [登城畫面](../../workplace/scratch/ui-windows-20261104/cao-route-remake-scale-wall.png)已目視核對原版畫布、部隊與喊話。

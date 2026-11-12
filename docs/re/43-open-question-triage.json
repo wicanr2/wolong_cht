@@ -7124,19 +7124,6 @@
     },
     {
       "file": "docs/re/80-pathfind-request-queue.md",
-      "item": "`loc_1B612` 那一處的前提",
-      "status": "只確認它在碰撞處理的尾段，哪幾條分支會走到沒有逐條追",
-      "section": "5. 未解",
-      "domain": "程式碼理解",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-71f4dbb7a032c52f9493",
-      "classification": "evidence-only",
-      "github_issue": null,
-      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
-    },
-    {
-      "file": "docs/re/80-pathfind-request-queue.md",
       "item": "佇列滿了會怎樣",
       "status": "bit 4 去重讓在飛請求 ≤ 96 < 128，**結構上塞不滿**；沒有溢位檢查也就沒有可觀察的行為",
       "section": "5. 未解",
@@ -8899,19 +8886,6 @@
       "verdict": "靜態",
       "occurrence": 0,
       "id": "oq-f360ff81be4ebcb3302a",
-      "classification": "evidence-only",
-      "github_issue": null,
-      "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"
-    },
-    {
-      "file": "docs/spec/120-pathfind-request-queue.md",
-      "item": "碰撞尾段那一處的前提",
-      "status": "哪幾條分支會走到 `loc_1B612` 沒有逐條追",
-      "section": "5. 未解",
-      "domain": "其他",
-      "verdict": "靜態",
-      "occurrence": 0,
-      "id": "oq-a90884fe8c6e183d544f",
       "classification": "evidence-only",
       "github_issue": null,
       "reason": "目前列只保留原版證據邊界，未命中現行玩家路徑、規則或交付 Issue；若影響範圍改變，先建立新 Issue 再調整分類。"

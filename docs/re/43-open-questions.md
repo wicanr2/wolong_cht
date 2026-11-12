@@ -7,7 +7,7 @@
 
 現行工作與狀態由 GitHub [Issues](https://github.com/wicanr2/wolong_cht/issues) 管理；
 本地 [`docs/worklist.json`](../worklist.json) 與 `tools/worklist.py verify` 只作輔助。
-1151 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
+1149 列不是同數量的獨立 backlog；可執行項目已由完成的 Issue #28 分流，證據／歷史項目留在本索引。
 
 - 日期：2026-11-12
 - 產生工具：`tools/re_open_questions.py`
@@ -22,7 +22,7 @@
 
 ## 0. ⚠ 這個數字在量什麼
 
-**1145 列分布在 464 份文件，平均每份 2.5 列。**
+**1143 列分布在 464 份文件，平均每份 2.5 列。**
 
 ⭐ **所以它比較接近「文件有多少份」，不是「原版還有多少沒解」。**
 每寫一份新文件就帶進約三列自己的未解——而 `check.sh --strict` 還會
@@ -47,11 +47,11 @@
 |---|---:|---:|---:|---:|
 | 規則正確性 | 11 | 7 | 3 | 1 |
 | 資料保存 | 20 | 19 | 1 | 0 |
-| 程式碼理解 | 321 | 314 | 6 | 1 |
+| 程式碼理解 | 320 | 313 | 6 | 1 |
 | 驗收 | 246 | 220 | 26 | 0 |
 | 外部資料 | 6 | 5 | 1 | 0 |
-| 其他 | 541 | 517 | 23 | 1 |
-| **合計** | **1145** | 1082 | 60 | 3 |
+| 其他 | 540 | 516 | 23 | 1 |
+| **合計** | **1143** | 1080 | 60 | 3 |
 
 ⚠ **這是列數，不是獨立問題數。** 索引檔的「現況」欄是別的文件的摘要，同一個缺口在那份文件自己的未解表裡還有一列——這類共 **0** 列（另有少數只是提到「未解」兩個字的圖例列）。
 
@@ -59,8 +59,8 @@
 
 | 來源目錄 | 列數 |
 |---|---:|
-| `docs/spec/` | 498 |
-| `docs/re/` | 321 |
+| `docs/spec/` | 497 |
+| `docs/re/` | 320 |
 | `docs/playtest/` | 246 |
 | `docs/release/` | 26 |
 | `docs/formats/` | 20 |
@@ -110,7 +110,7 @@
 | [`formats/09-cutscene-images.md`](../formats/09-cutscene-images.md) | `GAMEOVER.DAT` 誰播 | 不在 `D7END.EXE` 的十二幕裡。**推測是 `KI.EXE` 的敗北路徑**（`../re/59`），沒有找到取用端 | 靜態 | evidence-only | — |
 | [`formats/10-end-s15-namechars.md`](../formats/10-end-s15-namechars.md) | 勢力 `+0x02 = 0x7F` 時，訊息裡的 `{4}` 從哪裡取名 | 推測從 `5222h`，`sub_1075B` 那條路沒回頭讀 | 靜態 | evidence-only | — |
 
-## 2.3 程式碼理解（321 條）
+## 2.3 程式碼理解（320 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -367,7 +367,6 @@
 | [`re/79-talk-marker-handlers.md`](../re/79-talk-marker-handlers.md) | `ah ≠ 0xFF` 的直接位址形式誰在用 | `\1`–`\3` 的三個參數 handler 支援直接位址；`\4`／`\5` 讀玩家記錄且不消耗 SS 參數。正常呼叫端哪些真的送直接位址，仍要逐個 `sub_18810` 呼叫點看 `push` 值；後續消費端證據見 `110` | 靜態 | evidence-only | — |
 | [`re/79-talk-marker-handlers.md`](../re/79-talk-marker-handlers.md) | `loc_10701` 的 `al = 3` | 五支都傳 3。屬性的位元編碼見 `28`，`al` 那一格沒逐位讀 | 靜態 | evidence-only | — |
 | [`re/80-pathfind-request-queue.md`](../re/80-pathfind-request-queue.md) | `sub_1ACA4` | `loc_1AFD0` 排隊之後緊接著呼叫它，內容沒逐行讀。它也出現在 `sub_1ABFF:loc_1AC3A` | 靜態 | evidence-only | — |
-| [`re/80-pathfind-request-queue.md`](../re/80-pathfind-request-queue.md) | `loc_1B612` 那一處的前提 | 只確認它在碰撞處理的尾段，哪幾條分支會走到沒有逐條追 | 靜態 | evidence-only | — |
 | [`re/80-pathfind-request-queue.md`](../re/80-pathfind-request-queue.md) | 佇列滿了會怎樣 | bit 4 去重讓在飛請求 ≤ 96 < 128，**結構上塞不滿**；沒有溢位檢查也就沒有可觀察的行為 | 靜態 | evidence-only | — |
 | [`re/80-pathfind-request-queue.md`](../re/80-pathfind-request-queue.md) | `[si+0x10]` 的完整語意 | 這裡確認它是「這一步的目標座標」（出隊時先設成目前座標，再由 `sub_1B00D` 覆寫成第一個繞路點）；誰還會寫它沒有窮舉 | 靜態 | evidence-only | — |
 | [`re/81-sound-type-attenuation.md`](../re/81-sound-type-attenuation.md) | `0x060F` 的音色來源 | `es:[si]` 從 `ds:[0992h]` 指的段讀，`si` 由 `[bx+0A5Ch] << 5 + ds:[099Ah]` 算出。**這一段的資料結構沒逐行讀**，所以「換音色之後型別要不要重送」還不確定 | 靜態 | merge-target | [#8](https://github.com/wicanr2/wolong_cht/issues/8) |
@@ -698,7 +697,7 @@
 | [`reference/04-first-survey.md`](../reference/04-first-survey.md) | 不要憑「同一份專案應該用同一個編譯器」外推——**`KI.EXE` 的編譯器未解。 | （散句） | 靜態 | evidence-only | — |
 | [`reference/05-eten-font-provenance.md`](../reference/05-eten-font-provenance.md) | `END_S13/S14/S15` 是中文版加的結局段 | S13／S14 是字型。**`END_S15` 仍未解** | 靜態 | evidence-only | — |
 
-## 2.6 其他（541 條）
+## 2.6 其他（540 條）
 
 | 出處 | 缺口 | 現況 | 裁決 | 分流 | Issue |
 |---|---|---|---|---|---|
@@ -782,7 +781,6 @@
 | [`spec/119-talk-marker-fields.md`](../spec/119-talk-marker-fields.md) | 同狀態截圖 | 要一張原版畫面上出現「孔明」的訊息才驗得到字本身 | 實測 | merge-target | [#12](https://github.com/wicanr2/wolong_cht/issues/12) |
 | [`spec/12-strategy-chrome.md`](../spec/12-strategy-chrome.md) | 樣式碼的值域 | 只確定 `0`＝擦除、`0x0B`＝命令、`0x0Bh`／`0x10h`／`0x15h`／`0x1Fh` 各自出現在哪個視窗已知，完整值域未列 | 靜態 | evidence-only | — |
 | [`spec/120-pathfind-request-queue.md`](../spec/120-pathfind-request-queue.md) | `sub_1ACA4` | 排隊之後緊接著呼叫，內容沒讀（`../re/80` §5） | 靜態 | evidence-only | — |
-| [`spec/120-pathfind-request-queue.md`](../spec/120-pathfind-request-queue.md) | 碰撞尾段那一處的前提 | 哪幾條分支會走到 `loc_1B612` 沒有逐條追 | 靜態 | evidence-only | — |
 | [`spec/120-pathfind-request-queue.md`](../spec/120-pathfind-request-queue.md) | 佇列順序對戰局的影響 | FIFO 與無序在同一場攻城裡差多少，沒有量化 | 靜態 | evidence-only | — |
 | [`spec/121-water-battlefield-selection.md`](../spec/121-water-battlefield-selection.md) | 類型 9 的另一條分支 | 213編號已證實，remake維持不翻轉近似。`14C33`的LDS切換DS，`14C36`讀攻方佔用圖byte，`14C41`仍讀該DS的`[si+1]`；完整語意未知，不能解釋為鄰格或攻方勢力 | 靜態 | actionable | [#31](https://github.com/wicanr2/wolong_cht/issues/31) |
 | [`spec/121-water-battlefield-selection.md`](../spec/121-water-battlefield-selection.md) | 其餘海戰分支與結算 | playtest129只補類型8的戰場212，未代證其餘編號、類型9或完整自動／戰術結算 | 靜態 | actionable | [#31](https://github.com/wicanr2/wolong_cht/issues/31) |

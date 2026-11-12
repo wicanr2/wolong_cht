@@ -115,9 +115,14 @@
 規則層照著重做並有迴歸測試（[`30`](30-ground-planes-implemented.md)）。
 
 > 當時試著照低平面那條規則直接改，會讓 `TestCavalryCannotClimb` 與
-> `TestFacingOnlyUpdatesOnSuccessfulMove` 同時翻掉，而那兩條測試釘的是
+> 當時的面向測試同時翻掉，而那兩條測試釘的是
 > 既有 RE 的結論。**訂正比新結論需要更硬的證據**——正確的做法是先去解
 > 那兩張圖，不是改測試。
+
+2026-11-13面向勘誤：後續原指令`1B04A`／`1B06C`證實面向在碰撞查詢前就更新，
+舊「只有移動成功才寫面向」的推論有誤。現以`TestFacingUpdatesBeforeBlockedAxis`驗此條件；
+新原指令、正常原版碰撞軌跡及範圍見[spec159續片](../spec/159-tactical-command-movement-order.md)。
+本段保留當時地面圖追查歷史，不把舊面向斷言當成現行契約。
 
 ### 5.2 ⭐ 那兩張地面高度圖：在另一個段，已經解出來了
 

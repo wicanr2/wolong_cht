@@ -237,7 +237,8 @@ func (b *Battle) CityDamage(cityWall int) int {
 	return d
 }
 
-// hitStructure 是兵撞上城壁／門時的處理，重現 `seg000:B5B7`–`B5FE`：
+// hitStructure回傳本次結構物碰撞是否已處理，並不表示扣耐久或位移。
+// 兵撞上城壁／門時的處理，重現 `seg000:B5B7`–`B5FE`：
 //
 //	守方（side 1）→ 直接離開，**碰不壞城壁**（`cmp si, 600h / jnb loc_1B612`）
 //	攻方面向「背對城的方向」→ 耐久**直接歸零**
@@ -266,9 +267,9 @@ func (b *Battle) hitStructure(side, facing, x, y int) bool {
 	if s.Broken {
 		return false
 	}
-	// 守方碰不壞自己的城壁。
+	// 守方不扣自己的城壁耐久，但碰撞已處理，當拍移動到此結束。
 	if side != AttackerSide {
-		return false
+		return true
 	}
 	// 攻方背對城的方向 → 直接歸零。
 	if b.Field.IsSiege() && facing == b.awayFromCastle() {

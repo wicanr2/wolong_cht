@@ -5,6 +5,60 @@ import (
 	"testing"
 )
 
+func TestStructureCollisionEndsAxisAndQueuesPath(t *testing.T) {
+	for _, y := range []int{31, 32} { // 城壁與門。
+		for _, side := range []int{AttackerSide, DefenderSide} {
+			f, _ := tiledField(32)
+			b := NewBattle(f, SyntheticFormations(), &fixedRand{}, 10)
+			x, goalX, face, oldFace := 31, 34, East, West
+			if side == DefenderSide {
+				x, goalX, face, oldFace = 33, 30, West, East
+			}
+			s := &b.Sides[side].Soldiers[1]
+			*s = Soldier{Alive: true, Kind: Infantry, X: x, Y: y, Stamina: 128,
+				StepX: goalX, StepY: y + 1, StepZ: 4, GoalX: goalX, GoalY: y + 1,
+				Facing: oldFace, Target: -1}
+			other := &b.Sides[side].Soldiers[2]
+			*other = Soldier{Alive: true, Kind: Infantry, X: x, Y: y + 1}
+			i := b.structureAt(32, y)
+			if i < 0 {
+				t.Fatal("缺少測試結構物")
+			}
+			before := b.Structures[i].Durability
+			b.moveToward(side, 1)
+			if s.X != x || s.Y != y || s.Z != 0 || other.Swapped || !s.MoveFlag || !s.PathQueued || s.Stamina != 127 {
+				t.Fatalf("側%d撞牆後不可試Y/Z或換位，但須排尋路：%+v", side, *s)
+			}
+			if s.Facing != face {
+				t.Fatalf("碰撞須讀到嘗試方向%d，得到%d", face, s.Facing)
+			}
+			want := before
+			if side == AttackerSide {
+				want--
+			}
+			if b.Structures[i].Durability != want || b.Structures[i].Broken {
+				t.Fatalf("側%d碰撞耐久=%d，應為%d", side, b.Structures[i].Durability, want)
+			}
+		}
+	}
+}
+
+func TestNonStructureObstacleStillTriesOtherAxis(t *testing.T) {
+	rows := make([][]int, Height)
+	for y := range rows {
+		rows[y] = make([]int, Width)
+	}
+	rows[20][11] = 2
+	b := NewBattle(NewField(rows, 0), SyntheticFormations(), &fixedRand{}, 0)
+	s := &b.Sides[0].Soldiers[1]
+	*s = Soldier{Alive: true, Kind: Infantry, X: 10, Y: 20, StepX: 12, StepY: 21,
+		GoalX: 12, GoalY: 21, Stamina: 128, Target: -1}
+	b.moveToward(0, 1)
+	if len(b.Structures) != 0 || s.X != 10 || s.Y != 21 || !s.MoveFlag || !s.PathQueued {
+		t.Fatalf("普通地形擋X仍應試Y，不能當成結構物碰撞：%+v", *s)
+	}
+}
+
 // tiledField 造一張帶原始圖塊值的戰場：X = 32 那一行從 top 到 bottom
 // 是城壁圖塊，gate 那一格是門。
 func tiledField(gateX int) (*Field, [][]byte) {
@@ -283,8 +337,8 @@ func TestHitStructureSiegeBranches(t *testing.T) {
 	// ① 守方（side 1）碰不壞。
 	b, y := newSiege()
 	before := b.Structures[0].Durability
-	if b.hitStructure(1, East, 32, y) {
-		t.Error("守方不該碰得壞城壁")
+	if !b.hitStructure(1, East, 32, y) {
+		t.Error("守方撞自己的城壁仍應回報碰撞已處理")
 	}
 	if b.Structures[0].Durability != before {
 		t.Errorf("守方撞了之後耐久從 %d 變成 %d", before, b.Structures[0].Durability)
@@ -557,10 +611,8 @@ func TestClimbIntoUnbrokenGateHitsIt(t *testing.T) {
 	}
 }
 
-// 面向只在**走成功**那一步才更新——被牆擋住的兵保持原本的面向。
-//
-// 原版把 `[si+5]` 寫在四個移動常式裡，而那些常式只有走得動時才被呼叫。
-func TestFacingOnlyUpdatesOnSuccessfulMove(t *testing.T) {
+// 1B06C先寫嘗試方向，再呼叫碰撞查詢；無鎖敵時保留該方向。
+func TestFacingUpdatesBeforeBlockedAxis(t *testing.T) {
 	f := walledField(32)
 	b := NewBattle(f, SyntheticFormations(), &fixedRand{}, 0)
 	b.Deploy(0, 0, Infantry, 1)
@@ -575,8 +627,8 @@ func TestFacingOnlyUpdatesOnSuccessfulMove(t *testing.T) {
 	if s.X != 31 {
 		t.Fatalf("兵越過了牆，X ＝ %d", s.X)
 	}
-	if s.Facing != West {
-		t.Errorf("被牆擋住卻把面向改成 %d，應該保持 West(%d)", s.Facing, West)
+	if s.Facing != East {
+		t.Errorf("嘗試往東即先設定面向，得到%d，應為East(%d)", s.Facing, East)
 	}
 }
 
@@ -780,15 +832,16 @@ func TestTryMoveReportsTerrainBlock(t *testing.T) {
 	s := &b.Sides[AttackerSide].Soldiers[0]
 	y := b.Structures[0].Y
 	s.X, s.Y, s.Z = 31, y, 0
-	moved, walled := b.tryMove(AttackerSide, 0, 32, y, 0)
-	if moved || !walled {
-		t.Errorf("撞城壁應該回 (false, true)，得到 (%v, %v)", moved, walled)
+	s.Facing = East
+	handled, walled := b.tryMove(AttackerSide, 0, 32, y, 0)
+	if !handled || !walled || s.X != 31 || s.Y != y {
+		t.Errorf("撞城壁應回(true,true)但位置不變，得到(%v,%v)及(%d,%d)", handled, walled, s.X, s.Y)
 	}
 
 	// 走得動的那一步不算被地形擋住。
 	s.X, s.Y, s.Z = 20, y, 0
-	moved, walled = b.tryMove(AttackerSide, 0, 21, y, 0)
-	if !moved || walled {
-		t.Errorf("空地應該回 (true, false)，得到 (%v, %v)", moved, walled)
+	handled, walled = b.tryMove(AttackerSide, 0, 21, y, 0)
+	if !handled || walled {
+		t.Errorf("空地應該回 (true, false)，得到 (%v, %v)", handled, walled)
 	}
 }

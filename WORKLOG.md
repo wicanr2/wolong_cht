@@ -1463,3 +1463,14 @@
 - [正常滑鼠](workplace/scratch/ui-windows-20261104/cao-route-remake-gui.json)69個功能／同步檢查點、16圖通過，含重複工具列同步。曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然在椎陽入戰、改線後，實際點側欄登城令。第188→194拍滑鼠未動，主將X11→17，Goal保持(42,32,4)，之後突擊與主動退卻返回。已目視登城畫面的單兵、城牆、底列指令與原版喊話。這是正常流程抽樣，沒有戰場注入或強制勝負，也不代表原版同拍像素、架梯、投射物或手機GUI完成。
 - [來源收據](workplace/scratch/ui-windows-20261104/cao-route-integration.json)保存兩檔來源覆蓋包、49份證據、binary及原版輸入；[回填表](workplace/scratch/ui-windows-20261104/cao-route-backlinks.json)對應舊re11與spec159。spec36本片CONFORMED，整體戰術排程仍未完成。原始素材、快照、binary與畫面皆留本機，不作Release。
 - 收尾通過索引582份文件／135條斷言、嚴格未解與分流1145列、過期斷言及原版資產deny-list。不存在引用維持修改前相同的204筆歷史workplace缺件，本輪新增0，缺席census.tsv的歷史符號層未執行。兩檔來源覆蓋包、49份證據、原版輸入及原IDA資料庫SHA一致；來源UID/GID1000:1000，root-owned與誤建.md目錄0。本輪容器已結束移除，沒有新建image或清理其他專案資源。[收尾核對](workplace/scratch/ui-windows-20261104/cao-route-final-checks.json)保存結果。依既有指示commit並push，遠端核對另存本機repo-route-update-20261113.json。
+
+## 2026-11-13：水平撞牆完成當拍並排尋路
+
+- 接續Issue #16第147拍差異，載入復古remake、規格閘門、IDA9.4與RE回填路由。主機gh核對Issue仍OPEN，未寫入Issue。沿用既有Go／Ebiten與IDA py312-v1工具鏈，不新增image或變更玩家已確認選項。
+- 同一曹操正常原版輸入、固定seed1，新增第146拍碰撞／逐兵移動127筆唯讀觀測，182筆主觀測與前片完全相同。槽49–53向西撞結構物97後位置不變、守方耐久1700不變，仍排尋路且結束當拍。Go先前忽略碰撞已處理的回傳，繼續試Y／Z並造成額外換位。
+- IDA9.4原指令證實1B612→1C653排路、1B616清CF返回；1B04A／1B06C／1B08E／1B0B2在查詢前寫嘗試面向。spec159本片先DRAFT補證、候選審查列READY後接線。第一候選只結束當拍卻漏排路，第二候選保留兩項，再補方向時機；正式修改限水平三處既有結構物分支與守方已處理結果，不改耐久公式、純Z、碰撞形狀、時間或存檔。
+- [正式證據](workplace/scratch/ui-windows-20261104/cao-impact-evidence.json)前149拍96槽27欄位、完整RNG與腳本PC／wait／cond吻合；第146拍96兵移動後X／Y／Z／餘力／MoveFlag／PathQueued六欄相同。Swapped清除相位不同，不在移動後重畫前的內部點宣稱全旗標相同。第150拍槽54的StepXY原版(5,26)、Go(45,16)，RNG相同，後段沿Issue #16保留。
+- [七套件冷測／vet／建置](workplace/scratch/ui-windows-20261104/cao-impact-tests.log)通過，兩個舊錯版皆被回歸測試拒絕。冷測先揭露舊面向測試及牆體回傳測試的錯誤契約，依原指令改正，失敗日誌保留；沒有降低驗收。最終獨立收據初次誤把GUI檢查點清單當整數，改成核對長度並逐圖驗SHA後通過，屬驗證腳本問題。
+- [正常滑鼠](workplace/scratch/ui-windows-20261104/cao-impact-remake-gui.json)69個功能／同步檢查點、16圖通過，包含重複同步。曹操第一劇本宣戰呂布、編夏侯淵、停手行軍、途中存讀檔、自然遇敵、改線、實際登城、突擊與主動退卻返回。第200→206拍指標不動，主將X18→24、Goal保持(42,32,4)；已目視登城畫面的單兵、城牆及底列指令。不代證夏侯淵守許昌、整場原版同拍畫面、架梯、投射物或手機GUI。
+- [回填表](workplace/scratch/ui-windows-20261104/cao-impact-backlinks.json)勘誤re11、re80、spec120、spec93及舊測量。1C653佇列本身原已解，本次只補結構物呼叫前提與CF出口；刪除兩筆已解的證據索引列，保留其他分流。spec159本片CONFORMED，整體排程仍READY。三檔來源、binary、實際證據數與原版輸入見[來源收據](workplace/scratch/ui-windows-20261104/cao-impact-integration.json)。素材、IDA、binary及截圖留本機，不作Release。
+- 收尾通過索引582份文件／135條斷言、嚴格未解與分流1143列、過期斷言及資產deny-list與正對照。引用掃描保留原有204筆歷史workplace缺件，與HEAD同工具比較新增0；缺席census.tsv的歷史符號層未執行，不宣稱全庫全綠。來源覆蓋包、實際證據、原版輸入與IDA資料庫SHA一致，UID/GID1000:1000，root-owned及誤建.md目錄0。本輪容器已結束移除，未動其他專案資源。[收尾核對](workplace/scratch/ui-windows-20261104/cao-impact-final-checks.json)保存結果。依既有指示commit並push，遠端核對另存本機repo-impact-update-20261113.json。

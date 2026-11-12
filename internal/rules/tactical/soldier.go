@@ -373,9 +373,10 @@ func (b *Battle) moveToward(side, k int) {
 		if s.X > s.StepX {
 			d, face = -1, West
 		}
+		s.Facing = face
 		ok, blocked := b.tryMove(side, k, s.X+d, s.Y, s.Z)
 		if ok {
-			s.Facing, moved = face, true
+			moved = true
 		}
 		walled = walled || blocked
 	}
@@ -384,9 +385,10 @@ func (b *Battle) moveToward(side, k int) {
 		if s.Y > s.StepY {
 			d, face = -1, North
 		}
+		s.Facing = face
 		ok, blocked := b.tryMove(side, k, s.X, s.Y+d, s.Z)
 		if ok {
-			s.Facing, moved = face, true
+			moved = true
 		}
 		walled = walled || blocked
 	}
@@ -538,11 +540,11 @@ func (b *Battle) computePath(side, k int) {
 	applyWaypoint(s, pts[0])
 }
 
-// tryMove 試著走到一格。走得上去才動。
+// tryMove 試著走到一格。第一個回傳值表示該軸處理完畢，可能只有碰撞而沒有位移。
 //
 // 第二個回傳值是「**被地形擋住**」——擋路的是牆或高低差，不是別的兵。
 // 呼叫端要靠它決定要不要重算繞路：撞到兵可以靠對調解決，撞到地形不行。
-func (b *Battle) tryMove(side, k, x, y, z int) (moved, walled bool) {
+func (b *Battle) tryMove(side, k, x, y, z int) (handled, walled bool) {
 	s := &b.Sides[side].Soldiers[k]
 	if !inBounds(x, y) {
 		return false, true
@@ -554,20 +556,26 @@ func (b *Battle) tryMove(side, k, x, y, z int) (moved, walled bool) {
 	if !ok {
 		// 擋住去路的是城壁或門的話，這一撞要算耐久
 		// （原版在同一個碰撞路徑上 `dec [di+18h]`，docs/re/11 §5.9）。
-		b.hitStructure(side, s.Facing, x, y)
+		if b.hitStructure(side, s.Facing, x, y) {
+			return true, true
+		}
 		return false, true
 	}
 	// `sub_1B1B1` 的第一段：目標格**自己那一層之上**有地形就擋
 	// （`ah = es:[bx+1000h] / and ah, ah / jnz 失敗`）。城壁就是這樣擋人的
 	// ——它的地面層表是拿「打壞後的圖塊」算的，本來就有地面（docs/re/63 §2）。
 	if b.Field.Blocked(x, y, s.Z+1) {
-		b.hitStructure(side, s.Facing, x, y)
+		if b.hitStructure(side, s.Facing, x, y) {
+			return true, true
+		}
 		return false, true
 	}
 	if s.Plane() == PlaneHigh {
 		// 高平面要高度完全相等，而且未破的門橫向穿不過去。
 		if lv != s.Z || b.Field.GateBlocksHighPlane(x, y) {
-			b.hitStructure(side, s.Facing, x, y)
+			if b.hitStructure(side, s.Facing, x, y) {
+				return true, true
+			}
 			return false, true
 		}
 		z = lv
